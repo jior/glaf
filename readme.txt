@@ -31,9 +31,9 @@
           driverClassName="org.postgresql.Driver"
           url="jdbc:postgresql://127.0.0.1:5432/jbpm"/>
 
-3、用sql目录下的脚本建表及初始化数据
-在数据库工具中执行createTable.sql建表（目前只限PostgreSQL8.4）
-执行init.sql进行数据初始化
+3、用pgsql目录下的脚本建表及初始化数据
+在数据库工具中执行createTable.sql.txt建表（目前只限PostgreSQL8.4）
+执行init.sql.txt进行数据初始化
 
 4、请在Eclipse工程中编译或安装ant编译源码，如果没有编译工具，直接把glaf-base.jar复制到war\WEB-INF\lib目录
 编译时需要将war\WEB-INF\lib的全部jar及server\lib下的jar加入编译路径
