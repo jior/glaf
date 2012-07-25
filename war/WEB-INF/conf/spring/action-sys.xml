@@ -1,0 +1,115 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+	<!--action -->
+	<bean name="/sys/authorize" class="com.glaf.base.modules.sys.action.AuthorizeAction">
+		<property name="sysApplicationService">
+			<ref bean="sysApplicationProxy" />
+		</property>
+		<property name="sysUserService">
+			<ref bean="sysUserProxy" />
+		</property>
+		<property name="authorizeService">
+			<ref bean="authorizeService" />
+		</property>
+		<property name="sysTreeService">
+			<ref bean="sysTreeProxy" />
+		</property>
+	</bean>
+
+	<bean name="/sys/tree" class="com.glaf.base.modules.sys.action.SysTreeAction">
+		<property name="sysTreeService">
+			<ref bean="sysTreeProxy" />
+		</property>
+	</bean>
+
+	<bean name="/sys/application" class="com.glaf.base.modules.sys.action.SysApplicationAction">
+		<property name="sysApplicationService">
+			<ref bean="sysApplicationProxy" />
+		</property>
+		<property name="sysTreeService">
+			<ref bean="sysTreeProxy" />
+		</property>
+	</bean>
+
+	<bean name="/sys/department" class="com.glaf.base.modules.sys.action.SysDepartmentAction">
+		<property name="sysDepartmentService">
+			<ref bean="sysDepartmentProxy" />
+		</property>
+		<property name="sysTreeService">
+			<ref bean="sysTreeProxy" />
+		</property>
+	</bean>
+
+	<bean name="/sys/user" class="com.glaf.base.modules.sys.action.SysUserAction">
+		<property name="sysUserService">
+			<ref bean="sysUserProxy" />
+		</property>
+		<property name="sysDeptRoleService">
+			<ref bean="sysDeptRoleProxy" />
+		</property>
+		<property name="sysTreeService">
+			<ref bean="sysTreeProxy" />
+		</property>
+		<property name="sysDepartmentService">
+			<ref bean="sysDepartmentProxy" />
+		</property>
+		<property name="sysRoleService">
+			<ref bean="sysRoleProxy" />
+		</property>
+	</bean>
+
+	<bean name="/sys/role" class="com.glaf.base.modules.sys.action.SysRoleAction">
+		<property name="sysRoleService">
+			<ref bean="sysRoleProxy" />
+		</property>
+	</bean>
+
+	<bean name="/sys/deptRole" class="com.glaf.base.modules.sys.action.SysDeptRoleAction">
+		<property name="sysDeptRoleService">
+			<ref bean="sysDeptRoleProxy" />
+		</property>
+		<property name="sysTreeService">
+			<ref bean="sysTreeProxy" />
+		</property>
+		<property name="sysDepartmentService">
+			<ref bean="sysDepartmentProxy" />
+		</property>
+		<property name="sysRoleService">
+			<ref bean="sysRoleProxy" />
+		</property>
+	</bean>
+
+	<bean name="/sys/dictory" class="com.glaf.base.modules.sys.action.DictoryAction">
+		<property name="dictoryService">
+			<ref bean="dictoryProxy" />
+		</property>
+		<property name="sysTreeService">
+			<ref bean="sysTreeProxy" />
+		</property>
+	</bean>
+
+	<bean name="/sys/function" class="com.glaf.base.modules.sys.action.SysFunctionAction">
+		<property name="sysFunctionService">
+			<ref bean="sysFunctionProxy" />
+		</property>
+		<property name="sysApplicationService">
+			<ref bean="sysApplicationProxy" />
+		</property>
+	</bean>
+	<bean name="/sys/subject" class="com.glaf.base.modules.sys.action.SysSubjectCodeAction">
+		<property name="subjectCodeService">
+			<ref bean="subjectCodeProxy" />
+		</property>
+	</bean>
+
+	<bean name="/sys/sysUserRole" class="com.glaf.base.modules.sys.action.SysUserRoleAction">
+		<property name="sysUserRoleService">
+			<ref bean="sysUserRoleProxy" />
+		</property>
+		<property name="sysUserService">
+			<ref bean="sysUserProxy" />
+		</property>
+	</bean>
+
+</beans>

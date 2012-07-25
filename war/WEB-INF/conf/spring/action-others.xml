@@ -1,0 +1,19 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+	<!-- <bean name="/others/audit" class="com.glaf.base.modules.others.action.AuditAction"> 
+		<property name="auditService"> <ref bean="auditProxy" /> </property> </bean> -->
+
+	<bean name="/others/workCalendar" class="com.glaf.base.modules.others.action.WorkCalendarAction">
+		<property name="workCalendarService">
+			<ref bean="workCalendarProxy" />
+		</property>
+	</bean>
+
+	<!-- <bean name="/attachment/download" class="com.glaf.base.modules.others.action.AttachmentDownloadAction"> 
+		<property name="attachmentService"> <ref bean="attachmentProxy" /> </property> 
+		</bean> -->
+
+
+</beans>

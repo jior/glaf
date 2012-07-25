@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC
+          "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN"
+          "http://jakarta.apache.org/struts/dtds/struts-config_1_2.dtd">
+
+<struts-config>
+	<form-beans>
+		<form-bean name="GenericForm"
+			type="com.glaf.base.modules.sys.actionform.GenericForm" />
+	</form-beans>
+
+	<global-forwards>
+		<forward name="show_msg" path="/WEB-INF/views/error/show_msg.jsp" />
+		<forward name="show_msg2" path="/WEB-INF/views/error/show_msg2.jsp" />
+		<forward name="show_msg3" path="/WEB-INF/views/error/show_msg3.jsp" />
+		<forward name="show_msg4" path="/WEB-INF/views/error/show_msg4.jsp" />
+		<forward name="show_error" path="/WEB-INF/views/error/show_error.jsp" />
+		<forward name="show_failure" path="/WEB-INF/views/error/show_failure.jsp" />
+	</global-forwards>
+
+	<message-resources parameter="msg" null="false" />
+
+	<!--spring config -->
+	<plug-in className="org.springframework.web.struts.ContextLoaderPlugIn">
+		<set-property property="contextConfigLocation"
+			value="/WEB-INF/conf/spring/spring-security.xml,
+                         /WEB-INF/conf/spring/action-sys.xml,
+                          /WEB-INF/conf/spring/action-others.xml,
+                         /WEB-INF/conf/spring/action-workspace.xml" />
+	</plug-in>
+</struts-config>

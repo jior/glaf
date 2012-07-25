@@ -1,0 +1,3 @@
+ssh-keygen -t rsa -C "jior2008@gmai.com"
+
+git -T git@github.com

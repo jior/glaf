@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="GBK"?>
+<jbpm-configuration>
+
+  <jbpm-context>
+    <service name="persistence" factory="org.jbpm.persistence.db.DbPersistenceServiceFactory" />
+    <service name="tx" factory="org.jbpm.tx.TxServiceFactory" />
+    <service name="message" factory="org.jbpm.msg.db.DbMessageServiceFactory" />
+    <service name="scheduler" factory="org.jbpm.scheduler.db.DbSchedulerServiceFactory" />
+    <service name="authentication" factory="org.jbpm.security.authentication.DefaultAuthenticationServiceFactory" />
+  </jbpm-context>
+
+  <string name="resource.hibernate.cfg.xml" value="config/jbpm/hibernate.cfg.xml" />
+
+  <string name="resource.business.calendar" value="org/jbpm/calendar/jbpm.business.calendar.properties" />
+  <string name="resource.default.modules" value="org/jbpm/graph/def/jbpm.default.modules.properties" />
+  <string name="resource.converter" value="org/jbpm/db/hibernate/jbpm.converter.properties" />
+  <string name="resource.action.types" value="org/jbpm/graph/action/action.types.xml" />
+  <string name="resource.node.types" value="org/jbpm/graph/node/node.types.xml" />
+  <string name="resource.parsers" value="org/jbpm/jpdl/par/jbpm.parsers.xml" />
+  <string name="resource.varmapping" value="org/jbpm/context/exe/jbpm.varmapping.xml" />
+  <string name="resource.mail.templates" value="jbpm.mail.templates.xml" />
+
+  <int    name="jbpm.byte.block.size" value="1024" singleton="true" />
+  <bean   name="jbpm.task.instance.factory" class="org.jbpm.taskmgmt.impl.DefaultTaskInstanceFactoryImpl" singleton="true" />
+  <bean   name="jbpm.variable.resolver" class="org.jbpm.jpdl.el.impl.JbpmVariableResolver" singleton="true" />
+  <string name="jbpm.mail.smtp.host" value="localhost" />
+  <bean   name="jbpm.mail.address.resolver" class="org.jbpm.identity.mail.IdentityAddressResolver" singleton="true" />
+  <string name="jbpm.mail.from.address" value="jbpm@noreply" />
+  
+  <bean name="jbpm.job.executor" class="org.jbpm.job.executor.JobExecutor">
+    <field name="jbpmConfiguration"><ref bean="jbpmConfiguration" /></field>
+    <field name="name"><string value="JbpmJobExector" /></field>
+    <field name="nbrOfThreads"><int value="1" /></field>
+    <field name="idleInterval"><int value="5000" /></field>
+    <field name="maxIdleInterval"><int value="3600000" /></field> <!-- 1 hour -->
+    <field name="historyMaxSize"><int value="20" /></field>
+    <field name="maxLockTime"><int value="600000" /></field> <!-- 10 minutes -->
+    <field name="lockMonitorInterval"><int value="60000" /></field> <!-- 1 minute -->
+    <field name="lockBufferTime"><int value="5000" /></field> <!-- 5 seconds -->
+  </bean>
+
+  <!--2006-05-20黄朝文增加-->
+  <boolean name="isAutoCompleteTask" value="true" singleton="true"/>
+  <!--是否启用代理人功能-->
+  <!-- <boolean name="isAgentEnable" value="true" singleton="true"/> -->
+  <boolean name="isAgentEnable" value="true" singleton="true"/>
+  <!--是否可以中止流程-->
+  <boolean name="canAbortProcess" value="false" singleton="true"/>
+  <!--是否可以挂起流程-->
+  <boolean name="canSuspendProcess" value="true" singleton="true"/>
+  <!--是否可以删除流程实例-->
+  <boolean name="canDeleteProcessInstance" value="false" singleton="true"/>
+  <int           name="jpage.data.byte.block.size" value="1024" singleton="true" />
+  <int           name="jpage.file.byte.block.size" value="1024" singleton="true" />
+  <string      name="jbpm_datafield_keys" value="isAgree,isPass,money,day" singleton="true"/>
+
+  <!--2007-01-06黄朝文增加发送邮件功能-->
+  <int           name="jbpm.mail.repeatCount" value="0" singleton="true" />
+  <string      name="serviceUrl" value="http://127.0.0.1:8080/tms" singleton="true" />
+  <string      name="warnMail" value="pps@glaf.com.cn" singleton="true" />
+
+</jbpm-configuration>

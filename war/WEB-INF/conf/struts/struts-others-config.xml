@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC
+          "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN"
+          "http://jakarta.apache.org/struts/dtds/struts-config_1_2.dtd">
+      
+<struts-config>
+	<!-- <form-beans>
+		<form-bean name="purchaseGoodsForm" type="com.glaf.base.modules.purchase.actionform.PurchaseGoodsForm"/>    
+	</form-beans>  -->
+  <!--Action Mapping Definitions-->
+  <action-mappings>
+    <action path="/others/audit"
+            parameter="method"
+            scope="request"
+            name="GenericForm"
+            type="org.springframework.web.struts.DelegatingActionProxy">
+      <forward name="show_comment" path="/WEB-INF/views/module/audit/audit_comment.jsp"/>
+      <forward name="show_list" path="/WEB-INF/views/module/audit/audit_list.jsp"/>
+      <forward name="showList2" path="/WEB-INF/views/module/audit/showList2.jsp"/>
+    </action>
+    
+    <!-- <action path="/others/attachment"
+            parameter="method"
+            scope="request"
+            name="GenericForm"
+            type="org.springframework.web.struts.DelegatingActionProxy">
+      <forward name="show_list" path="/WEB-INF/views/module/others/attachment_list.jsp"/>
+      <forward name="show_view_list" path="/WEB-INF/views/module/others/attachment_list2.jsp"/>
+      <forward name="show_add_list" path="/WEB-INF/views/module/others/attachment_list3.jsp"/>
+      <forward name="showCount" path="/WEB-INF/views/module/others/showCount.jsp"/>
+      <forward name="show_list2" path="/WEB-INF/views/module/others/attachment_contract_list.jsp"/>
+    </action> -->
+    
+    <action path="/others/workCalendar"
+            parameter="method"
+            scope="request"
+            name="GenericForm"
+            type="org.springframework.web.struts.DelegatingActionProxy">
+      <forward name="show_list" path="/WEB-INF/views/module/others/work_calendar.jsp"/>
+      <forward name="show_cal" path="/WEB-INF/views/module/others/calendar.jsp"/>
+    </action>
+    
+    <action path="/attachment/download"
+            type="org.springframework.web.struts.DelegatingActionProxy"/>
+	  
+	<action path="/others/historyPrice" 
+		parameter="method"
+		scope="request"
+        name="purchaseGoodsForm"
+		type="org.springframework.web.struts.DelegatingActionProxy">
+		<forward name="history_price" path="/WEB-INF/views/module/others/history_price.jsp"/>
+		<forward name="history_quote" path="/WEB-INF/views/module/others/history_quote.jsp"/>
+		<forward name="history_price_quote" path="/WEB-INF/views/module/others/history_price_quote.jsp"/>
+	</action>
+    
+    <action path="/others/statusView"
+            parameter="method"
+            scope="request"
+            name="GenericForm"
+            type="org.springframework.web.struts.DelegatingActionProxy">
+      <forward name="status_list" path="/WEB-INF/views/module/others/status_list.jsp"/>
+	  <forward name="status_look" path="/WEB-INF/views/module/others/status_look.jsp"/>
+	  <forward name="viewManager_list" path="/WEB-INF/views/module/others/viewManager_list.jsp"/>
+	  <forward name="accept_contract_list" path="/WEB-INF/views/module/others/accept_contract_list.jsp"/>
+	  <forward name="payment_contract_list" path="/WEB-INF/views/module/others/payment_contract_list.jsp"/>
+	  <forward name="showFinanceList" path="/WEB-INF/views/module/others/showFinanceList.jsp"/>
+    </action>
+  </action-mappings>
+</struts-config>

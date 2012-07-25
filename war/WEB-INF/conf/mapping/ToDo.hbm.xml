@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.glaf.base.modules.todo.model.ToDo" table="sys_todo"
+		dynamic-update="true" dynamic-insert="true">
+		<id column="id" name="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property column="actorId" name="actorId" type="string" />
+		<property column="alarm" name="alarm" type="string" />
+		<property column="code" name="code" type="string" />
+		<property column="content" name="content" type="string" />
+		<property column="deptId" name="deptId" type="long" />
+		<property column="deptName" name="deptName" type="string" />
+		<property column="enableFlag" name="enableFlag" type="int" />
+		<property column="eventFrom" name="eventFrom" type="string" />
+		<property column="eventTo" name="eventTo" type="string" />
+		<property column="limitDay" name="limitDay" type="int" />
+		<property column="xa" name="xa" type="int" />
+		<property column="xb" name="xb" type="int" />
+		<property column="link" name="link" type="string" />
+		<property column="listLink" name="listLink" type="string" />
+		<property column="linkType" name="linkType" type="string" />
+		<property column="appId" name="appId" type="int" />
+		<property column="moduleId" name="moduleId" type="int" />
+		<property column="moduleName" name="moduleName" type="string" />
+		<property column="news" name="news" type="string" />
+		<property column="objectId" name="objectId" type="string" />
+		<property column="objectValue" name="objectValue" type="string" />
+		<property column="processName" name="processName" type="string" />
+		<property column="roleCode" name="roleCode" type="string" />
+		<property column="roleId" name="roleId" type="long" />
+		<property column="tablename" name="tablename" type="string" />
+		<property column="taskName" name="taskName" type="string" />
+		<property column="title" name="title" type="string" />
+		<property column="type" name="type" type="string" />
+		<property column="sql" name="sql" type="string" />
+		<property column="versionNo" name="versionNo" type="long" />
+	</class>
+</hibernate-mapping>

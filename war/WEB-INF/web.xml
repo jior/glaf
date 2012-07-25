@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app>
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+  
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/conf/spring/spring-config.xml</param-value>
+	</context-param>
+	<context-param>
+		<param-name>hqlmulti</param-name>
+		<param-value>true</param-value>
+	</context-param>
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+ 
+	<listener> 
+		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class> 
+	</listener>
+  
+	<filter>
+		<filter-name>OpenSessionInViewFilter</filter-name>
+		<filter-class>org.springframework.orm.hibernate3.support.OpenSessionInViewFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>OpenSessionInViewFilter</filter-name>
+		<url-pattern>*.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>OpenSessionInViewFilter</filter-name>
+		<url-pattern>*.jsp</url-pattern>
+	</filter-mapping>
+  
+	<!--由Sprng载入的Log4j配置文件位置-->
+	<context-param>
+		<param-name>log4jConfigLocation</param-name>
+		<param-value>/WEB-INF/conf/log4j.properties</param-value>
+	</context-param>
+	<!--Spring log4j Config loader-->
+	<listener>
+		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+	</listener>
+  
+	<!--struts 配置-->
+	<servlet>
+		<servlet-name>action</servlet-name>
+		<servlet-class>org.apache.struts.action.ActionServlet</servlet-class>
+		<init-param>
+			<param-name>config</param-name>
+			<param-value>
+				/WEB-INF/conf/struts/struts-config.xml,
+				/WEB-INF/conf/struts/struts-sys-config.xml,
+				/WEB-INF/conf/struts/struts-others-config.xml,
+				/WEB-INF/conf/struts/struts-workspace-config.xml
+			</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>action</servlet-name>
+		<url-pattern>*.do</url-pattern>
+	</servlet-mapping>
+
+  
+	<!--转码过滤器-->
+	<filter>
+		<filter-name>encodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>GBK</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<url-pattern>*.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<url-pattern>*.jsp</url-pattern>
+	</filter-mapping>
+  
+	<!--IE缓存清除过滤器-->
+	<filter>
+		<filter-name>Cache Filter</filter-name>
+		<filter-class>com.glaf.base.filter.ForbiddenCacheFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>Cache Filter</filter-name>
+		<url-pattern>*.do</url-pattern>
+	</filter-mapping>
+  
+	<!--权限过滤器-->
+	<filter>
+		<filter-name>Authorization Filter</filter-name>
+		<filter-class>com.glaf.base.filter.AuthorizeFilter</filter-class>
+		<init-param>
+			<param-name>login_user</param-name>
+			<param-value>LOGIN_USER</param-value>
+		</init-param>
+		<init-param>
+			<param-name>login_url</param-name>
+			<param-value>/glaf/sys/authorize.do</param-value>
+		</init-param>
+		<init-param>
+			<param-name>error_url</param-name>
+			<param-value>/glaf/error/error_jump.htm</param-value>
+		</init-param>
+		<init-param>
+			<param-name>require</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>Authorization Filter</filter-name>
+		<url-pattern>*.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>Authorization Filter</filter-name>
+		<url-pattern>*.jsp</url-pattern>
+	</filter-mapping>
+
+	<!--dwr-->
+	<servlet>
+		<servlet-name>dwr-invoker</servlet-name>
+		<servlet-class>uk.ltd.getahead.dwr.DWRServlet</servlet-class>
+		<init-param>
+			<param-name>debug</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>dwr-invoker</servlet-name>
+		<url-pattern>/dwr/*</url-pattern>
+	</servlet-mapping>
+  
+	<servlet>
+		<servlet-name>InitBaseData</servlet-name>
+		<servlet-class>com.glaf.base.modules.InitBaseDataServlet</servlet-class>
+		<load-on-startup>2</load-on-startup>
+	</servlet>
+  
+  
+	<!--workflow configure-->
+ 
+	<filter>
+		<filter-name>JbpmContextFilter</filter-name>
+		<filter-class>org.jpage.jbpm.filter.JbpmContextFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>JbpmContextFilter</filter-name>
+		<url-pattern>/workflow/*</url-pattern>
+	</filter-mapping>
+	<filter>
+		<filter-name>AuthenticationFilter</filter-name>
+		<filter-class>org.jpage.jbpm.filter.AuthenticationFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>AuthenticationFilter</filter-name>
+		<url-pattern>/workflow/*</url-pattern>
+	</filter-mapping>
+
+	<servlet>
+		<servlet-name>ContextServlet</servlet-name>
+		<servlet-class>org.jpage.context.ContextServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+  
+	<servlet>
+		<servlet-name>MainServlet</servlet-name>
+		<servlet-class>org.jpage.jbpm.servlet.MainServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>MainServlet</servlet-name>
+		<url-pattern>/workflow/mainServlet</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>TaskServlet</servlet-name>
+		<servlet-class>org.jpage.jbpm.servlet.TaskServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>TaskServlet</servlet-name>
+		<url-pattern>/workflow/task</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>ProcessImageServlet</servlet-name>
+		<servlet-class>org.jpage.jbpm.servlet.ProcessImageServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ProcessImageServlet</servlet-name>
+		<url-pattern>/workflow/processimage</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>MailCallbackServlet</servlet-name>
+		<servlet-class>org.jpage.jbpm.mail.MailCallbackServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>MailCallbackServlet</servlet-name>
+		<url-pattern>/workflow/mail/callback</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>workflow</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>workflow</servlet-name>
+		<url-pattern>*.jspa</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>DeployServlet</servlet-name>
+		<servlet-class>org.jpage.jbpm.deploy.DeployServlet</servlet-class>
+		<load-on-startup>2</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DeployServlet</servlet-name>
+		<url-pattern>/workflow/deploy</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>ForwardServlet</servlet-name>
+		<servlet-class>org.jpage.jbpm.servlet.ForwardServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ForwardServlet</servlet-name>
+		<url-pattern>/workflow/forward</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>UploadServlet</servlet-name>
+		<servlet-class>org.jpage.jbpm.deploy.UploadServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>UploadServlet</servlet-name>
+		<url-pattern>/workflow/upload</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>MainController</servlet-name>
+		<servlet-class>org.jpage.jbpm.controller.MainController</servlet-class>
+		<load-on-startup>5</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>MainController</servlet-name>
+		<url-pattern>/workflow/mainController</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>DefinitionServlet</servlet-name>
+		<servlet-class>org.jpage.jbpm.servlet.DefinitionServlet</servlet-class>
+		<load-on-startup>5</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DefinitionServlet</servlet-name>
+		<url-pattern>/workflow/definitionServlet</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>ProcessDefinitionServlet</servlet-name>
+		<servlet-class>org.jpage.jbpm.servlet.ProcessDefinitionServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ProcessDefinitionServlet</servlet-name>
+		<url-pattern>/workflow/processDefinitionServlet</url-pattern>
+	</servlet-mapping>
+
+ 
+	<error-page> 
+		<exception-type>com.glaf.base.modules.sys.interceptor.AuthorizeException</exception-type> 
+		<location>/WEB-INF/views/error/auth_error.jsp</location>
+	</error-page> 
+  
+</web-app>

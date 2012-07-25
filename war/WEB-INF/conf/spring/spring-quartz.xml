@@ -1,0 +1,398 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+
+	<!-- Todo消息提醒和邮件提醒 -->
+
+	<bean id="todoJobBean" class="com.glaf.base.modules.todo.service.TodoJobBean">
+		<property name="todoService">
+			<ref bean="todoService" />
+		</property>
+	</bean>
+
+	<!-- <bean id="todoQuartzJob" class="com.glaf.base.modules.todo.service.TodoQuartzJob"> 
+		<property name="sendMessageServiceUrl"> <value>http://localhost:8806/tms/jsp/sendMessage.jsp</value> 
+		</property> </bean> -->
+
+	<bean id="todoJobDetail"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="todoJobBean" />
+		</property>
+		<property name="targetMethod">
+			<value>createTasksFromSQL</value>
+		</property>
+	</bean>
+
+	<bean id="todoJobDetail_sendMessage"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="todoJobBean" />
+		</property>
+		<property name="targetMethod">
+			<value>sendMessage</value>
+		</property>
+	</bean>
+
+	<bean id="todoSimpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+		<property name="jobDetail">
+			<!-- 引用上述methodInvokingJobDetail -->
+			<ref bean="todoJobDetail" />
+		</property>
+		<property name="startDelay">
+			<!-- 第一次执行任务前，需要等待60秒钟 -->
+			<value>60000</value>
+		</property>
+		<property name="repeatInterval">
+			<!-- 任务执行周期为600000ms -->
+			<value>600000</value>
+		</property>
+		<property name="repeatCount">
+			<!-- 执行次数 -->
+			<value>1</value>
+		</property>
+	</bean>
+
+	<!--触发器/每天9点、14点执行 -->
+	<bean id="todoCronTrigger_sendMessage" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail">
+			<ref bean="todoJobDetail_sendMessage" />
+		</property>
+		<property name="cronExpression">
+			<value>0 0 9,14 * * ?</value>
+		</property>
+	</bean>
+
+
+	<!-- 清理无效数据 业务方法 start -->
+	<bean id="cleanTrashDataService" class="com.glaf.base.modules.schedule.CleanTrashDataService">
+		<property name="abstractDao">
+			<ref bean="abstractDao" />
+		</property>
+		<property name="sysUserRoleService">
+			<ref bean="sysUserRoleProxy" />
+		</property>
+	</bean>
+	<!--清理无效数据 -->
+	<bean id="cleanJobDetail"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="cleanTrashDataService" />
+		</property>
+		<property name="targetMethod">
+			<value>clearTrashData</value>
+		</property>
+	</bean>
+	<!--触发器/每天21点执行 -->
+	<bean id="cleanCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail">
+			<ref bean="cleanJobDetail" />
+		</property>
+		<property name="cronExpression">
+			<value>0 0 21 * * ?</value>
+		</property>
+	</bean>
+	<!--清理无效数据 end -->
+
+
+	<!--计划任务 -->
+	<bean id="scheduler"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="cleanCronTrigger" />
+				<ref bean="readSupplierTrigger" />
+				<ref bean="todoSimpleTrigger" />
+				<ref bean="todoCronTrigger_sendMessage" />
+				<ref bean="autoOrderGenerateTrigger" /><!-- 订单 -->
+				<ref bean="autoCheckContractOrderGenerateTrigger" /><!-- 合同订单验收 -->
+				<ref bean="autoScheduleGenerateTrigger" /><!-- 合同进度验收 -->
+				<ref bean="autoPaymentGenerateTrigger" /><!-- 付款通知书 -->
+				<ref bean="autoPerformanceGenerateTrigger" /><!-- 绩效考核add by key 
+					2010-10-09 -->
+				<ref bean="autoFileUtilGenerateTrigger" /><!-- 文件清理add by key 2010-10-09 -->
+				<ref bean="autoReportDataGenerateTrigger" /><!-- add by key 汇总报表 -->
+				<ref bean="autoZhuanguGenerateTrigger" /><!-- add by key 转固 -->
+				<ref bean="autoSupplierSynPayInfoGenerateTrigger" /><!-- add by key 
+					2012-07-11 -->
+				<ref bean="daySendInterfaceTrigger" /><!-- add by kxr 接口数据发送至共通平台 -->
+				<ref bean="monthSendInterfaceTrigger" /><!-- add by kxr 接口数据发送至共通平台 -->
+			</list>
+		</property>
+	</bean>
+
+	<!--业务方法 -->
+	<bean id="readSupplierValueService" class="com.glaf.base.modules.schedule.ReadSupplierValueService">
+		<property name="abstractDao">
+			<ref bean="abstractDao" />
+		</property>
+		<property name="supplierScoreDetailService">
+			<ref bean="supplierScoreDetailProxy" />
+		</property>
+		<property name="supplierDailyScoreService">
+			<ref bean="supplierDailyScoreProxy" />
+		</property>
+	</bean>
+	<!--读取供应商评价数据 -->
+	<bean id="readSupplier"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="readSupplierValueService" />
+		</property>
+		<property name="targetMethod">
+			<value>createAutoHalfYearSupplierDS</value>
+		</property>
+	</bean>
+	<!--触发器每半年执行一次 -->
+	<bean id="readSupplierTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail">
+			<ref bean="readSupplier" />
+		</property>
+		<property name="cronExpression">
+			<value>0 10 1 1 1,7 ?</value>
+		</property>
+	</bean>
+
+	<!--自动生成订单 start -->
+	<bean id="autoOrderGenerate"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="orderGenerateAction" /><!-- orderGenerateAction为spring-order.xml里配置的对象 -->
+		</property>
+		<property name="targetMethod">
+			<value>getAutoOrders</value>
+		</property>
+	</bean>
+	<!--12:30/21:30 触发器执行 -->
+	<bean id="autoOrderGenerateTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail">
+			<ref bean="autoOrderGenerate" />
+		</property>
+		<property name="cronExpression">
+			<value>0 30 12,21 * * ?</value>
+		</property>
+	</bean>
+	<!--自动生成订单 end -->
+
+	<!--自动生成合同、订单的验收单 start -->
+	<bean id="autoCheckContractOrderGenerate"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="checkGenerateAction" /><!-- checkGenerateAction为spring-check.xml里配置的对象 -->
+		</property>
+		<property name="targetMethod">
+			<value>getPurchaseCheck</value>
+		</property>
+	</bean>
+	<!--12:35/21:35 触发器执行 -->
+	<bean id="autoCheckContractOrderGenerateTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail">
+			<ref bean="autoCheckContractOrderGenerate" />
+		</property>
+		<property name="cronExpression">
+			<value>0 35 12,21 * * ?</value>
+		</property>
+	</bean>
+	<!--自动生成合同、订单的验收单 end -->
+
+	<!--自动生成合同进度的验收单 start -->
+	<bean id="autoScheduleGenerate"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="checkGenerateAction" /><!-- checkGenerateAction为spring-check.xml里配置的对象 -->
+		</property>
+		<property name="targetMethod">
+			<value>getScheduleCheck</value>
+		</property>
+	</bean>
+	<!--12:45/21:45整 触发器执行 -->
+	<bean id="autoScheduleGenerateTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail">
+			<ref bean="autoScheduleGenerate" />
+		</property>
+		<property name="cronExpression">
+			<value>0 45 12,21 * * ?</value>
+		</property>
+	</bean>
+	<!--自动生成合同进度的验收单 end -->
+
+	<!--自动生成付款通知书 start -->
+	<bean id="autoPaymentGenerate"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="paymentGenerateAction" /><!-- paymentGenerateAction为spring-pay.xml里配置的对象 -->
+		</property>
+		<property name="targetMethod">
+			<value>getPayment</value>
+		</property>
+	</bean>
+	<!--12:50/21:50 触发器执行 -->
+	<bean id="autoPaymentGenerateTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail">
+			<ref bean="autoPaymentGenerate" />
+		</property>
+		<property name="cronExpression">
+			<value>0 50 12,21 * * ?</value>
+		</property>
+	</bean>
+	<!--自动生成付款通知书 end -->
+
+	<!-- 生成转固数据批处理 start -->
+	<bean id="autoZhuanguGenerate"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="projectGenerateProxy" /><!-- projectGenerateProxy为spring-project.xml里配置的对象 -->
+		</property>
+		<property name="targetMethod">
+			<value>insertZhuangu</value>
+		</property>
+	</bean>
+	<!--13:00/22:00 触发器执行 -->
+	<bean id="autoZhuanguGenerateTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail">
+			<ref bean="autoZhuanguGenerate" />
+		</property>
+		<property name="cronExpression">
+			<value>0 0 13,22 * * ?</value><!-- -->
+		</property>
+	</bean>
+	<!-- 生成转固数据批处理 end -->
+
+	<!-- 供应商信息同步比较 start -->
+	<bean id="autoSupplierSynPayInfoGenerate"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="supplierApplyProxy" />
+		</property>
+		<property name="targetMethod">
+			<value>updateCompareSupplier</value>
+		</property>
+	</bean>
+	<!--13:15/22:15 触发器执行 -->
+	<bean id="autoSupplierSynPayInfoGenerateTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail">
+			<ref bean="autoSupplierSynPayInfoGenerate" />
+		</property>
+		<property name="cronExpression">
+			<value>0 15 13,22 * * ?</value>
+		</property>
+	</bean>
+	<!-- 供应商信息同步比较 end -->
+
+	<!--汇总报表批处理 (每月的最后一天晚上23点运行此程序) by key -->
+	<bean id="reportDataGenerateService"
+		class="com.glaf.base.modules.report.service.ReportDataGenerateService">
+		<property name="abstractDao">
+			<ref bean="abstractDao" />
+		</property>
+	</bean>
+	<bean id="autoReportDataGenerate"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="reportDataGenerateService" />
+		</property>
+		<property name="targetMethod">
+			<value>createReportData</value>
+		</property>
+	</bean>
+	<bean id="autoReportDataGenerateTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail">
+			<ref bean="autoReportDataGenerate" />
+		</property>
+		<property name="cronExpression">
+			<value>0 0 23 L * ?</value>
+		</property>
+	</bean>
+
+	<!-- 绩效考核 每月1号1点开始执行 add by key 2010-10-09 -->
+	<bean id="performanceGenerate"
+		class="com.glaf.base.modules.performance.action.PerformanceGenerateAction">
+		<property name="performanceService">
+			<ref bean="performanceProxy" />
+		</property>
+	</bean>
+	<bean id="autoPerformanceGenerate"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="performanceGenerate" />
+		</property>
+		<property name="targetMethod">
+			<value>processMonthly</value>
+		</property>
+	</bean>
+	<bean id="autoPerformanceGenerateTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail">
+			<ref bean="autoPerformanceGenerate" />
+		</property>
+		<property name="cronExpression">
+			<value>0 0 1 1 * ?</value>
+		</property>
+	</bean>
+
+	<!--File业务对象 -->
+	<bean id="fileUtilGenerate" class="com.glaf.base.utils.FileUtil"></bean>
+	<!--自动删除upload/temp文件夹中的文件 -->
+	<bean id="autoFileUtilGenerate"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="fileUtilGenerate" />
+		</property>
+		<property name="targetMethod">
+			<value>delDownTempFiles</value>
+		</property>
+	</bean>
+	<!--每个星期一 0:0 整 触发器执行 -->
+	<bean id="autoFileUtilGenerateTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail">
+			<ref bean="autoFileUtilGenerate" />
+		</property>
+		<property name="cronExpression">
+			<value>0 0 0 ? * 1</value>
+		</property>
+	</bean>
+
+	<!-- ↓↓↓↓↓↓↓↓↓↓↓↓日次执行的接口处理↓↓↓↓↓↓↓↓↓↓ -->
+	<bean id="daySendInterface" class="org.springframework.scheduling.quartz.JobDetailBean">
+		<property name="jobClass" value="com.glaf.base.modules.inf.mapping.DayJob" />
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="size" value="10" />
+			</map>
+		</property>
+		<property name="applicationContextJobDataKey" value="applicationContext" />
+	</bean>
+	<bean id="daySendInterfaceTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail">
+			<ref bean="daySendInterface" />
+		</property>
+		<property name="cronExpression">
+			<value>0 30 22 ? * *</value><!-- 每天22：30执行 -->
+		</property>
+	</bean>
+	<!-- ↑↑↑↑↑↑↑↑↑↑↑↑日次执行的接口处理↑↑↑↑↑↑↑↑↑↑↑↑ -->
+
+	<!-- ↓↓↓↓↓↓↓↓↓↓↓↓月次执行的接口处理↓↓↓↓↓↓↓↓↓↓ -->
+	<bean id="monthSendInterface" class="org.springframework.scheduling.quartz.JobDetailBean">
+		<property name="jobClass" value="com.glaf.base.modules.inf.mapping.MonthJob" />
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="size" value="10" />
+			</map>
+		</property>
+		<property name="applicationContextJobDataKey" value="applicationContext" />
+	</bean>
+
+	<bean id="monthSendInterfaceTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail">
+			<ref bean="monthSendInterface" />
+		</property>
+		<property name="cronExpression">
+			<value>0 40 22 ? * *</value><!-- 每天22：40执行 -->
+		</property>
+	</bean>
+	<!-- ↑↑↑↑↑↑↑↑↑↑↑↑月次执行的接口处理↑↑↑↑↑↑↑↑↑↑↑↑ -->
+</beans>
+<!-- 附：cronExpression配置说明 字段 允许值 允许的特殊字符 秒 0-59 , - * / 分 0-59 , - * / 小时 
+	0-23 , - * / 日期 1-31 , - * ? / L W C 月份 1-12 或者 JAN-DEC , - * / 星期 1-7 或者 
+	SUN-SAT , - * ? / L C # 年(可选) 留空, 1970-2099 , - * / -->

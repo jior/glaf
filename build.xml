@@ -1,0 +1,91 @@
+<project name="blank" basedir="." default="jar">
+    <!-- Project settings -->
+    <property name="project.title" value="glaf Base System"/>
+    <property name="project.distname" value="glaf-base"/>
+ 	
+    <!-- 路径设置 -->
+    <property name="src.dir" value="./src"/>
+    <property name="dist.dir" value="./dist"/>
+    <property name="resource.dir" value="./resource"/>
+    <property name="lib.dir" value="./war/WEB-INF/lib"/>
+    <property name="classes.dir" value="./bin"/>
+	<property name="jarfile" value="${project.distname}.jar"/>
+	
+    <!-- 类路径 -->
+    <path id="compile.classpath">
+    	<fileset dir="${lib.dir}">
+    	    <include name="*.jar"/>
+    	</fileset>
+		<fileset dir="server/lib">
+    	    <include name="*.jar"/>
+    	</fileset>
+    </path>
+
+    <!-- 准备任务 -->
+    <target name="prepare">
+        <tstamp/>
+    </target>
+
+	<!-- 清理任务 -->
+	<target name="clean" description="Prepare for clean build">
+		<delete file="${jarfile}"/>
+	</target>
+	
+	<target name="build" depends="clean">
+		<echo message="编译应用程序......"/>
+		<mkdir dir="bin"/>
+		<javac srcdir="src" destdir="bin" debug="on" fork="${javac.fork}" deprecation="on">
+			<include name="com/**/*.java" />
+			<classpath refid="compile.classpath"/>
+		</javac>
+		<copy todir="war/WEB-INF/classes">
+			<fileset dir="bin" includes="com/**/*.class" />
+		</copy>
+	</target>
+
+    <!-- 编译任务 -->
+	<target name="jar" depends="build"  description="Create java jar file">
+	    <jar jarfile="${jarfile}" basedir="${classes.dir}"/>
+    </target>
+	
+	<!-- 中文资源文件转码任务 -->
+	<target name="gbk2ascii">
+		<delete file="./war/WEB-INF/classes/res_zh.properties"/>
+	    <native2ascii src="${resource.dir}" dest="./war/WEB-INF/classes" encoding="GBK" includes="*_zh.properties"/>
+	</target>
+	
+    <!-- 制作 Javadoc 任务 -->
+    <target name="javadoc" description="Generate JavaDoc API docs">
+        <delete dir="${doc.path}"/>
+        <mkdir dir="${doc.path}"/>
+        <javadoc sourcepath="${doc.src}"
+            destdir="${doc.path}"
+            packagenames="*"
+            author="true"
+            private="true"
+            version="true"
+            windowtitle="${project.title} API Documentation"
+            doctitle="&lt;h1&gt;${project.title} Documentation (Version ${project.version})&lt;/h1&gt;"
+            bottom="Copyright &#169; 2004">
+            <classpath refid="compile.classpath"/>
+        </javadoc>
+    </target>
+
+    <!-- 发布执行文件任务 -->
+    <target name="dist" description="Create binary distribution">
+      <mkdir dir="${dist.dir}"/>
+      <war
+        basedir="./war"
+        warfile="${dist.dir}/${project.distname}.war"
+        webxml="./war/WEB-INF/web.xml">
+      </war>
+    </target>
+
+	<target name="copy">
+		<copy todir="war/WEB-INF/classes">
+			<fileset dir="bin" includes="com/glaf/**/*.class" excludes="**/designer/**, **/test/**"/>
+			<fileset dir="src" includes="**/*.xsd,**/*.xml,**/*.properties,**/*.sql"/>
+		</copy>
+	</target>
+
+</project>

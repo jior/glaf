@@ -1,0 +1,168 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<!--service -->
+	<bean id="serialNumberService" class="com.glaf.base.modules.sys.service.SerialNumberService">
+		<property name="abstractDao">
+			<ref bean="abstractDao" />
+		</property>
+	</bean>
+	<bean id="serialNumberProxy" parent="baseTxService">
+		<property name="target">
+			<ref bean="serialNumberService" />
+		</property>
+	</bean>
+
+	<bean id="sysTreeService" class="com.glaf.base.modules.sys.service.SysTreeService">
+		<property name="abstractDao">
+			<ref bean="abstractDao" />
+		</property>
+	</bean>
+	<bean id="sysTreeProxy" parent="baseTxService">
+		<property name="target">
+			<ref bean="sysTreeService" />
+		</property>
+	</bean>
+
+	<bean id="sysApplicationService" class="com.glaf.base.modules.sys.service.SysApplicationService">
+		<property name="abstractDao">
+			<ref bean="abstractDao" />
+		</property>
+		<property name="sysTreeService">
+			<ref bean="sysTreeProxy" />
+		</property>
+	</bean>
+	<bean id="sysApplicationProxy" parent="baseTxService">
+		<property name="target">
+			<ref bean="sysApplicationService" />
+		</property>
+	</bean>
+
+	<bean id="sysDepartmentService" class="com.glaf.base.modules.sys.service.SysDepartmentService">
+		<property name="abstractDao">
+			<ref bean="abstractDao" />
+		</property>
+		<property name="sysTreeService">
+			<ref bean="sysTreeProxy" />
+		</property>
+	</bean>
+	<bean id="sysDepartmentProxy" parent="baseTxService">
+		<property name="target">
+			<ref bean="sysDepartmentService" />
+		</property>
+	</bean>
+
+	<bean id="sysUserService" class="com.glaf.base.modules.sys.service.SysUserService">
+		<property name="abstractDao">
+			<ref bean="abstractDao" />
+		</property>
+	</bean>
+	<bean id="sysUserProxy" parent="baseTxService">
+		<property name="target">
+			<ref bean="sysUserService" />
+		</property>
+	</bean>
+
+	<bean id="sysRoleService" class="com.glaf.base.modules.sys.service.SysRoleService">
+		<property name="abstractDao">
+			<ref bean="abstractDao" />
+		</property>
+	</bean>
+	<bean id="sysRoleProxy" parent="baseTxService">
+		<property name="target">
+			<ref bean="sysRoleService" />
+		</property>
+	</bean>
+
+	<bean id="sysDeptRoleService" class="com.glaf.base.modules.sys.service.SysDeptRoleService">
+		<property name="abstractDao">
+			<ref bean="abstractDao" />
+		</property>
+		<property name="sysApplicationService">
+			<ref bean="sysApplicationProxy" />
+		</property>
+		<property name="sysFunctionService">
+			<ref bean="sysFunctionProxy" />
+		</property>
+		<property name="sysRoleService">
+			<ref bean="sysRoleProxy" />
+		</property>
+	</bean>
+	<bean id="sysDeptRoleProxy" parent="baseTxService">
+		<property name="target">
+			<ref bean="sysDeptRoleService" />
+		</property>
+	</bean>
+
+	<bean id="authorizeService" class="com.glaf.base.modules.sys.service.AuthorizeService">
+		<property name="sysUserService">
+			<ref bean="sysUserProxy" />
+		</property>
+		<property name="sysDepartmentService">
+			<ref bean="sysDepartmentProxy" />
+		</property>
+	</bean>
+
+	<bean id="dictoryService" class="com.glaf.base.modules.sys.service.DictoryService">
+		<property name="abstractDao">
+			<ref bean="abstractDao" />
+		</property>
+	</bean>
+	<bean id="dictoryProxy" parent="baseTxService">
+		<property name="target">
+			<ref bean="dictoryService" />
+		</property>
+	</bean>
+
+	<bean id="sysFunctionService" class="com.glaf.base.modules.sys.service.SysFunctionService">
+		<property name="abstractDao">
+			<ref bean="abstractDao" />
+		</property>
+	</bean>
+	<bean id="sysFunctionProxy" parent="baseTxService">
+		<property name="target">
+			<ref bean="sysFunctionService" />
+		</property>
+	</bean>
+
+	<bean id="subjectCodeService" class="com.glaf.base.modules.sys.service.SubjectCodeService">
+		<property name="abstractDao">
+			<ref bean="abstractDao" />
+		</property>
+	</bean>
+	<bean id="subjectCodeProxy" parent="baseTxService">
+		<property name="target">
+			<ref bean="subjectCodeService" />
+		</property>
+	</bean>
+
+	<bean id="sysLogService" class="com.glaf.base.modules.sys.service.SysLogService">
+		<property name="abstractDao">
+			<ref bean="abstractDao" />
+		</property>
+	</bean>
+	<bean id="sysLogProxy" parent="baseTxService">
+		<property name="target">
+			<ref bean="sysLogService" />
+		</property>
+	</bean>
+
+	<bean id="sysUserRoleService" class="com.glaf.base.modules.sys.service.SysUserRoleService">
+		<property name="abstractDao">
+			<ref bean="abstractDao" />
+		</property>
+		<property name="sysDepartmentService">
+			<ref local="sysDepartmentProxy" />
+		</property>
+		<property name="sysUserService">
+			<ref local="sysUserProxy" />
+		</property>
+	</bean>
+	<bean id="sysUserRoleProxy" parent="baseTxService">
+		<property name="target">
+			<ref bean="sysUserRoleService" />
+		</property>
+	</bean>
+
+</beans>

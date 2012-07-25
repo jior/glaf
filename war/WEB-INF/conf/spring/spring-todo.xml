@@ -1,0 +1,74 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<bean id="todoDAO" class="com.glaf.base.modules.todo.service.TodoDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+
+	<!--service -->
+	<bean id="todoService" class="com.glaf.base.modules.todo.service.TodoService">
+		<property name="abstractDao">
+			<ref bean="abstractDao" />
+		</property>
+
+		<property name="todoDAO">
+			<ref bean="todoDAO" />
+		</property>
+
+		<property name="sysUserService">
+			<ref bean="sysUserProxy" />
+		</property>
+
+		<property name="sysRoleService">
+			<ref bean="sysRoleProxy" />
+		</property>
+
+		<property name="sysDepartmentService">
+			<ref bean="sysDepartmentProxy" />
+		</property>
+
+		<property name="sysDeptRoleService">
+			<ref bean="sysDeptRoleProxy" />
+		</property>
+
+		<property name="messageService">
+			<ref bean="messageProxy" />
+		</property>
+
+		<property name="workCalendarService">
+			<ref bean="workCalendarProxy" />
+		</property>
+
+	</bean>
+
+	<bean id="membershipService" class="com.glaf.base.modules.todo.service.MembershipService">
+		<property name="abstractDao">
+			<ref bean="abstractDao" />
+		</property>
+	</bean>
+
+	<bean id="todoProxy" parent="baseTxService">
+		<property name="target">
+			<ref bean="todoService" />
+		</property>
+	</bean>
+
+	<bean id="membershipProxy" parent="baseTxService">
+		<property name="target">
+			<ref bean="membershipService" />
+		</property>
+	</bean>
+
+	<bean id="todoJobBean" class="com.glaf.base.modules.todo.service.TodoJobBean">
+		<property name="todoService">
+			<ref bean="todoProxy" />
+		</property>
+		<property name="membershipService">
+			<ref bean="membershipProxy" />
+		</property>
+	</bean>
+
+</beans>

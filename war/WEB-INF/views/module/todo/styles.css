@@ -1,0 +1,68 @@
+
+BODY {
+	FONT-SIZE: 12px; 
+	COLOR: #000000; 
+	LINE-HEIGHT: 23px
+}
+
+TABLE {
+    background-color:#b8ced7;
+}
+
+TD {
+    font-size: 12px;
+	background-color:#ffffff;
+	border-color: #b8ced7; 
+	border-width: 0px 0px 0px 0px; 
+	border-style: solid; 
+	height:23px;
+	overflow:hidden;
+}
+
+
+.menuTitle{
+	background:url(./menubar.gif);
+	color:#6F6F6F;
+	font-weight:bold;
+}
+
+.tdText{
+	color:#666666;
+}
+
+.layer {
+	FONT-SIZE: 12px;
+	COLOR: #000000; 
+	LINE-HEIGHT: 22px;
+	border-color: #b8ced7; 
+	border-width: 1px 1px 1px 1px; 
+	border-style: solid; 
+	overflow:hidden;
+}
+
+
+.subject{ font-size: 12px; color: #000000; text-decoration: none;font-weight:bold; font-family:"宋体"}
+.warning{ font-size: 12px;text-decoration: none;color:red; font-family:"宋体"}
+.buttonx{ background-color: #eeeeee; height:20px;border:1px solid #000000;text-decoration:none;}
+.functionbuttonx {background-color: #eeeeee; height:20px;border:1px solid #000000;text-decoration:none;}
+.list{ background-color: #ffffff; cursor: hand; border: 1px solid; text-decoration: none ; font-family:"宋体"}
+.txt{ background-color: #ffffff; border-right: #2f4c69 1px solid; padding-right: 2px; border-top: #2f4c69 1px solid; padding-left: 2px; font-size: 12px; padding-bottom: 2px; border-left: #2f4c69 1px solid; padding-top: 2px; border-bottom: #2f4c69 1px solid; height: 22px; }
+.textarea{ background-color: #ffffff; border-right: #2f4c69 1px solid; padding-right: 2px; border-top: #2f4c69 1px solid; padding-left: 2px; font-size: 12px; padding-bottom: 2px; border-left: #2f4c69 1px solid; padding-top: 2px; border-bottom: #2f4c69 1px solid; }
+
+.pageText{ background-color: #ffffff; border: 1px #639a9c solid; text-decoration: none; font-size:15px; font-family:"宋体"}
+
+.readonly{ background-color: #eeeeee; border-right: #2f4c69 1px solid; padding-right: 2px; border-top: #2f4c69 1px solid; padding-left: 2px; font-size: 12px; padding-bottom: 2px; border-left: #2f4c69 1px solid; padding-top: 2px; border-bottom: #2f4c69 1px solid; height: 22px; }
+.check{ background-color: #ffffff; text-decoration: none; font-family:"宋体"}
+.radio{ background-color: #eeffff; cursor: text; border: 1px #000000 solid; text-decoration: none; font-family:"宋体"}
+.button{ BORDER-RIGHT: #266386 1px solid; BORDER-TOP: #4982a3 1px solid; BACKGROUND-IMAGE: url(./primary-enabled.gif); BORDER-LEFT: #266386 1px solid; COLOR: #000; BORDER-BOTTOM: #026ea4 1px solid; BACKGROUND-COLOR: #bad7ed; height:22px;FONT-SIZE: 13px; PADDING-TOP:middle; TEXT-ALIGN: middle; VERTICAL-ALIGN: middle;}
+.functionbutton{ BORDER-RIGHT: #266386 1px solid; BORDER-TOP: #4982a3 1px solid; BACKGROUND-IMAGE: url(./primary-enabled.gif); BORDER-LEFT: #266386 1px solid; COLOR: #000; BORDER-BOTTOM: #026ea4 1px solid; BACKGROUND-COLOR: #bad7ed; height:22px;FONT-SIZE: 13px; PADDING-TOP:middle; TEXT-ALIGN: middle; VERTICAL-ALIGN: middle;}
+.bigbutton{ BORDER-RIGHT: #266386 1px solid; BORDER-TOP: #4982a3 1px solid; BACKGROUND-IMAGE: url(./primary-enabled.gif); BORDER-LEFT: #266386 1px solid; COLOR: #000; BORDER-BOTTOM: #026ea4 2px solid; BACKGROUND-COLOR: #bad7ed; height:36px; FONT-SIZE: 13px; TEXT-ALIGN: middle; VERTICAL-ALIGN: middle;}
+
+
+a.b1:visited {color: #ffffff; text-decoration: none}
+a.b1:active {color: #ffffff; text-decoration: none}
+a.b1:link {color: #006600; text-decoration: none}
+a:link {color: #0000dd; text-decoration: none}
+a:hover { cursor: hand;color: #000000; border-bottom: #ff6600 1px dotted}
+a:active {color: #000066; text-decoration: none}
+a:visited{color: #000066; text-decoration: none}

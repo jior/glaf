@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE taglib PUBLIC 
+    "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.1//EN" 
+    "http://java.sun.com/j2ee/dtds/web-jsptaglibrary_1_1.dtd">
+
+<taglib>
+  <tlibversion>1.0</tlibversion>
+  <jspversion>1.1</jspversion>
+  <shortname>jpage tags</shortname>
+  <info>jpage tags</info>
+
+  <!-- PROCESS IMAGE -->
+  <tag>
+    <name>processimage</name>
+    <tagclass>org.jpage.jbpm.tag.ProcessImageTag</tagclass>
+    <bodycontent>empty</bodycontent>
+    <attribute> 
+    	<name>task</name>       
+    	<required>true</required> 
+    	<rtexprvalue>true</rtexprvalue> 
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>processimageToken</name>
+    <tagclass>org.jpage.jbpm.tag.ProcessImageTag</tagclass>
+    <bodycontent>empty</bodycontent>
+    <attribute> 
+    	<name>token</name>       
+    	<required>true</required> 
+    	<rtexprvalue>true</rtexprvalue> 
+    </attribute>
+  </tag>
+
+  <!-- PAGE TAG -->
+  <tag>
+    <name>paging</name>
+    <tagclass>org.jpage.tag.PageTag</tagclass>
+    <bodycontent>empty</bodycontent>
+    <attribute> 
+    	<name>form</name>       
+    	<required>true</required> 
+    	<rtexprvalue>true</rtexprvalue> 
+    </attribute>
+    <attribute> 
+    	<name>display</name>       
+    	<required>false</required> 
+    	<rtexprvalue>true</rtexprvalue> 
+    </attribute>
+    <attribute> 
+    	<name>name</name>       
+    	<required>false</required> 
+    	<rtexprvalue>true</rtexprvalue> 
+    </attribute>
+    <attribute> 
+    	<name>prefix</name>       
+    	<required>false</required> 
+    	<rtexprvalue>true</rtexprvalue> 
+    </attribute>
+  </tag>
+
+</taglib>
