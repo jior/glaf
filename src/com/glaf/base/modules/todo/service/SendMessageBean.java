@@ -9,7 +9,7 @@ import org.jpage.core.mail.service.MailMessage;
 import org.jpage.core.mail.util.MailTools;
 import org.jpage.jbpm.context.JbpmContextFactory;
 import org.jpage.jbpm.mail.MailSender;
-import org.jpage.jbpm.model.TaskItem;
+
 import org.jpage.jbpm.service.ProcessContainer;
 import org.jpage.util.DateTools;
 import org.jpage.util.UUID32;
@@ -159,24 +159,25 @@ public class SendMessageBean {
 				// rows.size()+ "项.");
 				Iterator iterator008 = rows.iterator();
 				while (iterator008.hasNext()) {
-					//ToDoInstance tdi = (ToDoInstance) iterator008.next();
-					//rows99.add(tdi);
-					//update by key 2012-05-14 begin
+					// ToDoInstance tdi = (ToDoInstance) iterator008.next();
+					// rows99.add(tdi);
+					// update by key 2012-05-14 begin
 					ToDoInstance tdi = (ToDoInstance) iterator008.next();
 					String processName = "";
 					ToDo toDo = todoService.getToDo(tdi.getTodoId());
-					if(null!=toDo)
+					if (null != toDo)
 						processName = toDo.getProcessName();
-					if(actorId.equals(tdi.getActorId())){
+					if (actorId.equals(tdi.getActorId())) {
 						rows99.add(tdi);
-					}else{
-						//System.out.println(actorId+"---"+tdi.getActorId()+"---"+processName);
-						Collection agentList = ProcessContainer.getContainer().getAgentIds(actorId, processName);
-						if (null != agentList && agentList.size()>0) {//判断代理是否有该流程代理，有则add
+					} else {
+						// System.out.println(actorId+"---"+tdi.getActorId()+"---"+processName);
+						Collection agentList = ProcessContainer.getContainer()
+								.getAgentIds(actorId, processName);
+						if (null != agentList && agentList.size() > 0) {// 判断代理是否有该流程代理，有则add
 							rows99.add(tdi);
 						}
 					}
-					//update by key 2012-05-14 end
+					// update by key 2012-05-14 end
 				}
 			}
 
@@ -339,8 +340,8 @@ public class SendMessageBean {
 					MailMessage mailMessage = new MailMessage();
 					mailMessage.setDataMap(mailMap);
 					mailMessage.setTo(user.getEmail());
-//					mailMessage.setCc("pps@glaf.com.cn");
-//					mailMessage.setBcc("pps@glaf.com.cn");
+					// mailMessage.setCc("pps@glaf.com.cn");
+					// mailMessage.setBcc("pps@glaf.com.cn");
 					mailMessage.setTemplateId("tms_todo");
 					mailMessage.setSaveMessage(false);
 					mailMessage.setReplyTo("pps@glaf.com.cn");
@@ -387,8 +388,8 @@ public class SendMessageBean {
 								MailMessage mailMessage = new MailMessage();
 								mailMessage.setDataMap(mailMap);
 								mailMessage.setTo(leader.getEmail());
-//								mailMessage.setCc("pps@glaf.com.cn");
-//								mailMessage.setBcc("pps@glaf.com.cn");
+								// mailMessage.setCc("pps@glaf.com.cn");
+								// mailMessage.setBcc("pps@glaf.com.cn");
 								mailMessage.setTemplateId("tms_todo_redwarn");
 								mailMessage.setSaveMessage(false);
 								mailMessage.setReplyTo("pps@glaf.com.cn");
@@ -411,7 +412,7 @@ public class SendMessageBean {
 
 	public List getTodoInstances(String actorId) {
 		List list = new ArrayList();
-		SysUser user = sysUserService.findByAccount(actorId);
+		SysUser user = sysUserService.findByAccountWithAll(actorId);
 
 		if (user == null) {
 			return list;
@@ -444,8 +445,8 @@ public class SendMessageBean {
 			Iterator iter = agentIds.iterator();
 			while (iter.hasNext()) {
 				String agentId = (String) iter.next();
-				//System.out.println("000-----"+agentId);
-				SysUser u = sysUserService.findByAccount(agentId);
+				// System.out.println("000-----"+agentId);
+				SysUser u = sysUserService.findByAccountWithAll(agentId);
 				if (u != null) {
 					u = sysUserService.getUserPrivileges(u);
 					Collection appx = u.getApps();
@@ -466,8 +467,10 @@ public class SendMessageBean {
 			Iterator iteratorxy = roles.iterator();
 			while (iteratorxy.hasNext()) {
 				SysDeptRole sysDeptRole = (SysDeptRole) iteratorxy.next();
-				SysRole role = sysDeptRole.getRole();
-				roleCodes.add(role.getCode());
+				if (sysDeptRole != null) {
+					SysRole role = sysDeptRole.getRole();
+					roleCodes.add(role.getCode());
+				}
 			}
 		}
 
@@ -499,22 +502,23 @@ public class SendMessageBean {
 				logger.info(user.getName() + "的工作流任务有" + rows.size() + "项.");
 				Iterator iterator008 = rows.iterator();
 				while (iterator008.hasNext()) {
-					//update by key 2012-05-14 begin
+					// update by key 2012-05-14 begin
 					ToDoInstance tdi = (ToDoInstance) iterator008.next();
 					String processName = "";
 					ToDo toDo = todoService.getToDo(tdi.getTodoId());
-					if(null!=toDo)
+					if (null != toDo)
 						processName = toDo.getProcessName();
-					if(actorId.equals(tdi.getActorId())){
+					if (actorId.equals(tdi.getActorId())) {
 						rows99.add(tdi);
-					}else{
-						//System.out.println(actorId+"---"+tdi.getActorId()+"---"+processName);
-						Collection agentList = ProcessContainer.getContainer().getAgentIds(actorId, processName);
-						if (null != agentList && agentList.size()>0) {//判断代理是否有该流程代理，有则add
+					} else {
+						// System.out.println(actorId+"---"+tdi.getActorId()+"---"+processName);
+						Collection agentList = ProcessContainer.getContainer()
+								.getAgentIds(actorId, processName);
+						if (null != agentList && agentList.size() > 0) {// 判断代理是否有该流程代理，有则add
 							rows99.add(tdi);
 						}
 					}
-					//update by key 2012-05-14 end
+					// update by key 2012-05-14 end
 					logger.info("todo:" + tdi.getTodoId() + " rowId:"
 							+ tdi.getRowId());
 				}
@@ -774,24 +778,25 @@ public class SendMessageBean {
 				logger.info(user.getName() + "的工作流任务有" + rows.size() + "项.");
 				Iterator iterator008 = rows.iterator();
 				while (iterator008.hasNext()) {
-					//ToDoInstance tdi = (ToDoInstance) iterator008.next();
-					//rows99.add(tdi);
-					//update by key 2012-05-14 begin
+					// ToDoInstance tdi = (ToDoInstance) iterator008.next();
+					// rows99.add(tdi);
+					// update by key 2012-05-14 begin
 					ToDoInstance tdi = (ToDoInstance) iterator008.next();
 					String processName = "";
 					ToDo toDo = todoService.getToDo(tdi.getTodoId());
-					if(null!=toDo)
+					if (null != toDo)
 						processName = toDo.getProcessName();
-					if(actorId.equals(tdi.getActorId())){
+					if (actorId.equals(tdi.getActorId())) {
 						rows99.add(tdi);
-					}else{
-						//System.out.println(actorId+"---"+tdi.getActorId()+"---"+processName);
-						Collection agentList = ProcessContainer.getContainer().getAgentIds(actorId, processName);
-						if (null != agentList && agentList.size()>0) {//判断代理是否有该流程代理，有则add
+					} else {
+						// System.out.println(actorId+"---"+tdi.getActorId()+"---"+processName);
+						Collection agentList = ProcessContainer.getContainer()
+								.getAgentIds(actorId, processName);
+						if (null != agentList && agentList.size() > 0) {// 判断代理是否有该流程代理，有则add
 							rows99.add(tdi);
 						}
 					}
-					//update by key 2012-05-14 end
+					// update by key 2012-05-14 end
 				}
 			}
 
@@ -1096,9 +1101,8 @@ public class SendMessageBean {
 												dept.getId(), "R001");
 								if (users != null && users.size() > 0) {
 									if (logger.isDebugEnabled()) {
-										logger
-												.debug("[R002-R017-R001] users size:"
-														+ users.size());
+										logger.debug("[R002-R017-R001] users size:"
+												+ users.size());
 									}
 									actors.addAll(users);
 								}
@@ -1109,9 +1113,8 @@ public class SendMessageBean {
 												dept.getId(), "R002");
 								if (users != null && users.size() > 0) {
 									if (logger.isDebugEnabled()) {
-										logger
-												.debug("[R003-R002]-> users size:"
-														+ users.size());
+										logger.debug("[R003-R002]-> users size:"
+												+ users.size());
 									}
 									actors.addAll(users);
 								} else {
@@ -1119,9 +1122,8 @@ public class SendMessageBean {
 											.findRoleUser(dept.getId(), "R001");
 									if (users != null && users.size() > 0) {
 										if (logger.isDebugEnabled()) {
-											logger
-													.debug("[R003-R001]-> users size:"
-															+ users.size());
+											logger.debug("[R003-R001]-> users size:"
+													+ users.size());
 										}
 										actors.addAll(users);
 									}
@@ -1142,9 +1144,8 @@ public class SendMessageBean {
 											.findRoleUser(dept.getId(), "R002");
 									if (users != null && users.size() > 0) {
 										if (logger.isDebugEnabled()) {
-											logger
-													.debug("[R004-R002] users size:"
-															+ users.size());
+											logger.debug("[R004-R002] users size:"
+													+ users.size());
 										}
 										actors.addAll(users);
 									}
@@ -1173,8 +1174,8 @@ public class SendMessageBean {
 						MailMessage mailMessage = new MailMessage();
 						mailMessage.setDataMap(mailMap);
 						mailMessage.setTo(u.getEmail());
-						if (StringUtils.equals(u.getAccount(), user
-								.getAccount())) {
+						if (StringUtils.equals(u.getAccount(),
+								user.getAccount())) {
 							mailMessage.setTemplateId("tms_todo");
 						} else {
 							mailMessage.setTemplateId("tms_todo_cc");

@@ -137,6 +137,32 @@ public class SysUserService {
 	}
 
 	/**
+	 * 按名称查找对象
+	 * 
+	 * @param name
+	 *            String
+	 * @return SysUser
+	 */
+	public SysUser findByAccountWithAll(String account) {
+		SysUser bean = null;
+		Object[] values = new Object[] { account };
+		String query = "from SysUser a where a.account=? order by a.id desc";
+		List list = abstractDao.getList(query, values, null);
+		if (list != null && list.size() > 0) {// 有记录
+			bean = (SysUser) list.get(0);
+			if (bean != null) {
+				Hibernate.initialize(bean.getApps());
+				Hibernate.initialize(bean.getDepartment());
+				Hibernate.initialize(bean.getRoles());
+				Hibernate.initialize(bean.getUserRoles());
+				Hibernate.initialize(bean.getFunctions());
+			}
+		}
+
+		return bean;
+	}
+
+	/**
 	 * 获取特定部门的员工数据集 分页列表
 	 * 
 	 * @param deptId
