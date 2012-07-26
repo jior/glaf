@@ -149,9 +149,9 @@ public class Download {
 			}
 		}
 
-		Zipper zipper = new Zipper(file);
-		zipper.setFilename(filenames);
-		zipper.zipOutputStream(out);
+		//Zipper zipper = new Zipper(file);
+		//zipper.setFilename(filenames);
+		//zipper.zipOutputStream(out);
 
 		out.flush();
 		out.close();

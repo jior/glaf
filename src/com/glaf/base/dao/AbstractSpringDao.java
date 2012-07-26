@@ -53,7 +53,7 @@ public class AbstractSpringDao extends HibernateDaoSupport {
 		boolean ret = false;
 		try {
 			getHibernateTemplate().saveOrUpdate(obj);
-			logger.info("saveOrUpdate");
+			logger.debug("saveOrUpdate");
 			ret = true;
 		} catch (Exception e) {
 			logger.error(e);
@@ -70,10 +70,8 @@ public class AbstractSpringDao extends HibernateDaoSupport {
 					Object obj = iterator.next();
 					getHibernateTemplate().saveOrUpdate(obj);
 				}
-				// joy add 2007-12-26
-				// getHibernateTemplate().flush();
 			}
-			logger.info("saveAll");
+			logger.debug("saveAll");
 			ret = true;
 		} catch (Exception e) {
 			logger.error(e);
@@ -92,9 +90,7 @@ public class AbstractSpringDao extends HibernateDaoSupport {
 		boolean ret = false;
 		try {
 			getHibernateTemplate().save(obj);
-			// joy add 2007-12-26
-			// getHibernateTemplate().flush();
-			logger.info("create");
+			logger.debug("create");
 			ret = true;
 		} catch (Exception e) {
 			logger.error(e);
@@ -113,9 +109,7 @@ public class AbstractSpringDao extends HibernateDaoSupport {
 		boolean ret = false;
 		try {
 			getHibernateTemplate().merge(obj);
-			// joy add 2007-12-26
-			// getHibernateTemplate().flush();
-			logger.info("update");
+			logger.debug("update");
 			ret = true;
 		} catch (Exception e) {
 			logger.error(e);
@@ -134,7 +128,7 @@ public class AbstractSpringDao extends HibernateDaoSupport {
 		getHibernateTemplate().execute(new HibernateCallback() {
 			public Object doInHibernate(Session session)
 					throws HibernateException, SQLException {
-				logger.info("execute HQL: " + hsql);
+				logger.debug("execute HQL: " + hsql);
 				session.createQuery(hsql).executeUpdate();
 				return null;
 			}
@@ -177,7 +171,7 @@ public class AbstractSpringDao extends HibernateDaoSupport {
 		getHibernateTemplate().execute(new HibernateCallback() {
 			public Object doInHibernate(Session session)
 					throws HibernateException, SQLException {
-				logger.info("execute SQL: " + sql);
+				logger.debug("execute SQL: " + sql);
 				java.sql.PreparedStatement psmt = session.connection()
 						.prepareStatement(sql);
 
@@ -206,7 +200,7 @@ public class AbstractSpringDao extends HibernateDaoSupport {
 		getHibernateTemplate().execute(new HibernateCallback() {
 			public Object doInHibernate(Session session)
 					throws HibernateException, SQLException {
-				logger.info("execute sql: " + sql);
+				logger.debug("execute sql: " + sql);
 				session.createSQLQuery(sql).executeUpdate();
 				return null;
 			}
@@ -226,7 +220,7 @@ public class AbstractSpringDao extends HibernateDaoSupport {
 		getHibernateTemplate().execute(new HibernateCallback() {
 			public Object doInHibernate(Session session)
 					throws HibernateException, SQLException {
-				logger.info("execute HQL: " + hsql);
+				logger.debug("execute HQL: " + hsql);
 				session.createQuery(hsql).setParameters(values, types)
 						.executeUpdate();
 				return null;
@@ -246,9 +240,7 @@ public class AbstractSpringDao extends HibernateDaoSupport {
 		boolean ret = false;
 		try {
 			getHibernateTemplate().delete(obj);
-			// joy add 2007-12-26
-			// getHibernateTemplate().flush();
-			logger.info("delete");
+			logger.debug("delete");
 			ret = true;
 		} catch (Exception e) {
 			logger.error(e);
@@ -266,10 +258,8 @@ public class AbstractSpringDao extends HibernateDaoSupport {
 		try {
 			if (c != null) {
 				getHibernateTemplate().deleteAll(c);
-				// joy add 2007-12-26
-				// getHibernateTemplate().flush();
 			}
-			logger.info("deleteAll");
+			logger.debug("deleteAll");
 			ret = true;
 		} catch (Exception e) {
 			logger.error(e);
@@ -288,7 +278,7 @@ public class AbstractSpringDao extends HibernateDaoSupport {
 		Object ret = null;
 		try {
 			ret = getHibernateTemplate().get(clazz, id);
-			logger.info("get");
+			logger.debug("get");
 		} catch (Exception e) {
 			logger.error(e);
 		}
@@ -299,7 +289,7 @@ public class AbstractSpringDao extends HibernateDaoSupport {
 		Object ret = null;
 		try {
 			ret = getHibernateTemplate().load(clazz, id);
-			logger.info("load");
+			logger.debug("load");
 		} catch (Exception e) {
 			logger.error(e);
 		}
@@ -319,8 +309,7 @@ public class AbstractSpringDao extends HibernateDaoSupport {
 		Object ret = null;
 		try {
 			ret = getHibernateTemplate().get(clazz, id);
-			// Hibernate.initialize(ret);
-			logger.info("find");
+			logger.debug("find");
 		} catch (Exception e) {
 			logger.error(e);
 		}
@@ -328,12 +317,10 @@ public class AbstractSpringDao extends HibernateDaoSupport {
 	}
 
 	/**
-	 * 获取列表
+	 * 获取列表 --------------------------------------------------------- 修改人：kxr
+	 * 修改日期：2011-03-01 描述：捕捉错误示作抛出，将信息记录到日志，返回空的对象
 	 * ---------------------------------------------------------
-	 * 修改人：kxr
-	 * 修改日期：2011-03-01
-	 * 描述：捕捉错误示作抛出，将信息记录到日志，返回空的对象
-	 * ---------------------------------------------------------
+	 * 
 	 * @param query
 	 *            String
 	 * @param values
@@ -343,12 +330,12 @@ public class AbstractSpringDao extends HibernateDaoSupport {
 	 * @return List
 	 */
 	public List getList(String query, Object[] values, Type[] types) {
-		logger.info("query:" + query);
+		logger.debug("query:" + query);
 		List list = null;
-		try{
+		try {
 			list = getHibernateTemplate().find(query, values);
-		}catch(Exception ex){
-			logger.info("执行出错，位置：AbstractSpringDao.getList(query,values,types)");
+		} catch (Exception ex) {
+			logger.error("执行出错，位置：AbstractSpringDao.getList(query,values,types)");
 			logger.error(ex.getLocalizedMessage());
 			list = null;
 		}
@@ -357,9 +344,10 @@ public class AbstractSpringDao extends HibernateDaoSupport {
 		// }
 		return list;
 	}
-	
+
 	/**
 	 * 由Query 得到列表记录的总记录数。
+	 * 
 	 * @param query
 	 * @param values
 	 * @param types
@@ -368,9 +356,10 @@ public class AbstractSpringDao extends HibernateDaoSupport {
 	public int getResutlTotalByQuery(String query, Object[] values, Type[] types) {
 		int total = 0;
 		Session session = null;
-		logger.info("getResutlTotalByQuery  query:" + query);
+		logger.debug("getResutlTotalByQuery  query:" + query);
 		int position = query.toUpperCase().indexOf("ORDER BY");
-		if(-1 != position )query = query.substring(0, position);
+		if (-1 != position)
+			query = query.substring(0, position);
 		try {
 			getHibernateTemplate().setAllowCreate(true);
 			session = getSession();
@@ -379,7 +368,7 @@ public class AbstractSpringDao extends HibernateDaoSupport {
 				for (int i = 0; i < values.length; i++)
 					q.setParameter(i, values[i]);
 			}
-			total = ((java.lang.Number)q.uniqueResult()).intValue();
+			total = ((java.lang.Number) q.uniqueResult()).intValue();
 		} catch (HibernateException e) {
 			logger.error(e);
 		} finally {
@@ -400,7 +389,7 @@ public class AbstractSpringDao extends HibernateDaoSupport {
 		return (List) getHibernateTemplate().execute(new HibernateCallback() {
 			public Object doInHibernate(Session session)
 					throws HibernateException, SQLException {
-				logger.info("execute sql: " + sql);
+				logger.debug("execute sql: " + sql);
 				return session.createSQLQuery(sql).list();
 			}
 		});
@@ -423,7 +412,7 @@ public class AbstractSpringDao extends HibernateDaoSupport {
 	 */
 	public PageResult getList(String query, Object args[], int pageNo,
 			int pageSize, int count) {
-		logger.info("query:" + query);
+		logger.debug("query:" + query);
 		PageResult pager = new PageResult();
 		pager.setPageSize(pageSize);
 		pager.setCurrentPageNo(pageNo);
@@ -432,7 +421,7 @@ public class AbstractSpringDao extends HibernateDaoSupport {
 			getHibernateTemplate().setAllowCreate(true);
 			session = getSession();
 			Query q = session.createQuery(query);
-		
+
 			if (args != null && args.length > 0) {// 设置参数
 				for (int i = 0; i < args.length; i++)
 					q.setParameter(i, args[i]);
@@ -441,7 +430,7 @@ public class AbstractSpringDao extends HibernateDaoSupport {
 			q.setFirstResult(pageSize * (pager.getCurrentPageNo() - 1));
 			q.setMaxResults(pageSize);
 			pager.setResults(q.list());
-		
+
 			q = null;
 		} catch (HibernateException e) {
 			logger.error(e);
@@ -468,7 +457,7 @@ public class AbstractSpringDao extends HibernateDaoSupport {
 	 */
 	public PageResult getListBySQL(String query, int pageNo, int pageSize,
 			int count) {
-		logger.info("query:" + query);
+		logger.debug("query:" + query);
 		PageResult pager = new PageResult();
 		pager.setPageSize(pageSize);
 		pager.setCurrentPageNo(pageNo);
@@ -502,7 +491,7 @@ public class AbstractSpringDao extends HibernateDaoSupport {
 	public PageResult getList(final DetachedCriteria detachedCriteria,
 			final int pageNo, final int pageSize) {
 		PageResult pager = new PageResult();
-		
+
 		Criteria criteria = (Criteria) getHibernateTemplate().execute(
 				new HibernateCallback() {
 					public Object doInHibernate(Session session)
@@ -525,9 +514,8 @@ public class AbstractSpringDao extends HibernateDaoSupport {
 			throw new RuntimeException(ex);
 		}
 
-		logger.info(" @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ ");
-		Long iCount = (Long) criteria.setProjection(
-				Projections.rowCount()).uniqueResult();
+		Long iCount = (Long) criteria.setProjection(Projections.rowCount())
+				.uniqueResult();
 		int totalCount = ((iCount != null) ? iCount.intValue() : 0);
 		pager.setTotalRecordCount(totalCount);// 查询总记录数
 		criteria.setProjection(projection);
@@ -545,7 +533,7 @@ public class AbstractSpringDao extends HibernateDaoSupport {
 		} catch (Exception ex) {
 			throw new RuntimeException(ex);
 		}
-		 
+
 		criteria.setFirstResult(pageSize * (pageNo - 1));
 		criteria.setMaxResults(pageSize);
 		pager.setPageSize(pageSize);
@@ -582,9 +570,7 @@ public class AbstractSpringDao extends HibernateDaoSupport {
 						Object value = params.get(name);
 						if (value != null) {
 							if (value instanceof Collection) {
-								query
-										.setParameterList(name,
-												(Collection) value);
+								query.setParameterList(name, (Collection) value);
 							} else {
 								query.setParameter(name, value);
 							}
@@ -596,35 +582,36 @@ public class AbstractSpringDao extends HibernateDaoSupport {
 			}
 		});
 	}
-	
-	public static void main(String args[]){
+
+	public static void main(String args[]) {
 		String query = "SELECT COUNT(B.ID) FROM PAYMENT AS B RIGHT JOIN B.ORDER AS A WHERE B.STATUS <> -999 AND (A.CONTRACT.ID IS NULL OR A.CONTRACT.ID = 0) AND A.STATUS NOT IN (0,10,20,-1,80) ORDER BY A.ID";
-		System.out.println("query.toUpperCase() "+query.toUpperCase());
+		System.out.println("query.toUpperCase() " + query.toUpperCase());
 		int position = query.toUpperCase().indexOf("ORDER BY");
-		if(-1 != position ){
-			System.out.println("str.length = "+query.length()+"  indexof(ORDER BY)="+query.toUpperCase().indexOf("ORDER BY"));
+		if (-1 != position) {
+			System.out.println("str.length = " + query.length()
+					+ "  indexof(ORDER BY)="
+					+ query.toUpperCase().indexOf("ORDER BY"));
 			query = query.substring(0, position);
 		}
-		System.out.println("getResutlTotalByQuery  query:" + query);	
+		System.out.println("getResutlTotalByQuery  query:" + query);
 	}
-	
-	//以下是新增的方法（key）
+
+	// 以下是新增的方法（key）
 	/**
-	 * 根据sql拿记录数
-	 * author:key
-	 * createDate:2010-05-31
+	 * 根据sql拿记录数 author:key createDate:2010-05-31
+	 * 
 	 * @param sql
 	 * @return
 	 */
-	public double getCountBySQL(String sql){
+	public double getCountBySQL(String sql) {
 		double count = 0;
 		Session session = null;
 		try {
 			getHibernateTemplate().setAllowCreate(true);
 			session = getSession();
 			Query q = session.createSQLQuery(sql);
-			if(q.uniqueResult()!=null){
-				count = ((java.lang.Number)q.uniqueResult()).doubleValue();
+			if (q.uniqueResult() != null) {
+				count = ((java.lang.Number) q.uniqueResult()).doubleValue();
 			}
 		} catch (HibernateException e) {
 			logger.error(e);
@@ -635,13 +622,14 @@ public class AbstractSpringDao extends HibernateDaoSupport {
 		}
 		return count;
 	}
-	
+
 	/**
 	 * 根据sql拿指定字段的值
+	 * 
 	 * @param sql
 	 * @return
 	 */
-	public String getStringBySQL(String sql){
+	public String getStringBySQL(String sql) {
 		String str = "";
 		Session session = null;
 		try {
@@ -649,13 +637,13 @@ public class AbstractSpringDao extends HibernateDaoSupport {
 			session = getSession();
 			Query q = session.createSQLQuery(sql);
 			List list = q.list();
-			if(list!=null && list.size()>0){
-				str = (String)list.get(0);
+			if (list != null && list.size() > 0) {
+				str = (String) list.get(0);
 			}
-			//Object obj = q.uniqueResult();
-			//if(obj!=null){
-			//	str = obj.toString();
-			//}
+			// Object obj = q.uniqueResult();
+			// if(obj!=null){
+			// str = obj.toString();
+			// }
 		} catch (HibernateException e) {
 			logger.error(e);
 		} finally {
@@ -665,28 +653,20 @@ public class AbstractSpringDao extends HibernateDaoSupport {
 		}
 		return str;
 	}
-	//一下是新增的方法
-	/**
-	 * 根据sql拿总的付款金额
-	 * author:happy
-	 * createDate:2011-05-25
-	 * @param sql
-	 * @return
-	 */
-	public double getTotalMoneyBySQL(String sql){
-		Session session=null;
+
+	public double getTotalMoneyBySQL(String sql) {
+		Session session = null;
 		double dd = 0;
-		try{
+		try {
 			getHibernateTemplate().setAllowCreate(true);
-			session =getSession();
-			if(((BigDecimal)session.createSQLQuery(sql).uniqueResult())!=null)
-				dd= 	((BigDecimal)session.createSQLQuery(sql).uniqueResult()).doubleValue();
-			
-		}catch(Exception e){
+			session = getSession();
+			if (((BigDecimal) session.createSQLQuery(sql).uniqueResult()) != null)
+				dd = ((BigDecimal) session.createSQLQuery(sql).uniqueResult())
+						.doubleValue();
+
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-
 
 		return dd;
 	}

@@ -65,6 +65,8 @@ public class AuthorizeAction extends DispatchActionSupport {
 		String account = ParamUtil.getParameter(request, "account");
 		String password = ParamUtil.getParameter(request, "password");
 		String pwd = DigestUtil.digestString(password, "MD5");
+		
+		logger.debug(account+" start login........................");
 
 		// 用户登陆，返回系统用户对象
 		SysUser bean = authorizeService.login(account, pwd);

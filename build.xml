@@ -83,7 +83,7 @@
 
 	<target name="copy">
 		<copy todir="war/WEB-INF/classes">
-			<fileset dir="bin" includes="com/glaf/**/*.class" excludes="**/designer/**, **/test/**"/>
+			<fileset dir="bin" includes="com/glaf/**/*.class" />
 			<fileset dir="src" includes="**/*.xsd,**/*.xml,**/*.properties,**/*.sql"/>
 		</copy>
 	</target>

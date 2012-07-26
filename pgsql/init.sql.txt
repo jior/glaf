@@ -76,6 +76,21 @@ insert into sys_user_role (id, userId, roleId, authorized, authorizeFrom, availD
 insert into sys_dept_role (id, grade, code, sort, sysroleid, deptid) values (1, 0, null, 0, 15, 6);
 
 --插入访问权限
+insert into sys_access (roleid, appid) values (1, 8);
+insert into sys_access (roleid, appid) values (1, 9);
+insert into sys_access (roleid, appid) values (1, 279);
+insert into sys_access (roleid, appid) values (1, 26);
+insert into sys_access (roleid, appid) values (1, 276);
+insert into sys_access (roleid, appid) values (1, 10);
+insert into sys_access (roleid, appid) values (1, 16);
+insert into sys_access (roleid, appid) values (1, 12);
+insert into sys_access (roleid, appid) values (1, 277);
+insert into sys_access (roleid, appid) values (1, 280);
+insert into sys_access (roleid, appid) values (1, 14);
+insert into sys_access (roleid, appid) values (1, 278);
+insert into sys_access (roleid, appid) values (1, 11);
+insert into sys_access (roleid, appid) values (1, 15);
+
 insert into sys_access (roleid, appid) values (15, 8);
 insert into sys_access (roleid, appid) values (15, 9);
 insert into sys_access (roleid, appid) values (15, 279);

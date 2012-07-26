@@ -1,8 +1,9 @@
 <%@ page contentType="text/html;charset=gbk" language="java"%>
-<%@ taglib uri="/WEB-INF/tld/c.tld" prefix="c" %>
-<%@ taglib uri="/WEB-INF/tld/fmt.tld" prefix="fmt" %>
-<%@ taglib uri="/WEB-INF/tld/oscache.tld" prefix="oscache" %>
+<%@ taglib uri="http://www.opensymphony.com/oscache" prefix="oscache"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page import="java.util.*"%>
+<%@ page import="com.glaf.base.modules.*"%>
 <%@ page import="com.glaf.base.modules.todo.*"%>
 <%@ page import="com.glaf.base.modules.todo.model.*"%>
 <%@ page import="com.glaf.base.modules.todo.service.*"%>
@@ -35,7 +36,7 @@
 					 bean.createTasksFromWorkflow(agentId);
 				 }
 			 }
-			 System.out.println("---------------------已经更新用户‘"+user.getName()+"’ 的工作流待办任务。");
+			 //System.out.println("---------------------已经更新用户‘"+user.getName()+"’ 的工作流待办任务。");
 	 } catch(Exception ex){
 		 ex.printStackTrace();
 	 }
@@ -63,8 +64,8 @@
 			  %>
           <tr class="list-a">
             <td height="20" align="left">
-			<a href="<%=context%><c:out value="${todo.listLink}" escapeXml="true"/>&todoId=<c:out value="${todo.id}"/>" 
-			     title="<c:out value="${todo.title}"/>   <c:out value="${todo.content}"/>">
+			<a href='<%=context%><c:out value="${todo.listLink}" escapeXml="true"/>&todoId=<c:out value="${todo.id}"/>' 
+			     title='<c:out value="${todo.title}"/>   <c:out value="${todo.content}"/>'>
 			     <c:out value="${todo.title}"/>
 			</a>
 			</td>

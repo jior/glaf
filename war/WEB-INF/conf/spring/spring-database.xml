@@ -39,6 +39,8 @@
 					<prop key="hibernate.jdbc.use_streams_for_binary">true</prop> <prop key="hibernate.jdbc.batch_versioned_data">true</prop> -->
                 <!-- <property name="hibernate.hbm2ddl.auto">update</property> -->
 				<prop key="hibernate.cache.provider_class">org.hibernate.cache.OSCacheProvider</prop>
+				<!-- <prop key="hibernate.show_sql">true</prop> 
+				<prop key="hibernate.format_sql">true</prop> -->
 				<!--<prop key="hibernate.cache.use_minimal_puts">true</prop> <prop key="hibernate.cache.use_query_cache">true</prop> 
 					<prop key="hibernate.cache.use_second_level_cache">true</prop> <prop key="hibernate.cache.use_structured_entries">true</prop> 
 					<prop key="hibernate.use_identifer_rollback">true</prop> <prop key="hibernate.bytecode.use_reflection_optimizer">true</prop> 

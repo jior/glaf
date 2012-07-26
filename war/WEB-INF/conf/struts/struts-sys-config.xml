@@ -92,6 +92,7 @@
       <forward name="show_modify" path="/WEB-INF/views/module/sys/role_modify.jsp"/>
       <forward name="go_list" path="/sys/role.do?method=showList"/>      
     </action>
+
     <action path="/sys/deptRole"
             parameter="method"
             scope="request"
@@ -104,6 +105,7 @@
       <forward name="show_permission" path="/WEB-INF/views/module/sys/deptRole_permission.jsp"/>      
       <forward name="show_privilege" path="/WEB-INF/views/module/sys/deptRole_privilege.jsp"/>
     </action>
+
     <action path="/sys/tree"
             parameter="method"
             scope="request"
@@ -117,6 +119,7 @@
       <forward name="show_modify" path="/WEB-INF/views/module/sys/tree_modify.jsp"/>
       <forward name="show_sub_list" path="/WEB-INF/views/module/sys/subtree_list.jsp"/>
     </action>
+
     <action path="/sys/dictory"
             parameter="method"
             scope="request"
@@ -128,8 +131,7 @@
       <forward name="show_frame" path="/WEB-INF/views/module/sys/dictory_frame.jsp"/>
       <forward name="show_load" path="/WEB-INF/views/module/sys/dictory_load.jsp"/>
       <forward name="show_select" path="/WEB-INF/views/module/sys/dictory_select.jsp"/>
-	  <forward name="show_contract_dictory_select" path="/WEB-INF/views/module/contract/contract_dictory_select.jsp" />
-    </action>
+     </action>
     
     <action path="/sys/function"
             parameter="method"
@@ -139,6 +141,7 @@
       <forward name="show_list" path="/WEB-INF/views/module/sys/func_list.jsp"/>
       <forward name="go_list" path="/sys/function.do?method=showFuncList"/>
     </action>
+
     <action path="/sys/subject"
             parameter="method"
             scope="request"
@@ -150,6 +153,7 @@
       <forward name="show_add" path="/WEB-INF/views/module/budget/fee_add.jsp"/>
       <forward name="show_modify" path="/WEB-INF/views/module/budget/fee_modify.jsp"/>
     </action>
+
 	<action path="/sys/select_subject" forward="/WEB-INF/views/module/sys/select_subject_tree.jsp" />
 	
 	<action path="/sys/sysUserRole"
