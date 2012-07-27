@@ -118,7 +118,7 @@ public class WorkCalendarService {
 		
 		ArrayList noneWorkDays = new ArrayList();
 		if(workDateList.size()==0) initWorkDate();
-		if(workDateList!=null){
+		if(!workDateList.isEmpty()){
 			Iterator iter = workDateList.iterator();
 			cal.set(Calendar.YEAR, year);
 			cal.set(Calendar.MONTH, month);
