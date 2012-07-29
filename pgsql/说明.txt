@@ -1,1 +1,0 @@
-jbpm.data为备份数据，用pgAdmin恢复即可。
