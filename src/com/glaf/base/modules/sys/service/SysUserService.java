@@ -346,8 +346,13 @@ public class SysUserService {
 		Iterator iter = rows.iterator();
 		while (iter.hasNext()) {
 			SysUserRole bean = (SysUserRole) iter.next();
-			set.add(bean.getDeptRole());
+			if (bean.getDeptRole() != null) {
+				//logger.debug("id=" + bean.getDeptRole().getId());
+				set.add(bean.getDeptRole());
+			}
 		}
+
+		logger.debug("========================user roles:" + set);
 		return set;
 	}
 
@@ -391,7 +396,7 @@ public class SysUserService {
 				SysDeptRole role = (SysDeptRole) roles.next();
 				Set functions = role.getFunctions();
 				Set apps = role.getApps();
-
+				logger.debug("========================apps:" + apps);
 				bean.getFunctions().addAll(functions);
 				bean.getApps().addAll(apps);
 			}
