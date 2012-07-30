@@ -36,13 +36,10 @@ insert into sys_tree (id, parent, name, nodeDesc, code, sort) values (190, 163, 
 insert into sys_tree (id, parent, name, nodeDesc, code, sort) values (231, 229, '基础数据', '基础数据', '', 230);
 insert into sys_tree (id, parent, name, nodeDesc, code, sort) values (235, 231, '修改密码', '修改密码', '', 235);
 insert into sys_tree (id, parent, name, nodeDesc, code, sort) values (236, 231, '修改资料', '修改资料', '', 236);
-insert into sys_tree (id, parent, name, nodeDesc, code, sort) values (430, 8, '流程管理', '流程管理', 'workflow', 10);
-insert into sys_tree (id, parent, name, nodeDesc, code, sort) values (434, 3, '流程管理', '流程管理', '', 434);
+insert into sys_tree (id, parent, name, nodeDesc, code, sort) values (434, 8, '流程管理', '流程管理', 'workflow', 434);
 insert into sys_tree (id, parent, name, nodeDesc, code, sort) values (435, 434, '流程发布', '流程发布', '', 435);
-insert into sys_tree (id, parent, name, nodeDesc, code, sort) values (436, 434, '权限设置', '权限设置', '', 436);
-insert into sys_tree (id, parent, name, nodeDesc, code, sort) values (437, 434, '任务执行人设置', '任务执行人设置', '', 437);
-insert into sys_tree (id, parent, name, nodeDesc, code, sort) values (449, 8, '工作日历', '工作日历', '', 449);
 insert into sys_tree (id, parent, name, nodeDesc, code, sort) values (438, 434, '流程监控', '流程监控', '', 438);
+insert into sys_tree (id, parent, name, nodeDesc, code, sort) values (449, 8, '工作日历', '工作日历', '', 449);
 insert into sys_tree (id, parent, name, nodeDesc, code, sort) values (464, 5, '系统管理', '系统管理', 'xt', 397);
 
 --初始化部门信息
@@ -66,8 +63,6 @@ insert into sys_application (id, name, appDesc, url, sort, showMenu, nodeId) val
 insert into sys_application (id, name, appDesc, url, sort, showMenu, nodeId) values (235, '修改密码', '修改密码', '/module/sp/business_changePassword.html', 235, 0, 235);
 insert into sys_application (id, name, appDesc, url, sort, showMenu, nodeId) values (276, '流程管理', '工作流管理', '', 0, 1, 434);
 insert into sys_application (id, name, appDesc, url, sort, showMenu, nodeId) values (277, '流程发布', '', '/workflow/console/deploy.jsp', 277, 1, 435);
-insert into sys_application (id, name, appDesc, url, sort, showMenu, nodeId) values (278, '权限设置', '权限设置', '/workflow/task?forward=/workflow/console/processes.jsp&operationType=1', 278, 1, 436);
-insert into sys_application (id, name, appDesc, url, sort, showMenu, nodeId) values (279, '任务执行人设置', '任务执行人设置', '/workflow/task?forward=/workflow/console/processes.jsp&operationType=2', 279, 1, 437);
 insert into sys_application (id, name, appDesc, url, sort, showMenu, nodeId) values (280, '流程监控', '流程监控', '/workflow/processDefinitionServlet?forward=/workflow/console/processes.jsp&operationType=4&loadBusiness=1', 280, 1, 438);
 insert into sys_application (id, name, appDesc, url, sort, showMenu, nodeId) values (291, '工作日历', '工作日历', '/others/workCalendar.do?method=showList', 291, 1, 449);
 
@@ -78,7 +73,6 @@ insert into sys_dept_role (id, grade, code, sort, sysroleid, deptid) values (1, 
 --插入访问权限
 insert into sys_access (roleid, appid) values (1, 8);
 insert into sys_access (roleid, appid) values (1, 9);
-insert into sys_access (roleid, appid) values (1, 279);
 insert into sys_access (roleid, appid) values (1, 26);
 insert into sys_access (roleid, appid) values (1, 276);
 insert into sys_access (roleid, appid) values (1, 10);
@@ -86,14 +80,13 @@ insert into sys_access (roleid, appid) values (1, 16);
 insert into sys_access (roleid, appid) values (1, 12);
 insert into sys_access (roleid, appid) values (1, 277);
 insert into sys_access (roleid, appid) values (1, 280);
+insert into sys_access (roleid, appid) values (1, 291);
 insert into sys_access (roleid, appid) values (1, 14);
-insert into sys_access (roleid, appid) values (1, 278);
 insert into sys_access (roleid, appid) values (1, 11);
 insert into sys_access (roleid, appid) values (1, 15);
 
 insert into sys_access (roleid, appid) values (15, 8);
 insert into sys_access (roleid, appid) values (15, 9);
-insert into sys_access (roleid, appid) values (15, 279);
 insert into sys_access (roleid, appid) values (15, 26);
 insert into sys_access (roleid, appid) values (15, 276);
 insert into sys_access (roleid, appid) values (15, 10);
@@ -101,8 +94,8 @@ insert into sys_access (roleid, appid) values (15, 16);
 insert into sys_access (roleid, appid) values (15, 12);
 insert into sys_access (roleid, appid) values (15, 277);
 insert into sys_access (roleid, appid) values (15, 280);
+insert into sys_access (roleid, appid) values (15, 291);
 insert into sys_access (roleid, appid) values (15, 14);
-insert into sys_access (roleid, appid) values (15, 278);
 insert into sys_access (roleid, appid) values (15, 11);
 insert into sys_access (roleid, appid) values (15, 15);
 
