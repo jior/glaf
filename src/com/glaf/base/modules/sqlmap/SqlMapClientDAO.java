@@ -192,7 +192,6 @@ public class SqlMapClientDAO extends SqlMapClientDaoSupport {
 	}
 
 	public List<Object> getList(Executor executor) {
-		List<Object> rows = new ArrayList<Object>();
 		List<?> xList = null;
 		Map<String, Object> params = executor.getParams();
 		if (params != null && params.size() > 0) {
