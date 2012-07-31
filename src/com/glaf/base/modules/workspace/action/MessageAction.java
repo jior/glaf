@@ -17,7 +17,7 @@ import org.apache.struts.action.ActionMessages;
 import org.springframework.web.struts.DispatchActionSupport;
 
 import com.glaf.base.modules.Constants;
- 
+
 import com.glaf.base.modules.sys.SysConstants;
 import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.sys.service.SysUserService;
@@ -32,9 +32,9 @@ public class MessageAction extends DispatchActionSupport {
 	private Log logger = LogFactory.getLog(MessageAction.class);
 
 	private MessageService messageService;
-	
-    private SysUserService sysUserService;
-    
+
+	private SysUserService sysUserService;
+
 	public void setSysUserService(SysUserService sysUserService) {
 		this.sysUserService = sysUserService;
 		logger.info("setsysUserService");
@@ -68,8 +68,8 @@ public class MessageAction extends DispatchActionSupport {
 		int pageSize = ParamUtil.getIntParameter(request, "page_size",
 				Constants.PAGE_SIZE);
 
-		PageResult pager = messageService.getReceiveList(userId, WebUtil
-				.getQueryMap(request), pageNo, pageSize);
+		PageResult pager = messageService.getReceiveList(userId,
+				WebUtil.getQueryMap(request), pageNo, pageSize);
 		request.setAttribute("pager", pager);
 		request.setAttribute("flag", flag);
 
@@ -91,7 +91,7 @@ public class MessageAction extends DispatchActionSupport {
 			ActionForm actionForm, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		String flag = ParamUtil.getParameter(request, "flag", null);
-		
+
 		SysUser user = (SysUser) request.getSession().getAttribute(
 				SysConstants.LOGIN);
 		long userId = user == null ? 0L : user.getId();
@@ -100,8 +100,8 @@ public class MessageAction extends DispatchActionSupport {
 		int pageSize = ParamUtil.getIntParameter(request, "page_size",
 				Constants.PAGE_SIZE);
 
-		PageResult pager = messageService.getSendedList(userId, WebUtil
-				.getQueryMap(request), pageNo, pageSize);
+		PageResult pager = messageService.getSendedList(userId,
+				WebUtil.getQueryMap(request), pageNo, pageSize);
 		request.setAttribute("pager", pager);
 		request.setAttribute("flag", flag);
 
@@ -145,11 +145,12 @@ public class MessageAction extends DispatchActionSupport {
 			throws Exception {
 		SysUser user = (SysUser) request.getSession().getAttribute(
 				SysConstants.LOGIN);
-		int sysType = ParamUtil.getIntParameter(request, "sysType", 1);// 0：为系统警告  1：为系统消息 
+		int sysType = ParamUtil.getIntParameter(request, "sysType", 1);// 0：为系统警告
+																		// 1：为系统消息
 		String recverIds = ParamUtil.getParameter(request, "recverIds");
 		// 用户或部门
 		int recverType = ParamUtil.getIntParameter(request, "recverType", 0);
-      
+
 		MessageForm formBean = new MessageForm();
 		WebUtil.copyProperties(formBean, actionForm);
 
@@ -173,24 +174,27 @@ public class MessageAction extends DispatchActionSupport {
 			if (recverType == 0) {
 				ret = messageService
 						.saveSendMessage(bean, recverIds.split(","));
-			} if(recverType ==1) {
-				ret = messageService.saveSendMessageToDept(bean, recverIds
-						.split(","));
-			}if(recverType ==2){
-				 List userList = sysUserService.getSupplierUser(recverIds);
-				 if(userList !=null){
-				   Iterator iter = userList.iterator();
-				   StringBuffer sb = new StringBuffer();
-				   while(iter.hasNext()){
-					   SysUser user_sp =(SysUser)iter.next();
-					   if(user_sp.getAccountType()==1){
-						   
-						   sb.append(user_sp.getId()+",");
-					   }
-					String userIds = sb.toString();
-				  ret = messageService.saveSendMessage(bean, userIds.split(","));
-				   }
-				 }
+			}
+			if (recverType == 1) {
+				ret = messageService.saveSendMessageToDept(bean,
+						recverIds.split(","));
+			}
+			if (recverType == 2) {
+				List userList = sysUserService.getSupplierUser(recverIds);
+				if (userList != null) {
+					Iterator iter = userList.iterator();
+					StringBuffer sb = new StringBuffer();
+					while (iter.hasNext()) {
+						SysUser user_sp = (SysUser) iter.next();
+						if (user_sp.getAccountType() == 1) {
+
+							sb.append(user_sp.getId() + ",");
+						}
+						String userIds = sb.toString();
+						ret = messageService.saveSendMessage(bean,
+								userIds.split(","));
+					}
+				}
 			}
 		}
 		saveToken(request);
@@ -280,8 +284,10 @@ public class MessageAction extends DispatchActionSupport {
 		// 显示消息页面
 		return mapping.findForward("showMessage");
 	}
+
 	/**
 	 * 发送email
+	 * 
 	 * @param mapping
 	 * @param actionForm
 	 * @param request
@@ -294,39 +300,40 @@ public class MessageAction extends DispatchActionSupport {
 			HttpServletResponse response) throws Exception {
 		SysUser user = (SysUser) request.getSession().getAttribute(
 				SysConstants.LOGIN);
-		String sendEmail =user.getEmail();
-		
+		String sendEmail = user.getEmail();
+
 		int recverType = ParamUtil.getIntParameter(request, "recverType", 0);
 		String recverIds = ParamUtil.getParameter(request, "recverIds");
-		String recverName =ParamUtil.getParameter(request, "recverName");
+		String recverName = ParamUtil.getParameter(request, "recverName");
 		MessageForm formBean = new MessageForm();
 		WebUtil.copyProperties(formBean, actionForm);
 		String title = formBean.getTitle();
 		String content = formBean.getContent();
-		
-		if(recverType ==0||recverType==2){
-		String toEmail =ParamUtil.getParameter(request, "toEmail");
-	    String[] email = toEmail.split(",");
-		for(int i=0; i<email.length;i++){
-		   //EMail.send(sendEmail,email[i],title,content,null);
-		 }
-		}
-	//部门群发	
-		if(recverType ==1){
-		System.out.println("string to int" +Integer.parseInt(recverIds));
-		List list =sysUserService.getSysUserList(Integer.parseInt(recverIds));
-		System.out.println("list.size"+list.size());
-		if(list !=null){
-			Iterator iter = list.iterator();
-			while(iter.hasNext()){
-				SysUser sysUser = (SysUser)iter.next();
-				String email = sysUser.getEmail();
-			//EMail.send(sendEmail, email, title, content, null);	
+
+		if (recverType == 0 || recverType == 2) {
+			String toEmail = ParamUtil.getParameter(request, "toEmail");
+			String[] email = toEmail.split(",");
+			for (int i = 0; i < email.length; i++) {
+				// EMail.send(sendEmail,email[i],title,content,null);
 			}
 		}
-			
+		// 部门群发
+		if (recverType == 1) {
+			System.out.println("string to int" + Integer.parseInt(recverIds));
+			List list = sysUserService.getSysUserList(Integer
+					.parseInt(recverIds));
+			// System.out.println("list.size"+list.size());
+			if (list != null) {
+				Iterator iter = list.iterator();
+				while (iter.hasNext()) {
+					SysUser sysUser = (SysUser) iter.next();
+					String email = sysUser.getEmail();
+					// EMail.send(sendEmail, email, title, content, null);
+				}
+			}
+
 		}
-// 发送信息放入发件箱
+		// 发送信息放入发件箱
 		Message bean = new Message();
 		bean.setTitle(formBean.getTitle());
 		bean.setContent(formBean.getContent());
@@ -361,8 +368,10 @@ public class MessageAction extends DispatchActionSupport {
 		// 显示提交后页面
 		return mapping.findForward("show_msg");
 	}
+
 	/**
 	 * 发送系统信息和Email
+	 * 
 	 * @param mapping
 	 * @param actionForm
 	 * @param request
@@ -370,42 +379,44 @@ public class MessageAction extends DispatchActionSupport {
 	 * @return
 	 * @throws Exception
 	 */
-	public ActionForward saveBoth(ActionMapping mapping,
-			ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+	public ActionForward saveBoth(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
 		SysUser user = (SysUser) request.getSession().getAttribute(
 				SysConstants.LOGIN);
-		String sendEmail =user.getEmail();
-		
+		String sendEmail = user.getEmail();
+
 		String recverIds = ParamUtil.getParameter(request, "recverIds");
 		// 用户或部门
 		int recverType = ParamUtil.getIntParameter(request, "recverType", 0);
-		
-		int sysType = ParamUtil.getIntParameter(request, "sysType", 1);// 0：为系统警告  1：为系统消息 
-		
+
+		int sysType = ParamUtil.getIntParameter(request, "sysType", 1);// 0：为系统警告
+																		// 1：为系统消息
+
 		MessageForm formBean = new MessageForm();
 		WebUtil.copyProperties(formBean, actionForm);
 		String title = formBean.getTitle();
 		String content = formBean.getContent();
-	    if(recverType==0||recverType==2){
-		 String toEmail =ParamUtil.getParameter(request, "toEmail");
-	     String[] email = toEmail.split(",");
+		if (recverType == 0 || recverType == 2) {
+			String toEmail = ParamUtil.getParameter(request, "toEmail");
+			String[] email = toEmail.split(",");
 
-	     for(int i=0; i<email.length;i++){
-	 		//EMail.send(sendEmail,email[i],title,content,null);
-	 		}
-	    }
-	    if(recverType ==1){
-			   List list =sysUserService.getSysUserList(Integer.parseInt(recverIds));
-				if(list !=null){
-					Iterator iter = list.iterator();
-					while(iter.hasNext()){
-						SysUser sysUser = (SysUser)iter.next();
-						String email = sysUser.getEmail();
-					   // EMail.send(sendEmail, email, title, content, null);	
-				    }
-		       }
-	    }
+			for (int i = 0; i < email.length; i++) {
+				// EMail.send(sendEmail,email[i],title,content,null);
+			}
+		}
+		if (recverType == 1) {
+			List list = sysUserService.getSysUserList(Integer
+					.parseInt(recverIds));
+			if (list != null) {
+				Iterator iter = list.iterator();
+				while (iter.hasNext()) {
+					SysUser sysUser = (SysUser) iter.next();
+					String email = sysUser.getEmail();
+					// EMail.send(sendEmail, email, title, content, null);
+				}
+			}
+		}
 		Message bean = new Message();
 		bean.setSysType(sysType);
 		bean.setTitle(formBean.getTitle());
@@ -426,27 +437,28 @@ public class MessageAction extends DispatchActionSupport {
 			if (recverType == 0) {
 				ret = messageService
 						.saveSendMessage(bean, recverIds.split(","));
-			} 
-			if(recverType == 1){
-				ret = messageService.saveSendMessageToDept(bean, recverIds
-						.split(","));
 			}
-			if(recverType == 2){
-				   List userList = sysUserService.getSupplierUser(recverIds);
-				   if(userList !=null){
-				   Iterator iter = userList.iterator();
-				   StringBuffer sb = new StringBuffer();
-				   while(iter.hasNext()){
-					   SysUser user_sp =(SysUser)iter.next();
-					   if(user_sp.getAccountType()==1){
-						   
-						   sb.append(user_sp.getId()+",");
-					   }
-					String userIds = sb.toString();
-				  ret = messageService.saveSendMessage(bean, userIds.split(","));
-				   }
-				 }
+			if (recverType == 1) {
+				ret = messageService.saveSendMessageToDept(bean,
+						recverIds.split(","));
+			}
+			if (recverType == 2) {
+				List userList = sysUserService.getSupplierUser(recverIds);
+				if (userList != null) {
+					Iterator iter = userList.iterator();
+					StringBuffer sb = new StringBuffer();
+					while (iter.hasNext()) {
+						SysUser user_sp = (SysUser) iter.next();
+						if (user_sp.getAccountType() == 1) {
+
+							sb.append(user_sp.getId() + ",");
+						}
+						String userIds = sb.toString();
+						ret = messageService.saveSendMessage(bean,
+								userIds.split(","));
+					}
 				}
+			}
 		}
 		saveToken(request);
 

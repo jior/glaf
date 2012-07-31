@@ -25,6 +25,17 @@ public class StringUtil {
 
 	private static char[] numbersAndLetters = null;
 
+	static {
+		// 初始化随机数字生成器
+		if (randGen == null) {
+			synchronized (initLock) {
+				randGen = new Random();
+				// 初始化数字、字母数组
+				numbersAndLetters = ("0123456789").toCharArray();
+			}
+		}
+	}
+
 	/**
 	 * 生成随机字符串
 	 * 
@@ -35,16 +46,6 @@ public class StringUtil {
 	public static final String randomNumString(int length) {
 		if (length < 1) {
 			return null;
-		}
-		// 初始化随机数字生成器
-		if (randGen == null) {
-			synchronized (initLock) {
-				if (randGen == null) {
-					randGen = new Random();
-					// 初始化数字、字母数组
-					numbersAndLetters = ("0123456789").toCharArray();
-				}
-			}
 		}
 
 		// 创建字符缓存数组装入字母和数字
@@ -481,8 +482,8 @@ public class StringUtil {
 					len--;
 				} else if (len == 3) {
 					/*
-					 * if (yi.charAt(i) == '0' ) { b = false ; out.append( " 零 " );
-					 * len -- ; continue ; } else {
+					 * if (yi.charAt(i) == '0' ) { b = false ; out.append( " 零 "
+					 * ); len -- ; continue ; } else {
 					 */
 					out.append(pp(yi.charAt(i)));
 					out.append(" 佰 ");
@@ -513,11 +514,12 @@ public class StringUtil {
 			}
 			/*
 			 * if (out.charAt(out.indexOf( " 亿 " ) - 1 ) == '零' ) {
-			 * out.deleteCharAt(out.indexOf( " 亿 " ) - 1 ); out.append( " 零 " ); }
-			 * if (yi.charAt(yi.length() - 1 ) == '0' ) { out.append( " 零 " ); }
+			 * out.deleteCharAt(out.indexOf( " 亿 " ) - 1 ); out.append( " 零 " );
+			 * } if (yi.charAt(yi.length() - 1 ) == '0' ) { out.append( " 零 " );
+			 * }
 			 * 
-			 * if (out.charAt(out.length() - 2 ) == out.charAt(out.length() - 1 )) { //
-			 * 删除最后多余的零 out.deleteCharAt(out.lastIndexOf( " 零 " )); }
+			 * if (out.charAt(out.length() - 2 ) == out.charAt(out.length() - 1
+			 * )) { // 删除最后多余的零 out.deleteCharAt(out.lastIndexOf( " 零 " )); }
 			 */
 			// 处理万区间
 			len = wan.length();
@@ -529,8 +531,8 @@ public class StringUtil {
 				for (int i = 0; i < wan.length(); i++) {
 					if (len == 4) {
 						/*
-						 * if (wan.charAt(i) == '0' ) { out.append( " 零 " ); len -- ;
-						 * continue ; }
+						 * if (wan.charAt(i) == '0' ) { out.append( " 零 " ); len
+						 * -- ; continue ; }
 						 */
 						out.append(pp(wan.charAt(i)));
 						out.append(" 仟 ");
@@ -538,8 +540,8 @@ public class StringUtil {
 						continue;
 					} else if (len == 3) {
 						/*
-						 * if (wan.charAt(i) == '0' ) { b = false ; out.append( "
-						 * 零 " ); len -- ; continue ; } else {
+						 * if (wan.charAt(i) == '0' ) { b = false ; out.append(
+						 * " 零 " ); len -- ; continue ; } else {
 						 */
 						out.append(pp(wan.charAt(i)));
 						out.append(" 佰 ");
@@ -548,8 +550,8 @@ public class StringUtil {
 						// }
 					} else if (len == 2) {
 						/*
-						 * if (wan.charAt(i) == '0' && ! b) { len -- ; continue ; }
-						 * if (wan.charAt(i) == '0' && b) { b = false ;
+						 * if (wan.charAt(i) == '0' && ! b) { len -- ; continue
+						 * ; } if (wan.charAt(i) == '0' && b) { b = false ;
 						 * out.append( " 零 " ); len -- ; continue ; } else {
 						 */
 						out.append(pp(wan.charAt(i)));
@@ -559,8 +561,8 @@ public class StringUtil {
 						// }
 					} else if (len == 1) {
 						/*
-						 * if (wan.charAt(i) == '0' ) { out.append( " 万 " ); len -- ;
-						 * continue ; } else {
+						 * if (wan.charAt(i) == '0' ) { out.append( " 万 " ); len
+						 * -- ; continue ; } else {
 						 */
 						out.append(pp(wan.charAt(i)));
 						out.append(" 万 ");
@@ -571,10 +573,11 @@ public class StringUtil {
 				}
 				/*
 				 * if (out.charAt(out.indexOf( " 万 " ) - 1 ) == '零' ) {
-				 * out.deleteCharAt(out.indexOf( " 万 " ) - 1 ); out.append( " 零 " ); }
-				 * if (wan.charAt(wan.length() - 1 ) == '0' ) { out.append( " 零 " ); }
-				 * if (out.charAt(out.length() - 2 ) == out .charAt(out.length() -
-				 * 1 )) { out.deleteCharAt(out.lastIndexOf( " 零 " )); }
+				 * out.deleteCharAt(out.indexOf( " 万 " ) - 1 ); out.append(
+				 * " 零 " ); } if (wan.charAt(wan.length() - 1 ) == '0' ) {
+				 * out.append( " 零 " ); } if (out.charAt(out.length() - 2 ) ==
+				 * out .charAt(out.length() - 1 )) {
+				 * out.deleteCharAt(out.lastIndexOf( " 零 " )); }
 				 */
 			}
 
@@ -597,8 +600,8 @@ public class StringUtil {
 						continue;
 					} else if (len == 3) {
 						/*
-						 * if (qian.charAt(i) == '0' ) { b = false ; out.append( "
-						 * 零 " ); len -- ; continue ; } else {
+						 * if (qian.charAt(i) == '0' ) { b = false ; out.append(
+						 * " 零 " ); len -- ; continue ; } else {
 						 */
 						out.append(pp(qian.charAt(i)));
 						out.append(" 佰 ");
@@ -607,8 +610,8 @@ public class StringUtil {
 						// }
 					} else if (len == 2) {
 						/*
-						 * if (qian.charAt(i) == '0' && ! b) { len -- ; continue ; }
-						 * if (qian.charAt(i) == '0' && b) { b = false ;
+						 * if (qian.charAt(i) == '0' && ! b) { len -- ; continue
+						 * ; } if (qian.charAt(i) == '0' && b) { b = false ;
 						 * out.append( " 零 " ); len -- ; continue ; } else {
 						 */
 						out.append(pp(qian.charAt(i)));
@@ -635,11 +638,11 @@ public class StringUtil {
 			 * 
 			 * if (out.charAt(out.length() - 1 ) == '零' ) { // 删除多余的零 while
 			 * (out.charAt(out.length() - 1 ) == '零' ) {
-			 * out.deleteCharAt(out.length() - 1 ); } out.append( " 元 " ); } for (
-			 * int i = out.length() - 1 ; i >= 0 ; i -- ) { // 删除多余的零 if
+			 * out.deleteCharAt(out.length() - 1 ); } out.append( " 元 " ); } for
+			 * ( int i = out.length() - 1 ; i >= 0 ; i -- ) { // 删除多余的零 if
 			 * (out.indexOf( " 零 " ) !=- 1 ) { if (out.charAt(out.lastIndexOf( "
-			 * 零 " ) - 1 ) == '零' ) { out.deleteCharAt(out.lastIndexOf( " 零 " ) -
-			 * 1 ); } } }
+			 * 零 " ) - 1 ) == '零' ) { out.deleteCharAt(out.lastIndexOf( " 零 " )
+			 * - 1 ); } } }
 			 */
 
 			// 处理小数
@@ -691,8 +694,8 @@ public class StringUtil {
 						len--;
 					} else if (len == 3) {
 						/*
-						 * if (wan.charAt(i) == '0' ) { b = false ; out.append( "
-						 * 零 " ); len -- ; continue ; } else {
+						 * if (wan.charAt(i) == '0' ) { b = false ; out.append(
+						 * " 零 " ); len -- ; continue ; } else {
 						 */
 						out.append(pp(wan.charAt(i)));
 						out.append(" 佰 ");
@@ -701,8 +704,8 @@ public class StringUtil {
 						// }
 					} else if (len == 2) {
 						/*
-						 * if (wan.charAt(i) == '0' && ! b) { len -- ; continue ; }
-						 * if (wan.charAt(i) == '0' && b) { b = false ;
+						 * if (wan.charAt(i) == '0' && ! b) { len -- ; continue
+						 * ; } if (wan.charAt(i) == '0' && b) { b = false ;
 						 * out.append( " 零 " ); len -- ; continue ; } else {
 						 */
 						out.append(pp(wan.charAt(i)));
@@ -712,8 +715,8 @@ public class StringUtil {
 						// }
 					} else if (len == 1) {
 						/*
-						 * if (wan.charAt(i) == '0' ) { out.append( " 万 " ); len -- ;
-						 * continue ; } else {
+						 * if (wan.charAt(i) == '0' ) { out.append( " 万 " ); len
+						 * -- ; continue ; } else {
 						 */
 						out.append(pp(wan.charAt(i)));
 						out.append(" 万 ");
@@ -723,10 +726,11 @@ public class StringUtil {
 				}
 				/*
 				 * if (out.charAt(out.indexOf( " 万 " ) - 1 ) == '零' ) {
-				 * out.deleteCharAt(out.indexOf( " 万 " ) - 1 ); out.append( " 零 " ); }
-				 * if (wan.charAt(wan.length() - 1 ) == '0' ) { out.append( " 零 " ); }
-				 * if (out.charAt(out.length() - 2 ) == out .charAt(out.length() -
-				 * 1 )) { out.deleteCharAt(out.lastIndexOf( " 零 " )); }
+				 * out.deleteCharAt(out.indexOf( " 万 " ) - 1 ); out.append(
+				 * " 零 " ); } if (wan.charAt(wan.length() - 1 ) == '0' ) {
+				 * out.append( " 零 " ); } if (out.charAt(out.length() - 2 ) ==
+				 * out .charAt(out.length() - 1 )) {
+				 * out.deleteCharAt(out.lastIndexOf( " 零 " )); }
 				 */
 			}
 
@@ -740,9 +744,9 @@ public class StringUtil {
 				for (int i = 0; i < qian.length(); i++) {
 					if (len == 4) {
 						/*
-						 * if (qian.charAt(i) == '0' && out.charAt(out.length() -
-						 * 1 ) != '零' ) { out.append( " 零 " ); len -- ; continue ; }
-						 * else if (qian.charAt(i) == '0' &&
+						 * if (qian.charAt(i) == '0' && out.charAt(out.length()
+						 * - 1 ) != '零' ) { out.append( " 零 " ); len -- ;
+						 * continue ; } else if (qian.charAt(i) == '0' &&
 						 * out.charAt(out.length() - 1 ) == '零' ) { len -- ;
 						 * continue ; }
 						 */
@@ -751,8 +755,8 @@ public class StringUtil {
 						len--;
 					} else if (len == 3) {
 						/*
-						 * if (qian.charAt(i) == '0' ) { b = false ; out.append( "
-						 * 零 " ); len -- ; continue ; } else {
+						 * if (qian.charAt(i) == '0' ) { b = false ; out.append(
+						 * " 零 " ); len -- ; continue ; } else {
 						 */
 						out.append(pp(qian.charAt(i)));
 						out.append(" 佰 ");
@@ -761,8 +765,8 @@ public class StringUtil {
 						// }
 					} else if (len == 2) {
 						/*
-						 * if (qian.charAt(i) == '0' && ! b) { len -- ; continue ; }
-						 * if (qian.charAt(i) == '0' && b) { b = false ;
+						 * if (qian.charAt(i) == '0' && ! b) { len -- ; continue
+						 * ; } if (qian.charAt(i) == '0' && b) { b = false ;
 						 * out.append( " 零 " ); len -- ; continue ; } else {
 						 */
 						out.append(pp(qian.charAt(i)));
@@ -787,11 +791,11 @@ public class StringUtil {
 			 * out.deleteCharAt(out.length() - 2 ); } if
 			 * (out.charAt(out.length() - 1 ) == '零' ) { // 删除多余的零 while
 			 * (out.charAt(out.length() - 1 ) == '零' ) {
-			 * out.deleteCharAt(out.length() - 1 ); } out.append( " 元 " ); } for (
-			 * int i = out.length() - 1 ; i >= 0 ; i -- ) { // 删除多余的零 if
+			 * out.deleteCharAt(out.length() - 1 ); } out.append( " 元 " ); } for
+			 * ( int i = out.length() - 1 ; i >= 0 ; i -- ) { // 删除多余的零 if
 			 * (out.indexOf( " 零 " ) !=- 1 ) { if (out.charAt(out.lastIndexOf( "
-			 * 零 " ) - 1 ) == '零' ) { out.deleteCharAt(out.lastIndexOf( " 零 " ) -
-			 * 1 ); } } }
+			 * 零 " ) - 1 ) == '零' ) { out.deleteCharAt(out.lastIndexOf( " 零 " )
+			 * - 1 ); } } }
 			 */
 
 			// 处理小数点右边的数
@@ -974,25 +978,25 @@ public class StringUtil {
 		}
 		return r;
 	}
-	
+
 	/**
-	 * 取最后一个字母的下一个字母
-	 * author:key
-	 * createDate:2010-9-19
+	 * 取最后一个字母的下一个字母 author:key createDate:2010-9-19
+	 * 
 	 * @param str
 	 * @return
 	 */
-	public static char getLastChar(String str){
-		if(str==null || str.length()<=0){
+	public static char getLastChar(String str) {
+		if (str == null || str.length() <= 0) {
 			return 'A';
 		}
-		char s = (char)(str.charAt(str.length()-1)+1);
+		char s = (char) (str.charAt(str.length() - 1) + 1);
 		return s;
 	}
-	
+
 	public static String getContent(String s) {
-		if(s == null) return "";
-		
+		if (s == null)
+			return "";
+
 		s = s.replaceAll("&ensp;", " ");
 		s = s.replaceAll("&nbsp;", " ");
 		s = s.replaceAll("&emsp;", "　");
@@ -1007,24 +1011,26 @@ public class StringUtil {
 		s = s.replaceAll("&ndash;", "–");
 		s = s.replaceAll("&middot;", "·");
 		s = s.replaceAll("&hellip;", "…");
-		s = s.replaceAll("<br>","\r\n");
-		s = s.replaceAll("<br/>","\r\n");
-		s = s.replaceAll("<br />","\r\n");
-		s = s.replaceAll("  ","　");
+		s = s.replaceAll("<br>", "\r\n");
+		s = s.replaceAll("<br/>", "\r\n");
+		s = s.replaceAll("<br />", "\r\n");
+		s = s.replaceAll("  ", "　");
 		s = s.replaceAll("&amp;", "&");
-	
+
 		return s;
 	}
+
 	public static String getHtmlContent(String s) {
-		if(s == null) return "";
+		if (s == null)
+			return "";
 		s = s.replaceAll("&", "&amp;");
-		s = s.replaceAll("　"," ");
+		s = s.replaceAll("　", " ");
 		s = s.replaceAll("…", "&hellip;");
 		s = s.replaceAll("<", "&lt;");
 		s = s.replaceAll(">", "&gt;");
-		s = s.replaceAll("\r\n","<br>");
-		s = s.replaceAll("\r\n","<br/>");
-		s = s.replaceAll("\r\n","<br />");
+		s = s.replaceAll("\r\n", "<br>");
+		s = s.replaceAll("\r\n", "<br/>");
+		s = s.replaceAll("\r\n", "<br />");
 		s = s.replaceAll("“", "&ldquo;");
 		s = s.replaceAll("”", "&rdquo;");
 		s = s.replaceAll("“", "&quot;");
@@ -1033,7 +1039,7 @@ public class StringUtil {
 		s = s.replaceAll("—", "&mdash;");
 		s = s.replaceAll("–", "&ndash;");
 		s = s.replaceAll("·", "&middot;");
-		
+
 		return s;
 	}
 
