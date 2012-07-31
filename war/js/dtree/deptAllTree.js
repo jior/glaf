@@ -33,7 +33,7 @@ function Node(id, parentId, name, url, title,deptId){
   this.nodeId= deptId; //新增节点属性nodeId 存放部门id
 };
 
-var context = "/tms";
+var context = "/glaf";
 /**
  * 构造函数
  */

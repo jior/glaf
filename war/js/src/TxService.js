@@ -1,4 +1,4 @@
-var AppCode = "tms";   //项目名称
+var AppCode = "glaf";   //项目名称
 
 /**
  * Ajax业务处理器

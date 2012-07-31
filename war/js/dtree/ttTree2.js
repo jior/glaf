@@ -32,7 +32,7 @@ function Node(id, parentId, name, url, title ,show){
   this.show = show;
 };
 
-var context = "/tms";
+var context = "/glaf";
 /**
  * ¹¹Ôìº¯Êý
  */

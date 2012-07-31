@@ -136,7 +136,7 @@ function getChildTree(catId){
 		}  
       }
     };
-	xmlhttp.open("GET", "/tms/sys/authorize.do?method=showSubMenu&parent=" + catId, true);    
+	xmlhttp.open("GET", "/glaf/sys/authorize.do?method=showSubMenu&parent=" + catId, true);    
 	xmlhttp.send(null);
   }  
 }
@@ -516,7 +516,7 @@ function addValue(obj, addValue) {
 	}
 }
 
-var context = "/tms";
+var context = "/glaf";
 //选择基础数据
 function selectData(dataCode, referId, referTitle, referCode,parent){
   var url = context + "/sys/dictory.do?method=showDictData&code="+dataCode+"&parent="+parent;
