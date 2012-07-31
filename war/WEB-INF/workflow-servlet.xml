@@ -19,6 +19,10 @@
     
 	<bean id="actorController" class="org.jpage.jbpm.controller.ActorController"/>
 
+	<bean id="deployController" class="org.jpage.jbpm.controller.DeployController"/>
+
+	<bean id="processController" class="org.jpage.jbpm.controller.ProcessController"/>
+
 	<bean id="processMonitorController" class="org.jpage.jbpm.monitor.ProcessMonitorController"/>
 
 	<bean id="filenameController"
@@ -38,6 +42,8 @@
 		<property name="mappings">
 			<props>
 				<prop key="/workflow/actorController.jspa">actorController</prop>
+				<prop key="/workflow/deployController.jspa">deployController</prop>
+				<prop key="/workflow/processController.jspa">processController</prop>
 				<prop key="/workflow/processMonitorController.jspa">processMonitorController</prop>
 			</props>
 		</property>

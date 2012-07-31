@@ -158,17 +158,6 @@
 	<!--jbpm workflow configure-->
 
 	<servlet>
-		<servlet-name>DeployServlet</servlet-name>
-		<servlet-class>org.jpage.jbpm.deploy.DeployServlet</servlet-class>
-		<load-on-startup>2</load-on-startup>
-	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>DeployServlet</servlet-name>
-		<url-pattern>/workflow/deploy</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
 		<servlet-name>ProcessImageServlet</servlet-name>
 		<servlet-class>org.jpage.jbpm.servlet.ProcessImageServlet</servlet-class>
 	</servlet>

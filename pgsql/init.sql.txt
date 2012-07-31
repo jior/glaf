@@ -62,8 +62,8 @@ insert into sys_application (id, name, appDesc, url, sort, showMenu, nodeId) val
 --insert into sys_application (id, name, appDesc, url, sort, showMenu, nodeId) values (231, '基础数据', '基础数据', '', 230, 1, 231);
 insert into sys_application (id, name, appDesc, url, sort, showMenu, nodeId) values (235, '修改密码', '修改密码', '/module/sp/business_changePassword.html', 235, 0, 235);
 insert into sys_application (id, name, appDesc, url, sort, showMenu, nodeId) values (276, '流程管理', '工作流管理', '', 0, 1, 434);
-insert into sys_application (id, name, appDesc, url, sort, showMenu, nodeId) values (277, '流程发布', '', '/workflow/console/deploy.jsp', 277, 1, 435);
-insert into sys_application (id, name, appDesc, url, sort, showMenu, nodeId) values (280, '流程监控', '流程监控', '/workflow/processDefinitionServlet?forward=/workflow/console/processes.jsp&operationType=4&loadBusiness=1', 280, 1, 438);
+insert into sys_application (id, name, appDesc, url, sort, showMenu, nodeId) values (277, '流程发布', '', '/workflow/deployController.jspa', 277, 1, 435);
+insert into sys_application (id, name, appDesc, url, sort, showMenu, nodeId) values (280, '流程监控', '流程监控', '/workflow/processController.jspa?operationType=4&loadBusiness=1', 280, 1, 438);
 insert into sys_application (id, name, appDesc, url, sort, showMenu, nodeId) values (291, '工作日历', '工作日历', '/others/workCalendar.do?method=showList', 291, 1, 449);
 
 --插入用户角色
@@ -85,19 +85,6 @@ insert into sys_access (roleid, appid) values (1, 14);
 insert into sys_access (roleid, appid) values (1, 11);
 insert into sys_access (roleid, appid) values (1, 15);
 
-insert into sys_access (roleid, appid) values (15, 8);
-insert into sys_access (roleid, appid) values (15, 9);
-insert into sys_access (roleid, appid) values (15, 26);
-insert into sys_access (roleid, appid) values (15, 276);
-insert into sys_access (roleid, appid) values (15, 10);
-insert into sys_access (roleid, appid) values (15, 16);
-insert into sys_access (roleid, appid) values (15, 12);
-insert into sys_access (roleid, appid) values (15, 277);
-insert into sys_access (roleid, appid) values (15, 280);
-insert into sys_access (roleid, appid) values (15, 291);
-insert into sys_access (roleid, appid) values (15, 14);
-insert into sys_access (roleid, appid) values (15, 11);
-insert into sys_access (roleid, appid) values (15, 15);
 
 --插入系统功能
 insert into sys_function (id, appId, name, funcDesc, funcMethod, sort) values (1, 15, '模块列表', null, 'com.glaf.base.modules.sys.action.SysApplicationAction.showList', 5);

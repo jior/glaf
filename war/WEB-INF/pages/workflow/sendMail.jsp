@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ taglib uri="/WEB-INF/tld/c.tld" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page import="java.util.*" %>
 <%@ include file="/WEB-INF/pages/common/style.jsp"%>
 <script language="JavaScript">

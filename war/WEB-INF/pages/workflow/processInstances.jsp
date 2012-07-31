@@ -1,7 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ taglib uri="/WEB-INF/tld/c.tld" prefix="c" %>
-<%@ taglib uri="/WEB-INF/tld/fmt.tld" prefix="fmt" %>
-<%@ taglib uri="/WEB-INF/tld/jpage.tld" prefix="jpage" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page import="java.util.*"%>
 <%@ page import="org.jbpm.graph.exe.*"%>
 <%@ page import="org.jpage.jbpm.model.*"%>
@@ -16,8 +15,9 @@
   request.setAttribute("processInstances",jpage.getRows());
   Map rowMap = (Map)request.getAttribute("rowMap");
   %>
-<HTML><HEAD>
-<META http-equiv=Content-Type content="text/html; charset=UTF-8">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%@ include file="/WEB-INF/pages/common/style.jsp"%>
 <LINK href="<%=request.getContextPath()%>/workflow/styles/<c:out value="${frame_skin}"/>/main/main.css" type=text/css rel=stylesheet>
 </HEAD>
@@ -94,7 +94,7 @@
 		</select>
       </td>
 	  <td align="right">
-	    <input type="button" name="button" class="button" value=" 查询 " onclick="javascript:queryProcess();">
+	    <!-- <input type="button" name="button" class="button" value=" 查询 " onclick="javascript:queryProcess();"> -->
 	  </td>
  </tr>
 </table>
@@ -105,30 +105,25 @@
 <input type="hidden" name="running" value="<c:out value="${running}"/>">
 <input type="hidden" name="method" value="processInstances">
 
+<%=jpage.getDefaultHiddenField()%>
 <table align="center" class="table-border" cellspacing="1" cellpadding="4" width="90%" nowrap>
     <tr class="gamma"> 
-      <td colspan="10" class="gamma">
-	      <jpage:paging form="iForm"/>
-	  </td>
+      <td colspan="10" class="gamma"><%=jpage.getPagingHead("iForm",true)%></td>
     </tr>
     <tr class="table-bar" nowrap>
-	  <td width="5%" height="15" align="center" class="table-title" nowrap>编号</td>
+	  <td width="5%" height="15" align="center" class="table-title" nowrap>流程编号</td>
+	  <td width="5%" height="15" align="center" class="table-title" nowrap>业务编号</td>
 	  <td width="15%" height="15" align="center" class="table-title" nowrap>流程名称</td>
-	  <td width="5%" height="15" align="center" class="table-title" nowrap>版本</td>
-	  <c:if test="${loadBusiness == 1}">
-	  <td width="10%" height="15" align="center" class="table-title" nowrap>启动者</td>
-      <td width="40%" height="15" align="center" class="table-title" nowrap>主题</td>
-	  <td width="10%" height="15" align="center" class="table-title" nowrap>单据编号</td>
-	  </c:if>
-	  <td width="15%" height="15" align="center" class="table-title" nowrap>时间</td>
+	  <td width="5%"  height="15" align="center" class="table-title" nowrap>版本</td>
+	  <td width="15%" height="15" align="center" class="table-title" nowrap>启动时间</td>
 	  <td width="10%" height="15" align="center" class="table-title" nowrap>功能键</td>
     </tr>
     <c:forEach items="${processInstances}" var="processInstance">
 	<%
 	  ProcessInstance pi = (ProcessInstance)pageContext.getAttribute("processInstance");
-	  BusinessInstance bi = null;
+	  //BusinessInstance bi = null;
 	  if(rowMap != null && rowMap.get(String.valueOf(pi.getId())) != null){
-		  bi = (BusinessInstance)rowMap.get(String.valueOf(pi.getId()));
+		  //bi = (BusinessInstance)rowMap.get(String.valueOf(pi.getId()));
 	  }
 	%>
     <tr class="beta">
@@ -137,49 +132,50 @@
 	  <c:out value="${processInstance.id}"/>
 	  </a>
 	  </td>
+	  <td width="5%" height="15" align="center">
+	  <a href="<%=request.getContextPath()%>/workflow/processMonitorController.jspa?method=stateInstances&processInstanceId=<c:out value="${processInstance.id}"/>" title="查看流程实例" target="_blank">
+	  <c:out value="${processInstance.key}"/>
+	  </a>
+	  </td>
 	  <td width="15%" height="15" align="left">
-	  <a href="<%=request.getContextPath()%>/workflow/processMonitorController.jspa?method=stateInstances&processInstanceId=<c:out value="${processInstance.id}"/>">
+	  <a href="<%=request.getContextPath()%>/workflow/processMonitorController.jspa?method=stateInstances&processInstanceId=<c:out value="${processInstance.id}"/>"  target="_blank">
 	  <c:out value="${processInstance.processDefinition.name}"/>
 	  </a>
 	  </td>
 	  <td width="5%" height="15" align="center">
 	  <c:out value="${processInstance.processDefinition.version}"/>
 	  </td>
-	  <c:if test="${loadBusiness == 1}">
-	  <td width="10%" height="15" align="center" nowrap>
-      <%
-	  if(bi != null && bi.getRequesterName() != null){
-		  out.println(bi.getRequesterName());
-	  }
-	  %>
-	  </td>
-      <td width="40%" height="15" align="left" nowrap>
-	  <%
-	  if(bi != null && bi.getTitle() != null){
-		  out.println(bi.getTitle());
-	  }
-	  %>
-	  </td>
-	  <td width="10%" height="15" align="left" nowrap>
-	  <%
-	  if(bi != null && bi.getBusinessValue() != null){
-		  out.println(bi.getBusinessValue());
-	  }
-	  %>
-	  </td>
-	  </c:if>
+	   
 	  <td width="15%" height="15" align="center" nowrap>
-	  <fmt:formatDate value="${processInstance.start}" pattern="yyyy-MM-dd HH:mm"/>
+	  <fmt:formatDate value="${processInstance.start}" pattern="yyyy-MM-dd HH:mm:ss"/>
 	  </td>
 	  <td width="10%" height="15" align="center" nowrap>
+	  <%if(org.jpage.jbpm.config.ObjectFactory.canSuspendProcess()){%>
+	  <% if(pi != null && pi.getEnd() == null){
+          if(pi.isSuspended()){
+	  %>
+	      <img src="<%=request.getContextPath()%>/workflow/images/resume.gif" border="0" title="恢复流程实例" style="cursor:hand;"  onclick="javascript:resume('<c:out value="${processInstance.id}"/>');" >
+	  <%}else{%>
+	      <img src="<%=request.getContextPath()%>/workflow/images/suspend.gif" border="0" title="挂起流程实例" style="cursor:hand;"  onclick="javascript:suspend('<c:out value="${processInstance.id}"/>');" >
+	  <%}
+	   }
+	  }%>
+	  <%if(org.jpage.jbpm.config.ObjectFactory.canDeleteProcessInstance()){%>
+	      <img src="<%=request.getContextPath()%>/workflow/images/delete.gif" border="0" title="删除流程实例" style="cursor:hand;"  onclick="javascript:deleteRow('<c:out value="${processInstance.id}"/>');" >
+      <%}%>
+	  <c:choose>
+		  <c:when test="${running == 1}">
+			
+		  </c:when>
+		  <c:otherwise>
+		  </c:otherwise>
+	  </c:choose>	
 	  <a href="<%=request.getContextPath()%>/workflow/processMonitorController.jspa?method=stateInstances&processInstanceId=<c:out value="${processInstance.id}"/>" title="查看流程实例" target="_blank"><img src="<%=request.getContextPath()%>/workflow/images/view.gif" border="0"> </a>
 	  </td>
     </tr>
     </c:forEach>
   <tr class="gamma"> 
-    <td colspan="10" class="gamma">
-	    <jpage:paging form="iForm"/>
-	</td>
+    <td colspan="10" class="gamma"><%=jpage.getPagingTrail("iForm",true)%></td>
   </tr>
 </table>
  </BODY>

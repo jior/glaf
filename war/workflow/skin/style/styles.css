@@ -18,7 +18,7 @@ textarea{background-color: #ffffff; border: 1px #2f4c69 solid; text-decoration: 
 .table-border3{ background-color:#a80f02;height: 23px; font-family:"宋体"}
 .table-border4{ background-color:#1f4978;height: 23px; font-family:"宋体"}
 .table-title{   color:#000000;font-weight:700; height: 23px; font-family:"宋体"}
-.table-bar {FONT-WEIGHT: 300; BACKGROUND-IMAGE: url(../../images/table_title_bg.gif); COLOR: #000000; FONT-FAMILY: "宋体"; HEIGHT: 23px}
+.table-bar {FONT-WEIGHT: 300; BACKGROUND-IMAGE: url(../../../images/navigation_bg.jpg); COLOR: #000000; FONT-FAMILY: "宋体"; HEIGHT: 23px}
 .table-content{ background-color:#ffffff;height: 23px;font-size: 12px; font-family:"宋体"}
 .table-tool{    background-color:#ffffff;color:#000000;font-weight:700; height: 23px; font-family:"宋体"}
 

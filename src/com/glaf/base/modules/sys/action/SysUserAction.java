@@ -581,17 +581,19 @@ public class SysUserAction extends DispatchActionSupport {
 		int deptId = ParamUtil.getIntParameter(request, "deptId", 0);
 		int roleId = ParamUtil.getIntParameter(request, "roleId", 0);
 		SysDeptRole deptRole = sysDeptRoleService.find(deptId, roleId);
-		Set users = deptRole.getUsers();
+		if (deptRole != null) {
+			Set users = deptRole.getUsers();
 
-		long[] userIds = ParamUtil.getLongParameterValues(request, "id");
-		for (int i = 0; i < userIds.length; i++) {
-			SysUser user = sysUserService.findById(userIds[i]);
-			if (user != null) {
-				logger.info(user.getName());
-				users.add(user);
+			long[] userIds = ParamUtil.getLongParameterValues(request, "id");
+			for (int i = 0; i < userIds.length; i++) {
+				SysUser user = sysUserService.findById(userIds[i]);
+				if (user != null) {
+					logger.info(user.getName());
+					users.add(user);
+				}
 			}
+			deptRole.setUsers(users);
 		}
-		deptRole.setUsers(users);
 
 		ActionMessages messages = new ActionMessages();
 		if (sysDeptRoleService.update(deptRole)) {

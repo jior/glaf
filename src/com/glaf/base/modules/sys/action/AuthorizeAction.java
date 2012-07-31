@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.struts.action.ActionForm;
@@ -65,8 +66,8 @@ public class AuthorizeAction extends DispatchActionSupport {
 		String account = ParamUtil.getParameter(request, "account");
 		String password = ParamUtil.getParameter(request, "password");
 		String pwd = DigestUtil.digestString(password, "MD5");
-		
-		logger.debug(account+" start login........................");
+
+		logger.debug(account + " start login........................");
 
 		// 用户登陆，返回系统用户对象
 		SysUser bean = authorizeService.login(account, pwd);
@@ -100,6 +101,9 @@ public class AuthorizeAction extends DispatchActionSupport {
 			user.setActorType(0);
 			user.setMail(bean.getEmail());
 			user.setMobile(bean.getMobile());
+			if (StringUtils.equals(bean.getAccount(), "root")) {
+				user.setAdmin(true);
+			}
 
 			request.getSession().setAttribute(
 					org.jpage.util.Constant.LOGIN_USER, user);
