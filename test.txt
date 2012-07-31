@@ -1,0 +1,8 @@
+http://127.0.0.1:9090/glaf/workflow/test/start_test.jsp?rowId=1
+
+http://127.0.0.1:9090/glaf/workflow/test/endTask.jsp?rowId=1
+
+http://127.0.0.1:9090/glaf/workflow/processMonitorController.jspa?method=stateInstances&processInstanceId=345419
+
+
+ 
