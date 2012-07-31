@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="GBK"?>
+
+<process-definition xmlns="urn:jbpm.org:jpdl-3.2" name="Test">
+    <description>合同审批流程</description>
+	<swimlane name="starter">
+		<assignment class="org.jpage.jbpm.assignment.GeneralAssignment">
+		</assignment>
+	</swimlane>
+	<swimlane name="submiter">
+		<assignment
+			class="org.jpage.jbpm.assignment.ProcessStarterAssignment">
+		</assignment>
+	</swimlane>
+
+	<action name="create_task02"
+		class="org.jpage.jbpm.action.SqlMapTaskInstanceAction">
+		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
+		<taskName>task02</taskName>
+		<queryId>getXYDeptRoleUsers</queryId>
+		<roleId>R004</roleId>
+		<deptId>#P{deptId02}</deptId>
+	</action>
+
+	<action name="create_task03"
+		class="org.jpage.jbpm.action.SqlMapTaskInstanceAction">
+		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
+		<taskName>task03</taskName>
+		<queryId>getXYDeptRoleUsers</queryId>
+		<roleId>R002</roleId>
+		<deptId>#P{deptId03}</deptId>
+	</action>
+
+	<action name="create_task04"
+		class="org.jpage.jbpm.action.SqlMapTaskInstanceComplexAction">
+		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
+		<!--金额小于500000时可由任意一方审核-->
+		<pooledExpression>#{money &lt; 500000}</pooledExpression>
+		<taskName>task04</taskName>
+		<queryId>getXYDeptRoleUsers</queryId>
+		<roleIds>
+		  <roleId>R001</roleId>
+		</roleIds>
+		<deptId>#P{deptId04}</deptId>
+	</action>
+
+
+	<action name="EndCounterSigningAction"
+         class="org.jpage.jbpm.action.EndCounterSigningAction">
+      <expression>#{isAgree eq 'false'}</expression>
+    </action>
+
+	<action name="xyz_1000" class="org.jpage.jbpm.action.HibernateNativeSQLAction">
+		<sql>
+			UPDATE TEST
+			SET PROCESSNAME_ = 'Test',
+			PROCESSINSTANCEID_ = ${processInstanceId}, STATUS_ = 10, WFSTATUS_ = 1000 WHERE ID_ = ${rowId}
+		</sql>
+	</action>
+
+	<action name="xyz_1002" class="org.jpage.jbpm.action.HibernateNativeSQLAction">
+		<sql>
+			UPDATE TEST SET STATUS_ = 20, WFSTATUS_ = 1002 WHERE ID_ = ${rowId}
+		</sql>
+	</action>
+
+	<action name="xyz_5555" class="org.jpage.jbpm.action.HibernateNativeSQLAction">
+		<sql>
+			UPDATE TEST SET STATUS_ = -1, WFSTATUS_ = 5555 WHERE ID_ = ${rowId}
+		</sql>
+	</action>
+
+	<action name="xyz_9999" class="org.jpage.jbpm.action.HibernateNativeSQLAction">
+		<sql>
+			UPDATE TEST SET STATUS_ = 50, WFSTATUS_ = 9999 WHERE ID_ = ${rowId}
+		</sql>
+	</action>
+
+	<start-state name="启动流程">
+	    <task name="task0" description="启动流程" swimlane="starter">
+		    <event type="task-create">
+				<action ref-name="xyz_1000" />
+			</event>
+			<controller>
+				<variable name="isAgree" access="read,write,required"
+					mapped-name="isAgree" />
+			</controller>
+		</task>
+		<transition to="系长审核" name="提交"></transition>
+	</start-state>
+
+
+	<task-node name="系长审核"  create-tasks="false" end-tasks="true"
+		signal="first">
+		<event type="node-enter">
+			<action ref-name="create_task02" />
+			<action ref-name="xyz_1002" />
+		</event>
+		<task name="task02" description="系长审核">
+			<controller>
+				<variable name="isAgree" access="read,write,required"
+					mapped-name="isAgree" />
+			</controller>
+		</task>
+		<transition to="判断1？" name="判断"></transition>
+	</task-node>
+
+	<task-node name="科长审核"  create-tasks="false" end-tasks="true"
+		signal="last">
+		<event type="node-enter">
+			<action ref-name="create_task03" />
+			<action ref-name="xyz_1002" />
+		</event>
+		<task name="task03" description="科长审核">
+			<controller>
+				<variable name="isAgree" access="read,write,required"
+					mapped-name="isAgree" />
+			</controller>
+			<event type="task-end">
+			  <action ref-name="EndCounterSigningAction" />
+			</event>
+		</task>
+		<transition to="判断2？" name="判断"></transition>
+	</task-node>
+
+	<task-node name="部长会签" create-tasks="false" end-tasks="true"
+		signal="last">
+		<event type="node-enter">
+			<action ref-name="create_task04" />
+		</event>
+		<task name="task04" description="部长会签">
+			<controller>
+				<variable name="isAgree" access="read,write,required"
+					mapped-name="isAgree" />
+			</controller>
+			<event type="task-end">
+			  <action ref-name="EndCounterSigningAction" />
+			</event>
+		</task>
+		<transition to="是否通过？" name="判断"></transition>
+	</task-node>
+
+	<task-node name="重新修改">
+	    <event type="node-enter">
+			<action ref-name="xyz_5555" />
+		</event>
+	    <task name="task555" description="重新修改" swimlane="submiter">
+		</task>
+		<transition to="系长审核" name="重新提交"></transition>
+	</task-node>
+
+	<decision name="判断1？">
+		<transition to="重新修改" name="退回"></transition>
+		<transition to="科长审核" name="通过">
+		    <condition expression="#{isAgree eq 'true'}" />
+		</transition>
+	</decision>
+
+	<decision name="判断2？">
+		<transition to="重新修改" name="退回"></transition>
+		<transition to="部长会签" name="通过">
+		    <condition expression="#{isAgree eq 'true'}" />
+		</transition>
+	</decision>
+
+	<decision name="是否通过？">
+		<transition to="重新修改" name="退回"></transition>
+		<transition to="完成" name="通过">
+		    <condition expression="#{isAgree eq 'true'}" />
+		</transition>
+	</decision>
+
+
+	<end-state name="完成">
+	    <event type="node-enter">
+			<action ref-name="xyz_9999" />
+		</event>
+	</end-state>
+
+
+</process-definition>
