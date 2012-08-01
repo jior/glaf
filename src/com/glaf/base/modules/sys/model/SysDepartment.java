@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-public class SysDepartment implements Serializable{
+public class SysDepartment implements Serializable {
 	private static final long serialVersionUID = -1700125499848402378L;
 	private long id;
 	private String name;
@@ -17,88 +17,122 @@ public class SysDepartment implements Serializable{
 	private String code2;
 	private SysTree node;
 	private String fincode;
-	
+	private long nodeId;
+
 	private Set roles = new HashSet();
-	private Integer status =0;//是否有效[默认有效]
+	private int status = 0;// 是否有效[默认有效]
 	private Set historyDeparts = new HashSet();
-	
-	public String getCode2() {
-		return code2;
-	}
-	public void setCode2(String code2) {
-		this.code2 = code2;
-	}
-	public Set getRoles() {
-		return roles;
-	}
-	public void setRoles(Set roles) {
-		this.roles = roles;
-	}
-	public SysTree getNode() {
-		return node;
-	}
-	public void setNode(SysTree node) {
-		this.node = node;
-	}
-	public Date getCreateTime() {
-		return createTime;
-	}
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
-	public String getDesc() {
-		return desc;
-	}
-	public void setDesc(String desc) {
-		this.desc = desc;
-	}
-	public long getId() {
-		return id;
-	}
-	public void setId(long id) {
-		this.id = id;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public int getSort() {
-		return sort;
-	}
-	public void setSort(int sort) {
-		this.sort = sort;
-	}
+
 	public String getCode() {
 		return code;
 	}
-	public void setCode(String code) {
-		this.code = code;
+
+	public String getCode2() {
+		return code2;
 	}
-	public String getNo() {
-		return no;
+
+	public Date getCreateTime() {
+		return createTime;
 	}
-	public void setNo(String no) {
-		this.no = no;
+
+	public String getDesc() {
+		return desc;
 	}
-	public Integer getStatus() {
-		return status;
-	}
-	public void setStatus(Integer status) {
-		this.status = status;
-	}
-	public Set getHistoryDeparts() {
-		return historyDeparts;
-	}
-	public void setHistoryDeparts(Set historyDeparts) {
-		this.historyDeparts = historyDeparts;
-	}
+
 	public String getFincode() {
 		return fincode;
 	}
+
+	public Set getHistoryDeparts() {
+		return historyDeparts;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getNo() {
+		return no;
+	}
+
+	public SysTree getNode() {
+		return node;
+	}
+
+	public long getNodeId() {
+		return nodeId;
+	}
+
+	public Set getRoles() {
+		return roles;
+	}
+
+	public int getSort() {
+		return sort;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public void setCode2(String code2) {
+		this.code2 = code2;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	public void setDesc(String desc) {
+		this.desc = desc;
+	}
+
 	public void setFincode(String fincode) {
 		this.fincode = fincode;
 	}
-	
+
+	public void setHistoryDeparts(Set historyDeparts) {
+		this.historyDeparts = historyDeparts;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setNo(String no) {
+		this.no = no;
+	}
+
+	public void setNode(SysTree node) {
+		this.node = node;
+	}
+
+	public void setNodeId(long nodeId) {
+		this.nodeId = nodeId;
+	}
+
+	public void setRoles(Set roles) {
+		this.roles = roles;
+	}
+
+	public void setSort(int sort) {
+		this.sort = sort;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
 }

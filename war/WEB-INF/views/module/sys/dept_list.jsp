@@ -148,7 +148,7 @@ if(list!=null){
   <tr <%=i%2==0?"":"class='list-back'"%>> 
     <td class="td-cb"> <input type="checkbox" name="id" value="<%=bean.getId()%>" onClick="checkOperation(this.form)">    </td>
     <td class="td-no"><%=((pager.getCurrentPageNo()-1)*pageSize + i+1)%></td>
-    <td class="td-text"><a href="department.do?method=showList&id=<%=bean.getId()%>&parent=<%=bean.getNode().getId()%>"><%=bean.getName()%></a> </td>
+    <td class="td-text"><a href="department.do?method=showList&id=<%=bean.getId()%>&parent=<%=bean.getNodeId()%>"><%=bean.getName()%></a> </td>
     <td class="td-no"><%=bean.getStatus()==0?"有效":"无效"%>&nbsp;</td>
     <td class="td-no"><%=bean.getCode()%>&nbsp;</td>
     <td class="td-no"><%=bean.getNo()%>&nbsp;</td>

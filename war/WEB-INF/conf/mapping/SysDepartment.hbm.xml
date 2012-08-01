@@ -21,9 +21,11 @@
 		<property name="code2" type="string" column="code2" />
 		<property name="status" type="integer" column="status" />
 		<property name="fincode" type="string" column="fincode" />
+		<property name="nodeId" type="long" column="nodeId"  insert="false" update="false" />
 
 		<many-to-one name="node" class="SysTree" column="nodeId"
 			cascade="all" unique="true" not-null="true" not-found="ignore" />
+
 		<set name="roles" table="sys_dept_role" inverse="false">
 			<key column="deptId" />
 			<one-to-many class="SysDeptRole" />
