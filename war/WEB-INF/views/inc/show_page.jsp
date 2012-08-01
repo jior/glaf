@@ -1,4 +1,5 @@
 <%@page contentType="text/html;charset=gbk"%>
+<%@page import="java.net.URLDecoder"%>
 <%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean" %>
 <%@ page import="com.glaf.base.utils.*"%>
 <%
@@ -8,8 +9,7 @@ int pageCount = ParamUtil.getIntParameter(request, "page_count", 0);
 int pageSize = ParamUtil.getIntParameter(request, "page_size", 10);
 int pageNo = ParamUtil.getIntParameter(request, "page_no", 1);
 String url = ParamUtil.getParameter(request, "url");
-String params = ParamUtil.getParameter(request, "params");
-//System.out.println(">>>>params:"+params);
+String params = URLDecoder.decode(ParamUtil.getParameter(request, "params"));
 int go = pageNo;
 %>
 <table width="319"  border="0" align="right" cellpadding="0" cellspacing="0">

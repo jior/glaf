@@ -19,7 +19,7 @@ public class SysDepartment implements Serializable{
 	private String fincode;
 	
 	private Set roles = new HashSet();
-	private Integer status;//是否有效
+	private Integer status =0;//是否有效[默认有效]
 	private Set historyDeparts = new HashSet();
 	
 	public String getCode2() {
