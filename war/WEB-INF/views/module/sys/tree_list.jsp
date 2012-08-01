@@ -55,7 +55,7 @@ function modify(form){
 	  for (var i=0;i<arr.length;i++) {
 		var e = arr[i];
 		if (e.checked){
-		  id=e.value;
+		   id = e.value;
 		}     
 	  }
 	  var url="tree.do?method=prepareModify&id="+id;
