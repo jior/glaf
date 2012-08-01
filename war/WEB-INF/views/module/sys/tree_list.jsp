@@ -40,26 +40,32 @@ function checkOperation(form){
   }
 }
 function add(){
-  var url="tree.do?method=prepareAdd&parent="+<%=parent%>;
+  var url="tree.do?method=prepareAdd&parent=<%=parent%>";
   var width=450;
   var height=350;
   var scroll="no";
   openWindow(url, width, height, scroll);
 }
+
 function modify(form){
-var id =0;
-  for (var i=0;i<form.id.length;i++) {
-    var e = form.id[i];
-    if (e.checked){
-	  id=e.value;
-	}     
+  var id = 0;
+  num = getCheckedBoxNum(form,"id");
+  if(num == 1){
+      var arr = document.getElementsByName("id");
+	  for (var i=0;i<arr.length;i++) {
+		var e = arr[i];
+		if (e.checked){
+		  id=e.value;
+		}     
+	  }
+	  var url="tree.do?method=prepareModify&id="+id;
+	  var width=450;
+	  var height=350;
+	  var scroll="no";
+	  openWindow(url, width, height, scroll);
   }
-  var url="tree.do?method=prepareModify&id="+id;
-  var width=450;
-  var height=350;
-  var scroll="no";
-  openWindow(url, width, height, scroll);
 }
+
 function del(){
   var form = document.all.GenericForm;
   if(confirmDelete(form)){
@@ -77,6 +83,7 @@ function sort(id, operate){
 <body>
 <div class="nav-title"><span class="Title">目录管理</span>&gt;&gt;节点列表</div>
 <html:form action="/sys/tree.do?method=batchDelete" method="post" target="_self"> 
+ 
 <input name="page_no" type="hidden" value="<%=pager.getCurrentPageNo()%>">
 <input name="parent" type="hidden" value="<%=parent%>">
 <table width="100%" border="0" cellspacing="1" cellpadding="0" class="list-box">
@@ -96,7 +103,7 @@ if(list!=null){
     SysTree bean=(SysTree)iter.next();	
 %>
   <tr <%=i%2==0?"":"class='list-back'"%>> 
-    <td class="td-cb"> <input type="checkbox" name="id" value="<%=bean.getId()%>" onClick="checkOperation(this.form);">    </td>
+    <td class="td-cb"><input type="checkbox" name="id" value="<%=bean.getId()%>" onClick="checkOperation(this.form);"></td>
     <td class="td-no"><%=((pager.getCurrentPageNo()-1)*pageSize + i+1)%></td>
     <td class="td-text"><%=bean.getName()%>&nbsp;</td>
     <td class="td-text"><%=bean.getDesc()%>&nbsp;</td>
