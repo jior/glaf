@@ -15,6 +15,7 @@
 		<property name="grade" type="integer" column="grade" />
 		<property name="code" type="string" column="code" />
 		<property name="sort" type="integer" column="sort" />
+		<property name="deptId" type="long" column="deptId" insert="false" update="false" />
 
 		<many-to-one name="role" class="SysRole" column="sysRoleId"
 			cascade="none" not-null="true" not-found="ignore" />

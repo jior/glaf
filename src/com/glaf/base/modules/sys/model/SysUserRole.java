@@ -7,12 +7,34 @@ public class SysUserRole implements Serializable {
 	private static final long serialVersionUID = 4335486314285694158L;
 	private long id;
 	private SysUser user;
+	private long userId;
 	private SysDeptRole deptRole;
+	private long deptRoleId;
 	private int authorized;
 	private SysUser authorizeFrom;
 	private Date availDateStart;
 	private Date availDateEnd;
 	private String processDescription;
+
+	public SysUserRole() {
+
+	}
+
+	public long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(long userId) {
+		this.userId = userId;
+	}
+
+	public long getDeptRoleId() {
+		return deptRoleId;
+	}
+
+	public void setDeptRoleId(long deptRoleId) {
+		this.deptRoleId = deptRoleId;
+	}
 
 	public int getAuthorized() {
 		return authorized;

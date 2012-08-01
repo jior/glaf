@@ -17,6 +17,7 @@
 		<property name="url" type="string" column="url" />
 		<property name="sort" type="integer" column="sort" />
 		<property name="showMenu" type="int" column="showMenu" />
+		<property name="nodeId" type="long" column="nodeId"  insert="false" update="false" />
 
 		<many-to-one name="node" class="SysTree" column="nodeId"
 			cascade="all" unique="true" not-null="true" not-found="ignore" />
