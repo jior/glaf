@@ -9,12 +9,15 @@
 		deployInstanceMap = new HashMap();
 	}
 %>
-<HTML>
-<HEAD>
-<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%@ include file="/WEB-INF/pages/common/style.jsp"%>
-</HEAD>
-<BODY leftMargin=0 topMargin=0 marginheight="0" marginwidth="0" >
+<link href="<%=request.getContextPath()%>/css/site.css" type="text/css" rel="stylesheet">
+
+</head>
+<body onLoad="DynarchMenu.setup('menu1', { context: true});" id="document" >
+<jsp:include page="/WEB-INF/views/module/header.jsp" flush="true"/>
 <div style="height: 580px"> 
 <br><br>
 <div align="center"><b>流程列表</b></div><br>
@@ -51,5 +54,5 @@
     </c:forEach>
   </table>
   </div>
- </BODY>
-</HTML>
+ </body>
+</html>

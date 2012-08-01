@@ -19,7 +19,8 @@
 <HEAD>
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%@ include file="/WEB-INF/pages/common/style.jsp"%>
-<LINK href="<%=request.getContextPath()%>/workflow/styles/<c:out value="${frame_skin}"/>/main/main.css" type=text/css rel=stylesheet>
+<link href="<%=request.getContextPath()%>/css/site.css" type="text/css" rel="stylesheet">
+
 </HEAD>
 <script language="JavaScript">
   function chooseStatus()
@@ -73,7 +74,8 @@
   }
 
 </script>
-<body leftMargin=0 topMargin=0 marginheight="0" marginwidth="0">
+<body onLoad="DynarchMenu.setup('menu1', { context: true});" id="document">
+<jsp:include page="/WEB-INF/views/module/header.jsp" flush="true"/>
 <form name="iForm" action="<%=request.getContextPath()%>/workflow/processMonitorController.jspa" method="post">
 <input type="hidden" id="processInstanceId" name="processInstanceId">
 <br>
