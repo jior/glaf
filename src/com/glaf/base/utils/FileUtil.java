@@ -16,11 +16,11 @@ public class FileUtil {
 	 * 删除指定路径的单个文件
 	 * @param filePath
 	 */
-	public void delFiles(String filePath){
+	public static void delFiles(String filePath){
 		logger.info("filepath="+filePath);
 		File file = new File(filePath);
 		if(file.exists() && file.isFile()){
-			file.delete();
+			file.delete() ;
 		}
 	}
 	
@@ -28,7 +28,7 @@ public class FileUtil {
 	 * 删除指定目录中的所有文件
 	 * @param dirPath
 	 */
-	public void delDirFlies(String dirPath,String ext){
+	public static void delDirFlies(String dirPath,String ext){
 		File file = new File(dirPath);
 		if(file.isDirectory()){
 			File files[] = file.listFiles();
@@ -50,7 +50,7 @@ public class FileUtil {
 	 * 删除系统中的Down文件夹中的temp文件目录中的所有文件
 	 *
 	 */
-	public void delDownTempFiles(){
+	public static void delDownTempFiles(){
 		String path = Constants.ROOT_PATH + Constants.UPLOAD_DIR+"temp";
 		delDirFlies(path,"xls");
 	}
