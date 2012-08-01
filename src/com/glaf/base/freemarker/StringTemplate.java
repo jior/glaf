@@ -10,6 +10,8 @@ import freemarker.template.TemplateException;
 
 public class StringTemplate {
 
+	private static final Configuration cfg = new Configuration();
+
 	public static String convert(Map root, String source) {
 		if (source == null) {
 			return null;
@@ -18,7 +20,6 @@ public class StringTemplate {
 		String rst = "";
 		try {
 
-			Configuration cfg = new Configuration();
 			cfg.setTemplateLoader(new StringTemplateLoader(source));
 			cfg.setDefaultEncoding("UTF-8");
 
@@ -26,6 +27,7 @@ public class StringTemplate {
 
 			StringWriter writer = new StringWriter();
 			template.process(root, writer);
+
 			writer.flush();
 			rst = writer.toString();
 
