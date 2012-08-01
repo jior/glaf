@@ -317,7 +317,7 @@ public class AbstractSpringDao extends HibernateDaoSupport {
 	}
 
 	/**
-	 * 获取列表 --------------------------------------------------------- 修改人：kxr
+	 * 获取列表 ---------------------------------------------------------
 	 * 修改日期：2011-03-01 描述：捕捉错误示作抛出，将信息记录到日志，返回空的对象
 	 * ---------------------------------------------------------
 	 * 
@@ -595,10 +595,9 @@ public class AbstractSpringDao extends HibernateDaoSupport {
 		}
 		System.out.println("getResutlTotalByQuery  query:" + query);
 	}
-
-	// 以下是新增的方法（key）
+ 
 	/**
-	 * 根据sql拿记录数 author:key createDate:2010-05-31
+	 * 根据sql拿记录数
 	 * 
 	 * @param sql
 	 * @return
