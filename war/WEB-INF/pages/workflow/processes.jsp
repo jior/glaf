@@ -21,7 +21,7 @@
 <div style="height: 580px"> 
 <br><br>
 <div align="center"><b>流程列表</b></div><br>
-<table id="processTb" align="center" class="table-border" cellspacing="1" cellpadding="4" width="90%" nowrap >
+<table id="processTb" align="center" class="table-border" cellspacing="1" cellpadding="0" width="90%" nowrap >
     <tr class="table-bar" align="middle" nowrap>
 	  <td align="center" class="table-title" nowrap>流程编号</td>
 	  <td align="center" class="table-title" nowrap>流程名称</td>

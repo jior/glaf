@@ -108,7 +108,7 @@
 <input type="hidden" name="method" value="processInstances">
 
 <%=jpage.getDefaultHiddenField()%>
-<table align="center" class="table-border" cellspacing="1" cellpadding="4" width="90%" nowrap>
+<table align="center" class="table-border" cellspacing="1" cellpadding="0" width="90%" nowrap>
     <tr class="gamma"> 
       <td colspan="10" class="gamma"><%=jpage.getPagingHead("iForm",true)%></td>
     </tr>
