@@ -247,6 +247,7 @@ public class SysUserAction extends DispatchActionSupport {
 			HttpServletResponse response) throws Exception {
 		long id = ParamUtil.getIntParameter(request, "id", 0);
 		SysUser bean = sysUserService.findById(id);
+		boolean ret = false;
 		if (bean != null) {
 			SysDepartment department = sysDepartmentService.findById(ParamUtil
 					.getIntParameter(request, "parent", 0));
@@ -263,9 +264,9 @@ public class SysUserAction extends DispatchActionSupport {
 			bean.setBlocked(ParamUtil.getIntParameter(request, "blocked", 0));
 			bean.setHeadship(ParamUtil.getParameter(request, "headship"));
 			bean.setUserType(ParamUtil.getIntParameter(request, "userType", 0));
+			ret = sysUserService.update(bean);
 		}
 
-		boolean ret = sysUserService.update(bean);
 		ActionMessages messages = new ActionMessages();
 		if (ret) {// 保存成功
 			messages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage(
@@ -561,16 +562,18 @@ public class SysUserAction extends DispatchActionSupport {
 			HttpServletResponse response) throws Exception {
 		SysUser bean = (SysUser) request.getSession().getAttribute(
 				SysConstants.LOGIN);
+		boolean ret = false;
 		if (bean != null) {
 			// bean.setPassword(ParamUtil.getParameter(request, "password"));
 			// bean.setPassword(CryptUtil.EnCryptPassword(ParamUtil.getParameter(request,
 			// "password")));
-			bean.setMobile(ParamUtil.getParameter(request, "mobile"));
-			bean.setEmail(ParamUtil.getParameter(request, "email"));
-			bean.setTelephone(ParamUtil.getParameter(request, "telephone"));
+			SysUser user = sysUserService.findById(bean.getId());
+			user.setMobile(ParamUtil.getParameter(request, "mobile"));
+			user.setEmail(ParamUtil.getParameter(request, "email"));
+			user.setTelephone(ParamUtil.getParameter(request, "telephone"));
+			ret = sysUserService.update(user);
 		}
 
-		boolean ret = sysUserService.update(bean);
 		ActionMessages messages = new ActionMessages();
 		if (ret) {// 保存成功
 			request.getSession().setAttribute(SysConstants.LOGIN, bean);
