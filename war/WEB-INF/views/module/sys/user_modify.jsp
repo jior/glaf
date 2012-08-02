@@ -20,11 +20,11 @@ List  list = (List)request.getAttribute("parent");
 <script language="JavaScript">
 function checkForm(form){
   if(verifyAll(form)){
-     if(form.password.value!=form.password2.value){
-	   alert("密码与确认密码不匹配");
-	 }else{
-	   return true;
-	 }
+     //if(form.password.value!=form.password2.value){
+	 //  alert("密码与确认密码不匹配");
+	 //}else{
+	 //  return true;
+	 //}
   }
    return false;
 }
@@ -53,14 +53,6 @@ function setValue(obj){
       <tr>
         <td width="20%" class="input-box">员工编码*</td>
         <td width="80%"><%=bean.getCode()%></td>
-      </tr>
-      <tr>
-        <td class="input-box2" valign="top">密　　码*</td>
-        <td><input name="password" type="password" size="30" class="input" value="<%=bean.getPassword()%>" datatype="string" nullable="no" minsize="6" maxsize="20" chname="密码"></td>
-      </tr>
-      <tr>
-        <td class="input-box2" valign="top">确认密码*</td>
-        <td><input name="password2" type="password" size="30" class="input" value="<%=bean.getPassword()%>"  datatype="string" nullable="no" minsize="6" maxsize="20" chname="确认密码"></td>
       </tr>
       <tr>
         <td class="input-box2" valign="top">部　　门</td>

@@ -10,6 +10,7 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.struts.action.ActionForm;
@@ -205,6 +206,33 @@ public class SysUserAction extends DispatchActionSupport {
 	}
 
 	/**
+	 * 显示修改页面
+	 * 
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public ActionForward prepareModifyPwd(ActionMapping mapping,
+			ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		long id = ParamUtil.getLongParameter(request, "id", 0);
+		SysUser bean = sysUserService.findById(id);
+		request.setAttribute("bean", bean);
+
+		SysTree parent = sysTreeService.getSysTreeByCode(Constants.TREE_DEPT);
+		List list = new ArrayList();
+		parent.setDeep(0);
+		list.add(parent);
+		sysTreeService.getSysTree(list, (int) parent.getId(), 1);
+		request.setAttribute("parent", list);
+
+		return mapping.findForward("show_modify_pwd");
+	}
+
+	/**
 	 * 提交修改信息
 	 * 
 	 * @param mapping
@@ -224,7 +252,7 @@ public class SysUserAction extends DispatchActionSupport {
 					.getIntParameter(request, "parent", 0));
 			bean.setDepartment(department);
 			bean.setName(ParamUtil.getParameter(request, "name"));
-			bean.setPassword(ParamUtil.getParameter(request, "password"));
+			// bean.setPassword(ParamUtil.getParameter(request, "password"));
 			// bean.setPassword(CryptUtil.EnCryptPassword(ParamUtil.getParameter(request,
 			// "password")));
 			bean.setGender(ParamUtil.getIntParameter(request, "gender", 0));
@@ -238,6 +266,50 @@ public class SysUserAction extends DispatchActionSupport {
 		}
 
 		boolean ret = sysUserService.update(bean);
+		ActionMessages messages = new ActionMessages();
+		if (ret) {// 保存成功
+			messages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage(
+					"user.modify_success"));
+		} else {// 保存失败
+			messages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage(
+					"user.modify_failure"));
+		}
+		addMessages(request, messages);
+		return mapping.findForward("show_msg");
+	}
+
+	/**
+	 * 提交修改信息
+	 * 
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public ActionForward savePwd(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		SysUser bean = (SysUser) request.getSession().getAttribute(
+				SysConstants.LOGIN);
+		boolean ret = false;
+		String oldPwd = ParamUtil.getParameter(request, "oldPwd");
+		String newPwd = ParamUtil.getParameter(request, "newPwd");
+		if (bean != null && StringUtils.isNotEmpty(oldPwd)
+				&& StringUtils.isNotEmpty(newPwd)) {
+			SysUser user = sysUserService.findById(bean.getId());
+			// bean.setPassword(ParamUtil.getParameter(request, "password"));
+			// bean.setPassword(CryptUtil.EnCryptPassword(ParamUtil.getParameter(request,
+			// "password")));
+
+			String encPwd = DigestUtil.digestString(oldPwd, "MD5");
+			if (StringUtils.equals(encPwd, user.getPassword())) {
+				user.setPassword(DigestUtil.digestString(newPwd, "MD5"));
+				ret = sysUserService.update(user);
+			}
+		}
+
 		ActionMessages messages = new ActionMessages();
 		if (ret) {// 保存成功
 			messages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage(
@@ -490,7 +562,7 @@ public class SysUserAction extends DispatchActionSupport {
 		SysUser bean = (SysUser) request.getSession().getAttribute(
 				SysConstants.LOGIN);
 		if (bean != null) {
-			bean.setPassword(ParamUtil.getParameter(request, "password"));
+			// bean.setPassword(ParamUtil.getParameter(request, "password"));
 			// bean.setPassword(CryptUtil.EnCryptPassword(ParamUtil.getParameter(request,
 			// "password")));
 			bean.setMobile(ParamUtil.getParameter(request, "mobile"));

@@ -57,6 +57,15 @@ function modifyInfo(){
   var scroll="no";
   openWindow(url, width, height, scroll);	
 }
+
+function modifyPwd(){	
+  var url="<%=context%>/sys/user.do?method=prepareModifyPwd";
+  var width=450;
+  var height=250;
+  var scroll="no";
+  openWindow(url, width, height, scroll);	
+}
+
 function authorize(){	
   var url="<%=context%>/sys/sysUserRole.do?method=showSysAuth";
   var width=400;
@@ -110,6 +119,7 @@ function openDocument()
         <ul>
 		  <li><a href="<%=context%>/sys/frame.do">我的工作台</a></li>
 		  <li><a href="javascript:modifyInfo()">修改用户信息</a></li>
+		  <li><a href="javascript:modifyPwd()">修改密码</a></li>
 		  <li></li>
 		  <%=menu%>
 	      <li><a href="<%=context%>/sys/authorize.do?method=logout">退出系统</a></li>

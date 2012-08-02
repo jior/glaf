@@ -69,6 +69,7 @@
       <forward name="show_list" path="/WEB-INF/views/module/sys/user_list.jsp"/>
       <forward name="show_add" path="/WEB-INF/views/module/sys/user_add.jsp"/>
       <forward name="show_modify" path="/WEB-INF/views/module/sys/user_modify.jsp"/>
+	  <forward name="show_modify_pwd" path="/WEB-INF/views/module/sys/user_modify_pwd.jsp"/>
       <forward name="go_list" path="/sys/user.do?method=showList"/>
       <forward name="show_role" path="/WEB-INF/views/module/sys/user_role.jsp"/>
       <forward name="show_frame" path="/WEB-INF/views/module/sys/user_frame.jsp"/>
