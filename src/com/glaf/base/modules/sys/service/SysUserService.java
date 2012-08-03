@@ -112,8 +112,9 @@ public class SysUserService {
 	 * @return
 	 */
 	public SysUser findById(long id) {
-		if (id == 0)// add by key 2012-05-21
+		if (id == 0){
 			return null;
+		}
 		return (SysUser) abstractDao.find(SysUser.class, new Long(id));
 	}
 

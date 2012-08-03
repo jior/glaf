@@ -24,8 +24,8 @@
 	<plug-in className="org.springframework.web.struts.ContextLoaderPlugIn">
 		<set-property property="contextConfigLocation"
 			value="/WEB-INF/conf/spring/spring-security.xml,
-                         /WEB-INF/conf/spring/action-sys.xml,
-                          /WEB-INF/conf/spring/action-others.xml,
-                         /WEB-INF/conf/spring/action-workspace.xml" />
+                   /WEB-INF/conf/spring/action-sys.xml,
+                   /WEB-INF/conf/spring/action-others.xml,
+                   /WEB-INF/conf/spring/action-workspace.xml" />
 	</plug-in>
 </struts-config>

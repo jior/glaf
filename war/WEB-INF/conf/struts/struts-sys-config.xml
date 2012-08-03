@@ -168,5 +168,15 @@
       <forward name="show_auth_panel" path="/WEB-INF/views/module/sys/authorize_panel.jsp"/>
       <forward name="show_userAuth_panel" path="/WEB-INF/views/module/sys/authorizeUser_panel.jsp"/>
     </action>
+
+	<action path="/sys/todo"
+            parameter="method"
+            scope="request"
+            name="GenericForm"
+            type="org.springframework.web.struts.DelegatingActionProxy">
+      <forward name="show_list" path="/WEB-INF/views/module/todo/show_list.jsp"/>
+      <forward name="show_modify" path="/WEB-INF/views/module/todo/show_modify.jsp"/>
+    </action>
+
   </action-mappings>
 </struts-config>

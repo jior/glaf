@@ -10,6 +10,9 @@ import org.hibernate.Hibernate;
 import org.jpage.core.cache.CacheFactory;
 
 import org.jpage.util.DateTools;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.glaf.base.dao.AbstractSpringDao;
 import com.glaf.base.modules.others.service.WorkCalendarService;
 import com.glaf.base.modules.sys.model.*;
@@ -20,24 +23,33 @@ import com.glaf.base.modules.todo.model.ToDoInstance;
 import com.glaf.base.modules.todo.model.UserEntity;
 import com.glaf.base.modules.workspace.service.MessageService;
 
+@Service
 public class TodoService {
 
 	private final static Log logger = LogFactory.getLog(TodoService.class);
 
+	@Autowired
 	private AbstractSpringDao abstractDao;
 
+	@Autowired
 	private SysUserService sysUserService;
 
+	@Autowired
 	private SysRoleService sysRoleService;
 
+	@Autowired
 	private SysDeptRoleService sysDeptRoleService;
 
+	@Autowired
 	private SysDepartmentService sysDepartmentService;
 
+	@Autowired
 	private WorkCalendarService workCalendarService;
 
+	@Autowired
 	private MessageService messageService;
 
+	@Autowired
 	private TodoDAO todoDAO;
 
 	public TodoService() {

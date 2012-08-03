@@ -112,4 +112,10 @@
 		</property>
 	</bean>
 
+	<bean name="/sys/todo" class="com.glaf.base.modules.todo.action.TodoAction">
+		<property name="todoService">
+			<ref bean="todoProxy" />
+		</property>
+	</bean>
+
 </beans>
