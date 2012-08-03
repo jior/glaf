@@ -2,95 +2,21 @@
 
 <!DOCTYPE hibernate-configuration PUBLIC
           "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
-          "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+          "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 
 <hibernate-configuration>
   <session-factory>
 
-    <!-- jdbc connection properties -->
-    <!-- <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
-    <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-    <property name="hibernate.connection.url">jdbc:mysql://localhost/jbpm312</property>
-    <property name="hibernate.connection.username">root</property>
-    <property name="hibernate.connection.password">root</property> -->
-
     <property name="hibernate.cache.provider_class">org.hibernate.cache.HashtableCacheProvider</property>
 	<property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
-	<!-- <property name="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</property> -->
 	<property name="hibernate.connection.datasource">java:comp/env/jdbc/jbpm</property>
-	
-    <!--<property name="hibernate.connection.driver_class">net.sourceforge.jtds.jdbc.Driver</property>
-	<property name="hibernate.connection.url">jdbc:jtds:sqlserver://127.0.0.1:1433/purchase</property>
-    <property name="hibernate.connection.username">sa</property>
-    <property name="hibernate.connection.password"></property>
-	<property name="hibernate.connection.autocommit">true</property>-->
-     
-    <!-- <property name="hibernate.connection.url">jdbc:jtds:sqlserver://127.0.0.1:1433/purchase</property>
-    <property name="hibernate.connection.username">sa</property>
-    <property name="hibernate.connection.password"></property> -->  
-
-	<!-- <property name="hibernate.dialect">org.hibernate.dialect.DB2Dialect</property>
-    <property name="hibernate.connection.driver_class">COM.ibm.db2.jdbc.net.DB2Driver</property>
-    <property name="hibernate.connection.url">jdbc:db2://127.0.0.1/imsdb</property>
-    <property name="hibernate.connection.username">imsadmin</property>
-    <property name="hibernate.connection.password">imsadmin</property> -->
-	<!-- <property name="hibernate.connection.autocommit">false</property> -->
-	
 	<property name="hibernate.query.substitutions">true=1 false=0</property>
 	<property name="hibernate.cache.use_query_cache">true</property>
-	<property name="hibernate.cglib.use_reflection_optimizer">true</property>
+	<property name="hibernate.bytecode.use_reflection_optimizer">true</property>
 	<property name="hibernate.jdbc.fetch_size">25</property>
 	<property name="hibernate.jdbc.batch_size">25</property>
 	<property name="hibernate.max_fetch_depth">2</property>
 	<property name="hibernate.hbm2ddl.auto">update</property>
-	 
-	<!-- <property name="hibernate.show_sql">true</property>
-    <property name="hibernate.format_sql">true</property> -->
-	
-	<!-- <property name="hibernate.connection.release_mode">auto</property> -->
-	<!-- <property name="hibernate.connection.provider_class">
-	    org.hibernate.connection.C3P0ConnectionProvider
-	</property>
-    <property name="hibernate.connection.pool_size">50</property>
-	<property name="hibernate.c3p0.max_size">100</property>
-	<property name="hibernate.c3p0.min_size">5</property>
-	<property name="hibernate.c3p0.timeout">5000</property>
-	<property name="hibernate.c3p0.max_statements">100</property>
-	<property name="hibernate.c3p0.idle_test_period">3000</property>
-	<property name="hibernate.c3p0.acquire_increment">2</property>
-	<property name="hibernate.c3p0.validate">true</property>  -->
-
-	<!-- <property name="hibernate.connection.provider_class">
-	    org.hibernate.connection.ProxoolConnectionProvider
-	</property>
-    <property name="hibernate.proxool.pool_alias">jbpm</property>
-    <property name="hibernate.proxool.xml">proxool.xml</property> -->
-
-	<!-- <property name="hibernate.show_sql">true</property>
-    <property name="hibernate.format_sql">true</property> -->
-
-	<!-- <property name="hibernate.dialect">org.hibernate.dialect.DB2Dialect</property>
-    <property name="hibernate.connection.driver_class">COM.ibm.db2.jdbc.net.DB2Driver</property>
-    <property name="hibernate.connection.url">jdbc:db2://10.251.68.104/EQSDB</property>
-    <property name="hibernate.connection.username">eqsadmin</property>
-    <property name="hibernate.connection.password">eqsadmin</property>
-	<property name="hibernate.connection.autocommit">false</property>
-    <property name="hibernate.query.substitutions">true=1 false=0</property> -->
-
-	<!-- <property name="hibernate.dialect">org.hibernate.dialect.DB2Dialect</property>
-    <property name="hibernate.connection.driver_class">COM.ibm.db2.jdbc.app.DB2Driver</property>
-    <property name="hibernate.connection.url">jdbc:db2:EQSDB</property>
-    <property name="hibernate.connection.username">eqsadmin</property>
-    <property name="hibernate.connection.password">eqsadmin</property>
-	<property name="hibernate.connection.autocommit">false</property>
-    <property name="hibernate.query.substitutions">true=1 false=0</property> -->
-
-
-    <!-- other hibernate properties 
-	<property name="hibernate.hbm2ddl.auto">update</property>
-    <property name="hibernate.show_sql">true</property>
-    <property name="hibernate.format_sql">true</property>
-    -->
 
 	<!-- <property name="hibernate.show_sql">true</property>
     <property name="hibernate.format_sql">true</property> -->
