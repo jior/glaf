@@ -20,7 +20,7 @@ import com.glaf.base.modules.sys.service.SysLogService;
 import com.glaf.base.modules.utils.ContextUtil;
 
 public class AuthorizeInterceptor implements MethodBeforeAdvice {
-	private Logger logger = Logger.getLogger(this.getClass().getName());
+	private static final Logger logger = Logger.getLogger(AuthorizeInterceptor.class );
 	
 	/**
 	 * method - method being invoked

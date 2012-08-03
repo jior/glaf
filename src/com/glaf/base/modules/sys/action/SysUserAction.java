@@ -37,7 +37,7 @@ import com.glaf.base.utils.PageResult;
 import com.glaf.base.utils.ParamUtil;
 
 public class SysUserAction extends DispatchActionSupport {
-	private Log logger = LogFactory.getLog(SysUserAction.class);
+	private static final Log logger = LogFactory.getLog(SysUserAction.class);
 	private SysUserService sysUserService;
 	private SysDeptRoleService sysDeptRoleService;
 	private SysTreeService sysTreeService;

@@ -11,7 +11,7 @@ import com.glaf.base.modules.sys.SysConstants;
 import com.glaf.base.modules.sys.model.SysFunction;
 
 public class SysFunctionService {
-	private Log logger = LogFactory.getLog(SysFunctionService.class);
+	private static final Log logger = LogFactory.getLog(SysFunctionService.class);
 	private AbstractSpringDao abstractDao;
 	
 	public void setAbstractDao(AbstractSpringDao abstractDao) {

@@ -14,7 +14,7 @@ import com.glaf.base.modules.others.model.Audit;
 import com.glaf.base.modules.sys.model.SysUser;
 
 public class AuditService {
-	private Log logger = LogFactory.getLog(AuditService.class);
+	private static final Log logger = LogFactory.getLog(AuditService.class);
 	private AbstractSpringDao abstractDao;
 
 	public void setAbstractDao(AbstractSpringDao abstractDao) {

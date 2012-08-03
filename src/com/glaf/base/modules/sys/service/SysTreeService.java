@@ -13,7 +13,7 @@ import com.glaf.base.modules.sys.model.SysTree;
 import com.glaf.base.utils.PageResult;
 
 public class SysTreeService {
-	private Log logger = LogFactory.getLog(SysTreeService.class);
+	private static final Log logger = LogFactory.getLog(SysTreeService.class);
 	private AbstractSpringDao abstractDao;
 	
 	public void setAbstractDao(AbstractSpringDao abstractDao) {

@@ -36,7 +36,7 @@ import com.glaf.base.utils.MyBeanUtils;
  * 
  */
 public class AbstractSpringDao extends HibernateDaoSupport {
-	private Log logger = LogFactory.getLog(AbstractSpringDao.class);
+	private static final Log logger = LogFactory.getLog(AbstractSpringDao.class);
 
 	public AbstractSpringDao() {
 		logger.info("AbstractSpringDao init");

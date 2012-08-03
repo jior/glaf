@@ -4,7 +4,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 public class SysUserRoleAjaxService {
-	private Log logger = LogFactory.getLog(SysUserRoleAjaxService.class);
+	private static final Log logger = LogFactory.getLog(SysUserRoleAjaxService.class);
 	private SysUserRoleService sysUserRoleService;	
 	public void setSysUserRoleService(SysUserRoleService sysUserRoleService) {
 		this.sysUserRoleService = sysUserRoleService;

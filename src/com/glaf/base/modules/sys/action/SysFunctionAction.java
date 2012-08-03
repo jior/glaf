@@ -21,7 +21,7 @@ import com.glaf.base.modules.sys.service.SysFunctionService;
 import com.glaf.base.utils.ParamUtil;
 
 public class SysFunctionAction extends DispatchActionSupport{
-	private Log logger = LogFactory.getLog(SysFunctionAction.class);
+	private static final Log logger = LogFactory.getLog(SysFunctionAction.class);
 	private SysFunctionService sysFunctionService;
 	private SysApplicationService sysApplicationService;
 	

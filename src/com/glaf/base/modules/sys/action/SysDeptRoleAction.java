@@ -28,7 +28,7 @@ import com.glaf.base.modules.sys.service.SysTreeService;
 import com.glaf.base.utils.ParamUtil;
 
 public class SysDeptRoleAction extends DispatchActionSupport{
-	private Log logger = LogFactory.getLog(SysDeptRoleAction.class);
+	private static final Log logger = LogFactory.getLog(SysDeptRoleAction.class);
 	private SysDeptRoleService sysDeptRoleService;
 	private SysTreeService sysTreeService;
 	private SysDepartmentService sysDepartmentService;	

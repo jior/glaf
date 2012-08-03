@@ -12,7 +12,7 @@ import com.glaf.base.modules.workspace.model.MyMenu;
 import com.glaf.base.utils.PageResult;
 
 public class MyMenuService {
-	private Log logger = LogFactory.getLog(MyMenuService.class);
+	private static final Log logger = LogFactory.getLog(MyMenuService.class);
 
 	private AbstractSpringDao abstractDao;
 

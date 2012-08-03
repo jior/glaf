@@ -22,7 +22,7 @@ import com.glaf.base.utils.PageResult;
 import com.glaf.base.utils.ParamUtil;
 
 public class MyMenuAction extends DispatchActionSupport {
-	private Log logger = LogFactory.getLog(MyMenuAction.class);
+	private static final Log logger = LogFactory.getLog(MyMenuAction.class);
 
 	private MyMenuService myMenuService;
 

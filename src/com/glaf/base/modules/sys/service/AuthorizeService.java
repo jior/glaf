@@ -9,7 +9,7 @@ import org.apache.commons.logging.LogFactory;
 import com.glaf.base.modules.sys.model.SysUser;
 
 public class AuthorizeService {
-	private Log logger = LogFactory.getLog(AuthorizeService.class);
+	private static final Log logger = LogFactory.getLog(AuthorizeService.class);
 	private SysUserService sysUserService;
 	private SysDepartmentService sysDepartmentService;
 

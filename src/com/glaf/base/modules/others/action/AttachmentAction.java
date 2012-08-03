@@ -17,7 +17,7 @@ import com.glaf.base.modules.others.service.AttachmentService;
 import com.glaf.base.utils.ParamUtil;
 
 public class AttachmentAction extends DispatchActionSupport {
-	private Log logger = LogFactory.getLog(AttachmentAction.class);
+	private static final Log logger = LogFactory.getLog(AttachmentAction.class);
 
 	private AttachmentService attachmentService;
 

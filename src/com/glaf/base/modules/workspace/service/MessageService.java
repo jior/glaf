@@ -18,7 +18,7 @@ import com.glaf.base.utils.PageResult;
 import com.glaf.base.utils.WebUtil;
 
 public class MessageService {
-	private Log logger = LogFactory.getLog(MyMenuService.class);
+	private static final Log logger = LogFactory.getLog(MyMenuService.class);
 
 	private AbstractSpringDao abstractDao;
 

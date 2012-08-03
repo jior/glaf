@@ -6,7 +6,7 @@ import org.apache.commons.logging.LogFactory;
 import com.glaf.base.modules.sys.model.Dictory;
 
 public class DictoryAjaxService {
-	private Log logger = LogFactory.getLog(DictoryAjaxService.class);
+	private static final Log logger = LogFactory.getLog(DictoryAjaxService.class);
 	private DictoryService dictoryService;	
 	public void setDictoryService(DictoryService dictoryService) {
 		this.dictoryService = dictoryService;

@@ -15,7 +15,7 @@ import com.glaf.base.modules.sys.model.SubjectCode;
 import com.glaf.base.utils.PageResult;
 
 public class SubjectCodeService {
-	private Log logger = LogFactory.getLog(SubjectCodeService.class);
+	private static final Log logger = LogFactory.getLog(SubjectCodeService.class);
 	private AbstractSpringDao abstractDao;
 
 	public void setAbstractDao(AbstractSpringDao abstractDao) {

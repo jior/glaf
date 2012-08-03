@@ -4,7 +4,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 public class SysFunctionAjaxService {
-	private Log logger = LogFactory.getLog(SysFunctionAjaxService.class);
+	private static final Log logger = LogFactory.getLog(SysFunctionAjaxService.class);
 	private SysFunctionService sysFunctionService;
 	public void setSysFunctionService(SysFunctionService sysFunctionService) {
 		this.sysFunctionService = sysFunctionService;

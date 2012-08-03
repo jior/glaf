@@ -12,7 +12,7 @@ import com.glaf.base.modules.sys.model.SysRole;
 import com.glaf.base.utils.PageResult;
 
 public class SysRoleService {
-	private Log logger = LogFactory.getLog(SysRoleService.class);
+	private static final Log logger = LogFactory.getLog(SysRoleService.class);
 	private AbstractSpringDao abstractDao;	
 	
 	public void setAbstractDao(AbstractSpringDao abstractDao) {

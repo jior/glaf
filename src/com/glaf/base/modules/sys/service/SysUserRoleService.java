@@ -19,7 +19,7 @@ import com.glaf.base.modules.utils.BaseUtil;
 import com.glaf.base.utils.PageResult;
 
 public class SysUserRoleService {
-	private Log logger = LogFactory.getLog(SysUserRoleService.class);
+	private static final Log logger = LogFactory.getLog(SysUserRoleService.class);
 	private AbstractSpringDao abstractDao;
 	private SysDepartmentService sysDepartmentService;
 	private SysUserService sysUserService;

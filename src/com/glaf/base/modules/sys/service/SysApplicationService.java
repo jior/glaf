@@ -16,7 +16,7 @@ import com.glaf.base.modules.utils.ContextUtil;
 import com.glaf.base.utils.PageResult;
 
 public class SysApplicationService {
-	private Log logger = LogFactory.getLog(SysApplicationService.class);
+	private static final Log logger = LogFactory.getLog(SysApplicationService.class);
 	private SysTreeService sysTreeService;
 	private AbstractSpringDao abstractDao;
 

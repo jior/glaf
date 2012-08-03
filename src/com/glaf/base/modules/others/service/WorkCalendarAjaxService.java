@@ -6,7 +6,7 @@ import org.apache.commons.logging.LogFactory;
 import com.glaf.base.modules.others.model.WorkCalendar;
 
 public class WorkCalendarAjaxService {
-	private Log logger = LogFactory.getLog(WorkCalendarAjaxService.class);
+	private static final Log logger = LogFactory.getLog(WorkCalendarAjaxService.class);
 	private WorkCalendarService workCalendarService;
 	
 	public void setWorkCalendarService(WorkCalendarService workCalendarService) {

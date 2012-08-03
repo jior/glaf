@@ -13,7 +13,7 @@ import com.glaf.base.dao.AbstractSpringDao;
 import com.glaf.base.modules.others.model.WorkCalendar;
 
 public class WorkCalendarService {
-	private Log logger = LogFactory.getLog(WorkCalendarService.class);
+	private static final Log logger = LogFactory.getLog(WorkCalendarService.class);
 	
 	private AbstractSpringDao abstractDao;	
 	public void setAbstractDao(AbstractSpringDao abstractDao) {

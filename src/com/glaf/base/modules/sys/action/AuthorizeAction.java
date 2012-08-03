@@ -32,7 +32,7 @@ import com.glaf.base.modules.utils.ContextUtil;
 import com.glaf.base.utils.ParamUtil;
 
 public class AuthorizeAction extends DispatchActionSupport {
-	private Log logger = LogFactory.getLog(AuthorizeAction.class);
+	private static final Log logger = LogFactory.getLog(AuthorizeAction.class);
 
 	private SysApplicationService sysApplicationService;
 

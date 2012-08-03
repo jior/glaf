@@ -29,7 +29,7 @@ import com.glaf.base.utils.ParamUtil;
 import com.glaf.base.utils.WebUtil;
 
 public class MessageAction extends DispatchActionSupport {
-	private Log logger = LogFactory.getLog(MessageAction.class);
+	private static final Log logger = LogFactory.getLog(MessageAction.class);
 
 	private MessageService messageService;
 

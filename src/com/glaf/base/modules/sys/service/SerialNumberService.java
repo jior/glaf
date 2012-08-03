@@ -41,7 +41,7 @@ public class SerialNumberService {
 	 * 
 	 */
 
-	private Log logger = LogFactory.getLog(DictoryService.class);
+	private static final Log logger = LogFactory.getLog(DictoryService.class);
 
 	BaseDataManager bdm = null;
 

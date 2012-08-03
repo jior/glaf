@@ -6,9 +6,9 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Hibernate;
-import org.jpage.core.cache.Cache;
+
 import org.jpage.core.cache.CacheFactory;
- 
+
 import org.jpage.util.DateTools;
 import com.glaf.base.dao.AbstractSpringDao;
 import com.glaf.base.modules.others.service.WorkCalendarService;
@@ -23,8 +23,6 @@ import com.glaf.base.modules.workspace.service.MessageService;
 public class TodoService {
 
 	private final static Log logger = LogFactory.getLog(TodoService.class);
-
-	 
 
 	private AbstractSpringDao abstractDao;
 
@@ -116,12 +114,12 @@ public class TodoService {
 	}
 
 	public void create(ToDo todo) {
-		 
+
 		abstractDao.create(todo);
 	}
 
 	public void update(ToDo todo) {
-	 
+
 		abstractDao.update(todo);
 	}
 
@@ -461,8 +459,7 @@ public class TodoService {
 	public List getToDoInstanceList(Map paramMap) {
 		Map params = new LinkedHashMap();
 		StringBuffer buffer = new StringBuffer();
-		buffer
-				.append(" from com.glaf.base.modules.todo.model.ToDoInstance as a where 1=1 ");
+		buffer.append(" from com.glaf.base.modules.todo.model.ToDoInstance as a where 1=1 ");
 
 		if (paramMap.get("actorId") != null) {
 			params.put("actorId", paramMap.get("actorId"));
@@ -576,11 +573,8 @@ public class TodoService {
 		}
 
 		if (paramMap.get("processInstanceIds") != null) {
-			params
-					.put("processInstanceIds", paramMap
-							.get("processInstanceIds"));
-			buffer
-					.append(" and a.processInstanceId in ( :processInstanceIds ) ");
+			params.put("processInstanceIds", paramMap.get("processInstanceIds"));
+			buffer.append(" and a.processInstanceId in ( :processInstanceIds ) ");
 		}
 
 		if (paramMap.get("taskInstanceId") != null) {
@@ -681,9 +675,7 @@ public class TodoService {
 		if (paramMap.get("actorName") != null) {
 			String actorName = (String) paramMap.get("actorName");
 			if (StringUtils.isNumeric(actorName)) {
-				params
-						.put("actorId_xyz", "%" + paramMap.get("actorName")
-								+ "%");
+				params.put("actorId_xyz", "%" + paramMap.get("actorName") + "%");
 				buffer.append(" and a.actorId like :actorId_xyz ");
 			} else {
 				params.put("actorName", "%" + paramMap.get("actorName") + "%");
@@ -714,9 +706,7 @@ public class TodoService {
 		if (paramMap.get("createDate_start") != null) {
 			Object obj = paramMap.get("createDate_start");
 			if (obj instanceof java.util.Date) {
-				params
-						.put("createDate_start", paramMap
-								.get("createDate_start"));
+				params.put("createDate_start", paramMap.get("createDate_start"));
 			} else {
 				String dateTime = (String) obj;
 				if (!dateTime.endsWith(" 00:00:00")) {
@@ -866,8 +856,8 @@ public class TodoService {
 		if (paramMap.get("pastDueDate_start") != null) {
 			Object obj = paramMap.get("pastDueDate_start");
 			if (obj instanceof java.util.Date) {
-				params.put("pastDueDate_start", paramMap
-						.get("pastDueDate_start"));
+				params.put("pastDueDate_start",
+						paramMap.get("pastDueDate_start"));
 			} else {
 				String dateTime = (String) obj;
 				if (!dateTime.endsWith(" 00:00:00")) {

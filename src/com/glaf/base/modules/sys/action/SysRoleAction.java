@@ -19,7 +19,7 @@ import com.glaf.base.utils.PageResult;
 import com.glaf.base.utils.ParamUtil;
 
 public class SysRoleAction extends DispatchActionSupport{
-	private Log logger = LogFactory.getLog(SysRoleAction.class);
+	private static final Log logger = LogFactory.getLog(SysRoleAction.class);
 	private SysRoleService sysRoleService;	
 	
 	public void setSysRoleService(SysRoleService sysRoleService){

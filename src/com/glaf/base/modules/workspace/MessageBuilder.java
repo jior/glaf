@@ -9,7 +9,7 @@ import org.apache.commons.logging.LogFactory;
 import org.xml.sax.SAXException;
 
 public class MessageBuilder {
-	private Log logger = LogFactory.getLog(MessageBuilder.class);
+	private static final Log logger = LogFactory.getLog(MessageBuilder.class);
 	
 	public static Messages buildFromXML(InputStream xmlStream)
 			throws IOException, SAXException {

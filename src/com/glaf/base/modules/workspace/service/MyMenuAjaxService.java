@@ -6,7 +6,7 @@ import org.apache.commons.logging.LogFactory;
 import com.glaf.base.modules.workspace.model.MyMenu;
 
 public class MyMenuAjaxService {
-	private Log logger = LogFactory.getLog(MyMenuAjaxService.class);
+	private static final Log logger = LogFactory.getLog(MyMenuAjaxService.class);
 
 	private MyMenuService myMenuService;
 

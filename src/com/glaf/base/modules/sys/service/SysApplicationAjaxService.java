@@ -6,7 +6,7 @@ import org.apache.commons.logging.LogFactory;
 import com.glaf.base.modules.sys.model.SysApplication;
 
 public class SysApplicationAjaxService {
-	private Log logger = LogFactory.getLog(SysApplicationAjaxService.class);
+	private static final Log logger = LogFactory.getLog(SysApplicationAjaxService.class);
 	private SysApplicationService sysApplicationService;
 	public void setSysApplicationService(SysApplicationService sysApplicationService) {
 		this.sysApplicationService = sysApplicationService;

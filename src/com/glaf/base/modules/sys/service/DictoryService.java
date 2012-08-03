@@ -15,7 +15,7 @@ import com.glaf.base.modules.sys.model.ExchangeRateHistory;
 import com.glaf.base.utils.PageResult;
 
 public class DictoryService {
-	private Log logger = LogFactory.getLog(DictoryService.class);
+	private static final Log logger = LogFactory.getLog(DictoryService.class);
 	private AbstractSpringDao abstractDao;
 	
 	public void setAbstractDao(AbstractSpringDao abstractDao) {

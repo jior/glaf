@@ -19,7 +19,7 @@ import com.glaf.base.modules.sys.model.SysRole;
 import com.glaf.base.utils.PageResult;
 
 public class SysDeptRoleService {
-	private Log logger = LogFactory.getLog(SysDeptRole.class);
+	private static final Log logger = LogFactory.getLog(SysDeptRole.class);
 	private AbstractSpringDao abstractDao;
 	private SysApplicationService sysApplicationService;
 	private SysFunctionService sysFunctionService;

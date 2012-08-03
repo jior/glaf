@@ -18,7 +18,7 @@ import com.glaf.base.modules.others.service.WorkCalendarService;
 import com.glaf.base.utils.ParamUtil;
 
 public class WorkCalendarAction extends DispatchActionSupport{
-	private Log logger = LogFactory.getLog(WorkCalendarAction.class);
+	private static final Log logger = LogFactory.getLog(WorkCalendarAction.class);
 	
 	private WorkCalendarService workCalendarService;		
 	public void setWorkCalendarService(WorkCalendarService workCalendarService) {

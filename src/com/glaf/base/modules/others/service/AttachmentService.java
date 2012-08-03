@@ -14,7 +14,7 @@ import com.glaf.base.modules.Constants;
 import com.glaf.base.modules.others.model.Attachment;
 
 public class AttachmentService {
-	private Log logger = LogFactory.getLog(AttachmentService.class);
+	private static final Log logger = LogFactory.getLog(AttachmentService.class);
 
 	private AbstractSpringDao abstractDao;
 

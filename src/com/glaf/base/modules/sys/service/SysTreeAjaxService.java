@@ -6,7 +6,7 @@ import org.apache.commons.logging.LogFactory;
 import com.glaf.base.modules.sys.model.SysTree;
 
 public class SysTreeAjaxService {
-	private Log logger = LogFactory.getLog(SysTreeAjaxService.class);
+	private static final Log logger = LogFactory.getLog(SysTreeAjaxService.class);
 	private SysTreeService sysTreeService;
 	public void setSysTreeService(SysTreeService sysTreeService) {
 		this.sysTreeService = sysTreeService;

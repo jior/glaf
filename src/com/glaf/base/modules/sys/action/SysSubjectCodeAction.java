@@ -23,7 +23,7 @@ import com.glaf.base.utils.ParamUtil;
 import com.glaf.base.utils.WebUtil;
 
 public class SysSubjectCodeAction extends DispatchActionSupport {
-	private Log logger = LogFactory.getLog(SysSubjectCodeAction.class);
+	private static final Log logger = LogFactory.getLog(SysSubjectCodeAction.class);
 	private SubjectCodeService subjectCodeService;
 	
 	public void setSubjectCodeService(SubjectCodeService subjectCodeService){

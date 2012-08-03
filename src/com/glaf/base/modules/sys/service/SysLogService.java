@@ -7,7 +7,7 @@ import com.glaf.base.dao.AbstractSpringDao;
 import com.glaf.base.modules.sys.model.SysLog;
 
 public class SysLogService {
-	private Log logger = LogFactory.getLog(SysLogService.class);
+	private static final Log logger = LogFactory.getLog(SysLogService.class);
 	private AbstractSpringDao abstractDao;
 	
 	public void setAbstractDao(AbstractSpringDao abstractDao) {

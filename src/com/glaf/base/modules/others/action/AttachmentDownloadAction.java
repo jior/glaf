@@ -19,7 +19,7 @@ import com.glaf.base.modules.others.service.AttachmentService;
 import com.glaf.base.utils.ParamUtil;
 
 public class AttachmentDownloadAction extends DownloadAction {
-	private Log logger = LogFactory.getLog(AttachmentDownloadAction.class);
+	private static final Log logger = LogFactory.getLog(AttachmentDownloadAction.class);
 
 	private AttachmentService attachmentService;
 
