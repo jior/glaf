@@ -9,7 +9,7 @@
 String context = request.getContextPath();
 SysDepartment bean=(SysDepartment)request.getAttribute("bean");
 List  list = (List)request.getAttribute("parent");
-Set histortDeparts = bean.getHistoryDeparts();
+//Set histortDeparts = bean.getHistoryDeparts();
 %>
 <html>
 <head>
@@ -200,37 +200,11 @@ out.print(bean2.getName());
         <td><input type="radio" name="status" value="0" <%=bean.getStatus()==0?"checked":""%>>
           是
           <input type="radio" name="status" value="1" <%=bean.getStatus()==1?"checked":""%>>
-否</td>
+          否
+		</td>
       </tr>
-      <tr>
-        <td colspan="2" valign="top" class="input-box2">历史部门列表：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <!--input name="add" type="button" class="button" value="添加" onClick="addHistory(this.form)">&nbsp;&nbsp;<input name="delete" type="button" class="button" value="删除" onClick="deleteHistory(this.form)"-->
-		  <DIV id="listDiv" align="center" style="width:100%; height:110px;overflow-x:auto; overflow-y:auto;">
-		<table id="historyTb" width="100%" border="0" cellspacing="1" cellpadding="0" class="list-box">
-  <tr class="list-title" style="position:relative; top:expression(this.offsetParent.scrollTop-2);"> 
-    <td width="10%" align="center">选择</td>
-    <td width="14%" align="center">序号</td>
-    <td width="76%" align="center">名称</td>
-    </tr>
-  <%
-	int i=0;
-	if(histortDeparts!=null){
-		Iterator iter=histortDeparts.iterator();   
-		while(iter.hasNext()){
-			SysDepartHistory history = (SysDepartHistory)iter.next();
-			SysDepartment historyBean = history.getOldDepart();	
-%>
-  <tr <%=i%2==0?"":"class='list-back'"%>> 
-    <td class="td-cb"align="center"> <input type="checkbox" name="historyId" value="<%=historyBean.getId()%>"></td>
-    <td class="td-no"><%= i+1 %></td>
-    <td class="td-text"><%=historyBean.getName()%></td>
-    </tr>
-  <%
-    		i++;
-  		}
-	}
-%>
-</table>
+     
+    </table>
 		</DIV>
 		</td>
         </tr>

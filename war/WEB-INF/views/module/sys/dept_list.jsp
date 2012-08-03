@@ -47,8 +47,8 @@ function checkOperation(form){
 }
 function add(){
   var url="department.do?method=prepareAdd&parent="+<%=parent%>;
-  var width=450;
-  var height=380;
+  var width=650;
+  var height=480;
   var scroll="no";  
   openWindow(url, width, height, scroll);
 }
@@ -62,7 +62,7 @@ function modify(form){
   }
   var url="department.do?method=prepareModify&id="+id;
   var width=650;
-  var height=600;
+  var height=480;
   var scroll="no";
   openWindow(url, width, height, scroll);
 }
