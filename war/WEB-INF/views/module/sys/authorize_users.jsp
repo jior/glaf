@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=gbk" language="java"%>
+<%@ page contentType="text/html;charset=GBK" language="java"%>
 <%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
 <%@ page import="java.util.*"%>
@@ -121,14 +121,14 @@ if(list!=null){
 				processDescriptions = "";
 		    if(processDescriptions.indexOf(processDescription)<0){
 				contentBuffer += userRole.getProcessDescription()+"[<font color=red>代"+userRole.getAuthorizeFrom().getName();
-				contentBuffer += " 有效期：" + glafUtil.dateToString(userRole.getAvailDateStart()) +"至"+ glafUtil.dateToString(userRole.getAvailDateEnd()) + "</font>] ";
+				contentBuffer += " 有效期：" + BaseUtil.dateToString(userRole.getAvailDateStart()) +"至"+ BaseUtil.dateToString(userRole.getAvailDateEnd()) + "</font>] ";
 				contentTitle += userRole.getProcessDescription()+"[代"+userRole.getAuthorizeFrom().getName();
-				contentTitle += " 有效期：" + glafUtil.dateToString(userRole.getAvailDateStart()) +"至"+ glafUtil.dateToString(userRole.getAvailDateEnd())+"]";
+				contentTitle += " 有效期：" + BaseUtil.dateToString(userRole.getAvailDateStart()) +"至"+ BaseUtil.dateToString(userRole.getAvailDateEnd())+"]";
 		    }
 		    //if(null==processDescription || "".equals(processDescription)){
 		    //	if(authorizeFromNames.indexOf(userRole.getAuthorizeFrom().getName())<0){
 			//    	contentBuffer += "全局代理"+"[<font color=red>代"+userRole.getAuthorizeFrom().getName();
-			//		contentBuffer += " 有效期：" + glafUtil.dateToString(userRole.getAvailDateStart()) +"至"+ glafUtil.dateToString(userRole.getAvailDateEnd()) + "</font>] ";
+			//		contentBuffer += " 有效期：" + BaseUtil.dateToString(userRole.getAvailDateStart()) +"至"+ BaseUtil.dateToString(userRole.getAvailDateEnd()) + "</font>] ";
 		    //	}
 		    //}
 			authorizeFromNames += userRole.getAuthorizeFrom().getName();
@@ -137,7 +137,7 @@ if(list!=null){
 		  //out.print(userRole.getProcessDescription());
 		  //out.print("[<font color=red>代");
 		  //out.print(userRole.getAuthorizeFrom().getName());
-		  //out.print(" 有效期：" + glafUtil.dateToString(userRole.getAvailDateStart()) +"至"+ glafUtil.dateToString(userRole.getAvailDateEnd()));
+		  //out.print(" 有效期：" + BaseUtil.dateToString(userRole.getAvailDateStart()) +"至"+ BaseUtil.dateToString(userRole.getAvailDateEnd()));
 		  //out.print("</font>] ");
 		}		
 	  }

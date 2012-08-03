@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.Hibernate;
 import org.jpage.util.UUID32;
 
 import com.glaf.base.dao.AbstractSpringDao;
@@ -19,7 +20,8 @@ import com.glaf.base.modules.utils.BaseUtil;
 import com.glaf.base.utils.PageResult;
 
 public class SysUserRoleService {
-	private static final Log logger = LogFactory.getLog(SysUserRoleService.class);
+	private static final Log logger = LogFactory
+			.getLog(SysUserRoleService.class);
 	private AbstractSpringDao abstractDao;
 	private SysDepartmentService sysDepartmentService;
 	private SysUserService sysUserService;
@@ -215,14 +217,20 @@ public class SysUserRoleService {
 		Object[] values = new Object[] { fromUser };
 		String query = "from SysUserRole a where a.user=?";
 		List userRoles = abstractDao.getList(query, values, null);
+		long ts = System.currentTimeMillis();
 		Iterator iter = userRoles.iterator();
 		while (iter.hasNext()) {
 			SysUserRole userRole = (SysUserRole) iter.next();
-			logger.info("add role:"
-					+ userRole.getDeptRole().getRole().getName());
+			Hibernate.initialize(userRole.getDeptRole());
+			if (userRole.getDeptRole() != null) {
+				Hibernate.initialize(userRole.getDeptRole().getRole());
+			}
+			// logger.info("add role:"
+			// + userRole.getDeptRole().getRole().getName());
 
 			// 授给被授权人
 			SysUserRole bean = new SysUserRole();
+			bean.setId(ts++);
 			bean.setAuthorizeFrom(fromUser);
 			bean.setUser(toUser);
 			bean.setDeptRole(userRole.getDeptRole());
@@ -230,8 +238,9 @@ public class SysUserRoleService {
 			bean.setAvailDateStart(BaseUtil.stringToDate(startDate));
 			bean.setAvailDateEnd(BaseUtil.stringToDate(endDate));
 			bean.setProcessDescription(processDescriptions);
-			if (mark == 1)
+			if (mark == 1) {
 				bean.setProcessDescription("全局代理");
+			}
 			// if (toUser.getUserRoles().size() == 0) {
 			// System.out
 			// .println("!!!!!!!!!!toUser.getUserRoles().size() ==

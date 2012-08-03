@@ -46,7 +46,6 @@ public class SysUserService {
 	 * @return boolean
 	 */
 	public boolean update(SysUser bean) {
-
 		return abstractDao.update(bean);
 	}
 

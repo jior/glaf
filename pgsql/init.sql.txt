@@ -41,6 +41,7 @@ insert into sys_tree (id, parent, name, nodedesc, sort, code) values (435, 434, 
 insert into sys_tree (id, parent, name, nodedesc, sort, code) values (438, 434, '流程监控', '流程监控', 438, '');
 insert into sys_tree (id, parent, name, nodedesc, sort, code) values (449, 8, '工作日历', '工作日历', 449, '');
 insert into sys_tree (id, parent, name, nodeDesc, sort, code) values (494, 8, 'TODO配置', 'TODO配置', 494, ''); 
+insert into sys_tree (id, parent, name, nodeDesc, code, sort) values (482, 10, '授权管理', '授权管理', '', 482);
 
 /*初始化部门信息*/
 insert into sys_department (id, name, deptdesc, createtime, sort, deptno, code, code2, status, fincode, nodeid) values (6, '技术部', '技术部', '2006-07-16 16:30:39', 284, 'JS000', 'JS', 'J', 0, 'JS000', 6);
@@ -64,6 +65,7 @@ insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) val
 insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (280, '流程监控', '流程监控', '/workflow/processController.jspa?operationType=4&loadBusiness=1', 280, 1, 438);
 insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (291, '工作日历', '工作日历', '/others/workCalendar.do?method=showList', 291, 1, 449);
 insert into sys_application (id, name, appDesc, url, sort, showMenu, nodeId) values (327, 'TODO配置', '', '/sys/todo.do?method=showList', 327, 1, 494);
+insert into sys_application (id, name, appDesc, url, sort, showMenu, nodeId) values (315, '授权管理', '', '/sys/sysUserRole.do?method=showUsers', 315, 2, 482);
 
 
 /*插入用户角色*/
@@ -89,6 +91,7 @@ insert into sys_access (roleid, appid) values (1, 15);
 insert into sys_access (roleid, appid) values (1, 3);
 insert into sys_access (roleid, appid) values (1, 291);
 insert into sys_access (roleid, appid) values (1, 327); 
+insert into sys_access (roleid, appid) values (1, 315); 
 
 /*插入系统功能*/
 insert into sys_function (id, appId, name, funcDesc, funcMethod, sort) values (1, 15, '模块列表', null, 'com.glaf.base.modules.sys.action.SysApplicationAction.showList', 5);

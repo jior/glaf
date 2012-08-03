@@ -15,7 +15,7 @@ List processList = (List)request.getAttribute("processList");
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=gb2312"/>
-<title>XXXX基础平台系统</title>
+<title>基础平台系统</title>
 <base target="_self">
 <link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
 <script language="javascript" src='<%=context%>/js/verify.js'></script>
@@ -151,10 +151,12 @@ function add(){
     <td width="10%" align="center">选择</td>
     <td width="25%" align="center">工作流模块</td>
     <td width="30%" align="center">工作流描述</td>
-    <td width="35%" align="center">工作流code</td>
+    <td width="35%" align="center">工作流名称</td>
   </tr>
   <tr>
-    <td class="td-cb" height="20"><input type="checkbox" name="chkall" value="checkbox" onClick="checkAll_2(this.form, this);"></td>
+    <td class="td-cb" height="20">
+	<input type="checkbox" name="chkall" value="checkbox" onClick="checkAll_2(this.form, this);">
+	</td>
     <td class="td-text" colspan="3" title="全局代理">全局代理</td>
   </tr>	
 <%
@@ -167,7 +169,9 @@ if(null!=processList && processList.size()>0){
 	  String objectValue = bean[2].toString();
 %>
   <tr>
-    <td class="td-cb" height="20"><input type="checkbox" name="processId" value="" processName="<%=processName%>" processDescription="<%=objectValue%>" onClick="checkOperation2(this.form)"></td>
+    <td class="td-cb" height="20">
+	<input type="checkbox" name="processId" value="" processName="<%=processName%>" processDescription="<%=objectValue%>" onClick="checkOperation2(this.form)">
+	</td>
     <td class="td-text" title="<%=moduleName%>"><%=moduleName%></td>
     <td class="td-text" title="<%=objectValue%>"><%=objectValue%></td>
     <td class="td-text" title="<%=processName%>"><%=processName%></td>
@@ -238,7 +242,7 @@ while(iter.hasNext()){
   <tr>
     <td class="td-cb" height="20" ><input type="checkbox" name="id" value="<%=user2.getId()%>" onClick="checkOperation(this.form)"></td>
     <td class="td-text" title="<%=user2.getName()%>[<%=user2.getCode()%>]"><%=user2.getName()%>[<%=user2.getCode()%>]</td>
-    <td class="td-date" ><%=glafUtil.dateToString(startDate)%> - <%=glafUtil.dateToString(endDate)%></td>
+    <td class="td-date" ><%=BaseUtil.dateToString(startDate)%> - <%=BaseUtil.dateToString(endDate)%></td>
     <td class="td-date" title="<%=processDescription%>"><%=processDescription%></td>
   </tr>	
 <%
