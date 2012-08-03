@@ -7,7 +7,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.glaf.base.modules.sys.model.SysUser;
- 
 
 public class AuthorizeService {
 	private Log logger = LogFactory.getLog(AuthorizeService.class);
@@ -38,6 +37,12 @@ public class AuthorizeService {
 			org.hibernate.Hibernate.initialize(bean.getUserRoles());
 			org.hibernate.Hibernate.initialize(bean.getDepartment());
 			org.hibernate.Hibernate.initialize(bean.getFunctions());
+			if (bean.isDepartmentAdmin()) {
+				logger.debug(account + " is department admin");
+			}
+			if (bean.isSystemAdmin()) {
+				logger.debug(account + " is system admin");
+			}
 			if (!bean.getPassword().equals(pwd) || // √‹¬Î≤ª∆•≈‰
 					bean.getBlocked() == 1) {// ’ ∫≈Ω˚÷π
 				bean = null;

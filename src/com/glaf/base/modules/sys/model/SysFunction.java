@@ -11,9 +11,9 @@ public class SysFunction implements Serializable {
 	private String funcDesc;
 	private String funcMethod;
 	private int sort;
-	
-	public SysFunction(){
-		
+
+	public SysFunction() {
+
 	}
 
 	public SysApplication getApp() {

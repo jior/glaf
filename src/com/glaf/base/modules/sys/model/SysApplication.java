@@ -14,7 +14,7 @@ public class SysApplication implements Serializable {
 	private int showMenu;
 	private SysTree node;
 	private long nodeId;
-	private Set functions = new HashSet();
+	private Set<SysFunction> functions = new HashSet<SysFunction>();
 
 	public SysApplication() {
 
@@ -24,7 +24,7 @@ public class SysApplication implements Serializable {
 		return desc;
 	}
 
-	public Set getFunctions() {
+	public Set<SysFunction> getFunctions() {
 		return functions;
 	}
 
@@ -60,7 +60,7 @@ public class SysApplication implements Serializable {
 		this.desc = desc;
 	}
 
-	public void setFunctions(Set functions) {
+	public void setFunctions(Set<SysFunction> functions) {
 		this.functions = functions;
 	}
 

@@ -14,15 +14,15 @@ public class SysDeptRole implements Serializable {
 	private String code;
 	private int sort;
 
-	private Set users = new HashSet();
-	private Set functions = new HashSet();
-	private Set apps = new HashSet();
+	private Set<SysUser> users = new HashSet<SysUser>();
+	private Set<SysFunction> functions = new HashSet<SysFunction>();
+	private Set<SysApplication> apps = new HashSet<SysApplication>();
 
 	public SysDeptRole() {
 
 	}
 
-	public Set getApps() {
+	public Set<SysApplication> getApps() {
 		return apps;
 	}
 
@@ -38,7 +38,7 @@ public class SysDeptRole implements Serializable {
 		return deptId;
 	}
 
-	public Set getFunctions() {
+	public Set<SysFunction> getFunctions() {
 		return functions;
 	}
 
@@ -54,17 +54,15 @@ public class SysDeptRole implements Serializable {
 		return role;
 	}
 
-
-
 	public int getSort() {
 		return sort;
 	}
 
-	public Set getUsers() {
+	public Set<SysUser> getUsers() {
 		return users;
 	}
 
-	public void setApps(Set apps) {
+	public void setApps(Set<SysApplication> apps) {
 		this.apps = apps;
 	}
 
@@ -80,7 +78,7 @@ public class SysDeptRole implements Serializable {
 		this.deptId = deptId;
 	}
 
-	public void setFunctions(Set functions) {
+	public void setFunctions(Set<SysFunction> functions) {
 		this.functions = functions;
 	}
 
@@ -100,7 +98,7 @@ public class SysDeptRole implements Serializable {
 		this.sort = sort;
 	}
 
-	public void setUsers(Set users) {
+	public void setUsers(Set<SysUser> users) {
 		this.users = users;
 	}
 

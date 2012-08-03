@@ -20,22 +20,6 @@ public class SysUserRole implements Serializable {
 
 	}
 
-	public long getUserId() {
-		return userId;
-	}
-
-	public void setUserId(long userId) {
-		this.userId = userId;
-	}
-
-	public long getDeptRoleId() {
-		return deptRoleId;
-	}
-
-	public void setDeptRoleId(long deptRoleId) {
-		this.deptRoleId = deptRoleId;
-	}
-
 	public int getAuthorized() {
 		return authorized;
 	}
@@ -56,6 +40,10 @@ public class SysUserRole implements Serializable {
 		return deptRole;
 	}
 
+	public long getDeptRoleId() {
+		return deptRoleId;
+	}
+
 	public long getId() {
 		return id;
 	}
@@ -66,6 +54,10 @@ public class SysUserRole implements Serializable {
 
 	public SysUser getUser() {
 		return user;
+	}
+
+	public long getUserId() {
+		return userId;
 	}
 
 	public void setAuthorized(int authorized) {
@@ -88,6 +80,10 @@ public class SysUserRole implements Serializable {
 		this.deptRole = deptRole;
 	}
 
+	public void setDeptRoleId(long deptRoleId) {
+		this.deptRoleId = deptRoleId;
+	}
+
 	public void setId(long id) {
 		this.id = id;
 	}
@@ -98,6 +94,10 @@ public class SysUserRole implements Serializable {
 
 	public void setUser(SysUser user) {
 		this.user = user;
+	}
+
+	public void setUserId(long userId) {
+		this.userId = userId;
 	}
 
 }

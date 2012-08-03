@@ -19,9 +19,8 @@ public class SysDepartment implements Serializable {
 	private String fincode;
 	private long nodeId;
 
-	private Set roles = new HashSet();
+	private Set<SysDeptRole> roles = new HashSet<SysDeptRole>();
 	private int status = 0;// 是否有效[默认有效]
-	private Set historyDeparts = new HashSet();
 
 	public String getCode() {
 		return code;
@@ -41,10 +40,6 @@ public class SysDepartment implements Serializable {
 
 	public String getFincode() {
 		return fincode;
-	}
-
-	public Set getHistoryDeparts() {
-		return historyDeparts;
 	}
 
 	public long getId() {
@@ -67,7 +62,7 @@ public class SysDepartment implements Serializable {
 		return nodeId;
 	}
 
-	public Set getRoles() {
+	public Set<SysDeptRole> getRoles() {
 		return roles;
 	}
 
@@ -99,10 +94,6 @@ public class SysDepartment implements Serializable {
 		this.fincode = fincode;
 	}
 
-	public void setHistoryDeparts(Set historyDeparts) {
-		this.historyDeparts = historyDeparts;
-	}
-
 	public void setId(long id) {
 		this.id = id;
 	}
@@ -123,7 +114,7 @@ public class SysDepartment implements Serializable {
 		this.nodeId = nodeId;
 	}
 
-	public void setRoles(Set roles) {
+	public void setRoles(Set<SysDeptRole> roles) {
 		this.roles = roles;
 	}
 

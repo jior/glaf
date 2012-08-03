@@ -86,7 +86,7 @@ function users(form){
 	}     
   }
   var url="user.do?method=showList&parent="+id;
-  var width=650;
+  var width=750;
   var height=400;
   var scroll="no";
   openWindow(url, width, height, scroll);

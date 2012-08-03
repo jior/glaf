@@ -6,8 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class SysUser implements Serializable {		
-
+public class SysUser implements Serializable {
 	private static final long serialVersionUID = -7677600372139823989L;
 	private long id;
 	private SysDepartment department;
@@ -26,172 +25,282 @@ public class SysUser implements Serializable {
 	private int gender;
 	private String headship;
 	private int userType;
-	private Set userRoles = new HashSet();
-	private Set roles = new HashSet();
-	private Set functions = new HashSet();
-	private Set apps = new HashSet();
 	private String fax;
 	private int accountType;
-	private List nestingDepartment;
 	private String loginIP;
 	private int dumpFlag;
-	
-	public Set getUserRoles() {
-		return userRoles;
+	private Set<SysUserRole> userRoles = new HashSet<SysUserRole>();
+	private Set<SysDeptRole> roles = new HashSet<SysDeptRole>();
+	private Set<SysFunction> functions = new HashSet<SysFunction>();
+	private Set<SysApplication> apps = new HashSet<SysApplication>();
+	private List<SysDepartment> nestingDepartment;
+
+	public SysUser() {
+
 	}
-	public void setUserRoles(Set userRoles) {
-		this.userRoles = userRoles;
-	}
-	public String getLoginIP() {
-		return loginIP;
-	}
-	public void setLoginIP(String loginIP) {
-		this.loginIP = loginIP;
-	}
-	public void setApps(Set apps) {
-		this.apps = apps;
-	}
-	public int getBlocked() {
-		return blocked;
-	}
-	public void setBlocked(int blocked) {
-		this.blocked = blocked;
-	}
-	public Date getCreateTime() {
-		return createTime;
-	}
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
-	public SysDepartment getDepartment() {
-		return department;
-	}
-	public void setDepartment(SysDepartment department) {
-		this.department = department;
-	}
-	public long getId() {
-		return id;
-	}
-	public void setId(long id) {
-		this.id = id;
-	}
-	public Date getLastLoginTime() {
-		return lastLoginTime;
-	}
-	public void setLastLoginTime(Date lastLoginTime) {
-		this.lastLoginTime = lastLoginTime;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}	
-	public Set getRoles() {
-		return roles;
-	}
-	public void setRoles(Set roles) {
-		this.roles = roles;
-	}
+
 	public String getAccount() {
 		return account;
 	}
-	public void setAccount(String account) {
-		this.account = account;
-	}
-	public Set getFunctions() {
-		return functions;
-	}
-	public void setFunctions(Set functions) {
-		this.functions = functions;
-	}
-	public String getCode() {
-		return code;
-	}
-	public void setCode(String code) {
-		this.code = code;
-	}
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	public int getEvection() {
-		return evection;
-	}
-	public void setEvection(int evection) {
-		this.evection = evection;
-	}
-	public int getGender() {
-		return gender;
-	}
-	public void setGender(int gender) {
-		this.gender = gender;
-	}
-	public String getMobile() {
-		return mobile;
-	}
-	public void setMobile(String mobile) {
-		this.mobile = mobile;
-	}
-	public String getTelephone() {
-		return telephone;
-	}
-	public void setTelephone(String telephone) {
-		this.telephone = telephone;
-	}
-	public Set getApps() {
-		return apps;
-	}
-	public String getHeadship() {
-		return headship;
-	}
-	public void setHeadship(String headship) {
-		this.headship = headship;
-	}
-	public int getUserType() {
-		return userType;
-	}
-	public void setUserType(int userType) {
-		this.userType = userType;
-	}
+
 	public int getAccountType() {
 		return accountType;
 	}
-	public void setAccountType(int accountType) {
-		this.accountType = accountType;
+
+	public Set<SysApplication> getApps() {
+		return apps;
 	}
-	public String getFax() {
-		return fax;
+
+	public int getBlocked() {
+		return blocked;
 	}
-	public void setFax(String fax) {
-		this.fax = fax;
+
+	public String getCode() {
+		return code;
 	}
-	public List getNestingDepartment() {
-		return nestingDepartment;
+
+	public Date getCreateTime() {
+		return createTime;
 	}
-	public void setNestingDepartment(List nestingDepartment) {
-		this.nestingDepartment = nestingDepartment;
+
+	public SysDepartment getDepartment() {
+		return department;
 	}
+
 	public int getDumpFlag() {
 		return dumpFlag;
 	}
-	public void setDumpFlag(int dumpFlag) {
-		this.dumpFlag = dumpFlag;
+
+	public String getEmail() {
+		return email;
 	}
+
+	public int getEvection() {
+		return evection;
+	}
+
+	public String getFax() {
+		return fax;
+	}
+
+	public Set<SysFunction> getFunctions() {
+		return functions;
+	}
+
+	public int getGender() {
+		return gender;
+	}
+
+	public String getHeadship() {
+		return headship;
+	}
+
+	public long getId() {
+		return id;
+	}
+
 	public String getLastLoginIP() {
 		return lastLoginIP;
 	}
+
+	public Date getLastLoginTime() {
+		return lastLoginTime;
+	}
+
+	public String getLoginIP() {
+		return loginIP;
+	}
+
+	public String getMobile() {
+		return mobile;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public List<SysDepartment> getNestingDepartment() {
+		return nestingDepartment;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public Set<SysDeptRole> getRoles() {
+		return roles;
+	}
+
+	public String getTelephone() {
+		return telephone;
+	}
+
+	public Set<SysUserRole> getUserRoles() {
+		return userRoles;
+	}
+
+	public int getUserType() {
+		return userType;
+	}
+
+	public boolean isDepartmentAdmin() {
+		boolean isDeptAdmin = false;
+
+		if (roles != null && !roles.isEmpty()) {
+			for (SysDeptRole r : roles) {
+				if (r.getRole() != null && "R006".equals(r.getRole().getCode())) {
+					isDeptAdmin = true;
+					break;
+				}
+			}
+		}
+
+		if (!isDeptAdmin) {
+			if (userRoles != null && !userRoles.isEmpty()) {
+				for (SysUserRole r : userRoles) {
+					if (r.getDeptRole() != null
+							&& r.getDeptRole().getRole() != null) {
+						if ("R006".equals(r.getDeptRole().getRole().getCode())) {
+							isDeptAdmin = true;
+							break;
+						}
+					}
+				}
+			}
+		}
+		return isDeptAdmin;
+	}
+
+	public boolean isSystemAdmin() {
+		boolean isAdmin = false;
+
+		if (roles != null && !roles.isEmpty()) {
+			for (SysDeptRole r : roles) {
+				if (r.getRole() != null && "R015".equals(r.getRole().getCode())) {
+					isAdmin = true;
+					break;
+				}
+			}
+		}
+
+		if (!isAdmin) {
+			if (userRoles != null && !userRoles.isEmpty()) {
+				for (SysUserRole r : userRoles) {
+					if (r.getDeptRole() != null
+							&& r.getDeptRole().getRole() != null) {
+						if ("R015".equals(r.getDeptRole().getRole().getCode())) {
+							isAdmin = true;
+							break;
+						}
+					}
+				}
+			}
+		}
+		return isAdmin;
+	}
+
+	public void setAccount(String account) {
+		this.account = account;
+	}
+
+	public void setAccountType(int accountType) {
+		this.accountType = accountType;
+	}
+
+	public void setApps(Set<SysApplication> apps) {
+		this.apps = apps;
+	}
+
+	public void setBlocked(int blocked) {
+		this.blocked = blocked;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	public void setDepartment(SysDepartment department) {
+		this.department = department;
+	}
+
+	public void setDumpFlag(int dumpFlag) {
+		this.dumpFlag = dumpFlag;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public void setEvection(int evection) {
+		this.evection = evection;
+	}
+
+	public void setFax(String fax) {
+		this.fax = fax;
+	}
+
+	public void setFunctions(Set<SysFunction> functions) {
+		this.functions = functions;
+	}
+
+	public void setGender(int gender) {
+		this.gender = gender;
+	}
+
+	public void setHeadship(String headship) {
+		this.headship = headship;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
 	public void setLastLoginIP(String lastLoginIP) {
 		this.lastLoginIP = lastLoginIP;
 	}
-	
-	
+
+	public void setLastLoginTime(Date lastLoginTime) {
+		this.lastLoginTime = lastLoginTime;
+	}
+
+	public void setLoginIP(String loginIP) {
+		this.loginIP = loginIP;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setNestingDepartment(List<SysDepartment> nestingDepartment) {
+		this.nestingDepartment = nestingDepartment;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public void setRoles(Set<SysDeptRole> roles) {
+		this.roles = roles;
+	}
+
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
+	}
+
+	public void setUserRoles(Set<SysUserRole> userRoles) {
+		this.userRoles = userRoles;
+	}
+
+	public void setUserType(int userType) {
+		this.userType = userType;
+	}
+
 }

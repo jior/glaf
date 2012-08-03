@@ -29,13 +29,16 @@ function checkOperation(form){
 	if(num==1){
 	  document.all.btn_modify.disabled=false;
 	  document.all.btn_role.disabled=false;
+	  document.all.btn_reset_pwd.disabled=false;
 	}else{
 	  document.all.btn_modify.disabled=true;
+	  document.all.btn_reset_pwd.disabled=true;
 	  document.all.btn_role.disabled=true;
 	}
   }else{
     document.all.btn_del.disabled=true;
 	document.all.btn_modify.disabled=true;
+	document.all.btn_reset_pwd.disabled=true;
 	document.all.btn_role.disabled=true;
   }
 }
@@ -61,6 +64,22 @@ function modify(form){
   var scroll="no";
   openWindow(url, width, height, scroll);
 }
+
+function resetPwd(form){
+  var id =0;
+  for (var i=0;i<form.id.length;i++) {
+    var e = form.id[i];
+    if (e.checked){
+	  id=e.value;
+	}     
+  }
+  var url="user.do?method=prepareResetPwd&id="+id;
+  var width=450;
+  var height=300;
+  var scroll="no";
+  openWindow(url, width, height, scroll);
+}
+
 function del(){
   var form = document.all.GenericForm;
   if(confirmDelete(form)){
@@ -172,9 +191,10 @@ for(; i<pageSize; i++){
 </table>
 <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
   <tr> 
-    <td width="50%"> <input name="btn_add" type="button" value="增加" class="button" onClick="javascript:add();"> 
+    <td width="60%"> <input name="btn_add" type="button" value="增加" class="button" onClick="javascript:add();"> 
       <input name="btn_del" type="button" value="删除" class="button" onClick="javascript:del();" disabled>
       <input name="btn_modify" type="button" value="修改" class="button" onClick="javascript:modify(this.form);" disabled>
+	  <input name="btn_reset_pwd" type="button" value="重置密码" class="button" onClick="javascript:resetPwd(this.form);" disabled>
       <input name="btn_role" type="button" value="角色设置" class="button" onClick="javascript:roles(this.form);" disabled></td>
     <td width="50%"> 
       <%
