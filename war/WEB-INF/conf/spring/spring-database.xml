@@ -8,12 +8,7 @@
 			<value>java:comp/env/jdbc/jbpm</value>
 		</property>
 	</bean>
-	<!-- <bean id="myDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"> 
-		<property name="driverClassName"><value>com.microsoft.jdbc.sqlserver.SQLServerDriver</value></property> 
-		<property name="url"><value>jdbc:microsoft:sqlserver://172.16.1.29;DatabaseName=purchase_self</value></property> 
-		<property name="username"><value>purchase</value></property> <property name="password"><value>123456</value></property> 
-		</bean> -->
-	<!-- <bean id="transactionManager" class="org.springframework.transaction.jta.JtaTransactionManager"/> -->
+	
 
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
@@ -34,24 +29,10 @@
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</prop> 
-				<!-- <prop key="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</prop> -->
-				<!-- <prop key="hibernate.jdbc.batch_size">100</prop> <prop key="hibernate.jdbc.fetch_size">100</prop> 
-					<prop key="hibernate.jdbc.use_streams_for_binary">true</prop> <prop key="hibernate.jdbc.batch_versioned_data">true</prop> -->
                 <!-- <property name="hibernate.hbm2ddl.auto">update</property> -->
-				<prop key="hibernate.cache.provider_class">org.hibernate.cache.OSCacheProvider</prop>
-				<!-- <prop key="hibernate.show_sql">true</prop> 
-				<prop key="hibernate.format_sql">true</prop> -->
-				<!--<prop key="hibernate.cache.use_minimal_puts">true</prop> <prop key="hibernate.cache.use_query_cache">true</prop> 
-					<prop key="hibernate.cache.use_second_level_cache">true</prop> <prop key="hibernate.cache.use_structured_entries">true</prop> 
-					<prop key="hibernate.use_identifer_rollback">true</prop> <prop key="hibernate.bytecode.use_reflection_optimizer">true</prop> 
-					<prop key="hibernate.max_fetch_depth">2</prop> <prop key="hibernate.default_batch_fetch_size">16</prop> 
-					<prop key="hibernate.default_entity_mode">pojo</prop> <prop key="hibernate.order_updates">true</prop> 
-					<prop key="hibernate.generate_statistics">true</prop> <prop key="hibernate.use_sql_comments">false</prop> 
-					<prop key="hibernate.query.substitutions">toLowercase=Lower</prop> <prop 
-					key="hibernate.show_sql">false</prop> <prop key="hibernate.format_sql">true</prop> 
-					<prop key="hibernate.transaction.flush_before_completion">true</prop> <prop 
-					key="hibernate.transaction.auto_close_session">true</prop> -->
+				<prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>
 			</props>
 		</property>
 	</bean>
+
 </beans>  
