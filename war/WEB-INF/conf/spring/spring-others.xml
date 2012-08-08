@@ -4,6 +4,16 @@
 
 	<!--service -->
 
+	  <bean id="attachmentService" class="com.gzgi.modules.others.service.AttachmentService" >
+		<property name="abstractDao">
+		  <ref bean="abstractDao"/>
+		</property>
+	  </bean>
+	  <bean id="attachmentProxy" parent="baseTxService">
+		<property name="target">
+		  <ref bean="attachmentService"/>
+		</property>
+	  </bean>
 
 	<bean id="auditService" class="com.glaf.base.modules.others.service.AuditService">
 		<property name="abstractDao">
