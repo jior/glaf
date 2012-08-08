@@ -69,7 +69,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>XXXX基础平台系统</title>
+<title>基础平台系统</title>
 <script language="javascript" src='<%=request.getContextPath()%>/js/verify.js'></script>
 <script language="javascript" src='<%=request.getContextPath()%>/js/main.js'></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/hmenu/hmenu.js"></script>
