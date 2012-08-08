@@ -1,26 +1,11 @@
 package com.glaf.base.modules.others.service;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.hibernate.Hibernate;
-import org.hibernate.type.Type;
-
-import com.glaf.base.dao.AbstractSpringDao;
 import com.glaf.base.modules.others.model.Audit;
 import com.glaf.base.modules.sys.model.SysUser;
 
-public class AuditService {
-	private static final Log logger = LogFactory.getLog(AuditService.class);
-	private AbstractSpringDao abstractDao;
-
-	public void setAbstractDao(AbstractSpringDao abstractDao) {
-		this.abstractDao = abstractDao;
-		logger.info("setAbstractDao");
-	}
+public interface AuditService {
 
 	/**
 	 * 保存
@@ -29,9 +14,7 @@ public class AuditService {
 	 *            Audit
 	 * @return boolean
 	 */
-	public boolean create(Audit bean) {
-		return abstractDao.create(bean);
-	}
+	boolean create(Audit bean);
 
 	/**
 	 * 更新
@@ -40,9 +23,7 @@ public class AuditService {
 	 *            Audit
 	 * @return boolean
 	 */
-	public boolean update(Audit bean) {
-		return abstractDao.update(bean);
-	}
+	boolean update(Audit bean);
 
 	/**
 	 * 删除
@@ -51,9 +32,7 @@ public class AuditService {
 	 *            Audit
 	 * @return boolean
 	 */
-	public boolean delete(Audit bean) {
-		return abstractDao.delete(bean);
-	}
+	boolean delete(Audit bean);
 
 	/**
 	 * 删除
@@ -62,14 +41,7 @@ public class AuditService {
 	 *            int
 	 * @return boolean
 	 */
-	public boolean delete(long id) {
-		Audit bean = findById(id);
-		if (bean != null) {
-			return delete(bean);
-		} else {
-			return false;
-		}
-	}
+	boolean delete(long id);
 
 	/**
 	 * 批量删除
@@ -77,15 +49,7 @@ public class AuditService {
 	 * @param id
 	 * @return
 	 */
-	public boolean deleteAll(long[] id) {
-		List list = new ArrayList();
-		for (int i = 0; i < id.length; i++) {
-			Audit bean = findById(id[i]);
-			if (bean != null)
-				list.add(bean);
-		}
-		return abstractDao.deleteAll(list);
-	}
+	boolean deleteAll(long[] id);
 
 	/**
 	 * 获取对象
@@ -93,9 +57,7 @@ public class AuditService {
 	 * @param id
 	 * @return
 	 */
-	public Audit findById(long id) {
-		return (Audit) abstractDao.find(Audit.class, new Long(id));
-	}
+	Audit findById(long id);
 
 	/**
 	 * 返回所有审批列表，分type
@@ -104,13 +66,8 @@ public class AuditService {
 	 * @param referType
 	 * @return
 	 */
-	public List getAuditList(long referId, int referType) {
-		Object[] values = new Object[] { new Long(referId),
-				new Integer(referType) };
-		String query = "from Audit a where a.referId=? and a.referType=? order by a.id asc";
-		return abstractDao.getList(query, values, null);
-	}
-	
+	List getAuditList(long referId, int referType);
+
 	/**
 	 * 返回采购申请的所有审批列表(新增，变更，退单重提，废止)
 	 * 
@@ -118,85 +75,28 @@ public class AuditService {
 	 * @param referType
 	 * @return
 	 */
-	public List getAuditList(long referId,String referTypes) {
-		Object[] values = new Object[] { new Long(referId)};
-		String query = "from Audit a where a.referId=? and a.referType in("+referTypes+") order by a.id asc";
-		return abstractDao.getList(query, values, new Type[] { Hibernate.LONG});
-	}
-	
-//	
-//	/**
-//	 *返回无重复的审批人ID
-//	 * @author zoumin
-//	 * @param referId
-//	 * @param referType
-//	 * @return
-//	 */
-//	public List getAuditUserIdList(long referId, int referType){
-//		Object[] values = new Object[]{new Long(referId), new Integer(referType)};
-//		String query = "select DISTINCT leaderId from Audit a where a.referId = ? and a.referType = ?";
-//		return abstractDao.getList(query, values, null);
-//	}
-	
+	List getAuditList(long referId, String referTypes);
+
 	/**
 	 * 返回所有审批列表最终审批人列表（去除重复）
+	 * 
 	 * @author zoumin
 	 * @param referId
 	 * @param referType
 	 * @return
 	 */
-	public List getAuditUserList(long referId, int referType) {
-		Date rejectDate = null;
-		String sql = "from Audit a where a.referId = " + referId + " and a.referType = " + referType +
-		" and a.flag = 0 order by createDate desc";
-		List list = abstractDao.getList(sql, null, null);
-		if(list != null && list.size() > 0){
-			Audit audit = (Audit)list.get(0);
-			if(audit != null){
-				rejectDate = audit.getCreateDate();
-			}
-		}
-		
-		String query = "from Audit a where a.referId = " + referId + " and a.referType = " + 
-		referType +	" and a.flag = 1";
-		if(rejectDate != null){
-			query = "from Audit a where a.referId = " + referId + " and a.referType = " + 
-			referType +	" and a.flag = 1 and a.createDate >= '" + rejectDate + "'";
-		}
-		return abstractDao.getList(query, null, null);
-	}
-//	
-//	/**
-//	 * 返回同一审批人最后一次的审批记录
-//	 * @author zoumin
-//	 * @param referId
-//	 * @param referType
-//	 * @param leaderId
-//	 * @return
-//	 */
-//	public List getAuditList(long referId, int referType, long leaderId){
-//		Object [] values = new Object[]{new Long(referId), new Integer(referType), 
-//				new Long(leaderId)};
-//		String query = "from Audit where referId = ? and referType = ? " +
-//				"and leaderId = ? and flag=1 order by createDate desc";
-//		return abstractDao.getList(query, values, null);
-//	}
-	
+	List getAuditUserList(long referId, int referType);
+
 	/**
 	 * 返回部门最后一次的审批记录
+	 * 
 	 * @author zoumin
 	 * @param referId
 	 * @param referType
 	 * @param leaderId
 	 * @return
 	 */
-	public List getAuditDeptList(long referId, int referType, long deptId){
-		Object [] values = new Object[]{new Long(referId), new Integer(referType), 
-				new Long(deptId)};
-		String query = "from Audit where referId = ? and referType = ? " +
-				"and deptId = ? order by createDate desc";
-		return abstractDao.getList(query, values, null);
-	}
+	List getAuditDeptList(long referId, int referType, long deptId);
 
 	/**
 	 * 创建审批记录
@@ -207,33 +107,16 @@ public class AuditService {
 	 * @param confirm
 	 * @return
 	 */
-	public boolean saveAudit(SysUser user, long referId, int referType,
-			boolean confirm) {
-		Audit bean = new Audit();
-		bean.setDeptId(user.getDepartment().getId());
-		bean.setDeptName(user.getDepartment().getName());
-		bean.setHeadship(user.getHeadship());
-		bean.setLeaderId(user.getId());
-		bean.setLeaderName(user.getName());
-		bean.setMemo("");
-		bean.setReferId(referId);
-		bean.setReferType(referType);
-		bean.setFlag(confirm ? 1 : 0);
-		bean.setCreateDate(new Date());
-		return create(bean);
-	}
-	
+	boolean saveAudit(SysUser user, long referId, int referType, boolean confirm);
+
 	/**
 	 * 返回最后一个不通过的审批记录
+	 * 
 	 * @author zoumin
 	 * @param referId
 	 * @param referType
 	 * @param leaderId
 	 * @return
 	 */
-	public List getAuditNotList(long referId){
-		Object [] values = new Object[]{new Long(referId)};
-		String query = "from Audit where referId = ? and flag = 0 order by id desc";
-		return abstractDao.getList(query, values, null);
-	}
+	List getAuditNotList(long referId);
 }
