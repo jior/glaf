@@ -9,7 +9,7 @@
 	</bean>
 
 	<!--service -->
-	<bean id="todoService" class="com.glaf.base.modules.todo.service.TodoService">
+	<bean id="todoService" class="com.glaf.base.modules.todo.service.TodoServiceImpl">
 		<property name="abstractDao">
 			<ref bean="abstractDao" />
 		</property>
@@ -44,7 +44,7 @@
 
 	</bean>
 
-	<bean id="membershipService" class="com.glaf.base.modules.todo.service.MembershipService">
+	<bean id="membershipService" class="com.glaf.base.modules.todo.service.MembershipServiceImpl">
 		<property name="abstractDao">
 			<ref bean="abstractDao" />
 		</property>
@@ -68,6 +68,12 @@
 		</property>
 		<property name="membershipService">
 			<ref bean="membershipProxy" />
+		</property>
+		<property name="workCalendarService">
+			<ref bean="workCalendarProxy" />
+		</property>
+		<property name="sysUserService">
+			<ref bean="sysUserProxy" />
 		</property>
 	</bean>
 
