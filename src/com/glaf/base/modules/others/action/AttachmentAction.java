@@ -43,23 +43,22 @@ public class AttachmentAction extends DispatchActionSupport {
 		int referType = ParamUtil.getIntParameter(request, "referType", 0);
 		int viewType = ParamUtil.getIntParameter(request, "viewType", 0);
 
-		request.setAttribute("list", attachmentService.getAttachmentList(
-				referId, referType));
+		request.setAttribute("list",
+				attachmentService.getAttachmentList(referId, referType));
 
 		if (viewType == 1) {
 			return mapping.findForward("show_list");
-			}
-		if(viewType ==2){
-			return mapping.findForward("show_add_list");
 		}
-		else {
+		if (viewType == 2) {
+			return mapping.findForward("show_add_list");
+		} else {
 			return mapping.findForward("show_view_list");
 		}
 	}
-	
+
 	/**
-	 * 显示附件列表
-	 * 合同意见交流添加附件,只有上传者才能删除附件
+	 * 显示附件列表 合同意见交流添加附件,只有上传者才能删除附件
+	 * 
 	 * @param mapping
 	 * @param actionForm
 	 * @param request
@@ -67,21 +66,18 @@ public class AttachmentAction extends DispatchActionSupport {
 	 * @return
 	 * @throws Exception
 	 */
-	public ActionForward showList2(ActionMapping mapping, ActionForm actionForm,
-			HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+	public ActionForward showList2(ActionMapping mapping,
+			ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 		long referId = ParamUtil.getLongParameter(request, "referId", 0);
 		int referType = ParamUtil.getIntParameter(request, "referType", 0);
 		int viewType = ParamUtil.getIntParameter(request, "viewType", 0);
 
-		request.setAttribute("list", attachmentService.getAttachmentList(
-				referId, referType));
+		request.setAttribute("list",
+				attachmentService.getAttachmentList(referId, referType));
 
-
-			return mapping.findForward("show_list2");
-	
+		return mapping.findForward("show_list2");
 	}
-
 
 	/**
 	 * 提交删除
@@ -133,8 +129,8 @@ public class AttachmentAction extends DispatchActionSupport {
 			referId[i] = Long.parseLong(referIdArray[i]);
 		}
 
-		request.setAttribute("list", attachmentService.getAttachmentList(
-				referId, referType));
+		request.setAttribute("list",
+				attachmentService.getAttachmentList(referId, referType));
 
 		return mapping.findForward("show_view_list");
 
@@ -153,15 +149,16 @@ public class AttachmentAction extends DispatchActionSupport {
 	public ActionForward showCount(ActionMapping mapping,
 			ActionForm actionForm, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		 String referId = ParamUtil.getParameter(request, "referId");
-		 int referType = ParamUtil.getIntParameter(request, "referType", 0);
-		 String[] referIdArray = StringUtils.split(referId, ",");
-			long[] longReferId = new long[referIdArray.length];
-			for (int i = 0; i < referIdArray.length; i++) {
-				longReferId[i] = Long.parseLong(referIdArray[i]);
-			}
-		int count = attachmentService.getAttachmentCount(longReferId, referType);
-		String Strcount = count+"";
+		String referId = ParamUtil.getParameter(request, "referId");
+		int referType = ParamUtil.getIntParameter(request, "referType", 0);
+		String[] referIdArray = StringUtils.split(referId, ",");
+		long[] longReferId = new long[referIdArray.length];
+		for (int i = 0; i < referIdArray.length; i++) {
+			longReferId[i] = Long.parseLong(referIdArray[i]);
+		}
+		int count = attachmentService
+				.getAttachmentCount(longReferId, referType);
+		String Strcount = count + "";
 		request.setAttribute("count", Strcount);
 		return mapping.findForward("showCount");
 	}

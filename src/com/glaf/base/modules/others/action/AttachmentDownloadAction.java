@@ -19,7 +19,8 @@ import com.glaf.base.modules.others.service.AttachmentService;
 import com.glaf.base.utils.ParamUtil;
 
 public class AttachmentDownloadAction extends DownloadAction {
-	private static final Log logger = LogFactory.getLog(AttachmentDownloadAction.class);
+	private static final Log logger = LogFactory
+			.getLog(AttachmentDownloadAction.class);
 
 	private AttachmentService attachmentService;
 
@@ -50,7 +51,7 @@ public class AttachmentDownloadAction extends DownloadAction {
 		logger.info("referId = " + referId);
 		logger.info("referType = " + referType);
 		logger.info("查找前附件的Id为   " + id + "       ,        list = " + list);
-		if (list != null && list.size()>0 && id == 0) {
+		if (list != null && list.size() > 0 && id == 0) {
 			atta = (Attachment) list.get(0);
 			if (atta != null) {
 				id = atta.getId();
