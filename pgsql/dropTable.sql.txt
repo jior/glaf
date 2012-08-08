@@ -17,3 +17,5 @@ DROP TABLE sys_workcalendar;
 DROP TABLE message;
 DROP TABLE mymenu;
 DROP TABLE subjectcode;
+DROP TABLE Attachment;
+DROP TABLE Audit;

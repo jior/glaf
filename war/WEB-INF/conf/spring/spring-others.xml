@@ -4,22 +4,24 @@
 
 	<!--service -->
 
-	  <bean id="attachmentService" class="com.gzgi.modules.others.service.AttachmentService" >
+	<bean id="attachmentService" class="com.glaf.base.modules.others.service.AttachmentServiceImpl" >
 		<property name="abstractDao">
-		  <ref bean="abstractDao"/>
+			<ref bean="abstractDao"/>
 		</property>
-	  </bean>
-	  <bean id="attachmentProxy" parent="baseTxService">
-		<property name="target">
-		  <ref bean="attachmentService"/>
-		</property>
-	  </bean>
+	</bean>
 
-	<bean id="auditService" class="com.glaf.base.modules.others.service.AuditService">
+	<bean id="attachmentProxy" parent="baseTxService">
+		<property name="target">
+			<ref bean="attachmentService"/>
+		</property>
+	</bean>
+
+	<bean id="auditService" class="com.glaf.base.modules.others.service.AuditServiceImpl">
 		<property name="abstractDao">
 			<ref bean="abstractDao" />
 		</property>
 	</bean>
+
 	<bean id="auditProxy" parent="baseTxService">
 		<property name="target">
 			<ref bean="auditService" />
@@ -31,6 +33,7 @@
 			<ref bean="abstractDao" />
 		</property>
 	</bean>
+
 	<bean id="workCalendarProxy" parent="baseTxService">
 		<property name="target">
 			<ref bean="workCalendarService" />

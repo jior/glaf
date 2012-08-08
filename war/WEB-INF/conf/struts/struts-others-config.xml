@@ -40,7 +40,6 @@
 			<forward name="show_list" path="/WEB-INF/views/module/others/work_calendar.jsp"/>
 			<forward name="show_cal" path="/WEB-INF/views/module/others/calendar.jsp"/>
 		</action>
-    
  
 	</action-mappings>
 </struts-config>

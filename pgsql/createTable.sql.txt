@@ -289,3 +289,37 @@ CREATE TABLE subjectcode(
     );
 
 
+CREATE TABLE  Attachment (
+	id bigint  not null ,
+	referId bigint  ,
+	referType int  ,
+	name varchar (100)   ,
+	url varchar (200)   ,
+	createDate timestamp  ,
+	createId bigint  ,
+	crUser varchar (20)   ,
+	crDate timestamp  ,
+	edUser varchar (20)   ,
+	edDate timestamp ,
+	PRIMARY KEY (id)
+);
+
+
+  CREATE TABLE  Audit (
+	id bigint not null ,
+	referId bigint ,
+	referType int ,
+	deptId bigint ,
+	deptName varchar (50) ,
+	headship varchar (100) ,
+	leaderName varchar (100) ,
+	leaderId bigint ,
+	createDate timestamp ,
+	memo varchar (2000) ,
+	flag int ,
+	crUser varchar (20) ,
+	crDate timestamp ,
+	edUser varchar (20) ,
+	edDate timestamp , 
+	PRIMARY KEY (id)
+);
