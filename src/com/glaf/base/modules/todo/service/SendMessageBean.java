@@ -42,18 +42,6 @@ public class SendMessageBean {
 
 	}
 
-	public MembershipService getMembershipService() {
-		return membershipService;
-	}
-
-	public SysDeptRoleService getSysDeptRoleService() {
-		return sysDeptRoleService;
-	}
-
-	public SysUserService getSysUserService() {
-		return sysUserService;
-	}
-
 	public List getTodoInstances(String actorId) {
 		List list = new ArrayList();
 		SysUser user = sysUserService.findByAccountWithAll(actorId);

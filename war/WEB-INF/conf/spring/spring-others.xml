@@ -16,7 +16,7 @@
 		</property>
 	</bean>
 
-	<bean id="workCalendarService" class="com.glaf.base.modules.others.service.WorkCalendarService">
+	<bean id="workCalendarService" class="com.glaf.base.modules.others.service.WorkCalendarServiceImpl">
 		<property name="abstractDao">
 			<ref bean="abstractDao" />
 		</property>

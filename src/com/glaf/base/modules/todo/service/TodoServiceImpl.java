@@ -108,10 +108,6 @@ public class TodoServiceImpl implements TodoService {
 		}
 	}
 
-	public AbstractSpringDao getAbstractDao() {
-		return abstractDao;
-	}
-
 	public List getAllToDoList() {
 		return abstractDao
 				.getList(
@@ -152,10 +148,6 @@ public class TodoServiceImpl implements TodoService {
 		}
 		buffer.append(" ) ");
 		return buffer.toString();
-	}
-
-	public MessageService getMessageService() {
-		return messageService;
 	}
 
 	public Map getEnabledToDoMap() {
@@ -225,22 +217,6 @@ public class TodoServiceImpl implements TodoService {
 		return rows;
 	}
 
-	public SysDepartmentService getSysDepartmentService() {
-		return sysDepartmentService;
-	}
-
-	public SysDeptRoleService getSysDeptRoleService() {
-		return sysDeptRoleService;
-	}
-
-	public SysRoleService getSysRoleService() {
-		return sysRoleService;
-	}
-
-	public SysUserService getSysUserService() {
-		return sysUserService;
-	}
-
 	public List getSysUserWithDeptList() {
 		// ¼ÆËã×ÜÊý
 		String query = "from SysUser a order by a.department.id asc ";
@@ -263,10 +239,6 @@ public class TodoServiceImpl implements TodoService {
 		ToDo todo = (ToDo) abstractDao.find(ToDo.class, new Long(todoId));
 		CacheFactory.put(cacheKey, todo);
 		return todo;
-	}
-
-	public TodoDAO getTodoDAO() {
-		return todoDAO;
 	}
 
 	public List getToDoInstanceList(Map paramMap) {
