@@ -81,13 +81,13 @@ function window.onbeforeunload(){
 	</li>
 	<li class="context-class-a-hotspot2">
 		<ul>
-			<li><a href="javascript:openWindow('../workspace/mymenu.do?method=showList', 600, 450)">管理我的菜单</a></li><li></li>
+			<li><a href="javascript:openWindow('<%=context%>/workspace/mymenu.do?method=showList', 600, 450)">管理我的菜单</a></li><li></li>
       <li><a href="javascript:addToMyMenu()">添加到我的菜单</a></li><li></li>
 			<%
 				for (int i = 0;menuList != null && i < menuList.size(); i++) {
 					MyMenu myMenu = (MyMenu) menuList.get(i);
 			%>
-			<li><a href="javascript:jump('<%= URLDecoder.decode(myMenu.getUrl()) %>')"><%= myMenu.getTitle() %></a></li>
+			<li><a href="javascript:jump('<%=context%><%= URLDecoder.decode(myMenu.getUrl()) %>')"><%= myMenu.getTitle() %></a></li>
 			<%
 				}
 			%>

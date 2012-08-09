@@ -1,5 +1,7 @@
 package com.glaf.base.modules.workspace.action;
 
+import java.net.URLDecoder;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -114,8 +116,16 @@ public class MyMenuAction extends DispatchActionSupport {
 				SysConstants.LOGIN);
 		long userId = user == null ? 0L : user.getId();
 
+		String url = formBean.getUrl();
+		url = URLDecoder.decode(url, "UTF-8");
+		//System.out.println(url);
+		String contextPath = request.getContextPath();
+		if (url != null && url.startsWith(contextPath)) {
+			url = org.jpage.util.Tools.replaceIgnoreCase(url, contextPath, "");
+		}
+
 		bean.setTitle(formBean.getTitle());
-		bean.setUrl(formBean.getUrl());
+		bean.setUrl(url);
 		bean.setUserId(userId);
 
 		boolean ret = false;
@@ -137,7 +147,7 @@ public class MyMenuAction extends DispatchActionSupport {
 		// 显示提交后页面
 		int showList = ParamUtil.getIntParameter(request, "showList", 0);
 		if (showList == 1) {// 添加到我的菜单
-			
+
 			int pageNo = ParamUtil.getIntParameter(request, "page_no", 1);
 			int pageSize = ParamUtil.getIntParameter(request, "page_size",
 					Constants.PAGE_SIZE);

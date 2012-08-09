@@ -7,6 +7,11 @@
 <%@ page import="com.glaf.base.utils.*"%>
 <%
 	String url = ParamUtil.getParameter(request, "url");
+	//System.out.println(url);
+	String contextPath = request.getContextPath();
+    if(url != null && url.startsWith(contextPath)){
+		//url = org.jpage.util.Tools.replaceIgnoreCase(url, contextPath, "");
+	}
 %>
 <html>
 <head>
@@ -39,12 +44,14 @@
         </tr>
         <tr>
           <td class="input-box">访问链接*</td>
-          <td><input name="url" type="text" class="input" value="<%= url %>" size="45" datatype="string" nullable="no" maxsize="200" chname="访问链接"></td>
+          <td><input name="url" type="text" class="input" value="<%=url%>" size="45" datatype="string" nullable="no" maxsize="200" chname="访问链接"></td>
         </tr>
       </table>
         <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
             <tr>
-              <td height="35" align="center" valign="bottom"><input name="btnSave" type="submit" class="button" value="保存"></td>
+              <td height="35" align="center" valign="bottom">
+			  <input name="btnSave" type="submit" class="button" value="保存">
+			  </td>
             </tr>
         </table></td>
     </tr>

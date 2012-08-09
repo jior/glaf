@@ -13,7 +13,7 @@ if(list!=null){
   while(iter.hasNext()){
     SysApplication bean=(SysApplication)iter.next();	
 %>  
-  <li><a href="javascript:jump('<%=bean.getUrl()%>');" onmouseover="createChildNode(<%=bean.getId()%>)"><%=bean.getName()%></a>
+  <li><a href="javascript:jump('<%=request.getContextPath()%><%=bean.getUrl()%>');" onmouseover="createChildNode(<%=bean.getId()%>)"><%=bean.getName()%></a>
     <%if(bean.getShowMenu()!=0){//有子菜单%>
 	<ul id='node_<%=bean.getId()%>'></ul>
 	<%}%>

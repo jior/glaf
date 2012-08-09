@@ -45,6 +45,10 @@
 
     <!-- 编译任务 -->
 	<target name="jar" depends="build"  description="Create java jar file">
+	    <jar jarfile="glaf-src.zip">
+			<fileset dir="." includes="*.bat,*.xml, src/**/*.*,mapping/**/*.xml"  
+			             excludes="**/*.cvs,**/*.bak,**/*.tmp,**/*.scc,**/*.svn" />
+		</jar>
 	    <jar jarfile="${jarfile}" basedir="${classes.dir}"/>
     </target>
 	
@@ -79,6 +83,12 @@
         warfile="${dist.dir}/${project.distname}.war"
         webxml="./war/WEB-INF/web.xml">
       </war>
+    </target>
+
+	<target name="min-web" >
+		<jar jarfile="glaf-web.zip">
+			<fileset dir="war" includes="**/*.*"  excludes="**/*.jar,**/*.class,**/archives/*.*,**/*.ttc,**/*.lib,**/*.dll,**/*.so" casesensitive="yes"/>
+		</jar>
     </target>
 
 	<target name="copy">
