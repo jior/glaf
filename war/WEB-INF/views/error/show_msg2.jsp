@@ -1,12 +1,12 @@
-<%@ page contentType="text/html;charset=gbk" language="java"%>
-<%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
-<%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <SCRIPT src="/js/main.js"></SCRIPT>
 <script type='text/javascript' src='<%=request.getContextPath() %>/js/close.js'></script>
-<title>基础平台系统</title>
+<title>鍩虹骞冲彴绯荤粺</title>
 <body>
 <div id="messageDiv" style="display:none">
 <html:messages id="message" message="true"> 
@@ -15,7 +15,7 @@
 </div>
 </body>
 <script language="javascript">
-//刷新当前页面，不关闭页面
+//鍒锋柊褰撳墠椤甸潰锛屼笉鍏抽棴椤甸潰
 var messageDiv = document.getElementById("messageDiv");
 var message = messageDiv.innerText;
 if (message.length > 0) {

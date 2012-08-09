@@ -1,14 +1,14 @@
-<%@ page contentType="text/html;charset=gbk" language="java"%>
-<%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
-<%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%
   String msg = (String) request.getAttribute("msg");
   String url = (String) request.getAttribute("url");
 %>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
-<title>基础平台系统</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>鍩虹骞冲彴绯荤粺</title>
 <body>
 <div id="messageDiv" style="display:none">
 <%= msg == null ? "" : msg %>

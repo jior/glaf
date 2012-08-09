@@ -1,6 +1,6 @@
-<%@ page contentType="text/html;charset=gbk" language="java"%>
-<%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
-<%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.glaf.base.utils.*"%>
 <%@ page import="com.glaf.base.modules.sys.*"%>
@@ -21,7 +21,7 @@ String name =ParamUtil.getParameter(request,"fullName");
 <html>
 <head>
 <base target="_self">
-<meta http-equiv="Content-Type" content="text/html; charset=gb2312"/>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <title></title>
 <link href="../../css/site.css" type="text/css" rel="stylesheet">
 <link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
@@ -37,7 +37,7 @@ function selMultData(){
 <body>
 <table width="430" border="0" align="center" cellspacing="0" cellpadding="0">      
       <tr>
-        <td class="nav-title">您选择的是 <%=sysDepartment.getName()%> 下的工作人员：&nbsp;</td>
+        <td class="nav-title">鎮ㄩ�夋嫨鐨勬槸 <%=sysDepartment.getName()%> 涓嬬殑宸ヤ綔浜哄憳锛�&nbsp;</td>
       </tr>
     </table>
 <form action="?method=selectSysUserByDept&deptId=<%=sysDepartment.getId()%>" method="post">
@@ -55,7 +55,7 @@ function selMultData(){
     <td class="box-mm">
     <table width="100%"border="0" align="center" cellspacing="0" cellpadding="0" class="box">
       <tr>
-         <td class="input-box">用户名称
+         <td class="input-box">鐢ㄦ埛鍚嶇О
           <input name="fullName" type="text" class="input" size="15">
           <input name="Submit" type="submit" value=" " class="submit-search"></td>
         </tr>
@@ -64,7 +64,7 @@ function selMultData(){
       <table width="95%" align="center" border="0" cellspacing="0" cellpadding="5">
 	    <tr>
 		  <td width="7%" align="center"><input type="checkbox" name="id" value="checkbox" onClick="CheckAlls(this, 'id')"></td>
-		  <td width="93%">全择</td>
+		  <td width="93%">鍏ㄦ嫨</td>
 		</tr>
 		</table>
 		<table width="95%" align="center" border="0" cellspacing="1" cellpadding="3" class="list-box">
@@ -115,7 +115,7 @@ String params = WebUtil.getQueryString(request);
 </table>
 <table width="400" border="0" align="center" cellspacing="0" cellpadding="0">
   <tr>
-    <td align="center" height="30"><input type="button" name="btn_save" value="确定" class="button" onClick="selMultData()" /></td>
+    <td align="center" height="30"><input type="button" name="btn_save" value="纭畾" class="button" onClick="selMultData()" /></td>
   </tr>
 </table>
 </form>

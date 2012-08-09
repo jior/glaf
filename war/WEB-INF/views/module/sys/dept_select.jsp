@@ -1,6 +1,6 @@
-<%@ page contentType="text/html;charset=gbk" language="java"%>
-<%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
-<%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.glaf.base.modules.sys.*"%>
 <%@ page import="com.glaf.base.modules.sys.model.*"%>
@@ -12,7 +12,7 @@ SysTree parent= (SysTree)request.getAttribute("parent");
 <html>
 <head>
 <base target="_self">
-<meta http-equiv="Content-Type" content="text/html; charset=gb2312"/>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <title></title>
 <link href="<%=request.getContextPath()%>/css/site.css" type="text/css" rel="stylesheet">
 <link href="<%=request.getContextPath()%>/js/dtree/dtree.css" type="text/css" rel="stylesheet">
@@ -28,7 +28,7 @@ function selData(value, title){
 
 <table width="330" border="0" align="center" cellspacing="0" cellpadding="0">      
       <tr>
-        <td class="nav-title">ÇëÑ¡Ôñ£º&nbsp;</td>
+        <td class="nav-title">è¯·é€‰æ‹©ï¼š&nbsp;</td>
       </tr>
     </table>
 <table width="300" border="0" align="center" cellpadding="0" cellspacing="0" class="box">  
@@ -45,7 +45,7 @@ function selData(value, title){
     <td class="box-mm">
 	  <table width="95%" align="center" border="0" cellspacing="0" cellpadding="5">
 	    <tr>
-		  <td><a href="javascript:selData('','');">²»Ñ¡Ôñ</a></td>
+		  <td><a href="javascript:selData('','');">ä¸é€‰æ‹©</a></td>
 		</tr>
 		<tr>
 		  <td><DIV id="ttTree" class='ttTree' style="width:100%; height:180px;overflow-x:auto; overflow-y:auto;"></DIV></td>

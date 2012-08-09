@@ -1,6 +1,6 @@
-<%@ page contentType="text/html;charset=gbk" language="java"%>
-<%@ taglib uri="/WEB-INF/tld/c.tld" prefix="c" %>
-<%@ taglib uri="/WEB-INF/tld/fmt.tld" prefix="fmt" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.glaf.base.modules.todo.*"%>
 <%@ page import="com.glaf.base.modules.todo.model.*"%>
@@ -65,8 +65,8 @@
 %>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=gbk" />
-<title>基础平台系统</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>鍩虹骞冲彴绯荤粺</title>
 <link href="../css/site.css" rel="stylesheet" type="text/css">
 <link href="<%=context%>/css/site.css" rel="stylesheet" type="text/css">
 <script src="<%=context%>/js/main.js" language="javascript"></script>
@@ -89,7 +89,7 @@ _dynarch_menu_url = "<%=context%>/js/hmenu";
 <br><br>
 <table align="center" width="90%" border="0" cellspacing="1" cellpadding="0" class="list-box">
           <tr class="list-title">
-            <td align="center">用户</td>
+            <td align="center">鐢ㄦ埛</td>
             <td width="95" align="center">PastDue</td>
             <td width="95" align="center">Caution</td>
             <td width="95" align="center">OK</td>

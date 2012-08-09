@@ -1,6 +1,6 @@
-<%@ page contentType="text/html;charset=GBK" language="java"%>
-<%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
-<%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.glaf.base.modules.*"%>
 <%@ page import="com.glaf.base.modules.utils.*"%>
@@ -14,7 +14,7 @@ List list = pager.getResults();
 %>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
 <link href="<%=request.getContextPath()%>/css/site.css" type="text/css" rel="stylesheet">
 <script language="javascript" src='<%=request.getContextPath()%>/js/verify.js'></script>
@@ -71,7 +71,7 @@ function maxium() {
 </head>
 
 <body onLoad="maxium();">
-<div class="nav-title"><span class="Title">ÊÚÈ¨¹ÜÀí</span>&gt;&gt;
+<div class="nav-title"><span class="Title">æˆæƒç®¡ç†</span>&gt;&gt;
 
 </div>
 <html:form method="post" action="/sys/sysUserRole.do?method=showUsers" target="_self">
@@ -79,15 +79,15 @@ function maxium() {
   <table width="730" border="0" align="center" cellpadding="5" cellspacing="0">
     <tr>
       <td width="170">
-        ²¿ÃÅ
-        <input name="deptName" type="text" class="input" size="15" title="µã»÷Ñ¡Ôñ²¿ÃÅ" readonly onClick="selectDept('5', document.all.deptId, this);">
+        éƒ¨é—¨
+        <input name="deptName" type="text" class="input" size="15" title="ç‚¹å‡»é€‰æ‹©éƒ¨é—¨" readonly onClick="selectDept('5', document.all.deptId, this);">
         <input name="deptId" type="hidden" value="" searchflag="1">	  </td>
-      <td width="150">ĞÕÃû
+      <td width="150">å§“å
         <input name="name" type="text" class="input" searchflag="1" size="10"></td>
-      <td width="380">ÊÚÈ¨ÓĞĞ§ÈÕÆÚ:
-        <input name="startDate" type="text" class="input" id="startDate" size="10" datatype="date" nullable="no" maxsize="20" chname="Ô¤¼Æ¿ªÊ¼Ê±¼ä" value="" readonly searchflag=1>
+      <td width="380">æˆæƒæœ‰æ•ˆæ—¥æœŸ:
+        <input name="startDate" type="text" class="input" id="startDate" size="10" datatype="date" nullable="no" maxsize="20" chname="é¢„è®¡å¼€å§‹æ—¶é—´" value="" readonly searchflag=1>
           <img src="<%=context%>/images/system_pic_35.gif" style="cursor:pointer" onClick="return showCalendar('startDate', '%Y-%m-%d')"> -
-          <input name="endDate" type="text" class="input" id="endDate" size="10" datatype="date" nullable="no" maxsize="20" chname="Ô¤¼Æ½áÊøÊ±¼ä" value="" readonly searchflag=1>
+          <input name="endDate" type="text" class="input" id="endDate" size="10" datatype="date" nullable="no" maxsize="20" chname="é¢„è®¡ç»“æŸæ—¶é—´" value="" readonly searchflag=1>
           <img src="<%=context%>/images/system_pic_35.gif" style="cursor:pointer" onClick="return showCalendar('endDate', '%Y-%m-%d')"></td>
       <td width="30"><input name="btn_search" type="button" value=" " onClick="doSearch(this.form)" class="submit-search"></td>
     </tr>
@@ -95,10 +95,10 @@ function maxium() {
   <table width="100%" border="0" cellspacing="1" cellpadding="0" class="list-box">
   <tr class="list-title"> 
     <td width="5%" align="center"><input type="checkbox" name="chkall" value="checkbox" onClick="checkAll(this.form, this);checkOperation(this.form)"></td>
-    <td width="5%" align="center">ĞòºÅ</td>
-    <td width="10%" align="center">Ãû³Æ</td>
-    <td width="15%" align="center">²¿ÃÅ</td>
-    <td width="65%" align="center">´úÀíÈ¨ÏŞÄÚÈİ</td>
+    <td width="5%" align="center">åºå·</td>
+    <td width="10%" align="center">åç§°</td>
+    <td width="15%" align="center">éƒ¨é—¨</td>
+    <td width="65%" align="center">ä»£ç†æƒé™å†…å®¹</td>
   </tr>
 <%
 int i=0;
@@ -120,24 +120,24 @@ if(list!=null){
 			if(authorizeFromNames.indexOf(userRole.getAuthorizeFrom().getName())<0)
 				processDescriptions = "";
 		    if(processDescriptions.indexOf(processDescription)<0){
-				contentBuffer += userRole.getProcessDescription()+"[<font color=red>´ú"+userRole.getAuthorizeFrom().getName();
-				contentBuffer += " ÓĞĞ§ÆÚ£º" + BaseUtil.dateToString(userRole.getAvailDateStart()) +"ÖÁ"+ BaseUtil.dateToString(userRole.getAvailDateEnd()) + "</font>] ";
-				contentTitle += userRole.getProcessDescription()+"[´ú"+userRole.getAuthorizeFrom().getName();
-				contentTitle += " ÓĞĞ§ÆÚ£º" + BaseUtil.dateToString(userRole.getAvailDateStart()) +"ÖÁ"+ BaseUtil.dateToString(userRole.getAvailDateEnd())+"]";
+				contentBuffer += userRole.getProcessDescription()+"[<font color=red>ä»£"+userRole.getAuthorizeFrom().getName();
+				contentBuffer += " æœ‰æ•ˆæœŸï¼š" + BaseUtil.dateToString(userRole.getAvailDateStart()) +"è‡³"+ BaseUtil.dateToString(userRole.getAvailDateEnd()) + "</font>] ";
+				contentTitle += userRole.getProcessDescription()+"[ä»£"+userRole.getAuthorizeFrom().getName();
+				contentTitle += " æœ‰æ•ˆæœŸï¼š" + BaseUtil.dateToString(userRole.getAvailDateStart()) +"è‡³"+ BaseUtil.dateToString(userRole.getAvailDateEnd())+"]";
 		    }
 		    //if(null==processDescription || "".equals(processDescription)){
 		    //	if(authorizeFromNames.indexOf(userRole.getAuthorizeFrom().getName())<0){
-			//    	contentBuffer += "È«¾Ö´úÀí"+"[<font color=red>´ú"+userRole.getAuthorizeFrom().getName();
-			//		contentBuffer += " ÓĞĞ§ÆÚ£º" + BaseUtil.dateToString(userRole.getAvailDateStart()) +"ÖÁ"+ BaseUtil.dateToString(userRole.getAvailDateEnd()) + "</font>] ";
+			//    	contentBuffer += "å…¨å±€ä»£ç†"+"[<font color=red>ä»£"+userRole.getAuthorizeFrom().getName();
+			//		contentBuffer += " æœ‰æ•ˆæœŸï¼š" + BaseUtil.dateToString(userRole.getAvailDateStart()) +"è‡³"+ BaseUtil.dateToString(userRole.getAvailDateEnd()) + "</font>] ";
 		    //	}
 		    //}
 			authorizeFromNames += userRole.getAuthorizeFrom().getName();
 		    processDescriptions += processDescription;
 		  //out.print(userRole.getDeptRole().getRole().getName());
 		  //out.print(userRole.getProcessDescription());
-		  //out.print("[<font color=red>´ú");
+		  //out.print("[<font color=red>ä»£");
 		  //out.print(userRole.getAuthorizeFrom().getName());
-		  //out.print(" ÓĞĞ§ÆÚ£º" + BaseUtil.dateToString(userRole.getAvailDateStart()) +"ÖÁ"+ BaseUtil.dateToString(userRole.getAvailDateEnd()));
+		  //out.print(" æœ‰æ•ˆæœŸï¼š" + BaseUtil.dateToString(userRole.getAvailDateStart()) +"è‡³"+ BaseUtil.dateToString(userRole.getAvailDateEnd()));
 		  //out.print("</font>] ");
 		}		
 	  }
@@ -175,7 +175,7 @@ for(; i<pageSize; i++){
 <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
   <tr> 
     <td width="50%"> 
-	  <input name="btn_auth" type="button" value="ÊÚÈ¨" class="button" onClick="javascript:auth(this.form);" disabled></td>
+	  <input name="btn_auth" type="button" value="æˆæƒ" class="button" onClick="javascript:auth(this.form);" disabled></td>
     <td width="50%" align="right">
 <%
 String params = WebUtil.getQueryString(request);

@@ -1,6 +1,6 @@
-<%@ page contentType="text/html;charset=gbk" language="java"%>
-<%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
-<%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.glaf.base.modules.sys.model.*"%>
 <%
@@ -10,7 +10,7 @@ Iterator iter = user.iterator();
 %>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=gb2312"/>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <title></title>
 <link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
 <script language="javascript" src='<%=context%>/js/main.js'></script>
@@ -33,7 +33,7 @@ function selData(){
 <body>
 <table width="330" border="0" align="center" cellspacing="0" cellpadding="0">      
       <tr>
-        <td class="nav-title">ว๋ักิ๑ฃบ&nbsp;</td>
+        <td class="nav-title">่ฏท้€ๆฉ๏ผ&nbsp;</td>
       </tr>
     </table>
 <table width="300" border="0" align="center" cellpadding="0" cellspacing="0" class="box">  
@@ -54,7 +54,7 @@ function selData(){
 		  <td width="7%" align="center">
 		  <input type="hidden" name="id" value="">
 		  <input type="radio" name="id" value="" title="" code="" checked></td>
-		  <td width="93%">ฒปักิ๑</td>
+		  <td width="93%">ไธ้€ๆฉ</td>
 		</tr>
 <%
 while(iter.hasNext()){
@@ -85,7 +85,7 @@ while(iter.hasNext()){
 </table>
 <table width="300" border="0" align="center" cellspacing="0" cellpadding="0">
   <tr>
-    <td align="center" height="30"><input type="button" name="btn_save" value="ศทถจ" class="button" onClick="selData()" /></td>
+    <td align="center" height="30"><input type="button" name="btn_save" value="็กฎๅฎ" class="button" onClick="selData()" /></td>
   </tr>
 </table>
 </body>

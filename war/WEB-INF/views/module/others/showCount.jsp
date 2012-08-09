@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=gbk" language="java"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.glaf.base.modules.utils.*"%>
 <%@ page import="com.glaf.base.modules.others.*"%>
@@ -12,7 +12,7 @@
 	String count =(String)request.getAttribute("count");
 	int number = ParamUtil.getIntParameter(request,"number",0);
 %>
-(¹²<span id="referId-<%= referType + referIds+number %>"><%=count %></span>¸ö)
+(å…±<span id="referId-<%= referType + referIds+number %>"><%=count %></span>ä¸ª)
 <script type="text/javascript">
 <!--
 function getCount<%= referType + referIds+number %>() {

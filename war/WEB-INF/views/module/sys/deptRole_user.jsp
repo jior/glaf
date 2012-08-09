@@ -1,6 +1,6 @@
-<%@ page contentType="text/html;charset=gbk" language="java"%>
-<%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean" %>
-<%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.glaf.base.modules.*"%>
 <%@ page import="com.glaf.base.modules.sys.model.*"%>
@@ -14,7 +14,7 @@ int roleId = ParamUtil.getIntParameter(request, "roleId", 0);
 
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
 <link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
 <script language="javascript" src='<%=context%>/js/verify.js'></script>
@@ -37,7 +37,7 @@ function addUser(){
   openWindow(url, width, height, scroll);
 }
 function delUser(form){  
-  if(!confirm("È·ÈÏÒªÉ¾³ıÓÃ»§Âğ£¿")) return;
+  if(!confirm("ç¡®è®¤è¦åˆ é™¤ç”¨æˆ·å—ï¼Ÿ")) return;
   form.target="hiddenFrame";
   form.submit();
 }
@@ -56,7 +56,7 @@ while(navIter.hasNext()){
 <%
 }
 %>-
-½ÇÉ«[<%=ParamUtil.getAttribute(request, "role")%>] ÓÃ»§ÁĞ±í</div>
+è§’è‰²[<%=ParamUtil.getAttribute(request, "role")%>] ç”¨æˆ·åˆ—è¡¨</div>
 <html:form action="/sys/user.do?method=delRoleUser" method="post" target="_self"> 
 <input type="hidden" name="deptId" value="<%=deptId%>"> 
 <input type="hidden" name="roleId" value="<%=roleId%>"> 
@@ -65,9 +65,9 @@ while(navIter.hasNext()){
 <table width="95%" border="0" align="center" cellspacing="1" cellpadding="0" class="list-box">
   <tr class="list-title" style="position:relative; top:expression(this.offsetParent.scrollTop-2);"> 
     <td width="5%" align="center"> <input type="checkbox" name="chkall" value="checkbox" onClick="checkAll(this.form, this);checkOperation(this.form)">    </td>
-    <td width="5%" align="center">ĞòºÅ</td>
-    <td width="35%" align="center">ÓÃ»§Ãû³Æ</td>
-    <td width="40%" align="center">ËùÔÚ²¿ÃÅ</td>
+    <td width="5%" align="center">åºå·</td>
+    <td width="35%" align="center">ç”¨æˆ·åç§°</td>
+    <td width="40%" align="center">æ‰€åœ¨éƒ¨é—¨</td>
   </tr>
   <%
 int i=0;
@@ -102,8 +102,8 @@ for(; i<10; i++){
 <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
   <tr> 
     <td align="left" height="30" valign="bottom"> 
-	<input name="btn_del" type="button" value="É¾³ıÓÃ»§" class="button" onClick="delUser(this.form)" disabled>
-	<input name="btn_add" type="button" value="Ôö¼ÓÓÃ»§" class="button" onClick="addUser()"></td>
+	<input name="btn_del" type="button" value="åˆ é™¤ç”¨æˆ·" class="button" onClick="delUser(this.form)" disabled>
+	<input name="btn_add" type="button" value="å¢åŠ ç”¨æˆ·" class="button" onClick="addUser()"></td>
     </tr>
 </table>
 </html:form> 

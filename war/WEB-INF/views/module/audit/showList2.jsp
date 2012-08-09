@@ -1,12 +1,12 @@
-<%@ page contentType="text/html;charset=gbk" language="java"%>
-<%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
-<%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="/WEB-INF/tld/c.tld" prefix="c"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.glaf.base.utils.*"%>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title></title>
 <link href="../../css/site.css" type="text/css" rel="stylesheet">
 <link href="<%= request.getContextPath() %>/css/site.css" type="text/css" rel="stylesheet">
@@ -18,7 +18,7 @@
 <body>
 <table width="100%" border="0" cellpadding="0" cellspacing="0" class="m-box">
   <tr>
-    <td width="49%" class="nav-title">查看审核意见</td>
+    <td width="49%" class="nav-title">鏌ョ湅瀹℃牳鎰忚</td>
     <td width="51%" height="27" align="right">&nbsp;&nbsp;&nbsp;</td>
   </tr>
 </table> 
@@ -56,7 +56,7 @@
 </table>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td height="30" align="center"><input name="close" type="button" class="button" id="close" value="关闭" onClick="javascript:self.close();"></td>
+    <td height="30" align="center"><input name="close" type="button" class="button" id="close" value="鍏抽棴" onClick="javascript:self.close();"></td>
   </tr>
 </table>
 </body>

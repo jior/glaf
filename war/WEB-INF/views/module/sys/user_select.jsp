@@ -1,6 +1,6 @@
-<%@ page contentType="text/html;charset=gbk" language="java"%>
-<%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
-<%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.glaf.base.utils.*"%>
 <%@ page import="com.glaf.base.modules.sys.*"%>
@@ -22,7 +22,7 @@ int multDate = Date.intValue();
 <html>
 <head>
 <base target="_self">
-<meta http-equiv="Content-Type" content="text/html; charset=gb2312"/>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <title></title>
 <link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
 <script language="javascript" src='<%=context%>/js/main.js'></script>
@@ -41,7 +41,7 @@ function selOneData(){
 <body>
 <table width="430" border="0" align="center" cellspacing="0" cellpadding="0">      
       <tr>
-        <td class="nav-title">请选择：&nbsp;</td>
+        <td class="nav-title">璇烽�夋嫨锛�&nbsp;</td>
       </tr>
     </table>
 <form action="?method=selectSysUser" method="post">
@@ -61,10 +61,10 @@ function selOneData(){
     <td class="box-mm">
     <table width="100%"border="0" align="center" cellspacing="0" cellpadding="0" class="box">
       <tr>
-         <td class="input-box">部门
+         <td class="input-box">閮ㄩ棬
           <input name="deptTitle" type="text" class="input" value="" size="12" onClick="selectDept('5', document.all.deptId, this);" readonly>
             <input type="hidden" name="deptId" value="" searchflag="1"></td>
-        <td class="input-box">用户名称
+        <td class="input-box">鐢ㄦ埛鍚嶇О
           <input name="fullName" type="text" class="input" size="12"></td>
         <td width="3%" align="right"><input name="Submit" type="submit" value=" " class="submit-search"></td>
      </tr>
@@ -74,7 +74,7 @@ function selOneData(){
 	    <tr>
 	    <%if(multDate==0){ %>
 		  <td width="7%" align="center"><input type="checkbox" name="allcheck" value="checkbox" onClick="CheckAlls(this, 'id')"></td>
-		  <td width="93%">全择</td>
+		  <td width="93%">鍏ㄦ嫨</td>
 		  <%} %>
 		</tr>
 		</table>
@@ -131,9 +131,9 @@ String params = WebUtil.getQueryString(request);
 <table width="400" border="0" align="center" cellspacing="0" cellpadding="0">
   <tr>
     <%if(multDate==0){ %>
-    <td align="center" height="30"><input type="button" name="btn_save" value="确定" class="button" onClick="selMultData()" /></td>
+    <td align="center" height="30"><input type="button" name="btn_save" value="纭畾" class="button" onClick="selMultData()" /></td>
     <%}else{ %>
-    <td align="center" height="30"><input type="button" name="btn_save" value="确定" class="button" onClick="selOneData()" /></td>
+    <td align="center" height="30"><input type="button" name="btn_save" value="纭畾" class="button" onClick="selOneData()" /></td>
     <%} %>
   </tr>
 </table>

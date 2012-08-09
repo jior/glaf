@@ -1,6 +1,6 @@
-<%@ page contentType="text/html;charset=gbk" language="java"%>
-<%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean" %>
-<%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.glaf.base.modules.sys.*"%>
 <%@ page import="com.glaf.base.modules.sys.model.*"%>
@@ -13,7 +13,7 @@ ArrayList apps = (ArrayList)request.getAttribute("apps");
 
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
 <link href="<%=request.getContextPath()%>/css/site.css" type="text/css" rel="stylesheet">
 <link type="text/css" href="<%=request.getContextPath()%>/css/style.css" rel="stylesheet">
@@ -29,7 +29,7 @@ function checkForm(form){
     }
   }
   if(!isChecked){
-    alert("Äú»¹Ã»ÓĞÑ¡ÔñÒªÊÚÈ¨µÄÄ£¿é.");
+    alert("æ‚¨è¿˜æ²¡æœ‰é€‰æ‹©è¦æˆæƒçš„æ¨¡å—.");
     return false;
   }
 }
@@ -83,20 +83,20 @@ function unSelApp(id){
             <td width="200" height="45" valign="bottom"><table width="144%" height="100%"  border="0" align="right" cellpadding="0" cellspacing="0">
                 <tr> 
                   <td width="25"><div align="center"><img src="<%=request.getContextPath()%>/images/content_lt.jpg" width="11" height="34"></div></td>
-                  <td><span class="style2">½ÇÉ«¹ÜÀí</span></td>
+                  <td><span class="style2">è§’è‰²ç®¡ç†</span></td>
                 </tr>
               </table></td>
             <td valign="middle"><table width="95%"  border="0" cellspacing="0" cellpadding="0">
                 <tr> 
                   <td height="15" align="right"><img src="<%=request.getContextPath()%>/images/icon_1.jpg" width="11" height="12"> 
-                    <span class="font">È¨ÏŞÉèÖÃ</span> </td>
+                    <span class="font">æƒé™è®¾ç½®</span> </td>
                 </tr>
               </table></td>
           </tr>
         </table>
 		<table width="95%" align="center"  border="0" cellspacing="0" cellpadding="0">
         <tr>
-          <td class="font">&nbsp;ÉèÖÃ½ÇÉ« <b><%=role.getName()%> µÄÈ¨ÏŞ</b>
+          <td class="font">&nbsp;è®¾ç½®è§’è‰² <b><%=role.getName()%> çš„æƒé™</b>
 		  </td>
         </tr>
       </table>	  
@@ -107,9 +107,9 @@ function unSelApp(id){
         </table>
         <table width="95%"  border="0" align="center" cellpadding="0" cellspacing="2">
           <tr> 
-            <td width="10%" class="listborder"><div align="center" class="fontname_12">ĞòºÅ</div></td>
-            <td width="40%" class="listborder"><div align="left" class="fontname_12">Ä£¿éÃû³Æ</div></td>
-            <td width="50%" class="listborder"><div align="center"  class="fontname_12">²Ù×÷</div></td>
+            <td width="10%" class="listborder"><div align="center" class="fontname_12">åºå·</div></td>
+            <td width="40%" class="listborder"><div align="left" class="fontname_12">æ¨¡å—åç§°</div></td>
+            <td width="50%" class="listborder"><div align="center"  class="fontname_12">æ“ä½œ</div></td>
           </tr>
           
           <%
@@ -127,11 +127,11 @@ if(list!=null){
 if(bean.getDeep()>1){
   
   for(int j=1; j<=bean.getDeep()-1; j++){
-    out.print("¡¡¡¡");
+    out.print("ã€€ã€€");
   }
   out.print("--");
 }else{
-  out.print("£«");
+  out.print("ï¼‹");
 }
 %><%=bean.getName()%>&nbsp; 
               <input type="hidden" name="app_id" value="<%=bean.getId()%>">	    </td>
@@ -155,7 +155,7 @@ if(bean.getDeep()>1){
         </table>
         <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
           <tr> 
-            <td align="center"> <input name="btn_add" type="submit" value="±£´æ" class="butt-normal"></td>
+            <td align="center"> <input name="btn_add" type="submit" value="ä¿å­˜" class="butt-normal"></td>
           </tr>
         </table>
       </div></th>

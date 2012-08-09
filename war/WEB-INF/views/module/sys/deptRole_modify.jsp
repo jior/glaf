@@ -1,6 +1,6 @@
-<%@ page contentType="text/html;charset=gbk" language="java"%>
-<%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
-<%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.glaf.base.modules.sys.*"%>
 <%@ page import="com.glaf.base.modules.sys.model.*"%>
@@ -11,7 +11,7 @@ List  list = (List)request.getAttribute("parent");
 %>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
 <link href="<%=request.getContextPath()%>/css/site.css" type="text/css" rel="stylesheet">
 <link type="text/css" href="<%=request.getContextPath()%>/css/style.css" rel="stylesheet">
@@ -27,13 +27,13 @@ List  list = (List)request.getAttribute("parent");
           <td width="200" height="45" valign="bottom"><table width="100%" height="100%"  border="0" align="right" cellpadding="0" cellspacing="0">
             <tr>
               <td width="25"><div align="center"><img src="<%=request.getContextPath()%>/images/content_lt.jpg" width="11" height="34"></div></td>
-                  <td><span class="style2">½ÇÉ«¹ÜÀí</span></td>
+                  <td><span class="style2">è§’è‰²ç®¡ç†</span></td>
             </tr>
           </table></td>
           <td valign="middle"><table width="95%"  border="0" cellspacing="0" cellpadding="0">
             <tr>
               <td><div align="right"><img src="<%=request.getContextPath()%>/images/icon_1.jpg" width="11" height="12"> 
-                      <span class="font">ĞŞ¸Ä½ÇÉ«</span></div></td>
+                      <span class="font">ä¿®æ”¹è§’è‰²</span></div></td>
             </tr>
           </table></td>
         </tr>
@@ -49,27 +49,27 @@ List  list = (List)request.getAttribute("parent");
                         <td height="30"> <table width="100%" border="0" cellspacing="0" cellpadding="0">
                             <tr> 
                               <td width="20" align="center"><img src="<%=request.getContextPath()%>/images/icon_6.jpg" width="6" height="7"></td>
-                              <td class="fontlist" align="right">½ÇÉ«Ãû³Æ£º</td>
-                              <td>&nbsp; <input name="name" type="text" size="28" class="textbox" value="<%=bean.getName()%>" datatype="string" nullable="no" maxsize="20" chname="½ÇÉ«Ãû³Æ"></td>
+                              <td class="fontlist" align="right">è§’è‰²åç§°ï¼š</td>
+                              <td>&nbsp; <input name="name" type="text" size="28" class="textbox" value="<%=bean.getName()%>" datatype="string" nullable="no" maxsize="20" chname="è§’è‰²åç§°"></td>
                             </tr>
                             <tr> 
                               <td align="center" valign="top"><img src="<%=request.getContextPath()%>/images/icon_6.jpg" width="6" height="7"></td>
-                              <td class="fontlist" align="right" valign="top">Ãè¡¡¡¡Êö£º</td>
-                              <td>&nbsp; <textarea name="desc" cols="35" rows="6" class="textbox" datatype="string" nullable="yes" maxsize="100" chname="ÃèÊö"><%=bean.getDesc()%></textarea>                              </td>
+                              <td class="fontlist" align="right" valign="top">æã€€ã€€è¿°ï¼š</td>
+                              <td>&nbsp; <textarea name="desc" cols="35" rows="6" class="textbox" datatype="string" nullable="yes" maxsize="100" chname="æè¿°"><%=bean.getDesc()%></textarea>                              </td>
                             </tr>
                             <tr>
                               <td align="center"><img src="<%=request.getContextPath()%>/images/icon_6.jpg" width="6" height="7"></td>
-                              <td class="fontlist" align="right">µÈ¡¡¡¡¼¶£º</td>
+                              <td class="fontlist" align="right">ç­‰ã€€ã€€çº§ï¼š</td>
                               <td><span class="fontlist"> &nbsp;
                                     <input type="radio" name="grade" value="0" <%=bean.getGrade()==0?"checked":""%>>
-                                ÆÕÍ¨½ÇÉ«
+                                æ™®é€šè§’è‰²
                                 <input type="radio" name="grade" value="1" <%=bean.getGrade()==1?"checked":""%>>
-                                ²¿ÃÅ¹ÜÀíÔ±</span></td>
+                                éƒ¨é—¨ç®¡ç†å‘˜</span></td>
                             </tr>
                             <tr> 
                               <td align="center">&nbsp;</td>
                               <td class="fontlist" align="right">&nbsp;</td>
-                              <td>&nbsp; <input name="btn_save" type="submit" value="±£´æ" class="butt-normal"></td>
+                              <td>&nbsp; <input name="btn_save" type="submit" value="ä¿å­˜" class="butt-normal"></td>
                             </tr>
                           </table>
                           

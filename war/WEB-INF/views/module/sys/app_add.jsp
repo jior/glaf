@@ -1,6 +1,6 @@
-<%@ page contentType="text/html;charset=gbk" language="java"%>
-<%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
-<%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.glaf.base.modules.sys.*"%>
 <%@ page import="com.glaf.base.modules.sys.model.*"%>
@@ -12,7 +12,7 @@ int parent=ParamUtil.getIntParameter(request, "parent", 0);
 %>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
 <link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
 <script language="javascript" src='<%=context%>/js/verify.js'></script>
@@ -21,7 +21,7 @@ int parent=ParamUtil.getIntParameter(request, "parent", 0);
 <body>
 <html:form action="/sys/application.do?method=saveAdd" method="post" onsubmit="return verifyAll(this);" > 
 <input type="hidden" name="parent" value="<%=parent%>">
-<div class="nav-title"><span class="Title">Ä£¿é¹ÜÀí</span>&gt;&gt;Ôö¼ÓÄ£¿é</div>
+<div class="nav-title"><span class="Title">æ¨¡å—ç®¡ç†</span>&gt;&gt;å¢åŠ æ¨¡å—</div>
 <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0" class="box">
   <tr>
     <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -35,28 +35,28 @@ int parent=ParamUtil.getIntParameter(request, "parent", 0);
   <tr>
     <td class="box-mm"><table width="95%" align="center" border="0" cellspacing="0" cellpadding="5">
       <tr>
-        <td class="input-box">Ãû¡¡¡¡³Æ*</td>
-        <td><input name="name" type="text" size="37" class="input" datatype="string" nullable="no" maxsize="20" chname="Ãû³Æ"></td>
+        <td class="input-box">åã€€ã€€ç§°*</td>
+        <td><input name="name" type="text" size="37" class="input" datatype="string" nullable="no" maxsize="20" chname="åç§°"></td>
       </tr>
       <tr>
-        <td class="input-box2" valign="top">Ãè¡¡¡¡Êö</td>
-        <td><textarea name="desc" cols="35" rows="8" class="input-multi" datatype="string" nullable="yes" maxsize="100" chname="ÃèÊö"></textarea></td>
+        <td class="input-box2" valign="top">æã€€ã€€è¿°</td>
+        <td><textarea name="desc" cols="35" rows="8" class="input-multi" datatype="string" nullable="yes" maxsize="100" chname="æè¿°"></textarea></td>
       </tr>
       <tr>
-        <td class="input-box2" valign="top">Á´¡¡¡¡½Ó</td>
-        <td><input name="url" type="text" size="37" class="input"  datatype="string" nullable="yes" maxsize="200" chname="Á´½Ó"></td>
+        <td class="input-box2" valign="top">é“¾ã€€ã€€æ¥</td>
+        <td><input name="url" type="text" size="37" class="input"  datatype="string" nullable="yes" maxsize="200" chname="é“¾æ¥"></td>
       </tr>
       <tr>
-        <td class="input-box2" valign="top">ÊÇ·ñµ¯³ö´°</td>
+        <td class="input-box2" valign="top">æ˜¯å¦å¼¹å‡ºçª—</td>
         <td><span class="fontlist">
           <input type="radio" name="showMenu" value="2">
-ÊÇ
+æ˜¯
 <input type="radio" name="showMenu" value="1" checked>
-·ñ</span></td>
+å¦</span></td>
       </tr>
       <tr>
         <td colspan="2" align="center" valign="bottom" height="30">&nbsp;
-              <input name="btn_save" type="submit" value="±£´æ" class="button"></td>
+              <input name="btn_save" type="submit" value="ä¿å­˜" class="button"></td>
       </tr>
     </table></td>
   </tr>

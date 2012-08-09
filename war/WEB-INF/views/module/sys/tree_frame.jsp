@@ -1,10 +1,10 @@
-<%@ page contentType="text/html;charset=gbk" language="java"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ page import="com.glaf.base.modules.sys.*"%>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link type="text/css" href="<%=request.getContextPath()%>/css/style.css" rel="stylesheet">
-<title>基础平台系统</title>
+<title>鍩虹骞冲彴绯荤粺</title>
 <script language="JavaScript">
 function add(){
   mainFrame.add();

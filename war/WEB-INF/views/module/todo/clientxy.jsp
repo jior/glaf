@@ -1,6 +1,6 @@
-<%@ page contentType="text/html;charset=gbk" language="java"%>
-<%@ taglib uri="/WEB-INF/tld/c.tld" prefix="c" %>
-<%@ taglib uri="/WEB-INF/tld/fmt.tld" prefix="fmt" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page import="java.util.*" %>
 <%@ page import="java.io.*" %>
 <%@ page import="org.htmlparser.*" %>
@@ -22,12 +22,12 @@
     long start = System.currentTimeMillis();
 	
 	Map rowMap = new LinkedHashMap();
-	rowMap.put("a", "ÖØ²ÆÎ´ÉúĞ§");
-    rowMap.put("b", "²É¹ºÉêÇëÎ´ÉóÅú");
-	rowMap.put("c", "ºÏÍ¬Î´Ç©ÊğÍê±Ï");
-	rowMap.put("d", "¹©Ó¦ÉÌ¡¢¼Û¸ñÎ´¾ö");
-	rowMap.put("e", "ÑéÊÕÎ´Íê±Ï");
-	rowMap.put("f", "Ö§¸¶Î´Íê±Ï");
+	rowMap.put("a", "é‡è´¢æœªç”Ÿæ•ˆ");
+    rowMap.put("b", "é‡‡è´­ç”³è¯·æœªå®¡æ‰¹");
+	rowMap.put("c", "åˆåŒæœªç­¾ç½²å®Œæ¯•");
+	rowMap.put("d", "ä¾›åº”å•†ã€ä»·æ ¼æœªå†³");
+	rowMap.put("e", "éªŒæ”¶æœªå®Œæ¯•");
+	rowMap.put("f", "æ”¯ä»˜æœªå®Œæ¯•");
 
 	Map dataMap = new HashMap();
 	List r01 = new ArrayList();
@@ -40,7 +40,7 @@
     dataMap.put("a", r01);
 
 	List r02 = new ArrayList();
-	//²É¹ºÉêÇë
+	//é‡‡è´­ç”³è¯·
 	r02.add(new Long(1001));
 	r02.add(new Long(1002));
 	r02.add(new Long(1003));
@@ -53,7 +53,7 @@
 	r02.add(new Long(1021));
 	r02.add(new Long(1022));
 	r02.add(new Long(1023));
-	//²É¹ºÉêÇë±ä¸ü
+	//é‡‡è´­ç”³è¯·å˜æ›´
 	r02.add(new Long(2001));
 	r02.add(new Long(2002));
 	r02.add(new Long(2003));
@@ -66,7 +66,7 @@
 	r02.add(new Long(2021));
 	r02.add(new Long(2022));
 	r02.add(new Long(2023));
-    //²É¹ºÉêÇë·ÏÖ¹
+    //é‡‡è´­ç”³è¯·åºŸæ­¢
 	r02.add(new Long(3001));
 	r02.add(new Long(3002));
 	r02.add(new Long(3003));
@@ -159,7 +159,7 @@
 				   InputStream in = postMethod.getResponseBodyAsStream();
 				   if (in != null) {
 					    byte[] bytes = org.jpage.util.FileTools.getBytes(in);
-						Parser parser = Parser.createParser(new String(bytes, "GBK"), "UTF-8");
+						Parser parser = Parser.createParser(new String(bytes, "UTF-8"), "UTF-8");
 					    NodeFilter xfilter = new TagNameFilter("div");     
 						NodeList nodes = parser.extractAllNodesThatMatch(xfilter);						
 						if(nodes != null){
@@ -202,7 +202,7 @@
 %>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=GBK" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Todo List</title>
 <link href="<%=request.getContextPath()%>/css/site.css" type="text/css" rel="stylesheet">
 <link href="<%=request.getContextPath()%>/css/site.css" type="text/css" rel="stylesheet">
@@ -233,10 +233,10 @@ function selDept(parent, refer){
   <tr>
     <td class="box-mm"><table  border="0" align="center" cellpadding="5" cellspacing="0" >
       <tr>
-        <td nowrap  class="input-box"> ²¿ÃÅ
+        <td nowrap  class="input-box"> éƒ¨é—¨
           <input name="query_deptId" type="text" class="input" size="20" value=""  readonly onClick="selDept(5, this)">
         </td>
-        <td  class="input-box"> ÓÃ»§
+        <td  class="input-box"> ç”¨æˆ·
           <input name="query_actorName" type="text" class="input" size="20" value="">
         </td>
         <td><input type="hidden" name="mx" value="<%=mx%>">
@@ -302,7 +302,7 @@ function selDept(parent, refer){
 						   if(buffer.length() > 0){
 						        out.println(buffer.toString());
 						    } else {
-                                out.println("<br><br><br><center>Ã»ÓĞÊı¾İ<br><br><br></center>");
+                                out.println("<br><br><br><center>æ²¡æœ‰æ•°æ®<br><br><br></center>");
 							}%>
 						</td>
                       </tr>

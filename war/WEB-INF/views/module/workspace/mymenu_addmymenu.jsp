@@ -1,18 +1,18 @@
-<%@ page contentType="text/html;charset=GBK" language="java"%>
-<%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
-<%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ page import="java.util.*"%>
 <%@ page import="java.net.*"%>
 <%@ page import="com.glaf.base.modules.sys.*"%>
 <%@ page import="com.glaf.base.modules.workspace.model.*"%>
 <%@ page import="com.glaf.base.utils.*"%>
 <%
-	String url = URLEncoder.encode(ParamUtil.getParameter(request, "url"), "GBK");
+	String url = URLEncoder.encode(ParamUtil.getParameter(request, "url"), "UTF-8");
 %>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
-<title>增加我的菜单</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>澧炲姞鎴戠殑鑿滃崟</title>
 <link href="<%= request.getContextPath() %>/css/site.css" type="text/css" rel="stylesheet">
 <script src="<%= request.getContextPath() %>/js/css.js" language="javascript"></script>
 <script type='text/javascript' src='<%= request.getContextPath() %>/js/main.js'></script>
@@ -20,7 +20,7 @@
 </head>
 
 <body>
-<div class="nav-title"><span class="Title">工作台</span>&gt;&gt; 增加我的菜单</div>
+<div class="nav-title"><span class="Title">宸ヤ綔鍙�</span>&gt;&gt; 澧炲姞鎴戠殑鑿滃崟</div>
 <html:form action="/workspace/mymenu.do?method=saveAdd" method="post" onsubmit="return verifyAll(this);" >
 <input name="showList" type="hidden" value="1">
 <input name="url" type="hidden"  value="<%= url %>">
@@ -37,13 +37,13 @@
     <tr>
       <td class="box-mm"><table width="95%" border="0" align="center" cellpadding="5" cellspacing="0">
         <tr>
-          <td width="20%" class="input-box">菜单标题*</td>
-          <td><input name="title" type="text" class="input" size="45" datatype="string" nullable="no" maxsize="100" chname="菜单标题"></td>
+          <td width="20%" class="input-box">鑿滃崟鏍囬*</td>
+          <td><input name="title" type="text" class="input" size="45" datatype="string" nullable="no" maxsize="100" chname="鑿滃崟鏍囬"></td>
         </tr>
       </table>
         <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
             <tr>
-              <td height="35" align="center" valign="bottom"><input name="btnSave" type="submit" class="button" value="保存"></td>
+              <td height="35" align="center" valign="bottom"><input name="btnSave" type="submit" class="button" value="淇濆瓨"></td>
             </tr>
         </table></td>
     </tr>

@@ -1,6 +1,6 @@
-<%@ page contentType="text/html;charset=gbk" language="java"%>
-<%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
-<%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.glaf.base.modules.sys.*"%>
 <%@ page import="com.glaf.base.modules.sys.model.*"%>
@@ -12,7 +12,7 @@ List  list = (List)request.getAttribute("parent");
 %>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
 <link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
 <script language="javascript" src='<%=context%>/js/main.js'></script>
@@ -21,7 +21,7 @@ List  list = (List)request.getAttribute("parent");
 function checkForm(form){
   if(verifyAll(form)){
      if(form.parent.value=='<%=bean.getId()%>'){
-	   alert("µ±Ç°½Úµã²»ÄÜÑ¡ÔñÎªËùÊô½Úµã");
+	   alert("å½“å‰èŠ‚ç‚¹ä¸èƒ½é€‰æ‹©ä¸ºæ‰€å±èŠ‚ç‚¹");
 	 }else{
 	   return true;
 	 }
@@ -35,7 +35,7 @@ function setValue(obj){
 </head>
 
 <body>
-<div class="nav-title"><span class="Title">Ä¿Â¼¹ÜÀí</span>&gt;&gt;ĞŞ¸Ä½Úµã</div>
+<div class="nav-title"><span class="Title">ç›®å½•ç®¡ç†</span>&gt;&gt;ä¿®æ”¹èŠ‚ç‚¹</div>
 <html:form action="/sys/tree.do?method=saveModify" method="post"  onsubmit="return checkForm(this);"> 
 <input type="hidden" name="id" value="<%=bean.getId()%>">
 <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0" class="box">
@@ -51,7 +51,7 @@ function setValue(obj){
   <tr>
     <td class="box-mm"><table width="95%" align="center" border="0" cellspacing="0" cellpadding="5">
       <tr>
-        <td class="input-box">ÉÏ¼¶½Úµã</td>
+        <td class="input-box">ä¸Šçº§èŠ‚ç‚¹</td>
         <td><select name="parent" onChange="javascript:setValue(this);">
           <%
 if(list!=null){
@@ -78,20 +78,20 @@ out.print(bean2.getName());
 		</td>
       </tr>
       <tr>
-        <td class="input-box">Ãû¡¡¡¡³Æ*</td>
-        <td><input name="name" type="text" size="37" class="input" value="<%=bean.getName()%>" datatype="string" nullable="no" maxsize="30" chname="Ãû³Æ"></td>
+        <td class="input-box">åã€€ã€€ç§°*</td>
+        <td><input name="name" type="text" size="37" class="input" value="<%=bean.getName()%>" datatype="string" nullable="no" maxsize="30" chname="åç§°"></td>
       </tr>
       <tr>
-        <td class="input-box2" valign="top">Ãè¡¡¡¡Êö</td>
-        <td><textarea name="desc" cols="35" rows="8" class="input" datatype="string" nullable="yes" maxsize="100" chname="ÃèÊö"><%=bean.getDesc()%></textarea></td>
+        <td class="input-box2" valign="top">æã€€ã€€è¿°</td>
+        <td><textarea name="desc" cols="35" rows="8" class="input" datatype="string" nullable="yes" maxsize="100" chname="æè¿°"><%=bean.getDesc()%></textarea></td>
       </tr>
       <tr>
-        <td class="input-box2" valign="top">±à¡¡¡¡Âë*</td>
-        <td><input name="code" type="text" size="10" class="input" value="<%=bean.getCode()%>"  datatype="string" nullable="no" maxsize="20" chname="±àÂë"></td>
+        <td class="input-box2" valign="top">ç¼–ã€€ã€€ç *</td>
+        <td><input name="code" type="text" size="10" class="input" value="<%=bean.getCode()%>"  datatype="string" nullable="no" maxsize="20" chname="ç¼–ç "></td>
       </tr>
       <tr>
         <td colspan="2" align="center" valign="bottom" height="30">&nbsp;
-              <input name="btn_save" type="submit" value="±£´æ" class="button"></td>
+              <input name="btn_save" type="submit" value="ä¿å­˜" class="button"></td>
       </tr>
     </table></td>
   </tr>

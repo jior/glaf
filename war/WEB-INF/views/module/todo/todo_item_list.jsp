@@ -1,6 +1,6 @@
-<%@ page contentType="text/html;charset=gbk" language="java"%>
-<%@ taglib uri="/WEB-INF/tld/c.tld" prefix="c" %>
-<%@ taglib uri="/WEB-INF/tld/fmt.tld" prefix="fmt" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.glaf.base.modules.todo.*"%>
 <%@ page import="com.glaf.base.modules.todo.model.*"%>
@@ -37,12 +37,12 @@
     Collection rows = bean.getTodoInstances(actorId);
 	//System.out.println("@@@@@@@@@rows size:"+ rows.size());
     Map rowMap = new LinkedHashMap();
-	rowMap.put("a", "ÖØ²ÆÎ´ÉúÐ§");
-    rowMap.put("b", "²É¹ºÉêÇëÎ´ÉóÅú");
-	rowMap.put("c", "ºÏÍ¬Î´Ç©ÊðÍê±Ï");
-	rowMap.put("d", "¹©Ó¦ÉÌ¡¢¼Û¸ñÎ´¾ö");
-	rowMap.put("e", "ÑéÊÕÎ´Íê±Ï");
-	rowMap.put("f", "Ö§¸¶Î´Íê±Ï");
+	rowMap.put("a", "é‡è´¢æœªç”Ÿæ•ˆ");
+    rowMap.put("b", "é‡‡è´­ç”³è¯·æœªå®¡æ‰¹");
+	rowMap.put("c", "åˆåŒæœªç­¾ç½²å®Œæ¯•");
+	rowMap.put("d", "ä¾›åº”å•†ã€ä»·æ ¼æœªå†³");
+	rowMap.put("e", "éªŒæ”¶æœªå®Œæ¯•");
+	rowMap.put("f", "æ”¯ä»˜æœªå®Œæ¯•");
 
 	Map dataMap = new HashMap();
 	List r01 = new ArrayList();
@@ -55,7 +55,7 @@
     dataMap.put("a", r01);
 
 	List r02 = new ArrayList();
-	//²É¹ºÉêÇë
+	//é‡‡è´­ç”³è¯·
 	r02.add(new Long(1001));
 	r02.add(new Long(1002));
 	r02.add(new Long(1003));
@@ -68,7 +68,7 @@
 	r02.add(new Long(1021));
 	r02.add(new Long(1022));
 	r02.add(new Long(1023));
-	//²É¹ºÉêÇë±ä¸ü
+	//é‡‡è´­ç”³è¯·å˜æ›´
 	r02.add(new Long(2001));
 	r02.add(new Long(2002));
 	r02.add(new Long(2003));
@@ -81,7 +81,7 @@
 	r02.add(new Long(2021));
 	r02.add(new Long(2022));
 	r02.add(new Long(2023));
-    //²É¹ºÉêÇë·ÏÖ¹
+    //é‡‡è´­ç”³è¯·åºŸæ­¢
 	r02.add(new Long(3001));
 	r02.add(new Long(3002));
 	r02.add(new Long(3003));
@@ -145,7 +145,7 @@
 %>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=GBK" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Todo</title>
 <link href="<%=request.getContextPath()%>/css/site.css" type="text/css" rel="stylesheet">
 <form name="PurchaseForm" method="get" action="todo_user_list.jsp" target="_self">
@@ -164,10 +164,10 @@
   <tr>
     <td class="box-mm"><table  border="0" align="center" cellpadding="5" cellspacing="0" >
       <tr>
-        <td nowrap  class="input-box"> ²¿ÃÅ
+        <td nowrap  class="input-box"> éƒ¨é—¨
           <input name="query_deptId" type="text" class="input" size="20" value=""  readonly onClick="selDept(5, this)">
         </td>
-        <td  class="input-box"> ÓÃ»§
+        <td  class="input-box"> ç”¨æˆ·
           <input name="query_actorName" type="text" class="input" size="20" value="">
         </td>
         <td><input type="hidden" name="mx" value="<%=mx%>">
@@ -226,7 +226,7 @@
                 <div id="listDivx" style="width:620px; height:500px;overflow-x:auto; overflow-y:auto;">
                   <table align="center" width="100%" border="0" cellspacing="1" cellpadding="0" class="list-box">                    
 					<tr class="list-title">
-                      <td align="center" class="title">ÓÃ»§</td>
+                      <td align="center" class="title">ç”¨æˆ·</td>
                       <td width="125" align="center" class="title">PastDue</td>
                       <td width="125" align="center" class="title">Caution</td>
                     </tr>

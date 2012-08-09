@@ -1,14 +1,14 @@
-<%@ page contentType="text/html;charset=gbk" language="java"%>
-<%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
-<%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%
     String context = request.getContextPath();
 	com.glaf.base.modules.utils.ContextUtil.getInstance().setContextPath(context);
 %>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
-<title>基础平台系统</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>鍩虹骞冲彴绯荤粺</title>
 <link href="../css/system.css" type="text/css" rel="stylesheet">
 <link href="../css/site.css" rel="stylesheet" type="text/css">
 <script src="../js/css.js" language="javascript"></script>
@@ -49,17 +49,17 @@ if(window.name != "TMS"){
 			</td>
           </tr>
           <tr>
-            <td align="center" class="login-box">招聘号：
+            <td align="center" class="login-box">鎷涜仒鍙凤細
               <input name="account" type="text" size="15" class="input" datatype="string" nullable="no" maxsize="20" chname="Account"></td>
           </tr>
           <tr>
-            <td align="center" class="login-box">密&nbsp;&nbsp;码：
+            <td align="center" class="login-box">瀵�&nbsp;&nbsp;鐮侊細
               <input name="password" type="password" size="15" class="input" datatype="string" nullable="no" maxsize="20" chname="Password"></td>
           </tr>
           <tr>
-            <td align="right"><input name="login" type="submit" id="login" value="登录" class="login-btn">
+            <td align="right"><input name="login" type="submit" id="login" value="鐧诲綍" class="login-btn">
               &nbsp;
-              <input name="f" type="reset" id="f" value="重置" class="login-btn"></td>
+              <input name="f" type="reset" id="f" value="閲嶇疆" class="login-btn"></td>
           </tr>
         </table></td>
       </tr>

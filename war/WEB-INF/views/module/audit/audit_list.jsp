@@ -1,6 +1,6 @@
-<%@ page contentType="text/html;charset=gbk" language="java"%>
-<%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
-<%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.glaf.base.modules.utils.*"%>
 <%@ page import="com.glaf.base.modules.others.*"%>
@@ -9,25 +9,25 @@
 <%
 String context = request.getContextPath();
 List list = (List)request.getAttribute("list");
-List list_old = (List)request.getAttribute("list_old");//¾ÉÉóÅúÒâ¼ûÁÐ±í
+List list_old = (List)request.getAttribute("list_old");//æ—§å®¡æ‰¹æ„è§åˆ—è¡¨
 String height = ParamUtil.getParameter(request, "height", "80px");
 %>
 <table width="100%" id="main" border="0" cellspacing="1" cellpadding="0">
   <tr>
-    <td height="20">ÉóÅúÒâ¼û</td>
+    <td height="20">å®¡æ‰¹æ„è§</td>
   </tr>
 </table>
 <div style="width:100%; height:<%= height %>;overflow-x:auto; overflow-y:auto;">
 <table width="100%" id="main" border="0" cellspacing="1" cellpadding="0" class="list-box">
 <tr class="list-title" style="position:relative; top:expression(this.offsetParent.scrollTop-2);">
-   <TD width="13%" nowrap>²¿ÃÅ</TD>
-   <TD width="20%" nowrap>ÉóÅúÈË</TD>
-   <TD width="18%" nowrap>ÊÇ·ñÉóÅúÍ¨¹ý</TD>
-   <TD width="35%" nowrap>Òâ¼û</TD>
-   <TD width="14%" nowrap>ÈÕÆÚ</TD>
+   <TD width="13%" nowrap>éƒ¨é—¨</TD>
+   <TD width="20%" nowrap>å®¡æ‰¹äºº</TD>
+   <TD width="18%" nowrap>æ˜¯å¦å®¡æ‰¹é€šè¿‡</TD>
+   <TD width="35%" nowrap>æ„è§</TD>
+   <TD width="14%" nowrap>æ—¥æœŸ</TD>
 </TR>
 <%
-//ÏÔÊ¾¾ÉÉóÅúÒâ¼ûÁÐ±í
+//æ˜¾ç¤ºæ—§å®¡æ‰¹æ„è§åˆ—è¡¨
 if(list_old!=null){
   Iterator iter = list_old.iterator();
   while(iter.hasNext()){
@@ -36,7 +36,7 @@ if(list_old!=null){
 <TR>
    <TD height="18"><%=bean.getDeptName()%></TD>
    <TD><%=bean.getLeaderName()%></TD>
-   <TD><%=bean.getFlag()==1?"ÊÇ":"·ñ"%></TD>
+   <TD><%=bean.getFlag()==1?"æ˜¯":"å¦"%></TD>
    <TD title="<%=bean.getMemo()%>"><%=bean.getMemo()%></TD>
    <TD><%=glafUtil.dateToString(bean.getCreateDate())%></TD>
 </TR>
@@ -45,7 +45,7 @@ if(list_old!=null){
 }
 %>
 <%
-//ÏÔÊ¾ÐÂÉóÅúÒâ¼ûÁÐ±í
+//æ˜¾ç¤ºæ–°å®¡æ‰¹æ„è§åˆ—è¡¨
 if(list!=null){
   Iterator iter = list.iterator();
   while(iter.hasNext()){
@@ -54,7 +54,7 @@ if(list!=null){
 <TR>
    <TD height="18"><%=bean.getDeptName()%></TD>
    <TD><%=bean.getLeaderName()%></TD>
-   <TD><%=bean.getFlag()==1?"ÊÇ":"·ñ"%></TD>
+   <TD><%=bean.getFlag()==1?"æ˜¯":"å¦"%></TD>
    <TD title="<%=bean.getMemo()%>"><%=bean.getMemo()%></TD>
    <TD><%=glafUtil.dateToString(bean.getCreateDate())%></TD>
 </TR>

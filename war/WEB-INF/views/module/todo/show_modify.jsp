@@ -1,8 +1,8 @@
-<%@ page contentType="text/html;charset=GBK" language="java"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean" %>
-<%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.glaf.base.modules.todo.*"%>
 <%@ page import="com.glaf.base.modules.todo.model.*"%>
@@ -29,8 +29,8 @@
 %>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=GBK" />
-<title>»ù´¡Æ½Ì¨ÏµÍ³</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>åŸºç¡€å¹³å°ç³»ç»Ÿ</title>
 <link href="../css/site.css" rel="stylesheet" type="text/css">
 <link href="<%=context%>/css/site.css" rel="stylesheet" type="text/css">
 <script src="<%=context%>/js/main.js" language="javascript"></script>
@@ -56,7 +56,7 @@ function checkForm(form){
 </head>
 <body onLoad="DynarchMenu.setup('menu1', { context: true});" id="document">
 <jsp:include page="/WEB-INF/views/module/header.jsp" flush="true"/>
-<div class="nav-title">ĞŞ¸ÄTODOĞÅÏ¢</div>
+<div class="nav-title">ä¿®æ”¹TODOä¿¡æ¯</div>
 
 <html:form action="/sys/todo.do?method=save" method="post" onsubmit="return checkForm(this);"  > 
 
@@ -77,60 +77,60 @@ function checkForm(form){
     <td class="box-mm">
 	  <table width="95%" align="center" border="0" cellspacing="0" cellpadding="5">
       <tr>
-        <td width="20%" valign="top" class="input-box2">Ä£¿éÃû³Æ</td>
+        <td width="20%" valign="top" class="input-box2">æ¨¡å—åç§°</td>
         <td width="80%"><c:out value="${todo.moduleName}"/></td>
       </tr>
 	  <tr>
-        <td width="20%" valign="top" class="input-box2">½ÇÉ«Ãû³Æ</td>
+        <td width="20%" valign="top" class="input-box2">è§’è‰²åç§°</td>
         <td width="80%"><c:out value="${todo.roleCode}"/></td>
       </tr>
       <tr>
-        <td class="input-box2" valign="top">±ê&nbsp;&nbsp;Ìâ*</td>
+        <td class="input-box2" valign="top">æ ‡&nbsp;&nbsp;é¢˜*</td>
         <td>
 		<input name="title" type="text" size="30" class="input" 
-		       value="${todo.title}" datatype="string" nullable="no" minsize="6" maxsize="50" chname="±ê  Ìâ">
+		       value="${todo.title}" datatype="string" nullable="no" minsize="6" maxsize="50" chname="æ ‡  é¢˜">
 		</td>
       </tr>
       <tr>
-        <td class="input-box2" valign="top">ÄÚ&nbsp;&nbsp;Èİ*</td>
+        <td class="input-box2" valign="top">å†…&nbsp;&nbsp;å®¹*</td>
         <td>
           <input name="content" type="text" size="30" class="input" datatype="string" 
-		             value="${todo.content}" nullable="no" maxsize="255" chname="ÄÚÈİ"> </td>
+		             value="${todo.content}" nullable="no" maxsize="255" chname="å†…å®¹"> </td>
       </tr>
       <tr>
-        <td class="input-box2" valign="top">ÆÚ&nbsp;&nbsp;ÏŞ*</td>
+        <td class="input-box2" valign="top">æœŸ&nbsp;&nbsp;é™*</td>
         <td>
           <input name="limitDay" type="text" size="30" class="input" datatype="int" 
-		             value="${todo.limitDay}" nullable="no" maxsize="2" chname="ÆÚÏŞ"> Ìì
+		             value="${todo.limitDay}" nullable="no" maxsize="2" chname="æœŸé™"> å¤©
 		  </td>
       </tr>
 	  <tr>
         <td class="input-box2" valign="top">a*</td>
         <td>
           <input name="xa" type="text" size="30" class="input" datatype="int" 
-		             value="${todo.xa}" nullable="no" maxsize="3" chname="a"> Ğ¡Ê±
+		             value="${todo.xa}" nullable="no" maxsize="3" chname="a"> å°æ—¶
 		  </td>
       </tr>
 	  <tr>
         <td class="input-box2" valign="top">b*</td>
         <td>
           <input name="xb" type="text" size="30" class="input" datatype="int" 
-		             value="${todo.xb}" nullable="no" maxsize="3" chname="b"> Ğ¡Ê±
+		             value="${todo.xb}" nullable="no" maxsize="3" chname="b"> å°æ—¶
 		  </td>
       </tr>
 
 	 <tr>
-     <td class="input-box2" valign="top">ÊÇ·ñÆôÓÃ</td>
+     <td class="input-box2" valign="top">æ˜¯å¦å¯ç”¨</td>
      <td>
-	   <input type="radio" name="enableFlag" value="1" <c:if test="${todo.enableFlag == 1}">checked</c:if>>ÆôÓÃ&nbsp;&nbsp;
-	   <input type="radio" name="enableFlag" value="0" <c:if test="${todo.enableFlag == 0}">checked</c:if>>½ûÓÃ
+	   <input type="radio" name="enableFlag" value="1" <c:if test="${todo.enableFlag == 1}">checked</c:if>>å¯ç”¨&nbsp;&nbsp;
+	   <input type="radio" name="enableFlag" value="0" <c:if test="${todo.enableFlag == 0}">checked</c:if>>ç¦ç”¨
      </td>
    </tr>
 
       <tr>
 	    <td>&nbsp;&nbsp;</td>
         <td align="left" valign="bottom" height="30">&nbsp;
-          <br><input name="btn_save2" type="submit" value="±£´æ" class="button">
+          <br><input name="btn_save2" type="submit" value="ä¿å­˜" class="button">
 		</td>
       </tr>
     </table>

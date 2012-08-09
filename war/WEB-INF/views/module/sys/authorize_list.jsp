@@ -1,6 +1,6 @@
-<%@ page contentType="text/html;charset=gbk" language="java"%>
-<%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
-<%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.glaf.base.modules.sys.*"%>
 <%@ page import="com.glaf.base.modules.sys.model.*"%>
@@ -13,7 +13,7 @@ SysUser user = (SysUser)session.getAttribute(SysConstants.LOGIN);
 %>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
 <link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
 <script language="javascript" src='<%=context%>/js/verify.js'></script>
@@ -34,7 +34,7 @@ SysUser user = (SysUser)session.getAttribute(SysConstants.LOGIN);
 var fromUserId=<%=user.getId()%>;
 function add(){
   if($("available").selectedIndex==-1){
-    alert("ÇëÑ¡ÔñÒªÊÚÈ¨µÄÓÃ»§");
+    alert("è¯·é€‰æ‹©è¦æˆæƒçš„ç”¨æˆ·");
 	$("available").focus();
 	return;	
   }
@@ -42,16 +42,16 @@ function add(){
   
   SysUserRoleAjaxService.addRole(fromUserId, opt.value,  function(reply){
     if(reply){
-      //É¾³ıÑ¡ÖĞµÄ¼ÇÂ¼
+      //åˆ é™¤é€‰ä¸­çš„è®°å½•
       $("available").remove($("available").selectedIndex);
-      //Ôö¼Óµ½ÒÑÊÚÈ¨ÁĞ±í
+      //å¢åŠ åˆ°å·²æˆæƒåˆ—è¡¨
       $("unavailable").add(opt);
     }
   });
 }
 function remove(){
   if($("unavailable").selectedIndex==-1){
-    alert("ÇëÑ¡ÔñÒªÒÑÊÚÈ¨µÄÓÃ»§");
+    alert("è¯·é€‰æ‹©è¦å·²æˆæƒçš„ç”¨æˆ·");
 	$("unavailable").focus();
 	return;
   }
@@ -59,9 +59,9 @@ function remove(){
   
   SysUserRoleAjaxService.removeRole(fromUserId, opt.value,  function(reply){
     if(reply){
-      //É¾³ıÑ¡ÖĞµÄ¼ÇÂ¼
+      //åˆ é™¤é€‰ä¸­çš„è®°å½•
       $("unavailable").remove($("unavailable").selectedIndex);
-      //Ôö¼Óµ½¿ÉÊÚÈ¨ÁĞ±í
+      //å¢åŠ åˆ°å¯æˆæƒåˆ—è¡¨
       $("available").add(opt);
     }
   });  
@@ -69,7 +69,7 @@ function remove(){
 </script>
 <body>
 <html:form action="/sys/application.do?method=saveAdd" method="post" onsubmit="return verifyAll(this);" >
-  <div class="nav-title"><span class="Title">È¨ÏŞ¹ÜÀí</span>&gt;&gt;ÓÃ»§ÊÚÈ¨</div>
+  <div class="nav-title"><span class="Title">æƒé™ç®¡ç†</span>&gt;&gt;ç”¨æˆ·æˆæƒ</div>
   <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0" class="box">
   <tr>
     <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -87,9 +87,9 @@ function remove(){
         <td colspan="3" align="center"><b><jsp:include page="/WEB-INF/views/module/login_info.jsp" flush="true"/></b></td>
         </tr>
       <tr>
-        <td width="298" align="center">¿ÉÊÚÈ¨ÓÃ»§</td>
+        <td width="298" align="center">å¯æˆæƒç”¨æˆ·</td>
         <td width="83">&nbsp;</td>
-        <td width="280" align="center">ÒÑÊÚÈ¨ÓÃ»§</td>
+        <td width="280" align="center">å·²æˆæƒç”¨æˆ·</td>
       </tr>
       <tr>
         <td rowspan="6" align="center" valign="top">
@@ -124,12 +124,12 @@ function remove(){
       </tr>
       <tr>
         <td height="34" align="center" valign="bottom">
-		<input name="btn_add" type="button" value="ÊÚÈ¨>>" class="button" onClick="add();">
+		<input name="btn_add" type="button" value="æˆæƒ>>" class="button" onClick="add();">
 		</td>
       </tr>
       <tr>
         <td height="47" align="center" valign="top">
-		<input name="btn_remove" type="button" value="È¡Ïû<<" class="button" onClick="remove();">
+		<input name="btn_remove" type="button" value="å–æ¶ˆ<<" class="button" onClick="remove();">
 		</td>
       </tr>
       <tr>

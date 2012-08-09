@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=GBK" language="java"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.glaf.base.modules.sys.*"%>
 <%@ page import="com.glaf.base.modules.sys.model.*"%>
@@ -11,7 +11,7 @@ long parent=ParamUtil.getIntParameter(request, "parent", 0);
 <html>
 <head>
 <base target="_self" />
-<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link href="<%=request.getContextPath()%>/css/site.css" type="text/css" rel="stylesheet">
 <link href="<%=request.getContextPath()%>/js/dtree/dtree.css" type="text/css" rel="stylesheet">
 <script src="<%=request.getContextPath()%>/js/dtree/ttTree.js" type="text/javascript"></script>
@@ -22,13 +22,13 @@ function selData(){
   window.close();
 }
 </script>
-<title>¿ÆÄ¿·ÑÓÃ</title>
+<title>ç§‘ç›®è´¹ç”¨</title>
 </head>
 
 <body>
 <table width="300" border="0" align="center" cellspacing="0" cellpadding="0">
   <tr>
-    <td class="nav-title">ÇëÑ¡Ôñ¿ÆÄ¿·ÑÓÃ£º&nbsp;</td>
+    <td class="nav-title">è¯·é€‰æ‹©ç§‘ç›®è´¹ç”¨ï¼š&nbsp;</td>
   </tr>
 </table>
 <table width="300" border="0" align="center" cellpadding="0" cellspacing="0" class="box">
@@ -44,7 +44,7 @@ function selData(){
   <tr>
     <td class="box-mm"><table width="95%" align="center" border="0" cellspacing="0" cellpadding="5">
       <tr>
-	  	<td><a href="javascript:selData();">²»Ñ¡Ôñ</a></td>
+	  	<td><a href="javascript:selData();">ä¸é€‰æ‹©</a></td>
 		</tr><tr>
         <td><DIV id="ttTree" class='ttTree' style="width:100%; height:220px;overflow-x:auto; overflow-y:auto;"></DIV></td>
       </tr>
@@ -66,7 +66,7 @@ function goto(action, obj){
   window.returnValue = obj ? new Array(obj.id, obj.name, obj.code, obj.feeSum) : null;
   window.close();
 }
-var root = new Node(0, -1, "", "javascript:goto(0)", "¸ùÄ¿Â¼");
+var root = new Node(0, -1, "", "javascript:goto(0)", "æ ¹ç›®å½•");
 var tree = new ttTree(root);
 tree.setSubTreeUrl('/sys/subject.do?method=showSubjectTreeList&parent='+<%=parent%>);
 //tree.setTarget('_blank');

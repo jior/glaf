@@ -1,6 +1,6 @@
-<%@ page contentType="text/html;charset=gbk" language="java"%>
-<%@ taglib uri="/WEB-INF/tld/c.tld" prefix="c" %>
-<%@ taglib uri="/WEB-INF/tld/fmt.tld" prefix="fmt" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="/WEB-INF/tld/oscache.tld" prefix="oscache" %>
 <%@ page import="java.util.*"%>
 <%@ page import="com.glaf.base.modules.todo.*"%>
@@ -37,7 +37,7 @@
 					 bean.createTasksFromWorkflow(agentId);
 				 }
 			 }
-			 System.out.println("---------------------ÒÑ¾­¸üÐÂÓÃ»§¡®"+user.getName()+"¡¯ µÄ¹¤×÷Á÷´ý°ìÈÎÎñ¡£");
+			 System.out.println("---------------------å·²ç»æ›´æ–°ç”¨æˆ·â€˜"+user.getName()+"â€™ çš„å·¥ä½œæµå¾…åŠžä»»åŠ¡ã€‚");
 	 } catch(Exception ex){
 		 ex.printStackTrace();
 	 }
@@ -51,7 +51,7 @@
 %>
 <table width="98%" border="0" cellspacing="1" cellpadding="0" class="list-box">
     <tr class="list-title">
-            <td width="52%" align="center">ÊÂ&nbsp;&nbsp;Ïî</td>
+            <td width="52%" align="center">äº‹&nbsp;&nbsp;é¡¹</td>
             <td width="16%" align="center">PastDue</td>
             <td width="16%" align="center">Caution</td>
             <td width="16%" align="center">OK</td>

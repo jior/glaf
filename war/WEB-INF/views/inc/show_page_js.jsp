@@ -1,4 +1,4 @@
-<%@page contentType="text/html;charset=gbk"%>
+<%@page contentType="text/html;charset=UTF-8"%>
 <%@ page import="com.glaf.base.utils.*"%>
 <%
 String context = request.getContextPath();
@@ -15,24 +15,24 @@ int go = pageNo;
   <tr> 
     <td class="pageborder"><table width="100%"  border="0" cellspacing="0" cellpadding="0">
         <tr> 
-          <td align="center">ตฑวฐตฺ<%=pageNo%>าณ/นฒ<%=pageCount%>าณ,<%=total%>ฬ๕ผวยผ</td>
+          <td align="center">ๅฝ“ๅ็ฌฌ<%=pageNo%>้กต/ๅ…ฑ<%=pageCount%>้กต,<%=total%>ๆก่ฎฐๅฝ•</td>
           <td align="center">
-              <a href="javascript:<%=fn%>(1)">สืาณ</a></td>
+              <a href="javascript:<%=fn%>(1)">้ฆ–้กต</a></td>
           <td align="center">
 <%
 if(pageNo>1) go=pageNo-1;
 %>	
-	<a href="javascript:<%=fn%>(<%=go%>)">ษฯาปาณ</a>
+	<a href="javascript:<%=fn%>(<%=go%>)">ไธไธ€้กต</a>
 		  </td>
           <td align="center">
 <%
 go = pageNo;
 if(pageNo+1<=pageCount) go=pageNo+1;
 %>
-	<a href="javascript:<%=fn%>(<%=go%>)">ฯยาปาณ</a>         
+	<a href="javascript:<%=fn%>(<%=go%>)">ไธไธ€้กต</a>         
 		 </td>
           <td align="center">
-              <a href="javascript:<%=fn%>(<%=(pageCount==0?1:pageCount)%>)">ฮฒาณ</a></td>
+              <a href="javascript:<%=fn%>(<%=(pageCount==0?1:pageCount)%>)">ๅฐพ้กต</a></td>
         </tr>
       </table></td>
   </tr>

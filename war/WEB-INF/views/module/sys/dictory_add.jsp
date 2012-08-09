@@ -1,6 +1,6 @@
-<%@ page contentType="text/html;charset=gb2312" language="java"%>
-<%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean" %>
-<%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.glaf.base.modules.sys.*"%>
 <%@ page import="com.glaf.base.modules.sys.model.*"%>
@@ -11,15 +11,15 @@ int parent=ParamUtil.getIntParameter(request, "parent", 0);
 %>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
-<title>»ù´¡Æ½Ì¨ÏµÍ³</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>åŸºç¡€å¹³å°ç³»ç»Ÿ</title>
 <link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
 <script language="javascript" src='<%=context%>/js/main.js'></script>
 <script language="javascript" src='<%=context%>/js/verify.js'></script></head>
 </head>
 
 <body>
-<div class="nav-title"><span class="Title">×Öµä¹ÜÀí</span>&gt;&gt;Ôö¼Ó×Öµä</div>
+<div class="nav-title"><span class="Title">å­—å…¸ç®¡ç†</span>&gt;&gt;å¢žåŠ å­—å…¸</div>
 <html:form action="/sys/dictory.do?method=saveAdd" method="post" onsubmit="return verifyAll(this);">
 <input type="hidden" name="typeId" value="<%=parent%>">
 <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0" class="box">
@@ -35,45 +35,45 @@ int parent=ParamUtil.getIntParameter(request, "parent", 0);
   <tr>
     <td class="box-mm"><table width="95%" align="center" border="0" cellspacing="0" cellpadding="5">
       <tr>
-        <td width="21%" class="input-box">Ãû¡¡¡¡³Æ<font color="red">*</font></td>
-        <td width="79%"><input type="text" name="name" class="input" datatype="string" nullable="no" maxsize="50" chname="Ãû³Æ"></td>
+        <td width="21%" class="input-box">åã€€ã€€ç§°<font color="red">*</font></td>
+        <td width="79%"><input type="text" name="name" class="input" datatype="string" nullable="no" maxsize="50" chname="åç§°"></td>
       </tr>
       <tr>
-        <td class="input-box2" valign="top">´ú¡¡¡¡Âë</td>
-        <td><input type="text" name="code" class="input" datatype="string" nullable="yes" maxsize="10" chname="´úÂë"></td>
+        <td class="input-box2" valign="top">ä»£ã€€ã€€ç </td>
+        <td><input type="text" name="code" class="input" datatype="string" nullable="yes" maxsize="10" chname="ä»£ç "></td>
       </tr>
       <%
       if(17 == parent){
       %>
       <tr>
-        <td class="input-box2" valign="top">1 ÈÕÔª =<font color="red">*</font></td>
-        <td><input type="text" name="ext1" class="input" datatype="float" nullable="no" maxsize="100" chname="ÈÕÔª»ãÂÊ"> ÈËÃñ±Ò<font color="red">[»ãÂÊ]</font></td>
+        <td class="input-box2" valign="top">1 æ—¥å…ƒ =<font color="red">*</font></td>
+        <td><input type="text" name="ext1" class="input" datatype="float" nullable="no" maxsize="100" chname="æ—¥å…ƒæ±‡çŽ‡"> äººæ°‘å¸<font color="red">[æ±‡çŽ‡]</font></td>
       </tr>
       <tr>
-        <td class="input-box2" valign="top">1 ÃÀÔª =<font color="red">*</font></td>
-        <td><input type="text" name="ext2" class="input" datatype="float" nullable="no" maxsize="100" chname="ÃÀÔª»ãÂÊ"> ÈËÃñ±Ò<font color="red">[»ãÂÊ]</font></td>
+        <td class="input-box2" valign="top">1 ç¾Žå…ƒ =<font color="red">*</font></td>
+        <td><input type="text" name="ext2" class="input" datatype="float" nullable="no" maxsize="100" chname="ç¾Žå…ƒæ±‡çŽ‡"> äººæ°‘å¸<font color="red">[æ±‡çŽ‡]</font></td>
       </tr>
       <%}else{ %>
       <tr>
-        <td class="input-box2" valign="top">À©Õ¹×Ö¶Î1</td>
-        <td><input type="text" name="ext1" class="input" datatype="string" nullable="yes" maxsize="200" chname="À©Õ¹×Ö¶Î1"></td>
+        <td class="input-box2" valign="top">æ‰©å±•å­—æ®µ1</td>
+        <td><input type="text" name="ext1" class="input" datatype="string" nullable="yes" maxsize="200" chname="æ‰©å±•å­—æ®µ1"></td>
       </tr>
       <tr>
-        <td class="input-box2" valign="top">À©Õ¹×Ö¶Î2</td>
-        <td><input type="text" name="ext2" class="input" datatype="string" nullable="yes" maxsize="200" chname="À©Õ¹×Ö¶Î2"></td>
+        <td class="input-box2" valign="top">æ‰©å±•å­—æ®µ2</td>
+        <td><input type="text" name="ext2" class="input" datatype="string" nullable="yes" maxsize="200" chname="æ‰©å±•å­—æ®µ2"></td>
       </tr>
       <%} %>
       <tr>
-        <td class="input-box2" valign="top">ÊÇ·ñÓÐÐ§</td>
+        <td class="input-box2" valign="top">æ˜¯å¦æœ‰æ•ˆ</td>
         <td>
           <input type="radio" name="blocked" value="1">
-·ñ
+å¦
 <input type="radio" name="blocked" value="0" checked>
-ÊÇ        </td>
+æ˜¯        </td>
       </tr>
       <tr>
         <td colspan="2" align="center" valign="bottom" height="30">&nbsp;
-              <input name="btn_save3" type="submit" value="±£´æ" class="button"></td>
+              <input name="btn_save3" type="submit" value="ä¿å­˜" class="button"></td>
       </tr>
     </table></td>
   </tr>

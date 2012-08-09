@@ -1,9 +1,9 @@
-<%@ page contentType="text/html;charset=gbk" language="java"%>
-<%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
-<%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ page import="com.glaf.base.utils.*"%>
 <%
-//Ë¢ĞÂ¸¸´°¿Ú£¬²¢¹Ø±Õµ±Ç°Ò³Ãæ¡£
+//åˆ·æ–°çˆ¶çª—å£ï¼Œå¹¶å…³é—­å½“å‰é¡µé¢ã€‚
   String refresh = ParamUtil.getParameter(request,"refresh");
   if(refresh == null || refresh.equals("")){
   	refresh = request.getAttribute("refresh")!=null?request.getAttribute("refresh").toString():"";
@@ -11,14 +11,14 @@
 %>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <SCRIPT src="/js/main.js"></SCRIPT>
 <script type='text/javascript' src='<%= request.getContextPath() %>/js/close.js'></script>
 <script language="javascript">
 window.moveTo(10000, 10000);
 window.resizeTo(0, 0);
 </script>
-<title>»ù´¡Æ½Ì¨ÏµÍ³</title>
+<title>åŸºç¡€å¹³å°ç³»ç»Ÿ</title>
 <body>
 <div id="messageDiv" style="display:none">
 <html:messages id="message" message="true"> 
@@ -35,7 +35,7 @@ if (message.length > 0) {
 }
 if(refreshStr != 'false'){
   if (window.opener) {
-  //½â¾öÖØĞÂ·¢ËÍĞÅÏ¢Ë¢ĞÂÒ³ÃæµÄÎÊÌâ
+  //è§£å†³é‡æ–°å‘é€ä¿¡æ¯åˆ·æ–°é¡µé¢çš„é—®é¢˜
 	  window.opener.location.href=window.opener.location.href;
 	}
 }

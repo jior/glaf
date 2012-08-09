@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=gbk" language="java"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ page import="java.util.*"%>
 <%@ page import="java.net.*"%>
 <%@ page import="com.glaf.base.utils.*"%>
@@ -27,8 +27,8 @@ int count = 0;
 %>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
-<title>»ù´¡Æ½Ì¨ÏµÍ³</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>åŸºç¡€å¹³å°ç³»ç»Ÿ</title>
 <link href="../css/site.css" rel="stylesheet" type="text/css">
 <link href="<%=context%>/css/site.css" rel="stylesheet" type="text/css">
 <script src="<%=context%>/js/main.js" language="javascript"></script>
@@ -75,13 +75,13 @@ function authorize(){
 }
 function exit(){
   var url="<%=context%>/sys/authorize.do?method=logout";
-  if(confirm("ÕæµÄÒªÍË³öÏµÍ³Âğ£¿")){
+  if(confirm("çœŸçš„è¦é€€å‡ºç³»ç»Ÿå—ï¼Ÿ")){
     window.location=url;
   }
 }
 function window.onbeforeunload(){
 	if(event.clientX>document.body.clientWidth&&event.clientY<0||event.altKey){
-		//window.event.returnValue="È·¶¨ÒªÍË³ö»ù´¡Æ½Ì¨ÏµÍ³Âğ?";
+		//window.event.returnValue="ç¡®å®šè¦é€€å‡ºåŸºç¡€å¹³å°ç³»ç»Ÿå—?";
 		window.open("<%=context%>/sys/authorize.do?method=logout");
 	}
 }
@@ -117,17 +117,17 @@ function openDocument()
 	  <ul id="menu" style="display:none">
       <li class="context-class-a-hotspot1">
         <ul>
-		  <li><a href="<%=context%>/sys/frame.do">ÎÒµÄ¹¤×÷Ì¨</a></li>
-		  <li><a href="javascript:modifyInfo()">ĞŞ¸ÄÓÃ»§ĞÅÏ¢</a></li>
-		  <li><a href="javascript:modifyPwd()">ĞŞ¸ÄÃÜÂë</a></li>
+		  <li><a href="<%=context%>/sys/frame.do">æˆ‘çš„å·¥ä½œå°</a></li>
+		  <li><a href="javascript:modifyInfo()">ä¿®æ”¹ç”¨æˆ·ä¿¡æ¯</a></li>
+		  <li><a href="javascript:modifyPwd()">ä¿®æ”¹å¯†ç </a></li>
 		  <li></li>
 		  <%=menu%>
-	      <li><a href="<%=context%>/sys/authorize.do?method=logout">ÍË³öÏµÍ³</a></li>
+	      <li><a href="<%=context%>/sys/authorize.do?method=logout">é€€å‡ºç³»ç»Ÿ</a></li>
 	    </ul>
       </li>
 	    <li class="context-class-a-hotspot2">
 				<ul>
-					<li><a href="javascript:openWindow('<%=context%>/workspace/mymenu.do?method=showList', 600, 450)">¹ÜÀíÎÒµÄ²Ëµ¥</a></li><li></li>
+					<li><a href="javascript:openWindow('<%=context%>/workspace/mymenu.do?method=showList', 600, 450)">ç®¡ç†æˆ‘çš„èœå•</a></li><li></li>
 					<%
 					if(menuList!=null){
 					  for (int i = 0; i < menuList.size(); i++) {
@@ -154,14 +154,14 @@ function openDocument()
       </tr>
       <tr>
         <td class="m-newsalarm">&nbsp;</td>
-        <td class="m-more"><a href="javascript:openMoreMsg()">¸ü¶à&gt;&gt;</a></td>
+        <td class="m-more"><a href="javascript:openMoreMsg()">æ›´å¤š&gt;&gt;</a></td>
       </tr>
       <tr>
         <td colspan="2"><table width="620" border="0" cellspacing="1" cellpadding="0" class="list-box">
           <tr class="list-title">
-            <td width="120" align="center">·¢²¼Ê±¼ä</td>
-            <td align="center">Ö÷ Ìâ</td>
-            <td width="125" align="center">·¢²¼Õß</td>
+            <td width="120" align="center">å‘å¸ƒæ—¶é—´</td>
+            <td align="center">ä¸» é¢˜</td>
+            <td width="125" align="center">å‘å¸ƒè€…</td>
           </tr>
           <%
 					  if (messageList != null) {
@@ -174,7 +174,7 @@ function openDocument()
 								String colorClass = "";
 								if (msg.getType() == 0) {
 									String sysType = msg.getSysType()==0?"Alarm":"News";
-									senderName = "ÏµÍ³×Ô¶¯("+sysType+")";
+									senderName = "ç³»ç»Ÿè‡ªåŠ¨("+sysType+")";
 									colorClass = "redcolor";
 								}
 					%>

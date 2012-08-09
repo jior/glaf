@@ -1,6 +1,6 @@
-<%@ page contentType="text/html;charset=GBK" language="java"%>
-<%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
-<%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ page import="java.util.*"%>
 <%@ page import="java.util.List" %>
 <%@ page import="java.net.*"%>
@@ -26,7 +26,7 @@
 %>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link href="../../css/site.css" type="text/css" rel="stylesheet">
 <link href="<%= request.getContextPath() %>/css/site.css" type="text/css" rel="stylesheet">
 <script type='text/javascript' src="<%= request.getContextPath() %>/js/css.js"></script>
@@ -76,11 +76,11 @@ function selectSysUser(deptId,referId,referTitle,referCode){
 
 function saveMessage(form){
     if($('recverName').value==''){
-     alert("ÇëÑ¡ÔñÊÕ¼şÈË");
+     alert("è¯·é€‰æ‹©æ”¶ä»¶äºº");
      return false;
     }
     if($('title').value==''){
-     alert("Ö÷Ìâ²»ÄÜÎª¿Õ");
+     alert("ä¸»é¢˜ä¸èƒ½ä¸ºç©º");
      return false;
     }
     form.action="<%=request.getContextPath()%>/workspace/message.do?method=saveSend";
@@ -88,11 +88,11 @@ function saveMessage(form){
 }
 function saveEmail(form){
     if($('recverName').value==''){
-     alert("ÇëÑ¡ÔñÊÕ¼şÈË");
+     alert("è¯·é€‰æ‹©æ”¶ä»¶äºº");
      return false;
     }
     if($('title').value==''){
-     alert("Ö÷Ìâ²»ÄÜÎª¿Õ");
+     alert("ä¸»é¢˜ä¸èƒ½ä¸ºç©º");
      return false;
     }
     form.action="<%=request.getContextPath()%>/workspace/message.do?method=saveEmail";
@@ -102,11 +102,11 @@ function saveEmail(form){
 
 function saveBoth(form){
     if($('recverName').value==''){
-     alert("ÇëÑ¡ÔñÊÕ¼şÈË");
+     alert("è¯·é€‰æ‹©æ”¶ä»¶äºº");
      return false;
     }
     if($('title').value==''){
-     alert("Ö÷Ìâ²»ÄÜÎª¿Õ");
+     alert("ä¸»é¢˜ä¸èƒ½ä¸ºç©º");
      return false;
     }
     form.action= "<%=request.getContextPath()%>/workspace/message.do?method=saveBoth";
@@ -114,13 +114,13 @@ function saveBoth(form){
 }
 
 </script>
-<title>·¢ËÍÏûÏ¢</title>
+<title>å‘é€æ¶ˆæ¯</title>
 </head>
 
 <body>
 <table width="99%" border="0" align="center" cellpadding="0" cellspacing="0">
   <tr>
-    <td class="nav-title"><span class="Title">¹¤×÷Ì¨</span>&gt;&gt; ·¢ËÍÏûÏ¢</td>
+    <td class="nav-title"><span class="Title">å·¥ä½œå°</span>&gt;&gt; å‘é€æ¶ˆæ¯</td>
   </tr>
 </table>
 <html:form action="/workspace/message.do?method=saveSend" method="post" onsubmit="return verifyAll(this);" >
@@ -138,36 +138,36 @@ function saveBoth(form){
   <tr>
     <td class="box-mm"><table width="95%" border="0" align="center" cellpadding="5" cellspacing="0">
       <tr>
-        <td width="50" class="input-box">ÊÕ¼şÈË<font color="#FF0000">*</font></td>
-        <td><input name="recverName" type="text" class="input" size="25" value="<%= recverName %>" readonly="readonly" datatype="string" nullable="no" chname="½ÓÊÕÈË">
+        <td width="50" class="input-box">æ”¶ä»¶äºº<font color="#FF0000">*</font></td>
+        <td><input name="recverName" type="text" class="input" size="25" value="<%= recverName %>" readonly="readonly" datatype="string" nullable="no" chname="æ¥æ”¶äºº">
             <input name="recverIds" type="hidden" value="<%= recverIds %>">
             
             <input name="recverType" type="radio" value="0" checked onClick="changeSelect()">
-            <input name="add_user" type="button" class="button" value="Ôö¼ÓÓÃ»§" onClick="selectSysUser(0, $('recverIds'), $('recverName'),$(toEmail))">
+            <input name="add_user" type="button" class="button" value="å¢åŠ ç”¨æˆ·" onClick="selectSysUser(0, $('recverIds'), $('recverName'),$(toEmail))">
           <input type="radio" name="recverType" value="1" onClick="changeSelect()">
-          <input name="add_dept" type="button" class="button" value="Ñ¡Ôñ²¿ÃÅ" onClick="selectDept(5, $('recverIds'), $('recverName'),document.all.toEmail)" disabled="disabled">
+          <input name="add_dept" type="button" class="button" value="é€‰æ‹©éƒ¨é—¨" onClick="selectDept(5, $('recverIds'), $('recverName'),document.all.toEmail)" disabled="disabled">
           <input type="radio" name="recverType" value="2" onClick="changeSelect()">
-          <input name="add_supplier" type="button" class="button" value="Ñ¡Ôñ¹©Ó¦ÉÌ"  onClick="selectSpForEmail(-1, $('recverIds'), $('recverName'),document.all.toEmail)" disabled="disabled">
+          <input name="add_supplier" type="button" class="button" value="é€‰æ‹©ä¾›åº”å•†"  onClick="selectSpForEmail(-1, $('recverIds'), $('recverName'),document.all.toEmail)" disabled="disabled">
            </td>
       </tr>
-      <tr><td width="50" class="input-box">ÓÊ&nbsp;&nbsp;Ïä</td>
+      <tr><td width="50" class="input-box">é‚®&nbsp;&nbsp;ç®±</td>
           <td><input name="toEmail" type="text" datatype="string" nullable="no" searchflag="1" size="25"  readonly="readonly" class="input" value="<%=recverEmail %>" >
-            &nbsp;&nbsp;×¢Òâ£º *Ñ¡Ôñ¹©Ó¦ÉÌ±ØĞèÊÇÏµÍ³ÓÃ»§²ÅÄÜ·¢ËÍÏµÍ³ĞÅÏ¢*
+            &nbsp;&nbsp;æ³¨æ„ï¼š *é€‰æ‹©ä¾›åº”å•†å¿…éœ€æ˜¯ç³»ç»Ÿç”¨æˆ·æ‰èƒ½å‘é€ç³»ç»Ÿä¿¡æ¯*
           </td>
       </tr>
       <tr>
-        <td class="input-box">Ö÷&nbsp;&nbsp;Ìâ<font color="#FF0000">*</font></td>
-        <td><input name="title" type="text" class="input" size="60" maxlength="50" value="<%= title %>" datatype="string" nullable="no" chname="±êÌâ" maxsize="50"></td>
+        <td class="input-box">ä¸»&nbsp;&nbsp;é¢˜<font color="#FF0000">*</font></td>
+        <td><input name="title" type="text" class="input" size="60" maxlength="50" value="<%= title %>" datatype="string" nullable="no" chname="æ ‡é¢˜" maxsize="50"></td>
       </tr>
       <tr>
-        <td valign="top" class="input-box2">ÄÚ&nbsp;&nbsp;Èİ</td>
-        <td><textarea name="content" cols="58" rows="6" class="input" datatype="string" nullable="no" chname="ÄÚÈİ" maxsize="2000"></textarea></td>
+        <td valign="top" class="input-box2">å†…&nbsp;&nbsp;å®¹</td>
+        <td><textarea name="content" cols="58" rows="6" class="input" datatype="string" nullable="no" chname="å†…å®¹" maxsize="2000"></textarea></td>
       </tr>
       <tr>
         <td valign="top">&nbsp;</td>
-        <td><input name="btn_save" type="button" class="button" value="·¢ËÍÏµÍ³ÏûÏ¢"  onClick="saveMessage(this.form)">
-            <input name="btn_email" type="button" class="button" value="·¢ËÍEmail"  onClick="saveEmail(this.form)">
-            <input name="btn_both" type="button" class="button" value="Ë«·¢ËÍ"  onClick="saveBoth(this.form)">
+        <td><input name="btn_save" type="button" class="button" value="å‘é€ç³»ç»Ÿæ¶ˆæ¯"  onClick="saveMessage(this.form)">
+            <input name="btn_email" type="button" class="button" value="å‘é€Email"  onClick="saveEmail(this.form)">
+            <input name="btn_both" type="button" class="button" value="åŒå‘é€"  onClick="saveBoth(this.form)">
         </td>
       </tr>
     </table>

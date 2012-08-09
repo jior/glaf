@@ -1,6 +1,6 @@
-<%@ page contentType="text/html;charset=gb2312" language="java"%>
-<%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean" %>
-<%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.glaf.base.modules.*"%>
 <%@ page import="com.glaf.base.modules.sys.model.*"%>
@@ -14,8 +14,8 @@ List list = pager.getResults();
 %>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
-<title>基础平台系统</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>鍩虹骞冲彴绯荤粺</title>
 <script type='text/javascript' src='<%=context%>/dwr/interface/DictoryAjaxService.js'></script>
 <script type='text/javascript' src='<%=context%>/dwr/engine.js'></script>
 <script type='text/javascript' src='<%=context%>/dwr/util.js'></script>
@@ -78,7 +78,7 @@ function sort(id, operate){
 </head>
 
 <body>
-<div class="nav-title"><span class="Title">字典管理</span>&gt;&gt;字典列表</div>
+<div class="nav-title"><span class="Title">瀛楀吀绠＄悊</span>&gt;&gt;瀛楀吀鍒楄〃</div>
 <html:form action="/sys/dictory.do?method=batchDelete" method="post" target="_self">
 <input type="hidden" name="id" value="0">  
 <table width="100%" border="0" cellspacing="1" cellpadding="0" class="list-box">
@@ -86,11 +86,11 @@ function sort(id, operate){
     <td width="5%" align="center">
         <input type="checkbox" name="chkall" value="checkbox" onClick="checkAll(this.form, this)";checkOperation(this.form)>
     </td>
-    <td width="5%" align="center"> <div align="center" class="fontname_12">序号</div></td>
-    <td width="30%" align="center"> <div align="center" class="fontname_12">名称</div></td>
-    <td width="20%" align="center"> <div align="center" class="fontname_12">代码</div></td>
-    <td width="20%" align="center"><div align="center" class="fontname_12">是否有效</div></td>
-    <td width="20%" align="center"><div align="center" class="fontname_12">排序</div></td>
+    <td width="5%" align="center"> <div align="center" class="fontname_12">搴忓彿</div></td>
+    <td width="30%" align="center"> <div align="center" class="fontname_12">鍚嶇О</div></td>
+    <td width="20%" align="center"> <div align="center" class="fontname_12">浠ｇ爜</div></td>
+    <td width="20%" align="center"><div align="center" class="fontname_12">鏄惁鏈夋晥</div></td>
+    <td width="20%" align="center"><div align="center" class="fontname_12">鎺掑簭</div></td>
   </tr>
   <%
 int i=0;
@@ -104,8 +104,8 @@ if(list!=null){
     <td class="td-no"><%=(pager.getCurrentPageNo()-1)*10 + i+1%>&nbsp;</td>
     <td class="td-text"><%=bean.getName()%>&nbsp;</td>
     <td class="td-no"><%=bean.getCode()%>&nbsp;</td>
-    <td class="td-no"><%=bean.getBlocked()==0?"是":"否"%></td>
-    <td class="td-no"><a href="javascript:sort(<%=bean.getId()%>, 0);" title="上移"><img src="<%=context%>/images/up.gif" border="0" height="13" width="13"></a> <a href="javascript:sort(<%=bean.getId()%>, 1);" title="下移"><img src="<%=context%>/images/down.gif" border="0" height="13" width="13"></a></td>
+    <td class="td-no"><%=bean.getBlocked()==0?"鏄�":"鍚�"%></td>
+    <td class="td-no"><a href="javascript:sort(<%=bean.getId()%>, 0);" title="涓婄Щ"><img src="<%=context%>/images/up.gif" border="0" height="13" width="13"></a> <a href="javascript:sort(<%=bean.getId()%>, 1);" title="涓嬬Щ"><img src="<%=context%>/images/down.gif" border="0" height="13" width="13"></a></td>
   </tr>
   <%
     i++;
@@ -128,15 +128,15 @@ for(; i<pageSize; i++){
   
   <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
     <tr> 
-      <td width="50%"><input name="btn_add" type="button" value="增加" class="button" onClick="javascript:add();">
+      <td width="50%"><input name="btn_add" type="button" value="澧炲姞" class="button" onClick="javascript:add();">
       	<%
       	if(parent != 17){
       	%>
-        <input name="btn_del" type="button" value="删除" class="button" onClick="javascript:del();" disabled>
+        <input name="btn_del" type="button" value="鍒犻櫎" class="button" onClick="javascript:del();" disabled>
         <%
         }
         %>
-        <input name="btn_modify" type="button" value="修改" class="button" onClick="javascript:modify(this.form);" disabled></td>
+        <input name="btn_modify" type="button" value="淇敼" class="button" onClick="javascript:modify(this.form);" disabled></td>
       <td width="50%"> 
 <%
 String params = WebUtil.getQueryString(request);

@@ -1,6 +1,6 @@
-<%@ page contentType="text/html;charset=gbk" language="java"%>
-<%@ taglib uri="/WEB-INF/tld/c.tld" prefix="c" %>
-<%@ taglib uri="/WEB-INF/tld/fmt.tld" prefix="fmt" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.glaf.base.modules.todo.*"%>
 <%@ page import="com.glaf.base.modules.todo.model.*"%>
@@ -90,7 +90,7 @@
 %>
 <table width="620" border="0" cellspacing="1" cellpadding="0" class="list-box">
     <tr class="list-title">
-            <td align="center">ÊÂ&nbsp;&nbsp;Ïî</td>
+            <td align="center">äº‹&nbsp;&nbsp;é¡¹</td>
             <td width="95" align="center">PastDue</td>
             <td width="95" align="center">Caution</td>
             <td width="95" align="center">OK</td>

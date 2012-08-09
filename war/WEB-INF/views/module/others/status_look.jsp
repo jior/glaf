@@ -1,6 +1,6 @@
-<%@ page contentType="text/html;charset=gbk" language="java"%>
-<%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
-<%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.Iterator"%>
 <%@ page import="com.glaf.base.utils.PageResult"%>
@@ -22,7 +22,7 @@ List list = (List)request.getAttribute("list");
 String all = String.valueOf(request.getAttribute("all"));
 
 if(purchase == null){
-	out.println("¶Ô²»Æð£¬ÄúÒª²é¿´µÄ»ù´¡Æ½Ì¨µ¥²»´æÔÚ£¡£¡£¡");
+	out.println("å¯¹ä¸èµ·ï¼Œæ‚¨è¦æŸ¥çœ‹çš„åŸºç¡€å¹³å°å•ä¸å­˜åœ¨ï¼ï¼ï¼");
 }else{
 	PurchaseApply purchaseApply = purchase.getCurrentPurchaseApply();
 	Finance finance = purchase.getFinance();
@@ -34,19 +34,19 @@ if(purchase == null){
 	if(finance != null){
 		financeStatus = 1;
 	}
-	String name1 = purchase.getName();  //ÖÐÎÄÏîÄ¿Ãû³Æ
-	String name2 = purchase.getName2(); //ÈÕÎÄÏîÄ¿Ãû³Æ
-	String name = "ÖÐÎÄÏîÄ¿Ãû£º" + name1;
+	String name1 = purchase.getName();  //ä¸­æ–‡é¡¹ç›®åç§°
+	String name2 = purchase.getName2(); //æ—¥æ–‡é¡¹ç›®åç§°
+	String name = "ä¸­æ–‡é¡¹ç›®åï¼š" + name1;
 	if(!"".equals(name2)){
-	   name += "\n" + "ÈÕÎÄÏîÄ¿Ãû£º" + name2;  //"\n"__»»ÐÐ
+	   name += "\n" + "æ—¥æ–‡é¡¹ç›®åï¼š" + name2;  //"\n"__æ¢è¡Œ
 	}
-	String useDept = bdm.getStringValue(purchase.getUseDept(), "ZD0001"); //Ê¹ÓÃ²¿ÃÅ
-	String dutyDept = bdm.getStringValue(purchase.getDutyDept(), "ZD0001"); //¹é¿Ú²¿ÃÅ	
+	String useDept = bdm.getStringValue(purchase.getUseDept(), "ZD0001"); //ä½¿ç”¨éƒ¨é—¨
+	String dutyDept = bdm.getStringValue(purchase.getDutyDept(), "ZD0001"); //å½’å£éƒ¨é—¨	
 %>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
-<title>XXXX»ù´¡Æ½Ì¨ÏµÍ³</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>XXXXåŸºç¡€å¹³å°ç³»ç»Ÿ</title>
 <link href="../../css/site.css" type="text/css" rel="stylesheet">
 <link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
 <script language="javascript" src='<%=context%>/js/verify.js'></script>
@@ -105,7 +105,7 @@ if(purchase == null){
 							}else{
 								if(i >= 10 && "false".equals(all)){
 					%>
-									alert('¶Ô²»Æð£¬ÄúÎÞÈ¨²é¿´¸ÃÏî£¡');
+									alert('å¯¹ä¸èµ·ï¼Œæ‚¨æ— æƒæŸ¥çœ‹è¯¥é¡¹ï¼');
 					<%
 								}
 							}
@@ -124,7 +124,7 @@ if(purchase == null){
 <form action="#" method="post">
 <table width="100%" border="0" cellpadding="0" cellspacing="0" class="m-box">
   <tr>
-    <td width="100%" class="nav-title">½ø¶È¹ÜÀí¿´°å&gt;&gt;ÏîÄ¿½øÕ¹²éÑ¯</td>
+    <td width="100%" class="nav-title">è¿›åº¦ç®¡ç†çœ‹æ¿&gt;&gt;é¡¹ç›®è¿›å±•æŸ¥è¯¢</td>
   </tr>
 </table>  
 <table width="99%" border="0" align="center" cellpadding="0" cellspacing="0" class="box">
@@ -140,19 +140,19 @@ if(purchase == null){
   <tr>
     <td class="box-mm" align="center"><div id="listDiv" style="width:980px; height:70px;overflow-x:auto; overflow-y:auto;"><table border="0" cellspacing="1" cellpadding="0" class="list-box">
       <tr class="list-title">
-        <td width="90" height="22" align="center" nowrap class="title">²É¹º·½Ê½</td>
-        <td width="60" align="center" nowrap class="title">ÉêÇëÐÔÖÊ</td>
-        <td width="100" align="center" nowrap class="title">²É¹ºÉêÇëµ¥No</td>
-        <td width="255" align="center" nowrap class="title">ÏîÄ¿Ãû³Æ</td>
-        <td width="120" align="center" nowrap class="title">²É¹ºÀà±ð</td>
-        <td width="60" align="center" nowrap class="title">²É¹ºÐÔÖÊ</td>
-        <td width="100" align="center" nowrap class="title">Ê¹ÓÃ²¿ÃÅ</td>
-        <td width="100" align="center" nowrap class="title">Ê¹ÓÃ²¿ÃÅ¾­°ìÈË</td>
-        <td width="100" align="center" nowrap class="title">¹é¿Ú²¿ÃÅ</td>
-        <td width="100" align="center" nowrap class="title">¹é¿Ú²¿ÃÅ¾­°ìÈË</td>
-        <td width="100" align="center" nowrap class="title">ÖØ²ÆNo</td>
-        <td width="100" align="center" nowrap class="title">²É¹ºµ£µ±</td>
-        <td width="200" align="center" nowrap class="title">¹©Ó¦ÉÌ</td>
+        <td width="90" height="22" align="center" nowrap class="title">é‡‡è´­æ–¹å¼</td>
+        <td width="60" align="center" nowrap class="title">ç”³è¯·æ€§è´¨</td>
+        <td width="100" align="center" nowrap class="title">é‡‡è´­ç”³è¯·å•No</td>
+        <td width="255" align="center" nowrap class="title">é¡¹ç›®åç§°</td>
+        <td width="120" align="center" nowrap class="title">é‡‡è´­ç±»åˆ«</td>
+        <td width="60" align="center" nowrap class="title">é‡‡è´­æ€§è´¨</td>
+        <td width="100" align="center" nowrap class="title">ä½¿ç”¨éƒ¨é—¨</td>
+        <td width="100" align="center" nowrap class="title">ä½¿ç”¨éƒ¨é—¨ç»åŠžäºº</td>
+        <td width="100" align="center" nowrap class="title">å½’å£éƒ¨é—¨</td>
+        <td width="100" align="center" nowrap class="title">å½’å£éƒ¨é—¨ç»åŠžäºº</td>
+        <td width="100" align="center" nowrap class="title">é‡è´¢No</td>
+        <td width="100" align="center" nowrap class="title">é‡‡è´­æ‹…å½“</td>
+        <td width="200" align="center" nowrap class="title">ä¾›åº”å•†</td>
       </tr>
       <tr>
         <td height="27" align="center"><%=PurchaseConstants.getApplyType(purchase.getApplyType())%></td>
@@ -534,21 +534,21 @@ attachFrame();
 <div id="list" class="tooltip" style="visibility:hidden">
   <table height="40" border="0">
   	<tr>
-		<td>ÕÅÈý</td>
-		<td>ÈÎÎñ¿ªÊ¼Ê±¼ä:</td>
-		<td>³¬ÆÚÌìÊý:</td>
+		<td>å¼ ä¸‰</td>
+		<td>ä»»åŠ¡å¼€å§‹æ—¶é—´:</td>
+		<td>è¶…æœŸå¤©æ•°:</td>
 	</tr>
 	<tr>
-		<td>ÀîËÄ</td>
-		<td>ÈÎÎñ¿ªÊ¼Ê±¼ä:</td>
-		<td>³¬ÆÚÌìÊý:</td>
+		<td>æŽå››</td>
+		<td>ä»»åŠ¡å¼€å§‹æ—¶é—´:</td>
+		<td>è¶…æœŸå¤©æ•°:</td>
 	</tr>
   </table>
 </div>
 <div id="altlayer" class="tooltip"></div>
 <script type="text/javascript" src='<%=context%>/js/tooltip.js'></script>
 <script type="text/javascript">
-	addTipSupport(document.body);  //´Ë´¦µÄ²ÎÊý¿É»»³ÉÆäËü£¬ÒÔ¾ÖÏÞÔÚÄ³ÈÝÆ÷ÄÚÖ§³ÖTOOLTIP·ç¸ñ¡£
+	addTipSupport(document.body);  //æ­¤å¤„çš„å‚æ•°å¯æ¢æˆå…¶å®ƒï¼Œä»¥å±€é™åœ¨æŸå®¹å™¨å†…æ”¯æŒTOOLTIPé£Žæ ¼ã€‚
 </script>
 
 <script language="javascript">

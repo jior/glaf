@@ -1,6 +1,6 @@
-<%@ page contentType="text/html;charset=GBK" language="java"%>
-<%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
-<%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ page import="java.util.*"%>
 <%@ page import="java.net.*"%>
 <%@ page import="com.glaf.base.modules.*"%>
@@ -14,8 +14,8 @@ List list = pager.getResults();
 %>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
-<title>�ҵĲ˵�</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>我的菜单</title>
 <link href="<%= request.getContextPath() %>/css/site.css" type="text/css" rel="stylesheet">
 <script type='text/javascript' src='<%=request.getContextPath()%>/dwr/interface/MyMenuAjaxService.js'></script>
 <script type='text/javascript' src='<%=request.getContextPath()%>/dwr/engine.js'></script>
@@ -72,7 +72,7 @@ function checkOperation(form){
 </head>
 
 <body>
-<div class="nav-title"><span class="Title">����̨</span>&gt;&gt; �ҵĲ˵�</div>
+<div class="nav-title"><span class="Title">工作台</span>&gt;&gt; 我的菜单</div>
   <html:form action="/workspace/mymenu.do?method=batchDelete" method="post" target="_self"> 
 <input name="page_no" type="hidden" value="<%= pager.getCurrentPageNo() %>">
   <table width="99%" border="0" align="center" cellpadding="0" cellspacing="0">
@@ -82,10 +82,10 @@ function checkOperation(form){
               <td width="10%">
                 <input type="checkbox" name="chkall" value="checkbox" onClick="checkAll(this.form, this);checkOperation(this.form)">
               
-              ȫѡ</td>
-              <td width="17%" align="center">�˵�����</td>
-              <td width="58%" align="center">��������</td>
-              <td width="10%" align="center">����</td>
+              全选</td>
+              <td width="17%" align="center">菜单标题</td>
+              <td width="58%" align="center">访问链接</td>
+              <td width="10%" align="center">排序</td>
             </tr>
                   <%
 						int i = 0;
@@ -98,7 +98,7 @@ function checkOperation(form){
               <td height="22" class="td-cb"><input type="checkbox" name="id" value="<%= bean.getId() %>" onClick="checkOperation(this.form)"></td>
               <td height="22" class="td-text"><%= bean.getTitle() %></td>
               <td height="22" class="td-text"><a href="<%= URLDecoder.decode(bean.getUrl()) %>" target="_blank"><%= URLDecoder.decode(bean.getUrl()) %></a>&nbsp;</td>
-              <td height="22" align="center" class="td-order"><a href="javascript:sort(<%=bean.getId()%>, 0);" title="����"><img src="<%=request.getContextPath()%>/images/up.gif" border="0" height="13" width="13"></a> <a href="javascript:sort(<%=bean.getId()%>, 1);" title="����"><img src="<%=request.getContextPath()%>/images/down.gif" border="0" height="13" width="13"></a></td>
+              <td height="22" align="center" class="td-order"><a href="javascript:sort(<%=bean.getId()%>, 0);" title="上移"><img src="<%=request.getContextPath()%>/images/up.gif" border="0" height="13" width="13"></a> <a href="javascript:sort(<%=bean.getId()%>, 1);" title="下移"><img src="<%=request.getContextPath()%>/images/down.gif" border="0" height="13" width="13"></a></td>
             </tr>
 				  <%
 							i++;
@@ -118,9 +118,9 @@ function checkOperation(form){
           </table>
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
             <tr>
-              <td width="56%" height="35" valign="bottom"><input name="btn_add" id="btn_add" type="button" class="button"  onclick="javascript:add();" value="����">
-                <input name="btn_del" id="btn_del" type="button" class="button" onClick="javascript:del();" value="ɾ��" disabled="disabled">
-                <input name="btn_modify" id="btn_modify" type="button" value="�޸�" class="button" onClick="javascript:modify();" disabled="disabled"></td>
+              <td width="56%" height="35" valign="bottom"><input name="btn_add" id="btn_add" type="button" class="button"  onclick="javascript:add();" value="增加">
+                <input name="btn_del" id="btn_del" type="button" class="button" onClick="javascript:del();" value="删除" disabled="disabled">
+                <input name="btn_modify" id="btn_modify" type="button" value="修改" class="button" onClick="javascript:modify();" disabled="disabled"></td>
               <td width="44%" align="right" valign="bottom">
 <%
 String params = "method=showList";

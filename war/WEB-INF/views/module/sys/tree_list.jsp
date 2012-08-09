@@ -1,6 +1,6 @@
-<%@ page contentType="text/html;charset=gbk" language="java"%>
-<%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean" %>
-<%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.glaf.base.modules.*"%>
 <%@ page import="com.glaf.base.modules.sys.model.*"%>
@@ -15,7 +15,7 @@ List list = pager.getResults();
 
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
 <link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
 <script language="javascript" src='<%=context%>/js/verify.js'></script>
@@ -81,7 +81,7 @@ function sort(id, operate){
 </head>
 
 <body>
-<div class="nav-title"><span class="Title">目录管理</span>&gt;&gt;节点列表</div>
+<div class="nav-title"><span class="Title">鐩綍绠＄悊</span>&gt;&gt;鑺傜偣鍒楄〃</div>
 <html:form action="/sys/tree.do?method=batchDelete" method="post" target="_self"> 
  
 <input name="page_no" type="hidden" value="<%=pager.getCurrentPageNo()%>">
@@ -89,11 +89,11 @@ function sort(id, operate){
 <table width="100%" border="0" cellspacing="1" cellpadding="0" class="list-box">
   <tr class="list-title"> 
     <td width="5%" align="center"> <input type="checkbox" name="chkall" value="checkbox" onClick="checkAll(this.form, this);checkOperation(this.form)">    </td>
-    <td width="5%" align="center">序号</td>
-    <td width="30%" align="center">名称</td>
-    <td width="40%" align="center">描述</td>
-	<td width="10%" align="center">编码</td>
-    <td width="10%" align="center">排序</td>
+    <td width="5%" align="center">搴忓彿</td>
+    <td width="30%" align="center">鍚嶇О</td>
+    <td width="40%" align="center">鎻忚堪</td>
+	<td width="10%" align="center">缂栫爜</td>
+    <td width="10%" align="center">鎺掑簭</td>
     </tr>
   <%
 int i=0;
@@ -108,7 +108,7 @@ if(list!=null){
     <td class="td-text"><%=bean.getName()%>&nbsp;</td>
     <td class="td-text"><%=bean.getDesc()%>&nbsp;</td>
 	<td class="td-no"><%=bean.getCode()%>&nbsp;</td>
-    <td class="td-no"><a href="javascript:sort(<%=bean.getId()%>, 0);" title="上移"><img src="<%=context%>/images/up.gif" border="0" height="13" width="13"></a> <a href="javascript:sort(<%=bean.getId()%>, 1);" title="下移"><img src="<%=context%>/images/down.gif" border="0" height="13" width="13"></a>&nbsp;</td>
+    <td class="td-no"><a href="javascript:sort(<%=bean.getId()%>, 0);" title="涓婄Щ"><img src="<%=context%>/images/up.gif" border="0" height="13" width="13"></a> <a href="javascript:sort(<%=bean.getId()%>, 1);" title="涓嬬Щ"><img src="<%=context%>/images/down.gif" border="0" height="13" width="13"></a>&nbsp;</td>
     </tr>
   <%
     i++;
@@ -131,9 +131,9 @@ for(; i<pageSize; i++){
 
 <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
   <tr> 
-    <td width="50%"> <input name="btn_add" type="button" value="增加" class="button" onClick="javascript:add();"> 
-      <input name="btn_del" type="button" value="删除" class="button" onClick="javascript:del();" disabled>
-      <input name="btn_modify" type="button" value="修改" class="button" onClick="javascript:modify(this.form);" disabled></td>
+    <td width="50%"> <input name="btn_add" type="button" value="澧炲姞" class="button" onClick="javascript:add();"> 
+      <input name="btn_del" type="button" value="鍒犻櫎" class="button" onClick="javascript:del();" disabled>
+      <input name="btn_modify" type="button" value="淇敼" class="button" onClick="javascript:modify(this.form);" disabled></td>
     <td width="50%"> 
       <%
 String params = WebUtil.getQueryString(request);

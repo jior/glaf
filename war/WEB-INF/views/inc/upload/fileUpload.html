@@ -1,17 +1,17 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=GBK">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link href="./css/fileUpload.css" type="text/css" rel="stylesheet"/>
 <link href="../../css/site.css" type="text/css" rel="stylesheet"/>
 <script type="text/javascript" src="./js/prototype.js"></script>
 <script type="text/javascript" src="./js/AjaxWrapper.js"></script>
-<title>ÎÄ¼şÉÏ´«</title>
+<title>æ–‡ä»¶ä¸Šä¼ </title>
 
 </head>
 <body>
 <div id="controlPanel">
-  <div id="readme">ÉÏ´«ËµÃ÷:&nbsp;&nbsp;×î´óÉÏ´«Á¿:100M£¬µ¥¸öÎÄ¼ş×î´ó³¤¶È:100M</div>
+  <div id="readme">ä¸Šä¼ è¯´æ˜:&nbsp;&nbsp;æœ€å¤§ä¸Šä¼ é‡:100Mï¼Œå•ä¸ªæ–‡ä»¶æœ€å¤§é•¿åº¦:100M</div>
   <div id="uploadFileUrl"></div>
   <form id="fileUploadForm" name="fileUploadForm" action="./BackGroundService.action" 
 		enctype="multipart/form-data" method="post">
@@ -21,8 +21,8 @@
     <br />
     <input type="file" name="file" id="file" size="40"/>
     <br />
-    <input name="uploadButton" type="submit" class="login-btn" id="uploadButton" value="¿ªÊ¼ÉÏ´«"/>
-    <input name="cancelUploadButton" type="button" class="login-btn" id="cancelUploadButton" value="È¡ÏûÉÏ´«"/>
+    <input name="uploadButton" type="submit" class="login-btn" id="uploadButton" value="å¼€å§‹ä¸Šä¼ "/>
+    <input name="cancelUploadButton" type="button" class="login-btn" id="cancelUploadButton" value="å–æ¶ˆä¸Šä¼ "/>
     <br />
   </form>
   <div id="progressBar">
@@ -40,7 +40,7 @@ Element.hide('progressBar');
 Event.observe('fileUploadForm','submit',startProgress,false);
 Event.observe('cancelUploadButton','click',cancelProgress,false);
 
-//Ë¢ĞÂÉÏ´«×´Ì¬
+//åˆ·æ–°ä¸Šä¼ çŠ¶æ€
 function refreshUploadStatus(){
 	var ajaxW = new AjaxWrapper(false);
 	ajaxW.putRequest(
@@ -51,37 +51,37 @@ function refreshUploadStatus(){
 				var progressPercent = Math.ceil(
 					(uploadInfo.ReadTotalSize) / uploadInfo.UploadTotalSize * 100);
 	
-				$('progressBarText').innerHTML = ' ÉÏ´«´¦Àí½ø¶È: '+progressPercent+'% ['+
+				$('progressBarText').innerHTML = ' ä¸Šä¼ å¤„ç†è¿›åº¦: '+progressPercent+'% ['+
 					(uploadInfo.ReadTotalSize)+'/'+uploadInfo.UploadTotalSize + ' bytes]'+
-					' ÕıÔÚ´¦ÀíµÚ'+uploadInfo.CurrentUploadFileNum+'¸öÎÄ¼ş'+
-					' ºÄÊ±: '+(uploadInfo.ProcessRunningTime-uploadInfo.ProcessStartTime)+' ms';
-				//$('progressStatusText').innerHTML=' ·´À¡×´Ì¬:123 '+uploadInfo.Status + "|||";
+					' æ­£åœ¨å¤„ç†ç¬¬'+uploadInfo.CurrentUploadFileNum+'ä¸ªæ–‡ä»¶'+
+					' è€—æ—¶: '+(uploadInfo.ProcessRunningTime-uploadInfo.ProcessStartTime)+' ms';
+				//$('progressStatusText').innerHTML=' åé¦ˆçŠ¶æ€:123 '+uploadInfo.Status + "|||";
 				$('totalProgressBarBoxContent').style.width = parseInt(progressPercent * 3.5) + 'px';
 		}
 	);
 }
-//ÉÏ´«´¦Àí
+//ä¸Šä¼ å¤„ç†
 function startProgress(){
 	Element.show('progressBar');
-    $('progressBarText').innerHTML = ' ÉÏ´«´¦Àí½ø¶È: 0%';
-    //$('progressStatusText').innerHTML=' ·´À¡×´Ì¬:';
+    $('progressBarText').innerHTML = ' ä¸Šä¼ å¤„ç†è¿›åº¦: 0%';
+    //$('progressStatusText').innerHTML=' åé¦ˆçŠ¶æ€:';
     $('uploadButton').disabled = true;
     var periodicalExe=new PeriodicalExecuter(refreshUploadStatus,0.5);
     return true;
 }
-//È¡ÏûÉÏ´«´¦Àí
+//å–æ¶ˆä¸Šä¼ å¤„ç†
 function cancelProgress(){
 	$('cancelUploadButton').disabled = true;
 	var ajaxW = new AjaxWrapper(false);
 	ajaxW.putRequest(
 		'./BackGroundService.action',
 		'cancelUpload=true',
-		//ÒòÎªformµÄÌá½»£¬Õâ¿ÉÄÜ²»»áÖ´ĞĞ
+		//å› ä¸ºformçš„æäº¤ï¼Œè¿™å¯èƒ½ä¸ä¼šæ‰§è¡Œ
 		function(responseText){
 			eval("uploadInfo = " + responseText);
-			//$('progressStatusText').innerHTML=' ·´À¡×´Ì¬: '+uploadInfo.status;
+			//$('progressStatusText').innerHTML=' åé¦ˆçŠ¶æ€: '+uploadInfo.status;
 			if (msgInfo.cancel=='true'){
-				alert('É¾³ı³É¹¦!');
+				alert('åˆ é™¤æˆåŠŸ!');
 				window.location.reload();
 			};
 		}

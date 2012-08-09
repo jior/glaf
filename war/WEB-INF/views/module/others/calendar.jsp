@@ -1,11 +1,11 @@
-<%@ page contentType="text/html;charset=gbk" language="java"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ page import="java.util.*" %> 
 <%@ page import="com.glaf.base.utils.*"%>
 <% 
 Calendar cal=Calendar.getInstance();
-int year = ParamUtil.getIntAttribute(request, "year", cal.get(Calendar.YEAR));//Äê·Ý
-int month = ParamUtil.getIntAttribute(request, "month", cal.get(Calendar.MONTH));//ÔÂ·Ý
-int weeks = ParamUtil.getIntAttribute(request, "weeks", 0);//µ±ÔÂµÄÖÜÊý
+int year = ParamUtil.getIntAttribute(request, "year", cal.get(Calendar.YEAR));//å¹´ä»½
+int month = ParamUtil.getIntAttribute(request, "month", cal.get(Calendar.MONTH));//æœˆä»½
+int weeks = ParamUtil.getIntAttribute(request, "weeks", 0);//å½“æœˆçš„å‘¨æ•°
 List list = (List) request.getAttribute("list");
 String days[] = (String[])request.getAttribute("days");
 %> 
@@ -15,23 +15,23 @@ String days[] = (String[])request.getAttribute("days");
   <tr>
     <td colspan=7 class="header"><table width=100% cellspacing=0 cellpadding=0>
       <tr>
-        <td align="center"><font color="#FFFFFF"><b><%=month+1%>ÔÂ</b></font> </td>
+        <td align="center"><font color="#FFFFFF"><b><%=month+1%>æœˆ</b></font> </td>
         </tr>
     </table></td>
   </tr>
   <tr>
-    <td align="center" class="weekDay">ÈÕ</td>
-    <td align="center" class="weekDay">Ò»
+    <td align="center" class="weekDay">æ—¥</td>
+    <td align="center" class="weekDay">ä¸€
         </th>
-    <td align="center" class="weekDay">¶þ
+    <td align="center" class="weekDay">äºŒ
         </th>
-    <td align="center" class="weekDay">Èý
+    <td align="center" class="weekDay">ä¸‰
         </th>
-    <td align="center" class="weekDay">ËÄ
+    <td align="center" class="weekDay">å››
         </th>
-    <td align="center" class="weekDay">Îå
+    <td align="center" class="weekDay">äº”
         </th>
-    <td align="center" class="weekDay">Áù</td>
+    <td align="center" class="weekDay">å…­</td>
   </tr>
   <%
   for(int j=0; j<=5; j++) { 

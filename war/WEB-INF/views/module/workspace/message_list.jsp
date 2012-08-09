@@ -1,6 +1,6 @@
-<%@ page contentType="text/html;charset=GBK" language="java"%>
-<%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
-<%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ page import="java.util.*"%>
 <%@ page import="java.net.*"%>
 <%@ page import="com.glaf.base.modules.*"%>
@@ -16,7 +16,7 @@ String flag = (String)request.getAttribute("flag");
 %>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link href="../../css/site.css" type="text/css" rel="stylesheet">
 <link href="<%= request.getContextPath() %>/css/site.css" type="text/css" rel="stylesheet">
 <script type='text/javascript' src="<%= request.getContextPath() %>/js/css.js"></script>
@@ -59,13 +59,13 @@ function checkOperation(){
 }
 
 </script>
-<title>ÎÒµÄÊÕ¼şÏä</title>
+<title>æˆ‘çš„æ”¶ä»¶ç®±</title>
 </head>
 
 <body>
 <table width="99%" border="0" align="center" cellpadding="0" cellspacing="0">
   <tr>
-    <td class="nav-title"><span class="Title">¹¤×÷Ì¨</span>&gt;&gt; ÎÒµÄÊÕ¼şÏä</td>
+    <td class="nav-title"><span class="Title">å·¥ä½œå°</span>&gt;&gt; æˆ‘çš„æ”¶ä»¶ç®±</td>
   </tr>
 </table>
 <table width="99%" border="0" align="center" cellpadding="0" cellspacing="0" class="box">
@@ -85,20 +85,20 @@ function checkOperation(){
             <td><table border="0" cellspacing="0" cellpadding="0" class="tabs-box">
               <tr>
                 <td class="tab-lc">&nbsp;</td>
-                    <td width="60" class="tab-mc">ÊÕ¼şÏä</td>
+                    <td width="60" class="tab-mc">æ”¶ä»¶ç®±</td>
                     <td class="tab-rc">&nbsp;</td>
                     <td class="tab-l">&nbsp;</td>
-                    <td width="60" class="tab-m"><a href="?method=showSendedList&flag=supplier">ÒÑ·¢ËÍ</a></td>
+                    <td width="60" class="tab-m"><a href="?method=showSendedList&flag=supplier">å·²å‘é€</a></td>
                     <td class="tab-r">&nbsp;</td>
                 </tr>
               </table>
                   <table width="100%" border="0" cellspacing="1" cellpadding="0" class="list-box">
                     <tr class="list-title">
-                      <td width="60"><input type="checkbox" name="chkall" value="checkbox" onClick="CheckAlls(this, 'id');checkOperation()">È«Ñ¡</td>
-                      <td width="40" align="center">ĞòºÅ</td>
-                      <td width="110" align="center">·¢¼şÈË</td>
-                      <td align="center">Ö÷ Ìâ</td>
-                      <td width="120" align="center">·¢ËÍÈÕÆÚ</td>
+                      <td width="60"><input type="checkbox" name="chkall" value="checkbox" onClick="CheckAlls(this, 'id');checkOperation()">å…¨é€‰</td>
+                      <td width="40" align="center">åºå·</td>
+                      <td width="110" align="center">å‘ä»¶äºº</td>
+                      <td align="center">ä¸» é¢˜</td>
+                      <td width="120" align="center">å‘é€æ—¥æœŸ</td>
                     </tr>
                     <%
 											int i = 0;
@@ -111,13 +111,13 @@ function checkOperation(){
 												
 												String className = bean.getReaded() == 0 ? "readno-text" : "";
 												String imgClassName = bean.getReaded() == 0 ? "readno" : "readed";
-												String readStr = bean.getReaded() == 0 ? "Î´¶Á" : "ÒÑ¶Á";
+												String readStr = bean.getReaded() == 0 ? "æœªè¯»" : "å·²è¯»";
 												
 												String senderName = sender == null ? "" : sender.getName();
 												String colorClass = "";
 												if (bean.getType() == 0) {
 													String sysType = bean.getSysType()==0?"Alarm":"News";
-													senderName = "ÏµÍ³×Ô¶¯("+sysType+")";
+													senderName = "ç³»ç»Ÿè‡ªåŠ¨("+sysType+")";
 													colorClass = "redcolor";
 												}
 									%>
@@ -156,12 +156,12 @@ function checkOperation(){
 					<%
 					if(!"supplier".equals(flag)){
 					%>
-					<input name="btn_send" id="btn_send" type="button" class="button"  onclick="javascript:sendMsg();" value="·¢ËÍÏûÏ¢">
+					<input name="btn_send" id="btn_send" type="button" class="button"  onclick="javascript:sendMsg();" value="å‘é€æ¶ˆæ¯">
 					<%
 					}
 					%>
-                      <input name="btn_del" id="btn_del" type="button" class="button" onClick="javascript:del(this.form);" value="É¾³ı" disabled="disabled">
-                      <input name="btn_reply" id="btn_reply" type="button" value="»Ø¸´ÏûÏ¢" class="button" onClick="javascript:replyMsg();" disabled="disabled"></td>
+                      <input name="btn_del" id="btn_del" type="button" class="button" onClick="javascript:del(this.form);" value="åˆ é™¤" disabled="disabled">
+                      <input name="btn_reply" id="btn_reply" type="button" value="å›å¤æ¶ˆæ¯" class="button" onClick="javascript:replyMsg();" disabled="disabled"></td>
                       <td align="right" valign="bottom"><%
 String params = "method=showReceiveList";
 %>

@@ -1,6 +1,6 @@
-<%@ page contentType="text/html;charset=gbk" language="java"%>
-<%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
-<%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.glaf.base.modules.sys.*"%>
 <%@ page import="com.glaf.base.modules.sys.model.*"%>
@@ -13,7 +13,7 @@ List  list = (List)request.getAttribute("parent");
 %>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
 <link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
 <script language="javascript" src='<%=context%>/js/verify.js'></script>
@@ -22,7 +22,7 @@ List  list = (List)request.getAttribute("parent");
 function checkForm(form){
   if(verifyAll(form)){
      if(form.parent.value=='<%=bean.getId()%>'){
-	   alert("µ±Ç°²¿ÃÅ²»ÄÜÑ¡ÔñÎªËùÊô²¿ÃÅ");
+	   alert("å½“å‰éƒ¨é—¨ä¸èƒ½é€‰æ‹©ä¸ºæ‰€å±éƒ¨é—¨");
 	 }else{
 	   selectCB("historyId");
 	   return true;
@@ -33,7 +33,7 @@ function checkForm(form){
 function setValue(obj){
   obj.value=obj[obj.selectedIndex].value;
 }
-//Ìí¼ÓÀúÊ·²¿ÃÅ
+//æ·»åŠ å†å²éƒ¨é—¨
 function addHistory(form){
 	var departIds = "";
 	var departNames = "";
@@ -50,7 +50,7 @@ function addHistory(form){
 		}
   	}
 }
-//Ìí¼Óµ½tableÖĞ
+//æ·»åŠ åˆ°tableä¸­
 function addTableRow(depart){
 	var index = $("historyTb").rows.length;
 	var row = $("historyTb").insertRow(index);
@@ -72,7 +72,7 @@ function addTableRow(depart){
 		row.className="list-back";
 	}
 }
-//È«Ñ¡ÀúÊ·²¿ÃÅ
+//å…¨é€‰å†å²éƒ¨é—¨
 function selectCB(name){
 	var obj = document.getElementsByName(name);
 	for (var i = 0; i < obj.length; i++) {
@@ -82,7 +82,7 @@ function selectCB(name){
 		 }
 	}
 }
-//ÅĞ¶ÏÊÇ·ñ¿ÉÒÔÌí¼Óµ½tableÖĞ
+//åˆ¤æ–­æ˜¯å¦å¯ä»¥æ·»åŠ åˆ°tableä¸­
 function isAddDepart(depart){
 	var ret = false;
 	var obj = document.getElementsByName("historyId");
@@ -95,12 +95,12 @@ function isAddDepart(depart){
 	}
 	return ret;
 }
-//É¾³ıÀúÊ·²¿ÃÅ
+//åˆ é™¤å†å²éƒ¨é—¨
 function deleteHistory(form){
 	var num = getCheckedBoxNum(form,"historyId");
 	var rows = $("historyTb").rows
 	if(num == 0){
-		alert("ÇëÑ¡ÔñĞèÒªÉ¾³ıµÄ²¿ÃÅ!");
+		alert("è¯·é€‰æ‹©éœ€è¦åˆ é™¤çš„éƒ¨é—¨!");
 		return;
 	}else{
 		var obj = document.getElementsByName("historyId");
@@ -134,7 +134,7 @@ function reloadHistoryTable(){
 </head>
 
 <body>
-<div class="nav-title"><span class="Title">²¿ÃÅ¹ÜÀí</span>&gt;&gt;ĞŞ¸Ä²¿ÃÅ</div>
+<div class="nav-title"><span class="Title">éƒ¨é—¨ç®¡ç†</span>&gt;&gt;ä¿®æ”¹éƒ¨é—¨</div>
 <html:form action="/sys/department.do?method=saveModify" method="post"  onsubmit="return checkForm(this);"> 
 <input type="hidden" name="id" value="<%=bean.getId()%>">
 <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0" class="box">
@@ -150,7 +150,7 @@ function reloadHistoryTable(){
   <tr>
     <td class="box-mm"><table width="95%" align="center" border="0" cellspacing="0" cellpadding="5">
       <tr>
-        <td class="input-box">ÉÏ¼¶²¿ÃÅ</td>
+        <td class="input-box">ä¸Šçº§éƒ¨é—¨</td>
         <td><select name="parent" onChange="javascript:setValue(this);" class="input">
           <%
 if(list!=null){
@@ -176,31 +176,31 @@ out.print(bean2.getName());
 	    </script>		</td>
       </tr>
       <tr>
-        <td class="input-box">²¿ÃÅÃû³Æ*</td>
-        <td><input name="name" type="text" class="input" id="name" value="<%=bean.getName()%>" size="37" datatype="string" nullable="no" maxsize="20" chname="²¿ÃÅÃû³Æ"></td>
+        <td class="input-box">éƒ¨é—¨åç§°*</td>
+        <td><input name="name" type="text" class="input" id="name" value="<%=bean.getName()%>" size="37" datatype="string" nullable="no" maxsize="20" chname="éƒ¨é—¨åç§°"></td>
       </tr>
       <tr>
-        <td class="input-box2" valign="top">Ãè¡¡¡¡Êö</td>
-        <td><textarea name="desc" cols="35" rows="8" class="input" id="desc" datatype="string" nullable="yes" maxsize="1000" chname="ÃèÊö"><%=bean.getDesc()%></textarea></td>
+        <td class="input-box2" valign="top">æã€€ã€€è¿°</td>
+        <td><textarea name="desc" cols="35" rows="8" class="input" id="desc" datatype="string" nullable="yes" maxsize="1000" chname="æè¿°"><%=bean.getDesc()%></textarea></td>
       </tr>
       <tr>
-        <td class="input-box2" valign="top">´ú¡¡¡¡Âë*</td>
-        <td><input name="code" type="text" class="input" id="code" value="<%=bean.getCode()%>" size="37"  datatype="string" nullable="no" maxsize="10" chname="´úÂë"></td>
+        <td class="input-box2" valign="top">ä»£ã€€ã€€ç *</td>
+        <td><input name="code" type="text" class="input" id="code" value="<%=bean.getCode()%>" size="37"  datatype="string" nullable="no" maxsize="10" chname="ä»£ç "></td>
       </tr>
       <tr>
-        <td class="input-box2" valign="top">±à¡¡¡¡Âë*</td>
-        <td><input name="no" type="text" class="input" id="no" value="<%=bean.getNo()%>" size="37"  datatype="string" nullable="no" maxsize="10" chname="±àÂë"></td>
+        <td class="input-box2" valign="top">ç¼–ã€€ã€€ç *</td>
+        <td><input name="no" type="text" class="input" id="no" value="<%=bean.getNo()%>" size="37"  datatype="string" nullable="no" maxsize="10" chname="ç¼–ç "></td>
       </tr>
       <tr>
-        <td class="input-box2" valign="top">²¿ÃÅÇø·Ö*</td>
-        <td><input name="code2" type="text" size="37" class="input" value="<%=bean.getCode2()%>" datatype="string" nullable="no" maxsize="10" chname="²¿ÃÅÇø·Ö"></td>
+        <td class="input-box2" valign="top">éƒ¨é—¨åŒºåˆ†*</td>
+        <td><input name="code2" type="text" size="37" class="input" value="<%=bean.getCode2()%>" datatype="string" nullable="no" maxsize="10" chname="éƒ¨é—¨åŒºåˆ†"></td>
       </tr>
       <tr>
-        <td class="input-box2" valign="top">ÊÇ·ñÓĞĞ§*</td>
+        <td class="input-box2" valign="top">æ˜¯å¦æœ‰æ•ˆ*</td>
         <td><input type="radio" name="status" value="0" <%=bean.getStatus()==0?"checked":""%>>
-          ÊÇ
+          æ˜¯
           <input type="radio" name="status" value="1" <%=bean.getStatus()==1?"checked":""%>>
-          ·ñ
+          å¦
 		</td>
       </tr>
      
@@ -210,7 +210,7 @@ out.print(bean2.getName());
         </tr>
       <tr>
         <td colspan="2" align="center" valign="bottom" height="30">&nbsp;
-              <input name="btn_save" type="submit" value="±£´æ" class="button"></td>
+              <input name="btn_save" type="submit" value="ä¿å­˜" class="button"></td>
       </tr>
     </table></td>
   </tr>

@@ -1,6 +1,6 @@
-<%@ page contentType="text/html;charset=gbk" language="java"%>
-<%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean" %>
-<%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.glaf.base.modules.sys.*"%>
 <%@ page import="com.glaf.base.modules.sys.model.*"%>
@@ -19,7 +19,7 @@ while(roles.hasNext()){
 
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
 <link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
 <script language="javascript" src='<%=context%>/js/verify.js'></script>
@@ -35,7 +35,7 @@ function checkForm(form){
     }
   }
   if(!isChecked){
-    alert("您还没有选择要授权的角色.");
+    alert("鎮ㄨ繕娌℃湁閫夋嫨瑕佹巿鏉冪殑瑙掕壊.");
     return false;
   }
 }
@@ -43,16 +43,16 @@ function checkForm(form){
 </head>
 
 <body>
-<div class="nav-title"><span class="Title">用户管理</span>&gt;&gt;设置用户 <b><%=user.getName()%></b> 的权限</div>
+<div class="nav-title"><span class="Title">鐢ㄦ埛绠＄悊</span>&gt;&gt;璁剧疆鐢ㄦ埛 <b><%=user.getName()%></b> 鐨勬潈闄�</div>
 <html:form action="/sys/user.do?method=setRole" method="post" target="_self" onsubmit="return checkForm(this);"> 
 <input type="hidden" name="user_id" value="<%=user.getId()%>">
 <table width="95%" border="0" align="center" cellspacing="1" cellpadding="0" class="list-box">
   <tr class="list-title"> 
     <td width="9%" align="center"><input type="checkbox" name="chkall" value="checkbox" onClick="checkAll(this.form, this)">
     </td>
-    <td width="10%" align="center">序号</td>
-    <td width="37%" align="center">名称</td>
-    <td width="44%" align="center">描述</td>
+    <td width="10%" align="center">搴忓彿</td>
+    <td width="37%" align="center">鍚嶇О</td>
+    <td width="44%" align="center">鎻忚堪</td>
   </tr>
   <%
 int i=0;
@@ -86,7 +86,7 @@ for(; i<10; i++){
 </table>
 <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
   <tr>
-    <td align="center" height="30" valign="bottom"><input name="btn_add" type="submit" value="保存" class="button">
+    <td align="center" height="30" valign="bottom"><input name="btn_add" type="submit" value="淇濆瓨" class="button">
     </td>
   </tr>
 </table>

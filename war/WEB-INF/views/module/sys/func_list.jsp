@@ -1,6 +1,6 @@
-<%@ page contentType="text/html;charset=gb2312" language="java"%>
-<%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean" %>
-<%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.glaf.base.modules.*"%>
 <%@ page import="com.glaf.base.modules.sys.*"%>
@@ -14,7 +14,7 @@ int parent=ParamUtil.getIntParameter(request, "parent", 0);
 %>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
 <link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
 <script language="javascript" src='<%=context%>/js/verify.js'></script>
@@ -78,7 +78,7 @@ function sort(id, operate){
 </head>
 
 <body>
-<div class="nav-title"><span class="Title">模块管理</span>&gt;&gt;功能列表</div>
+<div class="nav-title"><span class="Title">妯″潡绠＄悊</span>&gt;&gt;鍔熻兘鍒楄〃</div>
 <html:form action="/sys/function.do?method=batchDelete" method="post" target="_self"> 
 <input type="hidden" name="parent" value="<%=parent%>">
 <input type="hidden" name="id" value="0">
@@ -87,9 +87,9 @@ function sort(id, operate){
 <table width="95%" border="0" cellspacing="1" cellpadding="0" class="list-box" align="center">
   <tr class="list-title"> 
     <td width="5%" align="center"> <input type="checkbox" name="chkall" value="checkbox" onClick="checkAll(this.form, this);checkOperation(this.form)">    </td>
-    <td width="20%" align="center">功能名称</td>
-    <td width="60%" align="center">调用方法</td>
-    <td width="15%" align="center">排序</td>
+    <td width="20%" align="center">鍔熻兘鍚嶇О</td>
+    <td width="60%" align="center">璋冪敤鏂规硶</td>
+    <td width="15%" align="center">鎺掑簭</td>
   </tr>
 <%
 int i=0;
@@ -107,8 +107,8 @@ if(list!=null){
     <td class="td-text"><%=bean.getFuncMethod()%>&nbsp;</td>
     <td class="td-no"> 
       <a href="#" onClick="modify(<%=bean.getId()%>, '<%=bean.getName()%>', '<%=bean.getFuncMethod()%>')"></a>
-	  <a href="javascript:sort(<%=bean.getId()%>, 0);" title="上移"><img src="<%=context%>/images/up.gif" border="0" height="13" width="13"></a>
-	  <a href="javascript:sort(<%=bean.getId()%>, 1);" title="下移"><img src="<%=context%>/images/down.gif" border="0" height="13" width="13"></a>	</td>
+	  <a href="javascript:sort(<%=bean.getId()%>, 0);" title="涓婄Щ"><img src="<%=context%>/images/up.gif" border="0" height="13" width="13"></a>
+	  <a href="javascript:sort(<%=bean.getId()%>, 1);" title="涓嬬Щ"><img src="<%=context%>/images/down.gif" border="0" height="13" width="13"></a>	</td>
   </tr>
   <%
     i++;
@@ -128,9 +128,9 @@ for(; i<pageSize; i++){
 </table>
 <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
   <tr> 
-    <td width="50%"><input name="btn_new" type="button" value="新增" class="button" onClick="javascript:create();">
-      <input name="btn_del" type="button" value="删除" class="button" onClick="javascript:del(this.form);" disabled>
-      <input name="btn_modify" type="button" value="修改" class="button" onClick="javascript:modify(this.form);" disabled></td>
+    <td width="50%"><input name="btn_new" type="button" value="鏂板" class="button" onClick="javascript:create();">
+      <input name="btn_del" type="button" value="鍒犻櫎" class="button" onClick="javascript:del(this.form);" disabled>
+      <input name="btn_modify" type="button" value="淇敼" class="button" onClick="javascript:modify(this.form);" disabled></td>
     <td width="50%">&nbsp;</td>
   </tr>
 </table>
@@ -153,15 +153,15 @@ for(; i<pageSize; i++){
     <td class="box-mm">
 <table width="95%" border="0" align="center" cellpadding="0" cellspacing="2">
   <tr>
-    <td class="fontname_12">功能名称*</td>
-    <td><input name="funcName" type="text" size="50" class="input" datatype="string" nullable="no" maxsize="50" chname="功能名称"></td>
+    <td class="fontname_12">鍔熻兘鍚嶇О*</td>
+    <td><input name="funcName" type="text" size="50" class="input" datatype="string" nullable="no" maxsize="50" chname="鍔熻兘鍚嶇О"></td>
   </tr>
   <tr>
-    <td width="15%" class="fontname_12">调用方法*</td>
-    <td width="85%"><input name="funcMethod" type="text" size="50" class="input" datatype="string" nullable="no" maxsize="200" chname="调用方法"></td>
+    <td width="15%" class="fontname_12">璋冪敤鏂规硶*</td>
+    <td width="85%"><input name="funcMethod" type="text" size="50" class="input" datatype="string" nullable="no" maxsize="200" chname="璋冪敤鏂规硶"></td>
   </tr>
   <tr>
-    <td><input name="btn_save" type="submit" value="保存" class="button"></td>
+    <td><input name="btn_save" type="submit" value="淇濆瓨" class="button"></td>
     <td>&nbsp;</td>
   </tr>
 </table>
@@ -196,15 +196,15 @@ for(; i<pageSize; i++){
     <td class="box-mm">
 <table width="95%" border="0" align="center" cellpadding="0" cellspacing="2">
   <tr>
-    <td class="fontname_12">功能名称：</td>
-    <td><input name="funcName" type="text" size="50" class="input" datatype="string" nullable="no" maxsize="50" chname="功能名称"></td>
+    <td class="fontname_12">鍔熻兘鍚嶇О锛�</td>
+    <td><input name="funcName" type="text" size="50" class="input" datatype="string" nullable="no" maxsize="50" chname="鍔熻兘鍚嶇О"></td>
   </tr>
   <tr>
-    <td width="15%" class="fontname_12">调用方法：</td>
-    <td width="85%"><input name="funcMethod" type="text" size="50" class="input" datatype="string" nullable="no" maxsize="200" chname="调用方法"></td>
+    <td width="15%" class="fontname_12">璋冪敤鏂规硶锛�</td>
+    <td width="85%"><input name="funcMethod" type="text" size="50" class="input" datatype="string" nullable="no" maxsize="200" chname="璋冪敤鏂规硶"></td>
   </tr>
   <tr>
-    <td><input name="btn_save" type="submit" value="保存" class="button"></td>
+    <td><input name="btn_save" type="submit" value="淇濆瓨" class="button"></td>
     <td>&nbsp;</td>
   </tr>
 </table>

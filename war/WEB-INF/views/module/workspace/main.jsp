@@ -1,8 +1,8 @@
-<%@ page contentType="text/html;charset=gbk" language="java"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ page import="java.util.*"%>
-<%@ page import="com.tonytech.module.sys.*"%>
-<%@ page import="com.tonytech.module.sys.model.*"%>
-<%@ page import="com.tonytech.module.sys.service.*"%>
+<%@ page import="com.glaf.base.modules.sys.*"%>
+<%@ page import="com.glaf.base.modules.sys.model.*"%>
+<%@ page import="com.glaf.base.modules.sys.service.*"%>
 <%@ page import="org.springframework.web.context.*"%>
 <%@ page import="org.springframework.web.context.support.*"%>
 <%
@@ -17,7 +17,7 @@ String menu = service.getMenu(parentId, userId);
 %>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title></title>
 <link href="../../css/system.css" type="text/css" rel="stylesheet">
 <script src="../../js/css.js" language="javascript"></script>
@@ -46,7 +46,7 @@ _dynarch_menu_url = "../../js/hmenu";
 <body onLoad="DynarchMenu.setup('menu1', { context: true});" id="document">
 <table width="800" border="0" cellspacing="2" cellpadding="0" align="center">
   <tr>
-    <td height="30" colspan="3" valign="top" class="title">XXXX»ù´¡Æ½Ì¨ÏµÍ³</td>
+    <td height="30" colspan="3" valign="top" class="title">XXXXåŸºç¡€å¹³å°ç³»ç»Ÿ</td>
   </tr>
   <tr>
     <td width="46%" valign="top">
@@ -59,7 +59,7 @@ _dynarch_menu_url = "../../js/hmenu";
       <li class="context-class-div-hotspot">
         <ul id="main-popup">
 		  <%=menu%>
-		  <li><a href="<%=request.getContextPath()%>/sys/authorize.do?method=logout">ÍË³öÏµÍ³</a>
+		  <li><a href="<%=request.getContextPath()%>/sys/authorize.do?method=logout">é€€å‡ºç³»ç»Ÿ</a>
 		</ul>
       </li>
     </ul>		  
@@ -74,7 +74,7 @@ _dynarch_menu_url = "../../js/hmenu";
           <td><table width="100%" border="0" cellpadding="0" cellspacing="0" background="../../images/sys_13.gif">
             <tr>
               <td width="18%" height="26" nowrap="nowrap" background="../../images/sys_12.gif" class="Title">News</td>
-              <td width="82%" align="right" background="../../images/sys_13.gif" ><a href="#">×îĞÂÏÔÊ¾</a></td>
+              <td width="82%" align="right" background="../../images/sys_13.gif" ><a href="#">æœ€æ–°æ˜¾ç¤º</a></td>
             </tr>
             
           </table></td>
@@ -82,8 +82,8 @@ _dynarch_menu_url = "../../js/hmenu";
         <tr>
           <td valign="top"><table width="100%" border="1" cellpadding="0" cellspacing="0" class="tableList">
             <tr>
-              <td height="22" align="center" class="tableTitle"> ÄÚÈİ</td>
-              <td width="20%" height="22" align="center" class="tableTitle">¼şÊı</td>
+              <td height="22" align="center" class="tableTitle"> å†…å®¹</td>
+              <td width="20%" height="22" align="center" class="tableTitle">ä»¶æ•°</td>
             </tr>
             <tr>
               <td height="22"> <a href="#">xxxxxxxx</a></td>
@@ -110,16 +110,16 @@ _dynarch_menu_url = "../../js/hmenu";
       <tr>
         <td><table width="100%" border="0" cellpadding="0" cellspacing="0" background="../../images/sys_13.gif">
           <tr>
-            <td width="18%" height="26" nowrap="nowrap" background="../../images/sys_12.gif" class="Title">Ô¤¾¯</td>
-            <td width="82%" align="right" background="../../images/sys_13.gif" ><a href="#">×îĞÂÏÔÊ¾</a></td>
+            <td width="18%" height="26" nowrap="nowrap" background="../../images/sys_12.gif" class="Title">é¢„è­¦</td>
+            <td width="82%" align="right" background="../../images/sys_13.gif" ><a href="#">æœ€æ–°æ˜¾ç¤º</a></td>
           </tr>
         </table></td>
       </tr>
       <tr>
         <td valign="top"><table width="100%" border="1" cellpadding="0" cellspacing="0" class="tableList">
           <tr>
-            <td height="22" align="center" class="tableTitle"> ÄÚÈİ</td>
-            <td width="20%" height="22" align="center" class="tableTitle">¼şÊı</td>
+            <td height="22" align="center" class="tableTitle"> å†…å®¹</td>
+            <td width="20%" height="22" align="center" class="tableTitle">ä»¶æ•°</td>
           </tr>
           <tr>
             <td height="22"> <a href="#">xxxxxxxx</a></td>
@@ -146,7 +146,7 @@ _dynarch_menu_url = "../../js/hmenu";
         <td><table width="100%" border="0" cellpadding="0" cellspacing="0" background="../../images/sys_13.gif">
           <tr>
             <td width="18%" height="26" nowrap="nowrap" background="../../images/sys_12.gif" class="Title">ToDo</td>
-            <td width="82%" align="right" background="../../images/sys_13.gif" ><a href="#">×îĞÂÏÔÊ¾</a></td>
+            <td width="82%" align="right" background="../../images/sys_13.gif" ><a href="#">æœ€æ–°æ˜¾ç¤º</a></td>
           </tr>
           
         </table></td>
@@ -154,15 +154,15 @@ _dynarch_menu_url = "../../js/hmenu";
       <tr>
         <td valign="top"><table width="100%" border="1" cellpadding="0" cellspacing="0" class="tableList">
           <tr>
-            <td height="22" align="center" class="tableTitle"> ÄÚÈİ</td>
-            <td width="20%" height="22" align="center" class="tableTitle">¼şÊı</td>
+            <td height="22" align="center" class="tableTitle"> å†…å®¹</td>
+            <td width="20%" height="22" align="center" class="tableTitle">ä»¶æ•°</td>
           </tr>
           <tr>
-            <td height="22"> <a href="#">ºÏÍ¬ÉóºË</a></td>
+            <td height="22"> <a href="#">åˆåŒå®¡æ ¸</a></td>
             <td height="22" align="center">2</td>
           </tr>
           <tr>
-            <td height="22"><a href="#">¶¨³§¶¨¼ÛÉóºË</a></td>
+            <td height="22"><a href="#">å®šå‚å®šä»·å®¡æ ¸</a></td>
             <td height="22" align="center">3</td>
           </tr>
           <tr>

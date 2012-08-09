@@ -1,6 +1,6 @@
-<%@ page contentType="text/html;charset=gbk" language="java"%>
-<%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean" %>
-<%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.glaf.base.modules.*"%>
 <%@ page import="com.glaf.base.modules.sys.model.*"%>
@@ -15,7 +15,7 @@ List list = pager.getResults();
 
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
 <link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
 <script language="javascript" src='<%=context%>/js/verify.js'></script>
@@ -109,7 +109,7 @@ function roles(form){
 </head>
 
 <body>
-<div class="nav-title"><span class="Title">部门管理</span>&gt;&gt;
+<div class="nav-title"><span class="Title">閮ㄩ棬绠＄悊</span>&gt;&gt;
 <%
 List nav = (List)request.getAttribute("nav");
 Iterator navIter = nav.iterator();
@@ -130,13 +130,13 @@ while(navIter.hasNext()){
   <col width="12%"/><col width="8%"/><col width="8%"/>
   <tr class="list-title"> 
     <td align="center"> <input type="checkbox" name="chkall" value="checkbox" onClick="checkAll(this.form, this);checkOperation(this.form)">    </td>
-    <td align="center">序号</td>
-    <td align="center">名称</td>
-    <td align="center">状态</td>
-    <td align="center">代码</td>
-    <td align="center">编码</td>
-    <td align="center">部门区分</td>
-    <td align="center">排序</td>
+    <td align="center">搴忓彿</td>
+    <td align="center">鍚嶇О</td>
+    <td align="center">鐘舵��</td>
+    <td align="center">浠ｇ爜</td>
+    <td align="center">缂栫爜</td>
+    <td align="center">閮ㄩ棬鍖哄垎</td>
+    <td align="center">鎺掑簭</td>
     </tr>
   <%
 int i=0;
@@ -149,11 +149,11 @@ if(list!=null){
     <td class="td-cb"> <input type="checkbox" name="id" value="<%=bean.getId()%>" onClick="checkOperation(this.form)">    </td>
     <td class="td-no"><%=((pager.getCurrentPageNo()-1)*pageSize + i+1)%></td>
     <td class="td-text"><a href="department.do?method=showList&id=<%=bean.getId()%>&parent=<%=bean.getNodeId()%>"><%=bean.getName()%></a> </td>
-    <td class="td-no"><%=bean.getStatus()==0?"有效":"无效"%>&nbsp;</td>
+    <td class="td-no"><%=bean.getStatus()==0?"鏈夋晥":"鏃犳晥"%>&nbsp;</td>
     <td class="td-no"><%=bean.getCode()%>&nbsp;</td>
     <td class="td-no"><%=bean.getNo()%>&nbsp;</td>
     <td class="td-no"><%=bean.getCode2()%>&nbsp;</td>
-    <td class="td-no"><a href="javascript:sort(<%=bean.getId()%>, 0);" title="上移"><img src="<%=context%>/images/up.gif" border="0" height="13" width="13"></a> <a href="javascript:sort(<%=bean.getId()%>, 1);" title="下移"><img src="<%=context%>/images/down.gif" border="0" height="13" width="13"></a></td>
+    <td class="td-no"><a href="javascript:sort(<%=bean.getId()%>, 0);" title="涓婄Щ"><img src="<%=context%>/images/up.gif" border="0" height="13" width="13"></a> <a href="javascript:sort(<%=bean.getId()%>, 1);" title="涓嬬Щ"><img src="<%=context%>/images/down.gif" border="0" height="13" width="13"></a></td>
     </tr>
   <%
     i++;
@@ -182,11 +182,11 @@ for(; i<pageSize; i++){
 </table>
 <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
   <tr> 
-    <td width="50%"> <input name="btn_add" type="button" value="增加" class="button" onClick="javascript:add();"> 
-      <input name="btn_del" type="button" value="删除" class="button" onClick="javascript:del();" disabled>
-      <input name="btn_modify" type="button" value="修改" class="button" onClick="javascript:modify(this.form);" disabled>
-      <input name="btn_user" type="button" value="用户管理" class="button" onClick="javascript:users(this.form);" disabled>
-      <input name="btn_role" type="button" value="角色设置" class="button" onClick="javascript:roles(this.form);" disabled>
+    <td width="50%"> <input name="btn_add" type="button" value="澧炲姞" class="button" onClick="javascript:add();"> 
+      <input name="btn_del" type="button" value="鍒犻櫎" class="button" onClick="javascript:del();" disabled>
+      <input name="btn_modify" type="button" value="淇敼" class="button" onClick="javascript:modify(this.form);" disabled>
+      <input name="btn_user" type="button" value="鐢ㄦ埛绠＄悊" class="button" onClick="javascript:users(this.form);" disabled>
+      <input name="btn_role" type="button" value="瑙掕壊璁剧疆" class="button" onClick="javascript:roles(this.form);" disabled>
 	  </td>
     <td width="50%"> 
       <%

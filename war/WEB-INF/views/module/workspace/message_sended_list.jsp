@@ -1,6 +1,6 @@
-<%@ page contentType="text/html;charset=GBK" language="java"%>
-<%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
-<%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ page import="java.util.*"%>
 <%@ page import="java.net.*"%>
 <%@ page import="com.glaf.base.modules.*"%>
@@ -16,7 +16,7 @@ String flag = (String)request.getAttribute("flag");
 %>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link href="../../css/site.css" type="text/css" rel="stylesheet">
 <link href="<%= request.getContextPath() %>/css/site.css" type="text/css" rel="stylesheet">
 <script type='text/javascript' src="<%= request.getContextPath() %>/js/css.js"></script>
@@ -53,13 +53,13 @@ function checkOperation(){
 }
 
 </script>
-<title>�ҵ��ѷ�����Ϣ</title>
+<title>我的已发送消息</title>
 </head>
 
 <body>
 <table width="99%" border="0" align="center" cellpadding="0" cellspacing="0">
   <tr>
-    <td class="nav-title"><span class="Title">����̨</span>&gt;&gt; �ҵ��ѷ�����Ϣ</td>
+    <td class="nav-title"><span class="Title">工作台</span>&gt;&gt; 我的已发送消息</td>
   </tr>
 </table>
 <table width="99%" border="0" align="center" cellpadding="0" cellspacing="0" class="box">
@@ -79,21 +79,21 @@ function checkOperation(){
             <td><table border="0" cellspacing="0" cellpadding="0" class="tabs-box">
               <tr>
                 <td class="tab-l">&nbsp;</td>
-                    <td width="60" class="tab-m"><a href="?method=showReceiveList">�ռ���</a></td>
+                    <td width="60" class="tab-m"><a href="?method=showReceiveList">收件箱</a></td>
                     <td class="tab-r">&nbsp;</td>
                     <td class="tab-lc">&nbsp;</td>
-                    <td width="60" class="tab-mc">�ѷ���</td>
+                    <td width="60" class="tab-mc">已发送</td>
                     <td class="tab-rc">&nbsp;</td>
                 </tr>
               </table>
                   <table width="100%" border="0" cellspacing="1" cellpadding="0" class="list-box">
                     <tr class="list-title">
                       <td width="60"><input type="checkbox" name="chkall" value="checkbox" onClick="CheckAlls(this, 'id');checkOperation()">
-                        ȫѡ</td>
-                      <td width="40" align="center">���</td> 
-                      <td width="120" align="center">�ռ���</td>
-                      <td align="center">�� ��</td>
-                      <td width="120" align="center">��������</td>
+                        全选</td>
+                      <td width="40" align="center">序号</td> 
+                      <td width="120" align="center">收件人</td>
+                      <td align="center">主 题</td>
+                      <td width="120" align="center">发送日期</td>
                     </tr>
                     <%
 											int i = 0;
@@ -133,11 +133,11 @@ function checkOperation(){
 					<%
 					if(!"supplier".equals(flag)){
 					%>
-					<input name="btn_send" id="btn_send" type="button" class="button"  onclick="javascript:sendMsg();" value="������Ϣ">
+					<input name="btn_send" id="btn_send" type="button" class="button"  onclick="javascript:sendMsg();" value="发送消息">
 					<%
 					}
 					%>
-                      <input name="btn_del" id="btn_del" type="button" class="button" onClick="javascript:del(this.form);" value="ɾ��" disabled="disabled"></td>
+                      <input name="btn_del" id="btn_del" type="button" class="button" onClick="javascript:del(this.form);" value="删除" disabled="disabled"></td>
                     <td align="right" valign="bottom"><%
 String params = "method=showSendedList";
 %>

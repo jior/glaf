@@ -1,6 +1,6 @@
-//ÎªHTMLÈİÆ÷Ôö¼ÓTOOLTIPÖ§³Ö£¬²ÎÊıeÎªÄãÒªÌí¼ÓµÄTOOLTIPÖ§³ÖµÄÈİÆ÷£¬ÈçÎªdocument.bodyÔòÎªÕû¸öÒ³Ãæ
+//ä¸ºHTMLå®¹å™¨å¢åŠ TOOLTIPæ”¯æŒï¼Œå‚æ•°eä¸ºä½ è¦æ·»åŠ çš„TOOLTIPæ”¯æŒçš„å®¹å™¨ï¼Œå¦‚ä¸ºdocument.bodyåˆ™ä¸ºæ•´ä¸ªé¡µé¢
 
-//Ìí¼ÓÖ§³Ö£¬ÈçÎªÄ³DIVÔò½öÎª¸ÃDIVÖĞ´øÓĞTOOLTIPÊôĞÔµÄÔªËØÌá¹©Ö§³Ö¡£
+//æ·»åŠ æ”¯æŒï¼Œå¦‚ä¸ºæŸDIVåˆ™ä»…ä¸ºè¯¥DIVä¸­å¸¦æœ‰TOOLTIPå±æ€§çš„å…ƒç´ æä¾›æ”¯æŒã€‚
 
 function addTipSupport(e) {
   e.onmouseover = showTip;
@@ -9,7 +9,7 @@ function addTipSupport(e) {
 }
  
 
-//»ñµÃ¿Ø¼şµÄ¾ø¶ÔÎ»ÖÃ£¬·µ»Ø×óÉÏ½Ç×ø±ê
+//è·å¾—æ§ä»¶çš„ç»å¯¹ä½ç½®ï¼Œè¿”å›å·¦ä¸Šè§’åæ ‡
 function getElePos(e){  
  var t=e.offsetTop; 
  var l=e.offsetLeft; 
@@ -21,7 +21,7 @@ function getElePos(e){
  return [l, t];
 } 
 
-//ÏÔÊ¾TOOLTIP
+//æ˜¾ç¤ºTOOLTIP
 
 function showTip() { 
  getElePos(event.srcElement);
@@ -36,7 +36,7 @@ function showTip() {
   //else altlayer.style.visibility='hidden';
 }
 
-//Òş²ØTOOLTIP
+//éšè—TOOLTIP
 
 function hideTip() {
  altlayer.style.visibility = 'hidden';

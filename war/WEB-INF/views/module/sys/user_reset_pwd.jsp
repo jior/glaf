@@ -1,6 +1,6 @@
-<%@ page contentType="text/html;charset=gbk" language="java"%>
-<%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
-<%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.glaf.base.modules.sys.*"%>
 <%@ page import="com.glaf.base.modules.sys.model.*"%>
@@ -11,7 +11,7 @@ SysUser bean=(SysUser)request.getAttribute("bean");
 %>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
 <link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
 <script language="javascript" src='<%=context%>/js/main.js'></script>
@@ -20,7 +20,7 @@ SysUser bean=(SysUser)request.getAttribute("bean");
 function checkForm(form){
   if(verifyAll(form)){
      if(form.newPwd.value!=form.password2.value){
-	   alert("ĞÂÃÜÂëÓëÈ·ÈÏÃÜÂë²»Æ¥Åä£¡");
+	   alert("æ–°å¯†ç ä¸ç¡®è®¤å¯†ç ä¸åŒ¹é…ï¼");
 	 }else{
 	   return true;
 	 }
@@ -34,7 +34,7 @@ function setValue(obj){
 </head>
 
 <body>
-<div class="nav-title"><span class="Title">ÖØÖÃÃÜÂë</span></div>
+<div class="nav-title"><span class="Title">é‡ç½®å¯†ç </span></div>
 <html:form action="/sys/user.do?method=resetPwd" method="post"  onsubmit="return checkForm(this);"> 
 <input type="hidden" name="id" value="<%=bean.getId()%>"> 
 <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0" class="box">
@@ -50,24 +50,24 @@ function setValue(obj){
   <tr>
     <td class="box-mm"><table width="95%" align="center" border="0" cellspacing="0" cellpadding="5">
 	  <tr>
-        <td width="20%" class="input-box">Ô±¹¤±àÂë</td>
+        <td width="20%" class="input-box">å‘˜å·¥ç¼–ç </td>
         <td width="80%"><%=bean.getCode()%></td>
       </tr>
       <tr>
-        <td class="input-box2" valign="top">ĞÕ¡¡¡¡Ãû</td>
+        <td class="input-box2" valign="top">å§“ã€€ã€€å</td>
         <td><%=bean.getName()%></td>
       </tr>
       <tr>
-        <td class="input-box2" valign="top">ĞÂÃÜÂë*</td>
-        <td><input name="newPwd" type="password" size="30" class="input" value="" datatype="string" nullable="no" minsize="6" maxsize="20" chname="ÃÜÂë"></td>
+        <td class="input-box2" valign="top">æ–°å¯†ç *</td>
+        <td><input name="newPwd" type="password" size="30" class="input" value="" datatype="string" nullable="no" minsize="6" maxsize="20" chname="å¯†ç "></td>
       </tr>
       <tr>
-        <td class="input-box2" valign="top">È·ÈÏÃÜÂë*</td>
-        <td><input name="password2" type="password" size="30" class="input" value=""  datatype="string" nullable="no" minsize="6" maxsize="20" chname="È·ÈÏÃÜÂë"></td>
+        <td class="input-box2" valign="top">ç¡®è®¤å¯†ç *</td>
+        <td><input name="password2" type="password" size="30" class="input" value=""  datatype="string" nullable="no" minsize="6" maxsize="20" chname="ç¡®è®¤å¯†ç "></td>
       </tr>
       <tr>
         <td colspan="2" align="center" valign="bottom" height="30">&nbsp;
-           <input name="btn_save2" type="submit" value="ĞŞ¸ÄÃÜÂë" class="button">
+           <input name="btn_save2" type="submit" value="ä¿®æ”¹å¯†ç " class="button">
 		</td>
       </tr>
     </table></td>

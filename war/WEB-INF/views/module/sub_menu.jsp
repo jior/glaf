@@ -1,6 +1,6 @@
-<%@ page contentType="text/html;charset=gbk" language="java"%>
-<%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean" %>
-<%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.glaf.base.modules.sys.*"%>
 <%@ page import="com.glaf.base.modules.sys.model.*"%>
@@ -14,7 +14,7 @@ if(list!=null){
     SysApplication bean=(SysApplication)iter.next();	
 %>  
   <li><a href="javascript:jump('<%=bean.getUrl()%>');" onmouseover="createChildNode(<%=bean.getId()%>)"><%=bean.getName()%></a>
-    <%if(bean.getShowMenu()!=0){//ÓÐ×Ó²Ëµ¥%>
+    <%if(bean.getShowMenu()!=0){//æœ‰å­èœå•%>
 	<ul id='node_<%=bean.getId()%>'></ul>
 	<%}%>
   </li>

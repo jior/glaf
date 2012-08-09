@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=GBK" language="java"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ page import="com.glaf.base.utils.upload.*"%>
 <%
   double fileSizeMax = (int)(((double)(BackGroundService.UPLOAD_FILE_SIZE_MAX / 1024 / 1024.0)) * 100) / 100.0;
@@ -12,7 +12,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <base target="_self" />
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=GBK">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link href="./css/fileUpload.css" type="text/css" rel="stylesheet"/>
 <link href="../../css/site.css" type="text/css" rel="stylesheet"/>
 <script type="text/javascript" src="./js/prototype.js"></script>
@@ -22,13 +22,13 @@
 <!--
  function checkFileUploadForm(form) {
 	if (form.file.value == '') {
-		alert('�ļ�����Ϊ��.');
+		alert('文件不能为空.');
 		form.file.focus();
 		return false;
 	}
 	var type = '<%= type %>';
 	if (type.length > 0 && !IsUploadFileType(form.file.value, type)) {
-	  alert('�ļ��ϴ����Ͳ���ȷ.�����ϴ��������У�' + type);
+	  alert('文件上传类型不正确.允许上传的类型有：' + type);
 		form.file.focus();
 		return false;
 	}
@@ -37,12 +37,12 @@
  }
 //-->
 </script>
-<title>�ļ��ϴ�</title>
+<title>文件上传</title>
 
 </head>
 <body>
 <div id="controlPanel">
-  <div id="readme">�ϴ�˵��:&nbsp;&nbsp;����ϴ���:<%= fileSizeMax %>M�������ļ���󳤶�:<%= sizeMax %>M</div>
+  <div id="readme">上传说明:&nbsp;&nbsp;最大上传量:<%= fileSizeMax %>M，单个文件最大长度:<%= sizeMax %>M</div>
   <div id="uploadFileUrl"></div>
   <form id="fileUploadForm" name="fileUploadForm" action="./BackGroundService.action" enctype="multipart/form-data" method="post" onsubmit="return checkFileUploadForm(this);">
     <div id="upload-box">
@@ -50,8 +50,8 @@
 		</div>
 		</div>
     <br />
-    <input name="uploadButton" type="submit" class="button" id="uploadButton" value="��ʼ�ϴ�"/>
-    <input name="cancelUploadButton" type="button" class="button" id="cancelUploadButton" value="ȡ���ϴ�" disabled="disabled"/>
+    <input name="uploadButton" type="submit" class="button" id="uploadButton" value="开始上传"/>
+    <input name="cancelUploadButton" type="button" class="button" id="cancelUploadButton" value="取消上传" disabled="disabled"/>
     <br />
   </form>
   <div id="progressBar">

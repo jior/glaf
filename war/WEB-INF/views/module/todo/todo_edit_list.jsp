@@ -1,6 +1,6 @@
-<%@ page contentType="text/html;charset=gbk" language="java"%>
-<%@ taglib uri="/WEB-INF/tld/c.tld" prefix="c" %>
-<%@ taglib uri="/WEB-INF/tld/fmt.tld" prefix="fmt" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.glaf.base.modules.todo.*"%>
 <%@ page import="com.glaf.base.modules.todo.model.*"%>
@@ -26,8 +26,8 @@
 %>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=gbk" />
-<title>基础平台系统</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>鍩虹骞冲彴绯荤粺</title>
 <link href="../css/site.css" rel="stylesheet" type="text/css">
 <link href="<%=context%>/css/site.css" rel="stylesheet" type="text/css">
 <script src="<%=context%>/js/main.js" language="javascript"></script>
@@ -50,17 +50,17 @@ _dynarch_menu_url = "<%=context%>/js/hmenu";
 <br><br>
 <table align="center" width="90%" border="0" cellspacing="1" cellpadding="0" class="list-box">
           <tr class="list-title">
-		    <td align="center" width="60">序号</td>
-            <td align="center" width="120">模块名称</td>
-			<td align="center">标题</td>
-			<td align="center">内容</td>
-			<!-- <td align="center" width="180">流程名称</td> -->
-            <!-- <td align="center" width="60">角色代码</td> -->
-            <td align="center" width="60">期限</td>
-			<td align="center" width="60">a(小时)</td>
-			<td align="center" width="60">b(小时)</td>
-			<td align="center" width="90">是否启用</td>
-			<td align="center" width="60">功能键</td>
+		    <td align="center" width="60">搴忓彿</td>
+            <td align="center" width="120">妯″潡鍚嶇О</td>
+			<td align="center">鏍囬</td>
+			<td align="center">鍐呭</td>
+			<!-- <td align="center" width="180">娴佺▼鍚嶇О</td> -->
+            <!-- <td align="center" width="60">瑙掕壊浠ｇ爜</td> -->
+            <td align="center" width="60">鏈熼檺</td>
+			<td align="center" width="60">a(灏忔椂)</td>
+			<td align="center" width="60">b(灏忔椂)</td>
+			<td align="center" width="90">鏄惁鍚敤</td>
+			<td align="center" width="60">鍔熻兘閿�</td>
           </tr>
 		  <%if(rows != null && rows.size()> 0){
 			  int index = 1;
@@ -99,10 +99,10 @@ _dynarch_menu_url = "<%=context%>/js/hmenu";
 			</td>
 			<td align="center" width="90">
 			   <c:if test="${todo.enableFlag == 1}">
-			      <strong><font color="green"> 启用 </font></strong>
+			      <strong><font color="green"> 鍚敤 </font></strong>
 			   </c:if>
 			   <c:if test="${todo.enableFlag == 0}">
-			      <strong><font color="red"> 禁用 </font></strong>
+			      <strong><font color="red"> 绂佺敤 </font></strong>
 			   </c:if>
 			</td>
 			<td align="center" width="60">

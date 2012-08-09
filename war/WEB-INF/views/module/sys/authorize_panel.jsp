@@ -1,6 +1,6 @@
-<%@ page contentType="text/html;charset=gbk" language="java"%>
-<%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
-<%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.glaf.base.modules.*"%>
 <%@ page import="com.glaf.base.modules.utils.*"%>
@@ -14,8 +14,8 @@ List processList = (List)request.getAttribute("processList");
 %>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=gb2312"/>
-<title>»ù´¡Æ½Ì¨ÏµÍ³</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title>åŸºç¡€å¹³å°ç³»ç»Ÿ</title>
 <base target="_self">
 <link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
 <script language="javascript" src='<%=context%>/js/verify.js'></script>
@@ -59,7 +59,7 @@ function checkAll_1(form, obj) {
 }
 function checkAll_2(form, obj) {
   if(obj.checked){
-		mark=1;//±íÊ¾È«¾Ö´úÀí
+		mark=1;//è¡¨ç¤ºå…¨å±€ä»£ç†
 		document.all.btn_save.disabled=false;
   }else{
 		mark=0;
@@ -85,7 +85,7 @@ function selectSysUser(referId,referTitle){
 }
 
 function cancel(form){
-  if(confirm("ÕæµÄÒªÈ¡ÏûÊÚÈ¨Âğ£¿")){
+  if(confirm("çœŸçš„è¦å–æ¶ˆæˆæƒå—ï¼Ÿ")){
     var ids="";	
     for (var i=0; i<form.id.length; i++) {
       var e = form.id[i];
@@ -110,27 +110,27 @@ function add(){
 	}
   }
   if($("userId").value.length==0){
-    alert("ÇëÑ¡ÔñÓÃ»§");
+    alert("è¯·é€‰æ‹©ç”¨æˆ·");
 	return;
   }
   if($("startDate").value.length==0){
-    alert("ÇëÑ¡Ôñ¿ªÊ¼ÈÕÆÚ");
+    alert("è¯·é€‰æ‹©å¼€å§‹æ—¥æœŸ");
 	return;
   }
   if($("endDate").value.length==0){
-    alert("ÇëÑ¡Ôñ½áÊøÈÕÆÚ");
+    alert("è¯·é€‰æ‹©ç»“æŸæ—¥æœŸ");
 	return;
   }
   if(checkDate($("startDate").value, $("endDate").value, true)){
-    alert("¿ªÊ¼ÈÕÆÚ²»ÄÜÍíÓÚ½áÊøÈÕÆÚ");
+    alert("å¼€å§‹æ—¥æœŸä¸èƒ½æ™šäºç»“æŸæ—¥æœŸ");
 	return;
   }
-  if(confirm("È·ÈÏÒªÊÚÈ¨Âğ£¿")){
+  if(confirm("ç¡®è®¤è¦æˆæƒå—ï¼Ÿ")){
     SysUserRoleAjaxService.addRole(fromUserId, $("userId").value,$("startDate").value,$("endDate").value,mark,processNames,processDescriptions, function(reply){
       if(reply){	    
         $("link").click();
       }else{
-	    alert($("userName").value + "²»ÄÜÖØ¸´ÊÚÈ¨!");
+	    alert($("userName").value + "ä¸èƒ½é‡å¤æˆæƒ!");
 	  }
     });
   }
@@ -142,22 +142,22 @@ function add(){
 <input type="hidden" name="id" value="0">
 <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
   <tr>
-    <td height="27" colspan="4" align="center"><b>ÓÃ»§<%=user.getName()%>[<%=user.getAccount()%>]µÄÈ¨ÏŞ</b></td>
+    <td height="27" colspan="4" align="center"><b>ç”¨æˆ·<%=user.getName()%>[<%=user.getAccount()%>]çš„æƒé™</b></td>
   </tr>
 </table>
 <div id="listDiv" style="width:595px; height:220px;overflow-x:auto; overflow-y:auto;">
 <table width="100%" border="0" cellspacing="1" cellpadding="0" class="list-box">
   <tr class="list-title" style="position:relative; top:expression(this.offsetParent.scrollTop-2);">
-    <td width="10%" align="center">Ñ¡Ôñ</td>
-    <td width="25%" align="center">¹¤×÷Á÷Ä£¿é</td>
-    <td width="30%" align="center">¹¤×÷Á÷ÃèÊö</td>
-    <td width="35%" align="center">¹¤×÷Á÷Ãû³Æ</td>
+    <td width="10%" align="center">é€‰æ‹©</td>
+    <td width="25%" align="center">å·¥ä½œæµæ¨¡å—</td>
+    <td width="30%" align="center">å·¥ä½œæµæè¿°</td>
+    <td width="35%" align="center">å·¥ä½œæµåç§°</td>
   </tr>
   <tr>
     <td class="td-cb" height="20">
 	<input type="checkbox" name="chkall" value="checkbox" onClick="checkAll_2(this.form, this);">
 	</td>
-    <td class="td-text" colspan="3" title="È«¾Ö´úÀí">È«¾Ö´úÀí</td>
+    <td class="td-text" colspan="3" title="å…¨å±€ä»£ç†">å…¨å±€ä»£ç†</td>
   </tr>	
 <%
 if(null!=processList && processList.size()>0){
@@ -189,46 +189,46 @@ if(null!=processList && processList.size()>0){
   </tr>
   <tr>
     <td height="22">&nbsp;</td>
-    <td height="22">ÊÚÈ¨¸ø</td>
+    <td height="22">æˆæƒç»™</td>
   </tr>
   <tr>
     <td height="22">&nbsp;</td>
-    <td height="22">ÓÃ¡¡»§:
-      <input name="userName" type="text" class="input" size="30" title="µã»÷Ñ¡ÔñÓÃ»§" readonly onClick="selectSysUser( $('userId'), $('userName'))">
+    <td height="22">ç”¨ã€€æˆ·:
+      <input name="userName" type="text" class="input" size="30" title="ç‚¹å‡»é€‰æ‹©ç”¨æˆ·" readonly onClick="selectSysUser( $('userId'), $('userName'))">
 	<input type="hidden" name="userId" value="">  
 	</td>
   </tr>
   <tr>
     <td height="22">&nbsp;</td>
-    <td height="22">ÓĞĞ§ÆÚ:
-      <input name="startDate" type="text" class="input" id="startDate" size="10" datatype="date" nullable="no" maxsize="20" chname="Ô¤¼Æ¿ªÊ¼Ê±¼ä" value="" readonly searchflag=1>
+    <td height="22">æœ‰æ•ˆæœŸ:
+      <input name="startDate" type="text" class="input" id="startDate" size="10" datatype="date" nullable="no" maxsize="20" chname="é¢„è®¡å¼€å§‹æ—¶é—´" value="" readonly searchflag=1>
       <img src="<%=context%>/images/system_pic_35.gif" style="cursor:pointer" onClick="return showCalendar('startDate', '%Y-%m-%d')"> -
-      <input name="endDate" type="text" class="input" id="endDate" size="10" datatype="date" nullable="no" maxsize="20" chname="Ô¤¼Æ½áÊøÊ±¼ä" value="" readonly searchflag=1>
+      <input name="endDate" type="text" class="input" id="endDate" size="10" datatype="date" nullable="no" maxsize="20" chname="é¢„è®¡ç»“æŸæ—¶é—´" value="" readonly searchflag=1>
       <img src="<%=context%>/images/system_pic_35.gif" style="cursor:pointer" onClick="return showCalendar('endDate', '%Y-%m-%d')"> </td>
   </tr>
   <tr>
     <td height="22">&nbsp;</td>
-    <td height="22"><input type="button" name="btn_save" value="È·¶¨" onClick="add()" disabled></td>
+    <td height="22"><input type="button" name="btn_save" value="ç¡®å®š" onClick="add()" disabled></td>
   </tr>
 </table>
 <br/>
 <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="m-box">
   <tr>
     <td>&nbsp;</td>
-    <td height="27" align="center"><b>ÓÃ»§<%=user.getName()%>[<%=user.getAccount()%>]µÄÈ¨ÏŞ</b></td>
+    <td height="27" align="center"><b>ç”¨æˆ·<%=user.getName()%>[<%=user.getAccount()%>]çš„æƒé™</b></td>
   </tr>
   <tr>
     <td>&nbsp;</td>
-    <td>ÒÑÊÚÈ¨¸ø</td>
+    <td>å·²æˆæƒç»™</td>
     </tr>
 </table> 
 <div id="listDiv" style="width:595px; height:120px;overflow-x:auto; overflow-y:auto;">
 <table width="100%" border="0" cellspacing="1" cellpadding="0" class="list-box">
   <tr class="list-title" style="position:relative; top:expression(this.offsetParent.scrollTop-2);">
     <td width="10%" align="center"><input type="checkbox" name="chkall" value="checkbox" onClick="checkAll_1(this.form, this);checkOperation(this.form)"></td>
-    <td width="20%" align="center">ÓÃ»§</td>
-    <td width="25%" align="center">ÓĞĞ§ÆÚ</td>
-    <td width="45%" align="center">ÊÚÈ¨ÄÚÈİ</td>
+    <td width="20%" align="center">ç”¨æˆ·</td>
+    <td width="25%" align="center">æœ‰æ•ˆæœŸ</td>
+    <td width="45%" align="center">æˆæƒå†…å®¹</td>
   </tr>
 <%
 Iterator iter = list.iterator();
@@ -252,7 +252,7 @@ while(iter.hasNext()){
 </div>
 <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
   <tr>
-    <td height="22">&nbsp;&nbsp;<input type="button" name="btn_cancel" value="È¡ÏûÊÚÈ¨" onClick="cancel(this.form)" disabled></td>
+    <td height="22">&nbsp;&nbsp;<input type="button" name="btn_cancel" value="å–æ¶ˆæˆæƒ" onClick="cancel(this.form)" disabled></td>
   </tr>
 </table>
 </html:form>

@@ -1,6 +1,6 @@
-<%@ page contentType="text/html;charset=gbk" language="java"%>
-<%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean" %>
-<%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.glaf.base.modules.sys.*"%>
 <%@ page import="com.glaf.base.modules.sys.model.*"%>
@@ -26,7 +26,7 @@ while(temp.hasNext()){
 
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
 <link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
 <script language="javascript" src='<%=context%>/js/verify.js'></script>
@@ -42,7 +42,7 @@ function checkForm(form){
     }
   }
   if(!isChecked){
-    alert("Äú»¹Ã»ÓĞÑ¡ÔñÒªÊÚÈ¨µÄÄ£¿é.");
+    alert("æ‚¨è¿˜æ²¡æœ‰é€‰æ‹©è¦æˆæƒçš„æ¨¡å—.");
     return false;
   }
 }
@@ -85,16 +85,16 @@ function unSelApp(id){
 </head>
 
 <body>
-<div class="nav-title"><span class="Title">½ÇÉ«¹ÜÀí</span>&gt;&gt;ÉèÖÃ½ÇÉ« <b><%=role.getDept().getName()+role.getRole().getName()%></b> µÄÈ¨ÏŞ</div>
+<div class="nav-title"><span class="Title">è§’è‰²ç®¡ç†</span>&gt;&gt;è®¾ç½®è§’è‰² <b><%=role.getDept().getName()+role.getRole().getName()%></b> çš„æƒé™</div>
 <html:form action="/sys/deptRole.do?method=setPrivilege" method="post" target="_self" onsubmit="return checkForm(this);">
 <input type="hidden" name="roleId" value="<%=role.getId()%>" />
 <div style="border:1px solid #FFFFFF;">
 <div style="width:100%; height:500px;overflow-x:auto; overflow-y:auto;">
 <table width="95%" border="0" align="center" cellspacing="1" cellpadding="0" class="list-box">
   <tr class="list-title" style="position:relative; top:expression(this.offsetParent.scrollTop-2);"> 
-    <td width="5%" class="listborder">ĞòºÅ</td>
-    <td width="30%" class="listborder">Ä£¿éÃû³Æ</td>
-    <td width="65%" class="listborder">²Ù×÷</td>
+    <td width="5%" class="listborder">åºå·</td>
+    <td width="30%" class="listborder">æ¨¡å—åç§°</td>
+    <td width="65%" class="listborder">æ“ä½œ</td>
   </tr>
   <%
 int i=0;
@@ -113,11 +113,11 @@ if(list!=null){
     <td class="td-text"><%
 if(bean.getDeep()>1){  
   for(int j=1; j<=bean.getDeep()-1; j++){
-    out.print("¡¡¡¡");
+    out.print("ã€€ã€€");
   }
   out.print("--");
 }else{
-  out.print("£«");
+  out.print("ï¼‹");
 }
 out.print(bean.getName());
 %>
@@ -125,7 +125,7 @@ out.print(bean.getName());
       <input type="hidden" name="appId" value="<%=id%>">
     </td>
     <td class="list">
-	  <input type="checkbox" name="access<%=id%>" value="1" <%=appId.contains(new Long(id))?"checked":""%>>·ÃÎÊÈ¨ÏŞ<br>
+	  <input type="checkbox" name="access<%=id%>" value="1" <%=appId.contains(new Long(id))?"checked":""%>>è®¿é—®æƒé™<br>
       <%
 			Iterator functions = bean.getApp().getFunctions().iterator();
 			int j=0;
@@ -151,7 +151,7 @@ out.print(bean.getName());
 </div></div>
 <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
   <tr>
-    <td align="center" height="30" valign="bottom"><input name="btn_add" type="submit"  onclick="" value="±£´æ" class="button" ></td>
+    <td align="center" height="30" valign="bottom"><input name="btn_add" type="submit"  onclick="" value="ä¿å­˜" class="button" ></td>
   </tr>
 </table>
 </html:form>

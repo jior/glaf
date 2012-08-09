@@ -1,10 +1,10 @@
-<%@ page contentType="text/html;charset=gbk" language="java"%>
-<%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
-<%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
-<title>Ӧ�ó������</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>应用程序出错</title>
 <link type="text/css" href="<%=request.getContextPath()%>/css/style.css" rel="stylesheet">
 <SCRIPT type="text/javascript">
 function showDetailInfo(){
@@ -50,20 +50,20 @@ function showDetailInfo(){
                       <tr> 
                         <td height="20" align="center" class="fontlist" ><img src="<%=request.getContextPath()%>/images/icon_6.jpg" width="6" height="7"> 
                           Err 400: System occurs error<br/>
-                      Ӧ�ô���<%=exception.getMessage()%>;���ϵͳ����Ա��ϵ���������<br>
-		      [<a onclick="showDetailInfo();" style="cursor:hand;">�鿴��ϸ��Ϣ</a>]
+                      应用错误：<%=exception.getMessage()%>;请和系统管理员联系解决该问题<br>
+		      [<a onclick="showDetailInfo();" style="cursor:hand;">查看详细信息</a>]
 			  </td>
                       </tr>
                       <tr>
           <td width="609" align="center" valign="top">
 		      <div id="detailInfoDiv" align="left" style="display:none;">
-			      <b>״̬����</b>:<%= request.getAttribute("javax.servlet.error.status_code") %><br>
-						<b>���ʵ�url</b>:<%= request.getAttribute("javax.servlet.error.request_uri") %><br>
-						<b>���ʵ�Servlet����</b>:<%= request.getAttribute("javax.servlet.error.servlet_name") %><br>
-						<b>�쳣����</b>:<%= request.getAttribute("javax.servlet.error.exception_type") %><br>
-						<b>�쳣��Ϣ</b>:<%= request.getAttribute("javax.servlet.error.exception") %><br>
-						<b>������Ϣ</b>:<%= request.getAttribute("javax.servlet.error.message") %><br>
-						<b>�쳣��ջ��Ϣ</b>:<br>
+			      <b>状态代码</b>:<%= request.getAttribute("javax.servlet.error.status_code") %><br>
+						<b>访问的url</b>:<%= request.getAttribute("javax.servlet.error.request_uri") %><br>
+						<b>访问的Servlet名称</b>:<%= request.getAttribute("javax.servlet.error.servlet_name") %><br>
+						<b>异常类型</b>:<%= request.getAttribute("javax.servlet.error.exception_type") %><br>
+						<b>异常信息</b>:<%= request.getAttribute("javax.servlet.error.exception") %><br>
+						<b>错误信息</b>:<%= request.getAttribute("javax.servlet.error.message") %><br>
+						<b>异常堆栈信息</b>:<br>
 						<% java.io.StringWriter stackTrace = new java.io.StringWriter();
 						   java.io.PrintWriter writer = new java.io.PrintWriter(stackTrace);
 						   exception.printStackTrace(writer);

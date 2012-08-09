@@ -1,6 +1,6 @@
-<%@ page contentType="text/html;charset=gbk" language="java"%>
-<%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean" %>
-<%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.glaf.base.modules.*"%>
 <%@ page import="com.glaf.base.modules.sys.model.*"%>
@@ -15,7 +15,7 @@ List list = pager.getResults();
 
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
 <link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
 <script language="javascript" src='<%=context%>/js/verify.js'></script>
@@ -92,7 +92,7 @@ function sort(id, operate){
 </head>
 
 <body>
-<div class="nav-title"><span class="Title">Ä£¿é¹ÜÀí</span>&gt;&gt;Ä£¿éÁĞ±í</div>
+<div class="nav-title"><span class="Title">æ¨¡å—ç®¡ç†</span>&gt;&gt;æ¨¡å—åˆ—è¡¨</div>
 <html:form action="/sys/application.do?method=batchDelete" method="post" target="_self"> 
 <input name="page_no" type="hidden" value="<%=pager.getCurrentPageNo()%>">
 <input name="parent" type="hidden" value="<%=parent%>">
@@ -100,12 +100,12 @@ function sort(id, operate){
 <table width="100%" border="0" cellspacing="1" cellpadding="0" class="list-box">
   <tr class="list-title"> 
     <td width="5%"  align="center"> <input type="checkbox" name="chkall" value="checkbox" onClick="checkAll(this.form, this);checkOperation(this.form)">    </td>
-    <td width="5%" align="center">ĞòºÅ</td>
-    <td width="20%" align="center">Ãû³Æ</td>
-    <td width="20%" align="center">ÃèÊö</td>
-    <td width="32%" align="center">Á´½Ó</td>
-    <td width="10%" align="center">ÊÇ·ñµ¯³ö´°</td>
-    <td width="8%" align="center">ÅÅĞò</td>
+    <td width="5%" align="center">åºå·</td>
+    <td width="20%" align="center">åç§°</td>
+    <td width="20%" align="center">æè¿°</td>
+    <td width="32%" align="center">é“¾æ¥</td>
+    <td width="10%" align="center">æ˜¯å¦å¼¹å‡ºçª—</td>
+    <td width="8%" align="center">æ’åº</td>
   </tr>
   <%
 int i=0;
@@ -120,8 +120,8 @@ if(list!=null){
     <td class="td-text"><%=bean.getName()%>&nbsp;</td>
     <td class="td-text"><%=bean.getDesc()%>&nbsp;</td>
     <td class="td-text"><%=bean.getUrl()%>&nbsp;</td>
-    <td class="td-no"><%=bean.getShowMenu()==2?"ÊÇ":"·ñ"%>&nbsp;</td>
-    <td class="td-no"><a href="javascript:sort(<%=bean.getId()%>, 0);" title="ÉÏÒÆ"><img src="<%=context%>/images/up.gif" border="0" height="13" width="13"></a> <a href="javascript:sort(<%=bean.getId()%>, 1);" title="ÏÂÒÆ"><img src="<%=context%>/images/down.gif" border="0" height="13" width="13"></a></td>
+    <td class="td-no"><%=bean.getShowMenu()==2?"æ˜¯":"å¦"%>&nbsp;</td>
+    <td class="td-no"><a href="javascript:sort(<%=bean.getId()%>, 0);" title="ä¸Šç§»"><img src="<%=context%>/images/up.gif" border="0" height="13" width="13"></a> <a href="javascript:sort(<%=bean.getId()%>, 1);" title="ä¸‹ç§»"><img src="<%=context%>/images/down.gif" border="0" height="13" width="13"></a></td>
   </tr>
   <%
     i++;
@@ -149,10 +149,10 @@ for(; i<pageSize; i++){
 </table>
 <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
   <tr> 
-    <td width="50%"> <input name="btn_add" type="button" value="Ôö¼Ó" class="button" onClick="javascript:add();"> 
-      <input name="btn_del" type="button" value="É¾³ı" class="button" onClick="javascript:del();" disabled>
-      <input name="btn_modify" type="button" value="ĞŞ¸Ä" class="button" onClick="javascript:modify(this.form);" disabled>
-      <input name="btn_function" type="button" value="¹¦ÄÜÉèÖÃ" class="button" onClick="javascript:func(this.form);" disabled></td>
+    <td width="50%"> <input name="btn_add" type="button" value="å¢åŠ " class="button" onClick="javascript:add();"> 
+      <input name="btn_del" type="button" value="åˆ é™¤" class="button" onClick="javascript:del();" disabled>
+      <input name="btn_modify" type="button" value="ä¿®æ”¹" class="button" onClick="javascript:modify(this.form);" disabled>
+      <input name="btn_function" type="button" value="åŠŸèƒ½è®¾ç½®" class="button" onClick="javascript:func(this.form);" disabled></td>
     <td width="50%"> 
       <%
 String params = WebUtil.getQueryString(request);

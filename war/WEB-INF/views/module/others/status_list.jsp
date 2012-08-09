@@ -1,6 +1,6 @@
-<%@ page contentType="text/html;charset=gbk" language="java"%>
-<%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
-<%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.Iterator"%>
 <%@ page import="com.glaf.base.utils.PageResult"%>
@@ -24,14 +24,14 @@ if(pager != null){
 %>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
-<title>XXXX����ƽ̨ϵͳ</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>XXXX基础平台系统</title>
 <link href="../../css/site.css" type="text/css" rel="stylesheet">
 <link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
 <script language="javascript" src='<%=context%>/js/verify.js'></script>
 <script language="javascript" src='<%=context%>/js/main.js'></script>
 <script language="javascript">
-	//���ݲ���ѡ����Ӧ�����µ�Ա��
+	//根据部门选择相应部门下的员工
 	function selectContact(dept, str, obj){
 		if(dept.value != ""){
 			if(str == 'use'){
@@ -48,7 +48,7 @@ if(pager != null){
 		}
 	}
 
-	//��ʾ���Ȳ�ѯҳ��
+	//显示进度查询页面
 	function showStatusLook(){
 		var ids = document.getElementsByName("id");
 		var purchaseId;
@@ -72,7 +72,7 @@ if(pager != null){
 <form action="<%=context%>/others/statusView.do?method=showList" method="get">
   <table width="100%" border="0" cellpadding="0" cellspacing="0" class="m-box">
   <tr>
-    <td width="49%" class="nav-title">��Ŀ���ȹ���&gt;&gt;��Ŀ��չ��ѯ�б�</td>
+    <td width="49%" class="nav-title">项目进度管理&gt;&gt;项目进展查询列表</td>
     <td width="51%" height="27" align="right"><jsp:include page="/WEB-INF/views/module/login_info.jsp" flush="true"/> &nbsp;&nbsp;&nbsp;</td>
   </tr>
 </table>  
@@ -90,16 +90,16 @@ if(pager != null){
   
     <td class="box-mm"><table width="100%" border="0" align="center" cellpadding="5" cellspacing="0">
       <tr>
-        <td width="76">�ɹ����뵥No</td>
+        <td width="76">采购申请单No</td>
         <td width="132"><input name="purchaseNo" type="text" class="input" size="15" searchflag="1"></td>
-        <td width="57">��Ŀ����</td>
+        <td width="57">项目名称</td>
         <td width="167"><input name="name" type="text" class="input" size="20" searchflag="1"></td>
-        <td width="55">ʹ�ò���</td>
+        <td width="55">使用部门</td>
         <td width="138">
 			<input name="useDeptTitle" type="text" class="input" size="15" onClick=" selectDept('5', $(useDept), this)" readonly>
 			<input type="hidden" id="useDept" name="useDept" value="" searchflag="1">
 		</td>
-        <td width="89">ʹ�ò��ž�����</td>
+        <td width="89">使用部门经办人</td>
         <td width="119">
 			<input name="useDeptContactTitle" type="text" class="input" size="15" onClick="selectContact($(useDept), 'use', this)" readonly>
 			<input type="hidden" name="useDeptContact" id="useDeptContact" value="" searchflag="1">
@@ -107,19 +107,19 @@ if(pager != null){
         <td width="57">&nbsp;</td>
       </tr>
       <tr>
-        <td>�ز�No</td>
+        <td>重财No</td>
         <td><input name="financeNo" type="text" class="input" size="15" searchflag="1"></td>
-        <td>�ɹ�����</td>
+        <td>采购担当</td>
         <td>
 			<input name="chargeTitle" type="text" class="input" size="15" onClick="selectUserDuty('310','R010',$('charge'),this)" readonly>
 			<input type="hidden" id="charge" name="charge" value="" searchflag="1">
 		</td>
-        <td>��ڲ���</td>
+        <td>归口部门</td>
         <td>
 			<input name="dutyDeptTitle" type="text" class="input" size="15" onClick="selectDept('5', $(dutyDept), this)" readonly>
 			<input type="hidden" name="dutyDept" id="dutyDept" searchflag="1">
 		</td>
-        <td>��ڲ��ž�����</td>
+        <td>归口部门经办人</td>
         <td>
 			<input name="dutyDeptContactTitle" type="text" class="input" size="15" onClick="selectContact($(dutyDept), 'duty', this)" readonly>
 			<input type="hidden" id="dutyDeptContact" name="dutyDeptContact" value="" searchflag="1">
@@ -138,21 +138,21 @@ if(pager != null){
         <td><div id="listDiv" style="width:980px; height:270px;overflow-x:auto; overflow-y:auto;">
 		  <table border="0" cellspacing="1" cellpadding="0" class="list-box">
             <tr class="list-title">
-              <td width="40" align="center" nowrap class="title">ѡ��</td>
-              <td width="40" align="center" nowrap class="title">���</td>
-              <td width="90" align="center" nowrap class="title">�ɹ���ʽ</td>
-              <td width="60" align="center" nowrap class="title">��������</td>
-              <td width="100" align="center" nowrap class="title">�ɹ����뵥No</td>
-              <td width="255" align="center" nowrap class="title">��Ŀ����</td>
-              <td width="100" align="center" nowrap class="title">�ɹ����</td>
-              <td width="60" align="center" nowrap class="title">�ɹ�����</td>
-              <td width="100" align="center" nowrap class="title">ʹ�ò���</td>
-              <td width="100" align="center" nowrap class="title">ʹ�ò��ž�����</td>
-              <td width="100" align="center" nowrap class="title">��ڲ���</td>
-              <td width="100" align="center" nowrap class="title">��ڲ��ž�����</td>
-              <td width="100" align="center" nowrap class="title">�ز�No</td>
-              <td width="80" align="center" nowrap class="title">�ɹ�����</td>
-              <td width="200" align="center" nowrap class="title">��Ӧ��</td>
+              <td width="40" align="center" nowrap class="title">选择</td>
+              <td width="40" align="center" nowrap class="title">序号</td>
+              <td width="90" align="center" nowrap class="title">采购方式</td>
+              <td width="60" align="center" nowrap class="title">申请性质</td>
+              <td width="100" align="center" nowrap class="title">采购申请单No</td>
+              <td width="255" align="center" nowrap class="title">项目名称</td>
+              <td width="100" align="center" nowrap class="title">采购类别</td>
+              <td width="60" align="center" nowrap class="title">采购性质</td>
+              <td width="100" align="center" nowrap class="title">使用部门</td>
+              <td width="100" align="center" nowrap class="title">使用部门经办人</td>
+              <td width="100" align="center" nowrap class="title">归口部门</td>
+              <td width="100" align="center" nowrap class="title">归口部门经办人</td>
+              <td width="100" align="center" nowrap class="title">重财No</td>
+              <td width="80" align="center" nowrap class="title">采购担当</td>
+              <td width="200" align="center" nowrap class="title">供应商</td>
             </tr>
 			<%
 			int i = 0;
@@ -167,14 +167,14 @@ if(pager != null){
 						if(fullName == null){
 							fullName = "";
 						}
-						String name1 = purchase.getName();  //������Ŀ����
-						String name2 = purchase.getName2(); //������Ŀ����
-						String name = "������Ŀ����" + name1;
+						String name1 = purchase.getName();  //中文项目名称
+						String name2 = purchase.getName2(); //日文项目名称
+						String name = "中文项目名：" + name1;
 						if(!"".equals(name2)){
-							 name += "\n" + "������Ŀ����" + name2;  //"\n"__����
+							 name += "\n" + "日文项目名：" + name2;  //"\n"__换行
 						}
-						String useDept = bdm.getStringValue(purchase.getUseDept(), "ZD0001"); //ʹ�ò���
-						String dutyDept = bdm.getStringValue(purchase.getDutyDept(), "ZD0001"); //��ڲ���
+						String useDept = bdm.getStringValue(purchase.getUseDept(), "ZD0001"); //使用部门
+						String dutyDept = bdm.getStringValue(purchase.getDutyDept(), "ZD0001"); //归口部门
 			%>
             <tr <%= ((i++)%2==0)?"class=\"list-back\"":"" %>>
               <td height="22"><input type="checkbox" name="id" value="<%=purchase.getId()%>" onClick="editBtnOperation(document.forms[0],'id',$('btn_look'));">&nbsp;</td>
@@ -246,8 +246,8 @@ if(pager != null){
 		  </div>
           <table width="100%" border="0" cellspacing="0" cellpadding="0">
             <tr>
-              <td width="44%" height="25" valign="bottom"><!--input name="btn_release" type="button" class="button" onClick="release(this.form)" value="����" disabled-->
-                <input id="btn_look" name="btn_status" type="button" class="button" value="�鿴״̬" onClick="showStatusLook();" disabled></td>
+              <td width="44%" height="25" valign="bottom"><!--input name="btn_release" type="button" class="button" onClick="release(this.form)" value="冻结" disabled-->
+                <input id="btn_look" name="btn_status" type="button" class="button" value="查看状态" onClick="showStatusLook();" disabled></td>
               <td width="43%" align="right">
 			  <jsp:include page="/WEB-INF/views/inc/show_page.jsp" flush="true">
                 <jsp:param name="total" value="<%=pager.getTotalRecordCount()%>"/>            

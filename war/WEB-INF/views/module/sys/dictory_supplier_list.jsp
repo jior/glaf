@@ -1,6 +1,6 @@
-<%@ page contentType="text/html;charset=gbk" language="java"%>
-<%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
-<%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ page import="java.util.*"%>
 <%@ page import="java.net.*"%>
 <%@ page import="com.glaf.base.utils.*"%>
@@ -26,15 +26,15 @@ String code = ParamUtil.getParameter(request, "query_code_ex");
 <html>
 <head>
 <base target="_self">
-<meta http-equiv="Content-Type" content="text/html; charset=gb2312"/>
-<title>¹©Ó¦ÉÌ</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title>ä¾›åº”å•†</title>
 <link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
 <script language="javascript" src='<%=context%>/js/main.js'></script>
 <script language="javascript" src='<%=context%>/js/verify.js'></script>
 <script language="javascript">
 function selData(){	
   if(getRadioValue('id')==''){
-  	alert('ÇëÑ¡Ôñ¹©Ó¦ÉÌ');
+  	alert('è¯·é€‰æ‹©ä¾›åº”å•†');
   }else{
 	  var val = getRadioValue('id', 'value', 'title', 'alt');
 	 
@@ -50,12 +50,12 @@ function noSelect() {
   window.returnValue = null;
   window.close();
 }
-//Çå¿Õ
+//æ¸…ç©º
 function cleanValue(){
 	document.all.categoryTitle.value="";
 	document.all.query_category_el.value="";
 }
-//Ñ¡Ôñ²É¹ºÀà±ğ
+//é€‰æ‹©é‡‡è´­ç±»åˆ«
 function selCategory(title){
 	selectSupplierGoodsCategory($('query_goodsCategorys.id_xel'),title,-1);
 	/*var rst = selectGoodsCategoryList(0);
@@ -74,7 +74,7 @@ function selCategory(title){
 <input type="hidden" name="goodsCategoryFlag" value="-1">
 <table width="480" border="0" align="center" cellspacing="0" cellpadding="0">      
       <tr>
-        <td class="nav-title">ÇëÑ¡Ôñ¹©Ó¦ÉÌ£º&nbsp;</td>
+        <td class="nav-title">è¯·é€‰æ‹©ä¾›åº”å•†ï¼š&nbsp;</td>
       </tr>
 </table>
 <table width="480" border="0" align="center" cellpadding="0" cellspacing="0" class="box">
@@ -90,21 +90,21 @@ function selCategory(title){
   <tr>
     <td class="box-mm"><table width="100%" border="0" cellspacing="0" cellpadding="5">
       <tr>
-        <td align="right">Ãû&nbsp;&nbsp;&nbsp;&nbsp;³Æ£º</td>
+        <td align="right">å&nbsp;&nbsp;&nbsp;&nbsp;ç§°ï¼š</td>
         <td width="145"><input name="query_fullName_like" type="text" class="input" size="15" value="" datatype="String" nullable="yes"></td>
-        <td align="right">±à&nbsp;&nbsp;&nbsp;&nbsp;Âë£º</td>
+        <td align="right">ç¼–&nbsp;&nbsp;&nbsp;&nbsp;ç ï¼š</td>
         <td width="165"><input name="query_supplierNo_like" type="text" class="input" size="12" value="" datatype="String" nullable="yes"></td>
         </tr>
       <tr>
-        <td width="102" align="right">ĞĞ&nbsp;&nbsp;&nbsp;&nbsp;Òµ£º</td>
+        <td width="102" align="right">è¡Œ&nbsp;&nbsp;&nbsp;&nbsp;ä¸šï¼š</td>
         <td><input name="categoryTitle" type="text" class="input" onClick="selectData('ZD0013', document.all.query_category_el, this);" size="15" readonly>
 				<input type="hidden" name="query_category_el" value="-1"></td>
-        <td width="102" align="right">µØ&nbsp;&nbsp;&nbsp;&nbsp;Çø£º</td>
+        <td width="102" align="right">åœ°&nbsp;&nbsp;&nbsp;&nbsp;åŒºï¼š</td>
         <td><input name="areaTitle" type="text" class="input" onClick="selectData('ZD0014',document.all.query_area_el, this)" size="12" readonly>
 				<input type="hidden" name="query_area_el" value="-1"></td>
         </tr>
       <tr>
-        <td align="right">²É¹ºÄ¿Â¼£º</td>
+        <td align="right">é‡‡è´­ç›®å½•ï¼š</td>
         <td><input name="GoodsCategorysTitle" type="text" class="input" size="15" value="" datatype="String" nullable="yes" onClick="selCategory(this)" readonly><input type="hidden" name="query_goodsCategorys.id_xel" value=""></td>
         <td align="right">&nbsp;</td>
         <td align="center"><input name="Submit" type="submit" value=" " class="submit-search"></td>
@@ -112,14 +112,14 @@ function selCategory(title){
     </table>
       <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
         <tr>
-          <td height="25"><a href="javascript:noSelect()">²»Ñ¡Ôñ</a></td>
+          <td height="25"><a href="javascript:noSelect()">ä¸é€‰æ‹©</a></td>
         </tr>
       </table>
       <table width="95%" align="center" border="0" cellspacing="1" cellpadding="3" class="list-box">
       <tr class="list-title" >
-          <td width="15%" align="center" class="title"><input type="checkbox" name="all" onClick="javascript:checkAll(this.form,this);">È«Ñ¡</td>
-           <td width="65%" align="center" class="title">¹©Ó¦ÉÌÃû³Æ</td>
-           <td width="20%" align="center" class="title">¹©Ó¦ÉÌ±àºÅ</td>
+          <td width="15%" align="center" class="title"><input type="checkbox" name="all" onClick="javascript:checkAll(this.form,this);">å…¨é€‰</td>
+           <td width="65%" align="center" class="title">ä¾›åº”å•†åç§°</td>
+           <td width="20%" align="center" class="title">ä¾›åº”å•†ç¼–å·</td>
         </tr>
 		  <%
 				int i = 0;
@@ -163,7 +163,7 @@ String params = WebUtil.getQueryString(request) ;
 </table>
 <table width="300" border="0" align="center" cellspacing="0" cellpadding="0">
   <tr>
-    <td height="30" align="center"><input type="button" name="btn_save" value="È·¶¨" class="button" onClick="<%= isMult ? "selMultData()" : "selData()" %>" /></td>
+    <td height="30" align="center"><input type="button" name="btn_save" value="ç¡®å®š" class="button" onClick="<%= isMult ? "selMultData()" : "selData()" %>" /></td>
   </tr>
 </table>
 </form>

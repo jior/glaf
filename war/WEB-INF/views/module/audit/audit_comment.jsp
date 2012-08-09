@@ -1,6 +1,6 @@
-<%@ page contentType="text/html;charset=gbk" language="java"%>
-<%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
-<%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ page import="java.util.*"%>
 <%@ page import="java.text.*"%>
 <%@ page import="com.glaf.base.modules.purchase.*"%>
@@ -15,7 +15,7 @@ String id = (String)request.getAttribute("id");
 %>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title></title>
 <link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
 <script language="javascript" src='<%=context%>/js/verify.js'></script>
@@ -25,7 +25,7 @@ window.resizeTo(380, 350);
 window.moveTo((screen.width - 380) / 2, (screen.height - 350) / 2);
 window.opener.location.reload();
 
-/*if(!confirm("ÊÇ·ñÊäÈëÉóÅúÒâ¼û£¿")){
+/*if(!confirm("æ˜¯å¦è¾“å…¥å®¡æ‰¹æ„è§ï¼Ÿ")){
   window.close();  
 }*/
 var count =0;
@@ -38,7 +38,7 @@ function activeWindow(){
 </script>
 </head>
 <body onBlur="activeWindow();">
-<div class="nav-title">ÉóÅúÒâ¼û</div>
+<div class="nav-title">å®¡æ‰¹æ„è§</div>
 <html:form method="post" action="/others/audit.do?method=saveComment" onsubmit="return verifyAll(this)">
 <input type="hidden" name="id" value="<%=id%>">
 <table width="99%" border="0" align="center" cellpadding="0" cellspacing="0" class="box">
@@ -59,12 +59,12 @@ function activeWindow(){
         <td>
 		  <table width="100%" border="0" cellspacing="0" cellpadding="0">
             <tr>
-              <td class="input-box">Òâ  ¼û<font color="red">*</font></td>
+              <td class="input-box">æ„  è§<font color="red">*</font></td>
             </tr>
             <tr>
-              <td><textarea name="memo" class="input" cols="45" rows="10" datatype="string" chname="Òâ¼û" nullable="no" maxlength="500"></textarea></td>
+              <td><textarea name="memo" class="input" cols="45" rows="10" datatype="string" chname="æ„è§" nullable="no" maxlength="500"></textarea></td>
             </tr>
-            <tr><td align="center" height="30"><input type="submit" name="btnSubmit" value="Ìá½»" class="button"><input type="button" name="btnClose" value="¹Ø±Õ" class="button" onclick="window.close();"></td></tr>
+            <tr><td align="center" height="30"><input type="submit" name="btnSubmit" value="æäº¤" class="button"><input type="button" name="btnClose" value="å…³é—­" class="button" onclick="window.close();"></td></tr>
           </table>
 		</td>
       </tr>

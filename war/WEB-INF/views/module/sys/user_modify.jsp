@@ -1,6 +1,6 @@
-<%@ page contentType="text/html;charset=gbk" language="java"%>
-<%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
-<%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.glaf.base.modules.sys.*"%>
 <%@ page import="com.glaf.base.modules.sys.model.*"%>
@@ -12,7 +12,7 @@ List  list = (List)request.getAttribute("parent");
 %>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
 <link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
 <script language="javascript" src='<%=context%>/js/main.js'></script>
@@ -21,7 +21,7 @@ List  list = (List)request.getAttribute("parent");
 function checkForm(form){
   if(verifyAll(form)){
      //if(form.password.value!=form.password2.value){
-	 //  alert("ÃÜÂëÓëÈ·ÈÏÃÜÂë²»Æ¥Åä");
+	 //  alert("å¯†ç ä¸ç¡®è®¤å¯†ç ä¸åŒ¹é…");
 	 //}else{
 	 //  return true;
 	 //}
@@ -35,7 +35,7 @@ function setValue(obj){
 </head>
 
 <body>
-<div class="nav-title"><span class="Title">ÓÃ»§¹ÜÀí</span>&gt;&gt;ĞŞ¸ÄÓÃ»§</div>
+<div class="nav-title"><span class="Title">ç”¨æˆ·ç®¡ç†</span>&gt;&gt;ä¿®æ”¹ç”¨æˆ·</div>
 <html:form action="/sys/user.do?method=saveModify" method="post"  onsubmit="return checkForm(this);"> 
 <input type="hidden" name="id" value="<%=bean.getId()%>">
 <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0" class="box">
@@ -51,11 +51,11 @@ function setValue(obj){
   <tr>
     <td class="box-mm"><table width="95%" align="center" border="0" cellspacing="0" cellpadding="5">
       <tr>
-        <td width="20%" class="input-box">Ô±¹¤±àÂë*</td>
+        <td width="20%" class="input-box">å‘˜å·¥ç¼–ç *</td>
         <td width="80%"><%=bean.getCode()%></td>
       </tr>
       <tr>
-        <td class="input-box2" valign="top">²¿¡¡¡¡ÃÅ</td>
+        <td class="input-box2" valign="top">éƒ¨ã€€ã€€é—¨</td>
         <td><select name="parent" onChange="javascript:setValue(this);">
           <%
 if(list!=null){
@@ -82,49 +82,49 @@ out.print(bean2.getName());
 	    </script>		</td>
       </tr>
       <tr>
-        <td class="input-box2" valign="top">ĞÕ¡¡¡¡Ãû*</td>
-        <td><input name="name" type="text" size="28" class="input" value="<%=bean.getName()%>" datatype="string" nullable="no" maxsize="20" chname="ĞÕÃû"></td>
+        <td class="input-box2" valign="top">å§“ã€€ã€€å*</td>
+        <td><input name="name" type="text" size="28" class="input" value="<%=bean.getName()%>" datatype="string" nullable="no" maxsize="20" chname="å§“å"></td>
       </tr>
       <tr>
-        <td class="input-box2" valign="top">ĞÔ¡¡¡¡±ğ</td>
+        <td class="input-box2" valign="top">æ€§ã€€ã€€åˆ«</td>
         <td>
           <input type="radio" name="gender" value="0" <%=bean.getGender()==0?"checked":""%>>
-ÄĞ
+ç”·
 <input type="radio" name="gender" value="1" <%=bean.getGender()==1?"checked":""%>>
-Å®</td>
+å¥³</td>
       </tr>
       <tr>
-        <td class="input-box2" valign="top">ÊÖ¡¡¡¡»ú*</td>
+        <td class="input-box2" valign="top">æ‰‹ã€€ã€€æœº*</td>
         <td>
-          <input name="mobile" type="text" size="30" class="input" datatype="string" value="<%=bean.getMobile()%>" nullable="no" maxsize="12" chname="ÊÖ»ú">        </td>
+          <input name="mobile" type="text" size="30" class="input" datatype="string" value="<%=bean.getMobile()%>" nullable="no" maxsize="12" chname="æ‰‹æœº">        </td>
       </tr>
       <tr>
-        <td class="input-box2" valign="top">ÓÊ¡¡¡¡¼ş*</td>
+        <td class="input-box2" valign="top">é‚®ã€€ã€€ä»¶*</td>
         <td>
-          <input name="email" type="text" size="30" class="input" datatype="email" value="<%=bean.getEmail()%>" nullable="no" maxsize="50" chname="ÓÊ¼ş">        </td>
+          <input name="email" type="text" size="30" class="input" datatype="email" value="<%=bean.getEmail()%>" nullable="no" maxsize="50" chname="é‚®ä»¶">        </td>
       </tr>
       <tr>
-        <td class="input-box2" valign="top">°ì¹«µç»°*</td>
+        <td class="input-box2" valign="top">åŠå…¬ç”µè¯*</td>
         <td>
-          <input name="telephone" type="text" size="30" class="input" datatype="string" value="<%=bean.getTelephone()%>" nullable="no" maxsize="20" chname="°ì¹«µç»°">        </td>
+          <input name="telephone" type="text" size="30" class="input" datatype="string" value="<%=bean.getTelephone()%>" nullable="no" maxsize="20" chname="åŠå…¬ç”µè¯">        </td>
       </tr>
       <tr>
-        <td class="input-box2" valign="top">ÊÇ·ñÓĞĞ§</td>
+        <td class="input-box2" valign="top">æ˜¯å¦æœ‰æ•ˆ</td>
         <td>
           <input type="radio" name="blocked" value="0" <%=bean.getBlocked()==0?"checked":""%>>
-          ÊÇ
+          æ˜¯
           <input type="radio" name="blocked" value="1" <%=bean.getBlocked()==1?"checked":""%>>
-·ñ</td>
+å¦</td>
       </tr>
       <tr>
-        <td class="input-box2" valign="top">Ö°¡¡¡¡Îñ</td>
+        <td class="input-box2" valign="top">èŒã€€ã€€åŠ¡</td>
         <td>
-          <input name="headship" type="text" size="30" class="input" datatype="string" nullable="no" maxsize="20" chname="Ö°Îñ" value="<%=bean.getHeadship()%>"onClick="selectData('ZD0019', null, this, document.all.userType)">
+          <input name="headship" type="text" size="30" class="input" datatype="string" nullable="no" maxsize="20" chname="èŒåŠ¡" value="<%=bean.getHeadship()%>"onClick="selectData('ZD0019', null, this, document.all.userType)">
 		  <input type="hidden" name="userType" value="<%=bean.getUserType()%>">        </td>
       </tr>
       <tr>
         <td colspan="2" align="center" valign="bottom" height="30">&nbsp;
-              <input name="btn_save2" type="submit" value="±£´æ" class="button"></td>
+              <input name="btn_save2" type="submit" value="ä¿å­˜" class="button"></td>
       </tr>
     </table></td>
   </tr>

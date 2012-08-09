@@ -1,6 +1,6 @@
-<%@ page contentType="text/html;charset=gbk" language="java"%>
-<%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
-<%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.glaf.base.modules.*"%>
 <%@ page import="com.glaf.base.modules.sys.model.*"%>
@@ -13,7 +13,7 @@ int roleId = ParamUtil.getIntParameter(request, "roleId", 0);
 %>
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title></title>
 	<link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
 	<script language="javascript" src='<%=context%>/js/verify.js'></script>
@@ -49,7 +49,7 @@ int roleId = ParamUtil.getIntParameter(request, "roleId", 0);
 
 <table width="95%" border="0" align="center" cellpadding="5" cellspacing="0">
   <tr>
-    <td align="center">部门
+    <td align="center">閮ㄩ棬
       <input name="deptTitle" type="text" class="input" size="30" onClick="selDept(5, this)">
 	  <input name="deptId2" type="hidden" searchflag="1">
 	  <input name="btn_search" type="submit" value=" " class="submit-search">
@@ -60,8 +60,8 @@ int roleId = ParamUtil.getIntParameter(request, "roleId", 0);
 <table width="95%" border="0" align="center" cellspacing="1" cellpadding="0" class="list-box">
   <tr class="list-title" style="position:relative; top:expression(this.offsetParent.scrollTop-2);"> 
     <td width="5%" align="center"> <input type="checkbox" name="chkall" value="checkbox" onClick="checkAll(this.form, this);checkOperation(this.form)">    </td>
-    <td width="35%" align="center">用户名称</td>
-    <td width="40%" align="center">所在部门</td>
+    <td width="35%" align="center">鐢ㄦ埛鍚嶇О</td>
+    <td width="40%" align="center">鎵�鍦ㄩ儴闂�</td>
   </tr>
   <%
 int i=0;
@@ -95,7 +95,7 @@ for(; i<10; i++){
 <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
   <tr> 
     <td align="center" height="30" valign="bottom"> 
-	<input name="btn_sel" type="button" value="选择用户" onClick="addUser(this.form);" class="button" disabled></td>
+	<input name="btn_sel" type="button" value="閫夋嫨鐢ㄦ埛" onClick="addUser(this.form);" class="button" disabled></td>
     </tr>
 </table>
 </html:form> 

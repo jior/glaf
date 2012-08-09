@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=gbk" language="java"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ page import="java.util.*"%>
 <%@ page import="java.net.*"%>
 <%@ page import="com.glaf.base.modules.sys.*"%>
@@ -45,7 +45,7 @@ function authorize(){
 }
 function window.onbeforeunload(){
 	if(event.clientX>document.body.clientWidth&&event.clientY<0||event.altKey){
-		//window.event.returnValue="È·¶¨ÒªÍË³ö»ù´¡Æ½Ì¨ÏµÍ³Âğ?";
+		//window.event.returnValue="ç¡®å®šè¦é€€å‡ºåŸºç¡€å¹³å°ç³»ç»Ÿå—?";
 		window.open("<%=context%>/sys/authorize.do?method=logout");
 	}
 }
@@ -58,9 +58,9 @@ function window.onbeforeunload(){
 	<font color="#FF0000" size="+2"><b>
 		<%
 		if(request.getServerName().equals("172.16.1.29")){
-		  out.print("½ÌÓı»·¾³");
+		  out.print("æ•™è‚²ç¯å¢ƒ");
 		}else if(request.getServerName().equals("172.16.1.39")){
-		  out.print("²âÊÔ»·¾³");
+		  out.print("æµ‹è¯•ç¯å¢ƒ");
 		}
 		%>
 		</b></font>&nbsp;
@@ -72,17 +72,17 @@ function window.onbeforeunload(){
 <ul id="menu1" style="display:none">
 	<li class="context-class-a-hotspot1">
 		<ul id="main-popup">
-		  <li><a href="<%=context%>/sys/frame.do">ÎÒµÄ¹¤×÷Ì¨</a></li>
-		  <li><a href="javascript:modifyInfo()">ĞŞ¸ÄÓÃ»§ĞÅÏ¢</a></li>
+		  <li><a href="<%=context%>/sys/frame.do">æˆ‘çš„å·¥ä½œå°</a></li>
+		  <li><a href="javascript:modifyInfo()">ä¿®æ”¹ç”¨æˆ·ä¿¡æ¯</a></li>
 		  <li></li>
 		  <%=menu%>
-		  <li><a href="<%= request.getContextPath() %>/sys/authorize.do?method=logout">ÍË³öÏµÍ³</a></li>
+		  <li><a href="<%= request.getContextPath() %>/sys/authorize.do?method=logout">é€€å‡ºç³»ç»Ÿ</a></li>
 		</ul>
 	</li>
 	<li class="context-class-a-hotspot2">
 		<ul>
-			<li><a href="javascript:openWindow('../workspace/mymenu.do?method=showList', 600, 450)">¹ÜÀíÎÒµÄ²Ëµ¥</a></li><li></li>
-      <li><a href="javascript:addToMyMenu()">Ìí¼Óµ½ÎÒµÄ²Ëµ¥</a></li><li></li>
+			<li><a href="javascript:openWindow('../workspace/mymenu.do?method=showList', 600, 450)">ç®¡ç†æˆ‘çš„èœå•</a></li><li></li>
+      <li><a href="javascript:addToMyMenu()">æ·»åŠ åˆ°æˆ‘çš„èœå•</a></li><li></li>
 			<%
 				for (int i = 0;menuList != null && i < menuList.size(); i++) {
 					MyMenu myMenu = (MyMenu) menuList.get(i);

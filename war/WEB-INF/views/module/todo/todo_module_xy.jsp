@@ -1,6 +1,6 @@
-<%@ page contentType="text/html;charset=gbk" language="java"%>
-<%@ taglib uri="/WEB-INF/tld/c.tld" prefix="c" %>
-<%@ taglib uri="/WEB-INF/tld/fmt.tld" prefix="fmt" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.glaf.base.modules.todo.*"%>
 <%@ page import="com.glaf.base.modules.todo.model.*"%>
@@ -16,14 +16,14 @@
 <%@ page import="org.apache.commons.lang.StringUtils" %>
 <%
     Map rowMap = new LinkedHashMap();
-    rowMap.put("8881", "²É¹ºÉêÇë");
-	rowMap.put("8884", "¹©Ó¦ÉÌ¹ÜÀí");
-	rowMap.put("8885", "¶¨³§¶¨¼Û");
-    rowMap.put("8886", "ÖØ²Æ¹ÜÀí");
-	rowMap.put("8887", "ÑéÊÕ¹ÜÀí");
-	rowMap.put("8888", "ºÏÍ¬¹ÜÀí");
-	rowMap.put("8889", "¶©µ¥¹ÜÀí");
-	rowMap.put("8890", "Ö§¸¶¹ÜÀí");
+    rowMap.put("8881", "é‡‡è´­ç”³è¯·");
+	rowMap.put("8884", "ä¾›åº”å•†ç®¡ç†");
+	rowMap.put("8885", "å®šåŽ‚å®šä»·");
+    rowMap.put("8886", "é‡è´¢ç®¡ç†");
+	rowMap.put("8887", "éªŒæ”¶ç®¡ç†");
+	rowMap.put("8888", "åˆåŒç®¡ç†");
+	rowMap.put("8889", "è®¢å•ç®¡ç†");
+	rowMap.put("8890", "æ”¯ä»˜ç®¡ç†");
 
     String moduleId = request.getParameter("moduleId");
 	String actorId = request.getParameter("actorId");
@@ -90,7 +90,7 @@
 %>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=GBK" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Todo</title>
 <link href="<%=request.getContextPath()%>/css/site.css" type="text/css" rel="stylesheet">
 
@@ -129,10 +129,10 @@ function checkOperation(){
       <td class="box-mm"><table width="95%" border="0" align="center" cellpadding="5" cellspacing="0">
         <tr>
           <td nowrap  class="input-box">
-            ²¿ÃÅ <input name="query_deptName" type="text" class="input" size="20" value="">
+            éƒ¨é—¨ <input name="query_deptName" type="text" class="input" size="20" value="">
 		  </td>
           <td  class="input-box">
-            ÓÃ»§ <input name="query_actorName" type="text" class="input" size="20" value="">
+            ç”¨æˆ· <input name="query_actorName" type="text" class="input" size="20" value="">
 		  </td>
 		  <td>
           <input type="hidden" name="moduleId" value="<%=moduleId%>">
@@ -178,7 +178,7 @@ function checkOperation(){
                        <td colspan="10"  height="400" valign="top" >
 					   <table align="center"  valign="top"  width="100%" border="0" cellspacing="1" cellpadding="0" class="list-box">
 						  <tr class="list-title">
-							<td align="center">ÓÃ»§</td>
+							<td align="center">ç”¨æˆ·</td>
 							<td width="95" align="center">PastDue</td>
 							<td width="95" align="center">Caution</td>
 							<td width="95" align="center">OK</td>

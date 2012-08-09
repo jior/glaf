@@ -1,6 +1,6 @@
-<%@ page contentType="text/html;charset=gbk" language="java"%>
-<%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean" %>
-<%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.glaf.base.modules.*"%>
 <%@ page import="com.glaf.base.modules.sys.model.*"%>
@@ -14,7 +14,7 @@ List list = pager.getResults();
 
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
 <link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
 <script language="javascript" src='<%=context%>/js/verify.js'></script>
@@ -66,7 +66,7 @@ function doSearch(form){
 <input type="hidden" name="id" value="0">
 <table width="100%" border="0" cellpadding="0" cellspacing="0" class="m-box">
   <tr>
-    <td width="49%" class="nav-title">ÓÃ»§²éÑ¯</td>
+    <td width="49%" class="nav-title">ç”¨æˆ·æŸ¥è¯¢</td>
     <td width="51%" height="27" align="right"><jsp:include page="/WEB-INF/views/module/login_info.jsp" flush="true"/> &nbsp;&nbsp;&nbsp;</td>
   </tr>
 </table>
@@ -84,13 +84,13 @@ function doSearch(form){
     <td class="box-mm">
 <table width="730" border="0" align="center" cellpadding="5" cellspacing="0">
     <tr>
-    <td width="170" class="input-box">²¿ÃÅ
-        <input name="deptName" type="text" class="input" size="15" title="µã»÷Ñ¡Ôñ²¿ÃÅ" readonly onClick="selectDept('5', document.all.deptId, this);">
+    <td width="170" class="input-box">éƒ¨é—¨
+        <input name="deptName" type="text" class="input" size="15" title="ç‚¹å‡»é€‰æ‹©éƒ¨é—¨" readonly onClick="selectDept('5', document.all.deptId, this);">
     <input name="deptId" type="hidden" value="" searchflag="1">	  </td>
-    <td width="150" class="input-box">ÕÊºÅ£º
+    <td width="150" class="input-box">å¸å·ï¼š
         <input name="account" type="text" class="input" searchflag="1" size="10">
     </td>
-    <td width="150" class="input-box">ĞÕÃû£º
+    <td width="150" class="input-box">å§“åï¼š
         <input name="userName" type="text" class="input" searchflag="1" size="10">
     </td>
 	<td width="30"><input name="btn_search" type="button" value=" " onClick="doSearch(this.form)" class="submit-search"></td>
@@ -98,15 +98,15 @@ function doSearch(form){
 </table> 
 <table width="99%" border="0" align="center" cellspacing="1" cellpadding="0" class="list-box">
   <tr class="list-title"> 
-    <td width="5%" height="20" align="center">ĞòºÅ</td>
-    <td width="8%" align="center" >ÕÊºÅ</td>
-    <td width="10%" align="center" >ĞÕÃû</td>
-    <td width="15%" align="center" >ÃÜÂë</td>
-    <td width="15%" align="center" >²¿ÃÅ</td>
-    <td width="20%" align="center" >½ÇÉ«</td>
-    <td width="5%" align="center" >ÊÇ·ñÓĞĞ§</td>
-    <td width="10%" align="center" >´´½¨ÈÕÆÚ</td>
-    <td width="15%" align="center" >ÉÏ´ÎµÇÂ½Ê±¼ä</td>
+    <td width="5%" height="20" align="center">åºå·</td>
+    <td width="8%" align="center" >å¸å·</td>
+    <td width="10%" align="center" >å§“å</td>
+    <td width="15%" align="center" >å¯†ç </td>
+    <td width="15%" align="center" >éƒ¨é—¨</td>
+    <td width="20%" align="center" >è§’è‰²</td>
+    <td width="5%" align="center" >æ˜¯å¦æœ‰æ•ˆ</td>
+    <td width="10%" align="center" >åˆ›å»ºæ—¥æœŸ</td>
+    <td width="15%" align="center" >ä¸Šæ¬¡ç™»é™†æ—¶é—´</td>
     </tr>
   <%
 int i=0;
@@ -122,7 +122,7 @@ if(list!=null){
 	    SysUserRole role = (SysUserRole)roleIter.next();
 		roleName+= role.getDeptRole().getDept().getName()+role.getDeptRole().getRole().getName();
 		if(role.getAuthorized()==1){
-		  roleName+= "[´ú]";
+		  roleName+= "[ä»£]";
 		}
 		roleName+= " ";		
 	  }
@@ -136,7 +136,7 @@ if(list!=null){
     <td class="td-text"><%=bean.getDepartment().getName()%></td>
     <td class="td-text" title="<%=roleName%>"><%=roleName%>
 	</td>
-    <td class="td-no"><%=bean.getBlocked()==1?"·ñ":"ÊÇ"%>&nbsp;</td>
+    <td class="td-no"><%=bean.getBlocked()==1?"å¦":"æ˜¯"%>&nbsp;</td>
     <td class="td-time"><%=new java.text.SimpleDateFormat("yyyy-MM-dd").format(bean.getCreateTime())%>&nbsp;</td>
     <td align="center" class="list"><%=new java.text.SimpleDateFormat("yyyy-MM-dd mm:ss").format(bean.getLastLoginTime())%>&nbsp;</td>
     </tr>

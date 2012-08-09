@@ -1,5 +1,5 @@
-<%@page contentType="text/html;charset=gbk"%>
-<%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean" %>
+<%@page contentType="text/html;charset=UTF-8"%>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ page import="com.glaf.base.utils.*"%>
 
 
@@ -33,24 +33,24 @@ function go(){
   <tr> 
     <td class="pageborder"><table width="100%"  border="0" cellspacing="0" cellpadding="0">
         <tr> 
-          <td align="center">ตฑวฐตฺ<%=pageNo%>าณ/นฒ<%=pageCount%>าณ,<%=total%>ฬ๕ผวยผ</td>
+          <td align="center">ๅฝ“ๅ็ฌฌ<%=pageNo%>้กต/ๅ…ฑ<%=pageCount%>้กต,<%=total%>ๆก่ฎฐๅฝ•</td>
           <td align="center">
-              <a href="<%=url%>?<%=WebUtil.getQueryString(params + "&page_no=1")%>">สืาณ</a></td>
+              <a href="<%=url%>?<%=WebUtil.getQueryString(params + "&page_no=1")%>">้ฆ–้กต</a></td>
           <td align="center">
 <%
 if(pageNo>1) go=pageNo-1;
 %>	
-	<a href="<%=url%>?<%=WebUtil.getQueryString(params + "&page_no=" + go)%>">ษฯาปาณ</a>
+	<a href="<%=url%>?<%=WebUtil.getQueryString(params + "&page_no=" + go)%>">ไธไธ€้กต</a>
 		  </td>
           <td align="center">
 <%
 go = pageNo;
 if(pageNo+1<=pageCount) go=pageNo+1;
 %>	
-	<a href="<%=url%>?<%=WebUtil.getQueryString(params + "&page_no=" + go)%>">ฯยาปาณ</a>         
+	<a href="<%=url%>?<%=WebUtil.getQueryString(params + "&page_no=" + go)%>">ไธไธ€้กต</a>         
 		 </td>
           <td align="center">
-              <a href="<%=url%>?<%=WebUtil.getQueryString(params + "&page_no=" + (pageCount==0?1:pageCount))%>">ฮฒาณ</a></td>
+              <a href="<%=url%>?<%=WebUtil.getQueryString(params + "&page_no=" + (pageCount==0?1:pageCount))%>">ๅฐพ้กต</a></td>
               
               
               <td align="center"><input type="text" size="3" name="pageNo" /> <input type="button" value="go" name="tiao" onclick="go();"/>

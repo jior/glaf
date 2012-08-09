@@ -1,11 +1,11 @@
 /******************************************************/
-/* ÎÄ¼şÃû£ºuniverify.js                               */
-/* ¹¦  ÄÜ£º»ùÓÚ×Ô¶¨ÒåÊôĞÔµÄÍ³Ò»¼ì²âÓÃJavascriptº¯Êı¿â */
+/* æ–‡ä»¶åï¼šuniverify.js                               */
+/* åŠŸ  èƒ½ï¼šåŸºäºè‡ªå®šä¹‰å±æ€§çš„ç»Ÿä¸€æ£€æµ‹ç”¨Javascriptå‡½æ•°åº“ */
 /******************************************************/
 
 /*
 ================================================================================
-	¹¦ÄÜ: ÊÇ·ñÎªÓÊÕş±àÂë
+	åŠŸèƒ½: æ˜¯å¦ä¸ºé‚®æ”¿ç¼–ç 
 ================================================================================
 */
 function IsPost(str){
@@ -15,7 +15,7 @@ function IsPost(str){
 
 /*
 ================================================================================
-	¹¦ÄÜ: ÊÇ·ñÎªµç»°ºÅÂë
+	åŠŸèƒ½: æ˜¯å¦ä¸ºç”µè¯å·ç 
 ================================================================================
 */
 function IsPhone(str){
@@ -25,7 +25,7 @@ function IsPhone(str){
 
 /*
 ================================================================================
-	¹¦ÄÜ: ÊÇ·ñÎªÊÖ»úºÅÂë
+	åŠŸèƒ½: æ˜¯å¦ä¸ºæ‰‹æœºå·ç 
 ================================================================================
 */
 function IsMobile(str){
@@ -35,7 +35,7 @@ function IsMobile(str){
 
 /*
 ================================================================================
-	¹¦ÄÜ: ÊÇ·ñÎªÖĞÎÄ×Ö·û
+	åŠŸèƒ½: æ˜¯å¦ä¸ºä¸­æ–‡å­—ç¬¦
 ================================================================================
 */
 function IsChinese(str){
@@ -45,7 +45,7 @@ function IsChinese(str){
 
 /*
 ================================================================================
-	¹¦ÄÜ: ÊÇ·ñÎªÈÕÆÚ(yyyy[/-]mm[/-]dd)
+	åŠŸèƒ½: æ˜¯å¦ä¸ºæ—¥æœŸ(yyyy[/-]mm[/-]dd)
 ================================================================================
 */
 function IsDate(str){
@@ -55,7 +55,7 @@ function IsDate(str){
 
 /*
 ================================================================================
-	¹¦ÄÜ: ÊÇ·ñÎªÈÕÆÚ(yyyy[-]mm[-]dd)
+	åŠŸèƒ½: æ˜¯å¦ä¸ºæ—¥æœŸ(yyyy[-]mm[-]dd)
 ================================================================================
 */
 function IsDate(str,type){
@@ -65,9 +65,9 @@ function IsDate(str,type){
 }
 /*
 ================================================================================
-	¹¦ÄÜ: ÏŞÖÆ×Ö·û´®³¤¶È
-	²ÎÊı: minLen ×îĞ¡³¤¶È, maxLen ×î´ó³¤¶È(0´ú±íÃ»ÓĞÏŞÖÆ)
-	·µ»ØÖµ: boolean
+	åŠŸèƒ½: é™åˆ¶å­—ç¬¦ä¸²é•¿åº¦
+	å‚æ•°: minLen æœ€å°é•¿åº¦, maxLen æœ€å¤§é•¿åº¦(0ä»£è¡¨æ²¡æœ‰é™åˆ¶)
+	è¿”å›å€¼: boolean
 ================================================================================
 */
 function LenB(str){
@@ -94,9 +94,9 @@ function IsLength(str,minLen,maxLen){
 
 /*
 ================================================================================
-	¹¦ÄÜ: ÊÇ·ñÎªÔÊĞíµÄÉÏ´«ÎÄ¼şÀàĞÍ
-	²ÎÊı: limitTypeÎªÔÊĞíµÄÎÄ¼şÀàĞÍ±äÁ¿(ÓÃ,·Ö¸ô).Èç:limitType = "gif,jpg,bmp";
-	·µ»ØÖµ: boolean
+	åŠŸèƒ½: æ˜¯å¦ä¸ºå…è®¸çš„ä¸Šä¼ æ–‡ä»¶ç±»å‹
+	å‚æ•°: limitTypeä¸ºå…è®¸çš„æ–‡ä»¶ç±»å‹å˜é‡(ç”¨,åˆ†éš”).å¦‚:limitType = "gif,jpg,bmp";
+	è¿”å›å€¼: boolean
 ================================================================================
 */
 function FileType(str){
@@ -125,7 +125,7 @@ function IsUploadFileType(str,limitType){
 
 /*
 ================================================================================
-	XMLEncode(string):¶Ô×Ö·û´®½øĞĞXML±àÂë.
+	XMLEncode(string):å¯¹å­—ç¬¦ä¸²è¿›è¡ŒXMLç¼–ç .
 ================================================================================
 */
 function XMLEncode(str){
@@ -140,7 +140,7 @@ function XMLEncode(str){
 
 /*
 ================================================================================
-	CheckAll(obj):¸´Ñ¡¿òÈ«Ñ¡.
+	CheckAll(obj):å¤é€‰æ¡†å…¨é€‰.
 ================================================================================
 */
 function CheckAll(obj){
@@ -152,7 +152,7 @@ function CheckAll(obj){
 
 /*
 ================================================================================
-	CheckNone(obj):¸´Ñ¡¿òÈ«²»Ñ¡.
+	CheckNone(obj):å¤é€‰æ¡†å…¨ä¸é€‰.
 ================================================================================
 */
 function CheckNone(obj){
@@ -165,7 +165,7 @@ function CheckNone(obj){
 
 /*
 ================================================================================
-	CheckItem(obj):¸´Ñ¡¿ò·´Ñ¡.
+	CheckItem(obj):å¤é€‰æ¡†åé€‰.
 ================================================================================
 */
 function CheckItem(obj){
@@ -182,11 +182,11 @@ function CheckItem(obj){
 
 /**
 ================================================================================
- * ÅĞ¶ÏÈÕÆÚÊÇ·ñÔÚÖ¸¶¨ÈÕÆÚµÄÎ´À´¼¸ÌìÄÚ.
- * @param Date appDate ¿ªÊ¼ÈÕÆÚ.
- * @param Date futDate ½áÊøÈÕÆÚ.
- * @param int mixDays	ÖÁÉÙÌìÊı.
- * @param int maxDays	×î´óÌìÊı.
+ * åˆ¤æ–­æ—¥æœŸæ˜¯å¦åœ¨æŒ‡å®šæ—¥æœŸçš„æœªæ¥å‡ å¤©å†….
+ * @param Date appDate å¼€å§‹æ—¥æœŸ.
+ * @param Date futDate ç»“æŸæ—¥æœŸ.
+ * @param int mixDays	è‡³å°‘å¤©æ•°.
+ * @param int maxDays	æœ€å¤§å¤©æ•°.
 ================================================================================
  */
 function InDate(appDate,futDate,mixDays,maxDays)
@@ -212,7 +212,7 @@ function InDate(appDate,futDate,mixDays,maxDays)
 	}
 }
 
-/* È¡µÃ×Ö·û´®µÄ×Ö½Ú³¤¶È */
+/* å–å¾—å­—ç¬¦ä¸²çš„å­—èŠ‚é•¿åº¦ */
 function strlen(str){
   var i;
   var len = 0;
@@ -224,7 +224,7 @@ function strlen(str){
 }
 
 /* 
-¼ì²â×Ö·û´®ÊÇ·ñÎª¿Õ 
+æ£€æµ‹å­—ç¬¦ä¸²æ˜¯å¦ä¸ºç©º 
 */
 function isNull(str){
   var i;
@@ -236,7 +236,7 @@ function isNull(str){
 }
 
 /* 
-¼ì²â×Ö·û´®ÊÇ·ñÈ«ÎªÊı×Ö 
+æ£€æµ‹å­—ç¬¦ä¸²æ˜¯å¦å…¨ä¸ºæ•°å­— 
 */
 function isNumber(str){
   var number_chars = "1234567890";
@@ -248,7 +248,7 @@ function isNumber(str){
   return true;
 }
 /*
-Ğ£ÑéÊÇ·ñÎªIntegerĞÍµÄÊı¾İ,·µ»ØµÄÖµÎªÕæºÍ¼Ù,trueºÍfalse
+æ ¡éªŒæ˜¯å¦ä¸ºIntegerå‹çš„æ•°æ®,è¿”å›çš„å€¼ä¸ºçœŸå’Œå‡,trueå’Œfalse
 */
 function checkInteger(strInteger){
   if(strInteger.length==0){
@@ -263,7 +263,7 @@ function checkInteger(strInteger){
   }
 } 
 /* 
-Ğ£ÑéÊÇ·ñÎªfloatĞÍµÄÊı¾İ,·µ»ØµÄÖµÎªÕæºÍ¼Ù,trueºÍfalse;
+æ ¡éªŒæ˜¯å¦ä¸ºfloatå‹çš„æ•°æ®,è¿”å›çš„å€¼ä¸ºçœŸå’Œå‡,trueå’Œfalse;
 */
 function checkFloat(strFloat){
   if(strFloat.length==0) {
@@ -278,7 +278,7 @@ function checkFloat(strFloat){
   }
 } 
 /* 
-ÊÇ·ñĞ¡Ê±Êı×Ö¸ñÊ½ 
+æ˜¯å¦å°æ—¶æ•°å­—æ ¼å¼ 
 */
 function isHour(str){
   if(!isNumber(str)) return false;  
@@ -287,7 +287,7 @@ function isHour(str){
   return true;   
 }
 /* 
-ÊÇ·ñ·ÖÖÓÊı×Ö¸ñÊ½ 
+æ˜¯å¦åˆ†é’Ÿæ•°å­—æ ¼å¼ 
 */
 function isMinute(str){
   if(!isNumber(str)) return false;  
@@ -296,7 +296,7 @@ function isMinute(str){
   return true;   
 }
 /*
-Ğ£ÑéÊÇ·ñÎªemailĞÍµÄÊı¾İ,·µ»ØµÄÖµÎªÕæºÍ¼Ù,trueºÍfalse;
+æ ¡éªŒæ˜¯å¦ä¸ºemailå‹çš„æ•°æ®,è¿”å›çš„å€¼ä¸ºçœŸå’Œå‡,trueå’Œfalse;
 */
 function isEmail(email){
   var pattern = /[a-zA-Z0-9_.]{1,}@[a-zA-Z0-9_]{1,}.[a-zA-Z0-9_]{1,}/;
@@ -308,8 +308,8 @@ function isEmail(email){
   }
 } 
 /*
-ÅĞ¶ÏÊÇ·ñÊÇÈÕÆÚĞÍ×Ö·û´®
-ÓÃ·¨£ºisDate("2002-1-31")
+åˆ¤æ–­æ˜¯å¦æ˜¯æ—¥æœŸå‹å­—ç¬¦ä¸²
+ç”¨æ³•ï¼šisDate("2002-1-31")
 */
 function isDate(str){ 
   var reg = /^(\d{1,4})(-|\/)(\d{1,2})\2(\d{1,2})$/; 
@@ -320,8 +320,8 @@ function isDate(str){
   return (newStr==str);
 } 
 /*
-ÅĞ¶ÏÊÇ·ñÊÇÈÕÆÚĞÍ×Ö·û´®
-ÓÃ·¨£ºisDateTime("2002-1-31 12:34:56")
+åˆ¤æ–­æ˜¯å¦æ˜¯æ—¥æœŸå‹å­—ç¬¦ä¸²
+ç”¨æ³•ï¼šisDateTime("2002-1-31 12:34:56")
 */
 function isDateTime(str){ 
   var reg = /^(\d{1,4})(-|\/)(\d{1,2})\2(\d{1,2}) (\d{1,2}):(\d{1,2}):(\d{1,2})$/; 
@@ -332,31 +332,31 @@ function isDateTime(str){
   return newStr==str 
 } 
 /*
-ÅĞ¶ÏÈÕÆÚÊÇ·ñÕıÈ·
-ÓÃ·¨£ºchkDate(2002-4-16)
+åˆ¤æ–­æ—¥æœŸæ˜¯å¦æ­£ç¡®
+ç”¨æ³•ï¼šchkDate(2002-4-16)
 */
 function chkDate(sDate){ 
   var r=/\d{4}(?:-\d{1,2}){0,2}/ 
-  //ÕıÔò±í´ïÊ½£¬ÅĞ¶ÏÊÇ·ñÎªyyyy-mm-dd,yyyy-mm,yyyy¸ñÊ½ 
+  //æ­£åˆ™è¡¨è¾¾å¼ï¼Œåˆ¤æ–­æ˜¯å¦ä¸ºyyyy-mm-dd,yyyy-mm,yyyyæ ¼å¼ 
   if(sDate.match(r)==sDate){ 
-¡¡  var arr=sDate.split("-") 
-¡¡  switch(arr.length){ 
-¡¡  //¸ù¾İ²»Í¬µÄyyyy-mm-dd,yyyy-mm¸ñÊ½ÅĞ¶ÏÄêÔÂÈÕÊı×ÖÊÇ·ñÕıÈ· 
-¡¡   case 3: 
-¡¡¡¡   var tmpDate=new Date(arr[0],arr[1],arr[2]); 
-¡¡¡¡   if(tmpDate.getMonth()==arr[1] && tmpDate.getFullYear()==arr[0]) return true; 
-¡¡¡¡   break; 
-¡¡   case 2: 
-¡¡¡¡   if(arr[1]<13) return true; 
-¡¡¡¡   break; 
-¡¡   default: 
-¡¡¡¡   return false; 
-¡¡  } 
+ã€€  var arr=sDate.split("-") 
+ã€€  switch(arr.length){ 
+ã€€  //æ ¹æ®ä¸åŒçš„yyyy-mm-dd,yyyy-mmæ ¼å¼åˆ¤æ–­å¹´æœˆæ—¥æ•°å­—æ˜¯å¦æ­£ç¡® 
+ã€€   case 3: 
+ã€€ã€€   var tmpDate=new Date(arr[0],arr[1],arr[2]); 
+ã€€ã€€   if(tmpDate.getMonth()==arr[1] && tmpDate.getFullYear()==arr[0]) return true; 
+ã€€ã€€   break; 
+ã€€   case 2: 
+ã€€ã€€   if(arr[1]<13) return true; 
+ã€€ã€€   break; 
+ã€€   default: 
+ã€€ã€€   return false; 
+ã€€  } 
   } 
   return false; 
 } 
 /*
-ÅĞ¶ÏÈÕÆÚDateOneÊÇ·ñÔÚÈÕÆÚDateTwoºóÃæ
+åˆ¤æ–­æ—¥æœŸDateOneæ˜¯å¦åœ¨æ—¥æœŸDateTwoåé¢
 */
 function compareDate(DateOne,DateTwo){
   var OneMonth = DateOne.substring(5,DateOne.lastIndexOf ("-"));
@@ -375,10 +375,10 @@ function compareDate(DateOne,DateTwo){
 }
 
 /**
- * ÅĞ¶ÏÈÕÆÚÊÇ·ñÔÚÖ¸¶¨ÈÕÆÚµÄÎ´À´¼¸ÌìÄÚ.
- * @param Date appDate ²Î¿¼ÈÕÆÚ.
- * @param Date futDate ÊäÈëÈÕÆÚ.
- * @param int days	ÌìÊı.
+ * åˆ¤æ–­æ—¥æœŸæ˜¯å¦åœ¨æŒ‡å®šæ—¥æœŸçš„æœªæ¥å‡ å¤©å†….
+ * @param Date appDate å‚è€ƒæ—¥æœŸ.
+ * @param Date futDate è¾“å…¥æ—¥æœŸ.
+ * @param int days	å¤©æ•°.
  */
 function isInDate(appDate,futDate,days)
 {
@@ -407,7 +407,7 @@ function IsInDate(futDate)
 	return isInDate(curDate, futDate, 7);	
 }
 /**
- *ÅĞ¶ÏÎÄ¼şÀàĞÍÊÇ·ñÕıÈ·
+ *åˆ¤æ–­æ–‡ä»¶ç±»å‹æ˜¯å¦æ­£ç¡®
  */
 function isFile(file, fileType){
   var arr = fileType.split(",");  
@@ -420,7 +420,7 @@ function isFile(file, fileType){
 	//alert(ext + ":" + fileType);
     for(var i=0;i<arr.length;i++){
 	  //alert(arr[i]+":"+ext);
-      if(arr[i]==ext){//ÀàĞÍÆ¥Åä
+      if(arr[i]==ext){//ç±»å‹åŒ¹é…
 		  return true;
 		  break;  
 	  }
@@ -430,74 +430,74 @@ function isFile(file, fileType){
 }
 
 /* 
-*¼ì²âÖ¸¶¨ÎÄ±¾¿òÊäÈëÊÇ·ñºÏ·¨
-* trueÑéÊÕÊ§°Ü£¬false³É¹¦ 
+*æ£€æµ‹æŒ‡å®šæ–‡æœ¬æ¡†è¾“å…¥æ˜¯å¦åˆæ³•
+* trueéªŒæ”¶å¤±è´¥ï¼ŒfalseæˆåŠŸ 
 */
 function verifyInput(input){
   var image;
   var i;
 
-  /* ·Ç¿ÕĞ£Ñé */
+  /* éç©ºæ ¡éªŒ */
   if (input.nullable=="no" && isNull(input.value)){
-    alert(input.chname+"²»ÄÜÎª¿ÕÖµ");
+    alert(input.chname+"ä¸èƒ½ä¸ºç©ºå€¼");
     return true;
   }
 
-  /* ³¤¶ÈĞ£Ñé */
+  /* é•¿åº¦æ ¡éªŒ */
   var inputSize = strlen(input.value);
   var maxSize = parseInt(input.maxsize);
   var minSize = parseInt(input.minsize);
   if (inputSize>maxSize){
-    alert(input.chname + "£¬×î´ó³¤¶ÈÎª "+ maxSize +" ×Ö·û");
+    alert(input.chname + "ï¼Œæœ€å¤§é•¿åº¦ä¸º "+ maxSize +" å­—ç¬¦");
     return true;
   }
   if (minSize !=0 && inputSize<minSize){
-    alert(input.chname + "£¬×îĞ¡³¤¶ÈÎª "+ minSize +" ×Ö·û");
+    alert(input.chname + "ï¼Œæœ€å°é•¿åº¦ä¸º "+ minSize +" å­—ç¬¦");
     return true;
   }
 
-   /* Êı¾İÀàĞÍĞ£Ñé */
+   /* æ•°æ®ç±»å‹æ ¡éªŒ */
   switch(input.datatype){
 	case "int": 
 	  if (checkInteger(input.value)==false){
-		alert(input.chname+" Ó¦¸ÃÎªintÀàĞÍ");
+		alert(input.chname+" åº”è¯¥ä¸ºintç±»å‹");
 		return true;
 	  }
 	  break;
 	case "float": 
 	  if (checkFloat(input.value)==false){
-		alert(input.chname+" Ó¦¸ÃÎªfloatÀàĞÍ");
+		alert(input.chname+" åº”è¯¥ä¸ºfloatç±»å‹");
 		return true;
 	  }
 	  break;  
 	case "hour":
 	  if (isHour(input.value)==false){
-		alert(input.chname+"ÖµÓ¦¸ÃÈ«Îª0-23µÄÊı×Ö");
+		alert(input.chname+"å€¼åº”è¯¥å…¨ä¸º0-23çš„æ•°å­—");
 		return true;
 	  }
 	  break;
 	case "minute":
 	  if (isMinute(input.value)==false){
-		alert(input.chname+"ÖµÓ¦¸ÃÈ«Îª0-59µÄÊı×Ö");
+		alert(input.chname+"å€¼åº”è¯¥å…¨ä¸º0-59çš„æ•°å­—");
 		return true;
 	  }
 	  break;  
 	case "email":
 	  if (isEmail(input.value)==false){
-		alert(input.chname+"ÖµÓ¦¸ÃÎªEmailÀàĞÍ");
+		alert(input.chname+"å€¼åº”è¯¥ä¸ºEmailç±»å‹");
 		return true;
 	  }
 	  break;
 	case "date":
 	  if(isNull(input.value))return false;
 	  if (IsDate(input.value)==false){
-		alert(input.chname+"ÖµÓ¦¸ÃÎªÈÕÆÚÀàĞÍ");
+		alert(input.chname+"å€¼åº”è¯¥ä¸ºæ—¥æœŸç±»å‹");
 		return true;
 	  }
 	  break;	
 	case "file":
 	  if(!isNull(input.value) && isFile(input.value,input.filetype)==false){
-		alert(input.chname+"ÀàĞÍ²»ÕıÈ·");
+		alert(input.chname+"ç±»å‹ä¸æ­£ç¡®");
 		return true;
 	  }
 	  break;
@@ -507,17 +507,17 @@ function verifyInput(input){
 }
 
 /**
-*Ğ£ÑéÁ½¸öÈÕÆÚµÄÏÈºó
-*·µ»ØÖµ£º
-*Èç¹ûÆäÖĞÓĞÒ»¸öÈÕÆÚÎª¿Õ£¬Ğ£ÑéÍ¨¹ı,          ·µ»Øfalse
-*Èç¹ûÆğÊ¼ÈÕÆÚÔçÓÚÖÕÖ¹ÈÕÆÚ£¬Ğ£ÑéÍ¨¹ı£¬   ·µ»Øtrue
-*Èç¹ûÆğÊ¼ÈÕÆÚÍíÓÚ»òµÈÓÚÖÕÖ¹ÈÕÆÚ£¬                 ·µ»Øfalse    ²Î¿¼ÌáÊ¾ĞÅÏ¢£º ÆğÊ¼ÈÕÆÚ²»ÄÜÍíÓÚ½áÊøÈÕÆÚ¡£
+*æ ¡éªŒä¸¤ä¸ªæ—¥æœŸçš„å…ˆå
+*è¿”å›å€¼ï¼š
+*å¦‚æœå…¶ä¸­æœ‰ä¸€ä¸ªæ—¥æœŸä¸ºç©ºï¼Œæ ¡éªŒé€šè¿‡,          è¿”å›false
+*å¦‚æœèµ·å§‹æ—¥æœŸæ—©äºç»ˆæ­¢æ—¥æœŸï¼Œæ ¡éªŒé€šè¿‡ï¼Œ   è¿”å›true
+*å¦‚æœèµ·å§‹æ—¥æœŸæ™šäºæˆ–ç­‰äºç»ˆæ­¢æ—¥æœŸï¼Œ                 è¿”å›false    å‚è€ƒæç¤ºä¿¡æ¯ï¼š èµ·å§‹æ—¥æœŸä¸èƒ½æ™šäºç»“æŸæ—¥æœŸã€‚
 */
 function checkDateEarlier(strStart,strEnd)
 {
     if(IsDate(strStart) == false || IsDate(strEnd) == false)
         return false;
-    //Èç¹ûÓĞÒ»¸öÊäÈëÎª¿Õ£¬ÔòÍ¨¹ı¼ìÑé
+    //å¦‚æœæœ‰ä¸€ä¸ªè¾“å…¥ä¸ºç©ºï¼Œåˆ™é€šè¿‡æ£€éªŒ
     if (( strStart == "" ) || ( strEnd == "" ))
         return false;
     var arr1 = strStart.split("-");
@@ -541,15 +541,15 @@ function checkDateEarlier(strStart,strEnd)
 }
 
 
-/* ¼ì²âÖ¸¶¨FORM±íµ¥ËùÓĞÓ¦±»¼ì²âµÄÔªËØ£¨ÄÇĞ©¾ßÓĞ×Ô¶¨ÒåÊôĞÔµÄÔªËØ£©ÊÇ·ñºÏ·¨£¬´Ëº¯ÊıÓÃÓÚ±íµ¥µÄonsubmitÊÂ¼ş */
+/* æ£€æµ‹æŒ‡å®šFORMè¡¨å•æ‰€æœ‰åº”è¢«æ£€æµ‹çš„å…ƒç´ ï¼ˆé‚£äº›å…·æœ‰è‡ªå®šä¹‰å±æ€§çš„å…ƒç´ ï¼‰æ˜¯å¦åˆæ³•ï¼Œæ­¤å‡½æ•°ç”¨äºè¡¨å•çš„onsubmitäº‹ä»¶ */
 function verifyAll(myform){
   var i;
 
   for (i=0;i<myform.elements.length;i++){
-    /* ·Ç×Ô¶¨ÒåÊôĞÔµÄÔªËØ²»ÓèÀí²Ç */
+    /* éè‡ªå®šä¹‰å±æ€§çš„å…ƒç´ ä¸äºˆç†ç¬ */
     if (myform.elements[i].chname+""=="undefined") continue;
 
-    /* Ğ£Ñéµ±Ç°ÔªËØ */	
+    /* æ ¡éªŒå½“å‰å…ƒç´  */	
     if (verifyInput(myform.elements[i])){
       myform.elements[i].focus()      
       return false;
@@ -558,13 +558,13 @@ function verifyAll(myform){
   return true;
 }
 
-/**cssÔö¼ÓÊÂ¼ş**/
+/**csså¢åŠ äº‹ä»¶**/
 function suckerfish(type, tag, parentId) {
 	if (window.attachEvent) {
 		window.attachEvent("onload", function() {
 			var sfEls = (parentId==null)?document.getElementsByTagName(tag):document.getElementById(parentId).getElementsByTagName(tag);
 			type(sfEls);
-			//×Ô¶¯µ÷ÕûÁĞ±í¿í¶È
+			//è‡ªåŠ¨è°ƒæ•´åˆ—è¡¨å®½åº¦
 			if(document.getElementById("listDiv") && document.getElementById("screen")){
 			  document.getElementById("listDiv").style.width=document.getElementById("screen").clientWidth;
 			}
@@ -576,13 +576,13 @@ sfFocus = function(sfEls) {
 	for (var i=0; i<sfEls.length; i++) {
 		sfEls[i].onfocus=function() {
 			this.className+=" sffocus";
-			/*if(this.component=="currency"){//»õ±ÒÀàĞÍ
+			/*if(this.component=="currency"){//è´§å¸ç±»å‹
 			  parseNum(this);
 			}*/
 		}
 		sfEls[i].onblur=function() {
 			this.className=this.className.replace(new RegExp(" sffocus\\b"), "");
-			/*if(this.component=="currency"){//»õ±ÒÀàĞÍ
+			/*if(this.component=="currency"){//è´§å¸ç±»å‹
 			  parseMoney(this);
 			}*/
 		}
@@ -619,9 +619,9 @@ suckerfish(sfFocus, "TEXTAREA");
 
 /**
  * ---------------------------------------------------------------------
- * ĞŞ¸ÄÈË£ºkxr
- * ĞŞ¸ÄÈÕÆÚ:2010-06-21
- * ÃèÊö£ºÔ­À´µÄ²»¿ÉÄÜÊäÈë¸ºÊı£¬Ö÷ÒªĞŞ¸ÄÁË¶Ô¸ºÊıÊäÈëµÄ×¼Êä
+ * ä¿®æ”¹äººï¼škxr
+ * ä¿®æ”¹æ—¥æœŸ:2010-06-21
+ * æè¿°ï¼šåŸæ¥çš„ä¸å¯èƒ½è¾“å…¥è´Ÿæ•°ï¼Œä¸»è¦ä¿®æ”¹äº†å¯¹è´Ÿæ•°è¾“å…¥çš„å‡†è¾“
  * ---------------------------------------------------------------------
  **/
 function LimitNumberInput(){
@@ -650,8 +650,8 @@ function LimitNumberInput(){
 } 
 
 /*
- *parentÎª¸¸¶ÔÏóÈçform
- *tagÎªÀàĞÍ£¬Èçinput
+ *parentä¸ºçˆ¶å¯¹è±¡å¦‚form
+ *tagä¸ºç±»å‹ï¼Œå¦‚input
 */
 function attachLimitNumEvent(tag, parent){
   if (window.attachEvent) {
@@ -669,7 +669,7 @@ function attachLimitNumEvent(tag, parent){
 attachLimitNumEvent("INPUT");
 
 
-//Êı×ÖËÄÉáÎåÈë, Ö±½ÓÓÃtoFixed()
+//æ•°å­—å››èˆäº”å…¥, ç›´æ¥ç”¨toFixed()
 Number.prototype.toFixed=function(n){
   with(Math) return round(Number(this)*pow(10, n))/pow(10, n);
   /*

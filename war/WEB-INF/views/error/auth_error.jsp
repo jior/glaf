@@ -1,12 +1,12 @@
-<%@ page contentType="text/html;charset=gbk" language="java"%>
-<%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
-<%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%
 String context = request.getContextPath();
 %>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
 <link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
 <script language="javascript" src='<%=context%>/js/verify.js'></script>
@@ -27,7 +27,7 @@ String context = request.getContextPath();
   <tr>
     <td class="box-mm"><table width="200" align="center" border="0" cellspacing="0" cellpadding="5">
       <tr>
-        <td height="100" align="center">错误：您没有访问该功能的权限</td>
+        <td height="100" align="center">閿欒锛氭偍娌℃湁璁块棶璇ュ姛鑳界殑鏉冮檺</td>
         </tr>
     </table>
     </td>

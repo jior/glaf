@@ -1,6 +1,6 @@
-<%@ page contentType="text/html;charset=gbk" language="java"%>
-<%@ taglib uri="/WEB-INF/tld/c.tld" prefix="c" %>
-<%@ taglib uri="/WEB-INF/tld/fmt.tld" prefix="fmt" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.glaf.base.modules.todo.*"%>
 <%@ page import="com.glaf.base.modules.todo.model.*"%>
@@ -68,10 +68,10 @@
 	StringBuffer roleBuffer = new StringBuffer();
 	StringBuffer todoBuffer = new StringBuffer();
 
-	userBuffer.append("<option value=\"\">----ÇëÑ¡Ôñ----</option>");
-	deptBuffer.append("<option value=\"\">----ÇëÑ¡Ôñ----</option>");
-	roleBuffer.append("<option value=\"\">----ÇëÑ¡Ôñ----</option>");
-	todoBuffer.append("<option value=\"\">----ÇëÑ¡Ôñ----</option>");
+	userBuffer.append("<option value=\"\">----è¯·é€‰æ‹©----</option>");
+	deptBuffer.append("<option value=\"\">----è¯·é€‰æ‹©----</option>");
+	roleBuffer.append("<option value=\"\">----è¯·é€‰æ‹©----</option>");
+	todoBuffer.append("<option value=\"\">----è¯·é€‰æ‹©----</option>");
 
     Iterator it001 = userMap.keySet().iterator();
 	while(it001.hasNext()){
@@ -109,8 +109,8 @@
 %>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=gbk" />
-<title>»ù´¡Æ½Ì¨ÏµÍ³</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>åŸºç¡€å¹³å°ç³»ç»Ÿ</title>
 <link href="../css/site.css" rel="stylesheet" type="text/css">
 <link href="<%=context%>/css/site.css" rel="stylesheet" type="text/css">
 <script src="<%=context%>/js/main.js" language="javascript"></script>
@@ -151,23 +151,23 @@ _dynarch_menu_url = "<%=context%>/js/hmenu";
   <tr>
     <td class="box-mm"><table width="90%" border="0" align="center" cellpadding="5" cellspacing="0">
       <tr>
-        <td>ÓÃ»§´úÂë&nbsp;<select name="query_actorId"><%=userBuffer.toString()%></select></td>
-        <td>²¿ÃÅ´úÂë&nbsp;<select name="query_deptId"><%=deptBuffer.toString()%></select></td>
+        <td>ç”¨æˆ·ä»£ç &nbsp;<select name="query_actorId"><%=userBuffer.toString()%></select></td>
+        <td>éƒ¨é—¨ä»£ç &nbsp;<select name="query_deptId"><%=deptBuffer.toString()%></select></td>
 		<td>&nbsp;</td>
 		<td>&nbsp;</td>
       </tr>
 	  <tr>
-        <td>½ÇÉ«´úÂë&nbsp;<select name="query_roleId"><%=roleBuffer.toString()%></select></td>
-        <td>ToDoÊÂÏî&nbsp;<select name="query_todoId"><%=todoBuffer.toString()%></select></td>
+        <td>è§’è‰²ä»£ç &nbsp;<select name="query_roleId"><%=roleBuffer.toString()%></select></td>
+        <td>ToDoäº‹é¡¹&nbsp;<select name="query_todoId"><%=todoBuffer.toString()%></select></td>
 		<td>&nbsp;</td>
 		<td>&nbsp;</td>
       </tr>
       <tr>
-        <td>¿ªÊ¼Ê±¼ä
-        <input name="query_startDate" type="text" class="input" id="query_startDate" size="10" datatype="date" nullable="no" maxsize="20" chname="Ô¤¼Æ¿ªÊ¼Ê±¼ä" value="" searchflag=1>
+        <td>å¼€å§‹æ—¶é—´
+        <input name="query_startDate" type="text" class="input" id="query_startDate" size="10" datatype="date" nullable="no" maxsize="20" chname="é¢„è®¡å¼€å§‹æ—¶é—´" value="" searchflag=1>
          <img src="<%=context%>/images/system_pic_35.gif" style="cursor:pointer" onClick="return showCalendar('query_startDate', '%Y-%m-%d')"></td>
-        <td>½áÊøÊ±¼ä
-        <input name="query_endDate" type="text" class="input" id="query_endDate" size="10" datatype="date" nullable="no" maxsize="20" chname="Ô¤¼Æ¿ªÊ¼Ê±¼ä" value="" searchflag=1>
+        <td>ç»“æŸæ—¶é—´
+        <input name="query_endDate" type="text" class="input" id="query_endDate" size="10" datatype="date" nullable="no" maxsize="20" chname="é¢„è®¡å¼€å§‹æ—¶é—´" value="" searchflag=1>
         <img src="<%=context%>/images/system_pic_35.gif" style="cursor:pointer" onClick="return showCalendar('query_endDate', '%Y-%m-%d')"></td>
         
 		<td  class="td-no"><input type="submit" class="submit-search" value=" "></td>
@@ -183,10 +183,10 @@ _dynarch_menu_url = "<%=context%>/js/hmenu";
       <br>
 <table align="center" width="90%" border="0" cellspacing="1" cellpadding="0" class="list-box">
           <tr class="list-title">
-            <td align="center">ÊÂ&nbsp;&nbsp;Ïî</td>
-			<td width="95" align="center">ÓÃ»§</td>
-			<td width="95" align="center">²¿ÃÅ</td>
-			<td width="95" align="center">½ÇÉ«</td>
+            <td align="center">äº‹&nbsp;&nbsp;é¡¹</td>
+			<td width="95" align="center">ç”¨æˆ·</td>
+			<td width="95" align="center">éƒ¨é—¨</td>
+			<td width="95" align="center">è§’è‰²</td>
             <td width="95" align="center">PastDue</td>
             <td width="95" align="center">Caution</td>
             <td width="95" align="center">OK</td>

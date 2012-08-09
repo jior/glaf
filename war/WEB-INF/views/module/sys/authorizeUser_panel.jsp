@@ -1,6 +1,6 @@
-<%@ page contentType="text/html;charset=gbk" language="java"%>
-<%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
-<%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.glaf.base.modules.*"%>
 <%@ page import="com.glaf.base.modules.utils.*"%>
@@ -13,8 +13,8 @@ List list = (List)request.getAttribute("authorizedUser");
 %>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=gb2312"/>
-<title>XXXX»ù´¡Æ½Ì¨ÏµÍ³</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title>XXXXåŸºç¡€å¹³å°ç³»ç»Ÿ</title>
 <base target="_self">
 <link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
 <script language="javascript" src='<%=context%>/js/verify.js'></script>
@@ -46,7 +46,7 @@ function selectSysUser(referId,referTitle){
 }
 
 function cancel(form){
-  //if(confirm("ÕæµÄÒªÈ¡ÏûÊÚÈ¨Âğ£¿")){
+  //if(confirm("çœŸçš„è¦å–æ¶ˆæˆæƒå—ï¼Ÿ")){
   var obj=document.getElementsByName('id');
    for (var i=0; i<obj.length; i++) {
      var e = obj[i];
@@ -61,19 +61,19 @@ function cancel(form){
 }
 function add(){
   if($("userId").value.length==0){
-    alert("ÇëÑ¡ÔñÓÃ»§");
+    alert("è¯·é€‰æ‹©ç”¨æˆ·");
 	return;
   }
   if($("startDate").value.length==0){
-    alert("ÇëÑ¡Ôñ¿ªÊ¼ÈÕÆÚ");
+    alert("è¯·é€‰æ‹©å¼€å§‹æ—¥æœŸ");
 	return;
   }
   if($("endDate").value.length==0){
-    alert("ÇëÑ¡Ôñ½áÊøÈÕÆÚ");
+    alert("è¯·é€‰æ‹©ç»“æŸæ—¥æœŸ");
 	return;
   }
   if(checkDate($("startDate").value, $("endDate").value, true)){
-    alert("¿ªÊ¼ÈÕÆÚ²»ÄÜÍíÓÚ½áÊøÈÕÆÚ");
+    alert("å¼€å§‹æ—¥æœŸä¸èƒ½æ™šäºç»“æŸæ—¥æœŸ");
 	return;
   }
    var idNum=0;
@@ -98,19 +98,19 @@ function add(){
 		    
 		    addUserRole($("userId").value);
 		}else{
-			alert($("userName").value + "²»ÄÜÖØ¸´ÊÚÈ¨!");
+			alert($("userName").value + "ä¸èƒ½é‡å¤æˆæƒ!");
 		}
 	}else{
-		alert("²»ÄÜÊÚÈ¨¸ø¶ş¸öÈËÒÔÉÏ!");
+		alert("ä¸èƒ½æˆæƒç»™äºŒä¸ªäººä»¥ä¸Š!");
 	}
 }
 
 function save(){
 	if(userRole==''){
-		alert('ÇëÌí¼ÓÊÚÈ¨!');
+		alert('è¯·æ·»åŠ æˆæƒ!');
 		return false;
 	}
-	if(confirm("È·ÈÏÒªÊÚÈ¨Âğ£¿")){
+	if(confirm("ç¡®è®¤è¦æˆæƒå—ï¼Ÿ")){
 		document.forms[0].submit();
 		if($('btn_save')){$('btn_save').disabled=true;}
 		if($('btn_cancel2')){$('btn_cancel2').disabled=true;}
@@ -191,48 +191,48 @@ function delRow(table,id){
 		<input type="hidden" name="uid" value="<%=user.getId()%>">
 		<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="m-box">
 		  <tr>
-		    <td height="27" align="center"><b>ÓÃ»§<%=user.getName()%>[<%=user.getAccount()%>]µÄÈ¨ÏŞ</b></td>
+		    <td height="27" align="center"><b>ç”¨æˆ·<%=user.getName()%>[<%=user.getAccount()%>]çš„æƒé™</b></td>
 		  </tr>
 		  <tr>
-		    <td>ÒÑÊÚÈ¨¸ø</td>
+		    <td>å·²æˆæƒç»™</td>
 		    </tr>
 		</table>
 		<div id="listDiv" style="width:390px; height:160px;overflow-x:auto; overflow-y:auto;">
 		<table id="listTable" width="100%" border="0" cellspacing="1" cellpadding="0" class="list-box">
 		  <tr class="list-title" style="position:relative; top:expression(this.offsetParent.scrollTop-2);">
 		    <td width="10%" align="center"><input type="checkbox" name="chkall" value="checkbox" onClick="checkAll(this.form, this);checkOperation(this.form)"></td>
-		    <td width="40%" align="center">ÓÃ»§</td>
-		    <td width="50%" align="center">ÓĞĞ§ÆÚ</td>
+		    <td width="40%" align="center">ç”¨æˆ·</td>
+		    <td width="50%" align="center">æœ‰æ•ˆæœŸ</td>
 		  </tr>
 		</table>
 		</div>
 		<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
 		  <tr>
-		    <td height="22"><input type="button" name="btn_cancel" value="È¡ÏûÊÚÈ¨" onClick="cancel(this.form)" disabled></td>
+		    <td height="22"><input type="button" name="btn_cancel" value="å–æ¶ˆæˆæƒ" onClick="cancel(this.form)" disabled></td>
 		  </tr>
 		  <tr>
 		    <td height="22">&nbsp;</td>
 		  </tr>
 		  <tr>
-		    <td height="22">ÊÚÈ¨¸ø</td>
+		    <td height="22">æˆæƒç»™</td>
 		  </tr>
 		  <tr>
-		    <td height="22">ÓÃ¡¡»§:
-		    <input name="userName" type="text" class="input" size="30" title="µã»÷Ñ¡ÔñÓÃ»§" readonly onClick="selectSysUser( $('userId'), $('userName'))">
+		    <td height="22">ç”¨ã€€æˆ·:
+		    <input name="userName" type="text" class="input" size="30" title="ç‚¹å‡»é€‰æ‹©ç”¨æˆ·" readonly onClick="selectSysUser( $('userId'), $('userName'))">
 			<input type="hidden" name="userId" value="">
 			<input type="hidden" name="userEmail" value="">
 			<input type="hidden" name="userCode" value="">
 			</td>
 		  </tr>
 		  <tr>
-		    <td height="22">ÓĞĞ§ÆÚ:
-		      <input name="startDate" type="text" class="input" id="startDate" size="10" datatype="date" nullable="no" maxsize="20" chname="Ô¤¼Æ¿ªÊ¼Ê±¼ä" value="" readonly searchflag=1>
+		    <td height="22">æœ‰æ•ˆæœŸ:
+		      <input name="startDate" type="text" class="input" id="startDate" size="10" datatype="date" nullable="no" maxsize="20" chname="é¢„è®¡å¼€å§‹æ—¶é—´" value="" readonly searchflag=1>
 		      <img src="<%=context%>/images/system_pic_35.gif" style="cursor:pointer" onClick="return showCalendar('startDate', '%Y-%m-%d')"> -
-		      <input name="endDate" type="text" class="input" id="endDate" size="10" datatype="date" nullable="no" maxsize="20" chname="Ô¤¼Æ½áÊøÊ±¼ä" value="" readonly searchflag=1>
+		      <input name="endDate" type="text" class="input" id="endDate" size="10" datatype="date" nullable="no" maxsize="20" chname="é¢„è®¡ç»“æŸæ—¶é—´" value="" readonly searchflag=1>
 		      <img src="<%=context%>/images/system_pic_35.gif" style="cursor:pointer" onClick="return showCalendar('endDate', '%Y-%m-%d')"> </td>
 		  </tr>
 		  <tr>
-		    <td height="22"><input type="button" name="btn_add" value="Ìí¼ÓÊÚÈ¨" onClick="add()"></td>
+		    <td height="22"><input type="button" name="btn_add" value="æ·»åŠ æˆæƒ" onClick="add()"></td>
 		  </tr>
 		</table>
 		</html:form>
@@ -248,7 +248,7 @@ function delRow(table,id){
       </table></td>
     </tr>
 </table>
-<center><input type="button" name="btn_save" value="È·¶¨" onClick="save();">&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" name="btn_cancel2" value="ÍË³ö" onClick="self.close();"></center>
+<center><input type="button" name="btn_save" value="ç¡®å®š" onClick="save();">&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" name="btn_cancel2" value="é€€å‡º" onClick="self.close();"></center>
 </body>
 </html>
 <script type="text/javascript">

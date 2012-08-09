@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=gbk" language="java"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ page import="java.util.*"%>
 <%@ page import="java.net.*"%>
 <%@ page import="java.io.*"%>
@@ -20,12 +20,12 @@ DequeueInterface dequeue = new DequeueInterface();
 			ins = new FileInputStream(new File("d:/test.xml"));
 			byte[] b = new byte[1024];
 			if (ins == null) {
-				System.out.println("源模板文件不存在");
+				System.out.println("婧愭ā鏉挎枃浠朵笉瀛樺湪");
 			}else{
 				while (true) {
 					bytesRead = ins.read(b, 0, 1024); // return final read bytes counts
 					if (bytesRead == -1) {// end of InputStream
-						System.out.println("读取模板文件结束");
+						System.out.println("璇诲彇妯℃澘鏂囦欢缁撴潫");
 						break;
 					}
 					

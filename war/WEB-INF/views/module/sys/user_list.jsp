@@ -1,6 +1,6 @@
-<%@ page contentType="text/html;charset=gbk" language="java"%>
-<%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean" %>
-<%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.glaf.base.modules.*"%>
 <%@ page import="com.glaf.base.modules.sys.model.*"%>
@@ -15,7 +15,7 @@ List list = pager.getResults();
 
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
 <link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
 <script language="javascript" src='<%=context%>/js/verify.js'></script>
@@ -106,7 +106,7 @@ function roles(form){
 </head>
 
 <body>
-<div class="nav-title"><span class="Title">用户管理</span>&gt;&gt;
+<div class="nav-title"><span class="Title">鐢ㄦ埛绠＄悊</span>&gt;&gt;
 <%
 List nav = (List)request.getAttribute("nav");
 Iterator navIter = nav.iterator();
@@ -125,14 +125,14 @@ while(navIter.hasNext()){
 <table width="100%" border="0" cellspacing="1" cellpadding="0" class="list-box">
   <tr class="list-title"> 
     <td width="5%" align="center"> <input type="checkbox" name="chkall" value="checkbox" onClick="checkAll(this.form, this);checkOperation(this.form)">    </td>
-    <td width="5%" align="center">序号</td>
-    <td width="8%" align="center" >帐号</td>
-    <td width="10%" align="center" >姓名</td>
-    <td width="15%" align="center" >部门</td>
-    <td width="20%" align="center" >角色</td>
-    <td width="5%" align="center" >是否有效</td>
-    <td width="12%" align="center" >创建日期</td>
-    <td width="20%" align="center" >上次登陆时间</td>
+    <td width="5%" align="center">搴忓彿</td>
+    <td width="8%" align="center" >甯愬彿</td>
+    <td width="10%" align="center" >濮撳悕</td>
+    <td width="15%" align="center" >閮ㄩ棬</td>
+    <td width="20%" align="center" >瑙掕壊</td>
+    <td width="5%" align="center" >鏄惁鏈夋晥</td>
+    <td width="12%" align="center" >鍒涘缓鏃ユ湡</td>
+    <td width="20%" align="center" >涓婃鐧婚檰鏃堕棿</td>
     </tr>
   <%
 int i=0;
@@ -150,7 +150,7 @@ if(list!=null){
 		  roleName+= role.getDeptRole().getDept().getName()+role.getDeptRole().getRole().getName();
 		}
 		if(role.getAuthorized()==1){
-		  roleName+= "[代]";
+		  roleName+= "[浠";
 		}
 		roleName+= " ";		
 	  }
@@ -164,7 +164,7 @@ if(list!=null){
     <td class="td-c"><%=bean.getDepartment().getName()%>&nbsp;</td>
     <td class="td-text" title="<%=roleName%>"><%=roleName%>
 	</td>
-    <td class="td-no"><%=bean.getBlocked()==1?"否":"是"%>&nbsp;</td>
+    <td class="td-no"><%=bean.getBlocked()==1?"鍚�":"鏄�"%>&nbsp;</td>
     <td class="td-time"><%=new java.text.SimpleDateFormat("yyyy-MM-dd").format(bean.getCreateTime())%>&nbsp;</td>
     <td align="center" class="list"><%=new java.text.SimpleDateFormat("yyyy-MM-dd mm:ss").format(bean.getLastLoginTime())%>&nbsp;</td>
     </tr>
@@ -191,11 +191,11 @@ for(; i<pageSize; i++){
 </table>
 <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
   <tr> 
-    <td width="60%"> <input name="btn_add" type="button" value="增加" class="button" onClick="javascript:add();"> 
-      <input name="btn_del" type="button" value="删除" class="button" onClick="javascript:del();" disabled>
-      <input name="btn_modify" type="button" value="修改" class="button" onClick="javascript:modify(this.form);" disabled>
-	  <input name="btn_reset_pwd" type="button" value="重置密码" class="button" onClick="javascript:resetPwd(this.form);" disabled>
-      <input name="btn_role" type="button" value="角色设置" class="button" onClick="javascript:roles(this.form);" disabled></td>
+    <td width="60%"> <input name="btn_add" type="button" value="澧炲姞" class="button" onClick="javascript:add();"> 
+      <input name="btn_del" type="button" value="鍒犻櫎" class="button" onClick="javascript:del();" disabled>
+      <input name="btn_modify" type="button" value="淇敼" class="button" onClick="javascript:modify(this.form);" disabled>
+	  <input name="btn_reset_pwd" type="button" value="閲嶇疆瀵嗙爜" class="button" onClick="javascript:resetPwd(this.form);" disabled>
+      <input name="btn_role" type="button" value="瑙掕壊璁剧疆" class="button" onClick="javascript:roles(this.form);" disabled></td>
     <td width="50%"> 
       <%
 String params = WebUtil.getQueryString(request);

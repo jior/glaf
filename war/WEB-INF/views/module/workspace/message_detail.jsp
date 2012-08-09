@@ -1,6 +1,6 @@
-<%@ page contentType="text/html;charset=GBK" language="java"%>
-<%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
-<%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ page import="java.util.*"%>
 <%@ page import="java.net.*"%>
 <%@ page import="com.glaf.base.modules.*"%>
@@ -13,19 +13,19 @@
 %>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link href="../../css/site.css" type="text/css" rel="stylesheet">
 <link href="<%= request.getContextPath() %>/css/site.css" type="text/css" rel="stylesheet">
 <script type='text/javascript' src="<%= request.getContextPath() %>/js/css.js"></script>
 <script type='text/javascript' src='<%= request.getContextPath() %>/js/main.js'></script>
 <script type='text/javascript' src="<%= request.getContextPath() %>/js/verify.js"></script>
-<title>ÏûÏ¢ÄÚÈİ</title>
+<title>æ¶ˆæ¯å†…å®¹</title>
 </head>
 
 <body>
 <table width="99%" border="0" align="center" cellpadding="0" cellspacing="0">
   <tr>
-    <td class="nav-title"><span class="Title">¹¤×÷Ì¨</span>&gt;&gt; ÏûÏ¢ÄÚÈİ</td>
+    <td class="nav-title"><span class="Title">å·¥ä½œå°</span>&gt;&gt; æ¶ˆæ¯å†…å®¹</td>
   </tr>
 </table>
 <table width="99%" border="0" align="center" cellpadding="0" cellspacing="0" class="box">
@@ -46,7 +46,7 @@
 					if (sended == 1) {
 				%>
 				<tr>
-          <td width="50" class="input-box">ÊÕ¼şÈË</td>
+          <td width="50" class="input-box">æ”¶ä»¶äºº</td>
           <td><%= bean.getRecverList() %></td>
         </tr>
 				<%
@@ -55,31 +55,31 @@
 						String colorClass = "";
 						if (bean.getType() == 0) {
 							String sysType = bean.getSysType()==0?"Alarm":"News";
-							senderName = "ÏµÍ³×Ô¶¯("+sysType+")";
+							senderName = "ç³»ç»Ÿè‡ªåŠ¨("+sysType+")";
 							colorClass = "redcolor";
 						}
 				%>
 				<tr>
-          <td width="50" class="input-box">·¢¼şÈË</td>
+          <td width="50" class="input-box">å‘ä»¶äºº</td>
           <td class="<%= colorClass %>"><%= senderName %></td>
         </tr>
 				<%
 					}
 				%>
         <tr>
-          <td class="input-box">ÈÕ&nbsp;&nbsp;ÆÚ</td>
+          <td class="input-box">æ—¥&nbsp;&nbsp;æœŸ</td>
           <td><%= WebUtil.dateToString(bean.getCreateDate(), "yyyy-MM-dd HH:mm:ss") %></td>
         </tr>
         <tr>
-          <td class="input-box">Ö÷&nbsp;&nbsp;Ìâ</td>
+          <td class="input-box">ä¸»&nbsp;&nbsp;é¢˜</td>
           <td><%= bean.getTitle() %></td>
           </tr>
         <tr>
-          <td valign="top" class="input-box2">ÄÚ&nbsp;&nbsp;Èİ</td>
+          <td valign="top" class="input-box2">å†…&nbsp;&nbsp;å®¹</td>
           <td><%= StringUtil.replace(bean.getContent(), "\n", "<br>") %></td>
         </tr>
         <tr>
-          <td height="30" colspan="2" align="center"><input name="btn_close" type="button" class="button" value="¹Ø±Õ" onClick="javascript:self.close()"></td>
+          <td height="30" colspan="2" align="center"><input name="btn_close" type="button" class="button" value="å…³é—­" onClick="javascript:self.close()"></td>
         </tr>
       </table>
         </form>

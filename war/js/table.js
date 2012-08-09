@@ -1,21 +1,21 @@
 var Element = {}; 
-//´´½¨½Úµã¶ÔÏó
+//åˆ›å»ºèŠ‚ç‚¹å¯¹è±¡
 Element.CreateNode = function(tag) { 
   return document.createElement(tag) 
 } 
-//´´½¨½Úµã¶ÔÏóhtmlÄÚÈÝ
+//åˆ›å»ºèŠ‚ç‚¹å¯¹è±¡htmlå†…å®¹
 Element.CreateHtmlNode = function(tag, text) { 
   var node = Element.CreateNode(tag);
   if (text) node.innerHTML = text; 
   return node; 
 } 
-//´´½¨½Úµã¶ÔÏótextÄÚÈÝ
+//åˆ›å»ºèŠ‚ç‚¹å¯¹è±¡textå†…å®¹
 Element.CreateTextNode = function(tag, text) { 
   var node = Element.CreateNode(tag); 
   if (text) node.appendChild = document.createTextNode(text); 
   return node; 
 } 
-//Ôö¼ÓÐÐ¼ÇÂ¼
+//å¢žåŠ è¡Œè®°å½•
 function RowAdd(tableObj, tdArray) {
   var tr = Element.CreateNode("tr"); 
   var td;
@@ -27,7 +27,7 @@ function RowAdd(tableObj, tdArray) {
   
   tableObj.tBodies[0].appendChild(tr); 
 } 
-//É¾³ýÐÐ¼ÇÂ¼  
+//åˆ é™¤è¡Œè®°å½•  
 function RowDelete(tableObj, tdIdx) { 
   var nodeList = tableObj.tBodies[0]; 
   if (nodeList.childNodes.length > 0)  { 
