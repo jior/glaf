@@ -15,36 +15,36 @@ function getXMLHttpObject(){
   return C;
 }
 /**
- * Ê÷½Úµã¶ÔÏó
+ * æ ‘èŠ‚ç‚¹å¯¹è±¡
  */
 function Node(id, parentId, name, url, title,deptId){
-  this.id = id;//½Úµãid
-  this.parentId = parentId;//¸¸½Úµãid
-  this.parentNode = null;//¸¸½Úµã
-  this.name = name;//½ÚµãÃû³Æ
-  this.title = title;//½ÚµãÏÔÊ¾Ãû³Æ
+  this.id = id;//èŠ‚ç‚¹id
+  this.parentId = parentId;//çˆ¶èŠ‚ç‚¹id
+  this.parentNode = null;//çˆ¶èŠ‚ç‚¹
+  this.name = name;//èŠ‚ç‚¹åç§°
+  this.title = title;//èŠ‚ç‚¹æ˜¾ç¤ºåç§°
   this.childNodes = new Array(0);  
-  this.isBottom = false;//×îÏÂ²ã½Úµã
-  this.rootBottom = false;//¸ùÊÇ·ñÎª×îµ×²ã
-  this.isOpen = false;//ÊÇ·ñ´ò¿ª×ÓÊ÷
+  this.isBottom = false;//æœ€ä¸‹å±‚èŠ‚ç‚¹
+  this.rootBottom = false;//æ ¹æ˜¯å¦ä¸ºæœ€åº•å±‚
+  this.isOpen = false;//æ˜¯å¦æ‰“å¼€å­æ ‘
   
-  this.url = url;//½Úµãurl
+  this.url = url;//èŠ‚ç‚¹url
   
-  this.nodeId= deptId; //ĞÂÔö½ÚµãÊôĞÔnodeId ´æ·Å²¿ÃÅid
+  this.nodeId= deptId; //æ–°å¢èŠ‚ç‚¹å±æ€§nodeId å­˜æ”¾éƒ¨é—¨id
 };
 
 var context = "/glaf";
 /**
- * ¹¹Ôìº¯Êı
+ * æ„é€ å‡½æ•°
  */
 function ttTree(rootNode){
-  this.nodes = new Array(0);//½ÚµãÁĞ±í
-  this.rootNode = rootNode;//¸ù½Úµã
-  this.debugMode = false;//µ÷ÊÔÄ£Ê½
-  this.target = "_self";//µ¯³ö·½Ê½
+  this.nodes = new Array(0);//èŠ‚ç‚¹åˆ—è¡¨
+  this.rootNode = rootNode;//æ ¹èŠ‚ç‚¹
+  this.debugMode = false;//è°ƒè¯•æ¨¡å¼
+  this.target = "_self";//å¼¹å‡ºæ–¹å¼
   this.baseUrl = "";
   this.obj = "tree";//
-  this.lastClick = rootNode.id;//ÉÏ´Îµã»÷
+  this.lastClick = rootNode.id;//ä¸Šæ¬¡ç‚¹å‡»
   this.icon = {
     root		: context + '/js/dtree/img/base.gif',
     folder		: context + '/js/dtree/img/folder.gif',
@@ -62,11 +62,11 @@ function ttTree(rootNode){
     nlMinus		: context + '/js/dtree/img/nolines_minus.gif',
     loading		: context + '/js/dtree/img/loading.gif'
   };
-  this.indent = [];//¼ÇÂ¼Ã¿²ã½ÚµãÊÇ·ñÎª×îµ×²ã
+  this.indent = [];//è®°å½•æ¯å±‚èŠ‚ç‚¹æ˜¯å¦ä¸ºæœ€åº•å±‚
 };
 
 /**
- * »­³öÊ÷½á¹¹
+ * ç”»å‡ºæ ‘ç»“æ„
  */
 ttTree.prototype.draw = function(id){
   var rootDiv = null;
@@ -77,17 +77,17 @@ ttTree.prototype.draw = function(id){
   }
   rootDiv.className='ttTree';
   
-  //¸ù½Úµã
+  //æ ¹èŠ‚ç‚¹
   var nodeDiv = document.createElement("DIV");
   nodeDiv.id = "Node_" + this.rootNode.id;
   nodeDiv.name = 'Node_' + this.rootNode.id;
   nodeDiv.className = 'node';
   
-  var img = document.createElement("IMG");//Í¼±ê
+  var img = document.createElement("IMG");//å›¾æ ‡
   img.src = this.icon.folder;
   nodeDiv.appendChild(img);
   
-  var href = document.createElement("A");//Á´½Ó
+  var href = document.createElement("A");//é“¾æ¥
   href.id= "link_"+this.rootNode.id;
   href.className = 'node';
   href.href = "#";
@@ -103,32 +103,32 @@ ttTree.prototype.draw = function(id){
   childNodeDiv.style.display="block";
   rootDiv.appendChild(childNodeDiv);
 
-  //Õ¹¿ª¸ù½ÚµãÏÂËùÓĞ×Ó½Úµã
+  //å±•å¼€æ ¹èŠ‚ç‚¹ä¸‹æ‰€æœ‰å­èŠ‚ç‚¹
   this.expendNode(this.rootNode.parentId, this.rootNode.id, 1);
 }
 /**
- * »­×Ó½Úµã
+ * ç”»å­èŠ‚ç‚¹
  */
 ttTree.prototype.drawNodes = function(parentNodeDiv, node, depth){
   this.debug("depth:"+depth);
   this.nodes[this.nodes.length] = node;
   
-  if(node.childNodes.length==0){//Ã»ÓĞ×Ó½Úµã
+  if(node.childNodes.length==0){//æ²¡æœ‰å­èŠ‚ç‚¹
     var nodeDiv = document.getElementById("Child_"+node.parentId);
 	if(nodeDiv==null)return;
     nodeDiv.removeChild(parentNodeDiv);
-    //¸ü¸Äµ±Ç°½ÚµãÍ¼±êÎªpage
+    //æ›´æ”¹å½“å‰èŠ‚ç‚¹å›¾æ ‡ä¸ºpage
     this.changeNodeImg2(node);
-    return;//ÍË³ö·½·¨
+    return;//é€€å‡ºæ–¹æ³•
   }
   this.getIndent(node);
   this.debug("indent.length:"+this.indent.length);
   
-  for(var i=0; i< node.childNodes.length; i++){//±éÀú×Ó½Úµã
+  for(var i=0; i< node.childNodes.length; i++){//éå†å­èŠ‚ç‚¹
     var childNode = node.childNodes[i];
     childNode.parentNode=node;    
     
-    if(i==(node.childNodes.length-1)){//ÉèÎª×îµ×²ã
+    if(i==(node.childNodes.length-1)){//è®¾ä¸ºæœ€åº•å±‚
       childNode.isBottom = true;      
     }
     if(childNode.isBottom && childNode.parentId==this.rootNode.id){
@@ -139,39 +139,39 @@ ttTree.prototype.drawNodes = function(parentNodeDiv, node, depth){
     this.debug("isBottom:"+childNode.isBottom);
     this.debug("rootBottom:"+childNode.rootBottom);
     
-    var nodeDiv = document.createElement("DIV");//´´½¨×Ó½Úµã
+    var nodeDiv = document.createElement("DIV");//åˆ›å»ºå­èŠ‚ç‚¹
     nodeDiv.id = "Node_" + childNode.id;
     nodeDiv.name = "Node_" + childNode.id;
     nodeDiv.className = "node";
-    parentNodeDiv.appendChild(nodeDiv);//¼ÓÈëµ½¸¸½Úµã
+    parentNodeDiv.appendChild(nodeDiv);//åŠ å…¥åˆ°çˆ¶èŠ‚ç‚¹
         
     for(var n=this.indent.length-1; n>-1; n--){
-      var img = document.createElement("IMG");//¿Õ¸ñÏß
+      var img = document.createElement("IMG");//ç©ºæ ¼çº¿
       img.src = (this.indent[n]==1)?this.icon.empty:this.icon.line;
       nodeDiv.appendChild(img);
     }
     
-    var href = document.createElement("A")//Á´½Ó
+    var href = document.createElement("A")//é“¾æ¥
     href.className = "node";
     href.id= "a_"+childNode.id;
     href.href = "javascript:"+ this.obj +".expendNode("+ childNode.parentId +","+ childNode.id +","+ (depth+1) +");";
-    var img = document.createElement("IMG");//µÚÒ»¸öÍ¼±ê
+    var img = document.createElement("IMG");//ç¬¬ä¸€ä¸ªå›¾æ ‡
     img.src = childNode.isBottom?this.icon.plusBottom:this.icon.plus;
     img.id = "img1_"+childNode.id;
     img.border = "0";
     href.appendChild(img);
     nodeDiv.appendChild(href);
 
-    img = document.createElement("IMG");//µÚ¶ş¸öÍ¼±ê
+    img = document.createElement("IMG");//ç¬¬äºŒä¸ªå›¾æ ‡
     img.id = "img2_"+childNode.id;
     img.src = this.icon.folder;
     img.border = "0";
     nodeDiv.appendChild(img);
     	
-    href = document.createElement("A");//Á´½Ó
+    href = document.createElement("A");//é“¾æ¥
     href.id= "link_"+childNode.id;
     href.className = "node";
-	if(depth>1){//Ñ¡Ôñµ½¿Æ
+	if(depth>1){//é€‰æ‹©åˆ°ç§‘
       href.href = "javascript:selData('"+ childNode.nodeId +"','" + node.name + "\\\\" + childNode.name +"');";
 	}else{
 	  href.href = "javascript:selData('"+ childNode.nodeId +"','" + childNode.name +"');";
@@ -187,19 +187,19 @@ ttTree.prototype.drawNodes = function(parentNodeDiv, node, depth){
     childNodeDiv.name = "Child_" + childNode.id;
     childNodeDiv.className = "clip";
     childNodeDiv.style.display="block";
-    parentNodeDiv.appendChild(childNodeDiv);//¼ÓÈëµ½¸¸½Úµã
+    parentNodeDiv.appendChild(childNodeDiv);//åŠ å…¥åˆ°çˆ¶èŠ‚ç‚¹
   }
-  this.indent=[];//Çå¿Õ
+  this.indent=[];//æ¸…ç©º
   var rootDiv = document.getElementById("ttTree");
   this.debug(rootDiv.outerHTML);
 }
 /**
- * ¸ßÁÁ¶ÈÑ¡ÔñµÄ½Úµã
+ * é«˜äº®åº¦é€‰æ‹©çš„èŠ‚ç‚¹
  */
 ttTree.prototype.highLightNode = function(id){
   this.debug("click "+ id);
   
-  //Çå³ıÉÏ´Îµã»÷ÑùÊ½
+  //æ¸…é™¤ä¸Šæ¬¡ç‚¹å‡»æ ·å¼
   var href = document.getElementById("link_"+this.lastClick);
   href.className = "node";
   
@@ -210,26 +210,26 @@ ttTree.prototype.highLightNode = function(id){
   this.lastClick = id;
 }
 /**
- * »ñÈ¡×Ó²Ëµ¥
+ * è·å–å­èœå•
  */
 ttTree.prototype.getNodes = function(node, depth){  
   var xmlhttp = getXMLHttpObject();
   if(xmlhttp){
     var childNodeDiv = document.getElementById("Child_"+node.id);
     var nodeDiv = document.getElementById("Node_"+node.id);
-    //Ã»ÓĞ×Ó½Úµã»òÒÑ¾­×°ÔØ¹ı×Ó½Úµã
+    //æ²¡æœ‰å­èŠ‚ç‚¹æˆ–å·²ç»è£…è½½è¿‡å­èŠ‚ç‚¹
     if(childNodeDiv==null || node.childNodes.length>0){
       return;
     }
     var thisObj = this;
     
-    xmlhttp.onreadystatechange=function(){//¼¤»îÊÂ¼ş            
-      if(xmlhttp.readyState==4 && xmlhttp.status==200){//ÓĞ·µ»Ø
+    xmlhttp.onreadystatechange=function(){//æ¿€æ´»äº‹ä»¶            
+      if(xmlhttp.readyState==4 && xmlhttp.status==200){//æœ‰è¿”å›
         if(node.childNodes.length>0){
           return;
         }
         var img = document.getElementById(node.id);
-        nodeDiv.removeChild(img);//Çå³ıµÈ´ıÍ¼±ê
+        nodeDiv.removeChild(img);//æ¸…é™¤ç­‰å¾…å›¾æ ‡
         try{
           eval(xmlhttp.responseText);
                     
@@ -240,7 +240,7 @@ ttTree.prototype.getNodes = function(node, depth){
         
         thisObj.drawNodes(childNodeDiv, node, depth);
       }else{
-      	//ÌáÊ¾µÈ´ı
+      	//æç¤ºç­‰å¾…
       	var img = document.getElementById(node.id);
       	if(img==null){
       	  img = document.createElement("IMG");
@@ -256,7 +256,7 @@ ttTree.prototype.getNodes = function(node, depth){
   }
 }
 /**
- * ´ò¿ªÏÂ¼¶Ê÷
+ * æ‰“å¼€ä¸‹çº§æ ‘
  */
 ttTree.prototype.expendNode = function(parentId, nodeId, depth){
   var parentNode=null;
@@ -269,7 +269,7 @@ ttTree.prototype.expendNode = function(parentId, nodeId, depth){
   	  break;
   	}
   }
-  if(parentNode!=null){//²»ÊÇ¸ù½Úµã
+  if(parentNode!=null){//ä¸æ˜¯æ ¹èŠ‚ç‚¹
     this.debug("parentNode:"+parentNode.id);
     for(var i=0; i<parentNode.childNodes.length; i++){
   	  if(nodeId == parentNode.childNodes[i].id){
@@ -284,20 +284,20 @@ ttTree.prototype.expendNode = function(parentId, nodeId, depth){
   this.debug("node:"+node.id);
   this.debug("node.childNodes.length:"+node.childNodes.length);  
   	  
-  if(node.childNodes.length>0){//ÒÑ¾­¼ÓÔØ¹ı×Ó½Úµã
+  if(node.childNodes.length>0){//å·²ç»åŠ è½½è¿‡å­èŠ‚ç‚¹
   	var nodeDiv = document.getElementById("Child_"+node.id);
   	this.debug("display:"+nodeDiv.style.display);
   	if(nodeDiv.style.display=='block'){
   	  node.isOpen=false;
-  	  nodeDiv.style.display='none';//ÊÕÆğ×Ó½Úµã
+  	  nodeDiv.style.display='none';//æ”¶èµ·å­èŠ‚ç‚¹
   	}else{
   	  node.isOpen=true;
-  	  nodeDiv.style.display='block';//Õ¹¿ª×Ó½Úµã
+  	  nodeDiv.style.display='block';//å±•å¼€å­èŠ‚ç‚¹
   	}
-  	this.changeNodeImg(node);//¸ü¸ÄÍ¼±ê
+  	this.changeNodeImg(node);//æ›´æ”¹å›¾æ ‡
   }else{
   	node.isOpen=true;
-  	this.changeNodeImg(node);//¸ü¸ÄÍ¼±ê
+  	this.changeNodeImg(node);//æ›´æ”¹å›¾æ ‡
     this.getNodes(node, depth);
   }  
 }
@@ -305,11 +305,11 @@ ttTree.prototype.expendNode = function(parentId, nodeId, depth){
  * 
  */
 ttTree.prototype.changeNodeImg = function(node){
-  var img = document.getElementById("img1_"+node.id);//Í¼±ê1
+  var img = document.getElementById("img1_"+node.id);//å›¾æ ‡1
   if(img==null){
     return;
   }
-  if(node.isBottom){//×îµ×²ã
+  if(node.isBottom){//æœ€åº•å±‚
     if(node.isOpen){
       img.src=this.icon.minusBottom;
     }else{
@@ -323,7 +323,7 @@ ttTree.prototype.changeNodeImg = function(node){
     }
   }
   
-  img = document.getElementById("img2_"+node.id);//Í¼±ê2
+  img = document.getElementById("img2_"+node.id);//å›¾æ ‡2
   if(node.isOpen){
     img.src=this.icon.folderOpen;
   }else{
@@ -334,39 +334,39 @@ ttTree.prototype.changeNodeImg = function(node){
  * 
  */
 ttTree.prototype.changeNodeImg2 = function(node){
-  var img = document.getElementById("img1_"+node.id);//Í¼±ê1
+  var img = document.getElementById("img1_"+node.id);//å›¾æ ‡1
   if(img==null){
     return;
   }
   
-  if(node.isBottom){//×îµ×²ã
+  if(node.isBottom){//æœ€åº•å±‚
     img.src=this.icon.joinBottom;
   }else{
     img.src=this.icon.join;    
   }
   
-  img = document.getElementById("img2_"+node.id);//Í¼±ê2
+  img = document.getElementById("img2_"+node.id);//å›¾æ ‡2
   img.src=this.icon.node;
   
-  //Çå³ıÁ´½Ó
+  //æ¸…é™¤é“¾æ¥
   var href = document.getElementById("a_"+node.id);
   href.href="#";
   href.style.cursor="hand";
 }
 /**
- * ¹Ø±ÕÏÂ¼¶Ê÷
+ * å…³é—­ä¸‹çº§æ ‘
  */
 ttTree.prototype.setDebugMode = function(flag){
   this.debugMode = flag;
 }
 /**
- * µ¯³ö·½Ê½
+ * å¼¹å‡ºæ–¹å¼
  */
 ttTree.prototype.setTarget = function(target){
   this.target = target;
 }
 /**
- * ÉèÖÃurl
+ * è®¾ç½®url
  */
 ttTree.prototype.setBaseUrl = function(url){
   this.baseUrl = url;
@@ -378,10 +378,10 @@ ttTree.prototype.debug = function(msg){
   }
 }
 /**
- * »ñÈ¡½ÚµãµÄÇ¶Ì××é³É£¨´òÓ¡¿Õ¸ñ»òÊúÏß£©
+ * è·å–èŠ‚ç‚¹çš„åµŒå¥—ç»„æˆï¼ˆæ‰“å°ç©ºæ ¼æˆ–ç«–çº¿ï¼‰
  */
 ttTree.prototype.getIndent = function(node){
-  if(node.id!=this.rootNode.id){//²»ÊÇ¸ù½Úµã
+  if(node.id!=this.rootNode.id){//ä¸æ˜¯æ ¹èŠ‚ç‚¹
     if(node.isBottom){
       this.indent.push(1);
     }else{
@@ -389,7 +389,7 @@ ttTree.prototype.getIndent = function(node){
     }
     this.debug("indent[" + (this.indent.length-1) + "]:" + this.indent[this.indent.length-1]);
     
-    //Èç¹ûÓĞparentÔò¼ÌĞø
+    //å¦‚æœæœ‰parentåˆ™ç»§ç»­
   	var parentNode = null;
   	for(var i=0; i<this.nodes.length; i++){
   	  if(node.parentId == this.nodes[i].id){
@@ -397,7 +397,7 @@ ttTree.prototype.getIndent = function(node){
   	    break;
   	  }
     }
-    if(parentNode!=null){//Ç¶Ì×Ñ­»·
+    if(parentNode!=null){//åµŒå¥—å¾ªç¯
       this.getIndent(parentNode);
     }
   }
