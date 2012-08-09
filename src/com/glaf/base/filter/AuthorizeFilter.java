@@ -15,6 +15,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.glaf.base.modules.sys.model.SysUser;
+import com.glaf.base.utils.Authentication;
 
 public class AuthorizeFilter implements Filter {
 	private Log logger = LogFactory.getLog(AuthorizeFilter.class);
@@ -58,6 +59,11 @@ public class AuthorizeFilter implements Filter {
 			if (bean == null && !ignoreUrl(uri)) {// ÏÔÊ¾µÇÂ½Ò³
 				res.sendRedirect(errorUrl);
 				return;
+			} else {
+				if (bean != null) {
+					Authentication.setAuthenticatedUser(bean);
+					Authentication.setAuthenticatedAccount(bean.getAccount());
+				}
 			}
 		}
 		chain.doFilter(req, response);
