@@ -5,8 +5,6 @@
 
 <sqlMapConfig>
 
-  <sqlMap resource="config/jbpm/sqlmap/BusinessInstance.xml"/>
   <sqlMap resource="config/jbpm/sqlmap/jbpm-role-user.xml"/>
    
-
 </sqlMapConfig>
