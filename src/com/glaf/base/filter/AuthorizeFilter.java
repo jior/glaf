@@ -11,6 +11,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -52,15 +53,26 @@ public class AuthorizeFilter implements Filter {
 			// 检测用户是否已经登录
 			SysUser bean = (SysUser) req.getSession().getAttribute(loginUser);
 			String uri = req.getRequestURI();
-			logger.info(uri);
+			logger.debug(uri);
 
 			// 用户没有登录且当前页不是登录页面
-			logger.info("ignoreUrl:" + ignoreUrl(uri));
+			logger.debug("ignoreUrl:" + ignoreUrl(uri));
 			if (bean == null && !ignoreUrl(uri)) {// 显示登陆页
 				res.sendRedirect(errorUrl);
 				return;
 			} else {
 				if (bean != null) {
+					if (!bean.isSystemAdmin()) {
+						if (StringUtils.contains(uri, "/sys/role.do")
+								|| StringUtils.contains(uri,
+										"/sys/department.do")
+								|| StringUtils.contains(uri,
+										"/sys/application.do")
+								|| StringUtils.contains(uri, "/sys/todo.do")) {
+							res.sendRedirect(errorUrl);
+							return;
+						}
+					}
 					Authentication.setAuthenticatedUser(bean);
 					Authentication.setAuthenticatedAccount(bean.getAccount());
 				}
