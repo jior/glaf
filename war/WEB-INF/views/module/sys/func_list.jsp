@@ -126,6 +126,7 @@ for(; i<pageSize; i++){
 }
 %>
 </table>
+<br>
 <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
   <tr> 
     <td width="50%"><input name="btn_new" type="button" value="新增" class="button" onClick="javascript:create();">
@@ -150,22 +151,26 @@ for(; i<pageSize; i++){
     </table></td>
   </tr>
   <tr>
-    <td class="box-mm">
-<table width="95%" border="0" align="center" cellpadding="0" cellspacing="2">
-  <tr>
-    <td class="fontname_12">功能名称*</td>
-    <td><input name="funcName" type="text" size="50" class="input" datatype="string" nullable="no" maxsize="50" chname="功能名称"></td>
-  </tr>
-  <tr>
-    <td width="15%" class="fontname_12">调用方法*</td>
-    <td width="85%"><input name="funcMethod" type="text" size="50" class="input" datatype="string" nullable="no" maxsize="200" chname="调用方法"></td>
-  </tr>
-  <tr>
-    <td><input name="btn_save" type="submit" value="保存" class="button"></td>
-    <td>&nbsp;</td>
-  </tr>
-</table>
-</td>
+    <td class="box-mm"> 
+		<table width="95%" border="0" align="center" cellpadding="0" cellspacing="2">
+		  <tr>
+			<td class="fontname_12">功能名称*</td>
+			<td>
+			<input name="funcName" type="text" size="80" class="input" datatype="string" nullable="no" maxsize="80" chname="功能名称">
+			</td>
+		  </tr>
+		  <tr>
+			<td width="15%" class="fontname_12">调用方法*</td>
+			<td width="85%">
+			<input name="funcMethod" type="text" size="80" class="input" datatype="string" nullable="no" maxsize="200" chname="调用方法">
+			</td>
+		  </tr>
+		  <tr>
+			<td><input name="btn_save" type="submit" value="保存" class="button"></td>
+			<td>&nbsp;</td>
+		  </tr>
+		</table>
+	</td>
   </tr>
   <tr>
     <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -197,11 +202,11 @@ for(; i<pageSize; i++){
 <table width="95%" border="0" align="center" cellpadding="0" cellspacing="2">
   <tr>
     <td class="fontname_12">功能名称：</td>
-    <td><input name="funcName" type="text" size="50" class="input" datatype="string" nullable="no" maxsize="50" chname="功能名称"></td>
+    <td><input name="funcName" type="text" size="80" class="input" datatype="string" nullable="no" maxsize="80" chname="功能名称"></td>
   </tr>
   <tr>
     <td width="15%" class="fontname_12">调用方法：</td>
-    <td width="85%"><input name="funcMethod" type="text" size="50" class="input" datatype="string" nullable="no" maxsize="200" chname="调用方法"></td>
+    <td width="85%"><input name="funcMethod" type="text" size="80" class="input" datatype="string" nullable="no" maxsize="200" chname="调用方法"></td>
   </tr>
   <tr>
     <td><input name="btn_save" type="submit" value="保存" class="button"></td>

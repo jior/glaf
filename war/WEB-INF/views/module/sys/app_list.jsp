@@ -72,8 +72,8 @@ function func(form){
 	}     
   }
   var url="function.do?method=showFuncList&parent="+id;
-  var width=550;
-  var height=350;
+  var width=580;
+  var height=380;
   var scroll="yes";
   openWindow(url, width, height, scroll);
 }
