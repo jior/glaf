@@ -1,25 +1,29 @@
-<%@ page contentType="text/html;charset=GBK" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page import="java.util.*" %>
+<%@ page import="org.apache.commons.lang.*" %>
 <%@ page import="org.jpage.jbpm.model.*" %>
-<%@ page import="org.jpage.jbpm.cmd.*" %>
+<%@ page import="org.jpage.jbpm.context.*" %>
 <%@ page import="org.jpage.jbpm.service.*" %>
 <%@ page import="org.jpage.jbpm.datafield.*" %>
 <%@ page import="org.jpage.util.*" %>
-<%@ page import="org.apache.commons.lang.*" %>
 <%
-       StartProcessCmd cmd = new StartProcessCmd();
-		Map<String, Object> paramMap = new HashMap<String, Object>();
-		String rowId = request.getParameter("rowId");
+        ProcessContainer container = ProcessContainer.getContainer();
+ 		String rowId = request.getParameter("rowId");
 		if(rowId != null){
-			// ÉóºË±íµÄ¼ÇÂ¼ID
-			paramMap.put("rowId", rowId);
-			// Á÷³ÌÃû³Æ£¨Ó¢ÎÄµÄÃû³Æ£©
-			paramMap.put("processName", "Test");
-			// ¹¤×÷Á÷¿ØÖÆ²ÎÊı£¬ºÏ·¨µÄJSON¸ñÊ½×Ö·û´®
-			String datafields = "{tableName:'TEST'}";
-			paramMap.put("json", datafields);
-			String processInstanceId = cmd.startProcess("joy", paramMap);
-			// Èç¹ûÁ÷³ÌÊµÀı±àºÅ²»Îª¿Õ£¬ÄÇÃ´ÒÑ¾­³É¹¦´´½¨Á÷³ÌÊµÀı£¬·ñÔòÅ×³öÒì³£
+			ProcessContext ctx = new ProcessContext();
+			ctx.setRowId(rowId);// å®¡æ ¸è¡¨çš„è®°å½•ID
+			ctx.setActorId("joy");//ç”¨æˆ·è´¦æˆ·
+			ctx.setTitle("å•æ®ç¼–å·ï¼š" + rowId);
+			ctx.setProcessName("Test");
+             
+			DataField df01 = new DataField();
+			df01.setName("money");
+			df01.setValue(5000000D);
+ 
+			ctx.addDataField(df01);//å·¥ä½œæµæ§åˆ¶å‚æ•°
+
+			String processInstanceId = container.startProcess(ctx);
+			// å¦‚æœæµç¨‹å®ä¾‹ç¼–å·ä¸ä¸ºç©ºï¼Œé‚£ä¹ˆå·²ç»æˆåŠŸåˆ›å»ºæµç¨‹å®ä¾‹ï¼Œå¦åˆ™æŠ›å‡ºå¼‚å¸¸
 			if (processInstanceId != null) {
 				 out.println("<br>processInstanceId="+processInstanceId);
 				 out.println("<br>OK!");

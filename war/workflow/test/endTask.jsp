@@ -1,17 +1,13 @@
-<%@ page contentType="text/html;charset=GBK" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page import="java.util.*" %>
-<%@ page import="org.jbpm.graph.def.*" %>
-<%@ page import="org.jbpm.graph.exe.*" %>
-<%@ page import="org.jbpm.db.*" %>
-<%@ page import="org.jbpm.*" %>
+<%@ page import="org.apache.commons.lang.*" %>
 <%@ page import="org.jpage.jbpm.model.*" %>
-<%@ page import="org.jpage.jbpm.cmd.*" %>
+<%@ page import="org.jpage.jbpm.context.*" %>
 <%@ page import="org.jpage.jbpm.service.*" %>
 <%@ page import="org.jpage.jbpm.datafield.*" %>
 <%@ page import="org.jpage.util.*" %>
-<%@ page import="org.apache.commons.lang.*" %>
 <%
         RequestUtil.setRequestParameterToAttribute(request);
         Map params = new HashMap();
@@ -62,23 +58,13 @@
 		dataFields.add(datafield8);
 
 		try {
-			if(processInstanceId != null && processInstanceId.length()>0){
-		        CompleteTaskCmd cmd = new CompleteTaskCmd();
-				Map<String, Object> paramMap = new HashMap<String, Object>();
-				// 流程实例编号，如果没有设置流程实例编号，必须始终任务实例编号
-				paramMap.put("processInstanceId", processInstanceId);
-				// 任务实例编号，如果没有设置任务实例编号，必须始终流程实例编号
-				//paramMap.put("taskInstanceId", "565");
-				// 转移路径名称，可选值，如果设置了该值，流程即按该路径转移，否则根据表达式自动选择转出路径
-				//paramMap.put("transitionName", "提交下一步审核");
-				// 是否通过，通过为true，否决为false
-				paramMap.put("isAgree", isAgree);
-				// 审核意见
-				//paramMap.put("opinion", "同意！");
-				// 工作流控制参数，合法的JSON格式字符串
-				 
-				paramMap.put("dataFields", dataFields);
-				boolean isOK = cmd.completeTask(actorId, paramMap);
+			if(processInstanceId != null && processInstanceId.length()>0 && actorId != null){
+		        ProcessContainer container = ProcessContainer.getContainer();
+ 				ProcessContext ctx = new ProcessContext();
+				ctx.setActorId(actorId);
+				ctx.setProcessInstanceId(processInstanceId);
+				ctx.setDataFields(dataFields);
+				boolean isOK = container.completeTask(ctx);
 				out.println("isOK="+isOK);
 			}
 		}catch (Exception ex) {
@@ -87,7 +73,7 @@
 		}
 %>
 
-<script language="JavaScript">
+<script language="javascript">
     function submitForm(isAgree){
         document.getElementById("isAgree").value=isAgree;
 		document.iForm.bt01.disabled=true;
@@ -151,8 +137,8 @@
 	</tr>
 	<tr class="table-bar" align="middle" nowrap>
 	<td align="center" colspan="4"  nowrap> 
-	<input type="button" name="bt01" value="通过" onclick="submitForm('true');">
-	<input type="button" name="bt02" value="不通过" onclick="submitForm('false');">
+	<input type="button" name="bt01" value="閫氳繃" onclick="submitForm('true');">
+	<input type="button" name="bt02" value="涓嶉�氳繃" onclick="submitForm('false');">
 	</td>
 	</tr>
   </table>
