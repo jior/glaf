@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="GBK"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!DOCTYPE hibernate-configuration PUBLIC
           "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
@@ -172,7 +172,7 @@
     <mapping resource="org/jbpm/taskmgmt/log/SwimlaneCreateLog.hbm.xml"/>
     <mapping resource="org/jbpm/taskmgmt/log/SwimlaneAssignLog.hbm.xml"/> 
 
-    <!-- joy 增加-->
+    <!-- joy 澧炲姞-->
 	<mapping resource="org/jpage/jbpm/model/Actor.hbm.xml"/>
 	<mapping resource="org/jpage/jbpm/model/AgentInstance.hbm.xml"/>
 	<mapping resource="org/jpage/jbpm/model/DeployInstance.hbm.xml"/>
