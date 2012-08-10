@@ -59,16 +59,6 @@ public class InitBaseDataServlet extends HttpServlet {
 			ex.printStackTrace();
 			logger.error("初始化基础信息失败！");
 		}
-		// 38环境需注释以下部份，表示禁用接口接收
-		/*
-		 * AppContext.setServletContext(this.getServletContext());
-		 * 
-		 * logger.info("接口处理开始..."); if(!MappingManager.init()){
-		 * logger.error("加载接口mapping失败！接口系统数据接收线程不能启动！"); }else{
-		 * logger.info("加载接口mapping完成."); QueueManager.receiveStart(); }
-		 */
-		// InterfaceConstants.setSendable(true);
-		logger.info("接口数据发送环境准备就绪");
 
 		logger.info("耗时：" + (System.currentTimeMillis() - startTime) + " ms.");
 	}
