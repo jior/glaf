@@ -21,8 +21,10 @@ function checkForm(form){
   if(verifyAll(form)){
      if(form.newPwd.value!=form.password2.value){
 	   alert("新密码与确认密码不匹配！");
-	 }else{
-	   return true;
+	 }else {
+	   if(confirm("确定要重置“<%=bean.getName()%>”的密码吗？")){
+	       return true;
+	   }
 	 }
   }
    return false;
