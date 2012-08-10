@@ -36,7 +36,8 @@ import com.glaf.base.utils.MyBeanUtils;
  * 
  */
 public class AbstractSpringDao extends HibernateDaoSupport {
-	private static final Log logger = LogFactory.getLog(AbstractSpringDao.class);
+	private static final Log logger = LogFactory
+			.getLog(AbstractSpringDao.class);
 
 	public AbstractSpringDao() {
 		logger.info("AbstractSpringDao init");
@@ -335,13 +336,8 @@ public class AbstractSpringDao extends HibernateDaoSupport {
 		try {
 			list = getHibernateTemplate().find(query, values);
 		} catch (Exception ex) {
-			logger.error("执行出错，位置：AbstractSpringDao.getList(query,values,types)");
-			logger.error(ex.getLocalizedMessage());
-			list = null;
+			logger.error(ex);
 		}
-		// if (list != null && list.size() == 0) {
-		// list = null;
-		// }
 		return list;
 	}
 
@@ -595,7 +591,7 @@ public class AbstractSpringDao extends HibernateDaoSupport {
 		}
 		System.out.println("getResutlTotalByQuery  query:" + query);
 	}
- 
+
 	/**
 	 * 根据sql拿记录数
 	 * 
