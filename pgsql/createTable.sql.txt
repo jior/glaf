@@ -233,6 +233,30 @@ CREATE TABLE sys_todo_instance(
         PRIMARY KEY (id)
     );
 
+  CREATE TABLE sys_scheduler (
+        id varchar(50)  NOT NULL,
+	autoStartup int4,
+        createBy varchar(255),
+        createDate timestamp,
+	title varchar(200),
+        content varchar(500),
+	startDate timestamp,
+        endDate timestamp,
+        expression_ varchar(500),
+        jobClass varchar(200),
+        locked_ int4,
+        priority_ int4,
+        repeatCount int4,
+        repeatInterval int4,
+        startDelay int4,
+        startup_ int4,
+        taskName varchar(200),
+        taskType varchar(50),
+        threadSize int4,
+	attribute_ varchar(500),
+        PRIMARY KEY (id)
+    );
+
 CREATE TABLE message(
         id int8 NOT NULL,
         type int4,

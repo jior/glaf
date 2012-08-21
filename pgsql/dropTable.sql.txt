@@ -14,6 +14,7 @@ DROP TABLE sys_membership;
 DROP TABLE sys_todo;
 DROP TABLE sys_todo_instance;
 DROP TABLE sys_workcalendar;
+DROP TABLE sys_scheduler;
 DROP TABLE message;
 DROP TABLE mymenu;
 DROP TABLE subjectcode;
