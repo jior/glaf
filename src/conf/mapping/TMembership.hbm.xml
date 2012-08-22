@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.glaf.base.modules.todo.model.TMembership" table="sys_membership"
+		dynamic-update="true" dynamic-insert="true">
+		<id column="ID_" name="id" type="long">
+			<generator class="native" />
+		</id>
+		<property column="ACTORID_" name="actorId" type="string" />
+		<property column="SUPERIORID_" name="superiorId" type="string" />
+		<property column="MODIFYDATE_" name="modifyDate" type="timestamp" />
+		<property column="ATTRIBUTE_" name="attribute" type="string" />
+	</class>
+</hibernate-mapping>

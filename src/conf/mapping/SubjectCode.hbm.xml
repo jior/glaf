@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.glaf.base.modules.sys.model">
+    <class name="SubjectCode" 
+           table="SubjectCode" 
+           dynamic-update="true"
+           dynamic-insert="true">
+           
+        <id name="id" type="long" unsaved-value="0">
+            <column name="id" not-null="true"/>
+            <generator class="native"/>
+        </id>
+        
+        <property name="parent" type="long" column="parent"/>
+        <property name="subjectCode" type="string" column="subjectCode"/>
+        <property name="subjectName" type="string" column="subjectName"/>        
+        <property name="sort" type="int" column="sort"/>
+    </class>
+</hibernate-mapping>

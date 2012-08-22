@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.glaf.base.modules.sys.model">
+    <class name="Scheduler" table="sys_scheduler" dynamic-update="true" dynamic-insert="true">
+        <id name="id" type="string" unsaved-value="null">
+			<column name="id" not-null="true" />
+			<generator class="assigned" />
+		</id>
+        <property name="taskName" column="taskName" type="string" length="200"/>
+        <property name="taskType" column="taskType" type="string" length="50"/>
+        <property name="jobClass" column="jobClass" type="string" length="200"/>
+        <property name="title" column="title" type="string" length="200"/>
+        <property name="content" column="content" type="string" length="500"/>
+        <property name="startDate" column="startDate" type="timestamp"/>
+        <property name="endDate" column="endDate" type="timestamp" />
+        <property name="threadSize" column="threadSize" type="int" />
+        <property name="repeatCount" column="repeatCount" type="int"/>
+        <property name="repeatInterval" column="repeatInterval" type="int" />
+        <property name="startDelay" column="startDelay" type="int"/>
+        <property name="priority" column="priority_" type="int" />
+        <property name="locked" column="locked_" type="int" />
+        <property name="startup" column="startup_" type="int"/>
+        <property name="autoStartup" column="autoStartup" type="int"/>
+        <property name="expression" column="expression_" type="string" length="500"/>
+        <property name="createBy" column="createBy" type="string" length="50"/>
+        <property name="createDate" column="createDate" type="timestamp"/>
+		<property name="attribute" column="attribute_" type="string" length="500"/>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.glaf.base.modules.todo.model.ToDoInstance" table="sys_todo_instance"
+		dynamic-update="true" dynamic-insert="true">
+		<id column="id" name="id" type="long">
+			<generator class="native" />
+		</id>
+		<property column="actorId" name="actorId" type="string" />
+		<property column="actorName" name="actorName" type="string" />
+		<property column="title" name="title" type="string" />
+		<property column="content" name="content" type="string" />
+		<property column="provider" name="provider" type="string" />
+		<property column="link" name="link" type="string" />
+		<property column="linkType" name="linkType" type="string" />
+		<property column="createDate" name="createDate" type="timestamp" />
+		<property column="startDate" name="startDate" type="timestamp" />
+		<property column="endDate" name="endDate" type="timestamp" />
+		<property column="alarmDate" name="alarmDate" type="timestamp" />
+		<property column="pastDueDate" name="pastDueDate" type="timestamp" />
+		<property column="taskInstanceId" name="taskInstanceId" type="string" />
+		<property column="processInstanceId" name="processInstanceId"
+			type="string" />
+		<property column="deptId" name="deptId" type="long" />
+		<property column="deptName" name="deptName" type="string" />
+		<property column="roleId" name="roleId" type="long" />
+		<property column="roleCode" name="roleCode" type="string" />
+		<property column="rowId" name="rowId" type="string" />
+		<property column="todoId" name="todoId" type="long" />
+		<property column="appId" name="appId" type="int" />
+		<property column="moduleId" name="moduleId" type="int" />
+		<property column="objectId" name="objectId" type="string" />
+		<property column="objectValue" name="objectValue" type="string" />
+		<property column="versionNo" name="versionNo" type="long" />
+	</class>
+</hibernate-mapping>
