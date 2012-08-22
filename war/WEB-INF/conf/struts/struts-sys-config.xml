@@ -7,7 +7,8 @@
   <form-beans>
     <form-bean name="DictoryForm" type="com.glaf.base.modules.sys.actionform.DictoryForm"/>
     <form-bean name="AttachmentForm" type="com.glaf.base.modules.sys.actionform.AttachmentForm"/>
-    <form-bean name="SubjectCodeForm" type="com.glaf.base.modules.sys.actionform.SubjectCodeForm"/>    
+    <form-bean name="SubjectCodeForm" type="com.glaf.base.modules.sys.actionform.SubjectCodeForm"/> 
+	<form-bean name="SchedulerForm" type="com.glaf.base.modules.sys.actionform.SchedulerForm"/>
   </form-beans>
   
   <!--Action Mapping Definitions-->
@@ -176,6 +177,16 @@
             type="org.springframework.web.struts.DelegatingActionProxy">
       <forward name="show_list" path="/WEB-INF/views/module/todo/show_list.jsp"/>
       <forward name="show_modify" path="/WEB-INF/views/module/todo/show_modify.jsp"/>
+    </action>
+
+    <action path="/sys/scheduler"
+            parameter="method"
+            scope="request"
+            name="SchedulerForm"
+            type="org.springframework.web.struts.DelegatingActionProxy">
+      <forward name="show_list" path="/WEB-INF/views/module/sys/scheduler_list.jsp"/>
+      <forward name="show_modify" path="/WEB-INF/views/module/sys/scheduler_modify.jsp"/>
+      <forward name="go_list" path="/sys/scheduler.do?method=showList"/>      
     </action>
 
   </action-mappings>

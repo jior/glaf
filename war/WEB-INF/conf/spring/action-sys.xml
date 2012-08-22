@@ -112,6 +112,12 @@
 		</property>
 	</bean>
 
+	<bean name="/sys/scheduler" class="com.glaf.base.modules.sys.action.SchedulerAction">
+		<property name="schedulerService">
+			<ref bean="schedulerProxy" />
+		</property>
+	</bean>
+
 	<bean name="/sys/todo" class="com.glaf.base.modules.todo.action.TodoAction">
 		<property name="todoService">
 			<ref bean="todoProxy" />

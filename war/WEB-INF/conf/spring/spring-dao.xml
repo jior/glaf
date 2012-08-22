@@ -22,6 +22,11 @@
 				<prop key="change*">PROPAGATION_REQUIRED</prop>
 				<prop key="sort*">PROPAGATION_REQUIRED</prop>
 				<prop key="do*">PROPAGATION_REQUIRED</prop>
+				<prop key="start*">PROPAGATION_REQUIRED</prop>
+				<prop key="restart*">PROPAGATION_REQUIRED</prop>
+				<prop key="stop*">PROPAGATION_REQUIRED</prop>
+				<prop key="shutdown*">PROPAGATION_REQUIRED</prop>
+				<prop key="locked*">PROPAGATION_REQUIRED</prop>
 				<prop key="sendMessage">PROPAGATION_REQUIRED</prop>
 				<prop key="doIDByNO">PROPAGATION_REQUIRED</prop>
 				<prop key="saveDetailFromExel">PROPAGATION_REQUIRED</prop>
