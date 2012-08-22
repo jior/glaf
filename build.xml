@@ -49,7 +49,7 @@
 			<fileset dir="." includes="*.bat,*.xml, src/**/*.*,mapping/**/*.xml"  
 			             excludes="**/*.cvs,**/*.bak,**/*.tmp,**/*.scc,**/*.svn" />
 		</jar>
-	    <jar jarfile="${jarfile}" basedir="${classes.dir}"/>
+	    <jar jarfile="${jarfile}" basedir="${classes.dir}"  includes="**/*.class" excludes="**/test/**" />
     </target>
 	
 	<!-- 中文资源文件转码任务 -->
