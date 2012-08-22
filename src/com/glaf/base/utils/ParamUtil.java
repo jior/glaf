@@ -1,9 +1,11 @@
 package com.glaf.base.utils;
 
 import java.text.DateFormat;
-import java.util.Date;
+import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.lang.StringUtils;
 
 /**
  * <p>
@@ -14,6 +16,141 @@ import javax.servlet.http.HttpServletRequest;
  * </p>
  */
 public class ParamUtil {
+	
+	public static Object get(Map<String, Object> dataMap, String key) {
+		if (dataMap == null || key == null) {
+			return null;
+		}
+		Object value = dataMap.get(key);
+		return value;
+	}
+
+	public static Date getDate(Map<String, Object> dataMap, String key) {
+		Date result = null;
+		if (dataMap == null || key == null) {
+			return null;
+		}
+		Object value = dataMap.get(key);
+		if (value != null) {
+			if (value instanceof String) {
+				result = DateTools.toTimestamp(value.toString());
+			} else if (value instanceof Date) {
+				result = (Date) value;
+			}
+		}
+		return result;
+	}
+
+	public static double getDouble(Map<String, Object> dataMap, String key) {
+		double result = 0.0;
+		Object value = dataMap.get(key);
+		if (value != null && StringUtils.isNotEmpty(value.toString())) {
+			if (value instanceof String) {
+				String tmp = (String) value;
+				result = Double.valueOf(tmp);
+			} else if (value instanceof Integer) {
+				Integer x = (Integer) value;
+				result = x.doubleValue();
+			} else if (value instanceof Long) {
+				Long x = (Long) value;
+				result = x.doubleValue();
+			} else if (value instanceof Double) {
+				Double x = (Double) value;
+				result = x.doubleValue();
+			}
+		}
+		return result;
+	}
+
+	public static int getInt(Map<String, Object> dataMap, String key) {
+		int result = 0;
+		Object value = dataMap.get(key);
+		if (value != null && StringUtils.isNotEmpty(value.toString())) {
+			if (value instanceof String) {
+				String tmp = (String) value;
+				result = Integer.valueOf(tmp);
+			} else if (value instanceof Integer) {
+				Integer x = (Integer) value;
+				result = x.intValue();
+			} else if (value instanceof Long) {
+				Long x = (Long) value;
+				result = x.intValue();
+			} else if (value instanceof Double) {
+				Double x = (Double) value;
+				result = x.intValue();
+			}
+		}
+		return result;
+	}
+
+	public static long getLong(Map<String, Object> dataMap, String key) {
+		long result = 0;
+		Object value = dataMap.get(key);
+		if (value != null && StringUtils.isNotEmpty(value.toString())) {
+			if (value instanceof String) {
+				String tmp = (String) value;
+				result = Long.valueOf(tmp);
+			} else if (value instanceof Integer) {
+				Integer x = (Integer) value;
+				result = x.intValue();
+			} else if (value instanceof Long) {
+				Long x = (Long) value;
+				result = x.longValue();
+			} else if (value instanceof Double) {
+				Double x = (Double) value;
+				result = x.longValue();
+			}
+		}
+		return result;
+	}
+
+	public static String getString(Map<String, Object> dataMap, String key) {
+		String result = null;
+		if (dataMap == null || key == null) {
+			return null;
+		}
+		Object value = dataMap.get(key);
+		if (value != null) {
+			if (value instanceof String) {
+				result = (String) value;
+			} else if (value instanceof Date) {
+				result = DateTools.getDate((Date) value);
+			} else {
+				result = value.toString();
+			}
+		}
+		return result;
+	}
+
+	public static String getString(Map<String, Object> dataMap, String key,
+			String defaultValue) {
+		String result = defaultValue;
+		if (dataMap == null || key == null) {
+			return result;
+		}
+		Object value = dataMap.get(key);
+		if (value != null) {
+			if (value instanceof String) {
+				result = (String) value;
+			} else {
+				result = value.toString();
+			}
+		}
+		return result;
+	}
+
+	public static boolean isNotEmpty(Map<String, Object> paramMap, String name) {
+		if (paramMap != null && paramMap.get(name) != null) {
+			Object obj = paramMap.get(name);
+			if (obj instanceof Collection<?>) {
+				Collection<?> rows = (Collection<?>) obj;
+				if (rows != null && rows.size() > 0) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 
 	/**
 	 * »ñÈ¡×Ö¶ÎÖµ
