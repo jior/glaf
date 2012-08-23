@@ -31,6 +31,18 @@ _dynarch_menu_url = "<%=contextPath%>/js/hmenu";
      return this.replace(/(^\s*)|(\s*$)/g, "");
   }
 
+ function check_integer(xx){
+	 if (!(event.keyCode==45 || (event.keyCode>=48 && event.keyCode<=57))) {
+		alert("该字段只能输入数字！");
+		return false;
+	 }
+	var x = xx.value*1;
+	if(x >2147483647 || x <-2147483648){
+		 return false;
+	 }
+	 return true;
+ }
+
  function submitRequest() {
     var taskName = document.schedulerForm.taskName.value.trim();
 	var title = document.schedulerForm.title.value.trim();
