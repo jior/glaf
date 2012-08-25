@@ -4,7 +4,7 @@
 
 --重新创建hibernate的SEQ
 --drop sequence hibernate_sequence;
-CREATE sequence hibernate_sequence START WITH 1000 increment BY 1 no maxvalue no minvalue cache 20 no cycle;
+CREATE sequence hibernate_sequence START WITH 10000 increment BY 1 no maxvalue no minvalue cache 20 no cycle;
 
 
 CREATE TABLE sys_access(
