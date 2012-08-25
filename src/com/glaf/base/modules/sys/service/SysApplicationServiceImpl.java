@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.glaf.base.context.ApplicationContext;
 import com.glaf.base.dao.AbstractSpringDao;
 import com.glaf.base.modules.sys.SysConstants;
 import com.glaf.base.modules.sys.model.SysApplication;
@@ -16,7 +17,8 @@ import com.glaf.base.modules.utils.ContextUtil;
 import com.glaf.base.utils.PageResult;
 
 public class SysApplicationServiceImpl implements SysApplicationService {
-	private static final Log logger = LogFactory.getLog(SysApplicationServiceImpl.class);
+	private static final Log logger = LogFactory
+			.getLog(SysApplicationServiceImpl.class);
 	private SysTreeService sysTreeService;
 	private AbstractSpringDao abstractDao;
 
@@ -311,9 +313,11 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 				SysApplication bean = (SysApplication) iter.next();
 				menu.append("<li>");
 				menu.append("<a href=\"javascript:jump('");
-				//System.out.println("ContextUtil.getContextPath():"+ContextUtil.getContextPath());
-				if (ContextUtil.getContextPath() != null) {
-					menu.append(ContextUtil.getContextPath());
+				// System.out.println("ContextUtil.getContextPath():"+ContextUtil.getContextPath());
+				if (bean.getUrl().startsWith("/")) {
+					if (ApplicationContext.getContextPath() != null) {
+						menu.append(ApplicationContext.getContextPath());
+					}
 				}
 				menu.append(bean.getUrl());
 				menu.append("',");

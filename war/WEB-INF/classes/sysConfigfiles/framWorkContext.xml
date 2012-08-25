@@ -104,7 +104,8 @@
 	</bean>
 
 	<!-- 配置事务控制对象 -->    
-	<bean class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+	<bean id="sysTransactionInterceptorBeanCreator" 
+	      class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
 		<!-- 所有以DAO结尾的bean都进行事务控制 -->
 		<property name="beanNames">
 		   <list>

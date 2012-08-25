@@ -1,10 +1,13 @@
 package com.glaf.base.utils;
 
+import java.beans.PropertyDescriptor;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -14,9 +17,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
-import org.jpage.util.Tools;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.jpage.util.DateTools;
 
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -26,6 +32,7 @@ import com.glaf.base.modules.sys.SysConstants;
 import com.glaf.base.modules.sys.model.SysUser;
 
 public class RequestUtil {
+	protected final static Log logger = LogFactory.getLog(RequestUtil.class);
 
 	private static Configuration conf = BaseConfiguration.create();
 
@@ -557,6 +564,106 @@ public class RequestUtil {
 		return defaultValue;
 	}
 
+	public static Object getValue(Class type, String propertyValue) {
+		if (type == null || propertyValue == null) {
+			return null;
+		}
+		Object value = null;
+		try {
+			if (type == String.class) {
+				value = propertyValue;
+			} else if ((type == Integer.class) || (type == int.class)) {
+				if (propertyValue.indexOf(',') != -1) {
+					propertyValue = propertyValue.replaceAll(",", "");
+				}
+				value = new Integer(propertyValue);
+			} else if ((type == Long.class) || (type == long.class)) {
+				if (propertyValue.indexOf(',') != -1) {
+					propertyValue = propertyValue.replaceAll(",", "");
+				}
+				value = new Long(propertyValue);
+			} else if ((type == Float.class) || (type == float.class)) {
+				if (propertyValue.indexOf(',') != -1) {
+					propertyValue = propertyValue.replaceAll(",", "");
+				}
+				value = new Float(propertyValue);
+			} else if ((type == Double.class) || (type == double.class)) {
+				if (propertyValue.indexOf(',') != -1) {
+					propertyValue = propertyValue.replaceAll(",", "");
+				}
+				value = new Double(propertyValue);
+			} else if ((type == Boolean.class) || (type == boolean.class)) {
+				value = Boolean.valueOf(propertyValue);
+			} else if ((type == Character.class) || (type == char.class)) {
+				value = new Character(propertyValue.charAt(0));
+			} else if ((type == Short.class) || (type == short.class)) {
+				if (propertyValue.indexOf(',') != -1) {
+					propertyValue = propertyValue.replaceAll(",", "");
+				}
+				value = new Short(propertyValue);
+			} else if ((type == Byte.class) || (type == byte.class)) {
+				value = new Byte(propertyValue);
+			} else if (type == java.util.Date.class) {
+				value = DateTools.toDate(propertyValue);
+			} else if (type == java.sql.Date.class) {
+				value = DateTools.toDate(propertyValue);
+			} else if (type == java.sql.Timestamp.class) {
+				value = DateTools.toDate(propertyValue);
+			} else if (type.isAssignableFrom(List.class)) {
+			} else if (type.isAssignableFrom(Set.class)) {
+			} else if (type.isAssignableFrom(Collection.class)) {
+			} else if (type.isAssignableFrom(Map.class)) {
+			} else {
+				value = propertyValue;
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			throw new RuntimeException(ex);
+		}
+		return value;
+	}
+
+	public static void populate(Object model, Map dataMap) {
+		PropertyDescriptor[] propertyDescriptor = PropertyUtils
+				.getPropertyDescriptors(model);
+		for (int i = 0; i < propertyDescriptor.length; i++) {
+			PropertyDescriptor descriptor = propertyDescriptor[i];
+			String propertyName = descriptor.getName();
+			if (propertyName.equalsIgnoreCase("class")) {
+				continue;
+			}
+			String value = null;
+			Object obj = null;
+			Object o = dataMap.get(propertyName);
+			if (o != null && o instanceof String) {
+				value = (String) o;
+			} else {
+				obj = o;
+			}
+			try {
+
+				Class clazz = descriptor.getPropertyType();
+				if(obj == null && value != null){
+				  obj = getValue(clazz, value);
+				}
+				
+				if (obj != null) {
+					if (logger.isDebugEnabled()) {
+						logger.debug("property name:" + propertyName);
+						logger.debug("property value:" + obj.toString());
+						logger.debug("property class name:"
+								+ obj.getClass().getName());
+					}
+					PropertyUtils.setProperty(model, propertyName, obj);
+				}
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				logger.error(dataMap);
+				logger.error(ex);
+			}
+		}
+	}
+
 	public static void setLoginUser(HttpServletRequest request, SysUser bean) {
 		HttpSession session = request.getSession(false);
 		session.setAttribute(SysConstants.LOGIN, bean);
@@ -574,18 +681,35 @@ public class RequestUtil {
 		session.setAttribute(org.jpage.util.Constant.LOGIN_USER_USERNAME,
 				user.getActorId());
 
+		logger.info("------------------------xxxx------------------------------------");
+		logger.info("------------------------xxxx------------------------------------");
+		logger.info("------------------------xxxx------------------------------------");
+		logger.info("------------------------xxxx------------------------------------");
+		logger.info("------------------------xxxx------------------------------------");
+		logger.info("------------------------xxxx------------------------------------");
+		logger.info("------------------------xxxx------------------------------------");
 		try {
-			String className = conf.get("session.user.className");
-			String keyName = conf.get("session.user.key");
+			String className = conf.get("session_user_className");
+			String keyName = conf.get("session_user_keyName");
+			logger.info(className + " = " + keyName);
 			if (className != null && keyName != null) {
-				Object obj = ClassUtil.instantiateObject("className");
+				Object obj = ClassUtil.instantiateObject(className);
 				Map<String, Object> dataMap = new HashMap<String, Object>();
 				dataMap.put("userId", bean.getAccount());
 				dataMap.put("userName", bean.getName());
 				dataMap.put("email", bean.getEmail());
 				dataMap.put("ip", getIPAddress(request));
-				Tools.populate(obj, dataMap);
+				dataMap.put("flg", true);
+				populate(obj, dataMap);
 				session.setAttribute(keyName, obj);
+				logger.info("------------------------xxxx------------------------------------");
+				logger.info("------------------------xxxx------------------------------------");
+				logger.info("------------------------xxxx------------------------------------");
+				logger.info("------------------------xxxx------------------------------------");
+				logger.info("------------------------xxxx------------------------------------");
+				logger.info("------------------------xxxx------------------------------------");
+				logger.info("------------------------xxxx------------------------------------");
+				logger.info(session.getAttribute(keyName));
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();

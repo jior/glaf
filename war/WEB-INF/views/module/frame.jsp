@@ -16,9 +16,9 @@ String menu = (String)session.getAttribute(SysConstants.MENU);
 
 MyMenuService myMenuService = (MyMenuService) wac.getBean("myMenuService");
 List menuList = myMenuService.getMyMenuList(user.getId());
-String context = request.getContextPath();
-com.glaf.base.modules.utils.ContextUtil.getInstance().setContextPath(context);
-
+String contextPath = request.getContextPath();
+com.glaf.base.modules.utils.ContextUtil.getInstance().setContextPath(contextPath);
+//System.out.println("-----------------------------------------contextPath:"+contextPath);
 MessageService messageService = (MessageService) wac.getBean("messageService");
 int msgPageSize = 5;
 PageResult messagePager = messageService.getNoReadList(user.getId(), new HashMap(), 1, msgPageSize);
@@ -30,28 +30,28 @@ int count = 0;
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>基础平台系统</title>
 <link href="../css/site.css" rel="stylesheet" type="text/css">
-<link href="<%=context%>/css/site.css" rel="stylesheet" type="text/css">
-<script src="<%=context%>/js/main.js" language="javascript"></script>
+<link href="<%=contextPath%>/css/site.css" rel="stylesheet" type="text/css">
+<script src="<%=contextPath%>/js/main.js" language="javascript"></script>
 <style type="text/css"> 
-@import url("<%=context%>/js/hmenu/skin-yp.css");
+@import url("<%=contextPath%>/js/hmenu/skin-yp.css");
 .STYLE1 {color: #FF0000}
 </style>
 <script type="text/javascript">
-_dynarch_menu_url = "<%=context%>/js/hmenu";
+_dynarch_menu_url = "<%=contextPath%>/js/hmenu";
 </script>
-<script type="text/javascript" src="<%=context%>/js/hmenu/hmenu.js"></script>
-<script type="text/javascript" src="<%=context%>/js/main.js"></script>
-<script type="text/javascript" src="<%=context%>/js/site.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/js/hmenu/hmenu.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/js/main.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/js/site.js"></script>
 <script type="text/javascript">
 <!--
   function openMoreMsg() {
-	  openWindow('<%=context%>/workspace/message.do?method=showReceiveList', 600, 450);
+	  openWindow('<%=contextPath%>/workspace/message.do?method=showReceiveList', 600, 450);
 	}
 	function openMsg(id) {
-		openWindow('<%=context%>/workspace/message.do?method=showMessage&id=' + id, 600, 450);
+		openWindow('<%=contextPath%>/workspace/message.do?method=showMessage&id=' + id, 600, 450);
 	}
 function modifyInfo(){	
-  var url="<%=context%>/sys/user.do?method=prepareModifyInfo";
+  var url="<%=contextPath%>/sys/user.do?method=prepareModifyInfo";
   var width=450;
   var height=350;
   var scroll="no";
@@ -59,7 +59,7 @@ function modifyInfo(){
 }
 
 function modifyPwd(){	
-  var url="<%=context%>/sys/user.do?method=prepareModifyPwd";
+  var url="<%=contextPath%>/sys/user.do?method=prepareModifyPwd";
   var width=450;
   var height=250;
   var scroll="no";
@@ -67,14 +67,14 @@ function modifyPwd(){
 }
 
 function authorize(){	
-  var url="<%=context%>/sys/sysUserRole.do?method=showSysAuth";
+  var url="<%=contextPath%>/sys/sysUserRole.do?method=showSysAuth";
   var width=400;
   var height=380;
   var scroll="no";
   openWindow(url, width, height, scroll);	
 }
 function exit(){
-  var url="<%=context%>/sys/authorize.do?method=logout";
+  var url="<%=contextPath%>/sys/authorize.do?method=logout";
   if(confirm("真的要退出系统吗？")){
     window.location=url;
   }
@@ -82,19 +82,20 @@ function exit(){
 function window.onbeforeunload(){
 	if(event.clientX>document.body.clientWidth&&event.clientY<0||event.altKey){
 		//window.event.returnValue="确定要退出基础平台系统吗?";
-		window.open("<%=context%>/sys/authorize.do?method=logout");
+		window.open("<%=contextPath%>/sys/authorize.do?method=logout");
 	}
 }
 function openDocument()
 {
-	var url = "<%=context%>/module/document/page1805.jsp";
+	var url = "<%=contextPath%>/module/document/page1805.jsp";
 	openMaxWindow(url);
 }
 //-->
 </script>
 </head>
 
-<body onLoad="DynarchMenu.setup('menu', { context: true});MM_preloadImages('<%=context%>/images/i_05b.jpg')" id="document">
+<body onLoad="DynarchMenu.setup('menu', { context: true});MM_preloadImages('<%=contextPath%>/images/i_05b.jpg')" id="document">
+
 <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
   <tr>
     <td height="35" colspan="2" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0" class="index-top">
@@ -110,30 +111,30 @@ function openDocument()
   <tr>
     <td valign="top" class="m-left"><table width="192" border="0" align="right" cellpadding="0" cellspacing="0">
       <tr>
-        <td height="105"><a href="#" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Image1','','<%=context%>/images/i_03b.jpg',1)" class="hotspot1 context-align-bottom dynarch-menu-ctxbutton-both"><img src="<%=context%>/images/i_03.jpg" name="Image1" width="89" height="36" border="0"></a></td>
+        <td height="105"><a href="#" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Image1','','<%=contextPath%>/images/i_03b.jpg',1)" class="hotspot1 context-align-bottom dynarch-menu-ctxbutton-both"><img src="<%=contextPath%>/images/i_03.jpg" name="Image1" width="89" height="36" border="0"></a></td>
       </tr>
       <tr>
-        <td height="120"><a href="#" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Image2','','<%=context%>/images/i_04b.jpg',1)" class="hotspot2 context-align-bottom dynarch-menu-ctxbutton-both"><img src="<%=context%>/images/i_04.jpg" name="Image2" width="143" height="40" border="0"></a>
+        <td height="120"><a href="#" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Image2','','<%=contextPath%>/images/i_04b.jpg',1)" class="hotspot2 context-align-bottom dynarch-menu-ctxbutton-both"><img src="<%=contextPath%>/images/i_04.jpg" name="Image2" width="143" height="40" border="0"></a>
 	  <ul id="menu" style="display:none">
       <li class="context-class-a-hotspot1">
         <ul>
-		  <li><a href="<%=context%>/sys/frame.do">我的工作台</a></li>
+		  <li><a href="<%=contextPath%>/sys/frame.do">我的工作台</a></li>
 		  <li><a href="javascript:modifyInfo()">修改用户信息</a></li>
 		  <li><a href="javascript:modifyPwd()">修改密码</a></li>
 		  <li></li>
 		  <%=menu%>
-	      <li><a href="<%=context%>/sys/authorize.do?method=logout">退出系统</a></li>
+	      <li><a href="<%=contextPath%>/sys/authorize.do?method=logout">退出系统</a></li>
 	    </ul>
       </li>
 	    <li class="context-class-a-hotspot2">
 				<ul>
-					<li><a href="javascript:openWindow('<%=context%>/workspace/mymenu.do?method=showList', 600, 450)">管理我的菜单</a></li><li></li>
+					<li><a href="javascript:openWindow('<%=contextPath%>/workspace/mymenu.do?method=showList', 600, 450)">管理我的菜单</a></li><li></li>
 					<%
 					if(menuList!=null){
 					  for (int i = 0; i < menuList.size(); i++) {
 						  MyMenu myMenu = (MyMenu) menuList.get(i);
 					%>
-					<li><a href="javascript:jump('<%=context%>/<%= URLDecoder.decode(myMenu.getUrl()) %>')"><%= myMenu.getTitle() %></a></li>
+					<li><a href="javascript:jump('<%=request.getContextPath()%>/<%= URLDecoder.decode(myMenu.getUrl()) %>')"><%= myMenu.getTitle() %></a></li>
 					<%
 					  }
 					}
@@ -144,7 +145,7 @@ function openDocument()
       </tr>
       <tr>
         <td height="95">
-		<a href="javascript:exit();" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Image4','','<%=context%>/images/i_12b.jpg',1)"><img src="<%=context%>/images/i_12.jpg" name="Image4" width="89" height="36" border="0"></a>
+		<a href="javascript:exit();" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Image4','','<%=contextPath%>/images/i_12b.jpg',1)"><img src="<%=contextPath%>/images/i_12.jpg" name="Image4" width="89" height="36" border="0"></a>
 		</td>
       </tr>
     </table></td>

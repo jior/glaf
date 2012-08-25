@@ -26,6 +26,8 @@ public class StartupListener extends ContextLoaderListener implements
 		ServletContext context = event.getServletContext();
 		String root = context.getRealPath("/");
 		com.glaf.base.context.ApplicationContext.setAppPath(root);
+		com.glaf.base.context.ApplicationContext.setContextPath(event
+				.getServletContext().getContextPath());
 
 		this.beforeContextInitialized(context);
 		super.contextInitialized(event);
@@ -45,7 +47,7 @@ public class StartupListener extends ContextLoaderListener implements
 				SchedulerService schedulerService = (SchedulerService) ContextFactory
 						.getBean("schedulerService");
 				if (ContextFactory.hasBean("scheduler")) {
-					//schedulerService.startup();
+					// schedulerService.startup();
 					logger.info("成功启动系统调动服务.");
 				}
 			}

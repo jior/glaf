@@ -18,10 +18,10 @@
 		</param-value>
 	</context-param>
 
-	<context-param>
+	<!-- <context-param>
 		<param-name>hqlmulti</param-name>
 		<param-value>true</param-value>
-	</context-param>
+	</context-param> -->
 
 	<listener>
 		<listener-class>com.glaf.base.context.StartupListener</listener-class>
@@ -140,7 +140,7 @@
 		</init-param>
 		<init-param>
 			<param-name>login_url</param-name>
-			<param-value>/glaf/sys/authorize.do</param-value>
+			<param-value>/glaf/sys/authorize.do,/glaf/login.do</param-value>
 		</init-param>
 		<init-param>
 			<param-name>error_url</param-name>

@@ -17,6 +17,7 @@ import org.apache.commons.logging.LogFactory;
 
 import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.utils.Authentication;
+import com.glaf.base.utils.RequestUtil;
 
 public class AuthorizeFilter implements Filter {
 	private Log logger = LogFactory.getLog(AuthorizeFilter.class);
@@ -51,7 +52,7 @@ public class AuthorizeFilter implements Filter {
 		// 需要验证
 		if ("true".equals(require)) {
 			// 检测用户是否已经登录
-			SysUser bean = (SysUser) req.getSession().getAttribute(loginUser);
+			SysUser bean = RequestUtil.getLoginUser(req);
 			String uri = req.getRequestURI();
 			logger.debug(uri);
 

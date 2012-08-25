@@ -85,7 +85,7 @@
 	  <appender-ref ref="ERROR"/>
    </category>
 
-   <category name="org.hibernate.SQL">  
+   <!-- <category name="org.hibernate.SQL">  
         <priority value="DEBUG" />           
         <appender-ref ref="CONSOLE" /> 
    </category> 
@@ -100,7 +100,7 @@
 
 	<logger name="java.sql.PreparedStatement">
         <level value="DEBUG"/>
-    </logger>
+    </logger> -->
 
     <logger name="org.apache">
         <level value="WARN"/>

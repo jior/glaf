@@ -8,12 +8,12 @@
 	</property>
 
 	<property>
-		<name>session.user.className</name>
+		<name>session_user_className</name>
 		<value>baseSrc.common.BaseCom</value>
 	</property>
 
 	<property>
-		<name>session.user.keyName</name>
+		<name>session_user_keyName</name>
 		<value>beanComId</value>
 	</property>
 
