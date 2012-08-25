@@ -5,7 +5,7 @@
 <%
 	String context = request.getContextPath();
 	com.glaf.base.modules.utils.ContextUtil.getInstance().setContextPath(context);
-    SysUser user = (SysUser)session.getAttribute(SysConstants.LOGIN);
+    SysUser user = com.glaf.base.utils.RequestUtil.getLoginUser(request);
 	if (user.getAccountType() == 1) {
 	  response.sendRedirect(request.getContextPath()+"/sys/spframe.do");
 	} else {
