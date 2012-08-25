@@ -16,6 +16,7 @@ import com.glaf.base.modules.others.service.WorkCalendarService;
 import com.glaf.base.modules.sys.model.*;
 import com.glaf.base.modules.sys.service.*;
 import com.glaf.base.modules.todo.TodoConstants;
+import com.glaf.base.modules.todo.dao.TodoDAO;
 import com.glaf.base.modules.todo.model.ToDo;
 import com.glaf.base.modules.todo.model.ToDoInstance;
 import com.glaf.base.modules.todo.model.UserEntity;
@@ -31,13 +32,9 @@ public class TodoServiceImpl implements TodoService {
 
 	private SysRoleService sysRoleService;
 
-	private SysDeptRoleService sysDeptRoleService;
-
 	private SysDepartmentService sysDepartmentService;
 
 	private WorkCalendarService workCalendarService;
-
-	private MessageService messageService;
 
 	private TodoDAO todoDAO;
 
@@ -870,17 +867,9 @@ public class TodoServiceImpl implements TodoService {
 		this.abstractDao = abstractDao;
 	}
 
-	public void setMessageService(MessageService messageService) {
-		this.messageService = messageService;
-	}
-
 	public void setSysDepartmentService(
 			SysDepartmentService sysDepartmentService) {
 		this.sysDepartmentService = sysDepartmentService;
-	}
-
-	public void setSysDeptRoleService(SysDeptRoleService sysDeptRoleService) {
-		this.sysDeptRoleService = sysDeptRoleService;
 	}
 
 	public void setSysRoleService(SysRoleService sysRoleService) {

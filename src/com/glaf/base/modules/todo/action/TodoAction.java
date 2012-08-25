@@ -17,6 +17,7 @@ import com.glaf.base.modules.sys.SysConstants;
 import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.todo.model.ToDo;
 import com.glaf.base.modules.todo.service.TodoService;
+import com.glaf.base.utils.RequestUtil;
 
 public class TodoAction extends DispatchActionSupport {
 	private static final Log logger = LogFactory.getLog(TodoAction.class);
@@ -36,8 +37,7 @@ public class TodoAction extends DispatchActionSupport {
 	public ActionForward save(ActionMapping mapping, ActionForm actionForm,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		SysUser user = (SysUser) request.getSession().getAttribute(
-				SysConstants.LOGIN);
+		SysUser user = RequestUtil.getLoginUser(request);
 		boolean ret = false;
 		if (user.isSystemAdmin()) {
 			String id = request.getParameter("id");
