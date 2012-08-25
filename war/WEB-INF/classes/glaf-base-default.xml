@@ -7,4 +7,14 @@
 		<value>jbpm</value>
 	</property>
 
+	<property>
+		<name>session.user.className</name>
+		<value>baseSrc.common.BaseCom</value>
+	</property>
+
+	<property>
+		<name>session.user.keyName</name>
+		<value>beanComId</value>
+	</property>
+
 </configuration>

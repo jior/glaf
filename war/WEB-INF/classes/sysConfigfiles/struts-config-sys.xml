@@ -5,7 +5,7 @@
 
   
   <form-beans>  
-    <!-- <form-bean name="loginForm" type="sysSrc.common.login.LoginForm"></form-bean> -->
+    <form-bean name="loginForm" type="sysSrc.common.login.LoginForm"></form-bean>
     <form-bean name="showBatchExeLogForm" type="sysSrc.common.batch.ShowBatchExeLogForm"></form-bean>
     <form-bean name="showIOFileForm" type="sysSrc.common.batch.ShowIOFileForm"></form-bean>
     <form-bean name="showCheckErrorDataFileForm" type="sysSrc.common.batch.ShowCheckErrorDataFileForm"></form-bean>
@@ -18,20 +18,21 @@
     <!-- 系统字典 -->
     <form-bean name="sysDictionaryForm" type="sysSrc.common.sysDictionary.SysDictionaryFrom"></form-bean>
     <form-bean name="sysDictionaryAddForm" type="sysSrc.common.sysDictionary.SysDictionaryAddFrom"></form-bean>
+
   </form-beans>
   
 
  <action-mappings>
 
-	 <!-- <action
-	  input="/sys/sysJsp/login.jsp"
-	  path="/login"
-	  name="loginForm"
-	  scope="request"
-	  validate="false"
-	  type="org.springframework.web.struts.DelegatingActionProxy" >
-	  <forward name="indexGo" path="/sys/sysJsp/index.jsp" />
-	</action> -->
+	<action path="/login"
+            parameter="method"
+            scope="request"
+            name="loginForm"
+			input="/WEB-INF/views/module/login.jsp"
+            type="org.springframework.web.struts.DelegatingActionProxy">
+      <forward name="indexGo" path="/sys/frame.do" redirect="true"/>
+      <forward name="show_sp_frame" path="/sys/spframe.do" redirect="true"/>
+    </action>
 
 	<action
 	  input="/sys/sysJsp/batch/showBatchExeLog.jsp"

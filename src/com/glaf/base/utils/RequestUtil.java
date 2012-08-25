@@ -16,13 +16,18 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
+import org.jpage.util.Tools;
 
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.glaf.base.config.BaseConfiguration;
+import com.glaf.base.config.Configuration;
 import com.glaf.base.modules.sys.SysConstants;
 import com.glaf.base.modules.sys.model.SysUser;
 
 public class RequestUtil {
+
+	private static Configuration conf = BaseConfiguration.create();
 
 	private final static Map<String, Object> paramMap = new HashMap<String, Object>();
 
@@ -236,24 +241,6 @@ public class RequestUtil {
 			user = (SysUser) session.getAttribute(SysConstants.LOGIN);
 		}
 		return user;
-	}
-
-	public static void setLoginUser(HttpServletRequest request, SysUser bean) {
-		HttpSession session = request.getSession(false);
-		session.setAttribute(SysConstants.LOGIN, bean);
-
-		org.jpage.actor.User user = new org.jpage.actor.User();
-		user.setActorId(bean.getAccount().toLowerCase());
-		user.setActorType(0);
-		user.setMail(bean.getEmail());
-		user.setMobile(bean.getMobile());
-		if (StringUtils.equals(bean.getAccount(), "root")) {
-			user.setAdmin(true);
-		}
-
-		session.setAttribute(org.jpage.util.Constant.LOGIN_USER, user);
-		session.setAttribute(org.jpage.util.Constant.LOGIN_USER_USERNAME,
-				user.getActorId());
 	}
 
 	/**
@@ -568,6 +555,41 @@ public class RequestUtil {
 			return paramValue;
 		}
 		return defaultValue;
+	}
+
+	public static void setLoginUser(HttpServletRequest request, SysUser bean) {
+		HttpSession session = request.getSession(false);
+		session.setAttribute(SysConstants.LOGIN, bean);
+
+		org.jpage.actor.User user = new org.jpage.actor.User();
+		user.setActorId(bean.getAccount().toLowerCase());
+		user.setActorType(0);
+		user.setMail(bean.getEmail());
+		user.setMobile(bean.getMobile());
+		if (StringUtils.equals(bean.getAccount(), "root")) {
+			user.setAdmin(true);
+		}
+
+		session.setAttribute(org.jpage.util.Constant.LOGIN_USER, user);
+		session.setAttribute(org.jpage.util.Constant.LOGIN_USER_USERNAME,
+				user.getActorId());
+
+		try {
+			String className = conf.get("session.user.className");
+			String keyName = conf.get("session.user.key");
+			if (className != null && keyName != null) {
+				Object obj = ClassUtil.instantiateObject("className");
+				Map<String, Object> dataMap = new HashMap<String, Object>();
+				dataMap.put("userId", bean.getAccount());
+				dataMap.put("userName", bean.getName());
+				dataMap.put("email", bean.getEmail());
+				dataMap.put("ip", getIPAddress(request));
+				Tools.populate(obj, dataMap);
+				session.setAttribute(keyName, obj);
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 	}
 
 	/**
