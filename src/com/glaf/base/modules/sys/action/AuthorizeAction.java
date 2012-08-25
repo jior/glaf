@@ -30,6 +30,7 @@ import com.glaf.base.modules.sys.service.SysTreeService;
 import com.glaf.base.modules.sys.service.SysUserService;
 import com.glaf.base.modules.utils.ContextUtil;
 import com.glaf.base.utils.ParamUtil;
+import com.glaf.base.utils.RequestUtil;
 
 public class AuthorizeAction extends DispatchActionSupport {
 	private static final Log logger = LogFactory.getLog(AuthorizeAction.class);
@@ -96,23 +97,9 @@ public class AuthorizeAction extends DispatchActionSupport {
 
 			ContextUtil.put(bean.getAccount(), bean);// 传入全局变量
 
-			org.jpage.actor.User user = new org.jpage.actor.User();
-			user.setActorId(bean.getAccount().toLowerCase());
-			user.setActorType(0);
-			user.setMail(bean.getEmail());
-			user.setMobile(bean.getMobile());
-			if (StringUtils.equals(bean.getAccount(), "root")) {
-				user.setAdmin(true);
-			}
-
-			request.getSession().setAttribute(
-					org.jpage.util.Constant.LOGIN_USER, user);
-			request.getSession().setAttribute(
-					org.jpage.util.Constant.LOGIN_USER_USERNAME,
-					user.getActorId());
+			RequestUtil.setLoginUser(request, bean);
 
 			// 保存session对象，跳转到后台主页面
-			request.getSession().setAttribute(SysConstants.LOGIN, bean);
 			request.getSession().setAttribute(SysConstants.MENU,
 					sysApplicationService.getMenu(3, bean));
 
@@ -192,8 +179,7 @@ public class AuthorizeAction extends DispatchActionSupport {
 	public ActionForward showMenu(ActionMapping mapping, ActionForm actionForm,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		SysUser user = (SysUser) request.getSession().getAttribute(
-				SysConstants.LOGIN);
+		SysUser user = RequestUtil.getLoginUser(request);
 		SysTree parent = sysTreeService.getSysTreeByCode(Constants.TREE_APP);
 		List list = sysApplicationService
 				.getAccessAppList(parent.getId(), user);
@@ -214,8 +200,7 @@ public class AuthorizeAction extends DispatchActionSupport {
 	public ActionForward showSubMenu(ActionMapping mapping,
 			ActionForm actionForm, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		SysUser user = (SysUser) request.getSession().getAttribute(
-				SysConstants.LOGIN);
+		SysUser user = RequestUtil.getLoginUser(request);
 		long parent = ParamUtil.getIntParameter(request, "parent", 0);
 		List list = sysApplicationService.getAccessAppList(parent, user);
 		request.setAttribute("list", list);

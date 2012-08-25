@@ -15,13 +15,13 @@ import org.apache.struts.action.ActionMessages;
 import org.springframework.web.struts.DispatchActionSupport;
 
 import com.glaf.base.modules.Constants;
-import com.glaf.base.modules.sys.SysConstants;
 import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.workspace.actionform.MyMenuForm;
 import com.glaf.base.modules.workspace.model.MyMenu;
 import com.glaf.base.modules.workspace.service.MyMenuService;
 import com.glaf.base.utils.PageResult;
 import com.glaf.base.utils.ParamUtil;
+import com.glaf.base.utils.RequestUtil;
 
 public class MyMenuAction extends DispatchActionSupport {
 	private static final Log logger = LogFactory.getLog(MyMenuAction.class);
@@ -46,9 +46,7 @@ public class MyMenuAction extends DispatchActionSupport {
 	public ActionForward showList(ActionMapping mapping, ActionForm actionForm,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-
-		SysUser user = (SysUser) request.getSession().getAttribute(
-				SysConstants.LOGIN);
+		SysUser user = RequestUtil.getLoginUser(request);
 		long userId = user == null ? 0L : user.getId();
 
 		int pageNo = ParamUtil.getIntParameter(request, "page_no", 1);
@@ -107,18 +105,16 @@ public class MyMenuAction extends DispatchActionSupport {
 	public ActionForward saveAdd(ActionMapping mapping, ActionForm actionForm,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-
 		MyMenuForm formBean = (MyMenuForm) actionForm;
 
 		MyMenu bean = new MyMenu();
 
-		SysUser user = (SysUser) request.getSession().getAttribute(
-				SysConstants.LOGIN);
+		SysUser user = RequestUtil.getLoginUser(request);
 		long userId = user == null ? 0L : user.getId();
 
 		String url = formBean.getUrl();
 		url = URLDecoder.decode(url, "UTF-8");
-		//System.out.println(url);
+		// System.out.println(url);
 		String contextPath = request.getContextPath();
 		if (url != null && url.startsWith(contextPath)) {
 			url = org.jpage.util.Tools.replaceIgnoreCase(url, contextPath, "");

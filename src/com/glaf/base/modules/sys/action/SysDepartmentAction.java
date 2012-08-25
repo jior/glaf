@@ -25,6 +25,7 @@ import com.glaf.base.modules.sys.service.SysDepartmentService;
 import com.glaf.base.modules.sys.service.SysTreeService;
 import com.glaf.base.utils.PageResult;
 import com.glaf.base.utils.ParamUtil;
+import com.glaf.base.utils.RequestUtil;
 
 public class SysDepartmentAction extends DispatchActionSupport {
 	private static final Log logger = LogFactory.getLog(SysDepartmentAction.class);
@@ -203,8 +204,7 @@ public class SysDepartmentAction extends DispatchActionSupport {
 	public ActionForward saveModify(ActionMapping mapping,
 			ActionForm actionForm, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		SysUser user = (SysUser) request.getSession().getAttribute(
-				SysConstants.LOGIN);
+		SysUser user = RequestUtil.getLoginUser(request);
 		long id = ParamUtil.getIntParameter(request, "id", 0);
 		SysDepartment bean = sysDepartmentService.findById(id);
 		boolean ret = false;

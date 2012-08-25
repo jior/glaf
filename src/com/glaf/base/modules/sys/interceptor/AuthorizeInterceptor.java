@@ -10,14 +10,14 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 import org.springframework.aop.MethodBeforeAdvice;
 import org.springframework.web.context.WebApplicationContext;
-
-import com.glaf.base.modules.sys.SysConstants;
+ 
 import com.glaf.base.modules.sys.model.BaseDataInfo;
 import com.glaf.base.modules.sys.model.SysFunction;
 import com.glaf.base.modules.sys.model.SysLog;
 import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.sys.service.SysLogService;
 import com.glaf.base.modules.utils.ContextUtil;
+import com.glaf.base.utils.RequestUtil;
 
 public class AuthorizeInterceptor implements MethodBeforeAdvice {
 	private static final Logger logger = Logger
@@ -45,8 +45,7 @@ public class AuthorizeInterceptor implements MethodBeforeAdvice {
 				if (request != null && request.getParameter("method") != null) {
 					methodName = request.getParameter("method");
 					ip = request.getRemoteHost();
-					SysUser user = (SysUser) request.getSession().getAttribute(
-							SysConstants.LOGIN);
+					SysUser user = RequestUtil.getLoginUser(request);
 					if (user != null) {
 						account = user.getAccount();
 					}

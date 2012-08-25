@@ -26,6 +26,7 @@ import com.glaf.base.modules.workspace.model.Message;
 import com.glaf.base.modules.workspace.service.MessageService;
 import com.glaf.base.utils.PageResult;
 import com.glaf.base.utils.ParamUtil;
+import com.glaf.base.utils.RequestUtil;
 import com.glaf.base.utils.WebUtil;
 
 public class MessageAction extends DispatchActionSupport {
@@ -60,8 +61,7 @@ public class MessageAction extends DispatchActionSupport {
 			HttpServletResponse response) throws Exception {
 		String flag = ParamUtil.getParameter(request, "flag", null);
 
-		SysUser user = (SysUser) request.getSession().getAttribute(
-				SysConstants.LOGIN);
+		SysUser user = RequestUtil.getLoginUser(request);
 		long userId = user == null ? 0L : user.getId();
 
 		int pageNo = ParamUtil.getIntParameter(request, "page_no", 1);
@@ -92,8 +92,7 @@ public class MessageAction extends DispatchActionSupport {
 			HttpServletResponse response) throws Exception {
 		String flag = ParamUtil.getParameter(request, "flag", null);
 
-		SysUser user = (SysUser) request.getSession().getAttribute(
-				SysConstants.LOGIN);
+		SysUser user = RequestUtil.getLoginUser(request);
 		long userId = user == null ? 0L : user.getId();
 
 		int pageNo = ParamUtil.getIntParameter(request, "page_no", 1);
@@ -143,8 +142,7 @@ public class MessageAction extends DispatchActionSupport {
 	public ActionForward saveSend(ActionMapping mapping, ActionForm actionForm,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		SysUser user = (SysUser) request.getSession().getAttribute(
-				SysConstants.LOGIN);
+		SysUser user = RequestUtil.getLoginUser(request);
 		int sysType = ParamUtil.getIntParameter(request, "sysType", 1);// 0：为系统警告
 																		// 1：为系统消息
 		String recverIds = ParamUtil.getParameter(request, "recverIds");
@@ -226,8 +224,7 @@ public class MessageAction extends DispatchActionSupport {
 			ActionForm actionForm, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 
-		SysUser user = (SysUser) request.getSession().getAttribute(
-				SysConstants.LOGIN);
+		SysUser user = RequestUtil.getLoginUser(request);
 
 		boolean ret = true;
 		if (isTokenValid(request)) {// 防止表单重复提交
@@ -298,8 +295,7 @@ public class MessageAction extends DispatchActionSupport {
 	public ActionForward saveEmail(ActionMapping mapping,
 			ActionForm actionForm, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		SysUser user = (SysUser) request.getSession().getAttribute(
-				SysConstants.LOGIN);
+		SysUser user = RequestUtil.getLoginUser(request);
 		String sendEmail = user.getEmail();
 
 		int recverType = ParamUtil.getIntParameter(request, "recverType", 0);
@@ -382,8 +378,7 @@ public class MessageAction extends DispatchActionSupport {
 	public ActionForward saveBoth(ActionMapping mapping, ActionForm actionForm,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		SysUser user = (SysUser) request.getSession().getAttribute(
-				SysConstants.LOGIN);
+		SysUser user = RequestUtil.getLoginUser(request);
 		String sendEmail = user.getEmail();
 
 		String recverIds = ParamUtil.getParameter(request, "recverIds");

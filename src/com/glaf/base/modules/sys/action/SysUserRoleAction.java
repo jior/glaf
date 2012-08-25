@@ -22,6 +22,7 @@ import com.glaf.base.modules.sys.service.SysUserRoleService;
 import com.glaf.base.modules.sys.service.SysUserService;
 import com.glaf.base.modules.utils.BaseUtil;
 import com.glaf.base.utils.ParamUtil;
+import com.glaf.base.utils.RequestUtil;
 import com.glaf.base.utils.WebUtil;
 
 public class SysUserRoleAction extends DispatchActionSupport{
@@ -55,7 +56,7 @@ public class SysUserRoleAction extends DispatchActionSupport{
 		      ActionForm actionForm,
 		      HttpServletRequest request,
 		      HttpServletResponse response) throws Exception{
-		SysUser user = (SysUser) request.getSession().getAttribute(SysConstants.LOGIN);
+		SysUser user = RequestUtil.getLoginUser(request);
 		request.setAttribute("available", sysUserRoleService.getUnAuthorizedUser(user));
 		request.setAttribute("unavailable", sysUserRoleService.getAuthorizedUser(user));
 		
@@ -98,7 +99,7 @@ public class SysUserRoleAction extends DispatchActionSupport{
 		long userId = ParamUtil.getLongParameter(request, "id", 0);
 		SysUser user = (SysUser)sysUserService.findById(userId);
 		if(user==null){
-			user = (SysUser) request.getSession().getAttribute(SysConstants.LOGIN);
+			  user = RequestUtil.getLoginUser(request);
 		}
 		
 		request.setAttribute("user", user);
@@ -126,7 +127,7 @@ public class SysUserRoleAction extends DispatchActionSupport{
 		long userId = ParamUtil.getLongParameter(request, "id", 0);
 		SysUser user = (SysUser)sysUserService.findById(userId);
 		if(user==null){
-			user = (SysUser) request.getSession().getAttribute(SysConstants.LOGIN);
+			user = RequestUtil.getLoginUser(request);
 		}
 		
 		request.setAttribute("user", user);

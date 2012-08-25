@@ -18,13 +18,13 @@ import org.apache.struts.action.ActionMapping;
 
 import org.jpage.util.Tools;
 import org.springframework.web.struts.DispatchActionSupport;
-
-import com.glaf.base.modules.sys.SysConstants;
+ 
 import com.glaf.base.modules.sys.actionform.SchedulerForm;
 import com.glaf.base.modules.sys.model.Scheduler;
 import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.sys.service.SchedulerService;
 import com.glaf.base.utils.ParamUtil;
+import com.glaf.base.utils.RequestUtil;
 
 public class SchedulerAction extends DispatchActionSupport {
 	protected final static Log logger = LogFactory
@@ -79,8 +79,7 @@ public class SchedulerAction extends DispatchActionSupport {
 			}
 		}
 
-		SysUser user = (SysUser) request.getSession().getAttribute(
-				SysConstants.LOGIN);
+		SysUser user = RequestUtil.getLoginUser(request);
 		String actorId = user.getAccount();
 		scheduler.setCreateBy(actorId);
 		schedulerService.save(scheduler);
@@ -95,8 +94,7 @@ public class SchedulerAction extends DispatchActionSupport {
 	public ActionForward showList(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		SysUser user = (SysUser) request.getSession().getAttribute(
-				SysConstants.LOGIN);
+		SysUser user = RequestUtil.getLoginUser(request);
 		String actorId = user.getAccount();
 		List<Scheduler> list = schedulerService.getUserSchedulers(actorId);
 		request.setAttribute("schedulers", list);

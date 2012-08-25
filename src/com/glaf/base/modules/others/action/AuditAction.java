@@ -16,10 +16,10 @@ import org.springframework.web.struts.DispatchActionSupport;
 
 import com.glaf.base.modules.others.model.Audit;
 import com.glaf.base.modules.others.service.AuditService;
-
-import com.glaf.base.modules.sys.SysConstants;
+ 
 import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.utils.ParamUtil;
+import com.glaf.base.utils.RequestUtil;
 
 public class AuditAction extends DispatchActionSupport {
 	private static final Log logger = LogFactory.getLog(AuditAction.class);
@@ -42,8 +42,7 @@ public class AuditAction extends DispatchActionSupport {
 		int referType = ParamUtil.getIntParameter(request, "referType", 0);
 		long referId = ParamUtil.getLongParameter(request, "referId", 0);
 		String confirm = ParamUtil.getParameter(request, "confirm", "true");
-		SysUser user = (SysUser) request.getSession().getAttribute(
-				SysConstants.LOGIN);
+		SysUser user = RequestUtil.getLoginUser(request);
 
 		Audit bean = new Audit();
 		bean.setDeptId(user.getDepartment().getId());

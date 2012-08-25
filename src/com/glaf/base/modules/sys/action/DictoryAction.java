@@ -30,6 +30,7 @@ import com.glaf.base.modules.sys.service.DictoryService;
 import com.glaf.base.modules.sys.service.SysTreeService;
 import com.glaf.base.utils.PageResult;
 import com.glaf.base.utils.ParamUtil;
+import com.glaf.base.utils.RequestUtil;
 
 public class DictoryAction extends DispatchActionSupport {
 	private static final Log logger = LogFactory.getLog(DictoryAction.class);
@@ -100,7 +101,7 @@ public class DictoryAction extends DispatchActionSupport {
 		      ActionForm actionForm,
 		      HttpServletRequest request,
 		      HttpServletResponse response) throws Exception{		
-		SysUser user = (SysUser)request.getSession().getAttribute(SysConstants.LOGIN);
+		SysUser user = RequestUtil.getLoginUser(request);
 		Dictory bean = new Dictory();
 		PropertyUtils.copyProperties(bean, (DictoryForm)actionForm);
 		
@@ -179,7 +180,7 @@ public class DictoryAction extends DispatchActionSupport {
 		      ActionForm actionForm,
 		      HttpServletRequest request,
 		      HttpServletResponse response) throws Exception{
-		SysUser user = (SysUser)request.getSession().getAttribute(SysConstants.LOGIN);
+		SysUser user = RequestUtil.getLoginUser(request);
 		long id=ParamUtil.getIntParameter(request, "id", 0);
 		Dictory bean = dictoryService.find(id);
 		DictoryForm form = (DictoryForm)actionForm;

@@ -22,7 +22,6 @@ import org.jpage.util.DigestUtil;
 import org.springframework.web.struts.DispatchActionSupport;
 
 import com.glaf.base.modules.Constants;
-import com.glaf.base.modules.sys.SysConstants;
 import com.glaf.base.modules.sys.model.SysDepartment;
 import com.glaf.base.modules.sys.model.SysDeptRole;
 import com.glaf.base.modules.sys.model.SysRole;
@@ -35,6 +34,7 @@ import com.glaf.base.modules.sys.service.SysTreeService;
 import com.glaf.base.modules.sys.service.SysUserService;
 import com.glaf.base.utils.PageResult;
 import com.glaf.base.utils.ParamUtil;
+import com.glaf.base.utils.RequestUtil;
 
 public class SysUserAction extends DispatchActionSupport {
 	private static final Log logger = LogFactory.getLog(SysUserAction.class);
@@ -247,8 +247,7 @@ public class SysUserAction extends DispatchActionSupport {
 	public ActionForward prepareModifyInfo(ActionMapping mapping,
 			ActionForm actionForm, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		SysUser user = (SysUser) request.getSession().getAttribute(
-				SysConstants.LOGIN);
+		SysUser user = RequestUtil.getLoginUser(request);
 		request.setAttribute("bean", user);
 
 		return mapping.findForward("show_modify_info");
@@ -314,8 +313,7 @@ public class SysUserAction extends DispatchActionSupport {
 	public ActionForward resetPwd(ActionMapping mapping, ActionForm actionForm,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		SysUser login = (SysUser) request.getSession().getAttribute(
-				SysConstants.LOGIN);
+		SysUser login = RequestUtil.getLoginUser(request);
 		boolean ret = false;
 
 		if (login.isSystemAdmin()) {
@@ -471,8 +469,7 @@ public class SysUserAction extends DispatchActionSupport {
 	public ActionForward saveModifyInfo(ActionMapping mapping,
 			ActionForm actionForm, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		SysUser bean = (SysUser) request.getSession().getAttribute(
-				SysConstants.LOGIN);
+		SysUser bean = RequestUtil.getLoginUser(request);
 		boolean ret = false;
 		if (bean != null) {
 			// bean.setPassword(ParamUtil.getParameter(request, "password"));
@@ -487,7 +484,7 @@ public class SysUserAction extends DispatchActionSupport {
 
 		ActionMessages messages = new ActionMessages();
 		if (ret) {// 保存成功
-			request.getSession().setAttribute(SysConstants.LOGIN, bean);
+			RequestUtil.setLoginUser(request, bean);
 			messages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage(
 					"user.modify_success"));
 		} else {// 保存失败
@@ -511,8 +508,7 @@ public class SysUserAction extends DispatchActionSupport {
 	public ActionForward savePwd(ActionMapping mapping, ActionForm actionForm,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		SysUser bean = (SysUser) request.getSession().getAttribute(
-				SysConstants.LOGIN);
+		SysUser bean= RequestUtil.getLoginUser(request);
 		boolean ret = false;
 		String oldPwd = ParamUtil.getParameter(request, "oldPwd");
 		String newPwd = ParamUtil.getParameter(request, "newPwd");
