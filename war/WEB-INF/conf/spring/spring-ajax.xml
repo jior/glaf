@@ -7,27 +7,32 @@
 			<ref bean="sysFunctionProxy" />
 		</property>
 	</bean>
+
 	<bean name="sysDepartmentAjaxService" class="com.glaf.base.modules.sys.service.SysDepartmentAjaxService">
 		<property name="sysDepartmentService">
 			<ref bean="sysDepartmentProxy" />
 		</property>
 	</bean>
+
 	<bean name="sysRoleAjaxService" class="com.glaf.base.modules.sys.service.SysRoleAjaxService">
 		<property name="sysRoleService">
 			<ref bean="sysRoleProxy" />
 		</property>
 	</bean>
+
 	<bean name="sysApplicationAjaxService"
 		class="com.glaf.base.modules.sys.service.SysApplicationAjaxService">
 		<property name="sysApplicationService">
 			<ref bean="sysApplicationProxy" />
 		</property>
 	</bean>
+
 	<bean name="sysTreeAjaxService" class="com.glaf.base.modules.sys.service.SysTreeAjaxService">
 		<property name="sysTreeService">
 			<ref bean="sysTreeProxy" />
 		</property>
 	</bean>
+
 	<bean name="dictoryAjaxService" class="com.glaf.base.modules.sys.service.DictoryAjaxService">
 		<property name="dictoryService">
 			<ref bean="dictoryProxy" />

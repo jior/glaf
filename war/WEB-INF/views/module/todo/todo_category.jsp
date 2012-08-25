@@ -18,7 +18,7 @@
     String context = request.getContextPath();
     
 	Map params = new HashMap();
-	SysUser user = (SysUser) request.getSession().getAttribute(SysConstants.LOGIN);
+	SysUser user = com.glaf.base.utils.RequestUtil.getLoginUser(request);
 	params.put("actorIdx", user.getAccount());
 	TodoJobBean bean = (TodoJobBean)BaseDataManager.getInstance().getBean("todoJobBean");
 	Collection rows = bean.getToDoInstanceList(params);

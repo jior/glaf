@@ -8,7 +8,7 @@
 <%
 WebApplicationContext wac = WebApplicationContextUtils.getRequiredWebApplicationContext(session.getServletContext());
 SysApplicationService service = (SysApplicationService) wac.getBean("sysApplicationService");
-SysUser user = (SysUser)session.getAttribute(SysConstants.LOGIN);
+SysUser user =com.glaf.base.utils.RequestUtil.getLoginUser(request);
 int userId =0;
 if(user!=null) userId = (int)user.getId();
 int parentId = 3;

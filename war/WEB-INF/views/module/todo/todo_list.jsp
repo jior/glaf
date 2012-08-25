@@ -27,7 +27,7 @@
 %>
 <%
     String context = request.getContextPath();
-    SysUser user = (SysUser) request.getSession().getAttribute(SysConstants.LOGIN);
+    SysUser user = com.glaf.base.utils.RequestUtil.getLoginUser(request);
 	
 	Map params = org.jpage.util.RequestUtil.getQueryParams(request);
 	params.put("actorIdx", user.getAccount());

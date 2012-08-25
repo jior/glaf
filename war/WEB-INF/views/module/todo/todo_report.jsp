@@ -40,7 +40,7 @@
 <%@ page import="com.glaf.base.modules.todo.service.*" %>
 <%@ page import="org.apache.commons.lang.StringUtils" %>
 <%
-    SysUser user = (SysUser) request.getSession().getAttribute(SysConstants.LOGIN);
+    SysUser user = com.glaf.base.utils.RequestUtil.getLoginUser(request);
 %>
 
 <link rel="stylesheet" href="<%=request.getContextPath()%>/pages/dojo.css" type="text/css"/>

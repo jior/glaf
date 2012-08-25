@@ -65,7 +65,7 @@
 	    	int width = 584;
             int height = 424;
 
-			SysUser user = (SysUser) request.getSession().getAttribute(SysConstants.LOGIN);
+			SysUser user = com.glaf.base.utils.RequestUtil.getLoginUser(request);
 	        Map params = new HashMap();
 	        params.put("actorIdx", user.getAccount());
 			TodoJobBean bean = (TodoJobBean)BaseDataManager.getInstance().getBean("todoJobBean");

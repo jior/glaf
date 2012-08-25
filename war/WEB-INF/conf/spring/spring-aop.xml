@@ -16,7 +16,7 @@
 	  <aop:advisor advice-ref="txAdvice" pointcut-ref="allServiceMethod" />
     </aop:config> 
 
-	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+	<tx:advice id="txAdvice" transaction-manager="sysTransactionManager">
 		<tx:attributes>
 			<tx:method name="get*" read-only="true" />
 			<tx:method name="find*" read-only="true" />
@@ -27,7 +27,7 @@
 		</tx:attributes>
 	</tx:advice>
 
-	<tx:annotation-driven transaction-manager="transactionManager"/>
+	<tx:annotation-driven transaction-manager="sysTransactionManager"/>
 
 	<context:annotation-config/>
 

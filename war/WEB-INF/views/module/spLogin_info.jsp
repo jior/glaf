@@ -2,7 +2,7 @@
 <%@ page import="com.glaf.base.modules.sys.*"%>
 <%@ page import="com.glaf.base.modules.sys.model.*"%>
 <%
-SysUser user = (SysUser)session.getAttribute(SysConstants.LOGIN);
+SysUser user = com.glaf.base.utils.RequestUtil.getLoginUser(request);
 List list = null;
 if(user != null){
 	list = user.getNestingDepartment();

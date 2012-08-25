@@ -7,14 +7,14 @@
 		<property name="configLocation">
 			<value>classpath:/config/jbpm/jpage-sqlmap-config.xml</value>
 		</property>
-		<property name="dataSource" ref="myDataSource" />
+		<property name="dataSource" ref="dataSource" />
 	</bean>
 
-	<bean id="sqlMapClientDAO" class="com.glaf.base.modules.sqlmap.SqlMapClientDAO">
+	<bean id="sqlMapClientDAO" class="com.glaf.base.modules.sqlmap.SqlMapClientDAOImpl">
 		<property name="sqlMapClient" ref="sqlMapClientFactoryBean" />
 	</bean>
 
-	<bean id="sqlMapManager" class="com.glaf.base.modules.sqlmap.SqlMapManager">
+	<bean id="sqlMapManager" class="com.glaf.base.modules.sqlmap.SqlMapManagerImpl">
 		<property name="sqlMapClientDAO" ref="sqlMapClientDAO" />
 	</bean>
 

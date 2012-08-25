@@ -12,7 +12,7 @@
 <%@ page import="com.glaf.base.modules.workspace.service.*"%>
 <%
 WebApplicationContext wac = WebApplicationContextUtils.getRequiredWebApplicationContext(session.getServletContext());
-SysUser user = (SysUser)session.getAttribute(SysConstants.LOGIN);
+SysUser user = com.glaf.base.utils.RequestUtil.getLoginUser(request);
 String menu = (String)session.getAttribute(SysConstants.MENU);
 
 MyMenuService myMenuService = (MyMenuService) wac.getBean("myMenuService");

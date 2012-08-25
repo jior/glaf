@@ -20,7 +20,7 @@
 <%@ page import="org.apache.commons.lang.StringUtils" %>
 <%
     String context = request.getContextPath();
-    SysUser user = (SysUser) request.getSession().getAttribute(SysConstants.LOGIN);
+    SysUser user = com.glaf.base.utils.RequestUtil.getLoginUser(request);
 	TodoJobBean bean = (TodoJobBean)BaseDataManager.getInstance().getBean("todoJobBean");
 %>
 

@@ -6,7 +6,7 @@
 	<bean id="baseTxService" lazy-init="true"
 		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
 		<property name="transactionManager">
-			<ref bean="transactionManager" />
+			<ref bean="sysTransactionManager" />
 		</property>
 		<property name="transactionAttributes">
 			<props>
@@ -41,7 +41,7 @@
 
 	<bean id="abstractDao" class="com.glaf.base.dao.AbstractSpringDao">
 		<property name="sessionFactory">
-			<ref bean="sessionFactory" />
+			<ref bean="sysSessionFactory" />
 		</property>
 	</bean>
 

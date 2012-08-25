@@ -11,7 +11,7 @@
 <%@ page import="com.glaf.base.modules.workspace.model.*"%>
 <%@ page import="com.glaf.base.modules.workspace.service.*"%>
 <%
-SysUser user = (SysUser)session.getAttribute(SysConstants.LOGIN);
+SysUser user = com.glaf.base.utils.RequestUtil.getLoginUser(request);
 WebApplicationContext wac = WebApplicationContextUtils.getRequiredWebApplicationContext(session.getServletContext());
 String menu = (String)session.getAttribute(SysConstants.MENU);
 

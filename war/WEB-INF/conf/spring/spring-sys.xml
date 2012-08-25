@@ -12,6 +12,7 @@
 			<ref bean="abstractDao" />
 		</property>
 	</bean>
+
 	<bean id="serialNumberProxy" parent="baseTxService">
 		<property name="target">
 			<ref bean="serialNumberService" />
@@ -23,6 +24,7 @@
 			<ref bean="abstractDao" />
 		</property>
 	</bean>
+
 	<bean id="sysTreeProxy" parent="baseTxService">
 		<property name="target">
 			<ref bean="sysTreeService" />
@@ -37,6 +39,7 @@
 			<ref bean="sysTreeProxy" />
 		</property>
 	</bean>
+
 	<bean id="sysApplicationProxy" parent="baseTxService">
 		<property name="target">
 			<ref bean="sysApplicationService" />
@@ -51,6 +54,7 @@
 			<ref bean="sysTreeProxy" />
 		</property>
 	</bean>
+
 	<bean id="sysDepartmentProxy" parent="baseTxService">
 		<property name="target">
 			<ref bean="sysDepartmentService" />
@@ -62,6 +66,7 @@
 			<ref bean="abstractDao" />
 		</property>
 	</bean>
+
 	<bean id="sysUserProxy" parent="baseTxService">
 		<property name="target">
 			<ref bean="sysUserService" />
@@ -73,6 +78,7 @@
 			<ref bean="abstractDao" />
 		</property>
 	</bean>
+
 	<bean id="sysRoleProxy" parent="baseTxService">
 		<property name="target">
 			<ref bean="sysRoleService" />
@@ -93,6 +99,7 @@
 			<ref bean="sysRoleProxy" />
 		</property>
 	</bean>
+
 	<bean id="sysDeptRoleProxy" parent="baseTxService">
 		<property name="target">
 			<ref bean="sysDeptRoleService" />
@@ -113,6 +120,7 @@
 			<ref bean="abstractDao" />
 		</property>
 	</bean>
+
 	<bean id="dictoryProxy" parent="baseTxService">
 		<property name="target">
 			<ref bean="dictoryService" />
@@ -124,6 +132,7 @@
 			<ref bean="abstractDao" />
 		</property>
 	</bean>
+
 	<bean id="sysFunctionProxy" parent="baseTxService">
 		<property name="target">
 			<ref bean="sysFunctionService" />
@@ -135,6 +144,7 @@
 			<ref bean="abstractDao" />
 		</property>
 	</bean>
+
 	<bean id="subjectCodeProxy" parent="baseTxService">
 		<property name="target">
 			<ref bean="subjectCodeService" />
@@ -146,6 +156,7 @@
 			<ref bean="abstractDao" />
 		</property>
 	</bean>
+
 	<bean id="sysLogProxy" parent="baseTxService">
 		<property name="target">
 			<ref bean="sysLogService" />
@@ -163,6 +174,7 @@
 			<ref local="sysUserProxy" />
 		</property>
 	</bean>
+
 	<bean id="sysUserRoleProxy" parent="baseTxService">
 		<property name="target">
 			<ref bean="sysUserRoleService" />
@@ -177,6 +189,7 @@
 			<ref local="scheduler" />
 		</property>
 	</bean>
+
 	<bean id="schedulerProxy" parent="baseTxService">
 		<property name="target">
 			<ref bean="schedulerService" />

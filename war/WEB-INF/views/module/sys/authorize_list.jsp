@@ -9,7 +9,7 @@
 String context = request.getContextPath();
 List available = (List)request.getAttribute("available");
 List unavailable = (List)request.getAttribute("unavailable");
-SysUser user = (SysUser)session.getAttribute(SysConstants.LOGIN);
+SysUser user = com.glaf.base.utils.RequestUtil.getLoginUser(request);
 %>
 <html>
 <head>

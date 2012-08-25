@@ -137,7 +137,7 @@
 		String rowIds = request.getParameter("rowIds");
 
         PostMethod postMethod = new PostMethod("http://"+request.getServerName()+":"+request.getServerPort()+"<%=request.getContextPath()%>/sys/authorize.do?method=login&type=x");
-        SysUser user = (SysUser) request.getSession().getAttribute(SysConstants.LOGIN);
+        SysUser user = com.glaf.base.utils.RequestUtil.getLoginUser(request);
         HttpClient client = new HttpClient();
 		client.setConnectionTimeout(800);
         postMethod.addParameter("%%ModDate","0000000000000000");
