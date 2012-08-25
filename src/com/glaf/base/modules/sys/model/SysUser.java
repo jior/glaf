@@ -6,6 +6,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
+
 public class SysUser implements Serializable {
 	private static final long serialVersionUID = -7677600372139823989L;
 	private long id;
@@ -29,6 +31,7 @@ public class SysUser implements Serializable {
 	private int accountType;
 	private String loginIP;
 	private int dumpFlag;
+	private String adminFlag;
 	private Set<SysUserRole> userRoles = new HashSet<SysUserRole>();
 	private Set<SysDeptRole> roles = new HashSet<SysDeptRole>();
 	private Set<SysFunction> functions = new HashSet<SysFunction>();
@@ -45,6 +48,10 @@ public class SysUser implements Serializable {
 
 	public int getAccountType() {
 		return accountType;
+	}
+
+	public String getAdminFlag() {
+		return adminFlag;
 	}
 
 	public Set<SysApplication> getApps() {
@@ -174,6 +181,11 @@ public class SysUser implements Serializable {
 	public boolean isSystemAdmin() {
 		boolean isAdmin = false;
 
+		if (StringUtils.equals(adminFlag, "1")) {
+			isAdmin = true;
+			return isAdmin;
+		}
+
 		if (roles != null && !roles.isEmpty()) {
 			for (SysDeptRole r : roles) {
 				if (r.getRole() != null && "R015".equals(r.getRole().getCode())) {
@@ -205,6 +217,10 @@ public class SysUser implements Serializable {
 
 	public void setAccountType(int accountType) {
 		this.accountType = accountType;
+	}
+
+	public void setAdminFlag(String adminFlag) {
+		this.adminFlag = adminFlag;
 	}
 
 	public void setApps(Set<SysApplication> apps) {

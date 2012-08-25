@@ -9,6 +9,6 @@
 	if (user.getAccountType() == 1) {
 	  response.sendRedirect(request.getContextPath()+"/sys/spframe.do");
 	} else {
-      response.sendRedirect(request.getContextPath()+"/sys/frame.do");
+      response.sendRedirect(request.getContextPath()+"/login.do");
 	}
 %>

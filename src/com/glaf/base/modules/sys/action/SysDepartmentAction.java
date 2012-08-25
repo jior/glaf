@@ -45,7 +45,7 @@ public class SysDepartmentAction extends DispatchActionSupport {
 	public ActionForward batchDelete(ActionMapping mapping,
 			ActionForm actionForm, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-
+		
 		boolean ret = true;
 		long[] id = ParamUtil.getLongParameterValues(request, "id");
 		ret = sysDepartmentService.deleteAll(id);

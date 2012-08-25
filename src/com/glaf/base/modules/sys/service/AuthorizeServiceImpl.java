@@ -31,6 +31,40 @@ public class AuthorizeServiceImpl implements AuthorizeService {
 	 * @param pwd
 	 * @return
 	 */
+	public SysUser login(String account) {
+		SysUser bean = sysUserService.findByAccount(account);
+		if (bean != null) {
+			org.hibernate.Hibernate.initialize(bean.getRoles());
+			org.hibernate.Hibernate.initialize(bean.getUserRoles());
+			org.hibernate.Hibernate.initialize(bean.getDepartment());
+			org.hibernate.Hibernate.initialize(bean.getFunctions());
+			if (bean.isDepartmentAdmin()) {
+				logger.debug(account + " is department admin");
+			}
+			if (bean.isSystemAdmin()) {
+				logger.debug(account + " is system admin");
+			}
+			if (bean.getAccountType() != 1) {
+				// 取出用户对应的模块权限
+				bean = sysUserService.getUserPrivileges(bean);
+				// bean=sysUserService.getUserAndPrivileges(bean);
+				// 取出用户的部门列表
+				List list = new ArrayList();
+				sysDepartmentService.findNestingDepartment(list,
+						bean.getDepartment());
+				bean.setNestingDepartment(list);
+			}
+		}
+		return bean;
+	}
+
+	/**
+	 * 用户登陆
+	 * 
+	 * @param account
+	 * @param pwd
+	 * @return
+	 */
 	public SysUser login(String account, String pwd) {
 		SysUser bean = sysUserService.findByAccount(account);
 		if (bean != null) {

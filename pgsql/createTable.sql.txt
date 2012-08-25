@@ -118,6 +118,7 @@ CREATE TABLE sys_user (
         accounttype int4,
         dumpflag int4,
         deptid int8,
+	adminFlag varchar(1),
         PRIMARY KEY (id)
 );
 

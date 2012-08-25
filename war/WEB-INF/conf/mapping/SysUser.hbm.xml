@@ -30,6 +30,7 @@
 		<property name="fax" type="string" column="fax" />
 		<property name="accountType" type="integer" column="accountType" />
 		<property name="dumpFlag" type="integer" column="dumpFlag" />
+		<property name="adminFlag" type="string" column="adminFlag" />
 
 		<many-to-one name="department" class="SysDepartment"
 			column="deptId" cascade="none" not-found="ignore" />

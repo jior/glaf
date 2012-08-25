@@ -242,7 +242,7 @@ public class RequestUtil {
 	}
 
 	public static SysUser getLoginUser(HttpServletRequest request) {
-		HttpSession session = request.getSession(false);
+		HttpSession session = request.getSession(true);
 		SysUser user = null;
 		if (session != null) {
 			user = (SysUser) session.getAttribute(SysConstants.LOGIN);
@@ -643,10 +643,10 @@ public class RequestUtil {
 			try {
 
 				Class clazz = descriptor.getPropertyType();
-				if(obj == null && value != null){
-				  obj = getValue(clazz, value);
+				if (obj == null && value != null) {
+					obj = getValue(clazz, value);
 				}
-				
+
 				if (obj != null) {
 					if (logger.isDebugEnabled()) {
 						logger.debug("property name:" + propertyName);
@@ -665,7 +665,7 @@ public class RequestUtil {
 	}
 
 	public static void setLoginUser(HttpServletRequest request, SysUser bean) {
-		HttpSession session = request.getSession(false);
+		HttpSession session = request.getSession(true);
 		session.setAttribute(SysConstants.LOGIN, bean);
 
 		org.jpage.actor.User user = new org.jpage.actor.User();
@@ -681,13 +681,6 @@ public class RequestUtil {
 		session.setAttribute(org.jpage.util.Constant.LOGIN_USER_USERNAME,
 				user.getActorId());
 
-		logger.info("------------------------xxxx------------------------------------");
-		logger.info("------------------------xxxx------------------------------------");
-		logger.info("------------------------xxxx------------------------------------");
-		logger.info("------------------------xxxx------------------------------------");
-		logger.info("------------------------xxxx------------------------------------");
-		logger.info("------------------------xxxx------------------------------------");
-		logger.info("------------------------xxxx------------------------------------");
 		try {
 			String className = conf.get("session_user_className");
 			String keyName = conf.get("session_user_keyName");
@@ -702,12 +695,7 @@ public class RequestUtil {
 				dataMap.put("flg", true);
 				populate(obj, dataMap);
 				session.setAttribute(keyName, obj);
-				logger.info("------------------------xxxx------------------------------------");
-				logger.info("------------------------xxxx------------------------------------");
-				logger.info("------------------------xxxx------------------------------------");
-				logger.info("------------------------xxxx------------------------------------");
-				logger.info("------------------------xxxx------------------------------------");
-				logger.info("------------------------xxxx------------------------------------");
+
 				logger.info("------------------------xxxx------------------------------------");
 				logger.info(session.getAttribute(keyName));
 			}

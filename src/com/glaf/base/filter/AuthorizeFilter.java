@@ -79,7 +79,7 @@ public class AuthorizeFilter implements Filter {
 				}
 			}
 		}
-		chain.doFilter(req, response);
+		chain.doFilter(request, response);
 	}
 
 	/**
