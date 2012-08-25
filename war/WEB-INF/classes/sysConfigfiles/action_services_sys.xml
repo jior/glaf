@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>        
+    <!-- <bean id="lgoinDAO" parent="baseDAO" 
+    	class="sysSrc.common.login.LoginDAO" >
+    </bean>
+    <bean name="/login" parent="sysAction" class="sysSrc.framework.SysBaseAction" singleton="false">
+        <property name="busDao"><ref local="lgoinDAO"/></property>
+    </bean> -->
+    
+    <!-- batch管理、日志查询 -->
+    <bean id="showBatchExeLogDAO" parent="baseDAO" 
+    	class="sysSrc.common.batch.ShowBatchExeLogDAO" >
+    </bean>    
+    <bean name="/showBatchExeLog" parent="sysAction" class="sysSrc.framework.SysBaseAction" singleton="false">
+        <property name="busDao"><ref local="showBatchExeLogDAO"/></property>
+    </bean>
+    
+    <bean id="showIOFileDAO" parent="baseDAO" 
+    	class="sysSrc.common.batch.ShowIOFileDAO" >
+    </bean>    
+    <bean name="/showIOFile" parent="sysAction" class="sysSrc.framework.SysBaseAction" singleton="false">
+        <property name="busDao"><ref local="showIOFileDAO"/></property>
+    </bean>
+    
+    <bean id="showCheckErrorDataFileDAO" parent="baseDAO" 
+    	class="sysSrc.common.batch.ShowCheckErrorDataFileDAO" >
+    </bean>    
+    <bean name="/showCheckErrorDataFile" parent="sysAction" class="sysSrc.framework.SysBaseAction" singleton="false">
+        <property name="busDao"><ref local="showCheckErrorDataFileDAO"/></property>
+    </bean>
+    
+    <bean id="manageBatchDAO" parent="baseDAO" 
+    	class="sysSrc.common.batch.ManageBatchDAO" >
+    </bean>    
+    <bean name="/manageBatch" parent="sysAction" class="sysSrc.framework.SysBaseAction" singleton="false">
+        <property name="busDao"><ref local="manageBatchDAO"/></property>
+    </bean>
+    
+   
+	<!-- 用户信息维护 -->
+    <bean id="userManageDAO" parent="baseDAO" 
+    	class="sysSrc.common.userPrivilege.UserManageDAO" >
+    </bean>
+    <bean name="/userManage" parent="sysAction" class="sysSrc.framework.SysBaseAction" singleton="false">
+        <property name="busDao"><ref local="userManageDAO"/></property>
+    </bean>
+    <bean id="rolesSelectDAO" parent="baseDAO" 
+    	class="sysSrc.common.userPrivilege.RolesSelectDAO" >
+    </bean>
+    <bean name="/rolesSelect" parent="sysAction" class="sysSrc.framework.SysBaseAction" singleton="false">
+        <property name="busDao"><ref local="rolesSelectDAO"/></property>
+    </bean>
+    
+    <bean id="funTopDAO" parent="baseDAO" 
+    	class="sysSrc.common.changeLanguage.FunTopDAO" >
+    </bean>    
+    <bean name="/funTop" parent="sysAction" class="sysSrc.framework.SysBaseAction" singleton="false">
+        <property name="busDao"><ref local="funTopDAO"/></property>
+    </bean>
+    
+    <!-- 系统字典管理 -->
+    <bean id="sysDictionaryDAO" parent="baseDAO"
+    	class="sysSrc.common.sysDictionary.SysDictionaryDAO">
+    </bean>
+    <bean name="/showSysDictionary" parent="sysAction" class="sysSrc.framework.SysBaseAction" singleton="false">
+    	<property name="busDao"><ref local="sysDictionaryDAO"/></property>
+    </bean>
+    
+    <!-- 系统字典管理 -->
+    <bean id="sysDictionaryAddDAO" parent="baseDAO"
+    	class="sysSrc.common.sysDictionary.SysDictionaryAddDAO">
+    </bean>
+    <bean name="/showSysDictionaryAdd" parent="sysAction" class="sysSrc.framework.SysBaseAction" singleton="false">
+    	<property name="busDao"><ref local="sysDictionaryAddDAO"/></property>
+    </bean>
+</beans>

@@ -1,0 +1,56 @@
+body {
+	letter-spacing:0.01em;
+    background:#EDF9F0;
+	margin:0;
+	
+	font:15px "Courier New", "Lucida Grande", Arial, sans-serif; 
+	font-size:12px;
+	
+	scrollbar-face-color:  #DEE3E7;  
+	scrollbar-highlight-color:  #FFFFFF;  
+	scrollbar-shadow-color:  #DEE3E7;  
+	scrollbar-3dlight-color:  #D1D7DC;  
+	scrollbar-arrow-color:    #006699;  
+	scrollbar-track-color:  #EFEFEF;  
+	scrollbar-darkshadow-color:  #98AAB1;
+}
+form {
+  margin:0;
+}
+#controlPanel,#resultPanel{
+	width:380px;
+	margin:10px auto;
+	padding:25px;
+	border:1px solid gray;
+	-moz-border-radius:10px;
+	background:#f8f8f8;
+}
+#errorArea{
+	width:300px;
+	margin:10px auto;
+	padding:10px;
+	border:2px solid gray;
+	-moz-border-radius:10px;
+	background:red;
+}
+#normalMessageArea{
+	width:300px;
+	margin:20px auto;
+	padding:10px;
+	border:2px solid gray;
+	-moz-border-radius:10px;
+	background:yellow;
+}
+#progressBar { padding-top: 5px; }
+#totalProgressBarBox { 
+   	width: 350px; 
+   	height: 20px; 
+   	border: 1px inset; 
+   	background: #eee;
+}
+#totalProgressBarBoxContent { 
+   	width: 0; 
+   	height: 20px; 
+   	border-right: 1px solid #444; 
+   	background: #9ACB34; 
+}
