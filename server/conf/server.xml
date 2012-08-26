@@ -73,7 +73,7 @@
     <!-- A "Connector" using the shared thread pool-->
     
     <Connector executor="tomcatThreadPool"
-               port="9090" protocol="HTTP/1.1"
+               port="9090" protocol="HTTP/1.1" URIEncoding="UTF-8"
                connectionTimeout="20000"
                redirectPort="9443" />
     

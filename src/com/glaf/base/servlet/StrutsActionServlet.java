@@ -10,6 +10,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.struts.action.ActionServlet;
 
+import com.glaf.base.modules.sys.action.AuthorizeBean;
 import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.utils.Authentication;
 import com.glaf.base.utils.RequestUtil;
@@ -34,6 +35,14 @@ public class StrutsActionServlet extends ActionServlet {
 			SysUser user = RequestUtil.getLoginUser(request);
 			if (user != null) {
 				Authentication.setAuthenticatedUser(user);
+			} else {
+				if (actorId != null) {
+					AuthorizeBean bean = new AuthorizeBean();
+					user = bean.getUser(actorId);
+					if (user != null) {
+						Authentication.setAuthenticatedUser(user);
+					}
+				}
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
