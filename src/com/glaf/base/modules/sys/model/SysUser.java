@@ -32,6 +32,7 @@ public class SysUser implements Serializable {
 	private String loginIP;
 	private int dumpFlag;
 	private String adminFlag;
+	private String menus;
 	private Set<SysUserRole> userRoles = new HashSet<SysUserRole>();
 	private Set<SysDeptRole> roles = new HashSet<SysDeptRole>();
 	private Set<SysFunction> functions = new HashSet<SysFunction>();
@@ -116,6 +117,10 @@ public class SysUser implements Serializable {
 
 	public String getLoginIP() {
 		return loginIP;
+	}
+
+	public String getMenus() {
+		return menus;
 	}
 
 	public String getMobile() {
@@ -285,6 +290,10 @@ public class SysUser implements Serializable {
 
 	public void setLoginIP(String loginIP) {
 		this.loginIP = loginIP;
+	}
+
+	public void setMenus(String menus) {
+		this.menus = menus;
 	}
 
 	public void setMobile(String mobile) {

@@ -17,6 +17,7 @@ public final class ContextFactory {
 		return ctx;
 	}
 
+
 	@SuppressWarnings("unchecked")
 	public static <T> T getBean(Class<?> clazz) {
 		if (ctx == null) {
@@ -60,7 +61,7 @@ public final class ContextFactory {
 		return ctx.containsBean(name);
 	}
 
-	protected static void setContext(
+	public static void setContext(
 			org.springframework.context.ApplicationContext context) {
 		if (context != null) {
 			ctx = context;

@@ -24,17 +24,12 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jpage.util.DateTools;
 
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-
-import com.glaf.base.config.BaseConfiguration;
-import com.glaf.base.config.Configuration;
 import com.glaf.base.modules.sys.SysConstants;
+import com.glaf.base.modules.sys.action.AuthorizeBean;
 import com.glaf.base.modules.sys.model.SysUser;
 
 public class RequestUtil {
 	protected final static Log logger = LogFactory.getLog(RequestUtil.class);
-
-	private static Configuration conf = BaseConfiguration.create();
 
 	private final static Map<String, Object> paramMap = new HashMap<String, Object>();
 
@@ -119,10 +114,10 @@ public class RequestUtil {
 	}
 
 	public static String getActorId(HttpServletRequest request) {
-		SysUser user = getLoginUser(request);
 		String actorId = null;
-		if (user != null) {
-			actorId = user.getAccount();
+		HttpSession session = request.getSession(false);
+		if (session != null) {
+			actorId = (String) session.getAttribute(SysConstants.LOGIN);
 		}
 		return actorId;
 	}
@@ -242,10 +237,12 @@ public class RequestUtil {
 	}
 
 	public static SysUser getLoginUser(HttpServletRequest request) {
-		HttpSession session = request.getSession(true);
+		HttpSession session = request.getSession(false);
 		SysUser user = null;
 		if (session != null) {
-			user = (SysUser) session.getAttribute(SysConstants.LOGIN);
+			String account = (String) session.getAttribute(SysConstants.LOGIN);
+			AuthorizeBean bean = new AuthorizeBean();
+			user = bean.getUser(account);
 		}
 		return user;
 	}
@@ -410,43 +407,6 @@ public class RequestUtil {
 					}
 					paramName = paramName.substring(prefix.length());
 					dataMap.put(paramName, paramValue);
-				}
-			}
-		}
-		return dataMap;
-	}
-
-	/**
-	 * 从request中获取参数
-	 * 
-	 * @param request
-	 * @return
-	 */
-	public static Map<String, Object> getParameterMap(
-			MultipartHttpServletRequest request) {
-		Map<String, Object> dataMap = new HashMap<String, Object>();
-		dataMap.put("contextPath", request.getContextPath());
-		Enumeration<?> enumeration = request.getParameterNames();
-		while (enumeration.hasMoreElements()) {
-			String paramName = (String) enumeration.nextElement();
-			String paramValue = getParameter(request, paramName);
-			if (StringUtils.isNotEmpty(paramName)
-					&& StringUtils.isNotEmpty(paramValue)) {
-				if (paramValue.equalsIgnoreCase("null")) {
-					continue;
-				}
-				dataMap.put(paramName, paramValue);
-				String tmp = paramName.trim().toLowerCase();
-				if (tmp.indexOf("date") > 0) {
-					try {
-						Date date = DateTools.toDate(paramValue);
-						dataMap.put(paramName, date);
-					} catch (Exception ex) {
-					}
-				} else if (tmp.startsWith("x_encode_")) {
-					String name = StringTools.replace(paramName, "x_encode_",
-							"");
-					dataMap.put(name, decodeString(paramValue));
 				}
 			}
 		}
@@ -664,16 +624,26 @@ public class RequestUtil {
 		}
 	}
 
+	public static void setLoginUser(HttpServletRequest request, String actorId) {
+		AuthorizeBean bean = new AuthorizeBean();
+		SysUser user = bean.getUser(actorId);
+		setLoginUser(request, user);
+	}
+
 	public static void setLoginUser(HttpServletRequest request, SysUser bean) {
-		HttpSession session = request.getSession(true);
-		session.setAttribute(SysConstants.LOGIN, bean);
+		HttpSession session = request.getSession(false);
+		session.setAttribute(SysConstants.LOGIN, bean.getAccount());
+		AuthorizeBean x = new AuthorizeBean();
+		String menus = x.getMenus(bean);
+
+		request.getSession().setAttribute(SysConstants.MENU, menus);
 
 		org.jpage.actor.User user = new org.jpage.actor.User();
 		user.setActorId(bean.getAccount().toLowerCase());
 		user.setActorType(0);
 		user.setMail(bean.getEmail());
 		user.setMobile(bean.getMobile());
-		if (StringUtils.equals(bean.getAccount(), "root")) {
+		if (bean.isSystemAdmin()) {
 			user.setAdmin(true);
 		}
 
@@ -681,27 +651,6 @@ public class RequestUtil {
 		session.setAttribute(org.jpage.util.Constant.LOGIN_USER_USERNAME,
 				user.getActorId());
 
-		try {
-			String className = conf.get("session_user_className");
-			String keyName = conf.get("session_user_keyName");
-			logger.info(className + " = " + keyName);
-			if (className != null && keyName != null) {
-				Object obj = ClassUtil.instantiateObject(className);
-				Map<String, Object> dataMap = new HashMap<String, Object>();
-				dataMap.put("userId", bean.getAccount());
-				dataMap.put("userName", bean.getName());
-				dataMap.put("email", bean.getEmail());
-				dataMap.put("ip", getIPAddress(request));
-				dataMap.put("flg", true);
-				populate(obj, dataMap);
-				session.setAttribute(keyName, obj);
-
-				logger.info("------------------------xxxx------------------------------------");
-				logger.info(session.getAttribute(keyName));
-			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
 	}
 
 	/**

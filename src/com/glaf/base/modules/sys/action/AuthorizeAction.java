@@ -8,7 +8,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.struts.action.ActionForm;
@@ -95,13 +94,15 @@ public class AuthorizeAction extends DispatchActionSupport {
 			map.put("account", bean.getAccount());
 			// sysUserService.updatexy();
 
+			String menus = sysApplicationService.getMenu(3, bean);
+			bean.setMenus(menus);
+
 			ContextUtil.put(bean.getAccount(), bean);// 传入全局变量
 
 			RequestUtil.setLoginUser(request, bean);
 
 			// 保存session对象，跳转到后台主页面
-			request.getSession().setAttribute(SysConstants.MENU,
-					sysApplicationService.getMenu(3, bean));
+			request.getSession().setAttribute(SysConstants.MENU, menus);
 
 			if (bean.getAccountType() == 1) {// 供应商用户
 				return mapping.findForward("show_sp_frame");
@@ -125,7 +126,8 @@ public class AuthorizeAction extends DispatchActionSupport {
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		// 登出系统，清除session对象
-		request.getSession().invalidate();
+		request.getSession().removeAttribute(SysConstants.LOGIN);
+		request.getSession().removeAttribute(SysConstants.MENU);
 		return mapping.findForward("show_login");
 	}
 

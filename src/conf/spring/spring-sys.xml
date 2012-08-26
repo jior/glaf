@@ -108,6 +108,12 @@
 		</property>
 	</bean>
 
+	<bean id="authorizeProxy" parent="baseTxService">
+		<property name="target">
+			<ref bean="authorizeService" />
+		</property>
+	</bean>
+
 	<bean id="dictoryService" class="com.glaf.base.modules.sys.service.DictoryServiceImpl">
 		<property name="abstractDao">
 			<ref bean="abstractDao" />

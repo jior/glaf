@@ -303,7 +303,7 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 		StringBuffer menu = new StringBuffer("");
 		List list = getAccessAppList(parent, user);
 		if (list == null || list.isEmpty()) {
-			if ("root".equals(user.getAccount())) {
+			if (user.isSystemAdmin()) {
 				list = getApplicationList((int) parent);
 			}
 		}
@@ -327,7 +327,7 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 
 				List sonNode = getAccessAppList(bean.getId(), user);
 				if (sonNode == null || sonNode.isEmpty()) {
-					if ("root".equals(user.getAccount())) {
+					if (user.isSystemAdmin()) {
 						sonNode = getApplicationList((int) bean.getId());
 					}
 				}
