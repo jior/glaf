@@ -35,11 +35,11 @@
 		<echo message="编译应用程序......"/>
 		<mkdir dir="bin"/>
 		<javac srcdir="src" destdir="bin" debug="on" fork="${javac.fork}" deprecation="on">
-			<include name="com/**/*.java" />
+			<include name="**/*.java" />
 			<classpath refid="compile.classpath"/>
 		</javac>
 		<copy todir="war/WEB-INF/classes">
-			<fileset dir="bin" includes="com/**/*.class" />
+			<fileset dir="bin" includes="**/*.class" />
 		</copy>
 	</target>
 
@@ -93,8 +93,7 @@
 
 	<target name="copy">
 		<copy todir="war/WEB-INF/classes">
-			<fileset dir="bin" includes="com/glaf/**/*.class" />
-			<fileset dir="src" includes="**/*.xsd,**/*.xml,**/*.properties,**/*.sql"/>
+			<fileset dir="bin" includes="**/*.class" />
 		</copy>
 	</target>
 
