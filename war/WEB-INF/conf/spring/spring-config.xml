@@ -10,6 +10,7 @@
 	<import resource="spring-ajax.xml" />
 	<import resource="spring-todo.xml" />
 	<import resource="spring-sqlmap.xml" />
+	<import resource="spring-mybatis.xml" />
 
 </beans>
 
