@@ -18,7 +18,7 @@ public class MyBatisTest extends AbstractTest {
 		for (int i = 0; i <= 1000; i++) {
 			List<Object> todoList = entityService.getList("getTodoList",
 					new HashMap());
-			logger.debug(todoList);
+			System.out.println(todoList);
 		}
 	}
 
