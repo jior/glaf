@@ -6,9 +6,8 @@ import org.junit.*;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class AbstractTest {
-	protected static final Log logger = LogFactory
-			.getLog(AbstractTest.class);
-	
+	protected static final Log logger = LogFactory.getLog(AbstractTest.class);
+
 	protected static String configurationResource = "/conf/spring/spring-config.xml";
 
 	protected static org.springframework.context.ApplicationContext ctx;
