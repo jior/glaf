@@ -30,4 +30,18 @@
 		<property name="basePackage" value="com.glaf.**.mapper" />
 	</bean>
 
+	<bean id="myBatis3EntityDAO" class="com.glaf.base.entity.mybatis.MyBatis3EntityDAOImpl">
+		<property name="sqlSessionTemplate" ref="sqlSession" />
+	</bean>
+
+	<bean id="myBatis3EntityService" class="com.glaf.base.entity.mybatis.MyBatis3EntityService">
+		<property name="entityDAO" ref="myBatis3EntityDAO" />
+	</bean>
+
+	<bean id="myBatis3EntityProxy" parent="baseTxService">
+		<property name="target">
+			<ref bean="myBatis3EntityService" />
+		</property>
+	</bean>
+
 </beans>
