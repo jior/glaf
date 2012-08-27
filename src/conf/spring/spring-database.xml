@@ -9,12 +9,25 @@
 		</property>
 	</bean> -->
 
-	<bean id="myDataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+	<bean id="myDataSource" class="com.alibaba.druid.pool.DruidDataSourceC3P0Adapter"	destroy-method="close">
+		<property name="driverClass" value="org.postgresql.Driver" />
+		<property name="jdbcUrl" value="jdbc:postgresql://127.0.0.1:5432/jbpm" />
+		<property name="user" value="root" />
+		<property name="password" value="root" />
+		<property name="minPoolSize" value="5"/>
+	    <property name="maxPoolSize" value="100"/>
+	    <property name="maxIdleTime" value="5000"/>
+	    <property name="acquireIncrement" value="2"/>
+	    <property name="maxStatements" value="100"/>
+	    <property name="idleConnectionTestPeriod" value="3000"/>
+	</bean>
+
+	<!-- <bean id="myDataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
 		<property name="driverClass" value="org.postgresql.Driver" />
 		<property name="url" value="jdbc:postgresql://127.0.0.1:5432/jbpm" />
 		<property name="username" value="root" />
 		<property name="password" value="root" />
-	</bean>
+	</bean> -->
 	
 
 	<bean id="transactionManager"
