@@ -52,7 +52,7 @@
 			<list>
 				<value>WEB-INF/classes/baseConfigfiles/hibernate.cfg.base.xml</value>
 				<value>WEB-INF/classes/sysConfigfiles/hibernate.cfg.sys.xml</value>
-				<!-- <value>WEB-INF/classes/demoConfigfiles/hibernate.cfg.demo.xml</value> -->
+				<value>WEB-INF/classes/demoConfigfiles/hibernate.cfg.demo.xml</value>
 			</list>
 		</property>
 	</bean>

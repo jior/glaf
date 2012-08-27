@@ -14,6 +14,7 @@
 		/WEB-INF/classes/sysConfigfiles/framWorkContext.xml,
         /WEB-INF/classes/baseConfigfiles/action_services_base.xml,
         /WEB-INF/classes/sysConfigfiles/action_services_sys.xml,
+		/WEB-INF/classes/demoConfigfiles/action_services_demo.xml,
 		/WEB-INF/conf/spring/spring-config.xml
 		</param-value>
 	</context-param>
@@ -65,6 +66,7 @@
 			<param-value>
 			    /WEB-INF/classes/baseConfigfiles/struts-config-base.xml,
                 /WEB-INF/classes/sysConfigfiles/struts-config-sys.xml,
+				/WEB-INF/classes/demoConfigfiles/struts-config-demo.xml,
 				/WEB-INF/conf/struts/struts-config.xml,
 				/WEB-INF/conf/struts/struts-sys-config.xml,
 				/WEB-INF/conf/struts/struts-others-config.xml,
