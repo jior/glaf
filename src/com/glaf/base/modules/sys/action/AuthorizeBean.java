@@ -1,8 +1,7 @@
 package com.glaf.base.modules.sys.action;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Enumeration;
+import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -11,6 +10,8 @@ import org.apache.commons.logging.LogFactory;
 import org.jpage.core.cache.CacheFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.glaf.base.callback.CallbackProperties;
+import com.glaf.base.callback.LoginCallback;
 import com.glaf.base.context.ContextFactory;
 
 import com.glaf.base.modules.sys.SysConstants;
@@ -18,6 +19,7 @@ import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.sys.service.AuthorizeService;
 import com.glaf.base.modules.sys.service.SysApplicationService;
 import com.glaf.base.modules.utils.ContextUtil;
+import com.glaf.base.utils.ClassUtil;
 import com.glaf.base.utils.RequestUtil;
 
 public class AuthorizeBean {
@@ -65,8 +67,8 @@ public class AuthorizeBean {
 		}
 		return null;
 	}
-	
-	public String getMenus(SysUser bean){
+
+	public String getMenus(SysUser bean) {
 		String menus = sysApplicationService.getMenu(3, bean);
 		return menus;
 	}
@@ -85,11 +87,24 @@ public class AuthorizeBean {
 		if (bean != null) {
 
 			// 登录成功，修改最近一次登录时间
-			Map map = new HashMap();
-			map.put("lastLoginIP", request.getRemoteAddr());
-			map.put("lastLoginTime", new Date());
-			map.put("account", bean.getAccount());
-			// sysUserService.updatexy();
+
+			Properties props = CallbackProperties.getProperties();
+			if (props != null && props.keys().hasMoreElements()) {
+				Enumeration<?> e = props.keys();
+				while (e.hasMoreElements()) {
+					String className = (String) e.nextElement();
+					try {
+						Object obj = ClassUtil.instantiateObject(className);
+						if (obj instanceof LoginCallback) {
+							LoginCallback callback = (LoginCallback) obj;
+							callback.afterLogin(bean, request, null);
+						}
+					} catch (Exception ex) {
+						ex.printStackTrace();
+						logger.error(ex);
+					}
+				}
+			}
 
 			String menus = sysApplicationService.getMenu(3, bean);
 			bean.setMenus(menus);

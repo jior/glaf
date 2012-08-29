@@ -1,9 +1,8 @@
 package com.glaf.base.modules.sys.action;
 
-import java.util.Date;
-import java.util.HashMap;
+import java.util.Enumeration;
 import java.util.List;
-import java.util.Map;
+import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,6 +17,8 @@ import org.apache.struts.action.ActionMessages;
 import org.jpage.util.DigestUtil;
 import org.springframework.web.struts.DispatchActionSupport;
 
+import com.glaf.base.callback.CallbackProperties;
+import com.glaf.base.callback.LoginCallback;
 import com.glaf.base.listener.UserOnlineListener;
 import com.glaf.base.modules.Constants;
 import com.glaf.base.modules.sys.SysConstants;
@@ -28,6 +29,7 @@ import com.glaf.base.modules.sys.service.SysApplicationService;
 import com.glaf.base.modules.sys.service.SysTreeService;
 import com.glaf.base.modules.sys.service.SysUserService;
 import com.glaf.base.modules.utils.ContextUtil;
+import com.glaf.base.utils.ClassUtil;
 import com.glaf.base.utils.ParamUtil;
 import com.glaf.base.utils.RequestUtil;
 
@@ -87,12 +89,25 @@ public class AuthorizeAction extends DispatchActionSupport {
 				return mapping.findForward("show_login");
 			}
 
+			Properties props = CallbackProperties.getProperties();
+			if (props != null && props.keys().hasMoreElements()) {
+				Enumeration<?> e = props.keys();
+				while (e.hasMoreElements()) {
+					String className = (String) e.nextElement();
+					try {
+						Object obj = ClassUtil.instantiateObject(className);
+						if (obj instanceof LoginCallback) {
+							LoginCallback callback = (LoginCallback) obj;
+							callback.afterLogin(bean, request, response);
+						}
+					} catch (Exception ex) {
+						ex.printStackTrace();
+						logger.error(ex);
+					}
+				}
+			}
+
 			// 登录成功，修改最近一次登录时间
-			Map map = new HashMap();
-			map.put("lastLoginIP", request.getRemoteAddr());
-			map.put("lastLoginTime", new Date());
-			map.put("account", bean.getAccount());
-			// sysUserService.updatexy();
 
 			String menus = sysApplicationService.getMenu(3, bean);
 			bean.setMenus(menus);
