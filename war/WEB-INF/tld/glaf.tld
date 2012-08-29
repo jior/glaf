@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<taglib xmlns="http://java.sun.com/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
+    version="2.1">
+
+  <display-name>glaf core</display-name>
+  <tlib-version>1.1</tlib-version>
+  <short-name>glaf</short-name>
+  <uri>http://www.glaf.com/jsp/jstl</uri>
+
+
+  <!-- Permission -->
+    <tag>
+	<name>permission</name>
+	<tag-class>com.glaf.base.tag.PermissionTag</tag-class>
+	<attribute>
+	    <name>key</name>
+	    <required>true</required>
+	    <rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+	    <name>operator</name>
+	    <required>false</required>
+	    <rtexprvalue>true</rtexprvalue>
+	</attribute>
+    </tag>
+
+
+</taglib>

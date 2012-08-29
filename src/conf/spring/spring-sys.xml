@@ -187,9 +187,23 @@
 			<ref local="scheduler" />
 		</property>
 	</bean>
+
 	<bean id="schedulerProxy" parent="baseTxService">
 		<property name="target">
 			<ref bean="schedulerService" />
+		</property>
+	</bean>
+
+
+	<bean id="persistenceService" class="com.glaf.base.service.PersistenceServiceImpl">
+		<property name="abstractDao">
+			<ref bean="abstractDao" />
+		</property>
+	</bean>
+
+	<bean id="persistenceProxy" parent="baseTxService">
+		<property name="target">
+			<ref bean="persistenceService" />
 		</property>
 	</bean>
 
