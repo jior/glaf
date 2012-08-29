@@ -320,16 +320,14 @@ public class SchedulerServiceImpl implements SchedulerService {
 	 */
 	public void stop(String taskId) {
 		Scheduler model = this.getScheduler(taskId);
-		if (scheduler != null) {
+		if (model != null && scheduler != null) {
 			try {
-				if (scheduler != null) {
-					String triggerName = "TRIGGER_" + model.getId();
-					String triggerGroup = org.quartz.Scheduler.DEFAULT_GROUP;
-					scheduler.unscheduleJob(triggerName, triggerGroup);
-					model.setStartup(0);
-					abstractDao.update(model);
-					logger.info(model.getTaskName() + " has unscheduled.");
-				}
+				String triggerName = "TRIGGER_" + model.getId();
+				String triggerGroup = org.quartz.Scheduler.DEFAULT_GROUP;
+				scheduler.unscheduleJob(triggerName, triggerGroup);
+				model.setStartup(0);
+				abstractDao.update(model);
+				logger.info(model.getTaskName() + " has unscheduled.");
 			} catch (org.quartz.SchedulerException ex) {
 				throw new RuntimeException(ex);
 			}
