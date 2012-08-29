@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import com.glaf.base.context.ApplicationContext;
 import com.glaf.base.dao.AbstractSpringDao;
@@ -13,18 +15,22 @@ import com.glaf.base.modules.sys.SysConstants;
 import com.glaf.base.modules.sys.model.SysApplication;
 import com.glaf.base.modules.sys.model.SysTree;
 import com.glaf.base.modules.sys.model.SysUser;
-import com.glaf.base.modules.utils.ContextUtil;
 import com.glaf.base.utils.PageResult;
 
 public class SysApplicationServiceImpl implements SysApplicationService {
 	private static final Log logger = LogFactory
 			.getLog(SysApplicationServiceImpl.class);
+	private AuthorizeService authorizeService;
 	private SysTreeService sysTreeService;
 	private AbstractSpringDao abstractDao;
 
 	public void setAbstractDao(AbstractSpringDao abstractDao) {
 		this.abstractDao = abstractDao;
 		logger.info("setAbstractDao");
+	}
+
+	public void setAuthorizeService(AuthorizeService authorizeService) {
+		this.authorizeService = authorizeService;
 	}
 
 	public void setSysTreeService(SysTreeService sysTreeService) {
@@ -340,5 +346,48 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 			}
 		}
 		return menu.toString();
+	}
+
+	public JSONArray getUserMenu(long parent, String userId) {
+		JSONArray array = new JSONArray();
+		SysUser user = authorizeService.login(userId);
+		if (user != null) {
+			logger.debug("@user="+user.getName());
+			List list = getAccessAppList(parent, user);
+			if (list == null || list.isEmpty()) {
+				if (user.isSystemAdmin()) {
+					list = getApplicationList((int) parent);
+				}
+			}
+			if (list != null && list.size() > 0) {
+				Iterator iter = list.iterator();
+				while (iter.hasNext()) {
+					SysApplication bean = (SysApplication) iter.next();
+					JSONObject item = new JSONObject();
+					item.put("nodeId", bean.getNodeId());
+					item.put("showMenu", bean.getShowMenu());
+					item.put("sort", bean.getSort());
+					item.put("description", bean.getDesc());
+					item.put("name", bean.getName());
+					item.put("url", bean.getUrl());
+
+					List sonNode = getAccessAppList(bean.getId(), user);
+					if (sonNode == null || sonNode.isEmpty()) {
+						if (user.isSystemAdmin()) {
+							sonNode = getApplicationList((int) bean.getId());
+						}
+					}
+					if (sonNode != null && sonNode.size() > 0) {// ÓÐ×Ó²Ëµ¥
+						JSONArray children = this.getUserMenu(bean.getId(),
+								userId);
+						item.put("children", children);
+					}
+
+					array.put(item);
+
+				}
+			}
+		}
+		return array;
 	}
 }

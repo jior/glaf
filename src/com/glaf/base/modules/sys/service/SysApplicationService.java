@@ -2,6 +2,8 @@ package com.glaf.base.modules.sys.service;
 
 import java.util.List;
 
+import org.json.JSONArray;
+
 import com.glaf.base.modules.sys.model.SysApplication;
 import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.utils.PageResult;
@@ -18,13 +20,13 @@ public interface SysApplicationService {
 	boolean create(SysApplication bean);
 
 	/**
-	 * 更新
+	 * 删除
 	 * 
-	 * @param bean
-	 *            SysApplication
+	 * @param id
+	 *            int
 	 * @return boolean
 	 */
-	boolean update(SysApplication bean);
+	boolean delete(long id);
 
 	/**
 	 * 删除
@@ -34,15 +36,6 @@ public interface SysApplicationService {
 	 * @return boolean
 	 */
 	boolean delete(SysApplication bean);
-
-	/**
-	 * 删除
-	 * 
-	 * @param id
-	 *            int
-	 * @return boolean
-	 */
-	boolean delete(long id);
 
 	/**
 	 * 批量删除
@@ -70,6 +63,33 @@ public interface SysApplicationService {
 	SysApplication findByName(String name);
 
 	/**
+	 * 获取用户能访问到的模块列表
+	 * 
+	 * @param userId
+	 *            int
+	 * @param parent
+	 *            int
+	 * @return List
+	 */
+	List<SysApplication> getAccessAppList(long parent, SysUser user);
+
+	/**
+	 * 获取全部列表
+	 * 
+	 * @return List
+	 */
+	List<SysApplication> getApplicationList();
+
+	/**
+	 * 获取列表
+	 * 
+	 * @param parent
+	 *            int
+	 * @return List
+	 */
+	List<SysApplication> getApplicationList(int parent);
+
+	/**
 	 * 获取分页列表
 	 * 
 	 * @param parent
@@ -83,20 +103,24 @@ public interface SysApplicationService {
 	PageResult getApplicationList(int parent, int pageNo, int pageSize);
 
 	/**
-	 * 获取列表
+	 * 获取菜单
 	 * 
 	 * @param parent
-	 *            int
-	 * @return List
+	 * @param userId
+	 * @return
 	 */
-	List<SysApplication> getApplicationList(int parent);
+	String getMenu(long parent, SysUser user);
 
 	/**
-	 * 获取全部列表
+	 * 获取用户菜单之Json对象
 	 * 
-	 * @return List
+	 * @param parent
+	 *            父节点编号
+	 * @param userId
+	 *            用户登录账号
+	 * @return
 	 */
-	List<SysApplication> getApplicationList();
+	JSONArray getUserMenu(long parent, String userId);
 
 	/**
 	 * 排序
@@ -109,22 +133,11 @@ public interface SysApplicationService {
 	void sort(long parent, SysApplication bean, int operate);
 
 	/**
-	 * 获取用户能访问到的模块列表
+	 * 更新
 	 * 
-	 * @param userId
-	 *            int
-	 * @param parent
-	 *            int
-	 * @return List
+	 * @param bean
+	 *            SysApplication
+	 * @return boolean
 	 */
-	List<SysApplication> getAccessAppList(long parent, SysUser user);
-
-	/**
-	 * 获取菜单
-	 * 
-	 * @param parent
-	 * @param userId
-	 * @return
-	 */
-	String getMenu(long parent, SysUser user);
+	boolean update(SysApplication bean);
 }

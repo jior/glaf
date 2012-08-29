@@ -36,7 +36,11 @@
 		<property name="sysTreeService">
 			<ref bean="sysTreeProxy" />
 		</property>
+		<property name="authorizeService">
+			<ref bean="authorizeProxy" />
+		</property>
 	</bean>
+
 	<bean id="sysApplicationProxy" parent="baseTxService">
 		<property name="target">
 			<ref bean="sysApplicationService" />
