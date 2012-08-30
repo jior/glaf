@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+	<hibernate-mapping>
+    <class name="baseSrc.orm.Attachment"
+           table="T_Attachment"
+           dynamic-update="true"
+           dynamic-insert="true">
+        <id name="id" type="java.lang.Long" column="F_Id">
+		    <generator class="sequence"> 
+		    <param name="sequence">S_Attachment </param> 
+		    </generator> 
+        </id>
+        
+        <property name="referId" type="string" column="F_ReferId"/>
+        <property name="referType" type="int" column="F_ReferType"/>
+        <property name="name" type="string" column="F_Name"/>
+        <property name="url" type="string" column="F_Url"/>
+        <property name="flag" type="string" column="F_Flag"/>
+        
+       	<property name="cdatetime" column="F_CDatetime" />
+	    <property name="cuID" column="F_CUID" />
+	    <property name="cpID" column="F_CPID"/>
+	    <property name="ciP" column="F_CIP"/>
+	    <property name="udatetime" column="F_UDatetime"/>
+	    <property name="uuID" column="F_UUID"/>
+	    <property name="upID" column="F_UPID"/>
+	    <property name="uiP" column="F_UIP"/>       
+    </class>
+    </hibernate-mapping>

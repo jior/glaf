@@ -1,0 +1,17 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+    <import resource="spring-aop.xml" />
+	<import resource="spring-database.xml" />
+	<import resource="spring-dao.xml" />
+	<import resource="spring-mybatis.xml" />
+	<import resource="spring-sys.xml" />
+	<import resource="spring-security.xml" />
+	<import resource="spring-others.xml" />
+	<import resource="spring-workspace.xml" />
+	<import resource="spring-todo.xml" />
+
+</beans>
+
+ 

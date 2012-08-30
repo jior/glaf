@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="GBK"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="myDataSource" />
+		<property name="environment" value="default" />
+		<property name="configLocation" value="classpath:config/mybatis/mybatis.conf.xml" />
+		<property name="mapperLocations">
+			<list>
+				<value>classpath:config/mybatis/mapper/**/*Mapper.xml
+				</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+	    <constructor-arg index="0" ref="sqlSessionFactory" />
+	    <constructor-arg index="1" value="BATCH" />
+	</bean>
+
+	<bean id="baseMapper" class="org.mybatis.spring.mapper.MapperFactoryBean"
+		abstract="true" lazy-init="true">
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
+
+	<bean id="baseMapperScanner" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+		<property name="basePackage" value="com.glaf.**.mapper" />
+	</bean>
+
+	<bean id="myBatis3EntityDAO" class="com.glaf.base.entity.mybatis.MyBatis3EntityDAOImpl">
+		<property name="sqlSessionTemplate" ref="sqlSession" />
+	</bean>
+
+	<bean id="myBatis3EntityService" class="com.glaf.base.entity.mybatis.MyBatis3EntityService">
+		<property name="entityDAO" ref="myBatis3EntityDAO" />
+	</bean>
+
+	<bean id="myBatis3EntityProxy" parent="baseTxService">
+		<property name="target">
+			<ref bean="myBatis3EntityService" />
+		</property>
+	</bean>
+
+</beans>

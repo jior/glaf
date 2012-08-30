@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.glaf.base.modules.others.model">
+	<class name="WorkCalendar" table="sys_workcalendar" dynamic-update="true"
+		dynamic-insert="true">
+		<id name="id" type="long" unsaved-value="0">
+			<column name="id" not-null="true" />
+			<generator class="native" />
+		</id>
+
+		<property name="freeDay" type="int" column="freeDay" />
+		<property name="freeMonth" type="int" column="freeMonth" />
+		<property name="freeYear" type="int" column="freeYear" />
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,27 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<bean id="myMenuService" class="com.glaf.base.modules.workspace.service.MyMenuServiceImpl">
+		<property name="abstractDao">
+			<ref bean="abstractDao" />
+		</property>
+	</bean>
+	<bean id="myMenuProxy" parent="baseTxService">
+		<property name="target">
+			<ref bean="myMenuService" />
+		</property>
+	</bean>
+
+	<bean id="messageService" class="com.glaf.base.modules.workspace.service.MessageServiceImpl">
+		<property name="abstractDao">
+			<ref bean="abstractDao" />
+		</property>
+	</bean>
+	<bean id="messageProxy" parent="baseTxService">
+		<property name="target">
+			<ref bean="messageService" />
+		</property>
+	</bean>
+
+</beans>

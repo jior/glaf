@@ -1,0 +1,58 @@
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<!-- <bean id="myDataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName">
+			<value>java:comp/env/jdbc/jbpm</value>
+		</property>
+	</bean> -->
+
+	<bean id="myDataSource" class="com.alibaba.druid.pool.DruidDataSourceC3P0Adapter"	destroy-method="close">
+		<property name="driverClass" value="org.postgresql.Driver" />
+		<property name="jdbcUrl" value="jdbc:postgresql://127.0.0.1:5432/jbpm" />
+		<property name="user" value="root" />
+		<property name="password" value="root" />
+		<property name="minPoolSize" value="5"/>
+	    <property name="maxPoolSize" value="100"/>
+	    <property name="maxIdleTime" value="5000"/>
+	    <property name="acquireIncrement" value="2"/>
+	    <property name="maxStatements" value="100"/>
+	    <property name="idleConnectionTestPeriod" value="3000"/>
+	</bean>
+
+	<!-- <bean id="myDataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+		<property name="driverClass" value="org.postgresql.Driver" />
+		<property name="url" value="jdbc:postgresql://127.0.0.1:5432/jbpm" />
+		<property name="username" value="root" />
+		<property name="password" value="root" />
+	</bean> -->
+	
+
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<!--hibernate config -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="myDataSource" />
+		</property>
+		<property name="mappingDirectoryLocations">
+			<list>
+				<value>/conf/mapping</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</prop> 
+                <!-- <property name="hibernate.hbm2ddl.auto">update</property> -->
+				<prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>
+			</props>
+		</property>
+	</bean>
+
+</beans>  

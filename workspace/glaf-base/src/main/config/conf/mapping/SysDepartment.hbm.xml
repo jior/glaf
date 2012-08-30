@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.glaf.base.modules.sys.model">
+	<class name="SysDepartment" table="sys_department"
+		dynamic-update="true" dynamic-insert="true">
+
+		<id name="id" type="long" unsaved-value="0">
+			<column name="id" not-null="true" />
+			<generator class="native" />
+		</id>
+
+		<property name="name" type="string" column="name" />
+		<property name="desc" type="string" column="deptDesc" />
+		<property name="createTime" type="timestamp" column="createTime" />
+		<property name="sort" type="integer" column="sort" />
+		<property name="no" type="string" column="deptNo" />
+		<property name="code" type="string" column="code" />
+		<property name="code2" type="string" column="code2" />
+		<property name="status" type="integer" column="status" />
+		<property name="fincode" type="string" column="fincode" />
+		<property name="nodeId" type="long" column="nodeId"  insert="false" update="false" />
+
+		<many-to-one name="node" class="SysTree" column="nodeId"
+			cascade="all" unique="true" not-null="true" not-found="ignore" />
+
+		<set name="roles" table="sys_dept_role" inverse="false">
+			<key column="deptId" />
+			<one-to-many class="SysDeptRole" />
+		</set>
+	 
+	</class>
+</hibernate-mapping>

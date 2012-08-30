@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.base.mapper">
+
+	<resultMap id="todoResultMap" type="com.glaf.base.modules.todo.model.ToDo">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="actorId" property="actorId" jdbcType="VARCHAR" />
+		<result column="alarm" property="alarm" jdbcType="VARCHAR" />
+		<result column="code" property="code" jdbcType="VARCHAR" />
+		<result column="content" property="content" jdbcType="VARCHAR" />
+		<result column="deptId" property="deptId" jdbcType="BIGINT" />
+		<result column="deptName" property="deptName" jdbcType="VARCHAR" />
+		<result column="enableFlag" property="enableFlag" jdbcType="INTEGER" />
+		<result column="eventFrom" property="eventFrom" jdbcType="VARCHAR" />
+		<result column="eventTo" property="eventTo" jdbcType="VARCHAR" />
+		<result column="limitDay" property="limitDay" jdbcType="INTEGER" />
+		<result column="xa" property="xa" jdbcType="INTEGER" />
+		<result column="xb" property="xb" jdbcType="INTEGER" />
+		<result column="link" property="link" jdbcType="VARCHAR" />
+		<result column="listLink" property="listLink" jdbcType="VARCHAR" />
+		<result column="linkType" property="linkType" jdbcType="VARCHAR" />
+		<result column="appId" property="appId" jdbcType="INTEGER" />
+		<result column="moduleId" property="moduleId" jdbcType="INTEGER" />
+		<result column="moduleName" property="moduleName" jdbcType="VARCHAR" />
+		<result column="news" property="news" jdbcType="VARCHAR" />
+		<result column="objectId" property="objectId" jdbcType="VARCHAR" />
+		<result column="objectValue" property="objectValue" jdbcType="VARCHAR" />
+		<result column="processName" property="processName" jdbcType="VARCHAR" />
+		<result column="roleCode" property="roleCode" jdbcType="VARCHAR" />
+		<result column="roleId" property="roleId" jdbcType="BIGINT" />
+		<result column="tablename" property="tablename" jdbcType="VARCHAR" />
+		<result column="taskName" property="taskName" jdbcType="VARCHAR" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="type" property="type" jdbcType="VARCHAR" />
+		<result column="sql" property="sql" jdbcType="VARCHAR" />
+		<result column="versionNo" property="versionNo" jdbcType="BIGINT" />
+	</resultMap>
+
+	<select id="getTodoList" parameterType="map" resultMap="todoResultMap">
+		 select * from sys_todo
+	</select>
+
+	<select id="getTodoById" parameterType="long" resultMap="todoResultMap">
+		 select * from sys_todo where id = #{id}
+	</select>
+
+</mapper>
