@@ -36,7 +36,7 @@
 执行init.sql.txt进行数据初始化
 
 4、请在Eclipse工程中编译或安装ant编译源码，如果没有编译工具，直接把glaf-base.jar复制到war\WEB-INF\lib目录
-编译时需要将war\WEB-INF\lib的全部jar及server\lib下的jar加入编译路径
+编译时需要将lib的全部jar.
 
 5、启动Tomcat服务器start-server.bat
 访问如下地址：
