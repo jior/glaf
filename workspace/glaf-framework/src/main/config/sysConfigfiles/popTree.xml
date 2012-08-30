@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<trees>
+	<tree1>
+		<!-- 
+		* pageid:JPS页面的名称(父目录不必要，不能相同)
+		* title:目录名称(必须)
+		* src:访问路径(父目录不必要，在原页面跳转:直接写路径,如:src="你的url"；
+
+
+
+
+
+
+					新开窗口打开:调用JAVASCRIPT来实现，如：src="javascript:window.open('你的url')")
+		 -->
+		<tree pageid="partInfoQuery" title="新旧品查询" src="javascript:goGPS(true,'PartInfoQuery');"/>
+		 <tree pageid="page1002" src="/page1002.do?methodName=LoadPage"	title="资材申请起票"/>
+		 <tree pageid="page1023" src="/page1023.do?methodName=load"	title="申请审批"/>
+		 
+		 <tree pageid="page1010" src="/page1010.do?methodName=load" title="安全指导" />
+		 <tree pageid="page1011" src="/page1011.do?methodName=loadPage" title="安全指导审核"/>
+		 <tree pageid="page1030" src="/page1030.do?methodName=loadPage"	title="重新上传附件/撤单"/>
+		 
+		 <tree pageid="page1003" src="/page1003.do?methodName=pageInit"	title="生管担当分配"/>
+		 <tree pageid="PAGE1004" src="/PAGE1004.do?methodName=load"	title="申请确认"/>
+		 <tree pageid="page1005" src="/page1005.do?methodName=load"	title="采购收单确认"/>
+		 <tree pageid="page1006" src="/page1006.do?methodName=pageInit"	title="推荐供应商"/>
+		 <tree pageid="page1031" src="/page1031.do?methodName=load"	title="采购推荐审批"/>
+		 <tree pageid="page1007" src="/page1007.do?methodName=LoadPage"	title="发送调查表"/>
+		 <tree pageid="page1008" src="/page1008.do?methodName=LoadPage"	title="调查表导入"/>
+		 <tree pageid="page1009" src="/page1009.do?methodName=load"	title="品确结果录入"/>
+		 
+		 <tree pageid="page1012" src="/page1012.do?methodName=loadPage"	title="采番"/>
+		 <tree pageid="page1013" src="/page1013.do?methodName=load"	title="品质服务评价"/>
+		 
+		 <tree pageid="page1027" src="/page1027.do?methodName=load"	title="生管审批"/>
+		 <tree pageid="page1014" src="/page1014.do?methodName=loadPage1014"	title="询价"/>
+		 <tree pageid="page1017" src="/page1017.do?methodName=load"	title="报价导入&amp;决裁书制作"/>
+		 <tree pageid="page1018" src="/page1018.do?methodName=load"	title="决裁书修改"/>       
+		 <tree pageid="page1019" src="/page1019.do?methodName=load"	title="定厂定价决裁"/>
+		 <tree pageid="page1020" src="/page1020.do?methodName=load"	title="定厂(定价)信息查询&amp;导出" />
+		 <tree pageid="page1021" src="/page1021.do?methodName=load"	title="申请进度流程图"/>
+		
+	</tree1>
+	<tree2>
+		<tree pageid="page3201" title="产量人员数据录入" src="/page3201.do?methodName=load"/>
+		<tree pageid="page3202" title="低减课题集计表参考数据查询" src="/page3202.do?methodName=load"/>
+		<tree pageid="page3501" title="供应商扩展信息维护" src="/page3501.do?methodName=loadPage"/>
+		<tree pageid="page3502" title="资材分类信息维护" src="javascript:openMaxWindow('/GTMC-GPS/page3502.do?methodName=loadPage');"/>
+		<tree pageid="page3503" title="发注方针维护" src="javascript:openMaxWindow('/GTMC-GPS/page3503.do?methodName=loadPage3503');"/>
+		<tree pageid="page3507" title="发注方针维护列表" src="/page3507.do?methodName=searchUnSumbitGL"/>
+		<tree pageid="page3504" title="发注方针审核" src="/page3504.do?methodName=searchGuideline"/>
+		<tree pageid="page3505" title="发注方针查询" src="/page3505.do?methodName=loadPage"/>
+	</tree2>
+		<tree3>
+		<tree title="用户管理画面">
+			<tree pageid="page5002" title="组织机构设定" src="javascript:openMaxWindow('/GTMC-GPS/page5002.do?methodName=loadPage');" />
+			<tree pageid="page5004" title="角色管理" src="javascript:openMaxWindow('/GTMC-GPS/page5004.do?methodName=pageInit');" />
+			<tree pageid="page5005" title="用户角色设定" src="javascript:openMaxWindow('/GTMC-GPS/page5005.do?methodName=loadPage');" />
+			<tree pageid="page5006" title="代理设置" src="javascript:openMaxWindow('/GTMC-GPS/page5006.do?methodName=loadPage');" />
+			<tree pageid="page5013" title="修改用户信息" src="javascript:openWindow('/GTMC-GPS/page5003.do?methodName=updateUserInfo',700,400);" />
+		</tree>
+		<tree title="系统BATCH日志查看">
+			<tree pageid="" title="资材定厂信息整合性检查BATCH日志查看" src=""/>
+		</tree>
+	</tree3>
+</trees>
