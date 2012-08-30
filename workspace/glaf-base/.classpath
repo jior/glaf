@@ -2,10 +2,9 @@
 <classpath>
 	<classpathentry kind="src" path="src/main/java"/>
 	<classpathentry kind="src" path="src/main/process"/>
-	<classpathentry kind="src" path="src/main/resources"/>
 	<classpathentry kind="src" path="src/main/config"/>
 	<classpathentry kind="src" path="src/test/java"/>
-	<classpathentry kind="src" path="src/test/resources"/>
+	<classpathentry kind="src" path="src/test/config"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/activation-1.1.jar"/>
 	<classpathentry kind="lib" path="lib/ant-tools.jar"/>
