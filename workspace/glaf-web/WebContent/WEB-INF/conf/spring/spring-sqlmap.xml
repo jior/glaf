@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="GBK"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<bean id="sqlMapClientFactoryBean" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation">
+			<value>classpath:/config/jbpm/jpage-sqlmap-config.xml</value>
+		</property>
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<bean id="sqlMapClientDAO" class="com.glaf.base.modules.sqlmap.SqlMapClientDAOImpl">
+		<property name="sqlMapClient" ref="sqlMapClientFactoryBean" />
+	</bean>
+
+	<bean id="sqlMapManager" class="com.glaf.base.modules.sqlmap.SqlMapManagerImpl">
+		<property name="sqlMapClientDAO" ref="sqlMapClientDAO" />
+	</bean>
+
+</beans>

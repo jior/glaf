@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.glaf.base.modules.sys.model">
+	<class name="SysTree" table="sys_tree" dynamic-update="true"
+		dynamic-insert="true">
+
+		<id name="id" type="long" unsaved-value="0">
+			<column name="id" not-null="true" />
+			<generator class="native" />
+		</id>
+
+		<property name="parent" type="long" column="parent" />
+		<property name="name" type="string" column="name" />
+		<property name="desc" type="string" column="nodeDesc" />
+		<property name="sort" type="integer" column="sort" />
+		<property name="code" type="string" column="code" />
+
+		<one-to-one name="app" cascade="all" class="SysApplication"
+			property-ref="node" outer-join="auto" />
+		<one-to-one name="department" cascade="all" class="SysDepartment"
+			property-ref="node" outer-join="auto" />
+	</class>
+</hibernate-mapping>

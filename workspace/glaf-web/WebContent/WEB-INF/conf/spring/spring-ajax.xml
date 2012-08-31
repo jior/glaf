@@ -1,0 +1,65 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<bean name="sysFunctionAjaxService" class="com.glaf.base.modules.sys.service.SysFunctionAjaxService">
+		<property name="sysFunctionService">
+			<ref bean="sysFunctionProxy" />
+		</property>
+	</bean>
+
+	<bean name="sysDepartmentAjaxService" class="com.glaf.base.modules.sys.service.SysDepartmentAjaxService">
+		<property name="sysDepartmentService">
+			<ref bean="sysDepartmentProxy" />
+		</property>
+	</bean>
+
+	<bean name="sysRoleAjaxService" class="com.glaf.base.modules.sys.service.SysRoleAjaxService">
+		<property name="sysRoleService">
+			<ref bean="sysRoleProxy" />
+		</property>
+	</bean>
+
+	<bean name="sysApplicationAjaxService"
+		class="com.glaf.base.modules.sys.service.SysApplicationAjaxService">
+		<property name="sysApplicationService">
+			<ref bean="sysApplicationProxy" />
+		</property>
+	</bean>
+
+	<bean name="sysTreeAjaxService" class="com.glaf.base.modules.sys.service.SysTreeAjaxService">
+		<property name="sysTreeService">
+			<ref bean="sysTreeProxy" />
+		</property>
+	</bean>
+
+	<bean name="dictoryAjaxService" class="com.glaf.base.modules.sys.service.DictoryAjaxService">
+		<property name="dictoryService">
+			<ref bean="dictoryProxy" />
+		</property>
+	</bean>
+
+	<bean name="myMenuAjaxService" class="com.glaf.base.modules.workspace.service.MyMenuAjaxService">
+		<property name="myMenuService">
+			<ref bean="myMenuProxy" />
+		</property>
+	</bean>
+
+
+	<bean name="workCalendarAjaxService"
+		class="com.glaf.base.modules.others.service.WorkCalendarAjaxService">
+		<property name="workCalendarService">
+			<ref bean="workCalendarProxy" />
+		</property>
+	</bean>
+
+
+	<bean name="sysUserRoleAjaxService" class="com.glaf.base.modules.sys.service.SysUserRoleAjaxService">
+		<property name="sysUserRoleService">
+			<ref bean="sysUserRoleProxy" />
+		</property>
+	</bean>
+
+
+
+</beans>

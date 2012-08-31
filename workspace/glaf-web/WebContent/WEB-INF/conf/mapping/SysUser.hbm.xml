@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.glaf.base.modules.sys.model">
+	<class name="SysUser" table="sys_user" dynamic-update="true"
+		dynamic-insert="true">
+
+		<id name="id" type="long" unsaved-value="0">
+			<column name="id" not-null="true" />
+			<generator class="native" />
+		</id>
+
+		<property name="account" type="string" column="account" />
+		<property name="password" type="string" column="password" />
+		<property name="code" type="string" column="code" />
+		<property name="name" type="string" column="name" />
+		<property name="blocked" type="integer" column="blocked" />
+		<property name="createTime" type="timestamp" column="createTime" />
+		<property name="lastLoginTime" type="timestamp" column="lastLoginTime" />
+		<property name="lastLoginIP" type="string" column="lastLoginIP" />
+		<property name="evection" type="integer" column="evection" />
+		<property name="mobile" type="string" column="mobile" />
+		<property name="email" type="string" column="email" />
+		<property name="telephone" type="string" column="telephone" />
+		<property name="gender" type="integer" column="gender" />
+		<property name="headship" type="string" column="headship" />
+		<property name="userType" type="integer" column="userType" />
+		<property name="fax" type="string" column="fax" />
+		<property name="accountType" type="integer" column="accountType" />
+		<property name="dumpFlag" type="integer" column="dumpFlag" />
+		<property name="adminFlag" type="string" column="adminFlag" />
+
+		<many-to-one name="department" class="SysDepartment"
+			column="deptId" cascade="none" not-found="ignore" />
+
+		<set name="userRoles" table="sys_user_role" inverse="true" cascade="all" order-by="id desc">
+			<key column="userId" not-null="true" />
+			<one-to-many class="SysUserRole" />
+		</set>
+
+		<set name="roles" table="sys_user_role" inverse="false" order-by="roleId asc">
+			<key column="userId" not-null="true" />
+			<many-to-many class="SysDeptRole" column="roleId" not-found="ignore" />
+		</set>
+	</class>
+</hibernate-mapping>

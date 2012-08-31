@@ -1,0 +1,15 @@
+#iscTab { border-collapse:collapse;clear:both;} 
+.#iscTab tr{ background-color:expression('#75BE5E,#D6FFD1'.split(',')[rowIndex%2]);
+            star:expression(onclick=function(){
+                if(typeof(lastrow)!='undefined' && null!=lastrow){
+       			   lastrow.style.backgroundColor = lastcolor;
+                }
+                lastrow = this;
+                lastcolor = this.style.backgroundColor;
+                this.style.backgroundColor="#b1baf0";
+                }
+         );} 
+         
+.input-noimd{
+	ime-mode:disabled;
+}

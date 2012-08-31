@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.glaf.base.modules.sys.model">
+	<class name="SysFunction" table="sys_function" dynamic-update="true"
+		dynamic-insert="true">
+
+		<id name="id" type="long" unsaved-value="0">
+			<column name="id" not-null="true" />
+			<generator class="native" />
+		</id>
+
+		<property name="name" type="string" column="name" />
+		<property name="funcDesc" type="string" column="funcDesc" />
+		<property name="funcMethod" type="string" column="funcMethod" />
+		<property name="sort" type="integer" column="sort" />
+		<property name="appId" type="long" column="appId"  insert="false" update="false" />
+
+		<many-to-one name="app" class="SysApplication" column="appId"
+			cascade="none" not-null="true" not-found="ignore" />
+	</class>
+</hibernate-mapping>

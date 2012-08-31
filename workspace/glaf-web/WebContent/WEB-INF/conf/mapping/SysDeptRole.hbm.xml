@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.glaf.base.modules.sys.model">
+	<class name="SysDeptRole" table="sys_dept_role" dynamic-update="true"
+		dynamic-insert="true">
+
+		<id name="id" type="long" unsaved-value="0">
+			<column name="id" not-null="true" />
+			<generator class="native" />
+		</id>
+
+		<property name="grade" type="integer" column="grade" />
+		<property name="code" type="string" column="code" />
+		<property name="sort" type="integer" column="sort" />
+		<property name="deptId" type="long" column="deptId" insert="false" update="false" />
+
+		<many-to-one name="role" class="SysRole" column="sysRoleId"
+			cascade="none" not-null="true" not-found="ignore" />
+		<many-to-one name="dept" class="SysDepartment" column="deptId"
+			cascade="none" not-null="true" not-found="ignore" />
+		<set name="users" table="sys_user_role" inverse="false" order-by="userId asc">
+			<key column="roleId" not-null="true" />
+			<many-to-many class="SysUser" column="userId" not-found="ignore" />
+		</set>
+		<set name="functions" table="sys_permission" inverse="false"
+			order-by="funcId asc">
+			<key column="roleId" not-null="true" />
+			<many-to-many class="SysFunction" column="funcId"
+				not-found="ignore" />
+		</set>
+		<set name="apps" table="sys_access" inverse="false" order-by="appId asc">
+			<key column="roleId" not-null="true" />
+			<many-to-many class="SysApplication" column="appId"
+				not-found="ignore" />
+		</set>
+	</class>
+</hibernate-mapping>

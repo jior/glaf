@@ -1,0 +1,170 @@
+body,h1,h2,h3,p,quote,small,form,input,ul,li,ol,label{
+	/* Simple page reset Download by http://sc.xueit.com*/
+	margin:0px;
+	padding:0px;
+}
+
+body{
+	/* Setting default text color, background and a font stack */
+	color:#cccccc;
+	font-size:13px;
+	background: #302b23;
+    background-color: #F2F1F1;
+	font-family:"微软雅黑",Arial, Helvetica, sans-serif;
+}
+
+ul{
+	margin:0;
+	padding:0;
+}
+
+ul.container{
+	/* The topmost UL */
+	width:158px;
+	margin:0 auto;
+
+}
+
+li{
+	list-style:none;
+	text-align:left;
+}
+
+li.menu{
+	/* The main list elements */
+	padding:5px 0;
+	width:100%;
+}
+li.index{
+	display:block;
+	font-family:"微软雅黑",Arial,Helvetica,sans-serif;
+    FONT-WEIGHT: bold;
+	font-size:16px;
+	height:34px;
+
+}
+li.index a.red{background:url(../../sysImages/red.png) repeat-x top left; color:#FFFFFF;}
+li.index a.red span{ background:url(../../sysImages/red.png) repeat-x top right;}
+li.button a{
+	/* The section titles */
+	display:block;
+	font-family:"微软雅黑",Arial,Helvetica,sans-serif;
+    FONT-WEIGHT: bold;
+	font-size:16px;
+	height:34px;
+	overflow:hidden;
+	padding:5px 5px 0;
+	position:relative;
+	width:158px;
+}
+
+li.button a:hover{
+	/* Removing the inherited underline from the titles */
+	text-decoration:none;
+}
+
+li.button a span{
+	/* This span acts as the right part of the section's background */
+	height:44px;
+	position:absolute;
+	right:0;
+	top:0;
+	width:4px;
+	display:block;
+}
+
+/* Setting up different styles for each section color */
+
+li.button a.red{background:url(../../sysImages/red.png) repeat-x top left; color:#FFFFFF;}
+li.button a.red span{ background:url(../../sysImages/images/red.png) repeat-x top right;}
+
+/* The hover effects */
+
+li.button a:hover{ background-position:bottom left;}
+li.button a:hover span{ background-position:bottom right;}
+
+.dropdown{
+	/* The expandable lists */
+	display:none;
+	padding-top:5px;
+	width:100%;
+}
+
+.dropdown li{
+	/* Each element in the expandable list */
+	background-color:#DEDEDE;
+	border:1px solid #CECECE;
+	color:#CCCCCC;
+	margin:5px 0;
+	padding:4px 18px;
+}
+
+
+
+li.highlight a.linkclassnew{
+	/* Each element in the expandable list */
+	font-weight:bold;
+}
+
+li.highlight a.linkclassold{
+	/* Each element in the expandable list */
+	font-weight:normal;
+}
+
+li.button a.linkclassnewbutton{
+	/* Each element in the expandable list */
+	background:url(../../sysImages/red.png) repeat-x top left; color:#FFFFFF;font-style:italic;
+}
+li.button a.linkclassoldbutton{
+	/* Each element in the expandable list */
+	background:url(../../sysImages/red.png) repeat-x top left; color:#FFFFFF;font-style:normal;
+
+}
+
+/* The styles below are only necessary for the demo page */
+
+h1{
+	font-family:"微软雅黑",Arial,Helvetica,sans-serif;
+	font-size:36px;
+	font-weight:normal;
+	margin-bottom:15px;
+}
+
+h2{
+	font-family:"微软雅黑",Arial,Helvetica,sans-serif;
+	font-size:12px;
+	font-weight:normal;
+	padding-right:140px;
+	right:0;
+	text-align:right;
+	text-transform:uppercase;
+	top:15px;
+}
+
+.clear{
+	clear:both;
+}
+
+#main{
+	/* The main container */
+
+	text-align:center;
+	width:158px;
+	position:relative;
+}
+
+a, a:visited {
+	color:#3C3C3C;
+	text-decoration:none;
+	outline:none;
+}
+
+a:hover{
+	text-decoration:underline;
+}
+
+p{
+	/* The tut info on the bottom of the page */
+	padding:10px;
+	text-align:center;
+}

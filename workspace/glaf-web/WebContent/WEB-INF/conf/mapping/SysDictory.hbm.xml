@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+	
+<hibernate-mapping package="com.glaf.base.modules.sys.model">
+    <class name="Dictory" 
+           table="sys_dictory"
+           dynamic-update="true"
+           dynamic-insert="true">
+        <id name="id" type="long" unsaved-value="0">
+            <column name="id" not-null="true"/>
+            <generator class="native"/>
+        </id>
+                
+        <property name="typeId" type="long" column="typeId"/>
+        <property name="code" type="string" column="code"/>        
+        <property name="name" type="string" column="name"/>        
+        <property name="sort" type="integer" column="sort"/>           
+        <property name="desc" type="string" column="dictDesc"/>          
+        <property name="blocked" type="integer" column="blocked"/>
+		
+        <property name="ext1" type="string" column="ext1"/>
+        <property name="ext2" type="string" column="ext2"/>
+		
+		<property name="ext3" type="string" column="ext3"/>
+        <property name="ext4" type="string" column="ext4"/>
+		
+		<property name="ext5" type="date" column="ext5"/>
+        <property name="ext6" type="date" column="ext6"/>
+		
+    </class>
+</hibernate-mapping>

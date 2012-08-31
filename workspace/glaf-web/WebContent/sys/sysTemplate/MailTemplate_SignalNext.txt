@@ -1,0 +1,70 @@
+﻿ 【资材管理SYS】新规资材申请单废止联络
+ <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+ <html xmlns="http://www.w3.org/1999/xhtml">
+ <head>
+ <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+ <title>无标题文档</title>
+
+ </head>
+
+ <body>
+ <table width="800" height="400" border="0" border="10">
+  <tr>
+    <td>各位:</td>
+  </tr>
+  <tr>
+    <td><table width="750" border="1" align="center">
+      <tr>
+        <td width="75">申请单号</td>
+        <td width="45">品名</td>
+        <td width="45">规格</td>
+        <td width="115">申请人</td>
+        <td width="115">申请部门</td>
+        <td width="180">废止原因</td>
+        <td>废止时间</td>
+      </tr>
+      <tr>
+        <td>#applyNo</td>
+        <td>#paryname</td>
+        <td>#specfiction</td>
+        <td>#applyer</td>
+        <td>#applypart</td>
+        <td>#reson</td>
+        <td>#time</td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>以上新规资材申请单申请部门的申请者已于#year年#month月#day日进行废止处理,请各部门的相关担当停止对以上新规申请单的推进工作。</td>
+  </tr>
+  <tr height="70">
+    <td height="70">&nbsp;</td>
+  </tr>
+  <tr>
+    <td>以上</td>
+  </tr>
+  <tr>
+    <td height="40">&nbsp;</td>
+  </tr>
+  <tr>
+    <td> 
+    ***************************************************</br>
+    fzname</br>
+    fzpart</br>
+    companyname</br>
+    地址:adress</br>
+    邮编:code</br>
+    E-mail:email</br>
+    传真(FAX):fax</br>
+    电话:phone</br>
+    ***************************************************</br>
+  </td>
+   <tr>
+    <td>&nbsp;</td>
+  </tr>
+ </table>
+ </body>
+ </html>
