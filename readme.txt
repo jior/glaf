@@ -44,6 +44,6 @@
 http://127.0.0.1:9090/glaf
 用户名为root，密码111111
 
-正式发布时请去掉测试文件,位于war\workflow\test目录。
+正式发布时请去掉测试文件,位于\workflow\test目录。
 
  test
