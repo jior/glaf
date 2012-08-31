@@ -1,6 +1,0 @@
-/**
- * @author suey
- */
-Field = {
-	
-};
