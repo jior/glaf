@@ -37,7 +37,7 @@
 			<include name="test/java/**/*.java" />
 			<classpath refid="compile.classpath" />
 		</javac>
-		<copy todir="../../war/WEB-INF/classes">
+		<copy todir="../glaf-web/WebContent/WEB-INF/classes">
 			<fileset dir="bin" includes="**/*.class" />
 		</copy>
 	</target>
