@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="GBK"?>
+<mail-templates>
+
+  <variable name="BaseTaskListURL" value="http://localhost:8080/workflow/task.jsp?taskId=" />
+
+  <mail-template name="default">
+    <subject>您的新任务 '#{taskDescription}'</subject>
+    <datafile>task_running.html</datafile>
+  </mail-template>
+
+  <mail-template name="task_finished">
+    <subject>您的申请已经处理完成。</subject>
+    <datafile>task_finished.html</datafile>
+  </mail-template>
+  
+  <mail-template name="business_callpricefile">
+    <subject>广汽丰田特定采购询价函</subject>
+    <datafile>tms/business_callPriceFile.html</datafile>
+  </mail-template>
+  
+  <mail-template name="order_confirm">
+    <subject>广汽丰田特定采购订购单--#{subject}</subject>
+    <datafile>tms/order_confirm.html</datafile>
+  </mail-template>
+  <mail-template name="order_noNeedConfirm">
+    <subject>广汽丰田特定采购项目报价的回复--#{subject}</subject>
+    <datafile>tms/order_noNeedConfirm.html</datafile>
+  </mail-template>
+
+  <mail-template name="orderLiaison_confirm">
+    <subject>广汽丰田特定目录采购价格联络书--#{subject}</subject>
+    <datafile>tms/orderLiaison_confirm.html</datafile>
+  </mail-template>
+
+  <mail-template name="orderLiaison_noNeedConfirm">
+    <subject>广汽丰田特定目录采购的回复--#{subject}</subject>
+    <datafile>tms/orderLiaison_noNeedConfirm.html</datafile>
+  </mail-template>
+
+  <mail-template name="payment_send">
+    <subject>广汽丰田特定采购应付款通知书#{projectName}</subject>
+    <datafile>tms/payment_send.html</datafile>
+  </mail-template>
+
+  <mail-template name="glaf_todo">
+    <subject>广汽丰田特定采购ToDo事项</subject>
+    <datafile>tms-todo-velocity.html</datafile>
+  </mail-template>
+
+   <mail-template name="glaf_todo_ccxy">
+    <subject>广汽丰田特定采购ToDo事项</subject>
+    <datafile>tms-todo-cc-velocity.html</datafile>
+  </mail-template>
+
+  <mail-template name="goodsApplyAbolish_send">
+    <subject>广汽丰田特定采购目录物品废止通知</subject>
+    <datafile>tms/goodsApplyAbolish_send.html</datafile>
+  </mail-template>
+
+</mail-templates>

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.glaf.base.modules.sys.model">
+	<class name="SysLog" table="sys_log" dynamic-update="true"
+		dynamic-insert="true" lazy="true">
+
+		<id name="id" type="long" unsaved-value="0">
+			<column name="id" not-null="true" />
+			<generator class="native" />
+		</id>
+
+		<property name="account" type="string" column="account" />
+		<property name="ip" type="string" column="ip" />
+		<property name="createTime" type="timestamp" column="createTime" />
+		<property name="operate" type="string" column="operate" />
+		<property name="flag" type="integer" column="flag" />
+	</class>
+</hibernate-mapping>

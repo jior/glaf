@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.glaf.base.modules.sys.model">
+	<class name="SysUserRole" table="sys_user_role" dynamic-update="true"
+		dynamic-insert="true" lazy="true">
+
+		<id name="id" type="long" unsaved-value="0">
+			<column name="id" not-null="true" />
+			<generator class="native" />
+		</id> 
+		<property name="availDateStart" type="timestamp" column="availDateStart" />
+		<property name="availDateEnd" type="timestamp" column="availDateEnd" />
+		<property name="userId" type="long" column="userId" insert="false" update="false" />
+		<property name="deptRoleId" type="long" column="roleId" insert="false" update="false" />
+
+		<many-to-one name="user" class="SysUser" column="userId"
+			cascade="none" not-found="ignore" />
+
+		<many-to-one name="deptRole" class="SysDeptRole" column="roleId"
+			cascade="none" not-found="ignore" />
+
+		<property name="authorized" type="integer" column="authorized" />
+
+		<many-to-one name="authorizeFrom" class="SysUser" column="authorizeFrom"
+			cascade="none" not-found="ignore" />
+
+		<property name="processDescription" type="string" column="processDescription" />
+	</class>
+</hibernate-mapping>

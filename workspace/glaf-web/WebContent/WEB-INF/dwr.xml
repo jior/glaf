@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dwr PUBLIC "-//GetAhead Limited//DTD Direct Web Remoting 2.0//EN" "http://www.getahead.ltd.uk/dwr/dwr20.dtd">
+
+<dwr>
+	<allow>
+		<create creator="spring" javascript="SysFunctionAjaxService">
+			<param name="beanName" value="sysFunctionAjaxService"/>
+			<exclude method="setSysFunctionService"/>
+		</create>
+		<create creator="spring" javascript="SysDepartmentAjaxService">
+			<param name="beanName" value="sysDepartmentAjaxService"/>
+			<exclude method="setSysDepartmentService"/>
+		</create>
+		<create creator="spring" javascript="SysRoleAjaxService">
+			<param name="beanName" value="sysRoleAjaxService"/>
+			<exclude method="setSysRoleService"/>
+		</create>
+		<create creator="spring" javascript="SysApplicationAjaxService">
+			<param name="beanName" value="sysApplicationAjaxService"/>
+			<exclude method="setSysApplicationService"/>
+		</create>
+		<create creator="spring" javascript="SysTreeAjaxService">
+			<param name="beanName" value="sysTreeAjaxService"/>
+			<exclude method="setSysTreeService"/>
+		</create>
+		<create creator="spring" javascript="DictoryAjaxService">
+			<param name="beanName" value="dictoryAjaxService"/>
+			<exclude method="setDictoryService"/>
+		</create>
+ 
+		<create creator="spring" javascript="MyMenuAjaxService">
+			<param name="beanName" value="myMenuAjaxService"/>
+			<exclude method="setMyMenuService"/>
+		</create>
+    
+		<create creator="spring" javascript="WorkCalendarAjaxService">
+			<param name="beanName" value="workCalendarAjaxService"/>
+			<exclude method="setWorkCalendarService"/>
+		</create>
+	 
+		<create creator="spring" javascript="SysUserRoleAjaxService">
+			<param name="beanName" value="sysUserRoleAjaxService"/>
+			<exclude method="setSysUserRoleService"/>
+		</create>
+
+	</allow>
+</dwr>

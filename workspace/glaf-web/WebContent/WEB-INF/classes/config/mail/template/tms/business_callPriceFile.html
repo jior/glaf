@@ -1,0 +1,212 @@
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>询价通知</title>
+<link href="#{serviceUrl}/css/site.css" type="text/css" rel="stylesheet">
+<script src="#{serviceUrl}/js/css.js" language="javascript"></script>
+<script type='text/javascript' src='#{serviceUrl}/js/main.js'></script>
+<script language="javascript">
+	function showSize(){
+		var width = screen.width;
+		var height = 500;
+		window.resizeTo(width, height);
+		window.moveTo(0, height/4);
+	}
+</script>
+<style>
+.myTable{
+border-color:#CCCCCC;
+}
+.STYLE2 {font-size: 12px}
+</style>
+</head>
+
+<body>
+<!--div class="nav-title"><span class="Title">供应商平台</span>&gt;&gt;询价函</div-->
+<table width="99%" border="0" cellspacing="0" cellpadding="0" align="center" class="box">
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr class="box">
+        <td class="box-lt">&nbsp;</td>
+        <td class="box-mt">&nbsp;</td>
+        <td class="box-rt">&nbsp;</td>
+      </tr>
+    </table></td>
+  </tr> 
+  <tr>
+    <td class="box-mm"><table width="98%" border="0" cellpadding="5" cellspacing="0" align="center">
+      <tr>
+        <td colspan="3" align="left"><table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td scope="row" class="input-box">询价单No:#{priceQuery.queryNo}</td>
+          </tr>
+        </table>        </td>
+      </tr>
+      <tr>
+        <td colspan="3" align="left"><hr></td>
+      </tr>
+      <tr>
+        <td colspan="3" align="center"><b><font size="+1" color="#0690D5" face="楷体">特定采购询价函</font></b></td>
+      </tr>
+      <tr>
+        <td colspan="3" align="center"><b><font color="#0690D5" face="楷体">LETTER OF ENQUIRY</font></b></td>
+      </tr>
+      <tr>
+        <td colspan="3" align="center" style="color:#0690D5; font-size:14px"><table width="100%" border="1" cellpadding="0" cellspacing="0" class="myTable">
+          <tr>
+            <td scope="row"><table width="100%" border="0" cellspacing="6" cellpadding="0" class="myTable">
+              <tr>
+                <td width="43%" class="input-box">供应商编码：#{supplier.supplierNo}</td>
+                <td width="35%" class="input-box">供应商名称：#{supplier.fullName}</td>
+                <td width="22%" align="right"><table border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                      <td align="left" class="input-box" scope="row">经办人：xxxxxxx</td>
+                    </tr>
+                </table></td>
+              </tr>
+              <tr>
+                <td height="15" colspan="3"><table width="100%" border="0" cellspacing="0" cellpadding="4">
+                    <tr>
+                      <td align="left" scope="row">感谢贵公司平日来对我公司的支持与帮助！</td>
+                    </tr>
+                    <tr>
+                      <td align="left" scope="row">本公司因业务需要拟向贵公司洽购下列项目/物品，请速予报价。</td>
+                    </tr>
+                </table></td>
+              </tr>
+            </table></td>
+          </tr>
+        </table></td>
+      </tr>
+      <tr>
+        <td colspan="3"><table width="100%" border="1" cellpadding="4" cellspacing="0" class="myTable">
+          <tr>
+            <td width="50%"><table width="100%" border="0" cellspacing="6" cellpadding="0">
+                <tr>
+                  <td width="23%" height="25" scope="row" class="input-box">项目名称：</td>
+                  <td width="77%" scope="row">#{priceQuery.name}</td>
+                </tr>
+                <tr>
+                  <td height="25" colspan="2" scope="row" class="input-box">详见询价项目/物品清单:</td>
+                </tr>
+                <tr>
+                  <td height="25" colspan="2" scope="row" class="input-box">询价附件：有/无 <a href="javascript:alert('下载询价附件')" title="如果有附件则下载">下载</a></td>
+                </tr>
+            </table></td>
+            <td width="54%"><table width="100%" border="0" cellpadding="2" cellspacing="6">
+                <tr>
+                  <td width="25%" height="25" scope="row" class="input-box">希望到货日期：</td>
+                  <td width="75%" scope="row">#{priceQuery.deliverDate}</td>
+                </tr>
+                <tr>
+                  <td height="25" scope="row" class="input-box">交货地点：</td>
+                  <td>暂不确切</td>
+                </tr>
+                <tr>
+                  <td height="25" scope="row" class="input-box">申请部门联系人：</td>
+                  <td height="25" scope="row">XX部XX科&nbsp;&nbsp;&nbsp;XX人&nbsp;&nbsp;&nbsp;TEL:3939XXXX/1354452XXXX</td>
+                </tr>
+            </table></td>
+          </tr>
+        </table></td>
+      </tr>
+      <tr>
+        <td colspan="3"><table width="100%" border="1" cellpadding="0" cellspacing="0" class="myTable">
+          <tr>
+            <td scope="row"><table width="100%" border="0" cellspacing="3" cellpadding="0">
+              <tr>
+                <td width="13%" height="25" scope="row"><table border="0" cellpadding="0" cellspacing="0" class="myTable">
+                    <tr>
+                      <td class="input-box">报价截止时间：</td>
+                    </tr>
+                </table></td>
+                <td width="62%">#{priceQuery.endDate}</td>
+                <td width="25%"><u><b>PS：&nbsp;逾期系统将不再受理。</b></u></td>
+              </tr>
+			  <tr>
+			  	<td>报价要求：</td>
+				<td>#{priceQuery.requirement}</td>
+			  </tr>
+              <!--tr>
+                <td rowspan="4" valign="top" scope="row"><table border="0" cellpadding="0" cellspacing="0" class="myTable">
+                    <tr>
+                      <td class="input-box">报价要求：</td>
+                    </tr>
+                </table></td>
+                <td colspan="2">＊ 所有报价请保留两位小数；</td>
+              </tr>
+              <tr>
+                <td colspan="2">＊ 报价必须为含税、含运费的到厂价；</td>
+              </tr>
+              <tr>
+                <td colspan="2">＊ 请确保单项报价的总和等于总报价，否则以总报价为准。 </td>
+              </tr>
+              <tr>
+                <td colspan="2">＊ ...... </td>
+              </tr-->
+            </table></td>
+          </tr>
+        </table></td>
+      </tr>
+      <tr>
+        <td width="100%" colspan="2"><table width="100%" border="1" cellpadding="4" cellspacing="0" class="myTable">
+          <tr>
+            <td width="12%" rowspan="2" valign="top" scope="row">
+				<table border="0" cellpadding="4" cellspacing="0" class="myTable">
+						<tr><td class="input-box">报价联系人：</td></tr>
+				</table>			</td>
+            <td height="25" colspan="3" align="center" scope="row"><span class="STYLE2">采购部采购科</span></td>
+            </tr>
+          <tr>
+            <td width="14%" align="center" valign="middle" scope="row">#{user.name}</td>
+            <td width="74%" colspan="2" align="right"><table width="95%" border="0" cellspacing="0" cellpadding="4">
+              <tr>
+                <td scope="row">TEL：#{user.telephone}</td>
+              </tr>
+              <tr>
+                <td scope="row">Fax：#{user.fax}</td>
+              </tr>
+              <tr>
+                <td scope="row">E-mail：#{user.email}</td>
+              </tr>
+              <tr>
+                <td scope="row">报价方式：网上平台</td>
+              </tr>
+            </table></td>
+          </tr>
+        </table></td>
+      </tr>
+      <tr>
+        <td colspan="3" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="4">
+          <tr>
+            <td align="right" scope="row">广汽丰田汽车有限公司&nbsp;&nbsp;&nbsp;&nbsp;采购部</td>
+          </tr>
+          <tr>
+            <td align="right" scope="row">#{priceQuery.createDate}</td>
+          </tr>
+        </table></td>
+      </tr>
+      <tr>
+        <td colspan="3" align="center" valign="top" class="line" style="line-height:3px"></td>
+      </tr>
+      <tr>
+        <td colspan="3" align="center" valign="top">&nbsp;
+			
+		</td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr class="box">
+        <td class="box-lb">&nbsp;</td>
+        <td class="box-mb">&nbsp;</td>
+        <td class="box-rb">&nbsp;</td>
+      </tr>
+    </table></td>
+  </tr>
+</table>
+<div style="height:10px"></div>
+</body>
+</html>

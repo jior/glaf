@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mails>
+	<mail key_id="DEFAULT_MAIL">		<!-- 默认发件人。请勿修改此key_id对应名字"DEFAULT_MAIL"-->
+		<serverip>intasect.com.cn</serverip>		<!--邮件服务器IP-->
+		<username>xumiao</username>		<!--用户名-->
+		<password>123456</password>		<!--密码-->
+		<port>25</port>		<!--端口：默认为25，且一般情况下均为25。-->
+	</mail>
+</mails>

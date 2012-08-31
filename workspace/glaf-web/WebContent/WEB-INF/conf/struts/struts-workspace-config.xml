@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC
+          "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN"
+          "http://jakarta.apache.org/struts/dtds/struts-config_1_2.dtd">
+          
+<struts-config>
+
+  <form-beans>
+    <form-bean name="MyMenuForm" type="com.glaf.base.modules.workspace.actionform.MyMenuForm" />
+    <form-bean name="MessageForm" type="com.glaf.base.modules.workspace.actionform.MessageForm" />
+  </form-beans>
+  
+  <!--Action Mapping Definitions-->
+  
+  <action-mappings>
+    
+    <action path="/workspace/mymenu"
+            parameter="method"
+            scope="request"
+            name="MyMenuForm"
+            type="org.springframework.web.struts.DelegatingActionProxy">
+      <forward name="show_list" path="/WEB-INF/views/module/workspace/mymenu_list.jsp" />
+      <forward name="show_add" path="/WEB-INF/views/module/workspace/mymenu_add.jsp" />
+      <forward name="show_modify" path="/WEB-INF/views/module/workspace/mymenu_modify.jsp" />
+      <forward name="show_addmymenu" path="/WEB-INF/views/module/workspace/mymenu_addmymenu.jsp" />
+    </action>
+    
+    <action path="/workspace/message"
+            parameter="method"
+            scope="request"
+            name="MessageForm"
+            type="org.springframework.web.struts.DelegatingActionProxy">
+      <forward name="showReceiveList" path="/WEB-INF/views/module/workspace/message_list.jsp" />
+      <forward name="prepareSend" path="/WEB-INF/views/module/workspace/message_send.jsp" />
+      <forward name="showSendedList" path="/WEB-INF/views/module/workspace/message_sended_list.jsp" />
+      <forward name="showMessage" path="/WEB-INF/views/module/workspace/message_detail.jsp" />
+    </action>
+    
+  </action-mappings>
+
+</struts-config>

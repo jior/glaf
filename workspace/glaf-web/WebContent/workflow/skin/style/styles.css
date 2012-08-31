@@ -1,0 +1,72 @@
+.subject{ font-size: 12px; color: #000000; text-decoration: none;font-weight:bold; font-family:"宋体"}
+.warning{ font-size: 12px;text-decoration: none;color:red; font-family:"宋体"}
+.button{ background-color: #eeeeee; height:20px;border:1px solid #000000;text-decoration:none; background-image:url(images/bgcolor.gif)}
+.functionbutton {background-color: #eeeeee; height:20px;border:1px solid #000000;text-decoration:none;}
+.list{ background-color: #ffffff; cursor: hand; border: 1px solid; text-decoration: none ; font-family:"宋体"}
+.txt2{ background-color: #ffffff; border: 1px #639a9c solid; text-decoration: none; font-size:10px; font-family:"宋体"}
+.txt{ background-color: #ffffff; border-right: #2f4c69 1px solid; padding-right: 2px; border-top: #2f4c69 1px solid; padding-left: 2px; font-size: 12px; padding-bottom: 2px; border-left: #2f4c69 1px solid; padding-top: 2px; border-bottom: #2f4c69 1px solid; height: 22px; }
+.line{ background-color: #ffffff; border-right: #ffffff 1px solid; padding-right: 1px; border-top: #ffffff 0px solid; padding-left: 1px; font-size: 12px; padding-bottom: 0px; border-left: #ffffff 1px solid; padding-top: 0px; border-bottom: #2f4c69 1px solid; height: 15px; }
+
+textarea{background-color: #ffffff; border: 1px #2f4c69 solid; text-decoration: none; font-size:12px; font-family:"宋体"}
+.pageText{ background-color: #ffffff; border: 1px #639a9c solid; text-decoration: none; font-size:12px; font-family:"宋体"}
+
+.readonly{ background-color: #eeeeee; border-right: #2f4c69 1px solid; padding-right: 2px; border-top: #2f4c69 1px solid; padding-left: 2px; font-size: 12px; padding-bottom: 2px; border-left: #2f4c69 1px solid; padding-top: 2px; border-bottom: #2f4c69 1px solid; height: 22px; }
+.check{ background-color: #ffffff; text-decoration: none; font-family:"宋体"}
+.radio{ background-color: #eeffff; cursor: text; border: 1px #000000 solid; text-decoration: none; font-family:"宋体"}
+.table-border { background-color:#1f4978;height: 23px; font-family:"宋体"}
+.table-border2{ background-color:#0080c0;height: 23px; font-family:"宋体"}
+.table-border3{ background-color:#a80f02;height: 23px; font-family:"宋体"}
+.table-border4{ background-color:#1f4978;height: 23px; font-family:"宋体"}
+.table-title{   color:#000000;font-weight:700; height: 23px; font-family:"宋体"}
+.table-bar {FONT-WEIGHT: 300; BACKGROUND-IMAGE: url(../../../images/s_20.jpg); COLOR: #000000; FONT-FAMILY: "宋体"; HEIGHT: 23px}
+.table-content{ background-color:#ffffff;height: 23px;font-size: 12px; font-family:"宋体"}
+.table-tool{    background-color:#ffffff;color:#000000;font-weight:700; height: 23px; font-family:"宋体"}
+
+frame-border { background-color:#1f4978;}
+
+body{   font-size: 12px; font-style: normal; font-weight: normal; line-height: normal}
+p{      font-size: 12px; font-style: normal; font-weight: normal; line-height: normal}
+td{     font-size: 12px; font-style: normal; line-height: normal}
+input{  font-size: 12px; font-style: normal; font-weight: normal; line-height: normal}
+select{ font-size: 12px; font-style: normal; font-weight: normal; line-height: normal}
+smallselect{ font-size: 9px; font-style: small; font-weight: small; line-height: small}
+
+a.b1:visited {color: #ffffff; text-decoration: none}
+a.b1:active {color: #ffffff; text-decoration: none}
+a.b1:link {color: #006600; text-decoration: none}
+a:link {color: #000066; text-decoration: none}
+a:hover { cursor: hand;color: #000066; border-bottom: #ff6600 1px dotted}
+a:active {color: #000000; text-decoration: none}
+a:visited{color: #000066; text-decoration: none}
+
+form input, form textarea, form select {
+    padding-left: 4px;
+    color: #666;
+}
+
+input.button {
+    color: #000;
+}
+
+form input.focus, form textarea.focus, form select.focus {
+    border-bottom: #ffdead solid 2px;
+    border-right: #ffdead solid 2px;
+    border-left: #c07300 solid 2px;
+    border-top:  #c07300 solid 2px;
+    color: #000;
+}
+
+form select {
+    padding-left: 0px;
+}
+
+
+.txt_disabled{ background-color: #eeeeee; border: 1px #639A9C solid; text-decoration: none}
+.txt_content{ background-color: #ffffff; border: 0px #639A9C solid; text-decoration: none}
+.red_table-border {background-color:#ff0000;height: 24px; font-family:"宋体"}
+
+.menuTitle{
+	background:url(../../images/menubar.gif);
+	color:#6F6F6F;
+	font-weight:bold;
+}

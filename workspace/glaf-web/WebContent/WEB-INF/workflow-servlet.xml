@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="GBK"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<bean id="exceptionResolver" 
+		class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property name="exceptionMappings">
+			<props>
+				<prop key="org.springframework.dao.DataAccessException">        
+                    dataAccessFailure
+				</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+    
+	<bean id="actorController" class="org.jpage.jbpm.controller.ActorController"/>
+
+	<bean id="deployController" class="org.jpage.jbpm.controller.DeployController"/>
+
+	<bean id="processController" class="org.jpage.jbpm.controller.ProcessController"/>
+
+	<bean id="processMonitorController" class="org.jpage.jbpm.monitor.ProcessMonitorController"/>
+
+	<bean id="filenameController"
+		class="org.springframework.web.servlet.mvc.UrlFilenameViewController"/> 
+
+	<bean id="messageSource" 
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename">
+			<value>messages</value>
+		</property>
+	</bean>
+
+	<bean id="defaultHandlerMapping" class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"/>
+
+	<bean id="urlMapping" 
+		class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/workflow/actorController.jspa">actorController</prop>
+				<prop key="/workflow/deployController.jspa">deployController</prop>
+				<prop key="/workflow/processController.jspa">processController</prop>
+				<prop key="/workflow/processMonitorController.jspa">processMonitorController</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="viewResolver" 
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="requestContextAttribute">
+			<value>rc</value>
+		</property>
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>/WEB-INF/pages/workflow/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>  
+
+</beans>

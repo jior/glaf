@@ -1,0 +1,150 @@
+TABLE {
+	FONT-SIZE: 10pt; FONT-FAMILY: 宋体
+}
+TD {
+	FONT-SIZE: 10pt; FONT-FAMILY: 宋体
+}
+TR {
+	FONT-SIZE: 10pt; FONT-FAMILY: 宋体
+}
+INPUT {
+	FONT-SIZE: 10pt; FONT-FAMILY: 宋体
+}
+A:link {
+	COLOR: dimgray; FONT-FAMILY: "宋体"; TEXT-DECORATION: none
+}
+A:active {
+	COLOR: tan; FONT-FAMILY: "宋体"; TEXT-DECORATION: none
+}
+A:visited {
+	COLOR: black; FONT-FAMILY: "宋体"; TEXT-DECORATION: none
+}
+A:hover {
+	COLOR: #ffffff; FONT-FAMILY: "宋体"; TEXT-DECORATION: none
+}
+P {
+	FONT-SIZE: 9pt; FONT-FAMILY: 宋体; TEXT-ALIGN: left
+}
+.anews {
+	FONT-SIZE: 11pt; LINE-HEIGHT: 1.5; FONT-FAMILY: 宋体; TEXT-ALIGN: left
+}
+.content {
+	FONT-SIZE: 9pt; COLOR: saddlebrown; FONT-FAMILY: 宋体
+}
+.title {
+	FONT-SIZE: 12pt; COLOR: saddlebrown; FONT-FAMILY: 宋体
+}
+.title-member {
+	FONT-WEIGHT: bold; FONT-SIZE: 12pt; COLOR: #003399; FONT-FAMILY: 方正中圆简体
+}
+H1 {
+	FONT-WEIGHT: normal; FONT-SIZE: 150%; COLOR: orange
+}
+.Button {
+	CURSOR: hand
+}
+.red {
+	COLOR: red
+}
+.date {
+	FONT-SIZE: 8pt; COLOR: red; FONT-FAMILY: 方正中圆简体
+}
+.color1 {
+	FONT-SIZE: 12pt; COLOR: black; FONT-FAMILY: 宋体
+}
+.color2 {
+	FONT-SIZE: 8pt; COLOR: black; FONT-FAMILY: 宋体
+}
+.color3 {
+	FONT-SIZE: 12pt; COLOR: white; FONT-FAMILY: 宋体
+}
+.fzzy {
+	FONT-SIZE: 9pt; COLOR: black; FONT-FAMILY: 方正中圆简体
+}
+.fzzyw {
+	FONT-SIZE: 9pt; COLOR: white; FONT-FAMILY: 方正中圆简体
+}
+.blink {
+	FONT-SIZE: 9pt; COLOR: black; FONT-FAMILY: 方正中圆简体; TEXT-DECORATION: underline
+}
+.Title1 {
+	FONT-WEIGHT: bolder; COLOR: white; BACKGROUND-COLOR: #5a82d6; TEXT-ALIGN: center
+}
+.Title2 {
+	COLOR: white; BACKGROUND-COLOR: #5a82d6; TEXT-ALIGN: left
+}
+.Content1 {
+	COLOR: #5a82d6; TEXT-ALIGN: center
+}
+.content2 {
+	COLOR: white; BACKGROUND-COLOR: #5a82d6
+}
+.ListTable1 {
+	BACKGROUND-COLOR: white
+}
+.ListTable2 {
+	COLOR: dimgray; BACKGROUND-COLOR: #cccccc
+}
+.ListTable3 {
+	COLOR: black; BACKGROUND-COLOR: lightgrey
+}
+.Title3 {
+	FONT-WEIGHT: bolder; FONT-SIZE: 10pt; COLOR: #5a82d6; FONT-FAMILY: 宋体
+}
+.txtStyle {
+	BORDER-RIGHT: white 1pt solid; BORDER-TOP: white 1pt solid; BORDER-LEFT: white 1pt solid; WIDTH: 200pt; COLOR: black; BORDER-BOTTOM: white 1pt solid; BACKGROUND-COLOR: white
+}
+.txtStyleHM {
+	BORDER-RIGHT: white 1pt solid; BORDER-TOP: white 1pt solid; BORDER-LEFT: white 1pt solid; WIDTH: 30pt; COLOR: black; BORDER-BOTTOM: white 1pt solid; BACKGROUND-COLOR: white; TEXT-ALIGN: right
+}
+.txtStyle11 {
+	BORDER-RIGHT: white 1pt solid; BORDER-TOP: white 1pt solid; BORDER-LEFT: white 1pt solid; WIDTH: 100pt; COLOR: black; BORDER-BOTTOM: white 1pt solid; BACKGROUND-COLOR: white
+}
+.ListTable4 {
+	COLOR: white; HEIGHT: 18px; BACKGROUND-COLOR: #999999
+}
+.txtStyle1 {
+	BORDER-TOP-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; WIDTH: 200pt; COLOR: black; BACKGROUND-COLOR: lightgrey; BORDER-RIGHT-WIDTH: 0px
+}
+.txtStyles {
+	BORDER-RIGHT: white 1pt solid; BORDER-TOP: white 1pt solid; BORDER-LEFT: white 1pt solid; WIDTH: 189pt; COLOR: black; BORDER-BOTTOM: white 1pt solid; BACKGROUND-COLOR: white
+}
+.txtStyleX {
+	BORDER-RIGHT: white 1pt solid; BORDER-TOP: white 1pt solid; BORDER-LEFT: white 1pt solid; WIDTH: 90pt; COLOR: black; BORDER-BOTTOM: white 1pt solid; BACKGROUND-COLOR: white
+}
+.txtareaStyle {
+	BORDER-RIGHT: white 1pt solid; BORDER-TOP: white 1pt solid; BORDER-LEFT: white 1pt solid; WIDTH: 480pt; COLOR: black; BORDER-BOTTOM: white 1pt solid; HEIGHT: 80pt; BACKGROUND-COLOR: white
+}
+A.TitleStyle {
+	COLOR: white
+}
+.Guide {
+	BACKGROUND-COLOR: lightgrey
+}
+.MainPage {
+	BACKGROUND-COLOR: lightgrey
+}
+.SuperGuide {
+	FONT-WEIGHT: lighter; COLOR: black; BACKGROUND-COLOR: #cccccc
+}
+A.YeWeiFont {
+	COLOR: dimgray
+}
+A.PageGuide {
+	COLOR: #cccccc
+}
+.QueryInput {
+	BORDER-RIGHT: white 1px solid; BORDER-TOP: white 1px solid; BORDER-LEFT: white 1px solid; BORDER-BOTTOM: gray 1px solid
+}
+.Line {
+	BORDER-RIGHT: black thin solid; BORDER-BOTTOM: black thin solid
+}
+.Line1 {
+	BORDER-BOTTOM: black thin solid
+}
+.Line2 {
+	BORDER-RIGHT: black thin solid
+}
+.txtStyle8 {
+	BORDER-RIGHT: white 1pt solid; BORDER-TOP: white 1pt solid; FONT-WEIGHT: bolder; BORDER-LEFT: white 1pt solid; WIDTH: 10pt; COLOR: red; BORDER-BOTTOM: white 1pt solid; BACKGROUND-COLOR: white
+}

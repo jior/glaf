@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tables>  <!--CVS导入导出检查及其设置-->
+	<table name = "测试001"> <!--导入CVS文件类型名称设置：name,对象名称。-->
+		<split>,</split>  <!--CVS分格符设置：只支持单字符，其中【TAB】为【t】，空格为【s】。-->
+		<checkModel>continue</checkModel> <!--检查模式设置：break，出错调出；continue，出错继续。-->
+		<headers>
+			<isExistHeader>false</isExistHeader>  <!--列头存在模式设置：true，有列头；false，无列头。-->
+		</headers>
+		<columns count="4"><!--count：列总数，为大于0的正整数-->
+			<column columnIndex = "1" nullAble="false">  <!--columnIndex：列序号，必须为从1开始的序列正整数；nullAble:列为是否可为空【false：可为空；true：不可为空】。-->
+				<chectRegex>^[1-9]$</chectRegex>  <!--检查的正则表达式 ，当列不做检查时该节点可无-->
+				<chectMessage>必须为1－9的正整数</chectMessage>  <!--检查出错消息， 当列不做检查时该节点可无-->
+			</column>
+			<column columnIndex = "2" nullAble ="true">
+				<chectRegex>[\u4e00-\u9fa5]</chectRegex>
+				<chectMessage>必须为中文</chectMessage>
+			</column>
+			<column columnIndex = "3" nullAble="true">
+				<chectRegex>[a-zA-z]</chectRegex>
+				<chectMessage>必须为字符</chectMessage>
+			</column>
+			<column columnIndex = "4" nullAble="true">				
+			</column>
+		</columns>
+	</table>
+	<table name = "测试002">
+		<split>,</split>
+		<checkModel>break</checkModel>
+		<headers>
+			<isExistHeader>true</isExistHeader>
+		</headers>
+		<columns>
+			<column columnIndex = "1" nullAble="false">
+				<chectRegex>^[1-9]\d*$</chectRegex>
+				<chectMessage>为正整数"</chectMessage>
+			</column>
+			<column columnIndex = "2" nullAble ="true">
+				<chectRegex>"^\d+\.?\d+$|^\d+$"</chectRegex>
+				<chectMessage>为小数</chectMessage>
+			</column>
+			<column columnIndex = "3" nullAble="true">
+				<chectRegex>*</chectRegex>
+				<chectMessage>为字符</chectMessage>
+			</column>
+		</columns>
+	</table>
+</tables>
+

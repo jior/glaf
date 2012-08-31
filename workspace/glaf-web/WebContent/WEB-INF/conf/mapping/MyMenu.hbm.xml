@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.glaf.base.modules.workspace.model">
+	<class name="MyMenu" table="MyMenu">
+		<id name="id" type="long" unsaved-value="0">
+			<column name="id" not-null="true" />
+			<generator class="native" />
+		</id>
+
+		<property name="userId" type="long" column="userId" />
+		<property name="title" type="string" column="title" />
+		<property name="url" type="string" column="url" />
+		<property name="sort" type="int" column="sort" />
+	</class>
+</hibernate-mapping>
+

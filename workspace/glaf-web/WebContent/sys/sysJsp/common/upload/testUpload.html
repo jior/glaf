@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>测试上传</title>
+</head>
+
+<body>
+<form id="form1" name="form1" method="post" action="">
+  <p>
+    <input type="text" name="pic" />
+    <input type="button" name="button1" value="上传文件" onclick="openUpload('pic')" />
+  </p>
+  <p>
+    <input type="text" name="pic2" />
+    <input type="button" name="button1" value="上传文件" onclick="openUpload('pic2', 'gif,jpg')" /> 
+    (限制上传类型:gif,jpg)
+<br />
+    <br />
+    <input type="text" name="url" />
+    <input type="button" name="button2" value="上传文件" onclick="openUpload('url')" />
+    <br />
+    <br />
+    <input type="text" name="url" value="上传文件" onclick="openUpload(this)" />
+    </p>
+</form>
+</body>
+</html>

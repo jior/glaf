@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="role_user">
+
+  <typeAlias alias="user" type="org.jpage.actor.User"/>
+
+  <typeAlias alias="actor" type="org.jpage.actor.Actor"/>
+
+   <select id="jbpm_getAllUsers" resultClass="user" parameterClass="java.util.Map">
+
+		   SELECT u.account as actorId, u.name as name, u.email as mail, u.mobile as mobile
+		   FROM sys_user u
+		   WHERE u.blocked = 0 
+
+  </select>
+
+   <select id="getDeptRoleUsers" resultClass="user" parameterClass="java.util.Map">
+
+		   SELECT u.account as actorId
+		   FROM sys_user u
+		   WHERE u.blocked = 0 AND u.id IN
+				 ( SELECT r.userId  FROM sys_user_role r
+			       WHERE r.authorized = 0 AND r.roleId IN
+						 ( SELECT a.id
+					       FROM sys_dept_role a, sys_role b
+					       WHERE a.deptId =  #deptId# AND b.code = #roleId# AND a.sysRoleId = b.id
+						 )
+				)
+
+  </select>
+
+  <select id="getXYDeptRoleUsers" resultClass="user" parameterClass="java.util.Map">
+
+		   SELECT u.account as actorId
+		   FROM sys_user u
+		   WHERE u.blocked = 0 AND u.id IN
+				 ( SELECT r.userId  FROM sys_user_role r
+			       WHERE r.authorized = 0 AND r.roleId IN
+						 ( SELECT a.id
+					       FROM sys_dept_role a, sys_role b
+					       WHERE 1=1
+						   AND  a.sysRoleId = b.id
+
+						<dynamic prepend="">
+
+                            <isPropertyAvailable prepend="AND" property="deptId">
+								   ( a.deptId =  #deptId# )
+							</isPropertyAvailable>
+
+							<isPropertyAvailable prepend="AND" property="roleId">
+								<isNotEmpty prepend="" property="roleId"> 
+									  ( b.code = #roleId# )
+								</isNotEmpty>
+							</isPropertyAvailable>
+
+							<isPropertyAvailable prepend="AND" property="deptIds">
+								<isNotNull prepend="" property="deptIds">
+									<iterate prepend="" property="deptIds" open="(" close=")" conjunction="OR">
+										( a.deptId =  #deptIds[]# )
+									</iterate>
+								</isNotNull>
+							</isPropertyAvailable>
+
+							<isPropertyAvailable prepend="AND" property="roleIds">
+								<isNotNull prepend="" property="roleIds">
+									<iterate prepend="" property="roleIds" open="(" close=")" conjunction="OR">
+										( b.code = #roleIds[]# )
+									</iterate>
+								</isNotNull>
+							</isPropertyAvailable>
+
+						</dynamic>			  
+
+						 )
+				)
+
+    </select>
+
+   <select id="getDeptAndTopLevelRoleUsers" resultClass="user" parameterClass="java.util.Map">
+
+		   SELECT u.account as actorId
+		   FROM sys_user u
+		   WHERE u.blocked = 0 AND u.id IN
+				 ( SELECT r.userId  FROM sys_user_role r
+			       WHERE r.authorized = 0 AND r.roleId IN
+						 ( SELECT a.id
+					       FROM sys_dept_role a, sys_role b
+					       WHERE (a.deptId =  #deptId#   OR  a.deptId = 
+									( 
+									select sys_department.id from sys_department left join sys_tree 
+														on sys_tree.id=sys_department.nodeid where sys_tree.id = 
+														(
+															SELECT sys_tree.parent FROM  sys_tree left join sys_department on sys_tree.id=sys_department.nodeid where sys_department.id = #deptId#
+														)  
+										)
+									) 
+						   AND b.code = #roleId# 
+						   AND a.sysRoleId = b.id
+						 )
+				)
+
+  </select>
+
+</sqlMap>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="GBK"?>
+
+<configuration>
+
+	<property>
+		<name>bpm.system</name>
+		<value>jbpm</value>
+	</property>
+
+	<property>
+		<name>session_user_className</name>
+		<value>baseSrc.common.BaseCom</value>
+	</property>
+
+	<property>
+		<name>session_user_keyName</name>
+		<value>beanComId</value>
+	</property>
+
+</configuration>

@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.glaf.base.modules.workspace.model">
+	<class name="Message" table="Message">
+		<id name="id" type="long" unsaved-value="0">
+			<column name="id" not-null="true" />
+			<generator class="native" />
+		</id>
+
+		<property name="type" type="int" column="type" />
+		<property name="sysType" type="int" column="sysType" />
+		<property name="recverList" type="string" column="recverList" />
+		<property name="title" type="string" column="title" />
+		<property name="content" type="string" column="content" />
+		<property name="createDate" type="timestamp"
+			column="createDate" />
+		<property name="readed" type="int" column="readed" />
+		<property name="category" type="int" column="category" />
+
+		<many-to-one name="sender"
+			class="com.glaf.base.modules.sys.model.SysUser" column="sender" not-found="ignore"/>
+		<many-to-one name="recver"
+			class="com.glaf.base.modules.sys.model.SysUser" column="recver" not-found="ignore"/>
+	</class>
+</hibernate-mapping>
+

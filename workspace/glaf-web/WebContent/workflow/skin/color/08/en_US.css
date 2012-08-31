@@ -1,0 +1,73 @@
+/* GLOBAL */
+
+SELECT { border-color: #CCCCCC; border-style: solid; border-width: 1px; }
+
+.form-button { border-color: #77B8D4; border-style: solid; border-width: 1px; }
+
+.form-button-hover { border-bottom: solid 1px #77B8D4; border-left: solid 1px #FFFFFF; border-right: solid 1px #77B8D4; border-top: solid 1px #FFFFFF; }
+
+.form-text { border-color: #CCCCCC; border-style: solid; border-width: 1px; font-family: Arial }
+
+/* ALPHA */
+
+A.alpha { color: #000000; text-decoration: none; }
+
+A.alpha:hover { color: #000000; text-decoration: underline; }
+
+TR.alpha { background-color: #77B8D4; }
+
+TD.alpha { background-color: #77B8D4; }
+
+FONT.alpha { color: #FFFFFF; font-family: Tahoma, Arial; }
+
+.alpha-neg-alert { color: #FF0000; }
+
+.alpha-pos-alert { color: #007F00; }
+
+/* BETA */
+
+A.beta { color: #000000; text-decoration: none; }
+
+A.beta:hover { color: #000000; text-decoration: underline; }
+
+TR.beta { background-color: #FEFEF6; }
+
+TD.beta { background-color: #FEFEF6; }
+
+FONT.beta { color: #1F7EA7; font-family: Tahoma, Arial; }
+
+.beta-neg-alert { color: #FF0000; }
+
+.beta-pos-alert { color: #007F00; }
+
+/* GAMMA */
+
+A.gamma { color: #000000; text-decoration: none; }
+
+A.gamma:hover { color: #000000; text-decoration: underline; }
+
+TR.gamma { background-color: #F0F7F9; }
+
+TD.gamma { background-color: #F0F7F9; }
+
+FONT.gamma { color: #3899C3; font-family: Tahoma, Arial; }
+
+.gamma-neg-alert { color: #FF0000; }
+
+.gamma-pos-alert { color: #007F00; }
+
+/* BG */
+
+A.bg { color: #000000; text-decoration: none; }
+
+A.bg:hover { color: #000000; text-decoration: underline; }
+
+TR.bg { background-color: #FFFFFF; }
+
+TD.bg { background-color: #FFFFFF; }
+
+FONT.bg { color: #000000; font-family: Tahoma, Arial; }
+
+.bg-neg-alert { color: #FF0000; }
+
+.bg-pos-alert { color: #007F00; }

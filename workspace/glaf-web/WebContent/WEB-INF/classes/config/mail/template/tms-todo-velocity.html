@@ -1,0 +1,115 @@
+<html>
+<head>
+<title>特定采购系统</title>
+<style type="text/css"> 
+/* list-box */
+.list-box {
+  background:#CDCBCC;
+  table-layout:fixed;
+}
+.list-box td {
+  background:#FCF9E8;
+	overflow:hidden;
+	text-overflow:ellipsis;
+	white-space:nowrap;
+	padding:0 3px;
+}
+.disp {
+  table-layout:auto;
+}
+.list-title td, .list-box .td-title {
+  background:url($serviceUrl/images/s_20.jpg) repeat-x;
+	line-height:22px;
+	color:#FFF;
+	white-space:nowrap;
+}
+.list-title .title {
+  background:url($serviceUrl/images/s_21.jpg) repeat-x bottom #629DE1;
+	line-height:22px;
+	color:#FFF;
+	white-space:nowrap;
+}
+.list-back td {
+  background:#EAE7D8;
+}
+.list-a td {
+  background:#F5F5F5;
+}
+.list-w td {
+  background:#FFF;
+}
+.list-box .red {
+  background:#E56061;
+}
+.list-box .yellow {
+  background:#F6C841;
+}
+.list-box .green {
+  background:#0FFF4B;
+}
+.list-over td {
+  background:#D8D7A7;
+}
+.list-del td, .list-del input {
+  color:#999;
+}
+.input-change {
+  border:1px solid #F00;
+}
+.list-new td {
+  color:#999900;
+}
+</style>
+</head>
+<body id="document">
+$user.name，您好！<br>
+&nbsp;$user.name，こんにちは！<br>
+<input type="hidden" name="actorId" value="$user.account">
+<table align="center" width="90%" border="0" cellspacing="1" cellpadding="0" >
+    <tr>
+	  <td colspan="10">
+          这是特定采购系统自动发出的提示邮件 ，请不要直接回复。<br>
+          これは特定調達システムからの自動アラーム·メッセージです。直接返信しないでください。<br>
+		  特定采购系统中您有以下未处理事宜　/　特定調達システムには貴方の以下の未処理案件があります。
+	  </td>
+	</tr>
+</table>
+<br><br>
+
+<table align="center" width="90%" border="0" cellspacing="1" cellpadding="0" class="list-box">
+          <tr class="list-title">
+            <td align="center">事&nbsp;&nbsp;项</td>
+			<td align="center">内&nbsp;&nbsp;容</td>
+            <td width="125" align="center">PastDue</td>
+            <td width="125" align="center">Caution</td>
+			<td width="125" align="center">OK</td>
+          </tr>
+		  #foreach( $tdi in $rows ) 
+		   <tr class="list-a">
+            <td height="20" align="left">
+			    <a href="$serviceUrl/$tdi.listLink&actorId=$user.account">$tdi.title</a>
+			</td>
+			<td height="20" align="left">$tdi.content</td> 
+			<td align="center" class="red">$tdi.qty03</td>
+			<td align="center" class="yellow">$tdi.qty02</td>
+			<td align="center" class="green">$tdi.qty01</td>
+		 </tr>
+		  #end
+</table>
+
+<table align="center" width="90%" border="0" cellspacing="1" cellpadding="0" >
+    <tr>
+	  <td colspan="10"><br><br>
+
+		PS:未处理事宜一旦超过期限，变成Past Due时,系统将会自动发邮件通知您的上一级审批者。<br>
+		请注意及时登录系统进行处理 <a href="http://172.16.1.38/tms" target="_blank"> http://172.16.1.38/tms</a>。
+        对上述内容如有疑问，请向贵部门/科室采购联络员咨询。谢谢！<br>
+        未処理案件が期限を過ぎ、Past Dueなると、システムにより自動的に貴方の上位決裁者に通知されます。タイムリーにシステムにログインし、未処理案件を処理してください。<a href="http://172.16.1.38/tms" target="_blank">http://172.16.1.38/tms</a>
+       上記内容にご不明点がある場合は、貴部署の調達窓口にお問い合わせください。ご協力お願いします！
+
+	  </td>
+	</tr>
+</table>
+
+</body>
+</html>

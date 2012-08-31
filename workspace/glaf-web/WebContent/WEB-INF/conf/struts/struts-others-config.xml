@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC
+	  "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN"
+	  "http://jakarta.apache.org/struts/dtds/struts-config_1_2.dtd">
+      
+<struts-config>
+	 
+	<!--Action Mapping Definitions-->
+	<action-mappings>
+		<action path="/others/audit"
+			parameter="method"
+			scope="request"
+			name="GenericForm"
+			type="org.springframework.web.struts.DelegatingActionProxy">
+			<forward name="show_comment" path="/WEB-INF/views/module/audit/audit_comment.jsp"/>
+			<forward name="show_list" path="/WEB-INF/views/module/audit/audit_list.jsp"/>
+			<forward name="showList2" path="/WEB-INF/views/module/audit/showList2.jsp"/>
+		</action>
+    
+		<action path="/others/attachment"
+			parameter="method"
+			scope="request"
+			name="GenericForm"
+			type="org.springframework.web.struts.DelegatingActionProxy">
+			<forward name="show_list" path="/WEB-INF/views/module/others/attachment_list.jsp"/>
+			<forward name="show_view_list" path="/WEB-INF/views/module/others/attachment_list2.jsp"/>
+			<forward name="show_add_list" path="/WEB-INF/views/module/others/attachment_list3.jsp"/>
+			<forward name="showCount" path="/WEB-INF/views/module/others/showCount.jsp"/>
+			<forward name="show_list2" path="/WEB-INF/views/module/others/attachment_contract_list.jsp"/>
+		</action> 
+
+		<action path="/attachment/download"
+			type="org.springframework.web.struts.DelegatingActionProxy"/>
+    
+		<action path="/others/workCalendar"
+			parameter="method"
+			scope="request"
+			name="GenericForm"
+			type="org.springframework.web.struts.DelegatingActionProxy">
+			<forward name="show_list" path="/WEB-INF/views/module/others/work_calendar.jsp"/>
+			<forward name="show_cal" path="/WEB-INF/views/module/others/calendar.jsp"/>
+		</action>
+ 
+	</action-mappings>
+</struts-config>

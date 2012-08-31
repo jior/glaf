@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+    
+	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">     
+		<property name="jndiName">
+		  <value>java:comp/env/jdbc/jbpm</value>
+		</property>
+    </bean>
+
+	<aop:config>
+		<aop:advisor id="sqlMapTx" advice-ref="txSqlMapAdvice"
+		     pointcut="execution(* *..SqlMapManager.*(..))" order="1"/>
+    </aop:config>
+
+	<tx:advice id="txSqlMapAdvice" transaction-manager="txManager">
+        <tx:attributes>
+            <tx:method name="get*" read-only="true"/>
+			<tx:method name="query*" read-only="true"/>
+            <tx:method name="*"/>
+        </tx:attributes>
+    </tx:advice>
+
+	<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+
+    <bean id="cryptor" class="org.jpage.core.security.DefaultCryptor"/>
+
+	<bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+	    <property name="dataSource" ref="dataSource"/>
+        <property name="configLocation">
+            <value>classpath:/config/jbpm/jpage-sqlmap-config.xml</value>
+        </property>
+    </bean>
+
+	<bean id="sqlMapClientDAO" class="org.jpage.jbpm.support.SqlMapClientDAOImpl">
+        <property name="sqlMapClient" ref="sqlMapClient"/> 
+    </bean>
+
+    <bean id="sqlMapManager" class="org.jpage.jbpm.support.SqlMapManagerImpl">
+	    <property name="sqlMapClientDAO" ref="sqlMapClientDAO"/>
+    </bean>
+
+</beans>
