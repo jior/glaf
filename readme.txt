@@ -32,18 +32,19 @@
           driverClassName="org.postgresql.Driver"
           url="jdbc:postgresql://127.0.0.1:5432/jbpm"/>
 
-3、用pgsql目录下的脚本建表及初始化数据
+3、用db/postgresql目录下的脚本建表及初始化数据
 在数据库工具中执行createTable.sql.txt建表（目前只限PostgreSQL8.4）
 执行init.sql.txt进行数据初始化
 
-4、请在Eclipse工程中编译或安装ant编译源码，如果没有编译工具，直接把glaf-base.jar复制到war\WEB-INF\lib目录
-编译时需要将lib的全部jar.
+4、请在Eclipse工程中编译或安装ant编译源码，将各个工程bin目录下所有的class 复制到glaf-web\WebContent\WEB-INF\classes目录.
 
-5、启动Tomcat服务器start-server.bat
+5、下载并安装Tomcat
+如果把tomcat解压到当前目录，在server.xml中添加虚拟目录
+<Context path="/glaf" docBase="../../workspace/glaf-web/WebContent" reloadable="false"/>
+启动Tomcat服务器
 访问如下地址：
-http://127.0.0.1:9090/glaf
+http://127.0.0.1:8080/glaf
 用户名为root，密码111111
 
-正式发布时请去掉测试文件,位于\workflow\test目录。
-
- test
+正式发布时请去掉测试文件,位于glaf-web\WebContent\workflow\test目录。
+ 
