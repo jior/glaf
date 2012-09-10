@@ -1,12 +1,4 @@
-<%@ page contentType="text/plain;charset=UTF-8" %>
-<%@ page import="java.util.*" %>
-<%@ page import="org.apache.commons.lang.*" %>
-<%@ page import="org.jpage.jbpm.model.*" %>
-<%@ page import="org.jpage.jbpm.context.*" %>
-<%@ page import="org.jpage.jbpm.service.*" %>
-<%@ page import="org.jpage.jbpm.datafield.*" %>
-<%@ page import="org.jpage.util.*" %>
-<%
+<%@ page contentType="text/plain;charset=UTF-8" %><%@ page import="java.util.*" %><%@ page import="org.apache.commons.lang.*" %><%@ page import="org.jpage.jbpm.model.*" %><%@ page import="org.jpage.jbpm.context.*" %><%@ page import="org.jpage.jbpm.service.*" %><%@ page import="org.jpage.jbpm.datafield.*" %><%@ page import="org.jpage.util.*" %><%
         ProcessContainer container = ProcessContainer.getContainer();
  		String rowId = request.getParameter("rowId");
 		if(rowId != null){
@@ -25,8 +17,11 @@
 			String processInstanceId = container.startProcess(ctx);
 			// 如果流程实例编号不为空，那么已经成功创建流程实例，否则抛出异常
 			if (processInstanceId != null) {
-				 out.println("<br>processInstanceId="+processInstanceId);
-				 out.println("<br>OK!");
+				 out.println("{message:\"成功！\"}");
+				 out.flush();
+			} else {
+				 out.println("{message:\"失败！\"}");
+				 out.flush();
 			}
 		}
 %>
