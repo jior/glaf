@@ -87,16 +87,23 @@
 			location.href="reload_data.jsp";
 		}
 	}
+
+	function deployJpdl(){
+		window.open('<%=request.getContextPath()%>/workflow/deployController.jspa');
+	}
    
 </script>
 </head>
 <body>
 	<h2>工作流审批范例</h2>
-	参与者<input type="text" id="actorId" name="actorId" size="20" value="joy">
+	流程包在workspace/glaf-base/src/main/process目录下，打包必须是zip格式。
+	<br>参与者<input type="text" id="actorId" name="actorId" size="20" value="joy">
  	<input type="button" name="btn"  value="提交审核" onclick="javascript:doXY();" />
 	<input type="button" name="btn2" value="查看流程" onclick="javascript:viewProc();" />
-	<input type="button" name="btn2" value="重新加载测试数据" onclick="javascript:reloadData();" />
+	<input type="button" name="btn3" value="重新加载测试数据" onclick="javascript:reloadData();" />
+	<input type="button" name="btn4" value="发布流程包" onclick="javascript:deployJpdl();" />
 	（注：在流程监控图中可以看到参与者。）
+    
 
  	<table id="dg" title="列表数据" class="easyui-datagrid" style="width:800px;height:380px"
 			url="get_data.jsp" pagination="true" rownumbers="true" fitColumns="true" singleSelect="true">
