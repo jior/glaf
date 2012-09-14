@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
-<%@ taglib uri="/WEB-INF/tld/c.tld" prefix="c"%>
+ 
 <%@ page import="java.util.*"%>
 <%@ page import="com.glaf.base.utils.*"%>
 <html>

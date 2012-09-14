@@ -3,8 +3,6 @@
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ page import="java.util.*"%>
 <%@ page import="java.text.*"%>
-<%@ page import="com.glaf.base.modules.purchase.*"%>
-<%@ page import="com.glaf.base.modules.purchase.model.*"%>
 <%@ page import="com.glaf.base.utils.*"%>
 <%@ page import="com.glaf.base.modules.*"%>
 <%

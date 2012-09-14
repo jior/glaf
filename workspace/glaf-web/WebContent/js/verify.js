@@ -585,7 +585,7 @@ sfFocus = function(sfEls) {
 			 * if(this.component=="currency"){//货币类型 parseMoney(this); }
 			 */
 		}
-	};
+	}
 }
 
 sfTarget = function(sfEls) {
