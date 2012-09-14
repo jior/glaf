@@ -51,12 +51,17 @@ public class StrutsActionServlet extends ActionServlet {
 			/**
 			 * 未登录或不是系统管理员，不允许访问系统管理地址
 			 */
-			if (user == null || !user.isSystemAdmin()) {
+			if ((user == null) || (!user.isSystemAdmin())) {
 				String uri = request.getRequestURI();
+				logger.debug("request uri:" + uri);
 				if (StringUtils.contains(uri, "/sys/role.do")
 						|| StringUtils.contains(uri, "/sys/department.do")
 						|| StringUtils.contains(uri, "/sys/application.do")
-						|| StringUtils.contains(uri, "/sys/todo.do")) {
+						|| StringUtils.contains(uri, "/sys/dictory.do")
+						|| StringUtils.contains(uri, "/sys/scheduler.do")
+						|| StringUtils.contains(uri, "/sys/function.do")
+						|| StringUtils.contains(uri, "/sys/todo.do")
+						|| StringUtils.contains(uri, "others/workCalendar.do")) {
 					response.sendRedirect(request.getContextPath() + errorUrl);
 					return;
 				}
