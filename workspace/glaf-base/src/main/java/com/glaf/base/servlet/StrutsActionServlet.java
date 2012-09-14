@@ -6,6 +6,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.struts.action.ActionServlet;
@@ -22,6 +23,8 @@ public class StrutsActionServlet extends ActionServlet {
 	private static final long serialVersionUID = 1L;
 
 	private static String dispatcherAuth = "false";
+
+	private String errorUrl = "/error/error_jump.htm";
 
 	protected void process(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException {
@@ -42,6 +45,20 @@ public class StrutsActionServlet extends ActionServlet {
 					if (user != null) {
 						Authentication.setAuthenticatedUser(user);
 					}
+				}
+			}
+
+			/**
+			 * 未登录或不是系统管理员，不允许访问系统管理地址
+			 */
+			if (user == null || !user.isSystemAdmin()) {
+				String uri = request.getRequestURI();
+				if (StringUtils.contains(uri, "/sys/role.do")
+						|| StringUtils.contains(uri, "/sys/department.do")
+						|| StringUtils.contains(uri, "/sys/application.do")
+						|| StringUtils.contains(uri, "/sys/todo.do")) {
+					response.sendRedirect(request.getContextPath() + errorUrl);
+					return;
 				}
 			}
 		} catch (Exception ex) {
