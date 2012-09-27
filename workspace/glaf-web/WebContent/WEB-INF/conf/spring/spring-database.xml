@@ -9,13 +9,10 @@
 		</property>
 	</bean>
 
-	<!-- 配置session工厂及载入的实体对象 -->
 	<bean id="sysSessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
-		<!-- 设置需要关联的数据源 -->
 		<property name="dataSource">
 			<ref bean="dataSource" />
 		</property>
-		<!--joy add 2012-08-25-->
 		<property name="mappingDirectoryLocations">
 			<list>
 				<value>WEB-INF/conf/mapping</value>
@@ -23,20 +20,16 @@
 		</property>
 	</bean>
 
-	<!-- 配置事务控制范围 -->
 	<bean id="sysTransactionManager" 
 		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
-		<!-- 设置事务控制范围为整个session工厂 -->
 		<property name="sessionFactory">
 			<ref bean="sysSessionFactory"/>
 		</property>
 	</bean>
 
-	<!-- 配置事务控制方式 -->
 	<bean id="sysTransactionInterceptor" 
 		class="org.springframework.transaction.interceptor.TransactionInterceptor">
 		<property name="transactionManager" ref="sysTransactionManager" />
-		<!-- 所有run开头的方法都进行事务控制 -->
 		<property name="transactionAttributes">
 			<props>
 				<prop key="run*">PROPAGATION_REQUIRED</prop>
@@ -68,17 +61,14 @@
 			</props>
 		</property>
 	</bean>
-
-	<!-- 配置事务控制对象 -->    
+ 
 	<bean id="sysTransactionInterceptorBeanCreator" 
 	      class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
-		<!-- 所有以DAO结尾的bean都进行事务控制 -->
 		<property name="beanNames">
 		   <list>
 			<value>*Service</value>
 		   </list>
 		</property>
-		<!-- 配置DAO对应的事务控制方式 -->
 		<property name="interceptorNames">
 			<list>
 				<value>sysTransactionInterceptor</value>

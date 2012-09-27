@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.glaf.base.modules.others.model">
+    <class name="Attachment"
+           table="Attachment"
+           dynamic-update="true"
+           dynamic-insert="true">
+        <id name="id" type="long" unsaved-value="0">
+            <column name="id" not-null="true"/>
+            <generator class="identity"/>
+        </id>
+        
+        <property name="referId" type="long" column="referId"/>
+        <property name="referType" type="integer" column="referType"/>
+        <property name="name" type="string" column="name"/>
+        <property name="url" type="string" column="url"/>
+        <property name="createDate" type="timestamp" column="createDate"/>        
+        <property name="createId" type="long" column="createId"/>        
+    </class>
+</hibernate-mapping>

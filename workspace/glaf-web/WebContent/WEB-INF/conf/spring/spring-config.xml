@@ -3,6 +3,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
 	<import resource="spring-dao.xml" />
+	<import resource="spring-database.xml" />
 	<import resource="spring-sys.xml" />
 	<import resource="spring-security.xml" />
 	<import resource="spring-others.xml" />

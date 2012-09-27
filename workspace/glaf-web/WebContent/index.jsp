@@ -9,6 +9,6 @@
 	if (user != null) {
 	  response.sendRedirect(request.getContextPath()+"/sys/frame.do");
 	} else {
-      response.sendRedirect(request.getContextPath()+"/login.do");
+      response.sendRedirect(request.getContextPath()+"/sys/authorize.do?method=prepareLogin");
 	}
 %>

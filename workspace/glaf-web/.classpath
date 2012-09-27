@@ -136,8 +136,5 @@
 	<classpathentry kind="lib" path="lib/jsp-api.jar"/>
 	<classpathentry kind="lib" path="lib/servlet-api.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/glaf-base"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/glaf-batch"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/glaf-demo"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/glaf-framework"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

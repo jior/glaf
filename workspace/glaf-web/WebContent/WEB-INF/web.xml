@@ -11,18 +11,9 @@
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
-		/WEB-INF/classes/sysConfigfiles/framWorkContext.xml,
-        /WEB-INF/classes/baseConfigfiles/action_services_base.xml,
-        /WEB-INF/classes/sysConfigfiles/action_services_sys.xml,
-		/WEB-INF/classes/demoConfigfiles/action_services_demo.xml,
-		/WEB-INF/conf/spring/spring-config.xml
+		    /WEB-INF/conf/spring/spring-config.xml
 		</param-value>
 	</context-param>
-
-	<!-- <context-param>
-		<param-name>hqlmulti</param-name>
-		<param-value>true</param-value>
-	</context-param> -->
 
 	<listener>
 		<listener-class>com.glaf.base.context.StartupListener</listener-class>
@@ -64,9 +55,6 @@
 		<init-param>
 			<param-name>config</param-name>
 			<param-value>
-			    /WEB-INF/classes/baseConfigfiles/struts-config-base.xml,
-                /WEB-INF/classes/sysConfigfiles/struts-config-sys.xml,
-				/WEB-INF/classes/demoConfigfiles/struts-config-demo.xml,
 				/WEB-INF/conf/struts/struts-config.xml,
 				/WEB-INF/conf/struts/struts-sys-config.xml,
 				/WEB-INF/conf/struts/struts-others-config.xml,
@@ -89,17 +77,6 @@
 		<url-pattern>*.do</url-pattern>
 	</servlet-mapping>
 
- 
-	<!--配置上传-->
-	<servlet>
-		<servlet-name>BackGroundService</servlet-name>
-		<servlet-class>baseSrc.common.upload.BackGroundService</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>BackGroundService</servlet-name>
-		<url-pattern>*.action</url-pattern>
-	</servlet-mapping>
-	<!--上传End -->
   
 	<!--转码过滤器-->
 	<filter>
@@ -186,31 +163,6 @@
 		<load-on-startup>2</load-on-startup>
 	</servlet>
   
-
-	<!-- 系统配置文件初始化 -->
-	<servlet>
-		<servlet-name>systemConfigInit</servlet-name>
-		<servlet-class>sysSrc.common.SystemConfigInit</servlet-class>
-		<init-param>
-			<param-name>configPath</param-name>
-			<param-value>sysConfigfiles/systemConfig.xml</param-value>
-		</init-param>
-		<load-on-startup>5</load-on-startup>
-	</servlet>
-	<!-- 系统配置文件初始化 end -->
-
-
-	<!--配置下载-->
-	<servlet>
-		<servlet-name>Download</servlet-name>
-		<servlet-class>baseSrc.common.upload.Download</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>Download</servlet-name>
-		<url-pattern>/Download</url-pattern>
-	</servlet-mapping>
-	<!--下载End -->
-  
 	<!--jbpm workflow configure-->
 
 	<servlet>
@@ -238,32 +190,5 @@
 		<exception-type>com.glaf.base.modules.sys.interceptor.AuthorizeException</exception-type> 
 		<location>/WEB-INF/views/error/auth_error.jsp</location>
 	</error-page> 
-
-	<jsp-config>
-		<taglib>
-			<taglib-uri>/sys/sysTld/struts-bean.tld</taglib-uri>
-			<taglib-location>/sys/sysTld/struts-bean.tld</taglib-location>
-		</taglib>
-		<taglib>
-			<taglib-uri>/sys/sysTld/struts-html.tld</taglib-uri>
-			<taglib-location>/sys/sysTld/struts-html.tld</taglib-location>
-		</taglib>
-		<taglib>
-			<taglib-uri>/sys/sysTld/struts-logic.tld</taglib-uri>
-			<taglib-location>/sys/sysTld/struts-logic.tld</taglib-location>
-		</taglib>
-		<taglib>
-			<taglib-uri>/sys/sysTld/struts-nested.tld</taglib-uri>
-			<taglib-location>/sys/sysTld/struts-nested.tld</taglib-location>
-		</taglib>
-		<taglib>
-			<taglib-uri>/sys/sysTld/struts-tiles.tld</taglib-uri>
-			<taglib-location>/sys/sysTld/struts-tiles.tld</taglib-location>
-		</taglib>
-		<taglib>
-			<taglib-uri>/sys/sysTld/privilegeTag.tld</taglib-uri>
-			<taglib-location>/sys/sysTld/privilegeTag.tld</taglib-location>
-		</taglib>
-	</jsp-config>
   
 </web-app>
