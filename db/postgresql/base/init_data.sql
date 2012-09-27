@@ -44,24 +44,6 @@ insert into sys_tree (id, parent, name, nodeDesc, sort, code) values (494, 8, 'T
 insert into sys_tree (id, parent, name, nodeDesc, sort, code) values (495, 8, '调度管理', '调度管理', 495, ''); 
 insert into sys_tree (id, parent, name, nodeDesc, code, sort) values (482, 10, '授权管理', '授权管理', '', 482);
 
-/*isc*/
-insert into sys_tree (id, parent, name, nodedesc, sort, code) values (1438, 1427, '分页检索grid', '分页检索grid', 0, '');
-insert into sys_tree (id, parent, name, nodedesc, sort, code) values (1446, 1427, '更新grid', '更新grid', 0, '');
-insert into sys_tree (id, parent, name, nodedesc, sort, code) values (1451, 1427, 'csv测试', 'csv测试', 0, '');
-insert into sys_tree (id, parent, name, nodedesc, sort, code) values (1456, 1427, 'xls导入导出&PDF生成', 'xls导入导出&PDF生成', 0, '');
-insert into sys_tree (id, parent, name, nodedesc, sort, code) values (1462, 1427, '报表示例', '报表示例', 0, '');
-insert into sys_tree (id, parent, name, nodedesc, sort, code) values (1467, 1427, '上传下载', '上传下载', 0, '');
-insert into sys_tree (id, parent, name, nodedesc, sort, code) values (1472, 1427, '统计查询', '统计查询', 0, '');
-insert into sys_tree (id, parent, name, nodedesc, sort, code) values (1498, 8, 'BATCH管理', 'BATCH管理', 0, '');
-insert into sys_tree (id, parent, name, nodedesc, sort, code) values (1507, 1498, 'BATCH管理', 'BATCH管理', 0, '');
-insert into sys_tree (id, parent, name, nodedesc, sort, code) values (1517, 1498, '查询batch执行日志', '查询batch执行日志', 0, '');
-insert into sys_tree (id, parent, name, nodedesc, sort, code) values (1549, 3, 'Demo', 'Demo', 0, '');
-insert into sys_tree (id, parent, name, nodedesc, sort, code) values (1561, 1549, '统计查询', '统计查询', 0, '');
-insert into sys_tree (id, parent, name, nodedesc, sort, code) values (1566, 1549, '上传下载', '上传下载', 0, '');
-insert into sys_tree (id, parent, name, nodedesc, sort, code) values (1573, 1549, '更新grid', '更新grid', 0, '');
-insert into sys_tree (id, parent, name, nodedesc, sort, code) values (1578, 1549, 'csv测试', 'csv测试', 0, '');
-insert into sys_tree (id, parent, name, nodedesc, sort, code) values (1584, 1549, 'xls导入导出&PDF生成', 'xls导入导出&PDF生成', 0, '');
-insert into sys_tree (id, parent, name, nodedesc, sort, code) values (1590, 1549, '报表示例', '报表示例', 0, '');
 
 /*初始化部门信息*/
 insert into sys_department (id, name, deptdesc, createtime, sort, deptno, code, code2, status, fincode, nodeid) values (6, '技术部', '技术部', '2006-07-16 16:30:39', 284, 'JS000', 'JS', 'J', 0, 'JS000', 6);
@@ -88,25 +70,6 @@ insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) val
 insert into sys_application (id, name, appDesc, url, sort, showMenu, nodeId) values (315, '授权管理', '', '/sys/sysUserRole.do?method=showUsers', 315, 2, 482);
 insert into sys_application (id, name, appDesc, url, sort, showMenu, nodeId) values (327, 'TODO配置', '', '/sys/todo.do?method=showList', 327, 1, 494);
 insert into sys_application (id, name, appDesc, url, sort, showMenu, nodeId) values (328, '调度管理', '', '/sys/scheduler.do?method=showList', 328, 1, 495);
-
-/*isc*/
-insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (1437, '分页检索grid', '分页检索grid', '../arrayGrid.do', 1437, 1, 1438);
-insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (1445, '更新grid', '更新grid', '../cellEditing.do', 1445, 1, 1446);
-insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (1450, 'csv测试', 'csv测试', '/demo/demoJsp/CsvTest.jsp', 1450, 1, 1451);
-insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (1455, 'xls导入导出&PDF生成', 'xls导入和导出&PDF生成', '/demo/demoJsp/xlsDo.jsp', 1455, 1, 1456);
-insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (1461, '报表示例', '报表示例', '../reportShow.do', 1461, 1, 1462);
-insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (1466, '上传下载', '上传下载', '../uploadDown.do', 1466, 1, 1467);
-insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (1471, '统计查询', '统计查询', '../BPF0107-02.do', 1471, 1, 1472);
-insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (1497, 'BATCH管理', 'BATCH管理', '', 1497, 1, 1498);
-insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (1548, 'Demo', '', '', 1548, 1, 1549);
-insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (1560, '统计查询', '', '/BPF0107-02.do', 1560, 1, 1561);
-insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (1565, '上传下载', '', '/uploadDown.do', 1565, 1, 1566);
-insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (1572, '更新grid', '', '/cellEditing.do', 1572, 1, 1573);
-insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (1577, 'csv测试', 'csv测试', '/demo/demoJsp/CsvTest.jsp', 1577, 1, 1578);
-insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (1583, 'xls导入导出&PDF生成', 'xls导入和导出&PDF生成', '/demo/demoJsp/xlsDo.jsp', 1583, 1, 1584);
-insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (1589, '报表示例', '', '/reportShow.do', 1589, 1, 1590);
-insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (1516, '查询batch执行日志', '查询batch执行日志', '/showBatchExeLog.do', 1516, 1, 1517);
-insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (1506, 'BATCH管理', '', '/manageBatch.do', 1506, 1, 1507);
 
 
 /*插入用户角色*/
