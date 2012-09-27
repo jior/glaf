@@ -74,17 +74,6 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jxl.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jxls-core.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jxls-reader.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/libbase-1.2.4.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/libdocbundle-1.2.5.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/libfonts-1.2.5.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/libformat-1.2.6.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/libformula-1.2.5.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/libloader-1.2.5.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/libpixie-1.2.4.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/librepository-1.2.5.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/libserializer-1.2.4.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/libswing-1.2.6.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/libxml-1.2.4.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/log4j-1.2.16.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/mail.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/mvel2-2.1.0.jar"/>
@@ -109,7 +98,6 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/org.springframework.web.servlet-3.0.6.RELEASE.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/org.springframework.web.struts-3.0.6.RELEASE.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/oscache-2.4.1.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/pentaho-reporting-engine-classic-core-3.9.0-GA.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/poi-3.8-20120326.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/poi-ooxml-3.8-20120326.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/poi-ooxml-schemas-3.8-20120326.jar"/>
@@ -132,7 +120,6 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/xml-resolver-1.2.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/XmlSchema-1.4.7.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/xpp3-1.1.3.4d_b4_min.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/xstream-1.2.1.jar"/>
 	<classpathentry kind="lib" path="lib/jsp-api.jar"/>
 	<classpathentry kind="lib" path="lib/servlet-api.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/glaf-base"/>
