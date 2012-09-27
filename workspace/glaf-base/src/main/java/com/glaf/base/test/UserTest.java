@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.junit.Test;
 
+import com.glaf.base.business.ApplicationBean;
 import com.glaf.base.modules.sys.service.SysApplicationService;
 import com.glaf.base.modules.sys.service.SysUserService;
 
@@ -35,6 +36,11 @@ public class UserTest extends AbstractTest {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		ApplicationBean bean = new ApplicationBean();
+		bean.setSysApplicationService(sysApplicationService);
+		String scripts = bean.getMenuScripts(3, "root", "/glaf");
+		System.out.println(scripts);
 	}
 
 }
