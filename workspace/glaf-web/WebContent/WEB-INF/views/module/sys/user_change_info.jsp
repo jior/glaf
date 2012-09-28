@@ -35,9 +35,9 @@ function setValue(obj){
 </head>
 
 <body>
-<div class="nav-title">修改用户信息</div>
+<br><br>
 <html:form action="/sys/user.do?method=saveModifyInfo" method="post" target="hiddenFrame" onsubmit="return checkForm(this);"> 
-<table width="95%" border="0" align="center" cellpadding="0" cellspacing="0" class="box">
+<table width="500" border="0" align="center" cellpadding="0" cellspacing="0" class="box">
   <tr>
     <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
       <tr class="box">

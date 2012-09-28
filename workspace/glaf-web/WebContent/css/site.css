@@ -1,5 +1,5 @@
 body {
-    background:#FBF6D9;
+    background:#FEFEFE;
 	margin:0;
 	font-size:12px;
 	
@@ -237,6 +237,7 @@ a:hover {
 
 /* list-box */
 .list-box {
+  width:85%;
   background:#CDCBCC;
   table-layout:fixed;
 }
@@ -499,4 +500,11 @@ color:#FFBC13
 	font-size:12px;
 	font-weight:normal;
 	background:#fafafa url('../images/datagrid_header_bg.gif') repeat-x left bottom;
+}
+.page-footer{
+	width:385px;
+	overflow:hidden;
+}
+.page-footer table{
+	width:90%;
 }

@@ -28,8 +28,8 @@ function go(){
 	 window.location = url+"page_no="+pageNo;
 }
 </script>
-
-<table width="380"  border="0" align="right" cellpadding="0" cellspacing="0">
+<div class="page-footer">
+<table  border="0" align="right" cellpadding="0" cellspacing="0">
   <tr> 
     <td class="pageborder"><table width="100%"  border="0" cellspacing="0" cellpadding="0">
         <tr> 
@@ -58,3 +58,4 @@ if(pageNo+1<=pageCount) go=pageNo+1;
       </table></td>
   </tr>
 </table>
+</div>

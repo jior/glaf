@@ -61,7 +61,7 @@ public class StrutsActionServlet extends ActionServlet {
 						|| StringUtils.contains(uri, "/sys/scheduler.do")
 						|| StringUtils.contains(uri, "/sys/function.do")
 						|| StringUtils.contains(uri, "/sys/todo.do")
-						|| StringUtils.contains(uri, "others/workCalendar.do")) {
+						|| StringUtils.contains(uri, "/others/workCalendar.do")) {
 					response.sendRedirect(request.getContextPath() + errorUrl);
 					return;
 				}

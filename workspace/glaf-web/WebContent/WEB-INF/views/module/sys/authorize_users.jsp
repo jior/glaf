@@ -56,27 +56,21 @@ function doSearch(form){
   window.location = url;
 }
 
-function maxium() {  
-  if (document.layers) {  
-    width=screen.availWidth;  
-    height=screen.availHeight;  
-  } else {  
-    var width=screen.availWidth;  
-    var height=screen.availHeight;  
-  }  
-  self.resizeTo(width, height);  
-  self.moveTo(0, 0);  
-}
+ function setIframeHeigh(){
+	var frameId = document.getElementById("mainFrame");
+	frameId.style.pixelHeight = frameId.Document.body.scrollHeight+20;
+	frameId.style.pixelWidth = frameId.Document.body.scrollWidth+20;
+ }
 </script>
 </head>
 
-<body onLoad="maxium();">
-<div class="nav-title"><span class="Title">授权管理</span>&gt;&gt;
-
+<body>
+<div class="nav-title">
+<span class="Title">授权管理</span>&gt;&gt;
 </div>
 <html:form method="post" action="/sys/sysUserRole.do?method=showUsers" target="_self">
 <input type="hidden" name="id" value="0">
-  <table width="730" border="0" align="center" cellpadding="5" cellspacing="0">
+  <table width="90%" border="0" align="center" cellpadding="5" cellspacing="0">
     <tr>
       <td width="170">
         部门
@@ -92,7 +86,7 @@ function maxium() {
       <td width="30"><input name="btn_search" type="button" value=" " onClick="doSearch(this.form)" class="submit-search"></td>
     </tr>
   </table> 
-  <table width="100%" border="0" cellspacing="1" cellpadding="0" class="list-box">
+  <table width="90%" border="0" cellspacing="1" cellpadding="0" class="list-box">
   <tr class="list-title"> 
     <td width="5%" align="center"><input type="checkbox" name="chkall" value="checkbox" onClick="checkAll(this.form, this);checkOperation(this.form)"></td>
     <td width="5%" align="center">序号</td>
@@ -174,23 +168,24 @@ for(; i<pageSize; i++){
 </table>
 <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
   <tr> 
-    <td width="50%"> 
+    <td width="40%"> 
 	  <input name="btn_auth" type="button" value="授权" class="button" onClick="javascript:auth(this.form);" disabled></td>
-    <td width="50%" align="right">
+    <td width="40%" align="center">
 <%
 String params = WebUtil.getQueryString(request);
 %>
-                        <jsp:include page="/WEB-INF/views/inc/show_page.jsp" flush="true">
-                        <jsp:param name="total" value="<%=pager.getTotalRecordCount()%>"/>      
-                        <jsp:param name="page_count" value="<%=pager.getTotalPageCount()%>"/>      
-                        <jsp:param name="page_size" value="<%=pageSize%>"/>      
-                        <jsp:param name="page_no" value="<%=pager.getCurrentPageNo()%>"/>      
-                        <jsp:param name="url" value="sysUserRole.do"/>      
-                        <jsp:param name="params" value="<%=java.net.URLEncoder.encode(params)%>"/>      
-                      </jsp:include>	
+    <jsp:include page="/WEB-INF/views/inc/show_page.jsp" flush="true">
+      <jsp:param name="total" value="<%=pager.getTotalRecordCount()%>"/>      
+      <jsp:param name="page_count" value="<%=pager.getTotalPageCount()%>"/>      
+      <jsp:param name="page_size" value="<%=pageSize%>"/>      
+      <jsp:param name="page_no" value="<%=pager.getCurrentPageNo()%>"/>      
+      <jsp:param name="url" value="sysUserRole.do"/>      
+      <jsp:param name="params" value="<%=java.net.URLEncoder.encode(params)%>"/>      
+    </jsp:include>	
 	</td>
   </tr>
 </table> 
 </html:form>
 </body>
 </html>
+ 

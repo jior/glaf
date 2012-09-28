@@ -12,6 +12,7 @@ String url = ParamUtil.getParameter(request, "url");
 String params = URLDecoder.decode(ParamUtil.getParameter(request, "params"));
 int go = pageNo;
 %>
+<div class="page-footer">
 <table width="319"  border="0" align="right" cellpadding="0" cellspacing="0">
   <tr> 
     <td class="pageborder"><table width="100%"  border="0" cellspacing="0" cellpadding="0">
@@ -38,3 +39,4 @@ if(pageNo+1<=pageCount) go=pageNo+1;
       </table></td>
   </tr>
 </table>
+</div>

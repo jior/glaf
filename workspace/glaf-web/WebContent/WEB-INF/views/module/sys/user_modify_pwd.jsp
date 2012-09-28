@@ -34,12 +34,13 @@ function setValue(obj){
 </head>
 
 <body>
-<div class="nav-title"><span class="Title">修改密码</span></div>
+<br><br>
 <html:form action="/sys/user.do?method=savePwd" method="post"  onsubmit="return checkForm(this);"> 
  
-<table width="95%" border="0" align="center" cellpadding="0" cellspacing="0" class="box">
+<table width="500" border="0" align="center" cellpadding="0" cellspacing="0" class="box">
   <tr>
-    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <td>
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
       <tr class="box">
         <td class="box-lt">&nbsp;</td>
         <td class="box-mt">&nbsp;</td>

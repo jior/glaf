@@ -43,6 +43,9 @@ insert into sys_tree (id, parent, name, nodedesc, sort, code) values (16, 8, '字
 insert into sys_tree (id, parent, name, nodedesc, sort, code) values (26, 8, '数据重载', '数据重载', 26, '');
 insert into sys_tree (id, parent, name, nodedesc, sort, code) values (434, 3, '流程管理', '流程管理', 434, '');
 insert into sys_tree (id, parent, name, nodedesc, sort, code) values (10, 3, '安全设置', '安全设置', 30, '');
+insert into sys_tree (id, parent, name, nodedesc, sort, code) values (20, 3, '个人设置', '个人设置', 30, '');
+insert into sys_tree (id, parent, name, nodedesc, sort, code) values (21, 20, '修改密码', '修改密码', 30, '');
+insert into sys_tree (id, parent, name, nodedesc, sort, code) values (22, 20, '修改个人信息', '修改个人信息', 30, '');
 insert into sys_tree (id, parent, name, nodedesc, sort, code) values (482, 10, '授权管理', '授权管理', 482, '');
 
 
@@ -64,6 +67,9 @@ insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) val
 insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (3, '应用模块', '应用模块', '', 3, 1, 3);
 insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (291, '工作日历', '工作日历', '/others/workCalendar.do?method=showList', 291, 1, 449);
 insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (10, '安全设置', '', '', 14, 2, 10);
+insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (20, '个人设置', '', '', 15, 2, 20);
+insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (21, '修改密码', '', '/sys/user.do?method=prepareModifyPwd', 15, 2, 21);
+insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (22, '修改个人信息', '', '/sys/user.do?method=prepareModifyInfo', 15, 2, 22);
 insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (277, '流程发布', '', '/workflow/deployController.jspa', 277, 1, 435);
 insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (278, '流程演示', '', '/workflow/test/index.jsp', 278, 1, 437);
 insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (280, '流程监控', '流程监控', '/workflow/processController.jspa?operationType=4&loadBusiness=1', 280, 1, 438);
@@ -90,6 +96,9 @@ insert into sys_access (roleid, appid) values (1, 9);
 insert into sys_access (roleid, appid) values (1, 26);
 insert into sys_access (roleid, appid) values (1, 276);
 insert into sys_access (roleid, appid) values (1, 10);
+insert into sys_access (roleid, appid) values (1, 20);
+insert into sys_access (roleid, appid) values (1, 21);
+insert into sys_access (roleid, appid) values (1, 22);
 insert into sys_access (roleid, appid) values (1, 16);
 insert into sys_access (roleid, appid) values (1, 12);
 insert into sys_access (roleid, appid) values (1, 277);
@@ -109,6 +118,9 @@ insert into sys_access (roleid, appid) values (3, 9);
 insert into sys_access (roleid, appid) values (3, 26);
 insert into sys_access (roleid, appid) values (3, 276);
 insert into sys_access (roleid, appid) values (3, 10);
+insert into sys_access (roleid, appid) values (3, 20);
+insert into sys_access (roleid, appid) values (3, 21);
+insert into sys_access (roleid, appid) values (3, 22);
 insert into sys_access (roleid, appid) values (3, 16);
 insert into sys_access (roleid, appid) values (3, 12);
 insert into sys_access (roleid, appid) values (3, 277);
