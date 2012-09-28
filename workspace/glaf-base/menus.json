@@ -1,0 +1,136 @@
+[{
+          "children": [
+                    {
+                              "description": "",
+                              "name": "调度管理",
+                              "nodeId": 495,
+                              "showMenu": 1,
+                              "sort": 328,
+                              "url": "/sys/scheduler.do?method=showList"
+                    },
+                    {
+                              "description": "",
+                              "name": "TODO配置",
+                              "nodeId": 494,
+                              "showMenu": 1,
+                              "sort": 327,
+                              "url": "/sys/todo.do?method=showList"
+                    },
+                    {
+                              "description": "工作日历",
+                              "name": "工作日历",
+                              "nodeId": 449,
+                              "showMenu": 1,
+                              "sort": 291,
+                              "url": "/others/workCalendar.do?method=showList"
+                    },
+                    {
+                              "children": [
+                                        {
+                                                  "description": "",
+                                                  "name": "字典管理",
+                                                  "nodeId": 16,
+                                                  "showMenu": 2,
+                                                  "sort": 15,
+                                                  "url": "/sys/dictory.do?method=showFrame"
+                                        },
+                                        {
+                                                  "description": "",
+                                                  "name": "数据重载",
+                                                  "nodeId": 26,
+                                                  "showMenu": 2,
+                                                  "sort": 10,
+                                                  "url": "/sys/dictory.do?method=loadDictory"
+                                        }
+                              ],
+                              "description": "基础数据",
+                              "name": "基础数据",
+                              "nodeId": 9,
+                              "showMenu": 1,
+                              "sort": 30,
+                              "url": ""
+                    },
+                    {
+                              "children": [
+                                        {
+                                                  "description": "",
+                                                  "name": "授权管理",
+                                                  "nodeId": 482,
+                                                  "showMenu": 2,
+                                                  "sort": 315,
+                                                  "url": "/sys/sysUserRole.do?method=showUsers"
+                                        },
+                                        {
+                                                  "description": "",
+                                                  "name": "部门管理",
+                                                  "nodeId": 12,
+                                                  "showMenu": 2,
+                                                  "sort": 20,
+                                                  "url": "/sys/department.do?method=showFrame"
+                                        },
+                                        {
+                                                  "description": "",
+                                                  "name": "角色管理",
+                                                  "nodeId": 14,
+                                                  "showMenu": 2,
+                                                  "sort": 15,
+                                                  "url": "/sys/role.do?method=showList"
+                                        },
+                                        {
+                                                  "description": "",
+                                                  "name": "模块管理",
+                                                  "nodeId": 15,
+                                                  "showMenu": 2,
+                                                  "sort": 12,
+                                                  "url": "/sys/application.do?method=showFrame"
+                                        }
+                              ],
+                              "description": "",
+                              "name": "权限管理",
+                              "nodeId": 10,
+                              "showMenu": 2,
+                              "sort": 14,
+                              "url": ""
+                    },
+                    {
+                              "description": "",
+                              "name": "系统目录",
+                              "nodeId": 11,
+                              "showMenu": 2,
+                              "sort": 10,
+                              "url": "/sys/tree.do?method=showMain"
+                    },
+                    {
+                              "children": [
+                                        {
+                                                  "description": "流程监控",
+                                                  "name": "流程监控",
+                                                  "nodeId": 438,
+                                                  "showMenu": 1,
+                                                  "sort": 280,
+                                                  "url": "/workflow/processController.jspa?operationType=4&loadBusiness=1"
+                                        },
+                                        {
+                                                  "description": "",
+                                                  "name": "流程发布",
+                                                  "nodeId": 435,
+                                                  "showMenu": 1,
+                                                  "sort": 277,
+                                                  "url": "/workflow/deployController.jspa"
+                                        }
+                              ],
+                              "description": "工作流管理",
+                              "name": "流程管理",
+                              "nodeId": 434,
+                              "showMenu": 1,
+                              "sort": 0,
+                              "url": ""
+                    }
+          ],
+          "description": "系统管理",
+          "name": "系统管理",
+          "nodeId": 8,
+          "showMenu": 1,
+          "sort": 5,
+          "url": ""
+}]
