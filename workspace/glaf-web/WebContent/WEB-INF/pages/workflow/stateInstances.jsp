@@ -8,57 +8,57 @@
 <%
 	Map userMap = (Map) request.getAttribute("userMap");
 %>
-<HTML>
-<HEAD>
-<META http-equiv=Content-Type content="text/html; charset=UTF-8">
-<%@ include file="/WEB-INF/pages/common/style.jsp"%>
-<LINK
-	href="<%=request.getContextPath()%>/workflow/styles/<c:out value="${frame_skin}"/>/main/main.css"
-	type=text/css rel=stylesheet>
-</HEAD>
+<html>
+<head>
+<meta http-equiv=content-type content="text/html; charset=utf-8">
+<link href="<%=request.getContextPath()%>/css/site.css" rel="stylesheet" type="text/css"> 
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/site.js"></script>
+</head>
 <body>
 	<div align="center">
-		<b>流程实例信息</b>
+		<br><b><span style="font-size:18px;">流程实例信息</span></b>
 	</div>
 	<br>
 
-	<table align="center" class="table-border" cellspacing="1"
+	<table align="center" class="list-box" cellspacing="1"
 		cellpadding="4" width="90%" nowrap>
-		<tr class="beta">
-			<td class="table-bar" width="12%" height="12" align="center"><b>流程名称</b></td>
-			<td class="table-content" width="38%"><c:out
-					value="${processDefinition.name}" /></td>
-			<td class="table-bar" width="12%" height="12" align="center"><b>流程版本</b></td>
-			<td class="table-content" width="38%"><c:out
-					value="${processDefinition.version}" /></td>
+		<tr class="list-title">
+			<td class="list-title" width="12%" height="22" align="center"><b>流程名称</b></td>
+			<td class="list-a" width="38%">
+			  <c:out value="${processDefinition.name}" />
+			</td>
+			<td class="list-title" width="12%" height="22" align="center"><b>流程版本</b></td>
+			<td class="list-a" width="38%">
+			  <c:out value="${processDefinition.version}" />
+			</td>
 		</tr>
-		<tr class="beta">
-			<td class="table-bar" width="12%" height="12" align="center"><b>启动者</td>
-			<td class="table-content" width="38%"><c:out
+		<tr class="list-title">
+			<td class="list-title" width="12%" height="22" align="center"><b>启动者</td>
+			<td class="list-a" width="38%"><c:out
 					value="${starter.name}" />[<c:out value="${starter.actorId}" />]</td>
-			<td class="table-bar" width="12%" height="12" align="center"><b>启动时间</b></td>
-			<td class="table-content" width="38%"><fmt:formatDate
+			<td class="list-title" width="12%" height="22" align="center"><b>启动时间</b></td>
+			<td class="list-a" width="38%"><fmt:formatDate
 					value="${processInstance.start}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
 		</tr>
-		<tr class="beta">
-			<td class="table-bar" width="12%" height="12" align="center"><b>业务编号</td>
-			<td class="table-content" width="38%"><c:out
+		<tr class="list-title">
+			<td class="list-title" width="12%" height="22" align="center"><b>业务编号</td>
+			<td class="list-a" width="38%"><c:out
 					value="${processInstance.key}" /></td>
-			<td class="table-bar" width="12%" height="12" align="center"><b>结束时间</b></td>
-			<td class="table-content" width="38%"><fmt:formatDate
+			<td class="list-title" width="12%" height="22" align="center"><b>结束时间</b></td>
+			<td class="list-a" width="38%"><fmt:formatDate
 					value="${processInstance.end}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
 		</tr>
 
 	</table>
 	<br>
-	<table align="center" class="table-border" cellspacing="1"
+	<table align="center" class="list-box" cellspacing="1"
 		cellpadding="4" width="90%" nowrap>
-		<tr class="table-bar">
-			<td height="12" align="center" class="table-title">任务名称</td>
-			<td height="12" align="center" class="table-title">处理者</td>
-			<td height="12" align="center" class="table-title">处理时间</td>
-			<td height="12" align="center" class="table-title">是否通过</td>
-			<td height="12" align="center" class="table-title">处理意见</td>
+		<tr class="list-title">
+			<td  align="center" >任务名称</td>
+			<td  align="center" >处理者</td>
+			<td  align="center" >处理时间</td>
+			<td  align="center" >是否通过</td>
+			<td  align="center" >处理意见</td>
 		</tr>
 		<%
 			String taskInstanceId = null;
@@ -78,21 +78,21 @@
 					taskInstanceId = stateInstance.getTaskInstanceId();
 					attachBuffer.delete(0, attachBuffer.length());
 		%>
-		<tr class="beta">
-			<td class="table-content" align="left"><c:out
+		<tr class="list-a">
+			<td height="20"  align="left"><c:out
 					value="${stateInstance.taskName}" />&nbsp;&nbsp;<c:out
 					value="${stateInstance.taskDescription}" /></td>
-			<td class="table-content" align="left"><%=user != null ? user.getName() : ""%>[<c:out
+			<td  align="left"><%=user != null ? user.getName() : ""%>[<c:out
 					value="${stateInstance.actorId}" />]</td>
-			<td class="table-content" align="center"><fmt:formatDate
+			<td  align="center"><fmt:formatDate
 					value="${stateInstance.startDate}" pattern="yyyy-MM-dd HH:mm" /></td>
-			<td class="table-content" align="center"><c:if
+			<td  align="center"><c:if
 					test="${stateInstance.opinion == 1}">
 	   是
     </c:if> <c:if test="${stateInstance.opinion == 0}">
 	   否
     </c:if>
-			<td class="table-content" align="left"><c:if
+			<td  align="left"><c:if
 					test="${not empty stateInstance.content}">
 					<c:out value="${stateInstance.content}" />
 				</c:if></td>
@@ -113,7 +113,7 @@
 
 		if (taskItems != null && taskItems.size() > 0) {
 	%>
-	<table align="center" class="table-border" cellspacing="1"
+	<table align="center" class="list-box" cellspacing="1"
 		cellpadding="4" width="90%" nowrap>
 		<%
 			Iterator iterator24 = taskItems.iterator();
@@ -121,9 +121,9 @@
 					TaskItem item = (TaskItem) iterator24.next();
 					if (item.getActorId() != null) {
 		%>
-		<tr class="beta">
-			<td class="table-bar" width="12%" height="16" align="center"><b>待办任务</b></td>
-			<td class="table-content" width="88%">
+		<tr class="list-title">
+			<td width="12%" height="25" align="center"><b>待办任务</b></td>
+			<td width="88%">
 				<%
 					org.jpage.actor.User user = (org.jpage.actor.User) userMap
 										.get(item.getActorId());

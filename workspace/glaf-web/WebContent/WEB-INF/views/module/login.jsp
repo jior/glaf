@@ -16,17 +16,7 @@
 </head>
 <body class="body">
 <script language="javascript">
-/*var openWinFlag;
-function resizeWindow(){
-  var openWinFlag = window.open(top.location, "TMS", "toolbar=no,status=1,scrollbars=yes,resizable=1,menubar=no");
-  openWinFlag.resizeTo(1024, 768);
-  openWinFlag.focus();
-}
-if(window.name != "TMS"){
-  resizeWindow();  
-  window.opener=null;
-  self.close();
-}*/
+ 
 </script>
 <br><br><br><br>
 <html:form method="post" action="/sys/authorize.do?method=login" onsubmit="return verifyAll(this);" > 
@@ -49,12 +39,12 @@ if(window.name != "TMS"){
 			</td>
           </tr>
           <tr>
-            <td align="center" class="login-box">招聘号：
-              <input name="account" type="text" size="15" class="input" datatype="string" nullable="no" maxsize="20" chname="Account"></td>
+            <td align="center" class="login-box">&nbsp;&nbsp;账号：
+              <input name="account" type="text" size="15" class="input" datatype="string" nullable="no" maxsize="20" chname="Account" value="root"></td>
           </tr>
           <tr>
-            <td align="center" class="login-box">密&nbsp;&nbsp;码：
-              <input name="password" type="password" size="15" class="input" datatype="string" nullable="no" maxsize="20" chname="Password"></td>
+            <td align="center" class="login-box">密码：
+              <input name="password" type="password" size="15" class="input" datatype="string" nullable="no" maxsize="20" chname="Password" value="111111"></td>
           </tr>
           <tr>
             <td align="right"><input name="login" type="submit" id="login" value="登录" class="login-btn">

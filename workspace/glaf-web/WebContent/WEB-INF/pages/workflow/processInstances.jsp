@@ -18,7 +18,6 @@
 <HTML>
 <HEAD>
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<%@ include file="/WEB-INF/pages/common/style.jsp"%>
 <link href="<%=request.getContextPath()%>/css/site.css" type="text/css" rel="stylesheet">
 
 </HEAD>
@@ -108,17 +107,17 @@
 <input type="hidden" name="method" value="processInstances">
 
 <%=jpage.getDefaultHiddenField()%>
-<table align="center" class="table-border" cellspacing="1" cellpadding="0" width="90%" nowrap>
+<table align="center" class="list-box" cellspacing="1" cellpadding="0" width="95%" nowrap>
     <tr class="gamma"> 
-      <td colspan="10" class="gamma"><%=jpage.getPagingHead("iForm",true)%></td>
+      <td colspan="6" class="gamma"><%=jpage.getPagingHead("iForm",true)%></td>
     </tr>
-    <tr class="table-bar" nowrap>
-	  <td width="5%" height="15" align="center" class="table-title" nowrap>流程编号</td>
-	  <td width="5%" height="15" align="center" class="table-title" nowrap>业务编号</td>
-	  <td width="15%" height="15" align="center" class="table-title" nowrap>流程名称</td>
-	  <td width="5%"  height="15" align="center" class="table-title" nowrap>版本</td>
-	  <td width="15%" height="15" align="center" class="table-title" nowrap>启动时间</td>
-	  <td width="10%" height="15" align="center" class="table-title" nowrap>功能键</td>
+    <tr class="list-title" nowrap>
+	  <td width="5%" height="20" align="center" nowrap>流程编号</td>
+	  <td width="5%" height="20" align="center" nowrap>业务编号</td>
+	  <td width="25%" height="20" align="center" nowrap>流程名称</td>
+	  <td width="5%"  height="20" align="center" nowrap>版本</td>
+	  <td width="20%" height="20" align="center" nowrap>启动时间</td>
+	  <td width="30%" height="20" align="center" nowrap>功能键</td>
     </tr>
     <c:forEach items="${processInstances}" var="processInstance">
 	<%
@@ -128,30 +127,30 @@
 		  //bi = (BusinessInstance)rowMap.get(String.valueOf(pi.getId()));
 	  }
 	%>
-    <tr class="beta">
-	  <td width="5%" height="15" align="center">
+    <tr class="list-a">
+	  <td width="5%" height="20" align="center">
 	  <a href="<%=request.getContextPath()%>/workflow/processMonitorController.jspa?method=stateInstances&processInstanceId=<c:out value="${processInstance.id}"/>" title="查看流程实例" target="_blank">
 	  <c:out value="${processInstance.id}"/>
 	  </a>
 	  </td>
-	  <td width="5%" height="15" align="center">
+	  <td width="5%" height="20" align="center">
 	  <a href="<%=request.getContextPath()%>/workflow/processMonitorController.jspa?method=stateInstances&processInstanceId=<c:out value="${processInstance.id}"/>" title="查看流程实例" target="_blank">
 	  <c:out value="${processInstance.key}"/>
 	  </a>
 	  </td>
-	  <td width="15%" height="15" align="left">
+	  <td width="25%" height="20" align="left">
 	  <a href="<%=request.getContextPath()%>/workflow/processMonitorController.jspa?method=stateInstances&processInstanceId=<c:out value="${processInstance.id}"/>"  target="_blank">
 	  <c:out value="${processInstance.processDefinition.name}"/>
 	  </a>
 	  </td>
-	  <td width="5%" height="15" align="center">
+	  <td width="5%" height="20" align="center">
 	  <c:out value="${processInstance.processDefinition.version}"/>
 	  </td>
 	   
-	  <td width="15%" height="15" align="center" nowrap>
+	  <td width="20%" height="20" align="center" nowrap>
 	  <fmt:formatDate value="${processInstance.start}" pattern="yyyy-MM-dd HH:mm:ss"/>
 	  </td>
-	  <td width="10%" height="15" align="center" nowrap>
+	  <td width="30%" height="20" align="center" nowrap>
 	  <%if(org.jpage.jbpm.config.ObjectFactory.canSuspendProcess()){%>
 	  <% if(pi != null && pi.getEnd() == null){
           if(pi.isSuspended()){
@@ -177,7 +176,7 @@
     </tr>
     </c:forEach>
   <tr class="gamma"> 
-    <td colspan="10" class="gamma"><%=jpage.getPagingTrail("iForm",true)%></td>
+    <td colspan="6" class="gamma"><%=jpage.getPagingTrail("iForm",true)%></td>
   </tr>
 </table>
  </BODY>

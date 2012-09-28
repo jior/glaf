@@ -71,10 +71,10 @@
 	background:url('images/panel_tools.gif') no-repeat -16px -16px;
 }
 .panel-tool-collapse{
-	background:url('images/panel_tool_collapse.gif') no-repeat;
+	background:url('images/panel_tools.gif') no-repeat -32px 0;
 }
 .panel-tool-expand{
-	background:url('images/panel_tool_expand.gif') no-repeat;
+	background:url('images/panel_tools.gif') no-repeat -32px -16px;
 }
 .panel-loading{
 	padding:11px 0px 10px 30px;

@@ -261,10 +261,10 @@ a:hover {
 	text-overflow:ellipsis;
 }
 .list-title td, .list-box .td-title {
-  background:url(../images/s_20.jpg) repeat-x;
 	line-height:22px;
-	color:#FFF;
-	white-space:nowrap;
+	background:#fafafa url('../images/datagrid_title_bg.png') repeat-x left bottom;
+	border-bottom:1px solid #ccc;
+	cursor:default;
 }
 .list-title .title {
   background:url(../images/s_21.jpg) repeat-x bottom #629DE1;
@@ -492,4 +492,11 @@ color:#008000
 }
 .line-font-yellow{
 color:#FFBC13
+}
+
+
+.gamma {
+	font-size:12px;
+	font-weight:normal;
+	background:#fafafa url('../images/datagrid_header_bg.gif') repeat-x left bottom;
 }

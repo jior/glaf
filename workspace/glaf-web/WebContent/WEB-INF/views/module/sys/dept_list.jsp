@@ -108,7 +108,7 @@ function roles(form){
 </script>
 </head>
 
-<body>
+<body style="padding-top:10px;padding-left:2px;padding-right:20px;">
 <div class="nav-title"><span class="Title">部门管理</span>&gt;&gt;
 <%
 List nav = (List)request.getAttribute("nav");

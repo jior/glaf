@@ -48,17 +48,15 @@ _dynarch_menu_url = "<%=context%>/js/hmenu";
 
 <body id="document">
 <br><br>
-<table align="center" width="90%" border="0" cellspacing="1" cellpadding="0" class="list-box">
+<table align="center" width="95%" border="0" cellspacing="1" cellpadding="0" class="list-box">
           <tr class="list-title">
 		    <td align="center" width="60">序号</td>
             <td align="center" width="120">模块名称</td>
-			<td align="center">标题</td>
-			<td align="center">内容</td>
+			<td align="center" width="150">标题</td>
+			<td align="center" width="180">内容</td>
 			<!-- <td align="center" width="180">流程名称</td> -->
             <!-- <td align="center" width="60">角色代码</td> -->
             <td align="center" width="60">期限</td>
-			<td align="center" width="60">a(小时)</td>
-			<td align="center" width="60">b(小时)</td>
 			<td align="center" width="90">是否启用</td>
 			<td align="center" width="60">功能键</td>
           </tr>
@@ -90,12 +88,6 @@ _dynarch_menu_url = "<%=context%>/js/hmenu";
 			</td> -->
             <td align="right" width="60">
 			    <c:out value="${todo.limitDay}"/>
-			</td>
-			<td align="right" width="60">
-			    <c:out value="${todo.xa}"/>
-			</td>
-			<td align="right" width="60">
-			    <c:out value="${todo.xb}"/>
 			</td>
 			<td align="center" width="90">
 			   <c:if test="${todo.enableFlag == 1}">

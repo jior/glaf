@@ -136,10 +136,10 @@
 	z-index:9900000;
 }
 .tree-dnd-yes{
-	background:url('images/tree_dnd_yes.png') no-repeat 0 center;
+	background:#fff url('images/tree_dnd_yes.png') no-repeat 0 center;
 }
 .tree-dnd-no{
-	background:url('images/tree_dnd_no.png') no-repeat 0 center;
+	background:#fff url('images/tree_dnd_no.png') no-repeat 0 center;
 }
 .tree-node-top{
 	border-top:1px dotted red;

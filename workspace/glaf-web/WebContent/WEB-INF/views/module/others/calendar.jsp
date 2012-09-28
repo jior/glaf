@@ -13,9 +13,9 @@ String days[] = (String[])request.getAttribute("days");
 <body>
 <table width="280" height="80" class="mainTable" border=0 cellspacing=1 cellpadding=2>
   <tr>
-    <td colspan=7 class="header"><table width=100% cellspacing=0 cellpadding=0>
+    <td colspan=7 class="list-title"><table width=100% cellspacing=0 cellpadding=0>
       <tr>
-        <td align="center"><font color="#FFFFFF"><b><%=month+1%>月</b></font> </td>
+        <td align="center"><font color="#0066ff"><b><%=month+1%>月</b></font> </td>
         </tr>
     </table></td>
   </tr>

@@ -27,7 +27,7 @@ _dynarch_menu_url = "<%=context%>/js/hmenu";
 <script type='text/javascript' src='<%= context %>/js/site.js'></script>
 <script type="text/javascript">
 window.onload = function() {
-  DynarchMenu.setup('menu1', { context: true});
+  //DynarchMenu.setup('menu1', { context: true});
 }
 function modifyInfo(){	
   var url="<%=context%>/sys/user.do?method=prepareModifyInfo";
@@ -51,24 +51,18 @@ function window.onbeforeunload(){
 }
 </script>
 
-<table width="100%" border="0" cellspacing="0" cellpadding="0" class="topbar">
+<!-- <table width="100%" border="0" cellspacing="0" cellpadding="0" class="topbar">
   <tr>
     <td width="165" class="topbar-l">&nbsp;</td>
     <td width="547">
 	<font color="#FF0000" size="+2"><b>
-		<%
-		if(request.getServerName().equals("172.16.1.29")){
-		  out.print("教育环境");
-		}else if(request.getServerName().equals("172.16.1.39")){
-		  out.print("测试环境");
-		}
-		%>
+		 
 		</b></font>&nbsp;
 	</td>
     <td width="115"><a href="#" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Image5','','<%=context%>/images/s_02b.jpg',1)" class="hotspot1 dynarch-menu-ctxbutton-both"><img src="<%=context%>/images/s_02.jpg" name="Image5" width="80" height="35" border="0"></a></td>
     <td width="135"><a href="#" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Image4','','<%=context%>/images/s_03b.jpg',1)" class="hotspot2 dynarch-menu-ctxbutton-both"><img src="<%=context%>/images/s_03.jpg" name="Image4" width="124" height="35" border="0"></a></td>
   </tr>
-</table>
+</table> -->
 <ul id="menu1" style="display:none">
 	<li class="context-class-a-hotspot1">
 		<ul id="main-popup">

@@ -30,7 +30,7 @@
 	font-size:1px;
 	display:none;
 	cursor:pointer;
-	background:#efefef url('images/tabs_leftarrow.png') no-repeat 1px 5px;
+	background:#efefef url('images/tabs_leftarrow.png') no-repeat center center;
 }
 .tabs-scroller-right{
 	position:absolute;
@@ -43,7 +43,7 @@
 	font-size:1px;
 	display:none;
 	cursor:pointer;
-	background:#efefef url('images/tabs_rightarrow.png') no-repeat 2px 5px;
+	background:#efefef url('images/tabs_rightarrow.png') no-repeat center center;
 }
 .tabs-tool{
 	position:absolute;

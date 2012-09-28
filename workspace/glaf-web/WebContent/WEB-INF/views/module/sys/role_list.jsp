@@ -74,7 +74,7 @@ function sort(id, operate){
 </script>
 </head>
 
-<body>
+<body style="padding-top:10px;padding-left:2px;padding-right:20px;">
 <html:form action="/sys/role.do?method=batchDelete" method="post" target="_self"> 
 <input name="page_no" type="hidden" value="<%=pager.getCurrentPageNo()%>">
 <input type="hidden" name="id" value="0">

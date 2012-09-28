@@ -16,7 +16,7 @@ int parent=ParamUtil.getIntParameter(request, "parent", 0);
 <link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
 <script language="javascript" src='<%=context%>/js/verify.js'></script>
 <script language="javascript" src='<%=context%>/js/main.js'></script>
-<</head>
+</head>
 
 <body>
 <html:form action="/sys/dictory.do?method=saveLoadDictory" method="post" onsubmit="return verifyAll(this);"> 

@@ -91,7 +91,7 @@ function sort(id, operate){
 </script>
 </head>
 
-<body>
+<body style="padding-top:10px;padding-left:2px;padding-right:20px;">
 <div class="nav-title"><span class="Title">模块管理</span>&gt;&gt;模块列表</div>
 <html:form action="/sys/application.do?method=batchDelete" method="post" target="_self"> 
 <input name="page_no" type="hidden" value="<%=pager.getCurrentPageNo()%>">

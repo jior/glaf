@@ -123,6 +123,7 @@ li.button a:hover span{ background-position:bottom right;}
 li.highlight a.linkclassnew{
 	/* Each element in the expandable list */
 	font-weight:bold;
+	color:#0066ff;
 }
 
 li.highlight a.linkclassold{
