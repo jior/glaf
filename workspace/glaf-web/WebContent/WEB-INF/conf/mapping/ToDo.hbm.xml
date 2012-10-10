@@ -5,7 +5,7 @@
 <hibernate-mapping>
 	<class name="com.glaf.base.modules.todo.model.ToDo" table="sys_todo"
 		dynamic-update="true" dynamic-insert="true">
-		<id column="id" name="id" type="long">
+		<id column="id" name="id" type="long" unsaved-value="0">
 			<generator class="assigned" />
 		</id>
 		<property column="actorId" name="actorId" type="string" />

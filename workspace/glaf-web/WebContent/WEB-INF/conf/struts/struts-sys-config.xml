@@ -9,6 +9,7 @@
     <form-bean name="AttachmentForm" type="com.glaf.base.modules.sys.actionform.AttachmentForm"/>
     <form-bean name="SubjectCodeForm" type="com.glaf.base.modules.sys.actionform.SubjectCodeForm"/> 
 	<form-bean name="SchedulerForm" type="com.glaf.base.modules.sys.actionform.SchedulerForm"/>
+	<form-bean name="TodoForm" type="com.glaf.base.modules.todo.form.TodoForm"/>
   </form-beans>
   
   <!--Action Mapping Definitions-->
@@ -173,10 +174,11 @@
 	<action path="/sys/todo"
             parameter="method"
             scope="request"
-            name="GenericForm"
+            name="TodoForm"
             type="org.springframework.web.struts.DelegatingActionProxy">
       <forward name="show_list" path="/WEB-INF/views/module/todo/show_list.jsp"/>
       <forward name="show_modify" path="/WEB-INF/views/module/todo/show_modify.jsp"/>
+	  <forward name="show_upload" path="/WEB-INF/views/module/todo/show_upload.jsp"/>
     </action>
 
     <action path="/sys/scheduler"

@@ -21,12 +21,12 @@ public class ToDo implements java.io.Serializable {
 	/**
 	 * 应用编号
 	 */
-	private int appId;
+	private int appId = 0;
 
 	/**
 	 * 模块编号
 	 */
-	private int moduleId;
+	private int moduleId = 0;
 
 	/**
 	 * 模块名称
@@ -41,7 +41,7 @@ public class ToDo implements java.io.Serializable {
 	/**
 	 * 角色编号
 	 */
-	private long roleId;
+	private long roleId = 0;
 
 	/**
 	 * 角色代码
@@ -51,7 +51,7 @@ public class ToDo implements java.io.Serializable {
 	/**
 	 * 部门编号
 	 */
-	private long deptId;
+	private long deptId = 0;
 
 	/**
 	 * 部门名称
@@ -81,17 +81,17 @@ public class ToDo implements java.io.Serializable {
 	/**
 	 * 限制天数
 	 */
-	private int limitDay;
+	private int limitDay = 2;
 
 	/**
 	 * a 小时
 	 */
-	private int xa;
+	private int xa = 0;
 
 	/**
 	 * 小时
 	 */
-	private int xb;
+	private int xb = 0;
 
 	/**
 	 * 标题
@@ -156,9 +156,9 @@ public class ToDo implements java.io.Serializable {
 	/**
 	 * 是否启用。1－启用、0－禁用
 	 */
-	private int enableFlag;
+	private int enableFlag = 1;
 
-	private long versionNo;
+	private long versionNo = 0;
 
 	private Collection ok = new HashSet();
 

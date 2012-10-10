@@ -41,12 +41,24 @@ _dynarch_menu_url = "<%=context%>/js/hmenu";
 <script type="text/javascript" src="<%=context%>/js/main.js"></script>
 <script type="text/javascript" src="<%=context%>/js/site.js"></script>
 <script type="text/javascript">
-
+    function importXls(){
+		location.href="<%=context%>/sys/todo.do?method=showUpload";
+    }
 </script>
 </head>
 <body onLoad="DynarchMenu.setup('menu1', { context: true});" id="document">
 <jsp:include page="/WEB-INF/views/module/header.jsp" flush="true"/>
-<br><br>
+<br>
+<table align="center" class="table-border" cellspacing="0"
+	cellpadding="0" width="90%">
+	<tr>
+		<td colspan="10" height="30" align="right"><input type="button" value="导入"
+			name="createScheduler" class="button"
+			onclick="javascript:importXls();"></td>
+	</tr>
+</table>
+<br>
+
  <table align="center" width="98%" border="0" cellspacing="1" cellpadding="0" class="list-box">
           <tr class="list-title">
 		    <td align="center" width="60">序号</td>

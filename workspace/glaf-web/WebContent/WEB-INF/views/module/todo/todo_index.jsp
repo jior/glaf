@@ -23,8 +23,7 @@
 	TodoJobBean bean = (TodoJobBean)BaseDataManager.getInstance().getBean("todoJobBean");
 %>
 
- <oscache:cache key="tms_todo_index" scope="session" time="3600"> 
-
+ 
 <%
 	 try{
 		     Collection agentIds = ProcessContainer.getContainer().getAgentIds(user.getAccount());
@@ -42,8 +41,6 @@
 	 }
 
 %>
-
- </oscache:cache>
 
 <%
     Collection rows = bean.getTodoInstances(user.getAccount());

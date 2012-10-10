@@ -859,8 +859,18 @@ public class TodoServiceImpl implements TodoService {
 		return dataMap.values();
 	}
 
-	public void saveAll(List rows) {
-		todoDAO.saveAll(rows);
+	public void saveAll(List<ToDo> rows) {
+		if (rows != null && !rows.isEmpty()) {
+			for (ToDo todo : rows) {
+				if (this.getToDo(todo.getId()) == null) {
+					todo.setEnableFlag(1);
+					todo.setVersionNo(System.currentTimeMillis());
+					this.create(todo);
+				} else {
+					this.update(todo);
+				}
+			}
+		}
 	}
 
 	public void setAbstractDao(AbstractSpringDao abstractDao) {
@@ -889,7 +899,6 @@ public class TodoServiceImpl implements TodoService {
 	}
 
 	public void update(ToDo todo) {
-
 		abstractDao.update(todo);
 	}
 

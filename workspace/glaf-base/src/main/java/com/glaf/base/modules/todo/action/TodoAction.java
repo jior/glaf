@@ -13,8 +13,9 @@ import org.apache.struts.action.ActionMapping;
 
 import org.springframework.web.struts.DispatchActionSupport;
 
-import com.glaf.base.modules.sys.SysConstants;
 import com.glaf.base.modules.sys.model.SysUser;
+import com.glaf.base.modules.todo.TodoXlsReader;
+import com.glaf.base.modules.todo.form.TodoForm;
 import com.glaf.base.modules.todo.model.ToDo;
 import com.glaf.base.modules.todo.service.TodoService;
 import com.glaf.base.utils.RequestUtil;
@@ -38,7 +39,6 @@ public class TodoAction extends DispatchActionSupport {
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		SysUser user = RequestUtil.getLoginUser(request);
-		boolean ret = false;
 		if (user.isSystemAdmin()) {
 			String id = request.getParameter("id");
 			String enableFlag = request.getParameter("enableFlag");
@@ -48,16 +48,14 @@ public class TodoAction extends DispatchActionSupport {
 			ToDo todo = todoService.getToDo(Long.valueOf(id));
 			todo.setTitle(request.getParameter("title"));
 			todo.setContent(request.getParameter("content"));
-
 			try {
 				todo.setEnableFlag(new Integer(enableFlag).intValue());
 				todo.setLimitDay(new Integer(limitDay).intValue());
 				todo.setXa(new Integer(xa).intValue());
 				todo.setXb(new Integer(xb).intValue());
 				todoService.update(todo);
-				ret = true;
 			} catch (Exception ex) {
-				ret = false;
+				logger.error(ex);
 			}
 		}
 
@@ -101,5 +99,44 @@ public class TodoAction extends DispatchActionSupport {
 			ActionForm actionForm, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		return mapping.findForward("show_modify");
+	}
+
+	/**
+	 * 上传文件
+	 * 
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public ActionForward showUpload(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		return mapping.findForward("show_upload");
+	}
+
+	/**
+	 * 上传文件
+	 * 
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public ActionForward uploadFile(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		TodoForm todoForm = (TodoForm) form;
+		TodoXlsReader reader = new TodoXlsReader();
+		List<ToDo> todos = reader.readXls(todoForm.getFile().getInputStream());
+		if (todos != null && !todos.isEmpty()) {
+			logger.debug("import size:"+todos.size());
+			todoService.saveAll(todos);
+		}
+		return this.showList(mapping, form, request, response);
 	}
 }

@@ -42,6 +42,12 @@
 		</copy>
 	</target>
 
+	<target name="copy">
+		<copy todir="../glaf-web/WebContent/WEB-INF/classes">
+			<fileset dir="bin" includes="**/*.class" />
+		</copy>
+	</target>
+
 	<!-- 编译任务 -->
 	<target name="jar" depends="build" description="Create java jar file">
 		<jar jarfile="${project.distname}-src.zip">
