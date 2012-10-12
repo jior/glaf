@@ -3,6 +3,7 @@ package com.glaf.base.business;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.glaf.base.context.ContextFactory;
 import com.glaf.base.modules.sys.service.SysApplicationService;
 
 public class ApplicationBean {
@@ -22,7 +23,8 @@ public class ApplicationBean {
 	 * @return
 	 */
 	public String getMenuScripts(long parent, String userId, String contextPath) {
-		JSONArray jsonArray = sysApplicationService.getUserMenu(parent, userId);
+		JSONArray jsonArray = getSysApplicationService().getUserMenu(parent,
+				userId);
 		String sMenu = "";
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject rootJson = jsonArray.getJSONObject(i);
@@ -69,6 +71,14 @@ public class ApplicationBean {
 		return sMenu;
 	}
 
+	public SysApplicationService getSysApplicationService() {
+		if (sysApplicationService == null) {
+			sysApplicationService = ContextFactory
+					.getBean("sysApplicationProxy");
+		}
+		return sysApplicationService;
+	}
+
 	/**
 	 * 获取用户菜单之Json对象
 	 * 
@@ -79,7 +89,8 @@ public class ApplicationBean {
 	 * @return
 	 */
 	public JSONArray getUserMenu(long parent, String userId) {
-		JSONArray array = sysApplicationService.getUserMenu(parent, userId);
+		JSONArray array = getSysApplicationService()
+				.getUserMenu(parent, userId);
 		return array;
 	}
 
