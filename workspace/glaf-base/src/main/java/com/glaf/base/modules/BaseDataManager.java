@@ -9,7 +9,6 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
- 
 import com.glaf.base.modules.sys.SysConstants;
 import com.glaf.base.modules.sys.model.BaseDataInfo;
 import com.glaf.base.modules.sys.model.Dictory;
@@ -135,10 +134,12 @@ public class BaseDataManager {
 			return null;
 		}
 	}
+
 	/**
 	 * 根据类型返回对象列表
 	 * 
-	 * @param  新增 by  happy 2011-8-11
+	 * @param 新增
+	 *            by happy 2011-8-11
 	 * @return
 	 */
 	public List getList2(String key) {
@@ -149,32 +150,34 @@ public class BaseDataManager {
 			return null;
 		}
 	}
-	
+
 	/**
 	 * add by kxr 2010-10-12
+	 * 
 	 * @param valueId
 	 * @param key
 	 * @return
 	 */
-	public BaseDataInfo getValue(Long valueId, String key){
-		if(valueId != null){
+	public BaseDataInfo getValue(Long valueId, String key) {
+		if (valueId != null) {
 			return getValue(valueId.intValue(), key);
-		} 
-		
+		}
+
 		return null;
 	}
-	
+
 	/**
 	 * add by kxr 2010-10-12
+	 * 
 	 * @param valueId
 	 * @param key
 	 * @return
 	 */
-	public BaseDataInfo getValue(Integer valueId, String key){
-		if(valueId != null){
+	public BaseDataInfo getValue(Integer valueId, String key) {
+		if (valueId != null) {
 			return getValue(valueId.intValue(), key);
-		} 
-		
+		}
+
 		return null;
 	}
 
@@ -187,7 +190,7 @@ public class BaseDataManager {
 	 */
 	public BaseDataInfo getValue(long valueId, String key) {
 		return getValue((int) valueId, key);
-	}	
+	}
 
 	/**
 	 * 根据数据对象id和类型返回对象
@@ -284,11 +287,10 @@ public class BaseDataManager {
 		}
 		return ret;
 	}
-	
+
 	/**
-	 * 根据编号和类型返回对象名称
-	 * author:key
-	 * createDate:2010-7-21
+	 * 根据编号和类型返回对象名称 author:key createDate:2010-7-21
+	 * 
 	 * @param no
 	 * @param key
 	 * @return
@@ -328,15 +330,16 @@ public class BaseDataManager {
 			return "";
 		}
 	}
-	
+
 	/**
 	 * add by kxr
+	 * 
 	 * @param valueId
 	 * @param key
 	 * @return
 	 */
 	public String getStringValue(Long valueId, String key) {
-		Long v = (valueId == null?Long.valueOf(0):valueId);
+		Long v = (valueId == null ? Long.valueOf(0) : valueId);
 		BaseDataInfo obj = getValue(v.intValue(), key);
 		if (obj != null) {
 			return obj.getName();
@@ -344,15 +347,16 @@ public class BaseDataManager {
 			return "";
 		}
 	}
-	
+
 	/**
 	 * add by kxr 2010-10-12
+	 * 
 	 * @param valueId
 	 * @param key
 	 * @return
 	 */
 	public String getStringValue(Integer valueId, String key) {
-		Integer v = (valueId == null?Integer.valueOf(0):valueId);
+		Integer v = (valueId == null ? Integer.valueOf(0) : valueId);
 		BaseDataInfo obj = getValue(v.intValue(), key);
 		if (obj != null) {
 			return obj.getName();
@@ -415,25 +419,29 @@ public class BaseDataManager {
 		}
 		return str;
 	}
+
 	public String getWithParentStringValue(Integer valueId, String key) {
-		if(valueId != null){
+		if (valueId != null) {
 			return getWithParentStringValue(valueId.intValue(), key);
 		}
 		return "";
-		
+
 	}
+
 	public String getWithParentStringValue(long valueId, String key) {
-		return getWithParentStringValue((int)valueId, key);
+		return getWithParentStringValue((int) valueId, key);
 	}
+
 	public String getWithParentStringValue(Long valueId, String key) {
-		if(valueId != null){
+		if (valueId != null) {
 			return getWithParentStringValue(valueId.intValue(), key);
 		}
 		return "";
 	}
-	
+
 	/**
 	 * 获取上一级科目名称
+	 * 
 	 * @param valueId
 	 * @param key
 	 * @return
@@ -450,7 +458,6 @@ public class BaseDataManager {
 		}
 		return str;
 	}
-	
 
 	/**
 	 * 根据数据对象id和类型返回根对象
@@ -496,18 +503,21 @@ public class BaseDataManager {
 		}
 		return s;
 	}
+
 	public String getWithParentValue(Integer valueId, String key) {
-		if(valueId != null){
+		if (valueId != null) {
 			return getWithParentValue(valueId.intValue(), key);
 		} else {
 			return "";
 		}
 	}
+
 	public String getWithParentValue(long valueId, String key) {
-		return getWithParentValue((int)valueId, key);
+		return getWithParentValue((int) valueId, key);
 	}
+
 	public String getWithParentValue(Long valueId, String key) {
-		if(valueId != null){
+		if (valueId != null) {
 			return getWithParentValue(valueId.intValue(), key);
 		} else {
 			return "";
@@ -526,18 +536,21 @@ public class BaseDataManager {
 		rst = rst.replaceAll("([^\\\\]*\\\\)(.*)(\\\\[^\\\\]*)", "$1...$3");
 		return rst;
 	}
+
 	public String getWithParentString(Integer valueId, String key) {
-		if(valueId != null){
+		if (valueId != null) {
 			return getWithParentValue(valueId.intValue(), key);
 		} else {
 			return "";
 		}
 	}
+
 	public String getWithParentString(long valueId, String key) {
-		return getWithParentValue((int)valueId, key);
+		return getWithParentValue((int) valueId, key);
 	}
+
 	public String getWithParentString(Long valueId, String key) {
-		if(valueId != null){
+		if (valueId != null) {
 			return getWithParentValue(valueId.intValue(), key);
 		} else {
 			return "";
@@ -634,12 +647,16 @@ public class BaseDataManager {
 							bdi.setCode(bean.getCode());// 部门代码
 							bdi.setNo(bean.getNo());// 部门编号
 							bdi.setDeep(tree.getDeep());
-							//bdi.setParentId((int) tree.getParent());
-							SysTree parentCurrTree = service.findById(tree.getParent());
-							if(parentCurrTree != null && parent.getId() != parentCurrTree.getId()){// 不等于部门结构,则取部门
-								bdi.setParentId((int)parentCurrTree.getDepartment().getId());
-							}else{
-								bdi.setParentId((int)parent.getParent());
+							// bdi.setParentId((int) tree.getParent());
+							SysTree parentCurrTree = service.findById(tree
+									.getParent());
+							if (parentCurrTree != null
+									&& parentCurrTree.getDepartment() != null
+									&& parent.getId() != parentCurrTree.getId()) {// 不等于部门结构,则取部门
+								bdi.setParentId((int) parentCurrTree
+										.getDepartment().getId());
+							} else {
+								bdi.setParentId((int) parent.getParent());
 							}
 
 							logger.info("id:" + bean.getId() + ",name:"
@@ -694,8 +711,6 @@ public class BaseDataManager {
 		}
 	}
 
-	 
-
 	/**
 	 * 装载字典信息
 	 */
@@ -718,15 +733,15 @@ public class BaseDataManager {
 				"0127", // 职务
 				"0128", // 目录采购分类
 				"0112", // 合同模板
-				"0129", //询价单附件
-				"0130",	//费用预算分类
-				"0131",  //目录采购结算方式
-				"0132",  //车型
-				"0133",  //生技内/外
-				"0134",  //核算项目(key)
-				"0135",  //进项类别(key)(增值税类型)
-				"0136",  //应付类别(key)
-				"0137",	 //关税(happy)
+				"0129", // 询价单附件
+				"0130", // 费用预算分类
+				"0131", // 目录采购结算方式
+				"0132", // 车型
+				"0133", // 生技内/外
+				"0134", // 核算项目(key)
+				"0135", // 进项类别(key)(增值税类型)
+				"0136", // 应付类别(key)
+				"0137", // 关税(happy)
 		};
 		String[] mapKeys = { "ZD0002", // 2：投资类型
 				// "ZD0003", //3：采购类别
@@ -746,15 +761,15 @@ public class BaseDataManager {
 				"ZD0019", // 18: 职务
 				"ZD0020", // 19: 目录采购分类
 				"ZD0021", // 20: 合同模板
-				"ZD0023",  // 22： 询价单附件
-				"ZD0024",	//23: 费用预算分类
-				"ZD0025",	//24: 目录采购结算方式
-				"ZD0026",   //25:车型
-				"ZD0027",	//26:生技内/外
-				"ZD0028",	//28:核算项目(key)
-				"ZD0029",	//29:进项类别(key)(增值税类型)
-				"ZD0030",	//30:应付类别(key)
-				"ZD0031",	//31:关税(happy)
+				"ZD0023", // 22： 询价单附件
+				"ZD0024", // 23: 费用预算分类
+				"ZD0025", // 24: 目录采购结算方式
+				"ZD0026", // 25:车型
+				"ZD0027", // 26:生技内/外
+				"ZD0028", // 28:核算项目(key)
+				"ZD0029", // 29:进项类别(key)(增值税类型)
+				"ZD0030", // 30:应付类别(key)
+				"ZD0031", // 31:关税(happy)
 		};
 		try {
 			if (serviceMap.containsKey(SV_NAMES[4])) {
@@ -779,10 +794,10 @@ public class BaseDataManager {
 							bdi.setCode(bean.getCode());// 字典代码
 							bdi.setExt1(bean.getExt1());// 扩展字段1(投资汇率)
 							bdi.setExt2(bean.getExt2());// 扩展字段2(费用汇率)
-							
+
 							bdi.setExt3(bean.getExt3());// 扩展字段1(投资汇率设置人)
 							bdi.setExt4(bean.getExt4());// 扩展字段1(费用汇率设置人)
-							
+
 							bdi.setExt5(bean.getExt5());// 扩展字段1(投资汇率最后修改时间)
 							bdi.setExt6(bean.getExt6());// 扩展字段1(费用汇率最后修改时间)
 							bdi.setDeep(0);
@@ -802,7 +817,6 @@ public class BaseDataManager {
 		}
 	}
 
-	 
 	/**
 	 * 
 	 * 装载预算科目信息
@@ -843,5 +857,5 @@ public class BaseDataManager {
 			logger.error("提取科目代码数据失败！");
 		}
 	}
-	
+
 }
