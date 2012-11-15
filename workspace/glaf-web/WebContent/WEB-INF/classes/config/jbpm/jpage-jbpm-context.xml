@@ -112,10 +112,6 @@
         </property>
 	</bean>
 
-	<bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean" >
-		<property name="resourceLoaderPath"><value>config/mail/template</value></property>
-    </bean>
-
 	<bean id="messageSender" class="org.jpage.jbpm.mail.MailMessageSender" >
 	    <property name="javaMailSender" ref="javaMailSender"/>
 		<property name="mailFrom"><value>admin@127.0.0.1</value></property>
@@ -123,11 +119,6 @@
 
 	<bean id="mailSender" class="org.jpage.jbpm.mail.DefaultJavaMailSender" >
 	    <property name="messageSender" ref="messageSender"/>
-    </bean>
-	
-	<bean id="velocityMailSender" class="org.jpage.jbpm.mail.VelocityJavaMailSender" >
-	    <property name="messageSender" ref="messageSender"/>
-		<property name="velocityEngine" ref="velocityEngine"/>
     </bean>
 
 </beans>
