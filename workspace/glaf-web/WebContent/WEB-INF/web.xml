@@ -22,6 +22,14 @@
 	<listener> 
 		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class> 
 	</listener>
+
+	<listener>
+		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+	</listener>
+
+	<listener>
+		<listener-class>org.jboss.resteasy.plugins.server.servlet.ResteasyBootstrap</listener-class>
+	</listener>
   
 	<filter>
 		<filter-name>OpenSessionInViewFilter</filter-name>
@@ -184,6 +192,17 @@
 	<servlet-mapping>
 		<servlet-name>workflow</servlet-name>
 		<url-pattern>*.jspa</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>resteasy</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<load-on-startup>2</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>resteasy</servlet-name>
+		<url-pattern>/rs/*</url-pattern>
 	</servlet-mapping>
  
 	<error-page> 
