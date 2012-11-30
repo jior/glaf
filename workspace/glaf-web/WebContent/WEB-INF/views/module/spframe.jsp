@@ -6,7 +6,6 @@
 <%@ page import="com.glaf.base.modules.sys.model.*"%>
 <%@ page import="com.glaf.base.modules.sys.service.*"%>
 <%@ page import="org.springframework.web.context.*"%>
-<%@ page import="com.glaf.base.modules.pay.PayConstants"%>
 <%@ page import="org.springframework.web.context.support.*"%>
 <%@ page import="com.glaf.base.modules.workspace.model.*"%>
 <%@ page import="com.glaf.base.modules.workspace.service.*"%>
