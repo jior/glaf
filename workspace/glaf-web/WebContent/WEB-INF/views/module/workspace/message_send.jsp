@@ -146,13 +146,13 @@ function saveBoth(form){
             <input name="add_user" type="button" class="button" value="增加用户" onClick="selectSysUser(0, $('recverIds'), $('recverName'),$(toEmail))">
           <input type="radio" name="recverType" value="1" onClick="changeSelect()">
           <input name="add_dept" type="button" class="button" value="选择部门" onClick="selectDept(5, $('recverIds'), $('recverName'),document.all.toEmail)" disabled="disabled">
-          <input type="radio" name="recverType" value="2" onClick="changeSelect()">
-          <input name="add_supplier" type="button" class="button" value="选择供应商"  onClick="selectSpForEmail(-1, $('recverIds'), $('recverName'),document.all.toEmail)" disabled="disabled">
+          <!-- <input type="radio" name="recverType" value="2" onClick="changeSelect()">
+          <input name="add_supplier" type="button" class="button" value="选择供应商"  onClick="selectSpForEmail(-1, $('recverIds'), $('recverName'),document.all.toEmail)" disabled="disabled"> -->
            </td>
       </tr>
       <tr><td width="50" class="input-box">邮&nbsp;&nbsp;箱</td>
           <td><input name="toEmail" type="text" datatype="string" nullable="no" searchflag="1" size="25"  readonly="readonly" class="input" value="<%=recverEmail %>" >
-            &nbsp;&nbsp;注意： *选择供应商必需是系统用户才能发送系统信息*
+            <!-- &nbsp;&nbsp;注意： *选择供应商必需是系统用户才能发送系统信息* -->
           </td>
       </tr>
       <tr>
