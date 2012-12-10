@@ -94,12 +94,7 @@ function checkForm(form){
           <input type="radio" name="blocked" value="1">
 否</td>
       </tr>
-      <tr>
-        <td class="input-box2" valign="top">职　　务</td>
-        <td>
-          <input name="headship" type="text" size="30" class="input" datatype="string" nullable="no" maxsize="20" chname="职务" onClick="selectData('ZD0019', null, this, document.all.userType)">
-		  <input type="hidden" name="userType" value="">        </td>
-      </tr>
+       
       <tr>
         <td colspan="2" align="center" valign="bottom" height="30">&nbsp;
               <input name="btn_save" type="submit" value="保存" class="button"></td>
