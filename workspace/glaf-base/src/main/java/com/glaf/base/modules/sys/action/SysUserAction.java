@@ -60,6 +60,13 @@ public class SysUserAction extends DispatchActionSupport {
 		int deptId = ParamUtil.getIntParameter(request, "deptId", 0);
 		int roleId = ParamUtil.getIntParameter(request, "roleId", 0);
 		SysDeptRole deptRole = sysDeptRoleService.find(deptId, roleId);
+		if(deptRole == null){
+			deptRole = new SysDeptRole();
+			deptRole.setDeptId(deptId);
+			deptRole.setDept(sysDepartmentService.findById(deptId));
+			deptRole.setRole(sysRoleService.findById(roleId));
+			sysDeptRoleService.create(deptRole);
+		}
 		if (deptRole != null) {
 			Set users = deptRole.getUsers();
 

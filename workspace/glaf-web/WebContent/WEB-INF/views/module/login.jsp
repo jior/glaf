@@ -21,14 +21,10 @@
 <br><br><br><br>
 <html:form method="post" action="/sys/authorize.do?method=login" onsubmit="return verifyAll(this);" > 
 <table border="0" align="center" cellpadding="0" cellspacing="0" id="login">
-  <!-- <tr>
-    <td colspan="2"><img src="../images/l_01.jpg" width="148" height="44"></td>
-  </tr> -->
+
   <tr>
-    <td width="201" valign="top" background="../images/l_03.jpg"><table width="100%" border="0" cellspacing="0" cellpadding="0">
-      <!-- <tr>
-        <td><img src="../images/l_02.jpg" width="201" height="62"></td>
-      </tr> -->
+    <td width="201" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+  
       <tr>
         <td height="262"><table border="0" align="center" cellpadding="4" cellspacing="0">
           <tr>
@@ -39,12 +35,12 @@
 			</td>
           </tr>
           <tr>
-            <td align="center" class="login-box">&nbsp;&nbsp;账号：
+            <td align="center"  >&nbsp;&nbsp;账号：&nbsp;&nbsp;
               <input name="account" type="text" size="15" class="input" datatype="string" nullable="no" maxsize="20" chname="Account" value="root"></td>
           </tr>
           <tr>
-            <td align="center" class="login-box">密码：
-              <input name="password" type="password" size="15" class="input" datatype="string" nullable="no" maxsize="20" chname="Password" value="111111"></td>
+            <td align="center"  >&nbsp;&nbsp;密码：&nbsp;&nbsp;
+              <input name="password" type="password" size="16" class="input" datatype="string" nullable="no" maxsize="20" chname="Password" value="111111"></td>
           </tr>
           <tr>
             <td align="right"><input name="login" type="submit" id="login" value="登录" class="login-btn">
@@ -53,11 +49,9 @@
           </tr>
         </table></td>
       </tr>
-      <!-- <tr>
-        <td><img src="../images/l_04.jpg" width="201" height="12"></td>
-      </tr> -->
+    
     </table></td>
-    <!-- <td width="395" valign="top"><img src="../images/l_05.jpg" width="395" height="53"><img src="../images/l_06.jpg" width="180" height="224"><img src="../images/l_07.jpg" width="215" height="224"><img src="../images/l_08.jpg" width="395" height="59"></td> -->
+    
   </tr>
 </table>
 </html:form>
