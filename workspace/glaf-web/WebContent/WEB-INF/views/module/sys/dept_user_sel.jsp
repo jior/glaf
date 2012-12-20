@@ -18,6 +18,9 @@ int roleId = ParamUtil.getIntParameter(request, "roleId", 0);
 	<link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
 	<script language="javascript" src='<%=context%>/js/verify.js'></script>
 	<script language="javascript" src='<%=context%>/js/main.js'></script>
+	<script type="text/javascript">
+      context = "<%=context%>";
+    </script>
 	<script language="javascript">
 	var num=0;
 	function checkOperation(form){

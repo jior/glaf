@@ -21,6 +21,7 @@ String context = request.getContextPath();
 <style type="text/css"> @import url("<%=context%>/js/hmenu/skin-yp.css");</style>
 <script type="text/javascript">
 _dynarch_menu_url = "<%=context%>/js/hmenu";
+context = "<%=context%>";
 </script>
 <script type="text/javascript" src="<%=context%>/js/hmenu/hmenu.js"></script>
 <script type='text/javascript' src='<%= context %>/js/main.js'></script>
