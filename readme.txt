@@ -1,3 +1,5 @@
+请先执行copy-jar.bat复制jar到运行环境。
+
 
 1、点击start-db.bat启动演示数据库
    演示数据库用户名为sa,密码为空
