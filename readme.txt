@@ -4,8 +4,8 @@
 1、点击start-db.bat启动演示数据库
    演示数据库用户名为sa,密码为空
 
-2、修改tomcat下的配置文件
-   修改tomcat\conf\context.xml,如果提供的数据库名称（url）、用户名（username）、密码（password）不一致时请修改成您自己的配置信息，默认配置如下：
+2、修改tomcat server下的配置文件
+   修改server\conf\context.xml,如果提供的数据库名称（url）、用户名（username）、密码（password）不一致时请修改成您自己的配置信息，默认配置如下：
    参考文档：http://tomcat.apache.org/tomcat-7.0-doc/jdbc-pool.html
 
    <Resource name="jdbc/jbpm"
@@ -35,10 +35,10 @@
           url="jdbc:h2:tcp://localhost/glafdb"/>
 
  
-3、下载并安装Tomcat
-如果把tomcat解压到当前目录，在server.xml中添加虚拟目录
+3、 安装server
+如果把需要修改虚拟目录，请修改server/conf/server.xml中配置信息
 <Context path="/glaf" docBase="../../workspace/glaf-web/WebContent" reloadable="false"/>
-启动Tomcat服务器
+启动server服务器
 访问如下地址：
 http://127.0.0.1:9090/glaf
 用户名为root，密码111111
