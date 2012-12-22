@@ -28,7 +28,6 @@ var num=0;
 function checkOperation(form){
   num = getCheckedBoxNum(form,"id");
   if(num>0){
-    document.all.btn_del.disabled=false;
 	if(num==1){
 	  document.all.btn_modify.disabled=false;
 	  document.all.btn_user.disabled=false;
@@ -39,7 +38,6 @@ function checkOperation(form){
 	  document.all.btn_role.disabled=true;
 	}
   }else{
-    document.all.btn_del.disabled=true;
 	  document.all.btn_modify.disabled=true;
 	  document.all.btn_user.disabled=true;
 	  document.all.btn_role.disabled=true;
@@ -66,14 +64,7 @@ function modify(form){
   var scroll="no";
   openWindow(url, width, height, scroll);
 }
-function del(){
-  var form = document.all.GenericForm;
-  if(confirmDelete(form)){
-    form.target="hiddenFrame";
-    form.action="department.do?method=batchDelete";
-	form.submit();
-  }
-}
+
 function sort(id, operate){  
   SysDepartmentAjaxService.sort(<%=parent%>, id, operate, {callback:function (){reloadPage();}});
 }
@@ -183,7 +174,6 @@ for(; i<pageSize; i++){
 <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
   <tr> 
     <td width="50%"> <input name="btn_add" type="button" value="增加" class="button" onClick="javascript:add();"> 
-      <input name="btn_del" type="button" value="删除" class="button" onClick="javascript:del();" disabled>
       <input name="btn_modify" type="button" value="修改" class="button" onClick="javascript:modify(this.form);" disabled>
       <input name="btn_user" type="button" value="用户管理" class="button" onClick="javascript:users(this.form);" disabled>
       <input name="btn_role" type="button" value="角色设置" class="button" onClick="javascript:roles(this.form);" disabled>
