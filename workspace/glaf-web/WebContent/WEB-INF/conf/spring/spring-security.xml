@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
 	<!--权限拦截器 -->
-	<!-- <bean id="autoProxyCreator"
+	<bean id="autoProxyCreator"
 		class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
 		<property name="interceptorNames">
 			<list>
@@ -17,6 +17,6 @@
 		</property>
 	</bean>
 
-	<bean id="authorizeInterceptor" class="com.glaf.base.modules.sys.interceptor.AuthorizeInterceptor" /> -->
+	<bean id="authorizeInterceptor" class="com.glaf.base.modules.sys.interceptor.AuthorizeInterceptor" /> 
 
 </beans>
