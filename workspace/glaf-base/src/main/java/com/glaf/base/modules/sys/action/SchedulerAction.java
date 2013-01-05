@@ -24,6 +24,7 @@ import com.glaf.base.modules.sys.model.Scheduler;
 import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.sys.service.SchedulerService;
 import com.glaf.base.utils.ParamUtil;
+import com.glaf.base.utils.QuartzUtils;
 import com.glaf.base.utils.RequestUtil;
 
 public class SchedulerAction extends DispatchActionSupport {
@@ -47,7 +48,7 @@ public class SchedulerAction extends DispatchActionSupport {
 			if (scheduler != null) {
 				schedulerService.locked(taskId, locked);
 				if (scheduler.getLocked() == 1) {
-					schedulerService.stop(taskId);
+					QuartzUtils.stop(taskId);
 				}
 			}
 		}
@@ -125,9 +126,9 @@ public class SchedulerAction extends DispatchActionSupport {
 			scheduler = schedulerService.getSchedulerById(taskId);
 			if (scheduler != null) {
 				if (StringUtils.equals(startup, "1")) {
-					schedulerService.restart(taskId);
+					QuartzUtils.restart(taskId);
 				} else {
-					schedulerService.stop(taskId);
+					QuartzUtils.stop(taskId);
 				}
 			}
 		}

@@ -52,32 +52,5 @@ public interface SchedulerService {
 	 */
 	void locked(String taskId, int locked);
 
-	/**
-	 * 启动调度任务
-	 * 
-	 * @param taskId
-	 */
-	void restart(String taskId);
-
-	/**
-	 * 关闭全部调度任务，同时关闭调度引擎Quartz。
-	 */
-	void shutdown();
-
-	/**
-	 * 启动全部调度任务
-	 */
-	void startup();
-
-	/**
-	 * 停止调度任务
-	 * 
-	 * @param taskId
-	 */
-	void stop(String taskId);
-
-	/**
-	 * 停止全部调度任务，但不关闭调度引擎Quartz。
-	 */
-	void stopAll();
+	 
 }
