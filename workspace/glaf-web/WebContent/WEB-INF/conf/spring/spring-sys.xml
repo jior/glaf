@@ -194,9 +194,6 @@
 		<property name="abstractDao">
 			<ref bean="abstractDao" />
 		</property>
-		<property name="scheduler">
-			<ref local="scheduler" />
-		</property>
 	</bean>
 
 	<bean id="schedulerProxy" parent="baseTxService">
