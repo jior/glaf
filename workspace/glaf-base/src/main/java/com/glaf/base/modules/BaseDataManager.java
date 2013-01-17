@@ -34,16 +34,14 @@ public class BaseDataManager {
 
 	private Map serviceMap = new Hashtable();
 
-	public static String SV_NAMES[] = { "sysUserService", // 0：用户Service
-			"sysRoleService", // 1：角色Service
-			"sysDepartmentService", // 2：部门Service
-			"sysTreeService", // 3：目录树Service
-			"dictoryService", // 4：字典Service
-			"sysFunctionService", // 5：模块功能Service
-			"supplierService", // 6：供应商Service
-			"sysDeptRoleService", // 7：部门角色Service
-			"goodsCategoryService", // 8：采购物品分类Service
-			"subjectCodeService" // 9: 费用科目Service
+	public static String SV_NAMES[] = { "sysUserService", // 用户Service
+			"sysRoleService", // 角色Service
+			"sysDepartmentService", // 部门Service
+			"sysTreeService", // 目录树Service
+			"dictoryService", // 字典Service
+			"sysFunctionService", // 模块功能Service
+			"sysDeptRoleService", // 部门角色Service
+			"subjectCodeService" // 费用科目Service
 	};
 
 	public Map getServiceMap() {
@@ -139,7 +137,7 @@ public class BaseDataManager {
 	 * 根据类型返回对象列表
 	 * 
 	 * @param 新增
-	 *            by happy 2011-8-11
+	 * 
 	 * @return
 	 */
 	public List getList2(String key) {
@@ -152,7 +150,7 @@ public class BaseDataManager {
 	}
 
 	/**
-	 * add by kxr 2010-10-12
+	 * 
 	 * 
 	 * @param valueId
 	 * @param key
@@ -167,7 +165,7 @@ public class BaseDataManager {
 	}
 
 	/**
-	 * add by kxr 2010-10-12
+	 * 
 	 * 
 	 * @param valueId
 	 * @param key
@@ -289,7 +287,7 @@ public class BaseDataManager {
 	}
 
 	/**
-	 * 根据编号和类型返回对象名称 author:key createDate:2010-7-21
+	 * 根据编号和类型返回对象名称
 	 * 
 	 * @param no
 	 * @param key
@@ -332,7 +330,7 @@ public class BaseDataManager {
 	}
 
 	/**
-	 * add by kxr
+	 * 
 	 * 
 	 * @param valueId
 	 * @param key
@@ -349,7 +347,7 @@ public class BaseDataManager {
 	}
 
 	/**
-	 * add by kxr 2010-10-12
+	 * 
 	 * 
 	 * @param valueId
 	 * @param key
@@ -445,7 +443,7 @@ public class BaseDataManager {
 	 * @param valueId
 	 * @param key
 	 * @return
-	 * @author key 2011-08-04
+	 * @author
 	 */
 	public String getParentName(long valueId, String key) {
 		String str = "";
@@ -782,37 +780,41 @@ public class BaseDataManager {
 					SysTree parent = treeService.getSysTreeByCode(treeNode[i]);
 					DictoryService service = (DictoryService) serviceMap
 							.get(SV_NAMES[4]);
-					List list = service.getAvailableDictoryList(parent.getId());
-					if (list != null) {
-						Iterator iter = list.iterator();
-						List tmp = new ArrayList();
-						while (iter.hasNext()) {
-							Dictory bean = (Dictory) iter.next();
-							BaseDataInfo bdi = new BaseDataInfo();
-							bdi.setId(bean.getId());// 字典id
-							bdi.setName(bean.getName());// 字典名称
-							bdi.setCode(bean.getCode());// 字典代码
-							bdi.setExt1(bean.getExt1());// 扩展字段1(投资汇率)
-							bdi.setExt2(bean.getExt2());// 扩展字段2(费用汇率)
+					if (parent != null) {
+						List list = service.getAvailableDictoryList(parent
+								.getId());
+						if (list != null) {
+							Iterator iter = list.iterator();
+							List tmp = new ArrayList();
+							while (iter.hasNext()) {
+								Dictory bean = (Dictory) iter.next();
+								BaseDataInfo bdi = new BaseDataInfo();
+								bdi.setId(bean.getId());// 字典id
+								bdi.setName(bean.getName());// 字典名称
+								bdi.setCode(bean.getCode());// 字典代码
+								bdi.setExt1(bean.getExt1());// 扩展字段1(投资汇率)
+								bdi.setExt2(bean.getExt2());// 扩展字段2(费用汇率)
 
-							bdi.setExt3(bean.getExt3());// 扩展字段1(投资汇率设置人)
-							bdi.setExt4(bean.getExt4());// 扩展字段1(费用汇率设置人)
+								bdi.setExt3(bean.getExt3());// 扩展字段1(投资汇率设置人)
+								bdi.setExt4(bean.getExt4());// 扩展字段1(费用汇率设置人)
 
-							bdi.setExt5(bean.getExt5());// 扩展字段1(投资汇率最后修改时间)
-							bdi.setExt6(bean.getExt6());// 扩展字段1(费用汇率最后修改时间)
-							bdi.setDeep(0);
+								bdi.setExt5(bean.getExt5());// 扩展字段1(投资汇率最后修改时间)
+								bdi.setExt6(bean.getExt6());// 扩展字段1(费用汇率最后修改时间)
+								bdi.setDeep(0);
 
-							logger.info("id:" + bean.getId() + ",name:"
-									+ bean.getName() + ",code:"
-									+ bean.getCode());
-							tmp.add(bdi);
+								logger.info("id:" + bean.getId() + ",name:"
+										+ bean.getName() + ",code:"
+										+ bean.getCode());
+								tmp.add(bdi);
+							}
+							baseDataMap.put(mapKeys[i], tmp);
 						}
-						baseDataMap.put(mapKeys[i], tmp);
 					}
 				}
 				logger.info("装载字典信息结束");
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			logger.error("提取字典数据失败！");
 		}
 	}
@@ -824,10 +826,10 @@ public class BaseDataManager {
 	 */
 	public void loadSubjectCode() {
 		try {
-			if (serviceMap.containsKey(SV_NAMES[9])) {
+			if (serviceMap.containsKey(SV_NAMES[7])) {
 				logger.info("装载科目代码开始...");
 				SubjectCodeService service = (SubjectCodeService) serviceMap
-						.get(SV_NAMES[9]);
+						.get(SV_NAMES[7]);
 				List list = service.getSubjectCodeList();
 				// 显示所有列表
 				if (list != null) {
