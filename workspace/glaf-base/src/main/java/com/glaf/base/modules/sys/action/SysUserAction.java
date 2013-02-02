@@ -578,7 +578,6 @@ public class SysUserAction extends DispatchActionSupport {
 	 * @param actionForm
 	 * @param request
 	 * @param response
-	 * @author zoumin
 	 * @return
 	 * @throws Exception
 	 */

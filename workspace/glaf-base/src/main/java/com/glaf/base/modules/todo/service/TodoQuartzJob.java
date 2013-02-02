@@ -58,14 +58,14 @@ public class TodoQuartzJob {
 				in = new BufferedInputStream(in);
 				Reader r = new InputStreamReader(in);
 				int c;
-				System.out.println("==============Beging====================");
-				System.out.println();
+				logger.debug("==============Beging====================");
+		 
 				while ((c = r.read()) != -1) {
-					System.out.print((char) c);
+					logger.debug((char) c);
 				}
 				in.close();
-				System.out.println();
-				System.out.println("===============End======================");
+				 
+				logger.debug("===============End======================");
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();

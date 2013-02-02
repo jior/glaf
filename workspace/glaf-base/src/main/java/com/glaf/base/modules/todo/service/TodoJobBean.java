@@ -312,7 +312,7 @@ public class TodoJobBean {
 						psmt = null;
 
 					} catch (java.sql.SQLException ex) {
-						System.out.println(todo.getId() + ":" + todo.getSql());
+						logger.debug(todo.getId() + ":" + todo.getSql());
 						ex.printStackTrace();
 					} finally {
 						Context.close(jbpmContext);

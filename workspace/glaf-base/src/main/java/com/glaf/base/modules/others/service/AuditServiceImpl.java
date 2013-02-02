@@ -129,7 +129,6 @@ public class AuditServiceImpl implements AuditService {
 	/**
 	 * 返回所有审批列表最终审批人列表（去除重复）
 	 * 
-	 * @author zoumin
 	 * @param referId
 	 * @param referType
 	 * @return
@@ -161,7 +160,6 @@ public class AuditServiceImpl implements AuditService {
 	/**
 	 * 返回部门最后一次的审批记录
 	 * 
-	 * @author zoumin
 	 * @param referId
 	 * @param referType
 	 * @param leaderId
@@ -203,7 +201,6 @@ public class AuditServiceImpl implements AuditService {
 	/**
 	 * 返回最后一个不通过的审批记录
 	 * 
-	 * @author zoumin
 	 * @param referId
 	 * @param referType
 	 * @param leaderId

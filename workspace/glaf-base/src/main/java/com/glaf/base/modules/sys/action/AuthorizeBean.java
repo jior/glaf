@@ -33,7 +33,7 @@ public class AuthorizeBean {
 		com.glaf.base.context.ContextFactory.setContext(ctx);
 		AuthorizeBean bean = new AuthorizeBean();
 		SysUser user = bean.getAuthorizeService().login("root");
-		System.out.println(bean.getSysApplicationService().getMenu(3, user));
+		logger.debug(bean.getSysApplicationService().getMenu(3, user));
 	}
 
 	private SysApplicationService sysApplicationService;

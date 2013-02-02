@@ -7,13 +7,17 @@ import java.util.Enumeration;
 import java.util.Properties;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
 import com.glaf.base.utils.*;
 
 public class JobProperties {
-
+	private static final Log logger = LogFactory
+			.getLog(JobProperties.class);
+	
 	private final static String MESSAGE_CONFIG = "/job.properties";
 
 	private static Properties properties = new Properties();
@@ -93,7 +97,7 @@ public class JobProperties {
 			InputStream inputStream = null;
 			try {
 				Resource resource = new ClassPathResource(MESSAGE_CONFIG);
-				System.out.println("load message config:"
+				logger.info("load message config:"
 						+ resource.getFile().getAbsolutePath());
 				inputStream = new FileInputStream(resource.getFile()
 						.getAbsolutePath());

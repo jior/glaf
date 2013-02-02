@@ -7,12 +7,16 @@ import java.util.Enumeration;
 import java.util.Properties;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
 import com.glaf.base.utils.*;
 
 public class CallbackProperties {
+	private static final Log logger = LogFactory
+			.getLog(CallbackProperties.class);
 
 	private final static String MESSAGE_CONFIG = "/login.properties";
 
@@ -93,7 +97,7 @@ public class CallbackProperties {
 			InputStream inputStream = null;
 			try {
 				Resource resource = new ClassPathResource(MESSAGE_CONFIG);
-				System.out.println("load message config:"
+				logger.info("load message config:"
 						+ resource.getFile().getAbsolutePath());
 				inputStream = new FileInputStream(resource.getFile()
 						.getAbsolutePath());

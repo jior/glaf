@@ -443,7 +443,6 @@ public class BaseDataManager {
 	 * @param valueId
 	 * @param key
 	 * @return
-	 * @author
 	 */
 	public String getParentName(long valueId, String key) {
 		String str = "";

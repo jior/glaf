@@ -18,7 +18,8 @@ import com.glaf.base.modules.sys.model.SysUserRole;
 import com.glaf.base.utils.PageResult;
 
 public class SysUserServiceImpl implements SysUserService {
-	private static final Log logger = LogFactory.getLog(SysUserServiceImpl.class);
+	private static final Log logger = LogFactory
+			.getLog(SysUserServiceImpl.class);
 
 	private AbstractSpringDao abstractDao;
 
@@ -111,7 +112,7 @@ public class SysUserServiceImpl implements SysUserService {
 	 * @return
 	 */
 	public SysUser findById(long id) {
-		if (id == 0){
+		if (id == 0) {
 			return null;
 		}
 		return (SysUser) abstractDao.find(SysUser.class, new Long(id));
@@ -171,8 +172,6 @@ public class SysUserServiceImpl implements SysUserService {
 	 *            int
 	 * @param pageSize
 	 *            int
-	 * @update by author: zoumin
-	 * @update by author: agoo 2008-7-8
 	 * @return
 	 */
 	public PageResult getSysUserList(int deptId, int pageNo, int pageSize) {
@@ -215,7 +214,6 @@ public class SysUserServiceImpl implements SysUserService {
 	 * @param fullName
 	 * @param pageNo
 	 * @param pageSize
-	 * @update by author : zoumin ※显示系统用户结果集（即非供应商）
 	 * @return
 	 */
 	public PageResult getSysUserList(int deptId, String fullName, int pageNo,
@@ -275,14 +273,6 @@ public class SysUserServiceImpl implements SysUserService {
 		}
 
 	}
-
-	// public PageResult getSysUserList(Map params, int pageNo, int pageSize) {
-	//
-	// DetachedCriteria detachedCriteria = WebUtil.getCriteria(params,
-	// Supplier.class);
-	// detachedCriteria.addOrder(Order.desc("id"));
-	// return abstractDao.getList(detachedCriteria, pageNo, pageSize);
-	// }
 
 	/**
 	 * 获取列表
@@ -347,7 +337,7 @@ public class SysUserServiceImpl implements SysUserService {
 		while (iter.hasNext()) {
 			SysUserRole bean = (SysUserRole) iter.next();
 			if (bean.getDeptRole() != null) {
-				//logger.debug("id=" + bean.getDeptRole().getId());
+				// logger.debug("id=" + bean.getDeptRole().getId());
 				set.add(bean.getDeptRole());
 			}
 		}
@@ -356,30 +346,6 @@ public class SysUserServiceImpl implements SysUserService {
 		return set;
 	}
 
-	// public Set getRoleFunctions(SysDeptRole role){
-	// Set set = new HashSet();
-	// Object[] values = new Object[] {role};
-	// String query = "from SysUserRole a where a.user=?";
-	// List rows = abstractDao.getList(query, values, null);
-	// Iterator iter = rows.iterator();
-	// while(iter.hasNext()){
-	// SysUserRole bean = (SysUserRole)iter.next();
-	// set.add(bean.getDeptRole());
-	// }
-	// return set;
-	// }
-	// public Set getRoleApps(SysDeptRole role){
-	// Set set = new HashSet();
-	// Object[] values = new Object[] {role};
-	// String query = "from SysUserRole a where a.user=?";
-	// List rows = abstractDao.getList(query, values, null);
-	// Iterator iter = rows.iterator();
-	// while(iter.hasNext()){
-	// SysUserRole bean = (SysUserRole)iter.next();
-	// set.add(bean.getDeptRole());
-	// }
-	// return set;
-	// }
 	/**
 	 * 其用户权限
 	 * 
@@ -474,8 +440,6 @@ public class SysUserServiceImpl implements SysUserService {
 	/**
 	 * 获取列表
 	 * 
-	 * @author key
-	 * @date Mar 2, 2012
 	 */
 	public PageResult getSysUserList(int deptId, String userName,
 			String account, int pageNo, int pageSize) {
@@ -500,13 +464,11 @@ public class SysUserServiceImpl implements SysUserService {
 	/**
 	 * 初始化所有用户密码进行加密
 	 * 
-	 * @author key
-	 * @date Mar 2, 2012
 	 */
 	public void updateSysUserPassword() {
 		String query = "from SysUser a where 1=1 ";
 		List list = abstractDao.getList(query, null, null);
-		System.out.println("size=" + list.size());
+		logger.debug("size=" + list.size());
 		for (int i = 0; i < list.size(); i++) {
 			SysUser user = (SysUser) list.get(i);
 			// user.setPassword(CryptUtil.EnCryptPassword(user.getPassword()));

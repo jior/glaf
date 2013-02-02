@@ -302,8 +302,6 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 	 * 定时批量删除过期代理的权限
 	 * 
 	 * @return
-	 * @author key
-	 * @date Jul 18, 2012
 	 */
 	public boolean removeRoles() {
 		boolean ret = false;

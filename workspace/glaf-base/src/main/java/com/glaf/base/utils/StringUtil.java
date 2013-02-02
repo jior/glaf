@@ -980,7 +980,7 @@ public class StringUtil {
 	}
 
 	/**
-	 * 取最后一个字母的下一个字母 author:key createDate:2010-9-19
+	 * 取最后一个字母的下一个字母  
 	 * 
 	 * @param str
 	 * @return

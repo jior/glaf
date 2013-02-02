@@ -1,10 +1,15 @@
 package com.glaf.base.context;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
 public class ApplicationContext {
+	
+	private static final Log logger = LogFactory
+			.getLog(ApplicationContext.class);
 
 	public final static String sp = System.getProperty("file.separator");
 
@@ -40,7 +45,7 @@ public class ApplicationContext {
 				Resource resource = new ClassPathResource("/system.properties");
 				appPath = resource.getFile().getParentFile().getParentFile()
 						.getParentFile().getAbsolutePath();
-				System.out.println("app path:" + appPath);
+				logger.info("app path:" + appPath);
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}

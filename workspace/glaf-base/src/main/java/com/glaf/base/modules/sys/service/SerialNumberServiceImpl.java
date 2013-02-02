@@ -1209,7 +1209,7 @@ public class SerialNumberServiceImpl implements SerialNumberService {
 	}
 
 	public static void main(String arg[]) {
-		System.out.println("yyMMdd="
+		logger.debug("yyMMdd="
 				+ WebUtil.dateToString(new Date(), "yyMMdd"));
 
 		Calendar lastCal = Calendar.getInstance();
@@ -1244,6 +1244,6 @@ public class SerialNumberServiceImpl implements SerialNumberService {
 			// leiji
 			reCaculate = false;
 		}
-		System.out.println(reCaculate);
+		logger.debug(reCaculate);
 	}
 }

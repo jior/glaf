@@ -32,7 +32,6 @@ import com.glaf.base.utils.MyBeanUtils;
 /**
  * 抽象Dao类，实现CRUD基本方法
  * 
- * @author user
  * 
  */
 public class AbstractSpringDao extends HibernateDaoSupport {
@@ -41,15 +40,15 @@ public class AbstractSpringDao extends HibernateDaoSupport {
 
 	public static void main(String args[]) {
 		String query = "SELECT COUNT(B.ID) FROM PAYMENT AS B RIGHT JOIN B.ORDER AS A WHERE B.STATUS <> -999 AND (A.CONTRACT.ID IS NULL OR A.CONTRACT.ID = 0) AND A.STATUS NOT IN (0,10,20,-1,80) ORDER BY A.ID";
-		System.out.println("query.toUpperCase() " + query.toUpperCase());
+		logger.debug("query.toUpperCase() " + query.toUpperCase());
 		int position = query.toUpperCase().indexOf("ORDER BY");
 		if (-1 != position) {
-			System.out.println("str.length = " + query.length()
+			logger.debug("str.length = " + query.length()
 					+ "  indexof(ORDER BY)="
 					+ query.toUpperCase().indexOf("ORDER BY"));
 			query = query.substring(0, position);
 		}
-		System.out.println("getResutlTotalByQuery  query:" + query);
+		logger.debug("getResutlTotalByQuery  query:" + query);
 	}
 
 	public AbstractSpringDao() {

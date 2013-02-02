@@ -315,7 +315,7 @@ public class MessageAction extends DispatchActionSupport {
 		}
 		// 部门群发
 		if (recverType == 1) {
-			System.out.println("string to int" + Integer.parseInt(recverIds));
+			logger.debug("string to int" + Integer.parseInt(recverIds));
 			List list = sysUserService.getSysUserList(Integer
 					.parseInt(recverIds));
 			// System.out.println("list.size"+list.size());

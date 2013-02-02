@@ -164,7 +164,7 @@ public class WebUtil {
 								.sqlRestriction(maintAlias + "_." + name
 										+ " is NULL "));
 
-					}else if ("mnn".equals(op)) { // 主表 日期字段，主要为了区别与关联表同名的字段 add by key 2012-05-21
+					}else if ("mnn".equals(op)) { // 主表 日期字段，主要为了区别与关联表同名的字段  
 						String maintAlias = detachedCriteria.getAlias();
 						// 子表连接 string 连接
 						detachedCriteria.add(Restrictions
