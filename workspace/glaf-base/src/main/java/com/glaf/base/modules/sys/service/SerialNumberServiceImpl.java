@@ -163,7 +163,7 @@ public class SerialNumberServiceImpl implements SerialNumberService {
 		} catch (Exception e) {
 		}
 
-		String sn = "T";// 审批项目：T特定采购相关
+		String sn = "T";// 审批项目 
 		Calendar date = Calendar.getInstance();
 		String year = String.valueOf(date.get(Calendar.YEAR));
 		sn += year.substring(2);// 审批年度
@@ -1259,7 +1259,6 @@ public class SerialNumberServiceImpl implements SerialNumberService {
 			// newCal.roll(Calendar.DAY_OF_MONTH, 1);
 			reCaculate = curCal.after(lastCal);
 		} else {
-			// leiji
 			reCaculate = false;
 		}
 		logger.debug(reCaculate);

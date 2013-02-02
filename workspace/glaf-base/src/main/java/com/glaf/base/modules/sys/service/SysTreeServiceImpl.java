@@ -189,7 +189,7 @@ public class SysTreeServiceImpl implements SysTreeService {
 	}
 
 	/**
-	 * 获取全部列表（add by kxr 2010-09-14)
+	 * 获取全部列表 
 	 * 
 	 * @param parent
 	 *            int 父ID

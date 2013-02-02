@@ -1,20 +1,20 @@
 /*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.glaf.base.modules.sys.service;
 
@@ -227,7 +227,7 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 			processDescriptions = processDescriptions.substring(0,
 					processDescriptions.lastIndexOf(","));
 		SysUser fromUser = sysUserService.findById(fromUserId);
-		SysUser toUser = sysUserService.findById(toUserId);// ////////////////????????????????????????
+		SysUser toUser = sysUserService.findById(toUserId);
 		if (fromUser == null || toUser == null || fromUserId == toUserId)
 			return ret;
 
@@ -259,24 +259,13 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 			if (mark == 1) {
 				bean.setProcessDescription("全局代理");
 			}
-			// if (toUser.getUserRoles().size() == 0) {
-			// System.out
-			// .println("!!!!!!!!!!toUser.getUserRoles().size() ==
-			// 0!!!!!!!!!!!!!!!");
-			// }
 
 			toUser.getUserRoles().add(bean);
 
-			// System.out
-			// .println("-------------SysUserRoleService.addRole()-----------------");
-			// System.out.println("-------------fromUser:" + fromUser.getName()
-			// + "------------------------");
-			// System.out.println("-------------toUser:" + toUser.getName()
-			// + "----------------------------");
 			ret = sysUserService.update(toUser);
 
 		}
-		// @todo 增加工作流
+		// 增加工作流
 		insertAgent(fromUser, toUser, startDate, endDate, mark, processNames);
 		return ret;
 	}
@@ -311,7 +300,7 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 				delete(userRole);// 删除权限
 			}
 		}
-		// @todo 删除工作流
+		// 删除工作流
 		removeAgent(fromUser, toUser);
 		return true;
 	}
@@ -336,10 +325,9 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 			logger.info("toUser:" + toUser.getName() + ",fromUser:"
 					+ fromUser.getName() + ",remove role:"
 					+ userRole.getDeptRole().getRole().getName()
-					+ ",availDateEnd="
-					+ userRole.getAvailDateEnd().toLocaleString());
+					+ ",availDateEnd=" + userRole.getAvailDateEnd());
 			delete(userRole);// 删除权限
-			removeAgent(fromUser, toUser);// @todo 删除工作流
+			removeAgent(fromUser, toUser);// 删除工作流
 		}
 		return true;
 	}

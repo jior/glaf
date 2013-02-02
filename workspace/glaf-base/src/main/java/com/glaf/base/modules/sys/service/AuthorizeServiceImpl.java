@@ -65,7 +65,7 @@ public class AuthorizeServiceImpl implements AuthorizeService {
 			if (bean.getAccountType() != 1) {
 				// 取出用户对应的模块权限
 				bean = sysUserService.getUserPrivileges(bean);
-				// bean=sysUserService.getUserAndPrivileges(bean);
+		 
 				// 取出用户的部门列表
 				List list = new ArrayList();
 				sysDepartmentService.findNestingDepartment(list,
@@ -102,7 +102,7 @@ public class AuthorizeServiceImpl implements AuthorizeService {
 			} else if (bean.getAccountType() != 1) {
 				// 取出用户对应的模块权限
 				bean = sysUserService.getUserPrivileges(bean);
-				// bean=sysUserService.getUserAndPrivileges(bean);
+			 
 				// 取出用户的部门列表
 				List list = new ArrayList();
 				sysDepartmentService.findNestingDepartment(list,

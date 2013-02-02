@@ -71,7 +71,7 @@ public class SysUserServiceImpl implements SysUserService {
 	public boolean updateUser(SysUser bean) {
 
 		String sql = " update sys_user set lastLoginTime = ? ,lastLoginIP = ? where account = ? ";
-		List values = new ArrayList();
+		List<Object> values = new ArrayList<Object>();
 		values.add(bean.getLastLoginTime());
 		values.add(bean.getLastLoginIP());
 		values.add(bean.getAccount());
@@ -87,7 +87,6 @@ public class SysUserServiceImpl implements SysUserService {
 	 * @return boolean
 	 */
 	public boolean delete(SysUser bean) {
-
 		return abstractDao.delete(bean);
 	}
 
@@ -114,7 +113,7 @@ public class SysUserServiceImpl implements SysUserService {
 	 * @return
 	 */
 	public boolean deleteAll(long[] id) {
-		List list = new ArrayList();
+		List<SysUser> list = new ArrayList<SysUser>();
 		for (int i = 0; i < id.length; i++) {
 			SysUser bean = findById(id[i]);
 			if (bean != null)
@@ -146,7 +145,7 @@ public class SysUserServiceImpl implements SysUserService {
 	public SysUser findByAccount(String account) {
 		SysUser bean = null;
 		Object[] values = new Object[] { account };
-		String query = "from SysUser a where a.account=? order by a.id desc";
+		String query = " from SysUser a where a.account=? order by a.id desc";
 		List list = abstractDao.getList(query, values, null);
 		if (list != null && list.size() > 0) {// 有记录
 			bean = (SysUser) list.get(0);
@@ -239,7 +238,6 @@ public class SysUserServiceImpl implements SysUserService {
 		String query = "";
 		List arrayList = new ArrayList();
 		if (deptId == 0) {
-
 			if (fullName == null || "".equals(fullName)) {
 				query = "select count(*) from SysUser a where a.accountType=0";
 				int count = ((Long) abstractDao.getList(query, null, null)
@@ -253,7 +251,6 @@ public class SysUserServiceImpl implements SysUserService {
 				return abstractDao
 						.getList(query, null, pageNo, pageSize, count);
 			} else {
-
 				Object[] values = new Object[] { new String("%" + fullName
 						+ "%") };
 				query = " select count(*) from SysUser a where a.name like ? and a.accountType=0";
@@ -289,7 +286,6 @@ public class SysUserServiceImpl implements SysUserService {
 			logger.info("count = " + count);
 			return abstractDao.getList(query, values, pageNo, pageSize, count);
 		}
-
 	}
 
 	/**
@@ -360,7 +356,7 @@ public class SysUserServiceImpl implements SysUserService {
 			}
 		}
 
-		logger.debug("========================user roles:" + set);
+		//logger.debug("========================user roles:" + set);
 		return set;
 	}
 
@@ -372,7 +368,6 @@ public class SysUserServiceImpl implements SysUserService {
 	 */
 	public SysUser getUserPrivileges(SysUser user) {
 		SysUser bean = user;
-
 		try {
 			bean.setRoles(getUserRoles(bean));
 			Iterator roles = bean.getRoles().iterator();
@@ -384,7 +379,6 @@ public class SysUserServiceImpl implements SysUserService {
 				bean.getFunctions().addAll(functions);
 				bean.getApps().addAll(apps);
 			}
-
 		} catch (Exception e) {
 			logger.error(e);
 		}
@@ -479,20 +473,7 @@ public class SysUserServiceImpl implements SysUserService {
 		return pager;
 	}
 
-	/**
-	 * 初始化所有用户密码进行加密
-	 * 
-	 */
-	public void updateSysUserPassword() {
-		String query = "from SysUser a where 1=1 ";
-		List list = abstractDao.getList(query, null, null);
-		logger.debug("size=" + list.size());
-		for (int i = 0; i < list.size(); i++) {
-			SysUser user = (SysUser) list.get(i);
-			abstractDao.update(user);
-		}
-	}
-
+ 
 	public boolean isThisPlayer(SysUser user, String code) {
 		boolean flag = false;
 		Set set = user.getRoles();
