@@ -200,31 +200,5 @@ public class SubjectCodeServiceImpl implements SubjectCodeService{
 		criteria.addOrder(Order.asc("subjectCode"));
 		return abstractDao.getList(criteria);
 	}
-	/**
-	 * 获取费用已使用的金额
-	 * @param subjectCode
-	 * @return
-	 */
-	public double getUsedFee(String subjectCode){
-		double usedBudgetSum = 0;
-		
-		//重财已占用的金额
-		String hql="select sum(a.realBudgetSum) from Finance a where a.subjectNo=? and a.status!=2";
-		Object[] values=new Object[]{subjectCode};
-		List list = abstractDao.getList(hql, values, null);
-		if(list!=null && list.size()>0){//有记录
-			Double sum = ((Double)list.get(0));
-			usedBudgetSum = sum!=null?sum.doubleValue():0;
-		}
-		
-		//无重财有费用预算的特采单已占用的金额
-		hql="select sum(a.intendingSum) from Purchase a where a.hasFinance=0 and a.subjectNo=?";
-		values=new Object[]{subjectCode};
-		list = abstractDao.getList(hql, values, null);
-		if(list!=null && list.size()>0){//有记录
-			Double sum = ((Double)list.get(0));
-			usedBudgetSum += sum!=null?sum.doubleValue():0;
-		}
-		return usedBudgetSum;
-	}
+	 
 }

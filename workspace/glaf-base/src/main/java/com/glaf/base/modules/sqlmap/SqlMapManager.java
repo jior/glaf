@@ -28,7 +28,7 @@ public interface SqlMapManager {
 
 	public void executeBatch(List<Executor> rows);
 
-	public List getSqlMapTmsList(String queryId, Map params);
+	public List getSqlMapList(String queryId, Map params);
 
 	public void insertObject(String statementId, Object obj);
 

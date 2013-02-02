@@ -227,7 +227,7 @@ public class SysUserRoleAction extends DispatchActionSupport{
 			return mapping.findForward("show_msg");
 		}
 		
-		if(sendMail(user,rootUser,"特采授权书",msgStr)){
+		if(sendMail(user,rootUser,"授权书",msgStr)){
 			messages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage(
 					"sys.author_success"));
 		}else{

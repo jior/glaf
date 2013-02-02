@@ -56,7 +56,7 @@ public class Constants {
 	final public static String SYS_ORDMC = "ORDMC"; // 目录采购价格联络书
 	final public static String SYS_ORDMO = "ORDMO"; // 目录采购订单
 	final public static String SYS_PAYM = "PAYM"; // 目录采购付款通知书
-	final public static String SYS_CATE = "CATE"; // 目录采购特采申请单
+	final public static String SYS_CATE = "CATE"; // 目录采购申请单
 	final public static String SYS_CKACM = "CKACM"; // 目录采购验收单
 	final public static String SYS_QUEM = "QUERYM"; // 目录采购询价
 	final public static String SYS_ABIM = "ABIM"; // 目录采购决裁;
