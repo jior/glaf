@@ -1,20 +1,20 @@
 /*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.glaf.base.modules;
 
@@ -29,13 +29,11 @@ import org.apache.commons.logging.LogFactory;
 
 import com.glaf.base.modules.sys.SysConstants;
 import com.glaf.base.modules.sys.model.BaseDataInfo;
-import com.glaf.base.modules.sys.model.Dictory;
 import com.glaf.base.modules.sys.model.SubjectCode;
 import com.glaf.base.modules.sys.model.SysDepartment;
 import com.glaf.base.modules.sys.model.SysFunction;
 import com.glaf.base.modules.sys.model.SysTree;
 import com.glaf.base.modules.sys.model.SysUser;
-import com.glaf.base.modules.sys.service.DictoryService;
 import com.glaf.base.modules.sys.service.SubjectCodeService;
 import com.glaf.base.modules.sys.service.SysFunctionService;
 import com.glaf.base.modules.sys.service.SysTreeService;
@@ -730,110 +728,7 @@ public class BaseDataManager {
 	 * 装载字典信息
 	 */
 	public void loadDictInfo() {
-		String[] treeNode = { "0111", // 投资类型
-				// "0113", // 采购类别
-				"0114", // 采购性质
-				"0115", // 合同性质
-				"0116", // 合同类型
-				"0117", // 结算币种
-				"0118", // 项目类别
-				"0119", // 付款方式
-				"0120", // 要求收到票据
-				"0121", // 款项名称
-				"0122", // 行业种类(长期供应产商)
-				"0124", // 行业种类(临时供应商)
-				"0123", // 地区
-				"0125", // 计量单位
-				"0126", // 颜色
-				"0127", // 职务
-				"0128", // 目录采购分类
-				"0112", // 合同模板
-				"0129", // 询价单附件
-				"0130", // 费用预算分类
-				"0131", // 目录采购结算方式
-				"0132", // 车型
-				"0133", // 生技内/外
-				"0134", // 核算项目(key)
-				"0135", // 进项类别(key)(增值税类型)
-				"0136", // 应付类别(key)
-				"0137", // 关税(happy)
-		};
-		String[] mapKeys = { "ZD0002", // 2：投资类型
-				// "ZD0003", //3：采购类别
-				"ZD0004", // 4：采购性质
-				"ZD0005", // 5：合同性质
-				"ZD0006", // 6：合同类型
-				"ZD0007", // 7：结算币种
-				"ZD0008", // 8：项目类别
-				"ZD0009", // 9：付款方式
-				"ZD0010", // 10：要求收到票据
-				"ZD0011", // 11：款项名称
-				"ZD0012", // 12：行业种类(长期供应产商)
-				"ZD0013", // 13：行业种类(临时供应商)
-				"ZD0014", // 14：地区
-				"ZD0016", // 16: 记量单位
-				"ZD0017", // 17: 颜色
-				"ZD0019", // 18: 职务
-				"ZD0020", // 19: 目录采购分类
-				"ZD0021", // 20: 合同模板
-				"ZD0023", // 22： 询价单附件
-				"ZD0024", // 23: 费用预算分类
-				"ZD0025", // 24: 目录采购结算方式
-				"ZD0026", // 25:车型
-				"ZD0027", // 26:生技内/外
-				"ZD0028", // 28:核算项目(key)
-				"ZD0029", // 29:进项类别(key)(增值税类型)
-				"ZD0030", // 30:应付类别(key)
-				"ZD0031", // 31:关税(happy)
-		};
-		try {
-			if (serviceMap.containsKey(SV_NAMES[4])) {
-				logger.info("装载字典信息开始...");
-				for (int i = 0; i < treeNode.length; i++) {
-					logger.info("node:" + treeNode[i] + "; key:" + mapKeys[i]);
 
-					SysTreeService treeService = (SysTreeService) serviceMap
-							.get(SV_NAMES[3]);
-					SysTree parent = treeService.getSysTreeByCode(treeNode[i]);
-					DictoryService service = (DictoryService) serviceMap
-							.get(SV_NAMES[4]);
-					if (parent != null) {
-						List list = service.getAvailableDictoryList(parent
-								.getId());
-						if (list != null) {
-							Iterator iter = list.iterator();
-							List tmp = new ArrayList();
-							while (iter.hasNext()) {
-								Dictory bean = (Dictory) iter.next();
-								BaseDataInfo bdi = new BaseDataInfo();
-								bdi.setId(bean.getId());// 字典id
-								bdi.setName(bean.getName());// 字典名称
-								bdi.setCode(bean.getCode());// 字典代码
-								bdi.setExt1(bean.getExt1());// 扩展字段1(投资汇率)
-								bdi.setExt2(bean.getExt2());// 扩展字段2(费用汇率)
-
-								bdi.setExt3(bean.getExt3());// 扩展字段1(投资汇率设置人)
-								bdi.setExt4(bean.getExt4());// 扩展字段1(费用汇率设置人)
-
-								bdi.setExt5(bean.getExt5());// 扩展字段1(投资汇率最后修改时间)
-								bdi.setExt6(bean.getExt6());// 扩展字段1(费用汇率最后修改时间)
-								bdi.setDeep(0);
-
-								logger.info("id:" + bean.getId() + ",name:"
-										+ bean.getName() + ",code:"
-										+ bean.getCode());
-								tmp.add(bdi);
-							}
-							baseDataMap.put(mapKeys[i], tmp);
-						}
-					}
-				}
-				logger.info("装载字典信息结束");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			logger.error("提取字典数据失败！");
-		}
 	}
 
 	/**
