@@ -678,6 +678,7 @@ public class RequestUtil {
 	 * @param request
 	 */
 	public static void setRequestParameterToAttribute(HttpServletRequest request) {
+		request.setAttribute("contextPath", request.getContextPath());
 		Enumeration<?> enumeration = request.getParameterNames();
 		while (enumeration.hasMoreElements()) {
 			String paramName = (String) enumeration.nextElement();

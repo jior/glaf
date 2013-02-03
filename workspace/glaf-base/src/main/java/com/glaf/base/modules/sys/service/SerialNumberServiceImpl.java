@@ -639,9 +639,9 @@ public class SerialNumberServiceImpl implements SerialNumberService {
 		int retInt = 1;
 		StringBuffer sb = new StringBuffer();
 		Object[] values = new Object[] { module };
-		Type[] types = new Type[] { Hibernate.STRING };
+ 
 		sb.append(" from SerialNumber s where s.moduleNo=? ");
-		List tempList = abstractDao.getList(sb.toString(), values, types);
+		List tempList = abstractDao.getList(sb.toString(), values, null);
 
 		if (tempList != null && tempList.size() > 0) {
 

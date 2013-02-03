@@ -1,20 +1,20 @@
 /*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.glaf.base.utils;
 
@@ -34,7 +34,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.collections.map.ListOrderedMap;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.hibernate.Hibernate;
+import org.hibernate.type.StandardBasicTypes;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
@@ -51,7 +51,7 @@ public class WebUtil {
 
 	final private static String ALIAS_PREFIX = "alias_";
 
-	// 
+	//
 	final private static String QUERY_ALIAS = "othert";
 
 	final private static String QUERY_ALIAS1 = "othert1_.";
@@ -79,11 +79,12 @@ public class WebUtil {
 		while (names.hasMoreElements()) {
 			String name = (String) names.nextElement();
 			String value = request.getParameter(name);
-			//logger.info("param name:" + name + ",value:" + value);
+			// logger.info("param name:" + name + ",value:" + value);
 			try {
-				//sb.append(name).append("=").append(URLEncoder.encode(value, encoding)).append("&");
+				// sb.append(name).append("=").append(URLEncoder.encode(value,
+				// encoding)).append("&");
 				sb.append(name).append("=").append(value).append("&");
-				//logger.info("param name:" + name + ",value:" + value);
+				// logger.info("param name:" + name + ",value:" + value);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -149,7 +150,8 @@ public class WebUtil {
 			Iterator it = params.iterator();
 			while (it.hasNext()) {
 				String key = (String) it.next();
-				String value = map.get(key)==null?null:map.get(key).toString();
+				String value = map.get(key) == null ? null : map.get(key)
+						.toString();
 				value = value == null ? value : value.trim();
 				if (key.startsWith(QUERY_PREFIX) && value != null
 						&& value.trim().length() > 0) {
@@ -182,7 +184,7 @@ public class WebUtil {
 								.sqlRestriction(maintAlias + "_." + name
 										+ " is NULL "));
 
-					}else if ("mnn".equals(op)) { // 主表 日期字段，主要为了区别与关联表同名的字段  
+					} else if ("mnn".equals(op)) { // 主表 日期字段，主要为了区别与关联表同名的字段
 						String maintAlias = detachedCriteria.getAlias();
 						// 子表连接 string 连接
 						detachedCriteria.add(Restrictions
@@ -194,7 +196,7 @@ public class WebUtil {
 						// 子表连接 string 连接
 						detachedCriteria.add(Restrictions.sqlRestriction(
 								maintAlias + "_." + name + "=?",
-								stringToDate(value), Hibernate.DATE));
+								stringToDate(value), StandardBasicTypes.DATE));
 
 					} else if ("mis".equals(op)) { // in( 子表_select )
 						String maintAlias = detachedCriteria.getAlias();
@@ -215,7 +217,7 @@ public class WebUtil {
 						}
 						detachedCriteria.add(Restrictions.sqlRestriction(
 								aliasMap.get(alias) + name + "=? ",
-								stringToDate(value), Hibernate.DATE));
+								stringToDate(value), StandardBasicTypes.DATE));
 					} else if ("xs".equals(op)) { // 主表 相关表.字段 为String
 						// 子表连接 string 连接
 						int pos = name.lastIndexOf(".");
@@ -238,8 +240,8 @@ public class WebUtil {
 							if (aliasMap.get(alias) == null) {
 								detachedCriteria.createAlias(alias, alias);
 								aliasNum++;
-								aliasMap.put(alias, getNewAliasName(alias,
-										aliasNum));
+								aliasMap.put(alias,
+										getNewAliasName(alias, aliasNum));
 							}
 							detachedCriteria.add(Restrictions
 									.sqlRestriction(aliasMap.get(alias) + name
@@ -253,8 +255,8 @@ public class WebUtil {
 							if (aliasMap.get(alias) == null) {
 								detachedCriteria.createAlias(alias, alias);
 								aliasNum++;
-								aliasMap.put(alias, getNewAliasName(alias,
-										aliasNum));
+								aliasMap.put(alias,
+										getNewAliasName(alias, aliasNum));
 							}
 							detachedCriteria.add(Restrictions
 									.sqlRestriction(aliasMap.get(alias) + name
@@ -268,8 +270,8 @@ public class WebUtil {
 							if (aliasMap.get(alias) == null) {
 								detachedCriteria.createAlias(alias, alias);
 								aliasNum++;
-								aliasMap.put(alias, getNewAliasName(alias,
-										aliasNum));
+								aliasMap.put(alias,
+										getNewAliasName(alias, aliasNum));
 							}
 							detachedCriteria.add(Restrictions
 									.sqlRestriction(aliasMap.get(alias) + name
@@ -283,8 +285,8 @@ public class WebUtil {
 							if (aliasMap.get(alias) == null) {
 								detachedCriteria.createAlias(alias, alias);
 								aliasNum++;
-								aliasMap.put(alias, getNewAliasName(alias,
-										aliasNum));
+								aliasMap.put(alias,
+										getNewAliasName(alias, aliasNum));
 							}
 							detachedCriteria.add(Restrictions
 									.sqlRestriction(aliasMap.get(alias) + name
@@ -339,7 +341,7 @@ public class WebUtil {
 						}
 						detachedCriteria.add(Restrictions.sqlRestriction(
 								aliasMap.get(alias) + name + dateOp + "?",
-								stringToDate(value), Hibernate.DATE));
+								stringToDate(value), StandardBasicTypes.DATE));
 					} else if (op.startsWith("date")) { // 对于Date
 						String dateOp = "=";
 						if ("datelt".equals(op)) {
@@ -353,17 +355,18 @@ public class WebUtil {
 						}
 						detachedCriteria.add(Restrictions.sqlRestriction(name
 								+ dateOp + "?", stringToDate(value),
-								Hibernate.DATE));
+								StandardBasicTypes.DATE));
 					} /*
-						 * else if(op.equals("double")){ //对于Double String
-						 * doubleOp = "="; if("double".equals(op)){ } }
-						 */else if ("like".equals(op)) { // like
+					 * else if(op.equals("double")){ //对于Double String doubleOp
+					 * = "="; if("double".equals(op)){ } }
+					 */else if ("like".equals(op)) { // like
 						detachedCriteria.add(Restrictions.like(name, "%"
 								+ value + "%"));
-					} else if("es".equals(op)){
-						//if(Integer.parseInt(value) != -1){
-							detachedCriteria.add(Restrictions.sqlRestriction(name+" = ? ",value,Hibernate.STRING));
-						//}
+					} else if ("es".equals(op)) {
+						// if(Integer.parseInt(value) != -1){
+						detachedCriteria.add(Restrictions.sqlRestriction(name
+								+ " = ? ", value, StandardBasicTypes.STRING));
+						// }
 					} else if ("ex".equals(op)) { // =int
 						if (Integer.parseInt(value) != -1) {
 							detachedCriteria.add(Restrictions.eq(name,
@@ -389,25 +392,25 @@ public class WebUtil {
 							detachedCriteria.add(Restrictions.ne(name,
 									new Long(value)));
 						}
-					}else if ("in".equals(op)) { // in (数字)
+					} else if ("in".equals(op)) { // in (数字)
 						if (!"".trim().equals(value)) {
 							String maintAlias = detachedCriteria.getAlias();
 							detachedCriteria.add(Restrictions
-									.sqlRestriction(maintAlias + "_." + name + " in (" + value
-											+ ") "));
-//							detachedCriteria.add(Restrictions
-//									.sqlRestriction(name + " in (" + value
-//											+ ") "));
+									.sqlRestriction(maintAlias + "_." + name
+											+ " in (" + value + ") "));
+							// detachedCriteria.add(Restrictions
+							// .sqlRestriction(name + " in (" + value
+							// + ") "));
 						}
 					} else if ("nin".equals(op)) { // not in (数字)
 						if (!"".trim().equals(value)) {
 							String maintAlias = detachedCriteria.getAlias();
 							detachedCriteria.add(Restrictions
-									.sqlRestriction(maintAlias + "_." + name + " not in (" + value
-											+ ") "));
-//							detachedCriteria.add(Restrictions
-//									.sqlRestriction(name + " not in (" + value
-//											+ ") "));
+									.sqlRestriction(maintAlias + "_." + name
+											+ " not in (" + value + ") "));
+							// detachedCriteria.add(Restrictions
+							// .sqlRestriction(name + " not in (" + value
+							// + ") "));
 						}
 					} else {
 						detachedCriteria.add(Restrictions.eq(name, value));
@@ -639,7 +642,8 @@ public class WebUtil {
 		System.out.println(getFormatNumberToString(1132411.235, 6));
 		System.out.println(getFormatNumberToString(1123411.235, 2));
 		System.out.println(getFormatNumberToString(1112341.34, 2));
-        System.out.println("DATE -----------------"+stringToDate("20091126","yyyyMMdd"));
+		System.out.println("DATE -----------------"
+				+ stringToDate("20091126", "yyyyMMdd"));
 		long[] t = new long[] { 1, 3, 2, 43, 23, 3, 4, 5, 3, 2 };
 		t = selectionSort(t);
 		for (int i = 0; i < t.length; i++) {

@@ -57,7 +57,7 @@
 	</listener>
   
 	<!--struts 配置-->
-	<servlet>
+	<!-- <servlet>
 		<servlet-name>action</servlet-name>
 		<servlet-class>com.glaf.base.servlet.StrutsActionServlet</servlet-class>
 		<init-param>
@@ -83,7 +83,7 @@
 	<servlet-mapping>
 		<servlet-name>action</servlet-name>
 		<url-pattern>*.do</url-pattern>
-	</servlet-mapping>
+	</servlet-mapping> -->
 
   
 	<!--转码过滤器-->
@@ -170,6 +170,18 @@
 		<servlet-class>com.glaf.base.modules.InitBaseDataServlet</servlet-class>
 		<load-on-startup>2</load-on-startup>
 	</servlet>
+
+
+	<servlet>
+		<servlet-name>dispatcher</servlet-name>
+		<servlet-class>com.glaf.base.servlet.SpringDispatcherServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>dispatcher</servlet-name>
+		<url-pattern>*.do</url-pattern>
+	</servlet-mapping>
   
 	<!--jbpm workflow configure-->
 

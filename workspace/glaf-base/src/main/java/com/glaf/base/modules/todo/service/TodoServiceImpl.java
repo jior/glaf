@@ -65,7 +65,7 @@ public class TodoServiceImpl implements TodoService {
 			String sql = " delete from sys_todo_instance where provider = 'jbpm' ";
 			sql = sql + " and processInstanceId "
 					+ this.getINSQL(processInstanceIds);
-			todoDAO.executeSQL(sql, null);
+			abstractDao.executeSQL(sql, null);
 		}
 		if (rows.size() > 0) {
 			logger.info("---------->rows size:" + rows.size());
@@ -77,7 +77,7 @@ public class TodoServiceImpl implements TodoService {
 		String sql = " delete from sys_todo_instance where provider = 'jbpm' and processInstanceId = ? ";
 		List values = new ArrayList();
 		values.add(processInstanceId);
-		todoDAO.executeSQL(sql, values);
+		abstractDao.executeSQL(sql, values);
 		if (rows.size() > 0) {
 			logger.info("---------->rows size:" + rows.size());
 			todoDAO.saveAll(rows);
@@ -86,7 +86,7 @@ public class TodoServiceImpl implements TodoService {
 
 	public void createTasksOfSQL(List rows) {
 		String sql = " delete from sys_todo_instance where provider = 'sql' ";
-		todoDAO.executeSQL(sql, null);
+		abstractDao.executeSQL(sql, null);
 		if (rows.size() > 0) {
 			todoDAO.saveAll(rows);
 		}
@@ -95,7 +95,7 @@ public class TodoServiceImpl implements TodoService {
 
 	public void createTasksOfWorkflow(List rows) {
 		String sql = " delete from sys_todo_instance where provider = 'jbpm' ";
-		todoDAO.executeSQL(sql, null);
+		abstractDao.executeSQL(sql, null);
 		if (rows.size() > 0) {
 			logger.info("---------->rows size:" + rows.size());
 			todoDAO.saveAll(rows);
@@ -106,7 +106,7 @@ public class TodoServiceImpl implements TodoService {
 		String sql = " delete from sys_todo_instance where provider = 'jbpm' and actorId = ? ";
 		List values = new ArrayList();
 		values.add(actorId);
-		todoDAO.executeSQL(sql, values);
+		abstractDao.executeSQL(sql, values);
 		if (rows.size() > 0) {
 			logger.info("---------->rows size:" + rows.size());
 			todoDAO.saveAll(rows);
@@ -117,7 +117,7 @@ public class TodoServiceImpl implements TodoService {
 		String sql = " delete from sys_todo_instance where provider = 'sql' and todoId = ? ";
 		List values = new ArrayList();
 		values.add(new Long(todoId));
-		todoDAO.executeSQL(sql, values);
+		abstractDao.executeSQL(sql, values);
 		if (rows.size() > 0) {
 			todoDAO.saveAll(rows);
 		}

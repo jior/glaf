@@ -25,6 +25,7 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Hibernate;
+import org.hibernate.type.StandardBasicTypes;
 import org.hibernate.type.Type;
 
 import com.glaf.base.dao.AbstractSpringDao;
@@ -141,7 +142,7 @@ public class AuditServiceImpl implements AuditService {
 		String query = "from Audit a where a.referId=? and a.referType in("
 				+ referTypes + ") order by a.id asc";
 		return abstractDao
-				.getList(query, values, new Type[] { Hibernate.LONG });
+				.getList(query, values, new Type[] { StandardBasicTypes.LONG });
 	}
 
 	/**
