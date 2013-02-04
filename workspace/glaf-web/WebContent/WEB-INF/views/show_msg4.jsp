@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
-
+<%@ taglib uri="/WEB-INF/tld/glaf.tld" prefix="glaf"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="html"%>
 <%@ page import="com.glaf.base.utils.*"%>
 <%
@@ -22,7 +22,7 @@ window.resizeTo(0, 0);
 <body>
 <div id="messageDiv" style="display:none">
 <glaf:messages id="message" message="true"> 
-   <bean:write name="message"/> 
+   <glaf:write name="message"/> 
 </glaf:messages>
 </div>
 </body>
