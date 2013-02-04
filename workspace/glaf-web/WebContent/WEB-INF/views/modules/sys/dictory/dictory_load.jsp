@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="/WEB-INF/tld/glaf.tld" prefix="glaf"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="html"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.glaf.base.modules.sys.*"%>
@@ -26,10 +27,7 @@ int parent=ParamUtil.getIntParameter(request, "parent", 0);
     <th> <table width="200" border="0" align="center" cellpadding="0" cellspacing="0">
         <tr> 
           <td height="50" align="center">
-		  <glaf:messages id="message" message="true"> 
-            <bean:write name="message"/> 
-		  </glaf:messages> 
-		</td>
+		  </td>
         </tr>
         <tr> 
           <td align="center"><img src="<%=request.getContextPath()%>/images/icon_6.jpg" width="6" height="7">重新装载基础数据</td>

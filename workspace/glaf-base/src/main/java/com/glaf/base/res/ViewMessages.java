@@ -66,7 +66,7 @@ public class ViewMessages implements Serializable {
      * those related to a specific property.</p>
      */
     public static final String GLOBAL_MESSAGE =
-        "org.apache.struts.action.GLOBAL_MESSAGE";
+        "com.glaf.base.res.GLOBAL_MESSAGE";
 
     // ----------------------------------------------------- Instance Variables
 

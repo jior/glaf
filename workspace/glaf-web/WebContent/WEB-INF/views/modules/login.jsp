@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="/WEB-INF/tld/glaf.tld" prefix="glaf"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="html"%>
 <%
     String context = request.getContextPath();
@@ -29,9 +30,6 @@
         <td height="262"><table border="0" align="center" cellpadding="4" cellspacing="0">
           <tr>
             <td align="center" class="login-box">
-			<glaf:messages id="message" message="true"> 
-              <bean:write name="message"/> 
-            </glaf:messages> 
 			</td>
           </tr>
           <tr>

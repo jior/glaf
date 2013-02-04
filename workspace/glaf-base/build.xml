@@ -44,7 +44,7 @@
 
 	<target name="copy">
 		<copy todir="../glaf-web/WebContent/WEB-INF/classes">
-			<fileset dir="bin" includes="**/*.class" />
+			<fileset dir="bin" includes="**/*.class,**/*.properties" />
 		</copy>
 	</target>
 
