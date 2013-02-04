@@ -28,6 +28,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -149,7 +150,8 @@ public class TodoController {
 	 * @return @
 	 */
 	@RequestMapping(params = "method=uploadFile")
-	public ModelAndView uploadFile(ModelMap modelMap, MultipartFile file,
+	public ModelAndView uploadFile(ModelMap modelMap,
+			@RequestParam("file") MultipartFile file,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		TodoXlsReader reader = new TodoXlsReader();

@@ -51,10 +51,10 @@ import com.glaf.base.utils.RequestUtil;
 public class SysDepartmentController {
 	private static final Log logger = LogFactory
 			.getLog(SysDepartmentController.class);
-	
+
 	@javax.annotation.Resource
 	private SysDepartmentService sysDepartmentService;
-	
+
 	@javax.annotation.Resource
 	private SysTreeService sysTreeService;
 
@@ -320,10 +320,10 @@ public class SysDepartmentController {
 				"/modules/sys/dept/dept_select", modelMap);
 		int type = ParamUtil.getIntParameter(request, "type", 1);
 		if (type == 2) {
-			forward = new ModelAndView("/modules/sys/dept/show_select2",
+			forward = new ModelAndView("/modules/sys/dept/dept_select2",
 					modelMap);
 		} else if (type == 3) {
-			forward = new ModelAndView("/modules/sys/dept/show_select3",
+			forward = new ModelAndView("/modules/sys/dept/dept_select3",
 					modelMap);
 		}
 

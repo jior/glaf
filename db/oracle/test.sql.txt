@@ -1,0 +1,9 @@
+DROP TABLE TEST;
+
+CREATE TABLE TEST (ID_ INT NOT NULL,PROCESSNAME_ VARCHAR(50),PROCESSINSTANCEID_ VARCHAR(50),STATUS_ INT,WFSTATUS_ INT,PRIMARY KEY(ID_));
+
+insert into TEST(ID_,STATUS_)values('1',0);
+insert into TEST(ID_,STATUS_)values('2',0);
+insert into TEST(ID_,STATUS_)values('3',0);
+insert into TEST(ID_,STATUS_)values('4',0);
+insert into TEST(ID_,STATUS_)values('5',0);

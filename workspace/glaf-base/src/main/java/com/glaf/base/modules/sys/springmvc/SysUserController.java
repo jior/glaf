@@ -89,6 +89,7 @@ public class SysUserController {
 	@RequestMapping(params = "method=addRoleUser")
 	public ModelAndView addRoleUser(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
+		logger.debug("---------addRoleUser---------------------------");
 		RequestUtil.setRequestParameterToAttribute(request);
 		int deptId = ParamUtil.getIntParameter(request, "deptId", 0);
 		int roleId = ParamUtil.getIntParameter(request, "roleId", 0);
