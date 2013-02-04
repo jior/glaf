@@ -110,7 +110,7 @@ public class SysTreeController {
 	@RequestMapping(params = "method=prepareAdd")
 	public ModelAndView prepareAdd(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		request.setAttribute("contextPath", request.getContextPath());
 		return new ModelAndView("/modules/sys/tree/tree_add", modelMap);
 	}
 
