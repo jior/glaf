@@ -122,8 +122,8 @@ CREATE TABLE sys_user (
         PRIMARY KEY (id)
 );
 
-CREATE TABLE sys_user_role (
-        id int8 not null,
+CREATE TABLE sys_user_role(
+        id int8 default nextval('hibernate_sequence') not null,
         userid int8 not null,
         roleid int8 not null,
         authorized int4 default 0,
