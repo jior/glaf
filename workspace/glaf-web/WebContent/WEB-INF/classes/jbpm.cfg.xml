@@ -60,6 +60,6 @@
   <string      name="warnMail" value="pps@glaf.com.cn" singleton="true" />
 
   <!--PostgreSQL使用bool字段，其他非bool的要去掉这个属性！！！-->
-  <boolean name="jbpm.db.boolean" value="true" singleton="true"/>
+  <!-- <boolean name="jbpm.db.boolean" value="true" singleton="true"/> -->
 
 </jbpm-configuration>
