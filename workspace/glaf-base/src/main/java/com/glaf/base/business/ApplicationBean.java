@@ -50,7 +50,7 @@ public class ApplicationBean {
 					+ "<li class='menu'><ul><li class='button'><a href='#' class='red'>"
 					+ rootJson.getString("name")
 					+ "<span></span></a></li><li class='dropdown'><ul>";
-
+            
 			JSONArray children = rootJson.getJSONArray("children");
 
 			for (int j = 0; children != null && j < children.length(); j++) {

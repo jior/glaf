@@ -19,18 +19,22 @@
 
 		<many-to-one name="role" class="SysRole" column="sysRoleId"
 			cascade="none" not-null="true" not-found="ignore" />
+
 		<many-to-one name="dept" class="SysDepartment" column="deptId"
 			cascade="none" not-null="true" not-found="ignore" />
+
 		<set name="users" table="sys_user_role" inverse="false" order-by="userId asc">
 			<key column="roleId" not-null="true" />
 			<many-to-many class="SysUser" column="userId" not-found="ignore" />
 		</set>
+
 		<set name="functions" table="sys_permission" inverse="false"
 			order-by="funcId asc">
 			<key column="roleId" not-null="true" />
 			<many-to-many class="SysFunction" column="funcId"
 				not-found="ignore" />
 		</set>
+
 		<set name="apps" table="sys_access" inverse="false" order-by="appId asc">
 			<key column="roleId" not-null="true" />
 			<many-to-many class="SysApplication" column="appId"

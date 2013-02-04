@@ -198,7 +198,7 @@ CREATE TABLE sys_todo(
         taskname NVARCHAR2(255),
         title NVARCHAR2(255),
         type NVARCHAR2(255),
-        SQL NVARCHAR2(255),
+        SQL_ NVARCHAR2(255),
         versionno NUMBER(19),
         PRIMARY KEY (id)
     );

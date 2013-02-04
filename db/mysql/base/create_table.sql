@@ -14,7 +14,7 @@ CREATE TABLE sys_access(
 
 
 CREATE TABLE sys_application(
-        id bigint NOT NULL auto_increment,
+        id bigint NOT NULL auto_increment 10000,
         name varchar(255),
         appdesc varchar(255),
         url varchar(255),
@@ -123,8 +123,8 @@ CREATE TABLE sys_user (
 
 CREATE TABLE sys_user_role(
         id bigint not null auto_increment,
-        userid bigint not null,
-        roleid bigint not null,
+        userid bigint not null default 0,
+        roleid bigint not null default 0,
         authorized int default 0,
         authorizefrom bigint default 0,
         availdatestart timestamp,
@@ -198,7 +198,7 @@ CREATE TABLE sys_todo(
         taskname varchar(255),
         title varchar(255),
         type varchar(255),
-        SQL varchar(255),
+        SQL_ varchar(255),
         versionno bigint,
         PRIMARY KEY (id)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_bin;

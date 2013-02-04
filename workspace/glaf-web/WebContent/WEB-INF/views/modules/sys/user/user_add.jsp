@@ -7,6 +7,7 @@
 <%@ page import="com.glaf.base.utils.*"%>
 <%
 String context = request.getContextPath();
+pageContext.setAttribute("contextPath", context);
 List  list = (List)request.getAttribute("parent");
 int parent=ParamUtil.getIntParameter(request, "parent", 0);
 %>
@@ -72,19 +73,19 @@ function checkForm(form){
 女</td>
       </tr>
       <tr>
-        <td class="input-box2" valign="top">手　　机*</td>
+        <td class="input-box2" valign="top">手　　机</td>
         <td>
-          <input name="mobile" type="text" size="30" class="input" datatype="string" nullable="no" maxsize="12" chname="手机">        </td>
+          <input name="mobile" type="text" size="30" class="input" datatype="string" nullable="yes" maxsize="12" chname="手机">        </td>
       </tr>
       <tr>
-        <td class="input-box2" valign="top">邮　　件*</td>
+        <td class="input-box2" valign="top">邮　　件</td>
         <td>
-          <input name="email" type="text" size="30" class="input" datatype="email" nullable="no" maxsize="50" chname="邮件">        </td>
+          <input name="email" type="text" size="30" class="input" datatype="email" nullable="yes" maxsize="50" chname="邮件">        </td>
       </tr>
       <tr>
-        <td class="input-box2" valign="top">办公电话*</td>
+        <td class="input-box2" valign="top">办公电话</td>
         <td>
-          <input name="telephone" type="text" size="30" class="input" datatype="string" nullable="no" maxsize="20" chname="办公电话">        </td>
+          <input name="telephone" type="text" size="30" class="input" datatype="string" nullable="yes" maxsize="20" chname="办公电话">        </td>
       </tr>
       <tr>
         <td class="input-box2" valign="top">是否有效</td>

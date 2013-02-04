@@ -94,6 +94,7 @@ public class SysUserController {
 		int deptId = ParamUtil.getIntParameter(request, "deptId", 0);
 		int roleId = ParamUtil.getIntParameter(request, "roleId", 0);
 		SysDeptRole deptRole = sysDeptRoleService.find(deptId, roleId);
+		boolean success = false;
 		if (deptRole == null) {
 			deptRole = new SysDeptRole();
 			deptRole.setDeptId(deptId);
@@ -102,7 +103,7 @@ public class SysUserController {
 			sysDeptRoleService.create(deptRole);
 		}
 		if (deptRole != null) {
-			Set users = deptRole.getUsers();
+			Set<SysUser> users = deptRole.getUsers();
 
 			long[] userIds = ParamUtil.getLongParameterValues(request, "id");
 			for (int i = 0; i < userIds.length; i++) {
@@ -113,10 +114,11 @@ public class SysUserController {
 				}
 			}
 			deptRole.setUsers(users);
+			success = sysDeptRoleService.update(deptRole);
 		}
 
 		ViewMessages messages = new ViewMessages();
-		if (sysDeptRoleService.update(deptRole)) {
+		if (success) {
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"user.add_success"));
 		} else {// ±£´æÊ§°Ü
@@ -244,7 +246,7 @@ public class SysUserController {
 	@RequestMapping(params = "method=prepareAdd")
 	public ModelAndView prepareAdd(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		//RequestUtil.setRequestParameterToAttribute(request);
 		return new ModelAndView("/modules/sys/user/user_add", modelMap);
 	}
 

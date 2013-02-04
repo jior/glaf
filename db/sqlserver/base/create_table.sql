@@ -193,7 +193,7 @@ CREATE TABLE sys_todo(
         taskname nvarchar(255),
         title nvarchar(255),
         type nvarchar(255),
-        SQL nvarchar(255),
+        SQL_ nvarchar(255),
         versionno numeric(19,0),
         PRIMARY KEY (id)
     );

@@ -8,8 +8,10 @@
   <session-factory>
 
     <property name="hibernate.cache.provider_class">org.hibernate.cache.HashtableCacheProvider</property>
-	<property name="hibernate.dialect">org.hibernate.dialect.H2Dialect</property>
+	<!-- <property name="hibernate.dialect">org.hibernate.dialect.H2Dialect</property> -->
 	<!-- <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property> -->
+	<!-- <property name="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property> -->
+	<property name="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</property>
 	<property name="hibernate.connection.datasource">java:comp/env/jdbc/jbpm</property>
 	<property name="hibernate.query.substitutions">true=1 false=0</property>
 	<property name="hibernate.cache.use_query_cache">true</property>

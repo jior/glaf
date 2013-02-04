@@ -2,6 +2,7 @@
 
 
 /*≥ı ºªØΩ«…´–≈œ¢*/
+SET IDENTITY_INSERT sys_role ON;
 insert into sys_role (id, name, roleDesc, sort, code) values (1, '≤ø≥§', '', 15, 'R001');
 insert into sys_role (id, name, roleDesc, sort, code) values (2, 'ø∆≥§', '', 14, 'R002');
 insert into sys_role (id, name, roleDesc, sort, code) values (3, 'CO', '', 12, 'R003');
@@ -14,9 +15,11 @@ insert into sys_role (id, name, roleDesc, sort, code) values (11, '…Í«Îµ£µ±', ' 
 insert into sys_role (id, name, roleDesc, sort, code) values (12, ' ’µ•µ£µ±', '', 4, 'R012');
 insert into sys_role (id, name, roleDesc, sort, code) values (15, 'œµÕ≥π‹¿Ì‘±', '', 1, 'R015');
 insert into sys_role (id, name, roleDesc, sort, code) values (18, '÷˜»Œ', '', 18, 'R017');
-
+SET IDENTITY_INSERT sys_role OFF;
+go;
 
 /*≥ı ºœµÕ≥ ˜–≈œ¢*/
+SET IDENTITY_INSERT sys_tree ON;
 insert into sys_tree (id, parent, name, nodedesc, sort, code) values (1, 0, '/', '∏˘ƒø¬º', 1, '0');
 insert into sys_tree (id, parent, name, nodedesc, sort, code) values (2, 1, ' ˝æ›Ω·ππ', '', 20, '01');
 insert into sys_tree (id, parent, name, nodedesc, sort, code) values (3, 1, '”¶”√ƒ£øÈ', '', 10, '02');
@@ -47,16 +50,25 @@ insert into sys_tree (id, parent, name, nodedesc, sort, code) values (20, 3, '∏ˆ
 insert into sys_tree (id, parent, name, nodedesc, sort, code) values (21, 20, '–ﬁ∏ƒ√‹¬Î', '–ﬁ∏ƒ√‹¬Î', 30, '');
 insert into sys_tree (id, parent, name, nodedesc, sort, code) values (22, 20, '–ﬁ∏ƒ∏ˆ»À–≈œ¢', '–ﬁ∏ƒ∏ˆ»À–≈œ¢', 30, '');
 insert into sys_tree (id, parent, name, nodedesc, sort, code) values (482, 10, ' ⁄»®π‹¿Ì', ' ⁄»®π‹¿Ì', 482, '');
-
+SET IDENTITY_INSERT sys_tree OFF;
+go;
 
 /*≥ı ºªØ≤ø√≈–≈œ¢*/
+SET IDENTITY_INSERT sys_department ON;
 insert into sys_department (id, name, deptdesc, createtime, sort, deptno, code, code2, status, fincode, nodeid) values (6, 'ºº ı≤ø', 'ºº ı≤ø', '2006-07-16 16:30:39', 284, 'JS000', 'JS', 'J', 0, 'JS000', 6);
- 
+SET IDENTITY_INSERT sys_department OFF;
+go;
+
 /*≥ı ºªØ”√ªß–≈œ¢*/
+SET IDENTITY_INSERT sys_user ON;
 insert into sys_user (id, deptId, account, password, code, name, blocked, createTime, lastLoginTime, lastLoginIP, mobile, email, telephone, evection, gender, headship, userType, fax, accountType, dumpFlag, adminFlag) values (1, 6, 'root', 'lueSGJZetyySpUndWjMB', 'root', 'root', 0, '2006-07-16 16:41:52', '2009-07-08 10:27:05', '127.0.0.1', '111', 'admin@127.0.0.1', '111', 0, 0, 'µ£µ±', 40, null, 0, 0, '1');
-insert into sys_user (id, deptId, account, password, code, name, blocked, createTime, lastLoginTime, lastLoginIP, mobile, email, telephone, evection, gender, headship, userType, fax, accountType, dumpFlag, adminFlag) values (2, 6, 'admin', 'lueSGJZetyySpUndWjMB', 'root', 'root', 0, '2006-07-16 16:41:52', '2009-07-08 10:27:05', '127.0.0.1', '111', 'admin@127.0.0.1', '111', 0, 0, 'µ£µ±', 40, null, 0, 0, '1');
+insert into sys_user (id, deptId, account, password, code, name, blocked, createTime, lastLoginTime, lastLoginIP, mobile, email, telephone, evection, gender, headship, userType, fax, accountType, dumpFlag, adminFlag) values (2, 6, 'admin', 'lueSGJZetyySpUndWjMB', 'admin', 'admin', 0, '2006-07-16 16:41:52', '2009-07-08 10:27:05', '127.0.0.1', '111', 'admin@127.0.0.1', '111', 0, 0, 'µ£µ±', 40, null, 0, 0, '1');
+SET IDENTITY_INSERT sys_user OFF;
+go;
+
 
 /*≥ı ºªØ”¶”√–≈œ¢*/
+SET IDENTITY_INSERT sys_application ON;
 insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (8, 'œµÕ≥π‹¿Ì', 'œµÕ≥π‹¿Ì', '', 5, 1, 8);
 insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (11, 'œµÕ≥ƒø¬º', '', '/sys/tree.do?method=showMain', 10, 2, 11);
 insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (12, '≤ø√≈π‹¿Ì', '', '/sys/department.do?method=showFrame', 20, 2, 12);
@@ -78,17 +90,21 @@ insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) val
 insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (327, 'TODO≈‰÷√', '', '/sys/todo.do?method=showList', 327, 1, 494);
 insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (315, ' ⁄»®π‹¿Ì', '', '/sys/sysUserRole.do?method=showUsers', 315, 2, 482);
 insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (328, 'µ˜∂»π‹¿Ì', '', '/sys/scheduler.do?method=showList', 328, 1, 495);
-
+SET IDENTITY_INSERT sys_application OFF;
+go;
 
 /*≤Â»Î”√ªßΩ«…´*/
-insert into sys_user_role (id, userid, roleid, authorized, authorizefrom, availdatestart, availdateend, processdescription) values (1, 1, 15, 0, 0, null, null, null);
-insert into sys_user_role (id, userid, roleid, authorized, authorizefrom, availdatestart, availdateend, processdescription) values (2, 1, 1, 0, 0, null, null, null);
-insert into sys_user_role (id, userid, roleid, authorized, authorizefrom, availdatestart, availdateend, processdescription) values (3, 2, 15, 0, 0, null, null, null);
-insert into sys_user_role (id, userid, roleid, authorized, authorizefrom, availdatestart, availdateend, processdescription) values (4, 2, 1, 0, 0, null, null, null);
+SET IDENTITY_INSERT sys_user_role ON;
+insert into sys_user_role (id, userid, roleid, authorized, authorizefrom, availdatestart, availdateend, processdescription) values (2, 1, 1, 1, 1, null, null, null);
+insert into sys_user_role (id, userid, roleid, authorized, authorizefrom, availdatestart, availdateend, processdescription) values (4, 2, 1, 2, 2, null, null, null);
+SET IDENTITY_INSERT sys_user_role OFF;
+go;
 
- 
+/*≤Â»Î≤ø√≈Ω«…´*/ 
+SET IDENTITY_INSERT sys_dept_role ON;
 insert into sys_dept_role (id, grade, code, sort, sysroleid, deptid) values (1, 0, null, 0, 15, 6);
-   
+SET IDENTITY_INSERT sys_dept_role OFF;
+go;  
  
 /*≤Â»Î∑√Œ »®œﬁ*/
 insert into sys_access (roleid, appid) values (1, 8);
@@ -112,37 +128,20 @@ insert into sys_access (roleid, appid) values (1, 291);
 insert into sys_access (roleid, appid) values (1, 327); 
 insert into sys_access (roleid, appid) values (1, 315); 
 insert into sys_access (roleid, appid) values (1, 328); 
-
-insert into sys_access (roleid, appid) values (3, 8);
-insert into sys_access (roleid, appid) values (3, 9);
-insert into sys_access (roleid, appid) values (3, 26);
-insert into sys_access (roleid, appid) values (3, 276);
-insert into sys_access (roleid, appid) values (3, 10);
-insert into sys_access (roleid, appid) values (3, 20);
-insert into sys_access (roleid, appid) values (3, 21);
-insert into sys_access (roleid, appid) values (3, 22);
-insert into sys_access (roleid, appid) values (3, 16);
-insert into sys_access (roleid, appid) values (3, 12);
-insert into sys_access (roleid, appid) values (3, 277);
-insert into sys_access (roleid, appid) values (3, 278);
-insert into sys_access (roleid, appid) values (3, 280);
-insert into sys_access (roleid, appid) values (3, 14);
-insert into sys_access (roleid, appid) values (3, 11);
-insert into sys_access (roleid, appid) values (3, 15);
-insert into sys_access (roleid, appid) values (3, 3);
-insert into sys_access (roleid, appid) values (3, 291);
-insert into sys_access (roleid, appid) values (3, 327); 
-insert into sys_access (roleid, appid) values (3, 315); 
-insert into sys_access (roleid, appid) values (3, 328); 
+go;
 
 /*≤Â»ÎœµÕ≥π¶ƒ‹*/
+SET IDENTITY_INSERT sys_function ON;
 insert into sys_function (id, appId, name, funcDesc, funcMethod, sort) values (1, 15, 'ƒ£øÈ¡–±Ì', null, 'com.glaf.base.modules.sys.action.SysApplicationAction.showList', 5);
 insert into sys_function (id, appId, name, funcDesc, funcMethod, sort) values (2, 15, '‘ˆº”ƒ£øÈ', null, 'com.glaf.base.modules.sys.action.SysApplicationAction.prepareAdd', 3);
 insert into sys_function (id, appId, name, funcDesc, funcMethod, sort) values (3, 15, '–ﬁ∏ƒƒ£øÈ', null, 'com.glaf.base.modules.sys.action.SysApplicationAction.prepareModify', 2);
 insert into sys_function (id, appId, name, funcDesc, funcMethod, sort) values (4, 15, '…æ≥˝ƒ£øÈ', null, 'com.glaf.base.modules.sys.action.SysApplicationAction.batchDelete', 1);
+SET IDENTITY_INSERT sys_function OFF;
+go;
 
 
 insert into  sys_permission (roleid, funcid) values (1, 1);
 insert into  sys_permission (roleid, funcid) values (1, 2);
 insert into  sys_permission (roleid, funcid) values (1, 3);
 insert into  sys_permission (roleid, funcid) values (1, 4);
+go;

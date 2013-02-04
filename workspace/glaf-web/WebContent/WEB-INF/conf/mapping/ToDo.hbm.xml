@@ -36,7 +36,7 @@
 		<property column="taskName" name="taskName" type="string" />
 		<property column="title" name="title" type="string" />
 		<property column="type" name="type" type="string" />
-		<property column="sql" name="sql" type="string" />
+		<property column="sql_" name="sql" type="string" />
 		<property column="versionNo" name="versionNo" type="long" />
 	</class>
 </hibernate-mapping>

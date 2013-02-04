@@ -200,7 +200,7 @@ CREATE TABLE sys_todo(
         taskname varchar(255),
         title varchar(255),
         type varchar(255),
-        SQL varchar(255),
+        SQL_ varchar(255),
         versionno bigint,
         PRIMARY KEY (id)
     );
