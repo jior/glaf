@@ -33,7 +33,7 @@ function submitMyForm() {
 </head>
 <body>
 <br><br>
-<html:form method="post" action="${contextPath}/sys/todo.do?method=uploadFile" enctype="multipart/form-data">
+<form method="post" id="TodoForm" name="TodoForm" action="${contextPath}/sys/todo.do?method=uploadFile" enctype="multipart/form-data">
 <table align="center" class="table-border" cellspacing="0"
 	cellpadding="0" width="90%">
 	<tr>
@@ -43,7 +43,7 @@ function submitMyForm() {
         </td>
 	</tr>
 </table>
-</html:form>
+</form>
 
 </body>
 </html>
