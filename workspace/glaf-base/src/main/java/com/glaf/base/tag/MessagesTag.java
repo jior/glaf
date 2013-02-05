@@ -61,11 +61,6 @@ public class MessagesTag extends BodyTagSupport {
 	protected boolean processed = false;
 
 	/**
-	 * The name of the scripting variable to be exposed.
-	 */
-	protected String id = null;
-
-	/**
 	 * The servlet context attribute key for our resources.
 	 */
 	protected String bundle = null;
