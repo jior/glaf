@@ -98,10 +98,38 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/xpp3-1.1.3.4d_b4_min.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/glaf-base"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-lang3-3.1.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/druid-0.2.8.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jaxrs-api-2.3.5.Final.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/xstream-1.4.3.jar"/>
 	<classpathentry kind="lib" path="/glaf-base/lib/jsp-api.jar"/>
 	<classpathentry kind="lib" path="/glaf-base/lib/servlet-api.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/druid-0.2.10.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/fastjson-1.1.26.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jackson-annotations-2.1.2.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jackson-core-2.1.2.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jackson-databind-2.1.2.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/resteasy-jackson-provider-2.3.5.Final.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/resteasy-jaxb-provider-2.3.5.Final.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/resteasy-jaxrs-2.3.5.Final.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/resteasy-multipart-provider-2.3.5.Final.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/resteasy-spring-2.3.5.Final.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/scannotation-1.0.3.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/serp-1.13.1.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-aop.RELEASE.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-aspects.RELEASE.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-beans.RELEASE.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-context-support.RELEASE.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-context.RELEASE.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-core.RELEASE.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-expression.RELEASE.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-instrument-tomcat.RELEASE.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-instrument.RELEASE.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-jdbc.RELEASE.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-orm.RELEASE.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-oxm.RELEASE.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-struts.RELEASE.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-test.RELEASE.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-tx.RELEASE.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-web.RELEASE.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-webmvc.RELEASE.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
