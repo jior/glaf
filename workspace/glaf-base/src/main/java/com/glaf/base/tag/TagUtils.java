@@ -491,11 +491,11 @@ public class TagUtils {
 
 		if (resources == null) {
 			resources = (MessageResources) pageContext.getAttribute(
-					Globals.DEFAULT_RES, PageContext.APPLICATION_SCOPE);
+					Globals.DEFAULT_RESOURCE_NAME, PageContext.APPLICATION_SCOPE);
 			if (resources == null) {
 				resources = PropertyMessageResourcesFactory.createFactory()
-						.createResources(Globals.DEFAULT_RES);
-				pageContext.setAttribute(Globals.DEFAULT_RES, resources,
+						.createResources(Globals.DEFAULT_RESOURCE_NAME);
+				pageContext.setAttribute(Globals.DEFAULT_RESOURCE_NAME, resources,
 						PageContext.APPLICATION_SCOPE);
 			}
 		}

@@ -159,6 +159,7 @@ public class SchedulerController {
 			scheduler = schedulerService.getSchedulerById(taskId);
 			if (scheduler != null) {
 				if (StringUtils.equals(startup, "1")) {
+					QuartzUtils.stop(taskId);
 					QuartzUtils.restart(taskId);
 				} else {
 					QuartzUtils.stop(taskId);

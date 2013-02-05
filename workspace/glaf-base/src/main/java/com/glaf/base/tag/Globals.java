@@ -36,7 +36,7 @@ public class Globals implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public static final String DEFAULT_RES = "com.glaf.base.res.LocalStrings";
+	public static final String DEFAULT_RESOURCE_NAME = "com.glaf.base.res.LocalStrings";
 
 	/**
 	 * The name of this package.

@@ -70,22 +70,6 @@
 	<classpathentry kind="lib" path="lib/mybatis-3.0.6.jar"/>
 	<classpathentry kind="lib" path="lib/mybatis-spring-1.0.2.jar"/>
 	<classpathentry kind="lib" path="lib/ognl-2.7.3.jar"/>
-	<classpathentry kind="lib" path="lib/org.springframework.aop-3.0.6.RELEASE.jar"/>
-	<classpathentry kind="lib" path="lib/org.springframework.asm-3.0.6.RELEASE.jar"/>
-	<classpathentry kind="lib" path="lib/org.springframework.aspects-3.0.6.RELEASE.jar"/>
-	<classpathentry kind="lib" path="lib/org.springframework.beans-3.0.6.RELEASE.jar"/>
-	<classpathentry kind="lib" path="lib/org.springframework.context-3.0.6.RELEASE.jar"/>
-	<classpathentry kind="lib" path="lib/org.springframework.context.support-3.0.6.RELEASE.jar"/>
-	<classpathentry kind="lib" path="lib/org.springframework.core-3.0.6.RELEASE.jar"/>
-	<classpathentry kind="lib" path="lib/org.springframework.expression-3.0.6.RELEASE.jar"/>
-	<classpathentry kind="lib" path="lib/org.springframework.jdbc-3.0.6.RELEASE.jar"/>
-	<classpathentry kind="lib" path="lib/org.springframework.jms-3.0.6.RELEASE.jar"/>
-	<classpathentry kind="lib" path="lib/org.springframework.orm-3.0.6.RELEASE.jar"/>
-	<classpathentry kind="lib" path="lib/org.springframework.test-3.0.6.RELEASE.jar"/>
-	<classpathentry kind="lib" path="lib/org.springframework.transaction-3.0.6.RELEASE.jar"/>
-	<classpathentry kind="lib" path="lib/org.springframework.web-3.0.6.RELEASE.jar"/>
-	<classpathentry kind="lib" path="lib/org.springframework.web.servlet-3.0.6.RELEASE.jar"/>
-	<classpathentry kind="lib" path="lib/org.springframework.web.struts-3.0.6.RELEASE.jar"/>
 	<classpathentry kind="lib" path="lib/quartz-all-1.8.5.jar"/>
 	<classpathentry kind="lib" path="lib/servlet-api.jar"/>
 	<classpathentry kind="lib" path="lib/slf4j-api-1.6.1.jar"/>
@@ -105,5 +89,22 @@
 	<classpathentry kind="lib" path="lib/poi-3.8-20120326.jar"/>
 	<classpathentry kind="lib" path="lib/poi-ooxml-3.8-20120326.jar"/>
 	<classpathentry kind="lib" path="lib/poi-ooxml-schemas-3.8-20120326.jar"/>
+	<classpathentry kind="lib" path="lib/spring-aop.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring-aspects.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring-beans.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring-context-support.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring-context.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring-core.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring-expression.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring-instrument-tomcat.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring-instrument.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring-jdbc.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring-orm.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring-oxm.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring-struts.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring-test.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring-tx.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring-web.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring-webmvc.RELEASE.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
