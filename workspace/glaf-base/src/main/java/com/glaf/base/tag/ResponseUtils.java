@@ -24,8 +24,6 @@ package com.glaf.base.tag;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.glaf.base.res.MessageResources;
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -34,6 +32,8 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
+import com.glaf.base.res.MessageResources;
 
 /**
  * General purpose utility methods related to generating a servlet response in
@@ -66,7 +66,7 @@ public class ResponseUtils {
 	static {
 		try {
 			// get version of encode method with two String args
-			Class[] args = new Class[] { String.class, String.class };
+			Class<?>[] args = new Class[] { String.class, String.class };
 
 			encode = URLEncoder.class.getMethod("encode", args);
 		} catch (NoSuchMethodException e) {
@@ -127,7 +127,7 @@ public class ResponseUtils {
 	 * @throws ClassNotFoundException
 	 *             if the class cannot be found
 	 */
-	public static Class applicationClass(String className)
+	public static Class<?> applicationClass(String className)
 			throws ClassNotFoundException {
 		return applicationClass(className, null);
 	}
@@ -146,7 +146,7 @@ public class ResponseUtils {
 	 * @throws ClassNotFoundException
 	 *             if the class cannot be found
 	 */
-	public static Class applicationClass(String className,
+	public static Class<?> applicationClass(String className,
 			ClassLoader classLoader) throws ClassNotFoundException {
 		if (classLoader == null) {
 			// Look up the class loader to be used
@@ -270,5 +270,6 @@ public class ResponseUtils {
 		}
 
 		return URLEncoder.encode(url);
+
 	}
 }

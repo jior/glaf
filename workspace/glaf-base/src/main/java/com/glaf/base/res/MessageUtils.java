@@ -22,9 +22,13 @@ package com.glaf.base.res;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.glaf.base.tag.Globals;
 
 public class MessageUtils {
+	private static final Log log = LogFactory.getLog(MessageUtils.class);
 
 	/**
 	 * Adds the specified messages keys into the appropriate request attribute
@@ -46,23 +50,25 @@ public class MessageUtils {
 		}
 
 		// get any existing messages from the request, or make a new one
-		ViewMessages requestMessages = (ViewMessages) request
+		ViewMessages viewMessages = (ViewMessages) request
 				.getAttribute(Globals.MESSAGE_KEY);
 
-		if (requestMessages == null) {
-			requestMessages = new ViewMessages();
+		if (viewMessages == null) {
+			viewMessages = new ViewMessages();
 		}
 
 		// add incoming messages
-		requestMessages.add(messages);
+		viewMessages.add(messages);
 
 		// if still empty, just wipe it out from the request
-		if (requestMessages.isEmpty()) {
+		if (viewMessages.isEmpty()) {
 			request.removeAttribute(Globals.MESSAGE_KEY);
 			return;
 		}
+		
+		log.debug("save viewMessages...");
 
 		// Save the messages
-		request.setAttribute(Globals.MESSAGE_KEY, requestMessages);
+		request.setAttribute(Globals.MESSAGE_KEY, viewMessages);
 	}
 }

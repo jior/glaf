@@ -20,11 +20,6 @@
  */
 package com.glaf.base.tag;
 
-import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.tagext.TagSupport;
-
-import com.glaf.base.res.MessageResources;
-
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
@@ -34,6 +29,11 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 
 import java.util.Locale;
+
+import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.tagext.TagSupport;
+
+import com.glaf.base.res.MessageResources;
 
 /**
  * Tag that retrieves the specified property of the specified bean, converts it

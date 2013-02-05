@@ -53,7 +53,7 @@ public class MessagesTag extends BodyTagSupport {
 	 * Iterator of the elements of this error collection, while we are actually
 	 * running.
 	 */
-	protected Iterator iterator = null;
+	protected Iterator<?> iterator = null;
 
 	/**
 	 * Whether or not any error messages have been processed.
@@ -190,9 +190,9 @@ public class MessagesTag extends BodyTagSupport {
 		try {
 			messages = TagUtils.getInstance()
 					.getViewMessages(pageContext, name);
-		} catch (JspException e) {
-			TagUtils.getInstance().saveException(pageContext, e);
-			throw e;
+		} catch (JspException ex) {
+			TagUtils.getInstance().saveException(pageContext, ex);
+			throw ex;
 		}
 
 		// Acquire the collection we are going to iterate over
@@ -220,7 +220,7 @@ public class MessagesTag extends BodyTagSupport {
 		// doEndTag() knows processing took place
 		processed = true;
 
-		return (EVAL_BODY_TAG);
+		return 0;
 	}
 
 	/**
@@ -242,7 +242,7 @@ public class MessagesTag extends BodyTagSupport {
 		if (iterator.hasNext()) {
 			processMessage((ViewMessage) iterator.next());
 
-			return (EVAL_BODY_TAG);
+			return (2);
 		} else {
 			return (SKIP_BODY);
 		}

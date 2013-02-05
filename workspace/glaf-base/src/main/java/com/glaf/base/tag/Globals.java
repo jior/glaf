@@ -36,6 +36,8 @@ public class Globals implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	public static final String DEFAULT_RES = "com.glaf.base.res.LocalStrings";
+
 	/**
 	 * The name of this package.
 	 */
@@ -57,8 +59,8 @@ public class Globals implements Serializable {
 
 	/**
 	 * The request attributes key under which your action should store an
-	 * <code>ViewMessages</code> object, if you are
-	 * using the corresponding custom tag library elements.
+	 * <code>ViewMessages</code> object, if you are using the corresponding
+	 * custom tag library elements.
 	 * 
 	 * @since Struts 1.1
 	 */

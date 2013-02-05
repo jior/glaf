@@ -89,7 +89,7 @@ public abstract class MessageResources implements Serializable {
 	 * The set of previously created MessageFormat objects, keyed by the key
 	 * computed in <code>messageKey()</code>.
 	 */
-	protected HashMap formats = new HashMap();
+	protected HashMap<String, MessageFormat> formats = new HashMap<String, MessageFormat>();
 
 	/**
 	 * Indicate is a <code>null</code> is returned instead of an error message

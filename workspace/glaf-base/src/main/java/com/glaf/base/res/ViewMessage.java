@@ -34,9 +34,10 @@ import java.io.Serializable;
  * @since Struts 1.1
  */
 public class ViewMessage implements Serializable {
-    // ----------------------------------------------------- Instance Variables
+ 
+	private static final long serialVersionUID = 1L;
 
-    /**
+	/**
      * <p>The message key for this message.</p>
      */
     protected String key = null;

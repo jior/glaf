@@ -20,31 +20,35 @@
  */
 package com.glaf.base.res;
 
+import com.glaf.base.config.BaseConfiguration;
+import com.glaf.base.config.Configuration;
 
 /**
- * Factory for <code>PropertyMessageResources</code> instances.  The
+ * Factory for <code>PropertyMessageResources</code> instances. The
  * configuration paramter for such instances is the base Java package name of
  * the resources entries from which our keys and values will be loaded.
- *
+ * 
  * @version $Rev: 480549 $ $Date: 2006-11-29 06:16:15 -0600 (Wed, 29 Nov 2006) $
  */
 public class PropertyMessageResourcesFactory extends MessageResourcesFactory {
-    // --------------------------------------------------------- Public Methods
+	private static Configuration conf = BaseConfiguration.create();
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * Create and return a newly instansiated <code>MessageResources</code>.
-     * This method must be implemented by concrete subclasses.
-     *
-     * @param config Configuration parameter(s) for the requested bundle
-     */
-    public MessageResources createResources(String config) {
-        PropertyMessageResources messageResources =
-               new PropertyMessageResources(this, config, this.returnNull);
-        String mode = null;
-        if (getConfig() != null) {
-            mode = getConfig().getProperty("mode");
-        }
-        messageResources.setMode(mode);
-        return messageResources;
-    }
+	/**
+	 * Create and return a newly instansiated <code>MessageResources</code>.
+	 * This method must be implemented by concrete subclasses.
+	 * 
+	 * @param config
+	 *            Configuration parameter(s) for the requested bundle
+	 */
+	public MessageResources createResources(String config) {
+		PropertyMessageResources messageResources = new PropertyMessageResources(
+				this, config, this.returnNull);
+		String mode = "default";
+		if (conf.get("i18n.mode") != null) {
+			mode = conf.get("i18n.mode");
+		}
+		messageResources.setMode(mode);
+		return messageResources;
+	}
 }

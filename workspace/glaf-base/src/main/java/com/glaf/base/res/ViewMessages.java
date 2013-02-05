@@ -30,409 +30,485 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * <p>A class that encapsulates messages. Messages can be either global or
- * they are specific to a particular bean property.</p>
- *
- * <p>Each individual message is described by an <code>ViewMessage</code>
- * object, which contains a message key (to be looked up in an appropriate
- * message resources database), and up to four placeholder arguments used for
- * parametric substitution in the resulting message.</p>
- *
- * <p><strong>IMPLEMENTATION NOTE</strong> - It is assumed that these objects
- * are created and manipulated only within the context of a single thread.
- * Therefore, no synchronization is required for access to internal
- * collections.</p>
- *
- * @version $Rev: 471754 $ $Date: 2005-08-26 21:58:39 -0400 (Fri, 26 Aug 2005)
- *          $
+ * <p>
+ * A class that encapsulates messages. Messages can be either global or they are
+ * specific to a particular bean property.
+ * </p>
+ * 
+ * <p>
+ * Each individual message is described by an <code>ViewMessage</code> object,
+ * which contains a message key (to be looked up in an appropriate message
+ * resources database), and up to four placeholder arguments used for parametric
+ * substitution in the resulting message.
+ * </p>
+ * 
+ * <p>
+ * <strong>IMPLEMENTATION NOTE</strong> - It is assumed that these objects are
+ * created and manipulated only within the context of a single thread.
+ * Therefore, no synchronization is required for access to internal collections.
+ * </p>
+ * 
+ * @version $Rev: 471754 $ $Date: 2005-08-26 21:58:39 -0400 (Fri, 26 Aug 2005) $
  * @since Struts 1.1
  */
 public class ViewMessages implements Serializable {
-    /**
-     * <p>Compares ViewMessageItem objects.</p>
-     */
-    private static final Comparator ACTION_ITEM_COMPARATOR =
-        new Comparator() {
-            public int compare(Object o1, Object o2) {
-                return ((ViewMessageItem) o1).getOrder()
-                - ((ViewMessageItem) o2).getOrder();
-            }
-        };
 
-    // ----------------------------------------------------- Manifest Constants
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * <p>The "property name" marker to use for global messages, as opposed to
-     * those related to a specific property.</p>
-     */
-    public static final String GLOBAL_MESSAGE =
-        "com.glaf.base.res.GLOBAL_MESSAGE";
+	/**
+	 * <p>
+	 * Compares ViewMessageItem objects.
+	 * </p>
+	 */
+	private static final Comparator ACTION_ITEM_COMPARATOR = new Comparator() {
+		public int compare(Object o1, Object o2) {
+			return ((ViewMessageItem) o1).getOrder()
+					- ((ViewMessageItem) o2).getOrder();
+		}
+	};
 
-    // ----------------------------------------------------- Instance Variables
+	// ----------------------------------------------------- Manifest Constants
 
-    /**
-     * <p>Have the messages been retrieved from this object?</p>
-     *
-     * <p>The controller uses this property to determine if session-scoped
-     * messages can be removed.</p>
-     *
-     * @since Struts 1.2
-     */
-    protected boolean accessed = false;
+	/**
+	 * <p>
+	 * The "property name" marker to use for global messages, as opposed to
+	 * those related to a specific property.
+	 * </p>
+	 */
+	public static final String GLOBAL_MESSAGE = "com.glaf.base.res.GLOBAL_MESSAGE";
 
-    /**
-     * <p>The accumulated set of <code>ViewMessage</code> objects
-     * (represented as an ArrayList) for each property, keyed by property
-     * name.</p>
-     */
-    protected HashMap messages = new HashMap();
+	// ----------------------------------------------------- Instance Variables
 
-    /**
-     * <p>The current number of the property/key being added. This is used to
-     * maintain the order messages are added.</p>
-     */
-    protected int iCount = 0;
+	/**
+	 * <p>
+	 * Have the messages been retrieved from this object?
+	 * </p>
+	 * 
+	 * <p>
+	 * The controller uses this property to determine if session-scoped messages
+	 * can be removed.
+	 * </p>
+	 * 
+	 * @since Struts 1.2
+	 */
+	protected boolean accessed = false;
 
-    // --------------------------------------------------------- Public Methods
+	/**
+	 * <p>
+	 * The accumulated set of <code>ViewMessage</code> objects (represented as
+	 * an ArrayList) for each property, keyed by property name.
+	 * </p>
+	 */
+	protected HashMap<String, ViewMessageItem> messages = new HashMap<String, ViewMessageItem>();
 
-    /**
-     * <p>Create an empty <code>ViewMessages</code> object.</p>
-     */
-    public ViewMessages() {
-        super();
-    }
+	/**
+	 * <p>
+	 * The current number of the property/key being added. This is used to
+	 * maintain the order messages are added.
+	 * </p>
+	 */
+	protected int iCount = 0;
 
-    /**
-     * <p>Create an <code>ViewMessages</code> object initialized with the
-     * given messages.</p>
-     *
-     * @param messages The messages to be initially added to this object. This
-     *                 parameter can be <code>null</code>.
-     * @since Struts 1.1
-     */
-    public ViewMessages(ViewMessages messages) {
-        super();
-        this.add(messages);
-    }
+	// --------------------------------------------------------- Public Methods
 
-    /**
-     * <p>Add a message to the set of messages for the specified property. An
-     * order of the property/key is maintained based on the initial addition
-     * of the property/key.</p>
-     *
-     * @param property Property name (or ViewMessages.GLOBAL_MESSAGE)
-     * @param message  The message to be added
-     */
-    public void add(String property, ViewMessage message) {
-        ViewMessageItem item = (ViewMessageItem) messages.get(property);
-        List list;
+	/**
+	 * <p>
+	 * Create an empty <code>ViewMessages</code> object.
+	 * </p>
+	 */
+	public ViewMessages() {
+		super();
+	}
 
-        if (item == null) {
-            list = new ArrayList();
-            item = new ViewMessageItem(list, iCount++, property);
+	/**
+	 * <p>
+	 * Create an <code>ViewMessages</code> object initialized with the given
+	 * messages.
+	 * </p>
+	 * 
+	 * @param messages
+	 *            The messages to be initially added to this object. This
+	 *            parameter can be <code>null</code>.
+	 * @since Struts 1.1
+	 */
+	public ViewMessages(ViewMessages messages) {
+		super();
+		this.add(messages);
+	}
 
-            messages.put(property, item);
-        } else {
-            list = item.getList();
-        }
+	/**
+	 * <p>
+	 * Add a message to the set of messages for the specified property. An order
+	 * of the property/key is maintained based on the initial addition of the
+	 * property/key.
+	 * </p>
+	 * 
+	 * @param property
+	 *            Property name (or ViewMessages.GLOBAL_MESSAGE)
+	 * @param message
+	 *            The message to be added
+	 */
+	public void add(String property, ViewMessage message) {
+		ViewMessageItem item = (ViewMessageItem) messages.get(property);
+		List list;
 
-        list.add(message);
-    }
+		if (item == null) {
+			list = new ArrayList();
+			item = new ViewMessageItem(list, iCount++, property);
 
-    /**
-     * <p>Adds the messages from the given <code>ViewMessages</code> object
-     * to this set of messages. The messages are added in the order they are
-     * returned from the <code>properties</code> method. If a message's
-     * property is already in the current <code>ViewMessages</code> object,
-     * it is added to the end of the list for that property. If a message's
-     * property is not in the current list it is added to the end of the
-     * properties.</p>
-     *
-     * @param actionMessages The <code>ViewMessages</code> object to be
-     *                       added. This parameter can be <code>null</code>.
-     * @since Struts 1.1
-     */
-    public void add(ViewMessages actionMessages) {
-        if (actionMessages == null) {
-            return;
-        }
+			messages.put(property, item);
+		} else {
+			list = item.getList();
+		}
 
-        // loop over properties
-        Iterator props = actionMessages.properties();
+		list.add(message);
+	}
 
-        while (props.hasNext()) {
-            String property = (String) props.next();
+	/**
+	 * <p>
+	 * Adds the messages from the given <code>ViewMessages</code> object to this
+	 * set of messages. The messages are added in the order they are returned
+	 * from the <code>properties</code> method. If a message's property is
+	 * already in the current <code>ViewMessages</code> object, it is added to
+	 * the end of the list for that property. If a message's property is not in
+	 * the current list it is added to the end of the properties.
+	 * </p>
+	 * 
+	 * @param actionMessages
+	 *            The <code>ViewMessages</code> object to be added. This
+	 *            parameter can be <code>null</code>.
+	 * @since Struts 1.1
+	 */
+	public void add(ViewMessages viewMessages) {
+		if (viewMessages == null) {
+			return;
+		}
 
-            // loop over messages for each property
-            Iterator msgs = actionMessages.get(property);
+		// loop over properties
+		Iterator props = viewMessages.properties();
 
-            while (msgs.hasNext()) {
-                ViewMessage msg = (ViewMessage) msgs.next();
+		while (props.hasNext()) {
+			String property = (String) props.next();
 
-                this.add(property, msg);
-            }
-        }
-    }
+			// loop over messages for each property
+			Iterator msgs = viewMessages.get(property);
 
-    /**
-     * <p>Clear all messages recorded by this object.</p>
-     */
-    public void clear() {
-        messages.clear();
-    }
+			while (msgs.hasNext()) {
+				ViewMessage msg = (ViewMessage) msgs.next();
 
-    /**
-     * <p>Return <code>true</code> if there are no messages recorded in this
-     * collection, or <code>false</code> otherwise.</p>
-     *
-     * @return <code>true</code> if there are no messages recorded in this
-     *         collection; <code>false</code> otherwise.
-     * @since Struts 1.1
-     */
-    public boolean isEmpty() {
-        return (messages.isEmpty());
-    }
+				this.add(property, msg);
+			}
+		}
+	}
 
-    /**
-     * <p>Return the set of all recorded messages, without distinction by
-     * which property the messages are associated with. If there are no
-     * messages recorded, an empty enumeration is returned.</p>
-     *
-     * @return An iterator over the messages for all properties.
-     */
-    public Iterator get() {
-        this.accessed = true;
+	/**
+	 * <p>
+	 * Clear all messages recorded by this object.
+	 * </p>
+	 */
+	public void clear() {
+		messages.clear();
+	}
 
-        if (messages.isEmpty()) {
-            return Collections.EMPTY_LIST.iterator();
-        }
+	/**
+	 * <p>
+	 * Return <code>true</code> if there are no messages recorded in this
+	 * collection, or <code>false</code> otherwise.
+	 * </p>
+	 * 
+	 * @return <code>true</code> if there are no messages recorded in this
+	 *         collection; <code>false</code> otherwise.
+	 * @since Struts 1.1
+	 */
+	public boolean isEmpty() {
+		return (messages.isEmpty());
+	}
 
-        ArrayList results = new ArrayList();
-        ArrayList actionItems = new ArrayList();
+	/**
+	 * <p>
+	 * Return the set of all recorded messages, without distinction by which
+	 * property the messages are associated with. If there are no messages
+	 * recorded, an empty enumeration is returned.
+	 * </p>
+	 * 
+	 * @return An iterator over the messages for all properties.
+	 */
+	public Iterator get() {
+		this.accessed = true;
 
-        for (Iterator i = messages.values().iterator(); i.hasNext();) {
-            actionItems.add(i.next());
-        }
+		if (messages.isEmpty()) {
+			return Collections.EMPTY_LIST.iterator();
+		}
 
-        // Sort ViewMessageItems based on the initial order the
-        // property/key was added to ViewMessages.
-        Collections.sort(actionItems, ACTION_ITEM_COMPARATOR);
+		ArrayList results = new ArrayList();
+		ArrayList actionItems = new ArrayList();
 
-        for (Iterator i = actionItems.iterator(); i.hasNext();) {
-            ViewMessageItem ami = (ViewMessageItem) i.next();
+		for (Iterator i = messages.values().iterator(); i.hasNext();) {
+			actionItems.add(i.next());
+		}
 
-            for (Iterator msgsIter = ami.getList().iterator();
-                msgsIter.hasNext();) {
-                results.add(msgsIter.next());
-            }
-        }
+		// Sort ViewMessageItems based on the initial order the
+		// property/key was added to ViewMessages.
+		Collections.sort(actionItems, ACTION_ITEM_COMPARATOR);
 
-        return results.iterator();
-    }
+		for (Iterator i = actionItems.iterator(); i.hasNext();) {
+			ViewMessageItem ami = (ViewMessageItem) i.next();
 
-    /**
-     * <p>Return the set of messages related to a specific property. If there
-     * are no such messages, an empty enumeration is returned.</p>
-     *
-     * @param property Property name (or ViewMessages.GLOBAL_MESSAGE)
-     * @return An iterator over the messages for the specified property.
-     */
-    public Iterator get(String property) {
-        this.accessed = true;
+			for (Iterator msgsIter = ami.getList().iterator(); msgsIter
+					.hasNext();) {
+				results.add(msgsIter.next());
+			}
+		}
 
-        ViewMessageItem item = (ViewMessageItem) messages.get(property);
+		return results.iterator();
+	}
 
-        if (item == null) {
-            return (Collections.EMPTY_LIST.iterator());
-        } else {
-            return (item.getList().iterator());
-        }
-    }
+	/**
+	 * <p>
+	 * Return the set of messages related to a specific property. If there are
+	 * no such messages, an empty enumeration is returned.
+	 * </p>
+	 * 
+	 * @param property
+	 *            Property name (or ViewMessages.GLOBAL_MESSAGE)
+	 * @return An iterator over the messages for the specified property.
+	 */
+	public Iterator get(String property) {
+		this.accessed = true;
 
-    /**
-     * <p>Returns <code>true</code> if the <code>get()</code> or
-     * <code>get(String)</code> methods are called.</p>
-     *
-     * @return <code>true</code> if the messages have been accessed one or
-     *         more times.
-     * @since Struts 1.2
-     */
-    public boolean isAccessed() {
-        return this.accessed;
-    }
+		ViewMessageItem item = (ViewMessageItem) messages.get(property);
 
-    /**
-     * <p>Return the set of property names for which at least one message has
-     * been recorded. If there are no messages, an empty <code>Iterator</code>
-     * is returned. If you have recorded global messages, the
-     * <code>String</code> value of <code>ViewMessages.GLOBAL_MESSAGE</code>
-     * will be one of the returned property names.</p>
-     *
-     * @return An iterator over the property names for which messages exist.
-     */
-    public Iterator properties() {
-        if (messages.isEmpty()) {
-            return Collections.EMPTY_LIST.iterator();
-        }
+		if (item == null) {
+			return (Collections.EMPTY_LIST.iterator());
+		} else {
+			return (item.getList().iterator());
+		}
+	}
 
-        ArrayList results = new ArrayList();
-        ArrayList actionItems = new ArrayList();
+	/**
+	 * <p>
+	 * Returns <code>true</code> if the <code>get()</code> or
+	 * <code>get(String)</code> methods are called.
+	 * </p>
+	 * 
+	 * @return <code>true</code> if the messages have been accessed one or more
+	 *         times.
+	 * @since Struts 1.2
+	 */
+	public boolean isAccessed() {
+		return this.accessed;
+	}
 
-        for (Iterator i = messages.values().iterator(); i.hasNext();) {
-            actionItems.add(i.next());
-        }
+	/**
+	 * <p>
+	 * Return the set of property names for which at least one message has been
+	 * recorded. If there are no messages, an empty <code>Iterator</code> is
+	 * returned. If you have recorded global messages, the <code>String</code>
+	 * value of <code>ViewMessages.GLOBAL_MESSAGE</code> will be one of the
+	 * returned property names.
+	 * </p>
+	 * 
+	 * @return An iterator over the property names for which messages exist.
+	 */
+	public Iterator properties() {
+		if (messages.isEmpty()) {
+			return Collections.EMPTY_LIST.iterator();
+		}
 
-        // Sort ViewMessageItems based on the initial order the
-        // property/key was added to ViewMessages.
-        Collections.sort(actionItems, ACTION_ITEM_COMPARATOR);
+		ArrayList results = new ArrayList();
+		ArrayList actionItems = new ArrayList();
 
-        for (Iterator i = actionItems.iterator(); i.hasNext();) {
-            ViewMessageItem ami = (ViewMessageItem) i.next();
+		for (Iterator i = messages.values().iterator(); i.hasNext();) {
+			actionItems.add(i.next());
+		}
 
-            results.add(ami.getProperty());
-        }
+		// Sort ViewMessageItems based on the initial order the
+		// property/key was added to ViewMessages.
+		Collections.sort(actionItems, ACTION_ITEM_COMPARATOR);
 
-        return results.iterator();
-    }
+		for (Iterator i = actionItems.iterator(); i.hasNext();) {
+			ViewMessageItem ami = (ViewMessageItem) i.next();
 
-    /**
-     * <p>Return the number of messages recorded for all properties (including
-     * global messages). <strong>NOTE</strong> - it is more efficient to call
-     * <code>isEmpty</code> if all you care about is whether or not there are
-     * any messages at all.</p>
-     *
-     * @return The number of messages associated with all properties.
-     */
-    public int size() {
-        int total = 0;
+			results.add(ami.getProperty());
+		}
 
-        for (Iterator i = messages.values().iterator(); i.hasNext();) {
-            ViewMessageItem ami = (ViewMessageItem) i.next();
+		return results.iterator();
+	}
 
-            total += ami.getList().size();
-        }
+	/**
+	 * <p>
+	 * Return the number of messages recorded for all properties (including
+	 * global messages). <strong>NOTE</strong> - it is more efficient to call
+	 * <code>isEmpty</code> if all you care about is whether or not there are
+	 * any messages at all.
+	 * </p>
+	 * 
+	 * @return The number of messages associated with all properties.
+	 */
+	public int size() {
+		int total = 0;
 
-        return (total);
-    }
+		for (Iterator i = messages.values().iterator(); i.hasNext();) {
+			ViewMessageItem ami = (ViewMessageItem) i.next();
 
-    /**
-     * <p>Return the number of messages associated with the specified
-     * property. </p>
-     *
-     * @param property Property name (or ViewMessages.GLOBAL_MESSAGE)
-     * @return The number of messages associated with the property.
-     */
-    public int size(String property) {
-        ViewMessageItem item = (ViewMessageItem) messages.get(property);
+			total += ami.getList().size();
+		}
 
-        return (item == null) ? 0 : item.getList().size();
-    }
+		return (total);
+	}
 
-    /**
-     * <p>Returns a String representation of this ViewMessages' property
-     * name=message list mapping.</p>
-     *
-     * @return String representation of the messages
-     * @see Object#toString()
-     */
-    public String toString() {
-        return this.messages.toString();
-    }
+	/**
+	 * <p>
+	 * Return the number of messages associated with the specified property.
+	 * </p>
+	 * 
+	 * @param property
+	 *            Property name (or ViewMessages.GLOBAL_MESSAGE)
+	 * @return The number of messages associated with the property.
+	 */
+	public int size(String property) {
+		ViewMessageItem item = (ViewMessageItem) messages.get(property);
 
-    /**
-     * <p>This class is used to store a set of messages associated with a
-     * property/key and the position it was initially added to list.</p>
-     */
-    protected class ViewMessageItem implements Serializable {
-        /**
-         * <p>The list of <code>ViewMessage</code>s.</p>
-         */
-        protected List list = null;
+		return (item == null) ? 0 : item.getList().size();
+	}
 
-        /**
-         * <p>The position in the list of messages.</p>
-         */
-        protected int iOrder = 0;
+	/**
+	 * <p>
+	 * Returns a String representation of this ViewMessages' property
+	 * name=message list mapping.
+	 * </p>
+	 * 
+	 * @return String representation of the messages
+	 * @see Object#toString()
+	 */
+	public String toString() {
+		return this.messages.toString();
+	}
 
-        /**
-         * <p>The property associated with <code>ViewMessage</code>.</p>
-         */
-        protected String property = null;
+	/**
+	 * <p>
+	 * This class is used to store a set of messages associated with a
+	 * property/key and the position it was initially added to list.
+	 * </p>
+	 */
+	protected class ViewMessageItem implements Serializable {
+		/**
+		 * <p>
+		 * The list of <code>ViewMessage</code>s.
+		 * </p>
+		 */
+		protected List list = null;
 
-        /**
-         * <p>Construct an instance of this class.</p>
-         *
-         * @param list     The list of ViewMessages.
-         * @param iOrder   The position in the list of messages.
-         * @param property The property associated with ViewMessage.
-         */
-        public ViewMessageItem(List list, int iOrder, String property) {
-            this.list = list;
-            this.iOrder = iOrder;
-            this.property = property;
-        }
+		/**
+		 * <p>
+		 * The position in the list of messages.
+		 * </p>
+		 */
+		protected int iOrder = 0;
 
-        /**
-         * <p>Retrieve the list of messages associated with this item.</p>
-         *
-         * @return The list of messages associated with this item.
-         */
-        public List getList() {
-            return list;
-        }
+		/**
+		 * <p>
+		 * The property associated with <code>ViewMessage</code>.
+		 * </p>
+		 */
+		protected String property = null;
 
-        /**
-         * <p>Set the list of messages associated with this item.</p>
-         *
-         * @param list The list of messages associated with this item.
-         */
-        public void setList(List list) {
-            this.list = list;
-        }
+		/**
+		 * <p>
+		 * Construct an instance of this class.
+		 * </p>
+		 * 
+		 * @param list
+		 *            The list of ViewMessages.
+		 * @param iOrder
+		 *            The position in the list of messages.
+		 * @param property
+		 *            The property associated with ViewMessage.
+		 */
+		public ViewMessageItem(List list, int iOrder, String property) {
+			this.list = list;
+			this.iOrder = iOrder;
+			this.property = property;
+		}
 
-        /**
-         * <p>Retrieve the position in the message list.</p>
-         *
-         * @return The position in the message list.
-         */
-        public int getOrder() {
-            return iOrder;
-        }
+		/**
+		 * <p>
+		 * Retrieve the list of messages associated with this item.
+		 * </p>
+		 * 
+		 * @return The list of messages associated with this item.
+		 */
+		public List getList() {
+			return list;
+		}
 
-        /**
-         * <p>Set the position in the message list.</p>
-         *
-         * @param iOrder The position in the message list.
-         */
-        public void setOrder(int iOrder) {
-            this.iOrder = iOrder;
-        }
+		/**
+		 * <p>
+		 * Set the list of messages associated with this item.
+		 * </p>
+		 * 
+		 * @param list
+		 *            The list of messages associated with this item.
+		 */
+		public void setList(List list) {
+			this.list = list;
+		}
 
-        /**
-         * <p>Retrieve the property associated with this item.</p>
-         *
-         * @return The property associated with this item.
-         */
-        public String getProperty() {
-            return property;
-        }
+		/**
+		 * <p>
+		 * Retrieve the position in the message list.
+		 * </p>
+		 * 
+		 * @return The position in the message list.
+		 */
+		public int getOrder() {
+			return iOrder;
+		}
 
-        /**
-         * <p>Set the property associated with this item.</p>
-         *
-         * @param property The property associated with this item.
-         */
-        public void setProperty(String property) {
-            this.property = property;
-        }
+		/**
+		 * <p>
+		 * Set the position in the message list.
+		 * </p>
+		 * 
+		 * @param iOrder
+		 *            The position in the message list.
+		 */
+		public void setOrder(int iOrder) {
+			this.iOrder = iOrder;
+		}
 
-        /**
-         * <p>Construct a string representation of this object.</p>
-         *
-         * @return A string representation of this object.
-         */
-        public String toString() {
-            return this.list.toString();
-        }
-    }
+		/**
+		 * <p>
+		 * Retrieve the property associated with this item.
+		 * </p>
+		 * 
+		 * @return The property associated with this item.
+		 */
+		public String getProperty() {
+			return property;
+		}
+
+		/**
+		 * <p>
+		 * Set the property associated with this item.
+		 * </p>
+		 * 
+		 * @param property
+		 *            The property associated with this item.
+		 */
+		public void setProperty(String property) {
+			this.property = property;
+		}
+
+		/**
+		 * <p>
+		 * Construct a string representation of this object.
+		 * </p>
+		 * 
+		 * @return A string representation of this object.
+		 */
+		public String toString() {
+			return this.list.toString();
+		}
+	}
 }

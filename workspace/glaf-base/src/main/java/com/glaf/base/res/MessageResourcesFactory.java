@@ -23,7 +23,6 @@ package com.glaf.base.res;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.struts.config.MessageResourcesConfig;
 
 import com.glaf.base.tag.ResponseUtils;
 
@@ -48,13 +47,14 @@ import java.io.Serializable;
  * @version $Rev: 471754 $ $Date: 2005-08-29 23:57:50 -0400 (Mon, 29 Aug 2005) $
  */
 public abstract class MessageResourcesFactory implements Serializable {
-	// ------------------------------------------------------ Static Properties
+
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * The Java class to be used for <code>MessageResourcesFactory</code>
 	 * instances.
 	 */
-	protected static transient Class clazz = null;
+	protected static transient Class<?> clazz = null;
 
 	/**
 	 * Commons Logging instance.
@@ -70,33 +70,10 @@ public abstract class MessageResourcesFactory implements Serializable {
 	// ---------------------------------------------------- Instance Properties
 
 	/**
-	 * Configuration information for Message Resources.
-	 */
-	protected MessageResourcesConfig config;
-
-	/**
 	 * The "return null" property value to which newly created MessageResourcess
 	 * should be initialized.
 	 */
 	protected boolean returnNull = true;
-
-	/**
-	 * Set the configuration information for Message Resources.
-	 * 
-	 * @since Struts 1.2.8
-	 */
-	public MessageResourcesConfig getConfig() {
-		return config;
-	}
-
-	/**
-	 * Return the configuration information for Message Resources.
-	 * 
-	 * @since Struts 1.2.8
-	 */
-	public void setConfig(MessageResourcesConfig config) {
-		this.config = config;
-	}
 
 	/**
 	 * Get default value of the "returnNull" property used to initialize newly

@@ -21,20 +21,6 @@
 
 package com.glaf.base.tag;
 
-import org.apache.commons.beanutils.PropertyUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-import com.glaf.base.res.MessageResources;
-import com.glaf.base.res.ViewMessage;
-import com.glaf.base.res.ViewMessages;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.JspWriter;
-import javax.servlet.jsp.PageContext;
-import javax.servlet.jsp.tagext.BodyContent;
-
 import java.io.IOException;
 
 import java.lang.reflect.InvocationTargetException;
@@ -42,6 +28,21 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.JspWriter;
+import javax.servlet.jsp.PageContext;
+import javax.servlet.jsp.tagext.BodyContent;
+
+import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import com.glaf.base.res.MessageResources;
+import com.glaf.base.res.PropertyMessageResourcesFactory;
+import com.glaf.base.res.ViewMessage;
+import com.glaf.base.res.ViewMessages;
 
 /**
  * Provides helper methods for JSP tags.
@@ -74,7 +75,7 @@ public class TagUtils {
 	 * Maps lowercase JSP scope names to their PageContext integer constant
 	 * values.
 	 */
-	private static final Map scopes = new HashMap();
+	private static final Map<String, Integer> scopes = new HashMap<String, Integer>();
 
 	/**
 	 * Initialize the scope names map and the encode variable with the Java 1.4
@@ -151,47 +152,8 @@ public class TagUtils {
 	}
 
 	/**
-	 * Return the form action converted into an action mapping path. The value
-	 * of the <code>action</code> property is manipulated as follows in
-	 * computing the name of the requested mapping:
-	 * 
-	 * <ul>
-	 * 
-	 * <li>Any filename extension is removed (on the theory that extension
-	 * mapping is being used to select the controller servlet).</li>
-	 * 
-	 * <li>If the resulting value does not start with a slash, then a slash is
-	 * prepended.</li>
-	 * 
-	 * </ul>
-	 */
-	public String getActionMappingName(String action) {
-		String value = action;
-		int question = action.indexOf("?");
-
-		if (question >= 0) {
-			value = value.substring(0, question);
-		}
-
-		int pound = value.indexOf("#");
-
-		if (pound >= 0) {
-			value = value.substring(0, pound);
-		}
-
-		int slash = value.lastIndexOf("/");
-		int period = value.lastIndexOf(".");
-
-		if ((period >= 0) && (period > slash)) {
-			value = value.substring(0, period);
-		}
-
-		return value.startsWith("/") ? value : ("/" + value);
-	}
-
-	/**
 	 * Retrieves the value from request scope and if it isn't already an
-	 * <code>ActionMessages</code>, some classes are converted to one.
+	 * <code>ViewMessages</code>, some classes are converted to one.
 	 * 
 	 * @param pageContext
 	 *            The PageContext for the current page
@@ -525,6 +487,17 @@ public class TagUtils {
 		if (resources == null) {
 			resources = (MessageResources) pageContext.getAttribute(bundle,
 					PageContext.APPLICATION_SCOPE);
+		}
+
+		if (resources == null) {
+			resources = (MessageResources) pageContext.getAttribute(
+					Globals.DEFAULT_RES, PageContext.APPLICATION_SCOPE);
+			if (resources == null) {
+				resources = PropertyMessageResourcesFactory.createFactory()
+						.createResources(Globals.DEFAULT_RES);
+				pageContext.setAttribute(Globals.DEFAULT_RES, resources,
+						PageContext.APPLICATION_SCOPE);
+			}
 		}
 
 		if (resources == null) {
