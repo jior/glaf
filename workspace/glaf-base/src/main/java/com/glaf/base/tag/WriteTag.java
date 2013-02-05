@@ -43,38 +43,20 @@ import java.util.Locale;
  * @version $Rev: 471754 $ $Date: 2004-10-16 12:38:42 -0400 (Sat, 16 Oct 2004) $
  */
 public class WriteTag extends TagSupport {
-	/**
-	 * The key to search default format string for java.sql.Timestamp in
-	 * resources.
-	 */
-	public static final String SQL_TIMESTAMP_FORMAT_KEY = "org.apache.struts.taglib.bean.format.sql.timestamp";
 
-	/**
-	 * The key to search default format string for java.sql.Date in resources.
-	 */
-	public static final String SQL_DATE_FORMAT_KEY = "org.apache.struts.taglib.bean.format.sql.date";
-
-	/**
-	 * The key to search default format string for java.sql.Time in resources.
-	 */
-	public static final String SQL_TIME_FORMAT_KEY = "org.apache.struts.taglib.bean.format.sql.time";
-
-	/**
-	 * The key to search default format string for java.util.Date in resources.
-	 */
-	public static final String DATE_FORMAT_KEY = "org.apache.struts.taglib.bean.format.date";
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * The key to search default format string for int (byte, short, etc.) in
 	 * resources.
 	 */
-	public static final String INT_FORMAT_KEY = "org.apache.struts.taglib.bean.format.int";
+	public static final String INT_FORMAT_KEY = "com.glaf.base.tag.format.int";
 
 	/**
 	 * The key to search default format string for float (double, BigDecimal) in
 	 * resources.
 	 */
-	public static final String FLOAT_FORMAT_KEY = "org.apache.struts.taglib.bean.format.float";
+	public static final String FLOAT_FORMAT_KEY = "com.glaf.base.tag.format.float";
 
 	/**
 	 * The message resources for this package.
@@ -339,15 +321,7 @@ public class WriteTag extends TagSupport {
 				}
 			} else if (value instanceof java.util.Date) {
 				if (formatString == null) {
-					if (value instanceof java.sql.Timestamp) {
-						formatString = retrieveFormatString(SQL_TIMESTAMP_FORMAT_KEY);
-					} else if (value instanceof java.sql.Date) {
-						formatString = retrieveFormatString(SQL_DATE_FORMAT_KEY);
-					} else if (value instanceof java.sql.Time) {
-						formatString = retrieveFormatString(SQL_TIME_FORMAT_KEY);
-					} else if (value instanceof java.util.Date) {
-						formatString = retrieveFormatString(DATE_FORMAT_KEY);
-					}
+
 				}
 
 				if (formatString != null) {

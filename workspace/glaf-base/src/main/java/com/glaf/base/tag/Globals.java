@@ -57,7 +57,7 @@ public class Globals implements Serializable {
 
 	/**
 	 * The request attributes key under which your action should store an
-	 * <code>org.apache.struts.action.ActionMessages</code> object, if you are
+	 * <code>ViewMessages</code> object, if you are
 	 * using the corresponding custom tag library elements.
 	 * 
 	 * @since Struts 1.1

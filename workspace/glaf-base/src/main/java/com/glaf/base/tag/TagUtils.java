@@ -68,7 +68,7 @@ public class TagUtils {
 	 * properties file.
 	 */
 	private static final MessageResources messages = MessageResources
-			.getMessageResources("com.glaf.base.tag.LocalStrings");
+			.getMessageResources("com.glaf.base.res.LocalStrings");
 
 	/**
 	 * Maps lowercase JSP scope names to their PageContext integer constant
