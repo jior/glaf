@@ -220,7 +220,7 @@ public class MessagesTag extends BodyTagSupport {
 		// doEndTag() knows processing took place
 		processed = true;
 
-		return 0;
+		return 2;
 	}
 
 	/**
