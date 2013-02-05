@@ -39,6 +39,8 @@ import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.glaf.base.config.BaseConfiguration;
+import com.glaf.base.config.Configuration;
 import com.glaf.base.res.MessageResources;
 import com.glaf.base.res.PropertyMessageResourcesFactory;
 import com.glaf.base.res.ViewMessage;
@@ -51,6 +53,8 @@ import com.glaf.base.res.ViewMessages;
  * @since Struts 1.2
  */
 public class TagUtils {
+
+	private static Configuration conf = BaseConfiguration.create();
 	/**
 	 * The Singleton instance.
 	 * 
@@ -471,6 +475,10 @@ public class TagUtils {
 		MessageResources resources = null;
 
 		if (bundle == null) {
+			bundle = conf.get("i18n.MESSAGES_KEY");
+		}
+
+		if (bundle == null) {
 			bundle = Globals.MESSAGES_KEY;
 		}
 
@@ -491,12 +499,13 @@ public class TagUtils {
 
 		if (resources == null) {
 			resources = (MessageResources) pageContext.getAttribute(
-					Globals.DEFAULT_RESOURCE_NAME, PageContext.APPLICATION_SCOPE);
+					Globals.DEFAULT_RESOURCE_NAME,
+					PageContext.APPLICATION_SCOPE);
 			if (resources == null) {
 				resources = PropertyMessageResourcesFactory.createFactory()
 						.createResources(Globals.DEFAULT_RESOURCE_NAME);
-				pageContext.setAttribute(Globals.DEFAULT_RESOURCE_NAME, resources,
-						PageContext.APPLICATION_SCOPE);
+				pageContext.setAttribute(Globals.DEFAULT_RESOURCE_NAME,
+						resources, PageContext.APPLICATION_SCOPE);
 			}
 		}
 

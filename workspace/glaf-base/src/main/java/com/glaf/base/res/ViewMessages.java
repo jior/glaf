@@ -150,10 +150,10 @@ public class ViewMessages implements Serializable {
 	 */
 	public void add(String property, ViewMessage message) {
 		ViewMessageItem item = (ViewMessageItem) messages.get(property);
-		List list;
+		List<Object> list;
 
 		if (item == null) {
-			list = new ArrayList();
+			list = new ArrayList<Object>();
 			item = new ViewMessageItem(list, iCount++, property);
 
 			messages.put(property, item);
@@ -185,13 +185,13 @@ public class ViewMessages implements Serializable {
 		}
 
 		// loop over properties
-		Iterator props = viewMessages.properties();
+		Iterator<?> props = viewMessages.properties();
 
 		while (props.hasNext()) {
 			String property = (String) props.next();
 
 			// loop over messages for each property
-			Iterator msgs = viewMessages.get(property);
+			Iterator<?> msgs = viewMessages.get(property);
 
 			while (msgs.hasNext()) {
 				ViewMessage msg = (ViewMessage) msgs.next();
