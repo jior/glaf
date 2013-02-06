@@ -4,40 +4,26 @@
 	<classpathentry kind="src" path="src/main/config"/>
 	<classpathentry kind="src" path="src/test/java"/>
 	<classpathentry kind="src" path="src/test/config"/>
-	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/activation-1.1.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/ant-tools.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/antlr-2.7.7.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/aopalliance-1.0.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/asm-all-3.2.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/aspectjrt-1.6.8.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/aspectjweaver-1.6.8.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/backport-3.1.0.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/bcprov-jdk16-145.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/bsf-2.4.0.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/bsh-2.0b4.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/c3p0-0.9.0.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/cglib-2.2.2.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-beanutils-1.8.0.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-betwixt-0.8.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-chain-1.2.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-codec-1.6.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-collections-3.2.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-configuration-1.3.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-dbcp-1.4.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-digester-1.8.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-discovery.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-el.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-fileupload-1.2.1.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-httpclient-3.1.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-io-1.3.1.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-jexl-1.1.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-lang-2.5.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-logging.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-pool-1.6.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-resources.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-validator-1.3.1.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/concurrent-1.3.4.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/dom4j-1.6.1.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/dwr.jar"/>
@@ -131,5 +117,27 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-tx.RELEASE.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-web.RELEASE.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-webmvc.RELEASE.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/asm-4.0.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/asm-analysis-4.0.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/asm-commons-4.0.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/asm-tree-4.0.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/asm-util-4.0.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/aspectjrt.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/aspectjweaver.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/c3p0-0.9.1.2.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-beanutils-1.8.3.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-cli-1.2.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-codec-1.7.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-collections-3.2.1.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-compress-1.4.1.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-digester-2.1.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-discovery-0.4.0.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-fileupload-1.2.2.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-io-2.4.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-jexl-2.1.1.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-lang-2.6.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-math-2.2.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-net-3.2.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-validator-1.4.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

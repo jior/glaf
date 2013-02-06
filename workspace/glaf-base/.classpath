@@ -11,31 +11,20 @@
 	<classpathentry kind="lib" path="lib/antlr-2.7.7.jar"/>
 	<classpathentry kind="lib" path="lib/aopalliance-1.0.jar"/>
 	<classpathentry kind="lib" path="lib/asm-all-3.2.jar"/>
-	<classpathentry kind="lib" path="lib/aspectjrt-1.6.8.jar"/>
-	<classpathentry kind="lib" path="lib/aspectjweaver-1.6.8.jar"/>
 	<classpathentry kind="lib" path="lib/bsf-2.4.0.jar"/>
 	<classpathentry kind="lib" path="lib/bsh-2.0b4.jar"/>
 	<classpathentry kind="lib" path="lib/c3p0-0.9.0.jar"/>
 	<classpathentry kind="lib" path="lib/cglib-2.2.2.jar"/>
-	<classpathentry kind="lib" path="lib/commons-beanutils-1.8.0.jar"/>
 	<classpathentry kind="lib" path="lib/commons-betwixt-0.8.jar"/>
 	<classpathentry kind="lib" path="lib/commons-chain-1.2.jar"/>
-	<classpathentry kind="lib" path="lib/commons-codec-1.6.jar"/>
-	<classpathentry kind="lib" path="lib/commons-collections-3.2.jar"/>
 	<classpathentry kind="lib" path="lib/commons-configuration-1.3.jar"/>
 	<classpathentry kind="lib" path="lib/commons-dbcp-1.4.jar"/>
-	<classpathentry kind="lib" path="lib/commons-digester-1.8.jar"/>
-	<classpathentry kind="lib" path="lib/commons-discovery.jar"/>
 	<classpathentry kind="lib" path="lib/commons-el.jar"/>
-	<classpathentry kind="lib" path="lib/commons-fileupload-1.2.1.jar"/>
 	<classpathentry kind="lib" path="lib/commons-httpclient-3.1.jar"/>
-	<classpathentry kind="lib" path="lib/commons-io-1.3.1.jar"/>
 	<classpathentry kind="lib" path="lib/commons-jexl-1.1.jar"/>
-	<classpathentry kind="lib" path="lib/commons-lang-2.5.jar"/>
 	<classpathentry kind="lib" path="lib/commons-logging.jar"/>
 	<classpathentry kind="lib" path="lib/commons-pool-1.6.jar"/>
 	<classpathentry kind="lib" path="lib/commons-resources.jar"/>
-	<classpathentry kind="lib" path="lib/commons-validator-1.3.1.jar"/>
 	<classpathentry kind="lib" path="lib/concurrent-1.3.4.jar"/>
 	<classpathentry kind="lib" path="lib/dom4j-1.6.1.jar"/>
 	<classpathentry kind="lib" path="lib/dwr.jar"/>
@@ -43,7 +32,7 @@
 	<classpathentry kind="lib" path="lib/filterbuilder.jar"/>
 	<classpathentry kind="lib" path="lib/freemarker.jar"/>
 	<classpathentry kind="lib" path="lib/hibernate-jpa-2.0-api-1.0.0.Final.jar"/>
-	<classpathentry kind="lib" path="lib/hibernate3.jar" sourcepath="E:/stg/download/jpa/hibernate-distribution-3.6.10.Final-dist.zip"/>
+	<classpathentry kind="lib" path="lib/hibernate3.jar"/>
 	<classpathentry kind="lib" path="lib/htmlparser.jar"/>
 	<classpathentry kind="lib" path="lib/itext-2.1.7.jar"/>
 	<classpathentry kind="lib" path="lib/jackson-all-1.9.8.jar"/>
@@ -73,7 +62,7 @@
 	<classpathentry kind="lib" path="lib/servlet-api.jar"/>
 	<classpathentry kind="lib" path="lib/slf4j-api-1.6.1.jar"/>
 	<classpathentry kind="lib" path="lib/slf4j-log4j12-1.6.1.jar"/>
-	<classpathentry kind="lib" path="lib/struts-core-1.3.10.jar" sourcepath="E:/stg/download/apache/struts-1.3.10-all.zip"/>
+	<classpathentry kind="lib" path="lib/struts-core-1.3.10.jar"/>
 	<classpathentry kind="lib" path="lib/struts-el-1.3.10.jar"/>
 	<classpathentry kind="lib" path="lib/struts-extras-1.3.10.jar"/>
 	<classpathentry kind="lib" path="lib/struts-mailreader-dao-1.3.10.jar"/>
@@ -110,5 +99,21 @@
 	<classpathentry kind="lib" path="lib/jackson-annotations-2.1.2.jar"/>
 	<classpathentry kind="lib" path="lib/jackson-core-2.1.2.jar"/>
 	<classpathentry kind="lib" path="lib/jackson-databind-2.1.2.jar"/>
+	<classpathentry kind="lib" path="lib/aspectjrt.jar"/>
+	<classpathentry kind="lib" path="lib/aspectjweaver.jar"/>
+	<classpathentry kind="lib" path="lib/commons-beanutils-1.8.3.jar"/>
+	<classpathentry kind="lib" path="lib/commons-cli-1.2.jar"/>
+	<classpathentry kind="lib" path="lib/commons-codec-1.7.jar"/>
+	<classpathentry kind="lib" path="lib/commons-collections-3.2.1.jar"/>
+	<classpathentry kind="lib" path="lib/commons-compress-1.4.1.jar"/>
+	<classpathentry kind="lib" path="lib/commons-digester-2.1.jar"/>
+	<classpathentry kind="lib" path="lib/commons-discovery-0.4.0.jar"/>
+	<classpathentry kind="lib" path="lib/commons-fileupload-1.2.2.jar"/>
+	<classpathentry kind="lib" path="lib/commons-io-2.4.jar"/>
+	<classpathentry kind="lib" path="lib/commons-jexl-2.1.1.jar"/>
+	<classpathentry kind="lib" path="lib/commons-lang-2.6.jar"/>
+	<classpathentry kind="lib" path="lib/commons-math-2.2.jar"/>
+	<classpathentry kind="lib" path="lib/commons-net-3.2.jar"/>
+	<classpathentry kind="lib" path="lib/commons-validator-1.4.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
