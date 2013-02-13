@@ -115,5 +115,6 @@
 	<classpathentry kind="lib" path="lib/commons-math-2.2.jar"/>
 	<classpathentry kind="lib" path="lib/commons-net-3.2.jar"/>
 	<classpathentry kind="lib" path="lib/commons-validator-1.4.0.jar"/>
+	<classpathentry kind="lib" path="lib/postgresql-9.1-902.jdbc4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

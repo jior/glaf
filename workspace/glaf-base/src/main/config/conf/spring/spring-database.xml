@@ -11,7 +11,7 @@
 
 	<bean id="myDataSource" class="com.alibaba.druid.pool.DruidDataSourceC3P0Adapter"	destroy-method="close">
 		<property name="driverClass" value="org.postgresql.Driver" />
-		<property name="jdbcUrl" value="jdbc:postgresql://127.0.0.1:5432/jbpm" />
+		<property name="jdbcUrl" value="jdbc:postgresql://127.0.0.1:5432/glaf" />
 		<property name="user" value="root" />
 		<property name="password" value="root" />
 		<property name="minPoolSize" value="5"/>

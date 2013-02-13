@@ -2,32 +2,6 @@
           {
                     "children": [
                               {
-                                        "description": "合同审核列表",
-                                        "name": "合同审核列表",
-                                        "nodeId": 10224,
-                                        "showMenu": 1,
-                                        "sort": 10223,
-                                        "url": ""
-                              },
-                              {
-                                        "description": "合同申请列表",
-                                        "name": "合同申请列表",
-                                        "nodeId": 10222,
-                                        "showMenu": 1,
-                                        "sort": 10221,
-                                        "url": ""
-                              }
-                    ],
-                    "description": "合同管理",
-                    "name": "合同管理",
-                    "nodeId": 10244,
-                    "showMenu": 1,
-                    "sort": 10243,
-                    "url": ""
-          },
-          {
-                    "children": [
-                              {
                                         "description": "",
                                         "name": "修改密码",
                                         "nodeId": 21,

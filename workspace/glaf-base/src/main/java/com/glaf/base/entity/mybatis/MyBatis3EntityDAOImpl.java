@@ -33,6 +33,7 @@ import org.mybatis.spring.support.SqlSessionDaoSupport;
 import com.glaf.base.entity.EntityDAO;
 import com.glaf.base.utils.ClassUtil;
 
+ 
 public class MyBatis3EntityDAOImpl extends SqlSessionDaoSupport implements
 		EntityDAO {
 	protected final static Log logger = LogFactory
