@@ -46,21 +46,21 @@ function ttTree(rootNode){
   this.obj = "tree";//
   this.lastClick = rootNode.id;//上次点击
   this.icon = {
-    root		: context + '/js/dtree/img/base.gif',
-    folder		: context + '/js/dtree/img/folder.gif',
-    folderOpen	: context + '/js/dtree/img/folderopen.gif',
-    node		: context + '/js/dtree/img/page.gif',
-    empty		: context + '/js/dtree/img/empty.gif',
-    line		: context + '/js/dtree/img/line.gif',
-    join		: context + '/js/dtree/img/join.gif',
-    joinBottom	: context + '/js/dtree/img/joinbottom.gif',
-    plus		: context + '/js/dtree/img/plus.gif',
-    plusBottom	: context + '/js/dtree/img/plusbottom.gif',
-    minus		: context + '/js/dtree/img/minus.gif',
-    minusBottom	: context + '/js/dtree/img/minusbottom.gif',
-    nlPlus		: context + '/js/dtree/img/nolines_plus.gif',
-    nlMinus		: context + '/js/dtree/img/nolines_minus.gif',
-    loading		: context + '/js/dtree/img/loading.gif'
+    root		: context + '/scripts/dtree/img/base.gif',
+    folder		: context + '/scripts/dtree/img/folder.gif',
+    folderOpen	: context + '/scripts/dtree/img/folderopen.gif',
+    node		: context + '/scripts/dtree/img/page.gif',
+    empty		: context + '/scripts/dtree/img/empty.gif',
+    line		: context + '/scripts/dtree/img/line.gif',
+    join		: context + '/scripts/dtree/img/join.gif',
+    joinBottom	: context + '/scripts/dtree/img/joinbottom.gif',
+    plus		: context + '/scripts/dtree/img/plus.gif',
+    plusBottom	: context + '/scripts/dtree/img/plusbottom.gif',
+    minus		: context + '/scripts/dtree/img/minus.gif',
+    minusBottom	: context + '/scripts/dtree/img/minusbottom.gif',
+    nlPlus		: context + '/scripts/dtree/img/nolines_plus.gif',
+    nlMinus		: context + '/scripts/dtree/img/nolines_minus.gif',
+    loading		: context + '/scripts/dtree/img/loading.gif'
   };
   this.indent = [];//记录每层节点是否为最底层
 };
