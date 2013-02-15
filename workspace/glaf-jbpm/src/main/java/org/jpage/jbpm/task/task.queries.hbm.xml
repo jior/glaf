@@ -1,0 +1,124 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+      "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+      "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+	<query name="StdTask.getActorIds">
+		<![CDATA[
+          select a from org.jpage.jbpm.model.StateInstance as a 
+		  where a.processInstanceId = :processInstanceId
+		  and a.taskId = :taskId
+          ]]>
+	</query>
+
+	<query name="StdTask.getFinishedTaskItems">
+		<![CDATA[
+          select a from org.jpage.jbpm.model.StateInstance as a 
+		  where a.actorId = :actorId
+          ]]>
+	</query>
+
+	<query name="StdTask.getActorsFinishedTaskItems">
+		<![CDATA[
+          select a from org.jpage.jbpm.model.StateInstance as a 
+		  where a.actorId in ( :actorIds )
+          ]]>
+	</query>
+
+    <query name="StdTask.getProcessFinishedTaskItems">
+		<![CDATA[
+          select a from org.jpage.jbpm.model.StateInstance as a 
+		  where a.processName = :processName 
+		  and a.actorId = :actorId
+          ]]>
+	</query>
+
+   <query name="StdTask.getActorsProcessFinishedTaskItems">
+		<![CDATA[
+          select a from org.jpage.jbpm.model.StateInstance as a 
+		  where a.processName = :processName 
+		  and a.actorId in ( :actorIds )
+          ]]>
+	</query>
+
+	<query name="StdTask.getTaskInstances">
+		<![CDATA[
+	      select ti
+	      from org.jbpm.taskmgmt.exe.TaskInstance as ti
+	      where 1 = 1  
+		  and ti.actorId is not null
+	      and ti.isOpen = true
+		  order by ti.id asc
+          ]]>
+	</query>
+
+	<query name="StdTask.getPooledTaskInstances">
+		<![CDATA[
+	      select distinct ti
+	      from org.jbpm.taskmgmt.exe.PooledActor pooledActor
+	      join pooledActor.taskInstances ti
+	      where 1 = 1 
+	      and ti.actorId is null
+	      and ti.isOpen = true
+		  order by ti.id asc
+          ]]>
+	</query>
+
+	<query name="StdTask.getProcessInstances">
+		<![CDATA[
+	      select pi
+          from org.jbpm.graph.exe.ProcessInstance as pi
+          where pi.processDefinition.name = :processName
+          ]]>
+	</query>
+
+	<query name="StdTask.getFinishedTaskInstances">
+		<![CDATA[
+	      select ti
+		  from org.jbpm.taskmgmt.exe.TaskInstance as ti
+		  where ti.actorId  in ( :actorIds ) 
+		    and ti.isSuspended != true
+			and ti.isOpen = false
+			and ti.end is not null 
+          ]]>
+	</query>
+
+	<query name="StdTask.getFinishedPooledTaskInstances">
+		<![CDATA[
+	      select distinct ti
+		  from org.jbpm.taskmgmt.exe.PooledActor pooledActor
+			   join pooledActor.taskInstances ti
+		  where pooledActor.actorId  in ( :actorIds ) 
+			and ti.isSuspended != true
+			and ti.isOpen = false
+			and ti.end is not null 
+          ]]>
+	</query>
+
+	<query name="StdTask.getFinishedProcessInstanceIds">
+		<![CDATA[
+	      select ti.token.processInstance.id
+		  from org.jbpm.taskmgmt.exe.TaskInstance as ti
+		  where ti.actorId  in ( :actorIds ) 
+		    and ti.isSuspended != true
+			and ti.isOpen = false
+			and ti.end is not null 
+          ]]>
+	</query>
+
+	<query name="StdTask.getFinishedPooledProcessInstanceIds">
+		<![CDATA[
+	      select distinct ti.token.processInstance.id
+		  from org.jbpm.taskmgmt.exe.PooledActor pooledActor
+			   join pooledActor.taskInstances ti
+		  where pooledActor.actorId  in ( :actorIds ) 
+			and ti.isSuspended != true
+			and ti.isOpen = false
+			and ti.end is not null 
+          ]]>
+	</query>
+
+</hibernate-mapping>
