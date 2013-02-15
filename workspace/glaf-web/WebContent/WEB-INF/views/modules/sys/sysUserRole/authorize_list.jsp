@@ -1,5 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
-
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="html"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.glaf.base.modules.sys.*"%>
@@ -84,7 +83,9 @@ function remove(){
     <td class="box-mm">
 	<table width="590" border="0" align="center" cellpadding="5" cellspacing="0">
       <tr>
-        <td colspan="3" align="center"><b><jsp:include page="/WEB-INF/views/module/login_info.jsp" flush="true"/></b></td>
+        <td colspan="3" align="center">
+		    <b><jsp:include page="/WEB-INF/views/module/login_info.jsp" flush="true"/></b>
+		</td>
         </tr>
       <tr>
         <td width="298" align="center">可授权用户</td>
@@ -103,10 +104,11 @@ function remove(){
 		<%
 		}
 		%>
-		</select>		</td>
+		</select>		
+		</td>
         <td height="27" align="center" valign="bottom">&nbsp;</td>
         <td rowspan="6" align="center">
-		<select name="unavailable" size=10 id="b">
+		<select name="unavailable" size="10" id="b">
         <%
 		iter = unavailable.iterator();
 		while(iter.hasNext()){
@@ -116,7 +118,8 @@ function remove(){
 		<%
 		}
 		%>
-        </select>		</td>
+        </select>		
+		</td>
       </tr>
       
       <tr>

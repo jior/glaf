@@ -53,7 +53,7 @@ function schedulerXY(taskId, startup) {
 }
 
 </script>
-<body onLoad="DynarchMenu.setup('menu1', { context: true});" id="document">
+<body id="document">
 <jsp:include page="/WEB-INF/views/module/header.jsp" flush="true"/>
 <br><br>
 

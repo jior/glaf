@@ -46,7 +46,7 @@ _dynarch_menu_url = "<%=context%>/scripts/hmenu";
     }
 </script>
 </head>
-<body onLoad="DynarchMenu.setup('menu1', { context: true});" id="document">
+<body  id="document">
 <jsp:include page="/WEB-INF/views/module/header.jsp" flush="true"/>
 <br>
 <table align="center" class="table-border" cellspacing="0"
@@ -59,7 +59,7 @@ _dynarch_menu_url = "<%=context%>/scripts/hmenu";
 </table>
 <br>
 
- <table align="center" width="98%" border="0" cellspacing="1" cellpadding="0" class="list-box">
+ <table align="center" width="90%" border="0" cellspacing="1" cellpadding="0" class="list-box">
           <tr class="list-title">
 		    <td align="center" width="60">序号</td>
             <td align="center" width="120">模块名称</td>
