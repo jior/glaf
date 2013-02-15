@@ -92,8 +92,8 @@ public class PooledSQLMapXYAssignment implements AssignmentHandler {
 	/**
 	 * ≤È—ØºØ∫œ <br>
 	 * <queryIds><br>
-	 * <element>tms_getDeptRoleUsers</element><br>
-	 * <element>tms_getCategoryChargeUsers</element><br>
+	 * <element>getDeptRoleUsers</element><br>
+	 * <element>getCategoryChargeUsers</element><br>
 	 * </queryIds><br>
 	 */
 	private List queryIds;

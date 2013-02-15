@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="GBK"?>
 <mail-templates>
 
-  <variable name="BaseTaskListURL" value="http://localhost:8080/workflow/task.jsp?taskId=" />
+  <variable name="BaseTaskListURL" value="http://localhost:8080/glaf/workflow/task.jsp?taskId=" />
 
   <mail-template name="default">
     <subject>您的新任务 '#{taskDescription}'</subject>
@@ -15,12 +15,12 @@
   
   <mail-template name="glaf_todo">
     <subject>ToDo事项</subject>
-    <datafile>tms-todo-velocity.html</datafile>
+    <datafile>todo-velocity.html</datafile>
   </mail-template>
 
    <mail-template name="glaf_todo_ccxy">
     <subject>ToDo事项</subject>
-    <datafile>tms-todo-cc-velocity.html</datafile>
+    <datafile>todo-cc-velocity.html</datafile>
   </mail-template>
 
 </mail-templates>

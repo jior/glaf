@@ -168,7 +168,7 @@ public class SendMessageBean {
 							rows99.add(tdi);
 						}
 					}
-					// update by key 2012-05-14 end
+				
 					logger.info("todo:" + tdi.getTodoId() + " rowId:"
 							+ tdi.getRowId());
 				}
@@ -735,7 +735,7 @@ public class SendMessageBean {
 				while (iterator008.hasNext()) {
 					// ToDoInstance tdi = (ToDoInstance) iterator008.next();
 					// rows99.add(tdi);
-					// update by key 2012-05-14 begin
+
 					ToDoInstance tdi = (ToDoInstance) iterator008.next();
 					String processName = "";
 					ToDo toDo = todoService.getToDo(tdi.getTodoId());
@@ -751,7 +751,7 @@ public class SendMessageBean {
 							rows99.add(tdi);
 						}
 					}
-					// update by key 2012-05-14 end
+					
 				}
 			}
 
@@ -909,16 +909,15 @@ public class SendMessageBean {
 
 					String subject = (dept != null ? dept.getName() : "") + " "
 							+ user.getName() + " "
-							+ DateTools.getDate(new Date()) + " 特定采购系统Todo事项";
+							+ DateTools.getDate(new Date()) + " GLAF系统Todo事项";
 					logger.info(subject);
 					MailMessage mailMessage = new MailMessage();
 					mailMessage.setDataMap(mailMap);
 					mailMessage.setTo(user.getEmail());
-					// mailMessage.setCc("pps@glaf.com.cn");
-					// mailMessage.setBcc("pps@glaf.com.cn");
-					mailMessage.setTemplateId("tms_todo");
+
+					mailMessage.setTemplateId("glaf_todo");
 					mailMessage.setSaveMessage(false);
-					mailMessage.setReplyTo("pps@glaf.com.cn");
+			
 					mailMessage.setMessageId(UUID32.getUUID());
 					mailMessage.setSubject(subject);
 					try {
@@ -957,16 +956,15 @@ public class SendMessageBean {
 										+ user.getName()
 										+ " "
 										+ DateTools.getDate(new Date())
-										+ " 特定采购系统超过7天期限TODO事项";
+										+ " GLAG系统超过7天期限TODO事项";
 								logger.info(subject);
 								MailMessage mailMessage = new MailMessage();
 								mailMessage.setDataMap(mailMap);
 								mailMessage.setTo(leader.getEmail());
-								// mailMessage.setCc("pps@glaf.com.cn");
-								// mailMessage.setBcc("pps@glaf.com.cn");
-								mailMessage.setTemplateId("tms_todo_redwarn");
+							
+								mailMessage.setTemplateId("glaf_todo_ccxy");
 								mailMessage.setSaveMessage(false);
-								mailMessage.setReplyTo("pps@glaf.com.cn");
+								
 								mailMessage.setMessageId(UUID32.getUUID());
 								mailMessage.setSubject(subject);
 								try {
@@ -1104,7 +1102,6 @@ public class SendMessageBean {
 
 				if (pastDues.size() > 0) {
 					// 发邮件提示TODO的担当的上级。
-					// 当角色为部长时，邮件提示TODO发送给部门内的系统管理员。
 					SysUser sysUser = sysUserService.findByAccount(user
 							.getAccount());
 					sysUser = sysUserService.getUserPrivileges(sysUser);
@@ -1204,7 +1201,7 @@ public class SendMessageBean {
 
 						String subject = dept.getName() + " " + user.getName()
 								+ " " + DateTools.getDateTime(new Date())
-								+ " 特定采购系统Todo事项";
+								+ " GLAF系统Todo事项";
 						String messageId = DateTools.getNowYearMonthDay()
 								+ "-cc-" + u.getAccount();
 						MailMessage mailMessage = new MailMessage();
@@ -1212,11 +1209,10 @@ public class SendMessageBean {
 						mailMessage.setTo(u.getEmail());
 						if (StringUtils.equals(u.getAccount(),
 								user.getAccount())) {
-							mailMessage.setTemplateId("tms_todo");
+							mailMessage.setTemplateId("glaf_todo");
 						} else {
-							mailMessage.setTemplateId("tms_todo_cc");
+							mailMessage.setTemplateId("glaf_todo_cc");
 						}
-						mailMessage.setReplyTo("pps@glaf.com.cn");
 						mailMessage.setSaveMessage(false);
 						mailMessage.setMessageId(messageId);
 						mailMessage.setSubject(subject);
@@ -1237,13 +1233,12 @@ public class SendMessageBean {
 							+ actorId;
 					String subject = dept.getName() + " " + user.getName()
 							+ " " + DateTools.getDateTime(new Date())
-							+ " 特定采购系统Todo事项";
+							+ " GLAF系统Todo事项";
 					MailMessage mailMessage = new MailMessage();
 					mailMessage.setDataMap(mailMap);
 					mailMessage.setTo(user.getEmail());
-					mailMessage.setTemplateId("tms_todo");
+					mailMessage.setTemplateId("glaf_todo");
 					mailMessage.setSaveMessage(false);
-					mailMessage.setReplyTo("pps@glaf.com.cn");
 					mailMessage.setMessageId(messageId);
 					mailMessage.setSubject(subject);
 					try {

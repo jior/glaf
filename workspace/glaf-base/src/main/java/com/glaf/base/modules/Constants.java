@@ -37,7 +37,7 @@ public class Constants {
 	public static long UPLOAD_MAX_SIZE = 2 * 1024 * 1024;// 20M
 	public static long UPLOAD_FILE_SIZE_MAX = 2 * 1024 * 1024;// 20M
 
-	// 各模块编码编号 特定采购
+	// 各模块编码编号 
 	final public static String SYS_BUD = "BUDGET"; // 预算
 	final public static String SYS_IMP = "IMPORT"; // 重财
 	final public static String SYS_PUR = "PURCHA"; // 采购

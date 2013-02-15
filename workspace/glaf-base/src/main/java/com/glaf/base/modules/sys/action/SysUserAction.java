@@ -803,27 +803,6 @@ public class SysUserAction extends DispatchActionSupport {
 	}
 
 	/**
-	 * 显示采购担当
-	 * 
-	 * @param mapping
-	 * @param actionForm
-	 * @param request
-	 * @param response
-	 * @return
-	 * @throws Exception
-	 */
-	public ActionForward showPurchaseDuty(ActionMapping mapping,
-			ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		long deptId = ParamUtil.getLongParameter(request, "dept", 310);
-		String roleCode = ParamUtil.getParameter(request, "code", "R010");
-		logger.info("dept = " + deptId + "     , code = " + roleCode);
-		request.setAttribute("user",
-				sysDeptRoleService.findRoleUser(deptId, roleCode));
-		return mapping.findForward("show_duty");
-	}
-
-	/**
 	 * 显示角色
 	 * 
 	 * @param mapping

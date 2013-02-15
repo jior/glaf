@@ -829,26 +829,7 @@ public class SysUserController {
 				modelMap);
 	}
 
-	/**
-	 * 显示采购担当
-	 * 
-	 * @param mapping
-	 * @param actionForm
-	 * @param request
-	 * @param response
-	 * @return
-	 */
-	@RequestMapping(params = "method=showPurchaseDuty")
-	public ModelAndView showPurchaseDuty(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
-		long deptId = ParamUtil.getLongParameter(request, "dept", 310);
-		String roleCode = ParamUtil.getParameter(request, "code", "R010");
-		logger.info("dept = " + deptId + "     , code = " + roleCode);
-		request.setAttribute("user",
-				sysDeptRoleService.findRoleUser(deptId, roleCode));
-		return new ModelAndView("/modules/sys/user/duty_select", modelMap);
-	}
+ 
 
 	/**
 	 * 显示角色
