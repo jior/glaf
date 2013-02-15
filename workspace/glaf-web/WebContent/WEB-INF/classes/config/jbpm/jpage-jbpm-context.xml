@@ -63,30 +63,24 @@
 
 	 <bean id="simpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
 	  <property name="jobDetail">
-	   <!-- ????????methodInvokingJobDetail --> 
 	   <ref bean="methodInvokingJobDetail" /> 
 	  </property>
 	  <property name="startDelay">
-	   <!-- ?????????????????????10????  --> 
 	   <value>10000</value> 
 	  </property>
 	  <property name="repeatInterval">
-	   <!-- ????????????600000ms --> 
 	   <value>600000</value> 
 	  </property>
 	  <property name="repeatCount">
-	  <!-- ??д??? --> 
 	  <value>-1</value> 
 	  </property>
 	</bean>
 
 	<bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
 	  <property name="jobDetail">
-	   <!-- ????????methodInvokingJobDetail --> 
 	   <ref bean="methodInvokingJobDetail" /> 
 	  </property>
 	  <property name="cronExpression">
-	   <!-- ???????8???????16????У????????°?????????δ?? --> 
 	   <value>0 0 8,12,16 * * ?</value>  
 	  </property>
 	</bean>
