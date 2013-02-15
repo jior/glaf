@@ -1,20 +1,20 @@
 /*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package org.jpage.actor;
 
@@ -40,8 +40,6 @@ public class User implements Serializable, java.lang.Comparable<User> {
 
 	protected String mobile;
 
-	protected String msn;
-
 	protected boolean isAdmin;
 
 	protected Map properties = new HashMap();
@@ -62,6 +60,7 @@ public class User implements Serializable, java.lang.Comparable<User> {
 		return ret;
 	}
 
+	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
@@ -69,31 +68,11 @@ public class User implements Serializable, java.lang.Comparable<User> {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		final User other = (User) obj;
+		User other = (User) obj;
 		if (actorId == null) {
 			if (other.actorId != null)
 				return false;
 		} else if (!actorId.equals(other.actorId))
-			return false;
-		if (mail == null) {
-			if (other.mail != null)
-				return false;
-		} else if (!mail.equals(other.mail))
-			return false;
-		if (mobile == null) {
-			if (other.mobile != null)
-				return false;
-		} else if (!mobile.equals(other.mobile))
-			return false;
-		if (msn == null) {
-			if (other.msn != null)
-				return false;
-		} else if (!msn.equals(other.msn))
-			return false;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
 			return false;
 		return true;
 	}
@@ -114,10 +93,6 @@ public class User implements Serializable, java.lang.Comparable<User> {
 		return mobile;
 	}
 
-	public String getMsn() {
-		return msn;
-	}
-
 	public String getName() {
 		return name;
 	}
@@ -126,14 +101,11 @@ public class User implements Serializable, java.lang.Comparable<User> {
 		return properties;
 	}
 
+	@Override
 	public int hashCode() {
-		final int PRIME = 31;
+		final int prime = 31;
 		int result = 1;
-		result = PRIME * result + ((actorId == null) ? 0 : actorId.hashCode());
-		result = PRIME * result + ((mail == null) ? 0 : mail.hashCode());
-		result = PRIME * result + ((mobile == null) ? 0 : mobile.hashCode());
-		result = PRIME * result + ((msn == null) ? 0 : msn.hashCode());
-		result = PRIME * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((actorId == null) ? 0 : actorId.hashCode());
 		return result;
 	}
 
@@ -159,10 +131,6 @@ public class User implements Serializable, java.lang.Comparable<User> {
 
 	public void setMobile(String mobile) {
 		this.mobile = mobile;
-	}
-
-	public void setMsn(String msn) {
-		this.msn = msn;
 	}
 
 	public void setName(String name) {

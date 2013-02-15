@@ -18,7 +18,7 @@
   <string name="resource.node.types" value="org/jbpm/graph/node/node.types.xml" />
   <string name="resource.parsers" value="org/jbpm/jpdl/par/jbpm.parsers.xml" />
   <string name="resource.varmapping" value="org/jbpm/context/exe/jbpm.varmapping.xml" />
-  <string name="resource.mail.templates" value="jbpm.mail.templates.xml" />
+  <string name="resource.mail.templates" value="mail.templates.xml" />
 
   <int    name="jbpm.byte.block.size" value="1024" singleton="true" />
   <bean   name="jbpm.task.instance.factory" class="org.jbpm.taskmgmt.impl.DefaultTaskInstanceFactoryImpl" singleton="true" />
@@ -39,10 +39,8 @@
     <field name="lockBufferTime"><int value="5000" /></field> <!-- 5 seconds -->
   </bean>
 
-  <!--2006-05-20黄朝文增加-->
   <boolean name="isAutoCompleteTask" value="true" singleton="true"/>
   <!--是否启用代理人功能-->
-  <!-- <boolean name="isAgentEnable" value="true" singleton="true"/> -->
   <boolean name="isAgentEnable" value="true" singleton="true"/>
   <!--是否可以中止流程-->
   <boolean name="canAbortProcess" value="false" singleton="true"/>
@@ -50,16 +48,12 @@
   <boolean name="canSuspendProcess" value="true" singleton="true"/>
   <!--是否可以删除流程实例-->
   <boolean name="canDeleteProcessInstance" value="false" singleton="true"/>
-  <int           name="jpage.data.byte.block.size" value="1024" singleton="true" />
-  <int           name="jpage.file.byte.block.size" value="1024" singleton="true" />
-  <string      name="jbpm_datafield_keys" value="isAgree,isPass,money,day" singleton="true"/>
+  <int     name="jpage.data.byte.block.size" value="1024" singleton="true" />
+  <int     name="jpage.file.byte.block.size" value="1024" singleton="true" />
+  <string  name="jbpm_datafield_keys" value="isAgree,isPass,money,day" singleton="true"/>
 
-  <!--2007-01-06黄朝文增加发送邮件功能-->
-  <int           name="jbpm.mail.repeatCount" value="0" singleton="true" />
-  <string      name="serviceUrl" value="http://127.0.0.1:8080/tms" singleton="true" />
-  <string      name="warnMail" value="pps@glaf.com.cn" singleton="true" />
-
-  <!--PostgreSQL使用bool字段，其他非bool的要去掉这个属性！！！-->
-  <!-- <boolean name="jbpm.db.boolean" value="true" singleton="true"/> -->
+  <int     name="jbpm.mail.repeatCount" value="0" singleton="true" />
+  <string  name="serviceUrl" value="http://127.0.0.1:8080/glaf" singleton="true" />
+  <string  name="warnMail" value="jior2008@gmail.com" singleton="true" />
 
 </jbpm-configuration>
