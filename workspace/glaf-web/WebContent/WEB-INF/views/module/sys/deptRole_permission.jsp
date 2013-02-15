@@ -17,7 +17,7 @@ ArrayList apps = (ArrayList)request.getAttribute("apps");
 <title></title>
 <link href="<%=request.getContextPath()%>/css/site.css" type="text/css" rel="stylesheet">
 <link type="text/css" href="<%=request.getContextPath()%>/css/style.css" rel="stylesheet">
-<SCRIPT src="<%=request.getContextPath()%>/js/main.js"></SCRIPT>
+<SCRIPT src="<%=request.getContextPath()%>/scripts/main.js"></SCRIPT>
 <script language="JavaScript">
 function checkForm(form){
   var isChecked = false;

@@ -11,21 +11,21 @@
 <html>
 <head>
 <title>任务调度管理</title>
-<link type="text/css" rel="stylesheet" href="<%=request.getContextPath()%>/js/calendar/skins/aqua/theme.css"/>
+<link type="text/css" rel="stylesheet" href="<%=request.getContextPath()%>/scripts/calendar/skins/aqua/theme.css"/>
 <link type="text/css" rel="stylesheet" href="<%=contextPath%>/css/site.css" >
-<script language="javascript" src='<%=contextPath%>/js/main.js'></script>
-<script language="javascript" src='<%=contextPath%>/js/verify.js'></script>
-<script language="javascript" src="<%=request.getContextPath()%>/js/calendar/calendar.js" ></script>
-<script language="javascript" src="<%=request.getContextPath()%>/js/calendar/lang/calendar-en.js"></script>
-<script language="javascript" src="<%=request.getContextPath()%>/js/calendar/calendar-setup.js"></script>
+<script language="javascript" src='<%=contextPath%>/scripts/main.js'></script>
+<script language="javascript" src='<%=contextPath%>/scripts/verify.js'></script>
+<script language="javascript" src="<%=request.getContextPath()%>/scripts/calendar/calendar.js" ></script>
+<script language="javascript" src="<%=request.getContextPath()%>/scripts/calendar/lang/calendar-en.js"></script>
+<script language="javascript" src="<%=request.getContextPath()%>/scripts/calendar/calendar-setup.js"></script>
 <style type="text/css"> 
-@import url("<%=contextPath%>/js/hmenu/skin-yp.css");
+@import url("<%=contextPath%>/scripts/hmenu/skin-yp.css");
 .STYLE1 {color: #FF0000}
 </style>
 <script type="text/javascript">
-_dynarch_menu_url = "<%=contextPath%>/js/hmenu";
+_dynarch_menu_url = "<%=contextPath%>/scripts/hmenu";
 </script>
-<script type="text/javascript" src="<%=contextPath%>/js/hmenu/hmenu.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/scripts/hmenu/hmenu.js"></script>
 <script language="javascript">
   String.prototype.trim = function() {
      return this.replace(/(^\s*)|(\s*$)/g, "");

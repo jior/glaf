@@ -29,8 +29,8 @@ String code = ParamUtil.getParameter(request, "query_code_ex");
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <title>供应商Vendor</title>
 <link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
-<script language="javascript" src='<%=context%>/js/main.js'></script>
-<script language="javascript" src='<%=context%>/js/verify.js'></script>
+<script language="javascript" src='<%=context%>/scripts/main.js'></script>
+<script language="javascript" src='<%=context%>/scripts/verify.js'></script>
 <script language="javascript">
 function selData(){	
   if(getRadioValue('id')==''){

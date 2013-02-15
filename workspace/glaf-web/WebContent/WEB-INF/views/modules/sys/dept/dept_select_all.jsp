@@ -15,9 +15,9 @@ SysTree parent= (SysTree)request.getAttribute("parent");
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <title></title>
 <link href="<%=request.getContextPath()%>/css/site.css" type="text/css" rel="stylesheet">
-<link href="<%=request.getContextPath()%>/js/dtree/dtree.css" type="text/css" rel="stylesheet">
-<script src="<%=request.getContextPath()%>/js/dtree/deptAllTree.js" type="text/javascript"></script>
-<script language="javascript" src='<%=context%>/js/main.js'></script>
+<link href="<%=request.getContextPath()%>/scripts/dtree/dtree.css" type="text/css" rel="stylesheet">
+<script src="<%=request.getContextPath()%>/scripts/dtree/deptAllTree.js" type="text/javascript"></script>
+<script language="javascript" src='<%=context%>/scripts/main.js'></script>
 <script language="javascript">
 function selData(value, title){  
   var a= new Array(value, title);

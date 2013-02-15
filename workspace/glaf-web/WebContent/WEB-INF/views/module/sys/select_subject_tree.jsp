@@ -13,8 +13,8 @@ long parent=ParamUtil.getIntParameter(request, "parent", 0);
 <base target="_self" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link href="<%=request.getContextPath()%>/css/site.css" type="text/css" rel="stylesheet">
-<link href="<%=request.getContextPath()%>/js/dtree/dtree.css" type="text/css" rel="stylesheet">
-<script src="<%=request.getContextPath()%>/js/dtree/ttTree.js" type="text/javascript"></script>
+<link href="<%=request.getContextPath()%>/scripts/dtree/dtree.css" type="text/css" rel="stylesheet">
+<script src="<%=request.getContextPath()%>/scripts/dtree/ttTree.js" type="text/javascript"></script>
 <script language="javascript">
 function selData(){  
   var a= new Array(0,null);

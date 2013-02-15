@@ -8,7 +8,7 @@
 <link href="./css/fileUpload.css" type="text/css" rel="stylesheet"/>
 <link href="../../css/site.css" type="text/css" rel="stylesheet"/>
 <script type='text/javascript' src='<%=request.getContextPath()%>/dwr/util.js'></script>
-<script type='text/javascript' src='<%=request.getContextPath()%>/js/main.js'></script>
+<script type='text/javascript' src='<%=request.getContextPath()%>/scripts/main.js'></script>
 <script type="text/javascript">
 <!--
 function submitUpload() {

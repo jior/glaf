@@ -3,12 +3,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page import="java.util.*" %>
 <%@ include file="/WEB-INF/pages/common/style.jsp"%>
-<script language="javascript" src="<%=request.getContextPath()%>/workflow/includes/js/fixdate.js"></script>
-<script language="javascript" src="<%=request.getContextPath()%>/workflow/includes/js/selectdate.js"></script>
-<link type="text/css" href="<%=request.getContextPath()%>/workflow/includes/js/calendar/skins/aqua/theme.css"  rel="stylesheet"/>
-<script src="<%=request.getContextPath()%>/workflow/includes/js/calendar/calendar.js" language="javascript"></script>
-<script src="<%=request.getContextPath()%>/workflow/includes/js/calendar/lang/calendar-en.js" language="javascript"></script>
-<script src="<%=request.getContextPath()%>/workflow/includes/js/calendar/calendar-setup.js" language="javascript"></script>
+<script language="javascript" src="<%=request.getContextPath()%>/workflow/includes/scripts/fixdate.js"></script>
+<script language="javascript" src="<%=request.getContextPath()%>/workflow/includes/scripts/selectdate.js"></script>
+<link type="text/css" href="<%=request.getContextPath()%>/workflow/includes/scripts/calendar/skins/aqua/theme.css"  rel="stylesheet"/>
+<script src="<%=request.getContextPath()%>/workflow/includes/scripts/calendar/calendar.js" language="javascript"></script>
+<script src="<%=request.getContextPath()%>/workflow/includes/scripts/calendar/lang/calendar-en.js" language="javascript"></script>
+<script src="<%=request.getContextPath()%>/workflow/includes/scripts/calendar/calendar-setup.js" language="javascript"></script>
 
 <script language="JavaScript">
 

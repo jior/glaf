@@ -12,16 +12,16 @@
 <title>任务调度管理</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link href="<%=contextPath%>/css/site.css" type="text/css" rel="stylesheet">
-<script language="javascript" src='<%=contextPath%>/js/verify.js'></script>
-<script language="javascript" src='<%=contextPath%>/js/main.js'></script>
+<script language="javascript" src='<%=contextPath%>/scripts/verify.js'></script>
+<script language="javascript" src='<%=contextPath%>/scripts/main.js'></script>
 <style type="text/css"> 
-@import url("<%=contextPath%>/js/hmenu/skin-yp.css");
+@import url("<%=contextPath%>/scripts/hmenu/skin-yp.css");
 .STYLE1 {color: #FF0000}
 </style>
 <script type="text/javascript">
-_dynarch_menu_url = "<%=contextPath%>/js/hmenu";
+_dynarch_menu_url = "<%=contextPath%>/scripts/hmenu";
 </script>
-<script type="text/javascript" src="<%=contextPath%>/js/hmenu/hmenu.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/scripts/hmenu/hmenu.js"></script>
 <script language="javascript">
 
 function createScheduler() {

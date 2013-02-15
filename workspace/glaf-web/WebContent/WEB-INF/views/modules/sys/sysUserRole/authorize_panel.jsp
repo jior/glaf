@@ -18,12 +18,12 @@ List processList = (List)request.getAttribute("processList");
 <title>基础平台系统</title>
 <base target="_self">
 <link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
-<script language="javascript" src='<%=context%>/js/verify.js'></script>
-<script language="javascript" src='<%=context%>/js/main.js'></script>
-<link href="<%=request.getContextPath()%>/js/calendar/skins/aqua/theme.css"  type="text/css" title="Aqua" rel="stylesheet"/>
-<script src="<%=context%>/js/calendar/calendar.js" language="javascript"></script>
-<script src="<%=context%>/js/calendar/lang/calendar-en.js" language="javascript"></script>
-<script src="<%=context%>/js/calendar/lang/calendar-setup.js" language="javascript"></script>
+<script language="javascript" src='<%=context%>/scripts/verify.js'></script>
+<script language="javascript" src='<%=context%>/scripts/main.js'></script>
+<link href="<%=request.getContextPath()%>/scripts/calendar/skins/aqua/theme.css"  type="text/css" title="Aqua" rel="stylesheet"/>
+<script src="<%=context%>/scripts/calendar/calendar.js" language="javascript"></script>
+<script src="<%=context%>/scripts/calendar/lang/calendar-en.js" language="javascript"></script>
+<script src="<%=context%>/scripts/calendar/lang/calendar-setup.js" language="javascript"></script>
 <script type='text/javascript' src='<%=context%>/dwr/interface/SysUserRoleAjaxService.js'></script>
 <script type='text/javascript' src='<%=context%>/dwr/engine.js'></script>
 <script type='text/javascript' src='<%=context%>/dwr/util.js'></script>

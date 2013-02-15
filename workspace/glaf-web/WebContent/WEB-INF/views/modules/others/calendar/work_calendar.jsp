@@ -11,8 +11,8 @@ int year =ParamUtil.getIntAttribute(request, "year", cal.get(Calendar.YEAR));
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
 <link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
 <link type="text/css" rel="stylesheet" href="<%=context%>/css/calendar.css">
-<script language="javascript" src='<%=context%>/js/verify.js'></script>
-<script language="javascript" src='<%=context%>/js/main.js'></script>
+<script language="javascript" src='<%=context%>/scripts/verify.js'></script>
+<script language="javascript" src='<%=context%>/scripts/main.js'></script>
 <script type='text/javascript' src='<%=context%>/dwr/interface/WorkCalendarAjaxService.js'></script>
 <script type='text/javascript' src='<%=context%>/dwr/engine.js'></script>
 

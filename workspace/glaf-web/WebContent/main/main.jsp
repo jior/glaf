@@ -28,8 +28,8 @@ int count = 0;
 <title>首页</title>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/site.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/style-custom.css">
-<script type="text/javascript" src="<%=request.getContextPath()%>/js/main.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/js/site.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/main.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/site.js"></script>
 <script type="text/javascript">
 
    function openMoreMsg() {

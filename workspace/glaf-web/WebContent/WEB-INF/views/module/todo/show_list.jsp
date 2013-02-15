@@ -29,17 +29,17 @@
 <title>基础平台系统</title>
 <link href="../css/site.css" rel="stylesheet" type="text/css">
 <link href="<%=context%>/css/site.css" rel="stylesheet" type="text/css">
-<script src="<%=context%>/js/main.js" language="javascript"></script>
+<script src="<%=context%>/scripts/main.js" language="javascript"></script>
 <style type="text/css"> 
-@import url("<%=context%>/js/hmenu/skin-yp.css");
+@import url("<%=context%>/scripts/hmenu/skin-yp.css");
 .STYLE1 {color: #FF0000}
 </style>
 <script type="text/javascript">
-_dynarch_menu_url = "<%=context%>/js/hmenu";
+_dynarch_menu_url = "<%=context%>/scripts/hmenu";
 </script>
-<script type="text/javascript" src="<%=context%>/js/hmenu/hmenu.js"></script>
-<script type="text/javascript" src="<%=context%>/js/main.js"></script>
-<script type="text/javascript" src="<%=context%>/js/site.js"></script>
+<script type="text/javascript" src="<%=context%>/scripts/hmenu/hmenu.js"></script>
+<script type="text/javascript" src="<%=context%>/scripts/main.js"></script>
+<script type="text/javascript" src="<%=context%>/scripts/site.js"></script>
 <script type="text/javascript">
     function importXls(){
 		location.href="<%=context%>/sys/todo.do?method=showUpload";

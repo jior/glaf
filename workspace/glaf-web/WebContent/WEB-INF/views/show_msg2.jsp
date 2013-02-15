@@ -4,8 +4,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<SCRIPT src="/js/main.js"></SCRIPT>
-<script type='text/javascript' src='<%=request.getContextPath() %>/js/close.js'></script>
+<SCRIPT src="/scripts/main.js"></SCRIPT>
+<script type='text/javascript' src='<%=request.getContextPath() %>/scripts/close.js'></script>
 <title>基础平台系统</title>
 <body>
 <div id="messageDiv" style="display:none">

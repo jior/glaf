@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<SCRIPT src="<%=request.getContextPath()%>/js/main.js"></SCRIPT>
+<SCRIPT src="<%=request.getContextPath()%>/scripts/main.js"></SCRIPT>
 <title>应用程序出错</title>
 <link type="text/css" href="<%=request.getContextPath()%>/css/style.css" rel="stylesheet">
 <SCRIPT type="text/javascript">

@@ -14,9 +14,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>增加我的菜单</title>
 <link href="<%= request.getContextPath() %>/css/site.css" type="text/css" rel="stylesheet">
-<script src="<%= request.getContextPath() %>/js/css.js" language="javascript"></script>
-<script type='text/javascript' src='<%= request.getContextPath() %>/js/main.js'></script>
-<script type='text/javascript' src="<%= request.getContextPath() %>/js/verify.js"></script>
+<script src="<%= request.getContextPath() %>/scripts/css.js" language="javascript"></script>
+<script type='text/javascript' src='<%= request.getContextPath() %>/scripts/main.js'></script>
+<script type='text/javascript' src="<%= request.getContextPath() %>/scripts/verify.js"></script>
 </head>
 
 <body>

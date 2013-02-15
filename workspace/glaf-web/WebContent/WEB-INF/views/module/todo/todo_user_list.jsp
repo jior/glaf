@@ -227,8 +227,8 @@
 <title>Todo List</title>
 <link href="<%=request.getContextPath()%>/css/site.css" type="text/css" rel="stylesheet">
 <link href="<%=request.getContextPath()%>/css/site.css" type="text/css" rel="stylesheet">
-<script language="javascript" src='<%=request.getContextPath()%>/js/verify.js'></script>
-<script language="javascript" src='<%=request.getContextPath()%>/js/main.js'></script>
+<script language="javascript" src='<%=request.getContextPath()%>/scripts/verify.js'></script>
+<script language="javascript" src='<%=request.getContextPath()%>/scripts/main.js'></script>
 <script language="JavaScript">
 function selDept(parent, refer){
   var ret = selectDeptList2(parent);

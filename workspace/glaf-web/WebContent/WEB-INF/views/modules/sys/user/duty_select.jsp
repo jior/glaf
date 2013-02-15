@@ -13,8 +13,8 @@ Iterator iter = user.iterator();
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <title></title>
 <link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
-<script language="javascript" src='<%=context%>/js/main.js'></script>
-<script language="javascript" src='<%=context%>/js/verify.js'></script>
+<script language="javascript" src='<%=context%>/scripts/main.js'></script>
+<script language="javascript" src='<%=context%>/scripts/verify.js'></script>
 </head>
 <script language="javascript">
 function selData(){

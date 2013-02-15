@@ -7,8 +7,8 @@ String context = request.getContextPath();
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
-<script language="javascript" src='<%=context%>/js/verify.js'></script>
-<script language="javascript" src='<%=context%>/js/main.js'></script>
+<script language="javascript" src='<%=context%>/scripts/verify.js'></script>
+<script language="javascript" src='<%=context%>/scripts/main.js'></script>
 <script language="javascript">
 function selSupplier(selectType, supplierType, refer){
   var ret = selectSupplierList(selectType, supplierType);

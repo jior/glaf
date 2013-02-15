@@ -18,14 +18,14 @@ MyMenuService myMenuService = (MyMenuService) wac.getBean("myMenuService");
 List menuList = myMenuService.getMyMenuList(user.getId());
 String context = request.getContextPath();
 %>
-<style type="text/css"> @import url("<%=context%>/js/hmenu/skin-yp.css");</style>
+<style type="text/css"> @import url("<%=context%>/scripts/hmenu/skin-yp.css");</style>
 <script type="text/javascript">
-_dynarch_menu_url = "<%=context%>/js/hmenu";
+_dynarch_menu_url = "<%=context%>/scripts/hmenu";
 context = "<%=context%>";
 </script>
-<script type="text/javascript" src="<%=context%>/js/hmenu/hmenu.js"></script>
-<script type='text/javascript' src='<%= context %>/js/main.js'></script>
-<script type='text/javascript' src='<%= context %>/js/site.js'></script>
+<script type="text/javascript" src="<%=context%>/scripts/hmenu/hmenu.js"></script>
+<script type='text/javascript' src='<%= context %>/scripts/main.js'></script>
+<script type='text/javascript' src='<%= context %>/scripts/site.js'></script>
 <script type="text/javascript">
 window.onload = function() {
   //DynarchMenu.setup('menu1', { context: true});

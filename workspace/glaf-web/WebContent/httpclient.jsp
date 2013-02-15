@@ -70,16 +70,16 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>基础平台系统</title>
-<script language="javascript" src='<%=request.getContextPath()%>/js/verify.js'></script>
-<script language="javascript" src='<%=request.getContextPath()%>/js/main.js'></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/js/hmenu/hmenu.js"></script>
+<script language="javascript" src='<%=request.getContextPath()%>/scripts/verify.js'></script>
+<script language="javascript" src='<%=request.getContextPath()%>/scripts/main.js'></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/hmenu/hmenu.js"></script>
 <link href="<%=request.getContextPath()%>/css/site.css" type="text/css" rel="stylesheet">
-<link href="<%=request.getContextPath()%>/js/calendar/skins/aqua/theme.css"  type="text/css" title="Aqua" rel="stylesheet"/>
+<link href="<%=request.getContextPath()%>/scripts/calendar/skins/aqua/theme.css"  type="text/css" title="Aqua" rel="stylesheet"/>
 <style type="text/css"> 
-@import url("<%=request.getContextPath()%>/js/hmenu/skin-yp.css");
+@import url("<%=request.getContextPath()%>/scripts/hmenu/skin-yp.css");
 </style>
 <script type="text/javascript">
-    _dynarch_menu_url = "<%=request.getContextPath()%>/js/hmenu";
+    _dynarch_menu_url = "<%=request.getContextPath()%>/scripts/hmenu";
 </script>
 <br><br>
 <center>

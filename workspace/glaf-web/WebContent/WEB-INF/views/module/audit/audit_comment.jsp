@@ -16,8 +16,8 @@ String id = (String)request.getAttribute("id");
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title></title>
 <link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
-<script language="javascript" src='<%=context%>/js/verify.js'></script>
-<script language="javascript" src='<%=context%>/js/main.js'></script>
+<script language="javascript" src='<%=context%>/scripts/verify.js'></script>
+<script language="javascript" src='<%=context%>/scripts/main.js'></script>
 <script language="javascript">
 window.resizeTo(380, 350);
 window.moveTo((screen.width - 380) / 2, (screen.height - 350) / 2);

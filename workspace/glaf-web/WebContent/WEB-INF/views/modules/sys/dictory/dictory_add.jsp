@@ -14,8 +14,8 @@ int parent=ParamUtil.getIntParameter(request, "parent", 0);
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>基础平台系统</title>
 <link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
-<script language="javascript" src='<%=context%>/js/main.js'></script>
-<script language="javascript" src='<%=context%>/js/verify.js'></script></head>
+<script language="javascript" src='<%=context%>/scripts/main.js'></script>
+<script language="javascript" src='<%=context%>/scripts/verify.js'></script></head>
 </head>
 
 <body>

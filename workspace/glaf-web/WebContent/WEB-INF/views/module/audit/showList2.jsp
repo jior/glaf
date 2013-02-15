@@ -10,8 +10,8 @@
 <title></title>
 <link href="../../css/site.css" type="text/css" rel="stylesheet">
 <link href="<%= request.getContextPath() %>/css/site.css" type="text/css" rel="stylesheet">
-<script language="javascript" src="<%= request.getContextPath() %>/js/css.js"></script>
-<script language="javascript" src='<%= request.getContextPath() %>/js/main.js'></script>
+<script language="javascript" src="<%= request.getContextPath() %>/scripts/css.js"></script>
+<script language="javascript" src='<%= request.getContextPath() %>/scripts/main.js'></script>
 <script type="text/JavaScript">
 </script>
 </head>

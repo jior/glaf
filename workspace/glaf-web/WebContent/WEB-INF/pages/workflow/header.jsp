@@ -7,8 +7,8 @@
 <head>
 <title>通用流程</title>
 <%@ include file="/WEB-INF/pages/common/style.jsp"%>
-<script language="javascript" src="<%=request.getContextPath()%>/workflow/includes/js/fixdate.js"></script>
-<script language="javascript" src="<%=request.getContextPath()%>/workflow/includes/js/selectdate.js"></script>
+<script language="javascript" src="<%=request.getContextPath()%>/workflow/includes/scripts/fixdate.js"></script>
+<script language="javascript" src="<%=request.getContextPath()%>/workflow/includes/scripts/selectdate.js"></script>
 <script language="JavaScript">
 
  //(用于onKeypress事件)浮点数字框不能输入其他字符

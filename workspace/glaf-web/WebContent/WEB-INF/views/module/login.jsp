@@ -11,8 +11,8 @@
 <title>基础平台系统</title>
 <link href="../css/system.css" type="text/css" rel="stylesheet">
 <link href="../css/site.css" rel="stylesheet" type="text/css">
-<script src="../js/css.js" language="javascript"></script>
-<script src="../js/verify.js" language="javascript"></script>
+<script src="../scripts/css.js" language="javascript"></script>
+<script src="../scripts/verify.js" language="javascript"></script>
 </head>
 <body class="body">
 <script language="javascript">

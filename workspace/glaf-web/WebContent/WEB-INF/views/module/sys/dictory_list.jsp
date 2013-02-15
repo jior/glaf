@@ -20,8 +20,8 @@ List list = pager.getResults();
 <script type='text/javascript' src='<%=context%>/dwr/engine.js'></script>
 <script type='text/javascript' src='<%=context%>/dwr/util.js'></script>
 <link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
-<script language="javascript" src='<%=context%>/js/verify.js'></script>
-<script language="javascript" src='<%=context%>/js/main.js'></script>
+<script language="javascript" src='<%=context%>/scripts/verify.js'></script>
+<script language="javascript" src='<%=context%>/scripts/main.js'></script>
 <script language="JavaScript">
 var num=0;
 function checkOperation(form){

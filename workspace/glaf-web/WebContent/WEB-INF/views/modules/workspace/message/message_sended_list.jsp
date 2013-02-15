@@ -19,9 +19,9 @@ String flag = (String)request.getAttribute("flag");
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link href="../../css/site.css" type="text/css" rel="stylesheet">
 <link href="<%= request.getContextPath() %>/css/site.css" type="text/css" rel="stylesheet">
-<script type='text/javascript' src="<%= request.getContextPath() %>/js/css.js"></script>
-<script type='text/javascript' src='<%= request.getContextPath() %>/js/main.js'></script>
-<script type='text/javascript' src="<%= request.getContextPath() %>/js/verify.js"></script>
+<script type='text/javascript' src="<%= request.getContextPath() %>/scripts/css.js"></script>
+<script type='text/javascript' src='<%= request.getContextPath() %>/scripts/main.js'></script>
+<script type='text/javascript' src="<%= request.getContextPath() %>/scripts/verify.js"></script>
 <script type="text/javascript">
 function openMsg(id) {
   openWindow('message.do?method=showMessage&sended=1&id=' + id, 600, 450);

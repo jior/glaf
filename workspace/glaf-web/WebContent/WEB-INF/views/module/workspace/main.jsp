@@ -20,8 +20,8 @@ String menu = service.getMenu(parentId, userId);
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title></title>
 <link href="../../css/system.css" type="text/css" rel="stylesheet">
-<script src="../../js/css.js" language="javascript"></script>
-<style type="text/css"> @import url("../../js/hmenu/skin-yp.css");</style>
+<script src="../../scripts/css.js" language="javascript"></script>
+<style type="text/css"> @import url("../../scripts/hmenu/skin-yp.css");</style>
 <style type="text/css">
 .hotspot { 
   position: absolute; 
@@ -38,9 +38,9 @@ String menu = service.getMenu(parentId, userId);
 }
 </style>
 <script type="text/javascript">
-_dynarch_menu_url = "../../js/hmenu";
+_dynarch_menu_url = "../../scripts/hmenu";
 </script>
-<script type="text/javascript" src="../../js/hmenu/hmenu.js"></script>
+<script type="text/javascript" src="../../scripts/hmenu/hmenu.js"></script>
 </head>
 
 <body onLoad="DynarchMenu.setup('menu1', { context: true});" id="document">

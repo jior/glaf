@@ -15,7 +15,7 @@ List  list = (List)request.getAttribute("parent");
 <title></title>
 <link href="<%=request.getContextPath()%>/css/site.css" type="text/css" rel="stylesheet">
 <link type="text/css" href="<%=request.getContextPath()%>/css/style.css" rel="stylesheet">
-<script src="<%=request.getContextPath()%>/js/verify.js" language="javascript"></script>
+<script src="<%=request.getContextPath()%>/scripts/verify.js" language="javascript"></script>
 </head>
 
 <body>

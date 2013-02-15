@@ -12,7 +12,7 @@
 <head>
 <meta http-equiv=content-type content="text/html; charset=utf-8">
 <link href="<%=request.getContextPath()%>/css/site.css" rel="stylesheet" type="text/css"> 
-<script type="text/javascript" src="<%=request.getContextPath()%>/js/site.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/site.js"></script>
 </head>
 <body>
 	<div align="center">

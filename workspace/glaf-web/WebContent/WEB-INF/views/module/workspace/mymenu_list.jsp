@@ -20,9 +20,9 @@ List list = pager.getResults();
 <script type='text/javascript' src='<%=request.getContextPath()%>/dwr/interface/MyMenuAjaxService.js'></script>
 <script type='text/javascript' src='<%=request.getContextPath()%>/dwr/engine.js'></script>
 <script type='text/javascript' src='<%=request.getContextPath()%>/dwr/util.js'></script>
-<script type='text/javascript' src="<%= request.getContextPath() %>/js/css.js"></script>
-<script type='text/javascript' src='<%= request.getContextPath() %>/js/main.js'></script>
-<script type='text/javascript' src='<%= request.getContextPath() %>/js/site.js'></script>
+<script type='text/javascript' src="<%= request.getContextPath() %>/scripts/css.js"></script>
+<script type='text/javascript' src='<%= request.getContextPath() %>/scripts/main.js'></script>
+<script type='text/javascript' src='<%= request.getContextPath() %>/scripts/site.js'></script>
 <script language="JavaScript">
 function add(){
   var url="mymenu.do?method=prepareAdd";

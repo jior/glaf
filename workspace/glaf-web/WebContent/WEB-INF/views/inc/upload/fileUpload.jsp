@@ -15,9 +15,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link href="./css/fileUpload.css" type="text/css" rel="stylesheet"/>
 <link href="../../css/site.css" type="text/css" rel="stylesheet"/>
-<script type="text/javascript" src="./js/prototype.js"></script>
-<script type="text/javascript" src="./js/AjaxWrapper.js"></script>
-<script type="text/javascript" src="../../js/verify.js"></script>
+<script type="text/javascript" src="./scripts/prototype.js"></script>
+<script type="text/javascript" src="./scripts/AjaxWrapper.js"></script>
+<script type="text/javascript" src="../../scripts/verify.js"></script>
 <script type="text/javascript">
 <!--
  function checkFileUploadForm(form) {
@@ -64,6 +64,6 @@
     <div id="progressStatusText"></div>
   </div>
 </div>
-<script type="text/javascript" src="./js/upload.js"></script>
+<script type="text/javascript" src="./scripts/upload.js"></script>
 </body>
 </html>

@@ -17,12 +17,12 @@ List list = pager.getResults();
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
 <link href="<%=request.getContextPath()%>/css/site.css" type="text/css" rel="stylesheet">
-<script language="javascript" src='<%=request.getContextPath()%>/js/verify.js'></script>
-<script language="javascript" src='<%=request.getContextPath()%>/js/main.js'></script>
-<link href="<%=request.getContextPath()%>/js/calendar/skins/aqua/theme.css"  type="text/css" title="Aqua" rel="stylesheet"/>
-<script src="<%=context%>/js/calendar/calendar.js" language="javascript"></script>
-<script src="<%=context%>/js/calendar/lang/calendar-en.js" language="javascript"></script>
-<script src="<%=context%>/js/calendar/lang/calendar-setup.js" language="javascript"></script>
+<script language="javascript" src='<%=request.getContextPath()%>/scripts/verify.js'></script>
+<script language="javascript" src='<%=request.getContextPath()%>/scripts/main.js'></script>
+<link href="<%=request.getContextPath()%>/scripts/calendar/skins/aqua/theme.css"  type="text/css" title="Aqua" rel="stylesheet"/>
+<script src="<%=context%>/scripts/calendar/calendar.js" language="javascript"></script>
+<script src="<%=context%>/scripts/calendar/lang/calendar-en.js" language="javascript"></script>
+<script src="<%=context%>/scripts/calendar/lang/calendar-setup.js" language="javascript"></script>
 
 <script language="JavaScript">
 var num=0;
