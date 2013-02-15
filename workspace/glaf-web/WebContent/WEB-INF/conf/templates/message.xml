@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+
+	<message name="sendToSupplier" desccription="供应商用户意见交流">
+		<sysType>1</sysType>
+		<title>
+			<![CDATA[
+			合同项目制作意见交流(合同编号：${contractNo}；项目名称：${projectName})
+			]]>
+		</title>
+		<content>
+			<![CDATA[
+			合同项目制作意见交流(合同编号：${contractNo}；项目名称：${projectName})
+		    请在平台上积极解决贵公司合同制作中的问题。
+			]]>
+		</content>
+	</message>
+
+</template>
