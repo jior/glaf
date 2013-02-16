@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+ <class name="org.jpage.jbpm.model.StateInstance" 
+        dynamic-insert="true" 
+    	dynamic-update="true"
+        table="JPAGE_JBPM_STATE_INSTANCE" >
+  <id name="stateInstanceId" column="stateInstanceId" type="string" length="32"  
+      unsaved-value="null">
+   <generator class="assigned"/>
+  </id>
+  <property name="status" column="status" type="int"/>
+  <property name="opinion" column="opinion" type="int"/>
+  <property name="actorId" column="actorId" type="string" length="100"/>
+  <property name="agentId" column="agentId" type="string" length="100"/>
+  <property name="previousActorIds" column="previousActorIds" type="string" length="1000"/>
+  <property name="title" column="title" type="string" length="255"/>
+  <property name="content" column="content" type="string" length="255"/>
+  <property name="businessId" column="businessId" type="string" length="32"/>
+  <property name="dataFile" column="dataFile" type="string" length="255" />
+  <property name="objectId" column="objectId" type="string" length="255"/>
+  <property name="objectValue" column="objectValue" type="string" length="255"/>
+  <property name="objectType" column="objectType" type="int"/>
+  <property name="taskId" column="taskId" type="string" length="50"/>
+  <property name="taskName" column="taskName" type="string" length="255"/>
+  <property name="taskDescription" column="taskDescription" type="string" length="255"/>
+  <property name="taskInstanceId" column="taskInstanceId" type="string" length="50"/>
+  <property name="tokenInstanceId" column="tokenInstanceId" type="string" length="50"/>
+  <property name="processName" column="processName" type="string" length="255"/>
+  <property name="processInstanceId" column="processInstanceId" type="string" length="50"/>
+  <property name="startDate" column="startDate" type="timestamp"/>
+  <property name="versionNo" column="versionNo" type="long"/>
+ </class>
+</hibernate-mapping>
