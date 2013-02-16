@@ -9,13 +9,13 @@
 		</property>
 	</bean> -->
 
-	<bean id="myDataSource" class="com.alibaba.druid.pool.DruidDataSourceC3P0Adapter"	destroy-method="close">
-		<property name="driverClass" value="org.postgresql.Driver" />
-		<property name="jdbcUrl" value="jdbc:postgresql://127.0.0.1:5432/glaf" />
-		<property name="user" value="root" />
-		<property name="password" value="root" />
+	<bean id="myDataSource" class="com.alibaba.druid.pool.DruidDataSourceC3P0Adapter" destroy-method="close">
+		<property name="driverClass" value="org.h2.Driver" />
+		<property name="jdbcUrl" value="jdbc:h2:tcp://localhost/glafdb" />
+		<property name="user" value="sa" />
+		<property name="password" value="" />
 		<property name="minPoolSize" value="5"/>
-	    <property name="maxPoolSize" value="100"/>
+	    <property name="maxPoolSize" value="50"/>
 	    <property name="maxIdleTime" value="5000"/>
 	    <property name="acquireIncrement" value="2"/>
 	    <property name="maxStatements" value="100"/>
@@ -23,10 +23,10 @@
 	</bean>
 
 	<!-- <bean id="myDataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
-		<property name="driverClass" value="org.postgresql.Driver" />
-		<property name="url" value="jdbc:postgresql://127.0.0.1:5432/jbpm" />
-		<property name="username" value="root" />
-		<property name="password" value="root" />
+		<property name="driverClass" value="org.h2.Driver" />
+		<property name="url" value="jdbc:h2:tcp://localhost/glafdb" />
+		<property name="username" value="sa" />
+		<property name="password" value="" />
 	</bean> -->
 	
 
@@ -48,7 +48,7 @@
 		</property>
 		<property name="hibernateProperties">
 			<props>
-				<prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</prop> 
+				<!-- <prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</prop> --> 
                 <!-- <property name="hibernate.hbm2ddl.auto">update</property> -->
 				<prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>
 			</props>
