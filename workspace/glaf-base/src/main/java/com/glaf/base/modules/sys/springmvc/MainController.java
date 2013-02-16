@@ -29,7 +29,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.glaf.base.utils.RequestUtil;
 
-@Controller
+@Controller("/sys/main")
 public class MainController {
 
 	protected static final Log logger = LogFactory.getLog(MainController.class);

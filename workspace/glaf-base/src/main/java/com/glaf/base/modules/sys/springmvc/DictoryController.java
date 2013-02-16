@@ -53,7 +53,7 @@ import com.glaf.base.utils.PageResult;
 import com.glaf.base.utils.ParamUtil;
 import com.glaf.base.utils.RequestUtil;
 
-@Controller
+@Controller("/sys/dictory")
 @RequestMapping("/sys/dictory.do")
 public class DictoryController {
 	private static final Log logger = LogFactory

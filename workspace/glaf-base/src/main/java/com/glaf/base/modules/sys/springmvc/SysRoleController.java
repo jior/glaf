@@ -38,7 +38,7 @@ import com.glaf.base.utils.PageResult;
 import com.glaf.base.utils.ParamUtil;
 import com.glaf.base.utils.RequestUtil;
 
-@Controller
+@Controller("/sys/role")
 @RequestMapping("/sys/role.do")
 public class SysRoleController {
 	private static final Log logger = LogFactory

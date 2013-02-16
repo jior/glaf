@@ -40,7 +40,7 @@ import com.glaf.base.modules.todo.service.TodoService;
 
 import com.glaf.base.utils.RequestUtil;
 
-@Controller
+@Controller("/sys/todo")
 @RequestMapping("/sys/todo.do")
 public class TodoController {
 	private static final Log logger = LogFactory.getLog(TodoController.class);

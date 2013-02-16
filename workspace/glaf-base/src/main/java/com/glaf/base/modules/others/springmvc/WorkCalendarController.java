@@ -37,7 +37,7 @@ import com.glaf.base.modules.others.service.WorkCalendarService;
 import com.glaf.base.utils.ParamUtil;
 import com.glaf.base.utils.RequestUtil;
 
-@Controller
+@Controller("/others/workCalendar")
 @RequestMapping("/others/workCalendar.do")
 public class WorkCalendarController {
 	private static final Log logger = LogFactory

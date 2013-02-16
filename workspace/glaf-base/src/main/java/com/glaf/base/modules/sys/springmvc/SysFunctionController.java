@@ -40,7 +40,7 @@ import com.glaf.base.res.ViewMessages;
 import com.glaf.base.utils.ParamUtil;
 import com.glaf.base.utils.RequestUtil;
 
-@Controller
+@Controller("/sys/function")
 @RequestMapping("/sys/function.do")
 public class SysFunctionController {
 	private static final Log logger = LogFactory

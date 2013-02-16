@@ -53,7 +53,7 @@ import com.glaf.base.utils.ClassUtil;
 import com.glaf.base.utils.ParamUtil;
 import com.glaf.base.utils.RequestUtil;
 
-@Controller
+@Controller("/sys/authorize")
 @RequestMapping("/sys/authorize.do")
 public class AuthorizeController {
 	private static final Log logger = LogFactory

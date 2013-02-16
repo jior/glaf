@@ -42,7 +42,7 @@ import com.glaf.base.utils.ParamUtil;
 import com.glaf.base.utils.RequestUtil;
 import com.glaf.base.utils.WebUtil;
 
-@Controller
+@Controller("/sys/subject")
 @RequestMapping("/sys/subject.do")
 public class SysSubjectCodeController {
 	private static final Log logger = LogFactory

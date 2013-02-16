@@ -46,7 +46,7 @@ import com.glaf.base.utils.ParamUtil;
 import com.glaf.base.utils.QuartzUtils;
 import com.glaf.base.utils.RequestUtil;
 
-@Controller
+@Controller("/sys/scheduler")
 @RequestMapping("/sys/scheduler.do")
 public class SchedulerController {
 	protected final static Log logger = LogFactory

@@ -42,7 +42,7 @@ import com.glaf.base.utils.PageResult;
 import com.glaf.base.utils.ParamUtil;
 import com.glaf.base.utils.RequestUtil;
 
-@Controller
+@Controller("/sys/tree")
 @RequestMapping("/sys/tree.do")
 public class SysTreeController {
 	private static final Log logger = LogFactory

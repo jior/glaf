@@ -1,20 +1,20 @@
 /*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.glaf.base.modules.sys.interceptor;
 
@@ -25,10 +25,11 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.aop.MethodBeforeAdvice;
 import org.springframework.web.context.WebApplicationContext;
- 
+
 import com.glaf.base.modules.sys.model.BaseDataInfo;
 import com.glaf.base.modules.sys.model.SysFunction;
 import com.glaf.base.modules.sys.model.SysLog;
@@ -53,6 +54,10 @@ public class AuthorizeInterceptor implements MethodBeforeAdvice {
 		String methodName = method.getName();
 		logger.debug("object:" + objectName);
 		logger.debug("method:" + methodName);
+		if (StringUtils.startsWith(methodName,
+				"org.springframework.web.servlet.view")) {
+			return;
+		}
 		String ip = "";
 		String account = "";
 
@@ -103,6 +108,10 @@ public class AuthorizeInterceptor implements MethodBeforeAdvice {
 	 */
 	private void createLog(String account, String methodName, String ip,
 			int flag) {
+		if (StringUtils.startsWith(methodName,
+				"org.springframework.web.servlet.view")) {
+			return;
+		}
 		SysLog log = new SysLog();
 		SysUser user = (SysUser) ContextUtil.get(account);
 		if (user != null) {
@@ -134,7 +143,7 @@ public class AuthorizeInterceptor implements MethodBeforeAdvice {
 			logger.debug("function:" + iter);
 			while (iter.hasNext()) {
 				BaseDataInfo bdi = (BaseDataInfo) iter.next();
-				logger.debug("sys function:" + bdi.getCode());
+				//logger.debug("sys function:" + bdi.getCode());
 				if (bdi.getCode().equals(methodName)) {// 找到
 					ret = true;
 					break;
@@ -158,9 +167,11 @@ public class AuthorizeInterceptor implements MethodBeforeAdvice {
 		// 用户对象，在登陆后加载
 		SysUser user = (SysUser) ContextUtil.get(account);
 		logger.debug("user:" + user);
+		logger.debug("user function size:" + user.getFunctions().size());
 		Iterator iter = user.getFunctions().iterator();// 用户功能列表
 		while (iter.hasNext()) {
 			SysFunction function = (SysFunction) iter.next();
+			logger.debug("function method:" + function.getFuncMethod());
 			if (function.getFuncMethod().equals(methodName)) {
 				ret = true;
 				break;

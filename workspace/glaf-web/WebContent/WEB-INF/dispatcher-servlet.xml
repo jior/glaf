@@ -12,6 +12,23 @@
 
 	<context:component-scan base-package="com.glaf.**.springmvc" />
 
+	<!--权限拦截器 -->
+	<bean id="autoProxyCreator"
+		class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+		<property name="interceptorNames">
+			<list>
+				<value>authorizeInterceptor</value>
+			</list>
+		</property>
+		<property name="beanNames">
+			<list>
+				<value>/*</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="authorizeInterceptor" class="com.glaf.base.modules.sys.interceptor.AuthorizeInterceptor" /> 
+
 	<!-- i18n  -->
 	<bean id="messageSource"
 		class="org.springframework.context.support.ResourceBundleMessageSource">

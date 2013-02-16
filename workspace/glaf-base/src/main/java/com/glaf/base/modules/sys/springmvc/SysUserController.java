@@ -56,7 +56,7 @@ import com.glaf.base.utils.PageResult;
 import com.glaf.base.utils.ParamUtil;
 import com.glaf.base.utils.RequestUtil;
 
-@Controller
+@Controller("/sys/user")
 @RequestMapping("/sys/user.do")
 public class SysUserController {
 	private static final Log logger = LogFactory
