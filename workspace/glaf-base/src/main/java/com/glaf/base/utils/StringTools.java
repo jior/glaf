@@ -34,6 +34,7 @@ import java.util.Random;
 import java.util.Set;
 import java.util.StringTokenizer;
 
+import org.apache.commons.lang.StringUtils;
 import org.htmlparser.Parser;
 import org.htmlparser.beans.StringBean;
 import org.htmlparser.lexer.Lexer;
@@ -91,7 +92,28 @@ public final class StringTools {
 		return s.toString();
 	}
 	
-	
+	public static String camelStyle(String str) {
+		if (str == null || str.indexOf("_") == -1) {
+			return str;
+		}
+		StringBuffer buffer = new StringBuffer();
+		int index = 0;
+		StringTokenizer tokenizer = new StringTokenizer(str, "_");
+		while (tokenizer.hasMoreTokens()) {
+			String tmp = tokenizer.nextToken();
+			if (StringUtils.isNotEmpty(tmp)) {
+				if (index > 0) {
+					tmp = tmp.substring(0, 1).toUpperCase() + tmp.substring(1);
+					buffer.append(tmp);
+				} else {
+					buffer.append(tmp);
+				}
+			}
+			index++;
+		}
+		return buffer.toString();
+	}
+
 
 	public static String chopAtWord(String string, int length) {
 		if (string == null || string.length() == 0) {

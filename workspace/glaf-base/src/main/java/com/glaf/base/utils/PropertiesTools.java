@@ -1,20 +1,20 @@
 /*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.glaf.base.utils;
 
@@ -33,13 +33,13 @@ import org.springframework.core.io.Resource;
 
 public class PropertiesTools {
 
-	public static void save(Resource resource, Map<String, String> dataMap)
+	public static void save(Resource resource, Map<String, Object> dataMap)
 			throws IOException {
 		StringBuffer writer = new StringBuffer();
-		Set<Entry<String,String>> entrySet = dataMap.entrySet(); 
-		for (Entry<String, String> entry : entrySet) { 
-		    String key = entry.getKey();
-		    Object value = entry.getValue(); 
+		Set<Entry<String, Object>> entrySet = dataMap.entrySet();
+		for (Entry<String, Object> entry : entrySet) {
+			String key = entry.getKey();
+			Object value = entry.getValue();
 			writer.append(key);
 			writer.append('=');
 			writer.append(value);
@@ -66,10 +66,10 @@ public class PropertiesTools {
 	public static void save(String filename, Map<String, String> dataMap)
 			throws IOException {
 		StringBuffer writer = new StringBuffer();
-		Set<Entry<String,String>> entrySet = dataMap.entrySet(); 
-		for (Entry<String, String> entry : entrySet) { 
-		    String key = entry.getKey();
-		    Object value = entry.getValue(); 
+		Set<Entry<String, String>> entrySet = dataMap.entrySet();
+		for (Entry<String, String> entry : entrySet) {
+			String key = entry.getKey();
+			Object value = entry.getValue();
 			writer.append(key);
 			writer.append('=');
 			writer.append(value);
@@ -121,8 +121,7 @@ public class PropertiesTools {
 			}
 		}
 	}
-	
-	
+
 	private static final String keyValueSeparators = "=: \t\r\n\f";
 
 	private static final String strictKeyValueSeparators = "=:";
@@ -167,8 +166,8 @@ public class PropertiesTools {
 							if (whiteSpaceChars.indexOf(nextLine
 									.charAt(startIndex)) == -1)
 								break;
-						nextLine = nextLine.substring(startIndex, nextLine
-								.length());
+						nextLine = nextLine.substring(startIndex,
+								nextLine.length());
 						line = loppedLine + nextLine;
 						len = line.length();
 					}
@@ -213,7 +212,7 @@ public class PropertiesTools {
 			}
 		}
 	}
-	
+
 	public static LinkedHashMap<String, String> load(InputStream inputStream)
 			throws IOException {
 		LinkedHashMap<String, String> properties = new LinkedHashMap<String, String>();
@@ -252,8 +251,8 @@ public class PropertiesTools {
 							if (whiteSpaceChars.indexOf(nextLine
 									.charAt(startIndex)) == -1)
 								break;
-						nextLine = nextLine.substring(startIndex, nextLine
-								.length());
+						nextLine = nextLine.substring(startIndex,
+								nextLine.length());
 						line = loppedLine + nextLine;
 						len = line.length();
 					}
