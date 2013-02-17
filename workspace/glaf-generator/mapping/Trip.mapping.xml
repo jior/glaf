@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<mapping>
+	<entity name="Trip" package="com.glaf.apps.trip" 
+	            table="X_APP_TRIP" title="出差申请" englishTitle="Trip Apply">
+		<id  name="id" column="ID_" title="编号" 
+		    englishTitle="ID"	type="String" displayType="4" length="50" sortNo="0"/>
+		<property name="transType" column="TRANSTYPE_" title="交通工具" 
+		    englishTitle="Trans Type"	type="String" displayType="4" length="50" editable="true"
+			dataCode="transportCode" renderType="select" />
+		<property name="applyDate" column="APPLYDATE_" title="申请日期"
+			englishTitle="Apply Date" type="Date" displayType="1" nullable="false" editable="true"/>
+		<property name="startDate" column="STARTDATE_" title="开始日期"
+			englishTitle="Start Date" type="Date" displayType="4" nullable="false" editable="true"/>
+		<property name="endDate" column="ENDDATE_" title="结束日期" type="Date"
+			englishTitle="End Date" displayType="4" nullable="false" editable="true"/>
+		<property name="days" column="DAYS_" title="天数" type="Double"
+			englishTitle="Days" displayType="4" mask="9.9" nullable="false" editable="true"/>
+		<property name="money" column="MONEY_" title="费用" type="Double"
+			englishTitle="Money" displayType="4" mask="9999" nullable="false" editable="true"/>
+		<property name="cause" column="CAUSE_" title="事由"
+			englishTitle="cause" type="String" length="500" nullable="false" editable="true"/>
+		<property name="createDate" column="CREATEDATE_" title="创建日期"
+			englishTitle="Create Date" type="Date" displayType="4" nullable="false"/>
+		<property name="createBy" column="CREATEBY_" title="创建人" 
+		    englishTitle="Create By"	type="String" displayType="4" length="50" />
+		<property name="createByName"  title="创建人" 
+		    englishTitle="Create By"	type="String" displayType="4" length="50" />
+		<property name="updateDate" column="UPDATEDATE_" title="修改日期"
+			englishTitle="Update Date" type="Date" displayType="4" nullable="false"/>
+		<property name="locked" column="LOCKED_" title="是否锁定" type="Integer"
+			englishTitle="Locked" displayType="4" mask="9" nullable="false"/>
+		<property name="deleteFlag" column="DELETEFLAG_" title="删除标记" type="Integer"
+			englishTitle="Delete Flag"  mask="9" nullable="false"/>
+		<property name="status" column="STATUS_" title="状态" type="Integer"
+			englishTitle="status" displayType="4" mask="9" nullable="false"/>
+		<property name="processName" column="PROCESSNAME_" title="流程名称" 
+		    englishTitle="Process Name"	type="String" displayType="4" length="200" />
+		<property name="processInstanceId" column="PROCESSINSTANCEID_" title="流程实例编号" 
+		    englishTitle="ProcessInstanceId"	type="String" displayType="4" length="200" />
+	</entity>
+</mapping>

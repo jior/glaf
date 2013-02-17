@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<mapping>
+	<definition name="Entity">
+		<savePath>/java/model</savePath>
+		<saveName>${entityName}.java</saveName>
+		<template>/templates/java/entity/Entity.java.ftl</template>
+	</definition>
+	<definition name="Service">
+		<savePath>/java/service</savePath>
+		<saveName>${entityName}Service.java</saveName>
+		<template>/templates/java/service/jpa/Service.java.ftl</template>
+	</definition>
+	<definition name="Controller">
+		<savePath>/java/web/springmvc</savePath>
+		<saveName>${entityName}Controller.java</saveName>
+		<template>/templates/java/springmvc/Controller.java.ftl</template>
+	</definition>
+	<definition name="BaseController">
+		<savePath>/java/web/springmvc</savePath>
+		<saveName>${entityName}BaseController.java</saveName>
+		<template>/templates/java/springmvc/BaseController.java.ftl</template>
+	</definition>
+	<definition name="list">
+		<savePath>/jsp</savePath>
+		<saveName>list.jsp</saveName>
+		<template>/templates/jsp/list.jsp.ftl</template>
+	</definition>
+	<definition name="edit">
+		<savePath>/jsp</savePath>
+		<saveName>edit.jsp</saveName>
+		<template>/templates/jsp/edit.jsp.ftl</template>
+	</definition>
+	<definition name="view">
+		<savePath>/jsp</savePath>
+		<saveName>view.jsp</saveName>
+		<template>/templates/jsp/view.jsp.ftl</template>
+	</definition>
+	<definition name="query">
+		<savePath>/jsp</savePath>
+		<saveName>query.jsp</saveName>
+		<template>/templates/jsp/query.jsp.ftl</template>
+	</definition>
+	<definition name="messages_zh_CN">
+		<savePath>/i18n</savePath>
+		<saveName>messages.txt</saveName>
+		<template>/templates/i18n/messages.txt</template>
+	</definition>
+	<definition name="messages_en_US">
+		<savePath>/i18n</savePath>
+		<saveName>messages.properties</saveName>
+		<template>/templates/i18n/messages.properties</template>
+	</definition>
+	<definition name="mysql">
+		<savePath>/sql/create</savePath>
+		<saveName>${entityName}.mysql.create.sql</saveName>
+		<template>/templates/sql/mysql.create.sql</template>
+	</definition>
+	<definition name="mssql">
+		<savePath>/sql/create</savePath>
+		<saveName>${entityName}.mssql.create.sql</saveName>
+		<template>/templates/sql/mssql.create.sql</template>
+	</definition>
+	<definition name="db2">
+		<savePath>/sql/create</savePath>
+		<saveName>${entityName}.db2.create.sql</saveName>
+		<template>/templates/sql/db2.create.sql</template>
+	</definition>
+	<definition name="postgres">
+		<savePath>/sql/create</savePath>
+		<saveName>${entityName}.postgres.create.sql</saveName>
+		<template>/templates/sql/postgres.create.sql</template>
+	</definition>
+	<definition name="oracle">
+		<savePath>/sql/create</savePath>
+		<saveName>${entityName}.oracle.create.sql</saveName>
+		<template>/templates/sql/oracle.create.sql</template>
+	</definition>
+</mapping>

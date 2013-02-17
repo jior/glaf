@@ -139,5 +139,6 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-math-2.2.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-net-3.2.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-validator-1.4.0.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

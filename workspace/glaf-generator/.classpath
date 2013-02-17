@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry kind="src" path="src/main/config"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/glaf-base"/>
+	<classpathentry kind="lib" path="/glaf-base/lib/spring-aop.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/glaf-base/lib/spring-aspects.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/glaf-base/lib/spring-beans.RELEASE.jar" sourcepath="E:/dev/java/src/org.springframework.beans-sources-3.0.6.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/glaf-base/lib/spring-context-support.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/glaf-base/lib/spring-context.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/glaf-base/lib/spring-core.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/glaf-base/lib/spring-expression.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/glaf-base/lib/spring-instrument-tomcat.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/glaf-base/lib/spring-instrument.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/glaf-base/lib/spring-jdbc.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/glaf-base/lib/spring-orm.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/glaf-base/lib/spring-oxm.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/glaf-base/lib/spring-struts.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/glaf-base/lib/spring-test.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/glaf-base/lib/spring-tx.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/glaf-base/lib/spring-web.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/glaf-base/lib/spring-webmvc.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/glaf-base/lib/commons-beanutils-1.8.3.jar"/>
+	<classpathentry kind="lib" path="/glaf-base/lib/commons-betwixt-0.8.jar"/>
+	<classpathentry kind="lib" path="/glaf-base/lib/commons-chain-1.2.jar"/>
+	<classpathentry kind="lib" path="/glaf-base/lib/commons-cli-1.2.jar"/>
+	<classpathentry kind="lib" path="/glaf-base/lib/commons-codec-1.7.jar"/>
+	<classpathentry kind="lib" path="/glaf-base/lib/commons-collections-3.2.1.jar"/>
+	<classpathentry kind="lib" path="/glaf-base/lib/commons-compress-1.4.1.jar"/>
+	<classpathentry kind="lib" path="/glaf-base/lib/commons-configuration-1.3.jar"/>
+	<classpathentry kind="lib" path="/glaf-base/lib/commons-dbcp-1.4.jar"/>
+	<classpathentry kind="lib" path="/glaf-base/lib/commons-digester-2.1.jar"/>
+	<classpathentry kind="lib" path="/glaf-base/lib/commons-discovery-0.4.0.jar"/>
+	<classpathentry kind="lib" path="/glaf-base/lib/commons-el.jar"/>
+	<classpathentry kind="lib" path="/glaf-base/lib/commons-fileupload-1.2.2.jar"/>
+	<classpathentry kind="lib" path="/glaf-base/lib/commons-httpclient-3.1.jar"/>
+	<classpathentry kind="lib" path="/glaf-base/lib/commons-io-2.4.jar"/>
+	<classpathentry kind="lib" path="/glaf-base/lib/commons-jexl-1.1.jar"/>
+	<classpathentry kind="lib" path="/glaf-base/lib/commons-jexl-2.1.1.jar"/>
+	<classpathentry kind="lib" path="/glaf-base/lib/commons-lang-2.6.jar"/>
+	<classpathentry kind="lib" path="/glaf-base/lib/commons-logging.jar"/>
+	<classpathentry kind="lib" path="/glaf-base/lib/commons-math-2.2.jar"/>
+	<classpathentry kind="lib" path="/glaf-base/lib/commons-net-3.2.jar"/>
+	<classpathentry kind="lib" path="/glaf-base/lib/commons-pool-1.6.jar"/>
+	<classpathentry kind="lib" path="/glaf-base/lib/commons-resources.jar"/>
+	<classpathentry kind="lib" path="/glaf-base/lib/commons-validator-1.4.0.jar"/>
+	<classpathentry kind="lib" path="/glaf-base/lib/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="/glaf-base/lib/freemarker.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

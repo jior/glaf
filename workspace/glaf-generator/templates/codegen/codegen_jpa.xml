@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<mapping>
+	<definition name="Entity">
+		<savePath>/java/model</savePath>
+		<saveName>${entityName}.java</saveName>
+		<template>/templates/java/entity/Entity.java.ftl</template>
+	</definition>
+	<definition name="Service">
+		<savePath>/java/service</savePath>
+		<saveName>${entityName}Service.java</saveName>
+		<template>/templates/java/service/jpa/Service.java.ftl</template>
+	</definition>
+	<definition name="Bean">
+		<savePath>/java/view/jsf</savePath>
+		<saveName>${entityName}Bean.java</saveName>
+		<template>/templates/java/jsf/Bean.java.ftl</template>
+	</definition>
+	<definition name="ViewBean">
+		<savePath>/java/view/jsf</savePath>
+		<saveName>${entityName}ViewBean.java</saveName>
+		<template>/templates/java/jsf/ViewBean.java.ftl</template>
+	</definition>
+	<definition name="DataModel">
+		<savePath>/java/view/jsf</savePath>
+		<saveName>${entityName}DataModel.java</saveName>
+		<template>/templates/java/jsf/DataModel.java.ftl</template>
+	</definition>
+	<definition name="list">
+		<savePath>/jsf</savePath>
+		<saveName>list.xhtml</saveName>
+		<template>/templates/jsf/list.xhtml.ftl</template>
+	</definition>
+	<definition name="edit">
+		<savePath>/jsf</savePath>
+		<saveName>edit.xhtml</saveName>
+		<template>/templates/jsf/edit.xhtml.ftl</template>
+	</definition>
+	<definition name="view">
+		<savePath>/jsf</savePath>
+		<saveName>view.xhtml</saveName>
+		<template>/templates/jsf/view.xhtml.ftl</template>
+	</definition>
+	<definition name="menu">
+		<encoding>GBK</encoding>
+		<savePath>/menu</savePath>
+		<saveName>${entityName}.menu.xml</saveName>
+		<template>/templates/menu/menu.xml</template>
+	</definition>
+	<definition name="messages_zh_CN">
+		<savePath>/i18n</savePath>
+		<saveName>messages.txt</saveName>
+		<template>/templates/i18n/messages.txt</template>
+	</definition>
+	<definition name="messages_en_US">
+		<savePath>/i18n</savePath>
+		<saveName>messages.properties</saveName>
+		<template>/templates/i18n/messages.properties</template>
+	</definition>
+	<definition name="mysql">
+		<savePath>/sql/create</savePath>
+		<saveName>${entityName}.mysql.create.sql</saveName>
+		<template>/templates/sql/mysql.create.sql</template>
+	</definition>
+	<definition name="mssql">
+		<savePath>/sql/create</savePath>
+		<saveName>${entityName}.mssql.create.sql</saveName>
+		<template>/templates/sql/mssql.create.sql</template>
+	</definition>
+	<definition name="db2">
+		<savePath>/sql/create</savePath>
+		<saveName>${entityName}.db2.create.sql</saveName>
+		<template>/templates/sql/db2.create.sql</template>
+	</definition>
+	<definition name="postgres">
+		<savePath>/sql/create</savePath>
+		<saveName>${entityName}.postgres.create.sql</saveName>
+		<template>/templates/sql/postgres.create.sql</template>
+	</definition>
+	<definition name="oracle">
+		<savePath>/sql/create</savePath>
+		<saveName>${entityName}.oracle.create.sql</saveName>
+		<template>/templates/sql/oracle.create.sql</template>
+	</definition>
+</mapping>

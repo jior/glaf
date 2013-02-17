@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="GBK" ?>
+<rows>
+	<row id="M_JSF2_${entityName}">
+		<property name="name" value="${classDefinition.title}" />
+		<property name="parent_code" value="M_JSF2" />
+		<property name="projectId" value="system" />
+		<property name="objectId" value="JSF_MENU" />
+		<property name="treeType" value="80" />
+		<property name="url" value="/apps/${modelName}/list.jsf" />
+		<property name="sortNo" value="900" />
+	</row>
+</rows>

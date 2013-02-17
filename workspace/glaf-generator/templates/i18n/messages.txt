@@ -1,0 +1,11 @@
+##############${className}##################
+res_${modelName} = ${classDefinition.title}
+<#if pojo_fields?exists>
+    <#list  pojo_fields as field>	
+        <#if field.title?exists>
+res_${modelName}_${field.name}=	${field.title}
+	<#else>
+res_${modelName}_${field.name}=	${field.name}
+	</#if>
+    </#list>
+</#if>

@@ -29,6 +29,9 @@ import java.util.List;
  */
 public class PageResult implements Serializable{
 	private static final long serialVersionUID = 4829284558188407984L;
+	
+	public final static int DEFAULT_PAGE_SIZE=20;
+	
 	private int currentPageNo;//当前页
 	private int totalPageCount;//总页数
 	private int totalRecordCount;//总记录数
