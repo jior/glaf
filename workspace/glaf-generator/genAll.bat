@@ -1,2 +1,2 @@
 rem set JAVA_HOME=C:\jdk1.6.0
-start ant GenAll
+start ..\..\ant\bin\ant GenAll

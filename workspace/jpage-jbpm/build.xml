@@ -1,6 +1,6 @@
 <project name="jpage-jbpm" basedir="./" default="jar">
     <!-- Project settings -->
-    <property name="project.title" value="JPage Jbpm System"/>
+    <property name="project.title" value="GLAF JBPM System"/>
     <property name="project.distname" value="jpage-jbpm"/>
     <property name="project.version" value="1.0"/>
 	

@@ -1,6 +1,6 @@
 <project name="glaf-base" basedir="." default="jar">
 	<!-- Project settings -->
-	<property name="project.title" value="glaf Base System" />
+	<property name="project.title" value="GLAF Base System" />
 	<property name="project.distname" value="glaf-base" />
 
 	<!-- 路径设置 -->

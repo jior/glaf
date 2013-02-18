@@ -1,0 +1,69 @@
+<project name="glaf-base" basedir="." default="jar">
+	<!-- Project settings -->
+	<property name="project.title" value="GLAF Web System" />
+	<property name="project.distname" value="glaf-web" />
+
+	<!-- 路径设置 -->
+	<property name="src.dir" value="./src" />
+	<property name="lib.dir" value="../glaf-base/lib" />
+	<property name="classes.dir" value="./bin" />
+	<property name="jarfile" value="${project.distname}.jar" />
+
+	<!-- 类路径 -->
+	<path id="compile.classpath">
+		<fileset dir="${lib.dir}">
+			<include name="*.jar" />
+		</fileset>
+		<fileset dir="../glaf-base">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<!-- 准备任务 -->
+	<target name="prepare">
+		<tstamp />
+	</target>
+
+	<!-- 清理任务 -->
+	<target name="clean" description="Prepare for clean build">
+		<delete file="${jarfile}" />
+	</target>
+
+	<target name="build" depends="clean">
+		<echo message="编译应用程序......" />
+		<mkdir dir="bin" />
+		<javac srcdir="src" destdir="bin" debug="on" fork="${javac.fork}" deprecation="on">
+			<include name="main/java/**/*.java" />
+			<include name="test/java/**/*.java" />
+			<classpath refid="compile.classpath" />
+		</javac>
+		<copy todir="WebContent/WEB-INF/classes">
+			<fileset dir="bin" includes="**/*.class" />
+		</copy>
+	</target>
+
+	<target name="copy">
+		<copy todir="WebContent/WEB-INF/classes">
+			<fileset dir="bin" includes="**/*.class,**/*.properties" />
+		</copy>
+	</target>
+
+	<!-- 编译任务 -->
+	<target name="jar" depends="build" description="Create java jar file">
+		<jar jarfile="${project.distname}-src.zip">
+			<fileset dir="." includes="*.bat,*.xml, src/**/*.*,mapping/**/*.xml" excludes="**/*.cvs,**/*.bak,**/*.tmp,**/*.scc,**/*.svn" />
+		</jar>
+		<jar jarfile="${jarfile}" basedir="${classes.dir}" includes="**/*.class" excludes="**/test/**" />
+	</target>
+
+
+	<!-- 制作 Javadoc 任务 -->
+	<target name="javadoc" description="Generate JavaDoc API docs">
+		<delete dir="${doc.path}" />
+		<mkdir dir="${doc.path}" />
+		<javadoc sourcepath="${doc.src}" destdir="${doc.path}" packagenames="*" author="true" private="true" version="true" windowtitle="${project.title} API Documentation" doctitle="&lt;h1&gt;${project.title} Documentation (Version ${project.version})&lt;/h1&gt;" bottom="Copyright &#169; 2012">
+			<classpath refid="compile.classpath" />
+		</javadoc>
+	</target>
+
+</project>
