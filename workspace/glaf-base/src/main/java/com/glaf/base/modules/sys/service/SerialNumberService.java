@@ -25,12 +25,12 @@ import com.glaf.base.modules.sys.model.SerialNumber;
 
 public interface SerialNumberService {
 
-	List<SerialNumber> getImportSupplierSerialNumber(Map params);
+	List<SerialNumber> getImportSupplierSerialNumber(Map<String, Object> params);
 
-	String getSerialNumber(Map params);
+	String getSerialNumber(Map<String, Object> params);
 
 	// 通过模块NO、category、area来查找SerialNumber中对应的moduleNo，从而获取SerialNumber对象
-	List<SerialNumber> getSupplierSerialNumber(Map params);
+	List<SerialNumber> getSupplierSerialNumber(Map<String, Object> params);
 
 	boolean update(SerialNumber bean);
 

@@ -433,7 +433,7 @@ public class SysUserServiceImpl implements SysUserService {
 		// 增加新权限
 		if (newRoles != null && !newRoles.isEmpty()) {
 			long ts = System.currentTimeMillis();
-			Iterator iter = newRoles.iterator();
+			Iterator<SysUserRole> iter = newRoles.iterator();
 			while (iter.hasNext()) {
 				Object obj = iter.next();
 				if (obj instanceof SysUserRole) {

@@ -27,8 +27,6 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.hibernate.Hibernate;
-import org.hibernate.type.Type;
 
 import com.glaf.base.dao.AbstractSpringDao;
 import com.glaf.base.modules.BaseDataManager;

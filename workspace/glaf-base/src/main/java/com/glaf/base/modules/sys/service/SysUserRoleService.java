@@ -84,7 +84,7 @@ public interface SysUserRoleService {
 	 * @param filter
 	 * @return
 	 */
-	PageResult getAllAuthorizedUser(Map filter);
+	PageResult getAllAuthorizedUser(Map<String, Object> filter);
 
 	/**
 	 * 获取某个部门及所有下级部门的某个角色的用户

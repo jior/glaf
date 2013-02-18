@@ -109,7 +109,7 @@ public interface SubjectCodeService {
 	 * @param filter
 	 * @return
 	 */
-	PageResult getFeePage(Map filter);
+	PageResult getFeePage(Map<String, Object> filter);
 
 	/**
 	 * 获取下级列表
@@ -117,6 +117,6 @@ public interface SubjectCodeService {
 	 * @param filter
 	 * @return
 	 */
-	List<SubjectCode> getSubFeeList(Map filter);
+	List<SubjectCode> getSubFeeList(Map<String, Object> filter);
 
 }
