@@ -347,3 +347,10 @@ CREATE TABLE  Attachment (
 	edDate TIMESTAMP(6) , 
 	PRIMARY KEY (id)
 );
+
+create table sys_dbid(
+        name_ VARCHAR2(50)  not null,
+        value_ VARCHAR2(255) not null,
+        version_ INTEGER not null,
+        primary key (name_)
+)

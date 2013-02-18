@@ -198,23 +198,28 @@ public class ${entityName}ResourceRest {
 	public byte[] save${entityName}(@Context HttpServletRequest request) {
 		String ${modelName}Id = request.getParameter("${modelName}Id");
 		if (StringUtils.isEmpty(${modelName}Id)) {
-            ${modelName}Id = request.getParameter("id");
+                   ${modelName}Id = request.getParameter("id");
 		}
 		${entityName} ${modelName} = null;
 		if (StringUtils.isNotEmpty(${modelName}Id)) {
-			${modelName} = ${modelName}Service.get${entityName}(${modelName}Id);
+		    ${modelName} = ${modelName}Service.get${entityName}(${modelName}Id);
 		}
 
 		if (${modelName} == null) {
-			${modelName} = new ${entityName}();
+		    ${modelName} = new ${entityName}();
 		}
+             
+	        try {
+		    Map<String, Object> params = RequestUtil.getParameterMap(request);
+		    Tools.populate(${modelName}, params);
 
-		Map<String, Object> params = RequestUtil.getParameterMap(request);
-		Tools.populate(${modelName}, params);
+		    this.${modelName}Service.save(${modelName});
 
-		this.${modelName}Service.save(${modelName});
-
-		return ResponseUtil.responseJsonResult(true);
+		    return ResponseUtil.responseJsonResult(true);
+		} catch (Exception ex) {
+		    ex.printStackTrace();
+		}
+		return ResponseUtil.responseJsonResult(false);
 	}
 
 	public void set${entityName}Service(${entityName}Service ${modelName}Service) {

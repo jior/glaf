@@ -14,7 +14,7 @@ import com.glaf.base.api.*;
 public class ${entityName} implements Serializable, JsonReadable {
 	private static final long serialVersionUID = 1L;
 
-    @Id
+        @Id
 	@Column(name = "${idField.columnName}", length = 50, nullable = false)
 	protected ${idField.type} ${idField.name};
 

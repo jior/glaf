@@ -347,3 +347,11 @@ CREATE TABLE  Attachment (
 	edDate timestamp , 
 	PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_bin;
+
+
+create table sys_dbid(
+        name_ varchar(50)  not null,
+        value_ varchar(255) not null,
+        version_ integer not null,
+        primary key (name_)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_bin;

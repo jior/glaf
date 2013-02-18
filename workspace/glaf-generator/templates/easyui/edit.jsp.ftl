@@ -1,100 +1,130 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ page import="java.util.*"%>
+<%
+    String theme = com.glaf.base.utils.RequestUtil.getTheme(request);
+    request.setAttribute("theme", theme);
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>${classDefinition.title}</title>
-<%@ include file="/WEB-INF/views/tm/header.jsp"%>
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/easyui/themes/default/easyui.css">
+<link href="<%=request.getContextPath()%>/css/site.css" type="text/css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/easyui/themes/#F{theme}/easyui.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/easyui/themes/icon.css">
-<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery/jquery.min.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery/jquery.form.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.form.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/locale/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript">
 
-        function initData(){
-            $('#iForm').form('load','<%=request.getContextPath()%>/rs/apps/${modelName}/view/$F{rowId}');
-        }
+	function saveData(){
+		var params = jQuery("#iForm").formSerialize();
+		jQuery.ajax({
+				   type: "POST",
+				   url: '<%=request.getContextPath()%>/rs/apps/${modelName}/save${entityName}',
+				   data: params,
+				   dataType:  'json',
+				   error: function(data){
+					   alert('服务器处理错误！');
+				   },
+				   success: function(data){
+					   if(data.message != null){
+						   alert(data.message);
+					   } else {
+						 alert('操作成功完成！');
+					   }
+				   }
+			 });
+	}
 
-        function saveData(){
-             var params = jQuery("#iForm").formSerialize();
-	          jQuery.ajax({
-          	   type: "POST",
-          	   url: '<%=request.getContextPath()%>/rs/apps/${modelName}/save${entityName}',
-          	   data: params,
-          	   dataType:  'json',
-          	   error: function(data){
-          		   alert('服务器处理错误！');
-          	   },
-          	   success: function(data){
-          		   if(data.message != null){
-                       alert(data.message);
-          		   } else {
-                     alert('操作成功完成！');
-          		   }
-          	   }
-           });
-          }
+	function saveAsData(){
+		document.getElementById("id").value="";
+		document.getElementById("rowId").value="";
+		var params = jQuery("#iForm").formSerialize();
+		jQuery.ajax({
+				   type: "POST",
+				   url: '<%=request.getContextPath()%>/rs/apps/${modelName}/save${entityName}',
+				   data: params,
+				   dataType:  'json',
+				   error: function(data){
+					   alert('服务器处理错误！');
+				   },
+				   success: function(data){
+					   if(data.message != null){
+						   alert(data.message);
+					   } else {
+						 alert('操作成功完成！');
+					   }
+				   }
+			 });
+	}
 
 </script>
 </head>
-<body>
-	<div class="x_content_title"><img
-	src="<%=request.getContextPath()%>/pages/images/window.png"
-	alt="${classDefinition.title}"> &nbsp;${classDefinition.title}
-	</div>
-	 <form id="iForm" name="iForm" method="post">
-	    <input type="hidden" id="id" name="id"/>
-	    <input type="hidden" id="${modelName}Id" name="${modelName}Id"/>
-	    <table class="easyui-form" style="width:700px;height:250px" align="center">
-		<tbody>
-<#if pojo_fields?exists>
-         <#list  pojo_fields as field>	
-		   <#if field.editable>
-          <tr>
-          	 <td>${field.title}</td>
-          	 <td>
-          	 <#if field.type?exists && field.type== 'Date'>
-          	  <input id="${field.name}" name="${field.name}" class="easyui-datebox" type="text" 
-	               value='<fmt:formatDate value="$F{${modelName}.${field.name}}" pattern="yyyy-MM-dd" />'
-	                   <#if field.nullable == false> required="true" </#if>></input>
-                 <#elseif field.type?exists && field.type== 'Integer'>
-          	 <input id="${field.name}" name="${field.name}" class="easyui-numberspinner" 
-                        value="$F{${modelName}.${field.name}}" 
-	                  increment="10" style="width:120px;" <#if field.nullable == false> required="true" </#if> type="text"></input>
-          	 <#elseif field.type?exists && field.type== 'Long'>
-          	 <input id="${field.name}" name="${field.name}" class="easyui-numberspinner" 
-                        value="$F{${modelName}.${field.name}}"
-	                  increment="100" style="width:120px;" <#if field.nullable == false> required="true" </#if> type="text"></input>
-          	 <#elseif field.type?exists && field.type== 'Double'>
-          	 <input id="${field.name}" name="${field.name}" class="easyui-numberbox"  precision="2" 
-	              value="$F{${modelName}.${field.name}}"
-          	  <#if field.nullable == false> required="true" </#if> type="text"/>
-          	 <#else>
-                 <input id="${field.name}" name="${field.name}" class="easyui-validatebox" type="text"
-	              value="$F{${modelName}.${field.name}}"
-          	 <#if field.nullable == false> required="true" </#if>></input>
-          	 </#if>
-          	 </td>
-          </tr>
-	  </#if>	 
-    </#list>
-</#if>
-	  <tr>
-		<td colspan="2" align="center">
-		<input type="button" name="save" value="保存" class="button" onclick="javascript:saveData();" />
-		<input name="btn_back" type="button" value=" 返 回 " class="button" onclick="javascript:history.back(0);">
+<body style="padding-left:20px;padding-right:20px">
+
+<div class="content-block" style="width: 845px;">
+<br>
+<div class="x_content_title"><img
+	src="<%=request.getContextPath()%>/images/window.png"
+	alt="${classDefinition.title}">&nbsp;${classDefinition.title}</div>
+<br>
+<form id="iForm" name="iForm" method="post">
+<input type="hidden" id="id" name="id" value="#F{${modelName}.${idField.name}}"/>
+<input type="hidden" id="rowId" name="rowId" value="#F{${modelName}.${idField.name}}"/>
+<table class="easyui-form" style="width:800px;" align="center">
+<tbody>
+  <#if pojo_fields?exists>
+    <#list  pojo_fields as field>	
+	<#if field.editable>
+	<tr>
+		<td width="20%" align="left">${field.title}</td>
+		<td align="left">
+		<#if field.type?exists && field.type== 'Date'>
+			<input id="${field.name}" name="${field.name}" type="text" 
+			       class="easyui-datebox"
+			<#if field.nullable == false> required="true" </#if>
+				  value="<fmt:formatDate value="#F{${modelName}.${field.name}}" pattern="yyyy-MM-dd"/>"/>
+            <#elseif field.type?exists && field.type== 'Integer'>
+			<input id="${field.name}" name="${field.name}" type="text" 
+			       class="easyui-numberspinner" value="0" 
+				   increment="10"  <#if field.nullable == false> required="true" </#if>
+				   value="#F{${modelName}.${field.name}}"/>
+			<#elseif field.type?exists && field.type== 'Long'>
+			<input id="${field.name}" name="${field.name}" type="text"
+			       class="easyui-numberspinner" value="0" 
+				   increment="100"  <#if field.nullable == false> required="true" </#if>
+				   value="#F{${modelName}.${field.name}}"/>
+			<#elseif field.type?exists && field.type== 'Double'>
+			<input id="${field.name}" name="${field.name}" type="text"
+			       class="easyui-numberbox"  precision="2" 
+			<#if field.nullable == false> required="true" </#if>
+				  value="#F{${modelName}.${field.name}}"/>
+			<#else>
+            <input id="${field.name}" name="${field.name}" type="text" 
+			       class="easyui-validatebox"  
+			<#if field.nullable == false> required="true" </#if>
+				   value="#F{${modelName}.${field.name}}"/>
+			</#if>
 		</td>
-	 </tr>
-	</tbody>
-   </table>
-  </form>
-  <script type="text/javascript">
-         initData();
-  </script>
+	</tr>
+  </#if>	 
+ </#list>
+</#if>
+<tr>
+	<td colspan="4" align="center">
+	<br />
+	<input type="button" name="save" value=" 保存 " class="button btn btn-primary" onclick="javascript:saveData();">
+	<input type="button" name="saveAs" value=" 另存 " class="button btn" onclick="javascript:saveAsData();">
+	<input type="button" name="back" value=" 返回 " class="button btn" onclick="javascript:history.back();">
+	</td>
+	</tr>
+</tbody>
+</table>
+</form>
+</div>
+
 </body>
 </html>

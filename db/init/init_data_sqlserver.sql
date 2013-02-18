@@ -155,3 +155,6 @@ insert into  sys_permission (roleid, funcid) values (1, 12);
 insert into  sys_permission (roleid, funcid) values (1, 13);
 insert into  sys_permission (roleid, funcid) values (1, 14);
 go;
+
+insert into SYS_DBID (NAME_, VALUE_, VERSION_) values ('next.dbid', '10001', 1);
+go;
