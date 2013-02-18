@@ -14,7 +14,7 @@
 		<fileset dir="${lib.dir}">
 			<include name="*.jar" />
 		</fileset>
-		<fileset dir="lib">
+		<fileset dir="../jpage-jbpm">
 			<include name="*.jar" />
 		</fileset>
 	</path>

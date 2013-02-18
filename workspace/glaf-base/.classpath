@@ -44,7 +44,6 @@
 	<classpathentry kind="lib" path="lib/jaxen-1.1.1.jar"/>
 	<classpathentry kind="lib" path="lib/jbpm-jpdl.jar"/>
 	<classpathentry kind="lib" path="lib/jdom-1.0.jar"/>
-	<classpathentry kind="lib" path="lib/jpage-jbpm.jar"/>
 	<classpathentry kind="lib" path="lib/json.jar"/>
 	<classpathentry kind="lib" path="lib/jsp-api.jar"/>
 	<classpathentry kind="lib" path="lib/jstl-1.2.jar"/>
@@ -116,5 +115,6 @@
 	<classpathentry kind="lib" path="lib/commons-net-3.2.jar"/>
 	<classpathentry kind="lib" path="lib/commons-validator-1.4.0.jar"/>
 	<classpathentry kind="lib" path="lib/postgresql-9.1-902.jdbc4.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/glaf-jbpm"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
