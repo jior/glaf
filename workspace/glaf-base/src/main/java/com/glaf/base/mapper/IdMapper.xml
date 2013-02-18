@@ -10,7 +10,7 @@
 	</resultMap>
 
 	<insert id="inertNextDbId">
-		insert into SYS_DBID(NAME_, VALUE_, VERSION_) values ('next.dbid', '101', 1)
+		insert into SYS_DBID(NAME_, VALUE_, VERSION_) values ('next.dbid', '10001', 1)
 	</insert>
 
 	<update id="updateNextDbId" parameterType="com.glaf.base.id.Dbid">
