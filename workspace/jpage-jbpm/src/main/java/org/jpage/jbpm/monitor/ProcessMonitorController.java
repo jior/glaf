@@ -442,7 +442,7 @@ public class ProcessMonitorController implements
 			if (StringUtils.isNotEmpty(processInstanceId)
 					&& StringUtils.isNumeric(processInstanceId)
 					&& StringUtils.isNotEmpty(taskName)) {
-				ProcessContainer.getContainer().reassignTask(processInstanceId,
+				ProcessContainer.getContainer().reassignTaskByTaskName(processInstanceId,
 						taskName, actorIds);
 			}
 		}

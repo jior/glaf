@@ -91,7 +91,7 @@
     }
  
 
-  function submitRequest() {
+  function submitMxRequest() {
  
    if(document.getElementById("taskName").value==""){
 	    alert("提示:请选择要重新分派任务的名称！");
@@ -198,7 +198,7 @@
 
 <div align="center"><br />
 <input value="确 定" class="button" name="button" type="button"
-	onclick="javacsript:submitRequest();"> <input value="返 回"
+	onclick="javacsript:submitMxRequest();"> <input value="返 回"
 	class="button" name="button" type="button"
 	onclick="javacsript:goback();"> <br />
 <br />
