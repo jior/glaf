@@ -1,21 +1,20 @@
 /*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
-
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package org.jpage.jbpm.monitor;
 
@@ -24,7 +23,9 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
+import java.util.StringTokenizer;
 import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,12 +34,18 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
+import org.springframework.web.servlet.ModelAndView;
+
 import org.hibernate.Hibernate;
 import org.jbpm.JbpmConfiguration;
 import org.jbpm.JbpmContext;
 import org.jbpm.graph.def.ProcessDefinition;
 import org.jbpm.graph.exe.ProcessInstance;
 import org.jbpm.graph.exe.Token;
+import org.jbpm.taskmgmt.exe.PooledActor;
+import org.jbpm.taskmgmt.exe.TaskInstance;
+import org.jbpm.taskmgmt.exe.TaskMgmtInstance;
 import org.jpage.actor.User;
 import org.jpage.core.query.paging.Page;
 import org.jpage.jbpm.config.ObjectFactory;
@@ -46,14 +53,14 @@ import org.jpage.jbpm.context.Context;
 import org.jpage.jbpm.context.ProcessContext;
 import org.jpage.jbpm.model.DeployInstance;
 import org.jpage.jbpm.service.ActorManager;
+
+import org.jpage.jbpm.service.ProcessContainer;
 import org.jpage.jbpm.service.ProcessManager;
 import org.jpage.jbpm.service.ServiceManager;
 import org.jpage.jbpm.util.Constant;
 import org.jpage.util.RequestUtil;
 import org.jpage.util.Tools;
-import org.springframework.web.servlet.ModelAndView;
 
- 
 public class ProcessMonitorController implements
 		org.springframework.web.servlet.mvc.Controller {
 	private final static Log logger = LogFactory
@@ -110,6 +117,117 @@ public class ProcessMonitorController implements
 		return processInstances(request, response);
 	}
 
+	public ModelAndView chooseUser(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		String processInstanceId = request.getParameter("processInstanceId");
+		String taskName = request.getParameter("taskName");
+
+		Set<String> actorIds = new HashSet<String>();
+		JbpmContext jbpmContext = null;
+		try {
+			jbpmContext = ProcessContainer.getContainer().createJbpmContext();
+			if (StringUtils.isNotEmpty(processInstanceId)
+					&& StringUtils.isNumeric(processInstanceId)) {
+				Map<String, User> userMap = actorManager
+						.getUserMap(jbpmContext);
+				ProcessInstance processInstance = jbpmContext
+						.getProcessInstance(Long.parseLong(processInstanceId));
+				if (processInstance != null) {
+					StringBuffer taskNameBuffer = new StringBuffer();
+					StringBuffer userBuffer = new StringBuffer();
+					StringBuffer taskUserBuffer = new StringBuffer();
+					TaskMgmtInstance tmi = processInstance
+							.getTaskMgmtInstance();
+					Collection<TaskInstance> taskInstances = tmi
+							.getUnfinishedTasks(processInstance.getRootToken());
+					if (taskInstances != null && taskInstances.size() > 0) {
+						Iterator<TaskInstance> iter = taskInstances.iterator();
+						while (iter.hasNext()) {
+							TaskInstance taskInstance = iter.next();
+							if (StringUtils.equals(taskName,
+									taskInstance.getName())) {
+								taskNameBuffer.append("<option value=\"")
+										.append(taskInstance.getName())
+										.append("\" selected>")
+										.append(taskInstance.getName())
+										.append('[')
+										.append(taskInstance.getDescription())
+										.append("]</option>");
+								if (StringUtils.isNotEmpty(taskInstance
+										.getActorId())) {
+									actorIds.add(taskInstance.getActorId());
+								} else {
+									Set<PooledActor> pooledActors = taskInstance
+											.getPooledActors();
+									if (pooledActors != null
+											&& pooledActors.size() > 0) {
+										Iterator<PooledActor> iter2 = pooledActors
+												.iterator();
+										while (iter2.hasNext()) {
+											PooledActor actor = iter2.next();
+											String pooledActorId = actor
+													.getActorId();
+											actorIds.add(pooledActorId);
+										}
+									}
+								}
+							} else {
+								taskNameBuffer.append("<option value=\"")
+										.append(taskInstance.getName())
+										.append("\">")
+										.append(taskInstance.getName())
+										.append('[')
+										.append(taskInstance.getDescription())
+										.append("]</option>");
+							}
+						}
+
+						if (userMap != null && userMap.size() > 0) {
+							Set<Entry<String, User>> entrySet = userMap
+									.entrySet();
+							for (Entry<String, User> entry : entrySet) {
+								User user = entry.getValue();
+								if (user != null) {
+									if (actorIds.contains(user.getActorId())) {
+										taskUserBuffer
+												.append("<option value=\"")
+												.append(user.getActorId())
+												.append("\">")
+												.append(user.getActorId())
+												.append('[')
+												.append(user.getName())
+												.append("]</option>");
+									} else {
+										userBuffer.append("<option value=\"")
+												.append(user.getActorId())
+												.append("\">")
+												.append(user.getActorId())
+												.append('[')
+												.append(user.getName())
+												.append("]</option>");
+									}
+								}
+							}
+						}
+					}
+					request.setAttribute("selectedScript",
+							taskUserBuffer.toString());
+					request.setAttribute("noselectedScript",
+							userBuffer.toString());
+					request.setAttribute("taskNameScript",
+							taskNameBuffer.toString());
+				}
+			}
+		} catch (Exception ex) {
+			logger.debug(ex);
+			ex.printStackTrace();
+		} finally {
+			Context.close(jbpmContext);
+		}
+
+		return new ModelAndView("chooseUser");
+	}
+
 	public ModelAndView chart(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		String chartType = request.getParameter("chartType");
@@ -126,51 +244,6 @@ public class ProcessMonitorController implements
 			return new ModelAndView(view);
 		}
 		return new ModelAndView("chart");
-	}
-
-	public ModelAndView deleteProcessDefinition(HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		String processDefinitionId = request
-				.getParameter("processDefinitionId");
-		logger.info("processDefinitionId:" + processDefinitionId);
-		JbpmContext jbpmContext = null;
-		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
-			processManager.deleteProcessDefinition(jbpmContext,
-					processDefinitionId);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			logger.error(ex);
-			return new ModelAndView("error");
-		} finally {
-			Context.close(jbpmContext);
-		}
-		return processDefinitions(request, response);
-	}
-
-	public ModelAndView deleteProcessInstance(HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		if (!ObjectFactory.canDeleteProcessInstance()) {
-			request.setAttribute(
-					org.jpage.jbpm.util.Constant.APPLICATION_EXCEPTION_MESSAGE,
-					"不允许删除该流程实例!");
-			return new ModelAndView("error");
-		}
-		String processInstanceId = request.getParameter("processInstanceId");
-		logger.info("processInstanceId:" + processInstanceId);
-		JbpmContext jbpmContext = null;
-		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
-			processManager
-					.deleteProcessInstance(jbpmContext, processInstanceId);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			logger.error(ex);
-			return new ModelAndView("error");
-		} finally {
-			Context.close(jbpmContext);
-		}
-		return processInstances(request, response);
 	}
 
 	public ModelAndView handleRequest(HttpServletRequest request,
@@ -194,10 +267,6 @@ public class ProcessMonitorController implements
 				return processDefinitions(request, response);
 			} else if (method.equals("taskInstances")) {
 				return taskInstances(request, response);
-			} else if (method.equals("deleteProcessDefinition")) {
-				return deleteProcessDefinition(request, response);
-			} else if (method.equals("deleteProcessInstance")) {
-				return deleteProcessInstance(request, response);
 			} else if (method.equals("abortProcess")) {
 				return abortProcess(request, response);
 			} else if (method.equals("suspend")) {
@@ -214,6 +283,14 @@ public class ProcessMonitorController implements
 				return stateInstances(request, response);
 			} else if (method.equals("viewStateInstances")) {
 				return viewStateInstances(request, response);
+			} else if (method.equals("reassign")) {
+				return reassign(request, response);
+			} else if (method.equals("chooseUser")) {
+				return chooseUser(request, response);
+			} else if (method.equals("task")) {
+				return stateInstances(request, response);
+			} else if (method.equals("view")) {
+				return stateInstances(request, response);
 			}
 
 			return processInstances(request, response);
@@ -336,6 +413,43 @@ public class ProcessMonitorController implements
 		return new ModelAndView("query");
 	}
 
+	public ModelAndView reassign(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		String processInstanceId = request.getParameter("processInstanceId");
+		String taskInstanceId = request.getParameter("taskInstanceId");
+		String actorIdXY = request.getParameter("actorIdXY");
+		String taskName = request.getParameter("taskName");
+
+		Set<String> actorIds = new HashSet<String>();
+		if (StringUtils.isNotEmpty(actorIdXY)) {
+			StringTokenizer token = new StringTokenizer(actorIdXY, ",");
+			while (token.hasMoreTokens()) {
+				String str = token.nextToken();
+				actorIds.add(str);
+			}
+		}
+
+		logger.debug("processInstanceId:" + processInstanceId);
+		logger.debug("taskName:" + taskName);
+		logger.debug("actorIds:" + actorIds);
+
+		if (actorIds.size() > 0) {
+			if (StringUtils.isNotEmpty(taskInstanceId)
+					&& StringUtils.isNumeric(taskInstanceId)) {
+				ProcessContainer.getContainer().reassignTask(taskInstanceId,
+						actorIds);
+			}
+			if (StringUtils.isNotEmpty(processInstanceId)
+					&& StringUtils.isNumeric(processInstanceId)
+					&& StringUtils.isNotEmpty(taskName)) {
+				ProcessContainer.getContainer().reassignTask(processInstanceId,
+						taskName, actorIds);
+			}
+		}
+
+		return this.stateInstances(request, response);
+	}
+
 	public ModelAndView resume(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		String processInstanceId = request.getParameter("processInstanceId");
@@ -351,7 +465,7 @@ public class ProcessMonitorController implements
 		} finally {
 			Context.close(jbpmContext);
 		}
-		return processInstances(request, response);
+		return this.stateInstances(request, response);
 	}
 
 	public ModelAndView stateInstances(HttpServletRequest request,
@@ -419,12 +533,6 @@ public class ProcessMonitorController implements
 
 	public ModelAndView suspend(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		if (!ObjectFactory.canSuspendProcess()) {
-			request.setAttribute(
-					org.jpage.jbpm.util.Constant.APPLICATION_EXCEPTION_MESSAGE,
-					"不允许挂起该流程实例!");
-			return new ModelAndView("error");
-		}
 		String processInstanceId = request.getParameter("processInstanceId");
 		logger.info("processInstanceId:" + processInstanceId);
 		JbpmContext jbpmContext = null;
@@ -438,7 +546,7 @@ public class ProcessMonitorController implements
 		} finally {
 			Context.close(jbpmContext);
 		}
-		return processInstances(request, response);
+		return this.stateInstances(request, response);
 	}
 
 	public ModelAndView taskInstances(HttpServletRequest request,

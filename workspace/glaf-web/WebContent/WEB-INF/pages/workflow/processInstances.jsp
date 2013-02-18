@@ -151,7 +151,6 @@
 	  <fmt:formatDate value="${processInstance.start}" pattern="yyyy-MM-dd HH:mm:ss"/>
 	  </td>
 	  <td width="30%" height="20" align="center" nowrap>
-	  <%if(org.jpage.jbpm.config.ObjectFactory.canSuspendProcess()){%>
 	  <% if(pi != null && pi.getEnd() == null){
           if(pi.isSuspended()){
 	  %>
@@ -160,7 +159,7 @@
 	      <img src="<%=request.getContextPath()%>/workflow/images/suspend.gif" border="0" title="挂起流程实例" style="cursor:hand;"  onclick="javascript:suspend('<c:out value="${processInstance.id}"/>');" >
 	  <%}
 	   }
-	  }%>
+	  %>
 	  <%if(org.jpage.jbpm.config.ObjectFactory.canDeleteProcessInstance()){%>
 	      <img src="<%=request.getContextPath()%>/workflow/images/delete.gif" border="0" title="删除流程实例" style="cursor:hand;"  onclick="javascript:deleteRow('<c:out value="${processInstance.id}"/>');" >
       <%}%>

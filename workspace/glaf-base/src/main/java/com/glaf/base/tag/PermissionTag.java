@@ -29,7 +29,7 @@ import javax.servlet.jsp.tagext.BodyTagSupport;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.glaf.base.modules.sys.action.AuthorizeBean;
+import com.glaf.base.business.AuthorizeBean;
 import com.glaf.base.modules.sys.model.SysDeptRole;
 import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.utils.RequestUtil;

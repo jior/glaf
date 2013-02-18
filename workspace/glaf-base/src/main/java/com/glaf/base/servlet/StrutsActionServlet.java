@@ -29,7 +29,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.struts.action.ActionServlet;
 
-import com.glaf.base.modules.sys.action.AuthorizeBean;
+import com.glaf.base.business.AuthorizeBean;
 import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.utils.Authentication;
 import com.glaf.base.utils.RequestUtil;

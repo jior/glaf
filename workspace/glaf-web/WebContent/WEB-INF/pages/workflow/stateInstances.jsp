@@ -3,16 +3,45 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="/WEB-INF/tld/jpage.tld" prefix="jpage"%>
 <%@ page import="java.util.*"%>
+<%@ page import="org.jbpm.graph.def.*"%>
+<%@ page import="org.jbpm.graph.exe.*"%>
+<%@ page import="org.jbpm.taskmgmt.def.*"%>
 <%@ page import="org.jpage.jbpm.util.*"%>
 <%@ page import="org.jpage.jbpm.model.*"%>
+<%@ page import="org.apache.commons.lang.StringUtils"%>
 <%
 	Map userMap = (Map) request.getAttribute("userMap");
+	ProcessInstance processInstance = (ProcessInstance) request.getAttribute("processInstance");
+	String processInstanceId = request.getParameter("processInstanceId");
+	if (!(StringUtils.isNumeric(processInstanceId))) {
+			processInstanceId = "0";
+	}
 %>
 <html>
 <head>
 <meta http-equiv=content-type content="text/html; charset=utf-8">
 <link href="<%=request.getContextPath()%>/css/site.css" rel="stylesheet" type="text/css"> 
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/site.js"></script>
+<script type="text/javascript">
+    function suspendX(btn){
+		 if(confirm("该流程实例的全部待办任务都会被暂停执行，确认吗？")){
+			 document.getElementById("method").value = "suspend";
+             document.iForm.submit();
+		 }
+     };
+
+	function resumeX(btn){
+		 if(confirm("该流程实例的全部待办任务都会被恢复执行，确认吗？")){
+			 document.getElementById("method").value ="resume";
+             document.iForm.submit();
+		  }
+     };
+ 
+ 
+  function chooseUserXY(){
+	  location.href= "<%=request.getContextPath()%>/workflow/processMonitorController.jspa?method=chooseUser&processInstanceId=<%=processInstanceId%>";
+  }
+</script>
 </head>
 <body>
 	<div align="center">
@@ -169,3 +198,24 @@
 			<jpage:processimageToken token="<%=tokenInstanceId.longValue()%>" />
 		</center>
 	</c:if>
+
+<div align="center"><br />
+<form id="iForm" name="iForm" class="x-form"
+	action="<%=request.getContextPath()%>/workflow/processMonitorController.jspa"><input
+	type="hidden" id="processInstanceId" name="processInstanceId"
+	value="<%=processInstanceId%>"> <input type="hidden"
+	id="method" name="method" value="task">
+<%if ( processInstance != null &&  !processInstance.hasEnded()) {%>
+<input type="button" value="暂停任务" id="suspend" name="suspend"
+	class="button" onclick="javascript:suspendX();" /> <input type="button"
+	value="恢复任务" id="resume" name="resume" class="button"
+	onclick="javascript:resumeX();" /> <input type="button" value="重新分派任务"
+	id="reassignx" name="reassignx" class="button"
+	onclick="javascript:chooseUserXY();" /> 
+<%}%> 
+	<input type="button"
+	value="关闭" id="close" name="close" class="button"
+	onclick="javascript:window.close();" /> <br />
+<br />
+</form>
+</div>

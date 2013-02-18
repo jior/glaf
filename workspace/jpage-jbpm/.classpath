@@ -61,8 +61,6 @@
 	<classpathentry kind="lib" path="/glaf-base/lib/jaxen-1.1.1.jar"/>
 	<classpathentry kind="lib" path="/glaf-base/lib/jbpm-jpdl.jar"/>
 	<classpathentry kind="lib" path="/glaf-base/lib/jdom-1.0.jar"/>
-	<classpathentry kind="lib" path="/glaf-base/lib/jpage-jbpm-src.zip"/>
-	<classpathentry kind="lib" path="/glaf-base/lib/jpage-jbpm.jar"/>
 	<classpathentry kind="lib" path="/glaf-base/lib/json.jar"/>
 	<classpathentry kind="lib" path="/glaf-base/lib/jsp-api.jar"/>
 	<classpathentry kind="lib" path="/glaf-base/lib/jstl-1.2.jar"/>

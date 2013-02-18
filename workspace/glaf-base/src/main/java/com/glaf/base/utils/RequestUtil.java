@@ -43,9 +43,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jpage.util.DateTools;
 
+import com.glaf.base.business.AuthorizeBean;
 import com.glaf.base.context.ContextFactory;
 import com.glaf.base.modules.sys.SysConstants;
-import com.glaf.base.modules.sys.action.AuthorizeBean;
 import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.sys.service.AuthorizeService;
 
