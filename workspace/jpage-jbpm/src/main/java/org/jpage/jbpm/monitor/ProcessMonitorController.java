@@ -117,6 +117,24 @@ public class ProcessMonitorController implements
 		return processInstances(request, response);
 	}
 
+	public ModelAndView chart(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		String chartType = request.getParameter("chartType");
+		if ("yearChart".equals(chartType)) {
+			return new ModelAndView("yearChart");
+		} else if ("monthChart".equals(chartType)) {
+			return new ModelAndView("monthChart");
+		} else if ("todayChart".equals(chartType)) {
+			return new ModelAndView("todayChart");
+		}
+
+		String view = request.getParameter("view");
+		if (StringUtils.isNotBlank(view)) {
+			return new ModelAndView(view);
+		}
+		return new ModelAndView("chart");
+	}
+
 	public ModelAndView chooseUser(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		String processInstanceId = request.getParameter("processInstanceId");
@@ -134,8 +152,6 @@ public class ProcessMonitorController implements
 						.getProcessInstance(Long.parseLong(processInstanceId));
 				if (processInstance != null) {
 					StringBuffer taskNameBuffer = new StringBuffer();
-					StringBuffer userBuffer = new StringBuffer();
-					StringBuffer taskUserBuffer = new StringBuffer();
 					TaskMgmtInstance tmi = processInstance
 							.getTaskMgmtInstance();
 					Collection<TaskInstance> taskInstances = tmi
@@ -182,40 +198,43 @@ public class ProcessMonitorController implements
 							}
 						}
 
-						if (userMap != null && userMap.size() > 0) {
-							Set<Entry<String, User>> entrySet = userMap
-									.entrySet();
-							for (Entry<String, User> entry : entrySet) {
-								User user = entry.getValue();
-								if (user != null) {
-									if (actorIds.contains(user.getActorId())) {
-										taskUserBuffer
-												.append("<option value=\"")
-												.append(user.getActorId())
-												.append("\">")
-												.append(user.getActorId())
-												.append('[')
-												.append(user.getName())
-												.append("]</option>");
-									} else {
-										userBuffer.append("<option value=\"")
-												.append(user.getActorId())
-												.append("\">")
-												.append(user.getActorId())
-												.append('[')
-												.append(user.getName())
-												.append("]</option>");
-									}
+					}
+
+					if (userMap != null && userMap.size() > 0) {
+						StringBuffer userBuffer = new StringBuffer();
+						StringBuffer taskUserBuffer = new StringBuffer();
+						for (User user : userMap.values()) {
+							if (user != null) {
+								logger.debug(user.getName()+" ->"+user.getActorId());
+								if (actorIds.contains(user.getActorId())) {
+									taskUserBuffer.append("<option value=\"")
+											.append(user.getActorId())
+											.append("\">")
+											.append(user.getActorId())
+											.append('[').append(user.getName())
+											.append("]</option>");
+								} else {
+									userBuffer.append("<option value=\"")
+											.append(user.getActorId())
+											.append("\">")
+											.append(user.getActorId())
+											.append('[').append(user.getName())
+											.append("]</option>");
 								}
 							}
 						}
+
+						request.setAttribute("selectedScript",
+								taskUserBuffer.toString());
+						request.setAttribute("noselectedScript",
+								userBuffer.toString());
+						request.setAttribute("taskNameScript",
+								taskNameBuffer.toString());
+						taskUserBuffer.delete(0, taskUserBuffer.length());
+						userBuffer.delete(0, userBuffer.length());
+						taskNameBuffer.delete(0, taskNameBuffer.length());
 					}
-					request.setAttribute("selectedScript",
-							taskUserBuffer.toString());
-					request.setAttribute("noselectedScript",
-							userBuffer.toString());
-					request.setAttribute("taskNameScript",
-							taskNameBuffer.toString());
+
 				}
 			}
 		} catch (Exception ex) {
@@ -226,24 +245,6 @@ public class ProcessMonitorController implements
 		}
 
 		return new ModelAndView("chooseUser");
-	}
-
-	public ModelAndView chart(HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		String chartType = request.getParameter("chartType");
-		if ("yearChart".equals(chartType)) {
-			return new ModelAndView("yearChart");
-		} else if ("monthChart".equals(chartType)) {
-			return new ModelAndView("monthChart");
-		} else if ("todayChart".equals(chartType)) {
-			return new ModelAndView("todayChart");
-		}
-
-		String view = request.getParameter("view");
-		if (StringUtils.isNotBlank(view)) {
-			return new ModelAndView(view);
-		}
-		return new ModelAndView("chart");
 	}
 
 	public ModelAndView handleRequest(HttpServletRequest request,
@@ -442,8 +443,8 @@ public class ProcessMonitorController implements
 			if (StringUtils.isNotEmpty(processInstanceId)
 					&& StringUtils.isNumeric(processInstanceId)
 					&& StringUtils.isNotEmpty(taskName)) {
-				ProcessContainer.getContainer().reassignTaskByTaskName(processInstanceId,
-						taskName, actorIds);
+				ProcessContainer.getContainer().reassignTaskByTaskName(
+						processInstanceId, taskName, actorIds);
 			}
 		}
 

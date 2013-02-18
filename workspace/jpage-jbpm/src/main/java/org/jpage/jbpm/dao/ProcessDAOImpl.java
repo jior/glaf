@@ -526,7 +526,6 @@ public class ProcessDAOImpl implements ProcessDAO {
 					org.jpage.actor.User user = (org.jpage.actor.User) iter
 							.next();
 					userMap.put(user.getActorId(), user);
-					userMap.put(user.getActorId().toUpperCase(), user);
 				}
 			}
 			return userMap;
