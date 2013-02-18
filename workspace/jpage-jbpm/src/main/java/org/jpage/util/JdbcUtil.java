@@ -33,8 +33,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
-import org.jpage.persistence.DatabaseType;
+ 
 import org.jpage.persistence.SqlExecutor;
 
 public final class JdbcUtil {
@@ -131,68 +130,7 @@ public final class JdbcUtil {
 		return (sql.startsWith("select distinct") ? 15 : 6);
 	}
 
-	public static String getLimitString(String sql, int startPage, int pageSize) {
-		int start = (startPage - 1) * pageSize;
-		int end = startPage * pageSize;
-		String startRow = String.valueOf(start);
-		String endRow = String.valueOf(end);
-		sql = sql.trim();
-		StringBuffer sqlBuffer = new StringBuffer();
-		int dbType = DatabaseType.getDatabaseType();
-		switch (dbType) {
-		case DatabaseType.DB2_TYPE:
-			int startOfSelect = sql.indexOf("select");
-			startRow = String.valueOf(start + 1);
-			sqlBuffer.append(sql.substring(0, startOfSelect))
-					.append(" select * from ( select ")
-					.append(getRowNumber(sql));
-			if (hasDistinct(sql)) {
-				sqlBuffer.append(" row_.* from ( ")
-						.append(sql.substring(startOfSelect))
-						.append(" ) as row_");
-			} else {
-				sqlBuffer.append(sql.substring(startOfSelect + 6));
-			}
-			sqlBuffer.append(" ) as temp_ where rownumber_ ");
-			sqlBuffer.append(" between ").append(startRow).append(" and ")
-					.append(endRow);
-			break;
-		case DatabaseType.HSQL_TYPE:
-			StringBuffer buffer = new StringBuffer();
-			buffer.append(" limit ").append(startRow).append(" ")
-					.append(String.valueOf(pageSize)).append(" ");
-			sqlBuffer.append(sql);
-			sqlBuffer.insert(6, buffer.toString());
-			break;
-		case DatabaseType.INTERBASE_TYPE:
-			sqlBuffer.append(sql).append(" rows ").append(startRow)
-					.append(" to ").append(endRow);
-			break;
-		case DatabaseType.MYSQL_TYPE:
-			sqlBuffer.append(sql).append(" limit ").append(startRow)
-					.append(" , ").append(String.valueOf(pageSize));
-			break;
-		case DatabaseType.ORACLE_TYPE:
-			sqlBuffer
-					.append(" select * from ( select row_.*, rownum rownum_ from ( ");
-			sqlBuffer.append(sql);
-			sqlBuffer.append(" ) row_ ) where rownum_ <= ").append(endRow)
-					.append(" and rownum_ ").append(startRow);
-			break;
-		case DatabaseType.POSTGRESQL_TYPE:
-			sqlBuffer.append(sql).append(" limit ").append(pageSize)
-					.append(" offset ").append(startRow);
-			break;
-		case DatabaseType.SQLSERVER_TYPE:
-			sqlBuffer.append(sql);
-			sqlBuffer.insert(getAfterSelectInsertPoint(sql), " top " + endRow);
-			break;
-		default:
-			sqlBuffer.append(sql);
-			break;
-		}
-		return sqlBuffer.toString();
-	}
+	 
 
 	public static Object getObject(ResultSet rs, int index) throws SQLException {
 		Object obj = rs.getObject(index);

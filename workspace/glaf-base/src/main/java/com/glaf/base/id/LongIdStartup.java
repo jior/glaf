@@ -20,8 +20,6 @@ import java.sql.SQLException;
 
 import com.glaf.base.config.DataSourceConfig;
 
- 
-
 public class LongIdStartup {
 
 	public static void init() {

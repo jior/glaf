@@ -50,7 +50,7 @@ public class StartupListener extends ContextLoaderListener implements
 				.getRequiredWebApplicationContext(context);
 
 		if (ctx != null) {
-			ContextFactory.setContext(ctx);
+			//ContextFactory.setContext(ctx);
 		}
 
 		if (log.isDebugEnabled()) {

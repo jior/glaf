@@ -38,6 +38,14 @@
 		<property name="entityDAO" ref="myBatis3EntityDAO" />
 	</bean>
 
+	<bean id="myBatis3DbIdGenerator" class="com.glaf.base.id.MyBatis3DbIdGenerator">
+		<property name="entityDAO" ref="myBatis3EntityDAO" />
+	</bean>
+
+	<bean id="myBatis3DbLongIdGenerator" class="com.glaf.base.id.MyBatis3DbLongIdGenerator">
+		<property name="entityDAO" ref="myBatis3EntityDAO" />
+	</bean>
+
 	<bean id="myBatis3EntityProxy" parent="baseTxService">
 		<property name="target">
 			<ref bean="myBatis3EntityService" />

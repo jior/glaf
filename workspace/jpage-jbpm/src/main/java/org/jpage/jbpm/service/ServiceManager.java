@@ -130,24 +130,6 @@ public interface ServiceManager {
 	 */
 	public List getDeployInstances(JbpmContext jbpmContext);
 
-
-	/**
-	 * 执行定义的SQL语句
-	 * 
-	 * @param con
-	 * @param executors
-	 */
-	public void execute(Connection con, List executors);
-
-	/**
-	 * 执行定义的SQL语句
-	 * 
-	 * @param con
-	 * @param executor
-	 * @param params
-	 */
-	public void execute(Connection con, Executor executor, Map params);
-
 	 
 
 	/**

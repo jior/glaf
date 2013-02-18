@@ -40,7 +40,6 @@ import org.jpage.jbpm.model.DeployInstance;
 import org.jpage.jbpm.model.StateInstance;
 import org.jpage.jbpm.persistence.PersistenceDAO;
 import org.jpage.persistence.Executor;
-import org.jpage.persistence.SQLCommandImpl;
 import org.jpage.util.DateTools;
 
 public class ServiceManagerImpl implements ServiceManager {
@@ -196,35 +195,8 @@ public class ServiceManagerImpl implements ServiceManager {
 
 	 
 
-	/**
-	 * 执行定义的SQL语句
-	 * 
-	 * @param con
-	 * @param executors
-	 */
-	public void execute(Connection con, List executors) {
-		SQLCommandImpl cmd = new SQLCommandImpl();
-		cmd.setConnection(con);
-		cmd.setExecutors(executors);
-		cmd.execute();
-	}
 
-	/**
-	 * 执行定义的SQL语句
-	 * 
-	 * @param con
-	 * @param executor
-	 * @param params
-	 */
-	public void execute(Connection con, Executor executor, Map params) {
-		List executors = new ArrayList();
-		executor.setParams(params);
-		executors.add(executor);
-		SQLCommandImpl cmd = new SQLCommandImpl();
-		cmd.setConnection(con);
-		cmd.setExecutors(executors);
-		cmd.execute();
-	}
+	
 	
 	/**
 	 * 根据流程实例编号获取用户的任务实例

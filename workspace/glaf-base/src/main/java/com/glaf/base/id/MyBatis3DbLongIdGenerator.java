@@ -18,8 +18,6 @@ import org.apache.commons.logging.LogFactory;
 
 import com.glaf.base.entity.EntityDAO;
 
- 
-
 public class MyBatis3DbLongIdGenerator implements LongIdGenerator {
 	protected final static Log logger = LogFactory
 			.getLog(MyBatis3DbLongIdGenerator.class);

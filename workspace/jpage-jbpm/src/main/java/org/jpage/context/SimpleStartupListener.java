@@ -48,7 +48,7 @@ public class SimpleStartupListener extends ContextLoaderListener implements
 				.getRequiredWebApplicationContext(context);
 		if (ctx != null) {
 			log.debug("set application context...");
-			ContextFactory.setContext(ctx);
+			//ContextFactory.setContext(ctx);
 		}
 		if (log.isDebugEnabled()) {
 			log.debug("Drop-down initialization complete [OK]");
