@@ -28,9 +28,10 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.json.JSONArray;
 
 import com.glaf.base.context.ContextFactory;
-import com.glaf.base.modules.sys.model.SysApplication;
+
 import com.glaf.base.modules.sys.model.SysDepartment;
 import com.glaf.base.modules.sys.model.SysRole;
 import com.glaf.base.modules.sys.model.SysUser;
@@ -52,10 +53,10 @@ public class IdentityFactory {
 	protected static SysApplicationService sysApplicationService;
 
 	static {
-		sysUserService = ContextFactory.getBean("sysUserService");
-		sysRoleService = ContextFactory.getBean("sysRoleService");
-		sysDepartmentService = ContextFactory.getBean("sysDepartmentService");
-		sysApplicationService = ContextFactory.getBean("sysApplicationService");
+		sysUserService = ContextFactory.getBean("sysUserProxy");
+		sysRoleService = ContextFactory.getBean("sysRoleProxy");
+		sysDepartmentService = ContextFactory.getBean("sysDepartmentProxy");
+		sysApplicationService = ContextFactory.getBean("sysApplicationProxy");
 	}
 
 	/**
@@ -67,7 +68,7 @@ public class IdentityFactory {
 	 */
 	public static List<SysUser> getChildrenMembershipUsers(Long deptId,
 			Long roleId) {
-		 
+
 		return null;
 	}
 
@@ -81,7 +82,7 @@ public class IdentityFactory {
 		SysDepartment model = sysDepartmentService.findByCode(code);
 		return model;
 	}
-	
+
 	/**
 	 * 根据部门代码获取部门(sys_department表的deptno字段)
 	 * 
@@ -107,8 +108,8 @@ public class IdentityFactory {
 	public static Map<String, SysDepartment> getDepartmentMap() {
 		Map<String, SysDepartment> deptMap = new HashMap<String, SysDepartment>();
 		List<SysDepartment> depts = sysDepartmentService.getSysDepartmentList();
-		if(depts != null && !depts.isEmpty()){
-			for(SysDepartment dept:depts){
+		if (depts != null && !depts.isEmpty()) {
+			for (SysDepartment dept : depts) {
 				depts.add(dept);
 			}
 		}
@@ -133,7 +134,12 @@ public class IdentityFactory {
 	 */
 	public static Map<String, SysUser> getLowerCaseUserMap() {
 		Map<String, SysUser> userMap = new LinkedHashMap<String, SysUser>();
-
+		List<SysUser> users = sysUserService.getSysUserList();
+		if (users != null && !users.isEmpty()) {
+			for (SysUser user : users) {
+				userMap.put(user.getAccount().toLowerCase(), user);
+			}
+		}
 		return userMap;
 	}
 
@@ -227,11 +233,21 @@ public class IdentityFactory {
 	/**
 	 * 通过角色编号获取角色
 	 * 
-	 * @param roleId
+	 * @param id
 	 * @return
 	 */
-	public static SysRole getRole(String roleId) {
-		return null;
+	public static SysRole getRole(Long id) {
+		return sysRoleService.findById(id);
+	}
+
+	/**
+	 * 通过角色代码获取角色
+	 * 
+	 * @param code
+	 * @return
+	 */
+	public static SysRole getRoleByCode(String code) {
+		return sysRoleService.findByCode(code);
 	}
 
 	/**
@@ -242,7 +258,12 @@ public class IdentityFactory {
 	 */
 	public static Map<String, SysRole> getRoleMap() {
 		Map<String, SysRole> roleMap = new HashMap<String, SysRole>();
-
+		List<SysRole> roles = sysRoleService.getSysRoleList();
+		if (roles != null && !roles.isEmpty()) {
+			for (SysRole role : roles) {
+				roleMap.put(role.getCode(), role);
+			}
+		}
 		return roleMap;
 	}
 
@@ -253,8 +274,7 @@ public class IdentityFactory {
 	 * @return
 	 */
 	public static List<SysRole> getRoles() {
-		List<SysRole> roles = new ArrayList<SysRole>();
-
+		List<SysRole> roles = sysRoleService.getSysRoleList();
 		return roles;
 	}
 
@@ -264,7 +284,7 @@ public class IdentityFactory {
 	 * @param roleId
 	 * @return
 	 */
-	public static List<SysUser> getRoleUsers(String roleId) {
+	public static List<SysUser> getRoleUsers(Long roleId) {
 		return null;
 	}
 
@@ -284,7 +304,7 @@ public class IdentityFactory {
 	 * @return
 	 */
 	public static SysUser getSysUser(String actorId) {
-		return null;
+		return sysUserService.findByAccountWithAll(actorId);
 	}
 
 	/**
@@ -295,19 +315,23 @@ public class IdentityFactory {
 	 */
 	public static Map<String, SysUser> getUserMap() {
 		Map<String, SysUser> userMap = new LinkedHashMap<String, SysUser>();
-
+		List<SysUser> users = sysUserService.getSysUserList();
+		if (users != null && !users.isEmpty()) {
+			for (SysUser user : users) {
+				userMap.put(user.getAccount(), user);
+			}
+		}
 		return userMap;
 	}
 
 	/**
 	 * 获取用户菜单
 	 * 
-	 * @param actorId
+	 * @param userId
 	 * @return
 	 */
-	public static List<SysApplication> getUserMenus(String actorId) {
-
-		return null;
+	public JSONArray getUserMenu(long parent, String userId) {
+		return sysApplicationService.getUserMenu(parent, userId);
 	}
 
 	/**
@@ -317,7 +341,7 @@ public class IdentityFactory {
 	 * @return
 	 */
 	public static List<SysUser> getUsers() {
-		return null;
+		return sysUserService.getSysUserList();
 	}
 
 }
