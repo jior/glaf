@@ -4,7 +4,7 @@
 
 	<!--service -->
 
-	<bean id="attachmentService" class="com.glaf.base.modules.others.service.AttachmentServiceImpl" >
+	<bean id="attachmentService" class="com.glaf.base.modules.others.service.impl.AttachmentServiceImpl" >
 		<property name="abstractDao">
 			<ref bean="abstractDao"/>
 		</property>
@@ -16,7 +16,7 @@
 		</property>
 	</bean>
 
-	<bean id="auditService" class="com.glaf.base.modules.others.service.AuditServiceImpl">
+	<bean id="auditService" class="com.glaf.base.modules.others.service.impl.AuditServiceImpl">
 		<property name="abstractDao">
 			<ref bean="abstractDao" />
 		</property>
@@ -28,7 +28,7 @@
 		</property>
 	</bean>
 
-	<bean id="workCalendarService" class="com.glaf.base.modules.others.service.WorkCalendarServiceImpl">
+	<bean id="workCalendarService" class="com.glaf.base.modules.others.service.impl.WorkCalendarServiceImpl">
 		<property name="abstractDao">
 			<ref bean="abstractDao" />
 		</property>

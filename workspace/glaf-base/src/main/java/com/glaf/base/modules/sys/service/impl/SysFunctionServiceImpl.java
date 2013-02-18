@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.glaf.base.modules.sys.service;
+package com.glaf.base.modules.sys.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,12 +26,12 @@ import org.apache.commons.logging.LogFactory;
 
 import com.glaf.base.dao.AbstractSpringDao;
 import com.glaf.base.modules.sys.SysConstants;
-import com.glaf.base.modules.sys.model.SysRole;
-import com.glaf.base.utils.PageResult;
+import com.glaf.base.modules.sys.model.SysFunction;
+import com.glaf.base.modules.sys.service.*;
 
-public class SysRoleServiceImpl implements SysRoleService {
+public class SysFunctionServiceImpl implements SysFunctionService {
 	private static final Log logger = LogFactory
-			.getLog(SysRoleServiceImpl.class);
+			.getLog(SysFunctionServiceImpl.class);
 	private AbstractSpringDao abstractDao;
 
 	public void setAbstractDao(AbstractSpringDao abstractDao) {
@@ -43,10 +43,10 @@ public class SysRoleServiceImpl implements SysRoleService {
 	 * 保存
 	 * 
 	 * @param bean
-	 *            SysRole
+	 *            SysFunction
 	 * @return boolean
 	 */
-	public boolean create(SysRole bean) {
+	public boolean create(SysFunction bean) {
 		boolean ret = false;
 		if (abstractDao.create(bean)) {// 插入记录成功
 			bean.setSort((int) bean.getId());// 设置排序号为刚插入的id值
@@ -60,10 +60,10 @@ public class SysRoleServiceImpl implements SysRoleService {
 	 * 更新
 	 * 
 	 * @param bean
-	 *            SysRole
+	 *            SysFunction
 	 * @return boolean
 	 */
-	public boolean update(SysRole bean) {
+	public boolean update(SysFunction bean) {
 		return abstractDao.update(bean);
 	}
 
@@ -71,10 +71,10 @@ public class SysRoleServiceImpl implements SysRoleService {
 	 * 删除
 	 * 
 	 * @param bean
-	 *            SysRole
+	 *            SysFunction
 	 * @return boolean
 	 */
-	public boolean delete(SysRole bean) {
+	public boolean delete(SysFunction bean) {
 		return abstractDao.delete(bean);
 	}
 
@@ -86,7 +86,7 @@ public class SysRoleServiceImpl implements SysRoleService {
 	 * @return boolean
 	 */
 	public boolean delete(long id) {
-		SysRole bean = findById(id);
+		SysFunction bean = findById(id);
 		if (bean != null) {
 			return delete(bean);
 		} else {
@@ -103,7 +103,7 @@ public class SysRoleServiceImpl implements SysRoleService {
 	public boolean deleteAll(long[] id) {
 		List list = new ArrayList();
 		for (int i = 0; i < id.length; i++) {
-			SysRole bean = findById(id[i]);
+			SysFunction bean = findById(id[i]);
 			if (bean != null)
 				list.add(bean);
 		}
@@ -116,77 +116,31 @@ public class SysRoleServiceImpl implements SysRoleService {
 	 * @param id
 	 * @return
 	 */
-	public SysRole findById(long id) {
-		return (SysRole) abstractDao.find(SysRole.class, new Long(id));
-	}
-
-	/**
-	 * 按名称查找对象
-	 * 
-	 * @param name
-	 *            String
-	 * @return SysRole
-	 */
-	public SysRole findByName(String name) {
-		SysRole bean = null;
-		Object[] values = new Object[] { name };
-		String query = "from SysRole a where a.name=? order by a.id desc";
-		List list = abstractDao.getList(query, values, null);
-		if (list != null && list.size() > 0) {// 有记录
-			bean = (SysRole) list.get(0);
-		}
-		return bean;
-	}
-
-	/**
-	 * 按code查找对象
-	 * 
-	 * @param name
-	 *            String
-	 * @return SysRole
-	 */
-	public SysRole findByCode(String code) {
-		SysRole bean = null;
-		Object[] values = new Object[] { code };
-		String query = "from SysRole a where a.code=? order by a.id desc";
-		List list = abstractDao.getList(query, values, null);
-		if (list != null && list.size() > 0) {// 有记录
-			bean = (SysRole) list.get(0);
-		}
-		return bean;
-	}
-
-	/**
-	 * 获取分页列表
-	 * 
-	 * @param pageNo
-	 *            int
-	 * @param pageSize
-	 *            int
-	 * @return
-	 */
-	public PageResult getSysRoleList(int pageNo, int pageSize) {
-		// 计算总数
-		String query = "select count(*) from SysRole a";
-		int count = ((Long) abstractDao.getList(query, null, null).iterator()
-				.next()).intValue();
-		if (count == 0) {// 结果集为空
-			PageResult pager = new PageResult();
-			pager.setPageSize(pageSize);
-			return pager;
-		}
-		// 查询列表
-		query = "from SysRole a order by a.sort desc";
-		return abstractDao.getList(query, null, pageNo, pageSize, count);
+	public SysFunction findById(long id) {
+		return (SysFunction) abstractDao.find(SysFunction.class, new Long(id));
 	}
 
 	/**
 	 * 获取列表
 	 * 
+	 * @param appId
+	 *            int
 	 * @return List
 	 */
-	public List getSysRoleList() {
-		String query = "from SysRole a order by a.sort desc";
+	public List getSysFunctionList(int appId) {
+		// 计算总数
+		Object[] values = new Object[] { new Long(appId) };
+		String query = "from SysFunction a where a.app.id=? order by a.sort desc";
+		return abstractDao.getList(query, values, null);
+	}
+
+	/**
+	 * 获取全部列表
+	 * 
+	 * @return List
+	 */
+	public List getSysFunctionList() {
+		String query = "from SysFunction a order by a.sort desc";
 		return abstractDao.getList(query, null, null);
 	}
 
@@ -194,11 +148,11 @@ public class SysRoleServiceImpl implements SysRoleService {
 	 * 排序
 	 * 
 	 * @param bean
-	 *            SysRole
+	 *            SysFunction
 	 * @param operate
 	 *            int 操作
 	 */
-	public void sort(SysRole bean, int operate) {
+	public void sort(SysFunction bean, int operate) {
 		if (bean == null)
 			return;
 		if (operate == SysConstants.SORT_PREVIOUS) {// 前移
@@ -213,13 +167,14 @@ public class SysRoleServiceImpl implements SysRoleService {
 	 * 
 	 * @param bean
 	 */
-	private void sortByPrevious(SysRole bean) {
-		Object[] values = new Object[] { new Integer(bean.getSort()) };
+	private void sortByPrevious(SysFunction bean) {
+		Object[] values = new Object[] { bean.getApp(),
+				new Integer(bean.getSort()) };
 		// 查找前一个对象
-		String query = "from SysRole a where a.sort>? order by a.sort asc";
+		String query = "from SysFunction a where a.app=? and a.sort>? order by a.sort asc";
 		List list = abstractDao.getList(query, values, null);
 		if (list != null && list.size() > 0) {// 有记录
-			SysRole temp = (SysRole) list.get(0);
+			SysFunction temp = (SysFunction) list.get(0);
 			int i = bean.getSort();
 			bean.setSort(temp.getSort());
 			abstractDao.update(bean);// 更新bean
@@ -234,13 +189,14 @@ public class SysRoleServiceImpl implements SysRoleService {
 	 * 
 	 * @param bean
 	 */
-	private void sortByForward(SysRole bean) {
-		Object[] values = new Object[] { new Integer(bean.getSort()) };
+	private void sortByForward(SysFunction bean) {
+		Object[] values = new Object[] { bean.getApp(),
+				new Integer(bean.getSort()) };
 		// 查找后一个对象
-		String query = "from SysRole a where a.sort<? order by a.sort desc";
+		String query = "from SysFunction a where a.app=? and a.sort<? order by a.sort desc";
 		List list = abstractDao.getList(query, values, null);
 		if (list != null && list.size() > 0) {// 有记录
-			SysRole temp = (SysRole) list.get(0);
+			SysFunction temp = (SysFunction) list.get(0);
 			int i = bean.getSort();
 			bean.setSort(temp.getSort());
 			abstractDao.update(bean);// 更新bean

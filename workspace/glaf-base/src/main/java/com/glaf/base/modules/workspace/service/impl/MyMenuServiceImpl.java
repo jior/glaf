@@ -16,7 +16,7 @@
 * limitations under the License.
 */
 
-package com.glaf.base.modules.workspace.service;
+package com.glaf.base.modules.workspace.service.impl;
 
 import java.util.Collection;
 import java.util.List;
@@ -27,6 +27,7 @@ import org.apache.commons.logging.LogFactory;
 import com.glaf.base.dao.AbstractSpringDao;
 import com.glaf.base.modules.sys.SysConstants;
 import com.glaf.base.modules.workspace.model.MyMenu;
+import com.glaf.base.modules.workspace.service.MyMenuService;
 import com.glaf.base.utils.PageResult;
 
 public class MyMenuServiceImpl implements MyMenuService {

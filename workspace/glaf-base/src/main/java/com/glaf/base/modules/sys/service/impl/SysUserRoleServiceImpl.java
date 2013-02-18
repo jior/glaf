@@ -16,13 +16,14 @@
  * limitations under the License.
  */
 
-package com.glaf.base.modules.sys.service;
+package com.glaf.base.modules.sys.service.impl;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -32,8 +33,10 @@ import org.jpage.util.UUID32;
 import com.glaf.base.dao.AbstractSpringDao;
 import com.glaf.base.modules.Constants;
 import com.glaf.base.modules.sys.model.SysDepartment;
+import com.glaf.base.modules.sys.model.SysDeptRole;
 import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.sys.model.SysUserRole;
+import com.glaf.base.modules.sys.service.*;
 import com.glaf.base.modules.utils.BaseUtil;
 import com.glaf.base.utils.PageResult;
 
@@ -119,6 +122,75 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 	 */
 	public SysUserRole findById(long id) {
 		return (SysUserRole) abstractDao.find(SysUserRole.class, new Long(id));
+	}
+
+	/**
+	 * 获取某个部门及所有下级部门的某个角色的用户
+	 * 
+	 * @param deptId
+	 * @param roleId
+	 * @return
+	 */
+	public List<SysUser> getChildrenMembershipUsers(int deptId, int roleId) {
+		List<SysUser> users = new ArrayList<SysUser>();
+		SysDepartment dept = sysDepartmentService.findById(deptId);
+		if (dept != null) {
+			List<SysDepartment> list = new ArrayList<SysDepartment>();
+			sysDepartmentService.findNestingDepartment(list, deptId);
+			if (!list.isEmpty()) {
+				for (SysDepartment dp : list) {
+					List<SysUser> userlist = getMembershipUsers(
+							(int) dp.getId(), roleId);
+					if (!userlist.isEmpty()) {
+						users.addAll(userlist);
+					}
+				}
+			} else {
+				return this.getMembershipUsers(deptId, roleId);
+			}
+		}
+		return users;
+	}
+
+	/**
+	 * 获取多个部门某个角色的用户
+	 * 
+	 * @param deptIds
+	 * @param roleId
+	 * @return
+	 */
+	public List<SysUser> getMembershipUsers(List<Integer> deptIds, int roleId) {
+		List<SysUser> users = new ArrayList<SysUser>();
+		for (Integer deptId : deptIds) {
+			List<SysUser> list = this.getMembershipUsers(deptId, roleId);
+			if (!list.isEmpty()) {
+				users.addAll(list);
+			}
+		}
+		return users;
+	}
+
+	/**
+	 * 获取某个部门某个角色的用户
+	 * 
+	 * @param deptId
+	 * @param roleId
+	 * @return
+	 */
+	public List<SysUser> getMembershipUsers(int deptId, int roleId) {
+		List<SysUser> users = new ArrayList<SysUser>();
+		SysDepartment dept = sysDepartmentService.findById(deptId);
+		if (dept != null && dept.getRoles() != null) {
+			Set<SysDeptRole> roles = dept.getRoles();
+			for (SysDeptRole role : roles) {
+				if (role.getRole() != null && role.getRole().getId() == roleId) {
+					if (role.getUsers() != null && !role.getUsers().isEmpty()) {
+						users.addAll(role.getUsers());
+					}
+				}
+			}
+		}
+		return users;
 	}
 
 	/**

@@ -16,7 +16,7 @@
 * limitations under the License.
 */
 
-package com.glaf.base.modules.others.service;
+package com.glaf.base.modules.others.service.impl;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -30,6 +30,7 @@ import org.apache.commons.logging.LogFactory;
 import com.glaf.base.dao.AbstractSpringDao;
 import com.glaf.base.modules.Constants;
 import com.glaf.base.modules.others.model.Attachment;
+import com.glaf.base.modules.others.service.AttachmentService;
 
 public class AttachmentServiceImpl implements AttachmentService {
 	private static final Log logger = LogFactory.getLog(AttachmentServiceImpl.class);

@@ -36,7 +36,9 @@ import com.glaf.base.modules.sys.model.SysDepartment;
 import com.glaf.base.modules.sys.model.SysRole;
 import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.sys.service.SysApplicationService;
+import com.glaf.base.modules.sys.service.SysDeptRoleService;
 import com.glaf.base.modules.sys.service.SysRoleService;
+import com.glaf.base.modules.sys.service.SysUserRoleService;
 import com.glaf.base.modules.sys.service.SysUserService;
 import com.glaf.base.modules.sys.service.SysDepartmentService;
 
@@ -48,6 +50,10 @@ public class IdentityFactory {
 
 	protected static SysRoleService sysRoleService;
 
+	protected static SysUserRoleService sysUserRoleService;
+
+	protected static SysDeptRoleService sysDeptRoleService;
+
 	protected static SysDepartmentService sysDepartmentService;
 
 	protected static SysApplicationService sysApplicationService;
@@ -55,6 +61,8 @@ public class IdentityFactory {
 	static {
 		sysUserService = ContextFactory.getBean("sysUserProxy");
 		sysRoleService = ContextFactory.getBean("sysRoleProxy");
+		sysDeptRoleService = ContextFactory.getBean("sysDeptRoleProxy");
+		sysUserRoleService = ContextFactory.getBean("sysUserRoleProxy");
 		sysDepartmentService = ContextFactory.getBean("sysDepartmentProxy");
 		sysApplicationService = ContextFactory.getBean("sysApplicationProxy");
 	}
@@ -66,10 +74,23 @@ public class IdentityFactory {
 	 * @param roleId
 	 * @return
 	 */
-	public static List<SysUser> getChildrenMembershipUsers(Long deptId,
-			Long roleId) {
+	public static List<SysUser> getChildrenMembershipUsers(int deptId,
+			int roleId) {
+		return sysUserRoleService.getChildrenMembershipUsers(deptId, roleId);
+	}
 
-		return null;
+	/**
+	 * 获取某个部门及所有下级部门的某个角色的用户
+	 * 
+	 * @param deptId
+	 * @param roleId
+	 * @return
+	 */
+	public static List<SysUser> getChildrenMembershipUsers(int deptId,
+			String roleCode) {
+		SysRole role = sysRoleService.findByCode(roleCode);
+		return sysUserRoleService.getChildrenMembershipUsers(deptId,
+				(int) role.getId());
 	}
 
 	/**
@@ -80,6 +101,17 @@ public class IdentityFactory {
 	 */
 	public static SysDepartment getDepartmentByCode(String code) {
 		SysDepartment model = sysDepartmentService.findByCode(code);
+		return model;
+	}
+
+	/**
+	 * 根据部门编号获取部门(sys_department表的id字段)
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public static SysDepartment getDepartmentById(int id) {
+		SysDepartment model = sysDepartmentService.findById(id);
 		return model;
 	}
 
@@ -95,16 +127,10 @@ public class IdentityFactory {
 	}
 
 	/**
-	 * 根据部门编号获取部门
+	 * 获取部门Map
 	 * 
-	 * @param id
 	 * @return
 	 */
-	public static SysDepartment getDepartmentById(Long id) {
-		SysDepartment model = sysDepartmentService.findById(id);
-		return model;
-	}
-
 	public static Map<String, SysDepartment> getDepartmentMap() {
 		Map<String, SysDepartment> deptMap = new HashMap<String, SysDepartment>();
 		List<SysDepartment> depts = sysDepartmentService.getSysDepartmentList();
@@ -117,7 +143,7 @@ public class IdentityFactory {
 	}
 
 	/**
-	 * 获取部门
+	 * 获取全部部门
 	 * 
 	 * @return
 	 */
@@ -127,8 +153,7 @@ public class IdentityFactory {
 	}
 
 	/**
-	 * 获取全部用户 <br>
-	 * 通过配置getUsers获取User对象
+	 * 获取全部用户
 	 * 
 	 * @return
 	 */
@@ -144,28 +169,37 @@ public class IdentityFactory {
 	}
 
 	/**
-	 * 获取某些用户的角色编号<br>
-	 * 通过配置getMembershipRoleIds获取角色编号
+	 * 获取某个部门的用户
 	 * 
-	 * @param actorIds
+	 * @param deptId
 	 * @return
 	 */
-	public static List<String> getMembershipRoleIds(List<String> actorIds) {
-		return null;
+	public static List<SysUser> getMembershipUsers(int deptId) {
+		return sysUserService.getSysUserList(deptId);
 	}
 
 	/**
-	 * 获取某个用户及代理人的角色编号
+	 * 获取某个部门某个角色的用户
 	 * 
-	 * @param actorId
+	 * @param deptId
+	 * @param roleId
 	 * @return
 	 */
-	public static List<String> getMembershipRoleIds(String actorId) {
+	public static List<SysUser> getMembershipUsers(int deptId, int roleId) {
+		return sysUserRoleService.getMembershipUsers(deptId, roleId);
+	}
 
-		List<String> actorIds = new ArrayList<String>();
-		actorIds.add(actorId);
-
-		return IdentityFactory.getMembershipRoleIds(actorIds);
+	/**
+	 * 获取某个部门某个角色的用户
+	 * 
+	 * @param deptId
+	 * @param roleId
+	 * @return
+	 */
+	public static List<SysUser> getMembershipUsers(int deptId, String roleCode) {
+		SysRole role = sysRoleService.findByCode(roleCode);
+		return sysUserRoleService
+				.getMembershipUsers(deptId, (int) role.getId());
 	}
 
 	/**
@@ -175,30 +209,23 @@ public class IdentityFactory {
 	 * @param roleId
 	 * @return
 	 */
-	public static List<SysUser> getMembershipUsers(List<String> deptIds,
-			String roleId) {
-		return null;
-	}
-
-	/**
-	 * 获取某个部门的用户
-	 * 
-	 * @param deptId
-	 * @return
-	 */
-	public static List<SysUser> getMembershipUsers(String deptId) {
-		return null;
+	public static List<SysUser> getMembershipUsers(List<Integer> deptIds,
+			int roleId) {
+		return sysUserRoleService.getMembershipUsers(deptIds, roleId);
 	}
 
 	/**
 	 * 获取某个部门某个角色的用户
 	 * 
-	 * @param deptId
+	 * @param deptIds
 	 * @param roleId
 	 * @return
 	 */
-	public static List<SysUser> getMembershipUsers(String deptId, String roleId) {
-		return null;
+	public static List<SysUser> getMembershipUsers(List<Integer> deptIds,
+			String roleCode) {
+		SysRole role = sysRoleService.findByCode(roleCode);
+		return sysUserRoleService.getMembershipUsers(deptIds,
+				(int) role.getId());
 	}
 
 	/**
@@ -207,27 +234,17 @@ public class IdentityFactory {
 	 * @param deptId
 	 *            部门编号
 	 * @param treeType
-	 *            级别 0-公司,1-部,2-科,3-系,4-室(班)
+	 *            级别 0-公司,1(B)-部,2(K)-科,3-系,4-室(班)
 	 * @return
 	 */
 	public static List<SysDepartment> getParentAndChildrenDepartments(
-			String deptId, String treeType) {
-		List<SysDepartment> depts = new ArrayList<SysDepartment>();
-
-		return depts;
-	}
-
-	/**
-	 * 获取权限点编号
-	 * 
-	 * @param actorId
-	 * @return
-	 */
-	public static List<String> getPermissionIds(List<String> roleIds) {
-		logger.debug("-------------------getPermissionIds----------");
-		logger.debug("roleIds:" + roleIds);
-
-		return null;
+			int deptId, String treeType) {
+		List<SysDepartment> list = new ArrayList<SysDepartment>();
+		SysDepartment dept = sysDepartmentService.findById(deptId);
+		if (dept != null) {
+			sysDepartmentService.findNestingDepartment(list, dept.getId());
+		}
+		return list;
 	}
 
 	/**
@@ -236,7 +253,7 @@ public class IdentityFactory {
 	 * @param id
 	 * @return
 	 */
-	public static SysRole getRole(Long id) {
+	public static SysRole getRoleById(int id) {
 		return sysRoleService.findById(id);
 	}
 
@@ -251,8 +268,7 @@ public class IdentityFactory {
 	}
 
 	/**
-	 * 获取全部角色 <br>
-	 * 通过配置getRoles获取Role对象
+	 * 获取全部角色 Map
 	 * 
 	 * @return
 	 */
@@ -268,8 +284,7 @@ public class IdentityFactory {
 	}
 
 	/**
-	 * 获取全部角色 <br>
-	 * 通过配置getRoles获取Role对象
+	 * 获取全部角色
 	 * 
 	 * @return
 	 */
@@ -279,26 +294,7 @@ public class IdentityFactory {
 	}
 
 	/**
-	 * 获取某个角色的用户
-	 * 
-	 * @param roleId
-	 * @return
-	 */
-	public static List<SysUser> getRoleUsers(Long roleId) {
-		return null;
-	}
-
-	/**
-	 * 获取最顶级部门
-	 * 
-	 * @return
-	 */
-	public static SysDepartment getRootDepartment() {
-		return null;
-	}
-
-	/**
-	 * 根据用户名获取用户安全上下文
+	 * 根据用户名获取用户对象
 	 * 
 	 * @param actorId
 	 * @return
@@ -308,8 +304,7 @@ public class IdentityFactory {
 	}
 
 	/**
-	 * 获取全部用户 <br>
-	 * 通过配置getUsers获取User对象
+	 * 获取全部用户Map
 	 * 
 	 * @return
 	 */
@@ -325,23 +320,45 @@ public class IdentityFactory {
 	}
 
 	/**
-	 * 获取用户菜单
+	 * 获取某些用户的角色代码
 	 * 
-	 * @param userId
+	 * @param actorIds
 	 * @return
 	 */
-	public JSONArray getUserMenu(long parent, String userId) {
-		return sysApplicationService.getUserMenu(parent, userId);
+	public static List<String> getUserRoles(List<String> actorIds) {
+		return null;
 	}
 
 	/**
-	 * 获取全部用户 <br>
-	 * 通过配置getUsers获取User对象
+	 * 获取某个用户及代理人的角色编号
+	 * 
+	 * @param actorId
+	 * @return
+	 */
+	public static List<String> getUserRoles(String actorId) {
+		List<String> actorIds = new ArrayList<String>();
+		actorIds.add(actorId);
+		return getUserRoles(actorIds);
+	}
+
+	/**
+	 * 获取全部用户
 	 * 
 	 * @return
 	 */
 	public static List<SysUser> getUsers() {
 		return sysUserService.getSysUserList();
+	}
+
+	/**
+	 * 获取用户菜单
+	 * 
+	 * @param parentId
+	 * @param actorId
+	 * @return
+	 */
+	public JSONArray getUserMenu(long parentId, String actorId) {
+		return sysApplicationService.getUserMenu(parentId, actorId);
 	}
 
 }

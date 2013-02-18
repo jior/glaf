@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.glaf.base.modules.sys.service;
+package com.glaf.base.modules.sys.service.impl;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -33,6 +33,7 @@ import com.glaf.base.modules.sys.model.SysDepartment;
 import com.glaf.base.modules.sys.model.SysDeptRole;
 import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.sys.model.SysUserRole;
+import com.glaf.base.modules.sys.service.*;
 import com.glaf.base.utils.PageResult;
 
 public class SysUserServiceImpl implements SysUserService {
@@ -342,12 +343,12 @@ public class SysUserServiceImpl implements SysUserService {
 	 * @param user
 	 * @return
 	 */
-	public Set getUserRoles(SysUser user) {
-		Set set = new HashSet();
+	public Set<SysDeptRole> getUserRoles(SysUser user) {
+		Set<SysDeptRole> set = new HashSet<SysDeptRole>();
 		Object[] values = new Object[] { user };
 		String query = "from SysUserRole a where a.user=?";
-		List rows = abstractDao.getList(query, values, null);
-		Iterator iter = rows.iterator();
+		List<SysUserRole> rows = abstractDao.getList(query, values, null);
+		Iterator<SysUserRole> iter = rows.iterator();
 		while (iter.hasNext()) {
 			SysUserRole bean = (SysUserRole) iter.next();
 			if (bean.getDeptRole() != null) {
@@ -356,7 +357,7 @@ public class SysUserServiceImpl implements SysUserService {
 			}
 		}
 
-		//logger.debug("========================user roles:" + set);
+		// logger.debug("========================user roles:" + set);
 		return set;
 	}
 
@@ -473,7 +474,6 @@ public class SysUserServiceImpl implements SysUserService {
 		return pager;
 	}
 
- 
 	public boolean isThisPlayer(SysUser user, String code) {
 		boolean flag = false;
 		Set set = user.getRoles();

@@ -145,7 +145,15 @@ public interface SysDepartmentService {
 	void sort(long parent, SysDepartment bean, int operate);
 
 	/**
-	 * 获取用户部门列表
+	 * 获取某个部门及下级部门列表
+	 * 
+	 * @param list
+	 * @param deptId
+	 */
+	void findNestingDepartment(List<SysDepartment> list, long deptId);
+
+	/**
+	 * 获取某个部门及下级部门列表
 	 * 
 	 * @param list
 	 * @param node

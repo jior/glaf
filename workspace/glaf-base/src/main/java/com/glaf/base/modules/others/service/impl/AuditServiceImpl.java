@@ -16,7 +16,7 @@
 * limitations under the License.
 */
 
-package com.glaf.base.modules.others.service;
+package com.glaf.base.modules.others.service.impl;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -30,6 +30,7 @@ import org.hibernate.type.Type;
 
 import com.glaf.base.dao.AbstractSpringDao;
 import com.glaf.base.modules.others.model.Audit;
+import com.glaf.base.modules.others.service.AuditService;
 import com.glaf.base.modules.sys.model.SysUser;
 
 public class AuditServiceImpl implements AuditService {

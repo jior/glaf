@@ -16,7 +16,7 @@
 * limitations under the License.
 */
 
-package com.glaf.base.modules.workspace.service;
+package com.glaf.base.modules.workspace.service.impl;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
@@ -32,6 +32,7 @@ import org.hibernate.criterion.DetachedCriteria;
 import com.glaf.base.dao.AbstractSpringDao;
 import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.workspace.model.Message;
+import com.glaf.base.modules.workspace.service.MessageService;
 import com.glaf.base.utils.PageResult;
 import com.glaf.base.utils.WebUtil;
 

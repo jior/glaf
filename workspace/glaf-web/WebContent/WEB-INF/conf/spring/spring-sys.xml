@@ -7,7 +7,7 @@
 		class="org.springframework.scheduling.quartz.SchedulerFactoryBean" />
 
 	<!--service -->
-	<bean id="serialNumberService" class="com.glaf.base.modules.sys.service.SerialNumberServiceImpl">
+	<bean id="serialNumberService" class="com.glaf.base.modules.sys.service.impl.SerialNumberServiceImpl">
 		<property name="abstractDao">
 			<ref bean="abstractDao" />
 		</property>
@@ -19,7 +19,7 @@
 		</property>
 	</bean>
 
-	<bean id="sysTreeService" class="com.glaf.base.modules.sys.service.SysTreeServiceImpl">
+	<bean id="sysTreeService" class="com.glaf.base.modules.sys.service.impl.SysTreeServiceImpl">
 		<property name="abstractDao">
 			<ref bean="abstractDao" />
 		</property>
@@ -31,7 +31,7 @@
 		</property>
 	</bean>
 
-	<bean id="sysApplicationService" class="com.glaf.base.modules.sys.service.SysApplicationServiceImpl">
+	<bean id="sysApplicationService" class="com.glaf.base.modules.sys.service.impl.SysApplicationServiceImpl">
 		<property name="abstractDao">
 			<ref bean="abstractDao" />
 		</property>
@@ -49,7 +49,7 @@
 		</property>
 	</bean>
 
-	<bean id="sysDepartmentService" class="com.glaf.base.modules.sys.service.SysDepartmentServiceImpl">
+	<bean id="sysDepartmentService" class="com.glaf.base.modules.sys.service.impl.SysDepartmentServiceImpl">
 		<property name="abstractDao">
 			<ref bean="abstractDao" />
 		</property>
@@ -64,7 +64,7 @@
 		</property>
 	</bean>
 
-	<bean id="sysUserService" class="com.glaf.base.modules.sys.service.SysUserServiceImpl">
+	<bean id="sysUserService" class="com.glaf.base.modules.sys.service.impl.SysUserServiceImpl">
 		<property name="abstractDao">
 			<ref bean="abstractDao" />
 		</property>
@@ -76,7 +76,7 @@
 		</property>
 	</bean>
 
-	<bean id="sysRoleService" class="com.glaf.base.modules.sys.service.SysRoleServiceImpl">
+	<bean id="sysRoleService" class="com.glaf.base.modules.sys.service.impl.SysRoleServiceImpl">
 		<property name="abstractDao">
 			<ref bean="abstractDao" />
 		</property>
@@ -88,7 +88,7 @@
 		</property>
 	</bean>
 
-	<bean id="sysDeptRoleService" class="com.glaf.base.modules.sys.service.SysDeptRoleServiceImpl">
+	<bean id="sysDeptRoleService" class="com.glaf.base.modules.sys.service.impl.SysDeptRoleServiceImpl">
 		<property name="abstractDao">
 			<ref bean="abstractDao" />
 		</property>
@@ -109,7 +109,7 @@
 		</property>
 	</bean>
 
-	<bean id="authorizeService" class="com.glaf.base.modules.sys.service.AuthorizeServiceImpl">
+	<bean id="authorizeService" class="com.glaf.base.modules.sys.service.impl.AuthorizeServiceImpl">
 		<property name="sysUserService">
 			<ref bean="sysUserProxy" />
 		</property>
@@ -124,7 +124,7 @@
 		</property>
 	</bean>
 
-	<bean id="dictoryService" class="com.glaf.base.modules.sys.service.DictoryServiceImpl">
+	<bean id="dictoryService" class="com.glaf.base.modules.sys.service.impl.DictoryServiceImpl">
 		<property name="abstractDao">
 			<ref bean="abstractDao" />
 		</property>
@@ -136,7 +136,7 @@
 		</property>
 	</bean>
 
-	<bean id="sysFunctionService" class="com.glaf.base.modules.sys.service.SysFunctionServiceImpl">
+	<bean id="sysFunctionService" class="com.glaf.base.modules.sys.service.impl.SysFunctionServiceImpl">
 		<property name="abstractDao">
 			<ref bean="abstractDao" />
 		</property>
@@ -148,7 +148,7 @@
 		</property>
 	</bean>
 
-	<bean id="subjectCodeService" class="com.glaf.base.modules.sys.service.SubjectCodeServiceImpl">
+	<bean id="subjectCodeService" class="com.glaf.base.modules.sys.service.impl.SubjectCodeServiceImpl">
 		<property name="abstractDao">
 			<ref bean="abstractDao" />
 		</property>
@@ -160,7 +160,7 @@
 		</property>
 	</bean>
 
-	<bean id="sysLogService" class="com.glaf.base.modules.sys.service.SysLogServiceImpl">
+	<bean id="sysLogService" class="com.glaf.base.modules.sys.service.impl.SysLogServiceImpl">
 		<property name="abstractDao">
 			<ref bean="abstractDao" />
 		</property>
@@ -172,7 +172,7 @@
 		</property>
 	</bean>
 
-	<bean id="sysUserRoleService" class="com.glaf.base.modules.sys.service.SysUserRoleServiceImpl">
+	<bean id="sysUserRoleService" class="com.glaf.base.modules.sys.service.impl.SysUserRoleServiceImpl">
 		<property name="abstractDao">
 			<ref bean="abstractDao" />
 		</property>
@@ -190,7 +190,7 @@
 		</property>
 	</bean>
 
-	<bean id="schedulerService" class="com.glaf.base.modules.sys.service.SchedulerServiceImpl">
+	<bean id="schedulerService" class="com.glaf.base.modules.sys.service.impl.SchedulerServiceImpl">
 		<property name="abstractDao">
 			<ref bean="abstractDao" />
 		</property>
@@ -202,7 +202,7 @@
 		</property>
 	</bean>
 
-	<bean id="persistenceService" class="com.glaf.base.service.PersistenceServiceImpl">
+	<bean id="persistenceService" class="com.glaf.base.service.impl.PersistenceServiceImpl">
 		<property name="abstractDao">
 			<ref bean="abstractDao" />
 		</property>

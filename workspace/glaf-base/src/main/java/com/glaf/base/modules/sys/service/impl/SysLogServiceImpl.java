@@ -16,13 +16,14 @@
  * limitations under the License.
  */
 
-package com.glaf.base.modules.sys.service;
+package com.glaf.base.modules.sys.service.impl;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.glaf.base.dao.AbstractSpringDao;
 import com.glaf.base.modules.sys.model.SysLog;
+import com.glaf.base.modules.sys.service.*;
 
 public class SysLogServiceImpl implements SysLogService {
 	private static final Log logger = LogFactory

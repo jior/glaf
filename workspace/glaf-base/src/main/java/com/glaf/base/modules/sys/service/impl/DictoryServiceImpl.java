@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.glaf.base.modules.sys.service;
+package com.glaf.base.modules.sys.service.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,6 +29,7 @@ import org.apache.commons.logging.LogFactory;
 import com.glaf.base.dao.AbstractSpringDao;
 import com.glaf.base.modules.sys.SysConstants;
 import com.glaf.base.modules.sys.model.Dictory;
+import com.glaf.base.modules.sys.service.*;
 import com.glaf.base.utils.PageResult;
 
 public class DictoryServiceImpl implements DictoryService {
@@ -282,10 +283,10 @@ public class DictoryServiceImpl implements DictoryService {
 					sql = sql.replaceAll("purchaseId", purchaseId + "");
 					str = abstractDao.getStringBySQL(sql);
 				}
- 
+
 			}
 			dictoryMap.put(dictory.getName(), str);
-			 
+
 		}
 		return dictoryMap;
 	}

@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.glaf.base.modules.sys.service;
+package com.glaf.base.modules.sys.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +28,7 @@ import com.glaf.base.dao.AbstractSpringDao;
 import com.glaf.base.modules.sys.SysConstants;
 import com.glaf.base.modules.sys.model.SysDepartment;
 import com.glaf.base.modules.sys.model.SysTree;
+import com.glaf.base.modules.sys.service.*;
 import com.glaf.base.utils.PageResult;
 
 public class SysDepartmentServiceImpl implements SysDepartmentService {
@@ -163,6 +164,13 @@ public class SysDepartmentServiceImpl implements SysDepartmentService {
 		return bean;
 	}
 
+	public void findNestingDepartment(List<SysDepartment> list, long deptId) {
+		SysDepartment node = this.findById(deptId);
+		if (node != null) {
+			this.findNestingDepartment(list, node);
+		}
+	}
+
 	/**
 	 * 获取用户部门列表
 	 * 
@@ -171,8 +179,9 @@ public class SysDepartmentServiceImpl implements SysDepartmentService {
 	 */
 	public void findNestingDepartment(List<SysDepartment> list,
 			SysDepartment node) {
-		if (node == null)
+		if (node == null) {
 			return;
+		}
 		SysTree tree = node.getNode();
 		if (tree.getParent() == 0) {// 找到根节点
 			logger.info("findFirstNode:" + node.getId());

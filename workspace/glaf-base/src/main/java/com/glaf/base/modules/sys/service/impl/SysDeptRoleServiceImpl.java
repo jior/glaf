@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.glaf.base.modules.sys.service;
+package com.glaf.base.modules.sys.service.impl;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -25,8 +25,6 @@ import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.hibernate.Hibernate;
-import org.hibernate.type.Type;
 
 import com.glaf.base.dao.AbstractSpringDao;
 import com.glaf.base.modules.sys.SysConstants;
@@ -34,6 +32,8 @@ import com.glaf.base.modules.sys.model.SysApplication;
 import com.glaf.base.modules.sys.model.SysDeptRole;
 import com.glaf.base.modules.sys.model.SysFunction;
 import com.glaf.base.modules.sys.model.SysRole;
+import com.glaf.base.modules.sys.model.SysUser;
+import com.glaf.base.modules.sys.service.*;
 import com.glaf.base.utils.PageResult;
 
 public class SysDeptRoleServiceImpl implements SysDeptRoleService {
@@ -169,7 +169,7 @@ public class SysDeptRoleServiceImpl implements SysDeptRoleService {
 	 * @param code
 	 * @return
 	 */
-	public Set findRoleUser(long deptId, String code) {
+	public Set<SysUser> findRoleUser(long deptId, String code) {
 		SysDeptRole deptRole = null;
 
 		SysRole role = sysRoleService.findByCode(code);
