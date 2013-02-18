@@ -66,8 +66,6 @@
 				<prop key="shutdown*">PROPAGATION_REQUIRED</prop>
 				<prop key="locked*">PROPAGATION_REQUIRED</prop>
 				<prop key="sendMessage">PROPAGATION_REQUIRED</prop>
-				<prop key="doIDByNO">PROPAGATION_REQUIRED</prop>
-				<prop key="saveDetailFromExel">PROPAGATION_REQUIRED</prop>
 				<prop key="get*SerialNumber">PROPAGATION_REQUIRED</prop>
 				<prop key="getSerialNumber">PROPAGATION_REQUIRED</prop>
 				<prop key="submit*">PROPAGATION_REQUIRED</prop>
