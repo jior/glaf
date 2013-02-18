@@ -1,26 +1,28 @@
 /*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.glaf.base.modules.sys.model;
 
 import java.io.Serializable;
 
-public class SysTree implements Serializable {
+import com.glaf.base.api.TreeModel;
+
+public class SysTree implements Serializable, TreeModel {
 	private static final long serialVersionUID = 2666681837822864771L;
 	private long id;
 	private long parent;
@@ -64,6 +66,10 @@ public class SysTree implements Serializable {
 		return parent;
 	}
 
+	public long getParentId() {
+		return parent;
+	}
+
 	public int getSort() {
 		return sort;
 	}
@@ -98,6 +104,10 @@ public class SysTree implements Serializable {
 
 	public void setParent(long parent) {
 		this.parent = parent;
+	}
+
+	public void setParentId(long parentId) {
+		this.parent = parentId;
 	}
 
 	public void setSort(int sort) {

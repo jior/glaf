@@ -34,7 +34,10 @@ import com.glaf.base.modules.sys.model.SysApplication;
 import com.glaf.base.modules.sys.model.SysDepartment;
 import com.glaf.base.modules.sys.model.SysRole;
 import com.glaf.base.modules.sys.model.SysUser;
+import com.glaf.base.modules.sys.service.SysApplicationService;
+import com.glaf.base.modules.sys.service.SysRoleService;
 import com.glaf.base.modules.sys.service.SysUserService;
+import com.glaf.base.modules.sys.service.SysDepartmentService;
 
 public class IdentityFactory {
 	protected final static Log logger = LogFactory
@@ -42,9 +45,17 @@ public class IdentityFactory {
 
 	protected static SysUserService sysUserService;
 
+	protected static SysRoleService sysRoleService;
+
+	protected static SysDepartmentService sysDepartmentService;
+
+	protected static SysApplicationService sysApplicationService;
+
 	static {
 		sysUserService = ContextFactory.getBean("sysUserService");
-
+		sysRoleService = ContextFactory.getBean("sysRoleService");
+		sysDepartmentService = ContextFactory.getBean("sysDepartmentService");
+		sysApplicationService = ContextFactory.getBean("sysApplicationService");
 	}
 
 	/**
@@ -54,22 +65,31 @@ public class IdentityFactory {
 	 * @param roleId
 	 * @return
 	 */
-	public static List<SysUser> getChildrenMembershipUsers(String deptId,
-			String roleId) {
-		List<String> deptIds = new ArrayList<String>();
-		deptIds.add(deptId);
+	public static List<SysUser> getChildrenMembershipUsers(Long deptId,
+			Long roleId) {
+		 
 		return null;
 	}
 
 	/**
-	 * 根据部门代码获取部门
+	 * 根据部门代码获取部门(sys_department表的code字段)
 	 * 
 	 * @param code
 	 * @return
 	 */
 	public static SysDepartment getDepartmentByCode(String code) {
-		SysDepartment model = null;
-
+		SysDepartment model = sysDepartmentService.findByCode(code);
+		return model;
+	}
+	
+	/**
+	 * 根据部门代码获取部门(sys_department表的deptno字段)
+	 * 
+	 * @param deptno
+	 * @return
+	 */
+	public static SysDepartment getDepartmentByNo(String deptno) {
+		SysDepartment model = sysDepartmentService.findByNo(deptno);
 		return model;
 	}
 
@@ -79,15 +99,19 @@ public class IdentityFactory {
 	 * @param id
 	 * @return
 	 */
-	public static SysDepartment getDepartmentById(String id) {
-		SysDepartment model = null;
-
+	public static SysDepartment getDepartmentById(Long id) {
+		SysDepartment model = sysDepartmentService.findById(id);
 		return model;
 	}
 
 	public static Map<String, SysDepartment> getDepartmentMap() {
 		Map<String, SysDepartment> deptMap = new HashMap<String, SysDepartment>();
-
+		List<SysDepartment> depts = sysDepartmentService.getSysDepartmentList();
+		if(depts != null && !depts.isEmpty()){
+			for(SysDepartment dept:depts){
+				depts.add(dept);
+			}
+		}
 		return deptMap;
 	}
 
@@ -97,7 +121,8 @@ public class IdentityFactory {
 	 * @return
 	 */
 	public static List<SysDepartment> getDepartments() {
-		return null;
+		List<SysDepartment> depts = sysDepartmentService.getSysDepartmentList();
+		return depts;
 	}
 
 	/**
@@ -107,7 +132,6 @@ public class IdentityFactory {
 	 * @return
 	 */
 	public static Map<String, SysUser> getLowerCaseUserMap() {
-
 		Map<String, SysUser> userMap = new LinkedHashMap<String, SysUser>();
 
 		return userMap;
