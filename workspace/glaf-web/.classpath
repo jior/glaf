@@ -44,7 +44,6 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jaxen-1.1.1.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jbpm-jpdl.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jdom-1.0.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jpage-jbpm.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/json-lib-2.4-jdk15.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/json.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jstl-1.2.jar"/>
@@ -140,5 +139,6 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-net-3.2.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-validator-1.4.0.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/glaf-jbpm"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -46,6 +46,11 @@
 		<saveName>${entityName}BaseController.java</saveName>
 		<template>/templates/java/springmvc/BaseController.java.ftl</template>
 	</definition>
+	<definition name="WfBaseController">
+		<savePath>/java/web/springmvc</savePath>
+		<saveName>${entityName}WfController.java</saveName>
+		<template>/templates/java/springmvc/WfBaseController.java.ftl</template>
+	</definition>
 	<definition name="Test">
 		<savePath>/test/java</savePath>
 		<saveName>${entityName}Test.java</saveName>

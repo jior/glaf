@@ -19,11 +19,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.apache.commons.lang.StringUtils;
 import org.json.*;
 
- 
 import com.glaf.base.modules.sys.model.*;
 import com.glaf.base.security.*;
 import com.glaf.base.utils.*;
- 
 
 import ${packageName}.model.${entityName};
 import ${packageName}.query.${entityName}Query;
@@ -32,7 +30,7 @@ import ${packageName}.service.${entityName}Service;
 @Controller
 @Path("/rs/apps/${modelName}")
 public class ${entityName}ResourceRest {
-	protected static Log logger = LogFactory.getLog(${entityName}ResourceRest.class);
+	protected  static final Log logger = LogFactory.getLog(${entityName}ResourceRest.class);
 
 	@javax.annotation.Resource
 	protected ${entityName}Service ${modelName}Service;
@@ -137,7 +135,7 @@ public class ${entityName}ResourceRest {
 			result.put("limit", limit);
 			result.put("pageSize", limit);
 
-            if (StringUtils.isNotEmpty(orderName)) {
+                        if (StringUtils.isNotEmpty(orderName)) {
 				query.setSortOrder(orderName);
 				if (StringUtils.equals(order, "desc")) {
 					query.setSortOrder(" desc ");
@@ -154,36 +152,10 @@ public class ${entityName}ResourceRest {
 				result.put("rows", rowsJSON);
 				 
 				for (${entityName} ${modelName} : list) {
-					JSONObject rowJSON = new JSONObject();
+					JSONObject rowJSON = ${modelName}.toJsonObject();
 					rowJSON.put("id", ${modelName}.getId());
 					rowJSON.put("${modelName}Id", ${modelName}.getId());
-
-<#if pojo_fields?exists>
-    <#list  pojo_fields as field>
-        <#if field.type?exists && ( field.type== 'Date' )>
-	                if(${modelName}.get${field.firstUpperName}() != null) {
-	                    rowJSON.put("${field.name}", DateTools.getDateTime(${modelName}.get${field.firstUpperName}()));
-                    }
-	<#else>
-            <#if field.name?exists && field.name == 'createByName' >  
-			        SysUser createByUser = userMap.get(${modelName}.getCreateBy());
-				    if(createByUser != null){
-					    rowJSON.put("createByName", createByUser.getName());
-                    }
-	    <#elseif field.name?exists && field.name == 'updateByName' >
-				SysUser updateByUser = userMap.get(${modelName}.getUpdateBy());
-				if(updateByUser != null){
-					rowJSON.put("updateByName", updateByUser.getName());
-                }
-	     <#else>
-	            if(${modelName}.get${field.firstUpperName}() != null) {
-                    rowJSON.put("${field.name}", ${modelName}.get${field.firstUpperName}());
-                }
-	    </#if>
-       </#if>
-    </#list>
-</#if>
-					rowsJSON.put(rowJSON);
+ 					rowsJSON.put(rowJSON);
 				}
 
 			}
@@ -195,24 +167,8 @@ public class ${entityName}ResourceRest {
 	@Path("/save${entityName}")
 	@ResponseBody
 	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
-	public byte[] save${entityName}(@Context HttpServletRequest request) {
-		String ${modelName}Id = request.getParameter("${modelName}Id");
-		if (StringUtils.isEmpty(${modelName}Id)) {
-                   ${modelName}Id = request.getParameter("id");
-		}
-		${entityName} ${modelName} = null;
-		if (StringUtils.isNotEmpty(${modelName}Id)) {
-		    ${modelName} = ${modelName}Service.get${entityName}(${modelName}Id);
-		}
-
-		if (${modelName} == null) {
-		    ${modelName} = new ${entityName}();
-		}
-             
+	public byte[] save${entityName}(@Context HttpServletRequest request, ${entityName} ${modelName}) {
 	        try {
-		    Map<String, Object> params = RequestUtil.getParameterMap(request);
-		    Tools.populate(${modelName}, params);
-
 		    this.${modelName}Service.save(${modelName});
 
 		    return ResponseUtil.responseJsonResult(true);
@@ -239,34 +195,10 @@ public class ${entityName}ResourceRest {
 		}
 		JSONObject result = new JSONObject();
 		if (${modelName} != null) {
+		    result =  ${modelName}.toJsonObject();
 		    Map<String, SysUser> userMap = IdentityFactory.getUserMap();
-			result.put("id", ${modelName}.getId());
-			result.put("${modelName}Id", ${modelName}.getId());
-<#if pojo_fields?exists>
-    <#list  pojo_fields as field>
-        <#if field.type?exists && ( field.type== 'Date' )>
-	        if(${modelName}.get${field.firstUpperName}() != null) {
-	          result.put("${field.name}", DateTools.getDateTime(${modelName}.get${field.firstUpperName}()));
-            }
-	<#else>
-            <#if field.name?exists && field.name == 'createByName' >  
-			SysUser createByUser = userMap.get(${modelName}.getCreateBy());
-		    if(createByUser != null){
-				result.put("createByName", createByUser.getName());
-            }
-	    <#elseif field.name?exists && field.name == 'updateByName' >
-			SysUser updateByUser = userMap.get(${modelName}.getUpdateBy());
-			if(updateByUser != null){
-			    result.put("updateByName", updateByUser.getName());
-            }
-	     <#else>
-	        if(${modelName}.get${field.firstUpperName}() != null) {
-                result.put("${field.name}", ${modelName}.get${field.firstUpperName}());
-            }
-	    </#if>
-       </#if>
-    </#list>
-</#if>
+		    result.put("id", ${modelName}.getId());
+		    result.put("${modelName}Id", ${modelName}.getId());
 		}
 		return result.toString().getBytes("UTF-8");
 	}

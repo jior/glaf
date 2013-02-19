@@ -7,6 +7,7 @@ import javax.persistence.*;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import org.json.*;
+import org.jpage.util.DateTools;
 import com.glaf.base.api.*;
 
 @Entity
@@ -47,13 +48,19 @@ public class ${entityName} implements Serializable, JsonReadable {
 		jsonObject.put("${idField.name}", ${idField.name});
 <#if pojo_fields?exists>
     <#list  pojo_fields as field>	
-        <#if field.type?exists && ( field.type== 'Integer' || field.type== 'Long' || field.type== 'Double' || field.type== 'Boolean')>
-        jsonObject.put("${field.name}", ${field.name});
-	    <#else>
+        <#if field.type?exists >
+	      <#if ( field.type== 'Integer' || field.type== 'Long' || field.type== 'Double' || field.type== 'Boolean')>
+                jsonObject.put("${field.name}", ${field.name});
+	      <#elseif ( field.type== 'Date' )>
+	        jsonObject.put("${field.name}", DateTools.getDateTime(${field.name}));
+		jsonObject.put("${field.name}_date", DateTools.getDate(${field.name}));
+		jsonObject.put("${field.name}_datetime", DateTools.getDateTime(${field.name}));
+	      </#if>
+	<#else>
 		if (${field.name} != null) {
 			jsonObject.put("${field.name}", ${field.name});
 		} 
-	    </#if>
+	</#if>
     </#list>
 </#if>
 		return jsonObject;

@@ -538,9 +538,9 @@ public class ProcessContainer {
 	 * @param actorId
 	 * @return
 	 */
-	public Collection getFinishedProcessInstanceIds(String processName,
+	public List getFinishedProcessInstanceIds(String processName,
 			String actorId) {
-		Collection processInstanceIds = new HashSet();
+		List processInstanceIds = new ArrayList();
 		List taskItems = this.getFinishedTaskItems(processName, actorId);
 		if (taskItems != null && taskItems.size() > 0) {
 			Iterator iterator = taskItems.iterator();
@@ -1036,10 +1036,10 @@ public class ProcessContainer {
 	 * @param actorId
 	 * @return
 	 */
-	public Collection getRunningProcessInstanceIds(String actorId) {
+	public List getRunningProcessInstanceIds(String actorId) {
 		logger.debug("----------------------------------------------------");
 		logger.debug("-----------getRunningProcessInstanceIds-------------");
-		Collection processInstanceIds = new HashSet();
+		List processInstanceIds = new ArrayList();
 		List taskItems = this.getTaskItems(actorId);
 		if (taskItems != null && taskItems.size() > 0) {
 			Iterator iterator = taskItems.iterator();
@@ -1085,11 +1085,11 @@ public class ProcessContainer {
 	 * @param actorId
 	 * @return
 	 */
-	public Collection getRunningProcessInstanceIdsByName(String processName,
+	public List getRunningProcessInstanceIdsByName(String processName,
 			String actorId) {
 		logger.debug("----------------------------------------------------");
 		logger.debug("-----------getRunningProcessInstanceIdsByName-------");
-		Collection processInstanceIds = new HashSet();
+		List processInstanceIds = new ArrayList();
 		List taskItems = this.getTaskItemsByProcessName(processName, actorId);
 		if (taskItems != null && taskItems.size() > 0) {
 			Iterator iterator = taskItems.iterator();
