@@ -24,29 +24,28 @@ insert into sys_tree (id, parent, name, nodedesc, sort, code) values (4, 2, '»ù´
 insert into sys_tree (id, parent, name, nodedesc, sort, code) values (5, 2, '²¿ÃÅ½á¹¹', '²¿ÃÅ½á¹¹', 40, '012');
 insert into sys_tree (id, parent, name, nodedesc, sort, code) values (6, 5, '¼¼Êõ²¿', '¼¼Êõ²¿', 284, 'JS000');
 insert into sys_tree (id, parent, name, nodedesc, sort, code) values (8, 3, 'ÏµÍ³¹ÜÀí', 'ÏµÍ³¹ÜÀí', 5, '');
+insert into sys_tree (id, parent, name, nodedesc, sort, code) values (10, 3, '°²È«ÉèÖÃ', '°²È«ÉèÖÃ', 30, '');
 insert into sys_tree (id, parent, name, nodedesc, sort, code) values (11, 8, 'ÏµÍ³Ä¿Â¼', 'ÏµÍ³Ä¿Â¼', 20, '');
 insert into sys_tree (id, parent, name, nodedesc, sort, code) values (12, 10, '²¿ÃÅ¹ÜÀí', '²¿ÃÅ¹ÜÀí', 20, '');
 insert into sys_tree (id, parent, name, nodedesc, sort, code) values (14, 10, '½ÇÉ«¹ÜÀí', '½ÇÉ«¹ÜÀí', 15, '');
 insert into sys_tree (id, parent, name, nodedesc, sort, code) values (15, 10, 'Ä£¿é¹ÜÀí', 'Ä£¿é¹ÜÀí', 12, '');
+insert into sys_tree (id, parent, name, nodedesc, sort, code) values (16, 8, '×Öµä¹ÜÀí', '×Öµä¹ÜÀí', 20, '');
+insert into sys_tree (id, parent, name, nodedesc, sort, code) values (20, 3, '¸öÈËÉèÖÃ', '¸öÈËÉèÖÃ', 30, '');
+insert into sys_tree (id, parent, name, nodedesc, sort, code) values (21, 20, 'ĞŞ¸ÄÃÜÂë', 'ĞŞ¸ÄÃÜÂë', 30, '');
+insert into sys_tree (id, parent, name, nodedesc, sort, code) values (22, 20, 'ĞŞ¸Ä¸öÈËĞÅÏ¢', 'ĞŞ¸Ä¸öÈËĞÅÏ¢', 30, '');
+insert into sys_tree (id, parent, name, nodedesc, sort, code) values (26, 8, 'Êı¾İÖØÔØ', 'Êı¾İÖØÔØ', 26, '');
 insert into sys_tree (id, parent, name, nodedesc, sort, code) values (190, 163, 'ĞŞ¸ÄÃÜÂë', 'ĞŞ¸ÄÃÜÂë', 188, '');
 insert into sys_tree (id, parent, name, nodedesc, sort, code) values (231, 229, '»ù´¡Êı¾İ', '»ù´¡Êı¾İ', 230, '');
 insert into sys_tree (id, parent, name, nodedesc, sort, code) values (235, 231, 'ĞŞ¸ÄÃÜÂë', 'ĞŞ¸ÄÃÜÂë', 235, '');
 insert into sys_tree (id, parent, name, nodedesc, sort, code) values (236, 231, 'ĞŞ¸Ä×ÊÁÏ', 'ĞŞ¸Ä×ÊÁÏ', 236, '');
+insert into sys_tree (id, parent, name, nodedesc, sort, code) values (434, 3, 'Á÷³Ì¹ÜÀí', 'Á÷³Ì¹ÜÀí', 434, '');
 insert into sys_tree (id, parent, name, nodedesc, sort, code) values (435, 434, 'Á÷³Ì·¢²¼', 'Á÷³Ì·¢²¼', 435, '');
 insert into sys_tree (id, parent, name, nodedesc, sort, code) values (437, 434, 'Á÷³ÌÑİÊ¾', 'Á÷³ÌÑİÊ¾', 437, '');
 insert into sys_tree (id, parent, name, nodedesc, sort, code) values (438, 434, 'Á÷³Ì¼à¿Ø', 'Á÷³Ì¼à¿Ø', 438, '');
 insert into sys_tree (id, parent, name, nodedesc, sort, code) values (449, 8, '¹¤×÷ÈÕÀú', '¹¤×÷ÈÕÀú', 449, '');
-insert into sys_tree (id, parent, name, nodedesc, sort, code) values (3238, 5, '²É¹º²¿', '²É¹º²¿', 3237, 'CGB');
+insert into sys_tree (id, parent, name, nodedesc, sort, code) values (482, 10, 'ÊÚÈ¨¹ÜÀí', 'ÊÚÈ¨¹ÜÀí', 482, '');
 insert into sys_tree (id, parent, name, nodedesc, sort, code) values (494, 8, 'TODOÅäÖÃ', 'TODOÅäÖÃ', 494, '');
 insert into sys_tree (id, parent, name, nodedesc, sort, code) values (495, 8, 'µ÷¶È¹ÜÀí', 'µ÷¶È¹ÜÀí', 495, '');
-insert into sys_tree (id, parent, name, nodedesc, sort, code) values (16, 8, '×Öµä¹ÜÀí', '×Öµä¹ÜÀí', 20, '');
-insert into sys_tree (id, parent, name, nodedesc, sort, code) values (26, 8, 'Êı¾İÖØÔØ', 'Êı¾İÖØÔØ', 26, '');
-insert into sys_tree (id, parent, name, nodedesc, sort, code) values (434, 3, 'Á÷³Ì¹ÜÀí', 'Á÷³Ì¹ÜÀí', 434, '');
-insert into sys_tree (id, parent, name, nodedesc, sort, code) values (10, 3, '°²È«ÉèÖÃ', '°²È«ÉèÖÃ', 30, '');
-insert into sys_tree (id, parent, name, nodedesc, sort, code) values (20, 3, '¸öÈËÉèÖÃ', '¸öÈËÉèÖÃ', 30, '');
-insert into sys_tree (id, parent, name, nodedesc, sort, code) values (21, 20, 'ĞŞ¸ÄÃÜÂë', 'ĞŞ¸ÄÃÜÂë', 30, '');
-insert into sys_tree (id, parent, name, nodedesc, sort, code) values (22, 20, 'ĞŞ¸Ä¸öÈËĞÅÏ¢', 'ĞŞ¸Ä¸öÈËĞÅÏ¢', 30, '');
-insert into sys_tree (id, parent, name, nodedesc, sort, code) values (482, 10, 'ÊÚÈ¨¹ÜÀí', 'ÊÚÈ¨¹ÜÀí', 482, '');
 
 
 /*³õÊ¼»¯²¿ÃÅĞÅÏ¢*/
@@ -79,13 +78,14 @@ insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) val
 insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (315, 'ÊÚÈ¨¹ÜÀí', '', '/sys/sysUserRole.do?method=showUsers', 315, 2, 482);
 insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (328, 'µ÷¶È¹ÜÀí', '', '/sys/scheduler.do?method=showList', 328, 1, 495);
 
+/*²åÈë²¿ÃÅ½ÇÉ«*/ 
+insert into sys_dept_role (id, grade, code, sort, sysroleid, deptid) values (1, 0, null, 0, 15, 6);
+
 
 /*²åÈëÓÃ»§½ÇÉ«*/
 insert into sys_user_role (id, userid, roleid, authorized, authorizefrom, availdatestart, availdateend, processdescription) values (2, 1, 1, 1, 1, null, null, null);
 insert into sys_user_role (id, userid, roleid, authorized, authorizefrom, availdatestart, availdateend, processdescription) values (4, 2, 1, 2, 2, null, null, null);
 
-/*²åÈë²¿ÃÅ½ÇÉ«*/ 
-insert into sys_dept_role (id, grade, code, sort, sysroleid, deptid) values (1, 0, null, 0, 15, 6);
    
  
 /*²åÈë·ÃÎÊÈ¨ÏŞ*/
