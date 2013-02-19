@@ -2,26 +2,26 @@
  
  
 CREATE TABLE sys_access(
-        roleid numeric(19,0)  NOT NULL,
-        appid numeric(19,0) NOT NULL,
+        roleid bigint  NOT NULL,
+        appid bigint NOT NULL,
         PRIMARY KEY (roleid, appid)
 );
 
 
 CREATE TABLE sys_application(
-        id numeric(19,0) identity not null,
+        id bigint identity not null,
         name nvarchar(255),
         appdesc nvarchar(255),
         url nvarchar(255),
         sort int,
         showmenu int,
-        nodeid numeric(19,0) NOT NULL,
+        nodeid bigint NOT NULL,
         PRIMARY KEY (id)
 );
 
 
 CREATE TABLE sys_department(
-        id numeric(19,0) identity not null,
+        id bigint identity not null,
         name nvarchar(255),
         deptdesc nvarchar(255),
         createtime datetime,
@@ -31,32 +31,32 @@ CREATE TABLE sys_department(
         code2 nvarchar(255),
         status int,
         fincode nvarchar(255),
-        nodeid numeric(19,0) NOT NULL,
+        nodeid bigint NOT NULL,
         PRIMARY KEY (id)
 );
 
 CREATE TABLE sys_dept_role(
-        id numeric(19,0) identity not null,
+        id bigint identity not null,
         grade int,
         code nvarchar(255),
         sort int,
-        sysroleid numeric(19,0) NOT NULL,
-        deptid numeric(19,0) NOT NULL,
+        sysroleid bigint NOT NULL,
+        deptid bigint NOT NULL,
         PRIMARY KEY (id)
 );
 
 CREATE TABLE sys_function(
-        id numeric(19,0) identity not null,
+        id bigint identity not null,
         name nvarchar(255),
         funcdesc nvarchar(255),
         funcmethod nvarchar(255),
         sort int,
-        appid numeric(19,0) NOT NULL,
+        appid bigint NOT NULL,
         PRIMARY KEY (id)
 );
 
 CREATE TABLE sys_log(
-        id numeric(19,0) identity not null,
+        id bigint identity not null,
         account nvarchar(255),
         ip nvarchar(255),
         createtime datetime,
@@ -66,13 +66,13 @@ CREATE TABLE sys_log(
 );
 
 CREATE TABLE sys_permission (
-        roleid numeric(19,0) NOT NULL,
-        funcid numeric(19,0) NOT NULL,
+        roleid bigint NOT NULL,
+        funcid bigint NOT NULL,
         PRIMARY KEY (roleid, funcid)
  );
 
 CREATE TABLE sys_role(
-        id numeric(19,0) identity not null,
+        id bigint identity not null,
         name nvarchar(255),
         roledesc nvarchar(255),
         code nvarchar(255),
@@ -82,8 +82,8 @@ CREATE TABLE sys_role(
 
 
 CREATE TABLE sys_tree (
-        id numeric(19,0) identity not null,
-        parent numeric(19,0),
+        id bigint identity not null,
+        parent bigint,
         name nvarchar(255),
         nodedesc nvarchar(255),
         sort int,
@@ -92,7 +92,7 @@ CREATE TABLE sys_tree (
 );
 
 CREATE TABLE sys_user (
-        id numeric(19,0) identity not null,
+        id bigint identity not null,
         account nvarchar(255),
         password nvarchar(255),
         code nvarchar(255),
@@ -111,17 +111,17 @@ CREATE TABLE sys_user (
         fax nvarchar(255),
         accounttype int,
         dumpflag int,
-        deptid numeric(19,0),
+        deptid bigint,
 	adminFlag nvarchar(1),
         PRIMARY KEY (id)
 );
 
 CREATE TABLE sys_user_role(
-        id numeric(19,0) identity not null ,
-        userid numeric(19,0) not null,
-        roleid numeric(19,0) not null,
+        id bigint identity not null ,
+        userid bigint not null,
+        roleid bigint not null,
         authorized int default 0,
-        authorizefrom numeric(19,0) default 0,
+        authorizefrom bigint default 0,
         availdatestart datetime,
         availdateend datetime,
         processdescription nvarchar(255),
@@ -129,8 +129,8 @@ CREATE TABLE sys_user_role(
 );
 
 CREATE TABLE sys_dictory (
-        id numeric(19,0) identity not null,
-        typeId numeric(19,0),
+        id bigint identity not null,
+        typeId bigint,
         name nvarchar(50),
         dictDesc nvarchar(200),
         code nvarchar(50),
@@ -147,7 +147,7 @@ CREATE TABLE sys_dictory (
 
 
 CREATE TABLE sys_workcalendar (
-        id numeric(19,0) identity not null,
+        id bigint identity not null,
         freeday int,
         freemonth int,
         freeyear int,
@@ -155,7 +155,7 @@ CREATE TABLE sys_workcalendar (
 );
 
 CREATE TABLE sys_membership(
-        id_ numeric(19,0) identity not null,
+        id_ bigint identity not null,
         actorid_ nvarchar(255),
         superiorid_ nvarchar(255),
         modifydate_ datetime,
@@ -164,12 +164,12 @@ CREATE TABLE sys_membership(
 );
 
 CREATE TABLE sys_todo(
-        id numeric(19,0) NOT NULL,
+        id bigint not null,
         actorid nvarchar(255),
         alarm nvarchar(255),
         code nvarchar(255),
         content nvarchar(255),
-        deptid numeric(19,0),
+        deptid bigint,
         deptname nvarchar(255),
         enableflag int,
         eventfrom nvarchar(255),
@@ -188,18 +188,18 @@ CREATE TABLE sys_todo(
         objectvalue nvarchar(255),
         processname nvarchar(255),
         rolecode nvarchar(255),
-        roleid numeric(19,0),
+        roleid bigint,
         tablename nvarchar(255),
         taskname nvarchar(255),
         title nvarchar(255),
         type nvarchar(255),
         SQL_ nvarchar(255),
-        versionno numeric(19,0),
+        versionno bigint,
         PRIMARY KEY (id)
     );
 
 CREATE TABLE sys_todo_instance(
-        id numeric(19,0) identity not null,
+        id bigint identity not null,
         actorid nvarchar(255),
         actorname nvarchar(255),
         title nvarchar(255),
@@ -214,17 +214,17 @@ CREATE TABLE sys_todo_instance(
         pastduedate datetime,
         taskinstanceid nvarchar(255),
         processinstanceid nvarchar(255),
-        deptid numeric(19,0),
+        deptid bigint,
         deptname nvarchar(255),
-        roleid numeric(19,0),
+        roleid bigint,
         rolecode nvarchar(255),
         rowid nvarchar(255),
-        todoid numeric(19,0),
+        todoid bigint,
         appid int,
         moduleid int,
         objectid nvarchar(255),
         objectvalue nvarchar(255),
-        versionno numeric(19,0),
+        versionno bigint,
         PRIMARY KEY (id)
     );
 
@@ -253,11 +253,11 @@ CREATE TABLE sys_todo_instance(
     );
 
 CREATE TABLE message(
-        id numeric(19,0) identity not null,
+        id bigint identity not null,
         type int,
         sysType int,
-        sender numeric(19,0),
-        recver numeric(19,0),
+        sender bigint,
+        recver bigint,
         recverList nvarchar(2000) ,
         title nvarchar(500) ,
         content nvarchar(2000) ,
@@ -272,8 +272,8 @@ CREATE TABLE message(
   );
 
 CREATE TABLE mymenu(
-        id numeric(19,0) identity not null,
-        userId numeric(19,0),
+        id bigint identity not null,
+        userId bigint,
         title nvarchar(100),
         url nvarchar(200),
         sort int,
@@ -285,8 +285,8 @@ CREATE TABLE mymenu(
 );
 
 CREATE TABLE subjectcode(
-        id numeric(19,0) identity not null ,
-        parent numeric(19,0),
+        id bigint identity not null ,
+        parent bigint,
         subjectCode nvarchar(20),
         subjectName nvarchar(100),
         feeSum double precision ,
@@ -309,13 +309,13 @@ CREATE TABLE subjectcode(
 
 
 CREATE TABLE  Attachment (
-	id numeric(19,0)  identity not null ,
-	referId numeric(19,0)  ,
+	id bigint  identity not null ,
+	referId bigint  ,
 	referType int  ,
 	name nvarchar (100)   ,
 	url nvarchar (200)   ,
 	createDate datetime  ,
-	createId numeric(19,0)  ,
+	createId bigint  ,
 	crUser nvarchar (20)   ,
 	crDate datetime  ,
 	edUser nvarchar (20)   ,
@@ -325,14 +325,14 @@ CREATE TABLE  Attachment (
 
 
   CREATE TABLE  Audit (
-	id numeric(19,0) identity not null,
-	referId numeric(19,0) ,
+	id bigint identity not null,
+	referId bigint ,
 	referType int ,
-	deptId numeric(19,0) ,
+	deptId bigint ,
 	deptName nvarchar (50) ,
 	headship nvarchar (100) ,
 	leaderName nvarchar (100) ,
-	leaderId numeric(19,0) ,
+	leaderId bigint ,
 	createDate datetime ,
 	memo text ,
 	flag int ,
