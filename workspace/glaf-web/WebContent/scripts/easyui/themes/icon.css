@@ -11,7 +11,13 @@
 	background:url('icons/edit_remove.png') no-repeat;
 }
 .icon-save{
-	background:url('icons/filesave.png') no-repeat;
+	background:url('../../../images/floppy_disk_blue.png') no-repeat;
+}
+.icon-saveas{
+	background:url('../../../images/save_as.png') no-repeat;
+}
+.icon-eback{
+	background:url('../../../images/e_back.gif') no-repeat;
 }
 .icon-cut{
 	background:url('icons/cut.png') no-repeat;

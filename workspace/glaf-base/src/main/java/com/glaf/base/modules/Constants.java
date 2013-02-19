@@ -132,20 +132,5 @@ public class Constants {
 	public static String ORDER_PREFIX = "order_";
 	public static String COLLE_PREFIX = "colle_";
 
-	public final static String ministerZ = "部长";
-	public final static String ministerF = "副部长";
-	// public final static String keZhangZ = "正科长";
-	public final static String keZhangZ = "科长";
-	public final static String keZhangF = "副科长";
-	public final static String CO = "CO";
-	public final static String xiZhang = "系长";
-	public final static String fawu = "法务审查担当";
-	public final static String jiancha = "监察审查担当";
-	public final static String charge = "担当";
-	public final static String YSY = "预算员";
-	public final static String JBR = "申请担当";
-	public final static String ZR = "主任";
-	public final static String cgk = "采购部";// 采购部
-	public final static String fgk = "法规科";// 总经理室
-	public final static String jck = "审计监察科";// 总经理室
+	
 }

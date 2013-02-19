@@ -8,15 +8,13 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.ModelMap;
 import org.json.*;
 import org.jpage.util.JSONTools;
 
-
-import com.glaf.base.*;
 import com.glaf.base.config.*;
 import com.glaf.base.modules.sys.model.*;
 import com.glaf.base.security.*;
@@ -32,7 +30,7 @@ public class ${entityName}BaseController {
 	protected static final Log logger = LogFactory
 			.getLog(${entityName}BaseController.class);
 
-    @Autowired
+        @javax.annotation.Resource
 	protected ${entityName}Service ${modelName}Service;
 
 	public ${entityName}BaseController() {
@@ -58,7 +56,36 @@ public class ${entityName}BaseController {
 		return this.list(request, modelMap);
 	}
 
-    @RequestMapping(params = "method=update")
+        @ResponseBody
+	@RequestMapping(params = "method=save${entityName}")
+	public byte[] save${entityName}(HttpServletRequest request ) {
+		String ${modelName}Id = request.getParameter("${modelName}Id");
+		if (StringUtils.isEmpty(${modelName}Id)) {
+                   ${modelName}Id = request.getParameter("id");
+		}
+		${entityName} ${modelName} = null;
+		if (StringUtils.isNotEmpty(${modelName}Id)) {
+		    ${modelName} = ${modelName}Service.get${entityName}(${modelName}Id);
+		}
+
+		if (${modelName} == null) {
+		    ${modelName} = new ${entityName}();
+		}
+             
+	        try {
+		    Map<String, Object> params = RequestUtil.getParameterMap(request);
+		    Tools.populate(${modelName}, params);
+
+		    this.${modelName}Service.save(${modelName});
+
+		    return ResponseUtil.responseJsonResult(true);
+		} catch (Exception ex) {
+		    ex.printStackTrace();
+		}
+		return ResponseUtil.responseJsonResult(false);
+	}
+
+        @RequestMapping(params = "method=update")
 	public ModelAndView update(HttpServletRequest request,
 			ModelMap modelMap) {
 		SysUser user = RequestUtil
@@ -83,7 +110,7 @@ public class ${entityName}BaseController {
 		return this.list(request, modelMap);
 	}
 
-    @RequestMapping(params = "method=delete")
+        @RequestMapping(params = "method=delete")
 	public ModelAndView delete(HttpServletRequest request,
 			ModelMap modelMap) {
 		SysUser user = RequestUtil
@@ -117,7 +144,7 @@ public class ${entityName}BaseController {
 
     
 
-    @RequestMapping(params = "method=edit")
+        @RequestMapping(params = "method=edit")
 	public ModelAndView edit(HttpServletRequest request,
 			ModelMap modelMap) {
 		SysUser user = RequestUtil
@@ -137,7 +164,7 @@ public class ${entityName}BaseController {
 			request.setAttribute("x_json", x_json);
 		}
 
-        boolean canUpdate = false;
+                boolean canUpdate = false;
 		String x_method = request.getParameter("x_method");
 		if (StringUtils.equals(x_method, "submit")) {
 			 
@@ -168,7 +195,7 @@ public class ${entityName}BaseController {
 		return new ModelAndView("/apps/${modelName}/edit", modelMap);
 	}
 
-    @RequestMapping(params = "method=view")
+        @RequestMapping(params = "method=view")
 	public ModelAndView view(HttpServletRequest request,
 			ModelMap modelMap) {
 		RequestUtil.setRequestParameterToAttribute(request);
@@ -197,7 +224,7 @@ public class ${entityName}BaseController {
 		return new ModelAndView("/apps/${modelName}/view");
 	}
 
-     @RequestMapping(params = "method=query")
+        @RequestMapping(params = "method=query")
 	public ModelAndView query(HttpServletRequest request,
 			ModelMap modelMap) {
 		RequestUtil.setRequestParameterToAttribute(request);
@@ -309,7 +336,7 @@ public class ${entityName}BaseController {
 		return result.toString().getBytes("UTF-8");
 	}
 
-    @RequestMapping 
+        @RequestMapping 
 	public ModelAndView list(HttpServletRequest request,
 			ModelMap modelMap) {
 		RequestUtil.setRequestParameterToAttribute(request);

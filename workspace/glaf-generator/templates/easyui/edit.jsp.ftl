@@ -23,7 +23,7 @@
 		var params = jQuery("#iForm").formSerialize();
 		jQuery.ajax({
 				   type: "POST",
-				   url: '<%=request.getContextPath()%>/rs/apps/${modelName}/save${entityName}',
+				   url: '<%=request.getContextPath()%>/apps/${modelName}.do?method=save${entityName}',
 				   data: params,
 				   dataType:  'json',
 				   error: function(data){
@@ -45,7 +45,7 @@
 		var params = jQuery("#iForm").formSerialize();
 		jQuery.ajax({
 				   type: "POST",
-				   url: '<%=request.getContextPath()%>/rs/apps/${modelName}/save${entityName}',
+				   url: '<%=request.getContextPath()%>/apps/${modelName}.do?method=save${entityName}',
 				   data: params,
 				   dataType:  'json',
 				   error: function(data){
@@ -63,19 +63,31 @@
 
 </script>
 </head>
-<body style="padding-left:20px;padding-right:20px">
 
-<div class="content-block" style="width: 845px;">
-<br>
-<div class="x_content_title"><img
-	src="<%=request.getContextPath()%>/images/window.png"
-	alt="${classDefinition.title}">&nbsp;${classDefinition.title}</div>
-<br>
-<form id="iForm" name="iForm" method="post">
-<input type="hidden" id="id" name="id" value="#F{${modelName}.${idField.name}}"/>
-<input type="hidden" id="rowId" name="rowId" value="#F{${modelName}.${idField.name}}"/>
-<table class="easyui-form" style="width:800px;" align="center">
-<tbody>
+<body>
+<div style="margin:0;"></div>  
+
+<div class="easyui-layout" data-options="fit:true">  
+  <div data-options="region:'north',split:true,border:true" style="height:40px"> 
+    <div style="background:#fafafa;padding:2px;border:1px solid #ddd;font-size:12px"> 
+	±‡º≠${classDefinition.title}
+	<!-- <input type="button" name="save" value=" ±£¥Ê " class="button btn btn-primary" onclick="javascript:saveData();">
+	<input type="button" name="saveAs" value=" ¡Ì¥Ê " class="button btn" onclick="javascript:saveAsData();">
+	<input type="button" name="back" value=" ∑µªÿ " class="button btn" onclick="javascript:history.back();"> -->
+	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-save'" onclick="javascript:saveData();" >±£¥Ê</a> 
+	<!-- 
+	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-saveas'" onclick="javascript:saveAsData();" >¡Ì¥Ê</a> 
+        -->
+	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-back'" onclick="javascript:history.back();">∑µªÿ</a>	
+    </div> 
+  </div>
+
+  <div data-options="region:'center',border:false,cache:true">
+  <form id="iForm" name="iForm" method="post">
+  <input type="hidden" id="id" name="id" value="#F{${modelName}.${idField.name}}"/>
+  <input type="hidden" id="rowId" name="rowId" value="#F{${modelName}.${idField.name}}"/>
+  <table class="easyui-form" style="width:800px;" align="center">
+    <tbody>
   <#if pojo_fields?exists>
     <#list  pojo_fields as field>	
 	<#if field.editable>
@@ -113,18 +125,11 @@
   </#if>	 
  </#list>
 </#if>
-<tr>
-	<td colspan="4" align="center">
-	<br />
-	<input type="button" name="save" value=" ±£¥Ê " class="button btn btn-primary" onclick="javascript:saveData();">
-	<input type="button" name="saveAs" value=" ¡Ì¥Ê " class="button btn" onclick="javascript:saveAsData();">
-	<input type="button" name="back" value=" ∑µªÿ " class="button btn" onclick="javascript:history.back();">
-	</td>
-	</tr>
-</tbody>
-</table>
-</form>
+ 
+    </tbody>
+  </table>
+  </form>
 </div>
-
+</div>
 </body>
 </html>

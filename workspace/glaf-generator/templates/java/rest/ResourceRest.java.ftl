@@ -13,7 +13,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.apache.commons.lang.StringUtils;
@@ -34,7 +34,7 @@ import ${packageName}.service.${entityName}Service;
 public class ${entityName}ResourceRest {
 	protected static Log logger = LogFactory.getLog(${entityName}ResourceRest.class);
 
-	@Autowired
+	@javax.annotation.Resource
 	protected ${entityName}Service ${modelName}Service;
 
 	@POST

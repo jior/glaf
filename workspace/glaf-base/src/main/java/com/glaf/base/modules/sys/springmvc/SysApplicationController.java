@@ -102,7 +102,7 @@ public class SysApplicationController {
 	@RequestMapping(params = "method=prepareAdd")
 	public ModelAndView prepareAdd(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		//RequestUtil.setRequestParameterToAttribute(request);
 		return new ModelAndView("/modules/sys/app/app_add", modelMap);
 	}
 
@@ -157,7 +157,7 @@ public class SysApplicationController {
 	@RequestMapping(params = "method=prepareModify")
 	public ModelAndView prepareModify(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		//RequestUtil.setRequestParameterToAttribute(request);
 		long id = ParamUtil.getIntParameter(request, "id", 0);
 		SysApplication bean = sysApplicationService.findById(id);
 		request.setAttribute("bean", bean);

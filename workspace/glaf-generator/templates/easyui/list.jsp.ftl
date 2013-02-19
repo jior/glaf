@@ -27,7 +27,7 @@
 				nowrap: false,
 				striped: true,
 				collapsible:true,
-				url:'<%=request.getContextPath()%>/rs/apps/${modelName}/list?gridType=easyui',
+				url:'<%=request.getContextPath()%>/apps/${modelName}.do?method=json',
 				sortName: 'id',
 				sortOrder: 'desc',
 				remoteSort: false,
@@ -46,7 +46,7 @@
 				]],
 				rownumbers:false,
 				pagination:true,
-				pageSize:50,
+				pageSize:15,
 				pageList: [10,15,20,25,30,40,50,100],
 				onDblClickRow: onRowClick 
 			});
@@ -65,7 +65,7 @@
 	}
 
 	function onRowClick(rowIndex, row){
-        window.open('<%=request.getContextPath()%><%=request.getContextPath()%>/apps/${modelName}.do?method=edit&rowId='+row.id);
+            window.open('<%=request.getContextPath()%><%=request.getContextPath()%>/apps/${modelName}.do?method=edit&rowId='+row.id);
 	}
 
 	function searchWin(){
@@ -88,7 +88,7 @@
 		}
 		var selected = jQuery('#mydatagrid').datagrid('getSelected');
 		if (selected ){
-			location.href="<%=request.getContextPath()%>/apps/${modelName}.do?method=edit?rowId="+selected.id;
+			location.href="<%=request.getContextPath()%>/apps/${modelName}.do?method=edit&rowId="+selected.id;
 		}
 	}
 
@@ -100,7 +100,7 @@
 		}
 		var selected = jQuery('#mydatagrid').datagrid('getSelected');
 		if (selected ){
-		    location.href="<%=request.getContextPath()%>/apps/${modelName}.do?method=edit?readonly=true&rowId="+selected.id;
+		    location.href="<%=request.getContextPath()%>/apps/${modelName}.do?method=edit&readonly=true&rowId="+selected.id;
 		}
 	}
 
@@ -114,7 +114,7 @@
 		    var rowIds = ids.join(',');
 			jQuery.ajax({
 				   type: "POST",
-				   url: '<%=request.getContextPath()%>/rs/apps/${modelName}/deleteAll?rowIds='+rowIds,
+				   url: '<%=request.getContextPath()%>/apps/${modelName}.do?method=delete&rowIds='+rowIds,
 				   dataType:  'json',
 				   error: function(data){
 					   alert('服务器处理错误！');
