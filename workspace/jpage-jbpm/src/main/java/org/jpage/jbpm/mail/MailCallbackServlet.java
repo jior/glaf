@@ -29,18 +29,17 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.jbpm.JbpmConfiguration;
+ 
 import org.jbpm.JbpmContext;
 import org.jpage.jbpm.context.Context;
 import org.jpage.jbpm.context.JbpmContextFactory;
 import org.jpage.jbpm.model.MessageInstance;
 import org.jpage.jbpm.service.PersistenceManager;
+import org.jpage.jbpm.service.ProcessContainer;
 
 public class MailCallbackServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-	private JbpmConfiguration jbpmConfiguration = JbpmConfiguration
-			.getInstance();
+ 
 
 	private final static Log logger = LogFactory
 			.getLog(MailCallbackServlet.class);
@@ -70,7 +69,7 @@ public class MailCallbackServlet extends HttpServlet {
 					.getBean("persistenceManager");
 
 			if (StringUtils.isNotBlank(messageId)) {
-				jbpmContext = jbpmConfiguration.createJbpmContext();
+				jbpmContext = ProcessContainer.getContainer().createJbpmContext();
 				MessageInstance messageInstance = (MessageInstance) persistenceManager
 						.getPersistObject(jbpmContext, MessageInstance.class,
 								messageId);

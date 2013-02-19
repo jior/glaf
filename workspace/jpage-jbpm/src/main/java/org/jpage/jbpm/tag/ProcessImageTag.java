@@ -1,20 +1,20 @@
 /*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package org.jpage.jbpm.tag;
 
@@ -35,7 +35,7 @@ import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.dom4j.XPath;
 import org.dom4j.xpath.DefaultXPath;
-import org.jbpm.JbpmConfiguration;
+
 import org.jbpm.JbpmContext;
 import org.jbpm.file.def.FileDefinition;
 import org.jbpm.graph.def.ProcessDefinition;
@@ -44,11 +44,9 @@ import org.jbpm.graph.exe.Token;
 import org.jbpm.taskmgmt.exe.TaskInstance;
 import org.jpage.core.cache.CacheFactory;
 import org.jpage.jbpm.context.Context;
+import org.jpage.jbpm.service.ProcessContainer;
 
 public class ProcessImageTag extends TagSupport {
-
-	private JbpmConfiguration jbpmConfiguration = JbpmConfiguration
-			.getInstance();
 
 	private static final long serialVersionUID = 1L;
 
@@ -80,7 +78,7 @@ public class ProcessImageTag extends TagSupport {
 	public int doEndTag() throws JspException {
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = ProcessContainer.getContainer().createJbpmContext();
 			initialize(jbpmContext);
 			retrieveByteArrays();
 			if (gpdBytes != null) {

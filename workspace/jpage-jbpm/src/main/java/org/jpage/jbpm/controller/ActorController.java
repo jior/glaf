@@ -32,7 +32,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.jbpm.JbpmConfiguration;
+ 
 import org.jbpm.JbpmContext;
 import org.jpage.actor.Actor;
 import org.jpage.actor.User;
@@ -40,6 +40,7 @@ import org.jpage.jbpm.context.Context;
 import org.jpage.jbpm.context.JbpmContextFactory;
 import org.jpage.jbpm.model.AgentInstance;
 import org.jpage.jbpm.service.ActorManager;
+import org.jpage.jbpm.service.ProcessContainer;
 import org.jpage.jbpm.util.Constant;
 import org.jpage.util.RequestUtil;
 import org.jpage.util.Tools;
@@ -50,8 +51,7 @@ public class ActorController implements
 		org.springframework.web.servlet.mvc.Controller {
 	private final static Log logger = LogFactory.getLog(ActorController.class);
 
-	private JbpmConfiguration jbpmConfiguration = JbpmConfiguration
-			.getInstance();
+	 
 
 	private ActorManager actorManager;
 
@@ -103,7 +103,7 @@ public class ActorController implements
 			HttpServletResponse response) throws Exception {
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = ProcessContainer.getContainer().createJbpmContext();
 			String roleId = request.getParameter("roleId");
 			List actorIds = actorManager.getActorIds(jbpmContext, roleId);
 			StringBuffer selected = new StringBuffer();
@@ -149,7 +149,7 @@ public class ActorController implements
 		String objectValue = request.getParameter("objectValue");
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = ProcessContainer.getContainer().createJbpmContext();
 			List agentIds = null;
 			if (StringUtils.isNotBlank(objectValue)) {
 				Map params = new HashMap();
@@ -211,7 +211,7 @@ public class ActorController implements
 		List actors = new ArrayList();
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = ProcessContainer.getContainer().createJbpmContext();
 			Map userMap = actorManager.getUserMap(jbpmContext);
 			if (userMap != null) {
 				if (userIds != null && userIds.size() > 0) {
@@ -256,7 +256,7 @@ public class ActorController implements
 		List agents = new ArrayList();
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = ProcessContainer.getContainer().createJbpmContext();
 			Map userMap = actorManager.getUserMap(jbpmContext);
 			if (userMap != null) {
 				if (agentIds != null && agentIds.size() > 0) {
@@ -293,7 +293,7 @@ public class ActorController implements
 		String roleId = request.getParameter("roleId");
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = ProcessContainer.getContainer().createJbpmContext();
 			List actors = actorManager.getActors(jbpmContext, roleId);
 			List users = new ArrayList();
 			Map userMap = actorManager.getUserMap(jbpmContext);
@@ -331,7 +331,7 @@ public class ActorController implements
 
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = ProcessContainer.getContainer().createJbpmContext();
 
 			Map userMap = actorManager.getUserMap(jbpmContext);
 

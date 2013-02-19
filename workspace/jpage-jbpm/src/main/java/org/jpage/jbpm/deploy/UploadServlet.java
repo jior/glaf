@@ -35,11 +35,12 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.fileupload.servlet.ServletRequestContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.jbpm.JbpmConfiguration;
+
 import org.jbpm.JbpmContext;
 import org.jbpm.graph.def.ProcessDefinition;
 import org.jpage.jbpm.context.Context;
 import org.jpage.jbpm.model.DeployInstance;
+import org.jpage.jbpm.service.ProcessContainer;
 import org.jpage.jbpm.service.ServiceManager;
 import org.jpage.util.DateTools;
 import org.jpage.util.FileTools;
@@ -47,8 +48,7 @@ import org.jpage.util.UUID32;
 
 public class UploadServlet extends HttpServlet {
 	private static Log logger = LogFactory.getLog(UploadServlet.class);
-	private JbpmConfiguration jbpmConfiguration = JbpmConfiguration
-			.getInstance();
+	
 	private static final long serialVersionUID = 1L;
 
 	private ServiceManager serviceManager;
@@ -103,7 +103,7 @@ public class UploadServlet extends HttpServlet {
 					.getBean("serviceManager");
 			ZipInputStream zipInputStream = new ZipInputStream(fileItem
 					.getInputStream());
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = ProcessContainer.getContainer().createJbpmContext();
 			ProcessDefinition processDefinition = ProcessDefinition
 					.parseParZipInputStream(zipInputStream);
 			logger.debug("Created a processdefinition : "

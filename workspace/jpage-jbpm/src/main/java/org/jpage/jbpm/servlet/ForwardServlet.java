@@ -31,7 +31,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.jbpm.JbpmConfiguration;
+ 
 import org.jbpm.JbpmContext;
 import org.jbpm.db.GraphSession;
 import org.jbpm.graph.def.ProcessDefinition;
@@ -40,13 +40,13 @@ import org.jbpm.taskmgmt.exe.TaskInstance;
 import org.jpage.actor.User;
 import org.jpage.jbpm.config.ObjectFactory;
 import org.jpage.jbpm.context.Context;
+import org.jpage.jbpm.service.ProcessContainer;
 import org.jpage.util.RequestUtil;
 import org.jpage.util.Tools;
 
 public class ForwardServlet extends HttpServlet {
 	private final static Log logger = LogFactory.getLog(ForwardServlet.class);
-	private JbpmConfiguration jbpmConfiguration = JbpmConfiguration
-			.getInstance();
+ 
 	private static final long serialVersionUID = 1L;
 
 	public void init() {
@@ -86,7 +86,7 @@ public class ForwardServlet extends HttpServlet {
 		GraphSession graphSession = null;
 
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = ProcessContainer.getContainer().createJbpmContext();
 			jbpmContext.setActorId(actorId);
 			graphSession = jbpmContext.getGraphSession();
 

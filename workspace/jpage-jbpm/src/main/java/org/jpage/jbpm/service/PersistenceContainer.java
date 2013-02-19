@@ -22,11 +22,11 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+ 
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.jbpm.JbpmConfiguration;
+ 
 import org.jbpm.JbpmContext;
 import org.jpage.core.query.paging.Page;
 import org.jpage.jbpm.context.Context;
@@ -38,8 +38,7 @@ public class PersistenceContainer {
 	private final static Log logger = LogFactory
 			.getLog(PersistenceContainer.class);
 
-	private JbpmConfiguration jbpmConfiguration = JbpmConfiguration
-			.getInstance();
+	 
 
 	private static PersistenceContainer container;
 
@@ -72,7 +71,7 @@ public class PersistenceContainer {
 	public Map getUserMap() {
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = ProcessContainer.getContainer().createJbpmContext();
 			return actorManager.getUserMap(jbpmContext);
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -86,7 +85,7 @@ public class PersistenceContainer {
 	public List getActors(Map params) {
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = ProcessContainer.getContainer().createJbpmContext();
 			return actorManager.getActors(jbpmContext, params);
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -107,7 +106,7 @@ public class PersistenceContainer {
 	public void delete(Serializable model) {
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = ProcessContainer.getContainer().createJbpmContext();
 			if (jbpmContext.getSession() != null) {
 				persistenceManager.delete(jbpmContext, model);
 			}
@@ -128,7 +127,7 @@ public class PersistenceContainer {
 	public void deleteAll(Collection rows) {
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = ProcessContainer.getContainer().createJbpmContext();
 			if (jbpmContext.getSession() != null) {
 				persistenceManager.deleteAll(jbpmContext, rows);
 			}
@@ -149,7 +148,7 @@ public class PersistenceContainer {
 	public void merge(Serializable model) {
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = ProcessContainer.getContainer().createJbpmContext();
 			if (jbpmContext.getSession() != null) {
 				persistenceManager.merge(jbpmContext, model);
 			}
@@ -170,7 +169,7 @@ public class PersistenceContainer {
 	public void mergeAll(Collection rows) {
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = ProcessContainer.getContainer().createJbpmContext();
 			if (jbpmContext.getSession() != null) {
 				persistenceManager.mergeAll(jbpmContext, rows);
 			}
@@ -191,7 +190,7 @@ public class PersistenceContainer {
 	public void persist(Serializable model) {
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = ProcessContainer.getContainer().createJbpmContext();
 			if (jbpmContext.getSession() != null) {
 				persistenceManager.persist(jbpmContext, model);
 			}
@@ -212,7 +211,7 @@ public class PersistenceContainer {
 	public void persistAll(Collection rows) {
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = ProcessContainer.getContainer().createJbpmContext();
 			if (jbpmContext.getSession() != null) {
 				persistenceManager.persistAll(jbpmContext, rows);
 			}
@@ -233,7 +232,7 @@ public class PersistenceContainer {
 	public void save(Serializable model) {
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = ProcessContainer.getContainer().createJbpmContext();
 			if (jbpmContext.getSession() != null) {
 				persistenceManager.save(jbpmContext, model);
 			}
@@ -254,7 +253,7 @@ public class PersistenceContainer {
 	public void saveAll(Collection rows) {
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = ProcessContainer.getContainer().createJbpmContext();
 			if (jbpmContext.getSession() != null) {
 				persistenceManager.saveAll(jbpmContext, rows);
 			}
@@ -275,7 +274,7 @@ public class PersistenceContainer {
 	public void update(Serializable model) {
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = ProcessContainer.getContainer().createJbpmContext();
 			if (jbpmContext.getSession() != null) {
 				persistenceManager.update(jbpmContext, model);
 			}
@@ -296,7 +295,7 @@ public class PersistenceContainer {
 	public void updateAll(Collection rows) {
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = ProcessContainer.getContainer().createJbpmContext();
 			if (jbpmContext.getSession() != null) {
 				persistenceManager.updateAll(jbpmContext, rows);
 			}
@@ -321,7 +320,7 @@ public class PersistenceContainer {
 	public Object getPersistObject(Class clazz, java.io.Serializable persistId) {
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = ProcessContainer.getContainer().createJbpmContext();
 			if (jbpmContext.getSession() != null) {
 				return persistenceManager.getPersistObject(jbpmContext, clazz,
 						persistId);
@@ -349,7 +348,7 @@ public class PersistenceContainer {
 	public List query(int currPageNo, int maxResults, Executor queryExecutor) {
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = ProcessContainer.getContainer().createJbpmContext();
 			if (jbpmContext.getSession() != null) {
 				return persistenceManager.query(jbpmContext, currPageNo,
 						maxResults, queryExecutor);
@@ -377,7 +376,7 @@ public class PersistenceContainer {
 			Executor queryExecutor) {
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = ProcessContainer.getContainer().createJbpmContext();
 			if (jbpmContext.getSession() != null) {
 				return persistenceManager.getPage(jbpmContext, currPageNo,
 						pageSize, countExecutor, queryExecutor);
@@ -402,7 +401,7 @@ public class PersistenceContainer {
 	public Object queryForObject(String statementId, Object parameterObject) {
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = ProcessContainer.getContainer().createJbpmContext();
 			if (jbpmContext.getSession() != null) {
 				return MutableSQLMapContainer.getContainer().queryForObject(
 						jbpmContext, statementId, parameterObject);
@@ -427,7 +426,7 @@ public class PersistenceContainer {
 	public java.util.List query(String statementId, Object parameterObject) {
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = ProcessContainer.getContainer().createJbpmContext();
 			if (jbpmContext.getSession() != null) {
 				return MutableSQLMapContainer.getContainer().query(jbpmContext,
 						statementId, parameterObject);
@@ -453,7 +452,7 @@ public class PersistenceContainer {
 	public int executeBatch(java.util.List rows) {
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = ProcessContainer.getContainer().createJbpmContext();
 			if (jbpmContext.getSession() != null) {
 				return MutableSQLMapContainer.getContainer().executeBatch(
 						jbpmContext, rows);

@@ -38,7 +38,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.web.servlet.ModelAndView;
 
 import org.hibernate.Hibernate;
-import org.jbpm.JbpmConfiguration;
+ 
 import org.jbpm.JbpmContext;
 import org.jbpm.graph.def.ProcessDefinition;
 import org.jbpm.graph.exe.ProcessInstance;
@@ -66,9 +66,7 @@ public class ProcessMonitorController implements
 	private final static Log logger = LogFactory
 			.getLog(ProcessMonitorController.class);
 
-	private JbpmConfiguration jbpmConfiguration = JbpmConfiguration
-			.getInstance();
-
+ 
 	private ActorManager actorManager;
 
 	private ProcessManager processManager;
@@ -99,7 +97,7 @@ public class ProcessMonitorController implements
 		Map params = Tools.getParameters(request);
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = ProcessContainer.getContainer().createJbpmContext();
 			ProcessContext ctx = new ProcessContext();
 			ctx.setContextMap(params);
 			ctx.setActorId(user.getActorId());
@@ -306,7 +304,7 @@ public class ProcessMonitorController implements
 			HttpServletResponse response) throws Exception {
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = ProcessContainer.getContainer().createJbpmContext();
 			List rows = processManager.getAllProcessDefinitions(jbpmContext);
 			request.setAttribute("rows", rows);
 		} catch (Exception ex) {
@@ -339,7 +337,7 @@ public class ProcessMonitorController implements
 		Page jpage = null;
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = ProcessContainer.getContainer().createJbpmContext();
 
 			if (StringUtils.isNumeric(processDefinitionId)) {
 				if (StringUtils.equals(running, "1")) {
@@ -389,7 +387,7 @@ public class ProcessMonitorController implements
 			HttpServletResponse response) throws Exception {
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = ProcessContainer.getContainer().createJbpmContext();
 			Map userMap = actorManager.getUserMap(jbpmContext);
 			List deployInstances = serviceManager
 					.getDeployInstances(jbpmContext);
@@ -457,7 +455,7 @@ public class ProcessMonitorController implements
 		logger.info("processInstanceId:" + processInstanceId);
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = ProcessContainer.getContainer().createJbpmContext();
 			processManager.resume(jbpmContext, processInstanceId);
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -477,7 +475,7 @@ public class ProcessMonitorController implements
 		List rows = null;
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = ProcessContainer.getContainer().createJbpmContext();
 
 			rows = serviceManager.getStateInstances(jbpmContext,
 					processInstanceId);
@@ -538,7 +536,7 @@ public class ProcessMonitorController implements
 		logger.info("processInstanceId:" + processInstanceId);
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = ProcessContainer.getContainer().createJbpmContext();
 			processManager.suspend(jbpmContext, processInstanceId);
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -558,7 +556,7 @@ public class ProcessMonitorController implements
 		List taskItems = null;
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = ProcessContainer.getContainer().createJbpmContext();
 			if (StringUtils.equals(actionType, "running")) {
 				if (StringUtils.isNotBlank(processName)) {
 					if (StringUtils.isNotBlank(actorId)) {
@@ -619,7 +617,7 @@ public class ProcessMonitorController implements
 			HttpServletResponse response) throws Exception {
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = ProcessContainer.getContainer().createJbpmContext();
 			Map userMap = actorManager.getUserMap(jbpmContext);
 			List deployInstances = serviceManager
 					.getDeployInstances(jbpmContext);
@@ -652,7 +650,7 @@ public class ProcessMonitorController implements
 		List rows = null;
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = ProcessContainer.getContainer().createJbpmContext();
 
 			rows = serviceManager.getStateInstances(jbpmContext,
 					processInstanceId);

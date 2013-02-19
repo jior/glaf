@@ -31,7 +31,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.jbpm.JbpmConfiguration;
+ 
 import org.jbpm.JbpmContext;
 import org.jbpm.graph.def.ProcessDefinition;
 import org.jbpm.graph.exe.ProcessInstance;
@@ -41,6 +41,7 @@ import org.jpage.actor.User;
 import org.jpage.context.ApplicationContext;
 import org.jpage.jbpm.config.ObjectFactory;
 import org.jpage.jbpm.context.Context;
+import org.jpage.jbpm.service.ProcessContainer;
 import org.jpage.jbpm.util.ResourceType;
 import org.jpage.util.RequestUtil;
 import org.jpage.util.Tools;
@@ -48,8 +49,7 @@ import org.jpage.util.Tools;
 public class MainServlet extends HttpServlet {
 
 	private final static Log logger = LogFactory.getLog(MainServlet.class);
-	private JbpmConfiguration jbpmConfiguration = JbpmConfiguration
-			.getInstance();
+	 
 	private final static String newline = System.getProperty("line.separator");
 
 	private static final long serialVersionUID = 1L;
@@ -117,7 +117,7 @@ public class MainServlet extends HttpServlet {
 		ProcessDefinition processDefinition = null;
 		long processInstanceId = -1;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = ProcessContainer.getContainer().createJbpmContext();
 			jbpmContext.setActorId(user.getActorId());
 
 			if (taskInstanceId > 0) {

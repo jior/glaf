@@ -36,13 +36,14 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.jbpm.JbpmConfiguration;
+ 
 import org.jbpm.JbpmContext;
 import org.jbpm.db.GraphSession;
 import org.jbpm.taskmgmt.exe.TaskInstance;
 import org.jpage.actor.User;
 import org.jpage.jbpm.config.ObjectFactory;
 import org.jpage.jbpm.context.Context;
+import org.jpage.jbpm.service.ProcessContainer;
 import org.jpage.jbpm.service.ServiceManager;
 import org.jpage.util.QueryTool;
 import org.jpage.util.RequestUtil;
@@ -50,8 +51,7 @@ import org.jpage.util.Tools;
 
 public class TaskServlet extends HttpServlet {
 	private final static Log logger = LogFactory.getLog(TaskServlet.class);
-	private JbpmConfiguration jbpmConfiguration = JbpmConfiguration
-			.getInstance();
+ 
 	private static final long serialVersionUID = 1L;
 
 	private static final int MAX_TASK_SIZE = 200;
@@ -65,7 +65,7 @@ public class TaskServlet extends HttpServlet {
 				.getBean("serviceManager");
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = ProcessContainer.getContainer().createJbpmContext();
 			List processes = jbpmContext.getGraphSession()
 					.findLatestProcessDefinitions();
 			if (processes != null && processes.size() > 0) {
@@ -101,7 +101,7 @@ public class TaskServlet extends HttpServlet {
 		JbpmContext jbpmContext = null;
 		GraphSession graphSession = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = ProcessContainer.getContainer().createJbpmContext();
 			graphSession = jbpmContext.getGraphSession();
 
 			List processDefinitions = graphSession

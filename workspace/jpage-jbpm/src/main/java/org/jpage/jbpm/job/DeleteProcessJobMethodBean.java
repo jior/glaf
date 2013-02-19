@@ -28,11 +28,12 @@ import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.jbpm.JbpmConfiguration;
+ 
 import org.jbpm.JbpmContext;
 import org.jbpm.graph.def.ProcessDefinition;
 import org.jbpm.graph.exe.ProcessInstance;
 import org.jpage.jbpm.context.Context;
+import org.jpage.jbpm.service.ProcessContainer;
 import org.jpage.jbpm.service.ProcessManager;
 import org.jpage.jbpm.service.ServiceManager;
 import org.jpage.jbpm.util.Constant;
@@ -42,8 +43,7 @@ public class DeleteProcessJobMethodBean {
 	private final static Log logger = LogFactory
 			.getLog(DeleteProcessJobMethodBean.class);
 
-	private JbpmConfiguration jbpmConfiguration = JbpmConfiguration
-			.getInstance();
+	 
 
 	private ProcessManager processManager;
 
@@ -73,7 +73,7 @@ public class DeleteProcessJobMethodBean {
 		Date date = new Date(calendar.getTimeInMillis());
 		logger.debug("删除" + DateTools.getDateTime(date) + "以前已经完成的流程.");
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = ProcessContainer.getContainer().createJbpmContext();
 			jbpmContext.setActorId("system");
 			List processDefinitions = jbpmContext.getGraphSession()
 					.findAllProcessDefinitions();
@@ -102,7 +102,7 @@ public class DeleteProcessJobMethodBean {
 		JbpmContext jbpmContext = null;
 		Set processInstanceIds = new HashSet();
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = ProcessContainer.getContainer().createJbpmContext();
 			jbpmContext.setActorId("system");
 
 			List processDefinitions = jbpmContext.getGraphSession()

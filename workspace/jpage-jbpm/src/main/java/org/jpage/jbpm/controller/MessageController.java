@@ -27,12 +27,13 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.jbpm.JbpmConfiguration;
+ 
 import org.jbpm.JbpmContext;
 import org.jpage.actor.User;
 import org.jpage.core.query.paging.Page;
 import org.jpage.jbpm.context.Context;
 import org.jpage.jbpm.service.MessageManager;
+import org.jpage.jbpm.service.ProcessContainer;
 import org.jpage.jbpm.util.Constant;
 import org.jpage.util.RequestUtil;
 import org.springframework.web.servlet.ModelAndView;
@@ -41,8 +42,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class MessageController implements org.springframework.web.servlet.mvc.Controller {
 	private final static Log logger = LogFactory.getLog(ActorController.class);
 
-	private JbpmConfiguration jbpmConfiguration = JbpmConfiguration
-			.getInstance();
+	 
 
 	private MessageManager messageManager;
 
@@ -83,7 +83,7 @@ public class MessageController implements org.springframework.web.servlet.mvc.Co
 		Page jpage = null;
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = ProcessContainer.getContainer().createJbpmContext();
 			jpage = messageManager.getPageMessageInstances(jbpmContext,
 					currPageNo, -1, params);
 		} catch (Exception ex) {

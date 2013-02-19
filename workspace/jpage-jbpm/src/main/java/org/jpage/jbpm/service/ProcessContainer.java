@@ -1,20 +1,20 @@
 /*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package org.jpage.jbpm.service;
 
@@ -86,7 +86,12 @@ public class ProcessContainer {
 	}
 
 	public JbpmContext createJbpmContext() {
-		return jbpmConfiguration.createJbpmContext();
+		JbpmContext jbpmContext = jbpmConfiguration.createJbpmContext();
+		if (logger.isDebugEnabled()) {
+			logger.debug("已经创建jbpm context");
+			logger.debug("---------------------------------------------");
+		}
+		return jbpmContext;
 	}
 
 	/**
@@ -99,7 +104,7 @@ public class ProcessContainer {
 		boolean isAbortOK = false;
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = this.createJbpmContext();
 			if (jbpmContext.getSession() != null) {
 				ctx.setJbpmContext(jbpmContext);
 				ctx.setNextStepId(Constant.SAVE_AND_CLOSE_TASK);
@@ -129,7 +134,7 @@ public class ProcessContainer {
 		boolean isCompleteOK = true;
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = this.createJbpmContext();
 			if (jbpmContext.getSession() != null) {
 				ctx.setJbpmContext(jbpmContext);
 				ctx.setNextStepId(Constant.SAVE_AND_CLOSE_TASK);
@@ -162,7 +167,7 @@ public class ProcessContainer {
 			Set actorIds) {
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = this.createJbpmContext();
 			if (jbpmContext.getSession() != null) {
 				processManager.createTaskInstances(jbpmContext,
 						processInstanceId, taskName, actorIds);
@@ -189,7 +194,7 @@ public class ProcessContainer {
 			Set actorIds, Collection<DataField> dataFields) {
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = this.createJbpmContext();
 			if (jbpmContext.getSession() != null) {
 				processManager.createTaskInstances(jbpmContext,
 						processInstanceId, taskName, actorIds, dataFields);
@@ -302,7 +307,7 @@ public class ProcessContainer {
 			boolean isAgentEnable = org.jpage.jbpm.config.ObjectFactory
 					.isAgentEnable();
 			if (isAgentEnable) {
-				jbpmContext = jbpmConfiguration.createJbpmContext();
+				jbpmContext = this.createJbpmContext();
 				if (jbpmContext.getSession() != null) {
 					Collection rows = this.getAgentIds(jbpmContext, actorId);
 					if (rows != null && rows.size() > 0) {
@@ -333,7 +338,7 @@ public class ProcessContainer {
 			boolean isAgentEnable = org.jpage.jbpm.config.ObjectFactory
 					.isAgentEnable();
 			if (isAgentEnable) {
-				jbpmContext = jbpmConfiguration.createJbpmContext();
+				jbpmContext = this.createJbpmContext();
 				if (jbpmContext.getSession() != null) {
 					Collection rows = this.getAgentIds(jbpmContext, actorId,
 							processName);
@@ -404,7 +409,7 @@ public class ProcessContainer {
 		List taskItems = new ArrayList();
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = this.createJbpmContext();
 			if (jbpmContext.getSession() != null) {
 				rows = processManager.getAllTaskItems(jbpmContext);
 				if (rows != null && rows.size() > 0) {
@@ -437,7 +442,7 @@ public class ProcessContainer {
 		List taskItems = new ArrayList();
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = this.createJbpmContext();
 			if (jbpmContext.getSession() != null) {
 				ProcessInstance processInstance = jbpmContext
 						.getProcessInstance(new Long(processInstanceId)
@@ -538,8 +543,7 @@ public class ProcessContainer {
 	 * @param actorId
 	 * @return
 	 */
-	public List getFinishedProcessInstanceIds(String processName,
-			String actorId) {
+	public List getFinishedProcessInstanceIds(String processName, String actorId) {
 		List processInstanceIds = new ArrayList();
 		List taskItems = this.getFinishedTaskItems(processName, actorId);
 		if (taskItems != null && taskItems.size() > 0) {
@@ -568,7 +572,7 @@ public class ProcessContainer {
 		List taskItems = new ArrayList();
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = this.createJbpmContext();
 			if (jbpmContext.getSession() != null) {
 				List rows = processManager.getFinishedTaskItems(jbpmContext,
 						actorId);
@@ -613,7 +617,7 @@ public class ProcessContainer {
 		List taskItems = new ArrayList();
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = this.createJbpmContext();
 			if (jbpmContext.getSession() != null) {
 				List rows = processManager.getFinishedTaskItems(jbpmContext,
 						processName, actorId);
@@ -758,7 +762,7 @@ public class ProcessContainer {
 		Collection<String> names = new ArrayList<String>();
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = this.createJbpmContext();
 			if (jbpmContext.getSession() != null) {
 				ProcessInstance pi = jbpmContext.getProcessInstance(Long
 						.valueOf(processInstanceId));
@@ -795,7 +799,7 @@ public class ProcessContainer {
 		Set processInstanceIds = new HashSet();
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = this.createJbpmContext();
 			if (jbpmContext.getSession() != null) {
 				List rowxs = jbpmContext.getTaskList(actorId);
 				if (rowxs != null && rowxs.size() > 0) {
@@ -890,7 +894,7 @@ public class ProcessContainer {
 		List rows = new ArrayList();
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = this.createJbpmContext();
 			if (jbpmContext.getSession() != null) {
 				List rowxs = jbpmContext.getTaskList(actorId);
 				if (rowxs != null && rowxs.size() > 0) {
@@ -983,7 +987,7 @@ public class ProcessContainer {
 		org.jpage.jbpm.context.Context.create();
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = Context.getCurrentJbpmContext();
+			jbpmContext = this.createJbpmContext();
 			if (jbpmContext.getSession() != null) {
 				rows = serviceManager.getProcessTaskItems(jbpmContext,
 						processInstanceId);
@@ -1207,7 +1211,7 @@ public class ProcessContainer {
 		int signal = -1;
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = this.createJbpmContext();
 			if (jbpmContext.getSession() != null) {
 				TaskInstance taskInstance = jbpmContext.getTaskInstance(Long
 						.valueOf(taskInstanceId));
@@ -1234,7 +1238,7 @@ public class ProcessContainer {
 		List rows = null;
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = this.createJbpmContext();
 			if (jbpmContext.getSession() != null) {
 				rows = serviceManager.getStateInstances(jbpmContext,
 						processInstanceId);
@@ -1258,7 +1262,7 @@ public class ProcessContainer {
 		List stateInstances = new ArrayList();
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = this.createJbpmContext();
 			if (jbpmContext.getSession() != null) {
 				List rows = serviceManager.getStateInstances(jbpmContext,
 						processName, actorId);
@@ -1284,7 +1288,7 @@ public class ProcessContainer {
 		Collection taskInstanceIds = new HashSet();
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = this.createJbpmContext();
 			if (jbpmContext.getSession() != null) {
 				List rows01 = jbpmContext.getTaskList(actorId);
 				if (rows01 != null && rows01.size() > 0) {
@@ -1366,7 +1370,7 @@ public class ProcessContainer {
 		List rows = new ArrayList();
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = this.createJbpmContext();
 			if (jbpmContext.getSession() != null) {
 				List rowxs = jbpmContext.getTaskList(actorId);
 				if (rowxs != null && rowxs.size() > 0) {
@@ -1443,7 +1447,7 @@ public class ProcessContainer {
 		TaskItem taskItem = null;
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = this.createJbpmContext();
 			if (jbpmContext.getSession() != null) {
 				taskItem = processManager.getTaskItem(jbpmContext,
 						taskInstanceId);
@@ -1467,7 +1471,7 @@ public class ProcessContainer {
 		TaskItem taskItem = null;
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = this.createJbpmContext();
 			if (jbpmContext.getSession() != null) {
 				TaskInstance taskInstance = jbpmContext.getTaskInstance(Long
 						.valueOf(taskInstanceId));
@@ -1526,7 +1530,7 @@ public class ProcessContainer {
 		List taskItems = new ArrayList();
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = this.createJbpmContext();
 			if (jbpmContext.getSession() != null) {
 				List rows = processManager.getTaskItems(jbpmContext, actorIds);
 				if (rows != null && rows.size() > 0) {
@@ -1562,7 +1566,7 @@ public class ProcessContainer {
 		List taskItems = new ArrayList();
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = this.createJbpmContext();
 			if (jbpmContext.getSession() != null) {
 				List rowsx = processManager.getTaskItems(jbpmContext, actorId);
 				if (rowsx != null && rowsx.size() > 0) {
@@ -1613,7 +1617,7 @@ public class ProcessContainer {
 		List taskItems = new ArrayList();
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = this.createJbpmContext();
 			if (jbpmContext.getSession() != null) {
 				jbpmContext.setActorId(actorId);
 				List rowsx = processManager.getTaskItems(jbpmContext, actorId,
@@ -1660,7 +1664,7 @@ public class ProcessContainer {
 		JbpmContext jbpmContext = null;
 		List taskItems = new ArrayList();
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = this.createJbpmContext();
 			if (jbpmContext.getSession() != null) {
 				rows = processManager.getTaskItemsByProcessInstanceId(
 						jbpmContext, processInstanceId);
@@ -1696,7 +1700,7 @@ public class ProcessContainer {
 		JbpmContext jbpmContext = null;
 		List taskItems = new ArrayList();
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = this.createJbpmContext();
 			if (jbpmContext.getSession() != null) {
 				rows = processManager.getTaskItemsByProcessInstanceIds(
 						jbpmContext, processInstanceIds);
@@ -1736,7 +1740,7 @@ public class ProcessContainer {
 		List taskItems = new ArrayList();
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = this.createJbpmContext();
 			if (jbpmContext.getSession() != null) {
 				List rowsx = processManager.getTaskItemsByProcessName(
 						jbpmContext, processNames, actorId);
@@ -1783,7 +1787,7 @@ public class ProcessContainer {
 		List taskItems = new ArrayList();
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = this.createJbpmContext();
 			if (jbpmContext.getSession() != null) {
 				List rows = processManager.getTaskItemsByProcessName(
 						jbpmContext, processName);
@@ -1822,7 +1826,7 @@ public class ProcessContainer {
 		List taskItems = new ArrayList();
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = this.createJbpmContext();
 			if (jbpmContext.getSession() != null) {
 				List rowsx = processManager.getTaskItemsByProcessName(
 						jbpmContext, processName, actorId);
@@ -1862,7 +1866,7 @@ public class ProcessContainer {
 		Collection<String> transitions = new ArrayList<String>();
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = this.createJbpmContext();
 			if (jbpmContext.getSession() != null) {
 				TaskInstance taskInstance = jbpmContext.getTaskInstance(Long
 						.valueOf(taskInstanceId));
@@ -1898,7 +1902,7 @@ public class ProcessContainer {
 		List rows = null;
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = this.createJbpmContext();
 			if (jbpmContext.getSession() != null) {
 				jbpmContext.setActorId(actorId);
 				rows = processManager.getWorkItems(jbpmContext, actorId);
@@ -1923,7 +1927,7 @@ public class ProcessContainer {
 		actorIds.add(actorId);
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = this.createJbpmContext();
 			if (jbpmContext.getSession() != null) {
 				Collection agentIds = this.getAgentIds(jbpmContext, actorId);
 				if (agentIds.size() > 0) {
@@ -1963,7 +1967,7 @@ public class ProcessContainer {
 		actorIds.add(actorId);
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = this.createJbpmContext();
 			if (jbpmContext.getSession() != null) {
 				Collection agentIds = this.getAgentIds(jbpmContext, actorId);
 				if (agentIds.size() > 0) {
@@ -1999,7 +2003,7 @@ public class ProcessContainer {
 	public void reassignAllTasks(String previousActorId, String nowActorId) {
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = this.createJbpmContext();
 			if (jbpmContext.getSession() != null) {
 				processManager.reassignAllTasks(jbpmContext, previousActorId,
 						nowActorId);
@@ -2024,7 +2028,7 @@ public class ProcessContainer {
 	public void reassignTask(String taskInstanceId, Set actorIds) {
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = this.createJbpmContext();
 			if (jbpmContext.getSession() != null) {
 				processManager.reassignTask(jbpmContext, taskInstanceId,
 						actorIds);
@@ -2050,7 +2054,7 @@ public class ProcessContainer {
 			Collection<DataField> dataFields) {
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = this.createJbpmContext();
 			if (jbpmContext.getSession() != null) {
 				processManager.reassignTask(jbpmContext, taskInstanceId,
 						actorIds, dataFields);
@@ -2077,7 +2081,7 @@ public class ProcessContainer {
 			Set actorIds) {
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = this.createJbpmContext();
 			if (jbpmContext.getSession() != null) {
 				processManager.reassignTask(jbpmContext, processInstanceId,
 						previousActorId, actorIds);
@@ -2104,7 +2108,7 @@ public class ProcessContainer {
 			Set actorIds, Collection<DataField> dataFields) {
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = this.createJbpmContext();
 			if (jbpmContext.getSession() != null) {
 				processManager.reassignTask(jbpmContext, processInstanceId,
 						previousActorId, actorIds, dataFields);
@@ -2131,7 +2135,7 @@ public class ProcessContainer {
 			String taskName, Set actorIds) {
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = this.createJbpmContext();
 			if (jbpmContext.getSession() != null) {
 				processManager.reassignTaskByTaskName(jbpmContext,
 						processInstanceId, taskName, actorIds);
@@ -2158,7 +2162,7 @@ public class ProcessContainer {
 			String taskName, Set actorIds, Collection<DataField> dataFields) {
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = this.createJbpmContext();
 			if (jbpmContext.getSession() != null) {
 				processManager.reassignTaskByTaskName(jbpmContext,
 						processInstanceId, taskName, actorIds, dataFields);
@@ -2182,7 +2186,7 @@ public class ProcessContainer {
 	public void resume(String processInstanceId) {
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = this.createJbpmContext();
 			if (jbpmContext.getSession() != null) {
 				if (ObjectFactory.canSuspendProcess()) {
 					processManager.resume(jbpmContext, processInstanceId);
@@ -2210,7 +2214,7 @@ public class ProcessContainer {
 		JbpmContext jbpmContext = null;
 		String processInstanceId = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = this.createJbpmContext();
 			if (jbpmContext.getSession() != null
 					&& ctx.getProcessName() != null) {
 				ctx.setJbpmContext(jbpmContext);
@@ -2239,7 +2243,7 @@ public class ProcessContainer {
 		}
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = this.createJbpmContext();
 			if (jbpmContext.getSession() != null) {
 				if (ObjectFactory.canSuspendProcess()) {
 					processManager.suspend(jbpmContext, processInstanceId);

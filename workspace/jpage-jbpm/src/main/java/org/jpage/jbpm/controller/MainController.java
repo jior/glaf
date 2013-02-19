@@ -38,13 +38,14 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.jbpm.JbpmConfiguration;
+ 
 import org.jbpm.JbpmContext;
 import org.jpage.actor.User;
 import org.jpage.jbpm.config.ObjectFactory;
 import org.jpage.jbpm.context.Context;
 import org.jpage.jbpm.context.ProcessContext;
 import org.jpage.jbpm.datafield.DataField;
+import org.jpage.jbpm.service.ProcessContainer;
 import org.jpage.jbpm.service.ProcessManager;
 import org.jpage.jbpm.util.ProcessActionType;
 import org.jpage.jbpm.util.ResourceType;
@@ -55,9 +56,7 @@ import org.jpage.util.Tools;
 public class MainController extends HttpServlet {
 	private final static Log logger = LogFactory.getLog(MainController.class);
 
-	private JbpmConfiguration jbpmConfiguration = JbpmConfiguration
-			.getInstance();
-
+	 
 	private final static String sp = System.getProperty("file.separator");
 
 	private static final long serialVersionUID = 1L;
@@ -160,7 +159,7 @@ public class MainController extends HttpServlet {
 
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = ProcessContainer.getContainer().createJbpmContext();
 			jbpmContext.setActorId(user.getActorId());
 
 			switch (processActionType) {

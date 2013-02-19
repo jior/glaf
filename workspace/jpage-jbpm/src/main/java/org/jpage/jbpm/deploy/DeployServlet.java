@@ -41,11 +41,12 @@ import org.apache.commons.fileupload.FileItemIterator;
 import org.apache.commons.fileupload.FileItemStream;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
-import org.jbpm.JbpmConfiguration;
+ 
 import org.jbpm.JbpmContext;
 import org.jbpm.graph.def.ProcessDefinition;
 import org.jpage.jbpm.context.Context;
 import org.jpage.jbpm.model.DeployInstance;
+import org.jpage.jbpm.service.ProcessContainer;
 import org.jpage.jbpm.service.ServiceManager;
 
 import org.jpage.util.DateTools;
@@ -54,8 +55,7 @@ import org.jpage.util.UUID32;
 
 public class DeployServlet extends HttpServlet {
 	private static Log logger = LogFactory.getLog(DeployServlet.class);
-	private JbpmConfiguration jbpmConfiguration = JbpmConfiguration
-			.getInstance();
+	 
 	private ServiceManager serviceManager;
 
 	private static final long serialVersionUID = 1L;
@@ -71,7 +71,7 @@ public class DeployServlet extends HttpServlet {
 		logger.debug("deploy par path:" + deployPath);
 		JbpmContext jbpmContext = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = ProcessContainer.getContainer().createJbpmContext();
 			java.io.File file = new java.io.File(deployPath);
 			if (file.isDirectory()) {
 				// 列出所有的子文件（夹）名字
@@ -147,7 +147,7 @@ public class DeployServlet extends HttpServlet {
 		JbpmContext jbpmContext = null;
 
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = ProcessContainer.getContainer().createJbpmContext();
 			if (StringUtils.isNotEmpty(archive)) {
 				URL archiveUrl = new URL(archive);
 				ZipInputStream zis = new ZipInputStream(archiveUrl.openStream());

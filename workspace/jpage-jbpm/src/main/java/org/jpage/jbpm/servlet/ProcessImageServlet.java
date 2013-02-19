@@ -29,19 +29,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.codec.binary.Base64;
-import org.jbpm.JbpmConfiguration;
+ 
 import org.jbpm.JbpmContext;
 import org.jbpm.file.def.FileDefinition;
 import org.jbpm.graph.def.ProcessDefinition;
 import org.jpage.core.cache.CacheFactory;
 import org.jpage.jbpm.context.Context;
+import org.jpage.jbpm.service.ProcessContainer;
 
 public class ProcessImageServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
-	private JbpmConfiguration jbpmConfiguration = JbpmConfiguration
-			.getInstance();
+	 
 
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
@@ -50,7 +50,7 @@ public class ProcessImageServlet extends HttpServlet {
 		JbpmContext jbpmContext = null;
 		byte[] bytes = null;
 		try {
-			jbpmContext = jbpmConfiguration.createJbpmContext();
+			jbpmContext = ProcessContainer.getContainer().createJbpmContext();
 			ProcessDefinition processDefinition = jbpmContext.getGraphSession()
 					.loadProcessDefinition(processDefinitionId);
 			String cacheKey02 = "processimage_"
