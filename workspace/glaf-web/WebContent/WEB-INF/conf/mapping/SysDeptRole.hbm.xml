@@ -17,10 +17,10 @@
 		<property name="sort" type="integer" column="sort" />
 		<property name="deptId" type="long" column="deptId" insert="false" update="false" />
 
-		<many-to-one name="role" class="SysRole" column="sysRoleId"
+		<many-to-one name="role" class="SysRole" column="sysRoleId" foreign-key="FK_DEPTROLE_ROLE"
 			cascade="none" not-null="true" not-found="ignore" />
 
-		<many-to-one name="dept" class="SysDepartment" column="deptId"
+		<many-to-one name="dept" class="SysDepartment" column="deptId" foreign-key="FK_DEPTROLE_DEPT"
 			cascade="none" not-null="true" not-found="ignore" />
 
 		<set name="users" table="sys_user_role" inverse="false" order-by="userId asc">

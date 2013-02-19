@@ -18,7 +18,7 @@
 		<property name="sort" type="integer" column="sort" />
 		<property name="appId" type="long" column="appId"  insert="false" update="false" />
 
-		<many-to-one name="app" class="SysApplication" column="appId"
+		<many-to-one name="app" class="SysApplication" column="appId" foreign-key="FK_FUN_APP"
 			cascade="none" not-null="true" not-found="ignore" />
 	</class>
 </hibernate-mapping>

@@ -17,15 +17,15 @@
 		<property name="deptRoleId" type="long" column="roleId" insert="false" update="false" />
 
 		<many-to-one name="user" class="SysUser" column="userId"
-			cascade="none" not-found="ignore" />
+			cascade="none" not-found="ignore" foreign-key="FK_USERROLE_USER"/>
 
 		<many-to-one name="deptRole" class="SysDeptRole" column="roleId"
-			cascade="none" not-found="ignore" />
+			cascade="none" not-found="ignore" foreign-key="FK_USERROLE_DEPTROLE"/>
 
 		<property name="authorized" type="integer" column="authorized" />
 
 		<many-to-one name="authorizeFrom" class="SysUser" column="authorizeFrom"
-			cascade="none" not-found="ignore" />
+			cascade="none" not-found="ignore" foreign-key="FK_USERROLE_USERAUTH" />
 
 		<property name="processDescription" type="string" column="processDescription" />
 	</class>

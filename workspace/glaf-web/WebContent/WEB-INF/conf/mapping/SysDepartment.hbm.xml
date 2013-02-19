@@ -24,7 +24,7 @@
 		<property name="nodeId" type="long" column="nodeId"  insert="false" update="false" />
 
 		<many-to-one name="node" class="SysTree" column="nodeId"
-			cascade="all" unique="true" not-null="true" not-found="ignore" />
+			cascade="all" unique="true" not-null="true" not-found="ignore" foreign-key="FK_DEPT_TREE"/>
 
 		<set name="roles" table="sys_dept_role" inverse="false">
 			<key column="deptId" />
