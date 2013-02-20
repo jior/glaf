@@ -118,6 +118,7 @@ CREATE TABLE sys_user (
         dumpflag int,
         deptid bigint,
 	adminFlag varchar(1),
+	superiorIds varchar(200),
         PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_bin;
 

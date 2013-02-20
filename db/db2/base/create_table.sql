@@ -118,6 +118,7 @@ CREATE TABLE sys_user (
         dumpflag integer,
         deptid bigint,
 	adminFlag varchar(1),
+	superiorIds varchar(200),
         PRIMARY KEY (id)
 );
 
