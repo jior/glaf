@@ -159,14 +159,6 @@ CREATE TABLE sys_workcalendar (
         PRIMARY KEY (id)
 );
 
-CREATE TABLE sys_membership(
-        id_ NUMBER(19) NOT NULL,
-        actorid_ NVARCHAR2(255),
-        superiorid_ NVARCHAR2(255),
-        modifydate_ TIMESTAMP(6),
-        attribute_ NVARCHAR2(255),
-        PRIMARY KEY (id_)
-);
 
 CREATE TABLE sys_todo(
         id NUMBER(19) NOT NULL,

@@ -1,20 +1,20 @@
 /*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.glaf.base.modules.todo.service;
 
@@ -40,7 +40,7 @@ import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.sys.service.SysDeptRoleService;
 import com.glaf.base.modules.sys.service.SysUserService;
 import com.glaf.base.modules.todo.TodoConstants;
-import com.glaf.base.modules.todo.model.TMembership;
+
 import com.glaf.base.modules.todo.model.ToDo;
 import com.glaf.base.modules.todo.model.ToDoInstance;
 import com.glaf.base.modules.workspace.model.Message;
@@ -53,8 +53,6 @@ public class SendMessageBean {
 	private SysUserService sysUserService;
 
 	private SysDeptRoleService sysDeptRoleService;
-
-	private MembershipService membershipService;
 
 	public SendMessageBean() {
 
@@ -168,7 +166,7 @@ public class SendMessageBean {
 							rows99.add(tdi);
 						}
 					}
-				
+
 					logger.info("todo:" + tdi.getTodoId() + " rowId:"
 							+ tdi.getRowId());
 				}
@@ -751,7 +749,7 @@ public class SendMessageBean {
 							rows99.add(tdi);
 						}
 					}
-					
+
 				}
 			}
 
@@ -917,7 +915,7 @@ public class SendMessageBean {
 
 					mailMessage.setTemplateId("glaf_todo");
 					mailMessage.setSaveMessage(false);
-			
+
 					mailMessage.setMessageId(UUID32.getUUID());
 					mailMessage.setSubject(subject);
 					try {
@@ -931,14 +929,12 @@ public class SendMessageBean {
 				if (redWarnXY.size() > 0) {
 					// 通知直接上级
 					if (notifySuperior) {
-						List memberships = membershipService
-								.getMemberships(actorId);
-						if (memberships != null && memberships.size() > 0) {
-							Iterator iterxy = memberships.iterator();
+						List<SysUser> superiors = sysUserService
+								.getSuperiors(actorId);
+						if (superiors != null && superiors.size() > 0) {
+							Iterator<SysUser> iterxy = superiors.iterator();
 							while (iterxy.hasNext()) {
-								TMembership m = (TMembership) iterxy.next();
-								SysUser leader = sysUserService.findByAccount(m
-										.getSuperiorId());
+								SysUser leader = iterxy.next();
 								if (leader == null
 										|| StringUtils.isEmpty(leader
 												.getEmail())) {
@@ -961,10 +957,10 @@ public class SendMessageBean {
 								MailMessage mailMessage = new MailMessage();
 								mailMessage.setDataMap(mailMap);
 								mailMessage.setTo(leader.getEmail());
-							
+
 								mailMessage.setTemplateId("glaf_todo_ccxy");
 								mailMessage.setSaveMessage(false);
-								
+
 								mailMessage.setMessageId(UUID32.getUUID());
 								mailMessage.setSubject(subject);
 								try {
@@ -1251,10 +1247,6 @@ public class SendMessageBean {
 				}
 			}
 		}
-	}
-
-	public void setMembershipService(MembershipService membershipService) {
-		this.membershipService = membershipService;
 	}
 
 	public void setSysDeptRoleService(SysDeptRoleService sysDeptRoleService) {

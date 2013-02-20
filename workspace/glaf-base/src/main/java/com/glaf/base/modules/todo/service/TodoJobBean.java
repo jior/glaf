@@ -42,7 +42,7 @@ public class TodoJobBean {
 
 	private TodoService todoService;
 
-	private MembershipService membershipService;
+ 
 
 	private WorkCalendarService workCalendarService;
 
@@ -263,9 +263,7 @@ public class TodoJobBean {
 		return rows;
 	}
 
-	public MembershipService getMembershipService() {
-		return membershipService;
-	}
+	 
 
 	public SysDepartment getParentDepartment(long id) {
 		return todoService.getParentDepartment(id);
@@ -509,7 +507,7 @@ public class TodoJobBean {
 	public List getTodoInstances(String actorId) {
 		SendMessageBean bean = new SendMessageBean();
 		bean.setSysUserService(this.getSysUserService());
-		bean.setMembershipService(membershipService);
+		 
 		bean.setTodoService(todoService);
 		return bean.getTodoInstances(actorId);
 	}
@@ -549,7 +547,6 @@ public class TodoJobBean {
 	public List getXYTodoInstances(String actorId) {
 		SendMessageBean bean = new SendMessageBean();
 		bean.setSysUserService(this.getSysUserService());
-		bean.setMembershipService(membershipService);
 		bean.setTodoService(todoService);
 		return bean.getXYTodoInstances(actorId);
 	}
@@ -592,13 +589,8 @@ public class TodoJobBean {
 	public void sendMessageToUser(String actorId) {
 		SendMessageBean bean = new SendMessageBean();
 		bean.setSysUserService(this.getSysUserService());
-		bean.setMembershipService(membershipService);
 		bean.setTodoService(todoService);
 		bean.sendMessageToUser(actorId);
-	}
-
-	public void setMembershipService(MembershipService membershipService) {
-		this.membershipService = membershipService;
 	}
 
 	public void setSysUserService(SysUserService sysUserService) {

@@ -159,14 +159,6 @@ CREATE TABLE sys_workcalendar (
         PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_bin;
 
-CREATE TABLE sys_membership(
-        id_ bigint NOT NULL auto_increment,
-        actorid_ varchar(255),
-        superiorid_ varchar(255),
-        modifydate_ timestamp,
-        attribute_ varchar(255),
-        PRIMARY KEY (id_)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_bin;
 
 CREATE TABLE sys_todo(
         id bigint NOT NULL,

@@ -154,14 +154,6 @@ CREATE TABLE sys_workcalendar (
         PRIMARY KEY (id)
 );
 
-CREATE TABLE sys_membership(
-        id_ bigint identity not null,
-        actorid_ nvarchar(255),
-        superiorid_ nvarchar(255),
-        modifydate_ datetime,
-        attribute_ nvarchar(255),
-        PRIMARY KEY (id_)
-);
 
 CREATE TABLE sys_todo(
         id bigint not null,

@@ -10,7 +10,6 @@ DROP TABLE sys_function;
 DROP TABLE sys_permission;
 DROP TABLE sys_tree;
 DROP TABLE sys_dictory;
-DROP TABLE sys_membership;
 DROP TABLE sys_todo;
 DROP TABLE sys_todo_instance;
 DROP TABLE sys_workcalendar;

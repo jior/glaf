@@ -160,14 +160,6 @@ CREATE TABLE sys_workcalendar (
         PRIMARY KEY (id)
 );
 
-CREATE TABLE sys_membership(
-        id_ bigint IDENTITY NOT NULL,
-        actorid_ varchar(255),
-        superiorid_ varchar(255),
-        modifydate_ timestamp,
-        attribute_ varchar(255),
-        PRIMARY KEY (id_)
-);
 
 CREATE TABLE sys_todo(
         id bigint NOT NULL,

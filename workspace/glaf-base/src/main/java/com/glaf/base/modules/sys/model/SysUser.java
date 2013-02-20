@@ -51,6 +51,7 @@ public class SysUser implements Serializable {
 	private int dumpFlag;
 	private String adminFlag;
 	private String menus;
+	private String superiorIds;
 	private Set<SysUserRole> userRoles = new HashSet<SysUserRole>();
 	private Set<SysDeptRole> roles = new HashSet<SysDeptRole>();
 	private Set<SysFunction> functions = new HashSet<SysFunction>();
@@ -163,6 +164,10 @@ public class SysUser implements Serializable {
 
 	public Set<SysDeptRole> getRoles() {
 		return roles;
+	}
+
+	public String getSuperiorIds() {
+		return superiorIds;
 	}
 
 	public String getTelephone() {
@@ -336,6 +341,10 @@ public class SysUser implements Serializable {
 
 	public void setRoles(Set<SysDeptRole> roles) {
 		this.roles = roles;
+	}
+
+	public void setSuperiorIds(String superiorIds) {
+		this.superiorIds = superiorIds;
 	}
 
 	public void setTelephone(String telephone) {

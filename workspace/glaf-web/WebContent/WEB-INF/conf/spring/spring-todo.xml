@@ -36,30 +36,15 @@
 
 	</bean>
 
-	<bean id="membershipService" class="com.glaf.base.modules.todo.service.MembershipServiceImpl">
-		<property name="abstractDao">
-			<ref bean="abstractDao" />
-		</property>
-	</bean>
-
 	<bean id="todoProxy" parent="baseTxService">
 		<property name="target">
 			<ref bean="todoService" />
 		</property>
 	</bean>
 
-	<bean id="membershipProxy" parent="baseTxService">
-		<property name="target">
-			<ref bean="membershipService" />
-		</property>
-	</bean>
-
 	<bean id="todoJobBean" class="com.glaf.base.modules.todo.service.TodoJobBean">
 		<property name="todoService">
 			<ref bean="todoProxy" />
-		</property>
-		<property name="membershipService">
-			<ref bean="membershipProxy" />
 		</property>
 		<property name="workCalendarService">
 			<ref bean="workCalendarProxy" />

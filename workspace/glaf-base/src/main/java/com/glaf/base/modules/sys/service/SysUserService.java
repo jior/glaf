@@ -99,6 +99,13 @@ public interface SysUserService {
 	 * @return SysUser
 	 */
 	SysUser findByAccountWithAll(String account);
+	
+	/**
+	 * 获取某个用户的上级
+	 * @param account
+	 * @return
+	 */
+	List<SysUser> getSuperiors(String account);
 
 	/**
 	 * 获取特定部门的员工数据集 分页列表

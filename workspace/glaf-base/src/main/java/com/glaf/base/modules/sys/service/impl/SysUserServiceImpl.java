@@ -35,6 +35,7 @@ import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.sys.model.SysUserRole;
 import com.glaf.base.modules.sys.service.*;
 import com.glaf.base.utils.PageResult;
+import com.glaf.base.utils.StringTools;
 
 public class SysUserServiceImpl implements SysUserService {
 	private static final Log logger = LogFactory
@@ -153,6 +154,28 @@ public class SysUserServiceImpl implements SysUserService {
 		}
 
 		return bean;
+	}
+	
+	/**
+	 * 获取某个用户的上级
+	 * @param account
+	 * @return
+	 */
+	public List<SysUser> getSuperiors(String account){
+		List<SysUser> superiors = new ArrayList<SysUser>();
+		SysUser bean = this.findByAccount(account);
+		if(bean != null && bean.getSuperiorIds() != null){
+			List<String> superiorIds=StringTools.split(bean.getSuperiorIds());
+			if(superiorIds !=null && !superiorIds.isEmpty()){
+				for(String superiorId: superiorIds){
+					SysUser user = this.findByAccount(superiorId);
+					if(user != null && user.getBlocked()==0){
+						superiors.add(user);
+					}
+				}
+			}
+		}
+		return superiors;
 	}
 
 	/**
