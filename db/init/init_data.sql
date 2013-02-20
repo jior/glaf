@@ -46,7 +46,7 @@ insert into sys_tree (id, parent, name, nodedesc, sort, code) values (449, 8, 'π
 insert into sys_tree (id, parent, name, nodedesc, sort, code) values (482, 10, ' ⁄»®π‹¿Ì', ' ⁄»®π‹¿Ì', 482, '');
 insert into sys_tree (id, parent, name, nodedesc, sort, code) values (494, 8, 'TODO≈‰÷√', 'TODO≈‰÷√', 494, '');
 insert into sys_tree (id, parent, name, nodedesc, sort, code) values (495, 8, 'µ˜∂»π‹¿Ì', 'µ˜∂»π‹¿Ì', 495, '');
-
+insert into sys_tree (id, parent, name, nodeDesc, sort, code) values (498, 4, 'ªı±“¿‡–Õ', 'ªı±“¿‡–Õ', 498, 'money');
 
 /*≥ı ºªØ≤ø√≈–≈œ¢*/
 insert into sys_department (id, name, deptdesc, createtime, sort, deptno, code, code2, status, fincode, nodeid) values (6, 'ºº ı≤ø', 'ºº ı≤ø', '2006-07-16 16:30:39', 284, 'JS000', 'JS', 'J', 0, 'JS000', 6);
@@ -131,4 +131,10 @@ insert into  sys_permission (roleid, funcid) values (1, 2);
 insert into  sys_permission (roleid, funcid) values (1, 3);
 insert into  sys_permission (roleid, funcid) values (1, 4);
 
-insert into SYS_DBID (NAME_, VALUE_, VERSION_) values ('next.dbid', '10001', 1);
+
+insert into sys_dictory (id, typeId, code, name, sort, dictDesc, blocked, ext1, ext2, ext3, ext4, ext5, ext6) values (1, 498, 'RMB', '»À√Ò±“', 1, null, 0, '', '', null, null, null, null);
+insert into sys_dictory (id, typeId, code, name, sort, dictDesc, blocked, ext1, ext2, ext3, ext4, ext5, ext6) values (2, 498, 'USD', '√¿‘™', 2, null, 0, '', '', null, null, null, null);
+insert into sys_dictory (id, typeId, code, name, sort, dictDesc, blocked, ext1, ext2, ext3, ext4, ext5, ext6) values (3, 498, 'JPY', '»’‘™', 3, null, 0, '', '', null, null, null, null);
+
+
+insert into sys_dbid (NAME_, VALUE_, VERSION_) values ('next.dbid', '10001', 1);
