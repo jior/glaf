@@ -55,10 +55,14 @@ public class ${entityName} implements Serializable, JsonReadable {
 	        jsonObject.put("${field.name}", DateTools.getDateTime(${field.name}));
 		jsonObject.put("${field.name}_date", DateTools.getDate(${field.name}));
 		jsonObject.put("${field.name}_datetime", DateTools.getDateTime(${field.name}));
+	      <#else>
+                if (${field.name} != null) {
+		    jsonObject.put("${field.name}", ${field.name});
+		} 
 	      </#if>
 	<#else>
 		if (${field.name} != null) {
-			jsonObject.put("${field.name}", ${field.name});
+		    jsonObject.put("${field.name}", ${field.name});
 		} 
 	</#if>
     </#list>
