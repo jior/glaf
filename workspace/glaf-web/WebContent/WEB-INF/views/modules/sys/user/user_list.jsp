@@ -45,7 +45,7 @@ function checkOperation(form){
 
 function add(){
   var url="user.do?method=prepareAdd&parent=<%=department.getId()%>";
-  var width=450;
+  var width=480;
   var height=450;
   var scroll="no";
   openWindow(url, width, height, scroll);
@@ -59,7 +59,7 @@ function modify(form){
 	}     
   }
   var url="user.do?method=prepareModify&id="+id;
-  var width=450;
+  var width=480;
   var height=450;
   var scroll="no";
   openWindow(url, width, height, scroll);
@@ -132,7 +132,7 @@ while(navIter.hasNext()){
     <td width="20%" align="center" >角色</td>
     <td width="5%" align="center" >是否有效</td>
     <td width="12%" align="center" >创建日期</td>
-    <td width="20%" align="center" >上次登陆时间</td>
+    <td width="15%" align="center" >上次登陆时间</td>
     </tr>
   <%
 int i=0;
@@ -191,22 +191,26 @@ for(; i<pageSize; i++){
 </table>
 <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
   <tr> 
-    <td width="60%"> <input name="btn_add" type="button" value="增加" class="button" onClick="javascript:add();"> 
+    <td colspan="5" width="50%"> 
+	  <input name="btn_add" type="button" value="增加" class="button" onClick="javascript:add();"> 
       <input name="btn_del" type="button" value="删除" class="button" onClick="javascript:del();" disabled>
       <input name="btn_modify" type="button" value="修改" class="button" onClick="javascript:modify(this.form);" disabled>
 	  <input name="btn_reset_pwd" type="button" value="重置密码" class="button" onClick="javascript:resetPwd(this.form);" disabled>
-      <input name="btn_role" type="button" value="角色设置" class="button" onClick="javascript:roles(this.form);" disabled></td>
-    <td width="50%"> 
+      <input name="btn_role" type="button" value="角色设置" class="button" onClick="javascript:roles(this.form);" disabled>
+	</td>
+    <td colspan="4" width="50%"> 
       <%
-String params = WebUtil.getQueryString(request);
-%>
+        String params = WebUtil.getQueryString(request);
+      %>
       <jsp:include page="/WEB-INF/views/inc/show_page.jsp" flush="true"> 
               <jsp:param name="total" value="<%=pager.getTotalRecordCount()%>"/>
               <jsp:param name="page_count" value="<%=pager.getTotalPageCount()%>"/>
               <jsp:param name="page_size" value="<%=pageSize%>"/>
               <jsp:param name="page_no" value="<%=pager.getCurrentPageNo()%>"/>
               <jsp:param name="url" value="user.do"/>
-	    <jsp:param name="params" value="<%=java.net.URLEncoder.encode(params)%>"/>        </jsp:include> </td>
+	    <jsp:param name="params" value="<%=java.net.URLEncoder.encode(params)%>"/>        
+		</jsp:include> 
+	</td>
   </tr>
 </table>
 </html:form> 

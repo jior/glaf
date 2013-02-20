@@ -109,21 +109,23 @@ out.print(bean2.getName());
         <td>
           <input name="telephone" type="text" size="30" class="input" datatype="string" value="<%=bean.getTelephone()%>" nullable="no" maxsize="20" chname="办公电话">        </td>
       </tr>
+	  <tr>
+        <td class="input-box2" valign="top">直接上级</td>
+        <td>
+          <input name="superiorIds" type="text" size="30" class="input" datatype="string" nullable="yes" maxsize="20"
+		  chname="直接上级" value="<%=bean.getSuperiorIds() != null ?bean.getSuperiorIds() :""%>"> 
+		  <br>（直接上级领导的账号，如果有多个，用半角的逗号“,”分隔）       
+		  </td>
+      </tr>
       <tr>
         <td class="input-box2" valign="top">是否有效</td>
         <td>
           <input type="radio" name="blocked" value="0" <%=bean.getBlocked()==0?"checked":""%>>
           是
           <input type="radio" name="blocked" value="1" <%=bean.getBlocked()==1?"checked":""%>>
-否</td>
+          否</td>
       </tr>
-      <!-- <tr>
-        <td class="input-box2" valign="top">职　　务</td>
-        <td>
-          <input name="headship" type="text" size="30" class="input" datatype="string" nullable="no" maxsize="20" chname="职务" value="<%=bean.getHeadship()%>"onClick="selectData('ZD0019', null, this, document.all.userType)">
-		  <input type="hidden" name="userType" value="<%=bean.getUserType()%>">        
-		 </td>
-      </tr> -->
+ 
       <tr>
         <td colspan="2" align="center" valign="bottom" height="30">&nbsp;
               <input name="btn_save2" type="submit" value="保存" class="button"></td>

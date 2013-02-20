@@ -63,7 +63,7 @@ function doSearch(form){
 </script>
 </head>
 
-<body>
+<body style="margin-left:15px;">
 <div class="nav-title">
 <span class="Title">授权管理</span>&gt;&gt;
 </div>
@@ -71,23 +71,25 @@ function doSearch(form){
 <input type="hidden" name="id" value="0">
   <table width="90%" border="0" align="center" cellpadding="5" cellspacing="0">
     <tr>
-      <td width="170">
+      <td width="20%">
         部门
         <input name="deptName" type="text" class="input" size="15" title="点击选择部门" readonly onClick="selectDept('5', document.all.deptId, this);">
         <input name="deptId" type="hidden" value="" searchflag="1">	  </td>
-      <td width="150">姓名
+      <td width="20%">姓名
         <input name="name" type="text" class="input" searchflag="1" size="10"></td>
-      <td width="380">授权有效日期:
+      <td width="40%">授权有效日期:
         <input name="startDate" type="text" class="input" id="startDate" size="10" datatype="date" nullable="no" maxsize="20" chname="预计开始时间" value="" readonly searchflag=1>
           <img src="<%=context%>/images/system_pic_35.gif" style="cursor:pointer" onClick="return showCalendar('startDate', '%Y-%m-%d')"> -
           <input name="endDate" type="text" class="input" id="endDate" size="10" datatype="date" nullable="no" maxsize="20" chname="预计结束时间" value="" readonly searchflag=1>
           <img src="<%=context%>/images/system_pic_35.gif" style="cursor:pointer" onClick="return showCalendar('endDate', '%Y-%m-%d')"></td>
-      <td width="30"><input name="btn_search" type="button" value=" " onClick="doSearch(this.form)" class="submit-search"></td>
+      <td width="20%"><input name="btn_search" type="button" value=" " onClick="doSearch(this.form)" class="submit-search"></td>
     </tr>
   </table> 
   <table width="90%" border="0" cellspacing="1" cellpadding="0" class="list-box">
   <tr class="list-title"> 
-    <td width="5%" align="center"><input type="checkbox" name="chkall" value="checkbox" onClick="checkAll(this.form, this);checkOperation(this.form)"></td>
+    <td width="5%" align="center">
+	<input type="checkbox" name="chkall" value="checkbox" onClick="checkAll(this.form, this);checkOperation(this.form)">
+	</td>
     <td width="5%" align="center">序号</td>
     <td width="10%" align="center">名称</td>
     <td width="15%" align="center">部门</td>
@@ -169,7 +171,7 @@ for(; i<pageSize; i++){
   <tr> 
     <td width="40%"> 
 	  <input name="btn_auth" type="button" value="授权" class="button" onClick="javascript:auth(this.form);" disabled></td>
-    <td width="40%" align="center">
+    <td width="40%" align="left">
 <%
 String params = WebUtil.getQueryString(request);
 %>
@@ -185,6 +187,9 @@ String params = WebUtil.getQueryString(request);
   </tr>
 </table> 
 </html:form>
+<br/>
+<br/>
+<br/>
 </body>
 </html>
  

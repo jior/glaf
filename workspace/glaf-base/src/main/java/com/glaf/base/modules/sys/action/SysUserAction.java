@@ -394,7 +394,7 @@ public class SysUserAction extends DispatchActionSupport {
 		bean.setCode(ParamUtil.getParameter(request, "code"));
 		bean.setAccount(bean.getCode());
 		bean.setName(ParamUtil.getParameter(request, "name"));
-		// bean.setPassword(ParamUtil.getParameter(request, "password"));
+		bean.setSuperiorIds(ParamUtil.getParameter(request, "superiorIds"));
 		String password = ParamUtil.getParameter(request, "password");
 		String pwd = DigestUtil.digestString(password, "MD5");
 		bean.setPassword(pwd);
@@ -455,9 +455,7 @@ public class SysUserAction extends DispatchActionSupport {
 					.getIntParameter(request, "parent", 0));
 			bean.setDepartment(department);
 			bean.setName(ParamUtil.getParameter(request, "name"));
-			// bean.setPassword(ParamUtil.getParameter(request, "password"));
-			// bean.setPassword(CryptUtil.EnCryptPassword(ParamUtil.getParameter(request,
-			// "password")));
+			bean.setSuperiorIds(ParamUtil.getParameter(request, "superiorIds"));
 			bean.setGender(ParamUtil.getIntParameter(request, "gender", 0));
 			bean.setMobile(ParamUtil.getParameter(request, "mobile"));
 			bean.setEmail(ParamUtil.getParameter(request, "email"));

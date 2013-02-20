@@ -45,7 +45,7 @@ function checkOperation(form){
 function add(){
   var url="application.do?method=prepareAdd&parent="+<%=parent%>;
   var width=450;
-  var height=350;
+  var height=390;
   var scroll="no";
   openWindow(url, width, height, scroll);
 }
@@ -59,7 +59,7 @@ function modify(form){
   }
   var url="application.do?method=prepareModify&id="+id;
   var width=450;
-  var height=350;
+  var height=390;
   var scroll="no";
   openWindow(url, width, height, scroll);
 }
@@ -73,7 +73,7 @@ function func(form){
   }
   var url="function.do?method=showFuncList&parent="+id;
   var width=580;
-  var height=380;
+  var height=330;
   var scroll="yes";
   openWindow(url, width, height, scroll);
 }

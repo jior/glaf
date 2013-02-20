@@ -423,6 +423,7 @@ public class SysUserController {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
+		bean.setSuperiorIds(ParamUtil.getParameter(request, "superiorIds"));
 		bean.setGender(ParamUtil.getIntParameter(request, "gender", 0));
 		bean.setMobile(ParamUtil.getParameter(request, "mobile"));
 		bean.setEmail(ParamUtil.getParameter(request, "email"));
@@ -480,9 +481,7 @@ public class SysUserController {
 					.getIntParameter(request, "parent", 0));
 			bean.setDepartment(department);
 			bean.setName(ParamUtil.getParameter(request, "name"));
-			// bean.setPassword(ParamUtil.getParameter(request, "password"));
-			// bean.setPassword(CryptUtil.EnCryptPassword(ParamUtil.getParameter(request,
-			// "password")));
+			bean.setSuperiorIds(ParamUtil.getParameter(request, "superiorIds"));
 			bean.setGender(ParamUtil.getIntParameter(request, "gender", 0));
 			bean.setMobile(ParamUtil.getParameter(request, "mobile"));
 			bean.setEmail(ParamUtil.getParameter(request, "email"));
@@ -565,9 +564,6 @@ public class SysUserController {
 		if (bean != null && StringUtils.isNotEmpty(oldPwd)
 				&& StringUtils.isNotEmpty(newPwd)) {
 			SysUser user = sysUserService.findById(bean.getId());
-			// bean.setPassword(ParamUtil.getParameter(request, "password"));
-			// bean.setPassword(CryptUtil.EnCryptPassword(ParamUtil.getParameter(request,
-			// "password")));
 			try {
 				String encPwd = DigestUtil.digestString(oldPwd, "MD5");
 				if (StringUtils.equals(encPwd, user.getPassword())) {
@@ -821,7 +817,7 @@ public class SysUserController {
 		int deptId = ParamUtil.getIntParameter(request, "deptId", 0);
 		int pageNo = ParamUtil.getIntParameter(request, "page_no", 1);
 		int pageSize = ParamUtil.getIntParameter(request, "page_size", 20);
-		// sysUserService.updateSysUserPassword();//初始化所有用户密码进行加密
+		 
 		PageResult pager = sysUserService.getSysUserList(deptId, userName,
 				account, pageNo, pageSize);
 		request.setAttribute("pager", pager);

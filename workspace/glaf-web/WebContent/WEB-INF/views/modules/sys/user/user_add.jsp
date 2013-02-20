@@ -18,11 +18,11 @@ int parent=ParamUtil.getIntParameter(request, "parent", 0);
 <link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
 <script language="javascript" src='<%=context%>/scripts/main.js'></script>
 <script language="javascript" src='<%=context%>/scripts/verify.js'></script></head>
-<script language="JavaScript">
+<script language="javascript">
 function checkForm(form){
   if(verifyAll(form)){
      if(form.password.value!=form.password2.value){
-	   alert("密码与确认密码不匹配");
+	   alert("密码与确认密码不匹配!");
 	 }else{
 	   return true;
 	 }
@@ -50,55 +50,70 @@ function checkForm(form){
     <td class="box-mm"><table width="95%" align="center" border="0" cellspacing="0" cellpadding="5">
       <tr>
         <td width="20%" class="input-box">员工编码*</td>
-        <td width="80%"><input name="code" type="text" size="30" class="input" datatype="string" nullable="no" maxsize="10" chname="员工编码"></td>
+        <td width="80%">
+		<input name="code" type="text" size="30" class="input" datatype="string" nullable="no" maxsize="10" chname="员工编码">
+		</td>
       </tr>
       <tr>
         <td class="input-box2" valign="top">密　　码*</td>
-        <td><input name="password" type="password" size="30" class="input" datatype="string" nullable="no" minsize="6" maxsize="20" chname="密码"></td>
+        <td>
+		<input name="password" type="password" size="30" class="input" datatype="string" nullable="no" minsize="6" maxsize="20" chname="密码">
+		</td>
       </tr>
       <tr>
         <td class="input-box2" valign="top">确认密码*</td>
-        <td><input name="password2" type="password" size="30" class="input"  datatype="string" nullable="no" minsize="6" maxsize="20" chname="确认密码"></td>
+        <td>
+		<input name="password2" type="password" size="30" class="input"  datatype="string" nullable="no" minsize="6" maxsize="20" chname="确认密码">
+		</td>
       </tr>
       <tr>
         <td class="input-box2" valign="top">姓　　名*</td>
-        <td><input name="name" type="text" size="30" class="input" datatype="string" nullable="no" maxsize="20" chname="姓名"></td>
+        <td>
+		<input name="name" type="text" size="30" class="input" datatype="string" nullable="no" maxsize="20" chname="姓名">
+		</td>
       </tr>
       <tr>
         <td class="input-box2" valign="top">性　　别</td>
         <td>
-          <input type="radio" name="gender" value="0">
-男
-<input type="radio" name="gender" value="1" checked>
-女</td>
+          <input type="radio" name="gender" value="0">男
+          <input type="radio" name="gender" value="1" checked>女
+		</td>
       </tr>
       <tr>
         <td class="input-box2" valign="top">手　　机</td>
         <td>
-          <input name="mobile" type="text" size="30" class="input" datatype="string" nullable="yes" maxsize="12" chname="手机">        </td>
+          <input name="mobile" type="text" size="30" class="input" datatype="string" nullable="yes" maxsize="12" chname="手机"> </td>
       </tr>
       <tr>
         <td class="input-box2" valign="top">邮　　件</td>
         <td>
-          <input name="email" type="text" size="30" class="input" datatype="email" nullable="yes" maxsize="50" chname="邮件">        </td>
+          <input name="email" type="text" size="30" class="input" datatype="email" nullable="yes" maxsize="50" chname="邮件">
+		  </td>
       </tr>
       <tr>
         <td class="input-box2" valign="top">办公电话</td>
         <td>
-          <input name="telephone" type="text" size="30" class="input" datatype="string" nullable="yes" maxsize="20" chname="办公电话">        </td>
+          <input name="telephone" type="text" size="30" class="input" datatype="string" nullable="yes" maxsize="20" chname="办公电话">        
+		  </td>
+      </tr>
+	  <tr>
+        <td class="input-box2" valign="top">直接上级</td>
+        <td>
+          <input name="superiorIds" type="text" size="30" class="input" datatype="string" nullable="yes" maxsize="20" chname="直接上级">
+          <br>（直接上级领导的账号，如果有多个，用半角的逗号“,”分隔）       
+		  </td>
       </tr>
       <tr>
         <td class="input-box2" valign="top">是否有效</td>
         <td>
-          <input type="radio" name="blocked" value="0" checked>
-          是
-          <input type="radio" name="blocked" value="1">
-否</td>
+          <input type="radio" name="blocked" value="0" checked>是
+          <input type="radio" name="blocked" value="1">否</td>
       </tr>
        
       <tr>
         <td colspan="2" align="center" valign="bottom" height="30">&nbsp;
-              <input name="btn_save" type="submit" value="保存" class="button"></td>
+         <input name="btn_save" type="submit" value="保存" class="button">
+		</td>
       </tr>
     </table></td>
   </tr>

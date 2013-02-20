@@ -45,8 +45,8 @@ function checkOperation(form){
 }
 function add(){
   var url="department.do?method=prepareAdd&parent="+<%=parent%>;
-  var width=650;
-  var height=480;
+  var width=630;
+  var height=450;
   var scroll="no";  
   openWindow(url, width, height, scroll);
 }
@@ -59,7 +59,7 @@ function modify(form){
 	}     
   }
   var url="department.do?method=prepareModify&id="+id;
-  var width=650;
+  var width=630;
   var height=480;
   var scroll="no";
   openWindow(url, width, height, scroll);
@@ -77,7 +77,7 @@ function users(form){
 	}     
   }
   var url="user.do?method=showList&parent="+id;
-  var width=750;
+  var width=780;
   var height=400;
   var scroll="no";
   openWindow(url, width, height, scroll);
@@ -91,7 +91,7 @@ function roles(form){
 	}     
   }
   var url="deptRole.do?method=showList&parent="+id;
-  var width=650;
+  var width=680;
   var height=400;
   var scroll="no";
   openWindow(url, width, height, scroll);
