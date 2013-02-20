@@ -19,7 +19,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "SYS_DBID")
+@Table(name = "sys_dbid")
 public class Dbid {
 
 	@Id

@@ -10,16 +10,16 @@
 	</resultMap>
 
 	<insert id="inertNextDbId">
-		insert into SYS_DBID(NAME_, VALUE_, VERSION_) values ('next.dbid', '10001', 1)
+		insert into sys_dbid(NAME_, VALUE_, VERSION_) values ('next.dbid', '10001', 1)
 	</insert>
 
 	<update id="updateNextDbId" parameterType="com.glaf.base.id.Dbid">
-		update SYS_DBID set VERSION_ = #{version}, VALUE_ = #{value}
+		update sys_dbid set VERSION_ = #{version}, VALUE_ = #{value}
 		where NAME_ = #{name}
 	</update>
 
 	<select id="getNextDbId" parameterType="string" resultMap="dbidResultMap">
-		select * from SYS_DBID where NAME_ = #{name}
+		select * from sys_dbid where NAME_ = #{name}
 	</select>
 
 </mapper>
