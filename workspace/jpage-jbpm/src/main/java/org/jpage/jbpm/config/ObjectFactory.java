@@ -35,7 +35,7 @@ public class ObjectFactory {
 
 	public static boolean isBooleanDatabase() {
 		if (databaseFlag == null) {
-			databaseFlag = DataSourceConfig.isBooleanDatabase();
+			databaseFlag = JbpmDataSourceConfig.isBooleanDatabase();
 		}
 		return databaseFlag;
 	}

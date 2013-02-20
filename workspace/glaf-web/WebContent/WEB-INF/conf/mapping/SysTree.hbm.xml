@@ -20,6 +20,7 @@
 
 		<one-to-one name="app" cascade="all" class="SysApplication"
 			property-ref="node" outer-join="auto" />
+
 		<one-to-one name="department" cascade="all" class="SysDepartment"
 			property-ref="node" outer-join="auto" />
 	</class>

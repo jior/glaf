@@ -21,6 +21,7 @@
 
 		<many-to-one name="node" class="SysTree" column="nodeId" foreign-key="FK_APP_TREE"
 			cascade="all" unique="true" not-null="true" not-found="ignore" />
+
 		<set name="functions" table="sys_function" inverse="false"
 			cascade="all" order-by="sort desc">
 			<key column="appId" />
