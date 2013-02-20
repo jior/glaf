@@ -5,6 +5,11 @@
 		<saveName>${entityName}.java</saveName>
 		<template>/templates/java/entity/Entity.java.ftl</template>
 	</definition>
+	<definition name="Entity">
+		<savePath>/java/model</savePath>
+		<saveName>${entityName}.hbm.xml</saveName>
+		<template>/templates/java/entity/Entity.hbm.xml.ftl</template>
+	</definition>
 	<definition name="Service">
 		<savePath>/java/service</savePath>
 		<saveName>${entityName}Service.java</saveName>

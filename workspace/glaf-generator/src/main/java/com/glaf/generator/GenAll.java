@@ -3,6 +3,7 @@ package com.glaf.generator;
 import java.io.*;
 
 import com.glaf.base.api.ClassDefinition;
+import com.glaf.base.xml.XmlReader;
 
 public class GenAll {
 
@@ -17,8 +18,7 @@ public class GenAll {
 				} else {
 					if (file.getName().endsWith("mapping.xml")) {
 						FileInputStream fin = new FileInputStream(file);
-						ClassDefinition def = new com.glaf.base.xml.XmlReader()
-								.read(fin);
+						ClassDefinition def = new XmlReader().read(fin);
 						JavaCodeGen gen = new JavaCodeGen();
 						String config = System.getProperty("codegen.cfg");
 						if (config == null) {
