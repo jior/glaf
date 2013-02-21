@@ -1,20 +1,20 @@
 /*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.glaf.base.business;
 
@@ -37,6 +37,7 @@ import com.glaf.base.modules.sys.SysConstants;
 import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.sys.service.AuthorizeService;
 import com.glaf.base.modules.sys.service.SysApplicationService;
+import com.glaf.base.modules.sys.service.SysUserService;
 import com.glaf.base.modules.utils.ContextUtil;
 import com.glaf.base.utils.ClassUtil;
 import com.glaf.base.utils.RequestUtil;
@@ -59,37 +60,53 @@ public class AuthorizeBean {
 
 	private AuthorizeService authorizeService;
 
+	private SysUserService sysUserService;
+
 	public AuthorizeBean() {
-		authorizeService = ContextFactory.getBean("authorizeProxy");
-		sysApplicationService = ContextFactory.getBean("sysApplicationProxy");
+
 	}
 
 	public AuthorizeService getAuthorizeService() {
+		if (authorizeService == null) {
+			authorizeService = ContextFactory.getBean("authorizeProxy");
+		}
 		return authorizeService;
 	}
 
+	public String getMenus(SysUser bean) {
+		String menus = getSysApplicationService().getMenu(3, bean);
+		return menus;
+	}
+
 	public SysApplicationService getSysApplicationService() {
+		if (sysApplicationService == null) {
+			sysApplicationService = ContextFactory
+					.getBean("sysApplicationProxy");
+		}
 		return sysApplicationService;
+	}
+
+	public SysUserService getSysUserService() {
+		if (sysUserService == null) {
+			sysUserService = ContextFactory.getBean("sysUserProxy");
+		}
+		return sysUserService;
 	}
 
 	public SysUser getUser(String account) {
 		logger.debug("#account=" + account);
+		SysUser sysUser = null;
 		if (account != null) {
-			String cacheKey = "cache_sysuser_" + account;
-			if (CacheFactory.get(cacheKey) != null) {
-				logger.debug("get user from cache");
-				return (SysUser) CacheFactory.get(cacheKey);
+			String cacheKey = "cache_user_" + account;
+			sysUser = (SysUser) CacheFactory.get(cacheKey);
+			if (sysUser == null) {
+				sysUser = getSysUserService().findByAccountWithAll(account);
+				if (sysUser != null) {
+					CacheFactory.put(cacheKey, sysUser);
+				}
 			}
-			SysUser bean = authorizeService.login(account);
-			CacheFactory.put(cacheKey, bean);
-			return bean;
 		}
-		return null;
-	}
-
-	public String getMenus(SysUser bean) {
-		String menus = sysApplicationService.getMenu(3, bean);
-		return menus;
+		return sysUser;
 	}
 
 	/**
@@ -102,7 +119,7 @@ public class AuthorizeBean {
 		logger.debug(account + " start login........................");
 
 		// 用户登陆，返回系统用户对象
-		SysUser bean = authorizeService.login(account);
+		SysUser bean = getSysUserService().findByAccount(account);
 		if (bean != null) {
 
 			// 登录成功，修改最近一次登录时间
@@ -125,7 +142,7 @@ public class AuthorizeBean {
 				}
 			}
 
-			String menus = sysApplicationService.getMenu(3, bean);
+			String menus = getSysApplicationService().getMenu(3, bean);
 			bean.setMenus(menus);
 
 			ContextUtil.put(bean.getAccount(), bean);// 传入全局变量
@@ -146,6 +163,10 @@ public class AuthorizeBean {
 	public void setSysApplicationService(
 			SysApplicationService sysApplicationService) {
 		this.sysApplicationService = sysApplicationService;
+	}
+
+	public void setSysUserService(SysUserService sysUserService) {
+		this.sysUserService = sysUserService;
 	}
 
 }

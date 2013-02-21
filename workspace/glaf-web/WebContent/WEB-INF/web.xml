@@ -65,6 +65,7 @@
 			<param-value>
 				/WEB-INF/conf/struts/struts-config.xml,
 				/WEB-INF/conf/struts/struts-sys-config.xml,
+				/WEB-INF/conf/struts/struts-apps-config.xml,
 				/WEB-INF/conf/struts/struts-others-config.xml,
 				/WEB-INF/conf/struts/struts-workspace-config.xml
 			</param-value>
@@ -83,7 +84,7 @@
 	<servlet-mapping>
 		<servlet-name>action</servlet-name>
 		<url-pattern>*.do</url-pattern>
-	</servlet-mapping> -->
+	</servlet-mapping>  -->
 
   
 	<!--转码过滤器-->
@@ -181,7 +182,7 @@
 	<servlet-mapping>
 		<servlet-name>dispatcher</servlet-name>
 		<url-pattern>*.do</url-pattern>
-	</servlet-mapping>
+	</servlet-mapping> 
   
 	<!--jbpm workflow configure-->
 

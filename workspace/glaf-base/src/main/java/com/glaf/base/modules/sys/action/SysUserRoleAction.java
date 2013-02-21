@@ -257,11 +257,7 @@ public class SysUserRoleAction extends DispatchActionSupport{
 		String context = msgStr;
 		logger.info(fromUser.getEmail()+"--"+toUser.getEmail()+"--"+
 				subject+"--"+ context);
-		// EMail.send(user.getEmail(), order.getSupplier().getBusinessEmail(),
-		// "business_callpricefile", context, attach);
-//		EMail.send(fromUser.getEmail(), toUser.getEmail(),
-//				subject, context, null);
-
+	 
 		return rst;
 	}
 	

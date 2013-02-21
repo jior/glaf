@@ -46,10 +46,9 @@ import org.apache.commons.logging.LogFactory;
 import org.jpage.util.DateTools;
 
 import com.glaf.base.business.AuthorizeBean;
-import com.glaf.base.context.ContextFactory;
 import com.glaf.base.modules.sys.SysConstants;
 import com.glaf.base.modules.sys.model.SysUser;
-import com.glaf.base.modules.sys.service.AuthorizeService;
+ 
 
 public class RequestUtil {
 	protected final static Log logger = LogFactory.getLog(RequestUtil.class);
@@ -554,9 +553,8 @@ public class RequestUtil {
 		if (session != null) {
 			actorId = (String) session.getAttribute(SysConstants.LOGIN);
 			if (actorId != null) {
-				AuthorizeService authorizeService = ContextFactory
-						.getBean("authorizeProxy");
-				sysUser = authorizeService.login(actorId);
+				AuthorizeBean bean = new AuthorizeBean();
+				sysUser = bean.getUser(actorId);
 			}
 		}
 		return sysUser;

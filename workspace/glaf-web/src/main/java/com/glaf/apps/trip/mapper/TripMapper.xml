@@ -1,0 +1,509 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.apps.trip.mapper.TripMapper">
+
+ 	<resultMap id="tripResultMap"	type="com.glaf.apps.trip.model.Trip">
+        <id property="id" column="ID_" jdbcType="VARCHAR"/>
+        <result property="transType" column="TRANSTYPE_" jdbcType="VARCHAR"/>
+        <result property="applyDate" column="APPLYDATE_" jdbcType="TIMESTAMP"/>
+        <result property="startDate" column="STARTDATE_" jdbcType="TIMESTAMP"/>
+        <result property="endDate" column="ENDDATE_" jdbcType="TIMESTAMP"/>
+        <result property="days" column="DAYS_" jdbcType="DOUBLE"/>
+        <result property="money" column="MONEY_" jdbcType="DOUBLE"/>
+        <result property="cause" column="CAUSE_" jdbcType="VARCHAR"/>
+        <result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP"/>
+        <result property="createBy" column="CREATEBY_" jdbcType="VARCHAR"/>
+        <result property="updateDate" column="UPDATEDATE_" jdbcType="TIMESTAMP"/>
+        <result property="locked" column="LOCKED_" jdbcType="INTEGER"/>
+        <result property="deleteFlag" column="DELETEFLAG_" jdbcType="INTEGER"/>
+        <result property="status" column="STATUS_" jdbcType="INTEGER"/>
+        <result property="processName" column="PROCESSNAME_" jdbcType="VARCHAR"/>
+        <result property="processInstanceId" column="PROCESSINSTANCEID_" jdbcType="VARCHAR"/>
+	</resultMap>
+
+ 
+	<insert id="insertTrip" parameterType="com.glaf.apps.trip.model.Trip">
+		insert into
+		X_APP_TRIP ( ID_
+        ,TRANSTYPE_ 
+        ,APPLYDATE_ 
+        ,STARTDATE_ 
+        ,ENDDATE_ 
+        ,DAYS_ 
+        ,MONEY_ 
+        ,CAUSE_ 
+        ,CREATEDATE_ 
+        ,CREATEBY_ 
+        ,UPDATEDATE_ 
+        ,LOCKED_ 
+        ,DELETEFLAG_ 
+        ,STATUS_ 
+        ,PROCESSNAME_ 
+        ,PROCESSINSTANCEID_ 
+		)
+		values (
+          #{id, jdbcType=VARCHAR}
+	     
+        ,#{transType, jdbcType=VARCHAR}
+        ,#{applyDate, jdbcType=TIMESTAMP}
+        ,#{startDate, jdbcType=TIMESTAMP}
+        ,#{endDate, jdbcType=TIMESTAMP}
+        ,#{days, jdbcType=DOUBLE}
+        ,#{money, jdbcType=DOUBLE}
+        ,#{cause, jdbcType=VARCHAR}
+        ,#{createDate, jdbcType=TIMESTAMP}
+        ,#{createBy, jdbcType=VARCHAR}
+        ,#{updateDate, jdbcType=TIMESTAMP}
+        ,#{locked, jdbcType=INTEGER}
+        ,#{deleteFlag, jdbcType=INTEGER}
+        ,#{status, jdbcType=INTEGER}
+        ,#{processName, jdbcType=VARCHAR}
+        ,#{processInstanceId, jdbcType=VARCHAR}
+		)
+    </insert>
+
+	 
+	<update id="updateTrip" parameterType="com.glaf.apps.trip.model.Trip">
+		update
+		X_APP_TRIP
+		set
+        <trim prefix="" suffix="" suffixOverrides=",">		
+        TRANSTYPE_ = #{transType, jdbcType=VARCHAR},
+        APPLYDATE_ = #{applyDate, jdbcType=TIMESTAMP},
+        STARTDATE_ = #{startDate, jdbcType=TIMESTAMP},
+        ENDDATE_ = #{endDate, jdbcType=TIMESTAMP},
+        DAYS_ = #{days, jdbcType=DOUBLE},
+        MONEY_ = #{money, jdbcType=DOUBLE},
+        CAUSE_ = #{cause, jdbcType=VARCHAR},
+        </trim>
+		where
+          ID_ = #{id, jdbcType=VARCHAR}
+		
+    </update>
+
+ 
+	<delete id="deleteTripById" parameterType="string"> 
+        delete from X_APP_TRIP
+        where ID_ =	#{id}
+	</delete>
+	
+	<delete id="deleteTrips" parameterType="com.glaf.apps.trip.query.TripQuery">
+		delete from X_APP_TRIP
+		where ( 
+ 			  ID_ IN
+              <foreach item="x_rowId" index="index" collection="rowIds" 
+                     open="(" separator="," close=")">
+                  #{x_rowId}
+              </foreach>
+		)
+	</delete>
+
+	<select id="getTripById" parameterType="string" resultMap="tripResultMap">
+		select * from X_APP_TRIP where ID_ = #{id}
+	</select>
+
+
+	<select id="getTrips" 
+	    parameterType="com.glaf.apps.trip.query.TripQuery"
+		resultMap="tripResultMap">
+		select E.*
+		<include refid="selectTripsSql" />
+		<if test="orderBy != null">
+		   order by ${orderBy}
+        </if>
+	</select>
+
+	<select id="getTripCount" 
+	    parameterType="com.glaf.apps.trip.query.TripQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectTripsSql" />
+	</select>
+
+	<sql id="selectTripsSql">
+
+		from X_APP_TRIP E
+
+		<if test=" workedProcessFlag == 'WD' and appActorIds != null and appActorIds.size != 0  ">
+           inner join JBPM_TASKINSTANCE T
+		   on E.PROCESSINSTANCEID_ = T.PROCINST_
+		</if>
+		 
+		<where>
+		       1 = 1  
+
+			   <if test="workedProcessFlag == 'WD' and appActorIds != null and appActorIds.size != 0 ">
+			     and ( T.END_ IS NOT NULL)
+                 and ( T.ACTORID in
+                 <foreach item="x_actorId" index="index" collection="appActorIds" 
+						open="(" separator="," close=")">
+					#{x_actorId}
+				 </foreach>
+				 )
+			   </if>
+
+			   <if test="workedProcessFlag == 'PD' and appActorIds != null and appActorIds.size != 0 ">
+			      and E.PROCESSINSTANCEID_ in (
+				          SELECT a.PROCINST_
+						  FROM JBPM_TASKINSTANCE a 
+						  WHERE (1 = 1) 
+						  AND (a.END_ IS NULL)
+						  AND (a.ACTORID_ IS NOT NULL) 
+						  AND (a.ACTORID_ in 
+						    <foreach item="x_actorId2" index="index" collection="appActorIds" 
+						          open="(" separator="," close=")">
+					              #{x_actorId2}
+				            </foreach>
+						  )
+				        union
+				          SELECT a.PROCINST_
+						  FROM JBPM_TASKINSTANCE a 
+						  INNER JOIN JBPM_TASKACTORPOOL t
+						  ON a.ID_ = t.TASKINSTANCE_
+						  INNER JOIN JBPM_POOLEDACTOR p  
+						  ON p.ID_ = t.POOLEDACTOR_ 
+						  WHERE (1 = 1)  
+						  AND (a.END_ IS NULL)
+						  AND (a.ACTORID_ IS NULL)
+						  AND (p.ACTORID_ in 
+                            <foreach item="x_actorId3" index="index" collection="appActorIds" 
+						             open="(" separator="," close=")">
+					              #{x_actorId3}
+				            </foreach>
+						  )  
+                 )
+			   </if>
+
+			   <if test="workedProcessFlag == 'ALL' and appActorIds != null and appActorIds.size != 0 ">
+			      and E.PROCESSINSTANCEID_ in (
+				          SELECT a.PROCINST_
+						  FROM JBPM_TASKINSTANCE a 
+						  WHERE (1 = 1) 
+						  AND (a.ACTORID_ IS NOT NULL) 
+						  AND (a.ACTORID_ in 
+						    <foreach item="x_actorId2" index="index" collection="appActorIds" 
+						          open="(" separator="," close=")">
+					              #{x_actorId2}
+				            </foreach>
+						  )
+				        union
+				          SELECT a.PROCINST_
+						  FROM JBPM_TASKINSTANCE a 
+						  INNER JOIN JBPM_TASKACTORPOOL t
+						  ON a.ID_ = t.TASKINSTANCE_
+						  INNER JOIN JBPM_POOLEDACTOR p  
+						  ON p.ID_ = t.POOLEDACTOR_ 
+						  WHERE (1 = 1) 
+						  AND (a.ACTORID_ IS NULL)
+						  AND (p.ACTORID_ in 
+                            <foreach item="x_actorId3" index="index" collection="appActorIds" 
+						             open="(" separator="," close=")">
+					              #{x_actorId3}
+				            </foreach>
+						  )  
+                 )
+			   </if>
+
+
+	        
+			<if test="transType != null &amp;&amp; transType != '' ">
+				and E.TRANSTYPE_ = #{transType}
+            </if>
+
+			<if test="transTypeLike != null &amp;&amp; transTypeLike != '' ">
+				and E.TRANSTYPE_ like #{transTypeLike}
+            </if>
+
+			<if test="transTypes != null &amp;&amp; transTypes.size() &gt; 0">
+			    and E.TRANSTYPE_ IN
+                <foreach item="x_transType" index="index" collection="transTypes" 
+                     open="(" separator="," close=")">
+                  #{x_transType}
+                </foreach>
+			</if>
+
+
+			<if test="applyDate != null">
+				and E.APPLYDATE_ = #{applyDate}
+            </if>
+
+			<if test="applyDateGreaterThanOrEqual != null">
+				and E.APPLYDATE_ &gt;= #{applyDateGreaterThanOrEqual}
+            </if>
+
+			<if test="applyDateLessThanOrEqual != null">
+				and E.APPLYDATE_ &lt;= #{applyDateLessThanOrEqual}
+            </if>
+
+			<if test="applyDates != null &amp;&amp; applyDates.size() &gt; 0">
+			    and E.APPLYDATE_ IN
+                <foreach item="x_applyDate" index="index" collection="applyDates" 
+                     open="(" separator="," close=")">
+                  #{x_applyDate}
+                </foreach>
+			</if>
+
+
+			<if test="startDate != null">
+				and E.STARTDATE_ = #{startDate}
+            </if>
+
+			<if test="startDateGreaterThanOrEqual != null">
+				and E.STARTDATE_ &gt;= #{startDateGreaterThanOrEqual}
+            </if>
+
+			<if test="startDateLessThanOrEqual != null">
+				and E.STARTDATE_ &lt;= #{startDateLessThanOrEqual}
+            </if>
+
+			<if test="startDates != null &amp;&amp; startDates.size() &gt; 0">
+			    and E.STARTDATE_ IN
+                <foreach item="x_startDate" index="index" collection="startDates" 
+                     open="(" separator="," close=")">
+                  #{x_startDate}
+                </foreach>
+			</if>
+
+
+			<if test="endDate != null">
+				and E.ENDDATE_ = #{endDate}
+            </if>
+
+			<if test="endDateGreaterThanOrEqual != null">
+				and E.ENDDATE_ &gt;= #{endDateGreaterThanOrEqual}
+            </if>
+
+			<if test="endDateLessThanOrEqual != null">
+				and E.ENDDATE_ &lt;= #{endDateLessThanOrEqual}
+            </if>
+
+			<if test="endDates != null &amp;&amp; endDates.size() &gt; 0">
+			    and E.ENDDATE_ IN
+                <foreach item="x_endDate" index="index" collection="endDates" 
+                     open="(" separator="," close=")">
+                  #{x_endDate}
+                </foreach>
+			</if>
+
+
+			<if test="days != null">
+				and E.DAYS_ = #{days}
+            </if>
+
+			<if test="daysGreaterThanOrEqual != null">
+				and E.DAYS_ &gt;= #{daysGreaterThanOrEqual}
+            </if>
+
+			<if test="daysLessThanOrEqual != null">
+				and E.DAYS_ &lt;= #{daysLessThanOrEqual}
+            </if>
+
+			<if test="dayss != null &amp;&amp; dayss.size() &gt; 0">
+			    and E.DAYS_ IN
+                <foreach item="x_days" index="index" collection="dayss" 
+                     open="(" separator="," close=")">
+                  #{x_days}
+                </foreach>
+			</if>
+
+
+			<if test="money != null">
+				and E.MONEY_ = #{money}
+            </if>
+
+			<if test="moneyGreaterThanOrEqual != null">
+				and E.MONEY_ &gt;= #{moneyGreaterThanOrEqual}
+            </if>
+
+			<if test="moneyLessThanOrEqual != null">
+				and E.MONEY_ &lt;= #{moneyLessThanOrEqual}
+            </if>
+
+			<if test="moneys != null &amp;&amp; moneys.size() &gt; 0">
+			    and E.MONEY_ IN
+                <foreach item="x_money" index="index" collection="moneys" 
+                     open="(" separator="," close=")">
+                  #{x_money}
+                </foreach>
+			</if>
+
+	        
+			<if test="cause != null &amp;&amp; cause != '' ">
+				and E.CAUSE_ = #{cause}
+            </if>
+
+			<if test="causeLike != null &amp;&amp; causeLike != '' ">
+				and E.CAUSE_ like #{causeLike}
+            </if>
+
+			<if test="causes != null &amp;&amp; causes.size() &gt; 0">
+			    and E.CAUSE_ IN
+                <foreach item="x_cause" index="index" collection="causes" 
+                     open="(" separator="," close=")">
+                  #{x_cause}
+                </foreach>
+			</if>
+
+
+			<if test="createDate != null">
+				and E.CREATEDATE_ = #{createDate}
+            </if>
+
+			<if test="createDateGreaterThanOrEqual != null">
+				and E.CREATEDATE_ &gt;= #{createDateGreaterThanOrEqual}
+            </if>
+
+			<if test="createDateLessThanOrEqual != null">
+				and E.CREATEDATE_ &lt;= #{createDateLessThanOrEqual}
+            </if>
+
+			<if test="createDates != null &amp;&amp; createDates.size() &gt; 0">
+			    and E.CREATEDATE_ IN
+                <foreach item="x_createDate" index="index" collection="createDates" 
+                     open="(" separator="," close=")">
+                  #{x_createDate}
+                </foreach>
+			</if>
+
+	        
+			<if test="createBy != null &amp;&amp; createBy != '' ">
+				and E.CREATEBY_ = #{createBy}
+            </if>
+
+			<if test="createByLike != null &amp;&amp; createByLike != '' ">
+				and E.CREATEBY_ like #{createByLike}
+            </if>
+
+			<if test="createBys != null &amp;&amp; createBys.size() &gt; 0">
+			    and E.CREATEBY_ IN
+                <foreach item="x_createBy" index="index" collection="createBys" 
+                     open="(" separator="," close=")">
+                  #{x_createBy}
+                </foreach>
+			</if>
+
+
+			<if test="updateDate != null">
+				and E.UPDATEDATE_ = #{updateDate}
+            </if>
+
+			<if test="updateDateGreaterThanOrEqual != null">
+				and E.UPDATEDATE_ &gt;= #{updateDateGreaterThanOrEqual}
+            </if>
+
+			<if test="updateDateLessThanOrEqual != null">
+				and E.UPDATEDATE_ &lt;= #{updateDateLessThanOrEqual}
+            </if>
+
+			<if test="updateDates != null &amp;&amp; updateDates.size() &gt; 0">
+			    and E.UPDATEDATE_ IN
+                <foreach item="x_updateDate" index="index" collection="updateDates" 
+                     open="(" separator="," close=")">
+                  #{x_updateDate}
+                </foreach>
+			</if>
+
+
+			<if test="locked != null">
+				and E.LOCKED_ = #{locked}
+            </if>
+
+			<if test="lockedGreaterThanOrEqual != null">
+				and E.LOCKED_ &gt;= #{lockedGreaterThanOrEqual}
+            </if>
+
+			<if test="lockedLessThanOrEqual != null">
+				and E.LOCKED_ &lt;= #{lockedLessThanOrEqual}
+            </if>
+
+			<if test="lockeds != null &amp;&amp; lockeds.size() &gt; 0">
+			    and E.LOCKED_ IN
+                <foreach item="x_locked" index="index" collection="lockeds" 
+                     open="(" separator="," close=")">
+                  #{x_locked}
+                </foreach>
+			</if>
+
+
+			<if test="deleteFlag != null">
+				and E.DELETEFLAG_ = #{deleteFlag}
+            </if>
+
+			<if test="deleteFlagGreaterThanOrEqual != null">
+				and E.DELETEFLAG_ &gt;= #{deleteFlagGreaterThanOrEqual}
+            </if>
+
+			<if test="deleteFlagLessThanOrEqual != null">
+				and E.DELETEFLAG_ &lt;= #{deleteFlagLessThanOrEqual}
+            </if>
+
+			<if test="deleteFlags != null &amp;&amp; deleteFlags.size() &gt; 0">
+			    and E.DELETEFLAG_ IN
+                <foreach item="x_deleteFlag" index="index" collection="deleteFlags" 
+                     open="(" separator="," close=")">
+                  #{x_deleteFlag}
+                </foreach>
+			</if>
+
+
+			<if test="status != null">
+				and E.STATUS_ = #{status}
+            </if>
+
+			<if test="statusGreaterThanOrEqual != null">
+				and E.STATUS_ &gt;= #{statusGreaterThanOrEqual}
+            </if>
+
+			<if test="statusLessThanOrEqual != null">
+				and E.STATUS_ &lt;= #{statusLessThanOrEqual}
+            </if>
+
+			<if test="statuss != null &amp;&amp; statuss.size() &gt; 0">
+			    and E.STATUS_ IN
+                <foreach item="x_status" index="index" collection="statuss" 
+                     open="(" separator="," close=")">
+                  #{x_status}
+                </foreach>
+			</if>
+
+	        
+			<if test="processName != null &amp;&amp; processName != '' ">
+				and E.PROCESSNAME_ = #{processName}
+            </if>
+
+			<if test="processNameLike != null &amp;&amp; processNameLike != '' ">
+				and E.PROCESSNAME_ like #{processNameLike}
+            </if>
+
+			<if test="processNames != null &amp;&amp; processNames.size() &gt; 0">
+			    and E.PROCESSNAME_ IN
+                <foreach item="x_processName" index="index" collection="processNames" 
+                     open="(" separator="," close=")">
+                  #{x_processName}
+                </foreach>
+			</if>
+
+	        
+			<if test="processInstanceId != null &amp;&amp; processInstanceId != '' ">
+				and E.PROCESSINSTANCEID_ = #{processInstanceId}
+            </if>
+
+			<if test="processInstanceIdLike != null &amp;&amp; processInstanceIdLike != '' ">
+				and E.PROCESSINSTANCEID_ like #{processInstanceIdLike}
+            </if>
+
+			<if test="processInstanceIds != null &amp;&amp; processInstanceIds.size() &gt; 0">
+			    and E.PROCESSINSTANCEID_ IN
+                <foreach item="x_processInstanceId" index="index" collection="processInstanceIds" 
+                     open="(" separator="," close=")">
+                  #{x_processInstanceId}
+                </foreach>
+			</if>
+
+			 
+		</where>
+	</sql>
+
+</mapper>

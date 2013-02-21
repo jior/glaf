@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC
+	  "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN"
+	  "http://jakarta.apache.org/struts/dtds/struts-config_1_2.dtd">
+      
+<struts-config>
+	 
+	<!--Action Mapping Definitions-->
+	<action-mappings>
+		<action path="/apps/trip"
+			parameter="method"
+			scope="request"
+			name="GenericForm"
+			type="org.springframework.web.struts.DelegatingActionProxy">
+			<forward name="show_edit" path="/WEB-INF/views/apps/trip/edit.jsp"/>
+			<forward name="show_modify" path="/WEB-INF/views/apps/trip/edit.jsp"/>
+			<forward name="show_list" path="/WEB-INF/views/apps/trip/list.jsp"/>
+			<forward name="show_view" path="/WEB-INF/views/apps/trip/view.jsp"/>
+		</action>
+    
+	</action-mappings>
+</struts-config>
