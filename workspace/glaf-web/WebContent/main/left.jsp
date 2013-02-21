@@ -8,25 +8,46 @@
 <%@ page import="com.glaf.base.modules.sys.service.*" %>
 <%
 	 
-	String userName = RequestUtil.getActorId(request);
+	String userId = RequestUtil.getActorId(request);
 	String perFix =request.getContextPath();
 	ApplicationBean bean = new ApplicationBean();
 	SysApplicationService sysApplicationService = ContextFactory.getBean("sysApplicationProxy");
     bean.setSysApplicationService(sysApplicationService);
-	String scripts = bean.getMenuScripts(3, userName, request.getContextPath());
+	String scripts = bean.getMenuScripts(3, userId, request.getContextPath());
 
 %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>jquery弹性菜单</title>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/menu.css" />
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.easing.1.3.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/xixi.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/frameWorkUtility.js"></script>
 <script language="javascript" type="text/javascript">
+
+$(document).ready(function(){
+	/* This code is executed after the DOM has been completely loaded */
+
+	/* Changing thedefault easing effect - will affect the slideUp/slideDown methods: */
+	$.easing.def = "easeOutBounce";
+
+	/* Binding a click event handler to the links: */
+	$('li.button a').click(function(e){
+	
+		/* Finding the drop down list that corresponds to the current section: */
+		var dropDown = $(this).parent().next();
+		
+		/* Closing all other drop down sections, except the current one */
+		//$('.dropdown').not(dropDown).slideUp('slow');
+		dropDown.slideToggle('slow');
+		
+		/* Preventing the default event (which would be to navigate the browser to the link's address) */
+		e.preventDefault();
+	})
+	
+});
+
 function changeClass(thisObt){
   //找到所有菜单项，设置标题颜色为黑色
   var livar = document.getElementsByName("lightbutton");
@@ -87,8 +108,6 @@ function changeClassButton(thisObt){
 </ul>
 <div class="clear"></div>
 </div>
-
-
 
 <p>&nbsp;</p>
 </body>
