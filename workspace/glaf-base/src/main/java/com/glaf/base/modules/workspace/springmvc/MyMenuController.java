@@ -41,6 +41,7 @@ import com.glaf.base.res.ViewMessages;
 import com.glaf.base.utils.PageResult;
 import com.glaf.base.utils.ParamUtil;
 import com.glaf.base.utils.RequestUtil;
+import com.glaf.base.utils.StringTools;
 
 @Controller
 @RequestMapping("/workspace/mymenu.do")
@@ -144,7 +145,7 @@ public class MyMenuController {
 		// System.out.println(url);
 		String contextPath = request.getContextPath();
 		if (url != null && url.startsWith(contextPath)) {
-			url = org.jpage.util.Tools.replaceIgnoreCase(url, contextPath, "");
+			url = StringTools.replaceIgnoreCase(url, contextPath, "");
 		}
 
 		bean.setTitle(formBean.getTitle());

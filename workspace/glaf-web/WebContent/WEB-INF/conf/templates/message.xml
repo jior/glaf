@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<template>
+<templates>
 
-	<message name="sendToSupplier" desccription="供应商用户意见交流">
+	<template name="sendToSupplier" desccription="供应商用户意见交流">
 		<sysType>1</sysType>
 		<title>
 			<![CDATA[
@@ -14,6 +14,6 @@
 		    请在平台上积极解决贵公司合同制作中的问题。
 			]]>
 		</content>
-	</message>
+	</template>
 
-</template>
+</templates>

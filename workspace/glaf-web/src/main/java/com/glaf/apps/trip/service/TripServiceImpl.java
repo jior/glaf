@@ -59,25 +59,16 @@ public class TripServiceImpl implements TripService {
 		return list;
 	}
 
-         /**
-	 * 根据查询参数获取记录总数
-	 * 
-	 * @return
-	 */
+        
 	public int getTripCountByQueryCriteria(TripQuery query) {
 		return tripMapper.getTripCount(query);
 	}
 
-	/**
-	 * 根据查询参数获取一页的数据
-	 * 
-	 * @return
-	 */
-	@SuppressWarnings("unchecked")
+	 
 	public List<Trip> getTripsByQueryCriteria(int start, int pageSize,
 			TripQuery query) {
 		RowBounds rowBounds = new RowBounds(start, pageSize);
-		List<Trip> rows = (List<Trip>) sqlSessionTemplate.selectList(
+		List<Trip> rows = sqlSessionTemplate.selectList(
 				"getTrips", query, rowBounds);
 		return rows;
 	}

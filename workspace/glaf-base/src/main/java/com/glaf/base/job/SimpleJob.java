@@ -22,10 +22,12 @@ import java.util.Date;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.jpage.util.DateTools;
+ 
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
+
+import com.glaf.base.utils.DateTools;
 
 public class SimpleJob implements Job {
 
@@ -37,7 +39,7 @@ public class SimpleJob implements Job {
 
 	public void execute(JobExecutionContext context)
 			throws JobExecutionException {
-		String jobName = context.getJobDetail().getFullName();
+		String jobName = context.getJobDetail().getKey().getName();
 		logger.info("Executing job: " + jobName + " executing at "
 				+ DateTools.getDateTime(new Date()));
 	}

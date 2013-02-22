@@ -15,7 +15,7 @@ import org.apache.struts.action.ActionMapping;
 
 import org.springframework.web.struts.DispatchActionSupport;
 import org.json.*;
-import org.jpage.util.JSONTools;
+ 
 
 import com.glaf.base.modules.sys.model.*;
 import com.glaf.base.security.*;
@@ -273,7 +273,7 @@ public class ${entityName}BaseAction extends DispatchActionSupport {
 		String x_query = request.getParameter("x_query");
 		if (StringUtils.equals(x_query, "true")) {
 			Map<String, Object> paramMap = RequestUtil.getParameterMap(request);
-			String x_complex_query = JSONTools.encode(paramMap);
+			String x_complex_query = JsonUtils.encode(paramMap);
 			x_complex_query = RequestUtil.encodeString(x_complex_query);
 			request.setAttribute("x_complex_query", x_complex_query);
 		} else {

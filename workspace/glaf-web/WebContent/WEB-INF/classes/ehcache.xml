@@ -46,8 +46,15 @@
 		memoryStoreEvictionPolicy="LRU"
 		/>
 
+    <cache name="DEFAULT_CACHE"
+		maxElementsInMemory="10000"
+		eternal="false"
+		timeToIdleSeconds="300000"
+		timeToLiveSeconds="600000"
+		overflowToDisk="true"
+		/>
  
-	<cache name="DEFAULT_CACHE"
+	<cache name="GLAF_CACHE"
 		maxElementsInMemory="10000"
 		eternal="false"
 		timeToIdleSeconds="300000"

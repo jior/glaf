@@ -13,7 +13,8 @@
 
 package com.glaf.base.id;
 
-import org.jpage.util.UUID32;
+import com.glaf.base.utils.UUID32;
+ 
 
 public class UUID32IdGenerator implements IdGenerator {
 

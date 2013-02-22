@@ -27,8 +27,8 @@ import org.jbpm.JbpmConfiguration;
 import org.jbpm.JbpmContext;
 import org.jpage.jbpm.context.Context;
 import org.jpage.jbpm.model.TaskItem;
-import org.jpage.jbpm.service.ProcessContainer;
-import org.jpage.util.DateTools;
+import org.jpage.jbpm.container.ProcessContainer;
+ 
 
 import com.glaf.base.modules.others.service.WorkCalendarService;
 import com.glaf.base.modules.sys.model.SysDepartment;
@@ -36,6 +36,7 @@ import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.sys.service.SysUserService;
 import com.glaf.base.modules.todo.model.ToDo;
 import com.glaf.base.modules.todo.model.ToDoInstance;
+import com.glaf.base.utils.DateTools;
 
 public class TodoJobBean {
 	private final static Log logger = LogFactory.getLog(TodoJobBean.class);
@@ -56,16 +57,16 @@ public class TodoJobBean {
 		todoService.create(todo);
 	}
 
-	public void createTasks(Collection processInstanceIds) {
+	public void createTasks(List processInstanceIds) {
 		List tasks = this.getJbpmTasksByProcessInstanceIds(processInstanceIds);
 		todoService.createTasks(processInstanceIds, tasks);
 		logger.info("流程 " + processInstanceIds + " 的任务已经更新,现在有任务:"
 				+ tasks.size());
 	}
 
-	public void createTasks(String processInstanceId) {
+	public void createTasks(Long processInstanceId) {
 		List tasks = this.getJbpmTasksByProcessInstanceId(processInstanceId);
-		todoService.createTasks(processInstanceId, tasks);
+		//todoService.createTasks(processInstanceId, tasks);
 		logger.info("流程 " + processInstanceId + " 的任务已经更新,现在有任务:"
 				+ tasks.size());
 	}
@@ -243,7 +244,7 @@ public class TodoJobBean {
 		return rows;
 	}
 
-	public List getJbpmTasksByProcessInstanceId(String processInstanceId) {
+	public List getJbpmTasksByProcessInstanceId(Long processInstanceId) {
 		List rows = new ArrayList();
 		List taskItems = ProcessContainer.getContainer()
 				.getTaskItemsByProcessInstanceId(processInstanceId);
@@ -253,7 +254,7 @@ public class TodoJobBean {
 		return rows;
 	}
 
-	public List getJbpmTasksByProcessInstanceIds(Collection processInstanceIds) {
+	public List getJbpmTasksByProcessInstanceIds(List processInstanceIds) {
 		List rows = new ArrayList();
 		List taskItems = ProcessContainer.getContainer()
 				.getTaskItemsByProcessInstanceIds(processInstanceIds);
@@ -436,7 +437,7 @@ public class TodoJobBean {
 								+ " where processinstanceid = ? ";
 						java.sql.PreparedStatement psmt = con
 								.prepareStatement(sql);
-						psmt.setString(1, taskItem.getProcessInstanceId());
+						psmt.setLong(1, taskItem.getProcessInstanceId());
 						java.sql.ResultSet rs = psmt.executeQuery();
 						if (rs.next()) {
 							exist = true;
@@ -469,7 +470,7 @@ public class TodoJobBean {
 					model.setDeptId(user.getDepartment().getId());
 					model.setDeptName(user.getDepartment().getName());
 					model.setCreateDate(new Date(System.currentTimeMillis()));
-					model.setStartDate(taskItem.getTaskCreateDate());
+					model.setStartDate(taskItem.getCreateDate());
 					int limitDay = todo.getLimitDay();
 					int ahour = todo.getXa();
 					int bhour = todo.getXb();
@@ -482,18 +483,18 @@ public class TodoJobBean {
 					Date pastDueDate = new Date(time + bhour * DateTools.HOUR);
 					model.setAlarmDate(cautionDate);
 					model.setPastDueDate(pastDueDate);
-					model.setProcessInstanceId(taskItem.getProcessInstanceId());
-					model.setTaskInstanceId(taskItem.getTaskInstanceId());
-					model.setRowId(taskItem.getBusinessValue());
+					model.setProcessInstanceId(String.valueOf(taskItem.getProcessInstanceId()));
+					model.setTaskInstanceId(String.valueOf(taskItem.getTaskInstanceId()));
+					model.setRowId(taskItem.getRowId());
 					model.setVersionNo(System.currentTimeMillis());
 					String content = todo.getContent();
 					if (StringUtils.isNotEmpty(taskItem.getTaskDescription())) {
 						content = content + taskItem.getTaskDescription();
 						model.setContent(content);
 					} else {
-						if (StringUtils.isNotEmpty(taskItem.getBusinessValue())) {
+						if (StringUtils.isNotEmpty(taskItem.getRowId())) {
 							content = content + " 单据编号（"
-									+ taskItem.getBusinessValue() + "）";
+									+ taskItem.getRowId() + "）";
 							model.setContent(content);
 						}
 					}

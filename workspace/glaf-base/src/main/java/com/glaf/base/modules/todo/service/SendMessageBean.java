@@ -23,14 +23,15 @@ import java.util.*;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.jpage.core.mail.service.MailMessage;
+ 
+import org.jpage.core.context.ContextFactory;
+import org.jpage.core.mail.MailMessage;
+import org.jpage.core.mail.MailSender;
 import org.jpage.core.mail.util.MailTools;
-import org.jpage.jbpm.context.JbpmContextFactory;
-import org.jpage.jbpm.mail.MailSender;
+ 
 
-import org.jpage.jbpm.service.ProcessContainer;
-import org.jpage.util.DateTools;
-import org.jpage.util.UUID32;
+import org.jpage.jbpm.container.ProcessContainer;
+ 
 
 import com.glaf.base.modules.sys.model.SysApplication;
 import com.glaf.base.modules.sys.model.SysDepartment;
@@ -44,6 +45,8 @@ import com.glaf.base.modules.todo.TodoConstants;
 import com.glaf.base.modules.todo.model.ToDo;
 import com.glaf.base.modules.todo.model.ToDoInstance;
 import com.glaf.base.modules.workspace.model.Message;
+import com.glaf.base.utils.DateTools;
+import com.glaf.base.utils.UUID32;
 
 public class SendMessageBean {
 	private final static Log logger = LogFactory.getLog(SendMessageBean.class);
@@ -125,13 +128,13 @@ public class SendMessageBean {
 		Collection rows99 = new ArrayList();
 
 		if (appXIds.size() > 0) {
-			Collection actorIds = new HashSet();
+			List actorIds = new ArrayList();
 			actorIds.add(actorId);
 			if (agentIds != null && agentIds.size() > 0) {
 				actorIds.addAll(agentIds);
 			}
 			Map params = new HashMap();
-			Collection taskInstanceIds = ProcessContainer.getContainer()
+			List taskInstanceIds = ProcessContainer.getContainer()
 					.getRunningTaskInstanceIds(actorIds);
 			if (taskInstanceIds != null && taskInstanceIds.size() > 0) {
 				params.put("taskInstanceIds", taskInstanceIds);
@@ -442,7 +445,7 @@ public class SendMessageBean {
 						rows99.add(tdi);
 					} else {
 						// System.out.println(actorId+"---"+tdi.getActorId()+"---"+processName);
-						Collection agentList = ProcessContainer.getContainer()
+						List agentList = ProcessContainer.getContainer()
 								.getAgentIds(actorId, processName);
 						if (null != agentList && agentList.size() > 0) {// 判断代理是否有该流程代理，有则add
 							rows99.add(tdi);
@@ -651,7 +654,7 @@ public class SendMessageBean {
 
 		logger.info("user name:" + user.getName());
 
-		Collection agentIds = ProcessContainer.getContainer().getAgentIds(
+		List<String> agentIds = ProcessContainer.getContainer().getAgentIds(
 				actorId);
 
 		Collection appXIds = new HashSet();
@@ -703,14 +706,13 @@ public class SendMessageBean {
 		Collection rows99 = new ArrayList();
 
 		if (appXIds.size() > 0) {
-
-			Collection actorIds = new HashSet();
+			List actorIds = new ArrayList();
 			actorIds.add(actorId);
 			if (agentIds != null && agentIds.size() > 0) {
 				actorIds.addAll(agentIds);
 			}
 			Map params = new HashMap();
-			Collection taskInstanceIds = ProcessContainer.getContainer()
+			List taskInstanceIds = ProcessContainer.getContainer()
 					.getRunningTaskInstanceIds(actorIds);
 			if (taskInstanceIds != null && taskInstanceIds.size() > 0) {
 				params.put("taskInstanceIds", taskInstanceIds);
@@ -919,7 +921,7 @@ public class SendMessageBean {
 					mailMessage.setMessageId(UUID32.getUUID());
 					mailMessage.setSubject(subject);
 					try {
-						MailSender mailSender = (MailSender) JbpmContextFactory
+						MailSender mailSender = (MailSender)  ContextFactory
 								.getBean("velocityMailSender");
 						mailSender.send(mailMessage);
 					} catch (Exception ex) {
@@ -964,7 +966,7 @@ public class SendMessageBean {
 								mailMessage.setMessageId(UUID32.getUUID());
 								mailMessage.setSubject(subject);
 								try {
-									MailSender mailSender = (MailSender) JbpmContextFactory
+									MailSender mailSender = (MailSender)  ContextFactory
 											.getBean("velocityMailSender");
 									mailSender.send(mailMessage);
 								} catch (Exception ex) {
@@ -1214,7 +1216,7 @@ public class SendMessageBean {
 						mailMessage.setSubject(subject);
 
 						try {
-							MailSender mailSender = (MailSender) JbpmContextFactory
+							MailSender mailSender = (MailSender)  ContextFactory
 									.getBean("velocityMailSender");
 							// mailSender.send(mailMessage);
 						} catch (Exception ex) {
@@ -1238,7 +1240,7 @@ public class SendMessageBean {
 					mailMessage.setMessageId(messageId);
 					mailMessage.setSubject(subject);
 					try {
-						MailSender mailSender = (MailSender) JbpmContextFactory
+						MailSender mailSender = (MailSender)  ContextFactory
 								.getBean("velocityMailSender");
 						mailSender.send(mailMessage);
 					} catch (Exception ex) {

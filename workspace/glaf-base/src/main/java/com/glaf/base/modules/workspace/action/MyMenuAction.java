@@ -40,6 +40,8 @@ import com.glaf.base.modules.workspace.service.MyMenuService;
 import com.glaf.base.utils.PageResult;
 import com.glaf.base.utils.ParamUtil;
 import com.glaf.base.utils.RequestUtil;
+import com.glaf.base.utils.StringTools;
+ 
 
 public class MyMenuAction extends DispatchActionSupport {
 	private static final Log logger = LogFactory.getLog(MyMenuAction.class);
@@ -135,7 +137,7 @@ public class MyMenuAction extends DispatchActionSupport {
 		// System.out.println(url);
 		String contextPath = request.getContextPath();
 		if (url != null && url.startsWith(contextPath)) {
-			url = org.jpage.util.Tools.replaceIgnoreCase(url, contextPath, "");
+			url =  StringTools.replaceIgnoreCase(url, contextPath, "");
 		}
 
 		bean.setTitle(formBean.getTitle());

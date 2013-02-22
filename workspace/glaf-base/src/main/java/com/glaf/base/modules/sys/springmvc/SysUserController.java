@@ -36,7 +36,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import org.jpage.util.DigestUtil;
+ 
 
 import com.glaf.base.modules.Constants;
 import com.glaf.base.modules.sys.model.SysDepartment;
@@ -52,6 +52,7 @@ import com.glaf.base.modules.sys.service.SysUserService;
 import com.glaf.base.res.MessageUtils;
 import com.glaf.base.res.ViewMessage;
 import com.glaf.base.res.ViewMessages;
+import com.glaf.base.security.DigestUtil;
 import com.glaf.base.utils.PageResult;
 import com.glaf.base.utils.ParamUtil;
 import com.glaf.base.utils.RequestUtil;

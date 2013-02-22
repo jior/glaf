@@ -40,10 +40,11 @@ import org.hibernate.criterion.Projection;
 import org.hibernate.criterion.Projections;
 import org.hibernate.impl.CriteriaImpl;
 import org.hibernate.type.Type;
-import org.jpage.util.DateTools;
+ 
 import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
+import com.glaf.base.utils.DateTools;
 import com.glaf.base.utils.PageResult;
 import com.glaf.base.utils.MyBeanUtils;
 

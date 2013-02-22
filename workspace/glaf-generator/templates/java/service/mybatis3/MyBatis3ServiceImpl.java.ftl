@@ -65,25 +65,16 @@ public class ${entityName}ServiceImpl implements ${entityName}Service {
 		return list;
 	}
 
-         /**
-	 * 根据查询参数获取记录总数
-	 * 
-	 * @return
-	 */
+         
 	public int get${entityName}CountByQueryCriteria(${entityName}Query query) {
 		return ${modelName}Mapper.get${entityName}Count(query);
 	}
 
-	/**
-	 * 根据查询参数获取一页的数据
-	 * 
-	 * @return
-	 */
-	@SuppressWarnings("unchecked")
+	 
 	public List<${entityName}> get${entityName}sByQueryCriteria(int start, int pageSize,
 			${entityName}Query query) {
 		RowBounds rowBounds = new RowBounds(start, pageSize);
-		List<${entityName}> rows = (List<${entityName}>) sqlSessionTemplate.selectList(
+		List<${entityName}> rows = sqlSessionTemplate.selectList(
 				"get${entityName}s", query, rowBounds);
 		return rows;
 	}

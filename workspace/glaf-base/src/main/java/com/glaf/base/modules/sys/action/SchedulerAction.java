@@ -33,8 +33,7 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-
-import org.jpage.util.Tools;
+ 
 import org.springframework.web.struts.DispatchActionSupport;
  
 import com.glaf.base.modules.sys.actionform.SchedulerForm;
@@ -79,7 +78,7 @@ public class SchedulerAction extends DispatchActionSupport {
 			throws Exception {
 		Scheduler scheduler = new Scheduler();
 		SchedulerForm schedulerForm = (SchedulerForm) form;
-		Map params = Tools.getParameterMap(request);
+		Map params =RequestUtil.getParameterMap(request);
 		logger.debug(params);
 		PropertyUtils.copyProperties(scheduler, schedulerForm);
 		Date startDate = ParamUtil.getDate(params, "startDate");

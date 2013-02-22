@@ -7,8 +7,9 @@ import javax.persistence.*;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import org.json.*;
-import org.jpage.util.DateTools;
+
 import com.glaf.base.api.*;
+import com.glaf.base.utils.DateTools;
 
 @Entity
 @Table(name = "${tableName}")

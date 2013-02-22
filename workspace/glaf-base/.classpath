@@ -54,10 +54,7 @@
 	<classpathentry kind="lib" path="lib/mail.jar"/>
 	<classpathentry kind="lib" path="lib/mvel2-2.1.0.jar"/>
 	<classpathentry kind="lib" path="lib/mybatis-2.3.5.jar"/>
-	<classpathentry kind="lib" path="lib/mybatis-3.0.6.jar"/>
-	<classpathentry kind="lib" path="lib/mybatis-spring-1.0.2.jar"/>
 	<classpathentry kind="lib" path="lib/ognl-2.7.3.jar"/>
-	<classpathentry kind="lib" path="lib/quartz-all-1.8.5.jar"/>
 	<classpathentry kind="lib" path="lib/servlet-api.jar"/>
 	<classpathentry kind="lib" path="lib/slf4j-api-1.6.1.jar"/>
 	<classpathentry kind="lib" path="lib/slf4j-log4j12-1.6.1.jar"/>
@@ -115,6 +112,9 @@
 	<classpathentry kind="lib" path="lib/commons-net-3.2.jar"/>
 	<classpathentry kind="lib" path="lib/commons-validator-1.4.0.jar"/>
 	<classpathentry kind="lib" path="lib/postgresql-9.1-902.jdbc4.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/glaf-jbpm"/>
+	<classpathentry kind="lib" path="lib/mybatis-3.1.1.jar"/>
+	<classpathentry kind="lib" path="lib/mybatis-spring-1.1.1.jar"/>
+	<classpathentry kind="lib" path="lib/quartz-all-2.1.6.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/glaf-bpm"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

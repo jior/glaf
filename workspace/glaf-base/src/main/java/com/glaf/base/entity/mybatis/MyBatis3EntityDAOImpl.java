@@ -27,13 +27,14 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import org.apache.ibatis.session.SqlSession;
-import org.jpage.util.Tools;
+ 
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 
 import com.glaf.base.entity.EntityDAO;
 import com.glaf.base.id.Dbid;
 import com.glaf.base.id.IdBlock;
 import com.glaf.base.utils.ClassUtil;
+import com.glaf.base.utils.Tools;
 
 public class MyBatis3EntityDAOImpl extends SqlSessionDaoSupport implements
 		EntityDAO {

@@ -20,7 +20,7 @@ package com.glaf.base.test;
 
 import java.io.IOException;
 
-import org.jpage.util.FileTools;
+ 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.junit.Test;
@@ -28,6 +28,7 @@ import org.junit.Test;
 import com.glaf.base.business.ApplicationBean;
 import com.glaf.base.modules.sys.service.SysApplicationService;
 import com.glaf.base.modules.sys.service.SysUserService;
+import com.glaf.base.utils.FileTools;
 
 public class UserTest extends AbstractTest {
 

@@ -35,7 +35,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import org.jpage.util.Tools;
+ 
 
 import com.glaf.base.modules.sys.form.SchedulerFormBean;
 import com.glaf.base.modules.sys.model.Scheduler;
@@ -86,7 +86,7 @@ public class SchedulerController {
 		RequestUtil.setRequestParameterToAttribute(request);
 		Scheduler scheduler = new Scheduler();
 
-		Map params = Tools.getParameterMap(request);
+		Map params = RequestUtil.getParameterMap(request);
 		logger.debug(params);
 		try {
 			PropertyUtils.copyProperties(scheduler, schedulerForm);

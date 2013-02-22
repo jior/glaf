@@ -82,6 +82,41 @@ public class DateTools {
 
 		return calendar1.before(calendar2);
 	}
+	
+	  /**
+     * 获取年月日,格式20060520
+     *
+     * @return
+     */
+    public static int getNowYearMonthDay() {
+        Date date = new Date(System.currentTimeMillis());
+        return getYearMonthDay(date);
+    }
+    
+    public static int getYearMonthDay(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        int month = calendar.get(Calendar.MONTH) + 1;
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int year = calendar.get(Calendar.YEAR);
+        String monthStr = null;
+        String dayStr = null;
+        String yearStr = null;
+        
+        if (month < 10) {
+            monthStr = "0" + month;
+        } else {
+            monthStr = "" + month;
+        }
+        if (day < 10) {
+            dayStr = "0" + day;
+        } else {
+            dayStr = "" + day;
+        }
+        yearStr = "" + year;
+        String totay = yearStr + monthStr + dayStr;
+        return Integer.parseInt(totay);
+    }
 
 	/**
 	 * 
@@ -274,12 +309,7 @@ public class DateTools {
 		return getWorkingDay(cal1, cal2);
 	}
 
-	public static int getYearMonthDay(Date date) {
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd",
-				Locale.getDefault());
-		String ret = formatter.format(date);
-		return Integer.parseInt(ret);
-	}
+ 
 
 	public static void main(String[] args) {
 		System.out.println(DateTools.getDate(new Date()));

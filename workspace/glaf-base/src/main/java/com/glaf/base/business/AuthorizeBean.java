@@ -25,10 +25,11 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.jpage.core.cache.CacheFactory;
+ 
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.glaf.base.cache.CacheFactory;
 import com.glaf.base.callback.CallbackProperties;
 import com.glaf.base.callback.LoginCallback;
 import com.glaf.base.context.ContextFactory;

@@ -13,18 +13,24 @@
 
 package com.glaf.base.utils;
 
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.quartz.CronScheduleBuilder;
 import org.quartz.CronTrigger;
 import org.quartz.Job;
+import org.quartz.JobBuilder;
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
+import org.quartz.JobKey;
+import org.quartz.SimpleScheduleBuilder;
 import org.quartz.SimpleTrigger;
+import org.quartz.Trigger;
+import org.quartz.TriggerBuilder;
+import org.quartz.TriggerKey;
 
 import com.glaf.base.context.*;
 import com.glaf.base.modules.sys.model.*;
@@ -82,71 +88,139 @@ public class QuartzUtils {
 					Class<Job> jobClass = (Class<Job>) clazz;
 
 					String jobName = "JOB_" + model.getId();
-					String jobGroup = "JOB_GROUP";
+					String jobGroup = "MX_JOB_GROUP";
 					String triggerName = "TRIGGER_" + model.getId();
-					String triggerGroup = "TRIGGER_GROUP";
+					String triggerGroup = "MX_TRIGGER_GROUP";
 
-					if (StringUtils.isNotEmpty(model.getExpression())) {
-						jobGroup = "CRON_GROUP_" + model.getId();
-						jobName = "CRON_JOB_" + model.getId();
-						triggerName = "CRON_TRIGGER_" + model.getId();
-						triggerGroup = "CRON_GROUP";
-					}
+					JobKey jobKey = JobKey.jobKey(jobName, jobGroup);
+					TriggerKey triggerKey = TriggerKey.triggerKey(triggerName,
+							triggerGroup);
 
-					JobDetail jobDetail = new JobDetail();
-					jobDetail.setJobClass(jobClass);
-					jobDetail.setJobDataMap(jobDataMap);
-					jobDetail.setName(jobName);
-					jobDetail.setGroup(jobGroup);
+					JobDetail jobDetail = JobBuilder.newJob(jobClass)
+							.withIdentity(jobKey).usingJobData(jobDataMap)
+							.build();
 
+					Trigger trigger = null;
 					boolean startup = false;
 
 					if (StringUtils.isNotEmpty(model.getExpression())) {
-						CronTrigger trigger = new CronTrigger(triggerName,
-								triggerGroup, jobName, jobGroup,
-								model.getExpression());
-						logger.debug("------------create new CronTrigger----------- ");
-						getQuartzScheduler().addJob(jobDetail, true);
-						Date ft = getQuartzScheduler().scheduleJob(trigger);
-						logger.info(jobDetail.getFullName()
-								+ " has been scheduled to run at: "
-								+ DateTools.getDateTime(ft)
-								+ " and repeat based on expression: "
-								+ trigger.getCronExpression());
-						startup = true;
-						logger.info(model.getTaskName() + " has scheduled.");
-						if (startup) {
-							model.setStartup(1);
-							getSchedulerService().save(model);
-							logger.info(model.getTaskName() + " has startup.");
+						trigger = getQuartzScheduler().getTrigger(triggerKey);
+						if (trigger == null) {
+							logger.debug("------------create new CronTrigger----------- ");
+							trigger = TriggerBuilder
+									.newTrigger()
+									.withIdentity(triggerKey)
+									.forJob(jobKey)
+									.withSchedule(
+											CronScheduleBuilder
+													.cronSchedule(model
+															.getExpression()))
+									.build();
+
+							getQuartzScheduler()
+									.scheduleJob(jobDetail, trigger);
+							startup = true;
+							logger.info(model.getTaskName() + " has scheduled.");
+							if (startup) {
+								model.setStartup(1);
+								schedulerService.save(model);
+								logger.info(model.getTaskName()
+										+ " has startup.");
+							}
+						} else {
+							if (trigger instanceof CronTrigger) {
+								logger.debug("------------update CronTrigger------------- ");
+								CronTrigger cronTrigger = (CronTrigger) trigger;
+								cronTrigger = cronTrigger
+										.getTriggerBuilder()
+										.withSchedule(
+												CronScheduleBuilder.cronSchedule(model
+														.getExpression()))
+										.build();
+
+								getQuartzScheduler().rescheduleJob(triggerKey,
+										cronTrigger);
+								startup = true;
+								logger.info(model.getTaskName()
+										+ " has rescheduled.");
+								if (startup) {
+									model.setStartup(1);
+									schedulerService.save(model);
+									logger.info(model.getTaskName()
+											+ " has startup.");
+								}
+							}
 						}
 					} else {
-						logger.debug("------------create new SimpleTrigger----------- ");
-						if (model.getRepeatCount() == -1) {
-							model.setRepeatCount(Integer.MAX_VALUE);
-						}
-						SimpleTrigger trigger = new SimpleTrigger(triggerName,
-								triggerGroup, jobName, jobGroup,
-								model.getStartDate(), model.getEndDate(),
-								model.getRepeatCount(),
-								model.getRepeatInterval() * 1000);
+						trigger = getQuartzScheduler().getTrigger(triggerKey);
+						if (trigger == null) {
+							logger.debug("------------create new SimpleTrigger----------- ");
+							if (model.getRepeatCount() == -1) {
+								model.setRepeatCount(Integer.MAX_VALUE);
+							}
+							trigger = TriggerBuilder
+									.newTrigger()
+									.startAt(model.getStartDate())
+									.endAt(model.getEndDate())
+									.forJob(jobKey)
+									.withIdentity(triggerKey)
+									.withSchedule(
+											SimpleScheduleBuilder
+													.simpleSchedule()
+													.withIntervalInSeconds(
+															model.getRepeatInterval())
+													.withRepeatCount(
+															model.getRepeatCount()))
+									.build();
 
-						getQuartzScheduler().addJob(jobDetail, true);
-						Date ft = getQuartzScheduler().scheduleJob(trigger);
-						logger.info(jobDetail.getFullName()
-								+ " has been scheduled to run at: "
-								+ DateTools.getDateTime(ft)
-								+ " and repeat interval: "
-								+ trigger.getRepeatInterval());
-						startup = true;
-						logger.debug("repeatInterval:"
-								+ model.getRepeatInterval());
-						logger.debug(model.getTaskName() + " has scheduled.");
-						if (startup) {
-							model.setStartup(1);
-							getSchedulerService().save(model);
-							logger.info(model.getTaskName() + " has startup.");
+							getQuartzScheduler()
+									.scheduleJob(jobDetail, trigger);
+							startup = true;
+							logger.debug("repeatInterval:"
+									+ model.getRepeatInterval());
+							logger.debug(model.getTaskName()
+									+ " has scheduled.");
+							if (startup) {
+								model.setStartup(1);
+								getSchedulerService().save(model);
+								logger.info(model.getTaskName()
+										+ " has startup.");
+							}
+						} else {
+							if (trigger instanceof SimpleTrigger) {
+								logger.debug("------------update SimpleTrigger----------- ");
+								SimpleTrigger simpleTrigger = (SimpleTrigger) trigger;
+								if (model.getRepeatCount() == -1) {
+									model.setRepeatCount(Integer.MAX_VALUE);
+								}
+								simpleTrigger = simpleTrigger
+										.getTriggerBuilder()
+										.startAt(model.getStartDate())
+										.endAt(model.getEndDate())
+										.forJob(jobKey)
+										.withIdentity(triggerKey)
+										.withSchedule(
+												SimpleScheduleBuilder
+														.simpleSchedule()
+														.withIntervalInSeconds(
+																model.getRepeatInterval())
+														.withRepeatCount(
+																model.getRepeatCount()))
+										.build();
+								getQuartzScheduler().rescheduleJob(triggerKey,
+										simpleTrigger);
+								startup = true;
+								logger.info(model.getTaskName()
+										+ " has rescheduled.");
+								if (startup) {
+									model.setStartup(1);
+									getSchedulerService().save(model);
+									logger.info(model.getTaskName()
+											+ " has startup.");
+								}
+							}
 						}
+
 					}
 				}
 			} catch (org.quartz.SchedulerException ex) {
@@ -157,6 +231,14 @@ public class QuartzUtils {
 				throw new RuntimeException(ex);
 			}
 		}
+	}
+
+	public static void setScheduler(org.quartz.Scheduler scheduler) {
+		QuartzUtils.scheduler = scheduler;
+	}
+
+	public static void setSchedulerService(SchedulerService schedulerService) {
+		QuartzUtils.schedulerService = schedulerService;
 	}
 
 	/**
@@ -170,6 +252,7 @@ public class QuartzUtils {
 			try {
 				stop(model.getId());
 			} catch (Exception ex) {
+				ex.printStackTrace();
 				logger.error(ex);
 			}
 		}
@@ -180,6 +263,7 @@ public class QuartzUtils {
 				getQuartzScheduler().shutdown(false);
 			}
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			logger.error(ex);
 		}
 	}
@@ -197,6 +281,7 @@ public class QuartzUtils {
 					try {
 						restart(model.getId());
 					} catch (Exception ex) {
+						ex.printStackTrace();
 						logger.error(ex);
 					}
 				}
@@ -215,25 +300,21 @@ public class QuartzUtils {
 			try {
 				if (getQuartzScheduler() != null) {
 					String jobName = "JOB_" + model.getId();
-					String jobGroup = "JOB_GROUP";
+					String jobGroup = "MX_JOB_GROUP";
 					String triggerName = "TRIGGER_" + model.getId();
-					String triggerGroup = "TRIGGER_GROUP";
+					String triggerGroup = "MX_TRIGGER_GROUP";
 
-					if (StringUtils.isNotEmpty(model.getExpression())) {
-						jobGroup = "CRON_GROUP_" + model.getId();
-						jobName = "CRON_JOB_" + model.getId();
-						triggerName = "CRON_TRIGGER_" + model.getId();
-						triggerGroup = "CRON_GROUP";
-					}
-
-					getQuartzScheduler().unscheduleJob(triggerName,
+					JobKey jobKey = JobKey.jobKey(jobName, jobGroup);
+					TriggerKey triggerKey = TriggerKey.triggerKey(triggerName,
 							triggerGroup);
-					getQuartzScheduler().pauseJob(jobName, jobGroup);
+					getQuartzScheduler().unscheduleJob(triggerKey);
+					getQuartzScheduler().pauseJob(jobKey);
 					model.setStartup(0);
-					getSchedulerService().save(model);
+					schedulerService.save(model);
 					logger.info(model.getTaskName() + " has stop.");
 				}
 			} catch (org.quartz.SchedulerException ex) {
+				ex.printStackTrace();
 				throw new RuntimeException(ex);
 			}
 		}
@@ -250,6 +331,7 @@ public class QuartzUtils {
 			try {
 				stop(model.getId());
 			} catch (Exception ex) {
+				ex.printStackTrace();
 				logger.error(ex);
 			}
 		}

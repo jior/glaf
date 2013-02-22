@@ -14,9 +14,6 @@
 		<fileset dir="${lib.dir}">
 			<include name="*.jar" />
 		</fileset>
-		<fileset dir="../jpage-jbpm">
-			<include name="*.jar" />
-		</fileset>
 	</path>
 
 	<!-- 准备任务 -->

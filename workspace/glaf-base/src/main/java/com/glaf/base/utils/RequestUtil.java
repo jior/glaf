@@ -43,12 +43,10 @@ import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.jpage.util.DateTools;
 
 import com.glaf.base.business.AuthorizeBean;
 import com.glaf.base.modules.sys.SysConstants;
 import com.glaf.base.modules.sys.model.SysUser;
- 
 
 public class RequestUtil {
 	protected final static Log logger = LogFactory.getLog(RequestUtil.class);
@@ -692,18 +690,7 @@ public class RequestUtil {
 
 		request.getSession().setAttribute(SysConstants.MENU, menus);
 
-		org.jpage.actor.User user = new org.jpage.actor.User();
-		user.setActorId(bean.getAccount().toLowerCase());
-		user.setActorType(0);
-		user.setMail(bean.getEmail());
-		user.setMobile(bean.getMobile());
-		if (bean.isSystemAdmin()) {
-			user.setAdmin(true);
-		}
-
-		session.setAttribute(org.jpage.util.Constant.LOGIN_USER, user);
-		session.setAttribute(org.jpage.util.Constant.LOGIN_USER_USERNAME,
-				user.getActorId());
+		session.setAttribute("LOGIN_ACTORID", bean.getAccount());
 
 	}
 
