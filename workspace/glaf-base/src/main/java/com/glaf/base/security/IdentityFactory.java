@@ -68,6 +68,18 @@ public class IdentityFactory {
 	}
 
 	/**
+	 * 获取委托人编号集合
+	 * 
+	 * @param assignTo
+	 *            受托人编号
+	 * @return
+	 */
+	public static List<String> getAgentIds(String assignTo) {
+		List<String> agentIds = new ArrayList<String>();
+		return agentIds;
+	}
+
+	/**
 	 * 获取某个部门及所有下级部门的某个角色的用户
 	 * 
 	 * @param deptId

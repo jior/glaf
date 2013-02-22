@@ -29,9 +29,19 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
 public class PropertiesTools {
+	
+	public final static InputStream getInputStream(String resourceName) {
+		try {
+			Resource resource = new ClassPathResource(resourceName);
+			return resource.getInputStream();
+		} catch (Exception ex) {
+			throw new RuntimeException(ex);
+		}
+	}
 
 	public static void save(Resource resource, Map<String, Object> dataMap)
 			throws IOException {
