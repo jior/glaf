@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.core.mapper.SchedulerParamMapper">
+
+	<resultMap id="schedulerParamResultMap" type="com.glaf.core.domain.SchedulerParam">
+		<id property="id" column="id" jdbcType="VARCHAR" />
+		<result property="taskId" column="taskId" jdbcType="VARCHAR"/>
+		<result property="typeCd" column="type_cd" jdbcType="VARCHAR"/>
+		<result property="keyName" column="key_name" jdbcType="VARCHAR"/>
+		<result property="title" column="title" jdbcType="VARCHAR" />
+		<result property="stringVal" column="string_val" jdbcType="VARCHAR"/>
+		<result property="textVal" column="text_val" jdbcType="VARCHAR"/>
+		<result property="dateVal" column="date_val" jdbcType="TIMESTAMP"/>
+		<result property="intVal" column="int_val" jdbcType="INTEGER"/>
+		<result property="longVal" column="long_val" jdbcType="BIGINT"/>
+		<result property="doubleVal" column="double_val" jdbcType="DOUBLE"/>
+	</resultMap>
+
+ 
+	<insert id="insertSchedulerParam" parameterType="com.glaf.core.domain.SchedulerParam">
+		insert into MX_SYS_SCHEDULER_PARAMS 
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			id, taskId, type_cd, key_name, title 
+			<if test="stringVal != null">
+				,string_val 
+			</if>
+			<if test="textVal != null">
+				,text_val 
+			</if>
+			<if test="dateVal != null">
+				,date_val 
+			</if>
+			<if test="intVal != null">
+				,int_val 
+			</if>
+			<if test="longVal != null">
+				,long_val 
+			</if>
+			<if test="doubleVal != null">
+				,double_val 
+			</if>
+		</trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			    #{id, jdbcType=VARCHAR},
+				#{taskId, jdbcType=VARCHAR},
+				#{typeCd, jdbcType=VARCHAR},
+				#{keyName, jdbcType=VARCHAR},
+				#{title, jdbcType=VARCHAR}
+			<if test="stringVal != null">
+				,#{stringVal, jdbcType=VARCHAR}
+			</if>
+			<if test="textVal != null">
+				,#{textVal, jdbcType=VARCHAR}
+			</if>
+			<if test="dateVal != null">
+				,#{dateVal, jdbcType=TIMESTAMP}
+			</if>
+			<if test="intVal != null">
+				,#{intVal, jdbcType=INTEGER}
+			</if>
+			<if test="longVal != null">
+				,#{longVal, jdbcType=BIGINT}
+			</if>
+			<if test="doubleVal != null">
+				,#{doubleVal, jdbcType=DOUBLE}
+			</if>
+		</trim>
+	</insert>
+
+ 
+	<delete id="deleteSchedulerParamsByTaskId" parameterType="string"> 
+        delete from MX_SYS_SCHEDULER_PARAMS
+        where taskId = #{taskId}
+	</delete>
+
+
+	<select id="getSchedulerParamsByTaskId" parameterType="string" resultMap="schedulerParamResultMap">
+		select * from MX_SYS_SCHEDULER_PARAMS 
+		where taskId = #{taskId}
+	</select>
+
+</mapper>

@@ -1,0 +1,650 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.jbpm.persistence.JbpmPersistence">
+
+	<resultMap id="jbpmProcessDefinitionResultMap" type="org.jbpm.graph.def.ProcessDefinition">
+		<id property="id" column="ID_" jdbcType="BIGINT" />
+		<result property="name" column="NAME_" jdbcType="VARCHAR" />
+		<result property="description" column="DESCRIPTION_" jdbcType="VARCHAR" />
+		<result property="version" column="VERSION_" jdbcType="INTEGER" />
+	</resultMap>
+
+	<resultMap id="jbpmTaskDefResultMap" type="org.jbpm.taskmgmt.def.Task">
+		<id property="id" column="ID_" jdbcType="BIGINT" />
+		<result property="name" column="NAME_" jdbcType="VARCHAR" />
+		<result property="description" column="DESCRIPTION_" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<resultMap id="jbpmTaskResultMap" type="com.glaf.jbpm.model.TaskItem">
+		<id property="taskInstanceId" column="ID_" jdbcType="BIGINT" />
+		<result property="processInstanceId" column="PROCINST_"
+			jdbcType="BIGINT" />
+		<result property="taskName" column="NAME_" jdbcType="VARCHAR" />
+		<result property="taskDescription" column="DESCRIPTION_"
+			jdbcType="VARCHAR" />
+		<result property="createDate" column="CREATE_" jdbcType="TIMESTAMP" />
+		<result property="startDate" column="START_" jdbcType="TIMESTAMP" />
+		<result property="endDate" column="END_" jdbcType="TIMESTAMP" />
+		<result property="actorId" column="ACTORID_" jdbcType="VARCHAR" />
+		<result property="rowKey" column="KEY_" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<select id="findLatestProcessDefinitions" parameterType="com.glaf.jbpm.query.ProcessQuery"
+		resultMap="jbpmProcessDefinitionResultMap">
+		SELECT ID_, NAME_, DESCRIPTION_, VERSION_
+		FROM
+		JBPM_PROCESSDEFINITION
+		ORDER BY ID_ DESC
+	</select>
+
+	<select id="findTasksByProcessDefinition" parameterType="com.glaf.jbpm.query.ProcessQuery"
+		resultMap="jbpmTaskDefResultMap">
+		SELECT ID_, NAME_, DESCRIPTION_
+		FROM JBPM_TASK
+		WHERE
+		PROCESSDEFINITION_ = #{processDefinitionId}
+		ORDER BY ID_ DESC
+	</select>
+
+
+	<select id="getTaskItems" parameterType="com.glaf.jbpm.query.ProcessQuery"
+		resultMap="jbpmTaskResultMap">
+
+		SELECT a.ID_, a.PROCINST_,
+		a.NAME_, a.DESCRIPTION_, a.CREATE_,
+		a.START_, a.END_, a.ACTORID_, y.KEY_
+		FROM JBPM_TASKINSTANCE a 
+        INNER JOIN JBPM_PROCESSINSTANCE y ON a.PROCINST_ = y.ID_ 
+		INNER JOIN JBPM_PROCESSDEFINITION z ON y.PROCESSDEFINITION_ = z.ID_
+		WHERE (a.ACTORID_ IS NOT NULL)
+		AND (a.END_ IS NULL)
+		
+		<choose>
+			<when test=" booleanDataFlag == 'true' ">
+			  AND (a.ISOPEN_ = true)
+		      AND (a.ISSUSPENDED_ != true)
+			</when>
+			<otherwise>
+		      AND (a.ISOPEN_ = 1)
+		      AND (a.ISSUSPENDED_ != 1)
+			</otherwise>
+		</choose>
+
+		<if test="actorId != null">
+			AND a.ACTORID_ = #{actorId}
+		</if>
+
+		<if test="actorIds != null &amp;&amp; actorIds.size() &gt; 0">
+			AND a.ACTORID_ IN
+			<foreach item="x_actorId" index="index" collection="actorIds"
+				open="(" separator="," close=")">
+				#{x_actorId}
+			</foreach>
+		</if>
+
+		<if test="processDefinitionId != null">
+			AND z.ID_ = #{processDefinitionId}
+		</if>
+
+		<if test="processInstanceId != null">
+			AND y.ID_ = #{processInstanceId}
+		</if>
+
+		<if
+			test="processInstanceIds != null &amp;&amp; processInstanceIds.size() &gt; 0">
+			AND y.ID_ IN
+			<foreach item="x_processInstanceId" index="index"
+				collection="processInstanceIds" open="(" separator="," close=")">
+				#{x_processInstanceId}
+			</foreach>
+		</if>
+
+		<if test="processName != null">
+			AND z.NAME_ = #{processName}
+		</if>
+
+		<if test="processNames != null &amp;&amp; processNames.size() &gt; 0">
+			AND z.NAME_ IN
+			<foreach item="x_processName" index="index" collection="processNames"
+				open="(" separator="," close=")">
+				#{x_processName}
+			</foreach>
+		</if>
+
+		<if test="taskName != null">
+			AND a.NAME_ = #{taskName}
+		</if>
+
+		<if test="taskNames != null &amp;&amp; taskNames.size() &gt; 0">
+			AND a.NAME_ IN
+			<foreach item="x_taskName" index="index" collection="taskNames"
+				open="(" separator="," close=")">
+				#{x_taskName}
+			</foreach>
+		</if>
+
+		<if test="beforeTaskCreateDate != null">
+			AND a.CREATE_ &lt;= #{beforeTaskCreateDate}
+		</if>
+
+		<if test="afterTaskCreateDate != null">
+			AND a.CREATE_ >= #{afterTaskCreateDate}
+		</if>
+
+		<if test="beforeTaskStartDate != null">
+			AND a.START_ &lt;= #{beforeTaskStartDate}
+		</if>
+
+		<if test="afterTaskStartDate != null">
+			AND a.START_ >= #{afterTaskStartDate}
+		</if>
+
+		<if test="beforeTaskEndDate != null">
+			AND a.END_ &lt;= #{beforeTaskEndDate}
+		</if>
+
+		<if test="afterTaskEndDate != null">
+			AND a.END_ >= #{afterTaskEndDate}
+		</if>
+
+		<if test="beforeProcessStartDate != null">
+			AND y.START_ &lt;= #{beforeProcessStartDate}
+		</if>
+
+		<if test="afterProcessStartDate != null">
+			AND y.START_ >= #{afterProcessStartDate}
+		</if>
+
+		<if test="beforeProcessEndDate != null">
+			AND y.START_ &lt;= #{beforeProcessEndDate}
+		</if>
+
+		<if test="afterProcessEndDate != null">
+			AND y.START_ >= #{afterProcessEndDate}
+		</if>
+
+		ORDER BY a.PROCINST_ ASC
+
+	</select>
+
+	<select id="getPooledTaskItems" parameterType="com.glaf.jbpm.query.ProcessQuery"
+		resultMap="jbpmTaskResultMap">
+
+		SELECT a.ID_, a.PROCINST_,
+		a.NAME_, a.DESCRIPTION_, a.CREATE_,
+		a.START_, a.END_, p.ACTORID_, y.KEY_
+		FROM JBPM_POOLEDACTOR p 
+		INNER JOIN JBPM_TASKACTORPOOL t ON p.ID_ = t.POOLEDACTOR_ 
+		INNER JOIN JBPM_TASKINSTANCE a ON t.TASKINSTANCE_ = a.ID_ 
+		INNER JOIN JBPM_PROCESSINSTANCE y ON a.PROCINST_ = y.ID_ 
+		INNER JOIN JBPM_PROCESSDEFINITION z ON y.PROCESSDEFINITION_ = z.ID_
+		WHERE ( a.ACTORID_ IS NULL )
+		AND ( a.END_ IS NULL )
+		AND ( y.END_ IS NOT NULL )
+
+		<choose>
+			<when test=" booleanDataFlag == 'true' ">
+			  AND (a.ISOPEN_ = true)
+		      AND (a.ISSUSPENDED_ != true)
+			</when>
+			<otherwise>
+		      AND (a.ISOPEN_ = 1)
+		      AND (a.ISSUSPENDED_ != 1)
+			</otherwise>
+		</choose>
+		
+
+		<if test="actorId != null">
+			AND p.ACTORID_ = #{actorId}
+		</if>
+
+		<if test="actorIds != null &amp;&amp; actorIds.size() &gt; 0">
+			AND p.ACTORID_ IN
+			<foreach item="x_actorId" index="index" collection="actorIds"
+				open="(" separator="," close=")">
+				#{x_actorId}
+			</foreach>
+		</if>
+
+		<if test="processDefinitionId != null">
+			AND z.ID_ = #{processDefinitionId}
+		</if>
+
+		<if test="processInstanceId != null">
+			AND y.ID_ = #{processInstanceId}
+		</if>
+
+		<if
+			test="processInstanceIds != null &amp;&amp; processInstanceIds.size() &gt; 0">
+			AND y.ID_ IN
+			<foreach item="x_processInstanceId" index="index"
+				collection="processInstanceIds" open="(" separator="," close=")">
+				#{x_processInstanceId}
+			</foreach>
+		</if>
+
+		<if test="processName != null">
+			AND z.NAME_ = #{processName}
+		</if>
+
+		<if test="processNames != null &amp;&amp; processNames.size() &gt; 0">
+			AND z.NAME_ IN
+			<foreach item="x_processName" index="index" collection="processNames"
+				open="(" separator="," close=")">
+				#{x_processName}
+			</foreach>
+		</if>
+
+		<if test="taskName != null">
+			AND a.NAME_ = #{taskName}
+		</if>
+
+		<if test="taskNames != null &amp;&amp; taskNames.size() &gt; 0">
+			AND a.NAME_ IN
+			<foreach item="x_taskName" index="index" collection="taskNames"
+				open="(" separator="," close=")">
+				#{x_taskName}
+			</foreach>
+		</if>
+
+		<if test="beforeTaskCreateDate != null">
+			AND a.CREATE_ &lt;= #{beforeTaskCreateDate}
+		</if>
+
+		<if test="afterTaskCreateDate != null">
+			AND a.CREATE_ >= #{afterTaskCreateDate}
+		</if>
+
+		<if test="beforeTaskStartDate != null">
+			AND a.START_ &lt;= #{beforeTaskStartDate}
+		</if>
+
+		<if test="afterTaskStartDate != null">
+			AND a.START_ >= #{afterTaskStartDate}
+		</if>
+
+		<if test="beforeTaskEndDate != null">
+			AND a.END_ &lt;= #{beforeTaskEndDate}
+		</if>
+
+		<if test="afterTaskEndDate != null">
+			AND a.END_ >= #{afterTaskEndDate}
+		</if>
+
+		<if test="beforeProcessStartDate != null">
+			AND y.START_ &lt;= #{beforeProcessStartDate}
+		</if>
+
+		<if test="afterProcessStartDate != null">
+			AND y.START_ >= #{afterProcessStartDate}
+		</if>
+
+		<if test="beforeProcessEndDate != null">
+			AND y.START_ &lt;= #{beforeProcessEndDate}
+		</if>
+
+		<if test="afterProcessEndDate != null">
+			AND y.START_ >= #{afterProcessEndDate}
+		</if>
+
+		ORDER BY a.PROCINST_ ASC
+
+	</select>
+
+	<select id="getWorkedTaskItems" parameterType="com.glaf.jbpm.query.ProcessQuery"
+		resultMap="jbpmTaskResultMap">
+		SELECT a.ID_, a.PROCINST_, a.NAME_,
+		a.DESCRIPTION_, a.CREATE_,
+		a.START_,
+		a.END_, a.ACTORID_, y.KEY_
+		FROM JBPM_TASKINSTANCE a
+		INNER JOIN JBPM_PROCESSINSTANCE y ON a.PROCINST_ = y.ID_
+		INNER JOIN JBPM_PROCESSDEFINITION z ON y.PROCESSDEFINITION_ = z.ID_
+		WHERE ( a.ACTORID_ IS NOT NULL )
+		AND ( a.CREATE_ IS NOT NULL )
+		AND ( a.START_ IS NOT NULL )
+		AND ( a.END_ IS NOT NULL )
+		
+		<choose>
+			<when test=" booleanDataFlag == 'true' ">
+			  AND (a.ISOPEN_ = false)
+		      AND (a.ISSUSPENDED_ != true)
+			</when>
+			<otherwise>
+		      AND (a.ISOPEN_ = 0)
+		      AND (a.ISSUSPENDED_ != 1)
+			</otherwise>
+		</choose>
+
+		<if test="actorId != null">
+			AND a.ACTORID_ = #{actorId}
+		</if>
+
+		<if test="actorIds != null &amp;&amp; actorIds.size() &gt; 0">
+			AND a.ACTORID_ IN
+			<foreach item="x_actorId" index="index" collection="actorIds"
+				open="(" separator="," close=")">
+				#{x_actorId}
+			</foreach>
+		</if>
+
+		<if test="processDefinitionId != null">
+			AND z.ID_ = #{processDefinitionId}
+		</if>
+
+		<if test="processInstanceId != null">
+			AND a.PROCINST_ = #{processInstanceId}
+		</if>
+
+		<if
+			test="processInstanceIds != null &amp;&amp; processInstanceIds.size() &gt; 0">
+			AND a.PROCINST_ IN
+			<foreach item="x_processInstanceId" index="index"
+				collection="processInstanceIds" open="(" separator="," close=")">
+				#{x_processInstanceId}
+			</foreach>
+		</if>
+
+		<if test="processName != null">
+			AND z.NAME_ = #{processName}
+		</if>
+
+		<if test="processNames != null &amp;&amp; processNames.size() &gt; 0">
+			AND z.NAME_ IN
+			<foreach item="x_processName" index="index" collection="processNames"
+				open="(" separator="," close=")">
+				#{x_processName}
+			</foreach>
+		</if>
+
+		<if test="taskName != null">
+			AND a.NAME_ = #{taskName}
+		</if>
+
+		<if test="taskNames != null &amp;&amp; taskNames.size() &gt; 0">
+			AND a.NAME_ IN
+			<foreach item="x_taskName" index="index" collection="taskNames"
+				open="(" separator="," close=")">
+				#{x_taskName}
+			</foreach>
+		</if>
+
+		<if test="beforeTaskCreateDate != null">
+			AND a.CREATE_ &lt;= #{beforeTaskCreateDate}
+		</if>
+
+		<if test="afterTaskCreateDate != null">
+			AND a.CREATE_ >= #{afterTaskCreateDate}
+		</if>
+
+		<if test="beforeTaskStartDate != null">
+			AND a.START_ &lt;= #{beforeTaskStartDate}
+		</if>
+
+		<if test="afterTaskStartDate != null">
+			AND a.START_ >= #{afterTaskStartDate}
+		</if>
+
+		<if test="beforeTaskEndDate != null">
+			AND a.END_ &lt;= #{beforeTaskEndDate}
+		</if>
+
+		<if test="afterTaskEndDate != null">
+			AND a.END_ >= #{afterTaskEndDate}
+		</if>
+
+		<if test="beforeProcessStartDate != null">
+			AND y.START_ &lt;= #{beforeProcessStartDate}
+		</if>
+
+		<if test="afterProcessStartDate != null">
+			AND y.START_ >= #{afterProcessStartDate}
+		</if>
+
+		<if test="beforeProcessEndDate != null">
+			AND y.START_ &lt;= #{beforeProcessEndDate}
+		</if>
+
+		<if test="afterProcessEndDate != null">
+			AND y.START_ >= #{afterProcessEndDate}
+		</if>
+
+		ORDER BY a.PROCINST_ DESC
+
+	</select>
+
+	<select id="getFinishedProcessInstanceIds" parameterType="com.glaf.jbpm.query.ProcessQuery"
+		resultType="long">
+		
+		SELECT DISTINCT y.ID_
+		FROM JBPM_TASKINSTANCE a 
+		INNER JOIN JBPM_PROCESSINSTANCE y ON a.PROCINST_ = y.ID_ 
+		INNER JOIN JBPM_PROCESSDEFINITION z ON y.PROCESSDEFINITION_ = z.ID_
+		WHERE (a.ACTORID_ IS NOT NULL)
+		AND (a.END_ IS NOT NULL)
+		
+		<choose>
+			<when test=" booleanDataFlag == 'true' ">
+			  AND (a.ISOPEN_ = false)
+		      AND (a.ISSUSPENDED_ != true)
+			</when>
+			<otherwise>
+		      AND (a.ISOPEN_ = 0)
+		      AND (a.ISSUSPENDED_ != 1)
+			</otherwise>
+		</choose>
+
+		<if test="actorId != null">
+			AND a.ACTORID_ = #{actorId}
+		</if>
+
+		<if test="actorIds != null &amp;&amp; actorIds.size() &gt; 0">
+			AND a.ACTORID_ IN
+			<foreach item="x_actorId" index="index" collection="actorIds"
+				open="(" separator="," close=")">
+				#{x_actorId}
+			</foreach>
+		</if>
+
+		<if test="processDefinitionId != null">
+			AND z.ID_ = #{processDefinitionId}
+		</if>
+
+		<if test="processInstanceId != null">
+			AND y.ID_ = #{processInstanceId}
+		</if>
+
+		<if
+			test="processInstanceIds != null &amp;&amp; processInstanceIds.size() &gt; 0">
+			AND y.ID_ IN
+			<foreach item="x_processInstanceId" index="index"
+				collection="processInstanceIds" open="(" separator="," close=")">
+				#{x_processInstanceId}
+			</foreach>
+		</if>
+
+		<if test="processName != null">
+			AND z.NAME_ = #{processName}
+		</if>
+
+		<if test="processNames != null &amp;&amp; processNames.size() &gt; 0">
+			AND z.NAME_ IN
+			<foreach item="x_processName" index="index" collection="processNames"
+				open="(" separator="," close=")">
+				#{x_processName}
+			</foreach>
+		</if>
+
+		<if test="taskName != null">
+			AND a.NAME_ = #{taskName}
+		</if>
+
+		<if test="taskNames != null &amp;&amp; taskNames.size() &gt; 0">
+			AND a.NAME_ IN
+			<foreach item="x_taskName" index="index" collection="taskNames"
+				open="(" separator="," close=")">
+				#{x_taskName}
+			</foreach>
+		</if>
+
+		<if test="beforeTaskCreateDate != null">
+			AND a.CREATE_ &lt;= #{beforeTaskCreateDate}
+		</if>
+
+		<if test="afterTaskCreateDate != null">
+			AND a.CREATE_ >= #{afterTaskCreateDate}
+		</if>
+
+		<if test="beforeTaskStartDate != null">
+			AND a.START_ &lt;= #{beforeTaskStartDate}
+		</if>
+
+		<if test="afterTaskStartDate != null">
+			AND a.START_ >= #{afterTaskStartDate}
+		</if>
+
+		<if test="beforeTaskEndDate != null">
+			AND a.END_ &lt;= #{beforeTaskEndDate}
+		</if>
+
+		<if test="afterTaskEndDate != null">
+			AND a.END_ >= #{afterTaskEndDate}
+		</if>
+
+		<if test="beforeProcessStartDate != null">
+			AND y.START_ &lt;= #{beforeProcessStartDate}
+		</if>
+
+		<if test="afterProcessStartDate != null">
+			AND y.START_ >= #{afterProcessStartDate}
+		</if>
+
+		<if test="beforeProcessEndDate != null">
+			AND y.START_ &lt;= #{beforeProcessEndDate}
+		</if>
+
+		<if test="afterProcessEndDate != null">
+			AND y.START_ >= #{afterProcessEndDate}
+		</if>
+
+		ORDER BY y.ID_ DESC
+	</select>
+
+	<select id="getWorkedProcessInstanceIds" parameterType="com.glaf.jbpm.query.ProcessQuery"
+		resultType="long">
+		
+		SELECT DISTINCT y.ID_
+		FROM JBPM_TASKINSTANCE a 
+		INNER JOIN JBPM_PROCESSINSTANCE y ON a.PROCINST_ = y.ID_ 
+		INNER JOIN JBPM_PROCESSDEFINITION z ON y.PROCESSDEFINITION_ = z.ID_
+		WHERE (a.ACTORID_ IS NOT NULL)
+		AND ( a.END_ IS NOT NULL )
+ 		
+		<choose>
+			<when test=" booleanDataFlag == 'true' ">
+		      AND (a.ISSUSPENDED_ != true)
+			</when>
+			<otherwise>
+		      AND (a.ISSUSPENDED_ != 1)
+			</otherwise>
+		</choose>
+
+		<if test="actorId != null">
+			AND a.ACTORID_ = #{actorId}
+		</if>
+
+		<if test="actorIds != null &amp;&amp; actorIds.size() &gt; 0">
+			AND a.ACTORID_ IN
+			<foreach item="x_actorId" index="index" collection="actorIds"
+				open="(" separator="," close=")">
+				#{x_actorId}
+			</foreach>
+		</if>
+
+		<if test="processDefinitionId != null">
+			AND z.ID_ = #{processDefinitionId}
+		</if>
+
+		<if test="processInstanceId != null">
+			AND y.ID_ = #{processInstanceId}
+		</if>
+
+		<if
+			test="processInstanceIds != null &amp;&amp; processInstanceIds.size() &gt; 0">
+			AND y.ID_ IN
+			<foreach item="x_processInstanceId" index="index"
+				collection="processInstanceIds" open="(" separator="," close=")">
+				#{x_processInstanceId}
+			</foreach>
+		</if>
+
+		<if test="processName != null">
+			AND z.NAME_ = #{processName}
+		</if>
+
+		<if test="processNames != null &amp;&amp; processNames.size() &gt; 0">
+			AND z.NAME_ IN
+			<foreach item="x_processName" index="index" collection="processNames"
+				open="(" separator="," close=")">
+				#{x_processName}
+			</foreach>
+		</if>
+
+		<if test="taskName != null">
+			AND a.NAME_ = #{taskName}
+		</if>
+
+		<if test="taskNames != null &amp;&amp; taskNames.size() &gt; 0">
+			AND a.NAME_ IN
+			<foreach item="x_taskName" index="index" collection="taskNames"
+				open="(" separator="," close=")">
+				#{x_taskName}
+			</foreach>
+		</if>
+
+		<if test="beforeTaskCreateDate != null">
+			AND a.CREATE_ &lt;= #{beforeTaskCreateDate}
+		</if>
+
+		<if test="afterTaskCreateDate != null">
+			AND a.CREATE_ >= #{afterTaskCreateDate}
+		</if>
+
+		<if test="beforeTaskStartDate != null">
+			AND a.START_ &lt;= #{beforeTaskStartDate}
+		</if>
+
+		<if test="afterTaskStartDate != null">
+			AND a.START_ >= #{afterTaskStartDate}
+		</if>
+
+		<if test="beforeTaskEndDate != null">
+			AND a.END_ &lt;= #{beforeTaskEndDate}
+		</if>
+
+		<if test="afterTaskEndDate != null">
+			AND a.END_ >= #{afterTaskEndDate}
+		</if>
+
+		<if test="beforeProcessStartDate != null">
+			AND y.START_ &lt;= #{beforeProcessStartDate}
+		</if>
+
+		<if test="afterProcessStartDate != null">
+			AND y.START_ >= #{afterProcessStartDate}
+		</if>
+
+		<if test="beforeProcessEndDate != null">
+			AND y.START_ &lt;= #{beforeProcessEndDate}
+		</if>
+
+		<if test="afterProcessEndDate != null">
+			AND y.START_ >= #{afterProcessEndDate}
+		</if>
+
+		ORDER BY y.ID_ DESC
+
+	</select>
+
+</mapper>

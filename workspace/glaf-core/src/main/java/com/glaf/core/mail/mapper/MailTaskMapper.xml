@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.core.mail.mapper.MailTaskMapper">
+
+ 	<resultMap id="mailTaskResultMap"	type="com.glaf.core.mail.domain.MailTask">
+        <id property="id" column="ID_" jdbcType="VARCHAR"/>
+        <result property="subject" column="SUBJECT_" jdbcType="VARCHAR"/>
+        <result property="content" column="CONTENT_" jdbcType="VARCHAR"/>
+        <result property="callbackUrl" column="CALLBACKURL_" jdbcType="VARCHAR"/>
+        <result property="cronExpression" column="CRONEXPRESSION_" jdbcType="VARCHAR"/>
+        <result property="storageId" column="STORAGEID_" jdbcType="VARCHAR"/>
+        <result property="threadSize" column="THREADSIZE_" jdbcType="INTEGER"/>
+        <result property="delayTime" column="DELAYTIME_" jdbcType="INTEGER"/>
+        <result property="startDate" column="STARTDATE_" jdbcType="TIMESTAMP"/>
+        <result property="endDate" column="ENDDATE_" jdbcType="TIMESTAMP"/>
+        <result property="isHtml" column="ISHTML_" jdbcType="VARCHAR"/>
+        <result property="isBack" column="ISBACK_" jdbcType="VARCHAR"/>
+        <result property="isUnSubscribe" column="ISUNSUBSCRIBE_" jdbcType="VARCHAR"/>
+		<result property="locked" column="LOCKED_" jdbcType="INTEGER" />
+		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR" />
+		<result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+ 
+	<insert id="insertMailTask" parameterType="com.glaf.core.mail.domain.MailTask">
+		insert into
+		MX_MAIL_TASK ( ID_
+        ,SUBJECT_ 
+        ,CONTENT_
+        ,CALLBACKURL_
+        ,CRONEXPRESSION_ 
+        ,STORAGEID_ 
+        ,THREADSIZE_ 
+        ,DELAYTIME_ 
+        ,STARTDATE_ 
+        ,ENDDATE_ 
+        ,ISHTML_ 
+        ,ISBACK_ 
+        ,ISUNSUBSCRIBE_ 
+		,LOCKED_
+		,CREATEBY_
+		,CREATEDATE_
+		)
+		values (
+          #{id, jdbcType=VARCHAR}
+        ,#{subject, jdbcType=VARCHAR}
+        ,#{content, jdbcType=VARCHAR}
+        ,#{callbackUrl, jdbcType=VARCHAR}
+        ,#{cronExpression, jdbcType=VARCHAR}
+        ,#{storageId, jdbcType=VARCHAR}
+        ,#{threadSize, jdbcType=INTEGER}
+        ,#{delayTime, jdbcType=INTEGER}
+        ,#{startDate, jdbcType=TIMESTAMP}
+        ,#{endDate, jdbcType=TIMESTAMP}
+        ,#{isHtml, jdbcType=VARCHAR}
+        ,#{isBack, jdbcType=VARCHAR}
+        ,#{isUnSubscribe, jdbcType=VARCHAR}
+		,#{locked, jdbcType=INTEGER}
+		,#{createBy, jdbcType=VARCHAR}
+		,#{createDate, jdbcType=TIMESTAMP}
+		)
+    </insert>
+
+	 
+	<update id="updateMailTask" parameterType="com.glaf.core.mail.domain.MailTask">
+		update
+		MX_MAIL_TASK
+		set
+        SUBJECT_ = #{subject, jdbcType=VARCHAR},
+        CONTENT_ = #{content, jdbcType=VARCHAR},
+        CALLBACKURL_ = #{callbackUrl, jdbcType=VARCHAR},
+        CRONEXPRESSION_ = #{cronExpression, jdbcType=VARCHAR},
+        THREADSIZE_ = #{threadSize, jdbcType=INTEGER},
+        DELAYTIME_ = #{delayTime, jdbcType=INTEGER},
+        STARTDATE_ = #{startDate, jdbcType=TIMESTAMP},
+        ENDDATE_ = #{endDate, jdbcType=TIMESTAMP},
+        ISHTML_ = #{isHtml, jdbcType=VARCHAR},
+        ISBACK_ = #{isBack, jdbcType=VARCHAR},
+        ISUNSUBSCRIBE_ = #{isUnSubscribe, jdbcType=VARCHAR},
+		LOCKED_ = #{locked, jdbcType=INTEGER}
+		where
+          ID_ = #{id, jdbcType=VARCHAR}
+		
+    </update>
+
+ 
+	<delete id="deleteMailTaskById" parameterType="string"> 
+        delete from MX_MAIL_TASK
+        where ID_ =	#{id}
+	</delete>
+	
+	<delete id="deleteMailTasks" parameterType="com.glaf.core.mail.query.MailTaskQuery">
+		delete from MX_MAIL_TASK
+		where ( 
+ 			  ID_ IN
+              <foreach item="x_rowId" index="index" collection="rowIds" 
+                     open="(" separator="," close=")">
+                  #{x_rowId}
+              </foreach>
+		)
+	</delete>
+
+	<select id="getMailTaskById" parameterType="string" resultMap="mailTaskResultMap">
+		select * from MX_MAIL_TASK where ID_ = #{id}
+	</select>
+
+
+	<select id="getMailTasks" 
+	    parameterType="com.glaf.core.mail.query.MailTaskQuery"
+		resultMap="mailTaskResultMap">
+		select E.*
+		<include refid="selectMailTasksSql" />
+		<if test="orderBy != null">
+		   order by ${orderBy}
+        </if>
+	</select>
+
+	<select id="getMailTaskCount" 
+	    parameterType="com.glaf.core.mail.query.MailTaskQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectMailTasksSql" />
+	</select>
+
+	<sql id="selectMailTasksSql">
+
+		from MX_MAIL_TASK E
+		 
+		<where>
+		       1 = 1  
+
+			<if test="createBy != null and createBy != '' ">
+				and E.CREATEBY_ = #{createBy}
+			</if>
+	      
+			<if test="subjectLike != null and subjectLike != '' ">
+				and E.SUBJECT_ like #{subjectLike}
+            </if>
+
+			<if test="startDateGreaterThanOrEqual != null">
+				and E.STARTDATE_ &gt;= #{startDateGreaterThanOrEqual}
+            </if>
+
+			<if test="startDateLessThanOrEqual != null">
+				and E.STARTDATE_ &lt;= #{startDateLessThanOrEqual}
+            </if>
+		
+			<if test="endDateGreaterThanOrEqual != null">
+				and E.ENDDATE_ &gt;= #{endDateGreaterThanOrEqual}
+            </if>
+
+			<if test="endDateLessThanOrEqual != null">
+				and E.ENDDATE_ &lt;= #{endDateLessThanOrEqual}
+            </if>
+
+			<if test="locked != null">
+				and E.LOCKED_ = #{locked}
+			</if>
+
+			<if test="createDateGreaterThanOrEqual != null">
+				and E.CREATEDATE_ &gt;= #{createDateGreaterThanOrEqual}
+			</if>
+
+			<if test="createDateLessThanOrEqual != null">
+				and E.CREATEDATE_ &lt;= #{createDateLessThanOrEqual}
+			</if>
+			 
+		</where>
+	</sql>
+
+</mapper>

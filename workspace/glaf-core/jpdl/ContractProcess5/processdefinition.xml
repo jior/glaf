@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process-definition  xmlns="urn:jbpm.org:jpdl-3.2"  name="ContractTestProcess">
+    <description>合同审核流程</description>
+	<swimlane name="starter">
+		<assignment class="com.glaf.jbpm.assignment.MxGeneralAssignment">
+		</assignment>
+	</swimlane>
+
+	<swimlane name="submiter">
+		<assignment
+			class="com.glaf.jbpm.assignment.MxProcessStarterAssignment">
+		</assignment>
+	</swimlane>
+
+	<action name="create_task01"
+		class="com.glaf.jbpm.action.MxMyBatisTaskInstanceAction">
+		<leaveNodeIfActorNotAvailable>
+			true
+		</leaveNodeIfActorNotAvailable>
+		<taskName>task01</taskName>
+		<queryId>getXYDeptRoleUsers</queryId>
+		<roleId>R_ST</roleId>
+	</action>
+
+	<action name="create_task04"
+		class="com.glaf.jbpm.action.MxMyBatisTaskInstanceAction">
+		<leaveNodeIfActorNotAvailable>
+			true
+		</leaveNodeIfActorNotAvailable>
+		<taskName>task04</taskName>
+		<queryId>getXYDeptRoleUsers</queryId>
+		<roleId>R_ST4</roleId>
+	</action>
+	
+		<action name="create_task05"
+		class="com.glaf.jbpm.action.MxMyBatisTaskInstanceAction">
+		<leaveNodeIfActorNotAvailable>
+			true
+		</leaveNodeIfActorNotAvailable>
+		<taskName>task05</taskName>
+		<queryId>getXYDeptRoleUsers</queryId>
+		<roleId>R_ST5</roleId>
+	</action>
+	
+	<action name="xyz_1000" class="com.glaf.jbpm.action.MxNativeSQLAction">
+		<sql>
+			UPDATE TEST_CONTRACT 
+			SET SPROCESSNAME = 'ContractTestProcess',
+			SPROCESSINSTANCEID = ${processInstanceId}, ISTATUS
+			= 10, IWFSTATUS = 1000  WHERE ICONTRACTID = ${rowId}
+		</sql>
+	</action>
+
+	<action name="xyz_1002" class="com.glaf.jbpm.action.MxNativeSQLAction">
+		<sql>
+			UPDATE TEST_CONTRACT  SET
+			ISTATUS = 10, IRETURNFLAG = 0, IWFSTATUS = 1002 
+			WHERE ICONTRACTID = ${rowId}
+		</sql>
+	</action>
+	
+	<action name="xyz_1004" class="com.glaf.jbpm.action.MxNativeSQLAction">
+		<sql>
+			UPDATE TEST_CONTRACT  SET
+			ISTATUS = 20,IRETURNFLAG = 0, IWFSTATUS = 1004 
+			WHERE ICONTRACTID = ${rowId}
+		</sql>
+	</action>
+
+	<action name="xyz_1004x" class="com.glaf.jbpm.action.MxNativeSQLAction">
+		<sql>
+			UPDATE TEST_CONTRACT  SET
+			ISTATUS = 30, DSIGNATUREDATE = ${signatureDate}, IRETURNFLAG = 0, IWFSTATUS = 1004 
+			WHERE ICONTRACTID = ${rowId}
+		</sql>
+	</action>
+
+
+	<action name="xyz_5555" class="com.glaf.jbpm.action.MxNativeSQLAction">
+		<sql>
+			UPDATE TEST_CONTRACT  SET
+			ISTATUS = 0, IRETURNFLAG = 1, IWFSTATUS = -5555 
+			WHERE ICONTRACTID = ${rowId}
+		</sql>
+	</action>
+
+
+	<action name="xyz_9999" class="com.glaf.jbpm.action.MxNativeSQLAction">
+		<sql>
+			UPDATE TEST_CONTRACT  SET
+			ISTATUS = 40,SEFFECTIVEAUDITOR = ${effectiveAuditor}, IRETURNFLAG = 0, IWFSTATUS = 9999 
+			WHERE ICONTRACTID = ${rowId}
+		</sql>
+	</action>
+	
+	<action name="xyz_9" class="com.glaf.jbpm.action.MxNativeSQLAction">
+		<sql>
+			UPDATE TEST_CONTRACT  SET
+			ISTATUS = -1, IRETURNFLAG = 0, IWFSTATUS = 9999 
+			WHERE ICONTRACTID = ${rowId}
+		</sql>
+	</action>
+ 
+	<start-state name="启动流程">
+	    <task name="task0" description="启动流程" swimlane="starter">
+			<controller>
+				<variable name="isAgree" access="read,write,required"
+				mapped-name="isAgree" />
+			</controller>
+			<event type="task-create">
+				<action ref-name="xyz_1000" />
+			</event>
+		</task>
+		<transition to="合同评审确认" name="提交"></transition>
+	</start-state>
+
+
+	<task-node name="合同评审确认" create-tasks="false" end-tasks="true"
+		signal="first">
+		<event type="node-enter">
+			<action ref-name="create_task01" />
+			<action ref-name="xyz_1002" />
+		</event>
+		<task name="task01" description="合同评审确认" >
+		</task>
+		<transition to="是否通过？" name="判断"></transition>
+	</task-node>
+
+	<task-node name="重新修改">
+	   <event type="node-enter">
+			<action ref-name="xyz_5555" />
+		</event>
+	   <task name="task555" description="重新修改" swimlane="submiter">
+		</task>
+		<transition to="合同评审确认" name="重新提交"></transition>
+	</task-node>
+
+	<decision name="是否通过？">
+		<transition to="重新修改" name="不通过"></transition>
+		<transition to="签署确认" name="to 签署确认">
+			<condition expression="#{isAgree eq 'true'}" />
+			</transition>
+	</decision>
+
+	<task-node name="签署确认" create-tasks="false" end-tasks="true"
+		signal="first">
+		<event type="node-enter">
+			<action ref-name="create_task04" />
+			<action ref-name="xyz_1004" />
+		</event>
+		<task name="task04" description="签署确认" >
+			<event type="task-end">
+			  <action ref-name="xyz_1004" />
+		  </event>
+		</task>
+		<transition to="是否确认？" name="to 是否确认？"></transition>
+	</task-node>
+
+	<task-node name="生效确认" create-tasks="false" end-tasks="true"
+		signal="first">
+		<event type="node-enter">
+			<action ref-name="create_task05" />
+			<action ref-name="xyz_1004x" />
+		</event>
+		<task name="task05" description="生效确认" >
+		</task>
+		<transition to="是否生效"></transition>
+	</task-node>
+
+	<decision name="是否确认？">
+		<transition to="重新修改"></transition>
+		<transition to="生效确认" name="to 生效确认">
+			<condition expression="#{isAgree eq 'true'}" />
+			</transition>
+	</decision>
+
+	<node name="生效">
+		<event type="node-enter">
+			<action ref-name="xyz_9999" />
+		</event>
+		<transition to="完成"></transition>
+	</node>
+
+	<node name="废止">
+		<event type="node-enter">
+			<action ref-name="xyz_9" />
+		</event>
+		<transition to="完成"></transition>
+	</node>
+
+	<decision name="是否生效">
+		<transition to="生效">
+			<condition expression="#{isAgree eq 'true'}" />
+			</transition>
+		<transition to="废止" name="to node2">
+			<condition expression="#{isAgree eq 'false'}" />
+			</transition>
+	</decision>
+
+
+	<end-state name="完成">
+	    
+	</end-state>
+
+
+</process-definition>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.core.mapper.IdMapper">
+
+	<resultMap id="dbidResultMap" type="com.glaf.core.id.Dbid">
+		<id property="name" column="NAME_" jdbcType="VARCHAR" />
+		<result property="version" column="VERSION_" jdbcType="VARCHAR" />
+		<result property="value" column="VALUE_" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<insert id="inertNextDbId">
+		insert into sys_dbid(NAME_, VALUE_, VERSION_) values ('next.dbid', '10001', 1)
+	</insert>
+
+	<update id="updateNextDbId" parameterType="com.glaf.core.id.Dbid">
+		update sys_dbid set VERSION_ = #{version}, VALUE_ = #{value}
+		where NAME_ = #{name}
+	</update>
+
+	<select id="getNextDbId" parameterType="string" resultMap="dbidResultMap">
+		select * from sys_dbid where NAME_ = #{name}
+	</select>
+
+</mapper>

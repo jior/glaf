@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.core.batch.mapper.JobExecutionContextMapper">
+
+	<resultMap id="jobExecutionContextResultMap"	type="com.glaf.core.batch.domain.JobExecutionContext">
+		<id property="jobExecutionId" column="job_execution_id" jdbcType="INTEGER" />
+		<result property="shortContext" column="short_context" jdbcType="VARCHAR"/>
+		<result property="serializedContext" column="serialized_context" jdbcType="VARCHAR"/>
+	</resultMap>
+
+ 
+	<insert id="insertJobExecutionContext" parameterType="com.glaf.core.batch.domain.JobExecutionContext">
+		insert into MX_JOB_EXECUTION_CONTEXT 
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+		    job_execution_id
+			<if test="shortContext != null">
+				,short_context 
+			</if>
+			<if test="serializedContext != null">
+				,serialized_context
+			</if>
+		</trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			  #{jobExecutionId, jdbcType=INTEGER}
+	     
+			<if test="shortContext != null">
+				,#{shortContext, jdbcType=VARCHAR}
+			</if>
+			<if test="serializedContext != null">
+				,#{serializedContext, jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</insert>
+
+	 
+	<update id="updateJobExecutionContext" parameterType="com.glaf.core.batch.domain.JobExecutionContext">
+		update
+		MX_JOB_EXECUTION_CONTEXT
+		set
+		<trim prefix="" suffix="" suffixOverrides=",">		
+			<if test="shortContext != null">
+				short_context = #{shortContext, jdbcType=VARCHAR},
+			</if>
+			<if test="serializedContext != null">
+				serialized_context = #{serializedContext, jdbcType=VARCHAR},
+			</if>
+		</trim>
+		where
+          job_execution_id = #{jobExecutionId, jdbcType=INTEGER}
+		
+	</update>
+
+ 
+	<delete id="deleteJobExecutionContextById" parameterType="string"> 
+        delete from MX_JOB_EXECUTION_CONTEXT
+        where job_execution_id = #{id}
+	</delete>
+	
+
+	<select id="getJobExecutionContextById" parameterType="string" resultMap="jobExecutionContextResultMap">
+		select * from MX_JOB_EXECUTION_CONTEXT where job_execution_id = #{id}
+	</select>
+
+</mapper>

@@ -1,0 +1,481 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.glaf.core.query;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+public class DataQuery extends BaseQuery {
+	private static final long serialVersionUID = 1L;
+	protected String businessKey;
+	protected String formName;
+	protected String processName;
+	protected String processNameLike;
+	protected List<String> processNames;
+	protected String processInstanceId;
+	protected Integer parentId;
+	protected String objectId;
+	protected String objectValue;
+	protected String treeId;
+	protected Integer status;
+	protected Integer statusNotEqual;
+	protected Integer statusGreaterThanOrEqual;
+	protected Integer statusLessThanOrEqual;
+	protected Integer wfStatus;
+	protected Integer wfStatusNotEqual;
+	protected Integer wfStatusGreaterThanOrEqual;
+	protected Integer wfStatusLessThanOrEqual;
+	protected Integer deleteFlag;
+	protected Date createDate;
+	protected Date beforeCreateDate;
+	protected Date afterCreateDate;
+	protected boolean processInstanceIsNotNull;
+	protected boolean processInstanceIsNull;
+	protected List<String> rowIds = new ArrayList<String>();
+	protected List<Integer> parentIds = new ArrayList<Integer>();
+	protected List<String> processInstanceIds = new ArrayList<String>();
+	protected String sortColumn;
+
+	public DataQuery() {
+
+	}
+
+	public DataQuery afterCreateDate(Date afterCreateDate) {
+		if (afterCreateDate == null) {
+			throw new RuntimeException("createDate is null");
+		}
+		this.afterCreateDate = afterCreateDate;
+		return this;
+	}
+
+	public DataQuery beforeCreateDate(Date beforeCreateDate) {
+		if (beforeCreateDate == null) {
+			throw new RuntimeException("createDate is null");
+		}
+		this.beforeCreateDate = beforeCreateDate;
+		return this;
+	}
+
+	public DataQuery businessKey(String businessKey) {
+		if (businessKey == null) {
+			throw new RuntimeException("businessKey is null");
+		}
+		this.businessKey = businessKey;
+		return this;
+	}
+
+	public DataQuery createDate(Date createDate) {
+		if (createDate == null) {
+			throw new RuntimeException("createDate is null");
+		}
+		this.createDate = createDate;
+		return this;
+	}
+
+	public DataQuery deleteFlag(Integer deleteFlag) {
+		this.deleteFlag = deleteFlag;
+		return this;
+	}
+
+	public void ensureInitialized() {
+		super.ensureInitialized();
+
+		if (processInstanceIds != null && !processInstanceIds.isEmpty()) {
+			isFilterPermission = false;
+		}
+
+	}
+
+	public Date getAfterCreateDate() {
+		return afterCreateDate;
+	}
+
+	public Date getBeforeCreateDate() {
+		return beforeCreateDate;
+	}
+
+	public String getBusinessKey() {
+		return businessKey;
+	}
+
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	public Integer getDeleteFlag() {
+		return deleteFlag;
+	}
+
+	public String getFormName() {
+		return formName;
+	}
+
+	public String getObjectId() {
+		return objectId;
+	}
+
+	public String getObjectValue() {
+		return objectValue;
+	}
+
+	public boolean getOnlyDataModels() {
+		return true;
+	}
+
+	public Integer getParentId() {
+		return parentId;
+	}
+
+	public List<Integer> getParentIds() {
+		return parentIds;
+	}
+
+	public String getProcessInstanceId() {
+		return processInstanceId;
+	}
+
+	public List<String> getProcessInstanceIds() {
+		return processInstanceIds;
+	}
+
+	public String getProcessName() {
+		return processName;
+	}
+
+	public String getProcessNameLike() {
+		return processNameLike;
+	}
+
+	public List<String> getProcessNames() {
+		return processNames;
+	}
+
+	public List<String> getRowIds() {
+		return rowIds;
+	}
+
+	public String getSortColumn() {
+		return sortColumn;
+	}
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public Integer getStatusGreaterThanOrEqual() {
+		return statusGreaterThanOrEqual;
+	}
+
+	public Integer getStatusLessThanOrEqual() {
+		return statusLessThanOrEqual;
+	}
+
+	public Integer getStatusNotEqual() {
+		return statusNotEqual;
+	}
+
+	public String getTreeId() {
+		return treeId;
+	}
+
+	public Integer getWfStatus() {
+		return wfStatus;
+	}
+
+	public Integer getWfStatusGreaterThanOrEqual() {
+		return wfStatusGreaterThanOrEqual;
+	}
+
+	public Integer getWfStatusLessThanOrEqual() {
+		return wfStatusLessThanOrEqual;
+	}
+
+	public Integer getWfStatusNotEqual() {
+		return wfStatusNotEqual;
+	}
+
+	public boolean isProcessInstanceIsNotNull() {
+		return processInstanceIsNotNull;
+	}
+
+	public boolean isProcessInstanceIsNull() {
+		return processInstanceIsNull;
+	}
+
+	public DataQuery objectId(String objectId) {
+		if (objectId == null) {
+			throw new RuntimeException("objectId is null");
+		}
+		this.objectId = objectId;
+		return this;
+	}
+
+	public DataQuery objectValue(String objectValue) {
+		if (objectValue == null) {
+			throw new RuntimeException("objectValue is null");
+		}
+		this.objectValue = objectValue;
+		return this;
+	}
+
+	public DataQuery parentId(Integer parentId) {
+		if (parentId == null) {
+			throw new RuntimeException("parentId is null");
+		}
+		this.parentId = parentId;
+		return this;
+	}
+
+	public DataQuery parentIds(List<Integer> parentIds) {
+		if (parentIds == null) {
+			throw new RuntimeException("parentIds is null");
+		}
+		this.parentIds = parentIds;
+		return this;
+	}
+
+	public DataQuery processInstanceId(String processInstanceId) {
+		if (processInstanceId == null) {
+			throw new RuntimeException("Process instance id is null");
+		}
+		this.processInstanceId = processInstanceId;
+		return this;
+	}
+
+	public BaseQuery processInstanceIds(List<String> processInstanceIds) {
+		if (processInstanceIds == null) {
+			throw new RuntimeException("Process instance id is null");
+		}
+		this.processInstanceIds = processInstanceIds;
+		return this;
+	}
+
+	public DataQuery processName(String processName) {
+		if (processName == null) {
+			throw new RuntimeException("Process definition key is null");
+		}
+		this.processName = processName;
+		return this;
+	}
+
+	public DataQuery processNameLike(String processNameLike) {
+		if (processNameLike == null) {
+			throw new RuntimeException("processName is null");
+		}
+		this.processNameLike = processNameLike;
+		return this;
+	}
+
+	public DataQuery processNames(List<String> processNames) {
+		if (processNames == null) {
+			throw new RuntimeException("processNames is empty ");
+		}
+		this.processNames = processNames;
+		return this;
+	}
+
+	public BaseQuery rowIds(List<String> rowIds) {
+		if (rowIds == null) {
+			throw new RuntimeException("rowIds is null");
+		}
+		this.rowIds = rowIds;
+		return this;
+	}
+
+	public void setAfterCreateDate(Date afterCreateDate) {
+		this.afterCreateDate = afterCreateDate;
+	}
+
+	public void setBeforeCreateDate(Date beforeCreateDate) {
+		this.beforeCreateDate = beforeCreateDate;
+	}
+
+	public void setBusinessKey(String businessKey) {
+		this.businessKey = businessKey;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+
+	public void setDeleteFlag(Integer deleteFlag) {
+		this.deleteFlag = deleteFlag;
+	}
+
+	public void setFormName(String formName) {
+		this.formName = formName;
+	}
+
+	public void setObjectId(String objectId) {
+		this.objectId = objectId;
+	}
+
+	public void setObjectValue(String objectValue) {
+		this.objectValue = objectValue;
+	}
+
+	public void setParentId(Integer parentId) {
+		this.parentId = parentId;
+	}
+
+	public void setParentIds(List<Integer> parentIds) {
+		this.parentIds = parentIds;
+	}
+
+	public void setProcessInstanceId(String processInstanceId) {
+		this.processInstanceId = processInstanceId;
+	}
+
+	public void setProcessInstanceIds(List<String> processInstanceIds) {
+		this.processInstanceIds = processInstanceIds;
+	}
+
+	public void setProcessInstanceIsNotNull(boolean processInstanceIsNotNull) {
+		this.processInstanceIsNotNull = processInstanceIsNotNull;
+	}
+
+	public void setProcessInstanceIsNull(boolean processInstanceIsNull) {
+		this.processInstanceIsNull = processInstanceIsNull;
+	}
+
+	public void setProcessName(String processName) {
+		this.processName = processName;
+	}
+
+	public void setProcessNameLike(String processNameLike) {
+		this.processNameLike = processNameLike;
+	}
+
+	public void setProcessNames(List<String> processNames) {
+		this.processNames = processNames;
+	}
+
+	public void setRowIds(List<String> rowIds) {
+		this.rowIds = rowIds;
+	}
+
+	public void setSortColumn(String sortColumn) {
+		this.sortColumn = sortColumn;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
+	public void setStatusGreaterThanOrEqual(Integer statusGreaterThanOrEqual) {
+		this.statusGreaterThanOrEqual = statusGreaterThanOrEqual;
+	}
+
+	public void setStatusLessThanOrEqual(Integer statusLessThanOrEqual) {
+		this.statusLessThanOrEqual = statusLessThanOrEqual;
+	}
+
+	public void setStatusNotEqual(Integer statusNotEqual) {
+		this.statusNotEqual = statusNotEqual;
+	}
+
+	public void setTreeId(String treeId) {
+		this.treeId = treeId;
+	}
+
+	public void setWfStatus(Integer wfStatus) {
+		this.wfStatus = wfStatus;
+	}
+
+	public void setWfStatusGreaterThanOrEqual(Integer wfStatusGreaterThanOrEqual) {
+		this.wfStatusGreaterThanOrEqual = wfStatusGreaterThanOrEqual;
+	}
+
+	public void setWfStatusLessThanOrEqual(Integer wfStatusLessThanOrEqual) {
+		this.wfStatusLessThanOrEqual = wfStatusLessThanOrEqual;
+	}
+
+	public void setWfStatusNotEqual(Integer wfStatusNotEqual) {
+		this.wfStatusNotEqual = wfStatusNotEqual;
+	}
+
+	public DataQuery status(Integer status) {
+		this.status = status;
+		return this;
+	}
+
+	public DataQuery statusGreaterThanOrEqual(Integer statusGreaterThanOrEqual) {
+		if (statusGreaterThanOrEqual == null) {
+			throw new RuntimeException("status is null");
+		}
+		this.statusGreaterThanOrEqual = statusGreaterThanOrEqual;
+		return this;
+	}
+
+	public DataQuery statusLessThanOrEqual(Integer statusLessThanOrEqual) {
+		if (statusLessThanOrEqual == null) {
+			throw new RuntimeException("status is null");
+		}
+		this.statusLessThanOrEqual = statusLessThanOrEqual;
+		return this;
+	}
+
+	public DataQuery statusNotEqual(Integer statusNotEqual) {
+		if (statusNotEqual == null) {
+			throw new RuntimeException("status is null");
+		}
+		this.statusNotEqual = statusNotEqual;
+		return this;
+	}
+
+	public DataQuery treeId(String treeId) {
+		if (treeId == null) {
+			throw new RuntimeException("treeId is null");
+		}
+		this.treeId = treeId;
+		return this;
+	}
+
+	public DataQuery wfStatus(Integer wfStatus) {
+		this.wfStatus = wfStatus;
+		return this;
+	}
+
+	public DataQuery wfStatusGreaterThanOrEqual(
+			Integer wfStatusGreaterThanOrEqual) {
+		if (wfStatusGreaterThanOrEqual == null) {
+			throw new RuntimeException("wfStatus is null");
+		}
+		this.wfStatusGreaterThanOrEqual = wfStatusGreaterThanOrEqual;
+		return this;
+	}
+
+	public DataQuery wfStatusLessThanOrEqual(Integer wfStatusLessThanOrEqual) {
+		if (wfStatusLessThanOrEqual == null) {
+			throw new RuntimeException("wfStatus is null");
+		}
+		this.wfStatusLessThanOrEqual = wfStatusLessThanOrEqual;
+		return this;
+	}
+
+	public DataQuery wfStatusNotEqual(Integer wfStatusNotEqual) {
+		if (wfStatusNotEqual == null) {
+			throw new RuntimeException("wfStatus is null");
+		}
+		this.wfStatusNotEqual = wfStatusNotEqual;
+		return this;
+	}
+
+}

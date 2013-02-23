@@ -1,0 +1,205 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.glaf.core.service;
+
+import java.io.InputStream;
+import java.util.List;
+import java.util.Map;
+
+import com.glaf.core.base.DataFile;
+import com.glaf.core.query.BlobItemQuery;
+
+/**
+ * 
+ * 字节流服务 本服务类提供字节流的创建、修改、删除、复制及查询服务
+ */
+
+public interface IBlobService {
+
+	/**
+	 * 复制字节流
+	 * 
+	 * @param sourceId
+	 * @param destId
+	 */
+
+	void copyBlob(String sourceId, String destId);
+
+	/**
+	 * 根据文件编号删除数据
+	 * 
+	 * @param fileId
+	 */
+
+	void deleteBlobByFileId(String fileId);
+
+	/**
+	 * 根据资源编号删除数据
+	 * 
+	 * @param resourceId
+	 */
+
+	void deleteBlobByResourceId(String resourceId);
+
+	/**
+	 * 根据主键删除数据
+	 * 
+	 * @param id
+	 */
+
+	void deleteById(String id);
+
+	/**
+	 * 根据文件编号获取数据(不包含字节流)
+	 * 
+	 * @param fileId
+	 * @return
+	 */
+	DataFile getBlobByFileId(String fileId);
+
+	/**
+	 * 根据文件名称获取数据(不包含字节流)
+	 * 
+	 * @param filename
+	 * @return
+	 */
+	DataFile getBlobByFilename(String filename);
+
+	/**
+	 * 根据文件编号获取数据(包含字节流)
+	 * 
+	 * @param fileId
+	 * @return
+	 */
+	DataFile getBlobWithBytesByFileId(String fileId);
+
+	/**
+	 * 根据主键获取数据(不包含字节流)
+	 * 
+	 * @param id
+	 * @return
+	 */
+	DataFile getBlobById(String id);
+
+	/**
+	 * 根据参数获取数据(不包含字节流)
+	 * 
+	 * @param paramMap
+	 * @return
+	 */
+	List<DataFile> getBlobList(BlobItemQuery query);
+
+	/**
+	 * 根据资源编号获取数据(不包含字节流)
+	 * 
+	 * @param resourceId
+	 * @return
+	 */
+	List<DataFile> getBlobList(String resourceId);
+
+	/**
+	 * 根据文件编号获取字节流
+	 * 
+	 * @param fileId
+	 * @return
+	 */
+	InputStream getInputStreamByFileId(String fileId);
+
+	/**
+	 * 根据主键获取字节流
+	 * 
+	 * @param id
+	 * @return
+	 */
+	InputStream getInputStreamById(String id);
+
+	/**
+	 * 根据参数获取最大数据(不包含字节流)
+	 * 
+	 * @param paramMap
+	 * @return
+	 */
+	DataFile getMaxBlob(BlobItemQuery query);
+
+	/**
+	 * 根据资源编号获取最大数据(不包含字节流)
+	 * 
+	 * @param resourceId
+	 * @return
+	 */
+	DataFile getMaxBlob(String resourceId);
+
+	/**
+	 * 根据资源编号获取最大数据
+	 * 
+	 * @param resourceId
+	 * @return
+	 */
+	DataFile getMaxBlobWithBytes(String resourceId);
+
+	/**
+	 * 新增记录
+	 * 
+	 * @param blobData
+	 */
+
+	void insertBlob(DataFile blobData);
+
+	/**
+	 * 将记录标记为正式
+	 * 
+	 * @param createBy
+	 * @param serviceKey
+	 * @param resourceId
+	 */
+
+	void makeMark(String createBy, String serviceKey, String resourceId);
+
+	/**
+	 * 批量保存记录
+	 * 
+	 * @param dataList
+	 */
+
+	void saveAll(List<DataFile> dataList);
+
+	/**
+	 * 批量保存记录
+	 * 
+	 * @param dataMap
+	 */
+
+	void saveAll(Map<String, DataFile> dataMap);
+
+	/**
+	 * 修改记录（不包含字节流）
+	 * 
+	 * @param model
+	 */
+
+	void updateBlob(DataFile model);
+
+	/**
+	 * 修改记录中的文件内容（仅修改字节流）
+	 * 
+	 * @param model
+	 */
+
+	void updateBlobFileInfo(DataFile model);
+}

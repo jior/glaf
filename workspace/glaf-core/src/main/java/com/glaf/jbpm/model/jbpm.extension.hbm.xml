@@ -1,0 +1,107 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+		  "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="field">
+	<class name="com.glaf.jbpm.model.Extension" table="MX_JBPM_EXTENSION"
+		dynamic-update="true" dynamic-insert="true">
+		<id name="id" column="ID_" type="long" unsaved-value="0">
+			<generator class="native" />
+		</id>
+		<property name="extendId" column="EXTENDID_" not-null="true"
+			unique="true" length="100" />
+		<property name="name" column="NAME_" length="50" />
+		<property name="type" column="TYPE_" length="50" />
+		<property name="description" column="DESCRIPTION_" length="200" />
+		<property name="processName" column="PROCESSNAME_" length="50" />
+		<property name="taskName" column="TASKNAME_" length="50" />
+		<property name="objectId" column="OBJECTID_" length="50" />
+		<property name="objectValue" column="OBJECTVALUE_" />
+		<property name="locked" column="LOCKED_" />
+		<property name="createDate" column="CREATEDATE_" update="false" />
+		<property name="createActorId" column="CREATEACTORID_"
+			update="false" />
+		<property name="updateDate" column="UPDATEDATE_" />
+		<property name="updateActorId" column="UPDATEACTORID_" />
+		<map name="fields" cascade="all-delete-orphan" lazy="false">
+			<key column="EXTENSION_" foreign-key="FK_EXTENSION_FIELD" />
+			<map-key column="NAME_" type="string" />
+			<one-to-many class="com.glaf.jbpm.model.ExtensionField" />
+		</map>
+		<list name="params" cascade="all-delete-orphan" lazy="false">
+			<key column="EXTENSION_" foreign-key="FK_EXTENSION_PARAM" />
+			<list-index column="PARAMCOLLECTIONINDEX_" />
+			<one-to-many class="com.glaf.jbpm.model.ExtensionParam" />
+		</list>
+	</class>
+
+	<class name="com.glaf.jbpm.model.ExtensionField" table="MX_JBPM_EXFIELD"
+		dynamic-update="true" dynamic-insert="true">
+		<id name="id" column="ID_" type="long" unsaved-value="0">
+			<generator class="native" />
+		</id>
+		<property name="extendId" column="EXTENDID_" length="100" />
+		<property name="name" column="NAME_" length="50" />
+		<property name="value" column="VALUE_" type="string" length="2000" />
+		<many-to-one name="extension" column="EXTENSION_"
+			foreign-key="FK_EXTENSION_FIELD" index="IDX_EXTENSION_FIELD" />
+	</class>
+
+	<class name="com.glaf.jbpm.model.ExtensionParam" table="MX_JBPM_EXPARAM"
+		dynamic-update="true" dynamic-insert="true">
+		<id name="id" column="ID_" type="long" unsaved-value="0">
+			<generator class="native" />
+		</id>
+		<property name="extendId" column="EXTENDID_" length="100" />
+		<property name="name" column="NAME_" length="50" />
+		<property name="type" column="TYPE_" length="50" />
+		<property name="value" column="VALUE_" type="string" length="2000" />
+		<many-to-one name="extension" column="EXTENSION_"
+			foreign-key="FK_EXTENSION_PARAM" index="IDX_EXTENSION_PARAM" />
+	</class>
+
+	<!--####ConfigFile########################################### -->
+	<class name="com.glaf.jbpm.model.ConfigFile" table="MX_JBPM_CONFIGFILE"
+		dynamic-update="true" dynamic-insert="true">
+		<id name="id" type="long" unsaved-value="0">
+			<column name="ID_" not-null="true" />
+			<generator class="native" />
+		</id>
+		<property column="FILENAME_" name="filename" length="200"
+			type="string" not-null="true" />
+		<property column="LASTMODIFIED_" name="lastModified" type="long"
+			not-null="true" />
+	</class>
+
+	<!--####ActivityInstance########################################### -->
+	<class name="com.glaf.jbpm.model.ActivityInstance"
+		dynamic-insert="true" dynamic-update="true" table="MX_JBPM_ACTIVITY_INSTANCE">
+		<id name="id" column="ID_" type="long" unsaved-value="0">
+			<generator class="native" />
+		</id>
+		<property name="actorId" column="ACTORID_" type="string"
+			length="50" />
+		<property name="processInstanceId" column="PROCESSINSTANCEID_"
+			type="long" />
+		<property name="taskInstanceId" column="TASKINSTANCEID_"
+			type="long"   />
+		<property name="taskName" column="TASKNAME_" type="string"
+			length="50" />
+		<property name="taskDescription" column="TASKDESCRIPTION_"
+			type="string" length="200" />
+		<property name="objectId" column="OBJECTID_" type="string"
+			length="200" />
+		<property name="objectValue" column="OBJECTVALUE_" type="string"
+			length="200" />
+		<property name="rowId" column="ROWID_" type="string" length="50" />
+		<property name="title" column="TITLE_" type="string" length="100" />
+		<property name="isAgree" column="ISAGREE_" type="string"
+			length="20" />
+		<property name="content" column="CONTENT_" type="string"
+			length="1000" />
+		<property name="variable" column="VARIABLE_" type="string"
+			length="1000" />
+		<property name="date" column="DATE_" type="timestamp" />
+	</class>
+
+</hibernate-mapping>

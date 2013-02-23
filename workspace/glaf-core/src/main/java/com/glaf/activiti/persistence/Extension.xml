@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.activiti.persistence.ExtensionPersistence">
+
+	<resultMap id="extensionEntityResultMap"
+		type="com.glaf.activiti.extension.model.ExtensionEntity">
+		<id property="id" column="ID_" jdbcType="VARCHAR" />
+		<result property="extendId" column="EXTENDID_" jdbcType="VARCHAR" />
+		<result property="name" column="NAME_" jdbcType="VARCHAR" />
+		<result property="type" column="TYPE_" jdbcType="VARCHAR" />
+		<result property="description" column="DESCRIPTION_" jdbcType="VARCHAR" />
+		<result property="processName" column="PROCESSNAME_" jdbcType="VARCHAR" />
+		<result property="taskName" column="TASKNAME_" jdbcType="VARCHAR" />
+		<result property="objectId" column="OBJECTID_" jdbcType="VARCHAR" />
+		<result property="objectValue" column="OBJECTVALUE_" jdbcType="VARCHAR" />
+		<result property="locked" column="LOCKED_" jdbcType="INTEGER" />
+		<result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP" />
+		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR" />
+		<result property="updateDate" column="UPDATEDATE_" jdbcType="TIMESTAMP" />
+		<result property="updateBy" column="UPDATEBY_" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<resultMap id="extensionFieldEntityResultMap"
+		type="com.glaf.activiti.extension.model.ExtensionFieldEntity">
+		<id property="id" column="ID_" jdbcType="VARCHAR" />
+		<result property="extendId" column="EXTENDID_" jdbcType="VARCHAR" />
+		<result property="name" column="NAME_" jdbcType="VARCHAR" />
+		<result property="value" column="VALUE_" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<resultMap id="extensionParamEntityResultMap"
+		type="com.glaf.activiti.extension.model.ExtensionParamEntity">
+		<id property="id" column="ID_" jdbcType="VARCHAR" />
+		<result property="extendId" column="EXTENDID_" jdbcType="VARCHAR" />
+		<result property="name" column="NAME_" jdbcType="VARCHAR" />
+		<result property="type" column="TYPE_" jdbcType="VARCHAR" />
+		<result property="value" column="VALUE_" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<insert id="insertExtensionEntity"
+		parameterType="com.glaf.activiti.extension.model.ExtensionEntity">
+		insert into MX_ACT_EXTENSION (ID_, EXTENDID_, NAME_, TYPE_,
+		DESCRIPTION_, PROCESSNAME_, TASKNAME_, OBJECTID_, OBJECTVALUE_,
+		LOCKED_, CREATEDATE_, CREATEBY_ ) values (
+		#{id, jdbcType=VARCHAR}, #{extendId, jdbcType=VARCHAR}, 
+		#{name, jdbcType=VARCHAR}, 
+		#{type, jdbcType=VARCHAR}, 
+		#{description, jdbcType=VARCHAR}, 
+		#{processName,	jdbcType=VARCHAR}, 
+		#{taskName, jdbcType=VARCHAR}, 
+		#{objectId, jdbcType=VARCHAR}, 
+		#{objectValue, jdbcType=VARCHAR}, 
+		#{locked, jdbcType=INTEGER}, 
+		#{createDate, jdbcType=TIMESTAMP}, 
+		#{createBy,	jdbcType=VARCHAR})
+	</insert>
+
+
+	<insert id="insertExtensionFieldEntity"
+		parameterType="com.glaf.activiti.extension.model.ExtensionFieldEntity">
+		insert into MX_ACT_EXTENSION_FIELD (ID_, EXTENDID_,
+		NAME_, VALUE_ ) values (
+		#{id, jdbcType=VARCHAR}, 
+		#{extendId, jdbcType=VARCHAR},
+		#{name, jdbcType=VARCHAR}, 
+		#{value, jdbcType=VARCHAR} )
+	</insert>
+
+	<insert id="insertExtensionParamEntity"
+		parameterType="com.glaf.activiti.extension.model.ExtensionParamEntity">
+		insert into MX_ACT_EXTENSION_PARAM (ID_, EXTENDID_,
+		NAME_, TYPE_, VALUE_ )
+		values ( #{id, jdbcType=VARCHAR}, 
+		#{extendId, jdbcType=VARCHAR},
+		#{name, jdbcType=VARCHAR},
+		#{type,	jdbcType=VARCHAR},
+		#{value, jdbcType=VARCHAR} )
+	</insert>
+	
+	<update id="updateSql" parameterType="map">
+	      ${updateSql}
+	</update>
+
+	<delete id="deleteExtension" parameterType="string">
+		delete from MX_ACT_EXTENSION 
+		where ID_ = #{value}
+	</delete>
+
+	<delete id="deleteExtensionField" parameterType="string">
+		delete from	MX_ACT_EXTENSION_FIELD
+		where EXTENDID_ = #{value} 
+	</delete>
+
+	<delete id="deleteExtensionParam" parameterType="string">
+		delete from	MX_ACT_EXTENSION_PARAM
+		where EXTENDID_ = #{value} 
+	</delete>
+
+	<sql id="selectExtensionEntitiesByQueryCriteriaSql">
+		from MX_ACT_EXTENSION
+		<where>
+			<if test="extendId != null "> and EXTENDID_ = #{extendId} </if>
+			 
+			<if test="name != null "> and NAME_ = #{name} </if>
+
+			<if test="processName != null "> and PROCESSNAME_ = #{processName} </if>
+ 
+			<if test="taskName != null "> and TASKNAME_ = #{taskName} </if>
+
+			<if test="locked != null "> and LOCKED_ = #{locked } </if>
+
+		</where>
+	</sql>
+
+	<select id="getExtensionById" parameterType="string"
+		resultMap="extensionEntityResultMap">
+		select * from MX_ACT_EXTENSION where ID_ = #{value}
+	</select>
+
+	<select id="getExtensionEntities" parameterType="map"
+		resultMap="extensionEntityResultMap">
+		select *
+		<include refid="selectExtensionEntitiesByQueryCriteriaSql" />
+		<if test="sortColumn != null">
+			order by ${sortColumn} ${sortOrder}
+		</if>
+	</select>
+
+	<select id="getExtensionEntityCount" parameterType="map"
+		resultType="int">
+		select count(*)
+		<include refid="selectExtensionEntitiesByQueryCriteriaSql" />
+	</select>
+
+	<select id="getExtensionFields" parameterType="string" resultMap="extensionFieldEntityResultMap">
+	    select * from MX_ACT_EXTENSION_FIELD where EXTENDID_ = #{value}
+	</select>
+
+	<select id="getExtensionParams" parameterType="string" resultMap="extensionParamEntityResultMap">
+	    select * from MX_ACT_EXTENSION_PARAM where EXTENDID_ = #{value}
+	</select>
+
+</mapper>

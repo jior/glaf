@@ -1,0 +1,6 @@
+<executionListeners>
+
+	<executionListener element="extensionMyBatis3ExecutionListener"
+		class="com.glaf.activiti.executionlistener.ExtensionMyBatis3ExecutionListener" />
+
+</executionListeners>

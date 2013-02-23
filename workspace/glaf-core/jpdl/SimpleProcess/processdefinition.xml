@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process-definition  xmlns="urn:jbpm.org:jpdl-3.2"  name="SimpleProcess">
+
+    <description>简单测试流程</description>
+
+    <swimlane name="starter">
+		<assignment class="com.glaf.jbpm.assignment.MxGeneralAssignment">
+		</assignment>
+	</swimlane>
+
+	<swimlane name="submiter">
+		<assignment
+			class="com.glaf.jbpm.assignment.MxProcessStarterAssignment">
+		</assignment>
+	</swimlane>
+
+	<action name="create_task02"
+		class="com.glaf.jbpm.action.MxDynamicTaskInstances">
+		<dynamicActors>Auditor1</dynamicActors>
+		<taskName>task02</taskName>
+	</action>
+
+
+	<action name="create_task03"
+		class="com.glaf.jbpm.action.MxDynamicTaskInstances">
+		<dynamicActors>Auditor2</dynamicActors>
+		<taskName>task03</taskName>
+	</action>
+
+	<action name="EndCounterSigningAction"
+		class="com.glaf.jbpm.action.MxEndCounterSigningAction">
+		<expression>#{isAgree eq 'false'}</expression>
+	</action>
+
+
+	<start-state name="启动流程">
+	    <task name="task01" description="启动流程" swimlane="starter">
+          <controller>
+            <variable name="isAgree" access="read,write" mapped-name="isAgree" />
+          </controller>
+		</task>
+		<transition to="动态参与者1"></transition>
+	</start-state>
+
+
+	<task-node name="动态参与者1" create-tasks="false" end-tasks="true"
+		signal="first">
+		<event type="node-enter">
+			<action ref-name="create_task02" />
+		</event>
+		<task name="task02" description="审核员1" >
+			<event type="task-end">
+				<action ref-name="EndCounterSigningAction" />
+			</event>
+		</task>
+		<transition to="动态参与者2"></transition>
+	</task-node>
+
+	<task-node name="动态参与者2" create-tasks="false" end-tasks="true"
+		signal="last">
+		<event type="node-enter">
+			<action ref-name="create_task03" />
+		</event>
+		<task name="task03" description="审核员2" >
+			<event type="task-end">
+				<action ref-name="EndCounterSigningAction" />
+			</event>
+		</task>
+		<transition to="结束"></transition>
+	</task-node>
+
+
+	<end-state name="结束"></end-state>
+
+
+</process-definition>

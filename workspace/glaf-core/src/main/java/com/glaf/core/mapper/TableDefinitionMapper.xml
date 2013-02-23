@@ -1,0 +1,514 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.core.mapper.TableDefinitionMapper">
+
+	<resultMap id="tableDefinitionResultMap"	type="com.glaf.core.domain.TableDefinition">
+		<id property="tableName" column="TABLENAME_" jdbcType="VARCHAR"/>
+		<result property="parentTableName" column="PARENTTABLENAME_" jdbcType="VARCHAR"/>
+		<result property="packageName" column="PACKAGENAME_" jdbcType="VARCHAR"/>
+		<result property="entityName" column="ENTITYNAME_" jdbcType="VARCHAR"/>
+		<result property="className" column="CLASSNAME_" jdbcType="VARCHAR"/>
+		<result property="title" column="TITLE_" jdbcType="VARCHAR"/>
+		<result property="englishTitle" column="ENGLISHTITLE_" jdbcType="VARCHAR"/>
+		<result property="columnQty" column="COLUMNQTY_" jdbcType="INTEGER"/>
+		<result property="addType" column="ADDTYPE_" jdbcType="INTEGER"/>
+		<result property="sysnum" column="SYSNUM_" jdbcType="VARCHAR"/>
+		<result property="isSubTable" column="ISSUBTABLE_" jdbcType="VARCHAR"/>
+		<result property="topId" column="TOPID_" jdbcType="VARCHAR"/>
+		<result property="aggregationKeys" column="AGGREGATIONKEYS_" jdbcType="VARCHAR"/>
+		<result property="queryIds" column="QUERYIDS_" jdbcType="VARCHAR"/>
+		<result property="temporaryFlag" column="TEMPORARYFLAG_" jdbcType="VARCHAR"/>
+		<result property="deleteFetch" column="DELETEFETCH_" jdbcType="VARCHAR"/>
+		<result property="createTime" column="CREATETIME_" jdbcType="TIMESTAMP"/>
+		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR"/>
+		<result property="description" column="DESCRIPTION_" jdbcType="VARCHAR"/>
+		<result property="type" column="TYPE_" jdbcType="VARCHAR"/>
+		<result property="displayType" column="DISPLAYTYPE_" jdbcType="VARCHAR"/>
+		<result property="insertCascade" column="INSERTCASCADE_" jdbcType="INTEGER"/>
+		<result property="updateCascade" column="UPDATECASCADE_" jdbcType="INTEGER"/>
+		<result property="deleteCascade" column="DELETECASCADE_" jdbcType="INTEGER"/>
+		<result property="locked" column="LOCKED_" jdbcType="INTEGER"/>
+		<result property="deleteFlag" column="DELETEFLAG_" jdbcType="INTEGER"/>
+		<result property="systemFlag" column="SYSTEMFLAG_" jdbcType="VARCHAR"/>
+		<result property="revision" column="REVISION_" jdbcType="INTEGER"/>
+	</resultMap>
+
+
+	<resultMap id="tableDefinitionHashMap"	type="java.util.HashMap">
+		<id property="tableName" column="TABLENAME_" jdbcType="VARCHAR"/>
+		<result property="parentTableName" column="PARENTTABLENAME_" jdbcType="VARCHAR"/>
+		<result property="packageName" column="PACKAGENAME_" jdbcType="VARCHAR"/>
+		<result property="entityName" column="ENTITYNAME_" jdbcType="VARCHAR"/>
+		<result property="className" column="CLASSNAME_" jdbcType="VARCHAR"/>
+		<result property="title" column="TITLE_" jdbcType="VARCHAR"/>
+		<result property="englishTitle" column="ENGLISHTITLE_" jdbcType="VARCHAR"/>
+		<result property="columnQty" column="COLUMNQTY_" jdbcType="INTEGER"/>
+		<result property="addType" column="ADDTYPE_" jdbcType="INTEGER"/>
+		<result property="sysnum" column="SYSNUM_" jdbcType="VARCHAR"/>
+		<result property="isSubTable" column="ISSUBTABLE_" jdbcType="VARCHAR"/>
+		<result property="topId" column="TOPID_" jdbcType="VARCHAR"/>
+		<result property="aggregationKeys" column="AGGREGATIONKEYS_" jdbcType="VARCHAR"/>
+		<result property="queryIds" column="QUERYIDS_" jdbcType="VARCHAR"/>
+		<result property="temporaryFlag" column="TEMPORARYFLAG_" jdbcType="VARCHAR"/>
+		<result property="deleteFetch" column="DELETEFETCH_" jdbcType="VARCHAR"/>
+		<result property="createTime" column="CREATETIME_" jdbcType="TIMESTAMP"/>
+		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR"/>
+		<result property="description" column="DESCRIPTION_" jdbcType="VARCHAR"/>
+		<result property="type" column="TYPE_" jdbcType="VARCHAR"/>
+		<result property="displayType" column="DISPLAYTYPE_" jdbcType="VARCHAR"/>
+		<result property="insertCascade" column="INSERTCASCADE_" jdbcType="INTEGER"/>
+		<result property="updateCascade" column="UPDATECASCADE_" jdbcType="INTEGER"/>
+		<result property="deleteCascade" column="DELETECASCADE_" jdbcType="INTEGER"/>
+		<result property="locked" column="LOCKED_" jdbcType="INTEGER"/>
+		<result property="deleteFlag" column="DELETEFLAG_" jdbcType="INTEGER"/>
+		<result property="systemFlag" column="SYSTEMFLAG_" jdbcType="VARCHAR"/>
+		<result property="revision" column="REVISION_" jdbcType="INTEGER"/>
+	</resultMap>
+ 
+	<insert id="insertTableDefinition" parameterType="com.glaf.core.domain.TableDefinition">
+		insert into MX_SYS_TABLE 
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+		    TABLENAME_
+			<if test="parentTableName != null">
+				,PARENTTABLENAME_ 
+			</if>
+			<if test="packageName != null">
+				,PACKAGENAME_ 
+			</if>
+			<if test="entityName != null">
+				,ENTITYNAME_ 
+			</if>
+			<if test="className != null">
+				,CLASSNAME_ 
+			</if>
+			<if test="title != null">
+				,TITLE_ 
+			</if>
+			<if test="englishTitle != null">
+				,ENGLISHTITLE_ 
+			</if>
+			<if test="columnQty != null">
+				,COLUMNQTY_ 
+			</if>
+			<if test="addType != null">
+				,ADDTYPE_ 
+			</if>
+			<if test="sysnum != null">
+				,SYSNUM_ 
+			</if>
+			<if test="isSubTable != null">
+				,ISSUBTABLE_ 
+			</if>
+			<if test="topId != null">
+				,TOPID_ 
+			</if>
+			<if test="aggregationKeys != null">
+				,AGGREGATIONKEYS_ 
+			</if>
+			<if test="queryIds != null">
+				,QUERYIDS_ 
+			</if>
+			<if test="temporaryFlag != null">
+				,TEMPORARYFLAG_ 
+			</if>
+			<if test="deleteFetch != null">
+				,DELETEFETCH_ 
+			</if>
+			<if test="createTime != null">
+				,CREATETIME_ 
+			</if>
+			<if test="createBy != null">
+				,CREATEBY_ 
+			</if>
+			<if test="description != null">
+				,DESCRIPTION_ 
+			</if>
+			<if test="type != null">
+				,TYPE_ 
+			</if>
+			<if test="displayType != null">
+				,DISPLAYTYPE_ 
+			</if>
+			<if test="insertCascade != null">
+				,INSERTCASCADE_ 
+			</if>
+			<if test="updateCascade != null">
+				,UPDATECASCADE_ 
+			</if>
+			<if test="deleteCascade != null">
+				,DELETECASCADE_ 
+			</if>
+			<if test="locked != null">
+				,LOCKED_ 
+			</if>
+			<if test="deleteFlag != null">
+				,DELETEFLAG_ 
+			</if>
+			<if test="systemFlag != null">
+				,SYSTEMFLAG_ 
+			</if>
+			<if test="revision != null">
+				,REVISION_ 
+			</if>
+		</trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			  #{tableName, jdbcType=VARCHAR}
+	     
+			<if test="parentTableName != null">
+				,#{parentTableName, jdbcType=VARCHAR}
+			</if>
+			<if test="packageName != null">
+				,#{packageName, jdbcType=VARCHAR}
+			</if>
+			<if test="entityName != null">
+				,#{entityName, jdbcType=VARCHAR}
+			</if>
+			<if test="className != null">
+				,#{className, jdbcType=VARCHAR}
+			</if>
+			<if test="title != null">
+				,#{title, jdbcType=VARCHAR}
+			</if>
+			<if test="englishTitle != null">
+				,#{englishTitle, jdbcType=VARCHAR}
+			</if>
+			<if test="columnQty != null">
+				,#{columnQty, jdbcType=INTEGER}
+			</if>
+			<if test="addType != null">
+				,#{addType, jdbcType=INTEGER}
+			</if>
+			<if test="sysnum != null">
+				,#{sysnum, jdbcType=VARCHAR}
+			</if>
+			<if test="isSubTable != null">
+				,#{isSubTable, jdbcType=VARCHAR}
+			</if>
+			<if test="topId != null">
+				,#{topId, jdbcType=VARCHAR}
+			</if>
+			<if test="aggregationKeys != null">
+				,#{aggregationKeys, jdbcType=VARCHAR}
+			</if>
+			<if test="queryIds != null">
+				,#{queryIds, jdbcType=VARCHAR}
+			</if>
+			<if test="temporaryFlag != null">
+				,#{temporaryFlag, jdbcType=VARCHAR}
+			</if>
+			<if test="deleteFetch != null">
+				,#{deleteFetch, jdbcType=VARCHAR}
+			</if>
+			<if test="createTime != null">
+				,#{createTime, jdbcType=TIMESTAMP}
+			</if>
+			<if test="createBy != null">
+				,#{createBy, jdbcType=VARCHAR}
+			</if>
+			<if test="description != null">
+				,#{description, jdbcType=VARCHAR}
+			</if>
+			<if test="type != null">
+				,#{type, jdbcType=VARCHAR}
+			</if>
+			<if test="displayType != null">
+				,#{displayType, jdbcType=VARCHAR}
+			</if>
+			<if test="insertCascade != null">
+				,#{insertCascade, jdbcType=INTEGER}
+			</if>
+			<if test="updateCascade != null">
+				,#{updateCascade, jdbcType=INTEGER}
+			</if>
+			<if test="deleteCascade != null">
+				,#{deleteCascade, jdbcType=INTEGER}
+			</if>
+			<if test="locked != null">
+				,#{locked, jdbcType=INTEGER}
+			</if>
+			<if test="deleteFlag != null">
+				,#{deleteFlag, jdbcType=INTEGER}
+			</if>
+			<if test="systemFlag != null">
+				,#{systemFlag, jdbcType=VARCHAR}
+			</if>
+			<if test="revision != null">
+				,#{revision, jdbcType=INTEGER}
+			</if>
+		</trim>
+	</insert>
+
+	 
+	<update id="updateTableDefinition" parameterType="com.glaf.core.domain.TableDefinition">
+		update MX_SYS_TABLE
+		set
+		<trim prefix="" suffix="" suffixOverrides=",">		
+			<if test="parentTableName != null">
+				PARENTTABLENAME_ = #{parentTableName, jdbcType=VARCHAR},
+			</if>
+			<if test="packageName != null">
+				PACKAGENAME_ = #{packageName, jdbcType=VARCHAR},
+			</if>
+			<if test="entityName != null">
+				ENTITYNAME_ = #{entityName, jdbcType=VARCHAR},
+			</if>
+			<if test="className != null">
+				CLASSNAME_ = #{className, jdbcType=VARCHAR},
+			</if>
+			<if test="title != null">
+				TITLE_ = #{title, jdbcType=VARCHAR},
+			</if>
+			<if test="englishTitle != null">
+				ENGLISHTITLE_ = #{englishTitle, jdbcType=VARCHAR},
+			</if>
+			<if test="columnQty != null">
+				COLUMNQTY_ = #{columnQty, jdbcType=INTEGER},
+			</if>
+			<if test="addType != null">
+				ADDTYPE_ = #{addType, jdbcType=INTEGER},
+			</if>
+			<if test="sysnum != null">
+				SYSNUM_ = #{sysnum, jdbcType=VARCHAR},
+			</if>
+			<if test="isSubTable != null">
+				ISSUBTABLE_ = #{isSubTable, jdbcType=VARCHAR},
+			</if>
+			<if test="topId != null">
+				TOPID_ = #{topId, jdbcType=VARCHAR},
+			</if>
+			<if test="aggregationKeys != null">
+				AGGREGATIONKEYS_ = #{aggregationKeys, jdbcType=VARCHAR},
+			</if>
+			<if test="queryIds != null">
+				QUERYIDS_ = #{queryIds, jdbcType=VARCHAR},
+			</if>
+			<if test="temporaryFlag != null">
+				TEMPORARYFLAG_ = #{temporaryFlag, jdbcType=VARCHAR},
+			</if>
+			<if test="deleteFetch != null">
+				DELETEFETCH_ = #{deleteFetch, jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				CREATETIME_ = #{createTime, jdbcType=TIMESTAMP},
+			</if>
+			<if test="createBy != null">
+				CREATEBY_ = #{createBy, jdbcType=VARCHAR},
+			</if>
+			<if test="description != null">
+				DESCRIPTION_ = #{description, jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				TYPE_ = #{type, jdbcType=VARCHAR},
+			</if>
+			<if test="displayType != null">
+				DISPLAYTYPE_ = #{displayType, jdbcType=VARCHAR},
+			</if>
+			<if test="insertCascade != null">
+				INSERTCASCADE_ = #{insertCascade, jdbcType=INTEGER},
+			</if>
+			<if test="updateCascade != null">
+				UPDATECASCADE_ = #{updateCascade, jdbcType=INTEGER},
+			</if>
+			<if test="deleteCascade != null">
+				DELETECASCADE_ = #{deleteCascade, jdbcType=INTEGER},
+			</if>
+			<if test="locked != null">
+				LOCKED_ = #{locked, jdbcType=INTEGER},
+			</if>
+			<if test="deleteFlag != null">
+				DELETEFLAG_ = #{deleteFlag, jdbcType=INTEGER},
+			</if>
+			<if test="systemFlag != null">
+				SYSTEMFLAG_ = #{systemFlag, jdbcType=VARCHAR},
+			</if>
+			<if test="revision != null">
+				REVISION_ = #{revision, jdbcType=INTEGER},
+			</if>
+		</trim>
+		where
+          TABLENAME_ = #{tableName, jdbcType=VARCHAR}
+		
+	</update>
+
+
+	<delete id="deleteTableDefinitionById" parameterType="string">
+		delete from MX_SYS_TABLE
+		where TABLENAME_ = #{id}
+	</delete>
+
+	<delete id="deleteTableDefinitions" parameterType="com.glaf.core.query.TableDefinitionQuery">
+		delete from MX_SYS_TABLE
+		where ( TABLENAME_ IN
+		<foreach item="x_rowId" index="index" collection="rowIds"
+			open="(" separator="," close=")">
+			#{x_rowId}
+		</foreach>
+		)
+	</delete>
+
+	<select id="getTableDefinitionById" parameterType="string"
+		resultMap="tableDefinitionResultMap">
+		select * from MX_SYS_TABLE 
+		where TABLENAME_ = #{id}
+	</select>
+	
+	
+	<select id="getTableColumnsCount" parameterType="com.glaf.core.query.TableDefinitionQuery"
+		resultType="com.glaf.core.domain.TableDefinition">
+		
+        select C.TABLENAME_ tableName, count(C.COLUMNNAME_) as columnQty 
+        from MX_SYS_COLUMN C 
+        inner join MX_SYS_TABLE E 
+        on C.TABLENAME_ = E.TABLENAME_  
+    
+		<include refid="selectTableCountSql" />
+		
+        group by C.TABLENAME_ 
+        order by C.TABLENAME_
+
+	</select>
+
+
+	<select id="getTableDefinitions" parameterType="com.glaf.core.query.TableDefinitionQuery"
+		resultMap="tableDefinitionResultMap">
+		select E.*
+		<include refid="selectTableDefinitionsSql" />
+		<if test="orderBy != null">
+			order by ${orderBy}
+		</if>
+	</select>
+
+	<select id="getTableDefinitionCount" parameterType="com.glaf.core.query.TableDefinitionQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectTableDefinitionsSql" />
+	</select>
+	
+	
+	<sql id="selectTableCountSql">
+
+	 
+		<where>
+			1 = 1
+
+			<if test="titleLike != null and titleLike != '' ">
+				and E.TITLE_ like #{titleLike}
+			</if>
+
+			<if test="createTimeGreaterThanOrEqual != null">
+				and E.CREATETIME_ &gt;= #{createTimeGreaterThanOrEqual}
+			</if>
+
+			<if test="createTimeLessThanOrEqual != null">
+				and E.CREATETIME_ &lt;= #{createTimeLessThanOrEqual}
+			</if>
+
+			<if test="createBy != null and createBy != '' ">
+				and E.CREATEBY_ = #{createBy}
+			</if>
+
+			<if test="descriptionLike != null and descriptionLike != '' ">
+				and E.DESCRIPTION_ like #{descriptionLike}
+			</if>
+			
+			<if test="type != null and type != '' ">
+				and E.TYPE_ = #{type}
+			</if>
+
+			<if test="locked != null">
+				and E.LOCKED_ = #{locked}
+			</if>
+
+			<if test="lockedGreaterThanOrEqual != null">
+				and E.LOCKED_ &gt;= #{lockedGreaterThanOrEqual}
+			</if>
+
+			<if test="lockedLessThanOrEqual != null">
+				and E.LOCKED_ &lt;= #{lockedLessThanOrEqual}
+			</if>
+			
+			<if test="systemFlag != null and systemFlag != '' ">
+				and E.SYSTEMFLAG_ = #{systemFlag}
+			</if>
+
+			<if test="revision != null">
+				and E.REVISION_ = #{revision}
+			</if>
+
+			<if test="revisionGreaterThanOrEqual != null">
+				and E.REVISION_ &gt;= #{revisionGreaterThanOrEqual}
+			</if>
+
+			<if test="revisionLessThanOrEqual != null">
+				and E.REVISION_ &lt;= #{revisionLessThanOrEqual}
+			</if>
+
+		</where>
+	</sql>
+
+	<sql id="selectTableDefinitionsSql">
+
+		from MX_SYS_TABLE E
+
+		<where>
+			1 = 1
+
+			<if test="titleLike != null and titleLike != '' ">
+				and E.TITLE_ like #{titleLike}
+			</if>
+
+			<if test="createTimeGreaterThanOrEqual != null">
+				and E.CREATETIME_ &gt;= #{createTimeGreaterThanOrEqual}
+			</if>
+
+			<if test="createTimeLessThanOrEqual != null">
+				and E.CREATETIME_ &lt;= #{createTimeLessThanOrEqual}
+			</if>
+
+			<if test="createBy != null and createBy != '' ">
+				and E.CREATEBY_ = #{createBy}
+			</if>
+
+			<if test="descriptionLike != null and descriptionLike != '' ">
+				and E.DESCRIPTION_ like #{descriptionLike}
+			</if>
+			
+			<if test="type != null and type != '' ">
+				and E.TYPE_ = #{type}
+			</if>
+
+			<if test="locked != null">
+				and E.LOCKED_ = #{locked}
+			</if>
+
+			<if test="lockedGreaterThanOrEqual != null">
+				and E.LOCKED_ &gt;= #{lockedGreaterThanOrEqual}
+			</if>
+
+			<if test="lockedLessThanOrEqual != null">
+				and E.LOCKED_ &lt;= #{lockedLessThanOrEqual}
+			</if>
+			
+			<if test="systemFlag != null and systemFlag != '' ">
+				and E.SYSTEMFLAG_ = #{systemFlag}
+			</if>
+
+			<if test="revision != null">
+				and E.REVISION_ = #{revision}
+			</if>
+
+			<if test="revisionGreaterThanOrEqual != null">
+				and E.REVISION_ &gt;= #{revisionGreaterThanOrEqual}
+			</if>
+
+			<if test="revisionLessThanOrEqual != null">
+				and E.REVISION_ &lt;= #{revisionLessThanOrEqual}
+			</if>
+
+		</where>
+	</sql>
+
+</mapper>

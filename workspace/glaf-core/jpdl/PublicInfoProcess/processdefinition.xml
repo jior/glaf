@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process-definition  xmlns="urn:jbpm.org:jpdl-3.2"  name="PublicInfoProcess">
+    <description>新闻发布流程</description>
+
+    <swimlane name="starter">
+		<assignment class="com.glaf.jbpm.assignment.MxGeneralAssignment">
+		</assignment>
+	</swimlane>
+
+	<swimlane name="submiter">
+		<assignment
+			class="com.glaf.jbpm.assignment.MxProcessStarterAssignment">
+		</assignment>
+	</swimlane>
+
+	<action name="create_task02"
+		class="com.glaf.jbpm.action.MxMyBatisTaskInstanceAction">
+		<taskName>task02</taskName>
+		<queryId>getMembershipUsers</queryId>
+		<roleId>Auditor</roleId>
+	</action>
+
+	<action name="EndCounterSigningAction"
+		class="com.glaf.jbpm.action.MxEndCounterSigningAction">
+		<expression>#{isAgree eq 'false'}</expression>
+	</action>
+
+	<action name="xyz_1000" class="com.glaf.jbpm.action.MxSQLAction">
+		<sql>
+			UPDATE MX_RICH_TEXT 
+			SET PROCESSNAME_='PublicInfoProcess',
+			PROCESSINSTANCEID_ = ?, STATUS_
+			= 40, WFSTATUS_ = 1000 WHERE ID_ = ?
+		</sql>
+		<elements element-type="org.dom4j.Element">
+			<element value-type="java.lang.String">
+				<key>processInstanceId</key>
+				<value>#{processInstanceId}</value>
+			</element>
+			<element value-type="java.lang.String">
+				<key>rowId</key>
+				<value>#{rowId}</value>
+			</element>
+		</elements>
+	</action>
+
+	<action name="xyz_1002" class="com.glaf.jbpm.action.MxSQLAction">
+		<sql>
+			UPDATE MX_RICH_TEXT SET
+			STATUS_ = 40, WFSTATUS_ = 1002, FALLBACKFLAG_ = '1' 
+			WHERE ID_ = ?
+		</sql>
+		<elements element-type="org.dom4j.Element">
+			<element value-type="java.lang.String">
+				<key>rowId</key>
+				<value>#{rowId}</value>
+			</element>
+		</elements>
+	</action>
+
+	<action name="xyz_5555" class="com.glaf.jbpm.action.MxSQLAction">
+		<sql>
+			UPDATE MX_RICH_TEXT SET STATUS_ = -1, WFSTATUS_ = -5555, FALLBACKFLAG_ = '0'
+			WHERE ID_ = ?
+		</sql>
+		<elements element-type="org.dom4j.Element">
+			<element value-type="java.lang.String">
+				<key>rowId</key>
+				<value>#{rowId}</value>
+			</element>
+		</elements>
+	</action>
+
+	<action name="xyz_9999" class="com.glaf.jbpm.action.MxSQLAction">
+		<sql>
+			UPDATE MX_RICH_TEXT SET PUBLISHFLAG_ = 1, STATUS_ = 50, WFSTATUS_ = 9999
+			WHERE ID_ = ?
+		</sql>
+		<elements element-type="org.dom4j.Element">
+			<element value-type="java.lang.String">
+				<key>rowId</key>
+				<value>#{rowId}</value>
+			</element>
+		</elements>
+	</action>
+
+	<start-state name="启动流程">
+	    <task name="task01" description="启动流程" swimlane="starter">
+			<event type="task-create">
+				<action ref-name="xyz_1000" />
+			</event>
+		</task>
+		<transition to="审核员审核" name="提交审核"></transition>
+	</start-state>
+
+	<task-node name="审核员审核" create-tasks="false" end-tasks="true"
+		signal="last">
+		<event type="node-enter">
+			<action ref-name="create_task02" />
+			<action ref-name="xyz_1002" />
+		</event>
+		<task name="task02" description="审核员审核" >
+			<controller>
+				<variable name="isAgree" access="read,write,required"
+				mapped-name="isAgree" />
+			</controller>
+			<event type="task-end">
+				<action ref-name="EndCounterSigningAction" />
+			</event>
+		</task>
+		<transition to="通过审核？" name="判断"></transition>
+	</task-node>
+
+	<decision name="通过审核？">
+		<transition to="重新修改" name="审核不通过"></transition>
+		<transition to="完成" name="通过">
+		      <condition expression="#{isAgree eq 'true'}" />
+		</transition>
+	</decision>
+
+	<task-node name="重新修改">
+	    <event type="node-enter">
+			<action ref-name="xyz_5555" />
+		</event>
+		<task name="task555" description="重新修改" swimlane="submiter">
+		</task>
+		<transition to="审核员审核" name="重新提交"></transition>
+	</task-node>
+
+	<end-state name="完成">
+	    <event type="node-enter">
+			<action ref-name="xyz_9999" />
+		</event>
+	</end-state>
+
+</process-definition>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<process-definition xmlns="urn:jbpm.org:jpdl-3.2" name="Test">    
+<description>
+Test
+</description>
+<swimlane name="starter">
+<assignment class="com.glaf.jbpm.assignment.MxGeneralAssignment" />
+</swimlane>
+<swimlane name="submiter">
+<assignment class="com.glaf.jbpm.assignment.MxProcessStarterAssignment" />
+</swimlane>
+<action name="create_task1" class="com.glaf.jbpm.action.MxExtensionTaskInstanceAction">
+    <taskName>task1</taskName>
+</action>
+<action name="create_task2" class="com.glaf.jbpm.action.MxExtensionTaskInstanceAction">
+    <taskName>task2</taskName>
+</action>
+
+<action name="formapp_xyz_1000" class="com.glaf.jbpm.action.MxExtensionAction">		
+<extensionName>
+extension_1000
+</extensionName>
+<description>
+【表单自定义】启动流程时执行更新业务表状态
+</description>
+<visible>
+true
+</visible>
+<nodeType>
+start-state
+</nodeType></action>
+<action name="formapp_xyz_1002" class="com.glaf.jbpm.action.MxExtensionAction">		
+<extensionName>
+extension_1002
+</extensionName>
+<description>
+【表单自定义】处理任务中更新业务表状态
+</description>
+<visible>
+true
+</visible>
+<nodeType>
+node,task-node
+</nodeType></action>
+<action name="formapp_xyz_5555" class="com.glaf.jbpm.action.MxExtensionAction">		
+<extensionName>
+extension_5555
+</extensionName>
+<description>
+【表单自定义】处理任务中退回启动者更新业务表状态
+</description>
+<visible>
+true
+</visible>
+<nodeType>
+node,task-node
+</nodeType></action>
+<action name="formapp_xyz_9999" class="com.glaf.jbpm.action.MxExtensionAction">		
+<extensionName>
+extension_9999
+</extensionName>
+<description>
+【表单自定义】流程成功完成更新业务表状态
+</description>
+<visible>
+true
+</visible>
+<nodeType>
+node,end-state
+</nodeType></action>
+<end-state name="结束1">
+<event type="node-enter"><action ref-name="formapp_xyz_9999" />
+</event>
+</end-state>
+<decision name="判断1">
+
+<transition to="任务2" name="任务2">
+<condition expression="#{isAgree == 'false'}"></condition></transition>
+<transition to="结束1" name="connect2">
+<condition expression="#{isAgree == 'true'}"></condition></transition>
+</decision>
+<task-node end-tasks="true" name="任务1" create-tasks="false" signal="first">
+    <event type="node-enter">
+        <action ref-name="create_task1" />
+        <action ref-name="formapp_xyz_1002" />
+    </event>
+    <task name="task1" description="任务1">
+        <controller>
+            <variable name="isAgree" access="read,write,required" mapped-name="isAgree" />
+        </controller>
+        <event type="task-end">
+                    </event>
+    </task>
+
+<transition to="判断1" name="connect1"></transition>
+</task-node>
+<task-node end-tasks="true" name="任务2" create-tasks="false" signal="first">
+    <event type="node-enter">
+        <action ref-name="create_task2" />
+        <action ref-name="formapp_xyz_5555" />
+    </event>
+    <task name="task2" description="任务2">
+        <controller>
+            <variable name="isAgree" access="read,write,required" mapped-name="isAgree" />
+        </controller>
+        <event type="task-end">
+                    </event>
+    </task>
+
+<transition to="任务1" name="任务1"></transition>
+</task-node>
+<start-state name="开始1">
+<task name="task0" description="开始1" swimlane="starter">
+<event type="task-create">
+<action ref-name="formapp_xyz_1000" />
+</event>
+</task>
+<transition to="任务1" name="任务1"></transition>
+</start-state>
+</process-definition>

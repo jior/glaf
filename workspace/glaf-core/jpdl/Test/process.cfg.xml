@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<bpm-cfg type="form-application">
+<taskmgr processName="Test" taskName="task1">
+	<taskMgmtType>0</taskMgmtType>
+	<properties>
+		<property key="queryId">getMembershipUsers</property>
+		<property key="deptId">#{deptId}</property>
+		<property key="roleId">DepartmentManager</property>
+		<property key="isPooled">false</property>
+		<property key="leaveIfNotAvailable">true</property>
+		<property key="transitionName" />
+	</properties>
+</taskmgr>
+<taskmgr processName="Test" taskName="task2">
+	<taskMgmtType>20</taskMgmtType>
+	<properties>
+		<property key="taskMgmtType">20</property>
+	</properties>
+</taskmgr>
+</bpm-cfg>

@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.activiti.persistence.StepInstancePersistence">
+
+	<resultMap id="mxActivityInstanceResultMap" type="com.glaf.activiti.model.ActivityInstance">
+		<id property="id" column="ID_" jdbcType="VARCHAR" />
+		<result property="actorId" column="ACTORID_" jdbcType="VARCHAR" />
+		<result property="processInstanceId" column="PROCESSINSTANCEID_"
+			jdbcType="VARCHAR" />
+		<result property="eventName" column="EVENTNAME_" jdbcType="VARCHAR" />
+		<result property="state" column="STATE_" jdbcType="VARCHAR" />
+		<result property="type" column="TYPE_" jdbcType="VARCHAR" />
+		<result property="outcome" column="OUTCOME_" jdbcType="VARCHAR" />
+		<result property="approve" column="APPROVE_" jdbcType="VARCHAR" />
+		<result property="opinion" column="OPINION_" jdbcType="VARCHAR" />
+		<result property="createTime" column="CREATETIME_" jdbcType="TIMESTAMP" />
+		<result property="endTime" column="ENDTIME_" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<insert id="insertActivityInstance" parameterType="com.glaf.activiti.model.ActivityInstance">
+		insert into
+		MX_ACT_ACTIVITY_INSTANCE (ID_, ACTORID_, PROCESSINSTANCEID_,EVENTNAME_,
+		STATE_,
+		OUTCOME_, APPROVE_, OPINION_, CREATETIME_, ENDTIME_, TYPE_ )
+		values (
+		#{id, jdbcType=VARCHAR},
+		#{actorId, jdbcType=VARCHAR},
+		#{processInstanceId, jdbcType=VARCHAR},
+		#{eventName, jdbcType=VARCHAR},
+		#{state, jdbcType=VARCHAR},
+		#{outcome,
+		jdbcType=VARCHAR},
+		#{approve,
+		jdbcType=VARCHAR},
+		#{opinion, jdbcType=VARCHAR},
+		#{createTime,
+		jdbcType=TIMESTAMP},
+		#{endTime, jdbcType=TIMESTAMP},
+		#{type,
+		jdbcType=VARCHAR} )
+	</insert>
+
+	<delete id="deleteActivityInstanceById" parameterType="string">
+	<![CDATA[		delete from MX_ACT_ACTIVITY_INSTANCE		where ID_ = #{value}
+	]]>
+	</delete>
+
+	<delete id="deleteActivityInstances" parameterType="map">
+		delete from MX_ACT_ACTIVITY_INSTANCE
+		where (
+		ID_ IN
+		<foreach item="x_rowId" index="index" collection="rowIds"
+			open="(" separator="," close=")">
+			#{x_rowId}
+		</foreach>
+		)
+	</delete>
+
+	<sql id="selectActivityInstancesByQueryCriteriaSql">
+		from MX_ACT_ACTIVITY_INSTANCE E
+		<where>
+			<if test="actorId != null and actorId != '' ">
+				and E.ACTORID_ = #{actorId}
+			</if>
+
+			<if test="actorIdLike != null and actorIdLike != '' ">
+				and E.ACTORID_ like #{actorIdLike}
+			</if>
+
+			<if test="actorIds != null and actorIds.size() &gt; 0">
+				and E.ACTORID_ IN
+				<foreach item="x_actorId" index="index" collection="actorIds"
+					open="(" separator="," close=")">
+					#{x_actorId}
+				</foreach>
+			</if>
+
+
+			<if test="processInstanceId != null and processInstanceId != '' ">
+				and E.PROCESSINSTANCEID_ = #{processInstanceId}
+			</if>
+
+			<if
+				test="processInstanceIdLike != null and processInstanceIdLike != '' ">
+				and E.PROCESSINSTANCEID_ like #{processInstanceIdLike}
+			</if>
+
+			<if
+				test="processInstanceIds != null and processInstanceIds.size() &gt; 0">
+				and E.PROCESSINSTANCEID_ IN
+				<foreach item="x_processInstanceId" index="index"
+					collection="processInstanceIds" open="(" separator="," close=")">
+					#{x_processInstanceId}
+				</foreach>
+			</if>
+
+
+			<if test="state != null and state != '' ">
+				and E.STATE_ = #{state}
+			</if>
+
+			<if test="stateLike != null and stateLike != '' ">
+				and E.STATE_ like #{stateLike}
+			</if>
+
+			<if test="outcome != null and outcome != '' ">
+				and E.OUTCOME_ = #{outcome}
+			</if>
+
+			<if test="outcomeLike != null and outcomeLike != '' ">
+				and E.OUTCOME_ like #{outcomeLike}
+			</if>
+
+			<if test="outcomes != null and outcomes.size() &gt; 0">
+				and E.OUTCOME_ IN
+				<foreach item="x_outcome" index="index" collection="outcomes"
+					open="(" separator="," close=")">
+					#{x_outcome}
+				</foreach>
+			</if>
+
+			<if test="approve != null and approve != '' ">
+				and E.APPROVE_ = #{approve}
+			</if>
+
+			<if test="opinion != null and opinion != '' ">
+				and E.OPINION_ = #{opinion}
+			</if>
+
+			<if test="opinionLike != null and opinionLike != '' ">
+				and E.OPINION_ like #{opinionLike}
+			</if>
+
+
+			<if test="createTime != null">
+				and E.CREATETIME_ = #{createTime}
+			</if>
+
+			<if test="createTimeGreaterThanOrEqual != null">
+				and E.CREATETIME_ &gt;= #{createTimeGreaterThanOrEqual}
+			</if>
+
+			<if test="createTimeLessThanOrEqual != null">
+				and E.CREATETIME_ &lt;= #{createTimeLessThanOrEqual}
+			</if>
+
+
+			<if test="endTime != null">
+				and E.ENDTIME_ = #{endTime}
+			</if>
+
+			<if test="endTimeGreaterThanOrEqual != null">
+				and E.ENDTIME_ &gt;= #{endTimeGreaterThanOrEqual}
+			</if>
+
+			<if test="endTimeLessThanOrEqual != null">
+				and E.ENDTIME_ &lt;= #{endTimeLessThanOrEqual}
+			</if>
+
+		</where>
+	</sql>
+
+	<select id="getActivityInstanceById" parameterType="string"
+		resultMap="mxActivityInstanceResultMap">
+		select * from MX_ACT_ACTIVITY_INSTANCE where ID_ = #{value}
+	</select>
+
+	<select id="getActivityInstances" parameterType="map"
+		resultMap="mxActivityInstanceResultMap">
+
+		select E.*
+
+		<include refid="selectActivityInstancesByQueryCriteriaSql" />
+		<if test="orderBy != null">
+			order by ${orderBy}
+		</if>
+
+	</select>
+
+	<select id="getActivityInstanceCount" parameterType="map"
+		resultType="int">
+		select count(*)
+		<include refid="selectActivityInstancesByQueryCriteriaSql" />
+	</select>
+
+</mapper>

@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.core.batch.mapper.JobExecutionMapper">
+
+	<resultMap id="jobExecutionResultMap"	type="com.glaf.core.batch.domain.JobExecution">
+		<id property="jobExecutionId" column="job_execution_id" jdbcType="INTEGER" />
+		<result property="version" column="version" jdbcType="INTEGER"/>
+		<result property="jobInstanceId" column="job_instance_id" jdbcType="INTEGER"/>
+		<result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+		<result property="startTime" column="start_time" jdbcType="TIMESTAMP"/>
+		<result property="endTime" column="end_time" jdbcType="TIMESTAMP"/>
+		<result property="status" column="status" jdbcType="VARCHAR"/>
+		<result property="exitCode" column="exit_code" jdbcType="VARCHAR"/>
+		<result property="exitMessage" column="exit_message" jdbcType="VARCHAR"/>
+		<result property="lastUpdated" column="last_updated" jdbcType="TIMESTAMP"/>
+	</resultMap>
+
+ 
+	<insert id="insertJobExecution" parameterType="com.glaf.core.batch.domain.JobExecution">
+		insert into MX_JOB_EXECUTION 
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+		    job_execution_id
+			<if test="version != null">
+				,version 
+			</if>
+			<if test="jobInstanceId != null">
+				,job_instance_id 
+			</if>
+			<if test="createTime != null">
+				,create_time 
+			</if>
+			<if test="startTime != null">
+				,start_time 
+			</if>
+			<if test="endTime != null">
+				,end_time 
+			</if>
+			<if test="status != null">
+				,status 
+			</if>
+			<if test="exitCode != null">
+				,exit_code 
+			</if>
+			<if test="exitMessage != null">
+				,exit_message 
+			</if>
+			<if test="lastUpdated != null">
+				,last_updated 
+			</if>
+		</trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			  #{jobExecutionId, jdbcType=INTEGER}
+	     
+			<if test="version != null">
+				,#{version, jdbcType=INTEGER}
+			</if>
+			<if test="jobInstanceId != null">
+				,#{jobInstanceId, jdbcType=INTEGER}
+			</if>
+			<if test="createTime != null">
+				,#{createTime, jdbcType=TIMESTAMP}
+			</if>
+			<if test="startTime != null">
+				,#{startTime, jdbcType=TIMESTAMP}
+			</if>
+			<if test="endTime != null">
+				,#{endTime, jdbcType=TIMESTAMP}
+			</if>
+			<if test="status != null">
+				,#{status, jdbcType=VARCHAR}
+			</if>
+			<if test="exitCode != null">
+				,#{exitCode, jdbcType=VARCHAR}
+			</if>
+			<if test="exitMessage != null">
+				,#{exitMessage, jdbcType=VARCHAR}
+			</if>
+			<if test="lastUpdated != null">
+				,#{lastUpdated, jdbcType=TIMESTAMP}
+			</if>
+		</trim>
+	</insert>
+
+	 
+	<update id="updateJobExecution" parameterType="com.glaf.core.batch.domain.JobExecution">
+		update
+		MX_JOB_EXECUTION
+		set
+		<trim prefix="" suffix="" suffixOverrides=",">		
+			<if test="startTime != null">
+				start_time = #{startTime, jdbcType=TIMESTAMP},
+			</if>
+			<if test="endTime != null">
+				end_time = #{endTime, jdbcType=TIMESTAMP},
+			</if>
+			<if test="status != null">
+				status = #{status, jdbcType=VARCHAR},
+			</if>
+			<if test="exitCode != null">
+				exit_code = #{exitCode, jdbcType=VARCHAR},
+			</if>
+			<if test="exitMessage != null">
+				exit_message = #{exitMessage, jdbcType=VARCHAR},
+			</if>
+			<if test="lastUpdated != null">
+				last_updated = #{lastUpdated, jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+		where
+          job_execution_id = #{jobExecutionId, jdbcType=INTEGER}
+		
+	</update>
+
+ 
+	<delete id="deleteJobExecutionById" parameterType="string"> 
+        delete from MX_JOB_EXECUTION
+        where job_execution_id = #{id}
+	</delete>
+	
+
+	<delete id="deleteJobExecutionByJobInstanceId" parameterType="string" >
+		delete from MX_JOB_EXECUTION where job_instance_id = #{jobInstanceId}
+	</delete>
+
+
+	<select id="getJobExecutionById" parameterType="string" resultMap="jobExecutionResultMap">
+		select * from MX_JOB_EXECUTION where job_execution_id = #{id}
+	</select>
+	
+	<select id="getJobExecutionByJobInstanceId" parameterType="string" resultMap="jobExecutionResultMap">
+		select * from MX_JOB_EXECUTION where job_instance_id = #{jobInstanceId}
+	</select>
+
+
+	<select id="getJobExecutionCountBy" 
+		parameterType="map"
+		resultType="int">
+		select count(*)
+		<include refid="selectJobExecutionsSql" />
+	</select>
+
+
+	<select id="getJobExecutionCountByQueryCriteria" 
+		parameterType="com.glaf.core.batch.query.JobExecutionQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectJobExecutionsSql" />
+	</select>
+
+
+	<select id="getJobExecutions" 
+		parameterType="map"
+		resultMap="jobExecutionResultMap">
+		select E.*
+		<include refid="selectJobExecutionsSql" />
+		<if test="orderBy != null">
+		   order by ${orderBy}
+		</if>
+	</select>
+
+	<select id="getJobExecutionsByQueryCriteria" 
+		parameterType="com.glaf.core.batch.query.JobExecutionQuery"
+		resultMap="jobExecutionResultMap">
+		select E.*
+		<include refid="selectJobExecutionsSql" />
+		<if test="orderBy != null">
+		   order by ${orderBy}
+		</if>
+	</select>
+
+
+	<sql id="selectJobExecutionsSql">
+
+		from MX_JOB_EXECUTION E
+		 
+		<where>
+
+		       1 = 1  
+
+			<if test="jobInstanceId != null">
+				and E.job_instance_id = #{jobInstanceId}
+			</if>
+
+			<if test="jobInstanceIds != null and jobInstanceIds.size() &gt; 0">
+			    and E.job_instance_id IN
+				<foreach item="x_jobInstanceId" index="index" collection="jobInstanceIds" 
+					open="(" separator="," close=")">
+                  #{x_jobInstanceId}
+				</foreach>
+			</if>
+
+			<if test="createTimeGreaterThanOrEqual != null">
+				and E.create_time &gt;= #{createTimeGreaterThanOrEqual}
+			</if>
+
+			<if test="createTimeLessThanOrEqual != null">
+				and E.create_time &lt;= #{createTimeLessThanOrEqual}
+			</if>
+
+			<if test="startTimeGreaterThanOrEqual != null">
+				and E.start_time &gt;= #{startTimeGreaterThanOrEqual}
+			</if>
+
+			<if test="startTimeLessThanOrEqual != null">
+				and E.start_time &lt;= #{startTimeLessThanOrEqual}
+			</if>
+
+			<if test="endTimeGreaterThanOrEqual != null">
+				and E.end_time &gt;= #{endTimeGreaterThanOrEqual}
+			</if>
+
+			<if test="endTimeLessThanOrEqual != null">
+				and E.end_time &lt;= #{endTimeLessThanOrEqual}
+			</if>
+	        
+			<if test="status != null and status != '' ">
+				and E.status = #{status}
+			</if>
+
+			<if test="exitCode != null and exitCode != '' ">
+				and E.exit_code = #{exitCode}
+			</if>
+
+			<if test="exitMessageLike != null and exitMessageLike != '' ">
+				and E.exit_message like #{exitMessageLike}
+			</if>
+
+			<if test="lastUpdatedGreaterThanOrEqual != null">
+				and E.last_updated &gt;= #{lastUpdatedGreaterThanOrEqual}
+			</if>
+
+			<if test="lastUpdatedLessThanOrEqual != null">
+				and E.last_updated &lt;= #{lastUpdatedLessThanOrEqual}
+			</if>
+
+		</where>
+	</sql>
+
+</mapper>

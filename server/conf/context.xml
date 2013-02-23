@@ -32,7 +32,7 @@
     <Valve className="org.apache.catalina.valves.CometConnectionManagerValve" />
     -->
 
-	<!-- <Resource name="jdbc/jbpm"
+	<!-- <Resource name="jdbc/glafdb"
           auth="Container"
           type="javax.sql.DataSource"
           factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
@@ -58,7 +58,7 @@
           driverClassName="org.postgresql.Driver"
           url="jdbc:postgresql://127.0.0.1:5432/glaf"/> --> 
 
-		  <Resource name="jdbc/jbpm"
+		  <Resource name="jdbc/glafdb"
           auth="Container"
           type="javax.sql.DataSource"
           factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
@@ -84,7 +84,7 @@
           driverClassName="org.h2.Driver"
           url="jdbc:h2:tcp://localhost/glafdb"/> 
 
-		  <!-- <Resource name="jdbc/jbpm"
+		  <!-- <Resource name="jdbc/glafdb"
           auth="Container"
           type="javax.sql.DataSource"
           factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
@@ -111,7 +111,7 @@
           url="jdbc:mysql://localhost/glaf"/>  -->
 
 
-	<!-- <Resource name="jdbc/jbpm"
+	<!-- <Resource name="jdbc/glafdb"
           auth="Container"
           type="javax.sql.DataSource"
           factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"

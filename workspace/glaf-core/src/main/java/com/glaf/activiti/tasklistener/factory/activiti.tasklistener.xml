@@ -1,0 +1,6 @@
+<taskListeners>
+
+	<taskListener element="extensionTaskInstanceListener"
+		class="com.glaf.activiti.tasklistener.ExtensionTaskCreateListener" />
+
+</taskListeners>

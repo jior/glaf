@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root-container name="ContractTestProcess" width="808" height="571">
+  <node name="启动流程" x="17" y="8" width="132" height="39">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="合同评审确认" x="18" y="164" width="132" height="40">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="重新修改" x="355" y="10" width="132" height="39">
+    <edge>
+      <label x="-28" y="-29"/>
+    </edge>
+  </node>
+  <node name="是否通过？" x="222" y="163" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="签署确认" x="27" y="281" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="生效确认" x="29" y="439" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="是否确认？" x="354" y="280" width="139" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="生效" x="463" y="383" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="废止" x="466" y="467" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="是否生效" x="254" y="438" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="完成" x="649" y="410" width="132" height="36"/>
+</root-container>

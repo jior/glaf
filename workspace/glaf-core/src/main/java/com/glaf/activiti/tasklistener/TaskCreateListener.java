@@ -1,0 +1,152 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.glaf.activiti.tasklistener;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.activiti.engine.delegate.DelegateExecution;
+import org.activiti.engine.delegate.DelegateTask;
+import org.activiti.engine.delegate.Expression;
+import org.activiti.engine.delegate.TaskListener;
+import org.activiti.engine.impl.context.Context;
+import org.activiti.engine.impl.interceptor.CommandContext;
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import com.glaf.core.dao.MyBatisEntityDAO;
+import com.glaf.activiti.util.ExecutionUtils;
+
+public class TaskCreateListener implements TaskListener {
+
+	protected final static Log logger = LogFactory
+			.getLog(TaskCreateListener.class);
+
+	protected Expression statementId;
+
+	protected Expression roleId;
+
+	protected Expression message;
+
+	protected Expression sql;
+
+	public void notify(DelegateTask delegateTask) {
+		logger.debug("----------------------------------------------------");
+		logger.debug("------------------TaskCreateListener----------------");
+		logger.debug("----------------------------------------------------");
+		CommandContext commandContext = Context.getCommandContext();
+		DelegateExecution execution = delegateTask.getExecution();
+		String taskDefinitionKey = delegateTask.getTaskDefinitionKey();
+		logger.debug("taskDefinitionKey:" + taskDefinitionKey);
+		logger.debug("task name:" + delegateTask.getName());
+		logger.debug("dbSqlsession:" + commandContext.getDbSqlSession());
+		logger.debug("sqlsession:"
+				+ commandContext.getDbSqlSession().getSqlSession());
+
+		if (execution != null && taskDefinitionKey != null) {
+			Map<String, Object> paramMap = new HashMap<String, Object>();
+			paramMap.putAll(execution.getVariables());
+			String statement = null;
+			if (statementId != null) {
+				statement = statementId.getExpressionText();
+				logger.debug("statementId:" + statement);
+			}
+			if (roleId != null) {
+				logger.debug("roleId:" + roleId.getExpressionText());
+				paramMap.put("roleId", roleId.getExpressionText());
+			}
+			if (message != null) {
+				logger.debug("message:"
+						+ message.getValue(delegateTask.getExecution()));
+			}
+			if (StringUtils.isNotEmpty(statement)) {
+				MyBatisEntityDAO entityDAO = new MyBatisEntityDAO(
+						commandContext.getDbSqlSession().getSqlSession());
+				List<?> list = entityDAO.getList(statement, paramMap);
+				if (list != null && !list.isEmpty()) {
+					List<String> candidateUsers = new ArrayList<String>();
+					List<String> candidateGroups = new ArrayList<String>();
+					for (Object object : list) {
+						if (object instanceof org.activiti.engine.identity.User) {
+							String actorId = ((org.activiti.engine.identity.User) object)
+									.getId();
+							if (!candidateUsers.contains(actorId)) {
+								candidateUsers.add(actorId);
+							}
+						} else if (object instanceof org.activiti.engine.identity.Group) {
+							String groupId = ((org.activiti.engine.identity.Group) object)
+									.getId();
+							if (!candidateGroups.contains(groupId)) {
+								candidateGroups.add(groupId);
+							}
+						} else if (object instanceof com.glaf.core.identity.User) {
+							String actorId = ((com.glaf.core.identity.User) object)
+									.getActorId();
+							if (!candidateUsers.contains(actorId)) {
+								candidateUsers.add(actorId);
+							}
+						} else if (object instanceof com.glaf.core.identity.Role) {
+							String groupId = String
+									.valueOf(((com.glaf.core.identity.Role) object)
+											.getRoleId());
+							if (!candidateGroups.contains(groupId)) {
+								candidateGroups.add(groupId);
+							}
+						}
+					}
+					logger.debug("candidateUsers:" + candidateUsers);
+					logger.debug("candidateGroups:" + candidateGroups);
+					if (candidateUsers.size() > 0) {
+						if (candidateUsers.size() > 1) {
+							delegateTask.setAssignee(null);
+							delegateTask.addCandidateUsers(candidateUsers);
+						} else {
+							delegateTask.setAssignee(candidateUsers.get(0));
+						}
+					}
+					if (candidateGroups.size() > 0) {
+						delegateTask.addCandidateGroups(candidateGroups);
+					}
+				}
+			}
+		}
+		if (sql != null) {
+			ExecutionUtils.executeSqlUpdate(execution, sql);
+		}
+	}
+
+	public void setSql(Expression sql) {
+		this.sql = sql;
+	}
+
+	public void setMessage(Expression message) {
+		this.message = message;
+	}
+
+	public void setRoleId(Expression roleId) {
+		this.roleId = roleId;
+	}
+
+	public void setStatementId(Expression statementId) {
+		this.statementId = statementId;
+	}
+
+}

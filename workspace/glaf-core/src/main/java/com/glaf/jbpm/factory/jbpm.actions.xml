@@ -1,0 +1,15 @@
+<action-handlers>
+
+	<action-handler element="debugAction"
+		class="com.glaf.jbpm.action.DebugAction" />
+
+	<action-handler element="extensionSQLAction"
+		class="com.glaf.jbpm.action.ExtensionSQLAction" />
+
+	<action-handler element="extensionSqlMapAction"
+		class="com.glaf.jbpm.action.ExtensionSqlMapAction" />
+
+	<action-handler element="extensionTaskInstanceAction"
+		class="com.glaf.jbpm.action.ExtensionTaskInstanceAction" />
+
+</action-handlers>
