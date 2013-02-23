@@ -193,7 +193,7 @@
 		<mapping resource="org/jbpm/taskmgmt/log/SwimlaneAssignLog.hbm.xml" />
 
 		<!--user extension -->
-		<mapping resource="org/jpage/jbpm/model/jbpm.extension.hbm.xml" />
+		<mapping resource="com/glaf/jbpm/model/jbpm.extension.hbm.xml" />
 
 		<!-- ################################### -->
 		<!-- # cache settings # -->
