@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.core.persistence.IdentityMgmtPersistence">
+
+	 
+	<resultMap id="agentResultMap" type="com.glaf.core.identity.AgentImpl">
+		<id property="id" column="id" jdbcType="VARCHAR" />
+		<result property="assignFrom" column="actorId" jdbcType="VARCHAR" />
+		<result property="assignTo" column="agentId" jdbcType="VARCHAR" />
+		<result property="agentType" column="objectValue" jdbcType="VARCHAR" />
+		<result property="processName" column="attribute01" jdbcType="VARCHAR" />
+		<result property="taskName" column="attribute02" jdbcType="VARCHAR" />
+		<result property="objectId" column="objectId" jdbcType="VARCHAR" />
+		<result property="objectValue" column="objectValue" jdbcType="VARCHAR" />
+		<result property="startDate" column="startDate" jdbcType="TIMESTAMP" />
+		<result property="endDate" column="endDate" jdbcType="TIMESTAMP" />
+	</resultMap>
+ 
+	<resultMap id="roleResultMap" type="com.glaf.core.identity.impl.RoleImpl">
+		<id property="roleId" column="id" jdbcType="INTEGER" />
+		<result property="name" column="rolename" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<resultMap id="userResultMap" type="com.glaf.core.identity.impl.UserImpl">
+		<id property="actorId" column="account" jdbcType="VARCHAR" />
+		<result property="activationCode" column="account" jdbcType="VARCHAR" />
+		<result property="name" column="name" jdbcType="VARCHAR" />
+		<result property="deptId" column="deptId" jdbcType="INTEGER" />
+		<result property="mail" column="email" jdbcType="VARCHAR" />
+		<result property="mobile" column="mobile" jdbcType="VARCHAR" />
+	</resultMap>
+
+
+	<select id="getAgents" resultMap="agentResultMap"
+		parameterType="string">
+		SELECT a.*
+		FROM JPAGE_JBPM_AGENT_INSTANCE a
+		WHERE a.actorId = #{assignTo} 
+	</select>
+
+
+	<select id="getMembershipActorIds" resultType="string"
+		parameterType="com.glaf.core.query.MembershipQuery">
+
+		 SELECT u.account as actorId
+		   FROM sys_user u
+		   WHERE u.blocked = 0 AND u.id IN
+				 ( SELECT r.userId  FROM sys_user_role r
+			       WHERE r.authorized = 0 AND r.roleId IN
+						 ( SELECT a.id
+					       FROM sys_dept_role a, sys_role b
+					       WHERE a.sysRoleId = b.id
+
+						   <if test="nodeId != null">
+			                 AND a.deptId = #{nodeId} 
+		                   </if>
+
+						   <if test="roleId != null">
+			                 AND b.code = #{roleId} 
+		                   </if>
+
+						   <if test="roleIds != null and roleIds.size !=0">
+							AND b.code IN
+							<foreach item="x_roleId" index="index" collection="roleIds"
+								open="(" separator="," close=")">
+								#{x_roleId}
+							</foreach>
+						  </if>
+
+						 )
+				)
+
+	</select>
+
+
+	<select id="getMembershipUsers" resultMap="userResultMap"
+		    parameterType="com.glaf.core.query.MembershipQuery">
+
+		   SELECT u.*
+		   FROM sys_user u
+		   WHERE u.blocked = 0 AND u.id IN
+				 ( SELECT r.userId  FROM sys_user_role r
+			       WHERE r.authorized = 0 AND r.roleId IN
+						 ( SELECT a.id
+					       FROM sys_dept_role a, sys_role b
+					       WHERE 1=1
+						   AND  a.sysRoleId = b.id
+ 
+						<if test="roleId != null">
+							AND b.code= #{roleId} 
+						</if>
+
+						<if test="roleIds != null and roleIds.size !=0">
+							AND b.code IN
+							<foreach item="x_roleId" index="index" collection="roleIds"
+									open="(" separator="," close=")">
+								#{x_roleId}
+							</foreach>
+						</if>
+				 
+						<if test="nodeId != null">
+							AND ( a.deptId = #{nodeId} ) 
+						</if>
+
+						<if test="nodeIds != null and nodeIds.size !=0">
+							AND a.deptId IN
+							<foreach item="x_deptId" index="index" collection="nodeIds"
+								open="(" separator="," close=")">
+								#{x_deptId}
+							</foreach>
+						</if>
+                       )
+				)
+	</select>
+
+
+	<select id="getXYDeptRoleUsers" resultMap="userResultMap"
+		    parameterType="com.glaf.core.query.MembershipQuery">
+
+           SELECT u.*
+		   FROM sys_user u
+		   WHERE u.blocked = 0 AND u.id IN
+				 ( SELECT r.userId  FROM sys_user_role r
+			       WHERE r.authorized = 0 AND r.roleId IN
+						 ( SELECT a.id
+					       FROM sys_dept_role a, sys_role b
+					       WHERE 1=1
+						   AND  a.sysRoleId = b.id
+ 
+						<if test="roleId != null">
+							AND b.code= #{roleId} 
+						</if>
+
+						<if test="roleIds != null and roleIds.size !=0">
+							AND b.code IN
+							<foreach item="x_roleId" index="index" collection="roleIds"
+									open="(" separator="," close=")">
+								#{x_roleId}
+							</foreach>
+						</if>
+				 
+						<if test="nodeId != null">
+							AND ( a.deptId = #{nodeId} ) 
+						</if>
+
+						<if test="nodeIds != null and nodeIds.size !=0">
+							AND a.deptId IN
+							<foreach item="x_deptId" index="index" collection="nodeIds"
+								open="(" separator="," close=")">
+								#{x_deptId}
+							</foreach>
+						</if>
+                       )
+				)
+	</select>
+
+
+	<select id="getRoleById" resultMap="roleResultMap" parameterType="int">
+
+		SELECT r.*
+		FROM sys_role r
+		WHERE r.id = #{roleId} 
+
+	</select>
+
+	<select id="getRoleByCode" resultMap="roleResultMap" parameterType="string">
+
+		SELECT r.*
+		FROM sys_role r
+		WHERE r.code = #{code} 
+
+	</select>
+
+
+	<select id="searchUsers" resultMap="userResultMap" parameterType="string">
+
+		SELECT x.* 
+		FROM sys_user x
+		WHERE 1=1 
+		AND (
+		   x.account LIKE #{searchWord}
+		   OR 
+		   x.name LIKE #{searchWord}
+		   OR
+		   x.email LIKE #{searchWord}
+		   OR
+		   x.mobile LIKE #{searchWord}
+		)
+		 
+		ORDER BY x.name ASC
+
+	</select>
+
+
+
+	<select id="getUsers" resultMap="userResultMap"
+		parameterType="com.glaf.core.query.UserQuery">
+
+		SELECT x.*
+		FROM sys_user x
+		WHERE 1=1 
+
+		<choose>
+			<when test="activationCode != null">
+				and x.account = #{activationCode} 
+			</when>
+			<when test="actorId != null">
+				and x.account = #{actorId} 
+			</when>
+			<when test="actorIds != null and actorIds.size !=0">
+				and x.account IN
+				<foreach item="x_actorId" index="index" collection="actorIds"
+					open="(" separator="," close=")">
+					#{x_actorId}
+                </foreach>
+			</when>
+			<when test="deptId != null">
+				AND ( x.deptid = #{deptId} ) 
+			</when>
+			<when test="deptIds != null and deptIds.size !=0">
+				AND x.deptid IN
+				<foreach item="x_deptId" index="index" collection="deptIds"
+					open="(" separator="," close=")">
+					#{x_deptId}
+				</foreach>
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+
+		ORDER BY x.name ASC
+
+	</select>
+
+
+	<select id="getUserById" resultMap="userResultMap" parameterType="string">
+
+		SELECT x.*
+		FROM sys_user x 
+		WHERE x.account = #{actorId}
+
+	</select>
+
+
+	<select id="getRoles" resultMap="roleResultMap"
+		parameterType="com.glaf.core.query.RoleQuery">
+
+		SELECT *
+		FROM sys_role r 
+		WHERE 1=1
+
+		<if test="roleId != null">
+			and ( r.id = #{roleId} )
+		</if>
+
+		<if test="code != null">
+			and ( r.code = #{code} )
+		</if>
+
+		<if test="roleIds != null and roleIds.size !=0">
+			and r.id IN
+			<foreach item="x_roleId" index="index" collection="roleIds"
+				open="(" separator="," close=")">
+				#{x_roleId}
+            </foreach>
+		</if>
+
+	</select>
+
+
+</mapper>
