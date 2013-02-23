@@ -2,7 +2,7 @@ package ${packageName}.web.springmvc;
 
 import java.io.IOException;
 import java.util.*;
- 
+
 import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
@@ -12,13 +12,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.ModelMap;
 import org.json.*;
 
-import com.glaf.core.util.JsonUtils;
 import com.glaf.jbpm.context.ProcessContext;
 import com.glaf.jbpm.datafield.DataField;
-import com.glaf.jbpm.model.*; 
-import com.glaf.jbpm.service.*;
-import com.glaf.jbpm.container.*; 
- 
+import com.glaf.jbpm.model.*;
+import com.glaf.jbpm.container.*;
 
 import com.glaf.base.config.*;
 import com.glaf.base.modules.sys.model.*;
@@ -27,8 +24,6 @@ import com.glaf.base.utils.*;
 
 import ${packageName}.model.*;
 import ${packageName}.query.*;
- 
-
 
 public class ${entityName}WfController extends ${entityName}BaseController {
 	protected static final Log logger = LogFactory
@@ -38,16 +33,14 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 
 	}
 
-
-        @RequestMapping(params = "method=startProcess")
+	@RequestMapping(params = "method=startProcess")
 	public ModelAndView startProcess(HttpServletRequest request,
 			ModelMap modelMap) {
 		SysUser user = RequestUtil.getSysUser(request);
-		String actorId =  user.getAccount();
+		String actorId = user.getAccount();
 		Map<String, Object> params = RequestUtil.getParameterMap(request);
 		String rowId = ParamUtil.getString(params, "rowId");
-		${entityName} ${modelName} = ${modelName}Service
-				.get${entityName}(rowId);
+		${entityName} ${modelName} = ${modelName}Service.get${entityName}(rowId);
 		if (${modelName} != null) {
 			String processName = SystemConfig.getString("${entityName}.processName");
 			if (StringUtils.isEmpty(processName)) {
@@ -59,10 +52,11 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 			ctx.setActorId(actorId);
 			ctx.setTitle(SystemConfig.getString("res_rowId") + ${modelName}.getId());
 			ctx.setProcessName(${modelName}.getProcessName());
-			String processInstanceId = ProcessContainer.getContainer()
+			Object processInstanceId = ProcessContainer.getContainer()
 					.startProcess(ctx);
 			if (processInstanceId == null) {
-				request.setAttribute("error_message", SystemConfig.getString("res_process_start_error"));
+				request.setAttribute("error_message",
+						SystemConfig.getString("res_process_start_error"));
 				return new ModelAndView("/error", modelMap);
 			}
 		}
@@ -70,62 +64,69 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 		return this.list(request, modelMap);
 	}
 
-        @RequestMapping(params = "method=completeTask")
+	@RequestMapping(params = "method=completeTask")
 	public ModelAndView completeTask(HttpServletRequest request,
 			ModelMap modelMap) {
-		SysUser user = RequestUtil
-				.getSysUser(request);
-		String actorId =  user.getAccount();
+		SysUser user = RequestUtil.getSysUser(request);
+		String actorId = user.getAccount();
 		Map<String, Object> params = RequestUtil.getParameterMap(request);
 		String taskInstanceId = ParamUtil.getString(params, "taskInstanceId");
 		String rowId = ParamUtil.getString(params, "rowId");
 		${entityName} ${modelName} = null;
 		if (StringUtils.isNotEmpty(rowId)) {
 			${modelName} = ${modelName}Service.get${entityName}(rowId);
-			if(${modelName} !=null && ${modelName}.getStatus() != 50){ 
-			TaskItem taskItem = ProcessContainer.getContainer().getMinTaskItem(actorId, ${modelName}.getProcessInstanceId());
-			if(taskItem != null && StringUtils.equals(taskItem.getTaskInstanceId(), taskInstanceId)){
-				if (StringUtils.isNotEmpty(${modelName}.getProcessInstanceId())) {
-					String route = request.getParameter("route");
-					String isAgree = request.getParameter("isAgree");
-					String opinion = request.getParameter("opinion");
-					ProcessContext ctx = new ProcessContext();
-					Collection<DataField> datafields = new ArrayList<DataField>();
-					if (StringUtils.isNotEmpty(isAgree)) {
-						DataField datafield = new DataField();
-						datafield.setName("isAgree");
-						datafield.setValue(isAgree);
-						datafields.add(datafield);
+			if (${modelName} != null && ${modelName}.getStatus() != 50) {
+				TaskItem taskItem = ProcessContainer.getContainer()
+						.getMinTaskItem(actorId,
+								Long.parseLong(${modelName}.getProcessInstanceId()));
+				if (taskItem != null
+						&& StringUtils.equals(
+								String.valueOf(taskItem.getTaskInstanceId()),
+								taskInstanceId)) {
+					if (StringUtils.isNotEmpty(${modelName}.getProcessInstanceId())) {
+						String route = request.getParameter("route");
+						String isAgree = request.getParameter("isAgree");
+						String opinion = request.getParameter("opinion");
+						ProcessContext ctx = new ProcessContext();
+						Collection<DataField> datafields = new ArrayList<DataField>();
+						if (StringUtils.isNotEmpty(isAgree)) {
+							DataField datafield = new DataField();
+							datafield.setName("isAgree");
+							datafield.setValue(isAgree);
+							datafields.add(datafield);
+						}
+						if (StringUtils.isNotEmpty(route)) {
+							DataField datafield = new DataField();
+							datafield.setName("route");
+							datafield.setValue(route);
+							datafields.add(datafield);
+						}
+						ctx.setActorId(actorId);
+						ctx.setOpinion(opinion);
+						ctx.setContextMap(params);
+						ctx.setDataFields(datafields);
+						ctx.setTaskInstanceId(Long.parseLong(taskInstanceId));
+						ctx.setProcessInstanceId(Long.parseLong(${modelName}
+								.getProcessInstanceId()));
+						boolean isOK = ProcessContainer.getContainer()
+								.completeTask(ctx);
+						if (!isOK) {
+							request.setAttribute("error_message", SystemConfig
+									.getString("res_complete_task_error"));
+							return new ModelAndView("/error", modelMap);
+						}
 					}
-					if (StringUtils.isNotEmpty(route)) {
-						DataField datafield = new DataField();
-						datafield.setName("route");
-						datafield.setValue(route);
-						datafields.add(datafield);
-					}
-					ctx.setActorId(actorId);
-					ctx.setOpinion(opinion);
-					ctx.setContextMap(params);
-					ctx.setDataFields(datafields);
-					ctx.setTaskInstanceId(taskInstanceId);
-					ctx.setProcessInstanceId(${modelName}.getProcessInstanceId());
-					boolean isOK = ProcessContainer.getContainer().completeTask(ctx);
-					if (!isOK) {
-						request.setAttribute("error_message", SystemConfig.getString("res_complete_task_error"));
-						return new ModelAndView("/error", modelMap);
-					}
-				 }
+				}
 			}
-		  }
 		}
 
 		return this.list(request, modelMap);
 	}
 
-        @RequestMapping(params = "method=edit")
+	@RequestMapping(params = "method=edit")
 	public ModelAndView edit(HttpServletRequest request, ModelMap modelMap) {
 		SysUser user = RequestUtil.getSysUser(request);
-		String actorId =  user.getAccount();
+		String actorId = user.getAccount();
 		RequestUtil.setRequestParameterToAttribute(request);
 		request.removeAttribute("canSubmit");
 		Map<String, Object> params = RequestUtil.getParameterMap(request);
@@ -134,35 +135,33 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 		if (StringUtils.isNotEmpty(rowId)) {
 			${modelName} = ${modelName}Service.get${entityName}(rowId);
 			request.setAttribute("${modelName}", ${modelName});
-			JSONObject rowJSON =  ${modelName}.toJsonObject();
+			JSONObject rowJSON = ${modelName}.toJsonObject();
 			request.setAttribute("x_json", rowJSON.toString('\n'));
 		}
 
-                boolean canUpdate = false;
+		boolean canUpdate = false;
 		boolean canSubmit = false;
 		String x_method = request.getParameter("x_method");
 		if (StringUtils.equals(x_method, "submit")) {
 			if (${modelName} != null
-					&& StringUtils.isNotEmpty(${modelName}
-							.getProcessInstanceId())) {
+					&& StringUtils.isNotEmpty(${modelName}.getProcessInstanceId())) {
 				ProcessContainer container = ProcessContainer.getContainer();
-				Collection<String> processInstanceIds = container
+				Collection<Long> processInstanceIds = container
 						.getRunningProcessInstanceIds(actorId);
-				if (processInstanceIds.contains(${modelName}
-						.getProcessInstanceId())) {
+				if (processInstanceIds.contains(${modelName}.getProcessInstanceId())) {
 					canSubmit = true;
 				}
-				if (${modelName}.getStatus() == 0
-						|| ${modelName}.getStatus() == -1) {
+				if (${modelName}.getStatus() == 0 || ${modelName}.getStatus() == -1) {
 					canUpdate = true;
 				}
-				TaskItem taskItem = container.getMinTaskItem(actorId, ${modelName}
-							.getProcessInstanceId());
-				if(taskItem != null){
-					  request.setAttribute("taskItem", taskItem);
+				TaskItem taskItem = container.getMinTaskItem(actorId,
+						Long.parseLong(${modelName}.getProcessInstanceId()));
+				if (taskItem != null) {
+					request.setAttribute("taskItem", taskItem);
 				}
-                                List<StateInstance> stepInstances = container
-						.getStateInstances(trip.getProcessInstanceId());
+				List<ActivityInstance> stepInstances = container
+						.getActivityInstances(Long.parseLong(${modelName}
+								.getProcessInstanceId()));
 				request.setAttribute("stepInstances", stepInstances);
 				request.setAttribute("stateInstances", stepInstances);
 			} else {
@@ -173,15 +172,14 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 
 		if (StringUtils.containsIgnoreCase(x_method, "update")) {
 			if (${modelName} != null) {
-				if (${modelName}.getStatus() == 0
-						|| ${modelName}.getStatus() == -1) {
+				if (${modelName}.getStatus() == 0 || ${modelName}.getStatus() == -1) {
 					canUpdate = true;
 				}
 			}
 		}
 
-		request.setAttribute("canSubmit",  canSubmit);
-		request.setAttribute("canUpdate",  canUpdate);
+		request.setAttribute("canSubmit", canSubmit);
+		request.setAttribute("canUpdate", canUpdate);
 
 		String view = request.getParameter("view");
 		if (StringUtils.isNotEmpty(view)) {
@@ -196,7 +194,7 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 		return new ModelAndView("/apps/${modelName}/edit", modelMap);
 	}
 
-        @RequestMapping(params = "method=view")
+	@RequestMapping(params = "method=view")
 	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtil.setRequestParameterToAttribute(request);
 		Map<String, Object> params = RequestUtil.getParameterMap(request);
@@ -205,14 +203,15 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 		if (StringUtils.isNotEmpty(rowId)) {
 			${modelName} = ${modelName}Service.get${entityName}(rowId);
 			request.setAttribute("${modelName}", ${modelName});
-			Map<String, Object> dataMap = Tools.getDataMap(${modelName});
-			JSONObject rowJSON =  ${modelName}.toJsonObject();
+ 
+			JSONObject rowJSON = ${modelName}.toJsonObject();
 			request.setAttribute("x_json", rowJSON.toString('\n'));
 
 			if (StringUtils.isNotEmpty(${modelName}.getProcessInstanceId())) {
 				ProcessContainer container = ProcessContainer.getContainer();
-				List<StateInstance> stepInstances = container
-						.getStateInstances(trip.getProcessInstanceId());
+				List<ActivityInstance> stepInstances = container
+						.getActivityInstances(Long.parseLong(${modelName}
+								.getProcessInstanceId()));
 				request.setAttribute("stepInstances", stepInstances);
 				request.setAttribute("stateInstances", stepInstances);
 			}
@@ -231,13 +230,12 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 		return new ModelAndView("/apps/${modelName}/view");
 	}
 
-
 	@RequestMapping(params = "method=json")
 	@ResponseBody
 	public byte[] json(HttpServletRequest request, ModelMap modelMap)
 			throws IOException {
 		SysUser user = RequestUtil.getSysUser(request);
-		String actorId = user.getAccount();
+	 
 		RequestUtil.setRequestParameterToAttribute(request);
 
 		String processName = SystemConfig.getString("${entityName}.processName");
@@ -251,54 +249,55 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 		}
 
 		Map<String, Object> params = RequestUtil.getParameterMap(request);
-		TripQuery query = new TripQuery();
+		${entityName}Query query = new ${entityName}Query();
 		Tools.populate(query, params);
 
 		ProcessContainer container = ProcessContainer.getContainer();
 		if (StringUtils.equals(taskType, "running")) {
-			List<String> processInstanceIds = container
+			List<Long> processInstanceIds = container
 					.getRunningProcessInstanceIdsByName(processName,
 							user.getActorId());
 			if (processInstanceIds != null && processInstanceIds.size() > 0) {
 				query.processInstanceIds(processInstanceIds);
 			} else {
-				processInstanceIds = new ArrayList<String>();
-				processInstanceIds.add("0");
+				processInstanceIds = new ArrayList<Long>();
+				processInstanceIds.add(0L);
 				query.processInstanceIds(processInstanceIds);
 			}
 		} else if (StringUtils.equals(taskType, "finished")) {
-			List<String> processInstanceIds = container
+			List<Long> processInstanceIds = container
 					.getFinishedProcessInstanceIds(processName,
 							user.getActorId());
 			if (processInstanceIds != null && processInstanceIds.size() > 0) {
-				query.processInstanceIds(processInstanceIds); 
+				query.processInstanceIds(processInstanceIds);
 			} else {
-				processInstanceIds = new ArrayList<String>();
-				processInstanceIds.add("0");
+				processInstanceIds = new ArrayList<Long>();
+				processInstanceIds.add(0L);
 				query.processInstanceIds(processInstanceIds);
 			}
 		} else if (StringUtils.equals(taskType, "fallback")) {
-			List<String> processInstanceIds = container
+			List<Long> processInstanceIds = container
 					.getFinishedProcessInstanceIds(processName,
 							user.getActorId());
 			if (processInstanceIds != null && processInstanceIds.size() > 0) {
-				query.processInstanceIds(processInstanceIds); 
+				query.processInstanceIds(processInstanceIds);
 			} else {
-				processInstanceIds = new ArrayList<String>();
-				processInstanceIds.add("0");
-				query.processInstanceIds(processInstanceIds); 
+				processInstanceIds = new ArrayList<Long>();
+				processInstanceIds.add(0L);
+				query.processInstanceIds(processInstanceIds);
 			}
 		} else if (StringUtils.equals(taskType, "worked")) {
-			List<String> processInstanceIds = container
-					.getFinishedProcessInstanceIds(processName, user.getActorId());
+			List<Long> processInstanceIds = container
+					.getFinishedProcessInstanceIds(processName,
+							user.getActorId());
 			if (processInstanceIds != null && processInstanceIds.size() > 0) {
-				query.processInstanceIds(processInstanceIds); 
+				query.processInstanceIds(processInstanceIds);
 			} else {
-				processInstanceIds = new ArrayList<String>();
-				processInstanceIds.add("0");
-				query.processInstanceIds(processInstanceIds); 
+				processInstanceIds = new ArrayList<Long>();
+				processInstanceIds.add(0L);
+				query.processInstanceIds(processInstanceIds);
 			}
-		} 
+		}
 
 		String gridType = ParamUtil.getString(params, "gridType");
 		if (gridType == null) {
@@ -324,7 +323,7 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 		}
 
 		JSONObject result = new JSONObject();
-		int total = tripService.getTripCountByQueryCriteria(query);
+		int total = ${modelName}Service.get${entityName}CountByQueryCriteria(query);
 		if (total > 0) {
 			result.put("total", total);
 			result.put("totalCount", total);
@@ -342,7 +341,7 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 			}
 
 			Map<String, SysUser> userMap = IdentityFactory.getUserMap();
-			List<Trip> list = tripService.getTripsByQueryCriteria(start, limit,
+			List<${entityName}> list = ${modelName}Service.get${entityName}sByQueryCriteria(start, limit,
 					query);
 
 			if (list != null && !list.isEmpty()) {
@@ -350,10 +349,10 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 
 				result.put("rows", rowsJSON);
 
-				for (Trip trip : list) {
-					JSONObject rowJSON = trip.toJsonObject();
-					rowJSON.put("id", trip.getId());
-					rowJSON.put("tripId", trip.getId());
+				for (${entityName} ${modelName} : list) {
+					JSONObject rowJSON = ${modelName}.toJsonObject();
+					rowJSON.put("id", ${modelName}.getId());
+					rowJSON.put("${modelName}Id", ${modelName}.getId());
 
 					rowsJSON.put(rowJSON);
 				}

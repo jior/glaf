@@ -4,19 +4,19 @@
 Test
 </description>
 <swimlane name="starter">
-<assignment class="com.glaf.jbpm.assignment.MxGeneralAssignment" />
+<assignment class="com.glaf.jbpm.assignment.GeneralAssignment" />
 </swimlane>
 <swimlane name="submiter">
-<assignment class="com.glaf.jbpm.assignment.MxProcessStarterAssignment" />
+<assignment class="com.glaf.jbpm.assignment.ProcessStarterAssignment" />
 </swimlane>
-<action name="create_task1" class="com.glaf.jbpm.action.MxExtensionTaskInstanceAction">
+<action name="create_task1" class="com.glaf.jbpm.action.ExtensionTaskInstanceAction">
     <taskName>task1</taskName>
 </action>
-<action name="create_task2" class="com.glaf.jbpm.action.MxExtensionTaskInstanceAction">
+<action name="create_task2" class="com.glaf.jbpm.action.ExtensionTaskInstanceAction">
     <taskName>task2</taskName>
 </action>
 
-<action name="formapp_xyz_1000" class="com.glaf.jbpm.action.MxExtensionAction">		
+<action name="formapp_xyz_1000" class="com.glaf.jbpm.action.ExtensionAction">		
 <extensionName>
 extension_1000
 </extensionName>
@@ -29,7 +29,7 @@ true
 <nodeType>
 start-state
 </nodeType></action>
-<action name="formapp_xyz_1002" class="com.glaf.jbpm.action.MxExtensionAction">		
+<action name="formapp_xyz_1002" class="com.glaf.jbpm.action.ExtensionAction">		
 <extensionName>
 extension_1002
 </extensionName>
@@ -42,7 +42,7 @@ true
 <nodeType>
 node,task-node
 </nodeType></action>
-<action name="formapp_xyz_5555" class="com.glaf.jbpm.action.MxExtensionAction">		
+<action name="formapp_xyz_5555" class="com.glaf.jbpm.action.ExtensionAction">		
 <extensionName>
 extension_5555
 </extensionName>
@@ -55,7 +55,7 @@ true
 <nodeType>
 node,task-node
 </nodeType></action>
-<action name="formapp_xyz_9999" class="com.glaf.jbpm.action.MxExtensionAction">		
+<action name="formapp_xyz_9999" class="com.glaf.jbpm.action.ExtensionAction">		
 <extensionName>
 extension_9999
 </extensionName>

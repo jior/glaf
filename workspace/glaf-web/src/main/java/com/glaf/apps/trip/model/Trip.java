@@ -9,7 +9,7 @@ import org.apache.commons.lang.builder.ToStringStyle;
 import org.json.*;
 
 import com.glaf.core.base.*;
-import com.glaf.base.utils.DateTools;
+import com.glaf.core.util.DateUtils;
 
 @Entity
 @Table(name = "X_APP_TRIP")
@@ -290,32 +290,32 @@ public class Trip implements Serializable, JsonReadable {
                 if (transType != null) {
 		    jsonObject.put("transType", transType);
 		} 
-	        jsonObject.put("applyDate", DateTools.getDateTime(applyDate));
-		jsonObject.put("applyDate_date", DateTools.getDate(applyDate));
-		jsonObject.put("applyDate_datetime", DateTools.getDateTime(applyDate));
-	        jsonObject.put("startDate", DateTools.getDateTime(startDate));
-		jsonObject.put("startDate_date", DateTools.getDate(startDate));
-		jsonObject.put("startDate_datetime", DateTools.getDateTime(startDate));
-	        jsonObject.put("endDate", DateTools.getDateTime(endDate));
-		jsonObject.put("endDate_date", DateTools.getDate(endDate));
-		jsonObject.put("endDate_datetime", DateTools.getDateTime(endDate));
+	        jsonObject.put("applyDate", DateUtils.getDateTime(applyDate));
+		jsonObject.put("applyDate_date", DateUtils.getDate(applyDate));
+		jsonObject.put("applyDate_datetime", DateUtils.getDateTime(applyDate));
+	        jsonObject.put("startDate", DateUtils.getDateTime(startDate));
+		jsonObject.put("startDate_date", DateUtils.getDate(startDate));
+		jsonObject.put("startDate_datetime", DateUtils.getDateTime(startDate));
+	        jsonObject.put("endDate", DateUtils.getDateTime(endDate));
+		jsonObject.put("endDate_date", DateUtils.getDate(endDate));
+		jsonObject.put("endDate_datetime", DateUtils.getDateTime(endDate));
                 jsonObject.put("days", days);
                 jsonObject.put("money", money);
                 if (cause != null) {
 		    jsonObject.put("cause", cause);
 		} 
-	        jsonObject.put("createDate", DateTools.getDateTime(createDate));
-		jsonObject.put("createDate_date", DateTools.getDate(createDate));
-		jsonObject.put("createDate_datetime", DateTools.getDateTime(createDate));
+	        jsonObject.put("createDate", DateUtils.getDateTime(createDate));
+		jsonObject.put("createDate_date", DateUtils.getDate(createDate));
+		jsonObject.put("createDate_datetime", DateUtils.getDateTime(createDate));
                 if (createBy != null) {
 		    jsonObject.put("createBy", createBy);
 		} 
                 if (createByName != null) {
 		    jsonObject.put("createByName", createByName);
 		} 
-	        jsonObject.put("updateDate", DateTools.getDateTime(updateDate));
-		jsonObject.put("updateDate_date", DateTools.getDate(updateDate));
-		jsonObject.put("updateDate_datetime", DateTools.getDateTime(updateDate));
+	        jsonObject.put("updateDate", DateUtils.getDateTime(updateDate));
+		jsonObject.put("updateDate_date", DateUtils.getDate(updateDate));
+		jsonObject.put("updateDate_datetime", DateUtils.getDateTime(updateDate));
                 jsonObject.put("locked", locked);
                 jsonObject.put("deleteFlag", deleteFlag);
                 jsonObject.put("status", status);

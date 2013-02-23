@@ -9,7 +9,6 @@
 <%
 	 
 	String userId = RequestUtil.getActorId(request);
-	String perFix =request.getContextPath();
 	ApplicationBean bean = new ApplicationBean();
 	SysApplicationService sysApplicationService = ContextFactory.getBean("sysApplicationProxy");
     bean.setSysApplicationService(sysApplicationService);

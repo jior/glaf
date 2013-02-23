@@ -10,7 +10,7 @@
 		<property name="mappingLocations">
 			<list>
 				<value>classpath:resources/sqlmap/mapping/**/*.xml</value>
-				<value>classpath:com/**/mapping/*.sqlmap.xml</value>
+				<value>classpath:com/glaf/**/mapping/*.sqlmap.xml</value>
 			</list>
 		</property>
 	</bean>

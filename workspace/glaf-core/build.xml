@@ -46,8 +46,14 @@
 	</target>
 
 	<target name="copy">
-		<copy todir="../dest">
-			<fileset dir="." includes="*.jar"/>
+		<copy todir="../glaf-web/WebContent/WEB-INF/classes">
+			<fileset dir="bin" includes="**/*.class,**/*.properties,com/glaf/**/*.xml" />
+		</copy>
+	</target>
+
+	<target name="copy-jar">
+		<copy todir="../glaf-web/WebContent/WEB-INF/lib">
+			<fileset dir="." includes="glaf-core.jar,glaf-jbpm.jar"/>
 		</copy>
 	</target>
 

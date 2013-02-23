@@ -55,8 +55,8 @@
 		<savePath>/java/web/springmvc</savePath>
 		<saveName>${entityName}WfController.java</saveName>
 		<template>/templates/java/springmvc/WfBaseController.java.ftl</template>
-	</definition>
-	<definition name="Action">
+	</definition> 
+	<!-- <definition name="Action">
 		<savePath>/java/action</savePath>
 		<saveName>${entityName}Action.java</saveName>
 		<template>/templates/java/struts/Action.java.ftl</template>
@@ -80,7 +80,7 @@
 		<savePath>/java/action</savePath>
 		<saveName>${entityName}-struts-config.xml</saveName>
 		<template>/templates/java/struts/struts-apps-config.xml.ftl</template>
-	</definition>
+	</definition> -->
 	<definition name="Test">
 		<savePath>/test/java</savePath>
 		<saveName>${entityName}Test.java</saveName>

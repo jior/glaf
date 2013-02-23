@@ -3,18 +3,18 @@
 <process-definition  xmlns="urn:jbpm.org:jpdl-3.2"  name="ContractTestProcess">
     <description>合同审核流程</description>
 	<swimlane name="starter">
-		<assignment class="com.glaf.jbpm.assignment.MxGeneralAssignment">
+		<assignment class="com.glaf.jbpm.assignment.GeneralAssignment">
 		</assignment>
 	</swimlane>
 
 	<swimlane name="submiter">
 		<assignment
-			class="com.glaf.jbpm.assignment.MxProcessStarterAssignment">
+			class="com.glaf.jbpm.assignment.ProcessStarterAssignment">
 		</assignment>
 	</swimlane>
 
 	<action name="create_task01"
-		class="com.glaf.jbpm.action.MxMyBatisTaskInstanceAction">
+		class="com.glaf.jbpm.action.SqlMapTaskInstanceAction">
 		<leaveNodeIfActorNotAvailable>
 			true
 		</leaveNodeIfActorNotAvailable>
@@ -24,7 +24,7 @@
 	</action>
 
 	<action name="create_task04"
-		class="com.glaf.jbpm.action.MxMyBatisTaskInstanceAction">
+		class="com.glaf.jbpm.action.SqlMapTaskInstanceAction">
 		<leaveNodeIfActorNotAvailable>
 			true
 		</leaveNodeIfActorNotAvailable>
@@ -34,7 +34,7 @@
 	</action>
 	
 		<action name="create_task05"
-		class="com.glaf.jbpm.action.MxMyBatisTaskInstanceAction">
+		class="com.glaf.jbpm.action.SqlMapTaskInstanceAction">
 		<leaveNodeIfActorNotAvailable>
 			true
 		</leaveNodeIfActorNotAvailable>
@@ -43,7 +43,7 @@
 		<roleId>R_ST5</roleId>
 	</action>
 	
-	<action name="xyz_1000" class="com.glaf.jbpm.action.MxNativeSQLAction">
+	<action name="xyz_1000" class="com.glaf.jbpm.action.HibernateNativeSQLAction">
 		<sql>
 			UPDATE TEST_CONTRACT 
 			SET SPROCESSNAME = 'ContractTestProcess',
@@ -52,7 +52,7 @@
 		</sql>
 	</action>
 
-	<action name="xyz_1002" class="com.glaf.jbpm.action.MxNativeSQLAction">
+	<action name="xyz_1002" class="com.glaf.jbpm.action.HibernateNativeSQLAction">
 		<sql>
 			UPDATE TEST_CONTRACT  SET
 			ISTATUS = 10, IRETURNFLAG = 0, IWFSTATUS = 1002 
@@ -60,7 +60,7 @@
 		</sql>
 	</action>
 	
-	<action name="xyz_1004" class="com.glaf.jbpm.action.MxNativeSQLAction">
+	<action name="xyz_1004" class="com.glaf.jbpm.action.HibernateNativeSQLAction">
 		<sql>
 			UPDATE TEST_CONTRACT  SET
 			ISTATUS = 20,IRETURNFLAG = 0, IWFSTATUS = 1004 
@@ -68,7 +68,7 @@
 		</sql>
 	</action>
 
-	<action name="xyz_1004x" class="com.glaf.jbpm.action.MxNativeSQLAction">
+	<action name="xyz_1004x" class="com.glaf.jbpm.action.HibernateNativeSQLAction">
 		<sql>
 			UPDATE TEST_CONTRACT  SET
 			ISTATUS = 30, DSIGNATUREDATE = ${signatureDate}, IRETURNFLAG = 0, IWFSTATUS = 1004 
@@ -77,7 +77,7 @@
 	</action>
 
 
-	<action name="xyz_5555" class="com.glaf.jbpm.action.MxNativeSQLAction">
+	<action name="xyz_5555" class="com.glaf.jbpm.action.HibernateNativeSQLAction">
 		<sql>
 			UPDATE TEST_CONTRACT  SET
 			ISTATUS = 0, IRETURNFLAG = 1, IWFSTATUS = -5555 
@@ -86,7 +86,7 @@
 	</action>
 
 
-	<action name="xyz_9999" class="com.glaf.jbpm.action.MxNativeSQLAction">
+	<action name="xyz_9999" class="com.glaf.jbpm.action.HibernateNativeSQLAction">
 		<sql>
 			UPDATE TEST_CONTRACT  SET
 			ISTATUS = 40,SEFFECTIVEAUDITOR = ${effectiveAuditor}, IRETURNFLAG = 0, IWFSTATUS = 9999 
@@ -94,7 +94,7 @@
 		</sql>
 	</action>
 	
-	<action name="xyz_9" class="com.glaf.jbpm.action.MxNativeSQLAction">
+	<action name="xyz_9" class="com.glaf.jbpm.action.HibernateNativeSQLAction">
 		<sql>
 			UPDATE TEST_CONTRACT  SET
 			ISTATUS = -1, IRETURNFLAG = 0, IWFSTATUS = 9999 

@@ -4,15 +4,9 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" >
 
-	<welcome-file-list>
-		<welcome-file>index.jsp</welcome-file>
-	</welcome-file-list>
-  
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>
-		    /WEB-INF/conf/spring/spring-config.xml
-		</param-value>
+		<param-value>/WEB-INF/conf/spring/spring-config.xml</param-value>
 	</context-param>
 
 	<listener>
@@ -167,7 +161,6 @@
 		<load-on-startup>2</load-on-startup>
 	</servlet>
 
-
 	<servlet>
 		<servlet-name>dispatcher</servlet-name>
 		<servlet-class>com.glaf.base.servlet.SpringDispatcherServlet</servlet-class>
@@ -179,7 +172,7 @@
 		<url-pattern>*.do</url-pattern>
 	</servlet-mapping> 
   
-	<!--jbpm workflow configure-->
+	<!--glaf core platform configure-->
 
 	<servlet >
 		<servlet-name>glaf</servlet-name>
@@ -202,6 +195,10 @@
 		<servlet-name>resteasy</servlet-name>
 		<url-pattern>/rs/*</url-pattern>
 	</servlet-mapping>
+
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
  
 	<error-page> 
 		<exception-type>com.glaf.base.modules.sys.interceptor.AuthorizeException</exception-type> 

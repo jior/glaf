@@ -48,10 +48,11 @@
 			   });
 
 			}else{
+				alert('启动流程 startProcess.jsp?rowId='+selected.ID_);
 				jQuery.ajax({
 					   type: "POST",
 					   url: 'startProcess.jsp?rowId='+selected.ID_,
-					   dataType:  'json',
+					   dataType: 'json',
 					   error: function(data){
 						   alert(data.message);
 						   location.href="index.jsp";
@@ -75,7 +76,7 @@
 		var selected = jQuery('#dg').datagrid('getSelected');
 		if (selected){
 	       if(selected.PROCESSINSTANCEID_ != ''){
-              window.open('<%=request.getContextPath()%>/workflow/processMonitorController.jspa?method=stateInstances&processInstanceId='+selected.PROCESSINSTANCEID_);
+              window.open('<%=request.getContextPath()%>/mx/jbpm/task/task?processInstanceId='+selected.PROCESSINSTANCEID_);
 		   }  
 		}else {
 			 alert("请选择一条记录。");
@@ -89,7 +90,7 @@
 	}
 
 	function deployJpdl(){
-		window.open('<%=request.getContextPath()%>/workflow/deployController.jspa');
+		window.open('<%=request.getContextPath()%>/mx/jbpm/deploy');
 	}
    
 </script>
@@ -104,7 +105,6 @@
 	<input type="button" name="btn4" value="发布流程包" onclick="javascript:deployJpdl();" />
 	（注：在流程监控图中可以看到参与者。）
     
-
  	<table id="dg" title="列表数据" class="easyui-datagrid" style="width:800px;height:380px"
 			url="get_data.jsp" pagination="true" rownumbers="true" fitColumns="true" singleSelect="true">
 		<thead>

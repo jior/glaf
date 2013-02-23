@@ -90,7 +90,7 @@ public class MxJbpmProcessTreeController {
 				result = graphSession
 						.findAllProcessDefinitionVersions(process_name);
 			} else {
-				result = graphSession.findLatestProcessDefinitions();
+				result = graphSession.findAllProcessDefinitions();
 			}
 			if (StringUtils.isNotEmpty(processDefinitionId)
 					&& StringUtils.isNumeric(processDefinitionId)) {
@@ -154,7 +154,7 @@ public class MxJbpmProcessTreeController {
 					result = graphSession
 							.findAllProcessDefinitionVersions(processName);
 				} else {
-					result = graphSession.findLatestProcessDefinitions();
+					result = graphSession.findAllProcessDefinitions();
 				}
 			}
 			modelMap.put("rows", result);

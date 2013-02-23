@@ -119,8 +119,11 @@ public class JbpmProcessImageTag extends TagSupport {
 				new String(gpdBytes)).getRootElement();
 		int[] boxConstraint;
 		int[] imageDimension = extractImageDimension(rootDiagramElement);
-		String imagePath = contextPath
-				+ ViewProperties.getString("jbpm.processImageUrl");
+		String imagePath = contextPath + "/mx/jbpm/image";
+		if (ViewProperties.getString("jbpm.processImageUrl") != null) {
+			imagePath = contextPath
+					+ ViewProperties.getString("jbpm.processImageUrl");
+		}
 		String imageLink = imagePath + "?processDefinitionId="
 				+ processDefinition.getId();
 		JspWriter jspOut = pageContext.getOut();

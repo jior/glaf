@@ -5,31 +5,31 @@
     <description>简单测试流程</description>
 
     <swimlane name="starter">
-		<assignment class="com.glaf.jbpm.assignment.MxGeneralAssignment">
+		<assignment class="com.glaf.jbpm.assignment.GeneralAssignment">
 		</assignment>
 	</swimlane>
 
 	<swimlane name="submiter">
 		<assignment
-			class="com.glaf.jbpm.assignment.MxProcessStarterAssignment">
+			class="com.glaf.jbpm.assignment.ProcessStarterAssignment">
 		</assignment>
 	</swimlane>
 
 	<action name="create_task02"
-		class="com.glaf.jbpm.action.MxDynamicTaskInstances">
+		class="com.glaf.jbpm.action.DynamicTaskInstances">
 		<dynamicActors>Auditor1</dynamicActors>
 		<taskName>task02</taskName>
 	</action>
 
 
 	<action name="create_task03"
-		class="com.glaf.jbpm.action.MxDynamicTaskInstances">
+		class="com.glaf.jbpm.action.DynamicTaskInstances">
 		<dynamicActors>Auditor2</dynamicActors>
 		<taskName>task03</taskName>
 	</action>
 
 	<action name="EndCounterSigningAction"
-		class="com.glaf.jbpm.action.MxEndCounterSigningAction">
+		class="com.glaf.jbpm.action.EndCounterSigningAction">
 		<expression>#{isAgree eq 'false'}</expression>
 	</action>
 

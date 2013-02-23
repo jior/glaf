@@ -4,29 +4,29 @@
     <description>新闻发布流程</description>
 
     <swimlane name="starter">
-		<assignment class="com.glaf.jbpm.assignment.MxGeneralAssignment">
+		<assignment class="com.glaf.jbpm.assignment.GeneralAssignment">
 		</assignment>
 	</swimlane>
 
 	<swimlane name="submiter">
 		<assignment
-			class="com.glaf.jbpm.assignment.MxProcessStarterAssignment">
+			class="com.glaf.jbpm.assignment.ProcessStarterAssignment">
 		</assignment>
 	</swimlane>
 
 	<action name="create_task02"
-		class="com.glaf.jbpm.action.MxMyBatisTaskInstanceAction">
+		class="com.glaf.jbpm.action.SqlMapTaskInstanceAction">
 		<taskName>task02</taskName>
 		<queryId>getMembershipUsers</queryId>
 		<roleId>Auditor</roleId>
 	</action>
 
 	<action name="EndCounterSigningAction"
-		class="com.glaf.jbpm.action.MxEndCounterSigningAction">
+		class="com.glaf.jbpm.action.EndCounterSigningAction">
 		<expression>#{isAgree eq 'false'}</expression>
 	</action>
 
-	<action name="xyz_1000" class="com.glaf.jbpm.action.MxSQLAction">
+	<action name="xyz_1000" class="com.glaf.jbpm.action.SQLAction">
 		<sql>
 			UPDATE MX_RICH_TEXT 
 			SET PROCESSNAME_='PublicInfoProcess',
@@ -45,7 +45,7 @@
 		</elements>
 	</action>
 
-	<action name="xyz_1002" class="com.glaf.jbpm.action.MxSQLAction">
+	<action name="xyz_1002" class="com.glaf.jbpm.action.SQLAction">
 		<sql>
 			UPDATE MX_RICH_TEXT SET
 			STATUS_ = 40, WFSTATUS_ = 1002, FALLBACKFLAG_ = '1' 
@@ -59,7 +59,7 @@
 		</elements>
 	</action>
 
-	<action name="xyz_5555" class="com.glaf.jbpm.action.MxSQLAction">
+	<action name="xyz_5555" class="com.glaf.jbpm.action.SQLAction">
 		<sql>
 			UPDATE MX_RICH_TEXT SET STATUS_ = -1, WFSTATUS_ = -5555, FALLBACKFLAG_ = '0'
 			WHERE ID_ = ?
@@ -72,7 +72,7 @@
 		</elements>
 	</action>
 
-	<action name="xyz_9999" class="com.glaf.jbpm.action.MxSQLAction">
+	<action name="xyz_9999" class="com.glaf.jbpm.action.SQLAction">
 		<sql>
 			UPDATE MX_RICH_TEXT SET PUBLISHFLAG_ = 1, STATUS_ = 50, WFSTATUS_ = 9999
 			WHERE ID_ = ?

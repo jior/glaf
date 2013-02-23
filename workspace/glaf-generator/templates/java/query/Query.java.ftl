@@ -1,13 +1,14 @@
 package ${packageName}.query;
 
 import java.util.*;
-import com.glaf.base.query.DataQuery;
+import com.glaf.core.query.DataQuery;
 
 public class ${entityName}Query extends DataQuery {
         private static final long serialVersionUID = 1L;
 	protected List<${idField.type}> rowIds;
  <#if pojo_fields?exists>
-    <#list  pojo_fields as field>	
+    <#list  pojo_fields as field>
+     <#if field.name != 'processInstanceId'>
       <#if field.type?exists && ( field.type== 'Integer' || field.type== 'Long' || field.type== 'Double' || field.type== 'Date')>
   	protected ${field.type} ${field.firstLowerName};
   	protected ${field.type} ${field.firstLowerName}GreaterThanOrEqual;
@@ -20,6 +21,7 @@ public class ${entityName}Query extends DataQuery {
   	protected ${field.type} ${field.firstLowerName}Like;
   	protected List<${field.type}> ${field.firstLowerName}s;
        </#if>
+      </#if>
     </#list>
 </#if>
 
@@ -28,7 +30,8 @@ public class ${entityName}Query extends DataQuery {
     }
 
  <#if pojo_fields?exists>
-    <#list  pojo_fields as field>	
+    <#list  pojo_fields as field>
+      <#if field.name != 'processInstanceId'>
         <#if field.type?exists && ( field.type== 'Integer' || field.type== 'Long' || field.type== 'Double' || field.type== 'Date')>
 
     public ${field.type} get${field.firstUpperName}(){
@@ -76,28 +79,14 @@ public class ${entityName}Query extends DataQuery {
     }
 
 	</#if>
+      </#if>
     </#list>
 </#if>
 
-    public List<${idField.type}> getRowIds() {
-        return rowIds;
-    }
-
-    public void setRowIds(List<${idField.type}> rowIds) {
-        this.rowIds = rowIds;
-    }
-
-    public ${entityName}Query rowIds(List<${idField.type}> rowIds) {
-	if (rowIds == null) {
-	    throw new RuntimeException("rowIds is empty ");
-	 }
-        this.rowIds = rowIds;
-        return this;
-    }
-
-
+ 
  <#if pojo_fields?exists>
-    <#list  pojo_fields as field>	
+    <#list  pojo_fields as field>
+      <#if field.name != 'processInstanceId'>
         <#if field.type?exists && ( field.type== 'Integer' || field.type== 'Long' || field.type== 'Double' || field.type== 'Date')>
 
     public void set${field.firstUpperName}(${field.type} ${field.firstLowerName}){
@@ -137,12 +126,14 @@ public class ${entityName}Query extends DataQuery {
     }
 
         </#if>
+      </#if>
     </#list>
 </#if>
 
 
  <#if pojo_fields?exists>
-    <#list  pojo_fields as field>	
+    <#list  pojo_fields as field>
+      <#if field.name != 'processInstanceId'>
         <#if field.type?exists && ( field.type== 'Integer' || field.type== 'Long' || field.type== 'Double' || field.type== 'Date')>
 
     public ${entityName}Query ${field.firstLowerName}(${field.type} ${field.firstLowerName}){
@@ -214,6 +205,7 @@ public class ${entityName}Query extends DataQuery {
     }
 
         </#if>
+      </#if>
     </#list>
 </#if>
 

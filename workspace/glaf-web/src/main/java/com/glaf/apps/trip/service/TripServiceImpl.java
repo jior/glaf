@@ -59,7 +59,7 @@ public class TripServiceImpl implements TripService {
 		return list;
 	}
 
-        
+         
 	public int getTripCountByQueryCriteria(TripQuery query) {
 		return tripMapper.getTripCount(query);
 	}

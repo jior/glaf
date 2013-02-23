@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@SuppressWarnings("rawtypes")
 public class DataQuery extends BaseQuery {
 	private static final long serialVersionUID = 1L;
 	protected String businessKey;
@@ -29,7 +30,7 @@ public class DataQuery extends BaseQuery {
 	protected String processName;
 	protected String processNameLike;
 	protected List<String> processNames;
-	protected String processInstanceId;
+	protected Object processInstanceId;
 	protected Integer parentId;
 	protected String objectId;
 	protected String objectValue;
@@ -48,9 +49,9 @@ public class DataQuery extends BaseQuery {
 	protected Date afterCreateDate;
 	protected boolean processInstanceIsNotNull;
 	protected boolean processInstanceIsNull;
-	protected List<String> rowIds = new ArrayList<String>();
+
 	protected List<Integer> parentIds = new ArrayList<Integer>();
-	protected List<String> processInstanceIds = new ArrayList<String>();
+	protected List processInstanceIds = new ArrayList();
 	protected String sortColumn;
 
 	public DataQuery() {
@@ -147,11 +148,11 @@ public class DataQuery extends BaseQuery {
 		return parentIds;
 	}
 
-	public String getProcessInstanceId() {
+	public Object getProcessInstanceId() {
 		return processInstanceId;
 	}
 
-	public List<String> getProcessInstanceIds() {
+	public List getProcessInstanceIds() {
 		return processInstanceIds;
 	}
 
@@ -165,10 +166,6 @@ public class DataQuery extends BaseQuery {
 
 	public List<String> getProcessNames() {
 		return processNames;
-	}
-
-	public List<String> getRowIds() {
-		return rowIds;
 	}
 
 	public String getSortColumn() {
@@ -259,7 +256,7 @@ public class DataQuery extends BaseQuery {
 		return this;
 	}
 
-	public BaseQuery processInstanceIds(List<String> processInstanceIds) {
+	public BaseQuery processInstanceIds(List processInstanceIds) {
 		if (processInstanceIds == null) {
 			throw new RuntimeException("Process instance id is null");
 		}
@@ -288,14 +285,6 @@ public class DataQuery extends BaseQuery {
 			throw new RuntimeException("processNames is empty ");
 		}
 		this.processNames = processNames;
-		return this;
-	}
-
-	public BaseQuery rowIds(List<String> rowIds) {
-		if (rowIds == null) {
-			throw new RuntimeException("rowIds is null");
-		}
-		this.rowIds = rowIds;
 		return this;
 	}
 
@@ -343,7 +332,7 @@ public class DataQuery extends BaseQuery {
 		this.processInstanceId = processInstanceId;
 	}
 
-	public void setProcessInstanceIds(List<String> processInstanceIds) {
+	public void setProcessInstanceIds(List<Object> processInstanceIds) {
 		this.processInstanceIds = processInstanceIds;
 	}
 
@@ -365,10 +354,6 @@ public class DataQuery extends BaseQuery {
 
 	public void setProcessNames(List<String> processNames) {
 		this.processNames = processNames;
-	}
-
-	public void setRowIds(List<String> rowIds) {
-		this.rowIds = rowIds;
 	}
 
 	public void setSortColumn(String sortColumn) {

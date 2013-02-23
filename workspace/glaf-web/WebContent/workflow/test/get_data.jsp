@@ -10,7 +10,7 @@
 	PreparedStatement psmt = null;
 	ResultSet rs = null;
 	try {
-		con = com.glaf.base.context.ContextFactory.getConnection();
+		con = com.glaf.core.context.ContextFactory.getConnection();
 		psmt = con.prepareStatement(" select * from Test order by ID_ asc ");
 		rs = psmt.executeQuery();
 		int total = 0;
@@ -31,8 +31,8 @@
 	} catch (Exception ex) {
 		ex.printStackTrace();
 	} finally {
-		org.jpage.util.JdbcUtil.close(rs);
-		org.jpage.util.JdbcUtil.close(psmt);
-		org.jpage.util.JdbcUtil.close(con);
+		com.glaf.core.util.JdbcUtils.close(rs);
+		com.glaf.core.util.JdbcUtils.close(psmt);
+		com.glaf.core.util.JdbcUtils.close(con);
 	}
 %>

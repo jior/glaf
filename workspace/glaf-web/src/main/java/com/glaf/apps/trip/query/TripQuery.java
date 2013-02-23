@@ -61,9 +61,6 @@ public class TripQuery extends DataQuery {
   	protected String processName;
   	protected String processNameLike;
   	protected List<String> processNames;
-  	protected String processInstanceId;
-  	protected String processInstanceIdLike;
-  	protected List<String> processInstanceIds;
 
     public TripQuery() {
 
@@ -345,44 +342,7 @@ public class TripQuery extends DataQuery {
     }
 
 
-    public String getProcessInstanceId(){
-        return processInstanceId;
-    }
-
-    public String getProcessInstanceIdLike(){
-	    if (processInstanceIdLike != null && processInstanceIdLike.trim().length() > 0) {
-		if (!processInstanceIdLike.startsWith("%")) {
-		    processInstanceIdLike = "%" + processInstanceIdLike;
-		}
-		if (!processInstanceIdLike.endsWith("%")) {
-		   processInstanceIdLike = processInstanceIdLike + "%";
-		}
-	    }
-	return processInstanceIdLike;
-    }
-
-    public List<String> getProcessInstanceIds(){
-	return processInstanceIds;
-    }
-
-
-    public List<String> getRowIds() {
-        return rowIds;
-    }
-
-    public void setRowIds(List<String> rowIds) {
-        this.rowIds = rowIds;
-    }
-
-    public TripQuery rowIds(List<String> rowIds) {
-	if (rowIds == null) {
-	    throw new RuntimeException("rowIds is empty ");
-	 }
-        this.rowIds = rowIds;
-        return this;
-    }
-
-
+ 
 
     public void setTransType(String transType){
         this.transType = transType;
@@ -616,19 +576,6 @@ public class TripQuery extends DataQuery {
 
     public void setProcessNames(List<String> processNames){
         this.processNames = processNames;
-    }
-
-
-    public void setProcessInstanceId(String processInstanceId){
-        this.processInstanceId = processInstanceId;
-    }
-
-    public void setProcessInstanceIdLike( String processInstanceIdLike){
-	this.processInstanceIdLike = processInstanceIdLike;
-    }
-
-    public void setProcessInstanceIds(List<String> processInstanceIds){
-        this.processInstanceIds = processInstanceIds;
     }
 
 
@@ -1085,31 +1032,6 @@ public class TripQuery extends DataQuery {
             throw new RuntimeException("processNames is empty ");
         }
         this.processNames = processNames;
-        return this;
-    }
-
-
-    public TripQuery processInstanceId(String processInstanceId){
-	if (processInstanceId == null) {
-	    throw new RuntimeException("processInstanceId is null");
-        }         
-	this.processInstanceId = processInstanceId;
-	return this;
-    }
-
-    public TripQuery processInstanceIdLike( String processInstanceIdLike){
-        if (processInstanceIdLike == null) {
-            throw new RuntimeException("processInstanceId is null");
-        }
-        this.processInstanceIdLike = processInstanceIdLike;
-        return this;
-    }
-
-    public TripQuery processInstanceIds(List<String> processInstanceIds){
-        if (processInstanceIds == null) {
-            throw new RuntimeException("processInstanceIds is empty ");
-        }
-        this.processInstanceIds = processInstanceIds;
         return this;
     }
 

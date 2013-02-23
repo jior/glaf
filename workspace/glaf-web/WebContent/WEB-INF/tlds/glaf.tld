@@ -11,6 +11,47 @@
   <uri>http://www.glaf.com/tags</uri>
 
 
+  	<!-- PROCESS IMAGE -->
+	<tag>
+		<name>processimage</name>
+		<tag-class>com.glaf.jbpm.tag.JbpmProcessImageTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<name>processInstanceId</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<!-- InfoPageTag PAGE TAG -->
+	<tag>
+		<name>paging</name>
+		<tag-class>com.glaf.core.tag.InfoPageTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<name>form</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>display</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>name</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>prefix</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+ 
+
+
   <!-- Permission -->
     <tag>
 	<name>permission</name>

@@ -1,11 +1,12 @@
 <%@ page contentType="text/plain;charset=UTF-8" %>
 <%@ page import="java.util.*" %>
 <%@ page import="org.apache.commons.lang.*" %>
-<%@ page import="org.jpage.jbpm.model.*" %>
-<%@ page import="org.jpage.jbpm.context.*" %>
-<%@ page import="org.jpage.jbpm.service.*" %>
-<%@ page import="org.jpage.jbpm.datafield.*" %>
-<%@ page import="org.jpage.util.*" %>
+<%@ page import="com.glaf.jbpm.model.*" %>
+<%@ page import="com.glaf.jbpm.context.*" %>
+<%@ page import="com.glaf.jbpm.container.*" %>
+<%@ page import="com.glaf.jbpm.service.*" %>
+<%@ page import="com.glaf.jbpm.datafield.*" %>
+<%@ page import="com.glaf.core.util.*" %>
 <%
         ProcessContainer container = ProcessContainer.getContainer();
  		String rowId = request.getParameter("rowId");

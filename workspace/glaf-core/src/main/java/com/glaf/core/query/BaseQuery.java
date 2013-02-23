@@ -29,11 +29,12 @@ import com.glaf.core.identity.User;
 
 import com.glaf.core.util.Paging;
 
+@SuppressWarnings("rawtypes")
 public class BaseQuery extends AbstractQuery<Object> {
 	private static final long serialVersionUID = 1L;
 	protected String actorId;
 	protected String createBy;
-	List<String> rowIds = new ArrayList<String>();
+	List rowIds = new ArrayList();
 	protected List<String> actorIds = new ArrayList<String>();
 	protected User loginContext;
 	protected boolean isFilterPermission = true;
@@ -183,7 +184,7 @@ public class BaseQuery extends AbstractQuery<Object> {
 		return parameter;
 	}
 
-	public List<String> getRowIds() {
+	public List getRowIds() {
 		return rowIds;
 	}
 
@@ -216,7 +217,7 @@ public class BaseQuery extends AbstractQuery<Object> {
 		return this;
 	}
 
-	public BaseQuery rowIds(List<String> rowIds) {
+	public BaseQuery rowIds(List rowIds) {
 		if (rowIds == null) {
 			throw new RuntimeException("rowIds is null");
 		}
@@ -272,7 +273,7 @@ public class BaseQuery extends AbstractQuery<Object> {
 		this.parameter = parameter;
 	}
 
-	public void setRowIds(List<String> rowIds) {
+	public void setRowIds(List rowIds) {
 		this.rowIds = rowIds;
 	}
 

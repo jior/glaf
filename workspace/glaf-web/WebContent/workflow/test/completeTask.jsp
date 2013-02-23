@@ -1,5 +1,6 @@
-<%@ page contentType="text/plain;charset=UTF-8" %><%@ page import="java.util.*" %><%@ page import="org.apache.commons.lang.*" %><%@ page import="org.jpage.jbpm.model.*" %><%@ page import="org.jpage.jbpm.context.*" %><%@ page import="org.jpage.jbpm.service.*" %><%@ page import="org.jpage.jbpm.datafield.*" %><%@ page import="org.jpage.util.*" %><%
-        RequestUtil.setRequestParameterToAttribute(request);
+<%@ page contentType="text/plain;charset=UTF-8" %><%@ page import="java.util.*" %><%@ page import="org.apache.commons.lang.*" %><%@ page import="com.glaf.jbpm.model.*" %><%@ page import="com.glaf.jbpm.context.*" %><%@ page import="com.glaf.jbpm.container.*" %><%@ page import="com.glaf.jbpm.service.*" %><%@ page import="com.glaf.jbpm.datafield.*" %><%@ page import="com.glaf.core.util.*" %><%
+        //http://127.0.0.1:8080/glaf//workflow/test/completeTask.jsp?processInstanceId=9
+        RequestUtils.setRequestParameterToAttribute(request);
         Map params = new HashMap();
 		String isAgree = request.getParameter("isAgree");
 		String actorId = request.getParameter("actorId");
@@ -52,13 +53,15 @@
 		        ProcessContainer container = ProcessContainer.getContainer();
  				ProcessContext ctx = new ProcessContext();
 				ctx.setActorId(actorId);
-				ctx.setProcessInstanceId(processInstanceId);
+				ctx.setProcessInstanceId(Long.parseLong(processInstanceId));
 				ctx.setDataFields(dataFields);
 				boolean isOK = container.completeTask(ctx);
 				if(isOK){
+					System.out.println("{message:\"成功！\"}");
 					out.println("{message:\"成功！\"}");
 				    out.flush();
 				} else {
+					System.out.println("{message:\"失败！\"}");
 					out.println("{message:\"失败！\"}");
 				    out.flush();
 				}
