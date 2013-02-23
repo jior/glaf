@@ -49,13 +49,13 @@ import com.glaf.base.modules.sys.service.SysDeptRoleService;
 import com.glaf.base.modules.sys.service.SysRoleService;
 import com.glaf.base.modules.sys.service.SysTreeService;
 import com.glaf.base.modules.sys.service.SysUserService;
-import com.glaf.base.res.MessageUtils;
-import com.glaf.base.res.ViewMessage;
-import com.glaf.base.res.ViewMessages;
-import com.glaf.base.security.DigestUtil;
+import com.glaf.core.res.MessageUtils;
+import com.glaf.core.res.ViewMessage;
+import com.glaf.core.res.ViewMessages;
 import com.glaf.base.utils.PageResult;
 import com.glaf.base.utils.ParamUtil;
 import com.glaf.base.utils.RequestUtil;
+import com.glaf.core.security.DigestUtil;
 
 @Controller("/sys/user")
 @RequestMapping("/sys/user.do")

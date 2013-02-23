@@ -23,7 +23,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.glaf.base.entity.EntityService;
+import com.glaf.core.entity.EntityService;
 
 public class MyBatisTest extends AbstractTest {
 
@@ -32,7 +32,7 @@ public class MyBatisTest extends AbstractTest {
 	@SuppressWarnings("rawtypes")
 	@Test
 	public void testList() {
-		entityService = super.getBean("myBatis3EntityProxy");
+		entityService = super.getBean("myBatisEntityProxy");
 		for (int i = 0; i <= 1000; i++) {
 			List<Object> todoList = entityService.getList("getTodoList",
 					new HashMap());

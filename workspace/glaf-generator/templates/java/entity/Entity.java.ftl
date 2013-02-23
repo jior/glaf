@@ -8,8 +8,8 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import org.json.*;
 
-import com.glaf.base.api.*;
-import com.glaf.base.utils.DateTools;
+import com.glaf.core.base.*;
+import com.glaf.core.util.DateUtils;
 
 @Entity
 @Table(name = "${tableName}")
@@ -53,9 +53,9 @@ public class ${entityName} implements Serializable, JsonReadable {
 	      <#if ( field.type== 'Integer' || field.type== 'Long' || field.type== 'Double' || field.type== 'Boolean')>
                 jsonObject.put("${field.name}", ${field.name});
 	      <#elseif ( field.type== 'Date' )>
-	        jsonObject.put("${field.name}", DateTools.getDateTime(${field.name}));
-		jsonObject.put("${field.name}_date", DateTools.getDate(${field.name}));
-		jsonObject.put("${field.name}_datetime", DateTools.getDateTime(${field.name}));
+	        jsonObject.put("${field.name}", DateUtils.getDateTime(${field.name}));
+		jsonObject.put("${field.name}_date", DateUtils.getDate(${field.name}));
+		jsonObject.put("${field.name}_datetime", DateUtils.getDateTime(${field.name}));
 	      <#else>
                 if (${field.name} != null) {
 		    jsonObject.put("${field.name}", ${field.name});

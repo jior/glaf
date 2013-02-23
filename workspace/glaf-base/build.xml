@@ -5,13 +5,16 @@
 
 	<!-- 路径设置 -->
 	<property name="src.dir" value="./src" />
-	<property name="lib.dir" value="./lib" />
+	<property name="lib.dir" value="../glaf-core/lib" />
 	<property name="classes.dir" value="./bin" />
 	<property name="jarfile" value="${project.distname}.jar" />
 
 	<!-- 类路径 -->
 	<path id="compile.classpath">
 		<fileset dir="${lib.dir}">
+			<include name="*.jar" />
+		</fileset>
+		<fileset dir="../glaf-core">
 			<include name="*.jar" />
 		</fileset>
 	</path>

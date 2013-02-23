@@ -8,7 +8,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import org.json.*;
 
-import com.glaf.base.api.*;
+import com.glaf.core.base.*;
 import com.glaf.base.utils.DateTools;
 
 @Entity

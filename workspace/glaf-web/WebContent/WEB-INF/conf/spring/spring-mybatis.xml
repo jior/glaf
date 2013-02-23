@@ -6,10 +6,10 @@
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="environment" value="default" />
-		<property name="configLocation" value="classpath:config/mybatis/mybatis.conf.xml" />
+		<property name="configLocation" value="classpath:resources/mybatis/mybatis.conf.xml" />
 		<property name="mapperLocations">
 			<list>
-				<value>classpath:config/mybatis/mapper/**/*Mapper.xml
+				<value>classpath:resources/mybatis/mapper/**/*Mapper.xml
 				</value>
 			</list>
 		</property>
@@ -30,25 +30,25 @@
 		<property name="basePackage" value="com.glaf.**.mapper" />
 	</bean>
 
-	<bean id="myBatis3EntityDAO" class="com.glaf.base.entity.mybatis.MyBatis3EntityDAOImpl">
+	<bean id="myBatisEntityDAO" class="com.glaf.core.entity.mybatis.MyBatisEntityDAOImpl">
 		<property name="sqlSessionTemplate" ref="sqlSession" />
 	</bean>
 
-	<bean id="myBatis3EntityService" class="com.glaf.base.entity.mybatis.MyBatis3EntityService">
-		<property name="entityDAO" ref="myBatis3EntityDAO" />
+	<bean id="myBatisEntityService" class="com.glaf.core.entity.mybatis.MyBatisEntityService">
+		<property name="entityDAO" ref="myBatisEntityDAO" />
 	</bean>
 
-	<bean id="myBatis3DbIdGenerator" class="com.glaf.base.id.MyBatis3DbIdGenerator">
-		<property name="entityDAO" ref="myBatis3EntityDAO" />
+	<bean id="myBatisDbIdGenerator" class="com.glaf.core.id.MyBatisDbIdGenerator">
+		<property name="entityDAO" ref="myBatisEntityDAO" />
 	</bean>
 
-	<bean id="myBatis3DbLongIdGenerator" class="com.glaf.base.id.MyBatis3DbLongIdGenerator">
-		<property name="entityDAO" ref="myBatis3EntityDAO" />
+	<bean id="myBatisDbLongIdGenerator" class="com.glaf.core.id.MyBatisDbLongIdGenerator">
+		<property name="entityDAO" ref="myBatisEntityDAO" />
 	</bean>
 
-	<bean id="myBatis3EntityProxy" parent="baseTxService">
+	<bean id="myBatisEntityProxy" parent="baseTxService">
 		<property name="target">
-			<ref bean="myBatis3EntityService" />
+			<ref bean="myBatisEntityService" />
 		</property>
 	</bean>
 

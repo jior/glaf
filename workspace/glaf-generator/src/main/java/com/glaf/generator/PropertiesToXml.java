@@ -4,9 +4,11 @@ import java.io.*;
 import java.util.*;
 import java.util.Map.Entry;
 
+import com.glaf.core.util.FileUtils;
+import com.glaf.core.util.PropertiesUtils;
+
  
-import com.glaf.base.utils.FileTools;
-import com.glaf.base.utils.PropertiesTools;
+ 
 
 public class PropertiesToXml {
 
@@ -15,7 +17,7 @@ public class PropertiesToXml {
 	public final static String newline = System.getProperty("line.separator");
 
 	public static void convert(String input, String output) throws Exception {
-		Properties p = PropertiesTools.loadProperties(new FileInputStream(
+		Properties p = PropertiesUtils.loadProperties(new FileInputStream(
 				input));
 		StringBuffer sb = new StringBuffer();
 		sb.append("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
@@ -47,7 +49,7 @@ public class PropertiesToXml {
 		}
 		sb.append(newline);
 		sb.append("</configuration>");
-		FileTools.save(output, sb.toString().getBytes("utf-8"));
+		FileUtils.save(output, sb.toString().getBytes("utf-8"));
 	}
 
 	public static void main(String[] args) throws Exception {

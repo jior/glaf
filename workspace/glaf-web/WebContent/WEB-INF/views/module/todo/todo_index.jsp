@@ -11,11 +11,10 @@
 <%@ page import="com.glaf.base.modules.sys.*"%>
 <%@ page import="com.glaf.base.modules.sys.model.*"%>
 <%@ page import="com.glaf.base.modules.sys.service.*"%>
-<%@ page import="org.jpage.util.*" %>
-<%@ page import="org.jpage.core.query.paging.*" %>
-<%@ page import="org.jpage.jbpm.task.*" %>
-<%@ page import="org.jpage.jbpm.model.*" %>
-<%@ page import="org.jpage.jbpm.service.ProcessContainer" %>
+<%@ page import="com.glaf.core.util.*" %>
+<%@ page import="com.glaf.jbpm.task.*" %>
+<%@ page import="com.glaf.jbpm.model.*" %>
+<%@ page import="com.glaf.jbpm.container.ProcessContainer" %>
 <%@ page import="org.apache.commons.lang.StringUtils" %>
 <%
     String context = request.getContextPath();

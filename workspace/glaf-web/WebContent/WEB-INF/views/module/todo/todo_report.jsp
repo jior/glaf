@@ -1,15 +1,15 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page import="java.util.*" %>
-<%@ page import="org.jpage.util.*" %>
-<%@ page import="org.jpage.context.*" %>
-<%@ page import="org.jpage.core.task.*" %>
-<%@ page import="org.jpage.core.task.model.*" %>
-<%@ page import="org.jpage.core.mail.*" %>
-<%@ page import="org.jpage.core.mail.model.*" %>
-<%@ page import="org.jpage.services.*" %>
-<%@ page import="org.jpage.persistence.*" %>
-<%@ page import="org.jpage.component.chart.*" %>
-<%@ page import="org.jpage.core.query.paging.Page" %>
+<%@ page import="com.glaf.util.*" %>
+<%@ page import="com.glaf.context.*" %>
+<%@ page import="com.glaf.core.task.*" %>
+<%@ page import="com.glaf.core.task.model.*" %>
+<%@ page import="com.glaf.core.mail.*" %>
+<%@ page import="com.glaf.core.mail.model.*" %>
+<%@ page import="com.glaf.services.*" %>
+<%@ page import="com.glaf.persistence.*" %>
+<%@ page import="com.glaf.component.chart.*" %>
+<%@ page import="com.glaf.core.query.paging.Page" %>
 <%@ page import="org.apache.commons.lang.StringUtils" %>
 <%@ page import="java.awt.*" %>
 <%@ page import="org.jfree.ui.*" %>
@@ -34,8 +34,8 @@
 <%@ page import="com.glaf.base.modules.sys.*"%>
 <%@ page import="com.glaf.base.modules.sys.model.*"%>
 <%@ page import="com.glaf.base.modules.sys.service.*"%>
-<%@ page import="org.jpage.util.*" %>
-<%@ page import="org.jpage.core.query.paging.*" %>
+<%@ page import="com.glaf.util.*" %>
+<%@ page import="com.glaf.core.query.paging.*" %>
 <%@ page import="com.glaf.base.modules.*" %>
 <%@ page import="com.glaf.base.modules.todo.service.*" %>
 <%@ page import="org.apache.commons.lang.StringUtils" %>

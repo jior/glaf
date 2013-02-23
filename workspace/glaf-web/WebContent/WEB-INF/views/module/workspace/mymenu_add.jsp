@@ -10,7 +10,7 @@
 	//System.out.println(url);
 	String contextPath = request.getContextPath();
     if(url != null && url.startsWith(contextPath)){
-		//url = org.jpage.util.Tools.replaceIgnoreCase(url, contextPath, "");
+		//url = com.glaf.util.Tools.replaceIgnoreCase(url, contextPath, "");
 	}
 %>
 <html>

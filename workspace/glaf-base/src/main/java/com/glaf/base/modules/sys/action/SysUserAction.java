@@ -50,10 +50,11 @@ import com.glaf.base.modules.sys.service.SysDeptRoleService;
 import com.glaf.base.modules.sys.service.SysRoleService;
 import com.glaf.base.modules.sys.service.SysTreeService;
 import com.glaf.base.modules.sys.service.SysUserService;
-import com.glaf.base.security.DigestUtil;
+ 
 import com.glaf.base.utils.PageResult;
 import com.glaf.base.utils.ParamUtil;
 import com.glaf.base.utils.RequestUtil;
+import com.glaf.core.security.DigestUtil;
 
 public class SysUserAction extends DispatchActionSupport {
 	private static final Log logger = LogFactory.getLog(SysUserAction.class);

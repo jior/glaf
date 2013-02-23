@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.glaf.base.id.*;
+import com.glaf.core.id.*;
 
 import ${packageName}.mapper.*;
 import ${packageName}.model.*;
@@ -107,17 +107,17 @@ public class ${entityName}ServiceImpl implements ${entityName}Service {
 
 	@Resource
 	<#if idField.type?exists && ( idField.type== 'Integer' )>
-	@Qualifier("myBatis3DbLongIdGenerator")
+	@Qualifier("myBatisDbLongIdGenerator")
 	public void setLongIdGenerator(LongIdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 	<#elseif idField.type?exists && ( idField.type== 'Long' )>
-	@Qualifier("myBatis3DbLongIdGenerator")
+	@Qualifier("myBatisDbLongIdGenerator")
 	public void setLongIdGenerator(LongIdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 	<#elseif idField.type?exists && ( idField.type== 'String')>
-	@Qualifier("myBatis3DbIdGenerator")
+	@Qualifier("myBatisDbIdGenerator")
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}

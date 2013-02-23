@@ -9,8 +9,8 @@
 <%@ page import="com.glaf.base.modules.sys.*"%>
 <%@ page import="com.glaf.base.modules.sys.model.*"%>
 <%@ page import="com.glaf.base.modules.sys.service.*"%>
-<%@ page import="org.jpage.util.*" %>
-<%@ page import="org.jpage.core.query.paging.*" %>
+<%@ page import="com.glaf.util.*" %>
+<%@ page import="com.glaf.core.query.paging.*" %>
 <%@ page import="com.glaf.base.modules.*" %>
 <%@ page import="com.glaf.base.modules.todo.service.*" %>
 <%@ page import="org.apache.commons.lang.StringUtils" %>
@@ -31,7 +31,7 @@
 	    moduleId = "8881";
 	}
 
-	Map params = org.jpage.util.RequestUtil.getQueryParams(request);
+	Map params = com.glaf.util.RequestUtil.getQueryParams(request);
 	params.put("moduleId", new Integer(moduleId));
     if(actorId != null){
 	    params.put("actorId", actorId);

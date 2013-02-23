@@ -6,7 +6,7 @@ import java.util.*;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
 
-import com.glaf.base.utils.*;
+import com.glaf.core.util.*;
 
 public class Java2Hbm {
 
@@ -23,7 +23,7 @@ public class Java2Hbm {
 				.append("\" dynamic-update=\"true\" dynamic-insert=\"true\" >");
 		buffer.append('\n');
 
-		Object model = ReflectUtil.instantiate(className);
+		Object model = ReflectUtils.instantiate(className);
 
 		BeanWrapper beanWrapper = new BeanWrapperImpl(model);
 		PropertyDescriptor[] propertyDescriptor = beanWrapper
@@ -101,7 +101,7 @@ public class Java2Hbm {
 		buffer.append("  </class>\n");
 		buffer.append("</hibernate-mapping>\n");
 
-		FileTools.save(filename, buffer.toString().getBytes());
+		FileUtils.save(filename, buffer.toString().getBytes());
 	}
 
 	public static void main(String[] args) throws Exception {

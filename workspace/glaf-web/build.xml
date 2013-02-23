@@ -5,7 +5,7 @@
 
 	<!-- 路径设置 -->
 	<property name="src.dir" value="./src" />
-	<property name="lib.dir" value="../glaf-base/lib" />
+	<property name="lib.dir" value="../glaf-core/lib" />
 	<property name="classes.dir" value="./bin" />
 	<property name="jarfile" value="${project.distname}.jar" />
 

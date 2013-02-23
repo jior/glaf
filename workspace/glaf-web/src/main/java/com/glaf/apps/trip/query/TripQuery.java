@@ -1,7 +1,7 @@
 package com.glaf.apps.trip.query;
 
 import java.util.*;
-import com.glaf.base.query.DataQuery;
+import com.glaf.core.query.DataQuery;
 
 public class TripQuery extends DataQuery {
         private static final long serialVersionUID = 1L;

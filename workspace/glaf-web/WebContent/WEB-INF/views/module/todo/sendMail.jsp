@@ -1,8 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page import="java.util.*" %>
-<%@ page import="org.jpage.jbpm.context.*" %>
-<%@ page import="org.jpage.jbpm.mail.*" %>
-<%@ page import="org.jpage.core.mail.service.*" %>
+<%@ page import="com.glaf.jbpm.context.*" %>
+<%@ page import="com.glaf.jbpm.mail.*" %>
+<%@ page import="com.glaf.core.mail.service.*" %>
 <%@ page import="org.apache.commons.lang.StringUtils" %>
 <%
       MailSender mailSender = (MailSender) JbpmContextFactory.getBean("mailSender");

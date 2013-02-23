@@ -8,7 +8,7 @@ import org.dom4j.Element;
 import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
 import org.xml.sax.EntityResolver;
-import com.glaf.base.utils.*;
+import com.glaf.core.util.*;
 
 public class Pdm2SqlMap {
 	public final static String newline = System.getProperty("line.separator");
@@ -504,8 +504,8 @@ public class Pdm2SqlMap {
 				format.setNewLineAfterDeclaration(true);
 				format.setSuppressDeclaration(true);
 
-				byte[] bytes = Dom4jToolkit.getBytesFromDocument(d, format);
-				FileTools.save(toFile, bytes);
+				byte[] bytes = Dom4jUtils.getBytesFromDocument(d, format);
+				FileUtils.save(toFile, bytes);
 
 			}
 

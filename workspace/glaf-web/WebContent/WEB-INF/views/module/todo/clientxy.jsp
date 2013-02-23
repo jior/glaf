@@ -128,8 +128,8 @@
 	    mx = "a";
 	}
 
-    org.jpage.util.RequestUtil.setRequestParameterToAttribute(request);
-	Map params = org.jpage.util.RequestUtil.getQueryParams(request);
+    com.glaf.util.RequestUtil.setRequestParameterToAttribute(request);
+	Map params = com.glaf.util.RequestUtil.getQueryParams(request);
 
         StringBuffer buffer = new StringBuffer();
 		String todoId = request.getParameter("todoId");
@@ -158,7 +158,7 @@
 				   statusCode = client.executeMethod(postMethod);
 				   InputStream in = postMethod.getResponseBodyAsStream();
 				   if (in != null) {
-					    byte[] bytes = org.jpage.util.FileTools.getBytes(in);
+					    byte[] bytes = com.glaf.util.FileTools.getBytes(in);
 						Parser parser = Parser.createParser(new String(bytes, "UTF-8"), "UTF-8");
 					    NodeFilter xfilter = new TagNameFilter("div");     
 						NodeList nodes = parser.extractAllNodesThatMatch(xfilter);						

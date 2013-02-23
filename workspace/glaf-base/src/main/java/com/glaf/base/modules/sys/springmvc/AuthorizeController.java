@@ -46,13 +46,13 @@ import com.glaf.base.modules.sys.service.SysApplicationService;
 import com.glaf.base.modules.sys.service.SysTreeService;
 import com.glaf.base.modules.sys.service.SysUserService;
 import com.glaf.base.modules.utils.ContextUtil;
-import com.glaf.base.res.MessageUtils;
-import com.glaf.base.res.ViewMessage;
-import com.glaf.base.res.ViewMessages;
-import com.glaf.base.security.DigestUtil;
+import com.glaf.core.res.MessageUtils;
+import com.glaf.core.res.ViewMessage;
+import com.glaf.core.res.ViewMessages;
 import com.glaf.base.utils.ClassUtil;
 import com.glaf.base.utils.ParamUtil;
 import com.glaf.base.utils.RequestUtil;
+import com.glaf.core.security.DigestUtil;
 
 @Controller("/sys/authorize")
 @RequestMapping("/sys/authorize.do")

@@ -25,9 +25,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jbpm.JbpmConfiguration;
 import org.jbpm.JbpmContext;
-import org.jpage.jbpm.context.Context;
-import org.jpage.jbpm.model.TaskItem;
-import org.jpage.jbpm.container.ProcessContainer;
+import com.glaf.jbpm.context.Context;
+import com.glaf.jbpm.model.TaskItem;
+import com.glaf.jbpm.container.ProcessContainer;
  
 
 import com.glaf.base.modules.others.service.WorkCalendarService;

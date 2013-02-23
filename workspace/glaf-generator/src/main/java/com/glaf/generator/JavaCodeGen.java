@@ -5,21 +5,23 @@ import java.util.*;
 
 import freemarker.cache.*;
 import freemarker.template.*;
+import freemarker.template.Template;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
-import com.glaf.base.api.*;
+import com.glaf.core.base.*;
 
 import com.glaf.generator.xml.XmlReader;
-import com.glaf.base.el.*;
+import com.glaf.core.el.*;
 
-import com.glaf.base.utils.ClassUtil;
-import com.glaf.base.utils.FileTools;
-import com.glaf.base.utils.StringTools;
-import com.glaf.base.utils.ZipTools;
+import com.glaf.core.util.ClassUtils;
+import com.glaf.core.util.FileUtils;
+import com.glaf.core.util.StringTools;
+import com.glaf.core.util.ZipUtils;
 
 public class JavaCodeGen {
 	private final static String DEFAULT_CONFIG = "templates/codegen/codegen_all.xml";
@@ -60,7 +62,7 @@ public class JavaCodeGen {
 			}
 			zipMap.put(filename, content.getBytes());
 		}
-		bytes = ZipTools.toZipBytes(zipMap);
+		bytes = ZipUtils.toZipBytes(zipMap);
 		return bytes;
 	}
 
@@ -374,7 +376,7 @@ public class JavaCodeGen {
 				String value = def.getTemplate();
 				String processor = def.getProcessor();
 				if (processor != null) {
-					Class<?> c = ClassUtil.loadClass(processor);
+					Class<?> c = ClassUtils.loadClass(processor);
 					Object object = c.newInstance();
 					if (object instanceof CodeGenerator) {
 						CodeGenerator p = (CodeGenerator) object;
@@ -413,13 +415,13 @@ public class JavaCodeGen {
 					String path = outputDir.getAbsolutePath() + "/"
 							+ def.getSavePath();
 					String filename = path + "/" + saveName;
-					FileTools.mkdir(path);
+					FileUtils.mkdirs(path);
 					if (def.getEncoding() != null) {
 						logger.debug(def.getEncoding());
-						FileTools.save(filename,
+						FileUtils.save(filename,
 								content.getBytes(def.getEncoding()));
 					} else {
-						FileTools.save(filename, content.getBytes());
+						FileUtils.save(filename, content.getBytes());
 					}
 				}
 
@@ -432,7 +434,7 @@ public class JavaCodeGen {
 
 	public static void main(String[] args) throws Exception {
 		FileInputStream fin = new FileInputStream(args[0]);
-		ClassDefinition def = new com.glaf.base.xml.XmlReader()
+		ClassDefinition def = new com.glaf.core.xml.XmlReader()
 				.read(fin);
 		JavaCodeGen gen = new JavaCodeGen();
 		File outputDir = new File(args[1]);

@@ -9,8 +9,8 @@
 <%@ page import="com.glaf.base.modules.sys.*"%>
 <%@ page import="com.glaf.base.modules.sys.model.*"%>
 <%@ page import="com.glaf.base.modules.sys.service.*"%>
-<%@ page import="org.jpage.util.*" %>
-<%@ page import="org.jpage.core.query.paging.*" %>
+<%@ page import="com.glaf.util.*" %>
+<%@ page import="com.glaf.core.query.paging.*" %>
 <%@ page import="com.glaf.base.modules.*" %>
 <%@ page import="com.glaf.base.modules.todo.service.*" %>
 <%@ page import="org.apache.commons.lang.StringUtils" %>
@@ -61,7 +61,7 @@ _dynarch_menu_url = "<%=context%>/scripts/hmenu";
 				   tdi.setStatus(status);
 				   ToDo todo = (ToDo) todoMap.get(new Long(tdi.getTodoId()));
                    String link = todo.getLink();
-				   link = org.jpage.util.Tools.replaceIgnoreCase(link, "${rowId}", tdi.getRowId());
+				   link = com.glaf.util.Tools.replaceIgnoreCase(link, "${rowId}", tdi.getRowId());
 				   pageContext.setAttribute("tdi",tdi);
 			  %>
           <tr class="list-a">

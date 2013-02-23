@@ -2,8 +2,8 @@ package com.glaf.generator;
 
 import java.io.*;
 
-import com.glaf.base.api.ClassDefinition;
-import com.glaf.base.xml.XmlReader;
+import com.glaf.core.base.ClassDefinition;
+import com.glaf.core.xml.XmlReader;
 
 public class GenAll {
 

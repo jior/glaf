@@ -3,17 +3,17 @@
 <process-definition xmlns="urn:jbpm.org:jpdl-3.2" name="Test">
     <description>合同审批流程</description>
 	<swimlane name="starter">
-		<assignment class="org.jpage.jbpm.assignment.GeneralAssignment">
+		<assignment class="com.glaf.jbpm.assignment.GeneralAssignment">
 		</assignment>
 	</swimlane>
 	<swimlane name="submiter">
 		<assignment
-			class="org.jpage.jbpm.assignment.ProcessStarterAssignment">
+			class="com.glaf.jbpm.assignment.ProcessStarterAssignment">
 		</assignment>
 	</swimlane>
 
 	<action name="create_task02"
-		class="org.jpage.jbpm.action.SqlMapTaskInstanceAction">
+		class="com.glaf.jbpm.action.SqlMapTaskInstanceAction">
 		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
 		<taskName>task02</taskName>
 		<queryId>getXYDeptRoleUsers</queryId>
@@ -22,7 +22,7 @@
 	</action>
 
 	<action name="create_task03"
-		class="org.jpage.jbpm.action.SqlMapTaskInstanceAction">
+		class="com.glaf.jbpm.action.SqlMapTaskInstanceAction">
 		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
 		<taskName>task03</taskName>
 		<queryId>getXYDeptRoleUsers</queryId>
@@ -31,7 +31,7 @@
 	</action>
 
 	<action name="create_task04"
-		class="org.jpage.jbpm.action.SqlMapTaskInstanceComplexAction">
+		class="com.glaf.jbpm.action.SqlMapTaskInstanceComplexAction">
 		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
 		<!--金额小于500000时可由任意一方审核-->
 		<pooledExpression>#{money &lt; 500000}</pooledExpression>
@@ -45,11 +45,11 @@
 
 
 	<action name="EndCounterSigningAction"
-         class="org.jpage.jbpm.action.EndCounterSigningAction">
+         class="com.glaf.jbpm.action.EndCounterSigningAction">
       <expression>#{isAgree eq 'false'}</expression>
     </action>
 
-	<action name="xyz_1000" class="org.jpage.jbpm.action.HibernateNativeSQLAction">
+	<action name="xyz_1000" class="com.glaf.jbpm.action.HibernateNativeSQLAction">
 		<sql>
 			UPDATE TEST
 			SET PROCESSNAME_ = 'Test',
@@ -57,19 +57,19 @@
 		</sql>
 	</action>
 
-	<action name="xyz_1002" class="org.jpage.jbpm.action.HibernateNativeSQLAction">
+	<action name="xyz_1002" class="com.glaf.jbpm.action.HibernateNativeSQLAction">
 		<sql>
 			UPDATE TEST SET STATUS_ = 20, WFSTATUS_ = 1002 WHERE ID_ = ${rowId}
 		</sql>
 	</action>
 
-	<action name="xyz_5555" class="org.jpage.jbpm.action.HibernateNativeSQLAction">
+	<action name="xyz_5555" class="com.glaf.jbpm.action.HibernateNativeSQLAction">
 		<sql>
 			UPDATE TEST SET STATUS_ = -1, WFSTATUS_ = 5555 WHERE ID_ = ${rowId}
 		</sql>
 	</action>
 
-	<action name="xyz_9999" class="org.jpage.jbpm.action.HibernateNativeSQLAction">
+	<action name="xyz_9999" class="com.glaf.jbpm.action.HibernateNativeSQLAction">
 		<sql>
 			UPDATE TEST SET STATUS_ = 50, WFSTATUS_ = 9999 WHERE ID_ = ${rowId}
 		</sql>

@@ -6,8 +6,8 @@ import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.dom4j.io.OutputFormat;
-import com.glaf.base.context.*;
-import com.glaf.base.utils.*;
+import com.glaf.core.context.*;
+import com.glaf.core.util.*;
 
 public class Database2SqlMap {
 	public final static String newline = System.getProperty("line.separator");
@@ -483,8 +483,8 @@ public class Database2SqlMap {
 		format.setNewLineAfterDeclaration(true);
 		format.setSuppressDeclaration(true);
 
-		byte[] bytes = Dom4jToolkit.getBytesFromDocument(d, format);
-		FileTools.save(toFile, bytes);
+		byte[] bytes = Dom4jUtils.getBytesFromDocument(d, format);
+		FileUtils.save(toFile, bytes);
 
 	}
 

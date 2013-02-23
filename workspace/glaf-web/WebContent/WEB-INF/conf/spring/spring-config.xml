@@ -12,6 +12,7 @@
 	<import resource="spring-ajax.xml" />
 	<import resource="spring-todo.xml" />
 	<import resource="spring-mybatis.xml" /> 
+	<import resource="spring-scheduler.xml" /> 
 
 </beans>
 

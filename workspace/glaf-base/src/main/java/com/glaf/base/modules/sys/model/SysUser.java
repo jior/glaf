@@ -26,6 +26,8 @@ import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.glaf.core.identity.User;
+
 public class SysUser implements Serializable {
 	private static final long serialVersionUID = -7677600372139823989L;
 	private long id;

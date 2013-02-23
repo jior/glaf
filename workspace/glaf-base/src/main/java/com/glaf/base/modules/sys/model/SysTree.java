@@ -20,9 +20,9 @@ package com.glaf.base.modules.sys.model;
 
 import java.io.Serializable;
 
-import com.glaf.base.api.TreeModel;
+import com.glaf.core.base.ITreeModel;
 
-public class SysTree implements Serializable, TreeModel {
+public class SysTree implements Serializable, ITreeModel {
 	private static final long serialVersionUID = 2666681837822864771L;
 	private long id;
 	private long parent;

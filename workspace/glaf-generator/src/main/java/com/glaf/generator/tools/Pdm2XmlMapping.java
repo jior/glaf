@@ -9,10 +9,10 @@ import org.dom4j.Element;
 import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
 
-import com.glaf.base.api.ClassDefinition;
-import com.glaf.base.api.FieldDefinition;
-import com.glaf.base.xml.*;
-import com.glaf.base.utils.*;
+import com.glaf.core.base.ClassDefinition;
+import com.glaf.core.base.FieldDefinition;
+import com.glaf.core.xml.*;
+import com.glaf.core.util.*;
 
 public class Pdm2XmlMapping {
 	public final static String newline = System.getProperty("line.separator");
@@ -48,7 +48,7 @@ public class Pdm2XmlMapping {
 
 	public void convert(File file) throws Exception {
 		if (file.isFile() && file.getName().toLowerCase().endsWith(".pdm")) {
-			String dt = DateTools.getDateTime("yyyyMMddHHmmss", new Date());
+			String dt = DateUtils.getDateTime("yyyyMMddHHmmss", new Date());
 			InputStream inputStream = new FileInputStream(file);
 			SAXReader xmlReader = new SAXReader(false);
 			Document doc = xmlReader.read(inputStream);
@@ -177,7 +177,7 @@ public class Pdm2XmlMapping {
 				String filename = table + ".mapping.xml";
 
 				String path = todir + "/" + dt;
-				FileTools.mkdir(path);
+				FileUtils.mkdirs(path);
 
 				String toFile = path + "/" + filename;
 
@@ -193,8 +193,8 @@ public class Pdm2XmlMapping {
 
 				XmlWriter xmlWriter = new XmlWriter();
 				Document d = xmlWriter.write(classDefinition);
-				byte[] bytes = Dom4jToolkit.getBytesFromDocument(d, format);
-				FileTools.save(toFile, bytes);
+				byte[] bytes = Dom4jUtils.getBytesFromDocument(d, format);
+				FileUtils.save(toFile, bytes);
 
 			}
 

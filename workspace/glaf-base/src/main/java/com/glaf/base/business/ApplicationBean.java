@@ -21,7 +21,7 @@ package com.glaf.base.business;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.glaf.base.context.ContextFactory;
+import com.glaf.core.context.ContextFactory;
 import com.glaf.base.modules.sys.service.SysApplicationService;
 
 public class ApplicationBean {

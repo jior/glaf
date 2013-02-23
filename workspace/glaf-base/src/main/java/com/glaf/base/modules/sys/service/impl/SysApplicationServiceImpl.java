@@ -27,7 +27,7 @@ import org.apache.commons.logging.LogFactory;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.glaf.base.context.ApplicationContext;
+import com.glaf.core.context.ApplicationContext;
 import com.glaf.base.dao.AbstractSpringDao;
 import com.glaf.base.modules.sys.SysConstants;
 import com.glaf.base.modules.sys.model.SysApplication;

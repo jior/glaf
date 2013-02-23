@@ -17,11 +17,12 @@ import org.apache.struts.action.ActionMessages;
 
 import org.json.*;
 
-import org.jpage.jbpm.context.ProcessContext;
-import org.jpage.jbpm.datafield.DataField;
-import org.jpage.jbpm.model.*;
-import org.jpage.jbpm.service.*;
-import org.jpage.util.JSONTools;
+import com.glaf.core.util.JsonUtils;
+import com.glaf.jbpm.context.ProcessContext;
+import com.glaf.jbpm.datafield.DataField;
+import com.glaf.jbpm.model.*;
+import com.glaf.jbpm.service.*;
+import com.glaf.jbpm.container.*; 
 
 import com.glaf.base.config.*;
 

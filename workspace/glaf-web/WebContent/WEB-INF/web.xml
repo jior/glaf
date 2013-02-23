@@ -16,7 +16,7 @@
 	</context-param>
 
 	<listener>
-		<listener-class>com.glaf.base.context.StartupListener</listener-class>
+		<listener-class>com.glaf.core.context.StartupListener</listener-class>
 	</listener>
  
 	<listener> 
@@ -99,12 +99,7 @@
 
 	<filter-mapping>
 		<filter-name>encodingFilter</filter-name>
-		<url-pattern>*.do</url-pattern>
-	</filter-mapping>
-
-	<filter-mapping>
-		<filter-name>encodingFilter</filter-name>
-		<url-pattern>*.jsp</url-pattern>
+		<url-pattern>/*</url-pattern>
 	</filter-mapping>
   
 	<!--IE缓存清除过滤器-->
@@ -186,30 +181,20 @@
   
 	<!--jbpm workflow configure-->
 
-	<servlet>
-		<servlet-name>ProcessImageServlet</servlet-name>
-		<servlet-class>org.jpage.jbpm.servlet.ProcessImageServlet</servlet-class>
-	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>ProcessImageServlet</servlet-name>
-		<url-pattern>/workflow/processimage</url-pattern>
-	</servlet-mapping>
- 
-	<servlet>
-		<servlet-name>workflow</servlet-name>
-		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+	<servlet >
+		<servlet-name>glaf</servlet-name>
+		<servlet-class>com.glaf.base.servlet.SpringDispatcherServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 
 	<servlet-mapping>
-		<servlet-name>workflow</servlet-name>
-		<url-pattern>*.jspa</url-pattern>
+		<servlet-name>glaf</servlet-name>
+		<url-pattern>/mx/*</url-pattern>
 	</servlet-mapping>
 
 	<servlet>
 		<servlet-name>resteasy</servlet-name>
-		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<servlet-class>com.glaf.base.servlet.SpringDispatcherServlet</servlet-class>
 		<load-on-startup>2</load-on-startup>
 	</servlet>
 

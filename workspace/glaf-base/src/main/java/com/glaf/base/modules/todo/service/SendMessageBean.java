@@ -23,15 +23,14 @@ import java.util.*;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
- 
-import org.jpage.core.context.ContextFactory;
-import org.jpage.core.mail.MailMessage;
-import org.jpage.core.mail.MailSender;
-import org.jpage.core.mail.util.MailTools;
- 
 
-import org.jpage.jbpm.container.ProcessContainer;
- 
+import com.glaf.core.context.ContextFactory;
+import com.glaf.core.mail.MailMessage;
+import com.glaf.core.mail.MailSender;
+import com.glaf.core.mail.util.MailTools;
+import com.glaf.core.util.UUID32;
+
+import com.glaf.jbpm.container.ProcessContainer;
 
 import com.glaf.base.modules.sys.model.SysApplication;
 import com.glaf.base.modules.sys.model.SysDepartment;
@@ -46,7 +45,6 @@ import com.glaf.base.modules.todo.model.ToDo;
 import com.glaf.base.modules.todo.model.ToDoInstance;
 import com.glaf.base.modules.workspace.model.Message;
 import com.glaf.base.utils.DateTools;
-import com.glaf.base.utils.UUID32;
 
 public class SendMessageBean {
 	private final static Log logger = LogFactory.getLog(SendMessageBean.class);
@@ -921,7 +919,7 @@ public class SendMessageBean {
 					mailMessage.setMessageId(UUID32.getUUID());
 					mailMessage.setSubject(subject);
 					try {
-						MailSender mailSender = (MailSender)  ContextFactory
+						MailSender mailSender = (MailSender) ContextFactory
 								.getBean("velocityMailSender");
 						mailSender.send(mailMessage);
 					} catch (Exception ex) {
@@ -966,7 +964,7 @@ public class SendMessageBean {
 								mailMessage.setMessageId(UUID32.getUUID());
 								mailMessage.setSubject(subject);
 								try {
-									MailSender mailSender = (MailSender)  ContextFactory
+									MailSender mailSender = (MailSender) ContextFactory
 											.getBean("velocityMailSender");
 									mailSender.send(mailMessage);
 								} catch (Exception ex) {
@@ -1216,7 +1214,7 @@ public class SendMessageBean {
 						mailMessage.setSubject(subject);
 
 						try {
-							MailSender mailSender = (MailSender)  ContextFactory
+							MailSender mailSender = (MailSender) ContextFactory
 									.getBean("velocityMailSender");
 							// mailSender.send(mailMessage);
 						} catch (Exception ex) {
@@ -1240,7 +1238,7 @@ public class SendMessageBean {
 					mailMessage.setMessageId(messageId);
 					mailMessage.setSubject(subject);
 					try {
-						MailSender mailSender = (MailSender)  ContextFactory
+						MailSender mailSender = (MailSender) ContextFactory
 								.getBean("velocityMailSender");
 						mailSender.send(mailMessage);
 					} catch (Exception ex) {

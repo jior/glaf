@@ -6,14 +6,13 @@ import org.apache.commons.lang.StringUtils;
 import org.dom4j.Document;
 import org.dom4j.io.OutputFormat;
 
-import com.glaf.base.api.ClassDefinition;
-import com.glaf.base.api.FieldDefinition;
-import com.glaf.base.xml.XmlWriter;
- 
-import com.glaf.base.utils.DBToolkit;
-import com.glaf.base.utils.Dom4jToolkit;
-import com.glaf.base.utils.FileTools;
-import com.glaf.base.utils.StringTools;
+import com.glaf.core.base.ClassDefinition;
+import com.glaf.core.base.FieldDefinition;
+import com.glaf.core.xml.XmlWriter;
+import com.glaf.core.util.DBUtils;
+import com.glaf.core.util.Dom4jUtils;
+import com.glaf.core.util.FileUtils;
+import com.glaf.core.util.StringTools;
 
 public class Database2XmlMapping {
 
@@ -21,7 +20,7 @@ public class Database2XmlMapping {
 
 	public static void main(String[] args) {
 		Database2XmlMapping gen = new Database2XmlMapping();
-		gen.setTodir("codegen/gmmc");
+		gen.setTodir("codegen/glaf");
 		gen.execute();
 	}
 
@@ -31,10 +30,10 @@ public class Database2XmlMapping {
 
 	public void execute() {
 		try {
-			List<String> tables = DBToolkit.getTables();
+			List<String> tables = DBUtils.getTables();
 			for (String tableName : tables) {
                 System.out.println("process "+tableName);
-				List<FieldDefinition> fields = DBToolkit
+				List<FieldDefinition> fields = DBUtils
 						.getFieldDefinitions(tableName);
 
 				ClassDefinition classDefinition = new ClassDefinition();
@@ -50,7 +49,7 @@ public class Database2XmlMapping {
 
 				classDefinition.setPackageName("com.glaf.apps");
 
-				List<String> primaryKeys = DBToolkit.getPrimaryKeys(tableName);
+				List<String> primaryKeys = DBUtils.getPrimaryKeys(tableName);
 
 				for (FieldDefinition f : fields) {
 					f.setName(StringTools.lower(StringTools.camelStyle(f
@@ -90,8 +89,8 @@ public class Database2XmlMapping {
 
 				XmlWriter xmlWriter = new XmlWriter();
 				Document d = xmlWriter.write(classDefinition);
-				byte[] bytes = Dom4jToolkit.getBytesFromDocument(d, format);
-				FileTools.save(toFile, bytes);
+				byte[] bytes = Dom4jUtils.getBytesFromDocument(d, format);
+				FileUtils.save(toFile, bytes);
 
 			}
 

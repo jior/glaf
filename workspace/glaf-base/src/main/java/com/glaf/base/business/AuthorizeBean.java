@@ -29,10 +29,12 @@ import org.apache.commons.logging.LogFactory;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.glaf.base.cache.CacheFactory;
+import com.glaf.core.cache.CacheFactory;
+import com.glaf.core.context.ContextFactory;
+
 import com.glaf.base.callback.CallbackProperties;
 import com.glaf.base.callback.LoginCallback;
-import com.glaf.base.context.ContextFactory;
+
 
 import com.glaf.base.modules.sys.SysConstants;
 import com.glaf.base.modules.sys.model.SysUser;
@@ -51,7 +53,7 @@ public class AuthorizeBean {
 
 	public static void main(String[] args) {
 		ctx = new ClassPathXmlApplicationContext(configurationResource);
-		com.glaf.base.context.ContextFactory.setContext(ctx);
+		com.glaf.core.context.ContextFactory.setContext(ctx);
 		AuthorizeBean bean = new AuthorizeBean();
 		SysUser user = bean.getAuthorizeService().login("root");
 		logger.debug(bean.getSysApplicationService().getMenu(3, user));

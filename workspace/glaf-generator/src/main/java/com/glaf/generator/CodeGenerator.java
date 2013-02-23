@@ -2,7 +2,7 @@ package com.glaf.generator;
 
 import java.util.Map;
 
-import com.glaf.base.api.ClassDefinition;
+import com.glaf.core.base.ClassDefinition;
 
 public interface CodeGenerator {
 

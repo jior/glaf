@@ -39,7 +39,8 @@ import com.glaf.base.modules.sys.model.SysUserRole;
 import com.glaf.base.modules.sys.service.*;
 import com.glaf.base.modules.utils.BaseUtil;
 import com.glaf.base.utils.PageResult;
-import com.glaf.base.utils.UUID32;
+import com.glaf.core.util.UUID32;
+ 
 
 public class SysUserRoleServiceImpl implements SysUserRoleService {
 	private static final Log logger = LogFactory

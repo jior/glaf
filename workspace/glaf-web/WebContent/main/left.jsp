@@ -3,7 +3,7 @@
 <%@ page import="org.json.*" %>
 <%@ page import="com.glaf.base.utils.*" %>
 <%@ page import="com.glaf.base.business.*" %>
-<%@ page import="com.glaf.base.context.*" %>
+<%@ page import="com.glaf.core.context.*" %>
 <%@ page import="com.glaf.base.modules.sys.model.*" %>
 <%@ page import="com.glaf.base.modules.sys.service.*" %>
 <%

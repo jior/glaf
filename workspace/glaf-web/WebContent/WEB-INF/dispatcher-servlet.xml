@@ -62,7 +62,7 @@
 	<bean
 		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
 		<property name="webBindingInitializer">
-			<bean class="com.glaf.base.web.DateBindingInitializer" />
+			<bean class="com.glaf.core.web.DateBindingInitializer" />
 		</property>
 	</bean>
 

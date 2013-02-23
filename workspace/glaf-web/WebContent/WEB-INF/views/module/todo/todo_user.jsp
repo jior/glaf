@@ -9,8 +9,8 @@
 <%@ page import="com.glaf.base.modules.sys.*"%>
 <%@ page import="com.glaf.base.modules.sys.model.*"%>
 <%@ page import="com.glaf.base.modules.sys.service.*"%>
-<%@ page import="org.jpage.util.*" %>
-<%@ page import="org.jpage.core.query.paging.*" %>
+<%@ page import="com.glaf.util.*" %>
+<%@ page import="com.glaf.core.query.paging.*" %>
 <%@ page import="com.glaf.base.modules.*" %>
 <%@ page import="com.glaf.base.modules.todo.service.*" %>
 <%@ page import="org.apache.commons.lang.StringUtils" %>
