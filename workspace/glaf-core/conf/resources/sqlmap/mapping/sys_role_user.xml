@@ -13,7 +13,7 @@
 	    select  AGENTTYPE_ as agentType, ASSIGNFROM_ as assignFrom,ASSIGNTO_ as assignTo,
 		        OBJECTID_ as objectId, OBJECTVALUE_ as objectValue,
                 PROCESSNAME_ as processName, TASKNAME_ as taskName
-		from sys_agent = #assignTo#
+		from sys_agent where ASSIGNTO_ = #assignTo#
 
 	</select>
 
