@@ -327,8 +327,7 @@ public class MxJbpmMonitorController {
 			modelMap.put("userMap", userMap);
 			jbpmContext = ProcessContainer.getContainer().createJbpmContext();
 			graphSession = jbpmContext.getGraphSession();
-
-			jbpmContext = ProcessContainer.getContainer().createJbpmContext();
+			
 			List<ProcessDefinition> processDefinitions = graphSession
 					.findAllProcessDefinitions();
 			modelMap.put("processDefinitions", processDefinitions);
