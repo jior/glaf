@@ -9,7 +9,7 @@
 	</bean>
 
 	<!--service -->
-	<bean id="todoService" class="com.glaf.base.modules.todo.service.TodoServiceImpl">
+	<bean id="todoServiceImpl" class="com.glaf.base.modules.todo.service.TodoServiceImpl">
 		<property name="abstractDao">
 			<ref bean="abstractDao" />
 		</property>
@@ -38,7 +38,13 @@
 
 	<bean id="todoProxy" parent="baseTxService">
 		<property name="target">
-			<ref bean="todoService" />
+			<ref bean="todoServiceImpl" />
+		</property>
+	</bean>
+
+	<bean id="todoService" parent="baseTxService">
+		<property name="target">
+			<ref bean="todoServiceImpl" />
 		</property>
 	</bean>
 

@@ -4,7 +4,7 @@
 
 	<!--service -->
 
-	<bean id="attachmentService" class="com.glaf.base.modules.others.service.impl.AttachmentServiceImpl" >
+	<bean id="attachmentServiceImpl" class="com.glaf.base.modules.others.service.impl.AttachmentServiceImpl" >
 		<property name="abstractDao">
 			<ref bean="abstractDao"/>
 		</property>
@@ -12,11 +12,17 @@
 
 	<bean id="attachmentProxy" parent="baseTxService">
 		<property name="target">
-			<ref bean="attachmentService"/>
+			<ref bean="attachmentServiceImpl"/>
 		</property>
 	</bean>
 
-	<bean id="auditService" class="com.glaf.base.modules.others.service.impl.AuditServiceImpl">
+	<bean id="attachmentService" parent="baseTxService">
+		<property name="target">
+			<ref bean="attachmentServiceImpl"/>
+		</property>
+	</bean>
+
+	<bean id="auditServiceImpl" class="com.glaf.base.modules.others.service.impl.AuditServiceImpl">
 		<property name="abstractDao">
 			<ref bean="abstractDao" />
 		</property>
@@ -24,11 +30,17 @@
 
 	<bean id="auditProxy" parent="baseTxService">
 		<property name="target">
-			<ref bean="auditService" />
+			<ref bean="auditServiceImpl" />
 		</property>
 	</bean>
 
-	<bean id="workCalendarService" class="com.glaf.base.modules.others.service.impl.WorkCalendarServiceImpl">
+	<bean id="auditService" parent="baseTxService">
+		<property name="target">
+			<ref bean="auditServiceImpl" />
+		</property>
+	</bean>
+
+	<bean id="workCalendarServiceImpl" class="com.glaf.base.modules.others.service.impl.WorkCalendarServiceImpl">
 		<property name="abstractDao">
 			<ref bean="abstractDao" />
 		</property>
@@ -36,9 +48,14 @@
 
 	<bean id="workCalendarProxy" parent="baseTxService">
 		<property name="target">
-			<ref bean="workCalendarService" />
+			<ref bean="workCalendarServiceImpl" />
 		</property>
 	</bean>
 
+	<bean id="workCalendarService" parent="baseTxService">
+		<property name="target">
+			<ref bean="workCalendarServiceImpl" />
+		</property>
+	</bean>
 
 </beans>
