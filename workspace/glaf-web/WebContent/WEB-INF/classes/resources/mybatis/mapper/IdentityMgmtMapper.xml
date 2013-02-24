@@ -20,7 +20,7 @@
 	</resultMap>
 
 
-	<select id="getAgents" resultClass="com.glaf.core.identity.impl.AgentImpl" parameterType="string">
+	<select id="getAgents" resultType="com.glaf.core.identity.impl.AgentImpl" parameterType="string">
 
 		select  AGENTTYPE_ as agentType, ASSIGNFROM_ as assignFrom,ASSIGNTO_ as assignTo,
 		        OBJECTID_ as objectId, OBJECTVALUE_ as objectValue,
@@ -31,8 +31,7 @@
 	</select>
 
 
-	<select id="getMembershipActorIds" resultType="string"
-		parameterType="com.glaf.core.query.MembershipQuery">
+	<select id="getMembershipActorIds" resultType="string" parameterType="com.glaf.core.query.MembershipQuery">
 
 		 SELECT u.account as actorId
 		   FROM sys_user u
@@ -166,20 +165,20 @@
 
 	<select id="searchUsers" resultMap="userResultMap" parameterType="string">
 
-		SELECT x.* 
-		FROM sys_user x
+		SELECT u.* 
+		FROM sys_user u
 		WHERE 1=1 
 		AND (
-		   x.account LIKE #{searchWord}
+		   u.account LIKE #{searchWord}
 		   OR 
-		   x.name LIKE #{searchWord}
+		   u.name LIKE #{searchWord}
 		   OR
-		   x.email LIKE #{searchWord}
+		   u.email LIKE #{searchWord}
 		   OR
-		   x.mobile LIKE #{searchWord}
+		   u.mobile LIKE #{searchWord}
 		)
 		 
-		ORDER BY x.name ASC
+		ORDER BY u.name ASC
 
 	</select>
 
@@ -188,29 +187,29 @@
 	<select id="getUsers" resultMap="userResultMap"
 		parameterType="com.glaf.core.query.UserQuery">
 
-		SELECT x.*
-		FROM sys_user x
+		SELECT u.*
+		FROM sys_user u
 		WHERE 1=1 
 
 		<choose>
 			<when test="activationCode != null">
-				and x.account = #{activationCode} 
+				and u.account = #{activationCode} 
 			</when>
 			<when test="actorId != null">
-				and x.account = #{actorId} 
+				and u.account = #{actorId} 
 			</when>
 			<when test="actorIds != null and actorIds.size !=0">
-				and x.account IN
+				and u.account IN
 				<foreach item="x_actorId" index="index" collection="actorIds"
 					open="(" separator="," close=")">
 					#{x_actorId}
                 </foreach>
 			</when>
 			<when test="deptId != null">
-				AND ( x.deptid = #{deptId} ) 
+				AND ( u.deptid = #{deptId} ) 
 			</when>
 			<when test="deptIds != null and deptIds.size !=0">
-				AND x.deptid IN
+				AND u.deptid IN
 				<foreach item="x_deptId" index="index" collection="deptIds"
 					open="(" separator="," close=")">
 					#{x_deptId}
@@ -220,16 +219,16 @@
 			</otherwise>
 		</choose>
 
-		ORDER BY x.name ASC
+		ORDER BY u.name ASC
 
 	</select>
 
 
 	<select id="getUserById" resultMap="userResultMap" parameterType="string">
 
-		SELECT x.*
-		FROM sys_user x 
-		WHERE x.account = #{actorId}
+		SELECT u.*
+		FROM sys_user u 
+		WHERE u.account = #{actorId}
 
 	</select>
 

@@ -34,7 +34,7 @@
 		<property name="sqlSessionTemplate" ref="sqlSession" />
 	</bean>
 
-	<bean id="myBatisEntityService" class="com.glaf.core.entity.mybatis.MyBatisEntityService">
+	<bean id="myBatisEntityServiceImpl" class="com.glaf.core.entity.mybatis.MyBatisEntityService">
 		<property name="entityDAO" ref="myBatisEntityDAO" />
 	</bean>
 
@@ -48,7 +48,19 @@
 
 	<bean id="myBatisEntityProxy" parent="baseTxService">
 		<property name="target">
-			<ref bean="myBatisEntityService" />
+			<ref bean="myBatisEntityServiceImpl" />
+		</property>
+	</bean>
+
+	<bean id="entityService" parent="baseTxService">
+		<property name="target">
+			<ref bean="myBatisEntityServiceImpl" />
+		</property>
+	</bean>
+
+	<bean id="myBatisEntityService" parent="baseTxService">
+		<property name="target">
+			<ref bean="myBatisEntityServiceImpl" />
 		</property>
 	</bean>
 

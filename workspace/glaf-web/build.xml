@@ -57,6 +57,10 @@
 			<fileset dir="." includes="*.bat,*.xml, src/**/*.*,mapping/**/*.xml" excludes="**/*.cvs,**/*.bak,**/*.tmp,**/*.scc,**/*.svn" />
 		</jar>
 		<jar jarfile="${jarfile}" basedir="${classes.dir}" includes="**/*.class" excludes="**/test/**" />
+
+		<jar jarfile="glaf-min-web.zip">
+			<fileset dir="WebContent" includes="**/*.*" excludes="**/*.jar,**/*.class,**/archives/*.*,**/*.ttc,**/*.lib,**/*.dll,**/*.so, **/data/index/**/*.*,**/examples/**/*.*, **/locks" casesensitive="yes" />
+		</jar>
 	</target>
 
 
