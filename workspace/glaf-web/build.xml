@@ -14,6 +14,9 @@
 		<fileset dir="${lib.dir}">
 			<include name="*.jar" />
 		</fileset>
+		<fileset dir="../glaf-core">
+			<include name="*.jar" />
+		</fileset>
 		<fileset dir="../glaf-base">
 			<include name="*.jar" />
 		</fileset>

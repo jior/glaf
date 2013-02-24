@@ -20,27 +20,19 @@ package com.glaf.core.identity;
 
 import java.util.Date;
 
+import com.alibaba.fastjson.JSONObject;
+
 public interface User extends java.io.Serializable {
 
 	int getAccountType();
 
-	String getActivationCode();
-
 	String getActorId();
-
-	String getComputerId();
 
 	int getDeptId();
 
-	int getDomainIndex();
-
-	int getDumpflag();
-
 	String getFax();
 
-	String getIsBind();
-
-	String getIsSystem();
+	long getId();
 
 	Date getLastLoginDate();
 
@@ -59,34 +51,22 @@ public interface User extends java.io.Serializable {
 	String getPassword();
 
 	String getRemark();
-
-	String getStatus();
-
-	String getSuperiorId();
-
+	
 	int getUserType();
+
+	boolean isSystemAdministrator();
+
+	User jsonToObject(JSONObject json);
 
 	void setAccountType(int accountType);
 
-	void setActivationCode(String activationCode);
-
 	void setActorId(String actorId);
-
-	void setComputerId(String computerId);
 
 	void setCreateDate(Date createDate);
 
 	void setDeptId(int deptId);
 
-	void setDomainIndex(int domainIndex);
-
-	void setDumpflag(int dumpflag);
-
-	void setFax(String fax);
-
-	void setIsBind(String isBind);
-
-	void setIsSystem(String isSystem);
+	void setId(long id);
 
 	void setLastLoginDate(Date lastLoginDate);
 
@@ -106,10 +86,8 @@ public interface User extends java.io.Serializable {
 
 	void setRemark(String remark);
 
-	void setStatus(String status);
-
-	void setSuperiorId(String superiorId);
-
 	void setUserType(int userType);
+
+	JSONObject toJsonObject();
 
 }

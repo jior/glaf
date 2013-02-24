@@ -32,9 +32,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.beanutils.BeanUtils;
@@ -558,23 +556,7 @@ public class RequestUtil {
 		return sysUser;
 	}
 
-	public static String getTheme(HttpServletRequest request) {
-		String theme = "gray";
-		Cookie[] cookies = request.getCookies();
-		if (cookies != null && cookies.length > 0) {
-			for (Cookie cookie : cookies) {
-				if (StringUtils.equals(cookie.getName(), "GLAF_THEME_COOKIE")) {
-					if (cookie.getValue() != null) {
-						theme = cookie.getValue();
-					}
-				}
-			}
-		}
-		if (StringUtils.isNotEmpty(request.getParameter("theme"))) {
-			theme = request.getParameter("theme");
-		}
-		return theme;
-	}
+	
 
 	public static Object getValue(Class<?> type, String propertyValue) {
 		if (type == null || propertyValue == null) {
@@ -733,25 +715,5 @@ public class RequestUtil {
 		}
 	}
 
-	public static void setTheme(HttpServletRequest request,
-			HttpServletResponse response) {
-		if (StringUtils.isNotEmpty(request.getParameter("theme"))) {
-			String theme = request.getParameter("theme");
-			Cookie cookie = new Cookie("GLAF_THEME_COOKIE", theme);
-			cookie.setPath("/");
-			cookie.setMaxAge(-1);
-			response.addCookie(cookie);
-		}
-	}
-
-	public static void setTheme(HttpServletRequest request,
-			HttpServletResponse response, String theme) {
-		if (StringUtils.isNotEmpty(theme)) {
-			Cookie cookie = new Cookie("GLAF_THEME_COOKIE", theme);
-			cookie.setPath("/");
-			cookie.setMaxAge(-1);
-			response.addCookie(cookie);
-		}
-	}
-
+	
 }

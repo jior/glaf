@@ -26,9 +26,13 @@ import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.glaf.core.identity.User;
+import com.glaf.core.util.DateUtils;
 
-public class SysUser implements Serializable {
+public class SysUser implements Serializable, User {
 	private static final long serialVersionUID = -7677600372139823989L;
 	private long id;
 	private SysDepartment department;
@@ -100,6 +104,13 @@ public class SysUser implements Serializable {
 		return department;
 	}
 
+	public int getDeptId() {
+		if (department != null) {
+			return (int) department.getId();
+		}
+		return 0;
+	}
+
 	public int getDumpFlag() {
 		return dumpFlag;
 	}
@@ -132,6 +143,10 @@ public class SysUser implements Serializable {
 		return id;
 	}
 
+	public Date getLastLoginDate() {
+		return lastLoginTime;
+	}
+
 	public String getLastLoginIP() {
 		return lastLoginIP;
 	}
@@ -140,8 +155,20 @@ public class SysUser implements Serializable {
 		return lastLoginTime;
 	}
 
+	public int getLocked() {
+		return blocked;
+	}
+
 	public String getLoginIP() {
 		return loginIP;
+	}
+
+	public int getLoginRetry() {
+		return 0;
+	}
+
+	public String getMail() {
+		return email;
 	}
 
 	public String getMenus() {
@@ -162,6 +189,10 @@ public class SysUser implements Serializable {
 
 	public String getPassword() {
 		return password;
+	}
+
+	public String getRemark() {
+		return null;
 	}
 
 	public Set<SysDeptRole> getRoles() {
@@ -213,6 +244,10 @@ public class SysUser implements Serializable {
 	}
 
 	public boolean isSystemAdmin() {
+		return isSystemAdministrator();
+	}
+
+	public boolean isSystemAdministrator() {
 		boolean isAdmin = false;
 
 		if (StringUtils.equals(adminFlag, "1")) {
@@ -245,12 +280,108 @@ public class SysUser implements Serializable {
 		return isAdmin;
 	}
 
+	@Override
+	public User jsonToObject(JSONObject jsonObject) {
+		SysUser model = new SysUser();
+		if (jsonObject.containsKey("id")) {
+			model.setId(jsonObject.getIntValue("id"));
+		}
+
+		if (jsonObject.containsKey("actorId")) {
+			model.setActorId(jsonObject.getString("actorId"));
+		}
+		if (jsonObject.containsKey("account")) {
+			model.setActorId(jsonObject.getString("account"));
+		}
+		if (jsonObject.containsKey("name")) {
+			model.setName(jsonObject.getString("name"));
+		}
+
+		if (jsonObject.containsKey("code")) {
+			model.setCode(jsonObject.getString("code"));
+		}
+
+		if (jsonObject.containsKey("evection")) {
+			model.setEvection(jsonObject.getIntValue("evection"));
+		}
+
+		if (jsonObject.containsKey("gender")) {
+			model.setGender(jsonObject.getIntValue("gender"));
+		}
+
+		if (jsonObject.containsKey("userType")) {
+			model.setUserType(jsonObject.getIntValue("userType"));
+		}
+
+		if (jsonObject.containsKey("accountType")) {
+			model.setAccountType(jsonObject.getIntValue("accountType"));
+		}
+
+		if (jsonObject.containsKey("dumpFlag")) {
+			model.setDumpFlag(jsonObject.getIntValue("dumpFlag"));
+		}
+
+		if (jsonObject.containsKey("createDate")) {
+			model.setCreateDate(jsonObject.getDate("createDate"));
+		}
+
+		if (jsonObject.containsKey("lastLoginTime")) {
+			model.setLastLoginTime(jsonObject.getDate("lastLoginTime"));
+		}
+
+		if (jsonObject.containsKey("lastLoginIP")) {
+			model.setLastLoginIP(jsonObject.getString("lastLoginIP"));
+		}
+
+		if (jsonObject.containsKey("remark")) {
+			model.setRemark(jsonObject.getString("remark"));
+		}
+
+		if (jsonObject.containsKey("deptId")) {
+			model.setDeptId(jsonObject.getInteger("deptId"));
+		}
+
+		if (jsonObject.containsKey("mail")) {
+			model.setMail(jsonObject.getString("mail"));
+		}
+
+		if (jsonObject.containsKey("mobile")) {
+			model.setMobile(jsonObject.getString("mobile"));
+		}
+
+		if (jsonObject.containsKey("telephone")) {
+			model.setTelephone(jsonObject.getString("telephone"));
+		}
+
+		if (jsonObject.containsKey("headship")) {
+			model.setHeadship(jsonObject.getString("headship"));
+		}
+
+		if (jsonObject.containsKey("superiorIds")) {
+			model.setSuperiorIds(jsonObject.getString("superiorIds"));
+		}
+
+		if (jsonObject.containsKey("blocked")) {
+			model.setBlocked(jsonObject.getIntValue("blocked"));
+		}
+
+		if (jsonObject.containsKey("adminFlag")) {
+			model.setAdminFlag(jsonObject.getString("adminFlag"));
+		}
+
+		return model;
+	}
+
 	public void setAccount(String account) {
 		this.account = account;
 	}
 
 	public void setAccountType(int accountType) {
 		this.accountType = accountType;
+	}
+
+	public void setActorId(String actorId) {
+		this.account = actorId;
 	}
 
 	public void setAdminFlag(String adminFlag) {
@@ -269,12 +400,20 @@ public class SysUser implements Serializable {
 		this.code = code;
 	}
 
+	public void setCreateDate(Date createDate) {
+		this.createTime = createDate;
+	}
+
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
 
 	public void setDepartment(SysDepartment department) {
 		this.department = department;
+	}
+
+	public void setDeptId(int deptId) {
+
 	}
 
 	public void setDumpFlag(int dumpFlag) {
@@ -309,6 +448,10 @@ public class SysUser implements Serializable {
 		this.id = id;
 	}
 
+	public void setLastLoginDate(Date lastLoginDate) {
+		this.lastLoginTime = lastLoginDate;
+	}
+
 	public void setLastLoginIP(String lastLoginIP) {
 		this.lastLoginIP = lastLoginIP;
 	}
@@ -317,8 +460,20 @@ public class SysUser implements Serializable {
 		this.lastLoginTime = lastLoginTime;
 	}
 
+	public void setLocked(int locked) {
+		this.blocked = locked;
+	}
+
 	public void setLoginIP(String loginIP) {
 		this.loginIP = loginIP;
+	}
+
+	public void setLoginRetry(int loginRetry) {
+
+	}
+
+	public void setMail(String mail) {
+		this.email = mail;
 	}
 
 	public void setMenus(String menus) {
@@ -341,6 +496,10 @@ public class SysUser implements Serializable {
 		this.password = password;
 	}
 
+	public void setRemark(String remark) {
+
+	}
+
 	public void setRoles(Set<SysDeptRole> roles) {
 		this.roles = roles;
 	}
@@ -359,6 +518,88 @@ public class SysUser implements Serializable {
 
 	public void setUserType(int userType) {
 		this.userType = userType;
+	}
+
+	public JSONObject toJsonObject() {
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("id", id);
+		jsonObject.put("actorId", account);
+		jsonObject.put("name", name);
+		jsonObject.put("locked", blocked);
+		if (department != null) {
+			jsonObject.put("deptId", department.getId());
+		}
+
+		jsonObject.put("accountType", accountType);
+		jsonObject.put("userType", userType);
+		jsonObject.put("dumpFlag", dumpFlag);
+		jsonObject.put("gender", gender);
+		jsonObject.put("evection", evection);
+		jsonObject.put("superiorIds", superiorIds);
+
+		jsonObject.put("fax", fax);
+		jsonObject.put("telephone", telephone);
+		jsonObject.put("headship", headship);
+		jsonObject.put("adminFlag", adminFlag);
+
+		if (email != null) {
+			jsonObject.put("mail", email);
+			jsonObject.put("email", email);
+		}
+		if (mobile != null) {
+			jsonObject.put("mobile", mobile);
+		}
+		if (lastLoginTime != null) {
+			jsonObject.put("lastLoginDate", lastLoginTime);
+			jsonObject.put("lastLoginTime", lastLoginTime);
+		}
+		if (loginIP != null) {
+			jsonObject.put("loginIP", loginIP);
+		}
+
+		return jsonObject;
+	}
+
+	public ObjectNode toObjectNode() {
+		ObjectNode jsonObject = new ObjectMapper().createObjectNode();
+		jsonObject.put("id", id);
+		jsonObject.put("actorId", account);
+		jsonObject.put("name", name);
+		jsonObject.put("locked", blocked);
+		if (department != null) {
+			jsonObject.put("deptId", department.getId());
+		}
+
+		jsonObject.put("accountType", accountType);
+		jsonObject.put("userType", userType);
+		jsonObject.put("dumpFlag", dumpFlag);
+		jsonObject.put("gender", gender);
+		jsonObject.put("evection", evection);
+		jsonObject.put("superiorIds", superiorIds);
+
+		jsonObject.put("fax", fax);
+		jsonObject.put("telephone", telephone);
+		jsonObject.put("headship", headship);
+		jsonObject.put("adminFlag", adminFlag);
+
+		if (email != null) {
+			jsonObject.put("mail", email);
+			jsonObject.put("email", email);
+		}
+		if (mobile != null) {
+			jsonObject.put("mobile", mobile);
+		}
+		if (lastLoginTime != null) {
+			jsonObject.put("lastLoginDate",
+					DateUtils.getDateTime(lastLoginTime));
+			jsonObject.put("lastLoginTime",
+					DateUtils.getDateTime(lastLoginTime));
+		}
+		if (loginIP != null) {
+			jsonObject.put("loginIP", loginIP);
+		}
+
+		return jsonObject;
 	}
 
 }

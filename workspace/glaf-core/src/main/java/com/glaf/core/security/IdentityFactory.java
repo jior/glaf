@@ -72,6 +72,15 @@ public class IdentityFactory {
 	public static User getUser(String actorId) {
 		return null;
 	}
+	
+	/**
+	 * 获取登录用户信息
+	 * @param actorId
+	 * @return
+	 */
+	public static LoginContext getLoginContext(String actorId) {
+		return null;
+	}
 
 	/**
 	 * 获取全部用户Map

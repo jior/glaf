@@ -58,22 +58,14 @@
 	<definition name="list">
 		<savePath>/jsp</savePath>
 		<saveName>list.jsp</saveName>
-		<template>/templates/jsp/list.jsp.ftl</template>
+		<template>/templates/struts/list.jsp.ftl</template>
+		<encoding>UTF-8</encoding>
 	</definition>
 	<definition name="edit">
 		<savePath>/jsp</savePath>
 		<saveName>edit.jsp</saveName>
-		<template>/templates/jsp/edit.jsp.ftl</template>
-	</definition>
-	<definition name="view">
-		<savePath>/jsp</savePath>
-		<saveName>view.jsp</saveName>
-		<template>/templates/jsp/view.jsp.ftl</template>
-	</definition>
-	<definition name="query">
-		<savePath>/jsp</savePath>
-		<saveName>query.jsp</saveName>
-		<template>/templates/jsp/query.jsp.ftl</template>
+		<template>/templates/struts/edit.jsp.ftl</template>
+		<encoding>UTF-8</encoding>
 	</definition>
 	<definition name="messages_zh_CN">
 		<savePath>/i18n</savePath>
@@ -90,20 +82,20 @@
 		<saveName>${entityName}.mysql.create.sql</saveName>
 		<template>/templates/sql/mysql.create.sql</template>
 	</definition>
-	<definition name="mssql">
+	<definition name="sqlserver">
 		<savePath>/sql/create</savePath>
-		<saveName>${entityName}.mssql.create.sql</saveName>
-		<template>/templates/sql/mssql.create.sql</template>
+		<saveName>${entityName}.sqlserver.create.sql</saveName>
+		<template>/templates/sql/sqlserver.create.sql</template>
 	</definition>
 	<definition name="db2">
 		<savePath>/sql/create</savePath>
 		<saveName>${entityName}.db2.create.sql</saveName>
 		<template>/templates/sql/db2.create.sql</template>
 	</definition>
-	<definition name="postgres">
+	<definition name="postgresql">
 		<savePath>/sql/create</savePath>
-		<saveName>${entityName}.postgres.create.sql</saveName>
-		<template>/templates/sql/postgres.create.sql</template>
+		<saveName>${entityName}.postgresql.create.sql</saveName>
+		<template>/templates/sql/postgresql.create.sql</template>
 	</definition>
 	<definition name="oracle">
 		<savePath>/sql/create</savePath>

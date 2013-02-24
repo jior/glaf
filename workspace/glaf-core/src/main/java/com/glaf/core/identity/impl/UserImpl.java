@@ -34,6 +34,8 @@ public class UserImpl implements User {
 
 	private static final long serialVersionUID = 1L;
 
+	protected long id;
+
 	protected String actorId;
 
 	protected String password;
@@ -147,6 +149,10 @@ public class UserImpl implements User {
 		return fax;
 	}
 
+	public long getId() {
+		return id;
+	}
+
 	public String getIsBind() {
 		return isBind;
 	}
@@ -231,6 +237,76 @@ public class UserImpl implements User {
 		return result;
 	}
 
+	public boolean isSystemAdministrator() {
+		if ("1".equals(getIsSystem())) {
+			return true;
+		}
+		return false;
+	}
+
+	public User jsonToObject(JSONObject jsonObject) {
+		UserImpl model = new UserImpl();
+		if (jsonObject.containsKey("id")) {
+			model.setId(jsonObject.getIntValue("id"));
+		}
+		if (jsonObject.containsKey("actorId")) {
+			model.setActorId(jsonObject.getString("actorId"));
+		}
+
+		if (jsonObject.containsKey("account")) {
+			model.setActorId(jsonObject.getString("account"));
+		}
+		if (jsonObject.containsKey("name")) {
+			model.setName(jsonObject.getString("name"));
+		}
+
+		if (jsonObject.containsKey("userType")) {
+			model.setUserType(jsonObject.getIntValue("userType"));
+		}
+
+		if (jsonObject.containsKey("accountType")) {
+			model.setAccountType(jsonObject.getIntValue("accountType"));
+		}
+
+		if (jsonObject.containsKey("createDate")) {
+			model.setCreateDate(jsonObject.getDate("createDate"));
+		}
+
+		if (jsonObject.containsKey("status")) {
+			model.setStatus(jsonObject.getString("status"));
+		}
+		if (jsonObject.containsKey("isSystem")) {
+			model.setIsSystem(jsonObject.getString("isSystem"));
+		}
+
+		if (jsonObject.containsKey("remark")) {
+			model.setRemark(jsonObject.getString("remark"));
+		}
+
+		if (jsonObject.containsKey("deptId")) {
+			model.setDeptId(jsonObject.getInteger("deptId"));
+		}
+		if (jsonObject.containsKey("isBind")) {
+			model.setIsBind(jsonObject.getString("isBind"));
+		}
+		if (jsonObject.containsKey("computerId")) {
+			model.setComputerId(jsonObject.getString("computerId"));
+		}
+		if (jsonObject.containsKey("mail")) {
+			model.setMail(jsonObject.getString("mail"));
+		}
+
+		if (jsonObject.containsKey("mobile")) {
+			model.setMobile(jsonObject.getString("mobile"));
+		}
+
+		if (jsonObject.containsKey("domainIndex")) {
+			model.setDomainIndex(jsonObject.getInteger("domainIndex"));
+		}
+
+		return model;
+	}
+
 	public void setAccountType(int accountType) {
 		this.accountType = accountType;
 	}
@@ -265,6 +341,10 @@ public class UserImpl implements User {
 
 	public void setFax(String fax) {
 		this.fax = fax;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public void setIsBind(String isBind) {
@@ -343,57 +423,9 @@ public class UserImpl implements User {
 		this.userType = userType;
 	}
 
-	public User jsonToObject(JSONObject jsonObject) {
-		User model = new UserImpl();
-		if (jsonObject.containsKey("actorId")) {
-			model.setActorId(jsonObject.getString("actorId"));
-		}
-		if (jsonObject.containsKey("name")) {
-			model.setName(jsonObject.getString("name"));
-		}
-
-		if (jsonObject.containsKey("createDate")) {
-			model.setCreateDate(jsonObject.getDate("createDate"));
-		}
-
-		if (jsonObject.containsKey("status")) {
-			model.setStatus(jsonObject.getString("status"));
-		}
-		if (jsonObject.containsKey("isSystem")) {
-			model.setIsSystem(jsonObject.getString("isSystem"));
-		}
-
-		if (jsonObject.containsKey("remark")) {
-			model.setRemark(jsonObject.getString("remark"));
-		}
-
-		if (jsonObject.containsKey("deptId")) {
-			model.setDeptId(jsonObject.getInteger("deptId"));
-		}
-		if (jsonObject.containsKey("isBind")) {
-			model.setIsBind(jsonObject.getString("isBind"));
-		}
-		if (jsonObject.containsKey("computerId")) {
-			model.setComputerId(jsonObject.getString("computerId"));
-		}
-		if (jsonObject.containsKey("mail")) {
-			model.setMail(jsonObject.getString("mail"));
-		}
-
-		if (jsonObject.containsKey("mobile")) {
-			model.setMobile(jsonObject.getString("mobile"));
-		}
-
-		if (jsonObject.containsKey("domainIndex")) {
-			model.setDomainIndex(jsonObject.getInteger("domainIndex"));
-		}
-
-		return model;
-	}
-
 	public JSONObject toJsonObject() {
 		JSONObject jsonObject = new JSONObject();
-
+		jsonObject.put("id", id);
 		jsonObject.put("actorId", actorId);
 		jsonObject.put("name", name);
 		jsonObject.put("locked", locked);
@@ -432,7 +464,7 @@ public class UserImpl implements User {
 
 	public ObjectNode toObjectNode() {
 		ObjectNode jsonObject = new ObjectMapper().createObjectNode();
-
+		jsonObject.put("id", id);
 		jsonObject.put("actorId", actorId);
 		jsonObject.put("name", name);
 		jsonObject.put("locked", locked);

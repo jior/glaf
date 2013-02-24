@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  
 
 @Controller
-@RequestMapping("/apps/${modelName}.do")
+@RequestMapping("/apps/${modelName}")
 public class ${entityName}Controller extends ${entityName}BaseController {
 	protected final static Log logger = LogFactory
 			.getLog(${entityName}Controller.class);

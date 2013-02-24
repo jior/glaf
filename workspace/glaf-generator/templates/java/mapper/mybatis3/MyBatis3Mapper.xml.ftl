@@ -152,9 +152,14 @@
 		resultMap="${modelName}ResultMap">
 		select E.*
 		<include refid="select${entityName}sSql" />
-		<if test="orderBy != null">
-		   order by #F{orderBy}
-        </if>
+		<choose>
+		  <when test="orderBy != null">
+		     order by #F{orderBy}
+          </when>
+		  <otherwise>
+		      order by E.CREATEDATE_ desc
+		  </otherwise>
+        </choose>
 	</select>
 
 	<select id="get${entityName}Count" 

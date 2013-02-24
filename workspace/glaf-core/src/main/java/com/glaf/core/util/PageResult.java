@@ -29,6 +29,7 @@ import java.util.List;
  * <p>Description: 分页对象</p>
  *
  */
+@SuppressWarnings("rawtypes")
 public class PageResult implements Serializable{
 	private static final long serialVersionUID = 4829284558188407984L;
 	
@@ -37,6 +38,7 @@ public class PageResult implements Serializable{
 	private int currentPageNo;//当前页
 	private int totalPageCount;//总页数
 	private int totalRecordCount;//总记录数
+	
 	private List results;//结果集
 	private int pageSize;//页面大小
 	

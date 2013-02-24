@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  
 
 @Controller
-@RequestMapping("/apps/trip.do")
+@RequestMapping("/apps/trip")
 public class TripController extends TripBaseController {
 	protected final static Log logger = LogFactory
 			.getLog(TripController.class);

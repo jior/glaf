@@ -1,22 +1,22 @@
 /*
- * Licensed to the Apache Software Foundation (ASF) under one
- * or more contributor license agreements.  See the NOTICE file
- * distributed with this work for additional information
- * regarding copyright ownership.  The ASF licenses this file
- * to you under the Apache License, Version 2.0 (the
- * "License"); you may not use this file except in compliance
- * with the License.  You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+* Licensed to the Apache Software Foundation (ASF) under one
+* or more contributor license agreements.  See the NOTICE file
+* distributed with this work for additional information
+* regarding copyright ownership.  The ASF licenses this file
+* to you under the Apache License, Version 2.0 (the
+* "License"); you may not use this file except in compliance
+* with the License.  You may obtain a copy of the License at
+*
+*     http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*/
 
-package com.glaf.base.modules.sys.springmvc;
+package com.glaf.base.modules.sys.action;
 
 import java.util.Enumeration;
 import java.util.List;
@@ -27,12 +27,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
-
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionMessage;
+import org.apache.struts.action.ActionMessages;
  
+import org.springframework.web.struts.DispatchActionSupport;
 
 import com.glaf.base.callback.CallbackProperties;
 import com.glaf.base.callback.LoginCallback;
@@ -46,31 +47,20 @@ import com.glaf.base.modules.sys.service.SysApplicationService;
 import com.glaf.base.modules.sys.service.SysTreeService;
 import com.glaf.base.modules.sys.service.SysUserService;
 import com.glaf.base.modules.utils.ContextUtil;
-import com.glaf.core.res.MessageUtils;
-import com.glaf.core.res.ViewMessage;
-import com.glaf.core.res.ViewMessages;
 import com.glaf.base.utils.ClassUtil;
 import com.glaf.base.utils.ParamUtil;
 import com.glaf.base.utils.RequestUtil;
 import com.glaf.core.security.DigestUtil;
-import com.glaf.core.util.RequestUtils;
 
-@Controller("/sys/authorize")
-@RequestMapping("/sys/authorize.do")
-public class AuthorizeController {
-	private static final Log logger = LogFactory
-			.getLog(AuthorizeController.class);
+public class AuthorizeAction extends DispatchActionSupport {
+	private static final Log logger = LogFactory.getLog(AuthorizeAction.class);
 
-	@javax.annotation.Resource
 	private SysApplicationService sysApplicationService;
 
-	@javax.annotation.Resource
 	private AuthorizeService authorizeService;
 
-	@javax.annotation.Resource
 	private SysTreeService sysTreeService;
 
-	@javax.annotation.Resource
 	private SysUserService sysUserService;
 
 	public SysUserService getSysUserService() {
@@ -84,21 +74,19 @@ public class AuthorizeController {
 	 * @param form
 	 * @param request
 	 * @param response
-	 * @return
+	 * @return ActionForward
+	 * @throws Exception
 	 */
-	@RequestMapping(params = "method=login")
-	public ModelAndView login(ModelMap modelMap, HttpServletRequest request,
-			HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
-		ViewMessages messages = new ViewMessages();
+	public ActionForward login(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		saveToken(request);
+
+		ActionMessages messages = new ActionMessages();
 		// 获取参数
 		String account = ParamUtil.getParameter(request, "account");
 		String password = ParamUtil.getParameter(request, "password");
-		String pwd = password;
-		try {
-			pwd = DigestUtil.digestString(password, "MD5");
-		} catch (Exception ex) {
-		}
+		String pwd = DigestUtil.digestString(password, "MD5");
 
 		logger.debug(account + " start login........................");
 
@@ -106,18 +94,18 @@ public class AuthorizeController {
 		SysUser bean = authorizeService.login(account, pwd);
 		if (bean == null) {
 			// 用户对象为空或失效，显示错误信息
-			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
+			messages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage(
 					"authorize.login_failure"));
-			MessageUtils.addMessages(request, messages);
-			return new ModelAndView("/modules/login", modelMap);
+			addMessages(request, messages);
+			return mapping.findForward("show_login");
 		} else {
 			String loginIp = UserOnlineListener.findUser(bean.getId());
 			logger.info("login ip:" + loginIp);
 			if (loginIp != null && !loginIp.equals(request.getRemoteAddr())) {// 用户已在其他机器登陆
-				messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
+				messages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage(
 						"authorize.login_failure2"));
-				MessageUtils.addMessages(request, messages);
-				return new ModelAndView("/modules/login", modelMap);
+				addMessages(request, messages);
+				return mapping.findForward("show_login");
 			}
 
 			Properties props = CallbackProperties.getProperties();
@@ -146,15 +134,14 @@ public class AuthorizeController {
 			ContextUtil.put(bean.getAccount(), bean);// 传入全局变量
 
 			RequestUtil.setLoginUser(request, bean);
-			RequestUtils.setLoginUser(request, response, "GLAF", bean.getAccount());
 
 			// 保存session对象，跳转到后台主页面
 			request.getSession().setAttribute(SysConstants.MENU, menus);
 
 			if (bean.getAccountType() == 1) {// 供应商用户
-				return new ModelAndView("/modules/spframe", modelMap);
+				return mapping.findForward("show_sp_frame");
 			} else {
-				return new ModelAndView("/modules/frame", modelMap);
+				return mapping.findForward("show_frame");
 			}
 		}
 	}
@@ -166,16 +153,16 @@ public class AuthorizeController {
 	 * @param form
 	 * @param request
 	 * @param response
-	 * @return
+	 * @return ActionForward
+	 * @throws Exception
 	 */
-	@RequestMapping(params = "method=logout")
-	public ModelAndView logout(ModelMap modelMap, HttpServletRequest request,
-			HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+	public ActionForward logout(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
 		// 登出系统，清除session对象
 		request.getSession().removeAttribute(SysConstants.LOGIN);
 		request.getSession().removeAttribute(SysConstants.MENU);
-		return new ModelAndView("/modules/login", modelMap);
+		return mapping.findForward("show_login");
 	}
 
 	/**
@@ -185,14 +172,14 @@ public class AuthorizeController {
 	 * @param form
 	 * @param request
 	 * @param response
-	 * @return
+	 * @return ActionForward
+	 * @throws Exception
 	 */
-	@RequestMapping(params = "method=prepareLogin")
-	public ModelAndView prepareLogin(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+	public ActionForward prepareLogin(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
 		// 显示登陆页面
-		return new ModelAndView("/modules/login", modelMap);
+		return mapping.findForward("show_login");
 	}
 
 	public void setAuthorizeService(AuthorizeService authorizeService) {
@@ -223,17 +210,17 @@ public class AuthorizeController {
 	 * @param request
 	 * @param response
 	 * @return
+	 * @throws Exception
 	 */
-	@RequestMapping(params = "method=showMenu")
-	public ModelAndView showMenu(ModelMap modelMap, HttpServletRequest request,
-			HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+	public ActionForward showMenu(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
 		SysUser user = RequestUtil.getLoginUser(request);
 		SysTree parent = sysTreeService.getSysTreeByCode(Constants.TREE_APP);
 		List list = sysApplicationService
 				.getAccessAppList(parent.getId(), user);
 		request.setAttribute("list", list);
-		return new ModelAndView("/modules/menu", modelMap);
+		return mapping.findForward("show_menu");
 	}
 
 	/**
@@ -244,14 +231,15 @@ public class AuthorizeController {
 	 * @param request
 	 * @param response
 	 * @return
+	 * @throws Exception
 	 */
-	@RequestMapping(params = "method=showSubMenu")
-	public ModelAndView showSubMenu(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ActionForward showSubMenu(ActionMapping mapping,
+			ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 		SysUser user = RequestUtil.getLoginUser(request);
 		long parent = ParamUtil.getIntParameter(request, "parent", 0);
 		List list = sysApplicationService.getAccessAppList(parent, user);
 		request.setAttribute("list", list);
-		return new ModelAndView("/modules/sub_menu", modelMap);
+		return mapping.findForward("show_submenu");
 	}
 }

@@ -20,6 +20,14 @@ package com.glaf.core.util;
 
 public final class Constants {
 
+	public static final String LOGIN_USER = "LOGIN_USER";
+
+	public static final String LOGIN_IP = "LOGIN_IP";
+	
+	public static final String LOGIN_ACTORID="LOGIN_ACTORID";
+	
+	public static final String TS = "TS";
+	
 	public final static String NUMBER_OF_INSTANCES = "nrOfInstances";
 
 	public final static String NUMBER_OF_ACTIVE_INSTANCES = "nrOfActiveInstances";

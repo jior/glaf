@@ -47,7 +47,7 @@
          <java classname="com.glaf.generator.GenAll" fork="true">
 			<classpath refid="compile.classpath"/>
 			<arg line=" mapping codegen/gen "/>
-			<jvmarg line="-Dcodegen.cfg=templates/codegen/codegen_rest.xml"/>
+			<jvmarg line="-Dcodegen.cfg=templates/codegen/codegen_springmvc.xml"/>
 		</java>
 
 	</target>
