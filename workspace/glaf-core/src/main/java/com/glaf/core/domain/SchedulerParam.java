@@ -32,7 +32,7 @@ import com.glaf.core.base.Parameter;
 import com.glaf.core.util.DateUtils;
 
 @Entity
-@Table(name = "MX_SYS_SCHEDULER_PARAMS")
+@Table(name = "SYS_SCHEDULER_PARAMS")
 public class SchedulerParam implements Serializable,  Parameter {
 	private static final long serialVersionUID = 1L;
 

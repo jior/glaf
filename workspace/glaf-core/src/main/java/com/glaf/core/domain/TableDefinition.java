@@ -40,7 +40,7 @@ import com.glaf.core.util.DateUtils;
  * 
  */
 @Entity
-@Table(name = "MX_SYS_TABLE")
+@Table(name = "SYS_TABLE")
 public class TableDefinition implements java.io.Serializable,
 		java.lang.Comparable<TableDefinition>{
 

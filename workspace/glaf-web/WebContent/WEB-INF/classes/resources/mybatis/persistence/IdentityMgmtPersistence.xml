@@ -4,24 +4,11 @@
 
 <mapper namespace="com.glaf.core.persistence.IdentityMgmtPersistence">
 
-	 
-	<resultMap id="agentResultMap" type="com.glaf.core.identity.AgentImpl">
-		<id property="id" column="id" jdbcType="VARCHAR" />
-		<result property="assignFrom" column="actorId" jdbcType="VARCHAR" />
-		<result property="assignTo" column="agentId" jdbcType="VARCHAR" />
-		<result property="agentType" column="objectValue" jdbcType="VARCHAR" />
-		<result property="processName" column="attribute01" jdbcType="VARCHAR" />
-		<result property="taskName" column="attribute02" jdbcType="VARCHAR" />
-		<result property="objectId" column="objectId" jdbcType="VARCHAR" />
-		<result property="objectValue" column="objectValue" jdbcType="VARCHAR" />
-		<result property="startDate" column="startDate" jdbcType="TIMESTAMP" />
-		<result property="endDate" column="endDate" jdbcType="TIMESTAMP" />
-	</resultMap>
- 
 	<resultMap id="roleResultMap" type="com.glaf.core.identity.impl.RoleImpl">
 		<id property="roleId" column="id" jdbcType="INTEGER" />
 		<result property="name" column="rolename" jdbcType="VARCHAR" />
 	</resultMap>
+
 
 	<resultMap id="userResultMap" type="com.glaf.core.identity.impl.UserImpl">
 		<id property="actorId" column="account" jdbcType="VARCHAR" />
@@ -33,11 +20,14 @@
 	</resultMap>
 
 
-	<select id="getAgents" resultMap="agentResultMap"
-		parameterType="string">
-		SELECT a.*
-		FROM JPAGE_JBPM_AGENT_INSTANCE a
-		WHERE a.actorId = #{assignTo} 
+	<select id="getAgents" resultClass="com.glaf.core.identity.impl.AgentImpl" parameterType="string">
+
+		select  AGENTTYPE_ as agentType, ASSIGNFROM_ as assignFrom,ASSIGNTO_ as assignTo,
+		        OBJECTID_ as objectId, OBJECTVALUE_ as objectValue,
+                PROCESSNAME_ as processName, TASKNAME_ as taskName
+		from sys_agent
+		where ASSIGNTO_ = #{assignTo}
+
 	</select>
 
 

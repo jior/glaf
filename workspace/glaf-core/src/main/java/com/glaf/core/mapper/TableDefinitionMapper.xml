@@ -68,7 +68,7 @@
 	</resultMap>
  
 	<insert id="insertTableDefinition" parameterType="com.glaf.core.domain.TableDefinition">
-		insert into MX_SYS_TABLE 
+		insert into SYS_TABLE 
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 		    TABLENAME_
 			<if test="parentTableName != null">
@@ -243,7 +243,7 @@
 
 	 
 	<update id="updateTableDefinition" parameterType="com.glaf.core.domain.TableDefinition">
-		update MX_SYS_TABLE
+		update SYS_TABLE
 		set
 		<trim prefix="" suffix="" suffixOverrides=",">		
 			<if test="parentTableName != null">
@@ -335,12 +335,12 @@
 
 
 	<delete id="deleteTableDefinitionById" parameterType="string">
-		delete from MX_SYS_TABLE
+		delete from SYS_TABLE
 		where TABLENAME_ = #{id}
 	</delete>
 
 	<delete id="deleteTableDefinitions" parameterType="com.glaf.core.query.TableDefinitionQuery">
-		delete from MX_SYS_TABLE
+		delete from SYS_TABLE
 		where ( TABLENAME_ IN
 		<foreach item="x_rowId" index="index" collection="rowIds"
 			open="(" separator="," close=")">
@@ -351,7 +351,7 @@
 
 	<select id="getTableDefinitionById" parameterType="string"
 		resultMap="tableDefinitionResultMap">
-		select * from MX_SYS_TABLE 
+		select * from SYS_TABLE 
 		where TABLENAME_ = #{id}
 	</select>
 	
@@ -360,8 +360,8 @@
 		resultType="com.glaf.core.domain.TableDefinition">
 		
         select C.TABLENAME_ tableName, count(C.COLUMNNAME_) as columnQty 
-        from MX_SYS_COLUMN C 
-        inner join MX_SYS_TABLE E 
+        from SYS_COLUMN C 
+        inner join SYS_TABLE E 
         on C.TABLENAME_ = E.TABLENAME_  
     
 		<include refid="selectTableCountSql" />
@@ -451,7 +451,7 @@
 
 	<sql id="selectTableDefinitionsSql">
 
-		from MX_SYS_TABLE E
+		from SYS_TABLE E
 
 		<where>
 			1 = 1

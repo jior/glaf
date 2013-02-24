@@ -20,7 +20,7 @@
 
  
 	<insert id="insertSchedulerParam" parameterType="com.glaf.core.domain.SchedulerParam">
-		insert into MX_SYS_SCHEDULER_PARAMS 
+		insert into SYS_SCHEDULER_PARAMS 
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			id, taskId, type_cd, key_name, title 
 			<if test="stringVal != null">
@@ -72,13 +72,13 @@
 
  
 	<delete id="deleteSchedulerParamsByTaskId" parameterType="string"> 
-        delete from MX_SYS_SCHEDULER_PARAMS
+        delete from SYS_SCHEDULER_PARAMS
         where taskId = #{taskId}
 	</delete>
 
 
 	<select id="getSchedulerParamsByTaskId" parameterType="string" resultMap="schedulerParamResultMap">
-		select * from MX_SYS_SCHEDULER_PARAMS 
+		select * from SYS_SCHEDULER_PARAMS 
 		where taskId = #{taskId}
 	</select>
 

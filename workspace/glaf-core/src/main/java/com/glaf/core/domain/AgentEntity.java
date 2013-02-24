@@ -39,7 +39,7 @@ import com.glaf.core.identity.Agent;
 import com.glaf.core.util.DateUtils;
 
 @Entity
-@Table(name = "MX_SYS_AGENT")
+@Table(name = "SYS_AGENT")
 public class AgentEntity implements Agent {
 
 	private static final long serialVersionUID = 1L;

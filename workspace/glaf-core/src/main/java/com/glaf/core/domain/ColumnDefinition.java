@@ -39,7 +39,7 @@ import com.alibaba.fastjson.JSONObject;
  * 
  */
 @Entity
-@Table(name = "MX_SYS_COLUMN")
+@Table(name = "SYS_COLUMN")
 public class ColumnDefinition implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;

@@ -43,7 +43,7 @@ import com.glaf.core.base.DataFile;
 import com.glaf.core.util.DateUtils;
 
 @Entity
-@Table(name = "MX_LOB")
+@Table(name = "SYS_LOB")
 public class BlobItemEntity implements DataFile, Serializable, BlobItem {
 	private static final long serialVersionUID = 1L;
 

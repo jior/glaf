@@ -5,54 +5,52 @@
 <mapper namespace="com.glaf.core.mapper.SchedulerMapper">
 
 	<resultMap id="schedulerResultMap" type="com.glaf.core.domain.SchedulerEntity">
-		<id property="id" column="ID_" jdbcType="VARCHAR" />
-		<result property="taskId" column="TASKID_" jdbcType="VARCHAR" />
-		<result property="taskName" column="TASKNAME_" jdbcType="VARCHAR" />
-		<result property="taskType" column="TASKTYPE_" jdbcType="VARCHAR" />
-		<result property="jobClass" column="JOBCLASS_" jdbcType="VARCHAR" />
-		<result property="title" column="TITLE_" jdbcType="VARCHAR" />
-		<result property="content" column="CONTENT_" jdbcType="VARCHAR" />
-		<result property="startDate" column="STARTDATE_" jdbcType="TIMESTAMP" />
-		<result property="endDate" column="ENDDATE_" jdbcType="TIMESTAMP" />
-		<result property="threadSize" column="THREADSIZE_" jdbcType="INTEGER" />
-		<result property="repeatCount" column="REPEATCOUNT_" jdbcType="INTEGER" />
-		<result property="repeatInterval" column="REPEATINTERVAL_"
+		<id property="id" column="id" jdbcType="VARCHAR" />
+		<result property="taskName" column="taskName" jdbcType="VARCHAR" />
+		<result property="taskType" column="taskType" jdbcType="VARCHAR" />
+		<result property="jobClass" column="jobClass" jdbcType="VARCHAR" />
+		<result property="title" column="title" jdbcType="VARCHAR" />
+		<result property="content" column="content" jdbcType="VARCHAR" />
+		<result property="startDate" column="startDate" jdbcType="TIMESTAMP" />
+		<result property="endDate" column="endDate" jdbcType="TIMESTAMP" />
+		<result property="threadSize" column="threadSize" jdbcType="INTEGER" />
+		<result property="repeatCount" column="repeatCount" jdbcType="INTEGER" />
+		<result property="repeatInterval" column="repeatInterval"
 			jdbcType="INTEGER" />
-		<result property="startDelay" column="STARTDELAY_" jdbcType="INTEGER" />
-		<result property="priority" column="PRIORITY_" jdbcType="INTEGER" />
-		<result property="locked" column="LOCKED_" jdbcType="INTEGER" />
-		<result property="startup" column="STARTUP_" jdbcType="VARCHAR" />
-		<result property="autoStartup" column="AUTOSTARTUP_" jdbcType="VARCHAR" />
-		<result property="expression" column="EXPRESSION_" jdbcType="VARCHAR" />
-		<result property="attribute" column="ATTRIBUTE_" jdbcType="VARCHAR" />
-		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR" />
-		<result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP" />
+		<result property="startDelay" column="startDelay" jdbcType="INTEGER" />
+		<result property="priority" column="priority_" jdbcType="INTEGER" />
+		<result property="locked" column="locked_" jdbcType="INTEGER" />
+		<result property="startup" column="startup_" jdbcType="INTEGER" />
+		<result property="autoStartup" column="autoStartup" jdbcType="INTEGER" />
+		<result property="expression" column="expression_" jdbcType="VARCHAR" />
+		<result property="attribute" column="attribute_" jdbcType="VARCHAR" />
+		<result property="createBy" column="createBy" jdbcType="VARCHAR" />
+		<result property="createDate" column="createDate" jdbcType="TIMESTAMP" />
 	</resultMap>
 
 
 	<insert id="insertScheduler" parameterType="com.glaf.core.domain.SchedulerEntity">
 		insert into
-		MX_SYS_SCHEDULER ( ID_
-		,TASKID_
-		,TASKNAME_
-		,TASKTYPE_
-		,JOBCLASS_
-		,TITLE_
-		,CONTENT_
-		,STARTDATE_
-		,ENDDATE_
-		,THREADSIZE_
-		,REPEATCOUNT_
-		,REPEATINTERVAL_
-		,STARTDELAY_
-		,PRIORITY_
-		,LOCKED_
-		,STARTUP_
-		,AUTOSTARTUP_
-		,EXPRESSION_
-		,ATTRIBUTE_
-		,CREATEBY_
-		,CREATEDATE_
+		SYS_SCHEDULER ( id
+		,taskName
+		,taskType
+		,jobClass
+		,title
+		,content
+		,startDate
+		,endDate
+		,threadSize
+		,repeatCount
+		,repeatInterval
+		,startDelay
+		,priority_
+		,locked_
+		,startup_
+		,autoStartup
+		,expression_
+		,attribute_
+		,createBy
+		,createDate
 		)
 		values (
 		#{id, jdbcType=VARCHAR}
@@ -70,8 +68,8 @@
 		,#{startDelay, jdbcType=INTEGER}
 		,#{priority, jdbcType=INTEGER}
 		,#{locked, jdbcType=INTEGER}
-		,#{startup, jdbcType=VARCHAR}
-		,#{autoStartup, jdbcType=VARCHAR}
+		,#{startup, jdbcType=INTEGER}
+		,#{autoStartup, jdbcType=INTEGER}
 		,#{expression, jdbcType=VARCHAR}
 		,#{attribute, jdbcType=VARCHAR}
 		,#{createBy, jdbcType=VARCHAR}
@@ -82,41 +80,41 @@
 
 	<update id="updateScheduler" parameterType="com.glaf.core.domain.SchedulerEntity">
 		update
-		MX_SYS_SCHEDULER
-		set TASKNAME_ = #{taskName, jdbcType=VARCHAR},
-		TASKTYPE_ = #{taskType, jdbcType=VARCHAR},
-		JOBCLASS_ = #{jobClass, jdbcType=VARCHAR},
-		TITLE_ = #{title, jdbcType=VARCHAR},
-		CONTENT_ = #{content, jdbcType=VARCHAR},
-		STARTDATE_ = #{startDate, jdbcType=TIMESTAMP},
-		ENDDATE_ = #{endDate, jdbcType=TIMESTAMP},
-		REPEATCOUNT_ = #{repeatCount, jdbcType=INTEGER},
-		REPEATINTERVAL_ = #{repeatInterval, jdbcType=INTEGER},
-		STARTDELAY_ = #{startDelay, jdbcType=INTEGER},
-		PRIORITY_ = #{priority, jdbcType=INTEGER},
-		LOCKED_ = #{locked, jdbcType=INTEGER},
-		STARTUP_ = #{startup, jdbcType=VARCHAR},
-		AUTOSTARTUP_ = #{autoStartup, jdbcType=VARCHAR},
-		EXPRESSION_ = #{expression, jdbcType=VARCHAR},
-		ATTRIBUTE_ = #{attribute, jdbcType=VARCHAR}
-		where ID_ = #{id, jdbcType=VARCHAR}
+		SYS_SCHEDULER
+		set taskName = #{taskName, jdbcType=VARCHAR},
+		taskType = #{taskType, jdbcType=VARCHAR},
+		jobClass = #{jobClass, jdbcType=VARCHAR},
+		title = #{title, jdbcType=VARCHAR},
+		content = #{content, jdbcType=VARCHAR},
+		startDate = #{startDate, jdbcType=TIMESTAMP},
+		endDate = #{endDate, jdbcType=TIMESTAMP},
+		repeatCount = #{repeatCount, jdbcType=INTEGER},
+		repeatInterval = #{repeatInterval, jdbcType=INTEGER},
+		startDelay = #{startDelay, jdbcType=INTEGER},
+		priority_ = #{priority, jdbcType=INTEGER},
+		locked_ = #{locked, jdbcType=INTEGER},
+		startup_ = #{startup, jdbcType=INTEGER},
+		autoStartup = #{autoStartup, jdbcType=INTEGER},
+		expression_ = #{expression, jdbcType=VARCHAR},
+		attribute_ = #{attribute, jdbcType=VARCHAR}
+		where id = #{id, jdbcType=VARCHAR}
 	</update>
 
 
 	<delete id="deleteSchedulerById" parameterType="string">
-		delete from MX_SYS_SCHEDULER
-		where ID_ = #{id}
+		delete from SYS_SCHEDULER
+		where id = #{id}
 	</delete>
 
 	<delete id="deleteSchedulerByTaskId" parameterType="string">
-		delete from MX_SYS_SCHEDULER
-		where TASKID_ = #{taskId}
+		delete from SYS_SCHEDULER
+		where id = #{taskId}
 	</delete>
 
 	<delete id="deleteSchedulers" parameterType="com.glaf.core.query.SchedulerQuery">
-		delete from MX_SYS_SCHEDULER
+		delete from SYS_SCHEDULER
 		where (
-		ID_ IN
+		id IN
 		<foreach item="x_rowId" index="index" collection="rowIds"
 			open="(" separator="," close=")">
 			#{x_rowId}
@@ -125,12 +123,12 @@
 	</delete>
 
 	<select id="getSchedulerById" parameterType="string" resultMap="schedulerResultMap">
-		select * from MX_SYS_SCHEDULER where ID_ = #{id}
+		select * from SYS_SCHEDULER where id = #{id}
 	</select>
 
 	<select id="getSchedulerByTaskId" parameterType="string"
 		resultMap="schedulerResultMap">
-		select * from MX_SYS_SCHEDULER where TASKID_ = #{taskId}
+		select * from SYS_SCHEDULER where id = #{taskId}
 	</select>
 
 	<select id="getSchedulers" parameterType="com.glaf.core.query.SchedulerQuery"
@@ -145,7 +143,7 @@
 		     order by ${orderBy}
 		  </when>
 		  <otherwise>
-		     order by E.CREATEDATE_ desc
+		     order by E.createDate desc
 		  </otherwise>
 		</choose>
 		
@@ -160,17 +158,17 @@
 
 	<sql id="selectSchedulersSql">
 
-		from MX_SYS_SCHEDULER E
+		from SYS_SCHEDULER E
 
 		<where>
 			1 = 1
 
 			<if test="taskId != null">
-				and E.TASKID_ = #{taskId}
+				and E.id = #{taskId}
             </if>
 
 			<if test="taskIds != null and taskIds.size() &gt; 0">
-				and E.TASKID_ IN
+				and E.id IN
 				<foreach item="x_taskId" index="index" collection="taskIds"
 					open="(" separator="," close=")">
 					#{x_taskId}
@@ -178,55 +176,55 @@
 			</if>
 
 			<if test="taskNameLike != null">
-				and E.TASKNAME_ like #{taskNameLike}
+				and E.taskName like #{taskNameLike}
             </if>
 
 			<if test="taskType != null">
-				and E.TASKTYPE_ = #{taskType}
+				and E.taskType = #{taskType}
             </if>
 
 			<if test="jobClassLike != null">
-				and E.JOBCLASS_ like #{jobClassLike}
+				and E.jobClass like #{jobClassLike}
             </if>
 
 			<if test="titleLike != null">
-				and E.TITLE_ like #{titleLike}
+				and E.title like #{titleLike}
             </if>
 
 			<if test="contentLike != null">
-				and E.CONTENT_ like #{contentLike}
+				and E.content like #{contentLike}
             </if>
 
 			<if test="startDateGreaterThanOrEqual != null">
-				and E.STARTDATE_ &gt;= #{startDateGreaterThanOrEqual}
+				and E.startDate &gt;= #{startDateGreaterThanOrEqual}
 			</if>
 
 			<if test="startDateLessThanOrEqual != null">
-				and E.STARTDATE_ &lt;= #{startDateLessThanOrEqual}
+				and E.startDate &lt;= #{startDateLessThanOrEqual}
             </if>
 
 			<if test="endDateGreaterThanOrEqual != null">
-				and E.ENDDATE_ &gt;= #{endDateGreaterThanOrEqual}
+				and E.endDate &gt;= #{endDateGreaterThanOrEqual}
             </if>
 
 			<if test="endDateLessThanOrEqual != null">
-				and E.ENDDATE_ &lt;= #{endDateLessThanOrEqual}
+				and E.endDate &lt;= #{endDateLessThanOrEqual}
             </if>
 
 			<if test="locked != null">
-				and E.LOCKED_ = #{locked}
+				and E.locked_ = #{locked}
             </if>
 
 			<if test="createBy != null">
-				and E.CREATEBY_ = #{createBy}
+				and E.createBy = #{createBy}
             </if>
 
 			<if test="afterCreateDate != null">
-				and E.CREATEDATE_ &gt;= #{afterCreateDate}
+				and E.createDate &gt;= #{afterCreateDate}
 			</if>
 
 			<if test="beforeCreateDate != null">
-				and E.CREATEDATE_ &lt;= #{beforeCreateDate}
+				and E.createDate &lt;= #{beforeCreateDate}
             </if>
 
 		</where>

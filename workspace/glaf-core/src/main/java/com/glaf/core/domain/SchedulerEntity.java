@@ -23,7 +23,6 @@ import java.util.*;
 
 import javax.persistence.*;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import com.alibaba.fastjson.*;
@@ -31,80 +30,77 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import com.glaf.core.util.DateUtils;
- 
+
 import com.glaf.core.base.Parameter;
 import com.glaf.core.base.Scheduler;
 
 @Entity
-@Table(name = "MX_SYS_SCHEDULER")
+@Table(name = "SYS_SCHEDULER")
 public class SchedulerEntity implements Serializable, Scheduler {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name = "ID_", length = 50, nullable = false)
+	@Column(name = "id", length = 50, nullable = false)
 	protected String id;
 
-	@Column(name = "TASKID_")
-	protected String taskId;
-
-	@Column(name = "TASKNAME_")
+	@Column(name = "taskName")
 	protected String taskName;
 
-	@Column(name = "TASKTYPE_")
+	@Column(name = "taskType")
 	protected String taskType;
 
-	@Column(name = "JOBCLASS_")
+	@Column(name = "jobClass")
 	protected String jobClass;
 
-	@Column(name = "TITLE_")
+	@Column(name = "title")
 	protected String title;
 
-	@Column(name = "CONTENT_")
+	@Column(name = "content")
 	protected String content;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "STARTDATE_")
+	@Column(name = "startDate")
 	protected Date startDate;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "ENDDATE_")
+	@Column(name = "endDate")
 	protected Date endDate;
 
-	@Column(name = "THREADSIZE_")
+	@Column(name = "threadSize")
 	protected int threadSize;
 
-	@Column(name = "REPEATCOUNT_")
+	@Column(name = "repeatCount")
 	protected int repeatCount;
 
-	@Column(name = "REPEATINTERVAL_")
+	@Column(name = "repeatInterval")
 	protected int repeatInterval;
 
-	@Column(name = "STARTDELAY_")
+	@Column(name = "startDelay")
 	protected int startDelay;
 
-	@Column(name = "PRIORITY_")
+	@Column(name = "priority_")
 	protected int priority;
 
-	@Column(name = "LOCKED_")
+	@Column(name = "locked_")
 	protected int locked;
 
-	@Column(name = "STARTUP_")
-	protected String startup;
+	@Column(name = "startup_")
+	protected int startup;
 
-	@Column(name = "AUTOSTARTUP_")
-	protected String autoStartup;
+	@Column(name = "autoStartup")
+	protected int autoStartup;
 
-	@Column(name = "EXPRESSION_")
+	@Column(name = "expression_")
 	protected String expression;
 
-	@Column(name = "ATTRIBUTE_", length = 500)
+	@Column(name = "attribute_", length = 500)
 	protected String attribute;
 
-	@Column(name = "CREATEBY_")
+	@Column(name = "createBy")
 	protected String createBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "CREATEDATE_")
+	@Column(name = "createDate")
 	protected Date createDate;
 
 	@javax.persistence.Transient
@@ -145,7 +141,7 @@ public class SchedulerEntity implements Serializable, Scheduler {
 		return attribute;
 	}
 
-	public String getAutoStartup() {
+	public int getAutoStartup() {
 		return autoStartup;
 	}
 
@@ -209,12 +205,12 @@ public class SchedulerEntity implements Serializable, Scheduler {
 		return startDelay;
 	}
 
-	public String getStartup() {
+	public int getStartup() {
 		return startup;
 	}
 
 	public String getTaskId() {
-		return taskId;
+		return id;
 	}
 
 	public String getTaskName() {
@@ -242,18 +238,14 @@ public class SchedulerEntity implements Serializable, Scheduler {
 	}
 
 	public boolean isAutoStartup() {
-		if (StringUtils.equalsIgnoreCase(autoStartup, "1")
-				|| StringUtils.equalsIgnoreCase(autoStartup, "Y")
-				|| StringUtils.equalsIgnoreCase(autoStartup, "true")) {
+		if (autoStartup == 1) {
 			return true;
 		}
 		return false;
 	}
 
 	public boolean isStartup() {
-		if (StringUtils.equalsIgnoreCase(startup, "1")
-				|| StringUtils.equalsIgnoreCase(startup, "Y")
-				|| StringUtils.equalsIgnoreCase(startup, "true")) {
+		if (startup == 1) {
 			return true;
 		}
 		return false;
@@ -282,8 +274,8 @@ public class SchedulerEntity implements Serializable, Scheduler {
 
 	public SchedulerEntity jsonToObject(JSONObject jsonObject) {
 		SchedulerEntity model = new SchedulerEntity();
-		if (jsonObject.containsKey("taskId")) {
-			model.setTaskId(jsonObject.getString("taskId"));
+		if (jsonObject.containsKey("id")) {
+			model.setTaskId(jsonObject.getString("id"));
 		}
 		if (jsonObject.containsKey("taskName")) {
 			model.setTaskName(jsonObject.getString("taskName"));
@@ -325,10 +317,10 @@ public class SchedulerEntity implements Serializable, Scheduler {
 			model.setLocked(jsonObject.getInteger("locked"));
 		}
 		if (jsonObject.containsKey("startup")) {
-			model.setStartup(jsonObject.getString("startup"));
+			model.setStartup(jsonObject.getInteger("startup"));
 		}
 		if (jsonObject.containsKey("autoStartup")) {
-			model.setAutoStartup(jsonObject.getString("autoStartup"));
+			model.setAutoStartup(jsonObject.getInteger("autoStartup"));
 		}
 		if (jsonObject.containsKey("expression")) {
 			model.setExpression(jsonObject.getString("expression"));
@@ -351,13 +343,13 @@ public class SchedulerEntity implements Serializable, Scheduler {
 
 	public void setAutoStartup(boolean autoStartup) {
 		if (autoStartup) {
-			this.autoStartup = "1";
+			this.autoStartup = 1;
 		} else {
-			this.autoStartup = "0";
+			this.autoStartup = 0;
 		}
 	}
 
-	public void setAutoStartup(String autoStartup) {
+	public void setAutoStartup(int autoStartup) {
 		this.autoStartup = autoStartup;
 	}
 
@@ -423,18 +415,18 @@ public class SchedulerEntity implements Serializable, Scheduler {
 
 	public void setStartup(boolean startup) {
 		if (startup) {
-			this.startup = "1";
+			this.startup = 1;
 		} else {
-			this.startup = "0";
+			this.startup = 0;
 		}
 	}
 
-	public void setStartup(String startup) {
+	public void setStartup(int startup) {
 		this.startup = startup;
 	}
 
 	public void setTaskId(String taskId) {
-		this.taskId = taskId;
+		this.id = taskId;
 	}
 
 	public void setTaskName(String taskName) {
@@ -456,9 +448,9 @@ public class SchedulerEntity implements Serializable, Scheduler {
 	public JSONObject toJsonObject() {
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("id", id);
-		if (taskId != null) {
-			jsonObject.put("taskId", taskId);
-		}
+
+		jsonObject.put("taskId", id);
+
 		if (taskName != null) {
 			jsonObject.put("taskName", taskName);
 		}
@@ -491,12 +483,11 @@ public class SchedulerEntity implements Serializable, Scheduler {
 		jsonObject.put("startDelay", startDelay);
 		jsonObject.put("priority", priority);
 		jsonObject.put("locked", locked);
-		if (startup != null) {
-			jsonObject.put("startup", startup);
-		}
-		if (autoStartup != null) {
-			jsonObject.put("autoStartup", autoStartup);
-		}
+
+		jsonObject.put("startup", startup);
+
+		jsonObject.put("autoStartup", autoStartup);
+
 		if (expression != null) {
 			jsonObject.put("expression", expression);
 		}
@@ -518,9 +509,9 @@ public class SchedulerEntity implements Serializable, Scheduler {
 	public ObjectNode toObjectNode() {
 		ObjectNode jsonObject = new ObjectMapper().createObjectNode();
 		jsonObject.put("id", id);
-		if (taskId != null) {
-			jsonObject.put("taskId", taskId);
-		}
+
+		jsonObject.put("taskId", id);
+
 		if (taskName != null) {
 			jsonObject.put("taskName", taskName);
 		}
@@ -553,12 +544,11 @@ public class SchedulerEntity implements Serializable, Scheduler {
 		jsonObject.put("startDelay", startDelay);
 		jsonObject.put("priority", priority);
 		jsonObject.put("locked", locked);
-		if (startup != null) {
-			jsonObject.put("startup", startup);
-		}
-		if (autoStartup != null) {
-			jsonObject.put("autoStartup", autoStartup);
-		}
+
+		jsonObject.put("startup", startup);
+
+		jsonObject.put("autoStartup", autoStartup);
+
 		if (expression != null) {
 			jsonObject.put("expression", expression);
 		}

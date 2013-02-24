@@ -43,7 +43,7 @@
  
 	<insert id="insertBlobItem" parameterType="com.glaf.core.domain.BlobItemEntity">
 		insert into
-		MX_LOB ( ID_
+		SYS_LOB ( ID_
         ,RESOURCEID_ 
         ,FILEID_ 
         ,SERVICEKEY_ 
@@ -87,7 +87,7 @@
 
 	<insert id="insertBlobItem_postgres" parameterType="com.glaf.core.domain.BlobItemEntity">
 		insert into
-		MX_LOB ( ID_
+		SYS_LOB ( ID_
         ,RESOURCEID_ 
         ,FILEID_ 
         ,SERVICEKEY_ 
@@ -130,7 +130,7 @@
 	</insert>
 	 
 	<update id="updateBlobItem" parameterType="com.glaf.core.domain.BlobItemEntity">
-	    update MX_LOB
+	    update SYS_LOB
 		set RESOURCEID_ = #{resourceId, jdbcType=VARCHAR},
         LOCKED_ = #{locked, jdbcType=INTEGER},
         STATUS_ = #{status, jdbcType=INTEGER}
@@ -139,7 +139,7 @@
 
 
 	<update id="updateBlobItemFileInfo" parameterType="com.glaf.core.domain.BlobItemEntity">
-	    update MX_LOB
+	    update SYS_LOB
 		set
 		RESOURCEID_ = #{resourceId, jdbcType=VARCHAR},
         FILENAME_ = #{filename, jdbcType=VARCHAR},
@@ -152,7 +152,7 @@
 
 
 	<update id="updateBlobItemFileInfo_postgres" parameterType="com.glaf.core.domain.BlobItemEntity">
-	    update MX_LOB
+	    update SYS_LOB
 		set
 		RESOURCEID_ = #{resourceId, jdbcType=VARCHAR},
         FILENAME_ = #{filename, jdbcType=VARCHAR},
@@ -165,22 +165,22 @@
 
  
 	<delete id="deleteBlobItemById" parameterType="string"> 
-        delete from MX_LOB
+        delete from SYS_LOB
         ID_ =	#{id}
 	</delete>
 
 	<delete id="deleteBlobItemsByFileId" parameterType="string"> 
-        delete from MX_LOB
+        delete from SYS_LOB
         where FILEID_ =	#{fileId}
 	</delete>
 	
 	<delete id="deleteBlobItemsByResourceId" parameterType="string"> 
-        delete from MX_LOB
+        delete from SYS_LOB
         where RESOURCEID_ =	#{resourceId}
 	</delete>
 
 	<delete id="deleteBlobItems" parameterType="com.glaf.core.query.BlobItemQuery">
-		delete from MX_LOB
+		delete from SYS_LOB
 		where (
 		<foreach collection="rowIds" index="index" item="rowId">
 			<if test="index != 0"> OR </if>
@@ -195,7 +195,7 @@
 		    ID_, RESOURCEID_ , FILEID_ , SERVICEKEY_ , NAME_ , TYPE_ , FILENAME_ ,  
             OBJECTID_  , OBJECTVALUE_ , SIZE_ , LASTMODIFIED_ , CONTENTTYPE_,
             LOCKED_ , STATUS_ , DELETEFLAG_  , CREATEBY_  , CREATEDATE_, DEVICEID_
-        from MX_LOB where ID_ = #{id}
+        from SYS_LOB where ID_ = #{id}
 	</select>
 
 
@@ -204,7 +204,7 @@
 		    ID_, RESOURCEID_ , FILEID_ , SERVICEKEY_ , NAME_ , TYPE_ , FILENAME_ ,  
             OBJECTID_  , OBJECTVALUE_ , SIZE_ , LASTMODIFIED_ , CONTENTTYPE_,
             LOCKED_ , STATUS_ , DELETEFLAG_  , CREATEBY_  , CREATEDATE_, DEVICEID_ 
-		from MX_LOB where FILEID_ = #{fileId}
+		from SYS_LOB where FILEID_ = #{fileId}
 		order by CREATEDATE_ desc 
 	</select>
 	
@@ -214,27 +214,27 @@
 		    ID_, RESOURCEID_ , FILEID_ , SERVICEKEY_ , NAME_ , TYPE_ , FILENAME_ ,  
             OBJECTID_  , OBJECTVALUE_ , SIZE_ , LASTMODIFIED_ , CONTENTTYPE_,
             LOCKED_ , STATUS_ , DELETEFLAG_  , CREATEBY_  , CREATEDATE_, DEVICEID_ 
-		from MX_LOB where FILENAME_ = #{filename}
+		from SYS_LOB where FILENAME_ = #{filename}
 		order by CREATEDATE_ desc 
 	</select>
 	
 
 	<select id="getBlobItemFileInfoById" parameterType="string" resultMap="blobItemFileInfoResultMap">
-		select ID_, FILENAME_, DATA_, SIZE_, LASTMODIFIED_ from MX_LOB where ID_ = #{id}
+		select ID_, FILENAME_, DATA_, SIZE_, LASTMODIFIED_ from SYS_LOB where ID_ = #{id}
 	</select>
 
 	<select id="getBlobItemFileInfoByFileId" parameterType="string" resultMap="blobItemFileInfoResultMap">
-		select ID_, FILENAME_, DATA_, SIZE_, LASTMODIFIED_ from MX_LOB where FILEID_ = #{fileId}
+		select ID_, FILENAME_, DATA_, SIZE_, LASTMODIFIED_ from SYS_LOB where FILEID_ = #{fileId}
 	</select>
 
 	<select id="getBlobItemFileInfoById_postgres" parameterType="string" 
 		resultMap="blobItemFileInfoResultMap_postgres">
-		select ID_, FILENAME_, DATA_, SIZE_, LASTMODIFIED_ from MX_LOB where ID_ = #{id}
+		select ID_, FILENAME_, DATA_, SIZE_, LASTMODIFIED_ from SYS_LOB where ID_ = #{id}
 	</select>
 
 	<select id="getBlobItemFileInfoByFileId_postgres" parameterType="string" 
 		resultMap="blobItemFileInfoResultMap_postgres">
-		select ID_, FILENAME_, DATA_, SIZE_, LASTMODIFIED_ from MX_LOB where FILEID_ = #{fileId}
+		select ID_, FILENAME_, DATA_, SIZE_, LASTMODIFIED_ from SYS_LOB where FILEID_ = #{fileId}
 	</select>
 
 	<select id="getBlobItems" 
@@ -259,7 +259,7 @@
 
 	<sql id="selectBlobItemsSql">
 
-		from MX_LOB E
+		from SYS_LOB E
 		 
 		<where>
 		       1 = 1  
