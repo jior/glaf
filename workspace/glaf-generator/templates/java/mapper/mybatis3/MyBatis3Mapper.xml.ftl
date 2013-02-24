@@ -249,9 +249,18 @@
 			   </if>
 
 
+			<if test="processInstanceIds != null &amp;&amp; processInstanceIds.size() &gt; 0">
+				and E.PROCESSINSTANCEID_ IN
+				<foreach item="x_processInstanceId" index="index"
+					collection="processInstanceIds" open="(" separator="," close=")">
+					#GG{x_processInstanceId}
+                </foreach>
+			</if>
+
 <#if pojo_fields?exists>
   <#list  pojo_fields as field>
   <#if field.name?exists && field.columnName?exists && field.type?exists>
+   <#if field.name != 'processInstanceId'>
 	<#if field.type?exists && ( field.type== 'Integer' || field.type== 'Long' || field.type== 'Double' || field.type== 'Date')>
 
 			<if test="${field.name} != null">
@@ -291,8 +300,8 @@
                   #GG{x_${field.name}}
                 </foreach>
 			</if>
-
-	</#if>
+      </#if>
+	 </#if>
 	</#if>
   </#list>
 </#if>			 

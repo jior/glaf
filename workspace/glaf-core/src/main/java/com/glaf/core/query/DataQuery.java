@@ -49,7 +49,7 @@ public class DataQuery extends BaseQuery {
 	protected Date afterCreateDate;
 	protected boolean processInstanceIsNotNull;
 	protected boolean processInstanceIsNull;
-
+	protected String workedProcessFlag;
 	protected List<Integer> parentIds = new ArrayList<Integer>();
 	protected List processInstanceIds = new ArrayList();
 	protected String sortColumn;
@@ -216,6 +216,10 @@ public class DataQuery extends BaseQuery {
 		return processInstanceIsNull;
 	}
 
+	public String isWorkedProcessFlag() {
+		return workedProcessFlag;
+	}
+
 	public DataQuery objectId(String objectId) {
 		if (objectId == null) {
 			throw new RuntimeException("objectId is null");
@@ -328,11 +332,15 @@ public class DataQuery extends BaseQuery {
 		this.parentIds = parentIds;
 	}
 
+	public void setProcessInstanceId(Object processInstanceId) {
+		this.processInstanceId = processInstanceId;
+	}
+
 	public void setProcessInstanceId(String processInstanceId) {
 		this.processInstanceId = processInstanceId;
 	}
 
-	public void setProcessInstanceIds(List<Object> processInstanceIds) {
+	public void setProcessInstanceIds(List processInstanceIds) {
 		this.processInstanceIds = processInstanceIds;
 	}
 
@@ -394,6 +402,10 @@ public class DataQuery extends BaseQuery {
 
 	public void setWfStatusNotEqual(Integer wfStatusNotEqual) {
 		this.wfStatusNotEqual = wfStatusNotEqual;
+	}
+
+	public void setWorkedProcessFlag(String workedProcessFlag) {
+		this.workedProcessFlag = workedProcessFlag;
 	}
 
 	public DataQuery status(Integer status) {
@@ -460,6 +472,14 @@ public class DataQuery extends BaseQuery {
 			throw new RuntimeException("wfStatus is null");
 		}
 		this.wfStatusNotEqual = wfStatusNotEqual;
+		return this;
+	}
+
+	public DataQuery workedProcessFlag(String workedProcessFlag) {
+		if (workedProcessFlag == null) {
+			throw new RuntimeException("workedProcessFlag is null");
+		}
+		this.workedProcessFlag = workedProcessFlag;
 		return this;
 	}
 

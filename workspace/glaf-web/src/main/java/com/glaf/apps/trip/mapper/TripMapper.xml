@@ -207,6 +207,14 @@
 			   </if>
 
 
+			<if test="processInstanceIds != null &amp;&amp; processInstanceIds.size() &gt; 0">
+				and E.PROCESSINSTANCEID_ IN
+				<foreach item="x_processInstanceId" index="index"
+					collection="processInstanceIds" open="(" separator="," close=")">
+					#{x_processInstanceId}
+                </foreach>
+			</if>
+
 	        
 			<if test="transType != null &amp;&amp; transType != '' ">
 				and E.TRANSTYPE_ = #{transType}
@@ -223,7 +231,6 @@
                   #{x_transType}
                 </foreach>
 			</if>
-
 
 			<if test="applyDate != null">
 				and E.APPLYDATE_ = #{applyDate}
@@ -346,7 +353,6 @@
                 </foreach>
 			</if>
 
-
 			<if test="createDate != null">
 				and E.CREATEDATE_ = #{createDate}
             </if>
@@ -383,7 +389,6 @@
                   #{x_createBy}
                 </foreach>
 			</if>
-
 
 			<if test="updateDate != null">
 				and E.UPDATEDATE_ = #{updateDate}
@@ -484,24 +489,6 @@
                   #{x_processName}
                 </foreach>
 			</if>
-
-	        
-			<if test="processInstanceId != null &amp;&amp; processInstanceId != '' ">
-				and E.PROCESSINSTANCEID_ = #{processInstanceId}
-            </if>
-
-			<if test="processInstanceIdLike != null &amp;&amp; processInstanceIdLike != '' ">
-				and E.PROCESSINSTANCEID_ like #{processInstanceIdLike}
-            </if>
-
-			<if test="processInstanceIds != null &amp;&amp; processInstanceIds.size() &gt; 0">
-			    and E.PROCESSINSTANCEID_ IN
-                <foreach item="x_processInstanceId" index="index" collection="processInstanceIds" 
-                     open="(" separator="," close=")">
-                  #{x_processInstanceId}
-                </foreach>
-			</if>
-
 			 
 		</where>
 	</sql>

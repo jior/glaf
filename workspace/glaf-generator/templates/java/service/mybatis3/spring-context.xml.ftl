@@ -1,0 +1,42 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+ 
+	<!--service -->
+	<bean id="${modelName}Service" class="${packageName}.service.${entityName}ServiceImpl">
+		<property name="persistenceDAO">
+			<ref bean="persistenceDAO" />
+		</property>
+
+<#if idField.type?exists && ( idField.type== 'Integer' )>        
+        <property name="idGenerator">
+			<ref bean="myBatisDbLongIdGenerator" />
+		</property>
+<#elseif idField.type?exists && ( idField.type== 'Long' )>
+        <property name="idGenerator">
+			<ref bean="myBatisDbLongIdGenerator" />
+		</property>
+<#elseif idField.type?exists && ( idField.type== 'String')>
+	    <property name="idGenerator">
+			<ref bean="myBatisDbIdGenerator" />
+		</property>
+</#if>
+
+		<property name="sqlSessionTemplate">
+			<ref bean="sqlSessionTemplate" />
+		</property>
+
+		<property name="${modelName}Mapper">
+			<ref bean="${modelName}Mapper" />
+		</property>
+
+	</bean>
+
+	<bean id="${modelName}Proxy" parent="baseTxService">
+		<property name="target">
+			<ref bean="${modelName}Service" />
+		</property>
+	</bean>
+
+</beans>

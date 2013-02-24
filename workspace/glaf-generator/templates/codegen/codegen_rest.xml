@@ -36,6 +36,11 @@
 		<saveName>${entityName}ServiceImpl.java</saveName>
 		<template>/templates/java/service/mybatis3/MyBatis3ServiceImpl.java.ftl</template>
 	</definition>
+	<definition name="spring-service-context">
+		<savePath>/java/service</savePath>
+		<saveName>${entityName}-spring-context.xml</saveName>
+		<template>/templates/java/service/mybatis3/spring-context.xml.ftl</template>
+	</definition>
 	<definition name="ResourceRest">
 		<savePath>/java/web/rest</savePath>
 		<saveName>${entityName}ResourceRest.java</saveName>

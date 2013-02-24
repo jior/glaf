@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.core.id.*;
+import com.glaf.core.dao.*;
 
 import ${packageName}.mapper.*;
 import ${packageName}.model.*;
@@ -29,6 +30,8 @@ public class ${entityName}ServiceImpl implements ${entityName}Service {
 <#elseif idField.type?exists && ( idField.type== 'String')>
 	protected IdGenerator idGenerator;
 </#if>
+       
+        protected PersistenceDAO persistenceDAO;
 
 	protected SqlSessionTemplate sqlSessionTemplate;
 
@@ -126,6 +129,11 @@ public class ${entityName}ServiceImpl implements ${entityName}Service {
 	@Resource
 	public void set${entityName}Mapper(${entityName}Mapper ${modelName}Mapper) {
 		this.${modelName}Mapper = ${modelName}Mapper;
+	}
+
+	@Resource
+	public void setPersistenceDAO(PersistenceDAO persistenceDAO) {
+		this.persistenceDAO = persistenceDAO;
 	}
 
         @Resource

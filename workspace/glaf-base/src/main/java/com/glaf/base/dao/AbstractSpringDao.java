@@ -1,20 +1,20 @@
 /*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.glaf.base.dao;
 
@@ -40,13 +40,13 @@ import org.hibernate.criterion.Projection;
 import org.hibernate.criterion.Projections;
 import org.hibernate.impl.CriteriaImpl;
 import org.hibernate.type.Type;
- 
+
 import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
-import com.glaf.base.utils.DateTools;
+import com.glaf.core.util.DateUtils;
+import com.glaf.core.util.ReflectUtils;
 import com.glaf.base.utils.PageResult;
-import com.glaf.base.utils.MyBeanUtils;
 
 /**
  * 抽象Dao类，实现CRUD基本方法
@@ -231,7 +231,7 @@ public class AbstractSpringDao extends HibernateDaoSupport {
 					Timestamp datetime = (Timestamp) obj;
 					stmt.setTimestamp(i + 1, datetime);
 				} else if (obj instanceof java.util.Date) {
-					Timestamp datetime = DateTools
+					Timestamp datetime = DateUtils
 							.toTimestamp((java.util.Date) obj);
 					stmt.setTimestamp(i + 1, datetime);
 				} else {
@@ -348,9 +348,9 @@ public class AbstractSpringDao extends HibernateDaoSupport {
 
 		List orderEntries = null;
 		try {
-			orderEntries = (List) MyBeanUtils.getFieldValue(impl,
+			orderEntries = (List) ReflectUtils.getFieldValue(impl,
 					"orderEntries");
-			MyBeanUtils.setFieldValue(impl, "orderEntries", new ArrayList());
+			ReflectUtils.setFieldValue(impl, "orderEntries", new ArrayList());
 		} catch (Exception ex) {
 			throw new RuntimeException(ex);
 		}
@@ -365,7 +365,7 @@ public class AbstractSpringDao extends HibernateDaoSupport {
 		}
 
 		try {
-			List innerOrderEntries = (List) MyBeanUtils.getFieldValue(impl,
+			List innerOrderEntries = (List) ReflectUtils.getFieldValue(impl,
 					"orderEntries");
 			Iterator it = orderEntries.iterator();
 			while (it.hasNext()) {
@@ -601,7 +601,7 @@ public class AbstractSpringDao extends HibernateDaoSupport {
 			if (list != null && list.size() > 0) {
 				str = (String) list.get(0);
 			}
- 
+
 		} catch (HibernateException e) {
 			logger.error(e);
 		} finally {

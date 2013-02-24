@@ -2,6 +2,8 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
+	<import resource="classpath*:com/glaf/**/*-spring-context.xml" />
+
 	<import resource="spring-aop.xml" />
 	<import resource="spring-dao.xml" />
 	<import resource="spring-database.xml" />

@@ -43,4 +43,10 @@
 		</property>
 	</bean>
 
+	<bean id="persistenceDAO" class="com.glaf.core.dao.PersistenceDAO">
+		<property name="sessionFactory">
+			<ref bean="sysSessionFactory" />
+		</property>
+	</bean>
+
 </beans>
