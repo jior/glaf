@@ -125,8 +125,8 @@ CREATE TABLE sys_user (
 
 CREATE TABLE sys_user_role(
         id int8 default nextval('hibernate_sequence') not null,
-        userid int8 not null,
-        roleid int8 not null,
+        userid int8 default 0,
+        roleid int8 default 0,
         authorized int4 default 0,
         authorizefrom int8 default 0,
         availdatestart timestamp,
@@ -348,3 +348,21 @@ create table sys_dbid(
         version_ int not null,
         primary key (name_)
 );
+
+
+create table sys_agent (
+        ID_ varchar(50)  not null,
+        AGENTTYPE_ int,
+        ASSIGNFROM_ varchar(255) ,
+        ASSIGNTO_ varchar(255) ,
+        CREATEDATE_ timestamp,
+        ENDDATE_ timestamp,
+        LOCKED_ int,
+        OBJECTID_ varchar(255) ,
+        OBJECTVALUE_ varchar(255) ,
+        PROCESSNAME_ varchar(255) ,
+        SERVICEKEY_ varchar(50) ,
+        STARTDATE_ timestamp,
+        TASKNAME_ varchar(255) ,
+        PRIMARY KEY (ID_)
+ );

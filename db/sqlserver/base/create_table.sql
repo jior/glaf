@@ -119,8 +119,8 @@ CREATE TABLE sys_user (
 
 CREATE TABLE sys_user_role(
         id bigint identity not null ,
-        userid bigint not null,
-        roleid bigint not null,
+        userid bigint default 0,
+        roleid bigint default 0,
         authorized int default 0,
         authorizefrom bigint default 0,
         availdatestart datetime,
@@ -337,8 +337,25 @@ CREATE TABLE  Attachment (
 );
 
 create table sys_dbid(
-        name_ varchar(50)  not null,
-        value_ varchar(255) not null,
+        name_ nvarchar(50)  not null,
+        value_ nvarchar(255) not null,
         version_ int not null,
         primary key (name_)
 );
+
+create table sys_agent (
+        ID_ nvarchar(50)  not null,
+        AGENTTYPE_ int,
+        ASSIGNFROM_ nvarchar(255) ,
+        ASSIGNTO_ nvarchar(255) ,
+        CREATEDATE_ datetime,
+        ENDDATE_ datetime,
+        LOCKED_ int,
+        OBJECTID_ nvarchar(255) ,
+        OBJECTVALUE_ nvarchar(255) ,
+        PROCESSNAME_ nvarchar(255) ,
+        SERVICEKEY_ nvarchar(50) ,
+        STARTDATE_ datetime,
+        TASKNAME_ nvarchar(255) ,
+        PRIMARY KEY (ID_)
+ );

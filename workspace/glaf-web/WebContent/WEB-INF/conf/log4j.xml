@@ -122,9 +122,6 @@
         <level value="DEBUG"/>
     </logger> 
 
-	<logger name="org.jpage.jbpm">
-        <level value="DEBUG"/>
-    </logger> 
 
   <root>
     <level value="INFO"/>

@@ -212,7 +212,7 @@ public class SystemPageTag extends TagSupport {
 	public int doEndTag() throws JspException {
 		Paging page = null;
 		if (name == null) {
-			name = "jpage";
+			name = "glaf";
 		}
 		page = (Paging) pageContext.getAttribute(name);
 		if (page == null) {

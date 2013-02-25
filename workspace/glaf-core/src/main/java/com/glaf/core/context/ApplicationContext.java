@@ -60,7 +60,7 @@ public class ApplicationContext {
 	public static String getAppPath() {
 		if (appPath == null) {
 			try {
-				Resource resource = new ClassPathResource("/jpage.properties");
+				Resource resource = new ClassPathResource("/glaf.properties");
 				appPath = resource.getFile().getParentFile().getParentFile()
 						.getParentFile().getAbsolutePath();
 				logger.info("app path:" + appPath);

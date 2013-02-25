@@ -122,8 +122,8 @@ public class Configuration implements Iterable<Map.Entry<String, String>> {
 			cL = Configuration.class.getClassLoader();
 		}
 
-		addDefaultResource("jpage-core-default.xml");
-		addDefaultResource("jpage-core-site.xml");
+		addDefaultResource("glaf-core-default.xml");
+		addDefaultResource("glaf-core-site.xml");
 	}
 
 	private Properties properties;

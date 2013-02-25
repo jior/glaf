@@ -70,8 +70,8 @@ public class MailSenderImpl implements MailSender {
 		dataMap.put("callback", "http://127.0.0.1:8080/jbpm/task.jsp");
 
 		MailMessage mailMessage = new MailMessage();
-		mailMessage.setFrom("john@mxalloy.com");
-		mailMessage.setTo("john@mxalloy.com");
+		mailMessage.setFrom("john@glaf.com");
+		mailMessage.setTo("john@glaf.com");
 		mailMessage.setSubject("ÓÊ¼ş²âÊÔ");
 		mailMessage.setDataMap(dataMap);
 		mailMessage.setTemplateId(args[0]);

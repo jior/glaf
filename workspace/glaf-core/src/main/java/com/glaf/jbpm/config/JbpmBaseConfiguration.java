@@ -39,8 +39,8 @@ public class JbpmBaseConfiguration extends Configuration {
 	}
 
 	public static Configuration addCustomResources(Configuration conf) {
-		conf.addResource("jbpm-base-default.xml");
-		conf.addResource("jbpm-base-site.xml");
+		conf.addResource("glaf-jbpm-default.xml");
+		conf.addResource("glaf-jbpm-site.xml");
 		return conf;
 	}
 
@@ -59,7 +59,7 @@ public class JbpmBaseConfiguration extends Configuration {
 	 * 
 	 * @param that
 	 *            Configuration to clone.
-	 * @return a Configuration created with the jbpm-base-*.xml files plus the
+	 * @return a Configuration created with the glaf-jbpm-*.xml files plus the
 	 *         given configuration.
 	 */
 	public static Configuration create(final Configuration that) {

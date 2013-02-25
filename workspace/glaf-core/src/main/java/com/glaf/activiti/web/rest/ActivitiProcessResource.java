@@ -243,7 +243,7 @@ public class ActivitiProcessResource {
 
 		String view = CustomProperties.getString("activiti.rs.view");
 		if (StringUtils.isEmpty(view)) {
-			view = "com/jpage/activiti/web/rest/view.ftl";
+			view = "com/glaf/activiti/web/rest/view.ftl";
 		}
 
 		String content = null;

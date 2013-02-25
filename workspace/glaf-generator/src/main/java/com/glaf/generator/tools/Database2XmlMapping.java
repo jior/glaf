@@ -44,7 +44,7 @@ public class Database2XmlMapping {
 						.camelStyle(tableName)));
 				classDefinition
 						.setEnglishTitle(classDefinition.getEntityName());
-				// classDefinition.setPackageName("com.mxalloy.apps."
+				// classDefinition.setPackageName("com.glaf.apps."
 				// + StringTools.camelStyle(tableName));
 
 				classDefinition.setPackageName("com.glaf.apps");

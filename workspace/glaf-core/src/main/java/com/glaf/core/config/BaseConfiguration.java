@@ -36,8 +36,8 @@ public class BaseConfiguration extends Configuration {
 	}
 
 	public static Configuration addCustomResources(Configuration conf) {
-		conf.addResource("jpage-core-default.xml");
-		conf.addResource("jpage-core-site.xml");
+		conf.addResource("glaf-core-default.xml");
+		conf.addResource("glaf-core-site.xml");
 		return conf;
 	}
 
@@ -56,7 +56,7 @@ public class BaseConfiguration extends Configuration {
 	 * 
 	 * @param that
 	 *            Configuration to clone.
-	 * @return a Configuration created with the jpage-*.xml files plus the given
+	 * @return a Configuration created with the glaf-*.xml files plus the given
 	 *         configuration.
 	 */
 	public static Configuration create(final Configuration that) {

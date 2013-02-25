@@ -30,7 +30,7 @@ public class ExecutionListenerBeanFactory {
 	protected static final Log logger = LogFactory
 			.getLog(ExecutionListenerBeanFactory.class);
 	private static org.springframework.context.ApplicationContext ctx;
-	private final static String DEFAULT_CONFIG = "com/jpage/activiti/executionlistener/factory/activiti-executionlistener-context.xml";
+	private final static String DEFAULT_CONFIG = "com/glaf/activiti/executionlistener/factory/activiti-executionlistener-context.xml";
 
 	public static Object getBean(Object key) {
 		if (ctx == null) {

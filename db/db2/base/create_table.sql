@@ -126,8 +126,8 @@ CREATE TABLE sys_user (
 
 CREATE TABLE sys_user_role(
         id bigint generated always as identity (start with 10000 increment by 1 minvalue 1 maxvalue 999999999 no cycle no cache),
-        userid bigint not null,
-        roleid bigint not null,
+        userid bigint default 0,
+        roleid bigint default 0,
         authorized integer default 0,
         authorizefrom bigint default 0,
         availdatestart timestamp,
@@ -349,3 +349,20 @@ create table sys_dbid(
         version_ integer not null,
         primary key (name_)
 );
+
+create table sys_agent (
+        ID_ varchar(50)  not null,
+        AGENTTYPE_ integer,
+        ASSIGNFROM_ varchar(255) ,
+        ASSIGNTO_ varchar(255) ,
+        CREATEDATE_ timestamp ,
+        ENDDATE_ timestamp ,
+        LOCKED_ integer ,
+        OBJECTID_ varchar(255) ,
+        OBJECTVALUE_ varchar(255) ,
+        PROCESSNAME_ varchar(255) ,
+        SERVICEKEY_ varchar(50) ,
+        STARTDATE_ timestamp ,
+        TASKNAME_ varchar(255) ,
+        PRIMARY KEY (ID_)
+ );

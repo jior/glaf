@@ -43,7 +43,7 @@ public class TaskListenerTypes {
 
 	static Map<String, Class<?>> taskListeners = initializeTaskListenerTypes();
 
-	private final static String DEFAULT_CONFIG = "com/jpage/activiti/tasklistener/factory/activiti.tasklistener.xml";
+	private final static String DEFAULT_CONFIG = "com/glaf/activiti/tasklistener/factory/activiti.tasklistener.xml";
 
 	public static void addTaskListener(Class<?> clazz) {
 		String name = clazz.getName();

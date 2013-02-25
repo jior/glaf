@@ -29,7 +29,7 @@ import com.glaf.core.config.SystemConfig;
 public class MailFactory {
 	protected static final Log logger = LogFactory.getLog(MailFactory.class);
 	private static ClassPathXmlApplicationContext ctx;
-	private final static String DEFAULT_CONFIG = "com/mxalloy/base/mail/mail-spring-context.xml";
+	private final static String DEFAULT_CONFIG = "com/glaf/core/mail/mail-spring-context.xml";
 
 	public synchronized  static Object getBean(Object key) {
 		if (ctx == null) {

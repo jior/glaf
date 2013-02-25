@@ -28,7 +28,6 @@ import java.util.Set;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Hibernate;
- 
 
 import com.glaf.base.dao.AbstractSpringDao;
 import com.glaf.base.modules.Constants;
@@ -39,8 +38,8 @@ import com.glaf.base.modules.sys.model.SysUserRole;
 import com.glaf.base.modules.sys.service.*;
 import com.glaf.base.modules.utils.BaseUtil;
 import com.glaf.base.utils.PageResult;
+import com.glaf.core.util.DateUtils;
 import com.glaf.core.util.UUID32;
- 
 
 public class SysUserRoleServiceImpl implements SysUserRoleService {
 	private static final Log logger = LogFactory
@@ -369,8 +368,6 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 			// 判断是否是授权人
 			if (userRole.getAuthorizeFrom() != null
 					&& fromUserId == userRole.getAuthorizeFrom().getId()) {
-				logger.info("remove role:"
-						+ userRole.getDeptRole().getRole().getName());
 				delete(userRole);// 删除权限
 			}
 		}
@@ -407,51 +404,52 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 	}
 
 	/**
-	 * 工作流授权
+	 * 工作流授权 2012-12-09
 	 * 
 	 * @param fromUser
 	 * @param toUser
 	 */
 	public void insertAgent(SysUser fromUser, SysUser toUser, String startDate,
 			String endDate, int mark, String processNames) {
-		endDate += " 23:59:59";
+		if (endDate.length() == 10) {
+			endDate += " 23:59:59";
+		}
 		if (mark == 1) {// 全局代理
-			String sql = "insert into JPAGE_JBPM_AGENT_INSTANCE(id, actorId, agentId, objectId, objectValue, startDate, endDate) "
-					+ "values('"
-					+ UUID32.getUUID()
-					+ "','"
-					+ toUser.getAccount()
-					+ "','"
-					+ fromUser.getAccount()
-					+ "', 'agent', 'jbpm', '"
-					+ startDate
-					+ "', '"
-					+ endDate
-					+ "')";
-			abstractDao.executeSQL(sql);
+			String sql = "insert into SYS_AGENT(ID_, ASSIGNFROM_, ASSIGNTO_, AGENTTYPE_, STARTDATE_, ENDDATE_, SERVICEKEY_, LOCKED_) values(?, ?, ?, ?, ?, ?, ?, ?) ";
+			List<Object> values = new ArrayList<Object>();
+			values.add(UUID32.getUUID());
+			values.add(fromUser.getAccount());
+			values.add(toUser.getAccount());
+			values.add(0);
+			values.add(DateUtils.toDate(startDate));
+			values.add(DateUtils.toDate(endDate));
+			values.add("JBPM");
+			values.add(0);
+
+			abstractDao.executeSQL(sql, values);
 		} else {// 流程代理
 			String[] ss = processNames.split(",");
 			for (int i = 0; i < ss.length; i++) {
 				String processName = ss[i];
-				String sql = "insert into JPAGE_JBPM_AGENT_INSTANCE(id, actorId, agentId, objectId, objectValue,attribute01, startDate, endDate) "
-						+ "values('"
-						+ UUID32.getUUID()
-						+ "','"
-						+ toUser.getAccount()
-						+ "','"
-						+ fromUser.getAccount()
-						+ "', 'agent', 'jbpm_process','"
-						+ processName
-						+ "','"
-						+ startDate + "', '" + endDate + "')";
-				abstractDao.executeSQL(sql);
+				String sql = "insert into SYS_AGENT(ID_, ASSIGNFROM_, ASSIGNTO_, AGENTTYPE_, PROCESSNAME_, STARTDATE_, ENDDATE_, SERVICEKEY_, LOCKED_) values(?, ?, ?, ?, ?, ?, ?, ?, ?) ";
+				List<Object> values = new ArrayList<Object>();
+				values.add(UUID32.getUUID());
+				values.add(fromUser.getAccount());
+				values.add(toUser.getAccount());
+				values.add(1);
+				values.add(processName);
+				values.add(DateUtils.toDate(startDate));
+				values.add(DateUtils.toDate(endDate));
+				values.add("JBPM");
+				values.add(0);
+				abstractDao.executeSQL(sql, values);
 			}
 		}
 	}
 
 	public void removeAgent(SysUser fromUser, SysUser toUser) {
-		String sql = "delete from JPAGE_JBPM_AGENT_INSTANCE where actorId='"
-				+ toUser.getAccount() + "' and agentId='"
+		String sql = "delete from SYS_AGENT where ASSIGNTO_='"
+				+ toUser.getAccount() + "' and ASSIGNFROM_='"
 				+ fromUser.getAccount() + "'";
 		abstractDao.executeSQL(sql);
 	}

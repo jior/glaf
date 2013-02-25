@@ -33,6 +33,7 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.DetachedCriteria;
@@ -190,7 +191,7 @@ public class AbstractSpringDao extends HibernateDaoSupport {
 		return ret;
 	}
 
-	public boolean executeSQL(final String sql, final List values) {
+	protected boolean executeSQL2(final String sql, final List values) {
 		boolean ret = true;
 		getHibernateTemplate().execute(new HibernateCallback() {
 			public Object doInHibernate(Session session)
@@ -207,6 +208,26 @@ public class AbstractSpringDao extends HibernateDaoSupport {
 				psmt.close();
 				psmt = null;
 
+				return null;
+			}
+		});
+		return ret;
+	}
+
+	public boolean executeSQL(final String sql, final List<Object> values) {
+		boolean ret = true;
+		getHibernateTemplate().execute(new HibernateCallback<Object>() {
+			public Object doInHibernate(Session session)
+					throws HibernateException, SQLException {
+				logger.debug("execute SQL: " + sql);
+				SQLQuery query = session.createSQLQuery(sql);
+				if (values != null && values.size() > 0) {
+					for (int i = 0; i < values.size(); i++) {
+						Object object = values.get(i);
+						query.setParameter(i, object);
+					}
+				}
+				query.executeUpdate();
 				return null;
 			}
 		});

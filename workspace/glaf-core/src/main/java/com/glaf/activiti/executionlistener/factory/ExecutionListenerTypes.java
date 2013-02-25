@@ -44,7 +44,7 @@ public class ExecutionListenerTypes {
 
 	static Map<String, Class<?>> executionListeners = initializeExecutionListenerTypes();
 
-	private final static String DEFAULT_CONFIG = "com/jpage/activiti/executionlistener/factory/activiti.executionlistener.xml";
+	private final static String DEFAULT_CONFIG = "com/glaf/activiti/executionlistener/factory/activiti.executionlistener.xml";
 
 	public static void addExecutionListener(Class<?> clazz) {
 		String name = clazz.getName();

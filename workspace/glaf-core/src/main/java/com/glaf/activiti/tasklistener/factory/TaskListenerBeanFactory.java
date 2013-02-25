@@ -29,7 +29,7 @@ public class TaskListenerBeanFactory {
 	protected static final Log logger = LogFactory
 			.getLog(TaskListenerBeanFactory.class);
 	private static org.springframework.context.ApplicationContext ctx;
-	private final static String DEFAULT_CONFIG = "com/jpage/activiti/tasklistener/factory/activiti-tasklistener-context.xml";
+	private final static String DEFAULT_CONFIG = "com/glaf/activiti/tasklistener/factory/activiti-tasklistener-context.xml";
 
 	public static Object getBean(Object key) {
 		if (ctx == null) {

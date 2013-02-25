@@ -37,7 +37,7 @@ public class LogUtils {
 		}
 	}
 
-	public static final String PLATFORM_L4J = "jpage-log4j.properties";
+	public static final String PLATFORM_L4J = "glaf-log4j.properties";
 
 	private final static Log LOG = LogFactory.getLog(LogUtils.class);
 
