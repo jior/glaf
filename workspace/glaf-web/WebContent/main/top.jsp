@@ -94,6 +94,7 @@ function exit(){
         	<div align="left">
         		<img src="<%=request.getContextPath()%>/images/logo.png" width="45" height="45"/>&nbsp;
 				<span style="font-size:34px;">GLAF基础应用框架</span>
+				<span style="font-size:18px;">&nbsp;Global Application Framework</span>
         	</div>
         </td>
         <td width="48%" height="20">
