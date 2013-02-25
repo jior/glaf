@@ -24,7 +24,7 @@
 </#if>
 
 		<property name="sqlSessionTemplate">
-			<ref bean="sqlSessionTemplate" />
+			<ref bean="sqlSession" />
 		</property>
 
 		<property name="${modelName}Mapper">

@@ -38,7 +38,7 @@ public class ColumnDefinitionQuery extends BaseQuery {
 	protected String nameLike;
 	protected String titleLike;
 	protected String discriminator;
-	protected boolean sortOrder;
+	protected String sortOrder;
 
 	public ColumnDefinitionQuery() {
 
@@ -140,7 +140,7 @@ public class ColumnDefinitionQuery extends BaseQuery {
 	public String getOrderBy() {
 		if (sortField != null) {
 			String a_x = " asc ";
-			if (!sortOrder) {
+			if (getSortOrder() != null) {
 				a_x = " desc ";
 			}
 
@@ -274,7 +274,7 @@ public class ColumnDefinitionQuery extends BaseQuery {
 		addColumn("translator", "TRANSLATOR_");
 	}
 
-	public boolean isSortOrder() {
+	public String getSortOrder() {
 		return sortOrder;
 	}
 
@@ -372,7 +372,7 @@ public class ColumnDefinitionQuery extends BaseQuery {
 		this.sortField = sortField;
 	}
 
-	public void setSortOrder(boolean sortOrder) {
+	public void setSortOrder(String sortOrder) {
 		this.sortOrder = sortOrder;
 	}
 

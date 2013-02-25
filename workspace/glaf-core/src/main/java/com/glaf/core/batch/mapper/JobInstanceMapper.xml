@@ -90,7 +90,7 @@
 
 
 	<select id="getJobInstanceCountBy" 
-		parameterType="map"
+		parameterType="java.util.HashMap"
 		resultType="int">
 		select count(*)
 		<include refid="selectJobInstancesSql" />
@@ -106,7 +106,7 @@
 
 
 	<select id="getJobInstances" 
-		parameterType="map"
+		parameterType="java.util.HashMap"
 		resultMap="jobInstanceResultMap">
 		select E.*
 		<include refid="selectJobInstancesSql" />

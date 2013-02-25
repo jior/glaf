@@ -33,7 +33,7 @@ public class MailTaskQuery extends BaseQuery {
 	protected Date startDateLessThanOrEqual;
 	protected Date endDateGreaterThanOrEqual;
 	protected Date endDateLessThanOrEqual;
-	protected boolean sortOrder;
+	protected String sortOrder;
 
 	public MailTaskQuery() {
 
@@ -95,7 +95,7 @@ public class MailTaskQuery extends BaseQuery {
 	public String getOrderBy() {
 		if (sortField != null) {
 			String a_x = " asc ";
-			if (!sortOrder) {
+			if (getSortOrder() != null) {
 				a_x = " desc ";
 			}
 
@@ -159,7 +159,7 @@ public class MailTaskQuery extends BaseQuery {
 		addColumn("isUnSubscribe", "ISUNSUBSCRIBE_");
 	}
 
-	public boolean isSortOrder() {
+	public String getSortOrder() {
 		return sortOrder;
 	}
 
@@ -184,7 +184,7 @@ public class MailTaskQuery extends BaseQuery {
 		this.endDateLessThanOrEqual = endDateLessThanOrEqual;
 	}
 
-	public void setSortOrder(boolean sortOrder) {
+	public void setSortOrder(String sortOrder) {
 		this.sortOrder = sortOrder;
 	}
 

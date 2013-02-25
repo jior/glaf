@@ -39,7 +39,7 @@ public class MailItemQuery extends BaseQuery {
 	protected Integer receiveStatus;
 	protected Integer receiveStatusGreaterThanOrEqual;
 	protected Integer receiveStatusLessThanOrEqual;
-	protected boolean sortOrder;
+	protected String sortOrder;
 
 	public MailItemQuery() {
 
@@ -56,7 +56,7 @@ public class MailItemQuery extends BaseQuery {
 	public String getOrderBy() {
 		if (sortField != null) {
 			String a_x = " asc ";
-			if (!sortOrder) {
+			if (getSortOrder() != null) {
 				a_x = " desc ";
 			}
 
@@ -154,7 +154,7 @@ public class MailItemQuery extends BaseQuery {
 		addColumn("receiveStatus", "RECEIVESTATUS_");
 	}
 
-	public boolean isSortOrder() {
+	public String getSortOrder() {
 		return sortOrder;
 	}
 
@@ -332,7 +332,7 @@ public class MailItemQuery extends BaseQuery {
 		this.sendStatusLessThanOrEqual = sendStatusLessThanOrEqual;
 	}
 
-	public void setSortOrder(boolean sortOrder) {
+	public void setSortOrder(String sortOrder) {
 		this.sortOrder = sortOrder;
 	}
 

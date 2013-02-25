@@ -37,7 +37,7 @@ public class JobExecutionQuery extends BaseQuery {
 	protected String exitMessageLike;
 	protected Date lastUpdatedGreaterThanOrEqual;
 	protected Date lastUpdatedLessThanOrEqual;
-	protected boolean sortOrder;
+	protected String sortOrder;
 
 	public JobExecutionQuery() {
 
@@ -145,7 +145,7 @@ public class JobExecutionQuery extends BaseQuery {
 	public String getOrderBy() {
 		if (sortField != null) {
 			String a_x = " asc ";
-			if (!sortOrder) {
+			if (getSortOrder() != null) {
 				a_x = " desc ";
 			}
 
@@ -183,7 +183,7 @@ public class JobExecutionQuery extends BaseQuery {
 		addColumn("lastUpdated", "last_updated");
 	}
 
-	public boolean isSortOrder() {
+	public String getSortOrder() {
 		return sortOrder;
 	}
 
@@ -263,7 +263,7 @@ public class JobExecutionQuery extends BaseQuery {
 		this.lastUpdatedLessThanOrEqual = lastUpdatedLessThanOrEqual;
 	}
 
-	public void setSortOrder(boolean sortOrder) {
+	public void setSortOrder(String sortOrder) {
 		this.sortOrder = sortOrder;
 	}
 

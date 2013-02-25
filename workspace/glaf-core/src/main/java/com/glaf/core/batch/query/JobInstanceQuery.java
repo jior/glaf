@@ -26,7 +26,7 @@ public class JobInstanceQuery extends BaseQuery {
 	protected String jobNameLike;
 	protected String jobKey;
 	protected List<String> jobKeys;
-	protected boolean sortOrder;
+	protected String sortOrder;
 
 	public JobInstanceQuery() {
 
@@ -55,7 +55,7 @@ public class JobInstanceQuery extends BaseQuery {
 	public String getOrderBy() {
 		if (sortField != null) {
 			String a_x = " asc ";
-			if (!sortOrder) {
+			if (getSortOrder() != null) {
 				a_x = " desc ";
 			}
 
@@ -75,7 +75,7 @@ public class JobInstanceQuery extends BaseQuery {
 		addColumn("jobKey", "job_key");
 	}
 
-	public boolean isSortOrder() {
+	public String getSortOrder() {
 		return sortOrder;
 	}
 
@@ -115,7 +115,7 @@ public class JobInstanceQuery extends BaseQuery {
 		this.jobNameLike = jobNameLike;
 	}
 
-	public void setSortOrder(boolean sortOrder) {
+	public void setSortOrder(String sortOrder) {
 		this.sortOrder = sortOrder;
 	}
 

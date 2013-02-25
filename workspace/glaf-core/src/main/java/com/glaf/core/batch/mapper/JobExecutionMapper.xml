@@ -136,7 +136,7 @@
 
 
 	<select id="getJobExecutionCountBy" 
-		parameterType="map"
+		parameterType="java.util.HashMap"
 		resultType="int">
 		select count(*)
 		<include refid="selectJobExecutionsSql" />
@@ -152,7 +152,7 @@
 
 
 	<select id="getJobExecutions" 
-		parameterType="map"
+		parameterType="java.util.HashMap"
 		resultMap="jobExecutionResultMap">
 		select E.*
 		<include refid="selectJobExecutionsSql" />

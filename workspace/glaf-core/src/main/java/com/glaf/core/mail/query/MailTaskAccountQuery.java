@@ -27,7 +27,7 @@ public class MailTaskAccountQuery extends BaseQuery {
 	protected List<String> taskIds;
 	protected String accountId;
 	protected List<String> accountIds;
-	protected boolean sortOrder;
+	protected String sortOrder;
 
 	public MailTaskAccountQuery() {
 
@@ -73,7 +73,7 @@ public class MailTaskAccountQuery extends BaseQuery {
 		addColumn("accountId", "ACCOUNTID_");
 	}
 
-	public boolean isSortOrder() {
+	public String getSortOrder() {
 		return sortOrder;
 	}
 
@@ -85,7 +85,7 @@ public class MailTaskAccountQuery extends BaseQuery {
 		this.accountIds = accountIds;
 	}
 
-	public void setSortOrder(boolean sortOrder) {
+	public void setSortOrder(String sortOrder) {
 		this.sortOrder = sortOrder;
 	}
 

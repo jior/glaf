@@ -36,7 +36,7 @@ public class TripBaseController {
 	}
 
 
-	@RequestMapping(params = "method=save")
+	@RequestMapping("/save")
 	public ModelAndView save(HttpServletRequest request, ModelMap modelMap, Trip trip) {
 		SysUser user = RequestUtil.getSysUser(request);
 		String actorId =  user.getAccount();
@@ -52,10 +52,14 @@ public class TripBaseController {
 	}
 
         @ResponseBody
-	@RequestMapping(params = "method=saveTrip")
-	public byte[] saveTrip(HttpServletRequest request, Trip trip ) { 
-	        try {
+	@RequestMapping("/saveTrip")
+	public byte[] saveTrip(HttpServletRequest request ) { 
+	        Map<String, Object> params = RequestUtil.getParameterMap(request);
+		Trip trip = new Trip();
+		try {
+		    Tools.populate(trip, params);
 		    this.tripService.save(trip);
+
 		    return ResponseUtil.responseJsonResult(true);
 		} catch (Exception ex) {
 		    ex.printStackTrace();
@@ -63,7 +67,7 @@ public class TripBaseController {
 		return ResponseUtil.responseJsonResult(false);
 	}
 
-        @RequestMapping(params = "method=update")
+        @RequestMapping("/update")
 	public ModelAndView update(HttpServletRequest request, ModelMap modelMap, Trip trip) {
 		SysUser user = RequestUtil.getSysUser(request);
 		Map<String, Object> params = RequestUtil.getParameterMap(request);
@@ -74,7 +78,7 @@ public class TripBaseController {
 		return this.list(request, modelMap);
 	}
 
-        @RequestMapping(params = "method=delete")
+        @RequestMapping("/delete")
 	public ModelAndView delete(HttpServletRequest request, ModelMap modelMap) {
 		SysUser user = RequestUtil.getSysUser(request);
 		Map<String, Object> params = RequestUtil.getParameterMap(request);
@@ -106,7 +110,7 @@ public class TripBaseController {
 
     
 
-        @RequestMapping(params = "method=edit")
+        @RequestMapping("/edit")
 	public ModelAndView edit(HttpServletRequest request, ModelMap modelMap) {
 		SysUser user = RequestUtil.getSysUser(request);
 		String actorId =  user.getAccount();
@@ -153,7 +157,7 @@ public class TripBaseController {
 		return new ModelAndView("/apps/trip/edit", modelMap);
 	}
 
-        @RequestMapping(params = "method=view")
+        @RequestMapping("/view")
 	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtil.setRequestParameterToAttribute(request);
 		Map<String, Object> params = RequestUtil.getParameterMap(request);
@@ -179,7 +183,7 @@ public class TripBaseController {
 		return new ModelAndView("/apps/trip/view");
 	}
 
-        @RequestMapping(params = "method=query")
+        @RequestMapping("/query")
 	public ModelAndView query(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtil.setRequestParameterToAttribute(request);
 		String view = request.getParameter("view");
@@ -193,7 +197,7 @@ public class TripBaseController {
 		return new ModelAndView("/apps/trip/query", modelMap);
 	}
 
-	@RequestMapping(params = "method=json")
+	@RequestMapping("/json")
 	@ResponseBody
 	public byte[] json(HttpServletRequest request, ModelMap modelMap) throws IOException {
 		Map<String, Object> params = RequestUtil.getParameterMap(request);

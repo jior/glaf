@@ -34,7 +34,7 @@ public class TableDefinitionQuery extends BaseQuery {
 	protected Integer revision;
 	protected Integer revisionGreaterThanOrEqual;
 	protected Integer revisionLessThanOrEqual;
-	protected boolean sortOrder;
+	protected String sortOrder;
 
 	public TableDefinitionQuery() {
 
@@ -101,7 +101,7 @@ public class TableDefinitionQuery extends BaseQuery {
 	public String getOrderBy() {
 		if (sortField != null) {
 			String a_x = " asc ";
-			if (!sortOrder) {
+			if (getSortOrder() != null) {
 				a_x = " desc ";
 			}
 
@@ -177,7 +177,7 @@ public class TableDefinitionQuery extends BaseQuery {
 		addColumn("revision", "REVISION_");
 	}
 
-	public boolean isSortOrder() {
+	public String getSortOrder() {
 		return sortOrder;
 	}
 
@@ -262,7 +262,7 @@ public class TableDefinitionQuery extends BaseQuery {
 		this.revisionLessThanOrEqual = revisionLessThanOrEqual;
 	}
 
-	public void setSortOrder(boolean sortOrder) {
+	public void setSortOrder(String sortOrder) {
 		this.sortOrder = sortOrder;
 	}
 

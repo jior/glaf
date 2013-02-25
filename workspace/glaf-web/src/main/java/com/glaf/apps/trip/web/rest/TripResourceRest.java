@@ -167,8 +167,11 @@ public class TripResourceRest {
 	@Path("/saveTrip")
 	@ResponseBody
 	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
-	public byte[] saveTrip(@Context HttpServletRequest request, Trip trip) {
-	        try {
+	public byte[] saveTrip(@Context HttpServletRequest request) {
+	        Map<String, Object> params = RequestUtil.getParameterMap(request);
+		Trip trip = new Trip();
+		try {
+		    Tools.populate(trip, params);
 		    this.tripService.save(trip);
 
 		    return ResponseUtil.responseJsonResult(true);

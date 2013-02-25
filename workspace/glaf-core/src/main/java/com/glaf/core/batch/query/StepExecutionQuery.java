@@ -63,7 +63,7 @@ public class StepExecutionQuery extends BaseQuery {
 	protected Date lastUpdated;
 	protected Date lastUpdatedGreaterThanOrEqual;
 	protected Date lastUpdatedLessThanOrEqual;
-	protected boolean sortOrder;
+	protected String sortOrder;
 
 	public StepExecutionQuery() {
 
@@ -233,7 +233,7 @@ public class StepExecutionQuery extends BaseQuery {
 	public String getOrderBy() {
 		if (sortField != null) {
 			String a_x = " asc ";
-			if (!sortOrder) {
+			if (getSortOrder() != null) {
 				a_x = " desc ";
 			}
 
@@ -364,7 +364,7 @@ public class StepExecutionQuery extends BaseQuery {
 		addColumn("lastUpdated", "last_updated");
 	}
 
-	public boolean isSortOrder() {
+	public String getSortOrder() {
 		return sortOrder;
 	}
 
@@ -647,7 +647,7 @@ public class StepExecutionQuery extends BaseQuery {
 		this.rollbackCountLessThanOrEqual = rollbackCountLessThanOrEqual;
 	}
 
-	public void setSortOrder(boolean sortOrder) {
+	public void setSortOrder(String sortOrder) {
 		this.sortOrder = sortOrder;
 	}
 

@@ -167,8 +167,11 @@ public class ${entityName}ResourceRest {
 	@Path("/save${entityName}")
 	@ResponseBody
 	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
-	public byte[] save${entityName}(@Context HttpServletRequest request, ${entityName} ${modelName}) {
-	        try {
+	public byte[] save${entityName}(@Context HttpServletRequest request) {
+	        Map<String, Object> params = RequestUtil.getParameterMap(request);
+		${entityName} ${modelName} = new ${entityName}();
+		try {
+		    Tools.populate(${modelName}, params);
 		    this.${modelName}Service.save(${modelName});
 
 		    return ResponseUtil.responseJsonResult(true);

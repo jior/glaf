@@ -37,7 +37,7 @@
 		<result column="versionNo" property="versionNo" jdbcType="BIGINT" />
 	</resultMap>
 
-	<select id="getTodoList" parameterType="map" resultMap="todoResultMap">
+	<select id="getTodoList" parameterType="java.util.HashMap" resultMap="todoResultMap">
 		 select * from sys_todo
 	</select>
 

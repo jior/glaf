@@ -179,7 +179,7 @@ public class MailTaskResource {
 			if (StringUtils.isNotEmpty(orderName)) {
 				query.setSortOrder(orderName);
 				if (StringUtils.equals(order, "desc")) {
-					query.setSortOrder(false);
+					query.setSortOrder("desc");
 				}
 			}
 
@@ -311,7 +311,7 @@ public class MailTaskResource {
 				if (StringUtils.isNotEmpty(orderName)) {
 					query.setSortOrder(orderName);
 					if (StringUtils.equals(order, "desc")) {
-						query.setSortOrder(false);
+						query.setSortOrder("desc");
 					}
 				}
 

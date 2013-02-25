@@ -271,7 +271,7 @@
 
 
 	<select id="getStepExecutionCountBy" 
-		parameterType="map"
+		parameterType="java.util.HashMap"
 		resultType="int">
 		select count(*)
 		<include refid="selectStepExecutionsSql" />
@@ -287,7 +287,7 @@
 
 
 	<select id="getStepExecutions" 
-		parameterType="map"
+		parameterType="java.util.HashMap"
 		resultMap="stepExecutionResultMap">
 		select E.*
 		<include refid="selectStepExecutionsSql" />

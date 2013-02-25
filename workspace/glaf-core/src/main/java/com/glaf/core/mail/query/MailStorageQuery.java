@@ -28,7 +28,7 @@ public class MailStorageQuery extends BaseQuery {
 	protected String storageType;
 	protected Date createDateGreaterThanOrEqual;
 	protected Date createDateLessThanOrEqual;
-	protected boolean sortOrder;
+	protected String sortOrder;
 
 	public MailStorageQuery() {
 
@@ -121,18 +121,18 @@ public class MailStorageQuery extends BaseQuery {
 		return this;
 	}
 
-	public boolean isSortOrder() {
+	public String getSortOrder() {
 		return sortOrder;
 	}
 
-	public void setSortOrder(boolean sortOrder) {
+	public void setSortOrder(String sortOrder) {
 		this.sortOrder = sortOrder;
 	}
 
 	public String getOrderBy() {
 		if (sortField != null) {
 			String a_x = " asc ";
-			if (!sortOrder) {
+			if (getSortOrder() != null) {
 				a_x = " desc ";
 			}
 

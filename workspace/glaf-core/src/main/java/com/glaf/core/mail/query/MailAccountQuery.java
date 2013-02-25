@@ -27,7 +27,7 @@ public class MailAccountQuery extends BaseQuery {
 	protected String mailAddressLike;
 	protected Date createDateGreaterThanOrEqual;
 	protected Date createDateLessThanOrEqual;
-	protected boolean sortOrder;
+	protected String sortOrder;
 
 	public MailAccountQuery() {
 
@@ -52,7 +52,7 @@ public class MailAccountQuery extends BaseQuery {
 	public String getOrderBy() {
 		if (sortField != null) {
 			String a_x = " asc ";
-			if (!sortOrder) {
+			if (getSortOrder() != null) {
 				a_x = " desc ";
 			}
 
@@ -106,7 +106,7 @@ public class MailAccountQuery extends BaseQuery {
 		addColumn("authFlag", "AUTHFLAG_");
 	}
 
-	public boolean isSortOrder() {
+	public String getSortOrder() {
 		return sortOrder;
 	}
 
@@ -127,7 +127,7 @@ public class MailAccountQuery extends BaseQuery {
 		this.mailAddressLike = mailAddressLike;
 	}
 
-	public void setSortOrder(boolean sortOrder) {
+	public void setSortOrder(String sortOrder) {
 		this.sortOrder = sortOrder;
 	}
 

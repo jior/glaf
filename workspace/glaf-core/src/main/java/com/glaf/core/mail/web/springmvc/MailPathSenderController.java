@@ -250,10 +250,9 @@ public class MailPathSenderController {
 		MailPathSender mailPathSender = null;
 		if (StringUtils.isNotEmpty(rowId)) {
 			mailPathSender = mailPathSenderService.getMailPathSender(rowId);
+			Tools.populate(mailPathSender, params);
+			mailPathSenderService.save(mailPathSender);
 		}
-
-		Tools.populate(mailPathSender, params);
-		mailPathSenderService.save(mailPathSender);
 
 		return this.list(request, modelMap);
 	}
