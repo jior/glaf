@@ -37,12 +37,17 @@
 		</javac>
 	</target>
 
-	<target name="GenAll" depends="build">
+	<target name="Pdm2XmlMapping" >
 
-	     <!-- <java classname="com.glaf.generator.tools.Pdm2XmlMapping" fork="true">
-			<classpath refid="classpath"/>
+	     <java classname="com.glaf.generator.tools.Pdm2XmlMapping" fork="true">
+			<classpath refid="compile.classpath"/>
 			<arg line=" codegen/pdm codegen/mapping "/>
-		</java> -->
+		</java> 
+
+	</target>
+
+
+	<target name="GenAll" depends="build">
 
          <java classname="com.glaf.generator.GenAll" fork="true">
 			<classpath refid="compile.classpath"/>
