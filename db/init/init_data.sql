@@ -38,10 +38,10 @@ insert into sys_tree (id, parent, name, nodedesc, sort, code) values (190, 163, 
 insert into sys_tree (id, parent, name, nodedesc, sort, code) values (231, 229, '基础数据', '基础数据', 230, '');
 insert into sys_tree (id, parent, name, nodedesc, sort, code) values (235, 231, '修改密码', '修改密码', 235, '');
 insert into sys_tree (id, parent, name, nodedesc, sort, code) values (236, 231, '修改资料', '修改资料', 236, '');
-insert into sys_tree (id, parent, name, nodedesc, sort, code) values (434, 3, '流程管理', '流程管理', 434, '');
-insert into sys_tree (id, parent, name, nodedesc, sort, code) values (435, 434, '流程发布', '流程发布', 435, '');
-insert into sys_tree (id, parent, name, nodedesc, sort, code) values (437, 434, '流程演示', '流程演示', 437, '');
-insert into sys_tree (id, parent, name, nodedesc, sort, code) values (438, 434, '流程监控', '流程监控', 438, '');
+insert into sys_tree (id, parent, name, nodedesc, sort, code) values (34, 3, '流程管理', '流程管理', 34, '');
+insert into sys_tree (id, parent, name, nodedesc, sort, code) values (435, 34, '流程发布', '流程发布', 435, '');
+insert into sys_tree (id, parent, name, nodedesc, sort, code) values (437, 34, '流程演示', '流程演示', 437, '');
+insert into sys_tree (id, parent, name, nodedesc, sort, code) values (438, 34, '流程监控', '流程监控', 438, '');
 insert into sys_tree (id, parent, name, nodedesc, sort, code) values (449, 8, '工作日历', '工作日历', 449, '');
 insert into sys_tree (id, parent, name, nodedesc, sort, code) values (482, 10, '授权管理', '授权管理', 482, '');
 insert into sys_tree (id, parent, name, nodedesc, sort, code) values (494, 8, 'TODO配置', 'TODO配置', 494, '');
@@ -69,9 +69,9 @@ insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) val
 insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (21, '修改密码', '', '/sys/user.do?method=prepareModifyPwd', 15, 2, 21);
 insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (22, '修改个人信息', '', '/sys/user.do?method=prepareModifyInfo', 15, 2, 22);
 insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (26, '数据重载', '', '/sys/dictory.do?method=loadDictory', 10, 2, 26);
-insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (280, '流程监控', '流程监控', '/workflow/processController.jspa?operationType=4&loadBusiness=1', 280, 1, 438);
-insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (434, '流程管理', '工作流管理', '', 0, 1, 434);
-insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (435, '流程发布', '', '/workflow/deployController.jspa', 435, 1, 435);
+insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (34, '流程管理', '工作流管理', '', 0, 1, 34);
+insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (280, '流程监控', '流程监控', '/mx/jbpm/tree', 280, 1, 438);
+insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (435, '流程发布', '', '/mx/jbpm/deploy', 435, 1, 435);
 insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (437, '流程演示', '', '/workflow/test/index.jsp', 437, 1, 437);
 insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (449, '工作日历', '工作日历', '/others/workCalendar.do?method=showList', 449, 1, 449);
 insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (482, '授权管理', '', '/sys/sysUserRole.do?method=showUsers', 482, 2, 482);
@@ -105,7 +105,7 @@ insert into sys_access (roleid, appid) values (1, 22);
 insert into sys_access (roleid, appid) values (1, 26);
 
 insert into sys_access (roleid, appid) values (1, 280);
-insert into sys_access (roleid, appid) values (1, 434);
+insert into sys_access (roleid, appid) values (1, 34);
 insert into sys_access (roleid, appid) values (1, 435);
 insert into sys_access (roleid, appid) values (1, 437);
 
