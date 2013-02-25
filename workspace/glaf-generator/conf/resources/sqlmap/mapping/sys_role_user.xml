@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="jbpm_user">
+
+	<typeAlias alias="agent" type="com.glaf.core.identity.impl.AgentImpl"/>
+
+	<typeAlias alias="user" type="com.glaf.core.identity.impl.UserImpl"/>
+ 
+
+    <select id="getAgents" resultClass="com.glaf.core.identity.impl.AgentImpl" parameterClass="java.util.HashMap">
+
+	    select  AGENTTYPE_ as agentType, ASSIGNFROM_ as assignFrom,ASSIGNTO_ as assignTo,
+		        OBJECTID_ as objectId, OBJECTVALUE_ as objectValue,
+                PROCESSNAME_ as processName, TASKNAME_ as taskName
+		from sys_agent where ASSIGNTO_ = #assignTo#
+
+	</select>
+
+
+	<select id="getUsers" resultClass="com.glaf.core.identity.impl.UserImpl" parameterClass="java.util.HashMap">
+
+	    SELECT u.account as actorId, u.name as name, u.deptId as deptId, u.email as mail, u.mobile as mobile
+		FROM sys_user u
+		where  u.blocked = 0
+
+	</select>
+
+
+ 	<select id="getXYDeptRoleUsers" resultClass="com.glaf.core.identity.impl.UserImpl" parameterClass="java.util.HashMap">
+		 
+		  SELECT u.account as actorId, u.name as name, u.deptId as deptId, u.email as mail, u.mobile as mobile
+		   FROM sys_user u
+		   WHERE u.blocked = 0 AND u.id IN
+				 ( SELECT r.userId  FROM sys_user_role r
+			       WHERE r.authorized = 0 AND r.roleId IN
+						 ( SELECT a.id
+					       FROM sys_dept_role a, sys_role b
+					       WHERE 1=1
+						   AND  a.sysRoleId = b.id
+
+						<dynamic prepend="">
+
+                            <isPropertyAvailable prepend="AND" property="deptId">
+								   ( a.deptId =  #deptId# )
+							</isPropertyAvailable>
+
+							<isPropertyAvailable prepend="AND" property="roleId">
+								<isNotEmpty prepend="" property="roleId"> 
+									  ( b.code = #roleId# )
+								</isNotEmpty>
+							</isPropertyAvailable>
+
+							<isPropertyAvailable prepend="AND" property="deptIds">
+								<isNotNull prepend="" property="deptIds">
+									<iterate prepend="" property="deptIds" open="(" close=")" conjunction="OR">
+										( a.deptId =  #deptIds[]# )
+									</iterate>
+								</isNotNull>
+							</isPropertyAvailable>
+
+							<isPropertyAvailable prepend="AND" property="roleIds">
+								<isNotNull prepend="" property="roleIds">
+									<iterate prepend="" property="roleIds" open="(" close=")" conjunction="OR">
+										( b.code = #roleIds[]# )
+									</iterate>
+								</isNotNull>
+							</isPropertyAvailable>
+
+						</dynamic>			  
+
+						 )
+				)
+
+	</select>
+
+</sqlMap>

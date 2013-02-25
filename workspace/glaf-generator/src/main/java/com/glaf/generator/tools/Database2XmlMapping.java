@@ -20,8 +20,14 @@ public class Database2XmlMapping {
 
 	public static void main(String[] args) {
 		Database2XmlMapping gen = new Database2XmlMapping();
-		gen.setTodir("codegen/glaf");
+		if (args != null && args.length > 0) {
+			gen.setTodir(args[0]);
+		} else {
+			gen.setTodir("codegen/mapping");
+		}
 		gen.execute();
+		System.out.println("生成结束，请到" + gen.getTodir() + "查看输出。");
+		System.exit(0);
 	}
 
 	public String todir;
@@ -32,7 +38,7 @@ public class Database2XmlMapping {
 		try {
 			List<String> tables = DBUtils.getTables();
 			for (String tableName : tables) {
-                System.out.println("process "+tableName);
+				System.out.println("process " + tableName);
 				List<FieldDefinition> fields = DBUtils
 						.getFieldDefinitions(tableName);
 
