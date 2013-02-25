@@ -41,13 +41,13 @@
 			<classpath refid="compile.classpath" />
 		</javac>
 		<copy todir="WebContent/WEB-INF/classes">
-			<fileset dir="bin" includes="**/*.class" />
+			<fileset dir="bin" includes="com/**/*.class,com/**/*.properties,com/**/*.xml" />
 		</copy>
 	</target>
 
 	<target name="copy">
 		<copy todir="WebContent/WEB-INF/classes">
-			<fileset dir="bin" includes="**/*.class,**/*.properties,com/glaf/**/*.xml" />
+			<fileset dir="bin" includes="com/**/*.class,com/**/*.properties,com/**/*.xml" />
 		</copy>
 	</target>
 
