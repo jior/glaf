@@ -6,7 +6,7 @@
 	<bean id="baseTxService" lazy-init="true"
 		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
 		<property name="transactionManager">
-			<ref bean="transactionManager" />
+			<ref bean="sysTransactionManager" />
 		</property>
 		<property name="transactionAttributes">
 			<props>
@@ -28,8 +28,6 @@
 				<prop key="shutdown*">PROPAGATION_REQUIRED</prop>
 				<prop key="locked*">PROPAGATION_REQUIRED</prop>
 				<prop key="sendMessage">PROPAGATION_REQUIRED</prop>
-				<prop key="doIDByNO">PROPAGATION_REQUIRED</prop>
-				<prop key="saveDetailFromExel">PROPAGATION_REQUIRED</prop>
 				<prop key="get*SerialNumber">PROPAGATION_REQUIRED</prop>
 				<prop key="getSerialNumber">PROPAGATION_REQUIRED</prop>
 				<prop key="submit*">PROPAGATION_REQUIRED</prop>
@@ -41,7 +39,13 @@
 
 	<bean id="abstractDao" class="com.glaf.base.dao.AbstractSpringDao">
 		<property name="sessionFactory">
-			<ref bean="sessionFactory" />
+			<ref bean="sysSessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="persistenceDAO" class="com.glaf.core.dao.PersistenceDAO">
+		<property name="sessionFactory">
+			<ref bean="sysSessionFactory" />
 		</property>
 	</bean>
 

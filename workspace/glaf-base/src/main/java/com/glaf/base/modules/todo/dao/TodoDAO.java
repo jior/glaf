@@ -20,10 +20,12 @@ package com.glaf.base.modules.todo.dao;
 
 import java.util.*;
 
+import com.glaf.base.modules.todo.model.UserEntity;
+
 public interface TodoDAO {
 
-	void saveAll(final List rows);
+	void saveAll(final List<Object> rows);
 
-	List getUserEntityList(final String actorId);
+	List<UserEntity> getUserEntityList(final String actorId);
 
 }

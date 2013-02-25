@@ -22,7 +22,7 @@
                     "name": "个人设置",
                     "nodeId": 20,
                     "showMenu": 2,
-                    "sort": 15,
+                    "sort": 329,
                     "url": ""
           },
           {
@@ -64,7 +64,7 @@
                     "name": "安全设置",
                     "nodeId": 10,
                     "showMenu": 2,
-                    "sort": 14,
+                    "sort": 15,
                     "url": ""
           },
           {
@@ -122,7 +122,7 @@
                     "name": "系统管理",
                     "nodeId": 8,
                     "showMenu": 1,
-                    "sort": 5,
+                    "sort": 14,
                     "url": ""
           },
           {
@@ -133,7 +133,7 @@
                                         "nodeId": 438,
                                         "showMenu": 1,
                                         "sort": 280,
-                                        "url": "/workflow/processController.jspa?operationType=4&loadBusiness=1"
+                                        "url": "/mx/jbpm/tree"
                               },
                               {
                                         "description": "",
@@ -149,12 +149,28 @@
                                         "nodeId": 435,
                                         "showMenu": 1,
                                         "sort": 277,
-                                        "url": "/workflow/deployController.jspa"
+                                        "url": "/mx/jbpm/deploy"
                               }
                     ],
                     "description": "工作流管理",
                     "name": "流程管理",
                     "nodeId": 434,
+                    "showMenu": 1,
+                    "sort": 5,
+                    "url": ""
+          },
+          {
+                    "children": [{
+                              "description": "",
+                              "name": "出差申请",
+                              "nodeId": 3240,
+                              "showMenu": 1,
+                              "sort": 330,
+                              "url": "/mx/apps/trip"
+                    }],
+                    "description": "",
+                    "name": "演示系统",
+                    "nodeId": 3239,
                     "showMenu": 1,
                     "sort": 0,
                     "url": ""

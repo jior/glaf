@@ -4,12 +4,12 @@
 
 	<bean id="todoDAO" class="com.glaf.base.modules.todo.dao.TodoDAOImpl">
 		<property name="sessionFactory">
-			<ref bean="sessionFactory" />
+			<ref bean="sysSessionFactory" />
 		</property>
 	</bean>
 
 	<!--service -->
-	<bean id="todoService" class="com.glaf.base.modules.todo.service.TodoServiceImpl">
+	<bean id="todoServiceImpl" class="com.glaf.base.modules.todo.service.TodoServiceImpl">
 		<property name="abstractDao">
 			<ref bean="abstractDao" />
 		</property>
@@ -36,30 +36,21 @@
 
 	</bean>
 
-	<bean id="membershipService" class="com.glaf.base.modules.todo.service.MembershipServiceImpl">
-		<property name="abstractDao">
-			<ref bean="abstractDao" />
-		</property>
-	</bean>
-
 	<bean id="todoProxy" parent="baseTxService">
 		<property name="target">
-			<ref bean="todoService" />
+			<ref bean="todoServiceImpl" />
 		</property>
 	</bean>
 
-	<bean id="membershipProxy" parent="baseTxService">
+	<bean id="todoService" parent="baseTxService">
 		<property name="target">
-			<ref bean="membershipService" />
+			<ref bean="todoServiceImpl" />
 		</property>
 	</bean>
 
 	<bean id="todoJobBean" class="com.glaf.base.modules.todo.service.TodoJobBean">
 		<property name="todoService">
 			<ref bean="todoProxy" />
-		</property>
-		<property name="membershipService">
-			<ref bean="membershipProxy" />
 		</property>
 		<property name="workCalendarService">
 			<ref bean="workCalendarProxy" />

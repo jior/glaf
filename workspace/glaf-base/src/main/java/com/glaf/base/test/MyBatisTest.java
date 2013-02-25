@@ -32,7 +32,7 @@ public class MyBatisTest extends AbstractTest {
 	@SuppressWarnings("rawtypes")
 	@Test
 	public void testList() {
-		entityService = super.getBean("myBatisEntityProxy");
+		entityService = super.getBean("entityService");
 		for (int i = 0; i <= 1000; i++) {
 			List<Object> todoList = entityService.getList("getTodoList",
 					new HashMap());

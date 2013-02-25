@@ -191,29 +191,6 @@ public class AbstractSpringDao extends HibernateDaoSupport {
 		return ret;
 	}
 
-	protected boolean executeSQL2(final String sql, final List values) {
-		boolean ret = true;
-		getHibernateTemplate().execute(new HibernateCallback() {
-			public Object doInHibernate(Session session)
-					throws HibernateException, SQLException {
-				logger.debug("execute SQL: " + sql);
-				java.sql.PreparedStatement psmt = session.connection()
-						.prepareStatement(sql);
-
-				if (values != null && values.size() > 0) {
-					fillStatement(psmt, values);
-				}
-
-				psmt.executeUpdate();
-				psmt.close();
-				psmt = null;
-
-				return null;
-			}
-		});
-		return ret;
-	}
-
 	public boolean executeSQL(final String sql, final List<Object> values) {
 		boolean ret = true;
 		getHibernateTemplate().execute(new HibernateCallback<Object>() {
@@ -353,7 +330,6 @@ public class AbstractSpringDao extends HibernateDaoSupport {
 	public PageResult getList(final DetachedCriteria detachedCriteria,
 			final int pageNo, final int pageSize) {
 		PageResult pager = new PageResult();
-
 		Criteria criteria = (Criteria) getHibernateTemplate().execute(
 				new HibernateCallback() {
 					public Object doInHibernate(Session session)

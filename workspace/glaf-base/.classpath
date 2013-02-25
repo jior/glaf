@@ -125,5 +125,6 @@
 	<classpathentry kind="lib" path="/glaf-core/lib/slf4j-api-1.7.2.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/slf4j-log4j12-1.7.2.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/asm-3.3.1.jar"/>
+	<classpathentry kind="lib" path="conf"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

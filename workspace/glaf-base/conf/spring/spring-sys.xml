@@ -1,0 +1,304 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+
+	<!--service -->
+	<bean id="serialNumberServiceImpl" class="com.glaf.base.modules.sys.service.impl.SerialNumberServiceImpl">
+		<property name="abstractDao">
+			<ref bean="abstractDao" />
+		</property>
+	</bean>
+
+	<bean id="serialNumberProxy" parent="baseTxService">
+		<property name="target">
+			<ref bean="serialNumberServiceImpl" />
+		</property>
+	</bean>
+
+	<bean id="serialNumberService" parent="baseTxService">
+		<property name="target">
+			<ref bean="serialNumberServiceImpl" />
+		</property>
+	</bean>
+
+	<bean id="sysTreeServiceImpl" class="com.glaf.base.modules.sys.service.impl.SysTreeServiceImpl">
+		<property name="abstractDao">
+			<ref bean="abstractDao" />
+		</property>
+	</bean>
+
+	<bean id="sysTreeProxy" parent="baseTxService">
+		<property name="target">
+			<ref bean="sysTreeServiceImpl" />
+		</property>
+	</bean>
+
+	<bean id="sysTreeService" parent="baseTxService">
+		<property name="target">
+			<ref bean="sysTreeServiceImpl" />
+		</property>
+	</bean>
+
+	<bean id="sysApplicationServiceImpl" class="com.glaf.base.modules.sys.service.impl.SysApplicationServiceImpl">
+		<property name="abstractDao">
+			<ref bean="abstractDao" />
+		</property>
+		<property name="sysTreeService">
+			<ref bean="sysTreeProxy" />
+		</property>
+		<property name="authorizeService">
+			<ref bean="authorizeProxy" />
+		</property>
+	</bean>
+
+	<bean id="sysApplicationProxy" parent="baseTxService">
+		<property name="target">
+			<ref bean="sysApplicationServiceImpl" />
+		</property>
+	</bean>
+
+	<bean id="sysApplicationService" parent="baseTxService">
+		<property name="target">
+			<ref bean="sysApplicationServiceImpl" />
+		</property>
+	</bean>
+
+	<bean id="sysDepartmentServiceImpl" class="com.glaf.base.modules.sys.service.impl.SysDepartmentServiceImpl">
+		<property name="abstractDao">
+			<ref bean="abstractDao" />
+		</property>
+		<property name="sysTreeService">
+			<ref bean="sysTreeProxy" />
+		</property>
+	</bean>
+
+	<bean id="sysDepartmentProxy" parent="baseTxService">
+		<property name="target">
+			<ref bean="sysDepartmentServiceImpl" />
+		</property>
+	</bean>
+
+	<bean id="sysDepartmentService" parent="baseTxService">
+		<property name="target">
+			<ref bean="sysDepartmentServiceImpl" />
+		</property>
+	</bean>
+
+	<bean id="sysUserServiceImpl" class="com.glaf.base.modules.sys.service.impl.SysUserServiceImpl">
+		<property name="abstractDao">
+			<ref bean="abstractDao" />
+		</property>
+	</bean>
+
+	<bean id="sysUserProxy" parent="baseTxService">
+		<property name="target">
+			<ref bean="sysUserServiceImpl" />
+		</property>
+	</bean>
+
+	<bean id="sysUserService" parent="baseTxService">
+		<property name="target">
+			<ref bean="sysUserServiceImpl" />
+		</property>
+	</bean>
+
+	<bean id="sysRoleServiceImpl" class="com.glaf.base.modules.sys.service.impl.SysRoleServiceImpl">
+		<property name="abstractDao">
+			<ref bean="abstractDao" />
+		</property>
+	</bean>
+
+	<bean id="sysRoleProxy" parent="baseTxService">
+		<property name="target">
+			<ref bean="sysRoleServiceImpl" />
+		</property>
+	</bean>
+
+	<bean id="sysRoleService" parent="baseTxService">
+		<property name="target">
+			<ref bean="sysRoleServiceImpl" />
+		</property>
+	</bean>
+
+	<bean id="sysDeptRoleServiceImpl" class="com.glaf.base.modules.sys.service.impl.SysDeptRoleServiceImpl">
+		<property name="abstractDao">
+			<ref bean="abstractDao" />
+		</property>
+		<property name="sysApplicationService">
+			<ref bean="sysApplicationProxy" />
+		</property>
+		<property name="sysFunctionService">
+			<ref bean="sysFunctionProxy" />
+		</property>
+		<property name="sysRoleService">
+			<ref bean="sysRoleProxy" />
+		</property>
+	</bean>
+
+	<bean id="sysDeptRoleProxy" parent="baseTxService">
+		<property name="target">
+			<ref bean="sysDeptRoleServiceImpl" />
+		</property>
+	</bean>
+
+	<bean id="sysDeptRoleService" parent="baseTxService">
+		<property name="target">
+			<ref bean="sysDeptRoleServiceImpl" />
+		</property>
+	</bean>
+
+	<bean id="authorizeServiceImpl" class="com.glaf.base.modules.sys.service.impl.AuthorizeServiceImpl">
+		<property name="sysUserService">
+			<ref bean="sysUserProxy" />
+		</property>
+		<property name="sysDepartmentService">
+			<ref bean="sysDepartmentProxy" />
+		</property>
+	</bean>
+
+	<bean id="authorizeProxy" parent="baseTxService">
+		<property name="target">
+			<ref bean="authorizeServiceImpl" />
+		</property>
+	</bean>
+
+	<bean id="authorizeService" parent="baseTxService">
+		<property name="target">
+			<ref bean="authorizeServiceImpl" />
+		</property>
+	</bean>
+
+	<bean id="dictoryServiceImpl" class="com.glaf.base.modules.sys.service.impl.DictoryServiceImpl">
+		<property name="abstractDao">
+			<ref bean="abstractDao" />
+		</property>
+	</bean>
+
+	<bean id="dictoryProxy" parent="baseTxService">
+		<property name="target">
+			<ref bean="dictoryServiceImpl" />
+		</property>
+	</bean>
+
+	<bean id="dictoryService" parent="baseTxService">
+		<property name="target">
+			<ref bean="dictoryServiceImpl" />
+		</property>
+	</bean>
+
+	<bean id="sysFunctionServiceImpl" class="com.glaf.base.modules.sys.service.impl.SysFunctionServiceImpl">
+		<property name="abstractDao">
+			<ref bean="abstractDao" />
+		</property>
+	</bean>
+
+	<bean id="sysFunctionProxy" parent="baseTxService">
+		<property name="target">
+			<ref bean="sysFunctionServiceImpl" />
+		</property>
+	</bean>
+
+	<bean id="sysFunctionService" parent="baseTxService">
+		<property name="target">
+			<ref bean="sysFunctionServiceImpl" />
+		</property>
+	</bean>
+
+	<bean id="subjectCodeServiceImpl" class="com.glaf.base.modules.sys.service.impl.SubjectCodeServiceImpl">
+		<property name="abstractDao">
+			<ref bean="abstractDao" />
+		</property>
+	</bean>
+
+	<bean id="subjectCodeProxy" parent="baseTxService">
+		<property name="target">
+			<ref bean="subjectCodeServiceImpl" />
+		</property>
+	</bean>
+
+	<bean id="subjectCodeService" parent="baseTxService">
+		<property name="target">
+			<ref bean="subjectCodeServiceImpl" />
+		</property>
+	</bean>
+
+	<bean id="sysLogServiceImpl" class="com.glaf.base.modules.sys.service.impl.SysLogServiceImpl">
+		<property name="abstractDao">
+			<ref bean="abstractDao" />
+		</property>
+	</bean>
+
+	<bean id="sysLogProxy" parent="baseTxService">
+		<property name="target">
+			<ref bean="sysLogServiceImpl" />
+		</property>
+	</bean>
+
+	<bean id="sysLogService" parent="baseTxService">
+		<property name="target">
+			<ref bean="sysLogServiceImpl" />
+		</property>
+	</bean>
+
+	<bean id="sysUserRoleServiceImpl" class="com.glaf.base.modules.sys.service.impl.SysUserRoleServiceImpl">
+		<property name="abstractDao">
+			<ref bean="abstractDao" />
+		</property>
+		<property name="sysDepartmentService">
+			<ref local="sysDepartmentProxy" />
+		</property>
+		<property name="sysUserService">
+			<ref local="sysUserProxy" />
+		</property>
+	</bean>
+
+	<bean id="sysUserRoleProxy" parent="baseTxService">
+		<property name="target">
+			<ref bean="sysUserRoleServiceImpl" />
+		</property>
+	</bean>
+
+	<bean id="sysUserRoleService" parent="baseTxService">
+		<property name="target">
+			<ref bean="sysUserRoleServiceImpl" />
+		</property>
+	</bean>
+
+	<bean id="schedulerServiceImpl" class="com.glaf.base.modules.sys.service.impl.SchedulerServiceImpl">
+		<property name="abstractDao">
+			<ref bean="abstractDao" />
+		</property>
+	</bean>
+
+	<bean id="schedulerProxy" parent="baseTxService">
+		<property name="target">
+			<ref bean="schedulerServiceImpl" />
+		</property>
+	</bean>
+
+	<bean id="schedulerService" parent="baseTxService">
+		<property name="target">
+			<ref bean="schedulerServiceImpl" />
+		</property>
+	</bean>
+
+	<bean id="persistenceServiceImpl" class="com.glaf.base.service.impl.PersistenceServiceImpl">
+		<property name="abstractDao">
+			<ref bean="abstractDao" />
+		</property>
+	</bean>
+
+	<bean id="persistenceProxy" parent="baseTxService">
+		<property name="target">
+			<ref bean="persistenceServiceImpl" />
+		</property>
+	</bean>
+
+	<bean id="persistenceService" parent="baseTxService">
+		<property name="target">
+			<ref bean="persistenceServiceImpl" />
+		</property>
+	</bean>
+
+</beans>

@@ -18,6 +18,9 @@
 
 package com.glaf.base.modules.todo.model;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
+
 public class UserEntity implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -53,6 +56,11 @@ public class UserEntity implements java.io.Serializable {
 
 	public void setRoleId(long roleId) {
 		this.roleId = roleId;
+	}
+	
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this,
+				ToStringStyle.MULTI_LINE_STYLE);
 	}
 
 }

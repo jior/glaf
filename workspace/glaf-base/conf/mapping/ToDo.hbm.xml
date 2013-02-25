@@ -5,7 +5,7 @@
 <hibernate-mapping>
 	<class name="com.glaf.base.modules.todo.model.ToDo" table="sys_todo"
 		dynamic-update="true" dynamic-insert="true">
-		<id column="id" name="id" type="long">
+		<id column="id" name="id" type="long" unsaved-value="0">
 			<generator class="assigned" />
 		</id>
 		<property column="actorId" name="actorId" type="string" />
@@ -36,7 +36,7 @@
 		<property column="taskName" name="taskName" type="string" />
 		<property column="title" name="title" type="string" />
 		<property column="type" name="type" type="string" />
-		<property column="sql" name="sql" type="string" />
+		<property column="sql_" name="sql" type="string" />
 		<property column="versionNo" name="versionNo" type="long" />
 	</class>
 </hibernate-mapping>

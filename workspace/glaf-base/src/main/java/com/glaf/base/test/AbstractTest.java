@@ -26,7 +26,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class AbstractTest {
 	protected static final Log logger = LogFactory.getLog(AbstractTest.class);
 
-	protected static String configurationResource = "/conf/spring/spring-config.xml";
+	protected static String configurationResource = "spring/spring-config.xml";
 
 	protected static org.springframework.context.ApplicationContext ctx;
 

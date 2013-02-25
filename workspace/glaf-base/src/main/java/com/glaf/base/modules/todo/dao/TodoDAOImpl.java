@@ -22,6 +22,7 @@ import java.sql.*;
 import java.util.*;
 
 import org.hibernate.HibernateException;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
@@ -34,7 +35,7 @@ public class TodoDAOImpl extends HibernateDaoSupport implements TodoDAO {
 
 	}
 
-	public static void fillStatement(PreparedStatement stmt, List values)
+	public static void fillStatement(PreparedStatement stmt, List<?> values)
 			throws SQLException {
 		if (values == null || values.size() == 0) {
 			return;
@@ -60,12 +61,12 @@ public class TodoDAOImpl extends HibernateDaoSupport implements TodoDAO {
 		}
 	}
 
-	public void saveAll(final List rows) {
-		getHibernateTemplate().execute(new HibernateCallback() {
+	public void saveAll(final List<Object> rows) {
+		getHibernateTemplate().execute(new HibernateCallback<Object>() {
 			public Object doInHibernate(Session session)
 					throws HibernateException, SQLException {
 				if (rows != null && rows.size() > 0) {
-					Iterator iter = rows.iterator();
+					Iterator<Object> iter = rows.iterator();
 					while (iter.hasNext()) {
 						Object obj = iter.next();
 						session.save(obj);
@@ -76,60 +77,40 @@ public class TodoDAOImpl extends HibernateDaoSupport implements TodoDAO {
 		});
 	}
 
-	public List getUserEntityList(final String actorId) {
-		return (List) getHibernateTemplate().execute(new HibernateCallback() {
-			public Object doInHibernate(Session session)
-					throws HibernateException, SQLException {
-				List rows = new ArrayList();
-				StringBuffer sb = new StringBuffer();
-				sb.append(
-						" SELECT d.account actorId, b.deptId deptId, b.sysRoleId roleId ")
-						.append(" FROM sys_user_role a INNER JOIN ")
-						.append(" sys_dept_role b ON a.roleId = b.id INNER JOIN ")
-						.append(" sys_role c ON b.sysRoleId = c.id INNER JOIN ")
-						.append(" sys_user d ON a.userId = d.id ")
-						.append(" WHERE (d.account = ? ) ");
-				Connection con = null;
-				PreparedStatement psmt = null;
-				ResultSet rs = null;
-				try {
-					con = session.connection();
-					psmt = con.prepareStatement(sb.toString());
-					psmt.setString(1, actorId);
-					rs = psmt.executeQuery();
-					while (rs.next()) {
-						UserEntity entity = new UserEntity();
-						entity.setActorId(rs.getString(1));
-						entity.setDeptId(rs.getLong(2));
-						entity.setRoleId(rs.getLong(3));
-						rows.add(entity);
-					}
-					psmt.close();
-					rs.close();
-					rs = null;
-					psmt = null;
-				} catch (SQLException ex) {
-					throw ex;
-				} finally {
-					if (psmt != null) {
-						try {
-							psmt.close();
-							psmt = null;
-						} catch (SQLException ex) {
-						}
-					}
-					if (rs != null) {
-						try {
-							rs.close();
-							rs = null;
-						} catch (SQLException ex) {
-						}
-					}
-				}
+	@SuppressWarnings("unchecked")
+	public List<UserEntity> getUserEntityList(final String actorId) {
+		return (List<UserEntity>) getHibernateTemplate().execute(
+				new HibernateCallback<Object>() {
+					public Object doInHibernate(Session session)
+							throws HibernateException, SQLException {
+						StringBuffer sb = new StringBuffer();
+						sb.append(
+								" SELECT distinct d.account actorId, b.deptId deptId, b.sysRoleId roleId ")
+								.append(" FROM sys_user_role a INNER JOIN ")
+								.append(" sys_dept_role b ON a.roleId = b.id INNER JOIN ")
+								.append(" sys_role c ON b.sysRoleId = c.id INNER JOIN ")
+								.append(" sys_user d ON a.userId = d.id ")
+								.append(" WHERE ( d.account = :account ) ");
+						SQLQuery query = session.createSQLQuery(sb.toString());
+						query.setParameter("account", actorId);
 
-				return rows;
-			}
-		});
+						List<?> list = query.list();
+						List<UserEntity> rows = new ArrayList<UserEntity>();
+						for (Object object : list) {
+							Object[] array = (Object[]) object;
+							UserEntity m = new UserEntity();
+							m.setActorId((String) array[0]);
+							if (array[1] != null) {
+								m.setDeptId(Long.parseLong(array[1].toString()));
+							}
+							if (array[2] != null) {
+								m.setRoleId(Long.parseLong(array[2].toString()));
+							}
+							rows.add(m);
+						}
+						return rows;
+					}
+				});
 	}
 
 }
