@@ -70,7 +70,7 @@ insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) val
 insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (22, '修改个人信息', '', '/sys/user.do?method=prepareModifyInfo', 15, 2, 22);
 insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (26, '数据重载', '', '/sys/dictory.do?method=loadDictory', 10, 2, 26);
 insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (34, '流程管理', '工作流管理', '', 0, 1, 34);
-insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (280, '流程监控', '流程监控', '/mx/jbpm/tree', 280, 1, 438);
+insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (36, '流程监控', '流程监控', '/mx/jbpm/tree', 36, 1, 438);
 insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (435, '流程发布', '', '/mx/jbpm/deploy', 435, 1, 435);
 insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (437, '流程演示', '', '/workflow/test/index.jsp', 437, 1, 437);
 insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (449, '工作日历', '工作日历', '/others/workCalendar.do?method=showList', 449, 1, 449);
@@ -104,7 +104,7 @@ insert into sys_access (roleid, appid) values (1, 21);
 insert into sys_access (roleid, appid) values (1, 22);
 insert into sys_access (roleid, appid) values (1, 26);
 
-insert into sys_access (roleid, appid) values (1, 280);
+insert into sys_access (roleid, appid) values (1, 36);
 insert into sys_access (roleid, appid) values (1, 34);
 insert into sys_access (roleid, appid) values (1, 435);
 insert into sys_access (roleid, appid) values (1, 437);
