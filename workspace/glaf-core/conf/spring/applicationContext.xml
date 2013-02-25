@@ -101,8 +101,8 @@
 		<property name="entityDAO" ref="myBatisEntityDAO" />
 	</bean>
 
-	<bean id="scheduler"
-		class="org.springframework.scheduling.quartz.SchedulerFactoryBean" />
+	<!-- <bean id="scheduler"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean" /> -->
 
 
 </beans>

@@ -1,20 +1,20 @@
 /*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.glaf.core.mail.business;
 
@@ -370,6 +370,13 @@ public class MailDataFacedeImpl implements MailDataFacede {
 		return null;
 	}
 
+	public org.quartz.Scheduler getScheduler() {
+		if (scheduler == null) {
+			scheduler = ContextFactory.getBean("scheduler");
+		}
+		return scheduler;
+	}
+
 	/**
 	 * 保存某个任务的邮件
 	 * 
@@ -434,7 +441,7 @@ public class MailDataFacedeImpl implements MailDataFacede {
 			TriggerKey triggerKey = TriggerKey.triggerKey(triggerName,
 					triggerGroup);
 			try {
-				Trigger trigger = scheduler.getTrigger(triggerKey);
+				Trigger trigger = getScheduler().getTrigger(triggerKey);
 				if (trigger == null) {
 					trigger = TriggerBuilder
 							.newTrigger()
@@ -449,11 +456,11 @@ public class MailDataFacedeImpl implements MailDataFacede {
 							.withIdentity(jobKey).build();
 
 					jobDetail.getJobDataMap().put("taskId", task.getId());
-					scheduler.scheduleJob(jobDetail, trigger);
+					getScheduler().scheduleJob(jobDetail, trigger);
 					logger.debug("schedule job " + jobName);
 				} else {
 					trigger = trigger.getTriggerBuilder().startAt(date).build();
-					scheduler.rescheduleJob(triggerKey, trigger);
+					getScheduler().rescheduleJob(triggerKey, trigger);
 					logger.debug("reschedule job " + jobName);
 				}
 			} catch (SchedulerException ex) {
@@ -501,7 +508,7 @@ public class MailDataFacedeImpl implements MailDataFacede {
 					TriggerKey triggerKey = TriggerKey.triggerKey(triggerName,
 							triggerGroup);
 					try {
-						Trigger trigger = scheduler.getTrigger(triggerKey);
+						Trigger trigger = getScheduler().getTrigger(triggerKey);
 						if (trigger == null) {
 							trigger = TriggerBuilder
 									.newTrigger()
@@ -523,12 +530,12 @@ public class MailDataFacedeImpl implements MailDataFacede {
 									task.getId());
 							jobDetail.getJobDataMap().put("itemId",
 									item.getId());
-							scheduler.scheduleJob(jobDetail, trigger);
+							getScheduler().scheduleJob(jobDetail, trigger);
 							logger.debug("schedule job " + jobName);
 						} else {
 							trigger = trigger.getTriggerBuilder().startAt(date)
 									.build();
-							scheduler.rescheduleJob(triggerKey, trigger);
+							getScheduler().rescheduleJob(triggerKey, trigger);
 							logger.debug("reschedule job " + jobName);
 						}
 					} catch (SchedulerException ex) {
@@ -647,7 +654,6 @@ public class MailDataFacedeImpl implements MailDataFacede {
 		this.mailTaskService = mailTaskService;
 	}
 
-	@javax.annotation.Resource(name = "scheduler")
 	public void setScheduler(org.quartz.Scheduler scheduler) {
 		this.scheduler = scheduler;
 	}
