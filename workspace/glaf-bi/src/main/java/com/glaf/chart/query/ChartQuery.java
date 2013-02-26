@@ -41,7 +41,6 @@ public class ChartQuery extends DataQuery {
 	protected Date createDateGreaterThanOrEqual;
 	protected Date createDateLessThanOrEqual;
 	protected String createByLike;
-	protected String sortColumn;
 
 	public ChartQuery() {
 
@@ -347,10 +346,6 @@ public class ChartQuery extends DataQuery {
 		return orderBy;
 	}
 
-	public String getSortColumn() {
-		return sortColumn;
-	}
-
 	public String getSubjectLike() {
 		if (subjectLike != null && subjectLike.trim().length() > 0) {
 			if (!subjectLike.startsWith("%")) {
@@ -478,10 +473,6 @@ public class ChartQuery extends DataQuery {
 
 	public void setImageTypes(List<String> imageTypes) {
 		this.imageTypes = imageTypes;
-	}
-
-	public void setSortColumn(String sortColumn) {
-		this.sortColumn = sortColumn;
 	}
 
 	public void setSubjectLike(String subjectLike) {

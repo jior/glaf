@@ -38,7 +38,6 @@ public class ReportQuery extends DataQuery {
 	protected Date createDateGreaterThanOrEqual;
 	protected Date createDateLessThanOrEqual;
 	protected String createByLike;
-	protected String sortColumn;
 
 	public ReportQuery() {
 
@@ -216,10 +215,6 @@ public class ReportQuery extends DataQuery {
 		return reportNameLike;
 	}
 
-	public String getSortColumn() {
-		return sortColumn;
-	}
-
 	public String getSubject() {
 		return subject;
 	}
@@ -365,10 +360,6 @@ public class ReportQuery extends DataQuery {
 
 	public void setReportNameLike(String reportNameLike) {
 		this.reportNameLike = reportNameLike;
-	}
-
-	public void setSortColumn(String sortColumn) {
-		this.sortColumn = sortColumn;
 	}
 
 	public void setSubject(String subject) {
