@@ -30,7 +30,7 @@ import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Element;
 
 import com.glaf.core.config.CustomProperties;
-import com.glaf.core.config.SystemConfig;
+import com.glaf.core.config.SystemProperties;
 import com.glaf.core.util.LogUtils;
 import com.glaf.core.util.PropertiesUtils;
 import com.glaf.core.util.XmlUtils;
@@ -73,7 +73,7 @@ public class JbpmActionHandlerTypes {
 
 	static Map<String, Class<?>> initializeHandlerTypes() {
 		Map<String, Class<?>> types = new HashMap<String, Class<?>>();
-		String resource = SystemConfig.getString("jbpm.actions");
+		String resource = SystemProperties.getString("jbpm.actions");
 		if (StringUtils.isEmpty(resource)) {
 			resource = DEFAULT_CONFIG;
 		}

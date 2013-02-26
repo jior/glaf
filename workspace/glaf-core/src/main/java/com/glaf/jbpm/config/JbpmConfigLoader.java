@@ -30,6 +30,7 @@ import org.jbpm.JbpmContext;
 import org.jbpm.JbpmException;
 
 import com.glaf.core.config.SystemConfig;
+import com.glaf.core.config.SystemProperties;
 import com.glaf.core.util.LogUtils;
 import com.glaf.jbpm.container.ProcessContainer;
 import com.glaf.jbpm.context.Context;
@@ -45,7 +46,7 @@ public class JbpmConfigLoader {
 	}
 
 	public void execute(java.util.Properties props) {
-		if (SystemConfig.getBoolean("jbpm.config.install.onStartup")) {
+		if (SystemProperties.getBoolean("jbpm.config.install.onStartup")) {
 			this.installActionsConfig();
 		}
 	}

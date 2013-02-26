@@ -1,192 +1,232 @@
 /*
- * Licensed to the Apache Software Foundation (ASF) under one
- * or more contributor license agreements.  See the NOTICE file
- * distributed with this work for additional information
- * regarding copyright ownership.  The ASF licenses this file
- * to you under the Apache License, Version 2.0 (the
- * "License"); you may not use this file except in compliance
- * with the License.  You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+* Licensed to the Apache Software Foundation (ASF) under one
+* or more contributor license agreements.  See the NOTICE file
+* distributed with this work for additional information
+* regarding copyright ownership.  The ASF licenses this file
+* to you under the Apache License, Version 2.0 (the
+* "License"); you may not use this file except in compliance
+* with the License.  You may obtain a copy of the License at
+*
+*     http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*/
 
 package com.glaf.core.config;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
 import org.apache.commons.lang.StringUtils;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
-import com.glaf.core.util.PropertiesUtils;
+import com.glaf.core.context.ContextFactory;
+import com.glaf.core.domain.SystemProperty;
+import com.glaf.core.el.Mvel2ExpressionEvaluator;
+import com.glaf.core.service.ISystemPropertyService;
+import com.glaf.core.util.DateUtils;
 
 public class SystemConfig {
+	protected static final Log logger = LogFactory.getLog(SystemConfig.class);
 
-	private final static String SYSTEM_CONFIG = "/glaf.properties";
+	public final static Map<String, SystemProperty> properties = new HashMap<String, SystemProperty>();
 
-	public 	static Map<String, Object> contextMap = new HashMap<String, Object>();
-	
-	private static Properties properties = new Properties();
+	public final static String CURR_YYYYMMDD = "${curr_yyyymmdd}";
 
-	private static String ROOT_CONF_PATH = null;
-	
-	private static String ROOT_APP_PATH = null;
+	public final static String CURR_YYYYMM = "${curr_yyyymm}";
+
+	public final static String INPUT_YYYYMMDD = "${input_yyyymmdd}";
+
+	public final static String INPUT_YYYYMM = "${input_yyyymm}";
+
+	public final static String LONG_ID = "${longId}";
+
+	public final static String NOW = "${now}";
 
 	static {
-		try {
-			reload();
-		} catch (Exception ex) {
-		}
+		 
 	}
 
-	public static boolean eq(String key, String value) {
-		if (key != null && value != null) {
-			String x = properties.getProperty(key);
-			if (StringUtils.equals(value, x)) {
-				return true;
-			}
-		}
-		return false;
+	public static Map<String, Object> getContextMap() {
+		Map<String, Object> dataMap = new HashMap<String, Object>();
+		dataMap.put(CURR_YYYYMMDD, getCurrentYYYYMMDD());
+		dataMap.put(CURR_YYYYMM, getCurrentYYYYMM());
+		dataMap.put(INPUT_YYYYMMDD, getInputYYYYMMDD());
+		dataMap.put(INPUT_YYYYMM, getInputYYYYMM());
+		dataMap.put("curr_yyyymmdd", getCurrentYYYYMMDD());
+		dataMap.put("curr_yyyymm", getCurrentYYYYMM());
+		dataMap.put("input_yyyymmdd", getInputYYYYMMDD());
+		dataMap.put("input_yyyymm", getInputYYYYMM());
+		dataMap.put("now", getCurrentYYYYMMDD());
+		dataMap.put("${now}", getCurrentYYYYMMDD());
+		dataMap.put("#{now}", getCurrentYYYYMMDD());
+		return dataMap;
 	}
 
-	public static boolean getBoolean(String key) {
-		if (hasObject(key)) {
-			String value = properties.getProperty(key);
-			return Boolean.valueOf(value).booleanValue();
+	public static String getCurrentYYYYMM() {
+		String value = getProperty("curr_yyyymm");
+		if (StringUtils.isEmpty(value)) {
+			Date now = new Date();
+			value = String.valueOf(DateUtils.getYearMonth(now));
 		}
-		return false;
+		return value;
+	}
+
+	public static String getCurrentYYYYMMDD() {
+		String value = getProperty("curr_yyyymmdd");
+		if (StringUtils.isEmpty(value)) {
+			Date now = new Date();
+			value = String.valueOf(DateUtils.getYearMonthDay(now));
+		}
+		return value;
 	}
 	
-	public static String getAppPath() {
-		if (ROOT_APP_PATH == null) {
-			reload();
-		}
-		return ROOT_APP_PATH;
+	public static String getConfigRootPath(){
+		return SystemProperties.getConfigRootPath();
 	}
 
-	public static String getConfigRootPath() {
-		if (ROOT_CONF_PATH == null) {
-			reload();
+	public static String getDataPath() {
+		String dataDir = getProperty("dataDir");
+		if (StringUtils.isEmpty(dataDir)) {
+			dataDir = SystemProperties.getConfigRootPath() + "/report/data";
 		}
-		return ROOT_CONF_PATH;
+		return dataDir;
 	}
 
-	public static double getDouble(String key) {
-		if (hasObject(key)) {
-			String value = properties.getProperty(key);
-			return Double.parseDouble(value);
+	public static String getInputYYYYMM() {
+		String value = getProperty("input_yyyymm");
+		if (StringUtils.isEmpty(value)) {
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(new Date());
+
+			int year = calendar.get(Calendar.YEAR);
+			int month = calendar.get(Calendar.MONTH);
+			int day = calendar.get(Calendar.DAY_OF_MONTH);
+			calendar.set(year, month, day - 1);
+
+			year = calendar.get(Calendar.YEAR);
+			month = calendar.get(Calendar.MONTH);
+			month = month + 1;
+			logger.debug(year + ":" + month);
+
+			StringBuffer sb = new StringBuffer();
+			sb.append(year);
+
+			if (month <= 9) {
+				sb.append("0").append(month);
+			} else {
+				sb.append(month);
+			}
+			value = sb.toString();
 		}
-		return 0;
+
+		logger.debug("input_yyyymm:" + value);
+		return value;
 	}
 
-	public static int getInt(String key) {
-		if (hasObject(key)) {
-			String value = properties.getProperty(key);
-			return Integer.parseInt(value);
+	public static String getInputYYYYMMDD() {
+		String value = getProperty("input_yyyymmdd");
+		if (StringUtils.isEmpty(value)) {
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(new Date());
+
+			int year = calendar.get(Calendar.YEAR);
+			int month = calendar.get(Calendar.MONTH);
+			int day = calendar.get(Calendar.DAY_OF_MONTH);
+			calendar.set(year, month, day - 1);
+
+			year = calendar.get(Calendar.YEAR);
+			month = calendar.get(Calendar.MONTH);
+			month = month + 1;
+			day = calendar.get(Calendar.DAY_OF_MONTH);
+
+			logger.debug(year + ":" + month + ":" + day);
+
+			StringBuffer sb = new StringBuffer();
+			sb.append(year);
+
+			if (month <= 9) {
+				sb.append("0").append(month);
+			} else {
+				sb.append(month);
+			}
+
+			if (day <= 9) {
+				sb.append("0").append(day);
+			} else {
+				sb.append(day);
+			}
+
+			value = sb.toString();
 		}
-		return 0;
+		logger.debug("input_yyyymmdd:" + value);
+		return value;
 	}
 
-	public static long getLong(String key) {
-		if (hasObject(key)) {
-			String value = properties.getProperty(key);
-			return Long.parseLong(value);
-		}
-		return 0;
+	public static String getMappingPath() {
+		String mappingDir = SystemProperties.getConfigRootPath()
+				+ "/report/mapping";
+		return mappingDir;
 	}
 
-	public static Properties getProperties() {
+	public static Map<String, SystemProperty> getProperties() {
 		return properties;
 	}
 
-	public static String getString(String key) {
-		if (hasObject(key)) {
-			String value = properties.getProperty(key);
-			if (value == null) {
-				value = properties.getProperty(key.toUpperCase());
+	public static String getProperty(String key) {
+		String ret = null;
+		SystemProperty prop = properties.get(key);
+		if (prop != null) {
+			String value = prop.getValue();
+			if (StringUtils.isEmpty(value)) {
+				value = prop.getInitValue();
 			}
-			return value;
-		}
-		return null;
-	}
-
-	public static boolean hasObject(String key) {
-		if (properties == null || key == null) {
-			return false;
-		}
-		String value = properties.getProperty(key);
-		if (value != null) {
-			return true;
-		}
-		return false;
-	}
-	
-	
-	public 	static Map<String, Object> getContextMap(){
-		return contextMap;
-	}
-	
-
-	public synchronized static void reload() {
-		try {
-			Resource resource = new ClassPathResource(SYSTEM_CONFIG);
-			ROOT_CONF_PATH = resource.getFile().getParentFile()
-					.getParentFile().getAbsolutePath();
-			ROOT_APP_PATH = resource.getFile().getParentFile().getParentFile()
-					.getParentFile().getAbsolutePath();
-		} catch (IOException ex) {
-			throw new RuntimeException(ex);
-		}
-		try {
-			String config = getConfigRootPath() + "/conf/system/";
-			File directory = new File(config);
-			if (directory.isDirectory()) {
-				String[] filelist = directory.list();
-				for (int i = 0; i < filelist.length; i++) {
-					String filename = config + filelist[i];
-					File file = new File(filename);
-					if (file.isFile() && file.getName().endsWith(".properties")) {
-						InputStream inputStream = new FileInputStream(file);
-						Properties p = PropertiesUtils
-								.loadProperties(inputStream);
-						if (p != null) {
-							Enumeration<?> e = p.keys();
-							while (e.hasMoreElements()) {
-								String key = (String) e.nextElement();
-								String value = p.getProperty(key);
-								contextMap.put(key, value);
-								properties.setProperty(key, value);
-								properties
-										.setProperty(key.toLowerCase(), value);
-								properties
-										.setProperty(key.toUpperCase(), value);
-							}
-						}
-						inputStream.close();
-						inputStream = null;
-					}
+			if (StringUtils.isNotEmpty(value)) {
+				Date now = new Date();
+				Map<String, Object> sysMap = new HashMap<String, Object>();
+				sysMap.put("now", DateUtils.getYearMonthDay(now));
+				sysMap.put("curr_yyyymm", DateUtils.getYearMonth(now));
+				sysMap.put("curr_yyyymmdd", DateUtils.getYearMonthDay(now));
+				Object obj = Mvel2ExpressionEvaluator.evaluate(value, sysMap);
+				if (obj != null) {
+					ret = obj.toString();
 				}
 			}
-		} catch (Exception ex) {
-			throw new RuntimeException(ex);
 		}
+		return ret;
 	}
 
-	private SystemConfig() {
+	public static String getReportSavePath() {
+		String value = getProperty("report_save_path");
+		if (StringUtils.isEmpty(value)) {
+			value = SystemProperties.getConfigRootPath() + "/report";
+		}
+		return value;
+	}
 
+	public static void main(String[] args) {
+		Date now = new Date();
+		Map<String, Object> sysMap = new HashMap<String, Object>();
+		sysMap.put("curr_yyyymmdd", DateUtils.getYearMonthDay(now));
+		sysMap.put("curr_yyyymm", DateUtils.getYearMonth(now));
+		System.out.println(Mvel2ExpressionEvaluator.evaluate(
+				"${curr_yyyymmdd}-1", sysMap));
+	}
+
+	public static void reload() {
+		ISystemPropertyService systemPropertyService = ContextFactory
+				.getBean("systemPropertyService");
+		List<SystemProperty> list = systemPropertyService
+				.getAllSystemProperties();
+		if (list != null && !list.isEmpty()) {
+			for (SystemProperty p : list) {
+				properties.put(p.getName(), p);
+			}
+		}
 	}
 
 }

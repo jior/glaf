@@ -29,7 +29,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Element;
 
-import com.glaf.core.config.SystemConfig;
+import com.glaf.core.config.SystemProperties;
 import com.glaf.core.util.LogUtils;
 import com.glaf.core.util.XmlUtils;
 import com.glaf.core.config.CustomProperties;
@@ -76,7 +76,7 @@ public class ExecutionListenerTypes {
 
 	static Map<String, Class<?>> initializeExecutionListenerTypes() {
 		Map<String, Class<?>> types = new HashMap<String, Class<?>>();
-		String resource = SystemConfig.getString("activiti.executionListeners");
+		String resource = SystemProperties.getString("activiti.executionListeners");
 		if (StringUtils.isEmpty(resource)) {
 			resource = DEFAULT_CONFIG;
 		}

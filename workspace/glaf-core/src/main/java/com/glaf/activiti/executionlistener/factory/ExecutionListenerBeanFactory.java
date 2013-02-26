@@ -24,7 +24,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.glaf.core.config.*;
-import com.glaf.core.config.SystemConfig;
+ 
 
 public class ExecutionListenerBeanFactory {
 	protected static final Log logger = LogFactory
@@ -37,7 +37,7 @@ public class ExecutionListenerBeanFactory {
 			String configLocation = CustomProperties
 					.getString("activiti.executionListeners.context");
 			if (StringUtils.isEmpty(configLocation)) {
-				configLocation = SystemConfig
+				configLocation = SystemProperties
 						.getString("activiti.executionListeners.context");
 			}
 			if (StringUtils.isEmpty(configLocation)) {

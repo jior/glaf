@@ -25,7 +25,7 @@ import org.apache.commons.pool.KeyedObjectPoolFactory;
 import org.apache.commons.pool.KeyedPoolableObjectFactory;
 import org.apache.commons.pool.impl.StackKeyedObjectPoolFactory;
 
-import com.glaf.core.config.SystemConfig;
+import com.glaf.core.config.SystemProperties;
 import com.glaf.core.util.LogUtils;
 import com.glaf.core.config.CustomProperties;
  
@@ -42,9 +42,9 @@ public class ExecutionListenerFactory {
 
 	public static void notify(String key, DelegateExecution execution) {
 		String executionListenerType = "spring";
-		if (StringUtils.isNotEmpty(SystemConfig
+		if (StringUtils.isNotEmpty(SystemProperties
 				.getString(EXECUTION_LISTENER_FACTORY_TYPE))) {
-			executionListenerType = SystemConfig
+			executionListenerType = SystemProperties
 					.getString(EXECUTION_LISTENER_FACTORY_TYPE);
 		}
 		if (StringUtils.isNotEmpty(CustomProperties

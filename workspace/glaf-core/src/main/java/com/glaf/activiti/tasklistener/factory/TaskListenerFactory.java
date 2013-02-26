@@ -26,7 +26,7 @@ import org.apache.commons.pool.KeyedPoolableObjectFactory;
 import org.apache.commons.pool.impl.StackKeyedObjectPoolFactory;
 
 import com.glaf.core.config.CustomProperties;
-import com.glaf.core.config.SystemConfig;
+import com.glaf.core.config.SystemProperties;
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
 public class TaskListenerFactory {
@@ -39,9 +39,9 @@ public class TaskListenerFactory {
 
 	public static void notify(String key, DelegateTask delegateTask) {
 		String taskListenerType = "spring";
-		if (StringUtils.isNotEmpty(SystemConfig
+		if (StringUtils.isNotEmpty(SystemProperties
 				.getString(EXECUTION_LISTENER_FACTORY_TYPE))) {
-			taskListenerType = SystemConfig
+			taskListenerType = SystemProperties
 					.getString(EXECUTION_LISTENER_FACTORY_TYPE);
 		}
 		if (StringUtils.isNotEmpty(CustomProperties

@@ -20,6 +20,8 @@ package com.glaf.core.util;
 
 public final class Constants {
 
+	public static final String SYSTEM_CONFIG = "/glaf.properties";
+	
 	public static final String LOGIN_USER = "LOGIN_USER";
 
 	public static final String LOGIN_IP = "LOGIN_IP";
@@ -66,4 +68,15 @@ public final class Constants {
 	
 	public static final String SPRING_APPLICATION_CONTEXT = "/conf/spring/applicationContext.xml";
 
+	public static final String ID_EXPRESSION = "#{id}";
+
+	public static final String NOW_EXPRESSION = "#{now}";
+
+	public static final String CURRENT_YYYYMMDD_EXPRESSION = "#{curr_yyyymmdd}";
+
+	public static final String CURRENT_YYYYMM_EXPRESSION = "#{curr_yyyymm}";
+
+	public static final String INPUT_YYYYMMDD_EXPRESSION = "#{input_yyyymmdd}";
+
+	public static final String INPUT_YYYYMM_EXPRESSION = "#{input_yyyymm}";
 }

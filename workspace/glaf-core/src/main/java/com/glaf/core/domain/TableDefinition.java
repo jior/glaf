@@ -42,7 +42,7 @@ import com.glaf.core.util.DateUtils;
 @Entity
 @Table(name = "SYS_TABLE")
 public class TableDefinition implements java.io.Serializable,
-		java.lang.Comparable<TableDefinition>{
+		java.lang.Comparable<TableDefinition> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -192,7 +192,8 @@ public class TableDefinition implements java.io.Serializable,
 	@Transient
 	protected List<ColumnDefinition> columns = new ArrayList<ColumnDefinition>();
 
-	 
+	@Transient
+	protected List<QueryDefinition> queries = new ArrayList<QueryDefinition>();
 
 	public TableDefinition() {
 
@@ -205,7 +206,12 @@ public class TableDefinition implements java.io.Serializable,
 		columns.add(column);
 	}
 
-	 
+	public void addQuery(QueryDefinition query) {
+		if (queries == null) {
+			queries = new ArrayList<QueryDefinition>();
+		}
+		queries.add(query);
+	}
 
 	public int compareTo(TableDefinition o) {
 		if (o == null) {
@@ -329,7 +335,9 @@ public class TableDefinition implements java.io.Serializable,
 		return parentTableName;
 	}
 
- 
+	public List<QueryDefinition> getQueries() {
+		return queries;
+	}
 
 	public String getQueryIds() {
 		return queryIds;
@@ -551,7 +559,9 @@ public class TableDefinition implements java.io.Serializable,
 		this.parentTableName = parentTableName;
 	}
 
-	 
+	public void setQueries(List<QueryDefinition> queries) {
+		this.queries = queries;
+	}
 
 	public void setQueryIds(String queryIds) {
 		this.queryIds = queryIds;

@@ -231,6 +231,14 @@ public class RequestUtils {
 
 		return actorId;
 	}
+	
+	public static LoginContext getLoginContext(HttpServletRequest request) {
+		String actorId = getActorId(request);
+		if (StringUtils.isNotEmpty(actorId)) {
+			return IdentityFactory.getLoginContext(actorId);
+		}
+		return null;
+	}
 
 	public static String getAttribute(HttpServletRequest request, String name) {
 		Object value = request.getAttribute(name);

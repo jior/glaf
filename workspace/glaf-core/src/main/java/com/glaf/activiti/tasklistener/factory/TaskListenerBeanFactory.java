@@ -23,7 +23,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import com.glaf.core.config.*;
-import com.glaf.core.config.SystemConfig;
+ 
 
 public class TaskListenerBeanFactory {
 	protected static final Log logger = LogFactory
@@ -36,7 +36,7 @@ public class TaskListenerBeanFactory {
 			String configLocation = CustomProperties
 					.getString("activiti.taskListeners.context");
 			if (StringUtils.isEmpty(configLocation)) {
-				configLocation = SystemConfig
+				configLocation = SystemProperties
 						.getString("activiti.taskListeners.context");
 			}
 			if (StringUtils.isEmpty(configLocation)) {

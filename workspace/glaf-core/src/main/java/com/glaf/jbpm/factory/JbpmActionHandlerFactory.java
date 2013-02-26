@@ -28,7 +28,7 @@ import org.jbpm.graph.def.ActionHandler;
 import org.jbpm.graph.exe.ExecutionContext;
 
 import com.glaf.core.config.CustomProperties;
-import com.glaf.core.config.SystemConfig;
+import com.glaf.core.config.SystemProperties;
 import com.glaf.core.util.LogUtils;
 
 @SuppressWarnings({"rawtypes","unchecked"})
@@ -42,9 +42,9 @@ public class JbpmActionHandlerFactory {
 
 	public static void execute(String key, ExecutionContext executionContext) {
 		String actionHandlerExecution = "spring";
-		if (StringUtils.isNotEmpty(SystemConfig
+		if (StringUtils.isNotEmpty(SystemProperties
 				.getString(JBPM_ACTION_HANDLER_FACTORY_TYPE))) {
-			actionHandlerExecution = SystemConfig
+			actionHandlerExecution = SystemProperties
 					.getString(JBPM_ACTION_HANDLER_FACTORY_TYPE);
 		}
 		if (StringUtils.isNotEmpty(CustomProperties

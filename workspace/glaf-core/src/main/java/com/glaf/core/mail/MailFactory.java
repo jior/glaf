@@ -24,7 +24,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.glaf.core.config.CustomProperties;
-import com.glaf.core.config.SystemConfig;
+import com.glaf.core.config.SystemProperties;
 
 public class MailFactory {
 	protected static final Log logger = LogFactory.getLog(MailFactory.class);
@@ -45,7 +45,7 @@ public class MailFactory {
 		}
 		String configLocation = CustomProperties.getString("mail.context");
 		if (StringUtils.isEmpty(configLocation)) {
-			configLocation = SystemConfig.getString("mail.context");
+			configLocation = SystemProperties.getString("mail.context");
 		}
 		if (StringUtils.isEmpty(configLocation)) {
 			configLocation = DEFAULT_CONFIG;

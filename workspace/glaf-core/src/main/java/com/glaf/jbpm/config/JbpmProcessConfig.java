@@ -8,8 +8,8 @@ import org.jbpm.JbpmContext;
 import org.jbpm.JbpmException;
 import org.jbpm.file.def.FileDefinition;
 import org.jbpm.graph.def.ProcessDefinition;
-
-import com.glaf.core.config.SystemConfig;
+ 
+import com.glaf.core.config.SystemProperties;
 import com.glaf.core.util.FileUtils;
 import com.glaf.jbpm.container.ProcessContainer;
 import com.glaf.jbpm.context.Context;
@@ -51,7 +51,7 @@ public class JbpmProcessConfig {
 		byte[] bytes = null;
 		JbpmContext jbpmContext = null;
 		try {
-			String filename = SystemConfig.getAppPath() + "/deploy/"
+			String filename = SystemProperties.getAppPath() + "/deploy/"
 					+ processDefinitionId + ".jpg";
 			File file = new File(filename);
 			if (file.exists()) {

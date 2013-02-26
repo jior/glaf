@@ -21,17 +21,108 @@ package com.glaf.core.util;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
+
+import com.glaf.core.config.SystemConfig;
+import com.glaf.core.entity.SqlExecutor;
+import com.glaf.core.query.QueryCondition;
+
 public class QueryUtils {
 
 	public final static String newline = System.getProperty("line.separator");
 
+	public static SqlExecutor getMyBatisAndConditionSql(
+			List<QueryCondition> conditions) {
+		SqlExecutor se = new SqlExecutor();
+		Map<String, Object> params = new LinkedHashMap<String, Object>();
+		StringBuffer buffer = new StringBuffer();
+		if (conditions != null && !conditions.isEmpty()) {
+			int index = 0;
+			Iterator<QueryCondition> iter = conditions.iterator();
+			while (iter.hasNext()) {
+				index++;
+				QueryCondition c = iter.next();
+				buffer.append(FileUtils.newline);
+				String column = c.getColumn();
+				String filter = c.getFilter();
+				String alias = c.getAlias();
+				params.put("param_" + index, c.getValue());
+				String operator = " = ";
+				if (StringUtils.isNotEmpty(filter)) {
+					if (SearchFilter.GREATER_THAN.equals(filter)) {
+						operator = SearchFilter.GREATER_THAN;
+					} else if (SearchFilter.GREATER_THAN_OR_EQUAL
+							.equals(filter)) {
+						operator = SearchFilter.GREATER_THAN_OR_EQUAL;
+					} else if (SearchFilter.LESS_THAN.equals(filter)) {
+						operator = SearchFilter.LESS_THAN;
+					} else if (SearchFilter.LESS_THAN_OR_EQUAL.equals(filter)) {
+						operator = SearchFilter.LESS_THAN_OR_EQUAL;
+					} else if (SearchFilter.LIKE.equals(filter)) {
+						operator = SearchFilter.LIKE;
+					} else if (SearchFilter.NOT_LIKE.equals(filter)) {
+						operator = SearchFilter.NOT_LIKE;
+					} else if (SearchFilter.EQUALS.equals(filter)) {
+						operator = SearchFilter.EQUALS;
+					} else if (SearchFilter.NOT_EQUALS.equals(filter)) {
+						operator = SearchFilter.NOT_EQUALS;
+					} else {
+						operator = SearchFilter.EQUALS;
+					}
+				}
+				if (StringUtils.isNotEmpty(alias)) {
+					buffer.append(" and ").append(alias).append(".")
+							.append(column).append(" ").append(operator)
+							.append(" #{").append("param_" + index)
+							.append("} ");
+				} else {
+					buffer.append(" and ").append(column).append(" ")
+							.append(operator).append(" #{")
+							.append("param_" + index).append("} ");
+				}
+			}
+		}
+
+		se.setSql(buffer.toString());
+		se.setParameter(params);
+
+		return se;
+	}
+
 	public static String getSelectFilter(String name) {
 		return getSelectFilter(name, true);
+	}
+
+	public static String getSelectFilter(String name, boolean isString) {
+		StringBuffer buffer = new StringBuffer();
+		buffer.append(newline).append("		 <select id=\"x_filter_").append(name)
+				.append("\" name=\"x_filter_").append(name)
+				.append("\"	class=\"span2\">");
+		buffer.append(newline).append(
+				"			<option value=\"\">----请选择----</option>");
+		buffer.append(newline).append("			<option value=\"=\">等于</option>");
+		buffer.append(newline).append("			<option value=\"!=\">不等于</option>");
+		if (!isString) {
+			buffer.append(newline).append(
+					"			<option value=\">=\">大于或等于</option>");
+			buffer.append(newline).append("			<option value=\">\">大于</option>");
+			buffer.append(newline).append(
+					"			<option value=\"<=\">小于或等于</option>");
+			buffer.append(newline).append("			<option value=\"<\">小于</option>");
+		} else {
+			buffer.append(newline).append(
+					"			<option value=\"LIKE\">包含</option>");
+			buffer.append(newline).append(
+					"			<option value=\"NOT LIKE\">不包含</option>");
+		}
+		buffer.append(newline).append("		 </select>");
+		return buffer.toString();
 	}
 
 	public static String getSQLCondition(List<String> rows, String alias,
@@ -68,32 +159,6 @@ public class QueryUtils {
 		}
 		whereBuffer.append(" ) ");
 		return whereBuffer.toString();
-	}
-
-	public static String getSelectFilter(String name, boolean isString) {
-		StringBuffer buffer = new StringBuffer();
-		buffer.append(newline).append("		 <select id=\"x_filter_").append(name)
-				.append("\" name=\"x_filter_").append(name)
-				.append("\"	class=\"span2\">");
-		buffer.append(newline).append(
-				"			<option value=\"\">----请选择----</option>");
-		buffer.append(newline).append("			<option value=\"=\">等于</option>");
-		buffer.append(newline).append("			<option value=\"!=\">不等于</option>");
-		if (!isString) {
-			buffer.append(newline).append(
-					"			<option value=\">=\">大于或等于</option>");
-			buffer.append(newline).append("			<option value=\">\">大于</option>");
-			buffer.append(newline).append(
-					"			<option value=\"<=\">小于或等于</option>");
-			buffer.append(newline).append("			<option value=\"<\">小于</option>");
-		} else {
-			buffer.append(newline).append(
-					"			<option value=\"LIKE\">包含</option>");
-			buffer.append(newline).append(
-					"			<option value=\"NOT LIKE\">不包含</option>");
-		}
-		buffer.append(newline).append("		 </select>");
-		return buffer.toString();
 	}
 
 	public static boolean isNotEmpty(Map<String, Object> paramMap, String name) {
@@ -243,6 +308,22 @@ public class QueryUtils {
 		}
 		String newString = sb.toString();
 		return newString;
+	}
+
+	public static String replaceSQLVars(String sql) {
+		sql = StringTools.replace(sql, "${now}",
+				SystemConfig.getCurrentYYYYMMDD());
+		sql = StringTools.replace(sql, "#{now}",
+				SystemConfig.getCurrentYYYYMMDD());
+		sql = StringTools.replace(sql, Constants.INPUT_YYYYMM_EXPRESSION,
+				SystemConfig.getInputYYYYMM());
+		sql = StringTools.replace(sql, Constants.INPUT_YYYYMMDD_EXPRESSION,
+				SystemConfig.getInputYYYYMMDD());
+		sql = StringTools.replace(sql, Constants.CURRENT_YYYYMM_EXPRESSION,
+				SystemConfig.getCurrentYYYYMM());
+		sql = StringTools.replace(sql, Constants.CURRENT_YYYYMMDD_EXPRESSION,
+				SystemConfig.getCurrentYYYYMMDD());
+		return sql;
 	}
 
 	public static String replaceTextParas(String str, Map<String, Object> params) {

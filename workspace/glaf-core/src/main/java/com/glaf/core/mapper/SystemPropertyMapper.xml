@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.core.mapper.SystemPropertyMapper">
+
+	<resultMap id="systemPropertyResultMap" type="com.glaf.core.domain.SystemProperty">
+		<id property="id" column="ID_" jdbcType="VARCHAR" />
+		<result property="name" column="NAME_" jdbcType="VARCHAR" />
+		<result property="title" column="TITLE_" jdbcType="VARCHAR" />
+		<result property="type" column="TYPE_" jdbcType="VARCHAR" />
+		<result property="description" column="DESCRIPTION_" jdbcType="VARCHAR" />
+		<result property="category" column="CATEGORY_" jdbcType="VARCHAR" />
+		<result property="initValue" column="INITVALUE_" jdbcType="VARCHAR" />
+		<result property="value" column="VALUE_" jdbcType="VARCHAR" />
+		<result property="locked" column="LOCKED_" jdbcType="INTEGER" />
+	</resultMap>
+
+
+	<insert id="insertSystemProperty" parameterType="com.glaf.core.domain.SystemProperty">
+		insert into
+		SYS_PROPERTY ( ID_
+		,NAME_
+		,TITLE_
+		,TYPE_
+		,DESCRIPTION_
+		,CATEGORY_
+		,INITVALUE_
+		,VALUE_
+		,LOCKED_
+		)
+		values (
+		#{id, jdbcType=VARCHAR}
+		,#{name, jdbcType=VARCHAR}
+		,#{title, jdbcType=VARCHAR}
+		,#{type, jdbcType=VARCHAR}
+		,#{description, jdbcType=VARCHAR}
+		,#{category, jdbcType=VARCHAR}
+		,#{initValue, jdbcType=VARCHAR}
+		,#{value, jdbcType=VARCHAR}
+		,#{locked, jdbcType=INTEGER}
+		)
+	</insert>
+
+
+	<update id="updateSystemProperty" parameterType="com.glaf.core.domain.SystemProperty">
+		
+		update SYS_PROPERTY
+		set
+		TITLE_ = #{title, jdbcType=VARCHAR},
+		DESCRIPTION_ = #{description, jdbcType=VARCHAR},
+		VALUE_ = #{value, jdbcType=VARCHAR}
+		where ID_ = #{id, jdbcType=VARCHAR}
+		
+	</update>
+
+
+	<delete id="deleteSystemPropertyById" parameterType="string">
+		
+		delete from SYS_PROPERTY
+		where ID_ = #{id}
+		
+	</delete>
+
+
+	<delete id="deleteSystemProperties" parameterType="com.glaf.core.query.SystemPropertyQuery">
+		delete from SYS_PROPERTY
+		where (
+		ID_ IN
+		<foreach item="x_rowId" index="index" collection="rowIds"
+			open="(" separator="," close=")">
+			#{x_rowId}
+		</foreach>
+		)
+	</delete>
+	
+
+	<select id="getSystemPropertyById" parameterType="string"
+		resultMap="systemPropertyResultMap">
+		select * from SYS_PROPERTY where ID_ = #{id}
+	</select>
+
+
+	<select id="getSystemProperties" parameterType="com.glaf.core.query.SystemPropertyQuery"
+		resultMap="systemPropertyResultMap">
+		select E.*
+		<include refid="selectSystemPropertysSql" />
+		<if test="orderBy != null">
+			order by ${orderBy}
+		</if>
+	</select>
+
+
+	<select id="getSystemPropertyCount" parameterType="com.glaf.core.query.SystemPropertyQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectSystemPropertysSql" />
+	</select>
+
+	<sql id="selectSystemPropertysSql">
+
+		from SYS_PROPERTY E
+
+		<where>
+			1 = 1
+
+			<if test="category != null">
+				and E.CATEGORY_ = #{category}
+			</if>
+			
+			<if test="name != null">
+				and E.NAME_ = #{name}
+			</if>
+
+			<if test="nameLike != null">
+				and E.NAME_ like #{nameLike}
+			</if>
+
+			<if test="names != null and names.size() &gt; 0">
+				and E.NAME_ IN
+				<foreach item="x_name" index="index" collection="names"
+					open="(" separator="," close=")">
+					#{x_name}
+				</foreach>
+			</if>
+
+			<if test="titleLike != null">
+				and E.TITLE_ like #{titleLike}
+			</if>
+
+			<if test="type != null">
+				and E.TYPE_ = #{type}
+			</if>
+
+			<if test="descriptionLike != null">
+				and E.DESCRIPTION_ like #{descriptionLike}
+			</if>
+
+		</where>
+	</sql>
+
+</mapper>

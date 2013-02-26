@@ -123,7 +123,7 @@ public class QuartzUtils {
 							startup = true;
 							logger.info(model.getTaskName() + " has scheduled.");
 							if (startup) {
-								model.setStartup(true);
+								model.setStartup(1);
 								sysSchedulerService.save(model);
 								logger.info(model.getTaskName()
 										+ " has startup.");
@@ -145,7 +145,7 @@ public class QuartzUtils {
 								logger.info(model.getTaskName()
 										+ " has rescheduled.");
 								if (startup) {
-									model.setStartup(true);
+									model.setStartup(1);
 									sysSchedulerService.save(model);
 									logger.info(model.getTaskName()
 											+ " has startup.");
@@ -182,7 +182,7 @@ public class QuartzUtils {
 							logger.debug(model.getTaskName()
 									+ " has scheduled.");
 							if (startup) {
-								model.setStartup(true);
+								model.setStartup(0);
 								getSysSchedulerService().save(model);
 								logger.info(model.getTaskName()
 										+ " has startup.");
@@ -214,7 +214,7 @@ public class QuartzUtils {
 								logger.info(model.getTaskName()
 										+ " has rescheduled.");
 								if (startup) {
-									model.setStartup(true);
+									model.setStartup(0);
 									getSysSchedulerService().save(model);
 									logger.info(model.getTaskName()
 											+ " has startup.");
@@ -278,7 +278,7 @@ public class QuartzUtils {
 			Iterator<Scheduler> iterator = list.iterator();
 			while (iterator.hasNext()) {
 				Scheduler model = iterator.next();
-				if (model.isValid() && model.isAutoStartup() ) {
+				if (model.isValid() && model.isSchedulerAutoStartup() ) {
 					try {
 						restart(model.getId());
 					} catch (Exception ex) {
@@ -310,7 +310,7 @@ public class QuartzUtils {
 							triggerGroup);
 					getQuartzScheduler().unscheduleJob(triggerKey);
 					getQuartzScheduler().pauseJob(jobKey);
-					model.setStartup(false);
+					model.setStartup(0);
 					sysSchedulerService.save(model);
 					logger.info(model.getTaskName() + " has stop.");
 				}

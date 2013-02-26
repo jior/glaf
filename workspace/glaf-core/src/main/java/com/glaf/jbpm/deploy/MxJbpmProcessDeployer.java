@@ -42,6 +42,7 @@ import org.jbpm.taskmgmt.def.Task;
 
 import com.glaf.core.config.CustomProperties;
 import com.glaf.core.config.SystemConfig;
+import com.glaf.core.config.SystemProperties;
 
 import com.glaf.core.util.Dom4jUtils;
 import com.glaf.core.util.FileUtils;
@@ -217,7 +218,7 @@ public class MxJbpmProcessDeployer {
 		}
 
 		if (StringUtils.isEmpty(className)) {
-			className = SystemConfig.getString("jbpm.action.class");
+			className = SystemProperties.getString("jbpm.action.class");
 		}
 
 		List<?> taskNodeList = root.elements("task-node");

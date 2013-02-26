@@ -20,7 +20,7 @@ package com.glaf.core.base;
 
 import java.util.*;
 
-public interface Scheduler  {
+public interface Scheduler {
 
 	String getAttribute();
 
@@ -62,15 +62,15 @@ public interface Scheduler  {
 
 	String getTitle();
 
-	boolean isAutoStartup();
+	boolean isSchedulerAutoStartup();
 
-	boolean isStartup();
+	boolean isSchedulerStartup();
 
 	boolean isValid();
 
 	void setAttribute(String attribute);
 
-	void setAutoStartup(boolean autoStartup);
+	void setAutoStartup(int autoStartup);
 
 	void setContent(String content);
 
@@ -100,7 +100,7 @@ public interface Scheduler  {
 
 	void setStartDelay(int startDelay);
 
-	void setStartup(boolean startup);
+	void setStartup(int startup);
 
 	void setTaskId(String taskId);
 

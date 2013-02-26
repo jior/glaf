@@ -237,14 +237,14 @@ public class SchedulerEntity implements Serializable, Scheduler {
 		return result;
 	}
 
-	public boolean isAutoStartup() {
+	public boolean isSchedulerAutoStartup() {
 		if (autoStartup == 1) {
 			return true;
 		}
 		return false;
 	}
 
-	public boolean isStartup() {
+	public boolean isSchedulerStartup() {
 		if (startup == 1) {
 			return true;
 		}

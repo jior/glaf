@@ -91,7 +91,7 @@
 	<classpathentry kind="lib" path="/glaf-core/lib/servlet-api.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/spring-aop.RELEASE.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/spring-aspects.RELEASE.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/spring-beans.RELEASE.jar" sourcepath="E:/dev/java/src/org.springframework.beans-sources-3.0.6.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/spring-beans.RELEASE.jar" />
 	<classpathentry kind="lib" path="/glaf-core/lib/spring-context-support.RELEASE.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/spring-context.RELEASE.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/spring-core.RELEASE.jar"/>

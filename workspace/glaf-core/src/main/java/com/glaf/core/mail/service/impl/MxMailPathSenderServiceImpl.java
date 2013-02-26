@@ -154,12 +154,12 @@ public class MxMailPathSenderServiceImpl implements IMailPathSenderService {
 					+ DateUtils.DAY * 3600));
 			if (StringUtils.equals(mailTask.getEnableFlag(), "1")) {
 				scheduler.setLocked(0);
-				scheduler.setAutoStartup(true);
-				scheduler.setStartup(true);
+				scheduler.setAutoStartup(1);
+				scheduler.setStartup(1);
 			} else {
 				scheduler.setLocked(1);
-				scheduler.setAutoStartup(false);
-				scheduler.setStartup(false);
+				scheduler.setAutoStartup(0);
+				scheduler.setStartup(0);
 			}
 			if (insert) {
 				sysSchedulerService.save(scheduler);

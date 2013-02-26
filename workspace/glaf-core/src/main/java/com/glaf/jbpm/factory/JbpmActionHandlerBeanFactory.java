@@ -24,7 +24,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.glaf.core.config.CustomProperties;
-import com.glaf.core.config.SystemConfig;
+import com.glaf.core.config.SystemProperties;
 
 public class JbpmActionHandlerBeanFactory {
 	protected static final Log logger = LogFactory
@@ -37,7 +37,7 @@ public class JbpmActionHandlerBeanFactory {
 			String configLocation = CustomProperties
 					.getString("jbpm.actions.context");
 			if (StringUtils.isEmpty(configLocation)) {
-				configLocation = SystemConfig.getString("jbpm.actions.context");
+				configLocation = SystemProperties.getString("jbpm.actions.context");
 			}
 			if (StringUtils.isEmpty(configLocation)) {
 				configLocation = DEFAULT_CONFIG;
