@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
-<%@ taglib uri="http://www.glaf.com/tags" prefix="glaf"%>
+<%@ taglib uri="http://github.com/jior/glaf/tags" prefix="glaf"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="html"%>
 <%
     String context = request.getContextPath();

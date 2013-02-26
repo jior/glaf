@@ -8,7 +8,7 @@
   <display-name>glaf core</display-name>
   <tlib-version>1.1</tlib-version>
   <short-name>glaf</short-name>
-  <uri>http://www.glaf.com/tags</uri>
+  <uri>http://github.com/jior/glaf/tags</uri>
 
 
   	<!-- PROCESS IMAGE -->

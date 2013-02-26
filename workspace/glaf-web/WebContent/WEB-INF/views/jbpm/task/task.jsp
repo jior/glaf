@@ -14,7 +14,7 @@
 <%@ page import="com.glaf.jbpm.container.*"%>
 <%@ page import="com.glaf.jbpm.datafield.*"%>
 <%@ page import="org.apache.commons.lang.StringUtils"%>
-<%@ taglib uri="http://www.glaf.com/tags" prefix="glaf"%>
+<%@ taglib uri="http://github.com/jior/glaf/tags" prefix="glaf"%>
 <%
   
  	Map variables = (Map) request.getAttribute("variables");
