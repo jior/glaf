@@ -18,61 +18,20 @@
 
 package com.glaf.core.dao;
 
-import java.math.BigDecimal;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.hibernate.Criteria;
-import org.hibernate.HibernateException;
-import org.hibernate.Query;
-import org.hibernate.SQLQuery;
-import org.hibernate.Session;
-import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Projection;
-import org.hibernate.criterion.Projections;
-import org.hibernate.impl.CriteriaImpl;
 import org.hibernate.type.Type;
 
-import org.springframework.orm.hibernate3.HibernateCallback;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
-
-import com.glaf.core.util.DateUtils;
 import com.glaf.core.util.PageResult;
-import com.glaf.core.util.ReflectUtils;
 
 /**
- * 抽象Dao类，实现CRUD基本方法
- * 
+ * DAO接口，封装CRUD基本方法
  * 
  */
-public class PersistenceDAO extends HibernateDaoSupport {
-	private static final Log logger = LogFactory.getLog(PersistenceDAO.class);
-
-	public static void main(String args[]) {
-		String query = "SELECT COUNT(B.ID) FROM PAYMENT AS B RIGHT JOIN B.ORDER AS A WHERE B.STATUS <> -999 AND (A.CONTRACT.ID IS NULL OR A.CONTRACT.ID = 0) AND A.STATUS NOT IN (0,10,20,-1,80) ORDER BY A.ID";
-		logger.debug("query.toUpperCase() " + query.toUpperCase());
-		int position = query.toUpperCase().indexOf("ORDER BY");
-		if (-1 != position) {
-			logger.debug("str.length = " + query.length()
-					+ "  indexof(ORDER BY)="
-					+ query.toUpperCase().indexOf("ORDER BY"));
-			query = query.substring(0, position);
-		}
-		logger.debug("getResutlTotalByQuery  query:" + query);
-	}
-
-	public PersistenceDAO() {
-		logger.info("PersistenceDAO init");
-	}
+public interface PersistenceDAO {
 
 	/**
 	 * 保存
@@ -81,17 +40,7 @@ public class PersistenceDAO extends HibernateDaoSupport {
 	 *            Object
 	 * @return boolean
 	 */
-	public boolean create(Object obj) {
-		boolean ret = false;
-		try {
-			getHibernateTemplate().save(obj);
-			logger.debug("create");
-			ret = true;
-		} catch (Exception e) {
-			logger.error(e);
-		}
-		return ret;
-	}
+	boolean create(Object obj);
 
 	/**
 	 * 删除
@@ -100,36 +49,14 @@ public class PersistenceDAO extends HibernateDaoSupport {
 	 *            Object
 	 * @return boolean
 	 */
-	public boolean delete(Object obj) {
-		boolean ret = false;
-		try {
-			getHibernateTemplate().delete(obj);
-			logger.debug("delete");
-			ret = true;
-		} catch (Exception e) {
-			logger.error(e);
-		}
-		return ret;
-	}
+	boolean delete(Object obj);
 
 	/**
 	 * 批量删除
 	 * 
 	 * @param c
 	 */
-	public boolean deleteAll(Collection<?> c) {
-		boolean ret = false;
-		try {
-			if (c != null) {
-				getHibernateTemplate().deleteAll(c);
-			}
-			logger.debug("deleteAll");
-			ret = true;
-		} catch (Exception e) {
-			logger.error(e);
-		}
-		return ret;
-	}
+	boolean deleteAll(Collection<?> c);
 
 	/**
 	 * 执行批量操作，如delete、update
@@ -137,18 +64,7 @@ public class PersistenceDAO extends HibernateDaoSupport {
 	 * @param hsql
 	 *            hsql语句
 	 */
-	public boolean execute(final String hsql) {
-		boolean ret = true;
-		getHibernateTemplate().execute(new HibernateCallback<Object>() {
-			public Object doInHibernate(Session session)
-					throws HibernateException, SQLException {
-				logger.debug("execute HQL: " + hsql);
-				session.createQuery(hsql).executeUpdate();
-				return null;
-			}
-		});
-		return ret;
-	}
+	boolean execute(final String hsql);
 
 	/**
 	 * 执行批量操作，如delete、update
@@ -156,20 +72,7 @@ public class PersistenceDAO extends HibernateDaoSupport {
 	 * @param hsql
 	 *            hsql语句
 	 */
-	public boolean execute(final String hsql, final Object[] values,
-			final Type[] types) {
-		boolean ret = true;
-		getHibernateTemplate().execute(new HibernateCallback<Object>() {
-			public Object doInHibernate(Session session)
-					throws HibernateException, SQLException {
-				logger.debug("execute HQL: " + hsql);
-				session.createQuery(hsql).setParameters(values, types)
-						.executeUpdate();
-				return null;
-			}
-		});
-		return ret;
-	}
+	boolean execute(final String hsql, final Object[] values, final Type[] types);
 
 	/**
 	 * 执行sql语句
@@ -177,68 +80,15 @@ public class PersistenceDAO extends HibernateDaoSupport {
 	 * @param sql
 	 * @return
 	 */
-	public boolean executeSQL(final String sql) {
-		boolean ret = true;
-		getHibernateTemplate().execute(new HibernateCallback<Object>() {
-			public Object doInHibernate(Session session)
-					throws HibernateException, SQLException {
-				logger.debug("execute sql: " + sql);
-				session.createSQLQuery(sql).executeUpdate();
-				return null;
-			}
-		});
-		return ret;
-	}
+	boolean executeSQL(final String sql);
 
-	public boolean executeSQL(final String sql, final List<Object> values) {
-		boolean ret = true;
-		getHibernateTemplate().execute(new HibernateCallback<Object>() {
-			public Object doInHibernate(Session session)
-					throws HibernateException, SQLException {
-				logger.debug("execute SQL: " + sql);
-				SQLQuery query = session.createSQLQuery(sql);
-				if (values != null && values.size() > 0) {
-					for(int i=0;i<values.size();i++){
-						Object object = values.get(i);
-						query.setParameter(i, object);
-					}
-				}
-				query.executeUpdate();
-				return null;
-			}
-		});
-		return ret;
-	}
-
-	public void fillStatement(PreparedStatement stmt, List<Object> params)
-			throws SQLException {
-		if (params == null || params.size() == 0) {
-			return;
-		}
-		for (int i = 0; i < params.size(); i++) {
-			Object obj = params.get(i);
-			if (obj != null) {
-				if (obj instanceof java.sql.Date) {
-					java.sql.Date sqlDate = (java.sql.Date) obj;
-					stmt.setDate(i + 1, sqlDate);
-				} else if (obj instanceof java.sql.Time) {
-					java.sql.Time sqlTime = (java.sql.Time) obj;
-					stmt.setTime(i + 1, sqlTime);
-				} else if (obj instanceof java.sql.Timestamp) {
-					Timestamp datetime = (Timestamp) obj;
-					stmt.setTimestamp(i + 1, datetime);
-				} else if (obj instanceof java.util.Date) {
-					Timestamp datetime = DateUtils
-							.toTimestamp((java.util.Date) obj);
-					stmt.setTimestamp(i + 1, datetime);
-				} else {
-					stmt.setObject(i + 1, obj);
-				}
-			} else {
-				stmt.setString(i + 1, null);
-			}
-		}
-	}
+	/**
+	 * 执行sql语句
+	 * @param sql
+	 * @param values
+	 * @return
+	 */
+	boolean executeSQL(final String sql, final List<Object> values);
 
 	/**
 	 * 查询
@@ -249,16 +99,7 @@ public class PersistenceDAO extends HibernateDaoSupport {
 	 *            Long
 	 * @return Object
 	 */
-	public Object find(Class<?> clazz, Long id) {
-		Object ret = null;
-		try {
-			ret = getHibernateTemplate().get(clazz, id);
-			logger.debug("find");
-		} catch (Exception e) {
-			logger.error(e);
-		}
-		return ret;
-	}
+	Object find(Class<?> clazz, Long id);
 
 	/**
 	 * 根据sql拿记录数
@@ -266,59 +107,17 @@ public class PersistenceDAO extends HibernateDaoSupport {
 	 * @param sql
 	 * @return
 	 */
-	public double getCountBySQL(String sql) {
-		double count = 0;
-		Session session = null;
-		try {
-			getHibernateTemplate().setAllowCreate(true);
-			session = getSession();
-			Query q = session.createSQLQuery(sql);
-			if (q.uniqueResult() != null) {
-				count = ((java.lang.Number) q.uniqueResult()).doubleValue();
-			}
-		} catch (HibernateException e) {
-			logger.error(e);
-		} finally {
-			if (session != null) {
-				releaseSession(session);
-			}
-		}
-		return count;
-	}
+	double getCountBySQL(String sql);
 
-	public double getDoubleBySQL(String sql) {
-		Session session = null;
-		double dd = 0;
-		try {
-			getHibernateTemplate().setAllowCreate(true);
-			session = getSession();
-			if (((BigDecimal) session.createSQLQuery(sql).uniqueResult()) != null)
-				dd = ((BigDecimal) session.createSQLQuery(sql).uniqueResult())
-						.doubleValue();
-
-		} catch (Exception e) {
-			logger.error(e);
-		}
-
-		return dd;
-	}
+	
+	double getDoubleBySQL(String sql);
 
 	/**
 	 * 
 	 * @param detachedCriteria
 	 * @return
 	 */
-	public List<?> getList(final DetachedCriteria detachedCriteria) {
-		return (List<?>) getHibernateTemplate().execute(
-				new HibernateCallback<Object>() {
-					public Object doInHibernate(Session session)
-							throws HibernateException {
-						Criteria criteria = detachedCriteria
-								.getExecutableCriteria(session);
-						return criteria.list();
-					}
-				});
-	}
+	List<?> getList(final DetachedCriteria detachedCriteria);
 
 	/**
 	 * 
@@ -327,88 +126,16 @@ public class PersistenceDAO extends HibernateDaoSupport {
 	 * @param pageSize
 	 * @return
 	 */
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public PageResult getList(final DetachedCriteria detachedCriteria,
-			final int pageNo, final int pageSize) {
-		PageResult pager = new PageResult();
+	PageResult getList(final DetachedCriteria detachedCriteria,
+			final int pageNo, final int pageSize);
 
-		Criteria criteria = (Criteria) getHibernateTemplate().execute(
-				new HibernateCallback<Object>() {
-					public Object doInHibernate(Session session)
-							throws HibernateException, SQLException {
-						Criteria criteria = detachedCriteria
-								.getExecutableCriteria(session);
-						return criteria;
-					}
-				});
-		CriteriaImpl impl = (CriteriaImpl) criteria;
-
-		Projection projection = impl.getProjection();
-
-		List<?> orderEntries = null;
-		try {
-			orderEntries = (List<?>) ReflectUtils.getFieldValue(impl,
-					"orderEntries");
-			ReflectUtils.setFieldValue(impl, "orderEntries",
-					new ArrayList<Object>());
-		} catch (Exception ex) {
-			throw new RuntimeException(ex);
-		}
-
-		Long iCount = (Long) criteria.setProjection(Projections.rowCount())
-				.uniqueResult();
-		int totalCount = ((iCount != null) ? iCount.intValue() : 0);
-		pager.setTotalRecordCount(totalCount);// 查询总记录数
-		criteria.setProjection(projection);
-		if (projection == null) {
-			criteria.setResultTransformer(CriteriaSpecification.ROOT_ENTITY);
-		}
-
-		try {
-			List innerOrderEntries = (List) ReflectUtils.getFieldValue(impl,
-					"orderEntries");
-			Iterator it = orderEntries.iterator();
-			while (it.hasNext()) {
-				innerOrderEntries.add(it.next());
-			}
-		} catch (Exception ex) {
-			throw new RuntimeException(ex);
-		}
-
-		criteria.setFirstResult(pageSize * (pageNo - 1));
-		criteria.setMaxResults(pageSize);
-		pager.setPageSize(pageSize);
-		pager.setCurrentPageNo(pageNo);
-		pager.setResults(criteria.list());
-		return pager;
-	}
-
-	public List<?> getList(final String sql, final Map<String, Object> params) {
-		return (List<?>) getHibernateTemplate().execute(
-				new HibernateCallback<Object>() {
-					public Object doInHibernate(Session session)
-							throws HibernateException {
-						Query query = session.createQuery(sql);
-						if (params != null && params.size() > 0) {
-							Iterator<?> iterator = params.keySet().iterator();
-							while (iterator.hasNext()) {
-								String name = (String) iterator.next();
-								Object value = params.get(name);
-								if (value != null) {
-									if (value instanceof Collection) {
-										query.setParameterList(name,
-												(Collection<?>) value);
-									} else {
-										query.setParameter(name, value);
-									}
-								}
-							}
-						}
-						List<?> rows = query.list();
-						return rows;
-					}
-				});
-	}
+	/**
+	 * 
+	 * @param sql
+	 * @param params
+	 * @return
+	 */
+	List<?> getList(final String sql, final Map<String, Object> params);
 
 	/**
 	 * 获取分页列表
@@ -425,37 +152,8 @@ public class PersistenceDAO extends HibernateDaoSupport {
 	 *            int
 	 * @return PageResult
 	 */
-	public PageResult getList(String query, Object args[], int pageNo,
-			int pageSize, int count) {
-		logger.debug("query:" + query);
-		PageResult pager = new PageResult();
-		pager.setPageSize(pageSize);
-		pager.setCurrentPageNo(pageNo);
-		Session session = null;
-		try {
-			getHibernateTemplate().setAllowCreate(true);
-			session = getSession();
-			Query q = session.createQuery(query);
-
-			if (args != null && args.length > 0) {// 设置参数
-				for (int i = 0; i < args.length; i++)
-					q.setParameter(i, args[i]);
-			}
-			pager.setTotalRecordCount(count);// 查询总记录数
-			q.setFirstResult(pageSize * (pager.getCurrentPageNo() - 1));
-			q.setMaxResults(pageSize);
-			pager.setResults(q.list());
-
-			q = null;
-		} catch (HibernateException e) {
-			logger.error(e);
-		} finally {
-			if (session != null) {
-				releaseSession(session);
-			}
-		}
-		return pager;
-	}
+	PageResult getList(String query, Object args[], int pageNo, int pageSize,
+			int count);
 
 	/**
 	 * 获取列表
@@ -468,16 +166,7 @@ public class PersistenceDAO extends HibernateDaoSupport {
 	 *            Type[]
 	 * @return List
 	 */
-	public List<?> getList(String query, Object[] values, Type[] types) {
-		logger.debug("query:" + query);
-		List<?> list = null;
-		try {
-			list = getHibernateTemplate().find(query, values);
-		} catch (Exception ex) {
-			logger.error(ex);
-		}
-		return list;
-	}
+	List<?> getList(String query, Object[] values, Type[] types);
 
 	/**
 	 * 执行sql语句
@@ -485,16 +174,7 @@ public class PersistenceDAO extends HibernateDaoSupport {
 	 * @param sql
 	 * @return
 	 */
-	public List<?> getListBySQL(final String sql) {
-		return (List<?>) getHibernateTemplate().execute(
-				new HibernateCallback<Object>() {
-					public Object doInHibernate(Session session)
-							throws HibernateException, SQLException {
-						logger.debug("execute sql: " + sql);
-						return session.createSQLQuery(sql).list();
-					}
-				});
-	}
+	List<?> getListBySQL(final String sql);
 
 	/**
 	 * 获取分页列表
@@ -509,31 +189,7 @@ public class PersistenceDAO extends HibernateDaoSupport {
 	 *            int
 	 * @return PageResult
 	 */
-	public PageResult getListBySQL(String query, int pageNo, int pageSize,
-			int count) {
-		logger.debug("query:" + query);
-		PageResult pager = new PageResult();
-		pager.setPageSize(pageSize);
-		pager.setCurrentPageNo(pageNo);
-		Session session = null;
-		try {
-			getHibernateTemplate().setAllowCreate(true);
-			session = getSession();
-			Query q = session.createSQLQuery(query);
-			pager.setTotalRecordCount(count);// 查询总记录数
-			q.setFirstResult(pageSize * (pager.getCurrentPageNo() - 1));
-			q.setMaxResults(pageSize);
-			pager.setResults(q.list());
-			q = null;
-		} catch (HibernateException e) {
-			logger.error(e);
-		} finally {
-			if (session != null) {
-				releaseSession(session);
-			}
-		}
-		return pager;
-	}
+	PageResult getListBySQL(String query, int pageNo, int pageSize, int count);
 
 	/**
 	 * 立即加载一个对象
@@ -542,16 +198,7 @@ public class PersistenceDAO extends HibernateDaoSupport {
 	 * @param id
 	 * @return
 	 */
-	public Object getObject(Class<?> clazz, Long id) {
-		Object ret = null;
-		try {
-			ret = getHibernateTemplate().get(clazz, id);
-			logger.debug("get");
-		} catch (Exception e) {
-			logger.error(e);
-		}
-		return ret;
-	}
+	Object getObject(Class<?> clazz, Long id);
 
 	/**
 	 * 由Query 得到列表记录的总记录数。
@@ -561,31 +208,7 @@ public class PersistenceDAO extends HibernateDaoSupport {
 	 * @param types
 	 * @return
 	 */
-	public int getResutlTotalByQuery(String query, Object[] values, Type[] types) {
-		int total = 0;
-		Session session = null;
-		logger.debug("getResutlTotalByQuery  query:" + query);
-		int position = query.toUpperCase().indexOf("ORDER BY");
-		if (-1 != position)
-			query = query.substring(0, position);
-		try {
-			getHibernateTemplate().setAllowCreate(true);
-			session = getSession();
-			Query q = session.createQuery(query);
-			if (values != null && values.length > 0) {// 设置参数
-				for (int i = 0; i < values.length; i++)
-					q.setParameter(i, values[i]);
-			}
-			total = ((java.lang.Number) q.uniqueResult()).intValue();
-		} catch (HibernateException e) {
-			logger.error(e);
-		} finally {
-			if (session != null) {
-				releaseSession(session);
-			}
-		}
-		return total;
-	}
+	int getResutlTotalByQuery(String query, Object[] values, Type[] types);
 
 	/**
 	 * 根据sql拿指定字段的值
@@ -593,56 +216,11 @@ public class PersistenceDAO extends HibernateDaoSupport {
 	 * @param sql
 	 * @return
 	 */
-	public String getStringBySQL(String sql) {
-		String str = "";
-		Session session = null;
-		try {
-			getHibernateTemplate().setAllowCreate(true);
-			session = getSession();
-			Query q = session.createSQLQuery(sql);
-			List<?> list = q.list();
-			if (list != null && list.size() > 0) {
-				str = (String) list.get(0);
-			}
+	String getStringBySQL(String sql);
 
-		} catch (HibernateException e) {
-			logger.error(e);
-		} finally {
-			if (session != null) {
-				releaseSession(session);
-			}
-		}
-		return str;
-	}
+	Object load(Class<?> clazz, Long id);
 
-	public Object load(Class<?> clazz, Long id) {
-		Object ret = null;
-		try {
-			ret = getHibernateTemplate().load(clazz, id);
-			logger.debug("load");
-		} catch (Exception e) {
-			logger.error(e);
-		}
-		return ret;
-	}
-
-	public boolean saveAll(java.util.Collection<?> rows) {
-		boolean ret = false;
-		try {
-			if (rows != null && rows.size() > 0) {
-				Iterator<?> iterator = rows.iterator();
-				while (iterator.hasNext()) {
-					Object obj = iterator.next();
-					getHibernateTemplate().saveOrUpdate(obj);
-				}
-			}
-			logger.debug("saveAll");
-			ret = true;
-		} catch (Exception e) {
-			logger.error(e);
-		}
-		return ret;
-	}
+	boolean saveAll(java.util.Collection<?> rows);
 
 	/**
 	 * 保存或更新
@@ -651,17 +229,7 @@ public class PersistenceDAO extends HibernateDaoSupport {
 	 *            Object
 	 * @return boolean
 	 */
-	public boolean saveOrUpdate(Object obj) {
-		boolean ret = false;
-		try {
-			getHibernateTemplate().saveOrUpdate(obj);
-			logger.debug("saveOrUpdate");
-			ret = true;
-		} catch (Exception e) {
-			logger.error(e);
-		}
-		return ret;
-	}
+	boolean saveOrUpdate(Object obj);
 
 	/**
 	 * 保存
@@ -670,16 +238,6 @@ public class PersistenceDAO extends HibernateDaoSupport {
 	 *            Object
 	 * @return boolean
 	 */
-	public boolean update(Object obj) {
-		boolean ret = false;
-		try {
-			getHibernateTemplate().merge(obj);
-			logger.debug("update");
-			ret = true;
-		} catch (Exception e) {
-			logger.error(e);
-		}
-		return ret;
-	}
+	boolean update(Object obj);
 
 }
