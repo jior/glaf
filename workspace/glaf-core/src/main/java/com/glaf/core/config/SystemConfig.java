@@ -1,20 +1,20 @@
 /*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.glaf.core.config;
 
@@ -47,8 +47,8 @@ public class SystemConfig {
 
 	public final static String NOW = "${now}";
 
-	static {
-		 
+	public static String getConfigRootPath() {
+		return SystemProperties.getConfigRootPath();
 	}
 
 	public static Map<String, Object> getContextMap() {
@@ -68,7 +68,7 @@ public class SystemConfig {
 	}
 
 	public static String getCurrentYYYYMM() {
-		String value = getProperty("curr_yyyymm");
+		String value = getString("curr_yyyymm");
 		if (StringUtils.isEmpty(value)) {
 			Date now = new Date();
 			value = String.valueOf(DateUtils.getYearMonth(now));
@@ -77,20 +77,16 @@ public class SystemConfig {
 	}
 
 	public static String getCurrentYYYYMMDD() {
-		String value = getProperty("curr_yyyymmdd");
+		String value = getString("curr_yyyymmdd");
 		if (StringUtils.isEmpty(value)) {
 			Date now = new Date();
 			value = String.valueOf(DateUtils.getYearMonthDay(now));
 		}
 		return value;
 	}
-	
-	public static String getConfigRootPath(){
-		return SystemProperties.getConfigRootPath();
-	}
 
 	public static String getDataPath() {
-		String dataDir = getProperty("dataDir");
+		String dataDir = getString("dataDir");
 		if (StringUtils.isEmpty(dataDir)) {
 			dataDir = SystemProperties.getConfigRootPath() + "/report/data";
 		}
@@ -98,7 +94,7 @@ public class SystemConfig {
 	}
 
 	public static String getInputYYYYMM() {
-		String value = getProperty("input_yyyymm");
+		String value = getString("input_yyyymm");
 		if (StringUtils.isEmpty(value)) {
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(new Date());
@@ -129,7 +125,7 @@ public class SystemConfig {
 	}
 
 	public static String getInputYYYYMMDD() {
-		String value = getProperty("input_yyyymmdd");
+		String value = getString("input_yyyymmdd");
 		if (StringUtils.isEmpty(value)) {
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(new Date());
@@ -177,8 +173,30 @@ public class SystemConfig {
 		return properties;
 	}
 
-	public static String getProperty(String key) {
+	public static SystemProperty getProperty(String key) {
+		if (properties.isEmpty()) {
+			reload();
+		}
+		SystemProperty prop = properties.get(key);
+		if (prop != null) {
+
+		}
+		return prop;
+	}
+
+	public static String getReportSavePath() {
+		String value = getString("report_save_path");
+		if (StringUtils.isEmpty(value)) {
+			value = SystemProperties.getConfigRootPath() + "/report";
+		}
+		return value;
+	}
+
+	public static String getString(String key) {
 		String ret = null;
+		if (properties.isEmpty()) {
+			reload();
+		}
 		SystemProperty prop = properties.get(key);
 		if (prop != null) {
 			String value = prop.getValue();
@@ -198,14 +216,6 @@ public class SystemConfig {
 			}
 		}
 		return ret;
-	}
-
-	public static String getReportSavePath() {
-		String value = getProperty("report_save_path");
-		if (StringUtils.isEmpty(value)) {
-			value = SystemProperties.getConfigRootPath() + "/report";
-		}
-		return value;
 	}
 
 	public static void main(String[] args) {
