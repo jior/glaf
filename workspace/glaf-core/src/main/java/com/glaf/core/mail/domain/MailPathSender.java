@@ -31,7 +31,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.glaf.core.util.DateUtils;
 
 @Entity
-@Table(name = "MX_MAIL_PATH_SENDER")
+@Table(name = "SYS_MAIL_PATH_SENDER")
 public class MailPathSender implements Serializable {
 	private static final long serialVersionUID = 1L;
 

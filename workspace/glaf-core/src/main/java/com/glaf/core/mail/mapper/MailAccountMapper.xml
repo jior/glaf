@@ -27,7 +27,7 @@
 
 	<insert id="insertMailAccount" parameterType="com.glaf.core.mail.domain.MailAccount">
 		insert into
-		MX_MAIL_ACCOUNT ( ID_
+		SYS_MAIL_ACCOUNT ( ID_
 		,ACCOUNTTYPE_
 		,MAILADDRESS_
 		,SHOWNAME_
@@ -82,7 +82,7 @@
 
 	<update id="updateMailAccount" parameterType="com.glaf.core.mail.domain.MailAccount">
 		update
-		MX_MAIL_ACCOUNT
+		SYS_MAIL_ACCOUNT
 		set
 		ACCOUNTTYPE_ = #{accountType, jdbcType=VARCHAR},
 		MAILADDRESS_ =
@@ -111,12 +111,12 @@
 
 	<delete id="deleteMailAccountById" parameterType="string">
 		delete from
-		MX_MAIL_ACCOUNT
+		SYS_MAIL_ACCOUNT
 		where ID_ = #{id}
 	</delete>
 
 	<delete id="deleteMailAccounts" parameterType="com.glaf.core.mail.query.MailAccountQuery">
-		delete from MX_MAIL_ACCOUNT
+		delete from SYS_MAIL_ACCOUNT
 		where (
 		ID_ IN
 		<foreach item="x_rowId" index="index" collection="rowIds"
@@ -128,14 +128,14 @@
 
 	<select id="getMailAccountById" parameterType="string"
 		resultMap="mailAccountResultMap">
-		select * from MX_MAIL_ACCOUNT where ID_ = #{id}
+		select * from SYS_MAIL_ACCOUNT where ID_ = #{id}
 	</select>
 
 	<select id="getMailAccountsByTaskId" parameterType="string"
 		resultMap="mailAccountResultMap">
 		
-		select E.* from MX_MAIL_ACCOUNT E 
-		inner join MX_MAIL_TASK_ACCOUNT T
+		select E.* from SYS_MAIL_ACCOUNT E 
+		inner join SYS_MAIL_TASK_ACCOUNT T
 		on E.ID_ = T.ACCOUNTID_
 		WHERE T.TASKID_ = #{taskId}
         
@@ -159,7 +159,7 @@
 
 	<sql id="selectMailAccountsSql">
 
-		from MX_MAIL_ACCOUNT E
+		from SYS_MAIL_ACCOUNT E
 
 		<where>
 			1 = 1

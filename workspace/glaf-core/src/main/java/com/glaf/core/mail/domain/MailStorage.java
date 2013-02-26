@@ -31,7 +31,7 @@ import org.apache.commons.lang.builder.ToStringStyle;
 import com.glaf.core.util.DateUtils;
 
 @Entity
-@Table(name = "MX_MAIL_STORAGE")
+@Table(name = "SYS_MAIL_STORAGE")
 @XmlRootElement
 public class MailStorage implements Serializable {
 

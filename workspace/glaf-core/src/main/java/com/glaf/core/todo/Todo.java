@@ -17,11 +17,7 @@
  */
 
 package com.glaf.core.todo;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+ 
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
@@ -29,9 +25,7 @@ import org.apache.commons.lang.builder.ToStringStyle;
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-
-@Entity
-@Table(name = "MX_TODO")
+ 
 public class Todo implements java.io.Serializable, Comparable<Todo> {
 
 	private static final long serialVersionUID = 1L;
@@ -39,137 +33,112 @@ public class Todo implements java.io.Serializable, Comparable<Todo> {
 	/**
 	 * 主键
 	 */
-	@Id
-	@Column(name = "ID_", length = 50, nullable = false)
 	protected String id;
 
 	/**
 	 * 代码
 	 */
-	@Column(name = "CODE_", length = 50)
 	protected String code;
 
 	/**
 	 * 模块编号
 	 */
-	@Column(name = "MODULEID_", length = 50)
 	protected String moduleId;
 
 	/**
 	 * 模块名称
 	 */
-	@Column(name = "MODULENAME_", length = 50)
 	protected String moduleName;
 
 	/**
 	 * 角色编号
 	 */
-	@Column(name = "ROLEID_", length = 50)
 	protected String roleId;
 
 	/**
 	 * 角色名称
 	 */
-	@Column(name = "ROLENAME_", length = 50)
 	protected String roleName;
 
 	/**
 	 * 期限
 	 */
-	@Column(name = "LIMITDAY_")
 	protected double limitDay;
 
 	/**
 	 * a 小时
 	 */
-	@Column(name = "XA_")
 	protected int xa;
 
 	/**
 	 * 小时
 	 */
-	@Column(name = "XB_")
 	protected int xb;
 
 	/**
 	 * 标题
 	 */
-	@Column(name = "TITLE_")
 	protected String title;
 
 	/**
 	 * 内容
 	 */
-	@Column(name = "CONTENT_")
 	protected String content;
 
 	/**
 	 * 链接地址
 	 */
-	@Column(name = "LINK_")
 	protected String link;
 
 	/**
 	 * 列表链接地址
 	 */
-	@Column(name = "LISTLINK_")
 	protected String listLink;
 
 	/**
 	 * 全部数据的链接地址
 	 */
-	@Column(name = "ALLLISTLINK_")
 	protected String allListLink;
 
 	/**
 	 * 链接类别
 	 */
-	@Column(name = "LINKTYPE_", length = 50)
 	protected String linkType;
 
 	/**
 	 * 流程名称
 	 */
-	@Column(name = "PROCESSNAME_", length = 50)
 	protected String processName;
 
 	/**
 	 * 任务名称
 	 */
-	@Column(name = "TASKNAME_", length = 50)
 	protected String taskName;
 
 	/**
 	 * TODO提供者
 	 */
-	@Column(name = "PROVIDER_", length = 50)
 	protected String provider;
 
 	/**
 	 * 对象编号
 	 */
-	@Column(name = "OBJECTID_")
 	protected String objectId;
 
 	/**
 	 * 对象值
 	 */
-	@Column(name = "OBJECTVALUE_")
 	protected String objectValue;
 
 	/**
 	 * 是否启用。0－启用、1－禁用
 	 */
-	@Column(name = "LOCKED_")
 	protected int locked;
 
-	@Column(name = "CONFIGFLAG_")
 	protected int configFlag;
 
-	@Column(name = "SORTNO_")
 	protected int sortNo;
 
-	@Column(name = "VERSIONNO_")
 	protected long versionNo;
 
 	public Todo() {

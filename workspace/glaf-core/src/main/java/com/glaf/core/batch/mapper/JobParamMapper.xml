@@ -18,7 +18,7 @@
 
  
 	<insert id="insertJobParam" parameterType="com.glaf.core.batch.domain.JobParam">
-		insert into MX_JOB_PARAMS 
+		insert into SYS_JOB_PARAMS 
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			id, job_instance_id , type_cd, key_name 
 			<if test="stringVal != null">
@@ -63,13 +63,13 @@
 
  
 	<delete id="deleteJobParamsByJobInstanceId" parameterType="int"> 
-        delete from MX_JOB_PARAMS
+        delete from SYS_JOB_PARAMS
         where job_instance_id = #{jobInstanceId}
 	</delete>
 
 
 	<select id="getJobParamsByJobInstanceId" parameterType="int" resultMap="jobParamResultMap">
-		select * from MX_JOB_PARAMS 
+		select * from SYS_JOB_PARAMS 
 		where job_instance_id = #{jobInstanceId}
 	</select>
 

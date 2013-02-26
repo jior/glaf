@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.dts.mapper.TransformStepMapper">
+
+	<resultMap id="transformStepResultMap" type="com.glaf.dts.domain.TransformStep">
+		<id property="id" column="ID_" jdbcType="VARCHAR" />
+		<result property="activityId" column="ACTIVITYID_" jdbcType="VARCHAR" />
+		<result property="queryId" column="QUERYID_" jdbcType="VARCHAR" />
+		<result property="title" column="TITLE_" jdbcType="VARCHAR" />
+		<result property="description" column="DESCRIPTION_" jdbcType="VARCHAR" />
+		<result property="priority" column="PRIORITY_" jdbcType="INTEGER" />
+		<result property="createTime" column="CREATETIME_" jdbcType="TIMESTAMP" />
+		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR" />
+		<result property="locked" column="LOCKED_" jdbcType="INTEGER" />
+		<result property="revision" column="REVISION_" jdbcType="INTEGER" />
+	</resultMap>
+
+
+	<insert id="insertTransformStep" parameterType="com.glaf.dts.domain.TransformStep">
+		insert into
+		SYS_DTS_STEP ( ID_
+		,ACTIVITYID_
+		,QUERYID_
+		,TITLE_
+		,DESCRIPTION_
+		,PRIORITY_
+		,CREATETIME_
+		,CREATEBY_
+		,LOCKED_
+		,REVISION_
+		)
+		values (
+		#{id, jdbcType=VARCHAR}
+
+		,#{activityId, jdbcType=VARCHAR}
+		,#{queryId, jdbcType=VARCHAR}
+		,#{title, jdbcType=VARCHAR}
+		,#{description, jdbcType=VARCHAR}
+		,#{priority, jdbcType=INTEGER}
+		,#{createTime, jdbcType=TIMESTAMP}
+		,#{createBy, jdbcType=VARCHAR}
+		,#{locked, jdbcType=INTEGER}
+		,#{revision, jdbcType=INTEGER}
+		)
+	</insert>
+
+
+	<update id="updateTransformStep" parameterType="com.glaf.dts.domain.TransformStep">
+		update
+		SYS_DTS_STEP
+		set
+		<trim prefix="" suffix="" suffixOverrides=",">
+			ACTIVITYID_ = #{activityId, jdbcType=VARCHAR},
+			QUERYID_ = #{queryId, jdbcType=VARCHAR},
+			TITLE_ = #{title, jdbcType=VARCHAR},
+			DESCRIPTION_ = #{description, jdbcType=VARCHAR},
+			PRIORITY_ = #{priority, jdbcType=INTEGER},
+			LOCKED_ = #{locked, jdbcType=INTEGER},
+			REVISION_ = #{revision, jdbcType=INTEGER},
+		</trim>
+		where
+		ID_ = #{id, jdbcType=VARCHAR}
+
+	</update>
+
+
+	<delete id="deleteTransformStepById" parameterType="string">
+		delete from SYS_DTS_STEP
+		where ID_ = #{id}
+	</delete>
+
+	<delete id="deleteTransformSteps" parameterType="com.glaf.dts.query.TransformStepQuery">
+		delete from SYS_DTS_STEP
+		where (
+		ID_ IN
+		<foreach item="x_rowId" index="index" collection="rowIds"
+			open="(" separator="," close=")">
+			#{x_rowId}
+		</foreach>
+		)
+	</delete>
+
+	<select id="getTransformStepById" parameterType="string"
+		resultMap="transformStepResultMap">
+		select * from SYS_DTS_STEP where ID_ = #{id}
+	</select>
+
+
+	<select id="getTransformSteps" parameterType="com.glaf.dts.query.TransformStepQuery"
+		resultMap="transformStepResultMap">
+		select E.*
+		<include refid="selectTransformStepsSql" />
+		<if test="orderBy != null">
+			order by ${orderBy}
+		</if>
+	</select>
+
+	<select id="getTransformStepCount" parameterType="com.glaf.dts.query.TransformStepQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectTransformStepsSql" />
+	</select>
+
+	<sql id="selectTransformStepsSql">
+
+		from SYS_DTS_STEP E
+
+		<where>
+			1 = 1
+
+			<if test="activityId != null and activityId != '' ">
+				and E.ACTIVITYID_ = #{activityId}
+			</if>
+
+			<if test="activityIds != null and activityIds.size() &gt; 0">
+				and E.ACTIVITYID_ IN
+				<foreach item="x_activityId" index="index" collection="activityIds"
+					open="(" separator="," close=")">
+					#{x_activityId}
+				</foreach>
+			</if>
+
+			<if test="queryId != null and queryId != '' ">
+				and E.QUERYID_ = #{queryId}
+			</if>
+
+			<if test="titleLike != null and titleLike != '' ">
+				and E.TITLE_ like #{titleLike}
+			</if>
+
+			<if test="descriptionLike != null and descriptionLike != '' ">
+				and E.DESCRIPTION_ like #{descriptionLike}
+			</if>
+
+			<if test="priority != null">
+				and E.PRIORITY_ = #{priority}
+			</if>
+
+			<if test="priorityGreaterThanOrEqual != null">
+				and E.PRIORITY_ &gt;= #{priorityGreaterThanOrEqual}
+			</if>
+
+			<if test="priorityLessThanOrEqual != null">
+				and E.PRIORITY_ &lt;= #{priorityLessThanOrEqual}
+			</if>
+
+			<if test="createTimeGreaterThanOrEqual != null">
+				and E.CREATETIME_ &gt;= #{createTimeGreaterThanOrEqual}
+			</if>
+
+			<if test="createTimeLessThanOrEqual != null">
+				and E.CREATETIME_ &lt;= #{createTimeLessThanOrEqual}
+			</if>
+
+			<if test="createBy != null and createBy != '' ">
+				and E.CREATEBY_ = #{createBy}
+			</if>
+
+			<if test="locked != null">
+				and E.LOCKED_ = #{locked}
+			</if>
+
+			<if test="lockedGreaterThanOrEqual != null">
+				and E.LOCKED_ &gt;= #{lockedGreaterThanOrEqual}
+			</if>
+
+			<if test="lockedLessThanOrEqual != null">
+				and E.LOCKED_ &lt;= #{lockedLessThanOrEqual}
+			</if>
+
+			<if test="revision != null">
+				and E.REVISION_ = #{revision}
+			</if>
+
+			<if test="revisionGreaterThanOrEqual != null">
+				and E.REVISION_ &gt;= #{revisionGreaterThanOrEqual}
+			</if>
+
+			<if test="revisionLessThanOrEqual != null">
+				and E.REVISION_ &lt;= #{revisionLessThanOrEqual}
+			</if>
+
+		</where>
+	</sql>
+
+</mapper>

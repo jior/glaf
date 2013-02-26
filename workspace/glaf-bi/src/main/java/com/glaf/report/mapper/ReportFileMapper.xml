@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.report.mapper.ReportFileMapper">
+
+
+	<resultMap id="reportFileResultMap"	type="com.glaf.report.domain.ReportFile">
+		<id property="id" column="ID_" jdbcType="VARCHAR"/>
+		<result property="reportId" column="REPORTID_" jdbcType="VARCHAR"/>
+		<result property="filename" column="FILENAME_" jdbcType="VARCHAR"/>
+		<result property="fileSize" column="FILESIZE_" jdbcType="INTEGER"/>
+		<result property="reportYearMonthDay" column="REPORTYEARMONTHDAY_" jdbcType="INTEGER"/>
+		<result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP"/>
+	</resultMap>
+	
+	
+	<resultMap id="reportFileResultMap_all"	type="com.glaf.report.domain.ReportFile">
+		<id property="id" column="ID_" jdbcType="VARCHAR"/>
+		<result property="reportId" column="REPORTID_" jdbcType="VARCHAR"/>
+		<result property="filename" column="FILENAME_" jdbcType="VARCHAR"/>
+		<result property="fileSize" column="FILESIZE_" jdbcType="INTEGER"/>
+		<result property="reportYearMonthDay" column="REPORTYEARMONTHDAY_" jdbcType="INTEGER"/>
+		<result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP"/>
+		<result property="fileContent" column="FILECONTENT_" jdbcType="BLOB"/>
+	</resultMap>
+	
+	
+	<resultMap id="reportFileResultMap_postgres" type="com.glaf.report.domain.ReportFile">
+		<id property="id" column="ID_" jdbcType="VARCHAR"/>
+		<result property="reportId" column="REPORTID_" jdbcType="VARCHAR"/>
+		<result property="filename" column="FILENAME_" jdbcType="VARCHAR"/>
+		<result property="fileSize" column="FILESIZE_" jdbcType="INTEGER"/>
+		<result property="reportYearMonthDay" column="REPORTYEARMONTHDAY_" jdbcType="INTEGER"/>
+		<result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP"/>
+		<result property="fileContent" column="FILECONTENT_" jdbcType="BINARY"/>
+	</resultMap>
+
+
+	<resultMap id="reportFileHashMap"	type="java.util.HashMap">
+		<id property="id" column="ID_" jdbcType="VARCHAR"/>
+		<result property="reportId" column="REPORTID_" jdbcType="VARCHAR"/>
+		<result property="filename" column="FILENAME_" jdbcType="VARCHAR"/>
+		<result property="fileSize" column="FILESIZE_" jdbcType="INTEGER"/>
+		<result property="reportYearMonthDay" column="REPORTYEARMONTHDAY_" jdbcType="INTEGER"/>
+		<result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP"/>
+	</resultMap>
+	
+ 
+	<insert id="insertReportFile" parameterType="com.glaf.report.domain.ReportFile">
+		insert into SYS_REPORT_FILE 
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+		    ID_
+			<if test="reportId != null">
+				,REPORTID_ 
+			</if>
+			<if test="filename != null">
+				,FILENAME_ 
+			</if>
+			<if test="fileSize != null">
+				,FILESIZE_ 
+			</if>
+			<if test="fileContent != null">
+				,FILECONTENT_
+			</if>
+			<if test="reportYearMonthDay != null">
+				,REPORTYEARMONTHDAY_ 
+			</if>
+			<if test="createDate != null">
+				,CREATEDATE_ 
+			</if>
+		</trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			  #{id, jdbcType=VARCHAR}
+	     
+			<if test="reportId != null">
+				,#{reportId, jdbcType=VARCHAR}
+			</if>
+			<if test="filename != null">
+				,#{filename, jdbcType=VARCHAR}
+			</if>
+			<if test="fileSize != null">
+				,#{fileSize, jdbcType=INTEGER}
+			</if>
+			<if test="fileContent != null">
+				,#{fileContent, jdbcType=BLOB}
+			</if>
+			<if test="reportYearMonthDay != null">
+				,#{reportYearMonthDay, jdbcType=INTEGER}
+			</if>
+			<if test="createDate != null">
+				,#{createDate, jdbcType=TIMESTAMP}
+			</if>
+		</trim>
+	</insert>
+    
+    
+	<insert id="insertReportFile_postgres" parameterType="com.glaf.report.domain.ReportFile">
+		insert into SYS_REPORT_FILE 
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+		    ID_
+			<if test="reportId != null">
+				,REPORTID_ 
+			</if>
+			<if test="filename != null">
+				,FILENAME_ 
+			</if>
+			<if test="fileSize != null">
+				,FILESIZE_ 
+			</if>
+			<if test="fileContent != null">
+				,FILECONTENT_
+			</if>
+			<if test="reportYearMonthDay != null">
+				,REPORTYEARMONTHDAY_ 
+			</if>
+			<if test="createDate != null">
+				,CREATEDATE_ 
+			</if>
+		</trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			  #{id, jdbcType=VARCHAR}
+	     
+			<if test="reportId != null">
+				,#{reportId, jdbcType=VARCHAR}
+			</if>
+			<if test="filename != null">
+				,#{filename, jdbcType=VARCHAR}
+			</if>
+			<if test="fileSize != null">
+				,#{fileSize, jdbcType=INTEGER}
+			</if>
+			<if test="fileContent != null">
+				,#{fileContent, jdbcType=BINARY}
+			</if>
+			<if test="reportYearMonthDay != null">
+				,#{reportYearMonthDay, jdbcType=INTEGER}
+			</if>
+			<if test="createDate != null">
+				,#{createDate, jdbcType=TIMESTAMP}
+			</if>
+		</trim>
+	</insert>
+
+	 
+	<update id="updateReportFile" parameterType="com.glaf.report.domain.ReportFile">
+		update SYS_REPORT_FILE
+		set
+		<trim prefix="" suffix="" suffixOverrides=",">		
+			<if test="reportId != null">
+				REPORTID_ = #{reportId, jdbcType=VARCHAR},
+			</if>
+			<if test="filename != null">
+				FILENAME_ = #{filename, jdbcType=VARCHAR},
+			</if>
+			<if test="fileSize != null">
+				FILESIZE_ = #{fileSize, jdbcType=INTEGER},
+			</if>
+			<if test="fileContent != null">
+				FILECONTENT_ = #{fileContent, jdbcType=BLOB},
+			</if>
+			<if test="reportYearMonthDay != null">
+				REPORTYEARMONTHDAY_ = #{reportYearMonthDay, jdbcType=INTEGER},
+			</if>
+			<if test="createDate != null">
+				CREATEDATE_ = #{createDate, jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+		where
+          ID_ = #{id, jdbcType=VARCHAR}
+		
+	</update>
+    
+    
+	<update id="updateReportFile_postgres" parameterType="com.glaf.report.domain.ReportFile">
+		update SYS_REPORT_FILE
+		set
+		<trim prefix="" suffix="" suffixOverrides=",">		
+			<if test="reportId != null">
+				REPORTID_ = #{reportId, jdbcType=VARCHAR},
+			</if>
+			<if test="filename != null">
+				FILENAME_ = #{filename, jdbcType=VARCHAR},
+			</if>
+			<if test="fileSize != null">
+				FILESIZE_ = #{fileSize, jdbcType=INTEGER},
+			</if>
+			<if test="fileContent != null">
+				FILECONTENT_ = #{fileContent, jdbcType=BINARY},
+			</if>
+			<if test="reportYearMonthDay != null">
+				REPORTYEARMONTHDAY_ = #{reportYearMonthDay, jdbcType=INTEGER},
+			</if>
+			<if test="createDate != null">
+				CREATEDATE_ = #{createDate, jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+		where
+          ID_ = #{id, jdbcType=VARCHAR}
+		
+	</update>
+
+ 
+	<delete id="deleteReportFileById" parameterType="string"> 
+        delete from SYS_REPORT_FILE
+        where ID_ = #{id}
+	</delete>
+	
+
+	<delete id="deleteReportFiles" parameterType="com.glaf.report.query.ReportFileQuery">
+		delete from SYS_REPORT_FILE
+		where ( ID_ IN
+		<foreach item="x_rowId" index="index" collection="rowIds" open="(" separator="," close=")">
+              #{x_rowId}
+		</foreach>
+		)
+	</delete>
+
+
+	<select id="getReportFileById" parameterType="string" resultMap="reportFileResultMap_all">
+		select * from SYS_REPORT_FILE where ID_ = #{id}
+	</select>
+	
+	
+	<select id="getReportFileById_postgres" parameterType="string" resultMap="reportFileResultMap_postgres">
+		select * from SYS_REPORT_FILE where ID_ = #{id}
+	</select>
+
+
+	<select id="getReportFileCount" 
+		parameterType="map"
+		resultType="int">
+		select count(*) from SYS_REPORT_FILE E
+		<include refid="selectReportFileSql" />
+	</select>
+
+
+	<select id="getReportFileCountByQueryCriteria" 
+		parameterType="com.glaf.report.query.ReportFileQuery"
+		resultType="int">
+		select count(*) from SYS_REPORT_FILE E
+		<include refid="selectReportFileSql" />
+	</select>
+
+
+	<select id="getReportFiles" 
+		parameterType="map"
+		resultMap="reportFileResultMap">
+		select E.ID_, E.REPORTID_, E.FILENAME_, E.FILESIZE_, E.REPORTYEARMONTHDAY_, E.CREATEDATE_ 
+		from SYS_REPORT_FILE E
+		<include refid="selectReportFileSql" />
+		<if test="orderBy != null">
+		   order by ${orderBy}
+		</if>
+	</select>
+
+
+	<select id="getReportFileMapList" parameterType="map" resultType="map">
+		select E.ID_, E.REPORTID_, E.FILENAME_, E.FILESIZE_, E.REPORTYEARMONTHDAY_, E.CREATEDATE_  
+		from SYS_REPORT_FILE E 
+		<include refid="selectReportFileSql" />
+		<if test="orderBy != null">
+		   order by ${orderBy}
+		</if>
+	</select>
+
+
+	<select id="getReportFilesByQueryCriteria" 
+		parameterType="com.glaf.report.query.ReportFileQuery"
+		resultMap="reportFileResultMap">
+		select  E.ID_, E.REPORTID_, E.FILENAME_, E.FILESIZE_, E.REPORTYEARMONTHDAY_, E.CREATEDATE_  
+		from SYS_REPORT_FILE E
+		<include refid="selectReportFileSql" />
+		<if test="orderBy != null">
+		   order by ${orderBy}
+		</if>
+	</select>
+
+
+	<sql id="selectReportFileSql">
+		 
+		<where>
+
+		   1 = 1  
+
+			<if test="reportId != null and reportId != '' ">
+				and E.REPORTID_ = #{reportId}
+			</if>
+
+			<if test="reportIds != null and reportIds.size() &gt; 0">
+			    and E.REPORTID_ IN
+				<foreach item="x_reportId" index="index" collection="reportIds" 
+					open="(" separator="," close=")">
+                  #{x_reportId}
+				</foreach>
+			</if>
+
+			<if test="filenameLike != null and filenameLike != '' ">
+				and E.FILENAME_ like #{filenameLike}
+			</if>
+
+			<if test="fileSizeGreaterThanOrEqual != null">
+				and E.FILESIZE_ &gt;= #{fileSizeGreaterThanOrEqual}
+			</if>
+
+			<if test="fileSizeLessThanOrEqual != null">
+				and E.FILESIZE_ &lt;= #{fileSizeLessThanOrEqual}
+			</if>
+
+			<if test="reportYearMonthDay != null">
+				and E.REPORTYEARMONTHDAY_ = #{reportYearMonthDay}
+			</if>
+
+			<if test="reportYearMonthDayGreaterThanOrEqual != null">
+				and E.REPORTYEARMONTHDAY_ &gt;= #{reportYearMonthDayGreaterThanOrEqual}
+			</if>
+
+			<if test="reportYearMonthDayLessThanOrEqual != null">
+				and E.REPORTYEARMONTHDAY_ &lt;= #{reportYearMonthDayLessThanOrEqual}
+			</if>
+
+			<if test="createDateGreaterThanOrEqual != null">
+				and E.CREATEDATE_ &gt;= #{createDateGreaterThanOrEqual}
+			</if>
+
+			<if test="createDateLessThanOrEqual != null">
+				and E.CREATEDATE_ &lt;= #{createDateLessThanOrEqual}
+			</if>
+			 
+		</where>
+	</sql>
+
+</mapper>

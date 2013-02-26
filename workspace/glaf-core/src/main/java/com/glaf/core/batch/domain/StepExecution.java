@@ -31,7 +31,7 @@ import org.apache.commons.lang.builder.ToStringStyle;
 import com.glaf.core.util.DateUtils;
 
 @Entity
-@Table(name = "MX_STEP_EXECUTION")
+@Table(name = "SYS_STEP_EXECUTION")
 public class StepExecution implements Serializable,
 		java.lang.Comparable<StepExecution> {
 	private static final long serialVersionUID = 1L;

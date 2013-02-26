@@ -13,7 +13,7 @@
 
  
 	<insert id="insertJobInstance" parameterType="com.glaf.core.batch.domain.JobInstance">
-		insert into MX_JOB_INSTANCE 
+		insert into SYS_JOB_INSTANCE 
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 		    job_instance_id
 			<if test="version != null">
@@ -45,7 +45,7 @@
 	 
 	<update id="updateJobInstance" parameterType="com.glaf.core.batch.domain.JobInstance">
 		update
-		MX_JOB_INSTANCE
+		SYS_JOB_INSTANCE
 		set
 		<trim prefix="" suffix="" suffixOverrides=",">		
 			<if test="version != null">
@@ -65,13 +65,13 @@
 
  
 	<delete id="deleteJobInstanceById" parameterType="string"> 
-        delete from MX_JOB_INSTANCE
+        delete from SYS_JOB_INSTANCE
         where job_instance_id = #{id}
 	</delete>
 	
 
 	<delete id="deleteJobInstances" parameterType="com.glaf.core.batch.query.JobInstanceQuery">
-		delete from MX_JOB_INSTANCE
+		delete from SYS_JOB_INSTANCE
 		where ( job_instance_id IN
 		<foreach item="x_rowId" index="index" collection="rowIds" open="(" separator="," close=")">
               #{x_rowId}
@@ -81,11 +81,11 @@
 
 
 	<select id="getJobInstanceById" parameterType="string" resultMap="jobInstanceResultMap">
-		select * from MX_JOB_INSTANCE where job_instance_id = #{id}
+		select * from SYS_JOB_INSTANCE where job_instance_id = #{id}
 	</select>
 	
 	<select id="getJobInstanceByJobKey" parameterType="string" resultMap="jobInstanceResultMap">
-		select * from MX_JOB_INSTANCE where job_key = #{jobKey}
+		select * from SYS_JOB_INSTANCE where job_key = #{jobKey}
 	</select>
 
 
@@ -128,7 +128,7 @@
 
 	<sql id="selectJobInstancesSql">
 
-		from MX_JOB_INSTANCE E
+		from SYS_JOB_INSTANCE E
 		 
 		<where>
 

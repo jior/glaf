@@ -30,7 +30,7 @@ import org.apache.commons.lang.builder.ToStringStyle;
 import com.glaf.core.util.DateUtils;
 
 @Entity
-@Table(name = "MX_JOB_PARAMS")
+@Table(name = "SYS_JOB_PARAMS")
 public class JobParam implements Serializable {
 	private static final long serialVersionUID = 1L;
 

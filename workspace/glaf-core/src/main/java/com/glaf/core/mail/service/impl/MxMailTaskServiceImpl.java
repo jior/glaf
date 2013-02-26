@@ -173,7 +173,7 @@ public class MxMailTaskServiceImpl implements IMailTaskService {
 			scheduler.setCreateDate(new Date());
 			insert = true;
 		}
-		scheduler.setTaskType("MX_MAIL_TASK");
+		scheduler.setTaskType("SYS_MAIL_TASK");
 		scheduler.setRepeatCount(-1);
 		scheduler.setJobClass("com.glaf.core.mail.job.MailTaskJob");
 		scheduler.setTaskName(taskId);

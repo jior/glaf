@@ -22,7 +22,7 @@
 
 	<insert id="insertMailStorage" parameterType="com.glaf.core.mail.domain.MailStorage">
 		insert into
-		MX_MAIL_STORAGE ( ID_
+		SYS_MAIL_STORAGE ( ID_
 		,SUBJECT_
 		,DATASPACE_
 		,DATATABLE_
@@ -54,7 +54,7 @@
 
 	<update id="updateMailStorage" parameterType="com.glaf.core.mail.domain.MailStorage">
 		update
-		MX_MAIL_STORAGE
+		SYS_MAIL_STORAGE
 		set
 		SUBJECT_ = #{subject, jdbcType=VARCHAR},
 		HOST_ = #{host, jdbcType=VARCHAR},
@@ -70,12 +70,12 @@
 
 	<delete id="deleteMailStorageById" parameterType="string">
 		delete from
-		MX_MAIL_STORAGE
+		SYS_MAIL_STORAGE
 		where ID_ = #{id}
 	</delete>
 
 	<delete id="deleteMailStorages" parameterType="com.glaf.core.mail.query.MailStorageQuery">
-		delete from MX_MAIL_STORAGE
+		delete from SYS_MAIL_STORAGE
 		where (
 		ID_ IN
 		<foreach item="x_rowId" index="index" collection="rowIds"
@@ -87,12 +87,12 @@
 
 	<select id="getMailStorageById" parameterType="string"
 		resultMap="mailStorageResultMap">
-		select * from MX_MAIL_STORAGE where ID_ = #{id}
+		select * from SYS_MAIL_STORAGE where ID_ = #{id}
 	</select>
 
 	<select id="getMailStorageByDataTable" parameterType="string"
 		resultMap="mailStorageResultMap">
-		select * from MX_MAIL_STORAGE where DATATABLE_ =
+		select * from SYS_MAIL_STORAGE where DATATABLE_ =
 		#{dataTable}
 	</select>
 
@@ -113,7 +113,7 @@
 
 	<sql id="selectMailStoragesSql">
 
-		from MX_MAIL_STORAGE E
+		from SYS_MAIL_STORAGE E
 
 		<where>
 			1 = 1

@@ -6,5 +6,6 @@
 	//com.glaf.core.util.RequestUtils.setRequestParameterToAttribute(request);
  
 %>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/core.css">
 
  

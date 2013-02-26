@@ -18,7 +18,7 @@
  
 	<insert id="insertMailCount" parameterType="com.glaf.core.mail.domain.MailCount">
 		insert into
-		MX_MAIL_COUNT ( ID_
+		SYS_MAIL_COUNT ( ID_
         ,TASKID_ 
         ,ACCOUNTID_ 
         ,TYPE_ 
@@ -43,12 +43,12 @@
 	 
  
 	<delete id="deleteMailCount" parameterType="com.glaf.core.mail.query.MailCountQuery"> 
-        delete from MX_MAIL_COUNT
+        delete from SYS_MAIL_COUNT
         where TASKID_ =	#{taskId} and TYPE_ = #{type}
 	</delete>
 	
 	<delete id="deleteMailCounts" parameterType="com.glaf.core.mail.query.MailCountQuery">
-		delete from MX_MAIL_COUNT
+		delete from SYS_MAIL_COUNT
 		where ( 
  			  ID_ IN
               <foreach item="x_rowId" index="index" collection="rowIds" 
@@ -59,7 +59,7 @@
 	</delete>
 
 	<select id="getMailCountById" parameterType="string" resultMap="mailCountResultMap">
-		select * from MX_MAIL_COUNT where ID_ = #{id}
+		select * from SYS_MAIL_COUNT where ID_ = #{id}
 	</select>
 
 
@@ -82,7 +82,7 @@
 
 	<sql id="selectMailCountsSql">
 
-		from MX_MAIL_COUNT E
+		from SYS_MAIL_COUNT E
 		 
 		<where>
 		       1 = 1  

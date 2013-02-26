@@ -41,7 +41,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.glaf.core.util.DateUtils;
 
 @Entity
-@Table(name = "MX_MAIL_TASK")
+@Table(name = "SYS_MAIL_TASK")
 public class MailTask implements Serializable {
 	private static final long serialVersionUID = 1L;
 

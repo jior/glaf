@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.report.mapper.ReportMapper">
+
+	<resultMap id="reportResultMap"	type="com.glaf.report.domain.Report">
+		<id property="id" column="ID_" jdbcType="VARCHAR"/>
+		<result property="queryIds" column="QUERYIDS_" jdbcType="VARCHAR"/>
+		<result property="chartIds" column="CHARTIDS_" jdbcType="VARCHAR"/>
+		<result property="name" column="NAME_" jdbcType="VARCHAR"/>
+		<result property="subject" column="SUBJECT_" jdbcType="VARCHAR"/>
+		<result property="type" column="TYPE_" jdbcType="VARCHAR"/>
+		<result property="reportName" column="REPORTNAME_" jdbcType="VARCHAR"/>
+		<result property="reportTitleDate" column="REPORTTITLEDATE_" jdbcType="VARCHAR"/>
+		<result property="reportMonth" column="REPORTMONTH_" jdbcType="VARCHAR"/>
+		<result property="reportDateYYYYMMDD" column="REPORTDATEYYYYMMDD_" jdbcType="VARCHAR"/>
+		<result property="reportFormat" column="REPORTFORMAT_" jdbcType="VARCHAR"/>
+		<result property="reportTemplate" column="REPORTTEMPLATE_" jdbcType="VARCHAR"/>
+		<result property="mailRecipient" column="MAILRECIPIENT_" jdbcType="VARCHAR"/>
+		<result property="mobileRecipient" column="MOBILERECIPIENT_" jdbcType="VARCHAR"/>
+		<result property="textContent" column="TEXTCONTENT_" jdbcType="VARCHAR"/>
+		<result property="jsonParameter" column="JSONPARAMETER_" jdbcType="VARCHAR"/>
+		<result property="cronExpression" column="CRONEXPRESSION_" jdbcType="VARCHAR"/>
+		<result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP"/>
+		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR"/>
+	</resultMap>
+
+
+	<resultMap id="reportHashMap"	type="java.util.HashMap">
+		<id property="id" column="ID_" jdbcType="VARCHAR"/>
+		<result property="queryIds" column="QUERYIDS_" jdbcType="VARCHAR"/>
+		<result property="chartIds" column="CHARTIDS_" jdbcType="VARCHAR"/>
+		<result property="name" column="NAME_" jdbcType="VARCHAR"/>
+		<result property="subject" column="SUBJECT_" jdbcType="VARCHAR"/>
+		<result property="type" column="TYPE_" jdbcType="VARCHAR"/>
+		<result property="reportName" column="REPORTNAME_" jdbcType="VARCHAR"/>
+		<result property="reportTitleDate" column="REPORTTITLEDATE_" jdbcType="VARCHAR"/>
+		<result property="reportMonth" column="REPORTMONTH_" jdbcType="VARCHAR"/>
+		<result property="reportDateYYYYMMDD" column="REPORTDATEYYYYMMDD_" jdbcType="VARCHAR"/>
+		<result property="reportFormat" column="REPORTFORMAT_" jdbcType="VARCHAR"/>
+		<result property="reportTemplate" column="REPORTTEMPLATE_" jdbcType="VARCHAR"/>
+		<result property="mailRecipient" column="MAILRECIPIENT_" jdbcType="VARCHAR"/>
+		<result property="mobileRecipient" column="MOBILERECIPIENT_" jdbcType="VARCHAR"/>
+		<result property="textContent" column="TEXTCONTENT_" jdbcType="VARCHAR"/>
+		<result property="jsonParameter" column="JSONPARAMETER_" jdbcType="VARCHAR"/>
+		<result property="cronExpression" column="CRONEXPRESSION_" jdbcType="VARCHAR"/>
+		<result property="enableFlag" column="ENABLEFLAG_" jdbcType="VARCHAR"/>
+		<result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP"/>
+		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR"/>
+	</resultMap>
+ 
+	<insert id="insertReport" parameterType="com.glaf.report.domain.Report">
+		insert into SYS_REPORT 
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+		    ID_
+			<if test="queryIds != null">
+				,QUERYIDS_ 
+			</if>
+			<if test="chartIds != null">
+				,CHARTIDS_ 
+			</if>
+			<if test="name != null">
+				,NAME_ 
+			</if>
+			<if test="subject != null">
+				,SUBJECT_ 
+			</if>
+			<if test="type != null">
+				,TYPE_ 
+			</if>
+			<if test="reportName != null">
+				,REPORTNAME_ 
+			</if>
+			<if test="reportTitleDate != null">
+				,REPORTTITLEDATE_ 
+			</if>
+			<if test="reportMonth != null">
+				,REPORTMONTH_ 
+			</if>
+			<if test="reportDateYYYYMMDD != null">
+				,REPORTDATEYYYYMMDD_ 
+			</if>
+			<if test="reportFormat != null">
+				,REPORTFORMAT_ 
+			</if>
+			<if test="reportTemplate != null">
+				,REPORTTEMPLATE_ 
+			</if>
+			<if test="mailRecipient != null">
+				,MAILRECIPIENT_ 
+			</if>
+			<if test="mobileRecipient != null">
+				,MOBILERECIPIENT_ 
+			</if>
+			<if test="textContent != null">
+				,TEXTCONTENT_ 
+			</if>
+			<if test="jsonParameter != null">
+				,JSONPARAMETER_ 
+			</if>
+			<if test="cronExpression != null">
+				,CRONEXPRESSION_ 
+			</if>
+			<if test="enableFlag != null">
+				,ENABLEFLAG_ 
+			</if>
+			<if test="createDate != null">
+				,CREATEDATE_ 
+			</if>
+			<if test="createBy != null">
+				,CREATEBY_ 
+			</if>
+		</trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			  #{id, jdbcType=VARCHAR}
+	     
+			<if test="queryIds != null">
+				,#{queryIds, jdbcType=VARCHAR}
+			</if>
+			<if test="chartIds != null">
+				,#{chartIds, jdbcType=VARCHAR}
+			</if>
+			<if test="name != null">
+				,#{name, jdbcType=VARCHAR}
+			</if>
+			<if test="subject != null">
+				,#{subject, jdbcType=VARCHAR}
+			</if>
+			<if test="type != null">
+				,#{type, jdbcType=VARCHAR}
+			</if>
+			<if test="reportName != null">
+				,#{reportName, jdbcType=VARCHAR}
+			</if>
+			<if test="reportTitleDate != null">
+				,#{reportTitleDate, jdbcType=VARCHAR}
+			</if>
+			<if test="reportMonth != null">
+				,#{reportMonth, jdbcType=VARCHAR}
+			</if>
+			<if test="reportDateYYYYMMDD != null">
+				,#{reportDateYYYYMMDD, jdbcType=VARCHAR}
+			</if>
+			<if test="reportFormat != null">
+				,#{reportFormat, jdbcType=VARCHAR}
+			</if>
+			<if test="reportTemplate != null">
+				,#{reportTemplate, jdbcType=VARCHAR}
+			</if>
+			<if test="mailRecipient != null">
+				,#{mailRecipient, jdbcType=VARCHAR}
+			</if>
+			<if test="mobileRecipient != null">
+				,#{mobileRecipient, jdbcType=VARCHAR}
+			</if>
+			<if test="textContent != null">
+				,#{textContent, jdbcType=VARCHAR}
+			</if>
+			<if test="jsonParameter != null">
+				,#{jsonParameter, jdbcType=VARCHAR}
+			</if>
+			<if test="cronExpression != null">
+				,#{cronExpression, jdbcType=VARCHAR}
+			</if>
+			<if test="enableFlag != null">
+				,#{enableFlag, jdbcType=VARCHAR}
+			</if>
+			<if test="createDate != null">
+				,#{createDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="createBy != null">
+				,#{createBy, jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</insert>
+
+	 
+	<update id="updateReport" parameterType="com.glaf.report.domain.Report">
+		update SYS_REPORT
+		set
+		<trim prefix="" suffix="" suffixOverrides=",">		
+			<if test="queryIds != null">
+				QUERYIDS_ = #{queryIds, jdbcType=VARCHAR},
+			</if>
+			<if test="chartIds != null">
+				CHARTIDS_ = #{chartIds, jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				NAME_ = #{name, jdbcType=VARCHAR},
+			</if>
+			<if test="subject != null">
+				SUBJECT_ = #{subject, jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				TYPE_ = #{type, jdbcType=VARCHAR},
+			</if>
+			<if test="reportName != null">
+				REPORTNAME_ = #{reportName, jdbcType=VARCHAR},
+			</if>
+			<if test="reportTitleDate != null">
+				REPORTTITLEDATE_ = #{reportTitleDate, jdbcType=VARCHAR},
+			</if>
+			<if test="reportMonth != null">
+				REPORTMONTH_ = #{reportMonth, jdbcType=VARCHAR},
+			</if>
+			<if test="reportDateYYYYMMDD != null">
+				REPORTDATEYYYYMMDD_ = #{reportDateYYYYMMDD, jdbcType=VARCHAR},
+			</if>
+			<if test="reportFormat != null">
+				REPORTFORMAT_ = #{reportFormat, jdbcType=VARCHAR},
+			</if>
+			<if test="reportTemplate != null">
+				REPORTTEMPLATE_ = #{reportTemplate, jdbcType=VARCHAR},
+			</if>
+			<if test="mailRecipient != null">
+				MAILRECIPIENT_ = #{mailRecipient, jdbcType=VARCHAR},
+			</if>
+			<if test="mobileRecipient != null">
+				MOBILERECIPIENT_ = #{mobileRecipient, jdbcType=VARCHAR},
+			</if>
+			<if test="textContent != null">
+				TEXTCONTENT_ = #{textContent, jdbcType=VARCHAR},
+			</if>
+			<if test="jsonParameter != null">
+				JSONPARAMETER_ = #{jsonParameter, jdbcType=VARCHAR},
+			</if>
+			<if test="cronExpression != null">
+				CRONEXPRESSION_ = #{cronExpression, jdbcType=VARCHAR},
+			</if>
+			<if test="enableFlag != null">
+				ENABLEFLAG_ = #{enableFlag, jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				CREATEDATE_ = #{createDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="createBy != null">
+				CREATEBY_ = #{createBy, jdbcType=VARCHAR},
+			</if>
+		</trim>
+		where
+          ID_ = #{id, jdbcType=VARCHAR}
+		
+	</update>
+ 
+	<delete id="deleteReportById" parameterType="string"> 
+        delete from SYS_REPORT
+        where ID_ =	#{id}
+	</delete>
+	
+	<delete id="deleteReports" parameterType="com.glaf.report.query.ReportQuery">
+		delete from SYS_REPORT
+		where ( 
+ 			  ID_ IN
+		<foreach item="x_rowId" index="index" collection="rowIds" 
+			open="(" separator="," close=")">
+                  #{x_rowId}
+		</foreach>
+		)
+	</delete>
+
+	<select id="getReportById" parameterType="string" resultMap="reportResultMap">
+		select * from SYS_REPORT where ID_ = #{id}
+	</select>
+
+
+	<select id="getReports" 
+		parameterType="com.glaf.report.query.ReportQuery"
+		resultMap="reportResultMap">
+		select E.*
+		<include refid="selectReportsSql" />
+		<if test="orderBy != null">
+		   order by ${orderBy}
+		</if>
+	</select>
+
+	<select id="getReportCount" 
+		parameterType="com.glaf.report.query.ReportQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectReportsSql" />
+	</select>
+
+	<sql id="selectReportsSql">
+
+		from SYS_REPORT E
+ 
+		 
+		<where>
+		       1 = 1  
+		       
+			<if test="reportIds != null and reportIds.size() &gt; 0">
+			    and E.ID_ IN
+				<foreach item="x_reportId" index="index" collection="reportIds" 
+					open="(" separator="," close=")">
+                  #{x_reportId}
+				</foreach>
+			</if>
+		      
+			<if test="enableFlag != null and enableFlag != '' ">
+				and E.ENABLEFLAG_ = #{enableFlag}
+			</if>
+			
+			<if test="name != null and name != '' ">
+				and E.NAME_ = #{name}
+			</if>
+
+			<if test="nameLike != null and nameLike != '' ">
+				and E.NAME_ like #{nameLike}
+			</if>
+	        
+			<if test="subject != null and subject != '' ">
+				and E.SUBJECT_ = #{subject}
+			</if>
+
+			<if test="subjectLike != null and subjectLike != '' ">
+				and E.SUBJECT_ like #{subjectLike}
+			</if>
+	        
+			<if test="type != null and type != '' ">
+				and E.TYPE_ = #{type}
+			</if>
+
+			<if test="typeLike != null and typeLike != '' ">
+				and E.TYPE_ like #{typeLike}
+			</if>
+
+			<if test="types != null and types.size() &gt; 0">
+			    and E.TYPE_ IN
+				<foreach item="x_type" index="index" collection="types" 
+					open="(" separator="," close=")">
+                  #{x_type}
+				</foreach>
+			</if>
+
+			<if test="reportName != null and reportName != '' ">
+				and E.REPORTNAME_ = #{reportName}
+			</if>
+
+			<if test="reportNameLike != null and reportNameLike != '' ">
+				and E.REPORTNAME_ like #{reportNameLike}
+			</if>
+
+			<if test="createDateGreaterThanOrEqual != null">
+				and E.CREATEDATE_ &gt;= #{createDateGreaterThanOrEqual}
+			</if>
+
+			<if test="createDateLessThanOrEqual != null">
+				and E.CREATEDATE_ &lt;= #{createDateLessThanOrEqual}
+			</if>
+	        
+			<if test="createBy != null and createBy != '' ">
+				and E.CREATEBY_ = #{createBy}
+			</if>
+
+			<if test="createByLike != null and createByLike != '' ">
+				and E.CREATEBY_ like #{createByLike}
+			</if>
+			
+			<if test="enableFlag != null and enableFlag != '' ">
+				and E.ENABLEFLAG_ = #{enableFlag}
+			</if>
+			 
+		</where>
+	</sql>
+
+</mapper>

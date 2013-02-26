@@ -32,7 +32,7 @@
 
  
 	<insert id="insertStepExecution" parameterType="com.glaf.core.batch.domain.StepExecution">
-		insert into MX_STEP_EXECUTION 
+		insert into SYS_STEP_EXECUTION 
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 		    step_execution_id
 			<if test="version != null">
@@ -178,7 +178,7 @@
 	 
 	<update id="updateStepExecution" parameterType="com.glaf.core.batch.domain.StepExecution">
 		update
-		MX_STEP_EXECUTION
+		SYS_STEP_EXECUTION
 		set
 		<trim prefix="" suffix="" suffixOverrides=",">		
 			<if test="stepName != null">
@@ -234,16 +234,16 @@
 
  
 	<delete id="deleteStepExecutionById" parameterType="string"> 
-        delete from MX_STEP_EXECUTION
+        delete from SYS_STEP_EXECUTION
         where step_execution_id = #{id}
 	</delete>
 	
 
 	<delete id="deleteStepExecutionByJobInstanceId" parameterType="string">
 		
-		delete from MX_STEP_EXECUTION  
+		delete from SYS_STEP_EXECUTION  
 		where exists (
-		     select job_execution_id from MX_JOB_EXECUTION 
+		     select job_execution_id from SYS_JOB_EXECUTION 
 		     where job_instance_id = #{jobInstanceId}
 		)
 		
@@ -251,18 +251,18 @@
 
 
 	<select id="getStepExecutionById" parameterType="string" resultMap="stepExecutionResultMap">
-		select * from MX_STEP_EXECUTION where step_execution_id = #{id}
+		select * from SYS_STEP_EXECUTION where step_execution_id = #{id}
 	</select>
 	
 	<select id="getStepExecutionByKey" parameterType="string" resultMap="stepExecutionResultMap">
-		select * from MX_STEP_EXECUTION where job_step_key = #{jobStepKey}
+		select * from SYS_STEP_EXECUTION where job_step_key = #{jobStepKey}
 	</select>
 	
 	
 	<select id="getStepExecutionsByJobInstanceId" parameterType="string" resultMap="stepExecutionResultMap">
 		
-		select S.* from MX_STEP_EXECUTION S
-		inner join MX_JOB_EXECUTION E
+		select S.* from SYS_STEP_EXECUTION S
+		inner join SYS_JOB_EXECUTION E
 		on S.job_execution_id = E.job_execution_id
 		where E.job_instance_id = #{jobInstanceId}
 		order by S.listno asc
@@ -310,7 +310,7 @@
 
 	<sql id="selectStepExecutionsSql">
 
-		from MX_STEP_EXECUTION E
+		from SYS_STEP_EXECUTION E
 		 
 		<where>
 

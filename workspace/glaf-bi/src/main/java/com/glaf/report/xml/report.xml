@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<reports>
+
+	<report id="jxls_OverTimeTotal">
+		<templateFile>conf\templates\report\OverTimeTotal.xls</templateFile>
+		<dataset datasourceName="datasource">
+			<rowset mapping="rows" dataMgr="mybatis">
+				<query>dynamicSelectOverTime</query>
+			</rowset>
+		</dataset>
+	</report>
+
+</reports>

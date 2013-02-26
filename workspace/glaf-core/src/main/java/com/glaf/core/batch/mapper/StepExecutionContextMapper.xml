@@ -12,7 +12,7 @@
 
  
 	<insert id="insertStepExecutionContext" parameterType="com.glaf.core.batch.domain.StepExecutionContext">
-		insert into MX_STEP_EXECUTION_CONTEXT 
+		insert into SYS_STEP_EXECUTION_CONTEXT 
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 		    step_execution_id
 			<if test="shortContext != null">
@@ -38,7 +38,7 @@
 	 
 	<update id="updateStepExecutionContext" parameterType="com.glaf.core.batch.domain.StepExecutionContext">
 		update
-		MX_STEP_EXECUTION_CONTEXT
+		SYS_STEP_EXECUTION_CONTEXT
 		set
 		<trim prefix="" suffix="" suffixOverrides=",">		
 			<if test="shortContext != null">
@@ -55,13 +55,13 @@
 
  
 	<delete id="deleteStepExecutionContextById" parameterType="string"> 
-        delete from MX_STEP_EXECUTION_CONTEXT
+        delete from SYS_STEP_EXECUTION_CONTEXT
         where step_execution_id = #{id}
 	</delete>
 	
 
 	<select id="getStepExecutionContextById" parameterType="string" resultMap="stepExecutionContextResultMap">
-		select * from MX_STEP_EXECUTION_CONTEXT 
+		select * from SYS_STEP_EXECUTION_CONTEXT 
 		where step_execution_id = #{id}
 	</select>
 

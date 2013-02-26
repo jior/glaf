@@ -33,7 +33,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
 @Entity
-@Table(name = "MX_JOB_INSTANCE")
+@Table(name = "SYS_JOB_INSTANCE")
 public class JobInstance implements Serializable {
 	private static final long serialVersionUID = 1L;
 

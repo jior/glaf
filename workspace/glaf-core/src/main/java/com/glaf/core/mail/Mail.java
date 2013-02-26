@@ -1,20 +1,20 @@
 /*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.glaf.core.mail;
 
@@ -39,346 +39,346 @@ import com.glaf.core.base.DataFile;
 import com.glaf.core.message.MessageProvider;
 
 @Entity
-@Table(name = "MX_MAIL")
+@Table(name = "SYS_MAIL")
 public class Mail implements MessageProvider {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * 主键
 	 */
+	@Id
+	@Column(name = "ID_", length = 50, nullable = false)
 	protected String id;
 
 	/**
 	 * 节点编号
 	 */
+	@Column(name = "NODEID_", length = 50)
 	protected String nodeId;
 
 	/**
 	 * 邮件编号
 	 */
+	@Column(name = "MAILID_", length = 50)
 	protected String mailId;
 
 	/**
 	 * Message-ID
 	 */
+	@Column(name = "MESSAGEID_", length = 50)
 	protected String messageId;
 
 	/**
 	 * 资源编号
 	 */
+	@Column(name = "RESOURCEID_", length = 50)
 	protected String resourceId;
 
 	/**
 	 * 任务编号
 	 */
+	@Column(name = "TASKID_", length = 50)
 	protected String taskId;
 
 	/**
 	 * 邮件帐号
 	 */
+	@Column(name = "ACCOUNTID_", length = 50)
 	protected String accountId;
 
 	/**
 	 * 发送者编号
 	 */
+	@Column(name = "SENDERID_", length = 50)
 	protected String senderId;
 
 	/**
 	 * 发送者
 	 */
+	@Transient
 	protected String senderName;
 
 	/**
 	 * 接收者编号
 	 */
+	@Column(name = "RECEIVERID_", length = 50)
 	protected String receiverId;
 
 	/**
 	 * 接收者
 	 */
+	@Transient
 	protected String receiverName;
 
 	/**
 	 * 主题
 	 */
+	@Column(name = "SUBJECT_")
 	protected String subject;
 
 	/**
 	 * 内容
 	 */
+	@Lob
+	@Column(name = "CONTENT_")
 	protected String content;
 
 	/**
 	 * 模板编号
 	 */
+	@Column(name = "TEMPLATEID_", length = 50)
 	protected String templateId;
 
 	/**
 	 * 发件人
 	 */
+	@Column(name = "MAILFROM_", length = 100)
 	protected String mailFrom;
 
 	/**
 	 * 收件人
 	 */
+	@Column(name = "MAILTO_", length = 200)
 	protected String mailTo;
 
 	/**
 	 * 抄送人
 	 */
+	@Column(name = "MAILCC_", length = 200)
 	protected String mailCC;
 
 	/**
 	 * 暗送人
 	 */
+	@Column(name = "MAILBCC_", length = 200)
 	protected String mailBCC;
 
 	/**
 	 * 回复地址
 	 */
+	@Column(name = "MAILREPLYTO_", length = 100)
 	protected String mailReplyTo;
 
 	/**
 	 * 发件箱(S)、收件箱(R)、草稿箱(D)、垃圾箱(R)、废件箱(W)
 	 */
+	@Column(name = "MAILBOX_", length = 50)
 	protected String mailBox;
 
 	/**
 	 * 邮件类型
 	 */
+	@Column(name = "MAILTYPE_", length = 50)
 	protected String mailType;
 
 	/**
 	 * 邮件大小
 	 */
+	@Column(name = "MAILSIZE_")
 	protected int mailSize;
 
 	/**
 	 * 发送日期
 	 */
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "SENDDATE_")
 	protected Date sendDate;
 
 	/**
 	 * 邮件状态
 	 */
+	@Column(name = "STATUS_")
 	protected int status;
 
 	/**
 	 * 发送状态
 	 */
+	@Column(name = "SENDSTATUS_")
 	protected int sendStatus;
 
 	/**
 	 * 重试次数
 	 */
+	@Column(name = "RETRYTIMES_")
 	protected int retryTimes;
 
 	/**
 	 * 接收日期
 	 */
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "RECEIVEDATE_")
 	protected Date receiveDate;
 
 	/**
 	 * 邮件接收状态
 	 */
+	@Column(name = "RECEIVESTATUS_")
 	protected int receiveStatus;
 
 	/**
 	 * 创建者编号
 	 */
+	@Column(name = "CREATEBY_", length = 50)
 	protected String createBy;
 
 	/**
 	 * 创建日期
 	 */
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "CREATEDATE_", updatable = false)
 	protected Date createDate;
 
 	/**
 	 * 最后一次查看日期
 	 */
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "LASTVIEWDATE_")
 	protected Date lastViewDate;
 
 	/**
 	 * 最后一次查看IP地址
 	 */
+	@Column(name = "LASTVIEWIP_", length = 100)
 	protected String lastViewIP;
 
 	/**
 	 * 相关附件
 	 */
+	@Transient
 	protected Collection<DataFile> dataFiles = new HashSet<DataFile>();
 
 	public Mail() {
 
 	}
 
-	@Column(name = "ACCOUNTID_", length = 50)
 	public String getAccountId() {
 		return accountId;
 	}
 
-	@Lob
-	@Column(name = "CONTENT_")
 	public String getContent() {
 		return content;
 	}
 
-	@Column(name = "CREATEBY_", length = 50, updatable = false)
 	public String getCreateBy() {
 		return createBy;
 	}
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "CREATEDATE_", updatable = false)
 	public Date getCreateDate() {
 		return createDate;
 	}
 
-	@Transient
 	public Collection<DataFile> getDataFiles() {
 		return dataFiles;
 	}
 
-	@Id
-	@Column(name = "ID_", length = 50, nullable = false)
 	public String getId() {
 		return id;
 	}
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "LASTVIEWDATE_")
 	public Date getLastViewDate() {
 		return lastViewDate;
 	}
 
-	@Column(name = "LASTVIEWIP_", length = 50)
 	public String getLastViewIP() {
 		return lastViewIP;
 	}
 
-	@Column(name = "MAILBCC_")
 	public String getMailBCC() {
 		return mailBCC;
 	}
 
-	@Column(name = "MAILBOX_", length = 50)
 	public String getMailBox() {
 		return mailBox;
 	}
 
-	@Column(name = "MAILCC_")
 	public String getMailCC() {
 		return mailCC;
 	}
 
-	@Column(name = "MAILFROM_", length = 100)
 	public String getMailFrom() {
 		return mailFrom;
 	}
 
-	@Column(name = "MAILID_", length = 50, updatable = false)
 	public String getMailId() {
 		return mailId;
 	}
 
-	@Column(name = "MAILREPLYTO_", length = 100)
 	public String getMailReplyTo() {
 		return mailReplyTo;
 	}
 
-	@Column(name = "MAILSIZE_")
 	public int getMailSize() {
 		return mailSize;
 	}
 
-	@Column(name = "MAILTO_", length = 100)
 	public String getMailTo() {
 		return mailTo;
 	}
 
-	@Column(name = "MAILTYPE_", length = 50)
 	public String getMailType() {
 		return mailType;
 	}
 
-	@Column(name = "MESSAGEID_", length = 50, updatable = false)
 	public String getMessageId() {
 		return messageId;
 	}
 
-	@Column(name = "NODEID_", length = 50)
 	public String getNodeId() {
 		return nodeId;
 	}
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "RECEIVEDATE_")
 	public Date getReceiveDate() {
 		return receiveDate;
 	}
 
-	@Column(name = "RECEIVERID_", length = 50)
 	public String getReceiverId() {
 		return receiverId;
 	}
 
-	@Transient
 	public String getReceiverName() {
 		return receiverName;
 	}
 
-	@Column(name = "RECEIVESTATUS_")
 	public int getReceiveStatus() {
 		return receiveStatus;
 	}
 
-	@Column(name = "RESOURCEID_", length = 50, updatable = false)
 	public String getResourceId() {
 		return resourceId;
 	}
 
-	@Column(name = "RETRYTIMES_")
 	public int getRetryTimes() {
 		return retryTimes;
 	}
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "SENDDATE_")
 	public Date getSendDate() {
 		return sendDate;
 	}
 
-	@Column(name = "SENDERID_", length = 50)
 	public String getSenderId() {
 		return senderId;
 	}
 
-	@Transient
 	public String getSenderName() {
 		return senderName;
 	}
 
-	@Column(name = "SENDSTATUS_")
 	public int getSendStatus() {
 		return sendStatus;
 	}
 
-	@Column(name = "STATUS_")
 	public int getStatus() {
 		return status;
 	}
 
-	@Column(name = "SUBJECT_")
 	public String getSubject() {
 		return subject;
 	}
 
-	@Column(name = "TASKID_", length = 50)
 	public String getTaskId() {
 		return taskId;
 	}
 
-	@Column(name = "TEMPLATEID_", length = 50)
 	public String getTemplateId() {
 		return templateId;
 	}

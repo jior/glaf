@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.dts.mapper.TransformTaskMapper">
+
+	<resultMap id="transformTaskResultMap" type="com.glaf.dts.domain.TransformTask">
+		<id property="id" column="ID_" jdbcType="VARCHAR" />
+		<result property="activityId" column="ACTIVITYID_" jdbcType="VARCHAR" />
+		<result property="stepId" column="STEPID_" jdbcType="VARCHAR" />
+		<result property="queryId" column="QUERYID_" jdbcType="VARCHAR" />
+		<result property="tableName" column="TABLENAME_" jdbcType="VARCHAR" />
+		<result property="title" column="TITLE_" jdbcType="VARCHAR" />
+		<result property="parameter" column="PARAMETER_" jdbcType="VARCHAR" />
+		<result property="startTime" column="STARTTIME_" jdbcType="TIMESTAMP" />
+		<result property="endTime" column="ENDTIME_" jdbcType="TIMESTAMP" />
+		<result property="duration" column="DURATION_" jdbcType="INTEGER" />
+		<result property="retryTimes" column="RETRYTIMES_" jdbcType="INTEGER" />
+		<result property="status" column="STATUS_" jdbcType="INTEGER" />
+		<result property="sortNo" column="SORTNO_" jdbcType="INTEGER" />
+	</resultMap>
+
+
+	<insert id="insertTransformTask" parameterType="com.glaf.dts.domain.TransformTask">
+		insert into
+		SYS_DTS_TASK ( ID_
+		,ACTIVITYID_
+		,STEPID_
+		,QUERYID_
+		,TABLENAME_
+		,TITLE_
+		,PARAMETER_
+		,STARTTIME_
+		,ENDTIME_
+		,STATUS_
+		,DURATION_
+		,RETRYTIMES_
+		,SORTNO_
+		)
+		values (
+		#{id,
+		jdbcType=VARCHAR}
+		,#{activityId, jdbcType=VARCHAR}
+		,#{stepId,
+		jdbcType=VARCHAR}
+		,#{queryId, jdbcType=VARCHAR}
+		,#{tableName,jdbcType=VARCHAR}
+		,#{title,
+		jdbcType=VARCHAR}
+		,#{parameter,
+		jdbcType=VARCHAR}
+		,#{startTime,
+		jdbcType=TIMESTAMP}
+		,#{endTime,
+		jdbcType=TIMESTAMP}
+		,#{status,
+		jdbcType=INTEGER}
+		,#{duration,
+		jdbcType=INTEGER}
+		,#{retryTimes,
+		jdbcType=INTEGER}
+		,#{sortNo,
+		jdbcType=INTEGER}
+		)
+	</insert>
+
+
+	<update id="updateTransformTask" parameterType="com.glaf.dts.domain.TransformTask">
+
+		update
+		SYS_DTS_TASK
+		set
+		STARTTIME_ = #{startTime, jdbcType=TIMESTAMP},
+		ENDTIME_ =
+		#{endTime, jdbcType=TIMESTAMP},
+		STATUS_ = #{status, jdbcType=INTEGER},
+		DURATION_ = #{duration, jdbcType=INTEGER},
+		RETRYTIMES_ = #{retryTimes,
+		jdbcType=INTEGER}
+		where
+		ID_ = #{id, jdbcType=VARCHAR}
+
+	</update>
+
+
+	<delete id="deleteTransformTaskById" parameterType="string">
+		delete from
+		SYS_DTS_TASK
+		where ID_ = #{id}
+	</delete>
+
+	<delete id="deleteTransformTaskByQueryId" parameterType="string">
+		delete
+		from SYS_DTS_TASK
+		where QUERYID_ = #{queryId}
+	</delete>
+
+	<delete id="deleteTransformTaskByTableName" parameterType="string">
+		delete
+		from SYS_DTS_TASK
+		where TABLENAME_ = #{tableName}
+	</delete>
+
+	<delete id="deleteTransformTasks" parameterType="com.glaf.dts.query.TransformTaskQuery">
+		delete from SYS_DTS_TASK
+		where (
+		ID_ IN
+		<foreach item="x_rowId" index="index" collection="rowIds"
+			open="(" separator="," close=")">
+			#{x_rowId}
+		</foreach>
+		)
+	</delete>
+
+	<select id="getTransformTaskById" parameterType="string"
+		resultMap="transformTaskResultMap">
+		select * from SYS_DTS_TASK where ID_ = #{id}
+	</select>
+
+
+	<select id="getTransformTasks" parameterType="com.glaf.dts.query.TransformTaskQuery"
+		resultMap="transformTaskResultMap">
+		select E.*
+		<include refid="selectTransformTasksSql" />
+		order by E.QUERYID_ asc, E.SORTNO_ asc
+	</select>
+
+	<select id="getTransformTaskCount" parameterType="com.glaf.dts.query.TransformTaskQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectTransformTasksSql" />
+	</select>
+
+	<sql id="selectTransformTasksSql">
+
+		from SYS_DTS_TASK E
+
+		<where>
+			1 = 1
+
+			<if test="activityId != null and activityId != '' ">
+				and E.ACTIVITYID_ = #{activityId}
+			</if>
+
+			<if test="activityIds != null and activityIds.size() &gt; 0">
+				and E.ACTIVITYID_ IN
+				<foreach item="x_activityId" index="index" collection="activityIds"
+					open="(" separator="," close=")">
+					#{x_activityId}
+				</foreach>
+			</if>
+
+			<if test="stepId != null and stepId != '' ">
+				and E.STEPID_ = #{stepId}
+			</if>
+
+			<if test="stepIds != null and stepIds.size() &gt; 0">
+				and E.STEPID_ IN
+				<foreach item="x_stepId" index="index" collection="stepIds"
+					open="(" separator="," close=")">
+					#{x_stepId}
+				</foreach>
+			</if>
+
+			<if test="queryId != null and queryId != '' ">
+				and E.QUERYID_ = #{queryId}
+			</if>
+
+			<if test="queryIds != null and queryIds.size() &gt; 0">
+				and E.QUERYID_ IN
+				<foreach item="x_queryId" index="index" collection="queryIds"
+					open="(" separator="," close=")">
+					#{x_queryId}
+				</foreach>
+			</if>
+
+			<if test="titleLike != null and titleLike != '' ">
+				and E.TITLE_ like #{titleLike}
+			</if>
+
+			<if test="startTimeGreaterThanOrEqual != null">
+				and E.STARTTIME_ &gt;= #{startTimeGreaterThanOrEqual}
+			</if>
+
+			<if test="startTimeLessThanOrEqual != null">
+				and E.STARTTIME_ &lt;= #{startTimeLessThanOrEqual}
+			</if>
+
+			<if test="endTimeGreaterThanOrEqual != null">
+				and E.ENDTIME_ &gt;= #{endTimeGreaterThanOrEqual}
+			</if>
+
+			<if test="endTimeLessThanOrEqual != null">
+				and E.ENDTIME_ &lt;= #{endTimeLessThanOrEqual}
+			</if>
+
+			<if test="status != null">
+				and E.STATUS_ = #{status}
+			</if>
+
+			<if test="statusNotEqual != null">
+				and E.STATUS_ &lt;&gt; #{statusNotEqual}
+			</if>
+
+			<if test="statusGreaterThanOrEqual != null">
+				and E.STATUS_ &gt;= #{statusGreaterThanOrEqual}
+			</if>
+
+			<if test="statusLessThanOrEqual != null">
+				and E.STATUS_ &lt;= #{statusLessThanOrEqual}
+			</if>
+
+		</where>
+	</sql>
+
+</mapper>

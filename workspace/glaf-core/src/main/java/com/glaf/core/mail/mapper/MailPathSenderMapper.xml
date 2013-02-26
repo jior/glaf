@@ -29,7 +29,7 @@
  
 	<insert id="insertMailPathSender" parameterType="com.glaf.core.mail.domain.MailPathSender">
 		insert into
-		MX_MAIL_PATH_SENDER ( ID_
+		SYS_MAIL_PATH_SENDER ( ID_
 		,TASKID_
         ,NAME_ 
         ,SUBJECT_ 
@@ -75,7 +75,7 @@
 	 
 	<update id="updateMailPathSender" parameterType="com.glaf.core.mail.domain.MailPathSender">
 		update
-		MX_MAIL_PATH_SENDER
+		SYS_MAIL_PATH_SENDER
 		set
 		<trim prefix="" suffix="" suffixOverrides=",">		
         NAME_ = #{name, jdbcType=VARCHAR},
@@ -101,12 +101,12 @@
 
  
 	<delete id="deleteMailPathSenderById" parameterType="string"> 
-        delete from MX_MAIL_PATH_SENDER
+        delete from SYS_MAIL_PATH_SENDER
         where ID_ =	#{id}
 	</delete>
 	
 	<delete id="deleteMailPathSenders" parameterType="com.glaf.core.mail.query.MailPathSenderQuery">
-		delete from MX_MAIL_PATH_SENDER
+		delete from SYS_MAIL_PATH_SENDER
 		where ( 
  			  ID_ IN
 		<foreach item="x_rowId" index="index" collection="rowIds" 
@@ -117,11 +117,11 @@
 	</delete>
 
 	<select id="getMailPathSenderById" parameterType="string" resultMap="mailTaskResultMap">
-		select * from MX_MAIL_PATH_SENDER where ID_ = #{id}
+		select * from SYS_MAIL_PATH_SENDER where ID_ = #{id}
 	</select>
 	
 	<select id="getMailPathSenderByTaskId" parameterType="string" resultMap="mailTaskResultMap">
-		select * from MX_MAIL_PATH_SENDER where TASKID_ = #{taskId}
+		select * from SYS_MAIL_PATH_SENDER where TASKID_ = #{taskId}
 	</select>
 
 
@@ -144,7 +144,7 @@
 
 	<sql id="selectMailPathSendersSql">
 
-		from MX_MAIL_PATH_SENDER E
+		from SYS_MAIL_PATH_SENDER E
  
 		 
 		<where>

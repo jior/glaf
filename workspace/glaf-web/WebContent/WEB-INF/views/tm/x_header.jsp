@@ -20,4 +20,4 @@
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/bootstrap/css/bootstrap.css" />
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/bootstrap/css/bootstrap-responsive.css" />
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/bootstrap/css/docs.css" />
-
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/core.css">

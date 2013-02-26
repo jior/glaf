@@ -8,6 +8,8 @@
 %>
 
 <link rel="stylesheet" type="text/css" href="<%=cpx%>/scripts/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/core.css">
+
 <script type="text/javascript" src="<%=cpx%>/scripts/jquery.min.js"></script>
 <script type="text/javascript" src="<%=cpx%>/scripts/jquery.form.js"></script>
 <script type="text/javascript" src="<%=cpx%>/scripts/bootstrap/js/bootstrap.min.js"></script>

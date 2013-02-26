@@ -27,7 +27,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
 @Entity
-@Table(name = "MX_JOB_EXECUTION_CONTEXT")
+@Table(name = "SYS_JOB_EXECUTION_CONTEXT")
 public class JobExecutionContext implements Serializable {
 	private static final long serialVersionUID = 1L;
 

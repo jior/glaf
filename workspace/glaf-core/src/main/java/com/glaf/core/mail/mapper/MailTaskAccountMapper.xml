@@ -13,7 +13,7 @@
  
 	<insert id="insertMailTaskAccount" parameterType="com.glaf.core.mail.domain.MailTaskAccount">
 		insert into
-		MX_MAIL_TASK_ACCOUNT ( ID_
+		SYS_MAIL_TASK_ACCOUNT ( ID_
         ,TASKID_ 
         ,ACCOUNTID_ 
 		)
@@ -27,14 +27,14 @@
 
  
 	<delete id="deleteMailTaskAccountByTaskId" parameterType="string"> 
-        delete from MX_MAIL_TASK_ACCOUNT
+        delete from SYS_MAIL_TASK_ACCOUNT
         where TASKID_ =	#{taskId}
 	</delete>
 	
  
 
 	<select id="getMailTaskAccountsByTaskId" parameterType="string" resultMap="mailTaskAccountResultMap">
-		select * from MX_MAIL_TASK_ACCOUNT where TASKID_ =	#{taskId}
+		select * from SYS_MAIL_TASK_ACCOUNT where TASKID_ =	#{taskId}
 	</select>
 
 
@@ -57,7 +57,7 @@
 
 	<sql id="selectMailTaskAccountsSql">
 
-		from MX_MAIL_TASK_ACCOUNT E
+		from SYS_MAIL_TASK_ACCOUNT E
 		 
 		<where>
 		       1 = 1  

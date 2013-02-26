@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.report.mapper.ReportTaskMapper">
+
+	<resultMap id="reportTaskResultMap"	type="com.glaf.report.domain.ReportTask">
+		<id property="id" column="ID_" jdbcType="VARCHAR"/>
+		<result property="reportIds" column="REPORTIDS_" jdbcType="VARCHAR"/>
+		<result property="name" column="NAME_" jdbcType="VARCHAR"/>
+		<result property="subject" column="SUBJECT_" jdbcType="VARCHAR"/>
+		<result property="mailRecipient" column="MAILRECIPIENT_" jdbcType="VARCHAR"/>
+		<result property="mobileRecipient" column="MOBILERECIPIENT_" jdbcType="VARCHAR"/>
+		<result property="sendTitle" column="SENDTITLE_" jdbcType="VARCHAR"/>
+		<result property="sendContent" column="SENDCONTENT_" jdbcType="VARCHAR"/>
+		<result property="cronExpression" column="CRONEXPRESSION_" jdbcType="VARCHAR"/>
+		<result property="enableFlag" column="ENABLEFLAG_" jdbcType="VARCHAR"/>
+		<result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP"/>
+		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR"/>
+	</resultMap>
+
+
+	<resultMap id="reportTaskHashMap"	type="java.util.HashMap">
+		<id property="id" column="ID_" jdbcType="VARCHAR"/>
+		<result property="reportIds" column="REPORTIDS_" jdbcType="VARCHAR"/>
+		<result property="name" column="NAME_" jdbcType="VARCHAR"/>
+		<result property="subject" column="SUBJECT_" jdbcType="VARCHAR"/>
+		<result property="mailRecipient" column="MAILRECIPIENT_" jdbcType="VARCHAR"/>
+		<result property="mobileRecipient" column="MOBILERECIPIENT_" jdbcType="VARCHAR"/>
+		<result property="sendTitle" column="SENDTITLE_" jdbcType="VARCHAR"/>
+		<result property="sendContent" column="SENDCONTENT_" jdbcType="VARCHAR"/>
+		<result property="cronExpression" column="CRONEXPRESSION_" jdbcType="VARCHAR"/>
+		<result property="enableFlag" column="ENABLEFLAG_" jdbcType="VARCHAR"/>
+		<result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP"/>
+		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR"/>
+	</resultMap>
+ 
+	<insert id="insertReportTask" parameterType="com.glaf.report.domain.ReportTask">
+		insert into SYS_REPORT_TASK 
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+		    ID_
+			<if test="reportIds != null">
+				,REPORTIDS_ 
+			</if>
+			<if test="name != null">
+				,NAME_ 
+			</if>
+			<if test="subject != null">
+				,SUBJECT_ 
+			</if>
+			<if test="mailRecipient != null">
+				,MAILRECIPIENT_ 
+			</if>
+			<if test="mobileRecipient != null">
+				,MOBILERECIPIENT_ 
+			</if>
+			<if test="sendTitle != null">
+				,SENDTITLE_ 
+			</if>
+			<if test="sendContent != null">
+				,SENDCONTENT_ 
+			</if>
+			<if test="cronExpression != null">
+				,CRONEXPRESSION_ 
+			</if>
+			<if test="enableFlag != null">
+				,ENABLEFLAG_ 
+			</if>
+			<if test="createDate != null">
+				,CREATEDATE_ 
+			</if>
+			<if test="createBy != null">
+				,CREATEBY_ 
+			</if>
+		</trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			  #{id, jdbcType=VARCHAR}
+	     
+			<if test="reportIds != null">
+				,#{reportIds, jdbcType=VARCHAR}
+			</if>
+			<if test="name != null">
+				,#{name, jdbcType=VARCHAR}
+			</if>
+			<if test="subject != null">
+				,#{subject, jdbcType=VARCHAR}
+			</if>
+			<if test="mailRecipient != null">
+				,#{mailRecipient, jdbcType=VARCHAR}
+			</if>
+			<if test="mobileRecipient != null">
+				,#{mobileRecipient, jdbcType=VARCHAR}
+			</if>
+			<if test="sendTitle != null">
+				,#{sendTitle, jdbcType=VARCHAR}
+			</if>
+			<if test="sendContent != null">
+				,#{sendContent, jdbcType=VARCHAR}
+			</if>
+			<if test="cronExpression != null">
+				,#{cronExpression, jdbcType=VARCHAR}
+			</if>
+			<if test="enableFlag != null">
+				,#{enableFlag, jdbcType=VARCHAR}
+			</if>
+			<if test="createDate != null">
+				,#{createDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="createBy != null">
+				,#{createBy, jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</insert>
+
+	 
+	<update id="updateReportTask" parameterType="com.glaf.report.domain.ReportTask">
+		update SYS_REPORT_TASK
+		set
+		<trim prefix="" suffix="" suffixOverrides=",">		
+			<if test="reportIds != null">
+				REPORTIDS_ = #{reportIds, jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				NAME_ = #{name, jdbcType=VARCHAR},
+			</if>
+			<if test="subject != null">
+				SUBJECT_ = #{subject, jdbcType=VARCHAR},
+			</if>
+			<if test="mailRecipient != null">
+				MAILRECIPIENT_ = #{mailRecipient, jdbcType=VARCHAR},
+			</if>
+			<if test="mobileRecipient != null">
+				MOBILERECIPIENT_ = #{mobileRecipient, jdbcType=VARCHAR},
+			</if>
+			<if test="sendTitle != null">
+				SENDTITLE_ = #{sendTitle, jdbcType=VARCHAR},
+			</if>
+			<if test="sendContent != null">
+				SENDCONTENT_ = #{sendContent, jdbcType=VARCHAR},
+			</if>
+			<if test="cronExpression != null">
+				CRONEXPRESSION_ = #{cronExpression, jdbcType=VARCHAR},
+			</if>
+			<if test="enableFlag != null">
+				ENABLEFLAG_ = #{enableFlag, jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				CREATEDATE_ = #{createDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="createBy != null">
+				CREATEBY_ = #{createBy, jdbcType=VARCHAR},
+			</if>
+		</trim>
+		where
+          ID_ = #{id, jdbcType=VARCHAR}
+		
+	</update>
+
+ 
+	<delete id="deleteReportTaskById" parameterType="string"> 
+        delete from SYS_REPORT_TASK
+        where ID_ = #{id}
+	</delete>
+	
+
+	<delete id="deleteReportTasks" parameterType="com.glaf.report.query.ReportTaskQuery">
+		delete from SYS_REPORT_TASK
+		where ( ID_ IN
+		<foreach item="x_rowId" index="index" collection="rowIds" open="(" separator="," close=")">
+              #{x_rowId}
+		</foreach>
+		)
+	</delete>
+
+
+	<select id="getReportTaskById" parameterType="string" resultMap="reportTaskResultMap">
+		select * from SYS_REPORT_TASK where ID_ = #{id}
+	</select>
+	
+	
+	<select id="getReportTaskByName" parameterType="string" resultMap="reportTaskResultMap">
+		select * from SYS_REPORT_TASK where NAME_ = #{id}
+	</select>
+
+
+	<select id="getReportTaskCount" 
+		parameterType="map"
+		resultType="int">
+		select count(*) from SYS_REPORT_TASK E
+		<include refid="selectReportTaskSql" />
+	</select>
+
+
+	<select id="getReportTaskCountByQueryCriteria" 
+		parameterType="com.glaf.report.query.ReportTaskQuery"
+		resultType="int">
+		select count(*) from SYS_REPORT_TASK E
+		<include refid="selectReportTaskSql" />
+	</select>
+
+
+	<select id="getReportTasks" 
+		parameterType="map"
+		resultMap="reportTaskResultMap">
+		select E.* from SYS_REPORT_TASK E
+		<include refid="selectReportTaskSql" />
+		<if test="orderBy != null">
+		   order by ${orderBy}
+		</if>
+	</select>
+
+
+	<select id="getReportTaskMapList" parameterType="map" resultType="map">
+		select E.* from SYS_REPORT_TASK E 
+		<include refid="selectReportTaskSql" />
+		<if test="orderBy != null">
+		   order by ${orderBy}
+		</if>
+	</select>
+
+
+	<select id="getReportTasksByQueryCriteria" 
+		parameterType="com.glaf.report.query.ReportTaskQuery"
+		resultMap="reportTaskResultMap">
+		select E.* from SYS_REPORT_TASK E
+		<include refid="selectReportTaskSql" />
+		<if test="orderBy != null">
+		   order by ${orderBy}
+		</if>
+	</select>
+
+
+	<sql id="selectReportTaskSql">
+		 
+		<where>
+
+		   1 = 1  
+
+			<if test="name != null and name != '' ">
+				and E.NAME_ = #{name}
+			</if>
+
+			<if test="nameLike != null and nameLike != '' ">
+				and E.NAME_ like #{nameLike}
+			</if>
+
+			<if test="subjectLike != null and subjectLike != '' ">
+				and E.SUBJECT_ like #{subjectLike}
+			</if>
+ 
+			<if test="mailRecipientLike != null and mailRecipientLike != '' ">
+				and E.MAILRECIPIENT_ like #{mailRecipientLike}
+			</if>
+
+			<if test="mobileRecipientLike != null and mobileRecipientLike != '' ">
+				and E.MOBILERECIPIENT_ like #{mobileRecipientLike}
+			</if>
+
+			<if test="sendTitleLike != null and sendTitleLike != '' ">
+				and E.SENDTITLE_ like #{sendTitleLike}
+			</if>
+
+			<if test="sendContentLike != null and sendContentLike != '' ">
+				and E.SENDCONTENT_ like #{sendContentLike}
+			</if>
+
+			<if test="createDateGreaterThanOrEqual != null">
+				and E.CREATEDATE_ &gt;= #{createDateGreaterThanOrEqual}
+			</if>
+
+			<if test="createDateLessThanOrEqual != null">
+				and E.CREATEDATE_ &lt;= #{createDateLessThanOrEqual}
+			</if>
+		 
+			<if test="createBy != null and createBy != '' ">
+				and E.CREATEBY_ = #{createBy}
+			</if>
+			 
+			<if test="enableFlag != null and enableFlag != '' ">
+				and E.ENABLEFLAG_ = #{enableFlag}
+            </if>
+            			 
+		</where>
+	</sql>
+
+</mapper>

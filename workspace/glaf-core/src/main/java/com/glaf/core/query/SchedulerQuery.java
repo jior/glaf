@@ -21,7 +21,7 @@ package com.glaf.core.query;
 import java.util.Date;
 import java.util.List;
 
-public class SchedulerQuery extends BaseQuery {
+public class SchedulerQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;
 	protected String taskId;
 	protected List<String> taskIds;

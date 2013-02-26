@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.chart.mapper.ChartMapper">
+
+	<resultMap id="chartResultMap"	type="com.glaf.chart.domain.Chart">
+		<id property="id" column="ID_" jdbcType="VARCHAR"/>
+		<result property="queryIds" column="QUERYIDS_" jdbcType="VARCHAR"/>
+		<result property="querySQL" column="QUERYSQL_" jdbcType="VARCHAR"/>
+		<result property="subject" column="SUBJECT_" jdbcType="VARCHAR"/>
+		<result property="chartName" column="CHARTNAME_" jdbcType="VARCHAR"/>
+		<result property="chartTitle" column="CHARTTITLE_" jdbcType="VARCHAR"/>
+		<result property="chartType" column="CHARTTYPE_" jdbcType="VARCHAR"/>
+		<result property="chartFont" column="CHARTFONT_" jdbcType="VARCHAR"/>
+		<result property="chartFontSize" column="CHARTFONTSIZE_" jdbcType="INTEGER"/>
+		<result property="chartTitleFont" column="CHARTTITLEFONT_" jdbcType="VARCHAR"/>
+		<result property="chartTitleFontSize" column="CHARTTITLEFONTSIZE_" jdbcType="INTEGER"/>
+		<result property="chartWidth" column="CHARTWIDTH_" jdbcType="INTEGER"/>
+		<result property="chartHeight" column="CHARTHEIGHT_" jdbcType="INTEGER"/>
+		<result property="mapping" column="MAPPING_" jdbcType="VARCHAR"/>
+		<result property="imageType" column="IMAGETYPE_" jdbcType="VARCHAR"/>
+		<result property="legend" column="LEGEND_" jdbcType="VARCHAR"/>
+		<result property="tooltip" column="TOOLTIP_" jdbcType="VARCHAR"/>
+		<result property="coordinateX" column="COORDINATEX_" jdbcType="VARCHAR"/>
+		<result property="coordinateY" column="COORDINATEY_" jdbcType="VARCHAR"/>
+		<result property="plotOrientation" column="PLOTORIENTATION_" jdbcType="VARCHAR"/>
+		<result property="enableFlag" column="ENABLEFLAG_" jdbcType="VARCHAR"/>
+		<result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP"/>
+		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR"/>
+	</resultMap>
+
+ 
+	<insert id="insertChart" parameterType="com.glaf.chart.domain.Chart">
+		insert into
+		SYS_CHART ( ID_
+        ,QUERYIDS_ 
+        ,QUERYSQL_ 
+        ,SUBJECT_ 
+        ,CHARTNAME_ 
+        ,CHARTTITLE_ 
+        ,CHARTTYPE_ 
+        ,CHARTFONT_ 
+        ,CHARTFONTSIZE_ 
+        ,CHARTTITLEFONT_ 
+        ,CHARTTITLEFONTSIZE_ 
+        ,CHARTWIDTH_ 
+        ,CHARTHEIGHT_ 
+        ,MAPPING_
+        ,IMAGETYPE_ 
+        ,LEGEND_ 
+        ,TOOLTIP_ 
+        ,COORDINATEX_ 
+        ,COORDINATEY_ 
+        ,PLOTORIENTATION_ 
+        ,ENABLEFLAG_
+        ,CREATEDATE_ 
+        ,CREATEBY_ 
+		)
+		values (
+          #{id, jdbcType=VARCHAR}
+        ,#{queryIds, jdbcType=VARCHAR}
+        ,#{querySQL, jdbcType=VARCHAR}
+        ,#{subject, jdbcType=VARCHAR}
+        ,#{chartName, jdbcType=VARCHAR}
+        ,#{chartTitle, jdbcType=VARCHAR}
+        ,#{chartType, jdbcType=VARCHAR}
+        ,#{chartFont, jdbcType=VARCHAR}
+        ,#{chartFontSize, jdbcType=INTEGER}
+        ,#{chartTitleFont, jdbcType=VARCHAR}
+        ,#{chartTitleFontSize, jdbcType=INTEGER}
+        ,#{chartWidth, jdbcType=INTEGER}
+        ,#{chartHeight, jdbcType=INTEGER}
+        ,#{mapping, jdbcType=VARCHAR}
+        ,#{imageType, jdbcType=VARCHAR}
+        ,#{legend, jdbcType=VARCHAR}
+        ,#{tooltip, jdbcType=VARCHAR}
+        ,#{coordinateX, jdbcType=VARCHAR}
+        ,#{coordinateY, jdbcType=VARCHAR}
+        ,#{plotOrientation, jdbcType=VARCHAR}
+        ,#{enableFlag, jdbcType=VARCHAR}
+        ,#{createDate, jdbcType=TIMESTAMP}
+        ,#{createBy, jdbcType=VARCHAR}
+		)
+	</insert>
+
+	 
+	<update id="updateChart" parameterType="com.glaf.chart.domain.Chart">
+		update
+		SYS_CHART
+		set
+		<trim prefix="" suffix="" suffixOverrides=",">		
+        QUERYIDS_ = #{queryIds, jdbcType=VARCHAR},
+        QUERYSQL_ = #{querySQL, jdbcType=VARCHAR},
+        SUBJECT_ = #{subject, jdbcType=VARCHAR},
+        CHARTNAME_ = #{chartName, jdbcType=VARCHAR},
+        CHARTTITLE_ = #{chartTitle, jdbcType=VARCHAR},
+        CHARTTYPE_ = #{chartType, jdbcType=VARCHAR},
+        CHARTFONT_ = #{chartFont, jdbcType=VARCHAR},
+        CHARTFONTSIZE_ = #{chartFontSize, jdbcType=INTEGER},
+        CHARTTITLEFONT_ = #{chartTitleFont, jdbcType=VARCHAR},
+        CHARTTITLEFONTSIZE_ = #{chartTitleFontSize, jdbcType=INTEGER},
+        CHARTWIDTH_ = #{chartWidth, jdbcType=INTEGER},
+        CHARTHEIGHT_ = #{chartHeight, jdbcType=INTEGER},
+        MAPPING_ = #{mapping, jdbcType=VARCHAR},
+        IMAGETYPE_ = #{imageType, jdbcType=VARCHAR},
+        LEGEND_ = #{legend, jdbcType=VARCHAR},
+        TOOLTIP_ = #{tooltip, jdbcType=VARCHAR},
+        COORDINATEX_ = #{coordinateX, jdbcType=VARCHAR},
+        COORDINATEY_ = #{coordinateY, jdbcType=VARCHAR},
+        PLOTORIENTATION_ = #{plotOrientation, jdbcType=VARCHAR},
+        ENABLEFLAG_ = #{enableFlag, jdbcType=VARCHAR},
+		</trim>
+		where
+          ID_ = #{id, jdbcType=VARCHAR}
+		
+	</update>
+
+ 
+	<delete id="deleteChartById" parameterType="string"> 
+        delete from SYS_CHART
+        where ID_ =	#{id}
+	</delete>
+	
+	
+	<delete id="deleteCharts" parameterType="com.glaf.chart.query.ChartQuery">
+		delete from SYS_CHART
+		where ( 
+ 			  ID_ IN
+		<foreach item="x_rowId" index="index" collection="rowIds" 
+			open="(" separator="," close=")">
+                  #{x_rowId}
+		</foreach>
+		)
+	</delete>
+
+
+	<select id="getChartById" parameterType="string" resultMap="chartResultMap">
+		select * from SYS_CHART where ID_ = #{id}
+	</select>
+
+
+	<select id="getCharts" 
+		parameterType="com.glaf.chart.query.ChartQuery"
+		resultMap="chartResultMap">
+		select E.*
+		<include refid="selectChartsSql" />
+		<if test="orderBy != null">
+		   order by ${orderBy}
+		</if>
+	</select>
+
+
+	<select id="getChartCount" 
+		parameterType="com.glaf.chart.query.ChartQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectChartsSql" />
+	</select>
+
+	<sql id="selectChartsSql">
+
+		from SYS_CHART E
+
+		<where>
+		       1 = 1  
+		       
+		    <if test="chartIds != null and chartIds.size() &gt; 0">
+			    and E.ID_ IN
+				<foreach item="x_chart" index="index" collection="chartIds" 
+					open="(" separator="," close=")">
+                  #{x_chart}
+				</foreach>
+			</if>
+			
+			<if test="enableFlag != null and enableFlag != '' ">
+				and E.ENABLEFLAG_ = #{enableFlag}
+			</if>
+
+			<if test="subjectLike != null and subjectLike != '' ">
+				and E.SUBJECT_ like #{subjectLike}
+			</if>
+	        
+			<if test="chartName != null and chartName != '' ">
+				and E.CHARTNAME_ = #{chartName}
+			</if>
+
+			<if test="chartNameLike != null and chartNameLike != '' ">
+				and E.CHARTNAME_ like #{chartNameLike}
+			</if>
+
+			<if test="chartTitleLike != null and chartTitleLike != '' ">
+				and E.CHARTTITLE_ like #{chartTitleLike}
+			</if>
+
+			<if test="chartType != null and chartType != '' ">
+				and E.CHARTTYPE_ = #{chartType}
+			</if>
+
+			<if test="chartTypeLike != null and chartTypeLike != '' ">
+				and E.CHARTTYPE_ like #{chartTypeLike}
+			</if>
+	        
+			<if test="imageType != null and imageType != '' ">
+				and E.IMAGETYPE_ = #{imageType}
+			</if>
+
+			<if test="imageTypeLike != null and imageTypeLike != '' ">
+				and E.IMAGETYPE_ like #{imageTypeLike}
+			</if>
+
+			<if test="imageTypes != null and imageTypes.size() &gt; 0">
+			    and E.IMAGETYPE_ IN
+				<foreach item="x_imageType" index="index" collection="imageTypes" 
+					open="(" separator="," close=")">
+                  #{x_imageType}
+				</foreach>
+			</if>
+	        
+			<if test="createDateGreaterThanOrEqual != null">
+				and E.CREATEDATE_ &gt;= #{createDateGreaterThanOrEqual}
+			</if>
+
+			<if test="createDateLessThanOrEqual != null">
+				and E.CREATEDATE_ &lt;= #{createDateLessThanOrEqual}
+			</if>
+	        
+			<if test="createBy != null and createBy != '' ">
+				and E.CREATEBY_ = #{createBy}
+			</if>
+
+			<if test="createByLike != null and createByLike != '' ">
+				and E.CREATEBY_ like #{createByLike}
+			</if>
+			 
+		</where>
+	</sql>
+
+</mapper>

@@ -34,7 +34,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
  
 
 @Entity
-@Table(name = "MX_MAIL_TASK_ACCOUNT")
+@Table(name = "SYS_MAIL_TASK_ACCOUNT")
 public class MailTaskAccount implements Serializable {
 	private static final long serialVersionUID = 1L;
 

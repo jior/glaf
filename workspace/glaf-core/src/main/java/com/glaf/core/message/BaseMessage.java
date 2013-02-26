@@ -22,33 +22,23 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.Transient;
-
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
- 
+
 import com.glaf.core.base.DataFile;
 import com.glaf.core.util.DateUtils;
 
-@Entity
-@Table(name = "MX_MESSAGE")
 public class BaseMessage implements MessageProvider {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Ö÷¼ü
 	 */
+
 	protected String id;
 
 	/**
@@ -150,111 +140,86 @@ public class BaseMessage implements MessageProvider {
 
 	}
 
-	@Lob
-	@Column(name = "CONTENT_")
 	public String getContent() {
 		return content;
 	}
 
-	@Column(name = "CREATEBY_", updatable = false)
 	public String getCreateBy() {
 		return createBy;
 	}
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "CREATEDATE_", updatable = false)
 	public Date getCreateDate() {
 		return createDate;
 	}
 
-	@Transient
 	public Collection<DataFile> getDataFiles() {
 		return dataFiles;
 	}
 
-	@Column(name = "DELETEFLAG_")
 	public int getDeleteFlag() {
 		return deleteFlag;
 	}
 
-	@Id
-	@Column(name = "ID_", length = 50, nullable = false)
 	public String getId() {
 		return id;
 	}
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "LASTVIEWDATE_")
 	public Date getLastViewDate() {
 		return lastViewDate;
 	}
 
-	@Column(name = "LASTVIEWIP_")
 	public String getLastViewIP() {
 		return lastViewIP;
 	}
 
-	@Column(name = "MESSAGEBOX_")
 	public String getMessageBox() {
 		return messageBox;
 	}
 
-	@Column(name = "MESSAGEID_", updatable = false)
 	public String getMessageId() {
 		return messageId;
 	}
 
-	@Column(name = "MESSAGETYPE_")
 	public String getMessageType() {
 		return messageType;
 	}
 
-	@Column(name = "OBJECTID_")
 	public String getObjectId() {
 		return objectId;
 	}
 
-	@Column(name = "OBJECTVALUE_")
 	public String getObjectValue() {
 		return objectValue;
 	}
 
-	@Column(name = "RECEIVERID_")
 	public String getReceiverId() {
 		return receiverId;
 	}
 
-	@Transient
 	public String getReceiverName() {
 		return receiverName;
 	}
 
-	@Column(name = "RESOURCEID_", updatable = false)
 	public String getResourceId() {
 		return resourceId;
 	}
 
-	@Column(name = "SENDERID_")
 	public String getSenderId() {
 		return senderId;
 	}
 
-	@Transient
 	public String getSenderName() {
 		return senderName;
 	}
 
-	@Column(name = "STATUS_")
 	public int getStatus() {
 		return status;
 	}
 
-	@Column(name = "SUBJECT_")
 	public String getSubject() {
 		return subject;
 	}
 
-	@Column(name = "TEMPLATEID_")
 	public String getTemplateId() {
 		return templateId;
 	}

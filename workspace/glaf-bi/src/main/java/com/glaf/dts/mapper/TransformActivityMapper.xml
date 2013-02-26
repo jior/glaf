@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.dts.mapper.TransformActivityMapper">
+
+	<resultMap id="transformActivityResultMap" type="com.glaf.dts.domain.TransformActivity">
+		<id property="id" column="ID_" jdbcType="VARCHAR" />
+		<result property="title" column="TITLE_" jdbcType="VARCHAR" />
+		<result property="cronExpression" column="CRONEXPRESSION_"
+			jdbcType="VARCHAR" />
+		<result property="executeCycle" column="EXECUTECYCLE_"
+			jdbcType="VARCHAR" />
+		<result property="createTime" column="CREATETIME_" jdbcType="TIMESTAMP" />
+		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR" />
+		<result property="description" column="DESCRIPTION_" jdbcType="VARCHAR" />
+		<result property="locked" column="LOCKED_" jdbcType="INTEGER" />
+		<result property="revision" column="REVISION_" jdbcType="INTEGER" />
+	</resultMap>
+
+
+	<insert id="insertTransformActivity" parameterType="com.glaf.dts.domain.TransformActivity">
+		insert into
+		SYS_DTS_ACTIVITY ( ID_
+		,TITLE_
+		,CRONEXPRESSION_
+		,EXECUTECYCLE_
+		,CREATETIME_
+		,CREATEBY_
+		,DESCRIPTION_
+		,LOCKED_
+		,REVISION_
+		)
+		values (
+		#{id, jdbcType=VARCHAR}
+		,#{title, jdbcType=VARCHAR}
+		,#{cronExpression, jdbcType=VARCHAR}
+		,#{executeCycle, jdbcType=VARCHAR}
+		,#{createTime, jdbcType=TIMESTAMP}
+		,#{createBy, jdbcType=VARCHAR}
+		,#{description, jdbcType=VARCHAR}
+		,#{locked, jdbcType=INTEGER}
+		,#{revision, jdbcType=INTEGER}
+		)
+	</insert>
+
+
+	<update id="updateTransformActivity" parameterType="com.glaf.dts.domain.TransformActivity">
+		update
+		SYS_DTS_ACTIVITY
+		set
+		<trim prefix="" suffix="" suffixOverrides=",">
+			TITLE_ = #{title, jdbcType=VARCHAR},
+			CRONEXPRESSION_ = #{cronExpression, jdbcType=VARCHAR},
+			EXECUTECYCLE_ = #{executeCycle, jdbcType=VARCHAR},
+			DESCRIPTION_ = #{description, jdbcType=VARCHAR},
+			LOCKED_ = #{locked, jdbcType=INTEGER},
+			REVISION_ = #{revision, jdbcType=INTEGER},
+		</trim>
+		where
+		ID_ = #{id, jdbcType=VARCHAR}
+
+	</update>
+
+
+	<delete id="deleteTransformActivityById" parameterType="string">
+		delete from SYS_DTS_ACTIVITY
+		where ID_ = #{id}
+	</delete>
+
+	<delete id="deleteTransformActivitys" parameterType="com.glaf.dts.query.TransformActivityQuery">
+		delete from SYS_DTS_ACTIVITY
+		where (
+		ID_ IN
+		<foreach item="x_rowId" index="index" collection="rowIds"
+			open="(" separator="," close=")">
+			#{x_rowId}
+		</foreach>
+		)
+	</delete>
+
+	<select id="getTransformActivityById" parameterType="string"
+		resultMap="transformActivityResultMap">
+		select * from SYS_DTS_ACTIVITY where ID_ = #{id}
+	</select>
+
+
+	<select id="getTransformActivitys" parameterType="com.glaf.dts.query.TransformActivityQuery"
+		resultMap="transformActivityResultMap">
+		select E.*
+		<include refid="selectTransformActivitysSql" />
+		<if test="orderBy != null">
+			order by ${orderBy}
+		</if>
+	</select>
+
+	<select id="getTransformActivityCount" parameterType="com.glaf.dts.query.TransformActivityQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectTransformActivitysSql" />
+	</select>
+
+	<sql id="selectTransformActivitysSql">
+
+		from SYS_DTS_ACTIVITY E
+
+		<where>
+			1 = 1
+
+			<if test="titleLike != null and titleLike != '' ">
+				and E.TITLE_ like #{titleLike}
+			</if>
+
+			<if test="createTimeGreaterThanOrEqual != null">
+				and E.CREATETIME_ &gt;= #{createTimeGreaterThanOrEqual}
+			</if>
+
+			<if test="createTimeLessThanOrEqual != null">
+				and E.CREATETIME_ &lt;= #{createTimeLessThanOrEqual}
+			</if>
+
+			<if test="createBy != null and createBy != '' ">
+				and E.CREATEBY_ = #{createBy}
+			</if>
+
+			<if test="descriptionLike != null and descriptionLike != '' ">
+				and E.DESCRIPTION_ like #{descriptionLike}
+			</if>
+
+			<if test="locked != null">
+				and E.LOCKED_ = #{locked}
+			</if>
+
+			<if test="lockedGreaterThanOrEqual != null">
+				and E.LOCKED_ &gt;= #{lockedGreaterThanOrEqual}
+			</if>
+
+			<if test="lockedLessThanOrEqual != null">
+				and E.LOCKED_ &lt;= #{lockedLessThanOrEqual}
+			</if>
+
+			<if test="revision != null">
+				and E.REVISION_ = #{revision}
+			</if>
+
+			<if test="revisionGreaterThanOrEqual != null">
+				and E.REVISION_ &gt;= #{revisionGreaterThanOrEqual}
+			</if>
+
+			<if test="revisionLessThanOrEqual != null">
+				and E.REVISION_ &lt;= #{revisionLessThanOrEqual}
+			</if>
+
+		</where>
+	</sql>
+
+</mapper>

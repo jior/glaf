@@ -1,20 +1,20 @@
 /*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.glaf.core.mail;
 
@@ -49,7 +49,7 @@ import com.glaf.core.context.ContextFactory;
 import com.glaf.core.freemarker.TemplateUtils;
 import com.glaf.core.mail.config.JavaMailSenderConfiguration;
 import com.glaf.core.mail.util.MailTools;
- 
+
 import com.glaf.core.util.LogUtils;
 import com.glaf.core.util.UUID32;
 
@@ -121,8 +121,8 @@ public class MailSenderImpl implements MailSender {
 			}
 			messageHelper.setFrom(mailFrom);
 		}
-		
-		logger.debug("mailFrom:"+mailFrom);
+
+		logger.debug("mailFrom:" + mailFrom);
 
 		if (mailMessage.getTo() != null) {
 			messageHelper.setTo(mailMessage.getTo());
@@ -186,20 +186,23 @@ public class MailSenderImpl implements MailSender {
 		mailMessage.setDataMap(dataMap);
 
 		if (StringUtils.isEmpty(mailMessage.getContent())) {
-			Template template = TemplateProperties.getTemplate(
-					mailMessage.getTemplateId());
+			Template template = TemplateProperties.getTemplate(mailMessage
+					.getTemplateId());
 			if (template != null) {
 				String templateType = template.getTemplateType();
 				logger.debug("templateType:" + templateType);
 				if (StringUtils.equals(templateType, "eml")) {
 					if (template.getContent() != null) {
-						Mail m = mailHelper.getMail(template.getContent().getBytes());
+						Mail m = mailHelper.getMail(template.getContent()
+								.getBytes());
 						String content = m.getContent();
 						if (StringUtils.isNotEmpty(content)) {
 							template.setContent(content);
 							try {
 								Writer writer = new StringWriter();
-								TemplateUtils.evaluate(mailMessage.getTemplateId(), dataMap, writer);
+								TemplateUtils.evaluate(
+										mailMessage.getTemplateId(), dataMap,
+										writer);
 								String text = writer.toString();
 								writer.close();
 								writer = null;
@@ -212,7 +215,8 @@ public class MailSenderImpl implements MailSender {
 				} else {
 					try {
 						Writer writer = new StringWriter();
-						TemplateUtils.evaluate(mailMessage.getTemplateId(), dataMap, writer);
+						TemplateUtils.evaluate(mailMessage.getTemplateId(),
+								dataMap, writer);
 						String text = writer.toString();
 						writer.close();
 						writer = null;
@@ -227,13 +231,14 @@ public class MailSenderImpl implements MailSender {
 		if (StringUtils.isNotEmpty(mailMessage.getContent())) {
 			String text = mailMessage.getContent();
 			if (StringUtils.isNotEmpty(mailMessage.getTemplateId())) {
-				Template template = TemplateProperties
-						.getTemplate(mailMessage.getTemplateId());
+				Template template = TemplateProperties.getTemplate(mailMessage
+						.getTemplateId());
 				if (template != null) {
 					try {
 						template.setContent(text);
 						Writer writer = new StringWriter();
-						TemplateUtils.evaluate(mailMessage.getTemplateId(), dataMap, writer);
+						TemplateUtils.evaluate(mailMessage.getTemplateId(),
+								dataMap, writer);
 						text = writer.toString();
 						writer.close();
 						writer = null;

@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.dts.mapper.TransformExcecutionMapper">
+
+	<resultMap id="transformExcecutionResultMap" type="com.glaf.dts.domain.TransformExcecution">
+		<id property="id" column="ID_" jdbcType="VARCHAR" />
+		<result property="activityId" column="ACTIVITYID_" jdbcType="VARCHAR" />
+		<result property="stepId" column="STEPID_" jdbcType="VARCHAR" />
+		<result property="startTime" column="STARTTIME_" jdbcType="TIMESTAMP" />
+		<result property="endTime" column="ENDTIME_" jdbcType="TIMESTAMP" />
+		<result property="priority" column="PRIORITY_" jdbcType="INTEGER" />
+		<result property="execute" column="EXECUTE_" jdbcType="VARCHAR" />
+		<result property="success" column="SUCCESS_" jdbcType="VARCHAR" />
+	</resultMap>
+
+
+	<insert id="insertTransformExcecution" parameterType="com.glaf.dts.domain.TransformExcecution">
+		insert into
+		SYS_DTS_EXCECUTION ( ID_
+		,ACTIVITYID_
+		,STEPID_
+		,STARTTIME_
+		,ENDTIME_
+		,PRIORITY_
+		,EXECUTE_
+		,SUCCESS_
+		)
+		values (
+		#{id, jdbcType=VARCHAR}
+
+		,#{activityId, jdbcType=VARCHAR}
+		,#{stepId, jdbcType=VARCHAR}
+		,#{startTime, jdbcType=TIMESTAMP}
+		,#{endTime, jdbcType=TIMESTAMP}
+		,#{priority, jdbcType=INTEGER}
+		,#{execute, jdbcType=VARCHAR}
+		,#{success, jdbcType=VARCHAR}
+		)
+	</insert>
+
+
+	<update id="updateTransformExcecution" parameterType="com.glaf.dts.domain.TransformExcecution">
+		update
+		SYS_DTS_EXCECUTION
+		set
+		<trim prefix="" suffix="" suffixOverrides=",">
+		</trim>
+		where
+		ID_ = #{id, jdbcType=VARCHAR}
+
+	</update>
+
+
+	<delete id="deleteTransformExcecutionById" parameterType="string">
+		delete
+		from SYS_DTS_EXCECUTION
+		where ID_ = #{id}
+	</delete>
+
+	<delete id="deleteTransformExcecutions" parameterType="com.glaf.dts.query.TransformExcecutionQuery">
+		delete from SYS_DTS_EXCECUTION
+		where (
+		ID_ IN
+		<foreach item="x_rowId" index="index" collection="rowIds"
+			open="(" separator="," close=")">
+			#{x_rowId}
+		</foreach>
+		)
+	</delete>
+
+	<select id="getTransformExcecutionById" parameterType="string"
+		resultMap="transformExcecutionResultMap">
+		select * from SYS_DTS_EXCECUTION where ID_ = #{id}
+	</select>
+
+
+	<select id="getTransformExcecutions" parameterType="com.glaf.dts.query.TransformExcecutionQuery"
+		resultMap="transformExcecutionResultMap">
+		select E.*
+		<include refid="selectTransformExcecutionsSql" />
+		<if test="orderBy != null">
+			order by ${orderBy}
+		</if>
+	</select>
+
+	<select id="getTransformExcecutionCount" parameterType="com.glaf.dts.query.TransformExcecutionQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectTransformExcecutionsSql" />
+	</select>
+
+	<sql id="selectTransformExcecutionsSql">
+
+		from SYS_DTS_EXCECUTION E
+
+		<where>
+			1 = 1
+
+			<if test="activityId != null and activityId != '' ">
+				and E.ACTIVITYID_ = #{activityId}
+			</if>
+
+			<if test="activityIds != null and activityIds.size() &gt; 0">
+				and E.ACTIVITYID_ IN
+				<foreach item="x_activityId" index="index" collection="activityIds"
+					open="(" separator="," close=")">
+					#{x_activityId}
+				</foreach>
+			</if>
+
+			<if test="stepId != null and stepId != '' ">
+				and E.STEPID_ = #{stepId}
+			</if>
+
+
+			<if test="stepIds != null and stepIds.size() &gt; 0">
+				and E.STEPID_ IN
+				<foreach item="x_stepId" index="index" collection="stepIds"
+					open="(" separator="," close=")">
+					#{x_stepId}
+				</foreach>
+			</if>
+
+			<if test="startTimeGreaterThanOrEqual != null">
+				and E.STARTTIME_ &gt;= #{startTimeGreaterThanOrEqual}
+			</if>
+
+			<if test="startTimeLessThanOrEqual != null">
+				and E.STARTTIME_ &lt;= #{startTimeLessThanOrEqual}
+			</if>
+
+			<if test="endTimeGreaterThanOrEqual != null">
+				and E.ENDTIME_ &gt;= #{endTimeGreaterThanOrEqual}
+			</if>
+
+			<if test="endTimeLessThanOrEqual != null">
+				and E.ENDTIME_ &lt;= #{endTimeLessThanOrEqual}
+			</if>
+
+			<if test="priority != null">
+				and E.PRIORITY_ = #{priority}
+			</if>
+
+			<if test="priorityGreaterThanOrEqual != null">
+				and E.PRIORITY_ &gt;= #{priorityGreaterThanOrEqual}
+			</if>
+
+			<if test="priorityLessThanOrEqual != null">
+				and E.PRIORITY_ &lt;= #{priorityLessThanOrEqual}
+			</if>
+
+		</where>
+	</sql>
+
+</mapper>

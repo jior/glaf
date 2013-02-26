@@ -508,3 +508,8 @@ color:#FFBC13
 .page-footer table{
 	width:90%;
 }
+
+ .x_content_title {
+   text-transform: uppercase; background-color: inherit; color: #789030; font-size: 14px; font-weight: bold; text-align: center;
+}
+ 
