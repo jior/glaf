@@ -11,7 +11,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.ModelMap;
-import org.json.*;
+import com.alibaba.fastjson.*;
  
 import com.glaf.core.util.JsonUtils;
 import com.glaf.base.config.*;
@@ -123,7 +123,7 @@ public class TripBaseController {
 			trip = tripService.getTrip(rowId);
 			request.setAttribute("trip", trip);
 			JSONObject rowJSON =  trip.toJsonObject();
-			request.setAttribute("x_json", rowJSON.toString('\n'));
+			request.setAttribute("x_json", rowJSON.toString());
 		}
 
                 boolean canUpdate = false;
@@ -167,7 +167,7 @@ public class TripBaseController {
 			trip = tripService.getTrip(rowId);
 			request.setAttribute("trip", trip);
 			JSONObject rowJSON =  trip.toJsonObject();
-			request.setAttribute("x_json", rowJSON.toString('\n'));
+			request.setAttribute("x_json", rowJSON.toString());
 		}
 
 		String view = request.getParameter("view");
@@ -260,7 +260,7 @@ public class TripBaseController {
 					rowJSON.put("id", trip.getId());
 					rowJSON.put("tripId", trip.getId());
 
- 					rowsJSON.put(rowJSON);
+ 					rowsJSON.add(rowJSON);
 				}
 
 			}

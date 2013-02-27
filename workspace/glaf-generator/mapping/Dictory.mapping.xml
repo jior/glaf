@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<mapping>
+    <entity name="Dictory" package="com.glaf.base.modules.sys" table="sys_dictory" title="Dictory" englishTitle="Dictory">
+        <id name="id" column="ID" type="Long" englishTitle="id" length="19"  title="编号"/>
+        <property name="typeId" column="TYPEID" type="Long" englishTitle="typeId" dataType="0" length="19"  title="类型编号"/>
+        <property name="name" column="NAME" type="String" englishTitle="name" dataType="0" length="50"  title="名称"/>
+        <property name="desc" column="DICTDESC" type="String" englishTitle="desc" dataType="0" length="200"  title="描述"/>
+        <property name="code" column="CODE" type="String" englishTitle="code" dataType="0" length="50"  title="编码"/>
+        <property name="sort" column="SORT" type="Integer" englishTitle="sort" dataType="0" length="10"  title="序号"/>
+        <property name="blocked" column="BLOCKED" type="Integer" englishTitle="blocked" dataType="0" length="10"  title="是否启用"/>
+        <property name="ext1" column="EXT1" type="String" englishTitle="ext1" dataType="0" length="200"  title="字符串值1"/>
+        <property name="ext2" column="EXT2" type="String" englishTitle="ext2" dataType="0" length="200"  title="字符串值2"/>
+        <property name="ext3" column="EXT3" type="String" englishTitle="ext3" dataType="0" length="200"  title="字符串值3"/>
+        <property name="ext4" column="EXT4" type="String" englishTitle="ext4" dataType="0" length="200"  title="字符串值4"/>
+        <property name="ext5" column="EXT5" type="Date" englishTitle="ext5" dataType="0" length="23"  title="日期值5"/>
+        <property name="ext6" column="EXT6" type="Date" englishTitle="ext6" dataType="0" length="23"  title="日期值6"/>
+    </entity>
+</mapping>

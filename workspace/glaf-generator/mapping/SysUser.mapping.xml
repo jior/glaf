@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<mapping>
+    <entity name="SysUser" package="com.glaf.base.modules.sys" table="sys_user" title="SysUser" englishTitle="SysUser">
+        <id name="id" column="ID" type="Long" englishTitle="id" length="19" title="编号" />
+        <property name="account" column="ACCOUNT" type="String" englishTitle="account" dataType="0" length="255" title="用户名" />
+        <property name="password" column="PASSWORD" type="String" englishTitle="password" dataType="0" length="255" title="密码" />
+        <property name="code" column="CODE" type="String" englishTitle="code" dataType="0" length="255" title="编码" />
+        <property name="name" column="NAME" type="String" englishTitle="name" dataType="0" length="255" title="姓名" />
+        <property name="blocked" column="BLOCKED" type="Integer" englishTitle="blocked" dataType="0" length="10" title="启用标记" />
+        <property name="createTime" column="CREATETIME" type="Date" englishTitle="createTime" dataType="0" length="23" title="创建时间" />
+        <property name="lastLoginTime" column="LASTLOGINTIME" type="Date" englishTitle="lastLoginTime" dataType="0" length="23" title="最后登录时间" />
+        <property name="lastLoginIP" column="LASTLOGINIP" type="String" englishTitle="lastLoginIP" dataType="0" length="255" title="最后登录IP" />
+        <property name="evection" column="EVECTION" type="Integer" englishTitle="evection" dataType="0" length="10" title="出差" />
+        <property name="mobile" column="MOBILE" type="String" englishTitle="mobile" dataType="0" length="255" title="手机" />
+        <property name="email" column="EMAIL" type="String" englishTitle="email" dataType="0" length="255" title="邮件" />
+        <property name="telephone" column="TELEPHONE" type="String" englishTitle="telephone" dataType="0" length="255" title="电话" />
+        <property name="gender" column="GENDER" type="Integer" englishTitle="gender" dataType="0" length="10" title="性别" />
+        <property name="headship" column="HEADSHIP" type="String" englishTitle="headship" dataType="0" length="255" title="职务" />
+        <property name="userType" column="USERTYPE" type="Integer" englishTitle="userType" dataType="0" length="10" title="用户类别" />
+        <property name="fax" column="FAX" type="String" englishTitle="fax" dataType="0" length="255" title="传真" />
+        <property name="accountType" column="ACCOUNTTYPE" type="Integer" englishTitle="accountType" dataType="0" length="10" title="账号类型" />
+        <property name="dumpFlag" column="DUMPFLAG" type="Integer" englishTitle="dumpFlag" dataType="0" length="10" title="废弃标记" />
+        <property name="deptId" column="DEPTID" type="Long" englishTitle="deptId" dataType="0" length="19" title="部门编号" />
+        <property name="adminFlag" column="ADMINFLAG" type="String" englishTitle="adminFlag" dataType="0" length="1" title="管理员标识" />
+        <property name="superiorIds" column="SUPERIORIDS" type="String" englishTitle="superiorIds" dataType="0" length="255" title="上级领导" />
+    </entity>
+</mapping>

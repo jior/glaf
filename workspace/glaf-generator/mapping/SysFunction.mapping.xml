@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<mapping>
+    <entity name="SysFunction" package="com.glaf.base.modules.sys" table="sys_function" title="SysFunction" englishTitle="SysFunction">
+        <id name="id" column="ID" type="Long" englishTitle="id" length="19" title="编号" />
+        <property name="name" column="NAME" type="String" englishTitle="name" dataType="0" length="255" title="名称" />
+        <property name="funcDesc" column="FUNCDESC" type="String" englishTitle="funcDesc" dataType="0" length="255" title="描述" />
+        <property name="funcMethod" column="FUNCMETHOD" type="String" englishTitle="funcMethod" dataType="0" length="255" title="方法" />
+        <property name="sort" column="SORT" type="Integer" englishTitle="sort" dataType="0" length="10" title="序号" />
+        <property name="appId" column="APPID" type="Long" englishTitle="appId" dataType="0" length="19" nullable="false" title="应用编号" />
+    </entity>
+</mapping>

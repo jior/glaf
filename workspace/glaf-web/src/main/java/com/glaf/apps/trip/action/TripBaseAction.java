@@ -14,7 +14,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import org.springframework.web.struts.DispatchActionSupport;
-import org.json.*;
+import com.alibaba.fastjson.*;
  
 
 import com.glaf.base.modules.sys.model.*;
@@ -148,7 +148,7 @@ public class TripBaseAction extends DispatchActionSupport {
 			trip = tripService.getTrip(rowId);
 			request.setAttribute("trip", trip);
 			JSONObject rowJSON = trip.toJsonObject();
-			request.setAttribute("x_json", rowJSON.toString('\n'));
+			request.setAttribute("x_json", rowJSON.toString());
 		}
 
 		boolean canUpdate = false;
@@ -181,7 +181,7 @@ public class TripBaseAction extends DispatchActionSupport {
 			trip = tripService.getTrip(rowId);
 			request.setAttribute("trip", trip);
 			JSONObject rowJSON = trip.toJsonObject();
-			request.setAttribute("x_json", rowJSON.toString('\n'));
+			request.setAttribute("x_json", rowJSON.toString());
 		}
 
 		return mapping.findForward("show_view");
@@ -257,7 +257,7 @@ public class TripBaseAction extends DispatchActionSupport {
 					rowJSON.put("id", trip.getId());
 					rowJSON.put("tripId", trip.getId());
 
-					rowsJSON.put(rowJSON);
+					rowsJSON.add(rowJSON);
 				}
 
 			}

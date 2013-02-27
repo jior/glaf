@@ -58,6 +58,7 @@ public class SysUser implements Serializable, User {
 	private String adminFlag;
 	private String menus;
 	private String superiorIds;
+	private int deptId;
 	private Set<SysUserRole> userRoles = new HashSet<SysUserRole>();
 	private Set<SysDeptRole> roles = new HashSet<SysDeptRole>();
 	private Set<SysFunction> functions = new HashSet<SysFunction>();
@@ -108,7 +109,7 @@ public class SysUser implements Serializable, User {
 		if (department != null) {
 			return (int) department.getId();
 		}
-		return 0;
+		return deptId;
 	}
 
 	public int getDumpFlag() {
@@ -413,7 +414,7 @@ public class SysUser implements Serializable, User {
 	}
 
 	public void setDeptId(int deptId) {
-
+		this.deptId = deptId;
 	}
 
 	public void setDumpFlag(int dumpFlag) {

@@ -58,6 +58,7 @@ public class CacheFactory {
 				cacheKey = DigestUtils.md5Hex(cacheKey.getBytes());
 				Object value = cache.get(cacheKey);
 				if (value != null) {
+					logger.debug("get object'" + key + "' from cache");
 					return value;
 				}
 			}
@@ -124,7 +125,7 @@ public class CacheFactory {
 			}
 
 			ctx = new ClassPathXmlApplicationContext(configLocation);
-			logger.info("################# CacheFactory ##############" );
+			logger.info("################# CacheFactory ##############");
 			logger.info("start spring ioc from: " + configLocation);
 			return ctx;
 		} catch (Exception ex) {

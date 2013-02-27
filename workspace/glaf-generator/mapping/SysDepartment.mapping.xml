@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<mapping>
+    <entity name="SysDepartment" package="com.glaf.base.modules.sys" table="sys_department" title="SysDepartment" englishTitle="SysDepartment">
+        <id name="id" column="ID" type="Long" englishTitle="ID" length="19"  title="编号"/>
+        <property name="name" column="NAME" type="String" englishTitle="NAME" dataType="0" length="255"  title="名称"/>
+        <property name="desc" column="DEPTDESC" type="String" englishTitle="DEPTDESC" dataType="0" length="255"  title="描述"/>
+        <property name="createTime" column="CREATETIME" type="Date" englishTitle="CREATETIME" dataType="0" length="23"  title="创建日期"/>
+        <property name="sort" column="SORT" type="Integer" englishTitle="SORT" dataType="0" length="10"  title="序号"/>
+        <property name="no" column="DEPTNO" type="String" englishTitle="DEPTNO" dataType="0" length="255"  title="部门编号"/>
+        <property name="code" column="CODE" type="String" englishTitle="CODE" dataType="0" length="255"  title="编码"/>
+        <property name="code2" column="CODE2" type="String" englishTitle="CODE2" dataType="0" length="255"  title="编码2"/>
+        <property name="status" column="STATUS" type="Integer" englishTitle="STATUS" dataType="0" length="10"  title="状态"/>
+        <property name="fincode" column="FINCODE" type="String" englishTitle="FINCODE" dataType="0" length="255"  title="财务代码"/>
+        <property name="nodeId" column="NODEID" type="Long" englishTitle="NODEID" dataType="0" length="19" nullable="false"  title="节点编号"/>
+    </entity>
+</mapping>

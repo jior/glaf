@@ -59,7 +59,7 @@ public class Database2XmlMapping {
 
 				for (FieldDefinition f : fields) {
 					f.setName(StringTools.lower(StringTools.camelStyle(f
-							.getName())));
+							.getName().toLowerCase())));
 					if (!primaryKeys.isEmpty()) {
 						if (primaryKeys.contains(f.getColumnName())) {
 							classDefinition.setIdField(f);
@@ -88,7 +88,7 @@ public class Database2XmlMapping {
 				format.setNewLineAfterDeclaration(true);
 				format.setSuppressDeclaration(true);
 
-				String filename = classDefinition.getEntityName()
+				String filename = classDefinition.getEntityName().toLowerCase()
 						+ ".mapping.xml";
 
 				String toFile = todir + "/" + filename;

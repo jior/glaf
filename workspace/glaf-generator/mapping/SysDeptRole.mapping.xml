@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<mapping>
+    <entity name="SysDeptRole" package="com.glaf.base.modules.sys" table="sys_dept_role" title="SysDeptRole" englishTitle="SysDeptRole">
+        <id name="id" column="ID" type="Long" englishTitle="ID" length="19" title="编号" />
+        <property name="grade" column="GRADE" type="Integer" englishTitle="GRADE" dataType="0" length="10" title="级别" />
+        <property name="code" column="CODE" type="String" englishTitle="CODE" dataType="0" length="255" title="编码" />
+        <property name="sort" column="SORT" type="Integer" englishTitle="SORT" dataType="0" length="10" title="序号" />
+        <property name="sysRoleId" column="SYSROLEID" type="Long" englishTitle="SYSROLEID" dataType="0" length="19" nullable="false" title="角色编号" />
+        <property name="deptId" column="DEPTID" type="Long" englishTitle="DEPTID" dataType="0" length="19" nullable="false" title="部门编号" />
+    </entity>
+</mapping>

@@ -1,20 +1,20 @@
 /*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.glaf.base.modules.sys.model;
 
@@ -31,6 +31,7 @@ public class SysDeptRole implements Serializable {
 	private int grade;
 	private String code;
 	private int sort;
+	private long sysRoleId;
 
 	private Set<SysUser> users = new HashSet<SysUser>();
 	private Set<SysFunction> functions = new HashSet<SysFunction>();
@@ -76,6 +77,10 @@ public class SysDeptRole implements Serializable {
 		return sort;
 	}
 
+	public long getSysRoleId() {
+		return sysRoleId;
+	}
+
 	public Set<SysUser> getUsers() {
 		return users;
 	}
@@ -114,6 +119,10 @@ public class SysDeptRole implements Serializable {
 
 	public void setSort(int sort) {
 		this.sort = sort;
+	}
+
+	public void setSysRoleId(long sysRoleId) {
+		this.sysRoleId = sysRoleId;
 	}
 
 	public void setUsers(Set<SysUser> users) {
