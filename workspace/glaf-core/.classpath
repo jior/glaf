@@ -126,5 +126,8 @@
 	<classpathentry kind="lib" path="lib/jasperreports-fonts-5.0.0.jar"/>
 	<classpathentry kind="lib" path="lib/jcommon-1.0.18.jar"/>
 	<classpathentry kind="lib" path="lib/jfreechart-1.0.14.jar"/>
+	<classpathentry kind="lib" path="lib/java_memcached-release.jar"/>
+	<classpathentry kind="lib" path="lib/spymemcached.jar"/>
+	<classpathentry kind="lib" path="lib/xmemcached.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
