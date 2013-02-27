@@ -55,10 +55,14 @@ insert into sys_tree (id, parent, name, nodedesc, sort, code) values (437, 34, '
 insert into sys_tree (id, parent, name, nodedesc, sort, code) values (438, 34, '流程监控', '流程监控', 438, '');
 insert into sys_tree (id, parent, name, nodedesc, sort, code) values (449, 8, '工作日历', '工作日历', 449, '');
 insert into sys_tree (id, parent, name, nodedesc, sort, code) values (450, 8, '系统参数', '系统参数', 450, '');
-insert into sys_tree (id, parent, name, nodedesc, sort, code) values (482, 10, '授权管理', '授权管理', 482, '');
+insert into sys_tree (id, parent, name, nodeDesc, sort, code) values (452, 8, '邮件服务设置', '邮件服务设置', 452, '');
+
 insert into sys_tree (id, parent, name, nodedesc, sort, code) values (494, 8, 'TODO配置', 'TODO配置', 494, '');
 insert into sys_tree (id, parent, name, nodedesc, sort, code) values (495, 8, '调度管理', '调度管理', 495, '');
 insert into sys_tree (id, parent, name, nodeDesc, sort, code) values (498, 4, '货币类型', '货币类型', 498, 'money');
+
+insert into sys_tree (id, parent, name, nodedesc, sort, code) values (512, 10, '授权管理', '授权管理', 512, '');
+
 
 /*初始化部门信息*/
 insert into sys_department (id, name, deptdesc, createtime, sort, deptno, code, code2, status, fincode, nodeid) values (6, '技术部', '技术部', '2006-07-16 16:30:39', 284, 'JS000', 'JS', 'J', 0, 'JS000', 6);
@@ -87,7 +91,8 @@ insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) val
 insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (437, '流程演示', '', '/workflow/test/index.jsp', 437, 1, 437);
 insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (449, '工作日历', '工作日历', '/others/workCalendar.do?method=showList', 449, 1, 449);
 insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (450, '系统参数', '系统参数', '/mx/system/property/edit?category=SYS', 450, 1, 450);
-insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (482, '授权管理', '', '/sys/sysUserRole.do?method=showUsers', 482, 2, 482);
+insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (452, '邮件服务设置', '邮件服务设置', '/mx/system/mailConfig', 452, 1, 452);
+insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (512, '授权管理', '', '/sys/sysUserRole.do?method=showUsers', 512, 2, 512);
 insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (494, 'TODO配置', '', '/sys/todo.do?method=showList', 494, 1, 494);
 insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (495, '调度管理', '', '/sys/scheduler.do?method=showList', 495, 1, 495);
 insert into sys_application (id, name, appDesc, url, sort, showMenu, nodeId) values (42, '统计报表', '统计报表', '', 42, 1, 42);
@@ -132,7 +137,7 @@ insert into sys_access (roleid, appid) values (1, 435);
 insert into sys_access (roleid, appid) values (1, 437);
 
 insert into sys_access (roleid, appid) values (1, 449);
-insert into sys_access (roleid, appid) values (1, 482); 
+insert into sys_access (roleid, appid) values (1, 512); 
 insert into sys_access (roleid, appid) values (1, 494); 
 insert into sys_access (roleid, appid) values (1, 495); 
 
