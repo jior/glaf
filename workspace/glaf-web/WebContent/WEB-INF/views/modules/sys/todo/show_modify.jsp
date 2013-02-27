@@ -1,9 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="html"%>
 <%@ page import="java.util.*"%>
+<%@ page import="com.glaf.core.util.*" %>
 <%@ page import="com.glaf.base.modules.todo.*"%>
 <%@ page import="com.glaf.base.modules.todo.model.*"%>
 <%@ page import="com.glaf.base.modules.todo.service.*"%>
@@ -11,8 +11,6 @@
 <%@ page import="com.glaf.base.modules.sys.*"%>
 <%@ page import="com.glaf.base.modules.sys.model.*"%>
 <%@ page import="com.glaf.base.modules.sys.service.*"%>
-<%@ page import="com.glaf.util.*" %>
-<%@ page import="com.glaf.core.query.paging.*" %>
 <%@ page import="com.glaf.base.modules.*" %>
 <%@ page import="com.glaf.base.modules.todo.service.*" %>
 <%@ page import="org.apache.commons.lang.StringUtils" %>
@@ -20,11 +18,11 @@
     String context = request.getContextPath();
     SysUser user = com.glaf.base.utils.RequestUtil.getLoginUser(request);
 	
-	Map params = com.glaf.util.RequestUtil.getQueryParams(request);
+	Map params = com.glaf.core.util.RequestUtils.getQueryParams(request);
 
 	TodoJobBean bean = (TodoJobBean)BaseDataManager.getInstance().getBean("todoJobBean");
 	String id = request.getParameter("id");
-    ToDo todo = bean.getToDo(new  Long(id).longValue());
+    ToDo todo = bean.getToDo(Long.parseLong(id));
 	pageContext.setAttribute("todo", todo);
 %>
 <html>

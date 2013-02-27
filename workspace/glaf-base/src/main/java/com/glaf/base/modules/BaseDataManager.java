@@ -44,11 +44,11 @@ public class BaseDataManager {
 
 	private static BaseDataManager instance;
 
-	private static Map baseDataMap = new Hashtable();
+	private static Map<String, List<BaseDataInfo>> baseDataMap = new Hashtable<String, List<BaseDataInfo>>();
 
-	private Map beanMap = new Hashtable();
+	private Map<String, Object> beanMap = new Hashtable<String, Object>();
 
-	private Map serviceMap = new Hashtable();
+	private Map<String, Object> serviceMap = new Hashtable<String, Object>();
 
 	public static String SV_NAMES[] = { "sysUserService", // 用户Service
 			"sysRoleService", // 角色Service
@@ -60,7 +60,7 @@ public class BaseDataManager {
 			"subjectCodeService" // 费用科目Service
 	};
 
-	public Map getServiceMap() {
+	public Map<String, Object> getServiceMap() {
 		return serviceMap;
 	}
 
@@ -69,7 +69,7 @@ public class BaseDataManager {
 	 * 
 	 * @param map
 	 */
-	public void setServiceMap(Map map) {
+	public void setServiceMap(Map<String, Object> map) {
 		this.serviceMap = map;
 		logger.info("service size:" + serviceMap.size());
 	}
@@ -87,11 +87,11 @@ public class BaseDataManager {
 		return null;
 	}
 
-	public Map getBeanMap() {
+	public Map<String, Object> getBeanMap() {
 		return beanMap;
 	}
 
-	public void setBeanMap(Map beanMap) {
+	public void setBeanMap(Map<String, Object> beanMap) {
 		this.beanMap = beanMap;
 	}
 
@@ -127,9 +127,9 @@ public class BaseDataManager {
 	 * @param key
 	 * @return
 	 */
-	public List getBaseData(String key) {
+	public List<?> getBaseData(String key) {
 		if (baseDataMap.containsKey(key)) {
-			return (List) baseDataMap.get(key);
+			return (List<?>) baseDataMap.get(key);
 		}
 		return null;
 	}
@@ -140,8 +140,8 @@ public class BaseDataManager {
 	 * @param key
 	 * @return
 	 */
-	public Iterator getList(String key) {
-		List list = getBaseData(key);
+	public Iterator<?> getList(String key) {
+		List<?> list = getBaseData(key);
 		if (list != null) {
 			return list.iterator();
 		} else {
@@ -156,8 +156,8 @@ public class BaseDataManager {
 	 * 
 	 * @return
 	 */
-	public List getList2(String key) {
-		List list = getBaseData(key);
+	public List<?> getList2(String key) {
+		List<?> list = getBaseData(key);
 		if (list != null) {
 			return list;
 		} else {
@@ -216,7 +216,7 @@ public class BaseDataManager {
 	public BaseDataInfo getValue(int valueId, String key) {
 		BaseDataInfo ret = null;
 		try {
-			Iterator iter = getList(key);
+			Iterator<?> iter = getList(key);
 			while (iter != null && iter.hasNext()) {
 				BaseDataInfo temp = (BaseDataInfo) iter.next();
 				if (temp.getId() == valueId) {
@@ -240,7 +240,7 @@ public class BaseDataManager {
 	public BaseDataInfo getValue(String code, String key) {
 		BaseDataInfo ret = null;
 		try {
-			Iterator iter = getList(key);
+			Iterator<?> iter = getList(key);
 			while (iter.hasNext()) {
 				BaseDataInfo temp = (BaseDataInfo) iter.next();
 				if (temp.getCode().equals(code)) {
@@ -264,7 +264,7 @@ public class BaseDataManager {
 	public BaseDataInfo getBaseData(String name, String key) {
 		BaseDataInfo ret = null;
 		try {
-			Iterator iter = getList(key);
+			Iterator<?> iter = getList(key);
 			while (iter.hasNext()) {
 				BaseDataInfo temp = (BaseDataInfo) iter.next();
 				if (temp.getName().equals(name)) {
@@ -288,7 +288,7 @@ public class BaseDataManager {
 	public BaseDataInfo getBaseDataWithNo(String no, String key) {
 		BaseDataInfo ret = null;
 		try {
-			Iterator iter = getList(key);
+			Iterator<?> iter = getList(key);
 			while (iter.hasNext()) {
 				BaseDataInfo temp = (BaseDataInfo) iter.next();
 				if (temp.getNo().equals(no)) {
@@ -591,7 +591,7 @@ public class BaseDataManager {
 		loadFunctions();
 		// 数据字典
 		loadDictInfo();
-		// 预算科目
+		// 科目代码
 		loadSubjectCode();
 	}
 
@@ -604,10 +604,10 @@ public class BaseDataManager {
 				logger.info("装载用户信息开始...");
 				SysUserService service = (SysUserService) serviceMap
 						.get(SV_NAMES[0]);
-				List list = service.getSysUserList();
+				List<?> list = service.getSysUserList();
 				if (list != null) {
-					Iterator iter = list.iterator();
-					List tmp = new ArrayList();
+					Iterator<?> iter = list.iterator();
+					List<BaseDataInfo> tmp = new ArrayList<BaseDataInfo>();
 					while (iter.hasNext()) {
 						SysUser bean = (SysUser) iter.next();
 						if (bean != null) {
@@ -643,13 +643,13 @@ public class BaseDataManager {
 						.get(SV_NAMES[3]);
 				SysTree parent = service
 						.getSysTreeByCode(SysConstants.TREE_DEPT);
-				List list = new ArrayList();
+				List<SysTree> list = new ArrayList<SysTree>();
 				service.getSysTree(list, (int) parent.getId(), 0);
 
 				// 显示所有部门列表
 				if (list != null) {
-					Iterator iter = list.iterator();
-					List tmp = new ArrayList();
+					Iterator<SysTree> iter = list.iterator();
+					List<BaseDataInfo> tmp = new ArrayList<BaseDataInfo>();
 					while (iter.hasNext()) {
 						SysTree tree = (SysTree) iter.next();
 						SysDepartment bean = tree.getDepartment();
@@ -696,11 +696,11 @@ public class BaseDataManager {
 				logger.info("装载模块信息开始...");
 				SysFunctionService service = (SysFunctionService) serviceMap
 						.get(SV_NAMES[5]);
-				List list = service.getSysFunctionList();
+				List<?> list = service.getSysFunctionList();
 				// 显示所有模块列表
 				if (list != null) {
-					Iterator iter = list.iterator();
-					List tmp = new ArrayList();
+					Iterator<?> iter = list.iterator();
+					List<BaseDataInfo> tmp = new ArrayList<BaseDataInfo>();
 					while (iter.hasNext()) {
 						SysFunction bean = (SysFunction) iter.next();
 						if (bean != null) {
@@ -742,11 +742,11 @@ public class BaseDataManager {
 				logger.info("装载科目代码开始...");
 				SubjectCodeService service = (SubjectCodeService) serviceMap
 						.get(SV_NAMES[7]);
-				List list = service.getSubjectCodeList();
+				List<?> list = service.getSubjectCodeList();
 				// 显示所有列表
 				if (list != null) {
-					Iterator iter = list.iterator();
-					List tmp = new ArrayList();
+					Iterator<?> iter = list.iterator();
+					List<BaseDataInfo> tmp = new ArrayList<BaseDataInfo>();
 					while (iter.hasNext()) {
 						SubjectCode bean = (SubjectCode) iter.next();
 						if (bean != null) {
