@@ -91,7 +91,7 @@
 	<classpathentry kind="lib" path="/glaf-core/lib/servlet-api.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/spring-aop.RELEASE.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/spring-aspects.RELEASE.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/spring-beans.RELEASE.jar" />
+	<classpathentry kind="lib" path="/glaf-core/lib/spring-beans.RELEASE.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/spring-context-support.RELEASE.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/spring-context.RELEASE.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/spring-core.RELEASE.jar"/>
@@ -120,11 +120,13 @@
 	<classpathentry kind="lib" path="/glaf-core/lib/xpp3-1.1.3.4d_b4_min.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/glaf-core"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/log4j-1.2.17.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/mybatis-3.2.0.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/mybatis-spring-1.2.0.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/slf4j-api-1.7.2.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/slf4j-log4j12-1.7.2.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/asm-3.3.1.jar"/>
 	<classpathentry kind="lib" path="conf"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/jcommon-1.0.18.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/jfreechart-1.0.14.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/mybatis-spring.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/mybatis.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

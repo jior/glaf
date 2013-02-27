@@ -36,6 +36,7 @@ import com.glaf.core.identity.Agent;
 public class IdentityFactory {
 	protected final static Log logger = LogFactory
 			.getLog(IdentityFactory.class);
+	
 	protected static EntityService entityService;
 
 	/**
@@ -47,7 +48,7 @@ public class IdentityFactory {
 	 */
 	public static List<String> getAgentIds(String assignTo) {
 		List<String> agentIds = new ArrayList<String>();
-		List<Object> list = entityService.getList("getAgents", assignTo);
+		List<Object> list = getEntityService().getList("getAgents", assignTo);
 		if (list != null && !list.isEmpty()) {
 			for (Object obj : list) {
 				if (obj instanceof Agent) {
@@ -68,7 +69,7 @@ public class IdentityFactory {
 	 */
 	public static List<Agent> getAgents(String assignTo) {
 		List<Agent> agents = new ArrayList<Agent>();
-		List<Object> list = entityService.getList("getAgents", assignTo);
+		List<Object> list = getEntityService().getList("getAgents", assignTo);
 		if (list != null && !list.isEmpty()) {
 			for (Object obj : list) {
 				if (obj instanceof Agent) {
@@ -94,7 +95,7 @@ public class IdentityFactory {
 	 * @return
 	 */
 	public static LoginContext getLoginContext(String actorId) {
-		User user = (User) entityService.getById("getUserById", actorId);
+		User user = (User) getEntityService().getById("getUserById", actorId);
 		if (user != null) {
 			LoginContext loginContext = new LoginContext(user);
 
@@ -110,7 +111,7 @@ public class IdentityFactory {
 	 * @return
 	 */
 	public static User getUser(String actorId) {
-		return (User) entityService.getById("getUserById", actorId);
+		return (User) getEntityService().getById("getUserById", actorId);
 	}
 
 	/**
@@ -120,7 +121,7 @@ public class IdentityFactory {
 	 */
 	public static Map<String, User> getUserMap() {
 		Map<String, User> userMap = new LinkedHashMap<String, User>();
-		List<Object> list = entityService.getList("getUsers", null);
+		List<Object> list = getEntityService().getList("getUsers", null);
 		if (list != null && !list.isEmpty()) {
 			for (Object obj : list) {
 				if (obj instanceof User) {

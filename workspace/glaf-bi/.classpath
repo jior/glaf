@@ -80,8 +80,6 @@
 	<classpathentry kind="lib" path="/glaf-core/lib/mail.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/mvel2-2.1.0.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/mybatis-2.3.5.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/mybatis-3.2.0.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/mybatis-spring-1.2.0.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/mysql-connector-java-5.1.22-bin.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/ognl-2.7.3.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/oscache-2.4.1.jar"/>
@@ -126,5 +124,7 @@
 	<classpathentry kind="lib" path="/glaf-core/lib/jasperreports-fonts-5.0.0.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/jcommon-1.0.18.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/jfreechart-1.0.14.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/mybatis-spring.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/mybatis.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

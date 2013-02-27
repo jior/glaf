@@ -134,7 +134,7 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/slf4j-api-1.7.2.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/slf4j-log4j12-1.7.2.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/asm-3.3.1.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/mybatis-3.2.0.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/mybatis-spring-1.2.0.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/mybatis-spring.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/mybatis.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

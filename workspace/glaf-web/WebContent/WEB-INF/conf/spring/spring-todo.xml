@@ -4,7 +4,7 @@
 
 	<bean id="todoDAO" class="com.glaf.base.modules.todo.dao.TodoDAOImpl">
 		<property name="sessionFactory">
-			<ref bean="sysSessionFactory" />
+			<ref bean="hibernateSessionFactory" />
 		</property>
 	</bean>
 

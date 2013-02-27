@@ -45,7 +45,6 @@
 		</property>
 	</bean>
 
-
 	<bean name="workCalendarAjaxService"
 		class="com.glaf.base.modules.others.service.WorkCalendarAjaxService">
 		<property name="workCalendarService">
@@ -53,13 +52,10 @@
 		</property>
 	</bean>
 
-
 	<bean name="sysUserRoleAjaxService" class="com.glaf.base.modules.sys.service.SysUserRoleAjaxService">
 		<property name="sysUserRoleService">
 			<ref bean="sysUserRoleProxy" />
 		</property>
 	</bean>
-
-
 
 </beans>
