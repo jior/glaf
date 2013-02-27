@@ -24,8 +24,16 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import com.alibaba.fastjson.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
 
-public class SysDepartment implements Serializable {
+import com.glaf.core.base.JSONable;
+import com.glaf.core.util.DateUtils;
+
+public class SysDepartment implements Serializable, JSONable {
 	private static final long serialVersionUID = -1700125499848402378L;
 	private long id;
 	private String name;
@@ -173,6 +181,119 @@ public class SysDepartment implements Serializable {
 
 	public void setStatus(int status) {
 		this.status = status;
+	}
+
+	public SysDepartment jsonToObject(JSONObject jsonObject) {
+		SysDepartment model = new SysDepartment();
+		if (jsonObject.containsKey("id")) {
+			model.setId(jsonObject.getLong("id"));
+		}
+		if (jsonObject.containsKey("name")) {
+			model.setName(jsonObject.getString("name"));
+		}
+		if (jsonObject.containsKey("desc")) {
+			model.setDesc(jsonObject.getString("desc"));
+		}
+		if (jsonObject.containsKey("createTime")) {
+			model.setCreateTime(jsonObject.getDate("createTime"));
+		}
+		if (jsonObject.containsKey("sort")) {
+			model.setSort(jsonObject.getInteger("sort"));
+		}
+		if (jsonObject.containsKey("no")) {
+			model.setNo(jsonObject.getString("no"));
+		}
+		if (jsonObject.containsKey("code")) {
+			model.setCode(jsonObject.getString("code"));
+		}
+		if (jsonObject.containsKey("code2")) {
+			model.setCode2(jsonObject.getString("code2"));
+		}
+		if (jsonObject.containsKey("status")) {
+			model.setStatus(jsonObject.getInteger("status"));
+		}
+		if (jsonObject.containsKey("fincode")) {
+			model.setFincode(jsonObject.getString("fincode"));
+		}
+		if (jsonObject.containsKey("nodeId")) {
+			model.setNodeId(jsonObject.getLong("nodeId"));
+		}
+		return model;
+	}
+
+	public JSONObject toJsonObject() {
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("id", id);
+		jsonObject.put("_id_", id);
+		jsonObject.put("_oid_", id);
+		if (name != null) {
+			jsonObject.put("name", name);
+		}
+		if (desc != null) {
+			jsonObject.put("desc", desc);
+		}
+		if (createTime != null) {
+			jsonObject.put("createTime", DateUtils.getDate(createTime));
+			jsonObject.put("createTime_date", DateUtils.getDate(createTime));
+			jsonObject.put("createTime_datetime",
+					DateUtils.getDateTime(createTime));
+		}
+		jsonObject.put("sort", sort);
+		if (no != null) {
+			jsonObject.put("no", no);
+		}
+		if (code != null) {
+			jsonObject.put("code", code);
+		}
+		if (code2 != null) {
+			jsonObject.put("code2", code2);
+		}
+		jsonObject.put("status", status);
+		if (fincode != null) {
+			jsonObject.put("fincode", fincode);
+		}
+		jsonObject.put("nodeId", nodeId);
+		return jsonObject;
+	}
+
+	public ObjectNode toObjectNode() {
+		ObjectNode jsonObject = new ObjectMapper().createObjectNode();
+		jsonObject.put("id", id);
+		jsonObject.put("_id_", id);
+		jsonObject.put("_oid_", id);
+		if (name != null) {
+			jsonObject.put("name", name);
+		}
+		if (desc != null) {
+			jsonObject.put("desc", desc);
+		}
+		if (createTime != null) {
+			jsonObject.put("createTime", DateUtils.getDate(createTime));
+			jsonObject.put("createTime_date", DateUtils.getDate(createTime));
+			jsonObject.put("createTime_datetime",
+					DateUtils.getDateTime(createTime));
+		}
+		jsonObject.put("sort", sort);
+		if (no != null) {
+			jsonObject.put("no", no);
+		}
+		if (code != null) {
+			jsonObject.put("code", code);
+		}
+		if (code2 != null) {
+			jsonObject.put("code2", code2);
+		}
+		jsonObject.put("status", status);
+		if (fincode != null) {
+			jsonObject.put("fincode", fincode);
+		}
+		jsonObject.put("nodeId", nodeId);
+		return jsonObject;
+	}
+
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this,
+				ToStringStyle.MULTI_LINE_STYLE);
 	}
 
 }

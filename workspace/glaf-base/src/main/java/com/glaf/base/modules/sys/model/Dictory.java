@@ -1,27 +1,35 @@
 /*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.glaf.base.modules.sys.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import com.alibaba.fastjson.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.glaf.core.base.JSONable;
+import com.glaf.core.util.DateUtils;
 
-public class Dictory implements Serializable {
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
+
+public class Dictory implements Serializable, JSONable {
 	private static final long serialVersionUID = 2756737871937885934L;
 	private long id;
 	private long typeId;
@@ -139,6 +147,139 @@ public class Dictory implements Serializable {
 
 	public void setTypeId(long typeId) {
 		this.typeId = typeId;
+	}
+
+	public Dictory jsonToObject(JSONObject jsonObject) {
+		Dictory model = new Dictory();
+		if (jsonObject.containsKey("id")) {
+			model.setId(jsonObject.getLong("id"));
+		}
+		if (jsonObject.containsKey("typeId")) {
+			model.setTypeId(jsonObject.getLong("typeId"));
+		}
+		if (jsonObject.containsKey("name")) {
+			model.setName(jsonObject.getString("name"));
+		}
+		if (jsonObject.containsKey("desc")) {
+			model.setDesc(jsonObject.getString("desc"));
+		}
+		if (jsonObject.containsKey("code")) {
+			model.setCode(jsonObject.getString("code"));
+		}
+		if (jsonObject.containsKey("sort")) {
+			model.setSort(jsonObject.getInteger("sort"));
+		}
+		if (jsonObject.containsKey("blocked")) {
+			model.setBlocked(jsonObject.getInteger("blocked"));
+		}
+		if (jsonObject.containsKey("ext1")) {
+			model.setExt1(jsonObject.getString("ext1"));
+		}
+		if (jsonObject.containsKey("ext2")) {
+			model.setExt2(jsonObject.getString("ext2"));
+		}
+		if (jsonObject.containsKey("ext3")) {
+			model.setExt3(jsonObject.getString("ext3"));
+		}
+		if (jsonObject.containsKey("ext4")) {
+			model.setExt4(jsonObject.getString("ext4"));
+		}
+		if (jsonObject.containsKey("ext5")) {
+			model.setExt5(jsonObject.getDate("ext5"));
+		}
+		if (jsonObject.containsKey("ext6")) {
+			model.setExt6(jsonObject.getDate("ext6"));
+		}
+		return model;
+	}
+
+	public JSONObject toJsonObject() {
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("id", id);
+		jsonObject.put("_id_", id);
+		jsonObject.put("_oid_", id);
+		jsonObject.put("typeId", typeId);
+		if (name != null) {
+			jsonObject.put("name", name);
+		}
+		if (desc != null) {
+			jsonObject.put("desc", desc);
+		}
+		if (code != null) {
+			jsonObject.put("code", code);
+		}
+		jsonObject.put("sort", sort);
+		jsonObject.put("blocked", blocked);
+		if (ext1 != null) {
+			jsonObject.put("ext1", ext1);
+		}
+		if (ext2 != null) {
+			jsonObject.put("ext2", ext2);
+		}
+		if (ext3 != null) {
+			jsonObject.put("ext3", ext3);
+		}
+		if (ext4 != null) {
+			jsonObject.put("ext4", ext4);
+		}
+		if (ext5 != null) {
+			jsonObject.put("ext5", DateUtils.getDate(ext5));
+			jsonObject.put("ext5_date", DateUtils.getDate(ext5));
+			jsonObject.put("ext5_datetime", DateUtils.getDateTime(ext5));
+		}
+		if (ext6 != null) {
+			jsonObject.put("ext6", DateUtils.getDate(ext6));
+			jsonObject.put("ext6_date", DateUtils.getDate(ext6));
+			jsonObject.put("ext6_datetime", DateUtils.getDateTime(ext6));
+		}
+		return jsonObject;
+	}
+
+	public ObjectNode toObjectNode() {
+		ObjectNode jsonObject = new ObjectMapper().createObjectNode();
+		jsonObject.put("id", id);
+		jsonObject.put("_id_", id);
+		jsonObject.put("_oid_", id);
+		jsonObject.put("typeId", typeId);
+		if (name != null) {
+			jsonObject.put("name", name);
+		}
+		if (desc != null) {
+			jsonObject.put("desc", desc);
+		}
+		if (code != null) {
+			jsonObject.put("code", code);
+		}
+		jsonObject.put("sort", sort);
+		jsonObject.put("blocked", blocked);
+		if (ext1 != null) {
+			jsonObject.put("ext1", ext1);
+		}
+		if (ext2 != null) {
+			jsonObject.put("ext2", ext2);
+		}
+		if (ext3 != null) {
+			jsonObject.put("ext3", ext3);
+		}
+		if (ext4 != null) {
+			jsonObject.put("ext4", ext4);
+		}
+		if (ext5 != null) {
+			jsonObject.put("ext5", DateUtils.getDate(ext5));
+			jsonObject.put("ext5_date", DateUtils.getDate(ext5));
+			jsonObject.put("ext5_datetime", DateUtils.getDateTime(ext5));
+		}
+		if (ext6 != null) {
+			jsonObject.put("ext6", DateUtils.getDate(ext6));
+			jsonObject.put("ext6_date", DateUtils.getDate(ext6));
+			jsonObject.put("ext6_datetime", DateUtils.getDateTime(ext6));
+		}
+		return jsonObject;
+	}
+
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this,
+				ToStringStyle.MULTI_LINE_STYLE);
 	}
 
 }

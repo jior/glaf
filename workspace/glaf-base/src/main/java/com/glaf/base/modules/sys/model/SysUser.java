@@ -29,10 +29,11 @@ import org.apache.commons.lang.StringUtils;
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.glaf.core.base.JSONable;
 import com.glaf.core.identity.User;
 import com.glaf.core.util.DateUtils;
 
-public class SysUser implements Serializable, User {
+public class SysUser implements Serializable, User, JSONable {
 	private static final long serialVersionUID = -7677600372139823989L;
 	private long id;
 	private SysDepartment department;
