@@ -64,6 +64,13 @@
 	</target>
 
 
+	<target name="war">
+		<jar jarfile="glaf.war">
+			<fileset dir="WebContent" includes="**/*.*"  excludes="**/*.class,**/*.cvs,**/*.bak,**/*.tmp,**/*.scc,**/*.svn,eclipselink.jar,openjpa-2.0.0.jar,**/archives/*.*,**/test/**/*.*,upload/***.*, data/**/*.*, db/**" casesensitive="yes"/>
+		</jar>
+    </target>
+
+
 	<!-- 制作 Javadoc 任务 -->
 	<target name="javadoc" description="Generate JavaDoc API docs">
 		<delete dir="${doc.path}" />
