@@ -15,7 +15,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 
-import org.json.*;
+import com.alibaba.fastjson.*;
 
 import com.glaf.core.util.JsonUtils;
 import com.glaf.jbpm.context.ProcessContext;
@@ -146,7 +146,7 @@ public class ${entityName}WfAction extends ${entityName}BaseAction {
 			${modelName} = ${modelName}Service.get${entityName}(rowId);
 			request.setAttribute("${modelName}", ${modelName});
 			JSONObject rowJSON = ${modelName}.toJsonObject();
-			request.setAttribute("x_json", rowJSON.toString('\n'));
+			request.setAttribute("x_json", rowJSON.toString());
 		}
 
 		boolean canUpdate = false;
@@ -343,7 +343,7 @@ public class ${entityName}WfAction extends ${entityName}BaseAction {
 					rowJSON.put("id", ${modelName}.getId());
 					rowJSON.put("${modelName}Id", ${modelName}.getId());
 
-					rowsJSON.put(rowJSON);
+					rowsJSON.add(rowJSON);
 				}
 
 			}

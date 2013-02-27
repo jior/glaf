@@ -17,7 +17,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.apache.commons.lang.StringUtils;
-import org.json.*;
+import com.alibaba.fastjson.*;
 
 import com.glaf.base.modules.sys.model.*;
 import com.glaf.base.security.*;
@@ -155,7 +155,7 @@ public class ${entityName}ResourceRest {
 					JSONObject rowJSON = ${modelName}.toJsonObject();
 					rowJSON.put("id", ${modelName}.getId());
 					rowJSON.put("${modelName}Id", ${modelName}.getId());
- 					rowsJSON.put(rowJSON);
+ 					rowsJSON.add(rowJSON);
 				}
 
 			}

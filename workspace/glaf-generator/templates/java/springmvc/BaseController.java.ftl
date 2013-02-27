@@ -11,7 +11,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.ModelMap;
-import org.json.*;
+import com.alibaba.fastjson.*;
  
 import com.glaf.core.util.JsonUtils;
 import com.glaf.base.config.*;
@@ -123,7 +123,7 @@ public class ${entityName}BaseController {
 			${modelName} = ${modelName}Service.get${entityName}(rowId);
 			request.setAttribute("${modelName}", ${modelName});
 			JSONObject rowJSON =  ${modelName}.toJsonObject();
-			request.setAttribute("x_json", rowJSON.toString('\n'));
+			request.setAttribute("x_json", rowJSON.toString());
 		}
 
                 boolean canUpdate = false;
@@ -167,7 +167,7 @@ public class ${entityName}BaseController {
 			${modelName} = ${modelName}Service.get${entityName}(rowId);
 			request.setAttribute("${modelName}", ${modelName});
 			JSONObject rowJSON =  ${modelName}.toJsonObject();
-			request.setAttribute("x_json", rowJSON.toString('\n'));
+			request.setAttribute("x_json", rowJSON.toString());
 		}
 
 		String view = request.getParameter("view");
@@ -260,7 +260,7 @@ public class ${entityName}BaseController {
 					rowJSON.put("id", ${modelName}.getId());
 					rowJSON.put("${modelName}Id", ${modelName}.getId());
 
- 					rowsJSON.put(rowJSON);
+ 					rowsJSON.add(rowJSON);
 				}
 
 			}

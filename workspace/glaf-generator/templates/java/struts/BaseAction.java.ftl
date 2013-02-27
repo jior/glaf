@@ -14,7 +14,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import org.springframework.web.struts.DispatchActionSupport;
-import org.json.*;
+import com.alibaba.fastjson.*;
  
 import com.glaf.core.util.JsonUtils;
 import com.glaf.base.modules.sys.model.*;
@@ -147,7 +147,7 @@ public class ${entityName}BaseAction extends DispatchActionSupport {
 			${modelName} = ${modelName}Service.get${entityName}(rowId);
 			request.setAttribute("${modelName}", ${modelName});
 			JSONObject rowJSON = ${modelName}.toJsonObject();
-			request.setAttribute("x_json", rowJSON.toString('\n'));
+			request.setAttribute("x_json", rowJSON.toString());
 		}
 
 		boolean canUpdate = false;
@@ -180,7 +180,7 @@ public class ${entityName}BaseAction extends DispatchActionSupport {
 			${modelName} = ${modelName}Service.get${entityName}(rowId);
 			request.setAttribute("${modelName}", ${modelName});
 			JSONObject rowJSON = ${modelName}.toJsonObject();
-			request.setAttribute("x_json", rowJSON.toString('\n'));
+			request.setAttribute("x_json", rowJSON.toString());
 		}
 
 		return mapping.findForward("show_view");
@@ -256,7 +256,7 @@ public class ${entityName}BaseAction extends DispatchActionSupport {
 					rowJSON.put("id", ${modelName}.getId());
 					rowJSON.put("${modelName}Id", ${modelName}.getId());
 
-					rowsJSON.put(rowJSON);
+					rowsJSON.add(rowJSON);
 				}
 
 			}
