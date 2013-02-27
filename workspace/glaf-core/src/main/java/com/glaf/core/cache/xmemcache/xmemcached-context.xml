@@ -7,47 +7,48 @@
 	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
 
-	<bean name="memcachedClientBuilder" class="net.rubyeye.xmemcached.XMemcachedClientBuilder">
-		<constructor-arg>
-			<list>
-				<bean class="java.net.InetSocketAddress">
-					<constructor-arg>
-						<value>127.0.0.1</value>
-					</constructor-arg>
-					<constructor-arg>
-						<value>11211</value>
-					</constructor-arg>
-				</bean>
-				<bean class="java.net.InetSocketAddress">
-					<constructor-arg>
-						<value>127.0.0.1</value>
-					</constructor-arg>
-					<constructor-arg>
-						<value>11212</value>
-					</constructor-arg>
-				</bean>
-			</list>
-		</constructor-arg>
-		<constructor-arg>
-			<list>
-				<value>1</value>
-				<value>1</value>
-			</list>
-		</constructor-arg>
-		<property name="connectionPoolSize" value="20"></property>
-		<property name="commandFactory">
-			<bean class="net.rubyeye.xmemcached.command.TextCommandFactory"></bean>
-		</property>
-		<property name="sessionLocator">
-			<bean class="net.rubyeye.xmemcached.impl.KetamaMemcachedSessionLocator"></bean>
-		</property>
-		<property name="transcoder">
-			<bean class="net.rubyeye.xmemcached.transcoders.SerializingTranscoder" />
-		</property>
-	</bean>
-
-	<bean name="memcachedClient" factory-bean="memcachedClientBuilder"
-		factory-method="build" destroy-method="shutdown" />
+	<bean name="memcachedClientBuilder" class="net.rubyeye.xmemcached.XMemcachedClientBuilder">                <!-- XMemcachedClientBuilder have two arguments.First is server list,and second is weights array. -->                
+		<constructor-arg>                        
+			<list>                                
+				<bean class="java.net.InetSocketAddress">                                        
+					<constructor-arg>                                                
+						<value>localhost</value>                                        
+					</constructor-arg>                                        
+					<constructor-arg>                                                
+						<value>11211</value>                                        
+					</constructor-arg>                                
+				</bean>                                
+				<bean class="java.net.InetSocketAddress">                                        
+					<constructor-arg>                                                
+						<value>localhost</value>                                        
+					</constructor-arg>                                        
+					<constructor-arg>                                                
+						<value>11212</value>                                        
+					</constructor-arg>                                
+				</bean>                        
+			</list>                
+		</constructor-arg>                
+		<constructor-arg>                        
+			<list>                                
+				<value>5</value>                                
+				<value>5</value>                        
+			</list>                
+		</constructor-arg>                
+		<property name="connectionPoolSize" value="2"></property>             
+		<property name="commandFactory">                        
+			<bean class="net.rubyeye.xmemcached.command.TextCommandFactory"></bean>                
+		</property>                
+		<property name="sessionLocator">                        
+			<bean class="net.rubyeye.xmemcached.impl.KetamaMemcachedSessionLocator"></bean>                
+		</property>                
+		<property name="transcoder">                        
+			<bean class="net.rubyeye.xmemcached.transcoders.SerializingTranscoder" />                
+		</property>        
+	</bean>   
+	   
+	<!-- Use factory bean to build memcached client -->        
+	<bean name="memcachedClient" factory-bean="memcachedClientBuilder"          
+		factory-method="build" destroy-method="shutdown"/>
 
 	<bean id="cache" class="com.glaf.core.cache.xmemcache.XmemcachedImpl">
 		<property name="cacheProvider" ref="memcachedClient" />

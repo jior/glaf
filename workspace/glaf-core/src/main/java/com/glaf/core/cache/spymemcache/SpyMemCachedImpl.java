@@ -57,7 +57,7 @@ public class SpyMemCachedImpl implements Cache {
 	}
 
 	public Object get(String key) {
-		return cacheProvider.get(String.valueOf(key.hashCode()));
+		return cacheProvider.get(key);
 	}
 
 	public MemcachedClient getCacheProvider() {
@@ -65,11 +65,11 @@ public class SpyMemCachedImpl implements Cache {
 	}
 
 	public void put(String key, Object value) {
-		cacheProvider.set(String.valueOf(key.hashCode()), 3600, value);
+		cacheProvider.set(key, 3600, value);
 	}
 
 	public void remove(String key) {
-		cacheProvider.delete(String.valueOf(key.hashCode()));
+		cacheProvider.delete(key);
 	}
 
 	public void setCacheProvider(MemcachedClient provider) {

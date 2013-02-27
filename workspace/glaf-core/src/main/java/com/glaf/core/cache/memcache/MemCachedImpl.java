@@ -32,12 +32,56 @@ public class MemCachedImpl implements Cache {
 
 	}
 
-	public Properties getProperties() {
-		return properties;
+	public boolean add(String key, Object value) {
+		return cacheProvider.add(key, value);
 	}
 
-	public void setProperties(Properties properties) {
-		this.properties = properties;
+	public boolean add(String key, Object value, Integer hashCode) {
+		return cacheProvider.add(key, value, hashCode);
+	}
+
+	public boolean add(String key, Object value, long expiry) {
+		return cacheProvider.add(key, value, new Date(expiry));
+	}
+
+	public boolean add(String key, Object value, long expiry, Integer hashCode) {
+		return cacheProvider.add(key, value, new Date(expiry), hashCode);
+	}
+
+	public void clear() {
+
+	}
+
+	public boolean delete(String key) {
+		return cacheProvider.delete(key);
+	}
+
+	public boolean delete(String key, Integer hashCode, long expiry) {
+		return cacheProvider.delete(key);
+	}
+
+	public boolean delete(String key, long expiry) {
+		return cacheProvider.delete(key);
+	}
+
+	public Object get(String key) {
+		return cacheProvider.get(key);
+	}
+
+	public Object get(String key, Integer hashCode) {
+		return cacheProvider.get(key, hashCode);
+	}
+
+	public Object get(String key, Integer hashCode, boolean asString) {
+		return cacheProvider.get(key, hashCode, asString);
+	}
+
+	public MemCachedClient getCacheProvider() {
+		return cacheProvider;
+	}
+
+	public Properties getProperties() {
+		return properties;
 	}
 
 	public void init() {
@@ -46,115 +90,61 @@ public class MemCachedImpl implements Cache {
 		}
 	}
 
-	public boolean add(String key, Object value) {
-		return cacheProvider.add(String.valueOf(key.hashCode()), value);
-	}
-
-	public boolean add(String key, Object value, long expiry) {
-		return cacheProvider.add(String.valueOf(key.hashCode()), value,
-				new Date(expiry));
-	}
-
-	public boolean add(String key, Object value, long expiry, Integer hashCode) {
-		return cacheProvider.add(String.valueOf(key.hashCode()), value,
-				new Date(expiry), hashCode);
-	}
-
-	public boolean add(String key, Object value, Integer hashCode) {
-		return cacheProvider.add(String.valueOf(key.hashCode()), value,
-				hashCode);
-	}
-
-	public boolean delete(String key) {
-		return cacheProvider.delete(String.valueOf(key.hashCode()));
-	}
-
-	public boolean delete(String key, long expiry) {
-		return cacheProvider.delete(String.valueOf(key.hashCode()));
-	}
-
-	public boolean delete(String key, Integer hashCode, long expiry) {
-		return cacheProvider.delete(String.valueOf(key.hashCode()));
-	}
-
-	public Object get(String key) {
-		return cacheProvider.get(String.valueOf(key.hashCode()));
-	}
-
-	public Object get(String key, Integer hashCode) {
-		return cacheProvider.get(String.valueOf(key.hashCode()), hashCode);
-	}
-
-	public Object get(String key, Integer hashCode, boolean asString) {
-		return cacheProvider.get(String.valueOf(key.hashCode()), hashCode,
-				asString);
-	}
-
 	public boolean keyExists(String key) {
-		return cacheProvider.keyExists(String.valueOf(key.hashCode()));
+		return cacheProvider.keyExists(key);
+	}
+
+	public void put(String key, Object value) {
+		cacheProvider.set(key, value);
+	}
+
+	public void remove(String key) {
+		cacheProvider.delete(key);
 	}
 
 	public boolean replace(String key, Object value) {
-		return cacheProvider.replace(String.valueOf(key.hashCode()), value);
+		return cacheProvider.replace(key, value);
+	}
+
+	public boolean replace(String key, Object value, Integer hashCode) {
+		return cacheProvider.replace(key, value, hashCode);
 	}
 
 	public boolean replace(String key, Object value, long expiry) {
-		return cacheProvider.replace(String.valueOf(key.hashCode()), value,
-				new Date(expiry));
+		return cacheProvider.replace(key, value, new Date(expiry));
 	}
 
 	public boolean replace(String key, Object value, long expiry,
 			Integer hashCode) {
-		return cacheProvider.replace(String.valueOf(key.hashCode()), value,
-				new Date(expiry), hashCode);
-	}
-
-	public boolean replace(String key, Object value, Integer hashCode) {
-		return cacheProvider.replace(String.valueOf(key.hashCode()), value,
-				hashCode);
+		return cacheProvider.replace(key, value, new Date(expiry), hashCode);
 	}
 
 	public boolean set(String key, Object value) {
-		return cacheProvider.set(String.valueOf(key.hashCode()), value);
-	}
-
-	public boolean set(String key, Object value, long expiry) {
-		return cacheProvider.set(String.valueOf(key.hashCode()), value,
-				new Date(expiry));
-	}
-
-	public boolean set(String key, Object value, long expiry, Integer hashCode) {
-		return cacheProvider.set(String.valueOf(key.hashCode()), value,
-				new Date(expiry), hashCode);
+		return cacheProvider.set(key, value);
 	}
 
 	public boolean set(String key, Object value, Integer hashCode) {
-		return cacheProvider.set(String.valueOf(key.hashCode()), value,
-				hashCode);
+		return cacheProvider.set(key, value, hashCode);
 	}
 
-	public MemCachedClient getCacheProvider() {
-		return cacheProvider;
+	public boolean set(String key, Object value, long expiry) {
+		return cacheProvider.set(key, value, new Date(expiry));
+	}
+
+	public boolean set(String key, Object value, long expiry, Integer hashCode) {
+		return cacheProvider.set(key, value, new Date(expiry), hashCode);
 	}
 
 	public void setCacheProvider(MemCachedClient memCachedClient) {
 		cacheProvider = memCachedClient;
 	}
 
-	public void clear() {
-
+	public void setProperties(Properties properties) {
+		this.properties = properties;
 	}
 
 	public void shutdown() {
 
-	}
-
-	public void put(String key, Object value) {
-		cacheProvider.set(String.valueOf(key.hashCode()), value);
-	}
-
-	public void remove(String key) {
-		cacheProvider.delete(String.valueOf(key.hashCode()));
 	}
 
 	public int size() {

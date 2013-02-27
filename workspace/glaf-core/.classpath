@@ -129,5 +129,6 @@
 	<classpathentry kind="lib" path="lib/java_memcached-release.jar"/>
 	<classpathentry kind="lib" path="lib/spymemcached.jar"/>
 	<classpathentry kind="lib" path="lib/xmemcached.jar"/>
+	<classpathentry kind="lib" path="lib/jedis.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

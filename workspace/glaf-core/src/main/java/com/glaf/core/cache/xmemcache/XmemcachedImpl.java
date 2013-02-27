@@ -61,7 +61,7 @@ public class XmemcachedImpl implements Cache {
 
 	public Object get(String key) {
 		try {
-			return cacheProvider.get(String.valueOf(key.hashCode()));
+			return cacheProvider.get(key);
 		} catch (TimeoutException e) {
 			throw new CacheException(e);
 		} catch (InterruptedException e) {
@@ -73,7 +73,7 @@ public class XmemcachedImpl implements Cache {
 
 	public void put(String key, Object value) {
 		try {
-			cacheProvider.set(String.valueOf(key.hashCode()), 3600, value);
+			cacheProvider.set(key, 3600, value);
 		} catch (TimeoutException e) {
 			throw new CacheException(e);
 		} catch (InterruptedException e) {
@@ -85,7 +85,7 @@ public class XmemcachedImpl implements Cache {
 
 	public void remove(String key) {
 		try {
-			cacheProvider.delete(String.valueOf(key.hashCode()));
+			cacheProvider.delete(key);
 		} catch (TimeoutException e) {
 			throw new CacheException(e);
 		} catch (InterruptedException e) {
