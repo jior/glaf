@@ -5,9 +5,24 @@
 <hibernate-mapping>
 	<class name="${packageName}.model.${entityName}" table="${tableName}"
 		dynamic-update="true" dynamic-insert="true">
-		<id column="${idField.columnName}" name="${idField.name}" type="long" unsaved-value="0">
+<#if idField?exists >
+    <#if idField.type?exists >
+	   <#if idField.type=='Integer' >
+		<id column="${idField.columnName}" name="${idField.name}" type="int" unsaved-value="0">
 			<generator class="assigned" />
 		</id>
+		<#elseif idField.type== 'Long' >
+        <id column="${idField.columnName}" name="${idField.name}" type="long" unsaved-value="0">
+			<generator class="assigned" />
+		</id>
+		<#else>
+		<id column="${idField.columnName}" name="${idField.name}" type="string" unsaved-value="null">
+			<generator class="assigned" />
+		</id>
+	   </#if>
+    </#if>
+</#if>
+
 <#if pojo_fields?exists>
 <#list  pojo_fields as field>	
     <#if field.columnName?exists && field.type?exists >
