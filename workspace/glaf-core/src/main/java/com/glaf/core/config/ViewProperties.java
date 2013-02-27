@@ -114,7 +114,7 @@ public class ViewProperties {
 			if (directory.exists() && directory.isDirectory()) {
 				String[] filelist = directory.list();
 				for (int i = 0; i < filelist.length; i++) {
-					String filename = config + filelist[i];
+					String filename = config + "/" + filelist[i];
 					File file = new File(filename);
 					if (file.isFile() && file.getName().endsWith(".properties")) {
 						InputStream inputStream = new FileInputStream(file);
