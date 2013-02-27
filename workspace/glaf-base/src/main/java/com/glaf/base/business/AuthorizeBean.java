@@ -23,18 +23,19 @@ import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
- 
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.cache.CacheFactory;
 import com.glaf.core.context.ContextFactory;
 
 import com.glaf.base.callback.CallbackProperties;
 import com.glaf.base.callback.LoginCallback;
-
 
 import com.glaf.base.modules.sys.SysConstants;
 import com.glaf.base.modules.sys.model.SysUser;
@@ -101,11 +102,17 @@ public class AuthorizeBean {
 		SysUser sysUser = null;
 		if (account != null) {
 			String cacheKey = "cache_user_" + account;
-			sysUser = (SysUser) CacheFactory.get(cacheKey);
+			String content = (String) CacheFactory.get(cacheKey);
+			if (StringUtils.isNotEmpty(content)) {
+				JSONObject jsonObject = JSON.parseObject(content);
+				sysUser = new SysUser();
+				sysUser = sysUser.jsonToObject(jsonObject);
+			}
 			if (sysUser == null) {
 				sysUser = getSysUserService().findByAccountWithAll(account);
 				if (sysUser != null) {
-					CacheFactory.put(cacheKey, sysUser);
+					CacheFactory.put(cacheKey, sysUser.toJsonObject()
+							.toJSONString());
 				}
 			}
 		}

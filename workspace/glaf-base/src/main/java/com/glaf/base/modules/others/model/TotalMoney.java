@@ -21,7 +21,9 @@ package com.glaf.base.modules.others.model;
 import java.io.Serializable;
 
 public class TotalMoney implements Serializable{
-	
+
+	private static final long serialVersionUID = 1L;
+
 	private  double totalDecisionSum;
 	
 	private double totalOrderSum;

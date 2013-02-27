@@ -1,25 +1,28 @@
 /*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.glaf.base.modules.todo.model;
 
 import java.util.*;
 
+import com.alibaba.fastjson.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
@@ -191,7 +194,7 @@ public class ToDoInstance implements java.io.Serializable {
 	 * Past Due
 	 */
 	private int qty03;
-	
+
 	private int qtyRedWarn;
 
 	/**
@@ -524,6 +527,172 @@ public class ToDoInstance implements java.io.Serializable {
 
 	public void setVersionNo(long versionNo) {
 		this.versionNo = versionNo;
+	}
+
+	public ToDoInstance jsonToObject(JSONObject jsonObject) {
+		ToDoInstance model = new ToDoInstance();
+		if (jsonObject.containsKey("id")) {
+			model.setId(jsonObject.getLong("id"));
+		}
+		if (jsonObject.containsKey("actorId")) {
+			model.setActorId(jsonObject.getString("actorId"));
+		}
+		if (jsonObject.containsKey("todoId")) {
+			model.setTodoId(jsonObject.getLong("todoId"));
+		}
+
+		if (jsonObject.containsKey("content")) {
+			model.setContent(jsonObject.getString("content"));
+		}
+		if (jsonObject.containsKey("deptId")) {
+			model.setDeptId(jsonObject.getLong("deptId"));
+		}
+		if (jsonObject.containsKey("deptName")) {
+			model.setDeptName(jsonObject.getString("deptName"));
+		}
+		if (jsonObject.containsKey("startDate")) {
+			model.setStartDate(jsonObject.getDate("startDate"));
+		}
+		if (jsonObject.containsKey("endDate")) {
+			model.setEndDate(jsonObject.getDate("endDate"));
+		}
+		if (jsonObject.containsKey("alarmDate")) {
+			model.setAlarmDate(jsonObject.getDate("alarmDate"));
+		}
+
+		if (jsonObject.containsKey("link")) {
+			model.setLink(jsonObject.getString("link"));
+		}
+		if (jsonObject.containsKey("listLink")) {
+			model.setListLink(jsonObject.getString("listLink"));
+		}
+		if (jsonObject.containsKey("linkType")) {
+			model.setLinkType(jsonObject.getString("linkType"));
+		}
+		if (jsonObject.containsKey("appId")) {
+			model.setAppId(jsonObject.getInteger("appId"));
+		}
+		if (jsonObject.containsKey("moduleId")) {
+			model.setModuleId(jsonObject.getInteger("moduleId"));
+		}
+
+		if (jsonObject.containsKey("objectId")) {
+			model.setObjectId(jsonObject.getString("objectId"));
+		}
+		if (jsonObject.containsKey("objectValue")) {
+			model.setObjectValue(jsonObject.getString("objectValue"));
+		}
+		if (jsonObject.containsKey("roleCode")) {
+			model.setRoleCode(jsonObject.getString("roleCode"));
+		}
+		if (jsonObject.containsKey("roleId")) {
+			model.setRoleId(jsonObject.getLong("roleId"));
+		}
+
+		if (jsonObject.containsKey("title")) {
+			model.setTitle(jsonObject.getString("title"));
+		}
+
+		if (jsonObject.containsKey("versionNo")) {
+			model.setVersionNo(jsonObject.getLong("versionNo"));
+		}
+		return model;
+	}
+
+	public JSONObject toJsonObject() {
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("id", id);
+		jsonObject.put("_id_", id);
+		jsonObject.put("_oid_", id);
+		if (actorId != null) {
+			jsonObject.put("actorId", actorId);
+		}
+
+		if (content != null) {
+			jsonObject.put("content", content);
+		}
+		jsonObject.put("deptId", deptId);
+		if (deptName != null) {
+			jsonObject.put("deptName", deptName);
+		}
+
+		if (link != null) {
+			jsonObject.put("link", link);
+		}
+		if (listLink != null) {
+			jsonObject.put("listLink", listLink);
+		}
+		if (linkType != null) {
+			jsonObject.put("linkType", linkType);
+		}
+		jsonObject.put("appId", appId);
+		jsonObject.put("moduleId", moduleId);
+
+		if (objectId != null) {
+			jsonObject.put("objectId", objectId);
+		}
+		if (objectValue != null) {
+			jsonObject.put("objectValue", objectValue);
+		}
+		if (roleCode != null) {
+			jsonObject.put("roleCode", roleCode);
+		}
+		jsonObject.put("roleId", roleId);
+
+		if (title != null) {
+			jsonObject.put("title", title);
+		}
+
+		jsonObject.put("versionNo", versionNo);
+		return jsonObject;
+	}
+
+	public ObjectNode toObjectNode() {
+		ObjectNode jsonObject = new ObjectMapper().createObjectNode();
+		jsonObject.put("id", id);
+		jsonObject.put("_id_", id);
+		jsonObject.put("_oid_", id);
+		if (actorId != null) {
+			jsonObject.put("actorId", actorId);
+		}
+
+		if (content != null) {
+			jsonObject.put("content", content);
+		}
+		jsonObject.put("deptId", deptId);
+		if (deptName != null) {
+			jsonObject.put("deptName", deptName);
+		}
+
+		if (link != null) {
+			jsonObject.put("link", link);
+		}
+		if (listLink != null) {
+			jsonObject.put("listLink", listLink);
+		}
+		if (linkType != null) {
+			jsonObject.put("linkType", linkType);
+		}
+		jsonObject.put("appId", appId);
+		jsonObject.put("moduleId", moduleId);
+
+		if (objectId != null) {
+			jsonObject.put("objectId", objectId);
+		}
+		if (objectValue != null) {
+			jsonObject.put("objectValue", objectValue);
+		}
+		if (roleCode != null) {
+			jsonObject.put("roleCode", roleCode);
+		}
+		jsonObject.put("roleId", roleId);
+
+		if (title != null) {
+			jsonObject.put("title", title);
+		}
+
+		jsonObject.put("versionNo", versionNo);
+		return jsonObject;
 	}
 
 	public String toString() {

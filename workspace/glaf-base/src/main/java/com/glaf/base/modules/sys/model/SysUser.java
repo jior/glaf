@@ -26,8 +26,10 @@ import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.glaf.core.base.JSONable;
 import com.glaf.core.identity.User;
@@ -281,9 +283,9 @@ public class SysUser implements Serializable, User, JSONable {
 		}
 		return isAdmin;
 	}
+	
 
-	@Override
-	public User jsonToObject(JSONObject jsonObject) {
+	public SysUser jsonToObject(JSONObject jsonObject) {
 		SysUser model = new SysUser();
 		if (jsonObject.containsKey("id")) {
 			model.setId(jsonObject.getIntValue("id"));
@@ -369,6 +371,54 @@ public class SysUser implements Serializable, User, JSONable {
 
 		if (jsonObject.containsKey("adminFlag")) {
 			model.setAdminFlag(jsonObject.getString("adminFlag"));
+		}
+
+		if (jsonObject.containsKey("userRoles")) {
+			JSONArray array = jsonObject.getJSONArray("userRoles");
+			if (array != null && !array.isEmpty()) {
+				for (int i = 0; i < array.size(); i++) {
+					JSONObject json = array.getJSONObject(i);
+					SysUserRole m = new SysUserRole();
+					SysUserRole r = m.jsonToObject(json);
+					userRoles.add(r);
+				}
+			}
+		}
+
+		if (jsonObject.containsKey("roles")) {
+			JSONArray array = jsonObject.getJSONArray("roles");
+			if (array != null && !array.isEmpty()) {
+				for (int i = 0; i < array.size(); i++) {
+					JSONObject json = array.getJSONObject(i);
+					SysDeptRole m = new SysDeptRole();
+					SysDeptRole r = m.jsonToObject(json);
+					roles.add(r);
+				}
+			}
+		}
+
+		if (jsonObject.containsKey("functions")) {
+			JSONArray array = jsonObject.getJSONArray("functions");
+			if (array != null && !array.isEmpty()) {
+				for (int i = 0; i < array.size(); i++) {
+					JSONObject json = array.getJSONObject(i);
+					SysFunction m = new SysFunction();
+					SysFunction r = m.jsonToObject(json);
+					functions.add(r);
+				}
+			}
+		}
+
+		if (jsonObject.containsKey("apps")) {
+			JSONArray array = jsonObject.getJSONArray("apps");
+			if (array != null && !array.isEmpty()) {
+				for (int i = 0; i < array.size(); i++) {
+					JSONObject json = array.getJSONObject(i);
+					SysApplication m = new SysApplication();
+					SysApplication r = m.jsonToObject(json);
+					apps.add(r);
+				}
+			}
 		}
 
 		return model;
@@ -559,6 +609,38 @@ public class SysUser implements Serializable, User, JSONable {
 			jsonObject.put("loginIP", loginIP);
 		}
 
+		if (userRoles != null && !userRoles.isEmpty()) {
+			JSONArray array = new JSONArray();
+			for (SysUserRole sysUserRole : userRoles) {
+				array.add(sysUserRole.toJsonObject());
+			}
+			jsonObject.put("userRoles", array);
+		}
+
+		if (roles != null && !roles.isEmpty()) {
+			JSONArray array = new JSONArray();
+			for (SysDeptRole sysDeptRole : roles) {
+				array.add(sysDeptRole.toJsonObject());
+			}
+			jsonObject.put("roles", array);
+		}
+
+		if (functions != null && !functions.isEmpty()) {
+			JSONArray array = new JSONArray();
+			for (SysFunction sysFunction : functions) {
+				array.add(sysFunction.toJsonObject());
+			}
+			jsonObject.put("functions", array);
+		}
+
+		if (apps != null && !apps.isEmpty()) {
+			JSONArray array = new JSONArray();
+			for (SysApplication app : apps) {
+				array.add(app.toJsonObject());
+			}
+			jsonObject.put("apps", array);
+		}
+
 		return jsonObject;
 	}
 
@@ -599,6 +681,38 @@ public class SysUser implements Serializable, User, JSONable {
 		}
 		if (loginIP != null) {
 			jsonObject.put("loginIP", loginIP);
+		}
+
+		if (userRoles != null && !userRoles.isEmpty()) {
+			ArrayNode array = new ObjectMapper().createArrayNode();
+			for (SysUserRole sysUserRole : userRoles) {
+				array.add(sysUserRole.toObjectNode());
+			}
+			jsonObject.put("userRoles", array);
+		}
+
+		if (roles != null && !roles.isEmpty()) {
+			ArrayNode array = new ObjectMapper().createArrayNode();
+			for (SysDeptRole sysDeptRole : roles) {
+				array.add(sysDeptRole.toObjectNode());
+			}
+			jsonObject.put("roles", array);
+		}
+
+		if (functions != null && !functions.isEmpty()) {
+			ArrayNode array = new ObjectMapper().createArrayNode();
+			for (SysFunction sysFunction : functions) {
+				array.add(sysFunction.toObjectNode());
+			}
+			jsonObject.put("functions", array);
+		}
+
+		if (apps != null && !apps.isEmpty()) {
+			ArrayNode array = new ObjectMapper().createArrayNode();
+			for (SysApplication app : apps) {
+				array.add(app.toObjectNode());
+			}
+			jsonObject.put("apps", array);
 		}
 
 		return jsonObject;

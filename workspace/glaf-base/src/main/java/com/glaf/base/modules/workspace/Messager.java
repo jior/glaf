@@ -28,8 +28,9 @@ import java.util.Map;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.xml.sax.SAXException;
 
-import com.glaf.base.freemarker.StringTemplate;
+ 
 import com.glaf.base.modules.Constants;
+import com.glaf.core.freemarker.TemplateUtils;
 
 public class Messager {
 
@@ -49,8 +50,8 @@ public class Messager {
 			MessageTemplate msgtemp = messages.getMessageTemplate(msgName);
 			PropertyUtils.copyProperties(msgt, msgtemp);
 
-			msgt.setTitle(StringTemplate.convert(root, msgt.getTitle()));
-			msgt.setContent(StringTemplate.convert(root, msgt.getContent()));
+			msgt.setTitle(TemplateUtils.process(root, msgt.getTitle()));
+			msgt.setContent(TemplateUtils.process(root, msgt.getContent()));
 
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -26,6 +26,7 @@ import org.json.JSONException;
 import org.junit.Test;
 
 import com.glaf.base.business.ApplicationBean;
+import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.sys.service.SysApplicationService;
 import com.glaf.base.modules.sys.service.SysUserService;
 import com.glaf.base.utils.FileTools;
@@ -35,6 +36,15 @@ public class UserTest extends AbstractTest {
 	protected SysUserService sysUserService;
 
 	protected SysApplicationService sysApplicationService;
+	
+	@Test
+	public void testUser() {
+		sysUserService = super.getBean("sysUserProxy");
+		SysUser user = sysUserService.findByAccountWithAll("root");
+		if(user != null){
+			logger.debug(user.toJsonObject().toJSONString());
+		}
+	}
 
 	@Test
 	public void testList() {
