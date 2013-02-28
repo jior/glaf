@@ -25,58 +25,157 @@
 
  
 	<insert id="insertTrip" parameterType="com.glaf.apps.trip.model.Trip">
-		insert into
-		X_APP_TRIP ( ID_
-        ,TRANSTYPE_ 
-        ,APPLYDATE_ 
-        ,STARTDATE_ 
-        ,ENDDATE_ 
-        ,DAYS_ 
-        ,MONEY_ 
-        ,CAUSE_ 
-        ,CREATEDATE_ 
-        ,CREATEBY_ 
-        ,UPDATEDATE_ 
-        ,LOCKED_ 
-        ,DELETEFLAG_ 
-        ,STATUS_ 
-        ,PROCESSNAME_ 
-        ,PROCESSINSTANCEID_ 
-		)
-		values (
-          #{id, jdbcType=VARCHAR}
+		insert into X_APP_TRIP 
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+		    ID_
+			<if test="transType != null">
+				,TRANSTYPE_ 
+			</if>
+			<if test="applyDate != null">
+				,APPLYDATE_ 
+			</if>
+			<if test="startDate != null">
+				,STARTDATE_ 
+			</if>
+			<if test="endDate != null">
+				,ENDDATE_ 
+			</if>
+			<if test="days != null">
+				,DAYS_ 
+			</if>
+			<if test="money != null">
+				,MONEY_ 
+			</if>
+			<if test="cause != null">
+				,CAUSE_ 
+			</if>
+			<if test="createDate != null">
+				,CREATEDATE_ 
+			</if>
+			<if test="createBy != null">
+				,CREATEBY_ 
+			</if>
+			<if test="updateDate != null">
+				,UPDATEDATE_ 
+			</if>
+			<if test="locked != null">
+				,LOCKED_ 
+			</if>
+			<if test="deleteFlag != null">
+				,DELETEFLAG_ 
+			</if>
+			<if test="status != null">
+				,STATUS_ 
+			</if>
+			<if test="processName != null">
+				,PROCESSNAME_ 
+			</if>
+			<if test="processInstanceId != null">
+				,PROCESSINSTANCEID_ 
+			</if>
+        </trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			  #{id, jdbcType=VARCHAR}
 	     
-        ,#{transType, jdbcType=VARCHAR}
-        ,#{applyDate, jdbcType=TIMESTAMP}
-        ,#{startDate, jdbcType=TIMESTAMP}
-        ,#{endDate, jdbcType=TIMESTAMP}
-        ,#{days, jdbcType=DOUBLE}
-        ,#{money, jdbcType=DOUBLE}
-        ,#{cause, jdbcType=VARCHAR}
-        ,#{createDate, jdbcType=TIMESTAMP}
-        ,#{createBy, jdbcType=VARCHAR}
-        ,#{updateDate, jdbcType=TIMESTAMP}
-        ,#{locked, jdbcType=INTEGER}
-        ,#{deleteFlag, jdbcType=INTEGER}
-        ,#{status, jdbcType=INTEGER}
-        ,#{processName, jdbcType=VARCHAR}
-        ,#{processInstanceId, jdbcType=VARCHAR}
-		)
+			<if test="transType != null">
+				,#{transType, jdbcType=VARCHAR}
+			</if>
+			<if test="applyDate != null">
+				,#{applyDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="startDate != null">
+				,#{startDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="endDate != null">
+				,#{endDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="days != null">
+				,#{days, jdbcType=DOUBLE}
+			</if>
+			<if test="money != null">
+				,#{money, jdbcType=DOUBLE}
+			</if>
+			<if test="cause != null">
+				,#{cause, jdbcType=VARCHAR}
+			</if>
+			<if test="createDate != null">
+				,#{createDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="createBy != null">
+				,#{createBy, jdbcType=VARCHAR}
+			</if>
+			<if test="updateDate != null">
+				,#{updateDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="locked != null">
+				,#{locked, jdbcType=INTEGER}
+			</if>
+			<if test="deleteFlag != null">
+				,#{deleteFlag, jdbcType=INTEGER}
+			</if>
+			<if test="status != null">
+				,#{status, jdbcType=INTEGER}
+			</if>
+			<if test="processName != null">
+				,#{processName, jdbcType=VARCHAR}
+			</if>
+			<if test="processInstanceId != null">
+				,#{processInstanceId, jdbcType=VARCHAR}
+			</if>
+	    </trim>
     </insert>
 
 	 
 	<update id="updateTrip" parameterType="com.glaf.apps.trip.model.Trip">
-		update
-		X_APP_TRIP
+		update X_APP_TRIP
 		set
         <trim prefix="" suffix="" suffixOverrides=",">		
-        TRANSTYPE_ = #{transType, jdbcType=VARCHAR},
-        APPLYDATE_ = #{applyDate, jdbcType=TIMESTAMP},
-        STARTDATE_ = #{startDate, jdbcType=TIMESTAMP},
-        ENDDATE_ = #{endDate, jdbcType=TIMESTAMP},
-        DAYS_ = #{days, jdbcType=DOUBLE},
-        MONEY_ = #{money, jdbcType=DOUBLE},
-        CAUSE_ = #{cause, jdbcType=VARCHAR},
+			<if test="transType != null">
+				TRANSTYPE_ = #{transType, jdbcType=VARCHAR},
+			</if>
+			<if test="applyDate != null">
+				APPLYDATE_ = #{applyDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="startDate != null">
+				STARTDATE_ = #{startDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="endDate != null">
+				ENDDATE_ = #{endDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="days != null">
+				DAYS_ = #{days, jdbcType=DOUBLE},
+			</if>
+			<if test="money != null">
+				MONEY_ = #{money, jdbcType=DOUBLE},
+			</if>
+			<if test="cause != null">
+				CAUSE_ = #{cause, jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				CREATEDATE_ = #{createDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="createBy != null">
+				CREATEBY_ = #{createBy, jdbcType=VARCHAR},
+			</if>
+			<if test="updateDate != null">
+				UPDATEDATE_ = #{updateDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="locked != null">
+				LOCKED_ = #{locked, jdbcType=INTEGER},
+			</if>
+			<if test="deleteFlag != null">
+				DELETEFLAG_ = #{deleteFlag, jdbcType=INTEGER},
+			</if>
+			<if test="status != null">
+				STATUS_ = #{status, jdbcType=INTEGER},
+			</if>
+			<if test="processName != null">
+				PROCESSNAME_ = #{processName, jdbcType=VARCHAR},
+			</if>
+			<if test="processInstanceId != null">
+				PROCESSINSTANCEID_ = #{processInstanceId, jdbcType=VARCHAR},
+			</if>
         </trim>
 		where
           ID_ = #{id, jdbcType=VARCHAR}

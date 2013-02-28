@@ -35,84 +35,101 @@
 
  
 	<insert id="insert${entityName}" parameterType="${packageName}.model.${entityName}">
-		insert into
-		${tableName} ( ${idField.columnName}
-<#if pojo_fields?exists>
-  <#list  pojo_fields as field>
-   <#if field.name?exists && field.columnName?exists && field.type?exists>
-	<#if field.type?exists && ( field.type== 'Integer' )>
-        ,${field.columnName} 
-      <#elseif field.type?exists && ( field.type== 'Long' )>
-        ,${field.columnName} 
-	  <#elseif field.type?exists && ( field.type== 'Double' )>
-        ,${field.columnName} 
-	  <#elseif field.type?exists && ( field.type== 'Boolean' )>
-        ,${field.columnName} 
-	  <#elseif field.type?exists && ( field.type== 'Date')>
-        ,${field.columnName} 
-	  <#elseif field.type?exists && ( field.type== 'String')>
-        ,${field.columnName} 
-	</#if>
-   </#if>
-  </#list>
-</#if>
-		)
-		values (
-		<#if idField.type?exists && ( idField.type== 'Integer' )>
-          #GG{${idField.name}, jdbcType=INTEGER}
-        <#elseif idField.type?exists && ( idField.type== 'Long' )>
-          #GG{${idField.name}, jdbcType=BIGINT}
-	    <#elseif idField.type?exists && ( idField.type== 'String')>
-          #GG{${idField.name}, jdbcType=VARCHAR}
-	    </#if>
+		insert into ${tableName} 
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+		    ${idField.columnName}
+		<#if pojo_fields?exists>
+		  <#list  pojo_fields as field>
+		    <#if field.name?exists && field.columnName?exists && field.type?exists>
+			<if test="${field.name} != null">
+			<#if field.type?exists && ( field.type== 'Integer' )>
+				,${field.columnName} 
+			<#elseif field.type?exists && ( field.type== 'Long' )>
+				,${field.columnName} 
+			<#elseif field.type?exists && ( field.type== 'Double' )>
+				,${field.columnName} 
+			<#elseif field.type?exists && ( field.type== 'Boolean' )>
+				,${field.columnName} 
+			<#elseif field.type?exists && ( field.type== 'Date')>
+				,${field.columnName} 
+			<#elseif field.type?exists && ( field.type== 'Blob')>
+				,${field.columnName} 
+			<#elseif field.type?exists && ( field.type== 'Clob')>
+				,${field.columnName} 
+			<#elseif field.type?exists && ( field.type== 'String')>
+				,${field.columnName} 
+			</#if>
+			</if>
+	        </#if>
+		  </#list>
+		 </#if>
+        </trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			<#if idField.type?exists && ( idField.type== 'Integer' )>
+			  #GG{${idField.name}, jdbcType=INTEGER}
+			<#elseif idField.type?exists && ( idField.type== 'Long' )>
+			  #GG{${idField.name}, jdbcType=BIGINT}
+			<#elseif idField.type?exists && ( idField.type== 'String')>
+			  #GG{${idField.name}, jdbcType=VARCHAR}
+			</#if>
 	     
-<#if pojo_fields?exists>
-  <#list  pojo_fields as field>
-   <#if field.name?exists && field.columnName?exists && field.type?exists>
-	<#if field.type?exists && ( field.type== 'Integer' )>
-        ,#GG{${field.name}, jdbcType=INTEGER}
-      <#elseif field.type?exists && ( field.type== 'Long' )>
-        ,#GG{${field.name}, jdbcType=BIGINT}
-	  <#elseif field.type?exists && ( field.type== 'Double' )>
-        ,#GG{${field.name}, jdbcType=DOUBLE}
-	  <#elseif field.type?exists && ( field.type== 'Boolean' )>
-        ,#GG{${field.name}, jdbcType=BOOLEAN}
-	  <#elseif field.type?exists && ( field.type== 'Date')>
-        ,#GG{${field.name}, jdbcType=TIMESTAMP}
-	  <#elseif field.type?exists && ( field.type== 'String')>
-        ,#GG{${field.name}, jdbcType=VARCHAR}
-	</#if>
-   </#if>
-  </#list>
-</#if>
-		)
+		<#if pojo_fields?exists>
+		<#list  pojo_fields as field>
+		<#if field.name?exists && field.columnName?exists && field.type?exists>
+			<if test="${field.name} != null">
+			<#if field.type?exists && ( field.type== 'Integer' )>
+				,#GG{${field.name}, jdbcType=INTEGER}
+			<#elseif field.type?exists && ( field.type== 'Long' )>
+				,#GG{${field.name}, jdbcType=BIGINT}
+			<#elseif field.type?exists && ( field.type== 'Double' )>
+				,#GG{${field.name}, jdbcType=DOUBLE}
+			<#elseif field.type?exists && ( field.type== 'Boolean' )>
+				,#GG{${field.name}, jdbcType=BOOLEAN}
+			<#elseif field.type?exists && ( field.type== 'Date')>
+				,#GG{${field.name}, jdbcType=TIMESTAMP}
+			<#elseif field.type?exists && ( field.type== 'Blob')>
+				,#GG{${field.name}, jdbcType=BLOB}
+			<#elseif field.type?exists && ( field.type== 'Clob')>
+				,#GG{${field.name}, jdbcType=VARCHAR}
+			<#elseif field.type?exists && ( field.type== 'String')>
+				,#GG{${field.name}, jdbcType=VARCHAR}
+			</#if>
+			</if>
+		  </#if>
+		</#list>
+	    </#if>
+	    </trim>
     </insert>
 
 	 
 	<update id="update${entityName}" parameterType="${packageName}.model.${entityName}">
-		update
-		${tableName}
+		update ${tableName}
 		set
         <trim prefix="" suffix="" suffixOverrides=",">		
-<#if pojo_fields?exists>
-  <#list  pojo_fields as field>
-  <#if field.name?exists && field.columnName?exists && field.type?exists && field.editable>
-	<#if field.type?exists && ( field.type== 'Integer' )>
-        ${field.columnName} = #GG{${field.name}, jdbcType=INTEGER},
-      <#elseif field.type?exists && ( field.type== 'Long' )>
-        ${field.columnName} = #GG{${field.name}, jdbcType=BIGINT},
-	  <#elseif field.type?exists && ( field.type== 'Double' )>
-        ${field.columnName} = #GG{${field.name}, jdbcType=DOUBLE},
-	  <#elseif field.type?exists && ( field.type== 'Boolean' )>
-        ${field.columnName} = #GG{${field.name}, jdbcType=BOOLEAN},
-	  <#elseif field.type?exists && ( field.type== 'Date')>
-        ${field.columnName} = #GG{${field.name}, jdbcType=TIMESTAMP},
-	  <#elseif field.type?exists && ( field.type== 'String')>
-        ${field.columnName} = #GG{${field.name}, jdbcType=VARCHAR},
-	</#if>
-	</#if>
-  </#list>
-</#if>
+		<#if pojo_fields?exists>
+		  <#list  pojo_fields as field>
+			<#if field.name?exists && field.columnName?exists && field.type?exists>
+			<if test="${field.name} != null">
+			<#if field.type?exists && ( field.type== 'Integer' )>
+				${field.columnName} = #GG{${field.name}, jdbcType=INTEGER},
+			<#elseif field.type?exists && ( field.type== 'Long' )>
+				${field.columnName} = #GG{${field.name}, jdbcType=BIGINT},
+			<#elseif field.type?exists && ( field.type== 'Double' )>
+				${field.columnName} = #GG{${field.name}, jdbcType=DOUBLE},
+			<#elseif field.type?exists && ( field.type== 'Boolean' )>
+				${field.columnName} = #GG{${field.name}, jdbcType=BOOLEAN},
+			<#elseif field.type?exists && ( field.type== 'Date')>
+				${field.columnName} = #GG{${field.name}, jdbcType=TIMESTAMP},
+			<#elseif field.type?exists && ( field.type== 'Clob')>
+				${field.columnName} = #GG{${field.name}, jdbcType=VARCHAR},
+			<#elseif field.type?exists && ( field.type== 'String')>
+				${field.columnName} = #GG{${field.name}, jdbcType=VARCHAR},
+			</#if>
+			</if>
+			</#if>
+		  </#list>
+		</#if>
         </trim>
 		where
 		<#if idField.type?exists && ( idField.type== 'Integer' )>
