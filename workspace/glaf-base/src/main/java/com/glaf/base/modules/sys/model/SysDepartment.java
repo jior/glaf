@@ -25,13 +25,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import com.alibaba.fastjson.*;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
+import com.glaf.base.modules.sys.util.SysDepartmentJsonFactory;
 import com.glaf.core.base.JSONable;
-import com.glaf.core.util.DateUtils;
 
 public class SysDepartment implements Serializable, JSONable {
 	private static final long serialVersionUID = -1700125499848402378L;
@@ -63,20 +61,8 @@ public class SysDepartment implements Serializable, JSONable {
 		children.add(dept);
 	}
 
-	public SysDepartment getParent() {
-		return parent;
-	}
-
-	public void setParent(SysDepartment parent) {
-		this.parent = parent;
-	}
-
 	public List<SysDepartment> getChildren() {
 		return children;
-	}
-
-	public void setChildren(List<SysDepartment> children) {
-		this.children = children;
 	}
 
 	public String getCode() {
@@ -119,6 +105,10 @@ public class SysDepartment implements Serializable, JSONable {
 		return nodeId;
 	}
 
+	public SysDepartment getParent() {
+		return parent;
+	}
+
 	public Set<SysDeptRole> getRoles() {
 		return roles;
 	}
@@ -129,6 +119,14 @@ public class SysDepartment implements Serializable, JSONable {
 
 	public int getStatus() {
 		return status;
+	}
+
+	public SysDepartment jsonToObject(JSONObject jsonObject) {
+		return SysDepartmentJsonFactory.jsonToObject(jsonObject);
+	}
+
+	public void setChildren(List<SysDepartment> children) {
+		this.children = children;
 	}
 
 	public void setCode(String code) {
@@ -171,6 +169,10 @@ public class SysDepartment implements Serializable, JSONable {
 		this.nodeId = nodeId;
 	}
 
+	public void setParent(SysDepartment parent) {
+		this.parent = parent;
+	}
+
 	public void setRoles(Set<SysDeptRole> roles) {
 		this.roles = roles;
 	}
@@ -183,117 +185,16 @@ public class SysDepartment implements Serializable, JSONable {
 		this.status = status;
 	}
 
-	public SysDepartment jsonToObject(JSONObject jsonObject) {
-		SysDepartment model = new SysDepartment();
-		if (jsonObject.containsKey("id")) {
-			model.setId(jsonObject.getLong("id"));
-		}
-		if (jsonObject.containsKey("name")) {
-			model.setName(jsonObject.getString("name"));
-		}
-		if (jsonObject.containsKey("desc")) {
-			model.setDesc(jsonObject.getString("desc"));
-		}
-		if (jsonObject.containsKey("createTime")) {
-			model.setCreateTime(jsonObject.getDate("createTime"));
-		}
-		if (jsonObject.containsKey("sort")) {
-			model.setSort(jsonObject.getInteger("sort"));
-		}
-		if (jsonObject.containsKey("no")) {
-			model.setNo(jsonObject.getString("no"));
-		}
-		if (jsonObject.containsKey("code")) {
-			model.setCode(jsonObject.getString("code"));
-		}
-		if (jsonObject.containsKey("code2")) {
-			model.setCode2(jsonObject.getString("code2"));
-		}
-		if (jsonObject.containsKey("status")) {
-			model.setStatus(jsonObject.getInteger("status"));
-		}
-		if (jsonObject.containsKey("fincode")) {
-			model.setFincode(jsonObject.getString("fincode"));
-		}
-		if (jsonObject.containsKey("nodeId")) {
-			model.setNodeId(jsonObject.getLong("nodeId"));
-		}
-		return model;
-	}
-
 	public JSONObject toJsonObject() {
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("id", id);
-		jsonObject.put("_id_", id);
-		jsonObject.put("_oid_", id);
-		if (name != null) {
-			jsonObject.put("name", name);
-		}
-		if (desc != null) {
-			jsonObject.put("desc", desc);
-		}
-		if (createTime != null) {
-			jsonObject.put("createTime", DateUtils.getDate(createTime));
-			jsonObject.put("createTime_date", DateUtils.getDate(createTime));
-			jsonObject.put("createTime_datetime",
-					DateUtils.getDateTime(createTime));
-		}
-		jsonObject.put("sort", sort);
-		if (no != null) {
-			jsonObject.put("no", no);
-		}
-		if (code != null) {
-			jsonObject.put("code", code);
-		}
-		if (code2 != null) {
-			jsonObject.put("code2", code2);
-		}
-		jsonObject.put("status", status);
-		if (fincode != null) {
-			jsonObject.put("fincode", fincode);
-		}
-		jsonObject.put("nodeId", nodeId);
-		return jsonObject;
+		return SysDepartmentJsonFactory.toJsonObject(this);
 	}
 
 	public ObjectNode toObjectNode() {
-		ObjectNode jsonObject = new ObjectMapper().createObjectNode();
-		jsonObject.put("id", id);
-		jsonObject.put("_id_", id);
-		jsonObject.put("_oid_", id);
-		if (name != null) {
-			jsonObject.put("name", name);
-		}
-		if (desc != null) {
-			jsonObject.put("desc", desc);
-		}
-		if (createTime != null) {
-			jsonObject.put("createTime", DateUtils.getDate(createTime));
-			jsonObject.put("createTime_date", DateUtils.getDate(createTime));
-			jsonObject.put("createTime_datetime",
-					DateUtils.getDateTime(createTime));
-		}
-		jsonObject.put("sort", sort);
-		if (no != null) {
-			jsonObject.put("no", no);
-		}
-		if (code != null) {
-			jsonObject.put("code", code);
-		}
-		if (code2 != null) {
-			jsonObject.put("code2", code2);
-		}
-		jsonObject.put("status", status);
-		if (fincode != null) {
-			jsonObject.put("fincode", fincode);
-		}
-		jsonObject.put("nodeId", nodeId);
-		return jsonObject;
+		return SysDepartmentJsonFactory.toObjectNode(this);
 	}
 
 	public String toString() {
-		return ToStringBuilder.reflectionToString(this,
-				ToStringStyle.MULTI_LINE_STYLE);
+		return toJsonObject().toJSONString();
 	}
 
 }

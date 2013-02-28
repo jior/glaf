@@ -26,14 +26,11 @@ import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.glaf.base.modules.sys.util.SysUserJsonFactory;
 import com.glaf.core.base.JSONable;
 import com.glaf.core.identity.User;
-import com.glaf.core.util.DateUtils;
 
 public class SysUser implements Serializable, User, JSONable {
 	private static final long serialVersionUID = -7677600372139823989L;
@@ -283,145 +280,9 @@ public class SysUser implements Serializable, User, JSONable {
 		}
 		return isAdmin;
 	}
-	
 
 	public SysUser jsonToObject(JSONObject jsonObject) {
-		SysUser model = new SysUser();
-		if (jsonObject.containsKey("id")) {
-			model.setId(jsonObject.getIntValue("id"));
-		}
-
-		if (jsonObject.containsKey("actorId")) {
-			model.setActorId(jsonObject.getString("actorId"));
-		}
-		if (jsonObject.containsKey("account")) {
-			model.setActorId(jsonObject.getString("account"));
-		}
-		if (jsonObject.containsKey("name")) {
-			model.setName(jsonObject.getString("name"));
-		}
-
-		if (jsonObject.containsKey("code")) {
-			model.setCode(jsonObject.getString("code"));
-		}
-
-		if (jsonObject.containsKey("evection")) {
-			model.setEvection(jsonObject.getIntValue("evection"));
-		}
-
-		if (jsonObject.containsKey("gender")) {
-			model.setGender(jsonObject.getIntValue("gender"));
-		}
-
-		if (jsonObject.containsKey("userType")) {
-			model.setUserType(jsonObject.getIntValue("userType"));
-		}
-
-		if (jsonObject.containsKey("accountType")) {
-			model.setAccountType(jsonObject.getIntValue("accountType"));
-		}
-
-		if (jsonObject.containsKey("dumpFlag")) {
-			model.setDumpFlag(jsonObject.getIntValue("dumpFlag"));
-		}
-
-		if (jsonObject.containsKey("createDate")) {
-			model.setCreateDate(jsonObject.getDate("createDate"));
-		}
-
-		if (jsonObject.containsKey("lastLoginTime")) {
-			model.setLastLoginTime(jsonObject.getDate("lastLoginTime"));
-		}
-
-		if (jsonObject.containsKey("lastLoginIP")) {
-			model.setLastLoginIP(jsonObject.getString("lastLoginIP"));
-		}
-
-		if (jsonObject.containsKey("remark")) {
-			model.setRemark(jsonObject.getString("remark"));
-		}
-
-		if (jsonObject.containsKey("deptId")) {
-			model.setDeptId(jsonObject.getInteger("deptId"));
-		}
-
-		if (jsonObject.containsKey("mail")) {
-			model.setMail(jsonObject.getString("mail"));
-		}
-
-		if (jsonObject.containsKey("mobile")) {
-			model.setMobile(jsonObject.getString("mobile"));
-		}
-
-		if (jsonObject.containsKey("telephone")) {
-			model.setTelephone(jsonObject.getString("telephone"));
-		}
-
-		if (jsonObject.containsKey("headship")) {
-			model.setHeadship(jsonObject.getString("headship"));
-		}
-
-		if (jsonObject.containsKey("superiorIds")) {
-			model.setSuperiorIds(jsonObject.getString("superiorIds"));
-		}
-
-		if (jsonObject.containsKey("blocked")) {
-			model.setBlocked(jsonObject.getIntValue("blocked"));
-		}
-
-		if (jsonObject.containsKey("adminFlag")) {
-			model.setAdminFlag(jsonObject.getString("adminFlag"));
-		}
-
-		if (jsonObject.containsKey("userRoles")) {
-			JSONArray array = jsonObject.getJSONArray("userRoles");
-			if (array != null && !array.isEmpty()) {
-				for (int i = 0; i < array.size(); i++) {
-					JSONObject json = array.getJSONObject(i);
-					SysUserRole m = new SysUserRole();
-					SysUserRole r = m.jsonToObject(json);
-					userRoles.add(r);
-				}
-			}
-		}
-
-		if (jsonObject.containsKey("roles")) {
-			JSONArray array = jsonObject.getJSONArray("roles");
-			if (array != null && !array.isEmpty()) {
-				for (int i = 0; i < array.size(); i++) {
-					JSONObject json = array.getJSONObject(i);
-					SysDeptRole m = new SysDeptRole();
-					SysDeptRole r = m.jsonToObject(json);
-					roles.add(r);
-				}
-			}
-		}
-
-		if (jsonObject.containsKey("functions")) {
-			JSONArray array = jsonObject.getJSONArray("functions");
-			if (array != null && !array.isEmpty()) {
-				for (int i = 0; i < array.size(); i++) {
-					JSONObject json = array.getJSONObject(i);
-					SysFunction m = new SysFunction();
-					SysFunction r = m.jsonToObject(json);
-					functions.add(r);
-				}
-			}
-		}
-
-		if (jsonObject.containsKey("apps")) {
-			JSONArray array = jsonObject.getJSONArray("apps");
-			if (array != null && !array.isEmpty()) {
-				for (int i = 0; i < array.size(); i++) {
-					JSONObject json = array.getJSONObject(i);
-					SysApplication m = new SysApplication();
-					SysApplication r = m.jsonToObject(json);
-					apps.add(r);
-				}
-			}
-		}
-
-		return model;
+		return SysUserJsonFactory.jsonToObject(jsonObject);
 	}
 
 	public void setAccount(String account) {
@@ -573,149 +434,14 @@ public class SysUser implements Serializable, User, JSONable {
 	}
 
 	public JSONObject toJsonObject() {
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("id", id);
-		jsonObject.put("actorId", account);
-		jsonObject.put("name", name);
-		jsonObject.put("locked", blocked);
-		if (department != null) {
-			jsonObject.put("deptId", department.getId());
-		}
-
-		jsonObject.put("accountType", accountType);
-		jsonObject.put("userType", userType);
-		jsonObject.put("dumpFlag", dumpFlag);
-		jsonObject.put("gender", gender);
-		jsonObject.put("evection", evection);
-		jsonObject.put("superiorIds", superiorIds);
-
-		jsonObject.put("fax", fax);
-		jsonObject.put("telephone", telephone);
-		jsonObject.put("headship", headship);
-		jsonObject.put("adminFlag", adminFlag);
-
-		if (email != null) {
-			jsonObject.put("mail", email);
-			jsonObject.put("email", email);
-		}
-		if (mobile != null) {
-			jsonObject.put("mobile", mobile);
-		}
-		if (lastLoginTime != null) {
-			jsonObject.put("lastLoginDate", lastLoginTime);
-			jsonObject.put("lastLoginTime", lastLoginTime);
-		}
-		if (loginIP != null) {
-			jsonObject.put("loginIP", loginIP);
-		}
-
-		if (userRoles != null && !userRoles.isEmpty()) {
-			JSONArray array = new JSONArray();
-			for (SysUserRole sysUserRole : userRoles) {
-				array.add(sysUserRole.toJsonObject());
-			}
-			jsonObject.put("userRoles", array);
-		}
-
-		if (roles != null && !roles.isEmpty()) {
-			JSONArray array = new JSONArray();
-			for (SysDeptRole sysDeptRole : roles) {
-				array.add(sysDeptRole.toJsonObject());
-			}
-			jsonObject.put("roles", array);
-		}
-
-		if (functions != null && !functions.isEmpty()) {
-			JSONArray array = new JSONArray();
-			for (SysFunction sysFunction : functions) {
-				array.add(sysFunction.toJsonObject());
-			}
-			jsonObject.put("functions", array);
-		}
-
-		if (apps != null && !apps.isEmpty()) {
-			JSONArray array = new JSONArray();
-			for (SysApplication app : apps) {
-				array.add(app.toJsonObject());
-			}
-			jsonObject.put("apps", array);
-		}
-
-		return jsonObject;
+		return SysUserJsonFactory.toJsonObject(this);
 	}
 
 	public ObjectNode toObjectNode() {
-		ObjectNode jsonObject = new ObjectMapper().createObjectNode();
-		jsonObject.put("id", id);
-		jsonObject.put("actorId", account);
-		jsonObject.put("name", name);
-		jsonObject.put("locked", blocked);
-		if (department != null) {
-			jsonObject.put("deptId", department.getId());
-		}
-
-		jsonObject.put("accountType", accountType);
-		jsonObject.put("userType", userType);
-		jsonObject.put("dumpFlag", dumpFlag);
-		jsonObject.put("gender", gender);
-		jsonObject.put("evection", evection);
-		jsonObject.put("superiorIds", superiorIds);
-
-		jsonObject.put("fax", fax);
-		jsonObject.put("telephone", telephone);
-		jsonObject.put("headship", headship);
-		jsonObject.put("adminFlag", adminFlag);
-
-		if (email != null) {
-			jsonObject.put("mail", email);
-			jsonObject.put("email", email);
-		}
-		if (mobile != null) {
-			jsonObject.put("mobile", mobile);
-		}
-		if (lastLoginTime != null) {
-			jsonObject.put("lastLoginDate",
-					DateUtils.getDateTime(lastLoginTime));
-			jsonObject.put("lastLoginTime",
-					DateUtils.getDateTime(lastLoginTime));
-		}
-		if (loginIP != null) {
-			jsonObject.put("loginIP", loginIP);
-		}
-
-		if (userRoles != null && !userRoles.isEmpty()) {
-			ArrayNode array = new ObjectMapper().createArrayNode();
-			for (SysUserRole sysUserRole : userRoles) {
-				array.add(sysUserRole.toObjectNode());
-			}
-			jsonObject.put("userRoles", array);
-		}
-
-		if (roles != null && !roles.isEmpty()) {
-			ArrayNode array = new ObjectMapper().createArrayNode();
-			for (SysDeptRole sysDeptRole : roles) {
-				array.add(sysDeptRole.toObjectNode());
-			}
-			jsonObject.put("roles", array);
-		}
-
-		if (functions != null && !functions.isEmpty()) {
-			ArrayNode array = new ObjectMapper().createArrayNode();
-			for (SysFunction sysFunction : functions) {
-				array.add(sysFunction.toObjectNode());
-			}
-			jsonObject.put("functions", array);
-		}
-
-		if (apps != null && !apps.isEmpty()) {
-			ArrayNode array = new ObjectMapper().createArrayNode();
-			for (SysApplication app : apps) {
-				array.add(app.toObjectNode());
-			}
-			jsonObject.put("apps", array);
-		}
-
-		return jsonObject;
+		return SysUserJsonFactory.toObjectNode(this);
 	}
 
+	public String toString() {
+		return toJsonObject().toJSONString();
+	}
 }

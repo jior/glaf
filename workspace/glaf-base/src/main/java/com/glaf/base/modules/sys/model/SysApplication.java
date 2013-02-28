@@ -22,12 +22,10 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import com.alibaba.fastjson.*;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.glaf.base.modules.sys.util.SysApplicationJsonFactory;
 import com.glaf.core.base.JSONable;
-
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
+ 
 
 public class SysApplication implements Serializable, JSONable {
 	private static final long serialVersionUID = 5148300850285163044L;
@@ -118,73 +116,18 @@ public class SysApplication implements Serializable, JSONable {
 	}
 
 	public SysApplication jsonToObject(JSONObject jsonObject) {
-		SysApplication model = new SysApplication();
-		if (jsonObject.containsKey("id")) {
-			model.setId(jsonObject.getLong("id"));
-		}
-		if (jsonObject.containsKey("name")) {
-			model.setName(jsonObject.getString("name"));
-		}
-		if (jsonObject.containsKey("desc")) {
-			model.setDesc(jsonObject.getString("desc"));
-		}
-		if (jsonObject.containsKey("url")) {
-			model.setUrl(jsonObject.getString("url"));
-		}
-		if (jsonObject.containsKey("sort")) {
-			model.setSort(jsonObject.getInteger("sort"));
-		}
-		if (jsonObject.containsKey("showMenu")) {
-			model.setShowMenu(jsonObject.getInteger("showMenu"));
-		}
-		if (jsonObject.containsKey("nodeId")) {
-			model.setNodeId(jsonObject.getLong("nodeId"));
-		}
-		return model;
+		return SysApplicationJsonFactory.jsonToObject(jsonObject);
 	}
 
 	public JSONObject toJsonObject() {
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("id", id);
-		jsonObject.put("_id_", id);
-		jsonObject.put("_oid_", id);
-		if (name != null) {
-			jsonObject.put("name", name);
-		}
-		if (desc != null) {
-			jsonObject.put("desc", desc);
-		}
-		if (url != null) {
-			jsonObject.put("url", url);
-		}
-		jsonObject.put("sort", sort);
-		jsonObject.put("showMenu", showMenu);
-		jsonObject.put("nodeId", nodeId);
-		return jsonObject;
+		return SysApplicationJsonFactory.toJsonObject(this);
 	}
 
 	public ObjectNode toObjectNode() {
-		ObjectNode jsonObject = new ObjectMapper().createObjectNode();
-		jsonObject.put("id", id);
-		jsonObject.put("_id_", id);
-		jsonObject.put("_oid_", id);
-		if (name != null) {
-			jsonObject.put("name", name);
-		}
-		if (desc != null) {
-			jsonObject.put("desc", desc);
-		}
-		if (url != null) {
-			jsonObject.put("url", url);
-		}
-		jsonObject.put("sort", sort);
-		jsonObject.put("showMenu", showMenu);
-		jsonObject.put("nodeId", nodeId);
-		return jsonObject;
+		return SysApplicationJsonFactory.toObjectNode(this);
 	}
 
 	public String toString() {
-		return ToStringBuilder.reflectionToString(this,
-				ToStringStyle.MULTI_LINE_STYLE);
+		return toJsonObject().toJSONString();
 	}
 }

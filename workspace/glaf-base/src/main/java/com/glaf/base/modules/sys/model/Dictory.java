@@ -21,13 +21,11 @@ package com.glaf.base.modules.sys.model;
 import java.io.Serializable;
 import java.util.Date;
 import com.alibaba.fastjson.*;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.glaf.core.base.JSONable;
-import com.glaf.core.util.DateUtils;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.glaf.base.modules.sys.util.DictoryJsonFactory;
+import com.glaf.core.base.JSONable;
+ 
 
 public class Dictory implements Serializable, JSONable {
 	private static final long serialVersionUID = 2756737871937885934L;
@@ -150,136 +148,19 @@ public class Dictory implements Serializable, JSONable {
 	}
 
 	public Dictory jsonToObject(JSONObject jsonObject) {
-		Dictory model = new Dictory();
-		if (jsonObject.containsKey("id")) {
-			model.setId(jsonObject.getLong("id"));
-		}
-		if (jsonObject.containsKey("typeId")) {
-			model.setTypeId(jsonObject.getLong("typeId"));
-		}
-		if (jsonObject.containsKey("name")) {
-			model.setName(jsonObject.getString("name"));
-		}
-		if (jsonObject.containsKey("desc")) {
-			model.setDesc(jsonObject.getString("desc"));
-		}
-		if (jsonObject.containsKey("code")) {
-			model.setCode(jsonObject.getString("code"));
-		}
-		if (jsonObject.containsKey("sort")) {
-			model.setSort(jsonObject.getInteger("sort"));
-		}
-		if (jsonObject.containsKey("blocked")) {
-			model.setBlocked(jsonObject.getInteger("blocked"));
-		}
-		if (jsonObject.containsKey("ext1")) {
-			model.setExt1(jsonObject.getString("ext1"));
-		}
-		if (jsonObject.containsKey("ext2")) {
-			model.setExt2(jsonObject.getString("ext2"));
-		}
-		if (jsonObject.containsKey("ext3")) {
-			model.setExt3(jsonObject.getString("ext3"));
-		}
-		if (jsonObject.containsKey("ext4")) {
-			model.setExt4(jsonObject.getString("ext4"));
-		}
-		if (jsonObject.containsKey("ext5")) {
-			model.setExt5(jsonObject.getDate("ext5"));
-		}
-		if (jsonObject.containsKey("ext6")) {
-			model.setExt6(jsonObject.getDate("ext6"));
-		}
-		return model;
+		return DictoryJsonFactory.jsonToObject(jsonObject);
 	}
 
 	public JSONObject toJsonObject() {
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("id", id);
-		jsonObject.put("_id_", id);
-		jsonObject.put("_oid_", id);
-		jsonObject.put("typeId", typeId);
-		if (name != null) {
-			jsonObject.put("name", name);
-		}
-		if (desc != null) {
-			jsonObject.put("desc", desc);
-		}
-		if (code != null) {
-			jsonObject.put("code", code);
-		}
-		jsonObject.put("sort", sort);
-		jsonObject.put("blocked", blocked);
-		if (ext1 != null) {
-			jsonObject.put("ext1", ext1);
-		}
-		if (ext2 != null) {
-			jsonObject.put("ext2", ext2);
-		}
-		if (ext3 != null) {
-			jsonObject.put("ext3", ext3);
-		}
-		if (ext4 != null) {
-			jsonObject.put("ext4", ext4);
-		}
-		if (ext5 != null) {
-			jsonObject.put("ext5", DateUtils.getDate(ext5));
-			jsonObject.put("ext5_date", DateUtils.getDate(ext5));
-			jsonObject.put("ext5_datetime", DateUtils.getDateTime(ext5));
-		}
-		if (ext6 != null) {
-			jsonObject.put("ext6", DateUtils.getDate(ext6));
-			jsonObject.put("ext6_date", DateUtils.getDate(ext6));
-			jsonObject.put("ext6_datetime", DateUtils.getDateTime(ext6));
-		}
-		return jsonObject;
+		return DictoryJsonFactory.toJsonObject(this);
 	}
 
 	public ObjectNode toObjectNode() {
-		ObjectNode jsonObject = new ObjectMapper().createObjectNode();
-		jsonObject.put("id", id);
-		jsonObject.put("_id_", id);
-		jsonObject.put("_oid_", id);
-		jsonObject.put("typeId", typeId);
-		if (name != null) {
-			jsonObject.put("name", name);
-		}
-		if (desc != null) {
-			jsonObject.put("desc", desc);
-		}
-		if (code != null) {
-			jsonObject.put("code", code);
-		}
-		jsonObject.put("sort", sort);
-		jsonObject.put("blocked", blocked);
-		if (ext1 != null) {
-			jsonObject.put("ext1", ext1);
-		}
-		if (ext2 != null) {
-			jsonObject.put("ext2", ext2);
-		}
-		if (ext3 != null) {
-			jsonObject.put("ext3", ext3);
-		}
-		if (ext4 != null) {
-			jsonObject.put("ext4", ext4);
-		}
-		if (ext5 != null) {
-			jsonObject.put("ext5", DateUtils.getDate(ext5));
-			jsonObject.put("ext5_date", DateUtils.getDate(ext5));
-			jsonObject.put("ext5_datetime", DateUtils.getDateTime(ext5));
-		}
-		if (ext6 != null) {
-			jsonObject.put("ext6", DateUtils.getDate(ext6));
-			jsonObject.put("ext6_date", DateUtils.getDate(ext6));
-			jsonObject.put("ext6_datetime", DateUtils.getDateTime(ext6));
-		}
-		return jsonObject;
+		return DictoryJsonFactory.toObjectNode(this);
 	}
 
 	public String toString() {
-		return ToStringBuilder.reflectionToString(this,
-				ToStringStyle.MULTI_LINE_STYLE);
+		return toJsonObject().toJSONString();
 	}
 
 }

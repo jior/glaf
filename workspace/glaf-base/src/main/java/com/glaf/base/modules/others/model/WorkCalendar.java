@@ -20,10 +20,10 @@ package com.glaf.base.modules.others.model;
 
 import java.io.Serializable;
 import com.alibaba.fastjson.*;
-import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
+import com.glaf.base.modules.others.util.WorkCalendarJsonFactory;
+
 
 public class WorkCalendar implements Serializable {
 	private static final long serialVersionUID = -5396045849722935648L;
@@ -65,47 +65,19 @@ public class WorkCalendar implements Serializable {
 	}
 
 	public WorkCalendar jsonToObject(JSONObject jsonObject) {
-		WorkCalendar model = new WorkCalendar();
-		if (jsonObject.containsKey("id")) {
-			model.setId(jsonObject.getLong("id"));
-		}
-		if (jsonObject.containsKey("freeDay")) {
-			model.setFreeDay(jsonObject.getInteger("freeDay"));
-		}
-		if (jsonObject.containsKey("freeMonth")) {
-			model.setFreeMonth(jsonObject.getInteger("freeMonth"));
-		}
-		if (jsonObject.containsKey("freeYear")) {
-			model.setFreeYear(jsonObject.getInteger("freeYear"));
-		}
-		return model;
+		return WorkCalendarJsonFactory.jsonToObject(jsonObject);
 	}
 
 	public JSONObject toJsonObject() {
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("id", id);
-		jsonObject.put("_id_", id);
-		jsonObject.put("_oid_", id);
-		jsonObject.put("freeDay", freeDay);
-		jsonObject.put("freeMonth", freeMonth);
-		jsonObject.put("freeYear", freeYear);
-		return jsonObject;
+		return WorkCalendarJsonFactory.toJsonObject(this);
 	}
 
 	public ObjectNode toObjectNode() {
-		ObjectNode jsonObject = new ObjectMapper().createObjectNode();
-		jsonObject.put("id", id);
-		jsonObject.put("_id_", id);
-		jsonObject.put("_oid_", id);
-		jsonObject.put("freeDay", freeDay);
-		jsonObject.put("freeMonth", freeMonth);
-		jsonObject.put("freeYear", freeYear);
-		return jsonObject;
+		return WorkCalendarJsonFactory.toObjectNode(this);
 	}
 
 	public String toString() {
-		return ToStringBuilder.reflectionToString(this,
-				ToStringStyle.MULTI_LINE_STYLE);
+		return toJsonObject().toJSONString();
 	}
 
 }

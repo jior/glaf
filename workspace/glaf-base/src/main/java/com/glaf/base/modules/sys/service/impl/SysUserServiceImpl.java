@@ -399,7 +399,7 @@ public class SysUserServiceImpl implements SysUserService {
 				SysDeptRole role = (SysDeptRole) roles.next();
 				Set functions = role.getFunctions();
 				Set apps = role.getApps();
-				logger.debug("========================apps:" + apps);
+				//logger.debug("========================apps:" + apps);
 				bean.getFunctions().addAll(functions);
 				bean.getApps().addAll(apps);
 			}

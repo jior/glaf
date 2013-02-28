@@ -20,10 +20,9 @@ package com.glaf.base.modules.sys.model;
 
 import java.io.Serializable;
 import com.alibaba.fastjson.*;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
+
+import com.glaf.base.modules.sys.util.SysTreeJsonFactory;
 import com.glaf.core.base.ITreeModel;
 import com.glaf.core.base.JSONable;
 
@@ -120,68 +119,18 @@ public class SysTree implements Serializable, ITreeModel, JSONable {
 	}
 
 	public SysTree jsonToObject(JSONObject jsonObject) {
-		SysTree model = new SysTree();
-		if (jsonObject.containsKey("id")) {
-			model.setId(jsonObject.getLong("id"));
-		}
-		if (jsonObject.containsKey("parent")) {
-			model.setParent(jsonObject.getLong("parent"));
-		}
-		if (jsonObject.containsKey("name")) {
-			model.setName(jsonObject.getString("name"));
-		}
-		if (jsonObject.containsKey("desc")) {
-			model.setDesc(jsonObject.getString("desc"));
-		}
-		if (jsonObject.containsKey("sort")) {
-			model.setSort(jsonObject.getInteger("sort"));
-		}
-		if (jsonObject.containsKey("code")) {
-			model.setCode(jsonObject.getString("code"));
-		}
-		return model;
+		 return SysTreeJsonFactory.jsonToObject(jsonObject);
 	}
 
 	public JSONObject toJsonObject() {
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("id", id);
-		jsonObject.put("_id_", id);
-		jsonObject.put("_oid_", id);
-		jsonObject.put("parent", parent);
-		if (name != null) {
-			jsonObject.put("name", name);
-		}
-		if (desc != null) {
-			jsonObject.put("desc", desc);
-		}
-		jsonObject.put("sort", sort);
-		if (code != null) {
-			jsonObject.put("code", code);
-		}
-		return jsonObject;
+		return SysTreeJsonFactory.toJsonObject(this);
 	}
 
 	public ObjectNode toObjectNode() {
-		ObjectNode jsonObject = new ObjectMapper().createObjectNode();
-		jsonObject.put("id", id);
-		jsonObject.put("_id_", id);
-		jsonObject.put("_oid_", id);
-		jsonObject.put("parent", parent);
-		if (name != null) {
-			jsonObject.put("name", name);
-		}
-		if (desc != null) {
-			jsonObject.put("desc", desc);
-		}
-		jsonObject.put("sort", sort);
-		if (code != null) {
-			jsonObject.put("code", code);
-		}
-		return jsonObject;
+		return SysTreeJsonFactory.toObjectNode(this);
 	}
 
 	public String toString() {
-		return ToStringBuilder.reflectionToString(this,
-				ToStringStyle.MULTI_LINE_STYLE);
+		return toJsonObject().toJSONString();
 	}
 }

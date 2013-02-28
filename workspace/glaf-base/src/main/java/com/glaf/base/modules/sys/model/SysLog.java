@@ -21,13 +21,10 @@ package com.glaf.base.modules.sys.model;
 import java.io.Serializable;
 import java.util.Date;
 import com.alibaba.fastjson.*;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
 
+import com.glaf.base.modules.sys.util.SysLogJsonFactory;
 import com.glaf.core.base.JSONable;
-import com.glaf.core.util.DateUtils;
 
 public class SysLog implements Serializable, JSONable {
 	private static final long serialVersionUID = 3489584842305336744L;
@@ -87,79 +84,19 @@ public class SysLog implements Serializable, JSONable {
 	}
 
 	public SysLog jsonToObject(JSONObject jsonObject) {
-		SysLog model = new SysLog();
-		if (jsonObject.containsKey("id")) {
-			model.setId(jsonObject.getLong("id"));
-		}
-		if (jsonObject.containsKey("account")) {
-			model.setAccount(jsonObject.getString("account"));
-		}
-		if (jsonObject.containsKey("ip")) {
-			model.setIp(jsonObject.getString("ip"));
-		}
-		if (jsonObject.containsKey("createTime")) {
-			model.setCreateTime(jsonObject.getDate("createTime"));
-		}
-		if (jsonObject.containsKey("operate")) {
-			model.setOperate(jsonObject.getString("operate"));
-		}
-		if (jsonObject.containsKey("flag")) {
-			model.setFlag(jsonObject.getInteger("flag"));
-		}
-		return model;
+		return SysLogJsonFactory.jsonToObject(jsonObject);
 	}
 
 	public JSONObject toJsonObject() {
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("id", id);
-		jsonObject.put("_id_", id);
-		jsonObject.put("_oid_", id);
-		if (account != null) {
-			jsonObject.put("account", account);
-		}
-		if (ip != null) {
-			jsonObject.put("ip", ip);
-		}
-		if (createTime != null) {
-			jsonObject.put("createTime", DateUtils.getDate(createTime));
-			jsonObject.put("createTime_date", DateUtils.getDate(createTime));
-			jsonObject.put("createTime_datetime",
-					DateUtils.getDateTime(createTime));
-		}
-		if (operate != null) {
-			jsonObject.put("operate", operate);
-		}
-		jsonObject.put("flag", flag);
-		return jsonObject;
+		return SysLogJsonFactory.toJsonObject(this);
 	}
 
 	public ObjectNode toObjectNode() {
-		ObjectNode jsonObject = new ObjectMapper().createObjectNode();
-		jsonObject.put("id", id);
-		jsonObject.put("_id_", id);
-		jsonObject.put("_oid_", id);
-		if (account != null) {
-			jsonObject.put("account", account);
-		}
-		if (ip != null) {
-			jsonObject.put("ip", ip);
-		}
-		if (createTime != null) {
-			jsonObject.put("createTime", DateUtils.getDate(createTime));
-			jsonObject.put("createTime_date", DateUtils.getDate(createTime));
-			jsonObject.put("createTime_datetime",
-					DateUtils.getDateTime(createTime));
-		}
-		if (operate != null) {
-			jsonObject.put("operate", operate);
-		}
-		jsonObject.put("flag", flag);
-		return jsonObject;
+		return SysLogJsonFactory.toObjectNode(this);
 	}
 
 	public String toString() {
-		return ToStringBuilder.reflectionToString(this,
-				ToStringStyle.MULTI_LINE_STYLE);
+		return toJsonObject().toJSONString();
 	}
 
 }

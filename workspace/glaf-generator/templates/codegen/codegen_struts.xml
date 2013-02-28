@@ -15,6 +15,11 @@
 		<saveName>${entityName}Service.java</saveName>
 		<template>/templates/java/service/jpa/Service.java.ftl</template>
 	</definition>
+	<definition name="JsonFactory">
+		<savePath>/java/util</savePath>
+		<saveName>${entityName}.java</saveName>
+		<template>/templates/java/util/JsonFactory.java.ftl</template>
+	</definition>
 	<definition name="Controller">
 		<savePath>/java/web/springmvc</savePath>
 		<saveName>${entityName}Controller.java</saveName>

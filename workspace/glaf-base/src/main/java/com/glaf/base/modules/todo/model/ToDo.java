@@ -20,11 +20,9 @@ package com.glaf.base.modules.todo.model;
 
 import java.util.*;
 import com.alibaba.fastjson.*;
-import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
- 
+import com.glaf.base.modules.todo.util.ToDoJsonFactory;
 
 public class ToDo implements java.io.Serializable {
 
@@ -351,101 +349,7 @@ public class ToDo implements java.io.Serializable {
 	}
 
 	public ToDo jsonToObject(JSONObject jsonObject) {
-		ToDo model = new ToDo();
-		if (jsonObject.containsKey("id")) {
-			model.setId(jsonObject.getLong("id"));
-		}
-		if (jsonObject.containsKey("actorId")) {
-			model.setActorId(jsonObject.getString("actorId"));
-		}
-		if (jsonObject.containsKey("alarm")) {
-			model.setAlarm(jsonObject.getString("alarm"));
-		}
-		if (jsonObject.containsKey("code")) {
-			model.setCode(jsonObject.getString("code"));
-		}
-		if (jsonObject.containsKey("content")) {
-			model.setContent(jsonObject.getString("content"));
-		}
-		if (jsonObject.containsKey("deptId")) {
-			model.setDeptId(jsonObject.getLong("deptId"));
-		}
-		if (jsonObject.containsKey("deptName")) {
-			model.setDeptName(jsonObject.getString("deptName"));
-		}
-		if (jsonObject.containsKey("enableFlag")) {
-			model.setEnableFlag(jsonObject.getInteger("enableFlag"));
-		}
-		if (jsonObject.containsKey("eventFrom")) {
-			model.setEventFrom(jsonObject.getString("eventFrom"));
-		}
-		if (jsonObject.containsKey("eventTo")) {
-			model.setEventTo(jsonObject.getString("eventTo"));
-		}
-		if (jsonObject.containsKey("limitDay")) {
-			model.setLimitDay(jsonObject.getInteger("limitDay"));
-		}
-		if (jsonObject.containsKey("xa")) {
-			model.setXa(jsonObject.getInteger("xa"));
-		}
-		if (jsonObject.containsKey("xb")) {
-			model.setXb(jsonObject.getInteger("xb"));
-		}
-		if (jsonObject.containsKey("link")) {
-			model.setLink(jsonObject.getString("link"));
-		}
-		if (jsonObject.containsKey("listLink")) {
-			model.setListLink(jsonObject.getString("listLink"));
-		}
-		if (jsonObject.containsKey("linkType")) {
-			model.setLinkType(jsonObject.getString("linkType"));
-		}
-		if (jsonObject.containsKey("appId")) {
-			model.setAppId(jsonObject.getInteger("appId"));
-		}
-		if (jsonObject.containsKey("moduleId")) {
-			model.setModuleId(jsonObject.getInteger("moduleId"));
-		}
-		if (jsonObject.containsKey("moduleName")) {
-			model.setModuleName(jsonObject.getString("moduleName"));
-		}
-		if (jsonObject.containsKey("news")) {
-			model.setNews(jsonObject.getString("news"));
-		}
-		if (jsonObject.containsKey("objectId")) {
-			model.setObjectId(jsonObject.getString("objectId"));
-		}
-		if (jsonObject.containsKey("objectValue")) {
-			model.setObjectValue(jsonObject.getString("objectValue"));
-		}
-		if (jsonObject.containsKey("roleCode")) {
-			model.setRoleCode(jsonObject.getString("roleCode"));
-		}
-		if (jsonObject.containsKey("roleId")) {
-			model.setRoleId(jsonObject.getLong("roleId"));
-		}
-		if (jsonObject.containsKey("tablename")) {
-			model.setTablename(jsonObject.getString("tablename"));
-		}
-		if (jsonObject.containsKey("processName")) {
-			model.setProcessName(jsonObject.getString("processName"));
-		}
-		if (jsonObject.containsKey("taskName")) {
-			model.setTaskName(jsonObject.getString("taskName"));
-		}
-		if (jsonObject.containsKey("title")) {
-			model.setTitle(jsonObject.getString("title"));
-		}
-		if (jsonObject.containsKey("type")) {
-			model.setType(jsonObject.getString("type"));
-		}
-		if (jsonObject.containsKey("sql")) {
-			model.setSql(jsonObject.getString("sql"));
-		}
-		if (jsonObject.containsKey("versionNo")) {
-			model.setVersionNo(jsonObject.getLong("versionNo"));
-		}
-		return model;
+		return ToDoJsonFactory.jsonToObject(jsonObject);
 	}
 
 	public void setActorId(String actorId) {
@@ -585,168 +489,15 @@ public class ToDo implements java.io.Serializable {
 	}
 
 	public JSONObject toJsonObject() {
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("id", id);
-		jsonObject.put("_id_", id);
-		jsonObject.put("_oid_", id);
-		if (actorId != null) {
-			jsonObject.put("actorId", actorId);
-		}
-		if (alarm != null) {
-			jsonObject.put("alarm", alarm);
-		}
-		if (code != null) {
-			jsonObject.put("code", code);
-		}
-		if (content != null) {
-			jsonObject.put("content", content);
-		}
-		jsonObject.put("deptId", deptId);
-		if (deptName != null) {
-			jsonObject.put("deptName", deptName);
-		}
-		jsonObject.put("enableFlag", enableFlag);
-		if (eventFrom != null) {
-			jsonObject.put("eventFrom", eventFrom);
-		}
-		if (eventTo != null) {
-			jsonObject.put("eventTo", eventTo);
-		}
-		jsonObject.put("limitDay", limitDay);
-		jsonObject.put("xa", xa);
-		jsonObject.put("xb", xb);
-		if (link != null) {
-			jsonObject.put("link", link);
-		}
-		if (listLink != null) {
-			jsonObject.put("listLink", listLink);
-		}
-		if (linkType != null) {
-			jsonObject.put("linkType", linkType);
-		}
-		jsonObject.put("appId", appId);
-		jsonObject.put("moduleId", moduleId);
-		if (moduleName != null) {
-			jsonObject.put("moduleName", moduleName);
-		}
-		if (news != null) {
-			jsonObject.put("news", news);
-		}
-		if (objectId != null) {
-			jsonObject.put("objectId", objectId);
-		}
-		if (objectValue != null) {
-			jsonObject.put("objectValue", objectValue);
-		}
-		if (roleCode != null) {
-			jsonObject.put("roleCode", roleCode);
-		}
-		jsonObject.put("roleId", roleId);
-		if (tablename != null) {
-			jsonObject.put("tablename", tablename);
-		}
-		if (processName != null) {
-			jsonObject.put("processName", processName);
-		}
-		if (taskName != null) {
-			jsonObject.put("taskName", taskName);
-		}
-		if (title != null) {
-			jsonObject.put("title", title);
-		}
-		if (type != null) {
-			jsonObject.put("type", type);
-		}
-		if (sql != null) {
-			jsonObject.put("sql", sql);
-		}
-		jsonObject.put("versionNo", versionNo);
-		return jsonObject;
+		return ToDoJsonFactory.toJsonObject(this);
 	}
 
 	public ObjectNode toObjectNode() {
-		ObjectNode jsonObject = new ObjectMapper().createObjectNode();
-		jsonObject.put("id", id);
-		jsonObject.put("_id_", id);
-		jsonObject.put("_oid_", id);
-		if (actorId != null) {
-			jsonObject.put("actorId", actorId);
-		}
-		if (alarm != null) {
-			jsonObject.put("alarm", alarm);
-		}
-		if (code != null) {
-			jsonObject.put("code", code);
-		}
-		if (content != null) {
-			jsonObject.put("content", content);
-		}
-		jsonObject.put("deptId", deptId);
-		if (deptName != null) {
-			jsonObject.put("deptName", deptName);
-		}
-		jsonObject.put("enableFlag", enableFlag);
-		if (eventFrom != null) {
-			jsonObject.put("eventFrom", eventFrom);
-		}
-		if (eventTo != null) {
-			jsonObject.put("eventTo", eventTo);
-		}
-		jsonObject.put("limitDay", limitDay);
-		jsonObject.put("xa", xa);
-		jsonObject.put("xb", xb);
-		if (link != null) {
-			jsonObject.put("link", link);
-		}
-		if (listLink != null) {
-			jsonObject.put("listLink", listLink);
-		}
-		if (linkType != null) {
-			jsonObject.put("linkType", linkType);
-		}
-		jsonObject.put("appId", appId);
-		jsonObject.put("moduleId", moduleId);
-		if (moduleName != null) {
-			jsonObject.put("moduleName", moduleName);
-		}
-		if (news != null) {
-			jsonObject.put("news", news);
-		}
-		if (objectId != null) {
-			jsonObject.put("objectId", objectId);
-		}
-		if (objectValue != null) {
-			jsonObject.put("objectValue", objectValue);
-		}
-		if (roleCode != null) {
-			jsonObject.put("roleCode", roleCode);
-		}
-		jsonObject.put("roleId", roleId);
-		if (tablename != null) {
-			jsonObject.put("tablename", tablename);
-		}
-		if (processName != null) {
-			jsonObject.put("processName", processName);
-		}
-		if (taskName != null) {
-			jsonObject.put("taskName", taskName);
-		}
-		if (title != null) {
-			jsonObject.put("title", title);
-		}
-		if (type != null) {
-			jsonObject.put("type", type);
-		}
-		if (sql != null) {
-			jsonObject.put("sql", sql);
-		}
-		jsonObject.put("versionNo", versionNo);
-		return jsonObject;
+		return ToDoJsonFactory.toObjectNode(this);
 	}
 
 	public String toString() {
-		return ToStringBuilder.reflectionToString(this,
-				ToStringStyle.MULTI_LINE_STYLE);
+		return toJsonObject().toJSONString();
 	}
 
 }

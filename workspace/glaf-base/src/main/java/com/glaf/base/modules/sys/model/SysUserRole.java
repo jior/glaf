@@ -21,13 +21,10 @@ package com.glaf.base.modules.sys.model;
 import java.io.Serializable;
 import java.util.Date;
 import com.alibaba.fastjson.*;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.glaf.base.modules.sys.util.SysUserRoleJsonFactory;
 import com.glaf.core.base.JSONable;
-import com.glaf.core.util.DateUtils;
-
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
+ 
 
 public class SysUserRole implements Serializable, JSONable {
 	private static final long serialVersionUID = 4335486314285694158L;
@@ -136,96 +133,19 @@ public class SysUserRole implements Serializable, JSONable {
 	}
 
 	public SysUserRole jsonToObject(JSONObject jsonObject) {
-		SysUserRole model = new SysUserRole();
-		if (jsonObject.containsKey("id")) {
-			model.setId(jsonObject.getLong("id"));
-		}
-		if (jsonObject.containsKey("userId")) {
-			model.setUserId(jsonObject.getLong("userId"));
-		}
-		if (jsonObject.containsKey("deptRoleId")) {
-			model.setDeptRoleId(jsonObject.getLong("deptRoleId"));
-		}
-		if (jsonObject.containsKey("authorized")) {
-			model.setAuthorized(jsonObject.getInteger("authorized"));
-		}
-		if (jsonObject.containsKey("authorizeFromId")) {
-			model.setAuthorizeFromId(jsonObject.getLong("authorizeFromId"));
-		}
-		if (jsonObject.containsKey("availDateStart")) {
-			model.setAvailDateStart(jsonObject.getDate("availDateStart"));
-		}
-		if (jsonObject.containsKey("availDateEnd")) {
-			model.setAvailDateEnd(jsonObject.getDate("availDateEnd"));
-		}
-		if (jsonObject.containsKey("processDescription")) {
-			model.setProcessDescription(jsonObject
-					.getString("processDescription"));
-		}
-		return model;
+		return SysUserRoleJsonFactory.jsonToObject(jsonObject);
 	}
 
 	public JSONObject toJsonObject() {
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("id", id);
-		jsonObject.put("_id_", id);
-		jsonObject.put("_oid_", id);
-		jsonObject.put("userId", userId);
-		jsonObject.put("deptRoleId", deptRoleId);
-		jsonObject.put("authorized", authorized);
-		jsonObject.put("authorizeFromId", authorizeFromId);
-		if (availDateStart != null) {
-			jsonObject.put("availDateStart", DateUtils.getDate(availDateStart));
-			jsonObject.put("availDateStart_date",
-					DateUtils.getDate(availDateStart));
-			jsonObject.put("availDateStart_datetime",
-					DateUtils.getDateTime(availDateStart));
-		}
-		if (availDateEnd != null) {
-			jsonObject.put("availDateEnd", DateUtils.getDate(availDateEnd));
-			jsonObject
-					.put("availDateEnd_date", DateUtils.getDate(availDateEnd));
-			jsonObject.put("availDateEnd_datetime",
-					DateUtils.getDateTime(availDateEnd));
-		}
-		if (processDescription != null) {
-			jsonObject.put("processDescription", processDescription);
-		}
-		return jsonObject;
+		return SysUserRoleJsonFactory.toJsonObject(this);
 	}
 
 	public ObjectNode toObjectNode() {
-		ObjectNode jsonObject = new ObjectMapper().createObjectNode();
-		jsonObject.put("id", id);
-		jsonObject.put("_id_", id);
-		jsonObject.put("_oid_", id);
-		jsonObject.put("userId", userId);
-		jsonObject.put("deptRoleId", deptRoleId);
-		jsonObject.put("authorized", authorized);
-		jsonObject.put("authorizeFromId", authorizeFromId);
-		if (availDateStart != null) {
-			jsonObject.put("availDateStart", DateUtils.getDate(availDateStart));
-			jsonObject.put("availDateStart_date",
-					DateUtils.getDate(availDateStart));
-			jsonObject.put("availDateStart_datetime",
-					DateUtils.getDateTime(availDateStart));
-		}
-		if (availDateEnd != null) {
-			jsonObject.put("availDateEnd", DateUtils.getDate(availDateEnd));
-			jsonObject
-					.put("availDateEnd_date", DateUtils.getDate(availDateEnd));
-			jsonObject.put("availDateEnd_datetime",
-					DateUtils.getDateTime(availDateEnd));
-		}
-		if (processDescription != null) {
-			jsonObject.put("processDescription", processDescription);
-		}
-		return jsonObject;
+		return SysUserRoleJsonFactory.toObjectNode(this);
 	}
 
 	public String toString() {
-		return ToStringBuilder.reflectionToString(this,
-				ToStringStyle.MULTI_LINE_STYLE);
+		return toJsonObject().toJSONString();
 	}
 
 }

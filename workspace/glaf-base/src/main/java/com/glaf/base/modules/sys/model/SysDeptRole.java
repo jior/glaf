@@ -22,12 +22,10 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import com.alibaba.fastjson.*;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.glaf.base.modules.sys.util.SysDeptRoleJsonFactory;
 import com.glaf.core.base.JSONable;
-
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
+ 
 
 public class SysDeptRole implements Serializable, JSONable {
 	private static final long serialVersionUID = 273479478656626289L;
@@ -137,61 +135,19 @@ public class SysDeptRole implements Serializable, JSONable {
 	}
 
 	public SysDeptRole jsonToObject(JSONObject jsonObject) {
-		SysDeptRole model = new SysDeptRole();
-		if (jsonObject.containsKey("id")) {
-			model.setId(jsonObject.getLong("id"));
-		}
-		if (jsonObject.containsKey("grade")) {
-			model.setGrade(jsonObject.getInteger("grade"));
-		}
-		if (jsonObject.containsKey("code")) {
-			model.setCode(jsonObject.getString("code"));
-		}
-		if (jsonObject.containsKey("sort")) {
-			model.setSort(jsonObject.getInteger("sort"));
-		}
-		if (jsonObject.containsKey("sysRoleId")) {
-			model.setSysRoleId(jsonObject.getLong("sysRoleId"));
-		}
-		if (jsonObject.containsKey("deptId")) {
-			model.setDeptId(jsonObject.getLong("deptId"));
-		}
-		return model;
+		return SysDeptRoleJsonFactory.jsonToObject(jsonObject);
 	}
 
 	public JSONObject toJsonObject() {
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("id", id);
-		jsonObject.put("_id_", id);
-		jsonObject.put("_oid_", id);
-		jsonObject.put("grade", grade);
-		if (code != null) {
-			jsonObject.put("code", code);
-		}
-		jsonObject.put("sort", sort);
-		jsonObject.put("sysRoleId", sysRoleId);
-		jsonObject.put("deptId", deptId);
-		return jsonObject;
+		return SysDeptRoleJsonFactory.toJsonObject(this);
 	}
 
 	public ObjectNode toObjectNode() {
-		ObjectNode jsonObject = new ObjectMapper().createObjectNode();
-		jsonObject.put("id", id);
-		jsonObject.put("_id_", id);
-		jsonObject.put("_oid_", id);
-		jsonObject.put("grade", grade);
-		if (code != null) {
-			jsonObject.put("code", code);
-		}
-		jsonObject.put("sort", sort);
-		jsonObject.put("sysRoleId", sysRoleId);
-		jsonObject.put("deptId", deptId);
-		return jsonObject;
+		return SysDeptRoleJsonFactory.toObjectNode(this);
 	}
 
 	public String toString() {
-		return ToStringBuilder.reflectionToString(this,
-				ToStringStyle.MULTI_LINE_STYLE);
+		return toJsonObject().toJSONString();
 	}
 
 }

@@ -42,6 +42,7 @@ import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.sys.service.AuthorizeService;
 import com.glaf.base.modules.sys.service.SysApplicationService;
 import com.glaf.base.modules.sys.service.SysUserService;
+import com.glaf.base.modules.sys.util.SysUserJsonFactory;
 import com.glaf.base.modules.utils.ContextUtil;
 import com.glaf.base.utils.ClassUtil;
 import com.glaf.base.utils.RequestUtil;
@@ -105,8 +106,7 @@ public class AuthorizeBean {
 			String content = (String) CacheFactory.get(cacheKey);
 			if (StringUtils.isNotEmpty(content)) {
 				JSONObject jsonObject = JSON.parseObject(content);
-				sysUser = new SysUser();
-				sysUser = sysUser.jsonToObject(jsonObject);
+				sysUser = SysUserJsonFactory.jsonToObject(jsonObject);
 			}
 			if (sysUser == null) {
 				sysUser = getSysUserService().findByAccountWithAll(account);
