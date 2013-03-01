@@ -34,8 +34,8 @@ import com.glaf.base.modules.sys.model.*;
 import com.glaf.base.modules.sys.service.*;
 import com.glaf.base.modules.todo.TodoConstants;
 import com.glaf.base.modules.todo.dao.TodoDAO;
-import com.glaf.base.modules.todo.model.ToDo;
-import com.glaf.base.modules.todo.model.ToDoInstance;
+import com.glaf.core.todo.Todo;
+import com.glaf.core.todo.TodoInstance;
 import com.glaf.base.modules.todo.model.UserEntity;
 import com.glaf.base.utils.DateTools;
 
@@ -55,7 +55,7 @@ public class TodoServiceImpl implements TodoService {
 
 	private TodoDAO todoDAO;
 
-	public void create(ToDo todo) {
+	public void create(Todo todo) {
 		abstractDao.create(todo);
 	}
 
@@ -122,10 +122,10 @@ public class TodoServiceImpl implements TodoService {
 		}
 	}
 
-	public List getAllToDoList() {
+	public List getAllTodoList() {
 		return abstractDao
 				.getList(
-						" from com.glaf.base.modules.todo.model.ToDo as a order by a.moduleId asc ",
+						" from com.glaf.core.todo.Todo as a order by a.moduleId asc ",
 						null);
 	}
 
@@ -164,7 +164,7 @@ public class TodoServiceImpl implements TodoService {
 		return buffer.toString();
 	}
 
-	public Map getEnabledToDoMap() {
+	public Map getEnabledTodoMap() {
 		String cacheKey = "cache_mmtodomap";
 		if (CacheFactory.get(cacheKey) != null) {
 			return (Map) CacheFactory.get(cacheKey);
@@ -172,12 +172,12 @@ public class TodoServiceImpl implements TodoService {
 		Map rowMap = new LinkedHashMap();
 		List rows = abstractDao
 				.getList(
-						" from com.glaf.base.modules.todo.model.ToDo as a where a.enableFlag = 1 order by a.moduleId asc ",
+						" from com.glaf.core.todo.Todo as a where a.enableFlag = 1 order by a.moduleId asc ",
 						null, null);
 		if (rows != null && rows.size() > 0) {
 			Iterator iterator = rows.iterator();
 			while (iterator.hasNext()) {
-				ToDo todo = (ToDo) iterator.next();
+				Todo todo = (Todo) iterator.next();
 				rowMap.put(new Long(todo.getId()), todo);
 			}
 		}
@@ -218,14 +218,14 @@ public class TodoServiceImpl implements TodoService {
 		return roleMap;
 	}
 
-	public List getSQLToDos() {
+	public List getSQLTodos() {
 		String cacheKey = "cache_sqltodos";
 		if (CacheFactory.get(cacheKey) != null) {
 			return (List) CacheFactory.get(cacheKey);
 		}
 		List rows = abstractDao
 				.getList(
-						" from com.glaf.base.modules.todo.model.ToDo as a where a.enableFlag = 1 and a.type = 'sql' ",
+						" from com.glaf.core.todo.Todo as a where a.enableFlag = 1 and a.type = 'sql' ",
 						null);
 		CacheFactory.put(cacheKey, rows);
 		return rows;
@@ -245,20 +245,20 @@ public class TodoServiceImpl implements TodoService {
 		return rows;
 	}
 
-	public ToDo getToDo(long todoId) {
+	public Todo getTodo(long todoId) {
 		String cacheKey = "cache_todoxy_" + todoId;
 		if (CacheFactory.get(cacheKey) != null) {
-			return (ToDo) CacheFactory.get(cacheKey);
+			return (Todo) CacheFactory.get(cacheKey);
 		}
-		ToDo todo = (ToDo) abstractDao.find(ToDo.class, new Long(todoId));
+		Todo todo = (Todo) abstractDao.find(Todo.class, new Long(todoId));
 		CacheFactory.put(cacheKey, todo);
 		return todo;
 	}
 
-	public List getToDoInstanceList(Map paramMap) {
+	public List getTodoInstanceList(Map paramMap) {
 		Map params = new LinkedHashMap();
 		StringBuffer buffer = new StringBuffer();
-		buffer.append(" from com.glaf.base.modules.todo.model.ToDoInstance as a where 1=1 ");
+		buffer.append(" from com.glaf.core.todo.TodoInstance as a where 1=1 ");
 
 		if (paramMap.get("actorId") != null) {
 			params.put("actorId", paramMap.get("actorId"));
@@ -696,20 +696,20 @@ public class TodoServiceImpl implements TodoService {
 		return abstractDao.getList(buffer.toString(), params);
 	}
 
-	public List getToDoList() {
+	public List getTodoList() {
 		String cacheKey = "cache_todolist";
 		if (CacheFactory.get(cacheKey) != null) {
 			return (List) CacheFactory.get(cacheKey);
 		}
 		List rows = abstractDao
 				.getList(
-						" from com.glaf.base.modules.todo.model.ToDo as a where a.enableFlag = 1 order by a.moduleId asc ",
+						" from com.glaf.core.todo.Todo as a where a.enableFlag = 1 order by a.moduleId asc ",
 						null);
 		CacheFactory.put(cacheKey, rows);
 		return rows;
 	}
 
-	public Map getToDoMap() {
+	public Map getTodoMap() {
 		String cacheKey = "cache_todomap";
 		if (CacheFactory.get(cacheKey) != null) {
 			return (Map) CacheFactory.get(cacheKey);
@@ -717,12 +717,12 @@ public class TodoServiceImpl implements TodoService {
 		Map rowMap = new LinkedHashMap();
 		List rows = abstractDao
 				.getList(
-						" from com.glaf.base.modules.todo.model.ToDo as a where a.enableFlag = 1 order by a.moduleId asc ",
+						" from com.glaf.core.todo.Todo as a where a.enableFlag = 1 order by a.moduleId asc ",
 						null, null);
 		if (rows != null && rows.size() > 0) {
 			Iterator iterator = rows.iterator();
 			while (iterator.hasNext()) {
-				ToDo todo = (ToDo) iterator.next();
+				Todo todo = (Todo) iterator.next();
 				rowMap.put(new Long(todo.getId()), todo);
 				rowMap.put(todo.getCode(), todo);
 				String processName = todo.getProcessName();
@@ -804,11 +804,11 @@ public class TodoServiceImpl implements TodoService {
 			}
 		}
 
-		List todoList = this.getToDoList();
+		List todoList = this.getTodoList();
 		if (todoList != null && todoList.size() > 0) {
 			Iterator iterator = todoList.iterator();
 			while (iterator.hasNext()) {
-				ToDo todo = (ToDo) iterator.next();
+				Todo todo = (Todo) iterator.next();
 				if (roleMap.containsKey(todo.getRoleCode())) {
 					todoMap.put(new Long(todo.getId()), todo);
 				}
@@ -825,7 +825,7 @@ public class TodoServiceImpl implements TodoService {
 		Object[] values = { actorId, taskInstanceId };
 		List rows = abstractDao
 				.getList(
-						" from com.glaf.base.modules.todo.model.ToDoInstance as a where a.actorId = ? and a.taskInstanceId = ? ",
+						" from com.glaf.core.todo.TodoInstance as a where a.actorId = ? and a.taskInstanceId = ? ",
 						values, null);
 		if (rows != null && rows.size() > 0) {
 			return true;
@@ -842,14 +842,14 @@ public class TodoServiceImpl implements TodoService {
 		if (rows != null && rows.size() > 0) {
 			Iterator iterator008 = rows.iterator();
 			while (iterator008.hasNext()) {
-				ToDoInstance tdi = (ToDoInstance) iterator008.next();
+				TodoInstance tdi = (TodoInstance) iterator008.next();
 				int status = TodoConstants.getTodoStatus(tdi);
-				ToDoInstance xx = (ToDoInstance) dataMap.get(new Long(tdi
+				TodoInstance xx = (TodoInstance) dataMap.get(new Long(tdi
 						.getTodoId()));
 				if (xx == null) {
-					xx = new ToDoInstance();
+					xx = new TodoInstance();
 					xx.setTodoId(tdi.getTodoId());
-					ToDo todo = (ToDo) todoMap.get(new Long(tdi.getTodoId()));
+					Todo todo = (Todo) todoMap.get(new Long(tdi.getTodoId()));
 					if (todo != null) {
 						xx.setTitle(todo.getTitle());
 						xx.setContent(todo.getContent());
@@ -876,10 +876,10 @@ public class TodoServiceImpl implements TodoService {
 		return dataMap.values();
 	}
 
-	public void saveAll(List<ToDo> rows) {
+	public void saveAll(List<Todo> rows) {
 		if (rows != null && !rows.isEmpty()) {
-			for (ToDo todo : rows) {
-				if (this.getToDo(todo.getId()) == null) {
+			for (Todo todo : rows) {
+				if (this.getTodo(todo.getId()) == null) {
 					todo.setEnableFlag(1);
 					todo.setVersionNo(System.currentTimeMillis());
 					this.create(todo);
@@ -915,7 +915,7 @@ public class TodoServiceImpl implements TodoService {
 		this.workCalendarService = workCalendarService;
 	}
 
-	public void update(ToDo todo) {
+	public void update(Todo todo) {
 		abstractDao.update(todo);
 	}
 

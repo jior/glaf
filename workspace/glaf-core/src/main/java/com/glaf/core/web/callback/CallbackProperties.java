@@ -16,37 +16,44 @@
  * limitations under the License.
  */
 
-package com.glaf.base.config;
+package com.glaf.core.web.callback;
 
-import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Enumeration;
 import java.util.Properties;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 
-import com.glaf.base.utils.PropertiesTools;
+import com.glaf.core.config.SystemProperties;
+import com.glaf.core.util.PropertiesUtils;
 
-public class CustomProperties {
+public class CallbackProperties {
+	private static final Log logger = LogFactory
+			.getLog(CallbackProperties.class);
+
+	private final static String DEFALUT_CONFIG = "/conf/callback.properties";
 
 	private static Properties properties = new Properties();
 
 	static {
 		try {
-			reload();
+			Properties p = reload();
+			if (p != null) {
+				Enumeration<?> e = p.keys();
+				while (e.hasMoreElements()) {
+					String key = (String) e.nextElement();
+					String value = p.getProperty(key);
+					properties.setProperty(key, value);
+				}
+			}
 		} catch (Exception ex) {
 		}
-	}
-
-	public static boolean eq(String key, String value) {
-		if (key != null && value != null) {
-			String x = properties.getProperty(key);
-			if (StringUtils.equals(value, x)) {
-				return true;
-			}
-		}
-		return false;
 	}
 
 	public static boolean getBoolean(String key) {
@@ -60,7 +67,7 @@ public class CustomProperties {
 	public static double getDouble(String key) {
 		if (hasObject(key)) {
 			String value = properties.getProperty(key);
-			return Double.parseDouble(value);
+			return Double.valueOf(value).doubleValue();
 		}
 		return 0;
 	}
@@ -68,7 +75,7 @@ public class CustomProperties {
 	public static int getInt(String key) {
 		if (hasObject(key)) {
 			String value = properties.getProperty(key);
-			return Integer.parseInt(value);
+			return Integer.valueOf(value).intValue();
 		}
 		return 0;
 	}
@@ -76,7 +83,7 @@ public class CustomProperties {
 	public static long getLong(String key) {
 		if (hasObject(key)) {
 			String value = properties.getProperty(key);
-			return Long.parseLong(value);
+			return Long.valueOf(value).longValue();
 		}
 		return 0;
 	}
@@ -88,16 +95,13 @@ public class CustomProperties {
 	public static String getString(String key) {
 		if (hasObject(key)) {
 			String value = properties.getProperty(key);
-			if (value == null) {
-				value = properties.getProperty(key.toUpperCase());
-			}
 			return value;
 		}
-		return null;
+		return "";
 	}
 
 	public static boolean hasObject(String key) {
-		if (properties == null || key == null) {
+		if (key == null || properties == null) {
 			return false;
 		}
 		String value = properties.getProperty(key);
@@ -107,42 +111,37 @@ public class CustomProperties {
 		return false;
 	}
 
-	public synchronized static void reload() {
-		try {
-			String config = SystemConfig.getConfigRootPath() + "/conf/props";
-			File directory = new File(config);
-			if (directory.exists() && directory.isDirectory()) {
-				String[] filelist = directory.list();
-				for (int i = 0; i < filelist.length; i++) {
-					String filename = config + filelist[i];
-					File file = new File(filename);
-					if (file.isFile() && file.getName().endsWith(".properties")) {
-						InputStream inputStream = new FileInputStream(file);
-						Properties p = PropertiesTools
-								.loadProperties(inputStream);
-						if (p != null) {
-							Enumeration<?> e = p.keys();
-							while (e.hasMoreElements()) {
-								String key = (String) e.nextElement();
-								String value = p.getProperty(key);
-								properties.setProperty(key, value);
-								properties
-										.setProperty(key.toLowerCase(), value);
-								properties
-										.setProperty(key.toUpperCase(), value);
-							}
-						}
-						inputStream.close();
-						inputStream = null;
+	public static Properties reload() {
+		synchronized (CallbackProperties.class) {
+			InputStream inputStream = null;
+			try {
+				Resource resource = new FileSystemResource(
+						SystemProperties.getConfigRootPath() + DEFALUT_CONFIG);
+				logger.info("load message config:"
+						+ resource.getFile().getAbsolutePath());
+				inputStream = new FileInputStream(resource.getFile()
+						.getAbsolutePath());
+				properties.clear();
+				Properties p = PropertiesUtils.loadProperties(inputStream);
+				if (p != null) {
+					Enumeration<?> e = p.keys();
+					while (e.hasMoreElements()) {
+						String key = (String) e.nextElement();
+						String value = p.getProperty(key);
+						properties.setProperty(key, value);
 					}
 				}
+				return p;
+			} catch (IOException ex) {
+				ex.printStackTrace();
+				throw new RuntimeException(ex);
+			} finally {
+				IOUtils.closeQuietly(inputStream);
 			}
-		} catch (Exception ex) {
-			throw new RuntimeException(ex);
 		}
 	}
 
-	private CustomProperties() {
+	private CallbackProperties() {
 
 	}
 

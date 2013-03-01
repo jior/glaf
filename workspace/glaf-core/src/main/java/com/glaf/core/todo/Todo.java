@@ -17,7 +17,15 @@
  */
 
 package com.glaf.core.todo;
- 
+
+import java.util.Collection;
+import java.util.HashSet;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.Table;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
@@ -25,7 +33,9 @@ import org.apache.commons.lang.builder.ToStringStyle;
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
- 
+
+@Entity
+@Table(name = "SYS_TODO")
 public class Todo implements java.io.Serializable, Comparable<Todo> {
 
 	private static final long serialVersionUID = 1L;
@@ -33,113 +43,163 @@ public class Todo implements java.io.Serializable, Comparable<Todo> {
 	/**
 	 * 主键
 	 */
-	protected String id;
+	@Id
+	@Column(name = "id", nullable = false)
+	protected Long id;
 
 	/**
 	 * 代码
 	 */
+	@Column(name = "code", length = 50)
 	protected String code;
 
 	/**
 	 * 模块编号
 	 */
-	protected String moduleId;
+	@Column(name = "moduleId", length = 50)
+	protected Long moduleId;
 
 	/**
 	 * 模块名称
 	 */
+	@Column(name = "moduleName", length = 50)
 	protected String moduleName;
 
 	/**
 	 * 角色编号
 	 */
-	protected String roleId;
+	@Column(name = "roleId")
+	protected Long roleId;
+
+	@Column(name = "roleCode", length = 50)
+	protected String roleCode;
 
 	/**
 	 * 角色名称
 	 */
+	@Column(name = "roleName", length = 50)
 	protected String roleName;
+
+	@Column(name = "appId")
+	protected Long appId;
+
+	@Column(name = "deptId")
+	protected Long deptId;
+
+	@javax.persistence.Transient
+	protected String deptName;
 
 	/**
 	 * 期限
 	 */
-	protected double limitDay;
+	@Column(name = "limitDay")
+	protected int limitDay;
 
 	/**
 	 * a 小时
 	 */
+	@Column(name = "xa")
 	protected int xa;
 
 	/**
 	 * 小时
 	 */
+	@Column(name = "xb")
 	protected int xb;
 
 	/**
 	 * 标题
 	 */
+	@Column(name = "title")
 	protected String title;
 
 	/**
 	 * 内容
 	 */
+	@Column(name = "content")
 	protected String content;
 
 	/**
 	 * 链接地址
 	 */
+	@Column(name = "link")
 	protected String link;
 
 	/**
 	 * 列表链接地址
 	 */
+	@Column(name = "listLink")
 	protected String listLink;
 
 	/**
 	 * 全部数据的链接地址
 	 */
+	@Column(name = "allListLink")
 	protected String allListLink;
 
 	/**
 	 * 链接类别
 	 */
+	@Column(name = "linkType", length = 50)
 	protected String linkType;
 
 	/**
 	 * 流程名称
 	 */
+	@Column(name = "processName", length = 50)
 	protected String processName;
 
 	/**
 	 * 任务名称
 	 */
+	@Column(name = "taskName", length = 50)
 	protected String taskName;
 
 	/**
 	 * TODO提供者
 	 */
+	@Column(name = "provider", length = 50)
 	protected String provider;
 
 	/**
 	 * 对象编号
 	 */
+	@Column(name = "objectId")
 	protected String objectId;
 
 	/**
 	 * 对象值
 	 */
+	@Column(name = "objectValue")
 	protected String objectValue;
 
 	/**
 	 * 是否启用。0－启用、1－禁用
 	 */
-	protected int locked;
+	@Column(name = "enableFlag")
+	protected int enableFlag;
 
+	@Column(name = "configFlag")
 	protected int configFlag;
 
+	@Column(name = "sortNo")
 	protected int sortNo;
 
+	@Column(name = "versionNo")
 	protected long versionNo;
+
+	@Column(name = "type", length = 50)
+	protected String type;
+
+	@Lob
+	@Column(name = "sql_", length = 2000)
+	protected String sql;
+
+	protected Collection<Object> ok = new HashSet<Object>();
+
+	protected Collection<Object> caution = new HashSet<Object>();
+
+	protected Collection<Object> pastDue = new HashSet<Object>();
 
 	public Todo() {
 
@@ -185,6 +245,14 @@ public class Todo implements java.io.Serializable, Comparable<Todo> {
 		return allListLink;
 	}
 
+	public Long getAppId() {
+		return appId;
+	}
+
+	public Collection<Object> getCaution() {
+		return caution;
+	}
+
 	public String getCode() {
 		return code;
 	}
@@ -197,11 +265,23 @@ public class Todo implements java.io.Serializable, Comparable<Todo> {
 		return content;
 	}
 
-	public String getId() {
+	public Long getDeptId() {
+		return deptId;
+	}
+
+	public String getDeptName() {
+		return deptName;
+	}
+
+	public int getEnableFlag() {
+		return enableFlag;
+	}
+
+	public Long getId() {
 		return id;
 	}
 
-	public double getLimitDay() {
+	public int getLimitDay() {
 		return limitDay;
 	}
 
@@ -217,11 +297,7 @@ public class Todo implements java.io.Serializable, Comparable<Todo> {
 		return listLink;
 	}
 
-	public int getLocked() {
-		return locked;
-	}
-
-	public String getModuleId() {
+	public Long getModuleId() {
 		return moduleId;
 	}
 
@@ -237,6 +313,14 @@ public class Todo implements java.io.Serializable, Comparable<Todo> {
 		return objectValue;
 	}
 
+	public Collection<Object> getOk() {
+		return ok;
+	}
+
+	public Collection<Object> getPastDue() {
+		return pastDue;
+	}
+
 	public String getProcessName() {
 		return processName;
 	}
@@ -245,7 +329,11 @@ public class Todo implements java.io.Serializable, Comparable<Todo> {
 		return provider;
 	}
 
-	public String getRoleId() {
+	public String getRoleCode() {
+		return roleCode;
+	}
+
+	public Long getRoleId() {
 		return roleId;
 	}
 
@@ -257,12 +345,20 @@ public class Todo implements java.io.Serializable, Comparable<Todo> {
 		return sortNo;
 	}
 
+	public String getSql() {
+		return sql;
+	}
+
 	public String getTaskName() {
 		return taskName;
 	}
 
 	public String getTitle() {
 		return title;
+	}
+
+	public String getType() {
+		return type;
 	}
 
 	public long getVersionNo() {
@@ -291,19 +387,19 @@ public class Todo implements java.io.Serializable, Comparable<Todo> {
 			model.setCode(jsonObject.getString("code"));
 		}
 		if (jsonObject.containsKey("moduleId")) {
-			model.setModuleId(jsonObject.getString("moduleId"));
+			model.setModuleId(jsonObject.getLong("moduleId"));
 		}
 		if (jsonObject.containsKey("moduleName")) {
 			model.setModuleName(jsonObject.getString("moduleName"));
 		}
 		if (jsonObject.containsKey("roleId")) {
-			model.setRoleId(jsonObject.getString("roleId"));
+			model.setRoleId(jsonObject.getLong("roleId"));
 		}
 		if (jsonObject.containsKey("roleName")) {
 			model.setRoleName(jsonObject.getString("roleName"));
 		}
 		if (jsonObject.containsKey("limitDay")) {
-			model.setLimitDay(jsonObject.getDouble("limitDay"));
+			model.setLimitDay(jsonObject.getInteger("limitDay"));
 		}
 		if (jsonObject.containsKey("xa")) {
 			model.setXa(jsonObject.getInteger("xa"));
@@ -344,8 +440,8 @@ public class Todo implements java.io.Serializable, Comparable<Todo> {
 		if (jsonObject.containsKey("objectValue")) {
 			model.setObjectValue(jsonObject.getString("objectValue"));
 		}
-		if (jsonObject.containsKey("locked")) {
-			model.setLocked(jsonObject.getInteger("locked"));
+		if (jsonObject.containsKey("enableFlag")) {
+			model.setEnableFlag(jsonObject.getInteger("enableFlag"));
 		}
 		if (jsonObject.containsKey("configFlag")) {
 			model.setConfigFlag(jsonObject.getInteger("configFlag"));
@@ -363,6 +459,14 @@ public class Todo implements java.io.Serializable, Comparable<Todo> {
 		this.allListLink = allListLink;
 	}
 
+	public void setAppId(Long appId) {
+		this.appId = appId;
+	}
+
+	public void setCaution(Collection<Object> caution) {
+		this.caution = caution;
+	}
+
 	public void setCode(String code) {
 		this.code = code;
 	}
@@ -375,11 +479,23 @@ public class Todo implements java.io.Serializable, Comparable<Todo> {
 		this.content = content;
 	}
 
-	public void setId(String id) {
+	public void setDeptId(Long deptId) {
+		this.deptId = deptId;
+	}
+
+	public void setDeptName(String deptName) {
+		this.deptName = deptName;
+	}
+
+	public void setEnableFlag(int enableFlag) {
+		this.enableFlag = enableFlag;
+	}
+
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public void setLimitDay(double limitDay) {
+	public void setLimitDay(int limitDay) {
 		this.limitDay = limitDay;
 	}
 
@@ -395,11 +511,7 @@ public class Todo implements java.io.Serializable, Comparable<Todo> {
 		this.listLink = listLink;
 	}
 
-	public void setLocked(int locked) {
-		this.locked = locked;
-	}
-
-	public void setModuleId(String moduleId) {
+	public void setModuleId(Long moduleId) {
 		this.moduleId = moduleId;
 	}
 
@@ -415,6 +527,14 @@ public class Todo implements java.io.Serializable, Comparable<Todo> {
 		this.objectValue = objectValue;
 	}
 
+	public void setOk(Collection<Object> ok) {
+		this.ok = ok;
+	}
+
+	public void setPastDue(Collection<Object> pastDue) {
+		this.pastDue = pastDue;
+	}
+
 	public void setProcessName(String processName) {
 		this.processName = processName;
 	}
@@ -423,7 +543,11 @@ public class Todo implements java.io.Serializable, Comparable<Todo> {
 		this.provider = provider;
 	}
 
-	public void setRoleId(String roleId) {
+	public void setRoleCode(String roleCode) {
+		this.roleCode = roleCode;
+	}
+
+	public void setRoleId(Long roleId) {
 		this.roleId = roleId;
 	}
 
@@ -435,12 +559,20 @@ public class Todo implements java.io.Serializable, Comparable<Todo> {
 		this.sortNo = sortNo;
 	}
 
+	public void setSql(String sql) {
+		this.sql = sql;
+	}
+
 	public void setTaskName(String taskName) {
 		this.taskName = taskName;
 	}
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public void setVersionNo(long versionNo) {
@@ -509,7 +641,7 @@ public class Todo implements java.io.Serializable, Comparable<Todo> {
 		if (objectValue != null) {
 			jsonObject.put("objectValue", objectValue);
 		}
-		jsonObject.put("locked", locked);
+		jsonObject.put("enableFlag", enableFlag);
 		jsonObject.put("configFlag", configFlag);
 		jsonObject.put("sortNo", sortNo);
 		jsonObject.put("versionNo", versionNo);
@@ -570,7 +702,7 @@ public class Todo implements java.io.Serializable, Comparable<Todo> {
 		if (objectValue != null) {
 			jsonObject.put("objectValue", objectValue);
 		}
-		jsonObject.put("locked", locked);
+		jsonObject.put("enableFlag", enableFlag);
 		jsonObject.put("configFlag", configFlag);
 		jsonObject.put("sortNo", sortNo);
 		jsonObject.put("versionNo", versionNo);

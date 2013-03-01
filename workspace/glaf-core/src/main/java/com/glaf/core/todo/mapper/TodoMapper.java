@@ -16,36 +16,36 @@
 * limitations under the License.
 */
 
-package com.glaf.base.modules.todo.model;
 
-import java.util.*;
 
-public class QueryModel implements java.io.Serializable {
+package com.glaf.core.todo.mapper;
 
-	private static final long serialVersionUID = -6755721626335022203L;
+import java.util.List;
 
-	private String sql;
+import org.springframework.stereotype.Component;
 
-	private List values;
+import com.glaf.core.todo.query.TodoQuery;
+import com.glaf.core.todo.Todo;
 
-	public QueryModel() {
+@Component
+public interface TodoMapper {
 
-	}
+	void deleteTodos(TodoQuery query);
 
-	public String getSql() {
-		return sql;
-	}
+	void deleteTodoById(Long id);
 
-	public void setSql(String sql) {
-		this.sql = sql;
-	}
+	Todo getTodoById(Long id);
 
-	public List getValues() {
-		return values;
-	}
+	Todo getTodoByCode(String code);
 
-	public void setValues(List values) {
-		this.values = values;
-	}
+	int getTodoCount(TodoQuery query);
+
+	List<Todo> getTodos(TodoQuery query);
+	
+	List<Todo> getTodoList(TodoQuery query);
+
+	void insertTodo(Todo model);
+
+	void updateTodo(Todo model);
 
 }

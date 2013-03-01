@@ -20,7 +20,7 @@ package com.glaf.base.modules.todo;
 
 import java.util.Date;
 
-import com.glaf.base.modules.todo.model.ToDoInstance;
+import com.glaf.core.todo.TodoInstance;
 
 public class TodoConstants {
 
@@ -34,7 +34,7 @@ public class TodoConstants {
 
 	}
 
-	public static int getTodoStatus(ToDoInstance model) {
+	public static int getTodoStatus(TodoInstance model) {
 		int status = 0;
 		if (model != null) {
 			long now = System.currentTimeMillis();

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.ModelMap;
 import com.alibaba.fastjson.*;
  
+import com.glaf.core.config.ViewProperties;
 import com.glaf.core.util.JsonUtils;
 import com.glaf.base.config.*;
 import com.glaf.base.modules.sys.model.*;
@@ -149,7 +150,7 @@ public class TripBaseController {
 			return new ModelAndView(view, modelMap);
 		}
 
-		String x_view = SystemConfig.getString("trip.edit");
+		String x_view = ViewProperties.getString("trip.edit");
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);
 		}
@@ -175,7 +176,7 @@ public class TripBaseController {
 			return new ModelAndView(view);
 		}
 
-		String x_view = SystemConfig.getString("trip.view");
+		String x_view = ViewProperties.getString("trip.view");
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view);
 		}
@@ -190,7 +191,7 @@ public class TripBaseController {
 		if (StringUtils.isNotEmpty(view)) {
 			return new ModelAndView(view, modelMap);
 		}
-		String x_view = SystemConfig.getString("trip.query");
+		String x_view = ViewProperties.getString("trip.query");
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);
 		}

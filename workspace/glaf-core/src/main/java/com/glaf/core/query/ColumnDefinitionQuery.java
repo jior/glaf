@@ -38,7 +38,6 @@ public class ColumnDefinitionQuery extends BaseQuery {
 	protected String nameLike;
 	protected String titleLike;
 	protected String discriminator;
-	protected String sortOrder;
 
 	public ColumnDefinitionQuery() {
 
@@ -370,10 +369,6 @@ public class ColumnDefinitionQuery extends BaseQuery {
 
 	public void setSortField(String sortField) {
 		this.sortField = sortField;
-	}
-
-	public void setSortOrder(String sortOrder) {
-		this.sortOrder = sortOrder;
 	}
 
 	public void setTableName(String tableName) {

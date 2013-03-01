@@ -72,7 +72,6 @@ public class JpdlXmlReader {
 					Todo model = new Todo();
 					model.setSortNo(sortNo++);
 					model.setProcessName(processName);
-					model.setModuleId(processName);
 					model.setModuleName(moduleName);
 					model.setTitle(moduleName + " "
 							+ elem.attributeValue("description") + "ÉÐÎ´Íê³É£¡");

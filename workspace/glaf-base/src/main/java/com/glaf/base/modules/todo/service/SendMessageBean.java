@@ -41,8 +41,8 @@ import com.glaf.base.modules.sys.service.SysDeptRoleService;
 import com.glaf.base.modules.sys.service.SysUserService;
 import com.glaf.base.modules.todo.TodoConstants;
 
-import com.glaf.base.modules.todo.model.ToDo;
-import com.glaf.base.modules.todo.model.ToDoInstance;
+import com.glaf.core.todo.Todo;
+import com.glaf.core.todo.TodoInstance;
 import com.glaf.base.modules.workspace.model.Message;
 import com.glaf.base.utils.DateTools;
 
@@ -146,15 +146,15 @@ public class SendMessageBean {
 			/**
 			 * 获取工作流的TODO实例
 			 */
-			Collection rows = todoService.getToDoInstanceList(params);
+			Collection rows = todoService.getTodoInstanceList(params);
 			if (rows != null && rows.size() > 0) {
 				logger.info(user.getName() + "的工作流任务有" + rows.size() + "项.");
 				Iterator iterator008 = rows.iterator();
 				while (iterator008.hasNext()) {
 					// update by key 2012-05-14 begin
-					ToDoInstance tdi = (ToDoInstance) iterator008.next();
+					TodoInstance tdi = (TodoInstance) iterator008.next();
 					String processName = "";
-					ToDo toDo = todoService.getToDo(tdi.getTodoId());
+					Todo toDo = todoService.getTodo(tdi.getTodoId());
 					if (null != toDo)
 						processName = toDo.getProcessName();
 					if (actorId.equals(tdi.getActorId())) {
@@ -180,7 +180,7 @@ public class SendMessageBean {
 			/**
 			 * 根据TODO sql配置取得的TODO实例
 			 */
-			Collection rows_sql = todoService.getToDoInstanceList(p);
+			Collection rows_sql = todoService.getTodoInstanceList(p);
 
 			if (rows_sql != null && rows_sql.size() > 0) {
 				logger.info("全部的sql任务共有" + rows_sql.size() + "项.");
@@ -188,7 +188,7 @@ public class SendMessageBean {
 				int qty = 0;
 				Iterator iter9988 = rows_sql.iterator();
 				while (iter9988.hasNext()) {
-					ToDoInstance model = (ToDoInstance) iter9988.next();
+					TodoInstance model = (TodoInstance) iter9988.next();
 					if (model.getActorId() != null) {
 						if (model.getActorId().equals(user.getAccount())) {
 							// ##System.out.println("11111111111111 " + model);
@@ -257,9 +257,9 @@ public class SendMessageBean {
 
 		Map qtyMap = new HashMap();
 		Set linkTypes = new HashSet();
-		Map todoMap = todoService.getToDoMap();
+		Map todoMap = todoService.getTodoMap();
 
-		Collection todoList = todoService.getToDoList();
+		Collection todoList = todoService.getTodoList();
 
 		logger.info(user.getName() + "的TODO任务有" + rows99.size() + "项.");
 
@@ -269,21 +269,21 @@ public class SendMessageBean {
 		if (rows99 != null && rows99.size() > 0) {
 			Iterator iterator = rows99.iterator();
 			while (iterator.hasNext()) {
-				ToDoInstance tdi = (ToDoInstance) iterator.next();
+				TodoInstance tdi = (TodoInstance) iterator.next();
 				int status = TodoConstants.getTodoStatus(tdi);
 				tdi.setStatus(status);
-				ToDo todo = (ToDo) todoMap.get(new Long(tdi.getTodoId()));
+				Todo todo = (Todo) todoMap.get(new Long(tdi.getTodoId()));
 				if (todo == null) {
 					continue;
 				}
-				ToDoInstance y = (ToDoInstance) qtyMap.get(todo.getLinkType());
+				TodoInstance y = (TodoInstance) qtyMap.get(todo.getLinkType());
 				if (y == null) {
-					y = new ToDoInstance();
+					y = new TodoInstance();
 					y.setTodoId(tdi.getTodoId());
 					y.setDeptId(tdi.getDeptId());
 					y.setRoleCode(tdi.getRoleCode());
 					if (todo != null) {
-						y.setToDo(todo);
+						y.setTodo(todo);
 						y.setTitle(todo.getTitle());
 						y.setContent(todo.getContent());
 						y.setLink(todo.getLink());
@@ -295,18 +295,18 @@ public class SendMessageBean {
 				switch (status) {
 				case TodoConstants.OK_STATUS:
 					y.setQty01(y.getQty01() + 1);
-					y.getToDo().getOk().add(tdi.getRowId());
+					y.getTodo().getOk().add(tdi.getRowId());
 					break;
 				case TodoConstants.CAUTION_STATUS:
 					y.setQty02(y.getQty02() + 1);
-					y.getToDo().getCaution().add(tdi.getRowId());
+					y.getTodo().getCaution().add(tdi.getRowId());
 					break;
 				case TodoConstants.PAST_DUE_STATUS:
 					y.setQty03(y.getQty03() + 1);
-					y.getToDo().getPastDue().add(tdi.getRowId());
+					y.getTodo().getPastDue().add(tdi.getRowId());
 					break;
 				default:
-					y.getToDo().getOk().add(tdi.getRowId());
+					y.getTodo().getOk().add(tdi.getRowId());
 					y.setQty01(y.getQty01() + 1);
 					break;
 				}
@@ -317,7 +317,7 @@ public class SendMessageBean {
 		if (todoList != null && todoList.size() > 0) {
 			Iterator iter = todoList.iterator();
 			while (iter.hasNext()) {
-				ToDo todo = (ToDo) iter.next();
+				Todo todo = (Todo) iter.next();
 				boolean isOK = false;
 				if (appIds.contains(new Long(todo.getAppId()))) {
 					isOK = true;
@@ -329,12 +329,12 @@ public class SendMessageBean {
 					continue;
 				}
 				linkTypes.add(todo.getLinkType());
-				ToDoInstance tdi = (ToDoInstance) qtyMap
+				TodoInstance tdi = (TodoInstance) qtyMap
 						.get(todo.getLinkType());
 				if (tdi == null) {
-					tdi = new ToDoInstance();
+					tdi = new TodoInstance();
 					tdi.setTodoId(todo.getId());
-					tdi.setToDo(todo);
+					tdi.setTodo(todo);
 				}
 				list.add(tdi);
 			}
@@ -425,18 +425,18 @@ public class SendMessageBean {
 			/**
 			 * 获取工作流的TODO实例
 			 */
-			Collection rows = todoService.getToDoInstanceList(params);
+			Collection rows = todoService.getTodoInstanceList(params);
 
 			if (rows != null && rows.size() > 0) {
 				logger.info(user.getName() + "的工作流任务有" + rows.size() + "项.");
 				Iterator iterator008 = rows.iterator();
 				while (iterator008.hasNext()) {
-					// ToDoInstance tdi = (ToDoInstance) iterator008.next();
+					// TodoInstance tdi = (TodoInstance) iterator008.next();
 					// rows99.add(tdi);
 					// update by key 2012-05-14 begin
-					ToDoInstance tdi = (ToDoInstance) iterator008.next();
+					TodoInstance tdi = (TodoInstance) iterator008.next();
 					String processName = "";
-					ToDo toDo = todoService.getToDo(tdi.getTodoId());
+					Todo toDo = todoService.getTodo(tdi.getTodoId());
 					if (null != toDo)
 						processName = toDo.getProcessName();
 					if (actorId.equals(tdi.getActorId())) {
@@ -460,7 +460,7 @@ public class SendMessageBean {
 			/**
 			 * 根据TODO sql配置取得的TODO实例
 			 */
-			Collection rows_sql = todoService.getToDoInstanceList(p);
+			Collection rows_sql = todoService.getTodoInstanceList(p);
 
 			if (rows_sql != null && rows_sql.size() > 0) {
 				logger.info("全部的sql任务共有" + rows_sql.size() + "项.");
@@ -468,7 +468,7 @@ public class SendMessageBean {
 				Set rowIds = new HashSet();
 				Iterator iter9988 = rows_sql.iterator();
 				while (iter9988.hasNext()) {
-					ToDoInstance model = (ToDoInstance) iter9988.next();
+					TodoInstance model = (TodoInstance) iter9988.next();
 					if (model.getActorId() != null) {
 						if (model.getActorId().equals(user.getAccount())) {
 							if (!rowIds.contains(model.getRowId())) {
@@ -512,9 +512,9 @@ public class SendMessageBean {
 
 		Map qtyMap = new HashMap();
 		Set linkTypes = new HashSet();
-		Map todoMap = todoService.getToDoMap();
+		Map todoMap = todoService.getTodoMap();
 
-		Collection todoList = todoService.getToDoList();
+		Collection todoList = todoService.getTodoList();
 
 		logger.info(user.getName() + "的TODO任务有" + rows99.size() + "项.");
 
@@ -524,16 +524,16 @@ public class SendMessageBean {
 		if (rows99 != null && rows99.size() > 0) {
 			Iterator iterator = rows99.iterator();
 			while (iterator.hasNext()) {
-				ToDoInstance tdi = (ToDoInstance) iterator.next();
+				TodoInstance tdi = (TodoInstance) iterator.next();
 				int status = TodoConstants.getTodoStatus(tdi);
 				tdi.setStatus(status);
-				ToDo todo = (ToDo) todoMap.get(new Long(tdi.getTodoId()));
+				Todo todo = (Todo) todoMap.get(new Long(tdi.getTodoId()));
 				if (todo == null) {
 					continue;
 				}
-				ToDoInstance y = (ToDoInstance) qtyMap.get(todo.getLinkType());
+				TodoInstance y = (TodoInstance) qtyMap.get(todo.getLinkType());
 				if (y == null) {
-					y = new ToDoInstance();
+					y = new TodoInstance();
 					y.setTodoId(tdi.getTodoId());
 					y.setDeptId(tdi.getDeptId());
 					y.setRoleCode(tdi.getRoleCode());
@@ -549,18 +549,18 @@ public class SendMessageBean {
 				switch (status) {
 				case TodoConstants.OK_STATUS:
 					y.setQty01(y.getQty01() + 1);
-					y.getToDo().getOk().add(tdi.getRowId());
+					y.getTodo().getOk().add(tdi.getRowId());
 					break;
 				case TodoConstants.CAUTION_STATUS:
 					y.setQty02(y.getQty02() + 1);
-					y.getToDo().getCaution().add(tdi.getRowId());
+					y.getTodo().getCaution().add(tdi.getRowId());
 					break;
 				case TodoConstants.PAST_DUE_STATUS:
 					y.setQty03(y.getQty03() + 1);
-					y.getToDo().getPastDue().add(tdi.getRowId());
+					y.getTodo().getPastDue().add(tdi.getRowId());
 					break;
 				default:
-					y.getToDo().getOk().add(tdi.getRowId());
+					y.getTodo().getOk().add(tdi.getRowId());
 					y.setQty01(y.getQty01() + 1);
 					break;
 				}
@@ -571,7 +571,7 @@ public class SendMessageBean {
 		if (todoList != null && todoList.size() > 0) {
 			Iterator iter = todoList.iterator();
 			while (iter.hasNext()) {
-				ToDo todo = (ToDo) iter.next();
+				Todo todo = (Todo) iter.next();
 				boolean isOK = false;
 				if (appIds.contains(new Long(todo.getAppId()))) {
 					isOK = true;
@@ -583,11 +583,11 @@ public class SendMessageBean {
 					continue;
 				}
 				linkTypes.add(todo.getLinkType());
-				ToDoInstance tdi = (ToDoInstance) qtyMap
+				TodoInstance tdi = (TodoInstance) qtyMap
 						.get(todo.getLinkType());
 				if (tdi == null) {
-					tdi = new ToDoInstance();
-					tdi.setToDo(todo);
+					tdi = new TodoInstance();
+					tdi.setTodo(todo);
 				}
 
 				list.add(tdi);
@@ -602,14 +602,14 @@ public class SendMessageBean {
 		if (rows != null && rows.size() > 0) {
 			Iterator iterator008 = rows.iterator();
 			while (iterator008.hasNext()) {
-				ToDoInstance tdi = (ToDoInstance) iterator008.next();
+				TodoInstance tdi = (TodoInstance) iterator008.next();
 				int status = TodoConstants.getTodoStatus(tdi);
-				ToDoInstance xx = (ToDoInstance) dataMap.get(new Long(tdi
+				TodoInstance xx = (TodoInstance) dataMap.get(new Long(tdi
 						.getTodoId()));
 				if (xx == null) {
-					xx = new ToDoInstance();
+					xx = new TodoInstance();
 					xx.setTodoId(tdi.getTodoId());
-					ToDo todo = (ToDo) todoMap.get(new Long(tdi.getTodoId()));
+					Todo todo = (Todo) todoMap.get(new Long(tdi.getTodoId()));
 					if (todo != null) {
 						xx.setTitle(todo.getTitle());
 						xx.setContent(todo.getContent());
@@ -724,19 +724,19 @@ public class SendMessageBean {
 			/**
 			 * 获取工作流的TODO实例
 			 */
-			Collection rows = todoService.getToDoInstanceList(params);
+			Collection rows = todoService.getTodoInstanceList(params);
 
 			if (rows != null && rows.size() > 0) {
 				// ##System.out.println(user.getName() + "的工作流任务有" +
 				// rows.size()+ "项.");
 				Iterator iterator008 = rows.iterator();
 				while (iterator008.hasNext()) {
-					// ToDoInstance tdi = (ToDoInstance) iterator008.next();
+					// TodoInstance tdi = (TodoInstance) iterator008.next();
 					// rows99.add(tdi);
 
-					ToDoInstance tdi = (ToDoInstance) iterator008.next();
+					TodoInstance tdi = (TodoInstance) iterator008.next();
 					String processName = "";
-					ToDo toDo = todoService.getToDo(tdi.getTodoId());
+					Todo toDo = todoService.getTodo(tdi.getTodoId());
 					if (null != toDo)
 						processName = toDo.getProcessName();
 					if (actorId.equals(tdi.getActorId())) {
@@ -760,7 +760,7 @@ public class SendMessageBean {
 			/**
 			 * 根据TODO sql配置取得的TODO实例
 			 */
-			Collection rows_sql = todoService.getToDoInstanceList(p);
+			Collection rows_sql = todoService.getTodoInstanceList(p);
 
 			if (rows_sql != null && rows_sql.size() > 0) {
 				logger.info("全部的sql任务共有" + rows_sql.size() + "项.");
@@ -768,7 +768,7 @@ public class SendMessageBean {
 				Set rowIds = new HashSet();
 				Iterator iter9988 = rows_sql.iterator();
 				while (iter9988.hasNext()) {
-					ToDoInstance model = (ToDoInstance) iter9988.next();
+					TodoInstance model = (TodoInstance) iter9988.next();
 					if (model.getActorId() != null) {
 						if (model.getActorId().equals(user.getAccount())) {
 							if (!rowIds.contains(model.getRowId())) {
@@ -812,9 +812,9 @@ public class SendMessageBean {
 
 		Map qtyMap = new HashMap();
 		Set linkTypes = new HashSet();
-		Map todoMap = todoService.getToDoMap();
+		Map todoMap = todoService.getTodoMap();
 
-		Collection todoList = todoService.getToDoList();
+		Collection todoList = todoService.getTodoList();
 
 		logger.info(user.getName() + "的TODO任务有" + rows99.size() + "项.");
 
@@ -825,21 +825,21 @@ public class SendMessageBean {
 			Date now = new Date();
 			Iterator iterator = rows99.iterator();
 			while (iterator.hasNext()) {
-				ToDoInstance tdi = (ToDoInstance) iterator.next();
+				TodoInstance tdi = (TodoInstance) iterator.next();
 				int status = TodoConstants.getTodoStatus(tdi);
 				tdi.setStatus(status);
-				ToDo todo = (ToDo) todoMap.get(new Long(tdi.getTodoId()));
+				Todo todo = (Todo) todoMap.get(new Long(tdi.getTodoId()));
 				if (todo == null) {
 					continue;
 				}
-				ToDoInstance xy = (ToDoInstance) qtyMap.get(todo.getLinkType());
+				TodoInstance xy = (TodoInstance) qtyMap.get(todo.getLinkType());
 				if (xy == null) {
-					xy = new ToDoInstance();
+					xy = new TodoInstance();
 					xy.setTodoId(tdi.getTodoId());
 					xy.setDeptId(tdi.getDeptId());
 					xy.setRoleCode(tdi.getRoleCode());
 					if (todo != null) {
-						xy.setToDo(todo);
+						xy.setTodo(todo);
 						xy.setTitle(todo.getTitle());
 						xy.setContent(todo.getContent());
 						xy.setLink(todo.getLink());
@@ -877,7 +877,7 @@ public class SendMessageBean {
 				Collection redWarnXY = new ArrayList();
 				Iterator iter = todoList.iterator();
 				while (iter.hasNext()) {
-					ToDo todo = (ToDo) iter.next();
+					Todo todo = (Todo) iter.next();
 					boolean isOK = false;
 					if (appIds.contains(new Long(todo.getAppId()))) {
 						isOK = true;
@@ -889,7 +889,7 @@ public class SendMessageBean {
 						continue;
 					}
 					linkTypes.add(todo.getLinkType());
-					ToDoInstance tdi = (ToDoInstance) qtyMap.get(todo
+					TodoInstance tdi = (TodoInstance) qtyMap.get(todo
 							.getLinkType());
 					if (tdi != null) {
 						rowsXY.add(tdi);
@@ -981,7 +981,7 @@ public class SendMessageBean {
 	public void sendMessagex() {
 		logger.info("...................sendMessage().....................");
 		Map params = new HashMap();
-		List rows = todoService.getToDoInstanceList(params);
+		List rows = todoService.getTodoInstanceList(params);
 		if (rows == null || rows.size() == 0) {
 			return;
 		}
@@ -993,7 +993,7 @@ public class SendMessageBean {
 
 		Iterator iterator008 = rows.iterator();
 		while (iterator008.hasNext()) {
-			ToDoInstance tdi = (ToDoInstance) iterator008.next();
+			TodoInstance tdi = (TodoInstance) iterator008.next();
 			String actorId = tdi.getActorId();
 			String roleCode = tdi.getRoleCode();
 			int status = TodoConstants.getTodoStatus(tdi);
@@ -1026,7 +1026,7 @@ public class SendMessageBean {
 
 		logger.info("dataMap size:" + dataMap.size());
 
-		Map todoMap = todoService.getToDoMap();
+		Map todoMap = todoService.getTodoMap();
 		Map userMap = todoService.getUserMap();
 
 		Iterator iterator = dataMap.keySet().iterator();
@@ -1038,7 +1038,7 @@ public class SendMessageBean {
 			Collection pastDues = new ArrayList();
 			Iterator iterator009 = list.iterator();
 			while (iterator009.hasNext()) {
-				ToDoInstance tdi = (ToDoInstance) iterator009.next();
+				TodoInstance tdi = (TodoInstance) iterator009.next();
 				int status = TodoConstants.getTodoStatus(tdi);
 				switch (status) {
 				case TodoConstants.OK_STATUS:
@@ -1069,7 +1069,7 @@ public class SendMessageBean {
 				List messages = new ArrayList();
 				Iterator iteratorxy = alerts.iterator();
 				while (iteratorxy.hasNext()) {
-					ToDoInstance tdi = (ToDoInstance) iteratorxy.next();
+					TodoInstance tdi = (TodoInstance) iteratorxy.next();
 					Message message = new Message();
 					message.setTitle(tdi.getTitle());
 					message.setContent(tdi.getContent());

@@ -16,17 +16,19 @@
  * limitations under the License.
  */
 
-package com.glaf.base.modules.todo.model;
+package com.glaf.core.todo;
 
 import java.util.*;
 
 import com.alibaba.fastjson.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+ 
+
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
-public class ToDoInstance implements java.io.Serializable {
+public class TodoInstance implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -43,12 +45,12 @@ public class ToDoInstance implements java.io.Serializable {
 	/**
 	 * 应用编号
 	 */
-	private int appId;
+	private long appId;
 
 	/**
 	 * 模块编号
 	 */
-	private int moduleId;
+	private long moduleId;
 
 	/**
 	 * 参与者编号或角色代码
@@ -204,9 +206,9 @@ public class ToDoInstance implements java.io.Serializable {
 
 	private long versionNo;
 
-	private ToDo toDo;
+	private Todo toDo;
 
-	public ToDoInstance() {
+	public TodoInstance() {
 
 	}
 
@@ -217,7 +219,7 @@ public class ToDoInstance implements java.io.Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		final ToDoInstance other = (ToDoInstance) obj;
+		final TodoInstance other = (TodoInstance) obj;
 		if (id != other.id)
 			return false;
 		return true;
@@ -235,7 +237,7 @@ public class ToDoInstance implements java.io.Serializable {
 		return alarmDate;
 	}
 
-	public int getAppId() {
+	public long getAppId() {
 		return appId;
 	}
 
@@ -287,7 +289,7 @@ public class ToDoInstance implements java.io.Serializable {
 		return listLink;
 	}
 
-	public int getModuleId() {
+	public long getModuleId() {
 		return moduleId;
 	}
 
@@ -362,7 +364,7 @@ public class ToDoInstance implements java.io.Serializable {
 		return title;
 	}
 
-	public ToDo getToDo() {
+	public Todo getTodo() {
 		return toDo;
 	}
 
@@ -393,7 +395,7 @@ public class ToDoInstance implements java.io.Serializable {
 		this.alarmDate = alarmDate;
 	}
 
-	public void setAppId(int appId) {
+	public void setAppId(long appId) {
 		this.appId = appId;
 	}
 
@@ -445,7 +447,7 @@ public class ToDoInstance implements java.io.Serializable {
 		this.listLink = listLink;
 	}
 
-	public void setModuleId(int moduleId) {
+	public void setModuleId(long moduleId) {
 		this.moduleId = moduleId;
 	}
 
@@ -517,7 +519,7 @@ public class ToDoInstance implements java.io.Serializable {
 		this.title = title;
 	}
 
-	public void setToDo(ToDo toDo) {
+	public void setTodo(Todo toDo) {
 		this.toDo = toDo;
 	}
 
@@ -529,8 +531,8 @@ public class ToDoInstance implements java.io.Serializable {
 		this.versionNo = versionNo;
 	}
 
-	public ToDoInstance jsonToObject(JSONObject jsonObject) {
-		ToDoInstance model = new ToDoInstance();
+	public TodoInstance jsonToObject(JSONObject jsonObject) {
+		TodoInstance model = new TodoInstance();
 		if (jsonObject.containsKey("id")) {
 			model.setId(jsonObject.getLong("id"));
 		}

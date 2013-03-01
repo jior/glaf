@@ -12,12 +12,14 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.ModelMap;
 import com.alibaba.fastjson.*;
 
+import com.glaf.core.config.ViewProperties;
+
 import com.glaf.jbpm.context.ProcessContext;
 import com.glaf.jbpm.datafield.DataField;
 import com.glaf.jbpm.model.*;
 import com.glaf.jbpm.container.*;
 
-import com.glaf.base.config.*;
+
 import com.glaf.base.modules.sys.model.*;
 import com.glaf.base.security.*;
 import com.glaf.base.utils.*;
@@ -42,7 +44,7 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 		String rowId = ParamUtil.getString(params, "rowId");
 		${entityName} ${modelName} = ${modelName}Service.get${entityName}(rowId);
 		if (${modelName} != null) {
-			String processName = SystemConfig.getString("${entityName}.processName");
+			String processName = ViewProperties.getString("${entityName}.processName");
 			if (StringUtils.isEmpty(processName)) {
 				processName = "${entityName}Process";
 				${modelName}.setProcessName(processName);
@@ -50,13 +52,13 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 			ProcessContext ctx = new ProcessContext();
 			ctx.setRowId(String.valueOf(${modelName}.getId()));
 			ctx.setActorId(actorId);
-			ctx.setTitle(SystemConfig.getString("res_rowId") + ${modelName}.getId());
+			ctx.setTitle(ViewProperties.getString("res_rowId") + ${modelName}.getId());
 			ctx.setProcessName(${modelName}.getProcessName());
 			Object processInstanceId = ProcessContainer.getContainer()
 					.startProcess(ctx);
 			if (processInstanceId == null) {
 				request.setAttribute("error_message",
-						SystemConfig.getString("res_process_start_error"));
+						ViewProperties.getString("res_process_start_error"));
 				return new ModelAndView("/error", modelMap);
 			}
 		}
@@ -111,7 +113,7 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 						boolean isOK = ProcessContainer.getContainer()
 								.completeTask(ctx);
 						if (!isOK) {
-							request.setAttribute("error_message", SystemConfig
+							request.setAttribute("error_message", ViewProperties
 									.getString("res_complete_task_error"));
 							return new ModelAndView("/error", modelMap);
 						}
@@ -186,7 +188,7 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 			return new ModelAndView(view, modelMap);
 		}
 
-		String x_view = SystemConfig.getString("${modelName}.edit");
+		String x_view = ViewProperties.getString("${modelName}.edit");
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);
 		}
@@ -222,7 +224,7 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 			return new ModelAndView(view);
 		}
 
-		String x_view = SystemConfig.getString("${modelName}.view");
+		String x_view = ViewProperties.getString("${modelName}.view");
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view);
 		}
@@ -238,7 +240,7 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 	 
 		RequestUtil.setRequestParameterToAttribute(request);
 
-		String processName = SystemConfig.getString("${entityName}.processName");
+		String processName = ViewProperties.getString("${entityName}.processName");
 		if (StringUtils.isEmpty(processName)) {
 			processName = "${entityName}Process";
 		}

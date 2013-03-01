@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.ModelMap;
 import com.alibaba.fastjson.*;
  
+import com.glaf.core.config.ViewProperties;
 import com.glaf.core.util.JsonUtils;
 import com.glaf.base.config.*;
 import com.glaf.base.modules.sys.model.*;
@@ -149,7 +150,7 @@ public class ${entityName}BaseController {
 			return new ModelAndView(view, modelMap);
 		}
 
-		String x_view = SystemConfig.getString("${modelName}.edit");
+		String x_view = ViewProperties.getString("${modelName}.edit");
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);
 		}
@@ -175,7 +176,7 @@ public class ${entityName}BaseController {
 			return new ModelAndView(view);
 		}
 
-		String x_view = SystemConfig.getString("${modelName}.view");
+		String x_view = ViewProperties.getString("${modelName}.view");
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view);
 		}
@@ -190,7 +191,7 @@ public class ${entityName}BaseController {
 		if (StringUtils.isNotEmpty(view)) {
 			return new ModelAndView(view, modelMap);
 		}
-		String x_view = SystemConfig.getString("${modelName}.query");
+		String x_view = ViewProperties.getString("${modelName}.query");
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);
 		}

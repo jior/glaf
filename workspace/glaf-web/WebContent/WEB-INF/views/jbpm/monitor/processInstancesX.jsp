@@ -17,7 +17,7 @@
     }
 	int sortNo = (jpage.getCurrentPage()-1) * jpage.getPageSize() + 1;
 	request.setAttribute("imagePath", request.getContextPath()+"/images/go.gif");
-	ITodoService todoService = (ITodoService) ContextFactory.getBean("todoService");
+	ISysTodoService todoService = (ISysTodoService) ContextFactory.getBean("todoService");
     String processName = (String)request.getAttribute("processName");
 	Map taskMap = (Map) request.getAttribute("taskMap");
 	Map userMap = (Map) request.getAttribute("userMap");
@@ -28,13 +28,13 @@
 		Iterator iterator = rows.iterator();
 		while(iterator.hasNext()){
               ProcessInstance pi = (ProcessInstance)iterator.next();
-			  Map row = new HashMap();   
-			  row.put("id", String.valueOf(pi.getId()));
-			  row.put("sortNo", new Integer(++start));
-					  row.put("startDate", DateUtils.getDate(pi.getStart()));
-			  if(pi.getEnd() != null){
-				  row.put("endDate", DateUtils.getDate(pi.getEnd()));
-			  }
+	  Map row = new HashMap();   
+	  row.put("id", String.valueOf(pi.getId()));
+	  row.put("sortNo", new Integer(++start));
+			  row.put("startDate", DateUtils.getDate(pi.getStart()));
+	  if(pi.getEnd() != null){
+		  row.put("endDate", DateUtils.getDate(pi.getEnd()));
+	  }
               row.put("version", new Integer(pi.getVersion()));
 	          array.add(row);   
 		}

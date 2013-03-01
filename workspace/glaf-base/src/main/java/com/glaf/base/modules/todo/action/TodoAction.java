@@ -34,7 +34,7 @@ import org.springframework.web.struts.DispatchActionSupport;
 import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.todo.TodoXlsReader;
 import com.glaf.base.modules.todo.form.TodoForm;
-import com.glaf.base.modules.todo.model.ToDo;
+import com.glaf.core.todo.Todo;
 import com.glaf.base.modules.todo.service.TodoService;
 import com.glaf.base.utils.RequestUtil;
 
@@ -63,7 +63,7 @@ public class TodoAction extends DispatchActionSupport {
 			String limitDay = request.getParameter("limitDay");
 			String xa = request.getParameter("xa");
 			String xb = request.getParameter("xb");
-			ToDo todo = todoService.getToDo(Long.valueOf(id));
+			Todo todo = todoService.getTodo(Long.valueOf(id));
 			todo.setTitle(request.getParameter("title"));
 			todo.setContent(request.getParameter("content"));
 			try {
@@ -98,7 +98,7 @@ public class TodoAction extends DispatchActionSupport {
 	public ActionForward showList(ActionMapping mapping, ActionForm actionForm,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		List rows = todoService.getAllToDoList();
+		List rows = todoService.getAllTodoList();
 		request.setAttribute("rows", rows);
 		return mapping.findForward("show_list");
 	}
@@ -150,7 +150,7 @@ public class TodoAction extends DispatchActionSupport {
 			throws Exception {
 		TodoForm todoForm = (TodoForm) form;
 		TodoXlsReader reader = new TodoXlsReader();
-		List<ToDo> todos = reader.readXls(todoForm.getFile().getInputStream());
+		List<Todo> todos = reader.readXls(todoForm.getFile().getInputStream());
 		if (todos != null && !todos.isEmpty()) {
 			logger.debug("import size:"+todos.size());
 			todoService.saveAll(todos);

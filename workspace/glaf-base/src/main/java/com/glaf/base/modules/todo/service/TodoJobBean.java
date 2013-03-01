@@ -1,20 +1,20 @@
 /*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.glaf.base.modules.todo.service;
 
@@ -28,22 +28,19 @@ import org.jbpm.JbpmContext;
 import com.glaf.jbpm.context.Context;
 import com.glaf.jbpm.model.TaskItem;
 import com.glaf.jbpm.container.ProcessContainer;
- 
 
 import com.glaf.base.modules.others.service.WorkCalendarService;
 import com.glaf.base.modules.sys.model.SysDepartment;
 import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.sys.service.SysUserService;
-import com.glaf.base.modules.todo.model.ToDo;
-import com.glaf.base.modules.todo.model.ToDoInstance;
+import com.glaf.core.todo.Todo;
+import com.glaf.core.todo.TodoInstance;
 import com.glaf.base.utils.DateTools;
 
 public class TodoJobBean {
 	private final static Log logger = LogFactory.getLog(TodoJobBean.class);
 
 	private TodoService todoService;
-
- 
 
 	private WorkCalendarService workCalendarService;
 
@@ -53,7 +50,7 @@ public class TodoJobBean {
 
 	}
 
-	public void create(ToDo todo) {
+	public void create(Todo todo) {
 		todoService.create(todo);
 	}
 
@@ -66,7 +63,7 @@ public class TodoJobBean {
 
 	public void createTasks(Long processInstanceId) {
 		List tasks = this.getJbpmTasksByProcessInstanceId(processInstanceId);
-		//todoService.createTasks(processInstanceId, tasks);
+		// todoService.createTasks(processInstanceId, tasks);
 		logger.info("流程 " + processInstanceId + " 的任务已经更新,现在有任务:"
 				+ tasks.size());
 	}
@@ -87,7 +84,7 @@ public class TodoJobBean {
 	}
 
 	public void createTodoInstances(long todoId) {
-		ToDo todo = todoService.getToDo(todoId);
+		Todo todo = todoService.getTodo(todoId);
 		Map rowsMap = new HashMap();
 		JbpmContext jbpmContext = null;
 		try {
@@ -98,7 +95,7 @@ public class TodoJobBean {
 			java.sql.ResultSet rs = psmt.executeQuery();
 			java.sql.ResultSetMetaData rsmd = rs.getMetaData();
 			while (rs.next()) {
-				ToDoInstance model = new ToDoInstance();
+				TodoInstance model = new TodoInstance();
 				model.setRowId(rs.getString(1));
 				model.setStartDate(rs.getDate(2));
 				if (rsmd.getColumnCount() == 3) {
@@ -139,7 +136,7 @@ public class TodoJobBean {
 			Iterator iter = rowsMap.keySet().iterator();
 			while (iter.hasNext()) {
 				String rowId = (String) iter.next();
-				ToDoInstance model = (ToDoInstance) rowsMap.get(rowId);
+				TodoInstance model = (TodoInstance) rowsMap.get(rowId);
 				Date startDate = model.getStartDate();
 				if (startDate == null) {
 					startDate = new java.util.Date();
@@ -191,8 +188,8 @@ public class TodoJobBean {
 		return rows;
 	}
 
-	public List getAllToDoList() {
-		return todoService.getAllToDoList();
+	public List getAllTodoList() {
+		return todoService.getAllTodoList();
 	}
 
 	public Collection getAllUsers() {
@@ -231,8 +228,8 @@ public class TodoJobBean {
 		return todoService.getDepartmentMap();
 	}
 
-	public Map getEnabledToDoMap() {
-		return todoService.getEnabledToDoMap();
+	public Map getEnabledTodoMap() {
+		return todoService.getEnabledTodoMap();
 	}
 
 	public List getJbpmTasks(String actorId) {
@@ -264,8 +261,6 @@ public class TodoJobBean {
 		return rows;
 	}
 
-	 
-
 	public SysDepartment getParentDepartment(long id) {
 		return todoService.getParentDepartment(id);
 	}
@@ -279,12 +274,12 @@ public class TodoJobBean {
 	}
 
 	public List getTasks() {
-		List todos = todoService.getSQLToDos();
+		List todos = todoService.getSQLTodos();
 		List rows = new ArrayList();
 		if (todos != null && todos.size() > 0) {
 			Iterator iterator = todos.iterator();
 			while (iterator.hasNext()) {
-				ToDo todo = (ToDo) iterator.next();
+				Todo todo = (Todo) iterator.next();
 				if (StringUtils.isNotEmpty(todo.getSql())) {
 					logger.info(todo.getId() + ":" + todo.getSql());
 					Map rowsMap = new HashMap();
@@ -298,7 +293,7 @@ public class TodoJobBean {
 						java.sql.ResultSet rs = psmt.executeQuery();
 						java.sql.ResultSetMetaData rsmd = rs.getMetaData();
 						while (rs.next()) {
-							ToDoInstance model = new ToDoInstance();
+							TodoInstance model = new TodoInstance();
 							model.setRowId(rs.getString(1));
 							model.setStartDate(rs.getDate(2));
 							if (rsmd.getColumnCount() == 3) {
@@ -339,7 +334,7 @@ public class TodoJobBean {
 						Iterator iter = rowsMap.keySet().iterator();
 						while (iter.hasNext()) {
 							String rowId = (String) iter.next();
-							ToDoInstance model = (ToDoInstance) rowsMap
+							TodoInstance model = (TodoInstance) rowsMap
 									.get(rowId);
 							Date startDate = model.getStartDate();
 							if (startDate == null) {
@@ -383,12 +378,12 @@ public class TodoJobBean {
 		return rows;
 	}
 
-	public ToDo getToDo(long todoId) {
-		return todoService.getToDo(todoId);
+	public Todo getTodo(long todoId) {
+		return todoService.getTodo(todoId);
 	}
 
-	public List getToDoInstanceList(Map paramMap) {
-		return todoService.getToDoInstanceList(paramMap);
+	public List getTodoInstanceList(Map paramMap) {
+		return todoService.getTodoInstanceList(paramMap);
 	}
 
 	public List getTodoInstances(List taskItems) {
@@ -396,7 +391,7 @@ public class TodoJobBean {
 		if (taskItems != null && taskItems.size() > 0) {
 			logger.info("---------->taskItems size:" + taskItems.size());
 			Map userMap = this.getUserMap();
-			Map todoMap = this.getToDoMap();
+			Map todoMap = this.getTodoMap();
 
 			Iterator iterator = taskItems.iterator();
 			while (iterator.hasNext()) {
@@ -407,7 +402,7 @@ public class TodoJobBean {
 					continue;
 				}
 
-				ToDo todo = null;
+				Todo todo = null;
 
 				String key001 = taskItem.getProcessName() + "_"
 						+ taskItem.getTaskName();
@@ -415,10 +410,10 @@ public class TodoJobBean {
 						+ taskItem.getTaskName() + "_"
 						+ user.getDepartment().getId();
 
-				todo = (ToDo) todoMap.get(key);
+				todo = (Todo) todoMap.get(key);
 
 				if (todo == null) {
-					todo = (ToDo) todoMap.get(key001);
+					todo = (Todo) todoMap.get(key001);
 				}
 
 				if (todo == null) {
@@ -426,37 +421,8 @@ public class TodoJobBean {
 				}
 
 				if (todo != null) {
-					boolean exist = false;
-					JbpmContext jbpmContext = null;
-					try {
-						JbpmConfiguration cfg = JbpmConfiguration.getInstance();
-						jbpmContext = cfg.createJbpmContext();
-						java.sql.Connection con = jbpmContext.getConnection();
-						String sql = " select processinstanceid from "
-								+ todo.getTablename()
-								+ " where processinstanceid = ? ";
-						java.sql.PreparedStatement psmt = con
-								.prepareStatement(sql);
-						psmt.setLong(1, taskItem.getProcessInstanceId());
-						java.sql.ResultSet rs = psmt.executeQuery();
-						if (rs.next()) {
-							exist = true;
-						}
-						rs.close();
-						psmt.close();
-						rs = null;
-						psmt = null;
-					} catch (java.sql.SQLException ex) {
-						ex.printStackTrace();
-					} finally {
-						Context.close(jbpmContext);
-					}
 
-					if (!exist) {
-						continue;
-					}
-
-					ToDoInstance model = new ToDoInstance();
+					TodoInstance model = new TodoInstance();
 					model.setProvider("jbpm");
 					model.setLinkType(todo.getLinkType());
 					model.setAppId(todo.getAppId());
@@ -483,8 +449,10 @@ public class TodoJobBean {
 					Date pastDueDate = new Date(time + bhour * DateTools.HOUR);
 					model.setAlarmDate(cautionDate);
 					model.setPastDueDate(pastDueDate);
-					model.setProcessInstanceId(String.valueOf(taskItem.getProcessInstanceId()));
-					model.setTaskInstanceId(String.valueOf(taskItem.getTaskInstanceId()));
+					model.setProcessInstanceId(String.valueOf(taskItem
+							.getProcessInstanceId()));
+					model.setTaskInstanceId(String.valueOf(taskItem
+							.getTaskInstanceId()));
 					model.setRowId(taskItem.getRowId());
 					model.setVersionNo(System.currentTimeMillis());
 					String content = todo.getContent();
@@ -493,8 +461,8 @@ public class TodoJobBean {
 						model.setContent(content);
 					} else {
 						if (StringUtils.isNotEmpty(taskItem.getRowId())) {
-							content = content + " 单据编号（"
-									+ taskItem.getRowId() + "）";
+							content = content + " 单据编号（" + taskItem.getRowId()
+									+ "）";
 							model.setContent(content);
 						}
 					}
@@ -508,17 +476,17 @@ public class TodoJobBean {
 	public List getTodoInstances(String actorId) {
 		SendMessageBean bean = new SendMessageBean();
 		bean.setSysUserService(this.getSysUserService());
-		 
+
 		bean.setTodoService(todoService);
 		return bean.getTodoInstances(actorId);
 	}
 
-	public List getToDoList() {
-		return todoService.getToDoList();
+	public List getTodoList() {
+		return todoService.getTodoList();
 	}
 
-	public Map getToDoMap() {
-		return todoService.getToDoMap();
+	public Map getTodoMap() {
+		return todoService.getTodoMap();
 	}
 
 	public TodoService getTodoService() {
@@ -607,7 +575,7 @@ public class TodoJobBean {
 		logger.info("setWorkCalendarService");
 	}
 
-	public void update(ToDo todo) {
+	public void update(Todo todo) {
 		todoService.update(todo);
 	}
 }

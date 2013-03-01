@@ -62,6 +62,8 @@ public class PropertiesUtils {
 	public static String get(Properties properties, String key) {
 		return properties.getProperty(key);
 	}
+	
+	
 
 	public static String get(Properties properties, String key,
 			String defaultVal) {

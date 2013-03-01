@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.core.todo.mapper.TodoMapper">
+
+	<resultMap id="todoResultMap"	type="com.glaf.core.todo.Todo">
+		<id property="id" column="id" jdbcType="BIGINT"/>
+		<result property="code" column="code" jdbcType="VARCHAR"/>
+		<result property="moduleId" column="moduleId" jdbcType="VARCHAR"/>
+		<result property="moduleName" column="moduleName" jdbcType="VARCHAR"/>
+		<result property="appId" column="appId" jdbcType="BIGINT"/>
+		<result property="deptId" column="deptId" jdbcType="BIGINT"/>
+		<result property="roleId" column="roleId" jdbcType="BIGINT"/>
+		<result property="roleCode" column="roleCode" jdbcType="VARCHAR"/>
+		<result property="limitDay" column="limitDay" jdbcType="INTEGER"/>
+		<result property="xa" column="xa" jdbcType="INTEGER"/>
+		<result property="xb" column="xb" jdbcType="INTEGER"/>
+		<result property="title" column="title" jdbcType="VARCHAR"/>
+		<result property="content" column="content" jdbcType="VARCHAR"/>
+		<result property="link" column="link" jdbcType="VARCHAR"/>
+		<result property="listLink" column="listLink" jdbcType="VARCHAR"/>
+		<result property="allListLink" column="allListLink" jdbcType="VARCHAR"/>
+		<result property="linkType" column="linkType" jdbcType="VARCHAR"/>
+		<result property="processName" column="processName" jdbcType="VARCHAR"/>
+		<result property="taskName" column="taskName" jdbcType="VARCHAR"/>
+		<result property="provider" column="provider" jdbcType="VARCHAR"/>
+		<result property="type" column="type" jdbcType="VARCHAR"/>
+		<result property="objectId" column="objectId" jdbcType="VARCHAR"/>
+		<result property="objectValue" column="objectValue" jdbcType="VARCHAR"/>
+		<result property="enableFlag" column="enableFlag" jdbcType="INTEGER"/>
+		<result property="configFlag" column="configFlag" jdbcType="INTEGER"/>
+		<result property="sortNo" column="sortNo" jdbcType="INTEGER"/>
+		<result property="versionNo" column="versionNo" jdbcType="BIGINT"/>
+		<result property="sql" column="sql_" jdbcType="VARCHAR"/>
+	</resultMap>
+
+ 
+	<insert id="insertTodo" parameterType="com.glaf.core.todo.Todo">
+		insert into
+		SYS_TODO ( id
+        ,code 
+        ,moduleId 
+        ,moduleName 
+		,appId
+		,deptId
+        ,roleId 
+        ,roleCode 
+        ,limitDay 
+        ,xa 
+        ,xb 
+        ,title 
+        ,content 
+        ,link 
+        ,listLink 
+        ,allListLink 
+        ,linkType 
+        ,processName 
+        ,taskName 
+        ,provider 
+		,type
+        ,objectId 
+        ,objectValue 
+        ,enableFlag 
+        ,configFlag 
+        ,sortNo 
+        ,versionNo 
+		,sql_
+		)
+		values (#{id, jdbcType=BIGINT}
+        ,#{code, jdbcType=VARCHAR}
+        ,#{moduleId, jdbcType=VARCHAR}
+        ,#{moduleName, jdbcType=VARCHAR}
+		,#{appId, jdbcType=BIGINT}
+		,#{deptId, jdbcType=BIGINT}
+        ,#{roleId, jdbcType=BIGINT}
+        ,#{roleCode, jdbcType=VARCHAR}
+        ,#{limitDay, jdbcType=INTEGER}
+        ,#{xa, jdbcType=INTEGER}
+        ,#{xb, jdbcType=INTEGER}
+        ,#{title, jdbcType=VARCHAR}
+        ,#{content, jdbcType=VARCHAR}
+        ,#{link, jdbcType=VARCHAR}
+        ,#{listLink, jdbcType=VARCHAR}
+        ,#{allListLink, jdbcType=VARCHAR}
+        ,#{linkType, jdbcType=VARCHAR}
+        ,#{processName, jdbcType=VARCHAR}
+        ,#{taskName, jdbcType=VARCHAR}
+        ,#{provider, jdbcType=VARCHAR}
+		,#{type, jdbcType=VARCHAR}
+        ,#{objectId, jdbcType=VARCHAR}
+        ,#{objectValue, jdbcType=VARCHAR}
+        ,#{enableFlag, jdbcType=INTEGER}
+        ,#{configFlag, jdbcType=INTEGER}
+        ,#{sortNo, jdbcType=INTEGER}
+        ,#{versionNo, jdbcType=BIGINT}
+		,#{sql, jdbcType=VARCHAR}
+		)
+	</insert>
+
+	 
+	<update id="updateTodo" parameterType="com.glaf.core.todo.Todo">
+		
+		update SYS_TODO
+		set
+        limitDay = #{limitDay, jdbcType=INTEGER},
+        xa = #{xa, jdbcType=INTEGER},
+        xb = #{xb, jdbcType=INTEGER},
+        title = #{title, jdbcType=VARCHAR},
+        content = #{content, jdbcType=VARCHAR},
+        link = #{link, jdbcType=VARCHAR},
+        listLink = #{listLink, jdbcType=VARCHAR},
+        allListLink = #{allListLink, jdbcType=VARCHAR},
+        enableFlag = #{enableFlag, jdbcType=INTEGER},
+        sortNo = #{sortNo, jdbcType=INTEGER}
+ 		where id = #{id,jdbcType=BIGINT}
+
+	</update>
+
+ 
+	<delete id="deleteTodoById" parameterType="long"> 
+        delete from SYS_TODO
+        where id =	#{id}
+	</delete>
+	
+	<delete id="deleteTodos" parameterType="com.glaf.core.todo.query.TodoQuery">
+		delete from SYS_TODO
+		where (
+		<foreach collection="rowIds" index="index" item="rowId">
+			<if test="index != 0"> OR </if>
+			 id = #{rowId}
+		</foreach>
+		)
+	</delete>
+
+	<select id="getTodoById" parameterType="long" resultMap="todoResultMap">
+		select * from SYS_TODO where id = #{id}
+	</select>
+
+	<select id="getTodoByCode" parameterType="string" resultMap="todoResultMap">
+		select * from SYS_TODO where code = #{code}
+	</select>
+
+	<select id="getTodos" 
+		parameterType="com.glaf.core.todo.query.TodoQuery"
+		resultMap="todoResultMap">
+		select E.*
+		<include refid="selectTodosSql" />
+		<if test="orderBy != null">
+		   order by ${orderBy}
+		</if>
+	</select>
+	
+	<select id="getTodoList" 
+		parameterType="com.glaf.core.todo.query.TodoQuery"
+		resultMap="todoResultMap">
+		select E.*
+		<include refid="selectTodosSql" />
+		<if test="orderBy != null">
+		   order by ${orderBy}
+		</if>
+	</select>
+
+	<select id="getTodoCount" 
+		parameterType="com.glaf.core.todo.query.TodoQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectTodosSql" />
+	</select>
+
+	<sql id="selectTodosSql">
+
+		from SYS_TODO E
+
+		<where>
+		       1 = 1  
+
+			<if test="code != null">
+				and E.code = #{code}
+			</if>
+
+			<if test="codes != null and codes.size() &gt; 0">
+			    and E.code IN
+				<foreach item="x_code" index="index" collection="codes" 
+					open="(" separator="," close=")">
+                  #{x_code}
+				</foreach>
+			</if>
+
+			<if test="moduleId != null">
+				and E.moduleId = #{moduleId}
+			</if>
+
+			<if test="moduleIds != null and moduleIds.size() &gt; 0">
+			    and E.moduleId IN
+				<foreach item="x_moduleId" index="index" collection="moduleIds" 
+					open="(" separator="," close=")">
+                  #{x_moduleId}
+				</foreach>
+			</if>
+
+			<if test="moduleNameLike != null">
+				and E.moduleName like #{moduleNameLike}
+			</if>
+	        
+			<if test="appId != null">
+				and E.appId = #{appId}
+			</if>
+
+			<if test="appIds != null and appIds.size() &gt; 0">
+			    and E.appId IN
+				<foreach item="x_appId" index="index" collection="appIds" 
+					open="(" separator="," close=")">
+                  #{x_appId}
+				</foreach>
+			</if>
+			
+			<if test="deptId != null">
+				and E.deptId = #{deptId}
+			</if>
+
+			<if test="deptIds != null and deptIds.size() &gt; 0">
+			    and E.deptId IN
+				<foreach item="x_deptId" index="index" collection="deptIds" 
+					open="(" separator="," close=")">
+                  #{x_deptId}
+				</foreach>
+			</if>
+			
+			<if test="roleId != null">
+				and E.roleId = #{roleId}
+			</if>
+
+			<if test="roleIds != null and roleIds.size() &gt; 0">
+			    and E.roleId IN
+				<foreach item="x_roleId" index="index" collection="roleIds" 
+					open="(" separator="," close=")">
+                  #{x_roleId}
+				</foreach>
+			</if>
+
+			<if test="roleCode != null">
+				and E.roleCode = #{roleCode}
+			</if>
+
+			<if test="titleLike != null">
+				and E.title like #{titleLike}
+			</if>
+	      
+			<if test="contentLike != null">
+				and E.content like #{contentLike}
+			</if>
+
+			<if test="linkLike != null">
+				and E.link like #{linkLike}
+			</if>
+
+			<if test="listLinkLike != null">
+				and E.listLink like #{listLinkLike}
+			</if>
+	        
+			<if test="allListLinkLike != null">
+				and E.allListLink like #{allListLinkLike}
+			</if>
+
+			<if test="linkType != null">
+				and E.linkType = #{linkType}
+			</if>
+
+			<if test="processName != null">
+				and E.processName = #{processName}
+			</if>
+
+			<if test="processNameLike != null">
+				and E.processName like #{processNameLike}
+			</if>
+
+			<if test="processNames != null and processNames.size() &gt; 0">
+			    and E.processName IN
+				<foreach item="x_processName" index="index" collection="processNames" 
+					open="(" separator="," close=")">
+                  #{x_processName}
+				</foreach>
+			</if>
+	        
+			<if test="taskName != null">
+				and E.taskName = #{taskName}
+			</if>
+
+			<if test="taskNameLike != null">
+				and E.taskName like #{taskNameLike}
+			</if>
+
+			<if test="taskNames != null and taskNames.size() &gt; 0">
+			    and E.taskName IN
+				<foreach item="x_taskName" index="index" collection="taskNames" 
+					open="(" separator="," close=")">
+                  #{x_taskName}
+				</foreach>
+			</if>
+
+			<if test="provider != null">
+				and E.provider = #{provider}
+			</if>
+
+			<if test="type != null">
+				and E.type = #{type}
+			</if>
+
+			<if test="objectId != null">
+				and E.objectId = #{objectId}
+			</if>
+
+			<if test="objectIds != null and objectIds.size() &gt; 0">
+			    and E.objectId IN
+				<foreach item="x_objectId" index="index" collection="objectIds" 
+					open="(" separator="," close=")">
+                  #{x_objectId}
+				</foreach>
+			</if>
+
+			<if test="objectValue != null">
+				and E.objectValue = #{objectValue}
+			</if>
+
+			<if test="objectValues != null and objectValues.size() &gt; 0">
+			    and E.objectValue IN
+				<foreach item="x_objectValue" index="index" collection="objectValues" 
+					open="(" separator="," close=")">
+                  #{x_objectValue}
+				</foreach>
+			</if>
+
+			<if test="enableFlag != null">
+				and E.enableFlag = #{enableFlag}
+			</if>
+
+			<if test="configFlag != null">
+				and E.configFlag = #{configFlag}
+			</if>
+
+		</where>
+	</sql>
+
+</mapper>

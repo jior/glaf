@@ -1,22 +1,22 @@
 /*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
-package com.glaf.base.config;
+package com.glaf.core.config;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -33,13 +33,15 @@ import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 
-import com.glaf.base.utils.PropertiesTools;
+import com.glaf.core.config.SystemProperties;
+import com.glaf.core.util.PropertiesUtils;
 
 public class DataSourceConfig {
 
-	private final static String SYSTEM_CONFIG = "/jdbc.properties";
+	private final static String JDBC_CONFIG = "/conf/jdbc.properties";
 
 	private static Properties properties = new Properties();
 
@@ -358,7 +360,7 @@ public class DataSourceConfig {
 									+ databaseProductName + "'");
 				}
 				System.out.println("using database type: " + databaseType);
-				if (SystemConfig.getBoolean("hibernate.cfg.update")) {
+				if (SystemProperties.getBoolean("hibernate.cfg.update")) {
 					reconfigHibernate();
 				}
 			}
@@ -383,10 +385,10 @@ public class DataSourceConfig {
 		return false;
 	}
 
-	public static void reconfigHibernate() {
+	protected static void reconfigHibernate() {
 		Resource resource = new ClassPathResource("/hibernate.properties");
 		try {
-			Properties p = PropertiesTools.loadProperties(resource
+			Properties p = PropertiesUtils.loadProperties(resource
 					.getInputStream());
 			if (StringUtils.isNotEmpty(getJndiName())) {
 				p.put("hibernate.connection.datasource", getJndiName());
@@ -441,14 +443,14 @@ public class DataSourceConfig {
 				p.put("hibernate.dialect", getHibernateDialect());
 			}
 
-			Map<String, Object> treeMap = new TreeMap<String, Object>();
+			Map<String, String> treeMap = new TreeMap<String, String>();
 
 			Set<String> keys = p.stringPropertyNames();
 			for (String key : keys) {
-				treeMap.put(key, p.get(key));
+				treeMap.put(key, p.getProperty(key));
 			}
 
-			PropertiesTools.save(resource, treeMap);
+			PropertiesUtils.save(resource, treeMap);
 
 		} catch (IOException ex) {
 			System.out.println("ÅäÖÃhibernate.propertiesÎÄ¼þ³ö´í¡£");
@@ -459,13 +461,15 @@ public class DataSourceConfig {
 		synchronized (DataSourceConfig.class) {
 			InputStream inputStream = null;
 			try {
-				Resource resource = new ClassPathResource(SYSTEM_CONFIG);
+				String filename = SystemProperties.getConfigRootPath()
+						+ JDBC_CONFIG;
+				Resource resource = new FileSystemResource(filename);
 				System.out.println("load jdbc config:"
 						+ resource.getFile().getAbsolutePath());
 				inputStream = new FileInputStream(resource.getFile()
 						.getAbsolutePath());
 				properties.clear();
-				Properties p = PropertiesTools.loadProperties(inputStream);
+				Properties p = PropertiesUtils.loadProperties(inputStream);
 				if (p != null) {
 					Enumeration<?> e = p.keys();
 					while (e.hasMoreElements()) {

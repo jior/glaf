@@ -30,9 +30,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.json.JSONObject;
 
-import com.glaf.base.config.SystemConfig;
-
- 
+import com.glaf.core.config.SystemConfig;
 
 public class ResponseUtil {
 	private static Log logger = LogFactory.getLog(ResponseUtil.class);
@@ -169,7 +167,7 @@ public class ResponseUtil {
 		} else {
 			Map<String, Object> jsonMap = new HashMap<String, Object>();
 			jsonMap.put("statusCode", 500);
-			jsonMap.put("message","操作失败！");
+			jsonMap.put("message", "操作失败！");
 			JSONObject object = new JSONObject(jsonMap);
 			try {
 				return object.toString().getBytes("UTF-8");
@@ -237,8 +235,7 @@ public class ResponseUtil {
 			buffer.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 			buffer.append("<response>");
 			buffer.append("\n    <statusCode>200</statusCode>");
-			buffer.append("\n    <message>")
-					.append("操作成功！")
+			buffer.append("\n    <message>").append("操作成功！")
 					.append("</message>");
 			buffer.append("\n</response>");
 			try {
@@ -250,8 +247,7 @@ public class ResponseUtil {
 			buffer.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 			buffer.append("<response>");
 			buffer.append("\n    <statusCode>500</statusCode>");
-			buffer.append("\n    <message>")
-					.append("操作失败！")
+			buffer.append("\n    <message>").append("操作失败！")
 					.append("</message>");
 			buffer.append("\n</response>");
 			try {

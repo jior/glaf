@@ -25,8 +25,8 @@ import java.util.Map;
 import com.glaf.base.modules.sys.model.SysDepartment;
 import com.glaf.base.modules.sys.model.SysRole;
 import com.glaf.base.modules.sys.model.SysUser;
-import com.glaf.base.modules.todo.model.ToDo;
-import com.glaf.base.modules.todo.model.ToDoInstance;
+import com.glaf.core.todo.Todo;
+import com.glaf.core.todo.TodoInstance;
 import com.glaf.base.modules.todo.model.UserEntity;
 
 public interface TodoService {
@@ -36,7 +36,7 @@ public interface TodoService {
 	 * 
 	 * @param todo
 	 */
-	void create(ToDo todo);
+	void create(Todo todo);
 
 	/**
 	 * 重建指定流程实例的待办事项
@@ -45,7 +45,7 @@ public interface TodoService {
 	 * @param rows
 	 */
 	void createTasks(Collection<String> processInstanceIds,
-			List<ToDoInstance> rows);
+			List<TodoInstance> rows);
 
 	/**
 	 * 重建指定流程实例的待办事项
@@ -53,21 +53,21 @@ public interface TodoService {
 	 * @param processInstanceId
 	 * @param rows
 	 */
-	void createTasks(String processInstanceId, List<ToDoInstance> rows);
+	void createTasks(String processInstanceId, List<TodoInstance> rows);
 
 	/**
 	 * 重建SQL查询的待办事项
 	 * 
 	 * @param rows
 	 */
-	void createTasksOfSQL(List<ToDoInstance> rows);
+	void createTasksOfSQL(List<TodoInstance> rows);
 
 	/**
 	 * 重建工作流的待办事项
 	 * 
 	 * @param rows
 	 */
-	void createTasksOfWorkflow(List<ToDoInstance> rows);
+	void createTasksOfWorkflow(List<TodoInstance> rows);
 
 	/**
 	 * 重建某个用户工作流的待办事项
@@ -75,7 +75,7 @@ public interface TodoService {
 	 * @param actorId
 	 * @param rows
 	 */
-	void createTasksOfWorkflow(String actorId, List<ToDoInstance> rows);
+	void createTasksOfWorkflow(String actorId, List<TodoInstance> rows);
 
 	/**
 	 * 重建某个todo的待办事项
@@ -83,14 +83,14 @@ public interface TodoService {
 	 * @param todoId
 	 * @param rows
 	 */
-	void createTodoInstances(long todoId, List<ToDoInstance> rows);
+	void createTodoInstances(long todoId, List<TodoInstance> rows);
 
 	/**
 	 * 获取全部Todo列表
 	 * 
 	 * @return
 	 */
-	List<ToDo> getAllToDoList();
+	List<Todo> getAllTodoList();
 
 	/**
 	 * 获取部门信息
@@ -119,7 +119,7 @@ public interface TodoService {
 	 * 
 	 * @return
 	 */
-	List<ToDo> getSQLToDos();
+	List<Todo> getSQLTodos();
 
 	/**
 	 * 获取用户及用户部门
@@ -134,7 +134,7 @@ public interface TodoService {
 	 * @param todoId
 	 * @return
 	 */
-	ToDo getToDo(long todoId);
+	Todo getTodo(long todoId);
 
 	/**
 	 * 根据参数获取待办事项列表
@@ -142,28 +142,28 @@ public interface TodoService {
 	 * @param paramMap
 	 * @return
 	 */
-	List<ToDoInstance> getToDoInstanceList(Map<String, Object> paramMap);
+	List<TodoInstance> getTodoInstanceList(Map<String, Object> paramMap);
 
 	/**
 	 * 获取Todo列表，但排除已经禁用的
 	 * 
 	 * @return
 	 */
-	List<ToDo> getToDoList();
+	List<Todo> getTodoList();
 
 	/**
 	 * 获取Todo信息
 	 * 
 	 * @return
 	 */
-	Map<String, ToDo> getToDoMap();
+	Map<String, Todo> getTodoMap();
 
 	/**
 	 * 获取可用的Todo信息
 	 * 
 	 * @return
 	 */
-	Map<Long, ToDo> getEnabledToDoMap();
+	Map<Long, Todo> getEnabledTodoMap();
 
 	/**
 	 * 获取用户信息
@@ -202,7 +202,7 @@ public interface TodoService {
 	 * @param actorId
 	 * @return
 	 */
-	Map<Long, ToDo> getUserTodoMap(String actorId);
+	Map<Long, Todo> getUserTodoMap(String actorId);
 
 	/**
 	 * 判断某个用户是否有任务
@@ -226,20 +226,20 @@ public interface TodoService {
 	 * 
 	 * @return
 	 */
-	Collection<ToDoInstance> populate(Collection<ToDoInstance> rows,
-			Map<Long, ToDo> todoMap);
+	Collection<TodoInstance> populate(Collection<TodoInstance> rows,
+			Map<Long, Todo> todoMap);
 
 	/**
 	 * 批量保存Todo
 	 * 
 	 * @param rows
 	 */
-	void saveAll(List<ToDo> rows);
+	void saveAll(List<Todo> rows);
 
 	/**
 	 * 修改Todo
 	 * 
 	 * @param todo
 	 */
-	void update(ToDo todo);
+	void update(Todo todo);
 }
