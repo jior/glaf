@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.mail.mapper.MailAccountMapper">
+
+	<resultMap id="mailAccountResultMap" type="com.glaf.mail.domain.MailAccount">
+		<id property="id" column="ID_" jdbcType="VARCHAR" />
+		<result property="accountType" column="ACCOUNTTYPE_" jdbcType="VARCHAR" />
+		<result property="mailAddress" column="MAILADDRESS_" jdbcType="VARCHAR" />
+		<result property="showName" column="SHOWNAME_" jdbcType="VARCHAR" />
+		<result property="username" column="USERNAME_" jdbcType="VARCHAR" />
+		<result property="password" column="PASSWORD_" jdbcType="VARCHAR" />
+		<result property="pop3Server" column="POP3SERVER_" jdbcType="VARCHAR" />
+		<result property="receivePort" column="RECEIVEPORT_" jdbcType="INTEGER" />
+		<result property="smtpServer" column="SMTPSERVER_" jdbcType="VARCHAR" />
+		<result property="sendPort" column="SENDPORT_" jdbcType="INTEGER" />
+		<result property="autoReceive" column="AUTORECEIVE_" jdbcType="VARCHAR" />
+		<result property="rememberPassword" column="REMEMBERPASSWORD_"
+			jdbcType="VARCHAR" />
+		<result property="locked" column="LOCKED_" jdbcType="INTEGER" />
+		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR" />
+		<result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP" />
+		<result property="authFlag" column="AUTHFLAG_" jdbcType="VARCHAR" />
+	</resultMap>
+
+
+	<insert id="insertMailAccount" parameterType="com.glaf.mail.domain.MailAccount">
+		insert into
+		SYS_MAIL_ACCOUNT ( ID_
+		,ACCOUNTTYPE_
+		,MAILADDRESS_
+		,SHOWNAME_
+		,USERNAME_
+		,PASSWORD_
+		,POP3SERVER_
+		,RECEIVEPORT_
+		,SMTPSERVER_
+		,SENDPORT_
+		,AUTORECEIVE_
+		,REMEMBERPASSWORD_
+		,LOCKED_
+		,CREATEBY_
+		,CREATEDATE_
+		,AUTHFLAG_
+		)
+		values (
+		#{id, jdbcType=VARCHAR}
+		,#{accountType,
+		jdbcType=VARCHAR}
+		,#{mailAddress,
+		jdbcType=VARCHAR}
+		,#{showName,
+		jdbcType=VARCHAR}
+		,#{username,
+		jdbcType=VARCHAR}
+		,#{password,
+		jdbcType=VARCHAR}
+		,#{pop3Server,
+		jdbcType=VARCHAR}
+		,#{receivePort,
+		jdbcType=INTEGER}
+		,#{smtpServer,
+		jdbcType=VARCHAR}
+		,#{sendPort,
+		jdbcType=INTEGER}
+		,#{autoReceive,
+		jdbcType=VARCHAR}
+		,#{rememberPassword,
+		jdbcType=VARCHAR}
+		,#{locked,
+		jdbcType=INTEGER}
+		,#{createBy,
+		jdbcType=VARCHAR}
+		,#{createDate,
+		jdbcType=TIMESTAMP}
+		,#{authFlag,
+		jdbcType=VARCHAR}
+		)
+	</insert>
+
+
+	<update id="updateMailAccount" parameterType="com.glaf.mail.domain.MailAccount">
+		update
+		SYS_MAIL_ACCOUNT
+		set
+		ACCOUNTTYPE_ = #{accountType, jdbcType=VARCHAR},
+		MAILADDRESS_ =
+		#{mailAddress, jdbcType=VARCHAR},
+		SHOWNAME_ = #{showName,
+		jdbcType=VARCHAR},
+		USERNAME_ = #{username, jdbcType=VARCHAR},
+		PASSWORD_
+		= #{password, jdbcType=VARCHAR},
+		POP3SERVER_ = #{pop3Server,
+		jdbcType=VARCHAR},
+		RECEIVEPORT_ = #{receivePort, jdbcType=INTEGER},
+		SMTPSERVER_ = #{smtpServer, jdbcType=VARCHAR},
+		SENDPORT_ = #{sendPort,
+		jdbcType=INTEGER},
+		AUTORECEIVE_ = #{autoReceive, jdbcType=VARCHAR},
+		REMEMBERPASSWORD_ = #{rememberPassword, jdbcType=VARCHAR},
+		LOCKED_ =
+		#{locked, jdbcType=INTEGER},
+		AUTHFLAG_ = #{authFlag, jdbcType=VARCHAR}
+		where
+		ID_ = #{id, jdbcType=VARCHAR}
+
+	</update>
+
+
+	<delete id="deleteMailAccountById" parameterType="string">
+		delete from
+		SYS_MAIL_ACCOUNT
+		where ID_ = #{id}
+	</delete>
+
+	<delete id="deleteMailAccounts" parameterType="com.glaf.mail.query.MailAccountQuery">
+		delete from SYS_MAIL_ACCOUNT
+		where (
+		ID_ IN
+		<foreach item="x_rowId" index="index" collection="rowIds"
+			open="(" separator="," close=")">
+			#{x_rowId}
+		</foreach>
+		)
+	</delete>
+
+	<select id="getMailAccountById" parameterType="string"
+		resultMap="mailAccountResultMap">
+		select * from SYS_MAIL_ACCOUNT where ID_ = #{id}
+	</select>
+
+	<select id="getMailAccountsByTaskId" parameterType="string"
+		resultMap="mailAccountResultMap">
+		
+		select E.* from SYS_MAIL_ACCOUNT E 
+		inner join SYS_MAIL_TASK_ACCOUNT T
+		on E.ID_ = T.ACCOUNTID_
+		WHERE T.TASKID_ = #{taskId}
+        
+	</select>
+
+
+	<select id="getMailAccounts" parameterType="com.glaf.mail.query.MailAccountQuery"
+		resultMap="mailAccountResultMap">
+		select E.*
+		<include refid="selectMailAccountsSql" />
+		<if test="orderBy != null">
+			order by ${orderBy}
+		</if>
+	</select>
+
+	<select id="getMailAccountCount" parameterType="com.glaf.mail.query.MailAccountQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectMailAccountsSql" />
+	</select>
+
+	<sql id="selectMailAccountsSql">
+
+		from SYS_MAIL_ACCOUNT E
+
+		<where>
+			1 = 1
+
+			<if test="accountType != null and accountType != '' ">
+				and E.ACCOUNTTYPE_ = #{accountType}
+			</if>
+
+			<if test="createBy != null and createBy != '' ">
+				and E.CREATEBY_ = #{createBy}
+			</if>
+
+			<if test="mailAddressLike != null and mailAddressLike != '' ">
+				and E.MAILADDRESS_ like #{mailAddressLike}
+			</if>
+
+			<if test="locked != null">
+				and E.LOCKED_ = #{locked}
+			</if>
+
+			<if test="createDateGreaterThanOrEqual != null">
+				and E.CREATEDATE_ &gt;= #{createDateGreaterThanOrEqual}
+			</if>
+
+			<if test="createDateLessThanOrEqual != null">
+				and E.CREATEDATE_ &lt;= #{createDateLessThanOrEqual}
+			</if>
+
+		</where>
+	</sql>
+
+</mapper>

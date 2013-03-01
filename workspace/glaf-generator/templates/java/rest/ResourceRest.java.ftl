@@ -19,11 +19,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.apache.commons.lang.StringUtils;
 import com.alibaba.fastjson.*;
 
+import com.glaf.core.identity.*;
+import com.glaf.core.security.*;
 import com.glaf.core.util.*;
 
-import com.glaf.base.modules.sys.model.*;
-import com.glaf.base.security.*;
-import com.glaf.base.utils.*;
 
 import ${packageName}.model.${entityName};
 import ${packageName}.query.${entityName}Query;
@@ -50,7 +49,7 @@ public class ${entityName}ResourceRest {
 				${modelName}Service.deleteByIds(ids);
 			}
 		}
-		return ResponseUtil.responseJsonResult(true);
+		return ResponseUtils.responseJsonResult(true);
 	}
 
 	@POST
@@ -65,7 +64,7 @@ public class ${entityName}ResourceRest {
 				${modelName}Service.deleteByIds(ids);
 			}
 		}
-		return ResponseUtil.responseJsonResult(true);
+		return ResponseUtils.responseJsonResult(true);
 	}
 
 	@POST
@@ -79,7 +78,7 @@ public class ${entityName}ResourceRest {
                       ${modelName}Id = request.getParameter("id");
 		}
 		${modelName}Service.deleteById(${modelName}Id);
-		return ResponseUtil.responseJsonResult(true);
+		return ResponseUtils.responseJsonResult(true);
 	}
 
 	@POST
@@ -89,7 +88,7 @@ public class ${entityName}ResourceRest {
 	public byte[] deleteById(@PathParam("${modelName}Id") String ${modelName}Id,
 			@Context HttpServletRequest request) throws IOException {
 		${modelName}Service.deleteById(${modelName}Id);
-		return ResponseUtil.responseJsonResult(true);
+		return ResponseUtils.responseJsonResult(true);
 	}
 
 	@GET
@@ -98,11 +97,11 @@ public class ${entityName}ResourceRest {
 	@ResponseBody
 	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
 	public byte[] list(@Context HttpServletRequest request) throws IOException {
-		Map<String, Object> params = RequestUtil.getParameterMap(request);
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		${entityName}Query query = new ${entityName}Query();
 		Tools.populate(query, params);
 
-                String gridType = ParamUtil.getString(params, "gridType");
+                String gridType = ParamUtils.getString(params, "gridType");
 		if (gridType == null) {
 			gridType = "easyui";
 		}
@@ -111,11 +110,11 @@ public class ${entityName}ResourceRest {
 		String orderName = null;
 		String order = null;
 	 
-		int pageNo = ParamUtil.getInt(params, "page");
-		limit = ParamUtil.getInt(params, "rows");
+		int pageNo = ParamUtils.getInt(params, "page");
+		limit = ParamUtils.getInt(params, "rows");
 		start = (pageNo - 1) * limit;
-		orderName = ParamUtil.getString(params, "sortName");
-		order = ParamUtil.getString(params, "sortOrder");
+		orderName = ParamUtils.getString(params, "sortName");
+		order = ParamUtils.getString(params, "sortOrder");
 		 
 
 		if (start < 0) {
@@ -144,7 +143,7 @@ public class ${entityName}ResourceRest {
 				}
 			}
 
-			Map<String, SysUser> userMap = IdentityFactory.getUserMap();
+			Map<String, User> userMap = IdentityFactory.getUserMap();
 			List<${entityName}> list = ${modelName}Service.get${entityName}sByQueryCriteria(start, limit,
 					query);
 
@@ -170,17 +169,17 @@ public class ${entityName}ResourceRest {
 	@ResponseBody
 	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
 	public byte[] save${entityName}(@Context HttpServletRequest request) {
-	        Map<String, Object> params = RequestUtil.getParameterMap(request);
+	        Map<String, Object> params = RequestUtils.getParameterMap(request);
 		${entityName} ${modelName} = new ${entityName}();
 		try {
 		    Tools.populate(${modelName}, params);
 		    this.${modelName}Service.save(${modelName});
 
-		    return ResponseUtil.responseJsonResult(true);
+		    return ResponseUtils.responseJsonResult(true);
 		} catch (Exception ex) {
 		    ex.printStackTrace();
 		}
-		return ResponseUtil.responseJsonResult(false);
+		return ResponseUtils.responseJsonResult(false);
 	}
 
 	public void set${entityName}Service(${entityName}Service ${modelName}Service) {
@@ -201,7 +200,7 @@ public class ${entityName}ResourceRest {
 		JSONObject result = new JSONObject();
 		if (${modelName} != null) {
 		    result =  ${modelName}.toJsonObject();
-		    Map<String, SysUser> userMap = IdentityFactory.getUserMap();
+		    Map<String, User> userMap = IdentityFactory.getUserMap();
 		    result.put("id", ${modelName}.getId());
 		    result.put("${modelName}Id", ${modelName}.getId());
 		}

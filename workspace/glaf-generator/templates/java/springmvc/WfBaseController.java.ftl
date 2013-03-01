@@ -13,6 +13,8 @@ import org.springframework.ui.ModelMap;
 import com.alibaba.fastjson.*;
 
 import com.glaf.core.config.ViewProperties;
+import com.glaf.core.identity.*;
+import com.glaf.core.security.*;
 import com.glaf.core.util.*;
 
 import com.glaf.jbpm.context.ProcessContext;
@@ -20,10 +22,6 @@ import com.glaf.jbpm.datafield.DataField;
 import com.glaf.jbpm.model.*;
 import com.glaf.jbpm.container.*;
 
-
-import com.glaf.base.modules.sys.model.*;
-import com.glaf.base.security.*;
-import com.glaf.base.utils.*;
 
 import ${packageName}.model.*;
 import ${packageName}.query.*;
@@ -39,10 +37,10 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 	@RequestMapping("/startProcess")
 	public ModelAndView startProcess(HttpServletRequest request,
 			ModelMap modelMap) {
-		SysUser user = RequestUtil.getSysUser(request);
-		String actorId = user.getAccount();
-		Map<String, Object> params = RequestUtil.getParameterMap(request);
-		String rowId = ParamUtil.getString(params, "rowId");
+		User user = RequestUtils.getUser(request);
+		String actorId = user.getActorId();
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		String rowId = ParamUtils.getString(params, "rowId");
 		${entityName} ${modelName} = ${modelName}Service.get${entityName}(rowId);
 		if (${modelName} != null) {
 			String processName = ViewProperties.getString("${entityName}.processName");
@@ -70,11 +68,11 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 	@RequestMapping("/completeTask")
 	public ModelAndView completeTask(HttpServletRequest request,
 			ModelMap modelMap) {
-		SysUser user = RequestUtil.getSysUser(request);
-		String actorId = user.getAccount();
-		Map<String, Object> params = RequestUtil.getParameterMap(request);
-		String taskInstanceId = ParamUtil.getString(params, "taskInstanceId");
-		String rowId = ParamUtil.getString(params, "rowId");
+		User user = RequestUtils.getUser(request);
+		String actorId = user.getActorId();
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		String taskInstanceId = ParamUtils.getString(params, "taskInstanceId");
+		String rowId = ParamUtils.getString(params, "rowId");
 		${entityName} ${modelName} = null;
 		if (StringUtils.isNotEmpty(rowId)) {
 			${modelName} = ${modelName}Service.get${entityName}(rowId);
@@ -128,12 +126,12 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 
 	@RequestMapping("/edit")
 	public ModelAndView edit(HttpServletRequest request, ModelMap modelMap) {
-		SysUser user = RequestUtil.getSysUser(request);
-		String actorId = user.getAccount();
-		RequestUtil.setRequestParameterToAttribute(request);
+		User user = RequestUtils.getUser(request);
+		String actorId = user.getActorId();
+		RequestUtils.setRequestParameterToAttribute(request);
 		request.removeAttribute("canSubmit");
-		Map<String, Object> params = RequestUtil.getParameterMap(request);
-		String rowId = ParamUtil.getString(params, "rowId");
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		String rowId = ParamUtils.getString(params, "rowId");
 		${entityName} ${modelName} = null;
 		if (StringUtils.isNotEmpty(rowId)) {
 			${modelName} = ${modelName}Service.get${entityName}(rowId);
@@ -199,9 +197,9 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 
 	@RequestMapping("/view")
 	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtil.setRequestParameterToAttribute(request);
-		Map<String, Object> params = RequestUtil.getParameterMap(request);
-		String rowId = ParamUtil.getString(params, "rowId");
+		RequestUtils.setRequestParameterToAttribute(request);
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		String rowId = ParamUtils.getString(params, "rowId");
 		${entityName} ${modelName} = null;
 		if (StringUtils.isNotEmpty(rowId)) {
 			${modelName} = ${modelName}Service.get${entityName}(rowId);
@@ -237,9 +235,9 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 	@ResponseBody
 	public byte[] json(HttpServletRequest request, ModelMap modelMap)
 			throws IOException {
-		SysUser user = RequestUtil.getSysUser(request);
+		User user = RequestUtils.getUser(request);
 	 
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 
 		String processName = ViewProperties.getString("${entityName}.processName");
 		if (StringUtils.isEmpty(processName)) {
@@ -251,7 +249,7 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 			taskType = "all";
 		}
 
-		Map<String, Object> params = RequestUtil.getParameterMap(request);
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		${entityName}Query query = new ${entityName}Query();
 		Tools.populate(query, params);
 
@@ -302,7 +300,7 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 			}
 		}
 
-		String gridType = ParamUtil.getString(params, "gridType");
+		String gridType = ParamUtils.getString(params, "gridType");
 		if (gridType == null) {
 			gridType = "easyui";
 		}
@@ -311,11 +309,11 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 		String orderName = null;
 		String order = null;
 
-		int pageNo = ParamUtil.getInt(params, "page");
-		limit = ParamUtil.getInt(params, "rows");
+		int pageNo = ParamUtils.getInt(params, "page");
+		limit = ParamUtils.getInt(params, "rows");
 		start = (pageNo - 1) * limit;
-		orderName = ParamUtil.getString(params, "sortName");
-		order = ParamUtil.getString(params, "sortOrder");
+		orderName = ParamUtils.getString(params, "sortName");
+		order = ParamUtils.getString(params, "sortOrder");
 
 		if (start < 0) {
 			start = 0;
@@ -343,7 +341,7 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 				}
 			}
 
-			Map<String, SysUser> userMap = IdentityFactory.getUserMap();
+			Map<String, User> userMap = IdentityFactory.getUserMap();
 			List<${entityName}> list = ${modelName}Service.get${entityName}sByQueryCriteria(start, limit,
 					query);
 

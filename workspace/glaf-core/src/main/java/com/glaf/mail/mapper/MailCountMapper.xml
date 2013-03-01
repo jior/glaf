@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.mail.mapper.MailCountMapper">
+
+ 	<resultMap id="mailCountResultMap"	type="com.glaf.mail.domain.MailCount">
+        <id property="id" column="ID_" jdbcType="VARCHAR"/>
+        <result property="taskId" column="TASKID_" jdbcType="VARCHAR"/>
+        <result property="accountId" column="ACCOUNTID_" jdbcType="VARCHAR"/>
+        <result property="type" column="TYPE_" jdbcType="VARCHAR"/>
+        <result property="sendStatus" column="SENDSTATUS_" jdbcType="INTEGER"/>
+        <result property="receiveStatus" column="RECEIVESTATUS_" jdbcType="INTEGER"/>
+        <result property="qty" column="QTY_" jdbcType="BIGINT"/>
+        <result property="lastModified" column="LASTMODIFIED_" jdbcType="BIGINT"/>
+	</resultMap>
+
+ 
+	<insert id="insertMailCount" parameterType="com.glaf.mail.domain.MailCount">
+		insert into
+		SYS_MAIL_COUNT ( ID_
+        ,TASKID_ 
+        ,ACCOUNTID_ 
+        ,TYPE_ 
+        ,SENDSTATUS_ 
+        ,RECEIVESTATUS_ 
+        ,QTY_ 
+        ,LASTMODIFIED_ 
+		)
+		values (
+          #{id, jdbcType=VARCHAR}
+	     
+        ,#{taskId, jdbcType=VARCHAR}
+        ,#{accountId, jdbcType=VARCHAR}
+        ,#{type, jdbcType=VARCHAR}
+        ,#{sendStatus, jdbcType=INTEGER}
+        ,#{receiveStatus, jdbcType=INTEGER}
+        ,#{qty, jdbcType=BIGINT}
+        ,#{lastModified, jdbcType=BIGINT}
+		)
+    </insert>
+
+	 
+ 
+	<delete id="deleteMailCount" parameterType="com.glaf.mail.query.MailCountQuery"> 
+        delete from SYS_MAIL_COUNT
+        where TASKID_ =	#{taskId} and TYPE_ = #{type}
+	</delete>
+	
+	<delete id="deleteMailCounts" parameterType="com.glaf.mail.query.MailCountQuery">
+		delete from SYS_MAIL_COUNT
+		where ( 
+ 			  ID_ IN
+              <foreach item="x_rowId" index="index" collection="rowIds" 
+                     open="(" separator="," close=")">
+                  #{x_rowId}
+              </foreach>
+		)
+	</delete>
+
+	<select id="getMailCountById" parameterType="string" resultMap="mailCountResultMap">
+		select * from SYS_MAIL_COUNT where ID_ = #{id}
+	</select>
+
+
+	<select id="getMailCounts" 
+	    parameterType="com.glaf.mail.query.MailCountQuery"
+		resultMap="mailCountResultMap">
+		select E.*
+		<include refid="selectMailCountsSql" />
+		<if test="orderBy != null">
+		   order by ${orderBy}
+        </if>
+	</select>
+
+	<select id="getMailCountCount" 
+	    parameterType="com.glaf.mail.query.MailCountQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectMailCountsSql" />
+	</select>
+
+	<sql id="selectMailCountsSql">
+
+		from SYS_MAIL_COUNT E
+		 
+		<where>
+		       1 = 1  
+	        
+			<if test="taskId != null and taskId != '' ">
+				and E.TASKID_ = #{taskId}
+            </if>
+	        
+			<if test="type != null and type != '' ">
+				and E.TYPE_ = #{type}
+            </if>
+			 
+		</where>
+	</sql>
+
+</mapper>

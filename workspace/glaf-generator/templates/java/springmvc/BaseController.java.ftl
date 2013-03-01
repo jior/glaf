@@ -14,12 +14,9 @@ import org.springframework.ui.ModelMap;
 import com.alibaba.fastjson.*;
  
 import com.glaf.core.config.ViewProperties;
+import com.glaf.core.identity.*;
+import com.glaf.core.security.*;
 import com.glaf.core.util.*;
-
-import com.glaf.base.config.*;
-import com.glaf.base.modules.sys.model.*;
-import com.glaf.base.security.*;
-import com.glaf.base.utils.*;
  
 import ${packageName}.model.*;
 import ${packageName}.query.*;
@@ -40,9 +37,9 @@ public class ${entityName}BaseController {
 
 	@RequestMapping("/save")
 	public ModelAndView save(HttpServletRequest request, ModelMap modelMap, ${entityName} ${modelName}) {
-		SysUser user = RequestUtil.getSysUser(request);
-		String actorId =  user.getAccount();
-		Map<String, Object> params = RequestUtil.getParameterMap(request);
+		User user = RequestUtils.getUser(request);
+		String actorId =  user.getActorId();
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
                 params.remove("status");
 		params.remove("wfStatus");
 		
@@ -56,23 +53,23 @@ public class ${entityName}BaseController {
         @ResponseBody
 	@RequestMapping("/save${entityName}")
 	public byte[] save${entityName}(HttpServletRequest request ) { 
-	        Map<String, Object> params = RequestUtil.getParameterMap(request);
+	        Map<String, Object> params = RequestUtils.getParameterMap(request);
 		${entityName} ${modelName} = new ${entityName}();
 		try {
 		    Tools.populate(${modelName}, params);
 		    this.${modelName}Service.save(${modelName});
 
-		    return ResponseUtil.responseJsonResult(true);
+		    return ResponseUtils.responseJsonResult(true);
 		} catch (Exception ex) {
 		    ex.printStackTrace();
 		}
-		return ResponseUtil.responseJsonResult(false);
+		return ResponseUtils.responseJsonResult(false);
 	}
 
         @RequestMapping("/update")
 	public ModelAndView update(HttpServletRequest request, ModelMap modelMap, ${entityName} ${modelName}) {
-		SysUser user = RequestUtil.getSysUser(request);
-		Map<String, Object> params = RequestUtil.getParameterMap(request);
+		User user = RequestUtils.getUser(request);
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
                 params.remove("status");
 		params.remove("wfStatus");
 		${modelName}Service.save(${modelName});   
@@ -82,9 +79,9 @@ public class ${entityName}BaseController {
 
         @RequestMapping("/delete")
 	public ModelAndView delete(HttpServletRequest request, ModelMap modelMap) {
-		SysUser user = RequestUtil.getSysUser(request);
-		Map<String, Object> params = RequestUtil.getParameterMap(request);
-		String rowId = ParamUtil.getString(params, "rowId");
+		User user = RequestUtils.getUser(request);
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		String rowId = ParamUtils.getString(params, "rowId");
 		String rowIds = request.getParameter("rowIds");
 		if (StringUtils.isNotEmpty(rowIds)) {
 			StringTokenizer token = new StringTokenizer(rowIds, ",");
@@ -92,7 +89,7 @@ public class ${entityName}BaseController {
 				String x = token.nextToken();
 				if (StringUtils.isNotEmpty(x)) {
 					${entityName} ${modelName} = ${modelName}Service.get${entityName}(x);
-					if (${modelName} != null && StringUtils.equals(${modelName}.getCreateBy(), user.getAccount())) {
+					if (${modelName} != null && StringUtils.equals(${modelName}.getCreateBy(), user.getActorId())) {
 						${modelName}.setDeleteFlag(1);
 						${modelName}Service.save(${modelName});
 					}
@@ -101,7 +98,7 @@ public class ${entityName}BaseController {
 		} else if (StringUtils.isNotEmpty(rowId)) {
 			${entityName} ${modelName} = ${modelName}Service
 					.get${entityName}(rowId);
-			if (${modelName} != null && StringUtils.equals(${modelName}.getCreateBy(), user.getAccount())) {
+			if (${modelName} != null && StringUtils.equals(${modelName}.getCreateBy(), user.getActorId())) {
 				${modelName}.setDeleteFlag(1);
 				${modelName}Service.save(${modelName});
 			}
@@ -114,12 +111,12 @@ public class ${entityName}BaseController {
 
         @RequestMapping("/edit")
 	public ModelAndView edit(HttpServletRequest request, ModelMap modelMap) {
-		SysUser user = RequestUtil.getSysUser(request);
-		String actorId =  user.getAccount();
-		RequestUtil.setRequestParameterToAttribute(request);
+		User user = RequestUtils.getUser(request);
+		String actorId =  user.getActorId();
+		RequestUtils.setRequestParameterToAttribute(request);
 		request.removeAttribute("canSubmit");
-		Map<String, Object> params = RequestUtil.getParameterMap(request);
-		String rowId = ParamUtil.getString(params, "rowId");
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		String rowId = ParamUtils.getString(params, "rowId");
 		${entityName} ${modelName} = null;
 		if (StringUtils.isNotEmpty(rowId)) {
 			${modelName} = ${modelName}Service.get${entityName}(rowId);
@@ -161,9 +158,9 @@ public class ${entityName}BaseController {
 
         @RequestMapping("/view")
 	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtil.setRequestParameterToAttribute(request);
-		Map<String, Object> params = RequestUtil.getParameterMap(request);
-		String rowId = ParamUtil.getString(params, "rowId");
+		RequestUtils.setRequestParameterToAttribute(request);
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		String rowId = ParamUtils.getString(params, "rowId");
 		${entityName} ${modelName} = null;
 		if (StringUtils.isNotEmpty(rowId)) {
 			${modelName} = ${modelName}Service.get${entityName}(rowId);
@@ -187,7 +184,7 @@ public class ${entityName}BaseController {
 
         @RequestMapping("/query")
 	public ModelAndView query(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		String view = request.getParameter("view");
 		if (StringUtils.isNotEmpty(view)) {
 			return new ModelAndView(view, modelMap);
@@ -202,11 +199,11 @@ public class ${entityName}BaseController {
 	@RequestMapping("/json")
 	@ResponseBody
 	public byte[] json(HttpServletRequest request, ModelMap modelMap) throws IOException {
-		Map<String, Object> params = RequestUtil.getParameterMap(request);
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		${entityName}Query query = new ${entityName}Query();
 		Tools.populate(query, params);
 
-                String gridType = ParamUtil.getString(params, "gridType");
+                String gridType = ParamUtils.getString(params, "gridType");
 		if (gridType == null) {
 			gridType = "easyui";
 		}
@@ -215,11 +212,11 @@ public class ${entityName}BaseController {
 		String orderName = null;
 		String order = null;
 	 
-		int pageNo = ParamUtil.getInt(params, "page");
-		limit = ParamUtil.getInt(params, "rows");
+		int pageNo = ParamUtils.getInt(params, "page");
+		limit = ParamUtils.getInt(params, "rows");
 		start = (pageNo - 1) * limit;
-		orderName = ParamUtil.getString(params, "sortName");
-		order = ParamUtil.getString(params, "sortOrder");
+		orderName = ParamUtils.getString(params, "sortName");
+		order = ParamUtils.getString(params, "sortOrder");
 		 
 
 		if (start < 0) {
@@ -248,7 +245,7 @@ public class ${entityName}BaseController {
 				}
 			}
 
-			Map<String, SysUser> userMap = IdentityFactory.getUserMap();
+			Map<String, User> userMap = IdentityFactory.getUserMap();
 			List<${entityName}> list = ${modelName}Service.get${entityName}sByQueryCriteria(start, limit,
 					query);
 
@@ -272,12 +269,12 @@ public class ${entityName}BaseController {
 
         @RequestMapping 
 	public ModelAndView list(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		String x_query = request.getParameter("x_query");
 		if (StringUtils.equals(x_query, "true")) {
-			Map<String, Object> paramMap = RequestUtil.getParameterMap(request);
+			Map<String, Object> paramMap = RequestUtils.getParameterMap(request);
 			String x_complex_query = JsonUtils.encode(paramMap);
-			x_complex_query = RequestUtil.encodeString(x_complex_query);
+			x_complex_query = RequestUtils.encodeString(x_complex_query);
 			request.setAttribute("x_complex_query", x_complex_query);
 		} else {
 			request.setAttribute("x_complex_query", "");

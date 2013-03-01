@@ -46,6 +46,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.glaf.core.identity.User;
 import com.glaf.core.security.IdentityFactory;
 import com.glaf.core.security.LoginContext;
 
@@ -230,6 +231,14 @@ public class RequestUtils {
 		logger.debug("@actorId=" + actorId);
 
 		return actorId;
+	}
+	
+	public static User getUser(HttpServletRequest request) {
+		String actorId = getActorId(request);
+		if (StringUtils.isNotEmpty(actorId)) {
+			return IdentityFactory.getUser(actorId);
+		}
+		return null;
 	}
 	
 	public static LoginContext getLoginContext(HttpServletRequest request) {

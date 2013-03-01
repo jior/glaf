@@ -43,6 +43,11 @@
 			   includes="com/glaf/jbpm/**/*.class,com/glaf/jbpm/**/*.xml,com/glaf/jbpm/**/*.properties" />
 		</jar>
 
+		<jar jarfile="glaf-mail.jar">
+			<fileset dir="bin" 
+			   includes="com/glaf/mail/**/*.class,com/glaf/mail/**/*.xml,com/glaf/mail/**/*.properties" />
+		</jar>
+
 	</target>
 
 	<target name="copy">

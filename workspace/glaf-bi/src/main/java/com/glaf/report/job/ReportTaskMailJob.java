@@ -27,8 +27,8 @@ import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
-import com.glaf.core.mail.MailMessage;
-import com.glaf.core.mail.MailSender;
+import com.glaf.mail.MailMessage;
+import com.glaf.mail.MailSender;
 import com.glaf.core.context.ContextFactory;
 import com.glaf.core.util.StringTools;
 import com.glaf.report.domain.Report;

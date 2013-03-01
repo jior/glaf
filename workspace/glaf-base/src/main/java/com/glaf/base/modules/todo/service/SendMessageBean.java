@@ -25,10 +25,11 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.glaf.core.context.ContextFactory;
-import com.glaf.core.mail.MailMessage;
-import com.glaf.core.mail.MailSender;
-import com.glaf.core.mail.util.MailTools;
 import com.glaf.core.util.UUID32;
+
+import com.glaf.mail.MailMessage;
+import com.glaf.mail.MailSender;
+import com.glaf.mail.util.MailTools;
 
 import com.glaf.jbpm.container.ProcessContainer;
 
@@ -88,7 +89,7 @@ public class SendMessageBean {
 		while (it.hasNext()) {
 			SysApplication app = (SysApplication) it.next();
 			appIds.add(new Long(app.getId()));
-			appXIds.add(new Long( app.getId()));
+			appXIds.add(new Long(app.getId()));
 		}
 
 		if (agentIds != null && agentIds.size() > 0) {
@@ -104,7 +105,7 @@ public class SendMessageBean {
 					while (it2.hasNext()) {
 						SysApplication app = (SysApplication) it2.next();
 						appIds.add(new Long(app.getId()));
-						appXIds.add(new Long( app.getId()));
+						appXIds.add(new Long(app.getId()));
 					}
 				}
 			}
@@ -174,7 +175,6 @@ public class SendMessageBean {
 				}
 			}
 
- 
 			TodoQuery q = new TodoQuery();
 			q.setProvider("sql");
 			q.setAppIds(appXIds);
@@ -420,7 +420,6 @@ public class SendMessageBean {
 				actorIds.addAll(agentIds);
 			}
 
-		 
 			TodoQuery query = new TodoQuery();
 			query.setActorIds(actorIds);
 			query.setProvider("jbpm");
@@ -452,17 +451,13 @@ public class SendMessageBean {
 							rows99.add(tdi);
 						}
 					}
-					 
+
 				}
 			}
 
-			 
-		 
-			
 			TodoQuery q = new TodoQuery();
 			q.setAppIds(appXIds);
 			q.setProvider("sql");
-			
 
 			/**
 			 * 根据TODO sql配置取得的TODO实例
@@ -717,8 +712,7 @@ public class SendMessageBean {
 				actorIds.addAll(agentIds);
 			}
 			TodoQuery q = new TodoQuery();
-			 
-			
+
 			List taskInstanceIds = ProcessContainer.getContainer()
 					.getRunningTaskInstanceIds(actorIds);
 			if (taskInstanceIds != null && taskInstanceIds.size() > 0) {
@@ -764,7 +758,6 @@ public class SendMessageBean {
 			TodoQuery qx = new TodoQuery();
 			qx.setProvider("sql");
 			qx.setAppIds(appXIds);
-
 
 			/**
 			 * 根据TODO sql配置取得的TODO实例

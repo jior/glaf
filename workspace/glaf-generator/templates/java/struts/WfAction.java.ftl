@@ -25,10 +25,9 @@ import com.glaf.jbpm.service.*;
 import com.glaf.jbpm.container.*; 
 
 import com.glaf.base.config.*;
-
-import com.glaf.base.modules.sys.model.*;
-import com.glaf.base.security.*;
-import com.glaf.base.utils.*;
+import com.glaf.core.identity.*;
+import com.glaf.core.security.*;
+import com.glaf.core.util.*;
 
 import ${packageName}.model.*;
 import ${packageName}.query.*;
@@ -44,10 +43,10 @@ public class ${entityName}WfAction extends ${entityName}BaseAction {
 	public ActionForward startProcess(ActionMapping mapping,
 			ActionForm actionForm, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		SysUser user = RequestUtil.getSysUser(request);
-		String actorId = user.getAccount();
-		Map<String, Object> params = RequestUtil.getParameterMap(request);
-		String rowId = ParamUtil.getString(params, "rowId");
+		User user = RequestUtils.getUser(request);
+		String actorId = user.getActorId();
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		String rowId = ParamUtils.getString(params, "rowId");
 		${entityName} ${modelName} = ${modelName}Service.get${entityName}(rowId);
 		if (${modelName} != null) {
 			String processName = SystemConfig.getString("${entityName}.processName");
@@ -77,11 +76,11 @@ public class ${entityName}WfAction extends ${entityName}BaseAction {
 	public ActionForward completeTask(ActionMapping mapping,
 			ActionForm actionForm, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		SysUser user = RequestUtil.getSysUser(request);
-		String actorId = user.getAccount();
-		Map<String, Object> params = RequestUtil.getParameterMap(request);
-		String taskInstanceId = ParamUtil.getString(params, "taskInstanceId");
-		String rowId = ParamUtil.getString(params, "rowId");
+		User user = RequestUtils.getUser(request);
+		String actorId = user.getActorId();
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		String taskInstanceId = ParamUtils.getString(params, "taskInstanceId");
+		String rowId = ParamUtils.getString(params, "rowId");
 		${entityName} ${modelName} = null;
 		if (StringUtils.isNotEmpty(rowId)) {
 			${modelName} = ${modelName}Service.get${entityName}(rowId);
@@ -135,12 +134,12 @@ public class ${entityName}WfAction extends ${entityName}BaseAction {
 	public ActionForward edit(ActionMapping mapping, ActionForm actionForm,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		SysUser user = RequestUtil.getSysUser(request);
-		String actorId = user.getAccount();
-		RequestUtil.setRequestParameterToAttribute(request);
+		User user = RequestUtils.getUser(request);
+		String actorId = user.getActorId();
+		RequestUtils.setRequestParameterToAttribute(request);
 		request.removeAttribute("canSubmit");
-		Map<String, Object> params = RequestUtil.getParameterMap(request);
-		String rowId = ParamUtil.getString(params, "rowId");
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		String rowId = ParamUtils.getString(params, "rowId");
 		${entityName} ${modelName} = null;
 		if (StringUtils.isNotEmpty(rowId)) {
 			${modelName} = ${modelName}Service.get${entityName}(rowId);
@@ -196,16 +195,16 @@ public class ${entityName}WfAction extends ${entityName}BaseAction {
 	public ActionForward view(ActionMapping mapping, ActionForm actionForm,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		RequestUtil.setRequestParameterToAttribute(request);
-		Map<String, Object> params = RequestUtil.getParameterMap(request);
-		String rowId = ParamUtil.getString(params, "rowId");
+		RequestUtils.setRequestParameterToAttribute(request);
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		String rowId = ParamUtils.getString(params, "rowId");
 		${entityName} ${modelName} = null;
 		if (StringUtils.isNotEmpty(rowId)) {
 			${modelName} = ${modelName}Service.get${entityName}(rowId);
 			request.setAttribute("${modelName}", ${modelName});
 			Map<String, Object> dataMap = Tools.getDataMap(${modelName});
 			String x_json = JSONTools.encode(dataMap);
-			x_json = RequestUtil.encodeString(x_json);
+			x_json = RequestUtils.encodeString(x_json);
 			request.setAttribute("x_json", x_json);
 
 			if (StringUtils.isNotEmpty(${modelName}.getProcessInstanceId())) {
@@ -223,9 +222,9 @@ public class ${entityName}WfAction extends ${entityName}BaseAction {
 	public ActionForward json(ActionMapping mapping, ActionForm actionForm,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		SysUser user = RequestUtil.getSysUser(request);
-		String actorId = user.getAccount();
-		RequestUtil.setRequestParameterToAttribute(request);
+		User user = RequestUtils.getUser(request);
+		String actorId = user.getActorId();
+		RequestUtils.setRequestParameterToAttribute(request);
 
 		String processName = SystemConfig.getString("${entityName}.processName");
 		if (StringUtils.isEmpty(processName)) {
@@ -237,7 +236,7 @@ public class ${entityName}WfAction extends ${entityName}BaseAction {
 			taskType = "all";
 		}
 
-		Map<String, Object> params = RequestUtil.getParameterMap(request);
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		${entityName}Query query = new ${entityName}Query();
 		Tools.populate(query, params);
 
@@ -288,7 +287,7 @@ public class ${entityName}WfAction extends ${entityName}BaseAction {
 			}
 		}
 
-		String gridType = ParamUtil.getString(params, "gridType");
+		String gridType = ParamUtils.getString(params, "gridType");
 		if (gridType == null) {
 			gridType = "easyui";
 		}
@@ -297,11 +296,11 @@ public class ${entityName}WfAction extends ${entityName}BaseAction {
 		String orderName = null;
 		String order = null;
 
-		int pageNo = ParamUtil.getInt(params, "page");
-		limit = ParamUtil.getInt(params, "rows");
+		int pageNo = ParamUtils.getInt(params, "page");
+		limit = ParamUtils.getInt(params, "rows");
 		start = (pageNo - 1) * limit;
-		orderName = ParamUtil.getString(params, "sortName");
-		order = ParamUtil.getString(params, "sortOrder");
+		orderName = ParamUtils.getString(params, "sortName");
+		order = ParamUtils.getString(params, "sortOrder");
 
 		if (start < 0) {
 			start = 0;
@@ -329,7 +328,7 @@ public class ${entityName}WfAction extends ${entityName}BaseAction {
 				}
 			}
 
-			Map<String, SysUser> userMap = IdentityFactory.getUserMap();
+			Map<String, User> userMap = IdentityFactory.getUserMap();
 			List<${entityName}> list = ${modelName}Service.get${entityName}sByQueryCriteria(start, limit,
 					query);
 

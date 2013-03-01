@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ page import="java.util.*"%>
-<%@ page import="com.glaf.core.mail.config.*"%>
+<%@ page import="com.glaf.mail.config.*"%>
 <%
        String contextPath = request.getContextPath();
 	   String host = request.getParameter("host");

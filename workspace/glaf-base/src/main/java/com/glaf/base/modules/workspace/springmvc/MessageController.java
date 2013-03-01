@@ -35,7 +35,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.glaf.base.modules.Constants;
 import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.sys.service.SysUserService;
-import com.glaf.base.modules.workspace.actionform.MessageForm;
 import com.glaf.base.modules.workspace.form.MessageFormBean;
 import com.glaf.base.modules.workspace.model.Message;
 import com.glaf.base.modules.workspace.service.MessageService;
@@ -174,7 +173,7 @@ public class MessageController {
 		// 用户或部门
 		int recverType = ParamUtil.getIntParameter(request, "recverType", 0);
 
-		MessageForm formBean = new MessageForm();
+		MessageFormBean formBean = new MessageFormBean();
 		WebUtil.copyProperties(formBean, form);
 
 		Message bean = new Message();
@@ -324,7 +323,7 @@ public class MessageController {
 		int recverType = ParamUtil.getIntParameter(request, "recverType", 0);
 		String recverIds = ParamUtil.getParameter(request, "recverIds");
 		String recverName = ParamUtil.getParameter(request, "recverName");
-		MessageForm formBean = new MessageForm();
+		MessageFormBean formBean = new MessageFormBean();
 		WebUtil.copyProperties(formBean, form);
 		String title = formBean.getTitle();
 		String content = formBean.getContent();
@@ -411,7 +410,7 @@ public class MessageController {
 		int sysType = ParamUtil.getIntParameter(request, "sysType", 1);// 0：为系统警告
 																		// 1：为系统消息
 
-		MessageForm formBean = new MessageForm();
+		MessageFormBean formBean = new MessageFormBean();
 		WebUtil.copyProperties(formBean, form);
 		String title = formBean.getTitle();
 		String content = formBean.getContent();

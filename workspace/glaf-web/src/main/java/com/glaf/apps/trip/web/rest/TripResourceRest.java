@@ -19,10 +19,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.apache.commons.lang.StringUtils;
 import com.alibaba.fastjson.*;
 
-import com.glaf.base.modules.sys.model.*;
-import com.glaf.base.security.*;
-import com.glaf.base.utils.*;
-import com.glaf.core.util.PageResult;
+import com.glaf.core.identity.*;
+import com.glaf.core.security.*;
+import com.glaf.core.util.*;
+
 
 import com.glaf.apps.trip.model.Trip;
 import com.glaf.apps.trip.query.TripQuery;
@@ -49,7 +49,7 @@ public class TripResourceRest {
 				tripService.deleteByIds(ids);
 			}
 		}
-		return ResponseUtil.responseJsonResult(true);
+		return ResponseUtils.responseJsonResult(true);
 	}
 
 	@POST
@@ -64,7 +64,7 @@ public class TripResourceRest {
 				tripService.deleteByIds(ids);
 			}
 		}
-		return ResponseUtil.responseJsonResult(true);
+		return ResponseUtils.responseJsonResult(true);
 	}
 
 	@POST
@@ -78,7 +78,7 @@ public class TripResourceRest {
                       tripId = request.getParameter("id");
 		}
 		tripService.deleteById(tripId);
-		return ResponseUtil.responseJsonResult(true);
+		return ResponseUtils.responseJsonResult(true);
 	}
 
 	@POST
@@ -88,7 +88,7 @@ public class TripResourceRest {
 	public byte[] deleteById(@PathParam("tripId") String tripId,
 			@Context HttpServletRequest request) throws IOException {
 		tripService.deleteById(tripId);
-		return ResponseUtil.responseJsonResult(true);
+		return ResponseUtils.responseJsonResult(true);
 	}
 
 	@GET
@@ -97,11 +97,11 @@ public class TripResourceRest {
 	@ResponseBody
 	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
 	public byte[] list(@Context HttpServletRequest request) throws IOException {
-		Map<String, Object> params = RequestUtil.getParameterMap(request);
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		TripQuery query = new TripQuery();
 		Tools.populate(query, params);
 
-                String gridType = ParamUtil.getString(params, "gridType");
+                String gridType = ParamUtils.getString(params, "gridType");
 		if (gridType == null) {
 			gridType = "easyui";
 		}
@@ -110,11 +110,11 @@ public class TripResourceRest {
 		String orderName = null;
 		String order = null;
 	 
-		int pageNo = ParamUtil.getInt(params, "page");
-		limit = ParamUtil.getInt(params, "rows");
+		int pageNo = ParamUtils.getInt(params, "page");
+		limit = ParamUtils.getInt(params, "rows");
 		start = (pageNo - 1) * limit;
-		orderName = ParamUtil.getString(params, "sortName");
-		order = ParamUtil.getString(params, "sortOrder");
+		orderName = ParamUtils.getString(params, "sortName");
+		order = ParamUtils.getString(params, "sortOrder");
 		 
 
 		if (start < 0) {
@@ -143,7 +143,7 @@ public class TripResourceRest {
 				}
 			}
 
-			Map<String, SysUser> userMap = IdentityFactory.getUserMap();
+			Map<String, User> userMap = IdentityFactory.getUserMap();
 			List<Trip> list = tripService.getTripsByQueryCriteria(start, limit,
 					query);
 
@@ -169,17 +169,17 @@ public class TripResourceRest {
 	@ResponseBody
 	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
 	public byte[] saveTrip(@Context HttpServletRequest request) {
-	        Map<String, Object> params = RequestUtil.getParameterMap(request);
+	        Map<String, Object> params = RequestUtils.getParameterMap(request);
 		Trip trip = new Trip();
 		try {
 		    Tools.populate(trip, params);
 		    this.tripService.save(trip);
 
-		    return ResponseUtil.responseJsonResult(true);
+		    return ResponseUtils.responseJsonResult(true);
 		} catch (Exception ex) {
 		    ex.printStackTrace();
 		}
-		return ResponseUtil.responseJsonResult(false);
+		return ResponseUtils.responseJsonResult(false);
 	}
 
 	public void setTripService(TripService tripService) {
@@ -200,7 +200,7 @@ public class TripResourceRest {
 		JSONObject result = new JSONObject();
 		if (trip != null) {
 		    result =  trip.toJsonObject();
-		    Map<String, SysUser> userMap = IdentityFactory.getUserMap();
+		    Map<String, User> userMap = IdentityFactory.getUserMap();
 		    result.put("id", trip.getId());
 		    result.put("tripId", trip.getId());
 		}

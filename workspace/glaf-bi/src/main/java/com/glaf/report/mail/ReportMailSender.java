@@ -42,9 +42,9 @@ import com.glaf.core.util.JsonUtils;
 import com.glaf.core.util.StringTools;
 import com.glaf.core.util.UUID32;
 
-import com.glaf.core.mail.MailMessage;
-import com.glaf.core.mail.MailSender;
-import com.glaf.core.mail.util.MailTools;
+import com.glaf.mail.MailMessage;
+import com.glaf.mail.MailSender;
+import com.glaf.mail.util.MailTools;
 
 import com.glaf.report.domain.Report;
 import com.glaf.report.domain.ReportFile;

@@ -40,9 +40,6 @@
 			<include name="test/java/**/*.java" />
 			<classpath refid="compile.classpath" />
 		</javac>
-		<copy todir="../glaf-web/WebContent/WEB-INF/classes">
-			<fileset dir="bin" includes="com/**/*.class,com/**/*.properties,com/**/*.xml" />
-		</copy>
 	</target>
 
 	<target name="copy">

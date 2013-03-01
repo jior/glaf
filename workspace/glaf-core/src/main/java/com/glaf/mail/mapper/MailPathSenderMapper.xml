@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.mail.mapper.MailPathSenderMapper">
+
+	<resultMap id="mailTaskResultMap"	type="com.glaf.mail.domain.MailPathSender">
+		<id property="id" column="ID_" jdbcType="VARCHAR"/>
+		<result property="taskId" column="TASKID_" jdbcType="VARCHAR" />
+		<result property="name" column="NAME_" jdbcType="VARCHAR"/>
+		<result property="subject" column="SUBJECT_" jdbcType="VARCHAR"/>
+		<result property="type" column="TYPE_" jdbcType="VARCHAR"/>
+		<result property="mailFilePath" column="MAILFILEPATH_" jdbcType="VARCHAR"/>
+		<result property="mailRecipient" column="MAILRECIPIENT_" jdbcType="VARCHAR"/>
+		<result property="mobileRecipient" column="MOBILERECIPIENT_" jdbcType="VARCHAR"/>
+		<result property="textTitle" column="TEXTTITLE_" jdbcType="VARCHAR"/>
+		<result property="textContent" column="TEXTCONTENT_" jdbcType="VARCHAR"/>
+		<result property="jsonParameter" column="JSONPARAMETER_" jdbcType="VARCHAR"/>
+		<result property="cronExpression" column="CRONEXPRESSION_" jdbcType="VARCHAR"/>
+		<result property="compressFlag" column="COMPRESSFLAG_" jdbcType="VARCHAR"/>
+		<result property="enableFlag" column="ENABLEFLAG_" jdbcType="VARCHAR"/>
+		<result property="includes" column="INCLUDES_" jdbcType="VARCHAR"/>
+		<result property="excludes" column="EXCLUDES_" jdbcType="VARCHAR"/>
+		<result property="size" column="SIZE_" jdbcType="VARCHAR"/>
+		<result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP"/>
+		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR"/>
+	</resultMap>
+
+ 
+	<insert id="insertMailPathSender" parameterType="com.glaf.mail.domain.MailPathSender">
+		insert into
+		SYS_MAIL_PATH_SENDER ( ID_
+		,TASKID_
+        ,NAME_ 
+        ,SUBJECT_ 
+        ,TYPE_
+        ,MAILFILEPATH_ 
+        ,MAILRECIPIENT_ 
+        ,MOBILERECIPIENT_ 
+        ,TEXTTITLE_
+        ,TEXTCONTENT_
+        ,JSONPARAMETER_ 
+        ,CRONEXPRESSION_
+        ,COMPRESSFLAG_
+        ,ENABLEFLAG_
+        ,INCLUDES_
+        ,EXCLUDES_
+        ,SIZE_
+        ,CREATEDATE_ 
+        ,CREATEBY_ 
+		)
+		values (
+          #{id, jdbcType=VARCHAR}
+        ,#{taskId, jdbcType=VARCHAR}
+        ,#{name, jdbcType=VARCHAR}
+        ,#{subject, jdbcType=VARCHAR}
+        ,#{type, jdbcType=VARCHAR}
+        ,#{mailFilePath, jdbcType=VARCHAR}
+        ,#{mailRecipient, jdbcType=VARCHAR}
+        ,#{mobileRecipient, jdbcType=VARCHAR}
+        ,#{textTitle, jdbcType=VARCHAR}
+        ,#{textContent, jdbcType=VARCHAR}
+        ,#{jsonParameter, jdbcType=VARCHAR}
+        ,#{cronExpression, jdbcType=VARCHAR}
+        ,#{compressFlag, jdbcType=VARCHAR}
+        ,#{enableFlag, jdbcType=VARCHAR}
+        ,#{includes, jdbcType=VARCHAR}
+        ,#{excludes, jdbcType=VARCHAR}
+        ,#{size, jdbcType=INTEGER}
+        ,#{createDate, jdbcType=TIMESTAMP}
+        ,#{createBy, jdbcType=VARCHAR}
+		)
+	</insert>
+
+	 
+	<update id="updateMailPathSender" parameterType="com.glaf.mail.domain.MailPathSender">
+		update
+		SYS_MAIL_PATH_SENDER
+		set
+		<trim prefix="" suffix="" suffixOverrides=",">		
+        NAME_ = #{name, jdbcType=VARCHAR},
+        SUBJECT_ = #{subject, jdbcType=VARCHAR},
+        TYPE_ = #{type, jdbcType=VARCHAR},
+        MAILFILEPATH_ = #{mailFilePath, jdbcType=VARCHAR},
+        MAILRECIPIENT_ = #{mailRecipient, jdbcType=VARCHAR},
+        MOBILERECIPIENT_ = #{mobileRecipient, jdbcType=VARCHAR},
+        TEXTTITLE_ = #{textTitle, jdbcType=VARCHAR},
+        TEXTCONTENT_ = #{textContent, jdbcType=VARCHAR},
+        JSONPARAMETER_ = #{jsonParameter, jdbcType=VARCHAR},
+        COMPRESSFLAG_ = #{compressFlag, jdbcType=VARCHAR},
+        ENABLEFLAG_ = #{enableFlag, jdbcType=VARCHAR},
+        INCLUDES_ = #{includes, jdbcType=VARCHAR},
+        EXCLUDES_ = #{excludes, jdbcType=VARCHAR},
+        SIZE_ = #{size, jdbcType=INTEGER},
+        CRONEXPRESSION_ = #{cronExpression, jdbcType=VARCHAR}
+		</trim>
+		where
+          ID_ = #{id, jdbcType=VARCHAR}
+		
+	</update>
+
+ 
+	<delete id="deleteMailPathSenderById" parameterType="string"> 
+        delete from SYS_MAIL_PATH_SENDER
+        where ID_ =	#{id}
+	</delete>
+	
+	<delete id="deleteMailPathSenders" parameterType="com.glaf.mail.query.MailPathSenderQuery">
+		delete from SYS_MAIL_PATH_SENDER
+		where ( 
+ 			  ID_ IN
+		<foreach item="x_rowId" index="index" collection="rowIds" 
+			open="(" separator="," close=")">
+                  #{x_rowId}
+		</foreach>
+		)
+	</delete>
+
+	<select id="getMailPathSenderById" parameterType="string" resultMap="mailTaskResultMap">
+		select * from SYS_MAIL_PATH_SENDER where ID_ = #{id}
+	</select>
+	
+	<select id="getMailPathSenderByTaskId" parameterType="string" resultMap="mailTaskResultMap">
+		select * from SYS_MAIL_PATH_SENDER where TASKID_ = #{taskId}
+	</select>
+
+
+	<select id="getMailPathSenders" 
+		parameterType="com.glaf.mail.query.MailPathSenderQuery"
+		resultMap="mailTaskResultMap">
+		select E.*
+		<include refid="selectMailPathSendersSql" />
+		<if test="orderBy != null">
+		   order by ${orderBy}
+		</if>
+	</select>
+
+	<select id="getMailPathSenderCount" 
+		parameterType="com.glaf.mail.query.MailPathSenderQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectMailPathSendersSql" />
+	</select>
+
+	<sql id="selectMailPathSendersSql">
+
+		from SYS_MAIL_PATH_SENDER E
+ 
+		 
+		<where>
+		       1 = 1  
+		      
+			<if test="enableFlag != null &amp;&amp; enableFlag != '' ">
+				and E.ENABLEFLAG_ = #{enableFlag}
+			</if>
+			
+			<if test="name != null &amp;&amp; name != '' ">
+				and E.NAME_ = #{name}
+			</if>
+
+			<if test="nameLike != null &amp;&amp; nameLike != '' ">
+				and E.NAME_ like #{nameLike}
+			</if>
+	        
+			<if test="subjectLike != null &amp;&amp; subjectLike != '' ">
+				and E.SUBJECT_ like #{subjectLike}
+			</if>
+
+			<if test="createDateGreaterThanOrEqual != null">
+				and E.CREATEDATE_ &gt;= #{createDateGreaterThanOrEqual}
+			</if>
+
+			<if test="createDateLessThanOrEqual != null">
+				and E.CREATEDATE_ &lt;= #{createDateLessThanOrEqual}
+			</if>
+	        
+			<if test="createBy != null &amp;&amp; createBy != '' ">
+				and E.CREATEBY_ = #{createBy}
+			</if>
+			 
+		</where>
+	</sql>
+
+</mapper>

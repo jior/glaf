@@ -16,10 +16,9 @@ import org.apache.struts.action.ActionMapping;
 import org.springframework.web.struts.DispatchActionSupport;
 import com.alibaba.fastjson.*;
  
+import com.glaf.core.identity.*;
+import com.glaf.core.security.*;
 import com.glaf.core.util.*;
-import com.glaf.base.modules.sys.model.*;
-import com.glaf.base.security.*;
-import com.glaf.base.utils.*;
 
 import ${packageName}.model.*;
 import ${packageName}.query.*;
@@ -41,9 +40,9 @@ public class ${entityName}BaseAction extends DispatchActionSupport {
 	public ActionForward save(ActionMapping mapping, ActionForm actionForm,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		SysUser user = RequestUtil.getSysUser(request);
-		String actorId = user.getAccount();
-		Map<String, Object> params = RequestUtil.getParameterMap(request);
+		User user = RequestUtils.getUser(request);
+		String actorId = user.getActorId();
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		params.remove("status");
 		params.remove("wfStatus");
 		${entityName} ${modelName} = new ${entityName}();
@@ -59,9 +58,9 @@ public class ${entityName}BaseAction extends DispatchActionSupport {
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		try {
-			SysUser user = RequestUtil.getSysUser(request);
-			String actorId = user.getAccount();
-			Map<String, Object> params = RequestUtil.getParameterMap(request);
+			User user = RequestUtils.getUser(request);
+			String actorId = user.getActorId();
+			Map<String, Object> params = RequestUtils.getParameterMap(request);
 			params.remove("status");
 			params.remove("wfStatus");
 			${entityName} ${modelName} = new ${entityName}();
@@ -69,14 +68,14 @@ public class ${entityName}BaseAction extends DispatchActionSupport {
 			${modelName}.setCreateBy(actorId);
 
 			${modelName}Service.save(${modelName});
-			byte[] bytes = ResponseUtil.responseJsonResult(true);
+			byte[] bytes = ResponseUtils.responseJsonResult(true);
 			response.getOutputStream().write(bytes);
 			response.flushBuffer();
 			return null;
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-		byte[] bytes = ResponseUtil.responseJsonResult(false);
+		byte[] bytes = ResponseUtils.responseJsonResult(false);
 		response.getOutputStream().write(bytes);
 		response.flushBuffer();
 		return null;
@@ -85,9 +84,9 @@ public class ${entityName}BaseAction extends DispatchActionSupport {
 	public ActionForward update(ActionMapping mapping, ActionForm actionForm,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		SysUser user = RequestUtil.getSysUser(request);
-		String actorId = user.getAccount();
-		Map<String, Object> params = RequestUtil.getParameterMap(request);
+		User user = RequestUtils.getUser(request);
+		String actorId = user.getActorId();
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		params.remove("status");
 		params.remove("wfStatus");
 		${entityName} ${modelName} = new ${entityName}();
@@ -102,9 +101,9 @@ public class ${entityName}BaseAction extends DispatchActionSupport {
 	public ActionForward delete(ActionMapping mapping, ActionForm actionForm,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		SysUser user = RequestUtil.getSysUser(request);
-		Map<String, Object> params = RequestUtil.getParameterMap(request);
-		String rowId = ParamUtil.getString(params, "rowId");
+		User user = RequestUtils.getUser(request);
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		String rowId = ParamUtils.getString(params, "rowId");
 		String rowIds = request.getParameter("rowIds");
 		if (StringUtils.isNotEmpty(rowIds)) {
 			StringTokenizer token = new StringTokenizer(rowIds, ",");
@@ -114,7 +113,7 @@ public class ${entityName}BaseAction extends DispatchActionSupport {
 					${entityName} ${modelName} = ${modelName}Service.get${entityName}(x);
 					if (${modelName} != null
 							&& StringUtils.equals(${modelName}.getCreateBy(),
-									user.getAccount())) {
+									user.getActorId())) {
 						${modelName}.setDeleteFlag(1);
 						${modelName}Service.save(${modelName});
 					}
@@ -124,7 +123,7 @@ public class ${entityName}BaseAction extends DispatchActionSupport {
 			${entityName} ${modelName} = ${modelName}Service.get${entityName}(rowId);
 			if (${modelName} != null
 					&& StringUtils
-							.equals(${modelName}.getCreateBy(), user.getAccount())) {
+							.equals(${modelName}.getCreateBy(), user.getActorId())) {
 				${modelName}.setDeleteFlag(1);
 				${modelName}Service.save(${modelName});
 			}
@@ -136,12 +135,12 @@ public class ${entityName}BaseAction extends DispatchActionSupport {
 	public ActionForward edit(ActionMapping mapping, ActionForm actionForm,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		SysUser user = RequestUtil.getSysUser(request);
-		String actorId = user.getAccount();
-		RequestUtil.setRequestParameterToAttribute(request);
+		User user = RequestUtils.getUser(request);
+		String actorId = user.getActorId();
+		RequestUtils.setRequestParameterToAttribute(request);
 		request.removeAttribute("canSubmit");
-		Map<String, Object> params = RequestUtil.getParameterMap(request);
-		String rowId = ParamUtil.getString(params, "rowId");
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		String rowId = ParamUtils.getString(params, "rowId");
 		${entityName} ${modelName} = null;
 		if (StringUtils.isNotEmpty(rowId)) {
 			${modelName} = ${modelName}Service.get${entityName}(rowId);
@@ -172,9 +171,9 @@ public class ${entityName}BaseAction extends DispatchActionSupport {
 	public ActionForward view(ActionMapping mapping, ActionForm actionForm,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		RequestUtil.setRequestParameterToAttribute(request);
-		Map<String, Object> params = RequestUtil.getParameterMap(request);
-		String rowId = ParamUtil.getString(params, "rowId");
+		RequestUtils.setRequestParameterToAttribute(request);
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		String rowId = ParamUtils.getString(params, "rowId");
 		${entityName} ${modelName} = null;
 		if (StringUtils.isNotEmpty(rowId)) {
 			${modelName} = ${modelName}Service.get${entityName}(rowId);
@@ -189,7 +188,7 @@ public class ${entityName}BaseAction extends DispatchActionSupport {
 	public ActionForward query(ActionMapping mapping, ActionForm actionForm,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 
 		return mapping.findForward("show_query");
 	}
@@ -197,11 +196,11 @@ public class ${entityName}BaseAction extends DispatchActionSupport {
 	public ActionForward json(ActionMapping mapping, ActionForm actionForm,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		Map<String, Object> params = RequestUtil.getParameterMap(request);
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		${entityName}Query query = new ${entityName}Query();
 		Tools.populate(query, params);
 
-		String gridType = ParamUtil.getString(params, "gridType");
+		String gridType = ParamUtils.getString(params, "gridType");
 		if (gridType == null) {
 			gridType = "easyui";
 		}
@@ -210,11 +209,11 @@ public class ${entityName}BaseAction extends DispatchActionSupport {
 		String orderName = null;
 		String order = null;
 
-		int pageNo = ParamUtil.getInt(params, "page");
-		limit = ParamUtil.getInt(params, "rows");
+		int pageNo = ParamUtils.getInt(params, "page");
+		limit = ParamUtils.getInt(params, "rows");
 		start = (pageNo - 1) * limit;
-		orderName = ParamUtil.getString(params, "sortName");
-		order = ParamUtil.getString(params, "sortOrder");
+		orderName = ParamUtils.getString(params, "sortName");
+		order = ParamUtils.getString(params, "sortOrder");
 
 		if (start < 0) {
 			start = 0;
@@ -242,7 +241,7 @@ public class ${entityName}BaseAction extends DispatchActionSupport {
 				}
 			}
 
-			Map<String, SysUser> userMap = IdentityFactory.getUserMap();
+			Map<String, User> userMap = IdentityFactory.getUserMap();
 			List<${entityName}> list = ${modelName}Service.get${entityName}sByQueryCriteria(start, limit,
 					query);
 
@@ -269,12 +268,12 @@ public class ${entityName}BaseAction extends DispatchActionSupport {
 	public ActionForward list(ActionMapping mapping, ActionForm actionForm,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		String x_query = request.getParameter("x_query");
 		if (StringUtils.equals(x_query, "true")) {
-			Map<String, Object> paramMap = RequestUtil.getParameterMap(request);
+			Map<String, Object> paramMap = RequestUtils.getParameterMap(request);
 			String x_complex_query = JsonUtils.encode(paramMap);
-			x_complex_query = RequestUtil.encodeString(x_complex_query);
+			x_complex_query = RequestUtils.encodeString(x_complex_query);
 			request.setAttribute("x_complex_query", x_complex_query);
 		} else {
 			request.setAttribute("x_complex_query", "");
