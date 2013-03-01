@@ -22,6 +22,7 @@ import com.alibaba.fastjson.*;
 import com.glaf.base.modules.sys.model.*;
 import com.glaf.base.security.*;
 import com.glaf.base.utils.*;
+import com.glaf.core.util.PageResult;
 
 import com.glaf.apps.trip.model.Trip;
 import com.glaf.apps.trip.query.TripQuery;

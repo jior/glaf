@@ -37,14 +37,18 @@ import com.glaf.core.base.DataFile;
 import com.glaf.core.entity.EntityDAO;
 import com.glaf.core.entity.SqlExecutor;
 import com.glaf.core.id.IdGenerator;
+import com.glaf.core.jdbc.DBConnectionFactory;
 import com.glaf.core.mail.Mail;
 import com.glaf.core.mail.MailMessage;
 import com.glaf.core.mail.MailSender;
 import com.glaf.core.mail.service.IMailService;
 import com.glaf.core.mail.util.MailStatus;
+import com.glaf.core.mail.domain.MailDataFile;
+import com.glaf.core.mail.mapper.MailDataFileMapper;
 import com.glaf.core.mail.mapper.MailMapper;
 import com.glaf.core.query.MailQuery;
 import com.glaf.core.service.IBlobService;
+import com.glaf.core.util.DBUtils;
 import com.glaf.core.util.LogUtils;
 import com.glaf.core.util.Paging;
 import com.glaf.core.util.UUID32;
@@ -61,6 +65,8 @@ public class MxMailServiceImpl implements IMailService {
 	protected SqlSession sqlSession;
 
 	protected MailMapper mailMapper;
+
+	protected MailDataFileMapper mailDataFileMapper;
 
 	protected IBlobService blobService;
 
@@ -150,6 +156,22 @@ public class MxMailServiceImpl implements IMailService {
 		mail.setCreateDate(new Date());
 		mail.setId(idGenerator.getNextId());
 		mailMapper.insertMail(mail);
+
+		if (mail.getDataFiles() != null && !mail.getDataFiles().isEmpty()) {
+			for (DataFile dataFile : mail.getDataFiles()) {
+				if (dataFile instanceof MailDataFile) {
+					MailDataFile att = (MailDataFile) dataFile;
+					att.setTopId(mail.getId());
+					att.setFileId(mail.getId() + "_" + UUID32.getUUID());
+					if (StringUtils.equals(DBUtils.POSTGRESQL,
+							DBConnectionFactory.getDatabaseType())) {
+						mailDataFileMapper.insertMailDataFile_postgres(att);
+					} else {
+						mailDataFileMapper.insertMailDataFile(att);
+					}
+				}
+			}
+		}
 	}
 
 	/**
@@ -275,9 +297,30 @@ public class MxMailServiceImpl implements IMailService {
 		this.sqlSession = sqlSession;
 	}
 
+	@Resource
+	public void setMailDataFileMapper(MailDataFileMapper mailDataFileMapper) {
+		this.mailDataFileMapper = mailDataFileMapper;
+	}
+
 	@Transactional
 	public void updateMail(Mail mail) {
 		mailMapper.updateMail(mail);
+	}
+
+	@Transactional
+	public long nextId() {
+		return idGenerator.nextId();
+	}
+
+	@Transactional
+	public Mail getMailByMessageId(String messageId) {
+		MailQuery query = new MailQuery();
+		query.messageId(messageId);
+		List<Mail> list = mailMapper.getMails(query);
+		if (list != null && !list.isEmpty()) {
+			return list.get(0);
+		}
+		return null;
 	}
 
 }

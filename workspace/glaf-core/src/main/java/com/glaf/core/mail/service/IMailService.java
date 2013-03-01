@@ -26,10 +26,14 @@ import com.glaf.core.mail.Mail;
 import com.glaf.core.util.Paging;
 
 public interface IMailService {
+	
+	 long nextId();
 
 	void deleteMail(String mailId);
 
 	Mail getMail(String mailId);
+	
+	Mail getMailByMessageId(String messageId);
 
 	List<Mail> getMailList(String resourceId);
 

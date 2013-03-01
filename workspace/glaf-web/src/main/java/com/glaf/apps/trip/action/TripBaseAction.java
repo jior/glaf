@@ -21,6 +21,7 @@ import com.glaf.base.modules.sys.model.*;
 import com.glaf.base.security.*;
 import com.glaf.base.utils.*;
 import com.glaf.core.util.JsonUtils;
+import com.glaf.core.util.PageResult;
 
 import com.glaf.apps.trip.model.*;
 import com.glaf.apps.trip.query.*;

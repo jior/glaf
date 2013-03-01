@@ -74,6 +74,9 @@ public class Mail implements MessageProvider {
 	@Column(name = "RESOURCEID_", length = 50)
 	protected String resourceId;
 
+	@Column(name = "USERNAME_", length = 100)
+	protected String username;
+
 	/**
 	 * 任务编号
 	 */
@@ -122,6 +125,13 @@ public class Mail implements MessageProvider {
 	@Lob
 	@Column(name = "CONTENT_")
 	protected String content;
+
+	/**
+	 * 内容
+	 */
+	@Lob
+	@Column(name = "HTML_")
+	protected String html;
 
 	/**
 	 * 模板编号
@@ -251,6 +261,13 @@ public class Mail implements MessageProvider {
 
 	}
 
+	public void addFile(DataFile file) {
+		if (dataFiles == null) {
+			dataFiles = new HashSet<DataFile>();
+		}
+		dataFiles.add(file);
+	}
+
 	public String getAccountId() {
 		return accountId;
 	}
@@ -269,6 +286,10 @@ public class Mail implements MessageProvider {
 
 	public Collection<DataFile> getDataFiles() {
 		return dataFiles;
+	}
+
+	public String getHtml() {
+		return html;
 	}
 
 	public String getId() {
@@ -383,6 +404,10 @@ public class Mail implements MessageProvider {
 		return templateId;
 	}
 
+	public String getUsername() {
+		return username;
+	}
+
 	public void setAccountId(String accountId) {
 		this.accountId = accountId;
 	}
@@ -401,6 +426,10 @@ public class Mail implements MessageProvider {
 
 	public void setDataFiles(Collection<DataFile> dataFiles) {
 		this.dataFiles = dataFiles;
+	}
+
+	public void setHtml(String html) {
+		this.html = html;
 	}
 
 	public void setId(String id) {
@@ -515,8 +544,8 @@ public class Mail implements MessageProvider {
 		this.templateId = templateId;
 	}
 
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this);
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public JSONObject toJsonObject() throws JSONException {
@@ -530,6 +559,10 @@ public class Mail implements MessageProvider {
 			jsonObject.put("sendDate", sendDate);
 		}
 		return jsonObject;
+	}
+
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this);
 	}
 
 }

@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.core.mail.mapper.MailDataFileMapper">
+
+	<resultMap id="mailDataFileResultMap"	type="com.glaf.core.mail.domain.MailDataFile">
+		<id property="id" column="id" jdbcType="VARCHAR"/>
+		<result property="topId" column="topId" jdbcType="VARCHAR"/>
+		<result property="filename" column="filename" jdbcType="VARCHAR"/>
+		<result property="createDate" column="createDate" jdbcType="TIMESTAMP"/>
+		<result property="size" column="size" jdbcType="INTEGER"/>
+		<result property="fileContent" column="fileContent" jdbcType="BLOB"/>
+	</resultMap>
+	
+	<resultMap id="mailDataFileResultMap_postgres"	type="com.glaf.core.mail.domain.MailDataFile">
+		<id property="id" column="id" jdbcType="VARCHAR"/>
+		<result property="topId" column="topId" jdbcType="VARCHAR"/>
+		<result property="filename" column="filename" jdbcType="VARCHAR"/>
+		<result property="createDate" column="createDate" jdbcType="TIMESTAMP"/>
+		<result property="size" column="size" jdbcType="INTEGER"/>
+		<result property="fileContent" column="fileContent" jdbcType="BINARY"/>
+	</resultMap>
+
+
+	<resultMap id="mailDataFileHashMap"	type="java.util.HashMap">
+		<id property="id" column="id" jdbcType="VARCHAR"/>
+		<result property="topId" column="topId" jdbcType="VARCHAR"/>
+		<result property="filename" column="filename" jdbcType="VARCHAR"/>
+		<result property="createDate" column="createDate" jdbcType="TIMESTAMP"/>
+		<result property="size" column="size" jdbcType="INTEGER"/>
+	</resultMap>
+ 
+	<insert id="insertMailDataFile" parameterType="com.glaf.core.mail.domain.MailDataFile">
+		insert into SYS_MAIL_FILE 
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+		    id
+			<if test="topId != null">
+				,topId 
+			</if>
+			<if test="filename != null">
+				,filename 
+			</if>
+			<if test="fileContent != null">
+			</if>
+			<if test="createDate != null">
+				,createDate 
+			</if>
+			<if test="size != null">
+				,size 
+			</if>
+			<if test="fileContent != null">
+				,fileContent 
+			</if>
+		</trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			  #{id, jdbcType=VARCHAR}
+	     
+			<if test="topId != null">
+				,#{topId, jdbcType=VARCHAR}
+			</if>
+			<if test="filename != null">
+				,#{filename, jdbcType=VARCHAR}
+			</if>
+			<if test="fileContent != null">
+			</if>
+			<if test="createDate != null">
+				,#{createDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="size != null">
+				,#{size, jdbcType=INTEGER}
+			</if>
+			<if test="fileContent != null">
+				,#{fileContent, jdbcType=BLOB}
+			</if>
+		</trim>
+	</insert>
+	
+	
+	<insert id="insertMailDataFile_postgres" parameterType="com.glaf.core.mail.domain.MailDataFile">
+		insert into SYS_MAIL_FILE 
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+		    id
+			<if test="topId != null">
+				,topId 
+			</if>
+			<if test="filename != null">
+				,filename 
+			</if>
+			<if test="fileContent != null">
+			</if>
+			<if test="createDate != null">
+				,createDate 
+			</if>
+			<if test="size != null">
+				,size 
+			</if>
+			<if test="fileContent != null">
+				,fileContent 
+			</if>
+		</trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			  #{id, jdbcType=VARCHAR}
+	     
+			<if test="topId != null">
+				,#{topId, jdbcType=VARCHAR}
+			</if>
+			<if test="filename != null">
+				,#{filename, jdbcType=VARCHAR}
+			</if>
+			<if test="fileContent != null">
+			</if>
+			<if test="createDate != null">
+				,#{createDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="size != null">
+				,#{size, jdbcType=INTEGER}
+			</if>
+			<if test="fileContent != null">
+				,#{fileContent, jdbcType=BINARY}
+			</if>
+		</trim>
+	</insert>
+
+	 
+	<update id="updateMailDataFile" parameterType="com.glaf.core.mail.domain.MailDataFile">
+		update SYS_MAIL_FILE
+		set
+		<trim prefix="" suffix="" suffixOverrides=",">		
+			<if test="topId != null">
+				topId = #{topId, jdbcType=VARCHAR},
+			</if>
+			<if test="filename != null">
+				filename = #{filename, jdbcType=VARCHAR},
+			</if>
+			<if test="fileContent != null">
+			</if>
+			<if test="createDate != null">
+				createDate = #{createDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="size != null">
+				size = #{size, jdbcType=INTEGER},
+			</if>
+		</trim>
+		where
+          id = #{id, jdbcType=VARCHAR}
+		
+	</update>
+
+ 
+	<delete id="deleteMailDataFileById" parameterType="string"> 
+        delete from SYS_MAIL_FILE
+        where id = #{id}
+	</delete>
+	
+
+	<delete id="deleteMailDataFiles" parameterType="com.glaf.isdp.query.MailDataFileQuery">
+		delete from SYS_MAIL_FILE
+		where ( id IN
+		<foreach item="x_rowId" index="index" collection="rowIds" open="(" separator="," close=")">
+              #{x_rowId}
+		</foreach>
+		)
+	</delete>
+
+
+	<select id="getMailDataFileById" parameterType="string" resultMap="mailDataFileResultMap">
+		select * from SYS_MAIL_FILE where id = #{id}
+	</select>
+
+
+	<select id="getMailDataFileCount" 
+		parameterType="map"
+		resultType="int">
+		select count(*) from SYS_MAIL_FILE E
+		<include refid="selectMailDataFileSql" />
+	</select>
+
+
+	<select id="getMailDataFileCountByQueryCriteria" 
+		parameterType="com.glaf.isdp.query.MailDataFileQuery"
+		resultType="int">
+		select count(*) from SYS_MAIL_FILE E
+		<include refid="selectMailDataFileSql" />
+	</select>
+
+
+	<select id="getMailDataFiles" 
+		parameterType="map"
+		resultMap="mailDataFileResultMap">
+		select E.id, E.topId, E.filename, E.createDate, E.size from SYS_MAIL_FILE E
+		<include refid="selectMailDataFileSql" />
+		<if test="orderBy != null">
+		   order by ${orderBy}
+		</if>
+	</select>
+
+
+	<select id="getMailDataFileMapList" parameterType="map" resultType="map">
+		select E.id, E.topId, E.filename, E.createDate, E.size from SYS_MAIL_FILE E 
+		<include refid="selectMailDataFileSql" />
+		<if test="orderBy != null">
+		   order by ${orderBy}
+		</if>
+	</select>
+
+
+	<select id="getMailDataFilesByQueryCriteria" 
+		parameterType="com.glaf.isdp.query.MailDataFileQuery"
+		resultMap="mailDataFileResultMap">
+		select E.id, E.topId, E.filename, E.createDate, E.size from SYS_MAIL_FILE E
+		<include refid="selectMailDataFileSql" />
+		<if test="orderBy != null">
+		   order by ${orderBy}
+		</if>
+	</select>
+
+
+	<sql id="selectMailDataFileSql">
+		 
+		<where>
+
+		   1 = 1  
+
+	        
+			<if test="topId != null and topId != '' ">
+				and E.topId = #{topId}
+			</if>
+
+			<if test="topIdLike != null and topIdLike != '' ">
+				and E.topId like #{topIdLike}
+			</if>
+
+			<if test="topIds != null and topIds.size() &gt; 0">
+			    and E.topId IN
+				<foreach item="x_topId" index="index" collection="topIds" 
+					open="(" separator="," close=")">
+                  #{x_topId}
+				</foreach>
+			</if>
+     
+			<if test="filename != null and filename != '' ">
+				and E.filename = #{filename}
+			</if>
+
+			<if test="filenameLike != null and filenameLike != '' ">
+				and E.filename like #{filenameLike}
+			</if>
+
+			<if test="createDateGreaterThanOrEqual != null">
+				and E.createDate &gt;= #{createDateGreaterThanOrEqual}
+			</if>
+
+			<if test="createDateLessThanOrEqual != null">
+				and E.createDate &lt;= #{createDateLessThanOrEqual}
+			</if>
+
+			<if test="sizeGreaterThanOrEqual != null">
+				and E.size &gt;= #{sizeGreaterThanOrEqual}
+			</if>
+
+			<if test="sizeLessThanOrEqual != null">
+				and E.size &lt;= #{sizeLessThanOrEqual}
+			</if>
+			 
+		</where>
+	</sql>
+
+</mapper>
