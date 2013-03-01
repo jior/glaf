@@ -14,7 +14,7 @@ int pageSize = Constants.PAGE_SIZE;
 String type = ParamUtil.getParameter(request, "query_type_ex");
 boolean isMult = ParamUtil.getBooleanParameter(request, "mult", "true");
 String context = request.getContextPath();
-PageResult pager = (PageResult) request.getAttribute("pager");
+com.glaf.core.util.PageResult pager = (com.glaf.core.util.PageResult) request.getAttribute("pager");
 List list = pager.getResults();
 Iterator iter = list.iterator();
 

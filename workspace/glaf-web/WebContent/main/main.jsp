@@ -2,6 +2,7 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
 <%@ page import="java.net.*"%>
+<%@ page import="com.glaf.core.util.*"%>
 <%@ page import="com.glaf.base.utils.*"%>
 <%@ page import="com.glaf.base.modules.sys.*"%>
 <%@ page import="com.glaf.base.modules.sys.model.*"%>
@@ -15,7 +16,7 @@ SysUser user = com.glaf.base.utils.RequestUtil.getLoginUser(request);
 WebApplicationContext wac = WebApplicationContextUtils.getRequiredWebApplicationContext(session.getServletContext());
 MessageService messageService = (MessageService) wac.getBean("messageService");
 int msgPageSize = 5;
-PageResult messagePager = messageService.getNoReadList(user.getId(), new HashMap(), 1, msgPageSize);
+com.glaf.core.util.PageResult messagePager = messageService.getNoReadList(user.getId(), new HashMap(), 1, msgPageSize);
 List messageList = messagePager.getResults();
 int count = 0;
 %>

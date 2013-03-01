@@ -20,7 +20,7 @@ String context = request.getContextPath();
 
 MessageService messageService = (MessageService) wac.getBean("messageService");
 int msgPageSize = 5;
-PageResult messagePager = messageService.getNoReadList(user.getId(), new HashMap(), 1, msgPageSize);
+com.glaf.core.util.PageResult messagePager = messageService.getNoReadList(user.getId(), new HashMap(), 1, msgPageSize);
 List messageList = messagePager.getResults();
 int count = 0;
 %>

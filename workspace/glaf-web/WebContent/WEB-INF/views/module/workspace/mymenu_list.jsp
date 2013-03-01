@@ -9,7 +9,7 @@
 <%@ page import="com.glaf.base.utils.*"%>
 <%
 int pageSize = Constants.PAGE_SIZE;
-PageResult pager = (PageResult)request.getAttribute("pager");
+com.glaf.core.util.PageResult pager = (com.glaf.core.util.PageResult)request.getAttribute("pager");
 List list = pager.getResults();
 %>
 <html>
