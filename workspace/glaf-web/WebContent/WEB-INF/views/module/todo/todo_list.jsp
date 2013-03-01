@@ -2,17 +2,15 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page import="java.util.*"%>
-<%@ page import="com.glaf.base.modules.todo.*"%>
-<%@ page import="com.glaf.base.modules.todo.model.*"%>
-<%@ page import="com.glaf.base.modules.todo.service.*"%>
-<%@ page import="com.glaf.base.utils.*"%>
+<%@ page import="com.glaf.core.todo.*" %>
 <%@ page import="com.glaf.base.modules.sys.*"%>
 <%@ page import="com.glaf.base.modules.sys.model.*"%>
 <%@ page import="com.glaf.base.modules.sys.service.*"%>
-<%@ page import="com.glaf.util.*" %>
-<%@ page import="com.glaf.core.query.paging.*" %>
-<%@ page import="com.glaf.base.modules.*" %>
-<%@ page import="com.glaf.base.modules.todo.service.*" %>
+<%@ page import="com.glaf.base.modules.todo.*"%>
+<%@ page import="com.glaf.base.modules.todo.model.*"%>
+<%@ page import="com.glaf.base.modules.todo.service.*"%>
+<%@ page import="com.glaf.base.modules.todo.util.*"%>
+<%@ page import="com.glaf.base.utils.*"%>
 <%@ page import="org.apache.commons.lang.StringUtils" %>
 <%!
       private String getMyValue(String temp){
@@ -60,23 +58,23 @@
 	}
 
 	TodoJobBean bean = (TodoJobBean)BaseDataManager.getInstance().getBean("todoJobBean");
-	Collection rows = bean.getToDoInstanceList(params);
+	Collection rows = bean.getTodoInstanceList(params);
 	Map dataMap = new TreeMap();
-	Map todoMap = bean.getToDoMap();
+	Map todoMap = bean.getTodoMap();
 	Map roleMap = bean.getRoleMap();
 	Map xMap = new TreeMap();
 
 	if(rows != null && rows.size()> 0){
 			  Iterator iterator008 = rows.iterator();
 			  while(iterator008.hasNext()){
-                   ToDoInstance tdi = (ToDoInstance)iterator008.next();
+                   TodoInstance tdi = (TodoInstance)iterator008.next();
 				   int status = TodoConstants.getTodoStatus(tdi);
 				   tdi.setStatus(status);
-				   ToDoInstance xx = (ToDoInstance)dataMap.get(new Long(tdi.getTodoId()));
+				   TodoInstance xx = (TodoInstance)dataMap.get(new Long(tdi.getTodoId()));
 				   if(xx == null){
-					   xx = new ToDoInstance();
+					   xx = new TodoInstance();
 					   xx.setTodoId(tdi.getTodoId());
-					   ToDo todo = (ToDo)todoMap.get(new Long(tdi.getTodoId()));
+					   Todo todo = (Todo)todoMap.get(new Long(tdi.getTodoId()));
 					   if(todo != null){
 						    xx.setTitle(todo.getTitle());
 							xx.setContent(todo.getContent());
@@ -143,10 +141,10 @@ _dynarch_menu_url = "<%=context%>/scripts/hmenu";
 		  <%if(rows != null && rows.size()> 0){
 			  Iterator iterator008 = rows.iterator();
 			  while(iterator008.hasNext()){
-				   ToDo todo = (ToDo)iterator008.next();
-                   ToDoInstance tdi = (ToDoInstance)dataMap.get(new Long(todo.getId()));
+				   Todo todo = (Todo)iterator008.next();
+                   TodoInstance tdi = (TodoInstance)dataMap.get(new Long(todo.getId()));
 				   if(tdi == null){
-					   tdi = new ToDoInstance();
+					   tdi = new TodoInstance();
 				   }
 				   pageContext.setAttribute("tdi",tdi);
 			  %>

@@ -2,17 +2,15 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page import="java.util.*"%>
-<%@ page import="com.glaf.base.modules.todo.*"%>
-<%@ page import="com.glaf.base.modules.todo.model.*"%>
-<%@ page import="com.glaf.base.modules.todo.service.*"%>
-<%@ page import="com.glaf.base.utils.*"%>
+<%@ page import="com.glaf.core.todo.*" %>
 <%@ page import="com.glaf.base.modules.sys.*"%>
 <%@ page import="com.glaf.base.modules.sys.model.*"%>
 <%@ page import="com.glaf.base.modules.sys.service.*"%>
-<%@ page import="com.glaf.util.*" %>
-<%@ page import="com.glaf.core.query.paging.*" %>
-<%@ page import="com.glaf.base.modules.*" %>
-<%@ page import="com.glaf.base.modules.todo.service.*" %>
+<%@ page import="com.glaf.base.modules.todo.*"%>
+<%@ page import="com.glaf.base.modules.todo.model.*"%>
+<%@ page import="com.glaf.base.modules.todo.service.*"%>
+<%@ page import="com.glaf.base.modules.todo.util.*"%>
+<%@ page import="com.glaf.base.utils.*"%>
 <%@ page import="org.apache.commons.lang.StringUtils" %>
 <%
     String context = request.getContextPath();
@@ -28,7 +26,7 @@
 	String limitDay = request.getParameter("limitDay");
 	String xa = request.getParameter("xa");
 	String xb = request.getParameter("xb");
-    ToDo todo = bean.getToDo(new  Long(id).longValue());
+    Todo todo = bean.getTodo(new  Long(id).longValue());
 	 todo.setTitle(request.getParameter("title"));
 	 todo.setContent(request.getParameter("content"));
 	

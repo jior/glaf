@@ -11,6 +11,7 @@
 <%@ page import="com.glaf.base.modules.sys.*"%>
 <%@ page import="com.glaf.base.modules.sys.model.*"%>
 <%@ page import="com.glaf.base.modules.sys.service.*"%>
+<%@ page import="com.glaf.core.todo.*" %>
 <%@ page import="com.glaf.core.util.*" %>
 <%@ page import="com.glaf.jbpm.task.*" %>
 <%@ page import="com.glaf.jbpm.model.*" %>
@@ -42,7 +43,7 @@
 %>
 
 <%
-    Collection rows = bean.getTodoInstances(user.getAccount());
+    List rows = bean.getTodoInstances(user.getAccount());
 %>
 <table width="620" border="0" cellspacing="1" cellpadding="0" class="list-box">
     <tr class="list-title">
@@ -54,8 +55,8 @@
 		  <%if(rows != null && rows.size()> 0){
 			  Iterator iterator008 = rows.iterator();
 			  while(iterator008.hasNext()){
-	               ToDoInstance tdi = (ToDoInstance) iterator008.next();
-				   pageContext.setAttribute("todo", tdi.getToDo());
+	               TodoInstance tdi = (TodoInstance) iterator008.next();
+				   pageContext.setAttribute("todo", tdi.getTodo());
 				   pageContext.setAttribute("tdi",tdi);
 			  %>
           <tr class="list-a">

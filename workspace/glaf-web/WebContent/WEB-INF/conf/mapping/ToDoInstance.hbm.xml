@@ -3,7 +3,7 @@
 	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-	<class name="com.glaf.base.modules.todo.model.ToDoInstance" table="sys_todo_instance"
+	<class name="com.glaf.core.todo.TodoInstance" table="sys_todo_instance"
 		dynamic-update="true" dynamic-insert="true">
 		<id column="id" name="id" type="long">
 			<generator class="native" />
@@ -21,16 +21,15 @@
 		<property column="alarmDate" name="alarmDate" type="timestamp" />
 		<property column="pastDueDate" name="pastDueDate" type="timestamp" />
 		<property column="taskInstanceId" name="taskInstanceId" type="string" />
-		<property column="processInstanceId" name="processInstanceId"
-			type="string" />
+		<property column="processInstanceId" name="processInstanceId" type="string" />
 		<property column="deptId" name="deptId" type="long" />
 		<property column="deptName" name="deptName" type="string" />
 		<property column="roleId" name="roleId" type="long" />
 		<property column="roleCode" name="roleCode" type="string" />
 		<property column="rowId" name="rowId" type="string" />
 		<property column="todoId" name="todoId" type="long" />
-		<property column="appId" name="appId" type="int" />
-		<property column="moduleId" name="moduleId" type="int" />
+		<property column="appId" name="appId" type="long" />
+		<property column="moduleId" name="moduleId" type="long" />
 		<property column="objectId" name="objectId" type="string" />
 		<property column="objectValue" name="objectValue" type="string" />
 		<property column="versionNo" name="versionNo" type="long" />

@@ -2,17 +2,16 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page import="java.util.*"%>
-<%@ page import="com.glaf.base.modules.todo.*"%>
-<%@ page import="com.glaf.base.modules.todo.model.*"%>
-<%@ page import="com.glaf.base.modules.todo.service.*"%>
-<%@ page import="com.glaf.base.utils.*"%>
+<%@ page import="com.glaf.core.todo.*" %>
 <%@ page import="com.glaf.base.modules.sys.*"%>
 <%@ page import="com.glaf.base.modules.sys.model.*"%>
 <%@ page import="com.glaf.base.modules.sys.service.*"%>
-<%@ page import="com.glaf.util.*" %>
-<%@ page import="com.glaf.core.query.paging.*" %>
-<%@ page import="com.glaf.base.modules.*" %>
-<%@ page import="com.glaf.base.modules.todo.service.*" %>
+<%@ page import="com.glaf.base.modules.todo.*"%>
+<%@ page import="com.glaf.base.modules.todo.model.*"%>
+<%@ page import="com.glaf.base.modules.todo.service.*"%>
+<%@ page import="com.glaf.base.modules.todo.util.*"%>
+<%@ page import="com.glaf.base.utils.*"%>
+
 <%@ page import="org.apache.commons.lang.StringUtils" %>
 <%
     String context = request.getContextPath();
@@ -77,7 +76,7 @@ _dynarch_menu_url = "<%=context%>/scripts/hmenu";
 			  int index = 1;
 			  Iterator iterator008 = rows.iterator();
 			  while(iterator008.hasNext()){
-                   ToDo todo = (ToDo)iterator008.next();
+                   Todo todo = (Todo)iterator008.next();
 				   pageContext.setAttribute("todo", todo);
 			  %>
           <tr class="list-a">
