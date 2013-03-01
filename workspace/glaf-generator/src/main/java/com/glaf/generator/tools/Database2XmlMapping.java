@@ -78,7 +78,7 @@ public class Database2XmlMapping {
 					}
 				}
 
-				OutputFormat format = new OutputFormat();
+				OutputFormat format = OutputFormat.createPrettyPrint();
 
 				format.setPadText(true);
 				format.setNewlines(true);

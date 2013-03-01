@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <mapping>
-    <entity name="SysAccess" package="com.glaf.base.modules.sys" table="sys_access" title="SysAccess" englishTitle="SysAccess">
+    <entity name="SysAccess" package="com.glaf.base.modules.sys" table="sys_access" title="角色应用访问权限" englishTitle="SysAccess">
         <id name="appId" column="APPID" type="Long" englishTitle="appId" length="19"  title="应用编号"/>
 		<property name="roleId" column="ROLEID" type="Long" englishTitle="roleId" length="19"  title="角色编号"/>
     </entity>

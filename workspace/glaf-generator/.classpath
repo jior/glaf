@@ -46,5 +46,9 @@
 	<classpathentry kind="lib" path="/glaf-core/lib/commons-validator-1.4.0.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/dom4j-1.6.1.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/freemarker.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/scannotation-1.0.3.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/javassist.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/junit-4.8.1.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/javax.persistence.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

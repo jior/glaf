@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <mapping>
-    <entity name="SysApplication" package="com.glaf.base.modules.sys" table="sys_application" title="SysApplication" englishTitle="SysApplication">
+    <entity name="SysApplication" package="com.glaf.base.modules.sys" table="sys_application" title="应用模块" englishTitle="SysApplication">
         <id name="id" column="ID" type="Long" englishTitle="id" length="19"  title="应用编号"/>
         <property name="name" column="NAME" type="String" englishTitle="name" dataType="0" length="255"  title="名称"/>
         <property name="desc" column="APPDESC" type="String" englishTitle="desc" dataType="0" length="255"  title="描述"/>

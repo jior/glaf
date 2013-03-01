@@ -130,5 +130,6 @@
 	<classpathentry kind="lib" path="lib/jedis.jar"/>
 	<classpathentry kind="lib" path="lib/mybatis-spring.jar"/>
 	<classpathentry kind="lib" path="lib/mybatis.jar"/>
+	<classpathentry kind="lib" path="lib/scannotation-1.0.3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

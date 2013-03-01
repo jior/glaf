@@ -21,6 +21,8 @@
 			<include name="*.jar" />
 		</fileset>
 		<pathelement location="./bin" />
+		<pathelement location="../glaf-bi/bin" />
+		<pathelement location="../glaf-core/bin" />
 		<pathelement location="./conf" />
 	</path>
 
@@ -44,6 +46,16 @@
 	     <java classname="com.glaf.generator.tools.Database2XmlMapping" fork="true">
 			<classpath refid="compile.classpath"/>
 			<arg line=" codegen/mapping "/>
+		</java> 
+
+	</target>
+
+
+	<target name="JPAEntityToXmlMapping" >
+
+	     <java classname="com.glaf.generator.tools.JPAEntityToXmlMapping" fork="true">
+			<classpath refid="compile.classpath"/>
+			<arg line=" codegen/jpa/mapping "/>
 		</java> 
 
 	</target>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <mapping>
-    <entity name="ToDo" package="com.glaf.base.modules.sys" table="sys_todo" title="ToDo" englishTitle="ToDo">
+    <entity name="ToDo" package="com.glaf.base.modules.todo" table="sys_todo" title="待办事项" englishTitle="ToDo">
         <id name="id" column="ID" type="Long" englishTitle="ID" length="19" title="编号" />
         <property name="actorId" column="ACTORID" type="String" englishTitle="actorId" dataType="0" length="255" title="用户名" />
         <property name="alarm" column="ALARM" type="String" englishTitle="alarm" dataType="0" length="255" title="报警" />

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<mapping>
+    <entity name="SystemProperty" package="com.glaf.core" table="sys_property" title="系统属性" englishTitle="SystemProperty">
+        <id name="id" column="ID_" type="String" title="编号" englishTitle="id" length="50"/>
+        <property name="category" column="CATEGORY_" type="String" title="分类码" englishTitle="category" dataType="0" length="200"/>
+        <property name="description" column="DESCRIPTION_" type="String" title="描述" englishTitle="description" dataType="0" length="500"/>
+        <property name="initValue" column="INITVALUE_" type="String" title="初始值" englishTitle="initValue" dataType="0" length="1000"/>
+        <property name="locked" column="LOCKED_" type="Integer" title="启用标识" englishTitle="locked" dataType="0" length="10"/>
+        <property name="name" column="NAME_" type="String" title="名称" englishTitle="name" dataType="0" length="50"/>
+        <property name="title" column="TITLE_" type="String" title="标题" englishTitle="title" dataType="0" length="200"/>
+        <property name="type" column="TYPE_" type="String" title="类型" englishTitle="type" dataType="0" length="50"/>
+        <property name="value" column="VALUE_" type="String" title="值" englishTitle="value" dataType="0" length="1000"/>
+    </entity>
+</mapping>

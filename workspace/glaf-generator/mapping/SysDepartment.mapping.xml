@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <mapping>
-    <entity name="SysDepartment" package="com.glaf.base.modules.sys" table="sys_department" title="SysDepartment" englishTitle="SysDepartment">
+    <entity name="SysDepartment" package="com.glaf.base.modules.sys" table="sys_department" title="部门" englishTitle="SysDepartment">
         <id name="id" column="ID" type="Long" englishTitle="ID" length="19"  title="编号"/>
         <property name="name" column="NAME" type="String" englishTitle="NAME" dataType="0" length="255"  title="名称"/>
         <property name="desc" column="DEPTDESC" type="String" englishTitle="DEPTDESC" dataType="0" length="255"  title="描述"/>
