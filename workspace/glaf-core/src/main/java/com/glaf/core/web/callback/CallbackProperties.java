@@ -117,7 +117,7 @@ public class CallbackProperties {
 			try {
 				Resource resource = new FileSystemResource(
 						SystemProperties.getConfigRootPath() + DEFALUT_CONFIG);
-				logger.info("load message config:"
+				logger.info("load callback config:"
 						+ resource.getFile().getAbsolutePath());
 				inputStream = new FileInputStream(resource.getFile()
 						.getAbsolutePath());

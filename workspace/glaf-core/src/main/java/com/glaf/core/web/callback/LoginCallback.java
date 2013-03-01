@@ -21,8 +21,6 @@ package com.glaf.core.web.callback;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.glaf.core.security.LoginContext;
-
 /**
  * 
  * 登录成功后的回调接口
@@ -33,12 +31,12 @@ public interface LoginCallback {
 	/**
 	 * 登录之后要处理的方法
 	 * 
-	 * @param loginContext
-	 *            用户登录对象
+	 * @param actorId
+	 *            用户账号
 	 * @param request
 	 * @param response
 	 */
-	void afterLogin(LoginContext loginContext, HttpServletRequest request,
+	void afterLogin(String actorId, HttpServletRequest request,
 			HttpServletResponse response);
 
 }
