@@ -21,7 +21,7 @@ package com.glaf.base.modules.workspace.service;
 import java.util.Collection;
 import java.util.Map;
 import com.glaf.base.modules.workspace.model.Message;
-import com.glaf.base.utils.PageResult;
+import com.glaf.core.util.PageResult;
 
 public interface MessageService {
 

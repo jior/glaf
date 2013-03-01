@@ -28,7 +28,7 @@ import com.glaf.base.dao.AbstractSpringDao;
 import com.glaf.base.modules.sys.SysConstants;
 import com.glaf.base.modules.sys.model.SysRole;
 import com.glaf.base.modules.sys.service.*;
-import com.glaf.base.utils.PageResult;
+import com.glaf.core.util.PageResult;
 
 public class SysRoleServiceImpl implements SysRoleService {
 	private static final Log logger = LogFactory

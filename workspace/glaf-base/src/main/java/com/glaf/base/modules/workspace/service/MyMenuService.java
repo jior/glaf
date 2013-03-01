@@ -22,7 +22,7 @@ import java.util.Collection;
 import java.util.List;
 
 import com.glaf.base.modules.workspace.model.MyMenu;
-import com.glaf.base.utils.PageResult;
+import com.glaf.core.util.PageResult;
 
 public interface MyMenuService {
 

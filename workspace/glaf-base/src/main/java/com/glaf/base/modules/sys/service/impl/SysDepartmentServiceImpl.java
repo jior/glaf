@@ -29,7 +29,7 @@ import com.glaf.base.modules.sys.SysConstants;
 import com.glaf.base.modules.sys.model.SysDepartment;
 import com.glaf.base.modules.sys.model.SysTree;
 import com.glaf.base.modules.sys.service.*;
-import com.glaf.base.utils.PageResult;
+import com.glaf.core.util.PageResult;
 
 public class SysDepartmentServiceImpl implements SysDepartmentService {
 	private static final Log logger = LogFactory

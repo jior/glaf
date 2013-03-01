@@ -32,8 +32,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
- 
-
 import com.glaf.base.callback.CallbackProperties;
 import com.glaf.base.callback.LoginCallback;
 import com.glaf.base.listener.UserOnlineListener;
@@ -146,7 +144,8 @@ public class AuthorizeController {
 			ContextUtil.put(bean.getAccount(), bean);// 传入全局变量
 
 			RequestUtil.setLoginUser(request, bean);
-			RequestUtils.setLoginUser(request, response, "GLAF", bean.getAccount());
+			RequestUtils.setLoginUser(request, response, "GLAF",
+					bean.getAccount());
 
 			// 保存session对象，跳转到后台主页面
 			request.getSession().setAttribute(SysConstants.MENU, menus);

@@ -25,7 +25,6 @@ import com.alibaba.fastjson.*;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.glaf.base.modules.sys.util.DictoryJsonFactory;
 import com.glaf.core.base.JSONable;
- 
 
 public class Dictory implements Serializable, JSONable {
 	private static final long serialVersionUID = 2756737871937885934L;

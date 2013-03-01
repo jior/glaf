@@ -28,7 +28,7 @@ import com.glaf.base.dao.AbstractSpringDao;
 import com.glaf.base.modules.sys.SysConstants;
 import com.glaf.base.modules.workspace.model.MyMenu;
 import com.glaf.base.modules.workspace.service.MyMenuService;
-import com.glaf.base.utils.PageResult;
+import com.glaf.core.util.PageResult;
 
 public class MyMenuServiceImpl implements MyMenuService {
 	private static final Log logger = LogFactory.getLog(MyMenuServiceImpl.class);

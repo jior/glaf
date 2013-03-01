@@ -27,6 +27,7 @@ import com.glaf.base.modules.sys.model.SysRole;
 import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.core.todo.Todo;
 import com.glaf.core.todo.TodoInstance;
+import com.glaf.core.todo.query.TodoQuery;
 import com.glaf.base.modules.todo.model.UserEntity;
 
 public interface TodoService {
@@ -142,7 +143,7 @@ public interface TodoService {
 	 * @param paramMap
 	 * @return
 	 */
-	List<TodoInstance> getTodoInstanceList(Map<String, Object> paramMap);
+	List<TodoInstance> getTodoInstanceList(TodoQuery query);
 
 	/**
 	 * 获取Todo列表，但排除已经禁用的

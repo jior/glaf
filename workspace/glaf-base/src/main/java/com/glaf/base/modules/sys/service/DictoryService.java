@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.glaf.base.modules.sys.model.Dictory;
-import com.glaf.base.utils.PageResult;
+import com.glaf.core.util.PageResult;
 
 public interface DictoryService {
 

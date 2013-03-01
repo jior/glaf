@@ -35,6 +35,7 @@ import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.sys.service.SysUserService;
 import com.glaf.core.todo.Todo;
 import com.glaf.core.todo.TodoInstance;
+import com.glaf.core.todo.query.TodoQuery;
 import com.glaf.base.utils.DateTools;
 
 public class TodoJobBean {
@@ -100,17 +101,17 @@ public class TodoJobBean {
 				model.setStartDate(rs.getDate(2));
 				if (rsmd.getColumnCount() == 3) {
 					switch (new Long(todo.getId()).intValue()) {
-					case 8005:// 尚未置合同生效日！
+					case 8005: 
 					case 7001:
 					case 7002:
 					case 7003:
 					case 7004:
-					case 17001:// 采购付款待交财务
+					case 17001: 
 					case 17010:
 					case 18001:
 					case 19001:
 					case 20001:
-					case 20084001:// 资产初步财务确认
+					case 20084001: 
 						model.setDeptId(rs.getLong(3));
 						break;
 					default:
@@ -298,17 +299,17 @@ public class TodoJobBean {
 							model.setStartDate(rs.getDate(2));
 							if (rsmd.getColumnCount() == 3) {
 								switch (new Long(todo.getId()).intValue()) {
-								case 8005:// 尚未置合同生效日！
+								case 8005: 
 								case 7001:
 								case 7002:
 								case 7003:
 								case 7004:
-								case 17001:// 采购付款待交财务
+								case 17001: 
 								case 17010:
 								case 18001:
 								case 19001:
 								case 20001:
-								case 20084001:// 资产初步财务确认
+								case 20084001: 
 									model.setDeptId(rs.getLong(3));
 									break;
 								default:
@@ -382,8 +383,8 @@ public class TodoJobBean {
 		return todoService.getTodo(todoId);
 	}
 
-	public List getTodoInstanceList(Map paramMap) {
-		return todoService.getTodoInstanceList(paramMap);
+	public List getTodoInstanceList(TodoQuery query) {
+		return todoService.getTodoInstanceList(query);
 	}
 
 	public List getTodoInstances(List taskItems) {

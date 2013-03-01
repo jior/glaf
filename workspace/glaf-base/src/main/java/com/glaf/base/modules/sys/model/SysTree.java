@@ -119,7 +119,7 @@ public class SysTree implements Serializable, ITreeModel, JSONable {
 	}
 
 	public SysTree jsonToObject(JSONObject jsonObject) {
-		 return SysTreeJsonFactory.jsonToObject(jsonObject);
+		return SysTreeJsonFactory.jsonToObject(jsonObject);
 	}
 
 	public JSONObject toJsonObject() {

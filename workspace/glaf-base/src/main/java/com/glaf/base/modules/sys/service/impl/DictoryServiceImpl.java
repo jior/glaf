@@ -30,7 +30,7 @@ import com.glaf.base.dao.AbstractSpringDao;
 import com.glaf.base.modules.sys.SysConstants;
 import com.glaf.base.modules.sys.model.Dictory;
 import com.glaf.base.modules.sys.service.*;
-import com.glaf.base.utils.PageResult;
+import com.glaf.core.util.PageResult;
 
 public class DictoryServiceImpl implements DictoryService {
 	private static final Log logger = LogFactory

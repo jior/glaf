@@ -1,20 +1,20 @@
 /*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.glaf.base.modules.sys.action;
 
@@ -33,9 +33,9 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
- 
+
 import org.springframework.web.struts.DispatchActionSupport;
- 
+
 import com.glaf.core.util.QuartzUtils;
 
 import com.glaf.base.modules.sys.actionform.SchedulerForm;
@@ -44,7 +44,6 @@ import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.sys.service.SchedulerService;
 import com.glaf.base.utils.ParamUtil;
 import com.glaf.base.utils.RequestUtil;
-
 
 public class SchedulerAction extends DispatchActionSupport {
 	protected final static Log logger = LogFactory
@@ -80,7 +79,7 @@ public class SchedulerAction extends DispatchActionSupport {
 			throws Exception {
 		Scheduler scheduler = new Scheduler();
 		SchedulerForm schedulerForm = (SchedulerForm) form;
-		Map params =RequestUtil.getParameterMap(request);
+		Map params = RequestUtil.getParameterMap(request);
 		logger.debug(params);
 		PropertyUtils.copyProperties(scheduler, schedulerForm);
 		Date startDate = ParamUtil.getDate(params, "startDate");

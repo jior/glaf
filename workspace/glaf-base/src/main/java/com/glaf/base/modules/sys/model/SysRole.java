@@ -23,7 +23,6 @@ import com.alibaba.fastjson.*;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.glaf.base.modules.sys.util.SysRoleJsonFactory;
 import com.glaf.core.base.JSONable;
- 
 
 public class SysRole implements Serializable, JSONable {
 	private static final long serialVersionUID = 7738558740111388611L;
@@ -74,7 +73,7 @@ public class SysRole implements Serializable, JSONable {
 	}
 
 	public SysRole jsonToObject(JSONObject jsonObject) {
-	return SysRoleJsonFactory.jsonToObject(jsonObject);
+		return SysRoleJsonFactory.jsonToObject(jsonObject);
 	}
 
 	public JSONObject toJsonObject() {

@@ -24,6 +24,7 @@ import com.glaf.core.query.DataQuery;
 
 public class TodoQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;
+	protected String actorIdx;
 	protected String code;
 	protected List<String> codes;
 	protected Long appId;
@@ -53,6 +54,8 @@ public class TodoQuery extends DataQuery {
 	protected Integer configFlag;
 	protected Integer enableFlag;
 	protected Integer sortNo;
+	protected Long todoId;
+	protected List<Long> todoIds;
 	protected String type;
 
 	public TodoQuery() {
@@ -97,6 +100,10 @@ public class TodoQuery extends DataQuery {
 		}
 		this.contentLike = contentLike;
 		return this;
+	}
+
+	public String getActorIdx() {
+		return actorIdx;
 	}
 
 	public String getAllListLinkLike() {
@@ -215,6 +222,14 @@ public class TodoQuery extends DataQuery {
 		return titleLike;
 	}
 
+	public Long getTodoId() {
+		return todoId;
+	}
+
+	public List<Long> getTodoIds() {
+		return todoIds;
+	}
+
 	public String getType() {
 		return type;
 	}
@@ -331,6 +346,10 @@ public class TodoQuery extends DataQuery {
 		return this;
 	}
 
+	public void setActorIdx(String actorIdx) {
+		this.actorIdx = actorIdx;
+	}
+
 	public void setAllListLinkLike(String allListLinkLike) {
 		this.allListLinkLike = allListLinkLike;
 	}
@@ -445,6 +464,14 @@ public class TodoQuery extends DataQuery {
 
 	public void setTitleLike(String titleLike) {
 		this.titleLike = titleLike;
+	}
+
+	public void setTodoId(Long todoId) {
+		this.todoId = todoId;
+	}
+
+	public void setTodoIds(List<Long> todoIds) {
+		this.todoIds = todoIds;
 	}
 
 	public void setType(String type) {

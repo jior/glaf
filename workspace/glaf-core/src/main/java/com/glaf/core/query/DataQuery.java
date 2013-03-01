@@ -52,6 +52,7 @@ public class DataQuery extends BaseQuery {
 	protected String workedProcessFlag;
 	protected List<Integer> parentIds = new ArrayList<Integer>();
 	protected List processInstanceIds = new ArrayList();
+	protected List taskInstanceIds = new ArrayList();
 	protected String sortColumn;
 
 	public DataQuery() {
@@ -188,6 +189,10 @@ public class DataQuery extends BaseQuery {
 		return statusNotEqual;
 	}
 
+	public List getTaskInstanceIds() {
+		return taskInstanceIds;
+	}
+
 	public String getTreeId() {
 		return treeId;
 	}
@@ -206,6 +211,10 @@ public class DataQuery extends BaseQuery {
 
 	public Integer getWfStatusNotEqual() {
 		return wfStatusNotEqual;
+	}
+
+	public String getWorkedProcessFlag() {
+		return workedProcessFlag;
 	}
 
 	public boolean isProcessInstanceIsNotNull() {
@@ -382,6 +391,10 @@ public class DataQuery extends BaseQuery {
 
 	public void setStatusNotEqual(Integer statusNotEqual) {
 		this.statusNotEqual = statusNotEqual;
+	}
+
+	public void setTaskInstanceIds(List taskInstanceIds) {
+		this.taskInstanceIds = taskInstanceIds;
 	}
 
 	public void setTreeId(String treeId) {

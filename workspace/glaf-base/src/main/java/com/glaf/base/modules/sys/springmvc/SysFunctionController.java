@@ -45,10 +45,10 @@ import com.glaf.base.utils.RequestUtil;
 public class SysFunctionController {
 	private static final Log logger = LogFactory
 			.getLog(SysFunctionController.class);
-	
+
 	@javax.annotation.Resource
 	private SysFunctionService sysFunctionService;
-	
+
 	@javax.annotation.Resource
 	private SysApplicationService sysApplicationService;
 

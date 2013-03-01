@@ -206,7 +206,7 @@ public class TodoInstance implements java.io.Serializable {
 
 	private long versionNo;
 
-	private Todo toDo;
+	private Todo todo;
 
 	public TodoInstance() {
 
@@ -365,7 +365,7 @@ public class TodoInstance implements java.io.Serializable {
 	}
 
 	public Todo getTodo() {
-		return toDo;
+		return todo;
 	}
 
 	public long getTodoId() {
@@ -519,8 +519,8 @@ public class TodoInstance implements java.io.Serializable {
 		this.title = title;
 	}
 
-	public void setTodo(Todo toDo) {
-		this.toDo = toDo;
+	public void setTodo(Todo todo) {
+		this.todo = todo;
 	}
 
 	public void setTodoId(long todoId) {

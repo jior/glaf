@@ -37,7 +37,7 @@ import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.workspace.actionform.MyMenuForm;
 import com.glaf.base.modules.workspace.model.MyMenu;
 import com.glaf.base.modules.workspace.service.MyMenuService;
-import com.glaf.base.utils.PageResult;
+import com.glaf.core.util.PageResult;
 import com.glaf.base.utils.ParamUtil;
 import com.glaf.base.utils.RequestUtil;
 import com.glaf.base.utils.StringTools;

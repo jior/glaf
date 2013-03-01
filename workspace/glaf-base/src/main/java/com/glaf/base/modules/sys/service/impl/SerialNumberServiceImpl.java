@@ -1229,11 +1229,11 @@ public class SerialNumberServiceImpl implements SerialNumberService {
 		logger.debug("yyMMdd=" + WebUtil.dateToString(new Date(), "yyMMdd"));
 
 		Calendar lastCal = Calendar.getInstance();
-		lastCal.setTime(WebUtil.stringToDate("2007-07-21")); 
+		lastCal.setTime(WebUtil.stringToDate("2007-07-21"));
 
 		Calendar curCal = Calendar.getInstance();
 		Date curDate = WebUtil.stringToDate(WebUtil.dateToString(new Date()));// 只包含年月日的日期
-		curCal.setTime(curDate);  
+		curCal.setTime(curDate);
 
 		boolean reCaculate = true;
 		int intervel = Constants.INTERVEL_3;// ///////

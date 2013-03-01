@@ -25,7 +25,7 @@ import java.util.Map;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.type.Type;
 
-import com.glaf.base.utils.PageResult;
+import com.glaf.core.util.PageResult;
 
 /**
  * 持久服务接口，实现CRUD基本方法

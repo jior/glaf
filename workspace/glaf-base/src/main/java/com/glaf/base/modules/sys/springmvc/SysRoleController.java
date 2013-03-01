@@ -34,7 +34,7 @@ import com.glaf.base.modules.sys.service.SysRoleService;
 import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
 import com.glaf.core.res.ViewMessages;
-import com.glaf.base.utils.PageResult;
+import com.glaf.core.util.PageResult;
 import com.glaf.base.utils.ParamUtil;
 import com.glaf.base.utils.RequestUtil;
 
@@ -43,7 +43,7 @@ import com.glaf.base.utils.RequestUtil;
 public class SysRoleController {
 	private static final Log logger = LogFactory
 			.getLog(SysRoleController.class);
-	
+
 	@javax.annotation.Resource
 	private SysRoleService sysRoleService;
 

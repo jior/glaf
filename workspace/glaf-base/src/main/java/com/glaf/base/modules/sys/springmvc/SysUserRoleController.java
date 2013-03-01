@@ -51,7 +51,7 @@ public class SysUserRoleController {
 
 	@javax.annotation.Resource
 	private SysUserRoleService sysUserRoleService;
-	
+
 	@javax.annotation.Resource
 	private SysUserService sysUserService;
 

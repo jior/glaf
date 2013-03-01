@@ -46,8 +46,9 @@ import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import com.glaf.core.util.DateUtils;
+import com.glaf.core.util.PageResult;
 import com.glaf.core.util.ReflectUtils;
-import com.glaf.base.utils.PageResult;
+ 
 
 /**
  * 抽象Dao类，实现CRUD基本方法
@@ -392,7 +393,10 @@ public class AbstractSpringDao extends HibernateDaoSupport {
 						Object value = params.get(name);
 						if (value != null) {
 							if (value instanceof Collection) {
-								query.setParameterList(name, (Collection) value);
+								Collection collection = (Collection)value;
+								if(!collection.isEmpty()){
+								  query.setParameterList(name, (Collection) value);
+								} 
 							} else {
 								query.setParameter(name, value);
 							}

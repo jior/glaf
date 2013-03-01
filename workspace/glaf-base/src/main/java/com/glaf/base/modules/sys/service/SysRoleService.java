@@ -21,7 +21,7 @@ package com.glaf.base.modules.sys.service;
 import java.util.List;
 
 import com.glaf.base.modules.sys.model.SysRole;
-import com.glaf.base.utils.PageResult;
+import com.glaf.core.util.PageResult;
 
 public interface SysRoleService {
 

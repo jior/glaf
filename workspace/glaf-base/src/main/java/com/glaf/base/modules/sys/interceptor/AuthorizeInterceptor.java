@@ -143,7 +143,7 @@ public class AuthorizeInterceptor implements MethodBeforeAdvice {
 			logger.debug("function:" + iter);
 			while (iter.hasNext()) {
 				BaseDataInfo bdi = (BaseDataInfo) iter.next();
-				//logger.debug("sys function:" + bdi.getCode());
+				// logger.debug("sys function:" + bdi.getCode());
 				if (bdi.getCode().equals(methodName)) {// ’“µΩ
 					ret = true;
 					break;

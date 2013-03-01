@@ -39,7 +39,7 @@ import com.glaf.base.modules.sys.service.SysTreeService;
 import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
 import com.glaf.core.res.ViewMessages;
-import com.glaf.base.utils.PageResult;
+import com.glaf.core.util.PageResult;
 import com.glaf.base.utils.ParamUtil;
 import com.glaf.base.utils.RequestUtil;
 
@@ -48,10 +48,10 @@ import com.glaf.base.utils.RequestUtil;
 public class SysApplicationController {
 	private static final Log logger = LogFactory
 			.getLog(SysApplicationController.class);
-	
+
 	@javax.annotation.Resource
 	private SysApplicationService sysApplicationService;
-	
+
 	@javax.annotation.Resource
 	private SysTreeService sysTreeService;
 
@@ -102,7 +102,7 @@ public class SysApplicationController {
 	@RequestMapping(params = "method=prepareAdd")
 	public ModelAndView prepareAdd(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		//RequestUtil.setRequestParameterToAttribute(request);
+		// RequestUtil.setRequestParameterToAttribute(request);
 		return new ModelAndView("/modules/sys/app/app_add", modelMap);
 	}
 
@@ -157,7 +157,7 @@ public class SysApplicationController {
 	@RequestMapping(params = "method=prepareModify")
 	public ModelAndView prepareModify(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		//RequestUtil.setRequestParameterToAttribute(request);
+		// RequestUtil.setRequestParameterToAttribute(request);
 		long id = ParamUtil.getIntParameter(request, "id", 0);
 		SysApplication bean = sysApplicationService.findById(id);
 		request.setAttribute("bean", bean);

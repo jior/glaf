@@ -23,7 +23,7 @@ import java.util.Map;
 
 import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.sys.model.SysUserRole;
-import com.glaf.base.utils.PageResult;
+import com.glaf.core.util.PageResult;
 
 public interface SysUserRoleService {
 

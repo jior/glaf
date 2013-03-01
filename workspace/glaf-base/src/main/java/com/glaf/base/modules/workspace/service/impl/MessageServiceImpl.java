@@ -33,7 +33,7 @@ import com.glaf.base.dao.AbstractSpringDao;
 import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.workspace.model.Message;
 import com.glaf.base.modules.workspace.service.MessageService;
-import com.glaf.base.utils.PageResult;
+import com.glaf.core.util.PageResult;
 import com.glaf.base.utils.WebUtil;
 
 public class MessageServiceImpl implements MessageService{

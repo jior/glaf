@@ -36,8 +36,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
- 
-
 import com.glaf.base.modules.Constants;
 import com.glaf.base.modules.sys.model.SysDepartment;
 import com.glaf.base.modules.sys.model.SysDeptRole;
@@ -52,7 +50,7 @@ import com.glaf.base.modules.sys.service.SysUserService;
 import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
 import com.glaf.core.res.ViewMessages;
-import com.glaf.base.utils.PageResult;
+import com.glaf.core.util.PageResult;
 import com.glaf.base.utils.ParamUtil;
 import com.glaf.base.utils.RequestUtil;
 import com.glaf.core.security.DigestUtil;
@@ -62,19 +60,19 @@ import com.glaf.core.security.DigestUtil;
 public class SysUserController {
 	private static final Log logger = LogFactory
 			.getLog(SysUserController.class);
-	
+
 	@javax.annotation.Resource
 	private SysUserService sysUserService;
-	
+
 	@javax.annotation.Resource
 	private SysDeptRoleService sysDeptRoleService;
-	
+
 	@javax.annotation.Resource
 	private SysTreeService sysTreeService;
-	
+
 	@javax.annotation.Resource
 	private SysDepartmentService sysDepartmentService;
-	
+
 	@javax.annotation.Resource
 	private SysRoleService sysRoleService;
 
@@ -247,7 +245,7 @@ public class SysUserController {
 	@RequestMapping(params = "method=prepareAdd")
 	public ModelAndView prepareAdd(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		//RequestUtil.setRequestParameterToAttribute(request);
+		// RequestUtil.setRequestParameterToAttribute(request);
 		return new ModelAndView("/modules/sys/user/user_add", modelMap);
 	}
 
@@ -818,15 +816,13 @@ public class SysUserController {
 		int deptId = ParamUtil.getIntParameter(request, "deptId", 0);
 		int pageNo = ParamUtil.getIntParameter(request, "page_no", 1);
 		int pageSize = ParamUtil.getIntParameter(request, "page_size", 20);
-		 
+
 		PageResult pager = sysUserService.getSysUserList(deptId, userName,
 				account, pageNo, pageSize);
 		request.setAttribute("pager", pager);
 		return new ModelAndView("/modules/sys/user/user_password_list",
 				modelMap);
 	}
-
- 
 
 	/**
 	 * ÏÔÊ¾½ÇÉ«

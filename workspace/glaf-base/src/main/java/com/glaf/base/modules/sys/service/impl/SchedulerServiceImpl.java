@@ -28,7 +28,6 @@ import com.glaf.base.dao.AbstractSpringDao;
 import com.glaf.base.modules.sys.model.*;
 import com.glaf.base.modules.sys.service.*;
 import com.glaf.core.util.UUID32;
- 
 
 public class SchedulerServiceImpl implements SchedulerService {
 	protected static final Log logger = LogFactory

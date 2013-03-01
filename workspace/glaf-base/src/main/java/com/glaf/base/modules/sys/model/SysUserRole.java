@@ -24,7 +24,6 @@ import com.alibaba.fastjson.*;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.glaf.base.modules.sys.util.SysUserRoleJsonFactory;
 import com.glaf.core.base.JSONable;
- 
 
 public class SysUserRole implements Serializable, JSONable {
 	private static final long serialVersionUID = 4335486314285694158L;

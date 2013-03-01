@@ -43,6 +43,7 @@ import com.glaf.base.modules.todo.TodoConstants;
 
 import com.glaf.core.todo.Todo;
 import com.glaf.core.todo.TodoInstance;
+import com.glaf.core.todo.query.TodoQuery;
 import com.glaf.base.modules.workspace.model.Message;
 import com.glaf.base.utils.DateTools;
 
@@ -74,7 +75,7 @@ public class SendMessageBean {
 		Collection agentIds = ProcessContainer.getContainer().getAgentIds(
 				actorId);
 
-		Collection appXIds = new HashSet();
+		List<Long> appXIds = new ArrayList<Long>();
 		Collection appIds = new HashSet();
 
 		Collection apps = user.getApps();
@@ -87,7 +88,7 @@ public class SendMessageBean {
 		while (it.hasNext()) {
 			SysApplication app = (SysApplication) it.next();
 			appIds.add(new Long(app.getId()));
-			appXIds.add(new Integer((int) app.getId()));
+			appXIds.add(new Long( app.getId()));
 		}
 
 		if (agentIds != null && agentIds.size() > 0) {
@@ -103,7 +104,7 @@ public class SendMessageBean {
 					while (it2.hasNext()) {
 						SysApplication app = (SysApplication) it2.next();
 						appIds.add(new Long(app.getId()));
-						appXIds.add(new Integer((int) app.getId()));
+						appXIds.add(new Long( app.getId()));
 					}
 				}
 			}
@@ -131,22 +132,22 @@ public class SendMessageBean {
 			if (agentIds != null && agentIds.size() > 0) {
 				actorIds.addAll(agentIds);
 			}
-			Map params = new HashMap();
+			TodoQuery query = new TodoQuery();
 			List taskInstanceIds = ProcessContainer.getContainer()
 					.getRunningTaskInstanceIds(actorIds);
 			if (taskInstanceIds != null && taskInstanceIds.size() > 0) {
-				params.put("taskInstanceIds", taskInstanceIds);
-				params.put("actorIds", actorIds);
-				params.put("provider", "jbpm");
+				query.setTaskInstanceIds(taskInstanceIds);
+				query.setActorIds(actorIds);
+				query.setProvider("jbpm");
 			} else {
-				params.put("actorIds", actorIds);
-				params.put("provider", "jbpm");
+				query.setActorIds(actorIds);
+				query.setProvider("jbpm");
 			}
 
 			/**
 			 * 获取工作流的TODO实例
 			 */
-			Collection rows = todoService.getTodoInstanceList(params);
+			Collection rows = todoService.getTodoInstanceList(query);
 			if (rows != null && rows.size() > 0) {
 				logger.info(user.getName() + "的工作流任务有" + rows.size() + "项.");
 				Iterator iterator008 = rows.iterator();
@@ -173,14 +174,15 @@ public class SendMessageBean {
 				}
 			}
 
-			Map p = new HashMap();
-			p.put("provider", "sql");
-			p.put("appIds", appXIds);
+ 
+			TodoQuery q = new TodoQuery();
+			q.setProvider("sql");
+			q.setAppIds(appXIds);
 
 			/**
 			 * 根据TODO sql配置取得的TODO实例
 			 */
-			Collection rows_sql = todoService.getTodoInstanceList(p);
+			Collection rows_sql = todoService.getTodoInstanceList(q);
 
 			if (rows_sql != null && rows_sql.size() > 0) {
 				logger.info("全部的sql任务共有" + rows_sql.size() + "项.");
@@ -362,7 +364,7 @@ public class SendMessageBean {
 		Collection agentIds = ProcessContainer.getContainer().getAgentIds(
 				actorId);
 
-		Collection appXIds = new HashSet();
+		List appXIds = new ArrayList();
 		Collection appIds = new HashSet();
 
 		Collection apps = user.getApps();
@@ -412,20 +414,21 @@ public class SendMessageBean {
 
 		if (appXIds.size() > 0) {
 
-			Collection actorIds = new HashSet();
+			List actorIds = new ArrayList();
 			actorIds.add(actorId);
 			if (agentIds != null && agentIds.size() > 0) {
 				actorIds.addAll(agentIds);
 			}
 
-			Map params = new HashMap();
-			params.put("actorIds", actorIds);
-			params.put("provider", "jbpm");
+		 
+			TodoQuery query = new TodoQuery();
+			query.setActorIds(actorIds);
+			query.setProvider("jbpm");
 
 			/**
 			 * 获取工作流的TODO实例
 			 */
-			Collection rows = todoService.getTodoInstanceList(params);
+			Collection rows = todoService.getTodoInstanceList(query);
 
 			if (rows != null && rows.size() > 0) {
 				logger.info(user.getName() + "的工作流任务有" + rows.size() + "项.");
@@ -449,18 +452,22 @@ public class SendMessageBean {
 							rows99.add(tdi);
 						}
 					}
-					// update by key 2012-05-14 end
+					 
 				}
 			}
 
-			Map p = new HashMap();
-			p.put("provider", "sql");
-			p.put("appIds", appXIds);
+			 
+		 
+			
+			TodoQuery q = new TodoQuery();
+			q.setAppIds(appXIds);
+			q.setProvider("sql");
+			
 
 			/**
 			 * 根据TODO sql配置取得的TODO实例
 			 */
-			Collection rows_sql = todoService.getTodoInstanceList(p);
+			Collection rows_sql = todoService.getTodoInstanceList(q);
 
 			if (rows_sql != null && rows_sql.size() > 0) {
 				logger.info("全部的sql任务共有" + rows_sql.size() + "项.");
@@ -655,7 +662,7 @@ public class SendMessageBean {
 		List<String> agentIds = ProcessContainer.getContainer().getAgentIds(
 				actorId);
 
-		Collection appXIds = new HashSet();
+		List appXIds = new ArrayList();
 		Collection appIds = new HashSet();
 
 		Collection apps = user.getApps();
@@ -709,22 +716,24 @@ public class SendMessageBean {
 			if (agentIds != null && agentIds.size() > 0) {
 				actorIds.addAll(agentIds);
 			}
-			Map params = new HashMap();
+			TodoQuery q = new TodoQuery();
+			 
+			
 			List taskInstanceIds = ProcessContainer.getContainer()
 					.getRunningTaskInstanceIds(actorIds);
 			if (taskInstanceIds != null && taskInstanceIds.size() > 0) {
-				params.put("taskInstanceIds", taskInstanceIds);
-				params.put("actorIds", actorIds);
-				params.put("provider", "jbpm");
+				q.setTaskInstanceIds(taskInstanceIds);
+				q.setActorIds(actorIds);
+				q.setProvider("jbpm");
 			} else {
-				params.put("actorIds", actorIds);
-				params.put("provider", "jbpm");
+				q.setActorIds(actorIds);
+				q.setProvider("jbpm");
 			}
 
 			/**
 			 * 获取工作流的TODO实例
 			 */
-			Collection rows = todoService.getTodoInstanceList(params);
+			Collection rows = todoService.getTodoInstanceList(q);
 
 			if (rows != null && rows.size() > 0) {
 				// ##System.out.println(user.getName() + "的工作流任务有" +
@@ -752,15 +761,15 @@ public class SendMessageBean {
 
 				}
 			}
+			TodoQuery qx = new TodoQuery();
+			qx.setProvider("sql");
+			qx.setAppIds(appXIds);
 
-			Map p = new HashMap();
-			p.put("provider", "sql");
-			p.put("appIds", appXIds);
 
 			/**
 			 * 根据TODO sql配置取得的TODO实例
 			 */
-			Collection rows_sql = todoService.getTodoInstanceList(p);
+			Collection rows_sql = todoService.getTodoInstanceList(qx);
 
 			if (rows_sql != null && rows_sql.size() > 0) {
 				logger.info("全部的sql任务共有" + rows_sql.size() + "项.");
@@ -980,8 +989,8 @@ public class SendMessageBean {
 
 	public void sendMessagex() {
 		logger.info("...................sendMessage().....................");
-		Map params = new HashMap();
-		List rows = todoService.getTodoInstanceList(params);
+		TodoQuery query = new TodoQuery();
+		List rows = todoService.getTodoInstanceList(query);
 		if (rows == null || rows.size() == 0) {
 			return;
 		}

@@ -1,31 +1,28 @@
 /*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.glaf.base.modules.todo.service;
 
 import java.util.*;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Hibernate;
-
- 
 
 import com.glaf.core.cache.CacheFactory;
 import com.glaf.base.dao.AbstractSpringDao;
@@ -36,9 +33,10 @@ import com.glaf.base.modules.todo.TodoConstants;
 import com.glaf.base.modules.todo.dao.TodoDAO;
 import com.glaf.core.todo.Todo;
 import com.glaf.core.todo.TodoInstance;
+import com.glaf.core.todo.query.TodoQuery;
 import com.glaf.base.modules.todo.model.UserEntity;
-import com.glaf.base.utils.DateTools;
 
+@SuppressWarnings({ "unchecked", "rawtypes" })
 public class TodoServiceImpl implements TodoService {
 
 	private final static Log logger = LogFactory.getLog(TodoServiceImpl.class);
@@ -89,7 +87,6 @@ public class TodoServiceImpl implements TodoService {
 		if (rows.size() > 0) {
 			todoDAO.saveAll(rows);
 		}
-
 	}
 
 	public void createTasksOfWorkflow(List rows) {
@@ -123,10 +120,9 @@ public class TodoServiceImpl implements TodoService {
 	}
 
 	public List getAllTodoList() {
-		return abstractDao
-				.getList(
-						" from com.glaf.core.todo.Todo as a order by a.moduleId asc ",
-						null);
+		return abstractDao.getList(
+				" from com.glaf.core.todo.Todo as a order by a.moduleId asc ",
+				null);
 	}
 
 	public Map getDepartmentMap() {
@@ -219,7 +215,7 @@ public class TodoServiceImpl implements TodoService {
 	}
 
 	public List getSQLTodos() {
-		String cacheKey = "cache_sqltodos";
+		String cacheKey = "cache_sql_todos";
 		if (CacheFactory.get(cacheKey) != null) {
 			return (List) CacheFactory.get(cacheKey);
 		}
@@ -255,435 +251,201 @@ public class TodoServiceImpl implements TodoService {
 		return todo;
 	}
 
-	public List getTodoInstanceList(Map paramMap) {
+	public List getTodoInstanceList(TodoQuery query) {
 		Map params = new LinkedHashMap();
 		StringBuffer buffer = new StringBuffer();
 		buffer.append(" from com.glaf.core.todo.TodoInstance as a where 1=1 ");
 
-		if (paramMap.get("actorId") != null) {
-			params.put("actorId", paramMap.get("actorId"));
+		if (query.getActorId() != null) {
+			params.put("actorId", query.getActorId());
 			buffer.append(" and a.actorId = :actorId ");
 		}
 
-		if (paramMap.get("actorIdx") != null) {
-			String actorIdx = (String) paramMap.get("actorIdx");
-			List rows = getUserEntityList(actorIdx);
-			if (rows != null && rows.size() > 0) {
+		String actorIdx = query.getActorIdx();
+		List rows = getUserEntityList(actorIdx);
+		if (rows != null && rows.size() > 0) {
 
-				boolean isDeptAdmin = false;
-				boolean isStockTopManager = false;
+			boolean isDeptAdmin = false;
+			boolean isStockTopManager = false;
 
-				Set roleIds = new HashSet();
-				Set deptIds = new HashSet();
-				Set actorxIds = new HashSet();
+			Set roleIds = new HashSet();
+			Set deptIds = new HashSet();
+			Set actorxIds = new HashSet();
 
-				actorxIds.add(actorIdx);
+			actorxIds.add(actorIdx);
 
-				Collection roles = sysUserService.findByAccount(actorIdx)
-						.getRoles();
-				if (roles != null && roles.size() > 0) {
-					Iterator iteratorxy = roles.iterator();
-					while (iteratorxy.hasNext()) {
-						SysDeptRole sysDeptRole = (SysDeptRole) iteratorxy
-								.next();
-						SysRole role = sysDeptRole.getRole();
-						SysDepartment dept = sysDeptRole.getDept();
-						roleIds.add(new Long(role.getId()));
-						deptIds.add(new Long(dept.getId()));
-					}
+			Collection roles = sysUserService.findByAccount(actorIdx)
+					.getRoles();
+			if (roles != null && roles.size() > 0) {
+				Iterator iteratorxy = roles.iterator();
+				while (iteratorxy.hasNext()) {
+					SysDeptRole sysDeptRole = (SysDeptRole) iteratorxy.next();
+					SysRole role = sysDeptRole.getRole();
+					SysDepartment dept = sysDeptRole.getDept();
+					roleIds.add(new Long(role.getId()));
+					deptIds.add(new Long(dept.getId()));
 				}
+			}
 
-				logger.info("@@deptIds:" + deptIds);
-				logger.info("@@roleIds:" + roleIds);
+			logger.info("@@deptIds:" + deptIds);
+			logger.info("@@roleIds:" + roleIds);
 
-				Iterator iterator = rows.iterator();
-				while (iterator.hasNext()) {
-					UserEntity entity = (UserEntity) iterator.next();
-					roleIds.add(new Long(entity.getRoleId()));
-					deptIds.add(new Long(entity.getDeptId()));
-					actorxIds.add(entity.getActorId());
+			Iterator iterator = rows.iterator();
+			while (iterator.hasNext()) {
+				UserEntity entity = (UserEntity) iterator.next();
+				roleIds.add(new Long(entity.getRoleId()));
+				deptIds.add(new Long(entity.getDeptId()));
+				actorxIds.add(entity.getActorId());
 
-					if (entity.getRoleId() == 6 || entity.getRoleId() == 1) {
-						isDeptAdmin = true;
-						List list = new ArrayList();
-						SysDepartment node = sysDepartmentService
-								.findById(entity.getDeptId());
-						sysDepartmentService.findNestingDepartment(list, node);
-						if (list != null && list.size() > 0) {
-							Iterator iter007 = list.iterator();
-							while (iter007.hasNext()) {
-								SysDepartment dept = (SysDepartment) iter007
-										.next();
-								deptIds.add(new Long(dept.getId()));
-							}
+				if (entity.getRoleId() == 6 || entity.getRoleId() == 1) {
+					isDeptAdmin = true;
+					List list = new ArrayList();
+					SysDepartment node = sysDepartmentService.findById(entity
+							.getDeptId());
+					sysDepartmentService.findNestingDepartment(list, node);
+					if (list != null && list.size() > 0) {
+						Iterator iter007 = list.iterator();
+						while (iter007.hasNext()) {
+							SysDepartment dept = (SysDepartment) iter007.next();
+							deptIds.add(new Long(dept.getId()));
 						}
 					}
-					if (entity.getRoleId() == 1 && entity.getDeptId() == 134) {
-						isStockTopManager = true;
-					}
 				}
-
-				if (!isDeptAdmin) {
-					params.put("roleIds", roleIds);
-					buffer.append(" and a.roleId in ( :roleIds ) ");
+				if (entity.getRoleId() == 1 && entity.getDeptId() == 134) {
+					isStockTopManager = true;
 				}
-
-				if (!isStockTopManager) {
-					params.put("deptIds", deptIds);
-					buffer.append(" and a.deptId in ( :deptIds ) ");
-				}
-
-				if (!(isDeptAdmin || isStockTopManager)) {
-					params.put("actorxIds", actorxIds);
-					buffer.append(" and a.actorId in ( :actorxIds ) ");
-				}
-
 			}
+
+			if (!isDeptAdmin) {
+				params.put("roleIds", roleIds);
+				buffer.append(" and a.roleId in ( :roleIds ) ");
+			}
+
+			if (!isStockTopManager) {
+				params.put("deptIds", deptIds);
+				buffer.append(" and a.deptId in ( :deptIds ) ");
+			}
+
+			if (!(isDeptAdmin || isStockTopManager)) {
+				params.put("actorxIds", actorxIds);
+				buffer.append(" and a.actorId in ( :actorxIds ) ");
+			}
+
 		}
 
-		if (paramMap.get("actorIds") != null) {
-			params.put("actorIds", paramMap.get("actorIds"));
+		if (query.getActorIds() != null && !query.getActorIds().isEmpty()) {
+			params.put("actorIds", query.getActorIds());
 			buffer.append(" and a.actorId in ( :actorIds ) ");
 		}
 
-		if (paramMap.get("objectId") != null) {
-			params.put("objectId", paramMap.get("objectId"));
+		if (query.getObjectId() != null) {
+			params.put("objectId", query.getObjectId());
 			buffer.append(" and a.objectId = :objectId ");
 		}
 
-		if (paramMap.get("objectIds") != null) {
-			params.put("objectIds", paramMap.get("objectIds"));
+		if (query.getObjectIds() != null && !query.getObjectIds().isEmpty()) {
+			params.put("objectIds", query.getObjectIds());
 			buffer.append(" and a.objectId in ( :objectIds ) ");
 		}
 
-		if (paramMap.get("objectValue") != null) {
-			params.put("objectValue", paramMap.get("objectValue"));
+		if (query.getObjectValue() != null) {
+			params.put("objectValue", query.getObjectValue());
 			buffer.append(" and a.objectValue = :objectValue ");
 		}
 
-		if (paramMap.get("objectValues") != null) {
-			params.put("objectValues", paramMap.get("objectValues"));
+		if (query.getObjectValues() != null
+				&& !query.getObjectValues().isEmpty()) {
+			params.put("objectValues", query.getObjectValues());
 			buffer.append(" and a.objectValue in ( :objectValues ) ");
 		}
 
-		if (paramMap.get("processInstanceId") != null) {
-			params.put("processInstanceId", paramMap.get("processInstanceId"));
+		if (query.getProcessInstanceId() != null) {
+			params.put("processInstanceId", query.getProcessInstanceId());
 			buffer.append(" and a.processInstanceId = :processInstanceId ");
 		}
 
-		if (paramMap.get("processInstanceIds") != null) {
-			params.put("processInstanceIds", paramMap.get("processInstanceIds"));
+		if (query.getProcessInstanceIds() != null
+				&& !query.getProcessInstanceIds().isEmpty()) {
+			params.put("processInstanceIds", query.getProcessInstanceIds());
 			buffer.append(" and a.processInstanceId in ( :processInstanceIds ) ");
 		}
 
-		if (paramMap.get("taskInstanceId") != null) {
-			params.put("taskInstanceId", paramMap.get("taskInstanceId"));
-			buffer.append(" and a.taskInstanceId = :taskInstanceId ");
-		}
-
-		if (paramMap.get("taskInstanceIds") != null) {
-			params.put("taskInstanceIds", paramMap.get("taskInstanceIds"));
-			buffer.append(" and a.taskInstanceId in ( :taskInstanceIds ) ");
-		}
-
-		if (paramMap.get("provider") != null) {
-			params.put("provider", paramMap.get("provider"));
+		if (query.getProvider() != null) {
+			params.put("provider", query.getProvider());
 			buffer.append(" and a.provider = :provider ");
 		}
 
-		if (paramMap.get("roleId") != null) {
-			Object obj = paramMap.get("roleId");
-			if (obj instanceof java.lang.Long) {
-				params.put("roleId", paramMap.get("roleId"));
-			} else {
-				String roleId = (String) obj;
-				params.put("roleId", new Long(roleId));
-			}
+		if (query.getRoleId() != null) {
+			params.put("roleId", query.getRoleId());
 			buffer.append(" and ( a.roleId = :roleId )");
 		}
 
-		if (paramMap.get("roleIds") != null) {
-			params.put("roleIds", paramMap.get("roleIds"));
+		if (query.getRoleIds() != null && !query.getRoleIds().isEmpty()) {
+			params.put("roleIds", query.getRoleIds());
 			buffer.append(" and a.roleId in ( :roleIds ) ");
 		}
 
-		if (paramMap.get("deptId") != null) {
-			Object obj = paramMap.get("deptId");
-			if (obj instanceof java.lang.Long) {
-				params.put("deptId", paramMap.get("deptId"));
-			} else {
-				String deptId = (String) obj;
-				params.put("deptId", new Long(deptId));
-			}
+		if (query.getDeptId() != null) {
+
+			params.put("deptId", query.getDeptId());
+
 			buffer.append(" and ( a.deptId = :deptId )");
 		}
 
-		if (paramMap.get("deptIds") != null) {
-			params.put("deptIds", paramMap.get("deptIds"));
+		if (query.getDeptIds() != null && !query.getDeptIds().isEmpty()) {
+			params.put("deptIds", query.getDeptIds());
 			buffer.append(" and a.deptId in ( :deptIds ) ");
 		}
 
-		if (paramMap.get("todoId") != null) {
-			Object obj = paramMap.get("todoId");
-			if (obj instanceof java.lang.Long) {
-				params.put("todoId", paramMap.get("todoId"));
-			} else {
-				String todoId = (String) obj;
-				params.put("todoId", new Long(todoId));
-			}
+		if (query.getTodoId() != null) {
+
+			params.put("todoId", query.getTodoId());
+
 			buffer.append(" and ( a.todoId = :todoId )");
 		}
 
-		if (paramMap.get("todoIds") != null) {
-			params.put("todoIds", paramMap.get("todoIds"));
+		if (query.getTodoIds() != null && !query.getTodoIds().isEmpty()) {
+			params.put("todoIds", query.getTodoIds());
 			buffer.append(" and a.todoId in ( :todoIds ) ");
 		}
 
-		if (paramMap.get("appId") != null) {
-			Object obj = paramMap.get("appId");
-			if (obj instanceof java.lang.Integer) {
-				params.put("appId", paramMap.get("appId"));
-			} else {
-				String appId = (String) obj;
-				params.put("appId", new Integer(appId));
-			}
+		if (query.getAppId() != null) {
+
+			params.put("appId", query.getAppId());
+
 			buffer.append(" and ( a.appId = :appId )");
 		}
 
-		if (paramMap.get("appIds") != null) {
-			params.put("appIds", paramMap.get("appIds"));
+		if (query.getAppIds() != null && !query.getAppIds().isEmpty()) {
+			params.put("appIds", query.getAppIds());
 			buffer.append(" and a.appId in ( :appIds ) ");
 		}
 
-		if (paramMap.get("moduleId") != null) {
-			Object obj = paramMap.get("moduleId");
-			if (obj instanceof java.lang.Integer) {
-				params.put("moduleId", paramMap.get("moduleId"));
-			} else {
-				String moduleId = (String) obj;
-				params.put("moduleId", new Integer(moduleId));
-			}
+		if (query.getModuleId() != null) {
+
+			params.put("moduleId", query.getModuleId());
+
 			buffer.append(" and ( a.moduleId = :moduleId )");
 		}
 
-		if (paramMap.get("moduleIds") != null) {
-			params.put("moduleIds", paramMap.get("moduleIds"));
+		if (query.getModuleIds() != null && !query.getModuleIds().isEmpty()) {
+			params.put("moduleIds", query.getModuleIds());
 			buffer.append(" and a.moduleId in ( :moduleIds ) ");
 		}
 
-		if (paramMap.get("actorName") != null) {
-			String actorName = (String) paramMap.get("actorName");
-			if (StringUtils.isNumeric(actorName)) {
-				params.put("actorId_xyz", "%" + paramMap.get("actorName") + "%");
-				buffer.append(" and a.actorId like :actorId_xyz ");
-			} else {
-				params.put("actorName", "%" + paramMap.get("actorName") + "%");
-				buffer.append(" and a.actorName like :actorName ");
-			}
-		}
-
-		if (paramMap.get("deptName") != null) {
-			params.put("deptName", "%" + paramMap.get("deptName") + "%");
-			buffer.append(" and a.deptName like :deptName ");
-		}
-
-		if (paramMap.get("createDate") != null) {
-			Object obj = paramMap.get("createDate");
-			if (obj instanceof java.util.Date) {
-				params.put("createDate", paramMap.get("createDate"));
-			} else {
-				String dateTime = (String) obj;
-				if (!dateTime.endsWith(" 00:00:00")) {
-					dateTime += " 00:00:00";
-				}
-				Date date = DateTools.toDate(dateTime);
-				params.put("createDate", date);
-			}
-			buffer.append(" and ( a.createDate >= :createDate )");
-		}
-
-		if (paramMap.get("createDate_start") != null) {
-			Object obj = paramMap.get("createDate_start");
-			if (obj instanceof java.util.Date) {
-				params.put("createDate_start", paramMap.get("createDate_start"));
-			} else {
-				String dateTime = (String) obj;
-				if (!dateTime.endsWith(" 00:00:00")) {
-					dateTime += " 00:00:00";
-				}
-				Date date = DateTools.toDate(dateTime);
-				params.put("createDate_start", date);
-			}
+		if (query.getAfterCreateDate() != null) {
+			params.put("createDate_start", query.getAfterCreateDate());
 			buffer.append(" and ( a.createDate >= :createDate_start )");
 		}
 
-		if (paramMap.get("createDate_end") != null) {
-			Object obj = paramMap.get("createDate_end");
-			if (obj instanceof java.util.Date) {
-				params.put("createDate_end", paramMap.get("createDate_end"));
-			} else {
-				String dateTime = (String) obj;
-				if (!dateTime.endsWith(" 23:59:59")) {
-					dateTime += " 23:59:59";
-				}
-				Date date = DateTools.toDate(dateTime);
-				params.put("createDate_end", date);
-			}
+		if (query.getBeforeCreateDate() != null) {
+
+			params.put("createDate_end", query.getBeforeCreateDate());
+
 			buffer.append(" and ( a.createDate <= :createDate_end )");
 		}
 
-		if (paramMap.get("startDate") != null) {
-			Object obj = paramMap.get("startDate");
-			if (obj instanceof java.util.Date) {
-				params.put("startDate", paramMap.get("startDate"));
-			} else {
-				String dateTime = (String) obj;
-				if (!dateTime.endsWith(" 00:00:00")) {
-					dateTime += " 00:00:00";
-				}
-				Date date = DateTools.toDate(dateTime);
-				params.put("startDate", date);
-			}
-			buffer.append(" and ( a.startDate >= :startDate )");
-		}
-
-		if (paramMap.get("startDate_start") != null) {
-			Object obj = paramMap.get("startDate_start");
-			if (obj instanceof java.util.Date) {
-				params.put("startDate_start", paramMap.get("startDate_start"));
-			} else {
-				String dateTime = (String) obj;
-				if (!dateTime.endsWith(" 00:00:00")) {
-					dateTime += " 00:00:00";
-				}
-				Date date = DateTools.toDate(dateTime);
-				params.put("startDate_start", date);
-			}
-			buffer.append(" and ( a.startDate >= :startDate_start )");
-		}
-
-		if (paramMap.get("startDate_end") != null) {
-			Object obj = paramMap.get("startDate_end");
-			if (obj instanceof java.util.Date) {
-				params.put("startDate_end", paramMap.get("startDate_end"));
-			} else {
-				String dateTime = (String) obj;
-				if (!dateTime.endsWith(" 23:59:59")) {
-					dateTime += " 23:59:59";
-				}
-				Date date = DateTools.toDate(dateTime);
-				params.put("startDate_end", date);
-			}
-			buffer.append(" and ( a.startDate <= :startDate_end )");
-		}
-
-		if (paramMap.get("endDate") != null) {
-			Object obj = paramMap.get("endDate");
-			if (obj instanceof java.util.Date) {
-				params.put("endDate", paramMap.get("endDate"));
-			} else {
-				String dateTime = (String) obj;
-				if (!dateTime.endsWith(" 23:59:59")) {
-					dateTime += " 23:59:59";
-				}
-				Date date = DateTools.toDate(dateTime);
-				params.put("endDate", date);
-			}
-			buffer.append(" and ( a.endDate <= :endDate )");
-		}
-
-		if (paramMap.get("endDate_start") != null) {
-			Object obj = paramMap.get("endDate_start");
-			if (obj instanceof java.util.Date) {
-				params.put("endDate_start", paramMap.get("endDate_start"));
-			} else {
-				String dateTime = (String) obj;
-				if (!dateTime.endsWith(" 00:00:00")) {
-					dateTime += " 00:00:00";
-				}
-				Date date = DateTools.toDate(dateTime);
-				params.put("endDate_start", date);
-			}
-			buffer.append(" and ( a.endDate >= :endDate_start )");
-		}
-
-		if (paramMap.get("endDate_end") != null) {
-			Object obj = paramMap.get("endDate_end");
-			if (obj instanceof java.util.Date) {
-				params.put("endDate_end", paramMap.get("endDate_end"));
-			} else {
-				String dateTime = (String) obj;
-				if (!dateTime.endsWith(" 23:59:59")) {
-					dateTime += " 23:59:59";
-				}
-				Date date = DateTools.toDate(dateTime);
-				params.put("endDate_end", date);
-			}
-			buffer.append(" and ( a.endDate <= :endDate_end )");
-		}
-
-		if (paramMap.get("alarmDate_start") != null) {
-			Object obj = paramMap.get("alarmDate_start");
-			if (obj instanceof java.util.Date) {
-				params.put("alarmDate_start", paramMap.get("alarmDate_start"));
-			} else {
-				String dateTime = (String) obj;
-				if (!dateTime.endsWith(" 00:00:00")) {
-					dateTime += " 00:00:00";
-				}
-				Date date = DateTools.toDate(dateTime);
-				params.put("alarmDate_start", date);
-			}
-			buffer.append(" and ( a.alarmDate >= :alarmDate_start )");
-		}
-
-		if (paramMap.get("alarmDate_end") != null) {
-			Object obj = paramMap.get("alarmDate_end");
-			if (obj instanceof java.util.Date) {
-				params.put("alarmDate_end", paramMap.get("alarmDate_end"));
-			} else {
-				String dateTime = (String) obj;
-				if (!dateTime.endsWith(" 23:59:59")) {
-					dateTime += " 23:59:59";
-				}
-				Date date = DateTools.toDate(dateTime);
-				params.put("alarmDate_end", date);
-			}
-			buffer.append(" and ( a.alarmDate <= :alarmDate_end )");
-		}
-
-		if (paramMap.get("pastDueDate_start") != null) {
-			Object obj = paramMap.get("pastDueDate_start");
-			if (obj instanceof java.util.Date) {
-				params.put("pastDueDate_start",
-						paramMap.get("pastDueDate_start"));
-			} else {
-				String dateTime = (String) obj;
-				if (!dateTime.endsWith(" 00:00:00")) {
-					dateTime += " 00:00:00";
-				}
-				Date date = DateTools.toDate(dateTime);
-				params.put("pastDueDate_start", date);
-			}
-			buffer.append(" and ( a.pastDueDate >= :pastDueDate_start )");
-		}
-
-		if (paramMap.get("pastDueDate_end") != null) {
-			Object obj = paramMap.get("pastDueDate_end");
-			if (obj instanceof java.util.Date) {
-				params.put("pastDueDate_end", paramMap.get("pastDueDate_end"));
-			} else {
-				String dateTime = (String) obj;
-				if (!dateTime.endsWith(" 23:59:59")) {
-					dateTime += " 23:59:59";
-				}
-				Date date = DateTools.toDate(dateTime);
-				params.put("pastDueDate_end", date);
-			}
-			buffer.append(" and ( a.pastDueDate <= :pastDueDate_end )");
-		}
-
-		String orderBy = (String) paramMap.get("orderBy");
+		String orderBy = query.getOrderBy();
 		if (orderBy != null) {
 			buffer.append(" order by a.").append(orderBy).append(" asc ");
 		} else {

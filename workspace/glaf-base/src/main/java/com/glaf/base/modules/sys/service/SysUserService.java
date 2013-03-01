@@ -24,7 +24,7 @@ import java.util.Set;
 import com.glaf.base.modules.sys.model.SysDeptRole;
 import com.glaf.base.modules.sys.model.SysUser;
 
-import com.glaf.base.utils.PageResult;
+import com.glaf.core.util.PageResult;
 
 public interface SysUserService {
 
@@ -99,9 +99,10 @@ public interface SysUserService {
 	 * @return SysUser
 	 */
 	SysUser findByAccountWithAll(String account);
-	
+
 	/**
 	 * 获取某个用户的上级
+	 * 
 	 * @param account
 	 * @return
 	 */

@@ -37,7 +37,7 @@ import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.sys.model.SysUserRole;
 import com.glaf.base.modules.sys.service.*;
 import com.glaf.base.modules.utils.BaseUtil;
-import com.glaf.base.utils.PageResult;
+import com.glaf.core.util.PageResult;
 import com.glaf.core.util.DateUtils;
 import com.glaf.core.util.UUID32;
 

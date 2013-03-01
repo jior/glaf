@@ -34,7 +34,7 @@ import com.glaf.base.modules.sys.model.SysApplication;
 import com.glaf.base.modules.sys.model.SysTree;
 import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.sys.service.*;
-import com.glaf.base.utils.PageResult;
+import com.glaf.core.util.PageResult;
 
 public class SysApplicationServiceImpl implements SysApplicationService {
 	private static final Log logger = LogFactory

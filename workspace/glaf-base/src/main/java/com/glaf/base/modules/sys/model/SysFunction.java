@@ -23,7 +23,6 @@ import com.alibaba.fastjson.*;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.glaf.base.modules.sys.util.SysFunctionJsonFactory;
 import com.glaf.core.base.JSONable;
- 
 
 public class SysFunction implements Serializable, JSONable {
 	private static final long serialVersionUID = -4669036487930746301L;

@@ -49,7 +49,7 @@ import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
 
 import com.glaf.core.res.ViewMessages;
-import com.glaf.base.utils.PageResult;
+import com.glaf.core.util.PageResult;
 import com.glaf.base.utils.ParamUtil;
 import com.glaf.base.utils.RequestUtil;
 
@@ -58,10 +58,10 @@ import com.glaf.base.utils.RequestUtil;
 public class DictoryController {
 	private static final Log logger = LogFactory
 			.getLog(DictoryController.class);
-	
+
 	@javax.annotation.Resource
 	private DictoryService dictoryService;
-	
+
 	@javax.annotation.Resource
 	private SysTreeService sysTreeService;
 
