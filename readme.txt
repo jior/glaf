@@ -2,6 +2,9 @@
 ####请先执行copy-jar.bat复制jar到运行环境。       ####
 ######################################################
 
+jvm_args    : -Xms1024m -Xmx1024m -XX:NewSize=64m -XX:MaxNewSize=64m -XX:PermSize=256m -XX:MaxPermSize=512m
+
+
 
 1、点击start-db.bat启动演示数据库
    演示数据库用户名为sa,密码为空
