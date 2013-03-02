@@ -24,6 +24,7 @@ import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -88,6 +89,7 @@ public class AuthorizeController {
 	public ModelAndView login(ModelMap modelMap, HttpServletRequest request,
 			HttpServletResponse response) {
 		RequestUtil.setRequestParameterToAttribute(request);
+		HttpSession session = request.getSession(true);
 		ViewMessages messages = new ViewMessages();
 		// 获取参数
 		String account = ParamUtil.getParameter(request, "account");
@@ -143,12 +145,16 @@ public class AuthorizeController {
 
 			ContextUtil.put(bean.getAccount(), bean);// 传入全局变量
 
+			if(session != null){
 			RequestUtil.setLoginUser(request, bean);
 			RequestUtils.setLoginUser(request, response, "GLAF",
 					bean.getAccount());
 
 			// 保存session对象，跳转到后台主页面
-			request.getSession().setAttribute(SysConstants.MENU, menus);
+			//session.setAttribute(SysConstants.MENU, menus);
+			}
+			
+			request.setAttribute(SysConstants.MENU, menus);
 
 			if (bean.getAccountType() == 1) {// 供应商用户
 				return new ModelAndView("/modules/spframe", modelMap);

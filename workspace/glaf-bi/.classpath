@@ -45,7 +45,6 @@
 	<classpathentry kind="lib" path="/glaf-core/lib/dom4j-1.6.1.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/druid-0.2.10.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/dwr.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/ehcache-core-2.4.7.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/fastjson-1.1.26.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/filterbuilder.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/freemarker.jar"/>
@@ -126,5 +125,6 @@
 	<classpathentry kind="lib" path="/glaf-core/lib/jfreechart-1.0.14.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/mybatis-spring.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/mybatis.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/ehcache-core.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -59,7 +59,7 @@
 
 	<target name="copy-jar">
 		<copy todir="../glaf-web/WebContent/WEB-INF/lib">
-			<fileset dir="." includes="glaf-core.jar,glaf-jbpm.jar"/>
+			<fileset dir="." includes="glaf-core.jar,glaf-jbpm.jar,glaf-mail.jar"/>
 		</copy>
 	</target>
 

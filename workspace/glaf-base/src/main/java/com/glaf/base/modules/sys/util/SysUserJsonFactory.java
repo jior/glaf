@@ -175,6 +175,7 @@ public class SysUserJsonFactory {
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("id", user.getId());
 		jsonObject.put("actorId", user.getAccount());
+		jsonObject.put("code", user.getCode());
 		jsonObject.put("name", user.getName());
 		jsonObject.put("locked", user.getBlocked());
 		if (user.getDepartment() != null) {
@@ -250,6 +251,7 @@ public class SysUserJsonFactory {
 
 		jsonObject.put("id", user.getId());
 		jsonObject.put("actorId", user.getAccount());
+		jsonObject.put("code", user.getCode());
 		jsonObject.put("name", user.getName());
 		jsonObject.put("locked", user.getBlocked());
 		if (user.getDepartment() != null) {

@@ -43,7 +43,6 @@
 	<classpathentry kind="lib" path="lib/dom4j-1.6.1.jar"/>
 	<classpathentry kind="lib" path="lib/druid-0.2.10.jar"/>
 	<classpathentry kind="lib" path="lib/dwr.jar"/>
-	<classpathentry kind="lib" path="lib/ehcache-core-2.4.7.jar"/>
 	<classpathentry kind="lib" path="lib/fastjson-1.1.26.jar"/>
 	<classpathentry kind="lib" path="lib/filterbuilder.jar"/>
 	<classpathentry kind="lib" path="lib/freemarker.jar"/>
@@ -131,5 +130,6 @@
 	<classpathentry kind="lib" path="lib/mybatis-spring.jar"/>
 	<classpathentry kind="lib" path="lib/mybatis.jar"/>
 	<classpathentry kind="lib" path="lib/scannotation-1.0.3.jar"/>
+	<classpathentry kind="lib" path="lib/ehcache-core.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

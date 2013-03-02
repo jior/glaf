@@ -556,8 +556,6 @@ public class RequestUtil {
 		return sysUser;
 	}
 
-	
-
 	public static Object getValue(Class<?> type, String propertyValue) {
 		if (type == null || propertyValue == null) {
 			return null;
@@ -666,14 +664,10 @@ public class RequestUtil {
 
 	public static void setLoginUser(HttpServletRequest request, SysUser bean) {
 		HttpSession session = request.getSession(false);
-		session.setAttribute(SysConstants.LOGIN, bean.getAccount());
-		AuthorizeBean x = new AuthorizeBean();
-		String menus = x.getMenus(bean);
-
-		request.getSession().setAttribute(SysConstants.MENU, menus);
-
-		session.setAttribute("LOGIN_ACTORID", bean.getAccount());
-
+		if (bean != null) {
+			session.setAttribute(SysConstants.LOGIN, bean.getAccount());
+			session.setAttribute("LOGIN_ACTORID", bean.getAccount());
+		}
 	}
 
 	/**
@@ -715,5 +709,4 @@ public class RequestUtil {
 		}
 	}
 
-	
 }

@@ -4,6 +4,7 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="html"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.glaf.core.todo.*" %>
+<%@ page import="com.glaf.base.modules.*"%>
 <%@ page import="com.glaf.base.modules.sys.*"%>
 <%@ page import="com.glaf.base.modules.sys.model.*"%>
 <%@ page import="com.glaf.base.modules.sys.service.*"%>
@@ -21,7 +22,7 @@
 
 	TodoJobBean bean = (TodoJobBean)BaseDataManager.getInstance().getBean("todoJobBean");
 	String id = request.getParameter("id");
-    ToDo todo = bean.getTodo(Long.parseLong(id));
+    Todo todo = bean.getTodo(Long.parseLong(id));
 	pageContext.setAttribute("todo", todo);
 %>
 <html>
