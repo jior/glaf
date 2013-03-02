@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.ui.mapper.UserPortalMapper">
+
+	<resultMap id="userPortalResultMap" type="com.glaf.ui.model.UserPortal">
+		<id property="id" column="ID_" jdbcType="VARCHAR" />
+		<result property="actorId" column="ACTORID_" jdbcType="VARCHAR" />
+		<result property="panelId" column="PANELID_" jdbcType="VARCHAR" />
+		<result property="columnIndex" column="COLUMNINDEX_" jdbcType="INTEGER" />
+		<result property="position" column="POSITION_" jdbcType="INTEGER" />
+		<result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+
+	<insert id="insertUserPortal" parameterType="com.glaf.ui.model.UserPortal">
+		insert into
+		MX_UI_USERPORTAL (
+		ID_
+		,ACTORID_
+		,PANELID_
+		,COLUMNINDEX_
+		,POSITION_
+		,CREATEDATE_
+		)
+		values
+		(
+		#{id,
+		jdbcType=VARCHAR},
+		#{actorId,jdbcType=VARCHAR},
+		#{panelId,jdbcType=VARCHAR},
+		#{columnIndex,jdbcType=INTEGER},
+		#{position,jdbcType=INTEGER},
+		#{createDate,jdbcType=TIMESTAMP}
+		)
+	</insert>
+
+	<update id="updateUserPortal" parameterType="com.glaf.ui.model.UserPortal">
+		update
+		MX_UI_USERPORTAL
+		set
+        COLUMNINDEX_ = #{columnIndex, jdbcType=INTEGER},
+        POSITION_ = #{position, jdbcType=INTEGER}
+		where
+          ID_ = #{id, jdbcType=VARCHAR}
+		
+    </update>
+
+	<delete id="deleteUserPortalByActorId" parameterType="string">
+		delete from
+		MX_UI_USERPORTAL
+		where ACTORID_ = #{actorId}
+	</delete>
+
+
+	<select id="getUserPortals" parameterType="string" resultMap="userPortalResultMap">
+		select * from MX_UI_USERPORTAL E
+		where E.ACTORID_ = #{actorId}
+		order by
+		E.COLUMNINDEX_ asc, E.POSITION_ asc
+	</select>
+
+
+</mapper>

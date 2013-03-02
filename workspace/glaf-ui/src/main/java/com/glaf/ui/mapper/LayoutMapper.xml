@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.ui.mapper.LayoutMapper">
+
+ 	<resultMap id="layoutResultMap"	type="com.glaf.ui.model.Layout">
+        <id property="id" column="ID_" jdbcType="VARCHAR"/>
+        <result property="name" column="NAME_" jdbcType="VARCHAR"/>
+        <result property="title" column="TITLE_" jdbcType="VARCHAR"/>
+        <result property="dataIndex" column="DATAINDEX_" jdbcType="INTEGER"/>
+        <result property="columns" column="COLUMNS_" jdbcType="INTEGER"/>
+        <result property="templateId" column="TEMPLATEID_" jdbcType="VARCHAR"/>
+        <result property="spaceStyle" column="SPACESTYLE_" jdbcType="VARCHAR"/>
+        <result property="columnStyle" column="COLUMNSTYLE_" jdbcType="VARCHAR"/>
+        <result property="panels" column="PANELS_" jdbcType="VARCHAR"/>
+        <result property="actorId" column="ACTORID_" jdbcType="VARCHAR"/>
+        <result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP"/>
+	</resultMap>
+
+ 
+	<insert id="insertLayout" parameterType="com.glaf.ui.model.Layout">
+		insert into
+		MX_UI_LAYOUT ( ID_
+        ,NAME_ 
+        ,TITLE_ 
+        ,DATAINDEX_ 
+        ,COLUMNS_ 
+        ,TEMPLATEID_ 
+        ,SPACESTYLE_ 
+        ,COLUMNSTYLE_ 
+        ,PANELS_ 
+        ,ACTORID_ 
+        ,CREATEDATE_ 
+		)
+		values (
+          #{id, jdbcType=VARCHAR}
+        ,#{name, jdbcType=VARCHAR}
+        ,#{title, jdbcType=VARCHAR}
+        ,#{dataIndex, jdbcType=INTEGER}
+        ,#{columns, jdbcType=INTEGER}
+        ,#{templateId, jdbcType=VARCHAR}
+        ,#{spaceStyle, jdbcType=VARCHAR}
+        ,#{columnStyle, jdbcType=VARCHAR}
+        ,#{panels, jdbcType=VARCHAR}
+        ,#{actorId, jdbcType=VARCHAR}
+        ,#{createDate, jdbcType=TIMESTAMP}
+		)
+    </insert>
+
+	<delete id="deleteLayoutById" parameterType="string"> 
+        delete from MX_UI_LAYOUT
+        where ID_ =	#{id}
+	</delete>
+
+	<select id="getLayoutById" parameterType="string" resultMap="layoutResultMap">
+		select * from MX_UI_LAYOUT where ID_ = #{id}
+	</select>
+
+	<select id="getLayouts" 
+	    parameterType="com.glaf.ui.query.LayoutQuery"
+		resultMap="layoutResultMap">
+		select E.*
+		<include refid="selectLayoutsSql" />
+		<if test="orderBy != null">
+		   order by ${orderBy}
+        </if>
+	</select>
+
+	<select id="getLayoutCount" 
+	    parameterType="com.glaf.ui.query.LayoutQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectLayoutsSql" />
+	</select>
+
+	<sql id="selectLayoutsSql">
+
+		from MX_UI_LAYOUT E
+		 
+		<where>
+		       1 = 1  
+	        
+			<if test="name != null">
+				and E.NAME_ = #{name}
+            </if>
+
+			<if test="nameLike != null">
+				and E.NAME_ like #{nameLike}
+            </if>
+
+			<if test="names != null &amp;&amp; names.size() &gt; 0">
+			    and E.NAME_ IN
+                <foreach item="x_name" index="index" collection="names" 
+                     open="(" separator="," close=")">
+                  #{x_name}
+                </foreach>
+			</if>
+
+			<if test="titleLike != null">
+				and E.TITLE_ like #{titleLike}
+            </if>
+
+			<if test="templateId != null">
+				and E.TEMPLATEID_ = #{templateId}
+            </if>
+
+			<if test="templateIds != null &amp;&amp; templateIds.size() &gt; 0">
+			    and E.TEMPLATEID_ IN
+                <foreach item="x_templateId" index="index" collection="templateIds" 
+                     open="(" separator="," close=")">
+                  #{x_templateId}
+                </foreach>
+			</if>
+
+			<if test="spaceStyleLike != null">
+				and E.SPACESTYLE_ like #{spaceStyleLike}
+            </if>
+	       
+			<if test="columnStyleLike != null">
+				and E.COLUMNSTYLE_ like #{columnStyleLike}
+            </if>
+	        
+			<if test="actorId != null">
+				and E.ACTORID_ = #{actorId}
+            </if>
+
+			<if test="afterCreateDate != null">
+				and E.CREATEDATE_ &gt;= #{afterCreateDate}
+			</if>
+
+			<if test="beforeCreateDate != null">
+				and E.CREATEDATE_ &lt;= #{beforeCreateDate}
+            </if>
+            			 
+		</where>
+	</sql>
+
+</mapper>

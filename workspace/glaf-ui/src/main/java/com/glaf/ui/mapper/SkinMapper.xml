@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.ui.mapper.SkinMapper">
+
+ 	<resultMap id="skinResultMap"	type="com.glaf.ui.model.Skin">
+        <id property="id" column="ID_" jdbcType="VARCHAR"/>
+        <result property="name" column="NAME_" jdbcType="VARCHAR"/>
+        <result property="title" column="TITLE_" jdbcType="VARCHAR"/>
+        <result property="description" column="DESCRIPTION_" jdbcType="VARCHAR"/>
+        <result property="image" column="IMAGE_" jdbcType="VARCHAR"/>
+        <result property="styleClass" column="STYLECLASS_" jdbcType="VARCHAR"/>
+        <result property="locked" column="LOCKED_" jdbcType="INTEGER"/>
+        <result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP"/>
+	</resultMap>
+
+ 	<resultMap id="skinInstanceResultMap"	type="com.glaf.ui.model.SkinInstance">
+        <id property="id" column="ID_" jdbcType="VARCHAR"/>
+        <result property="actorId" column="ACTORID_" jdbcType="VARCHAR"/>
+        <result property="skinId" column="SKIN_" jdbcType="VARCHAR"/>
+	</resultMap>
+
+ 
+	<insert id="insertSkin" parameterType="com.glaf.ui.model.Skin">
+		insert into
+		MX_UI_SKIN ( ID_
+        ,NAME_ 
+        ,TITLE_ 
+        ,DESCRIPTION_ 
+        ,IMAGE_ 
+        ,STYLECLASS_ 
+        ,LOCKED_ 
+        ,CREATEDATE_ 
+		)
+		values (
+          #{id, jdbcType=VARCHAR}
+        ,#{name, jdbcType=VARCHAR}
+        ,#{title, jdbcType=VARCHAR}
+        ,#{description, jdbcType=VARCHAR}
+        ,#{image, jdbcType=VARCHAR}
+        ,#{styleClass, jdbcType=VARCHAR}
+        ,#{locked, jdbcType=INTEGER}
+        ,#{createDate, jdbcType=TIMESTAMP}
+		)
+    </insert>
+
+	<insert id="insertSkinInstance" parameterType="com.glaf.ui.model.SkinInstance">
+		insert into
+		MX_UI_SKININSTANCE ( ID_, ACTORID_, SKIN_)
+		values (
+          #{id, jdbcType=VARCHAR},
+          #{actorId, jdbcType=VARCHAR},
+          #{skinId, jdbcType=VARCHAR}
+		)
+    </insert>
+
+	 
+	<update id="updateSkin" parameterType="com.glaf.ui.model.Skin">
+		update MX_UI_SKIN
+		set
+        TITLE_ = #{title, jdbcType=VARCHAR},
+        DESCRIPTION_ = #{description, jdbcType=VARCHAR},
+        IMAGE_ = #{image, jdbcType=VARCHAR},
+        STYLECLASS_ = #{styleClass, jdbcType=VARCHAR},
+        LOCKED_ = #{locked, jdbcType=INTEGER}
+		where ID_ = #{id, jdbcType=VARCHAR}
+    </update>
+
+ 
+	<delete id="deleteSkinById" parameterType="string"> 
+        delete from MX_UI_SKIN
+        where ID_ =	#{id}
+	</delete>
+
+
+	<delete id="deleteSkinInstanceByActorId" parameterType="string"> 
+        delete from MX_UI_SKININSTANCE
+        where ACTORID_ =	#{actorId}
+	</delete>
+
+	<select id="getSkinById" parameterType="string" resultMap="skinResultMap">
+		select * from MX_UI_SKIN where ID_ = #{id}
+	</select>
+
+	<select id="getUserSkin" parameterType="string" resultMap="skinResultMap">
+		select * from MX_UI_SKIN where ID_ in (
+		    select SKIN_ from MX_UI_SKININSTANCE where ACTORID_ =  #{actorId}
+		)
+	</select>
+
+	<select id="getSkins" 
+	    parameterType="com.glaf.ui.query.SkinQuery"
+		resultMap="skinResultMap">
+		select E.*
+		<include refid="selectSkinsSql" />
+		<if test="orderBy != null">
+		   order by ${orderBy}
+        </if>
+	</select>
+
+	<select id="getSkinCount" 
+	    parameterType="com.glaf.ui.query.SkinQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectSkinsSql" />
+	</select>
+
+	<sql id="selectSkinsSql">
+
+		from MX_UI_SKIN E
+		 
+		<where>
+		       1 = 1  
+
+			<if test="name != null">
+				and E.NAME_ = #{name}
+            </if>
+
+			<if test="nameLike != null">
+				and E.NAME_ like #{nameLike}
+            </if>
+
+			<if test="names != null &amp;&amp; names.size() &gt; 0">
+			    and E.NAME_ IN
+                <foreach item="x_name" index="index" collection="names" 
+                     open="(" separator="," close=")">
+                  #{x_name}
+                </foreach>
+			</if>
+
+			<if test="titleLike != null">
+				and E.TITLE_ like #{titleLike}
+            </if>
+
+			<if test="descriptionLike != null">
+				and E.DESCRIPTION_ like #{descriptionLike}
+            </if>
+
+			<if test="imageLike != null">
+				and E.IMAGE_ like #{imageLike}
+            </if>
+
+			<if test="styleClassLike != null">
+				and E.STYLECLASS_ like #{styleClassLike}
+            </if>
+
+			<if test="locked != null">
+				and E.LOCKED_ = #{locked}
+            </if>
+			 
+		</where>
+	</sql>
+
+</mapper>

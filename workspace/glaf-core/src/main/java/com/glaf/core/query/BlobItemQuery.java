@@ -43,6 +43,7 @@ public class BlobItemQuery extends BaseQuery {
 	protected Long lastModifiedLessThanOrEqual;
 	protected Date createDateGreaterThanOrEqual;
 	protected Date createDateLessThanOrEqual;
+	protected Integer status;
 
 	public BlobItemQuery() {
 
@@ -180,6 +181,10 @@ public class BlobItemQuery extends BaseQuery {
 
 	public Long getSizeLessThanOrEqual() {
 		return sizeLessThanOrEqual;
+	}
+
+	public Integer getStatus() {
+		return status;
 	}
 
 	public String getType() {
@@ -338,6 +343,10 @@ public class BlobItemQuery extends BaseQuery {
 		this.sizeLessThanOrEqual = sizeLessThanOrEqual;
 	}
 
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
 	public void setType(String type) {
 		this.type = type;
 	}
@@ -363,6 +372,14 @@ public class BlobItemQuery extends BaseQuery {
 			throw new RuntimeException("size is null");
 		}
 		this.sizeLessThanOrEqual = sizeLessThanOrEqual;
+		return this;
+	}
+
+	public BlobItemQuery status(Integer status) {
+		if (status == null) {
+			throw new RuntimeException("status is null");
+		}
+		this.status = status;
 		return this;
 	}
 

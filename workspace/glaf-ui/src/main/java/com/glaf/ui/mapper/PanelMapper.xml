@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.ui.mapper.PanelMapper">
+
+	<resultMap id="panelResultMap" type="com.glaf.ui.model.Panel">
+		<id property="id" column="ID_" jdbcType="VARCHAR" />
+		<result property="name" column="NAME_" jdbcType="VARCHAR" />
+		<result property="title" column="TITLE_" jdbcType="VARCHAR" />
+		<result property="icon" column="ICON_" jdbcType="VARCHAR" />
+		<result property="moduleId" column="MODULEID_" jdbcType="VARCHAR" />
+		<result property="moduleName" column="MODULENAME_" jdbcType="VARCHAR" />
+		<result property="type" column="TYPE_" jdbcType="VARCHAR" />
+		<result property="link" column="LINK_" jdbcType="VARCHAR" />
+		<result property="moreLink" column="MORELINK_" jdbcType="VARCHAR" />
+		<result property="content" column="CONTENT_" jdbcType="VARCHAR" />
+		<result property="style" column="STYLE_" jdbcType="VARCHAR" />
+		<result property="color" column="COLOR_" jdbcType="VARCHAR" />
+		<result property="columnIndex" column="COLUMNINDEX_" jdbcType="INTEGER" />
+		<result property="width" column="WIDTH_" jdbcType="INTEGER" />
+		<result property="height" column="HEIGHT_" jdbcType="INTEGER" />
+		<result property="locked" column="LOCKED_" jdbcType="INTEGER" />
+		<result property="close" column="CLOSE_" jdbcType="BOOLEAN" />
+		<result property="collapsible" column="COLLAPSIBLE_" jdbcType="BOOLEAN" />
+		<result property="resize" column="RESIZE_" jdbcType="BOOLEAN" />
+		<result property="actorId" column="ACTORID_" jdbcType="VARCHAR" />
+		<result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<resultMap id="panelInstanceResultMap" type="com.glaf.ui.model.PanelInstance">
+		<id property="id" column="ID_" jdbcType="VARCHAR" />
+		<result property="name" column="NAME_" jdbcType="VARCHAR" />
+		<result property="panelId" column="PANEL_" jdbcType="VARCHAR" />
+		<result property="userPanelId" column="USERPANEL_" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<resultMap id="userPanelResultMap" type="com.glaf.ui.model.UserPanel">
+		<id property="id" column="ID_" jdbcType="VARCHAR" />
+		<result property="actorId" column="ACTORID_" jdbcType="VARCHAR" />
+		<result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP" />
+		<result property="layoutId" column="LAYOUT_" jdbcType="VARCHAR" />
+		<result property="layoutName" column="LAYOUTNAME_" jdbcType="VARCHAR" />
+		<result property="refreshSeconds" column="REFRESHSECONDS_"
+			jdbcType="INTEGER" />
+	</resultMap>
+
+	<insert id="insertPanel" parameterType="com.glaf.ui.model.Panel">
+		insert into
+		MX_UI_PANEL (
+		ID_
+		,NAME_
+		,TITLE_
+		,ICON_
+		,MODULEID_
+		,MODULENAME_
+		,TYPE_
+		,LINK_
+		,MORELINK_
+		,CONTENT_
+		,STYLE_
+		,COLOR_
+		,COLUMNINDEX_
+		,WIDTH_
+		,HEIGHT_
+		,LOCKED_
+		,CLOSE_
+		,COLLAPSIBLE_
+		,RESIZE_
+		,ACTORID_
+		,CREATEDATE_
+		)
+		values (
+		#{id,
+		jdbcType=VARCHAR}
+		,#{name, jdbcType=VARCHAR}
+		,#{title, jdbcType=VARCHAR}
+		,#{icon, jdbcType=VARCHAR}
+		,#{moduleId, jdbcType=VARCHAR}
+		,#{moduleName, jdbcType=VARCHAR}
+		,#{type, jdbcType=VARCHAR}
+		,#{link,
+		jdbcType=VARCHAR}
+		,#{moreLink, jdbcType=VARCHAR}
+		,#{content,
+		jdbcType=VARCHAR}
+		,#{style, jdbcType=VARCHAR}
+		,#{color,
+		jdbcType=VARCHAR}
+		,#{columnIndex,jdbcType=INTEGER}
+		,#{width,
+		jdbcType=INTEGER}
+		,#{height, jdbcType=INTEGER}
+		,#{locked,
+		jdbcType=INTEGER}
+		,#{close, jdbcType=BOOLEAN}
+		,#{collapsible,
+		jdbcType=BOOLEAN}
+		,#{resize, jdbcType=BOOLEAN}
+		,#{actorId,
+		jdbcType=VARCHAR}
+		,#{createDate, jdbcType=TIMESTAMP}
+		)
+	</insert>
+
+	<insert id="insertPanelInstance" parameterType="com.glaf.ui.model.PanelInstance">
+		insert into
+		MX_UI_PANELINSTANCE ( ID_
+		,NAME_
+		,PANEL_
+		,USERPANEL_
+		)
+		values (
+		#{id,
+		jdbcType=VARCHAR},
+		#{name, jdbcType=VARCHAR},
+		#{panelId,
+		jdbcType=VARCHAR},
+		#{userPanelId, jdbcType=VARCHAR}
+		)
+	</insert>
+
+	<insert id="insertUserPanel" parameterType="com.glaf.ui.model.UserPanel">
+		insert into
+		MX_UI_USERPANEL ( ID_
+		,ACTORID_
+		,CREATEDATE_
+		,REFRESHSECONDS_
+		,LAYOUT_
+		,LAYOUTNAME_
+		)
+		values (
+		#{id, jdbcType=VARCHAR},
+		#{actorId,
+		jdbcType=VARCHAR},
+		#{createDate, jdbcType=TIMESTAMP},
+		#{refreshSeconds,
+		jdbcType=INTEGER},
+		#{layoutId, jdbcType=VARCHAR},
+		#{layoutName,
+		jdbcType=VARCHAR}
+		)
+	</insert>
+
+	<update id="updatePanel" parameterType="com.glaf.ui.model.Panel">
+		update
+		MX_UI_PANEL
+		set
+		TITLE_ = #{title, jdbcType=VARCHAR},
+		ICON_ = #{icon, jdbcType=VARCHAR},
+		MODULENAME_ = #{moduleName, jdbcType=VARCHAR},
+		TYPE_ = #{type,
+		jdbcType=VARCHAR},
+		LINK_ = #{link, jdbcType=VARCHAR},
+		MORELINK_ =
+		#{moreLink, jdbcType=VARCHAR},
+		CONTENT_ = #{content, jdbcType=VARCHAR},
+		STYLE_ = #{style, jdbcType=VARCHAR},
+		COLOR_ = #{color,
+		jdbcType=VARCHAR},
+		COLUMNINDEX_ = #{columnIndex, jdbcType=INTEGER},
+		LOCKED_ = #{locked, jdbcType=INTEGER},
+		CLOSE_ = #{close,
+		jdbcType=BOOLEAN},
+		RESIZE_ = #{resize, jdbcType=BOOLEAN},
+		WIDTH_ =
+		#{width, jdbcType=INTEGER},
+		HEIGHT_ = #{height, jdbcType=INTEGER},
+		COLLAPSIBLE_ = #{collapsible, jdbcType=BOOLEAN}
+		where
+		ID_ = #{id,
+		jdbcType=VARCHAR}
+	</update>
+
+
+	<delete id="deletePanelById" parameterType="string">
+		delete from
+		MX_UI_PANEL
+		where ID_ = #{id}
+	</delete>
+
+	<delete id="deletePanelInstancesById" parameterType="string">
+		delete from
+		MX_UI_PANELINSTANCE
+		where USERPANEL_ = #{userPanelId}
+	</delete>
+
+	<delete id="deleteUserPanelById" parameterType="string">
+		delete from
+		MX_UI_USERPANEL
+		where ID_ = #{id}
+	</delete>
+
+	<select id="getPanelById" parameterType="string" resultMap="panelResultMap">
+		select * from MX_UI_PANEL where ID_ = #{id}
+	</select>
+
+	<select id="getUserPanel" parameterType="string" resultMap="userPanelResultMap">
+		select * from MX_UI_USERPANEL where ACTORID_ = #{actorId}
+	</select>
+
+	<select id="getPanelInstances" parameterType="string"
+		resultMap="panelInstanceResultMap">
+		select * from MX_UI_PANELINSTANCE where USERPANEL_ =
+		#{userPanelId}
+	</select>
+
+	<select id="getPanels" parameterType="com.glaf.ui.query.PanelQuery"
+		resultMap="panelResultMap">
+		select E.*
+		<include refid="selectPanelsSql" />
+		<if test="orderBy != null">
+			order by ${orderBy}
+		</if>
+	</select>
+
+	<select id="getPanelCount" parameterType="com.glaf.ui.query.PanelQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectPanelsSql" />
+	</select>
+
+	<sql id="selectPanelsSql">
+
+		from MX_UI_PANEL E
+
+		<where>
+			1 = 1
+
+			<if test="name != null">
+				and E.NAME_ = #{name}
+			</if>
+
+			<if test="nameLike != null">
+				and E.NAME_ like #{nameLike}
+			</if>
+
+			<if test="names != null &amp;&amp; names.size() &gt; 0">
+				and E.NAME_ IN
+				<foreach item="x_name" index="index" collection="names"
+					open="(" separator="," close=")">
+					#{x_name}
+				</foreach>
+			</if>
+
+			<if test="titleLike != null">
+				and E.TITLE_ like #{titleLike}
+			</if>
+
+			<if test="iconLike != null">
+				and E.ICON_ like #{iconLike}
+			</if>
+
+			<if test="moduleId != null">
+				and E.MODULEID_ = #{moduleId}
+			</if>
+
+			<if test="moduleIds != null &amp;&amp; moduleIds.size() &gt; 0">
+				and E.MODULEID_ IN
+				<foreach item="x_moduleId" index="index" collection="moduleIds"
+					open="(" separator="," close=")">
+					#{x_moduleId}
+				</foreach>
+			</if>
+
+			<if test="moduleNameLike != null">
+				and E.MODULENAME_ like #{moduleNameLike}
+			</if>
+
+			<if test="linkLike != null">
+				and E.LINK_ like #{linkLike}
+			</if>
+
+			<if test="moreLinkLike != null">
+				and E.MORELINK_ like #{moreLinkLike}
+			</if>
+
+			<if test="locked != null">
+				and E.LOCKED_ = #{locked}
+			</if>
+
+			<if test="actorId != null">
+				and E.ACTORID_ = #{actorId}
+			</if>
+
+			<if test="actorIds != null &amp;&amp; actorIds.size() &gt; 0">
+				and E.ACTORID_ IN
+				<foreach item="x_actorId" index="index" collection="actorIds"
+					open="(" separator="," close=")">
+					#{x_actorId}
+				</foreach>
+			</if>
+
+		</where>
+	</sql>
+
+</mapper>
