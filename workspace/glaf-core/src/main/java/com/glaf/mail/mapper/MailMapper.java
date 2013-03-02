@@ -23,7 +23,8 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import com.glaf.mail.Mail;
-import com.glaf.core.query.MailQuery;
+import com.glaf.mail.query.MailQuery;
+ 
 
 @Component
 public interface MailMapper {

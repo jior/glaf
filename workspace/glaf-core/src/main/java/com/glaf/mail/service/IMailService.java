@@ -21,8 +21,9 @@ package com.glaf.mail.service;
 import java.util.List;
 import java.util.Map;
 
-import com.glaf.core.query.MailQuery;
+ 
 import com.glaf.mail.Mail;
+import com.glaf.mail.query.MailQuery;
 import com.glaf.core.util.Paging;
 
 public interface IMailService {

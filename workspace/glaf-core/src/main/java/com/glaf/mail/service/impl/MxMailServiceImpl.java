@@ -46,7 +46,7 @@ import com.glaf.mail.util.MailStatus;
 import com.glaf.mail.domain.MailDataFile;
 import com.glaf.mail.mapper.MailDataFileMapper;
 import com.glaf.mail.mapper.MailMapper;
-import com.glaf.core.query.MailQuery;
+import com.glaf.mail.query.MailQuery;
 import com.glaf.core.service.IBlobService;
 import com.glaf.core.util.DBUtils;
 import com.glaf.core.util.LogUtils;
