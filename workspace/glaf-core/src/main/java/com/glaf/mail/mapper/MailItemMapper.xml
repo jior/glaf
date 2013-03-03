@@ -20,9 +20,9 @@
 			jdbcType="BIGINT" />
 	</resultMap>
 
+
 	<insert id="insertMailItem" parameterType="com.glaf.mail.domain.MailItem">
-		insert into
-		${tableName} ( ID_, TASKID_, MAILTO_, SENDSTATUS_,
+		insert into ${tableName} ( ID_, TASKID_, MAILTO_, SENDSTATUS_,
 		RECEIVESTATUS_,RETRYTIMES_, LASTMODIFIED_ )
 		values (
 		#{id,jdbcType=VARCHAR}

@@ -215,13 +215,8 @@
 
 		   1 = 1  
 
-	        
 			<if test="topId != null and topId != '' ">
 				and E.topId = #{topId}
-			</if>
-
-			<if test="topIdLike != null and topIdLike != '' ">
-				and E.topId like #{topIdLike}
 			</if>
 
 			<if test="topIds != null and topIds.size() &gt; 0">

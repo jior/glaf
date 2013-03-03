@@ -4,20 +4,20 @@
 
 <mapper namespace="com.glaf.mail.mapper.MailTaskMapper">
 
- 	<resultMap id="mailTaskResultMap"	type="com.glaf.mail.domain.MailTask">
-        <id property="id" column="ID_" jdbcType="VARCHAR"/>
-        <result property="subject" column="SUBJECT_" jdbcType="VARCHAR"/>
-        <result property="content" column="CONTENT_" jdbcType="VARCHAR"/>
-        <result property="callbackUrl" column="CALLBACKURL_" jdbcType="VARCHAR"/>
-        <result property="cronExpression" column="CRONEXPRESSION_" jdbcType="VARCHAR"/>
-        <result property="storageId" column="STORAGEID_" jdbcType="VARCHAR"/>
-        <result property="threadSize" column="THREADSIZE_" jdbcType="INTEGER"/>
-        <result property="delayTime" column="DELAYTIME_" jdbcType="INTEGER"/>
-        <result property="startDate" column="STARTDATE_" jdbcType="TIMESTAMP"/>
-        <result property="endDate" column="ENDDATE_" jdbcType="TIMESTAMP"/>
-        <result property="isHtml" column="ISHTML_" jdbcType="VARCHAR"/>
-        <result property="isBack" column="ISBACK_" jdbcType="VARCHAR"/>
-        <result property="isUnSubscribe" column="ISUNSUBSCRIBE_" jdbcType="VARCHAR"/>
+	<resultMap id="mailTaskResultMap"	type="com.glaf.mail.domain.MailTask">
+		<id property="id" column="ID_" jdbcType="VARCHAR"/>
+		<result property="subject" column="SUBJECT_" jdbcType="VARCHAR"/>
+		<result property="content" column="CONTENT_" jdbcType="VARCHAR"/>
+		<result property="callbackUrl" column="CALLBACKURL_" jdbcType="VARCHAR"/>
+		<result property="cronExpression" column="CRONEXPRESSION_" jdbcType="VARCHAR"/>
+		<result property="storageId" column="STORAGEID_" jdbcType="VARCHAR"/>
+		<result property="threadSize" column="THREADSIZE_" jdbcType="INTEGER"/>
+		<result property="delayTime" column="DELAYTIME_" jdbcType="INTEGER"/>
+		<result property="startDate" column="STARTDATE_" jdbcType="TIMESTAMP"/>
+		<result property="endDate" column="ENDDATE_" jdbcType="TIMESTAMP"/>
+		<result property="isHtml" column="ISHTML_" jdbcType="VARCHAR"/>
+		<result property="isBack" column="ISBACK_" jdbcType="VARCHAR"/>
+		<result property="isUnSubscribe" column="ISUNSUBSCRIBE_" jdbcType="VARCHAR"/>
 		<result property="locked" column="LOCKED_" jdbcType="INTEGER" />
 		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR" />
 		<result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP" />
@@ -61,7 +61,7 @@
 		,#{createBy, jdbcType=VARCHAR}
 		,#{createDate, jdbcType=TIMESTAMP}
 		)
-    </insert>
+	</insert>
 
 	 
 	<update id="updateMailTask" parameterType="com.glaf.mail.domain.MailTask">
@@ -83,7 +83,7 @@
 		where
           ID_ = #{id, jdbcType=VARCHAR}
 		
-    </update>
+	</update>
 
  
 	<delete id="deleteMailTaskById" parameterType="string"> 
@@ -91,16 +91,18 @@
         where ID_ =	#{id}
 	</delete>
 	
+	
 	<delete id="deleteMailTasks" parameterType="com.glaf.mail.query.MailTaskQuery">
 		delete from SYS_MAIL_TASK
 		where ( 
  			  ID_ IN
-              <foreach item="x_rowId" index="index" collection="rowIds" 
-                     open="(" separator="," close=")">
+		<foreach item="x_rowId" index="index" collection="rowIds" 
+			open="(" separator="," close=")">
                   #{x_rowId}
-              </foreach>
+		</foreach>
 		)
 	</delete>
+
 
 	<select id="getMailTaskById" parameterType="string" resultMap="mailTaskResultMap">
 		select * from SYS_MAIL_TASK where ID_ = #{id}
@@ -108,21 +110,23 @@
 
 
 	<select id="getMailTasks" 
-	    parameterType="com.glaf.mail.query.MailTaskQuery"
+		parameterType="com.glaf.mail.query.MailTaskQuery"
 		resultMap="mailTaskResultMap">
 		select E.*
 		<include refid="selectMailTasksSql" />
 		<if test="orderBy != null">
 		   order by ${orderBy}
-        </if>
+		</if>
 	</select>
 
+
 	<select id="getMailTaskCount" 
-	    parameterType="com.glaf.mail.query.MailTaskQuery"
+		parameterType="com.glaf.mail.query.MailTaskQuery"
 		resultType="int">
 		select count(*)
 		<include refid="selectMailTasksSql" />
 	</select>
+
 
 	<sql id="selectMailTasksSql">
 
@@ -137,23 +141,23 @@
 	      
 			<if test="subjectLike != null and subjectLike != '' ">
 				and E.SUBJECT_ like #{subjectLike}
-            </if>
+			</if>
 
 			<if test="startDateGreaterThanOrEqual != null">
 				and E.STARTDATE_ &gt;= #{startDateGreaterThanOrEqual}
-            </if>
+			</if>
 
 			<if test="startDateLessThanOrEqual != null">
 				and E.STARTDATE_ &lt;= #{startDateLessThanOrEqual}
-            </if>
+			</if>
 		
 			<if test="endDateGreaterThanOrEqual != null">
 				and E.ENDDATE_ &gt;= #{endDateGreaterThanOrEqual}
-            </if>
+			</if>
 
 			<if test="endDateLessThanOrEqual != null">
 				and E.ENDDATE_ &lt;= #{endDateLessThanOrEqual}
-            </if>
+			</if>
 
 			<if test="locked != null">
 				and E.LOCKED_ = #{locked}

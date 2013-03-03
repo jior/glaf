@@ -4,26 +4,23 @@
 
 <mapper namespace="com.glaf.mail.mapper.MailTaskAccountMapper">
 
- 	<resultMap id="mailTaskAccountResultMap"	type="com.glaf.mail.domain.MailTaskAccount">
-        <id property="id" column="ID_" jdbcType="VARCHAR"/>
-        <result property="taskId" column="TASKID_" jdbcType="VARCHAR"/>
-        <result property="accountId" column="ACCOUNTID_" jdbcType="VARCHAR"/>
+	<resultMap id="mailTaskAccountResultMap"	type="com.glaf.mail.domain.MailTaskAccount">
+		<id property="id" column="ID_" jdbcType="VARCHAR"/>
+		<result property="taskId" column="TASKID_" jdbcType="VARCHAR"/>
+		<result property="accountId" column="ACCOUNTID_" jdbcType="VARCHAR"/>
 	</resultMap>
 
  
 	<insert id="insertMailTaskAccount" parameterType="com.glaf.mail.domain.MailTaskAccount">
-		insert into
-		SYS_MAIL_TASK_ACCOUNT ( ID_
-        ,TASKID_ 
-        ,ACCOUNTID_ 
-		)
+		
+		insert into SYS_MAIL_TASK_ACCOUNT ( ID_,TASKID_ ,ACCOUNTID_ )
 		values (
-          #{id, jdbcType=VARCHAR}
-	     
+         #{id, jdbcType=VARCHAR}
         ,#{taskId, jdbcType=VARCHAR}
         ,#{accountId, jdbcType=VARCHAR}
 		)
-    </insert>
+		
+	</insert>
 
  
 	<delete id="deleteMailTaskAccountByTaskId" parameterType="string"> 
@@ -31,7 +28,6 @@
         where TASKID_ =	#{taskId}
 	</delete>
 	
- 
 
 	<select id="getMailTaskAccountsByTaskId" parameterType="string" resultMap="mailTaskAccountResultMap">
 		select * from SYS_MAIL_TASK_ACCOUNT where TASKID_ =	#{taskId}
@@ -39,21 +35,23 @@
 
 
 	<select id="getMailTaskAccounts" 
-	    parameterType="com.glaf.mail.query.MailTaskAccountQuery"
+		parameterType="com.glaf.mail.query.MailTaskAccountQuery"
 		resultMap="mailTaskAccountResultMap">
 		select E.*
 		<include refid="selectMailTaskAccountsSql" />
 		<if test="orderBy != null">
 		   order by ${orderBy}
-        </if>
+		</if>
 	</select>
 
+
 	<select id="getMailTaskAccountCount" 
-	    parameterType="com.glaf.mail.query.MailTaskAccountQuery"
+		parameterType="com.glaf.mail.query.MailTaskAccountQuery"
 		resultType="int">
 		select count(*)
 		<include refid="selectMailTaskAccountsSql" />
 	</select>
+
 
 	<sql id="selectMailTaskAccountsSql">
 
@@ -61,36 +59,31 @@
 		 
 		<where>
 		       1 = 1  
-
 	        
 			<if test="taskId != null and taskId != '' ">
 				and E.TASKID_ = #{taskId}
-            </if>
-
+			</if>
 
 			<if test="taskIds != null and taskIds.size() &gt; 0">
 			    and E.TASKID_ IN
-                <foreach item="x_taskId" index="index" collection="taskIds" 
-                     open="(" separator="," close=")">
+				<foreach item="x_taskId" index="index" collection="taskIds" 
+					open="(" separator="," close=")">
                   #{x_taskId}
-                </foreach>
+				</foreach>
 			</if>
 
-	        
 			<if test="accountId != null and accountId != '' ">
 				and E.ACCOUNTID_ = #{accountId}
-            </if>
+			</if>
  
-
 			<if test="accountIds != null and accountIds.size() &gt; 0">
 			    and E.ACCOUNTID_ IN
-                <foreach item="x_accountId" index="index" collection="accountIds" 
-                     open="(" separator="," close=")">
+				<foreach item="x_accountId" index="index" collection="accountIds" 
+					open="(" separator="," close=")">
                   #{x_accountId}
-                </foreach>
+				</foreach>
 			</if>
-
-			 
+	 
 		</where>
 	</sql>
 

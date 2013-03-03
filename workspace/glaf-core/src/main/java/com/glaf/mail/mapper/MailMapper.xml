@@ -11,6 +11,9 @@
 		<result property="senderId" column="SENDERID_" jdbcType="VARCHAR" />
 		<result property="accountId" column="ACCOUNTID_" jdbcType="VARCHAR" />
 		<result property="subject" column="SUBJECT_" jdbcType="VARCHAR" />
+		<result property="content" column="CONTENT_" jdbcType="VARCHAR" />
+		<result property="html" column="HTML_" jdbcType="VARCHAR" />
+		<result property="username" column="USERNAME_" jdbcType="VARCHAR" />
 		<result property="retryTimes" column="RETRYTIMES_" jdbcType="INTEGER" />
 		<result property="mailCC" column="MAILCC_" jdbcType="VARCHAR" />
 		<result property="mailReplyTo" column="MAILREPLYTO_" jdbcType="VARCHAR" />
@@ -40,83 +43,305 @@
 
 
 	<insert id="insertMail" parameterType="com.glaf.mail.Mail">
-		insert into
-		SYS_MAIL (
-		ID_
-		,TEMPLATEID_
-		,RECEIVERID_
-		,SENDERID_
-		,ACCOUNTID_
-		,SUBJECT_
-		,RETRYTIMES_
-		,MAILCC_
-		,MAILREPLYTO_
-		,TASKID_
-		,NODEID_
-		,RECEIVESTATUS_
-		,MAILTYPE_
-		,SENDSTATUS_
-		,RECEIVEDATE_
-		,LASTVIEWDATE_
-		,MAILBCC_
-		,CREATEDATE_
-		,MAILTO_
-		,RESOURCEID_
-		,MAILBOX_
-		,SENDDATE_
-		,MAILSIZE_
-		,LASTVIEWIP_
-		,MAILFROM_
-		,CREATEBY_
-		,MAILID_
-		,MESSAGEID_
-		,STATUS_
-		)
-		values (
-		#{id, jdbcType=VARCHAR}
-		,#{templateId, jdbcType=VARCHAR}
-		,#{receiverId, jdbcType=VARCHAR}
-		,#{senderId, jdbcType=VARCHAR}
-		,#{accountId, jdbcType=VARCHAR}
-		,#{subject, jdbcType=VARCHAR}
-		,#{retryTimes, jdbcType=INTEGER}
-		,#{mailCC, jdbcType=VARCHAR}
-		,#{mailReplyTo, jdbcType=VARCHAR}
-		,#{taskId, jdbcType=VARCHAR}
-		,#{nodeId, jdbcType=VARCHAR}
-		,#{receiveStatus, jdbcType=INTEGER}
-		,#{mailType, jdbcType=VARCHAR}
-		,#{sendStatus, jdbcType=INTEGER}
-		,#{receiveDate, jdbcType=TIMESTAMP}
-		,#{lastViewDate, jdbcType=TIMESTAMP}
-		,#{mailBCC, jdbcType=VARCHAR}
-		,#{createDate, jdbcType=TIMESTAMP}
-		,#{mailTo, jdbcType=VARCHAR}
-		,#{resourceId, jdbcType=VARCHAR}
-		,#{mailBox, jdbcType=VARCHAR}
-		,#{sendDate, jdbcType=TIMESTAMP}
-		,#{mailSize, jdbcType=INTEGER}
-		,#{lastViewIP, jdbcType=VARCHAR}
-		,#{mailFrom, jdbcType=VARCHAR}
-		,#{createBy, jdbcType=VARCHAR}
-		,#{mailId, jdbcType=VARCHAR}
-		,#{messageId, jdbcType=VARCHAR}
-		,#{status, jdbcType=INTEGER}
-		)
-    </insert>
+		insert into SYS_MAIL 
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+		    ID_
+			<if test="nodeId != null">
+				,NODEID_ 
+			</if>
+			<if test="mailId != null">
+				,MAILID_ 
+			</if>
+			<if test="messageId != null">
+				,MESSAGEID_ 
+			</if>
+			<if test="resourceId != null">
+				,RESOURCEID_ 
+			</if>
+			<if test="username != null">
+				,USERNAME_ 
+			</if>
+			<if test="taskId != null">
+				,TASKID_ 
+			</if>
+			<if test="accountId != null">
+				,ACCOUNTID_ 
+			</if>
+			<if test="senderId != null">
+				,SENDERID_ 
+			</if>
+			<if test="receiverId != null">
+				,RECEIVERID_ 
+			</if>
+			<if test="subject != null">
+				,SUBJECT_ 
+			</if>
+			<if test="content != null">
+				,CONTENT_ 
+			</if>
+			<if test="html != null">
+				,HTML_ 
+			</if>
+			<if test="templateId != null">
+				,TEMPLATEID_ 
+			</if>
+			<if test="mailFrom != null">
+				,MAILFROM_ 
+			</if>
+			<if test="mailTo != null">
+				,MAILTO_ 
+			</if>
+			<if test="mailCC != null">
+				,MAILCC_ 
+			</if>
+			<if test="mailBCC != null">
+				,MAILBCC_ 
+			</if>
+			<if test="mailReplyTo != null">
+				,MAILREPLYTO_ 
+			</if>
+			<if test="mailBox != null">
+				,MAILBOX_ 
+			</if>
+			<if test="mailType != null">
+				,MAILTYPE_ 
+			</if>
+			<if test="mailSize != null">
+				,MAILSIZE_ 
+			</if>
+			<if test="sendDate != null">
+				,SENDDATE_ 
+			</if>
+			<if test="status != null">
+				,STATUS_ 
+			</if>
+			<if test="sendStatus != null">
+				,SENDSTATUS_ 
+			</if>
+			<if test="retryTimes != null">
+				,RETRYTIMES_ 
+			</if>
+			<if test="receiveDate != null">
+				,RECEIVEDATE_ 
+			</if>
+			<if test="receiveStatus != null">
+				,RECEIVESTATUS_ 
+			</if>
+			<if test="createBy != null">
+				,CREATEBY_ 
+			</if>
+			<if test="createDate != null">
+				,CREATEDATE_ 
+			</if>
+			<if test="lastViewDate != null">
+				,LASTVIEWDATE_ 
+			</if>
+			<if test="lastViewIP != null">
+				,LASTVIEWIP_ 
+			</if>
+		</trim>
 
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			  #{id, jdbcType=VARCHAR}
+	     
+			<if test="nodeId != null">
+				,#{nodeId, jdbcType=VARCHAR}
+			</if>
+			<if test="mailId != null">
+				,#{mailId, jdbcType=VARCHAR}
+			</if>
+			<if test="messageId != null">
+				,#{messageId, jdbcType=VARCHAR}
+			</if>
+			<if test="resourceId != null">
+				,#{resourceId, jdbcType=VARCHAR}
+			</if>
+			<if test="username != null">
+				,#{username, jdbcType=VARCHAR}
+			</if>
+			<if test="taskId != null">
+				,#{taskId, jdbcType=VARCHAR}
+			</if>
+			<if test="accountId != null">
+				,#{accountId, jdbcType=VARCHAR}
+			</if>
+			<if test="senderId != null">
+				,#{senderId, jdbcType=VARCHAR}
+			</if>
+			<if test="receiverId != null">
+				,#{receiverId, jdbcType=VARCHAR}
+			</if>
+			<if test="subject != null">
+				,#{subject, jdbcType=VARCHAR}
+			</if>
+			<if test="content != null">
+				,#{content, jdbcType=VARCHAR}
+			</if>
+			<if test="html != null">
+				,#{html, jdbcType=VARCHAR}
+			</if>
+			<if test="templateId != null">
+				,#{templateId, jdbcType=VARCHAR}
+			</if>
+			<if test="mailFrom != null">
+				,#{mailFrom, jdbcType=VARCHAR}
+			</if>
+			<if test="mailTo != null">
+				,#{mailTo, jdbcType=VARCHAR}
+			</if>
+			<if test="mailCC != null">
+				,#{mailCC, jdbcType=VARCHAR}
+			</if>
+			<if test="mailBCC != null">
+				,#{mailBCC, jdbcType=VARCHAR}
+			</if>
+			<if test="mailReplyTo != null">
+				,#{mailReplyTo, jdbcType=VARCHAR}
+			</if>
+			<if test="mailBox != null">
+				,#{mailBox, jdbcType=VARCHAR}
+			</if>
+			<if test="mailType != null">
+				,#{mailType, jdbcType=VARCHAR}
+			</if>
+			<if test="mailSize != null">
+				,#{mailSize, jdbcType=INTEGER}
+			</if>
+			<if test="sendDate != null">
+				,#{sendDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="status != null">
+				,#{status, jdbcType=INTEGER}
+			</if>
+			<if test="sendStatus != null">
+				,#{sendStatus, jdbcType=INTEGER}
+			</if>
+			<if test="retryTimes != null">
+				,#{retryTimes, jdbcType=INTEGER}
+			</if>
+			<if test="receiveDate != null">
+				,#{receiveDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="receiveStatus != null">
+				,#{receiveStatus, jdbcType=INTEGER}
+			</if>
+			<if test="createBy != null">
+				,#{createBy, jdbcType=VARCHAR}
+			</if>
+			<if test="createDate != null">
+				,#{createDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="lastViewDate != null">
+				,#{lastViewDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="lastViewIP != null">
+				,#{lastViewIP, jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</insert>
 
+	 
 	<update id="updateMail" parameterType="com.glaf.mail.Mail">
 		update SYS_MAIL
 		set
-		RETRYTIMES_ = #{retryTimes, jdbcType=INTEGER},
-		RECEIVESTATUS_ = #{receiveStatus, jdbcType=INTEGER},
-		RECEIVEDATE_ = #{receiveDate, jdbcType=TIMESTAMP},
-		LASTVIEWDATE_ = #{lastViewDate, jdbcType=TIMESTAMP},
-		MAILBOX_ = #{mailBox, jdbcType=VARCHAR},
-		LASTVIEWIP_ = #{lastViewIP, jdbcType=VARCHAR},
-		STATUS_ = #{status, jdbcType=INTEGER}
-		where ID_ = #{id, jdbcType=VARCHAR}
+		<trim prefix="" suffix="" suffixOverrides=",">		
+			<if test="nodeId != null">
+				NODEID_ = #{nodeId, jdbcType=VARCHAR},
+			</if>
+			<if test="mailId != null">
+				MAILID_ = #{mailId, jdbcType=VARCHAR},
+			</if>
+			<if test="messageId != null">
+				MESSAGEID_ = #{messageId, jdbcType=VARCHAR},
+			</if>
+			<if test="resourceId != null">
+				RESOURCEID_ = #{resourceId, jdbcType=VARCHAR},
+			</if>
+			<if test="username != null">
+				USERNAME_ = #{username, jdbcType=VARCHAR},
+			</if>
+			<if test="taskId != null">
+				TASKID_ = #{taskId, jdbcType=VARCHAR},
+			</if>
+			<if test="accountId != null">
+				ACCOUNTID_ = #{accountId, jdbcType=VARCHAR},
+			</if>
+			<if test="senderId != null">
+				SENDERID_ = #{senderId, jdbcType=VARCHAR},
+			</if>
+			<if test="receiverId != null">
+				RECEIVERID_ = #{receiverId, jdbcType=VARCHAR},
+			</if>
+			<if test="subject != null">
+				SUBJECT_ = #{subject, jdbcType=VARCHAR},
+			</if>
+			<if test="content != null">
+				CONTENT_ = #{content, jdbcType=VARCHAR},
+			</if>
+			<if test="html != null">
+				HTML_ = #{html, jdbcType=VARCHAR},
+			</if>
+			<if test="templateId != null">
+				TEMPLATEID_ = #{templateId, jdbcType=VARCHAR},
+			</if>
+			<if test="mailFrom != null">
+				MAILFROM_ = #{mailFrom, jdbcType=VARCHAR},
+			</if>
+			<if test="mailTo != null">
+				MAILTO_ = #{mailTo, jdbcType=VARCHAR},
+			</if>
+			<if test="mailCC != null">
+				MAILCC_ = #{mailCC, jdbcType=VARCHAR},
+			</if>
+			<if test="mailBCC != null">
+				MAILBCC_ = #{mailBCC, jdbcType=VARCHAR},
+			</if>
+			<if test="mailReplyTo != null">
+				MAILREPLYTO_ = #{mailReplyTo, jdbcType=VARCHAR},
+			</if>
+			<if test="mailBox != null">
+				MAILBOX_ = #{mailBox, jdbcType=VARCHAR},
+			</if>
+			<if test="mailType != null">
+				MAILTYPE_ = #{mailType, jdbcType=VARCHAR},
+			</if>
+			<if test="mailSize != null">
+				MAILSIZE_ = #{mailSize, jdbcType=INTEGER},
+			</if>
+			<if test="sendDate != null">
+				SENDDATE_ = #{sendDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="status != null">
+				STATUS_ = #{status, jdbcType=INTEGER},
+			</if>
+			<if test="sendStatus != null">
+				SENDSTATUS_ = #{sendStatus, jdbcType=INTEGER},
+			</if>
+			<if test="retryTimes != null">
+				RETRYTIMES_ = #{retryTimes, jdbcType=INTEGER},
+			</if>
+			<if test="receiveDate != null">
+				RECEIVEDATE_ = #{receiveDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="receiveStatus != null">
+				RECEIVESTATUS_ = #{receiveStatus, jdbcType=INTEGER},
+			</if>
+			<if test="createBy != null">
+				CREATEBY_ = #{createBy, jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				CREATEDATE_ = #{createDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastViewDate != null">
+				LASTVIEWDATE_ = #{lastViewDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastViewIP != null">
+				LASTVIEWIP_ = #{lastViewIP, jdbcType=VARCHAR},
+			</if>
+		</trim>
+		where
+          ID_ = #{id, jdbcType=VARCHAR}
+		
 	</update>
 
 
@@ -132,7 +357,7 @@
 		<foreach item="x_rowId" index="index" collection="rowIds"
 			open="(" separator="," close=")">
 			#{x_rowId}
-              </foreach>
+		</foreach>
 		)
 	</delete>
 
@@ -151,7 +376,7 @@
 		<include refid="selectMailsSql" />
 		<if test="orderBy != null">
 			order by ${orderBy}
-        </if>
+		</if>
 	</select>
 
 	<select id="getMailCount" parameterType="com.glaf.mail.query.MailQuery"
@@ -169,61 +394,61 @@
 
 			<if test="templateId != null">
 				and E.TEMPLATEID_ = #{templateId}
-            </if>
+			</if>
 
 			<if test="templateIds != null and templateIds.size() &gt; 0">
 				and E.TEMPLATEID_ IN
 				<foreach item="x_templateId" index="index" collection="templateIds"
 					open="(" separator="," close=")">
 					#{x_templateId}
-                </foreach>
+				</foreach>
 			</if>
 
 			<if test="receiverId != null">
 				and E.RECEIVERID_ = #{receiverId}
-            </if>
+			</if>
 
 			<if test="receiverIds != null and receiverIds.size() &gt; 0">
 				and E.RECEIVERID_ IN
 				<foreach item="x_receiverId" index="index" collection="receiverIds"
 					open="(" separator="," close=")">
 					#{x_receiverId}
-                </foreach>
+				</foreach>
 			</if>
 
 
 			<if test="senderId != null">
 				and E.SENDERID_ = #{senderId}
-            </if>
+			</if>
 
 			<if test="senderIds != null and senderIds.size() &gt; 0">
 				and E.SENDERID_ IN
 				<foreach item="x_senderId" index="index" collection="senderIds"
 					open="(" separator="," close=")">
 					#{x_senderId}
-                </foreach>
+				</foreach>
 			</if>
 
 
 			<if test="accountId != null">
 				and E.ACCOUNTID_ = #{accountId}
-            </if>
+			</if>
 
 			<if test="accountIds != null and accountIds.size() &gt; 0">
 				and E.ACCOUNTID_ IN
 				<foreach item="x_accountId" index="index" collection="accountIds"
 					open="(" separator="," close=")">
 					#{x_accountId}
-                </foreach>
+				</foreach>
 			</if>
 
 			<if test="subjectLike != null">
 				and E.SUBJECT_ like #{subjectLike}
-            </if>
+			</if>
 
 			<if test="retryTimes != null">
 				and E.RETRYTIMES_ = #{retryTimes}
-            </if>
+			</if>
 
 			<if test="retryTimesGreaterThanOrEqual != null">
 				and E.RETRYTIMES_ &gt;= #{retryTimesGreaterThanOrEqual}
@@ -231,69 +456,69 @@
 
 			<if test="retryTimesLessThanOrEqual != null">
 				and E.RETRYTIMES_ &lt;= #{retryTimesLessThanOrEqual}
-            </if>
+			</if>
 
 			<if test="mailCCLike != null">
 				and E.MAILCC_ like #{mailCCLike}
-            </if>
+			</if>
 
 			<if test="mailReplyToLike != null">
 				and E.MAILREPLYTO_ like #{mailReplyToLike}
-            </if>
+			</if>
 
 			<if test="taskId != null">
 				and E.TASKID_ = #{taskId}
-            </if>
+			</if>
 
 			<if test="taskIds != null and taskIds.size() &gt; 0">
 				and E.TASKID_ IN
 				<foreach item="x_taskId" index="index" collection="taskIds"
 					open="(" separator="," close=")">
 					#{x_taskId}
-                </foreach>
+				</foreach>
 			</if>
 
 			<if test="nodeId != null">
 				and E.NODEID_ = #{nodeId}
-            </if>
+			</if>
 
 			<if test="nodeIds != null and nodeIds.size() &gt; 0">
 				and E.NODEID_ IN
 				<foreach item="x_nodeId" index="index" collection="nodeIds"
 					open="(" separator="," close=")">
 					#{x_nodeId}
-                </foreach>
+				</foreach>
 			</if>
 
 			<if test="receiveStatus != null">
 				and E.RECEIVESTATUS_ = #{receiveStatus}
-            </if>
+			</if>
 
 			<if test="receiveStatusGreaterThanOrEqual != null">
 				and E.RECEIVESTATUS_ &gt;=
 				#{receiveStatusGreaterThanOrEqual}
-            </if>
+			</if>
 
 			<if test="receiveStatusLessThanOrEqual != null">
 				and E.RECEIVESTATUS_ &lt;=
 				#{receiveStatusLessThanOrEqual}
-            </if>
+			</if>
 
 			<if test="mailType != null">
 				and E.MAILTYPE_ = #{mailType}
-            </if>
+			</if>
 
 			<if test="mailTypes != null and mailTypes.size() &gt; 0">
 				and E.MAILTYPE_ IN
 				<foreach item="x_mailType" index="index" collection="mailTypes"
 					open="(" separator="," close=")">
 					#{x_mailType}
-                </foreach>
+				</foreach>
 			</if>
 
 			<if test="sendStatus != null">
 				and E.SENDSTATUS_ = #{sendStatus}
-            </if>
+			</if>
 
 			<if test="sendStatusGreaterThanOrEqual != null">
 				and E.SENDSTATUS_ &gt;= #{sendStatusGreaterThanOrEqual}
@@ -301,7 +526,7 @@
 
 			<if test="sendStatusLessThanOrEqual != null">
 				and E.SENDSTATUS_ &lt;= #{sendStatusLessThanOrEqual}
-            </if>
+			</if>
 
 			<if test="receiveDateGreaterThanOrEqual != null">
 				and E.RECEIVEDATE_ &gt;= #{receiveDateGreaterThanOrEqual}
@@ -314,7 +539,7 @@
 			<if test="lastViewDateGreaterThanOrEqual != null">
 				and E.LASTVIEWDATE_ &gt;=
 				#{lastViewDateGreaterThanOrEqual}
-            </if>
+			</if>
 
 			<if test="lastViewDateLessThanOrEqual != null">
 				and E.LASTVIEWDATE_ &lt;= #{lastViewDateLessThanOrEqual}
@@ -322,107 +547,107 @@
 
 			<if test="mailBCCLike != null">
 				and E.MAILBCC_ like #{mailBCCLike}
-            </if>
+			</if>
 
 			<if test="mailToLike != null">
 				and E.MAILTO_ like #{mailToLike}
-            </if>
+			</if>
 
 			<if test="resourceId != null">
 				and E.RESOURCEID_ = #{resourceId}
-            </if>
+			</if>
 
 			<if test="resourceIds != null and resourceIds.size() &gt; 0">
 				and E.RESOURCEID_ IN
 				<foreach item="x_resourceId" index="index" collection="resourceIds"
 					open="(" separator="," close=")">
 					#{x_resourceId}
-                </foreach>
+				</foreach>
 			</if>
 
 			<if test="mailBox != null">
 				and E.MAILBOX_ = #{mailBox}
-            </if>
+			</if>
 
 			<if test="mailBoxs != null and mailBoxs.size() &gt; 0">
 				and E.MAILBOX_ IN
 				<foreach item="x_mailBox" index="index" collection="mailBoxs"
 					open="(" separator="," close=")">
 					#{x_mailBox}
-                </foreach>
+				</foreach>
 			</if>
 
 			<if test="sendDateGreaterThanOrEqual != null">
 				and E.SENDDATE_ &gt;= #{sendDateGreaterThanOrEqual}
-            </if>
+			</if>
 
 			<if test="sendDateLessThanOrEqual != null">
 				and E.SENDDATE_ &lt;= #{sendDateLessThanOrEqual}
-            </if>
+			</if>
 
 			<if test="mailSizeGreaterThanOrEqual != null">
 				and E.MAILSIZE_ &gt;= #{mailSizeGreaterThanOrEqual}
-            </if>
+			</if>
 
 			<if test="mailSizeLessThanOrEqual != null">
 				and E.MAILSIZE_ &lt;= #{mailSizeLessThanOrEqual}
-            </if>
+			</if>
 
 			<if test="lastViewIPLike != null">
 				and E.LASTVIEWIP_ like #{lastViewIPLike}
-            </if>
+			</if>
 
 			<if test="mailFromLike != null">
 				and E.MAILFROM_ like #{mailFromLike}
-            </if>
+			</if>
 
 			<if test="createBy != null">
 				and E.CREATEBY_ = #{createBy}
-            </if>
+			</if>
 
 			<if test="createBys != null and createBys.size() &gt; 0">
 				and E.CREATEBY_ IN
 				<foreach item="x_createBy" index="index" collection="createBys"
 					open="(" separator="," close=")">
 					#{x_createBy}
-                </foreach>
+				</foreach>
 			</if>
 
 			<if test="mailId != null">
 				and E.MAILID_ = #{mailId}
-            </if>
+			</if>
 
 			<if test="mailIds != null and mailIds.size() &gt; 0">
 				and E.MAILID_ IN
 				<foreach item="x_mailId" index="index" collection="mailIds"
 					open="(" separator="," close=")">
 					#{x_mailId}
-                </foreach>
+				</foreach>
 			</if>
 
 			<if test="messageId != null">
 				and E.MESSAGEID_ = #{messageId}
-            </if>
+			</if>
 
 			<if test="messageIds != null and messageIds.size() &gt; 0">
 				and E.MESSAGEID_ IN
 				<foreach item="x_messageId" index="index" collection="messageIds"
 					open="(" separator="," close=")">
 					#{x_messageId}
-                </foreach>
+				</foreach>
 			</if>
 
 			<if test="status != null">
 				and E.STATUS_ = #{status}
-            </if>
+			</if>
 
 			<if test="statusGreaterThanOrEqual != null">
 				and E.STATUS_ &gt;= #{statusGreaterThanOrEqual}
-            </if>
+			</if>
 
 			<if test="statusLessThanOrEqual != null">
 				and E.STATUS_ &lt;= #{statusLessThanOrEqual}
-            </if>
+			</if>
 
 			<if test="afterCreateDate != null">
 				and E.CREATEDATE_ &gt;= #{afterCreateDate}
@@ -430,7 +655,7 @@
 
 			<if test="beforeCreateDate != null">
 				and E.CREATEDATE_ &lt;= #{beforeCreateDate}
-            </if>
+			</if>
             
 		</where>
 	</sql>
