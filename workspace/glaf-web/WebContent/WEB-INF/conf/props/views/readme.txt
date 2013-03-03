@@ -1,0 +1,1 @@
+springmvc view config

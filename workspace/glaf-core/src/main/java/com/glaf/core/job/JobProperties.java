@@ -16,37 +16,24 @@
  * limitations under the License.
  */
 
-package com.glaf.core.config;
+package com.glaf.core.job;
 
 import java.io.File;
 import java.io.FileInputStream;
+
 import java.io.InputStream;
 import java.util.Enumeration;
 import java.util.Properties;
 
-import org.apache.commons.lang.StringUtils;
+import com.glaf.core.config.SystemConfig;
+import com.glaf.core.util.*;
 
-import com.glaf.core.util.PropertiesUtils;
-
-public class MessageProperties {
+public class JobProperties {
 
 	private static Properties properties = new Properties();
 
 	static {
-		try {
-			reload();
-		} catch (Exception ex) {
-		}
-	}
-
-	public static boolean eq(String key, String value) {
-		if (key != null && value != null) {
-			String x = properties.getProperty(key);
-			if (StringUtils.equals(value, x)) {
-				return true;
-			}
-		}
-		return false;
+		reload();
 	}
 
 	public static boolean getBoolean(String key) {
@@ -60,7 +47,7 @@ public class MessageProperties {
 	public static double getDouble(String key) {
 		if (hasObject(key)) {
 			String value = properties.getProperty(key);
-			return Double.parseDouble(value);
+			return Double.valueOf(value).doubleValue();
 		}
 		return 0;
 	}
@@ -68,7 +55,7 @@ public class MessageProperties {
 	public static int getInt(String key) {
 		if (hasObject(key)) {
 			String value = properties.getProperty(key);
-			return Integer.parseInt(value);
+			return Integer.valueOf(value).intValue();
 		}
 		return 0;
 	}
@@ -76,7 +63,7 @@ public class MessageProperties {
 	public static long getLong(String key) {
 		if (hasObject(key)) {
 			String value = properties.getProperty(key);
-			return Long.parseLong(value);
+			return Long.valueOf(value).longValue();
 		}
 		return 0;
 	}
@@ -88,12 +75,9 @@ public class MessageProperties {
 	public static String getString(String key) {
 		if (hasObject(key)) {
 			String value = properties.getProperty(key);
-			if (value == null) {
-				value = properties.getProperty(key.toUpperCase());
-			}
 			return value;
 		}
-		return null;
+		return "";
 	}
 
 	public static boolean hasObject(String key) {
@@ -109,7 +93,8 @@ public class MessageProperties {
 
 	public synchronized static void reload() {
 		try {
-			String config = SystemConfig.getConfigRootPath() + "/conf/props/messages";
+			String config = SystemConfig.getConfigRootPath()
+					+ "/conf/props/jobs";
 			File directory = new File(config);
 			if (directory.exists() && directory.isDirectory()) {
 				String[] filelist = directory.list();
@@ -126,10 +111,6 @@ public class MessageProperties {
 								String key = (String) e.nextElement();
 								String value = p.getProperty(key);
 								properties.setProperty(key, value);
-								properties
-										.setProperty(key.toLowerCase(), value);
-								properties
-										.setProperty(key.toUpperCase(), value);
 							}
 						}
 						inputStream.close();
@@ -142,7 +123,7 @@ public class MessageProperties {
 		}
 	}
 
-	private MessageProperties() {
+	private JobProperties() {
 
 	}
 

@@ -7,6 +7,7 @@
 <%@ page import="com.glaf.core.base.*"%>
 <%@ page import="com.glaf.core.service.*"%>
 <%@ page import="com.glaf.core.domain.*"%>
+<%@ page import="com.glaf.core.job.*"%>
 <%@ page import="com.glaf.core.query.*"%>
 <%@ page import="com.glaf.core.service.*"%>
 <%@ page import="com.glaf.dts.domain.*"%>
@@ -145,9 +146,15 @@
 		<td align="left" width="25%" height="27">任务类名&nbsp;</td>
 		<td align="left" height="27"> 
 		      <select id="jobClass" name="jobClass" onchange="switchTbl();" >
-			    <option value="com.glaf.dts.job.MxTransformTableJob">采集指定表Job</option>
-				<option value="com.glaf.dts.job.MxTransformAllJob">数据抽取采集Job</option>
-				<option value="com.glaf.core.job.SimpleJob">测试Job</option>
+		      <%
+			   Properties props =  JobProperties.getProperties();
+			   Enumeration<?> e = props.keys();
+			   while (e.hasMoreElements()) {
+				String key = (String) e.nextElement();
+				String value = props.getProperty(key);
+			  %>
+				<option value="<%=key%>"><%=value%></option>
+			  <%}%>
 		      </select>
 			  <script type="text/javascript">
                       document.getElementById("jobClass").value="${scheduler.jobClass}";

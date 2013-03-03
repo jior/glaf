@@ -109,7 +109,7 @@ public class ViewProperties {
 
 	public synchronized static void reload() {
 		try {
-			String config = SystemConfig.getConfigRootPath() + "/conf/props";
+			String config = SystemConfig.getConfigRootPath() + "/conf/props/views";
 			File directory = new File(config);
 			if (directory.exists() && directory.isDirectory()) {
 				String[] filelist = directory.list();
