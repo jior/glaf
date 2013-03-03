@@ -13,12 +13,10 @@
 	<import resource="classpath*:com/glaf/**/*-spring-context.xml" />
  
 
-	<aop:config expose-proxy="true">
-        <!-- 只对业务逻辑层实施事务 -->
-        <aop:pointcut id="txPointcut" expression="execution(* com.glaf..service..*.*(..))" />
-        <aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut"/>
-    </aop:config>
-
+	<aop:config>
+	  <aop:pointcut id="allServiceMethod" expression="execution (*com.glaf.* *..Service.*(..))" />
+	  <aop:advisor advice-ref="txAdvice" pointcut-ref="allServiceMethod" />
+    </aop:config> 
 
 	<tx:advice id="txAdvice" transaction-manager="transactionManager">
 		<tx:attributes>
@@ -26,11 +24,11 @@
 			<tx:method name="find*" read-only="true" />
 			<tx:method name="load*" read-only="true" />
 			<tx:method name="query*" read-only="true" />
-			<tx:method name="export*" read-only="true" />
 			<tx:method name="search*" read-only="true" />
 			<tx:method name="*" propagation="REQUIRED" />
 		</tx:attributes>
 	</tx:advice>
+
 
 	<tx:annotation-driven transaction-manager="transactionManager" />
 

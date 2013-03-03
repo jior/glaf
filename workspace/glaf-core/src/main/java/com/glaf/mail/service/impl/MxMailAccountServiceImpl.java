@@ -29,7 +29,6 @@ import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
- 
 import com.glaf.core.cache.CacheFactory;
 import com.glaf.core.entity.EntityDAO;
 import com.glaf.core.id.*;
@@ -37,7 +36,6 @@ import com.glaf.mail.domain.*;
 import com.glaf.mail.mapper.*;
 import com.glaf.mail.query.*;
 import com.glaf.mail.service.*;
-
 
 @Service("mailAccountService")
 @Transactional(readOnly = true)
@@ -74,7 +72,7 @@ public class MxMailAccountServiceImpl implements IMailAccountService {
 	}
 
 	public MailAccount getMailAccount(String id) {
-		
+
 		MailAccount mailAccount = mailAccountMapper.getMailAccountById(id);
 
 		return mailAccount;
@@ -133,8 +131,7 @@ public class MxMailAccountServiceImpl implements IMailAccountService {
 	}
 
 	@javax.annotation.Resource
-	public void setMailAccountMapper(
-			MailAccountMapper mailAccountMapper) {
+	public void setMailAccountMapper(MailAccountMapper mailAccountMapper) {
 		this.mailAccountMapper = mailAccountMapper;
 	}
 

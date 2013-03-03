@@ -1,20 +1,20 @@
 /*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.glaf.mail.service.impl;
 
@@ -133,7 +133,8 @@ public class MxMailPathSenderServiceImpl implements IMailPathSenderService {
 		}
 		if (StringUtils.isNotEmpty(mailTask.getCronExpression())) {
 			String taskId = "mail_task_" + mailTask.getId();
-			Scheduler scheduler = sysSchedulerService.getSchedulerByTaskId(taskId);
+			Scheduler scheduler = sysSchedulerService
+					.getSchedulerByTaskId(taskId);
 			boolean insert = false;
 			if (scheduler == null) {
 				scheduler = new SchedulerEntity();
@@ -144,8 +145,7 @@ public class MxMailPathSenderServiceImpl implements IMailPathSenderService {
 			}
 			scheduler.setTaskType("MAIL_TASK");
 			scheduler.setRepeatCount(-1);
-			scheduler
-					.setJobClass("com.glaf.mail.job.MailPathSenderJob");
+			scheduler.setJobClass("com.glaf.mail.job.MailPathSenderJob");
 			scheduler.setExpression(mailTask.getCronExpression());
 			scheduler.setTaskName(mailTask.getName());
 			scheduler.setTitle(mailTask.getSubject());

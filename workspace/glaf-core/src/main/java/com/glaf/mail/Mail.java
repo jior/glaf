@@ -65,7 +65,7 @@ public class Mail implements MessageProvider {
 	/**
 	 * Message-ID
 	 */
-	@Column(name = "MESSAGEID_", length = 50)
+	@Column(name = "MESSAGEID_", length = 250)
 	protected String messageId;
 
 	/**

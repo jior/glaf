@@ -28,7 +28,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
- 
+
 import com.glaf.core.base.Scheduler;
 import com.glaf.core.cache.CacheFactory;
 import com.glaf.core.domain.SchedulerEntity;
@@ -36,7 +36,7 @@ import com.glaf.core.entity.EntityDAO;
 import com.glaf.core.id.*;
 import com.glaf.core.service.ISysSchedulerService;
 import com.glaf.core.util.DateUtils;
- 
+
 import com.glaf.mail.domain.*;
 import com.glaf.mail.mapper.*;
 import com.glaf.mail.query.*;
@@ -97,28 +97,28 @@ public class MxMailTaskServiceImpl implements IMailTaskService {
 	}
 
 	public MailTask getMailTask(String id) {
-		 
+
 		MailTask mailTask = mailTaskMapper.getMailTaskById(id);
 		if (mailTask != null) {
-			MailStorage stg = mailStorageMapper
-					.getMailStorageById(mailTask.getStorageId());
+			MailStorage stg = mailStorageMapper.getMailStorageById(mailTask
+					.getStorageId());
 			mailTask.setStorage(stg);
 		}
-	 
+
 		return mailTask;
 	}
 
 	public MailTask getMailTaskWithAccounts(String taskId) {
 		MailTask mailTask = mailTaskMapper.getMailTaskById(taskId);
 		if (mailTask != null) {
-			MailStorage stg = mailStorageMapper
-					.getMailStorageById(mailTask.getStorageId());
+			MailStorage stg = mailStorageMapper.getMailStorageById(mailTask
+					.getStorageId());
 			mailTask.setStorage(stg);
 			List<MailAccount> accounts = mailAccountMapper
 					.getMailAccountsByTaskId(taskId);
 			mailTask.setAccounts(accounts);
 		}
- 
+
 		return mailTask;
 	}
 
@@ -246,8 +246,7 @@ public class MxMailTaskServiceImpl implements IMailTaskService {
 	}
 
 	@javax.annotation.Resource
-	public void setMailAccountMapper(
-			MailAccountMapper mailAccountMapper) {
+	public void setMailAccountMapper(MailAccountMapper mailAccountMapper) {
 		this.mailAccountMapper = mailAccountMapper;
 	}
 
@@ -263,8 +262,7 @@ public class MxMailTaskServiceImpl implements IMailTaskService {
 	}
 
 	@javax.annotation.Resource
-	public void setMailStorageMapper(
-			MailStorageMapper mailStorageMapper) {
+	public void setMailStorageMapper(MailStorageMapper mailStorageMapper) {
 		this.mailStorageMapper = mailStorageMapper;
 	}
 

@@ -41,7 +41,7 @@
 
 	<insert id="insertMail" parameterType="com.glaf.mail.Mail">
 		insert into
-		MX_MAIL (
+		SYS_MAIL (
 		ID_
 		,TEMPLATEID_
 		,RECEIVERID_
@@ -107,7 +107,7 @@
 
 
 	<update id="updateMail" parameterType="com.glaf.mail.Mail">
-		update MX_MAIL
+		update SYS_MAIL
 		set
 		RETRYTIMES_ = #{retryTimes, jdbcType=INTEGER},
 		RECEIVESTATUS_ = #{receiveStatus, jdbcType=INTEGER},
@@ -121,12 +121,12 @@
 
 
 	<delete id="deleteMailById" parameterType="string">
-		delete from MX_MAIL
+		delete from SYS_MAIL
 		where where ID_ = #{id}
 	</delete>
 
 	<delete id="deleteMails" parameterType="com.glaf.mail.query.MailQuery">
-		delete from MX_MAIL
+		delete from SYS_MAIL
 		where (
 		ID_ IN
 		<foreach item="x_rowId" index="index" collection="rowIds"
@@ -137,11 +137,11 @@
 	</delete>
 
 	<select id="getMailById" parameterType="string" resultMap="mailResultMap">
-		select * from MX_MAIL where ID_ = #{id}
+		select * from SYS_MAIL where ID_ = #{id}
 	</select>
 
 	<select id="getMailByMailId" parameterType="string" resultMap="mailResultMap">
-		select * from MX_MAIL where MAILID_ = #{mailId}
+		select * from SYS_MAIL where MAILID_ = #{mailId}
 	</select>
 
 
@@ -162,7 +162,7 @@
 
 	<sql id="selectMailsSql">
 
-		from MX_MAIL E
+		from SYS_MAIL E
 
 		<where>
 			1 = 1

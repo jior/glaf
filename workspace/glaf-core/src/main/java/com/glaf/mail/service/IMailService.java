@@ -21,25 +21,30 @@ package com.glaf.mail.service;
 import java.util.List;
 import java.util.Map;
 
- 
+import org.springframework.transaction.annotation.Transactional;
+
 import com.glaf.mail.Mail;
 import com.glaf.mail.query.MailQuery;
 import com.glaf.core.util.Paging;
 
+@Transactional(readOnly = true)
 public interface IMailService {
-	
-	 long nextId();
 
+	@Transactional
+	long nextId();
+
+	@Transactional
 	void deleteMail(String mailId);
 
 	Mail getMail(String mailId);
-	
+
 	Mail getMailByMessageId(String messageId);
 
 	List<Mail> getMailList(String resourceId);
 
 	Paging getPage(MailQuery query);
 
+	@Transactional
 	void saveMail(Mail mail);
 
 	/**
@@ -48,7 +53,7 @@ public interface IMailService {
 	 * @param mail
 	 * @return
 	 */
-
+	@Transactional
 	boolean send(Mail mail);
 
 	/**
@@ -60,9 +65,10 @@ public interface IMailService {
 	 *            ²ÎÊý¼¯
 	 * @return
 	 */
-
+	@Transactional
 	boolean send(Mail mail, Map<String, Object> dataMap);
 
+	@Transactional
 	void updateMail(Mail mail);
 
 }

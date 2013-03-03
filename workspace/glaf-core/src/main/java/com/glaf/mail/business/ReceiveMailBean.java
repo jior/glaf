@@ -44,7 +44,7 @@ public class ReceiveMailBean {
 	public static void main(String[] args) throws Exception {
 		ReceiveMailBean rm = new ReceiveMailBean();
 		rm.receiveMail("pop3.163.com", 110, "cinsoft2013@163.com",
-				"cinsoft@2013", "c:/temp");
+				"cinsoft@2013", "/temp");
 	}
 
 	private MimeMessage mimeMessage = null;
@@ -361,15 +361,18 @@ public class ReceiveMailBean {
 									msg.getMessageID(), "MD5");
 							String hex_str = Hex.encodeHexString(md5_str
 									.getBytes());
-							FileUtils.mkdirsWithExistsCheck(new File(
-									attachSavePath + FileUtils.sp
-											+ mail.getUsername() + FileUtils.sp));
+							FileUtils
+									.mkdirsWithExistsCheck(new File(
+											attachSavePath + FileUtils.sp
+													+ mail.getUsername()
+													+ FileUtils.sp));
 							this.setAttchSavePath(attachSavePath + FileUtils.sp
 									+ mail.getUsername() + FileUtils.sp
 									+ hex_str);
 						}
 						this.receive(msgs[i], i);
 						mailService.saveMail(mail);
+						logger.debug("save mail ok.");
 					} catch (Exception ex) {
 						ex.printStackTrace();
 					} finally {
