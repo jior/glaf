@@ -150,7 +150,7 @@ public class SysTreeController {
 			HttpServletResponse response) {
 		RequestUtil.setRequestParameterToAttribute(request);
 		SysTree bean = new SysTree();
-		bean.setParent(ParamUtil.getIntParameter(request, "parent", 0));
+		bean.setParentId(ParamUtil.getIntParameter(request, "parent", 0));
 		bean.setName(ParamUtil.getParameter(request, "name"));
 		bean.setDesc(ParamUtil.getParameter(request, "desc"));
 		bean.setCode(ParamUtil.getParameter(request, "code"));
@@ -183,7 +183,7 @@ public class SysTreeController {
 		long id = ParamUtil.getIntParameter(request, "id", 0);
 		SysTree bean = sysTreeService.findById(id);
 		if (bean != null) {
-			bean.setParent(ParamUtil.getIntParameter(request, "parent", 0));
+			bean.setParentId(ParamUtil.getIntParameter(request, "parent", 0));
 			bean.setName(ParamUtil.getParameter(request, "name"));
 			bean.setDesc(ParamUtil.getParameter(request, "desc"));
 			bean.setCode(ParamUtil.getParameter(request, "code"));

@@ -96,7 +96,7 @@ public class MailTaskBaseController {
 			return new ModelAndView(x_view);
 		}
 
-		return new ModelAndView("/base/mail/mailTask/account");
+		return new ModelAndView("/modules/mail/mailTask/account");
 	}
 
 	@RequestMapping("/addMail")
@@ -125,7 +125,7 @@ public class MailTaskBaseController {
 			return new ModelAndView(x_view);
 		}
 
-		return new ModelAndView("/base/mail/mailTask/addMail");
+		return new ModelAndView("/modules/mail/mailTask/addMail");
 	}
 
 	@RequestMapping("/edit")
@@ -158,7 +158,7 @@ public class MailTaskBaseController {
 			return new ModelAndView(x_view);
 		}
 
-		return new ModelAndView("/base/mail/mailTask/edit");
+		return new ModelAndView("/modules/mail/mailTask/edit");
 	}
 
 	@RequestMapping
@@ -183,7 +183,7 @@ public class MailTaskBaseController {
 			return new ModelAndView(x_view, modelMap);
 		}
 
-		return new ModelAndView("/base/mail/mailTask/list", modelMap);
+		return new ModelAndView("/modules/mail/mailTask/list", modelMap);
 	}
 
 	@RequestMapping("/mailList")
@@ -208,7 +208,7 @@ public class MailTaskBaseController {
 			return new ModelAndView(x_view, modelMap);
 		}
 
-		return new ModelAndView("/base/mail/mailTask/mailList", modelMap);
+		return new ModelAndView("/modules/mail/mailTask/mailList", modelMap);
 	}
 
 	@RequestMapping("/query")
@@ -222,7 +222,7 @@ public class MailTaskBaseController {
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);
 		}
-		return new ModelAndView("/base/mail/mailTask/query", modelMap);
+		return new ModelAndView("/modules/mail/mailTask/query", modelMap);
 	}
 
 	public void setMailAccountService(IMailAccountService mailAccountService) {
@@ -271,7 +271,7 @@ public class MailTaskBaseController {
 			return new ModelAndView(x_view);
 		}
 
-		return new ModelAndView("/base/mail/mailTask/showUpload");
+		return new ModelAndView("/modules/mail/mailTask/showUpload");
 	}
 
 	@RequestMapping("/uploadMails")
@@ -350,7 +350,7 @@ public class MailTaskBaseController {
 			return new ModelAndView(x_view);
 		}
 
-		return new ModelAndView("/base/mail/mailTask/view");
+		return new ModelAndView("/modules/mail/mailTask/view");
 	}
 
 }

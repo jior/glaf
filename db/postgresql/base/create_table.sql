@@ -94,6 +94,10 @@ CREATE TABLE sys_tree (
         nodedesc varchar(255),
         sort int4,
         code varchar(255),
+	icon varchar(255),
+	iconCls varchar(255),
+	url varchar(255),
+	locked int4 default 0,
         PRIMARY KEY (id)
 );
 

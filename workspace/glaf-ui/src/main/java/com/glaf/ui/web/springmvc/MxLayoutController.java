@@ -192,7 +192,7 @@ public class MxLayoutController {
 			return new ModelAndView(x_view, modelMap);
 		}
 
-		return new ModelAndView("/ui/layout/showLayout", modelMap);
+		return new ModelAndView("/modules/ui/layout/showLayout", modelMap);
 	}
 
 }

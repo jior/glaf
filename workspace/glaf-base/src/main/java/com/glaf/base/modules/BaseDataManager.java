@@ -662,14 +662,14 @@ public class BaseDataManager {
 							bdi.setDeep(tree.getDeep());
 							// bdi.setParentId((int) tree.getParent());
 							SysTree parentCurrTree = service.findById(tree
-									.getParent());
+									.getParentId());
 							if (parentCurrTree != null
 									&& parentCurrTree.getDepartment() != null
 									&& parent.getId() != parentCurrTree.getId()) {// 不等于部门结构,则取部门
 								bdi.setParentId((int) parentCurrTree
 										.getDepartment().getId());
 							} else {
-								bdi.setParentId((int) parent.getParent());
+								bdi.setParentId((int) parent.getParentId());
 							}
 
 							logger.info("id:" + bean.getId() + ",name:"

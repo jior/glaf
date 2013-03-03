@@ -114,7 +114,7 @@ public class MailPathSenderController {
 			return new ModelAndView(x_view, modelMap);
 		}
 
-		return new ModelAndView("/base/mail/sender/edit", modelMap);
+		return new ModelAndView("/modules/mail/sender/edit", modelMap);
 	}
 
 	@RequestMapping("/json")
@@ -203,7 +203,7 @@ public class MailPathSenderController {
 			return new ModelAndView(view, modelMap);
 		}
 
-		return new ModelAndView("/base/mail/sender/list", modelMap);
+		return new ModelAndView("/modules/mail/sender/list", modelMap);
 	}
 
 	@RequestMapping("/query")
@@ -217,7 +217,7 @@ public class MailPathSenderController {
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);
 		}
-		return new ModelAndView("/base/mail/sender/query", modelMap);
+		return new ModelAndView("/modules/mail/sender/query", modelMap);
 	}
 
 	@RequestMapping("/save")

@@ -16,14 +16,14 @@
  * limitations under the License.
  */
 
-package com.glaf.base.modules.sys.util;
+package com.glaf.core.tree.util;
 
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.glaf.base.modules.sys.model.SysTree;
+import com.glaf.core.tree.SysTree;
 
-public class SysTreeJsonFactory {
+public class TreeJsonFactory {
 
 	public static SysTree jsonToObject(JSONObject jsonObject) {
 		SysTree model = new SysTree();
@@ -87,7 +87,7 @@ public class SysTreeJsonFactory {
 		return jsonObject;
 	}
 
-	private SysTreeJsonFactory() {
+	private TreeJsonFactory() {
 
 	}
 

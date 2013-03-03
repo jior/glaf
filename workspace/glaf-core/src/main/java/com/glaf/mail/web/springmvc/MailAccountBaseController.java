@@ -72,7 +72,7 @@ public class MailAccountBaseController {
 			return new ModelAndView(x_view, modelMap);
 		}
 
-		return new ModelAndView("/base/mail/mailAccount/edit", modelMap);
+		return new ModelAndView("/modules/mail/mailAccount/edit", modelMap);
 	}
 
 	@RequestMapping
@@ -97,7 +97,7 @@ public class MailAccountBaseController {
 			return new ModelAndView(x_view, modelMap);
 		}
 
-		return new ModelAndView("/base/mail/mailAccount/list", modelMap);
+		return new ModelAndView("/modules/mail/mailAccount/list", modelMap);
 	}
 
 	@RequestMapping("/query")
@@ -111,7 +111,7 @@ public class MailAccountBaseController {
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);
 		}
-		return new ModelAndView("/base/mail/mailAccount/query", modelMap);
+		return new ModelAndView("/modules/mail/mailAccount/query", modelMap);
 	}
 
 	@RequestMapping("/view")
@@ -140,7 +140,7 @@ public class MailAccountBaseController {
 			return new ModelAndView(x_view);
 		}
 
-		return new ModelAndView("/base/mail/mailAccount/view");
+		return new ModelAndView("/modules/mail/mailAccount/view");
 	}
 
 }

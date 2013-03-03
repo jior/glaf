@@ -71,7 +71,7 @@ public class MailStorageBaseController {
 			return new ModelAndView(x_view, modelMap);
 		}
 
-		return new ModelAndView("/base/mail/mailStorage/edit", modelMap);
+		return new ModelAndView("/modules/mail/mailStorage/edit", modelMap);
 	}
 
 	@RequestMapping
@@ -96,7 +96,7 @@ public class MailStorageBaseController {
 			return new ModelAndView(x_view, modelMap);
 		}
 
-		return new ModelAndView("/base/mail/mailStorage/list", modelMap);
+		return new ModelAndView("/modules/mail/mailStorage/list", modelMap);
 	}
 
 	@RequestMapping("/query")
@@ -110,7 +110,7 @@ public class MailStorageBaseController {
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);
 		}
-		return new ModelAndView("/base/mail/mailStorage/query", modelMap);
+		return new ModelAndView("/modules/mail/mailStorage/query", modelMap);
 	}
 
 	public void setMailStorageService(IMailStorageService mailStorageService) {
@@ -143,7 +143,7 @@ public class MailStorageBaseController {
 			return new ModelAndView(x_view);
 		}
 
-		return new ModelAndView("/base/mail/mailStorage/view");
+		return new ModelAndView("/modules/mail/mailStorage/view");
 	}
 
 }

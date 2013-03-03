@@ -198,7 +198,7 @@ public class SysDepartmentController {
 		node.setName(bean.getName());
 		node.setDesc(bean.getName());
 		node.setCode(bean.getCode());
-		node.setParent((long) ParamUtil.getIntParameter(request, "parent", 0));
+		node.setParentId((long) ParamUtil.getIntParameter(request, "parent", 0));
 		bean.setNode(node);
 		boolean ret = sysDepartmentService.create(bean);
 
@@ -241,7 +241,7 @@ public class SysDepartmentController {
 			bean.setStatus(ParamUtil.getIntParameter(request, "status", 0));
 			SysTree node = bean.getNode();
 			node.setName(bean.getName());
-			node.setParent((long) ParamUtil.getIntParameter(request, "parent",
+			node.setParentId((long) ParamUtil.getIntParameter(request, "parent",
 					0));
 			bean.setNode(node);
 

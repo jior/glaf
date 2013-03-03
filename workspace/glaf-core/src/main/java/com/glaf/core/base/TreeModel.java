@@ -19,7 +19,7 @@
 package com.glaf.core.base;
 
 import java.io.Serializable;
-import java.util.Date;
+
 import java.util.List;
 import java.util.Map;
 
@@ -41,15 +41,6 @@ public interface TreeModel extends Serializable,
 	 */
 	void addChild(TreeModel treeModel);
 
-	String getAttribute();
-
-	/**
-	 * 获取大图标
-	 * 
-	 * @return
-	 */
-	String getBigIcon();
-
 	/**
 	 * 返回子节点
 	 * 
@@ -64,31 +55,12 @@ public interface TreeModel extends Serializable,
 	 */
 	String getCode();
 
-	String getCreateBy();
-
-	Date getCreateDate();
-
 	Map<String, Object> getDataMap();
 
-	/**
-	 * 描述
-	 * 
-	 * @return
-	 */
 	String getDescription();
 
-	/**
-	 * 小图标
-	 * 
-	 * @return
-	 */
 	String getIcon();
 
-	/**
-	 * 图标样式
-	 * 
-	 * @return
-	 */
 	String getIconCls();
 
 	/**
@@ -96,15 +68,10 @@ public interface TreeModel extends Serializable,
 	 * 
 	 * @return
 	 */
-	int getId();
+	long getId();
 
 	int getLevel();
 
-	/**
-	 * 锁定
-	 * 
-	 * @return
-	 */
 	int getLocked();
 
 	/**
@@ -113,17 +80,6 @@ public interface TreeModel extends Serializable,
 	 * @return
 	 */
 	String getName();
-
-	/**
-	 * 节点类型
-	 * 
-	 * @return
-	 */
-	String getNodeType();
-
-	String getObjectId();
-
-	String getObjectValue();
 
 	/**
 	 * 父节点
@@ -137,28 +93,7 @@ public interface TreeModel extends Serializable,
 	 * 
 	 * @return
 	 */
-	int getParentId();
-
-	/**
-	 * 项目编号
-	 * 
-	 * @return
-	 */
-	String getProjectId();
-
-	/**
-	 * 根据名称获取属性值
-	 * 
-	 * @return
-	 */
-	String getProperty(String name);
-
-	/**
-	 * 读取级别
-	 * 
-	 * @return
-	 */
-	int getReadAccessLevel();
+	long getParentId();
 
 	/**
 	 * 获取顺序号
@@ -167,35 +102,13 @@ public interface TreeModel extends Serializable,
 	 */
 	int getSortNo();
 
-	String getTreeId();
-
-	String getTreeType();
-
-	/**
-	 * URL
-	 * 
-	 * @return
-	 */
 	String getUrl();
-
-	/**
-	 * 写级别
-	 * 
-	 * @return
-	 */
-	int getWriteAccessLevel();
-
-	boolean isLeaf();
-
-	boolean isWriteProtected();
 
 	/**
 	 * 删除子节点
 	 * 
 	 */
 	void removeChild(TreeModel treeModel);
-
-	void setAttribute(String attribute);
 
 	/**
 	 * 设置子节点
@@ -205,21 +118,13 @@ public interface TreeModel extends Serializable,
 
 	void setCode(String code);
 
-	void setCreateBy(String createBy);
-
-	void setCreateDate(Date createDate);
-
-	void setDataMap(Map<String, Object> dataMap);
-
 	void setDescription(String description);
 
 	void setIcon(String icon);
 
 	void setIconCls(String iconCls);
 
-	void setId(int id);
-
-	void setLeaf(boolean leaf);
+	void setId(long id);
 
 	void setLevel(int level);
 
@@ -227,30 +132,14 @@ public interface TreeModel extends Serializable,
 
 	void setName(String name);
 
-	void setNodeType(String nodeType);
-
-	void setObjectId(String objectId);
-
-	void setObjectValue(String objectValue);
-
 	void setParent(TreeModel parent);
 
-	void setParentId(int parentId);
-
-	void setProjectId(String projectId);
-
-	void setProperty(String name, String value);
+	void setParentId(long parentId);
 
 	void setSortNo(int sortNo);
 
-	void setTreeId(String treeId);
-
-	void setTreeType(String treeType);
-
 	void setUrl(String url);
 
-	void setWriteProtected(boolean isWriteProtected);
-
-	JSONObject toJSONObject();
+	JSONObject toJsonObject();
 
 }

@@ -89,7 +89,7 @@ public class MxSkinController {
 			return new ModelAndView(x_view, modelMap);
 		}
 
-		return new ModelAndView("/ui/skin/showSkins", modelMap);
+		return new ModelAndView("/modules/ui/skin/showSkins", modelMap);
 	}
 
 }

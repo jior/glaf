@@ -104,7 +104,7 @@ public class MxPanelController {
 			return new ModelAndView(x_view, modelMap);
 		}
 
-		return new ModelAndView("/ui/panel/edit", modelMap);
+		return new ModelAndView("/modules/ui/panel/edit", modelMap);
 	}
 
 	@RequestMapping
@@ -134,7 +134,7 @@ public class MxPanelController {
 			return new ModelAndView(x_view, modelMap);
 		}
 
-		return new ModelAndView("/ui/panel/list", modelMap);
+		return new ModelAndView("/modules/ui/panel/list", modelMap);
 	}
 
 	@RequestMapping("/save")

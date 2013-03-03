@@ -171,7 +171,7 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 	public PageResult getApplicationList(int parent, int pageNo, int pageSize) {
 		// 计算总数
 		Object[] values = new Object[] { new Long(parent) };
-		String query = "select count(*) from SysApplication a where a.node.parent=?";
+		String query = "select count(*) from SysApplication a where a.node.parentId=?";
 		logger.info(query);
 		int count = ((Long) abstractDao.getList(query, values, null).iterator()
 				.next()).intValue();
@@ -181,7 +181,7 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 			return pager;
 		}
 		// 查询列表
-		query = "from SysApplication a where a.node.parent=? order by a.sort desc";
+		query = "from SysApplication a where a.node.parentId=? order by a.sort desc";
 		return abstractDao.getList(query, values, pageNo, pageSize, count);
 	}
 
@@ -194,7 +194,7 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 	 */
 	public List getApplicationList(int parent) {
 		Object[] values = new Object[] { new Long(parent) };
-		String query = "from SysApplication a where a.node.parent=? order by a.sort desc";
+		String query = "from SysApplication a where a.node.parentId=? order by a.sort desc";
 		return abstractDao.getList(query, values, null);
 	}
 
@@ -235,7 +235,7 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 		Object[] values = new Object[] { new Long(parent),
 				new Integer(bean.getSort()) };
 		// 查找前一个对象
-		String query = "from SysApplication a where a.node.parent=? and a.sort>? order by a.sort asc";
+		String query = "from SysApplication a where a.node.parentId=? and a.sort>? order by a.sort asc";
 		List list = abstractDao.getList(query, values, null);
 		if (list != null && list.size() > 0) {// 有记录
 			SysApplication temp = (SysApplication) list.get(0);
@@ -263,7 +263,7 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 		Object[] values = new Object[] { new Long(parent),
 				new Integer(bean.getSort()) };
 		// 查找后一个对象
-		String query = "from SysApplication a where a.node.parent=? and a.sort<? order by a.sort desc";
+		String query = "from SysApplication a where a.node.parentId=? and a.sort<? order by a.sort desc";
 		List list = abstractDao.getList(query, values, null);
 		if (list != null && list.size() > 0) {// 有记录
 			SysApplication temp = (SysApplication) list.get(0);
@@ -312,7 +312,7 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 		// 计算总数
 		Object[] values = new Object[] { new Long(parentAppId) };
 		String query = "select a from SysApplication a "
-				+ "where a.node.parent=? and " + "a.id in (" + sb.toString()
+				+ "where a.node.parentId=? and " + "a.id in (" + sb.toString()
 				+ ") " + "order by a.sort desc";
 		return abstractDao.getList(query, values, null);
 	}

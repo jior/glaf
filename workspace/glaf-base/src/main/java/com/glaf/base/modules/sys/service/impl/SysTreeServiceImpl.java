@@ -162,7 +162,7 @@ public class SysTreeServiceImpl implements SysTreeService {
 	public PageResult getSysTreeList(int parent, int pageNo, int pageSize) {
 		// 计算总数
 		Object[] values = new Object[] { new Long(parent) };
-		String query = "select count(*) from SysTree a where a.parent=?";
+		String query = "select count(*) from SysTree a where a.parentId=?";
 		int count = ((Long) abstractDao.getList(query, values, null).iterator()
 				.next()).intValue();
 		if (count == 0) {// 结果集为空
@@ -171,7 +171,7 @@ public class SysTreeServiceImpl implements SysTreeService {
 			return pager;
 		}
 		// 查询列表
-		query = "from SysTree a where a.parent=? order by a.sort desc";
+		query = "from SysTree a where a.parentId=? order by a.sort desc";
 		return abstractDao.getList(query, values, pageNo, pageSize, count);
 	}
 
@@ -185,7 +185,7 @@ public class SysTreeServiceImpl implements SysTreeService {
 	public List getSysTreeList(int parent) {
 		// 计算总数
 		Object[] values = new Object[] { new Long(parent) };
-		String query = "from SysTree a where a.parent=? order by a.sort desc";
+		String query = "from SysTree a where a.parentId=? order by a.sort desc";
 		return abstractDao.getList(query, values, null);
 	}
 
@@ -201,7 +201,7 @@ public class SysTreeServiceImpl implements SysTreeService {
 	public List getSysTreeListForDept(int parent, int status) {
 		// 计算总数
 		Object[] values = new Object[] { new Long(parent) };
-		String query = "from SysTree a where a.parent=? ";
+		String query = "from SysTree a where a.parentId=? ";
 		if (status != -1) {
 			query += " and a.department.status = " + status;
 		}
@@ -219,7 +219,7 @@ public class SysTreeServiceImpl implements SysTreeService {
 	public void getSysTree(List tree, int parent, int deep) {
 		// 首先获取当前节点下的所有子节点
 		Object[] values = new Object[] { new Long(parent) };
-		String query = "from SysTree a where a.parent=? order by a.sort desc";
+		String query = "from SysTree a where a.parentId=? order by a.sort desc";
 		List nodes = abstractDao.getList(query, values, null);
 		if (nodes != null) {
 			Iterator iter = nodes.iterator();
@@ -242,8 +242,8 @@ public class SysTreeServiceImpl implements SysTreeService {
 		// 查找是否有父节点
 		SysTree bean = findById(id);
 		if (bean != null) {
-			if (bean.getParent() != 0) {
-				getSysTreeParent(tree, bean.getParent());
+			if (bean.getParentId() != 0) {
+				getSysTreeParent(tree, bean.getParentId());
 			}
 			tree.add(bean);
 		}
@@ -274,7 +274,7 @@ public class SysTreeServiceImpl implements SysTreeService {
 		Object[] values = new Object[] { new Long(parent),
 				new Integer(bean.getSort()) };
 		// 查找前一个对象
-		String query = "from SysTree a where a.parent=? and a.sort>? order by a.sort asc";
+		String query = "from SysTree a where a.parentId=? and a.sort>? order by a.sort asc";
 		List list = abstractDao.getList(query, values, null);
 		if (list != null && list.size() > 0) {// 有记录
 			SysTree temp = (SysTree) list.get(0);
@@ -296,7 +296,7 @@ public class SysTreeServiceImpl implements SysTreeService {
 		Object[] values = new Object[] { new Long(parent),
 				new Integer(bean.getSort()) };
 		// 查找后一个对象
-		String query = "from SysTree a where a.parent=? and a.sort<? order by a.sort desc";
+		String query = "from SysTree a where a.parentId=? and a.sort<? order by a.sort desc";
 		List list = abstractDao.getList(query, values, null);
 		if (list != null && list.size() > 0) {// 有记录
 			SysTree temp = (SysTree) list.get(0);

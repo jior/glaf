@@ -187,9 +187,9 @@ public class TodoServiceImpl implements TodoService {
 				SysDepartment.class, new Long(id));
 		if (node != null) {
 			SysTree tree = node.getNode();
-			if (tree.getParent() != 0) {
+			if (tree.getParentId() != 0) {
 				SysTree treeParent = (SysTree) abstractDao.find(SysTree.class,
-						new Long(tree.getParent()));
+						new Long(tree.getParentId()));
 				parent = treeParent.getDepartment();
 			}
 		}

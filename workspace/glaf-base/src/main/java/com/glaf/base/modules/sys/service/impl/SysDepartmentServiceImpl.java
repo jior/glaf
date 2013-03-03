@@ -183,11 +183,11 @@ public class SysDepartmentServiceImpl implements SysDepartmentService {
 			return;
 		}
 		SysTree tree = node.getNode();
-		if (tree.getParent() == 0) {// 找到根节点
+		if (tree.getParentId() == 0) {// 找到根节点
 			logger.info("findFirstNode:" + node.getId());
 			list.add(node);
 		} else {
-			SysTree treeParent = sysTreeService.findById(tree.getParent());
+			SysTree treeParent = sysTreeService.findById(tree.getParentId());
 			SysDepartment parent = treeParent.getDepartment();
 			findNestingDepartment(list, parent);
 		}
@@ -214,7 +214,7 @@ public class SysDepartmentServiceImpl implements SysDepartmentService {
 	public List<SysDepartment> getSysDepartmentList(int parent) {
 		// 计算总数
 		Object[] values = new Object[] { new Long(parent) };
-		String query = "from SysDepartment a where a.node.parent=? order by a.sort desc";
+		String query = "from SysDepartment a where a.node.parentId=? order by a.sort desc";
 		return abstractDao.getList(query, values, null);
 	}
 
@@ -232,7 +232,7 @@ public class SysDepartmentServiceImpl implements SysDepartmentService {
 	public PageResult getSysDepartmentList(int parent, int pageNo, int pageSize) {
 		// 计算总数
 		Object[] values = new Object[] { new Long(parent) };
-		String query = "select count(*) from SysDepartment a where a.node.parent=?";
+		String query = "select count(*) from SysDepartment a where a.node.parentId=?";
 		int count = ((Long) abstractDao.getList(query, values, null).iterator()
 				.next()).intValue();
 		if (count == 0) {// 结果集为空
@@ -241,7 +241,7 @@ public class SysDepartmentServiceImpl implements SysDepartmentService {
 			return pager;
 		}
 		// 查询列表
-		query = "from SysDepartment a where a.node.parent=? order by a.sort desc";
+		query = "from SysDepartment a where a.node.parentId=? order by a.sort desc";
 		return abstractDao.getList(query, values, pageNo, pageSize, count);
 	}
 
@@ -282,7 +282,7 @@ public class SysDepartmentServiceImpl implements SysDepartmentService {
 		Object[] values = new Object[] { new Long(parent),
 				new Integer(bean.getSort()) };
 		// 查找后一个对象
-		String query = "from SysDepartment a where a.node.parent=? and a.sort<? order by a.sort desc";
+		String query = "from SysDepartment a where a.node.parentId=? and a.sort<? order by a.sort desc";
 		List<SysDepartment> list = abstractDao.getList(query, values, null);
 		if (list != null && list.size() > 0) {// 有记录
 			SysDepartment temp = (SysDepartment) list.get(0);
@@ -310,7 +310,7 @@ public class SysDepartmentServiceImpl implements SysDepartmentService {
 		Object[] values = new Object[] { new Long(parent),
 				new Integer(bean.getSort()) };
 		// 查找前一个对象
-		String query = "from SysDepartment a where a.node.parent=? and a.sort>? order by a.sort asc";
+		String query = "from SysDepartment a where a.node.parentId=? and a.sort>? order by a.sort asc";
 		List<SysDepartment> list = abstractDao.getList(query, values, null);
 		if (list != null && list.size() > 0) {// 有记录
 			SysDepartment temp = (SysDepartment) list.get(0);

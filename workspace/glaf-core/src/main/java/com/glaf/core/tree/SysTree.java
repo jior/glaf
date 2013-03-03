@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.glaf.base.modules.sys.model;
+package com.glaf.core.tree;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -26,10 +26,9 @@ import java.util.Map;
 import com.alibaba.fastjson.*;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import com.glaf.base.modules.sys.util.SysTreeJsonFactory;
-
 import com.glaf.core.base.JSONable;
 import com.glaf.core.base.TreeModel;
+import com.glaf.core.tree.util.TreeJsonFactory;
 
 public class SysTree implements Serializable, TreeModel, JSONable {
 	private static final long serialVersionUID = 2666681837822864771L;
@@ -44,8 +43,6 @@ public class SysTree implements Serializable, TreeModel, JSONable {
 	protected String url;
 	protected String iconCls;
 	protected int locked;
-	protected SysApplication app;
-	protected SysDepartment department;
 	protected TreeModel parent;
 	protected List<TreeModel> children = new ArrayList<TreeModel>();
 
@@ -89,10 +86,6 @@ public class SysTree implements Serializable, TreeModel, JSONable {
 		return true;
 	}
 
-	public SysApplication getApp() {
-		return app;
-	}
-
 	public List<TreeModel> getChildren() {
 		return children;
 	}
@@ -107,10 +100,6 @@ public class SysTree implements Serializable, TreeModel, JSONable {
 
 	public int getDeep() {
 		return deep;
-	}
-
-	public SysDepartment getDepartment() {
-		return department;
 	}
 
 	public String getDesc() {
@@ -174,7 +163,7 @@ public class SysTree implements Serializable, TreeModel, JSONable {
 	}
 
 	public SysTree jsonToObject(JSONObject jsonObject) {
-		return SysTreeJsonFactory.jsonToObject(jsonObject);
+		return TreeJsonFactory.jsonToObject(jsonObject);
 	}
 
 	@Override
@@ -182,10 +171,6 @@ public class SysTree implements Serializable, TreeModel, JSONable {
 		if (children != null) {
 			children.remove(treeModel);
 		}
-	}
-
-	public void setApp(SysApplication app) {
-		this.app = app;
 	}
 
 	public void setChildren(List<TreeModel> children) {
@@ -198,10 +183,6 @@ public class SysTree implements Serializable, TreeModel, JSONable {
 
 	public void setDeep(int deep) {
 		this.deep = deep;
-	}
-
-	public void setDepartment(SysDepartment department) {
-		this.department = department;
 	}
 
 	public void setDesc(String desc) {
@@ -258,11 +239,11 @@ public class SysTree implements Serializable, TreeModel, JSONable {
 	}
 
 	public JSONObject toJsonObject() {
-		return SysTreeJsonFactory.toJsonObject(this);
+		return TreeJsonFactory.toJsonObject(this);
 	}
 
 	public ObjectNode toObjectNode() {
-		return SysTreeJsonFactory.toObjectNode(this);
+		return TreeJsonFactory.toObjectNode(this);
 	}
 
 	public String toString() {

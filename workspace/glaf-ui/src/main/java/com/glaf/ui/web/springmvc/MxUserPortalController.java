@@ -154,7 +154,7 @@ public class MxUserPortalController {
 		modelMap.put("userPanel", userPanel);
 		modelMap.put("userPortals", userPortals);
 
-		return new ModelAndView("/ui/portal/myPortal", modelMap);
+		return new ModelAndView("/modules/ui/portal/myPortal", modelMap);
 	}
 
 	@RequestMapping("/save")

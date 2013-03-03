@@ -129,7 +129,7 @@ public class SysApplicationController {
 		node.setName(bean.getName());
 		node.setDesc(bean.getName());
 		node.setCode("");
-		node.setParent((long) ParamUtil.getIntParameter(request, "parent", 0));
+		node.setParentId((long) ParamUtil.getIntParameter(request, "parent", 0));
 		bean.setNode(node);
 
 		boolean ret = sysApplicationService.create(bean);
@@ -196,7 +196,7 @@ public class SysApplicationController {
 			SysTree node = bean.getNode();
 			node.setName(bean.getName());
 			node.setDesc(bean.getName());
-			node.setParent((long) ParamUtil.getIntParameter(request, "parent",
+			node.setParentId((long) ParamUtil.getIntParameter(request, "parent",
 					0));
 			bean.setNode(node);
 		}
