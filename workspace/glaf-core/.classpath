@@ -97,7 +97,6 @@
 	<classpathentry kind="lib" path="lib/spring-jdbc.RELEASE.jar"/>
 	<classpathentry kind="lib" path="lib/spring-orm.RELEASE.jar"/>
 	<classpathentry kind="lib" path="lib/spring-oxm.RELEASE.jar"/>
-	<classpathentry kind="lib" path="lib/spring-struts.RELEASE.jar"/>
 	<classpathentry kind="lib" path="lib/spring-test.RELEASE.jar"/>
 	<classpathentry kind="lib" path="lib/spring-tx.RELEASE.jar"/>
 	<classpathentry kind="lib" path="lib/spring-web.RELEASE.jar"/>

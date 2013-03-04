@@ -100,7 +100,6 @@
 	<classpathentry kind="lib" path="/glaf-core/lib/spring-jdbc.RELEASE.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/spring-orm.RELEASE.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/spring-oxm.RELEASE.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/spring-struts.RELEASE.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/spring-test.RELEASE.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/spring-tx.RELEASE.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/spring-web.RELEASE.jar"/>
