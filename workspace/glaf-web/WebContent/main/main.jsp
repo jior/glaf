@@ -102,7 +102,7 @@ int count = 0;
       </tr>
       <tr>
         <td colspan="2">
-             <jsp:include page="/WEB-INF/views/module/todo/todo_index.jsp" />
+             <jsp:include page="/WEB-INF/views/todo_index.jsp" />
 		</td>
       </tr>
       <tr>

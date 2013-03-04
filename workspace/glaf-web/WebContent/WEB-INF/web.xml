@@ -49,38 +49,8 @@
 	<listener>
 		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
 	</listener>
-  
-	<!--struts 配置-->
-	<!-- <servlet>
-		<servlet-name>action</servlet-name>
-		<servlet-class>com.glaf.base.servlet.StrutsActionServlet</servlet-class>
-		<init-param>
-			<param-name>config</param-name>
-			<param-value>
-				/WEB-INF/conf/struts/struts-config.xml,
-				/WEB-INF/conf/struts/struts-sys-config.xml,
-				/WEB-INF/conf/struts/struts-apps-config.xml,
-				/WEB-INF/conf/struts/struts-others-config.xml,
-				/WEB-INF/conf/struts/struts-workspace-config.xml
-			</param-value>
-		</init-param>
-		<init-param>
-			<param-name>debug</param-name>
-			<param-value>3</param-value>
-		</init-param>
-		<init-param>
-			<param-name>detail</param-name>
-			<param-value>3</param-value>
-		</init-param>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
 
-	<servlet-mapping>
-		<servlet-name>action</servlet-name>
-		<url-pattern>*.do</url-pattern>
-	</servlet-mapping>  -->
 
-  
 	<!--转码过滤器-->
 	<filter>
 		<filter-name>encodingFilter</filter-name>
