@@ -1,6 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
-<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
-<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
+<%@ taglib uri="http://github.com/jior/glaf/tags" prefix="glaf"%>
 <%@ page import="com.glaf.base.utils.*"%>
 <%
 //刷新父窗口，并关闭当前页面。
@@ -25,9 +24,9 @@ window.resizeTo(0, 0);
 <title>基础平台系统</title>
 <body>
 <div id="messageDiv" style="display:none">
-<html:messages id="message" message="true"> 
-   <bean:write name="message"/> 
-</html:messages>
+<glaf:messages id="message" message="true"> 
+   <glaf:write name="message"/> 
+</glaf:messages>
 </div>
 </body>
 <script language="javascript">

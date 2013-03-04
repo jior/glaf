@@ -8,16 +8,16 @@
 	  type = "";
 	}
 %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <base target="_self" />
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link href="./css/fileUpload.css" type="text/css" rel="stylesheet"/>
-<link href="../../css/site.css" type="text/css" rel="stylesheet"/>
-<script type="text/javascript" src="./scripts/prototype.js"></script>
-<script type="text/javascript" src="./scripts/AjaxWrapper.js"></script>
-<script type="text/javascript" src="../../scripts/verify.js"></script>
+<link href="<%=request.getContextPath()%>/css/fileUpload.css" type="text/css" rel="stylesheet"/>
+<link href="<%=request.getContextPath()%>/css/site.css" type="text/css" rel="stylesheet"/>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/prototype-1.6.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/AjaxWrapper.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/verify.js"></script>
 <script type="text/javascript">
 <!--
  function checkFileUploadForm(form) {
@@ -64,6 +64,6 @@
     <div id="progressStatusText"></div>
   </div>
 </div>
-<script type="text/javascript" src="./scripts/upload.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/upload.js"></script>
 </body>
 </html>

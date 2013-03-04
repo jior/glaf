@@ -1,6 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
-<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
-<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
+<%@ taglib uri="http://github.com/jior/glaf/tags" prefix="glaf"%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -40,7 +39,7 @@
                   <td ><table width="265" align="center"  border="0" cellpadding="2" cellspacing="2">
                       <tr> 
                         <td height="20" align="center" class="fontlist" ><img src="<%=request.getContextPath()%>/images/icon_6.jpg" width="6" height="7"> 
-                         <bean:message key="error.global"/></td>
+                         <glaf:message key="error.global"/></td>
                       </tr>
                       <tr> 
                         <td height="20" align="center">&nbsp; </td>

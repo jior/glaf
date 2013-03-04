@@ -1,6 +1,5 @@
 <%@page contentType="text/html;charset=UTF-8"%>
 <%@page import="java.net.URLDecoder"%>
-<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ page import="com.glaf.base.utils.*"%>
 <%
 String context = request.getContextPath();

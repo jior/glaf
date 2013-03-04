@@ -6,7 +6,7 @@ Event.observe('cancelUploadButton','click',cancelProgress,false);
 function refreshUploadStatus(){
 	var ajaxW = new AjaxWrapper(false);
 	ajaxW.putRequest(
-		'./BackGroundService.action',
+		'./BackGroundService.do',
 		'uploadStatus=',
 		function(responseText){
 				eval("uploadInfo = " + responseText);
@@ -37,7 +37,7 @@ function cancelProgress(){
 	$('cancelUploadButton').disabled = true;
 	var ajaxW = new AjaxWrapper(false);
 	ajaxW.putRequest(
-		'./BackGroundService.action',
+		'./BackGroundService.do',
 		'cancelUpload=true',
 		//因为form的提交，这可能不会执行
 		function(responseText){

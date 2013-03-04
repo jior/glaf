@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
-<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@ taglib uri="http://github.com/jior/glaf/tags" prefix="glaf"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <html>
 <head>
@@ -40,8 +40,10 @@
                   <td ><table width="265" align="center"  border="0" cellpadding="2" cellspacing="2">
                       <tr> 
                         <td height="20" align="center" class="fontlist" ><img src="<%=request.getContextPath()%>/images/icon_6.jpg" width="6" height="7"> 
-                          <html:messages id="message" message="true"> <bean:write name="message"/> 
-                          </html:messages> </td>
+                          <glaf:messages id="message" message="true"> 
+						     <glaf:write name="message"/> 
+						  </glaf:messages>
+                        </td>
                       </tr>
                       <tr> 
                         <td height="20" align="center"> <input name="btn_close" type="button" value="Close" class="butt-normal" onClick="closeOpenWindow()"> 
