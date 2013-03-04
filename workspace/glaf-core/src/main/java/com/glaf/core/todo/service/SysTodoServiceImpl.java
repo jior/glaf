@@ -35,6 +35,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
 import com.glaf.core.cache.CacheFactory;
@@ -48,6 +49,7 @@ import com.glaf.core.todo.mapper.TodoMapper;
 import com.glaf.core.todo.query.TodoQuery;
 
 import com.glaf.core.todo.Todo;
+import com.glaf.core.todo.util.TodoJsonFactory;
 import com.glaf.core.todo.util.TodoUtils;
 import com.glaf.core.todo.util.TodoXmlReader;
 
@@ -82,26 +84,26 @@ public class SysTodoServiceImpl implements ISysTodoService {
 	public Todo getTodo(Long todoId) {
 		String cacheKey = "x_todo_" + todoId;
 		if (CacheFactory.get(cacheKey) != null) {
-			JSONObject jsonObject = (JSONObject) CacheFactory.get(cacheKey);
-			Todo model = new Todo();
-			model = model.jsonToObject(jsonObject);
+			String text = (String)CacheFactory.get(cacheKey);
+			JSONObject jsonObject = JSON.parseObject(text) ;
+			Todo model = TodoJsonFactory.jsonToObject(jsonObject);
 			return model;
 		}
 		Todo todo = todoMapper.getTodoById(todoId);
-		CacheFactory.put(cacheKey, todo.toJsonObject());
+		CacheFactory.put(cacheKey, todo.toJsonObject().toJSONString());
 		return todo;
 	}
 
 	public Todo getTodoByCode(String code) {
 		String cacheKey = "x_todo_c_" + code;
 		if (CacheFactory.get(cacheKey) != null) {
-			JSONObject jsonObject = (JSONObject) CacheFactory.get(cacheKey);
-			Todo model = new Todo();
-			model = model.jsonToObject(jsonObject);
-			return model;
+			String text = (String)CacheFactory.get(cacheKey);
+			JSONObject jsonObject = JSON.parseObject(text) ;
+			Todo todo = TodoJsonFactory.jsonToObject(jsonObject);
+			return todo;
 		}
 		Todo todo = todoMapper.getTodoByCode(code);
-		CacheFactory.put(cacheKey, todo.toJsonObject());
+		CacheFactory.put(cacheKey, todo.toJsonObject().toJSONString());
 		return todo;
 	}
 

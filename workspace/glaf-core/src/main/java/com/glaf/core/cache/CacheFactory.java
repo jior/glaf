@@ -19,7 +19,9 @@
 package com.glaf.core.cache;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.logging.Log;
@@ -33,6 +35,7 @@ public class CacheFactory {
 	protected static final Log logger = LogFactory.getLog(CacheFactory.class);
 	private final static String DEFAULT_CONFIG = "com/glaf/core/cache/cache-context.xml";
 	private final static Map<String, Cache> cacheMap = new HashMap<String, Cache>();
+	protected static final Set<String> keys = new HashSet<String>();
 	private static ApplicationContext ctx;
 	private static String CACHE_PREFIX = "GLAF_";
 
@@ -40,6 +43,10 @@ public class CacheFactory {
 		try {
 			Cache cache = getCache();
 			if (cache != null) {
+				for (String cacheKey : keys) {
+					cache.remove(cacheKey);
+				}
+				keys.clear();
 				cache.clear();
 			}
 		} catch (Exception ex) {
@@ -91,13 +98,39 @@ public class CacheFactory {
 		return cache;
 	}
 
-	public static void put(String key, Object value) {
+	public static Set<String> getCacheKeys() {
+		return keys;
+	}
+
+	public static String getString(String key) {
+		try {
+			Cache cache = getCache();
+			if (cache != null) {
+				String cacheKey = CACHE_PREFIX + key;
+				cacheKey = DigestUtils.md5Hex(cacheKey.getBytes());
+				Object value = cache.get(cacheKey);
+				if (value != null) {
+					logger.debug("get object'" + key + "' from cache");
+					return value.toString();
+				}
+			}
+		} catch (Exception ex) {
+			if (logger.isDebugEnabled()) {
+				ex.printStackTrace();
+				logger.debug(ex);
+			}
+		}
+		return null;
+	}
+
+	public static void put(String key, String value) {
 		try {
 			Cache cache = getCache();
 			if (cache != null) {
 				String cacheKey = CACHE_PREFIX + key;
 				cacheKey = DigestUtils.md5Hex(cacheKey.getBytes());
 				cache.put(cacheKey, value);
+				keys.add(cacheKey);
 			}
 		} catch (Exception ex) {
 			if (logger.isDebugEnabled()) {
@@ -144,6 +177,7 @@ public class CacheFactory {
 				String cacheKey = CACHE_PREFIX + key;
 				cacheKey = DigestUtils.md5Hex(cacheKey.getBytes());
 				cache.remove(cacheKey);
+				keys.remove(cacheKey);
 			}
 		} catch (Exception ex) {
 			if (logger.isDebugEnabled()) {
@@ -157,6 +191,7 @@ public class CacheFactory {
 		try {
 			Cache cache = getCache();
 			if (cache != null) {
+				keys.clear();
 				cache.clear();
 				cache.shutdown();
 			}

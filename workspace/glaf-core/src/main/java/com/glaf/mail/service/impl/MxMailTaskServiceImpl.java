@@ -97,14 +97,12 @@ public class MxMailTaskServiceImpl implements IMailTaskService {
 	}
 
 	public MailTask getMailTask(String id) {
-
 		MailTask mailTask = mailTaskMapper.getMailTaskById(id);
 		if (mailTask != null) {
 			MailStorage stg = mailStorageMapper.getMailStorageById(mailTask
 					.getStorageId());
 			mailTask.setStorage(stg);
 		}
-
 		return mailTask;
 	}
 
