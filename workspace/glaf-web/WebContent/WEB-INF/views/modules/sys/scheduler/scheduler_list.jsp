@@ -54,7 +54,7 @@ function schedulerXY(taskId, startup) {
 
 </script>
 <body id="document">
-<jsp:include page="/WEB-INF/views/module/header.jsp" flush="true"/>
+<jsp:include page="/WEB-INF/views/modules/header.jsp" flush="true"/>
 <br><br>
 
 <center>

@@ -1,6 +1,5 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*" %>
-<%@ page import="org.apache.struts.Globals" %>
 <%@ page import="com.glaf.base.modules.sys.model.*" %>
 <%@ page import="com.glaf.base.utils.*" %>
 <%

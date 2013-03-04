@@ -45,7 +45,7 @@ _dynarch_menu_url = "<%=context%>/scripts/hmenu";
 </script>
 </head>
 <body  id="document">
-<jsp:include page="/WEB-INF/views/module/header.jsp" flush="true"/>
+<jsp:include page="/WEB-INF/views/modules/header.jsp" flush="true"/>
 <br>
 <table align="center" class="table-border" cellspacing="0"
 	cellpadding="0" width="90%">

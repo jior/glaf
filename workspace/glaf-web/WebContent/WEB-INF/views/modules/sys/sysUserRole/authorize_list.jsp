@@ -84,7 +84,7 @@ function remove(){
 	<table width="590" border="0" align="center" cellpadding="5" cellspacing="0">
       <tr>
         <td colspan="3" align="center">
-		    <b><jsp:include page="/WEB-INF/views/module/login_info.jsp" flush="true"/></b>
+		    <b><jsp:include page="/WEB-INF/views/modules/login_info.jsp" flush="true"/></b>
 		</td>
         </tr>
       <tr>

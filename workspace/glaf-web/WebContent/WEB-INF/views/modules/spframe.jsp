@@ -108,7 +108,7 @@ function openDocument()
 	  <table width="100%" border="0" cellpadding="0" cellspacing="0" class="m-box">
         <tr>
 		  <!--td height="30" align="left" valign="middle"><font size="+2" face="华文隶书" color="#CED4E0">供应商平台</font></td-->
-          <td colspan="2" height="30" align="right"><jsp:include page="/WEB-INF/views/module/spLogin_info.jsp" flush="true"/>    
+          <td colspan="2" height="30" align="right"><jsp:include page="/WEB-INF/views/modules/spLogin_info.jsp" flush="true"/>    
           &nbsp;&nbsp;&nbsp;</td>
         </tr>
         <tr>

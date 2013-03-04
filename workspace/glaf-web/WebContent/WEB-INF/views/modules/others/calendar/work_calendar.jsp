@@ -36,7 +36,7 @@ function selDay(obj, month, day){
 </head>
 
 <body onLoad="DynarchMenu.setup('menu1', { context: true});" id="document">
-<jsp:include page="/WEB-INF/views/module/header.jsp" flush="true"/>
+<jsp:include page="/WEB-INF/views/modules/header.jsp" flush="true"/>
 
 <table width="90%" border="0" cellpadding="2" cellspacing="2" align="center">
   <tr>

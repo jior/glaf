@@ -64,7 +64,7 @@ _dynarch_menu_url = "<%=contextPath%>/scripts/hmenu";
 
 </script>
 <body onLoad="DynarchMenu.setup('menu1', { context: true});" id="document">
-<jsp:include page="/WEB-INF/views/module/header.jsp" flush="true"/>
+<jsp:include page="/WEB-INF/views/modules/header.jsp" flush="true"/>
 <br><br>
 <html:form action="${contextPath}/sys/scheduler.do?method=saveModify" method="post"  onsubmit="return verifyAll(this);">
 <input type="hidden" name="status" value="0">

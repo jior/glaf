@@ -67,7 +67,7 @@ function doSearch(form){
 <table width="100%" border="0" cellpadding="0" cellspacing="0" class="m-box">
   <tr>
     <td width="49%" class="nav-title">用户查询</td>
-    <td width="51%" height="27" align="right"><jsp:include page="/WEB-INF/views/module/login_info.jsp" flush="true"/> &nbsp;&nbsp;&nbsp;</td>
+    <td width="51%" height="27" align="right"><jsp:include page="/WEB-INF/views/modules/login_info.jsp" flush="true"/> &nbsp;&nbsp;&nbsp;</td>
   </tr>
 </table>
 <table width="99%" border="0" align="center" cellpadding="0" cellspacing="0" class="box">

@@ -53,7 +53,7 @@ function checkForm(form){
 </script>
 </head>
 <body onLoad="DynarchMenu.setup('menu1', { context: true});" id="document">
-<jsp:include page="/WEB-INF/views/module/header.jsp" flush="true"/>
+<jsp:include page="/WEB-INF/views/modules/header.jsp" flush="true"/>
 <div class="nav-title">修改TODO信息</div>
 
 <html:form action="${contextPath}/sys/todo.do?method=save" method="post" onsubmit="return checkForm(this);"  > 
