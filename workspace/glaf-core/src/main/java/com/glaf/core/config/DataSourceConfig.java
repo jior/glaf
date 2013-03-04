@@ -47,8 +47,6 @@ public class DataSourceConfig {
 
 	private static String databaseType;
 
-	protected static Properties dialetTypeMappings = getDialectMappings();
-
 	protected static Properties hibernateDialetTypeMappings = getHibernateDialectMappings();
 
 	protected static Properties databaseTypeMappings = getDefaultDatabaseTypeMappings();
@@ -157,13 +155,6 @@ public class DataSourceConfig {
 		return connection;
 	}
 
-	public static String getDatabaseDialect() {
-		if (getDatabaseType() != null) {
-			return dialetTypeMappings.getProperty(getDatabaseType());
-		}
-		return null;
-	}
-
 	public static String getDatabaseType() {
 		if (databaseType == null) {
 			initDatabaseType();
@@ -198,8 +189,8 @@ public class DataSourceConfig {
 		databaseTypeMappings.setProperty("H2", "h2");
 		databaseTypeMappings.setProperty("MySQL", "mysql");
 		databaseTypeMappings.setProperty("Oracle", "oracle");
-		databaseTypeMappings.setProperty("PostgreSQL", "postgres");
-		databaseTypeMappings.setProperty("Microsoft SQL Server", "mssql");
+		databaseTypeMappings.setProperty("PostgreSQL", "postgresql");
+		databaseTypeMappings.setProperty("Microsoft SQL Server", "sqlserver");
 		databaseTypeMappings.setProperty("DB2", "db2");
 		databaseTypeMappings.setProperty("DB2/NT", "db2");
 		databaseTypeMappings.setProperty("DB2/NT64", "db2");
@@ -218,23 +209,6 @@ public class DataSourceConfig {
 		databaseTypeMappings.setProperty("DB2/PTX", "db2");
 		databaseTypeMappings.setProperty("DB2/2", "db2");
 		return databaseTypeMappings;
-	}
-
-	protected static Properties getDialectMappings() {
-		Properties dialectMappings = new Properties();
-		dialectMappings.setProperty("h2",
-				"com.gzgi.framework.core.dialect.H2Dialect");
-		dialectMappings.setProperty("mysql",
-				"com.gzgi.framework.core.dialect.MySQLDialect");
-		dialectMappings.setProperty("oracle",
-				"com.gzgi.framework.core.dialect.OracleDialect");
-		dialectMappings.setProperty("postgres",
-				"com.gzgi.framework.core.dialect.PostgreSQLDialect");
-		dialectMappings.setProperty("mssql",
-				"com.gzgi.framework.core.dialect.SQLServerDialect");
-		dialectMappings.setProperty("db2",
-				"com.gzgi.framework.core.dialect.DB2Dialect");
-		return dialectMappings;
 	}
 
 	public static double getDouble(String key) {
@@ -259,9 +233,9 @@ public class DataSourceConfig {
 				"org.hibernate.dialect.MySQL5Dialect");
 		dialectMappings.setProperty("oracle",
 				"org.hibernate.dialect.Oracle10gDialect");
-		dialectMappings.setProperty("postgres",
+		dialectMappings.setProperty("postgresql",
 				"org.hibernate.dialect.PostgreSQLDialect");
-		dialectMappings.setProperty("mssql",
+		dialectMappings.setProperty("sqlserver",
 				"org.hibernate.dialect.SQLServerDialect");
 		dialectMappings.setProperty("db2", "org.hibernate.dialect.DB2Dialect");
 		return dialectMappings;

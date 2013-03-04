@@ -1,31 +1,28 @@
 /*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.glaf.core.entity;
 
 import java.util.List;
 
-
-
 import com.glaf.core.util.Paging;
 
-
-public interface EntityService  {
+public interface EntityService {
 
 	/**
 	 * É¾³ý¼ÇÂ¼
@@ -33,7 +30,7 @@ public interface EntityService  {
 	 * @param statementId
 	 * @param parameterObject
 	 */
-	
+
 	void delete(String statementId, Object parameterObject);
 
 	/**
@@ -42,7 +39,7 @@ public interface EntityService  {
 	 * @param statementId
 	 * @param parameterObject
 	 */
-	
+
 	void deleteAll(String statementId, List<Object> rowIds);
 
 	/**
@@ -51,7 +48,7 @@ public interface EntityService  {
 	 * @param statementId
 	 * @param rowId
 	 */
-	
+
 	void deleteById(String statementId, Object rowId);
 
 	/**
@@ -59,7 +56,7 @@ public interface EntityService  {
 	 * 
 	 * @param sqlExecutors
 	 */
-	
+
 	void executeBatch(List<SqlExecutor> sqlExecutors);
 
 	/**
@@ -126,7 +123,7 @@ public interface EntityService  {
 	 * @param statementId
 	 * @param parameterObject
 	 */
-	
+
 	void insert(String statementId, Object parameterObject);
 
 	/**
@@ -135,7 +132,7 @@ public interface EntityService  {
 	 * @param statementId
 	 * @param parameterObject
 	 */
-	
+
 	void insertAll(String statementId, List<Object> rows);
 
 	/**
@@ -144,7 +141,7 @@ public interface EntityService  {
 	 * @param statementId
 	 * @param parameterObject
 	 */
-	
+
 	void update(String statementId, Object parameterObject);
 
 	/**
@@ -153,7 +150,7 @@ public interface EntityService  {
 	 * @param statementId
 	 * @param parameterObject
 	 */
-	
+
 	void updateAll(String statementId, List<Object> rows);
 
 }
