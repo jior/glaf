@@ -65,7 +65,7 @@
 	}
 
 	function onRowClick(rowIndex, row){
-            window.open('<%=request.getContextPath()%><%=request.getContextPath()%>/mx/apps/${modelName}/edit?rowId='+row.id);
+            window.open('<%=request.getContextPath()%>/mx/apps/${modelName}/edit?rowId='+row.id);
 	}
 
 	function searchWin(){

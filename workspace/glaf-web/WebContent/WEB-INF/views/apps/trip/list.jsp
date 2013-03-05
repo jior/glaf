@@ -71,7 +71,7 @@
 	}
 
 	function onRowClick(rowIndex, row){
-            window.open('<%=request.getContextPath()%><%=request.getContextPath()%>/mx/apps/trip/edit?rowId='+row.id);
+            window.open('<%=request.getContextPath()%>/mx/apps/trip/edit?rowId='+row.id);
 	}
 
 	function searchWin(){
