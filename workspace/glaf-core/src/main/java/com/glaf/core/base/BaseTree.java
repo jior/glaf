@@ -162,7 +162,7 @@ public class BaseTree implements Serializable, TreeModel, JSONable {
 		return result;
 	}
 
-	public BaseTree jsonToObject(JSONObject jsonObject) {
+	public TreeModel jsonToObject(JSONObject jsonObject) {
 		return TreeJsonFactory.jsonToObject(jsonObject);
 	}
 

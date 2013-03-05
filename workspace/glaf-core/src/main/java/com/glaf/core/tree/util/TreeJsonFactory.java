@@ -18,15 +18,18 @@
 
 package com.glaf.core.tree.util;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.glaf.core.base.BaseTree;
+import com.glaf.core.base.TreeModel;
 
 public class TreeJsonFactory {
 
-	public static BaseTree jsonToObject(JSONObject jsonObject) {
-		BaseTree model = new BaseTree();
+	public static TreeModel jsonToObject(JSONObject jsonObject) {
+		TreeModel model = new BaseTree();
 		if (jsonObject.containsKey("id")) {
 			model.setId(jsonObject.getLong("id"));
 		}
@@ -36,20 +39,52 @@ public class TreeJsonFactory {
 		if (jsonObject.containsKey("name")) {
 			model.setName(jsonObject.getString("name"));
 		}
-		if (jsonObject.containsKey("desc")) {
-			model.setDesc(jsonObject.getString("desc"));
+		if (jsonObject.containsKey("description")) {
+			model.setDescription(jsonObject.getString("description"));
 		}
-		if (jsonObject.containsKey("sort")) {
-			model.setSort(jsonObject.getInteger("sort"));
+		if (jsonObject.containsKey("sortNo")) {
+			model.setSortNo(jsonObject.getInteger("sortNo"));
 		}
+
+		if (jsonObject.containsKey("level")) {
+			model.setLevel(jsonObject.getInteger("level"));
+		}
+
 		if (jsonObject.containsKey("code")) {
 			model.setCode(jsonObject.getString("code"));
+		}
+
+		if (jsonObject.containsKey("url")) {
+			model.setUrl(jsonObject.getString("url"));
+		}
+
+		if (jsonObject.containsKey("icon")) {
+			model.setIcon(jsonObject.getString("icon"));
+		}
+
+		if (jsonObject.containsKey("iconCls")) {
+			model.setIconCls(jsonObject.getString("iconCls"));
+		}
+
+		if (jsonObject.containsKey("locked")) {
+			model.setLocked(jsonObject.getInteger("locked"));
+		}
+
+		if (jsonObject.containsKey("children")) {
+			JSONArray jsonArray = jsonObject.getJSONArray("children");
+			if (jsonArray != null && !jsonArray.isEmpty()) {
+				for (int i = 0; i < jsonArray.size(); i++) {
+					JSONObject json = jsonArray.getJSONObject(i);
+					TreeModel child = jsonToObject(json);
+					model.addChild(child);
+				}
+			}
 		}
 
 		return model;
 	}
 
-	public static JSONObject toJsonObject(BaseTree model) {
+	public static JSONObject toJsonObject(TreeModel model) {
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("id", model.getId());
 		jsonObject.put("_id_", model.getId());
@@ -58,17 +93,37 @@ public class TreeJsonFactory {
 		if (model.getName() != null) {
 			jsonObject.put("name", model.getName());
 		}
-		if (model.getDesc() != null) {
-			jsonObject.put("desc", model.getDesc());
-		}
-		jsonObject.put("sort", model.getSort());
 		if (model.getCode() != null) {
 			jsonObject.put("code", model.getCode());
+		}
+		if (model.getUrl() != null) {
+			jsonObject.put("url", model.getUrl());
+		}
+		if (model.getIcon() != null) {
+			jsonObject.put("icon", model.getIcon());
+		}
+		if (model.getIconCls() != null) {
+			jsonObject.put("iconCls", model.getIconCls());
+		}
+		if (model.getDescription() != null) {
+			jsonObject.put("description", model.getDescription());
+		}
+		jsonObject.put("level", model.getLevel());
+		jsonObject.put("locked", model.getLocked());
+		jsonObject.put("sortNo", model.getSortNo());
+
+		if (model.getChildren() != null && !model.getChildren().isEmpty()) {
+			JSONArray jsonArray = new JSONArray();
+			for (TreeModel treeModel : model.getChildren()) {
+				JSONObject json = toJsonObject(treeModel);
+				jsonArray.add(json);
+			}
+			jsonObject.put("children", jsonArray);
 		}
 		return jsonObject;
 	}
 
-	public static ObjectNode toObjectNode(BaseTree model) {
+	public static ObjectNode toObjectNode(TreeModel model) {
 		ObjectNode jsonObject = new ObjectMapper().createObjectNode();
 		jsonObject.put("id", model.getId());
 		jsonObject.put("_id_", model.getId());
@@ -77,13 +132,38 @@ public class TreeJsonFactory {
 		if (model.getName() != null) {
 			jsonObject.put("name", model.getName());
 		}
-		if (model.getDesc() != null) {
-			jsonObject.put("desc", model.getDesc());
-		}
-		jsonObject.put("sort", model.getSort());
+
 		if (model.getCode() != null) {
 			jsonObject.put("code", model.getCode());
 		}
+
+		if (model.getUrl() != null) {
+			jsonObject.put("url", model.getUrl());
+		}
+		if (model.getIcon() != null) {
+			jsonObject.put("icon", model.getIcon());
+		}
+		if (model.getIconCls() != null) {
+			jsonObject.put("iconCls", model.getIconCls());
+		}
+
+		if (model.getDescription() != null) {
+			jsonObject.put("description", model.getDescription());
+		}
+
+		jsonObject.put("level", model.getLevel());
+		jsonObject.put("locked", model.getLocked());
+		jsonObject.put("sortNo", model.getSortNo());
+
+		if (model.getChildren() != null && !model.getChildren().isEmpty()) {
+			ArrayNode array = new ObjectMapper().createArrayNode();
+			for (TreeModel treeModel : model.getChildren()) {
+				ObjectNode json = toObjectNode(treeModel);
+				array.add(json);
+			}
+			jsonObject.put("children", array);
+		}
+
 		return jsonObject;
 	}
 
