@@ -20,6 +20,7 @@ package com.glaf.core.security;
 
 import java.util.ArrayList;
 
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +28,7 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.glaf.core.base.TreeModel;
 import com.glaf.core.context.ContextFactory;
 import com.glaf.core.entity.EntityService;
 import com.glaf.core.identity.User;
@@ -36,7 +38,7 @@ import com.glaf.core.identity.Agent;
 public class IdentityFactory {
 	protected final static Log logger = LogFactory
 			.getLog(IdentityFactory.class);
-	
+
 	protected static EntityService entityService;
 
 	/**
@@ -81,6 +83,25 @@ public class IdentityFactory {
 		return agents;
 	}
 
+	public static List<TreeModel> getChildrenTreeModels(Long id) {
+		List<Object> list = entityService.getList("getChildrenTreeModels", id);
+		List<TreeModel> treeModels = new ArrayList<TreeModel>();
+		if (list != null && !list.isEmpty()) {
+			Iterator<Object> iter = list.iterator();
+			while (iter.hasNext()) {
+				Object obj = iter.next();
+				if (obj instanceof TreeModel) {
+					TreeModel treeModel = (TreeModel) obj;
+					List<TreeModel> children = getChildrenTreeModels(treeModel
+							.getId());
+					treeModel.setChildren(children);
+					treeModels.add(treeModel);
+				}
+			}
+		}
+		return treeModels;
+	}
+
 	public static EntityService getEntityService() {
 		if (entityService == null) {
 			entityService = ContextFactory.getBean("entityService");
@@ -102,6 +123,14 @@ public class IdentityFactory {
 			return loginContext;
 		}
 		return null;
+	}
+
+	public static TreeModel getTreeModelByCode(String code) {
+		return (TreeModel) entityService.getById("getTreeModelByCode", code);
+	}
+
+	public static TreeModel getTreeModelById(Long id) {
+		return (TreeModel) entityService.getById("getTreeModelById", id);
 	}
 
 	/**
@@ -135,6 +164,10 @@ public class IdentityFactory {
 
 	public static void setEntityService(EntityService entityService) {
 		IdentityFactory.entityService = entityService;
+	}
+
+	private IdentityFactory() {
+
 	}
 
 }

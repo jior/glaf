@@ -1,5 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
-<%@ taglib uri="http://www.opensymphony.com/oscache" prefix="oscache"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page import="java.util.*"%>
@@ -7,7 +6,6 @@
 <%@ page import="com.glaf.base.modules.todo.*"%>
 <%@ page import="com.glaf.base.modules.todo.model.*"%>
 <%@ page import="com.glaf.base.modules.todo.service.*"%>
-<%@ page import="com.glaf.base.utils.*"%>
 <%@ page import="com.glaf.base.modules.sys.*"%>
 <%@ page import="com.glaf.base.modules.sys.model.*"%>
 <%@ page import="com.glaf.base.modules.sys.service.*"%>
@@ -20,30 +18,24 @@
     String context = request.getContextPath();
     SysUser user = com.glaf.base.utils.RequestUtil.getLoginUser(request);
 	TodoJobBean bean = (TodoJobBean)BaseDataManager.getInstance().getBean("todoJobBean");
-%>
-
- 
-<%
+    List rows = null;
 	 try{
-		     Collection agentIds = ProcessContainer.getContainer().getAgentIds(user.getAccount());
-		     bean.createTasksFromWorkflow(user.getAccount());
-			 if(agentIds != null && agentIds.size() > 0){
-				 Iterator iter = agentIds.iterator();
-				 while(iter.hasNext()){
-					 String agentId = (String)iter.next();
-					 bean.createTasksFromWorkflow(agentId);
-				 }
-			 }
-			 //System.out.println("---------------------已经更新用户‘"+user.getName()+"’ 的工作流待办任务。");
-	 } catch(Exception ex){
+		Collection agentIds = ProcessContainer.getContainer().getAgentIds(user.getAccount());
+		bean.createTasksFromWorkflow(user.getAccount());
+		if(agentIds != null && agentIds.size() > 0){
+			Iterator iter = agentIds.iterator();
+			while(iter.hasNext()){
+				String agentId = (String)iter.next();
+				bean.createTasksFromWorkflow(agentId);
+			}
+		}
+		rows = bean.getTodoInstances(user.getAccount());
+ 	 } catch(Exception ex){
 		 ex.printStackTrace();
 	 }
 
 %>
-
-<%
-    List rows = bean.getTodoInstances(user.getAccount());
-%>
+ 
 <table width="620" border="0" cellspacing="1" cellpadding="0" class="list-box">
     <tr class="list-title">
             <td align="center">事&nbsp;&nbsp;项</td>

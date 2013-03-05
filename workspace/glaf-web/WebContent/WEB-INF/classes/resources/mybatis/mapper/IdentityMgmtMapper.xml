@@ -20,6 +20,35 @@
 	</resultMap>
 
 
+	<resultMap id="baseTreeResultMap"	type="com.glaf.core.base.BaseTree">
+        <id property="id" column="id" jdbcType="BIGINT" />
+        <result property="parent" column="parent" jdbcType="BIGINT"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="desc" column="nodedesc" jdbcType="VARCHAR"/>
+        <result property="sort" column="sort" jdbcType="INTEGER"/>
+        <result property="code" column="code" jdbcType="VARCHAR"/>
+        <result property="icon" column="icon" jdbcType="VARCHAR"/>
+        <result property="iconCls" column="iconCls" jdbcType="VARCHAR"/>
+        <result property="url" column="url" jdbcType="VARCHAR"/>
+        <result property="locked" column="locked" jdbcType="INTEGER"/>
+	</resultMap>
+
+
+	<select id="getTreeModelById" parameterType="long" resultMap="baseTreeResultMap">
+		select * from sys_tree where id = #{id}
+	</select>
+
+
+	<select id="getTreeModelByCode" parameterType="string" resultMap="baseTreeResultMap">
+		select * from sys_tree where code = #{code}
+	</select>
+
+
+	<select id="getChildrenTreeModels" parameterType="long" resultMap="baseTreeResultMap">
+		select * from sys_tree where parent = #{parent}
+	</select>
+
+
 	<select id="getAgents" resultType="com.glaf.core.identity.impl.AgentImpl" parameterType="string">
 
 		select  ASSIGNFROM_ as assignFrom, ASSIGNTO_ as assignTo,

@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.glaf.core.tree;
+package com.glaf.core.base;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -30,7 +30,7 @@ import com.glaf.core.base.JSONable;
 import com.glaf.core.base.TreeModel;
 import com.glaf.core.tree.util.TreeJsonFactory;
 
-public class SysTree implements Serializable, TreeModel, JSONable {
+public class BaseTree implements Serializable, TreeModel, JSONable {
 	private static final long serialVersionUID = 2666681837822864771L;
 	protected long id;
 	protected long parentId;
@@ -80,7 +80,7 @@ public class SysTree implements Serializable, TreeModel, JSONable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		SysTree other = (SysTree) obj;
+		BaseTree other = (BaseTree) obj;
 		if (id != other.id)
 			return false;
 		return true;
@@ -162,7 +162,7 @@ public class SysTree implements Serializable, TreeModel, JSONable {
 		return result;
 	}
 
-	public SysTree jsonToObject(JSONObject jsonObject) {
+	public BaseTree jsonToObject(JSONObject jsonObject) {
 		return TreeJsonFactory.jsonToObject(jsonObject);
 	}
 

@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <mapping>
     <entity name="SysTree" package="com.glaf.base.modules.sys" table="sys_tree" title="目录树" englishTitle="SysTree">
-        <id name="id" column="ID" type="Long" englishTitle="ID" length="19" title="编号" />
-        <property name="parent" column="PARENT" type="Long" englishTitle="parent" dataType="0" length="19" title="父节点编号" />
-        <property name="name" column="NAME" type="String" englishTitle="name" dataType="0" length="255" title="名称" />
-        <property name="desc" column="NODEDESC" type="String" englishTitle="desc" dataType="0" length="255" title="节点描述" />
-        <property name="sort" column="SORT" type="Integer" englishTitle="sort" dataType="0" length="10" title="序号" />
-        <property name="code" column="CODE" type="String" englishTitle="code" dataType="0" length="255" title="编码" />
+        <id name="id" column="ID" type="Long" englishTitle="Id" length="19" title="编号" />
+        <property name="parent" column="PARENT" type="Long" englishTitle="parent" length="19" title="父节点编号" />
+        <property name="name" column="NAME" type="String" englishTitle="name" length="255" title="名称" />
+        <property name="desc" column="NODEDESC" type="String" englishTitle="desc" length="255" title="节点描述" />
+        <property name="sort" column="SORT" type="Integer" englishTitle="sort" length="10" title="序号" />
+        <property name="code" column="CODE" type="String" englishTitle="code" length="255" title="编码" />
+		<property name="icon" type="String" column="icon"  englishTitle="icon" length="255" title="图标"/>
+		<property name="iconCls" type="String" column="iconCls"  englishTitle="iconCls" length="255" title="图标样式"/>
+		<property name="url" type="String" column="url"  englishTitle="url" length="255" title="url"/>
+		<property name="locked" type="Integer" column="locked"  englishTitle="locked" title="是否启用"/>
     </entity>
 </mapping>

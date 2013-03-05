@@ -21,12 +21,12 @@ package com.glaf.core.tree.util;
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.glaf.core.tree.SysTree;
+import com.glaf.core.base.BaseTree;
 
 public class TreeJsonFactory {
 
-	public static SysTree jsonToObject(JSONObject jsonObject) {
-		SysTree model = new SysTree();
+	public static BaseTree jsonToObject(JSONObject jsonObject) {
+		BaseTree model = new BaseTree();
 		if (jsonObject.containsKey("id")) {
 			model.setId(jsonObject.getLong("id"));
 		}
@@ -49,7 +49,7 @@ public class TreeJsonFactory {
 		return model;
 	}
 
-	public static JSONObject toJsonObject(SysTree model) {
+	public static JSONObject toJsonObject(BaseTree model) {
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("id", model.getId());
 		jsonObject.put("_id_", model.getId());
@@ -68,7 +68,7 @@ public class TreeJsonFactory {
 		return jsonObject;
 	}
 
-	public static ObjectNode toObjectNode(SysTree model) {
+	public static ObjectNode toObjectNode(BaseTree model) {
 		ObjectNode jsonObject = new ObjectMapper().createObjectNode();
 		jsonObject.put("id", model.getId());
 		jsonObject.put("_id_", model.getId());

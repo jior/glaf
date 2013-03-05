@@ -77,7 +77,7 @@ public class SendMessageBean {
 				actorId);
 
 		List<Long> appXIds = new ArrayList<Long>();
-		Collection appIds = new HashSet();
+		Collection<Long> appIds = new HashSet<Long>();
 
 		Collection apps = user.getApps();
 
@@ -96,7 +96,7 @@ public class SendMessageBean {
 			Iterator iter = agentIds.iterator();
 			while (iter.hasNext()) {
 				String agentId = (String) iter.next();
-				// System.out.println("000-----"+agentId);
+
 				SysUser u = sysUserService.findByAccountWithAll(agentId);
 				if (u != null) {
 					u = sysUserService.getUserPrivileges(u);
@@ -153,7 +153,6 @@ public class SendMessageBean {
 				logger.info(user.getName() + "的工作流任务有" + rows.size() + "项.");
 				Iterator iterator008 = rows.iterator();
 				while (iterator008.hasNext()) {
-					// update by key 2012-05-14 begin
 					TodoInstance tdi = (TodoInstance) iterator008.next();
 					String processName = "";
 					Todo toDo = todoService.getTodo(tdi.getTodoId());
@@ -162,7 +161,7 @@ public class SendMessageBean {
 					if (actorId.equals(tdi.getActorId())) {
 						rows99.add(tdi);
 					} else {
-						// System.out.println(actorId+"---"+tdi.getActorId()+"---"+processName);
+
 						Collection agentList = ProcessContainer.getContainer()
 								.getAgentIds(actorId, processName);
 						if (null != agentList && agentList.size() > 0) {// 判断代理是否有该流程代理，有则add
@@ -193,7 +192,7 @@ public class SendMessageBean {
 					TodoInstance model = (TodoInstance) iter9988.next();
 					if (model.getActorId() != null) {
 						if (model.getActorId().equals(user.getAccount())) {
-							// ##System.out.println("11111111111111 " + model);
+
 							if (!rowIds.contains(model.getTodoId() + "-"
 									+ model.getRowId())) {
 								rowIds.add(model.getTodoId() + "-"
@@ -210,8 +209,7 @@ public class SendMessageBean {
 								if (model.getTodoId() == 7003
 										|| model.getTodoId() == 7004) {
 									if (roleCodes.contains(model.getRoleCode())) {
-										// ##System.out.println(
-										// "2222222222222222 " + model);
+
 										if (!rowIds.contains(model.getTodoId()
 												+ "-" + model.getRowId())) {
 											rowIds.add(model.getTodoId() + "-"
@@ -225,8 +223,7 @@ public class SendMessageBean {
 										}
 									}
 								} else {
-									// ##System.out.println("33333333333333333 "
-									// + model);
+
 									if (!rowIds.contains(model.getTodoId()
 											+ "-" + model.getRowId())) {
 										rowIds.add(model.getTodoId() + "-"
@@ -239,8 +236,7 @@ public class SendMessageBean {
 								}
 							}
 						} else {
-							// ##System.out.println("4444444444444444 " +
-							// model);
+
 							if (!rowIds.contains(model.getTodoId() + "-"
 									+ model.getRowId())) {
 								rowIds.add(model.getTodoId() + "-"
@@ -320,6 +316,9 @@ public class SendMessageBean {
 			Iterator iter = todoList.iterator();
 			while (iter.hasNext()) {
 				Todo todo = (Todo) iter.next();
+				if (todo == null || todo.getAppId() == null) {
+					continue;
+				}
 				boolean isOK = false;
 				if (appIds.contains(new Long(todo.getAppId()))) {
 					isOK = true;
