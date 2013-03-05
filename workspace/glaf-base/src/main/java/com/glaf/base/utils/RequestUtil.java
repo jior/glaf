@@ -664,7 +664,7 @@ public class RequestUtil {
 
 	public static void setLoginUser(HttpServletRequest request, SysUser bean) {
 		HttpSession session = request.getSession(false);
-		if (bean != null) {
+		if (session != null && bean != null) {
 			session.setAttribute(SysConstants.LOGIN, bean.getAccount());
 			session.setAttribute("LOGIN_ACTORID", bean.getAccount());
 		}

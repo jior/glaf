@@ -167,10 +167,6 @@ go;
 
 /*插入系统功能*/
 SET IDENTITY_INSERT sys_function ON;
-insert into sys_function (id, appId, name, funcDesc, funcMethod, sort) values (1, 15, '模块列表', null, 'com.glaf.base.modules.sys.action.SysApplicationAction.showList', 5);
-insert into sys_function (id, appId, name, funcDesc, funcMethod, sort) values (2, 15, '增加模块', null, 'com.glaf.base.modules.sys.action.SysApplicationAction.prepareAdd', 3);
-insert into sys_function (id, appId, name, funcDesc, funcMethod, sort) values (3, 15, '修改模块', null, 'com.glaf.base.modules.sys.action.SysApplicationAction.prepareModify', 2);
-insert into sys_function (id, appId, name, funcDesc, funcMethod, sort) values (4, 15, '删除模块', null, 'com.glaf.base.modules.sys.action.SysApplicationAction.batchDelete', 1);
 
 insert into sys_function (id, appId, name, funcDesc, funcMethod, sort) values (11, 15, '模块列表', null, 'com.glaf.base.modules.sys.springmvc.SysApplicationController.showList', 5);
 insert into sys_function (id, appId, name, funcDesc, funcMethod, sort) values (12, 15, '增加模块', null, 'com.glaf.base.modules.sys.springmvc.SysApplicationController.prepareAdd', 3);
@@ -179,11 +175,6 @@ insert into sys_function (id, appId, name, funcDesc, funcMethod, sort) values (1
 SET IDENTITY_INSERT sys_function OFF;
 go;
 
-
-insert into  sys_permission (roleid, funcid) values (1, 1);
-insert into  sys_permission (roleid, funcid) values (1, 2);
-insert into  sys_permission (roleid, funcid) values (1, 3);
-insert into  sys_permission (roleid, funcid) values (1, 4);
 
 insert into  sys_permission (roleid, funcid) values (1, 11);
 insert into  sys_permission (roleid, funcid) values (1, 12);

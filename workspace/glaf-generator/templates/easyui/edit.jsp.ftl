@@ -70,7 +70,7 @@
 <div class="easyui-layout" data-options="fit:true">  
   <div data-options="region:'north',split:true,border:true" style="height:40px"> 
     <div style="background:#fafafa;padding:2px;border:1px solid #ddd;font-size:12px"> 
-	±à¼­${classDefinition.title}
+	<span class="x_content_title">±à¼­${classDefinition.title}</span>
 	<!-- <input type="button" name="save" value=" ±£´æ " class="button btn btn-primary" onclick="javascript:saveData();">
 	<input type="button" name="saveAs" value=" Áí´æ " class="button btn" onclick="javascript:saveAsData();">
 	<input type="button" name="back" value=" ·µ»Ø " class="button btn" onclick="javascript:history.back();"> -->

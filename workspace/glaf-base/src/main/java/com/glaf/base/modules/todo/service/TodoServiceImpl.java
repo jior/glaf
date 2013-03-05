@@ -494,6 +494,9 @@ public class TodoServiceImpl implements TodoService {
 	}
 
 	public List getUserEntityList(String actorId) {
+		if(actorId == null){
+			return null;
+		}
 		return todoDAO.getUserEntityList(actorId);
 	}
 

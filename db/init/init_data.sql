@@ -142,21 +142,11 @@ insert into sys_access (roleid, appid) values (1, 494);
 insert into sys_access (roleid, appid) values (1, 495); 
 
 /*插入系统功能*/
-insert into sys_function (id, appId, name, funcDesc, funcMethod, sort) values (1, 15, '模块列表', null, 'com.glaf.base.modules.sys.action.SysApplicationAction.showList', 5);
-insert into sys_function (id, appId, name, funcDesc, funcMethod, sort) values (2, 15, '增加模块', null, 'com.glaf.base.modules.sys.action.SysApplicationAction.prepareAdd', 3);
-insert into sys_function (id, appId, name, funcDesc, funcMethod, sort) values (3, 15, '修改模块', null, 'com.glaf.base.modules.sys.action.SysApplicationAction.prepareModify', 2);
-insert into sys_function (id, appId, name, funcDesc, funcMethod, sort) values (4, 15, '删除模块', null, 'com.glaf.base.modules.sys.action.SysApplicationAction.batchDelete', 1);
 
 insert into sys_function (id, appId, name, funcDesc, funcMethod, sort) values (11, 15, '模块列表', null, 'com.glaf.base.modules.sys.springmvc.SysApplicationController.showList', 5);
 insert into sys_function (id, appId, name, funcDesc, funcMethod, sort) values (12, 15, '增加模块', null, 'com.glaf.base.modules.sys.springmvc.SysApplicationController.prepareAdd', 3);
 insert into sys_function (id, appId, name, funcDesc, funcMethod, sort) values (13, 15, '修改模块', null, 'com.glaf.base.modules.sys.springmvc.SysApplicationController.prepareModify', 2);
 insert into sys_function (id, appId, name, funcDesc, funcMethod, sort) values (14, 15, '删除模块', null, 'com.glaf.base.modules.sys.springmvc.SysApplicationController.batchDelete', 1);
-
-
-insert into  sys_permission (roleid, funcid) values (1, 1);
-insert into  sys_permission (roleid, funcid) values (1, 2);
-insert into  sys_permission (roleid, funcid) values (1, 3);
-insert into  sys_permission (roleid, funcid) values (1, 4);
 
 
 insert into sys_dictory (id, typeId, code, name, sort, dictDesc, blocked, ext1, ext2, ext3, ext4, ext5, ext6) values (1, 498, 'RMB', '人民币', 1, null, 0, '', '', null, null, null, null);

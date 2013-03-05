@@ -358,3 +358,16 @@ create table sys_agent (
         TASKNAME_ nvarchar(255) ,
         PRIMARY KEY (ID_)
  );
+
+CREATE TABLE sys_property (
+        id_ nvarchar(50) NOT NULL,
+        category_ nvarchar(200),
+        description_ nvarchar(500),
+        initvalue_ nvarchar(1000),
+        locked_ int,
+        name_ nvarchar(50),
+        title_ nvarchar(200),
+        type_ nvarchar(50),
+        value_ nvarchar(1000),
+        PRIMARY KEY (id_)
+);

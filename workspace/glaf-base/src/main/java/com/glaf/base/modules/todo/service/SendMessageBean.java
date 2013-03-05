@@ -134,6 +134,7 @@ public class SendMessageBean {
 				actorIds.addAll(agentIds);
 			}
 			TodoQuery query = new TodoQuery();
+			query.setActorIdx(actorId);
 			List taskInstanceIds = ProcessContainer.getContainer()
 					.getRunningTaskInstanceIds(actorIds);
 			if (taskInstanceIds != null && taskInstanceIds.size() > 0) {

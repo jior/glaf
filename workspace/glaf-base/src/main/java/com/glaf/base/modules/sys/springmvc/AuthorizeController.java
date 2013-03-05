@@ -145,15 +145,15 @@ public class AuthorizeController {
 
 			ContextUtil.put(bean.getAccount(), bean);// 传入全局变量
 
-			if(session != null){
-			RequestUtil.setLoginUser(request, bean);
-			RequestUtils.setLoginUser(request, response, "GLAF",
-					bean.getAccount());
+			if (session != null) {
+				RequestUtil.setLoginUser(request, bean);
+				RequestUtils.setLoginUser(request, response, "GLAF",
+						bean.getAccount());
 
-			// 保存session对象，跳转到后台主页面
-			//session.setAttribute(SysConstants.MENU, menus);
+				// 保存session对象，跳转到后台主页面
+				// session.setAttribute(SysConstants.MENU, menus);
 			}
-			
+
 			request.setAttribute(SysConstants.MENU, menus);
 
 			if (bean.getAccountType() == 1) {// 供应商用户

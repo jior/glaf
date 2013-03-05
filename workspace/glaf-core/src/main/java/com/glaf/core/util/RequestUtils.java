@@ -232,7 +232,7 @@ public class RequestUtils {
 
 		return actorId;
 	}
-	
+
 	public static User getUser(HttpServletRequest request) {
 		String actorId = getActorId(request);
 		if (StringUtils.isNotEmpty(actorId)) {
@@ -240,7 +240,7 @@ public class RequestUtils {
 		}
 		return null;
 	}
-	
+
 	public static LoginContext getLoginContext(HttpServletRequest request) {
 		String actorId = getActorId(request);
 		if (StringUtils.isNotEmpty(actorId)) {
@@ -839,8 +839,10 @@ public class RequestUtils {
 			HttpServletResponse response, String systemName, String actorId) {
 		String ip = getIPAddress(request);
 		String value = encodeCookieValue(ip, systemName, actorId);
-		HttpSession session = request.getSession(true);
-		session.setAttribute(Constants.LOGIN_ACTORID, value);
+		HttpSession session = request.getSession(false);
+		if (session != null) {
+			session.setAttribute(Constants.LOGIN_ACTORID, value);
+		}
 		Cookie cookie = new Cookie(Constants.LOGIN_ACTORID + "_GLAF_COOKIE",
 				value);
 		cookie.setPath("/");

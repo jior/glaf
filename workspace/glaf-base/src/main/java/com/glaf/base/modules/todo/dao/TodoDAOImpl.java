@@ -35,32 +35,6 @@ public class TodoDAOImpl extends HibernateDaoSupport implements TodoDAO {
 
 	}
 
-	public static void fillStatement(PreparedStatement stmt, List<?> values)
-			throws SQLException {
-		if (values == null || values.size() == 0) {
-			return;
-		}
-		for (int i = 0; i < values.size(); i++) {
-			Object obj = values.get(i);
-			if (obj != null) {
-				if (obj instanceof java.sql.Date) {
-					java.sql.Date sqlDate = (java.sql.Date) obj;
-					stmt.setDate(i + 1, sqlDate);
-				} else if (obj instanceof java.sql.Time) {
-					java.sql.Time sqlTime = (java.sql.Time) obj;
-					stmt.setTime(i + 1, sqlTime);
-				} else if (obj instanceof java.sql.Timestamp) {
-					Timestamp datetime = (Timestamp) obj;
-					stmt.setTimestamp(i + 1, datetime);
-				} else {
-					stmt.setObject(i + 1, obj);
-				}
-			} else {
-				stmt.setString(i + 1, null);
-			}
-		}
-	}
-
 	public void saveAll(final List<Object> rows) {
 		getHibernateTemplate().execute(new HibernateCallback<Object>() {
 			public Object doInHibernate(Session session)
@@ -91,6 +65,7 @@ public class TodoDAOImpl extends HibernateDaoSupport implements TodoDAO {
 								.append(" sys_role c ON b.sysRoleId = c.id INNER JOIN ")
 								.append(" sys_user d ON a.userId = d.id ")
 								.append(" WHERE ( d.account = :account ) ");
+						logger.debug("@@actorId:"+actorId);
 						SQLQuery query = session.createSQLQuery(sb.toString());
 						query.setParameter("account", actorId);
 

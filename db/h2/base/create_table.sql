@@ -365,4 +365,18 @@ create table sys_agent (
         PRIMARY KEY (ID_)
  );
 
+ 
+CREATE TABLE sys_property (
+        id_ varchar(50) NOT NULL,
+        category_ varchar(200),
+        description_ varchar(500),
+        initvalue_ varchar(1000),
+        locked_ int,
+        name_ varchar(50),
+        title_ varchar(200),
+        type_ varchar(50),
+        value_ varchar(1000),
+        PRIMARY KEY (id_)
+);
+
 commit;

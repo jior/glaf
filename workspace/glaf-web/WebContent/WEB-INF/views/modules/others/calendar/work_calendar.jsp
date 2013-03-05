@@ -46,58 +46,83 @@ function selDay(obj, month, day){
     <td valign="top">
 	<jsp:include page="/others/workCalendar.do?method=showCalendar" flush="true">
 	  <jsp:param name="year" value="<%=year%>"/>
-	  <jsp:param name="month" value="0"/>	</jsp:include>	</td>
+	  <jsp:param name="month" value="0"/>	
+	</jsp:include>	
+	</td>
     <td valign="top">
 	<jsp:include page="/others/workCalendar.do?method=showCalendar" flush="true">
 	  <jsp:param name="year" value="<%=year%>"/>
-	  <jsp:param name="month" value="1"/>	</jsp:include>	</td>
+	  <jsp:param name="month" value="1"/>	
+	</jsp:include>	
+	</td>
     <td valign="top">
 	<jsp:include page="/others/workCalendar.do?method=showCalendar" flush="true">
 	  <jsp:param name="year" value="<%=year%>"/>
-	  <jsp:param name="month" value="2"/>	</jsp:include>	</td>
+	  <jsp:param name="month" value="2"/>	
+	</jsp:include>	
+	</td>
   </tr>
   <tr>
     <td valign="top">
 	<jsp:include page="/others/workCalendar.do?method=showCalendar" flush="true">
 	  <jsp:param name="year" value="<%=year%>"/>
-	  <jsp:param name="month" value="3"/>	</jsp:include>	</td>
+	  <jsp:param name="month" value="3"/>	
+	 </jsp:include>	
+	</td>
     <td valign="top">
 	<jsp:include page="/others/workCalendar.do?method=showCalendar" flush="true">
 	  <jsp:param name="year" value="<%=year%>"/>
-	  <jsp:param name="month" value="4"/>	</jsp:include>	</td>
+	  <jsp:param name="month" value="4"/>	
+	 </jsp:include>	
+	</td>
     <td valign="top">
 	<jsp:include page="/others/workCalendar.do?method=showCalendar" flush="true">
 	  <jsp:param name="year" value="<%=year%>"/>
-	  <jsp:param name="month" value="5"/>	</jsp:include>	</td>
+	  <jsp:param name="month" value="5"/>	
+	 </jsp:include>	
+	</td>
   </tr>
   <tr>
     <td valign="top">
 	<jsp:include page="/others/workCalendar.do?method=showCalendar" flush="true">
 	  <jsp:param name="year" value="<%=year%>"/>
-	  <jsp:param name="month" value="6"/>	</jsp:include>	</td>
+	  <jsp:param name="month" value="6"/>	
+	 </jsp:include>	
+	</td>
 	<td valign="top">
 	<jsp:include page="/others/workCalendar.do?method=showCalendar" flush="true">
 	  <jsp:param name="year" value="<%=year%>"/>
-	  <jsp:param name="month" value="7"/>	</jsp:include>	</td>
+	  <jsp:param name="month" value="7"/>	
+	 </jsp:include>	
+	</td>
 	<td valign="top">
 	<jsp:include page="/others/workCalendar.do?method=showCalendar" flush="true">
 	  <jsp:param name="year" value="<%=year%>"/>
-	  <jsp:param name="month" value="8"/>	</jsp:include>	</td>
+	  <jsp:param name="month" value="8"/>	
+	</jsp:include>	
+    </td>
   </tr>
   <tr>
     <td valign="top">
 	<jsp:include page="/others/workCalendar.do?method=showCalendar" flush="true">
 	  <jsp:param name="year" value="<%=year%>"/>
-	  <jsp:param name="month" value="9"/>	</jsp:include>	</td>
+	  <jsp:param name="month" value="9"/>	
+	</jsp:include>	
+	</td>
     <td valign="top">
 	<jsp:include page="/others/workCalendar.do?method=showCalendar" flush="true">
 	  <jsp:param name="year" value="<%=year%>"/>
-	  <jsp:param name="month" value="10"/>	</jsp:include>	</td>
+	  <jsp:param name="month" value="10"/>	
+	 </jsp:include>	
+	</td>
     <td valign="top">
 	<jsp:include page="/others/workCalendar.do?method=showCalendar" flush="true">
 	  <jsp:param name="year" value="<%=year%>"/>
-	  <jsp:param name="month" value="11"/>	</jsp:include>	</td>
+	  <jsp:param name="month" value="11"/>	
+	 </jsp:include>	
+	</td>
   </tr>
 </table>
+<br><br>
 </body>
 </html>

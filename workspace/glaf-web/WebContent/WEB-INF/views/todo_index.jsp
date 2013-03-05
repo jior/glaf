@@ -16,12 +16,13 @@
 <%@ page import="org.apache.commons.lang.StringUtils" %>
 <%
     String context = request.getContextPath();
-    SysUser user = com.glaf.base.utils.RequestUtil.getLoginUser(request);
+    String actorId = com.glaf.core.util.RequestUtils.getActorId(request);
+	//System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@"+actorId);
 	TodoJobBean bean = (TodoJobBean)BaseDataManager.getInstance().getBean("todoJobBean");
     List rows = null;
 	 try{
-		Collection agentIds = ProcessContainer.getContainer().getAgentIds(user.getAccount());
-		bean.createTasksFromWorkflow(user.getAccount());
+		Collection agentIds = ProcessContainer.getContainer().getAgentIds(actorId);
+		bean.createTasksFromWorkflow(actorId);
 		if(agentIds != null && agentIds.size() > 0){
 			Iterator iter = agentIds.iterator();
 			while(iter.hasNext()){
@@ -29,7 +30,7 @@
 				bean.createTasksFromWorkflow(agentId);
 			}
 		}
-		rows = bean.getTodoInstances(user.getAccount());
+		rows = bean.getTodoInstances(actorId);
  	 } catch(Exception ex){
 		 ex.printStackTrace();
 	 }
@@ -68,6 +69,6 @@
 			</td>
           </tr>
 		  <%     }
-				  }
+			}
 		  %>
  </table>
