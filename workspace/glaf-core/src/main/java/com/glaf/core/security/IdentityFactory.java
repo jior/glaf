@@ -84,7 +84,7 @@ public class IdentityFactory {
 	}
 
 	public static List<TreeModel> getChildrenTreeModels(Long id) {
-		List<Object> list = entityService.getList("getChildrenTreeModels", id);
+		List<Object> list = getEntityService().getList("getChildrenTreeModels", id);
 		List<TreeModel> treeModels = new ArrayList<TreeModel>();
 		if (list != null && !list.isEmpty()) {
 			Iterator<Object> iter = list.iterator();
@@ -126,11 +126,11 @@ public class IdentityFactory {
 	}
 
 	public static TreeModel getTreeModelByCode(String code) {
-		return (TreeModel) entityService.getById("getTreeModelByCode", code);
+		return (TreeModel) getEntityService().getById("getTreeModelByCode", code);
 	}
 
 	public static TreeModel getTreeModelById(Long id) {
-		return (TreeModel) entityService.getById("getTreeModelById", id);
+		return (TreeModel) getEntityService().getById("getTreeModelById", id);
 	}
 
 	/**
