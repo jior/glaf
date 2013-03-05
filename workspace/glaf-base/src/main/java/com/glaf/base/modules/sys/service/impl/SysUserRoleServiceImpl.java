@@ -206,7 +206,7 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 	public boolean isAuthorized(long fromUserId, long toUserId) {
 		Object[] values = new Object[] { new Long(toUserId),
 				new Long(fromUserId) };
-		String query = "select count(*) from SysUserRole a where a.user.id=? and a.authorizeFrom.id=?";
+		String query = "select count(*) from SysUserRole a where a.user.id=? and a.authorizeFrom=?";
 		int count = ((Long) abstractDao.getList(query, values, null).iterator()
 				.next()).intValue();
 		logger.info("count:" + count + ",fromUserId:" + fromUserId
@@ -226,8 +226,8 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 	 * @return
 	 */
 	public List getAuthorizedUser(SysUser user) {
-		Object[] values = new Object[] { user };
-		String query = "select distinct a.user,a.availDateStart,a.availDateEnd,a.processDescription from SysUserRole a where a.authorizeFrom=?";
+		Object[] values = new Object[] { user.getId() };
+		String query = "select distinct a.user, a.availDateStart, a.availDateEnd, a.processDescription from SysUserRole a where a.authorizeFrom=? ";
 		return abstractDao.getList(query, values, null);
 	}
 
@@ -236,7 +236,7 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 	 */
 	public List getProcessByUser(SysUser user) {
 		Object[] values = new Object[] { user };
-		String query = "select distinct t.moduleName,t.processName,t.objectValue from ToDo t where t.type='1' and t.processName<>'finance_process' and t.roleId in "
+		String query = "select distinct t.moduleName, t.processName, t.objectValue from Todo t where t.type='1' and t.roleId in "
 				+ " (select sdr.role.id from SysDeptRole sdr where sdr.id in "
 				+ " (select sur.deptRole.id from SysUserRole sur where sur.user=?))";
 		return abstractDao.getList(query, values, null);
@@ -322,7 +322,7 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 			// 授给被授权人
 			SysUserRole bean = new SysUserRole();
 			bean.setId(ts++);
-			bean.setAuthorizeFrom(fromUser);
+			bean.setAuthorizeFrom(fromUser.getId());
 			bean.setUser(toUser);
 			bean.setDeptRole(userRole.getDeptRole());
 			bean.setAuthorized(1);
@@ -366,8 +366,7 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 		while (iter.hasNext()) {
 			SysUserRole userRole = (SysUserRole) iter.next();
 			// 判断是否是授权人
-			if (userRole.getAuthorizeFrom() != null
-					&& fromUserId == userRole.getAuthorizeFrom().getId()) {
+			if (userRole.getAuthorizeFrom() != 0 ) {
 				delete(userRole);// 删除权限
 			}
 		}
@@ -390,7 +389,8 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 		Iterator iter = userRoles.iterator();
 		while (iter.hasNext()) {
 			SysUserRole userRole = (SysUserRole) iter.next();
-			SysUser fromUser = userRole.getAuthorizeFrom();
+			long fromUserId = userRole.getAuthorizeFrom();
+			SysUser fromUser = sysUserService.findById(fromUserId);
 			SysUser toUser = userRole.getUser();
 			// 判断是否是授权人
 			logger.info("toUser:" + toUser.getName() + ",fromUser:"
@@ -404,7 +404,7 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 	}
 
 	/**
-	 * 工作流授权 2012-12-09
+	 * 工作流授权 
 	 * 
 	 * @param fromUser
 	 * @param toUser

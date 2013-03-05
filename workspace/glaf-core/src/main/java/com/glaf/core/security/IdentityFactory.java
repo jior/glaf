@@ -161,6 +161,25 @@ public class IdentityFactory {
 		}
 		return userMap;
 	}
+	
+	/**
+	 * 获取全部用户Map
+	 * 
+	 * @return
+	 */
+	public static Map<Long, User> getLongUserMap() {
+		Map<Long, User> userMap = new LinkedHashMap<Long, User>();
+		List<Object> list = getEntityService().getList("getUsers", null);
+		if (list != null && !list.isEmpty()) {
+			for (Object obj : list) {
+				if (obj instanceof User) {
+					User user = (User) obj;
+					userMap.put(user.getId(), user);
+				}
+			}
+		}
+		return userMap;
+	}
 
 	public static void setEntityService(EntityService entityService) {
 		IdentityFactory.entityService = entityService;

@@ -290,7 +290,8 @@ public class SysUserController {
 			HttpServletRequest request, HttpServletResponse response) {
 		RequestUtil.setRequestParameterToAttribute(request);
 		SysUser user = RequestUtil.getLoginUser(request);
-		request.setAttribute("bean", user);
+		SysUser bean = sysUserService.findByAccount(user.getAccount());
+		request.setAttribute("bean", bean);
 
 		return new ModelAndView("/modules/sys/user/user_change_info", modelMap);
 	}

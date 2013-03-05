@@ -157,7 +157,7 @@
 		<td width="20%" align="left">发送内容</td>
 		<td align="left">
 			<textarea type="textarea" id="sendContent" name="sendContent"  
-				      class="x-textarea"  style="width:758px;height:420px;"><c:out value="${reportTask.sendContent}" escapeXml="true"/></textarea>
+				      class="x-textarea"  style="width:725px;height:420px;"><c:out value="${reportTask.sendContent}" escapeXml="true"/></textarea>
 		</td>
 	</tr>
 	<tr>

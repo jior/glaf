@@ -38,10 +38,10 @@ public class SysUserRoleJsonFactory {
 			model.setDeptRoleId(jsonObject.getLong("deptRoleId"));
 		}
 		if (jsonObject.containsKey("authorized")) {
-			model.setAuthorized(jsonObject.getInteger("authorized"));
+			model.setAuthorized(jsonObject.getLong("authorized"));
 		}
-		if (jsonObject.containsKey("authorizeFromId")) {
-			model.setAuthorizeFromId(jsonObject.getLong("authorizeFromId"));
+		if (jsonObject.containsKey("authorizeFrom")) {
+			model.setAuthorizeFrom(jsonObject.getLong("authorizeFrom"));
 		}
 		if (jsonObject.containsKey("availDateStart")) {
 			model.setAvailDateStart(jsonObject.getDate("availDateStart"));
@@ -65,7 +65,7 @@ public class SysUserRoleJsonFactory {
 		jsonObject.put("userId", model.getUserId());
 		jsonObject.put("deptRoleId", model.getDeptRoleId());
 		jsonObject.put("authorized", model.getAuthorized());
-		jsonObject.put("authorizeFromId", model.getAuthorizeFromId());
+		jsonObject.put("authorizeFrom", model.getAuthorizeFrom());
 		if (model.getAvailDateStart() != null) {
 			jsonObject.put("availDateStart",
 					DateUtils.getDate(model.getAvailDateStart()));
@@ -96,7 +96,7 @@ public class SysUserRoleJsonFactory {
 		jsonObject.put("userId", model.getUserId());
 		jsonObject.put("deptRoleId", model.getDeptRoleId());
 		jsonObject.put("authorized", model.getAuthorized());
-		jsonObject.put("authorizeFromId", model.getAuthorizeFromId());
+		jsonObject.put("authorizeFrom", model.getAuthorizeFrom());
 		if (model.getAvailDateStart() != null) {
 			jsonObject.put("availDateStart",
 					DateUtils.getDate(model.getAvailDateStart()));

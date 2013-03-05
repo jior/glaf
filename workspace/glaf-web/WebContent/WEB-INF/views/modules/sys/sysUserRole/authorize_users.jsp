@@ -5,11 +5,14 @@
 <%@ page import="com.glaf.base.modules.utils.*"%>
 <%@ page import="com.glaf.base.modules.sys.model.*"%>
 <%@ page import="com.glaf.base.utils.*"%>
+<%@ page import="com.glaf.core.identity.*"%>
+<%@ page import="com.glaf.core.security.*"%>
 <%
 String context = request.getContextPath();
 int pageSize=2*Constants.PAGE_SIZE;
 com.glaf.core.util.PageResult pager=(com.glaf.core.util.PageResult)request.getAttribute("pager");
 List list = pager.getResults();
+Map userMap = IdentityFactory.getLongUserMap();
 %>
 <html>
 <head>
@@ -111,29 +114,23 @@ if(list!=null){
 	  while(userRoleIter.hasNext()){
 	    SysUserRole userRole = (SysUserRole)userRoleIter.next();
 		if(userRole.getAuthorized()==1){
+			User u = (User)userMap.get(userRole.getAuthorizeFrom());
+			if(u != null){
+               userRole.setAuthorizeFromName(u.getName());
+			}
 		    String processDescription = null == userRole.getProcessDescription()?"":userRole.getProcessDescription();
-			if(authorizeFromNames.indexOf(userRole.getAuthorizeFrom().getName())<0)
+			if(userRole.getAuthorizeFromName() !=null && authorizeFromNames.indexOf(userRole.getAuthorizeFromName())<0)
 				processDescriptions = "";
 		    if(processDescriptions.indexOf(processDescription)<0){
-				contentBuffer += userRole.getProcessDescription()+"[<font color=red>代"+userRole.getAuthorizeFrom().getName();
+				contentBuffer += userRole.getProcessDescription()+"[<font color=red>代"+userRole.getAuthorizeFromName();
 				contentBuffer += " 有效期：" + BaseUtil.dateToString(userRole.getAvailDateStart()) +"至"+ BaseUtil.dateToString(userRole.getAvailDateEnd()) + "</font>] ";
-				contentTitle += userRole.getProcessDescription()+"[代"+userRole.getAuthorizeFrom().getName();
+				contentTitle += userRole.getProcessDescription()+"[代"+userRole.getAuthorizeFromName();
 				contentTitle += " 有效期：" + BaseUtil.dateToString(userRole.getAvailDateStart()) +"至"+ BaseUtil.dateToString(userRole.getAvailDateEnd())+"]";
 		    }
-		    //if(null==processDescription || "".equals(processDescription)){
-		    //	if(authorizeFromNames.indexOf(userRole.getAuthorizeFrom().getName())<0){
-			//    	contentBuffer += "全局代理"+"[<font color=red>代"+userRole.getAuthorizeFrom().getName();
-			//		contentBuffer += " 有效期：" + BaseUtil.dateToString(userRole.getAvailDateStart()) +"至"+ BaseUtil.dateToString(userRole.getAvailDateEnd()) + "</font>] ";
-		    //	}
-		    //}
-			authorizeFromNames += userRole.getAuthorizeFrom().getName();
+		    
+			authorizeFromNames += userRole.getAuthorizeFromName();
 		    processDescriptions += processDescription;
-		  //out.print(userRole.getDeptRole().getRole().getName());
-		  //out.print(userRole.getProcessDescription());
-		  //out.print("[<font color=red>代");
-		  //out.print(userRole.getAuthorizeFrom().getName());
-		  //out.print(" 有效期：" + BaseUtil.dateToString(userRole.getAvailDateStart()) +"至"+ BaseUtil.dateToString(userRole.getAvailDateEnd()));
-		  //out.print("</font>] ");
+		  
 		}		
 	  }
 	}

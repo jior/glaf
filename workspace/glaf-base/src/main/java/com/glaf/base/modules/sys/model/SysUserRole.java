@@ -28,35 +28,31 @@ import com.glaf.core.base.JSONable;
 public class SysUserRole implements Serializable, JSONable {
 	private static final long serialVersionUID = 4335486314285694158L;
 	private long id;
-	private SysUser user;
 	private long userId;
-	private SysDeptRole deptRole;
 	private long deptRoleId;
-	private int authorized;
-	private SysUser authorizeFrom;
-	private long authorizeFromId;
+	private long authorized;// 0-角色用户 1-代理用户
+	private long authorizeFrom;
+	private String authorizeFromName;
 	private Date availDateStart;
 	private Date availDateEnd;
 	private String processDescription;
+	private SysUser user;
+	private SysDeptRole deptRole;
 
 	public SysUserRole() {
 
 	}
 
-	public long getAuthorizeFromId() {
-		return authorizeFromId;
-	}
-
-	public void setAuthorizeFromId(long authorizeFromId) {
-		this.authorizeFromId = authorizeFromId;
-	}
-
-	public int getAuthorized() {
+	public long getAuthorized() {
 		return authorized;
 	}
 
-	public SysUser getAuthorizeFrom() {
+	public long getAuthorizeFrom() {
 		return authorizeFrom;
+	}
+
+	public String getAuthorizeFromName() {
+		return authorizeFromName;
 	}
 
 	public Date getAvailDateEnd() {
@@ -91,12 +87,20 @@ public class SysUserRole implements Serializable, JSONable {
 		return userId;
 	}
 
-	public void setAuthorized(int authorized) {
+	public SysUserRole jsonToObject(JSONObject jsonObject) {
+		return SysUserRoleJsonFactory.jsonToObject(jsonObject);
+	}
+
+	public void setAuthorized(long authorized) {
 		this.authorized = authorized;
 	}
 
-	public void setAuthorizeFrom(SysUser authorizeFrom) {
+	public void setAuthorizeFrom(long authorizeFrom) {
 		this.authorizeFrom = authorizeFrom;
+	}
+
+	public void setAuthorizeFromName(String authorizeFromName) {
+		this.authorizeFromName = authorizeFromName;
 	}
 
 	public void setAvailDateEnd(Date availDateEnd) {
@@ -129,10 +133,6 @@ public class SysUserRole implements Serializable, JSONable {
 
 	public void setUserId(long userId) {
 		this.userId = userId;
-	}
-
-	public SysUserRole jsonToObject(JSONObject jsonObject) {
-		return SysUserRoleJsonFactory.jsonToObject(jsonObject);
 	}
 
 	public JSONObject toJsonObject() {
