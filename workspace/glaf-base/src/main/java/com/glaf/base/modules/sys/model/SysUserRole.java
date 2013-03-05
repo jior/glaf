@@ -27,11 +27,11 @@ import com.glaf.core.base.JSONable;
 
 public class SysUserRole implements Serializable, JSONable {
 	private static final long serialVersionUID = 4335486314285694158L;
-	private long id;
-	private long userId;
-	private long deptRoleId;
-	private long authorized;// 0-角色用户 1-代理用户
-	private long authorizeFrom;
+	private Long id;
+	private Long userId;
+	private Long deptRoleId;
+	private Integer authorized;// 0-角色用户 1-代理用户
+	private Long authorizeFrom;
 	private String authorizeFromName;
 	private Date availDateStart;
 	private Date availDateEnd;
@@ -43,11 +43,11 @@ public class SysUserRole implements Serializable, JSONable {
 
 	}
 
-	public long getAuthorized() {
+	public Integer getAuthorized() {
 		return authorized;
 	}
 
-	public long getAuthorizeFrom() {
+	public Long getAuthorizeFrom() {
 		return authorizeFrom;
 	}
 
@@ -67,11 +67,11 @@ public class SysUserRole implements Serializable, JSONable {
 		return deptRole;
 	}
 
-	public long getDeptRoleId() {
+	public Long getDeptRoleId() {
 		return deptRoleId;
 	}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
@@ -83,7 +83,7 @@ public class SysUserRole implements Serializable, JSONable {
 		return user;
 	}
 
-	public long getUserId() {
+	public Long getUserId() {
 		return userId;
 	}
 
@@ -91,11 +91,11 @@ public class SysUserRole implements Serializable, JSONable {
 		return SysUserRoleJsonFactory.jsonToObject(jsonObject);
 	}
 
-	public void setAuthorized(long authorized) {
+	public void setAuthorized(Integer authorized) {
 		this.authorized = authorized;
 	}
 
-	public void setAuthorizeFrom(long authorizeFrom) {
+	public void setAuthorizeFrom(Long authorizeFrom) {
 		this.authorizeFrom = authorizeFrom;
 	}
 
@@ -115,11 +115,11 @@ public class SysUserRole implements Serializable, JSONable {
 		this.deptRole = deptRole;
 	}
 
-	public void setDeptRoleId(long deptRoleId) {
+	public void setDeptRoleId(Long deptRoleId) {
 		this.deptRoleId = deptRoleId;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -131,7 +131,7 @@ public class SysUserRole implements Serializable, JSONable {
 		this.user = user;
 	}
 
-	public void setUserId(long userId) {
+	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
 

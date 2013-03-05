@@ -38,7 +38,7 @@ public class SysUserRoleJsonFactory {
 			model.setDeptRoleId(jsonObject.getLong("deptRoleId"));
 		}
 		if (jsonObject.containsKey("authorized")) {
-			model.setAuthorized(jsonObject.getLong("authorized"));
+			model.setAuthorized(jsonObject.getInteger("authorized"));
 		}
 		if (jsonObject.containsKey("authorizeFrom")) {
 			model.setAuthorizeFrom(jsonObject.getLong("authorizeFrom"));

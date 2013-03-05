@@ -15,7 +15,7 @@
 		<property name="availDateEnd" type="timestamp" column="availDateEnd" />
 		<property name="userId" type="long" column="userId" insert="false" update="false" />
 		<property name="deptRoleId" type="long" column="roleId" insert="false" update="false" />
-		<property name="authorized" type="long" column="authorized" />
+		<property name="authorized" type="int" column="authorized" />
 		<property name="authorizeFrom" type="long" column="authorizeFrom" />
 		<property name="processDescription" type="string" column="processDescription" />
 
