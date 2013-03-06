@@ -33,11 +33,6 @@
 			   includes="com/glaf/core/**/*.class,com/glaf/core/**/*.xml,com/glaf/core/**/*.properties"  />
 		</jar>
 
-		<jar jarfile="glaf-jbpm.jar">
-			<fileset dir="bin" 
-			   includes="com/glaf/jbpm/**/*.class,com/glaf/jbpm/**/*.xml,com/glaf/jbpm/**/*.properties" />
-		</jar>
-
 		<jar jarfile="glaf-mail.jar">
 			<fileset dir="bin" 
 			   includes="com/glaf/mail/**/*.class,com/glaf/mail/**/*.xml,com/glaf/mail/**/*.properties" />
@@ -48,14 +43,13 @@
 	<target name="copy">
 		<copy todir="../glaf-web/WebContent/WEB-INF/classes">
 			<fileset dir="bin" includes="com/glaf/core/**/*.class,com/glaf/core/**/*.properties,com/glaf/core/**/*.xml" />
-			<fileset dir="bin" includes="com/glaf/jbpm/**/*.class,com/glaf/jbpm/**/*.properties,com/glaf/jbpm/**/*.xml" />
 			<fileset dir="bin" includes="com/glaf/mail/**/*.class,com/glaf/mail/**/*.properties,com/glaf/mail/**/*.xml" />
 		</copy>
 	</target>
 
 	<target name="copy-jar">
 		<copy todir="../glaf-web/WebContent/WEB-INF/lib">
-			<fileset dir="." includes="glaf-core.jar,glaf-jbpm.jar,glaf-mail.jar"/>
+			<fileset dir="." includes="glaf-core.jar,glaf-mail.jar"/>
 		</copy>
 	</target>
 

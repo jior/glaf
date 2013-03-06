@@ -123,5 +123,6 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/mybatis-spring.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/mybatis.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/ehcache-core.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/glaf-jbpm"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
