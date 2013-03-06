@@ -4,8 +4,6 @@
 	<classpathentry kind="src" path="src/test/java"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/activation-1.1.jar"/>
-	<classpathentry kind="lib" path="lib/activiti-engine-5.10.jar"/>
-	<classpathentry kind="lib" path="lib/activiti-spring-5.10.jar"/>
 	<classpathentry kind="lib" path="lib/ant-tools.jar"/>
 	<classpathentry kind="lib" path="lib/antlr-2.7.7.jar"/>
 	<classpathentry kind="lib" path="lib/aopalliance-1.0.jar"/>
@@ -101,11 +99,7 @@
 	<classpathentry kind="lib" path="lib/spring-tx.RELEASE.jar"/>
 	<classpathentry kind="lib" path="lib/spring-web.RELEASE.jar"/>
 	<classpathentry kind="lib" path="lib/spring-webmvc.RELEASE.jar"/>
-	<classpathentry kind="lib" path="lib/xercesImpl-2.9.1.jar"/>
 	<classpathentry kind="lib" path="lib/xml-apis-1.3.04.jar"/>
-	<classpathentry kind="lib" path="lib/xml-resolver-1.2.jar"/>
-	<classpathentry kind="lib" path="lib/XmlSchema-1.4.7.jar"/>
-	<classpathentry kind="lib" path="lib/xpp3-1.1.3.4d_b4_min.jar"/>
 	<classpathentry kind="lib" path="lib/log4j-1.2.17.jar"/>
 	<classpathentry kind="lib" path="lib/slf4j-api-1.7.2.jar"/>
 	<classpathentry kind="lib" path="lib/slf4j-log4j12-1.7.2.jar"/>

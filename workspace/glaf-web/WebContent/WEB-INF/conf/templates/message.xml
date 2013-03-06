@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates>
 
-	<template name="sendToSupplier" desccription="供应商用户意见交流">
+	<template name="sendToSupplier" description="供应商用户意见交流">
 		<sysType>1</sysType>
 		<title>
 			<![CDATA[

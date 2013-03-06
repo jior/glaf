@@ -42,11 +42,11 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 
 import com.glaf.core.base.DataFile;
-import com.glaf.core.base.Template;
 import com.glaf.core.config.TemplateProperties;
 import com.glaf.core.config.ViewProperties;
 import com.glaf.core.context.ContextFactory;
 import com.glaf.core.freemarker.TemplateUtils;
+import com.glaf.core.template.Template;
 import com.glaf.mail.config.JavaMailSenderConfiguration;
 import com.glaf.mail.util.MailTools;
 

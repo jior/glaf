@@ -23,8 +23,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.activiti.engine.impl.context.Context;
-import org.activiti.engine.impl.interceptor.CommandContext;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -53,13 +51,7 @@ public class IdentityUtils {
 		List<Object> rows = entityDAO.getList(statementId, paramMap);
 		if (rows != null && !rows.isEmpty()) {
 			for (Object object : rows) {
-				if (object instanceof org.activiti.engine.identity.User) {
-					String actorId = ((org.activiti.engine.identity.User) object)
-							.getId();
-					if (!actorIds.contains(actorId)) {
-						actorIds.add(actorId);
-					}
-				} else if (object instanceof com.glaf.core.identity.User) {
+				if (object instanceof com.glaf.core.identity.User) {
 					String actorId = ((com.glaf.core.identity.User) object)
 							.getActorId();
 					if (!actorIds.contains(actorId)) {
@@ -91,13 +83,7 @@ public class IdentityUtils {
 		List<Object> rows = entityDAO.getList(statement, paramMap);
 		if (rows != null && !rows.isEmpty()) {
 			for (Object object : rows) {
-				if (object instanceof org.activiti.engine.identity.User) {
-					String actorId = ((org.activiti.engine.identity.User) object)
-							.getId();
-					if (!actorIds.contains(actorId)) {
-						actorIds.add(actorId);
-					}
-				} else if (object instanceof com.glaf.core.identity.User) {
+				if (object instanceof com.glaf.core.identity.User) {
 					String actorId = ((com.glaf.core.identity.User) object)
 							.getActorId();
 					if (!actorIds.contains(actorId)) {
@@ -108,43 +94,6 @@ public class IdentityUtils {
 					if (!actorIds.contains(actorId)) {
 						actorIds.add(actorId);
 					}
-				}
-			}
-		}
-		return actorIds;
-	}
-
-	public static List<String> getActorIds(String statementId, String roleId) {
-		List<String> actorIds = new ArrayList<String>();
-		CommandContext commandContext = Context.getCommandContext();
-
-		logger.debug("dbSqlsession:" + commandContext.getDbSqlSession());
-		logger.debug("sqlsession:"
-				+ commandContext.getDbSqlSession().getSqlSession());
-
-		if (statementId != null && roleId != null) {
-			Map<String, Object> paramMap = new HashMap<String, Object>();
-			if (StringUtils.isNotEmpty(statementId)) {
-				MyBatisEntityDAO entityDAO = new MyBatisEntityDAO(
-						commandContext.getDbSqlSession().getSqlSession());
-				List<?> list = entityDAO.getList(statementId, paramMap);
-				if (list != null && !list.isEmpty()) {
-					for (Object object : list) {
-						if (object instanceof org.activiti.engine.identity.User) {
-							String actorId = ((org.activiti.engine.identity.User) object)
-									.getId();
-							if (!actorIds.contains(actorId)) {
-								actorIds.add(actorId);
-							}
-						} else if (object instanceof com.glaf.core.identity.User) {
-							String actorId = ((com.glaf.core.identity.User) object)
-									.getActorId();
-							if (!actorIds.contains(actorId)) {
-								actorIds.add(actorId);
-							}
-						}
-					}
-					logger.debug("actorIds:" + actorIds);
 				}
 			}
 		}
@@ -172,13 +121,7 @@ public class IdentityUtils {
 		List<Object> rows = entityDAO.getList(statementId, paramMap);
 		if (rows != null && rows.size() > 0) {
 			for (Object object : rows) {
-				if (object instanceof org.activiti.engine.identity.User) {
-					String actorId = ((org.activiti.engine.identity.User) object)
-							.getId();
-					if (!actorIds.contains(actorId)) {
-						actorIds.add(actorId);
-					}
-				} else if (object instanceof com.glaf.core.identity.User) {
+				if (object instanceof com.glaf.core.identity.User) {
 					String actorId = ((com.glaf.core.identity.User) object)
 							.getActorId();
 					if (!actorIds.contains(actorId)) {

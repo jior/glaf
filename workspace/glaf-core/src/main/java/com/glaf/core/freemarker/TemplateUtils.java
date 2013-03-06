@@ -38,7 +38,7 @@ public class TemplateUtils {
 	
 	public static void evaluate(String templateId, Map<String, Object> context,
 			Writer writer){
-		com.glaf.core.base.Template template = TemplateProperties.getTemplate(
+		com.glaf.core.template.Template template = TemplateProperties.getTemplate(
 				templateId);
 		if(template != null && template.getContent() != null){
 			if(template.getJson() != null){

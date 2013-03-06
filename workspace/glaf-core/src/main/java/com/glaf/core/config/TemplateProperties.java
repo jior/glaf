@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-import com.glaf.core.base.Template;
+import com.glaf.core.template.Template;
 import com.glaf.core.xml.TemplateReader;
 
 public class TemplateProperties {

@@ -11,7 +11,7 @@ import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
-import com.glaf.core.base.Template;
+import com.glaf.core.template.Template;
 import com.glaf.core.util.Tools;
 
 public class TemplateReader {
@@ -37,7 +37,7 @@ public class TemplateReader {
 			for (Element element : elements) {
 				Template tpl = new Template();
 				tpl.setName(element.attributeValue("name"));
-				tpl.setDesccription(element.attributeValue("desccription"));
+				tpl.setDescription(element.attributeValue("description"));
 				List<Element> elems = element.elements();
 				if (elems != null && !elems.isEmpty()) {
 					Map<String, Object> dataMap = new HashMap<String, Object>();

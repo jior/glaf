@@ -33,11 +33,6 @@
 			   includes="com/glaf/core/**/*.class,com/glaf/core/**/*.xml,com/glaf/core/**/*.properties"  />
 		</jar>
 
-		<jar jarfile="glaf-activiti.jar">
-			<fileset dir="bin" 
-			   includes="com/glaf/activiti/**/*.class,com/glaf/activiti/**/*.xml,com/glaf/activiti/**/*.properties" />
-		</jar>
-
 		<jar jarfile="glaf-jbpm.jar">
 			<fileset dir="bin" 
 			   includes="com/glaf/jbpm/**/*.class,com/glaf/jbpm/**/*.xml,com/glaf/jbpm/**/*.properties" />
