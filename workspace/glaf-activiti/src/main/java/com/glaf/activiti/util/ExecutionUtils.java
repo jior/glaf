@@ -50,8 +50,9 @@ public class ExecutionUtils {
 			Expression sql) {
 		CommandContext commandContext = Context.getCommandContext();
 
-		ExecutionEntity executionEntity = commandContext.getExecutionEntityManager()
-				.findExecutionById(execution.getId());
+		ExecutionEntity executionEntity = commandContext
+				.getExecutionEntityManager().findExecutionById(
+						execution.getId());
 		String processDefinitionId = executionEntity.getProcessDefinitionId();
 		ProcessDefinitionEntity processDefinitionEntity = commandContext
 				.getProcessDefinitionEntityManager().findProcessDefinitionById(
@@ -79,7 +80,7 @@ public class ExecutionUtils {
 		params.put("now", new java.util.Date());
 
 		if (sql != null) {
-			String sqlx = (String) sql.getExpressionText();
+			String sqlx = sql.getExpressionText();
 
 			if (sqlx.indexOf("#{tableName}") != -1) {
 				String tableName = (String) execution.getVariable("tableName");
@@ -128,8 +129,9 @@ public class ExecutionUtils {
 	public static void executeUpdate(DelegateExecution execution, Expression sql) {
 		CommandContext commandContext = Context.getCommandContext();
 
-		ExecutionEntity executionEntity = commandContext.getExecutionEntityManager()
-				.findExecutionById(execution.getId());
+		ExecutionEntity executionEntity = commandContext
+				.getExecutionEntityManager().findExecutionById(
+						execution.getId());
 		String processDefinitionId = executionEntity.getProcessDefinitionId();
 		ProcessDefinitionEntity processDefinitionEntity = commandContext
 				.getProcessDefinitionEntityManager().findProcessDefinitionById(
@@ -156,7 +158,7 @@ public class ExecutionUtils {
 		params.put("processName", processName);
 
 		if (sql != null) {
-			String sqlx = (String) sql.getExpressionText();
+			String sqlx = sql.getExpressionText();
 
 			if (sqlx.indexOf("#{tableName}") != -1) {
 				String tableName = (String) execution.getVariable("tableName");

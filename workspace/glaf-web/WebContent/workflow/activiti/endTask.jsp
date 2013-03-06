@@ -3,16 +3,17 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page import="java.util.*" %>
 <%@ page import="org.apache.commons.lang.*" %>
-<%@ page import="com.glaf.jbpm.model.*" %>
-<%@ page import="com.glaf.jbpm.context.*" %>
-<%@ page import="com.glaf.jbpm.container.*" %>
-<%@ page import="com.glaf.jbpm.service.*" %>
-<%@ page import="com.glaf.jbpm.datafield.*" %>
+<%@ page import="com.glaf.activiti.model.*" %>
+<%@ page import="com.glaf.activiti.context.*" %>
+<%@ page import="com.glaf.activiti.container.*" %>
+<%@ page import="com.glaf.activiti.service.*" %>
+<%@ page import="com.glaf.activiti.datafield.*" %>
 <%@ page import="com.glaf.core.util.*" %>
 <%
+        //http://127.0.0.1:8080/glaf/workflow/activiti/endTask.jsp
         RequestUtils.setRequestParameterToAttribute(request);
         Map params = new HashMap();
-		String isAgree = request.getParameter("isAgree");
+		String approve = request.getParameter("approve");
 		String actorId = request.getParameter("actorId");
 		String opinion = request.getParameter("opinion");
 		String processInstanceId = request.getParameter("processInstanceId");
@@ -20,22 +21,15 @@
 		if(actorId == null){
 			actorId = "test";
 		}
-		if(isAgree == null){
-			isAgree = "true";
+		if(approve == null){
+			approve = "true";
 		}
 		 
 
 		DataField datafield = new DataField();
-		datafield.setName("isAgree");
-        datafield.setValue(isAgree);
+		datafield.setName("approve");
+        datafield.setValue(Boolean.valueOf(approve));
 
-		DataField datafield4 = new DataField();
-		datafield4.setName(request.getParameter("name"));
-        datafield4.setValue(request.getParameter("value"));
-
-		DataField datafield5 = new DataField();
-		datafield5.setName(request.getParameter("rowId"));
-        datafield5.setValue(request.getParameter("rowValue"));
 
 		DataField datafield6 = new DataField();
 		datafield6.setName("effectiveDate");
@@ -52,14 +46,20 @@
 		
         List dataFields = new ArrayList();
         dataFields.add(datafield);
-		dataFields.add(datafield4);
-		dataFields.add(datafield5);
+		
 		dataFields.add(datafield6);
 		dataFields.add(datafield7);
 		dataFields.add(datafield8);
 
+		if(request.getParameter("name") != null && request.getParameter("value") != null){
+		    DataField datafield4 = new DataField();
+		    datafield4.setName(request.getParameter("name"));
+            datafield4.setValue(request.getParameter("value"));
+			dataFields.add(datafield4);
+		}
+
 		try {
-			if(processInstanceId != null && processInstanceId.length()>0 && actorId != null){
+			if(processInstanceId != null && processInstanceId.length() > 0 && actorId != null){
 		        ProcessContainer container = ProcessContainer.getContainer();
  				ProcessContext ctx = new ProcessContext();
 				ctx.setActorId(actorId);
@@ -75,8 +75,8 @@
 %>
 
 <script language="javascript">
-    function submitForm(isAgree){
-        document.getElementById("isAgree").value=isAgree;
+    function submitForm(approve){
+        document.getElementById("approve").value=approve;
 		document.iForm.bt01.disabled=true;
 		document.iForm.bt02.disabled=true;
         document.iForm.submit();
@@ -87,7 +87,7 @@
   <table align="center" class="table-border" cellspacing="1" cellpadding="4" width="90%" nowrap>
     <tr class="table-bar" align="middle" nowrap>
 	<td align="center"  nowrap> 
-    <input type="hidden" id="isAgree" name="isAgree" value=""><br>
+    <input type="hidden" id="approve" name="approve" value=""><br>
 	process actorId 
 	</td>
 	<td align="left"  nowrap> 
