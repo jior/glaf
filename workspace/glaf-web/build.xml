@@ -20,6 +20,9 @@
 		<fileset dir="../glaf-base">
 			<include name="*.jar" />
 		</fileset>
+		<fileset dir="../glaf-jbpm">
+			<include name="*.jar" />
+		</fileset>
 	</path>
 
 	<!-- 准备任务 -->
