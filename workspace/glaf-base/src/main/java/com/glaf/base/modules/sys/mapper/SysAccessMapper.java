@@ -21,23 +21,18 @@ package com.glaf.base.modules.sys.mapper;
 import java.util.*;
 import org.springframework.stereotype.Component;
 import com.glaf.base.modules.sys.model.*;
-import com.glaf.base.modules.sys.query.*;
 
 @Component
 public interface SysAccessMapper {
 
-	void deleteSysAccesss(SysAccessQuery query);
+	void deleteSysAccessByAppId(Long appId);
 
-	void deleteSysAccessById(Long id);
+	void deleteSysAccessByRoleId(Long roleId);
 
-	SysAccess getSysAccessById(Long id);
+	List<SysAccess> getSysAccessByAppId(Long appId);
 
-	int getSysAccessCount(SysAccessQuery query);
-
-	List<SysAccess> getSysAccesss(SysAccessQuery query);
+	List<SysAccess> getSysAccessByRoleId(Long roleId);
 
 	void insertSysAccess(SysAccess model);
-
-	void updateSysAccess(SysAccess model);
 
 }

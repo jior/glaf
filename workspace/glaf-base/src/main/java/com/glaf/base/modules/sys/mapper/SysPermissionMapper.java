@@ -19,25 +19,21 @@
 package com.glaf.base.modules.sys.mapper;
 
 import java.util.*;
+
 import org.springframework.stereotype.Component;
 import com.glaf.base.modules.sys.model.*;
-import com.glaf.base.modules.sys.query.*;
 
 @Component
 public interface SysPermissionMapper {
 
-	void deleteSysPermissions(SysPermissionQuery query);
+	void deleteSysPermissionByFunctionId(Long funcId);
 
-	void deleteSysPermissionById(Long id);
+	void deleteSysPermissionByRoleId(Long roleId);
 
-	SysPermission getSysPermissionById(Long id);
+	List<SysPermission> getSysPermissionByFunctionId(Long funcId);
 
-	int getSysPermissionCount(SysPermissionQuery query);
-
-	List<SysPermission> getSysPermissions(SysPermissionQuery query);
+	List<SysPermission> getSysPermissionByRoleId(Long roleId);
 
 	void insertSysPermission(SysPermission model);
-
-	void updateSysPermission(SysPermission model);
 
 }

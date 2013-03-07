@@ -4,13 +4,13 @@
 
 <mapper namespace="com.glaf.base.modules.sys.mapper.SysDeptRoleMapper">
 
- 	<resultMap id="sysDeptRoleResultMap"	type="com.glaf.base.modules.sys.model.SysDeptRole">
-        <id property="id" column="ID" jdbcType="BIGINT" />
-        <result property="grade" column="GRADE" jdbcType="INTEGER"/>
-        <result property="code" column="CODE" jdbcType="VARCHAR"/>
-        <result property="sort" column="SORT" jdbcType="INTEGER"/>
-        <result property="sysRoleId" column="SYSROLEID" jdbcType="BIGINT"/>
-        <result property="deptId" column="DEPTID" jdbcType="BIGINT"/>
+	<resultMap id="sysDeptRoleResultMap"	type="com.glaf.base.modules.sys.model.SysDeptRole">
+		<id property="id" column="ID" jdbcType="BIGINT" />
+		<result property="grade" column="GRADE" jdbcType="INTEGER"/>
+		<result property="code" column="CODE" jdbcType="VARCHAR"/>
+		<result property="sort" column="SORT" jdbcType="INTEGER"/>
+		<result property="sysRoleId" column="SYSROLEID" jdbcType="BIGINT"/>
+		<result property="deptId" column="DEPTID" jdbcType="BIGINT"/>
 	</resultMap>
 
  
@@ -33,7 +33,7 @@
 			<if test="deptId != null">
 				,DEPTID 
 			</if>
-        </trim>
+		</trim>
 
 		<trim prefix=" values (" suffix=")" suffixOverrides=",">
 			  #{id, jdbcType=BIGINT}
@@ -53,14 +53,14 @@
 			<if test="deptId != null">
 				,#{deptId, jdbcType=BIGINT}
 			</if>
-	    </trim>
-    </insert>
+		</trim>
+	</insert>
 
 	 
 	<update id="updateSysDeptRole" parameterType="com.glaf.base.modules.sys.model.SysDeptRole">
 		update sys_dept_role
 		set
-        <trim prefix="" suffix="" suffixOverrides=",">		
+		<trim prefix="" suffix="" suffixOverrides=",">		
 			<if test="grade != null">
 				GRADE = #{grade, jdbcType=INTEGER},
 			</if>
@@ -76,26 +76,33 @@
 			<if test="deptId != null">
 				DEPTID = #{deptId, jdbcType=BIGINT},
 			</if>
-        </trim>
+		</trim>
 		where
           ID = #{id, jdbcType=BIGINT}
 		
-    </update>
+	</update>
 
  
-	<delete id="deleteSysDeptRoleById" parameterType="string"> 
+	<delete id="deleteSysDeptRoleById" parameterType="long"> 
         delete from sys_dept_role
         where ID =	#{id}
 	</delete>
+	
+	
+	<delete id="deleteSysDeptRoleByDeptId" parameterType="long"> 
+        delete from sys_dept_role
+        where DEPTID =	#{deptId}
+	</delete>
+	
 	
 	<delete id="deleteSysDeptRoles" parameterType="com.glaf.base.modules.sys.query.SysDeptRoleQuery">
 		delete from sys_dept_role
 		where ( 
  			  ID IN
-              <foreach item="x_rowId" index="index" collection="rowIds" 
-                     open="(" separator="," close=")">
+		<foreach item="x_rowId" index="index" collection="rowIds" 
+			open="(" separator="," close=")">
                   #{x_rowId}
-              </foreach>
+		</foreach>
 		)
 	</delete>
 
@@ -105,22 +112,22 @@
 
 
 	<select id="getSysDeptRoles" 
-	    parameterType="com.glaf.base.modules.sys.query.SysDeptRoleQuery"
+		parameterType="com.glaf.base.modules.sys.query.SysDeptRoleQuery"
 		resultMap="sysDeptRoleResultMap">
 		select E.*
 		<include refid="selectSysDeptRolesSql" />
 		<choose>
-		  <when test="orderBy != null">
+			<when test="orderBy != null">
 		     order by ${orderBy}
-          </when>
-		  <otherwise>
+			</when>
+			<otherwise>
 		      order by E.SORT asc
-		  </otherwise>
-        </choose>
+			</otherwise>
+		</choose>
 	</select>
 
 	<select id="getSysDeptRoleCount" 
-	    parameterType="com.glaf.base.modules.sys.query.SysDeptRoleQuery"
+		parameterType="com.glaf.base.modules.sys.query.SysDeptRoleQuery"
 		resultType="int">
 		select count(*)
 		<include refid="selectSysDeptRolesSql" />
@@ -135,78 +142,78 @@
 
 			<if test="grade != null">
 				and E.GRADE = #{grade}
-            </if>
+			</if>
 
 			<if test="gradeGreaterThanOrEqual != null">
 				and E.GRADE &gt;= #{gradeGreaterThanOrEqual}
-            </if>
+			</if>
 
 			<if test="gradeLessThanOrEqual != null">
 				and E.GRADE &lt;= #{gradeLessThanOrEqual}
-            </if>
+			</if>
 	        
 			<if test="code != null &amp;&amp; code != '' ">
 				and E.CODE = #{code}
-            </if>
+			</if>
 
 			<if test="codeLike != null &amp;&amp; codeLike != '' ">
 				and E.CODE like #{codeLike}
-            </if>
+			</if>
 
 			<if test="codes != null &amp;&amp; codes.size() &gt; 0">
 			    and E.CODE IN
-                <foreach item="x_code" index="index" collection="codes" 
-                     open="(" separator="," close=")">
+				<foreach item="x_code" index="index" collection="codes" 
+					open="(" separator="," close=")">
                   #{x_code}
-                </foreach>
+				</foreach>
 			</if>
 
 			<if test="sortGreaterThanOrEqual != null">
 				and E.SORT &gt;= #{sortGreaterThanOrEqual}
-            </if>
+			</if>
 
 			<if test="sortLessThanOrEqual != null">
 				and E.SORT &lt;= #{sortLessThanOrEqual}
-            </if>
+			</if>
 
 			<if test="sysRoleId != null">
 				and E.SYSROLEID = #{sysRoleId}
-            </if>
+			</if>
 
 			<if test="sysRoleIdGreaterThanOrEqual != null">
 				and E.SYSROLEID &gt;= #{sysRoleIdGreaterThanOrEqual}
-            </if>
+			</if>
 
 			<if test="sysRoleIdLessThanOrEqual != null">
 				and E.SYSROLEID &lt;= #{sysRoleIdLessThanOrEqual}
-            </if>
+			</if>
 
 			<if test="sysRoleIds != null &amp;&amp; sysRoleIds.size() &gt; 0">
 			    and E.SYSROLEID IN
-                <foreach item="x_sysRoleId" index="index" collection="sysRoleIds" 
-                     open="(" separator="," close=")">
+				<foreach item="x_sysRoleId" index="index" collection="sysRoleIds" 
+					open="(" separator="," close=")">
                   #{x_sysRoleId}
-                </foreach>
+				</foreach>
 			</if>
 
 			<if test="deptId != null">
 				and E.DEPTID = #{deptId}
-            </if>
+			</if>
 
 			<if test="deptIdGreaterThanOrEqual != null">
 				and E.DEPTID &gt;= #{deptIdGreaterThanOrEqual}
-            </if>
+			</if>
 
 			<if test="deptIdLessThanOrEqual != null">
 				and E.DEPTID &lt;= #{deptIdLessThanOrEqual}
-            </if>
+			</if>
 
 			<if test="deptIds != null &amp;&amp; deptIds.size() &gt; 0">
 			    and E.DEPTID IN
-                <foreach item="x_deptId" index="index" collection="deptIds" 
-                     open="(" separator="," close=")">
+				<foreach item="x_deptId" index="index" collection="deptIds" 
+					open="(" separator="," close=")">
                   #{x_deptId}
-                </foreach>
+				</foreach>
 			</if>
 			 
 		</where>

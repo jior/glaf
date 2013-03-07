@@ -4,116 +4,44 @@
 
 <mapper namespace="com.glaf.base.modules.sys.mapper.SysAccessMapper">
 
- 	<resultMap id="sysAccessResultMap"	type="com.glaf.base.modules.sys.model.SysAccess">
-        <id property="appId" column="APPID" jdbcType="BIGINT" />
-        <result property="roleId" column="ROLEID" jdbcType="BIGINT"/>
-	</resultMap>
-
  
 	<insert id="insertSysAccess" parameterType="com.glaf.base.modules.sys.model.SysAccess">
-		insert into sys_access 
-		<trim prefix="(" suffix=")" suffixOverrides=",">
-		    APPID
-			<if test="roleId != null">
-				,ROLEID 
-			</if>
-        </trim>
-
-		<trim prefix=" values (" suffix=")" suffixOverrides=",">
-			  #{appId, jdbcType=BIGINT}
-	     
-			<if test="roleId != null">
-				,#{roleId, jdbcType=BIGINT}
-			</if>
-	    </trim>
-    </insert>
-
-	 
-	<update id="updateSysAccess" parameterType="com.glaf.base.modules.sys.model.SysAccess">
-		update sys_access
-		set
-        <trim prefix="" suffix="" suffixOverrides=",">		
-			<if test="roleId != null">
-				ROLEID = #{roleId, jdbcType=BIGINT},
-			</if>
-        </trim>
-		where
-          APPID = #{appId, jdbcType=BIGINT}
 		
-    </update>
+		insert into sys_access (APPID, ROLEID )
+        values(
+          #{appId, jdbcType=BIGINT},
+          #{roleId, jdbcType=BIGINT}
+        )
 
- 
-	<delete id="deleteSysAccessById" parameterType="string"> 
-        delete from sys_access
-        where APPID =	#{id}
+	</insert>
+
+
+	<delete id="deleteSysAccessByAppId" parameterType="long"  >
+		delete from sys_access where APPID = #{appId}
 	</delete>
 	
-	<delete id="deleteSysAccesss" parameterType="com.glaf.base.modules.sys.query.SysAccessQuery">
-		delete from sys_access
-		where ( 
- 			  APPID IN
-              <foreach item="x_rowId" index="index" collection="rowIds" 
-                     open="(" separator="," close=")">
-                  #{x_rowId}
-              </foreach>
-		)
+	
+	<delete id="deleteSysAccessByRoleId" parameterType="long"  >
+		delete from sys_access where ROLEID = #{roleId}
 	</delete>
+	
 
-	<select id="getSysAccessById" parameterType="string" resultMap="sysAccessResultMap">
-		select * from sys_access where APPID = #{id}
+	<select id="getSysAccessByAppId" parameterType="long" resultType="com.glaf.base.modules.sys.model.SysAccess">
+		
+		select E.APPID as appId, E.ROLEID as roleId 
+		from sys_access E 
+		where E.APPID = #{appId}
+		
 	</select>
+	
 
-
-	<select id="getSysAccesss" 
-	    parameterType="com.glaf.base.modules.sys.query.SysAccessQuery"
-		resultMap="sysAccessResultMap">
-		select E.*
-		<include refid="selectSysAccesssSql" />
-		<choose>
-		  <when test="orderBy != null">
-		     order by ${orderBy}
-          </when>
-		  <otherwise>
-		    
-		  </otherwise>
-        </choose>
+	<select id="getSysAccessByRoleId" parameterType="long" resultType="com.glaf.base.modules.sys.model.SysAccess">
+		
+		select E.APPID as appId, E.ROLEID as roleId 
+		from sys_access E 
+		where E.ROLEID = #{roleId}
+		
 	</select>
-
-	<select id="getSysAccessCount" 
-	    parameterType="com.glaf.base.modules.sys.query.SysAccessQuery"
-		resultType="int">
-		select count(*)
-		<include refid="selectSysAccesssSql" />
-	</select>
-
-	<sql id="selectSysAccesssSql">
-
-		from sys_access E
-		 
-		<where>
-		       1 = 1  
-
-			<if test="roleId != null">
-				and E.ROLEID = #{roleId}
-            </if>
-
-			<if test="roleIdGreaterThanOrEqual != null">
-				and E.ROLEID &gt;= #{roleIdGreaterThanOrEqual}
-            </if>
-
-			<if test="roleIdLessThanOrEqual != null">
-				and E.ROLEID &lt;= #{roleIdLessThanOrEqual}
-            </if>
-
-			<if test="roleIds != null &amp;&amp; roleIds.size() &gt; 0">
-			    and E.ROLEID IN
-                <foreach item="x_roleId" index="index" collection="roleIds" 
-                     open="(" separator="," close=")">
-                  #{x_roleId}
-                </foreach>
-			</if>
-			 
-		</where>
-	</sql>
+	 
 
 </mapper>
