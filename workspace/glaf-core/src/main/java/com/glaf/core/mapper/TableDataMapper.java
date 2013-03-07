@@ -34,6 +34,8 @@ public interface TableDataMapper {
 	List<Map<String, Object>> getTableKeyMap(TableModel model);
 	
 	List<Map<String, Object>> getTablePrimaryKeyMap(TableModel model);
+	
+	void deleteTableData(TableModel model);
 
 	void insertTableData(TableModel model);
 

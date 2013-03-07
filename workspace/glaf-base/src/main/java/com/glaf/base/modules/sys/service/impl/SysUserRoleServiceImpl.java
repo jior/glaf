@@ -236,7 +236,7 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 	 */
 	public List getProcessByUser(SysUser user) {
 		Object[] values = new Object[] { user };
-		String query = "select distinct t.moduleName, t.processName, t.objectValue from Todo t where t.type='1' and t.roleId in "
+		String query = " select distinct t.moduleName, t.processName, t.objectValue from Todo t where t.type='1' and t.roleId in "
 				+ " (select sdr.role.id from SysDeptRole sdr where sdr.id in "
 				+ " (select sur.deptRole.id from SysUserRole sur where sur.user=?))";
 		return abstractDao.getList(query, values, null);

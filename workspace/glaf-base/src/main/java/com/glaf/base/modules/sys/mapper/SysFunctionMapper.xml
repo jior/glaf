@@ -124,7 +124,7 @@
 		     order by ${orderBy}
 			</when>
 			<otherwise>
-		      order by E.CREATEDATE_ desc
+		      order by E.SORT asc
 			</otherwise>
 		</choose>
 	</select>
@@ -158,10 +158,6 @@
                   #{x_name}
 				</foreach>
 			</if>
-	        
-			<if test="funcDesc != null &amp;&amp; funcDesc != '' ">
-				and E.FUNCDESC = #{funcDesc}
-			</if>
 
 			<if test="funcDescLike != null &amp;&amp; funcDescLike != '' ">
 				and E.FUNCDESC like #{funcDescLike}
@@ -173,10 +169,6 @@
 
 			<if test="funcMethodLike != null &amp;&amp; funcMethodLike != '' ">
 				and E.FUNCMETHOD like #{funcMethodLike}
-			</if>
-
-			<if test="sort != null">
-				and E.SORT = #{sort}
 			</if>
 
 			<if test="sortGreaterThanOrEqual != null">

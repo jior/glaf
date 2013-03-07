@@ -262,6 +262,82 @@
 	<select id="getSysUserById" parameterType="string" resultMap="sysUserResultMap">
 		select * from sys_user where ID = #{id}
 	</select>
+	
+	
+	<select id="getCountAuthorizedUsers" parameterType="com.glaf.base.modules.sys.query.SysUserQuery" resultMap="sysUserResultMap">
+		
+		select count(distinct E.id) from sys_user E
+		inner join sys_user_role R
+		on E.ID = R.USERID
+		where E.ACCOUNTTYPE = 0
+		 
+		<if test=" deptId != null  ">
+			and E.DEPTID = #{deptId}
+		</if>
+		
+		<if test="nameLike != null &amp;&amp; nameLike != '' ">
+			and E.NAME like #{nameLike}
+		</if>
+		
+		<if test="availDateStartGreaterThanOrEqual != null">
+			and R.AVAILDATESTART &gt;= #{availDateStartGreaterThanOrEqual}
+		</if>
+
+		<if test="availDateStartLessThanOrEqual != null">
+			and R.AVAILDATESTART &lt;= #{availDateStartLessThanOrEqual}
+		</if>
+
+		<if test="availDateEndGreaterThanOrEqual != null">
+			and R.AVAILDATEEND &gt;= #{availDateEndGreaterThanOrEqual}
+		</if>
+
+		<if test="availDateEndLessThanOrEqual != null">
+			and R.AVAILDATEEND &lt;= #{availDateEndLessThanOrEqual}
+		</if>
+        
+	</select>
+	
+	<select id="getAuthorizedUsers" parameterType="com.glaf.base.modules.sys.query.SysUserQuery" resultMap="long">
+		
+		select distinct E.* from sys_user E
+		inner join sys_user_role R
+		on E.ID = R.USERID
+		where E.ACCOUNTTYPE = 0
+		 
+		<if test=" deptId != null  ">
+			and E.DEPTID = #{deptId}
+		</if>
+		
+		<if test="nameLike != null &amp;&amp; nameLike != '' ">
+			and E.NAME like #{nameLike}
+		</if>
+		
+		<if test="availDateStartGreaterThanOrEqual != null">
+			and R.AVAILDATESTART &gt;= #{availDateStartGreaterThanOrEqual}
+		</if>
+
+		<if test="availDateStartLessThanOrEqual != null">
+			and R.AVAILDATESTART &lt;= #{availDateStartLessThanOrEqual}
+		</if>
+
+		<if test="availDateEndGreaterThanOrEqual != null">
+			and R.AVAILDATEEND &gt;= #{availDateEndGreaterThanOrEqual}
+		</if>
+
+		<if test="availDateEndLessThanOrEqual != null">
+			and R.AVAILDATEEND &lt;= #{availDateEndLessThanOrEqual}
+		</if>
+		
+		<choose>
+			<when test="orderBy != null">
+		     order by ${orderBy}
+			</when>
+			<otherwise>
+		      order by E.ID asc
+			</otherwise>
+		</choose>
+        
+	</select>
 
 
 	<select id="getSysUsers" 
@@ -274,7 +350,7 @@
 		     order by ${orderBy}
 			</when>
 			<otherwise>
-		      order by E.CREATEDATE_ desc
+		       order by E.ID asc
 			</otherwise>
 		</choose>
 	</select>
@@ -375,14 +451,6 @@
 
 			<if test="lastLoginIPLike != null &amp;&amp; lastLoginIPLike != '' ">
 				and E.LASTLOGINIP like #{lastLoginIPLike}
-			</if>
-
-			<if test="lastLoginIPs != null &amp;&amp; lastLoginIPs.size() &gt; 0">
-			    and E.LASTLOGINIP IN
-				<foreach item="x_lastLoginIP" index="index" collection="lastLoginIPs" 
-					open="(" separator="," close=")">
-                  #{x_lastLoginIP}
-				</foreach>
 			</if>
 
 			<if test="evection != null">

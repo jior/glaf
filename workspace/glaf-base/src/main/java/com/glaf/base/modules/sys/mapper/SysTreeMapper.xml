@@ -154,7 +154,7 @@
 		     order by ${orderBy}
 			</when>
 			<otherwise>
-		      order by E.CREATEDATE_ desc
+		      order by E.SORT asc
 			</otherwise>
 		</choose>
 	</select>
@@ -193,7 +193,6 @@
                   #{x_parentId}
 				</foreach>
 			</if>
-
 	        
 			<if test="name != null &amp;&amp; name != '' ">
 				and E.NAME = #{name}
@@ -213,10 +212,6 @@
 
 			<if test="descLike != null &amp;&amp; descLike != '' ">
 				and E.NODEDESC like #{descLike}
-			</if>
-
-			<if test="sort != null">
-				and E.SORT = #{sort}
 			</if>
 
 			<if test="sortGreaterThanOrEqual != null">
@@ -251,26 +246,6 @@
 				</foreach>
 			</if>
 	        
-			<if test="icon != null &amp;&amp; icon != '' ">
-				and E.icon = #{icon}
-			</if>
-
-			<if test="iconLike != null &amp;&amp; iconLike != '' ">
-				and E.icon like #{iconLike}
-			</if>
-	
-			<if test="iconCls != null &amp;&amp; iconCls != '' ">
-				and E.iconCls = #{iconCls}
-			</if>
-
-			<if test="iconClsLike != null &amp;&amp; iconClsLike != '' ">
-				and E.iconCls like #{iconClsLike}
-			</if>
-	      
-			<if test="url != null &amp;&amp; url != '' ">
-				and E.url = #{url}
-			</if>
-
 			<if test="urlLike != null &amp;&amp; urlLike != '' ">
 				and E.url like #{urlLike}
 			</if>

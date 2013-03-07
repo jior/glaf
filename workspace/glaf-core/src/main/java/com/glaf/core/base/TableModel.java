@@ -113,6 +113,18 @@ public class TableModel implements java.io.Serializable {
 		columns.add(column);
 	}
 
+	public void addColumn(String columnName, String javaType, Object value) {
+		if (columns == null) {
+			columns = new ArrayList<ColumnModel>();
+		}
+		ColumnModel column = new ColumnModel();
+		column.setColumnName(columnName);
+		column.setJavaType(javaType);
+		column.setValue(value);
+		column.setTable(this);
+		columns.add(column);
+	}
+
 	public String getAggregationKey() {
 		return aggregationKey;
 	}

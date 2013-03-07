@@ -72,6 +72,13 @@ public interface ITableDataService {
 	 */
 	@Transactional
 	void insertTableData(TableModel model);
+	
+	/**
+	 * 删除数据
+	 * @param model
+	 */
+	@Transactional
+	void deleteTableData(TableModel model);
 
 	/**
 	 * 批量新增或修改记录，如果存在，可以选择是否更新

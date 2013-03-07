@@ -123,6 +123,19 @@ public class MxTableDataServiceImpl implements ITableDataService {
 		}
 	}
 
+	/**
+	 * É¾³ýÊý¾Ý
+	 * 
+	 * @param model
+	 */
+	@Transactional
+	public void deleteTableData(TableModel model) {
+		if (StringUtils.isNotEmpty(model.getTableName())
+				&& model.getColumns() != null && !model.getColumns().isEmpty()) {
+			tableDataMapper.deleteTableData(model);
+		}
+	}
+
 	@Transactional
 	public void insertTableData(String tableName, List<Map<String, Object>> rows) {
 		TableDefinition tableDefinition = tableDefinitionService
@@ -463,8 +476,7 @@ public class MxTableDataServiceImpl implements ITableDataService {
 	}
 
 	@Resource
-	public void setTableDataMapper(
-			TableDataMapper tableDataMapper) {
+	public void setTableDataMapper(TableDataMapper tableDataMapper) {
 		this.tableDataMapper = tableDataMapper;
 	}
 
@@ -475,8 +487,7 @@ public class MxTableDataServiceImpl implements ITableDataService {
 	}
 
 	@Resource
-	public void setTablePageMapper(
-			TablePageMapper tablePageMapper) {
+	public void setTablePageMapper(TablePageMapper tablePageMapper) {
 		this.tablePageMapper = tablePageMapper;
 	}
 

@@ -114,7 +114,7 @@
 		     order by ${orderBy}
 			</when>
 			<otherwise>
-		      order by E.CREATEDATE_ desc
+		      order by E.CREATETIME desc
 			</otherwise>
 		</choose>
 	</select>
@@ -179,14 +179,6 @@
 
 			<if test="flagLessThanOrEqual != null">
 				and E.FLAG &lt;= #{flagLessThanOrEqual}
-			</if>
-
-			<if test="flags != null &amp;&amp; flags.size() &gt; 0">
-			    and E.FLAG IN
-				<foreach item="x_flag" index="index" collection="flags" 
-					open="(" separator="," close=")">
-                  #{x_flag}
-				</foreach>
 			</if>
 			 
 		</where>

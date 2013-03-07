@@ -164,7 +164,7 @@
 		     order by ${orderBy}
           </when>
 		  <otherwise>
-		      order by E.CREATEDATE_ desc
+		      order by E.SORT asc
 		  </otherwise>
         </choose>
 	</select>
@@ -207,10 +207,6 @@
                   #{x_name}
                 </foreach>
 			</if>
-	        
-			<if test="desc != null &amp;&amp; desc != '' ">
-				and E.DEPTDESC = #{desc}
-            </if>
 
 			<if test="descLike != null &amp;&amp; descLike != '' ">
 				and E.DEPTDESC like #{descLike}
@@ -222,10 +218,6 @@
 
 			<if test="createTimeLessThanOrEqual != null">
 				and E.CREATETIME &lt;= #{createTimeLessThanOrEqual}
-            </if>
-
-			<if test="sort != null">
-				and E.SORT = #{sort}
             </if>
 
 			<if test="sortGreaterThanOrEqual != null">
@@ -264,10 +256,6 @@
 				and E.CODE2 = #{code2}
             </if>
 
-			<if test="code2Like != null &amp;&amp; code2Like != '' ">
-				and E.CODE2 like #{code2Like}
-            </if>
-
 			<if test="status != null">
 				and E.STATUS = #{status}
             </if>
@@ -279,15 +267,6 @@
 			<if test="statusLessThanOrEqual != null">
 				and E.STATUS &lt;= #{statusLessThanOrEqual}
             </if>
-
-			<if test="statuss != null &amp;&amp; statuss.size() &gt; 0">
-			    and E.STATUS IN
-                <foreach item="x_status" index="index" collection="statuss" 
-                     open="(" separator="," close=")">
-                  #{x_status}
-                </foreach>
-			</if>
-
 	        
 			<if test="fincode != null &amp;&amp; fincode != '' ">
 				and E.FINCODE = #{fincode}

@@ -40,17 +40,14 @@ public class SysUserRoleQuery extends DataQuery {
 	protected Long authorizeFromIdGreaterThanOrEqual;
 	protected Long authorizeFromIdLessThanOrEqual;
 	protected List<Long> authorizeFromIds;
-	protected Date availDateStart;
+
 	protected Date availDateStartGreaterThanOrEqual;
 	protected Date availDateStartLessThanOrEqual;
-	protected List<Date> availDateStarts;
-	protected Date availDateEnd;
+
 	protected Date availDateEndGreaterThanOrEqual;
 	protected Date availDateEndLessThanOrEqual;
-	protected List<Date> availDateEnds;
-	protected String processDescription;
+
 	protected String processDescriptionLike;
-	protected List<String> processDescriptions;
 
 	public SysUserRoleQuery() {
 
@@ -120,10 +117,6 @@ public class SysUserRoleQuery extends DataQuery {
 		return authorizeFromIds;
 	}
 
-	public Date getAvailDateStart() {
-		return availDateStart;
-	}
-
 	public Date getAvailDateStartGreaterThanOrEqual() {
 		return availDateStartGreaterThanOrEqual;
 	}
@@ -132,28 +125,12 @@ public class SysUserRoleQuery extends DataQuery {
 		return availDateStartLessThanOrEqual;
 	}
 
-	public List<Date> getAvailDateStarts() {
-		return availDateStarts;
-	}
-
-	public Date getAvailDateEnd() {
-		return availDateEnd;
-	}
-
 	public Date getAvailDateEndGreaterThanOrEqual() {
 		return availDateEndGreaterThanOrEqual;
 	}
 
 	public Date getAvailDateEndLessThanOrEqual() {
 		return availDateEndLessThanOrEqual;
-	}
-
-	public List<Date> getAvailDateEnds() {
-		return availDateEnds;
-	}
-
-	public String getProcessDescription() {
-		return processDescription;
 	}
 
 	public String getProcessDescriptionLike() {
@@ -167,10 +144,6 @@ public class SysUserRoleQuery extends DataQuery {
 			}
 		}
 		return processDescriptionLike;
-	}
-
-	public List<String> getProcessDescriptions() {
-		return processDescriptions;
 	}
 
 	public void setUserId(Long userId) {
@@ -241,10 +214,6 @@ public class SysUserRoleQuery extends DataQuery {
 		this.authorizeFromIds = authorizeFromIds;
 	}
 
-	public void setAvailDateStart(Date availDateStart) {
-		this.availDateStart = availDateStart;
-	}
-
 	public void setAvailDateStartGreaterThanOrEqual(
 			Date availDateStartGreaterThanOrEqual) {
 		this.availDateStartGreaterThanOrEqual = availDateStartGreaterThanOrEqual;
@@ -253,14 +222,6 @@ public class SysUserRoleQuery extends DataQuery {
 	public void setAvailDateStartLessThanOrEqual(
 			Date availDateStartLessThanOrEqual) {
 		this.availDateStartLessThanOrEqual = availDateStartLessThanOrEqual;
-	}
-
-	public void setAvailDateStarts(List<Date> availDateStarts) {
-		this.availDateStarts = availDateStarts;
-	}
-
-	public void setAvailDateEnd(Date availDateEnd) {
-		this.availDateEnd = availDateEnd;
 	}
 
 	public void setAvailDateEndGreaterThanOrEqual(
@@ -272,20 +233,8 @@ public class SysUserRoleQuery extends DataQuery {
 		this.availDateEndLessThanOrEqual = availDateEndLessThanOrEqual;
 	}
 
-	public void setAvailDateEnds(List<Date> availDateEnds) {
-		this.availDateEnds = availDateEnds;
-	}
-
-	public void setProcessDescription(String processDescription) {
-		this.processDescription = processDescription;
-	}
-
 	public void setProcessDescriptionLike(String processDescriptionLike) {
 		this.processDescriptionLike = processDescriptionLike;
-	}
-
-	public void setProcessDescriptions(List<String> processDescriptions) {
-		this.processDescriptions = processDescriptions;
 	}
 
 	public SysUserRoleQuery userId(Long userId) {
@@ -423,14 +372,6 @@ public class SysUserRoleQuery extends DataQuery {
 		return this;
 	}
 
-	public SysUserRoleQuery availDateStart(Date availDateStart) {
-		if (availDateStart == null) {
-			throw new RuntimeException("availDateStart is null");
-		}
-		this.availDateStart = availDateStart;
-		return this;
-	}
-
 	public SysUserRoleQuery availDateStartGreaterThanOrEqual(
 			Date availDateStartGreaterThanOrEqual) {
 		if (availDateStartGreaterThanOrEqual == null) {
@@ -446,22 +387,6 @@ public class SysUserRoleQuery extends DataQuery {
 			throw new RuntimeException("availDateStart is null");
 		}
 		this.availDateStartLessThanOrEqual = availDateStartLessThanOrEqual;
-		return this;
-	}
-
-	public SysUserRoleQuery availDateStarts(List<Date> availDateStarts) {
-		if (availDateStarts == null) {
-			throw new RuntimeException("availDateStarts is empty ");
-		}
-		this.availDateStarts = availDateStarts;
-		return this;
-	}
-
-	public SysUserRoleQuery availDateEnd(Date availDateEnd) {
-		if (availDateEnd == null) {
-			throw new RuntimeException("availDateEnd is null");
-		}
-		this.availDateEnd = availDateEnd;
 		return this;
 	}
 
@@ -483,35 +408,11 @@ public class SysUserRoleQuery extends DataQuery {
 		return this;
 	}
 
-	public SysUserRoleQuery availDateEnds(List<Date> availDateEnds) {
-		if (availDateEnds == null) {
-			throw new RuntimeException("availDateEnds is empty ");
-		}
-		this.availDateEnds = availDateEnds;
-		return this;
-	}
-
-	public SysUserRoleQuery processDescription(String processDescription) {
-		if (processDescription == null) {
-			throw new RuntimeException("processDescription is null");
-		}
-		this.processDescription = processDescription;
-		return this;
-	}
-
 	public SysUserRoleQuery processDescriptionLike(String processDescriptionLike) {
 		if (processDescriptionLike == null) {
 			throw new RuntimeException("processDescription is null");
 		}
 		this.processDescriptionLike = processDescriptionLike;
-		return this;
-	}
-
-	public SysUserRoleQuery processDescriptions(List<String> processDescriptions) {
-		if (processDescriptions == null) {
-			throw new RuntimeException("processDescriptions is empty ");
-		}
-		this.processDescriptions = processDescriptions;
 		return this;
 	}
 

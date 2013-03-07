@@ -27,18 +27,14 @@ public class SysRoleQuery extends DataQuery {
 	protected String name;
 	protected String nameLike;
 	protected List<String> names;
-	protected String desc;
 	protected String descLike;
-	protected List<String> descs;
 	protected String code;
 	protected String codeLike;
 	protected List<String> codes;
-	protected Integer sort;
 	protected Integer sortGreaterThanOrEqual;
 	protected Integer sortGreaterThan;
 	protected Integer sortLessThanOrEqual;
 	protected Integer sortLessThan;
-	protected List<Integer> sorts;
 
 	public SysRoleQuery() {
 
@@ -80,10 +76,6 @@ public class SysRoleQuery extends DataQuery {
 		return names;
 	}
 
-	public String getDesc() {
-		return desc;
-	}
-
 	public String getDescLike() {
 		if (descLike != null && descLike.trim().length() > 0) {
 			if (!descLike.startsWith("%")) {
@@ -94,10 +86,6 @@ public class SysRoleQuery extends DataQuery {
 			}
 		}
 		return descLike;
-	}
-
-	public List<String> getDescs() {
-		return descs;
 	}
 
 	public String getCode() {
@@ -120,20 +108,12 @@ public class SysRoleQuery extends DataQuery {
 		return codes;
 	}
 
-	public Integer getSort() {
-		return sort;
-	}
-
 	public Integer getSortGreaterThanOrEqual() {
 		return sortGreaterThanOrEqual;
 	}
 
 	public Integer getSortLessThanOrEqual() {
 		return sortLessThanOrEqual;
-	}
-
-	public List<Integer> getSorts() {
-		return sorts;
 	}
 
 	public void setName(String name) {
@@ -148,16 +128,8 @@ public class SysRoleQuery extends DataQuery {
 		this.names = names;
 	}
 
-	public void setDesc(String desc) {
-		this.desc = desc;
-	}
-
 	public void setDescLike(String descLike) {
 		this.descLike = descLike;
-	}
-
-	public void setDescs(List<String> descs) {
-		this.descs = descs;
 	}
 
 	public void setCode(String code) {
@@ -172,20 +144,12 @@ public class SysRoleQuery extends DataQuery {
 		this.codes = codes;
 	}
 
-	public void setSort(Integer sort) {
-		this.sort = sort;
-	}
-
 	public void setSortGreaterThanOrEqual(Integer sortGreaterThanOrEqual) {
 		this.sortGreaterThanOrEqual = sortGreaterThanOrEqual;
 	}
 
 	public void setSortLessThanOrEqual(Integer sortLessThanOrEqual) {
 		this.sortLessThanOrEqual = sortLessThanOrEqual;
-	}
-
-	public void setSorts(List<Integer> sorts) {
-		this.sorts = sorts;
 	}
 
 	public SysRoleQuery name(String name) {
@@ -212,27 +176,11 @@ public class SysRoleQuery extends DataQuery {
 		return this;
 	}
 
-	public SysRoleQuery desc(String desc) {
-		if (desc == null) {
-			throw new RuntimeException("desc is null");
-		}
-		this.desc = desc;
-		return this;
-	}
-
 	public SysRoleQuery descLike(String descLike) {
 		if (descLike == null) {
 			throw new RuntimeException("desc is null");
 		}
 		this.descLike = descLike;
-		return this;
-	}
-
-	public SysRoleQuery descs(List<String> descs) {
-		if (descs == null) {
-			throw new RuntimeException("descs is empty ");
-		}
-		this.descs = descs;
 		return this;
 	}
 
@@ -260,14 +208,6 @@ public class SysRoleQuery extends DataQuery {
 		return this;
 	}
 
-	public SysRoleQuery sort(Integer sort) {
-		if (sort == null) {
-			throw new RuntimeException("sort is null");
-		}
-		this.sort = sort;
-		return this;
-	}
-
 	public SysRoleQuery sortGreaterThanOrEqual(Integer sortGreaterThanOrEqual) {
 		if (sortGreaterThanOrEqual == null) {
 			throw new RuntimeException("sort is null");
@@ -281,14 +221,6 @@ public class SysRoleQuery extends DataQuery {
 			throw new RuntimeException("sort is null");
 		}
 		this.sortLessThanOrEqual = sortLessThanOrEqual;
-		return this;
-	}
-
-	public SysRoleQuery sorts(List<Integer> sorts) {
-		if (sorts == null) {
-			throw new RuntimeException("sorts is empty ");
-		}
-		this.sorts = sorts;
 		return this;
 	}
 

@@ -46,12 +46,7 @@ public class SysDepartmentQuery extends DataQuery {
 	protected String codeLike;
 	protected List<String> codes;
 	protected String code2;
-	protected String code2Like;
-	protected List<String> code2s;
-	protected Integer status;
-	protected Integer statusGreaterThanOrEqual;
-	protected Integer statusLessThanOrEqual;
-	protected List<Integer> statuss;
+
 	protected String fincode;
 	protected String fincodeLike;
 	protected List<String> fincodes;
@@ -192,38 +187,6 @@ public class SysDepartmentQuery extends DataQuery {
 		return code2;
 	}
 
-	public String getCode2Like() {
-		if (code2Like != null && code2Like.trim().length() > 0) {
-			if (!code2Like.startsWith("%")) {
-				code2Like = "%" + code2Like;
-			}
-			if (!code2Like.endsWith("%")) {
-				code2Like = code2Like + "%";
-			}
-		}
-		return code2Like;
-	}
-
-	public List<String> getCode2s() {
-		return code2s;
-	}
-
-	public Integer getStatus() {
-		return status;
-	}
-
-	public Integer getStatusGreaterThanOrEqual() {
-		return statusGreaterThanOrEqual;
-	}
-
-	public Integer getStatusLessThanOrEqual() {
-		return statusLessThanOrEqual;
-	}
-
-	public List<Integer> getStatuss() {
-		return statuss;
-	}
-
 	public String getFincode() {
 		return fincode;
 	}
@@ -341,14 +304,6 @@ public class SysDepartmentQuery extends DataQuery {
 		this.code2 = code2;
 	}
 
-	public void setCode2Like(String code2Like) {
-		this.code2Like = code2Like;
-	}
-
-	public void setCode2s(List<String> code2s) {
-		this.code2s = code2s;
-	}
-
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
@@ -359,10 +314,6 @@ public class SysDepartmentQuery extends DataQuery {
 
 	public void setStatusLessThanOrEqual(Integer statusLessThanOrEqual) {
 		this.statusLessThanOrEqual = statusLessThanOrEqual;
-	}
-
-	public void setStatuss(List<Integer> statuss) {
-		this.statuss = statuss;
 	}
 
 	public void setFincode(String fincode) {
@@ -553,56 +504,6 @@ public class SysDepartmentQuery extends DataQuery {
 			throw new RuntimeException("code2 is null");
 		}
 		this.code2 = code2;
-		return this;
-	}
-
-	public SysDepartmentQuery code2Like(String code2Like) {
-		if (code2Like == null) {
-			throw new RuntimeException("code2 is null");
-		}
-		this.code2Like = code2Like;
-		return this;
-	}
-
-	public SysDepartmentQuery code2s(List<String> code2s) {
-		if (code2s == null) {
-			throw new RuntimeException("code2s is empty ");
-		}
-		this.code2s = code2s;
-		return this;
-	}
-
-	public SysDepartmentQuery status(Integer status) {
-		if (status == null) {
-			throw new RuntimeException("status is null");
-		}
-		this.status = status;
-		return this;
-	}
-
-	public SysDepartmentQuery statusGreaterThanOrEqual(
-			Integer statusGreaterThanOrEqual) {
-		if (statusGreaterThanOrEqual == null) {
-			throw new RuntimeException("status is null");
-		}
-		this.statusGreaterThanOrEqual = statusGreaterThanOrEqual;
-		return this;
-	}
-
-	public SysDepartmentQuery statusLessThanOrEqual(
-			Integer statusLessThanOrEqual) {
-		if (statusLessThanOrEqual == null) {
-			throw new RuntimeException("status is null");
-		}
-		this.statusLessThanOrEqual = statusLessThanOrEqual;
-		return this;
-	}
-
-	public SysDepartmentQuery statuss(List<Integer> statuss) {
-		if (statuss == null) {
-			throw new RuntimeException("statuss is empty ");
-		}
-		this.statuss = statuss;
 		return this;
 	}
 

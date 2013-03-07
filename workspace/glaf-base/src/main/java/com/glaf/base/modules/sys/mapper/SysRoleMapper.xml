@@ -4,12 +4,12 @@
 
 <mapper namespace="com.glaf.base.modules.sys.mapper.SysRoleMapper">
 
- 	<resultMap id="sysRoleResultMap"	type="com.glaf.base.modules.sys.model.SysRole">
-        <id property="id" column="ID" jdbcType="BIGINT" />
-        <result property="name" column="NAME" jdbcType="VARCHAR"/>
-        <result property="desc" column="ROLEDESC" jdbcType="VARCHAR"/>
-        <result property="code" column="CODE" jdbcType="VARCHAR"/>
-        <result property="sort" column="SORT" jdbcType="INTEGER"/>
+	<resultMap id="sysRoleResultMap"	type="com.glaf.base.modules.sys.model.SysRole">
+		<id property="id" column="ID" jdbcType="BIGINT" />
+		<result property="name" column="NAME" jdbcType="VARCHAR"/>
+		<result property="desc" column="ROLEDESC" jdbcType="VARCHAR"/>
+		<result property="code" column="CODE" jdbcType="VARCHAR"/>
+		<result property="sort" column="SORT" jdbcType="INTEGER"/>
 	</resultMap>
 
  
@@ -29,7 +29,7 @@
 			<if test="sort != null">
 				,SORT 
 			</if>
-        </trim>
+		</trim>
 
 		<trim prefix=" values (" suffix=")" suffixOverrides=",">
 			  #{id, jdbcType=BIGINT}
@@ -46,14 +46,14 @@
 			<if test="sort != null">
 				,#{sort, jdbcType=INTEGER}
 			</if>
-	    </trim>
-    </insert>
+		</trim>
+	</insert>
 
 	 
 	<update id="updateSysRole" parameterType="com.glaf.base.modules.sys.model.SysRole">
 		update sys_role
 		set
-        <trim prefix="" suffix="" suffixOverrides=",">		
+		<trim prefix="" suffix="" suffixOverrides=",">		
 			<if test="name != null">
 				NAME = #{name, jdbcType=VARCHAR},
 			</if>
@@ -66,11 +66,11 @@
 			<if test="sort != null">
 				SORT = #{sort, jdbcType=INTEGER},
 			</if>
-        </trim>
+		</trim>
 		where
           ID = #{id, jdbcType=BIGINT}
 		
-    </update>
+	</update>
 
  
 	<delete id="deleteSysRoleById" parameterType="string"> 
@@ -82,10 +82,10 @@
 		delete from sys_role
 		where ( 
  			  ID IN
-              <foreach item="x_rowId" index="index" collection="rowIds" 
-                     open="(" separator="," close=")">
+		<foreach item="x_rowId" index="index" collection="rowIds" 
+			open="(" separator="," close=")">
                   #{x_rowId}
-              </foreach>
+		</foreach>
 		)
 	</delete>
 
@@ -95,22 +95,22 @@
 
 
 	<select id="getSysRoles" 
-	    parameterType="com.glaf.base.modules.sys.query.SysRoleQuery"
+		parameterType="com.glaf.base.modules.sys.query.SysRoleQuery"
 		resultMap="sysRoleResultMap">
 		select E.*
 		<include refid="selectSysRolesSql" />
 		<choose>
-		  <when test="orderBy != null">
+			<when test="orderBy != null">
 		     order by ${orderBy}
-          </when>
-		  <otherwise>
-		      order by E.CREATEDATE_ desc
-		  </otherwise>
-        </choose>
+			</when>
+			<otherwise>
+		      order by E.SORT asc
+			</otherwise>
+		</choose>
 	</select>
 
 	<select id="getSysRoleCount" 
-	    parameterType="com.glaf.base.modules.sys.query.SysRoleQuery"
+		parameterType="com.glaf.base.modules.sys.query.SysRoleQuery"
 		resultType="int">
 		select count(*)
 		<include refid="selectSysRolesSql" />
@@ -125,56 +125,55 @@
 
 			<if test="name != null &amp;&amp; name != '' ">
 				and E.NAME = #{name}
-            </if>
+			</if>
 
 			<if test="nameLike != null &amp;&amp; nameLike != '' ">
 				and E.NAME like #{nameLike}
-            </if>
+			</if>
 
 			<if test="names != null &amp;&amp; names.size() &gt; 0">
 			    and E.NAME IN
-                <foreach item="x_name" index="index" collection="names" 
-                     open="(" separator="," close=")">
+				<foreach item="x_name" index="index" collection="names" 
+					open="(" separator="," close=")">
                   #{x_name}
-                </foreach>
+				</foreach>
 			</if>
-	        
-			<if test="desc != null &amp;&amp; desc != '' ">
-				and E.ROLEDESC = #{desc}
-            </if>
 
 			<if test="descLike != null &amp;&amp; descLike != '' ">
 				and E.ROLEDESC like #{descLike}
-            </if>
+			</if>
 
 			<if test="code != null &amp;&amp; code != '' ">
 				and E.CODE = #{code}
-            </if>
+			</if>
 
 			<if test="codeLike != null &amp;&amp; codeLike != '' ">
 				and E.CODE like #{codeLike}
-            </if>
+			</if>
 
 			<if test="codes != null &amp;&amp; codes.size() &gt; 0">
 			    and E.CODE IN
-                <foreach item="x_code" index="index" collection="codes" 
-                     open="(" separator="," close=")">
+				<foreach item="x_code" index="index" collection="codes" 
+					open="(" separator="," close=")">
                   #{x_code}
-                </foreach>
+				</foreach>
 			</if>
-
-			<if test="sort != null">
-				and E.SORT = #{sort}
-            </if>
 
 			<if test="sortGreaterThanOrEqual != null">
 				and E.SORT &gt;= #{sortGreaterThanOrEqual}
-            </if>
+			</if>
+            
+			<if test="sortGreaterThan  != null">
+				and E.SORT &gt; #{sortGreaterThan}
+			</if>
 
 			<if test="sortLessThanOrEqual != null">
 				and E.SORT &lt;= #{sortLessThanOrEqual}
-            </if>
-
+			</if>
+            
+			<if test="sortLessThan != null">
+				and E.SORT &lt; #{sortLess}
+			</if>
 			 
 		</where>
 	</sql>

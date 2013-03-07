@@ -31,28 +31,15 @@ public class SysTreeQuery extends DataQuery {
 	protected String name;
 	protected String nameLike;
 	protected List<String> names;
-	protected String desc;
 	protected String descLike;
-	protected List<String> descs;
-	protected Integer sort;
 	protected Integer sortGreaterThanOrEqual;
 	protected Integer sortGreaterThan;
 	protected Integer sortLessThanOrEqual;
 	protected Integer sortLessThan;
-	protected List<Integer> sorts;
 	protected String code;
 	protected String codeLike;
 	protected List<String> codes;
-	protected String icon;
-	protected String iconLike;
-	protected List<String> icons;
-	protected String iconCls;
-	protected String iconClsLike;
-	protected List<String> iconClss;
-	protected String url;
-	protected String urlLike;
-	protected List<String> urls;
-	protected Integer locked;
+	protected String urlLike;	 
 	protected Integer lockedGreaterThanOrEqual;
 	protected Integer lockedLessThanOrEqual;
 	protected Integer departmentStatus;
@@ -113,10 +100,6 @@ public class SysTreeQuery extends DataQuery {
 		return names;
 	}
 
-	public String getDesc() {
-		return desc;
-	}
-
 	public String getDescLike() {
 		if (descLike != null && descLike.trim().length() > 0) {
 			if (!descLike.startsWith("%")) {
@@ -129,24 +112,12 @@ public class SysTreeQuery extends DataQuery {
 		return descLike;
 	}
 
-	public List<String> getDescs() {
-		return descs;
-	}
-
-	public Integer getSort() {
-		return sort;
-	}
-
 	public Integer getSortGreaterThanOrEqual() {
 		return sortGreaterThanOrEqual;
 	}
 
 	public Integer getSortLessThanOrEqual() {
 		return sortLessThanOrEqual;
-	}
-
-	public List<Integer> getSorts() {
-		return sorts;
 	}
 
 	public String getCode() {
@@ -169,50 +140,6 @@ public class SysTreeQuery extends DataQuery {
 		return codes;
 	}
 
-	public String getIcon() {
-		return icon;
-	}
-
-	public String getIconLike() {
-		if (iconLike != null && iconLike.trim().length() > 0) {
-			if (!iconLike.startsWith("%")) {
-				iconLike = "%" + iconLike;
-			}
-			if (!iconLike.endsWith("%")) {
-				iconLike = iconLike + "%";
-			}
-		}
-		return iconLike;
-	}
-
-	public List<String> getIcons() {
-		return icons;
-	}
-
-	public String getIconCls() {
-		return iconCls;
-	}
-
-	public String getIconClsLike() {
-		if (iconClsLike != null && iconClsLike.trim().length() > 0) {
-			if (!iconClsLike.startsWith("%")) {
-				iconClsLike = "%" + iconClsLike;
-			}
-			if (!iconClsLike.endsWith("%")) {
-				iconClsLike = iconClsLike + "%";
-			}
-		}
-		return iconClsLike;
-	}
-
-	public List<String> getIconClss() {
-		return iconClss;
-	}
-
-	public String getUrl() {
-		return url;
-	}
-
 	public String getUrlLike() {
 		if (urlLike != null && urlLike.trim().length() > 0) {
 			if (!urlLike.startsWith("%")) {
@@ -223,10 +150,6 @@ public class SysTreeQuery extends DataQuery {
 			}
 		}
 		return urlLike;
-	}
-
-	public List<String> getUrls() {
-		return urls;
 	}
 
 	public Integer getLocked() {
@@ -269,20 +192,8 @@ public class SysTreeQuery extends DataQuery {
 		this.names = names;
 	}
 
-	public void setDesc(String desc) {
-		this.desc = desc;
-	}
-
 	public void setDescLike(String descLike) {
 		this.descLike = descLike;
-	}
-
-	public void setDescs(List<String> descs) {
-		this.descs = descs;
-	}
-
-	public void setSort(Integer sort) {
-		this.sort = sort;
 	}
 
 	public void setSortGreaterThanOrEqual(Integer sortGreaterThanOrEqual) {
@@ -291,10 +202,6 @@ public class SysTreeQuery extends DataQuery {
 
 	public void setSortLessThanOrEqual(Integer sortLessThanOrEqual) {
 		this.sortLessThanOrEqual = sortLessThanOrEqual;
-	}
-
-	public void setSorts(List<Integer> sorts) {
-		this.sorts = sorts;
 	}
 
 	public void setCode(String code) {
@@ -309,40 +216,8 @@ public class SysTreeQuery extends DataQuery {
 		this.codes = codes;
 	}
 
-	public void setIcon(String icon) {
-		this.icon = icon;
-	}
-
-	public void setIconLike(String iconLike) {
-		this.iconLike = iconLike;
-	}
-
-	public void setIcons(List<String> icons) {
-		this.icons = icons;
-	}
-
-	public void setIconCls(String iconCls) {
-		this.iconCls = iconCls;
-	}
-
-	public void setIconClsLike(String iconClsLike) {
-		this.iconClsLike = iconClsLike;
-	}
-
-	public void setIconClss(List<String> iconClss) {
-		this.iconClss = iconClss;
-	}
-
-	public void setUrl(String url) {
-		this.url = url;
-	}
-
 	public void setUrlLike(String urlLike) {
 		this.urlLike = urlLike;
-	}
-
-	public void setUrls(List<String> urls) {
-		this.urls = urls;
 	}
 
 	public void setLocked(Integer locked) {
@@ -413,35 +288,11 @@ public class SysTreeQuery extends DataQuery {
 		return this;
 	}
 
-	public SysTreeQuery desc(String desc) {
-		if (desc == null) {
-			throw new RuntimeException("desc is null");
-		}
-		this.desc = desc;
-		return this;
-	}
-
 	public SysTreeQuery descLike(String descLike) {
 		if (descLike == null) {
 			throw new RuntimeException("desc is null");
 		}
 		this.descLike = descLike;
-		return this;
-	}
-
-	public SysTreeQuery descs(List<String> descs) {
-		if (descs == null) {
-			throw new RuntimeException("descs is empty ");
-		}
-		this.descs = descs;
-		return this;
-	}
-
-	public SysTreeQuery sort(Integer sort) {
-		if (sort == null) {
-			throw new RuntimeException("sort is null");
-		}
-		this.sort = sort;
 		return this;
 	}
 
@@ -458,14 +309,6 @@ public class SysTreeQuery extends DataQuery {
 			throw new RuntimeException("sort is null");
 		}
 		this.sortLessThanOrEqual = sortLessThanOrEqual;
-		return this;
-	}
-
-	public SysTreeQuery sorts(List<Integer> sorts) {
-		if (sorts == null) {
-			throw new RuntimeException("sorts is empty ");
-		}
-		this.sorts = sorts;
 		return this;
 	}
 
@@ -493,75 +336,11 @@ public class SysTreeQuery extends DataQuery {
 		return this;
 	}
 
-	public SysTreeQuery icon(String icon) {
-		if (icon == null) {
-			throw new RuntimeException("icon is null");
-		}
-		this.icon = icon;
-		return this;
-	}
-
-	public SysTreeQuery iconLike(String iconLike) {
-		if (iconLike == null) {
-			throw new RuntimeException("icon is null");
-		}
-		this.iconLike = iconLike;
-		return this;
-	}
-
-	public SysTreeQuery icons(List<String> icons) {
-		if (icons == null) {
-			throw new RuntimeException("icons is empty ");
-		}
-		this.icons = icons;
-		return this;
-	}
-
-	public SysTreeQuery iconCls(String iconCls) {
-		if (iconCls == null) {
-			throw new RuntimeException("iconCls is null");
-		}
-		this.iconCls = iconCls;
-		return this;
-	}
-
-	public SysTreeQuery iconClsLike(String iconClsLike) {
-		if (iconClsLike == null) {
-			throw new RuntimeException("iconCls is null");
-		}
-		this.iconClsLike = iconClsLike;
-		return this;
-	}
-
-	public SysTreeQuery iconClss(List<String> iconClss) {
-		if (iconClss == null) {
-			throw new RuntimeException("iconClss is empty ");
-		}
-		this.iconClss = iconClss;
-		return this;
-	}
-
-	public SysTreeQuery url(String url) {
-		if (url == null) {
-			throw new RuntimeException("url is null");
-		}
-		this.url = url;
-		return this;
-	}
-
 	public SysTreeQuery urlLike(String urlLike) {
 		if (urlLike == null) {
 			throw new RuntimeException("url is null");
 		}
 		this.urlLike = urlLike;
-		return this;
-	}
-
-	public SysTreeQuery urls(List<String> urls) {
-		if (urls == null) {
-			throw new RuntimeException("urls is empty ");
-		}
-		this.urls = urls;
 		return this;
 	}
 
