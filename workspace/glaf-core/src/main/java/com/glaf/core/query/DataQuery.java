@@ -31,7 +31,7 @@ public class DataQuery extends BaseQuery {
 	protected String processNameLike;
 	protected List<String> processNames;
 	protected Object processInstanceId;
-	protected Integer parentId;
+	protected Long parentId;
 	protected String objectId;
 	protected String objectValue;
 	protected String treeId;
@@ -50,7 +50,7 @@ public class DataQuery extends BaseQuery {
 	protected boolean processInstanceIsNotNull;
 	protected boolean processInstanceIsNull;
 	protected String workedProcessFlag;
-	protected List<Integer> parentIds = new ArrayList<Integer>();
+	protected List<Long> parentIds = new ArrayList<Long>();
 	protected List processInstanceIds = new ArrayList();
 	protected List taskInstanceIds = new ArrayList();
 	protected String sortColumn;
@@ -141,11 +141,11 @@ public class DataQuery extends BaseQuery {
 		return true;
 	}
 
-	public Integer getParentId() {
+	public Long getParentId() {
 		return parentId;
 	}
 
-	public List<Integer> getParentIds() {
+	public List<Long> getParentIds() {
 		return parentIds;
 	}
 
@@ -245,7 +245,7 @@ public class DataQuery extends BaseQuery {
 		return this;
 	}
 
-	public DataQuery parentId(Integer parentId) {
+	public DataQuery parentId(Long parentId) {
 		if (parentId == null) {
 			throw new RuntimeException("parentId is null");
 		}
@@ -253,7 +253,7 @@ public class DataQuery extends BaseQuery {
 		return this;
 	}
 
-	public DataQuery parentIds(List<Integer> parentIds) {
+	public DataQuery parentIds(List<Long> parentIds) {
 		if (parentIds == null) {
 			throw new RuntimeException("parentIds is null");
 		}
@@ -333,11 +333,11 @@ public class DataQuery extends BaseQuery {
 		this.objectValue = objectValue;
 	}
 
-	public void setParentId(Integer parentId) {
+	public void setParentId(Long parentId) {
 		this.parentId = parentId;
 	}
 
-	public void setParentIds(List<Integer> parentIds) {
+	public void setParentIds(List<Long> parentIds) {
 		this.parentIds = parentIds;
 	}
 

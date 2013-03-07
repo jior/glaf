@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.base.modules.sys.mapper.SysApplicationMapper">
+
+	<resultMap id="sysApplicationResultMap"	type="com.glaf.base.modules.sys.model.SysApplication">
+		<id property="id" column="ID" jdbcType="BIGINT" />
+		<result property="name" column="NAME" jdbcType="VARCHAR"/>
+		<result property="desc" column="APPDESC" jdbcType="VARCHAR"/>
+		<result property="url" column="URL" jdbcType="VARCHAR"/>
+		<result property="sort" column="SORT" jdbcType="INTEGER"/>
+		<result property="showMenu" column="SHOWMENU" jdbcType="INTEGER"/>
+		<result property="nodeId" column="NODEID" jdbcType="BIGINT"/>
+	</resultMap>
+
+ 
+	<insert id="insertSysApplication" parameterType="com.glaf.base.modules.sys.model.SysApplication">
+		insert into sys_application 
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+		    ID
+			<if test="name != null">
+				,NAME 
+			</if>
+			<if test="desc != null">
+				,APPDESC 
+			</if>
+			<if test="url != null">
+				,URL 
+			</if>
+			<if test="sort != null">
+				,SORT 
+			</if>
+			<if test="showMenu != null">
+				,SHOWMENU 
+			</if>
+			<if test="nodeId != null">
+				,NODEID 
+			</if>
+		</trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			  #{id, jdbcType=BIGINT}
+	     
+			<if test="name != null">
+				,#{name, jdbcType=VARCHAR}
+			</if>
+			<if test="desc != null">
+				,#{desc, jdbcType=VARCHAR}
+			</if>
+			<if test="url != null">
+				,#{url, jdbcType=VARCHAR}
+			</if>
+			<if test="sort != null">
+				,#{sort, jdbcType=INTEGER}
+			</if>
+			<if test="showMenu != null">
+				,#{showMenu, jdbcType=INTEGER}
+			</if>
+			<if test="nodeId != null">
+				,#{nodeId, jdbcType=BIGINT}
+			</if>
+		</trim>
+	</insert>
+
+	 
+	<update id="updateSysApplication" parameterType="com.glaf.base.modules.sys.model.SysApplication">
+		update sys_application
+		set
+		<trim prefix="" suffix="" suffixOverrides=",">		
+			<if test="name != null">
+				NAME = #{name, jdbcType=VARCHAR},
+			</if>
+			<if test="desc != null">
+				APPDESC = #{desc, jdbcType=VARCHAR},
+			</if>
+			<if test="url != null">
+				URL = #{url, jdbcType=VARCHAR},
+			</if>
+			<if test="sort != null">
+				SORT = #{sort, jdbcType=INTEGER},
+			</if>
+			<if test="showMenu != null">
+				SHOWMENU = #{showMenu, jdbcType=INTEGER},
+			</if>
+			<if test="nodeId != null">
+				NODEID = #{nodeId, jdbcType=BIGINT},
+			</if>
+		</trim>
+		where
+          ID = #{id, jdbcType=BIGINT}
+		
+	</update>
+
+ 
+	<delete id="deleteSysApplicationById" parameterType="string"> 
+        delete from sys_application
+        where ID =	#{id}
+	</delete>
+	
+	<delete id="deleteSysApplications" parameterType="com.glaf.base.modules.sys.query.SysApplicationQuery">
+		delete from sys_application
+		where ( 
+ 			  ID IN
+		<foreach item="x_rowId" index="index" collection="rowIds" 
+			open="(" separator="," close=")">
+                  #{x_rowId}
+		</foreach>
+		)
+	</delete>
+	
+
+	<select id="getSysApplicationById" parameterType="string" resultMap="sysApplicationResultMap">
+		select * from sys_application where ID = #{id}
+	</select>
+	
+	<select id="getSysApplicationByRoleId" parameterType="long" resultMap="sysFunctionResultMap">
+		
+		select E.* from sys_application E
+		inner join sys_access A
+		on E.ID = A.APPID
+		where A.ROLEID = #{roleId}
+ 
+	</select>
+
+
+	<select id="getSysApplications" 
+		parameterType="com.glaf.base.modules.sys.query.SysApplicationQuery"
+		resultMap="sysApplicationResultMap">
+		select E.*
+		<include refid="selectSysApplicationsSql" />
+		<choose>
+			<when test="orderBy != null">
+		     order by ${orderBy}
+			</when>
+			<otherwise>
+		      order by E.CREATEDATE_ desc
+			</otherwise>
+		</choose>
+	</select>
+
+	<select id="getSysApplicationCount" 
+		parameterType="com.glaf.base.modules.sys.query.SysApplicationQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectSysApplicationsSql" />
+	</select>
+
+	<sql id="selectSysApplicationsSql">
+
+		from sys_application E
+
+		<if test=" parentId != null  ">
+           inner join sys_tree T
+		   on E.NODEID = T.ID
+		</if>
+		 
+		<where>
+		       1 = 1  
+
+			<if test=" parentId != null  ">
+               T.PARENT = #{parentId}
+			</if>
+	        
+			<if test="name != null &amp;&amp; name != '' ">
+				and E.NAME = #{name}
+			</if>
+
+			<if test="nameLike != null &amp;&amp; nameLike != '' ">
+				and E.NAME like #{nameLike}
+			</if>
+
+			<if test="names != null &amp;&amp; names.size() &gt; 0">
+			    and E.NAME IN
+				<foreach item="x_name" index="index" collection="names" 
+					open="(" separator="," close=")">
+                  #{x_name}
+				</foreach>
+			</if>
+	        
+			<if test="desc != null &amp;&amp; desc != '' ">
+				and E.APPDESC = #{desc}
+			</if>
+
+			<if test="descLike != null &amp;&amp; descLike != '' ">
+				and E.APPDESC like #{descLike}
+			</if>
+	        
+			<if test="url != null &amp;&amp; url != '' ">
+				and E.URL = #{url}
+			</if>
+
+			<if test="urlLike != null &amp;&amp; urlLike != '' ">
+				and E.URL like #{urlLike}
+			</if>
+
+			<if test="sort != null">
+				and E.SORT = #{sort}
+			</if>
+
+			<if test="sortGreaterThanOrEqual != null">
+				and E.SORT &gt;= #{sortGreaterThanOrEqual}
+			</if>
+			
+			<if test="sortGreaterThan != null">
+				and E.SORT &gt; #{sortGreaterThan}
+			</if>
+
+			<if test="sortLessThanOrEqual != null">
+				and E.SORT &lt;= #{sortLessThanOrEqual}
+			</if>
+
+			<if test="sortLessThan != null">
+				and E.SORT &lt; #{sortLessThan}
+			</if>
+
+			<if test="showMenu != null">
+				and E.SHOWMENU = #{showMenu}
+			</if>
+
+			<if test="showMenuGreaterThanOrEqual != null">
+				and E.SHOWMENU &gt;= #{showMenuGreaterThanOrEqual}
+			</if>
+
+			<if test="showMenuLessThanOrEqual != null">
+				and E.SHOWMENU &lt;= #{showMenuLessThanOrEqual}
+			</if>
+
+			<if test="nodeId != null">
+				and E.NODEID = #{nodeId}
+			</if>
+
+			<if test="nodeIdGreaterThanOrEqual != null">
+				and E.NODEID &gt;= #{nodeIdGreaterThanOrEqual}
+			</if>
+
+			<if test="nodeIdLessThanOrEqual != null">
+				and E.NODEID &lt;= #{nodeIdLessThanOrEqual}
+			</if>
+
+			<if test="nodeIds != null &amp;&amp; nodeIds.size() &gt; 0">
+			    and E.NODEID IN
+				<foreach item="x_nodeId" index="index" collection="nodeIds" 
+					open="(" separator="," close=")">
+                  #{x_nodeId}
+				</foreach>
+			</if>
+
+		</where>
+	</sql>
+
+</mapper>

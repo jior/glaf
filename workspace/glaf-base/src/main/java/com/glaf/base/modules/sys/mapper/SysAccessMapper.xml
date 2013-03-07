@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.base.modules.sys.mapper.SysAccessMapper">
+
+ 	<resultMap id="sysAccessResultMap"	type="com.glaf.base.modules.sys.model.SysAccess">
+        <id property="appId" column="APPID" jdbcType="BIGINT" />
+        <result property="roleId" column="ROLEID" jdbcType="BIGINT"/>
+	</resultMap>
+
+ 
+	<insert id="insertSysAccess" parameterType="com.glaf.base.modules.sys.model.SysAccess">
+		insert into sys_access 
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+		    APPID
+			<if test="roleId != null">
+				,ROLEID 
+			</if>
+        </trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			  #{appId, jdbcType=BIGINT}
+	     
+			<if test="roleId != null">
+				,#{roleId, jdbcType=BIGINT}
+			</if>
+	    </trim>
+    </insert>
+
+	 
+	<update id="updateSysAccess" parameterType="com.glaf.base.modules.sys.model.SysAccess">
+		update sys_access
+		set
+        <trim prefix="" suffix="" suffixOverrides=",">		
+			<if test="roleId != null">
+				ROLEID = #{roleId, jdbcType=BIGINT},
+			</if>
+        </trim>
+		where
+          APPID = #{appId, jdbcType=BIGINT}
+		
+    </update>
+
+ 
+	<delete id="deleteSysAccessById" parameterType="string"> 
+        delete from sys_access
+        where APPID =	#{id}
+	</delete>
+	
+	<delete id="deleteSysAccesss" parameterType="com.glaf.base.modules.sys.query.SysAccessQuery">
+		delete from sys_access
+		where ( 
+ 			  APPID IN
+              <foreach item="x_rowId" index="index" collection="rowIds" 
+                     open="(" separator="," close=")">
+                  #{x_rowId}
+              </foreach>
+		)
+	</delete>
+
+	<select id="getSysAccessById" parameterType="string" resultMap="sysAccessResultMap">
+		select * from sys_access where APPID = #{id}
+	</select>
+
+
+	<select id="getSysAccesss" 
+	    parameterType="com.glaf.base.modules.sys.query.SysAccessQuery"
+		resultMap="sysAccessResultMap">
+		select E.*
+		<include refid="selectSysAccesssSql" />
+		<choose>
+		  <when test="orderBy != null">
+		     order by ${orderBy}
+          </when>
+		  <otherwise>
+		      order by E.CREATEDATE_ desc
+		  </otherwise>
+        </choose>
+	</select>
+
+	<select id="getSysAccessCount" 
+	    parameterType="com.glaf.base.modules.sys.query.SysAccessQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectSysAccesssSql" />
+	</select>
+
+	<sql id="selectSysAccesssSql">
+
+		from sys_access E
+		 
+		<where>
+		       1 = 1  
+
+			<if test="roleId != null">
+				and E.ROLEID = #{roleId}
+            </if>
+
+			<if test="roleIdGreaterThanOrEqual != null">
+				and E.ROLEID &gt;= #{roleIdGreaterThanOrEqual}
+            </if>
+
+			<if test="roleIdLessThanOrEqual != null">
+				and E.ROLEID &lt;= #{roleIdLessThanOrEqual}
+            </if>
+
+			<if test="roleIds != null &amp;&amp; roleIds.size() &gt; 0">
+			    and E.ROLEID IN
+                <foreach item="x_roleId" index="index" collection="roleIds" 
+                     open="(" separator="," close=")">
+                  #{x_roleId}
+                </foreach>
+			</if>
+			 
+		</where>
+	</sql>
+
+</mapper>

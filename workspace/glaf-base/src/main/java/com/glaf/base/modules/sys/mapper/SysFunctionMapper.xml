@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.base.modules.sys.mapper.SysFunctionMapper">
+
+	<resultMap id="sysFunctionResultMap"	type="com.glaf.base.modules.sys.model.SysFunction">
+		<id property="id" column="ID" jdbcType="BIGINT" />
+		<result property="name" column="NAME" jdbcType="VARCHAR"/>
+		<result property="funcDesc" column="FUNCDESC" jdbcType="VARCHAR"/>
+		<result property="funcMethod" column="FUNCMETHOD" jdbcType="VARCHAR"/>
+		<result property="sort" column="SORT" jdbcType="INTEGER"/>
+		<result property="appId" column="APPID" jdbcType="BIGINT"/>
+	</resultMap>
+
+ 
+	<insert id="insertSysFunction" parameterType="com.glaf.base.modules.sys.model.SysFunction">
+		insert into sys_function 
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+		    ID
+			<if test="name != null">
+				,NAME 
+			</if>
+			<if test="funcDesc != null">
+				,FUNCDESC 
+			</if>
+			<if test="funcMethod != null">
+				,FUNCMETHOD 
+			</if>
+			<if test="sort != null">
+				,SORT 
+			</if>
+			<if test="appId != null">
+				,APPID 
+			</if>
+		</trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			  #{id, jdbcType=BIGINT}
+	     
+			<if test="name != null">
+				,#{name, jdbcType=VARCHAR}
+			</if>
+			<if test="funcDesc != null">
+				,#{funcDesc, jdbcType=VARCHAR}
+			</if>
+			<if test="funcMethod != null">
+				,#{funcMethod, jdbcType=VARCHAR}
+			</if>
+			<if test="sort != null">
+				,#{sort, jdbcType=INTEGER}
+			</if>
+			<if test="appId != null">
+				,#{appId, jdbcType=BIGINT}
+			</if>
+		</trim>
+	</insert>
+
+	 
+	<update id="updateSysFunction" parameterType="com.glaf.base.modules.sys.model.SysFunction">
+		update sys_function
+		set
+		<trim prefix="" suffix="" suffixOverrides=",">		
+			<if test="name != null">
+				NAME = #{name, jdbcType=VARCHAR},
+			</if>
+			<if test="funcDesc != null">
+				FUNCDESC = #{funcDesc, jdbcType=VARCHAR},
+			</if>
+			<if test="funcMethod != null">
+				FUNCMETHOD = #{funcMethod, jdbcType=VARCHAR},
+			</if>
+			<if test="sort != null">
+				SORT = #{sort, jdbcType=INTEGER},
+			</if>
+			<if test="appId != null">
+				APPID = #{appId, jdbcType=BIGINT},
+			</if>
+		</trim>
+		where
+          ID = #{id, jdbcType=BIGINT}
+		
+	</update>
+
+ 
+	<delete id="deleteSysFunctionById" parameterType="string"> 
+        delete from sys_function
+        where ID =	#{id}
+	</delete>
+	
+	<delete id="deleteSysFunctions" parameterType="com.glaf.base.modules.sys.query.SysFunctionQuery">
+		delete from sys_function
+		where ( 
+ 			  ID IN
+		<foreach item="x_rowId" index="index" collection="rowIds" 
+			open="(" separator="," close=")">
+                  #{x_rowId}
+		</foreach>
+		)
+	</delete>
+
+	<select id="getSysFunctionById" parameterType="long" resultMap="sysFunctionResultMap">
+		select * from sys_function where ID = #{id}
+	</select>
+	
+	
+	<select id="getSysFunctionByRoleId" parameterType="long" resultMap="sysFunctionResultMap">
+		
+		select E.* from sys_function E
+		inner join sys_permission P
+		on E.ID = P.FUNCID
+		where P.ROLEID = #{roleId}
+ 
+	</select>
+
+
+	<select id="getSysFunctions" 
+		parameterType="com.glaf.base.modules.sys.query.SysFunctionQuery"
+		resultMap="sysFunctionResultMap">
+		select E.*
+		<include refid="selectSysFunctionsSql" />
+		<choose>
+			<when test="orderBy != null">
+		     order by ${orderBy}
+			</when>
+			<otherwise>
+		      order by E.CREATEDATE_ desc
+			</otherwise>
+		</choose>
+	</select>
+
+	<select id="getSysFunctionCount" 
+		parameterType="com.glaf.base.modules.sys.query.SysFunctionQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectSysFunctionsSql" />
+	</select>
+
+	<sql id="selectSysFunctionsSql">
+
+		from sys_function E
+		 
+		<where>
+		       1 = 1  
+
+			<if test="name != null &amp;&amp; name != '' ">
+				and E.NAME = #{name}
+			</if>
+
+			<if test="nameLike != null &amp;&amp; nameLike != '' ">
+				and E.NAME like #{nameLike}
+			</if>
+
+			<if test="names != null &amp;&amp; names.size() &gt; 0">
+			    and E.NAME IN
+				<foreach item="x_name" index="index" collection="names" 
+					open="(" separator="," close=")">
+                  #{x_name}
+				</foreach>
+			</if>
+	        
+			<if test="funcDesc != null &amp;&amp; funcDesc != '' ">
+				and E.FUNCDESC = #{funcDesc}
+			</if>
+
+			<if test="funcDescLike != null &amp;&amp; funcDescLike != '' ">
+				and E.FUNCDESC like #{funcDescLike}
+			</if>
+
+			<if test="funcMethod != null &amp;&amp; funcMethod != '' ">
+				and E.FUNCMETHOD = #{funcMethod}
+			</if>
+
+			<if test="funcMethodLike != null &amp;&amp; funcMethodLike != '' ">
+				and E.FUNCMETHOD like #{funcMethodLike}
+			</if>
+
+			<if test="sort != null">
+				and E.SORT = #{sort}
+			</if>
+
+			<if test="sortGreaterThanOrEqual != null">
+				and E.SORT &gt;= #{sortGreaterThanOrEqual}
+			</if>
+            
+			<if test="sortGreaterThan != null">
+				and E.SORT &gt; #{sortGreaterThan}
+			</if>
+
+			<if test="sortLessThanOrEqual != null">
+				and E.SORT &lt;= #{sortLessThanOrEqual}
+			</if>
+            
+			<if test="sortLessThan != null">
+				and E.SORT &lt; #{sortLessThan}
+			</if>
+
+			<if test="appId != null">
+				and E.APPID = #{appId}
+			</if>
+
+			<if test="appIdGreaterThanOrEqual != null">
+				and E.APPID &gt;= #{appIdGreaterThanOrEqual}
+			</if>
+
+			<if test="appIdLessThanOrEqual != null">
+				and E.APPID &lt;= #{appIdLessThanOrEqual}
+			</if>
+
+			<if test="appIds != null &amp;&amp; appIds.size() &gt; 0">
+			    and E.APPID IN
+				<foreach item="x_appId" index="index" collection="appIds" 
+					open="(" separator="," close=")">
+                  #{x_appId}
+				</foreach>
+			</if>
+			 
+		</where>
+	</sql>
+
+</mapper>

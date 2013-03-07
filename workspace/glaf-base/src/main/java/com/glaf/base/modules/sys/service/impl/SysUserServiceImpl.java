@@ -461,7 +461,7 @@ public class SysUserServiceImpl implements SysUserService {
 			while (iter.hasNext()) {
 				Object obj = iter.next();
 				if (obj instanceof SysUserRole) {
-					SysUserRole r = (SysUserRole) iter.next();
+					SysUserRole r = (SysUserRole) obj;
 					if (r.getId() == 0) {
 						r.setId(ts++);
 					}

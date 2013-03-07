@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.base.modules.sys.mapper.SysPermissionMapper">
+
+ 	<resultMap id="sysPermissionResultMap"	type="com.glaf.base.modules.sys.model.SysPermission">
+        <id property="funcId" column="FUNCID" jdbcType="BIGINT" />
+        <result property="roleId" column="ROLEID" jdbcType="BIGINT"/>
+	</resultMap>
+
+ 
+	<insert id="insertSysPermission" parameterType="com.glaf.base.modules.sys.model.SysPermission">
+		insert into sys_permission 
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+		    FUNCID
+			<if test="roleId != null">
+				,ROLEID 
+			</if>
+        </trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			  #{funcId, jdbcType=BIGINT}
+	     
+			<if test="roleId != null">
+				,#{roleId, jdbcType=BIGINT}
+			</if>
+	    </trim>
+    </insert>
+
+	 
+	<update id="updateSysPermission" parameterType="com.glaf.base.modules.sys.model.SysPermission">
+		update sys_permission
+		set
+        <trim prefix="" suffix="" suffixOverrides=",">		
+			<if test="roleId != null">
+				ROLEID = #{roleId, jdbcType=BIGINT},
+			</if>
+        </trim>
+		where
+          FUNCID = #{funcId, jdbcType=BIGINT}
+		
+    </update>
+
+ 
+	<delete id="deleteSysPermissionById" parameterType="string"> 
+        delete from sys_permission
+        where FUNCID =	#{id}
+	</delete>
+	
+	<delete id="deleteSysPermissions" parameterType="com.glaf.base.modules.sys.query.SysPermissionQuery">
+		delete from sys_permission
+		where ( 
+ 			  FUNCID IN
+              <foreach item="x_rowId" index="index" collection="rowIds" 
+                     open="(" separator="," close=")">
+                  #{x_rowId}
+              </foreach>
+		)
+	</delete>
+
+	<select id="getSysPermissionById" parameterType="string" resultMap="sysPermissionResultMap">
+		select * from sys_permission where FUNCID = #{id}
+	</select>
+
+
+	<select id="getSysPermissions" 
+	    parameterType="com.glaf.base.modules.sys.query.SysPermissionQuery"
+		resultMap="sysPermissionResultMap">
+		select E.*
+		<include refid="selectSysPermissionsSql" />
+		<choose>
+		  <when test="orderBy != null">
+		     order by ${orderBy}
+          </when>
+		  <otherwise>
+		      order by E.CREATEDATE_ desc
+		  </otherwise>
+        </choose>
+	</select>
+
+	<select id="getSysPermissionCount" 
+	    parameterType="com.glaf.base.modules.sys.query.SysPermissionQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectSysPermissionsSql" />
+	</select>
+
+	<sql id="selectSysPermissionsSql">
+
+		from sys_permission E
+		 
+		<where>
+		       1 = 1  
+
+			<if test="roleId != null">
+				and E.ROLEID = #{roleId}
+            </if>
+
+			<if test="roleIdGreaterThanOrEqual != null">
+				and E.ROLEID &gt;= #{roleIdGreaterThanOrEqual}
+            </if>
+
+			<if test="roleIdLessThanOrEqual != null">
+				and E.ROLEID &lt;= #{roleIdLessThanOrEqual}
+            </if>
+
+			<if test="roleIds != null &amp;&amp; roleIds.size() &gt; 0">
+			    and E.ROLEID IN
+                <foreach item="x_roleId" index="index" collection="roleIds" 
+                     open="(" separator="," close=")">
+                  #{x_roleId}
+                </foreach>
+			</if>
+			 
+		</where>
+	</sql>
+
+</mapper>

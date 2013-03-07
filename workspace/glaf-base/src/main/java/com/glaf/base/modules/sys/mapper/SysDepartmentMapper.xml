@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.base.modules.sys.mapper.SysDepartmentMapper">
+
+ 	<resultMap id="sysDepartmentResultMap"	type="com.glaf.base.modules.sys.model.SysDepartment">
+        <id property="id" column="ID" jdbcType="BIGINT" />
+        <result property="name" column="NAME" jdbcType="VARCHAR"/>
+        <result property="desc" column="DEPTDESC" jdbcType="VARCHAR"/>
+        <result property="createTime" column="CREATETIME" jdbcType="TIMESTAMP"/>
+        <result property="sort" column="SORT" jdbcType="INTEGER"/>
+        <result property="no" column="DEPTNO" jdbcType="VARCHAR"/>
+        <result property="code" column="CODE" jdbcType="VARCHAR"/>
+        <result property="code2" column="CODE2" jdbcType="VARCHAR"/>
+        <result property="status" column="STATUS" jdbcType="INTEGER"/>
+        <result property="fincode" column="FINCODE" jdbcType="VARCHAR"/>
+        <result property="nodeId" column="NODEID" jdbcType="BIGINT"/>
+	</resultMap>
+
+ 
+	<insert id="insertSysDepartment" parameterType="com.glaf.base.modules.sys.model.SysDepartment">
+		insert into sys_department 
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+		    ID
+			<if test="name != null">
+				,NAME 
+			</if>
+			<if test="desc != null">
+				,DEPTDESC 
+			</if>
+			<if test="createTime != null">
+				,CREATETIME 
+			</if>
+			<if test="sort != null">
+				,SORT 
+			</if>
+			<if test="no != null">
+				,DEPTNO 
+			</if>
+			<if test="code != null">
+				,CODE 
+			</if>
+			<if test="code2 != null">
+				,CODE2 
+			</if>
+			<if test="status != null">
+				,STATUS 
+			</if>
+			<if test="fincode != null">
+				,FINCODE 
+			</if>
+			<if test="nodeId != null">
+				,NODEID 
+			</if>
+        </trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			  #{id, jdbcType=BIGINT}
+	     
+			<if test="name != null">
+				,#{name, jdbcType=VARCHAR}
+			</if>
+			<if test="desc != null">
+				,#{desc, jdbcType=VARCHAR}
+			</if>
+			<if test="createTime != null">
+				,#{createTime, jdbcType=TIMESTAMP}
+			</if>
+			<if test="sort != null">
+				,#{sort, jdbcType=INTEGER}
+			</if>
+			<if test="no != null">
+				,#{no, jdbcType=VARCHAR}
+			</if>
+			<if test="code != null">
+				,#{code, jdbcType=VARCHAR}
+			</if>
+			<if test="code2 != null">
+				,#{code2, jdbcType=VARCHAR}
+			</if>
+			<if test="status != null">
+				,#{status, jdbcType=INTEGER}
+			</if>
+			<if test="fincode != null">
+				,#{fincode, jdbcType=VARCHAR}
+			</if>
+			<if test="nodeId != null">
+				,#{nodeId, jdbcType=BIGINT}
+			</if>
+	    </trim>
+    </insert>
+
+	 
+	<update id="updateSysDepartment" parameterType="com.glaf.base.modules.sys.model.SysDepartment">
+		update sys_department
+		set
+        <trim prefix="" suffix="" suffixOverrides=",">		
+			<if test="name != null">
+				NAME = #{name, jdbcType=VARCHAR},
+			</if>
+			<if test="desc != null">
+				DEPTDESC = #{desc, jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				CREATETIME = #{createTime, jdbcType=TIMESTAMP},
+			</if>
+			<if test="sort != null">
+				SORT = #{sort, jdbcType=INTEGER},
+			</if>
+			<if test="no != null">
+				DEPTNO = #{no, jdbcType=VARCHAR},
+			</if>
+			<if test="code != null">
+				CODE = #{code, jdbcType=VARCHAR},
+			</if>
+			<if test="code2 != null">
+				CODE2 = #{code2, jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				STATUS = #{status, jdbcType=INTEGER},
+			</if>
+			<if test="fincode != null">
+				FINCODE = #{fincode, jdbcType=VARCHAR},
+			</if>
+			<if test="nodeId != null">
+				NODEID = #{nodeId, jdbcType=BIGINT},
+			</if>
+        </trim>
+		where
+          ID = #{id, jdbcType=BIGINT}
+		
+    </update>
+
+ 
+	<delete id="deleteSysDepartmentById" parameterType="string"> 
+        delete from sys_department
+        where ID =	#{id}
+	</delete>
+	
+	<delete id="deleteSysDepartments" parameterType="com.glaf.base.modules.sys.query.SysDepartmentQuery">
+		delete from sys_department
+		where ( 
+ 			  ID IN
+              <foreach item="x_rowId" index="index" collection="rowIds" 
+                     open="(" separator="," close=")">
+                  #{x_rowId}
+              </foreach>
+		)
+	</delete>
+
+	<select id="getSysDepartmentById" parameterType="string" resultMap="sysDepartmentResultMap">
+		select * from sys_department where ID = #{id}
+	</select>
+
+
+	<select id="getSysDepartments" 
+	    parameterType="com.glaf.base.modules.sys.query.SysDepartmentQuery"
+		resultMap="sysDepartmentResultMap">
+		select E.*
+		<include refid="selectSysDepartmentsSql" />
+		<choose>
+		  <when test="orderBy != null">
+		     order by ${orderBy}
+          </when>
+		  <otherwise>
+		      order by E.CREATEDATE_ desc
+		  </otherwise>
+        </choose>
+	</select>
+
+	<select id="getSysDepartmentCount" 
+	    parameterType="com.glaf.base.modules.sys.query.SysDepartmentQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectSysDepartmentsSql" />
+	</select>
+
+	<sql id="selectSysDepartmentsSql">
+
+		from sys_department E
+		
+		<if test=" parentId != null  ">
+           inner join sys_tree T
+		   on E.NODEID = T.ID
+		</if>
+		 
+		<where>
+		       1 = 1  
+
+			<if test=" parentId != null  ">
+               T.PARENT = #{parentId}
+			</if>
+				        
+			<if test="name != null &amp;&amp; name != '' ">
+				and E.NAME = #{name}
+            </if>
+
+			<if test="nameLike != null &amp;&amp; nameLike != '' ">
+				and E.NAME like #{nameLike}
+            </if>
+
+			<if test="names != null &amp;&amp; names.size() &gt; 0">
+			    and E.NAME IN
+                <foreach item="x_name" index="index" collection="names" 
+                     open="(" separator="," close=")">
+                  #{x_name}
+                </foreach>
+			</if>
+	        
+			<if test="desc != null &amp;&amp; desc != '' ">
+				and E.DEPTDESC = #{desc}
+            </if>
+
+			<if test="descLike != null &amp;&amp; descLike != '' ">
+				and E.DEPTDESC like #{descLike}
+            </if>
+
+			<if test="createTimeGreaterThanOrEqual != null">
+				and E.CREATETIME &gt;= #{createTimeGreaterThanOrEqual}
+            </if>
+
+			<if test="createTimeLessThanOrEqual != null">
+				and E.CREATETIME &lt;= #{createTimeLessThanOrEqual}
+            </if>
+
+			<if test="sort != null">
+				and E.SORT = #{sort}
+            </if>
+
+			<if test="sortGreaterThanOrEqual != null">
+				and E.SORT &gt;= #{sortGreaterThanOrEqual}
+            </if>
+
+			<if test="sortLessThanOrEqual != null">
+				and E.SORT &lt;= #{sortLessThanOrEqual}
+            </if>
+	        
+			<if test="no != null &amp;&amp; no != '' ">
+				and E.DEPTNO = #{no}
+            </if>
+
+			<if test="noLike != null &amp;&amp; noLike != '' ">
+				and E.DEPTNO like #{noLike}
+            </if>
+	        
+			<if test="code != null &amp;&amp; code != '' ">
+				and E.CODE = #{code}
+            </if>
+
+			<if test="codeLike != null &amp;&amp; codeLike != '' ">
+				and E.CODE like #{codeLike}
+            </if>
+
+			<if test="codes != null &amp;&amp; codes.size() &gt; 0">
+			    and E.CODE IN
+                <foreach item="x_code" index="index" collection="codes" 
+                     open="(" separator="," close=")">
+                  #{x_code}
+                </foreach>
+			</if>
+	        
+			<if test="code2 != null &amp;&amp; code2 != '' ">
+				and E.CODE2 = #{code2}
+            </if>
+
+			<if test="code2Like != null &amp;&amp; code2Like != '' ">
+				and E.CODE2 like #{code2Like}
+            </if>
+
+			<if test="status != null">
+				and E.STATUS = #{status}
+            </if>
+
+			<if test="statusGreaterThanOrEqual != null">
+				and E.STATUS &gt;= #{statusGreaterThanOrEqual}
+            </if>
+
+			<if test="statusLessThanOrEqual != null">
+				and E.STATUS &lt;= #{statusLessThanOrEqual}
+            </if>
+
+			<if test="statuss != null &amp;&amp; statuss.size() &gt; 0">
+			    and E.STATUS IN
+                <foreach item="x_status" index="index" collection="statuss" 
+                     open="(" separator="," close=")">
+                  #{x_status}
+                </foreach>
+			</if>
+
+	        
+			<if test="fincode != null &amp;&amp; fincode != '' ">
+				and E.FINCODE = #{fincode}
+            </if>
+
+			<if test="fincodeLike != null &amp;&amp; fincodeLike != '' ">
+				and E.FINCODE like #{fincodeLike}
+            </if>
+
+			<if test="nodeId != null">
+				and E.NODEID = #{nodeId}
+            </if>
+
+			<if test="nodeIdGreaterThanOrEqual != null">
+				and E.NODEID &gt;= #{nodeIdGreaterThanOrEqual}
+            </if>
+
+			<if test="nodeIdLessThanOrEqual != null">
+				and E.NODEID &lt;= #{nodeIdLessThanOrEqual}
+            </if>
+
+			<if test="nodeIds != null &amp;&amp; nodeIds.size() &gt; 0">
+			    and E.NODEID IN
+                <foreach item="x_nodeId" index="index" collection="nodeIds" 
+                     open="(" separator="," close=")">
+                  #{x_nodeId}
+                </foreach>
+			</if>
+
+		</where>
+	</sql>
+
+</mapper>

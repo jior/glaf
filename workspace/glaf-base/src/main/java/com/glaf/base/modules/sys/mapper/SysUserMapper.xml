@@ -1,0 +1,527 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.base.modules.sys.mapper.SysUserMapper">
+
+	<resultMap id="sysUserResultMap"	type="com.glaf.base.modules.sys.model.SysUser">
+		<id property="id" column="ID" jdbcType="BIGINT" />
+		<result property="account" column="ACCOUNT" jdbcType="VARCHAR"/>
+		<result property="password" column="PASSWORD" jdbcType="VARCHAR"/>
+		<result property="code" column="CODE" jdbcType="VARCHAR"/>
+		<result property="name" column="NAME" jdbcType="VARCHAR"/>
+		<result property="blocked" column="BLOCKED" jdbcType="INTEGER"/>
+		<result property="createTime" column="CREATETIME" jdbcType="TIMESTAMP"/>
+		<result property="lastLoginTime" column="LASTLOGINTIME" jdbcType="TIMESTAMP"/>
+		<result property="lastLoginIP" column="LASTLOGINIP" jdbcType="VARCHAR"/>
+		<result property="evection" column="EVECTION" jdbcType="INTEGER"/>
+		<result property="mobile" column="MOBILE" jdbcType="VARCHAR"/>
+		<result property="email" column="EMAIL" jdbcType="VARCHAR"/>
+		<result property="telephone" column="TELEPHONE" jdbcType="VARCHAR"/>
+		<result property="gender" column="GENDER" jdbcType="INTEGER"/>
+		<result property="headship" column="HEADSHIP" jdbcType="VARCHAR"/>
+		<result property="userType" column="USERTYPE" jdbcType="INTEGER"/>
+		<result property="fax" column="FAX" jdbcType="VARCHAR"/>
+		<result property="accountType" column="ACCOUNTTYPE" jdbcType="INTEGER"/>
+		<result property="dumpFlag" column="DUMPFLAG" jdbcType="INTEGER"/>
+		<result property="deptId" column="DEPTID" jdbcType="BIGINT"/>
+		<result property="adminFlag" column="ADMINFLAG" jdbcType="VARCHAR"/>
+		<result property="superiorIds" column="SUPERIORIDS" jdbcType="VARCHAR"/>
+	</resultMap>
+
+ 
+	<insert id="insertSysUser" parameterType="com.glaf.base.modules.sys.model.SysUser">
+		insert into sys_user 
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+		    ID
+			<if test="account != null">
+				,ACCOUNT 
+			</if>
+			<if test="password != null">
+				,PASSWORD 
+			</if>
+			<if test="code != null">
+				,CODE 
+			</if>
+			<if test="name != null">
+				,NAME 
+			</if>
+			<if test="blocked != null">
+				,BLOCKED 
+			</if>
+			<if test="createTime != null">
+				,CREATETIME 
+			</if>
+			<if test="lastLoginTime != null">
+				,LASTLOGINTIME 
+			</if>
+			<if test="lastLoginIP != null">
+				,LASTLOGINIP 
+			</if>
+			<if test="evection != null">
+				,EVECTION 
+			</if>
+			<if test="mobile != null">
+				,MOBILE 
+			</if>
+			<if test="email != null">
+				,EMAIL 
+			</if>
+			<if test="telephone != null">
+				,TELEPHONE 
+			</if>
+			<if test="gender != null">
+				,GENDER 
+			</if>
+			<if test="headship != null">
+				,HEADSHIP 
+			</if>
+			<if test="userType != null">
+				,USERTYPE 
+			</if>
+			<if test="fax != null">
+				,FAX 
+			</if>
+			<if test="accountType != null">
+				,ACCOUNTTYPE 
+			</if>
+			<if test="dumpFlag != null">
+				,DUMPFLAG 
+			</if>
+			<if test="deptId != null">
+				,DEPTID 
+			</if>
+			<if test="adminFlag != null">
+				,ADMINFLAG 
+			</if>
+			<if test="superiorIds != null">
+				,SUPERIORIDS 
+			</if>
+		</trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			  #{id, jdbcType=BIGINT}
+	     
+			<if test="account != null">
+				,#{account, jdbcType=VARCHAR}
+			</if>
+			<if test="password != null">
+				,#{password, jdbcType=VARCHAR}
+			</if>
+			<if test="code != null">
+				,#{code, jdbcType=VARCHAR}
+			</if>
+			<if test="name != null">
+				,#{name, jdbcType=VARCHAR}
+			</if>
+			<if test="blocked != null">
+				,#{blocked, jdbcType=INTEGER}
+			</if>
+			<if test="createTime != null">
+				,#{createTime, jdbcType=TIMESTAMP}
+			</if>
+			<if test="lastLoginTime != null">
+				,#{lastLoginTime, jdbcType=TIMESTAMP}
+			</if>
+			<if test="lastLoginIP != null">
+				,#{lastLoginIP, jdbcType=VARCHAR}
+			</if>
+			<if test="evection != null">
+				,#{evection, jdbcType=INTEGER}
+			</if>
+			<if test="mobile != null">
+				,#{mobile, jdbcType=VARCHAR}
+			</if>
+			<if test="email != null">
+				,#{email, jdbcType=VARCHAR}
+			</if>
+			<if test="telephone != null">
+				,#{telephone, jdbcType=VARCHAR}
+			</if>
+			<if test="gender != null">
+				,#{gender, jdbcType=INTEGER}
+			</if>
+			<if test="headship != null">
+				,#{headship, jdbcType=VARCHAR}
+			</if>
+			<if test="userType != null">
+				,#{userType, jdbcType=INTEGER}
+			</if>
+			<if test="fax != null">
+				,#{fax, jdbcType=VARCHAR}
+			</if>
+			<if test="accountType != null">
+				,#{accountType, jdbcType=INTEGER}
+			</if>
+			<if test="dumpFlag != null">
+				,#{dumpFlag, jdbcType=INTEGER}
+			</if>
+			<if test="deptId != null">
+				,#{deptId, jdbcType=BIGINT}
+			</if>
+			<if test="adminFlag != null">
+				,#{adminFlag, jdbcType=VARCHAR}
+			</if>
+			<if test="superiorIds != null">
+				,#{superiorIds, jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</insert>
+
+	 
+	<update id="updateSysUser" parameterType="com.glaf.base.modules.sys.model.SysUser">
+		update sys_user
+		set
+		<trim prefix="" suffix="" suffixOverrides=",">		
+			<if test="account != null">
+				ACCOUNT = #{account, jdbcType=VARCHAR},
+			</if>
+			<if test="password != null">
+				PASSWORD = #{password, jdbcType=VARCHAR},
+			</if>
+			<if test="code != null">
+				CODE = #{code, jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				NAME = #{name, jdbcType=VARCHAR},
+			</if>
+			<if test="blocked != null">
+				BLOCKED = #{blocked, jdbcType=INTEGER},
+			</if>
+			<if test="createTime != null">
+				CREATETIME = #{createTime, jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastLoginTime != null">
+				LASTLOGINTIME = #{lastLoginTime, jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastLoginIP != null">
+				LASTLOGINIP = #{lastLoginIP, jdbcType=VARCHAR},
+			</if>
+			<if test="evection != null">
+				EVECTION = #{evection, jdbcType=INTEGER},
+			</if>
+			<if test="mobile != null">
+				MOBILE = #{mobile, jdbcType=VARCHAR},
+			</if>
+			<if test="email != null">
+				EMAIL = #{email, jdbcType=VARCHAR},
+			</if>
+			<if test="telephone != null">
+				TELEPHONE = #{telephone, jdbcType=VARCHAR},
+			</if>
+			<if test="gender != null">
+				GENDER = #{gender, jdbcType=INTEGER},
+			</if>
+			<if test="headship != null">
+				HEADSHIP = #{headship, jdbcType=VARCHAR},
+			</if>
+			<if test="userType != null">
+				USERTYPE = #{userType, jdbcType=INTEGER},
+			</if>
+			<if test="fax != null">
+				FAX = #{fax, jdbcType=VARCHAR},
+			</if>
+			<if test="accountType != null">
+				ACCOUNTTYPE = #{accountType, jdbcType=INTEGER},
+			</if>
+			<if test="dumpFlag != null">
+				DUMPFLAG = #{dumpFlag, jdbcType=INTEGER},
+			</if>
+			<if test="deptId != null">
+				DEPTID = #{deptId, jdbcType=BIGINT},
+			</if>
+			<if test="adminFlag != null">
+				ADMINFLAG = #{adminFlag, jdbcType=VARCHAR},
+			</if>
+			<if test="superiorIds != null">
+				SUPERIORIDS = #{superiorIds, jdbcType=VARCHAR},
+			</if>
+		</trim>
+		where
+          ID = #{id, jdbcType=BIGINT}
+		
+	</update>
+
+ 
+	<delete id="deleteSysUserById" parameterType="string"> 
+        delete from sys_user
+        where ID =	#{id}
+	</delete>
+	
+	<delete id="deleteSysUsers" parameterType="com.glaf.base.modules.sys.query.SysUserQuery">
+		delete from sys_user
+		where ( 
+ 			  ID IN
+		<foreach item="x_rowId" index="index" collection="rowIds" 
+			open="(" separator="," close=")">
+                  #{x_rowId}
+		</foreach>
+		)
+	</delete>
+
+	<select id="getSysUserById" parameterType="string" resultMap="sysUserResultMap">
+		select * from sys_user where ID = #{id}
+	</select>
+
+
+	<select id="getSysUsers" 
+		parameterType="com.glaf.base.modules.sys.query.SysUserQuery"
+		resultMap="sysUserResultMap">
+		select E.*
+		<include refid="selectSysUsersSql" />
+		<choose>
+			<when test="orderBy != null">
+		     order by ${orderBy}
+			</when>
+			<otherwise>
+		      order by E.CREATEDATE_ desc
+			</otherwise>
+		</choose>
+	</select>
+
+	<select id="getSysUserCount" 
+		parameterType="com.glaf.base.modules.sys.query.SysUserQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectSysUsersSql" />
+	</select>
+
+	<sql id="selectSysUsersSql">
+
+		from sys_user E
+		 
+		<where>
+		       1 = 1  
+	        
+			<if test="account != null &amp;&amp; account != '' ">
+				and E.ACCOUNT = #{account}
+			</if>
+
+			<if test="accountLike != null &amp;&amp; accountLike != '' ">
+				and E.ACCOUNT like #{accountLike}
+			</if>
+
+			<if test="accounts != null &amp;&amp; accounts.size() &gt; 0">
+			    and E.ACCOUNT IN
+				<foreach item="x_account" index="index" collection="accounts" 
+					open="(" separator="," close=")">
+                  #{x_account}
+				</foreach>
+			</if>
+	        
+			<if test="code != null &amp;&amp; code != '' ">
+				and E.CODE = #{code}
+			</if>
+
+			<if test="codeLike != null &amp;&amp; codeLike != '' ">
+				and E.CODE like #{codeLike}
+			</if>
+
+			<if test="codes != null &amp;&amp; codes.size() &gt; 0">
+			    and E.CODE IN
+				<foreach item="x_code" index="index" collection="codes" 
+					open="(" separator="," close=")">
+                  #{x_code}
+				</foreach>
+			</if>
+	        
+			<if test="name != null &amp;&amp; name != '' ">
+				and E.NAME = #{name}
+			</if>
+
+			<if test="nameLike != null &amp;&amp; nameLike != '' ">
+				and E.NAME like #{nameLike}
+			</if>
+
+			<if test="names != null &amp;&amp; names.size() &gt; 0">
+			    and E.NAME IN
+				<foreach item="x_name" index="index" collection="names" 
+					open="(" separator="," close=")">
+                  #{x_name}
+				</foreach>
+			</if>
+
+			<if test="blocked != null">
+				and E.BLOCKED = #{blocked}
+			</if>
+
+			<if test="blockedGreaterThanOrEqual != null">
+				and E.BLOCKED &gt;= #{blockedGreaterThanOrEqual}
+			</if>
+
+			<if test="blockedLessThanOrEqual != null">
+				and E.BLOCKED &lt;= #{blockedLessThanOrEqual}
+			</if>
+
+			<if test="createTimeGreaterThanOrEqual != null">
+				and E.CREATETIME &gt;= #{createTimeGreaterThanOrEqual}
+			</if>
+
+			<if test="createTimeLessThanOrEqual != null">
+				and E.CREATETIME &lt;= #{createTimeLessThanOrEqual}
+			</if>
+
+			<if test="lastLoginTimeGreaterThanOrEqual != null">
+				and E.LASTLOGINTIME &gt;= #{lastLoginTimeGreaterThanOrEqual}
+			</if>
+
+			<if test="lastLoginTimeLessThanOrEqual != null">
+				and E.LASTLOGINTIME &lt;= #{lastLoginTimeLessThanOrEqual}
+			</if>
+     
+			<if test="lastLoginIP != null &amp;&amp; lastLoginIP != '' ">
+				and E.LASTLOGINIP = #{lastLoginIP}
+			</if>
+
+			<if test="lastLoginIPLike != null &amp;&amp; lastLoginIPLike != '' ">
+				and E.LASTLOGINIP like #{lastLoginIPLike}
+			</if>
+
+			<if test="lastLoginIPs != null &amp;&amp; lastLoginIPs.size() &gt; 0">
+			    and E.LASTLOGINIP IN
+				<foreach item="x_lastLoginIP" index="index" collection="lastLoginIPs" 
+					open="(" separator="," close=")">
+                  #{x_lastLoginIP}
+				</foreach>
+			</if>
+
+			<if test="evection != null">
+				and E.EVECTION = #{evection}
+			</if>
+
+			<if test="evectionGreaterThanOrEqual != null">
+				and E.EVECTION &gt;= #{evectionGreaterThanOrEqual}
+			</if>
+
+			<if test="evectionLessThanOrEqual != null">
+				and E.EVECTION &lt;= #{evectionLessThanOrEqual}
+			</if>
+
+			<if test="mobile != null &amp;&amp; mobile != '' ">
+				and E.MOBILE = #{mobile}
+			</if>
+
+			<if test="mobileLike != null &amp;&amp; mobileLike != '' ">
+				and E.MOBILE like #{mobileLike}
+			</if>
+	        
+			<if test="email != null &amp;&amp; email != '' ">
+				and E.EMAIL = #{email}
+			</if>
+
+			<if test="emailLike != null &amp;&amp; emailLike != '' ">
+				and E.EMAIL like #{emailLike}
+			</if>
+	        
+			<if test="telephone != null &amp;&amp; telephone != '' ">
+				and E.TELEPHONE = #{telephone}
+			</if>
+
+			<if test="telephoneLike != null &amp;&amp; telephoneLike != '' ">
+				and E.TELEPHONE like #{telephoneLike}
+			</if>
+
+			<if test="gender != null">
+				and E.GENDER = #{gender}
+			</if>
+
+			<if test="genderGreaterThanOrEqual != null">
+				and E.GENDER &gt;= #{genderGreaterThanOrEqual}
+			</if>
+
+			<if test="genderLessThanOrEqual != null">
+				and E.GENDER &lt;= #{genderLessThanOrEqual}
+			</if>
+   
+			<if test="headship != null &amp;&amp; headship != '' ">
+				and E.HEADSHIP = #{headship}
+			</if>
+
+			<if test="headshipLike != null &amp;&amp; headshipLike != '' ">
+				and E.HEADSHIP like #{headshipLike}
+			</if>
+
+			<if test="userType != null">
+				and E.USERTYPE = #{userType}
+			</if>
+
+			<if test="userTypeGreaterThanOrEqual != null">
+				and E.USERTYPE &gt;= #{userTypeGreaterThanOrEqual}
+			</if>
+
+			<if test="userTypeLessThanOrEqual != null">
+				and E.USERTYPE &lt;= #{userTypeLessThanOrEqual}
+			</if>
+
+			<if test="userTypes != null &amp;&amp; userTypes.size() &gt; 0">
+			    and E.USERTYPE IN
+				<foreach item="x_userType" index="index" collection="userTypes" 
+					open="(" separator="," close=")">
+                  #{x_userType}
+				</foreach>
+			</if>
+        
+			<if test="fax != null &amp;&amp; fax != '' ">
+				and E.FAX = #{fax}
+			</if>
+
+			<if test="faxLike != null &amp;&amp; faxLike != '' ">
+				and E.FAX like #{faxLike}
+			</if>
+
+			<if test="accountType != null">
+				and E.ACCOUNTTYPE = #{accountType}
+			</if>
+
+			<if test="accountTypeGreaterThanOrEqual != null">
+				and E.ACCOUNTTYPE &gt;= #{accountTypeGreaterThanOrEqual}
+			</if>
+
+			<if test="accountTypeLessThanOrEqual != null">
+				and E.ACCOUNTTYPE &lt;= #{accountTypeLessThanOrEqual}
+			</if>
+
+			<if test="dumpFlag != null">
+				and E.DUMPFLAG = #{dumpFlag}
+			</if>
+
+			<if test="dumpFlagGreaterThanOrEqual != null">
+				and E.DUMPFLAG &gt;= #{dumpFlagGreaterThanOrEqual}
+			</if>
+
+			<if test="dumpFlagLessThanOrEqual != null">
+				and E.DUMPFLAG &lt;= #{dumpFlagLessThanOrEqual}
+			</if>
+
+			<if test="deptId != null">
+				and E.DEPTID = #{deptId}
+			</if>
+
+			<if test="deptIdGreaterThanOrEqual != null">
+				and E.DEPTID &gt;= #{deptIdGreaterThanOrEqual}
+			</if>
+
+			<if test="deptIdLessThanOrEqual != null">
+				and E.DEPTID &lt;= #{deptIdLessThanOrEqual}
+			</if>
+
+			<if test="deptIds != null &amp;&amp; deptIds.size() &gt; 0">
+			    and E.DEPTID IN
+				<foreach item="x_deptId" index="index" collection="deptIds" 
+					open="(" separator="," close=")">
+                  #{x_deptId}
+				</foreach>
+			</if>
+	        
+			<if test="adminFlag != null &amp;&amp; adminFlag != '' ">
+				and E.ADMINFLAG = #{adminFlag}
+			</if>
+	        
+			<if test="superiorIdsLike != null &amp;&amp; superiorIdsLike != '' ">
+				and E.SUPERIORIDS like #{superiorIdsLike}
+			</if>
+			 
+		</where>
+	</sql>
+
+</mapper>

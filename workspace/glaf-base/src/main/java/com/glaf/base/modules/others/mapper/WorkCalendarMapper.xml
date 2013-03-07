@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.base.modules.others.mapper.WorkCalendarMapper">
+
+	<resultMap id="workCalendarResultMap"	type="com.glaf.base.modules.others.model.WorkCalendar">
+		<id property="id" column="ID" jdbcType="BIGINT" />
+		<result property="freeDay" column="FREEDAY" jdbcType="INTEGER"/>
+		<result property="freeMonth" column="FREEMONTH" jdbcType="INTEGER"/>
+		<result property="freeYear" column="FREEYEAR" jdbcType="INTEGER"/>
+	</resultMap>
+
+ 
+	<insert id="insertWorkCalendar" parameterType="com.glaf.base.modules.others.model.WorkCalendar">
+		insert into sys_workcalendar 
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+		    ID
+			<if test="freeDay != null">
+				,FREEDAY 
+			</if>
+			<if test="freeMonth != null">
+				,FREEMONTH 
+			</if>
+			<if test="freeYear != null">
+				,FREEYEAR 
+			</if>
+		</trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			  #{id, jdbcType=BIGINT}
+	     
+			<if test="freeDay != null">
+				,#{freeDay, jdbcType=INTEGER}
+			</if>
+			<if test="freeMonth != null">
+				,#{freeMonth, jdbcType=INTEGER}
+			</if>
+			<if test="freeYear != null">
+				,#{freeYear, jdbcType=INTEGER}
+			</if>
+		</trim>
+	</insert>
+
+	 
+	<update id="updateWorkCalendar" parameterType="com.glaf.base.modules.others.model.WorkCalendar">
+		update sys_workcalendar
+		set
+		<trim prefix="" suffix="" suffixOverrides=",">		
+			<if test="freeDay != null">
+				FREEDAY = #{freeDay, jdbcType=INTEGER},
+			</if>
+			<if test="freeMonth != null">
+				FREEMONTH = #{freeMonth, jdbcType=INTEGER},
+			</if>
+			<if test="freeYear != null">
+				FREEYEAR = #{freeYear, jdbcType=INTEGER},
+			</if>
+		</trim>
+		where
+          ID = #{id, jdbcType=BIGINT}
+		
+	</update>
+
+ 
+	<delete id="deleteWorkCalendarById" parameterType="string"> 
+        delete from sys_workcalendar
+        where ID =	#{id}
+	</delete>
+	
+	<delete id="deleteWorkCalendars" parameterType="com.glaf.base.modules.others.query.WorkCalendarQuery">
+		delete from sys_workcalendar
+		where ( 
+ 			  ID IN
+		<foreach item="x_rowId" index="index" collection="rowIds" 
+			open="(" separator="," close=")">
+                  #{x_rowId}
+		</foreach>
+		)
+	</delete>
+
+	<select id="getWorkCalendarById" parameterType="string" resultMap="workCalendarResultMap">
+		select * from sys_workcalendar where ID = #{id}
+	</select>
+
+
+	<select id="getWorkCalendars" 
+		parameterType="com.glaf.base.modules.others.query.WorkCalendarQuery"
+		resultMap="workCalendarResultMap">
+		select E.*
+		<include refid="selectWorkCalendarsSql" />
+		<choose>
+			<when test="orderBy != null">
+		     order by ${orderBy}
+			</when>
+			<otherwise>
+		      order by E.CREATEDATE_ desc
+			</otherwise>
+		</choose>
+	</select>
+
+	<select id="getWorkCalendarCount" 
+		parameterType="com.glaf.base.modules.others.query.WorkCalendarQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectWorkCalendarsSql" />
+	</select>
+
+	<sql id="selectWorkCalendarsSql">
+
+		from sys_workcalendar E
+	 
+		<where>
+		       1 = 1  
+
+			<if test="freeDay != null">
+				and E.FREEDAY = #{freeDay}
+			</if>
+
+			<if test="freeDayGreaterThanOrEqual != null">
+				and E.FREEDAY &gt;= #{freeDayGreaterThanOrEqual}
+			</if>
+
+			<if test="freeDayLessThanOrEqual != null">
+				and E.FREEDAY &lt;= #{freeDayLessThanOrEqual}
+			</if>
+
+			<if test="freeMonth != null">
+				and E.FREEMONTH = #{freeMonth}
+			</if>
+
+			<if test="freeMonthGreaterThanOrEqual != null">
+				and E.FREEMONTH &gt;= #{freeMonthGreaterThanOrEqual}
+			</if>
+
+			<if test="freeMonthLessThanOrEqual != null">
+				and E.FREEMONTH &lt;= #{freeMonthLessThanOrEqual}
+			</if>
+
+			<if test="freeYear != null">
+				and E.FREEYEAR = #{freeYear}
+			</if>
+
+			<if test="freeYearGreaterThanOrEqual != null">
+				and E.FREEYEAR &gt;= #{freeYearGreaterThanOrEqual}
+			</if>
+
+			<if test="freeYearLessThanOrEqual != null">
+				and E.FREEYEAR &lt;= #{freeYearLessThanOrEqual}
+			</if>
+
+		</where>
+	</sql>
+
+</mapper>
