@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.base.modules.others.mapper.AuditMapper">
+
+ 	<resultMap id="auditResultMap"	type="com.glaf.base.modules.others.model.Audit">
+        <id property="id" column="ID" jdbcType="BIGINT" />
+        <result property="referId" column="REFERID" jdbcType="BIGINT"/>
+        <result property="referType" column="REFERTYPE" jdbcType="INTEGER"/>
+        <result property="deptId" column="DEPTID" jdbcType="BIGINT"/>
+        <result property="deptName" column="DEPTNAME" jdbcType="VARCHAR"/>
+        <result property="headship" column="HEADSHIP" jdbcType="VARCHAR"/>
+        <result property="leaderName" column="LEADERNAME" jdbcType="VARCHAR"/>
+        <result property="leaderId" column="LEADERID" jdbcType="BIGINT"/>
+        <result property="memo" column="MEMO" jdbcType="VARCHAR"/>
+        <result property="createDate" column="CREATEDATE" jdbcType="TIMESTAMP"/>
+        <result property="flag" column="FLAG" jdbcType="INTEGER"/>
+	</resultMap>
+
+ 
+	<insert id="insertAudit" parameterType="com.glaf.base.modules.others.model.Audit">
+		insert into Audit 
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+		    ID
+			<if test="referId != null">
+				,REFERID 
+			</if>
+			<if test="referType != null">
+				,REFERTYPE 
+			</if>
+			<if test="deptId != null">
+				,DEPTID 
+			</if>
+			<if test="deptName != null">
+				,DEPTNAME 
+			</if>
+			<if test="headship != null">
+				,HEADSHIP 
+			</if>
+			<if test="leaderName != null">
+				,LEADERNAME 
+			</if>
+			<if test="leaderId != null">
+				,LEADERID 
+			</if>
+			<if test="memo != null">
+				,MEMO 
+			</if>
+			<if test="createDate != null">
+				,CREATEDATE 
+			</if>
+			<if test="flag != null">
+				,FLAG 
+			</if>
+        </trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			  #{id, jdbcType=BIGINT}
+	     
+			<if test="referId != null">
+				,#{referId, jdbcType=BIGINT}
+			</if>
+			<if test="referType != null">
+				,#{referType, jdbcType=INTEGER}
+			</if>
+			<if test="deptId != null">
+				,#{deptId, jdbcType=BIGINT}
+			</if>
+			<if test="deptName != null">
+				,#{deptName, jdbcType=VARCHAR}
+			</if>
+			<if test="headship != null">
+				,#{headship, jdbcType=VARCHAR}
+			</if>
+			<if test="leaderName != null">
+				,#{leaderName, jdbcType=VARCHAR}
+			</if>
+			<if test="leaderId != null">
+				,#{leaderId, jdbcType=BIGINT}
+			</if>
+			<if test="memo != null">
+				,#{memo, jdbcType=VARCHAR}
+			</if>
+			<if test="createDate != null">
+				,#{createDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="flag != null">
+				,#{flag, jdbcType=INTEGER}
+			</if>
+	    </trim>
+    </insert>
+
+	 
+	<update id="updateAudit" parameterType="com.glaf.base.modules.others.model.Audit">
+		update Audit
+		set
+        <trim prefix="" suffix="" suffixOverrides=",">		
+			<if test="referId != null">
+				REFERID = #{referId, jdbcType=BIGINT},
+			</if>
+			<if test="referType != null">
+				REFERTYPE = #{referType, jdbcType=INTEGER},
+			</if>
+			<if test="deptId != null">
+				DEPTID = #{deptId, jdbcType=BIGINT},
+			</if>
+			<if test="deptName != null">
+				DEPTNAME = #{deptName, jdbcType=VARCHAR},
+			</if>
+			<if test="headship != null">
+				HEADSHIP = #{headship, jdbcType=VARCHAR},
+			</if>
+			<if test="leaderName != null">
+				LEADERNAME = #{leaderName, jdbcType=VARCHAR},
+			</if>
+			<if test="leaderId != null">
+				LEADERID = #{leaderId, jdbcType=BIGINT},
+			</if>
+			<if test="memo != null">
+				MEMO = #{memo, jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				CREATEDATE = #{createDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="flag != null">
+				FLAG = #{flag, jdbcType=INTEGER},
+			</if>
+        </trim>
+		where
+          ID = #{id, jdbcType=BIGINT}
+		
+    </update>
+
+ 
+	<delete id="deleteAuditById" parameterType="long"> 
+        delete from Audit
+        where ID =	#{id}
+	</delete>
+
+	
+	<delete id="deleteAudits" parameterType="com.glaf.base.modules.others.query.AuditQuery">
+		delete from Audit
+		where ( 
+ 			  ID IN
+              <foreach item="x_rowId" index="index" collection="rowIds" 
+                     open="(" separator="," close=")">
+                  #{x_rowId}
+              </foreach>
+		)
+	</delete>
+
+
+	<select id="getAuditById" parameterType="long" resultMap="auditResultMap">
+		select * from Audit where ID = #{id}
+	</select>
+
+
+	<select id="getAudits" 
+	    parameterType="com.glaf.base.modules.others.query.AuditQuery"
+		resultMap="auditResultMap">
+		select E.*
+		<include refid="selectAuditsSql" />
+		<choose>
+		  <when test="orderBy != null">
+		     order by ${orderBy}
+          </when>
+		  <otherwise>
+		      order by E.ID desc
+		  </otherwise>
+        </choose>
+	</select>
+
+
+	<select id="getAuditCount" 
+	    parameterType="com.glaf.base.modules.others.query.AuditQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectAuditsSql" />
+	</select>
+
+
+	<sql id="selectAuditsSql">
+
+		from Audit E
+		 
+		<where>
+		       1 = 1  
+
+			<if test="referId != null">
+				and E.REFERID = #{referId}
+            </if>
+
+			<if test="referIdGreaterThanOrEqual != null">
+				and E.REFERID &gt;= #{referIdGreaterThanOrEqual}
+            </if>
+
+			<if test="referIdLessThanOrEqual != null">
+				and E.REFERID &lt;= #{referIdLessThanOrEqual}
+            </if>
+
+			<if test="referIds != null &amp;&amp; referIds.size() &gt; 0">
+			    and E.REFERID IN
+                <foreach item="x_referId" index="index" collection="referIds" 
+                     open="(" separator="," close=")">
+                  #{x_referId}
+                </foreach>
+			</if>
+
+			<if test="referType != null">
+				and E.REFERTYPE = #{referType}
+            </if>
+
+			<if test="referTypeGreaterThanOrEqual != null">
+				and E.REFERTYPE &gt;= #{referTypeGreaterThanOrEqual}
+            </if>
+
+			<if test="referTypeLessThanOrEqual != null">
+				and E.REFERTYPE &lt;= #{referTypeLessThanOrEqual}
+            </if>
+
+			<if test="referTypes != null &amp;&amp; referTypes.size() &gt; 0">
+			    and E.REFERTYPE IN
+                <foreach item="x_referType" index="index" collection="referTypes" 
+                     open="(" separator="," close=")">
+                  #{x_referType}
+                </foreach>
+			</if>
+
+			<if test="deptId != null">
+				and E.DEPTID = #{deptId}
+            </if>
+
+			<if test="deptIdGreaterThanOrEqual != null">
+				and E.DEPTID &gt;= #{deptIdGreaterThanOrEqual}
+            </if>
+
+			<if test="deptIdLessThanOrEqual != null">
+				and E.DEPTID &lt;= #{deptIdLessThanOrEqual}
+            </if>
+
+			<if test="deptIds != null &amp;&amp; deptIds.size() &gt; 0">
+			    and E.DEPTID IN
+                <foreach item="x_deptId" index="index" collection="deptIds" 
+                     open="(" separator="," close=")">
+                  #{x_deptId}
+                </foreach>
+			</if>
+
+			<if test="deptNameLike != null &amp;&amp; deptNameLike != '' ">
+				and E.DEPTNAME like #{deptNameLike}
+            </if>
+
+			<if test="headshipLike != null &amp;&amp; headshipLike != '' ">
+				and E.HEADSHIP like #{headshipLike}
+            </if>
+	        
+			<if test="leaderName != null &amp;&amp; leaderName != '' ">
+				and E.LEADERNAME = #{leaderName}
+            </if>
+
+			<if test="leaderNameLike != null &amp;&amp; leaderNameLike != '' ">
+				and E.LEADERNAME like #{leaderNameLike}
+            </if>
+
+			<if test="leaderId != null">
+				and E.LEADERID = #{leaderId}
+            </if>
+
+			<if test="leaderIdGreaterThanOrEqual != null">
+				and E.LEADERID &gt;= #{leaderIdGreaterThanOrEqual}
+            </if>
+
+			<if test="leaderIdLessThanOrEqual != null">
+				and E.LEADERID &lt;= #{leaderIdLessThanOrEqual}
+            </if>
+
+			<if test="leaderIds != null &amp;&amp; leaderIds.size() &gt; 0">
+			    and E.LEADERID IN
+                <foreach item="x_leaderId" index="index" collection="leaderIds" 
+                     open="(" separator="," close=")">
+                  #{x_leaderId}
+                </foreach>
+			</if>
+
+			<if test="memoLike != null &amp;&amp; memoLike != '' ">
+				and E.MEMO like #{memoLike}
+            </if>
+
+			<if test="createDateGreaterThanOrEqual != null">
+				and E.CREATEDATE &gt;= #{createDateGreaterThanOrEqual}
+            </if>
+
+			<if test="createDateLessThanOrEqual != null">
+				and E.CREATEDATE &lt;= #{createDateLessThanOrEqual}
+            </if>
+
+			<if test="flag != null">
+				and E.FLAG = #{flag}
+            </if>
+
+			<if test="flagGreaterThanOrEqual != null">
+				and E.FLAG &gt;= #{flagGreaterThanOrEqual}
+            </if>
+
+			<if test="flagLessThanOrEqual != null">
+				and E.FLAG &lt;= #{flagLessThanOrEqual}
+            </if>
+
+		</where>
+	</sql>
+
+</mapper>

@@ -19,8 +19,12 @@
 package com.glaf.base.modules.sys.model;
 
 import java.io.Serializable;
+import com.alibaba.fastjson.*;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.glaf.base.modules.sys.util.SubjectCodeJsonFactory;
+import com.glaf.core.base.JSONable;
 
-public class SubjectCode implements Serializable {
+public class SubjectCode implements Serializable, JSONable {
 	private static final long serialVersionUID = -1L;
 	private long id;
 	private long parent;
@@ -67,4 +71,39 @@ public class SubjectCode implements Serializable {
 	public void setSubjectName(String subjectName) {
 		this.subjectName = subjectName;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (id ^ (id >>> 32));
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		SubjectCode other = (SubjectCode) obj;
+		if (id != other.id)
+			return false;
+		return true;
+	}
+
+	public SubjectCode jsonToObject(JSONObject jsonObject) {
+		return SubjectCodeJsonFactory.jsonToObject(jsonObject);
+	}
+
+	public JSONObject toJsonObject() {
+		return SubjectCodeJsonFactory.toJsonObject(this);
+	}
+
+	public ObjectNode toObjectNode() {
+		return SubjectCodeJsonFactory.toObjectNode(this);
+	}
+
 }

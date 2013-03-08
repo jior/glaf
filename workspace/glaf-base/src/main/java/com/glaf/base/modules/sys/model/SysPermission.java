@@ -5,10 +5,11 @@ import javax.persistence.*;
 import com.alibaba.fastjson.*;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.glaf.base.modules.sys.util.*;
+import com.glaf.core.base.JSONable;
 
 @Entity
 @Table(name = "sys_permission")
-public class SysPermission implements Serializable {
+public class SysPermission implements Serializable, JSONable {
 	private static final long serialVersionUID = 1L;
 
 	/**

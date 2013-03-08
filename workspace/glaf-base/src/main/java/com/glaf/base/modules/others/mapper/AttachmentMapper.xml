@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.base.modules.others.mapper.AttachmentMapper">
+
+	<resultMap id="attachmentResultMap"	type="com.glaf.base.modules.others.model.Attachment">
+		<id property="id" column="ID" jdbcType="BIGINT" />
+		<result property="referId" column="REFERID" jdbcType="BIGINT"/>
+		<result property="referType" column="REFERTYPE" jdbcType="INTEGER"/>
+		<result property="name" column="NAME" jdbcType="VARCHAR"/>
+		<result property="url" column="URL" jdbcType="VARCHAR"/>
+		<result property="createDate" column="CREATEDATE" jdbcType="TIMESTAMP"/>
+		<result property="createId" column="CREATEID" jdbcType="BIGINT"/>
+	</resultMap>
+
+ 
+	<insert id="insertAttachment" parameterType="com.glaf.base.modules.others.model.Attachment">
+		insert into Attachment 
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+		    ID
+			<if test="referId != null">
+				,REFERID 
+			</if>
+			<if test="referType != null">
+				,REFERTYPE 
+			</if>
+			<if test="name != null">
+				,NAME 
+			</if>
+			<if test="url != null">
+				,URL 
+			</if>
+			<if test="createDate != null">
+				,CREATEDATE 
+			</if>
+			<if test="createId != null">
+				,CREATEID 
+			</if>
+		</trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			  #{id, jdbcType=BIGINT}
+	     
+			<if test="referId != null">
+				,#{referId, jdbcType=BIGINT}
+			</if>
+			<if test="referType != null">
+				,#{referType, jdbcType=INTEGER}
+			</if>
+			<if test="name != null">
+				,#{name, jdbcType=VARCHAR}
+			</if>
+			<if test="url != null">
+				,#{url, jdbcType=VARCHAR}
+			</if>
+			<if test="createDate != null">
+				,#{createDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="createId != null">
+				,#{createId, jdbcType=BIGINT}
+			</if>
+		</trim>
+	</insert>
+
+	 
+	<update id="updateAttachment" parameterType="com.glaf.base.modules.others.model.Attachment">
+		update Attachment
+		set
+		<trim prefix="" suffix="" suffixOverrides=",">		
+			<if test="referId != null">
+				REFERID = #{referId, jdbcType=BIGINT},
+			</if>
+			<if test="referType != null">
+				REFERTYPE = #{referType, jdbcType=INTEGER},
+			</if>
+			<if test="name != null">
+				NAME = #{name, jdbcType=VARCHAR},
+			</if>
+			<if test="url != null">
+				URL = #{url, jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				CREATEDATE = #{createDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="createId != null">
+				CREATEID = #{createId, jdbcType=BIGINT},
+			</if>
+		</trim>
+		where
+          ID = #{id, jdbcType=BIGINT}
+		
+	</update>
+
+ 
+	<delete id="deleteAttachmentById" parameterType="long"> 
+        delete from Attachment
+        where ID =	#{id}
+	</delete>
+
+	
+	<delete id="deleteAttachments" parameterType="com.glaf.base.modules.others.query.AttachmentQuery">
+		delete from Attachment
+		where ( 
+ 			  ID IN
+		<foreach item="x_rowId" index="index" collection="rowIds" 
+			open="(" separator="," close=")">
+                  #{x_rowId}
+		</foreach>
+		)
+	</delete>
+
+
+	<select id="getAttachmentById" parameterType="long" resultMap="attachmentResultMap">
+		select * from Attachment where ID = #{id}
+	</select>
+
+
+	<select id="getAttachments" 
+		parameterType="com.glaf.base.modules.others.query.AttachmentQuery"
+		resultMap="attachmentResultMap">
+		select E.*
+		<include refid="selectAttachmentsSql" />
+		<choose>
+			<when test="orderBy != null">
+		     order by ${orderBy}
+			</when>
+			<otherwise>
+		      order by E.ID desc
+			</otherwise>
+		</choose>
+	</select>
+
+
+	<select id="getAttachmentCount" 
+		parameterType="com.glaf.base.modules.others.query.AttachmentQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectAttachmentsSql" />
+	</select>
+
+
+	<sql id="selectAttachmentsSql">
+
+		from Attachment E
+
+
+		<where>
+		       1 = 1  
+
+			<if test="referId != null">
+				and E.REFERID = #{referId}
+			</if>
+
+			<if test="referIdGreaterThanOrEqual != null">
+				and E.REFERID &gt;= #{referIdGreaterThanOrEqual}
+			</if>
+
+			<if test="referIdLessThanOrEqual != null">
+				and E.REFERID &lt;= #{referIdLessThanOrEqual}
+			</if>
+
+			<if test="referIds != null &amp;&amp; referIds.size() &gt; 0">
+			    and E.REFERID IN
+				<foreach item="x_referId" index="index" collection="referIds" 
+					open="(" separator="," close=")">
+                  #{x_referId}
+				</foreach>
+			</if>
+
+
+			<if test="referType != null">
+				and E.REFERTYPE = #{referType}
+			</if>
+
+			<if test="referTypeGreaterThanOrEqual != null">
+				and E.REFERTYPE &gt;= #{referTypeGreaterThanOrEqual}
+			</if>
+
+			<if test="referTypeLessThanOrEqual != null">
+				and E.REFERTYPE &lt;= #{referTypeLessThanOrEqual}
+			</if>
+
+			<if test="referTypes != null &amp;&amp; referTypes.size() &gt; 0">
+			    and E.REFERTYPE IN
+				<foreach item="x_referType" index="index" collection="referTypes" 
+					open="(" separator="," close=")">
+                  #{x_referType}
+				</foreach>
+			</if>
+
+	        
+			<if test="name != null &amp;&amp; name != '' ">
+				and E.NAME = #{name}
+			</if>
+
+			<if test="nameLike != null &amp;&amp; nameLike != '' ">
+				and E.NAME like #{nameLike}
+			</if>
+	        
+			<if test="url != null &amp;&amp; url != '' ">
+				and E.URL = #{url}
+			</if>
+
+			<if test="urlLike != null &amp;&amp; urlLike != '' ">
+				and E.URL like #{urlLike}
+			</if>
+
+			<if test="createDateGreaterThanOrEqual != null">
+				and E.CREATEDATE &gt;= #{createDateGreaterThanOrEqual}
+			</if>
+
+			<if test="createDateLessThanOrEqual != null">
+				and E.CREATEDATE &lt;= #{createDateLessThanOrEqual}
+			</if>
+
+			<if test="createId != null">
+				and E.CREATEID = #{createId}
+			</if>
+
+			<if test="createIdGreaterThanOrEqual != null">
+				and E.CREATEID &gt;= #{createIdGreaterThanOrEqual}
+			</if>
+
+			<if test="createIdLessThanOrEqual != null">
+				and E.CREATEID &lt;= #{createIdLessThanOrEqual}
+			</if>
+
+			<if test="createIds != null &amp;&amp; createIds.size() &gt; 0">
+			    and E.CREATEID IN
+				<foreach item="x_createId" index="index" collection="createIds" 
+					open="(" separator="," close=")">
+                  #{x_createId}
+				</foreach>
+			</if>
+			 
+		</where>
+	</sql>
+
+</mapper>

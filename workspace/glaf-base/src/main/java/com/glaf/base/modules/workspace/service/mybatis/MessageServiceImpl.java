@@ -144,31 +144,37 @@ public class MessageServiceImpl implements MessageService {
 		this.sysUserService = sysUserService;
 	}
 
+	@Transactional
 	public boolean create(Message bean) {
 		this.save(bean);
 		return true;
 	}
 
+	@Transactional
 	public boolean saveOrUpdate(Message bean) {
 		this.save(bean);
 		return true;
 	}
 
+	@Transactional
 	public boolean update(Message bean) {
 		this.save(bean);
 		return true;
 	}
 
+	@Transactional
 	public boolean delete(Message bean) {
 		this.deleteById(bean.getId());
 		return true;
 	}
 
+	@Transactional
 	public boolean delete(long id) {
 		this.deleteById(id);
 		return true;
 	}
 
+	@Transactional
 	@SuppressWarnings("rawtypes")
 	public boolean deleteAll(Collection c) {
 		for (Object object : c) {
@@ -187,6 +193,7 @@ public class MessageServiceImpl implements MessageService {
 		return this.getMessage(id);
 	}
 
+	@Transactional
 	public boolean saveSendMessage(Message message, String[] recverIds) {
 		boolean rst = true;
 
@@ -255,6 +262,7 @@ public class MessageServiceImpl implements MessageService {
 		return saveOrUpdate(newMessage);
 	}
 
+	@Transactional
 	public boolean saveSendMessageToDept(Message message, String[] recverIds) {
 		boolean rst = true;
 
@@ -308,6 +316,8 @@ public class MessageServiceImpl implements MessageService {
 		return rst;
 	}
 
+	
+	@Transactional
 	public Message updateReadMessage(long id) {
 		Message message = find(id);
 		message.setReaded(1);// …Ë÷√“—∂¡

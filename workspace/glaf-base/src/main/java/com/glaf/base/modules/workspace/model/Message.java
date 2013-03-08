@@ -21,9 +21,16 @@ package com.glaf.base.modules.workspace.model;
 import java.io.Serializable;
 import java.util.Date;
 
-import com.glaf.base.modules.sys.model.SysUser;
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
 
-public class Message implements Serializable {
+import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.glaf.base.modules.sys.model.SysUser;
+import com.glaf.base.modules.workspace.util.MessageJsonFactory;
+import com.glaf.core.base.JSONable;
+
+public class Message implements Serializable, JSONable {
 
 	private static final long serialVersionUID = -3111749338365950889L;
 
@@ -156,6 +163,23 @@ public class Message implements Serializable {
 
 	public void setType(int type) {
 		this.type = type;
+	}
+
+	public Message jsonToObject(JSONObject jsonObject) {
+		return MessageJsonFactory.jsonToObject(jsonObject);
+	}
+
+	public JSONObject toJsonObject() {
+		return MessageJsonFactory.toJsonObject(this);
+	}
+
+	public ObjectNode toObjectNode() {
+		return MessageJsonFactory.toObjectNode(this);
+	}
+
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this,
+				ToStringStyle.MULTI_LINE_STYLE);
 	}
 
 }

@@ -135,21 +135,25 @@ public class MyMenuServiceImpl implements MyMenuService {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}
 
+	@Transactional
 	public boolean create(MyMenu bean) {
 		this.save(bean);
 		return true;
 	}
 
+	@Transactional
 	public boolean delete(long id) {
 		this.deleteById(id);
 		return true;
 	}
 
+	@Transactional
 	public boolean delete(MyMenu myMenu) {
 		this.deleteById(myMenu.getId());
 		return true;
 	}
 
+	@Transactional
 	@SuppressWarnings("rawtypes")
 	public boolean deleteAll(Collection c) {
 		for (Object object : c) {
@@ -206,6 +210,7 @@ public class MyMenuServiceImpl implements MyMenuService {
 	 * @param operate
 	 *            int ²Ù×÷
 	 */
+	@Transactional
 	public void sort(MyMenu bean, int operate) {
 		if (bean == null)
 			return;
@@ -265,6 +270,7 @@ public class MyMenuServiceImpl implements MyMenuService {
 		}
 	}
 
+	@Transactional
 	public boolean update(MyMenu myMenu) {
 		this.save(myMenu);
 		return true;

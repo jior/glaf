@@ -23,9 +23,10 @@ import com.alibaba.fastjson.*;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.glaf.base.modules.others.util.WorkCalendarJsonFactory;
+import com.glaf.core.base.JSONable;
 
 
-public class WorkCalendar implements Serializable {
+public class WorkCalendar implements Serializable, JSONable {
 	private static final long serialVersionUID = -5396045849722935648L;
 	private long id;
 	private int freeDay;

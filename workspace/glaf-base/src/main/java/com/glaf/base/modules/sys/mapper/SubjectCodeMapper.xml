@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.base.modules.sys.mapper.SubjectCodeMapper">
+
+	<resultMap id="subjectCodeResultMap"	type="com.glaf.base.modules.sys.model.SubjectCode">
+		<id property="id" column="ID" jdbcType="BIGINT" />
+		<result property="parent" column="PARENT" jdbcType="BIGINT"/>
+		<result property="subjectCode" column="SUBJECTCODE" jdbcType="VARCHAR"/>
+		<result property="subjectName" column="SUBJECTNAME" jdbcType="VARCHAR"/>
+		<result property="sort" column="SORT" jdbcType="INTEGER"/>
+	</resultMap>
+
+ 
+	<insert id="insertSubjectCode" parameterType="com.glaf.base.modules.sys.model.SubjectCode">
+		insert into SubjectCode 
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+		    ID
+			<if test="parent != null">
+				,PARENT 
+			</if>
+			<if test="subjectCode != null">
+				,SUBJECTCODE 
+			</if>
+			<if test="subjectName != null">
+				,SUBJECTNAME 
+			</if>
+			<if test="sort != null">
+				,SORT 
+			</if>
+		</trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			  #{id, jdbcType=BIGINT}
+	     
+			<if test="parent != null">
+				,#{parent, jdbcType=BIGINT}
+			</if>
+			<if test="subjectCode != null">
+				,#{subjectCode, jdbcType=VARCHAR}
+			</if>
+			<if test="subjectName != null">
+				,#{subjectName, jdbcType=VARCHAR}
+			</if>
+			<if test="sort != null">
+				,#{sort, jdbcType=INTEGER}
+			</if>
+		</trim>
+	</insert>
+
+	 
+	<update id="updateSubjectCode" parameterType="com.glaf.base.modules.sys.model.SubjectCode">
+		update SubjectCode
+		set
+		<trim prefix="" suffix="" suffixOverrides=",">		
+			<if test="parent != null">
+				PARENT = #{parent, jdbcType=BIGINT},
+			</if>
+			<if test="subjectCode != null">
+				SUBJECTCODE = #{subjectCode, jdbcType=VARCHAR},
+			</if>
+			<if test="subjectName != null">
+				SUBJECTNAME = #{subjectName, jdbcType=VARCHAR},
+			</if>
+			<if test="sort != null">
+				SORT = #{sort, jdbcType=INTEGER},
+			</if>
+		</trim>
+		where
+          ID = #{id, jdbcType=BIGINT}
+		
+	</update>
+
+ 
+	<delete id="deleteSubjectCodeById" parameterType="long"> 
+        delete from SubjectCode
+        where ID =	#{id}
+	</delete>
+
+	
+	<delete id="deleteSubjectCodes" parameterType="com.glaf.base.modules.sys.query.SubjectCodeQuery">
+		delete from SubjectCode
+		where ( 
+ 			  ID IN
+		<foreach item="x_rowId" index="index" collection="rowIds" 
+			open="(" separator="," close=")">
+                  #{x_rowId}
+		</foreach>
+		)
+	</delete>
+
+
+	<select id="getSubjectCodeById" parameterType="long" resultMap="subjectCodeResultMap">
+		select * from SubjectCode where ID = #{id}
+	</select>
+
+
+	<select id="getSubjectCodes" 
+		parameterType="com.glaf.base.modules.sys.query.SubjectCodeQuery"
+		resultMap="subjectCodeResultMap">
+		select E.*
+		<include refid="selectSubjectCodesSql" />
+		<choose>
+			<when test="orderBy != null">
+		     order by ${orderBy}
+			</when>
+			<otherwise>
+		      order by E.ID desc
+			</otherwise>
+		</choose>
+	</select>
+
+
+	<select id="getSubjectCodeCount" 
+		parameterType="com.glaf.base.modules.sys.query.SubjectCodeQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectSubjectCodesSql" />
+	</select>
+
+
+	<sql id="selectSubjectCodesSql">
+
+		from SubjectCode E
+		 
+		<where>
+		       1 = 1  
+
+			<if test="parent != null">
+				and E.PARENT = #{parent}
+			</if>
+
+			<if test="parentGreaterThanOrEqual != null">
+				and E.PARENT &gt;= #{parentGreaterThanOrEqual}
+			</if>
+
+			<if test="parentLessThanOrEqual != null">
+				and E.PARENT &lt;= #{parentLessThanOrEqual}
+			</if>
+
+			<if test="parents != null &amp;&amp; parents.size() &gt; 0">
+			    and E.PARENT IN
+				<foreach item="x_parent" index="index" collection="parents" 
+					open="(" separator="," close=")">
+                  #{x_parent}
+				</foreach>
+			</if>
+
+			<if test="subjectCodeLike != null &amp;&amp; subjectCodeLike != '' ">
+				and E.SUBJECTCODE like #{subjectCodeLike}
+			</if>
+
+			<if test="subjectCodes != null &amp;&amp; subjectCodes.size() &gt; 0">
+			    and E.SUBJECTCODE IN
+				<foreach item="x_subjectCode" index="index" collection="subjectCodes" 
+					open="(" separator="," close=")">
+                  #{x_subjectCode}
+				</foreach>
+			</if>
+	  
+			<if test="subjectNameLike != null &amp;&amp; subjectNameLike != '' ">
+				and E.SUBJECTNAME like #{subjectNameLike}
+			</if>
+
+			<if test="sortGreaterThanOrEqual != null">
+				and E.SORT &gt;= #{sortGreaterThanOrEqual}
+			</if>
+
+			<if test="sortLessThanOrEqual != null">
+				and E.SORT &lt;= #{sortLessThanOrEqual}
+			</if>
+			 
+		</where>
+	</sql>
+
+</mapper>
