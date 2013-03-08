@@ -144,6 +144,7 @@ public class SysDepartmentServiceImpl implements SysDepartmentService {
 		this.sysTreeService = sysTreeService;
 	}
 
+	@Transactional
 	public boolean create(SysDepartment bean) {
 		boolean ret = false;
 		if (bean.getId() == 0L) {
@@ -159,6 +160,7 @@ public class SysDepartmentServiceImpl implements SysDepartmentService {
 		return ret;
 	}
 
+	@Transactional
 	public boolean update(SysDepartment bean) {
 		if (bean.getNode() != null) {
 			List<SysTree> sts = (List<SysTree>) this.sysTreeService
@@ -196,16 +198,19 @@ public class SysDepartmentServiceImpl implements SysDepartmentService {
 		return true;
 	}
 
+	@Transactional
 	public boolean delete(SysDepartment bean) {
 		this.deleteById(bean.getId());
 		return true;
 	}
 
+	@Transactional
 	public boolean delete(long id) {
 		this.deleteById(id);
 		return true;
 	}
 
+	@Transactional
 	public boolean deleteAll(long[] ids) {
 		if (ids != null && ids.length > 0) {
 			for (long id : ids) {
@@ -301,6 +306,7 @@ public class SysDepartmentServiceImpl implements SysDepartmentService {
 	 * @param operate
 	 *            int ²Ù×÷
 	 */
+	@Transactional
 	public void sort(long parent, SysDepartment bean, int operate) {
 		if (bean == null)
 			return;

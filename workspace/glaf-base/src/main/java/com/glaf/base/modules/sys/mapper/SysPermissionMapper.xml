@@ -20,6 +20,7 @@
         where FUNCID =	#{functionId}
 	</delete>
 	
+	
 	<delete id="deleteSysPermissionByRoleId" parameterType="long"> 
         delete from sys_permission
         where ROLEID =	#{roleId}

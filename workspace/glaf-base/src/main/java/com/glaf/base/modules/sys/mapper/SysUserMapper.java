@@ -32,15 +32,19 @@ public interface SysUserMapper {
 
 	SysUser getSysUserById(Long id);
 
+	SysUser getSysUserByAccount(String account);
+
 	int getSysUserCount(SysUserQuery query);
-	
+
 	int getCountAuthorizedUsers(SysUserQuery query);
 
 	List<SysUser> getSysUsers(SysUserQuery query);
-	
+
 	List<SysUser> getAuthorizedUsers(SysUserQuery query);
-	
+
 	List<SysUser> getAuthorizedUsers(long authorizeFrom);
+
+	List<SysUser> getSysRoleUsers(long roleId);
 
 	void insertSysUser(SysUser model);
 

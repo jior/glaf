@@ -183,7 +183,7 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 		this.tableDataService = tableDataService;
 	}
 
-	@Override
+	@Transactional
 	public boolean addRole(long fromUserId, long toUserId, String startDate,
 			String endDate, int mark, String processNames,
 			String processDescriptions) {
@@ -236,7 +236,7 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 		return ret;
 	}
 
-	@Override
+	@Transactional
 	public boolean create(SysUserRole bean) {
 		if (bean.getId() == 0L) {
 			bean.setId(idGenerator.getNextId());
@@ -245,11 +245,13 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 		return true;
 	}
 
+	@Transactional
 	public boolean delete(long id) {
 		this.deleteById(id);
 		return true;
 	}
 
+	@Transactional
 	public boolean delete(SysUserRole bean) {
 		this.deleteById(bean.getId());
 		return true;
@@ -440,6 +442,7 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 		return list;
 	}
 
+	@Transactional
 	public void insertAgent(SysUser fromUser, SysUser toUser, String startDate,
 			String endDate, int mark, String processNames) {
 		if (endDate.length() == 10) {
@@ -495,6 +498,7 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 		}
 	}
 
+	@Transactional
 	public void removeAgent(SysUser fromUser, SysUser toUser) {
 		TableModel table = new TableModel();
 		table.setTableName("SYS_AGENT");
@@ -503,6 +507,7 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 		tableDataService.deleteTableData(table);
 	}
 
+	@Transactional
 	public boolean removeRole(long fromUserId, long toUserId) {
 		boolean ret = false;
 		SysUser fromUser = sysUserService.findById(fromUserId);
@@ -528,6 +533,7 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 		return true;
 	}
 
+	@Transactional
 	public boolean removeRoles() {
 		SysUserRoleQuery query = new SysUserRoleQuery();
 		query.availDateEndLessThanOrEqual(new Date());
@@ -552,6 +558,7 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 		return true;
 	}
 
+	@Transactional
 	public boolean update(SysUserRole bean) {
 		this.save(bean);
 		return true;

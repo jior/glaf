@@ -366,7 +366,7 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 		while (iter.hasNext()) {
 			SysUserRole userRole = (SysUserRole) iter.next();
 			// 判断是否是授权人
-			if (userRole.getAuthorizeFrom() != 0 ) {
+			if (userRole.getAuthorizeFrom() != 0) {
 				delete(userRole);// 删除权限
 			}
 		}
@@ -404,7 +404,7 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 	}
 
 	/**
-	 * 工作流授权 
+	 * 工作流授权
 	 * 
 	 * @param fromUser
 	 * @param toUser

@@ -136,21 +136,25 @@ public class SysTreeServiceImpl implements SysTreeService {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}
 
+	@Transactional
 	public boolean create(SysTree bean) {
 		this.save(bean);
 		return true;
 	}
 
+	@Transactional
 	public boolean delete(long id) {
 		this.deleteById(id);
 		return true;
 	}
 
+	@Transactional
 	public boolean delete(SysTree bean) {
 		this.deleteById(bean.getId());
 		return true;
 	}
 
+	@Transactional
 	public boolean deleteAll(long[] ids) {
 		if (ids != null && ids.length > 0) {
 			for (long id : ids) {
@@ -235,7 +239,7 @@ public class SysTreeServiceImpl implements SysTreeService {
 		return pager;
 	}
 
-	@Override
+ 
 	public List<SysTree> getSysTreeListForDept(int parent, int status) {
 		SysTreeQuery query = new SysTreeQuery();
 		query.setParent(Long.valueOf(parent));
@@ -263,6 +267,7 @@ public class SysTreeServiceImpl implements SysTreeService {
 		}
 	}
 
+	@Transactional
 	public void sort(long parent, SysTree bean, int operate) {
 		if (operate == SysConstants.SORT_PREVIOUS) {// Ç°ÒÆ
 			sortByPrevious(parent, bean);
@@ -319,6 +324,7 @@ public class SysTreeServiceImpl implements SysTreeService {
 		}
 	}
 
+	@Transactional
 	public boolean update(SysTree bean) {
 		this.save(bean);
 		return true;

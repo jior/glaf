@@ -153,7 +153,7 @@
 	</update>
 
  
-	<delete id="deleteDictoryById" parameterType="string"> 
+	<delete id="deleteDictoryById" parameterType="long"> 
         delete from sys_dictory
         where ID =	#{id}
 	</delete>
@@ -169,7 +169,7 @@
 		)
 	</delete>
 
-	<select id="getDictoryById" parameterType="string" resultMap="dictoryResultMap">
+	<select id="getDictoryById" parameterType="long" resultMap="dictoryResultMap">
 		select * from sys_dictory where ID = #{id}
 	</select>
 

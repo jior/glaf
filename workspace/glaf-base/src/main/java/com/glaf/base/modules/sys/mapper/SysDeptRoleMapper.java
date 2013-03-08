@@ -29,7 +29,7 @@ public interface SysDeptRoleMapper {
 	void deleteSysDeptRoles(SysDeptRoleQuery query);
 
 	void deleteSysDeptRoleById(Long id);
-	
+
 	void deleteSysDeptRoleByDeptId(Long deptId);
 
 	SysDeptRole getSysDeptRoleById(Long id);

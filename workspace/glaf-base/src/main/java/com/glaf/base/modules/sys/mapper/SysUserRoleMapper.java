@@ -32,7 +32,6 @@ public interface SysUserRoleMapper {
 
 	SysUserRole getSysUserRoleById(Long id);
 
- 
 	List<Map<String, Object>> getProcessByUser(Long userId);
 
 	int getSysUserRoleCount(SysUserRoleQuery query);

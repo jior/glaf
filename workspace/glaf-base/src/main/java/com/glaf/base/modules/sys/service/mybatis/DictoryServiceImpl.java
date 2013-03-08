@@ -143,16 +143,19 @@ public class DictoryServiceImpl implements DictoryService {
 		return true;
 	}
 
+	@Transactional
 	public boolean delete(Dictory bean) {
 		this.deleteById(bean.getId());
 		return true;
 	}
 
+	@Transactional
 	public boolean delete(long id) {
 		this.deleteById(id);
 		return true;
 	}
 
+	@Transactional
 	public boolean deleteAll(long[] ids) {
 		if (ids != null && ids.length > 0) {
 			for (long id : ids) {
@@ -253,7 +256,6 @@ public class DictoryServiceImpl implements DictoryService {
 	 * @param bean
 	 */
 	private void sortByPrevious(long typeId, Dictory bean) {
-
 		DictoryQuery query = new DictoryQuery();
 		query.typeId(typeId);
 		query.setSortGreaterThan(bean.getSort());

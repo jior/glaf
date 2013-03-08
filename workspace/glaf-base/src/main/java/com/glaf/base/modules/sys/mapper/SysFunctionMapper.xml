@@ -83,7 +83,7 @@
 	</update>
 
  
-	<delete id="deleteSysFunctionById" parameterType="string"> 
+	<delete id="deleteSysFunctionById" parameterType="long"> 
         delete from sys_function
         where ID =	#{id}
 	</delete>

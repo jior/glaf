@@ -123,9 +123,8 @@
 	</update>
 
  
-	<delete id="deleteSysTreeById" parameterType="string"> 
-        delete from sys_tree
-        where ID =	#{id}
+	<delete id="deleteSysTreeById" parameterType="long"> 
+        delete from sys_tree where ID =	#{id}
 	</delete>
 	
 	<delete id="deleteSysTrees" parameterType="com.glaf.base.modules.sys.query.SysTreeQuery">
@@ -139,7 +138,7 @@
 		)
 	</delete>
 
-	<select id="getSysTreeById" parameterType="string" resultMap="sysTreeResultMap">
+	<select id="getSysTreeById" parameterType="long" resultMap="sysTreeResultMap">
 		select * from sys_tree where ID = #{id}
 	</select>
 

@@ -83,7 +83,7 @@
 	</update>
 
  
-	<delete id="deleteSysLogById" parameterType="string"> 
+	<delete id="deleteSysLogById" parameterType="long"> 
         delete from sys_log
         where ID =	#{id}
 	</delete>
@@ -99,7 +99,7 @@
 		)
 	</delete>
 
-	<select id="getSysLogById" parameterType="string" resultMap="sysLogResultMap">
+	<select id="getSysLogById" parameterType="long" resultMap="sysLogResultMap">
 		select * from sys_log where ID = #{id}
 	</select>
 

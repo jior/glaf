@@ -52,7 +52,7 @@ public class SysRoleServiceImpl implements SysRoleService {
 	protected SqlSessionTemplate sqlSessionTemplate;
 
 	protected SysRoleMapper sysRoleMapper;
-	
+
 	protected SysDeptRoleMapper sysDeptRoleMapper;
 
 	public SysRoleServiceImpl() {
@@ -137,8 +137,7 @@ public class SysRoleServiceImpl implements SysRoleService {
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}
-	
-	
+
 	@Resource
 	public void setSysDeptRoleMapper(SysDeptRoleMapper sysDeptRoleMapper) {
 		this.sysDeptRoleMapper = sysDeptRoleMapper;

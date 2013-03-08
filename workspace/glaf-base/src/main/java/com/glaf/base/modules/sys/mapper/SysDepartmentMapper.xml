@@ -133,7 +133,7 @@
     </update>
 
  
-	<delete id="deleteSysDepartmentById" parameterType="string"> 
+	<delete id="deleteSysDepartmentById" parameterType="long"> 
         delete from sys_department
         where ID =	#{id}
 	</delete>
@@ -149,7 +149,7 @@
 		)
 	</delete>
 
-	<select id="getSysDepartmentById" parameterType="string" resultMap="sysDepartmentResultMap">
+	<select id="getSysDepartmentById" parameterType="long" resultMap="sysDepartmentResultMap">
 		select * from sys_department where ID = #{id}
 	</select>
 

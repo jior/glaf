@@ -103,10 +103,11 @@
 	</update>
 
  
-	<delete id="deleteSysUserRoleById" parameterType="string"> 
+	<delete id="deleteSysUserRoleById" parameterType="long"> 
         delete from sys_user_role
         where ID =	#{id}
 	</delete>
+	
 	
 	<delete id="deleteSysUserRoles" parameterType="com.glaf.base.modules.sys.query.SysUserRoleQuery">
 		delete from sys_user_role
@@ -118,8 +119,9 @@
 		</foreach>
 		)
 	</delete>
+	
 
-	<select id="getSysUserRoleById" parameterType="string" resultMap="sysUserRoleResultMap">
+	<select id="getSysUserRoleById" parameterType="long" resultMap="sysUserRoleResultMap">
 		select * from sys_user_role where ID = #{id}
 	</select>
 	
@@ -150,6 +152,7 @@
 			</otherwise>
 		</choose>
 	</select>
+	
 
 	<select id="getSysUserRoleCount" 
 		parameterType="com.glaf.base.modules.sys.query.SysUserRoleQuery"
@@ -157,6 +160,7 @@
 		select count(*)
 		<include refid="selectSysUserRolesSql" />
 	</select>
+	
 
 	<sql id="selectSysUserRolesSql">
 

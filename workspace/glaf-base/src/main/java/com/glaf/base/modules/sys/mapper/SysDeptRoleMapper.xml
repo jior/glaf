@@ -106,7 +106,7 @@
 		)
 	</delete>
 
-	<select id="getSysDeptRoleById" parameterType="string" resultMap="sysDeptRoleResultMap">
+	<select id="getSysDeptRoleById" parameterType="long" resultMap="sysDeptRoleResultMap">
 		select * from sys_dept_role where ID = #{id}
 	</select>
 

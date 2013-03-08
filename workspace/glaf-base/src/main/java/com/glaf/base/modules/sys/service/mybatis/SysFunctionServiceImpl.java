@@ -135,6 +135,7 @@ public class SysFunctionServiceImpl implements SysFunctionService {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}
 
+	@Transactional
 	public boolean create(SysFunction bean) {
 		if (bean.getId() == 0L) {
 			bean.setId(idGenerator.getNextId());
@@ -144,21 +145,25 @@ public class SysFunctionServiceImpl implements SysFunctionService {
 		return true;
 	}
 
+	@Transactional
 	public boolean update(SysFunction bean) {
 		sysFunctionMapper.updateSysFunction(bean);
 		return true;
 	}
 
+	@Transactional
 	public boolean delete(SysFunction bean) {
 		this.deleteById(bean.getId());
 		return true;
 	}
 
+	@Transactional
 	public boolean delete(long id) {
 		this.deleteById(id);
 		return true;
 	}
 
+	@Transactional
 	public boolean deleteAll(long[] ids) {
 		if (ids != null && ids.length > 0) {
 			for (long id : ids) {
@@ -193,6 +198,7 @@ public class SysFunctionServiceImpl implements SysFunctionService {
 	 * @param operate
 	 *            int ²Ù×÷
 	 */
+	@Transactional
 	public void sort(SysFunction bean, int operate) {
 		if (bean == null)
 			return;

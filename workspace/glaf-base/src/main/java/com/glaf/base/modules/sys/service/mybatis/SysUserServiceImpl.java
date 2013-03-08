@@ -21,6 +21,8 @@ package com.glaf.base.modules.sys.service.mybatis;
 import java.util.*;
 
 import javax.annotation.Resource;
+
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.RowBounds;
@@ -58,6 +60,8 @@ public class SysUserServiceImpl implements SysUserService {
 	protected SysDeptRoleMapper sysDeptRoleMapper;
 
 	protected SysUserRoleMapper sysUserRoleMapper;
+	
+	protected SysRoleMapper sysRoleMapper;
 
 	protected SysAccessMapper sysAccessMapper;
 
@@ -186,30 +190,42 @@ public class SysUserServiceImpl implements SysUserService {
 	public void setSysFunctionMapper(SysFunctionMapper sysFunctionMapper) {
 		this.sysFunctionMapper = sysFunctionMapper;
 	}
+	
+	
+	@Resource
+	public void setSysRoleMapper(SysRoleMapper sysRoleMapper) {
+		this.sysRoleMapper = sysRoleMapper;
+	}
 
+	@Transactional
 	public boolean create(SysUser bean) {
 		this.save(bean);
 		return true;
 	}
 
+	@Transactional
 	public boolean update(SysUser bean) {
 		sysUserMapper.updateSysUser(bean);
 		return true;
 	}
 
+	@Transactional
 	public boolean updateUser(SysUser bean) {
 		sysUserMapper.updateSysUser(bean);
 		return true;
 	}
 
+	@Transactional
 	public boolean delete(SysUser bean) {
 		return false;
 	}
 
+	@Transactional
 	public boolean delete(long id) {
 		return false;
 	}
 
+	@Transactional
 	public boolean deleteAll(long[] ids) {
 		return false;
 	}
@@ -410,6 +426,7 @@ public class SysUserServiceImpl implements SysUserService {
 		return users;
 	}
 
+	@Transactional
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public boolean updateRole(SysUser user, Set delRoles, Set newRoles) {
 		boolean flag = false;
@@ -481,8 +498,9 @@ public class SysUserServiceImpl implements SysUserService {
 		Set<SysDeptRole> set = this.getUserRoles(user);
 		Iterator<SysDeptRole> it = set.iterator();
 		while (it.hasNext()) {
-			SysDeptRole s = (SysDeptRole) it.next();
-			if (s.getRole() != null && code.equals(s.getRole().getCode())) {
+			SysDeptRole deptRole = (SysDeptRole) it.next();
+			SysRole role = sysRoleMapper.getSysRoleById(deptRole.getSysRoleId());
+			if (role != null && StringUtils.equals(role.getCode(), code)) {
 				// 代判断用户是否拥有此角色
 				flag = true;
 				break;

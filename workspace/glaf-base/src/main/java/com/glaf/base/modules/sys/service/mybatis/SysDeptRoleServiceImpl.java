@@ -53,6 +53,10 @@ public class SysDeptRoleServiceImpl implements SysDeptRoleService {
 
 	protected SysDeptRoleMapper sysDeptRoleMapper;
 
+	protected SysUserRoleMapper sysUserRoleMapper;
+
+	protected SysUserMapper sysUserMapper;
+
 	protected SysPermissionMapper sysPermissionMapper;
 
 	protected SysAccessMapper sysAccessMapper;
@@ -162,26 +166,51 @@ public class SysDeptRoleServiceImpl implements SysDeptRoleService {
 		this.sysRoleService = sysRoleService;
 	}
 
+	@Resource
+	public void setSysUserRoleMapper(SysUserRoleMapper sysUserRoleMapper) {
+		this.sysUserRoleMapper = sysUserRoleMapper;
+	}
+
+	@Resource
+	public void setSysPermissionMapper(SysPermissionMapper sysPermissionMapper) {
+		this.sysPermissionMapper = sysPermissionMapper;
+	}
+
+	@Resource
+	public void setSysAccessMapper(SysAccessMapper sysAccessMapper) {
+		this.sysAccessMapper = sysAccessMapper;
+	}
+
+	@Resource
+	public void setSysUserMapper(SysUserMapper sysUserMapper) {
+		this.sysUserMapper = sysUserMapper;
+	}
+
+	@Transactional
 	public boolean create(SysDeptRole bean) {
 		this.save(bean);
 		return true;
 	}
 
+	@Transactional
 	public boolean update(SysDeptRole bean) {
 		this.save(bean);
 		return true;
 	}
 
+	@Transactional
 	public boolean delete(SysDeptRole bean) {
 		this.deleteById(bean.getId());
 		return true;
 	}
 
+	@Transactional
 	public boolean delete(long id) {
 		this.deleteById(id);
 		return true;
 	}
 
+	@Transactional
 	public boolean deleteAll(long[] ids) {
 		if (ids != null && ids.length > 0) {
 			for (long id : ids) {
@@ -190,7 +219,8 @@ public class SysDeptRoleServiceImpl implements SysDeptRoleService {
 		}
 		return true;
 	}
-
+	
+	@Transactional
 	public boolean deleteByDept(long deptId) {
 		sysDeptRoleMapper.deleteSysDeptRoleByDeptId(deptId);
 		return true;
@@ -212,18 +242,23 @@ public class SysDeptRoleServiceImpl implements SysDeptRoleService {
 		return null;
 	}
 
-	public Set<SysUser> findRoleUser(long deptId, String code) {
+	public Set<SysUser> findRoleUser(long deptId, String roleCode) {
+		Set<SysUser> users = new HashSet<SysUser>();
 		SysDeptRole deptRole = null;
 
-		SysRole role = sysRoleService.findByCode(code);
+		SysRole role = sysRoleService.findByCode(roleCode);
 		if (role != null) {
 			deptRole = find(deptId, role.getId());
 		}
-		if (deptRole == null) {
-			deptRole = new SysDeptRole();
+		if (deptRole != null) {
+			List<SysUser> list = sysUserMapper
+					.getSysRoleUsers(deptRole.getId());
+			if (list != null && !list.isEmpty()) {
+				users.addAll(list);
+			}
 		}
 
-		return deptRole.getUsers();
+		return users;
 	}
 
 	public PageResult getRoleList(long deptId, int pageNo, int pageSize) {
@@ -263,6 +298,7 @@ public class SysDeptRoleServiceImpl implements SysDeptRoleService {
 	 * @param operate
 	 *            int 操作
 	 */
+	@Transactional
 	public void sort(SysDeptRole bean, int operate) {
 		if (bean == null)
 			return;
@@ -329,9 +365,12 @@ public class SysDeptRoleServiceImpl implements SysDeptRoleService {
 	 * @param funcId
 	 * @return
 	 */
-	public boolean saveRoleApplication(long roleId, long[] appIds, long[] funcIds) {
+	@Transactional
+	public boolean saveRoleApplication(long roleId, long[] appIds,
+			long[] funcIds) {
 		SysDeptRole role = findById(roleId);
 		if (appIds != null) {
+			sysAccessMapper.deleteSysAccessByRoleId(roleId);
 			// 设置角色对应的模块访问权限
 			for (int i = 0; i < appIds.length; i++) {
 				logger.info("app id:" + appIds[i]);
@@ -344,6 +383,7 @@ public class SysDeptRoleServiceImpl implements SysDeptRoleService {
 
 		// 设置模块对应的功能操作权限
 		if (funcIds != null) {
+			sysPermissionMapper.deleteSysPermissionByRoleId(roleId);
 			for (int i = 0; i < funcIds.length; i++) {
 				logger.info("function id:" + funcIds[i]);
 				SysPermission p = new SysPermission();

@@ -93,7 +93,7 @@
 	</update>
 
  
-	<delete id="deleteSysApplicationById" parameterType="string"> 
+	<delete id="deleteSysApplicationById" parameterType="long"> 
         delete from sys_application
         where ID =	#{id}
 	</delete>
@@ -110,11 +110,12 @@
 	</delete>
 	
 
-	<select id="getSysApplicationById" parameterType="string" resultMap="sysApplicationResultMap">
+	<select id="getSysApplicationById" parameterType="long" resultMap="sysApplicationResultMap">
 		select * from sys_application where ID = #{id}
 	</select>
 	
-	<select id="getSysApplicationByRoleId" parameterType="long" resultMap="sysFunctionResultMap">
+	
+	<select id="getSysApplicationByRoleId" parameterType="long" resultMap="sysApplicationResultMap">
 		
 		select E.* from sys_application E
 		inner join sys_access A

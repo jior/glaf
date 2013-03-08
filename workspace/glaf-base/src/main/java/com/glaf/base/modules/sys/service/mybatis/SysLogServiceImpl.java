@@ -157,7 +157,6 @@ public class SysLogServiceImpl implements SysLogService {
 		return true;
 	}
 
-	@Transactional
 	public SysLog findById(long id) {
 		return this.getSysLog(id);
 	}
