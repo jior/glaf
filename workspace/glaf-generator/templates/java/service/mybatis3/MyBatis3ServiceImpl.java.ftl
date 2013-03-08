@@ -3,8 +3,8 @@ package ${packageName}.service;
 import java.util.*;
 import javax.annotation.Resource;
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.*;
@@ -21,7 +21,7 @@ import ${packageName}.query.*;
 @Service("${modelName}Service")
 @Transactional(readOnly = true) 
 public class ${entityName}ServiceImpl implements ${entityName}Service {
-	protected final static Log logger = LogFactory.getLog(${entityName}ServiceImpl.class);
+	protected final Logger logger = LoggerFactory.getLogger(getClass());
 
 <#if idField.type?exists && ( idField.type== 'Integer' )>        
         protected LongIdGenerator idGenerator;

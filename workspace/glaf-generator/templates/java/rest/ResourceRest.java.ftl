@@ -11,8 +11,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -31,7 +31,7 @@ import ${packageName}.service.${entityName}Service;
 @Controller
 @Path("/rs/apps/${modelName}")
 public class ${entityName}ResourceRest {
-	protected  static final Log logger = LogFactory.getLog(${entityName}ResourceRest.class);
+	protected final Logger logger = LoggerFactory.getLogger(getClass());
 
 	@javax.annotation.Resource
 	protected ${entityName}Service ${modelName}Service;

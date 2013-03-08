@@ -1,10 +1,10 @@
 package ${packageName}.action;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ${entityName}Action extends ${entityName}BaseAction {
-	protected final static Log logger = LogFactory.getLog(${entityName}Action.class);
+	protected final Logger logger = LoggerFactory.getLogger(getClass());
 
 	public ${entityName}Action() {
 

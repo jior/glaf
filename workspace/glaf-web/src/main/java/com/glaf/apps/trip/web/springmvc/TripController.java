@@ -1,7 +1,7 @@
 package com.glaf.apps.trip.web.springmvc;
  
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,8 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/apps/trip")
 public class TripController extends TripBaseController {
-	protected final static Log logger = LogFactory
-			.getLog(TripController.class);
+	protected final Logger logger = LoggerFactory.getLogger(getClass());
 
 	public TripController() {
 	    

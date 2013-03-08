@@ -3,8 +3,8 @@ package com.glaf.apps.trip.service;
 import java.util.*;
 import javax.annotation.Resource;
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.*;
@@ -21,7 +21,7 @@ import com.glaf.apps.trip.query.*;
 @Service("tripService")
 @Transactional(readOnly = true) 
 public class TripServiceImpl implements TripService {
-	protected final static Log logger = LogFactory.getLog(TripServiceImpl.class);
+	protected final Logger logger = LoggerFactory.getLogger(getClass());
 
 	protected IdGenerator idGenerator;
        

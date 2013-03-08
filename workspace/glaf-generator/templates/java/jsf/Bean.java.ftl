@@ -8,8 +8,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.primefaces.model.LazyDataModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -23,9 +23,9 @@ import ${packageName}.service.*;
 @Component("${modelName}Bean")
 @Scope("view")
 public class ${entityName}Bean implements Serializable  {
-    private static final long serialVersionUID = 1L;
+        private static final long serialVersionUID = 1L;
 
-	protected static final Log logger = LogFactory.getLog(${entityName}Bean.class);
+	protected final Logger logger = LoggerFactory.getLogger(getClass());
 
 	@Autowired
 	protected transient ${entityName}Service ${modelName}Service;

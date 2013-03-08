@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 import com.glaf.base.context.*;
@@ -18,7 +18,7 @@ public class ${entityName}DataModel extends LazyDataModel<${entityName}> {
 
 	private static final long serialVersionUID = 0L;
 
-	protected static final Log logger = LogFactory.getLog(${entityName}DataModel.class);
+	protected final Logger logger = LoggerFactory.getLogger(getClass());
 
 	protected transient ${entityName}Service ${modelName}Service;
 
