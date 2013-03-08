@@ -74,7 +74,7 @@ public class JsonTreeHelper {
 	}
 
 	public JSONObject fillTreeDataChildren(TreeModel treeModel,
-			List<Integer> includes) {
+			List<Long> includes) {
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("id", treeModel.getId());
 		jsonObject.put("menuId",
