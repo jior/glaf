@@ -47,6 +47,10 @@ public class SystemConfig {
 
 	public final static String NOW = "${now}";
 
+	/**
+	 * 返回web应用的WEB-INF目录的全路径
+	 * @return
+	 */
 	public static String getConfigRootPath() {
 		return SystemProperties.getConfigRootPath();
 	}

@@ -31,6 +31,7 @@ import com.glaf.base.dao.AbstractSpringDao;
 import com.glaf.base.modules.Constants;
 import com.glaf.base.modules.others.model.Attachment;
 import com.glaf.base.modules.others.service.AttachmentService;
+import com.glaf.core.config.SystemConfig;
 
 public class AttachmentServiceImpl implements AttachmentService {
 	private static final Log logger = LogFactory.getLog(AttachmentServiceImpl.class);
@@ -98,7 +99,7 @@ public class AttachmentServiceImpl implements AttachmentService {
 	 * @return
 	 */
 	public boolean deleteAll(long[] id) {
-		String path = Constants.ROOT_PATH + Constants.UPLOAD_DIR;
+		String path =  SystemConfig.getConfigRootPath() + Constants.UPLOAD_DIR;
 		logger.info(path);
 
 		List list = new ArrayList();

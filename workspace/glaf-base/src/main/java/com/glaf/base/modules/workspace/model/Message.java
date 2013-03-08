@@ -25,9 +25,6 @@ import com.glaf.base.modules.sys.model.SysUser;
 
 public class Message implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -3111749338365950889L;
 
 	private long id;

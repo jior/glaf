@@ -60,6 +60,7 @@ public class Database2XmlMapping {
 				for (FieldDefinition f : fields) {
 					f.setName(StringTools.lower(StringTools.camelStyle(f
 							.getName().toLowerCase())));
+					f.setTitle(f.getName());
 					if (!primaryKeys.isEmpty()) {
 						if (primaryKeys.contains(f.getColumnName())) {
 							classDefinition.setIdField(f);

@@ -1,20 +1,20 @@
 /*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.glaf.base.utils.upload;
 
@@ -42,12 +42,10 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import com.glaf.base.modules.Constants;
 import com.glaf.base.utils.StringUtil;
+import com.glaf.core.config.SystemConfig;
 
 public class BackGroundService extends HttpServlet implements Servlet {
 	private static final long serialVersionUID = 6162190133320085279L;
-
-	public static final String UPLOAD_DIR = Constants.ROOT_PATH
-			+ Constants.UPLOAD_DIR;
 
 	public static final String DEFAULT_UPLOAD_FAILURE_URL = "/inc/upload/result.jsp";
 
@@ -100,8 +98,8 @@ public class BackGroundService extends HttpServlet implements Servlet {
 	private void deleteUploadedFile(HttpServletRequest request) {
 		FileUploadStatus satusBean = getStatusBean(request);
 		for (int i = 0; i < satusBean.getUploadFileUrlList().size(); i++) {
-			File uploadedFile = new File(UPLOAD_DIR + File.separator
-					+ satusBean.getUploadFileUrlList().get(i));
+			File uploadedFile = new File(SystemConfig.getConfigRootPath()
+					+ File.separator + satusBean.getUploadFileUrlList().get(i));
 			uploadedFile.delete();
 		}
 		satusBean.getUploadFileUrlList().clear();
@@ -141,7 +139,7 @@ public class BackGroundService extends HttpServlet implements Servlet {
 		DiskFileItemFactory factory = new DiskFileItemFactory();
 		// 设置内存缓冲区，超过后写入临时文件
 		factory.setSizeThreshold(204800);
-		File tempDir = new File(UPLOAD_DIR + "/temp");
+		File tempDir = new File(SystemConfig.getConfigRootPath() + "/temp");
 		if (!tempDir.exists()) {
 			tempDir.mkdir();
 		}
@@ -173,7 +171,8 @@ public class BackGroundService extends HttpServlet implements Servlet {
 			for (int i = 0; i < items.size(); i++) {
 				if (i == 0) {
 					// 生成两层随机目录
-					uploadDir = StringUtil.createDir(UPLOAD_DIR);
+					uploadDir = StringUtil.createDir(SystemConfig
+							.getConfigRootPath());
 				}
 				FileItem item = (FileItem) items.get(i);
 
@@ -187,8 +186,9 @@ public class BackGroundService extends HttpServlet implements Servlet {
 				else if (!item.isFormField() && item.getName().length() > 0) {
 					String fileName = getFileName(takeOutFileName(item
 							.getName()));
-					File uploadedFile = new File(
-							new File(UPLOAD_DIR, uploadDir), fileName);
+					File uploadedFile = new File(new File(
+							SystemConfig.getConfigRootPath(), uploadDir),
+							fileName);
 					item.write(uploadedFile);
 					// 更新上传文件列表
 					FileUploadStatus satusBean = getStatusBean(request);

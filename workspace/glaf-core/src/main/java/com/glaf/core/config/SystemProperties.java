@@ -46,6 +46,10 @@ public class SystemProperties {
 		return false;
 	}
 
+	/**
+	 * 返回web应用的WEB-INF目录的全路径
+	 * @return
+	 */
 	public static String getConfigRootPath() {
 		if (ROOT_CONF_PATH == null) {
 			reload();

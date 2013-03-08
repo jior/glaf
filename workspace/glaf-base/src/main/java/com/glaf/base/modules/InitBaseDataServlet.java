@@ -44,8 +44,6 @@ public class InitBaseDataServlet extends HttpServlet {
 
 	public void init() {
 		long startTime = System.currentTimeMillis();
-		Constants.ROOT_PATH = getServletContext().getRealPath("/");
-		logger.info("root path:" + Constants.ROOT_PATH);
 		logger.info("初始化基础信息...");
 		try {
 			bdm = BaseDataManager.getInstance();

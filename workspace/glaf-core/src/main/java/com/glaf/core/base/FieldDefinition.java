@@ -226,6 +226,10 @@ public class FieldDefinition implements java.lang.Comparable<FieldDefinition>,
 		return type;
 	}
 
+	public String getLowerCaseType() {
+		return type.toLowerCase();
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
