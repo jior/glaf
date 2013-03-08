@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<mapping >
+    <entity name="Scheduler" table="sys_scheduler" package="com.glaf.core" title="系统调度" englishTitle="Scheduler">
+        <id name="id" type="String" column="ID" title="编号" englishTitle="id"/>
+        <property name="taskName" column="TASKNAME" type="String" length="200" title="任务名称" englishTitle="taskName"/>
+        <property name="taskType" column="TASKTYPE" type="String" length="50" title="任务类型" englishTitle="taskType"/>
+        <property name="jobClass" column="JOBCLASS" type="String" length="200" title="任务名" englishTitle="jobClass"/>
+        <property name="title" column="TITLE" type="String" length="200" title="标题" englishTitle="title"/>
+        <property name="content" column="CONTENT" type="String" length="500" title="内容" englishTitle="content"/>
+        <property name="startDate" column="STARTDATE" type="Date" title="开始日期" englishTitle="startDate"/>
+        <property name="endDate" column="ENDDATE" type="Date" title="结束日期" englishTitle="endDate"/>
+        <property name="threadSize" column="THREADSIZE" type="Integer" title="线程数" englishTitle="threadSize"/>
+        <property name="repeatCount" column="REPEATCOUNT" type="Integer" title="重复次数" englishTitle="repeatCount"/>
+        <property name="repeatInterval" column="REPEATINTERVAL" type="Integer" title="重复间隔" englishTitle="repeatInterval"/>
+        <property name="startDelay" column="STARTDELAY" type="Integer" title="开始延时" englishTitle="startDelay"/>
+        <property name="priority" column="PRIORITY_" type="Integer" title="优先级" englishTitle="priority"/>
+        <property name="locked" column="LOCKED_" type="Integer" title="是否锁定" englishTitle="locked"/>
+        <property name="startup" column="STARTUP_" type="Integer" title="是否启动" englishTitle="startup"/>
+        <property name="autoStartup" column="AUTOSTARTUP" type="Integer" title="自动启动" englishTitle="autoStartup"/>
+        <property name="expression" column="EXPRESSION_" type="String" length="500" title="cron表达式" 
+		          englishTitle="cron expression"/>
+        <property name="createBy" column="CREATEBY" type="String" length="50" title="创建用户" englishTitle="createBy"/>
+        <property name="createDate" column="CREATEDATE" type="Date" title="创建日期" englishTitle="createDate"/>
+		<property name="attribute" column="ATTRIBUTE_" type="String" length="500" title="扩展属性" englishTitle="attribute"/>
+    </entity>
+</mapping>

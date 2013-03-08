@@ -1,0 +1,37 @@
+
+<mapping>
+    <entity name="Mail" package="com.glaf.mail" table="SYS_MAIL" title="Mail" englishTitle="Mail">
+        <id name="id" column="ID_" type="String" title="Id" englishTitle="Id" length="50"/>
+        <property name="nodeId" column="NODEID_" type="String" title="NodeId" englishTitle="NodeId" dataType="0" length="50"/>
+        <property name="mailId" column="MAILID_" type="String" title="MailId" englishTitle="MailId" dataType="0" length="50"/>
+        <property name="messageId" column="MESSAGEID_" type="String" title="MessageId" englishTitle="MessageId" dataType="0" length="250"/>
+        <property name="resourceId" column="RESOURCEID_" type="String" title="ResourceId" englishTitle="ResourceId" dataType="0" length="50"/>
+        <property name="username" column="USERNAME_" type="String" title="Username" englishTitle="Username" dataType="0" length="100"/>
+        <property name="taskId" column="TASKID_" type="String" title="TaskId" englishTitle="TaskId" dataType="0" length="50"/>
+        <property name="accountId" column="ACCOUNTID_" type="String" title="AccountId" englishTitle="AccountId" dataType="0" length="50"/>
+        <property name="senderId" column="SENDERID_" type="String" title="SenderId" englishTitle="SenderId" dataType="0" length="50"/>
+        <property name="receiverId" column="RECEIVERID_" type="String" title="ReceiverId" englishTitle="ReceiverId" dataType="0" length="50"/>
+        <property name="subject" column="SUBJECT_" type="String" title="Subject" englishTitle="Subject" dataType="0" length="255"/>
+        <property name="content" column="CONTENT_" type="String" title="Content" englishTitle="Content" dataType="0" length="255"/>
+        <property name="html" column="HTML_" type="String" title="Html" englishTitle="Html" dataType="0" length="255"/>
+        <property name="templateId" column="TEMPLATEID_" type="String" title="TemplateId" englishTitle="TemplateId" dataType="0" length="50"/>
+        <property name="mailFrom" column="MAILFROM_" type="String" title="MailFrom" englishTitle="MailFrom" dataType="0" length="100"/>
+        <property name="mailTo" column="MAILTO_" type="String" title="MailTo" englishTitle="MailTo" dataType="0" length="200"/>
+        <property name="mailCC" column="MAILCC_" type="String" title="MailCC" englishTitle="MailCC" dataType="0" length="200"/>
+        <property name="mailBCC" column="MAILBCC_" type="String" title="MailBCC" englishTitle="MailBCC" dataType="0" length="200"/>
+        <property name="mailReplyTo" column="MAILREPLYTO_" type="String" title="MailReplyTo" englishTitle="MailReplyTo" dataType="0" length="100"/>
+        <property name="mailBox" column="MAILBOX_" type="String" title="MailBox" englishTitle="MailBox" dataType="0" length="50"/>
+        <property name="mailType" column="MAILTYPE_" type="String" title="MailType" englishTitle="MailType" dataType="0" length="50"/>
+        <property name="mailSize" column="MAILSIZE_" type="Integer" title="MailSize" englishTitle="MailSize" dataType="0" length="255"/>
+        <property name="sendDate" column="SENDDATE_" type="Date" title="SendDate" englishTitle="SendDate" dataType="0" length="255"/>
+        <property name="status" column="STATUS_" type="Integer" title="Status" englishTitle="Status" dataType="0" length="255"/>
+        <property name="sendStatus" column="SENDSTATUS_" type="Integer" title="SendStatus" englishTitle="SendStatus" dataType="0" length="255"/>
+        <property name="retryTimes" column="RETRYTIMES_" type="Integer" title="RetryTimes" englishTitle="RetryTimes" dataType="0" length="255"/>
+        <property name="receiveDate" column="RECEIVEDATE_" type="Date" title="ReceiveDate" englishTitle="ReceiveDate" dataType="0" length="255"/>
+        <property name="receiveStatus" column="RECEIVESTATUS_" type="Integer" title="ReceiveStatus" englishTitle="ReceiveStatus" dataType="0" length="255"/>
+        <property name="createBy" column="CREATEBY_" type="String" title="CreateBy" englishTitle="CreateBy" dataType="0" length="50"/>
+        <property name="createDate" column="CREATEDATE_" type="Date" title="CreateDate" englishTitle="CreateDate" dataType="0" length="255" updatable="false"/>
+        <property name="lastViewDate" column="LASTVIEWDATE_" type="Date" title="LastViewDate" englishTitle="LastViewDate" dataType="0" length="255"/>
+        <property name="lastViewIP" column="LASTVIEWIP_" type="String" title="LastViewIP" englishTitle="LastViewIP" dataType="0" length="100"/>
+    </entity>
+</mapping>

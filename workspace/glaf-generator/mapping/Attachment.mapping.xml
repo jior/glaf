@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<mapping>
+    <entity name="Attachment"
+            table="Attachment"
+            package="com.glaf.base.modules.others" title="附件" englishTitle="Attachment">
+        <id name="id" type="Long" column="ID" title="编号" englishTitle="id"/>
+        <property name="referId" type="Long" column="REFERID" title="引用ID" englishTitle="referId"/>
+        <property name="referType" type="Integer" column="REFERTYPE" title="引用类型" englishTitle="referType"/>
+        <property name="name" type="String" column="NAME" title="名称" englishTitle="name"/>
+        <property name="url" type="String" column="URL" title="URL" englishTitle="url"/>
+        <property name="createDate" type="Date" column="CREATEDATE" title="创建日期" englishTitle="createDate"/>        
+        <property name="createId" type="Long" column="CREATEID" title="创建人编号" englishTitle="createId"/>        
+    </entity>
+</mapping>

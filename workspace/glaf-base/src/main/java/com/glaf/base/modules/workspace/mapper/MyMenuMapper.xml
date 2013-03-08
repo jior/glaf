@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.base.modules.workspace.mapper.MyMenuMapper">
+
+	<resultMap id="myMenuResultMap"	type="com.glaf.base.modules.workspace.model.MyMenu">
+		<id property="id" column="ID" jdbcType="BIGINT" />
+		<result property="userId" column="USERID" jdbcType="BIGINT"/>
+		<result property="title" column="TITLE" jdbcType="VARCHAR"/>
+		<result property="url" column="URL" jdbcType="VARCHAR"/>
+		<result property="sort" column="SORT" jdbcType="INTEGER"/>
+	</resultMap>
+
+ 
+	<insert id="insertMyMenu" parameterType="com.glaf.base.modules.workspace.model.MyMenu">
+		insert into MyMenu 
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+		    ID
+			<if test="userId != null">
+				,USERID 
+			</if>
+			<if test="title != null">
+				,TITLE 
+			</if>
+			<if test="url != null">
+				,URL 
+			</if>
+			<if test="sort != null">
+				,SORT 
+			</if>
+		</trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			  #{id, jdbcType=BIGINT}
+	     
+			<if test="userId != null">
+				,#{userId, jdbcType=BIGINT}
+			</if>
+			<if test="title != null">
+				,#{title, jdbcType=VARCHAR}
+			</if>
+			<if test="url != null">
+				,#{url, jdbcType=VARCHAR}
+			</if>
+			<if test="sort != null">
+				,#{sort, jdbcType=INTEGER}
+			</if>
+		</trim>
+	</insert>
+
+	 
+	<update id="updateMyMenu" parameterType="com.glaf.base.modules.workspace.model.MyMenu">
+		update MyMenu
+		set
+		<trim prefix="" suffix="" suffixOverrides=",">		
+			<if test="userId != null">
+				USERID = #{userId, jdbcType=BIGINT},
+			</if>
+			<if test="title != null">
+				TITLE = #{title, jdbcType=VARCHAR},
+			</if>
+			<if test="url != null">
+				URL = #{url, jdbcType=VARCHAR},
+			</if>
+			<if test="sort != null">
+				SORT = #{sort, jdbcType=INTEGER},
+			</if>
+		</trim>
+		where
+          ID = #{id, jdbcType=BIGINT}
+		
+	</update>
+
+ 
+	<delete id="deleteMyMenuById" parameterType="long"> 
+        delete from MyMenu
+        where ID =	#{id}
+	</delete>
+
+	
+	<delete id="deleteMyMenus" parameterType="com.glaf.base.modules.workspace.query.MyMenuQuery">
+		delete from MyMenu
+		where ( 
+ 			  ID IN
+		<foreach item="x_rowId" index="index" collection="rowIds" 
+			open="(" separator="," close=")">
+                  #{x_rowId}
+		</foreach>
+		)
+	</delete>
+
+
+	<select id="getMyMenuById" parameterType="long" resultMap="myMenuResultMap">
+		select * from MyMenu where ID = #{id}
+	</select>
+
+
+	<select id="getMyMenus" 
+		parameterType="com.glaf.base.modules.workspace.query.MyMenuQuery"
+		resultMap="myMenuResultMap">
+		select E.*
+		<include refid="selectMyMenusSql" />
+		<choose>
+			<when test="orderBy != null">
+		     order by ${orderBy}
+			</when>
+			<otherwise>
+		      order by E.ID desc
+			</otherwise>
+		</choose>
+	</select>
+
+
+	<select id="getMyMenuCount" 
+		parameterType="com.glaf.base.modules.workspace.query.MyMenuQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectMyMenusSql" />
+	</select>
+
+
+	<sql id="selectMyMenusSql">
+
+		from MyMenu E
+		 
+		<where>
+		       1 = 1  
+
+			<if test="userId != null">
+				and E.USERID = #{userId}
+			</if>
+
+			<if test="userIdGreaterThanOrEqual != null">
+				and E.USERID &gt;= #{userIdGreaterThanOrEqual}
+			</if>
+
+			<if test="userIdLessThanOrEqual != null">
+				and E.USERID &lt;= #{userIdLessThanOrEqual}
+			</if>
+
+			<if test="userIds != null &amp;&amp; userIds.size() &gt; 0">
+			    and E.USERID IN
+				<foreach item="x_userId" index="index" collection="userIds" 
+					open="(" separator="," close=")">
+                  #{x_userId}
+				</foreach>
+			</if>
+
+			<if test="titleLike != null &amp;&amp; titleLike != '' ">
+				and E.TITLE like #{titleLike}
+			</if>
+
+			<if test="urlLike != null &amp;&amp; urlLike != '' ">
+				and E.URL like #{urlLike}
+			</if>
+
+			<if test="sortGreaterThanOrEqual != null">
+				and E.SORT &gt;= #{sortGreaterThanOrEqual}
+			</if>
+            
+			<if test="sortGreaterThan != null">
+				and E.SORT &gt;= #{sortGreaterThan}
+			</if>
+
+			<if test="sortLessThanOrEqual != null">
+				and E.SORT &lt;= #{sortLessThanOrEqual}
+			</if>
+            
+			<if test="sortLessThan != null">
+				and E.SORT &lt;= #{sortLessThan}
+			</if>
+
+		</where>
+	</sql>
+
+</mapper>

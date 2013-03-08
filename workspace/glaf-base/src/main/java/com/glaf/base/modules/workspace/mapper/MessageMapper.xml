@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.base.modules.workspace.mapper.MessageMapper">
+
+	<resultMap id="messageResultMap"	type="com.glaf.base.modules.workspace.model.Message">
+		<id property="id" column="ID" jdbcType="BIGINT" />
+		<result property="type" column="TYPE" jdbcType="INTEGER"/>
+		<result property="sysType" column="SYSTYPE" jdbcType="INTEGER"/>
+		<result property="recverList" column="RECVERLIST" jdbcType="VARCHAR"/>
+		<result property="title" column="TITLE" jdbcType="VARCHAR"/>
+		<result property="content" column="CONTENT" jdbcType="VARCHAR"/>
+		<result property="createDate" column="CREATEDATE" jdbcType="TIMESTAMP"/>
+		<result property="readed" column="READED" jdbcType="INTEGER"/>
+		<result property="category" column="CATEGORY" jdbcType="INTEGER"/>
+		<result property="senderId" column="SENDER" jdbcType="BIGINT"/>
+		<result property="recverId" column="RECVER" jdbcType="BIGINT"/>
+	</resultMap>
+
+ 
+	<insert id="insertMessage" parameterType="com.glaf.base.modules.workspace.model.Message">
+		insert into Message 
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+		    ID
+			<if test="type != null">
+				,TYPE 
+			</if>
+			<if test="sysType != null">
+				,SYSTYPE 
+			</if>
+			<if test="recverList != null">
+				,RECVERLIST 
+			</if>
+			<if test="title != null">
+				,TITLE 
+			</if>
+			<if test="content != null">
+				,CONTENT 
+			</if>
+			<if test="createDate != null">
+				,CREATEDATE 
+			</if>
+			<if test="readed != null">
+				,READED 
+			</if>
+			<if test="category != null">
+				,CATEGORY 
+			</if>
+			<if test="senderId != null">
+				,SENDER 
+			</if>
+			<if test="recverId != null">
+				,RECVER 
+			</if>
+		</trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			  #{id, jdbcType=BIGINT}
+	     
+			<if test="type != null">
+				,#{type, jdbcType=INTEGER}
+			</if>
+			<if test="sysType != null">
+				,#{sysType, jdbcType=INTEGER}
+			</if>
+			<if test="recverList != null">
+				,#{recverList, jdbcType=VARCHAR}
+			</if>
+			<if test="title != null">
+				,#{title, jdbcType=VARCHAR}
+			</if>
+			<if test="content != null">
+				,#{content, jdbcType=VARCHAR}
+			</if>
+			<if test="createDate != null">
+				,#{createDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="readed != null">
+				,#{readed, jdbcType=INTEGER}
+			</if>
+			<if test="category != null">
+				,#{category, jdbcType=INTEGER}
+			</if>
+			<if test="senderId != null">
+				,#{senderId, jdbcType=BIGINT}
+			</if>
+			<if test="recverId != null">
+				,#{recverId, jdbcType=BIGINT}
+			</if>
+		</trim>
+	</insert>
+
+	 
+	<update id="updateMessage" parameterType="com.glaf.base.modules.workspace.model.Message">
+		update Message
+		set
+		<trim prefix="" suffix="" suffixOverrides=",">		
+			<if test="type != null">
+				TYPE = #{type, jdbcType=INTEGER},
+			</if>
+			<if test="sysType != null">
+				SYSTYPE = #{sysType, jdbcType=INTEGER},
+			</if>
+			<if test="recverList != null">
+				RECVERLIST = #{recverList, jdbcType=VARCHAR},
+			</if>
+			<if test="title != null">
+				TITLE = #{title, jdbcType=VARCHAR},
+			</if>
+			<if test="content != null">
+				CONTENT = #{content, jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				CREATEDATE = #{createDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="readed != null">
+				READED = #{readed, jdbcType=INTEGER},
+			</if>
+			<if test="category != null">
+				CATEGORY = #{category, jdbcType=INTEGER},
+			</if>
+			<if test="senderId != null">
+				SENDER = #{senderId, jdbcType=BIGINT},
+			</if>
+			<if test="recverId != null">
+				RECVER = #{recverId, jdbcType=BIGINT},
+			</if>
+		</trim>
+		where
+          ID = #{id, jdbcType=BIGINT}
+		
+	</update>
+
+ 
+	<delete id="deleteMessageById" parameterType="long"> 
+        delete from Message
+        where ID =	#{id}
+	</delete>
+
+	
+	<delete id="deleteMessages" parameterType="com.glaf.base.modules.workspace.query.MessageQuery">
+		delete from Message
+		where ( 
+ 			  ID IN
+		<foreach item="x_rowId" index="index" collection="rowIds" 
+			open="(" separator="," close=")">
+                  #{x_rowId}
+		</foreach>
+		)
+	</delete>
+
+
+	<select id="getMessageById" parameterType="long" resultMap="messageResultMap">
+		select * from Message where ID = #{id}
+	</select>
+
+
+	<select id="getMessages" 
+		parameterType="com.glaf.base.modules.workspace.query.MessageQuery"
+		resultMap="messageResultMap">
+		select E.*
+		<include refid="selectMessagesSql" />
+		<choose>
+			<when test="orderBy != null">
+		     order by ${orderBy}
+			</when>
+			<otherwise>
+		      order by E.ID desc
+			</otherwise>
+		</choose>
+	</select>
+
+
+	<select id="getMessageCount" 
+		parameterType="com.glaf.base.modules.workspace.query.MessageQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectMessagesSql" />
+	</select>
+
+
+	<sql id="selectMessagesSql">
+
+		from Message E
+
+		<where>
+		       1 = 1  
+
+			<if test="type != null">
+				and E.TYPE = #{type}
+			</if>
+
+			<if test="typeGreaterThanOrEqual != null">
+				and E.TYPE &gt;= #{typeGreaterThanOrEqual}
+			</if>
+
+			<if test="typeLessThanOrEqual != null">
+				and E.TYPE &lt;= #{typeLessThanOrEqual}
+			</if>
+
+			<if test="types != null &amp;&amp; types.size() &gt; 0">
+			    and E.TYPE IN
+				<foreach item="x_type" index="index" collection="types" 
+					open="(" separator="," close=")">
+                  #{x_type}
+				</foreach>
+			</if>
+
+
+			<if test="sysType != null">
+				and E.SYSTYPE = #{sysType}
+			</if>
+
+			<if test="sysTypeGreaterThanOrEqual != null">
+				and E.SYSTYPE &gt;= #{sysTypeGreaterThanOrEqual}
+			</if>
+
+			<if test="sysTypeLessThanOrEqual != null">
+				and E.SYSTYPE &lt;= #{sysTypeLessThanOrEqual}
+			</if>
+
+			<if test="sysTypes != null &amp;&amp; sysTypes.size() &gt; 0">
+			    and E.SYSTYPE IN
+				<foreach item="x_sysType" index="index" collection="sysTypes" 
+					open="(" separator="," close=")">
+                  #{x_sysType}
+				</foreach>
+			</if>
+
+			<if test="recverListLike != null &amp;&amp; recverListLike != '' ">
+				and E.RECVERLIST like #{recverListLike}
+			</if>
+
+			<if test="titleLike != null &amp;&amp; titleLike != '' ">
+				and E.TITLE like #{titleLike}
+			</if>
+
+			<if test="contentLike != null &amp;&amp; contentLike != '' ">
+				and E.CONTENT like #{contentLike}
+			</if>
+
+			<if test="createDateGreaterThanOrEqual != null">
+				and E.CREATEDATE &gt;= #{createDateGreaterThanOrEqual}
+			</if>
+
+			<if test="createDateLessThanOrEqual != null">
+				and E.CREATEDATE &lt;= #{createDateLessThanOrEqual}
+			</if>
+
+			<if test="readed != null">
+				and E.READED = #{readed}
+			</if>
+
+			<if test="readedGreaterThanOrEqual != null">
+				and E.READED &gt;= #{readedGreaterThanOrEqual}
+			</if>
+
+			<if test="readedLessThanOrEqual != null">
+				and E.READED &lt;= #{readedLessThanOrEqual}
+			</if>
+
+			<if test="category != null">
+				and E.CATEGORY = #{category}
+			</if>
+
+			<if test="categoryGreaterThanOrEqual != null">
+				and E.CATEGORY &gt;= #{categoryGreaterThanOrEqual}
+			</if>
+
+			<if test="categoryLessThanOrEqual != null">
+				and E.CATEGORY &lt;= #{categoryLessThanOrEqual}
+			</if>
+
+			<if test="categorys != null &amp;&amp; categorys.size() &gt; 0">
+			    and E.CATEGORY IN
+				<foreach item="x_category" index="index" collection="categorys" 
+					open="(" separator="," close=")">
+                  #{x_category}
+				</foreach>
+			</if>
+
+
+			<if test="senderId != null">
+				and E.SENDER = #{senderId}
+			</if>
+
+			<if test="senderIdGreaterThanOrEqual != null">
+				and E.SENDER &gt;= #{senderIdGreaterThanOrEqual}
+			</if>
+
+			<if test="senderIdLessThanOrEqual != null">
+				and E.SENDER &lt;= #{senderIdLessThanOrEqual}
+			</if>
+
+			<if test="senderIds != null &amp;&amp; senderIds.size() &gt; 0">
+			    and E.SENDER IN
+				<foreach item="x_senderId" index="index" collection="senderIds" 
+					open="(" separator="," close=")">
+                  #{x_senderId}
+				</foreach>
+			</if>
+
+			<if test="recverId != null">
+				and E.RECVER = #{recverId}
+			</if>
+
+			<if test="recverIdGreaterThanOrEqual != null">
+				and E.RECVER &gt;= #{recverIdGreaterThanOrEqual}
+			</if>
+
+			<if test="recverIdLessThanOrEqual != null">
+				and E.RECVER &lt;= #{recverIdLessThanOrEqual}
+			</if>
+
+			<if test="recverIds != null &amp;&amp; recverIds.size() &gt; 0">
+			    and E.RECVER IN
+				<foreach item="x_recverId" index="index" collection="recverIds" 
+					open="(" separator="," close=")">
+                  #{x_recverId}
+				</foreach>
+			</if>
+			 
+		</where>
+	</sql>
+
+</mapper>

@@ -143,10 +143,11 @@
     </update>
 
  
-	<delete id="delete${entityName}ById" parameterType="string"> 
+	<delete id="delete${entityName}ById" parameterType="${idField.lowerCaseType}"> 
         delete from ${tableName}
         where ${idField.columnName} =	#GG{id}
 	</delete>
+
 	
 	<delete id="delete${entityName}s" parameterType="${packageName}.query.${entityName}Query">
 		delete from ${tableName}
@@ -159,7 +160,8 @@
 		)
 	</delete>
 
-	<select id="get${entityName}ById" parameterType="string" resultMap="${modelName}ResultMap">
+
+	<select id="get${entityName}ById" parameterType="${idField.lowerCaseType}" resultMap="${modelName}ResultMap">
 		select * from ${tableName} where ${idField.columnName} = #GG{id}
 	</select>
 
@@ -174,10 +176,11 @@
 		     order by #F{orderBy}
           </when>
 		  <otherwise>
-		      order by E.CREATEDATE_ desc
+		      order by E.${idField.columnName} desc
 		  </otherwise>
         </choose>
 	</select>
+
 
 	<select id="get${entityName}Count" 
 	    parameterType="${packageName}.query.${entityName}Query"
@@ -185,6 +188,7 @@
 		select count(*)
 		<include refid="select${entityName}sSql" />
 	</select>
+
 
 	<sql id="select${entityName}sSql">
 

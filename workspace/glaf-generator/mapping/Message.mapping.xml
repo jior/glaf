@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<mapping>
+	<entity name="Message" table="Message" package="com.glaf.base.modules.workspace" title="消息" englishTitle="Message">
+		<id name="id" type="Long" column="ID" title="编号" englishTitle="id"/>
+		<property name="type" type="Integer" column="TYPE" title="消息类型" englishTitle="type"/>
+		<property name="sysType" type="Integer" column="SYSTYPE" title="" englishTitle="sysType"/>
+		<property name="recverList" type="String" column="RECVERLIST" title="接收人列表" englishTitle="recverList"/>
+		<property name="title" type="String" column="TITLE" title="标题" englishTitle="title"/>
+		<property name="content" type="String" column="CONTENT" title="内容" englishTitle="content"/>
+		<property name="createDate" type="Date" column="CREATEDATE" title="创建时间" englishTitle="createDate"/>
+		<property name="readed" type="Integer" column="READED" title="已读标记" englishTitle="readed"/>
+		<property name="category" type="Integer" column="CATEGORY" title="分类" englishTitle="category"/>
+		<property name="senderId" type="Long" column="SENDER" title="发送者" englishTitle="senderId"/>
+		<property name="recverId" type="Long" column="RECVER" title="接收者" englishTitle="recverId"/>
+	</entity>
+</mapping>
+

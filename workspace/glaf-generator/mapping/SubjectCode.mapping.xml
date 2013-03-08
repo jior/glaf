@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<mapping>
+    <entity name="SubjectCode" 
+            table="SubjectCode" 
+            package="com.glaf.base.modules.sys" title="科目代码" englishTitle="SubjectCode">         
+        <id name="id" type="Long" column="ID" title="编号" englishTitle="id"/>      
+        <property name="parent" type="Long" column="PARENT" title="父节点编号" englishTitle="parentId"/>
+        <property name="subjectCode" type="String" column="SUBJECTCODE" title="编码" englishTitle="subjectCode"/>
+        <property name="subjectName" type="String" column="SUBJECTNAME" title="名称" englishTitle="subjectName"/>        
+        <property name="sort" type="Integer" column="SORT" title="顺序" englishTitle="sort"/>
+    </entity>
+</mapping>

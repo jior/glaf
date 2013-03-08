@@ -37,12 +37,12 @@ public class DictoryQuery extends DataQuery {
 	protected String code;
 	protected String codeLike;
 	protected List<String> codes;
-	protected Integer sort;
+
 	protected Integer sortGreaterThanOrEqual;
 	protected Integer sortGreaterThan;
 	protected Integer sortLessThanOrEqual;
 	protected Integer sortLessThan;
-	protected List<Integer> sorts;
+
 	protected Integer blocked;
 	protected Integer blockedGreaterThanOrEqual;
 	protected Integer blockedLessThanOrEqual;
@@ -560,10 +560,6 @@ public class DictoryQuery extends DataQuery {
 		return orderBy;
 	}
 
-	public Integer getSort() {
-		return sort;
-	}
-
 	public Integer getSortGreaterThan() {
 		return sortGreaterThan;
 	}
@@ -578,10 +574,6 @@ public class DictoryQuery extends DataQuery {
 
 	public Integer getSortLessThanOrEqual() {
 		return sortLessThanOrEqual;
-	}
-
-	public List<Integer> getSorts() {
-		return sorts;
 	}
 
 	public Long getTypeId() {
@@ -774,10 +766,6 @@ public class DictoryQuery extends DataQuery {
 		this.names = names;
 	}
 
-	public void setSort(Integer sort) {
-		this.sort = sort;
-	}
-
 	public void setSortGreaterThan(Integer sortGreaterThan) {
 		this.sortGreaterThan = sortGreaterThan;
 	}
@@ -792,10 +780,6 @@ public class DictoryQuery extends DataQuery {
 
 	public void setSortLessThanOrEqual(Integer sortLessThanOrEqual) {
 		this.sortLessThanOrEqual = sortLessThanOrEqual;
-	}
-
-	public void setSorts(List<Integer> sorts) {
-		this.sorts = sorts;
 	}
 
 	public void setTypeId(Long typeId) {
@@ -814,14 +798,6 @@ public class DictoryQuery extends DataQuery {
 		this.typeIds = typeIds;
 	}
 
-	public DictoryQuery sort(Integer sort) {
-		if (sort == null) {
-			throw new RuntimeException("sort is null");
-		}
-		this.sort = sort;
-		return this;
-	}
-
 	public DictoryQuery sortGreaterThanOrEqual(Integer sortGreaterThanOrEqual) {
 		if (sortGreaterThanOrEqual == null) {
 			throw new RuntimeException("sort is null");
@@ -835,14 +811,6 @@ public class DictoryQuery extends DataQuery {
 			throw new RuntimeException("sort is null");
 		}
 		this.sortLessThanOrEqual = sortLessThanOrEqual;
-		return this;
-	}
-
-	public DictoryQuery sorts(List<Integer> sorts) {
-		if (sorts == null) {
-			throw new RuntimeException("sorts is empty ");
-		}
-		this.sorts = sorts;
 		return this;
 	}
 
