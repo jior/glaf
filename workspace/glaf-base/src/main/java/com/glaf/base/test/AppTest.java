@@ -29,7 +29,7 @@ public class AppTest extends AbstractTest {
 
 	@Test
 	public void testUserMenu() {
-		sysApplicationService = super.getBean("sysApplicationProxy");
+		sysApplicationService = super.getBean("sysApplicationService");
 		ApplicationBean bean = new ApplicationBean();
 		bean.setSysApplicationService(sysApplicationService);
 		System.out.println("sysApplicationService="+sysApplicationService);

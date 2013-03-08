@@ -92,7 +92,7 @@ public class ApplicationBean {
 	public SysApplicationService getSysApplicationService() {
 		if (sysApplicationService == null) {
 			sysApplicationService = ContextFactory
-					.getBean("sysApplicationProxy");
+					.getBean("sysApplicationService");
 		}
 		return sysApplicationService;
 	}

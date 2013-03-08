@@ -73,7 +73,7 @@ public class AuthorizeBean {
 
 	public AuthorizeService getAuthorizeService() {
 		if (authorizeService == null) {
-			authorizeService = ContextFactory.getBean("authorizeProxy");
+			authorizeService = ContextFactory.getBean("authorizeService");
 		}
 		return authorizeService;
 	}
@@ -86,14 +86,14 @@ public class AuthorizeBean {
 	public SysApplicationService getSysApplicationService() {
 		if (sysApplicationService == null) {
 			sysApplicationService = ContextFactory
-					.getBean("sysApplicationProxy");
+					.getBean("sysApplicationService");
 		}
 		return sysApplicationService;
 	}
 
 	public SysUserService getSysUserService() {
 		if (sysUserService == null) {
-			sysUserService = ContextFactory.getBean("sysUserProxy");
+			sysUserService = ContextFactory.getBean("sysUserService");
 		}
 		return sysUserService;
 	}

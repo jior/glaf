@@ -4,13 +4,14 @@
 <%@ page import="com.glaf.base.utils.*" %>
 <%@ page import="com.glaf.base.business.*" %>
 <%@ page import="com.glaf.core.context.*" %>
+<%@ page import="com.glaf.core.util.*" %>
 <%@ page import="com.glaf.base.modules.sys.model.*" %>
 <%@ page import="com.glaf.base.modules.sys.service.*" %>
 <%
 	 
-	String userId = RequestUtil.getActorId(request);
+	String userId = RequestUtils.getActorId(request);
 	ApplicationBean bean = new ApplicationBean();
-	SysApplicationService sysApplicationService = ContextFactory.getBean("sysApplicationProxy");
+	SysApplicationService sysApplicationService = ContextFactory.getBean("sysApplicationService");
     bean.setSysApplicationService(sysApplicationService);
 	String scripts = bean.getMenuScripts(3, userId, request.getContextPath());
 

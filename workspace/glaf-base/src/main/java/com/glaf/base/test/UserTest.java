@@ -39,7 +39,7 @@ public class UserTest extends AbstractTest {
 	
 	@Test
 	public void testUser() {
-		sysUserService = super.getBean("sysUserProxy");
+		sysUserService = super.getBean("sysUserService");
 		SysUser user = sysUserService.findByAccountWithAll("root");
 		if(user != null){
 			logger.debug(user.toJsonObject().toJSONString());
@@ -48,13 +48,13 @@ public class UserTest extends AbstractTest {
 
 	@Test
 	public void testList() {
-		sysUserService = super.getBean("sysUserProxy");
+		sysUserService = super.getBean("sysUserService");
 		logger.info("user list:" + sysUserService.getSysUserList());
 	}
 
 	@Test
 	public void testUserMenu() {
-		sysApplicationService = super.getBean("sysApplicationProxy");
+		sysApplicationService = super.getBean("sysApplicationService");
 		JSONArray array = sysApplicationService.getUserMenu(3, "root");
 		System.out.println("menus:\n" + array.toString('\n'));
 		System.out.println();

@@ -124,7 +124,7 @@ public class AuthorizeInterceptor implements MethodBeforeAdvice {
 			WebApplicationContext wac = (WebApplicationContext) ContextUtil
 					.get("wac");
 			SysLogService logService = (SysLogService) wac
-					.getBean("sysLogProxy");
+					.getBean("sysLogService");
 			logService.create(log);
 		}
 	}

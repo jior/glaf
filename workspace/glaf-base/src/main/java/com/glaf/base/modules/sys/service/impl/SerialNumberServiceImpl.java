@@ -54,7 +54,7 @@ public class SerialNumberServiceImpl implements SerialNumberService {
 	 * contract.setContractNo(serialNumberService.getSerialNumber(pros));
 	 * 
 	 * 3.在action-xxxx.xml中,为该Action注入serialNumberService <property
-	 * name="serialNumberService"> <ref bean="serialNumberProxy"/> </property>
+	 * name="serialNumberService"> <ref bean="serialNumberService"/> </property>
 	 * 
 	 */
 

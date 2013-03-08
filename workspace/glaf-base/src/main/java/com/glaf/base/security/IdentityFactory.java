@@ -59,12 +59,12 @@ public class IdentityFactory {
 	protected static SysApplicationService sysApplicationService;
 
 	static {
-		sysUserService = ContextFactory.getBean("sysUserProxy");
-		sysRoleService = ContextFactory.getBean("sysRoleProxy");
-		sysDeptRoleService = ContextFactory.getBean("sysDeptRoleProxy");
-		sysUserRoleService = ContextFactory.getBean("sysUserRoleProxy");
-		sysDepartmentService = ContextFactory.getBean("sysDepartmentProxy");
-		sysApplicationService = ContextFactory.getBean("sysApplicationProxy");
+		sysUserService = ContextFactory.getBean("sysUserService");
+		sysRoleService = ContextFactory.getBean("sysRoleService");
+		sysDeptRoleService = ContextFactory.getBean("sysDeptRoleService");
+		sysUserRoleService = ContextFactory.getBean("sysUserRoleService");
+		sysDepartmentService = ContextFactory.getBean("sysDepartmentService");
+		sysApplicationService = ContextFactory.getBean("sysApplicationService");
 	}
 
 	/**
