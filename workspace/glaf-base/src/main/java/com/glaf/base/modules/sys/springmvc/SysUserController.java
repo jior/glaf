@@ -173,7 +173,7 @@ public class SysUserController {
 		int deptId = ParamUtil.getIntParameter(request, "deptId", 0);
 		int roleId = ParamUtil.getIntParameter(request, "roleId", 0);
 		SysDeptRole deptRole = sysDeptRoleService.find(deptId, roleId);
-		Set users = deptRole.getUsers();
+		Set<SysUser> users = deptRole.getUsers();
 
 		long[] userIds = ParamUtil.getLongParameterValues(request, "id");
 		for (int i = 0; i < userIds.length; i++) {
@@ -204,8 +204,8 @@ public class SysUserController {
 	 * @param list
 	 * @param parentId
 	 */
-	public void getAllSysDepartmentList(List list, int parentId) {
-		List temp = new ArrayList();
+	public void getAllSysDepartmentList(List<SysDepartment> list, int parentId) {
+		List<SysDepartment> temp = new ArrayList<SysDepartment>();
 		temp = this.sysDepartmentService.getSysDepartmentList(parentId);
 		if (temp != null && temp.size() != 0) {
 			for (int i = 0; i < temp.size(); i++) {
@@ -223,12 +223,12 @@ public class SysUserController {
 	 * @param deptId
 	 * @param code
 	 */
-	public void getRoleUser(Set set, long deptId, String code) {
+	public void getRoleUser(Set<SysUser> set, long deptId, String code) {
 		if (!"".equals(code)) {
-			Set temp = sysDeptRoleService.findRoleUser(deptId, "R011");
+			Set<SysUser> temp = sysDeptRoleService.findRoleUser(deptId, "R011");
 			set.addAll(temp);
 		} else {
-			List list = sysUserService.getSysUserList((int) deptId);
+			List<SysUser> list = sysUserService.getSysUserList((int) deptId);
 			set.addAll(list);
 		}
 	}

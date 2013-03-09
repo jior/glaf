@@ -116,9 +116,10 @@ public class WorkCalendarController {
 			days[firstIndex + i] = String.valueOf(i + 1);
 		}
 
-		List list = workCalendarService.getWorkDateList(year, month + 1);
-		if (list == null)
-			list = new ArrayList();
+		List<Integer> list = workCalendarService.getWorkDateList(year, month + 1);
+		if (list == null){
+			list = new ArrayList<Integer>();
+		}
 
 		request.setAttribute("list", list);
 		request.setAttribute("year", String.valueOf(year));

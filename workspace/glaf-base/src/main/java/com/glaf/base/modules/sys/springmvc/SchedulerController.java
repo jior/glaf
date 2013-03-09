@@ -43,6 +43,7 @@ import com.glaf.base.modules.sys.service.SchedulerService;
 import com.glaf.base.utils.ParamUtil;
 import com.glaf.base.utils.RequestUtil;
 import com.glaf.core.util.QuartzUtils;
+import com.glaf.core.util.RequestUtils;
 
 @Controller("/sys/scheduler")
 @RequestMapping("/sys/scheduler.do")
@@ -77,14 +78,13 @@ public class SchedulerController {
 	}
 
 	@RequestMapping(params = "method=saveModify")
-	@SuppressWarnings("rawtypes")
 	public ModelAndView saveModify(ModelMap modelMap,
 			SchedulerFormBean schedulerForm, HttpServletRequest request,
 			HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		Scheduler scheduler = new Scheduler();
 
-		Map params = RequestUtil.getParameterMap(request);
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		logger.debug(params);
 		try {
 			PropertyUtils.copyProperties(scheduler, schedulerForm);

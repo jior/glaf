@@ -221,7 +221,7 @@ public class SysDepartmentServiceImpl implements SysDepartmentService {
 	}
 
 	public SysDepartment findById(long id) {
-		return this.findById(id);
+		return this.getSysDepartment(id);
 	}
 
 	public SysDepartment findByCode(String code) {

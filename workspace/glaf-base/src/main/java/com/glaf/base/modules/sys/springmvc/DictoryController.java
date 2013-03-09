@@ -139,7 +139,7 @@ public class DictoryController {
 		if (bean.getTypeId() == 17) {
 			// 添加当前操作汇率的担当和最后修改时间
 			StringBuffer sb = new StringBuffer();
-			List list = user.getNestingDepartment();
+			List<SysDepartment> list = user.getNestingDepartment();
 
 			if (list != null && list.size() > 0) {
 				SysDepartment depart = (SysDepartment) list.get(0);
@@ -225,7 +225,7 @@ public class DictoryController {
 		if (bean.getTypeId() == 17) {
 			// 添加当前操作汇率的担当和最后修改时间
 			StringBuffer sb = new StringBuffer();
-			List list = user.getNestingDepartment();
+			List<SysDepartment> list = user.getNestingDepartment();
 
 			if (list != null && list.size() > 0) {
 				SysDepartment depart = (SysDepartment) list.get(0);

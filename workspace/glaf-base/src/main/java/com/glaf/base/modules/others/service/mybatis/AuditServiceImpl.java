@@ -169,7 +169,7 @@ public class AuditServiceImpl implements AuditService {
 	}
 
 	public Audit findById(long id) {
-		return this.findById(id);
+		return this.getAudit(id);
 	}
 
 	public List<Audit> getAuditList(long referId, int referType) {

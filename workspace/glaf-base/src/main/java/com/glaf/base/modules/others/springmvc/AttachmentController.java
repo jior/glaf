@@ -95,7 +95,7 @@ public class AttachmentController {
 			HttpServletRequest request, HttpServletResponse response) {
 		long referId = ParamUtil.getLongParameter(request, "referId", 0);
 		int referType = ParamUtil.getIntParameter(request, "referType", 0);
-		int viewType = ParamUtil.getIntParameter(request, "viewType", 0);
+	 
 
 		request.setAttribute("list",
 				attachmentService.getAttachmentList(referId, referType));

@@ -355,7 +355,7 @@ public class SysUserServiceImpl implements SysUserService {
 				}
 			}
 			for (SysUser user : users) {
-				user.setDepartment(deptMap.get(user.getDeptId()));
+				user.setDepartment(deptMap.get(Long.valueOf(user.getDeptId())));
 			}
 		}
 		return users;

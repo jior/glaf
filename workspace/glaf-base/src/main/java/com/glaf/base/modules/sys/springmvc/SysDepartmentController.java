@@ -104,7 +104,7 @@ public class SysDepartmentController {
 		RequestUtil.setRequestParameterToAttribute(request);
 		int id = ParamUtil.getIntParameter(request, "id", 0);
 		int status = ParamUtil.getIntParameter(request, "status", -1);
-		List list = sysTreeService.getSysTreeListForDept(id, status);
+		List<SysTree> list = sysTreeService.getSysTreeListForDept(id, status);
 		request.setAttribute("list", list);
 		return new ModelAndView("/modules/sys/dept/subdept_list", modelMap);
 	}
@@ -123,7 +123,7 @@ public class SysDepartmentController {
 			HttpServletRequest request, HttpServletResponse response) {
 		RequestUtil.setRequestParameterToAttribute(request);
 		int id = ParamUtil.getIntParameter(request, "id", 0);
-		List list = sysTreeService.getSysTreeList(id);
+		List<SysTree> list = sysTreeService.getSysTreeList(id);
 		request.setAttribute("list", list);
 		return new ModelAndView("/modules/sys/dept/subdeptall_list", modelMap);
 	}
@@ -228,7 +228,7 @@ public class SysDepartmentController {
 	public ModelAndView saveModify(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
 		RequestUtil.setRequestParameterToAttribute(request);
-		SysUser user = RequestUtil.getLoginUser(request);
+		 
 		long id = ParamUtil.getIntParameter(request, "id", 0);
 		SysDepartment bean = sysDepartmentService.findById(id);
 		boolean ret = false;
@@ -246,8 +246,7 @@ public class SysDepartmentController {
 			bean.setNode(node);
 
 			ret = sysDepartmentService.update(bean);
-			long historyIds[] = ParamUtil.getLongParameterValues(request,
-					"historyId");
+		 
 			if (ret) {
 				// this.sysDepartmentService.updateHistoryDepart(bean,
 				// historyIds, user);
@@ -379,7 +378,7 @@ public class SysDepartmentController {
 
 		SysTree treeNode = sysTreeService.findById(parent);
 		SysDepartment dept = treeNode.getDepartment();
-		List list = new ArrayList();
+		List<SysDepartment> list = new ArrayList<SysDepartment>();
 		sysDepartmentService.findNestingDepartment(list, dept);
 		request.setAttribute("nav", list);
 

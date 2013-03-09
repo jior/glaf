@@ -201,9 +201,9 @@ public class MessageController {
 					recverIds.split(","));
 		}
 		if (recverType == 2) {
-			List userList = sysUserService.getSupplierUser(recverIds);
+			List<SysUser> userList = sysUserService.getSupplierUser(recverIds);
 			if (userList != null) {
-				Iterator iter = userList.iterator();
+				Iterator<SysUser> iter = userList.iterator();
 				StringBuffer sb = new StringBuffer();
 				while (iter.hasNext()) {
 					SysUser user_sp = (SysUser) iter.next();
@@ -318,15 +318,12 @@ public class MessageController {
 			HttpServletRequest request, HttpServletResponse response) {
 		RequestUtil.setRequestParameterToAttribute(request);
 		SysUser user = RequestUtil.getLoginUser(request);
-		String sendEmail = user.getEmail();
 
 		int recverType = ParamUtil.getIntParameter(request, "recverType", 0);
 		String recverIds = ParamUtil.getParameter(request, "recverIds");
 		String recverName = ParamUtil.getParameter(request, "recverName");
 		MessageFormBean formBean = new MessageFormBean();
 		WebUtil.copyProperties(formBean, form);
-		String title = formBean.getTitle();
-		String content = formBean.getContent();
 
 		if (recverType == 0 || recverType == 2) {
 			String toEmail = ParamUtil.getParameter(request, "toEmail");
@@ -338,15 +335,17 @@ public class MessageController {
 		// 部门群发
 		if (recverType == 1) {
 			logger.debug("string to int" + Integer.parseInt(recverIds));
-			List list = sysUserService.getSysUserList(Integer
+			List<SysUser> list = sysUserService.getSysUserList(Integer
 					.parseInt(recverIds));
 			// System.out.println("list.size"+list.size());
 			if (list != null) {
-				Iterator iter = list.iterator();
+				Iterator<SysUser> iter = list.iterator();
 				while (iter.hasNext()) {
 					SysUser sysUser = (SysUser) iter.next();
 					String email = sysUser.getEmail();
-					// EMail.send(sendEmail, email, title, content, null);
+					if (email != null) {
+						// EMail.send(sendEmail, email, title, content, null);
+					}
 				}
 			}
 
@@ -401,7 +400,6 @@ public class MessageController {
 			HttpServletRequest request, HttpServletResponse response) {
 		RequestUtil.setRequestParameterToAttribute(request);
 		SysUser user = RequestUtil.getLoginUser(request);
-		String sendEmail = user.getEmail();
 
 		String recverIds = ParamUtil.getParameter(request, "recverIds");
 		// 用户或部门
@@ -412,8 +410,7 @@ public class MessageController {
 
 		MessageFormBean formBean = new MessageFormBean();
 		WebUtil.copyProperties(formBean, form);
-		String title = formBean.getTitle();
-		String content = formBean.getContent();
+
 		if (recverType == 0 || recverType == 2) {
 			String toEmail = ParamUtil.getParameter(request, "toEmail");
 			String[] email = toEmail.split(",");
@@ -423,14 +420,16 @@ public class MessageController {
 			}
 		}
 		if (recverType == 1) {
-			List list = sysUserService.getSysUserList(Integer
+			List<SysUser> list = sysUserService.getSysUserList(Integer
 					.parseInt(recverIds));
 			if (list != null) {
-				Iterator iter = list.iterator();
+				Iterator<SysUser> iter = list.iterator();
 				while (iter.hasNext()) {
 					SysUser sysUser = (SysUser) iter.next();
 					String email = sysUser.getEmail();
-					// EMail.send(sendEmail, email, title, content, null);
+					if (email != null) {
+						// EMail.send(sendEmail, email, title, content, null);
+					}
 				}
 			}
 		}
@@ -459,9 +458,9 @@ public class MessageController {
 					recverIds.split(","));
 		}
 		if (recverType == 2) {
-			List userList = sysUserService.getSupplierUser(recverIds);
+			List<SysUser> userList = sysUserService.getSupplierUser(recverIds);
 			if (userList != null) {
-				Iterator iter = userList.iterator();
+				Iterator<SysUser> iter = userList.iterator();
 				StringBuffer sb = new StringBuffer();
 				while (iter.hasNext()) {
 					SysUser user_sp = (SysUser) iter.next();

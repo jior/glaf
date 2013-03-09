@@ -38,6 +38,7 @@ import com.glaf.base.callback.LoginCallback;
 import com.glaf.base.listener.UserOnlineListener;
 import com.glaf.base.modules.Constants;
 import com.glaf.base.modules.sys.SysConstants;
+import com.glaf.base.modules.sys.model.SysApplication;
 import com.glaf.base.modules.sys.model.SysTree;
 import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.sys.service.AuthorizeService;
@@ -235,7 +236,7 @@ public class AuthorizeController {
 		RequestUtil.setRequestParameterToAttribute(request);
 		SysUser user = RequestUtil.getLoginUser(request);
 		SysTree parent = sysTreeService.getSysTreeByCode(Constants.TREE_APP);
-		List list = sysApplicationService
+		List<SysApplication> list = sysApplicationService
 				.getAccessAppList(parent.getId(), user);
 		request.setAttribute("list", list);
 		return new ModelAndView("/modules/menu", modelMap);
@@ -255,7 +256,7 @@ public class AuthorizeController {
 			HttpServletRequest request, HttpServletResponse response) {
 		SysUser user = RequestUtil.getLoginUser(request);
 		long parent = ParamUtil.getIntParameter(request, "parent", 0);
-		List list = sysApplicationService.getAccessAppList(parent, user);
+		List<SysApplication> list = sysApplicationService.getAccessAppList(parent, user);
 		request.setAttribute("list", list);
 		return new ModelAndView("/modules/sub_menu", modelMap);
 	}

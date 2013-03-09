@@ -93,7 +93,7 @@ public class SysTreeController {
 			HttpServletRequest request, HttpServletResponse response) {
 		RequestUtil.setRequestParameterToAttribute(request);
 		int id = ParamUtil.getIntParameter(request, "id", 0);
-		List list = sysTreeService.getSysTreeList(id);
+		List<SysTree> list = sysTreeService.getSysTreeList(id);
 		request.setAttribute("list", list);
 		return new ModelAndView("/modules/sys/tree/subtree_list", modelMap);
 	}
@@ -130,7 +130,7 @@ public class SysTreeController {
 		long id = ParamUtil.getIntParameter(request, "id", 0);
 		SysTree bean = sysTreeService.findById(id);
 		request.setAttribute("bean", bean);
-		List list = new ArrayList();
+		List<SysTree> list = new ArrayList<SysTree>();
 		sysTreeService.getSysTree(list, 0, 0);
 		request.setAttribute("parent", list);
 		return new ModelAndView("/modules/sys/tree/tree_modify", modelMap);

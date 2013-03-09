@@ -76,7 +76,7 @@ public class SysFunctionController {
 			HttpServletRequest request, HttpServletResponse response) {
 		RequestUtil.setRequestParameterToAttribute(request);
 		int parent = ParamUtil.getIntParameter(request, "parent", 0);
-		List list = sysFunctionService.getSysFunctionList(parent);
+		List<SysFunction> list = sysFunctionService.getSysFunctionList(parent);
 		request.setAttribute("list", list);
 
 		// 显示列表页面
