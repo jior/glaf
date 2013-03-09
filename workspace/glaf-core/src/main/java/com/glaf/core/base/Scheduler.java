@@ -61,6 +61,10 @@ public interface Scheduler {
 	int getThreadSize();
 
 	String getTitle();
+	
+	int getStartup();
+	
+	int getAutoStartup();
 
 	boolean isSchedulerAutoStartup();
 

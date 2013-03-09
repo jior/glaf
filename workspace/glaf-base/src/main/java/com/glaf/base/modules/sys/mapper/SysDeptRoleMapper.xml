@@ -109,6 +109,17 @@
 	<select id="getSysDeptRoleById" parameterType="long" resultMap="sysDeptRoleResultMap">
 		select * from sys_dept_role where ID = #{id}
 	</select>
+	
+	
+	<select id="getSysDeptRolesByUserId" parameterType="long" resultMap="sysDeptRoleResultMap">
+		
+		select dr.* from sys_dept_role dr
+		inner join sys_user_role ur 
+		on dr.ID = ur.ROLEID
+		where ur.userid = #{userId}
+		and ur.authorized = 0
+
+	</select>
 
 
 	<select id="getSysDeptRoles" 
@@ -152,15 +163,15 @@
 				and E.GRADE &lt;= #{gradeLessThanOrEqual}
 			</if>
 	        
-			<if test="code != null &amp;&amp; code != '' ">
+			<if test="code != null and code != '' ">
 				and E.CODE = #{code}
 			</if>
 
-			<if test="codeLike != null &amp;&amp; codeLike != '' ">
+			<if test="codeLike != null and codeLike != '' ">
 				and E.CODE like #{codeLike}
 			</if>
 
-			<if test="codes != null &amp;&amp; codes.size() &gt; 0">
+			<if test="codes != null and codes.size() &gt; 0">
 			    and E.CODE IN
 				<foreach item="x_code" index="index" collection="codes" 
 					open="(" separator="," close=")">
@@ -188,7 +199,7 @@
 				and E.SYSROLEID &lt;= #{sysRoleIdLessThanOrEqual}
 			</if>
 
-			<if test="sysRoleIds != null &amp;&amp; sysRoleIds.size() &gt; 0">
+			<if test="sysRoleIds != null and sysRoleIds.size() &gt; 0">
 			    and E.SYSROLEID IN
 				<foreach item="x_sysRoleId" index="index" collection="sysRoleIds" 
 					open="(" separator="," close=")">
@@ -208,7 +219,7 @@
 				and E.DEPTID &lt;= #{deptIdLessThanOrEqual}
 			</if>
 
-			<if test="deptIds != null &amp;&amp; deptIds.size() &gt; 0">
+			<if test="deptIds != null and deptIds.size() &gt; 0">
 			    and E.DEPTID IN
 				<foreach item="x_deptId" index="index" collection="deptIds" 
 					open="(" separator="," close=")">

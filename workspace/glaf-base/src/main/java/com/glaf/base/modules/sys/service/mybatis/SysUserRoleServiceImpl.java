@@ -50,7 +50,7 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 	protected final static Log logger = LogFactory
 			.getLog(SysUserRoleServiceImpl.class);
 
-	protected LongIdGenerator idGenerator;
+	protected IdGenerator idGenerator;
 
 	protected PersistenceDAO persistenceDAO;
 
@@ -122,7 +122,7 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 	@Transactional
 	public void save(SysUserRole sysUserRole) {
 		if (sysUserRole.getId() == 0L) {
-			sysUserRole.setId(idGenerator.getNextId());
+			sysUserRole.setId(idGenerator.nextId());
 			// sysUserRole.setCreateDate(new Date());
 			sysUserRoleMapper.insertSysUserRole(sysUserRole);
 		} else {
@@ -131,8 +131,8 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 	}
 
 	@Resource
-	@Qualifier("myBatisDbLongIdGenerator")
-	public void setLongIdGenerator(LongIdGenerator idGenerator) {
+	@Qualifier("myBatisDbIdGenerator")
+	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 
@@ -155,12 +155,6 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 	public void setSysDepartmentService(
 			SysDepartmentService sysDepartmentService) {
 		this.sysDepartmentService = sysDepartmentService;
-	}
-
-	@Resource
-	@Qualifier("myBatisDbLongIdGenerator")
-	public void setIdGenerator(LongIdGenerator idGenerator) {
-		this.idGenerator = idGenerator;
 	}
 
 	@Resource
@@ -211,7 +205,7 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 
 			// 授给被授权人
 			SysUserRole bean = new SysUserRole();
-			bean.setId(this.idGenerator.getNextId());
+			bean.setId(this.idGenerator.nextId());
 			bean.setAuthorizeFrom(fromUser.getId());
 			bean.setUser(toUser);
 			if (sysDeptRole != null) {
@@ -239,7 +233,7 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 	@Transactional
 	public boolean create(SysUserRole bean) {
 		if (bean.getId() == 0L) {
-			bean.setId(idGenerator.getNextId());
+			bean.setId(idGenerator.nextId());
 		}
 		sysUserRoleMapper.insertSysUserRole(bean);
 		return true;
@@ -259,6 +253,22 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 
 	public SysUserRole findById(long id) {
 		return this.getSysUserRole(id);
+	}
+	
+	protected void initUserDepartments(List<SysUser> users) {
+		if (users != null && !users.isEmpty()) {
+			List<SysDepartment> depts = sysDepartmentService
+					.getSysDepartmentList();
+			Map<Long, SysDepartment> deptMap = new HashMap<Long, SysDepartment>();
+			if (depts != null && !depts.isEmpty()) {
+				for (SysDepartment dept : depts) {
+					deptMap.put(dept.getId(), dept);
+				}
+			}
+			for (SysUser user : users) {
+				user.setDepartment(deptMap.get(Long.valueOf(user.getDeptId())));
+			}
+		}
 	}
 
 	public PageResult getAllAuthorizedUser(Map<String, Object> filter) {
@@ -309,7 +319,7 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 		RowBounds rowBounds = new RowBounds(start, pageSize);
 		List<SysUser> rows = sqlSessionTemplate.selectList(
 				"getAuthorizedUsers", query, rowBounds);
-
+        this.initUserDepartments(rows);
 		pager.setResults(rows);
 		pager.setPageSize(pageSize);
 		pager.setCurrentPageNo(pageNo);
@@ -352,6 +362,7 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 				}
 			}
 		}
+		this.initUserDepartments(users);
 		return users;
 	}
 
@@ -363,6 +374,7 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 				users.addAll(list);
 			}
 		}
+		this.initUserDepartments(users);
 		return users;
 	}
 
@@ -376,6 +388,8 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 				userMap.put(u.getId(), u);
 			}
 		}
+		
+		this.initUserDepartments(users);
 
 		SysUserRoleQuery query = new SysUserRoleQuery();
 		query.authorizeFromId(user.getId());

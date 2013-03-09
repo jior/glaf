@@ -35,10 +35,13 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.glaf.core.base.Scheduler;
+import com.glaf.core.domain.SchedulerEntity;
+import com.glaf.core.service.*;
+
 import com.glaf.base.modules.sys.form.SchedulerFormBean;
-import com.glaf.base.modules.sys.model.Scheduler;
+
 import com.glaf.base.modules.sys.model.SysUser;
-import com.glaf.base.modules.sys.service.SchedulerService;
 
 import com.glaf.base.utils.ParamUtil;
 import com.glaf.base.utils.RequestUtil;
@@ -52,7 +55,7 @@ public class SchedulerController {
 			.getLog(SchedulerController.class);
 
 	@javax.annotation.Resource
-	protected SchedulerService schedulerService;
+	protected ISysSchedulerService sysSchedulerService;
 
 	public SchedulerController() {
 
@@ -66,9 +69,9 @@ public class SchedulerController {
 		int locked = 0;
 		Scheduler scheduler = null;
 		if (StringUtils.isNotEmpty(taskId)) {
-			scheduler = schedulerService.getSchedulerById(taskId);
+			scheduler = sysSchedulerService.getSchedulerByTaskId(taskId);
 			if (scheduler != null) {
-				schedulerService.locked(taskId, locked);
+				sysSchedulerService.locked(taskId, locked);
 				if (scheduler.getLocked() == 1) {
 					QuartzUtils.stop(taskId);
 				}
@@ -82,7 +85,7 @@ public class SchedulerController {
 			SchedulerFormBean schedulerForm, HttpServletRequest request,
 			HttpServletResponse response) {
 		RequestUtils.setRequestParameterToAttribute(request);
-		Scheduler scheduler = new Scheduler();
+		Scheduler scheduler = new SchedulerEntity();
 
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		logger.debug(params);
@@ -110,13 +113,13 @@ public class SchedulerController {
 		SysUser user = RequestUtil.getLoginUser(request);
 		String actorId = user.getAccount();
 		scheduler.setCreateBy(actorId);
-		schedulerService.save(scheduler);
+		sysSchedulerService.save(scheduler);
 
 		return this.showList(modelMap, request, response);
 	}
 
-	public void setSchedulerService(SchedulerService schedulerService) {
-		this.schedulerService = schedulerService;
+	public void setSysSchedulerService(ISysSchedulerService sysSchedulerService) {
+		this.sysSchedulerService = sysSchedulerService;
 	}
 
 	@RequestMapping(params = "method=showList")
@@ -125,7 +128,7 @@ public class SchedulerController {
 		RequestUtil.setRequestParameterToAttribute(request);
 		SysUser user = RequestUtil.getLoginUser(request);
 		String actorId = user.getAccount();
-		List<Scheduler> list = schedulerService.getUserSchedulers(actorId);
+		List<Scheduler> list = sysSchedulerService.getUserSchedulers(actorId);
 		request.setAttribute("schedulers", list);
 		return new ModelAndView("/modules/sys/scheduler/scheduler_list",
 				modelMap);
@@ -138,7 +141,7 @@ public class SchedulerController {
 		String taskId = request.getParameter("taskId");
 		Scheduler scheduler = null;
 		if (StringUtils.isNotEmpty(taskId)) {
-			scheduler = schedulerService.getSchedulerById(taskId);
+			scheduler = sysSchedulerService.getSchedulerByTaskId(taskId);
 		}
 		request.setAttribute("scheduler", scheduler);
 
@@ -154,7 +157,7 @@ public class SchedulerController {
 		String startup = request.getParameter("startup");
 		Scheduler scheduler = null;
 		if (StringUtils.isNotEmpty(taskId)) {
-			scheduler = schedulerService.getSchedulerById(taskId);
+			scheduler = sysSchedulerService.getSchedulerByTaskId(taskId);
 			if (scheduler != null) {
 				if (StringUtils.equals(startup, "1")) {
 					QuartzUtils.stop(taskId);

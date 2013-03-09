@@ -6,7 +6,7 @@
 
 	<resultMap id="sysTreeResultMap"	type="com.glaf.base.modules.sys.model.SysTree">
 		<id property="id" column="ID" jdbcType="BIGINT" />
-		<result property="parent" column="PARENT" jdbcType="BIGINT"/>
+		<result property="parentId" column="PARENT" jdbcType="BIGINT"/>
 		<result property="name" column="NAME" jdbcType="VARCHAR"/>
 		<result property="desc" column="NODEDESC" jdbcType="VARCHAR"/>
 		<result property="sort" column="SORT" jdbcType="INTEGER"/>
@@ -22,7 +22,7 @@
 		insert into sys_tree 
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 		    ID
-			<if test="parent != null">
+			<if test="parentId != null">
 				,PARENT 
 			</if>
 			<if test="name != null">
@@ -54,8 +54,8 @@
 		<trim prefix=" values (" suffix=")" suffixOverrides=",">
 			  #{id, jdbcType=BIGINT}
 	     
-			<if test="parent != null">
-				,#{parent, jdbcType=BIGINT}
+			<if test="parentId != null">
+				,#{parentId, jdbcType=BIGINT}
 			</if>
 			<if test="name != null">
 				,#{name, jdbcType=VARCHAR}
@@ -89,8 +89,8 @@
 		update sys_tree
 		set
 		<trim prefix="" suffix="" suffixOverrides=",">		
-			<if test="parent != null">
-				PARENT = #{parent, jdbcType=BIGINT},
+			<if test="parentId != null">
+				PARENT = #{parentId, jdbcType=BIGINT},
 			</if>
 			<if test="name != null">
 				NAME = #{name, jdbcType=VARCHAR},
@@ -185,7 +185,7 @@
 				and E.PARENT = #{parentId}
 			</if>
 
-			<if test="parentIds != null &amp;&amp; parentIds.size() &gt; 0">
+			<if test="parentIds != null and parentIds.size() &gt; 0">
 			    and E.PARENT IN
 				<foreach item="x_parentId" index="index" collection="parentIds" 
 					open="(" separator="," close=")">
@@ -193,15 +193,15 @@
 				</foreach>
 			</if>
 	        
-			<if test="name != null &amp;&amp; name != '' ">
+			<if test="name != null and name != '' ">
 				and E.NAME = #{name}
 			</if>
 
-			<if test="nameLike != null &amp;&amp; nameLike != '' ">
+			<if test="nameLike != null and nameLike != '' ">
 				and E.NAME like #{nameLike}
 			</if>
 
-			<if test="names != null &amp;&amp; names.size() &gt; 0">
+			<if test="names != null and names.size() &gt; 0">
 			    and E.NAME IN
 				<foreach item="x_name" index="index" collection="names" 
 					open="(" separator="," close=")">
@@ -209,7 +209,7 @@
 				</foreach>
 			</if>
 
-			<if test="descLike != null &amp;&amp; descLike != '' ">
+			<if test="descLike != null and descLike != '' ">
 				and E.NODEDESC like #{descLike}
 			</if>
 
@@ -229,15 +229,15 @@
 				and E.SORT &lt; #{sortLessThan}
 			</if>
 	        
-			<if test="code != null &amp;&amp; code != '' ">
+			<if test="code != null and code != '' ">
 				and E.CODE = #{code}
 			</if>
 
-			<if test="codeLike != null &amp;&amp; codeLike != '' ">
+			<if test="codeLike != null and codeLike != '' ">
 				and E.CODE like #{codeLike}
 			</if>
 
-			<if test="codes != null &amp;&amp; codes.size() &gt; 0">
+			<if test="codes != null and codes.size() &gt; 0">
 			    and E.CODE IN
 				<foreach item="x_code" index="index" collection="codes" 
 					open="(" separator="," close=")">
@@ -245,7 +245,7 @@
 				</foreach>
 			</if>
 	        
-			<if test="urlLike != null &amp;&amp; urlLike != '' ">
+			<if test="urlLike != null and urlLike != '' ">
 				and E.url like #{urlLike}
 			</if>
 

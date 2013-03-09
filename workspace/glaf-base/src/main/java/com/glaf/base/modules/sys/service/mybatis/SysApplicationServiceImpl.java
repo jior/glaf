@@ -48,7 +48,7 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 	protected final static Log logger = LogFactory
 			.getLog(SysApplicationServiceImpl.class);
 
-	protected LongIdGenerator idGenerator;
+	protected IdGenerator idGenerator;
 
 	protected PersistenceDAO persistenceDAO;
 
@@ -56,9 +56,9 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 
 	protected SysApplicationMapper sysApplicationMapper;
 
-	private AuthorizeService authorizeService;
+	protected AuthorizeService authorizeService;
 
-	private SysTreeService sysTreeService;
+	protected SysTreeService sysTreeService;
 
 	public SysApplicationServiceImpl() {
 
@@ -110,13 +110,17 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 		}
 		SysApplication sysApplication = sysApplicationMapper
 				.getSysApplicationById(id);
+		if (sysApplication != null) {
+			SysTree node = sysTreeService.findById(sysApplication.getNodeId());
+			sysApplication.setNode(node);
+		}
 		return sysApplication;
 	}
 
 	@Transactional
 	public void save(SysApplication sysApplication) {
 		if (sysApplication.getId() == 0L) {
-			sysApplication.setId(idGenerator.getNextId());
+			sysApplication.setId(idGenerator.nextId());
 			// sysApplication.setCreateDate(new Date());
 			sysApplicationMapper.insertSysApplication(sysApplication);
 		} else {
@@ -125,8 +129,8 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 	}
 
 	@Resource
-	@Qualifier("myBatisDbLongIdGenerator")
-	public void setLongIdGenerator(LongIdGenerator idGenerator) {
+	@Qualifier("myBatisDbIdGenerator")
+	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 
@@ -160,7 +164,7 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 	public boolean create(SysApplication bean) {
 		boolean ret = false;
 		if (bean.getId() == 0L) {
-			bean.setId(idGenerator.getNextId());
+			bean.setId(idGenerator.nextId());
 		}
 		bean.setSort((int) bean.getId());// 设置排序号为刚插入的id值
 		sysApplicationMapper.insertSysApplication(bean);
@@ -200,7 +204,10 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 
 		List<SysApplication> list = this.list(query);
 		if (list != null && !list.isEmpty()) {
-			return list.get(0);
+			SysApplication sysApplication = list.get(0);
+			SysTree node = sysTreeService.findById(sysApplication.getNodeId());
+			sysApplication.setNode(node);
+			return sysApplication;
 		}
 
 		return null;

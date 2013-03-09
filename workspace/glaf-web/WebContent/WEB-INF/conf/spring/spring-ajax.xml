@@ -4,57 +4,57 @@
 
 	<bean name="sysFunctionAjaxService" class="com.glaf.base.modules.sys.service.SysFunctionAjaxService">
 		<property name="sysFunctionService">
-			<ref bean="sysFunctionProxy" />
+			<ref bean="sysFunctionService" />
 		</property>
 	</bean>
 
 	<bean name="sysDepartmentAjaxService" class="com.glaf.base.modules.sys.service.SysDepartmentAjaxService">
 		<property name="sysDepartmentService">
-			<ref bean="sysDepartmentProxy" />
+			<ref bean="sysDepartmentService" />
 		</property>
 	</bean>
 
 	<bean name="sysRoleAjaxService" class="com.glaf.base.modules.sys.service.SysRoleAjaxService">
 		<property name="sysRoleService">
-			<ref bean="sysRoleProxy" />
+			<ref bean="sysRoleService" />
 		</property>
 	</bean>
 
 	<bean name="sysApplicationAjaxService"
 		class="com.glaf.base.modules.sys.service.SysApplicationAjaxService">
 		<property name="sysApplicationService">
-			<ref bean="sysApplicationProxy" />
+			<ref bean="sysApplicationService" />
 		</property>
 	</bean>
 
 	<bean name="sysTreeAjaxService" class="com.glaf.base.modules.sys.service.SysTreeAjaxService">
 		<property name="sysTreeService">
-			<ref bean="sysTreeProxy" />
+			<ref bean="sysTreeService" />
 		</property>
 	</bean>
 
 	<bean name="dictoryAjaxService" class="com.glaf.base.modules.sys.service.DictoryAjaxService">
 		<property name="dictoryService">
-			<ref bean="dictoryProxy" />
+			<ref bean="dictoryService" />
 		</property>
 	</bean>
 
 	<bean name="myMenuAjaxService" class="com.glaf.base.modules.workspace.service.MyMenuAjaxService">
 		<property name="myMenuService">
-			<ref bean="myMenuProxy" />
+			<ref bean="myMenuService" />
 		</property>
 	</bean>
 
 	<bean name="workCalendarAjaxService"
 		class="com.glaf.base.modules.others.service.WorkCalendarAjaxService">
 		<property name="workCalendarService">
-			<ref bean="workCalendarProxy" />
+			<ref bean="workCalendarService" />
 		</property>
 	</bean>
 
 	<bean name="sysUserRoleAjaxService" class="com.glaf.base.modules.sys.service.SysUserRoleAjaxService">
 		<property name="sysUserRoleService">
-			<ref bean="sysUserRoleProxy" />
+			<ref bean="sysUserRoleService" />
 		</property>
 	</bean>
 

@@ -4,104 +4,105 @@
 
 <mapper namespace="com.glaf.base.modules.sys.mapper.SysUserMapper">
 
-	<resultMap id="sysUserResultMap"	type="com.glaf.base.modules.sys.model.SysUser">
+	<resultMap id="sysUserResultMap" type="com.glaf.base.modules.sys.model.SysUser">
 		<id property="id" column="ID" jdbcType="BIGINT" />
-		<result property="account" column="ACCOUNT" jdbcType="VARCHAR"/>
-		<result property="password" column="PASSWORD" jdbcType="VARCHAR"/>
-		<result property="code" column="CODE" jdbcType="VARCHAR"/>
-		<result property="name" column="NAME" jdbcType="VARCHAR"/>
-		<result property="blocked" column="BLOCKED" jdbcType="INTEGER"/>
-		<result property="createTime" column="CREATETIME" jdbcType="TIMESTAMP"/>
-		<result property="lastLoginTime" column="LASTLOGINTIME" jdbcType="TIMESTAMP"/>
-		<result property="lastLoginIP" column="LASTLOGINIP" jdbcType="VARCHAR"/>
-		<result property="evection" column="EVECTION" jdbcType="INTEGER"/>
-		<result property="mobile" column="MOBILE" jdbcType="VARCHAR"/>
-		<result property="email" column="EMAIL" jdbcType="VARCHAR"/>
-		<result property="telephone" column="TELEPHONE" jdbcType="VARCHAR"/>
-		<result property="gender" column="GENDER" jdbcType="INTEGER"/>
-		<result property="headship" column="HEADSHIP" jdbcType="VARCHAR"/>
-		<result property="userType" column="USERTYPE" jdbcType="INTEGER"/>
-		<result property="fax" column="FAX" jdbcType="VARCHAR"/>
-		<result property="accountType" column="ACCOUNTTYPE" jdbcType="INTEGER"/>
-		<result property="dumpFlag" column="DUMPFLAG" jdbcType="INTEGER"/>
-		<result property="deptId" column="DEPTID" jdbcType="BIGINT"/>
-		<result property="adminFlag" column="ADMINFLAG" jdbcType="VARCHAR"/>
-		<result property="superiorIds" column="SUPERIORIDS" jdbcType="VARCHAR"/>
+		<result property="account" column="ACCOUNT" jdbcType="VARCHAR" />
+		<result property="password" column="PASSWORD" jdbcType="VARCHAR" />
+		<result property="code" column="CODE" jdbcType="VARCHAR" />
+		<result property="name" column="NAME" jdbcType="VARCHAR" />
+		<result property="blocked" column="BLOCKED" jdbcType="INTEGER" />
+		<result property="createTime" column="CREATETIME" jdbcType="TIMESTAMP" />
+		<result property="lastLoginTime" column="LASTLOGINTIME"
+			jdbcType="TIMESTAMP" />
+		<result property="lastLoginIP" column="LASTLOGINIP" jdbcType="VARCHAR" />
+		<result property="evection" column="EVECTION" jdbcType="INTEGER" />
+		<result property="mobile" column="MOBILE" jdbcType="VARCHAR" />
+		<result property="email" column="EMAIL" jdbcType="VARCHAR" />
+		<result property="telephone" column="TELEPHONE" jdbcType="VARCHAR" />
+		<result property="gender" column="GENDER" jdbcType="INTEGER" />
+		<result property="headship" column="HEADSHIP" jdbcType="VARCHAR" />
+		<result property="userType" column="USERTYPE" jdbcType="INTEGER" />
+		<result property="fax" column="FAX" jdbcType="VARCHAR" />
+		<result property="accountType" column="ACCOUNTTYPE" jdbcType="INTEGER" />
+		<result property="dumpFlag" column="DUMPFLAG" jdbcType="INTEGER" />
+		<result property="deptId" column="DEPTID" jdbcType="BIGINT" />
+		<result property="adminFlag" column="ADMINFLAG" jdbcType="VARCHAR" />
+		<result property="superiorIds" column="SUPERIORIDS" jdbcType="VARCHAR" />
 	</resultMap>
 
- 
+
 	<insert id="insertSysUser" parameterType="com.glaf.base.modules.sys.model.SysUser">
-		insert into sys_user 
+		insert into sys_user
 		<trim prefix="(" suffix=")" suffixOverrides=",">
-		    ID
+			ID
 			<if test="account != null">
-				,ACCOUNT 
+				,ACCOUNT
 			</if>
 			<if test="password != null">
-				,PASSWORD 
+				,PASSWORD
 			</if>
 			<if test="code != null">
-				,CODE 
+				,CODE
 			</if>
 			<if test="name != null">
-				,NAME 
+				,NAME
 			</if>
 			<if test="blocked != null">
-				,BLOCKED 
+				,BLOCKED
 			</if>
 			<if test="createTime != null">
-				,CREATETIME 
+				,CREATETIME
 			</if>
 			<if test="lastLoginTime != null">
-				,LASTLOGINTIME 
+				,LASTLOGINTIME
 			</if>
 			<if test="lastLoginIP != null">
-				,LASTLOGINIP 
+				,LASTLOGINIP
 			</if>
 			<if test="evection != null">
-				,EVECTION 
+				,EVECTION
 			</if>
 			<if test="mobile != null">
-				,MOBILE 
+				,MOBILE
 			</if>
 			<if test="email != null">
-				,EMAIL 
+				,EMAIL
 			</if>
 			<if test="telephone != null">
-				,TELEPHONE 
+				,TELEPHONE
 			</if>
 			<if test="gender != null">
-				,GENDER 
+				,GENDER
 			</if>
 			<if test="headship != null">
-				,HEADSHIP 
+				,HEADSHIP
 			</if>
 			<if test="userType != null">
-				,USERTYPE 
+				,USERTYPE
 			</if>
 			<if test="fax != null">
-				,FAX 
+				,FAX
 			</if>
 			<if test="accountType != null">
-				,ACCOUNTTYPE 
+				,ACCOUNTTYPE
 			</if>
 			<if test="dumpFlag != null">
-				,DUMPFLAG 
+				,DUMPFLAG
 			</if>
 			<if test="deptId != null">
-				,DEPTID 
+				,DEPTID
 			</if>
 			<if test="adminFlag != null">
-				,ADMINFLAG 
+				,ADMINFLAG
 			</if>
 			<if test="superiorIds != null">
-				,SUPERIORIDS 
+				,SUPERIORIDS
 			</if>
 		</trim>
 
 		<trim prefix=" values (" suffix=")" suffixOverrides=",">
-			  #{id, jdbcType=BIGINT}
-	     
+			#{id, jdbcType=BIGINT}
+
 			<if test="account != null">
 				,#{account, jdbcType=VARCHAR}
 			</if>
@@ -168,11 +169,11 @@
 		</trim>
 	</insert>
 
-	 
+
 	<update id="updateSysUser" parameterType="com.glaf.base.modules.sys.model.SysUser">
 		update sys_user
 		set
-		<trim prefix="" suffix="" suffixOverrides=",">		
+		<trim prefix="" suffix="" suffixOverrides=",">
 			<if test="account != null">
 				ACCOUNT = #{account, jdbcType=VARCHAR},
 			</if>
@@ -238,23 +239,23 @@
 			</if>
 		</trim>
 		where
-          ID = #{id, jdbcType=BIGINT}
-		
+		ID = #{id, jdbcType=BIGINT}
+
 	</update>
 
- 
-	<delete id="deleteSysUserById" parameterType="long"> 
-        delete from sys_user
-        where ID =	#{id}
+
+	<delete id="deleteSysUserById" parameterType="long">
+		delete from sys_user
+		where ID = #{id}
 	</delete>
-	
+
 	<delete id="deleteSysUsers" parameterType="com.glaf.base.modules.sys.query.SysUserQuery">
 		delete from sys_user
-		where ( 
- 			  ID IN
-		<foreach item="x_rowId" index="index" collection="rowIds" 
+		where (
+		ID IN
+		<foreach item="x_rowId" index="index" collection="rowIds"
 			open="(" separator="," close=")">
-                  #{x_rowId}
+			#{x_rowId}
 		</foreach>
 		)
 	</delete>
@@ -262,34 +263,38 @@
 	<select id="getSysUserById" parameterType="long" resultMap="sysUserResultMap">
 		select * from sys_user where ID = #{id}
 	</select>
-	
-	
-	<select id="getSysUserByAccount" parameterType="String" resultMap="sysUserResultMap">
+
+
+	<select id="getSysUserByAccount" parameterType="String"
+		resultMap="sysUserResultMap">
 		select * from sys_user where ACCOUNT = #{account}
 	</select>
-	
-	
-	<select id="getCountAuthorizedUsers" parameterType="com.glaf.base.modules.sys.query.SysUserQuery" resultMap="sysUserResultMap">
-		
+
+
+	<select id="getCountAuthorizedUsers" parameterType="com.glaf.base.modules.sys.query.SysUserQuery"
+		resultType="int">
+
 		select count(distinct E.id) from sys_user E
 		inner join sys_user_role R
 		on E.ID = R.USERID
 		where E.ACCOUNTTYPE = 0
-		 
+
 		<if test=" deptId != null  ">
 			and E.DEPTID = #{deptId}
 		</if>
-		
-		<if test="nameLike != null &amp;&amp; nameLike != '' ">
+
+		<if test="nameLike != null and nameLike != '' ">
 			and E.NAME like #{nameLike}
 		</if>
-		
+
 		<if test="availDateStartGreaterThanOrEqual != null">
-			and R.AVAILDATESTART &gt;= #{availDateStartGreaterThanOrEqual}
+			and R.AVAILDATESTART &gt;=
+			#{availDateStartGreaterThanOrEqual}
 		</if>
 
 		<if test="availDateStartLessThanOrEqual != null">
-			and R.AVAILDATESTART &lt;= #{availDateStartLessThanOrEqual}
+			and R.AVAILDATESTART &lt;=
+			#{availDateStartLessThanOrEqual}
 		</if>
 
 		<if test="availDateEndGreaterThanOrEqual != null">
@@ -299,30 +304,33 @@
 		<if test="availDateEndLessThanOrEqual != null">
 			and R.AVAILDATEEND &lt;= #{availDateEndLessThanOrEqual}
 		</if>
-        
+
 	</select>
-	
-	<select id="getAuthorizedUsers" parameterType="com.glaf.base.modules.sys.query.SysUserQuery" resultMap="sysUserResultMap">
-		
+
+	<select id="getAuthorizedUsers" parameterType="com.glaf.base.modules.sys.query.SysUserQuery"
+		resultMap="sysUserResultMap">
+
 		select distinct E.* from sys_user E
 		inner join sys_user_role R
 		on E.ID = R.USERID
 		where E.ACCOUNTTYPE = 0
-		 
+
 		<if test=" deptId != null  ">
 			and E.DEPTID = #{deptId}
 		</if>
-		
-		<if test="nameLike != null &amp;&amp; nameLike != '' ">
+
+		<if test="nameLike != null and nameLike != '' ">
 			and E.NAME like #{nameLike}
 		</if>
-		
+
 		<if test="availDateStartGreaterThanOrEqual != null">
-			and R.AVAILDATESTART &gt;= #{availDateStartGreaterThanOrEqual}
+			and R.AVAILDATESTART &gt;=
+			#{availDateStartGreaterThanOrEqual}
 		</if>
 
 		<if test="availDateStartLessThanOrEqual != null">
-			and R.AVAILDATESTART &lt;= #{availDateStartLessThanOrEqual}
+			and R.AVAILDATESTART &lt;=
+			#{availDateStartLessThanOrEqual}
 		</if>
 
 		<if test="availDateEndGreaterThanOrEqual != null">
@@ -332,46 +340,38 @@
 		<if test="availDateEndLessThanOrEqual != null">
 			and R.AVAILDATEEND &lt;= #{availDateEndLessThanOrEqual}
 		</if>
-		
-		<choose>
-			<when test="orderBy != null">
-		     order by ${orderBy}
-			</when>
-			<otherwise>
-		      order by E.ID asc
-			</otherwise>
-		</choose>
-        
+
+		order by E.ID asc
+
 	</select>
-	
-	
+
+
 	<select id="getSysRoleUsers" parameterType="long" resultMap="sysUserResultMap">
-		
+
 		select distinct E.* from sys_user E
 		inner join sys_user_role R
-		on E.ID = R.USERID
-		where  R.ROLEID = #{roleId}
-        
+		on E.ID =
+		R.USERID
+		where R.ROLEID = #{roleId}
+
 	</select>
 
 
-	<select id="getSysUsers" 
-		parameterType="com.glaf.base.modules.sys.query.SysUserQuery"
+	<select id="getSysUsers" parameterType="com.glaf.base.modules.sys.query.SysUserQuery"
 		resultMap="sysUserResultMap">
 		select E.*
 		<include refid="selectSysUsersSql" />
 		<choose>
 			<when test="orderBy != null">
-		     order by ${orderBy}
+				order by ${orderBy}
 			</when>
 			<otherwise>
-		       order by E.ID asc
+				order by E.ID asc
 			</otherwise>
 		</choose>
 	</select>
 
-	<select id="getSysUserCount" 
-		parameterType="com.glaf.base.modules.sys.query.SysUserQuery"
+	<select id="getSysUserCount" parameterType="com.glaf.base.modules.sys.query.SysUserQuery"
 		resultType="int">
 		select count(*)
 		<include refid="selectSysUsersSql" />
@@ -380,55 +380,55 @@
 	<sql id="selectSysUsersSql">
 
 		from sys_user E
-		 
+
 		<where>
-		       1 = 1  
-	        
-			<if test="account != null &amp;&amp; account != '' ">
+			1 = 1
+
+			<if test="account != null and account != '' ">
 				and E.ACCOUNT = #{account}
 			</if>
 
-			<if test="accountLike != null &amp;&amp; accountLike != '' ">
+			<if test="accountLike != null and accountLike != '' ">
 				and E.ACCOUNT like #{accountLike}
 			</if>
 
-			<if test="accounts != null &amp;&amp; accounts.size() &gt; 0">
-			    and E.ACCOUNT IN
-				<foreach item="x_account" index="index" collection="accounts" 
+			<if test="accounts != null and accounts.size() &gt; 0">
+				and E.ACCOUNT IN
+				<foreach item="x_account" index="index" collection="accounts"
 					open="(" separator="," close=")">
-                  #{x_account}
+					#{x_account}
 				</foreach>
 			</if>
-	        
-			<if test="code != null &amp;&amp; code != '' ">
+
+			<if test="code != null and code != '' ">
 				and E.CODE = #{code}
 			</if>
 
-			<if test="codeLike != null &amp;&amp; codeLike != '' ">
+			<if test="codeLike != null and codeLike != '' ">
 				and E.CODE like #{codeLike}
 			</if>
 
-			<if test="codes != null &amp;&amp; codes.size() &gt; 0">
-			    and E.CODE IN
-				<foreach item="x_code" index="index" collection="codes" 
+			<if test="codes != null and codes.size() &gt; 0">
+				and E.CODE IN
+				<foreach item="x_code" index="index" collection="codes"
 					open="(" separator="," close=")">
-                  #{x_code}
+					#{x_code}
 				</foreach>
 			</if>
-	        
-			<if test="name != null &amp;&amp; name != '' ">
+
+			<if test="name != null and name != '' ">
 				and E.NAME = #{name}
 			</if>
 
-			<if test="nameLike != null &amp;&amp; nameLike != '' ">
+			<if test="nameLike != null and nameLike != '' ">
 				and E.NAME like #{nameLike}
 			</if>
 
-			<if test="names != null &amp;&amp; names.size() &gt; 0">
-			    and E.NAME IN
-				<foreach item="x_name" index="index" collection="names" 
+			<if test="names != null and names.size() &gt; 0">
+				and E.NAME IN
+				<foreach item="x_name" index="index" collection="names"
 					open="(" separator="," close=")">
-                  #{x_name}
+					#{x_name}
 				</foreach>
 			</if>
 
@@ -453,18 +453,19 @@
 			</if>
 
 			<if test="lastLoginTimeGreaterThanOrEqual != null">
-				and E.LASTLOGINTIME &gt;= #{lastLoginTimeGreaterThanOrEqual}
+				and E.LASTLOGINTIME &gt;=
+				#{lastLoginTimeGreaterThanOrEqual}
 			</if>
 
 			<if test="lastLoginTimeLessThanOrEqual != null">
 				and E.LASTLOGINTIME &lt;= #{lastLoginTimeLessThanOrEqual}
 			</if>
-     
-			<if test="lastLoginIP != null &amp;&amp; lastLoginIP != '' ">
+
+			<if test="lastLoginIP != null and lastLoginIP != '' ">
 				and E.LASTLOGINIP = #{lastLoginIP}
 			</if>
 
-			<if test="lastLoginIPLike != null &amp;&amp; lastLoginIPLike != '' ">
+			<if test="lastLoginIPLike != null and lastLoginIPLike != '' ">
 				and E.LASTLOGINIP like #{lastLoginIPLike}
 			</if>
 
@@ -480,27 +481,27 @@
 				and E.EVECTION &lt;= #{evectionLessThanOrEqual}
 			</if>
 
-			<if test="mobile != null &amp;&amp; mobile != '' ">
+			<if test="mobile != null and mobile != '' ">
 				and E.MOBILE = #{mobile}
 			</if>
 
-			<if test="mobileLike != null &amp;&amp; mobileLike != '' ">
+			<if test="mobileLike != null and mobileLike != '' ">
 				and E.MOBILE like #{mobileLike}
 			</if>
-	        
-			<if test="email != null &amp;&amp; email != '' ">
+
+			<if test="email != null and email != '' ">
 				and E.EMAIL = #{email}
 			</if>
 
-			<if test="emailLike != null &amp;&amp; emailLike != '' ">
+			<if test="emailLike != null and emailLike != '' ">
 				and E.EMAIL like #{emailLike}
 			</if>
-	        
-			<if test="telephone != null &amp;&amp; telephone != '' ">
+
+			<if test="telephone != null and telephone != '' ">
 				and E.TELEPHONE = #{telephone}
 			</if>
 
-			<if test="telephoneLike != null &amp;&amp; telephoneLike != '' ">
+			<if test="telephoneLike != null and telephoneLike != '' ">
 				and E.TELEPHONE like #{telephoneLike}
 			</if>
 
@@ -515,12 +516,12 @@
 			<if test="genderLessThanOrEqual != null">
 				and E.GENDER &lt;= #{genderLessThanOrEqual}
 			</if>
-   
-			<if test="headship != null &amp;&amp; headship != '' ">
+
+			<if test="headship != null and headship != '' ">
 				and E.HEADSHIP = #{headship}
 			</if>
 
-			<if test="headshipLike != null &amp;&amp; headshipLike != '' ">
+			<if test="headshipLike != null and headshipLike != '' ">
 				and E.HEADSHIP like #{headshipLike}
 			</if>
 
@@ -536,19 +537,19 @@
 				and E.USERTYPE &lt;= #{userTypeLessThanOrEqual}
 			</if>
 
-			<if test="userTypes != null &amp;&amp; userTypes.size() &gt; 0">
-			    and E.USERTYPE IN
-				<foreach item="x_userType" index="index" collection="userTypes" 
+			<if test="userTypes != null and userTypes.size() &gt; 0">
+				and E.USERTYPE IN
+				<foreach item="x_userType" index="index" collection="userTypes"
 					open="(" separator="," close=")">
-                  #{x_userType}
+					#{x_userType}
 				</foreach>
 			</if>
-        
-			<if test="fax != null &amp;&amp; fax != '' ">
+
+			<if test="fax != null and fax != '' ">
 				and E.FAX = #{fax}
 			</if>
 
-			<if test="faxLike != null &amp;&amp; faxLike != '' ">
+			<if test="faxLike != null and faxLike != '' ">
 				and E.FAX like #{faxLike}
 			</if>
 
@@ -588,22 +589,22 @@
 				and E.DEPTID &lt;= #{deptIdLessThanOrEqual}
 			</if>
 
-			<if test="deptIds != null &amp;&amp; deptIds.size() &gt; 0">
-			    and E.DEPTID IN
-				<foreach item="x_deptId" index="index" collection="deptIds" 
+			<if test="deptIds != null and deptIds.size() &gt; 0">
+				and E.DEPTID IN
+				<foreach item="x_deptId" index="index" collection="deptIds"
 					open="(" separator="," close=")">
-                  #{x_deptId}
+					#{x_deptId}
 				</foreach>
 			</if>
-	        
-			<if test="adminFlag != null &amp;&amp; adminFlag != '' ">
+
+			<if test="adminFlag != null and adminFlag != '' ">
 				and E.ADMINFLAG = #{adminFlag}
 			</if>
-	        
-			<if test="superiorIdsLike != null &amp;&amp; superiorIdsLike != '' ">
+
+			<if test="superiorIdsLike != null and superiorIdsLike != '' ">
 				and E.SUPERIORIDS like #{superiorIdsLike}
 			</if>
-			 
+
 		</where>
 	</sql>
 

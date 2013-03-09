@@ -139,7 +139,7 @@
 				and E.USERID &lt;= #{userIdLessThanOrEqual}
 			</if>
 
-			<if test="userIds != null &amp;&amp; userIds.size() &gt; 0">
+			<if test="userIds != null and userIds.size() &gt; 0">
 			    and E.USERID IN
 				<foreach item="x_userId" index="index" collection="userIds" 
 					open="(" separator="," close=")">
@@ -147,11 +147,11 @@
 				</foreach>
 			</if>
 
-			<if test="titleLike != null &amp;&amp; titleLike != '' ">
+			<if test="titleLike != null and titleLike != '' ">
 				and E.TITLE like #{titleLike}
 			</if>
 
-			<if test="urlLike != null &amp;&amp; urlLike != '' ">
+			<if test="urlLike != null and urlLike != '' ">
 				and E.URL like #{urlLike}
 			</if>
 

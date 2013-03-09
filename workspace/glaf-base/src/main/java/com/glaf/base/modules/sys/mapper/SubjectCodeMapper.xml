@@ -139,7 +139,7 @@
 				and E.PARENT &lt;= #{parentLessThanOrEqual}
 			</if>
 
-			<if test="parents != null &amp;&amp; parents.size() &gt; 0">
+			<if test="parents != null and parents.size() &gt; 0">
 			    and E.PARENT IN
 				<foreach item="x_parent" index="index" collection="parents" 
 					open="(" separator="," close=")">
@@ -147,11 +147,11 @@
 				</foreach>
 			</if>
 
-			<if test="subjectCodeLike != null &amp;&amp; subjectCodeLike != '' ">
+			<if test="subjectCodeLike != null and subjectCodeLike != '' ">
 				and E.SUBJECTCODE like #{subjectCodeLike}
 			</if>
 
-			<if test="subjectCodes != null &amp;&amp; subjectCodes.size() &gt; 0">
+			<if test="subjectCodes != null and subjectCodes.size() &gt; 0">
 			    and E.SUBJECTCODE IN
 				<foreach item="x_subjectCode" index="index" collection="subjectCodes" 
 					open="(" separator="," close=")">
@@ -159,7 +159,7 @@
 				</foreach>
 			</if>
 	  
-			<if test="subjectNameLike != null &amp;&amp; subjectNameLike != '' ">
+			<if test="subjectNameLike != null and subjectNameLike != '' ">
 				and E.SUBJECTNAME like #{subjectNameLike}
 			</if>
 

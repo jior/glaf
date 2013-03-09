@@ -37,6 +37,8 @@ public interface SysDeptRoleMapper {
 	int getSysDeptRoleCount(SysDeptRoleQuery query);
 
 	List<SysDeptRole> getSysDeptRoles(SysDeptRoleQuery query);
+	
+	List<SysDeptRole> getSysDeptRolesByUserId(Long userId);
 
 	void insertSysDeptRole(SysDeptRole model);
 

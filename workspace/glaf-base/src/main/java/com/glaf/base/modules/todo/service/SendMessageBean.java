@@ -39,6 +39,7 @@ import com.glaf.base.modules.sys.model.SysDeptRole;
 import com.glaf.base.modules.sys.model.SysRole;
 import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.sys.service.SysDeptRoleService;
+import com.glaf.base.modules.sys.service.SysRoleService;
 import com.glaf.base.modules.sys.service.SysUserService;
 import com.glaf.base.modules.todo.TodoConstants;
 
@@ -54,12 +55,22 @@ public class SendMessageBean {
 	private TodoService todoService;
 
 	private SysUserService sysUserService;
+	
+	private SysRoleService sysRoleService;
 
 	private SysDeptRoleService sysDeptRoleService;
 
 	public SendMessageBean() {
 
 	}
+	
+	
+
+	public void setSysRoleService(SysRoleService sysRoleService) {
+		this.sysRoleService = sysRoleService;
+	}
+
+
 
 	public List getTodoInstances(String actorId) {
 		List list = new ArrayList();
@@ -120,7 +131,8 @@ public class SendMessageBean {
 				SysDeptRole sysDeptRole = (SysDeptRole) iteratorxy.next();
 				if (sysDeptRole != null) {
 					SysRole role = sysDeptRole.getRole();
-					roleCodes.add(role.getCode());
+					//sysRoleService.findById(sysDeptRole.getSysRoleId());
+					//roleCodes.add(role.getCode());
 				}
 			}
 		}

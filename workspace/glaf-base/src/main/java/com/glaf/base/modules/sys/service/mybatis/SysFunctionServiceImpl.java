@@ -44,7 +44,7 @@ public class SysFunctionServiceImpl implements SysFunctionService {
 	protected final static Log logger = LogFactory
 			.getLog(SysFunctionServiceImpl.class);
 
-	protected LongIdGenerator idGenerator;
+	protected IdGenerator idGenerator;
 
 	protected PersistenceDAO persistenceDAO;
 
@@ -106,7 +106,7 @@ public class SysFunctionServiceImpl implements SysFunctionService {
 	@Transactional
 	public void save(SysFunction sysFunction) {
 		if (sysFunction.getId() == 0L) {
-			sysFunction.setId(idGenerator.getNextId());
+			sysFunction.setId(idGenerator.nextId());
 			// sysFunction.setCreateDate(new Date());
 			sysFunctionMapper.insertSysFunction(sysFunction);
 		} else {
@@ -115,8 +115,8 @@ public class SysFunctionServiceImpl implements SysFunctionService {
 	}
 
 	@Resource
-	@Qualifier("myBatisDbLongIdGenerator")
-	public void setLongIdGenerator(LongIdGenerator idGenerator) {
+	@Qualifier("myBatisDbIdGenerator")
+	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 
@@ -138,7 +138,7 @@ public class SysFunctionServiceImpl implements SysFunctionService {
 	@Transactional
 	public boolean create(SysFunction bean) {
 		if (bean.getId() == 0L) {
-			bean.setId(idGenerator.getNextId());
+			bean.setId(idGenerator.nextId());
 		}
 		bean.setSort((int) bean.getId());
 		sysFunctionMapper.insertSysFunction(bean);

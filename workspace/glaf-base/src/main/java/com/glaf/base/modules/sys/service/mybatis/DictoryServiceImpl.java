@@ -46,7 +46,7 @@ public class DictoryServiceImpl implements DictoryService {
 	protected final static Log logger = LogFactory
 			.getLog(DictoryServiceImpl.class);
 
-	protected LongIdGenerator idGenerator;
+	protected IdGenerator idGenerator;
 
 	protected PersistenceDAO persistenceDAO;
 
@@ -108,7 +108,7 @@ public class DictoryServiceImpl implements DictoryService {
 	@Transactional
 	public void save(Dictory dictory) {
 		if (dictory.getId() == 0L) {
-			dictory.setId(idGenerator.getNextId());
+			dictory.setId(idGenerator.nextId());
 			// dictory.setCreateDate(new Date());
 			dictoryMapper.insertDictory(dictory);
 		} else {
@@ -117,8 +117,8 @@ public class DictoryServiceImpl implements DictoryService {
 	}
 
 	@Resource
-	@Qualifier("myBatisDbLongIdGenerator")
-	public void setLongIdGenerator(LongIdGenerator idGenerator) {
+	@Qualifier("myBatisDbIdGenerator")
+	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 

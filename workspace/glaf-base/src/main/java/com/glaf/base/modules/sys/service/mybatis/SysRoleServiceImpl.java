@@ -45,7 +45,7 @@ public class SysRoleServiceImpl implements SysRoleService {
 	protected final static Log logger = LogFactory
 			.getLog(SysRoleServiceImpl.class);
 
-	protected LongIdGenerator idGenerator;
+	protected IdGenerator idGenerator;
 
 	protected PersistenceDAO persistenceDAO;
 
@@ -109,7 +109,7 @@ public class SysRoleServiceImpl implements SysRoleService {
 	@Transactional
 	public void save(SysRole sysRole) {
 		if (sysRole.getId() == 0L) {
-			sysRole.setId(idGenerator.getNextId());
+			sysRole.setId(idGenerator.nextId());
 			// sysRole.setCreateDate(new Date());
 			sysRoleMapper.insertSysRole(sysRole);
 		} else {
@@ -118,8 +118,8 @@ public class SysRoleServiceImpl implements SysRoleService {
 	}
 
 	@Resource
-	@Qualifier("myBatisDbLongIdGenerator")
-	public void setLongIdGenerator(LongIdGenerator idGenerator) {
+	@Qualifier("myBatisDbIdGenerator")
+	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 
@@ -146,7 +146,7 @@ public class SysRoleServiceImpl implements SysRoleService {
 	@Transactional
 	public boolean create(SysRole bean) {
 		if (bean.getId() == 0L) {
-			bean.setId(idGenerator.getNextId());
+			bean.setId(idGenerator.nextId());
 		}
 		bean.setSort((int) bean.getId());
 		sysRoleMapper.insertSysRole(bean);

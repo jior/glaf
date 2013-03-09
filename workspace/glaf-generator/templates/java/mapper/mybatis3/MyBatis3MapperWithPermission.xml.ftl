@@ -194,7 +194,7 @@
 				and E.${field.columnName} &lt;= #GG{${field.name}LessThanOrEqual}
             </if>
 
-			<if test="${field.name}s != null &amp;&amp; ${field.name}s.size() &gt; 0">
+			<if test="${field.name}s != null and ${field.name}s.size() &gt; 0">
 			    and E.${field.columnName} IN
                 <foreach item="x_${field.name}" index="index" collection="${field.name}s" 
                      open="(" separator="," close=")">
@@ -204,15 +204,15 @@
 
 	  <#elseif field.type?exists && ( field.type== 'String')>
 	        
-			<if test="${field.name} != null &amp;&amp; ${field.name} != '' ">
+			<if test="${field.name} != null and ${field.name} != '' ">
 				and E.${field.columnName} = #GG{${field.name}}
             </if>
 
-			<if test="${field.name}Like != null &amp;&amp; ${field.name}Like != '' ">
+			<if test="${field.name}Like != null and ${field.name}Like != '' ">
 				and E.${field.columnName} like #GG{${field.name}Like}
             </if>
 
-			<if test="${field.name}s != null &amp;&amp; ${field.name}s.size() &gt; 0">
+			<if test="${field.name}s != null and ${field.name}s.size() &gt; 0">
 			    and E.${field.columnName} IN
                 <foreach item="x_${field.name}" index="index" collection="${field.name}s" 
                      open="(" separator="," close=")">
@@ -226,7 +226,7 @@
 </#if>			 
 			 
 
-		<if test="dynamicAccesses != null &amp;&amp; dynamicAccesses.size !=0 ">
+		<if test="dynamicAccesses != null and dynamicAccesses.size !=0 ">
 		    <foreach item="dynamicAccess" collection="dynamicAccesses" index="dax">
 				<if test="dynamicAccess.filterSql != null">
 					$F{dynamicAccess.filterSql} 

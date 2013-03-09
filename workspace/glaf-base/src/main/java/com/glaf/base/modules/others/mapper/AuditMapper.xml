@@ -199,7 +199,7 @@
 				and E.REFERID &lt;= #{referIdLessThanOrEqual}
             </if>
 
-			<if test="referIds != null &amp;&amp; referIds.size() &gt; 0">
+			<if test="referIds != null and referIds.size() &gt; 0">
 			    and E.REFERID IN
                 <foreach item="x_referId" index="index" collection="referIds" 
                      open="(" separator="," close=")">
@@ -219,7 +219,7 @@
 				and E.REFERTYPE &lt;= #{referTypeLessThanOrEqual}
             </if>
 
-			<if test="referTypes != null &amp;&amp; referTypes.size() &gt; 0">
+			<if test="referTypes != null and referTypes.size() &gt; 0">
 			    and E.REFERTYPE IN
                 <foreach item="x_referType" index="index" collection="referTypes" 
                      open="(" separator="," close=")">
@@ -239,7 +239,7 @@
 				and E.DEPTID &lt;= #{deptIdLessThanOrEqual}
             </if>
 
-			<if test="deptIds != null &amp;&amp; deptIds.size() &gt; 0">
+			<if test="deptIds != null and deptIds.size() &gt; 0">
 			    and E.DEPTID IN
                 <foreach item="x_deptId" index="index" collection="deptIds" 
                      open="(" separator="," close=")">
@@ -247,19 +247,19 @@
                 </foreach>
 			</if>
 
-			<if test="deptNameLike != null &amp;&amp; deptNameLike != '' ">
+			<if test="deptNameLike != null and deptNameLike != '' ">
 				and E.DEPTNAME like #{deptNameLike}
             </if>
 
-			<if test="headshipLike != null &amp;&amp; headshipLike != '' ">
+			<if test="headshipLike != null and headshipLike != '' ">
 				and E.HEADSHIP like #{headshipLike}
             </if>
 	        
-			<if test="leaderName != null &amp;&amp; leaderName != '' ">
+			<if test="leaderName != null and leaderName != '' ">
 				and E.LEADERNAME = #{leaderName}
             </if>
 
-			<if test="leaderNameLike != null &amp;&amp; leaderNameLike != '' ">
+			<if test="leaderNameLike != null and leaderNameLike != '' ">
 				and E.LEADERNAME like #{leaderNameLike}
             </if>
 
@@ -275,7 +275,7 @@
 				and E.LEADERID &lt;= #{leaderIdLessThanOrEqual}
             </if>
 
-			<if test="leaderIds != null &amp;&amp; leaderIds.size() &gt; 0">
+			<if test="leaderIds != null and leaderIds.size() &gt; 0">
 			    and E.LEADERID IN
                 <foreach item="x_leaderId" index="index" collection="leaderIds" 
                      open="(" separator="," close=")">
@@ -283,7 +283,7 @@
                 </foreach>
 			</if>
 
-			<if test="memoLike != null &amp;&amp; memoLike != '' ">
+			<if test="memoLike != null and memoLike != '' ">
 				and E.MEMO like #{memoLike}
             </if>
 

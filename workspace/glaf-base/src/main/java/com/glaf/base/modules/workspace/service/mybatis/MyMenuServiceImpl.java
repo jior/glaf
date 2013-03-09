@@ -44,7 +44,7 @@ import com.glaf.base.modules.workspace.service.*;
 public class MyMenuServiceImpl implements MyMenuService {
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
 
-	protected LongIdGenerator idGenerator;
+	protected IdGenerator idGenerator;
 
 	protected PersistenceDAO persistenceDAO;
 
@@ -106,7 +106,7 @@ public class MyMenuServiceImpl implements MyMenuService {
 	@Transactional
 	public void save(MyMenu myMenu) {
 		if (myMenu.getId() == 0L) {
-			myMenu.setId(idGenerator.getNextId());
+			myMenu.setId(idGenerator.nextId());
 			// myMenu.setCreateDate(new Date());
 			myMenuMapper.insertMyMenu(myMenu);
 		} else {
@@ -115,8 +115,8 @@ public class MyMenuServiceImpl implements MyMenuService {
 	}
 
 	@Resource
-	@Qualifier("myBatisDbLongIdGenerator")
-	public void setLongIdGenerator(LongIdGenerator idGenerator) {
+	@Qualifier("myBatisDbIdGenerator")
+	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 

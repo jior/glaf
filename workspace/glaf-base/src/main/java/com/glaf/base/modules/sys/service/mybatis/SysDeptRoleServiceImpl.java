@@ -45,7 +45,7 @@ public class SysDeptRoleServiceImpl implements SysDeptRoleService {
 	protected final static Log logger = LogFactory
 			.getLog(SysDeptRoleServiceImpl.class);
 
-	protected LongIdGenerator idGenerator;
+	protected IdGenerator idGenerator;
 
 	protected PersistenceDAO persistenceDAO;
 
@@ -121,7 +121,7 @@ public class SysDeptRoleServiceImpl implements SysDeptRoleService {
 	@Transactional
 	public void save(SysDeptRole sysDeptRole) {
 		if (sysDeptRole.getId() == 0L) {
-			sysDeptRole.setId(idGenerator.getNextId());
+			sysDeptRole.setId(idGenerator.nextId());
 			// sysDeptRole.setCreateDate(new Date());
 			sysDeptRoleMapper.insertSysDeptRole(sysDeptRole);
 		} else {
@@ -130,8 +130,8 @@ public class SysDeptRoleServiceImpl implements SysDeptRoleService {
 	}
 
 	@Resource
-	@Qualifier("myBatisDbLongIdGenerator")
-	public void setLongIdGenerator(LongIdGenerator idGenerator) {
+	@Qualifier("myBatisDbIdGenerator")
+	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 
@@ -219,7 +219,7 @@ public class SysDeptRoleServiceImpl implements SysDeptRoleService {
 		}
 		return true;
 	}
-	
+
 	@Transactional
 	public boolean deleteByDept(long deptId) {
 		sysDeptRoleMapper.deleteSysDeptRoleByDeptId(deptId);
@@ -276,6 +276,7 @@ public class SysDeptRoleServiceImpl implements SysDeptRoleService {
 		int start = pageSize * (pageNo - 1);
 		List<SysDeptRole> list = this.getSysDeptRolesByQueryCriteria(start,
 				pageSize, query);
+		this.initRoles(list);
 		pager.setResults(list);
 		pager.setPageSize(pageSize);
 		pager.setCurrentPageNo(pageNo);
@@ -284,10 +285,27 @@ public class SysDeptRoleServiceImpl implements SysDeptRoleService {
 		return pager;
 	}
 
+	protected void initRoles(List<SysDeptRole> list) {
+		if (list != null && !list.isEmpty()) {
+			List<SysRole> rows = sysRoleService.getSysRoleList();
+			Map<Long, SysRole> dataMap = new HashMap<Long, SysRole>();
+			if (rows != null && !rows.isEmpty()) {
+				for (SysRole m : rows) {
+					dataMap.put(m.getId(), m);
+				}
+			}
+			for (SysDeptRole bean : list) {
+				bean.setRole(dataMap.get(Long.valueOf(bean.getSysRoleId())));
+			}
+		}
+	}
+
 	public List<SysDeptRole> getRoleList(long deptId) {
 		SysDeptRoleQuery query = new SysDeptRoleQuery();
 		query.setDeptId(deptId);
-		return this.list(query);
+		List<SysDeptRole> list = this.list(query);
+		this.initRoles(list);
+		return list;
 	}
 
 	/**

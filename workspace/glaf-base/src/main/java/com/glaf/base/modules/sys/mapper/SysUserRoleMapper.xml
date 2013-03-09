@@ -9,7 +9,7 @@
 		<result property="userId" column="USERID" jdbcType="BIGINT"/>
 		<result property="deptRoleId" column="ROLEID" jdbcType="BIGINT"/>
 		<result property="authorized" column="AUTHORIZED" jdbcType="INTEGER"/>
-		<result property="authorizeFromId" column="AUTHORIZEFROM" jdbcType="BIGINT"/>
+		<result property="authorizeFrom" column="AUTHORIZEFROM" jdbcType="BIGINT"/>
 		<result property="availDateStart" column="AVAILDATESTART" jdbcType="TIMESTAMP"/>
 		<result property="availDateEnd" column="AVAILDATEEND" jdbcType="TIMESTAMP"/>
 		<result property="processDescription" column="PROCESSDESCRIPTION" jdbcType="VARCHAR"/>
@@ -29,7 +29,7 @@
 			<if test="authorized != null">
 				,AUTHORIZED 
 			</if>
-			<if test="authorizeFromId != null">
+			<if test="authorizeFrom != null">
 				,AUTHORIZEFROM 
 			</if>
 			<if test="availDateStart != null">
@@ -55,8 +55,8 @@
 			<if test="authorized != null">
 				,#{authorized, jdbcType=INTEGER}
 			</if>
-			<if test="authorizeFromId != null">
-				,#{authorizeFromId, jdbcType=BIGINT}
+			<if test="authorizeFrom != null">
+				,#{authorizeFrom, jdbcType=BIGINT}
 			</if>
 			<if test="availDateStart != null">
 				,#{availDateStart, jdbcType=TIMESTAMP}
@@ -84,8 +84,8 @@
 			<if test="authorized != null">
 				AUTHORIZED = #{authorized, jdbcType=INTEGER},
 			</if>
-			<if test="authorizeFromId != null">
-				AUTHORIZEFROM = #{authorizeFromId, jdbcType=BIGINT},
+			<if test="authorizeFrom != null">
+				AUTHORIZEFROM = #{authorizeFrom, jdbcType=BIGINT},
 			</if>
 			<if test="availDateStart != null">
 				AVAILDATESTART = #{availDateStart, jdbcType=TIMESTAMP},
@@ -123,6 +123,11 @@
 
 	<select id="getSysUserRoleById" parameterType="long" resultMap="sysUserRoleResultMap">
 		select * from sys_user_role where ID = #{id}
+	</select>
+	
+	
+	<select id="getSysUserRolesByUserId" parameterType="long" resultMap="sysUserRoleResultMap">
+		select * from sys_user_role where USERID = #{userId}
 	</select>
 	
 	
@@ -181,7 +186,7 @@
 				and E.USERID &lt;= #{userIdLessThanOrEqual}
 			</if>
 
-			<if test="userIds != null &amp;&amp; userIds.size() &gt; 0">
+			<if test="userIds != null and userIds.size() &gt; 0">
 			    and E.USERID IN
 				<foreach item="x_userId" index="index" collection="userIds" 
 					open="(" separator="," close=")">
@@ -201,7 +206,7 @@
 				and E.ROLEID &lt;= #{deptRoleIdLessThanOrEqual}
 			</if>
 
-			<if test="deptRoleIds != null &amp;&amp; deptRoleIds.size() &gt; 0">
+			<if test="deptRoleIds != null and deptRoleIds.size() &gt; 0">
 			    and E.ROLEID IN
 				<foreach item="x_deptRoleId" index="index" collection="deptRoleIds" 
 					open="(" separator="," close=")">
@@ -221,23 +226,23 @@
 				and E.AUTHORIZED &lt;= #{authorizedLessThanOrEqual}
 			</if>
 
-			<if test="authorizeFromId != null">
-				and E.AUTHORIZEFROM = #{authorizeFromId}
+			<if test="authorizeFrom != null">
+				and E.AUTHORIZEFROM = #{authorizeFrom}
 			</if>
 
-			<if test="authorizeFromIdGreaterThanOrEqual != null">
-				and E.AUTHORIZEFROM &gt;= #{authorizeFromIdGreaterThanOrEqual}
+			<if test="authorizeFromGreaterThanOrEqual != null">
+				and E.AUTHORIZEFROM &gt;= #{authorizeFromGreaterThanOrEqual}
 			</if>
 
-			<if test="authorizeFromIdLessThanOrEqual != null">
-				and E.AUTHORIZEFROM &lt;= #{authorizeFromIdLessThanOrEqual}
+			<if test="authorizeFromLessThanOrEqual != null">
+				and E.AUTHORIZEFROM &lt;= #{authorizeFromLessThanOrEqual}
 			</if>
 
-			<if test="authorizeFromIds != null &amp;&amp; authorizeFromIds.size() &gt; 0">
+			<if test="authorizeFroms != null and authorizeFroms.size() &gt; 0">
 			    and E.AUTHORIZEFROM IN
-				<foreach item="x_authorizeFromId" index="index" collection="authorizeFromIds" 
+				<foreach item="x_authorizeFrom" index="index" collection="authorizeFroms" 
 					open="(" separator="," close=")">
-                  #{x_authorizeFromId}
+                  #{x_authorizeFrom}
 				</foreach>
 			</if>
 
@@ -257,7 +262,7 @@
 				and E.AVAILDATEEND &lt;= #{availDateEndLessThanOrEqual}
 			</if>
 	        
-			<if test="processDescriptionLike != null &amp;&amp; processDescriptionLike != '' ">
+			<if test="processDescriptionLike != null and processDescriptionLike != '' ">
 				and E.PROCESSDESCRIPTION like #{processDescriptionLike}
 			</if>
 			 

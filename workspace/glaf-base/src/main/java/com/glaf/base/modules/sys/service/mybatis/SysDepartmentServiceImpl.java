@@ -45,7 +45,7 @@ public class SysDepartmentServiceImpl implements SysDepartmentService {
 	protected final static Log logger = LogFactory
 			.getLog(SysDepartmentServiceImpl.class);
 
-	protected LongIdGenerator idGenerator;
+	protected IdGenerator idGenerator;
 
 	protected PersistenceDAO persistenceDAO;
 
@@ -104,13 +104,17 @@ public class SysDepartmentServiceImpl implements SysDepartmentService {
 		}
 		SysDepartment sysDepartment = sysDepartmentMapper
 				.getSysDepartmentById(id);
+		if (sysDepartment != null) {
+			SysTree node = sysTreeService.findById(sysDepartment.getNodeId());
+			sysDepartment.setNode(node);
+		}
 		return sysDepartment;
 	}
 
 	@Transactional
 	public void save(SysDepartment sysDepartment) {
 		if (sysDepartment.getId() == 0L) {
-			sysDepartment.setId(idGenerator.getNextId());
+			sysDepartment.setId(idGenerator.nextId());
 			// sysDepartment.setCreateDate(new Date());
 			sysDepartmentMapper.insertSysDepartment(sysDepartment);
 		} else {
@@ -119,8 +123,8 @@ public class SysDepartmentServiceImpl implements SysDepartmentService {
 	}
 
 	@Resource
-	@Qualifier("myBatisDbLongIdGenerator")
-	public void setLongIdGenerator(LongIdGenerator idGenerator) {
+	@Qualifier("myBatisDbIdGenerator")
+	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 
@@ -148,7 +152,7 @@ public class SysDepartmentServiceImpl implements SysDepartmentService {
 	public boolean create(SysDepartment bean) {
 		boolean ret = false;
 		if (bean.getId() == 0L) {
-			bean.setId(idGenerator.getNextId());
+			bean.setId(idGenerator.nextId());
 		}
 		sysDepartmentMapper.insertSysDepartment(bean);
 		if (bean.getId() > 0) {// 插入记录成功

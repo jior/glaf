@@ -89,14 +89,6 @@
 		resultMap="workCalendarResultMap">
 		select E.*
 		<include refid="selectWorkCalendarsSql" />
-		<choose>
-			<when test="orderBy != null">
-		     order by ${orderBy}
-			</when>
-			<otherwise>
-		      order by E.CREATEDATE_ desc
-			</otherwise>
-		</choose>
 	</select>
 
 	<select id="getWorkCalendarCount" 

@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.base.modules.sys.mapper.SerialNumberMapper">
+
+ 	<resultMap id="serialNumberResultMap"	type="com.glaf.base.modules.sys.model.SerialNumber">
+        <id property="id" column="ID" jdbcType="BIGINT" />
+        <result property="moduleNo" column="moduleNo" jdbcType="VARCHAR"/>
+        <result property="lastDate" column="lastDate" jdbcType="TIMESTAMP"/>
+        <result property="intervelNo" column="intervelNo" jdbcType="INTEGER"/>
+        <result property="currentSerail" column="currentSerail" jdbcType="INTEGER"/>
+	</resultMap>
+
+ 
+	<insert id="insertSerialNumber" parameterType="com.glaf.base.modules.sys.model.SerialNumber">
+		insert into SerialNumber 
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+		    ID
+			<if test="moduleNo != null">
+				,moduleNo 
+			</if>
+			<if test="lastDate != null">
+				,lastDate 
+			</if>
+			<if test="intervelNo != null">
+				,intervelNo 
+			</if>
+			<if test="currentSerail != null">
+				,currentSerail 
+			</if>
+        </trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			  #{id, jdbcType=BIGINT}
+	     
+			<if test="moduleNo != null">
+				,#{moduleNo, jdbcType=VARCHAR}
+			</if>
+			<if test="lastDate != null">
+				,#{lastDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="intervelNo != null">
+				,#{intervelNo, jdbcType=INTEGER}
+			</if>
+			<if test="currentSerail != null">
+				,#{currentSerail, jdbcType=INTEGER}
+			</if>
+	    </trim>
+    </insert>
+
+	 
+	<update id="updateSerialNumber" parameterType="com.glaf.base.modules.sys.model.SerialNumber">
+		update SerialNumber
+		set
+        <trim prefix="" suffix="" suffixOverrides=",">		
+			<if test="moduleNo != null">
+				moduleNo = #{moduleNo, jdbcType=VARCHAR},
+			</if>
+			<if test="lastDate != null">
+				lastDate = #{lastDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="intervelNo != null">
+				intervelNo = #{intervelNo, jdbcType=INTEGER},
+			</if>
+			<if test="currentSerail != null">
+				currentSerail = #{currentSerail, jdbcType=INTEGER},
+			</if>
+        </trim>
+		where
+          ID = #{id, jdbcType=BIGINT}
+		
+    </update>
+
+ 
+	<delete id="deleteSerialNumberById" parameterType="long"> 
+        delete from SerialNumber
+        where ID =	#{id}
+	</delete>
+
+	
+	<delete id="deleteSerialNumbers" parameterType="com.glaf.base.modules.sys.query.SerialNumberQuery">
+		delete from SerialNumber
+		where ( 
+ 			  ID IN
+              <foreach item="x_rowId" index="index" collection="rowIds" 
+                     open="(" separator="," close=")">
+                  #{x_rowId}
+              </foreach>
+		)
+	</delete>
+
+
+	<select id="getSerialNumberById" parameterType="long" resultMap="serialNumberResultMap">
+		select * from SerialNumber where ID = #{id}
+	</select>
+
+
+	<select id="getSerialNumbers" 
+	    parameterType="com.glaf.base.modules.sys.query.SerialNumberQuery"
+		resultMap="serialNumberResultMap">
+		select E.*
+		<include refid="selectSerialNumbersSql" />
+		<choose>
+		  <when test="orderBy != null">
+		     order by ${orderBy}
+          </when>
+		  <otherwise>
+		      order by E.ID desc
+		  </otherwise>
+        </choose>
+	</select>
+
+
+	<select id="getSerialNumberCount" 
+	    parameterType="com.glaf.base.modules.sys.query.SerialNumberQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectSerialNumbersSql" />
+	</select>
+
+
+	<sql id="selectSerialNumbersSql">
+
+		from SerialNumber E
+
+		<where>
+		       1 = 1  
+	        
+			<if test="moduleNo != null and moduleNo != '' ">
+				and E.moduleNo = #{moduleNo}
+            </if>
+
+			<if test="moduleNoLike != null and moduleNoLike != '' ">
+				and E.moduleNo like #{moduleNoLike}
+            </if>
+
+			<if test="moduleNos != null and moduleNos.size() &gt; 0">
+			    and E.moduleNo IN
+                <foreach item="x_moduleNo" index="index" collection="moduleNos" 
+                     open="(" separator="," close=")">
+                  #{x_moduleNo}
+                </foreach>
+			</if>
+
+			<if test="lastDateGreaterThanOrEqual != null">
+				and E.lastDate &gt;= #{lastDateGreaterThanOrEqual}
+            </if>
+
+			<if test="lastDateLessThanOrEqual != null">
+				and E.lastDate &lt;= #{lastDateLessThanOrEqual}
+            </if>
+
+
+			<if test="intervelNo != null">
+				and E.intervelNo = #{intervelNo}
+            </if>
+
+			<if test="intervelNoGreaterThanOrEqual != null">
+				and E.intervelNo &gt;= #{intervelNoGreaterThanOrEqual}
+            </if>
+
+			<if test="intervelNoLessThanOrEqual != null">
+				and E.intervelNo &lt;= #{intervelNoLessThanOrEqual}
+            </if>
+
+			<if test="currentSerail != null">
+				and E.currentSerail = #{currentSerail}
+            </if>
+
+			<if test="currentSerailGreaterThanOrEqual != null">
+				and E.currentSerail &gt;= #{currentSerailGreaterThanOrEqual}
+            </if>
+
+			<if test="currentSerailLessThanOrEqual != null">
+				and E.currentSerail &lt;= #{currentSerailLessThanOrEqual}
+            </if>
+			 
+		</where>
+	</sql>
+
+</mapper>

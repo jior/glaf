@@ -49,4 +49,16 @@
 		</property>
 	</bean>
 
+	<bean id="persistenceServiceImpl" class="com.glaf.base.service.impl.PersistenceServiceImpl">
+		<property name="abstractDao">
+			<ref bean="abstractDao" />
+		</property>
+	</bean>
+
+	<bean id="persistenceService" parent="baseTxService">
+		<property name="target">
+			<ref bean="persistenceServiceImpl" />
+		</property>
+	</bean>
+
 </beans>

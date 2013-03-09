@@ -114,10 +114,10 @@ public class SysUserServiceImpl implements SysUserService {
 	 * @param id
 	 * @return
 	 */
-	public boolean deleteAll(long[] id) {
+	public boolean deleteAll(long[] ids) {
 		List<SysUser> list = new ArrayList<SysUser>();
-		for (int i = 0; i < id.length; i++) {
-			SysUser bean = findById(id[i]);
+		for (int i = 0; i < ids.length; i++) {
+			SysUser bean = findById(ids[i]);
 			if (bean != null)
 				list.add(bean);
 		}

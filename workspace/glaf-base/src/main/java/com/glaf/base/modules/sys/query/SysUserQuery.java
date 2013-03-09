@@ -28,7 +28,6 @@ public class SysUserQuery extends DataQuery {
 	protected String account;
 	protected String accountLike;
 	protected List<String> accounts;
-
 	protected String code;
 	protected String codeLike;
 	protected List<String> codes;
@@ -39,13 +38,10 @@ public class SysUserQuery extends DataQuery {
 	protected Integer blockedGreaterThanOrEqual;
 	protected Integer blockedLessThanOrEqual;
 	protected List<Integer> blockeds;
-
 	protected Date createTimeGreaterThanOrEqual;
 	protected Date createTimeLessThanOrEqual;
-
 	protected Date lastLoginTimeGreaterThanOrEqual;
 	protected Date lastLoginTimeLessThanOrEqual;
-
 	protected String lastLoginIP;
 	protected String lastLoginIPLike;
 	protected List<String> lastLoginIPs;
@@ -55,13 +51,10 @@ public class SysUserQuery extends DataQuery {
 	protected List<Integer> evections;
 	protected String mobile;
 	protected String mobileLike;
-
 	protected String email;
 	protected String emailLike;
-
 	protected String telephone;
 	protected String telephoneLike;
-
 	protected Integer gender;
 	protected Integer genderGreaterThanOrEqual;
 	protected Integer genderLessThanOrEqual;

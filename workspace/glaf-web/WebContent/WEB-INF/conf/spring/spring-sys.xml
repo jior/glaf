@@ -265,40 +265,4 @@
 		</property>
 	</bean>
 
-	<bean id="schedulerServiceImpl" class="com.glaf.base.modules.sys.service.impl.SchedulerServiceImpl">
-		<property name="abstractDao">
-			<ref bean="abstractDao" />
-		</property>
-	</bean>
-
-	<bean id="schedulerProxy" parent="baseTxService">
-		<property name="target">
-			<ref bean="schedulerServiceImpl" />
-		</property>
-	</bean>
-
-	<bean id="schedulerService" parent="baseTxService">
-		<property name="target">
-			<ref bean="schedulerServiceImpl" />
-		</property>
-	</bean>
-
-	<bean id="persistenceServiceImpl" class="com.glaf.base.service.impl.PersistenceServiceImpl">
-		<property name="abstractDao">
-			<ref bean="abstractDao" />
-		</property>
-	</bean>
-
-	<bean id="persistenceProxy" parent="baseTxService">
-		<property name="target">
-			<ref bean="persistenceServiceImpl" />
-		</property>
-	</bean>
-
-	<bean id="persistenceService" parent="baseTxService">
-		<property name="target">
-			<ref bean="persistenceServiceImpl" />
-		</property>
-	</bean>
-
 </beans>

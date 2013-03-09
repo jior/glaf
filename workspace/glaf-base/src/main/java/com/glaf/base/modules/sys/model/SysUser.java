@@ -34,36 +34,36 @@ import com.glaf.core.identity.User;
 
 public class SysUser implements Serializable, User, JSONable {
 	private static final long serialVersionUID = -7677600372139823989L;
-	private long id;
-	private SysDepartment department;
 	private String account;
-	private String password;
-	private String code;
-	private String name;
+	private int accountType;
+	private String adminFlag;
+	private Set<SysApplication> apps = new HashSet<SysApplication>();
 	private int blocked;
+	private String code;
 	private Date createTime;
-	private Date lastLoginTime;
-	private String lastLoginIP;
-	private int evection;
-	private String mobile;
+	private SysDepartment department;
+	private int deptId;
+	private int dumpFlag;
 	private String email;
-	private String telephone;
+	private int evection;
+	private String fax;
+	private Set<SysFunction> functions = new HashSet<SysFunction>();
 	private int gender;
 	private String headship;
-	private int userType;
-	private String fax;
-	private int accountType;
+	private long id;
+	private String lastLoginIP;
+	private Date lastLoginTime;
 	private String loginIP;
-	private int dumpFlag;
-	private String adminFlag;
 	private String menus;
-	private String superiorIds;
-	private int deptId;
-	private Set<SysUserRole> userRoles = new HashSet<SysUserRole>();
-	private Set<SysDeptRole> roles = new HashSet<SysDeptRole>();
-	private Set<SysFunction> functions = new HashSet<SysFunction>();
-	private Set<SysApplication> apps = new HashSet<SysApplication>();
+	private String mobile;
+	private String name;
 	private List<SysDepartment> nestingDepartment;
+	private String password;
+	private Set<SysDeptRole> roles = new HashSet<SysDeptRole>();
+	private String superiorIds;
+	private String telephone;
+	private Set<SysUserRole> userRoles = new HashSet<SysUserRole>();
+	private int userType;
 
 	public SysUser() {
 
@@ -86,6 +86,9 @@ public class SysUser implements Serializable, User, JSONable {
 	}
 
 	public Set<SysApplication> getApps() {
+		if (apps == null) {
+			apps = new HashSet<SysApplication>();
+		}
 		return apps;
 	}
 
@@ -129,6 +132,9 @@ public class SysUser implements Serializable, User, JSONable {
 	}
 
 	public Set<SysFunction> getFunctions() {
+		if (functions == null) {
+			functions = new HashSet<SysFunction>();
+		}
 		return functions;
 	}
 
@@ -197,6 +203,9 @@ public class SysUser implements Serializable, User, JSONable {
 	}
 
 	public Set<SysDeptRole> getRoles() {
+		if (roles == null) {
+			roles = new HashSet<SysDeptRole>();
+		}
 		return roles;
 	}
 
@@ -209,6 +218,9 @@ public class SysUser implements Serializable, User, JSONable {
 	}
 
 	public Set<SysUserRole> getUserRoles() {
+		if (userRoles == null) {
+			userRoles = new HashSet<SysUserRole>();
+		}
 		return userRoles;
 	}
 

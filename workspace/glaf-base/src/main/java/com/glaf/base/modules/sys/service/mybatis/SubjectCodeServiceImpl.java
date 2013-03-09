@@ -42,7 +42,7 @@ import com.glaf.base.modules.sys.service.*;
 public class SubjectCodeServiceImpl implements SubjectCodeService {
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
 
-	protected LongIdGenerator idGenerator;
+	protected IdGenerator idGenerator;
 
 	protected PersistenceDAO persistenceDAO;
 
@@ -104,7 +104,7 @@ public class SubjectCodeServiceImpl implements SubjectCodeService {
 	@Transactional
 	public void save(SubjectCode subjectCode) {
 		if (subjectCode.getId() == 0L) {
-			subjectCode.setId(idGenerator.getNextId());
+			subjectCode.setId(idGenerator.nextId());
 			// subjectCode.setCreateDate(new Date());
 			subjectCodeMapper.insertSubjectCode(subjectCode);
 		} else {
@@ -113,8 +113,8 @@ public class SubjectCodeServiceImpl implements SubjectCodeService {
 	}
 
 	@Resource
-	@Qualifier("myBatisDbLongIdGenerator")
-	public void setLongIdGenerator(LongIdGenerator idGenerator) {
+	@Qualifier("myBatisDbIdGenerator")
+	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 

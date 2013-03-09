@@ -42,7 +42,7 @@ public class SysLogServiceImpl implements SysLogService {
 	protected final static Log logger = LogFactory
 			.getLog(SysLogServiceImpl.class);
 
-	protected LongIdGenerator idGenerator;
+	protected IdGenerator idGenerator;
 
 	protected PersistenceDAO persistenceDAO;
 
@@ -104,7 +104,7 @@ public class SysLogServiceImpl implements SysLogService {
 	@Transactional
 	public void save(SysLog sysLog) {
 		if (sysLog.getId() == 0L) {
-			sysLog.setId(idGenerator.getNextId());
+			sysLog.setId(idGenerator.nextId());
 			// sysLog.setCreateDate(new Date());
 			sysLogMapper.insertSysLog(sysLog);
 		} else {
@@ -113,8 +113,8 @@ public class SysLogServiceImpl implements SysLogService {
 	}
 
 	@Resource
-	@Qualifier("myBatisDbLongIdGenerator")
-	public void setLongIdGenerator(LongIdGenerator idGenerator) {
+	@Qualifier("myBatisDbIdGenerator")
+	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 

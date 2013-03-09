@@ -20,8 +20,15 @@ package com.glaf.base.modules.sys.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import com.alibaba.fastjson.*;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.glaf.base.modules.sys.util.SerialNumberJsonFactory;
+import com.glaf.core.base.JSONable;
 
-public class SerialNumber implements Serializable {
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
+
+public class SerialNumber implements Serializable, JSONable {
 	private static final long serialVersionUID = 7285967860734876783L;
 	private long id;
 	private String moduleNo;
@@ -49,6 +56,10 @@ public class SerialNumber implements Serializable {
 		return moduleNo;
 	}
 
+	public SerialNumber jsonToObject(JSONObject jsonObject) {
+		return SerialNumberJsonFactory.jsonToObject(jsonObject);
+	}
+
 	public void setCurrentSerail(int currentSerail) {
 		this.currentSerail = currentSerail;
 	}
@@ -67,6 +78,41 @@ public class SerialNumber implements Serializable {
 
 	public void setModuleNo(String moduleNo) {
 		this.moduleNo = moduleNo;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (id ^ (id >>> 32));
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		SerialNumber other = (SerialNumber) obj;
+		if (id != other.id)
+			return false;
+		return true;
+	}
+
+	public JSONObject toJsonObject() {
+		return SerialNumberJsonFactory.toJsonObject(this);
+	}
+
+	public ObjectNode toObjectNode() {
+		return SerialNumberJsonFactory.toObjectNode(this);
+	}
+
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this,
+				ToStringStyle.MULTI_LINE_STYLE);
 	}
 
 }

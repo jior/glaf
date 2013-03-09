@@ -7,14 +7,15 @@
 	<import resource="spring-aop.xml" />
 	<import resource="spring-dao.xml" />
 	<import resource="spring-database.xml" />
-	<import resource="spring-sys.xml" />
+	<import resource="spring-mybatis.xml" /> 
 	<import resource="spring-security.xml" />
-	<import resource="spring-others.xml" />
-	<import resource="spring-workspace.xml" />
 	<import resource="spring-ajax.xml" />
 	<import resource="spring-todo.xml" />
-	<import resource="spring-mybatis.xml" /> 
-	<import resource="spring-scheduler.xml" /> 
+	<import resource="spring-scheduler.xml" />
+	
+	<!-- <import resource="spring-sys.xml" />
+	<import resource="spring-others.xml" />
+	<import resource="spring-workspace.xml" /> -->
 
 </beans>
 

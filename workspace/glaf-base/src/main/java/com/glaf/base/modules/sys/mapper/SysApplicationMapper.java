@@ -37,6 +37,8 @@ public interface SysApplicationMapper {
 	List<SysApplication> getSysApplications(SysApplicationQuery query);
 
 	List<SysApplication> getSysApplicationByRoleId(long deptRoleId);
+	
+	List<SysApplication> getSysApplicationByUserId(long userId);
 
 	void insertSysApplication(SysApplication model);
 

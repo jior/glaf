@@ -88,6 +88,7 @@
         where ID =	#{id}
 	</delete>
 	
+	
 	<delete id="deleteSysFunctions" parameterType="com.glaf.base.modules.sys.query.SysFunctionQuery">
 		delete from sys_function
 		where ( 
@@ -98,6 +99,7 @@
 		</foreach>
 		)
 	</delete>
+
 
 	<select id="getSysFunctionById" parameterType="long" resultMap="sysFunctionResultMap">
 		select * from sys_function where ID = #{id}
@@ -110,6 +112,22 @@
 		inner join sys_permission P
 		on E.ID = P.FUNCID
 		where P.ROLEID = #{roleId}
+ 
+	</select>
+	
+	
+	<select id="getSysFunctionByUserId" parameterType="long" resultMap="sysFunctionResultMap">
+		
+		select  E.* from sys_function E
+		inner join sys_permission A
+		on E.id = A.funcId
+		where A.roleId in (
+		    select dr.id from sys_dept_role dr
+		    inner join sys_user_role ur 
+		    on dr.id = ur.roleid
+		    where ur.userid = #{userId}
+		    and ur.authorized = 0
+		)
  
 	</select>
 
@@ -143,15 +161,15 @@
 		<where>
 		       1 = 1  
 
-			<if test="name != null &amp;&amp; name != '' ">
+			<if test="name != null and name != '' ">
 				and E.NAME = #{name}
 			</if>
 
-			<if test="nameLike != null &amp;&amp; nameLike != '' ">
+			<if test="nameLike != null and nameLike != '' ">
 				and E.NAME like #{nameLike}
 			</if>
 
-			<if test="names != null &amp;&amp; names.size() &gt; 0">
+			<if test="names != null and names.size() &gt; 0">
 			    and E.NAME IN
 				<foreach item="x_name" index="index" collection="names" 
 					open="(" separator="," close=")">
@@ -159,15 +177,15 @@
 				</foreach>
 			</if>
 
-			<if test="funcDescLike != null &amp;&amp; funcDescLike != '' ">
+			<if test="funcDescLike != null and funcDescLike != '' ">
 				and E.FUNCDESC like #{funcDescLike}
 			</if>
 
-			<if test="funcMethod != null &amp;&amp; funcMethod != '' ">
+			<if test="funcMethod != null and funcMethod != '' ">
 				and E.FUNCMETHOD = #{funcMethod}
 			</if>
 
-			<if test="funcMethodLike != null &amp;&amp; funcMethodLike != '' ">
+			<if test="funcMethodLike != null and funcMethodLike != '' ">
 				and E.FUNCMETHOD like #{funcMethodLike}
 			</if>
 
@@ -199,7 +217,7 @@
 				and E.APPID &lt;= #{appIdLessThanOrEqual}
 			</if>
 
-			<if test="appIds != null &amp;&amp; appIds.size() &gt; 0">
+			<if test="appIds != null and appIds.size() &gt; 0">
 			    and E.APPID IN
 				<foreach item="x_appId" index="index" collection="appIds" 
 					open="(" separator="," close=")">

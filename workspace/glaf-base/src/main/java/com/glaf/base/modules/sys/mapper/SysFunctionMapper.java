@@ -37,6 +37,8 @@ public interface SysFunctionMapper {
 	List<SysFunction> getSysFunctions(SysFunctionQuery query);
 
 	List<SysFunction> getSysFunctionByRoleId(long deptRoleId);
+	
+	List<SysFunction> getSysFunctionByUserId(long userId);
 
 	void insertSysFunction(SysFunction model);
 

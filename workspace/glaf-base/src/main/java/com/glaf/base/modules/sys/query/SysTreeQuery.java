@@ -24,9 +24,9 @@ import com.glaf.core.query.DataQuery;
 public class SysTreeQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;
 	protected List<Long> rowIds;
-	protected Long parent;
-	protected Long parentGreaterThanOrEqual;
-	protected Long parentLessThanOrEqual;
+	protected Long parentId;
+	protected Long parentIdGreaterThanOrEqual;
+	protected Long parentIdLessThanOrEqual;
 	protected List<Long> parents;
 	protected String name;
 	protected String nameLike;
@@ -64,19 +64,19 @@ public class SysTreeQuery extends DataQuery {
 		this.sortLessThan = sortLessThan;
 	}
 
-	public Long getParent() {
-		return parent;
+	public Long getParentId() {
+		return parentId;
 	}
 
-	public Long getParentGreaterThanOrEqual() {
-		return parentGreaterThanOrEqual;
+	public Long getParentIdGreaterThanOrEqual() {
+		return parentIdGreaterThanOrEqual;
 	}
 
-	public Long getParentLessThanOrEqual() {
-		return parentLessThanOrEqual;
+	public Long getParentIdLessThanOrEqual() {
+		return parentIdLessThanOrEqual;
 	}
 
-	public List<Long> getParents() {
+	public List<Long> getParentIds() {
 		return parents;
 	}
 
@@ -164,16 +164,16 @@ public class SysTreeQuery extends DataQuery {
 		return lockedLessThanOrEqual;
 	}
 
-	public void setParent(Long parent) {
-		this.parent = parent;
+	public void setParentId(Long parentId) {
+		this.parentId = parentId;
 	}
 
-	public void setParentGreaterThanOrEqual(Long parentGreaterThanOrEqual) {
-		this.parentGreaterThanOrEqual = parentGreaterThanOrEqual;
+	public void setParentIdGreaterThanOrEqual(Long parentIdGreaterThanOrEqual) {
+		this.parentIdGreaterThanOrEqual = parentIdGreaterThanOrEqual;
 	}
 
-	public void setParentLessThanOrEqual(Long parentLessThanOrEqual) {
-		this.parentLessThanOrEqual = parentLessThanOrEqual;
+	public void setParentIdLessThanOrEqual(Long parentIdLessThanOrEqual) {
+		this.parentIdLessThanOrEqual = parentIdLessThanOrEqual;
 	}
 
 	public void setParents(List<Long> parents) {
@@ -232,27 +232,27 @@ public class SysTreeQuery extends DataQuery {
 		this.lockedLessThanOrEqual = lockedLessThanOrEqual;
 	}
 
-	public SysTreeQuery parent(Long parent) {
-		if (parent == null) {
-			throw new RuntimeException("parent is null");
+	public SysTreeQuery parentId(Long parentId) {
+		if (parentId == null) {
+			throw new RuntimeException("parentId is null");
 		}
-		this.parent = parent;
+		this.parentId = parentId;
 		return this;
 	}
 
-	public SysTreeQuery parentGreaterThanOrEqual(Long parentGreaterThanOrEqual) {
-		if (parentGreaterThanOrEqual == null) {
-			throw new RuntimeException("parent is null");
+	public SysTreeQuery parentIdGreaterThanOrEqual(Long parentIdGreaterThanOrEqual) {
+		if (parentIdGreaterThanOrEqual == null) {
+			throw new RuntimeException("parentId is null");
 		}
-		this.parentGreaterThanOrEqual = parentGreaterThanOrEqual;
+		this.parentIdGreaterThanOrEqual = parentIdGreaterThanOrEqual;
 		return this;
 	}
 
-	public SysTreeQuery parentLessThanOrEqual(Long parentLessThanOrEqual) {
-		if (parentLessThanOrEqual == null) {
-			throw new RuntimeException("parent is null");
+	public SysTreeQuery parentIdLessThanOrEqual(Long parentIdLessThanOrEqual) {
+		if (parentIdLessThanOrEqual == null) {
+			throw new RuntimeException("parentId is null");
 		}
-		this.parentLessThanOrEqual = parentLessThanOrEqual;
+		this.parentIdLessThanOrEqual = parentIdLessThanOrEqual;
 		return this;
 	}
 

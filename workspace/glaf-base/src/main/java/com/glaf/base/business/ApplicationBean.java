@@ -1,20 +1,20 @@
 /*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.glaf.base.business;
 
@@ -50,41 +50,43 @@ public class ApplicationBean {
 					+ "<li class='menu'><ul><li class='button'><a href='#' class='red'>"
 					+ rootJson.getString("name")
 					+ "<span></span></a></li><li class='dropdown'><ul>";
-            
-			JSONArray children = rootJson.getJSONArray("children");
+			if (rootJson.has("children")) {
+				JSONArray children = rootJson.getJSONArray("children");
 
-			for (int j = 0; children != null && j < children.length(); j++) {
-				JSONObject childJson = children.getJSONObject(j);
-				JSONArray items2 = null;
-				if (childJson.has("children")) {
-					items2 = childJson.getJSONArray("children");
-				}
-
-				if (items2 != null && items2.length() > 0) {
-					sMenu = sMenu
-							+ "</ul><ul class='father'><li class='button'><a style='width: 110px' name='lightli' onclick='changeClass(this)' href='#' target='mainFrame'>"
-							+ childJson.getString("name")
-							+ "</a></li><li class='dropdownFather'><ul>";
-
-					for (int k = 0; k < items2.length(); k++) {
-						JSONObject cd = items2.getJSONObject(k);
-						sMenu = sMenu
-								+ "<li class='highlight'><a name='lightli' onclick='changeClass(this)' href='"
-								+ contextPath + "/" + cd.getString("url")
-								+ "' target='mainFrame'>"
-								+ cd.getString("name") + "</a></li>";
+				for (int j = 0; children != null && j < children.length(); j++) {
+					JSONObject childJson = children.getJSONObject(j);
+					JSONArray items2 = null;
+					if (childJson.has("children")) {
+						items2 = childJson.getJSONArray("children");
 					}
 
-					sMenu = sMenu + "</ul></li></ul><ul>";
-				} else {
-					sMenu = sMenu
-							+ "<li class='highlight'><a name='lightli' onclick='changeClass(this)' href='"
-							+ contextPath + "/" + childJson.getString("url")
-							+ "' target='mainFrame'>"
-							+ childJson.getString("name") + "</a></li>";
+					if (items2 != null && items2.length() > 0) {
+						sMenu = sMenu
+								+ "</ul><ul class='father'><li class='button'><a style='width: 110px' name='lightli' onclick='changeClass(this)' href='#' target='mainFrame'>"
+								+ childJson.getString("name")
+								+ "</a></li><li class='dropdownFather'><ul>";
+
+						for (int k = 0; k < items2.length(); k++) {
+							JSONObject cd = items2.getJSONObject(k);
+							sMenu = sMenu
+									+ "<li class='highlight'><a name='lightli' onclick='changeClass(this)' href='"
+									+ contextPath + "/" + cd.getString("url")
+									+ "' target='mainFrame'>"
+									+ cd.getString("name") + "</a></li>";
+						}
+
+						sMenu = sMenu + "</ul></li></ul><ul>";
+					} else {
+						sMenu = sMenu
+								+ "<li class='highlight'><a name='lightli' onclick='changeClass(this)' href='"
+								+ contextPath + "/"
+								+ childJson.getString("url")
+								+ "' target='mainFrame'>"
+								+ childJson.getString("name") + "</a></li>";
+					}
 				}
+				sMenu = sMenu + " </ul></li></ul></li>";
 			}
-			sMenu = sMenu + " </ul></li></ul></li>";
 		}
 		return sMenu;
 	}

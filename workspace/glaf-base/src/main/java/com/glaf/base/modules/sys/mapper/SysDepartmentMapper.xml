@@ -189,18 +189,18 @@
 		       1 = 1  
 
 			<if test=" parentId != null  ">
-               T.PARENT = #{parentId}
+               and T.PARENT = #{parentId}
 			</if>
 				        
-			<if test="name != null &amp;&amp; name != '' ">
+			<if test="name != null and name != '' ">
 				and E.NAME = #{name}
             </if>
 
-			<if test="nameLike != null &amp;&amp; nameLike != '' ">
+			<if test="nameLike != null and nameLike != '' ">
 				and E.NAME like #{nameLike}
             </if>
 
-			<if test="names != null &amp;&amp; names.size() &gt; 0">
+			<if test="names != null and names.size() &gt; 0">
 			    and E.NAME IN
                 <foreach item="x_name" index="index" collection="names" 
                      open="(" separator="," close=")">
@@ -208,7 +208,7 @@
                 </foreach>
 			</if>
 
-			<if test="descLike != null &amp;&amp; descLike != '' ">
+			<if test="descLike != null and descLike != '' ">
 				and E.DEPTDESC like #{descLike}
             </if>
 
@@ -228,23 +228,23 @@
 				and E.SORT &lt;= #{sortLessThanOrEqual}
             </if>
 	        
-			<if test="no != null &amp;&amp; no != '' ">
+			<if test="no != null and no != '' ">
 				and E.DEPTNO = #{no}
             </if>
 
-			<if test="noLike != null &amp;&amp; noLike != '' ">
+			<if test="noLike != null and noLike != '' ">
 				and E.DEPTNO like #{noLike}
             </if>
 	        
-			<if test="code != null &amp;&amp; code != '' ">
+			<if test="code != null and code != '' ">
 				and E.CODE = #{code}
             </if>
 
-			<if test="codeLike != null &amp;&amp; codeLike != '' ">
+			<if test="codeLike != null and codeLike != '' ">
 				and E.CODE like #{codeLike}
             </if>
 
-			<if test="codes != null &amp;&amp; codes.size() &gt; 0">
+			<if test="codes != null and codes.size() &gt; 0">
 			    and E.CODE IN
                 <foreach item="x_code" index="index" collection="codes" 
                      open="(" separator="," close=")">
@@ -252,7 +252,7 @@
                 </foreach>
 			</if>
 	        
-			<if test="code2 != null &amp;&amp; code2 != '' ">
+			<if test="code2 != null and code2 != '' ">
 				and E.CODE2 = #{code2}
             </if>
 
@@ -268,11 +268,11 @@
 				and E.STATUS &lt;= #{statusLessThanOrEqual}
             </if>
 	        
-			<if test="fincode != null &amp;&amp; fincode != '' ">
+			<if test="fincode != null and fincode != '' ">
 				and E.FINCODE = #{fincode}
             </if>
 
-			<if test="fincodeLike != null &amp;&amp; fincodeLike != '' ">
+			<if test="fincodeLike != null and fincodeLike != '' ">
 				and E.FINCODE like #{fincodeLike}
             </if>
 
@@ -288,7 +288,7 @@
 				and E.NODEID &lt;= #{nodeIdLessThanOrEqual}
             </if>
 
-			<if test="nodeIds != null &amp;&amp; nodeIds.size() &gt; 0">
+			<if test="nodeIds != null and nodeIds.size() &gt; 0">
 			    and E.NODEID IN
                 <foreach item="x_nodeId" index="index" collection="nodeIds" 
                      open="(" separator="," close=")">

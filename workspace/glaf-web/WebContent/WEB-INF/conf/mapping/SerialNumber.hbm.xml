@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+	
+<hibernate-mapping package="com.glaf.base.modules.sys.model">
+    <class name="SerialNumber" 
+           table="SerialNumber"
+           dynamic-update="true"
+           dynamic-insert="true">
+        <id name="id" type="long" unsaved-value="0">
+            <column name="id" not-null="true"/>
+            <generator class="native"/>
+        </id>
+        
+        <property name="moduleNo" type="string" column="moduleNo"/>
+        <property name="lastDate" type="date" column="lastDate"/>
+        <property name="intervelNo" type="int" column="intervelNo"/>
+        <property name="currentSerail" type="int" column="currentSerail"/>
+       
+    </class>
+</hibernate-mapping>

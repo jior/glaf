@@ -215,7 +215,7 @@
 				and E.TYPEID &lt;= #{typeIdLessThanOrEqual}
 			</if>
 
-			<if test="typeIds != null &amp;&amp; typeIds.size() &gt; 0">
+			<if test="typeIds != null and typeIds.size() &gt; 0">
 			    and E.TYPEID IN
 				<foreach item="x_typeId" index="index" collection="typeIds" 
 					open="(" separator="," close=")">
@@ -223,15 +223,15 @@
 				</foreach>
 			</if>
 	        
-			<if test="name != null &amp;&amp; name != '' ">
+			<if test="name != null and name != '' ">
 				and E.NAME = #{name}
 			</if>
 
-			<if test="nameLike != null &amp;&amp; nameLike != '' ">
+			<if test="nameLike != null and nameLike != '' ">
 				and E.NAME like #{nameLike}
 			</if>
 
-			<if test="names != null &amp;&amp; names.size() &gt; 0">
+			<if test="names != null and names.size() &gt; 0">
 			    and E.NAME IN
 				<foreach item="x_name" index="index" collection="names" 
 					open="(" separator="," close=")">
@@ -239,23 +239,23 @@
 				</foreach>
 			</if>
 	        
-			<if test="desc != null &amp;&amp; desc != '' ">
+			<if test="desc != null and desc != '' ">
 				and E.DICTDESC = #{desc}
 			</if>
 
-			<if test="descLike != null &amp;&amp; descLike != '' ">
+			<if test="descLike != null and descLike != '' ">
 				and E.DICTDESC like #{descLike}
 			</if>
 	        
-			<if test="code != null &amp;&amp; code != '' ">
+			<if test="code != null and code != '' ">
 				and E.CODE = #{code}
 			</if>
 
-			<if test="codeLike != null &amp;&amp; codeLike != '' ">
+			<if test="codeLike != null and codeLike != '' ">
 				and E.CODE like #{codeLike}
 			</if>
 
-			<if test="codes != null &amp;&amp; codes.size() &gt; 0">
+			<if test="codes != null and codes.size() &gt; 0">
 			    and E.CODE IN
 				<foreach item="x_code" index="index" collection="codes" 
 					open="(" separator="," close=")">
@@ -284,35 +284,35 @@
 				and E.BLOCKED = #{blocked}
 			</if>
      
-			<if test="ext1 != null &amp;&amp; ext1 != '' ">
+			<if test="ext1 != null and ext1 != '' ">
 				and E.EXT1 = #{ext1}
 			</if>
 
-			<if test="ext1Like != null &amp;&amp; ext1Like != '' ">
+			<if test="ext1Like != null and ext1Like != '' ">
 				and E.EXT1 like #{ext1Like}
 			</if>		
 	        
-			<if test="ext2 != null &amp;&amp; ext2 != '' ">
+			<if test="ext2 != null and ext2 != '' ">
 				and E.EXT2 = #{ext2}
 			</if>
 
-			<if test="ext2Like != null &amp;&amp; ext2Like != '' ">
+			<if test="ext2Like != null and ext2Like != '' ">
 				and E.EXT2 like #{ext2Like}
 			</if>
 	      
-			<if test="ext3 != null &amp;&amp; ext3 != '' ">
+			<if test="ext3 != null and ext3 != '' ">
 				and E.EXT3 = #{ext3}
 			</if>
 
-			<if test="ext3Like != null &amp;&amp; ext3Like != '' ">
+			<if test="ext3Like != null and ext3Like != '' ">
 				and E.EXT3 like #{ext3Like}
 			</if>
 
-			<if test="ext4 != null &amp;&amp; ext4 != '' ">
+			<if test="ext4 != null and ext4 != '' ">
 				and E.EXT4 = #{ext4}
 			</if>
 
-			<if test="ext4Like != null &amp;&amp; ext4Like != '' ">
+			<if test="ext4Like != null and ext4Like != '' ">
 				and E.EXT4 like #{ext4Like}
 			</if>
 		

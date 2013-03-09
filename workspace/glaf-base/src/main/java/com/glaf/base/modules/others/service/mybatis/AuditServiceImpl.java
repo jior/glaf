@@ -43,7 +43,7 @@ import com.glaf.base.modules.sys.model.SysUser;
 public class AuditServiceImpl implements AuditService {
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
 
-	protected LongIdGenerator idGenerator;
+	protected IdGenerator idGenerator;
 
 	protected PersistenceDAO persistenceDAO;
 
@@ -105,7 +105,7 @@ public class AuditServiceImpl implements AuditService {
 	@Transactional
 	public void save(Audit audit) {
 		if (audit.getId() == 0L) {
-			audit.setId(idGenerator.getNextId());
+			audit.setId(idGenerator.nextId());
 			// audit.setCreateDate(new Date());
 			auditMapper.insertAudit(audit);
 		} else {
@@ -114,8 +114,8 @@ public class AuditServiceImpl implements AuditService {
 	}
 
 	@Resource
-	@Qualifier("myBatisDbLongIdGenerator")
-	public void setLongIdGenerator(LongIdGenerator idGenerator) {
+	@Qualifier("myBatisDbIdGenerator")
+	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 

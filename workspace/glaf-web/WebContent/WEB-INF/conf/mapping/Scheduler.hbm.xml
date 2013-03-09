@@ -3,8 +3,8 @@
 	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping package="com.glaf.base.modules.sys.model">
-    <class name="Scheduler" table="sys_scheduler" dynamic-update="true" dynamic-insert="true">
+<hibernate-mapping package="com.glaf.core.domain">
+    <class name="SchedulerEntity" table="sys_scheduler" dynamic-update="true" dynamic-insert="true">
         <id name="id" type="string" unsaved-value="null">
 			<column name="id" not-null="true" />
 			<generator class="assigned" />

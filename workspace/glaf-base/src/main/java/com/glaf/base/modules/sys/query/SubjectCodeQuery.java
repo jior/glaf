@@ -5,19 +5,47 @@ import com.glaf.core.query.DataQuery;
 
 public class SubjectCodeQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;
-	protected List<Long> rowIds;
 	protected Long parent;
 	protected Long parentGreaterThanOrEqual;
 	protected Long parentLessThanOrEqual;
 	protected List<Long> parents;
-	protected String subjectCode;
-	protected String subjectCodeLike;
-	protected String subjectNameLike;
+	protected List<Long> rowIds;
 	protected Integer sortGreaterThanOrEqual;
 	protected Integer sortLessThanOrEqual;
+	protected String subjectCode;
+	protected String subjectCodeLike;
+	protected List<String> subjectCodes;
+	protected String subjectNameLike;
 
 	public SubjectCodeQuery() {
 
+	}
+
+	public String getOrderBy() {
+		if (sortColumn != null) {
+			String a_x = " asc ";
+			if (sortOrder != null) {
+				a_x = sortOrder;
+			}
+
+			if ("parent".equals(sortColumn)) {
+				orderBy = "E.PARENT" + a_x;
+			}
+
+			if ("subjectCode".equals(sortColumn)) {
+				orderBy = "E.SUBJECTCODE" + a_x;
+			}
+
+			if ("subjectName".equals(sortColumn)) {
+				orderBy = "E.SUBJECTNAME" + a_x;
+			}
+
+			if ("sort".equals(sortColumn)) {
+				orderBy = "E.SORT" + a_x;
+			}
+
+		}
+		return orderBy;
 	}
 
 	public Long getParent() {
@@ -36,6 +64,14 @@ public class SubjectCodeQuery extends DataQuery {
 		return parents;
 	}
 
+	public Integer getSortGreaterThanOrEqual() {
+		return sortGreaterThanOrEqual;
+	}
+
+	public Integer getSortLessThanOrEqual() {
+		return sortLessThanOrEqual;
+	}
+
 	public String getSubjectCode() {
 		return subjectCode;
 	}
@@ -52,6 +88,10 @@ public class SubjectCodeQuery extends DataQuery {
 		return subjectCodeLike;
 	}
 
+	public List<String> getSubjectCodes() {
+		return subjectCodes;
+	}
+
 	public String getSubjectNameLike() {
 		if (subjectNameLike != null && subjectNameLike.trim().length() > 0) {
 			if (!subjectNameLike.startsWith("%")) {
@@ -64,48 +104,14 @@ public class SubjectCodeQuery extends DataQuery {
 		return subjectNameLike;
 	}
 
-	public Integer getSortGreaterThanOrEqual() {
-		return sortGreaterThanOrEqual;
-	}
-
-	public Integer getSortLessThanOrEqual() {
-		return sortLessThanOrEqual;
-	}
-
-	public void setParent(Long parent) {
-		this.parent = parent;
-	}
-
-	public void setParentGreaterThanOrEqual(Long parentGreaterThanOrEqual) {
-		this.parentGreaterThanOrEqual = parentGreaterThanOrEqual;
-	}
-
-	public void setParentLessThanOrEqual(Long parentLessThanOrEqual) {
-		this.parentLessThanOrEqual = parentLessThanOrEqual;
-	}
-
-	public void setParents(List<Long> parents) {
-		this.parents = parents;
-	}
-
-	public void setSubjectCode(String subjectCode) {
-		this.subjectCode = subjectCode;
-	}
-
-	public void setSubjectCodeLike(String subjectCodeLike) {
-		this.subjectCodeLike = subjectCodeLike;
-	}
-
-	public void setSubjectNameLike(String subjectNameLike) {
-		this.subjectNameLike = subjectNameLike;
-	}
-
-	public void setSortGreaterThanOrEqual(Integer sortGreaterThanOrEqual) {
-		this.sortGreaterThanOrEqual = sortGreaterThanOrEqual;
-	}
-
-	public void setSortLessThanOrEqual(Integer sortLessThanOrEqual) {
-		this.sortLessThanOrEqual = sortLessThanOrEqual;
+	@Override
+	public void initQueryColumns() {
+		super.initQueryColumns();
+		addColumn("id", "ID");
+		addColumn("parent", "PARENT");
+		addColumn("subjectCode", "SUBJECTCODE");
+		addColumn("subjectName", "SUBJECTNAME");
+		addColumn("sort", "SORT");
 	}
 
 	public SubjectCodeQuery parent(Long parent) {
@@ -141,28 +147,44 @@ public class SubjectCodeQuery extends DataQuery {
 		return this;
 	}
 
-	public SubjectCodeQuery subjectCode(String subjectCode) {
-		if (subjectCode == null) {
-			throw new RuntimeException("subjectCode is null");
-		}
+	public void setParent(Long parent) {
+		this.parent = parent;
+	}
+
+	public void setParentGreaterThanOrEqual(Long parentGreaterThanOrEqual) {
+		this.parentGreaterThanOrEqual = parentGreaterThanOrEqual;
+	}
+
+	public void setParentLessThanOrEqual(Long parentLessThanOrEqual) {
+		this.parentLessThanOrEqual = parentLessThanOrEqual;
+	}
+
+	public void setParents(List<Long> parents) {
+		this.parents = parents;
+	}
+
+	public void setSortGreaterThanOrEqual(Integer sortGreaterThanOrEqual) {
+		this.sortGreaterThanOrEqual = sortGreaterThanOrEqual;
+	}
+
+	public void setSortLessThanOrEqual(Integer sortLessThanOrEqual) {
+		this.sortLessThanOrEqual = sortLessThanOrEqual;
+	}
+
+	public void setSubjectCode(String subjectCode) {
 		this.subjectCode = subjectCode;
-		return this;
 	}
 
-	public SubjectCodeQuery subjectCodeLike(String subjectCodeLike) {
-		if (subjectCodeLike == null) {
-			throw new RuntimeException("subjectCode is null");
-		}
+	public void setSubjectCodeLike(String subjectCodeLike) {
 		this.subjectCodeLike = subjectCodeLike;
-		return this;
 	}
 
-	public SubjectCodeQuery subjectNameLike(String subjectNameLike) {
-		if (subjectNameLike == null) {
-			throw new RuntimeException("subjectName is null");
-		}
+	public void setSubjectCodes(List<String> subjectCodes) {
+		this.subjectCodes = subjectCodes;
+	}
+
+	public void setSubjectNameLike(String subjectNameLike) {
 		this.subjectNameLike = subjectNameLike;
-		return this;
 	}
 
 	public SubjectCodeQuery sortGreaterThanOrEqual(
@@ -182,41 +204,36 @@ public class SubjectCodeQuery extends DataQuery {
 		return this;
 	}
 
-	public String getOrderBy() {
-		if (sortColumn != null) {
-			String a_x = " asc ";
-			if (sortOrder != null) {
-				a_x = sortOrder;
-			}
-
-			if ("parent".equals(sortColumn)) {
-				orderBy = "E.PARENT" + a_x;
-			}
-
-			if ("subjectCode".equals(sortColumn)) {
-				orderBy = "E.SUBJECTCODE" + a_x;
-			}
-
-			if ("subjectName".equals(sortColumn)) {
-				orderBy = "E.SUBJECTNAME" + a_x;
-			}
-
-			if ("sort".equals(sortColumn)) {
-				orderBy = "E.SORT" + a_x;
-			}
-
+	public SubjectCodeQuery subjectCode(String subjectCode) {
+		if (subjectCode == null) {
+			throw new RuntimeException("subjectCode is null");
 		}
-		return orderBy;
+		this.subjectCode = subjectCode;
+		return this;
 	}
 
-	@Override
-	public void initQueryColumns() {
-		super.initQueryColumns();
-		addColumn("id", "ID");
-		addColumn("parent", "PARENT");
-		addColumn("subjectCode", "SUBJECTCODE");
-		addColumn("subjectName", "SUBJECTNAME");
-		addColumn("sort", "SORT");
+	public SubjectCodeQuery subjectCodeLike(String subjectCodeLike) {
+		if (subjectCodeLike == null) {
+			throw new RuntimeException("subjectCode is null");
+		}
+		this.subjectCodeLike = subjectCodeLike;
+		return this;
+	}
+
+	public SubjectCodeQuery subjectCodes(List<String> subjectCodes) {
+		if (subjectCodes == null) {
+			throw new RuntimeException("subjectCodes is empty ");
+		}
+		this.subjectCodes = subjectCodes;
+		return this;
+	}
+
+	public SubjectCodeQuery subjectNameLike(String subjectNameLike) {
+		if (subjectNameLike == null) {
+			throw new RuntimeException("subjectName is null");
+		}
+		this.subjectNameLike = subjectNameLike;
+		return this;
 	}
 
 }

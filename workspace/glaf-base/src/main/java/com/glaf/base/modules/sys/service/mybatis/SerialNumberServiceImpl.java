@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.glaf.base.modules.sys.service.impl;
+package com.glaf.base.modules.sys.service.mybatis;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -24,40 +24,50 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.ibatis.session.RowBounds;
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.glaf.base.dao.AbstractSpringDao;
 import com.glaf.base.modules.BaseDataManager;
 import com.glaf.base.modules.Constants;
+import com.glaf.base.modules.sys.mapper.SerialNumberMapper;
 import com.glaf.base.modules.sys.model.BaseDataInfo;
 import com.glaf.base.modules.sys.model.SerialNumber;
+
+import com.glaf.base.modules.sys.query.SerialNumberQuery;
 import com.glaf.base.modules.sys.service.*;
 import com.glaf.base.utils.WebUtil;
+import com.glaf.core.dao.PersistenceDAO;
+import com.glaf.core.id.IdGenerator;
 
+/**
+ * 在各虚获得编码的类中加入如下代码：
+ * 
+ * 1.引入Service private SerialNumberService serialNumberService; public void
+ * setSerialNumberService(SerialNumberService serialNumberService){
+ * this.serialNumberService = serialNumberService;
+ * logger.info("SerialNumberService Injected"); }
+ * 
+ * 2.插入参数（合同例子） Map pros = new HashMap();
+ * pros.put(Constants.SYS_MOD,Constants.SYS_CON); pros.put("category", new
+ * Integer(contract.getCategory())); pros.put("kind", new
+ * Integer(contract.getKind())); pros.put("type", new
+ * Integer(contract.getType()));
+ * contract.setContractNo(serialNumberService.getSerialNumber(pros));
+ * 
+ */
+
+@Service("serialNumberService")
+@Transactional(readOnly = true)
 @SuppressWarnings("rawtypes")
 public class SerialNumberServiceImpl implements SerialNumberService {
-
-	/**
-	 * 在各虚获得编码的类中加入如下代码：
-	 * 
-	 * 1.引入Service private SerialNumberService serialNumberService; public void
-	 * setSerialNumberService(SerialNumberService serialNumberService){
-	 * this.serialNumberService = serialNumberService;
-	 * logger.info("SerialNumberService Injected"); }
-	 * 
-	 * 2.插入参数（合同例子） Map pros = new HashMap();
-	 * pros.put(Constants.SYS_MOD,Constants.SYS_CON); pros.put("category", new
-	 * Integer(contract.getCategory())); pros.put("kind", new
-	 * Integer(contract.getKind())); pros.put("type", new
-	 * Integer(contract.getType()));
-	 * contract.setContractNo(serialNumberService.getSerialNumber(pros));
-	 * 
-	 * 3.在action-xxxx.xml中,为该Action注入serialNumberService <property
-	 * name="serialNumberService"> <ref bean="serialNumberService"/> </property>
-	 * 
-	 */
 
 	private static final Log logger = LogFactory
 			.getLog(SerialNumberServiceImpl.class);
@@ -66,18 +76,97 @@ public class SerialNumberServiceImpl implements SerialNumberService {
 
 	private BaseDataInfo bdi = null;
 
-	private AbstractSpringDao abstractDao;
+	protected IdGenerator idGenerator;
 
-	public void setAbstractDao(AbstractSpringDao abstractDao) {
-		this.abstractDao = abstractDao;
-		logger.info("setAbstractDao");
+	protected PersistenceDAO persistenceDAO;
+
+	protected SqlSessionTemplate sqlSessionTemplate;
+
+	protected SerialNumberMapper serialNumberMapper;
+
+	@Transactional
+	public void deleteById(Long id) {
+		if (id != null) {
+			serialNumberMapper.deleteSerialNumberById(id);
+		}
 	}
 
-	// 决裁
+	@Transactional
+	public void deleteByIds(List<Long> rowIds) {
+		if (rowIds != null && !rowIds.isEmpty()) {
+			SerialNumberQuery query = new SerialNumberQuery();
+			query.rowIds(rowIds);
+			serialNumberMapper.deleteSerialNumbers(query);
+		}
+	}
+
+	public int count(SerialNumberQuery query) {
+		query.ensureInitialized();
+		return serialNumberMapper.getSerialNumberCount(query);
+	}
+
+	public List<SerialNumber> list(SerialNumberQuery query) {
+		query.ensureInitialized();
+		List<SerialNumber> list = serialNumberMapper.getSerialNumbers(query);
+		return list;
+	}
+
+	public int getSerialNumberCountByQueryCriteria(SerialNumberQuery query) {
+		return serialNumberMapper.getSerialNumberCount(query);
+	}
+
+	public List<SerialNumber> getSerialNumbersByQueryCriteria(int start,
+			int pageSize, SerialNumberQuery query) {
+		RowBounds rowBounds = new RowBounds(start, pageSize);
+		List<SerialNumber> rows = sqlSessionTemplate.selectList(
+				"getSerialNumbers", query, rowBounds);
+		return rows;
+	}
+
+	public SerialNumber getSerialNumber(Long id) {
+		if (id == null) {
+			return null;
+		}
+		SerialNumber serialNumber = serialNumberMapper.getSerialNumberById(id);
+		return serialNumber;
+	}
+
+	@Transactional
+	public void save(SerialNumber serialNumber) {
+		if (serialNumber.getId() == 0L) {
+			serialNumber.setId(idGenerator.nextId());
+			// serialNumber.setCreateDate(new Date());
+			serialNumberMapper.insertSerialNumber(serialNumber);
+		} else {
+			serialNumberMapper.updateSerialNumber(serialNumber);
+		}
+	}
+
+	@Resource
+	@Qualifier("myBatisDbIdGenerator")
+	public void setIdGenerator(IdGenerator idGenerator) {
+		this.idGenerator = idGenerator;
+	}
+
+	@Resource
+	public void setSerialNumberMapper(SerialNumberMapper serialNumberMapper) {
+		this.serialNumberMapper = serialNumberMapper;
+	}
+
+	@Resource
+	public void setPersistenceDAO(PersistenceDAO persistenceDAO) {
+		this.persistenceDAO = persistenceDAO;
+	}
+
+	@Resource
+	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
+		this.sqlSessionTemplate = sqlSessionTemplate;
+	}
+
 	private String getABISerialNumber(Map params) {
 		// 取模块代码
 		String module = (String) params.get(Constants.SYS_MOD);
-		// 询价代码
+
 		StringBuffer sn = new StringBuffer("J");
 		// 类别代码
 		String typeCode = (String) params.get("type");
@@ -92,11 +181,10 @@ public class SerialNumberServiceImpl implements SerialNumberService {
 		return sn.toString();
 	}
 
-	// 决裁
 	private String getABIMSerialNumber(Map params) {
 		// 取模块代码
 		String module = (String) params.get(Constants.SYS_MOD);
-		// 询价代码
+
 		StringBuffer sn = new StringBuffer("MJ");
 		// 类别代码
 		String typeCode = (String) params.get("type");
@@ -125,7 +213,7 @@ public class SerialNumberServiceImpl implements SerialNumberService {
 		Calendar date = Calendar.getInstance();
 		Integer i = null;
 		String sn = "";
-		// 采购部简称
+
 		sn = "PD";
 		// 项目类别代码
 		i = (Integer) params.get("category");
@@ -153,7 +241,6 @@ public class SerialNumberServiceImpl implements SerialNumberService {
 		return sn;
 	}
 
-	// 重财
 	private String getIMPSerialNumber(Map params) {
 		// 取模块代码
 		String module = (String) params.get(Constants.SYS_MOD);
@@ -171,12 +258,10 @@ public class SerialNumberServiceImpl implements SerialNumberService {
 		return sn;
 	}
 
-	// 预算
 	private String getBUDSerialNumber(Map params) {
 		return "";
 	}
 
-	// 询价
 	private String getQUESerialNumber(Map params) {
 		// 取模块代码
 		String module = (String) params.get(Constants.SYS_MOD);
@@ -195,7 +280,6 @@ public class SerialNumberServiceImpl implements SerialNumberService {
 		return sn.toString();
 	}
 
-	// 目录询价
 	private String getQUEMSerialNumber(Map params) {
 		// 取模块代码
 		String module = (String) params.get(Constants.SYS_MOD);
@@ -214,7 +298,6 @@ public class SerialNumberServiceImpl implements SerialNumberService {
 		return sn.toString();
 	}
 
-	// 订单
 	private String getORDSerialNumber(Map params) {
 		// 取模块代码
 		String module = (String) params.get(Constants.SYS_MOD);
@@ -250,11 +333,11 @@ public class SerialNumberServiceImpl implements SerialNumberService {
 		// 取模块代码
 		String module = (String) params.get(Constants.SYS_MOD);
 		String sn = "";
-		// 采购类别
+
 		String category = (String) params.get("category");
-		// 采购性质
+
 		String type = (String) params.get("type");
-		// 部门区分
+
 		String deptNo = (String) params.get("deptNo");
 		// 年份
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
@@ -265,14 +348,13 @@ public class SerialNumberServiceImpl implements SerialNumberService {
 		return sn.toString();
 	}
 
-	// 目录采购
 	private String getCATESerialNumber(Map params) {
 		// 取模块代码
 		String module = (String) params.get(Constants.SYS_MOD);
 		String sn = "M";
-		// 采购类别
+
 		String category = (String) params.get("category");
-		// 采购性质
+
 		String type = (String) params.get("type");
 		// 部门区分
 		String deptNo = (String) params.get("deptNo");
@@ -285,13 +367,10 @@ public class SerialNumberServiceImpl implements SerialNumberService {
 		return sn.toString();
 	}
 
-	// 报价
 	private String getREPSerialNumber(Map params) {
-
 		return "";
 	}
 
-	// 付款
 	private String getPAYSerialNumber(Map params) {
 
 		String module = (String) params.get(Constants.SYS_MOD);
@@ -327,7 +406,6 @@ public class SerialNumberServiceImpl implements SerialNumberService {
 		return sb.toString();
 	}
 
-	// 物品
 	private String getGOODSerialNumber(Map params) {
 		// 取模块代码
 		String module = (String) params.get(Constants.SYS_MOD);
@@ -346,11 +424,10 @@ public class SerialNumberServiceImpl implements SerialNumberService {
 		return sn.toString();
 	}
 
-	// 目录物品申请单
 	private String getGOODAPPLYSerialNumber(Map params) {
 		// 取模块代码
 		String module = (String) params.get(Constants.SYS_MOD);
-		// 物品申请代码
+
 		StringBuffer sn = new StringBuffer("");
 		// 类别代码
 		String typeCode = (String) params.get("type");
@@ -369,7 +446,6 @@ public class SerialNumberServiceImpl implements SerialNumberService {
 		return sn.toString();
 	}
 
-	// 目录采购订购单
 	private String getORDMOSerialNumber(Map params) {
 		// 取模块代码
 		String module = (String) params.get(Constants.SYS_MOD);
@@ -445,7 +521,7 @@ public class SerialNumberServiceImpl implements SerialNumberService {
 
 		// 模块类别
 		sb.append("MY");
-		// 采购类别
+
 		String category = (String) params.get("category");
 
 		if (category != null) {
@@ -465,7 +541,6 @@ public class SerialNumberServiceImpl implements SerialNumberService {
 		return sb.toString();
 	}
 
-	// 目录采购付款
 	private String getPAYMSerialNumber(Map params) {
 
 		String module = (String) params.get(Constants.SYS_MOD);
@@ -481,7 +556,6 @@ public class SerialNumberServiceImpl implements SerialNumberService {
 		// 模块类别
 		sb.append("MP");
 
-		// 采购类别
 		String category = (String) params.get("category");
 
 		if (category != null) {
@@ -501,12 +575,6 @@ public class SerialNumberServiceImpl implements SerialNumberService {
 		return sb.toString();
 	}
 
-	/**
-	 * 对单一供应商的决策评价自动编号
-	 * 
-	 * @param params
-	 * @return
-	 */
 	private String getCommendSerialNumber(Map params) {
 		String module = (String) params.get(Constants.SYS_MOD);
 
@@ -628,11 +696,11 @@ public class SerialNumberServiceImpl implements SerialNumberService {
 	private int getCurrentSerialNumber(String module) {
 
 		int retInt = 1;
-		StringBuffer sb = new StringBuffer();
-		Object[] values = new Object[] { module };
 
-		sb.append(" from SerialNumber s where s.moduleNo=? ");
-		List tempList = abstractDao.getList(sb.toString(), values, null);
+		SerialNumberQuery query = new SerialNumberQuery();
+		query.moduleNo(module);
+
+		List<SerialNumber> tempList = this.list(query);
 
 		if (tempList != null && tempList.size() > 0) {
 
@@ -641,22 +709,20 @@ public class SerialNumberServiceImpl implements SerialNumberService {
 			// 检测是否已过归零日期
 			int intervel = serialNumber.getIntervelNo();
 			Calendar lastCal = Calendar.getInstance();
-			lastCal.setTime(serialNumber.getLastDate());// 2007-05-15
+			lastCal.setTime(serialNumber.getLastDate());
 
 			Calendar curCal = Calendar.getInstance();
 			Date curDate = WebUtil.stringToDate(WebUtil
 					.dateToString(new Date()));// 只包含年月日的日期
-			curCal.setTime(curDate); // 2007-07-21
+			curCal.setTime(curDate);
 
 			boolean reCaculate = true;
 			if (intervel == Constants.INTERVEL_1) {
-				// yue
 				// lastCal.roll(Calendar.MONTH, 1);
 				lastCal.set(Calendar.DAY_OF_MONTH, 1);
 				curCal.set(Calendar.DAY_OF_MONTH, 1);
 				reCaculate = curCal.after(lastCal);
 			} else if (intervel == Constants.INTERVEL_2) {
-				// nian
 				// newCal.roll(Calendar.YEAR, 1);
 				lastCal.set(Calendar.DAY_OF_MONTH, 1);
 				lastCal.set(Calendar.MONTH, 1);
@@ -668,13 +734,9 @@ public class SerialNumberServiceImpl implements SerialNumberService {
 				// newCal.roll(Calendar.DAY_OF_MONTH, 1);
 				reCaculate = curCal.after(lastCal);
 			} else {
-				// leiji
 				reCaculate = false;
 			}
 
-			// if (reCaculate
-			// && newCal.getTime().compareTo(
-			// Calendar.getInstance().getTime()) < 0) {
 			if (reCaculate) {
 				serialNumber.setCurrentSerail(retInt);
 				serialNumber.setLastDate(new Date());
@@ -693,7 +755,8 @@ public class SerialNumberServiceImpl implements SerialNumberService {
 	}
 
 	public boolean update(SerialNumber bean) {
-		return abstractDao.update(bean);
+		this.save(bean);
+		return true;
 	}
 
 	// 通过模块NO、category、area来查找SerialNumber中对应的moduleNo，从而获取SerialNumber对象
@@ -733,10 +796,13 @@ public class SerialNumberServiceImpl implements SerialNumberService {
 		}
 
 		logger.info("moduleNo----------------" + moduleNo);
-		StringBuffer sb = new StringBuffer();
-		sb.append("from SerialNumber s where s.moduleNo=?");
-		Object[] values = { new String(moduleNo) };
-		return abstractDao.getList(sb.toString(), values, null);
+
+		SerialNumberQuery query = new SerialNumberQuery();
+		query.moduleNo(moduleNo);
+
+		List<SerialNumber> list = this.list(query);
+
+		return list;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -764,10 +830,12 @@ public class SerialNumberServiceImpl implements SerialNumberService {
 			}
 		}
 		logger.info("moduleNo----------------" + moduleNo);
-		StringBuffer sb = new StringBuffer();
-		sb.append("from SerialNumber s where s.moduleNo=?");
-		Object[] values = { new String(moduleNo) };
-		return abstractDao.getList(sb.toString(), values, null);
+		SerialNumberQuery query = new SerialNumberQuery();
+		query.moduleNo(moduleNo);
+
+		List<SerialNumber> list = this.list(query);
+
+		return list;
 	}
 
 	public static void main(String arg[]) {

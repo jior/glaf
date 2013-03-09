@@ -160,7 +160,7 @@
 				and E.REFERID &lt;= #{referIdLessThanOrEqual}
 			</if>
 
-			<if test="referIds != null &amp;&amp; referIds.size() &gt; 0">
+			<if test="referIds != null and referIds.size() &gt; 0">
 			    and E.REFERID IN
 				<foreach item="x_referId" index="index" collection="referIds" 
 					open="(" separator="," close=")">
@@ -181,7 +181,7 @@
 				and E.REFERTYPE &lt;= #{referTypeLessThanOrEqual}
 			</if>
 
-			<if test="referTypes != null &amp;&amp; referTypes.size() &gt; 0">
+			<if test="referTypes != null and referTypes.size() &gt; 0">
 			    and E.REFERTYPE IN
 				<foreach item="x_referType" index="index" collection="referTypes" 
 					open="(" separator="," close=")">
@@ -190,19 +190,19 @@
 			</if>
 
 	        
-			<if test="name != null &amp;&amp; name != '' ">
+			<if test="name != null and name != '' ">
 				and E.NAME = #{name}
 			</if>
 
-			<if test="nameLike != null &amp;&amp; nameLike != '' ">
+			<if test="nameLike != null and nameLike != '' ">
 				and E.NAME like #{nameLike}
 			</if>
 	        
-			<if test="url != null &amp;&amp; url != '' ">
+			<if test="url != null and url != '' ">
 				and E.URL = #{url}
 			</if>
 
-			<if test="urlLike != null &amp;&amp; urlLike != '' ">
+			<if test="urlLike != null and urlLike != '' ">
 				and E.URL like #{urlLike}
 			</if>
 
@@ -226,7 +226,7 @@
 				and E.CREATEID &lt;= #{createIdLessThanOrEqual}
 			</if>
 
-			<if test="createIds != null &amp;&amp; createIds.size() &gt; 0">
+			<if test="createIds != null and createIds.size() &gt; 0">
 			    and E.CREATEID IN
 				<foreach item="x_createId" index="index" collection="createIds" 
 					open="(" separator="," close=")">

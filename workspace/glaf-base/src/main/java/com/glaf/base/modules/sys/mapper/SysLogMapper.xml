@@ -133,15 +133,15 @@
 		<where>
 		       1 = 1  
 	        
-			<if test="account != null &amp;&amp; account != '' ">
+			<if test="account != null and account != '' ">
 				and E.ACCOUNT = #{account}
 			</if>
 
-			<if test="accountLike != null &amp;&amp; accountLike != '' ">
+			<if test="accountLike != null and accountLike != '' ">
 				and E.ACCOUNT like #{accountLike}
 			</if>
 
-			<if test="accounts != null &amp;&amp; accounts.size() &gt; 0">
+			<if test="accounts != null and accounts.size() &gt; 0">
 			    and E.ACCOUNT IN
 				<foreach item="x_account" index="index" collection="accounts" 
 					open="(" separator="," close=")">
@@ -149,11 +149,11 @@
 				</foreach>
 			</if>
 	        
-			<if test="ip != null &amp;&amp; ip != '' ">
+			<if test="ip != null and ip != '' ">
 				and E.IP = #{ip}
 			</if>
 
-			<if test="ipLike != null &amp;&amp; ipLike != '' ">
+			<if test="ipLike != null and ipLike != '' ">
 				and E.IP like #{ipLike}
 			</if>
 
@@ -165,7 +165,7 @@
 				and E.CREATETIME &lt;= #{createTimeLessThanOrEqual}
 			</if>
    
-			<if test="operate != null &amp;&amp; operate != '' ">
+			<if test="operate != null and operate != '' ">
 				and E.OPERATE = #{operate}
 			</if>
 

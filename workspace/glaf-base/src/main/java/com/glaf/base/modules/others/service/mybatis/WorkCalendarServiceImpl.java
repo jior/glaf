@@ -43,7 +43,7 @@ public class WorkCalendarServiceImpl implements WorkCalendarService {
 	protected final static Log logger = LogFactory
 			.getLog(WorkCalendarServiceImpl.class);
 
-	protected LongIdGenerator idGenerator;
+	protected IdGenerator idGenerator;
 
 	protected PersistenceDAO persistenceDAO;
 
@@ -79,7 +79,7 @@ public class WorkCalendarServiceImpl implements WorkCalendarService {
 	@Transactional
 	public boolean create(WorkCalendar bean) {
 		if (bean.getId() == 0L) {
-			bean.setId(idGenerator.getNextId());
+			bean.setId(idGenerator.nextId());
 		}
 		this.workCalendarMapper.insertWorkCalendar(bean);
 		return false;
@@ -269,7 +269,7 @@ public class WorkCalendarServiceImpl implements WorkCalendarService {
 	@Transactional
 	public void save(WorkCalendar workCalendar) {
 		if (workCalendar.getId() == 0L) {
-			workCalendar.setId(idGenerator.getNextId());
+			workCalendar.setId(idGenerator.nextId());
 			// workCalendar.setCreateDate(new Date());
 			workCalendarMapper.insertWorkCalendar(workCalendar);
 		} else {
@@ -278,8 +278,8 @@ public class WorkCalendarServiceImpl implements WorkCalendarService {
 	}
 
 	@Resource
-	@Qualifier("myBatisDbLongIdGenerator")
-	public void setLongIdGenerator(LongIdGenerator idGenerator) {
+	@Qualifier("myBatisDbIdGenerator")
+	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 

@@ -42,7 +42,7 @@ import com.glaf.base.modules.others.service.*;
 public class AttachmentServiceImpl implements AttachmentService {
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
 
-	protected LongIdGenerator idGenerator;
+	protected IdGenerator idGenerator;
 
 	protected PersistenceDAO persistenceDAO;
 
@@ -104,7 +104,7 @@ public class AttachmentServiceImpl implements AttachmentService {
 	@Transactional
 	public void save(Attachment attachment) {
 		if (attachment.getId() == 0L) {
-			attachment.setId(idGenerator.getNextId());
+			attachment.setId(idGenerator.nextId());
 			// attachment.setCreateDate(new Date());
 			attachmentMapper.insertAttachment(attachment);
 		} else {
@@ -113,8 +113,8 @@ public class AttachmentServiceImpl implements AttachmentService {
 	}
 
 	@Resource
-	@Qualifier("myBatisDbLongIdGenerator")
-	public void setLongIdGenerator(LongIdGenerator idGenerator) {
+	@Qualifier("myBatisDbIdGenerator")
+	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 

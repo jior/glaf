@@ -45,13 +45,17 @@ public class SysTreeServiceImpl implements SysTreeService {
 	protected final static Log logger = LogFactory
 			.getLog(SysTreeServiceImpl.class);
 
-	protected LongIdGenerator idGenerator;
+	protected IdGenerator idGenerator;
 
 	protected PersistenceDAO persistenceDAO;
 
 	protected SqlSessionTemplate sqlSessionTemplate;
 
 	protected SysTreeMapper sysTreeMapper;
+
+	protected SysApplicationMapper sysApplicationMapper;
+
+	protected SysDepartmentMapper sysDepartmentMapper;
 
 	public SysTreeServiceImpl() {
 
@@ -74,12 +78,10 @@ public class SysTreeServiceImpl implements SysTreeService {
 	}
 
 	public int count(SysTreeQuery query) {
-		query.ensureInitialized();
 		return sysTreeMapper.getSysTreeCount(query);
 	}
 
 	public List<SysTree> list(SysTreeQuery query) {
-		query.ensureInitialized();
 		List<SysTree> list = sysTreeMapper.getSysTrees(query);
 		return list;
 	}
@@ -107,7 +109,7 @@ public class SysTreeServiceImpl implements SysTreeService {
 	@Transactional
 	public void save(SysTree sysTree) {
 		if (sysTree.getId() == 0L) {
-			sysTree.setId(idGenerator.getNextId());
+			sysTree.setId(idGenerator.nextId());
 			// sysTree.setCreateDate(new Date());
 			sysTreeMapper.insertSysTree(sysTree);
 		} else {
@@ -116,8 +118,8 @@ public class SysTreeServiceImpl implements SysTreeService {
 	}
 
 	@Resource
-	@Qualifier("myBatisDbLongIdGenerator")
-	public void setLongIdGenerator(LongIdGenerator idGenerator) {
+	@Qualifier("myBatisDbIdGenerator")
+	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 
@@ -134,6 +136,17 @@ public class SysTreeServiceImpl implements SysTreeService {
 	@Resource
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
 		this.sqlSessionTemplate = sqlSessionTemplate;
+	}
+
+	@Resource
+	public void setSysApplicationMapper(
+			SysApplicationMapper sysApplicationMapper) {
+		this.sysApplicationMapper = sysApplicationMapper;
+	}
+
+	@Resource
+	public void setSysDepartmentMapper(SysDepartmentMapper sysDepartmentMapper) {
+		this.sysDepartmentMapper = sysDepartmentMapper;
 	}
 
 	@Transactional
@@ -180,12 +193,14 @@ public class SysTreeServiceImpl implements SysTreeService {
 		return null;
 	}
 
-	public void getSysTree(List<SysTree> tree, int parent, int deep) {
+	public void getSysTree(List<SysTree> tree, int parentId, int deep) {
 		SysTreeQuery query = new SysTreeQuery();
-		query.setParent(Long.valueOf(parent));
+		query.setParentId(Long.valueOf(parentId));
 		query.setOrderBy("  E.SORT desc ");
 		List<SysTree> nodes = this.list(query);
 		if (nodes != null) {
+			this.initDepartments(nodes);
+			this.initApplications(nodes);
 			Iterator<SysTree> iter = nodes.iterator();
 			while (iter.hasNext()) {// µÝ¹é±éÀú
 				SysTree bean = (SysTree) iter.next();
@@ -208,12 +223,48 @@ public class SysTreeServiceImpl implements SysTreeService {
 		return null;
 	}
 
-	public List<SysTree> getSysTreeList(int parent) {
+	public List<SysTree> getSysTreeList(int parentId) {
 		SysTreeQuery query = new SysTreeQuery();
-		query.setParent(Long.valueOf(parent));
+		query.setParentId(Long.valueOf(parentId));
 		query.setOrderBy("  E.SORT desc ");
 		List<SysTree> trees = this.list(query);
 		return trees;
+	}
+
+	protected void initDepartments(List<SysTree> list) {
+		if (list != null && !list.isEmpty()) {
+			SysDepartmentQuery query = new SysDepartmentQuery();
+			query.status(0);
+			List<SysDepartment> depts = sysDepartmentMapper
+					.getSysDepartments(query);
+			Map<Long, SysDepartment> deptMap = new HashMap<Long, SysDepartment>();
+			if (depts != null && !depts.isEmpty()) {
+				for (SysDepartment dept : depts) {
+					deptMap.put(dept.getId(), dept);
+				}
+			}
+			for (SysTree bean : list) {
+				bean.setDepartment(deptMap.get(Long.valueOf(bean.getId())));
+			}
+		}
+	}
+
+	protected void initApplications(List<SysTree> list) {
+		if (list != null && !list.isEmpty()) {
+			SysApplicationQuery query = new SysApplicationQuery();
+			query.locked(0);
+			List<SysApplication> apps = sysApplicationMapper
+					.getSysApplications(query);
+			Map<Long, SysApplication> appMap = new HashMap<Long, SysApplication>();
+			if (apps != null && !apps.isEmpty()) {
+				for (SysApplication m : apps) {
+					appMap.put(m.getId(), m);
+				}
+			}
+			for (SysTree bean : list) {
+				bean.setApp(appMap.get(Long.valueOf(bean.getId())));
+			}
+		}
 	}
 
 	public PageResult getSysTreeList(int parent, int pageNo, int pageSize) {
@@ -239,10 +290,9 @@ public class SysTreeServiceImpl implements SysTreeService {
 		return pager;
 	}
 
- 
-	public List<SysTree> getSysTreeListForDept(int parent, int status) {
+	public List<SysTree> getSysTreeListForDept(int parentId, int status) {
 		SysTreeQuery query = new SysTreeQuery();
-		query.setParent(Long.valueOf(parent));
+		query.setParentId(Long.valueOf(parentId));
 		if (status != -1) {
 			query.setDepartmentStatus(status);
 		}

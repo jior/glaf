@@ -46,7 +46,7 @@ import com.glaf.base.modules.workspace.service.*;
 public class MessageServiceImpl implements MessageService {
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
 
-	protected LongIdGenerator idGenerator;
+	protected IdGenerator idGenerator;
 
 	protected PersistenceDAO persistenceDAO;
 
@@ -110,7 +110,7 @@ public class MessageServiceImpl implements MessageService {
 	@Transactional
 	public void save(Message message) {
 		if (message.getId() == 0L) {
-			message.setId(idGenerator.getNextId());
+			message.setId(idGenerator.nextId());
 			// message.setCreateDate(new Date());
 			messageMapper.insertMessage(message);
 		} else {
@@ -119,8 +119,8 @@ public class MessageServiceImpl implements MessageService {
 	}
 
 	@Resource
-	@Qualifier("myBatisDbLongIdGenerator")
-	public void setLongIdGenerator(LongIdGenerator idGenerator) {
+	@Qualifier("myBatisDbIdGenerator")
+	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 

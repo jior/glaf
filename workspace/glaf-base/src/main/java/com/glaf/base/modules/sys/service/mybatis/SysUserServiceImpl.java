@@ -47,7 +47,7 @@ public class SysUserServiceImpl implements SysUserService {
 	protected final static Log logger = LogFactory
 			.getLog(SysUserServiceImpl.class);
 
-	protected LongIdGenerator idGenerator;
+	protected IdGenerator idGenerator;
 
 	protected PersistenceDAO persistenceDAO;
 
@@ -60,7 +60,7 @@ public class SysUserServiceImpl implements SysUserService {
 	protected SysDeptRoleMapper sysDeptRoleMapper;
 
 	protected SysUserRoleMapper sysUserRoleMapper;
-	
+
 	protected SysRoleMapper sysRoleMapper;
 
 	protected SysAccessMapper sysAccessMapper;
@@ -99,6 +99,7 @@ public class SysUserServiceImpl implements SysUserService {
 	public List<SysUser> list(SysUserQuery query) {
 		query.ensureInitialized();
 		List<SysUser> list = sysUserMapper.getSysUsers(query);
+		this.initUserDepartments(list);
 		return list;
 	}
 
@@ -111,6 +112,7 @@ public class SysUserServiceImpl implements SysUserService {
 		RowBounds rowBounds = new RowBounds(start, pageSize);
 		List<SysUser> rows = sqlSessionTemplate.selectList("getSysUsers",
 				query, rowBounds);
+		this.initUserDepartments(rows);
 		return rows;
 	}
 
@@ -125,7 +127,7 @@ public class SysUserServiceImpl implements SysUserService {
 	@Transactional
 	public void save(SysUser sysUser) {
 		if (sysUser.getId() == 0L) {
-			sysUser.setId(idGenerator.getNextId());
+			sysUser.setId(idGenerator.nextId());
 			// sysUser.setCreateDate(new Date());
 			sysUserMapper.insertSysUser(sysUser);
 		} else {
@@ -134,8 +136,8 @@ public class SysUserServiceImpl implements SysUserService {
 	}
 
 	@Resource
-	@Qualifier("myBatisDbLongIdGenerator")
-	public void setLongIdGenerator(LongIdGenerator idGenerator) {
+	@Qualifier("myBatisDbIdGenerator")
+	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 
@@ -190,8 +192,7 @@ public class SysUserServiceImpl implements SysUserService {
 	public void setSysFunctionMapper(SysFunctionMapper sysFunctionMapper) {
 		this.sysFunctionMapper = sysFunctionMapper;
 	}
-	
-	
+
 	@Resource
 	public void setSysRoleMapper(SysRoleMapper sysRoleMapper) {
 		this.sysRoleMapper = sysRoleMapper;
@@ -231,7 +232,9 @@ public class SysUserServiceImpl implements SysUserService {
 	}
 
 	public SysUser findById(long id) {
-		return this.getSysUser(id);
+		SysUser user = this.getSysUser(id);
+		user.setDepartment(sysDepartmentService.findById(user.getDeptId()));
+		return user;
 	}
 
 	@Override
@@ -242,7 +245,9 @@ public class SysUserServiceImpl implements SysUserService {
 
 		List<SysUser> list = this.list(query);
 		if (list != null && !list.isEmpty()) {
-			return list.get(0);
+			SysUser user = list.get(0);
+			user.setDepartment(sysDepartmentService.findById(user.getDeptId()));
+			return user;
 		}
 
 		return null;
@@ -256,6 +261,19 @@ public class SysUserServiceImpl implements SysUserService {
 		List<SysUser> list = this.list(query);
 		if (list != null && !list.isEmpty()) {
 			SysUser user = list.get(0);
+			user.setDepartment(sysDepartmentService.findById(user.getDeptId()));
+			List<SysUserRole> userRoles = sysUserRoleMapper
+					.getSysUserRolesByUserId(user.getId());
+			user.getUserRoles().addAll(userRoles);
+			List<SysDeptRole> deptRoles = sysDeptRoleMapper
+					.getSysDeptRolesByUserId(user.getId());
+			user.getRoles().addAll(deptRoles);
+			List<SysApplication> apps = sysApplicationMapper
+					.getSysApplicationByUserId(user.getId());
+			user.getApps().addAll(apps);
+			List<SysFunction> funs = sysFunctionMapper
+					.getSysFunctionByUserId(user.getId());
+			user.getFunctions().addAll(funs);
 			return user;
 		}
 
@@ -290,11 +308,12 @@ public class SysUserServiceImpl implements SysUserService {
 			pager.setPageSize(pageSize);
 			return pager;
 		}
-		query.setOrderBy(" E.SORT asc");
+		query.setOrderBy(" E.ID asc");
 
 		int start = pageSize * (pageNo - 1);
 		List<SysUser> list = this.getSysUsersByQueryCriteria(start, pageSize,
 				query);
+		this.initUserDepartments(list);
 		pager.setResults(list);
 		pager.setPageSize(pageSize);
 		pager.setCurrentPageNo(pageNo);
@@ -318,11 +337,12 @@ public class SysUserServiceImpl implements SysUserService {
 			pager.setPageSize(pageSize);
 			return pager;
 		}
-		query.setOrderBy(" E.SORT asc");
+		query.setOrderBy(" E.ID asc");
 
 		int start = pageSize * (pageNo - 1);
 		List<SysUser> list = this.getSysUsersByQueryCriteria(start, pageSize,
 				query);
+		this.initUserDepartments(list);
 		pager.setResults(list);
 		pager.setPageSize(pageSize);
 		pager.setCurrentPageNo(pageNo);
@@ -342,9 +362,18 @@ public class SysUserServiceImpl implements SysUserService {
 		return this.list(query);
 	}
 
-	public List<SysUser> getSysUserWithDeptList() {
-		SysUserQuery query = new SysUserQuery();
-		List<SysUser> users = this.list(query);
+	protected Map<Long, SysDepartment> getDepartmentMap() {
+		Map<Long, SysDepartment> deptMap = new HashMap<Long, SysDepartment>();
+		List<SysDepartment> depts = sysDepartmentService.getSysDepartmentList();
+		if (depts != null && !depts.isEmpty()) {
+			for (SysDepartment dept : depts) {
+				deptMap.put(dept.getId(), dept);
+			}
+		}
+		return deptMap;
+	}
+
+	protected void initUserDepartments(List<SysUser> users) {
 		if (users != null && !users.isEmpty()) {
 			List<SysDepartment> depts = sysDepartmentService
 					.getSysDepartmentList();
@@ -357,6 +386,14 @@ public class SysUserServiceImpl implements SysUserService {
 			for (SysUser user : users) {
 				user.setDepartment(deptMap.get(Long.valueOf(user.getDeptId())));
 			}
+		}
+	}
+
+	public List<SysUser> getSysUserWithDeptList() {
+		SysUserQuery query = new SysUserQuery();
+		List<SysUser> users = this.list(query);
+		if (users != null && !users.isEmpty()) {
+			this.initUserDepartments(users);
 		}
 		return users;
 	}
@@ -423,6 +460,7 @@ public class SysUserServiceImpl implements SysUserService {
 		SysUserQuery query = new SysUserQuery();
 		query.account(supplierNo);
 		List<SysUser> users = this.list(query);
+		this.initUserDepartments(users);
 		return users;
 	}
 
@@ -451,14 +489,14 @@ public class SysUserServiceImpl implements SysUserService {
 				if (object instanceof SysUserRole) {
 					SysUserRole r = (SysUserRole) object;
 					if (r.getId() == 0) {
-						r.setId(this.idGenerator.getNextId());
+						r.setId(idGenerator.nextId());
 					}
 					sysUserRoleMapper.insertSysUserRole(r);
 				}
 				if (object instanceof SysDeptRole) {
 					SysDeptRole r = (SysDeptRole) object;
 					if (r.getId() == 0) {
-						r.setId(this.idGenerator.getNextId());
+						r.setId(idGenerator.nextId());
 					}
 					sysDeptRoleMapper.insertSysDeptRole(r);
 				}
@@ -485,6 +523,7 @@ public class SysUserServiceImpl implements SysUserService {
 		int start = pageSize * (pageNo - 1);
 		List<SysUser> list = this.getSysUsersByQueryCriteria(start, pageSize,
 				query);
+		this.initUserDepartments(list);
 		pager.setResults(list);
 		pager.setPageSize(pageSize);
 		pager.setCurrentPageNo(pageNo);
@@ -499,7 +538,8 @@ public class SysUserServiceImpl implements SysUserService {
 		Iterator<SysDeptRole> it = set.iterator();
 		while (it.hasNext()) {
 			SysDeptRole deptRole = (SysDeptRole) it.next();
-			SysRole role = sysRoleMapper.getSysRoleById(deptRole.getSysRoleId());
+			SysRole role = sysRoleMapper
+					.getSysRoleById(deptRole.getSysRoleId());
 			if (role != null && StringUtils.equals(role.getCode(), code)) {
 				// 代判断用户是否拥有此角色
 				flag = true;
