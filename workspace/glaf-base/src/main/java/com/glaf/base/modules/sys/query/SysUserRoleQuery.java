@@ -33,13 +33,8 @@ public class SysUserRoleQuery extends DataQuery {
 	protected Long deptRoleIdLessThanOrEqual;
 	protected List<Long> deptRoleIds;
 	protected Integer authorized;
-	protected Integer authorizedGreaterThanOrEqual;
-	protected Integer authorizedLessThanOrEqual;
-	protected List<Integer> authorizeds;
-	protected Long authorizeFromId;
-	protected Long authorizeFromIdGreaterThanOrEqual;
-	protected Long authorizeFromIdLessThanOrEqual;
-	protected List<Long> authorizeFromIds;
+	protected Long authorizeFrom;
+	protected List<Long> authorizeFroms;
 
 	protected Date availDateStartGreaterThanOrEqual;
 	protected Date availDateStartLessThanOrEqual;
@@ -89,32 +84,12 @@ public class SysUserRoleQuery extends DataQuery {
 		return authorized;
 	}
 
-	public Integer getAuthorizedGreaterThanOrEqual() {
-		return authorizedGreaterThanOrEqual;
+	public Long getAuthorizeFrom() {
+		return authorizeFrom;
 	}
 
-	public Integer getAuthorizedLessThanOrEqual() {
-		return authorizedLessThanOrEqual;
-	}
-
-	public List<Integer> getAuthorizeds() {
-		return authorizeds;
-	}
-
-	public Long getAuthorizeFromId() {
-		return authorizeFromId;
-	}
-
-	public Long getAuthorizeFromIdGreaterThanOrEqual() {
-		return authorizeFromIdGreaterThanOrEqual;
-	}
-
-	public Long getAuthorizeFromIdLessThanOrEqual() {
-		return authorizeFromIdLessThanOrEqual;
-	}
-
-	public List<Long> getAuthorizeFromIds() {
-		return authorizeFromIds;
+	public List<Long> getAuthorizeFroms() {
+		return authorizeFroms;
 	}
 
 	public Date getAvailDateStartGreaterThanOrEqual() {
@@ -183,35 +158,12 @@ public class SysUserRoleQuery extends DataQuery {
 		this.authorized = authorized;
 	}
 
-	public void setAuthorizedGreaterThanOrEqual(
-			Integer authorizedGreaterThanOrEqual) {
-		this.authorizedGreaterThanOrEqual = authorizedGreaterThanOrEqual;
+	public void setAuthorizeFrom(Long authorizeFrom) {
+		this.authorizeFrom = authorizeFrom;
 	}
 
-	public void setAuthorizedLessThanOrEqual(Integer authorizedLessThanOrEqual) {
-		this.authorizedLessThanOrEqual = authorizedLessThanOrEqual;
-	}
-
-	public void setAuthorizeds(List<Integer> authorizeds) {
-		this.authorizeds = authorizeds;
-	}
-
-	public void setAuthorizeFromId(Long authorizeFromId) {
-		this.authorizeFromId = authorizeFromId;
-	}
-
-	public void setAuthorizeFromIdGreaterThanOrEqual(
-			Long authorizeFromIdGreaterThanOrEqual) {
-		this.authorizeFromIdGreaterThanOrEqual = authorizeFromIdGreaterThanOrEqual;
-	}
-
-	public void setAuthorizeFromIdLessThanOrEqual(
-			Long authorizeFromIdLessThanOrEqual) {
-		this.authorizeFromIdLessThanOrEqual = authorizeFromIdLessThanOrEqual;
-	}
-
-	public void setAuthorizeFromIds(List<Long> authorizeFromIds) {
-		this.authorizeFromIds = authorizeFromIds;
+	public void setAuthorizeFroms(List<Long> authorizeFroms) {
+		this.authorizeFroms = authorizeFroms;
 	}
 
 	public void setAvailDateStartGreaterThanOrEqual(
@@ -312,63 +264,11 @@ public class SysUserRoleQuery extends DataQuery {
 		return this;
 	}
 
-	public SysUserRoleQuery authorizedGreaterThanOrEqual(
-			Integer authorizedGreaterThanOrEqual) {
-		if (authorizedGreaterThanOrEqual == null) {
-			throw new RuntimeException("authorized is null");
+	public SysUserRoleQuery authorizeFrom(Long authorizeFrom) {
+		if (authorizeFrom == null) {
+			throw new RuntimeException("authorizeFrom is null");
 		}
-		this.authorizedGreaterThanOrEqual = authorizedGreaterThanOrEqual;
-		return this;
-	}
-
-	public SysUserRoleQuery authorizedLessThanOrEqual(
-			Integer authorizedLessThanOrEqual) {
-		if (authorizedLessThanOrEqual == null) {
-			throw new RuntimeException("authorized is null");
-		}
-		this.authorizedLessThanOrEqual = authorizedLessThanOrEqual;
-		return this;
-	}
-
-	public SysUserRoleQuery authorizeds(List<Integer> authorizeds) {
-		if (authorizeds == null) {
-			throw new RuntimeException("authorizeds is empty ");
-		}
-		this.authorizeds = authorizeds;
-		return this;
-	}
-
-	public SysUserRoleQuery authorizeFromId(Long authorizeFromId) {
-		if (authorizeFromId == null) {
-			throw new RuntimeException("authorizeFromId is null");
-		}
-		this.authorizeFromId = authorizeFromId;
-		return this;
-	}
-
-	public SysUserRoleQuery authorizeFromIdGreaterThanOrEqual(
-			Long authorizeFromIdGreaterThanOrEqual) {
-		if (authorizeFromIdGreaterThanOrEqual == null) {
-			throw new RuntimeException("authorizeFromId is null");
-		}
-		this.authorizeFromIdGreaterThanOrEqual = authorizeFromIdGreaterThanOrEqual;
-		return this;
-	}
-
-	public SysUserRoleQuery authorizeFromIdLessThanOrEqual(
-			Long authorizeFromIdLessThanOrEqual) {
-		if (authorizeFromIdLessThanOrEqual == null) {
-			throw new RuntimeException("authorizeFromId is null");
-		}
-		this.authorizeFromIdLessThanOrEqual = authorizeFromIdLessThanOrEqual;
-		return this;
-	}
-
-	public SysUserRoleQuery authorizeFromIds(List<Long> authorizeFromIds) {
-		if (authorizeFromIds == null) {
-			throw new RuntimeException("authorizeFromIds is empty ");
-		}
-		this.authorizeFromIds = authorizeFromIds;
+		this.authorizeFrom = authorizeFrom;
 		return this;
 	}
 

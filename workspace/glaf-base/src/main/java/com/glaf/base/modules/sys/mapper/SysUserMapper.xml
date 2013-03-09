@@ -25,7 +25,7 @@
 		<result property="fax" column="FAX" jdbcType="VARCHAR" />
 		<result property="accountType" column="ACCOUNTTYPE" jdbcType="INTEGER" />
 		<result property="dumpFlag" column="DUMPFLAG" jdbcType="INTEGER" />
-		<result property="deptId" column="DEPTID" jdbcType="BIGINT" />
+		<result property="deptId" column="DEPTID" jdbcType="INTEGER" />
 		<result property="adminFlag" column="ADMINFLAG" jdbcType="VARCHAR" />
 		<result property="superiorIds" column="SUPERIORIDS" jdbcType="VARCHAR" />
 	</resultMap>
@@ -158,7 +158,7 @@
 				,#{dumpFlag, jdbcType=INTEGER}
 			</if>
 			<if test="deptId != null">
-				,#{deptId, jdbcType=BIGINT}
+				,#{deptId, jdbcType=INTEGER}
 			</if>
 			<if test="adminFlag != null">
 				,#{adminFlag, jdbcType=VARCHAR}
@@ -229,7 +229,7 @@
 				DUMPFLAG = #{dumpFlag, jdbcType=INTEGER},
 			</if>
 			<if test="deptId != null">
-				DEPTID = #{deptId, jdbcType=BIGINT},
+				DEPTID = #{deptId, jdbcType=INTEGER},
 			</if>
 			<if test="adminFlag != null">
 				ADMINFLAG = #{adminFlag, jdbcType=VARCHAR},
@@ -245,7 +245,8 @@
 
 
 	<delete id="deleteSysUserById" parameterType="long">
-		delete from sys_user
+		delete from
+		sys_user
 		where ID = #{id}
 	</delete>
 
@@ -312,7 +313,8 @@
 
 		select distinct E.* from sys_user E
 		inner join sys_user_role R
-		on E.ID = R.USERID
+		on E.ID =
+		R.USERID
 		where E.ACCOUNTTYPE = 0
 
 		<if test=" deptId != null  ">
@@ -346,6 +348,18 @@
 	</select>
 
 
+	<select id="getAuthorizedUsersByUserId" parameterType="long" resultMap="sysUserResultMap">
+
+		select distinct E.* from sys_user E
+		inner join sys_user_role R
+		on E.ID =
+		R.USERID
+		where E.ACCOUNTTYPE = 0
+		and R.AUTHORIZEFROM = #{authorizeFrom}
+
+	</select>
+	
+	
 	<select id="getSysRoleUsers" parameterType="long" resultMap="sysUserResultMap">
 
 		select distinct E.* from sys_user E
@@ -579,14 +593,6 @@
 
 			<if test="deptId != null">
 				and E.DEPTID = #{deptId}
-			</if>
-
-			<if test="deptIdGreaterThanOrEqual != null">
-				and E.DEPTID &gt;= #{deptIdGreaterThanOrEqual}
-			</if>
-
-			<if test="deptIdLessThanOrEqual != null">
-				and E.DEPTID &lt;= #{deptIdLessThanOrEqual}
 			</if>
 
 			<if test="deptIds != null and deptIds.size() &gt; 0">

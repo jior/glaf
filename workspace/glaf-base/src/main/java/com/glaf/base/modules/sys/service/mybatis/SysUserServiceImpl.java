@@ -301,7 +301,7 @@ public class SysUserServiceImpl implements SysUserService {
 		// 计算总数
 		PageResult pager = new PageResult();
 		SysUserQuery query = new SysUserQuery();
-		query.deptId(Long.valueOf(deptId));
+		query.deptId(Integer.valueOf(deptId));
 		query.accountType(0);
 		int count = this.count(query);
 		if (count == 0) {// 结果集为空
@@ -327,7 +327,7 @@ public class SysUserServiceImpl implements SysUserService {
 		// 计算总数
 		PageResult pager = new PageResult();
 		SysUserQuery query = new SysUserQuery();
-		query.deptId(Long.valueOf(deptId));
+		query.deptId(Integer.valueOf(deptId));
 		query.accountType(0);
 		if (fullName != null && fullName.trim().length() > 0) {
 			query.nameLike(fullName);
@@ -353,7 +353,7 @@ public class SysUserServiceImpl implements SysUserService {
 
 	public List<SysUser> getSysUserList(int deptId) {
 		SysUserQuery query = new SysUserQuery();
-		query.deptId(Long.valueOf(deptId));
+		query.deptId(Integer.valueOf(deptId));
 		return this.list(query);
 	}
 
@@ -512,7 +512,7 @@ public class SysUserServiceImpl implements SysUserService {
 		// 计算总数
 		PageResult pager = new PageResult();
 		SysUserQuery query = new SysUserQuery();
-		query.deptId(Long.valueOf(deptId));
+		query.deptId(Integer.valueOf(deptId));
 		int count = this.count(query);
 		if (count == 0) {// 结果集为空
 			pager.setPageSize(pageSize);

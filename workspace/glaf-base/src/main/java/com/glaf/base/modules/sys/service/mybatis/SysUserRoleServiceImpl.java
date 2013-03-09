@@ -208,6 +208,7 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 			bean.setId(this.idGenerator.nextId());
 			bean.setAuthorizeFrom(fromUser.getId());
 			bean.setUser(toUser);
+			bean.setUserId(toUser.getId());
 			if (sysDeptRole != null) {
 				bean.setDeptRole(sysDeptRole);
 				bean.setDeptRoleId(sysDeptRole.getId());
@@ -285,7 +286,7 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 
 		String deptId = (String) filter.get("deptId");
 		if (deptId != null) {
-			query.deptId(Long.parseLong(deptId));
+			query.deptId(Integer.parseInt(deptId));
 		}
 
 		String name = (String) filter.get("name");
@@ -382,7 +383,7 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 	public List getAuthorizedUser(SysUser user) {
 		List list = new ArrayList();
 		Map<Long, SysUser> userMap = new HashMap<Long, SysUser>();
-		List<SysUser> users = sysUserMapper.getAuthorizedUsers(user.getId());
+		List<SysUser> users = sysUserMapper.getAuthorizedUsersByUserId(user.getId());
 		if (users != null && !users.isEmpty()) {
 			for (SysUser u : users) {
 				userMap.put(u.getId(), u);
@@ -392,7 +393,7 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 		this.initUserDepartments(users);
 
 		SysUserRoleQuery query = new SysUserRoleQuery();
-		query.authorizeFromId(user.getId());
+		query.authorizeFrom(user.getId());
 
 		List<SysUserRole> roles = this.list(query);
 		if (roles != null && !roles.isEmpty()) {
@@ -500,7 +501,7 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 	public boolean isAuthorized(long fromUserId, long toUserId) {
 		SysUserRoleQuery query = new SysUserRoleQuery();
 		query.userId(toUserId);
-		query.authorizeFromId(fromUserId);
+		query.authorizeFrom(fromUserId);
 
 		int count = this.count(query);
 		logger.info("count:" + count + ",fromUserId:" + fromUserId

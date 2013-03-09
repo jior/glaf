@@ -297,7 +297,9 @@ public class SysTreeServiceImpl implements SysTreeService {
 			query.setDepartmentStatus(status);
 		}
 		query.setOrderBy(" E.SORT desc");
-		return this.list(query);
+		List<SysTree> list = this.list(query);
+		this.initDepartments(list);
+		return list;
 	}
 
 	/**

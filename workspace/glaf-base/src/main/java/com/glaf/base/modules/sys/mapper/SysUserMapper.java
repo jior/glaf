@@ -42,9 +42,9 @@ public interface SysUserMapper {
 
 	List<SysUser> getAuthorizedUsers(SysUserQuery query);
 
-	List<SysUser> getAuthorizedUsers(long authorizeFrom);
+	List<SysUser> getAuthorizedUsersByUserId(Long authorizeFrom);
 
-	List<SysUser> getSysRoleUsers(long roleId);
+	List<SysUser> getSysRoleUsers(Long roleId);
 
 	void insertSysUser(SysUser model);
 

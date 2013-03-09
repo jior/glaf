@@ -218,24 +218,8 @@
 				and E.AUTHORIZED = #{authorized}
 			</if>
 
-			<if test="authorizedGreaterThanOrEqual != null">
-				and E.AUTHORIZED &gt;= #{authorizedGreaterThanOrEqual}
-			</if>
-
-			<if test="authorizedLessThanOrEqual != null">
-				and E.AUTHORIZED &lt;= #{authorizedLessThanOrEqual}
-			</if>
-
 			<if test="authorizeFrom != null">
 				and E.AUTHORIZEFROM = #{authorizeFrom}
-			</if>
-
-			<if test="authorizeFromGreaterThanOrEqual != null">
-				and E.AUTHORIZEFROM &gt;= #{authorizeFromGreaterThanOrEqual}
-			</if>
-
-			<if test="authorizeFromLessThanOrEqual != null">
-				and E.AUTHORIZEFROM &lt;= #{authorizeFromLessThanOrEqual}
 			</if>
 
 			<if test="authorizeFroms != null and authorizeFroms.size() &gt; 0">
