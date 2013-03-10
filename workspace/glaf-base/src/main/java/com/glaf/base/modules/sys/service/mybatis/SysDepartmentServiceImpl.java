@@ -53,7 +53,11 @@ public class SysDepartmentServiceImpl implements SysDepartmentService {
 
 	protected SysDepartmentMapper sysDepartmentMapper;
 
+	protected SysDeptRoleMapper sysDeptRoleMapper;
+
 	protected SysTreeService sysTreeService;
+
+	protected SysRoleService sysRoleService;
 
 	public SysDepartmentServiceImpl() {
 
@@ -107,8 +111,31 @@ public class SysDepartmentServiceImpl implements SysDepartmentService {
 		if (sysDepartment != null) {
 			SysTree node = sysTreeService.findById(sysDepartment.getNodeId());
 			sysDepartment.setNode(node);
+			SysDeptRoleQuery query = new SysDeptRoleQuery();
+			query.deptId(sysDepartment.getId());
+			List<SysDeptRole> deptRoles = sysDeptRoleMapper
+					.getSysDeptRoles(query);
+			if (deptRoles != null && !deptRoles.isEmpty()) {
+				this.initRoles(deptRoles);
+				sysDepartment.getRoles().addAll(deptRoles);
+			}
 		}
 		return sysDepartment;
+	}
+
+	protected void initRoles(List<SysDeptRole> list) {
+		if (list != null && !list.isEmpty()) {
+			List<SysRole> rows = sysRoleService.getSysRoleList();
+			Map<Long, SysRole> dataMap = new HashMap<Long, SysRole>();
+			if (rows != null && !rows.isEmpty()) {
+				for (SysRole m : rows) {
+					dataMap.put(m.getId(), m);
+				}
+			}
+			for (SysDeptRole bean : list) {
+				bean.setRole(dataMap.get(Long.valueOf(bean.getSysRoleId())));
+			}
+		}
 	}
 
 	@Transactional
@@ -146,6 +173,16 @@ public class SysDepartmentServiceImpl implements SysDepartmentService {
 	@Resource
 	public void setSysTreeService(SysTreeService sysTreeService) {
 		this.sysTreeService = sysTreeService;
+	}
+
+	@Resource
+	public void setSysDeptRoleMapper(SysDeptRoleMapper sysDeptRoleMapper) {
+		this.sysDeptRoleMapper = sysDeptRoleMapper;
+	}
+
+	@Resource
+	public void setSysRoleService(SysRoleService sysRoleService) {
+		this.sysRoleService = sysRoleService;
 	}
 
 	@Transactional

@@ -110,6 +110,9 @@ public class SysDepartment implements Serializable, JSONable {
 	}
 
 	public Set<SysDeptRole> getRoles() {
+		if (roles == null) {
+			roles = new HashSet<SysDeptRole>();
+		}
 		return roles;
 	}
 
