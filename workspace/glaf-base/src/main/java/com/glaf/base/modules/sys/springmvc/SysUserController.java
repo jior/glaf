@@ -309,8 +309,7 @@ public class SysUserController {
 	public ModelAndView prepareModifyPwd(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
 		RequestUtil.setRequestParameterToAttribute(request);
-		long id = ParamUtil.getLongParameter(request, "id", 0);
-		SysUser bean = sysUserService.findById(id);
+		SysUser bean = RequestUtil.getLoginUser(request);
 		request.setAttribute("bean", bean);
 
 		SysTree parent = sysTreeService.getSysTreeByCode(Constants.TREE_DEPT);
@@ -658,6 +657,7 @@ public class SysUserController {
 	public ModelAndView setRole(ModelMap modelMap, HttpServletRequest request,
 			HttpServletResponse response) {
 		RequestUtil.setRequestParameterToAttribute(request);
+		logger.debug(RequestUtil.getParameterMap(request));
 		ViewMessages messages = new ViewMessages();
 		long userId = ParamUtil.getIntParameter(request, "user_id", 0);
 		SysUser user = sysUserService.findById(userId);// 查找用户对象
@@ -668,6 +668,7 @@ public class SysUserController {
 				Set oldRoles = user.getRoles();
 				Set newRoles = new HashSet();
 				for (int i = 0; i < id.length; i++) {
+					logger.debug("id["+i+"]="+id[i]);
 					SysDeptRole role = sysDeptRoleService.findById(id[i]);// 查找角色对象
 					if (role != null) {
 						newRoles.add(role);// 加入到角色列表
@@ -839,7 +840,8 @@ public class SysUserController {
 			HttpServletResponse response) {
 		RequestUtil.setRequestParameterToAttribute(request);
 		long id = ParamUtil.getIntParameter(request, "user_id", 0);
-		SysUser user = sysUserService.findById(id);
+		SysUser bean = sysUserService.findById(id);
+		SysUser user = sysUserService.findByAccountWithAll(bean.getAccount());
 		request.setAttribute("user", user);
 		request.setAttribute("list",
 				sysDeptRoleService.getRoleList(user.getDepartment().getId()));

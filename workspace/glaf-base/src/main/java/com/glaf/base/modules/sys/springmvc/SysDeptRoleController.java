@@ -126,7 +126,9 @@ public class SysDeptRoleController {
 		if (deptRole == null) {// 如果没有找到则创建一个
 			deptRole = new SysDeptRole();
 			deptRole.setDept(sysDepartmentService.findById(deptId));
+			deptRole.setDeptId(deptId);
 			deptRole.setRole(sysRoleService.findById(roleId));
+			deptRole.setSysRoleId(roleId);
 			sysDeptRoleService.create(deptRole);
 		}
 		request.setAttribute("role", deptRole);

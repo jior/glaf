@@ -3,12 +3,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.glaf.core.mapper.TableDataMapper">
- 
-    
+
+
 	<insert id="insertTableData" parameterType="com.glaf.core.base.TableModel">
-		
-    	insert into ${tableName}
-    	
+
+		insert into ${tableName}
+
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<foreach collection="columns" item="column">
 				${column.columnName},
@@ -38,79 +38,96 @@
 				</choose>
 			</foreach>
 		</trim>
-		
+
 	</insert>
-	 
-	
+
+
 	<update id="updateTableDataByPrimaryKey" parameterType="com.glaf.core.base.TableModel">
-		
-    	update ${tableName}
-    	
+
+		update ${tableName}
+
 		<set>
-			<foreach collection="columns" item="column">
-				<choose>
-					<when test="column.javaType == 'Boolean'">
-						${column.columnName} = #{column.value, jdbcType=BOOLEAN},
-					</when>
-					<when test="column.javaType == 'Integer'">
-						${column.columnName} = #{column.value, jdbcType=INTEGER},
-					</when>
-					<when test="column.javaType == 'Long'">
-						${column.columnName} = #{column.value, jdbcType=BIGINT},
-					</when>
-					<when test="column.javaType == 'Double'">
-						${column.columnName} = #{column.value, jdbcType=DOUBLE},
-					</when>
-					<when test="column.javaType == 'Date'">
-						${column.columnName} = #{column.value, jdbcType=TIMESTAMP},
-					</when>
-					<otherwise>
-						${column.columnName} = #{column.value, jdbcType=VARCHAR},
-					</otherwise>
-				</choose>
-			</foreach>
+			<trim prefix="" suffix="" suffixOverrides=",">
+				<foreach collection="columns" item="column">
+					<choose>
+						<when test="column.javaType == 'Boolean'">
+							${column.columnName} = #{column.value,
+							jdbcType=BOOLEAN},
+						</when>
+						<when test="column.javaType == 'Integer'">
+							${column.columnName} = #{column.value,
+							jdbcType=INTEGER},
+						</when>
+						<when test="column.javaType == 'Long'">
+							${column.columnName} = #{column.value,
+							jdbcType=BIGINT},
+						</when>
+						<when test="column.javaType == 'Double'">
+							${column.columnName} = #{column.value,
+							jdbcType=DOUBLE},
+						</when>
+						<when test="column.javaType == 'Date'">
+							${column.columnName} = #{column.value,
+							jdbcType=TIMESTAMP},
+						</when>
+						<otherwise>
+							${column.columnName} = #{column.value,
+							jdbcType=VARCHAR},
+						</otherwise>
+					</choose>
+				</foreach>
+			</trim>
 		</set>
-		
-		where 
-		
+
+		where
+
 		<choose>
 			<when test="idColumn.javaType == 'Integer'">
-				${idColumn.columnName} = #{idColumn.value, jdbcType=INTEGER}
+				${idColumn.columnName} = #{idColumn.value,
+				jdbcType=INTEGER}
 			</when>
 			<when test="idColumn.javaType == 'Long'">
-				${idColumn.columnName} = #{idColumn.value, jdbcType=BIGINT}
-			</when>		
+				${idColumn.columnName} = #{idColumn.value,
+				jdbcType=BIGINT}
+			</when>
 			<otherwise>
-				${idColumn.columnName} = #{idColumn.value, jdbcType=VARCHAR}
+				${idColumn.columnName} = #{idColumn.value,
+				jdbcType=VARCHAR}
 			</otherwise>
 		</choose>
-				
+
 	</update>
-	
-	
+
+
 	<delete id="deleteTableData" parameterType="com.glaf.core.base.TableModel">
-		
-    	delete from ${tableName}
+
+		delete from ${tableName}
 		where 1=1
-		
+
+
 		<choose>
 			<when test="columns.size != 0">
 				<foreach collection="columns" item="column">
 					<choose>
 						<when test="column.javaType == 'Boolean'">
-					       and	${column.columnName} = #{column.value, jdbcType=BOOLEAN},
+							and ${column.columnName} = #{column.value,
+							jdbcType=BOOLEAN}
 						</when>
 						<when test="column.javaType == 'Integer'">
-					       and	${column.columnName} = #{column.value, jdbcType=INTEGER},
+							and ${column.columnName} = #{column.value,
+							jdbcType=INTEGER}
 						</when>
 						<when test="column.javaType == 'Long'">
-					       and	${column.columnName} = #{column.value, jdbcType=BIGINT},
+							and ${column.columnName} = #{column.value,
+							jdbcType=BIGINT}
 						</when>
 						<when test="column.javaType == 'Double'">
-					       and	${column.columnName} = #{column.value, jdbcType=DOUBLE},
+							and ${column.columnName} = #{column.value,
+							jdbcType=DOUBLE}
 						</when>
 						<otherwise>
-					       and	${column.columnName} = #{column.value, jdbcType=VARCHAR},
+							and ${column.columnName} = #{column.value,
+							jdbcType=VARCHAR}
 						</otherwise>
 					</choose>
 				</foreach>
@@ -119,51 +136,53 @@
 				and 1=0
 			</otherwise>
 		</choose>
-				
+
 	</delete>
 
 
-	
 	<select id="getTableDataByPrimaryKey" parameterType="com.glaf.core.base.TableModel"
 		resultType="map">
-		
-		select * from ${tableName} 
-		where 
-		
+
+		select * from ${tableName}
+		where
+
 		<choose>
 			<when test="idColumn.javaType == 'Integer'">
-				${idColumn.columnName} = #{idColumn.value, jdbcType=INTEGER}
+				${idColumn.columnName} = #{idColumn.value,
+				jdbcType=INTEGER}
 			</when>
 			<when test="idColumn.javaType == 'Long'">
-				${idColumn.columnName} = #{idColumn.value, jdbcType=BIGINT}
-			</when>		
+				${idColumn.columnName} = #{idColumn.value,
+				jdbcType=BIGINT}
+			</when>
 			<otherwise>
-				${idColumn.columnName} = #{idColumn.value, jdbcType=VARCHAR}
+				${idColumn.columnName} = #{idColumn.value,
+				jdbcType=VARCHAR}
 			</otherwise>
 		</choose>
 	</select>
-	
-	
+
+
 	<select id="getTablePrimaryKeyMap" parameterType="com.glaf.core.base.TableModel"
 		resultType="map">
-		
-		select ${idColumn.columnName} as id from ${tableName} 
-		 
+
+		select ${idColumn.columnName} as id from ${tableName}
+
 	</select>
-	
-	
+
+
 	<select id="getTableKeyMap" parameterType="com.glaf.core.base.TableModel"
 		resultType="map">
-		
-		select ${idColumn.columnName} as id, aggregationkey_ as aggregationKey 
-		from ${tableName} 
+
+		select ${idColumn.columnName} as id, aggregationkey_ as aggregationKey
+		from ${tableName}
 		where aggregationkey_ in (
 		<foreach item="aggregationkey" index="index" collection="aggregationKeys"
 			open="" separator="," close="">
-			  #{aggregationkey}
+			#{aggregationkey}
 		</foreach>
 		)
-		 
+
 	</select>
- 
+
 </mapper>

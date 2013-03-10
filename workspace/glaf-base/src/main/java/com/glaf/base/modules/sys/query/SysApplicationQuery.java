@@ -27,22 +27,15 @@ public class SysApplicationQuery extends DataQuery {
 	protected String name;
 	protected String nameLike;
 	protected List<String> names;
-	protected String desc;
 	protected String descLike;
-	protected List<String> descs;
-	protected String url;
 	protected String urlLike;
-	protected List<String> urls;
-	protected Integer sort;
 	protected Integer sortGreaterThanOrEqual;
 	protected Integer sortGreaterThan;
 	protected Integer sortLessThanOrEqual;
 	protected Integer sortLessThan;
-	protected List<Integer> sorts;
 	protected Integer showMenu;
 	protected Integer showMenuGreaterThanOrEqual;
 	protected Integer showMenuLessThanOrEqual;
-	protected List<Integer> showMenus;
 	protected Long nodeId;
 	protected Long nodeIdGreaterThanOrEqual;
 	protected Long nodeIdLessThanOrEqual;
@@ -88,10 +81,6 @@ public class SysApplicationQuery extends DataQuery {
 		return names;
 	}
 
-	public String getDesc() {
-		return desc;
-	}
-
 	public String getDescLike() {
 		if (descLike != null && descLike.trim().length() > 0) {
 			if (!descLike.startsWith("%")) {
@@ -102,14 +91,6 @@ public class SysApplicationQuery extends DataQuery {
 			}
 		}
 		return descLike;
-	}
-
-	public List<String> getDescs() {
-		return descs;
-	}
-
-	public String getUrl() {
-		return url;
 	}
 
 	public String getUrlLike() {
@@ -124,24 +105,12 @@ public class SysApplicationQuery extends DataQuery {
 		return urlLike;
 	}
 
-	public List<String> getUrls() {
-		return urls;
-	}
-
-	public Integer getSort() {
-		return sort;
-	}
-
 	public Integer getSortGreaterThanOrEqual() {
 		return sortGreaterThanOrEqual;
 	}
 
 	public Integer getSortLessThanOrEqual() {
 		return sortLessThanOrEqual;
-	}
-
-	public List<Integer> getSorts() {
-		return sorts;
 	}
 
 	public Integer getShowMenu() {
@@ -154,10 +123,6 @@ public class SysApplicationQuery extends DataQuery {
 
 	public Integer getShowMenuLessThanOrEqual() {
 		return showMenuLessThanOrEqual;
-	}
-
-	public List<Integer> getShowMenus() {
-		return showMenus;
 	}
 
 	public Long getNodeId() {
@@ -188,32 +153,12 @@ public class SysApplicationQuery extends DataQuery {
 		this.names = names;
 	}
 
-	public void setDesc(String desc) {
-		this.desc = desc;
-	}
-
 	public void setDescLike(String descLike) {
 		this.descLike = descLike;
 	}
 
-	public void setDescs(List<String> descs) {
-		this.descs = descs;
-	}
-
-	public void setUrl(String url) {
-		this.url = url;
-	}
-
 	public void setUrlLike(String urlLike) {
 		this.urlLike = urlLike;
-	}
-
-	public void setUrls(List<String> urls) {
-		this.urls = urls;
-	}
-
-	public void setSort(Integer sort) {
-		this.sort = sort;
 	}
 
 	public void setSortGreaterThanOrEqual(Integer sortGreaterThanOrEqual) {
@@ -222,10 +167,6 @@ public class SysApplicationQuery extends DataQuery {
 
 	public void setSortLessThanOrEqual(Integer sortLessThanOrEqual) {
 		this.sortLessThanOrEqual = sortLessThanOrEqual;
-	}
-
-	public void setSorts(List<Integer> sorts) {
-		this.sorts = sorts;
 	}
 
 	public void setShowMenu(Integer showMenu) {
@@ -238,10 +179,6 @@ public class SysApplicationQuery extends DataQuery {
 
 	public void setShowMenuLessThanOrEqual(Integer showMenuLessThanOrEqual) {
 		this.showMenuLessThanOrEqual = showMenuLessThanOrEqual;
-	}
-
-	public void setShowMenus(List<Integer> showMenus) {
-		this.showMenus = showMenus;
 	}
 
 	public void setNodeId(Long nodeId) {
@@ -284,14 +221,6 @@ public class SysApplicationQuery extends DataQuery {
 		return this;
 	}
 
-	public SysApplicationQuery desc(String desc) {
-		if (desc == null) {
-			throw new RuntimeException("desc is null");
-		}
-		this.desc = desc;
-		return this;
-	}
-
 	public SysApplicationQuery descLike(String descLike) {
 		if (descLike == null) {
 			throw new RuntimeException("desc is null");
@@ -300,43 +229,11 @@ public class SysApplicationQuery extends DataQuery {
 		return this;
 	}
 
-	public SysApplicationQuery descs(List<String> descs) {
-		if (descs == null) {
-			throw new RuntimeException("descs is empty ");
-		}
-		this.descs = descs;
-		return this;
-	}
-
-	public SysApplicationQuery url(String url) {
-		if (url == null) {
-			throw new RuntimeException("url is null");
-		}
-		this.url = url;
-		return this;
-	}
-
 	public SysApplicationQuery urlLike(String urlLike) {
 		if (urlLike == null) {
 			throw new RuntimeException("url is null");
 		}
 		this.urlLike = urlLike;
-		return this;
-	}
-
-	public SysApplicationQuery urls(List<String> urls) {
-		if (urls == null) {
-			throw new RuntimeException("urls is empty ");
-		}
-		this.urls = urls;
-		return this;
-	}
-
-	public SysApplicationQuery sort(Integer sort) {
-		if (sort == null) {
-			throw new RuntimeException("sort is null");
-		}
-		this.sort = sort;
 		return this;
 	}
 
@@ -354,14 +251,6 @@ public class SysApplicationQuery extends DataQuery {
 			throw new RuntimeException("sort is null");
 		}
 		this.sortLessThanOrEqual = sortLessThanOrEqual;
-		return this;
-	}
-
-	public SysApplicationQuery sorts(List<Integer> sorts) {
-		if (sorts == null) {
-			throw new RuntimeException("sorts is empty ");
-		}
-		this.sorts = sorts;
 		return this;
 	}
 
@@ -388,14 +277,6 @@ public class SysApplicationQuery extends DataQuery {
 			throw new RuntimeException("showMenu is null");
 		}
 		this.showMenuLessThanOrEqual = showMenuLessThanOrEqual;
-		return this;
-	}
-
-	public SysApplicationQuery showMenus(List<Integer> showMenus) {
-		if (showMenus == null) {
-			throw new RuntimeException("showMenus is empty ");
-		}
-		this.showMenus = showMenus;
 		return this;
 	}
 

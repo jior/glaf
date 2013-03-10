@@ -61,11 +61,17 @@ public class SysDeptRoleServiceImpl implements SysDeptRoleService {
 
 	protected SysAccessMapper sysAccessMapper;
 
+	protected SysApplicationMapper sysApplicationMapper;
+
+	protected SysFunctionMapper sysFunctionMapper;
+
 	protected SysApplicationService sysApplicationService;
 
 	protected SysFunctionService sysFunctionService;
 
 	protected SysRoleService sysRoleService;
+
+	protected SysDepartmentService sysDepartmentService;
 
 	public SysDeptRoleServiceImpl() {
 
@@ -114,8 +120,18 @@ public class SysDeptRoleServiceImpl implements SysDeptRoleService {
 		if (id == null) {
 			return null;
 		}
-		SysDeptRole sysDeptRole = sysDeptRoleMapper.getSysDeptRoleById(id);
-		return sysDeptRole;
+		SysDeptRole deptRole = sysDeptRoleMapper.getSysDeptRoleById(id);
+		if (deptRole != null) {
+			deptRole.setDept(sysDepartmentService.findById(deptRole.getDeptId()));
+			deptRole.setRole(sysRoleService.findById(deptRole.getSysRoleId()));
+			deptRole.getApps().addAll(
+					sysApplicationMapper.getSysApplicationByRoleId(deptRole
+							.getSysRoleId()));
+			deptRole.getFunctions().addAll(
+					sysFunctionMapper.getSysFunctionByRoleId(deptRole
+							.getSysRoleId()));
+		}
+		return deptRole;
 	}
 
 	@Transactional
@@ -186,6 +202,23 @@ public class SysDeptRoleServiceImpl implements SysDeptRoleService {
 		this.sysUserMapper = sysUserMapper;
 	}
 
+	@Resource
+	public void setSysDepartmentService(
+			SysDepartmentService sysDepartmentService) {
+		this.sysDepartmentService = sysDepartmentService;
+	}
+
+	@Resource
+	public void setSysApplicationMapper(
+			SysApplicationMapper sysApplicationMapper) {
+		this.sysApplicationMapper = sysApplicationMapper;
+	}
+
+	@Resource
+	public void setSysFunctionMapper(SysFunctionMapper sysFunctionMapper) {
+		this.sysFunctionMapper = sysFunctionMapper;
+	}
+
 	@Transactional
 	public boolean create(SysDeptRole bean) {
 		this.save(bean);
@@ -237,9 +270,34 @@ public class SysDeptRoleServiceImpl implements SysDeptRoleService {
 		query.setOrderBy(" E.ID desc ");
 		List<SysDeptRole> list = this.list(query);
 		if (list != null && !list.isEmpty()) {
-			return list.get(0);
+			SysDeptRole deptRole = list.get(0);
+			deptRole.setDept(sysDepartmentService.findById(deptRole.getDeptId()));
+			deptRole.setRole(sysRoleService.findById(deptRole.getSysRoleId()));
+			deptRole.getApps().addAll(
+					sysApplicationMapper.getSysApplicationByRoleId(deptRole
+							.getSysRoleId()));
+			deptRole.getFunctions().addAll(
+					sysFunctionMapper.getSysFunctionByRoleId(deptRole
+							.getSysRoleId()));
+			return deptRole;
 		}
 		return null;
+	}
+
+	protected void initUserDepartments(List<SysUser> users) {
+		if (users != null && !users.isEmpty()) {
+			List<SysDepartment> depts = sysDepartmentService
+					.getSysDepartmentList();
+			Map<Long, SysDepartment> deptMap = new HashMap<Long, SysDepartment>();
+			if (depts != null && !depts.isEmpty()) {
+				for (SysDepartment dept : depts) {
+					deptMap.put(dept.getId(), dept);
+				}
+			}
+			for (SysUser user : users) {
+				user.setDepartment(deptMap.get(Long.valueOf(user.getDeptId())));
+			}
+		}
 	}
 
 	public Set<SysUser> findRoleUser(long deptId, String roleCode) {
@@ -254,6 +312,7 @@ public class SysDeptRoleServiceImpl implements SysDeptRoleService {
 			List<SysUser> list = sysUserMapper
 					.getSysRoleUsers(deptRole.getId());
 			if (list != null && !list.isEmpty()) {
+				this.initUserDepartments(list);
 				users.addAll(list);
 			}
 		}
@@ -392,10 +451,12 @@ public class SysDeptRoleServiceImpl implements SysDeptRoleService {
 			// 设置角色对应的模块访问权限
 			for (int i = 0; i < appIds.length; i++) {
 				logger.info("app id:" + appIds[i]);
-				SysAccess access = new SysAccess();
-				access.setAppId(appIds[i]);
-				access.setRoleId(role.getId());
-				sysAccessMapper.insertSysAccess(access);
+				if (appIds[i] > 0) {
+					SysAccess access = new SysAccess();
+					access.setAppId(appIds[i]);
+					access.setRoleId(role.getId());
+					sysAccessMapper.insertSysAccess(access);
+				}
 			}
 		}
 
@@ -404,10 +465,12 @@ public class SysDeptRoleServiceImpl implements SysDeptRoleService {
 			sysPermissionMapper.deleteSysPermissionByRoleId(roleId);
 			for (int i = 0; i < funcIds.length; i++) {
 				logger.info("function id:" + funcIds[i]);
-				SysPermission p = new SysPermission();
-				p.setFuncId(funcIds[i]);
-				p.setRoleId(role.getId());
-				sysPermissionMapper.insertSysPermission(p);
+				if (funcIds[i] > 0) {
+					SysPermission p = new SysPermission();
+					p.setFuncId(funcIds[i]);
+					p.setRoleId(role.getId());
+					sysPermissionMapper.insertSysPermission(p);
+				}
 			}
 		}
 		return true;

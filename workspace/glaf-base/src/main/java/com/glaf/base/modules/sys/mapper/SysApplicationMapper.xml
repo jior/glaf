@@ -195,18 +195,10 @@
 				</foreach>
 			</if>
 	        
-			<if test="desc != null and desc != '' ">
-				and E.APPDESC = #{desc}
-			</if>
-
 			<if test="descLike != null and descLike != '' ">
 				and E.APPDESC like #{descLike}
 			</if>
-	        
-			<if test="url != null and url != '' ">
-				and E.URL = #{url}
-			</if>
-
+	       
 			<if test="urlLike != null and urlLike != '' ">
 				and E.URL like #{urlLike}
 			</if>

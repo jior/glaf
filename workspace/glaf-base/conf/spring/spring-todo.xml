@@ -19,27 +19,21 @@
 		</property>
 
 		<property name="sysUserService">
-			<ref bean="sysUserProxy" />
+			<ref bean="sysUserService" />
 		</property>
 
 		<property name="sysRoleService">
-			<ref bean="sysRoleProxy" />
+			<ref bean="sysRoleService" />
 		</property>
 
 		<property name="sysDepartmentService">
-			<ref bean="sysDepartmentProxy" />
+			<ref bean="sysDepartmentService" />
 		</property>
 
 		<property name="workCalendarService">
-			<ref bean="workCalendarProxy" />
+			<ref bean="workCalendarService" />
 		</property>
 
-	</bean>
-
-	<bean id="todoProxy" parent="baseTxService">
-		<property name="target">
-			<ref bean="todoServiceImpl" />
-		</property>
 	</bean>
 
 	<bean id="todoService" parent="baseTxService">
@@ -50,13 +44,13 @@
 
 	<bean id="todoJobBean" class="com.glaf.base.modules.todo.service.TodoJobBean">
 		<property name="todoService">
-			<ref bean="todoProxy" />
+			<ref bean="todoService" />
 		</property>
 		<property name="workCalendarService">
-			<ref bean="workCalendarProxy" />
+			<ref bean="workCalendarService" />
 		</property>
 		<property name="sysUserService">
-			<ref bean="sysUserProxy" />
+			<ref bean="sysUserService" />
 		</property>
 	</bean>
 

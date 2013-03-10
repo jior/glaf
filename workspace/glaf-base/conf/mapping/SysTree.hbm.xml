@@ -12,11 +12,15 @@
 			<generator class="native" />
 		</id>
 
-		<property name="parent" type="long" column="parent" />
+		<property name="parentId" type="long" column="parent" />
 		<property name="name" type="string" column="name" />
 		<property name="desc" type="string" column="nodeDesc" />
 		<property name="sort" type="integer" column="sort" />
 		<property name="code" type="string" column="code" />
+		<property name="icon" type="string" column="icon" />
+		<property name="iconCls" type="string" column="iconCls" />
+		<property name="url" type="string" column="url" />
+		<property name="locked" type="integer" column="locked" />
 
 		<one-to-one name="app" cascade="all" class="SysApplication"
 			property-ref="node" outer-join="auto" />

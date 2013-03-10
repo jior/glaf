@@ -7,11 +7,8 @@
  
 	<insert id="insertSysAccess" parameterType="com.glaf.base.modules.sys.model.SysAccess">
 		
-		insert into sys_access (APPID, ROLEID )
-        values(
-          #{appId, jdbcType=BIGINT},
-          #{roleId, jdbcType=BIGINT}
-        )
+		insert into sys_access ( APPID, ROLEID )
+        values (#{appId, jdbcType=BIGINT}, #{roleId, jdbcType=BIGINT})
 
 	</insert>
 

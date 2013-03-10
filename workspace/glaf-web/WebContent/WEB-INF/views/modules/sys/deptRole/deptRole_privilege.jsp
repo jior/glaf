@@ -6,22 +6,22 @@
 <%@ page import="com.glaf.base.modules.sys.model.*"%>
 <%@ page import="com.glaf.base.modules.utils.*"%>
 <%
-String context = request.getContextPath();
-List list = (List)request.getAttribute("list");
-SysDeptRole role = (SysDeptRole)request.getAttribute("role");
+	String context = request.getContextPath();
+	List list = (List)request.getAttribute("list");
+	SysDeptRole role = (SysDeptRole)request.getAttribute("role");
 
-Set appId=new HashSet();
-Iterator temp = role.getApps().iterator();
-while(temp.hasNext()){
-  SysApplication bean=(SysApplication)temp.next();
-  appId.add(new Long(bean.getId()));
-}
-Set funcId=new HashSet();
-temp = role.getFunctions().iterator();
-while(temp.hasNext()){
-  SysFunction bean=(SysFunction)temp.next();
-  funcId.add(new Long(bean.getId()));
-}
+	Set appId=new HashSet();
+	Iterator temp = role.getApps().iterator();
+	while(temp.hasNext()){
+	  SysApplication bean=(SysApplication)temp.next();
+	  appId.add(new Long(bean.getId()));
+	}
+	Set funcId=new HashSet();
+	temp = role.getFunctions().iterator();
+	while(temp.hasNext()){
+	  SysFunction bean=(SysFunction)temp.next();
+	  funcId.add(new Long(bean.getId()));
+	}
 %>
 
 <html>

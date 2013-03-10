@@ -40,9 +40,8 @@ public class Constants {
 	final public static String SYS_COM = "COM";// 单一供应商的决策评价
 	final public static String SYS_SUP = "SUP";
 	final public static String SYS_TEMPSUP = "TEMPSUP";
-	final public static String SYS_GOOD = "GOOD";// 物品编号
+	final public static String SYS_GOOD = "GOODS";// 物品编号
 
-	// 目录采购
 	final public static String SYS_ORDMC = "ORDMC"; // 目录采购价格联络书
 	final public static String SYS_ORDMO = "ORDMO"; // 目录采购订单
 	final public static String SYS_PAYM = "PAYM"; // 目录采购付款通知书

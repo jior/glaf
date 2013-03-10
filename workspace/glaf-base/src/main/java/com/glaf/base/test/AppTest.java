@@ -22,6 +22,7 @@ import org.junit.Test;
 
 import com.glaf.base.business.ApplicationBean;
 import com.glaf.base.modules.sys.service.SysApplicationService;
+import com.glaf.core.util.FileUtils;
 
 public class AppTest extends AbstractTest {
 	
@@ -35,6 +36,7 @@ public class AppTest extends AbstractTest {
 		System.out.println("sysApplicationService="+sysApplicationService);
 		String scripts = bean.getMenuScripts(3, "root", "/glaf");
 		System.out.println(scripts);
+		FileUtils.save("menu.html", scripts.getBytes());
 	}
 
 }

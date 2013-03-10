@@ -198,12 +198,12 @@ public class SysTreeServiceImpl implements SysTreeService {
 		query.setParentId(Long.valueOf(parentId));
 		query.setOrderBy("  E.SORT desc ");
 		List<SysTree> nodes = this.list(query);
-		if (nodes != null) {
+		if (nodes != null && !nodes.isEmpty()) {
 			this.initDepartments(nodes);
 			this.initApplications(nodes);
 			Iterator<SysTree> iter = nodes.iterator();
 			while (iter.hasNext()) {// 递归遍历
-				SysTree bean = (SysTree) iter.next();
+				SysTree bean = iter.next();
 				bean.setDeep(deep + 1);
 				tree.add(bean);// 加入到数组
 				getSysTree(tree, (int) bean.getId(), bean.getDeep());

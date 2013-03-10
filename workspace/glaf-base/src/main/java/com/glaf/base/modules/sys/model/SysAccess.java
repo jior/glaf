@@ -30,22 +30,6 @@ public class SysAccess implements Serializable, JSONable {
 
 	}
 
-	public Long getAppId() {
-		return this.appId;
-	}
-
-	public Long getRoleId() {
-		return this.roleId;
-	}
-
-	public void setAppId(Long appId) {
-		this.appId = appId;
-	}
-
-	public void setRoleId(Long roleId) {
-		this.roleId = roleId;
-	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -63,6 +47,14 @@ public class SysAccess implements Serializable, JSONable {
 		return true;
 	}
 
+	public Long getAppId() {
+		return this.appId;
+	}
+
+	public Long getRoleId() {
+		return this.roleId;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -73,6 +65,14 @@ public class SysAccess implements Serializable, JSONable {
 
 	public SysAccess jsonToObject(JSONObject jsonObject) {
 		return SysAccessJsonFactory.jsonToObject(jsonObject);
+	}
+
+	public void setAppId(Long appId) {
+		this.appId = appId;
+	}
+
+	public void setRoleId(Long roleId) {
+		this.roleId = roleId;
 	}
 
 	public JSONObject toJsonObject() {

@@ -214,9 +214,26 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 	}
 
 	public List<SysApplication> getAccessAppList(long parentId, SysUser user) {
+		long parentAppId = parentId;
+		SysApplication parentApp = findById(parentId);
+		if (parentApp != null) {
+			parentAppId = parentApp.getNode().getId();
+		}
+
+		logger.info("parent node:" + parentAppId);
+		
 		SysApplicationQuery query = new SysApplicationQuery();
-		query.parentId(parentId);
+		query.parentId(parentAppId);
 		query.setOrderBy(" E.SORT desc ");
+		List<SysApplication> apps = sysApplicationMapper
+				.getSysApplicationByUserId(user.getId());
+		if (apps != null && !apps.isEmpty()) {
+			List<Long> nodeIds = new ArrayList<Long>();
+			for (SysApplication app : apps) {
+				nodeIds.add(app.getNodeId());
+			}
+			query.nodeIds(nodeIds);
+		}
 		return this.list(query);
 	}
 
@@ -227,10 +244,20 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 	}
 
 	public List<SysApplication> getApplicationList(int parentId) {
+		long parentAppId = parentId;
+		SysApplication parentApp = findById(parentId);
+		if (parentApp != null) {
+			parentAppId = parentApp.getNode().getId();
+		}
+
+		logger.info("parent node:" + parentAppId);
+		
 		SysApplicationQuery query = new SysApplicationQuery();
-		query.parentId(Long.valueOf(parentId));
+		query.parentId(Long.valueOf(parentAppId));
 		query.setOrderBy(" E.SORT desc ");
-		return this.list(query);
+		List<SysApplication> apps= this.list(query);
+		logger.debug("----------------apps size:"+apps.size());
+		return apps;
 	}
 
 	public PageResult getApplicationList(int parentId, int pageNo, int pageSize) {
@@ -304,12 +331,12 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 		JSONArray array = new JSONArray();
 		SysUser user = authorizeService.login(userId);
 		if (user != null) {
-			logger.debug("@user=" + user.getName());
-			List<SysApplication> list = getAccessAppList(parent, user);
-			if (list == null || list.isEmpty()) {
-				if (user.isSystemAdmin()) {
-					list = getApplicationList((int) parent);
-				}
+			logger.debug("#user=" + user.getName());
+			List<SysApplication> list = null;
+			if (user.isSystemAdmin()) {
+				list = getApplicationList((int) parent);
+			} else {
+				list = getAccessAppList(parent, user);
 			}
 			if (list != null && list.size() > 0) {
 				Iterator<SysApplication> iter = list.iterator();
@@ -323,14 +350,13 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 					item.put("name", bean.getName());
 					item.put("url", bean.getUrl());
 
-					List<SysApplication> sonNode = getAccessAppList(
-							bean.getId(), user);
-					if (sonNode == null || sonNode.isEmpty()) {
-						if (user.isSystemAdmin()) {
-							sonNode = getApplicationList((int) bean.getId());
-						}
+					List<SysApplication> childrenNodes = null;
+					if (user.isSystemAdmin()) {
+						childrenNodes = getApplicationList((int) bean.getId());
+					} else {
+						childrenNodes = getAccessAppList(bean.getId(), user);
 					}
-					if (sonNode != null && sonNode.size() > 0) {// 有子菜单
+					if (childrenNodes != null && childrenNodes.size() > 0) {// 有子菜单
 						JSONArray children = this.getUserMenu(bean.getId(),
 								userId);
 						item.put("children", children);

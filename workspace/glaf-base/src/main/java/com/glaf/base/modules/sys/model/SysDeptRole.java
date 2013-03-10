@@ -46,6 +46,9 @@ public class SysDeptRole implements Serializable, JSONable {
 	}
 
 	public Set<SysApplication> getApps() {
+		if (apps == null) {
+			apps = new HashSet<SysApplication>();
+		}
 		return apps;
 	}
 
@@ -62,6 +65,9 @@ public class SysDeptRole implements Serializable, JSONable {
 	}
 
 	public Set<SysFunction> getFunctions() {
+		if (functions == null) {
+			functions = new HashSet<SysFunction>();
+		}
 		return functions;
 	}
 

@@ -32,7 +32,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.core.id.*;
+import com.glaf.core.service.ITableDataService;
 import com.glaf.core.util.PageResult;
+import com.glaf.core.base.TableModel;
 import com.glaf.core.dao.*;
 
 import com.glaf.base.modules.sys.mapper.*;
@@ -70,6 +72,8 @@ public class SysUserServiceImpl implements SysUserService {
 	protected SysApplicationMapper sysApplicationMapper;
 
 	protected SysFunctionMapper sysFunctionMapper;
+
+	protected ITableDataService tableDataService;
 
 	public SysUserServiceImpl() {
 
@@ -198,6 +202,11 @@ public class SysUserServiceImpl implements SysUserService {
 		this.sysRoleMapper = sysRoleMapper;
 	}
 
+	@Resource
+	public void setTableDataService(ITableDataService tableDataService) {
+		this.tableDataService = tableDataService;
+	}
+
 	@Transactional
 	public boolean create(SysUser bean) {
 		this.save(bean);
@@ -233,7 +242,9 @@ public class SysUserServiceImpl implements SysUserService {
 
 	public SysUser findById(long id) {
 		SysUser user = this.getSysUser(id);
-		user.setDepartment(sysDepartmentService.findById(user.getDeptId()));
+		if (user != null) {
+			user.setDepartment(sysDepartmentService.findById(user.getDeptId()));
+		}
 		return user;
 	}
 
@@ -467,20 +478,19 @@ public class SysUserServiceImpl implements SysUserService {
 	@Transactional
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public boolean updateRole(SysUser user, Set delRoles, Set newRoles) {
-		boolean flag = false;
-		// 删除要删除的权限
-		if (delRoles != null && !delRoles.isEmpty()) {
-			for (Object object : delRoles) {
-				if (object instanceof SysUserRole) {
-					SysUserRole r = (SysUserRole) object;
-					sysUserRoleMapper.deleteSysUserRoleById(r.getId());
-				}
-				if (object instanceof SysDeptRole) {
-					SysDeptRole r = (SysDeptRole) object;
-					sysDeptRoleMapper.deleteSysDeptRoleById(r.getId());
-				}
+		// 先删除用户之前的权限
+		List<SysUserRole> userRoles = sysUserRoleMapper
+				.getSysUserRolesByUserId(user.getId());
+		if (userRoles != null && !userRoles.isEmpty()) {
+			for (SysUserRole userRole : userRoles) {
+				TableModel table = new TableModel();
+				table.setTableName("sys_user_role");
+				table.addColumn("userId", "Long", user.getId());
+				table.addColumn("roleId", "Long", userRole.getDeptRoleId());
+				tableDataService.deleteTableData(table);
 			}
 		}
+
 		// 增加新权限
 		if (newRoles != null && !newRoles.isEmpty()) {
 			Iterator<Object> iter = newRoles.iterator();
@@ -488,23 +498,21 @@ public class SysUserServiceImpl implements SysUserService {
 				Object object = iter.next();
 				if (object instanceof SysUserRole) {
 					SysUserRole r = (SysUserRole) object;
-					if (r.getId() == 0) {
-						r.setId(idGenerator.nextId());
-					}
+					r.setId(idGenerator.nextId());
 					sysUserRoleMapper.insertSysUserRole(r);
 				}
 				if (object instanceof SysDeptRole) {
-					SysDeptRole r = (SysDeptRole) object;
-					if (r.getId() == 0) {
-						r.setId(idGenerator.nextId());
-					}
-					sysDeptRoleMapper.insertSysDeptRole(r);
+					SysDeptRole deptRole = (SysDeptRole) object;
+					SysUserRole userRole = new SysUserRole();
+					userRole.setId(idGenerator.nextId());
+					userRole.setUserId(user.getId());
+					userRole.setDeptRoleId(deptRole.getId());
+					sysUserRoleMapper.insertSysUserRole(userRole);
 				}
 			}
 		}
 
-		flag = update(user);
-		return flag;
+		return true;
 	}
 
 	public PageResult getSysUserList(int deptId, String userName,

@@ -18,6 +18,8 @@
 
 package com.glaf.base.business;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -25,7 +27,7 @@ import com.glaf.core.context.ContextFactory;
 import com.glaf.base.modules.sys.service.SysApplicationService;
 
 public class ApplicationBean {
-
+	private final Log logger = LogFactory.getLog(ApplicationBean.class);
 	protected SysApplicationService sysApplicationService;
 
 	public ApplicationBean() {
@@ -43,6 +45,7 @@ public class ApplicationBean {
 	public String getMenuScripts(long parent, String userId, String contextPath) {
 		JSONArray jsonArray = getSysApplicationService().getUserMenu(parent,
 				userId);
+		//logger.debug(jsonArray.toString('\n'));
 		String sMenu = "";
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject rootJson = jsonArray.getJSONObject(i);
