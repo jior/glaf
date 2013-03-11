@@ -129,6 +129,10 @@ public class SysTreeController {
 		RequestUtil.setRequestParameterToAttribute(request);
 		long id = ParamUtil.getIntParameter(request, "id", 0);
 		SysTree bean = sysTreeService.findById(id);
+		if(bean != null && bean.getParentId()>0){
+			SysTree parent = sysTreeService.findById(bean.getParentId());
+			bean.setParent(parent);
+		}
 		request.setAttribute("bean", bean);
 		List<SysTree> list = new ArrayList<SysTree>();
 		sysTreeService.getSysTree(list, 0, 0);

@@ -58,7 +58,7 @@ function modify(form){
 	}     
   }
   var url="department.do?method=prepareModify&id="+id;
-  var width=630;
+  var width=720;
   var height=480;
   var scroll="no";
   openWindow(url, width, height, scroll);
@@ -76,7 +76,7 @@ function users(form){
 	}     
   }
   var url="user.do?method=showList&parent="+id;
-  var width=780;
+  var width=850;
   var height=400;
   var scroll="no";
   openWindow(url, width, height, scroll);

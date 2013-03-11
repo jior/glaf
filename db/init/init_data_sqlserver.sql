@@ -48,6 +48,14 @@ insert into sys_tree (id, parent, name, nodeDesc, sort, code) values (48, 42, 'µ
 insert into sys_tree (id, parent, name, nodeDesc, sort, code) values (49, 42, 'ÈÎÎñ¹ÜÀí', 'ÈÎÎñ¹ÜÀí', 49, '');
 insert into sys_tree (id, parent, name, nodeDesc, sort, code) values (50, 42, '²ÎÊıÉèÖÃ', '²ÎÊıÉèÖÃ', 50, '');
  
+insert into sys_tree (id, parent, name, nodeDesc, sort, code) values (53, 3, 'ActivitiÁ÷³Ì¹ÜÀí', 'ActivitiÁ÷³Ì¹ÜÀí', 53, '');
+insert into sys_tree (id, parent, name, nodeDesc, sort, code) values (54, 53, '·¢²¼Á÷³Ì°ü', '·¢²¼Á÷³Ì°ü', 54, '');
+insert into sys_tree (id, parent, name, nodeDesc, sort, code) values (55, 53, 'Á÷³Ì¶¨Òå', 'Á÷³Ì¶¨Òå', 55, '');
+insert into sys_tree (id, parent, name, nodeDesc, sort, code) values (56, 53, 'Á÷³ÌÊµÀı', 'Á÷³ÌÊµÀı', 56, '');
+insert into sys_tree (id, parent, name, nodeDesc, sort, code) values (57, 53, 'ÀúÊ·Á÷³ÌÊµÀı', 'ÀúÊ·Á÷³ÌÊµÀı', 57, '');
+insert into sys_tree (id, parent, name, nodeDesc, sort, code) values (58, 53, 'ÈÎÎñÁĞ±í', 'ÈÎÎñÁĞ±í', 58, '');
+insert into sys_tree (id, parent, name, nodeDesc, sort, code) values (59, 53, 'Á÷³ÌÑİÊ¾', 'Á÷³ÌÑİÊ¾', 59, '');
+
 insert into sys_tree (id, parent, name, nodedesc, sort, code) values (190, 163, 'ĞŞ¸ÄÃÜÂë', 'ĞŞ¸ÄÃÜÂë', 188, '');
 insert into sys_tree (id, parent, name, nodedesc, sort, code) values (231, 229, '»ù´¡Êı¾İ', '»ù´¡Êı¾İ', 230, '');
 insert into sys_tree (id, parent, name, nodedesc, sort, code) values (235, 231, 'ĞŞ¸ÄÃÜÂë', 'ĞŞ¸ÄÃÜÂë', 235, '');
@@ -118,7 +126,13 @@ insert into sys_application (id, name, appDesc, url, sort, showMenu, nodeId) val
 insert into sys_application (id, name, appDesc, url, sort, showMenu, nodeId) values (49, 'ÈÎÎñ¹ÜÀí', 'ÈÎÎñ¹ÜÀí', '/mx/dts/task', 49, 1, 49);
 insert into sys_application (id, name, appDesc, url, sort, showMenu, nodeId) values (50, '²ÎÊıÉèÖÃ', '²ÎÊıÉèÖÃ', '/mx/system/property/edit?category=RPT', 50, 1, 50);
 
-
+insert into sys_application (id, name, appDesc, url, sort, showMenu, nodeId) values (53, 'ActivitiÁ÷³Ì¹ÜÀí', 'ActivitiÁ÷³Ì¹ÜÀí', '', 53, 1, 53);
+insert into sys_application (id, name, appDesc, url, sort, showMenu, nodeId) values (54, '·¢²¼Á÷³Ì°ü', '', '/mx/activiti/deploy', 54, 1, 54);
+insert into sys_application (id, name, appDesc, url, sort, showMenu, nodeId) values (55, 'Á÷³Ì¶¨Òå', 'Á÷³Ì¶¨Òå', '/mx/activiti/process/processDefinitions', 55, 1, 55);
+insert into sys_application (id, name, appDesc, url, sort, showMenu, nodeId) values (56, 'Á÷³ÌÊµÀı', 'Á÷³ÌÊµÀı', '/mx/activiti/process/processInstances', 56, 1, 56);
+insert into sys_application (id, name, appDesc, url, sort, showMenu, nodeId) values (57, 'ÀúÊ·Á÷³ÌÊµÀı', 'ÀúÊ·Á÷³ÌÊµÀı', '/mx/activiti/history/historyProcessInstances', 57, 1, 57);
+insert into sys_application (id, name, appDesc, url, sort, showMenu, nodeId) values (58, 'ÈÎÎñÁĞ±í', 'ÈÎÎñÁĞ±í', '/mx/activiti/task/taskList', 58, 1, 58);
+insert into sys_application (id, name, appDesc, url, sort, showMenu, nodeId) values (59, 'Á÷³ÌÑİÊ¾', 'Á÷³ÌÑİÊ¾', '/workflow/activiti/index.jsp', 59, 1, 59);
 
 SET IDENTITY_INSERT sys_application OFF;
 go;

@@ -1,14 +1,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
-
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="html"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.glaf.base.modules.sys.*"%>
 <%@ page import="com.glaf.base.modules.sys.model.*"%>
 <%@ page import="com.glaf.base.utils.*"%>
 <%
-String context = request.getContextPath();
-SysTree bean=(SysTree)request.getAttribute("bean");
-List  list = (List)request.getAttribute("parent");
+	String context = request.getContextPath();
+	SysTree bean=(SysTree)request.getAttribute("bean");
+	List list = (List)request.getAttribute("parent");
 %>
 <html>
 <head>
@@ -54,26 +53,26 @@ function setValue(obj){
         <td class="input-box">上级节点</td>
         <td><select name="parent" onChange="javascript:setValue(this);">
           <%
-if(list!=null){
-  Iterator iter=list.iterator();   
-  while(iter.hasNext()){
-    SysTree bean2=(SysTree)iter.next();
-%>
+			if(list!=null){
+			  Iterator iter=list.iterator();   
+			  while(iter.hasNext()){
+				SysTree bean2=(SysTree)iter.next();
+			%>
           <option value="<%=bean2.getId()%>">
           <%
-for(int i=1;i<bean2.getDeep();i++){
-  out.print("&nbsp;&nbsp;");
-}
-out.print(bean2.getName());
-%>
+			for(int i=1;i<bean2.getDeep();i++){
+			  out.print("&nbsp;&nbsp;");
+			}
+			out.print(bean2.getName());
+			%>
           </option>
           <%    
-  }
-}
-%>
+           }
+         }
+        %>
         </select>
-		<script language="JavaScript">
-		document.all.parent.value="<%=bean.getParent()%>";	
+		<script language="javascript">
+		document.all.parent.value="<%=bean.getParentId()%>";	
 	    </script>
 		</td>
       </tr>
