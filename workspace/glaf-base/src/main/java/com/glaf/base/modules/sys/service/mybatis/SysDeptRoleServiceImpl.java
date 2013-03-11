@@ -339,19 +339,14 @@ public class SysDeptRoleServiceImpl implements SysDeptRoleService {
 
 	public Set<SysUser> findRoleUser(long deptId, String roleCode) {
 		Set<SysUser> users = new HashSet<SysUser>();
-		SysDeptRole deptRole = null;
+		SysDeptRoleQuery query = new SysDeptRoleQuery();
+		query.deptId(deptId);
+		query.setRoleCode(roleCode);
+		List<SysUser> list = sysUserMapper.getSysDeptRoleUsers(query);
 
-		SysRole role = sysRoleService.findByCode(roleCode);
-		if (role != null) {
-			deptRole = find(deptId, role.getId());
-		}
-		if (deptRole != null) {
-			List<SysUser> list = sysUserMapper
-					.getSysRoleUsers(deptRole.getId());
-			if (list != null && !list.isEmpty()) {
-				this.initUserDepartments(list);
-				users.addAll(list);
-			}
+		if (list != null && !list.isEmpty()) {
+			this.initUserDepartments(list);
+			users.addAll(list);
 		}
 
 		return users;

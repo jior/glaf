@@ -1,5 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
-
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="html"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.glaf.base.modules.*"%>
@@ -64,7 +63,9 @@ while(navIter.hasNext()){
 <div style="width:100%; height:250px;overflow-x:auto; overflow-y:auto;">
 <table width="95%" border="0" align="center" cellspacing="1" cellpadding="0" class="list-box">
   <tr class="list-title" style="position:relative; top:expression(this.offsetParent.scrollTop-2);"> 
-    <td width="5%" align="center"> <input type="checkbox" name="chkall" value="checkbox" onClick="checkAll(this.form, this);checkOperation(this.form)">    </td>
+    <td width="5%" align="center">
+	<input type="checkbox" name="chkall" value="checkbox" onClick="checkAll(this.form, this);checkOperation(this.form)">    
+	</td>
     <td width="5%" align="center">序号</td>
     <td width="35%" align="center">用户名称</td>
     <td width="40%" align="center">所在部门</td>

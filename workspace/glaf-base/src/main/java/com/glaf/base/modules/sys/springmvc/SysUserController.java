@@ -47,6 +47,7 @@ import com.glaf.base.modules.sys.service.SysDeptRoleService;
 import com.glaf.base.modules.sys.service.SysRoleService;
 import com.glaf.base.modules.sys.service.SysTreeService;
 import com.glaf.base.modules.sys.service.SysUserService;
+import com.glaf.core.base.TableModel;
 import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
 import com.glaf.core.res.ViewMessages;
@@ -54,6 +55,7 @@ import com.glaf.core.util.PageResult;
 import com.glaf.base.utils.ParamUtil;
 import com.glaf.base.utils.RequestUtil;
 import com.glaf.core.security.DigestUtil;
+import com.glaf.core.service.ITableDataService;
 
 @Controller("/sys/user")
 @RequestMapping("/sys/user.do")
@@ -62,19 +64,22 @@ public class SysUserController {
 			.getLog(SysUserController.class);
 
 	@javax.annotation.Resource
-	private SysUserService sysUserService;
+	protected SysDepartmentService sysDepartmentService;
 
 	@javax.annotation.Resource
-	private SysDeptRoleService sysDeptRoleService;
+	protected SysDeptRoleService sysDeptRoleService;
 
 	@javax.annotation.Resource
-	private SysTreeService sysTreeService;
+	protected SysRoleService sysRoleService;
 
 	@javax.annotation.Resource
-	private SysDepartmentService sysDepartmentService;
+	protected SysTreeService sysTreeService;
 
 	@javax.annotation.Resource
-	private SysRoleService sysRoleService;
+	protected SysUserService sysUserService;
+
+	@javax.annotation.Resource
+	protected ITableDataService tableDataService;
 
 	/**
 	 * 增加角色用户
@@ -175,19 +180,30 @@ public class SysUserController {
 		int roleId = ParamUtil.getIntParameter(request, "roleId", 0);
 		SysDeptRole deptRole = sysDeptRoleService.find(deptId, roleId);
 		Set<SysUser> users = deptRole.getUsers();
-
-		long[] userIds = ParamUtil.getLongParameterValues(request, "id");
-		for (int i = 0; i < userIds.length; i++) {
-			SysUser user = sysUserService.findById(userIds[i]);
-			if (user != null) {
-				logger.info(user.getName());
-				users.remove(user);
+		boolean sucess = false;
+		try {
+			long[] userIds = ParamUtil.getLongParameterValues(request, "id");
+			for (int i = 0; i < userIds.length; i++) {
+				SysUser user = sysUserService.findById(userIds[i]);
+				if (user != null) {
+					logger.info(user.getName());
+					users.remove(user);
+					TableModel table = new TableModel();
+					table.setTableName("sys_user_role");
+					table.addColumn("AUTHORIZED", "Integer", 0);
+					table.addColumn("ROLEID", "Long", deptRole.getId());
+					table.addColumn("USERID", "Long", user.getId());
+					tableDataService.deleteTableData(table);
+				}
 			}
+			sucess = true;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			sucess = false;
 		}
-		deptRole.setUsers(users);
 
 		ViewMessages messages = new ViewMessages();
-		if (sysDeptRoleService.update(deptRole)) {
+		if (sucess) {
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"user.delete_success"));
 		} else {// 保存失败
@@ -669,7 +685,7 @@ public class SysUserController {
 				Set oldRoles = user.getRoles();
 				Set newRoles = new HashSet();
 				for (int i = 0; i < id.length; i++) {
-					logger.debug("id["+i+"]="+id[i]);
+					logger.debug("id[" + i + "]=" + id[i]);
 					SysDeptRole role = sysDeptRoleService.findById(id[i]);// 查找角色对象
 					if (role != null) {
 						newRoles.add(role);// 加入到角色列表
@@ -717,6 +733,10 @@ public class SysUserController {
 	public void setSysUserService(SysUserService sysUserService) {
 		this.sysUserService = sysUserService;
 		logger.info("setSysUserService");
+	}
+
+	public void setTableDataService(ITableDataService tableDataService) {
+		this.tableDataService = tableDataService;
 	}
 
 	/**
