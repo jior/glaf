@@ -14,7 +14,6 @@
 	<classpathentry kind="lib" path="/glaf-core/lib/aspectjweaver.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/bsf-2.4.0.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/bsh-2.0b4.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/c3p0-0.9.0.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/cglib-2.2.2.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/commons-beanutils-1.8.3.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/commons-betwixt-0.8.jar"/>

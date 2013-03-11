@@ -99,7 +99,6 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-webmvc.RELEASE.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/aspectjrt.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/aspectjweaver.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/c3p0-0.9.1.2.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-beanutils-1.8.3.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-cli-1.2.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-codec-1.7.jar"/>
