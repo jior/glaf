@@ -52,8 +52,8 @@ public class AuthorizeInterceptor implements MethodBeforeAdvice {
 
 		String objectName = target.getClass().getName();
 		String methodName = method.getName();
-		logger.debug("object:" + objectName);
-		logger.debug("method:" + methodName);
+		//logger.debug("object:" + objectName);
+		//logger.debug("method:" + methodName);
 		if (StringUtils.startsWith(methodName,
 				"org.springframework.web.servlet.view")) {
 			return;
@@ -62,7 +62,7 @@ public class AuthorizeInterceptor implements MethodBeforeAdvice {
 		String account = "";
 
 		for (int i = 0; i < args.length; i++) {
-			logger.debug("args:" + args[i]);
+			//logger.debug("args:" + args[i]);
 			if (args[i] instanceof HttpServletRequest) {
 				HttpServletRequest request = (HttpServletRequest) args[i];
 				if (request != null && request.getParameter("method") != null) {
@@ -72,7 +72,7 @@ public class AuthorizeInterceptor implements MethodBeforeAdvice {
 					if (user != null) {
 						account = user.getAccount();
 					}
-					logger.debug("IP:" + ip + ", Account:" + account);
+					//logger.debug("IP:" + ip + ", Account:" + account);
 				}
 			}
 		}
@@ -83,11 +83,11 @@ public class AuthorizeInterceptor implements MethodBeforeAdvice {
 		if (findSysFunction(methodName)) {
 			// 在用户功能列表中，通过
 			if (findUserFunction(account, methodName)) {
-				logger.debug("method is in user functions");
+				//logger.debug("method is in user functions");
 				authorized = true;
 			}
 		} else {// 拦截的功能不在系统功能列表中，通过
-			logger.debug("method isn't in sys functions");
+			//logger.debug("method isn't in sys functions");
 			authorized = true;
 		}
 
@@ -140,7 +140,7 @@ public class AuthorizeInterceptor implements MethodBeforeAdvice {
 		try {
 			// 系统功能列表，在初始化servlet中加载
 			Iterator iter = ((List) ContextUtil.get("function")).iterator();
-			logger.debug("function:" + iter);
+			//logger.debug("function:" + iter);
 			while (iter.hasNext()) {
 				BaseDataInfo bdi = (BaseDataInfo) iter.next();
 				// logger.debug("sys function:" + bdi.getCode());
@@ -166,12 +166,12 @@ public class AuthorizeInterceptor implements MethodBeforeAdvice {
 		boolean ret = false;
 		// 用户对象，在登陆后加载
 		SysUser user = (SysUser) ContextUtil.get(account);
-		logger.debug("user:" + user);
-		logger.debug("user function size:" + user.getFunctions().size());
-		Iterator iter = user.getFunctions().iterator();// 用户功能列表
+		//logger.debug("user:" + user);
+		//logger.debug("user function size:" + user.getFunctions().size());
+		Iterator<SysFunction> iter = user.getFunctions().iterator();// 用户功能列表
 		while (iter.hasNext()) {
 			SysFunction function = (SysFunction) iter.next();
-			logger.debug("function method:" + function.getFuncMethod());
+			//logger.debug("function method:" + function.getFuncMethod());
 			if (function.getFuncMethod().equals(methodName)) {
 				ret = true;
 				break;

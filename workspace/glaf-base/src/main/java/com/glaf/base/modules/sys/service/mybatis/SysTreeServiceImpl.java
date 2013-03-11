@@ -240,7 +240,7 @@ public class SysTreeServiceImpl implements SysTreeService {
 			Map<Long, SysDepartment> deptMap = new HashMap<Long, SysDepartment>();
 			if (depts != null && !depts.isEmpty()) {
 				for (SysDepartment dept : depts) {
-					deptMap.put(dept.getId(), dept);
+					deptMap.put(dept.getNodeId(), dept);
 				}
 			}
 			for (SysTree bean : list) {
@@ -252,13 +252,12 @@ public class SysTreeServiceImpl implements SysTreeService {
 	protected void initApplications(List<SysTree> list) {
 		if (list != null && !list.isEmpty()) {
 			SysApplicationQuery query = new SysApplicationQuery();
-			query.locked(0);
 			List<SysApplication> apps = sysApplicationMapper
 					.getSysApplications(query);
 			Map<Long, SysApplication> appMap = new HashMap<Long, SysApplication>();
 			if (apps != null && !apps.isEmpty()) {
 				for (SysApplication m : apps) {
-					appMap.put(m.getId(), m);
+					appMap.put(m.getNodeId(), m);
 				}
 			}
 			for (SysTree bean : list) {

@@ -26,25 +26,27 @@ import com.glaf.base.modules.sys.query.*;
 @Component
 public interface SysUserMapper {
 
-	void deleteSysUsers(SysUserQuery query);
-
 	void deleteSysUserById(Long id);
 
-	SysUser getSysUserById(Long id);
-
-	SysUser getSysUserByAccount(String account);
-
-	int getSysUserCount(SysUserQuery query);
-
-	int getCountAuthorizedUsers(SysUserQuery query);
-
-	List<SysUser> getSysUsers(SysUserQuery query);
+	void deleteSysUsers(SysUserQuery query);
 
 	List<SysUser> getAuthorizedUsers(SysUserQuery query);
 
 	List<SysUser> getAuthorizedUsersByUserId(Long authorizeFrom);
 
+	int getCountAuthorizedUsers(SysUserQuery query);
+
+	List<SysUser> getSysDeptRoleUsers(SysDeptRoleQuery query);
+
 	List<SysUser> getSysRoleUsers(Long roleId);
+
+	SysUser getSysUserByAccount(String account);
+
+	SysUser getSysUserById(Long id);
+
+	int getSysUserCount(SysUserQuery query);
+	
+	List<SysUser> getSysUsers(SysUserQuery query);
 
 	void insertSysUser(SysUser model);
 

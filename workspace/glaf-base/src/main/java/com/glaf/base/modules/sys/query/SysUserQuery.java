@@ -75,7 +75,6 @@ public class SysUserQuery extends DataQuery {
 	protected Integer dumpFlagLessThanOrEqual;
 	protected List<Integer> dumpFlags;
 	protected Integer deptId;
-
 	protected List<Integer> deptIds;
 	protected String adminFlag;
 	protected List<String> adminFlags;

@@ -132,10 +132,14 @@ public class SysDeptRoleController {
 			sysDeptRoleService.create(deptRole);
 		}
 		request.setAttribute("role", deptRole);
+		logger.debug("#########################################");
+		logger.debug("apps:"+deptRole.getApps());
 		SysTree parent = sysTreeService.getSysTreeByCode(Constants.TREE_APP);
 		List list = new ArrayList();
 		sysTreeService.getSysTree(list, (int) parent.getId(), 0);
 		request.setAttribute("list", list);
+		logger.debug("------------list size:"+list.size());
+		
 		return new ModelAndView("/modules/sys/deptRole/deptRole_privilege",
 				modelMap);
 	}

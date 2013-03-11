@@ -10,11 +10,11 @@
 	List list = (List)request.getAttribute("list");
 	SysDeptRole role = (SysDeptRole)request.getAttribute("role");
 
-	Set appId=new HashSet();
+	Set appIds=new HashSet();
 	Iterator temp = role.getApps().iterator();
 	while(temp.hasNext()){
 	  SysApplication bean=(SysApplication)temp.next();
-	  appId.add(new Long(bean.getId()));
+	  appIds.add(new Long(bean.getId()));
 	}
 	Set funcId=new HashSet();
 	temp = role.getFunctions().iterator();
@@ -81,7 +81,7 @@ function unSelApp(id){
 	eval("document.all.operall_"+ id +".checked=false");
   }
 }
-</SCRIPT>
+</script>
 </head>
 
 <body>
@@ -125,7 +125,7 @@ out.print(bean.getName());
       <input type="hidden" name="appId" value="<%=id%>">
     </td>
     <td class="list">
-	  <input type="checkbox" name="access<%=id%>" value="1" <%=appId.contains(new Long(id))?"checked":""%>>访问权限<br>
+	  <input type="checkbox" name="access<%=id%>" value="1" <%=appIds.contains(new Long(id))?"checked":""%>>访问权限<br>
       <%
 			Iterator functions = bean.getApp().getFunctions().iterator();
 			int j=0;

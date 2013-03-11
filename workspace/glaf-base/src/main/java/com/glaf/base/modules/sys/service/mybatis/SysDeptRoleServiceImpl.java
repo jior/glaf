@@ -30,7 +30,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.core.id.*;
+import com.glaf.core.service.ITableDataService;
 import com.glaf.core.util.PageResult;
+import com.glaf.core.base.TableModel;
 import com.glaf.core.dao.*;
 
 import com.glaf.base.modules.sys.SysConstants;
@@ -71,7 +73,11 @@ public class SysDeptRoleServiceImpl implements SysDeptRoleService {
 
 	protected SysRoleService sysRoleService;
 
+	protected SysUserService sysUserService;
+
 	protected SysDepartmentService sysDepartmentService;
+
+	protected ITableDataService tableDataService;
 
 	public SysDeptRoleServiceImpl() {
 
@@ -126,10 +132,9 @@ public class SysDeptRoleServiceImpl implements SysDeptRoleService {
 			deptRole.setRole(sysRoleService.findById(deptRole.getSysRoleId()));
 			deptRole.getApps().addAll(
 					sysApplicationMapper.getSysApplicationByRoleId(deptRole
-							.getSysRoleId()));
+							.getId()));
 			deptRole.getFunctions().addAll(
-					sysFunctionMapper.getSysFunctionByRoleId(deptRole
-							.getSysRoleId()));
+					sysFunctionMapper.getSysFunctionByRoleId(deptRole.getId()));
 		}
 		return deptRole;
 	}
@@ -219,6 +224,16 @@ public class SysDeptRoleServiceImpl implements SysDeptRoleService {
 		this.sysFunctionMapper = sysFunctionMapper;
 	}
 
+	@Resource
+	public void setSysUserService(SysUserService sysUserService) {
+		this.sysUserService = sysUserService;
+	}
+
+	@Resource
+	public void setTableDataService(ITableDataService tableDataService) {
+		this.tableDataService = tableDataService;
+	}
+
 	@Transactional
 	public boolean create(SysDeptRole bean) {
 		this.save(bean);
@@ -228,6 +243,24 @@ public class SysDeptRoleServiceImpl implements SysDeptRoleService {
 	@Transactional
 	public boolean update(SysDeptRole bean) {
 		this.save(bean);
+		TableModel table = new TableModel();
+		table.setTableName("sys_user_role");
+		table.addColumn("AUTHORIZED", "Integer", 0);
+		table.addColumn("ROLEID", "Long", bean.getId());
+		tableDataService.deleteTableData(table);
+
+		Set<SysUser> users = bean.getUsers();
+		if (users != null && !users.isEmpty()) {
+			for (SysUser user : users) {
+				SysUserRole userRole = new SysUserRole();
+				userRole.setId(idGenerator.nextId());
+				userRole.setUserId(user.getId());
+				userRole.setDeptRoleId(bean.getId());
+				userRole.setDeptRole(bean);
+				sysUserRoleMapper.insertSysUserRole(userRole);
+			}
+		}
+
 		return true;
 	}
 
@@ -275,10 +308,14 @@ public class SysDeptRoleServiceImpl implements SysDeptRoleService {
 			deptRole.setRole(sysRoleService.findById(deptRole.getSysRoleId()));
 			deptRole.getApps().addAll(
 					sysApplicationMapper.getSysApplicationByRoleId(deptRole
-							.getSysRoleId()));
+							.getId()));
 			deptRole.getFunctions().addAll(
-					sysFunctionMapper.getSysFunctionByRoleId(deptRole
-							.getSysRoleId()));
+					sysFunctionMapper.getSysFunctionByRoleId(deptRole.getId()));
+			SysDeptRoleQuery q = new SysDeptRoleQuery();
+			q.setDeptId(deptId);
+			q.setSysRoleId(roleId);
+			List<SysUser> users = sysUserMapper.getSysDeptRoleUsers(q);
+			deptRole.getUsers().addAll(users);
 			return deptRole;
 		}
 		return null;

@@ -348,18 +348,21 @@
 	</select>
 
 
-	<select id="getAuthorizedUsersByUserId" parameterType="long" resultMap="sysUserResultMap">
+	<select id="getAuthorizedUsersByUserId" parameterType="long"
+		resultMap="sysUserResultMap">
 
 		select distinct E.* from sys_user E
-		inner join sys_user_role R
+		inner join sys_user_role
+		R
 		on E.ID =
 		R.USERID
 		where E.ACCOUNTTYPE = 0
-		and R.AUTHORIZEFROM = #{authorizeFrom}
+		and R.AUTHORIZEFROM =
+		#{authorizeFrom}
 
 	</select>
-	
-	
+
+
 	<select id="getSysRoleUsers" parameterType="long" resultMap="sysUserResultMap">
 
 		select distinct E.* from sys_user E
@@ -369,6 +372,72 @@
 		where R.ROLEID = #{roleId}
 
 	</select>
+
+
+	<select id="getSysDeptRoleUsers" resultMap="sysUserResultMap"
+		parameterType="com.glaf.base.modules.sys.query.SysDeptRoleQuery">
+
+		SELECT E.*
+		FROM sys_user E
+		WHERE E.blocked = 0 AND E.id IN
+		( SELECT r.userId FROM sys_user_role r
+		  WHERE r.authorized = 0 AND r.roleId IN ( 
+		    SELECT a.id FROM sys_dept_role a
+		    INNER JOIN sys_role b
+		    ON a.sysRoleId = b.id
+		    WHERE 1=1
+
+		<if test="deptRoleId != null">
+			AND a.id = #{deptRoleId}
+		</if>
+
+		<if test="deptRoleIds != null and deptRoleIds.size !=0">
+			AND a.id IN
+			<foreach item="x_deptRoleId" index="index" collection="deptRoleIds"
+				open="(" separator="," close=")">
+				#{x_deptRoleId}
+			</foreach>
+		</if>
+
+		<if test="sysRoleId != null">
+			AND a.sysRoleId= #{sysRoleId}
+		</if>
+
+		<if test="sysRoleIds != null and sysRoleIds.size !=0">
+			AND a.sysRoleId IN
+			<foreach item="x_sysRoleId" index="index" collection="sysRoleIds"
+				open="(" separator="," close=")">
+				#{x_sysRoleId}
+			</foreach>
+		</if>
+
+		<if test="roleCode != null">
+			AND b.code= #{roleCode}
+		</if>
+
+		<if test="roleCodes != null and roleCodes.size !=0">
+			AND b.code IN
+			<foreach item="x_roleCode" index="index" collection="roleCodes"
+				open="(" separator="," close=")">
+				#{x_roleCode}
+			</foreach>
+		</if>
+
+		<if test="deptId != null">
+			AND ( a.deptId = #{deptId} )
+		</if>
+
+		<if test="deptIds != null and deptIds.size !=0">
+			AND a.deptId IN
+			<foreach item="x_deptId" index="index" collection="deptIds"
+				open="(" separator="," close=")">
+				#{x_deptId}
+			</foreach>
+		</if>
+		)
+		)
+	</select>
+
 
 
 	<select id="getSysUsers" parameterType="com.glaf.base.modules.sys.query.SysUserQuery"

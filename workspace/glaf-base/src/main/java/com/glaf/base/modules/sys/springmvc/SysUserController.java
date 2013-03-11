@@ -98,6 +98,7 @@ public class SysUserController {
 			deptRole = new SysDeptRole();
 			deptRole.setDeptId(deptId);
 			deptRole.setDept(sysDepartmentService.findById(deptId));
+			deptRole.setSysRoleId(roleId);
 			deptRole.setRole(sysRoleService.findById(roleId));
 			sysDeptRoleService.create(deptRole);
 		}

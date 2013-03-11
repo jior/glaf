@@ -92,6 +92,9 @@ public class SysDeptRole implements Serializable, JSONable {
 	}
 
 	public Set<SysUser> getUsers() {
+		if(users == null){
+			users = new HashSet<SysUser>();
+		}
 		return users;
 	}
 
