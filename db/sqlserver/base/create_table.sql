@@ -172,6 +172,7 @@ CREATE TABLE sys_todo(
         xb int,
         link nvarchar(255),
         listlink nvarchar(255),
+	allListLink nvarchar(255),
         linktype nvarchar(255),
         appid bigint,
         moduleid bigint,
@@ -186,6 +187,7 @@ CREATE TABLE sys_todo(
         type nvarchar(50),
 	provider varchar(50),
         sql_ text,
+	sortno int,
         versionno bigint,
         PRIMARY KEY (id)
     );

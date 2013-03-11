@@ -17,6 +17,7 @@
 		<property column="xb" name="xb" type="int" />
 		<property column="link" name="link" type="string" />
 		<property column="listLink" name="listLink" type="string" />
+		<property column="allListLink" name="allListLink" type="string" />
 		<property column="linkType" name="linkType" type="string" />
 		<property column="appId" name="appId" type="long" />
 		<property column="moduleId" name="moduleId" type="long" />
@@ -29,6 +30,7 @@
 		<property column="taskName" name="taskName" type="string" />
 		<property column="title" name="title" type="string" />
 		<property column="type" name="type" type="string" />
+		<property column="sortNo" name="sortNo" type="int" />
 		<property column="versionNo" name="versionNo" type="long" />
 	</class>
 </hibernate-mapping>

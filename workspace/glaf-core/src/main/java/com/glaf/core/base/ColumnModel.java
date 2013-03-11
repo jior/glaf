@@ -18,6 +18,7 @@
 
 package com.glaf.core.base;
 
+import java.util.Collection;
 import java.util.Date;
 
 public class ColumnModel implements java.io.Serializable,
@@ -25,39 +26,43 @@ public class ColumnModel implements java.io.Serializable,
 
 	private static final long serialVersionUID = 1L;
 
-	protected String columnName;
-
-	protected String javaType;
-
-	protected Object value;
-
-	/**
-	 * 取值表达式
-	 */
-	protected String valueExpression;
+	protected Boolean booleanValue;
 
 	protected String category;
 
-	protected String series;
+	protected Collection<Object> collectionValues;
 
-	protected String stringValue;
+	protected String columnName;
 
-	protected Boolean booleanValue;
-
-	protected Integer intValue;
-
-	protected Long longValue;
-
-	protected Double doubleValue;
+	/**
+	 * 货币格式
+	 */
+	protected String currency;
 
 	protected Date dateValue;
 
-	protected TableModel table;
+	/**
+	 * 小数位数
+	 */
+	protected int decimal;
+
+	protected Double doubleValue;
 
 	/**
-	 * Java属性名称
+	 * 数据格式，如果是日期，需要指定格式，如YYYYMMDD
 	 */
-	protected String name;
+	protected String format;
+
+	protected Integer intValue;
+
+	protected String javaType;
+
+	/**
+	 * 长度
+	 */
+	protected int length;
+
+	protected Long longValue;
 
 	/**
 	 * 映射名称
@@ -65,34 +70,14 @@ public class ColumnModel implements java.io.Serializable,
 	protected String mapping;
 
 	/**
-	 * 标题
+	 * Java属性名称
 	 */
-	protected String title;
+	protected String name;
 
 	/**
-	 * 次标题
+	 * 取数位置，csv或Excel单元格的位置（从1开始）
 	 */
-	protected String secondTitle;
-
-	/**
-	 * 数据类型:String,Boolean,Integer,Double,Long,Date
-	 */
-	protected String type;
-
-	/**
-	 * 数据格式，如果是日期，需要指定格式，如YYYYMMDD
-	 */
-	protected String format;
-
-	/**
-	 * 货币格式
-	 */
-	protected String currency;
-
-	/**
-	 * 长度
-	 */
-	protected int length;
+	protected int position;
 
 	/**
 	 * 精度
@@ -100,21 +85,39 @@ public class ColumnModel implements java.io.Serializable,
 	protected int precision;
 
 	/**
-	 * 小数位数
+	 * 次标题
 	 */
-	protected int decimal;
+	protected String secondTitle;
 
-	/**
-	 * 取数位置，csv或Excel单元格的位置（从1开始）
-	 */
-	protected int position;
+	protected String series;
+
+	protected String stringValue;
+
+	protected TableModel table;
 
 	protected boolean temporary;
+
+	/**
+	 * 标题
+	 */
+	protected String title;
 
 	/**
 	 * 去掉首尾空格
 	 */
 	protected String trimType;
+
+	/**
+	 * 数据类型:String,Boolean,Integer,Double,Long,Date
+	 */
+	protected String type;
+
+	protected Object value;
+
+	/**
+	 * 取值表达式
+	 */
+	protected String valueExpression;
 
 	public ColumnModel() {
 
@@ -160,6 +163,10 @@ public class ColumnModel implements java.io.Serializable,
 
 	public String getCategory() {
 		return category;
+	}
+
+	public Collection<Object> getCollectionValues() {
+		return collectionValues;
 	}
 
 	public String getColumnName() {
@@ -277,6 +284,10 @@ public class ColumnModel implements java.io.Serializable,
 
 	public void setCategory(String category) {
 		this.category = category;
+	}
+
+	public void setCollectionValues(Collection<Object> collectionValues) {
+		this.collectionValues = collectionValues;
 	}
 
 	public void setColumnName(String columnName) {

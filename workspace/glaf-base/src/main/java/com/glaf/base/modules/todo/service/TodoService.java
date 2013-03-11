@@ -122,12 +122,7 @@ public interface TodoService {
 	 */
 	List<Todo> getSQLTodos();
 
-	/**
-	 * 获取用户及用户部门
-	 * 
-	 * @return
-	 */
-	List<SysUser> getSysUserWithDeptList();
+ 
 
 	/**
 	 * 根据Todo编号获取Todo

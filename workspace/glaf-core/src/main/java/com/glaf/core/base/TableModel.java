@@ -27,13 +27,21 @@ public class TableModel implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	protected String tableName;
-
-	protected ColumnModel idColumn;
-
 	protected String aggregationKey;
 
-	protected String sql;
+	protected Collection<String> aggregationKeys = new ArrayList<String>();
+
+	/**
+	 * 批处理的大小
+	 */
+	protected int batchSize;
+
+	protected List<ColumnModel> columns = new ArrayList<ColumnModel>();
+
+	/**
+	 * 英文标题
+	 */
+	protected String englishTitle;
 
 	/**
 	 * 实体名称
@@ -41,14 +49,38 @@ public class TableModel implements java.io.Serializable {
 	protected String entityName;
 
 	/**
+	 * 文件前缀
+	 */
+	protected String filePrefix;
+
+	protected ColumnModel idColumn;
+
+	/**
+	 * 合法数据的最小长度
+	 */
+	protected int minLength;
+
+	/**
 	 * Java 包名
 	 */
 	protected String packageName;
 
 	/**
-	 * 文件前缀
+	 * 自行提供的解析器类名
 	 */
-	protected String filePrefix;
+	protected String parseClass;
+
+	/**
+	 * 解析类型,csv,text,xls
+	 */
+	protected String parseType;
+
+	/**
+	 * 物理表的主键字段名称
+	 */
+	protected String primaryKey;
+
+	protected String sql;
 
 	/**
 	 * 开始行数
@@ -60,49 +92,31 @@ public class TableModel implements java.io.Serializable {
 	 */
 	protected int stopSkipRow;
 
-	/**
-	 * 合法数据的最小长度
-	 */
-	protected int minLength;
+	protected String stopWord;
 
-	/**
-	 * 批处理的大小
-	 */
-	protected int batchSize;
+	protected String tableName;
 
 	/**
 	 * 标题
 	 */
 	protected String title;
 
-	/**
-	 * 英文标题
-	 */
-	protected String englishTitle;
-
-	protected String stopWord;
-
-	/**
-	 * 物理表的主键字段名称
-	 */
-	protected String primaryKey;
-
-	/**
-	 * 解析类型,csv,text,xls
-	 */
-	protected String parseType;
-
-	/**
-	 * 自行提供的解析器类名
-	 */
-	protected String parseClass;
-
-	protected List<ColumnModel> columns = new ArrayList<ColumnModel>();
-
-	protected Collection<String> aggregationKeys = new ArrayList<String>();
-
 	public TableModel() {
 
+	}
+
+	public void addCollectionColumn(String columnName,
+			Collection<Object> collection) {
+		if (columns == null) {
+			columns = new ArrayList<ColumnModel>();
+		}
+		ColumnModel column = new ColumnModel();
+		column.setColumnName(columnName);
+		column.setJavaType("Collection");
+		column.setCollectionValues(collection);
+		column.setValue(collection);
+		column.setTable(this);
+		columns.add(column);
 	}
 
 	public void addColumn(ColumnModel column) {
@@ -113,6 +127,7 @@ public class TableModel implements java.io.Serializable {
 		columns.add(column);
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void addColumn(String columnName, String javaType, Object value) {
 		if (columns == null) {
 			columns = new ArrayList<ColumnModel>();
@@ -120,6 +135,9 @@ public class TableModel implements java.io.Serializable {
 		ColumnModel column = new ColumnModel();
 		column.setColumnName(columnName);
 		column.setJavaType(javaType);
+		if (value instanceof Collection) {
+			column.setCollectionValues((Collection) value);
+		}
 		column.setValue(value);
 		column.setTable(this);
 		columns.add(column);

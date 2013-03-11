@@ -125,6 +125,16 @@
 							and ${column.columnName} = #{column.value,
 							jdbcType=DOUBLE}
 						</when>
+						<when test="column.javaType == 'Collection'">
+							<if
+								test="column.collectionValues != null and column.collectionValues.size() &gt; 0">
+								and ${column.columnName} IN
+								<foreach item="x_rowId" index="index" collection="column.collectionValues"
+									open="(" separator="," close=")">
+									#{x_rowId}
+								</foreach>
+							</if>
+						</when>
 						<otherwise>
 							and ${column.columnName} = #{column.value,
 							jdbcType=VARCHAR}

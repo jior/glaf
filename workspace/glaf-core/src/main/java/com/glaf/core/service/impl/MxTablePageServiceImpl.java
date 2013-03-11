@@ -71,7 +71,6 @@ public class MxTablePageServiceImpl implements ITablePageService {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public int getQueryCount(String querySql, List<QueryCondition> conditions) {
-		 
 		SqlExecutor sqlExecutor = QueryUtils.getMyBatisAndConditionSql(conditions);
 		StringBuilder buffer = new StringBuilder();
 		buffer.append(querySql);

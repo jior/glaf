@@ -177,6 +177,7 @@ CREATE TABLE sys_todo(
         xb int,
         link varchar(255),
         listlink varchar(255),
+	allListLink varchar(255),
         linktype varchar(255),
         appid bigint,
         moduleid bigint,
@@ -192,6 +193,7 @@ CREATE TABLE sys_todo(
         type varchar(50),
 	provider varchar(50),
         sql_ longtext,
+	sortno int,
         versionno bigint,
         PRIMARY KEY (id)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_bin;

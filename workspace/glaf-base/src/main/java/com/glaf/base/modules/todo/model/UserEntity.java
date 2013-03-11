@@ -26,9 +26,9 @@ public class UserEntity implements java.io.Serializable {
 
 	private String actorId;
 
-	private long deptId;
+	private Long deptId;
 
-	private long roleId;
+	private Long roleId;
 
 	public UserEntity() {
 
@@ -42,19 +42,19 @@ public class UserEntity implements java.io.Serializable {
 		this.actorId = actorId;
 	}
 
-	public long getDeptId() {
+	public Long getDeptId() {
 		return deptId;
 	}
 
-	public void setDeptId(long deptId) {
+	public void setDeptId(Long deptId) {
 		this.deptId = deptId;
 	}
 
-	public long getRoleId() {
+	public Long getRoleId() {
 		return roleId;
 	}
 
-	public void setRoleId(long roleId) {
+	public void setRoleId(Long roleId) {
 		this.roleId = roleId;
 	}
 	

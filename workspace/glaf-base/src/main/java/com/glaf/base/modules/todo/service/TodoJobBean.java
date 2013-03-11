@@ -25,6 +25,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jbpm.JbpmConfiguration;
 import org.jbpm.JbpmContext;
+import org.springframework.stereotype.Component;
+
 import com.glaf.jbpm.context.Context;
 import com.glaf.jbpm.model.TaskItem;
 import com.glaf.jbpm.container.ProcessContainer;
@@ -38,6 +40,7 @@ import com.glaf.core.todo.TodoInstance;
 import com.glaf.core.todo.query.TodoQuery;
 import com.glaf.base.utils.DateTools;
 
+@Component("todoJobBean")
 public class TodoJobBean {
 	private final static Log logger = LogFactory.getLog(TodoJobBean.class);
 
@@ -101,17 +104,17 @@ public class TodoJobBean {
 				model.setStartDate(rs.getDate(2));
 				if (rsmd.getColumnCount() == 3) {
 					switch (new Long(todo.getId()).intValue()) {
-					case 8005: 
+					case 8005:
 					case 7001:
 					case 7002:
 					case 7003:
 					case 7004:
-					case 17001: 
+					case 17001:
 					case 17010:
 					case 18001:
 					case 19001:
 					case 20001:
-					case 20084001: 
+					case 20084001:
 						model.setDeptId(rs.getLong(3));
 						break;
 					default:
@@ -194,7 +197,6 @@ public class TodoJobBean {
 	}
 
 	public Collection getAllUsers() {
-		SysUserService sysUserService = this.getSysUserService();
 		Collection users = sysUserService.getSysUserList();
 		return users;
 	}
@@ -270,10 +272,6 @@ public class TodoJobBean {
 		return todoService.getRoleMap();
 	}
 
-	public SysUserService getSysUserService() {
-		return sysUserService;
-	}
-
 	public List getTasks() {
 		List todos = todoService.getSQLTodos();
 		List rows = new ArrayList();
@@ -299,17 +297,17 @@ public class TodoJobBean {
 							model.setStartDate(rs.getDate(2));
 							if (rsmd.getColumnCount() == 3) {
 								switch (new Long(todo.getId()).intValue()) {
-								case 8005: 
+								case 8005:
 								case 7001:
 								case 7002:
 								case 7003:
 								case 7004:
-								case 17001: 
+								case 17001:
 								case 17010:
 								case 18001:
 								case 19001:
 								case 20001:
-								case 20084001: 
+								case 20084001:
 									model.setDeptId(rs.getLong(3));
 									break;
 								default:
@@ -476,7 +474,7 @@ public class TodoJobBean {
 
 	public List getTodoInstances(String actorId) {
 		SendMessageBean bean = new SendMessageBean();
-		bean.setSysUserService(this.getSysUserService());
+		bean.setSysUserService(this.sysUserService);
 
 		bean.setTodoService(todoService);
 		return bean.getTodoInstances(actorId);
@@ -488,10 +486,6 @@ public class TodoJobBean {
 
 	public Map getTodoMap() {
 		return todoService.getTodoMap();
-	}
-
-	public TodoService getTodoService() {
-		return todoService;
 	}
 
 	public SysUser getUser(String actorId) {
@@ -510,13 +504,9 @@ public class TodoJobBean {
 		return todoService.getUserTodoMap(actorId);
 	}
 
-	public WorkCalendarService getWorkCalendarService() {
-		return workCalendarService;
-	}
-
 	public List getXYTodoInstances(String actorId) {
 		SendMessageBean bean = new SendMessageBean();
-		bean.setSysUserService(this.getSysUserService());
+		bean.setSysUserService(this.sysUserService);
 		bean.setTodoService(todoService);
 		return bean.getXYTodoInstances(actorId);
 	}
@@ -537,7 +527,6 @@ public class TodoJobBean {
 			todoService.createTasksOfSQL(rows);
 			List tasks = this.getAllJbpmTasks();
 			todoService.createTasksOfWorkflow(tasks);
-			SysUserService sysUserService = this.getSysUserService();
 			Collection users = sysUserService.getSysUserList();
 			if (users != null && users.size() > 0) {
 				logger.info("########user size:" + users.size());
@@ -558,19 +547,22 @@ public class TodoJobBean {
 
 	public void sendMessageToUser(String actorId) {
 		SendMessageBean bean = new SendMessageBean();
-		bean.setSysUserService(this.getSysUserService());
+		bean.setSysUserService(this.sysUserService);
 		bean.setTodoService(todoService);
 		bean.sendMessageToUser(actorId);
 	}
 
+	@javax.annotation.Resource
 	public void setSysUserService(SysUserService sysUserService) {
 		this.sysUserService = sysUserService;
 	}
 
+	@javax.annotation.Resource
 	public void setTodoService(TodoService todoService) {
 		this.todoService = todoService;
 	}
 
+	@javax.annotation.Resource
 	public void setWorkCalendarService(WorkCalendarService workCalendarService) {
 		this.workCalendarService = workCalendarService;
 		logger.info("setWorkCalendarService");

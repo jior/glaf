@@ -22,7 +22,6 @@ import java.util.*;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.hibernate.Hibernate;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -46,15 +45,15 @@ public class TodoServiceImpl implements TodoService {
 
 	private AbstractSpringDao abstractDao;
 
-	private SysUserService sysUserService;
+	private SysDepartmentService sysDepartmentService;
 
 	private SysRoleService sysRoleService;
 
-	private SysDepartmentService sysDepartmentService;
-
-	private WorkCalendarService workCalendarService;
+	private SysUserService sysUserService;
 
 	private TodoDAO todoDAO;
+
+	private WorkCalendarService workCalendarService;
 
 	public void create(Todo todo) {
 		abstractDao.create(todo);
@@ -135,7 +134,7 @@ public class TodoServiceImpl implements TodoService {
 			Iterator iterator = roles.iterator();
 			while (iterator.hasNext()) {
 				SysDepartment model = (SysDepartment) iterator.next();
-				rowMap.put(new Long(model.getId()), model);
+				rowMap.put(Long.valueOf(model.getId()), model);
 			}
 		}
 		return rowMap;
@@ -151,7 +150,7 @@ public class TodoServiceImpl implements TodoService {
 			Iterator iterator = rows.iterator();
 			while (iterator.hasNext()) {
 				Todo todo = (Todo) iterator.next();
-				rowMap.put(new Long(todo.getId()), todo);
+				rowMap.put(Long.valueOf(todo.getId()), todo);
 			}
 		}
 		return rowMap;
@@ -210,20 +209,6 @@ public class TodoServiceImpl implements TodoService {
 		return rows;
 	}
 
-	public List getSysUserWithDeptList() {
-		// ¼ÆËã×ÜÊý
-		String query = "from SysUser a order by a.department.id asc ";
-		List rows = abstractDao.getList(query, null, null);
-		Iterator iterator = rows.iterator();
-		while (iterator.hasNext()) {
-			SysUser user = (SysUser) iterator.next();
-			if (!Hibernate.isInitialized(user.getDepartment())) {
-				Hibernate.initialize(user.getDepartment());
-			}
-		}
-		return rows;
-	}
-
 	public Todo getTodo(long todoId) {
 		String cacheKey = "x_todo_" + todoId;
 		if (CacheFactory.get(cacheKey) != null) {
@@ -270,13 +255,13 @@ public class TodoServiceImpl implements TodoService {
 					SysDeptRole sysDeptRole = (SysDeptRole) iteratorxy.next();
 					SysRole role = sysDeptRole.getRole();
 					SysDepartment dept = sysDeptRole.getDept();
-					roleIds.add(new Long(role.getId()));
-					deptIds.add(new Long(dept.getId()));
+					roleIds.add(Long.valueOf(role.getId()));
+					deptIds.add(Long.valueOf(dept.getId()));
 				}
 			}
 
-			logger.info("@@deptIds:" + deptIds);
-			logger.info("@@roleIds:" + roleIds);
+			logger.debug("@@deptIds:" + deptIds);
+			logger.debug("@@roleIds:" + roleIds);
 
 			Iterator iterator = rows.iterator();
 			while (iterator.hasNext()) {
@@ -440,8 +425,8 @@ public class TodoServiceImpl implements TodoService {
 			buffer.append(" order by a.moduleId asc ");
 		}
 
-		logger.info(buffer.toString());
-		logger.info(params);
+		logger.debug(buffer.toString());
+		logger.debug(params);
 
 		return abstractDao.getList(buffer.toString(), params);
 	}
@@ -481,20 +466,12 @@ public class TodoServiceImpl implements TodoService {
 	}
 
 	public SysUser getUser(String actorId) {
-		SysUser user = (SysUser) sysUserService.findByAccount(actorId);
-		if (user != null) {
-			Set apps = user.getApps();
-			Set roles = user.getRoles();
-			Set functions = user.getFunctions();
-			logger.info(apps);
-			logger.info(roles);
-			logger.info(functions);
-		}
+		SysUser user = (SysUser) sysUserService.findByAccountWithAll(actorId);
 		return user;
 	}
 
 	public List getUserEntityList(String actorId) {
-		if(actorId == null){
+		if (actorId == null) {
 			return null;
 		}
 		return todoDAO.getUserEntityList(actorId);
@@ -521,7 +498,7 @@ public class TodoServiceImpl implements TodoService {
 			while (iterator.hasNext()) {
 				SysDeptRole sysDeptRole = (SysDeptRole) iterator.next();
 				SysRole role = sysDeptRole.getRole();
-				logger.info("role.getCode():" + role.getCode());
+				logger.debug("role.getCode():" + role.getCode());
 				roleMap.put(role.getCode(), role);
 			}
 		}
@@ -531,13 +508,13 @@ public class TodoServiceImpl implements TodoService {
 	public Map getUserTodoMap(String actorId) {
 		Map todoMap = new HashMap();
 		Map roleMap = new HashMap();
-		Collection roles = sysUserService.findByAccount(actorId).getRoles();
+		Collection roles = sysUserService.findByAccountWithAll(actorId).getRoles();
 		if (roles != null && roles.size() > 0) {
 			Iterator iterator = roles.iterator();
 			while (iterator.hasNext()) {
 				SysDeptRole sysDeptRole = (SysDeptRole) iterator.next();
-				SysRole role = sysDeptRole.getRole();
-				logger.info("role.getCode():" + role.getCode());
+				SysRole role = sysRoleService.findById(sysDeptRole.getSysRoleId());
+				logger.debug("role.getCode():" + role.getCode());
 				roleMap.put(role.getCode(), role.getCode());
 			}
 		}
@@ -548,16 +525,14 @@ public class TodoServiceImpl implements TodoService {
 			while (iterator.hasNext()) {
 				Todo todo = (Todo) iterator.next();
 				if (roleMap.containsKey(todo.getRoleCode())) {
-					todoMap.put(new Long(todo.getId()), todo);
+					todoMap.put(  Long.valueOf(todo.getId()), todo);
 				}
 			}
 		}
 		return todoMap;
 	}
 
-	public WorkCalendarService getWorkCalendarService() {
-		return workCalendarService;
-	}
+ 
 
 	public boolean hasTask(String actorId, String taskInstanceId) {
 		Object[] values = { actorId, taskInstanceId };
@@ -608,7 +583,7 @@ public class TodoServiceImpl implements TodoService {
 				default:
 					break;
 				}
-				dataMap.put(new Long(tdi.getTodoId()), xx);
+				dataMap.put(Long.valueOf(tdi.getTodoId()), xx);
 			}
 		}
 		return dataMap.values();

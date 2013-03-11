@@ -177,6 +177,7 @@ CREATE TABLE sys_todo(
         xb INTEGER,
         link NVARCHAR2(255),
         listlink NVARCHAR2(255),
+	allListLink NVARCHAR2(255),
         linktype NVARCHAR2(255),
         appid NUMBER(19),
         moduleid NUMBER(19),
@@ -191,6 +192,7 @@ CREATE TABLE sys_todo(
         type NVARCHAR2(50),
 	provider NVARCHAR2(50),
         sql_ NVARCHAR2(2000),
+	sortno INTEGER,
         versionno NUMBER(19),
         PRIMARY KEY (id)
     );

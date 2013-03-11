@@ -1,0 +1,584 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.core.todo.mapper.TodoInstanceMapper">
+
+ 	<resultMap id="todoInstanceResultMap"	type="com.glaf.core.todo.TodoInstance">
+        <id property="id" column="ID" jdbcType="BIGINT" />
+        <result property="actorId" column="actorId" jdbcType="VARCHAR"/>
+        <result property="actorName" column="actorName" jdbcType="VARCHAR"/>
+        <result property="title" column="title" jdbcType="VARCHAR"/>
+        <result property="content" column="content" jdbcType="VARCHAR"/>
+        <result property="provider" column="provider" jdbcType="VARCHAR"/>
+        <result property="link" column="link" jdbcType="VARCHAR"/>
+        <result property="linkType" column="linkType" jdbcType="VARCHAR"/>
+        <result property="createDate" column="createDate" jdbcType="TIMESTAMP"/>
+        <result property="startDate" column="startDate" jdbcType="TIMESTAMP"/>
+        <result property="endDate" column="endDate" jdbcType="TIMESTAMP"/>
+        <result property="alarmDate" column="alarmDate" jdbcType="TIMESTAMP"/>
+        <result property="pastDueDate" column="pastDueDate" jdbcType="TIMESTAMP"/>
+        <result property="taskInstanceId" column="taskInstanceId" jdbcType="VARCHAR"/>
+        <result property="processInstanceId" column="processInstanceId" jdbcType="VARCHAR"/>
+        <result property="deptId" column="deptId" jdbcType="BIGINT"/>
+        <result property="deptName" column="deptName" jdbcType="VARCHAR"/>
+        <result property="roleId" column="roleId" jdbcType="BIGINT"/>
+        <result property="roleCode" column="roleCode" jdbcType="VARCHAR"/>
+        <result property="rowId" column="rowId" jdbcType="VARCHAR"/>
+        <result property="todoId" column="todoId" jdbcType="BIGINT"/>
+        <result property="appId" column="appId" jdbcType="BIGINT"/>
+        <result property="moduleId" column="moduleId" jdbcType="BIGINT"/>
+        <result property="objectId" column="objectId" jdbcType="VARCHAR"/>
+        <result property="objectValue" column="objectValue" jdbcType="VARCHAR"/>
+        <result property="versionNo" column="versionNo" jdbcType="BIGINT"/>
+	</resultMap>
+
+ 
+	<insert id="insertTodoInstance" parameterType="com.glaf.core.todo.TodoInstance">
+		insert into sys_todo_instance 
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+		    ID
+			<if test="actorId != null">
+				,actorId 
+			</if>
+			<if test="actorName != null">
+				,actorName 
+			</if>
+			<if test="title != null">
+				,title 
+			</if>
+			<if test="content != null">
+				,content 
+			</if>
+			<if test="provider != null">
+				,provider 
+			</if>
+			<if test="link != null">
+				,link 
+			</if>
+			<if test="linkType != null">
+				,linkType 
+			</if>
+			<if test="createDate != null">
+				,createDate 
+			</if>
+			<if test="startDate != null">
+				,startDate 
+			</if>
+			<if test="endDate != null">
+				,endDate 
+			</if>
+			<if test="alarmDate != null">
+				,alarmDate 
+			</if>
+			<if test="pastDueDate != null">
+				,pastDueDate 
+			</if>
+			<if test="taskInstanceId != null">
+				,taskInstanceId 
+			</if>
+			<if test="processInstanceId != null">
+				,processInstanceId 
+			</if>
+			<if test="deptId != null">
+				,deptId 
+			</if>
+			<if test="deptName != null">
+				,deptName 
+			</if>
+			<if test="roleId != null">
+				,roleId 
+			</if>
+			<if test="roleCode != null">
+				,roleCode 
+			</if>
+			<if test="rowId != null">
+				,rowId 
+			</if>
+			<if test="todoId != null">
+				,todoId 
+			</if>
+			<if test="appId != null">
+				,appId 
+			</if>
+			<if test="moduleId != null">
+				,moduleId 
+			</if>
+			<if test="objectId != null">
+				,objectId 
+			</if>
+			<if test="objectValue != null">
+				,objectValue 
+			</if>
+			<if test="versionNo != null">
+				,versionNo 
+			</if>
+        </trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			  #{id, jdbcType=BIGINT}
+	     
+			<if test="actorId != null">
+				,#{actorId, jdbcType=VARCHAR}
+			</if>
+			<if test="actorName != null">
+				,#{actorName, jdbcType=VARCHAR}
+			</if>
+			<if test="title != null">
+				,#{title, jdbcType=VARCHAR}
+			</if>
+			<if test="content != null">
+				,#{content, jdbcType=VARCHAR}
+			</if>
+			<if test="provider != null">
+				,#{provider, jdbcType=VARCHAR}
+			</if>
+			<if test="link != null">
+				,#{link, jdbcType=VARCHAR}
+			</if>
+			<if test="linkType != null">
+				,#{linkType, jdbcType=VARCHAR}
+			</if>
+			<if test="createDate != null">
+				,#{createDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="startDate != null">
+				,#{startDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="endDate != null">
+				,#{endDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="alarmDate != null">
+				,#{alarmDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="pastDueDate != null">
+				,#{pastDueDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="taskInstanceId != null">
+				,#{taskInstanceId, jdbcType=VARCHAR}
+			</if>
+			<if test="processInstanceId != null">
+				,#{processInstanceId, jdbcType=VARCHAR}
+			</if>
+			<if test="deptId != null">
+				,#{deptId, jdbcType=BIGINT}
+			</if>
+			<if test="deptName != null">
+				,#{deptName, jdbcType=VARCHAR}
+			</if>
+			<if test="roleId != null">
+				,#{roleId, jdbcType=BIGINT}
+			</if>
+			<if test="roleCode != null">
+				,#{roleCode, jdbcType=VARCHAR}
+			</if>
+			<if test="rowId != null">
+				,#{rowId, jdbcType=VARCHAR}
+			</if>
+			<if test="todoId != null">
+				,#{todoId, jdbcType=BIGINT}
+			</if>
+			<if test="appId != null">
+				,#{appId, jdbcType=BIGINT}
+			</if>
+			<if test="moduleId != null">
+				,#{moduleId, jdbcType=BIGINT}
+			</if>
+			<if test="objectId != null">
+				,#{objectId, jdbcType=VARCHAR}
+			</if>
+			<if test="objectValue != null">
+				,#{objectValue, jdbcType=VARCHAR}
+			</if>
+			<if test="versionNo != null">
+				,#{versionNo, jdbcType=BIGINT}
+			</if>
+	    </trim>
+    </insert>
+
+	 
+	<update id="updateTodoInstance" parameterType="com.glaf.core.todo.TodoInstance">
+		update sys_todo_instance
+		set
+        <trim prefix="" suffix="" suffixOverrides=",">		
+			<if test="actorId != null">
+				actorId = #{actorId, jdbcType=VARCHAR},
+			</if>
+			<if test="actorName != null">
+				actorName = #{actorName, jdbcType=VARCHAR},
+			</if>
+			<if test="title != null">
+				title = #{title, jdbcType=VARCHAR},
+			</if>
+			<if test="content != null">
+				content = #{content, jdbcType=VARCHAR},
+			</if>
+			<if test="provider != null">
+				provider = #{provider, jdbcType=VARCHAR},
+			</if>
+			<if test="link != null">
+				link = #{link, jdbcType=VARCHAR},
+			</if>
+			<if test="linkType != null">
+				linkType = #{linkType, jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				createDate = #{createDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="startDate != null">
+				startDate = #{startDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="endDate != null">
+				endDate = #{endDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="alarmDate != null">
+				alarmDate = #{alarmDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="pastDueDate != null">
+				pastDueDate = #{pastDueDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="taskInstanceId != null">
+				taskInstanceId = #{taskInstanceId, jdbcType=VARCHAR},
+			</if>
+			<if test="processInstanceId != null">
+				processInstanceId = #{processInstanceId, jdbcType=VARCHAR},
+			</if>
+			<if test="deptId != null">
+				deptId = #{deptId, jdbcType=BIGINT},
+			</if>
+			<if test="deptName != null">
+				deptName = #{deptName, jdbcType=VARCHAR},
+			</if>
+			<if test="roleId != null">
+				roleId = #{roleId, jdbcType=BIGINT},
+			</if>
+			<if test="roleCode != null">
+				roleCode = #{roleCode, jdbcType=VARCHAR},
+			</if>
+			<if test="rowId != null">
+				rowId = #{rowId, jdbcType=VARCHAR},
+			</if>
+			<if test="todoId != null">
+				todoId = #{todoId, jdbcType=BIGINT},
+			</if>
+			<if test="appId != null">
+				appId = #{appId, jdbcType=BIGINT},
+			</if>
+			<if test="moduleId != null">
+				moduleId = #{moduleId, jdbcType=BIGINT},
+			</if>
+			<if test="objectId != null">
+				objectId = #{objectId, jdbcType=VARCHAR},
+			</if>
+			<if test="objectValue != null">
+				objectValue = #{objectValue, jdbcType=VARCHAR},
+			</if>
+			<if test="versionNo != null">
+				versionNo = #{versionNo, jdbcType=BIGINT},
+			</if>
+        </trim>
+		where
+          ID = #{id, jdbcType=BIGINT}
+		
+    </update>
+
+ 
+	<delete id="deleteTodoInstanceById" parameterType="long"> 
+        delete from sys_todo_instance
+        where ID =	#{id}
+	</delete>
+
+	
+	<delete id="deleteTodoInstances" parameterType="com.glaf.core.todo.query.TodoInstanceQuery">
+		delete from sys_todo_instance
+		where ( 
+ 			  ID IN
+              <foreach item="x_rowId" index="index" collection="rowIds" 
+                     open="(" separator="," close=")">
+                  #{x_rowId}
+              </foreach>
+		)
+	</delete>
+
+
+	<select id="getTodoInstanceById" parameterType="long" resultMap="todoInstanceResultMap">
+		select * from sys_todo_instance where ID = #{id}
+	</select>
+
+
+	<select id="getTodoInstances" 
+	    parameterType="com.glaf.core.todo.query.TodoInstanceQuery"
+		resultMap="todoInstanceResultMap">
+		select E.*
+		<include refid="selectTodoInstancesSql" />
+		<choose>
+		  <when test="orderBy != null">
+		     order by ${orderBy}
+          </when>
+		  <otherwise>
+		      order by E.ID desc
+		  </otherwise>
+        </choose>
+	</select>
+
+
+	<select id="getTodoInstanceCount" 
+	    parameterType="com.glaf.core.todo.query.TodoInstanceQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectTodoInstancesSql" />
+	</select>
+
+
+	<sql id="selectTodoInstancesSql">
+
+		from sys_todo_instance E
+
+		<where>
+		       1 = 1  
+
+			<if test="processInstanceIds != null and processInstanceIds.size() &gt; 0">
+				and E.PROCESSINSTANCEID_ IN
+				<foreach item="x_processInstanceId" index="index"
+					collection="processInstanceIds" open="(" separator="," close=")">
+					#{x_processInstanceId}
+                </foreach>
+			</if>
+
+	        
+			<if test="actorId != null and actorId != '' ">
+				and E.actorId = #{actorId}
+            </if>
+
+			<if test="actorIds != null and actorIds.size() &gt; 0">
+			    and E.actorId IN
+                <foreach item="x_actorId" index="index" collection="actorIds" 
+                     open="(" separator="," close=")">
+                  #{x_actorId}
+                </foreach>
+			</if>	     
+
+			<if test="actorNameLike != null and actorNameLike != '' ">
+				and E.actorName like #{actorNameLike}
+            </if>
+	    
+			<if test="titleLike != null and titleLike != '' ">
+				and E.title like #{titleLike}
+            </if>
+
+			<if test="contentLike != null and contentLike != '' ">
+				and E.content like #{contentLike}
+            </if>
+            
+			<if test="provider != null and provider != '' ">
+				and E.provider = #{provider}
+            </if>
+
+			<if test="providers != null and providers.size() &gt; 0">
+			    and E.provider IN
+                <foreach item="x_provider" index="index" collection="providers" 
+                     open="(" separator="," close=")">
+                  #{x_provider}
+                </foreach>
+			</if>
+	
+			<if test="linkLike != null and linkLike != '' ">
+				and E.link like #{linkLike}
+            </if>
+
+			<if test="linkType != null and linkType != '' ">
+				and E.linkType = #{linkType}
+            </if>
+
+			<if test="linkTypes != null and linkTypes.size() &gt; 0">
+			    and E.linkType IN
+                <foreach item="x_linkType" index="index" collection="linkTypes" 
+                     open="(" separator="," close=")">
+                  #{x_linkType}
+                </foreach>
+			</if>
+
+			<if test="createDateGreaterThanOrEqual != null">
+				and E.createDate &gt;= #{createDateGreaterThanOrEqual}
+            </if>
+
+			<if test="createDateLessThanOrEqual != null">
+				and E.createDate &lt;= #{createDateLessThanOrEqual}
+            </if>
+
+			<if test="startDateGreaterThanOrEqual != null">
+				and E.startDate &gt;= #{startDateGreaterThanOrEqual}
+            </if>
+
+			<if test="startDateLessThanOrEqual != null">
+				and E.startDate &lt;= #{startDateLessThanOrEqual}
+            </if>
+
+			<if test="endDateGreaterThanOrEqual != null">
+				and E.endDate &gt;= #{endDateGreaterThanOrEqual}
+            </if>
+
+			<if test="endDateLessThanOrEqual != null">
+				and E.endDate &lt;= #{endDateLessThanOrEqual}
+            </if>
+
+			<if test="alarmDateGreaterThanOrEqual != null">
+				and E.alarmDate &gt;= #{alarmDateGreaterThanOrEqual}
+            </if>
+
+			<if test="alarmDateLessThanOrEqual != null">
+				and E.alarmDate &lt;= #{alarmDateLessThanOrEqual}
+            </if>
+
+			<if test="pastDueDateGreaterThanOrEqual != null">
+				and E.pastDueDate &gt;= #{pastDueDateGreaterThanOrEqual}
+            </if>
+
+			<if test="pastDueDateLessThanOrEqual != null">
+				and E.pastDueDate &lt;= #{pastDueDateLessThanOrEqual}
+            </if>
+	        
+			<if test="taskInstanceId != null and taskInstanceId != '' ">
+				and E.taskInstanceId = #{taskInstanceId}
+            </if>
+
+			<if test="taskInstanceIds != null and taskInstanceIds.size() &gt; 0">
+			    and E.taskInstanceId IN
+                <foreach item="x_taskInstanceId" index="index" collection="taskInstanceIds" 
+                     open="(" separator="," close=")">
+                  #{x_taskInstanceId}
+                </foreach>
+			</if>
+
+			<if test="deptId != null">
+				and E.deptId = #{deptId}
+            </if>
+
+			<if test="deptIds != null and deptIds.size() &gt; 0">
+			    and E.deptId IN
+                <foreach item="x_deptId" index="index" collection="deptIds" 
+                     open="(" separator="," close=")">
+                  #{x_deptId}
+                </foreach>
+			</if>
+
+			<if test="deptNameLike != null and deptNameLike != '' ">
+				and E.deptName like #{deptNameLike}
+            </if>
+
+			<if test="roleId != null">
+				and E.roleId = #{roleId}
+            </if>
+
+			<if test="roleIds != null and roleIds.size() &gt; 0">
+			    and E.roleId IN
+                <foreach item="x_roleId" index="index" collection="roleIds" 
+                     open="(" separator="," close=")">
+                  #{x_roleId}
+                </foreach>
+			</if>
+	        
+			<if test="roleCode != null and roleCode != '' ">
+				and E.roleCode = #{roleCode}
+            </if>
+
+			<if test="roleCodeLike != null and roleCodeLike != '' ">
+				and E.roleCode like #{roleCodeLike}
+            </if>
+
+			<if test="roleCodes != null and roleCodes.size() &gt; 0">
+			    and E.roleCode IN
+                <foreach item="x_roleCode" index="index" collection="roleCodes" 
+                     open="(" separator="," close=")">
+                  #{x_roleCode}
+                </foreach>
+			</if>
+	        
+			<if test="rowId != null and rowId != '' ">
+				and E.rowId = #{rowId}
+            </if>
+
+			<if test="rowIdLike != null and rowIdLike != '' ">
+				and E.rowId like #{rowIdLike}
+            </if>
+
+			<if test="rowIds != null and rowIds.size() &gt; 0">
+			    and E.rowId IN
+                <foreach item="x_rowId" index="index" collection="rowIds" 
+                     open="(" separator="," close=")">
+                  #{x_rowId}
+                </foreach>
+			</if>
+
+			<if test="todoId != null">
+				and E.todoId = #{todoId}
+            </if>
+
+			<if test="todoIds != null and todoIds.size() &gt; 0">
+			    and E.todoId IN
+                <foreach item="x_todoId" index="index" collection="todoIds" 
+                     open="(" separator="," close=")">
+                  #{x_todoId}
+                </foreach>
+			</if>
+
+			<if test="appId != null">
+				and E.appId = #{appId}
+            </if>
+
+			<if test="appIds != null and appIds.size() &gt; 0">
+			    and E.appId IN
+                <foreach item="x_appId" index="index" collection="appIds" 
+                     open="(" separator="," close=")">
+                  #{x_appId}
+                </foreach>
+			</if>
+
+			<if test="moduleId != null">
+				and E.moduleId = #{moduleId}
+            </if>
+
+			<if test="moduleIds != null and moduleIds.size() &gt; 0">
+			    and E.moduleId IN
+                <foreach item="x_moduleId" index="index" collection="moduleIds" 
+                     open="(" separator="," close=")">
+                  #{x_moduleId}
+                </foreach>
+			</if>
+	        
+			<if test="objectId != null and objectId != '' ">
+				and E.objectId = #{objectId}
+            </if>
+
+			<if test="objectIds != null and objectIds.size() &gt; 0">
+			    and E.objectId IN
+                <foreach item="x_objectId" index="index" collection="objectIds" 
+                     open="(" separator="," close=")">
+                  #{x_objectId}
+                </foreach>
+			</if>
+	        
+			<if test="objectValue != null and objectValue != '' ">
+				and E.objectValue = #{objectValue}
+            </if>
+
+			<if test="objectValues != null and objectValues.size() &gt; 0">
+			    and E.objectValue IN
+                <foreach item="x_objectValue" index="index" collection="objectValues" 
+                     open="(" separator="," close=")">
+                  #{x_objectValue}
+                </foreach>
+			</if>
+
+			<if test="versionNoGreaterThanOrEqual != null">
+				and E.versionNo &gt;= #{versionNoGreaterThanOrEqual}
+            </if>
+
+			<if test="versionNoLessThanOrEqual != null">
+				and E.versionNo &lt;= #{versionNoLessThanOrEqual}
+            </if>
+
+		</where>
+	</sql>
+
+</mapper>
