@@ -24,9 +24,6 @@ import com.glaf.core.query.DataQuery;
 public class TodoInstanceQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;
 
-	protected String actorId;
-	protected String actorIdLike;
-	protected List<String> actorIds;
 	protected String actorNameLike;
 	protected Date alarmDateGreaterThanOrEqual;
 	protected Date alarmDateLessThanOrEqual;
@@ -45,9 +42,7 @@ public class TodoInstanceQuery extends DataQuery {
 	protected List<String> linkTypes;
 	protected Long moduleId;
 	protected List<Long> moduleIds;
-	protected String objectId;
 	protected List<String> objectIds;
-	protected String objectValue;
 	protected List<String> objectValues;
 	protected Date pastDueDateGreaterThanOrEqual;
 	protected Date pastDueDateLessThanOrEqual;
@@ -64,7 +59,6 @@ public class TodoInstanceQuery extends DataQuery {
 	protected Date startDateGreaterThanOrEqual;
 	protected Date startDateLessThanOrEqual;
 	protected String taskInstanceId;
-	protected List<String> taskInstanceIds;
 	protected String titleLike;
 	protected Long todoId;
 	protected List<Long> todoIds;
@@ -73,30 +67,6 @@ public class TodoInstanceQuery extends DataQuery {
 
 	public TodoInstanceQuery() {
 
-	}
-
-	public TodoInstanceQuery actorId(String actorId) {
-		if (actorId == null) {
-			throw new RuntimeException("actorId is null");
-		}
-		this.actorId = actorId;
-		return this;
-	}
-
-	public TodoInstanceQuery actorIdLike(String actorIdLike) {
-		if (actorIdLike == null) {
-			throw new RuntimeException("actorId is null");
-		}
-		this.actorIdLike = actorIdLike;
-		return this;
-	}
-
-	public TodoInstanceQuery actorIds(List<String> actorIds) {
-		if (actorIds == null) {
-			throw new RuntimeException("actorIds is empty ");
-		}
-		this.actorIds = actorIds;
-		return this;
 	}
 
 	public TodoInstanceQuery actorNameLike(String actorNameLike) {
@@ -210,18 +180,6 @@ public class TodoInstanceQuery extends DataQuery {
 
 	public String getActorId() {
 		return actorId;
-	}
-
-	public String getActorIdLike() {
-		if (actorIdLike != null && actorIdLike.trim().length() > 0) {
-			if (!actorIdLike.startsWith("%")) {
-				actorIdLike = "%" + actorIdLike;
-			}
-			if (!actorIdLike.endsWith("%")) {
-				actorIdLike = actorIdLike + "%";
-			}
-		}
-		return actorIdLike;
 	}
 
 	public List<String> getActorIds() {
@@ -539,10 +497,6 @@ public class TodoInstanceQuery extends DataQuery {
 		return taskInstanceId;
 	}
 
-	public List<String> getTaskInstanceIds() {
-		return taskInstanceIds;
-	}
-
 	public String getTitleLike() {
 		if (titleLike != null && titleLike.trim().length() > 0) {
 			if (!titleLike.startsWith("%")) {
@@ -757,10 +711,6 @@ public class TodoInstanceQuery extends DataQuery {
 
 	public void setActorId(String actorId) {
 		this.actorId = actorId;
-	}
-
-	public void setActorIdLike(String actorIdLike) {
-		this.actorIdLike = actorIdLike;
 	}
 
 	public void setActorIds(List<String> actorIds) {
