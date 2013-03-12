@@ -34,7 +34,6 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/hibernate3.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/htmlparser.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/itext-2.1.7.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jackson-all-1.9.8.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/javassist.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/javax.activation-1.1.0.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/javax.jms-1.1.0.jar"/>
@@ -52,7 +51,6 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jxls-core.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jxls-reader.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/mail.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/mvel2-2.1.0.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/mybatis-2.3.5.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/ognl-2.7.3.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/oscache-2.4.1.jar"/>
@@ -123,5 +121,7 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/mybatis.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/ehcache-core.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/glaf-jbpm"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jackson-all-1.9.10.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/mvel2-2.1.3.Final.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
