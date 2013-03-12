@@ -74,7 +74,7 @@ out.print(bean2.getName());
 %>
         </select>
 		<script language="JavaScript">
-		  document.all.parent.value="<%=bean.getNode().getParent()%>";	
+		  document.all.parent.value="<%=bean.getNode().getParentId()%>";	
 	    </script>
 		</td>
       </tr>

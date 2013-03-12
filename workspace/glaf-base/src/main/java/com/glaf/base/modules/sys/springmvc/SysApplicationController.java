@@ -55,39 +55,33 @@ public class SysApplicationController {
 	@javax.annotation.Resource
 	private SysTreeService sysTreeService;
 
-	public void setSysApplicationService(
-			SysApplicationService sysApplicationService) {
-		this.sysApplicationService = sysApplicationService;
-		logger.info("setSysApplicationService");
-	}
-
-	public void setSysTreeService(SysTreeService sysTreeService) {
-		this.sysTreeService = sysTreeService;
-		logger.info("setSysTreeService");
-	}
-
 	/**
-	 * 显示所有列表
+	 * 批量删除信息
 	 * 
 	 * @param mapping
-	 * @param form
+	 * @param actionForm
 	 * @param request
 	 * @param response
 	 * @return
 	 */
-	@RequestMapping(params = "method=showList")
-	public ModelAndView showList(ModelMap modelMap, HttpServletRequest request,
-			HttpServletResponse response) {
+	@RequestMapping(params = "method=batchDelete")
+	public ModelAndView batchDelete(ModelMap modelMap,
+			HttpServletRequest request, HttpServletResponse response) {
 		RequestUtil.setRequestParameterToAttribute(request);
-		int parent = ParamUtil.getIntParameter(request, "parent", 0);
-		int pageNo = ParamUtil.getIntParameter(request, "page_no", 1);
-		int pageSize = ParamUtil.getIntParameter(request, "page_size",
-				Constants.PAGE_SIZE);
-		PageResult pager = sysApplicationService.getApplicationList(parent,
-				pageNo, pageSize);
-		request.setAttribute("pager", pager);
-		// 显示列表页面
-		return new ModelAndView("/modules/sys/app/app_list", modelMap);
+		boolean ret = true;
+		long[] id = ParamUtil.getLongParameterValues(request, "id");
+		ret = sysApplicationService.deleteAll(id);
+
+		ViewMessages messages = new ViewMessages();
+		if (ret) {// 保存成功
+			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
+					"application.delete_success"));
+		} else {// 保存失败
+			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
+					"application.delete_failure"));
+		}
+		MessageUtils.addMessages(request, messages);
+		return new ModelAndView("show_msg2", modelMap);
 	}
 
 	/**
@@ -104,6 +98,33 @@ public class SysApplicationController {
 			HttpServletRequest request, HttpServletResponse response) {
 		// RequestUtil.setRequestParameterToAttribute(request);
 		return new ModelAndView("/modules/sys/app/app_add", modelMap);
+	}
+
+	/**
+	 * 显示修改页面
+	 * 
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(params = "method=prepareModify")
+	public ModelAndView prepareModify(ModelMap modelMap,
+			HttpServletRequest request, HttpServletResponse response) {
+		// RequestUtil.setRequestParameterToAttribute(request);
+		long id = ParamUtil.getIntParameter(request, "id", 0);
+		SysApplication bean = sysApplicationService.findById(id);
+		request.setAttribute("bean", bean);
+
+		SysTree parent = sysTreeService.getSysTreeByCode(Constants.TREE_APP);
+		List list = new ArrayList();
+		parent.setDeep(0);
+		list.add(parent);
+		sysTreeService.getSysTree(list, (int) parent.getId(), 1);
+		request.setAttribute("parent", list);
+
+		return new ModelAndView("/modules/sys/app/app_modify", modelMap);
 	}
 
 	/**
@@ -146,33 +167,6 @@ public class SysApplicationController {
 	}
 
 	/**
-	 * 显示修改页面
-	 * 
-	 * @param mapping
-	 * @param form
-	 * @param request
-	 * @param response
-	 * @return
-	 */
-	@RequestMapping(params = "method=prepareModify")
-	public ModelAndView prepareModify(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
-		// RequestUtil.setRequestParameterToAttribute(request);
-		long id = ParamUtil.getIntParameter(request, "id", 0);
-		SysApplication bean = sysApplicationService.findById(id);
-		request.setAttribute("bean", bean);
-
-		SysTree parent = sysTreeService.getSysTreeByCode(Constants.TREE_APP);
-		List list = new ArrayList();
-		parent.setDeep(0);
-		list.add(parent);
-		sysTreeService.getSysTree(list, (int) parent.getId(), 1);
-		request.setAttribute("parent", list);
-
-		return new ModelAndView("/modules/sys/app/app_modify", modelMap);
-	}
-
-	/**
 	 * 提交修改信息
 	 * 
 	 * @param mapping
@@ -196,8 +190,8 @@ public class SysApplicationController {
 			SysTree node = bean.getNode();
 			node.setName(bean.getName());
 			node.setDesc(bean.getName());
-			node.setParentId((long) ParamUtil.getIntParameter(request, "parent",
-					0));
+			node.setParentId((long) ParamUtil.getIntParameter(request,
+					"parent", 0));
 			bean.setNode(node);
 		}
 		boolean ret = sysApplicationService.update(bean);
@@ -213,33 +207,15 @@ public class SysApplicationController {
 		return new ModelAndView("show_msg", modelMap);
 	}
 
-	/**
-	 * 批量删除信息
-	 * 
-	 * @param mapping
-	 * @param actionForm
-	 * @param request
-	 * @param response
-	 * @return
-	 */
-	@RequestMapping(params = "method=batchDelete")
-	public ModelAndView batchDelete(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
-		boolean ret = true;
-		long[] id = ParamUtil.getLongParameterValues(request, "id");
-		ret = sysApplicationService.deleteAll(id);
+	public void setSysApplicationService(
+			SysApplicationService sysApplicationService) {
+		this.sysApplicationService = sysApplicationService;
+		logger.info("setSysApplicationService");
+	}
 
-		ViewMessages messages = new ViewMessages();
-		if (ret) {// 保存成功
-			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
-					"application.delete_success"));
-		} else {// 保存失败
-			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
-					"application.delete_failure"));
-		}
-		MessageUtils.addMessages(request, messages);
-		return new ModelAndView("show_msg2", modelMap);
+	public void setSysTreeService(SysTreeService sysTreeService) {
+		this.sysTreeService = sysTreeService;
+		logger.info("setSysTreeService");
 	}
 
 	/**
@@ -251,11 +227,11 @@ public class SysApplicationController {
 	 * @param response
 	 * @return
 	 */
-	@RequestMapping(params = "method=showPermission")
-	public ModelAndView showPermission(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+	@RequestMapping(params = "method=showBase")
+	public ModelAndView showBase(ModelMap modelMap, HttpServletRequest request,
+			HttpServletResponse response) {
 		RequestUtil.setRequestParameterToAttribute(request);
-		return new ModelAndView("/modules/sys/app/permission_frame", modelMap);
+		return new ModelAndView("/modules/sys/app/basedata_frame", modelMap);
 	}
 
 	/**
@@ -277,19 +253,27 @@ public class SysApplicationController {
 	}
 
 	/**
-	 * 显示框架页面
+	 * 显示所有列表
 	 * 
 	 * @param mapping
-	 * @param actionForm
+	 * @param form
 	 * @param request
 	 * @param response
 	 * @return
 	 */
-	@RequestMapping(params = "method=showBase")
-	public ModelAndView showBase(ModelMap modelMap, HttpServletRequest request,
+	@RequestMapping(params = "method=showList")
+	public ModelAndView showList(ModelMap modelMap, HttpServletRequest request,
 			HttpServletResponse response) {
 		RequestUtil.setRequestParameterToAttribute(request);
-		return new ModelAndView("/modules/sys/app/basedata_frame", modelMap);
+		int parent = ParamUtil.getIntParameter(request, "parent", 0);
+		int pageNo = ParamUtil.getIntParameter(request, "page_no", 1);
+		int pageSize = ParamUtil.getIntParameter(request, "page_size",
+				Constants.PAGE_SIZE);
+		PageResult pager = sysApplicationService.getApplicationList(parent,
+				pageNo, pageSize);
+		request.setAttribute("pager", pager);
+		// 显示列表页面
+		return new ModelAndView("/modules/sys/app/app_list", modelMap);
 	}
 
 	/**
@@ -310,5 +294,21 @@ public class SysApplicationController {
 		sysTreeService.getSysTree(list, parent, 0);
 		request.setAttribute("list", list);
 		return new ModelAndView("/modules/sys/app/navmenu", modelMap);
+	}
+
+	/**
+	 * 显示框架页面
+	 * 
+	 * @param mapping
+	 * @param actionForm
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(params = "method=showPermission")
+	public ModelAndView showPermission(ModelMap modelMap,
+			HttpServletRequest request, HttpServletResponse response) {
+		RequestUtil.setRequestParameterToAttribute(request);
+		return new ModelAndView("/modules/sys/app/permission_frame", modelMap);
 	}
 }

@@ -8,11 +8,11 @@
 <%@ page import="com.glaf.core.identity.*"%>
 <%@ page import="com.glaf.core.security.*"%>
 <%
-String context = request.getContextPath();
-int pageSize=2*Constants.PAGE_SIZE;
-com.glaf.core.util.PageResult pager=(com.glaf.core.util.PageResult)request.getAttribute("pager");
-List list = pager.getResults();
-Map userMap = IdentityFactory.getLongUserMap();
+	String context = request.getContextPath();
+	int pageSize=2*Constants.PAGE_SIZE;
+	com.glaf.core.util.PageResult pager=(com.glaf.core.util.PageResult)request.getAttribute("pager");
+	List list = pager.getResults();
+	Map userMap = IdentityFactory.getLongUserMap();
 %>
 <html>
 <head>
@@ -25,8 +25,7 @@ Map userMap = IdentityFactory.getLongUserMap();
 <script src="<%=context%>/scripts/calendar/calendar.js" language="javascript"></script>
 <script src="<%=context%>/scripts/calendar/lang/calendar-en.js" language="javascript"></script>
 <script src="<%=context%>/scripts/calendar/lang/calendar-setup.js" language="javascript"></script>
-
-<script language="JavaScript">
+<script language="javascript">
 var num=0;
 function checkOperation(form){
   num = getCheckedBoxNum(form,"id");
@@ -118,9 +117,13 @@ if(list!=null){
 			if(u != null){
                userRole.setAuthorizeFromName(u.getName());
 			}
-		    String processDescription = null == userRole.getProcessDescription()?"":userRole.getProcessDescription();
-			if(userRole.getAuthorizeFromName() !=null && authorizeFromNames.indexOf(userRole.getAuthorizeFromName())<0)
+		    String processDescription = "";
+			if(userRole.getProcessDescription() != null){
+			    processDescription = userRole.getProcessDescription();
+			}
+			if(userRole.getAuthorizeFromName() !=null && authorizeFromNames.indexOf(userRole.getAuthorizeFromName())<0){
 				processDescriptions = "";
+			}
 		    if(processDescriptions.indexOf(processDescription)<0){
 				contentBuffer += userRole.getProcessDescription()+"[<font color=red>代"+userRole.getAuthorizeFromName();
 				contentBuffer += " 有效期：" + BaseUtil.dateToString(userRole.getAvailDateStart()) +"至"+ BaseUtil.dateToString(userRole.getAvailDateEnd()) + "</font>] ";

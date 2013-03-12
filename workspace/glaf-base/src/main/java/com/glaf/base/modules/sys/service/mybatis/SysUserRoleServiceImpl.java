@@ -255,7 +255,7 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 	public SysUserRole findById(long id) {
 		return this.getSysUserRole(id);
 	}
-	
+
 	protected void initUserDepartments(List<SysUser> users) {
 		if (users != null && !users.isEmpty()) {
 			List<SysDepartment> depts = sysDepartmentService
@@ -268,6 +268,16 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 			}
 			for (SysUser user : users) {
 				user.setDepartment(deptMap.get(Long.valueOf(user.getDeptId())));
+			}
+		}
+	}
+
+	protected void initUserRoles(List<SysUser> users) {
+		if (users != null && !users.isEmpty()) {
+			for (SysUser user : users) {
+				List<SysUserRole> userRoles = sysUserRoleMapper
+						.getSysUserRolesByUserId(user.getId());
+				user.getUserRoles().addAll(userRoles);
 			}
 		}
 	}
@@ -320,7 +330,8 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 		RowBounds rowBounds = new RowBounds(start, pageSize);
 		List<SysUser> rows = sqlSessionTemplate.selectList(
 				"getAuthorizedUsers", query, rowBounds);
-        this.initUserDepartments(rows);
+		this.initUserDepartments(rows);
+		this.initUserRoles(rows);
 		pager.setResults(rows);
 		pager.setPageSize(pageSize);
 		pager.setCurrentPageNo(pageNo);
@@ -383,13 +394,14 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 	public List getAuthorizedUser(SysUser user) {
 		List list = new ArrayList();
 		Map<Long, SysUser> userMap = new HashMap<Long, SysUser>();
-		List<SysUser> users = sysUserMapper.getAuthorizedUsersByUserId(user.getId());
+		List<SysUser> users = sysUserMapper.getAuthorizedUsersByUserId(user
+				.getId());
 		if (users != null && !users.isEmpty()) {
 			for (SysUser u : users) {
 				userMap.put(u.getId(), u);
 			}
 		}
-		
+
 		this.initUserDepartments(users);
 
 		SysUserRoleQuery query = new SysUserRoleQuery();
