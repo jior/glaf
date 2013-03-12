@@ -1,20 +1,20 @@
 /*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.glaf.base.modules.todo;
 
@@ -30,11 +30,10 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
- 
 
 import com.glaf.core.todo.Todo;
+import com.glaf.core.util.Tools;
 import com.glaf.base.utils.ParamUtil;
-import com.glaf.base.utils.Tools;
 
 public class TodoXlsReader {
 
@@ -93,17 +92,16 @@ public class TodoXlsReader {
 				}
 				if (cellValue != null) {
 					dataMap.put(fieldName, cellValue);
-					if("id".equals(fieldName)){
-						cellValue = cellValue.toString().substring(0, cellValue.toString().indexOf("."));
+					if ("id".equals(fieldName)) {
+						cellValue = cellValue.toString().substring(0,
+								cellValue.toString().indexOf("."));
 						dataMap.put(fieldName, cellValue);
 					}
-					//System.out.print("\t" + fieldName + "=" + cellValue);
 				}
 			}
-			//System.out.println();
-			//System.out.println(rowIndex+":::::"+dataMap.get("code"));
+			 
 			if (dataMap.get("code") != null) {
-				//System.out.println(rowIndex+"->"+dataMap);
+	 
 				String id = ParamUtil.getString(dataMap, "id");
 				if (!keys.contains(ParamUtil.getString(dataMap, "code"))) {
 					if (id != null && StringUtils.isNotEmpty(id)) {

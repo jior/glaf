@@ -1,20 +1,20 @@
 /*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.glaf.base.listener;
 
@@ -64,7 +64,7 @@ public class UserOnlineListener implements HttpSessionAttributeListener {
 		synchronized (this) {
 			logger.info("in stack userId:" + user.getId());
 			if (findUser(user.getId()) == null) {// 用户未登陆
-				userList.put(new Long(user.getId()), user.getLoginIP());
+				userList.put(Long.valueOf(user.getId()), user.getLoginIP());
 			}
 		}
 	}
@@ -78,7 +78,7 @@ public class UserOnlineListener implements HttpSessionAttributeListener {
 			return;
 		synchronized (this) {
 			logger.info("out stack userId:" + user.getId());
-			userList.remove(new Long(user.getId()));
+			userList.remove(Long.valueOf(user.getId()));
 		}
 	}
 
@@ -92,8 +92,8 @@ public class UserOnlineListener implements HttpSessionAttributeListener {
 		String ip = null;
 		logger.info("find userId:" + userId);
 
-		if (userList.containsKey(new Long(userId))) {// 用户是否存在
-			ip = (String) userList.get(new Long(userId));
+		if (userList.containsKey(Long.valueOf(userId))) {// 用户是否存在
+			ip = (String) userList.get(Long.valueOf(userId));
 		}
 		logger.info("ip:" + ip);
 		return ip;

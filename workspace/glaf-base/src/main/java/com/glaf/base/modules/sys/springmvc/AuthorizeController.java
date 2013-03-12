@@ -33,8 +33,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.glaf.base.callback.CallbackProperties;
-import com.glaf.base.callback.LoginCallback;
 import com.glaf.base.listener.UserOnlineListener;
 import com.glaf.base.modules.Constants;
 import com.glaf.base.modules.sys.SysConstants;
@@ -54,6 +52,8 @@ import com.glaf.base.utils.ParamUtil;
 import com.glaf.base.utils.RequestUtil;
 import com.glaf.core.security.DigestUtil;
 import com.glaf.core.util.RequestUtils;
+import com.glaf.core.web.callback.CallbackProperties;
+import com.glaf.core.web.callback.LoginCallback;
 
 @Controller("/sys/authorize")
 @RequestMapping("/sys/authorize.do")
@@ -130,7 +130,8 @@ public class AuthorizeController {
 						Object obj = ClassUtil.instantiateObject(className);
 						if (obj instanceof LoginCallback) {
 							LoginCallback callback = (LoginCallback) obj;
-							callback.afterLogin(bean, request, response);
+							callback.afterLogin(bean.getAccount(), request,
+									response);
 						}
 					} catch (Exception ex) {
 						ex.printStackTrace();
@@ -236,8 +237,8 @@ public class AuthorizeController {
 		RequestUtil.setRequestParameterToAttribute(request);
 		SysUser user = RequestUtil.getLoginUser(request);
 		SysTree parent = sysTreeService.getSysTreeByCode(Constants.TREE_APP);
-		List<SysApplication> list = sysApplicationService
-				.getAccessAppList(parent.getId(), user);
+		List<SysApplication> list = sysApplicationService.getAccessAppList(
+				parent.getId(), user);
 		request.setAttribute("list", list);
 		return new ModelAndView("/modules/menu", modelMap);
 	}
@@ -256,7 +257,8 @@ public class AuthorizeController {
 			HttpServletRequest request, HttpServletResponse response) {
 		SysUser user = RequestUtil.getLoginUser(request);
 		long parent = ParamUtil.getIntParameter(request, "parent", 0);
-		List<SysApplication> list = sysApplicationService.getAccessAppList(parent, user);
+		List<SysApplication> list = sysApplicationService.getAccessAppList(
+				parent, user);
 		request.setAttribute("list", list);
 		return new ModelAndView("/modules/sub_menu", modelMap);
 	}

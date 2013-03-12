@@ -33,9 +33,10 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.cache.CacheFactory;
 import com.glaf.core.context.ContextFactory;
+import com.glaf.core.web.callback.CallbackProperties;
+import com.glaf.core.web.callback.LoginCallback;
 
-import com.glaf.base.callback.CallbackProperties;
-import com.glaf.base.callback.LoginCallback;
+ 
 
 import com.glaf.base.modules.sys.SysConstants;
 import com.glaf.base.modules.sys.model.SysUser;
@@ -143,7 +144,7 @@ public class AuthorizeBean {
 						Object obj = ClassUtil.instantiateObject(className);
 						if (obj instanceof LoginCallback) {
 							LoginCallback callback = (LoginCallback) obj;
-							callback.afterLogin(bean, request, null);
+							callback.afterLogin(bean.getAccount(), request, null);
 						}
 					} catch (Exception ex) {
 						ex.printStackTrace();

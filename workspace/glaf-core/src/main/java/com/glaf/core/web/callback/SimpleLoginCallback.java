@@ -24,6 +24,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.glaf.core.security.Authentication;
+
 public class SimpleLoginCallback implements LoginCallback {
 	private static final Log logger = LogFactory
 			.getLog(SimpleLoginCallback.class);
@@ -31,6 +33,7 @@ public class SimpleLoginCallback implements LoginCallback {
 	public void afterLogin(String actorId, HttpServletRequest request,
 			HttpServletResponse response) {
 		logger.debug(actorId + " is Login. ");
+		Authentication.setAuthenticatedActorId(actorId);
 	}
 
 }
