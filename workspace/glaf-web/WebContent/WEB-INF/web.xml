@@ -175,9 +175,10 @@
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
 
+	<!-- Session timeout on  60 * 60  (in minutes) -->
 	<session-config>
-        <session-timeout>3600</session-timeout>
-    </session-config>
+		<session-timeout>3600</session-timeout>
+	</session-config>
  
 	<error-page> 
 		<exception-type>com.glaf.base.modules.sys.interceptor.AuthorizeException</exception-type> 

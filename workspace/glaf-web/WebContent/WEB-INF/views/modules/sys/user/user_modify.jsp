@@ -1,5 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
-
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="html"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.glaf.base.modules.sys.*"%>
@@ -59,28 +58,29 @@ function setValue(obj){
         <td class="input-box2" valign="top">部　　门</td>
         <td><select name="parent" onChange="javascript:setValue(this);">
           <%
-if(list!=null){
-  Iterator iter=list.iterator();   
-  while(iter.hasNext()){
-    SysTree bean2=(SysTree)iter.next();	
-	SysDepartment dept = bean2.getDepartment();
-%>
-          <option value="<%=dept!=null?dept.getId():""%>">
-          <%
-for(int i=1;i<bean2.getDeep();i++){
-  out.print("&nbsp;&nbsp;");
-}
-out.print(bean2.getName());
-%>
-          </option>
-          <%    
-  }
-}
-%>
+			if(list!=null){
+			  Iterator iter=list.iterator();   
+			  while(iter.hasNext()){
+				SysTree bean2=(SysTree)iter.next();	
+				SysDepartment dept = bean2.getDepartment();
+			%>
+					  <option value="<%=dept!=null?dept.getId():""%>">
+					  <%
+			for(int i=1;i<bean2.getDeep();i++){
+			  out.print("&nbsp;&nbsp;");
+			}
+			out.print(bean2.getName());
+			%>
+					  </option>
+					  <%    
+			  }
+			}
+			%>
         </select>
-		<script language="JavaScript">								
+		<script language="javascript">								
           document.all.parent.value="<%=bean.getDepartment().getId()%>";	
-	    </script>		</td>
+	    </script>		
+	   </td>
       </tr>
       <tr>
         <td class="input-box2" valign="top">姓　　名*</td>
@@ -95,19 +95,22 @@ out.print(bean2.getName());
 女</td>
       </tr>
       <tr>
-        <td class="input-box2" valign="top">手　　机*</td>
+        <td class="input-box2" valign="top">手　　机</td>
         <td>
-          <input name="mobile" type="text" size="30" class="input" datatype="string" value="<%=bean.getMobile()%>" nullable="no" maxsize="12" chname="手机">        </td>
+          <input name="mobile" type="text" size="30" class="input" datatype="string" value="<%=bean.getMobile()%>" nullable="yes" maxsize="12" chname="手机">        
+		</td>
       </tr>
       <tr>
-        <td class="input-box2" valign="top">邮　　件*</td>
+        <td class="input-box2" valign="top">邮　　件</td>
         <td>
-          <input name="email" type="text" size="30" class="input" datatype="email" value="<%=bean.getEmail()%>" nullable="no" maxsize="50" chname="邮件">        </td>
+          <input name="email" type="text" size="30" class="input" datatype="email" value="<%=bean.getEmail()%>" nullable="yes" maxsize="50" chname="邮件">       
+		</td>
       </tr>
       <tr>
-        <td class="input-box2" valign="top">办公电话*</td>
+        <td class="input-box2" valign="top">办公电话</td>
         <td>
-          <input name="telephone" type="text" size="30" class="input" datatype="string" value="<%=bean.getTelephone()%>" nullable="no" maxsize="20" chname="办公电话">        </td>
+          <input name="telephone" type="text" size="30" class="input" datatype="string" value="<%=bean.getTelephone()%>" nullable="yes" maxsize="20" chname="办公电话">        
+		</td>
       </tr>
 	  <tr>
         <td class="input-box2" valign="top">直接上级</td>
@@ -115,7 +118,7 @@ out.print(bean2.getName());
           <input name="superiorIds" type="text" size="30" class="input" datatype="string" nullable="yes" maxsize="20"
 		  chname="直接上级" value="<%=bean.getSuperiorIds() != null ?bean.getSuperiorIds() :""%>"> 
 		  <br>（直接上级领导的账号，如果有多个，用半角的逗号“,”分隔）       
-		  </td>
+		</td>
       </tr>
       <tr>
         <td class="input-box2" valign="top">是否有效</td>
@@ -128,18 +131,21 @@ out.print(bean2.getName());
  
       <tr>
         <td colspan="2" align="center" valign="bottom" height="30">&nbsp;
-              <input name="btn_save2" type="submit" value="保存" class="button"></td>
+              <input name="btn_save2" type="submit" value="保存" class="button">
+	    </td>
       </tr>
     </table></td>
   </tr>
   <tr>
-    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <td>
+	 <table width="100%" border="0" cellspacing="0" cellpadding="0">
       <tr class="box">
         <td class="box-lb">&nbsp;</td>
         <td class="box-mb">&nbsp;</td>
         <td class="box-rb">&nbsp;</td>
       </tr>
-    </table></td>
+    </table>
+	</td>
   </tr>
 </table>
 </html:form>
