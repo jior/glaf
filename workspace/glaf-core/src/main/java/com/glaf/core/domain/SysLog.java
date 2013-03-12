@@ -16,15 +16,16 @@
  * limitations under the License.
  */
 
-package com.glaf.base.modules.sys.model;
+package com.glaf.core.domain;
 
 import java.io.Serializable;
 import java.util.Date;
 import com.alibaba.fastjson.*;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import com.glaf.base.modules.sys.util.SysLogJsonFactory;
+ 
 import com.glaf.core.base.JSONable;
+import com.glaf.core.domain.util.*;
 
 public class SysLog implements Serializable, JSONable {
 	private static final long serialVersionUID = 3489584842305336744L;

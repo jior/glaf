@@ -16,12 +16,12 @@
  * limitations under the License.
  */
 
-package com.glaf.base.modules.sys.util;
+package com.glaf.core.domain.util;
 
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.glaf.base.modules.sys.model.SysLog;
+import com.glaf.core.domain.SysLog;
 import com.glaf.core.util.DateUtils;
 
 public class SysLogJsonFactory {

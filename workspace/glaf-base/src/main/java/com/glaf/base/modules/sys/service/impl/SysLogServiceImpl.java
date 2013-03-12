@@ -22,12 +22,14 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.glaf.base.dao.AbstractSpringDao;
-import com.glaf.base.modules.sys.model.SysLog;
-import com.glaf.base.modules.sys.service.*;
 
-public class SysLogServiceImpl implements SysLogService {
+import com.glaf.core.domain.SysLog;
+import com.glaf.core.service.ISysLogService;
+
+public class SysLogServiceImpl implements ISysLogService {
 	private static final Log logger = LogFactory
 			.getLog(SysLogServiceImpl.class);
+	
 	private AbstractSpringDao abstractDao;
 
 	public void setAbstractDao(AbstractSpringDao abstractDao) {

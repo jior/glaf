@@ -16,12 +16,12 @@
  * limitations under the License.
  */
 
-package com.glaf.base.modules.sys.mapper;
+package com.glaf.core.mapper;
 
 import java.util.*;
 import org.springframework.stereotype.Component;
-import com.glaf.base.modules.sys.model.*;
-import com.glaf.base.modules.sys.query.*;
+import com.glaf.core.domain.*;
+import com.glaf.core.query.*;
 
 @Component
 public interface SysLogMapper {

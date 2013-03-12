@@ -16,11 +16,11 @@
  * limitations under the License.
  */
 
-package com.glaf.base.modules.sys.service;
+package com.glaf.core.service;
 
-import com.glaf.base.modules.sys.model.SysLog;
+import com.glaf.core.domain.SysLog;
 
-public interface SysLogService {
+public interface ISysLogService {
 
 	/**
 	 * ±£´æ

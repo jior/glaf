@@ -2,9 +2,9 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.glaf.base.modules.sys.mapper.SysLogMapper">
+<mapper namespace="com.glaf.core.mapper.SysLogMapper">
 
-	<resultMap id="sysLogResultMap"	type="com.glaf.base.modules.sys.model.SysLog">
+	<resultMap id="sysLogResultMap"	type="com.glaf.core.domain.SysLog">
 		<id property="id" column="ID" jdbcType="BIGINT" />
 		<result property="account" column="ACCOUNT" jdbcType="VARCHAR"/>
 		<result property="ip" column="IP" jdbcType="VARCHAR"/>
@@ -14,7 +14,7 @@
 	</resultMap>
 
  
-	<insert id="insertSysLog" parameterType="com.glaf.base.modules.sys.model.SysLog">
+	<insert id="insertSysLog" parameterType="com.glaf.core.domain.SysLog">
 		insert into sys_log 
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 		    ID
@@ -57,7 +57,7 @@
 	</insert>
 
 	 
-	<update id="updateSysLog" parameterType="com.glaf.base.modules.sys.model.SysLog">
+	<update id="updateSysLog" parameterType="com.glaf.core.domain.SysLog">
 		update sys_log
 		set
 		<trim prefix="" suffix="" suffixOverrides=",">		
@@ -88,7 +88,7 @@
         where ID =	#{id}
 	</delete>
 	
-	<delete id="deleteSysLogs" parameterType="com.glaf.base.modules.sys.query.SysLogQuery">
+	<delete id="deleteSysLogs" parameterType="com.glaf.core.query.SysLogQuery">
 		delete from sys_log
 		where ( 
  			  ID IN
@@ -105,7 +105,7 @@
 
 
 	<select id="getSysLogs" 
-		parameterType="com.glaf.base.modules.sys.query.SysLogQuery"
+		parameterType="com.glaf.core.query.SysLogQuery"
 		resultMap="sysLogResultMap">
 		select E.*
 		<include refid="selectSysLogsSql" />
@@ -120,7 +120,7 @@
 	</select>
 
 	<select id="getSysLogCount" 
-		parameterType="com.glaf.base.modules.sys.query.SysLogQuery"
+		parameterType="com.glaf.core.query.SysLogQuery"
 		resultType="int">
 		select count(*)
 		<include refid="selectSysLogsSql" />

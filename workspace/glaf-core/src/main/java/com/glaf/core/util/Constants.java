@@ -19,6 +19,8 @@
 package com.glaf.core.util;
 
 public final class Constants {
+	
+	public static final String SYSTEM_NAME="GLAF";
 
 	public static final String SYSTEM_CONFIG = "/glaf.properties";
 	
@@ -27,6 +29,8 @@ public final class Constants {
 	public static final String LOGIN_IP = "LOGIN_IP";
 	
 	public static final String LOGIN_ACTORID="LOGIN_ACTORID";
+	
+	public static final String SYSTEM_PERMISSION_IDS="SYSTEM_PERMISSION_IDS";
 	
 	public static final String TS = "TS";
 	

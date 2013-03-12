@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.glaf.base.modules.sys.service.mybatis;
+package com.glaf.core.service.impl;
 
 import java.util.*;
 import javax.annotation.Resource;
@@ -31,16 +31,16 @@ import org.springframework.transaction.annotation.Transactional;
 import com.glaf.core.id.*;
 import com.glaf.core.dao.*;
 
-import com.glaf.base.modules.sys.mapper.*;
-import com.glaf.base.modules.sys.model.*;
-import com.glaf.base.modules.sys.query.*;
-import com.glaf.base.modules.sys.service.*;
+import com.glaf.core.domain.*;
+import com.glaf.core.mapper.*;
+import com.glaf.core.query.*;
+import com.glaf.core.service.*;
 
 @Service("sysLogService")
 @Transactional(readOnly = true)
-public class SysLogServiceImpl implements SysLogService {
+public class MxSysLogServiceImpl implements ISysLogService {
 	protected final static Log logger = LogFactory
-			.getLog(SysLogServiceImpl.class);
+			.getLog(MxSysLogServiceImpl.class);
 
 	protected IdGenerator idGenerator;
 
@@ -50,7 +50,7 @@ public class SysLogServiceImpl implements SysLogService {
 
 	protected SysLogMapper sysLogMapper;
 
-	public SysLogServiceImpl() {
+	public MxSysLogServiceImpl() {
 
 	}
 
