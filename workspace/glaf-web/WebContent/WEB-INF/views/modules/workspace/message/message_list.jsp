@@ -1,5 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
-
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="html"%>
 <%@ page import="java.util.*"%>
 <%@ page import="java.net.*"%>
@@ -24,17 +23,17 @@ String flag = (String)request.getAttribute("flag");
 <script type='text/javascript' src="<%= request.getContextPath() %>/scripts/verify.js"></script>
 <script type="text/javascript">
 function openMsg(id) {
-  openWindow('message.do?method=showMessage&id=' + id, 600, 450);
+  openWindow('message.do?method=showMessage&id=' + id, 600, 350);
 }
 function sendMsg() {
-  openWindow('message.do?method=prepareSend', 660, 450);
+  openWindow('message.do?method=prepareSend', 600, 380);
 }
 function replyMsg() {
   var id = getCheckboxValue('id');
 	if (id.length == 0) {
 	  return;
 	}
-	openWindow('message.do?method=prepareSend&id=' + id, 660, 450);
+	openWindow('message.do?method=prepareSend&id=' + id, 600, 380);
 }
 function del(form) {
   if(confirmDelete(form)) {
@@ -101,25 +100,25 @@ function checkOperation(){
                       <td width="120" align="center">发送日期</td>
                     </tr>
                     <%
-											int i = 0;
-									  if (list != null) {
-										  Iterator iter = list.iterator();
-											while (iter.hasNext()) {
-											  Message bean = (Message) iter.next();
-												
-												SysUser sender = bean.getSender();
-												
-												String className = bean.getReaded() == 0 ? "readno-text" : "";
-												String imgClassName = bean.getReaded() == 0 ? "readno" : "readed";
-												String readStr = bean.getReaded() == 0 ? "未读" : "已读";
-												
-												String senderName = sender == null ? "" : sender.getName();
-												String colorClass = "";
-												if (bean.getType() == 0) {
-													String sysType = bean.getSysType()==0?"Alarm":"News";
-													senderName = "系统自动("+sysType+")";
-													colorClass = "redcolor";
-												}
+                     int i = 0;
+                     if (list != null) {
+	                    Iterator iter = list.iterator();
+                        while (iter.hasNext()) {
+		                    Message bean = (Message) iter.next();
+                        
+                        	SysUser sender = bean.getSender();
+                        	
+                        	String className = bean.getReaded() == 0 ? "readno-text" : "";
+                        	String imgClassName = bean.getReaded() == 0 ? "readno" : "readed";
+                        	String readStr = bean.getReaded() == 0 ? "未读" : "已读";
+                        	
+                        	String senderName = sender == null ? "" : sender.getName();
+                        	String colorClass = "";
+                        	if (bean.getType() == 0) {
+                        		String sysType = bean.getSysType()==0?"Alarm":"News";
+                        		senderName = "系统自动("+sysType+")";
+                        		colorClass = "redcolor";
+                        	}
 									%>
                     <tr class="<%= i % 2 == 0 ? "list-a" : "list-w" %>">
                       <td height="20" class="td-cb"><table border="0" cellpadding="0" cellspacing="0">
@@ -134,11 +133,12 @@ function checkOperation(){
                       <td class="td-date <%= colorClass %>"><%= WebUtil.dateToString(bean.getCreateDate(), "yyyy-MM-dd HH:mm:ss") %></td>
                     </tr>
                     <%
-											  i++;
-									    }
-									  }
-										for(; i < pageSize; i++) {
-									%>
+		                  i++;
+                           }
+                     }
+
+					for(; i < pageSize; i++) {
+					%>
                     <tr class="<%= i % 2 == 0 ? "list-a" : "list-w" %>">
                       <td height="20">&nbsp;</td>                      
                       <td>&nbsp;</td>
@@ -147,8 +147,8 @@ function checkOperation(){
                       <td>&nbsp;</td>
                     </tr>
                     <%
-									  }
-									%>
+                         }
+					%>
               </table>
                 <table width="100%" border="0" cellspacing="0" cellpadding="0">
                   <tr>
@@ -162,9 +162,8 @@ function checkOperation(){
 					%>
                       <input name="btn_del" id="btn_del" type="button" class="button" onClick="javascript:del(this.form);" value="删除" disabled="disabled">
                       <input name="btn_reply" id="btn_reply" type="button" value="回复消息" class="button" onClick="javascript:replyMsg();" disabled="disabled"></td>
-                      <td align="right" valign="bottom"><%
-String params = "method=showReceiveList";
-%>
+                      <td align="right" valign="bottom">
+					    <%String params = "method=showReceiveList";%>
                         <jsp:include page="/WEB-INF/views/inc/show_page.jsp" flush="true">
                         <jsp:param name="total" value="<%=pager.getTotalRecordCount()%>"/>            
                         <jsp:param name="page_count" value="<%=pager.getTotalPageCount()%>"/>            

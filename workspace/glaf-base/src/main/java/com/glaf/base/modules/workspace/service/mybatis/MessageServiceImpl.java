@@ -96,6 +96,17 @@ public class MessageServiceImpl implements MessageService {
 		RowBounds rowBounds = new RowBounds(start, pageSize);
 		List<Message> rows = sqlSessionTemplate.selectList("getMessages",
 				query, rowBounds);
+		if (rows != null && !rows.isEmpty()) {
+			List<SysUser> users = sysUserService.getSysUserList();
+			Map<Long, SysUser> userMap = new HashMap<Long, SysUser>();
+			for (SysUser user : users) {
+				userMap.put(user.getId(), user);
+			}
+			for (Message message : rows) {
+				message.setRecver(userMap.get(message.getRecverId()));
+				message.setSender(userMap.get(message.getSenderId()));
+			}
+		}
 		return rows;
 	}
 
@@ -104,6 +115,10 @@ public class MessageServiceImpl implements MessageService {
 			return null;
 		}
 		Message message = messageMapper.getMessageById(id);
+		if (message != null) {
+			message.setRecver(sysUserService.findById(message.getRecverId()));
+			message.setSender(sysUserService.findById(message.getSenderId()));
+		}
 		return message;
 	}
 
@@ -217,6 +232,7 @@ public class MessageServiceImpl implements MessageService {
 			SysUser recver = sysUserService.findById(Long
 					.parseLong(recverIds[i]));
 			newMessage.setRecver(recver);
+			newMessage.setRecverId(recver.getId());
 
 			recverList.append(recver.getName()).append(",");
 
@@ -251,6 +267,7 @@ public class MessageServiceImpl implements MessageService {
 
 		newMessage.setCategory(1);// ·¢¼þÏä
 		newMessage.setRecver(message.getSender());
+		newMessage.setRecverId(message.getSender().getId());
 
 		if (recverLists.endsWith(",")) {
 			recverLists = recverLists.substring(0, recverLists.length() - 1);
@@ -300,6 +317,7 @@ public class MessageServiceImpl implements MessageService {
 							newMessage, message);
 				}
 				newMessage.setRecver(recver);
+				newMessage.setRecverId(recver.getId());
 
 				if (!saveOrUpdate(newMessage)) {
 					rst = false;
@@ -316,7 +334,6 @@ public class MessageServiceImpl implements MessageService {
 		return rst;
 	}
 
-	
 	@Transactional
 	public Message updateReadMessage(long id) {
 		Message message = find(id);
@@ -341,6 +358,17 @@ public class MessageServiceImpl implements MessageService {
 		int start = pageSize * (pageNo - 1);
 		List<Message> list = this.getMessagesByQueryCriteria(start, pageSize,
 				query);
+		if (list != null && !list.isEmpty()) {
+			List<SysUser> users = sysUserService.getSysUserList();
+			Map<Long, SysUser> userMap = new HashMap<Long, SysUser>();
+			for (SysUser user : users) {
+				userMap.put(user.getId(), user);
+			}
+			for (Message message : list) {
+				message.setRecver(userMap.get(message.getRecverId()));
+				message.setSender(userMap.get(message.getSenderId()));
+			}
+		}
 		pager.setResults(list);
 		pager.setPageSize(pageSize);
 		pager.setCurrentPageNo(pageNo);
@@ -368,6 +396,17 @@ public class MessageServiceImpl implements MessageService {
 		int start = pageSize * (pageNo - 1);
 		List<Message> list = this.getMessagesByQueryCriteria(start, pageSize,
 				query);
+		if (list != null && !list.isEmpty()) {
+			List<SysUser> users = sysUserService.getSysUserList();
+			Map<Long, SysUser> userMap = new HashMap<Long, SysUser>();
+			for (SysUser user : users) {
+				userMap.put(user.getId(), user);
+			}
+			for (Message message : list) {
+				message.setRecver(userMap.get(message.getRecverId()));
+				message.setSender(userMap.get(message.getSenderId()));
+			}
+		}
 		pager.setResults(list);
 		pager.setPageSize(pageSize);
 		pager.setCurrentPageNo(pageNo);
@@ -396,6 +435,17 @@ public class MessageServiceImpl implements MessageService {
 		int start = pageSize * (pageNo - 1);
 		List<Message> list = this.getMessagesByQueryCriteria(start, pageSize,
 				query);
+		if (list != null && !list.isEmpty()) {
+			List<SysUser> users = sysUserService.getSysUserList();
+			Map<Long, SysUser> userMap = new HashMap<Long, SysUser>();
+			for (SysUser user : users) {
+				userMap.put(user.getId(), user);
+			}
+			for (Message message : list) {
+				message.setRecver(userMap.get(message.getRecverId()));
+				message.setSender(userMap.get(message.getSenderId()));
+			}
+		}
 		pager.setResults(list);
 		pager.setPageSize(pageSize);
 		pager.setCurrentPageNo(pageNo);
@@ -423,6 +473,17 @@ public class MessageServiceImpl implements MessageService {
 		int start = pageSize * (pageNo - 1);
 		List<Message> list = this.getMessagesByQueryCriteria(start, pageSize,
 				query);
+		if (list != null && !list.isEmpty()) {
+			List<SysUser> users = sysUserService.getSysUserList();
+			Map<Long, SysUser> userMap = new HashMap<Long, SysUser>();
+			for (SysUser user : users) {
+				userMap.put(user.getId(), user);
+			}
+			for (Message message : list) {
+				message.setRecver(userMap.get(message.getRecverId()));
+				message.setSender(userMap.get(message.getSenderId()));
+			}
+		}
 		pager.setResults(list);
 		pager.setPageSize(pageSize);
 		pager.setCurrentPageNo(pageNo);

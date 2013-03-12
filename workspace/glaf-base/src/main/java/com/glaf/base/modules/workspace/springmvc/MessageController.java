@@ -181,6 +181,7 @@ public class MessageController {
 		bean.setTitle(formBean.getTitle());
 		bean.setContent(formBean.getContent());
 		bean.setSender(user);
+		bean.setSenderId(user.getId());
 		bean.setCategory(0);// ÊÕ¼şÏä
 		bean.setReaded(0);
 		bean.setCreateDate(new Date());
@@ -208,7 +209,6 @@ public class MessageController {
 				while (iter.hasNext()) {
 					SysUser user_sp = (SysUser) iter.next();
 					if (user_sp.getAccountType() == 1) {
-
 						sb.append(user_sp.getId() + ",");
 					}
 					String userIds = sb.toString();

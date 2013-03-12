@@ -1,5 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
-
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="html"%>
 <%@ page import="java.util.*"%>
 <%@ page import="java.util.List" %>
@@ -10,7 +9,7 @@
 <%@ page import="com.glaf.base.modules.workspace.model.*"%>
 <%@ page import="com.glaf.base.utils.*"%>
 <%
-  Message bean = (Message) request.getAttribute("bean");
+    Message bean = (Message) request.getAttribute("bean");
     String title = "";
 	String recverIds = "";
 	String recverName = "";
@@ -21,7 +20,6 @@
 		recverIds = recver == null ? "" : recver.getId() + "";
 		recverName = recver == null ? "" : recver.getName()+"";
 		recverEmail =recver == null ? "" : recver.getEmail();
-	
   }
 %>
 <html>
@@ -161,7 +159,7 @@ function saveBoth(form){
       </tr>
       <tr>
         <td valign="top" class="input-box2">内&nbsp;&nbsp;容</td>
-        <td><textarea name="content" cols="58" rows="6" class="input" datatype="string" nullable="no" chname="内容" maxsize="2000"></textarea></td>
+        <td><textarea name="content" cols="58" rows="10" class="input" datatype="string" nullable="no" chname="内容" maxsize="2000"></textarea></td>
       </tr>
       <tr>
         <td valign="top">&nbsp;</td>
