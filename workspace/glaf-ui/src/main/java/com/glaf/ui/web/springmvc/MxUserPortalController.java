@@ -83,24 +83,26 @@ public class MxUserPortalController {
 				PanelInstance p = iter.next();
 				if (StringUtils.isNumeric(p.getName())) {
 					int pos = Integer.parseInt(p.getName());
-					panelPxMap.put(p.getPanelId(), pos);
+					if (pos > 0) {
+						panelPxMap.put(p.getPanelId(), pos);
 
-					if ("P2".equals(layoutName)) {
-						if (pos % 2 == 1) {
-							panelMap.put(p.getPanelId(), 0);
+						if ("P2".equals(layoutName)) {
+							if (pos % 2 == 1) {
+								panelMap.put(p.getPanelId(), 0);
+							} else {
+								panelMap.put(p.getPanelId(), 1);
+							}
+						} else if ("P3".equals(layoutName)) {
+							if (pos % 3 == 1) {
+								panelMap.put(p.getPanelId(), 0);
+							} else if (pos % 3 == 2) {
+								panelMap.put(p.getPanelId(), 1);
+							} else if (pos % 3 == 0) {
+								panelMap.put(p.getPanelId(), 2);
+							}
 						} else {
-							panelMap.put(p.getPanelId(), 1);
-						}
-					} else if ("P3".equals(layoutName)) {
-						if (pos % 3 == 1) {
 							panelMap.put(p.getPanelId(), 0);
-						} else if (pos % 3 == 2) {
-							panelMap.put(p.getPanelId(), 1);
-						} else if (pos % 3 == 0) {
-							panelMap.put(p.getPanelId(), 2);
 						}
-					} else {
-						panelMap.put(p.getPanelId(), 0);
 					}
 				}
 			}
