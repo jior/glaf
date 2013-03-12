@@ -59,6 +59,7 @@ public class SpringDispatcherServlet extends DispatcherServlet {
 			SysUser user = RequestUtil.getLoginUser(request);
 			if (user != null) {
 				Authentication.setAuthenticatedUser(user);
+				com.glaf.core.security.Authentication.setAuthenticatedActorId(user.getAccount());
 			}
 
 			/**

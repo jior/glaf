@@ -103,6 +103,7 @@ public class AuthorizeFilter implements Filter {
 					}
 					Authentication.setAuthenticatedUser(bean);
 					Authentication.setAuthenticatedAccount(bean.getAccount());
+					com.glaf.core.security.Authentication.setAuthenticatedActorId(bean.getAccount());
 				}
 			}
 		}
