@@ -84,26 +84,31 @@ public class SysTodoServiceImpl implements ISysTodoService {
 	public Todo getTodo(Long todoId) {
 		String cacheKey = "x_todo_" + todoId;
 		if (CacheFactory.get(cacheKey) != null) {
-			String text = (String)CacheFactory.get(cacheKey);
-			JSONObject jsonObject = JSON.parseObject(text) ;
+			String text = (String) CacheFactory.get(cacheKey);
+			JSONObject jsonObject = JSON.parseObject(text);
 			Todo model = TodoJsonFactory.jsonToObject(jsonObject);
 			return model;
 		}
 		Todo todo = todoMapper.getTodoById(todoId);
-		CacheFactory.put(cacheKey, todo.toJsonObject().toJSONString());
+		if (todo != null) {
+			CacheFactory.put(cacheKey, todo.toJsonObject().toJSONString());
+		}
 		return todo;
 	}
 
 	public Todo getTodoByCode(String code) {
 		String cacheKey = "x_todo_c_" + code;
 		if (CacheFactory.get(cacheKey) != null) {
-			String text = (String)CacheFactory.get(cacheKey);
-			JSONObject jsonObject = JSON.parseObject(text) ;
+			String text = (String) CacheFactory.get(cacheKey);
+			JSONObject jsonObject = JSON.parseObject(text);
 			Todo todo = TodoJsonFactory.jsonToObject(jsonObject);
 			return todo;
 		}
 		Todo todo = todoMapper.getTodoByCode(code);
-		CacheFactory.put(cacheKey, todo.toJsonObject().toJSONString());
+		if (todo != null) {
+			CacheFactory.put(cacheKey, todo.toJsonObject().toJSONString());
+		}
+
 		return todo;
 	}
 

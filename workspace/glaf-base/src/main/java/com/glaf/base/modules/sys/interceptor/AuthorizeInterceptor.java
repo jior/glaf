@@ -73,6 +73,9 @@ public class AuthorizeInterceptor implements MethodBeforeAdvice {
 					SysUser user = RequestUtil.getLoginUser(request);
 					if (user != null) {
 						account = user.getAccount();
+						if (StringUtils.equals(user.getAdminFlag(), "1")) {
+							authorized = true;
+						}
 					}
 					// logger.debug("IP:" + ip + ", Account:" + account);
 				}
