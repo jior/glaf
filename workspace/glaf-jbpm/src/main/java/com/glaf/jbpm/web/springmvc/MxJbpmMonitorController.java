@@ -130,7 +130,7 @@ public class MxJbpmMonitorController {
 		ProcessQuery query = new ProcessQuery();
 		Tools.populate(query, paramMap);
 
-		Paging glaf = null;
+		Paging jpage = null;
 		JbpmContext jbpmContext = null;
 		try {
 			Map<String, User> userMap = ProcessContainer.getContainer()
@@ -138,12 +138,12 @@ public class MxJbpmMonitorController {
 			jbpmContext = ProcessContainer.getContainer().createJbpmContext();
 			JbpmProcessManager jbpmProcessManager = ProcessContainer
 					.getContainer().getJbpmProcessManager();
-			glaf = jbpmProcessManager.getPageProcessInstances(jbpmContext,
+			jpage = jbpmProcessManager.getPageProcessInstances(jbpmContext,
 					currPageNo, limit, query);
-			if (glaf.getRows() != null && glaf.getRows().size() > 0) {
+			if (jpage.getRows() != null && jpage.getRows().size() > 0) {
 				Map<String, Object> variables = new HashMap<String, Object>();
 				Collection<Long> processInstanceIds = new HashSet<Long>();
-				Iterator<Object> iterator = glaf.getRows().iterator();
+				Iterator<Object> iterator = jpage.getRows().iterator();
 				while (iterator.hasNext()) {
 					ProcessInstance processInstance = (ProcessInstance) iterator
 							.next();
@@ -175,7 +175,7 @@ public class MxJbpmMonitorController {
 
 			request.setAttribute("userMap", userMap);
 
-			request.setAttribute("glaf", glaf);
+			request.setAttribute("jpage", jpage);
 		} catch (Exception ex) {
 			if (LogUtils.isDebug()) {
 				ex.printStackTrace();
@@ -230,7 +230,7 @@ public class MxJbpmMonitorController {
 		long processDefinitionId = ParamUtils.getLong(paramMap,
 				"processDefinitionId");
 
-		Paging glaf = null;
+		Paging jpage = null;
 		JbpmContext jbpmContext = null;
 		List<TaskItem> taskItems = null;
 		try {
@@ -255,11 +255,11 @@ public class MxJbpmMonitorController {
 			}
 			JbpmProcessManager jbpmProcessManager = ProcessContainer
 					.getContainer().getJbpmProcessManager();
-			glaf = jbpmProcessManager.getPageProcessInstances(jbpmContext,
+			jpage = jbpmProcessManager.getPageProcessInstances(jbpmContext,
 					currPageNo, limit, query);
-			if (glaf.getRows() != null && glaf.getRows().size() > 0) {
+			if (jpage.getRows() != null && jpage.getRows().size() > 0) {
 				Collection<Long> processInstanceIds = new HashSet<Long>();
-				Iterator<Object> iterator = glaf.getRows().iterator();
+				Iterator<Object> iterator = jpage.getRows().iterator();
 				while (iterator.hasNext()) {
 					ProcessInstance processInstance = (ProcessInstance) iterator
 							.next();
@@ -276,7 +276,7 @@ public class MxJbpmMonitorController {
 
 			}
 
-			request.setAttribute("glaf", glaf);
+			request.setAttribute("jpage", jpage);
 		} catch (Exception ex) {
 			if (LogUtils.isDebug()) {
 				ex.printStackTrace();
