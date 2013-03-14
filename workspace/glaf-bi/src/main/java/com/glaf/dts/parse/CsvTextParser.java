@@ -33,11 +33,12 @@ import org.apache.commons.lang.StringUtils;
 
 import com.glaf.core.base.ColumnModel;
 import com.glaf.core.base.TableModel;
-import com.glaf.core.xml.MetadataXmlReader;
 import com.glaf.core.context.ContextFactory;
 import com.glaf.core.domain.TableDefinition;
 import com.glaf.core.service.ITableDataService;
 import com.glaf.core.service.ITableDefinitionService;
+import com.glaf.core.util.DBUtils;
+import com.glaf.core.xml.MetadataXmlReader;
 
 public class CsvTextParser implements TextParser {
 
@@ -48,7 +49,11 @@ public class CsvTextParser implements TextParser {
 		TableDefinition tableDefinition = reader
 				.read(new java.io.FileInputStream(mappingFile));
 		if (tableDefinition != null) {
-			com.glaf.core.util.DBUtils.createTable(tableDefinition);
+			if (DBUtils.tableExists(tableDefinition.getTableName())) {
+				com.glaf.core.util.DBUtils.alterTable(tableDefinition);
+			} else {
+				com.glaf.core.util.DBUtils.createTable(tableDefinition);
+			}
 		}
 		XmlMappingReader xmlReader = new XmlMappingReader();
 		TableModel tableModel = xmlReader.read(new java.io.FileInputStream(

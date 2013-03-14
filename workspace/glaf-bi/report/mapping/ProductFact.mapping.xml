@@ -1,0 +1,84 @@
+
+<mapping>
+    <entity name="ProductFact" package="com.glaf.rms" table="rms_productfact" parseType="text"
+	        title="ProductFact" primaryKey="id" filePrefix="PALC-PBRT-RSLT" stopWord="TPALC-PBRT-RSLT"
+			aggregationKeys="stype,smc,scolor,svin" startRow="1" insertOnly="true">
+        <property name="id" column="id" type="String" title="id" valueExpression="#{id}"/>
+		<property name="recordID" column="srecordID" type="String" title="recordID" length="1"
+		          position="1" temporary="true"/>
+        <property name="modeltype" column="smodeltype" type="String" title="smodeltype" length="3"
+		          position="2"/>
+        <property name="type" column="stype" type="String" title="stype" length="17"
+		          position="3"/>
+        <property name="mc" column="smc" type="String" title="smc" length="2"
+		          position="4"/>
+        <property name="color" column="scolor" type="String" title="scolor" length="3"
+		          position="5"/>
+        <property name="vin" column="svin" type="String" title="svin" length="17"
+		          position="6"/>
+        <property name="weline" column="sweline" type="String" title="sweline" length="2"
+		          position="7"/>
+        <property name="paline" column="spaline" type="String" title="spaline" length="2"
+		          position="8"/>
+        <property name="afline" column="safline" type="String" title="safline" length="2"
+		          position="9"/>
+        <property name="sendline" column="ssendline" type="String" title="ssendline" length="2"
+		          position="10"/>
+        <property name="webegindate" column="iwebegindate" type="Integer" title="iwebegindate" length="8"
+		          position="11"/>
+        <property name="westartclass" column="swestartclass" type="String" title="swestartclass" length="1"
+		          position="12"/>
+        <property name="weenddate" column="iweenddate" type="Integer" title="iweenddate" length="8"
+		          position="13"/>
+        <property name="weemdclass" column="sweemdclass" type="String" title="sweemdclass" length="1"
+		          position="14"/>
+        <property name="pabegindate" column="ipabegindate" type="Integer" title="ipabegindate" length="8"
+		          position="15"/>
+        <property name="pabeginclass" column="spabeginclass" type="String" title="spabeginclass" length="1"
+		          position="16"/>
+        <property name="paenddate" column="ipaenddate" type="Integer" title="ipaenddate" length="8"
+		          position="17"/>
+        <property name="paendclass" column="spaendclass" type="String" title="spaendclass" length="1"
+		          position="18"/>
+        <property name="afbegindate" column="iafbegindate" type="Integer" title="iafbegindate" length="8"
+		          position="19"/>
+        <property name="afbeginclass" column="safbeginclass" type="String" title="safbeginclass" length="1"
+		          position="20"/>
+        <property name="afenddate" column="iafenddate" type="Integer" title="iafenddate" length="8"
+		          position="21"/>
+        <property name="afendclass" column="safendclass" type="String" title="safendclass" length="1"
+		          position="22"/>
+        <property name="sendenddate" column="isendenddate" type="Integer" title="isendenddate" length="8"
+		          position="23"/>
+        <property name="sendendclass" column="ssendendclass" type="String" title="ssendendclass" length="1"
+		          position="24"/>
+        <property name="webadindate" column="iwebadindate" type="Integer" title="iwebadindate" length="8"
+		          position="25"/>
+        <property name="webadinclass" column="swebadinclass" type="String" title="swebadinclass" length="1"
+		          position="26"/>
+        <property name="webadoutdate" column="iwebadoutdate" type="Integer" title="iwebadoutdate" length="8"
+		          position="27"/>
+        <property name="webadoutclass" column="swebadoutclass" type="String" title="swebadoutclass" length="1"
+		          position="28"/>
+        <property name="pabadindate" column="ipabadindate" type="Integer" title="ipabadindate" length="8"
+		          position="29"/>
+        <property name="pabadinclass" column="spabadinclass" type="String" title="spabadinclass" length="1"
+		          position="30"/>
+        <property name="pabadoutdate" column="ipabadoutdate" type="Integer" title="ipabadoutdate" length="8"
+		          position="31"/>
+        <property name="pabadoutclass" column="spabadoutclass" type="String" title="spabadoutclass" length="1"
+		          position="32"/>
+        <property name="afbadindate" column="iafbadindate" type="Integer" title="iafbadindate" length="8"
+		          position="33"/>
+        <property name="afbadinclass" column="safbadinclass" type="String" title="safbadinclass" length="1"
+		          position="34"/>
+        <property name="afbadoutdate" column="iafbadoutdate" type="Integer" title="iafbadoutdate" length="8"
+		          position="35"/>
+        <property name="afbadoutclass" column="safbadoutclass" type="String" title="safbadoutclass" length="1"
+		          position="36"/>
+        <property name="lineFeed" column="slf" type="String" title="slf" length="1"
+		          position="37"/>
+        <property name="crdate" column="dcrdate" type="Date" title="dcrdate" valueExpression="#{now}" />
+		<property name="aggregationkey" column="aggregationkey" type="String" title="aggregationkey" length="500" />
+    </entity>
+</mapping>

@@ -1,0 +1,30 @@
+
+<mapping>
+    <entity name="MonthReport" package="com.glaf.rms" table="rms_monthreport" 
+	        title="MonthReport" primaryKey="id">
+        <property  name="id" column="id" type="String" title="id" valueExpression="#{id}"/>
+        <property  name="modelcode" column="smodelcode" type="String" title="smodelcode" length="30" nullable="false"/>
+        <property  name="won" column="iwon" type="Integer" title="iwon" />
+        <property  name="woff" column="iwoff" type="Integer" title="iwoff" />
+        <property  name="pon" column="ipon" type="Integer" title="ipon" />
+        <property  name="poff" column="ipoff" type="Integer" title="ipoff" />
+        <property  name="aon" column="iaon" type="Integer" title="iaon" />
+        <property  name="aoff" column="iaoff" type="Integer" title="iaoff" />
+        <property  name="vqWe" column="ivq_we" type="Integer" title="ivqWe" />
+        <property  name="vqPa" column="ivq_pa" type="Integer" title="ivqPa" />
+        <property  name="vqAf" column="ivq_af" type="Integer" title="ivqAf" />
+        <property  name="vq" column="ivq" type="Integer" title="ivq" />
+        <property  name="vqoffplan" column="ivqoffplan" type="Integer" title="ivqoffplan" />
+        <property  name="vqofffact" column="ivqofffact" type="Integer" title="ivqofffact" />
+        <property  name="saleplan" column="isaleplan" type="Integer" title="isaleplan" />
+        <property  name="import" column="iimport" type="Integer" title="iimport" />
+        <property  name="export" column="iexport" type="Integer" title="iexport" />
+        <property  name="sale1" column="isale1" type="Integer" title="isale1" />
+        <property  name="sale2" column="isale2" type="Integer" title="isale2" />
+        <property  name="stockfactory" column="istockfactory" type="Integer" title="istockfactory" />
+        <property  name="storageroad" column="istorageroad" type="Integer" title="istorageroad" />
+        <property  name="storagedlr" column="istoragedlr" type="Integer" title="istoragedlr" />
+        <property  name="crdate" column="dcrdate" type="Date" title="dcrdate" valueExpression="#{now}"/>
+        <property  name="type" column="stype" type="String" title="stype" length="3"/>
+    </entity>
+</mapping>

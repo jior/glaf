@@ -51,7 +51,7 @@
 	<!-- 编译任务 -->
 	<target name="jar" depends="build" description="Create java jar file">
 		<jar jarfile="${project.distname}-src.zip">
-			<fileset dir="." includes="*.bat,*.xml, src/**/*.*,mapping/**/*.xml,conf/**" excludes="**/*.cvs,**/*.bak,**/*.tmp,**/*.scc,**/*.svn" />
+			<fileset dir="." includes="*.bat,*.xml, src/**/*.*,mapping/**/*.xml,conf/**,report/**" excludes="**/*.cvs,**/*.bak,**/*.tmp,**/*.scc,**/*.svn" />
 		</jar>
 
 		<jar jarfile="${jarfile}" basedir="${classes.dir}"

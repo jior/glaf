@@ -29,8 +29,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.core.id.*;
-import com.glaf.core.dao.*;
-
 import com.glaf.core.domain.*;
 import com.glaf.core.mapper.*;
 import com.glaf.core.query.*;
@@ -44,14 +42,35 @@ public class MxSysLogServiceImpl implements ISysLogService {
 
 	protected IdGenerator idGenerator;
 
-	protected PersistenceDAO persistenceDAO;
-
 	protected SqlSessionTemplate sqlSessionTemplate;
 
 	protected SysLogMapper sysLogMapper;
 
 	public MxSysLogServiceImpl() {
 
+	}
+
+	public int count(SysLogQuery query) {
+		query.ensureInitialized();
+		return sysLogMapper.getSysLogCount(query);
+	}
+
+	@Transactional
+	public boolean create(SysLog bean) {
+		this.save(bean);
+		return true;
+	}
+
+	@Transactional
+	public boolean delete(long id) {
+		this.deleteById(id);
+		return true;
+	}
+
+	@Transactional
+	public boolean delete(SysLog bean) {
+		this.deleteById(bean.getId());
+		return true;
 	}
 
 	@Transactional
@@ -70,15 +89,16 @@ public class MxSysLogServiceImpl implements ISysLogService {
 		}
 	}
 
-	public int count(SysLogQuery query) {
-		query.ensureInitialized();
-		return sysLogMapper.getSysLogCount(query);
+	public SysLog findById(long id) {
+		return this.getSysLog(id);
 	}
 
-	public List<SysLog> list(SysLogQuery query) {
-		query.ensureInitialized();
-		List<SysLog> list = sysLogMapper.getSysLogs(query);
-		return list;
+	public SysLog getSysLog(Long id) {
+		if (id == null) {
+			return null;
+		}
+		SysLog sysLog = sysLogMapper.getSysLogById(id);
+		return sysLog;
 	}
 
 	public int getSysLogCountByQueryCriteria(SysLogQuery query) {
@@ -93,12 +113,10 @@ public class MxSysLogServiceImpl implements ISysLogService {
 		return rows;
 	}
 
-	public SysLog getSysLog(Long id) {
-		if (id == null) {
-			return null;
-		}
-		SysLog sysLog = sysLogMapper.getSysLogById(id);
-		return sysLog;
+	public List<SysLog> list(SysLogQuery query) {
+		query.ensureInitialized();
+		List<SysLog> list = sysLogMapper.getSysLogs(query);
+		return list;
 	}
 
 	@Transactional
@@ -119,46 +137,19 @@ public class MxSysLogServiceImpl implements ISysLogService {
 	}
 
 	@Resource
-	public void setSysLogMapper(SysLogMapper sysLogMapper) {
-		this.sysLogMapper = sysLogMapper;
-	}
-
-	@Resource
-	public void setPersistenceDAO(PersistenceDAO persistenceDAO) {
-		this.persistenceDAO = persistenceDAO;
-	}
-
-	@Resource
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}
 
-	@Transactional
-	public boolean create(SysLog bean) {
-		this.save(bean);
-		return true;
+	@Resource
+	public void setSysLogMapper(SysLogMapper sysLogMapper) {
+		this.sysLogMapper = sysLogMapper;
 	}
 
 	@Transactional
 	public boolean update(SysLog bean) {
 		this.save(bean);
 		return true;
-	}
-
-	@Transactional
-	public boolean delete(SysLog bean) {
-		this.deleteById(bean.getId());
-		return true;
-	}
-
-	@Transactional
-	public boolean delete(long id) {
-		this.deleteById(id);
-		return true;
-	}
-
-	public SysLog findById(long id) {
-		return this.getSysLog(id);
 	}
 
 }

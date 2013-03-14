@@ -29,8 +29,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.core.id.*;
-import com.glaf.core.dao.*;
-
 import com.glaf.core.todo.*;
 import com.glaf.core.todo.mapper.*;
 import com.glaf.core.todo.query.*;
@@ -41,8 +39,6 @@ public class SysTodoInstanceServiceImpl implements ISysTodoInstanceService {
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
 
 	protected LongIdGenerator idGenerator;
-
-	protected PersistenceDAO persistenceDAO;
 
 	protected SqlSessionTemplate sqlSessionTemplate;
 
@@ -119,11 +115,6 @@ public class SysTodoInstanceServiceImpl implements ISysTodoInstanceService {
 	@Resource
 	public void setTodoInstanceMapper(TodoInstanceMapper todoInstanceMapper) {
 		this.todoInstanceMapper = todoInstanceMapper;
-	}
-
-	@Resource
-	public void setPersistenceDAO(PersistenceDAO persistenceDAO) {
-		this.persistenceDAO = persistenceDAO;
 	}
 
 	@Resource

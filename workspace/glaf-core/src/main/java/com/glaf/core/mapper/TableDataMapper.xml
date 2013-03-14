@@ -184,9 +184,9 @@
 	<select id="getTableKeyMap" parameterType="com.glaf.core.base.TableModel"
 		resultType="map">
 
-		select ${idColumn.columnName} as id, aggregationkey_ as aggregationKey
+		select ${idColumn.columnName} as id, AGGREGATIONKEY as aggregationKey
 		from ${tableName}
-		where aggregationkey_ in (
+		where AGGREGATIONKEY in (
 		<foreach item="aggregationkey" index="index" collection="aggregationKeys"
 			open="" separator="," close="">
 			#{aggregationkey}
