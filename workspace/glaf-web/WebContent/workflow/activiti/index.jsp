@@ -106,7 +106,8 @@
 	（注：在流程监控图中可以看到参与者。）
     
  	<table id="dg" title="列表数据" class="easyui-datagrid" style="width:800px;height:380px"
-			url="get_data.jsp" pagination="true" rownumbers="true" fitColumns="true" singleSelect="true">
+			url="get_data.jsp" pagination="true" rownumbers="true" fitColumns="true" singleSelect="true" 
+			onDblClickRow ="viewProc" >
 		<thead>
 			<tr>
 				<th field="ID_" width="50">编号</th>

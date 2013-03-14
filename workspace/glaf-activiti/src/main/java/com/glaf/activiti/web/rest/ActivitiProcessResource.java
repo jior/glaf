@@ -19,7 +19,6 @@
 package com.glaf.activiti.web.rest;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -42,7 +41,6 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.glaf.core.config.CustomProperties;
@@ -57,6 +55,7 @@ import com.glaf.activiti.service.ActivitiDeployQueryService;
 import com.glaf.activiti.service.ActivitiProcessQueryService;
 import com.glaf.activiti.service.ActivitiProcessService;
 import com.glaf.activiti.service.ActivitiTaskQueryService;
+import com.glaf.activiti.util.ProcessUtils;
 
 @Controller("/rs/activiti/process")
 @Path("/rs/activiti/process")
@@ -104,21 +103,12 @@ public class ActivitiProcessResource {
 					.getProcessDefinitionByProcessInstanceId(processInstanceId);
 		}
 		if (processDefinition != null) {
-			String resourceName = processDefinition.getDiagramResourceName();
-			if (resourceName != null) {
-				InputStream inputStream = activitiDeployQueryService
-						.getResourceAsStream(
-								processDefinition.getDeploymentId(),
-								resourceName);
-				if (inputStream != null) {
-					byte[] bytes = null;
-					try {
-						bytes = FileCopyUtils.copyToByteArray(inputStream);
-					} catch (IOException e) {
-					}
-					return bytes;
-				}
+			byte[] bytes = null;
+			try {
+				bytes = ProcessUtils.getImage(processDefinition.getId());
+			} catch (Exception e) {
 			}
+			return bytes;
 		}
 
 		return null;

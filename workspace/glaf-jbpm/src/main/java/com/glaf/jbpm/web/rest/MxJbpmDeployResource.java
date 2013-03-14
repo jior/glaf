@@ -156,7 +156,6 @@ public class MxJbpmDeployResource {
 		if (StringUtils.isNotEmpty(process_name)) {
 			Map<String, InputStream> zipMap = new HashMap<String, InputStream>();
 			JbpmContext jbpmContext = null;
-
 			try {
 				JbpmExtensionManager jbpmExtensionManager = ProcessContainer
 						.getContainer().getJbpmExtensionManager();

@@ -19,7 +19,6 @@
 package com.glaf.activiti.web.springmvc;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.zip.ZipInputStream;
 
 import org.activiti.engine.repository.ProcessDefinition;
@@ -101,20 +100,15 @@ public class ActivitiDeployController {
 					String resourceName = processDefinition
 							.getDiagramResourceName();
 					if (resourceName != null) {
-						InputStream inputStream = activitiDeployQueryService
-								.getResourceAsStream(
-										processDefinition.getDeploymentId(),
-										resourceName);
-						if (inputStream != null) {
-							model.addAttribute("processimage", inputStream);
-							String view = ViewProperties
-									.getString("activiti.deploy.showImage");
-							if (StringUtils.isNotEmpty(view)) {
-								return view;
-							}
-							return "/activiti/deploy/showImage";
+
+						String view = ViewProperties
+								.getString("activiti.deploy.showImage");
+						if (StringUtils.isNotEmpty(view)) {
+							return view;
 						}
+						return "/activiti/deploy/showImage";
 					}
+
 				}
 			}
 		}

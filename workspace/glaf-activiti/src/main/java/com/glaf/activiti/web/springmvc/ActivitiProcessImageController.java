@@ -19,7 +19,7 @@
 package com.glaf.activiti.web.springmvc;
 
 import java.io.IOException;
-import java.io.InputStream;
+ 
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -29,7 +29,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -38,6 +37,7 @@ import com.glaf.activiti.service.ActivitiDeployQueryService;
 import com.glaf.activiti.service.ActivitiDeployService;
 import com.glaf.activiti.service.ActivitiProcessQueryService;
 import com.glaf.activiti.service.ActivitiTaskQueryService;
+import com.glaf.activiti.util.ProcessUtils;
 
 @Controller("/activiti/image")
 @RequestMapping("/activiti/image")
@@ -67,17 +67,12 @@ public class ActivitiProcessImageController {
 					.getProcessDefinitionByDeploymentId(deploymentId);
 		}
 		if (processDefinition != null) {
-			String resourceName = processDefinition.getDiagramResourceName();
-			if (resourceName != null) {
-				InputStream inputStream = activitiDeployQueryService
-						.getResourceAsStream(
-								processDefinition.getDeploymentId(),
-								resourceName);
-				if (inputStream != null) {
-					byte[] bytes = FileCopyUtils.copyToByteArray(inputStream);
-					return bytes;
-				}
+			byte[] bytes = null;
+			try {
+				bytes = ProcessUtils.getImage(processDefinition.getId());
+			} catch (Exception e) {
 			}
+			return bytes;
 		}
 
 		return null;
@@ -119,17 +114,12 @@ public class ActivitiProcessImageController {
 					.getProcessDefinitionByProcessInstanceId(processInstanceId);
 		}
 		if (processDefinition != null) {
-			String resourceName = processDefinition.getDiagramResourceName();
-			if (resourceName != null) {
-				InputStream inputStream = activitiDeployQueryService
-						.getResourceAsStream(
-								processDefinition.getDeploymentId(),
-								resourceName);
-				if (inputStream != null) {
-					byte[] bytes = FileCopyUtils.copyToByteArray(inputStream);
-					return bytes;
-				}
+			byte[] bytes = null;
+			try {
+				bytes = ProcessUtils.getImage(processDefinition.getId());
+			} catch (Exception e) {
 			}
+			return bytes;
 		}
 
 		return null;

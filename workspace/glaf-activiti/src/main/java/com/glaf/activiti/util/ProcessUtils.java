@@ -19,6 +19,8 @@
 package com.glaf.activiti.util;
 
 import java.io.InputStream;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 import org.activiti.engine.repository.ProcessDefinition;
 import org.apache.commons.logging.Log;
@@ -26,16 +28,19 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.core.io.FileSystemResource;
 
 import com.glaf.activiti.service.ActivitiDeployQueryService;
+import com.glaf.activiti.service.ActivitiProcessQueryService;
 import com.glaf.core.context.ApplicationContext;
 import com.glaf.core.context.ContextFactory;
 import com.glaf.core.security.DigestUtil;
 import com.glaf.core.util.FileUtils;
 import com.glaf.core.util.StringTools;
 
-public class ProcessImage {
-	protected final static Log logger = LogFactory.getLog(ProcessImage.class);
+public class ProcessUtils {
+	protected final static Log logger = LogFactory.getLog(ProcessUtils.class);
 
-	private ProcessImage() {
+	private static ConcurrentMap<String, ProcessDefinition> cache = new ConcurrentHashMap<String, ProcessDefinition>();
+
+	private ProcessUtils() {
 
 	}
 
@@ -69,19 +74,56 @@ public class ProcessImage {
 		return null;
 	}
 
+	public static byte[] getImage(String processDefinitionId) {
+		byte[] bytes = null;
+		ProcessDefinition processDefinition = cache.get(processDefinitionId);
+		if (processDefinition == null) {
+			ActivitiProcessQueryService activitiProcessQueryService = ContextFactory
+					.getBean("activitiProcessQueryService");
+			processDefinition = activitiProcessQueryService
+					.getProcessDefinition(processDefinitionId);
+		}
+
+		if (processDefinition != null) {
+			String resourceName = processDefinition.getDiagramResourceName();
+			if (resourceName != null) {
+				String filename = ApplicationContext.getAppPath()
+						+ "/deploy/bpmn/" + getImagePath(processDefinition);
+				FileSystemResource fs = new FileSystemResource(filename);
+				if (!fs.exists()) {
+					try {
+						ActivitiDeployQueryService activitiDeployQueryService = ContextFactory
+								.getBean("activitiDeployQueryService");
+						InputStream inputStream = activitiDeployQueryService
+								.getResourceAsStream(
+										processDefinition.getDeploymentId(),
+										resourceName);
+						logger.debug("save:" + filename);
+						FileUtils.save(filename, inputStream);
+					} catch (Exception ex) {
+						ex.printStackTrace();
+					}
+				}
+				return FileUtils.getBytes(fs.getFile());
+			}
+		}
+
+		return bytes;
+	}
+
 	public static void saveProcessImageToFileSystem(
-			ProcessDefinition processDefinition, String imagePath) {
+			ProcessDefinition processDefinition) {
 		logger.debug("@deploymentId:" + processDefinition.getDeploymentId());
 		String resourceName = processDefinition.getDiagramResourceName();
-		if (resourceName != null && imagePath != null) {
+		if (resourceName != null) {
 			ActivitiDeployQueryService activitiDeployQueryService = ContextFactory
 					.getBean("activitiDeployQueryService");
 			InputStream inputStream = activitiDeployQueryService
 					.getResourceAsStream(processDefinition.getDeploymentId(),
 							resourceName);
 			logger.debug("@resourceName:" + resourceName);
-			String filename = ApplicationContext.getAppPath() + "/apps/temp/"
-					+ imagePath;
+			String filename = ApplicationContext.getAppPath() + "/deploy/bpmn/"
+					+ getImagePath(processDefinition);
 			FileSystemResource fs = new FileSystemResource(filename);
 			if (!fs.exists()) {
 				try {
