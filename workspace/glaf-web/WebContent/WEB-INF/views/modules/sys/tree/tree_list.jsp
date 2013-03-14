@@ -12,7 +12,6 @@ int parent=ParamUtil.getIntParameter(request, "parent", 0);
 com.glaf.core.util.PageResult pager=(com.glaf.core.util.PageResult)request.getAttribute("pager");
 List list = pager.getResults();
 %>
-
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -23,19 +22,19 @@ List list = pager.getResults();
 <script type='text/javascript' src='<%=request.getContextPath()%>/dwr/interface/SysTreeAjaxService.js'></script>
 <script type='text/javascript' src='<%=request.getContextPath()%>/dwr/engine.js'></script>
 <script type='text/javascript' src='<%=request.getContextPath()%>/dwr/util.js'></script>
-<script language="JavaScript">
+<script language="javascript">
 var num=0;
 function checkOperation(form){
   num = getCheckedBoxNum(form,"id");
   if(num>0){
-    document.all.btn_del.disabled=false;
+    //document.all.btn_del.disabled=false;
 	if(num==1){
 	  document.all.btn_modify.disabled=false;
 	}else{
 	  document.all.btn_modify.disabled=true;
 	}
   }else{
-    document.all.btn_del.disabled=true;
+    //document.all.btn_del.disabled=true;
 	document.all.btn_modify.disabled=true;
   }
 }
@@ -66,6 +65,7 @@ function modify(form){
   }
 }
 
+/**
 function del(){
   var form = document.all.GenericForm;
   if(confirmDelete(form)){
@@ -73,13 +73,13 @@ function del(){
     form.action="tree.do?method=batchDelete";
 	form.submit();
   }
-}
+}**/
+
 function sort(id, operate){  
   SysTreeAjaxService.sort(<%=parent%>, id, operate, {callback:function (){reloadPage();}});
 }
 </script>
 </head>
-
 <body>
 <div class="nav-title"><span class="Title">目录管理</span>&gt;&gt;节点列表</div>
 <html:form action="${contextPath}/sys/tree.do?method=batchDelete" method="post" target="_self"> 
@@ -131,9 +131,11 @@ for(; i<pageSize; i++){
 
 <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
   <tr> 
-    <td width="50%"> <input name="btn_add" type="button" value="增加" class="button" onClick="javascript:add();"> 
-      <input name="btn_del" type="button" value="删除" class="button" onClick="javascript:del();" disabled>
-      <input name="btn_modify" type="button" value="修改" class="button" onClick="javascript:modify(this.form);" disabled></td>
+    <td width="50%"> 
+	  <input name="btn_add" type="button" value="增加" class="button" onClick="javascript:add();"> 
+      <!-- <input name="btn_del" type="button" value="删除" class="button" onClick="javascript:del();" disabled> -->
+      <input name="btn_modify" type="button" value="修改" class="button" onClick="javascript:modify(this.form);" disabled>
+	</td>
     <td width="50%"> 
       <%
 String params = WebUtil.getQueryString(request);

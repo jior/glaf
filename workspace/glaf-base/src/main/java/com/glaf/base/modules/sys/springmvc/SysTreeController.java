@@ -64,17 +64,9 @@ public class SysTreeController {
 	public ModelAndView batchDelete(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
 		RequestUtil.setRequestParameterToAttribute(request);
-		boolean ret = true;
-		long[] id = ParamUtil.getLongParameterValues(request, "id");
-		ret = sysTreeService.deleteAll(id);
 		ViewMessages messages = new ViewMessages();
-		if (ret) {// 保存成功
-			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
-					"tree.delete_success"));
-		} else {// 保存失败
-			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
-					"tree.delete_failure"));
-		}
+		messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
+			"tree.delete_failure"));
 		MessageUtils.addMessages(request, messages);
 		return new ModelAndView("show_msg2", modelMap);
 	}
