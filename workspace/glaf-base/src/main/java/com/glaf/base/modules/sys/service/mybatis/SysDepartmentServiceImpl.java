@@ -55,134 +55,17 @@ public class SysDepartmentServiceImpl implements SysDepartmentService {
 
 	protected SysDeptRoleMapper sysDeptRoleMapper;
 
-	protected SysTreeService sysTreeService;
-
 	protected SysRoleService sysRoleService;
+
+	protected SysTreeService sysTreeService;
 
 	public SysDepartmentServiceImpl() {
 
 	}
 
-	@Transactional
-	public void deleteById(Long id) {
-		if (id != null) {
-			sysDepartmentMapper.deleteSysDepartmentById(id);
-		}
-	}
-
-	@Transactional
-	public void deleteByIds(List<Long> rowIds) {
-		if (rowIds != null && !rowIds.isEmpty()) {
-			SysDepartmentQuery query = new SysDepartmentQuery();
-			query.rowIds(rowIds);
-			sysDepartmentMapper.deleteSysDepartments(query);
-		}
-	}
-
 	public int count(SysDepartmentQuery query) {
 		query.ensureInitialized();
 		return sysDepartmentMapper.getSysDepartmentCount(query);
-	}
-
-	public List<SysDepartment> list(SysDepartmentQuery query) {
-		query.ensureInitialized();
-		List<SysDepartment> list = sysDepartmentMapper.getSysDepartments(query);
-		return list;
-	}
-
-	public int getSysDepartmentCountByQueryCriteria(SysDepartmentQuery query) {
-		return sysDepartmentMapper.getSysDepartmentCount(query);
-	}
-
-	public List<SysDepartment> getSysDepartmentsByQueryCriteria(int start,
-			int pageSize, SysDepartmentQuery query) {
-		RowBounds rowBounds = new RowBounds(start, pageSize);
-		List<SysDepartment> rows = sqlSessionTemplate.selectList(
-				"getSysDepartments", query, rowBounds);
-		return rows;
-	}
-
-	public SysDepartment getSysDepartment(Long id) {
-		if (id == null) {
-			return null;
-		}
-		SysDepartment sysDepartment = sysDepartmentMapper
-				.getSysDepartmentById(id);
-		if (sysDepartment != null) {
-			SysTree node = sysTreeService.findById(sysDepartment.getNodeId());
-			sysDepartment.setNode(node);
-			SysDeptRoleQuery query = new SysDeptRoleQuery();
-			query.deptId(sysDepartment.getId());
-			List<SysDeptRole> deptRoles = sysDeptRoleMapper
-					.getSysDeptRoles(query);
-			if (deptRoles != null && !deptRoles.isEmpty()) {
-				this.initRoles(deptRoles);
-				sysDepartment.getRoles().addAll(deptRoles);
-			}
-		}
-		return sysDepartment;
-	}
-
-	protected void initRoles(List<SysDeptRole> list) {
-		if (list != null && !list.isEmpty()) {
-			List<SysRole> rows = sysRoleService.getSysRoleList();
-			Map<Long, SysRole> dataMap = new HashMap<Long, SysRole>();
-			if (rows != null && !rows.isEmpty()) {
-				for (SysRole m : rows) {
-					dataMap.put(m.getId(), m);
-				}
-			}
-			for (SysDeptRole bean : list) {
-				bean.setRole(dataMap.get(Long.valueOf(bean.getSysRoleId())));
-			}
-		}
-	}
-
-	@Transactional
-	public void save(SysDepartment sysDepartment) {
-		if (sysDepartment.getId() == 0L) {
-			sysDepartment.setId(idGenerator.nextId());
-			// sysDepartment.setCreateDate(new Date());
-			sysDepartmentMapper.insertSysDepartment(sysDepartment);
-		} else {
-			sysDepartmentMapper.updateSysDepartment(sysDepartment);
-		}
-	}
-
-	@Resource
-	@Qualifier("myBatisDbIdGenerator")
-	public void setIdGenerator(IdGenerator idGenerator) {
-		this.idGenerator = idGenerator;
-	}
-
-	@Resource
-	public void setSysDepartmentMapper(SysDepartmentMapper sysDepartmentMapper) {
-		this.sysDepartmentMapper = sysDepartmentMapper;
-	}
-
-	@Resource
-	public void setPersistenceDAO(PersistenceDAO persistenceDAO) {
-		this.persistenceDAO = persistenceDAO;
-	}
-
-	@Resource
-	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
-		this.sqlSessionTemplate = sqlSessionTemplate;
-	}
-
-	@Resource
-	public void setSysTreeService(SysTreeService sysTreeService) {
-		this.sysTreeService = sysTreeService;
-	}
-
-	@Resource
-	public void setSysDeptRoleMapper(SysDeptRoleMapper sysDeptRoleMapper) {
-		this.sysDeptRoleMapper = sysDeptRoleMapper;
-	}
-
-	@Resource
-	public void setSysRoleService(SysRoleService sysRoleService) {
-		this.sysRoleService = sysRoleService;
 	}
 
 	@Transactional
@@ -202,53 +85,14 @@ public class SysDepartmentServiceImpl implements SysDepartmentService {
 	}
 
 	@Transactional
-	public boolean update(SysDepartment bean) {
-		if (bean.getNode() != null) {
-			List<SysTree> sts = sysTreeService.getSysTreeList((int) bean
-					.getNode().getId());
-			if (sts != null && sts.size() > 0) {
-				this.updateSubStatus(sts, bean.getStatus());
-			}
-			sysTreeService.update(bean.getNode());
-		}
-		sysDepartmentMapper.updateSysDepartment(bean);
-		return true;
-	}
-
-	/**
-	 * 修改子部门的状态
-	 * 
-	 * @param list
-	 * @param status
-	 * @return
-	 */
-	private boolean updateSubStatus(List<SysTree> list, Integer status) {
-		List<SysTree> sts = null;
-		SysDepartment sdp = null;
-		for (SysTree st : list) {
-			sts = (List<SysTree>) this.sysTreeService.getSysTreeList((int) st
-					.getId());
-			if (sts != null && sts.size() > 0) {
-				this.updateSubStatus(sts, status);
-			}
-			sdp = st.getDepartment();
-			if (sdp != null) {
-				sdp.setStatus(status);
-				this.update(sdp);
-			}
-		}
+	public boolean delete(long id) {
+		this.deleteById(id);
 		return true;
 	}
 
 	@Transactional
 	public boolean delete(SysDepartment bean) {
 		this.deleteById(bean.getId());
-		return true;
-	}
-
-	@Transactional
-	public boolean delete(long id) {
-		this.deleteById(id);
 		return true;
 	}
 
@@ -262,13 +106,42 @@ public class SysDepartmentServiceImpl implements SysDepartmentService {
 		return true;
 	}
 
-	public SysDepartment findById(long id) {
-		return this.getSysDepartment(id);
+	@Transactional
+	public void deleteById(Long id) {
+		if (id != null) {
+			sysDepartmentMapper.deleteSysDepartmentById(id);
+		}
+	}
+
+	@Transactional
+	public void deleteByIds(List<Long> rowIds) {
+		if (rowIds != null && !rowIds.isEmpty()) {
+			SysDepartmentQuery query = new SysDepartmentQuery();
+			query.rowIds(rowIds);
+			sysDepartmentMapper.deleteSysDepartments(query);
+		}
 	}
 
 	public SysDepartment findByCode(String code) {
 		SysDepartmentQuery query = new SysDepartmentQuery();
 		query.code(code);
+		query.setOrderBy(" E.ID asc ");
+
+		List<SysDepartment> list = this.list(query);
+		if (list != null && !list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	public SysDepartment findById(long id) {
+		return this.getSysDepartment(id);
+	}
+
+	public SysDepartment findByName(String name) {
+		SysDepartmentQuery query = new SysDepartmentQuery();
+		query.name(name);
 		query.setOrderBy(" E.ID asc ");
 
 		List<SysDepartment> list = this.list(query);
@@ -292,17 +165,70 @@ public class SysDepartmentServiceImpl implements SysDepartmentService {
 		return null;
 	}
 
-	public SysDepartment findByName(String name) {
-		SysDepartmentQuery query = new SysDepartmentQuery();
-		query.name(name);
-		query.setOrderBy(" E.ID asc ");
-
-		List<SysDepartment> list = this.list(query);
-		if (list != null && !list.isEmpty()) {
-			return list.get(0);
+	public void findNestingDepartment(List<SysDepartment> list, long deptId) {
+		SysDepartment node = this.findById(deptId);
+		if (node != null) {
+			this.findNestingDepartment(list, node);
 		}
+	}
 
-		return null;
+	/**
+	 * 获取用户部门列表
+	 * 
+	 * @param list
+	 * @param node
+	 */
+	public void findNestingDepartment(List<SysDepartment> list,
+			SysDepartment node) {
+		if (node == null) {
+			return;
+		}
+		SysTree tree = node.getNode();
+		if (tree.getParentId() == 0) {// 找到根节点
+			logger.info("findFirstNode:" + node.getId());
+			list.add(node);
+		} else {
+			SysTree treeParent = sysTreeService.findById(tree.getParentId());
+			SysDepartment parent = treeParent.getDepartment();
+			findNestingDepartment(list, parent);
+		}
+		list.add(node);
+	}
+
+	public SysDepartment getSysDepartment(Long id) {
+		if (id == null) {
+			return null;
+		}
+		SysDepartment sysDepartment = sysDepartmentMapper
+				.getSysDepartmentById(id);
+		if (sysDepartment != null) {
+			SysTree node = sysTreeService.findById(sysDepartment.getNodeId());
+			sysDepartment.setNode(node);
+			SysDeptRoleQuery query = new SysDeptRoleQuery();
+			query.deptId(sysDepartment.getId());
+			List<SysDeptRole> deptRoles = sysDeptRoleMapper
+					.getSysDeptRoles(query);
+			if (deptRoles != null && !deptRoles.isEmpty()) {
+				this.initRoles(deptRoles);
+				sysDepartment.getRoles().addAll(deptRoles);
+			}
+		}
+		return sysDepartment;
+	}
+
+	public int getSysDepartmentCountByQueryCriteria(SysDepartmentQuery query) {
+		return sysDepartmentMapper.getSysDepartmentCount(query);
+	}
+
+	public List<SysDepartment> getSysDepartmentList() {
+		SysDepartmentQuery query = new SysDepartmentQuery();
+		return this.list(query);
+	}
+
+	public List<SysDepartment> getSysDepartmentList(int parent) {
+		SysDepartmentQuery query = new SysDepartmentQuery();
+		query.parentId(Long.valueOf(parent));
+		return this.list(query);
 	}
 
 	@Override
@@ -329,15 +255,80 @@ public class SysDepartmentServiceImpl implements SysDepartmentService {
 		return pager;
 	}
 
-	public List<SysDepartment> getSysDepartmentList() {
-		SysDepartmentQuery query = new SysDepartmentQuery();
-		return this.list(query);
+	public List<SysDepartment> getSysDepartmentsByQueryCriteria(int start,
+			int pageSize, SysDepartmentQuery query) {
+		RowBounds rowBounds = new RowBounds(start, pageSize);
+		List<SysDepartment> rows = sqlSessionTemplate.selectList(
+				"getSysDepartments", query, rowBounds);
+		return rows;
 	}
 
-	public List<SysDepartment> getSysDepartmentList(int parent) {
-		SysDepartmentQuery query = new SysDepartmentQuery();
-		query.parentId(Long.valueOf(parent));
-		return this.list(query);
+	protected void initRoles(List<SysDeptRole> list) {
+		if (list != null && !list.isEmpty()) {
+			List<SysRole> rows = sysRoleService.getSysRoleList();
+			Map<Long, SysRole> dataMap = new HashMap<Long, SysRole>();
+			if (rows != null && !rows.isEmpty()) {
+				for (SysRole m : rows) {
+					dataMap.put(m.getId(), m);
+				}
+			}
+			for (SysDeptRole bean : list) {
+				bean.setRole(dataMap.get(Long.valueOf(bean.getSysRoleId())));
+			}
+		}
+	}
+
+	public List<SysDepartment> list(SysDepartmentQuery query) {
+		query.ensureInitialized();
+		List<SysDepartment> list = sysDepartmentMapper.getSysDepartments(query);
+		return list;
+	}
+
+	@Transactional
+	public void save(SysDepartment sysDepartment) {
+		if (sysDepartment.getId() == 0L) {
+			sysDepartment.setId(idGenerator.nextId());
+			// sysDepartment.setCreateDate(new Date());
+			sysDepartmentMapper.insertSysDepartment(sysDepartment);
+		} else {
+			sysDepartmentMapper.updateSysDepartment(sysDepartment);
+		}
+	}
+
+	@Resource
+	@Qualifier("myBatisDbIdGenerator")
+	public void setIdGenerator(IdGenerator idGenerator) {
+		this.idGenerator = idGenerator;
+	}
+
+	@Resource
+	public void setPersistenceDAO(PersistenceDAO persistenceDAO) {
+		this.persistenceDAO = persistenceDAO;
+	}
+
+	@Resource
+	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
+		this.sqlSessionTemplate = sqlSessionTemplate;
+	}
+
+	@Resource
+	public void setSysDepartmentMapper(SysDepartmentMapper sysDepartmentMapper) {
+		this.sysDepartmentMapper = sysDepartmentMapper;
+	}
+
+	@Resource
+	public void setSysDeptRoleMapper(SysDeptRoleMapper sysDeptRoleMapper) {
+		this.sysDeptRoleMapper = sysDeptRoleMapper;
+	}
+
+	@Resource
+	public void setSysRoleService(SysRoleService sysRoleService) {
+		this.sysRoleService = sysRoleService;
+	}
+
+	@Resource
+	public void setSysTreeService(SysTreeService sysTreeService) {
+		this.sysTreeService = sysTreeService;
 	}
 
 	/**
@@ -421,34 +412,43 @@ public class SysDepartmentServiceImpl implements SysDepartmentService {
 		}
 	}
 
-	public void findNestingDepartment(List<SysDepartment> list, long deptId) {
-		SysDepartment node = this.findById(deptId);
-		if (node != null) {
-			this.findNestingDepartment(list, node);
+	@Transactional
+	public boolean update(SysDepartment bean) {
+		if (bean.getNode() != null) {
+			List<SysTree> sts = sysTreeService.getSysTreeList((int) bean
+					.getNode().getId());
+			if (sts != null && sts.size() > 0) {
+				this.updateSubStatus(sts, bean.getStatus());
+			}
+			sysTreeService.update(bean.getNode());
 		}
+		sysDepartmentMapper.updateSysDepartment(bean);
+		return true;
 	}
 
 	/**
-	 * 获取用户部门列表
+	 * 修改子部门的状态
 	 * 
 	 * @param list
-	 * @param node
+	 * @param status
+	 * @return
 	 */
-	public void findNestingDepartment(List<SysDepartment> list,
-			SysDepartment node) {
-		if (node == null) {
-			return;
+	private boolean updateSubStatus(List<SysTree> list, Integer status) {
+		List<SysTree> sts = null;
+		SysDepartment sdp = null;
+		for (SysTree st : list) {
+			sts = (List<SysTree>) this.sysTreeService.getSysTreeList((int) st
+					.getId());
+			if (sts != null && sts.size() > 0) {
+				this.updateSubStatus(sts, status);
+			}
+			sdp = st.getDepartment();
+			if (sdp != null) {
+				sdp.setStatus(status);
+				this.update(sdp);
+			}
 		}
-		SysTree tree = node.getNode();
-		if (tree.getParentId() == 0) {// 找到根节点
-			logger.info("findFirstNode:" + node.getId());
-			list.add(node);
-		} else {
-			SysTree treeParent = sysTreeService.findById(tree.getParentId());
-			SysDepartment parent = treeParent.getDepartment();
-			findNestingDepartment(list, parent);
-		}
-		list.add(node);
+		return true;
 	}
 
 }

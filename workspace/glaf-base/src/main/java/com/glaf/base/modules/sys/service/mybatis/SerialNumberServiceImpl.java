@@ -72,17 +72,59 @@ public class SerialNumberServiceImpl implements SerialNumberService {
 	private static final Log logger = LogFactory
 			.getLog(SerialNumberServiceImpl.class);
 
-	private BaseDataManager bdm = null;
+	public static void main(String arg[]) {
+		logger.debug("yyMMdd=" + WebUtil.dateToString(new Date(), "yyMMdd"));
+
+		Calendar lastCal = Calendar.getInstance();
+		lastCal.setTime(WebUtil.stringToDate("2007-07-21"));
+
+		Calendar curCal = Calendar.getInstance();
+		Date curDate = WebUtil.stringToDate(WebUtil.dateToString(new Date()));// 只包含年月日的日期
+		curCal.setTime(curDate);
+
+		boolean reCaculate = true;
+		int intervel = Constants.INTERVEL_3;// ///////
+
+		if (intervel == Constants.INTERVEL_1) {
+			// yue
+			// lastCal.roll(Calendar.MONTH, 1);
+			lastCal.set(Calendar.DAY_OF_MONTH, 1);
+			curCal.set(Calendar.DAY_OF_MONTH, 1);
+			reCaculate = curCal.after(lastCal);
+		} else if (intervel == Constants.INTERVEL_2) {
+			// nian
+			// newCal.roll(Calendar.YEAR, 1);
+			lastCal.set(Calendar.DAY_OF_MONTH, 1);
+			lastCal.set(Calendar.MONTH, 1);
+			curCal.set(Calendar.DAY_OF_MONTH, 1);
+			curCal.set(Calendar.MONTH, 1);
+			reCaculate = curCal.after(lastCal);
+		} else if (intervel == Constants.INTERVEL_3) {
+			// ri
+			// newCal.roll(Calendar.DAY_OF_MONTH, 1);
+			reCaculate = curCal.after(lastCal);
+		} else {
+			reCaculate = false;
+		}
+		logger.debug(reCaculate);
+	}
 
 	private BaseDataInfo bdi = null;
+
+	private BaseDataManager bdm = null;
 
 	protected IdGenerator idGenerator;
 
 	protected PersistenceDAO persistenceDAO;
 
+	protected SerialNumberMapper serialNumberMapper;
+
 	protected SqlSessionTemplate sqlSessionTemplate;
 
-	protected SerialNumberMapper serialNumberMapper;
+	public int count(SerialNumberQuery query) {
+		query.ensureInitialized();
+		return serialNumberMapper.getSerialNumberCount(query);
+	}
 
 	@Transactional
 	public void deleteById(Long id) {
@@ -100,67 +142,22 @@ public class SerialNumberServiceImpl implements SerialNumberService {
 		}
 	}
 
-	public int count(SerialNumberQuery query) {
-		query.ensureInitialized();
-		return serialNumberMapper.getSerialNumberCount(query);
-	}
+	private String getABIMSerialNumber(Map params) {
+		// 取模块代码
+		String module = (String) params.get(Constants.SYS_MOD);
 
-	public List<SerialNumber> list(SerialNumberQuery query) {
-		query.ensureInitialized();
-		List<SerialNumber> list = serialNumberMapper.getSerialNumbers(query);
-		return list;
-	}
-
-	public int getSerialNumberCountByQueryCriteria(SerialNumberQuery query) {
-		return serialNumberMapper.getSerialNumberCount(query);
-	}
-
-	public List<SerialNumber> getSerialNumbersByQueryCriteria(int start,
-			int pageSize, SerialNumberQuery query) {
-		RowBounds rowBounds = new RowBounds(start, pageSize);
-		List<SerialNumber> rows = sqlSessionTemplate.selectList(
-				"getSerialNumbers", query, rowBounds);
-		return rows;
-	}
-
-	public SerialNumber getSerialNumber(Long id) {
-		if (id == null) {
-			return null;
+		StringBuffer sn = new StringBuffer("MJ");
+		// 类别代码
+		String typeCode = (String) params.get("type");
+		if (StringUtils.isEmpty(typeCode)) {
+			typeCode = "E";// 其他
 		}
-		SerialNumber serialNumber = serialNumberMapper.getSerialNumberById(id);
-		return serialNumber;
-	}
-
-	@Transactional
-	public void save(SerialNumber serialNumber) {
-		if (serialNumber.getId() == 0L) {
-			serialNumber.setId(idGenerator.nextId());
-			// serialNumber.setCreateDate(new Date());
-			serialNumberMapper.insertSerialNumber(serialNumber);
-		} else {
-			serialNumberMapper.updateSerialNumber(serialNumber);
-		}
-	}
-
-	@Resource
-	@Qualifier("myBatisDbIdGenerator")
-	public void setIdGenerator(IdGenerator idGenerator) {
-		this.idGenerator = idGenerator;
-	}
-
-	@Resource
-	public void setSerialNumberMapper(SerialNumberMapper serialNumberMapper) {
-		this.serialNumberMapper = serialNumberMapper;
-	}
-
-	@Resource
-	public void setPersistenceDAO(PersistenceDAO persistenceDAO) {
-		this.persistenceDAO = persistenceDAO;
-	}
-
-	@Resource
-	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
-		this.sqlSessionTemplate = sqlSessionTemplate;
+		sn.append(typeCode);
+		// 年份月份
+		sn.append(WebUtil.dateToString(new Date(), "yyMM"));
+		// 序列号
+		sn.append(getCurrentSerialNumber(module, 3));
+		return sn.toString();
 	}
 
 	private String getABISerialNumber(Map params) {
@@ -181,22 +178,75 @@ public class SerialNumberServiceImpl implements SerialNumberService {
 		return sn.toString();
 	}
 
-	private String getABIMSerialNumber(Map params) {
+	private String getBUDSerialNumber(Map params) {
+		return "";
+	}
+
+	private String getCATESerialNumber(Map params) {
 		// 取模块代码
 		String module = (String) params.get(Constants.SYS_MOD);
+		String sn = "M";
 
-		StringBuffer sn = new StringBuffer("MJ");
-		// 类别代码
-		String typeCode = (String) params.get("type");
-		if (StringUtils.isEmpty(typeCode)) {
-			typeCode = "E";// 其他
-		}
-		sn.append(typeCode);
-		// 年份月份
-		sn.append(WebUtil.dateToString(new Date(), "yyMM"));
-		// 序列号
-		sn.append(getCurrentSerialNumber(module, 3));
+		String category = (String) params.get("category");
+
+		String type = (String) params.get("type");
+		// 部门区分
+		String deptNo = (String) params.get("deptNo");
+		// 年份
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+		String year = sdf.format(new Date()).substring(2, 4);
+		sn += category.trim() + type.trim() + deptNo.trim();
+		sn += year.trim();
+		sn += getCurrentSerialNumber(module, 4).trim();
 		return sn.toString();
+	}
+
+	private String getCKACMSerialNumber(Map params) {
+
+		String module = (String) params.get(Constants.SYS_MOD);
+
+		try {
+			bdm = BaseDataManager.getInstance();
+		} catch (Exception e) {
+			logger.info(" baseDataManager is Error!");
+		}
+
+		StringBuffer sb = new StringBuffer();
+
+		// 模块类别
+		sb.append("MY");
+
+		String category = (String) params.get("category");
+
+		if (category != null) {
+			bdi = bdm.getValue(Integer.parseInt(category), "ZD0003");
+			if (bdi != null) {
+				sb.append(bdi.getCode());
+			} else {
+				sb.append("E");// 其它
+			}
+		}
+		// 年月
+		sb.append(WebUtil.dateToString(new Date(), "yyMM"));
+
+		// 自动编号
+		sb.append(getCurrentSerialNumber(module, 3));
+
+		return sb.toString();
+	}
+
+	private String getCommendSerialNumber(Map params) {
+		String module = (String) params.get(Constants.SYS_MOD);
+
+		StringBuffer sb = new StringBuffer();
+		// 模块类别
+		sb.append("SSA");
+		// 年月
+		sb.append(WebUtil.dateToString(new Date(), "yyMM"));
+		// 自动编号
+		sb.append(getCurrentSerialNumber(module, 3));
+
+		return sb.toString();
 	}
 
 	// 合同
@@ -241,6 +291,162 @@ public class SerialNumberServiceImpl implements SerialNumberService {
 		return sn;
 	}
 
+	/**
+	 * 获取当前序列号
+	 * 
+	 * @param module
+	 * @return
+	 */
+	private int getCurrentSerialNumber(String module) {
+
+		int retInt = 1;
+
+		SerialNumberQuery query = new SerialNumberQuery();
+		query.moduleNo(module);
+
+		List<SerialNumber> tempList = this.list(query);
+
+		if (tempList != null && tempList.size() > 0) {
+
+			SerialNumber serialNumber = (SerialNumber) tempList.iterator()
+					.next();
+			// 检测是否已过归零日期
+			int intervel = serialNumber.getIntervelNo();
+			Calendar lastCal = Calendar.getInstance();
+			lastCal.setTime(serialNumber.getLastDate());
+
+			Calendar curCal = Calendar.getInstance();
+			Date curDate = WebUtil.stringToDate(WebUtil
+					.dateToString(new Date()));// 只包含年月日的日期
+			curCal.setTime(curDate);
+
+			boolean reCaculate = true;
+			if (intervel == Constants.INTERVEL_1) {
+				// lastCal.roll(Calendar.MONTH, 1);
+				lastCal.set(Calendar.DAY_OF_MONTH, 1);
+				curCal.set(Calendar.DAY_OF_MONTH, 1);
+				reCaculate = curCal.after(lastCal);
+			} else if (intervel == Constants.INTERVEL_2) {
+				// newCal.roll(Calendar.YEAR, 1);
+				lastCal.set(Calendar.DAY_OF_MONTH, 1);
+				lastCal.set(Calendar.MONTH, 1);
+				curCal.set(Calendar.DAY_OF_MONTH, 1);
+				curCal.set(Calendar.MONTH, 1);
+				reCaculate = curCal.after(lastCal);
+			} else if (intervel == Constants.INTERVEL_3) {
+				// ri
+				// newCal.roll(Calendar.DAY_OF_MONTH, 1);
+				reCaculate = curCal.after(lastCal);
+			} else {
+				reCaculate = false;
+			}
+
+			if (reCaculate) {
+				serialNumber.setCurrentSerail(retInt);
+				serialNumber.setLastDate(new Date());
+				logger.info("序号重新计算： retInt = " + retInt);
+			}
+			retInt = serialNumber.getCurrentSerail();
+
+			// 序列号自增１
+			serialNumber.setCurrentSerail(retInt + 1);
+			logger.info("序号： retInt = " + retInt);
+			logger.info("自增后的序号： CurrentSerail = "
+					+ serialNumber.getCurrentSerail());
+			update(serialNumber);
+		}
+		return retInt;
+	}
+
+	/**
+	 * 根据指定len，返回当前序列号编码
+	 * 
+	 * @param moudle
+	 * @param len
+	 * @return
+	 */
+	private String getCurrentSerialNumber(String moudle, int length) {
+		String sn = String.valueOf(getCurrentSerialNumber(moudle));
+		int len = sn.length();
+		for (int i = 0; i < length - len; i++) {
+			sn = "0" + sn;
+		}
+		return sn;
+	}
+
+	private String getGOODAPPLYSerialNumber(Map params) {
+		// 取模块代码
+		String module = (String) params.get(Constants.SYS_MOD);
+
+		StringBuffer sn = new StringBuffer("");
+		// 类别代码
+		String typeCode = (String) params.get("type");
+		sn.append("M");
+		if (StringUtils.isEmpty(typeCode)) {
+			typeCode = "E";// 其他
+		}
+		if (typeCode != null) {
+			sn.append(typeCode);
+		}
+
+		// 年份月份
+		sn.append(WebUtil.dateToString(new Date(), "yyMM"));
+		// 序列号
+		sn.append(getCurrentSerialNumber(module, 4));
+		return sn.toString();
+	}
+
+	private String getGOODSerialNumber(Map params) {
+		// 取模块代码
+		String module = (String) params.get(Constants.SYS_MOD);
+		// 物品代码
+		StringBuffer sn = new StringBuffer("");
+		// 类别代码
+		String typeCode = (String) params.get("type");
+		if (StringUtils.isEmpty(typeCode)) {
+			typeCode = "E";// 其他
+		}
+		sn.append(typeCode);
+		// 年份月份
+		sn.append(WebUtil.dateToString(new Date(), "yyMM"));
+		// 序列号
+		sn.append(getCurrentSerialNumber(module, 4));
+		return sn.toString();
+	}
+
+	@SuppressWarnings("unchecked")
+	public synchronized List getImportSupplierSerialNumber(Map params) {
+		// 获取模块No
+		String module = (String) params.get(Constants.SYS_MOD);
+
+		String category = params.get("category").toString();
+		String area = params.get("area").toString();
+		String moduleNo = "";
+		try {
+			bdm = BaseDataManager.getInstance();
+		} catch (Exception e) {
+			logger.info("updateSupplierSerialNumber in baseDataManager is Error!");
+		}
+
+		if (module.equals(Constants.SYS_SUP)) {
+			if (category != null && area != null) {
+				moduleNo += "C_" + category + "_AREA_" + area;
+			}
+		}
+		if (module.equals(Constants.SYS_TEMPSUP)) {
+			if (category != null) {
+				moduleNo += "CATEGORY_" + category;
+			}
+		}
+		logger.info("moduleNo----------------" + moduleNo);
+		SerialNumberQuery query = new SerialNumberQuery();
+		query.moduleNo(moduleNo);
+
+		List<SerialNumber> list = this.list(query);
+
+		return list;
+	}
+
 	private String getIMPSerialNumber(Map params) {
 		// 取模块代码
 		String module = (String) params.get(Constants.SYS_MOD);
@@ -258,43 +464,64 @@ public class SerialNumberServiceImpl implements SerialNumberService {
 		return sn;
 	}
 
-	private String getBUDSerialNumber(Map params) {
-		return "";
-	}
-
-	private String getQUESerialNumber(Map params) {
+	// 目录采购订购单
+	private String getORDMCSerialNumber(Map params) {
 		// 取模块代码
 		String module = (String) params.get(Constants.SYS_MOD);
-		// 询价代码
-		StringBuffer sn = new StringBuffer("I");
-		// 类别代码
-		String typeCode = (String) params.get("type");
-		if (StringUtils.isEmpty(typeCode)) {
-			typeCode = "E";// 其他
+		try {
+			bdm = BaseDataManager.getInstance();
+		} catch (Exception e) {
 		}
-		sn.append(typeCode);
-		// 年份月份
-		sn.append(WebUtil.dateToString(new Date(), "yyMM"));
+
+		Integer i = null;
+		String sn = "MC";
+		// 项目类别代码
+		i = (Integer) params.get("category");
+		if (i != null) {
+			bdi = bdm.getValue(i.intValue(), "ZD0003");
+			if (bdi != null) {
+				sn += bdi.getCode();
+			} else {
+				sn += "Z";
+			}
+		}
+
+		// 年月
+		sn += WebUtil.dateToString(new Date(), "yyMM");
+
 		// 序列号
-		sn.append(getCurrentSerialNumber(module, 3));
+		sn += getCurrentSerialNumber(module, 3);
+
 		return sn.toString();
 	}
 
-	private String getQUEMSerialNumber(Map params) {
+	private String getORDMOSerialNumber(Map params) {
 		// 取模块代码
 		String module = (String) params.get(Constants.SYS_MOD);
-		// 询价代码
-		StringBuffer sn = new StringBuffer("MI");
-		// 类别代码
-		String typeCode = (String) params.get("type");
-		if (StringUtils.isEmpty(typeCode)) {
-			typeCode = "E";// 其他
+		try {
+			bdm = BaseDataManager.getInstance();
+		} catch (Exception e) {
 		}
-		sn.append(typeCode);
-		// 年份月份
-		sn.append(WebUtil.dateToString(new Date(), "yyMM"));
+
+		Integer i = null;
+		String sn = "MO";
+		// 项目类别代码
+		i = (Integer) params.get("category");
+		if (i != null) {
+			bdi = bdm.getValue(i.intValue(), "ZD0003");
+			if (bdi != null) {
+				sn += bdi.getCode();
+			} else {
+				sn += "Z";
+			}
+		}
+
+		// 年月
+		sn += WebUtil.dateToString(new Date(), "yyMM");
+
 		// 序列号
-		sn.append(getCurrentSerialNumber(module, 3));
+		sn += getCurrentSerialNumber(module, 3);
+
 		return sn.toString();
 	}
 
@@ -328,47 +555,38 @@ public class SerialNumberServiceImpl implements SerialNumberService {
 		return sn.toString();
 	}
 
-	// 采购
-	private String getPURSerialNumber(Map params) {
-		// 取模块代码
+	private String getPAYMSerialNumber(Map params) {
+
 		String module = (String) params.get(Constants.SYS_MOD);
-		String sn = "";
+
+		try {
+			bdm = BaseDataManager.getInstance();
+		} catch (Exception e) {
+			logger.info(" baseDataManager is Error!");
+		}
+
+		StringBuffer sb = new StringBuffer();
+
+		// 模块类别
+		sb.append("MP");
 
 		String category = (String) params.get("category");
 
-		String type = (String) params.get("type");
+		if (category != null) {
+			bdi = bdm.getValue(Integer.parseInt(category), "ZD0003");
+			if (bdi != null) {
+				sb.append(bdi.getCode());
+			} else {
+				sb.append("E");// 其它
+			}
+		}
+		// 年月
+		sb.append(WebUtil.dateToString(new Date(), "yyMM"));
 
-		String deptNo = (String) params.get("deptNo");
-		// 年份
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
-		String year = sdf.format(new Date()).substring(2, 4);
-		sn += category.trim() + type.trim() + deptNo.trim();
-		sn += year.trim();
-		sn += getCurrentSerialNumber(module, 4).trim();
-		return sn.toString();
-	}
+		// 自动编号
+		sb.append(getCurrentSerialNumber(module, 3));
 
-	private String getCATESerialNumber(Map params) {
-		// 取模块代码
-		String module = (String) params.get(Constants.SYS_MOD);
-		String sn = "M";
-
-		String category = (String) params.get("category");
-
-		String type = (String) params.get("type");
-		// 部门区分
-		String deptNo = (String) params.get("deptNo");
-		// 年份
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
-		String year = sdf.format(new Date()).substring(2, 4);
-		sn += category.trim() + type.trim() + deptNo.trim();
-		sn += year.trim();
-		sn += getCurrentSerialNumber(module, 4).trim();
-		return sn.toString();
-	}
-
-	private String getREPSerialNumber(Map params) {
-		return "";
+		return sb.toString();
 	}
 
 	private String getPAYSerialNumber(Map params) {
@@ -406,11 +624,31 @@ public class SerialNumberServiceImpl implements SerialNumberService {
 		return sb.toString();
 	}
 
-	private String getGOODSerialNumber(Map params) {
+	// 采购
+	private String getPURSerialNumber(Map params) {
 		// 取模块代码
 		String module = (String) params.get(Constants.SYS_MOD);
-		// 物品代码
-		StringBuffer sn = new StringBuffer("");
+		String sn = "";
+
+		String category = (String) params.get("category");
+
+		String type = (String) params.get("type");
+
+		String deptNo = (String) params.get("deptNo");
+		// 年份
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+		String year = sdf.format(new Date()).substring(2, 4);
+		sn += category.trim() + type.trim() + deptNo.trim();
+		sn += year.trim();
+		sn += getCurrentSerialNumber(module, 4).trim();
+		return sn.toString();
+	}
+
+	private String getQUEMSerialNumber(Map params) {
+		// 取模块代码
+		String module = (String) params.get(Constants.SYS_MOD);
+		// 询价代码
+		StringBuffer sn = new StringBuffer("MI");
 		// 类别代码
 		String typeCode = (String) params.get("type");
 		if (StringUtils.isEmpty(typeCode)) {
@@ -420,173 +658,38 @@ public class SerialNumberServiceImpl implements SerialNumberService {
 		// 年份月份
 		sn.append(WebUtil.dateToString(new Date(), "yyMM"));
 		// 序列号
-		sn.append(getCurrentSerialNumber(module, 4));
+		sn.append(getCurrentSerialNumber(module, 3));
 		return sn.toString();
 	}
 
-	private String getGOODAPPLYSerialNumber(Map params) {
+	private String getQUESerialNumber(Map params) {
 		// 取模块代码
 		String module = (String) params.get(Constants.SYS_MOD);
-
-		StringBuffer sn = new StringBuffer("");
+		// 询价代码
+		StringBuffer sn = new StringBuffer("I");
 		// 类别代码
 		String typeCode = (String) params.get("type");
-		sn.append("M");
 		if (StringUtils.isEmpty(typeCode)) {
 			typeCode = "E";// 其他
 		}
-		if (typeCode != null) {
-			sn.append(typeCode);
-		}
-
+		sn.append(typeCode);
 		// 年份月份
 		sn.append(WebUtil.dateToString(new Date(), "yyMM"));
 		// 序列号
-		sn.append(getCurrentSerialNumber(module, 4));
+		sn.append(getCurrentSerialNumber(module, 3));
 		return sn.toString();
 	}
 
-	private String getORDMOSerialNumber(Map params) {
-		// 取模块代码
-		String module = (String) params.get(Constants.SYS_MOD);
-		try {
-			bdm = BaseDataManager.getInstance();
-		} catch (Exception e) {
-		}
-
-		Integer i = null;
-		String sn = "MO";
-		// 项目类别代码
-		i = (Integer) params.get("category");
-		if (i != null) {
-			bdi = bdm.getValue(i.intValue(), "ZD0003");
-			if (bdi != null) {
-				sn += bdi.getCode();
-			} else {
-				sn += "Z";
-			}
-		}
-
-		// 年月
-		sn += WebUtil.dateToString(new Date(), "yyMM");
-
-		// 序列号
-		sn += getCurrentSerialNumber(module, 3);
-
-		return sn.toString();
+	private String getREPSerialNumber(Map params) {
+		return "";
 	}
 
-	// 目录采购订购单
-	private String getORDMCSerialNumber(Map params) {
-		// 取模块代码
-		String module = (String) params.get(Constants.SYS_MOD);
-		try {
-			bdm = BaseDataManager.getInstance();
-		} catch (Exception e) {
+	public SerialNumber getSerialNumber(Long id) {
+		if (id == null) {
+			return null;
 		}
-
-		Integer i = null;
-		String sn = "MC";
-		// 项目类别代码
-		i = (Integer) params.get("category");
-		if (i != null) {
-			bdi = bdm.getValue(i.intValue(), "ZD0003");
-			if (bdi != null) {
-				sn += bdi.getCode();
-			} else {
-				sn += "Z";
-			}
-		}
-
-		// 年月
-		sn += WebUtil.dateToString(new Date(), "yyMM");
-
-		// 序列号
-		sn += getCurrentSerialNumber(module, 3);
-
-		return sn.toString();
-	}
-
-	private String getCKACMSerialNumber(Map params) {
-
-		String module = (String) params.get(Constants.SYS_MOD);
-
-		try {
-			bdm = BaseDataManager.getInstance();
-		} catch (Exception e) {
-			logger.info(" baseDataManager is Error!");
-		}
-
-		StringBuffer sb = new StringBuffer();
-
-		// 模块类别
-		sb.append("MY");
-
-		String category = (String) params.get("category");
-
-		if (category != null) {
-			bdi = bdm.getValue(Integer.parseInt(category), "ZD0003");
-			if (bdi != null) {
-				sb.append(bdi.getCode());
-			} else {
-				sb.append("E");// 其它
-			}
-		}
-		// 年月
-		sb.append(WebUtil.dateToString(new Date(), "yyMM"));
-
-		// 自动编号
-		sb.append(getCurrentSerialNumber(module, 3));
-
-		return sb.toString();
-	}
-
-	private String getPAYMSerialNumber(Map params) {
-
-		String module = (String) params.get(Constants.SYS_MOD);
-
-		try {
-			bdm = BaseDataManager.getInstance();
-		} catch (Exception e) {
-			logger.info(" baseDataManager is Error!");
-		}
-
-		StringBuffer sb = new StringBuffer();
-
-		// 模块类别
-		sb.append("MP");
-
-		String category = (String) params.get("category");
-
-		if (category != null) {
-			bdi = bdm.getValue(Integer.parseInt(category), "ZD0003");
-			if (bdi != null) {
-				sb.append(bdi.getCode());
-			} else {
-				sb.append("E");// 其它
-			}
-		}
-		// 年月
-		sb.append(WebUtil.dateToString(new Date(), "yyMM"));
-
-		// 自动编号
-		sb.append(getCurrentSerialNumber(module, 3));
-
-		return sb.toString();
-	}
-
-	private String getCommendSerialNumber(Map params) {
-		String module = (String) params.get(Constants.SYS_MOD);
-
-		StringBuffer sb = new StringBuffer();
-		// 模块类别
-		sb.append("SSA");
-		// 年月
-		sb.append(WebUtil.dateToString(new Date(), "yyMM"));
-		// 自动编号
-		sb.append(getCurrentSerialNumber(module, 3));
-
-		return sb.toString();
+		SerialNumber serialNumber = serialNumberMapper.getSerialNumberById(id);
+		return serialNumber;
 	}
 
 	public synchronized String getSerialNumber(Map params) {
@@ -671,92 +774,16 @@ public class SerialNumberServiceImpl implements SerialNumberService {
 		throw new RuntimeException("不存在此模块编码，请检查输入代码");
 	}
 
-	/**
-	 * 根据指定len，返回当前序列号编码
-	 * 
-	 * @param moudle
-	 * @param len
-	 * @return
-	 */
-	private String getCurrentSerialNumber(String moudle, int length) {
-		String sn = String.valueOf(getCurrentSerialNumber(moudle));
-		int len = sn.length();
-		for (int i = 0; i < length - len; i++) {
-			sn = "0" + sn;
-		}
-		return sn;
+	public int getSerialNumberCountByQueryCriteria(SerialNumberQuery query) {
+		return serialNumberMapper.getSerialNumberCount(query);
 	}
 
-	/**
-	 * 获取当前序列号
-	 * 
-	 * @param module
-	 * @return
-	 */
-	private int getCurrentSerialNumber(String module) {
-
-		int retInt = 1;
-
-		SerialNumberQuery query = new SerialNumberQuery();
-		query.moduleNo(module);
-
-		List<SerialNumber> tempList = this.list(query);
-
-		if (tempList != null && tempList.size() > 0) {
-
-			SerialNumber serialNumber = (SerialNumber) tempList.iterator()
-					.next();
-			// 检测是否已过归零日期
-			int intervel = serialNumber.getIntervelNo();
-			Calendar lastCal = Calendar.getInstance();
-			lastCal.setTime(serialNumber.getLastDate());
-
-			Calendar curCal = Calendar.getInstance();
-			Date curDate = WebUtil.stringToDate(WebUtil
-					.dateToString(new Date()));// 只包含年月日的日期
-			curCal.setTime(curDate);
-
-			boolean reCaculate = true;
-			if (intervel == Constants.INTERVEL_1) {
-				// lastCal.roll(Calendar.MONTH, 1);
-				lastCal.set(Calendar.DAY_OF_MONTH, 1);
-				curCal.set(Calendar.DAY_OF_MONTH, 1);
-				reCaculate = curCal.after(lastCal);
-			} else if (intervel == Constants.INTERVEL_2) {
-				// newCal.roll(Calendar.YEAR, 1);
-				lastCal.set(Calendar.DAY_OF_MONTH, 1);
-				lastCal.set(Calendar.MONTH, 1);
-				curCal.set(Calendar.DAY_OF_MONTH, 1);
-				curCal.set(Calendar.MONTH, 1);
-				reCaculate = curCal.after(lastCal);
-			} else if (intervel == Constants.INTERVEL_3) {
-				// ri
-				// newCal.roll(Calendar.DAY_OF_MONTH, 1);
-				reCaculate = curCal.after(lastCal);
-			} else {
-				reCaculate = false;
-			}
-
-			if (reCaculate) {
-				serialNumber.setCurrentSerail(retInt);
-				serialNumber.setLastDate(new Date());
-				logger.info("序号重新计算： retInt = " + retInt);
-			}
-			retInt = serialNumber.getCurrentSerail();
-
-			// 序列号自增１
-			serialNumber.setCurrentSerail(retInt + 1);
-			logger.info("序号： retInt = " + retInt);
-			logger.info("自增后的序号： CurrentSerail = "
-					+ serialNumber.getCurrentSerail());
-			update(serialNumber);
-		}
-		return retInt;
-	}
-
-	public boolean update(SerialNumber bean) {
-		this.save(bean);
-		return true;
+	public List<SerialNumber> getSerialNumbersByQueryCriteria(int start,
+			int pageSize, SerialNumberQuery query) {
+		RowBounds rowBounds = new RowBounds(start, pageSize);
+		List<SerialNumber> rows = sqlSessionTemplate.selectList(
+				"getSerialNumbers", query, rowBounds);
+		return rows;
 	}
 
 	// 通过模块NO、category、area来查找SerialNumber中对应的moduleNo，从而获取SerialNumber对象
@@ -805,73 +832,46 @@ public class SerialNumberServiceImpl implements SerialNumberService {
 		return list;
 	}
 
-	@SuppressWarnings("unchecked")
-	public synchronized List getImportSupplierSerialNumber(Map params) {
-		// 获取模块No
-		String module = (String) params.get(Constants.SYS_MOD);
-
-		String category = params.get("category").toString();
-		String area = params.get("area").toString();
-		String moduleNo = "";
-		try {
-			bdm = BaseDataManager.getInstance();
-		} catch (Exception e) {
-			logger.info("updateSupplierSerialNumber in baseDataManager is Error!");
-		}
-
-		if (module.equals(Constants.SYS_SUP)) {
-			if (category != null && area != null) {
-				moduleNo += "C_" + category + "_AREA_" + area;
-			}
-		}
-		if (module.equals(Constants.SYS_TEMPSUP)) {
-			if (category != null) {
-				moduleNo += "CATEGORY_" + category;
-			}
-		}
-		logger.info("moduleNo----------------" + moduleNo);
-		SerialNumberQuery query = new SerialNumberQuery();
-		query.moduleNo(moduleNo);
-
-		List<SerialNumber> list = this.list(query);
-
+	public List<SerialNumber> list(SerialNumberQuery query) {
+		query.ensureInitialized();
+		List<SerialNumber> list = serialNumberMapper.getSerialNumbers(query);
 		return list;
 	}
 
-	public static void main(String arg[]) {
-		logger.debug("yyMMdd=" + WebUtil.dateToString(new Date(), "yyMMdd"));
-
-		Calendar lastCal = Calendar.getInstance();
-		lastCal.setTime(WebUtil.stringToDate("2007-07-21"));
-
-		Calendar curCal = Calendar.getInstance();
-		Date curDate = WebUtil.stringToDate(WebUtil.dateToString(new Date()));// 只包含年月日的日期
-		curCal.setTime(curDate);
-
-		boolean reCaculate = true;
-		int intervel = Constants.INTERVEL_3;// ///////
-
-		if (intervel == Constants.INTERVEL_1) {
-			// yue
-			// lastCal.roll(Calendar.MONTH, 1);
-			lastCal.set(Calendar.DAY_OF_MONTH, 1);
-			curCal.set(Calendar.DAY_OF_MONTH, 1);
-			reCaculate = curCal.after(lastCal);
-		} else if (intervel == Constants.INTERVEL_2) {
-			// nian
-			// newCal.roll(Calendar.YEAR, 1);
-			lastCal.set(Calendar.DAY_OF_MONTH, 1);
-			lastCal.set(Calendar.MONTH, 1);
-			curCal.set(Calendar.DAY_OF_MONTH, 1);
-			curCal.set(Calendar.MONTH, 1);
-			reCaculate = curCal.after(lastCal);
-		} else if (intervel == Constants.INTERVEL_3) {
-			// ri
-			// newCal.roll(Calendar.DAY_OF_MONTH, 1);
-			reCaculate = curCal.after(lastCal);
+	@Transactional
+	public void save(SerialNumber serialNumber) {
+		if (serialNumber.getId() == 0L) {
+			serialNumber.setId(idGenerator.nextId());
+			// serialNumber.setCreateDate(new Date());
+			serialNumberMapper.insertSerialNumber(serialNumber);
 		} else {
-			reCaculate = false;
+			serialNumberMapper.updateSerialNumber(serialNumber);
 		}
-		logger.debug(reCaculate);
+	}
+
+	@Resource
+	@Qualifier("myBatisDbIdGenerator")
+	public void setIdGenerator(IdGenerator idGenerator) {
+		this.idGenerator = idGenerator;
+	}
+
+	@Resource
+	public void setPersistenceDAO(PersistenceDAO persistenceDAO) {
+		this.persistenceDAO = persistenceDAO;
+	}
+
+	@Resource
+	public void setSerialNumberMapper(SerialNumberMapper serialNumberMapper) {
+		this.serialNumberMapper = serialNumberMapper;
+	}
+
+	@Resource
+	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
+		this.sqlSessionTemplate = sqlSessionTemplate;
+	}
+
+	public boolean update(SerialNumber bean) {
+		this.save(bean);
+		return true;
 	}
 }

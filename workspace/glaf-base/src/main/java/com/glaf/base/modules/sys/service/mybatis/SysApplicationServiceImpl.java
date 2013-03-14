@@ -48,6 +48,8 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 	protected final static Log logger = LogFactory
 			.getLog(SysApplicationServiceImpl.class);
 
+	protected AuthorizeService authorizeService;
+
 	protected IdGenerator idGenerator;
 
 	protected PersistenceDAO persistenceDAO;
@@ -56,108 +58,15 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 
 	protected SysApplicationMapper sysApplicationMapper;
 
-	protected AuthorizeService authorizeService;
-
 	protected SysTreeService sysTreeService;
 
 	public SysApplicationServiceImpl() {
 
 	}
 
-	@Transactional
-	public void deleteById(Long id) {
-		if (id != null) {
-			sysApplicationMapper.deleteSysApplicationById(id);
-		}
-	}
-
-	@Transactional
-	public void deleteByIds(List<Long> rowIds) {
-		if (rowIds != null && !rowIds.isEmpty()) {
-			SysApplicationQuery query = new SysApplicationQuery();
-			query.rowIds(rowIds);
-			sysApplicationMapper.deleteSysApplications(query);
-		}
-	}
-
 	public int count(SysApplicationQuery query) {
 		query.ensureInitialized();
 		return sysApplicationMapper.getSysApplicationCount(query);
-	}
-
-	public List<SysApplication> list(SysApplicationQuery query) {
-		query.ensureInitialized();
-		List<SysApplication> list = sysApplicationMapper
-				.getSysApplications(query);
-		return list;
-	}
-
-	public int getSysApplicationCountByQueryCriteria(SysApplicationQuery query) {
-		return sysApplicationMapper.getSysApplicationCount(query);
-	}
-
-	public List<SysApplication> getSysApplicationsByQueryCriteria(int start,
-			int pageSize, SysApplicationQuery query) {
-		RowBounds rowBounds = new RowBounds(start, pageSize);
-		List<SysApplication> rows = sqlSessionTemplate.selectList(
-				"getSysApplications", query, rowBounds);
-		return rows;
-	}
-
-	public SysApplication getSysApplication(Long id) {
-		if (id == null) {
-			return null;
-		}
-		SysApplication sysApplication = sysApplicationMapper
-				.getSysApplicationById(id);
-		if (sysApplication != null) {
-			SysTree node = sysTreeService.findById(sysApplication.getNodeId());
-			sysApplication.setNode(node);
-		}
-		return sysApplication;
-	}
-
-	@Transactional
-	public void save(SysApplication sysApplication) {
-		if (sysApplication.getId() == 0L) {
-			sysApplication.setId(idGenerator.nextId());
-			// sysApplication.setCreateDate(new Date());
-			sysApplicationMapper.insertSysApplication(sysApplication);
-		} else {
-			sysApplicationMapper.updateSysApplication(sysApplication);
-		}
-	}
-
-	@Resource
-	@Qualifier("myBatisDbIdGenerator")
-	public void setIdGenerator(IdGenerator idGenerator) {
-		this.idGenerator = idGenerator;
-	}
-
-	@Resource
-	public void setSysApplicationMapper(
-			SysApplicationMapper sysApplicationMapper) {
-		this.sysApplicationMapper = sysApplicationMapper;
-	}
-
-	@Resource
-	public void setPersistenceDAO(PersistenceDAO persistenceDAO) {
-		this.persistenceDAO = persistenceDAO;
-	}
-
-	@Resource
-	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
-		this.sqlSessionTemplate = sqlSessionTemplate;
-	}
-
-	@Resource
-	public void setAuthorizeService(AuthorizeService authorizeService) {
-		this.authorizeService = authorizeService;
-	}
-
-	@Resource
-	public void setSysTreeService(SysTreeService sysTreeService) {
-		this.sysTreeService = sysTreeService;
 	}
 
 	@Transactional
@@ -192,6 +101,22 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 			}
 		}
 		return true;
+	}
+
+	@Transactional
+	public void deleteById(Long id) {
+		if (id != null) {
+			sysApplicationMapper.deleteSysApplicationById(id);
+		}
+	}
+
+	@Transactional
+	public void deleteByIds(List<Long> rowIds) {
+		if (rowIds != null && !rowIds.isEmpty()) {
+			SysApplicationQuery query = new SysApplicationQuery();
+			query.rowIds(rowIds);
+			sysApplicationMapper.deleteSysApplications(query);
+		}
 	}
 
 	public SysApplication findById(long id) {
@@ -327,6 +252,31 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 		return menu.toString();
 	}
 
+	public SysApplication getSysApplication(Long id) {
+		if (id == null) {
+			return null;
+		}
+		SysApplication sysApplication = sysApplicationMapper
+				.getSysApplicationById(id);
+		if (sysApplication != null) {
+			SysTree node = sysTreeService.findById(sysApplication.getNodeId());
+			sysApplication.setNode(node);
+		}
+		return sysApplication;
+	}
+
+	public int getSysApplicationCountByQueryCriteria(SysApplicationQuery query) {
+		return sysApplicationMapper.getSysApplicationCount(query);
+	}
+
+	public List<SysApplication> getSysApplicationsByQueryCriteria(int start,
+			int pageSize, SysApplicationQuery query) {
+		RowBounds rowBounds = new RowBounds(start, pageSize);
+		List<SysApplication> rows = sqlSessionTemplate.selectList(
+				"getSysApplications", query, rowBounds);
+		return rows;
+	}
+
 	public JSONArray getUserMenu(long parent, String userId) {
 		JSONArray array = new JSONArray();
 		SysUser user = authorizeService.login(userId);
@@ -370,6 +320,56 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 		return array;
 	}
 
+	public List<SysApplication> list(SysApplicationQuery query) {
+		query.ensureInitialized();
+		List<SysApplication> list = sysApplicationMapper
+				.getSysApplications(query);
+		return list;
+	}
+
+	@Transactional
+	public void save(SysApplication sysApplication) {
+		if (sysApplication.getId() == 0L) {
+			sysApplication.setId(idGenerator.nextId());
+			// sysApplication.setCreateDate(new Date());
+			sysApplicationMapper.insertSysApplication(sysApplication);
+		} else {
+			sysApplicationMapper.updateSysApplication(sysApplication);
+		}
+	}
+
+	@Resource
+	public void setAuthorizeService(AuthorizeService authorizeService) {
+		this.authorizeService = authorizeService;
+	}
+
+	@Resource
+	@Qualifier("myBatisDbIdGenerator")
+	public void setIdGenerator(IdGenerator idGenerator) {
+		this.idGenerator = idGenerator;
+	}
+
+	@Resource
+	public void setPersistenceDAO(PersistenceDAO persistenceDAO) {
+		this.persistenceDAO = persistenceDAO;
+	}
+
+	@Resource
+	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
+		this.sqlSessionTemplate = sqlSessionTemplate;
+	}
+
+	@Resource
+	public void setSysApplicationMapper(
+			SysApplicationMapper sysApplicationMapper) {
+		this.sysApplicationMapper = sysApplicationMapper;
+	}
+
+	@Resource
+	public void setSysTreeService(SysTreeService sysTreeService) {
+		this.sysTreeService = sysTreeService;
+	}
+
 	@Transactional
 	public void sort(long parent, SysApplication bean, int operate) {
 		if (bean == null)
@@ -382,18 +382,15 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 	}
 
 	/**
-	 * 向前移动排序
+	 * 向后移动排序
 	 * 
 	 * @param bean
 	 */
-	private void sortByPrevious(long parentId, SysApplication bean) {
-		// 查找前一个对象
-
+	private void sortByForward(long parentId, SysApplication bean) {
 		SysApplicationQuery query = new SysApplicationQuery();
 		query.parentId(Long.valueOf(parentId));
-		query.setSortGreaterThan(bean.getSort());
-		query.setOrderBy(" E.SORT asc ");
-
+		query.setSortLessThan(bean.getSort());
+		query.setOrderBy(" E.SORT desc ");
 		List<SysApplication> list = this.list(query);
 		if (list != null && list.size() > 0) {// 有记录
 			SysApplication temp = (SysApplication) list.get(0);
@@ -413,15 +410,18 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 	}
 
 	/**
-	 * 向后移动排序
+	 * 向前移动排序
 	 * 
 	 * @param bean
 	 */
-	private void sortByForward(long parentId, SysApplication bean) {
+	private void sortByPrevious(long parentId, SysApplication bean) {
+		// 查找前一个对象
+
 		SysApplicationQuery query = new SysApplicationQuery();
 		query.parentId(Long.valueOf(parentId));
-		query.setSortLessThan(bean.getSort());
-		query.setOrderBy(" E.SORT desc ");
+		query.setSortGreaterThan(bean.getSort());
+		query.setOrderBy(" E.SORT asc ");
+
 		List<SysApplication> list = this.list(query);
 		if (list != null && list.size() > 0) {// 有记录
 			SysApplication temp = (SysApplication) list.get(0);

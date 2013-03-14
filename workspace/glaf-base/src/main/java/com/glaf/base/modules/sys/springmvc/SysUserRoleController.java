@@ -85,7 +85,7 @@ public class SysUserRoleController {
 				sysUserRoleService.getAuthorizedUser(user));
 
 		// 显示列表页面
-		return new ModelAndView("/modules/sys/sysUserRole/authorize_list",
+		return new ModelAndView("/modules/sys/userRole/authorize_list",
 				modelMap);
 	}
 
@@ -106,7 +106,7 @@ public class SysUserRoleController {
 		request.setAttribute("pager",
 				sysUserRoleService.getAllAuthorizedUser(filter));
 		// 显示列表页面
-		return new ModelAndView("/modules/sys/sysUserRole/authorize_users",
+		return new ModelAndView("/modules/sys/userRole/authorize_users",
 				modelMap);
 	}
 
@@ -136,7 +136,7 @@ public class SysUserRoleController {
 				sysUserRoleService.getProcessByUser(user));
 
 		// 显示列表页面
-		return new ModelAndView("/modules/sys/sysUserRole/authorize_panel",
+		return new ModelAndView("/modules/sys/userRole/authorize_panel",
 				modelMap);
 	}
 
@@ -164,7 +164,7 @@ public class SysUserRoleController {
 				sysUserRoleService.getAuthorizedUser(user));
 
 		// 显示列表页面
-		return new ModelAndView("/modules/sys/sysUserRole/authorizeUser_panel",
+		return new ModelAndView("/modules/sys/userRole/authorizeUser_panel",
 				modelMap);
 	}
 

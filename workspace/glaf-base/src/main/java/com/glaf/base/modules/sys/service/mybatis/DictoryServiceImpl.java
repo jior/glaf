@@ -46,95 +46,21 @@ public class DictoryServiceImpl implements DictoryService {
 	protected final static Log logger = LogFactory
 			.getLog(DictoryServiceImpl.class);
 
+	protected DictoryMapper dictoryMapper;
+
 	protected IdGenerator idGenerator;
 
 	protected PersistenceDAO persistenceDAO;
 
 	protected SqlSessionTemplate sqlSessionTemplate;
 
-	protected DictoryMapper dictoryMapper;
-
 	public DictoryServiceImpl() {
 
-	}
-
-	@Transactional
-	public void deleteById(Long id) {
-		if (id != null) {
-			dictoryMapper.deleteDictoryById(id);
-		}
-	}
-
-	@Transactional
-	public void deleteByIds(List<Long> rowIds) {
-		if (rowIds != null && !rowIds.isEmpty()) {
-			DictoryQuery query = new DictoryQuery();
-			query.rowIds(rowIds);
-			dictoryMapper.deleteDictorys(query);
-		}
 	}
 
 	public int count(DictoryQuery query) {
 		query.ensureInitialized();
 		return dictoryMapper.getDictoryCount(query);
-	}
-
-	public List<Dictory> list(DictoryQuery query) {
-		query.ensureInitialized();
-		List<Dictory> list = dictoryMapper.getDictorys(query);
-		return list;
-	}
-
-	public int getDictoryCountByQueryCriteria(DictoryQuery query) {
-		return dictoryMapper.getDictoryCount(query);
-	}
-
-	public List<Dictory> getDictorysByQueryCriteria(int start, int pageSize,
-			DictoryQuery query) {
-		RowBounds rowBounds = new RowBounds(start, pageSize);
-		List<Dictory> rows = sqlSessionTemplate.selectList("getDictorys",
-				query, rowBounds);
-		return rows;
-	}
-
-	public Dictory getDictory(Long id) {
-		if (id == null) {
-			return null;
-		}
-		Dictory dictory = dictoryMapper.getDictoryById(id);
-		return dictory;
-	}
-
-	@Transactional
-	public void save(Dictory dictory) {
-		if (dictory.getId() == 0L) {
-			dictory.setId(idGenerator.nextId());
-			// dictory.setCreateDate(new Date());
-			dictoryMapper.insertDictory(dictory);
-		} else {
-			dictoryMapper.updateDictory(dictory);
-		}
-	}
-
-	@Resource
-	@Qualifier("myBatisDbIdGenerator")
-	public void setIdGenerator(IdGenerator idGenerator) {
-		this.idGenerator = idGenerator;
-	}
-
-	@Resource
-	public void setDictoryMapper(DictoryMapper dictoryMapper) {
-		this.dictoryMapper = dictoryMapper;
-	}
-
-	@Resource
-	public void setPersistenceDAO(PersistenceDAO persistenceDAO) {
-		this.persistenceDAO = persistenceDAO;
-	}
-
-	@Resource
-	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
-		this.sqlSessionTemplate = sqlSessionTemplate;
 	}
 
 	@Transactional
@@ -165,6 +91,22 @@ public class DictoryServiceImpl implements DictoryService {
 		return true;
 	}
 
+	@Transactional
+	public void deleteById(Long id) {
+		if (id != null) {
+			dictoryMapper.deleteDictoryById(id);
+		}
+	}
+
+	@Transactional
+	public void deleteByIds(List<Long> rowIds) {
+		if (rowIds != null && !rowIds.isEmpty()) {
+			DictoryQuery query = new DictoryQuery();
+			query.rowIds(rowIds);
+			dictoryMapper.deleteDictorys(query);
+		}
+	}
+
 	public Dictory find(long id) {
 		return this.getDictory(id);
 	}
@@ -180,6 +122,18 @@ public class DictoryServiceImpl implements DictoryService {
 	public String getCodeById(long id) {
 		Dictory dic = find(id);
 		return dic.getCode();
+	}
+
+	public Dictory getDictory(Long id) {
+		if (id == null) {
+			return null;
+		}
+		Dictory dictory = dictoryMapper.getDictoryById(id);
+		return dictory;
+	}
+
+	public int getDictoryCountByQueryCriteria(DictoryQuery query) {
+		return dictoryMapper.getDictoryCount(query);
 	}
 
 	public PageResult getDictoryList(int pageNo, int pageSize) {
@@ -239,6 +193,52 @@ public class DictoryServiceImpl implements DictoryService {
 		return dictoryMap;
 	}
 
+	public List<Dictory> getDictorysByQueryCriteria(int start, int pageSize,
+			DictoryQuery query) {
+		RowBounds rowBounds = new RowBounds(start, pageSize);
+		List<Dictory> rows = sqlSessionTemplate.selectList("getDictorys",
+				query, rowBounds);
+		return rows;
+	}
+
+	public List<Dictory> list(DictoryQuery query) {
+		query.ensureInitialized();
+		List<Dictory> list = dictoryMapper.getDictorys(query);
+		return list;
+	}
+
+	@Transactional
+	public void save(Dictory dictory) {
+		if (dictory.getId() == 0L) {
+			dictory.setId(idGenerator.nextId());
+			// dictory.setCreateDate(new Date());
+			dictoryMapper.insertDictory(dictory);
+		} else {
+			dictoryMapper.updateDictory(dictory);
+		}
+	}
+
+	@Resource
+	public void setDictoryMapper(DictoryMapper dictoryMapper) {
+		this.dictoryMapper = dictoryMapper;
+	}
+
+	@Resource
+	@Qualifier("myBatisDbIdGenerator")
+	public void setIdGenerator(IdGenerator idGenerator) {
+		this.idGenerator = idGenerator;
+	}
+
+	@Resource
+	public void setPersistenceDAO(PersistenceDAO persistenceDAO) {
+		this.persistenceDAO = persistenceDAO;
+	}
+
+	@Resource
+	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
+		this.sqlSessionTemplate = sqlSessionTemplate;
+	}
+
 	@Transactional
 	public void sort(long parent, Dictory bean, int operate) {
 		if (bean == null)
@@ -251,15 +251,15 @@ public class DictoryServiceImpl implements DictoryService {
 	}
 
 	/**
-	 * 向前移动排序
+	 * 向后移动排序
 	 * 
 	 * @param bean
 	 */
-	private void sortByPrevious(long typeId, Dictory bean) {
+	private void sortByForward(long typeId, Dictory bean) {
 		DictoryQuery query = new DictoryQuery();
 		query.typeId(typeId);
-		query.setSortGreaterThan(bean.getSort());
-		query.setOrderBy(" E.SORT asc");
+		query.setSortLessThan(bean.getSort());
+		query.setOrderBy(" E.SORT desc");
 
 		List<?> list = this.list(query);
 		if (list != null && list.size() > 0) {// 有记录
@@ -274,15 +274,15 @@ public class DictoryServiceImpl implements DictoryService {
 	}
 
 	/**
-	 * 向后移动排序
+	 * 向前移动排序
 	 * 
 	 * @param bean
 	 */
-	private void sortByForward(long typeId, Dictory bean) {
+	private void sortByPrevious(long typeId, Dictory bean) {
 		DictoryQuery query = new DictoryQuery();
 		query.typeId(typeId);
-		query.setSortLessThan(bean.getSort());
-		query.setOrderBy(" E.SORT desc");
+		query.setSortGreaterThan(bean.getSort());
+		query.setOrderBy(" E.SORT asc");
 
 		List<?> list = this.list(query);
 		if (list != null && list.size() > 0) {// 有记录

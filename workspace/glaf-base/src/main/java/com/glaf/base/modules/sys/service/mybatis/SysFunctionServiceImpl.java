@@ -56,6 +56,43 @@ public class SysFunctionServiceImpl implements SysFunctionService {
 
 	}
 
+	public int count(SysFunctionQuery query) {
+		query.ensureInitialized();
+		return sysFunctionMapper.getSysFunctionCount(query);
+	}
+
+	@Transactional
+	public boolean create(SysFunction bean) {
+		if (bean.getId() == 0L) {
+			bean.setId(idGenerator.nextId());
+		}
+		bean.setSort((int) bean.getId());
+		sysFunctionMapper.insertSysFunction(bean);
+		return true;
+	}
+
+	@Transactional
+	public boolean delete(long id) {
+		this.deleteById(id);
+		return true;
+	}
+
+	@Transactional
+	public boolean delete(SysFunction bean) {
+		this.deleteById(bean.getId());
+		return true;
+	}
+
+	@Transactional
+	public boolean deleteAll(long[] ids) {
+		if (ids != null && ids.length > 0) {
+			for (long id : ids) {
+				this.deleteById(id);
+			}
+		}
+		return true;
+	}
+
 	@Transactional
 	public void deleteById(Long id) {
 		if (id != null) {
@@ -72,19 +109,33 @@ public class SysFunctionServiceImpl implements SysFunctionService {
 		}
 	}
 
-	public int count(SysFunctionQuery query) {
-		query.ensureInitialized();
-		return sysFunctionMapper.getSysFunctionCount(query);
+	public SysFunction findById(long id) {
+		return this.getSysFunction(id);
 	}
 
-	public List<SysFunction> list(SysFunctionQuery query) {
-		query.ensureInitialized();
-		List<SysFunction> list = sysFunctionMapper.getSysFunctions(query);
-		return list;
+	public SysFunction getSysFunction(Long id) {
+		if (id == null) {
+			return null;
+		}
+		SysFunction sysFunction = sysFunctionMapper.getSysFunctionById(id);
+		return sysFunction;
 	}
 
 	public int getSysFunctionCountByQueryCriteria(SysFunctionQuery query) {
 		return sysFunctionMapper.getSysFunctionCount(query);
+	}
+
+	public List<SysFunction> getSysFunctionList() {
+		SysFunctionQuery query = new SysFunctionQuery();
+		query.setOrderBy(" E.SORT desc ");
+		return this.list(query);
+	}
+
+	public List<SysFunction> getSysFunctionList(int appId) {
+		SysFunctionQuery query = new SysFunctionQuery();
+		query.appId(Long.valueOf(appId));
+		query.setOrderBy(" E.SORT desc ");
+		return this.list(query);
 	}
 
 	public List<SysFunction> getSysFunctionsByQueryCriteria(int start,
@@ -95,12 +146,10 @@ public class SysFunctionServiceImpl implements SysFunctionService {
 		return rows;
 	}
 
-	public SysFunction getSysFunction(Long id) {
-		if (id == null) {
-			return null;
-		}
-		SysFunction sysFunction = sysFunctionMapper.getSysFunctionById(id);
-		return sysFunction;
+	public List<SysFunction> list(SysFunctionQuery query) {
+		query.ensureInitialized();
+		List<SysFunction> list = sysFunctionMapper.getSysFunctions(query);
+		return list;
 	}
 
 	@Transactional
@@ -121,11 +170,6 @@ public class SysFunctionServiceImpl implements SysFunctionService {
 	}
 
 	@Resource
-	public void setSysFunctionMapper(SysFunctionMapper sysFunctionMapper) {
-		this.sysFunctionMapper = sysFunctionMapper;
-	}
-
-	@Resource
 	public void setPersistenceDAO(PersistenceDAO persistenceDAO) {
 		this.persistenceDAO = persistenceDAO;
 	}
@@ -135,59 +179,9 @@ public class SysFunctionServiceImpl implements SysFunctionService {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}
 
-	@Transactional
-	public boolean create(SysFunction bean) {
-		if (bean.getId() == 0L) {
-			bean.setId(idGenerator.nextId());
-		}
-		bean.setSort((int) bean.getId());
-		sysFunctionMapper.insertSysFunction(bean);
-		return true;
-	}
-
-	@Transactional
-	public boolean update(SysFunction bean) {
-		sysFunctionMapper.updateSysFunction(bean);
-		return true;
-	}
-
-	@Transactional
-	public boolean delete(SysFunction bean) {
-		this.deleteById(bean.getId());
-		return true;
-	}
-
-	@Transactional
-	public boolean delete(long id) {
-		this.deleteById(id);
-		return true;
-	}
-
-	@Transactional
-	public boolean deleteAll(long[] ids) {
-		if (ids != null && ids.length > 0) {
-			for (long id : ids) {
-				this.deleteById(id);
-			}
-		}
-		return true;
-	}
-
-	public SysFunction findById(long id) {
-		return this.getSysFunction(id);
-	}
-
-	public List<SysFunction> getSysFunctionList(int appId) {
-		SysFunctionQuery query = new SysFunctionQuery();
-		query.appId(Long.valueOf(appId));
-		query.setOrderBy(" E.SORT desc ");
-		return this.list(query);
-	}
-
-	public List<SysFunction> getSysFunctionList() {
-		SysFunctionQuery query = new SysFunctionQuery();
-		query.setOrderBy(" E.SORT desc ");
-		return this.list(query);
+	@Resource
+	public void setSysFunctionMapper(SysFunctionMapper sysFunctionMapper) {
+		this.sysFunctionMapper = sysFunctionMapper;
 	}
 
 	/**
@@ -206,6 +200,29 @@ public class SysFunctionServiceImpl implements SysFunctionService {
 			sortByPrevious(bean);
 		} else if (operate == SysConstants.SORT_FORWARD) {// 后移
 			sortByForward(bean);
+		}
+	}
+
+	/**
+	 * 向后移动排序
+	 * 
+	 * @param bean
+	 */
+	private void sortByForward(SysFunction bean) {
+		SysFunctionQuery query = new SysFunctionQuery();
+		query.appId(Long.valueOf(bean.getAppId()));
+		query.setSortLessThan(bean.getSort());
+		query.setOrderBy(" E.SORT desc ");
+		// 查找前一个对象
+		List<SysFunction> list = this.list(query);
+		if (list != null && list.size() > 0) {// 有记录
+			SysFunction temp = (SysFunction) list.get(0);
+			int i = bean.getSort();
+			bean.setSort(temp.getSort());
+			this.update(bean);// 更新bean
+
+			temp.setSort(i);
+			this.update(temp);// 更新temp
 		}
 	}
 
@@ -232,26 +249,9 @@ public class SysFunctionServiceImpl implements SysFunctionService {
 		}
 	}
 
-	/**
-	 * 向后移动排序
-	 * 
-	 * @param bean
-	 */
-	private void sortByForward(SysFunction bean) {
-		SysFunctionQuery query = new SysFunctionQuery();
-		query.appId(Long.valueOf(bean.getAppId()));
-		query.setSortLessThan(bean.getSort());
-		query.setOrderBy(" E.SORT desc ");
-		// 查找前一个对象
-		List<SysFunction> list = this.list(query);
-		if (list != null && list.size() > 0) {// 有记录
-			SysFunction temp = (SysFunction) list.get(0);
-			int i = bean.getSort();
-			bean.setSort(temp.getSort());
-			this.update(bean);// 更新bean
-
-			temp.setSort(i);
-			this.update(temp);// 更新temp
-		}
+	@Transactional
+	public boolean update(SysFunction bean) {
+		sysFunctionMapper.updateSysFunction(bean);
+		return true;
 	}
 }

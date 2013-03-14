@@ -51,12 +51,49 @@ public class SysRoleServiceImpl implements SysRoleService {
 
 	protected SqlSessionTemplate sqlSessionTemplate;
 
-	protected SysRoleMapper sysRoleMapper;
-
 	protected SysDeptRoleMapper sysDeptRoleMapper;
+
+	protected SysRoleMapper sysRoleMapper;
 
 	public SysRoleServiceImpl() {
 
+	}
+
+	public int count(SysRoleQuery query) {
+		query.ensureInitialized();
+		return sysRoleMapper.getSysRoleCount(query);
+	}
+
+	@Transactional
+	public boolean create(SysRole bean) {
+		if (bean.getId() == 0L) {
+			bean.setId(idGenerator.nextId());
+		}
+		bean.setSort((int) bean.getId());
+		sysRoleMapper.insertSysRole(bean);
+		return true;
+	}
+
+	@Transactional
+	public boolean delete(long id) {
+		this.deleteById(id);
+		return true;
+	}
+
+	@Transactional
+	public boolean delete(SysRole bean) {
+		sysRoleMapper.deleteSysRoleById(bean.getId());
+		return true;
+	}
+
+	@Transactional
+	public boolean deleteAll(long[] ids) {
+		if (ids != null && ids.length > 0) {
+			for (long id : ids) {
+				this.deleteById(id);
+			}
+		}
+		return true;
 	}
 
 	@Transactional
@@ -75,110 +112,17 @@ public class SysRoleServiceImpl implements SysRoleService {
 		}
 	}
 
-	public int count(SysRoleQuery query) {
-		query.ensureInitialized();
-		return sysRoleMapper.getSysRoleCount(query);
-	}
+	public SysRole findByCode(String code) {
+		SysRoleQuery query = new SysRoleQuery();
+		query.code(code);
+		query.setOrderBy(" E.ID desc ");
 
-	public List<SysRole> list(SysRoleQuery query) {
-		query.ensureInitialized();
-		List<SysRole> list = sysRoleMapper.getSysRoles(query);
-		return list;
-	}
-
-	public int getSysRoleCountByQueryCriteria(SysRoleQuery query) {
-		return sysRoleMapper.getSysRoleCount(query);
-	}
-
-	public List<SysRole> getSysRolesByQueryCriteria(int start, int pageSize,
-			SysRoleQuery query) {
-		RowBounds rowBounds = new RowBounds(start, pageSize);
-		List<SysRole> rows = sqlSessionTemplate.selectList("getSysRoles",
-				query, rowBounds);
-		return rows;
-	}
-
-	public SysRole getSysRole(Long id) {
-		if (id == null) {
-			return null;
+		List<SysRole> list = this.list(query);
+		if (list != null && !list.isEmpty()) {
+			return list.get(0);
 		}
-		SysRole sysRole = sysRoleMapper.getSysRoleById(id);
-		return sysRole;
-	}
 
-	@Transactional
-	public void save(SysRole sysRole) {
-		if (sysRole.getId() == 0L) {
-			sysRole.setId(idGenerator.nextId());
-			// sysRole.setCreateDate(new Date());
-			sysRoleMapper.insertSysRole(sysRole);
-		} else {
-			sysRoleMapper.updateSysRole(sysRole);
-		}
-	}
-
-	@Resource
-	@Qualifier("myBatisDbIdGenerator")
-	public void setIdGenerator(IdGenerator idGenerator) {
-		this.idGenerator = idGenerator;
-	}
-
-	@Resource
-	public void setSysRoleMapper(SysRoleMapper sysRoleMapper) {
-		this.sysRoleMapper = sysRoleMapper;
-	}
-
-	@Resource
-	public void setPersistenceDAO(PersistenceDAO persistenceDAO) {
-		this.persistenceDAO = persistenceDAO;
-	}
-
-	@Resource
-	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
-		this.sqlSessionTemplate = sqlSessionTemplate;
-	}
-
-	@Resource
-	public void setSysDeptRoleMapper(SysDeptRoleMapper sysDeptRoleMapper) {
-		this.sysDeptRoleMapper = sysDeptRoleMapper;
-	}
-
-	@Transactional
-	public boolean create(SysRole bean) {
-		if (bean.getId() == 0L) {
-			bean.setId(idGenerator.nextId());
-		}
-		bean.setSort((int) bean.getId());
-		sysRoleMapper.insertSysRole(bean);
-		return true;
-	}
-
-	@Transactional
-	public boolean update(SysRole bean) {
-		sysRoleMapper.updateSysRole(bean);
-		return true;
-	}
-
-	@Transactional
-	public boolean delete(SysRole bean) {
-		sysRoleMapper.deleteSysRoleById(bean.getId());
-		return true;
-	}
-
-	@Transactional
-	public boolean delete(long id) {
-		this.deleteById(id);
-		return true;
-	}
-
-	@Transactional
-	public boolean deleteAll(long[] ids) {
-		if (ids != null && ids.length > 0) {
-			for (long id : ids) {
-				this.deleteById(id);
-			}
-		}
-		return true;
+		return null;
 	}
 
 	public SysRole findById(long id) {
@@ -198,17 +142,24 @@ public class SysRoleServiceImpl implements SysRoleService {
 		return null;
 	}
 
-	public SysRole findByCode(String code) {
+	public SysRole getSysRole(Long id) {
+		if (id == null) {
+			return null;
+		}
+		SysRole sysRole = sysRoleMapper.getSysRoleById(id);
+		return sysRole;
+	}
+
+	public int getSysRoleCountByQueryCriteria(SysRoleQuery query) {
+		return sysRoleMapper.getSysRoleCount(query);
+	}
+
+	public List<SysRole> getSysRoleList() {
 		SysRoleQuery query = new SysRoleQuery();
-		query.code(code);
-		query.setOrderBy(" E.ID desc ");
+		query.setOrderBy(" E.SORT desc ");
 
 		List<SysRole> list = this.list(query);
-		if (list != null && !list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return list;
 	}
 
 	public PageResult getSysRoleList(int pageNo, int pageSize) {
@@ -234,12 +185,55 @@ public class SysRoleServiceImpl implements SysRoleService {
 		return pager;
 	}
 
-	public List<SysRole> getSysRoleList() {
-		SysRoleQuery query = new SysRoleQuery();
-		query.setOrderBy(" E.SORT desc ");
+	public List<SysRole> getSysRolesByQueryCriteria(int start, int pageSize,
+			SysRoleQuery query) {
+		RowBounds rowBounds = new RowBounds(start, pageSize);
+		List<SysRole> rows = sqlSessionTemplate.selectList("getSysRoles",
+				query, rowBounds);
+		return rows;
+	}
 
-		List<SysRole> list = this.list(query);
+	public List<SysRole> list(SysRoleQuery query) {
+		query.ensureInitialized();
+		List<SysRole> list = sysRoleMapper.getSysRoles(query);
 		return list;
+	}
+
+	@Transactional
+	public void save(SysRole sysRole) {
+		if (sysRole.getId() == 0L) {
+			sysRole.setId(idGenerator.nextId());
+			// sysRole.setCreateDate(new Date());
+			sysRoleMapper.insertSysRole(sysRole);
+		} else {
+			sysRoleMapper.updateSysRole(sysRole);
+		}
+	}
+
+	@Resource
+	@Qualifier("myBatisDbIdGenerator")
+	public void setIdGenerator(IdGenerator idGenerator) {
+		this.idGenerator = idGenerator;
+	}
+
+	@Resource
+	public void setPersistenceDAO(PersistenceDAO persistenceDAO) {
+		this.persistenceDAO = persistenceDAO;
+	}
+
+	@Resource
+	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
+		this.sqlSessionTemplate = sqlSessionTemplate;
+	}
+
+	@Resource
+	public void setSysDeptRoleMapper(SysDeptRoleMapper sysDeptRoleMapper) {
+		this.sysDeptRoleMapper = sysDeptRoleMapper;
+	}
+
+	@Resource
+	public void setSysRoleMapper(SysRoleMapper sysRoleMapper) {
+		this.sysRoleMapper = sysRoleMapper;
 	}
 
 	/**
@@ -258,6 +252,27 @@ public class SysRoleServiceImpl implements SysRoleService {
 			sortByPrevious(bean);
 		} else if (operate == SysConstants.SORT_FORWARD) {// 后移
 			sortByForward(bean);
+		}
+	}
+
+	/**
+	 * 向后移动排序
+	 * 
+	 * @param bean
+	 */
+	private void sortByForward(SysRole bean) {
+		SysRoleQuery query = new SysRoleQuery();
+		query.setSortLessThan(bean.getSort());
+		query.setOrderBy(" E.SORT desc ");
+		List<SysRole> list = this.list(query);
+		if (list != null && list.size() > 0) {// 有记录
+			SysRole temp = (SysRole) list.get(0);
+			int i = bean.getSort();
+			bean.setSort(temp.getSort());
+			this.update(bean);// 更新bean
+
+			temp.setSort(i);
+			this.update(temp);// 更新temp
 		}
 	}
 
@@ -283,24 +298,9 @@ public class SysRoleServiceImpl implements SysRoleService {
 		}
 	}
 
-	/**
-	 * 向后移动排序
-	 * 
-	 * @param bean
-	 */
-	private void sortByForward(SysRole bean) {
-		SysRoleQuery query = new SysRoleQuery();
-		query.setSortLessThan(bean.getSort());
-		query.setOrderBy(" E.SORT desc ");
-		List<SysRole> list = this.list(query);
-		if (list != null && list.size() > 0) {// 有记录
-			SysRole temp = (SysRole) list.get(0);
-			int i = bean.getSort();
-			bean.setSort(temp.getSort());
-			this.update(bean);// 更新bean
-
-			temp.setSort(i);
-			this.update(temp);// 更新temp
-		}
+	@Transactional
+	public boolean update(SysRole bean) {
+		sysRoleMapper.updateSysRole(bean);
+		return true;
 	}
 }

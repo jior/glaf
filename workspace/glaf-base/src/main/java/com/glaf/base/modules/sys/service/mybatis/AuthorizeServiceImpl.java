@@ -38,21 +38,9 @@ public class AuthorizeServiceImpl implements AuthorizeService {
 	private static final Log logger = LogFactory
 			.getLog(AuthorizeServiceImpl.class);
 
-	private SysUserService sysUserService;
-
 	private SysDepartmentService sysDepartmentService;
 
-	@Resource
-	public void setSysUserService(SysUserService sysUserService) {
-		this.sysUserService = sysUserService;
-		logger.info("setSysUserService");
-	}
-
-	@Resource
-	public void setSysDepartmentService(
-			SysDepartmentService sysDepartmentService) {
-		this.sysDepartmentService = sysDepartmentService;
-	}
+	private SysUserService sysUserService;
 
 	/**
 	 * ÓÃ»§µÇÂ½
@@ -117,6 +105,18 @@ public class AuthorizeServiceImpl implements AuthorizeService {
 			}
 		}
 		return bean;
+	}
+
+	@Resource
+	public void setSysDepartmentService(
+			SysDepartmentService sysDepartmentService) {
+		this.sysDepartmentService = sysDepartmentService;
+	}
+
+	@Resource
+	public void setSysUserService(SysUserService sysUserService) {
+		this.sysUserService = sysUserService;
+		logger.info("setSysUserService");
 	}
 
 }

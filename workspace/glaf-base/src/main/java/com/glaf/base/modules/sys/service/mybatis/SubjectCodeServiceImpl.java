@@ -40,9 +40,9 @@ import com.glaf.base.modules.sys.service.*;
 @Service("subjectCodeService")
 @Transactional(readOnly = true)
 public class SubjectCodeServiceImpl implements SubjectCodeService {
-	protected final Logger logger = LoggerFactory.getLogger(getClass());
-
 	protected IdGenerator idGenerator;
+
+	protected final Logger logger = LoggerFactory.getLogger(getClass());
 
 	protected PersistenceDAO persistenceDAO;
 
@@ -52,6 +52,35 @@ public class SubjectCodeServiceImpl implements SubjectCodeService {
 
 	public SubjectCodeServiceImpl() {
 
+	}
+
+	public int count(SubjectCodeQuery query) {
+		query.ensureInitialized();
+		return subjectCodeMapper.getSubjectCodeCount(query);
+	}
+
+	public boolean create(SubjectCode bean) {
+		this.save(bean);
+		return true;
+	}
+
+	public boolean delete(long id) {
+		this.deleteById(id);
+		return true;
+	}
+
+	public boolean delete(SubjectCode bean) {
+		this.deleteById(bean.getId());
+		return true;
+	}
+
+	public boolean deleteAll(long[] ids) {
+		if (ids != null && ids.length > 0) {
+			for (long id : ids) {
+				this.deleteById(id);
+			}
+		}
+		return true;
 	}
 
 	@Transactional
@@ -70,102 +99,6 @@ public class SubjectCodeServiceImpl implements SubjectCodeService {
 		}
 	}
 
-	public int count(SubjectCodeQuery query) {
-		query.ensureInitialized();
-		return subjectCodeMapper.getSubjectCodeCount(query);
-	}
-
-	public List<SubjectCode> list(SubjectCodeQuery query) {
-		query.ensureInitialized();
-		List<SubjectCode> list = subjectCodeMapper.getSubjectCodes(query);
-		return list;
-	}
-
-	public int getSubjectCodeCountByQueryCriteria(SubjectCodeQuery query) {
-		return subjectCodeMapper.getSubjectCodeCount(query);
-	}
-
-	public List<SubjectCode> getSubjectCodesByQueryCriteria(int start,
-			int pageSize, SubjectCodeQuery query) {
-		RowBounds rowBounds = new RowBounds(start, pageSize);
-		List<SubjectCode> rows = sqlSessionTemplate.selectList(
-				"getSubjectCodes", query, rowBounds);
-		return rows;
-	}
-
-	public SubjectCode getSubjectCode(Long id) {
-		if (id == null) {
-			return null;
-		}
-		SubjectCode subjectCode = subjectCodeMapper.getSubjectCodeById(id);
-		return subjectCode;
-	}
-
-	@Transactional
-	public void save(SubjectCode subjectCode) {
-		if (subjectCode.getId() == 0L) {
-			subjectCode.setId(idGenerator.nextId());
-			// subjectCode.setCreateDate(new Date());
-			subjectCodeMapper.insertSubjectCode(subjectCode);
-		} else {
-			subjectCodeMapper.updateSubjectCode(subjectCode);
-		}
-	}
-
-	@Resource
-	@Qualifier("myBatisDbIdGenerator")
-	public void setIdGenerator(IdGenerator idGenerator) {
-		this.idGenerator = idGenerator;
-	}
-
-	@Resource
-	public void setSubjectCodeMapper(SubjectCodeMapper subjectCodeMapper) {
-		this.subjectCodeMapper = subjectCodeMapper;
-	}
-
-	@Resource
-	public void setPersistenceDAO(PersistenceDAO persistenceDAO) {
-		this.persistenceDAO = persistenceDAO;
-	}
-
-	@Resource
-	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
-		this.sqlSessionTemplate = sqlSessionTemplate;
-	}
-
-	public boolean create(SubjectCode bean) {
-		this.save(bean);
-		return true;
-	}
-
-	public boolean update(SubjectCode bean) {
-		this.save(bean);
-		return true;
-	}
-
-	public boolean delete(SubjectCode bean) {
-		this.deleteById(bean.getId());
-		return true;
-	}
-
-	public boolean delete(long id) {
-		this.deleteById(id);
-		return true;
-	}
-
-	public boolean deleteAll(long[] ids) {
-		if (ids != null && ids.length > 0) {
-			for (long id : ids) {
-				this.deleteById(id);
-			}
-		}
-		return true;
-	}
-
-	public SubjectCode findById(long id) {
-		return this.getSubjectCode(id);
-	}
-
 	public SubjectCode findByCode(String code) {
 		SubjectCodeQuery query = new SubjectCodeQuery();
 		query.subjectCode(code);
@@ -177,19 +110,8 @@ public class SubjectCodeServiceImpl implements SubjectCodeService {
 		return null;
 	}
 
-	public List<SubjectCode> getSubjectCodeList() {
-		SubjectCodeQuery query = new SubjectCodeQuery();
-		query.setOrderBy(" E.subjectCode asc ");
-		List<SubjectCode> list = this.list(query);
-		return list;
-	}
-
-	public List<SubjectCode> getSysSubjectCodeList(long parent) {
-		SubjectCodeQuery query = new SubjectCodeQuery();
-		query.parent(parent);
-		query.setOrderBy(" E.subjectCode asc ");
-		List<SubjectCode> list = this.list(query);
-		return list;
+	public SubjectCode findById(long id) {
+		return this.getSubjectCode(id);
 	}
 
 	public PageResult getFeePage(Map<String, Object> filter) {
@@ -253,6 +175,84 @@ public class SubjectCodeServiceImpl implements SubjectCodeService {
 		query.setOrderBy(" E.subjectCode asc ");
 		List<SubjectCode> list = this.list(query);
 		return list;
+	}
+
+	public SubjectCode getSubjectCode(Long id) {
+		if (id == null) {
+			return null;
+		}
+		SubjectCode subjectCode = subjectCodeMapper.getSubjectCodeById(id);
+		return subjectCode;
+	}
+
+	public int getSubjectCodeCountByQueryCriteria(SubjectCodeQuery query) {
+		return subjectCodeMapper.getSubjectCodeCount(query);
+	}
+
+	public List<SubjectCode> getSubjectCodeList() {
+		SubjectCodeQuery query = new SubjectCodeQuery();
+		query.setOrderBy(" E.subjectCode asc ");
+		List<SubjectCode> list = this.list(query);
+		return list;
+	}
+
+	public List<SubjectCode> getSubjectCodesByQueryCriteria(int start,
+			int pageSize, SubjectCodeQuery query) {
+		RowBounds rowBounds = new RowBounds(start, pageSize);
+		List<SubjectCode> rows = sqlSessionTemplate.selectList(
+				"getSubjectCodes", query, rowBounds);
+		return rows;
+	}
+
+	public List<SubjectCode> getSysSubjectCodeList(long parent) {
+		SubjectCodeQuery query = new SubjectCodeQuery();
+		query.parent(parent);
+		query.setOrderBy(" E.subjectCode asc ");
+		List<SubjectCode> list = this.list(query);
+		return list;
+	}
+
+	public List<SubjectCode> list(SubjectCodeQuery query) {
+		query.ensureInitialized();
+		List<SubjectCode> list = subjectCodeMapper.getSubjectCodes(query);
+		return list;
+	}
+
+	@Transactional
+	public void save(SubjectCode subjectCode) {
+		if (subjectCode.getId() == 0L) {
+			subjectCode.setId(idGenerator.nextId());
+			// subjectCode.setCreateDate(new Date());
+			subjectCodeMapper.insertSubjectCode(subjectCode);
+		} else {
+			subjectCodeMapper.updateSubjectCode(subjectCode);
+		}
+	}
+
+	@Resource
+	@Qualifier("myBatisDbIdGenerator")
+	public void setIdGenerator(IdGenerator idGenerator) {
+		this.idGenerator = idGenerator;
+	}
+
+	@Resource
+	public void setPersistenceDAO(PersistenceDAO persistenceDAO) {
+		this.persistenceDAO = persistenceDAO;
+	}
+
+	@Resource
+	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
+		this.sqlSessionTemplate = sqlSessionTemplate;
+	}
+
+	@Resource
+	public void setSubjectCodeMapper(SubjectCodeMapper subjectCodeMapper) {
+		this.subjectCodeMapper = subjectCodeMapper;
+	}
+
+	public boolean update(SubjectCode bean) {
+		this.save(bean);
+		return true;
 	}
 
 }

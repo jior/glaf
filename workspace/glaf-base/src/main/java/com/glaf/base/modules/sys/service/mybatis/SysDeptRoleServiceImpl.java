@@ -53,29 +53,29 @@ public class SysDeptRoleServiceImpl implements SysDeptRoleService {
 
 	protected SqlSessionTemplate sqlSessionTemplate;
 
-	protected SysDeptRoleMapper sysDeptRoleMapper;
-
-	protected SysUserRoleMapper sysUserRoleMapper;
-
-	protected SysUserMapper sysUserMapper;
-
-	protected SysPermissionMapper sysPermissionMapper;
-
 	protected SysAccessMapper sysAccessMapper;
 
 	protected SysApplicationMapper sysApplicationMapper;
 
-	protected SysFunctionMapper sysFunctionMapper;
-
 	protected SysApplicationService sysApplicationService;
+
+	protected SysDepartmentService sysDepartmentService;
+
+	protected SysDeptRoleMapper sysDeptRoleMapper;
+
+	protected SysFunctionMapper sysFunctionMapper;
 
 	protected SysFunctionService sysFunctionService;
 
+	protected SysPermissionMapper sysPermissionMapper;
+
 	protected SysRoleService sysRoleService;
 
-	protected SysUserService sysUserService;
+	protected SysUserMapper sysUserMapper;
 
-	protected SysDepartmentService sysDepartmentService;
+	protected SysUserRoleMapper sysUserRoleMapper;
+
+	protected SysUserService sysUserService;
 
 	protected ITableDataService tableDataService;
 
@@ -83,155 +83,9 @@ public class SysDeptRoleServiceImpl implements SysDeptRoleService {
 
 	}
 
-	@Transactional
-	public void deleteById(Long id) {
-		if (id != null) {
-			sysDeptRoleMapper.deleteSysDeptRoleById(id);
-		}
-	}
-
-	@Transactional
-	public void deleteByIds(List<Long> rowIds) {
-		if (rowIds != null && !rowIds.isEmpty()) {
-			SysDeptRoleQuery query = new SysDeptRoleQuery();
-			query.rowIds(rowIds);
-			sysDeptRoleMapper.deleteSysDeptRoles(query);
-		}
-	}
-
 	public int count(SysDeptRoleQuery query) {
 		query.ensureInitialized();
 		return sysDeptRoleMapper.getSysDeptRoleCount(query);
-	}
-
-	public List<SysDeptRole> list(SysDeptRoleQuery query) {
-		query.ensureInitialized();
-		List<SysDeptRole> list = sysDeptRoleMapper.getSysDeptRoles(query);
-		return list;
-	}
-
-	public int getSysDeptRoleCountByQueryCriteria(SysDeptRoleQuery query) {
-		return sysDeptRoleMapper.getSysDeptRoleCount(query);
-	}
-
-	public List<SysDeptRole> getSysDeptRolesByQueryCriteria(int start,
-			int pageSize, SysDeptRoleQuery query) {
-		RowBounds rowBounds = new RowBounds(start, pageSize);
-		List<SysDeptRole> rows = sqlSessionTemplate.selectList(
-				"getSysDeptRoles", query, rowBounds);
-		return rows;
-	}
-
-	public SysDeptRole getSysDeptRole(Long id) {
-		if (id == null) {
-			return null;
-		}
-		SysDeptRole deptRole = sysDeptRoleMapper.getSysDeptRoleById(id);
-		if (deptRole != null) {
-			deptRole.setDept(sysDepartmentService.findById(deptRole.getDeptId()));
-			deptRole.setRole(sysRoleService.findById(deptRole.getSysRoleId()));
-			deptRole.getApps().addAll(
-					sysApplicationMapper.getSysApplicationByRoleId(deptRole
-							.getId()));
-			deptRole.getFunctions().addAll(
-					sysFunctionMapper.getSysFunctionByRoleId(deptRole.getId()));
-		}
-		return deptRole;
-	}
-
-	@Transactional
-	public void save(SysDeptRole sysDeptRole) {
-		if (sysDeptRole.getId() == 0L) {
-			sysDeptRole.setId(idGenerator.nextId());
-			// sysDeptRole.setCreateDate(new Date());
-			sysDeptRoleMapper.insertSysDeptRole(sysDeptRole);
-		} else {
-			sysDeptRoleMapper.updateSysDeptRole(sysDeptRole);
-		}
-	}
-
-	@Resource
-	@Qualifier("myBatisDbIdGenerator")
-	public void setIdGenerator(IdGenerator idGenerator) {
-		this.idGenerator = idGenerator;
-	}
-
-	@Resource
-	public void setSysDeptRoleMapper(SysDeptRoleMapper sysDeptRoleMapper) {
-		this.sysDeptRoleMapper = sysDeptRoleMapper;
-	}
-
-	@Resource
-	public void setPersistenceDAO(PersistenceDAO persistenceDAO) {
-		this.persistenceDAO = persistenceDAO;
-	}
-
-	@Resource
-	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
-		this.sqlSessionTemplate = sqlSessionTemplate;
-	}
-
-	@Resource
-	public void setSysApplicationService(
-			SysApplicationService sysApplicationService) {
-		this.sysApplicationService = sysApplicationService;
-	}
-
-	@Resource
-	public void setSysFunctionService(SysFunctionService sysFunctionService) {
-		this.sysFunctionService = sysFunctionService;
-	}
-
-	@Resource
-	public void setSysRoleService(SysRoleService sysRoleService) {
-		this.sysRoleService = sysRoleService;
-	}
-
-	@Resource
-	public void setSysUserRoleMapper(SysUserRoleMapper sysUserRoleMapper) {
-		this.sysUserRoleMapper = sysUserRoleMapper;
-	}
-
-	@Resource
-	public void setSysPermissionMapper(SysPermissionMapper sysPermissionMapper) {
-		this.sysPermissionMapper = sysPermissionMapper;
-	}
-
-	@Resource
-	public void setSysAccessMapper(SysAccessMapper sysAccessMapper) {
-		this.sysAccessMapper = sysAccessMapper;
-	}
-
-	@Resource
-	public void setSysUserMapper(SysUserMapper sysUserMapper) {
-		this.sysUserMapper = sysUserMapper;
-	}
-
-	@Resource
-	public void setSysDepartmentService(
-			SysDepartmentService sysDepartmentService) {
-		this.sysDepartmentService = sysDepartmentService;
-	}
-
-	@Resource
-	public void setSysApplicationMapper(
-			SysApplicationMapper sysApplicationMapper) {
-		this.sysApplicationMapper = sysApplicationMapper;
-	}
-
-	@Resource
-	public void setSysFunctionMapper(SysFunctionMapper sysFunctionMapper) {
-		this.sysFunctionMapper = sysFunctionMapper;
-	}
-
-	@Resource
-	public void setSysUserService(SysUserService sysUserService) {
-		this.sysUserService = sysUserService;
-	}
-
-	@Resource
-	public void setTableDataService(ITableDataService tableDataService) {
-		this.tableDataService = tableDataService;
 	}
 
 	@Transactional
@@ -241,38 +95,14 @@ public class SysDeptRoleServiceImpl implements SysDeptRoleService {
 	}
 
 	@Transactional
-	public boolean update(SysDeptRole bean) {
-		this.save(bean);
-		TableModel table = new TableModel();
-		table.setTableName("sys_user_role");
-		table.addColumn("AUTHORIZED", "Integer", 0);
-		table.addColumn("ROLEID", "Long", bean.getId());
-		tableDataService.deleteTableData(table);
-
-		Set<SysUser> users = bean.getUsers();
-		if (users != null && !users.isEmpty()) {
-			for (SysUser user : users) {
-				SysUserRole userRole = new SysUserRole();
-				userRole.setId(idGenerator.nextId());
-				userRole.setUserId(user.getId());
-				userRole.setDeptRoleId(bean.getId());
-				userRole.setDeptRole(bean);
-				sysUserRoleMapper.insertSysUserRole(userRole);
-			}
-		}
-
+	public boolean delete(long id) {
+		this.deleteById(id);
 		return true;
 	}
 
 	@Transactional
 	public boolean delete(SysDeptRole bean) {
 		this.deleteById(bean.getId());
-		return true;
-	}
-
-	@Transactional
-	public boolean delete(long id) {
-		this.deleteById(id);
 		return true;
 	}
 
@@ -292,8 +122,20 @@ public class SysDeptRoleServiceImpl implements SysDeptRoleService {
 		return true;
 	}
 
-	public SysDeptRole findById(long id) {
-		return this.getSysDeptRole(id);
+	@Transactional
+	public void deleteById(Long id) {
+		if (id != null) {
+			sysDeptRoleMapper.deleteSysDeptRoleById(id);
+		}
+	}
+
+	@Transactional
+	public void deleteByIds(List<Long> rowIds) {
+		if (rowIds != null && !rowIds.isEmpty()) {
+			SysDeptRoleQuery query = new SysDeptRoleQuery();
+			query.rowIds(rowIds);
+			sysDeptRoleMapper.deleteSysDeptRoles(query);
+		}
 	}
 
 	public SysDeptRole find(long deptId, long roleId) {
@@ -321,20 +163,8 @@ public class SysDeptRoleServiceImpl implements SysDeptRoleService {
 		return null;
 	}
 
-	protected void initUserDepartments(List<SysUser> users) {
-		if (users != null && !users.isEmpty()) {
-			List<SysDepartment> depts = sysDepartmentService
-					.getSysDepartmentList();
-			Map<Long, SysDepartment> deptMap = new HashMap<Long, SysDepartment>();
-			if (depts != null && !depts.isEmpty()) {
-				for (SysDepartment dept : depts) {
-					deptMap.put(dept.getId(), dept);
-				}
-			}
-			for (SysUser user : users) {
-				user.setDepartment(deptMap.get(Long.valueOf(user.getDeptId())));
-			}
-		}
+	public SysDeptRole findById(long id) {
+		return this.getSysDeptRole(id);
 	}
 
 	public Set<SysUser> findRoleUser(long deptId, String roleCode) {
@@ -350,6 +180,14 @@ public class SysDeptRoleServiceImpl implements SysDeptRoleService {
 		}
 
 		return users;
+	}
+
+	public List<SysDeptRole> getRoleList(long deptId) {
+		SysDeptRoleQuery query = new SysDeptRoleQuery();
+		query.setDeptId(deptId);
+		List<SysDeptRole> list = this.list(query);
+		this.initRoles(list);
+		return list;
 	}
 
 	public PageResult getRoleList(long deptId, int pageNo, int pageSize) {
@@ -376,6 +214,35 @@ public class SysDeptRoleServiceImpl implements SysDeptRoleService {
 		return pager;
 	}
 
+	public SysDeptRole getSysDeptRole(Long id) {
+		if (id == null) {
+			return null;
+		}
+		SysDeptRole deptRole = sysDeptRoleMapper.getSysDeptRoleById(id);
+		if (deptRole != null) {
+			deptRole.setDept(sysDepartmentService.findById(deptRole.getDeptId()));
+			deptRole.setRole(sysRoleService.findById(deptRole.getSysRoleId()));
+			deptRole.getApps().addAll(
+					sysApplicationMapper.getSysApplicationByRoleId(deptRole
+							.getId()));
+			deptRole.getFunctions().addAll(
+					sysFunctionMapper.getSysFunctionByRoleId(deptRole.getId()));
+		}
+		return deptRole;
+	}
+
+	public int getSysDeptRoleCountByQueryCriteria(SysDeptRoleQuery query) {
+		return sysDeptRoleMapper.getSysDeptRoleCount(query);
+	}
+
+	public List<SysDeptRole> getSysDeptRolesByQueryCriteria(int start,
+			int pageSize, SysDeptRoleQuery query) {
+		RowBounds rowBounds = new RowBounds(start, pageSize);
+		List<SysDeptRole> rows = sqlSessionTemplate.selectList(
+				"getSysDeptRoles", query, rowBounds);
+		return rows;
+	}
+
 	protected void initRoles(List<SysDeptRole> list) {
 		if (list != null && !list.isEmpty()) {
 			List<SysRole> rows = sysRoleService.getSysRoleList();
@@ -391,78 +258,36 @@ public class SysDeptRoleServiceImpl implements SysDeptRoleService {
 		}
 	}
 
-	public List<SysDeptRole> getRoleList(long deptId) {
-		SysDeptRoleQuery query = new SysDeptRoleQuery();
-		query.setDeptId(deptId);
-		List<SysDeptRole> list = this.list(query);
-		this.initRoles(list);
+	protected void initUserDepartments(List<SysUser> users) {
+		if (users != null && !users.isEmpty()) {
+			List<SysDepartment> depts = sysDepartmentService
+					.getSysDepartmentList();
+			Map<Long, SysDepartment> deptMap = new HashMap<Long, SysDepartment>();
+			if (depts != null && !depts.isEmpty()) {
+				for (SysDepartment dept : depts) {
+					deptMap.put(dept.getId(), dept);
+				}
+			}
+			for (SysUser user : users) {
+				user.setDepartment(deptMap.get(Long.valueOf(user.getDeptId())));
+			}
+		}
+	}
+
+	public List<SysDeptRole> list(SysDeptRoleQuery query) {
+		query.ensureInitialized();
+		List<SysDeptRole> list = sysDeptRoleMapper.getSysDeptRoles(query);
 		return list;
 	}
 
-	/**
-	 * 排序
-	 * 
-	 * @param bean
-	 *            SysDeptRole
-	 * @param operate
-	 *            int 操作
-	 */
 	@Transactional
-	public void sort(SysDeptRole bean, int operate) {
-		if (bean == null)
-			return;
-		if (operate == SysConstants.SORT_PREVIOUS) {// 前移
-			sortByPrevious(bean);
-		} else if (operate == SysConstants.SORT_FORWARD) {// 后移
-			sortByForward(bean);
-		}
-	}
-
-	/**
-	 * 向前移动排序
-	 * 
-	 * @param bean
-	 */
-	private void sortByPrevious(SysDeptRole bean) {
-		SysDeptRoleQuery query = new SysDeptRoleQuery();
-		query.setDeptId(bean.getDeptId());
-		query.setSortGreaterThan(bean.getSort());
-		query.setOrderBy(" E.SORT asc ");
-		// 查找前一个对象
-
-		List<SysDeptRole> list = this.list(query);
-		if (list != null && list.size() > 0) {// 有记录
-			SysDeptRole temp = (SysDeptRole) list.get(0);
-			int i = bean.getSort();
-			bean.setSort(temp.getSort());
-			this.update(bean);// 更新bean
-
-			temp.setSort(i);
-			this.update(temp);// 更新temp
-		}
-	}
-
-	/**
-	 * 向后移动排序
-	 * 
-	 * @param bean
-	 */
-	private void sortByForward(SysDeptRole bean) {
-		SysDeptRoleQuery query = new SysDeptRoleQuery();
-		query.setDeptId(bean.getDeptId());
-		query.setSortLessThan(bean.getSort());
-		query.setOrderBy(" E.SORT desc ");
-
-		// 查找后一个对象
-		List<SysDeptRole> list = this.list(query);
-		if (list != null && list.size() > 0) {// 有记录
-			SysDeptRole temp = (SysDeptRole) list.get(0);
-			int i = bean.getSort();
-			bean.setSort(temp.getSort());
-			this.update(bean);// 更新bean
-
-			temp.setSort(i);
-			this.update(temp);// 更新temp
+	public void save(SysDeptRole sysDeptRole) {
+		if (sysDeptRole.getId() == 0L) {
+			sysDeptRole.setId(idGenerator.nextId());
+			// sysDeptRole.setCreateDate(new Date());
+			sysDeptRoleMapper.insertSysDeptRole(sysDeptRole);
+		} else {
+			sysDeptRoleMapper.updateSysDeptRole(sysDeptRole);
 		}
 	}
 
@@ -505,6 +330,181 @@ public class SysDeptRoleServiceImpl implements SysDeptRoleService {
 				}
 			}
 		}
+		return true;
+	}
+
+	@Resource
+	@Qualifier("myBatisDbIdGenerator")
+	public void setIdGenerator(IdGenerator idGenerator) {
+		this.idGenerator = idGenerator;
+	}
+
+	@Resource
+	public void setPersistenceDAO(PersistenceDAO persistenceDAO) {
+		this.persistenceDAO = persistenceDAO;
+	}
+
+	@Resource
+	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
+		this.sqlSessionTemplate = sqlSessionTemplate;
+	}
+
+	@Resource
+	public void setSysAccessMapper(SysAccessMapper sysAccessMapper) {
+		this.sysAccessMapper = sysAccessMapper;
+	}
+
+	@Resource
+	public void setSysApplicationMapper(
+			SysApplicationMapper sysApplicationMapper) {
+		this.sysApplicationMapper = sysApplicationMapper;
+	}
+
+	@Resource
+	public void setSysApplicationService(
+			SysApplicationService sysApplicationService) {
+		this.sysApplicationService = sysApplicationService;
+	}
+
+	@Resource
+	public void setSysDepartmentService(
+			SysDepartmentService sysDepartmentService) {
+		this.sysDepartmentService = sysDepartmentService;
+	}
+
+	@Resource
+	public void setSysDeptRoleMapper(SysDeptRoleMapper sysDeptRoleMapper) {
+		this.sysDeptRoleMapper = sysDeptRoleMapper;
+	}
+
+	@Resource
+	public void setSysFunctionMapper(SysFunctionMapper sysFunctionMapper) {
+		this.sysFunctionMapper = sysFunctionMapper;
+	}
+
+	@Resource
+	public void setSysFunctionService(SysFunctionService sysFunctionService) {
+		this.sysFunctionService = sysFunctionService;
+	}
+
+	@Resource
+	public void setSysPermissionMapper(SysPermissionMapper sysPermissionMapper) {
+		this.sysPermissionMapper = sysPermissionMapper;
+	}
+
+	@Resource
+	public void setSysRoleService(SysRoleService sysRoleService) {
+		this.sysRoleService = sysRoleService;
+	}
+
+	@Resource
+	public void setSysUserMapper(SysUserMapper sysUserMapper) {
+		this.sysUserMapper = sysUserMapper;
+	}
+
+	@Resource
+	public void setSysUserRoleMapper(SysUserRoleMapper sysUserRoleMapper) {
+		this.sysUserRoleMapper = sysUserRoleMapper;
+	}
+
+	@Resource
+	public void setSysUserService(SysUserService sysUserService) {
+		this.sysUserService = sysUserService;
+	}
+
+	@Resource
+	public void setTableDataService(ITableDataService tableDataService) {
+		this.tableDataService = tableDataService;
+	}
+
+	/**
+	 * 排序
+	 * 
+	 * @param bean
+	 *            SysDeptRole
+	 * @param operate
+	 *            int 操作
+	 */
+	@Transactional
+	public void sort(SysDeptRole bean, int operate) {
+		if (bean == null)
+			return;
+		if (operate == SysConstants.SORT_PREVIOUS) {// 前移
+			sortByPrevious(bean);
+		} else if (operate == SysConstants.SORT_FORWARD) {// 后移
+			sortByForward(bean);
+		}
+	}
+
+	/**
+	 * 向后移动排序
+	 * 
+	 * @param bean
+	 */
+	private void sortByForward(SysDeptRole bean) {
+		SysDeptRoleQuery query = new SysDeptRoleQuery();
+		query.setDeptId(bean.getDeptId());
+		query.setSortLessThan(bean.getSort());
+		query.setOrderBy(" E.SORT desc ");
+
+		// 查找后一个对象
+		List<SysDeptRole> list = this.list(query);
+		if (list != null && list.size() > 0) {// 有记录
+			SysDeptRole temp = (SysDeptRole) list.get(0);
+			int i = bean.getSort();
+			bean.setSort(temp.getSort());
+			this.update(bean);// 更新bean
+
+			temp.setSort(i);
+			this.update(temp);// 更新temp
+		}
+	}
+
+	/**
+	 * 向前移动排序
+	 * 
+	 * @param bean
+	 */
+	private void sortByPrevious(SysDeptRole bean) {
+		SysDeptRoleQuery query = new SysDeptRoleQuery();
+		query.setDeptId(bean.getDeptId());
+		query.setSortGreaterThan(bean.getSort());
+		query.setOrderBy(" E.SORT asc ");
+		// 查找前一个对象
+
+		List<SysDeptRole> list = this.list(query);
+		if (list != null && list.size() > 0) {// 有记录
+			SysDeptRole temp = (SysDeptRole) list.get(0);
+			int i = bean.getSort();
+			bean.setSort(temp.getSort());
+			this.update(bean);// 更新bean
+
+			temp.setSort(i);
+			this.update(temp);// 更新temp
+		}
+	}
+
+	@Transactional
+	public boolean update(SysDeptRole bean) {
+		this.save(bean);
+		TableModel table = new TableModel();
+		table.setTableName("sys_user_role");
+		table.addColumn("AUTHORIZED", "Integer", 0);
+		table.addColumn("ROLEID", "Long", bean.getId());
+		tableDataService.deleteTableData(table);
+
+		Set<SysUser> users = bean.getUsers();
+		if (users != null && !users.isEmpty()) {
+			for (SysUser user : users) {
+				SysUserRole userRole = new SysUserRole();
+				userRole.setId(idGenerator.nextId());
+				userRole.setUserId(user.getId());
+				userRole.setDeptRoleId(bean.getId());
+				userRole.setDeptRole(bean);
+				sysUserRoleMapper.insertSysUserRole(userRole);
+			}
+		}
+
 		return true;
 	}
 
