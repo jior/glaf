@@ -190,8 +190,7 @@ public class SysApplicationController {
 			SysTree node = bean.getNode();
 			node.setName(bean.getName());
 			node.setDesc(bean.getName());
-			node.setParentId((long) ParamUtil.getIntParameter(request,
-					"parent", 0));
+			node.setParentId(ParamUtil.getLongParameter(request, "parent", 0));
 			bean.setNode(node);
 		}
 		boolean ret = sysApplicationService.update(bean);

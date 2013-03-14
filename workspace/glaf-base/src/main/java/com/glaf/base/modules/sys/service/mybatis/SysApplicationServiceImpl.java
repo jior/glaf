@@ -221,7 +221,7 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 		}
 
 		logger.info("parent node:" + parentAppId);
-		
+
 		SysApplicationQuery query = new SysApplicationQuery();
 		query.parentId(parentAppId);
 		query.setOrderBy(" E.SORT desc ");
@@ -251,12 +251,12 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 		}
 
 		logger.info("parent node:" + parentAppId);
-		
+
 		SysApplicationQuery query = new SysApplicationQuery();
 		query.parentId(Long.valueOf(parentAppId));
 		query.setOrderBy(" E.SORT desc ");
-		List<SysApplication> apps= this.list(query);
-		logger.debug("----------------apps size:"+apps.size());
+		List<SysApplication> apps = this.list(query);
+		logger.debug("----------------apps size:" + apps.size());
 		return apps;
 	}
 
@@ -443,6 +443,9 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 	@Transactional
 	public boolean update(SysApplication bean) {
 		this.save(bean);
+		if (bean.getNode() != null) {
+			sysTreeService.update(bean.getNode());
+		}
 		return true;
 	}
 

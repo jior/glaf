@@ -204,11 +204,12 @@ public class SysDepartmentServiceImpl implements SysDepartmentService {
 	@Transactional
 	public boolean update(SysDepartment bean) {
 		if (bean.getNode() != null) {
-			List<SysTree> sts = (List<SysTree>) this.sysTreeService
-					.getSysTreeList((int) bean.getNode().getId());
+			List<SysTree> sts = sysTreeService.getSysTreeList((int) bean
+					.getNode().getId());
 			if (sts != null && sts.size() > 0) {
 				this.updateSubStatus(sts, bean.getStatus());
 			}
+			sysTreeService.update(bean.getNode());
 		}
 		sysDepartmentMapper.updateSysDepartment(bean);
 		return true;
