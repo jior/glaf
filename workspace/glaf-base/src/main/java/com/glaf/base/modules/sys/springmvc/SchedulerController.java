@@ -29,22 +29,18 @@ import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.glaf.core.base.Scheduler;
-import com.glaf.core.domain.SchedulerEntity;
-import com.glaf.core.service.*;
-
 import com.glaf.base.modules.sys.form.SchedulerFormBean;
-
 import com.glaf.base.modules.sys.model.SysUser;
-
 import com.glaf.base.utils.ParamUtil;
 import com.glaf.base.utils.RequestUtil;
+import com.glaf.core.base.Scheduler;
+import com.glaf.core.domain.SchedulerEntity;
+import com.glaf.core.service.ISysSchedulerService;
 import com.glaf.core.util.QuartzUtils;
 import com.glaf.core.util.RequestUtils;
 

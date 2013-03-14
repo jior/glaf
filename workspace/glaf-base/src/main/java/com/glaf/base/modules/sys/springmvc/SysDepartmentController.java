@@ -36,15 +36,14 @@ import com.glaf.base.modules.Constants;
 import com.glaf.base.modules.sys.SysConstants;
 import com.glaf.base.modules.sys.model.SysDepartment;
 import com.glaf.base.modules.sys.model.SysTree;
-import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.sys.service.SysDepartmentService;
 import com.glaf.base.modules.sys.service.SysTreeService;
+import com.glaf.base.utils.ParamUtil;
+import com.glaf.base.utils.RequestUtil;
 import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
 import com.glaf.core.res.ViewMessages;
 import com.glaf.core.util.PageResult;
-import com.glaf.base.utils.ParamUtil;
-import com.glaf.base.utils.RequestUtil;
 
 @Controller("/sys/department")
 @RequestMapping("/sys/department.do")
@@ -228,7 +227,7 @@ public class SysDepartmentController {
 	public ModelAndView saveModify(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
 		RequestUtil.setRequestParameterToAttribute(request);
-		 
+
 		long id = ParamUtil.getIntParameter(request, "id", 0);
 		SysDepartment bean = sysDepartmentService.findById(id);
 		boolean ret = false;
@@ -241,15 +240,14 @@ public class SysDepartmentController {
 			bean.setStatus(ParamUtil.getIntParameter(request, "status", 0));
 			SysTree node = bean.getNode();
 			node.setName(bean.getName());
-			node.setParentId((long) ParamUtil.getIntParameter(request, "parent",
-					0));
+			node.setParentId((long) ParamUtil.getIntParameter(request,
+					"parent", 0));
 			bean.setNode(node);
-
-			ret = sysDepartmentService.update(bean);
-		 
-			if (ret) {
-				// this.sysDepartmentService.updateHistoryDepart(bean,
-				// historyIds, user);
+			try {
+				ret = sysDepartmentService.update(bean);
+			} catch (Exception ex) {
+				ret = false;
+				logger.error(ex);
 			}
 		}
 		ViewMessages messages = new ViewMessages();

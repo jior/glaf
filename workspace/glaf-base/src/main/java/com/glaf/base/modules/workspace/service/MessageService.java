@@ -20,9 +20,13 @@ package com.glaf.base.modules.workspace.service;
 
 import java.util.Collection;
 import java.util.Map;
+
+import org.springframework.transaction.annotation.Transactional;
+
 import com.glaf.base.modules.workspace.model.Message;
 import com.glaf.core.util.PageResult;
 
+@Transactional(readOnly = true)
 public interface MessageService {
 
 	/**
@@ -31,6 +35,7 @@ public interface MessageService {
 	 * @param bean
 	 * @return
 	 */
+	@Transactional
 	boolean create(Message bean);
 
 	/**
@@ -39,6 +44,7 @@ public interface MessageService {
 	 * @param bean
 	 * @return
 	 */
+	@Transactional
 	boolean saveOrUpdate(Message bean);
 
 	/**
@@ -47,6 +53,7 @@ public interface MessageService {
 	 * @param bean
 	 * @return
 	 */
+	@Transactional
 	boolean update(Message bean);
 
 	/**
@@ -55,6 +62,7 @@ public interface MessageService {
 	 * @param bean
 	 * @return
 	 */
+	@Transactional
 	boolean delete(Message bean);
 
 	/**
@@ -64,6 +72,7 @@ public interface MessageService {
 	 *            int
 	 * @return boolean
 	 */
+	@Transactional
 	boolean delete(long id);
 
 	/**
@@ -72,6 +81,7 @@ public interface MessageService {
 	 * @param c
 	 * @return
 	 */
+	@Transactional
 	boolean deleteAll(Collection c);
 
 	/**
@@ -89,6 +99,7 @@ public interface MessageService {
 	 * @param recverIdStr
 	 * @return
 	 */
+	@Transactional
 	boolean saveSendMessage(Message message, String[] recverIds);
 
 	/**
@@ -98,6 +109,7 @@ public interface MessageService {
 	 * @param recverIds
 	 * @return
 	 */
+	@Transactional
 	boolean saveSendMessageToDept(Message message, String[] recverIds);
 
 	/**
@@ -106,6 +118,7 @@ public interface MessageService {
 	 * @param id
 	 * @return
 	 */
+	@Transactional
 	Message updateReadMessage(long id);
 
 	/**

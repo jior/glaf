@@ -21,9 +21,12 @@ package com.glaf.base.modules.sys.service;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import com.glaf.base.modules.sys.model.SubjectCode;
 import com.glaf.core.util.PageResult;
 
+@Transactional(readOnly = true)
 public interface SubjectCodeService {
 
 	/**
@@ -33,6 +36,7 @@ public interface SubjectCodeService {
 	 *            SubjectCode
 	 * @return boolean
 	 */
+	@Transactional
 	boolean create(SubjectCode bean);
 
 	/**
@@ -42,6 +46,7 @@ public interface SubjectCodeService {
 	 *            SubjectCode
 	 * @return boolean
 	 */
+	@Transactional
 	boolean update(SubjectCode bean);
 
 	/**
@@ -51,6 +56,7 @@ public interface SubjectCodeService {
 	 *            SubjectCode
 	 * @return boolean
 	 */
+	@Transactional
 	boolean delete(SubjectCode bean);
 
 	/**
@@ -60,15 +66,17 @@ public interface SubjectCodeService {
 	 *            long
 	 * @return boolean
 	 */
+	@Transactional
 	boolean delete(long id);
 
 	/**
 	 * 批量删除
 	 * 
-	 * @param id
+	 * @param ids
 	 * @return
 	 */
-	boolean deleteAll(long[] id);
+	@Transactional
+	boolean deleteAll(long[] ids);
 
 	/**
 	 * 获取对象

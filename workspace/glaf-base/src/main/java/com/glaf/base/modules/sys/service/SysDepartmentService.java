@@ -20,9 +20,12 @@ package com.glaf.base.modules.sys.service;
 
 import java.util.List;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import com.glaf.base.modules.sys.model.SysDepartment;
 import com.glaf.core.util.PageResult;
 
+@Transactional(readOnly = true)
 public interface SysDepartmentService {
 
 	/**
@@ -32,6 +35,7 @@ public interface SysDepartmentService {
 	 *            SysDepartment
 	 * @return boolean
 	 */
+	@Transactional
 	boolean create(SysDepartment bean);
 
 	/**
@@ -41,6 +45,7 @@ public interface SysDepartmentService {
 	 *            SysDepartment
 	 * @return boolean
 	 */
+	@Transactional
 	boolean update(SysDepartment bean);
 
 	/**
@@ -50,6 +55,7 @@ public interface SysDepartmentService {
 	 *            SysDepartment
 	 * @return boolean
 	 */
+	@Transactional
 	boolean delete(SysDepartment bean);
 
 	/**
@@ -59,15 +65,17 @@ public interface SysDepartmentService {
 	 *            int
 	 * @return boolean
 	 */
+	@Transactional
 	boolean delete(long id);
 
 	/**
 	 * 批量删除
 	 * 
-	 * @param id
+	 * @param ids
 	 * @return
 	 */
-	boolean deleteAll(long[] id);
+	@Transactional
+	boolean deleteAll(long[] ids);
 
 	/**
 	 * 获取对象
@@ -142,6 +150,7 @@ public interface SysDepartmentService {
 	 * @param operate
 	 *            int 操作
 	 */
+	@Transactional
 	void sort(long parent, SysDepartment bean, int operate);
 
 	/**

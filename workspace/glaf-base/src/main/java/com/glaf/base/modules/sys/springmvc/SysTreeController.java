@@ -35,12 +35,12 @@ import com.glaf.base.modules.Constants;
 import com.glaf.base.modules.sys.SysConstants;
 import com.glaf.base.modules.sys.model.SysTree;
 import com.glaf.base.modules.sys.service.SysTreeService;
+import com.glaf.base.utils.ParamUtil;
+import com.glaf.base.utils.RequestUtil;
 import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
 import com.glaf.core.res.ViewMessages;
 import com.glaf.core.util.PageResult;
-import com.glaf.base.utils.ParamUtil;
-import com.glaf.base.utils.RequestUtil;
 
 @Controller("/sys/tree")
 @RequestMapping("/sys/tree.do")
@@ -129,7 +129,7 @@ public class SysTreeController {
 		RequestUtil.setRequestParameterToAttribute(request);
 		long id = ParamUtil.getIntParameter(request, "id", 0);
 		SysTree bean = sysTreeService.findById(id);
-		if(bean != null && bean.getParentId()>0){
+		if (bean != null && bean.getParentId() > 0) {
 			SysTree parent = sysTreeService.findById(bean.getParentId());
 			bean.setParent(parent);
 		}
@@ -192,7 +192,13 @@ public class SysTreeController {
 			bean.setDesc(ParamUtil.getParameter(request, "desc"));
 			bean.setCode(ParamUtil.getParameter(request, "code"));
 		}
-		boolean ret = sysTreeService.update(bean);
+		boolean ret = false;
+		try {
+			ret = sysTreeService.update(bean);
+		} catch (Exception ex) {
+			ret = false;
+			logger.error(ex);
+		}
 		ViewMessages messages = new ViewMessages();
 		if (ret) {// ±£´æ³É¹¦
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(

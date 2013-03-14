@@ -21,17 +21,24 @@ package com.glaf.base.modules.sys.service;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import com.glaf.base.modules.sys.model.SerialNumber;
 
+@Transactional(readOnly = true)
 public interface SerialNumberService {
 
+	@Transactional
 	List<SerialNumber> getImportSupplierSerialNumber(Map<String, Object> params);
 
+	@Transactional
 	String getSerialNumber(Map<String, Object> params);
 
 	// 通过模块NO、category、area来查找SerialNumber中对应的moduleNo，从而获取SerialNumber对象
+	@Transactional
 	List<SerialNumber> getSupplierSerialNumber(Map<String, Object> params);
 
+	@Transactional
 	boolean update(SerialNumber bean);
 
 }

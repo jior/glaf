@@ -211,6 +211,18 @@ public class SysTreeServiceImpl implements SysTreeService {
 		}
 	}
 
+	public void loadChildren(List<SysTree> list, long parentId) {
+		SysTreeQuery query = new SysTreeQuery();
+		query.setParentId(Long.valueOf(parentId));
+		List<SysTree> nodes = this.list(query);
+		if (nodes != null && !nodes.isEmpty()) {
+			for (SysTree node : nodes) {
+				list.add(node);
+				this.loadChildren(list, node.getId());
+			}
+		}
+	}
+
 	public SysTree getSysTreeByCode(String code) {
 		SysTreeQuery query = new SysTreeQuery();
 		query.code(code);
@@ -377,6 +389,19 @@ public class SysTreeServiceImpl implements SysTreeService {
 
 	@Transactional
 	public boolean update(SysTree bean) {
+		SysTree model = this.findById(bean.getId());
+		if (model.getParentId() != bean.getParentId()) {
+			List<SysTree> list = new ArrayList<SysTree>();
+			this.loadChildren(list, bean.getId());
+			if (!list.isEmpty()) {
+				for (SysTree node : list) {
+					if (bean.getParentId() == node.getId()) {
+						throw new RuntimeException(
+								"Can't change node into children");
+					}
+				}
+			}
+		}
 		this.save(bean);
 		return true;
 	}

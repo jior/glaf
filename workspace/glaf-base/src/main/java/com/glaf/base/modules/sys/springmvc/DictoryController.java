@@ -29,7 +29,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,14 +43,12 @@ import com.glaf.base.modules.sys.model.SysTree;
 import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.sys.service.DictoryService;
 import com.glaf.base.modules.sys.service.SysTreeService;
-
-import com.glaf.core.res.MessageUtils;
-import com.glaf.core.res.ViewMessage;
-
-import com.glaf.core.res.ViewMessages;
-import com.glaf.core.util.PageResult;
 import com.glaf.base.utils.ParamUtil;
 import com.glaf.base.utils.RequestUtil;
+import com.glaf.core.res.MessageUtils;
+import com.glaf.core.res.ViewMessage;
+import com.glaf.core.res.ViewMessages;
+import com.glaf.core.util.PageResult;
 
 @Controller("/sys/dictory")
 @RequestMapping("/sys/dictory.do")

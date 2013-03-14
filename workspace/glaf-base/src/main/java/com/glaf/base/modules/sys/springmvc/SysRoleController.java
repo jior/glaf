@@ -31,12 +31,12 @@ import org.springframework.web.servlet.ModelAndView;
 import com.glaf.base.modules.Constants;
 import com.glaf.base.modules.sys.model.SysRole;
 import com.glaf.base.modules.sys.service.SysRoleService;
+import com.glaf.base.utils.ParamUtil;
+import com.glaf.base.utils.RequestUtil;
 import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
 import com.glaf.core.res.ViewMessages;
 import com.glaf.core.util.PageResult;
-import com.glaf.base.utils.ParamUtil;
-import com.glaf.base.utils.RequestUtil;
 
 @Controller("/sys/role")
 @RequestMapping("/sys/role.do")

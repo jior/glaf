@@ -20,8 +20,11 @@ package com.glaf.base.modules.sys.service;
 
 import java.util.List;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import com.glaf.base.modules.sys.model.SysFunction;
 
+@Transactional(readOnly = true)
 public interface SysFunctionService {
 
 	/**
@@ -31,6 +34,7 @@ public interface SysFunctionService {
 	 *            SysFunction
 	 * @return boolean
 	 */
+	@Transactional
 	boolean create(SysFunction bean);
 
 	/**
@@ -40,6 +44,7 @@ public interface SysFunctionService {
 	 *            SysFunction
 	 * @return boolean
 	 */
+	@Transactional
 	boolean update(SysFunction bean);
 
 	/**
@@ -49,6 +54,7 @@ public interface SysFunctionService {
 	 *            SysFunction
 	 * @return boolean
 	 */
+	@Transactional
 	boolean delete(SysFunction bean);
 
 	/**
@@ -58,15 +64,17 @@ public interface SysFunctionService {
 	 *            int
 	 * @return boolean
 	 */
+	@Transactional
 	boolean delete(long id);
 
 	/**
 	 * 批量删除
 	 * 
-	 * @param id
+	 * @param ids
 	 * @return
 	 */
-	boolean deleteAll(long[] id);
+	@Transactional
+	boolean deleteAll(long[] ids);
 
 	/**
 	 * 获取对象
@@ -100,6 +108,7 @@ public interface SysFunctionService {
 	 * @param operate
 	 *            int 操作
 	 */
+	@Transactional
 	void sort(SysFunction bean, int operate);
 
 }

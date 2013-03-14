@@ -21,10 +21,13 @@ package com.glaf.base.modules.sys.service;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import com.glaf.base.modules.sys.model.SysDeptRole;
 import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.core.util.PageResult;
 
+@Transactional(readOnly = true)
 public interface SysDeptRoleService {
 
 	/**
@@ -34,6 +37,7 @@ public interface SysDeptRoleService {
 	 *            SysDeptRole
 	 * @return boolean
 	 */
+	@Transactional
 	boolean create(SysDeptRole bean);
 
 	/**
@@ -43,6 +47,7 @@ public interface SysDeptRoleService {
 	 *            SysDeptRole
 	 * @return boolean
 	 */
+	@Transactional
 	boolean update(SysDeptRole bean);
 
 	/**
@@ -52,6 +57,7 @@ public interface SysDeptRoleService {
 	 *            SysDeptRole
 	 * @return boolean
 	 */
+	@Transactional
 	boolean delete(SysDeptRole bean);
 
 	/**
@@ -61,16 +67,19 @@ public interface SysDeptRoleService {
 	 *            int
 	 * @return boolean
 	 */
+	@Transactional
 	boolean delete(long id);
 
 	/**
 	 * 批量删除
 	 * 
-	 * @param id
+	 * @param ids
 	 * @return
 	 */
-	boolean deleteAll(long[] id);
+	@Transactional
+	boolean deleteAll(long[] ids);
 
+	@Transactional
 	boolean deleteByDept(long deptId);
 
 	/**
@@ -123,16 +132,18 @@ public interface SysDeptRoleService {
 	 * @param operate
 	 *            int 操作
 	 */
+	@Transactional
 	void sort(SysDeptRole bean, int operate);
 
 	/**
 	 * 设置角色对应的模块、功能
 	 * 
 	 * @param roleId
-	 * @param appId
-	 * @param funcId
+	 * @param appIds
+	 * @param funcIds
 	 * @return
 	 */
-	boolean saveRoleApplication(long roleId, long[] appId, long[] funcId);
+	@Transactional
+	boolean saveRoleApplication(long roleId, long[] appIds, long[] funcIds);
 
 }

@@ -21,10 +21,13 @@ package com.glaf.base.modules.sys.service;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.sys.model.SysUserRole;
 import com.glaf.core.util.PageResult;
 
+@Transactional(readOnly = true)
 public interface SysUserRoleService {
 
 	/**
@@ -39,6 +42,7 @@ public interface SysUserRoleService {
 	 * @param endDate
 	 *            String
 	 */
+	@Transactional
 	boolean addRole(long fromUserId, long toUserId, String startDate,
 			String endDate, int mark, String processNames,
 			String processDescriptions);
@@ -50,6 +54,7 @@ public interface SysUserRoleService {
 	 *            SysUserRole
 	 * @return boolean
 	 */
+	@Transactional
 	boolean create(SysUserRole bean);
 
 	/**
@@ -59,6 +64,7 @@ public interface SysUserRoleService {
 	 *            int
 	 * @return boolean
 	 */
+	@Transactional
 	boolean delete(long id);
 
 	/**
@@ -68,6 +74,7 @@ public interface SysUserRoleService {
 	 *            SysUserRole
 	 * @return boolean
 	 */
+	@Transactional
 	boolean delete(SysUserRole bean);
 
 	/**
@@ -142,6 +149,7 @@ public interface SysUserRoleService {
 	 * @param fromUser
 	 * @param toUser
 	 */
+	@Transactional
 	void insertAgent(SysUser fromUser, SysUser toUser, String startDate,
 			String endDate, int mark, String processNames);
 
@@ -156,6 +164,7 @@ public interface SysUserRoleService {
 	 */
 	boolean isAuthorized(long fromUserId, long toUserId);
 
+	@Transactional
 	void removeAgent(SysUser fromUser, SysUser toUser);
 
 	/**
@@ -166,6 +175,7 @@ public interface SysUserRoleService {
 	 * @param toUser
 	 *            SysUser ±ª ⁄»®»À
 	 */
+	@Transactional
 	boolean removeRole(long fromUserId, long toUserId);
 
 	/**
@@ -173,6 +183,7 @@ public interface SysUserRoleService {
 	 * 
 	 * @return
 	 */
+	@Transactional
 	public boolean removeRoles();
 
 	/**
@@ -182,5 +193,6 @@ public interface SysUserRoleService {
 	 *            SysUserRole
 	 * @return boolean
 	 */
+	@Transactional
 	boolean update(SysUserRole bean);
 }

@@ -36,12 +36,12 @@ import com.glaf.base.modules.sys.model.SysApplication;
 import com.glaf.base.modules.sys.model.SysTree;
 import com.glaf.base.modules.sys.service.SysApplicationService;
 import com.glaf.base.modules.sys.service.SysTreeService;
+import com.glaf.base.utils.ParamUtil;
+import com.glaf.base.utils.RequestUtil;
 import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
 import com.glaf.core.res.ViewMessages;
 import com.glaf.core.util.PageResult;
-import com.glaf.base.utils.ParamUtil;
-import com.glaf.base.utils.RequestUtil;
 
 @Controller("/sys/application")
 @RequestMapping("/sys/application.do")
@@ -193,7 +193,13 @@ public class SysApplicationController {
 			node.setParentId(ParamUtil.getLongParameter(request, "parent", 0));
 			bean.setNode(node);
 		}
-		boolean ret = sysApplicationService.update(bean);
+		boolean ret = false;
+		try {
+			ret = sysApplicationService.update(bean);
+		} catch (Exception ex) {
+			ret = false;
+			logger.error(ex);
+		}
 		ViewMessages messages = new ViewMessages();
 		if (ret) {// ±£´æ³É¹¦
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(

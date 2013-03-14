@@ -41,11 +41,11 @@ import com.glaf.base.modules.sys.service.SysDepartmentService;
 import com.glaf.base.modules.sys.service.SysDeptRoleService;
 import com.glaf.base.modules.sys.service.SysRoleService;
 import com.glaf.base.modules.sys.service.SysTreeService;
+import com.glaf.base.utils.ParamUtil;
+import com.glaf.base.utils.RequestUtil;
 import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
 import com.glaf.core.res.ViewMessages;
-import com.glaf.base.utils.ParamUtil;
-import com.glaf.base.utils.RequestUtil;
 
 @Controller("/sys/deptRole")
 @RequestMapping("/sys/deptRole.do")

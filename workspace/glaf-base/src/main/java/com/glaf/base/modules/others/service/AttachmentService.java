@@ -21,8 +21,11 @@ package com.glaf.base.modules.others.service;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import com.glaf.base.modules.others.model.Attachment;
 
+@Transactional(readOnly = true)
 public interface AttachmentService {
 
 	/**
@@ -32,6 +35,7 @@ public interface AttachmentService {
 	 *            Attachment
 	 * @return boolean
 	 */
+	@Transactional
 	boolean create(Attachment bean);
 
 	/**
@@ -41,6 +45,7 @@ public interface AttachmentService {
 	 *            Attachment
 	 * @return boolean
 	 */
+	@Transactional
 	boolean update(Attachment bean);
 
 	/**
@@ -50,6 +55,7 @@ public interface AttachmentService {
 	 *            Attachment
 	 * @return boolean
 	 */
+	@Transactional
 	boolean delete(Attachment bean);
 
 	/**
@@ -59,15 +65,17 @@ public interface AttachmentService {
 	 *            int
 	 * @return boolean
 	 */
+	@Transactional
 	boolean delete(long id);
 
 	/**
 	 * 批量删除
 	 * 
-	 * @param id
+	 * @param ids
 	 * @return
 	 */
-	boolean deleteAll(long[] id);
+	@Transactional
+	boolean deleteAll(long[] ids);
 
 	/**
 	 * 获取对象

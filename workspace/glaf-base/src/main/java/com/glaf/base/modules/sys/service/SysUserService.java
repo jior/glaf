@@ -21,11 +21,14 @@ package com.glaf.base.modules.sys.service;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import com.glaf.base.modules.sys.model.SysDeptRole;
 import com.glaf.base.modules.sys.model.SysUser;
 
 import com.glaf.core.util.PageResult;
 
+@Transactional(readOnly = true)
 public interface SysUserService {
 
 	/**
@@ -35,6 +38,7 @@ public interface SysUserService {
 	 *            SysUser
 	 * @return boolean
 	 */
+	@Transactional
 	boolean create(SysUser bean);
 
 	/**
@@ -44,8 +48,10 @@ public interface SysUserService {
 	 *            SysUser
 	 * @return boolean
 	 */
+	@Transactional
 	boolean update(SysUser bean);
 
+	@Transactional
 	boolean updateUser(SysUser bean);
 
 	/**
@@ -55,6 +61,7 @@ public interface SysUserService {
 	 *            SysUser
 	 * @return boolean
 	 */
+	@Transactional
 	boolean delete(SysUser bean);
 
 	/**
@@ -64,6 +71,7 @@ public interface SysUserService {
 	 *            int
 	 * @return boolean
 	 */
+	@Transactional
 	boolean delete(long id);
 
 	/**
@@ -72,6 +80,7 @@ public interface SysUserService {
 	 * @param id
 	 * @return
 	 */
+	@Transactional
 	boolean deleteAll(long[] id);
 
 	/**
@@ -195,6 +204,7 @@ public interface SysUserService {
 	 * @param newRoles
 	 *            要增加的用户权限
 	 */
+	@Transactional
 	boolean updateRole(SysUser user, Set delRoles, Set newRoles);
 
 	/**

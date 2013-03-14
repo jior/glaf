@@ -21,9 +21,12 @@ package com.glaf.base.modules.sys.service;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import com.glaf.base.modules.sys.model.Dictory;
 import com.glaf.core.util.PageResult;
 
+@Transactional(readOnly = true)
 public interface DictoryService {
 
 	/**
@@ -33,6 +36,7 @@ public interface DictoryService {
 	 *            Dictory
 	 * @return boolean
 	 */
+	@Transactional
 	boolean create(Dictory bean);
 
 	/**
@@ -42,6 +46,7 @@ public interface DictoryService {
 	 *            Dictory
 	 * @return boolean
 	 */
+	@Transactional
 	boolean delete(Dictory bean);
 
 	/**
@@ -51,15 +56,17 @@ public interface DictoryService {
 	 *            int
 	 * @return boolean
 	 */
+	@Transactional
 	boolean delete(long id);
 
 	/**
 	 * 批量删除
 	 * 
-	 * @param id
+	 * @param ids
 	 * @return
 	 */
-	boolean deleteAll(long[] id);
+	@Transactional
+	boolean deleteAll(long[] ids);
 
 	/**
 	 * 获取对象
@@ -129,6 +136,7 @@ public interface DictoryService {
 	 * @param operate
 	 *            int 操作
 	 */
+	@Transactional
 	void sort(long parent, Dictory bean, int operate);
 
 	/**
@@ -138,5 +146,6 @@ public interface DictoryService {
 	 *            Dictory
 	 * @return boolean
 	 */
+	@Transactional
 	boolean update(Dictory bean);
 }

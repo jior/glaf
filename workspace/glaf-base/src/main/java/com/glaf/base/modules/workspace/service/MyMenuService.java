@@ -21,9 +21,12 @@ package com.glaf.base.modules.workspace.service;
 import java.util.Collection;
 import java.util.List;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import com.glaf.base.modules.workspace.model.MyMenu;
 import com.glaf.core.util.PageResult;
 
+@Transactional(readOnly = true)
 public interface MyMenuService {
 
 	/**
@@ -32,6 +35,7 @@ public interface MyMenuService {
 	 * @param myMenu
 	 * @return
 	 */
+	@Transactional
 	boolean create(MyMenu bean);
 
 	/**
@@ -41,6 +45,7 @@ public interface MyMenuService {
 	 *            int
 	 * @return boolean
 	 */
+	@Transactional
 	boolean delete(long id);
 
 	/**
@@ -49,6 +54,7 @@ public interface MyMenuService {
 	 * @param myMenu
 	 * @return
 	 */
+	@Transactional
 	boolean delete(MyMenu myMenu);
 
 	/**
@@ -57,6 +63,7 @@ public interface MyMenuService {
 	 * @param c
 	 * @return
 	 */
+	@Transactional
 	boolean deleteAll(Collection c);
 
 	/**
@@ -93,6 +100,7 @@ public interface MyMenuService {
 	 * @param operate
 	 *            int ²Ù×÷
 	 */
+	@Transactional
 	void sort(MyMenu bean, int operate);
 
 	/**
@@ -101,6 +109,7 @@ public interface MyMenuService {
 	 * @param myMenu
 	 * @return
 	 */
+	@Transactional
 	boolean update(MyMenu myMenu);
 
 }

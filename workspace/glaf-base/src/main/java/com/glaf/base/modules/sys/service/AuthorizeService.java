@@ -18,8 +18,11 @@
 
 package com.glaf.base.modules.sys.service;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import com.glaf.base.modules.sys.model.SysUser;
 
+@Transactional(readOnly = true)
 public interface AuthorizeService {
 
 	/**

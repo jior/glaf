@@ -21,11 +21,14 @@ package com.glaf.base.modules.sys.service;
 import java.util.List;
 
 import org.json.JSONArray;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.base.modules.sys.model.SysApplication;
 import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.core.util.PageResult;
 
+
+@Transactional(readOnly = true)
 public interface SysApplicationService {
 
 	/**
