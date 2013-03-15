@@ -1,5 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
-
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="html"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.glaf.base.modules.*"%>
@@ -59,8 +58,9 @@ function modify(form){
   var scroll="no";
   openWindow(url, width, height, scroll);
 }
+
 function del(){
-  var form = document.all.GenericForm;
+  var form = document.all.command;
   if(confirmDelete(form)){
     form.target="hiddenFrame";
     form.action="role.do?method=batchDelete";

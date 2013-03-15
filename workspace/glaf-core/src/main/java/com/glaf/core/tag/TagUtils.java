@@ -73,7 +73,7 @@ public class TagUtils {
 	 * properties file.
 	 */
 	private static final MessageResources messages = MessageResources
-			.getMessageResources("com.glaf.core.res.LocalStrings");
+			.getMessageResources(Globals.DEFAULT_RESOURCE_NAME);
 
 	/**
 	 * Maps lowercase JSP scope names to their PageContext integer constant
@@ -475,7 +475,7 @@ public class TagUtils {
 		MessageResources resources = null;
 
 		if (bundle == null) {
-			bundle = conf.get("i18n.MESSAGES_KEY");
+			bundle = conf.get("i18n.messages_key");
 		}
 
 		if (bundle == null) {

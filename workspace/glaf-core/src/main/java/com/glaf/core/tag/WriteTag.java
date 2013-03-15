@@ -62,7 +62,7 @@ public class WriteTag extends TagSupport {
 	 * The message resources for this package.
 	 */
 	protected static MessageResources messages = MessageResources
-			.getMessageResources("com.glaf.core.res.LocalStrings");
+			.getMessageResources(Globals.DEFAULT_RESOURCE_NAME);
 
 	// ------------------------------------------------------------- Properties
 

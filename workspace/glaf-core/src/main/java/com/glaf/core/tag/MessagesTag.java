@@ -47,7 +47,7 @@ public class MessagesTag extends BodyTagSupport {
 	 * The message resources for this package.
 	 */
 	protected static MessageResources messageResources = MessageResources
-			.getMessageResources("com.glaf.core.res.LocalStrings");
+			.getMessageResources(Globals.DEFAULT_RESOURCE_NAME);
 
 	/**
 	 * Iterator of the elements of this error collection, while we are actually

@@ -47,31 +47,40 @@ public class SysRoleController {
 	@javax.annotation.Resource
 	private SysRoleService sysRoleService;
 
-	public void setSysRoleService(SysRoleService sysRoleService) {
-		this.sysRoleService = sysRoleService;
-		logger.info("setSysRoleService");
-	}
-
 	/**
-	 * 显示所有列表
+	 * 批量删除信息
 	 * 
 	 * @param mapping
-	 * @param form
+	 * @param actionForm
 	 * @param request
 	 * @param response
 	 * @return
 	 */
-	@RequestMapping(params = "method=showList")
-	public ModelAndView showList(ModelMap modelMap, HttpServletRequest request,
-			HttpServletResponse response) {
+	@RequestMapping(params = "method=batchDelete")
+	public ModelAndView batchDelete(ModelMap modelMap,
+			HttpServletRequest request, HttpServletResponse response) {
 		RequestUtil.setRequestParameterToAttribute(request);
-		int pageNo = ParamUtil.getIntParameter(request, "page_no", 1);
-		int pageSize = ParamUtil.getIntParameter(request, "page_size",
-				Constants.PAGE_SIZE);
-		PageResult pager = sysRoleService.getSysRoleList(pageNo, pageSize);
-		request.setAttribute("pager", pager);
+		boolean ret = true;
+		long[] ids = ParamUtil.getLongParameterValues(request, "id");
+		try {
+			ret = sysRoleService.deleteAll(ids);
+		} catch (Exception ex) {
+			logger.error(ex);
+			ret = false;
+		}
+
+		ViewMessages messages = new ViewMessages();
+		if (ret) {// 成功
+			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
+					"role.delete_success"));
+		} else {// 失败
+			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
+					"role.delete_failure"));
+		}
+		MessageUtils.addMessages(request, messages);
+
 		// 显示列表页面
-		return new ModelAndView("/modules/sys/role/role_list", modelMap);
+		return new ModelAndView("show_msg2", modelMap);
 	}
 
 	/**
@@ -89,6 +98,27 @@ public class SysRoleController {
 		RequestUtil.setRequestParameterToAttribute(request);
 		// 显示列表页面
 		return new ModelAndView("/modules/sys/role/role_add", modelMap);
+	}
+
+	/**
+	 * 显示修改页面
+	 * 
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(params = "method=prepareModify")
+	public ModelAndView prepareModify(ModelMap modelMap,
+			HttpServletRequest request, HttpServletResponse response) {
+		RequestUtil.setRequestParameterToAttribute(request);
+		long id = ParamUtil.getIntParameter(request, "id", 0);
+		SysRole bean = sysRoleService.findById(id);
+		request.setAttribute("bean", bean);
+
+		// 显示列表页面
+		return new ModelAndView("/modules/sys/role/role_modify", modelMap);
 	}
 
 	/**
@@ -125,27 +155,6 @@ public class SysRoleController {
 	}
 
 	/**
-	 * 显示修改页面
-	 * 
-	 * @param mapping
-	 * @param form
-	 * @param request
-	 * @param response
-	 * @return
-	 */
-	@RequestMapping(params = "method=prepareModify")
-	public ModelAndView prepareModify(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
-		long id = ParamUtil.getIntParameter(request, "id", 0);
-		SysRole bean = sysRoleService.findById(id);
-		request.setAttribute("bean", bean);
-
-		// 显示列表页面
-		return new ModelAndView("/modules/sys/role/role_modify", modelMap);
-	}
-
-	/**
 	 * 提交修改信息
 	 * 
 	 * @param mapping
@@ -179,34 +188,30 @@ public class SysRoleController {
 		return new ModelAndView("show_msg", modelMap);
 	}
 
+	public void setSysRoleService(SysRoleService sysRoleService) {
+		this.sysRoleService = sysRoleService;
+		logger.info("setSysRoleService");
+	}
+
 	/**
-	 * 批量删除信息
+	 * 显示所有列表
 	 * 
 	 * @param mapping
-	 * @param actionForm
+	 * @param form
 	 * @param request
 	 * @param response
 	 * @return
 	 */
-	@RequestMapping(params = "method=batchDelete")
-	public ModelAndView batchDelete(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+	@RequestMapping(params = "method=showList")
+	public ModelAndView showList(ModelMap modelMap, HttpServletRequest request,
+			HttpServletResponse response) {
 		RequestUtil.setRequestParameterToAttribute(request);
-		boolean ret = true;
-		long[] id = ParamUtil.getLongParameterValues(request, "id");
-		ret = sysRoleService.deleteAll(id);
-
-		ViewMessages messages = new ViewMessages();
-		if (ret) {// 保存成功
-			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
-					"role.delete_success"));
-		} else {// 保存失败
-			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
-					"role.delete_failure"));
-		}
-		MessageUtils.addMessages(request, messages);
-
+		int pageNo = ParamUtil.getIntParameter(request, "page_no", 1);
+		int pageSize = ParamUtil.getIntParameter(request, "page_size",
+				Constants.PAGE_SIZE);
+		PageResult pager = sysRoleService.getSysRoleList(pageNo, pageSize);
+		request.setAttribute("pager", pager);
 		// 显示列表页面
-		return new ModelAndView("show_msg2", modelMap);
+		return new ModelAndView("/modules/sys/role/role_list", modelMap);
 	}
 }

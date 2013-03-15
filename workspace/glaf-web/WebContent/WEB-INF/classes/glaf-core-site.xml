@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="GBK"?>
+
+<configuration>
+
+	<property>
+		<name>i18n.messages_key</name>
+		<value>ApplicationStrings</value>
+	</property>
+ 
+
+</configuration>
