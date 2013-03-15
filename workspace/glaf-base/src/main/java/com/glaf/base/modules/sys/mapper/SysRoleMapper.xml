@@ -176,7 +176,7 @@
 			</if>
             
 			<if test="sortLessThan != null">
-				and E.SORT &lt; #{sortLess}
+				and E.SORT &lt; #{sortLessThan}
 			</if>
 			 
 		</where>
