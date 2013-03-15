@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%
-    String theme = com.mxalloy.core.util.RequestUtils.getTheme(request);
+    String theme = com.glaf.core.util.RequestUtils.getTheme(request);
 	request.setAttribute("theme", theme);
 %>
 <!DOCTYPE html>
@@ -114,7 +114,7 @@
 <div class="easyui-layout" data-options="fit:true">  
    <div data-options="region:'north',split:true,border:true" style="height:40px"> 
     <div style="background:#fafafa;padding:2px;border:1px solid #ddd;font-size:12px"> 
-	<b>邮件存储列表</b>
+	<span class="x_content_title">邮件存储列表</span>
      <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" 
 		     onclick="javascript:addNew();">新增</a>
 	<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" 

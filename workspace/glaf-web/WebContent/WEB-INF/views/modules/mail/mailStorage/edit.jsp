@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%
-    String theme = com.mxalloy.core.util.RequestUtils.getTheme(request);
+    String theme = com.glaf.core.util.RequestUtils.getTheme(request);
 	request.setAttribute("theme", theme);
 %>
 <!DOCTYPE html>
@@ -63,9 +63,9 @@
 				 <td>
                  <select id="storageType" name="storageType">
 					<option value="0" selected="selected">关系型数据库</option>
-					<option value="1">MongoDB</option>
+					<!-- <option value="1">MongoDB</option>
 					<option value="2">Cassandra</option>
-					<option value="3">HBase</option>
+					<option value="3">HBase</option> -->
                  </select>
 				 </td>
 			</tr>

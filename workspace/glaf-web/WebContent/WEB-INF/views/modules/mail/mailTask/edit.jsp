@@ -4,7 +4,7 @@
 					+ request.getServerName() + ":" + request.getServerPort()
 				    + request.getContextPath();
 	String callbackUrl = serviceUrl+"/rs/mail/receive/view";
-	String theme = com.mxalloy.core.util.RequestUtils.getTheme(request);
+	String theme = com.glaf.core.util.RequestUtils.getTheme(request);
 	request.setAttribute("theme", theme);
 %>
 <!DOCTYPE html>

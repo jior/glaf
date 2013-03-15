@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ page import="java.util.*"%>
 <%
-    String theme = com.mxalloy.core.util.RequestUtils.getTheme(request);
+    String theme = com.glaf.core.util.RequestUtils.getTheme(request);
 	request.setAttribute("theme", theme);
 %>
 <!DOCTYPE html>
@@ -196,7 +196,7 @@
 <div class="easyui-layout" data-options="fit:true">  
    <div data-options="region:'north',split:true,border:true" style="height:40px"> 
     <div style="background:#fafafa;padding:2px;border:1px solid #ddd;font-size:12px"> 
-	<b>邮件任务列表</b>
+	<span class="x_content_title">邮件任务列表</span>
     <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-add'" 
 	onclick="create();">新增</a>  
     <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-edit'"

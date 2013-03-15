@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%
-    String theme = com.mxalloy.core.util.RequestUtils.getTheme(request);
+    String theme = com.glaf.core.util.RequestUtils.getTheme(request);
 	request.setAttribute("theme", theme);
 %>
 <!DOCTYPE html>

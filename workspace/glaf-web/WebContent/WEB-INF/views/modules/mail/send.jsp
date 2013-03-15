@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ page import="java.util.*"%>
-<%@ page import="com.mxalloy.core.context.*"%>
-<%@ page import="com.mxalloy.core.util.*"%>
+<%@ page import="com.glaf.core.context.*"%>
+<%@ page import="com.glaf.core.util.*"%>
 <%@ page import="org.apache.commons.lang.*"%>
 <%@ include file="/WEB-INF/views/tm/mx_header.jsp"%>
 

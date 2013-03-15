@@ -260,7 +260,8 @@ function deleteAll(){
 				</c:when>
 				<c:otherwise>
 				</c:otherwise>
-			</c:choose></td>
+			</c:choose>
+			</td>
 			<td align="center" noWrap>&nbsp;<a
 				href="<%=request.getContextPath()%>/mx/mail/compose?mailId=${mail.mailId}&iType=Re&x_actorIds=${mail.senderId}&mailType=${mailType}"
 				title="回复邮件"><img
@@ -283,7 +284,7 @@ function deleteAll(){
 	</tbody>
 	<thead>
 	   	<tr class="x-paging">
-			<td colspan="20" align="right"><mxalloy:paging form="iForm" /></td>
+			<td colspan="20" align="right"><glaf:paging form="iForm" /></td>
 		</tr>
     </thead>
 </table>

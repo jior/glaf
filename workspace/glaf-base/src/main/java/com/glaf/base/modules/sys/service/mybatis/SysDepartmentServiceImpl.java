@@ -70,18 +70,16 @@ public class SysDepartmentServiceImpl implements SysDepartmentService {
 
 	@Transactional
 	public boolean create(SysDepartment bean) {
-		boolean ret = false;
 		if (bean.getId() == 0L) {
 			bean.setId(idGenerator.nextId());
 		}
-		sysDepartmentMapper.insertSysDepartment(bean);
-		if (bean.getId() > 0) {// 插入记录成功
-			bean.setSort((int) bean.getId());// 设置排序号为刚插入的id值
-			bean.getNode().setSort(bean.getSort());
-			sysTreeService.update(bean.getNode());
-			ret = true;
+		bean.setSort((int) bean.getId());
+		if (bean.getNode() != null) {
+			sysTreeService.create(bean.getNode());
+			bean.setNodeId(bean.getNode().getId());
 		}
-		return ret;
+		sysDepartmentMapper.insertSysDepartment(bean);
+		return true;
 	}
 
 	@Transactional
@@ -282,17 +280,6 @@ public class SysDepartmentServiceImpl implements SysDepartmentService {
 		query.ensureInitialized();
 		List<SysDepartment> list = sysDepartmentMapper.getSysDepartments(query);
 		return list;
-	}
-
-	@Transactional
-	public void save(SysDepartment sysDepartment) {
-		if (sysDepartment.getId() == 0L) {
-			sysDepartment.setId(idGenerator.nextId());
-			// sysDepartment.setCreateDate(new Date());
-			sysDepartmentMapper.insertSysDepartment(sysDepartment);
-		} else {
-			sysDepartmentMapper.updateSysDepartment(sysDepartment);
-		}
 	}
 
 	@Resource

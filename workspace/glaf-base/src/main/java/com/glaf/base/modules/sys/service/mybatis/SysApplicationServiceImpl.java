@@ -75,6 +75,10 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 		if (bean.getId() == 0L) {
 			bean.setId(idGenerator.nextId());
 		}
+		if (bean.getNode() != null) {
+			sysTreeService.create(bean.getNode());
+			bean.setNodeId(bean.getNode().getId());
+		}
 		bean.setSort((int) bean.getId());// 设置排序号为刚插入的id值
 		sysApplicationMapper.insertSysApplication(bean);
 		ret = true;
@@ -327,17 +331,6 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 		return list;
 	}
 
-	@Transactional
-	public void save(SysApplication sysApplication) {
-		if (sysApplication.getId() == 0L) {
-			sysApplication.setId(idGenerator.nextId());
-			// sysApplication.setCreateDate(new Date());
-			sysApplicationMapper.insertSysApplication(sysApplication);
-		} else {
-			sysApplicationMapper.updateSysApplication(sysApplication);
-		}
-	}
-
 	@Resource
 	public void setAuthorizeService(AuthorizeService authorizeService) {
 		this.authorizeService = authorizeService;
@@ -442,7 +435,7 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 
 	@Transactional
 	public boolean update(SysApplication bean) {
-		this.save(bean);
+		this.sysApplicationMapper.updateSysApplication(bean);
 		if (bean.getNode() != null) {
 			sysTreeService.update(bean.getNode());
 		}
