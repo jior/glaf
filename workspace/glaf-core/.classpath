@@ -67,7 +67,6 @@
 	<classpathentry kind="lib" path="lib/jstl-1.2.jar"/>
 	<classpathentry kind="lib" path="lib/jtds-1.2.7.jar"/>
 	<classpathentry kind="lib" path="lib/jtds-1.3.0.jar"/>
-	<classpathentry kind="lib" path="lib/junit-4.8.1.jar"/>
 	<classpathentry kind="lib" path="lib/jxls-core.jar"/>
 	<classpathentry kind="lib" path="lib/jxls-reader.jar"/>
 	<classpathentry kind="lib" path="lib/mail.jar"/>
@@ -89,8 +88,6 @@
 	<classpathentry kind="lib" path="lib/spring-context.RELEASE.jar"/>
 	<classpathentry kind="lib" path="lib/spring-core.RELEASE.jar"/>
 	<classpathentry kind="lib" path="lib/spring-expression.RELEASE.jar"/>
-	<classpathentry kind="lib" path="lib/spring-instrument-tomcat.RELEASE.jar"/>
-	<classpathentry kind="lib" path="lib/spring-instrument.RELEASE.jar"/>
 	<classpathentry kind="lib" path="lib/spring-jdbc.RELEASE.jar"/>
 	<classpathentry kind="lib" path="lib/spring-orm.RELEASE.jar"/>
 	<classpathentry kind="lib" path="lib/spring-oxm.RELEASE.jar"/>
@@ -123,5 +120,6 @@
 	<classpathentry kind="lib" path="lib/netty.jar"/>
 	<classpathentry kind="lib" path="lib/snappy-java-1.0.4.1.jar"/>
 	<classpathentry kind="lib" path="lib/zookeeper.jar"/>
+	<classpathentry kind="lib" path="lib/junit-4.11.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

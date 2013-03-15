@@ -10,8 +10,6 @@
 	<classpathentry kind="lib" path="/glaf-core/lib/spring-context.RELEASE.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/spring-core.RELEASE.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/spring-expression.RELEASE.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/spring-instrument-tomcat.RELEASE.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/spring-instrument.RELEASE.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/spring-jdbc.RELEASE.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/spring-orm.RELEASE.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/spring-oxm.RELEASE.jar"/>
@@ -47,7 +45,7 @@
 	<classpathentry kind="lib" path="/glaf-core/lib/freemarker.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/scannotation-1.0.3.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/javassist.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/junit-4.8.1.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/javax.persistence.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/junit-4.11.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

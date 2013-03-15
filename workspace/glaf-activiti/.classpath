@@ -69,7 +69,6 @@
 	<classpathentry kind="lib" path="/glaf-core/lib/jstl-1.2.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/jtds-1.2.7.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/jtds-1.3.0.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/junit-4.8.1.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/jxls-core.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/jxls-reader.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/log4j-1.2.17.jar"/>
@@ -94,8 +93,6 @@
 	<classpathentry kind="lib" path="/glaf-core/lib/spring-context.RELEASE.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/spring-core.RELEASE.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/spring-expression.RELEASE.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/spring-instrument-tomcat.RELEASE.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/spring-instrument.RELEASE.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/spring-jdbc.RELEASE.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/spring-orm.RELEASE.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/spring-oxm.RELEASE.jar"/>
@@ -119,5 +116,6 @@
 	<classpathentry kind="lib" path="/glaf-core/lib/activiti-engine.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/activiti-json-converter.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/activiti-spring.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/junit-4.11.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
