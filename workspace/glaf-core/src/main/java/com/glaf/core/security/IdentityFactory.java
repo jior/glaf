@@ -34,6 +34,7 @@ import com.glaf.core.entity.EntityService;
 import com.glaf.core.identity.User;
 
 import com.glaf.core.identity.Agent;
+import com.glaf.core.query.MembershipQuery;
 
 public class IdentityFactory {
 	protected final static Log logger = LogFactory
@@ -110,6 +111,20 @@ public class IdentityFactory {
 		return entityService;
 	}
 
+	public static List<String> getUserRoleCodes(String actorId) {
+		MembershipQuery query = new MembershipQuery();
+		query.actorId(actorId);
+		List<Object> list = getEntityService().getList("getUserRoleCodes",
+				query);
+		List<String> roles = new ArrayList<String>();
+		if (list != null && !list.isEmpty()) {
+			for (Object object : list) {
+				roles.add(object.toString());
+			}
+		}
+		return roles;
+	}
+
 	/**
 	 * 获取登录用户信息
 	 * 
@@ -120,6 +135,8 @@ public class IdentityFactory {
 		User user = (User) getEntityService().getById("getUserById", actorId);
 		if (user != null) {
 			LoginContext loginContext = new LoginContext(user);
+			List<String> roles = getUserRoleCodes(actorId);
+			loginContext.setRoles(roles);
 			return loginContext;
 		}
 		return null;

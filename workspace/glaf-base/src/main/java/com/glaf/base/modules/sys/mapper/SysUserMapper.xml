@@ -313,8 +313,7 @@
 
 		select distinct E.* from sys_user E
 		inner join sys_user_role R
-		on E.ID =
-		R.USERID
+		on E.ID = R.USERID
 		where E.ACCOUNTTYPE = 0
 
 		<if test=" deptId != null  ">
@@ -352,10 +351,8 @@
 		resultMap="sysUserResultMap">
 
 		select distinct E.* from sys_user E
-		inner join sys_user_role
-		R
-		on E.ID =
-		R.USERID
+		inner join sys_user_role R
+		on E.ID = R.USERID
 		where E.ACCOUNTTYPE = 0
 		and R.AUTHORIZEFROM =
 		#{authorizeFrom}
@@ -367,8 +364,7 @@
 
 		select distinct E.* from sys_user E
 		inner join sys_user_role R
-		on E.ID =
-		R.USERID
+		on E.ID = R.USERID
 		where R.ROLEID = #{roleId}
 
 	</select>

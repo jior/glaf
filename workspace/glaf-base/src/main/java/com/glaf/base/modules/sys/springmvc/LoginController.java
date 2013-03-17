@@ -50,6 +50,7 @@ import com.glaf.core.security.DigestUtil;
 import com.glaf.core.util.RequestUtils;
 import com.glaf.core.web.callback.CallbackProperties;
 import com.glaf.core.web.callback.LoginCallback;
+import com.glaf.shiro.ShiroSecurity;
 
 
 @Controller("/login")
@@ -179,6 +180,7 @@ public class LoginController {
 		// 登出系统，清除session对象
 		request.getSession().removeAttribute(SysConstants.LOGIN);
 		request.getSession().removeAttribute(SysConstants.MENU);
+		ShiroSecurity.logout();
 		return new ModelAndView("/modules/login", modelMap);
 	}
 

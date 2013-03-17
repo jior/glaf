@@ -81,7 +81,7 @@
     <!--shiroFilter-->
 	<filter> 
 	   <filter-name>shiroFilter</filter-name> 
-	   <filter-class> org.springframework.web.filter.DelegatingFilterProxy</filter-class> 
+	   <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class> 
 	</filter> 
 
 	<filter-mapping> 
@@ -98,7 +98,6 @@
 	   <filter-name>shiroFilter</filter-name> 
 	   <url-pattern>/mx/*</url-pattern> 
 	</filter-mapping> 
-
   
 	<!--权限过滤器-->
 	<!-- <filter>

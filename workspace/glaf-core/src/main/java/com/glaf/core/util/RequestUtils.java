@@ -206,7 +206,7 @@ public class RequestUtils {
 			if (cookies != null && cookies.length > 0) {
 				for (Cookie cookie : cookies) {
 					if (StringUtils.equals(cookie.getName(),
-							Constants.LOGIN_USER + "_GLAF_COOKIE")) {
+							Constants.LOGIN_ACTORID + "_GLAF_COOKIE")) {
 						String value = cookie.getValue();
 						// logger.debug("cookie value=" + value);
 						Map<String, String> cookieMap = decodeCookieValue(value);

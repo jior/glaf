@@ -23,8 +23,6 @@ public final class Constants {
 	public static final String SYSTEM_NAME="GLAF";
 
 	public static final String SYSTEM_CONFIG = "/glaf.properties";
-	
-	public static final String LOGIN_USER = "LOGIN_USER";
 
 	public static final String LOGIN_IP = "LOGIN_IP";
 	

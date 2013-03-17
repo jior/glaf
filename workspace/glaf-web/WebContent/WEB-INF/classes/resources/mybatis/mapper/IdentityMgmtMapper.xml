@@ -213,6 +213,47 @@
 
 	</select>
 
+ 
+    <select id="getUserRoleCodes" resultType="string"
+		parameterType="com.glaf.core.query.MembershipQuery">
+
+		select distinct r.CODE from SYS_ROLE r
+		inner join SYS_DEPT_ROLE dr
+		on r.ID = dr.SYSROLEID
+		inner join SYS_USER_ROLE ur
+		on dr.ID = ur.ROLEID
+		inner join SYS_USER u
+		on ur.USERID = u.ID
+		where 1=1
+
+		<choose>
+			<when test="actorId != null">
+				and u.account = #{actorId} 
+			</when>
+			<when test="actorIds != null and actorIds.size !=0">
+				and u.account IN
+				<foreach item="x_actorId" index="index" collection="actorIds"
+					open="(" separator="," close=")">
+					#{x_actorId}
+                </foreach>
+			</when>
+			<when test="nodeId != null">
+				and ( u.deptid = #{nodeId} ) 
+			</when>
+			<when test="nodeIds != null and nodeIds.size !=0">
+				and u.deptid IN
+				<foreach item="x_nodeId" index="index" collection="nodeIds"
+					open="(" separator="," close=")">
+					#{x_nodeId}
+				</foreach>
+			</when>
+			<otherwise>
+			  and 1=0
+			</otherwise>
+		</choose>
+	 
+
+	</select>
 
 
 	<select id="getUsers" resultMap="userResultMap"

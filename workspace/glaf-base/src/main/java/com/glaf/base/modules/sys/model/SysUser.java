@@ -270,7 +270,8 @@ public class SysUser implements Serializable, User, JSONable {
 
 		if (roles != null && !roles.isEmpty()) {
 			for (SysDeptRole r : roles) {
-				if (r.getRole() != null && "R015".equals(r.getRole().getCode())) {
+				if (r.getRole() != null
+						&& "SystemAdministrator".equals(r.getRole().getCode())) {
 					isAdmin = true;
 					break;
 				}
@@ -282,7 +283,8 @@ public class SysUser implements Serializable, User, JSONable {
 				for (SysUserRole r : userRoles) {
 					if (r.getDeptRole() != null
 							&& r.getDeptRole().getRole() != null) {
-						if ("R015".equals(r.getDeptRole().getRole().getCode())) {
+						if ("SystemAdministrator".equals(r.getDeptRole()
+								.getRole().getCode())) {
 							isAdmin = true;
 							break;
 						}
