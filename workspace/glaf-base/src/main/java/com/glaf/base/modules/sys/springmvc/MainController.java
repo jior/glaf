@@ -29,31 +29,73 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.glaf.base.utils.RequestUtil;
 
-@Controller("/sys/main")
+@Controller("main")
+@RequestMapping("/main.do")
 public class MainController {
 
 	protected static final Log logger = LogFactory.getLog(MainController.class);
 
-	@RequestMapping("/sys/frame.do")
+	@RequestMapping(params = "method=footer")
+	public ModelAndView footer(ModelMap modelMap, HttpServletRequest request,
+			HttpServletResponse response) {
+		RequestUtil.setRequestParameterToAttribute(request);
+		return new ModelAndView("/main/footer", modelMap);
+	}
+
+	@RequestMapping(params = "method=frame")
 	public ModelAndView frame(ModelMap modelMap, HttpServletRequest request,
 			HttpServletResponse response) {
 		RequestUtil.setRequestParameterToAttribute(request);
-		return new ModelAndView("/modules/frame", modelMap);
+		return new ModelAndView("/main/frame", modelMap);
 	}
 
-	@RequestMapping("/sys/select_subject.do")
-	public ModelAndView showList(ModelMap modelMap, HttpServletRequest request,
+	@RequestMapping(params = "method=header")
+	public ModelAndView header(ModelMap modelMap, HttpServletRequest request,
 			HttpServletResponse response) {
 		RequestUtil.setRequestParameterToAttribute(request);
-		return new ModelAndView("/modules/sys/subject/select_subject_tree",
-				modelMap);
+		return new ModelAndView("/main/header", modelMap);
 	}
 
-	@RequestMapping("/sys/spframe.do")
+	@RequestMapping
+	public ModelAndView index(ModelMap modelMap, HttpServletRequest request,
+			HttpServletResponse response) {
+		RequestUtil.setRequestParameterToAttribute(request);
+		return new ModelAndView("/main/index", modelMap);
+	}
+
+	@RequestMapping(params = "method=left")
+	public ModelAndView left(ModelMap modelMap, HttpServletRequest request,
+			HttpServletResponse response) {
+		RequestUtil.setRequestParameterToAttribute(request);
+		return new ModelAndView("/main/left", modelMap);
+	}
+
+	@RequestMapping(params = "method=leftbar")
+	public ModelAndView leftbar(ModelMap modelMap, HttpServletRequest request,
+			HttpServletResponse response) {
+		RequestUtil.setRequestParameterToAttribute(request);
+		return new ModelAndView("/main/leftbar", modelMap);
+	}
+
+	@RequestMapping(params = "method=main")
+	public ModelAndView main(ModelMap modelMap, HttpServletRequest request,
+			HttpServletResponse response) {
+		RequestUtil.setRequestParameterToAttribute(request);
+		return new ModelAndView("/main/main", modelMap);
+	}
+
+	@RequestMapping(params = "method=spframe")
 	public ModelAndView spframe(ModelMap modelMap, HttpServletRequest request,
 			HttpServletResponse response) {
 		RequestUtil.setRequestParameterToAttribute(request);
-		return new ModelAndView("/modules/spframe", modelMap);
+		return new ModelAndView("/main/spframe", modelMap);
+	}
+
+	@RequestMapping(params = "method=top")
+	public ModelAndView top(ModelMap modelMap, HttpServletRequest request,
+			HttpServletResponse response) {
+		RequestUtil.setRequestParameterToAttribute(request);
+		return new ModelAndView("/main/top", modelMap);
 	}
 
 }

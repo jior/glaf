@@ -167,7 +167,7 @@ public class MxConsoleController {
 		List<TreeModel> treeModels = IdentityFactory.getChildrenTreeModels(root
 				.getId());
 
-		Collection<Integer> roles = loginContext.getRoles();
+		Collection<Integer> roles = loginContext.getRoleIds();
 		List<Integer> list = new ArrayList<Integer>();
 		if (roles != null && !roles.isEmpty()) {
 			for (Integer r : roles) {
@@ -303,7 +303,7 @@ public class MxConsoleController {
 		modelMap.put("json", buffer.toString());
 
 		logger.debug("#######################################");
-		logger.debug(loginContext.getRoles());
+		logger.debug(loginContext.getRoleIds());
 
 		String jx_view = request.getParameter("jx_view");
 

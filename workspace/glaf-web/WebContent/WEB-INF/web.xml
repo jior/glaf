@@ -49,8 +49,7 @@
 	<listener>
 		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
 	</listener>
-
-
+  
 	<!--转码过滤器-->
 	<filter>
 		<filter-name>encodingFilter</filter-name>
@@ -76,9 +75,32 @@
 		<filter-name>Cache Filter</filter-name>
 		<url-pattern>*.do</url-pattern>
 	</filter-mapping>
+
+
+    <!--shiroFilter-->
+	<filter> 
+	   <filter-name>shiroFilter</filter-name> 
+	   <filter-class> org.springframework.web.filter.DelegatingFilterProxy</filter-class> 
+	</filter> 
+
+	<filter-mapping> 
+	   <filter-name>shiroFilter</filter-name> 
+	   <url-pattern>*.do</url-pattern> 
+	</filter-mapping> 
+
+	<filter-mapping> 
+	   <filter-name>shiroFilter</filter-name> 
+	   <url-pattern>*.jsf</url-pattern> 
+	</filter-mapping> 
+
+	<filter-mapping> 
+	   <filter-name>shiroFilter</filter-name> 
+	   <url-pattern>/mx/*</url-pattern> 
+	</filter-mapping> 
+
   
 	<!--权限过滤器-->
-	<filter>
+	<!-- <filter>
 		<filter-name>Authorization Filter</filter-name>
 		<filter-class>com.glaf.base.filter.AuthorizeFilter</filter-class>
 		<init-param>
@@ -87,11 +109,11 @@
 		</init-param>
 		<init-param>
 			<param-name>login_url</param-name>
-			<param-value>/glaf/sys/authorize.do,/glaf/login.do</param-value>
+			<param-value>/login.do</param-value>
 		</init-param>
 		<init-param>
 			<param-name>error_url</param-name>
-			<param-value>/glaf/error/error_jump.htm</param-value>
+			<param-value>/error/error_jump.htm</param-value>
 		</init-param>
 		<init-param>
 			<param-name>require</param-name>
@@ -112,7 +134,7 @@
 	<filter-mapping>
 		<filter-name>Authorization Filter</filter-name>
 		<url-pattern>*.jsp</url-pattern>
-	</filter-mapping>
+	</filter-mapping> -->
 	
 
 	<!--dwr-->
@@ -182,7 +204,7 @@
  
 	<error-page> 
 		<exception-type>com.glaf.base.modules.sys.interceptor.AuthorizeException</exception-type> 
-		<location>/WEB-INF/views/error/auth_error.jsp</location>
+		<location>/unauthorized.jsp</location>
 	</error-page> 
   
 </web-app>

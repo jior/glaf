@@ -35,42 +35,17 @@ import com.glaf.core.identity.impl.UserImpl;
  */
 public class LoginContext implements java.io.Serializable, Cloneable {
 
-	protected static final Log logger = LogFactory.getLog(LoginContext.class);
-
-	private static final long serialVersionUID = 1L;
-
 	public static final String CURRENT_USER = "CURRENT_USER";
 
-	public final static int SYSTEM_ADMINISTRATOR = 1000;
+	protected static final Log logger = LogFactory.getLog(LoginContext.class);
 
 	public final static int SENIOR_MANAGER = 99;
 
+	private static final long serialVersionUID = 1L;
+
+	public final static int SYSTEM_ADMINISTRATOR = 1000;
+
 	public final static int USER = 0;
-
-	/**
-	 * 登录用户
-	 */
-	protected User user;
-
-	/**
-	 * 当前访问级别
-	 */
-	protected int currentAccessLevel;
-
-	/**
-	 * 用户系统
-	 */
-	protected int systemType;
-
-	/**
-	 * 部门编号
-	 */
-	protected int deptId;
-
-	/**
-	 * 皮肤
-	 */
-	protected String skin;
 
 	/**
 	 * 代理人编号集合
@@ -78,19 +53,19 @@ public class LoginContext implements java.io.Serializable, Cloneable {
 	protected Collection<String> agents = new HashSet<String>();
 
 	/**
-	 * 角色集合
+	 * 当前访问级别
 	 */
-	protected Collection<Integer> roles = new HashSet<Integer>();
+	protected int currentAccessLevel;
 
 	/**
-	 * 权限点集合
+	 * 部门编号
 	 */
-	protected Collection<String> permissions = new HashSet<String>();
+	protected int deptId;
 
 	/**
-	 * 子部门编号
+	 * 功能集合
 	 */
-	protected Collection<Integer> subDeptIds = new HashSet<Integer>();
+	protected Collection<String> functions = new HashSet<String>();
 
 	/**
 	 * 观察者集合
@@ -98,9 +73,39 @@ public class LoginContext implements java.io.Serializable, Cloneable {
 	protected Collection<String> observers = new HashSet<String>();
 
 	/**
-	 * 功能集合
+	 * 权限点集合
 	 */
-	protected Collection<String> functions = new HashSet<String>();
+	protected Collection<String> permissions = new HashSet<String>();
+
+	/**
+	 * 角色编号集合
+	 */
+	protected Collection<Integer> roleIds = new HashSet<Integer>();
+
+	/**
+	 * 角色代码集合
+	 */
+	protected Collection<String> roles = new HashSet<String>();
+
+	/**
+	 * 皮肤
+	 */
+	protected String skin;
+
+	/**
+	 * 子部门编号
+	 */
+	protected Collection<Integer> subDeptIds = new HashSet<Integer>();
+
+	/**
+	 * 用户系统
+	 */
+	protected int systemType;
+
+	/**
+	 * 登录用户
+	 */
+	protected User user;
 
 	public LoginContext() {
 
@@ -146,12 +151,22 @@ public class LoginContext implements java.io.Serializable, Cloneable {
 		}
 	}
 
-	public void addRole(Integer role) {
+	public void addRole(String role) {
 		if (roles == null) {
-			roles = new HashSet<Integer>();
+			roles = new HashSet<String>();
 		}
 		if (!roles.contains(role)) {
 			roles.add(role);
+		}
+		this.addPermission(String.valueOf(role));
+	}
+
+	public void addRoleId(Integer role) {
+		if (roleIds == null) {
+			roleIds = new HashSet<Integer>();
+		}
+		if (!roleIds.contains(role)) {
+			roleIds.add(role);
 		}
 		this.addPermission(String.valueOf(role));
 	}
@@ -202,8 +217,14 @@ public class LoginContext implements java.io.Serializable, Cloneable {
 		}
 
 		if (loginContext.getRoles() != null) {
-			for (Integer x : loginContext.getRoles()) {
+			for (String x : loginContext.getRoles()) {
 				m.addRole(x);
+			}
+		}
+
+		if (loginContext.getRoleIds() != null) {
+			for (Integer x : loginContext.getRoleIds()) {
+				m.addRoleId(x);
 			}
 		}
 
@@ -272,9 +293,16 @@ public class LoginContext implements java.io.Serializable, Cloneable {
 		return permissions;
 	}
 
-	public Collection<Integer> getRoles() {
+	public Collection<Integer> getRoleIds() {
+		if (roleIds == null) {
+			roleIds = new HashSet<Integer>();
+		}
+		return roleIds;
+	}
+
+	public Collection<String> getRoles() {
 		if (roles == null) {
-			roles = new HashSet<Integer>();
+			roles = new HashSet<String>();
 		}
 		return roles;
 	}
@@ -297,7 +325,7 @@ public class LoginContext implements java.io.Serializable, Cloneable {
 
 	public boolean hasAdvancedPermission() {
 		boolean hasPermission = false;
-		Collection<Integer> roles = this.getRoles();
+		Collection<Integer> roles = this.getRoleIds();
 		if (roles != null) {
 			if (roles.contains(10000)) {
 				hasPermission = true;
@@ -348,9 +376,15 @@ public class LoginContext implements java.io.Serializable, Cloneable {
 			return true;
 		}
 		boolean hasPermission = false;
-		Collection<Integer> roles = this.getRoles();
+		Collection<Integer> roleIds = this.getRoleIds();
+		if (roleIds != null) {
+			if (roleIds.contains(10000)) {
+				hasPermission = true;
+			}
+		}
+		Collection<String> roles = this.getRoles();
 		if (roles != null) {
-			if (roles.contains(10000)) {
+			if (roles.contains("SystemAdministrator")) {
 				hasPermission = true;
 			}
 		}
@@ -359,9 +393,16 @@ public class LoginContext implements java.io.Serializable, Cloneable {
 
 	public boolean isSystemAdministrator() {
 		boolean isSystemAdministrator = false;
-		Collection<Integer> roles = this.getRoles();
+		Collection<Integer> roleIds = this.getRoleIds();
+		if (roleIds != null) {
+			if (roleIds.contains(10000)) {
+				isSystemAdministrator = true;
+			}
+		}
+
+		Collection<String> roles = this.getRoles();
 		if (roles != null) {
-			if (roles.contains(10000)) {
+			if (roles.contains("SystemAdministrator")) {
 				isSystemAdministrator = true;
 			}
 		}
@@ -404,7 +445,16 @@ public class LoginContext implements java.io.Serializable, Cloneable {
 			Iterator<Object> iterator = jsonArray.iterator();
 			while (iterator.hasNext()) {
 				String role = (String) iterator.next();
-				loginContext.addRole(Integer.parseInt(role));
+				loginContext.addRole(role);
+			}
+		}
+
+		if (jsonObject.containsKey("roleIds")) {
+			JSONArray jsonArray = jsonObject.getJSONArray("roleIds");
+			Iterator<Object> iterator = jsonArray.iterator();
+			while (iterator.hasNext()) {
+				String role = (String) iterator.next();
+				loginContext.addRoleId(Integer.parseInt(role));
 			}
 		}
 
@@ -470,6 +520,10 @@ public class LoginContext implements java.io.Serializable, Cloneable {
 		this.deptId = deptId;
 	}
 
+	public void setFunctions(Collection<String> functions) {
+		this.functions = functions;
+	}
+
 	public void setObservers(Collection<String> observers) {
 		this.observers = observers;
 	}
@@ -478,7 +532,11 @@ public class LoginContext implements java.io.Serializable, Cloneable {
 		this.permissions = permissions;
 	}
 
-	public void setRoles(Collection<Integer> roles) {
+	public void setRoleIds(Collection<Integer> roleIds) {
+		this.roleIds = roleIds;
+	}
+
+	public void setRoles(Collection<String> roles) {
 		this.roles = roles;
 	}
 
@@ -517,10 +575,18 @@ public class LoginContext implements java.io.Serializable, Cloneable {
 
 		if (roles != null && !roles.isEmpty()) {
 			JSONArray jsonArray = new JSONArray();
-			for (Integer roleId : roles) {
-				jsonArray.add(String.valueOf(roleId));
+			for (String role : roles) {
+				jsonArray.add(role);
 			}
 			jsonObject.put("roles", jsonArray);
+		}
+
+		if (roleIds != null && !roleIds.isEmpty()) {
+			JSONArray jsonArray = new JSONArray();
+			for (Integer roleId : roleIds) {
+				jsonArray.add(String.valueOf(roleId));
+			}
+			jsonObject.put("roleIds", jsonArray);
 		}
 
 		if (subDeptIds != null && !subDeptIds.isEmpty()) {

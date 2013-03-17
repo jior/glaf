@@ -28,6 +28,8 @@ public interface User extends java.io.Serializable {
 
 	String getActorId();
 
+	String getAdminFlag();
+
 	int getDeptId();
 
 	String getFax();
@@ -51,7 +53,7 @@ public interface User extends java.io.Serializable {
 	String getPassword();
 
 	String getRemark();
-	
+
 	int getUserType();
 
 	boolean isSystemAdministrator();
@@ -61,6 +63,8 @@ public interface User extends java.io.Serializable {
 	void setAccountType(int accountType);
 
 	void setActorId(String actorId);
+
+	void setAdminFlag(String adminFlag);
 
 	void setCreateDate(Date createDate);
 

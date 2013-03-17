@@ -84,7 +84,8 @@ public class IdentityFactory {
 	}
 
 	public static List<TreeModel> getChildrenTreeModels(Long id) {
-		List<Object> list = getEntityService().getList("getChildrenTreeModels", id);
+		List<Object> list = getEntityService().getList("getChildrenTreeModels",
+				id);
 		List<TreeModel> treeModels = new ArrayList<TreeModel>();
 		if (list != null && !list.isEmpty()) {
 			Iterator<Object> iter = list.iterator();
@@ -119,14 +120,14 @@ public class IdentityFactory {
 		User user = (User) getEntityService().getById("getUserById", actorId);
 		if (user != null) {
 			LoginContext loginContext = new LoginContext(user);
-
 			return loginContext;
 		}
 		return null;
 	}
 
 	public static TreeModel getTreeModelByCode(String code) {
-		return (TreeModel) getEntityService().getById("getTreeModelByCode", code);
+		return (TreeModel) getEntityService().getById("getTreeModelByCode",
+				code);
 	}
 
 	public static TreeModel getTreeModelById(Long id) {
@@ -161,7 +162,7 @@ public class IdentityFactory {
 		}
 		return userMap;
 	}
-	
+
 	/**
 	 * 获取全部用户Map
 	 * 

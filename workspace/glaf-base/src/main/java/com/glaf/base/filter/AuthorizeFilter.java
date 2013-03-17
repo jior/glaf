@@ -42,7 +42,6 @@ public class AuthorizeFilter implements Filter {
 	private String url = "";
 	private String require = "";
 	private String errorUrl = "";
-	private String loginUser = "";
 
 	/**
 	 * 注销
@@ -77,7 +76,7 @@ public class AuthorizeFilter implements Filter {
 			// 用户没有登录且当前页不是登录页面
 			logger.debug("ignoreUrl:" + ignoreUrl(uri));
 			if (bean == null && !ignoreUrl(uri)) {// 显示登陆页
-				res.sendRedirect(errorUrl);
+				res.sendRedirect(req.getContextPath() + errorUrl);
 				return;
 			} else {
 				if (bean != null) {
@@ -124,7 +123,7 @@ public class AuthorizeFilter implements Filter {
 		boolean ret = false;
 		String[] ignoreUrls = url.split(",");
 		for (int i = 0; i < ignoreUrls.length; i++) {
-			if (ignoreUrls[i].trim().equals(uri)) {
+			if (StringUtils.contains(uri, ignoreUrls[i])) {
 				ret = true;
 				break;
 			}
@@ -143,10 +142,10 @@ public class AuthorizeFilter implements Filter {
 		this.url = config.getInitParameter("login_url");
 		this.require = config.getInitParameter("require");
 		this.errorUrl = config.getInitParameter("error_url");
-		this.loginUser = config.getInitParameter("login_user");
+
 		logger.info("url:" + url);
 		logger.info("require:" + require);
 		logger.info("errorUrl:" + errorUrl);
-		logger.info("loginUser:" + loginUser);
+
 	}
 }

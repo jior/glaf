@@ -121,5 +121,6 @@
 	<classpathentry kind="lib" path="lib/snappy-java-1.0.4.1.jar"/>
 	<classpathentry kind="lib" path="lib/zookeeper.jar"/>
 	<classpathentry kind="lib" path="lib/junit-4.11.jar"/>
+	<classpathentry kind="lib" path="lib/shiro-all.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

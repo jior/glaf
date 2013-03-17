@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
@@ -164,6 +165,91 @@ public class PropertiesUtils {
 			throw new RuntimeException(ex);
 		} finally {
 			IOUtils.closeStream(in);
+		}
+	}
+	
+	public static LinkedHashMap<String, String> load(InputStream inputStream)
+			throws IOException {
+		LinkedHashMap<String, String> properties = new LinkedHashMap<String, String>();
+		BufferedReader in = new BufferedReader(new InputStreamReader(
+				inputStream));
+		while (true) {
+			// Get next line
+			String line = in.readLine();
+			if (line == null)
+				return properties;
+
+			if (line.length() > 0) {
+
+				// Find start of key
+				int len = line.length();
+				int keyStart;
+				for (keyStart = 0; keyStart < len; keyStart++)
+					if (whiteSpaceChars.indexOf(line.charAt(keyStart)) == -1)
+						break;
+
+				// Blank lines are ignored
+				if (keyStart == len)
+					continue;
+
+				// Continue lines that end in slashes if they are not comments
+				char firstChar = line.charAt(keyStart);
+				if ((firstChar != '#') && (firstChar != '!')) {
+					while (continueLine(line)) {
+						String nextLine = in.readLine();
+						if (nextLine == null)
+							nextLine = "";
+						String loppedLine = line.substring(0, len - 1);
+						// Advance beyond whitespace on new line
+						int startIndex;
+						for (startIndex = 0; startIndex < nextLine.length(); startIndex++)
+							if (whiteSpaceChars.indexOf(nextLine
+									.charAt(startIndex)) == -1)
+								break;
+						nextLine = nextLine.substring(startIndex, nextLine
+								.length());
+						line = loppedLine + nextLine;
+						len = line.length();
+					}
+
+					// Find separation between key and value
+					int separatorIndex;
+					for (separatorIndex = keyStart; separatorIndex < len; separatorIndex++) {
+						char currentChar = line.charAt(separatorIndex);
+						if (currentChar == '\\')
+							separatorIndex++;
+						else if (keyValueSeparators.indexOf(currentChar) != -1)
+							break;
+					}
+
+					// Skip over whitespace after key if any
+					int valueIndex;
+					for (valueIndex = separatorIndex; valueIndex < len; valueIndex++)
+						if (whiteSpaceChars.indexOf(line.charAt(valueIndex)) == -1)
+							break;
+
+					// Skip over one non whitespace key value separators if any
+					if (valueIndex < len)
+						if (strictKeyValueSeparators.indexOf(line
+								.charAt(valueIndex)) != -1)
+							valueIndex++;
+
+					// Skip over white space after other separators if any
+					while (valueIndex < len) {
+						if (whiteSpaceChars.indexOf(line.charAt(valueIndex)) == -1)
+							break;
+						valueIndex++;
+					}
+					String key = line.substring(keyStart, separatorIndex);
+					String value = (separatorIndex < len) ? line.substring(
+							valueIndex, len) : "";
+
+					// Convert then store key and value
+					key = loadConvert(key);
+					value = loadConvert(value);
+					properties.put(key, value);
+				}
+			}
 		}
 	}
 

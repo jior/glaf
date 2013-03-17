@@ -34,63 +34,63 @@ public class UserImpl implements User {
 
 	private static final long serialVersionUID = 1L;
 
-	protected long id;
-
-	protected String actorId;
-
-	protected String password;
-
-	protected String name;
+	protected int accountType;
 
 	protected String activationCode;
 
-	protected int deptId;
+	protected String actorId;
 
-	protected String mail;
-
-	protected String mailUser;
-
-	protected String mailPwd;
-
-	protected String isSystem;
-
-	protected String isBind;
+	protected String adminFlag;
 
 	protected String computerId;
 
+	protected Date createDate;
+
+	protected int deptId;
+
 	protected int domainIndex;
 
-	protected Integer remoteAttr;
+	protected int dumpflag;
 
-	protected String status;
+	protected String fax;
 
-	protected String mobile;
+	protected long id;
 
-	protected String phoneNumber;
-
-	protected String superiorId;
-
-	protected String principalshipCode;
-
-	protected String remark;
-
-	protected String loginIP;
+	protected String isBind;
 
 	protected Date lastLoginDate;
 
 	protected int locked;
 
-	protected int accountType;
-
-	protected int userType;
+	protected String loginIP;
 
 	protected int loginRetry;
 
-	protected Date createDate;
+	protected String mail;
 
-	protected String fax;
+	protected String mailPwd;
 
-	protected int dumpflag;
+	protected String mailUser;
+
+	protected String mobile;
+
+	protected String name;
+
+	protected String password;
+
+	protected String phoneNumber;
+
+	protected String principalshipCode;
+
+	protected String remark;
+
+	protected Integer remoteAttr;
+
+	protected String status;
+
+	protected String superiorId;
+
+	protected int userType;
 
 	public UserImpl() {
 
@@ -125,6 +125,10 @@ public class UserImpl implements User {
 		return actorId;
 	}
 
+	public String getAdminFlag() {
+		return adminFlag;
+	}
+
 	public String getComputerId() {
 		return computerId;
 	}
@@ -155,10 +159,6 @@ public class UserImpl implements User {
 
 	public String getIsBind() {
 		return isBind;
-	}
-
-	public String getIsSystem() {
-		return isSystem;
 	}
 
 	public Date getLastLoginDate() {
@@ -238,7 +238,7 @@ public class UserImpl implements User {
 	}
 
 	public boolean isSystemAdministrator() {
-		if ("1".equals(getIsSystem())) {
+		if ("1".equals(adminFlag)) {
 			return true;
 		}
 		return false;
@@ -275,8 +275,9 @@ public class UserImpl implements User {
 		if (jsonObject.containsKey("status")) {
 			model.setStatus(jsonObject.getString("status"));
 		}
-		if (jsonObject.containsKey("isSystem")) {
-			model.setIsSystem(jsonObject.getString("isSystem"));
+
+		if (jsonObject.containsKey("adminFlag")) {
+			model.setAdminFlag(jsonObject.getString("adminFlag"));
 		}
 
 		if (jsonObject.containsKey("remark")) {
@@ -319,6 +320,10 @@ public class UserImpl implements User {
 		this.actorId = actorId;
 	}
 
+	public void setAdminFlag(String adminFlag) {
+		this.adminFlag = adminFlag;
+	}
+
 	public void setComputerId(String computerId) {
 		this.computerId = computerId;
 	}
@@ -349,10 +354,6 @@ public class UserImpl implements User {
 
 	public void setIsBind(String isBind) {
 		this.isBind = isBind;
-	}
-
-	public void setIsSystem(String isSystem) {
-		this.isSystem = isSystem;
 	}
 
 	public void setLastLoginDate(Date lastLoginDate) {
@@ -430,7 +431,8 @@ public class UserImpl implements User {
 		jsonObject.put("name", name);
 		jsonObject.put("locked", locked);
 		jsonObject.put("deptId", deptId);
-		jsonObject.put("isSystem", isSystem);
+		jsonObject.put("adminFlag", adminFlag);
+
 		jsonObject.put("accountType", accountType);
 		jsonObject.put("userType", userType);
 		jsonObject.put("loginRetry", loginRetry);
@@ -469,7 +471,7 @@ public class UserImpl implements User {
 		jsonObject.put("name", name);
 		jsonObject.put("locked", locked);
 		jsonObject.put("deptId", deptId);
-		jsonObject.put("isSystem", isSystem);
+		jsonObject.put("adminFlag", adminFlag);
 		jsonObject.put("accountType", accountType);
 		jsonObject.put("userType", userType);
 		jsonObject.put("loginRetry", loginRetry);

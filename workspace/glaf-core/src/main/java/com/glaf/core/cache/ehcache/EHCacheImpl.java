@@ -1,20 +1,20 @@
 /*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.glaf.core.cache.ehcache;
 
@@ -25,6 +25,7 @@ import net.sf.ehcache.Element;
 
 import com.glaf.core.cache.Cache;
 import com.glaf.core.cache.CacheException;
+import com.glaf.core.context.ContextFactory;
 
 public class EHCacheImpl implements Cache {
 
@@ -40,7 +41,7 @@ public class EHCacheImpl implements Cache {
 
 	public void clear() {
 		try {
-			cache.removeAll();
+			getCache().removeAll();
 		} catch (IllegalStateException e) {
 			throw new CacheException(e);
 		} catch (net.sf.ehcache.CacheException e) {
@@ -53,7 +54,7 @@ public class EHCacheImpl implements Cache {
 			if (key == null) {
 				return null;
 			} else {
-				Element element = cache.get(key);
+				Element element = getCache().get(key);
 				if (element == null) {
 					return null;
 				} else {
@@ -65,20 +66,16 @@ public class EHCacheImpl implements Cache {
 		}
 	}
 
-	public Ehcache getCache() {
-		return cache;
-	}
-
 	public long getElementCountInMemory() {
 		try {
-			return cache.getMemoryStoreSize();
+			return getCache().getMemoryStoreSize();
 		} catch (net.sf.ehcache.CacheException ce) {
 			throw new CacheException(ce);
 		}
 	}
 
 	public long getElementCountOnDisk() {
-		return cache.getDiskStoreSize();
+		return getCache().getDiskStoreSize();
 	}
 
 	public Properties getProperties() {
@@ -86,11 +83,11 @@ public class EHCacheImpl implements Cache {
 	}
 
 	public String getRegionName() {
-		return cache.getName();
+		return getCache().getName();
 	}
 
 	public long getSizeInMemory() {
-		return cache.calculateInMemorySize();
+		return getCache().calculateInMemorySize();
 	}
 
 	public int getTimeToLive() {
@@ -109,7 +106,7 @@ public class EHCacheImpl implements Cache {
 			if (timeToLive > 0) {
 				element.setTimeToLive(timeToLive);
 			}
-			cache.put(element);
+			getCache().put(element);
 		} catch (IllegalArgumentException e) {
 			throw new CacheException(e);
 		} catch (IllegalStateException e) {
@@ -122,7 +119,7 @@ public class EHCacheImpl implements Cache {
 
 	public void remove(String key) {
 		try {
-			cache.remove(key);
+			getCache().remove(key);
 		} catch (ClassCastException e) {
 			throw new CacheException(e);
 		} catch (IllegalStateException e) {
@@ -136,6 +133,13 @@ public class EHCacheImpl implements Cache {
 		this.cache = cache;
 	}
 
+	public Ehcache getCache() {
+		if (cache == null) {
+			cache = ContextFactory.getBean("ehCache");
+		}
+		return cache;
+	}
+
 	public void setProperties(Properties properties) {
 		this.properties = properties;
 	}
@@ -146,7 +150,7 @@ public class EHCacheImpl implements Cache {
 
 	public void shutdown() {
 		try {
-			cache.getCacheManager().shutdown();
+			getCache().getCacheManager().shutdown();
 		} catch (IllegalStateException e) {
 			throw new CacheException(e);
 		} catch (net.sf.ehcache.CacheException e) {

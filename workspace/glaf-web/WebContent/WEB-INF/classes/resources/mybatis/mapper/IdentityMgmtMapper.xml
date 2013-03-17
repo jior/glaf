@@ -17,6 +17,7 @@
 		<result property="deptId" column="deptId" jdbcType="INTEGER" />
 		<result property="mail" column="email" jdbcType="VARCHAR" />
 		<result property="mobile" column="mobile" jdbcType="VARCHAR" />
+		<result property="adminFlag" column="adminFlag" jdbcType="VARCHAR" />
 	</resultMap>
 
 

@@ -10,17 +10,17 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>基础平台系统</title>
-<link href="../css/system.css" type="text/css" rel="stylesheet">
-<link href="../css/site.css" rel="stylesheet" type="text/css">
-<script src="../scripts/css.js" language="javascript"></script>
-<script src="../scripts/verify.js" language="javascript"></script>
+<link href="${contextPath}/css/system.css" type="text/css" rel="stylesheet">
+<link href="${contextPath}/css/site.css" rel="stylesheet" type="text/css">
+<script src="${contextPath}/scripts/css.js" language="javascript"></script>
+<script src="${contextPath}/scripts/verify.js" language="javascript"></script>
 </head>
 <body class="body">
 <script language="javascript">
  
 </script>
 <br><br><br><br>
-<html:form method="post" action="${contextPath}/sys/authorize.do?method=login" onsubmit="return verifyAll(this);" > 
+<html:form method="post" action="${contextPath}/login.do?method=login" onsubmit="return verifyAll(this);" > 
 <table border="0" align="center" cellpadding="0" cellspacing="0" id="login">
 
   <tr>

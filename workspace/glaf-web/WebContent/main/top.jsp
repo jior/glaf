@@ -74,7 +74,7 @@ function logOut(){
 	}
 }
 function exit(){
-	  var url="<%=contextPath%>/sys/authorize.do?method=logout";
+	  var url="<%=contextPath%>/login.do?method=logout";
 	  if(confirm("真的要退出系统吗？")){
 	    parent.window.location=url;
 	  }

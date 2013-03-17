@@ -84,7 +84,7 @@ public class JxlsReportContainer {
 		if (loginContext != null) {
 			context.put("loginContext", loginContext);
 			context.put("currUser", loginContext.getUser());
-			context.put("roleIds", loginContext.getRoles());
+			context.put("roleIds", loginContext.getRoleIds());
 			context.put("perms", loginContext.getPermissions());
 		}
 		context.put("currDate", new java.util.Date());
