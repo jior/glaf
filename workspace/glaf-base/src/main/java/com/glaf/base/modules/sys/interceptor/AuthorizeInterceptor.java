@@ -36,6 +36,7 @@ import com.glaf.base.modules.sys.model.SysFunction;
 import com.glaf.base.modules.sys.model.SysUser;
 
 import com.glaf.base.modules.utils.ContextUtil;
+import com.glaf.base.security.IdentityFactory;
 import com.glaf.base.utils.RequestUtil;
 import com.glaf.core.domain.SysLog;
 import com.glaf.core.service.ISysLogService;
@@ -171,6 +172,9 @@ public class AuthorizeInterceptor implements MethodBeforeAdvice {
 		boolean ret = false;
 		// 用户对象，在登陆后加载
 		SysUser user = (SysUser) ContextUtil.get(account);
+		if (user == null) {
+			user = IdentityFactory.getSysUserWithAll(account);
+		}
 		// logger.debug("user:" + user);
 		// logger.debug("user function size:" + user.getFunctions().size());
 		Iterator<SysFunction> iter = user.getFunctions().iterator();// 用户功能列表

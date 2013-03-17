@@ -41,6 +41,7 @@ import com.glaf.base.modules.sys.service.SysRoleService;
 import com.glaf.base.modules.sys.service.SysUserRoleService;
 import com.glaf.base.modules.sys.service.SysUserService;
 import com.glaf.base.modules.sys.service.SysDepartmentService;
+import com.glaf.base.modules.utils.ContextUtil;
 
 public class IdentityFactory {
 	protected final static Log logger = LogFactory
@@ -313,6 +314,20 @@ public class IdentityFactory {
 	 */
 	public static SysUser getSysUser(String actorId) {
 		return sysUserService.findByAccountWithAll(actorId);
+	}
+
+	/**
+	 * 根据用户名获取用户对象
+	 * 
+	 * @param actorId
+	 * @return
+	 */
+	public static SysUser getSysUserWithAll(String actorId) {
+		SysUser user = sysUserService.findByAccountWithAll(actorId);
+		if (user != null) {
+			ContextUtil.put(actorId, user);
+		}
+		return user;
 	}
 
 	/**
