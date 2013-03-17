@@ -4,10 +4,21 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" >
 
+    <!--Spring配置文件位置-->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>/WEB-INF/conf/spring/spring-config.xml</param-value>
 	</context-param>
+
+	<!--由Spring载入的Log4j配置文件位置-->
+	<context-param>
+		<param-name>log4jConfigLocation</param-name>
+		<param-value>/WEB-INF/conf/log4j.xml</param-value>
+	</context-param>
+
+	<listener>
+		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+	</listener>
 
 	<listener>
 		<listener-class>com.glaf.core.context.StartupListener</listener-class>
@@ -25,7 +36,7 @@
 		<listener-class>org.jboss.resteasy.plugins.server.servlet.ResteasyBootstrap</listener-class>
 	</listener>
   
-	<filter>
+	<!-- <filter>
 		<filter-name>OpenSessionInViewFilter</filter-name>
 		<filter-class>org.springframework.orm.hibernate3.support.OpenSessionInViewFilter</filter-class>
 		<init-param>  
@@ -37,18 +48,8 @@
 	<filter-mapping>
 		<filter-name>OpenSessionInViewFilter</filter-name>
 		<url-pattern>*.do</url-pattern>
-	</filter-mapping>
- 
-  
-	<!--由Sprng载入的Log4j配置文件位置-->
-	<context-param>
-		<param-name>log4jConfigLocation</param-name>
-		<param-value>/WEB-INF/conf/log4j.xml</param-value>
-	</context-param>
-	<!--Spring log4j Config loader-->
-	<listener>
-		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
-	</listener>
+	</filter-mapping> -->
+
   
 	<!--转码过滤器-->
 	<filter>
