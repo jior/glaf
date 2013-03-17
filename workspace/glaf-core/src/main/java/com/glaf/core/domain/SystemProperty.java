@@ -29,10 +29,10 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
 import com.alibaba.fastjson.JSONObject;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import com.glaf.core.base.JSONable;
+import com.glaf.core.domain.util.SystemPropertyJsonFactory;
 
 @Entity
 @Table(name = "SYS_PROPERTY")
@@ -133,32 +133,7 @@ public class SystemProperty implements Serializable, JSONable {
 	}
 
 	public SystemProperty jsonToObject(JSONObject jsonObject) {
-		SystemProperty model = new SystemProperty();
-		if (jsonObject.containsKey("name")) {
-			model.setName(jsonObject.getString("name"));
-		}
-		if (jsonObject.containsKey("title")) {
-			model.setTitle(jsonObject.getString("title"));
-		}
-		if (jsonObject.containsKey("category")) {
-			model.setCategory(jsonObject.getString("category"));
-		}
-		if (jsonObject.containsKey("type")) {
-			model.setType(jsonObject.getString("type"));
-		}
-		if (jsonObject.containsKey("description")) {
-			model.setDescription(jsonObject.getString("description"));
-		}
-		if (jsonObject.containsKey("value")) {
-			model.setValue(jsonObject.getString("value"));
-		}
-		if (jsonObject.containsKey("initValue")) {
-			model.setInitValue(jsonObject.getString("initValue"));
-		}
-		if (jsonObject.containsKey("locked")) {
-			model.setLocked(jsonObject.getInteger("locked"));
-		}
-		return model;
+		return SystemPropertyJsonFactory.jsonToObject(jsonObject);
 	}
 
 	public void setCategory(String category) {
@@ -198,59 +173,11 @@ public class SystemProperty implements Serializable, JSONable {
 	}
 
 	public JSONObject toJsonObject() {
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("id", id);
-		if (name != null) {
-			jsonObject.put("name", name);
-		}
-		if (title != null) {
-			jsonObject.put("title", title);
-		}
-		if (category != null) {
-			jsonObject.put("category", category);
-		}
-		if (type != null) {
-			jsonObject.put("type", type);
-		}
-		if (description != null) {
-			jsonObject.put("description", description);
-		}
-		if (value != null) {
-			jsonObject.put("value", value);
-		}
-		if (initValue != null) {
-			jsonObject.put("initValue", initValue);
-		}
-		jsonObject.put("locked", locked);
-		return jsonObject;
+		return SystemPropertyJsonFactory.toJsonObject(this);
 	}
 
 	public ObjectNode toObjectNode() {
-		ObjectNode jsonObject = new ObjectMapper().createObjectNode();
-		jsonObject.put("id", id);
-		if (name != null) {
-			jsonObject.put("name", name);
-		}
-		if (title != null) {
-			jsonObject.put("title", title);
-		}
-		if (category != null) {
-			jsonObject.put("category", category);
-		}
-		if (type != null) {
-			jsonObject.put("type", type);
-		}
-		if (description != null) {
-			jsonObject.put("description", description);
-		}
-		if (value != null) {
-			jsonObject.put("value", value);
-		}
-		if (initValue != null) {
-			jsonObject.put("initValue", initValue);
-		}
-		jsonObject.put("locked", locked);
-		return jsonObject;
+		return SystemPropertyJsonFactory.toObjectNode(this);
 	}
 
 	public String toString() {

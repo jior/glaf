@@ -23,17 +23,18 @@ import java.util.*;
 import javax.persistence.*;
 
 import com.alibaba.fastjson.*;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
- 
+
+import com.glaf.core.base.JSONable;
 import com.glaf.core.base.Parameter;
-import com.glaf.core.util.DateUtils;
+import com.glaf.core.domain.util.SchedulerParamJsonFactory;
+
 
 @Entity
 @Table(name = "SYS_SCHEDULER_PARAMS")
-public class SchedulerParam implements Serializable,  Parameter {
+public class SchedulerParam implements Serializable, Parameter, JSONable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -170,29 +171,7 @@ public class SchedulerParam implements Serializable,  Parameter {
 	}
 
 	public SchedulerParam jsonToObject(JSONObject jsonObject) {
-		SchedulerParam model = new SchedulerParam();
-		if (jsonObject.containsKey("taskId")) {
-			model.setTaskId(jsonObject.getString("taskId"));
-		}
-		if (jsonObject.containsKey("typeCd")) {
-			model.setTypeCd(jsonObject.getString("typeCd"));
-		}
-		if (jsonObject.containsKey("keyName")) {
-			model.setKeyName(jsonObject.getString("keyName"));
-		}
-		if (jsonObject.containsKey("title")) {
-			model.setTitle(jsonObject.getString("title"));
-		}
-		if (jsonObject.containsKey("stringVal")) {
-			model.setStringVal(jsonObject.getString("stringVal"));
-		}
-		if (jsonObject.containsKey("textVal")) {
-			model.setTextVal(jsonObject.getString("textVal"));
-		}
-		if (jsonObject.containsKey("dateVal")) {
-			model.setDateVal(jsonObject.getDate("dateVal"));
-		}
-		return model;
+		return SchedulerParamJsonFactory.jsonToObject(jsonObject);
 	}
 
 	public void setDateVal(Date dateVal) {
@@ -240,61 +219,11 @@ public class SchedulerParam implements Serializable,  Parameter {
 	}
 
 	public JSONObject toJsonObject() {
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("id", id);
-		if (taskId != null) {
-			jsonObject.put("taskId", taskId);
-		}
-		if (typeCd != null) {
-			jsonObject.put("typeCd", typeCd);
-		}
-		if (keyName != null) {
-			jsonObject.put("keyName", keyName);
-		}
-		if (title != null) {
-			jsonObject.put("title", title);
-		}
-		if (stringVal != null) {
-			jsonObject.put("stringVal", stringVal);
-		}
-		if (textVal != null) {
-			jsonObject.put("textVal", textVal);
-		}
-		if (dateVal != null) {
-			jsonObject.put("dateVal", DateUtils.getDate(dateVal));
-			jsonObject.put("dateVal_date", DateUtils.getDate(dateVal));
-			jsonObject.put("dateVal_datetime", DateUtils.getDateTime(dateVal));
-		}
-		return jsonObject;
+		return SchedulerParamJsonFactory.toJsonObject(this);
 	}
 
 	public ObjectNode toObjectNode() {
-		ObjectNode jsonObject = new ObjectMapper().createObjectNode();
-		jsonObject.put("id", id);
-		if (taskId != null) {
-			jsonObject.put("taskId", taskId);
-		}
-		if (typeCd != null) {
-			jsonObject.put("typeCd", typeCd);
-		}
-		if (keyName != null) {
-			jsonObject.put("keyName", keyName);
-		}
-		if (title != null) {
-			jsonObject.put("title", title);
-		}
-		if (stringVal != null) {
-			jsonObject.put("stringVal", stringVal);
-		}
-		if (textVal != null) {
-			jsonObject.put("textVal", textVal);
-		}
-		if (dateVal != null) {
-			jsonObject.put("dateVal", DateUtils.getDate(dateVal));
-			jsonObject.put("dateVal_date", DateUtils.getDate(dateVal));
-			jsonObject.put("dateVal_datetime", DateUtils.getDateTime(dateVal));
-		}
-		return jsonObject;
+		return SchedulerParamJsonFactory.toObjectNode(this);
 	}
 
 	public String toString() {

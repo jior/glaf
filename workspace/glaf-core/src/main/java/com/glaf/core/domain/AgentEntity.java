@@ -32,23 +32,23 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
 import com.alibaba.fastjson.JSONObject;
-import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import com.glaf.core.base.JSONable;
+import com.glaf.core.domain.util.AgentJsonFactory;
 import com.glaf.core.identity.Agent;
-import com.glaf.core.util.DateUtils;
 
 @Entity
 @Table(name = "SYS_AGENT")
-public class AgentEntity implements Agent {
+public class AgentEntity implements Agent, JSONable {
 
 	private static final long serialVersionUID = 1L;
 	/**
-	 * 主键
+	 * 代理类型 0-全局代理 1-代理指定流程的全部任务 2-代理指定流程的指定任务
 	 */
-	@Id
-	@Column(name = "ID_", length = 50, nullable = false)
-	protected String id;
+	@Column(name = "AGENTTYPE_")
+	protected int agentType;
 
 	/**
 	 * 委托人 ，consigner
@@ -75,16 +75,31 @@ public class AgentEntity implements Agent {
 	protected String assignToName;
 
 	/**
-	 * 流程名称
+	 * 创建日期
 	 */
-	@Column(name = "PROCESSNAME_")
-	protected String processName;
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "CREATEDATE_")
+	protected Date createDate;
 
 	/**
-	 * 任务名称
+	 * 结束日期
 	 */
-	@Column(name = "TASKNAME_")
-	protected String taskName;
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "ENDDATE_")
+	protected Date endDate;
+
+	/**
+	 * 主键
+	 */
+	@Id
+	@Column(name = "ID_", length = 50, nullable = false)
+	protected String id;
+
+	/**
+	 * 锁定标记
+	 */
+	@Column(name = "LOCKED_")
+	protected int locked;
 
 	/**
 	 * 对象编号
@@ -99,6 +114,15 @@ public class AgentEntity implements Agent {
 	protected String objectValue;
 
 	/**
+	 * 流程名称
+	 */
+	@Column(name = "PROCESSNAME_")
+	protected String processName;
+
+	@Column(name = "SERVICEKEY_", length = 50)
+	protected String serviceKey;
+
+	/**
 	 * 开始生效日期
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
@@ -106,38 +130,16 @@ public class AgentEntity implements Agent {
 	protected Date startDate;
 
 	/**
-	 * 结束日期
+	 * 任务名称
 	 */
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "ENDDATE_")
-	protected Date endDate;
-
-	/**
-	 * 代理类型 0-全局代理 1-代理指定流程的全部任务 2-代理指定流程的指定任务
-	 */
-	@Column(name = "AGENTTYPE_")
-	protected int agentType;
-
-	@Column(name = "SERVICEKEY_", length = 50)
-	protected String serviceKey;
-
-	/**
-	 * 锁定标记
-	 */
-	@Column(name = "LOCKED_")
-	protected int locked;
+	@Column(name = "TASKNAME_")
+	protected String taskName;
 
 	@Transient
 	protected boolean valid = false;
 
-	/**
-	 * 创建日期
-	 */
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "CREATEDATE_")
-	protected Date createDate;
-
 	public AgentEntity() {
+		
 	}
 
 	public int getAgentEntityType() {
@@ -216,6 +218,10 @@ public class AgentEntity implements Agent {
 		return valid;
 	}
 
+	public AgentEntity jsonToObject(JSONObject jsonObject) {
+		return AgentJsonFactory.jsonToObject(jsonObject);
+	}
+
 	public void setAgentEntityType(int agentType) {
 		this.agentType = agentType;
 	}
@@ -285,69 +291,11 @@ public class AgentEntity implements Agent {
 	}
 
 	public JSONObject toJsonObject() {
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("id", id);
-		jsonObject.put("assignFrom", assignFrom);
-		jsonObject.put("assignTo", assignTo);
-		jsonObject.put("agentType", agentType);
-		jsonObject.put("createDate", createDate);
-		jsonObject.put("serviceKey", serviceKey);
-		if (processName != null) {
-			jsonObject.put("processName", processName);
-		}
-		if (taskName != null) {
-			jsonObject.put("taskName", taskName);
-		}
-		if (startDate != null) {
-			jsonObject.put("startDate", startDate);
-		}
-		if (endDate != null) {
-			jsonObject.put("endDate", endDate);
-		}
-		if (objectId != null) {
-			jsonObject.put("objectId", objectId);
-		}
-		if (objectValue != null) {
-			jsonObject.put("objectValue", objectValue);
-		}
-		return jsonObject;
+		return AgentJsonFactory.toJsonObject(this);
 	}
 
 	public ObjectNode toObjectNode() {
-		ObjectNode jsonObject = new ObjectMapper().createObjectNode();
-		jsonObject.put("id", id);
-		jsonObject.put("assignFrom", assignFrom);
-		jsonObject.put("assignTo", assignTo);
-		jsonObject.put("agentType", agentType);
-		jsonObject.put("serviceKey", serviceKey);
-		jsonObject.put("createDate", DateUtils.getDate(createDate));
-		jsonObject.put("createDate_date", DateUtils.getDate(createDate));
-		jsonObject
-				.put("createDate_datetime", DateUtils.getDateTime(createDate));
-		if (processName != null) {
-			jsonObject.put("processName", processName);
-		}
-		if (taskName != null) {
-			jsonObject.put("taskName", taskName);
-		}
-		if (startDate != null) {
-			jsonObject.put("startDate", DateUtils.getDate(startDate));
-			jsonObject.put("startDate_date", DateUtils.getDate(startDate));
-			jsonObject.put("startDate_datetime",
-					DateUtils.getDateTime(startDate));
-		}
-		if (endDate != null) {
-			jsonObject.put("endDate", DateUtils.getDate(endDate));
-			jsonObject.put("endDate_date", DateUtils.getDate(endDate));
-			jsonObject.put("endDate_datetime", DateUtils.getDateTime(endDate));
-		}
-		if (objectId != null) {
-			jsonObject.put("objectId", objectId);
-		}
-		if (objectValue != null) {
-			jsonObject.put("objectValue", objectValue);
-		}
-		return jsonObject;
+		return AgentJsonFactory.toObjectNode(this);
 	}
 
 	public String toString() {

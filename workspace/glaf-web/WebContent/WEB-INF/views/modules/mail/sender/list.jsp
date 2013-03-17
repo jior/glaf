@@ -9,16 +9,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>邮件定义</title>
-	<%@ include file="/WEB-INF/views/tm/header.jsp"%>
-	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/easyui/themes/${theme}/easyui.css">
-	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/easyui/themes/icon.css">
-	<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
-	<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.form.js"></script>
-	<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/jquery.easyui.min.js"></script>
-	<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/locale/easyui-lang-zh_CN.js"></script>
-	<script>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>邮件定义</title>
+<%@ include file="/WEB-INF/views/tm/header.jsp"%>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/easyui/themes/${theme}/easyui.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/icons/styles.css">
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.form.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript">
 		jQuery(function(){
 			jQuery('#easyui_data_grid').datagrid({
 				//title:'邮件任务定义',

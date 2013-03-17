@@ -121,7 +121,7 @@
 <div class="easyui-layout" data-options="fit:true">  
    <div data-options="region:'north',split:true,border:true" style="height:40px"> 
     <div style="background:#fafafa;padding:2px;border:1px solid #ddd;font-size:12px"> 
-	<b>邮件列表</b>
+	<span class="x_content_title">邮件列表</span>
 	<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" 
 		     onclick="javascript:addMail();">增加邮件</a>
 	<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" 

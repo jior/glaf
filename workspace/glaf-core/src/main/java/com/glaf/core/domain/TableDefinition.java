@@ -29,9 +29,9 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import com.alibaba.fastjson.JSONObject;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.glaf.core.util.DateUtils;
+import com.glaf.core.base.JSONable;
+import com.glaf.core.domain.util.TableDefinitionJsonFactory;
 
 /**
  * 数据表定义
@@ -42,7 +42,7 @@ import com.glaf.core.util.DateUtils;
 @Entity
 @Table(name = "SYS_TABLE")
 public class TableDefinition implements java.io.Serializable,
-		java.lang.Comparable<TableDefinition> {
+		java.lang.Comparable<TableDefinition>, JSONable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -393,89 +393,7 @@ public class TableDefinition implements java.io.Serializable,
 	}
 
 	public TableDefinition jsonToObject(JSONObject jsonObject) {
-		TableDefinition model = new TableDefinition();
-		if (jsonObject.containsKey("parentTableName")) {
-			model.setParentTableName(jsonObject.getString("parentTableName"));
-		}
-		if (jsonObject.containsKey("packageName")) {
-			model.setPackageName(jsonObject.getString("packageName"));
-		}
-		if (jsonObject.containsKey("entityName")) {
-			model.setEntityName(jsonObject.getString("entityName"));
-		}
-		if (jsonObject.containsKey("className")) {
-			model.setClassName(jsonObject.getString("className"));
-		}
-		if (jsonObject.containsKey("title")) {
-			model.setTitle(jsonObject.getString("title"));
-		}
-		if (jsonObject.containsKey("englishTitle")) {
-			model.setEnglishTitle(jsonObject.getString("englishTitle"));
-		}
-		if (jsonObject.containsKey("columnQty")) {
-			model.setColumnQty(jsonObject.getInteger("columnQty"));
-		}
-		if (jsonObject.containsKey("addType")) {
-			model.setAddType(jsonObject.getInteger("addType"));
-		}
-		if (jsonObject.containsKey("sysnum")) {
-			model.setSysnum(jsonObject.getString("sysnum"));
-		}
-		if (jsonObject.containsKey("isSubTable")) {
-			model.setIsSubTable(jsonObject.getString("isSubTable"));
-		}
-		if (jsonObject.containsKey("topId")) {
-			model.setTopId(jsonObject.getString("topId"));
-		}
-		if (jsonObject.containsKey("aggregationKeys")) {
-			model.setAggregationKeys(jsonObject.getString("aggregationKeys"));
-		}
-		if (jsonObject.containsKey("queryIds")) {
-			model.setQueryIds(jsonObject.getString("queryIds"));
-		}
-		if (jsonObject.containsKey("temporaryFlag")) {
-			model.setTemporaryFlag(jsonObject.getString("temporaryFlag"));
-		}
-		if (jsonObject.containsKey("deleteFetch")) {
-			model.setDeleteFetch(jsonObject.getString("deleteFetch"));
-		}
-		if (jsonObject.containsKey("createTime")) {
-			model.setCreateTime(jsonObject.getDate("createTime"));
-		}
-		if (jsonObject.containsKey("createBy")) {
-			model.setCreateBy(jsonObject.getString("createBy"));
-		}
-		if (jsonObject.containsKey("description")) {
-			model.setDescription(jsonObject.getString("description"));
-		}
-		if (jsonObject.containsKey("type")) {
-			model.setType(jsonObject.getString("type"));
-		}
-		if (jsonObject.containsKey("displayType")) {
-			model.setDisplayType(jsonObject.getString("displayType"));
-		}
-		if (jsonObject.containsKey("insertCascade")) {
-			model.setInsertCascade(jsonObject.getInteger("insertCascade"));
-		}
-		if (jsonObject.containsKey("updateCascade")) {
-			model.setUpdateCascade(jsonObject.getInteger("updateCascade"));
-		}
-		if (jsonObject.containsKey("deleteCascade")) {
-			model.setDeleteCascade(jsonObject.getInteger("deleteCascade"));
-		}
-		if (jsonObject.containsKey("locked")) {
-			model.setLocked(jsonObject.getInteger("locked"));
-		}
-		if (jsonObject.containsKey("deleteFlag")) {
-			model.setDeleteFlag(jsonObject.getInteger("deleteFlag"));
-		}
-		if (jsonObject.containsKey("systemFlag")) {
-			model.setSystemFlag(jsonObject.getString("systemFlag"));
-		}
-		if (jsonObject.containsKey("revision")) {
-			model.setRevision(jsonObject.getInteger("revision"));
-		}
-		return model;
+		return TableDefinitionJsonFactory.jsonToObject(jsonObject);
 	}
 
 	public void setAddType(int addType) {
@@ -608,151 +526,11 @@ public class TableDefinition implements java.io.Serializable,
 	}
 
 	public JSONObject toJsonObject() {
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("tableName", tableName);
-		if (parentTableName != null) {
-			jsonObject.put("parentTableName", parentTableName);
-		}
-		if (packageName != null) {
-			jsonObject.put("packageName", packageName);
-		}
-		if (entityName != null) {
-			jsonObject.put("entityName", entityName);
-		}
-		if (className != null) {
-			jsonObject.put("className", className);
-		}
-		if (title != null) {
-			jsonObject.put("title", title);
-		}
-		if (englishTitle != null) {
-			jsonObject.put("englishTitle", englishTitle);
-		}
-		jsonObject.put("columnQty", columnQty);
-		jsonObject.put("addType", addType);
-		if (sysnum != null) {
-			jsonObject.put("sysnum", sysnum);
-		}
-		if (isSubTable != null) {
-			jsonObject.put("isSubTable", isSubTable);
-		}
-		if (topId != null) {
-			jsonObject.put("topId", topId);
-		}
-		if (aggregationKeys != null) {
-			jsonObject.put("aggregationKeys", aggregationKeys);
-		}
-		if (queryIds != null) {
-			jsonObject.put("queryIds", queryIds);
-		}
-		if (temporaryFlag != null) {
-			jsonObject.put("temporaryFlag", temporaryFlag);
-		}
-		if (deleteFetch != null) {
-			jsonObject.put("deleteFetch", deleteFetch);
-		}
-		if (createTime != null) {
-			jsonObject.put("createTime", DateUtils.getDate(createTime));
-			jsonObject.put("createTime_date", DateUtils.getDate(createTime));
-			jsonObject.put("createTime_datetime",
-					DateUtils.getDateTime(createTime));
-		}
-		if (createBy != null) {
-			jsonObject.put("createBy", createBy);
-		}
-		if (description != null) {
-			jsonObject.put("description", description);
-		}
-		if (type != null) {
-			jsonObject.put("type", type);
-		}
-		if (displayType != null) {
-			jsonObject.put("displayType", displayType);
-		}
-		jsonObject.put("insertCascade", insertCascade);
-		jsonObject.put("updateCascade", updateCascade);
-		jsonObject.put("deleteCascade", deleteCascade);
-		jsonObject.put("locked", locked);
-		jsonObject.put("deleteFlag", deleteFlag);
-		if (systemFlag != null) {
-			jsonObject.put("systemFlag", systemFlag);
-		}
-		jsonObject.put("revision", revision);
-		return jsonObject;
+		return TableDefinitionJsonFactory.toJsonObject(this);
 	}
 
 	public ObjectNode toObjectNode() {
-		ObjectNode jsonObject = new ObjectMapper().createObjectNode();
-		jsonObject.put("tableName", tableName);
-		if (parentTableName != null) {
-			jsonObject.put("parentTableName", parentTableName);
-		}
-		if (packageName != null) {
-			jsonObject.put("packageName", packageName);
-		}
-		if (entityName != null) {
-			jsonObject.put("entityName", entityName);
-		}
-		if (className != null) {
-			jsonObject.put("className", className);
-		}
-		if (title != null) {
-			jsonObject.put("title", title);
-		}
-		if (englishTitle != null) {
-			jsonObject.put("englishTitle", englishTitle);
-		}
-		jsonObject.put("columnQty", columnQty);
-		jsonObject.put("addType", addType);
-		if (sysnum != null) {
-			jsonObject.put("sysnum", sysnum);
-		}
-		if (isSubTable != null) {
-			jsonObject.put("isSubTable", isSubTable);
-		}
-		if (topId != null) {
-			jsonObject.put("topId", topId);
-		}
-		if (aggregationKeys != null) {
-			jsonObject.put("aggregationKeys", aggregationKeys);
-		}
-		if (queryIds != null) {
-			jsonObject.put("queryIds", queryIds);
-		}
-		if (temporaryFlag != null) {
-			jsonObject.put("temporaryFlag", temporaryFlag);
-		}
-		if (deleteFetch != null) {
-			jsonObject.put("deleteFetch", deleteFetch);
-		}
-		if (createTime != null) {
-			jsonObject.put("createTime", DateUtils.getDate(createTime));
-			jsonObject.put("createTime_date", DateUtils.getDate(createTime));
-			jsonObject.put("createTime_datetime",
-					DateUtils.getDateTime(createTime));
-		}
-		if (createBy != null) {
-			jsonObject.put("createBy", createBy);
-		}
-		if (description != null) {
-			jsonObject.put("description", description);
-		}
-		if (type != null) {
-			jsonObject.put("type", type);
-		}
-		if (displayType != null) {
-			jsonObject.put("displayType", displayType);
-		}
-		jsonObject.put("insertCascade", insertCascade);
-		jsonObject.put("updateCascade", updateCascade);
-		jsonObject.put("deleteCascade", deleteCascade);
-		jsonObject.put("locked", locked);
-		jsonObject.put("deleteFlag", deleteFlag);
-		if (systemFlag != null) {
-			jsonObject.put("systemFlag", systemFlag);
-		}
-		jsonObject.put("revision", revision);
-		return jsonObject;
+		return TableDefinitionJsonFactory.toObjectNode(this);
 	}
 
 }

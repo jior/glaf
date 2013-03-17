@@ -126,10 +126,6 @@
 				and E.STORAGETYPE_ = #{storageType}
 			</if>
 
-			<if test="status != null">
-				and E.STATUS_ = #{status}
-			</if>
-
 			<if test="createBy != null and createBy != '' ">
 				and E.CREATEBY_ = #{createBy}
 			</if>

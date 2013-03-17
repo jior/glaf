@@ -59,7 +59,8 @@ public class SpringDispatcherServlet extends DispatcherServlet {
 			SysUser user = RequestUtil.getLoginUser(request);
 			if (user != null) {
 				Authentication.setAuthenticatedUser(user);
-				com.glaf.core.security.Authentication.setAuthenticatedActorId(user.getAccount());
+				com.glaf.core.security.Authentication
+						.setAuthenticatedActorId(user.getAccount());
 			}
 
 			/**
@@ -75,7 +76,9 @@ public class SpringDispatcherServlet extends DispatcherServlet {
 						|| StringUtils.contains(uri, "/sys/scheduler.do")
 						|| StringUtils.contains(uri, "/sys/function.do")
 						|| StringUtils.contains(uri, "/sys/todo.do")
+						|| StringUtils.contains(uri, "/sys/user.do")
 						|| StringUtils.contains(uri, "/sys/sysUserRole.do")
+						|| StringUtils.contains(uri, "/sys/deptRole.do")
 						|| StringUtils.contains(uri, "/others/workCalendar.do")) {
 					response.sendRedirect(request.getContextPath() + errorUrl);
 					return;

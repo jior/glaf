@@ -26,17 +26,16 @@ import javax.persistence.*;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import com.alibaba.fastjson.*;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-
-import com.glaf.core.util.DateUtils;
-
+ 
+import com.glaf.core.base.JSONable;
 import com.glaf.core.base.Parameter;
 import com.glaf.core.base.Scheduler;
+import com.glaf.core.domain.util.SchedulerJsonFactory;
 
 @Entity
 @Table(name = "SYS_SCHEDULER")
-public class SchedulerEntity implements Serializable, Scheduler {
+public class SchedulerEntity implements Serializable, Scheduler, JSONable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -272,69 +271,8 @@ public class SchedulerEntity implements Serializable, Scheduler {
 		return valid;
 	}
 
-	public SchedulerEntity jsonToObject(JSONObject jsonObject) {
-		SchedulerEntity model = new SchedulerEntity();
-		if (jsonObject.containsKey("id")) {
-			model.setTaskId(jsonObject.getString("id"));
-		}
-		if (jsonObject.containsKey("taskName")) {
-			model.setTaskName(jsonObject.getString("taskName"));
-		}
-		if (jsonObject.containsKey("taskType")) {
-			model.setTaskType(jsonObject.getString("taskType"));
-		}
-		if (jsonObject.containsKey("jobClass")) {
-			model.setJobClass(jsonObject.getString("jobClass"));
-		}
-		if (jsonObject.containsKey("title")) {
-			model.setTitle(jsonObject.getString("title"));
-		}
-		if (jsonObject.containsKey("content")) {
-			model.setContent(jsonObject.getString("content"));
-		}
-		if (jsonObject.containsKey("startDate")) {
-			model.setStartDate(jsonObject.getDate("startDate"));
-		}
-		if (jsonObject.containsKey("endDate")) {
-			model.setEndDate(jsonObject.getDate("endDate"));
-		}
-		if (jsonObject.containsKey("threadSize")) {
-			model.setThreadSize(jsonObject.getInteger("threadSize"));
-		}
-		if (jsonObject.containsKey("repeatCount")) {
-			model.setRepeatCount(jsonObject.getInteger("repeatCount"));
-		}
-		if (jsonObject.containsKey("repeatInterval")) {
-			model.setRepeatInterval(jsonObject.getInteger("repeatInterval"));
-		}
-		if (jsonObject.containsKey("startDelay")) {
-			model.setStartDelay(jsonObject.getInteger("startDelay"));
-		}
-		if (jsonObject.containsKey("priority")) {
-			model.setPriority(jsonObject.getInteger("priority"));
-		}
-		if (jsonObject.containsKey("locked")) {
-			model.setLocked(jsonObject.getInteger("locked"));
-		}
-		if (jsonObject.containsKey("startup")) {
-			model.setStartup(jsonObject.getInteger("startup"));
-		}
-		if (jsonObject.containsKey("autoStartup")) {
-			model.setAutoStartup(jsonObject.getInteger("autoStartup"));
-		}
-		if (jsonObject.containsKey("expression")) {
-			model.setExpression(jsonObject.getString("expression"));
-		}
-		if (jsonObject.containsKey("attribute")) {
-			model.setAttribute(jsonObject.getString("attribute"));
-		}
-		if (jsonObject.containsKey("createBy")) {
-			model.setCreateBy(jsonObject.getString("createBy"));
-		}
-		if (jsonObject.containsKey("createDate")) {
-			model.setCreateDate(jsonObject.getDate("createDate"));
-		}
-		return model;
+	public Scheduler  jsonToObject(JSONObject jsonObject) {
+		return SchedulerJsonFactory.jsonToObject(jsonObject);
 	}
 
 	public void setAttribute(String attribute) {
@@ -446,125 +384,11 @@ public class SchedulerEntity implements Serializable, Scheduler {
 	}
 
 	public JSONObject toJsonObject() {
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("id", id);
-
-		jsonObject.put("taskId", id);
-
-		if (taskName != null) {
-			jsonObject.put("taskName", taskName);
-		}
-		if (taskType != null) {
-			jsonObject.put("taskType", taskType);
-		}
-		if (jobClass != null) {
-			jsonObject.put("jobClass", jobClass);
-		}
-		if (title != null) {
-			jsonObject.put("title", title);
-		}
-		if (content != null) {
-			jsonObject.put("content", content);
-		}
-		if (startDate != null) {
-			jsonObject.put("startDate", DateUtils.getDate(startDate));
-			jsonObject.put("startDate_date", DateUtils.getDate(startDate));
-			jsonObject.put("startDate_datetime",
-					DateUtils.getDateTime(startDate));
-		}
-		if (endDate != null) {
-			jsonObject.put("endDate", DateUtils.getDate(endDate));
-			jsonObject.put("endDate_date", DateUtils.getDate(endDate));
-			jsonObject.put("endDate_datetime", DateUtils.getDateTime(endDate));
-		}
-		jsonObject.put("threadSize", threadSize);
-		jsonObject.put("repeatCount", repeatCount);
-		jsonObject.put("repeatInterval", repeatInterval);
-		jsonObject.put("startDelay", startDelay);
-		jsonObject.put("priority", priority);
-		jsonObject.put("locked", locked);
-
-		jsonObject.put("startup", startup);
-
-		jsonObject.put("autoStartup", autoStartup);
-
-		if (expression != null) {
-			jsonObject.put("expression", expression);
-		}
-		if (attribute != null) {
-			jsonObject.put("attribute", attribute);
-		}
-		if (createBy != null) {
-			jsonObject.put("createBy", createBy);
-		}
-		if (createDate != null) {
-			jsonObject.put("createDate", DateUtils.getDate(createDate));
-			jsonObject.put("createDate_date", DateUtils.getDate(createDate));
-			jsonObject.put("createDate_datetime",
-					DateUtils.getDateTime(createDate));
-		}
-		return jsonObject;
+		return SchedulerJsonFactory.toJsonObject(this);
 	}
 
 	public ObjectNode toObjectNode() {
-		ObjectNode jsonObject = new ObjectMapper().createObjectNode();
-		jsonObject.put("id", id);
-
-		jsonObject.put("taskId", id);
-
-		if (taskName != null) {
-			jsonObject.put("taskName", taskName);
-		}
-		if (taskType != null) {
-			jsonObject.put("taskType", taskType);
-		}
-		if (jobClass != null) {
-			jsonObject.put("jobClass", jobClass);
-		}
-		if (title != null) {
-			jsonObject.put("title", title);
-		}
-		if (content != null) {
-			jsonObject.put("content", content);
-		}
-		if (startDate != null) {
-			jsonObject.put("startDate", DateUtils.getDate(startDate));
-			jsonObject.put("startDate_date", DateUtils.getDate(startDate));
-			jsonObject.put("startDate_datetime",
-					DateUtils.getDateTime(startDate));
-		}
-		if (endDate != null) {
-			jsonObject.put("endDate", DateUtils.getDate(endDate));
-			jsonObject.put("endDate_date", DateUtils.getDate(endDate));
-			jsonObject.put("endDate_datetime", DateUtils.getDateTime(endDate));
-		}
-		jsonObject.put("threadSize", threadSize);
-		jsonObject.put("repeatCount", repeatCount);
-		jsonObject.put("repeatInterval", repeatInterval);
-		jsonObject.put("startDelay", startDelay);
-		jsonObject.put("priority", priority);
-		jsonObject.put("locked", locked);
-
-		jsonObject.put("startup", startup);
-
-		jsonObject.put("autoStartup", autoStartup);
-
-		if (expression != null) {
-			jsonObject.put("expression", expression);
-		}
-		if (attribute != null) {
-			jsonObject.put("attribute", attribute);
-		}
-		if (createBy != null) {
-			jsonObject.put("createBy", createBy);
-		}
-		if (createDate != null) {
-			jsonObject.put("createDate", DateUtils.getDate(createDate));
-			jsonObject.put("createDate_date", DateUtils.getDate(createDate));
-			jsonObject.put("createDate_datetime",
-					DateUtils.getDateTime(createDate));
-		}
-		return jsonObject;
+		 return SchedulerJsonFactory.toObjectNode(this);
 	}
 
 	public String toString() {

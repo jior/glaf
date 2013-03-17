@@ -35,16 +35,15 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
 import com.alibaba.fastjson.JSONObject;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.glaf.core.base.BlobItem;
 import com.glaf.core.base.DataFile;
-
-import com.glaf.core.util.DateUtils;
+import com.glaf.core.base.JSONable;
+import com.glaf.core.domain.util.*;
 
 @Entity
 @Table(name = "SYS_LOB")
-public class BlobItemEntity implements DataFile, Serializable, BlobItem {
+public class BlobItemEntity implements DataFile, Serializable, BlobItem, JSONable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -227,59 +226,7 @@ public class BlobItemEntity implements DataFile, Serializable, BlobItem {
 	}
 
 	public BlobItemEntity jsonToObject(JSONObject jsonObject) {
-		BlobItemEntity model = new BlobItemEntity();
-		if (jsonObject.containsKey("resourceId")) {
-			model.setResourceId(jsonObject.getString("resourceId"));
-		}
-		if (jsonObject.containsKey("fileId")) {
-			model.setFileId(jsonObject.getString("fileId"));
-		}
-		if (jsonObject.containsKey("serviceKey")) {
-			model.setServiceKey(jsonObject.getString("serviceKey"));
-		}
-		if (jsonObject.containsKey("deviceId")) {
-			model.setDeviceId(jsonObject.getString("deviceId"));
-		}
-		if (jsonObject.containsKey("name")) {
-			model.setName(jsonObject.getString("name"));
-		}
-		if (jsonObject.containsKey("type")) {
-			model.setType(jsonObject.getString("type"));
-		}
-		if (jsonObject.containsKey("filename")) {
-			model.setFilename(jsonObject.getString("filename"));
-		}
-		if (jsonObject.containsKey("contentType")) {
-			model.setContentType(jsonObject.getString("contentType"));
-		}
-		if (jsonObject.containsKey("objectId")) {
-			model.setObjectId(jsonObject.getString("objectId"));
-		}
-		if (jsonObject.containsKey("objectValue")) {
-			model.setObjectValue(jsonObject.getString("objectValue"));
-		}
-		if (jsonObject.containsKey("size")) {
-			model.setSize(jsonObject.getLong("size"));
-		}
-		if (jsonObject.containsKey("lastModified")) {
-			model.setLastModified(jsonObject.getLong("lastModified"));
-		}
-		if (jsonObject.containsKey("locked")) {
-			model.setLocked(jsonObject.getInteger("locked"));
-		}
-		if (jsonObject.containsKey("status")) {
-			model.setStatus(jsonObject.getInteger("status"));
-		}
-		if (jsonObject.containsKey("deleteFlag")) {
-			model.setDeleteFlag(jsonObject.getInteger("deleteFlag"));
-		}
-		if (jsonObject.containsKey("createBy")) {
-			model.setCreateBy(jsonObject.getString("createBy"));
-		}
-		if (jsonObject.containsKey("createDate")) {
-			model.setCreateDate(jsonObject.getDate("createDate"));
-		}
-		return model;
+		return BlobItemJsonFactory.jsonToObject(jsonObject);
 	}
 
 	public void setContentType(String contentType) {
@@ -367,103 +314,11 @@ public class BlobItemEntity implements DataFile, Serializable, BlobItem {
 	}
 
 	public JSONObject toJsonObject() {
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("id", id);
-		if (resourceId != null) {
-			jsonObject.put("resourceId", resourceId);
-		}
-		if (fileId != null) {
-			jsonObject.put("fileId", fileId);
-		}
-		if (serviceKey != null) {
-			jsonObject.put("serviceKey", serviceKey);
-		}
-		if (deviceId != null) {
-			jsonObject.put("deviceId", deviceId);
-		}
-		if (name != null) {
-			jsonObject.put("name", name);
-		}
-		if (type != null) {
-			jsonObject.put("type", type);
-		}
-		if (filename != null) {
-			jsonObject.put("filename", filename);
-		}
-		if (contentType != null) {
-			jsonObject.put("contentType", contentType);
-		}
-		if (objectId != null) {
-			jsonObject.put("objectId", objectId);
-		}
-		if (objectValue != null) {
-			jsonObject.put("objectValue", objectValue);
-		}
-		jsonObject.put("size", size);
-		jsonObject.put("lastModified", lastModified);
-		jsonObject.put("locked", locked);
-		jsonObject.put("status", status);
-		jsonObject.put("deleteFlag", deleteFlag);
-		if (createBy != null) {
-			jsonObject.put("createBy", createBy);
-		}
-		if (createDate != null) {
-			jsonObject.put("createDate", DateUtils.getDate(createDate));
-			jsonObject.put("createDate_date", DateUtils.getDate(createDate));
-			jsonObject.put("createDate_datetime",
-					DateUtils.getDateTime(createDate));
-		}
-		return jsonObject;
+		return BlobItemJsonFactory.toJsonObject(this);
 	}
 
 	public ObjectNode toObjectNode() {
-		ObjectNode objectNode = new ObjectMapper().createObjectNode();
-		objectNode.put("id", id);
-		if (resourceId != null) {
-			objectNode.put("resourceId", resourceId);
-		}
-		if (fileId != null) {
-			objectNode.put("fileId", fileId);
-		}
-		if (serviceKey != null) {
-			objectNode.put("serviceKey", serviceKey);
-		}
-		if (deviceId != null) {
-			objectNode.put("deviceId", deviceId);
-		}
-		if (name != null) {
-			objectNode.put("name", name);
-		}
-		if (type != null) {
-			objectNode.put("type", type);
-		}
-		if (filename != null) {
-			objectNode.put("filename", filename);
-		}
-		if (contentType != null) {
-			objectNode.put("contentType", contentType);
-		}
-		if (objectId != null) {
-			objectNode.put("objectId", objectId);
-		}
-		if (objectValue != null) {
-			objectNode.put("objectValue", objectValue);
-		}
-		objectNode.put("size", size);
-		objectNode.put("lastModified", lastModified);
-		objectNode.put("locked", locked);
-		objectNode.put("status", status);
-		objectNode.put("deleteFlag", deleteFlag);
-		if (createBy != null) {
-			objectNode.put("createBy", createBy);
-		}
-		if (createDate != null) {
-			objectNode.put("createDate", DateUtils.getDate(createDate));
-			objectNode.put("createDate_date", DateUtils.getDate(createDate));
-			objectNode.put("createDate_datetime",
-					DateUtils.getDateTime(createDate));
-		}
-		return objectNode;
+		return BlobItemJsonFactory.toObjectNode(this);
 	}
 
 	public String toString() {

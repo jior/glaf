@@ -93,6 +93,9 @@ public class AuthorizeFilter implements Filter {
 								|| StringUtils
 										.contains(uri, "/sys/function.do")
 								|| StringUtils.contains(uri, "/sys/todo.do")
+								|| StringUtils.contains(uri, "/sys/user.do")
+								|| StringUtils
+										.contains(uri, "/sys/deptRole.do")
 								|| StringUtils.contains(uri,
 										"/sys/sysUserRole.do")
 								|| StringUtils.contains(uri,
@@ -103,7 +106,8 @@ public class AuthorizeFilter implements Filter {
 					}
 					Authentication.setAuthenticatedUser(bean);
 					Authentication.setAuthenticatedAccount(bean.getAccount());
-					com.glaf.core.security.Authentication.setAuthenticatedActorId(bean.getAccount());
+					com.glaf.core.security.Authentication
+							.setAuthenticatedActorId(bean.getAccount());
 				}
 			}
 		}

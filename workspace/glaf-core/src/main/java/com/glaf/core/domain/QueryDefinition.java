@@ -36,10 +36,10 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
 import com.alibaba.fastjson.JSONObject;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.glaf.core.base.JSONable;
-import com.glaf.core.util.DateUtils;
+import com.glaf.core.domain.util.QueryDefinitionJsonFactory;
+
 
 @Entity
 @Table(name = "SYS_QUERY")
@@ -47,54 +47,40 @@ public class QueryDefinition implements java.io.Serializable, JSONable {
 
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * 主键
-	 */
-	@Id
-	@Column(name = "ID_", length = 50, nullable = false)
-	protected String id;
+	@Transient
+	protected QueryDefinition child = null;
+
+	@Transient
+	protected List<ColumnDefinition> columns = new ArrayList<ColumnDefinition>();
 
 	/**
-	 * 父查询编号
+	 * 查询SQL语句
 	 */
-	@Column(name = "PARENTID_", length = 50)
-	protected String parentId;
+	@Lob
+	@Column(name = "COUNTSQL_")
+	protected String countSql;
 
 	/**
-	 * 目标表名
+	 * MyBatis查询语句的select编号
 	 */
-	@Column(name = "TARGETTABLENAME_", length = 50)
-	protected String targetTableName;
+	@Column(name = "COUNTSTATEMENTID_", length = 100)
+	protected String countStatementId;
 
 	/**
-	 * 服务标识
+	 * 创建人
 	 */
-	@Column(name = "SERVICEKEY_", length = 50)
-	protected String serviceKey;
+	@Column(name = "CREATEBY_")
+	protected String createBy;
 
 	/**
-	 * 标题
+	 * 创建时间
 	 */
-	@Column(name = "TITLE_")
-	protected String title;
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "CREATETIME_")
+	protected Date createTime;
 
-	/**
-	 * 名称
-	 */
-	@Column(name = "NAME_", length = 50)
-	protected String name;
-
-	/**
-	 * 别名
-	 */
-	@Column(name = "MAPPING_", length = 50)
-	protected String mapping;
-
-	/**
-	 * 类别
-	 */
-	@Column(name = "TYPE_", length = 50)
-	protected String type;
+	@Column(name = "DELETEFLAG_")
+	protected int deleteFlag;
 
 	/**
 	 * 描述
@@ -103,10 +89,92 @@ public class QueryDefinition implements java.io.Serializable, JSONable {
 	protected String description;
 
 	/**
+	 * detailUrl
+	 */
+	@Column(name = "DETAILURL_", length = 250)
+	protected String detailUrl;
+
+	/**
 	 * 数据源名称
 	 */
 	@Column(name = "DSNAME_")
 	protected String dsName;
+
+	/**
+	 * 主键
+	 */
+	@Id
+	@Column(name = "ID_", length = 50, nullable = false)
+	protected String id;
+
+	@Column(name = "IDFIELD_", length = 50)
+	protected String idField;
+
+	/**
+	 * ListUrl
+	 */
+	@Column(name = "LISTURL_", length = 250)
+	protected String listUrl;
+
+	/**
+	 * 是否锁定
+	 */
+	@Column(name = "LOCKED_")
+	protected int locked;
+
+	/**
+	 * 别名
+	 */
+	@Column(name = "MAPPING_", length = 50)
+	protected String mapping;
+
+	/**
+	 * 名称
+	 */
+	@Column(name = "NAME_", length = 50)
+	protected String name;
+
+	@Transient
+	protected List<ColumnDefinition> parameters = new ArrayList<ColumnDefinition>();
+
+	/**
+	 * 参数类型
+	 */
+	@Column(name = "PARAMETERTYPE_", length = 200)
+	protected String parameterType;
+
+	@Transient
+	protected List<Object> paramList = new ArrayList<Object>();
+
+	@Transient
+	protected QueryDefinition parent = null;
+
+	/**
+	 * 父查询编号
+	 */
+	@Column(name = "PARENTID_", length = 50)
+	protected String parentId;
+
+	@Transient
+	protected List<Map<String, Object>> resultList = new ArrayList<Map<String, Object>>();
+
+	/**
+	 * 返回值类型
+	 */
+	@Column(name = "RESULTTYPE_", length = 200)
+	protected String resultType;
+
+	/**
+	 * 修订版本
+	 */
+	@Column(name = "REVISION_")
+	protected int revision;
+
+	/**
+	 * 服务标识
+	 */
+	@Column(name = "SERVICEKEY_", length = 50)
+	protected String serviceKey;
 
 	/**
 	 * 查询SQL语句
@@ -116,96 +184,28 @@ public class QueryDefinition implements java.io.Serializable, JSONable {
 	protected String sql;
 
 	/**
-	 * 查询SQL语句
-	 */
-	@Lob
-	@Column(name = "COUNTSQL_")
-	protected String countSql;
-
-	@Column(name = "IDFIELD_", length = 50)
-	protected String idField;
-
-	/**
 	 * MyBatis查询语句的select编号
 	 */
 	@Column(name = "STATEMENTID_", length = 100)
 	protected String statementId;
 
 	/**
-	 * MyBatis查询语句的select编号
+	 * 目标表名
 	 */
-	@Column(name = "COUNTSTATEMENTID_", length = 100)
-	protected String countStatementId;
+	@Column(name = "TARGETTABLENAME_", length = 50)
+	protected String targetTableName;
 
 	/**
-	 * 参数类型
+	 * 标题
 	 */
-	@Column(name = "PARAMETERTYPE_", length = 200)
-	protected String parameterType;
+	@Column(name = "TITLE_")
+	protected String title;
 
 	/**
-	 * 返回值类型
+	 * 类别
 	 */
-	@Column(name = "RESULTTYPE_", length = 200)
-	protected String resultType;
-
-	/**
-	 * 创建时间
-	 */
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "CREATETIME_")
-	protected Date createTime;
-
-	/**
-	 * 创建人
-	 */
-	@Column(name = "CREATEBY_")
-	protected String createBy;
-
-	/**
-	 * 是否锁定
-	 */
-	@Column(name = "LOCKED_")
-	protected int locked;
-
-	@Column(name = "DELETEFLAG_")
-	protected int deleteFlag;
-
-	/**
-	 * 修订版本
-	 */
-	@Column(name = "REVISION_")
-	protected int revision;
-
-	/**
-	 * ListUrl
-	 */
-	@Column(name = "LISTURL_", length = 250)
-	protected String listUrl;
-
-	/**
-	 * detailUrl
-	 */
-	@Column(name = "DETAILURL_", length = 250)
-	protected String detailUrl;
-
-	@Transient
-	protected QueryDefinition parent = null;
-
-	@Transient
-	protected QueryDefinition child = null;
-
-	@Transient
-	protected List<ColumnDefinition> columns = new ArrayList<ColumnDefinition>();
-
-	@Transient
-	protected List<ColumnDefinition> parameters = new ArrayList<ColumnDefinition>();
-
-	@Transient
-	protected List<Object> paramList = new ArrayList<Object>();
-
-	@Transient
-	protected List<Map<String, Object>> resultList = new ArrayList<Map<String, Object>>();
+	@Column(name = "TYPE_", length = 50)
+	protected String type;
 
 	public QueryDefinition() {
 
@@ -386,6 +386,10 @@ public class QueryDefinition implements java.io.Serializable, JSONable {
 		return result;
 	}
 
+	public QueryDefinition jsonToObject(JSONObject jsonObject) {
+		return QueryDefinitionJsonFactory.jsonToObject(jsonObject);
+	}
+
 	public void setChild(QueryDefinition child) {
 		this.child = child;
 	}
@@ -506,227 +510,17 @@ public class QueryDefinition implements java.io.Serializable, JSONable {
 		this.type = type;
 	}
 
-	public QueryDefinition jsonToObject(JSONObject jsonObject) {
-		QueryDefinition model = new QueryDefinition();
-		if (jsonObject.containsKey("parentId")) {
-			model.setParentId(jsonObject.getString("parentId"));
-		}
-		if (jsonObject.containsKey("targetTableName")) {
-			model.setTargetTableName(jsonObject.getString("targetTableName"));
-		}
-		if (jsonObject.containsKey("serviceKey")) {
-			model.setServiceKey(jsonObject.getString("serviceKey"));
-		}
-		if (jsonObject.containsKey("title")) {
-			model.setTitle(jsonObject.getString("title"));
-		}
-		if (jsonObject.containsKey("name")) {
-			model.setName(jsonObject.getString("name"));
-		}
-		if (jsonObject.containsKey("mapping")) {
-			model.setMapping(jsonObject.getString("mapping"));
-		}
-		if (jsonObject.containsKey("type")) {
-			model.setType(jsonObject.getString("type"));
-		}
-		if (jsonObject.containsKey("description")) {
-			model.setDescription(jsonObject.getString("description"));
-		}
-		if (jsonObject.containsKey("dsName")) {
-			model.setDsName(jsonObject.getString("dsName"));
-		}
-		if (jsonObject.containsKey("sql")) {
-			model.setSql(jsonObject.getString("sql"));
-		}
-		if (jsonObject.containsKey("countSql")) {
-			model.setCountSql(jsonObject.getString("countSql"));
-		}
-		if (jsonObject.containsKey("idField")) {
-			model.setIdField(jsonObject.getString("idField"));
-		}
-		if (jsonObject.containsKey("statementId")) {
-			model.setStatementId(jsonObject.getString("statementId"));
-		}
-		if (jsonObject.containsKey("countStatementId")) {
-			model.setCountStatementId(jsonObject.getString("countStatementId"));
-		}
-		if (jsonObject.containsKey("parameterType")) {
-			model.setParameterType(jsonObject.getString("parameterType"));
-		}
-		if (jsonObject.containsKey("resultType")) {
-			model.setResultType(jsonObject.getString("resultType"));
-		}
-		if (jsonObject.containsKey("createTime")) {
-			model.setCreateTime(jsonObject.getDate("createTime"));
-		}
-		if (jsonObject.containsKey("createBy")) {
-			model.setCreateBy(jsonObject.getString("createBy"));
-		}
-		if (jsonObject.containsKey("locked")) {
-			model.setLocked(jsonObject.getInteger("locked"));
-		}
-		if (jsonObject.containsKey("deleteFlag")) {
-			model.setDeleteFlag(jsonObject.getInteger("deleteFlag"));
-		}
-		if (jsonObject.containsKey("revision")) {
-			model.setRevision(jsonObject.getInteger("revision"));
-		}
-		if (jsonObject.containsKey("listUrl")) {
-			model.setListUrl(jsonObject.getString("listUrl"));
-		}
-		if (jsonObject.containsKey("detailUrl")) {
-			model.setDetailUrl(jsonObject.getString("detailUrl"));
-		}
-		return model;
+	public JSONObject toJsonObject() {
+		return QueryDefinitionJsonFactory.toJsonObject(this);
+	}
+
+	public ObjectNode toObjectNode() {
+		return QueryDefinitionJsonFactory.toObjectNode(this);
 	}
 
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this,
 				ToStringStyle.MULTI_LINE_STYLE);
-	}
-
-	public JSONObject toJsonObject() {
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("id", id);
-		if (parentId != null) {
-			jsonObject.put("parentId", parentId);
-		}
-		if (targetTableName != null) {
-			jsonObject.put("targetTableName", targetTableName);
-		}
-		if (serviceKey != null) {
-			jsonObject.put("serviceKey", serviceKey);
-		}
-		if (title != null) {
-			jsonObject.put("title", title);
-		}
-		if (name != null) {
-			jsonObject.put("name", name);
-		}
-		if (mapping != null) {
-			jsonObject.put("mapping", mapping);
-		}
-		if (type != null) {
-			jsonObject.put("type", type);
-		}
-		if (description != null) {
-			jsonObject.put("description", description);
-		}
-		if (dsName != null) {
-			jsonObject.put("dsName", dsName);
-		}
-		if (sql != null) {
-			jsonObject.put("sql", sql);
-		}
-		if (countSql != null) {
-			jsonObject.put("countSql", countSql);
-		}
-		if (idField != null) {
-			jsonObject.put("idField", idField);
-		}
-		if (statementId != null) {
-			jsonObject.put("statementId", statementId);
-		}
-		if (countStatementId != null) {
-			jsonObject.put("countStatementId", countStatementId);
-		}
-		if (parameterType != null) {
-			jsonObject.put("parameterType", parameterType);
-		}
-		if (resultType != null) {
-			jsonObject.put("resultType", resultType);
-		}
-		if (createTime != null) {
-			jsonObject.put("createTime", DateUtils.getDate(createTime));
-			jsonObject.put("createTime_date", DateUtils.getDate(createTime));
-			jsonObject.put("createTime_datetime",
-					DateUtils.getDateTime(createTime));
-		}
-		if (createBy != null) {
-			jsonObject.put("createBy", createBy);
-		}
-		jsonObject.put("locked", locked);
-		jsonObject.put("deleteFlag", deleteFlag);
-		jsonObject.put("revision", revision);
-		if (listUrl != null) {
-			jsonObject.put("listUrl", listUrl);
-		}
-		if (detailUrl != null) {
-			jsonObject.put("detailUrl", detailUrl);
-		}
-		return jsonObject;
-	}
-
-	public ObjectNode toObjectNode() {
-		ObjectNode jsonObject = new ObjectMapper().createObjectNode();
-		jsonObject.put("id", id);
-		if (parentId != null) {
-			jsonObject.put("parentId", parentId);
-		}
-		if (targetTableName != null) {
-			jsonObject.put("targetTableName", targetTableName);
-		}
-		if (serviceKey != null) {
-			jsonObject.put("serviceKey", serviceKey);
-		}
-		if (title != null) {
-			jsonObject.put("title", title);
-		}
-		if (name != null) {
-			jsonObject.put("name", name);
-		}
-		if (mapping != null) {
-			jsonObject.put("mapping", mapping);
-		}
-		if (type != null) {
-			jsonObject.put("type", type);
-		}
-		if (description != null) {
-			jsonObject.put("description", description);
-		}
-		if (dsName != null) {
-			jsonObject.put("dsName", dsName);
-		}
-		if (sql != null) {
-			jsonObject.put("sql", sql);
-		}
-		if (countSql != null) {
-			jsonObject.put("countSql", countSql);
-		}
-		if (idField != null) {
-			jsonObject.put("idField", idField);
-		}
-		if (statementId != null) {
-			jsonObject.put("statementId", statementId);
-		}
-		if (countStatementId != null) {
-			jsonObject.put("countStatementId", countStatementId);
-		}
-		if (parameterType != null) {
-			jsonObject.put("parameterType", parameterType);
-		}
-		if (resultType != null) {
-			jsonObject.put("resultType", resultType);
-		}
-		if (createTime != null) {
-			jsonObject.put("createTime", DateUtils.getDate(createTime));
-			jsonObject.put("createTime_date", DateUtils.getDate(createTime));
-			jsonObject.put("createTime_datetime",
-					DateUtils.getDateTime(createTime));
-		}
-		if (createBy != null) {
-			jsonObject.put("createBy", createBy);
-		}
-		jsonObject.put("locked", locked);
-		jsonObject.put("deleteFlag", deleteFlag);
-		jsonObject.put("revision", revision);
-		if (listUrl != null) {
-			jsonObject.put("listUrl", listUrl);
-		}
-		if (detailUrl != null) {
-			jsonObject.put("detailUrl", detailUrl);
-		}
-		return jsonObject;
 	}
 
 }
