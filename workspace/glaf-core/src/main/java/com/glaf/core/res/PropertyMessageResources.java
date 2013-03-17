@@ -21,9 +21,14 @@
 
 package com.glaf.core.res;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.glaf.core.config.SystemProperties;
+import com.glaf.core.util.PropertiesUtils;
+
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -153,13 +158,13 @@ public class PropertyMessageResources extends MessageResources {
 	 * The set of locale keys for which we have already loaded messages, keyed
 	 * by the value calculated in <code>localeKey()</code>.
 	 */
-	protected HashMap<String, String> locales = new HashMap<String, String>();
+	protected static HashMap<String, String> locales = new HashMap<String, String>();
 
 	/**
 	 * The cache of messages we have accumulated over time, keyed by the value
 	 * calculated in <code>messageKey()</code>.
 	 */
-	protected HashMap<String, String> messages = new HashMap<String, String>();
+	protected static HashMap<String, String> messages = new HashMap<String, String>();
 
 	/**
 	 * Compatibility mode that PropertyMessageResources is operating in.
@@ -302,7 +307,7 @@ public class PropertyMessageResources extends MessageResources {
 
 		// Return an appropriate error indication
 		if (returnNull) {
-			 log.debug("getMessage(" + locale + "," + key + "):null");
+			log.debug("getMessage(" + locale + "," + key + "):null");
 			return (null);
 		} else {
 			return ("???" + messageKey(locale, key) + "???");
@@ -324,9 +329,7 @@ public class PropertyMessageResources extends MessageResources {
 	 *            Locale key for the messages to be retrieved
 	 */
 	protected synchronized void loadLocale(String localeKey) {
-		if (log.isTraceEnabled()) {
-			log.trace("loadLocale(" + localeKey + ")");
-		}
+		log.debug("loadLocale(" + localeKey + ")");
 
 		// Have we already attempted to load messages for this locale?
 		if (locales.get(localeKey) != null) {
@@ -334,6 +337,35 @@ public class PropertyMessageResources extends MessageResources {
 		}
 
 		locales.put(localeKey, localeKey);
+
+		// load system default i18n .properties
+		String path = SystemProperties.getConfigRootPath() + "/conf/i18n";
+		try {
+			java.io.File dir = new java.io.File(path);
+			if (dir.exists() && dir.isDirectory()) {
+				File contents[] = dir.listFiles();
+				if (contents != null) {
+					for (int i = 0; i < contents.length; i++) {
+						if (contents[i].isFile()
+								&& contents[i].getName()
+										.endsWith(".properties")) {
+							if (StringUtils.contains(contents[i].getName(),
+									localeKey)) {
+								Properties props = PropertiesUtils
+										.loadFilePathResource(contents[i]);
+								log.debug("load i18n properties:"
+										+ contents[i].getAbsolutePath());
+								log.debug("props size:" + props.size());
+								this.loadLocale(localeKey, props);
+								log.debug("props load ok.");
+							}
+						}
+					}
+				}
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 
 		// Set up to load the property resource for this locale key, if we can
 		String name = config.replace('.', '/');
@@ -348,9 +380,8 @@ public class PropertyMessageResources extends MessageResources {
 		Properties props = new Properties();
 
 		// Load the specified property resource
-		if (log.isTraceEnabled()) {
-			log.trace("  Loading resource '" + name + "'");
-		}
+
+		log.debug("  Loading resource '" + name + "'");
 
 		ClassLoader classLoader = Thread.currentThread()
 				.getContextClassLoader();
@@ -389,15 +420,28 @@ public class PropertyMessageResources extends MessageResources {
 
 		synchronized (messages) {
 			Iterator<?> names = props.keySet().iterator();
-
 			while (names.hasNext()) {
 				String key = (String) names.next();
+				log.debug("  Saving message key '" + messageKey(localeKey, key));
+				messages.put(messageKey(localeKey, key), props.getProperty(key));
+			}
+		}
+	}
 
-				if (log.isTraceEnabled()) {
-					log.trace("  Saving message key '"
-							+ messageKey(localeKey, key));
-				}
+	protected synchronized void loadLocale(String localeKey, Properties props) {
+		log.debug("loadLocale(" + localeKey + ")");
 
+		// Copy the corresponding values into our cache
+		if (props.size() < 1) {
+			return;
+		}
+
+		synchronized (messages) {
+			Iterator<?> names = props.keySet().iterator();
+			while (names.hasNext()) {
+				String key = (String) names.next();
+				log.debug("->  Saving message key '"
+						+ messageKey(localeKey, key));
 				messages.put(messageKey(localeKey, key), props.getProperty(key));
 			}
 		}

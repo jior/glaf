@@ -19,6 +19,7 @@
 package com.glaf.core.util;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -142,6 +143,19 @@ public class PropertiesUtils {
 
 	public static Properties loadFilePathResource(String filename) {
 		Resource resource = new FileSystemResource(filename);
+		InputStream in = null;
+		try {
+			in = resource.getInputStream();
+			return loadProperties(in);
+		} catch (Exception ex) {
+			throw new RuntimeException(ex);
+		} finally {
+			IOUtils.closeStream(in);
+		}
+	}
+	
+	public static Properties loadFilePathResource(File file) {
+		Resource resource = new FileSystemResource(file);
 		InputStream in = null;
 		try {
 			in = resource.getInputStream();

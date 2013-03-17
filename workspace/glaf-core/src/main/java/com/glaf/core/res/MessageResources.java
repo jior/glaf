@@ -24,6 +24,9 @@ package com.glaf.core.res;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.glaf.core.config.BaseConfiguration;
+import com.glaf.core.config.Configuration;
+
 import java.io.Serializable;
 
 import java.text.MessageFormat;
@@ -61,6 +64,9 @@ public abstract class MessageResources implements Serializable {
 	 * Commons Logging instance.
 	 */
 	protected static Log log = LogFactory.getLog(MessageResources.class);
+	
+	
+	protected static Configuration conf = BaseConfiguration.create();
 
 	// --------------------------------------------------------- Static Methods
 
