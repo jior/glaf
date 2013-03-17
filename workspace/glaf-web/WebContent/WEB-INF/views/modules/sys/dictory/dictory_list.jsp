@@ -78,7 +78,7 @@ function sort(id, operate){
 
 <body>
 <div class="nav-title"><span class="Title">字典管理</span>&gt;&gt;字典列表</div>
-<html:form action="${contextPath}/sys/dictory.do?method=batchDelete" method="post" target="_self">
+<html:form id="DictoryForm" name="DictoryForm" action="${contextPath}/sys/dictory.do?method=batchDelete" method="post" target="_self">
 <input type="hidden" name="id" value="0">  
 <table width="100%" border="0" cellspacing="1" cellpadding="0" class="list-box">
   <tr class="list-title"> 
