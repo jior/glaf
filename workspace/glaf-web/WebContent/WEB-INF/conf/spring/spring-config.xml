@@ -12,13 +12,6 @@
 	<import resource="spring-ajax.xml" />
 	<import resource="spring-ehcache.xml" />
 	<import resource="spring-scheduler.xml" />
-	
-	<!-- 
-	<import resource="spring-sys.xml" />
-	<import resource="spring-others.xml" />
-	<import resource="spring-workspace.xml" />
-	<import resource="spring-todo.xml" />
-	-->
 
 </beans>
 
