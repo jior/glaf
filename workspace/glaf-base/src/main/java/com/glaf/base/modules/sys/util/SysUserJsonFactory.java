@@ -180,8 +180,9 @@ public class SysUserJsonFactory {
 		jsonObject.put("locked", user.getBlocked());
 		if (user.getDepartment() != null) {
 			jsonObject.put("deptId", user.getDepartment().getId());
+		} else {
+			jsonObject.put("deptId", user.getDeptId());
 		}
-
 		jsonObject.put("accountType", user.getAccountType());
 		jsonObject.put("userType", user.getUserType());
 		jsonObject.put("dumpFlag", user.getDumpFlag());
@@ -256,6 +257,8 @@ public class SysUserJsonFactory {
 		jsonObject.put("locked", user.getBlocked());
 		if (user.getDepartment() != null) {
 			jsonObject.put("deptId", user.getDepartment().getId());
+		} else {
+			jsonObject.put("deptId", user.getDeptId());
 		}
 
 		jsonObject.put("accountType", user.getAccountType());
