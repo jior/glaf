@@ -23,6 +23,7 @@
 				/=anon
 				/login.do*=authc
 				/logout.do*=anon
+				/rs/**=authc
 				/sys/*.do=authc,perms[SystemAdministrator]
 				/mx/system/**=authc,perms[SystemAdministrator]
 				/mx/jbpm/deploy/**=authc,perms[SystemAdministrator]
