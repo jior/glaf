@@ -37,15 +37,14 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 
 import com.glaf.core.config.SystemProperties;
+import com.glaf.core.util.Constants;
 import com.glaf.core.util.PropertiesUtils;
 
 public class DataSourceConfig {
 
-	private final static String JDBC_CONFIG = "/conf/jdbc.properties";
+	protected static Properties properties = new Properties();
 
-	private static Properties properties = new Properties();
-
-	private static String databaseType;
+	protected static String databaseType;
 
 	protected static Properties hibernateDialetTypeMappings = getHibernateDialectMappings();
 
@@ -136,17 +135,18 @@ public class DataSourceConfig {
 		Connection connection = null;
 		DataSource ds = null;
 		try {
-			if (StringUtils.isNotEmpty(props.getProperty("jdbc.datasource"))) {
+			if (StringUtils.isNotEmpty(props
+					.getProperty(Environment.DATASOURCE))) {
 				InitialContext ctx = new InitialContext();
 				ds = (DataSource) ctx.lookup(props
-						.getProperty("jdbc.datasource"));
+						.getProperty(Environment.DATASOURCE));
 				connection = ds.getConnection();
 			} else {
 				BasicDataSource bds = new BasicDataSource();
-				bds.setDriverClassName(props.getProperty("jdbc.driver"));
-				bds.setUrl(props.getProperty("jdbc.url"));
-				bds.setUsername(props.getProperty("jdbc.user"));
-				bds.setPassword(props.getProperty("jdbc.password"));
+				bds.setDriverClassName(props.getProperty(Environment.DRIVER));
+				bds.setUrl(props.getProperty(Environment.URL));
+				bds.setUsername(props.getProperty(Environment.USER));
+				bds.setPassword(props.getProperty(Environment.PASS));
 				connection = bds.getConnection();
 			}
 		} catch (Exception ex) {
@@ -250,23 +250,23 @@ public class DataSourceConfig {
 	}
 
 	public static String getJdbcConnectionURL() {
-		return getString("jdbc.url");
+		return getString(Environment.URL);
 	}
 
 	public static String getJdbcDriverClass() {
-		return getString("jdbc.driver");
+		return getString(Environment.DRIVER);
 	}
 
 	public static String getJdbcPassword() {
-		return getString("jdbc.password");
+		return getString(Environment.PASS);
 	}
 
 	public static String getJdbcUsername() {
-		return getString("jdbc.user");
+		return getString(Environment.USER);
 	}
 
 	public static String getJndiName() {
-		return getString("jdbc.datasource");
+		return getString(Environment.DATASOURCE);
 	}
 
 	public static long getLong(String key) {
@@ -353,7 +353,7 @@ public class DataSourceConfig {
 
 	public static boolean isBooleanDatabase() {
 		String databaseType = getDatabaseType();
-		if ("postgres".equalsIgnoreCase(databaseType)) {
+		if (Constants.POSTGRESQL.equalsIgnoreCase(databaseType)) {
 			return true;
 		}
 		return false;
@@ -436,10 +436,9 @@ public class DataSourceConfig {
 			InputStream inputStream = null;
 			try {
 				String filename = SystemProperties.getConfigRootPath()
-						+ JDBC_CONFIG;
+						+ Constants.DEFAULT_JDBC_CONFIG;
 				Resource resource = new FileSystemResource(filename);
-				System.out.println("load jdbc config:"
-						+ resource.getFile().getAbsolutePath());
+
 				inputStream = new FileInputStream(resource.getFile()
 						.getAbsolutePath());
 				properties.clear();

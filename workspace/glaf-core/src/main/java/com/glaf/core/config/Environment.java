@@ -45,17 +45,17 @@ import com.glaf.core.util.Constants;
 import com.glaf.core.util.PropertiesUtils;
 
 public final class Environment {
-	public static final String AUTOCOMMIT = "connection.autocommit";
+	public static final String AUTOCOMMIT = "jdbc.autocommit";
 
-	public static final String CONNECTION_DATABASE_TYPE = "connection.type";
+	public static final String CONNECTION_DATABASE_TYPE = "jdbc.type";
 
-	public static final String CONNECTION_NAME = "connection.name";
+	public static final String CONNECTION_NAME = "jdbc.name";
 
-	public static final String CONNECTION_PREFIX = "connection";
+	public static final String CONNECTION_PREFIX = "jdbc";
 
-	public static final String CONNECTION_PROVIDER = "connection.provider_class";
+	public static final String CONNECTION_PROVIDER = "jdbc.provider_class";
 
-	public static final String CONNECTION_TITLE = "connection.title";
+	public static final String CONNECTION_TITLE = "jdbc.title";
 
 	public static final String CURRENT_SYSTEM_NAME = "CURRENT_SYSTEM_NAME";
 
@@ -63,11 +63,9 @@ public final class Environment {
 
 	protected static Properties databaseTypeMappings = getDatabaseTypeMappings();
 
-	public static final String DATASOURCE = "connection.datasource";
+	public static final String DATASOURCE = "jdbc.datasource";
 
 	private static ConcurrentMap<String, Properties> dataSourceProperties = new ConcurrentHashMap<String, Properties>();
-
-	public static final String DEFAULT_JDBC_CONFIG = "/conf/jdbc.properties";
 
 	public static final String DEFAULT_SYSTEM_NAME = "default";
 
@@ -75,40 +73,38 @@ public final class Environment {
 
 	protected static Properties dialectTypeMappings = getDialectMappings();
 
-	public static final String DRIVER = "connection.driver_class";
+	public static final String DRIVER = "jdbc.driver";
 
 	protected static Properties hibernateDialectTypeMappings = getHibernateDialectMappings();
 
-	public static final String ISOLATION = "connection.isolation";
+	public static final String ISOLATION = "jdbc.isolation";
 
 	private static final ConcurrentMap<Integer, String> ISOLATION_LEVELS = new ConcurrentHashMap<Integer, String>();
 
 	protected final static Log logger = LogFactory.getLog(Environment.class);
 
-	public static final String PASS = "connection.password";
+	public static final String PASS = "jdbc.password";
 
-	public static final String POOL_ACQUIRE_INCREMENT = "connection.acquire_increment";
+	public static final String POOL_ACQUIRE_INCREMENT = "jdbc.acquire_increment";
 
-	public static final String POOL_IDLE_TEST_PERIOD = "connection.idle_test_period";
+	public static final String POOL_IDLE_TEST_PERIOD = "jdbc.idle_test_period";
 
-	public static final String POOL_INIT_SIZE = "connection.init_size";
+	public static final String POOL_INIT_SIZE = "jdbc.init_size";
 
-	public static final String POOL_MAX_SIZE = "connection.max_size";
+	public static final String POOL_MAX_SIZE = "jdbc.max_size";
 
-	public static final String POOL_MAX_STATEMENTS = "connection.max_statements";
+	public static final String POOL_MAX_STATEMENTS = "jdbc.max_statements";
 
-	public static final String POOL_MIN_SIZE = "connection.min_size";
+	public static final String POOL_MIN_SIZE = "jdbc.min_size";
 
-	public static final String POOL_SIZE = "connection.pool_size";
+	public static final String POOL_SIZE = "jdbc.pool_size";
 
-	public static final String POOL_TIMEOUT = "connection.timeout";
+	public static final String POOL_TIMEOUT = "jdbc.timeout";
 
 	/**
 	 * 连接池类型，支持Druid,C3P0,DBCP,TomcatJdbc,默认是Druid
 	 */
-	public static final String POOL_TYPE = "connection.pool_type";
-
-	public static final String POSTGRESQL = "postgresql";
+	public static final String POOL_TYPE = "jdbc.pool_type";
 
 	private static Properties properties = new Properties();
 
@@ -120,9 +116,9 @@ public final class Environment {
 
 	protected static ThreadLocal<Map<String, String>> threadLocalVaribles = new ThreadLocal<Map<String, String>>();
 
-	public static final String URL = "connection.url";
+	public static final String URL = "jdbc.url";
 
-	public static final String USER = "connection.user";
+	public static final String USER = "jdbc.user";
 
 	static {
 		ISOLATION_LEVELS.put(new Integer(Connection.TRANSACTION_NONE), "NONE");
@@ -336,7 +332,7 @@ public final class Environment {
 	public static void reload() {
 		try {
 			String filename = SystemProperties.getConfigRootPath()
-					+ DEFAULT_JDBC_CONFIG;
+					+ Constants.DEFAULT_JDBC_CONFIG;
 			Properties p = PropertiesUtils.loadFilePathResource(filename);
 			if (p != null) {
 				properties.clear();
@@ -356,12 +352,12 @@ public final class Environment {
 		Map<String, Properties> dataSourceMap = new HashMap<String, Properties>();
 		synchronized (Environment.class) {
 			try {
-				String dir = SystemProperties.getConfigRootPath()
+				String path = SystemProperties.getConfigRootPath()
 						+ Constants.JDBC_CONFIG;
-				System.out.println("dir:" + dir);
-				File src = new File(dir);
-				if (src.isDirectory()) {
-					File[] entries = src.listFiles();
+				System.out.println("path:" + path);
+				File dir = new File(path);
+				if (dir.exists() && dir.isDirectory()) {
+					File[] entries = dir.listFiles();
 					for (int i = 0; i < entries.length; i++) {
 						File file = entries[i];
 						if (file.getName().endsWith(".properties")) {
@@ -399,15 +395,17 @@ public final class Environment {
 			}
 
 			String filename = SystemProperties.getConfigRootPath()
-					+ DEFAULT_JDBC_CONFIG;
+					+ Constants.DEFAULT_JDBC_CONFIG;
 			Properties p = PropertiesUtils.loadFilePathResource(filename);
 			String dbType = p.getProperty(CONNECTION_DATABASE_TYPE);
 			if (StringUtils.isEmpty(dbType)) {
 				dbType = getDatabaseType(p.getProperty(URL));
-				p.setProperty(CONNECTION_DATABASE_TYPE, dbType);
+				if (dbType != null) {
+					p.setProperty(CONNECTION_DATABASE_TYPE, dbType);
+				}
 			}
 			dataSourceMap.put(DEFAULT_SYSTEM_NAME, p);
-			System.out.println("#datasources:" + dataSourceMap.keySet());
+			logger.info("#datasources:" + dataSourceMap.keySet());
 			dataSourceProperties.clear();
 			dataSourceProperties.putAll(dataSourceMap);
 			REQUIRE_RELOAD_JDBC_RESOURCE = true;

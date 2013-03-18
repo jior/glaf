@@ -9,4 +9,8 @@
 		<setting name="lazyLoadingEnabled" value="false" />
 	</settings>
 
+	<plugins>
+		<plugin interceptor="com.glaf.core.entity.mybatis.MyBatisOffsetLimitInterceptor"/>
+    </plugins>
+
 </configuration>
