@@ -1,5 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
-
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="html"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.glaf.base.modules.*"%>
@@ -93,7 +92,7 @@ function sort(id, operate){
 
 <body style="padding-top:10px;padding-left:2px;padding-right:20px;">
 <div class="nav-title"><span class="Title">模块管理</span>&gt;&gt;模块列表</div>
-<html:form action="${contextPath}/sys/application.do?method=batchDelete" method="post" target="_self"> 
+<html:form name="GenericForm" action="${contextPath}/sys/application.do?method=batchDelete" method="post" target="_self"> 
 <input name="page_no" type="hidden" value="<%=pager.getCurrentPageNo()%>">
 <input name="parent" type="hidden" value="<%=parent%>">
 <input type="hidden" name="id" value="0">
