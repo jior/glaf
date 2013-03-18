@@ -27,13 +27,14 @@
 				/mx/system/**=authc,perms[SystemAdministrator]
 				/mx/jbpm/deploy/**=authc,perms[SystemAdministrator]
 				/mx/activiti/deploy/**=authc,perms[SystemAdministrator]
-				/** = authc
+				/**=authc
 			</value>
 		</property>
 	</bean>
 
 	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
 		<property name="realm" ref="myShiroRealm" />
+		<property name="cacheManager" ref="shiroCacheManager" />  
 	</bean>
 
 	<bean id="myShiroRealm" class="com.glaf.shiro.SystemRealm">
