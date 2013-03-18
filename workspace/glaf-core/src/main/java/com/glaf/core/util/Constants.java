@@ -19,19 +19,19 @@
 package com.glaf.core.util;
 
 public final class Constants {
-	
-	public static final String SYSTEM_NAME="GLAF";
+
+	public static final String SYSTEM_NAME = "GLAF";
 
 	public static final String SYSTEM_CONFIG = "/glaf.properties";
 
 	public static final String LOGIN_IP = "LOGIN_IP";
-	
-	public static final String LOGIN_ACTORID="LOGIN_ACTORID";
-	
-	public static final String SYSTEM_PERMISSION_IDS="SYSTEM_PERMISSION_IDS";
-	
+
+	public static final String LOGIN_ACTORID = "LOGIN_ACTORID";
+
+	public static final String SYSTEM_PERMISSION_IDS = "SYSTEM_PERMISSION_IDS";
+
 	public static final String TS = "TS";
-	
+
 	public final static String NUMBER_OF_INSTANCES = "nrOfInstances";
 
 	public final static String NUMBER_OF_ACTIVE_INSTANCES = "nrOfActiveInstances";
@@ -65,9 +65,11 @@ public final class Constants {
 	public final static int TM_PROCESS_STARTER_LEADER_TYPE = 22;
 
 	public final static int TM_PROCESS_STARTER_LEADERS_TYPE = 25;
-	
+
 	public static final String MAIL_CONFIG = "/conf/mail.properties";
-	
+
+	public static final String JDBC_CONFIG = "/conf/jdbc";
+
 	public static final String SPRING_APPLICATION_CONTEXT = "/conf/spring/applicationContext.xml";
 
 	public static final String ID_EXPRESSION = "#{id}";
