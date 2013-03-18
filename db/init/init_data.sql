@@ -24,7 +24,7 @@ insert into sys_role (id, name, roleDesc, sort, code) values (7, '采购联络员', '
 insert into sys_role (id, name, roleDesc, sort, code) values (10, '采购担当', '', 6, 'R010');
 insert into sys_role (id, name, roleDesc, sort, code) values (11, '申请担当', '使用部门申请起票经办人', 5, 'R011');
 insert into sys_role (id, name, roleDesc, sort, code) values (12, '收单担当', '', 4, 'R012');
-insert into sys_role (id, name, roleDesc, sort, code) values (15, '系统管理员', '', 1, 'R015');
+insert into sys_role (id, name, roleDesc, sort, code) values (15, '系统管理员', '', 1, 'SystemAdministrator');
 insert into sys_role (id, name, roleDesc, sort, code) values (18, '主任', '', 18, 'R017');
 
 
