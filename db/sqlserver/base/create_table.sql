@@ -9,7 +9,7 @@ CREATE TABLE sys_access(
 
 
 CREATE TABLE sys_application(
-        id bigint identity not null,
+        id bigint not null,
         name nvarchar(255),
         appdesc nvarchar(255),
         url nvarchar(255),
@@ -21,7 +21,7 @@ CREATE TABLE sys_application(
 
 
 CREATE TABLE sys_department(
-        id bigint identity not null,
+        id bigint not null,
         name nvarchar(255),
         deptdesc nvarchar(255),
         createtime datetime,
@@ -36,7 +36,7 @@ CREATE TABLE sys_department(
 );
 
 CREATE TABLE sys_dept_role(
-        id bigint identity not null,
+        id bigint not null,
         grade int,
         code nvarchar(255),
         sort int,
@@ -46,7 +46,7 @@ CREATE TABLE sys_dept_role(
 );
 
 CREATE TABLE sys_function(
-        id bigint identity not null,
+        id bigint not null,
         name nvarchar(255),
         funcdesc nvarchar(255),
         funcmethod nvarchar(255),
@@ -56,7 +56,7 @@ CREATE TABLE sys_function(
 );
 
 CREATE TABLE sys_log(
-        id bigint identity not null,
+        id bigint not null,
         account nvarchar(255),
         ip nvarchar(255),
         createtime datetime,
@@ -72,7 +72,7 @@ CREATE TABLE sys_permission (
  );
 
 CREATE TABLE sys_role(
-        id bigint identity not null,
+        id bigint not null,
         name nvarchar(255),
         roledesc nvarchar(255),
         code nvarchar(255),
@@ -82,7 +82,7 @@ CREATE TABLE sys_role(
 
 
 CREATE TABLE sys_tree (
-        id bigint identity not null,
+        id bigint not null,
         parent bigint,
         name nvarchar(255),
         nodedesc nvarchar(255),
@@ -96,7 +96,7 @@ CREATE TABLE sys_tree (
 );
 
 CREATE TABLE sys_user (
-        id bigint identity not null,
+        id bigint not null,
         account nvarchar(255),
         password nvarchar(255),
         code nvarchar(255),
@@ -122,7 +122,7 @@ CREATE TABLE sys_user (
 );
 
 CREATE TABLE sys_user_role(
-        id bigint identity not null ,
+        id bigint not null,
         userid bigint default 0,
         roleid bigint default 0,
         authorized int default 0,
@@ -134,7 +134,7 @@ CREATE TABLE sys_user_role(
 );
 
 CREATE TABLE sys_dictory (
-        id bigint identity not null,
+        id bigint not null,
         typeId bigint,
         name nvarchar(50),
         dictDesc nvarchar(200),
@@ -152,7 +152,7 @@ CREATE TABLE sys_dictory (
 
 
 CREATE TABLE sys_workcalendar (
-        id bigint identity not null,
+        id bigint not null,
         freeday int,
         freemonth int,
         freeyear int,
@@ -193,7 +193,7 @@ CREATE TABLE sys_todo(
     );
 
 CREATE TABLE sys_todo_instance(
-        id bigint identity not null,
+        id bigint not null,
         actorid nvarchar(255),
         actorname nvarchar(255),
         title nvarchar(255),
@@ -247,7 +247,7 @@ CREATE TABLE sys_todo_instance(
     );
 
 CREATE TABLE message(
-        id bigint identity not null,
+        id bigint not null,
         type int,
         sysType int,
         sender bigint,
@@ -266,7 +266,7 @@ CREATE TABLE message(
   );
 
 CREATE TABLE mymenu(
-        id bigint identity not null,
+        id bigint not null,
         userId bigint,
         title nvarchar(100),
         url nvarchar(200),
@@ -279,7 +279,7 @@ CREATE TABLE mymenu(
 );
 
 CREATE TABLE subjectcode(
-        id bigint identity not null ,
+        id bigint not null ,
         parent bigint,
         subjectCode nvarchar(20),
         subjectName nvarchar(100),
@@ -303,7 +303,7 @@ CREATE TABLE subjectcode(
 
 
 CREATE TABLE  Attachment (
-	id bigint  identity not null ,
+	id bigint  not null,
 	referId bigint  ,
 	referType int  ,
 	name nvarchar (100)   ,
@@ -319,7 +319,7 @@ CREATE TABLE  Attachment (
 
 
   CREATE TABLE  Audit (
-	id bigint identity not null,
+	id bigint not null,
 	referId bigint ,
 	referType int ,
 	deptId bigint ,

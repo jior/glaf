@@ -1,11 +1,4 @@
 
---如果首次建表，要创建sequence
-
-
---重新创建hibernate的SEQ
---drop sequence hibernate_sequence;
-CREATE sequence hibernate_sequence START WITH 10000 increment BY 1 no maxvalue no minvalue cache 20 no cycle;
-
 
 CREATE TABLE sys_access(
         roleid int8 NOT NULL,
@@ -128,7 +121,7 @@ CREATE TABLE sys_user (
 );
 
 CREATE TABLE sys_user_role(
-        id int8 default nextval('hibernate_sequence') not null,
+        id int8 not null,
         userid int8 default 0,
         roleid int8 default 0,
         authorized int4 default 0,

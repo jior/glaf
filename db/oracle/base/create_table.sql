@@ -1,10 +1,5 @@
 
---如果首次建表，要创建sequence
-
-
---重新创建hibernate的SEQ
---drop sequence hibernate_sequence;
-CREATE sequence hibernate_sequence START WITH 10000 increment BY 1;
+ 
 
 CREATE TABLE sys_access(
         roleid NUMBER(19) NOT NULL,

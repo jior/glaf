@@ -1,10 +1,4 @@
 
---如果首次建表，要创建sequence
-
-
---重新创建hibernate的SEQ
---drop sequence hibernate_sequence;
---CREATE sequence hibernate_sequence START WITH 10000 increment BY 1;
 
 CREATE TABLE sys_access(
         roleid bigint NOT NULL,
@@ -14,7 +8,7 @@ CREATE TABLE sys_access(
 
 
 CREATE TABLE sys_application(
-        id bigint NOT NULL auto_increment 10000,
+        id bigint NOT NULL,
         name varchar(255),
         appdesc varchar(255),
         url varchar(255),
@@ -26,7 +20,7 @@ CREATE TABLE sys_application(
 
 
 CREATE TABLE sys_department(
-        id bigint NOT NULL auto_increment,
+        id bigint NOT NULL,
         name varchar(255),
         deptdesc varchar(255),
         createtime timestamp,
@@ -41,7 +35,7 @@ CREATE TABLE sys_department(
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_bin;
 
 CREATE TABLE sys_dept_role(
-        id bigint NOT NULL auto_increment,
+        id bigint NOT NULL,
         grade int,
         code varchar(255),
         sort int,
@@ -51,7 +45,7 @@ CREATE TABLE sys_dept_role(
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_bin;
 
 CREATE TABLE sys_function(
-        id bigint NOT NULL auto_increment,
+        id bigint NOT NULL,
         name varchar(255),
         funcdesc varchar(255),
         funcmethod varchar(255),
@@ -61,7 +55,7 @@ CREATE TABLE sys_function(
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_bin;
 
 CREATE TABLE sys_log(
-        id bigint NOT NULL auto_increment,
+        id bigint NOT NULL,
         account varchar(255),
         ip varchar(255),
         createtime timestamp,
@@ -77,7 +71,7 @@ CREATE TABLE sys_permission (
  ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_bin;
 
 CREATE TABLE sys_role(
-        id bigint NOT NULL auto_increment,
+        id bigint NOT NULL,
         name varchar(255),
         roledesc varchar(255),
         code varchar(255),
@@ -87,7 +81,7 @@ CREATE TABLE sys_role(
 
 
 CREATE TABLE sys_tree (
-        id bigint NOT NULL auto_increment,
+        id bigint NOT NULL,
         parent bigint,
         name varchar(255),
         nodedesc varchar(255),
@@ -101,7 +95,7 @@ CREATE TABLE sys_tree (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_bin;
 
 CREATE TABLE sys_user (
-        id bigint NOT NULL auto_increment,
+        id bigint NOT NULL,
         account varchar(255),
         password varchar(255),
         code varchar(255),
@@ -127,7 +121,7 @@ CREATE TABLE sys_user (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_bin;
 
 CREATE TABLE sys_user_role(
-        id bigint not null auto_increment,
+        id bigint not null,
         userid bigint default 0,
         roleid bigint default 0,
         authorized int default 0,
@@ -139,7 +133,7 @@ CREATE TABLE sys_user_role(
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_bin;
 
 CREATE TABLE sys_dictory (
-        id bigint not null auto_increment,
+        id bigint not null,
         typeId bigint,
         name varchar(50),
         dictDesc varchar(200),
@@ -157,7 +151,7 @@ CREATE TABLE sys_dictory (
 
 
 CREATE TABLE sys_workcalendar (
-        id bigint NOT NULL auto_increment,
+        id bigint NOT NULL,
         freeday int,
         freemonth int,
         freeyear int,
@@ -199,7 +193,7 @@ CREATE TABLE sys_todo(
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_bin;
 
 CREATE TABLE sys_todo_instance(
-        id bigint NOT NULL auto_increment,
+        id bigint NOT NULL,
         actorid varchar(255),
         actorname varchar(255),
         title varchar(255),
@@ -253,7 +247,7 @@ CREATE TABLE sys_todo_instance(
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_bin;
 
 CREATE TABLE message(
-        id bigint NOT NULL auto_increment,
+        id bigint NOT NULL,
         type int,
         sysType int,
         sender bigint,
@@ -272,7 +266,7 @@ CREATE TABLE message(
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_bin;
 
 CREATE TABLE mymenu(
-        id bigint not null auto_increment,
+        id bigint not null,
         userId bigint,
         title varchar(100),
         url varchar(200),
@@ -285,7 +279,7 @@ CREATE TABLE mymenu(
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_bin;
 
 CREATE TABLE subjectcode(
-        id bigint not null auto_increment,
+        id bigint not null,
         parent bigint,
         subjectCode varchar(20),
         subjectName varchar(100),
@@ -309,7 +303,7 @@ CREATE TABLE subjectcode(
 
 
 CREATE TABLE  Attachment (
-	id bigint  not null auto_increment,
+	id bigint  not null,
 	referId bigint  ,
 	referType int  ,
 	name varchar (100)   ,
@@ -325,7 +319,7 @@ CREATE TABLE  Attachment (
 
 
   CREATE TABLE  Audit (
-	id bigint not null auto_increment,
+	id bigint not null,
 	referId bigint ,
 	referType int ,
 	deptId bigint ,
