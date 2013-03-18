@@ -45,6 +45,8 @@ import com.glaf.core.util.Constants;
 import com.glaf.core.util.PropertiesUtils;
 
 public final class Environment {
+	protected final static Log logger = LogFactory.getLog(Environment.class);
+
 	public static final String AUTOCOMMIT = "jdbc.autocommit";
 
 	public static final String CONNECTION_DATABASE_TYPE = "jdbc.type";
@@ -73,17 +75,19 @@ public final class Environment {
 
 	protected static Properties dialectTypeMappings = getDialectMappings();
 
+	public static final String URL = "jdbc.url";
+
+	public static final String USER = "jdbc.user";
+
 	public static final String DRIVER = "jdbc.driver";
+
+	public static final String PASS = "jdbc.password";
 
 	protected static Properties hibernateDialectTypeMappings = getHibernateDialectMappings();
 
 	public static final String ISOLATION = "jdbc.isolation";
 
 	private static final ConcurrentMap<Integer, String> ISOLATION_LEVELS = new ConcurrentHashMap<Integer, String>();
-
-	protected final static Log logger = LogFactory.getLog(Environment.class);
-
-	public static final String PASS = "jdbc.password";
 
 	public static final String POOL_ACQUIRE_INCREMENT = "jdbc.acquire_increment";
 
@@ -115,10 +119,6 @@ public final class Environment {
 	protected static ThreadLocal<LoginContext> threadLocalContexts = new ThreadLocal<LoginContext>();
 
 	protected static ThreadLocal<Map<String, String>> threadLocalVaribles = new ThreadLocal<Map<String, String>>();
-
-	public static final String URL = "jdbc.url";
-
-	public static final String USER = "jdbc.user";
 
 	static {
 		ISOLATION_LEVELS.put(new Integer(Connection.TRANSACTION_NONE), "NONE");
@@ -354,14 +354,14 @@ public final class Environment {
 			try {
 				String path = SystemProperties.getConfigRootPath()
 						+ Constants.JDBC_CONFIG;
-				System.out.println("path:" + path);
+				logger.info("path:" + path);
 				File dir = new File(path);
 				if (dir.exists() && dir.isDirectory()) {
 					File[] entries = dir.listFiles();
 					for (int i = 0; i < entries.length; i++) {
 						File file = entries[i];
 						if (file.getName().endsWith(".properties")) {
-							System.out.println("load jdbc properties:"
+							logger.info("load jdbc properties:"
 									+ file.getAbsolutePath());
 							try {
 								Properties props = PropertiesUtils

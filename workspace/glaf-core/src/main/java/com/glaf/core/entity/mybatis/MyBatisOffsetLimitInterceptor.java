@@ -36,6 +36,7 @@ import org.apache.ibatis.plugin.Signature;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
 
+import com.glaf.core.config.DataSourceConfig;
 import com.glaf.core.config.Environment;
 import com.glaf.core.dialect.Dialect;
 import com.glaf.core.util.SQLFormatter;
@@ -128,7 +129,9 @@ public class MyBatisOffsetLimitInterceptor implements Interceptor {
 		int offset = rowBounds.getOffset();
 		int limit = rowBounds.getLimit();
 
-		dialect = Environment.getCurrentDialect();
+		if (Environment.getCurrentDialect() != null) {
+			dialect = Environment.getCurrentDialect();
+		}
 
 		if (dialect != null
 				&& dialect.supportsLimit()
@@ -161,7 +164,23 @@ public class MyBatisOffsetLimitInterceptor implements Interceptor {
 	}
 
 	public void setProperties(Properties properties) {
-
+		String dialectClass = properties.getProperty("dialectClass");
+		if (dialectClass == null) {
+			if (DataSourceConfig.getDatabaseDialect() != null) {
+				dialectClass = DataSourceConfig.getDatabaseDialect();
+			}
+		}
+		if (dialectClass != null) {
+			try {
+				dialect = (Dialect) Class.forName(dialectClass).newInstance();
+			} catch (Exception ex) {
+				throw new RuntimeException(
+						"cannot create dialect instance by dialect:"
+								+ dialectClass, ex);
+			}
+			logger.info(MyBatisOffsetLimitInterceptor.class.getSimpleName()
+					+ ".dialect=" + dialectClass);
+		}
 	}
 
 }

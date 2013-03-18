@@ -42,13 +42,15 @@ import com.glaf.core.util.PropertiesUtils;
 
 public class DataSourceConfig {
 
-	protected static Properties properties = new Properties();
-
 	protected static String databaseType;
+
+	protected static Properties databaseTypeMappings = getDefaultDatabaseTypeMappings();
+
+	protected static Properties dialetTypeMappings = getDialectMappings();
 
 	protected static Properties hibernateDialetTypeMappings = getHibernateDialectMappings();
 
-	protected static Properties databaseTypeMappings = getDefaultDatabaseTypeMappings();
+	protected static Properties properties = new Properties();
 
 	static {
 		try {
@@ -155,6 +157,13 @@ public class DataSourceConfig {
 		return connection;
 	}
 
+	public static String getDatabaseDialect() {
+		if (getDatabaseType() != null) {
+			return dialetTypeMappings.getProperty(getDatabaseType());
+		}
+		return null;
+	}
+
 	public static String getDatabaseType() {
 		if (databaseType == null) {
 			initDatabaseType();
@@ -209,6 +218,21 @@ public class DataSourceConfig {
 		databaseTypeMappings.setProperty("DB2/PTX", "db2");
 		databaseTypeMappings.setProperty("DB2/2", "db2");
 		return databaseTypeMappings;
+	}
+
+	protected static Properties getDialectMappings() {
+		Properties dialectMappings = new Properties();
+		dialectMappings.setProperty("h2", "com.glaf.core.dialect.H2Dialect");
+		dialectMappings.setProperty("mysql",
+				"com.glaf.core.dialect.MySQLDialect");
+		dialectMappings.setProperty("oracle",
+				"com.glaf.core.dialect.OracleDialect");
+		dialectMappings.setProperty("postgresql",
+				"com.glaf.core.dialect.PostgreSQLDialect");
+		dialectMappings.setProperty("sqlserver",
+				"com.glaf.core.dialect.SQLServerDialect");
+		dialectMappings.setProperty("db2", "com.glaf.core.dialect.DB2Dialect");
+		return dialectMappings;
 	}
 
 	public static double getDouble(String key) {
