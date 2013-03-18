@@ -64,6 +64,14 @@ int parent = ParamUtil.getIntParameter(request, "parent", 0);
         <td class="input-box2" valign="top">扩展字段2</td>
         <td><input type="text" name="ext2" class="input" datatype="string" nullable="yes" maxsize="200" chname="扩展字段2" value="<%=bean.getExt2() == null ? "" : bean.getExt2()%>"></td>
       </tr>
+	  <tr>
+      	<td class="input-box2" valign="top">扩展字段3</td>
+      	<td><input type="text" name="ext3" class="input" datatype="string" nullable="yes" maxsize="200" chname="扩展字段3" value="<%=bean.getExt3() == null ? "" : bean.getExt3()%>"></td>
+      </tr>
+      <tr>
+        <td class="input-box2" valign="top">扩展字段4</td>
+        <td><input type="text" name="ext4" class="input" datatype="string" nullable="yes" maxsize="200" chname="扩展字段4" value="<%=bean.getExt4() == null ? "" : bean.getExt4()%>"></td>
+      </tr>
       <%} %>
         
       
