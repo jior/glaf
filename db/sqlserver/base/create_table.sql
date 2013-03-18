@@ -139,6 +139,7 @@ CREATE TABLE sys_dictory (
         name nvarchar(50),
         dictDesc nvarchar(200),
         code nvarchar(50),
+	value_ nvarchar(2000),
         sort int,
         blocked int,
         ext1 nvarchar(200),

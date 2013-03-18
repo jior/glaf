@@ -44,7 +44,7 @@ function checkOperation(form){
 function add(){
   var url="dictory.do?method=prepareAdd&parent="+<%=parent%>;
   var width=480;
-  var height=350;
+  var height=380;
   var scroll="no";
   openWindow(url, width, height, scroll);
 }
@@ -58,7 +58,7 @@ function modify(form){
   }
   var url="dictory.do?method=prepareModify&id="+id+"&parent="+<%=parent%>;
   var width=480;
-  var height=350;
+  var height=380;
   var scroll="no";
   openWindow(url, width, height, scroll);
 }
@@ -85,11 +85,12 @@ function sort(id, operate){
     <td width="5%" align="center">
         <input type="checkbox" name="chkall" value="checkbox" onClick="checkAll(this.form, this)";checkOperation(this.form)>
     </td>
-    <td width="5%" align="center"> <div align="center" class="fontname_12">序号</div></td>
-    <td width="30%" align="center"> <div align="center" class="fontname_12">名称</div></td>
-    <td width="20%" align="center"> <div align="center" class="fontname_12">代码</div></td>
-    <td width="20%" align="center"><div align="center" class="fontname_12">是否有效</div></td>
-    <td width="20%" align="center"><div align="center" class="fontname_12">排序</div></td>
+    <td width="5%"  align="center"><div align="center" class="fontname_12">序号</div></td>
+    <td width="20%" align="center"><div align="center" class="fontname_12">名称</div></td>
+    <td width="20%" align="center"><div align="center" class="fontname_12">代码</div></td>
+	<td width="20%" align="center"><div align="center" class="fontname_12">属性值</div></td>
+    <td width="15%" align="center"><div align="center" class="fontname_12">是否有效</div></td>
+    <td width="15%" align="center"><div align="center" class="fontname_12">排序</div></td>
   </tr>
   <%
 int i=0;
@@ -99,12 +100,17 @@ if(list!=null){
     Dictory bean=(Dictory)iter.next();	
 %>
   <tr <%=i%2==0?"":"class='list-back'"%>> 
-    <td width="5%" class="td-cb"> <input type="checkbox" name="id" value="<%=bean.getId()%>" onClick="checkOperation(this.form)">    </td>
+    <td width="5%" class="td-cb">
+	<input type="checkbox" name="id" value="<%=bean.getId()%>" onClick="checkOperation(this.form)">
+	</td>
     <td class="td-no"><%=(pager.getCurrentPageNo()-1)*10 + i+1%>&nbsp;</td>
     <td class="td-text"><%=bean.getName()%>&nbsp;</td>
     <td class="td-no"><%=bean.getCode()%>&nbsp;</td>
+	<td class="td-no"><%=bean.getValue() != null ? bean.getValue():""%>&nbsp;</td>
     <td class="td-no"><%=bean.getBlocked()==0?"是":"否"%></td>
-    <td class="td-no"><a href="javascript:sort(<%=bean.getId()%>, 0);" title="上移"><img src="<%=context%>/images/up.gif" border="0" height="13" width="13"></a> <a href="javascript:sort(<%=bean.getId()%>, 1);" title="下移"><img src="<%=context%>/images/down.gif" border="0" height="13" width="13"></a></td>
+    <td class="td-no">
+	<a href="javascript:sort(<%=bean.getId()%>, 0);" title="上移"><img src="<%=context%>/images/up.gif" border="0" height="13" width="13"></a> <a href="javascript:sort(<%=bean.getId()%>, 1);" title="下移"><img src="<%=context%>/images/down.gif" border="0" height="13" width="13"></a>
+	</td>
   </tr>
   <%
     i++;
@@ -118,6 +124,7 @@ for(; i<pageSize; i++){
     <td>&nbsp; </td>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
+	<td>&nbsp;</td>
 	<td>&nbsp;</td>
   </tr>
 <%

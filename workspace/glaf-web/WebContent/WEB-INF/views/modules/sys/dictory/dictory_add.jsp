@@ -40,7 +40,11 @@ int parent=ParamUtil.getIntParameter(request, "parent", 0);
       </tr>
       <tr>
         <td class="input-box2" valign="top">代　　码</td>
-        <td><input type="text" name="code" class="input" datatype="string" nullable="yes" maxsize="10" chname="代码"></td>
+        <td><input type="text" name="code" class="input" datatype="string" nullable="yes" maxsize="20" chname="代码"></td>
+      </tr>
+	  <tr>
+        <td class="input-box2" valign="top">属性值</td>
+        <td><input type="text" name="value" class="input" datatype="string" nullable="yes" maxsize="200" chname="属性值"></td>
       </tr>
       <%
       if(17 == parent){

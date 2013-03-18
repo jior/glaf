@@ -43,6 +43,9 @@ public class DictoryJsonFactory {
 		if (jsonObject.containsKey("code")) {
 			model.setCode(jsonObject.getString("code"));
 		}
+		if (jsonObject.containsKey("value")) {
+			model.setValue(jsonObject.getString("value"));
+		}
 		if (jsonObject.containsKey("sort")) {
 			model.setSort(jsonObject.getInteger("sort"));
 		}
@@ -85,6 +88,9 @@ public class DictoryJsonFactory {
 		}
 		if (model.getCode() != null) {
 			jsonObject.put("code", model.getCode());
+		}
+		if (model.getValue() != null) {
+			jsonObject.put("value", model.getValue());
 		}
 		jsonObject.put("sort", model.getSort());
 		jsonObject.put("blocked", model.getBlocked());
@@ -129,6 +135,9 @@ public class DictoryJsonFactory {
 		}
 		if (model.getCode() != null) {
 			jsonObject.put("code", model.getCode());
+		}
+		if (model.getValue() != null) {
+			jsonObject.put("value", model.getValue());
 		}
 		jsonObject.put("sort", model.getSort());
 		jsonObject.put("blocked", model.getBlocked());

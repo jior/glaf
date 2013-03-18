@@ -216,6 +216,7 @@ public class DictoryController {
 		Dictory bean = dictoryService.find(id);
 		bean.setName(form.getName());
 		bean.setCode(form.getCode());
+		bean.setValue(form.getValue());
 		bean.setBlocked(form.getBlocked());
 		bean.setExt1(form.getExt1());
 		bean.setExt2(form.getExt2());

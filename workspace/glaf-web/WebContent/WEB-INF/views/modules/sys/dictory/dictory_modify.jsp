@@ -5,10 +5,10 @@
 <%@ page import="com.glaf.base.modules.sys.model.*"%>
 <%@ page import="com.glaf.base.utils.*"%>
 <%
-String context = request.getContextPath();
-Dictory bean=(Dictory)request.getAttribute("bean");
-List list = (List)request.getAttribute("parent");
-int parent = ParamUtil.getIntParameter(request, "parent", 0);
+	String context = request.getContextPath();
+	Dictory bean=(Dictory)request.getAttribute("bean");
+	List list = (List)request.getAttribute("parent");
+	int parent = ParamUtil.getIntParameter(request, "parent", 0);
 %>
 <html>
 <head>
@@ -42,7 +42,12 @@ int parent = ParamUtil.getIntParameter(request, "parent", 0);
       </tr>
       <tr>
         <td class="input-box2" valign="top">代　　码</td>
-        <td><input type="text" name="code" class="input" datatype="string" nullable="yes" maxsize="10" value="<%=bean.getCode()%>" chname="代码"></td>
+        <td><input type="text" name="code" class="input" datatype="string" nullable="yes" maxsize="20" value="<%=bean.getCode()%>" chname="代码"></td>
+      </tr>
+	  <tr>
+        <td class="input-box2" valign="top">属性值</td>
+        <td><input type="text" name="value" class="input" datatype="string" nullable="yes" maxsize="200" 
+		value="<%=bean.getValue() != null ? bean.getValue() :"" %>" chname="属性值"></td>
       </tr>
       <%
       if(17 == parent){

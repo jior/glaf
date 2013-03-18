@@ -10,6 +10,7 @@
 		<result property="name" column="NAME" jdbcType="VARCHAR"/>
 		<result property="desc" column="DICTDESC" jdbcType="VARCHAR"/>
 		<result property="code" column="CODE" jdbcType="VARCHAR"/>
+		<result property="value" column="VALUE_" jdbcType="VARCHAR"/>
 		<result property="sort" column="SORT" jdbcType="INTEGER"/>
 		<result property="blocked" column="BLOCKED" jdbcType="INTEGER"/>
 		<result property="ext1" column="EXT1" jdbcType="VARCHAR"/>
@@ -36,6 +37,9 @@
 			</if>
 			<if test="code != null">
 				,CODE 
+			</if>
+			<if test="value != null">
+				,VALUE_ 
 			</if>
 			<if test="sort != null">
 				,SORT 
@@ -77,6 +81,9 @@
 			</if>
 			<if test="code != null">
 				,#{code, jdbcType=VARCHAR}
+			</if>
+			<if test="value != null">
+				,#{value, jdbcType=VARCHAR}
 			</if>
 			<if test="sort != null">
 				,#{sort, jdbcType=INTEGER}
@@ -121,6 +128,9 @@
 			</if>
 			<if test="code != null">
 				CODE = #{code, jdbcType=VARCHAR},
+			</if>
+			<if test="value != null">
+				VALUE_ = #{value, jdbcType=VARCHAR},
 			</if>
 			<if test="sort != null">
 				SORT = #{sort, jdbcType=INTEGER},

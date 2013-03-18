@@ -32,8 +32,9 @@ public class Dictory implements Serializable, JSONable {
 	private long typeId;
 	private String code;
 	private String name;
-	private int sort;
 	private String desc;
+	private String value;
+	private int sort;
 	private int blocked;
 	private String ext1;
 	private String ext2;
@@ -41,6 +42,18 @@ public class Dictory implements Serializable, JSONable {
 	private String ext4;
 	private Date ext5;
 	private Date ext6;
+
+	public Dictory() {
+
+	}
+
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
+	}
 
 	public int getBlocked() {
 		return blocked;
