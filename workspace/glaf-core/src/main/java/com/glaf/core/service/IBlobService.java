@@ -22,6 +22,8 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import com.glaf.core.base.DataFile;
 import com.glaf.core.query.BlobItemQuery;
 
@@ -29,7 +31,7 @@ import com.glaf.core.query.BlobItemQuery;
  * 
  * 字节流服务 本服务类提供字节流的创建、修改、删除、复制及查询服务
  */
-
+@Transactional(readOnly = true)
 public interface IBlobService {
 
 	/**
@@ -38,7 +40,7 @@ public interface IBlobService {
 	 * @param sourceId
 	 * @param destId
 	 */
-
+	@Transactional
 	void copyBlob(String sourceId, String destId);
 
 	/**
@@ -46,7 +48,7 @@ public interface IBlobService {
 	 * 
 	 * @param fileId
 	 */
-
+	@Transactional
 	void deleteBlobByFileId(String fileId);
 
 	/**
@@ -54,7 +56,7 @@ public interface IBlobService {
 	 * 
 	 * @param resourceId
 	 */
-
+	@Transactional
 	void deleteBlobByResourceId(String resourceId);
 
 	/**
@@ -62,7 +64,7 @@ public interface IBlobService {
 	 * 
 	 * @param id
 	 */
-
+	@Transactional
 	void deleteById(String id);
 
 	/**
@@ -158,7 +160,7 @@ public interface IBlobService {
 	 * 
 	 * @param blobData
 	 */
-
+	@Transactional
 	void insertBlob(DataFile blobData);
 
 	/**
@@ -168,7 +170,7 @@ public interface IBlobService {
 	 * @param serviceKey
 	 * @param resourceId
 	 */
-
+	@Transactional
 	void makeMark(String createBy, String serviceKey, String resourceId);
 
 	/**
@@ -176,7 +178,7 @@ public interface IBlobService {
 	 * 
 	 * @param dataList
 	 */
-
+	@Transactional
 	void saveAll(List<DataFile> dataList);
 
 	/**
@@ -184,7 +186,7 @@ public interface IBlobService {
 	 * 
 	 * @param dataMap
 	 */
-
+	@Transactional
 	void saveAll(Map<String, DataFile> dataMap);
 
 	/**
@@ -192,7 +194,7 @@ public interface IBlobService {
 	 * 
 	 * @param model
 	 */
-
+	@Transactional
 	void updateBlob(DataFile model);
 
 	/**
@@ -200,6 +202,6 @@ public interface IBlobService {
 	 * 
 	 * @param model
 	 */
-
+	@Transactional
 	void updateBlobFileInfo(DataFile model);
 }

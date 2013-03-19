@@ -8,6 +8,7 @@
 <%
 SysTree parent= (SysTree)request.getAttribute("parent");
 String url = ParamUtil.getParameter(request, "url", "tree.do?method=showList&parent=");
+//System.out.println("########"+url);
 int showCode = ParamUtil.getIntParameter(request, "showCode",0);
 %>
 <html>

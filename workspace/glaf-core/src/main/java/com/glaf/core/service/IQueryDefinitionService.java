@@ -20,9 +20,12 @@ package com.glaf.core.service;
 
 import java.util.*;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import com.glaf.core.domain.*;
 import com.glaf.core.query.*;
 
+@Transactional(readOnly = true)
 public interface IQueryDefinitionService {
 
 	/**
@@ -30,6 +33,7 @@ public interface IQueryDefinitionService {
 	 * 
 	 * @return
 	 */
+	@Transactional
 	void deleteById(String id);
 
 	/**
@@ -120,6 +124,7 @@ public interface IQueryDefinitionService {
 	 * 
 	 * @return
 	 */
+	@Transactional
 	void save(QueryDefinition queryDefinition);
 
 }

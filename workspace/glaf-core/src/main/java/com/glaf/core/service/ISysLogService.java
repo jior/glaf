@@ -18,8 +18,11 @@
 
 package com.glaf.core.service;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import com.glaf.core.domain.SysLog;
 
+@Transactional(readOnly = true)
 public interface ISysLogService {
 
 	/**
@@ -29,6 +32,7 @@ public interface ISysLogService {
 	 *            SysLog
 	 * @return boolean
 	 */
+	@Transactional
 	boolean create(SysLog bean);
 
 	/**
@@ -38,6 +42,7 @@ public interface ISysLogService {
 	 *            SysLog
 	 * @return boolean
 	 */
+	@Transactional
 	boolean update(SysLog bean);
 
 	/**
@@ -47,6 +52,7 @@ public interface ISysLogService {
 	 *            SysLog
 	 * @return boolean
 	 */
+	@Transactional
 	boolean delete(SysLog bean);
 
 	/**
@@ -56,6 +62,7 @@ public interface ISysLogService {
 	 *            int
 	 * @return boolean
 	 */
+	@Transactional
 	boolean delete(long id);
 
 	/**

@@ -17,8 +17,7 @@
  */
 
 package com.glaf.core.context;
- 
-import javax.sql.DataSource;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import com.glaf.core.config.SystemConfig;
@@ -27,11 +26,9 @@ import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 public final class ContextFactory {
 
-	protected static final Log logger = LogFactory.getLog(ContextFactory.class);
-
 	private static org.springframework.context.ApplicationContext ctx;
 
-	private static DataSource dataSource;
+	protected static final Log logger = LogFactory.getLog(ContextFactory.class);
 
 	public static org.springframework.context.ApplicationContext getApplicationContext() {
 		return ctx;
@@ -55,25 +52,8 @@ public final class ContextFactory {
 		return (T) ctx.getBean(name);
 	}
 
-	public static java.sql.Connection getConnection()   {
-		if (dataSource == null) {
-			dataSource = ContextFactory.getBean("dataSource");
-		}
-		if (dataSource != null) {
-			try{
-			   return dataSource.getConnection();
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
-		}
-		return null;
-	}
-
-	public static DataSource getDataSource() {
-		if (dataSource == null) {
-			dataSource = ContextFactory.getBean("dataSource");
-		}
-		return dataSource;
+	public static boolean hasBean(String name) {
+		return ctx.containsBean(name);
 	}
 
 	protected static void init() {
@@ -88,14 +68,6 @@ public final class ContextFactory {
 				ex.printStackTrace();
 			}
 		}
-	}
-
-	public static DataSource getDataSource(String dataSourceName) {
-		return ContextFactory.getBean(dataSourceName);
-	}
-
-	public static boolean hasBean(String name) {
-		return ctx.containsBean(name);
 	}
 
 	public static void setContext(

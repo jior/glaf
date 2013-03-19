@@ -33,10 +33,4 @@
 
 	</bean>
 
-	<bean id="${modelName}Proxy" parent="baseTxService">
-		<property name="target">
-			<ref bean="${modelName}Service" />
-		</property>
-	</bean>
-
 </beans>

@@ -21,8 +21,11 @@ package com.glaf.core.service;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import com.glaf.core.domain.SystemProperty;
 
+@Transactional(readOnly = true)
 public interface ISystemPropertyService {
 
 	List<SystemProperty> getAllSystemProperties();
@@ -31,6 +34,7 @@ public interface ISystemPropertyService {
 
 	List<SystemProperty> getSystemProperties(String category);
 
+	@Transactional
 	void saveAll(List<SystemProperty> props);
 
 }

@@ -20,8 +20,11 @@ package com.glaf.core.service;
 
 import java.util.List;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import com.glaf.core.base.Scheduler;
 
+@Transactional(readOnly = true)
 public interface ISysSchedulerService {
 
 	/**
@@ -29,7 +32,7 @@ public interface ISysSchedulerService {
 	 * 
 	 * @param scheduler
 	 */
-
+	@Transactional
 	void deleteScheduler(String taskId);
 
 	/**
@@ -69,7 +72,7 @@ public interface ISysSchedulerService {
 	 * @param taskId
 	 * @param locked
 	 */
-
+	@Transactional
 	void locked(String taskId, int locked);
 
 	/**
@@ -77,6 +80,7 @@ public interface ISysSchedulerService {
 	 * 
 	 * @param model
 	 */
+	@Transactional
 	void save(Scheduler model);
 
 	/**
@@ -84,5 +88,6 @@ public interface ISysSchedulerService {
 	 * 
 	 * @param model
 	 */
+	@Transactional
 	void update(Scheduler model);
 }

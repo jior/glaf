@@ -21,7 +21,7 @@ package com.glaf.core.query;
 import java.util.Date;
 import java.util.List;
 
-public class BlobItemQuery extends BaseQuery {
+public class BlobItemQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;
 	protected String resourceId;
 	protected List<String> resourceIds;

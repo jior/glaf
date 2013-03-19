@@ -21,9 +21,12 @@ package com.glaf.core.template.service;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import com.glaf.core.template.query.TemplateQuery;
 import com.glaf.core.template.Template;
 
+@Transactional(readOnly = true)
 public interface ITemplateService {
 
 	/**
@@ -31,7 +34,7 @@ public interface ITemplateService {
 	 * 
 	 * @param templateId
 	 */
-
+	@Transactional
 	void deleteTemplate(String templateId);
 
 	/**
@@ -60,7 +63,7 @@ public interface ITemplateService {
 	/**
 	 * 批量导入模板
 	 */
-
+	@Transactional
 	void installAllTemplates();
 
 	/**
@@ -68,6 +71,6 @@ public interface ITemplateService {
 	 * 
 	 * @param template
 	 */
-
+	@Transactional
 	void saveTemplate(Template template);
 }

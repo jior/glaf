@@ -22,11 +22,14 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import com.glaf.core.base.TablePage;
 import com.glaf.core.query.TablePageQuery;
 import com.glaf.core.query.QueryCondition;
 import com.glaf.core.util.Paging;
 
+@Transactional(readOnly = true)
 public interface ITablePageService {
 
 	List<Map<String, Object>> getListData(String sql, Map<String, Object> params);

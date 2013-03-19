@@ -26,7 +26,7 @@ import com.glaf.core.base.TableModel;
 import com.glaf.core.domain.TableDefinition;
 import com.glaf.core.util.Paging;
 
-@Transactional
+@Transactional(readOnly = true)
 public interface ITableDataService {
 
 	/**

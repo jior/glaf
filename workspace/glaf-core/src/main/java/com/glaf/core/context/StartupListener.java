@@ -1,20 +1,20 @@
 /*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.glaf.core.context;
 
@@ -27,7 +27,8 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.WebApplicationContextUtils;
- 
+
+import com.glaf.core.config.DataSourceConfig;
 
 public class StartupListener extends ContextLoaderListener implements
 		ServletContextListener {
@@ -45,11 +46,14 @@ public class StartupListener extends ContextLoaderListener implements
 		com.glaf.core.context.ApplicationContext.setAppPath(root);
 		com.glaf.core.context.ApplicationContext.setContextPath(event
 				.getServletContext().getContextPath());
-
-		this.beforeContextInitialized(context);
-		super.contextInitialized(event);
-		this.setupContext(context);
-
+		if (DataSourceConfig.checkConnection()) {
+			DataSourceConfig.initDatabaseType();
+			this.beforeContextInitialized(context);
+			super.contextInitialized(event);
+			this.setupContext(context);
+		} else {
+			logger.error("数据库连接错误，请检查配置。");
+		}
 	}
 
 	public void setupContext(ServletContext context) {
@@ -61,7 +65,7 @@ public class StartupListener extends ContextLoaderListener implements
 		}
 		try {
 			if (ContextFactory.hasBean("sysSchedulerService")) {
-				 
+
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();

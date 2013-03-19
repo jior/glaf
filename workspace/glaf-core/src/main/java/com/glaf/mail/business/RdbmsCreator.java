@@ -23,7 +23,6 @@ import java.sql.Statement;
 
 import org.springframework.core.io.*;
 
-import com.glaf.core.context.ContextFactory;
 import com.glaf.core.jdbc.DBConnectionFactory;
 import com.glaf.mail.domain.MailStorage;
 import com.glaf.core.util.DBUtils;
@@ -41,7 +40,7 @@ public class RdbmsCreator implements StorageCreator {
 		Connection conn = null;
 		Statement stmt = null;
 		try {
-			conn = ContextFactory.getConnection();
+			conn = DBConnectionFactory.getConnection();
 
 			String dbType = DBConnectionFactory.getDatabaseType(conn);
 			String filename = "com/glaf/mail/business/sql/create/mail."

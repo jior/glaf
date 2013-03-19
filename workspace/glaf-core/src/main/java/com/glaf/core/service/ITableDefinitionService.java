@@ -20,9 +20,12 @@ package com.glaf.core.service;
 
 import java.util.*;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import com.glaf.core.domain.*;
 import com.glaf.core.query.*;
 
+@Transactional(readOnly = true)
 public interface ITableDefinitionService {
 
 	/**
@@ -30,6 +33,7 @@ public interface ITableDefinitionService {
 	 * 
 	 * @param columnId
 	 */
+	@Transactional
 	void deleteColumn(String columnId);
 
 	/**
@@ -37,6 +41,7 @@ public interface ITableDefinitionService {
 	 * 
 	 * @param tableName
 	 */
+	@Transactional
 	void deleteTable(String tableName);
 
 	/**
@@ -84,6 +89,7 @@ public interface ITableDefinitionService {
 	 * 
 	 * @return
 	 */
+	@Transactional
 	void save(TableDefinition tableDefinition);
 
 	/**
@@ -92,6 +98,7 @@ public interface ITableDefinitionService {
 	 * @param tableName
 	 * @param columnDefinition
 	 */
+	@Transactional
 	void saveColumn(String tableName, ColumnDefinition columnDefinition);
 
 	/**
@@ -100,6 +107,7 @@ public interface ITableDefinitionService {
 	 * @param tableName
 	 * @param rows
 	 */
+	@Transactional
 	void saveSystemTable(String tableName, List<ColumnDefinition> rows);
 
 }

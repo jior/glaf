@@ -28,7 +28,7 @@ import javax.sql.DataSource;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.glaf.core.context.ContextFactory;
+import com.glaf.core.config.DataSourceConfig;
 import com.glaf.core.util.JdbcUtils;
 
 public class DBConnectionFactory {
@@ -38,34 +38,14 @@ public class DBConnectionFactory {
 
 	protected static Properties databaseTypeMappings = getDefaultDatabaseTypeMappings();
 
-	 
-	public static Connection getConnection(){
-		return ContextFactory.getConnection();
+	public static Connection getConnection() {
+		return DataSourceConfig.getConnection();
 	}
-	
+
 	public static String getDatabaseType() {
-		Connection connection = getConnection();
-		if (connection != null) {
-			String databaseProductName = null;
-			try {
-				DatabaseMetaData databaseMetaData = connection.getMetaData();
-				databaseProductName = databaseMetaData.getDatabaseProductName();
-			} catch (SQLException ex) {
-				ex.printStackTrace();
-				throw new RuntimeException(ex);
-			}
-			String dbType = databaseTypeMappings
-					.getProperty(databaseProductName);
-			if (dbType == null) {
-				throw new RuntimeException(
-						"couldn't deduct database type from database product name '"
-								+ databaseProductName + "'");
-			}
-			return dbType;
-		}
-		return null;
+		return DataSourceConfig.getDatabaseType();
 	}
-	
+
 	public static String getDatabaseType(Connection connection) {
 		if (connection != null) {
 			String databaseProductName = null;

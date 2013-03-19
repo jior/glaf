@@ -28,7 +28,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>基础平台系统</title>
-<link href="../css/site.css" rel="stylesheet" type="text/css">
 <link href="<%=context%>/css/site.css" rel="stylesheet" type="text/css">
 <script src="<%=context%>/scripts/main.js" language="javascript"></script>
 <style type="text/css"> 

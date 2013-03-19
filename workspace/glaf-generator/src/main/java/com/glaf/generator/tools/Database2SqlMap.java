@@ -6,7 +6,7 @@ import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.dom4j.io.OutputFormat;
-import com.glaf.core.context.*;
+import com.glaf.core.jdbc.DBConnectionFactory;
 import com.glaf.core.util.*;
 
 public class Database2SqlMap {
@@ -25,7 +25,7 @@ public class Database2SqlMap {
 	public void execute() {
 		Connection con = null;
 		try {
-			con = ContextFactory.getConnection();
+			con = DBConnectionFactory.getConnection();
 			DatabaseMetaData dbmd = con.getMetaData();
 			ResultSet rs = dbmd.getTables(null, null, null, null);
 			while (rs.next()) {
