@@ -10,7 +10,7 @@
 	PreparedStatement psmt = null;
 	ResultSet rs = null;
 	try {
-		con = com.glaf.core.context.ContextFactory.getConnection();
+		con = com.glaf.core.jdbc.DBConnectionFactory.getConnection();
 		psmt = con.prepareStatement(" select * from Test_ACT order by ID_ asc ");
 		rs = psmt.executeQuery();
 		int total = 0;

@@ -8,7 +8,7 @@
 	PreparedStatement psmt = null;
 	ResultSet rs = null;
 	try {
-		con = com.glaf.core.context.ContextFactory.getConnection();
+		con = com.glaf.core.jdbc.DBConnectionFactory.getConnection();
 		psmt = con.prepareStatement(" drop table Test_ACT  ");
 		psmt.executeUpdate();
 		psmt.close();
@@ -20,7 +20,7 @@
 		com.glaf.core.util.JdbcUtils.close(con);
 	}
 	try {
-		con = com.glaf.core.context.ContextFactory.getConnection();
+		con = com.glaf.core.jdbc.DBConnectionFactory.getConnection();
 		psmt = con.prepareStatement(" CREATE TABLE Test_ACT (ID_ VARCHAR(50) NOT NULL,PROCESSNAME_ VARCHAR(50),PROCESSINSTANCEID_ VARCHAR(50),STATUS_ INT,WFSTATUS_ INT,PRIMARY KEY(ID_))  ");
 		psmt.executeUpdate();
 		psmt.close();
