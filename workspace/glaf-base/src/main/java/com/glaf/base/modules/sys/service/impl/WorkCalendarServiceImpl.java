@@ -16,7 +16,7 @@
 * limitations under the License.
 */
 
-package com.glaf.base.modules.others.service.impl;
+package com.glaf.base.modules.sys.service.impl;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -28,8 +28,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.glaf.base.dao.AbstractSpringDao;
-import com.glaf.base.modules.others.model.WorkCalendar;
-import com.glaf.base.modules.others.service.WorkCalendarService;
+import com.glaf.base.modules.sys.model.WorkCalendar;
+import com.glaf.base.modules.sys.service.WorkCalendarService;
 
 public class WorkCalendarServiceImpl implements WorkCalendarService {
 	private static final Log logger = LogFactory

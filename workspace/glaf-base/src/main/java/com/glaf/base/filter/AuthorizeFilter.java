@@ -98,7 +98,7 @@ public class AuthorizeFilter implements Filter {
 								|| StringUtils.contains(uri,
 										"/sys/sysUserRole.do")
 								|| StringUtils.contains(uri,
-										"/others/workCalendar.do")) {
+										"/sys/workCalendar.do")) {
 							res.sendRedirect(errorUrl);
 							return;
 						}

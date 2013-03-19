@@ -79,7 +79,7 @@ public class SpringDispatcherServlet extends DispatcherServlet {
 						|| StringUtils.contains(uri, "/sys/user.do")
 						|| StringUtils.contains(uri, "/sys/sysUserRole.do")
 						|| StringUtils.contains(uri, "/sys/deptRole.do")
-						|| StringUtils.contains(uri, "/others/workCalendar.do")) {
+						|| StringUtils.contains(uri, "/sys/workCalendar.do")) {
 					response.sendRedirect(request.getContextPath() + errorUrl);
 					return;
 				}

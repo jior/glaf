@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.glaf.base.modules.others.springmvc;
+package com.glaf.base.modules.sys.springmvc;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -32,13 +32,13 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.glaf.base.modules.others.service.WorkCalendarService;
+import com.glaf.base.modules.sys.service.WorkCalendarService;
 
 import com.glaf.base.utils.ParamUtil;
 import com.glaf.base.utils.RequestUtil;
 
-@Controller("/others/workCalendar")
-@RequestMapping("/others/workCalendar.do")
+@Controller("/sys/workCalendar")
+@RequestMapping("/sys/workCalendar.do")
 public class WorkCalendarController {
 	private static final Log logger = LogFactory
 			.getLog(WorkCalendarController.class);
@@ -68,7 +68,7 @@ public class WorkCalendarController {
 		int year = ParamUtil.getIntParameter(request, "year",
 				cal.get(Calendar.YEAR));
 		request.setAttribute("year", String.valueOf(year));
-		return new ModelAndView("/modules/others/calendar/work_calendar",
+		return new ModelAndView("/modules/sys/calendar/work_calendar",
 				modelMap);
 	}
 
@@ -127,6 +127,6 @@ public class WorkCalendarController {
 		request.setAttribute("weeks", String.valueOf(weeks));
 		request.setAttribute("days", days);
 
-		return new ModelAndView("/modules/others/calendar/calendar", modelMap);
+		return new ModelAndView("/modules/sys/calendar/calendar", modelMap);
 	}
 }

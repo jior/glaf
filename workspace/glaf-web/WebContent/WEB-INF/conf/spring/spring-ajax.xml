@@ -46,7 +46,7 @@
 	</bean>
 
 	<bean name="workCalendarAjaxService"
-		class="com.glaf.base.modules.others.service.WorkCalendarAjaxService">
+		class="com.glaf.base.modules.sys.service.WorkCalendarAjaxService">
 		<property name="workCalendarService">
 			<ref bean="workCalendarService" />
 		</property>

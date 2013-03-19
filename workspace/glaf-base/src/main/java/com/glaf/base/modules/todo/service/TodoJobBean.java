@@ -31,10 +31,10 @@ import com.glaf.jbpm.context.Context;
 import com.glaf.jbpm.model.TaskItem;
 import com.glaf.jbpm.container.ProcessContainer;
 
-import com.glaf.base.modules.others.service.WorkCalendarService;
 import com.glaf.base.modules.sys.model.SysDepartment;
 import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.sys.service.SysUserService;
+import com.glaf.base.modules.sys.service.WorkCalendarService;
 import com.glaf.core.todo.Todo;
 import com.glaf.core.todo.TodoInstance;
 import com.glaf.core.todo.query.TodoQuery;

@@ -3,7 +3,7 @@
 	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping package="com.glaf.base.modules.others.model">
+<hibernate-mapping package="com.glaf.base.modules.sys.model">
 	<class name="WorkCalendar" table="sys_workcalendar" dynamic-update="true"
 		dynamic-insert="true">
 		<id name="id" type="long" unsaved-value="0">

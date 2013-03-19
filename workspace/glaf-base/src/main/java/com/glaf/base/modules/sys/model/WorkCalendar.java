@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.glaf.base.modules.others.model;
+package com.glaf.base.modules.sys.model;
 
 import java.io.Serializable;
 import com.alibaba.fastjson.*;

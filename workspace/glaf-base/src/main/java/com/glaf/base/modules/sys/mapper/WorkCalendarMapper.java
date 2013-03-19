@@ -16,12 +16,14 @@
  * limitations under the License.
  */
 
-package com.glaf.base.modules.others.mapper;
+package com.glaf.base.modules.sys.mapper;
 
 import java.util.*;
 import org.springframework.stereotype.Component;
 import com.glaf.base.modules.others.model.*;
 import com.glaf.base.modules.others.query.*;
+import com.glaf.base.modules.sys.model.WorkCalendar;
+import com.glaf.base.modules.sys.query.WorkCalendarQuery;
 
 @Component
 public interface WorkCalendarMapper {

@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.glaf.base.modules.others.query;
+package com.glaf.base.modules.sys.query;
 
 import java.util.*;
 import com.glaf.core.query.DataQuery;

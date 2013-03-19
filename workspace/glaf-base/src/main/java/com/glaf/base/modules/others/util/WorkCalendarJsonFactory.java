@@ -4,6 +4,7 @@ import com.alibaba.fastjson.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode; 
 import com.glaf.base.modules.others.model.*;
+import com.glaf.base.modules.sys.model.WorkCalendar;
 
 public class WorkCalendarJsonFactory {
 

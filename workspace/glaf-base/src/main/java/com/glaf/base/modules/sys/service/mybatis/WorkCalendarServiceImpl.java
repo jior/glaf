@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.glaf.base.modules.others.service.mybatis;
+package com.glaf.base.modules.sys.service.mybatis;
 
 import java.util.*;
 
@@ -36,6 +36,10 @@ import com.glaf.base.modules.others.mapper.*;
 import com.glaf.base.modules.others.model.*;
 import com.glaf.base.modules.others.query.*;
 import com.glaf.base.modules.others.service.*;
+import com.glaf.base.modules.sys.mapper.WorkCalendarMapper;
+import com.glaf.base.modules.sys.model.WorkCalendar;
+import com.glaf.base.modules.sys.query.WorkCalendarQuery;
+import com.glaf.base.modules.sys.service.WorkCalendarService;
 
 @Service("workCalendarService")
 @Transactional(readOnly = true)

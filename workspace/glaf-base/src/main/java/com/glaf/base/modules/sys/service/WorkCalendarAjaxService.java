@@ -16,12 +16,12 @@
 * limitations under the License.
 */
 
-package com.glaf.base.modules.others.service;
+package com.glaf.base.modules.sys.service;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.glaf.base.modules.others.model.WorkCalendar;
+import com.glaf.base.modules.sys.model.WorkCalendar;
 
 public class WorkCalendarAjaxService {
 	private static final Log logger = LogFactory.getLog(WorkCalendarAjaxService.class);

@@ -16,14 +16,14 @@
  * limitations under the License.
  */
 
-package com.glaf.base.modules.others.service;
+package com.glaf.base.modules.sys.service;
 
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import com.glaf.base.modules.others.model.WorkCalendar;
+import com.glaf.base.modules.sys.model.WorkCalendar;
 
 @Transactional(readOnly = true)
 public interface WorkCalendarService {
