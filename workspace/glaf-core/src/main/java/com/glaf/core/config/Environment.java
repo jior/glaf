@@ -158,6 +158,9 @@ public final class Environment {
 		Properties props = getCurrentDataSourceProperties();
 		if (props != null) {
 			String dbType = props.getProperty(CONNECTION_DATABASE_TYPE);
+			if (dbType == null) {
+				dbType = DataSourceConfig.getDatabaseType();
+			}
 			logger.debug("databaseType:" + dbType);
 			return dialects.get(dbType);
 		}
