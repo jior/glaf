@@ -42,7 +42,7 @@ import com.glaf.base.modules.sys.service.SysUserService;
 public class BaseDataManager {
 	private final static Log logger = LogFactory.getLog(BaseDataManager.class);
 
-	private static BaseDataManager instance;
+	private static BaseDataManager instance = new BaseDataManager();
 
 	private static Map<String, List<BaseDataInfo>> baseDataMap = new Hashtable<String, List<BaseDataInfo>>();
 
