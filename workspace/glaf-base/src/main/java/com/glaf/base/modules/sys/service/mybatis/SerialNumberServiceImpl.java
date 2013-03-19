@@ -44,7 +44,6 @@ import com.glaf.base.modules.sys.model.SerialNumber;
 import com.glaf.base.modules.sys.query.SerialNumberQuery;
 import com.glaf.base.modules.sys.service.*;
 import com.glaf.base.utils.WebUtil;
-import com.glaf.core.dao.PersistenceDAO;
 import com.glaf.core.id.IdGenerator;
 
 /**
@@ -114,8 +113,6 @@ public class SerialNumberServiceImpl implements SerialNumberService {
 	private BaseDataManager bdm = null;
 
 	protected IdGenerator idGenerator;
-
-	protected PersistenceDAO persistenceDAO;
 
 	protected SerialNumberMapper serialNumberMapper;
 
@@ -853,11 +850,6 @@ public class SerialNumberServiceImpl implements SerialNumberService {
 	@Qualifier("myBatisDbIdGenerator")
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
-	}
-
-	@Resource
-	public void setPersistenceDAO(PersistenceDAO persistenceDAO) {
-		this.persistenceDAO = persistenceDAO;
 	}
 
 	@Resource

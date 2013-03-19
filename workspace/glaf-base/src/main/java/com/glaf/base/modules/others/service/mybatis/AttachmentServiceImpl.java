@@ -30,7 +30,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.core.id.*;
-import com.glaf.core.dao.*;
 
 import com.glaf.base.modules.others.mapper.*;
 import com.glaf.base.modules.others.model.*;
@@ -43,8 +42,6 @@ public class AttachmentServiceImpl implements AttachmentService {
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
 
 	protected IdGenerator idGenerator;
-
-	protected PersistenceDAO persistenceDAO;
 
 	protected SqlSessionTemplate sqlSessionTemplate;
 
@@ -121,11 +118,6 @@ public class AttachmentServiceImpl implements AttachmentService {
 	@Resource
 	public void setAttachmentMapper(AttachmentMapper attachmentMapper) {
 		this.attachmentMapper = attachmentMapper;
-	}
-
-	@Resource
-	public void setPersistenceDAO(PersistenceDAO persistenceDAO) {
-		this.persistenceDAO = persistenceDAO;
 	}
 
 	@Resource

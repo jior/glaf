@@ -35,7 +35,7 @@ import com.glaf.core.service.ITableDataService;
 import com.glaf.core.util.DateUtils;
 import com.glaf.core.util.PageResult;
 import com.glaf.core.base.TableModel;
-import com.glaf.core.dao.*;
+ 
 
 import com.glaf.base.modules.Constants;
 import com.glaf.base.modules.sys.mapper.*;
@@ -51,8 +51,6 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 			.getLog(SysUserRoleServiceImpl.class);
 
 	protected IdGenerator idGenerator;
-
-	protected PersistenceDAO persistenceDAO;
 
 	protected SqlSessionTemplate sqlSessionTemplate;
 
@@ -537,11 +535,6 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 	@Qualifier("myBatisDbIdGenerator")
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
-	}
-
-	@Resource
-	public void setPersistenceDAO(PersistenceDAO persistenceDAO) {
-		this.persistenceDAO = persistenceDAO;
 	}
 
 	@Resource

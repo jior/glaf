@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.core.id.*;
-import com.glaf.core.dao.*;
 
 import com.glaf.apps.trip.mapper.*;
 import com.glaf.apps.trip.model.*;
@@ -24,8 +23,6 @@ public class TripServiceImpl implements TripService {
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
 
 	protected IdGenerator idGenerator;
-
-	protected PersistenceDAO persistenceDAO;
 
 	protected SqlSessionTemplate sqlSessionTemplate;
 
@@ -102,11 +99,6 @@ public class TripServiceImpl implements TripService {
 	@Resource
 	public void setTripMapper(TripMapper tripMapper) {
 		this.tripMapper = tripMapper;
-	}
-
-	@Resource
-	public void setPersistenceDAO(PersistenceDAO persistenceDAO) {
-		this.persistenceDAO = persistenceDAO;
 	}
 
 	@Resource

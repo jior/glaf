@@ -30,12 +30,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.core.id.*;
-import com.glaf.core.dao.*;
-
-import com.glaf.base.modules.others.mapper.*;
-import com.glaf.base.modules.others.model.*;
-import com.glaf.base.modules.others.query.*;
-import com.glaf.base.modules.others.service.*;
 import com.glaf.base.modules.sys.mapper.WorkCalendarMapper;
 import com.glaf.base.modules.sys.model.WorkCalendar;
 import com.glaf.base.modules.sys.query.WorkCalendarQuery;
@@ -48,8 +42,6 @@ public class WorkCalendarServiceImpl implements WorkCalendarService {
 			.getLog(WorkCalendarServiceImpl.class);
 
 	protected IdGenerator idGenerator;
-
-	protected PersistenceDAO persistenceDAO;
 
 	protected SqlSessionTemplate sqlSessionTemplate;
 
@@ -285,11 +277,6 @@ public class WorkCalendarServiceImpl implements WorkCalendarService {
 	@Qualifier("myBatisDbIdGenerator")
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
-	}
-
-	@Resource
-	public void setPersistenceDAO(PersistenceDAO persistenceDAO) {
-		this.persistenceDAO = persistenceDAO;
 	}
 
 	@Resource

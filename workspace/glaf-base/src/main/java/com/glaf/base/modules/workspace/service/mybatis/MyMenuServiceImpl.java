@@ -31,7 +31,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.core.id.*;
 import com.glaf.core.util.PageResult;
-import com.glaf.core.dao.*;
 
 import com.glaf.base.modules.sys.SysConstants;
 import com.glaf.base.modules.workspace.mapper.*;
@@ -45,8 +44,6 @@ public class MyMenuServiceImpl implements MyMenuService {
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
 
 	protected IdGenerator idGenerator;
-
-	protected PersistenceDAO persistenceDAO;
 
 	protected SqlSessionTemplate sqlSessionTemplate;
 
@@ -123,11 +120,6 @@ public class MyMenuServiceImpl implements MyMenuService {
 	@Resource
 	public void setMyMenuMapper(MyMenuMapper myMenuMapper) {
 		this.myMenuMapper = myMenuMapper;
-	}
-
-	@Resource
-	public void setPersistenceDAO(PersistenceDAO persistenceDAO) {
-		this.persistenceDAO = persistenceDAO;
 	}
 
 	@Resource

@@ -30,7 +30,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.core.id.*;
-import com.glaf.core.dao.*;
+ 
 
 import com.glaf.base.modules.sys.SysConstants;
 import com.glaf.base.modules.sys.mapper.*;
@@ -45,8 +45,6 @@ public class SysFunctionServiceImpl implements SysFunctionService {
 			.getLog(SysFunctionServiceImpl.class);
 
 	protected IdGenerator idGenerator;
-
-	protected PersistenceDAO persistenceDAO;
 
 	protected SqlSessionTemplate sqlSessionTemplate;
 
@@ -167,11 +165,6 @@ public class SysFunctionServiceImpl implements SysFunctionService {
 	@Qualifier("myBatisDbIdGenerator")
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
-	}
-
-	@Resource
-	public void setPersistenceDAO(PersistenceDAO persistenceDAO) {
-		this.persistenceDAO = persistenceDAO;
 	}
 
 	@Resource

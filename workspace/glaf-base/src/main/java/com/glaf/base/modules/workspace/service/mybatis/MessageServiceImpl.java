@@ -32,7 +32,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.core.id.*;
 import com.glaf.core.util.PageResult;
-import com.glaf.core.dao.*;
 
 import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.sys.service.SysUserService;
@@ -47,8 +46,6 @@ public class MessageServiceImpl implements MessageService {
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
 
 	protected IdGenerator idGenerator;
-
-	protected PersistenceDAO persistenceDAO;
 
 	protected SqlSessionTemplate sqlSessionTemplate;
 
@@ -142,11 +139,6 @@ public class MessageServiceImpl implements MessageService {
 	@Resource
 	public void setMessageMapper(MessageMapper messageMapper) {
 		this.messageMapper = messageMapper;
-	}
-
-	@Resource
-	public void setPersistenceDAO(PersistenceDAO persistenceDAO) {
-		this.persistenceDAO = persistenceDAO;
 	}
 
 	@Resource

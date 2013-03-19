@@ -5,7 +5,6 @@
 	<import resource="classpath*:com/glaf/**/*-spring-context.xml" />
 
 	<import resource="spring-aop.xml" />
-	<import resource="spring-dao.xml" />
 	<import resource="spring-database.xml" />
 	<import resource="spring-mybatis.xml" /> 
 	<import resource="spring-ajax.xml" />

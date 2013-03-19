@@ -33,7 +33,7 @@ import com.glaf.core.id.*;
 import com.glaf.core.service.ITableDataService;
 import com.glaf.core.util.PageResult;
 import com.glaf.core.base.TableModel;
-import com.glaf.core.dao.*;
+ 
 
 import com.glaf.base.modules.sys.SysConstants;
 import com.glaf.base.modules.sys.mapper.*;
@@ -48,8 +48,6 @@ public class SysDeptRoleServiceImpl implements SysDeptRoleService {
 			.getLog(SysDeptRoleServiceImpl.class);
 
 	protected IdGenerator idGenerator;
-
-	protected PersistenceDAO persistenceDAO;
 
 	protected SqlSessionTemplate sqlSessionTemplate;
 
@@ -337,11 +335,6 @@ public class SysDeptRoleServiceImpl implements SysDeptRoleService {
 	@Qualifier("myBatisDbIdGenerator")
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
-	}
-
-	@Resource
-	public void setPersistenceDAO(PersistenceDAO persistenceDAO) {
-		this.persistenceDAO = persistenceDAO;
 	}
 
 	@Resource

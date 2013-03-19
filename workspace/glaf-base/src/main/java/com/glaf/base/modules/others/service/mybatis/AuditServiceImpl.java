@@ -30,7 +30,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.core.id.*;
-import com.glaf.core.dao.*;
 
 import com.glaf.base.modules.others.mapper.*;
 import com.glaf.base.modules.others.model.*;
@@ -44,8 +43,6 @@ public class AuditServiceImpl implements AuditService {
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
 
 	protected IdGenerator idGenerator;
-
-	protected PersistenceDAO persistenceDAO;
 
 	protected SqlSessionTemplate sqlSessionTemplate;
 
@@ -122,11 +119,6 @@ public class AuditServiceImpl implements AuditService {
 	@Resource
 	public void setAuditMapper(AuditMapper auditMapper) {
 		this.auditMapper = auditMapper;
-	}
-
-	@Resource
-	public void setPersistenceDAO(PersistenceDAO persistenceDAO) {
-		this.persistenceDAO = persistenceDAO;
 	}
 
 	@Resource

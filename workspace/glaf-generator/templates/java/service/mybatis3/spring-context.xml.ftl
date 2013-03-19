@@ -5,9 +5,6 @@
  
 	<!--service -->
 	<bean id="${modelName}Service" class="${packageName}.service.${entityName}ServiceImpl">
-		<property name="persistenceDAO">
-			<ref bean="persistenceDAO" />
-		</property>
 
 <#if idField.type?exists && ( idField.type== 'Integer' )>        
         <property name="idGenerator">
