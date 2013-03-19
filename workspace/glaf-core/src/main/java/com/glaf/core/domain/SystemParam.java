@@ -23,13 +23,12 @@ import java.util.*;
 import javax.persistence.*;
 
 import com.alibaba.fastjson.*;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
 import com.glaf.core.base.JSONable;
-import com.glaf.core.util.DateUtils;
+import com.glaf.core.domain.util.SystemParamJsonFactory;
 
 @Entity
 @Table(name = "SYS_PARAMS")
@@ -196,35 +195,7 @@ public class SystemParam implements Serializable, JSONable {
 	}
 
 	public SystemParam jsonToObject(JSONObject jsonObject) {
-		SystemParam model = new SystemParam();
-		if (jsonObject.containsKey("serviceKey")) {
-			model.setServiceKey(jsonObject.getString("serviceKey"));
-		}
-		if (jsonObject.containsKey("businessKey")) {
-			model.setBusinessKey(jsonObject.getString("businessKey"));
-		}
-		if (jsonObject.containsKey("typeCd")) {
-			model.setTypeCd(jsonObject.getString("typeCd"));
-		}
-		if (jsonObject.containsKey("keyName")) {
-			model.setKeyName(jsonObject.getString("keyName"));
-		}
-		if (jsonObject.containsKey("title")) {
-			model.setTitle(jsonObject.getString("title"));
-		}
-		if (jsonObject.containsKey("javaType")) {
-			model.setJavaType(jsonObject.getString("javaType"));
-		}
-		if (jsonObject.containsKey("stringVal")) {
-			model.setStringVal(jsonObject.getString("stringVal"));
-		}
-		if (jsonObject.containsKey("textVal")) {
-			model.setTextVal(jsonObject.getString("textVal"));
-		}
-		if (jsonObject.containsKey("dateVal")) {
-			model.setDateVal(jsonObject.getDate("dateVal"));
-		}
-		return model;
+		return SystemParamJsonFactory.jsonToObject(jsonObject);
 	}
 
 	public void setBusinessKey(String businessKey) {
@@ -280,73 +251,11 @@ public class SystemParam implements Serializable, JSONable {
 	}
 
 	public JSONObject toJsonObject() {
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("id", id);
-		if (serviceKey != null) {
-			jsonObject.put("serviceKey", serviceKey);
-		}
-		if (businessKey != null) {
-			jsonObject.put("businessKey", businessKey);
-		}
-		if (typeCd != null) {
-			jsonObject.put("typeCd", typeCd);
-		}
-		if (keyName != null) {
-			jsonObject.put("keyName", keyName);
-		}
-		if (title != null) {
-			jsonObject.put("title", title);
-		}
-		if (javaType != null) {
-			jsonObject.put("javaType", javaType);
-		}
-		if (stringVal != null) {
-			jsonObject.put("stringVal", stringVal);
-		}
-		if (textVal != null) {
-			jsonObject.put("textVal", textVal);
-		}
-		if (dateVal != null) {
-			jsonObject.put("dateVal", DateUtils.getDate(dateVal));
-			jsonObject.put("dateVal_date", DateUtils.getDate(dateVal));
-			jsonObject.put("dateVal_datetime", DateUtils.getDateTime(dateVal));
-		}
-		return jsonObject;
+		return SystemParamJsonFactory.toJsonObject(this);
 	}
 
 	public ObjectNode toObjectNode() {
-		ObjectNode jsonObject = new ObjectMapper().createObjectNode();
-		jsonObject.put("id", id);
-		if (serviceKey != null) {
-			jsonObject.put("serviceKey", serviceKey);
-		}
-		if (businessKey != null) {
-			jsonObject.put("businessKey", businessKey);
-		}
-		if (typeCd != null) {
-			jsonObject.put("typeCd", typeCd);
-		}
-		if (keyName != null) {
-			jsonObject.put("keyName", keyName);
-		}
-		if (title != null) {
-			jsonObject.put("title", title);
-		}
-		if (javaType != null) {
-			jsonObject.put("javaType", javaType);
-		}
-		if (stringVal != null) {
-			jsonObject.put("stringVal", stringVal);
-		}
-		if (textVal != null) {
-			jsonObject.put("textVal", textVal);
-		}
-		if (dateVal != null) {
-			jsonObject.put("dateVal", DateUtils.getDate(dateVal));
-			jsonObject.put("dateVal_date", DateUtils.getDate(dateVal));
-			jsonObject.put("dateVal_datetime", DateUtils.getDateTime(dateVal));
-		}
-		return jsonObject;
+		return SystemParamJsonFactory.toObjectNode(this);
 	}
 
 	public String toString() {

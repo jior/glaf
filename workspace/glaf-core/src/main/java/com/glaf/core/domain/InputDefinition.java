@@ -23,12 +23,12 @@ import java.io.*;
 import javax.persistence.*;
 
 import com.alibaba.fastjson.*;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
 import com.glaf.core.base.JSONable;
+import com.glaf.core.domain.util.InputDefinitionJsonFactory;
 
 @Entity
 @Table(name = "SYS_INPUT_DEF")
@@ -208,47 +208,7 @@ public class InputDefinition implements Serializable, JSONable {
 	}
 
 	public InputDefinition jsonToObject(JSONObject jsonObject) {
-		InputDefinition model = new InputDefinition();
-		if (jsonObject.containsKey("serviceKey")) {
-			model.setServiceKey(jsonObject.getString("serviceKey"));
-		}
-		if (jsonObject.containsKey("typeCd")) {
-			model.setTypeCd(jsonObject.getString("typeCd"));
-		}
-		if (jsonObject.containsKey("typeTitle")) {
-			model.setTypeTitle(jsonObject.getString("typeTitle"));
-		}
-		if (jsonObject.containsKey("keyName")) {
-			model.setKeyName(jsonObject.getString("keyName"));
-		}
-		if (jsonObject.containsKey("javaType")) {
-			model.setJavaType(jsonObject.getString("javaType"));
-		}
-		if (jsonObject.containsKey("title")) {
-			model.setTitle(jsonObject.getString("title"));
-		}
-		if (jsonObject.containsKey("inputType")) {
-			model.setInputType(jsonObject.getString("inputType"));
-		}
-		if (jsonObject.containsKey("valueField")) {
-			model.setValueField(jsonObject.getString("valueField"));
-		}
-		if (jsonObject.containsKey("textField")) {
-			model.setTextField(jsonObject.getString("textField"));
-		}
-		if (jsonObject.containsKey("url")) {
-			model.setUrl(jsonObject.getString("url"));
-		}
-		if (jsonObject.containsKey("validType")) {
-			model.setValidType(jsonObject.getString("validType"));
-		}
-		if (jsonObject.containsKey("required")) {
-			model.setRequired(jsonObject.getString("required"));
-		}
-		if (jsonObject.containsKey("initValue")) {
-			model.setInitValue(jsonObject.getString("initValue"));
-		}
-		return model;
+		return InputDefinitionJsonFactory.jsonToObject(jsonObject);
 	}
 
 	public void setId(String id) {
@@ -308,102 +268,11 @@ public class InputDefinition implements Serializable, JSONable {
 	}
 
 	public JSONObject toJsonObject() {
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("id", id);
-		jsonObject.put("serviceKey", serviceKey);
-
-		if (typeCd != null) {
-			jsonObject.put("typeCd", typeCd);
-		}
-		if (keyName != null) {
-			jsonObject.put("keyName", keyName);
-		}
-		if (typeTitle != null) {
-			jsonObject.put("typeTitle", typeTitle);
-		}
-
-		if (javaType != null) {
-			jsonObject.put("javaType", javaType);
-		}
-
-		if (inputType != null) {
-			jsonObject.put("inputType", inputType);
-		}
-
-		if (valueField != null) {
-			jsonObject.put("valueField", valueField);
-		}
-
-		if (textField != null) {
-			jsonObject.put("textField", textField);
-		}
-
-		if (validType != null) {
-			jsonObject.put("validType", validType);
-		}
-
-		if (required != null) {
-			jsonObject.put("required", required);
-		}
-
-		if (url != null) {
-			jsonObject.put("url", url);
-		}
-
-		if (initValue != null) {
-			jsonObject.put("initValue", initValue);
-		}
-
-		return jsonObject;
+		return InputDefinitionJsonFactory.toJsonObject(this);
 	}
 
 	public ObjectNode toObjectNode() {
-		ObjectNode jsonObject = new ObjectMapper().createObjectNode();
-		jsonObject.put("id", id);
-		jsonObject.put("serviceKey", serviceKey);
-		if (typeCd != null) {
-			jsonObject.put("typeCd", typeCd);
-		}
-		if (keyName != null) {
-			jsonObject.put("keyName", keyName);
-		}
-		if (typeTitle != null) {
-			jsonObject.put("typeTitle", typeTitle);
-		}
-
-		if (javaType != null) {
-			jsonObject.put("javaType", javaType);
-		}
-
-		if (inputType != null) {
-			jsonObject.put("inputType", inputType);
-		}
-
-		if (valueField != null) {
-			jsonObject.put("valueField", valueField);
-		}
-
-		if (textField != null) {
-			jsonObject.put("textField", textField);
-		}
-
-		if (validType != null) {
-			jsonObject.put("validType", validType);
-		}
-
-		if (required != null) {
-			jsonObject.put("required", required);
-		}
-
-		if (url != null) {
-			jsonObject.put("url", url);
-		}
-
-		if (initValue != null) {
-			jsonObject.put("initValue", initValue);
-		}
-
-		return jsonObject;
+		return InputDefinitionJsonFactory.toObjectNode(this);
 	}
 
 	public String toString() {
