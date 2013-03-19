@@ -38,6 +38,7 @@ import org.springframework.core.io.Resource;
 
 import com.glaf.core.config.SystemProperties;
 import com.glaf.core.util.Constants;
+import com.glaf.core.util.DBUtils;
 import com.glaf.core.util.PropertiesUtils;
 
 public class DataSourceConfig {
@@ -377,7 +378,7 @@ public class DataSourceConfig {
 
 	public static boolean isBooleanDatabase() {
 		String databaseType = getDatabaseType();
-		if (Constants.POSTGRESQL.equalsIgnoreCase(databaseType)) {
+		if (DBUtils.POSTGRESQL.equalsIgnoreCase(databaseType)) {
 			return true;
 		}
 		return false;

@@ -56,6 +56,8 @@ insert into sys_tree (id, parent, name, nodeDesc, sort, code) values (47, 42, '±
 insert into sys_tree (id, parent, name, nodeDesc, sort, code) values (48, 42, 'µ÷¶È¹ÜÀí', 'µ÷¶È¹ÜÀí', 48, '');
 insert into sys_tree (id, parent, name, nodeDesc, sort, code) values (49, 42, 'ÈÎÎñ¹ÜÀí', 'ÈÎÎñ¹ÜÀí', 49, '');
 insert into sys_tree (id, parent, name, nodeDesc, sort, code) values (50, 42, '²ÎÊıÉèÖÃ', '²ÎÊıÉèÖÃ', 50, '');
+insert into sys_tree (id, parent, name, nodeDesc, sort, code) values (51, 42, 'Ä£°å¹ÜÀí', 'Ä£°å¹ÜÀí', 51, 'template');
+
 
 insert into sys_tree (id, parent, name, nodeDesc, sort, code) values (53, 3, 'ActivitiÁ÷³Ì¹ÜÀí', 'ActivitiÁ÷³Ì¹ÜÀí', 53, '');
 insert into sys_tree (id, parent, name, nodeDesc, sort, code) values (54, 53, '·¢²¼Á÷³Ì°ü', '·¢²¼Á÷³Ì°ü', 54, '');
@@ -69,6 +71,10 @@ insert into sys_tree (id, parent, name, nodedesc, sort, code) values (190, 163, 
 insert into sys_tree (id, parent, name, nodedesc, sort, code) values (231, 229, '»ù´¡Êı¾İ', '»ù´¡Êı¾İ', 230, '');
 insert into sys_tree (id, parent, name, nodedesc, sort, code) values (235, 231, 'ĞŞ¸ÄÃÜÂë', 'ĞŞ¸ÄÃÜÂë', 235, '');
 insert into sys_tree (id, parent, name, nodedesc, sort, code) values (236, 231, 'ĞŞ¸Ä×ÊÁÏ', 'ĞŞ¸Ä×ÊÁÏ', 236, '');
+
+insert into sys_tree (id, parent, name, nodedesc, sort, code) values (308, 51, '´òÓ¡Ä£°å', '´òÓ¡Ä£°å', 0, 'print_tpl');
+insert into sys_tree (id, parent, name, nodedesc, sort, code) values (312, 51, 'ÓÊ¼şÄ£°å', 'ÓÊ¼şÄ£°å', 0, 'mail_tpl');
+
 insert into sys_tree (id, parent, name, nodedesc, sort, code) values (34, 3, 'Á÷³Ì¹ÜÀí', 'Á÷³Ì¹ÜÀí', 34, '');
 insert into sys_tree (id, parent, name, nodedesc, sort, code) values (435, 34, 'Á÷³Ì·¢²¼', 'Á÷³Ì·¢²¼', 435, '');
 insert into sys_tree (id, parent, name, nodedesc, sort, code) values (437, 34, 'Á÷³ÌÑİÊ¾', 'Á÷³ÌÑİÊ¾', 437, '');
@@ -82,6 +88,7 @@ insert into sys_tree (id, parent, name, nodedesc, sort, code) values (495, 8, 'µ
 insert into sys_tree (id, parent, name, nodeDesc, sort, code) values (498, 4, '»õ±ÒÀàĞÍ', '»õ±ÒÀàĞÍ', 498, 'money');
 
 insert into sys_tree (id, parent, name, nodedesc, sort, code) values (512, 10, 'ÊÚÈ¨¹ÜÀí', 'ÊÚÈ¨¹ÜÀí', 512, '');
+
 
 
 /*³õÊ¼»¯²¿ÃÅĞÅÏ¢*/
@@ -124,6 +131,7 @@ insert into sys_application (id, name, appDesc, url, sort, showMenu, nodeId) val
 insert into sys_application (id, name, appDesc, url, sort, showMenu, nodeId) values (48, 'µ÷¶È¹ÜÀí', 'µ÷¶È¹ÜÀí', '/mx/dts/scheduler', 48, 1, 48);
 insert into sys_application (id, name, appDesc, url, sort, showMenu, nodeId) values (49, 'ÈÎÎñ¹ÜÀí', 'ÈÎÎñ¹ÜÀí', '/mx/dts/task', 49, 1, 49);
 insert into sys_application (id, name, appDesc, url, sort, showMenu, nodeId) values (50, '²ÎÊıÉèÖÃ', '²ÎÊıÉèÖÃ', '/mx/system/property/edit?category=RPT', 50, 1, 50);
+insert into sys_application (id, name, appDesc, url, sort, showMenu, nodeId) values (51, 'Ä£°å¹ÜÀí', 'Ä£°å¹ÜÀí', '/mx/system/template/showFrame', 51, 1, 51);
 
 insert into sys_application (id, name, appDesc, url, sort, showMenu, nodeId) values (53, 'ActivitiÁ÷³Ì¹ÜÀí', 'ActivitiÁ÷³Ì¹ÜÀí', '', 53, 1, 53);
 insert into sys_application (id, name, appDesc, url, sort, showMenu, nodeId) values (54, '·¢²¼Á÷³Ì°ü', '', '/mx/activiti/deploy', 54, 1, 54);

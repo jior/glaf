@@ -376,3 +376,36 @@ CREATE TABLE sys_property (
         value_ varchar(1000),
         PRIMARY KEY (id_)
 );
+
+create table sys_lob (
+        id_ varchar(50) not null,
+        contenttype_ varchar(50),
+        createby_ varchar(50),
+        createdate_ timestamp,
+        deleteflag_ integer,
+        deviceid_ varchar(20),
+        fileid_ varchar(50),
+        filename_ varchar(500),
+        lastmodified_ bigint,
+        locked_ integer,
+        name_ varchar(50),
+        objectid_ varchar(255),
+        objectvalue_ varchar(255),
+        resourceid_ varchar(50),
+        servicekey_ varchar(50),
+        size_ bigint,
+        status_ integer,
+        type_ varchar(50),
+        data_ bytea,
+        primary key (id_)
+);
+
+create table sys_mail_file (
+        id varchar(50) not null,
+        createdate timestamp,
+        filecontent bytea,
+        filename varchar(255),
+        size bigint,
+        topid varchar(100),
+        primary key (id)
+);

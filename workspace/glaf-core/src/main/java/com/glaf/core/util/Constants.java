@@ -66,8 +66,6 @@ public final class Constants {
 
 	public final static int TM_PROCESS_STARTER_LEADERS_TYPE = 25;
 
-	public static final String POSTGRESQL = "postgresql";
-
 	public static final String MAIL_CONFIG = "/conf/mail.properties";
 
 	public static final String JDBC_CONFIG = "/conf/jdbc";
