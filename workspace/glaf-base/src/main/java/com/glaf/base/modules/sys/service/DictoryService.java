@@ -24,6 +24,7 @@ import java.util.Map;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.base.modules.sys.model.Dictory;
+import com.glaf.base.modules.sys.model.SysTree;
 import com.glaf.core.util.PageResult;
 
 @Transactional(readOnly = true)
@@ -75,6 +76,12 @@ public interface DictoryService {
 	 * @return
 	 */
 	Dictory find(long id);
+	
+	/**
+	 * 获取全部基础数据的分类树
+	 * @return
+	 */
+	List<SysTree> getAllCategories();
 
 	/**
 	 * 返回某分类下的所有字典列表

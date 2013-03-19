@@ -141,6 +141,16 @@
 	<select id="getSysTreeById" parameterType="long" resultMap="sysTreeResultMap">
 		select * from sys_tree where ID = #{id}
 	</select>
+	
+	
+	<select id="getDictorySysTrees" parameterType="com.glaf.base.modules.sys.query.SysTreeQuery" resultMap="sysTreeResultMap">
+		
+		select distinct E.* from sys_tree E
+		inner join sys_dictory D
+		on E.ID = D.TYPEID
+		where E.LOCKED = 0
+
+	</select>
 
 
 	<select id="getSysTrees" 

@@ -23,10 +23,10 @@ import java.util.Date;
 
 public class BaseDataInfo implements Serializable {
 	private static final long serialVersionUID = 4103533989257821676L;
-
 	private long id; // 基础信息内部标识号
 	private String name; // 基础信息名称
 	private String code; // 代码
+	private String value;// 值
 	private String no; // 基础信息内容名称
 	private int parentId; // 基础信息父类标识号
 	private int deep; // 树状结构基础信息深度
@@ -38,6 +38,18 @@ public class BaseDataInfo implements Serializable {
 	private String ext4;
 	private Date ext5;
 	private Date ext6;
+
+	public BaseDataInfo() {
+
+	}
+
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
+	}
 
 	public String getCode() {
 		return code;

@@ -35,6 +35,8 @@ public interface SysTreeMapper {
 	int getSysTreeCount(SysTreeQuery query);
 
 	List<SysTree> getSysTrees(SysTreeQuery query);
+	
+	List<SysTree> getDictorySysTrees(SysTreeQuery query);
 
 	void insertSysTree(SysTree model);
 

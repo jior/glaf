@@ -24,16 +24,19 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.glaf.base.modules.sys.SysConstants;
 import com.glaf.base.modules.sys.model.BaseDataInfo;
+import com.glaf.base.modules.sys.model.Dictory;
 import com.glaf.base.modules.sys.model.SubjectCode;
 import com.glaf.base.modules.sys.model.SysDepartment;
 import com.glaf.base.modules.sys.model.SysFunction;
 import com.glaf.base.modules.sys.model.SysTree;
 import com.glaf.base.modules.sys.model.SysUser;
+import com.glaf.base.modules.sys.service.DictoryService;
 import com.glaf.base.modules.sys.service.SubjectCodeService;
 import com.glaf.base.modules.sys.service.SysFunctionService;
 import com.glaf.base.modules.sys.service.SysTreeService;
@@ -111,13 +114,9 @@ public class BaseDataManager {
 	 * 单例模式
 	 * 
 	 * @return
-	 * @throws Exception
 	 */
-	public static synchronized BaseDataManager getInstance() {
-		logger.info("getInstance");
-		if (instance == null) {
-			instance = new BaseDataManager();
-		}
+	public static BaseDataManager getInstance() {
+		logger.debug("BaseDataManager.getInstance");
 		return instance;
 	}
 
@@ -127,9 +126,9 @@ public class BaseDataManager {
 	 * @param key
 	 * @return
 	 */
-	public List<?> getBaseData(String key) {
+	public List<BaseDataInfo> getBaseData(String key) {
 		if (baseDataMap.containsKey(key)) {
-			return (List<?>) baseDataMap.get(key);
+			return (List<BaseDataInfo>) baseDataMap.get(key);
 		}
 		return null;
 	}
@@ -140,8 +139,8 @@ public class BaseDataManager {
 	 * @param key
 	 * @return
 	 */
-	public Iterator<?> getList(String key) {
-		List<?> list = getBaseData(key);
+	public Iterator<BaseDataInfo> getList(String key) {
+		List<BaseDataInfo> list = getBaseData(key);
 		if (list != null) {
 			return list.iterator();
 		} else {
@@ -156,8 +155,8 @@ public class BaseDataManager {
 	 * 
 	 * @return
 	 */
-	public List<?> getList2(String key) {
-		List<?> list = getBaseData(key);
+	public List<BaseDataInfo> getList2(String key) {
+		List<BaseDataInfo> list = getBaseData(key);
 		if (list != null) {
 			return list;
 		} else {
@@ -215,18 +214,16 @@ public class BaseDataManager {
 	 */
 	public BaseDataInfo getValue(int valueId, String key) {
 		BaseDataInfo ret = null;
-		try {
-			Iterator<?> iter = getList(key);
-			while (iter != null && iter.hasNext()) {
-				BaseDataInfo temp = (BaseDataInfo) iter.next();
-				if (temp.getId() == valueId) {
-					ret = temp;
-					break;
-				}
+
+		Iterator<BaseDataInfo> iter = getList(key);
+		while (iter != null && iter.hasNext()) {
+			BaseDataInfo temp = (BaseDataInfo) iter.next();
+			if (temp.getId() == valueId) {
+				ret = temp;
+				break;
 			}
-		} catch (Exception e) {
-			logger.error(e);
 		}
+
 		return ret;
 	}
 
@@ -239,18 +236,16 @@ public class BaseDataManager {
 	 */
 	public BaseDataInfo getValue(String code, String key) {
 		BaseDataInfo ret = null;
-		try {
-			Iterator<?> iter = getList(key);
-			while (iter.hasNext()) {
-				BaseDataInfo temp = (BaseDataInfo) iter.next();
-				if (temp.getCode().equals(code)) {
-					ret = temp;
-					break;
-				}
+
+		Iterator<BaseDataInfo> iter = getList(key);
+		while (iter.hasNext()) {
+			BaseDataInfo temp = (BaseDataInfo) iter.next();
+			if (StringUtils.equals(temp.getCode(), code)) {
+				ret = temp;
+				break;
 			}
-		} catch (Exception e) {
-			logger.error(e);
 		}
+
 		return ret;
 	}
 
@@ -263,18 +258,16 @@ public class BaseDataManager {
 	 */
 	public BaseDataInfo getBaseData(String name, String key) {
 		BaseDataInfo ret = null;
-		try {
-			Iterator<?> iter = getList(key);
-			while (iter.hasNext()) {
-				BaseDataInfo temp = (BaseDataInfo) iter.next();
-				if (temp.getName().equals(name)) {
-					ret = temp;
-					break;
-				}
+
+		Iterator<BaseDataInfo> iter = getList(key);
+		while (iter.hasNext()) {
+			BaseDataInfo temp = (BaseDataInfo) iter.next();
+			if (StringUtils.equals(temp.getName(), name)) {
+				ret = temp;
+				break;
 			}
-		} catch (Exception e) {
-			logger.error(e);
 		}
+
 		return ret;
 	}
 
@@ -287,18 +280,16 @@ public class BaseDataManager {
 	 */
 	public BaseDataInfo getBaseDataWithNo(String no, String key) {
 		BaseDataInfo ret = null;
-		try {
-			Iterator<?> iter = getList(key);
-			while (iter.hasNext()) {
-				BaseDataInfo temp = (BaseDataInfo) iter.next();
-				if (temp.getNo().equals(no)) {
-					ret = temp;
-					break;
-				}
+
+		Iterator<BaseDataInfo> iter = getList(key);
+		while (iter.hasNext()) {
+			BaseDataInfo temp = (BaseDataInfo) iter.next();
+			if (StringUtils.equals(temp.getNo(), no)) {
+				ret = temp;
+				break;
 			}
-		} catch (Exception e) {
-			logger.error(e);
 		}
+
 		return ret;
 	}
 
@@ -604,9 +595,9 @@ public class BaseDataManager {
 				logger.info("装载用户信息开始...");
 				SysUserService service = (SysUserService) serviceMap
 						.get(SV_NAMES[0]);
-				List<?> list = service.getSysUserList();
+				List<SysUser> list = service.getSysUserList();
 				if (list != null) {
-					Iterator<?> iter = list.iterator();
+					Iterator<SysUser> iter = list.iterator();
 					List<BaseDataInfo> tmp = new ArrayList<BaseDataInfo>();
 					while (iter.hasNext()) {
 						SysUser bean = (SysUser) iter.next();
@@ -615,6 +606,7 @@ public class BaseDataManager {
 							bdi.setId(bean.getId());// 用户id
 							bdi.setName(bean.getName());// 用户名称
 							bdi.setCode(bean.getCode());// 用户招聘号
+							bdi.setValue(bean.getAccount());
 							bdi.setExt1(bean.getTelephone());// 用户电话
 							logger.info("id:" + bean.getId() + ",name:"
 									+ bean.getName() + ",telephone:"
@@ -661,12 +653,12 @@ public class BaseDataManager {
 							bdi.setNo(bean.getNo());// 部门编号
 							bdi.setDeep(tree.getDeep());
 							// bdi.setParentId((int) tree.getParent());
-							SysTree parentCurrTree = service.findById(tree
+							SysTree parentTree = service.findById(tree
 									.getParentId());
-							if (parentCurrTree != null
-									&& parentCurrTree.getDepartment() != null
-									&& parent.getId() != parentCurrTree.getId()) {// 不等于部门结构,则取部门
-								bdi.setParentId((int) parentCurrTree
+							if (parentTree != null
+									&& parentTree.getDepartment() != null
+									&& parent.getId() != parentTree.getId()) {// 不等于部门结构,则取部门
+								bdi.setParentId((int) parentTree
 										.getDepartment().getId());
 							} else {
 								bdi.setParentId((int) parent.getParentId());
@@ -696,10 +688,10 @@ public class BaseDataManager {
 				logger.info("装载模块信息开始...");
 				SysFunctionService service = (SysFunctionService) serviceMap
 						.get(SV_NAMES[5]);
-				List<?> list = service.getSysFunctionList();
+				List<SysFunction> list = service.getSysFunctionList();
 				// 显示所有模块列表
-				if (list != null) {
-					Iterator<?> iter = list.iterator();
+				if (list != null && !list.isEmpty()) {
+					Iterator<SysFunction> iter = list.iterator();
 					List<BaseDataInfo> tmp = new ArrayList<BaseDataInfo>();
 					while (iter.hasNext()) {
 						SysFunction bean = (SysFunction) iter.next();
@@ -728,7 +720,52 @@ public class BaseDataManager {
 	 * 装载字典信息
 	 */
 	public void loadDictInfo() {
+		try {
+			if (serviceMap.containsKey(SV_NAMES[4])) {
+				logger.info("装载字典信息开始...");
+				DictoryService dictoryService = (DictoryService) serviceMap
+						.get(SV_NAMES[4]);
+				List<SysTree> trees = dictoryService.getAllCategories();
+				for (int i = 0; i < trees.size(); i++) {
+					SysTree treeNode = trees.get(i);
+					if (treeNode != null) {
+						List<Dictory> list = dictoryService
+								.getAvailableDictoryList(treeNode.getId());
+						if (list != null && !list.isEmpty()) {
+							Iterator<Dictory> iter = list.iterator();
+							List<BaseDataInfo> tmp = new ArrayList<BaseDataInfo>();
+							while (iter.hasNext()) {
+								Dictory bean = (Dictory) iter.next();
+								BaseDataInfo bdi = new BaseDataInfo();
+								bdi.setId(bean.getId());// 字典id
+								bdi.setName(bean.getName());// 字典名称
+								bdi.setCode(bean.getCode());// 字典代码
+								bdi.setValue(bean.getValue());// 字典代码
+								bdi.setExt1(bean.getExt1());// 扩展字段1(投资汇率)
+								bdi.setExt2(bean.getExt2());// 扩展字段2(费用汇率)
 
+								bdi.setExt3(bean.getExt3());// 扩展字段1(投资汇率设置人)
+								bdi.setExt4(bean.getExt4());// 扩展字段1(费用汇率设置人)
+
+								bdi.setExt5(bean.getExt5());// 扩展字段1(投资汇率最后修改时间)
+								bdi.setExt6(bean.getExt6());// 扩展字段1(费用汇率最后修改时间)
+								bdi.setDeep(0);
+
+								logger.info("id:" + bean.getId() + ",name:"
+										+ bean.getName() + ",code:"
+										+ bean.getCode() + ",value:"
+										+ bean.getValue());
+								tmp.add(bdi);
+							}
+							baseDataMap.put(treeNode.getCode(), tmp);
+						}
+					}
+				}
+				logger.info("装载字典信息结束.");
+			}
+		} catch (Exception e) {
+			logger.error("提取字典数据失败！");
+		}
 	}
 
 	/**
@@ -742,10 +779,10 @@ public class BaseDataManager {
 				logger.info("装载科目代码开始...");
 				SubjectCodeService service = (SubjectCodeService) serviceMap
 						.get(SV_NAMES[7]);
-				List<?> list = service.getSubjectCodeList();
+				List<SubjectCode> list = service.getSubjectCodeList();
 				// 显示所有列表
 				if (list != null) {
-					Iterator<?> iter = list.iterator();
+					Iterator<SubjectCode> iter = list.iterator();
 					List<BaseDataInfo> tmp = new ArrayList<BaseDataInfo>();
 					while (iter.hasNext()) {
 						SubjectCode bean = (SubjectCode) iter.next();

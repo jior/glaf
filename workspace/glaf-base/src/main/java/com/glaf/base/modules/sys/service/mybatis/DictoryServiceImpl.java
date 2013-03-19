@@ -47,6 +47,8 @@ public class DictoryServiceImpl implements DictoryService {
 
 	protected DictoryMapper dictoryMapper;
 
+	protected SysTreeMapper sysTreeMapper;
+
 	protected IdGenerator idGenerator;
 
 	protected SqlSessionTemplate sqlSessionTemplate;
@@ -106,6 +108,18 @@ public class DictoryServiceImpl implements DictoryService {
 
 	public Dictory find(long id) {
 		return this.getDictory(id);
+	}
+
+	/**
+	 * 获取全部基础数据的分类树
+	 * 
+	 * @return
+	 */
+	public List<SysTree> getAllCategories() {
+		SysTreeQuery query = new SysTreeQuery();
+		query.locked(0);
+		List<SysTree> trees = sysTreeMapper.getDictorySysTrees(query);
+		return trees;
 	}
 
 	public List<Dictory> getAvailableDictoryList(long typeId) {
@@ -229,6 +243,11 @@ public class DictoryServiceImpl implements DictoryService {
 	@Resource
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
 		this.sqlSessionTemplate = sqlSessionTemplate;
+	}
+
+	@Resource
+	public void setSysTreeMapper(SysTreeMapper sysTreeMapper) {
+		this.sysTreeMapper = sysTreeMapper;
 	}
 
 	@Transactional
