@@ -23,50 +23,28 @@ import com.glaf.core.query.DataQuery;
 
 public class DictoryQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;
-	protected List<Long> rowIds;
-	protected Long typeId;
-	protected Long typeIdGreaterThanOrEqual;
-	protected Long typeIdLessThanOrEqual;
-	protected List<Long> typeIds;
-	protected String name;
-	protected String nameLike;
-	protected List<String> names;
-	protected String desc;
-	protected String descLike;
-	protected List<String> descs;
+	protected Integer blocked;
+	protected Integer blockedGreaterThanOrEqual;
+
+	protected Integer blockedLessThanOrEqual;
+	protected List<Integer> blockeds;
 	protected String code;
 	protected String codeLike;
 	protected List<String> codes;
+	protected String desc;
+	protected String descLike;
+	protected List<String> descs;
+	protected String name;
 
-	protected Integer sortGreaterThanOrEqual;
+	protected String nameLike;
+	protected List<String> names;
+	protected Long nodeId;
+	protected List<Long> rowIds;
+
 	protected Integer sortGreaterThan;
-	protected Integer sortLessThanOrEqual;
+	protected Integer sortGreaterThanOrEqual;
 	protected Integer sortLessThan;
-
-	protected Integer blocked;
-	protected Integer blockedGreaterThanOrEqual;
-	protected Integer blockedLessThanOrEqual;
-	protected List<Integer> blockeds;
-	protected String ext1;
-	protected String ext1Like;
-	protected List<String> ext1s;
-	protected String ext2;
-	protected String ext2Like;
-	protected List<String> ext2s;
-	protected String ext3;
-	protected String ext3Like;
-	protected List<String> ext3s;
-	protected String ext4;
-	protected String ext4Like;
-	protected List<String> ext4s;
-	protected Date ext5;
-	protected Date ext5GreaterThanOrEqual;
-	protected Date ext5LessThanOrEqual;
-	protected List<Date> ext5s;
-	protected Date ext6;
-	protected Date ext6GreaterThanOrEqual;
-	protected Date ext6LessThanOrEqual;
-	protected List<Date> ext6s;
+	protected Integer sortLessThanOrEqual;
 
 	public DictoryQuery() {
 
@@ -153,166 +131,6 @@ public class DictoryQuery extends DataQuery {
 		return this;
 	}
 
-	public DictoryQuery ext1(String ext1) {
-		if (ext1 == null) {
-			throw new RuntimeException("ext1 is null");
-		}
-		this.ext1 = ext1;
-		return this;
-	}
-
-	public DictoryQuery ext1Like(String ext1Like) {
-		if (ext1Like == null) {
-			throw new RuntimeException("ext1 is null");
-		}
-		this.ext1Like = ext1Like;
-		return this;
-	}
-
-	public DictoryQuery ext1s(List<String> ext1s) {
-		if (ext1s == null) {
-			throw new RuntimeException("ext1s is empty ");
-		}
-		this.ext1s = ext1s;
-		return this;
-	}
-
-	public DictoryQuery ext2(String ext2) {
-		if (ext2 == null) {
-			throw new RuntimeException("ext2 is null");
-		}
-		this.ext2 = ext2;
-		return this;
-	}
-
-	public DictoryQuery ext2Like(String ext2Like) {
-		if (ext2Like == null) {
-			throw new RuntimeException("ext2 is null");
-		}
-		this.ext2Like = ext2Like;
-		return this;
-	}
-
-	public DictoryQuery ext2s(List<String> ext2s) {
-		if (ext2s == null) {
-			throw new RuntimeException("ext2s is empty ");
-		}
-		this.ext2s = ext2s;
-		return this;
-	}
-
-	public DictoryQuery ext3(String ext3) {
-		if (ext3 == null) {
-			throw new RuntimeException("ext3 is null");
-		}
-		this.ext3 = ext3;
-		return this;
-	}
-
-	public DictoryQuery ext3Like(String ext3Like) {
-		if (ext3Like == null) {
-			throw new RuntimeException("ext3 is null");
-		}
-		this.ext3Like = ext3Like;
-		return this;
-	}
-
-	public DictoryQuery ext3s(List<String> ext3s) {
-		if (ext3s == null) {
-			throw new RuntimeException("ext3s is empty ");
-		}
-		this.ext3s = ext3s;
-		return this;
-	}
-
-	public DictoryQuery ext4(String ext4) {
-		if (ext4 == null) {
-			throw new RuntimeException("ext4 is null");
-		}
-		this.ext4 = ext4;
-		return this;
-	}
-
-	public DictoryQuery ext4Like(String ext4Like) {
-		if (ext4Like == null) {
-			throw new RuntimeException("ext4 is null");
-		}
-		this.ext4Like = ext4Like;
-		return this;
-	}
-
-	public DictoryQuery ext4s(List<String> ext4s) {
-		if (ext4s == null) {
-			throw new RuntimeException("ext4s is empty ");
-		}
-		this.ext4s = ext4s;
-		return this;
-	}
-
-	public DictoryQuery ext5(Date ext5) {
-		if (ext5 == null) {
-			throw new RuntimeException("ext5 is null");
-		}
-		this.ext5 = ext5;
-		return this;
-	}
-
-	public DictoryQuery ext5GreaterThanOrEqual(Date ext5GreaterThanOrEqual) {
-		if (ext5GreaterThanOrEqual == null) {
-			throw new RuntimeException("ext5 is null");
-		}
-		this.ext5GreaterThanOrEqual = ext5GreaterThanOrEqual;
-		return this;
-	}
-
-	public DictoryQuery ext5LessThanOrEqual(Date ext5LessThanOrEqual) {
-		if (ext5LessThanOrEqual == null) {
-			throw new RuntimeException("ext5 is null");
-		}
-		this.ext5LessThanOrEqual = ext5LessThanOrEqual;
-		return this;
-	}
-
-	public DictoryQuery ext5s(List<Date> ext5s) {
-		if (ext5s == null) {
-			throw new RuntimeException("ext5s is empty ");
-		}
-		this.ext5s = ext5s;
-		return this;
-	}
-
-	public DictoryQuery ext6(Date ext6) {
-		if (ext6 == null) {
-			throw new RuntimeException("ext6 is null");
-		}
-		this.ext6 = ext6;
-		return this;
-	}
-
-	public DictoryQuery ext6GreaterThanOrEqual(Date ext6GreaterThanOrEqual) {
-		if (ext6GreaterThanOrEqual == null) {
-			throw new RuntimeException("ext6 is null");
-		}
-		this.ext6GreaterThanOrEqual = ext6GreaterThanOrEqual;
-		return this;
-	}
-
-	public DictoryQuery ext6LessThanOrEqual(Date ext6LessThanOrEqual) {
-		if (ext6LessThanOrEqual == null) {
-			throw new RuntimeException("ext6 is null");
-		}
-		this.ext6LessThanOrEqual = ext6LessThanOrEqual;
-		return this;
-	}
-
-	public DictoryQuery ext6s(List<Date> ext6s) {
-		if (ext6s == null) {
-			throw new RuntimeException("ext6s is empty ");
-		}
-		this.ext6s = ext6s;
-		return this;
-	}
-
 	public Integer getBlocked() {
 		return blocked;
 	}
@@ -367,118 +185,6 @@ public class DictoryQuery extends DataQuery {
 
 	public List<String> getDescs() {
 		return descs;
-	}
-
-	public String getExt1() {
-		return ext1;
-	}
-
-	public String getExt1Like() {
-		if (ext1Like != null && ext1Like.trim().length() > 0) {
-			if (!ext1Like.startsWith("%")) {
-				ext1Like = "%" + ext1Like;
-			}
-			if (!ext1Like.endsWith("%")) {
-				ext1Like = ext1Like + "%";
-			}
-		}
-		return ext1Like;
-	}
-
-	public List<String> getExt1s() {
-		return ext1s;
-	}
-
-	public String getExt2() {
-		return ext2;
-	}
-
-	public String getExt2Like() {
-		if (ext2Like != null && ext2Like.trim().length() > 0) {
-			if (!ext2Like.startsWith("%")) {
-				ext2Like = "%" + ext2Like;
-			}
-			if (!ext2Like.endsWith("%")) {
-				ext2Like = ext2Like + "%";
-			}
-		}
-		return ext2Like;
-	}
-
-	public List<String> getExt2s() {
-		return ext2s;
-	}
-
-	public String getExt3() {
-		return ext3;
-	}
-
-	public String getExt3Like() {
-		if (ext3Like != null && ext3Like.trim().length() > 0) {
-			if (!ext3Like.startsWith("%")) {
-				ext3Like = "%" + ext3Like;
-			}
-			if (!ext3Like.endsWith("%")) {
-				ext3Like = ext3Like + "%";
-			}
-		}
-		return ext3Like;
-	}
-
-	public List<String> getExt3s() {
-		return ext3s;
-	}
-
-	public String getExt4() {
-		return ext4;
-	}
-
-	public String getExt4Like() {
-		if (ext4Like != null && ext4Like.trim().length() > 0) {
-			if (!ext4Like.startsWith("%")) {
-				ext4Like = "%" + ext4Like;
-			}
-			if (!ext4Like.endsWith("%")) {
-				ext4Like = ext4Like + "%";
-			}
-		}
-		return ext4Like;
-	}
-
-	public List<String> getExt4s() {
-		return ext4s;
-	}
-
-	public Date getExt5() {
-		return ext5;
-	}
-
-	public Date getExt5GreaterThanOrEqual() {
-		return ext5GreaterThanOrEqual;
-	}
-
-	public Date getExt5LessThanOrEqual() {
-		return ext5LessThanOrEqual;
-	}
-
-	public List<Date> getExt5s() {
-		return ext5s;
-	}
-
-	public Date getExt6() {
-		return ext6;
-	}
-
-	public Date getExt6GreaterThanOrEqual() {
-		return ext6GreaterThanOrEqual;
-	}
-
-	public Date getExt6LessThanOrEqual() {
-		return ext6LessThanOrEqual;
-	}
-
-	public List<Date> getExt6s() {
-		return ext6s;
 	}
 
 	public String getName() {
@@ -576,27 +282,11 @@ public class DictoryQuery extends DataQuery {
 		return sortLessThanOrEqual;
 	}
 
-	public Long getTypeId() {
-		return typeId;
-	}
-
-	public Long getTypeIdGreaterThanOrEqual() {
-		return typeIdGreaterThanOrEqual;
-	}
-
-	public Long getTypeIdLessThanOrEqual() {
-		return typeIdLessThanOrEqual;
-	}
-
-	public List<Long> getTypeIds() {
-		return typeIds;
-	}
-
 	@Override
 	public void initQueryColumns() {
 		super.initQueryColumns();
 		addColumn("id", "ID");
-		addColumn("typeId", "TYPEID");
+		addColumn("nodeId", "TYPEID");
 		addColumn("name", "NAME");
 		addColumn("desc", "DICTDESC");
 		addColumn("code", "CODE");
@@ -631,6 +321,14 @@ public class DictoryQuery extends DataQuery {
 			throw new RuntimeException("names is empty ");
 		}
 		this.names = names;
+		return this;
+	}
+
+	public DictoryQuery nodeId(Long nodeId) {
+		if (nodeId == null) {
+			throw new RuntimeException("nodeId is null");
+		}
+		this.nodeId = nodeId;
 		return this;
 	}
 
@@ -674,86 +372,6 @@ public class DictoryQuery extends DataQuery {
 		this.descs = descs;
 	}
 
-	public void setExt1(String ext1) {
-		this.ext1 = ext1;
-	}
-
-	public void setExt1Like(String ext1Like) {
-		this.ext1Like = ext1Like;
-	}
-
-	public void setExt1s(List<String> ext1s) {
-		this.ext1s = ext1s;
-	}
-
-	public void setExt2(String ext2) {
-		this.ext2 = ext2;
-	}
-
-	public void setExt2Like(String ext2Like) {
-		this.ext2Like = ext2Like;
-	}
-
-	public void setExt2s(List<String> ext2s) {
-		this.ext2s = ext2s;
-	}
-
-	public void setExt3(String ext3) {
-		this.ext3 = ext3;
-	}
-
-	public void setExt3Like(String ext3Like) {
-		this.ext3Like = ext3Like;
-	}
-
-	public void setExt3s(List<String> ext3s) {
-		this.ext3s = ext3s;
-	}
-
-	public void setExt4(String ext4) {
-		this.ext4 = ext4;
-	}
-
-	public void setExt4Like(String ext4Like) {
-		this.ext4Like = ext4Like;
-	}
-
-	public void setExt4s(List<String> ext4s) {
-		this.ext4s = ext4s;
-	}
-
-	public void setExt5(Date ext5) {
-		this.ext5 = ext5;
-	}
-
-	public void setExt5GreaterThanOrEqual(Date ext5GreaterThanOrEqual) {
-		this.ext5GreaterThanOrEqual = ext5GreaterThanOrEqual;
-	}
-
-	public void setExt5LessThanOrEqual(Date ext5LessThanOrEqual) {
-		this.ext5LessThanOrEqual = ext5LessThanOrEqual;
-	}
-
-	public void setExt5s(List<Date> ext5s) {
-		this.ext5s = ext5s;
-	}
-
-	public void setExt6(Date ext6) {
-		this.ext6 = ext6;
-	}
-
-	public void setExt6GreaterThanOrEqual(Date ext6GreaterThanOrEqual) {
-		this.ext6GreaterThanOrEqual = ext6GreaterThanOrEqual;
-	}
-
-	public void setExt6LessThanOrEqual(Date ext6LessThanOrEqual) {
-		this.ext6LessThanOrEqual = ext6LessThanOrEqual;
-	}
-
-	public void setExt6s(List<Date> ext6s) {
-		this.ext6s = ext6s;
-	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -782,22 +400,6 @@ public class DictoryQuery extends DataQuery {
 		this.sortLessThanOrEqual = sortLessThanOrEqual;
 	}
 
-	public void setTypeId(Long typeId) {
-		this.typeId = typeId;
-	}
-
-	public void setTypeIdGreaterThanOrEqual(Long typeIdGreaterThanOrEqual) {
-		this.typeIdGreaterThanOrEqual = typeIdGreaterThanOrEqual;
-	}
-
-	public void setTypeIdLessThanOrEqual(Long typeIdLessThanOrEqual) {
-		this.typeIdLessThanOrEqual = typeIdLessThanOrEqual;
-	}
-
-	public void setTypeIds(List<Long> typeIds) {
-		this.typeIds = typeIds;
-	}
-
 	public DictoryQuery sortGreaterThanOrEqual(Integer sortGreaterThanOrEqual) {
 		if (sortGreaterThanOrEqual == null) {
 			throw new RuntimeException("sort is null");
@@ -811,38 +413,6 @@ public class DictoryQuery extends DataQuery {
 			throw new RuntimeException("sort is null");
 		}
 		this.sortLessThanOrEqual = sortLessThanOrEqual;
-		return this;
-	}
-
-	public DictoryQuery typeId(Long typeId) {
-		if (typeId == null) {
-			throw new RuntimeException("typeId is null");
-		}
-		this.typeId = typeId;
-		return this;
-	}
-
-	public DictoryQuery typeIdGreaterThanOrEqual(Long typeIdGreaterThanOrEqual) {
-		if (typeIdGreaterThanOrEqual == null) {
-			throw new RuntimeException("typeId is null");
-		}
-		this.typeIdGreaterThanOrEqual = typeIdGreaterThanOrEqual;
-		return this;
-	}
-
-	public DictoryQuery typeIdLessThanOrEqual(Long typeIdLessThanOrEqual) {
-		if (typeIdLessThanOrEqual == null) {
-			throw new RuntimeException("typeId is null");
-		}
-		this.typeIdLessThanOrEqual = typeIdLessThanOrEqual;
-		return this;
-	}
-
-	public DictoryQuery typeIds(List<Long> typeIds) {
-		if (typeIds == null) {
-			throw new RuntimeException("typeIds is empty ");
-		}
-		this.typeIds = typeIds;
 		return this;
 	}
 

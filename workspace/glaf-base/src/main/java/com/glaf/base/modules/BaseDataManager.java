@@ -764,6 +764,7 @@ public class BaseDataManager {
 				logger.info("装载字典信息结束.");
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			logger.error("提取字典数据失败！");
 		}
 	}

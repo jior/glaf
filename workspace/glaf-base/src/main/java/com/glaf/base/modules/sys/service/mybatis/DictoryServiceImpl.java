@@ -122,9 +122,9 @@ public class DictoryServiceImpl implements DictoryService {
 		return trees;
 	}
 
-	public List<Dictory> getAvailableDictoryList(long typeId) {
+	public List<Dictory> getAvailableDictoryList(long nodeId) {
 		DictoryQuery query = new DictoryQuery();
-		query.typeId(typeId);
+		query.nodeId(nodeId);
 		query.blocked(0);
 		query.setOrderBy(" E.SORT desc");
 		return this.list(query);
@@ -169,18 +169,18 @@ public class DictoryServiceImpl implements DictoryService {
 		return pager;
 	}
 
-	public List<Dictory> getDictoryList(long typeId) {
+	public List<Dictory> getDictoryList(long nodeId) {
 		DictoryQuery query = new DictoryQuery();
-		query.typeId(typeId);
+		query.nodeId(nodeId);
 		query.setOrderBy(" E.SORT desc");
 		return this.list(query);
 	}
 
-	public PageResult getDictoryList(long typeId, int pageNo, int pageSize) {
+	public PageResult getDictoryList(long nodeId, int pageNo, int pageSize) {
 		// 计算总数
 		PageResult pager = new PageResult();
 		DictoryQuery query = new DictoryQuery();
-		query.typeId(typeId);
+		query.nodeId(nodeId);
 		int count = this.count(query);
 		if (count == 0) {// 结果集为空
 			pager.setPageSize(pageSize);
@@ -266,9 +266,9 @@ public class DictoryServiceImpl implements DictoryService {
 	 * 
 	 * @param bean
 	 */
-	private void sortByForward(long typeId, Dictory bean) {
+	private void sortByForward(long nodeId, Dictory bean) {
 		DictoryQuery query = new DictoryQuery();
-		query.typeId(typeId);
+		query.nodeId(nodeId);
 		query.setSortLessThan(bean.getSort());
 		query.setOrderBy(" E.SORT desc");
 
@@ -289,9 +289,9 @@ public class DictoryServiceImpl implements DictoryService {
 	 * 
 	 * @param bean
 	 */
-	private void sortByPrevious(long typeId, Dictory bean) {
+	private void sortByPrevious(long nodeId, Dictory bean) {
 		DictoryQuery query = new DictoryQuery();
-		query.typeId(typeId);
+		query.nodeId(nodeId);
 		query.setSortGreaterThan(bean.getSort());
 		query.setOrderBy(" E.SORT asc");
 

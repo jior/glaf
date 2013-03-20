@@ -6,7 +6,7 @@
 
 	<resultMap id="dictoryResultMap"	type="com.glaf.base.modules.sys.model.Dictory">
 		<id property="id" column="ID" jdbcType="BIGINT" />
-		<result property="typeId" column="TYPEID" jdbcType="BIGINT"/>
+		<result property="nodeId" column="TYPEID" jdbcType="BIGINT"/>
 		<result property="name" column="NAME" jdbcType="VARCHAR"/>
 		<result property="desc" column="DICTDESC" jdbcType="VARCHAR"/>
 		<result property="code" column="CODE" jdbcType="VARCHAR"/>
@@ -26,7 +26,7 @@
 		insert into sys_dictory 
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 		    ID
-			<if test="typeId != null">
+			<if test="nodeId != null">
 				,TYPEID 
 			</if>
 			<if test="name != null">
@@ -70,8 +70,8 @@
 		<trim prefix=" values (" suffix=")" suffixOverrides=",">
 			  #{id, jdbcType=BIGINT}
 	     
-			<if test="typeId != null">
-				,#{typeId, jdbcType=BIGINT}
+			<if test="nodeId != null">
+				,#{nodeId, jdbcType=BIGINT}
 			</if>
 			<if test="name != null">
 				,#{name, jdbcType=VARCHAR}
@@ -117,8 +117,8 @@
 		update sys_dictory
 		set
 		<trim prefix="" suffix="" suffixOverrides=",">		
-			<if test="typeId != null">
-				TYPEID = #{typeId, jdbcType=BIGINT},
+			<if test="nodeId != null">
+				TYPEID = #{nodeId, jdbcType=BIGINT},
 			</if>
 			<if test="name != null">
 				NAME = #{name, jdbcType=VARCHAR},
@@ -213,24 +213,8 @@
 		<where>
 		       1 = 1  
 
-			<if test="typeId != null">
-				and E.TYPEID = #{typeId}
-			</if>
-
-			<if test="typeIdGreaterThanOrEqual != null">
-				and E.TYPEID &gt;= #{typeIdGreaterThanOrEqual}
-			</if>
-
-			<if test="typeIdLessThanOrEqual != null">
-				and E.TYPEID &lt;= #{typeIdLessThanOrEqual}
-			</if>
-
-			<if test="typeIds != null and typeIds.size() &gt; 0">
-			    and E.TYPEID IN
-				<foreach item="x_typeId" index="index" collection="typeIds" 
-					open="(" separator="," close=")">
-                  #{x_typeId}
-				</foreach>
+			<if test="nodeId != null">
+				and E.TYPEID = #{nodeId}
 			</if>
 	        
 			<if test="name != null and name != '' ">
@@ -249,10 +233,6 @@
 				</foreach>
 			</if>
 	        
-			<if test="desc != null and desc != '' ">
-				and E.DICTDESC = #{desc}
-			</if>
-
 			<if test="descLike != null and descLike != '' ">
 				and E.DICTDESC like #{descLike}
 			</if>
@@ -273,7 +253,6 @@
 				</foreach>
 			</if>
 
-
 			<if test="sortGreaterThanOrEqual != null">
 				and E.SORT &gt;= #{sortGreaterThanOrEqual}
 			</if>
@@ -292,62 +271,6 @@
 		
 			<if test="blocked != null">
 				and E.BLOCKED = #{blocked}
-			</if>
-     
-			<if test="ext1 != null and ext1 != '' ">
-				and E.EXT1 = #{ext1}
-			</if>
-
-			<if test="ext1Like != null and ext1Like != '' ">
-				and E.EXT1 like #{ext1Like}
-			</if>		
-	        
-			<if test="ext2 != null and ext2 != '' ">
-				and E.EXT2 = #{ext2}
-			</if>
-
-			<if test="ext2Like != null and ext2Like != '' ">
-				and E.EXT2 like #{ext2Like}
-			</if>
-	      
-			<if test="ext3 != null and ext3 != '' ">
-				and E.EXT3 = #{ext3}
-			</if>
-
-			<if test="ext3Like != null and ext3Like != '' ">
-				and E.EXT3 like #{ext3Like}
-			</if>
-
-			<if test="ext4 != null and ext4 != '' ">
-				and E.EXT4 = #{ext4}
-			</if>
-
-			<if test="ext4Like != null and ext4Like != '' ">
-				and E.EXT4 like #{ext4Like}
-			</if>
-		
-			<if test="ext5 != null">
-				and E.EXT5 = #{ext5}
-			</if>
-
-			<if test="ext5GreaterThanOrEqual != null">
-				and E.EXT5 &gt;= #{ext5GreaterThanOrEqual}
-			</if>
-
-			<if test="ext5LessThanOrEqual != null">
-				and E.EXT5 &lt;= #{ext5LessThanOrEqual}
-			</if>
-
-			<if test="ext6 != null">
-				and E.EXT6 = #{ext6}
-			</if>
-
-			<if test="ext6GreaterThanOrEqual != null">
-				and E.EXT6 &gt;= #{ext6GreaterThanOrEqual}
-			</if>
-
-			<if test="ext6LessThanOrEqual != null">
-				and E.EXT6 &lt;= #{ext6LessThanOrEqual}
 			</if>
 			 
 		</where>
