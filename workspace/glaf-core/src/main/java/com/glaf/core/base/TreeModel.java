@@ -102,6 +102,8 @@ public interface TreeModel extends Serializable,
 	 */
 	int getSortNo();
 
+	String getTreeId();
+
 	String getUrl();
 
 	/**
@@ -137,6 +139,8 @@ public interface TreeModel extends Serializable,
 	void setParentId(long parentId);
 
 	void setSortNo(int sortNo);
+
+	void setTreeId(String treeId);
 
 	void setUrl(String url);
 

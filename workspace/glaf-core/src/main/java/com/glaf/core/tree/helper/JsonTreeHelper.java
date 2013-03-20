@@ -56,6 +56,10 @@ public class JsonTreeHelper {
 		if (treeModel.getUrl() != null) {
 			jsonObject.put("url", treeModel.getUrl());
 		}
+		
+		if (treeModel.getTreeId() != null) {
+			jsonObject.put("treeId", treeModel.getTreeId());
+		}
 
 		List<TreeModel> children = treeModel.getChildren();
 
@@ -92,7 +96,9 @@ public class JsonTreeHelper {
 		if (treeModel.getIcon() != null) {
 			jsonObject.put("icon", treeModel.getIcon());
 		}
-
+		if (treeModel.getTreeId() != null) {
+			jsonObject.put("treeId", treeModel.getTreeId());
+		}
 		if (treeModel.getUrl() != null) {
 			jsonObject.put("url", treeModel.getUrl());
 		}

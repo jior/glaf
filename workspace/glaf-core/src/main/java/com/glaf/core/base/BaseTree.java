@@ -32,19 +32,20 @@ import com.glaf.core.tree.util.TreeJsonFactory;
 
 public class BaseTree implements Serializable, TreeModel, JSONable {
 	private static final long serialVersionUID = 2666681837822864771L;
-	protected long id;
-	protected long parentId;
-	protected String name;
-	protected String desc;
-	protected int sort;
+	protected List<TreeModel> children = new ArrayList<TreeModel>();
 	protected String code;
 	protected int deep;
+	protected String desc;
 	protected String icon;
-	protected String url;
 	protected String iconCls;
+	protected long id;
 	protected int locked;
+	protected String name;
 	protected TreeModel parent;
-	protected List<TreeModel> children = new ArrayList<TreeModel>();
+	protected long parentId;
+	protected int sort;
+	protected String treeId;
+	protected String url;
 
 	public void addChild(TreeModel treeModel) {
 		if (children == null) {
@@ -150,6 +151,10 @@ public class BaseTree implements Serializable, TreeModel, JSONable {
 		return sort;
 	}
 
+	public String getTreeId() {
+		return treeId;
+	}
+
 	public String getUrl() {
 		return url;
 	}
@@ -232,6 +237,10 @@ public class BaseTree implements Serializable, TreeModel, JSONable {
 
 	public void setSortNo(int sortNo) {
 		this.sort = sortNo;
+	}
+
+	public void setTreeId(String treeId) {
+		this.treeId = treeId;
 	}
 
 	public void setUrl(String url) {

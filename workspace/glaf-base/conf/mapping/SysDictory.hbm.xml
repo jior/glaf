@@ -13,11 +13,12 @@
             <generator class="native"/>
         </id>
                 
-        <property name="typeId" type="long" column="typeId"/>
+        <property name="nodeId" type="long" column="typeId"/>
         <property name="code" type="string" column="code"/>        
         <property name="name" type="string" column="name"/>        
-        <property name="sort" type="integer" column="sort"/>           
-        <property name="desc" type="string" column="dictDesc"/>          
+        <property name="desc" type="string" column="dictDesc"/>  
+		<property name="value" type="string" column="value_"/>
+		<property name="sort" type="integer" column="sort"/>   
         <property name="blocked" type="integer" column="blocked"/>
 		
         <property name="ext1" type="string" column="ext1"/>
@@ -26,8 +27,8 @@
 		<property name="ext3" type="string" column="ext3"/>
         <property name="ext4" type="string" column="ext4"/>
 		
-		<property name="ext5" type="date" column="ext5"/>
-        <property name="ext6" type="date" column="ext6"/>
+		<property name="ext5" type="timestamp" column="ext5"/>
+        <property name="ext6" type="timestamp" column="ext6"/>
 		
     </class>
 </hibernate-mapping>

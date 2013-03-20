@@ -109,6 +109,14 @@ public interface SysTreeService {
 	 * @return List
 	 */
 	List<SysTree> getSysTreeList(int parent);
+	
+
+	/**
+	 * 获取全部列表
+	 * 
+	 * @return List
+	 */
+	List<SysTree> getAllSysTreeList();
 
 	/**
 	 * 获取分页列表

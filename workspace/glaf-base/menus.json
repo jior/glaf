@@ -7,7 +7,7 @@
                                         "nodeId": 21,
                                         "showMenu": 2,
                                         "sort": 15,
-                                        "url": "/sys/user.do?method=prepareModifyPwd"
+                                        "url": "/identity/user.do?method=prepareModifyPwd"
                               },
                               {
                                         "description": "",
@@ -15,14 +15,14 @@
                                         "nodeId": 22,
                                         "showMenu": 2,
                                         "sort": 15,
-                                        "url": "/sys/user.do?method=prepareModifyInfo"
+                                        "url": "/identity/user.do?method=prepareModifyInfo"
                               }
                     ],
                     "description": "",
                     "name": "个人设置",
                     "nodeId": 20,
                     "showMenu": 2,
-                    "sort": 329,
+                    "sort": 68213,
                     "url": ""
           },
           {
@@ -64,18 +64,34 @@
                     "name": "安全设置",
                     "nodeId": 10,
                     "showMenu": 2,
-                    "sort": 42,
+                    "sort": 329,
                     "url": ""
           },
           {
                     "children": [
                               {
+                                        "description": "系统参数",
+                                        "name": "系统参数",
+                                        "nodeId": 3241,
+                                        "showMenu": 1,
+                                        "sort": 113269,
+                                        "url": "/mx/system/property/edit?category=SYS"
+                              },
+                              {
                                         "description": "",
                                         "name": "调度管理",
                                         "nodeId": 495,
                                         "showMenu": 1,
-                                        "sort": 328,
+                                        "sort": 331,
                                         "url": "/sys/scheduler.do?method=showList"
+                              },
+                              {
+                                        "description": "模板管理",
+                                        "name": "模板管理",
+                                        "nodeId": 113270,
+                                        "showMenu": 1,
+                                        "sort": 328,
+                                        "url": "/mx/system/template/showFrame"
                               },
                               {
                                         "description": "",
@@ -91,7 +107,7 @@
                                         "nodeId": 449,
                                         "showMenu": 1,
                                         "sort": 291,
-                                        "url": "/others/workCalendar.do?method=showList"
+                                        "url": "/sys/workCalendar.do?method=showList"
                               },
                               {
                                         "description": "",
@@ -122,7 +138,7 @@
                     "name": "系统管理",
                     "nodeId": 8,
                     "showMenu": 1,
-                    "sort": 15,
+                    "sort": 53,
                     "url": ""
           },
           {
@@ -156,11 +172,77 @@
                     "name": "流程管理",
                     "nodeId": 434,
                     "showMenu": 1,
-                    "sort": 14,
+                    "sort": 42,
                     "url": ""
           },
           {
                     "children": [
+                              {
+                                        "description": "",
+                                        "name": "发布流程包",
+                                        "nodeId": 54,
+                                        "showMenu": 1,
+                                        "sort": 59,
+                                        "url": "/mx/activiti/deploy"
+                              },
+                              {
+                                        "description": "流程定义",
+                                        "name": "流程定义",
+                                        "nodeId": 55,
+                                        "showMenu": 1,
+                                        "sort": 58,
+                                        "url": "/mx/activiti/process/processDefinitions"
+                              },
+                              {
+                                        "description": "历史流程实例",
+                                        "name": "历史流程实例",
+                                        "nodeId": 57,
+                                        "showMenu": 1,
+                                        "sort": 57,
+                                        "url": "/mx/activiti/history/historyProcessInstances"
+                              },
+                              {
+                                        "description": "流程实例",
+                                        "name": "流程实例",
+                                        "nodeId": 56,
+                                        "showMenu": 1,
+                                        "sort": 56,
+                                        "url": "/mx/activiti/process/processInstances"
+                              },
+                              {
+                                        "description": "任务列表",
+                                        "name": "任务列表",
+                                        "nodeId": 58,
+                                        "showMenu": 1,
+                                        "sort": 55,
+                                        "url": "/mx/activiti/task/taskList"
+                              },
+                              {
+                                        "description": "流程演示",
+                                        "name": "流程演示",
+                                        "nodeId": 59,
+                                        "showMenu": 1,
+                                        "sort": 54,
+                                        "url": "/workflow/activiti/index.jsp"
+                              }
+                    ],
+                    "description": "Activiti流程管理",
+                    "name": "Activiti流程管理",
+                    "nodeId": 53,
+                    "showMenu": 1,
+                    "sort": 15,
+                    "url": ""
+          },
+          {
+                    "children": [
+                              {
+                                        "description": "参数设置",
+                                        "name": "参数设置",
+                                        "nodeId": 50,
+                                        "showMenu": 1,
+                                        "sort": 50,
+                                        "url": "/mx/system/property/edit?category=RPT"
+                              },
                               {
                                         "description": "",
                                         "name": "查询管理",
@@ -222,18 +304,44 @@
                     "name": "统计报表",
                     "nodeId": 42,
                     "showMenu": 1,
-                    "sort": 5,
+                    "sort": 14,
                     "url": ""
           },
           {
                     "children": [{
                               "description": "",
-                              "name": "出差申请",
-                              "nodeId": 3240,
+                              "name": "目录邮件发送",
+                              "nodeId": 68231,
                               "showMenu": 1,
-                              "sort": 330,
-                              "url": "/mx/apps/trip"
+                              "sort": 68230,
+                              "url": "/mx/mail/sender"
                     }],
+                    "description": "工具箱",
+                    "name": "工具箱",
+                    "nodeId": 68214,
+                    "showMenu": 1,
+                    "sort": 5,
+                    "url": ""
+          },
+          {
+                    "children": [
+                              {
+                                        "description": "",
+                                        "name": "系统参数演示",
+                                        "nodeId": 109209,
+                                        "showMenu": 1,
+                                        "sort": 109208,
+                                        "url": "mx/system/param/edit?serviceKey=chart&businessKey=29"
+                              },
+                              {
+                                        "description": "",
+                                        "name": "出差申请",
+                                        "nodeId": 3240,
+                                        "showMenu": 1,
+                                        "sort": 330,
+                                        "url": "/mx/apps/trip"
+                              }
+                    ],
                     "description": "",
                     "name": "演示系统",
                     "nodeId": 3239,

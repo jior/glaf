@@ -6,6 +6,7 @@ import org.jbpm.JbpmContext;
 import org.jbpm.JbpmException;
 import org.junit.Test;
 
+import com.glaf.core.config.SystemConfig;
 import com.glaf.core.util.FileUtils;
 import com.glaf.jbpm.container.ProcessContainer;
 import com.glaf.jbpm.context.Context;
@@ -15,6 +16,9 @@ public class DeployTest {
 	
 	@Test
 	public void testDeploy() {
+		String filename = SystemConfig.getConfigRootPath()
+				+ "/conf/jbpm/hibernate.cfg.xml";
+		System.out.println(filename);
 		MxJbpmProcessDeployer deployer = new MxJbpmProcessDeployer();
 		JbpmContext jbpmContext = null;
 		try {

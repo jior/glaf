@@ -1,20 +1,20 @@
 /*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.glaf.core.tree.component;
 
@@ -34,6 +34,12 @@ public abstract class TreeBase implements Component {
 	/** Holds value of property altImage. */
 	protected String altImage;
 
+	protected boolean checked;
+
+	private String cls;
+
+	protected String code;
+
 	/** Holds value of property description. */
 	protected String description;
 
@@ -43,19 +49,30 @@ public abstract class TreeBase implements Component {
 	/** Holds value of property height. */
 	protected String height;
 
+	/** Holds value of property name. */
+	protected String id;
+
 	/** Holds value of property image. */
 	protected String image;
 
 	/** Holds value of property location. */
 	protected String location;
 
-	/** Holds value of property name. */
-	protected String id;
-
-	protected String code;
+	/**
+	 * Holds value of property module; a Struts module prefix that overrides the
+	 * current module.
+	 * 
+	 * <p>
+	 * The default module is specified by <code>""</code>. Any non-default
+	 * module should begin with <code>"/"</code>.
+	 */
+	protected String module;
 
 	/** Holds value of property onclick. */
 	protected String onclick;
+
+	/** Holds value of property onContextTree */
+	protected String onContextTree;
 
 	/** Holds value of property ondblclick. */
 	protected String ondblclick;
@@ -81,28 +98,13 @@ public abstract class TreeBase implements Component {
 	/** Holds value of property toolTip. */
 	protected String toolTip;
 
-	/** Holds value of property width. */
-	protected String width;
+	protected String treeId;
 
 	/** Holds parsed (with variables) url that is used to render a link */
 	private String url;
 
-	/** Holds value of property onContextTree */
-	protected String onContextTree;
-
-	/**
-	 * Holds value of property module; a Struts module prefix that overrides the
-	 * current module.
-	 * 
-	 * <p>
-	 * The default module is specified by <code>""</code>. Any non-default
-	 * module should begin with <code>"/"</code>.
-	 */
-	protected String module;
-
-	private String cls;
-
-	protected boolean checked;
+	/** Holds value of property width. */
+	protected String width;
 
 	// ~ Methods
 	// ================================================================
@@ -282,6 +284,10 @@ public abstract class TreeBase implements Component {
 	 */
 	public String getToolTip() {
 		return toolTip;
+	}
+
+	public String getTreeId() {
+		return treeId;
 	}
 
 	/**
@@ -500,6 +506,10 @@ public abstract class TreeBase implements Component {
 	 */
 	public void setToolTip(String toolTip) {
 		this.toolTip = toolTip;
+	}
+
+	public void setTreeId(String treeId) {
+		this.treeId = treeId;
 	}
 
 	/**

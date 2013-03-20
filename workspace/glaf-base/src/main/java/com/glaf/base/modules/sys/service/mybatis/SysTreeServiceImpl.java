@@ -122,6 +122,12 @@ public class SysTreeServiceImpl implements SysTreeService {
 		return null;
 	}
 
+	public List<SysTree> getAllSysTreeList() {
+		SysTreeQuery query = new SysTreeQuery();
+		List<SysTree> list = this.list(query);
+		return list;
+	}
+
 	public void getSysTree(List<SysTree> tree, int parentId, int deep) {
 		SysTreeQuery query = new SysTreeQuery();
 		query.setParentId(Long.valueOf(parentId));
