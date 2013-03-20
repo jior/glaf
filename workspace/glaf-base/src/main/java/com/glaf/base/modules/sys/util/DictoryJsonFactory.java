@@ -31,8 +31,8 @@ public class DictoryJsonFactory {
 		if (jsonObject.containsKey("id")) {
 			model.setId(jsonObject.getLong("id"));
 		}
-		if (jsonObject.containsKey("typeId")) {
-			model.setTypeId(jsonObject.getLong("typeId"));
+		if (jsonObject.containsKey("nodeId")) {
+			model.setNodeId(jsonObject.getLong("nodeId"));
 		}
 		if (jsonObject.containsKey("name")) {
 			model.setName(jsonObject.getString("name"));
@@ -79,7 +79,7 @@ public class DictoryJsonFactory {
 		jsonObject.put("id", model.getId());
 		jsonObject.put("_id_", model.getId());
 		jsonObject.put("_oid_", model.getId());
-		jsonObject.put("typeId", model.getTypeId());
+		jsonObject.put("nodeId", model.getNodeId());
 		if (model.getName() != null) {
 			jsonObject.put("name", model.getName());
 		}
@@ -126,7 +126,7 @@ public class DictoryJsonFactory {
 		jsonObject.put("id", model.getId());
 		jsonObject.put("_id_", model.getId());
 		jsonObject.put("_oid_", model.getId());
-		jsonObject.put("typeId", model.getTypeId());
+		jsonObject.put("nodeId", model.getNodeId());
 		if (model.getName() != null) {
 			jsonObject.put("name", model.getName());
 		}

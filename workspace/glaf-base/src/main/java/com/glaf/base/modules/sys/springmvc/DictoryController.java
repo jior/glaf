@@ -133,7 +133,7 @@ public class DictoryController {
 			ex.printStackTrace();
 		}
 
-		if (bean.getTypeId() == 17) {
+		if (bean.getNodeId() == 17) {
 			// 添加当前操作汇率的担当和最后修改时间
 			StringBuffer sb = new StringBuffer();
 			List<SysDepartment> list = user.getNestingDepartment();
@@ -155,7 +155,7 @@ public class DictoryController {
 		}
 		ViewMessages messages = new ViewMessages();
 		if (dictoryService.create(bean)) {// 保存成功
-			if (bean.getTypeId() == 17) {
+			if (bean.getNodeId() == 17) {
 				BaseDataManager.getInstance().loadDictInfo();
 			}
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
@@ -220,7 +220,7 @@ public class DictoryController {
 		bean.setBlocked(form.getBlocked());
 		bean.setExt1(form.getExt1());
 		bean.setExt2(form.getExt2());
-		if (bean.getTypeId() == 17) {
+		if (bean.getNodeId() == 17) {
 			// 添加当前操作汇率的担当和最后修改时间
 			StringBuffer sb = new StringBuffer();
 			List<SysDepartment> list = user.getNestingDepartment();
@@ -242,7 +242,7 @@ public class DictoryController {
 		}
 		ViewMessages messages = new ViewMessages();
 		if (dictoryService.update(bean)) {// 保存成功
-			if (bean.getTypeId() == 17) {
+			if (bean.getNodeId() == 17) {
 				BaseDataManager.getInstance().loadDictInfo();
 			}
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(

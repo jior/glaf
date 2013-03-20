@@ -28,31 +28,23 @@ import com.glaf.core.base.JSONable;
 
 public class Dictory implements Serializable, JSONable {
 	private static final long serialVersionUID = 2756737871937885934L;
-	private long id;
-	private long typeId;
-	private String code;
-	private String name;
-	private String desc;
-	private String value;
-	private int sort;
 	private int blocked;
+	private String code;
+	private String desc;
 	private String ext1;
 	private String ext2;
 	private String ext3;
 	private String ext4;
 	private Date ext5;
 	private Date ext6;
+	private long id;
+	private String name;
+	private long nodeId;
+	private int sort;
+	private String value;
 
 	public Dictory() {
 
-	}
-
-	public String getValue() {
-		return value;
-	}
-
-	public void setValue(String value) {
-		this.value = value;
 	}
 
 	public int getBlocked() {
@@ -99,12 +91,20 @@ public class Dictory implements Serializable, JSONable {
 		return name;
 	}
 
+	public long getNodeId() {
+		return nodeId;
+	}
+
 	public int getSort() {
 		return sort;
 	}
 
-	public long getTypeId() {
-		return typeId;
+	public String getValue() {
+		return value;
+	}
+
+	public Dictory jsonToObject(JSONObject jsonObject) {
+		return DictoryJsonFactory.jsonToObject(jsonObject);
 	}
 
 	public void setBlocked(int blocked) {
@@ -151,16 +151,16 @@ public class Dictory implements Serializable, JSONable {
 		this.name = name;
 	}
 
+	public void setNodeId(long nodeId) {
+		this.nodeId = nodeId;
+	}
+
 	public void setSort(int sort) {
 		this.sort = sort;
 	}
 
-	public void setTypeId(long typeId) {
-		this.typeId = typeId;
-	}
-
-	public Dictory jsonToObject(JSONObject jsonObject) {
-		return DictoryJsonFactory.jsonToObject(jsonObject);
+	public void setValue(String value) {
+		this.value = value;
 	}
 
 	public JSONObject toJsonObject() {

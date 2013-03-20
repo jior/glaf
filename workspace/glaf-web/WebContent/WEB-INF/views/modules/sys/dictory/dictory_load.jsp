@@ -21,7 +21,7 @@ int parent=ParamUtil.getIntParameter(request, "parent", 0);
 
 <body>
 <html:form action="${contextPath}/sys/dictory.do?method=saveLoadDictory" method="post" onsubmit="return verifyAll(this);"> 
-<input type="hidden" name="typeId" value="<%=parent%>">
+<input type="hidden" name="nodeId" value="<%=parent%>">
 <table width="100%" height="258"  border="0" cellpadding="0" cellspacing="0">
   <tr> 
     <th> <table width="200" border="0" align="center" cellpadding="0" cellspacing="0">

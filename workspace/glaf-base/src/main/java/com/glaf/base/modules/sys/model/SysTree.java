@@ -33,21 +33,23 @@ import com.glaf.core.base.TreeModel;
 
 public class SysTree implements Serializable, TreeModel, JSONable {
 	private static final long serialVersionUID = 2666681837822864771L;
-	protected long id;
-	protected long parentId;
-	protected String name;
-	protected String desc;
-	protected int sort;
+	protected SysApplication app;
+	protected List<TreeModel> children = new ArrayList<TreeModel>();
 	protected String code;
 	protected int deep;
-	protected String icon;
-	protected String url;
-	protected String iconCls;
-	protected int locked;
-	protected SysApplication app;
 	protected SysDepartment department;
+	protected String desc;
+	protected String discriminator;
+	protected String icon;
+	protected String iconCls;
+	protected long id;
+	protected int locked;
+	protected String name;
 	protected TreeModel parent;
-	protected List<TreeModel> children = new ArrayList<TreeModel>();
+	protected long parentId;
+	protected int sort;
+	protected String treeId;
+	protected String url;
 
 	public void addChild(TreeModel treeModel) {
 		if (children == null) {
@@ -121,6 +123,10 @@ public class SysTree implements Serializable, TreeModel, JSONable {
 		return desc;
 	}
 
+	public String getDiscriminator() {
+		return discriminator;
+	}
+
 	public String getIcon() {
 		return icon;
 	}
@@ -159,6 +165,10 @@ public class SysTree implements Serializable, TreeModel, JSONable {
 
 	public int getSortNo() {
 		return sort;
+	}
+
+	public String getTreeId() {
+		return treeId;
 	}
 
 	public String getUrl() {
@@ -213,6 +223,10 @@ public class SysTree implements Serializable, TreeModel, JSONable {
 
 	}
 
+	public void setDiscriminator(String discriminator) {
+		this.discriminator = discriminator;
+	}
+
 	public void setIcon(String icon) {
 		this.icon = icon;
 	}
@@ -251,6 +265,10 @@ public class SysTree implements Serializable, TreeModel, JSONable {
 
 	public void setSortNo(int sortNo) {
 		this.sort = sortNo;
+	}
+
+	public void setTreeId(String treeId) {
+		this.treeId = treeId;
 	}
 
 	public void setUrl(String url) {

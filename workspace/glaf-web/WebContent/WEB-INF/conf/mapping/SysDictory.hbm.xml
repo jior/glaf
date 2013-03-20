@@ -13,7 +13,7 @@
             <generator class="native"/>
         </id>
                 
-        <property name="typeId" type="long" column="typeId"/>
+        <property name="nodeId" type="long" column="typeId"/>
         <property name="code" type="string" column="code"/>        
         <property name="name" type="string" column="name"/>        
         <property name="desc" type="string" column="dictDesc"/>  

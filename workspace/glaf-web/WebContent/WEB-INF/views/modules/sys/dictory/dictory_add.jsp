@@ -21,7 +21,7 @@ int parent=ParamUtil.getIntParameter(request, "parent", 0);
 <body>
 <div class="nav-title"><span class="Title">字典管理</span>&gt;&gt;增加字典</div>
 <html:form action="${contextPath}/sys/dictory.do?method=saveAdd" method="post" onsubmit="return verifyAll(this);">
-<input type="hidden" name="typeId" value="<%=parent%>">
+<input type="hidden" name="nodeId" value="<%=parent%>">
 <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0" class="box">
   <tr>
     <td><table width="100%" border="0" cellspacing="0" cellpadding="0">

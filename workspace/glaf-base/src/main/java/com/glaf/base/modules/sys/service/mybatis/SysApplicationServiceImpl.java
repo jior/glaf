@@ -73,6 +73,7 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 			bean.setId(idGenerator.nextId());
 		}
 		if (bean.getNode() != null) {
+			bean.getNode().setDiscriminator("A");
 			sysTreeService.create(bean.getNode());
 			bean.setNodeId(bean.getNode().getId());
 		}

@@ -33,10 +33,11 @@ import org.apache.commons.lang.builder.ToStringStyle;
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.glaf.core.base.JSONable;
 
 @Entity
 @Table(name = "SYS_TODO")
-public class Todo implements java.io.Serializable, Comparable<Todo> {
+public class Todo implements java.io.Serializable, Comparable<Todo>, JSONable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -195,10 +196,13 @@ public class Todo implements java.io.Serializable, Comparable<Todo> {
 	@Column(name = "sql_", length = 2000)
 	protected String sql;
 
+	@javax.persistence.Transient
 	protected Collection<Object> ok = new HashSet<Object>();
 
+	@javax.persistence.Transient
 	protected Collection<Object> caution = new HashSet<Object>();
 
+	@javax.persistence.Transient
 	protected Collection<Object> pastDue = new HashSet<Object>();
 
 	public Todo() {

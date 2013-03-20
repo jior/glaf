@@ -72,6 +72,7 @@ public class SysDepartmentServiceImpl implements SysDepartmentService {
 		}
 		bean.setSort((int) bean.getId());
 		if (bean.getNode() != null) {
+			bean.getNode().setDescription("D");
 			sysTreeService.create(bean.getNode());
 			bean.setNodeId(bean.getNode().getId());
 		}

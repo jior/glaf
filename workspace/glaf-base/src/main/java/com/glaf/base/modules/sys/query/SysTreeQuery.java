@@ -23,250 +23,28 @@ import com.glaf.core.query.DataQuery;
 
 public class SysTreeQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;
-	protected List<Long> rowIds;
-	protected List<Long> parents;
-	protected String name;
-	protected String nameLike;
-	protected List<String> names;
-	protected String descLike;
-	protected Integer sortGreaterThanOrEqual;
-	protected Integer sortGreaterThan;
-	protected Integer sortLessThanOrEqual;
-	protected Integer sortLessThan;
 	protected String code;
 	protected String codeLike;
 	protected List<String> codes;
-	protected String urlLike;
+	protected Integer departmentStatus;
+	protected String descLike;
+	protected String discriminator;
 	protected Integer lockedGreaterThanOrEqual;
 	protected Integer lockedLessThanOrEqual;
-	protected Integer departmentStatus;
+	protected String name;
+	protected String nameLike;
+	protected List<String> names;
+	protected List<Long> parents;
+	protected List<Long> rowIds;
+	protected Integer sortGreaterThan;
+	protected Integer sortGreaterThanOrEqual;
+	protected Integer sortLessThan;
+	protected Integer sortLessThanOrEqual;
+	protected String treeIdLike;
+	protected String urlLike;
 
 	public SysTreeQuery() {
 
-	}
-
-	public Integer getSortGreaterThan() {
-		return sortGreaterThan;
-	}
-
-	public void setSortGreaterThan(Integer sortGreaterThan) {
-		this.sortGreaterThan = sortGreaterThan;
-	}
-
-	public Integer getSortLessThan() {
-		return sortLessThan;
-	}
-
-	public void setSortLessThan(Integer sortLessThan) {
-		this.sortLessThan = sortLessThan;
-	}
-
-	public List<Long> getParentIds() {
-		return parents;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public String getNameLike() {
-		if (nameLike != null && nameLike.trim().length() > 0) {
-			if (!nameLike.startsWith("%")) {
-				nameLike = "%" + nameLike;
-			}
-			if (!nameLike.endsWith("%")) {
-				nameLike = nameLike + "%";
-			}
-		}
-		return nameLike;
-	}
-
-	public List<String> getNames() {
-		return names;
-	}
-
-	public String getDescLike() {
-		if (descLike != null && descLike.trim().length() > 0) {
-			if (!descLike.startsWith("%")) {
-				descLike = "%" + descLike;
-			}
-			if (!descLike.endsWith("%")) {
-				descLike = descLike + "%";
-			}
-		}
-		return descLike;
-	}
-
-	public Integer getSortGreaterThanOrEqual() {
-		return sortGreaterThanOrEqual;
-	}
-
-	public Integer getSortLessThanOrEqual() {
-		return sortLessThanOrEqual;
-	}
-
-	public String getCode() {
-		return code;
-	}
-
-	public String getCodeLike() {
-		if (codeLike != null && codeLike.trim().length() > 0) {
-			if (!codeLike.startsWith("%")) {
-				codeLike = "%" + codeLike;
-			}
-			if (!codeLike.endsWith("%")) {
-				codeLike = codeLike + "%";
-			}
-		}
-		return codeLike;
-	}
-
-	public List<String> getCodes() {
-		return codes;
-	}
-
-	public String getUrlLike() {
-		if (urlLike != null && urlLike.trim().length() > 0) {
-			if (!urlLike.startsWith("%")) {
-				urlLike = "%" + urlLike;
-			}
-			if (!urlLike.endsWith("%")) {
-				urlLike = urlLike + "%";
-			}
-		}
-		return urlLike;
-	}
-
-	public Integer getLocked() {
-		return locked;
-	}
-
-	public Integer getLockedGreaterThanOrEqual() {
-		return lockedGreaterThanOrEqual;
-	}
-
-	public Integer getLockedLessThanOrEqual() {
-		return lockedLessThanOrEqual;
-	}
-
-	public void setParents(List<Long> parents) {
-		this.parents = parents;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public void setNameLike(String nameLike) {
-		this.nameLike = nameLike;
-	}
-
-	public void setNames(List<String> names) {
-		this.names = names;
-	}
-
-	public void setDescLike(String descLike) {
-		this.descLike = descLike;
-	}
-
-	public void setSortGreaterThanOrEqual(Integer sortGreaterThanOrEqual) {
-		this.sortGreaterThanOrEqual = sortGreaterThanOrEqual;
-	}
-
-	public void setSortLessThanOrEqual(Integer sortLessThanOrEqual) {
-		this.sortLessThanOrEqual = sortLessThanOrEqual;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
-	}
-
-	public void setCodeLike(String codeLike) {
-		this.codeLike = codeLike;
-	}
-
-	public void setCodes(List<String> codes) {
-		this.codes = codes;
-	}
-
-	public void setUrlLike(String urlLike) {
-		this.urlLike = urlLike;
-	}
-
-	public void setLocked(Integer locked) {
-		this.locked = locked;
-	}
-
-	public void setLockedGreaterThanOrEqual(Integer lockedGreaterThanOrEqual) {
-		this.lockedGreaterThanOrEqual = lockedGreaterThanOrEqual;
-	}
-
-	public void setLockedLessThanOrEqual(Integer lockedLessThanOrEqual) {
-		this.lockedLessThanOrEqual = lockedLessThanOrEqual;
-	}
-
-	public SysTreeQuery parentId(Long parentId) {
-		if (parentId == null) {
-			throw new RuntimeException("parentId is null");
-		}
-		this.parentId = parentId;
-		return this;
-	}
-
-	public SysTreeQuery parents(List<Long> parents) {
-		if (parents == null) {
-			throw new RuntimeException("parents is empty ");
-		}
-		this.parents = parents;
-		return this;
-	}
-
-	public SysTreeQuery name(String name) {
-		if (name == null) {
-			throw new RuntimeException("name is null");
-		}
-		this.name = name;
-		return this;
-	}
-
-	public SysTreeQuery nameLike(String nameLike) {
-		if (nameLike == null) {
-			throw new RuntimeException("name is null");
-		}
-		this.nameLike = nameLike;
-		return this;
-	}
-
-	public SysTreeQuery names(List<String> names) {
-		if (names == null) {
-			throw new RuntimeException("names is empty ");
-		}
-		this.names = names;
-		return this;
-	}
-
-	public SysTreeQuery descLike(String descLike) {
-		if (descLike == null) {
-			throw new RuntimeException("desc is null");
-		}
-		this.descLike = descLike;
-		return this;
-	}
-
-	public SysTreeQuery sortGreaterThanOrEqual(Integer sortGreaterThanOrEqual) {
-		if (sortGreaterThanOrEqual == null) {
-			throw new RuntimeException("sort is null");
-		}
-		this.sortGreaterThanOrEqual = sortGreaterThanOrEqual;
-		return this;
-	}
-
-	public SysTreeQuery sortLessThanOrEqual(Integer sortLessThanOrEqual) {
-		if (sortLessThanOrEqual == null) {
-			throw new RuntimeException("sort is null");
-		}
-		this.sortLessThanOrEqual = sortLessThanOrEqual;
-		return this;
 	}
 
 	public SysTreeQuery code(String code) {
@@ -293,45 +71,84 @@ public class SysTreeQuery extends DataQuery {
 		return this;
 	}
 
-	public SysTreeQuery urlLike(String urlLike) {
-		if (urlLike == null) {
-			throw new RuntimeException("url is null");
+	public SysTreeQuery descLike(String descLike) {
+		if (descLike == null) {
+			throw new RuntimeException("desc is null");
 		}
-		this.urlLike = urlLike;
+		this.descLike = descLike;
 		return this;
 	}
 
-	public SysTreeQuery locked(Integer locked) {
-		if (locked == null) {
-			throw new RuntimeException("locked is null");
-		}
-		this.locked = locked;
-		return this;
+	public String getCode() {
+		return code;
 	}
 
-	public SysTreeQuery lockedGreaterThanOrEqual(
-			Integer lockedGreaterThanOrEqual) {
-		if (lockedGreaterThanOrEqual == null) {
-			throw new RuntimeException("locked is null");
+	public String getCodeLike() {
+		if (codeLike != null && codeLike.trim().length() > 0) {
+			if (!codeLike.startsWith("%")) {
+				codeLike = "%" + codeLike;
+			}
+			if (!codeLike.endsWith("%")) {
+				codeLike = codeLike + "%";
+			}
 		}
-		this.lockedGreaterThanOrEqual = lockedGreaterThanOrEqual;
-		return this;
+		return codeLike;
 	}
 
-	public SysTreeQuery lockedLessThanOrEqual(Integer lockedLessThanOrEqual) {
-		if (lockedLessThanOrEqual == null) {
-			throw new RuntimeException("locked is null");
-		}
-		this.lockedLessThanOrEqual = lockedLessThanOrEqual;
-		return this;
+	public List<String> getCodes() {
+		return codes;
 	}
 
 	public Integer getDepartmentStatus() {
 		return departmentStatus;
 	}
 
-	public void setDepartmentStatus(Integer departmentStatus) {
-		this.departmentStatus = departmentStatus;
+	public String getDescLike() {
+		if (descLike != null && descLike.trim().length() > 0) {
+			if (!descLike.startsWith("%")) {
+				descLike = "%" + descLike;
+			}
+			if (!descLike.endsWith("%")) {
+				descLike = descLike + "%";
+			}
+		}
+		return descLike;
+	}
+
+	public String getDiscriminator() {
+		return discriminator;
+	}
+
+	public Integer getLocked() {
+		return locked;
+	}
+
+	public Integer getLockedGreaterThanOrEqual() {
+		return lockedGreaterThanOrEqual;
+	}
+
+	public Integer getLockedLessThanOrEqual() {
+		return lockedLessThanOrEqual;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getNameLike() {
+		if (nameLike != null && nameLike.trim().length() > 0) {
+			if (!nameLike.startsWith("%")) {
+				nameLike = "%" + nameLike;
+			}
+			if (!nameLike.endsWith("%")) {
+				nameLike = nameLike + "%";
+			}
+		}
+		return nameLike;
+	}
+
+	public List<String> getNames() {
+		return names;
 	}
 
 	public String getOrderBy() {
@@ -381,6 +198,48 @@ public class SysTreeQuery extends DataQuery {
 		return orderBy;
 	}
 
+	public List<Long> getParentIds() {
+		return parents;
+	}
+
+	public Integer getSortGreaterThan() {
+		return sortGreaterThan;
+	}
+
+	public Integer getSortGreaterThanOrEqual() {
+		return sortGreaterThanOrEqual;
+	}
+
+	public Integer getSortLessThan() {
+		return sortLessThan;
+	}
+
+	public Integer getSortLessThanOrEqual() {
+		return sortLessThanOrEqual;
+	}
+
+	public String getTreeIdLike() {
+		if (treeIdLike != null && treeIdLike.trim().length() > 0) {
+			if (!treeIdLike.endsWith("%")) {
+				treeIdLike = treeIdLike + "%";
+			}
+		}
+
+		return treeIdLike;
+	}
+
+	public String getUrlLike() {
+		if (urlLike != null && urlLike.trim().length() > 0) {
+			if (!urlLike.startsWith("%")) {
+				urlLike = "%" + urlLike;
+			}
+			if (!urlLike.endsWith("%")) {
+				urlLike = urlLike + "%";
+			}
+		}
+		return urlLike;
+	}
+
 	@Override
 	public void initQueryColumns() {
 		super.initQueryColumns();
@@ -394,6 +253,171 @@ public class SysTreeQuery extends DataQuery {
 		addColumn("iconCls", "iconCls");
 		addColumn("url", "url");
 		addColumn("locked", "locked");
+	}
+
+	public SysTreeQuery locked(Integer locked) {
+		if (locked == null) {
+			throw new RuntimeException("locked is null");
+		}
+		this.locked = locked;
+		return this;
+	}
+
+	public SysTreeQuery lockedGreaterThanOrEqual(
+			Integer lockedGreaterThanOrEqual) {
+		if (lockedGreaterThanOrEqual == null) {
+			throw new RuntimeException("locked is null");
+		}
+		this.lockedGreaterThanOrEqual = lockedGreaterThanOrEqual;
+		return this;
+	}
+
+	public SysTreeQuery lockedLessThanOrEqual(Integer lockedLessThanOrEqual) {
+		if (lockedLessThanOrEqual == null) {
+			throw new RuntimeException("locked is null");
+		}
+		this.lockedLessThanOrEqual = lockedLessThanOrEqual;
+		return this;
+	}
+
+	public SysTreeQuery name(String name) {
+		if (name == null) {
+			throw new RuntimeException("name is null");
+		}
+		this.name = name;
+		return this;
+	}
+
+	public SysTreeQuery nameLike(String nameLike) {
+		if (nameLike == null) {
+			throw new RuntimeException("name is null");
+		}
+		this.nameLike = nameLike;
+		return this;
+	}
+
+	public SysTreeQuery names(List<String> names) {
+		if (names == null) {
+			throw new RuntimeException("names is empty ");
+		}
+		this.names = names;
+		return this;
+	}
+
+	public SysTreeQuery parentId(Long parentId) {
+		if (parentId == null) {
+			throw new RuntimeException("parentId is null");
+		}
+		this.parentId = parentId;
+		return this;
+	}
+
+	public SysTreeQuery parents(List<Long> parents) {
+		if (parents == null) {
+			throw new RuntimeException("parents is empty ");
+		}
+		this.parents = parents;
+		return this;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public void setCodeLike(String codeLike) {
+		this.codeLike = codeLike;
+	}
+
+	public void setCodes(List<String> codes) {
+		this.codes = codes;
+	}
+
+	public void setDepartmentStatus(Integer departmentStatus) {
+		this.departmentStatus = departmentStatus;
+	}
+
+	public void setDescLike(String descLike) {
+		this.descLike = descLike;
+	}
+
+	public void setDiscriminator(String discriminator) {
+		this.discriminator = discriminator;
+	}
+
+	public void setLocked(Integer locked) {
+		this.locked = locked;
+	}
+
+	public void setLockedGreaterThanOrEqual(Integer lockedGreaterThanOrEqual) {
+		this.lockedGreaterThanOrEqual = lockedGreaterThanOrEqual;
+	}
+
+	public void setLockedLessThanOrEqual(Integer lockedLessThanOrEqual) {
+		this.lockedLessThanOrEqual = lockedLessThanOrEqual;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setNameLike(String nameLike) {
+		this.nameLike = nameLike;
+	}
+
+	public void setNames(List<String> names) {
+		this.names = names;
+	}
+
+	public void setParents(List<Long> parents) {
+		this.parents = parents;
+	}
+
+	public void setSortGreaterThan(Integer sortGreaterThan) {
+		this.sortGreaterThan = sortGreaterThan;
+	}
+
+	public void setSortGreaterThanOrEqual(Integer sortGreaterThanOrEqual) {
+		this.sortGreaterThanOrEqual = sortGreaterThanOrEqual;
+	}
+
+	public void setSortLessThan(Integer sortLessThan) {
+		this.sortLessThan = sortLessThan;
+	}
+
+	public void setSortLessThanOrEqual(Integer sortLessThanOrEqual) {
+		this.sortLessThanOrEqual = sortLessThanOrEqual;
+	}
+
+	public void setTreeIdLike(String treeIdLike) {
+		this.treeIdLike = treeIdLike;
+	}
+
+	public void setUrlLike(String urlLike) {
+		this.urlLike = urlLike;
+	}
+
+	public SysTreeQuery sortGreaterThanOrEqual(Integer sortGreaterThanOrEqual) {
+		if (sortGreaterThanOrEqual == null) {
+			throw new RuntimeException("sort is null");
+		}
+		this.sortGreaterThanOrEqual = sortGreaterThanOrEqual;
+		return this;
+	}
+
+	public SysTreeQuery sortLessThanOrEqual(Integer sortLessThanOrEqual) {
+		if (sortLessThanOrEqual == null) {
+			throw new RuntimeException("sort is null");
+		}
+		this.sortLessThanOrEqual = sortLessThanOrEqual;
+		return this;
+	}
+
+	public SysTreeQuery urlLike(String urlLike) {
+		if (urlLike == null) {
+			throw new RuntimeException("url is null");
+		}
+		this.urlLike = urlLike;
+		return this;
 	}
 
 }

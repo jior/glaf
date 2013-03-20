@@ -4,56 +4,65 @@
 
 <mapper namespace="com.glaf.base.modules.sys.mapper.SysTreeMapper">
 
-	<resultMap id="sysTreeResultMap"	type="com.glaf.base.modules.sys.model.SysTree">
+	<resultMap id="sysTreeResultMap" type="com.glaf.base.modules.sys.model.SysTree">
 		<id property="id" column="ID" jdbcType="BIGINT" />
-		<result property="parentId" column="PARENT" jdbcType="BIGINT"/>
-		<result property="name" column="NAME" jdbcType="VARCHAR"/>
-		<result property="desc" column="NODEDESC" jdbcType="VARCHAR"/>
-		<result property="sort" column="SORT" jdbcType="INTEGER"/>
-		<result property="code" column="CODE" jdbcType="VARCHAR"/>
-		<result property="icon" column="icon" jdbcType="VARCHAR"/>
-		<result property="iconCls" column="iconCls" jdbcType="VARCHAR"/>
-		<result property="url" column="url" jdbcType="VARCHAR"/>
-		<result property="locked" column="locked" jdbcType="INTEGER"/>
+		<result property="parentId" column="PARENT" jdbcType="BIGINT" />
+		<result property="name" column="NAME" jdbcType="VARCHAR" />
+		<result property="desc" column="NODEDESC" jdbcType="VARCHAR" />
+		<result property="discriminator" column="DISCRIMINATOR"
+			jdbcType="VARCHAR" />
+		<result property="treeId" column="TREEID" jdbcType="VARCHAR" />
+		<result property="sort" column="SORT" jdbcType="INTEGER" />
+		<result property="code" column="CODE" jdbcType="VARCHAR" />
+		<result property="icon" column="icon" jdbcType="VARCHAR" />
+		<result property="iconCls" column="iconCls" jdbcType="VARCHAR" />
+		<result property="url" column="url" jdbcType="VARCHAR" />
+		<result property="locked" column="locked" jdbcType="INTEGER" />
 	</resultMap>
 
- 
+
 	<insert id="insertSysTree" parameterType="com.glaf.base.modules.sys.model.SysTree">
-		insert into sys_tree 
+		insert into sys_tree
 		<trim prefix="(" suffix=")" suffixOverrides=",">
-		    ID
+			ID
 			<if test="parentId != null">
-				,PARENT 
+				,PARENT
 			</if>
 			<if test="name != null">
-				,NAME 
+				,NAME
 			</if>
 			<if test="desc != null">
-				,NODEDESC 
+				,NODEDESC
+			</if>
+			<if test="discriminator != null">
+				,DISCRIMINATOR
+			</if>
+			<if test="treeId != null">
+				,TREEID
 			</if>
 			<if test="sort != null">
-				,SORT 
+				,SORT
 			</if>
 			<if test="code != null">
-				,CODE 
+				,CODE
 			</if>
 			<if test="icon != null">
-				,icon 
+				,icon
 			</if>
 			<if test="iconCls != null">
-				,iconCls 
+				,iconCls
 			</if>
 			<if test="url != null">
-				,url 
+				,url
 			</if>
 			<if test="locked != null">
-				,locked 
+				,locked
 			</if>
 		</trim>
 
 		<trim prefix=" values (" suffix=")" suffixOverrides=",">
-			  #{id, jdbcType=BIGINT}
-	     
+			#{id, jdbcType=BIGINT}
+
 			<if test="parentId != null">
 				,#{parentId, jdbcType=BIGINT}
 			</if>
@@ -62,6 +71,12 @@
 			</if>
 			<if test="desc != null">
 				,#{desc, jdbcType=VARCHAR}
+			</if>
+			<if test="discriminator != null">
+				,#{discriminator, jdbcType=VARCHAR}
+			</if>
+			<if test="treeId != null">
+				,#{treeId, jdbcType=VARCHAR}
 			</if>
 			<if test="sort != null">
 				,#{sort, jdbcType=INTEGER}
@@ -84,11 +99,11 @@
 		</trim>
 	</insert>
 
-	 
+
 	<update id="updateSysTree" parameterType="com.glaf.base.modules.sys.model.SysTree">
 		update sys_tree
 		set
-		<trim prefix="" suffix="" suffixOverrides=",">		
+		<trim prefix="" suffix="" suffixOverrides=",">
 			<if test="parentId != null">
 				PARENT = #{parentId, jdbcType=BIGINT},
 			</if>
@@ -97,6 +112,9 @@
 			</if>
 			<if test="desc != null">
 				NODEDESC = #{desc, jdbcType=VARCHAR},
+			</if>
+			<if test="treeId != null">
+				TREEID = #{treeId, jdbcType=VARCHAR},
 			</if>
 			<if test="sort != null">
 				SORT = #{sort, jdbcType=INTEGER},
@@ -118,22 +136,23 @@
 			</if>
 		</trim>
 		where
-          ID = #{id, jdbcType=BIGINT}
-		
+		ID = #{id, jdbcType=BIGINT}
+
 	</update>
 
- 
-	<delete id="deleteSysTreeById" parameterType="long"> 
-        delete from sys_tree where ID =	#{id}
+
+	<delete id="deleteSysTreeById" parameterType="long">
+		delete from
+		sys_tree where ID = #{id}
 	</delete>
-	
+
 	<delete id="deleteSysTrees" parameterType="com.glaf.base.modules.sys.query.SysTreeQuery">
 		delete from sys_tree
-		where ( 
- 			  ID IN
-		<foreach item="x_rowId" index="index" collection="rowIds" 
+		where (
+		ID IN
+		<foreach item="x_rowId" index="index" collection="rowIds"
 			open="(" separator="," close=")">
-                  #{x_rowId}
+			#{x_rowId}
 		</foreach>
 		)
 	</delete>
@@ -141,35 +160,35 @@
 	<select id="getSysTreeById" parameterType="long" resultMap="sysTreeResultMap">
 		select * from sys_tree where ID = #{id}
 	</select>
-	
-	
-	<select id="getDictorySysTrees" parameterType="com.glaf.base.modules.sys.query.SysTreeQuery" resultMap="sysTreeResultMap">
-		
+
+
+	<select id="getDictorySysTrees" parameterType="com.glaf.base.modules.sys.query.SysTreeQuery"
+		resultMap="sysTreeResultMap">
+
 		select distinct E.* from sys_tree E
 		inner join sys_dictory D
-		on E.ID = D.TYPEID
+		on E.ID =
+		D.TYPEID
 		where E.LOCKED = 0
 
 	</select>
 
 
-	<select id="getSysTrees" 
-		parameterType="com.glaf.base.modules.sys.query.SysTreeQuery"
+	<select id="getSysTrees" parameterType="com.glaf.base.modules.sys.query.SysTreeQuery"
 		resultMap="sysTreeResultMap">
 		select E.*
 		<include refid="selectSysTreesSql" />
 		<choose>
 			<when test="orderBy != null">
-		     order by ${orderBy}
+				order by ${orderBy}
 			</when>
 			<otherwise>
-		      order by E.SORT asc
+				order by E.SORT asc
 			</otherwise>
 		</choose>
 	</select>
 
-	<select id="getSysTreeCount" 
-		parameterType="com.glaf.base.modules.sys.query.SysTreeQuery"
+	<select id="getSysTreeCount" parameterType="com.glaf.base.modules.sys.query.SysTreeQuery"
 		resultType="int">
 		select count(*)
 		<include refid="selectSysTreesSql" />
@@ -180,15 +199,15 @@
 		from sys_tree E
 
 		<if test=" departmentStatus != null  ">
-           inner join sys_department D
-		   on D.NODEID = E.ID
+			inner join sys_department D
+			on D.NODEID = E.ID
 		</if>
-		 
+
 		<where>
-		       1 = 1  
+			1 = 1
 
 			<if test=" departmentStatus != null  ">
-                and D.STATUS = #{departmentStatus}
+				and D.STATUS = #{departmentStatus}
 			</if>
 
 			<if test="parentId != null">
@@ -196,13 +215,17 @@
 			</if>
 
 			<if test="parentIds != null and parentIds.size() &gt; 0">
-			    and E.PARENT IN
-				<foreach item="x_parentId" index="index" collection="parentIds" 
+				and E.PARENT IN
+				<foreach item="x_parentId" index="index" collection="parentIds"
 					open="(" separator="," close=")">
-                  #{x_parentId}
+					#{x_parentId}
 				</foreach>
 			</if>
-	        
+
+			<if test="discriminator != null and discriminator != '' ">
+				and E.DISCRIMINATOR = #{discriminator}
+			</if>
+
 			<if test="name != null and name != '' ">
 				and E.NAME = #{name}
 			</if>
@@ -212,10 +235,10 @@
 			</if>
 
 			<if test="names != null and names.size() &gt; 0">
-			    and E.NAME IN
-				<foreach item="x_name" index="index" collection="names" 
+				and E.NAME IN
+				<foreach item="x_name" index="index" collection="names"
 					open="(" separator="," close=")">
-                  #{x_name}
+					#{x_name}
 				</foreach>
 			</if>
 
@@ -226,7 +249,7 @@
 			<if test="sortGreaterThanOrEqual != null">
 				and E.SORT &gt;= #{sortGreaterThanOrEqual}
 			</if>
-			
+
 			<if test="sortGreaterThan != null">
 				and E.SORT &gt; #{sortGreaterThan}
 			</if>
@@ -234,11 +257,11 @@
 			<if test="sortLessThanOrEqual != null">
 				and E.SORT &lt;= #{sortLessThanOrEqual}
 			</if>
-			
+
 			<if test="sortLessThan != null">
 				and E.SORT &lt; #{sortLessThan}
 			</if>
-	        
+
 			<if test="code != null and code != '' ">
 				and E.CODE = #{code}
 			</if>
@@ -248,13 +271,17 @@
 			</if>
 
 			<if test="codes != null and codes.size() &gt; 0">
-			    and E.CODE IN
-				<foreach item="x_code" index="index" collection="codes" 
+				and E.CODE IN
+				<foreach item="x_code" index="index" collection="codes"
 					open="(" separator="," close=")">
-                  #{x_code}
+					#{x_code}
 				</foreach>
 			</if>
-	        
+
+			<if test="treeIdLike != null and treeIdLike != '' ">
+				and E.TREEID like #{treeIdLike}
+			</if>
+
 			<if test="urlLike != null and urlLike != '' ">
 				and E.url like #{urlLike}
 			</if>
@@ -270,7 +297,7 @@
 			<if test="lockedLessThanOrEqual != null">
 				and E.locked &lt;= #{lockedLessThanOrEqual}
 			</if>
-			 
+
 		</where>
 	</sql>
 

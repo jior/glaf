@@ -21,196 +21,202 @@ package com.glaf.core.todo;
 import java.util.*;
 
 import com.alibaba.fastjson.*;
-import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.fasterxml.jackson.databind.node.ObjectNode;
- 
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
-public class TodoInstance implements java.io.Serializable {
+import java.io.*;
+import javax.persistence.*;
 
+import com.glaf.core.base.JSONable;
+import com.glaf.core.todo.util.*;
+
+@Entity
+@Table(name = "SYS_TODO_INSTANCE")
+public class TodoInstance implements Serializable, JSONable {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * 主键
+	 * 参与者
 	 */
-	private long id;
+	@Column(name = "actorId")
+	protected String actorId;
 
 	/**
-	 * TODO主键
+	 * 参与者姓名
 	 */
-	private long todoId;
-
-	/**
-	 * 应用编号
-	 */
-	private long appId;
-
-	/**
-	 * 模块编号
-	 */
-	private long moduleId;
-
-	/**
-	 * 参与者编号或角色代码
-	 */
-	private String actorId;
-
-	/**
-	 * 参与者名称
-	 */
-	private String actorName;
-
-	/**
-	 * 角色编号
-	 */
-	private long roleId;
-
-	/**
-	 * 角色代码
-	 */
-	private String roleCode;
-
-	/**
-	 * 角色名称
-	 */
-	private String roleName;
-
-	/**
-	 * 部门编号
-	 */
-	private long deptId;
-
-	/**
-	 * 部门名称
-	 */
-	private String deptName;
-
-	/**
-	 * 主题
-	 */
-	private String title;
-
-	/**
-	 * 内容
-	 */
-	private String content;
-
-	/**
-	 * 链接地址
-	 */
-	private String link;
-
-	/**
-	 * 列表的链接地址
-	 */
-	private String listLink;
-
-	/**
-	 * 链接属性
-	 */
-	private String linkType;
-
-	/**
-	 * 开始日期
-	 */
-	private Date startDate;
-
-	/**
-	 * 结束日期
-	 */
-	private Date endDate;
+	@Column(name = "actorName")
+	protected String actorName;
 
 	/**
 	 * 报警日期
 	 */
-	private Date alarmDate;
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "alarmDate")
+	protected Date alarmDate;
 
 	/**
-	 * 过期时间
+	 * 应用编号
 	 */
-	private Date pastDueDate;
+	@Column(name = "appId")
+	protected Long appId;
 
 	/**
-	 * 记录编号
+	 * 内容
 	 */
-	private String rowId;
-
-	/**
-	 * 流程实例编号
-	 */
-	private String processInstanceId;
-
-	/**
-	 * 任务实例编号
-	 */
-	private String taskInstanceId;
+	@Column(name = "content")
+	protected String content;
 
 	/**
 	 * 创建日期
 	 */
-	private Date createDate;
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "createDate")
+	protected Date createDate;
 
 	/**
-	 * TODO提供者
+	 * 部门编号
 	 */
-	private String provider;
+	@Column(name = "deptId")
+	protected Long deptId;
 
 	/**
-	 * 对象编号
+	 * 部门名称
 	 */
-	private String objectId;
+	@Column(name = "deptName")
+	protected String deptName;
 
 	/**
-	 * 对象值
+	 * 结束日期
 	 */
-	private String objectValue;
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "endDate")
+	protected Date endDate;
+
+	@Id
+	@Column(name = "ID", length = 50, nullable = false)
+	protected Long id;
 
 	/**
-	 * OK
+	 * 链接
 	 */
-	private int level01;
+	@Column(name = "link")
+	protected String link;
 
 	/**
-	 * Caution
+	 * 链接类型
 	 */
-	private int level02;
+	@Column(name = "linkType")
+	protected String linkType;
+
+	@javax.persistence.Transient
+	protected String listLink;
 
 	/**
-	 * Past Due
+	 * 模块编号
 	 */
-	private int level03;
+	@Column(name = "moduleId")
+	protected Long moduleId;
 
 	/**
-	 * OK
+	 * 扩展名
 	 */
-	private int qty01;
+	@Column(name = "objectId")
+	protected String objectId;
 
 	/**
-	 * Caution
+	 * 控制值
 	 */
-	private int qty02;
+	@Column(name = "objectValue")
+	protected String objectValue;
 
 	/**
-	 * Past Due
+	 * 过期日期
 	 */
-	private int qty03;
-
-	private int qtyRedWarn;
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "pastDueDate")
+	protected Date pastDueDate;
 
 	/**
-	 * 状态
+	 * 流程实例编号
 	 */
-	private int status;
+	@Column(name = "processInstanceId")
+	protected String processInstanceId;
 
-	private long versionNo;
+	/**
+	 * 提供者
+	 */
+	@Column(name = "provider")
+	protected String provider;
 
-	private Todo todo;
+	@javax.persistence.Transient
+	protected Integer qty01;
 
-	public TodoInstance() {
+	@javax.persistence.Transient
+	protected Integer qty02;
 
-	}
+	@javax.persistence.Transient
+	protected Integer qty03;
+
+	@javax.persistence.Transient
+	protected Integer qtyRedWarn;
+
+	/**
+	 * 角色代码
+	 */
+	@Column(name = "roleCode")
+	protected String roleCode;
+
+	/**
+	 * 角色编号
+	 */
+	@Column(name = "roleId")
+	protected Long roleId;
+
+	/**
+	 * 业务编号
+	 */
+	@Column(name = "rowId")
+	protected String rowId;
+
+	/**
+	 * 开始日期
+	 */
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "startDate")
+	protected Date startDate;
+
+	@javax.persistence.Transient
+	protected Integer status;
+
+	/**
+	 * 任务实例编号
+	 */
+	@Column(name = "taskInstanceId")
+	protected String taskInstanceId;
+
+	/**
+	 * 主题
+	 */
+	@Column(name = "title")
+	protected String title;
+
+	@javax.persistence.Transient
+	protected Todo todo;
+
+	/**
+	 * TODO定义编号
+	 */
+	@Column(name = "todoId")
+	protected Long todoId;
+
+	/**
+	 * 版本
+	 */
+	@Column(name = "versionNo")
+	protected Long versionNo;
 
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -265,18 +271,6 @@ public class TodoInstance implements java.io.Serializable {
 		return id;
 	}
 
-	public int getLevel01() {
-		return level01;
-	}
-
-	public int getLevel02() {
-		return level02;
-	}
-
-	public int getLevel03() {
-		return level03;
-	}
-
 	public String getLink() {
 		return link;
 	}
@@ -313,19 +307,19 @@ public class TodoInstance implements java.io.Serializable {
 		return provider;
 	}
 
-	public int getQty01() {
+	public Integer getQty01() {
 		return qty01;
 	}
 
-	public int getQty02() {
+	public Integer getQty02() {
 		return qty02;
 	}
 
-	public int getQty03() {
+	public Integer getQty03() {
 		return qty03;
 	}
 
-	public int getQtyRedWarn() {
+	public Integer getQtyRedWarn() {
 		return qtyRedWarn;
 	}
 
@@ -335,10 +329,6 @@ public class TodoInstance implements java.io.Serializable {
 
 	public long getRoleId() {
 		return roleId;
-	}
-
-	public String getRoleName() {
-		return roleName;
 	}
 
 	public String getRowId() {
@@ -352,7 +342,7 @@ public class TodoInstance implements java.io.Serializable {
 		return startDate;
 	}
 
-	public int getStatus() {
+	public Integer getStatus() {
 		return status;
 	}
 
@@ -383,6 +373,10 @@ public class TodoInstance implements java.io.Serializable {
 		return result;
 	}
 
+	public TodoInstance jsonToObject(JSONObject jsonObject) {
+		return TodoInstanceJsonFactory.jsonToObject(jsonObject);
+	}
+
 	public void setActorId(String actorId) {
 		this.actorId = actorId;
 	}
@@ -399,6 +393,10 @@ public class TodoInstance implements java.io.Serializable {
 		this.appId = appId;
 	}
 
+	public void setAppId(Long appId) {
+		this.appId = appId;
+	}
+
 	public void setContent(String content) {
 		this.content = content;
 	}
@@ -408,6 +406,10 @@ public class TodoInstance implements java.io.Serializable {
 	}
 
 	public void setDeptId(long deptId) {
+		this.deptId = deptId;
+	}
+
+	public void setDeptId(Long deptId) {
 		this.deptId = deptId;
 	}
 
@@ -423,16 +425,8 @@ public class TodoInstance implements java.io.Serializable {
 		this.id = id;
 	}
 
-	public void setLevel01(int level01) {
-		this.level01 = level01;
-	}
-
-	public void setLevel02(int level02) {
-		this.level02 = level02;
-	}
-
-	public void setLevel03(int level03) {
-		this.level03 = level03;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public void setLink(String link) {
@@ -448,6 +442,10 @@ public class TodoInstance implements java.io.Serializable {
 	}
 
 	public void setModuleId(long moduleId) {
+		this.moduleId = moduleId;
+	}
+
+	public void setModuleId(Long moduleId) {
 		this.moduleId = moduleId;
 	}
 
@@ -471,19 +469,19 @@ public class TodoInstance implements java.io.Serializable {
 		this.provider = provider;
 	}
 
-	public void setQty01(int qty01) {
+	public void setQty01(Integer qty01) {
 		this.qty01 = qty01;
 	}
 
-	public void setQty02(int qty02) {
+	public void setQty02(Integer qty02) {
 		this.qty02 = qty02;
 	}
 
-	public void setQty03(int qty03) {
+	public void setQty03(Integer qty03) {
 		this.qty03 = qty03;
 	}
 
-	public void setQtyRedWarn(int qtyRedWarn) {
+	public void setQtyRedWarn(Integer qtyRedWarn) {
 		this.qtyRedWarn = qtyRedWarn;
 	}
 
@@ -495,8 +493,8 @@ public class TodoInstance implements java.io.Serializable {
 		this.roleId = roleId;
 	}
 
-	public void setRoleName(String roleName) {
-		this.roleName = roleName;
+	public void setRoleId(Long roleId) {
+		this.roleId = roleId;
 	}
 
 	public void setRowId(String rowId) {
@@ -507,7 +505,7 @@ public class TodoInstance implements java.io.Serializable {
 		this.startDate = startDate;
 	}
 
-	public void setStatus(int status) {
+	public void setStatus(Integer status) {
 		this.status = status;
 	}
 
@@ -527,174 +525,24 @@ public class TodoInstance implements java.io.Serializable {
 		this.todoId = todoId;
 	}
 
+	public void setTodoId(Long todoId) {
+		this.todoId = todoId;
+	}
+
 	public void setVersionNo(long versionNo) {
 		this.versionNo = versionNo;
 	}
 
-	public TodoInstance jsonToObject(JSONObject jsonObject) {
-		TodoInstance model = new TodoInstance();
-		if (jsonObject.containsKey("id")) {
-			model.setId(jsonObject.getLong("id"));
-		}
-		if (jsonObject.containsKey("actorId")) {
-			model.setActorId(jsonObject.getString("actorId"));
-		}
-		if (jsonObject.containsKey("todoId")) {
-			model.setTodoId(jsonObject.getLong("todoId"));
-		}
-
-		if (jsonObject.containsKey("content")) {
-			model.setContent(jsonObject.getString("content"));
-		}
-		if (jsonObject.containsKey("deptId")) {
-			model.setDeptId(jsonObject.getLong("deptId"));
-		}
-		if (jsonObject.containsKey("deptName")) {
-			model.setDeptName(jsonObject.getString("deptName"));
-		}
-		if (jsonObject.containsKey("startDate")) {
-			model.setStartDate(jsonObject.getDate("startDate"));
-		}
-		if (jsonObject.containsKey("endDate")) {
-			model.setEndDate(jsonObject.getDate("endDate"));
-		}
-		if (jsonObject.containsKey("alarmDate")) {
-			model.setAlarmDate(jsonObject.getDate("alarmDate"));
-		}
-
-		if (jsonObject.containsKey("link")) {
-			model.setLink(jsonObject.getString("link"));
-		}
-		if (jsonObject.containsKey("listLink")) {
-			model.setListLink(jsonObject.getString("listLink"));
-		}
-		if (jsonObject.containsKey("linkType")) {
-			model.setLinkType(jsonObject.getString("linkType"));
-		}
-		if (jsonObject.containsKey("appId")) {
-			model.setAppId(jsonObject.getInteger("appId"));
-		}
-		if (jsonObject.containsKey("moduleId")) {
-			model.setModuleId(jsonObject.getInteger("moduleId"));
-		}
-
-		if (jsonObject.containsKey("objectId")) {
-			model.setObjectId(jsonObject.getString("objectId"));
-		}
-		if (jsonObject.containsKey("objectValue")) {
-			model.setObjectValue(jsonObject.getString("objectValue"));
-		}
-		if (jsonObject.containsKey("roleCode")) {
-			model.setRoleCode(jsonObject.getString("roleCode"));
-		}
-		if (jsonObject.containsKey("roleId")) {
-			model.setRoleId(jsonObject.getLong("roleId"));
-		}
-
-		if (jsonObject.containsKey("title")) {
-			model.setTitle(jsonObject.getString("title"));
-		}
-
-		if (jsonObject.containsKey("versionNo")) {
-			model.setVersionNo(jsonObject.getLong("versionNo"));
-		}
-		return model;
+	public void setVersionNo(Long versionNo) {
+		this.versionNo = versionNo;
 	}
 
 	public JSONObject toJsonObject() {
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("id", id);
-		jsonObject.put("_id_", id);
-		jsonObject.put("_oid_", id);
-		if (actorId != null) {
-			jsonObject.put("actorId", actorId);
-		}
-
-		if (content != null) {
-			jsonObject.put("content", content);
-		}
-		jsonObject.put("deptId", deptId);
-		if (deptName != null) {
-			jsonObject.put("deptName", deptName);
-		}
-
-		if (link != null) {
-			jsonObject.put("link", link);
-		}
-		if (listLink != null) {
-			jsonObject.put("listLink", listLink);
-		}
-		if (linkType != null) {
-			jsonObject.put("linkType", linkType);
-		}
-		jsonObject.put("appId", appId);
-		jsonObject.put("moduleId", moduleId);
-
-		if (objectId != null) {
-			jsonObject.put("objectId", objectId);
-		}
-		if (objectValue != null) {
-			jsonObject.put("objectValue", objectValue);
-		}
-		if (roleCode != null) {
-			jsonObject.put("roleCode", roleCode);
-		}
-		jsonObject.put("roleId", roleId);
-
-		if (title != null) {
-			jsonObject.put("title", title);
-		}
-
-		jsonObject.put("versionNo", versionNo);
-		return jsonObject;
+		return TodoInstanceJsonFactory.toJsonObject(this);
 	}
 
 	public ObjectNode toObjectNode() {
-		ObjectNode jsonObject = new ObjectMapper().createObjectNode();
-		jsonObject.put("id", id);
-		jsonObject.put("_id_", id);
-		jsonObject.put("_oid_", id);
-		if (actorId != null) {
-			jsonObject.put("actorId", actorId);
-		}
-
-		if (content != null) {
-			jsonObject.put("content", content);
-		}
-		jsonObject.put("deptId", deptId);
-		if (deptName != null) {
-			jsonObject.put("deptName", deptName);
-		}
-
-		if (link != null) {
-			jsonObject.put("link", link);
-		}
-		if (listLink != null) {
-			jsonObject.put("listLink", listLink);
-		}
-		if (linkType != null) {
-			jsonObject.put("linkType", linkType);
-		}
-		jsonObject.put("appId", appId);
-		jsonObject.put("moduleId", moduleId);
-
-		if (objectId != null) {
-			jsonObject.put("objectId", objectId);
-		}
-		if (objectValue != null) {
-			jsonObject.put("objectValue", objectValue);
-		}
-		if (roleCode != null) {
-			jsonObject.put("roleCode", roleCode);
-		}
-		jsonObject.put("roleId", roleId);
-
-		if (title != null) {
-			jsonObject.put("title", title);
-		}
-
-		jsonObject.put("versionNo", versionNo);
-		return jsonObject;
+		return TodoInstanceJsonFactory.toObjectNode(this);
 	}
 
 	public String toString() {
