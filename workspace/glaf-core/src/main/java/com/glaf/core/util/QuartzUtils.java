@@ -182,7 +182,7 @@ public class QuartzUtils {
 							logger.debug(model.getTaskName()
 									+ " has scheduled.");
 							if (startup) {
-								model.setStartup(0);
+								model.setStartup(1);
 								getSysSchedulerService().save(model);
 								logger.info(model.getTaskName()
 										+ " has startup.");
@@ -214,7 +214,7 @@ public class QuartzUtils {
 								logger.info(model.getTaskName()
 										+ " has rescheduled.");
 								if (startup) {
-									model.setStartup(0);
+									model.setStartup(1);
 									getSysSchedulerService().save(model);
 									logger.info(model.getTaskName()
 											+ " has startup.");

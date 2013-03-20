@@ -79,7 +79,7 @@ public class SysRoleServiceImpl implements SysRoleService {
 
 	@Transactional
 	public boolean delete(SysRole bean) {
-		sysRoleMapper.deleteSysRoleById(bean.getId());
+		this.deleteById(bean.getId());
 		return true;
 	}
 
@@ -96,7 +96,12 @@ public class SysRoleServiceImpl implements SysRoleService {
 	@Transactional
 	public void deleteById(Long id) {
 		if (id != null) {
-			sysRoleMapper.deleteSysRoleById(id);
+			List<SysRole> roles = sysRoleMapper.getSysRolesOfDeptRole(id);
+			if (roles != null && !roles.isEmpty()) {
+				throw new RuntimeException("Can't delete role");
+			} else {
+				sysRoleMapper.deleteSysRoleById(id);
+			}
 		}
 	}
 

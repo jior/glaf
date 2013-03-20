@@ -35,6 +35,8 @@ public interface SysRoleMapper {
 	int getSysRoleCount(SysRoleQuery query);
 
 	List<SysRole> getSysRoles(SysRoleQuery query);
+	
+	List<SysRole> getSysRolesOfDeptRole(Long roleId);
 
 	void insertSysRole(SysRole model);
 

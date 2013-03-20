@@ -1,5 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
-
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="html"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.glaf.base.modules.sys.*"%>
@@ -18,7 +17,7 @@ List  list = (List)request.getAttribute("parent");
 <link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
 <script language="javascript" src='<%=context%>/scripts/verify.js'></script>
 <script language="javascript" src='<%=context%>/scripts/main.js'></script></head>
-<script language="JavaScript">
+<script language="javascript">
 function checkForm(form){
   if(verifyAll(form)){
      if(form.parent.value=='<%=bean.getId()%>'){
@@ -153,27 +152,28 @@ function reloadHistoryTable(){
         <td class="input-box">上级部门</td>
         <td><select name="parent" onChange="javascript:setValue(this);" class="input">
           <%
-if(list!=null){
-  Iterator iter=list.iterator();   
-  while(iter.hasNext()){
-    SysTree bean2=(SysTree)iter.next();
-%>
-          <option value="<%=bean2.getId()%>">
-          <%
-for(int i=1;i<bean2.getDeep();i++){
-  out.print("&nbsp;&nbsp;");
-}
-out.print(bean2.getName());
-%>
-          </option>
-          <%    
-  }
-}
-%>
+			if(list!=null){
+			  Iterator iter=list.iterator();   
+			  while(iter.hasNext()){
+				SysTree bean2=(SysTree)iter.next();
+			%>
+					  <option value="<%=bean2.getId()%>">
+					  <%
+			for(int i=1;i<bean2.getDeep();i++){
+			  out.print("&nbsp;&nbsp;");
+			}
+			out.print(bean2.getName());
+			%>
+					  </option>
+					  <%    
+			  }
+			}
+			%>
         </select>
-		<script language="JavaScript">								
+		<script language="javascript">								
 		  document.all.parent.value="<%=bean.getNode().getParentId()%>";
-	    </script>		</td>
+	    </script>		
+		</td>
       </tr>
       <tr>
         <td class="input-box">部门名称*</td>
@@ -210,7 +210,8 @@ out.print(bean2.getName());
         </tr>
       <tr>
         <td colspan="2" align="center" valign="bottom" height="30">&nbsp;
-              <input name="btn_save" type="submit" value="保存" class="button"></td>
+              <input name="btn_save" type="submit" value="保存" class="button">
+		</td>
       </tr>
     </table></td>
   </tr>

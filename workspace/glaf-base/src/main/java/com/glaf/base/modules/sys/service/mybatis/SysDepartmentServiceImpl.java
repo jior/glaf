@@ -274,9 +274,27 @@ public class SysDepartmentServiceImpl implements SysDepartmentService {
 		}
 	}
 
+	protected void initTrees(List<SysDepartment> list) {
+		if (list != null && !list.isEmpty()) {
+			List<SysTree> trees = sysTreeService.getAllSysTreeList();
+			Map<Long, SysTree> treeMap = new HashMap<Long, SysTree>();
+			if (trees != null && !trees.isEmpty()) {
+				for (SysTree tree : trees) {
+					treeMap.put(tree.getId(), tree);
+				}
+			}
+			for (SysDepartment bean : list) {
+				bean.setNode(treeMap.get(Long.valueOf(bean.getNodeId())));
+			}
+		}
+	}
+
 	public List<SysDepartment> list(SysDepartmentQuery query) {
 		query.ensureInitialized();
 		List<SysDepartment> list = sysDepartmentMapper.getSysDepartments(query);
+		if (list != null && !list.isEmpty()) {
+			this.initTrees(list);
+		}
 		return list;
 	}
 

@@ -103,7 +103,7 @@ public class TodoController {
 	public ModelAndView showList(ModelMap modelMap, HttpServletRequest request,
 			HttpServletResponse response) {
 		RequestUtil.setRequestParameterToAttribute(request);
-		List rows = todoService.getAllTodoList();
+		List<Todo> rows = todoService.getAllTodoList();
 		request.setAttribute("rows", rows);
 		return new ModelAndView("/modules/sys/todo/show_list", modelMap);
 	}
@@ -158,6 +158,9 @@ public class TodoController {
 		List<Todo> todos = reader.readXls(file.getInputStream());
 		if (todos != null && !todos.isEmpty()) {
 			logger.debug("import size:" + todos.size());
+			for(Todo todo:todos){
+				todo.setEnableFlag(1);
+			}
 			todoService.saveAll(todos);
 		}
 		return this.showList(modelMap, request, response);

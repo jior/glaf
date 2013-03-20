@@ -1,8 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="html"%>
-<HTML>
-<HEAD>
-<TITLE>文件上传</TITLE>
+<html>
+<head>
+<title>文件上传</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link href="<%=request.getContextPath()%>/css/site.css" type="text/css" rel="stylesheet">
 <script language=javascript>
@@ -25,7 +25,15 @@ function IsExt(url, opt){
 }
 // 检测上传表单
 function submitMyForm() {
-	document.TodoForm.submit();
+	if(document.getElementById("file").value=""){
+		alert("请选择要导入的Todo模板文件，格式为Excel，扩展名是.xls");
+		return;
+	}
+	if(IsExt(document.getElementById("file").value, "xls")){
+	    document.TodoForm.submit();
+	} else {
+		alert("请选择要导入的Excel模板文件，扩展名是.xls");
+	}
 }
 </script>
 </head>
@@ -36,7 +44,7 @@ function submitMyForm() {
 	cellpadding="0" width="90%">
 	<tr>
 		<td align="center">
-           <input type="file" name="file" size="1" style="width:50%">
+           <input type="file" id="file" name="file" size="1" style="width:50%" >
 		   <input type="button" name="btn" value=" 确 定 " class="button" onclick="javascript:submitMyForm();">
         </td>
 	</tr>

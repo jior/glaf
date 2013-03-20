@@ -18,6 +18,7 @@
 
 package com.glaf.base.modules.sys.springmvc;
 
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.Properties;
 
@@ -138,6 +139,8 @@ public class LoginController {
 			}
 
 			// 登录成功，修改最近一次登录时间
+			bean.setLastLoginDate(new Date());
+			sysUserService.updateUser(bean);
 
 			String menus = sysApplicationService.getMenu(3, bean);
 			bean.setMenus(menus);

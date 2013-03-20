@@ -94,6 +94,16 @@
 	<select id="getSysRoleById" parameterType="long" resultMap="sysRoleResultMap">
 		select * from sys_role where ID = #{id}
 	</select>
+	
+	
+	<select id="getSysRolesOfDeptRole" parameterType="long" resultMap="sysRoleResultMap">
+		
+		select * from sys_role E
+		inner join sys_dept_role R
+		on E.ID = R.SYSROLEID
+		where E.ID = #{id}
+
+	</select>
 
 
 	<select id="getSysRoles" 

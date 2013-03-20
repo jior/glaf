@@ -134,11 +134,15 @@ public class SysRoleController {
 	public ModelAndView saveAdd(ModelMap modelMap, HttpServletRequest request,
 			HttpServletResponse response) {
 		RequestUtil.setRequestParameterToAttribute(request);
-		SysRole bean = new SysRole();
-		bean.setName(ParamUtil.getParameter(request, "name"));
-		bean.setDesc(ParamUtil.getParameter(request, "desc"));
-		bean.setCode(ParamUtil.getParameter(request, "code"));
-		boolean ret = sysRoleService.create(bean);
+
+		boolean ret = false;
+		if (sysRoleService.findByCode(ParamUtil.getParameter(request, "code")) == null) {
+			SysRole bean = new SysRole();
+			bean.setName(ParamUtil.getParameter(request, "name"));
+			bean.setDesc(ParamUtil.getParameter(request, "desc"));
+			bean.setCode(ParamUtil.getParameter(request, "code"));
+			ret = sysRoleService.create(bean);
+		}
 
 		ViewMessages messages = new ViewMessages();
 		if (ret) {// ±£´æ³É¹¦
