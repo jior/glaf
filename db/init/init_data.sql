@@ -33,8 +33,8 @@ insert into sys_tree (id, parent, name, nodedesc, sort, code) values (1, 0, '/',
 insert into sys_tree (id, parent, name, nodedesc, sort, code) values (2, 1, '数据结构', '', 20, '01');
 insert into sys_tree (id, parent, name, nodedesc, sort, code) values (3, 1, '应用模块', '', 10, '02');
 insert into sys_tree (id, parent, name, nodedesc, sort, code) values (4, 2, '基础数据', '', 50, '011');
-insert into sys_tree (id, parent, name, nodedesc, sort, code) values (5, 2, '部门结构', '部门结构', 40, '012');
-insert into sys_tree (id, parent, name, nodedesc, sort, code) values (6, 5, '技术部', '技术部', 284, 'JS000');
+insert into sys_tree (id, parent, name, nodedesc, sort, code, discriminator) values (5, 2, '部门结构', '部门结构', 40, '012','D');
+insert into sys_tree (id, parent, name, nodedesc, sort, code, discriminator) values (6, 5, '技术部', '技术部', 284, 'JS000','D');
 insert into sys_tree (id, parent, name, nodedesc, sort, code) values (8, 3, '系统管理', '系统管理', 5, '');
 insert into sys_tree (id, parent, name, nodedesc, sort, code) values (10, 3, '安全设置', '安全设置', 30, '');
 insert into sys_tree (id, parent, name, nodedesc, sort, code) values (11, 8, '系统目录', '系统目录', 20, '');

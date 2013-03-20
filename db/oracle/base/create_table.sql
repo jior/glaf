@@ -86,6 +86,8 @@ CREATE TABLE sys_tree (
         parent NUMBER(19),
         name NVARCHAR2(255),
         nodedesc NVARCHAR2(255),
+	discriminator NVARCHAR2(1),
+	treeId NVARCHAR2(200),
         sort INTEGER,
         code NVARCHAR2(255),
 	icon NVARCHAR2(255),

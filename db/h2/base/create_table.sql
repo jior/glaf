@@ -86,6 +86,8 @@ CREATE TABLE sys_tree (
         parent bigint,
         name varchar(255),
         nodedesc varchar(255),
+	discriminator varchar(1),
+	treeId varchar(200),
         sort int,
         code varchar(255),
 	icon varchar(255),
