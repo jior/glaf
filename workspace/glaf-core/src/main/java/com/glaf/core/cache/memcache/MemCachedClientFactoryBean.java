@@ -15,8 +15,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
- package com.glaf.core.cache.memcache;
+
+package com.glaf.core.cache.memcache;
 
 import org.springframework.beans.factory.FactoryBean;
 
