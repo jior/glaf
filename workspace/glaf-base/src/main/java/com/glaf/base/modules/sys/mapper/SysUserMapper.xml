@@ -264,6 +264,19 @@
 	<select id="getSysUserById" parameterType="long" resultMap="sysUserResultMap">
 		select * from sys_user where ID = #{id}
 	</select>
+	
+	
+	<select id="getSysUsersByAppId" parameterType="long" resultMap="sysUserResultMap">
+		
+		select distinct a.*
+		from sys_user a 
+		inner join sys_user_role b 
+		on a.id = b.userId 
+		inner join sys_access c 
+		on b.roleId = c.roleId 
+		where c.appId = #{appId}
+
+	</select>
 
 
 	<select id="getSysUserByAccount" parameterType="String"

@@ -47,7 +47,7 @@ import com.glaf.core.todo.TodoInstance;
 import com.glaf.core.todo.query.TodoQuery;
 import com.glaf.base.modules.workspace.model.Message;
 import com.glaf.base.utils.DateTools;
-
+@SuppressWarnings({"rawtypes", "unchecked"})
 public class SendMessageBean {
 	private final static Log logger = LogFactory.getLog(SendMessageBean.class);
 
@@ -61,8 +61,8 @@ public class SendMessageBean {
 
 	}
 
-	public List getTodoInstances(String actorId) {
-		List list = new ArrayList();
+	public List<TodoInstance> getTodoInstances(String actorId) {
+		List<TodoInstance> list = new ArrayList<TodoInstance>();
 		SysUser user = sysUserService.findByAccountWithAll(actorId);
 
 		if (user == null) {
@@ -73,19 +73,19 @@ public class SendMessageBean {
 
 		logger.info("user name:" + user.getName());
 
-		Collection agentIds = ProcessContainer.getContainer().getAgentIds(
+		List<String> agentIds = ProcessContainer.getContainer().getAgentIds(
 				actorId);
 
 		List<Long> appXIds = new ArrayList<Long>();
 		Collection<Long> appIds = new HashSet<Long>();
 
-		Collection apps = user.getApps();
+		Collection<SysApplication> apps = user.getApps();
 
 		SysDepartment dept = user.getDepartment();
 
 		logger.info("apps size:" + apps.size());
 
-		Iterator it = apps.iterator();
+		Iterator<SysApplication> it = apps.iterator();
 		while (it.hasNext()) {
 			SysApplication app = (SysApplication) it.next();
 			appIds.add(new Long(app.getId()));
@@ -93,15 +93,15 @@ public class SendMessageBean {
 		}
 
 		if (agentIds != null && agentIds.size() > 0) {
-			Iterator iter = agentIds.iterator();
+			Iterator<String> iter = agentIds.iterator();
 			while (iter.hasNext()) {
 				String agentId = (String) iter.next();
 
 				SysUser u = sysUserService.findByAccountWithAll(agentId);
 				if (u != null) {
 					u = sysUserService.getUserPrivileges(u);
-					Collection appx = u.getApps();
-					Iterator it2 = appx.iterator();
+					Set<SysApplication> appx = u.getApps();
+					Iterator<SysApplication> it2 = appx.iterator();
 					while (it2.hasNext()) {
 						SysApplication app = (SysApplication) it2.next();
 						appIds.add(new Long(app.getId()));

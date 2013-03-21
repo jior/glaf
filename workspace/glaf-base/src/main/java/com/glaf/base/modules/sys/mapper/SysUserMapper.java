@@ -45,8 +45,10 @@ public interface SysUserMapper {
 	SysUser getSysUserById(Long id);
 
 	int getSysUserCount(SysUserQuery query);
-	
+
 	List<SysUser> getSysUsers(SysUserQuery query);
+
+	List<SysUser> getSysUsersByAppId(Long appId);
 
 	void insertSysUser(SysUser model);
 

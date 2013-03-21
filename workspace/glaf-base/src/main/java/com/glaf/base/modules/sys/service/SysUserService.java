@@ -193,6 +193,13 @@ public interface SysUserService {
 	 * @return
 	 */
 	List<SysUser> getSupplierUser(String supplierNo);
+	
+	/**
+	 * 获取某个应用的权限用户
+	 * @param appId
+	 * @return
+	 */
+	List<SysUser> getSysUsersByAppId(Long appId);
 
 	/**
 	 * 设置用户权限

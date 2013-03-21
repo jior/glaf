@@ -325,6 +325,15 @@ public class SysUserServiceImpl implements SysUserService {
 		}
 		return users;
 	}
+	
+	/**
+	 * 获取某个应用的权限用户
+	 * @param appId
+	 * @return
+	 */
+	public List<SysUser> getSysUsersByAppId(Long appId){
+		return sysUserMapper.getSysUsersByAppId(appId);
+	}
 
 	public SysUser getUserAndPrivileges(SysUser user) {
 		SysUser bean = user;

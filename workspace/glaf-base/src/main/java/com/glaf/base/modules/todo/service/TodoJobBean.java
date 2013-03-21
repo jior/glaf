@@ -23,11 +23,9 @@ import java.util.*;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.jbpm.JbpmConfiguration;
-import org.jbpm.JbpmContext;
+
 import org.springframework.stereotype.Component;
 
-import com.glaf.jbpm.context.Context;
 import com.glaf.jbpm.model.TaskItem;
 import com.glaf.jbpm.container.ProcessContainer;
 
@@ -35,20 +33,26 @@ import com.glaf.base.modules.sys.model.SysDepartment;
 import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.sys.service.SysUserService;
 import com.glaf.base.modules.sys.service.WorkCalendarService;
+import com.glaf.core.jdbc.DBConnectionFactory;
+import com.glaf.core.service.ITableDataService;
 import com.glaf.core.todo.Todo;
 import com.glaf.core.todo.TodoInstance;
 import com.glaf.core.todo.query.TodoQuery;
+import com.glaf.core.util.JdbcUtils;
 import com.glaf.base.utils.DateTools;
 
 @Component("todoJobBean")
+@SuppressWarnings({"rawtypes", "unchecked"})
 public class TodoJobBean {
 	private final static Log logger = LogFactory.getLog(TodoJobBean.class);
 
-	private TodoService todoService;
+	protected SysUserService sysUserService;
 
-	private WorkCalendarService workCalendarService;
+	protected ITableDataService tableDataService;
 
-	private SysUserService sysUserService;
+	protected TodoService todoService;
+
+	protected WorkCalendarService workCalendarService;
 
 	public TodoJobBean() {
 
@@ -58,6 +62,7 @@ public class TodoJobBean {
 		todoService.create(todo);
 	}
 
+	
 	public void createTasks(List processInstanceIds) {
 		List tasks = this.getJbpmTasksByProcessInstanceIds(processInstanceIds);
 		todoService.createTasks(processInstanceIds, tasks);
@@ -89,14 +94,14 @@ public class TodoJobBean {
 
 	public void createTodoInstances(long todoId) {
 		Todo todo = todoService.getTodo(todoId);
-		Map rowsMap = new HashMap();
-		JbpmContext jbpmContext = null;
+		Map<String, TodoInstance> rowsMap = new HashMap<String, TodoInstance>();
+		java.sql.Connection con = null;
+		java.sql.PreparedStatement psmt = null;
+		java.sql.ResultSet rs = null;
 		try {
-			jbpmContext = ProcessContainer.getContainer().createJbpmContext();
-			java.sql.Connection con = jbpmContext.getConnection();
-			java.sql.PreparedStatement psmt = con.prepareStatement(todo
-					.getSql());
-			java.sql.ResultSet rs = psmt.executeQuery();
+			con = DBConnectionFactory.getConnection();
+			psmt = con.prepareStatement(todo.getSql());
+			rs = psmt.executeQuery();
 			java.sql.ResultSetMetaData rsmd = rs.getMetaData();
 			while (rs.next()) {
 				TodoInstance model = new TodoInstance();
@@ -131,13 +136,15 @@ public class TodoJobBean {
 		} catch (java.sql.SQLException ex) {
 			ex.printStackTrace();
 		} finally {
-			Context.close(jbpmContext);
+			JdbcUtils.close(rs);
+			JdbcUtils.close(psmt);
+			JdbcUtils.close(con);
 		}
 
-		List rows = new ArrayList();
+		List<TodoInstance> rows = new ArrayList<TodoInstance>();
 
 		if (rowsMap.size() > 0) {
-			Iterator iter = rowsMap.keySet().iterator();
+			Iterator<String> iter = rowsMap.keySet().iterator();
 			while (iter.hasNext()) {
 				String rowId = (String) iter.next();
 				TodoInstance model = (TodoInstance) rowsMap.get(rowId);
@@ -203,26 +210,12 @@ public class TodoJobBean {
 
 	public Collection getAppActorIds(String appId) {
 		Collection actorIds = new HashSet();
-		String sql = " select a.account, a.name, c.appId from sys_user a inner join sys_user_role b on a.id = b.userId inner join sys_access c on b.roleId = c.roleId where c.appId = ? ";
-		JbpmContext jbpmContext = null;
-		try {
-			JbpmConfiguration cfg = JbpmConfiguration.getInstance();
-			jbpmContext = cfg.createJbpmContext();
-			java.sql.Connection con = jbpmContext.getConnection();
-			java.sql.PreparedStatement psmt = con.prepareStatement(sql);
-			psmt.setString(1, appId);
-			java.sql.ResultSet rs = psmt.executeQuery();
-			while (rs.next()) {
-				actorIds.add(rs.getString(1));
+		List<SysUser> users = sysUserService.getSysUsersByAppId(Long
+				.parseLong(appId));
+		if (users != null && !users.isEmpty()) {
+			for (SysUser user : users) {
+				actorIds.add(user.getAccount());
 			}
-			rs.close();
-			psmt.close();
-			rs = null;
-			psmt = null;
-		} catch (java.sql.SQLException ex) {
-			ex.printStackTrace();
-		} finally {
-			Context.close(jbpmContext);
 		}
 		return actorIds;
 	}
@@ -272,6 +265,7 @@ public class TodoJobBean {
 		return todoService.getRoleMap();
 	}
 
+	 
 	public List getTasks() {
 		List todos = todoService.getSQLTodos();
 		List rows = new ArrayList();
@@ -282,21 +276,20 @@ public class TodoJobBean {
 				if (StringUtils.isNotEmpty(todo.getSql())) {
 					logger.info(todo.getId() + ":" + todo.getSql());
 					Map rowsMap = new HashMap();
-					JbpmContext jbpmContext = null;
+					java.sql.Connection con = null;
+					java.sql.PreparedStatement psmt = null;
+					java.sql.ResultSet rs = null;
 					try {
-						JbpmConfiguration cfg = JbpmConfiguration.getInstance();
-						jbpmContext = cfg.createJbpmContext();
-						java.sql.Connection con = jbpmContext.getConnection();
-						java.sql.PreparedStatement psmt = con
-								.prepareStatement(todo.getSql());
-						java.sql.ResultSet rs = psmt.executeQuery();
+						con = DBConnectionFactory.getConnection();
+						psmt = con.prepareStatement(todo.getSql());
+						rs = psmt.executeQuery();
 						java.sql.ResultSetMetaData rsmd = rs.getMetaData();
 						while (rs.next()) {
 							TodoInstance model = new TodoInstance();
 							model.setRowId(rs.getString(1));
 							model.setStartDate(rs.getDate(2));
 							if (rsmd.getColumnCount() == 3) {
-								switch (new Long(todo.getId()).intValue()) {
+								switch (Long.valueOf(todo.getId()).intValue()) {
 								case 8005:
 								case 7001:
 								case 7002:
@@ -326,7 +319,9 @@ public class TodoJobBean {
 						logger.debug(todo.getId() + ":" + todo.getSql());
 						ex.printStackTrace();
 					} finally {
-						Context.close(jbpmContext);
+						JdbcUtils.close(rs);
+						JdbcUtils.close(psmt);
+						JdbcUtils.close(con);
 					}
 
 					if (rowsMap.size() > 0) {
@@ -512,11 +507,7 @@ public class TodoJobBean {
 	}
 
 	public void sendMessage() {
-		// logger.info("sendMessage");
-		// System.out.println("sendMessage");
 		if (todoService.isWorkDate(new Date())) {
-			// logger.info("ok--------");
-			// System.out.println("ok--------");
 			this.sendMessageToAllUsers();
 		}
 	}
@@ -555,6 +546,11 @@ public class TodoJobBean {
 	@javax.annotation.Resource
 	public void setSysUserService(SysUserService sysUserService) {
 		this.sysUserService = sysUserService;
+	}
+
+	@javax.annotation.Resource
+	public void setTableDataService(ITableDataService tableDataService) {
+		this.tableDataService = tableDataService;
 	}
 
 	@javax.annotation.Resource
