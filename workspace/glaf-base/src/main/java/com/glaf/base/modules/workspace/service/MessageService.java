@@ -26,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.glaf.base.modules.workspace.model.Message;
 import com.glaf.core.util.PageResult;
 
+@SuppressWarnings("rawtypes")
 @Transactional(readOnly = true)
 public interface MessageService {
 
@@ -82,7 +83,7 @@ public interface MessageService {
 	 * @return
 	 */
 	@Transactional
-	boolean deleteAll(Collection c);
+	boolean deleteAll(Collection<Object> c);
 
 	/**
 	 * 获取对象

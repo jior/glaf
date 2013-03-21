@@ -19,6 +19,5 @@
 package com.glaf.base.modules.sys.form;
 
 public class AttachmentFormBean {
-	private static final long serialVersionUID = 1L;
 
 }

@@ -29,9 +29,9 @@ public class DictoryFormBean {
 	private int sort;
 	private long typeId;
 	private String value;
-	
-	public DictoryFormBean(){
-		
+
+	public DictoryFormBean() {
+
 	}
 
 	public int getBlocked() {

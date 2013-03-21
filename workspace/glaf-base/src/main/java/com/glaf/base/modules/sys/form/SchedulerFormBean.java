@@ -18,13 +18,10 @@
 
 package com.glaf.base.modules.sys.form;
 
-import java.util.*;
-
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
 public class SchedulerFormBean {
-	private static final long serialVersionUID = 1L;
 
 	protected String id;
 

@@ -23,7 +23,7 @@ import java.util.Map;
 
 public class Messages {
 
-	private Map messageTemplates = new HashMap();
+	private Map<String, MessageTemplate> messageTemplates = new HashMap<String, MessageTemplate>();
 
 	public MessageTemplate getMessageTemplate(String name) {
 		if (messageTemplates.get(name) == null) {
@@ -37,11 +37,11 @@ public class Messages {
 		messageTemplates.put(msgt.getName(), msgt);
 	}
 
-	public Map getMessageTemplates() {
+	public Map<String, MessageTemplate> getMessageTemplates() {
 		return this.messageTemplates;
 	}
 
-	public void setMessageTemplates(Map messageTemplates) {
+	public void setMessageTemplates(Map<String, MessageTemplate> messageTemplates) {
 		this.messageTemplates = messageTemplates;
 	}
 

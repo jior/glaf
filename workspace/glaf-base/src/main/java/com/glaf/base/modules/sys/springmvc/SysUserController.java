@@ -284,7 +284,7 @@ public class SysUserController {
 		request.setAttribute("bean", bean);
 
 		SysTree parent = sysTreeService.getSysTreeByCode(Constants.TREE_DEPT);
-		List list = new ArrayList();
+		List<SysTree> list = new ArrayList<SysTree>();
 		parent.setDeep(0);
 		list.add(parent);
 		sysTreeService.getSysTree(list, (int) parent.getId(), 1);
@@ -330,7 +330,7 @@ public class SysUserController {
 		request.setAttribute("bean", bean);
 
 		SysTree parent = sysTreeService.getSysTreeByCode(Constants.TREE_DEPT);
-		List list = new ArrayList();
+		List<SysTree> list = new ArrayList<SysTree>();
 		parent.setDeep(0);
 		list.add(parent);
 		sysTreeService.getSysTree(list, (int) parent.getId(), 1);
@@ -681,9 +681,9 @@ public class SysUserController {
 		if (user != null) {// 用户存在
 			long[] id = ParamUtil.getLongParameterValues(request, "id");// 获取页面参数
 			if (id != null) {
-				Set delRoles = new HashSet();
-				Set oldRoles = user.getRoles();
-				Set newRoles = new HashSet();
+				Set<?> delRoles = new HashSet<Object>();
+				Set<?> oldRoles = user.getRoles();
+				Set<SysDeptRole> newRoles = new HashSet<SysDeptRole>();
 				for (int i = 0; i < id.length; i++) {
 					logger.debug("id[" + i + "]=" + id[i]);
 					SysDeptRole role = sysDeptRoleService.findById(id[i]);// 查找角色对象
@@ -691,7 +691,7 @@ public class SysUserController {
 						newRoles.add(role);// 加入到角色列表
 					}
 				}
-				delRoles.addAll(oldRoles);
+		 
 				oldRoles.retainAll(newRoles);// 公共权限
 				delRoles.removeAll(newRoles);// 待删除的权限
 				newRoles.removeAll(oldRoles);// 待增加的权限
@@ -752,8 +752,8 @@ public class SysUserController {
 	public ModelAndView showDeptUsers(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
 		RequestUtil.setRequestParameterToAttribute(request);
-		List list = new ArrayList();
-		Set set = new HashSet();
+		List<SysDepartment> list = new ArrayList<SysDepartment>();
+		Set<SysUser> set = new HashSet<SysUser>();
 		// 6:
 		long deptId = ParamUtil.getLongParameter(request, "dept", 5);
 		String roleCode = ParamUtil.getParameter(request, "code", "");
@@ -764,7 +764,7 @@ public class SysUserController {
 		} else {
 			this.getAllSysDepartmentList(list, (int) deptId);
 		}
-		for (Iterator iter = list.iterator(); iter.hasNext();) {
+		for (Iterator<SysDepartment> iter = list.iterator(); iter.hasNext();) {
 			SysDepartment element = (SysDepartment) iter.next();
 			this.getRoleUser(set, element.getId(), roleCode);
 		}
@@ -814,7 +814,7 @@ public class SysUserController {
 		request.setAttribute("pager", pager);
 
 		SysDepartment dept = sysDepartmentService.findById(deptId);
-		List list = new ArrayList();
+		List<SysDepartment> list = new ArrayList<SysDepartment>();
 		sysDepartmentService.findNestingDepartment(list, dept);
 		request.setAttribute("nav", list);
 
@@ -888,7 +888,7 @@ public class SysUserController {
 
 		// 部门信息
 		SysDepartment dept = sysDepartmentService.findById(deptId);
-		List list = new ArrayList();
+		List<SysDepartment> list = new ArrayList<SysDepartment>();
 		sysDepartmentService.findNestingDepartment(list, dept);
 		request.setAttribute("nav", list);
 
@@ -896,7 +896,7 @@ public class SysUserController {
 		SysRole role = sysRoleService.findById(roleId);
 		request.setAttribute("role", role.getName());
 
-		Set users = sysDeptRoleService.findRoleUser(deptId, role.getCode());
+		Set<?> users = sysDeptRoleService.findRoleUser(deptId, role.getCode());
 		request.setAttribute("list", users);
 
 		return new ModelAndView("/modules/sys/user/deptRole_user", modelMap);

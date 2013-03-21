@@ -135,7 +135,7 @@ public class SysDeptRoleController {
 		logger.debug("#########################################");
 		logger.debug("apps:"+deptRole.getApps());
 		SysTree parent = sysTreeService.getSysTreeByCode(Constants.TREE_APP);
-		List list = new ArrayList();
+		List<SysTree> list = new ArrayList<SysTree>();
 		sysTreeService.getSysTree(list, (int) parent.getId(), 0);
 		request.setAttribute("list", list);
 		logger.debug("------------list size:"+list.size());
@@ -207,7 +207,7 @@ public class SysDeptRoleController {
 				// 再确定要增加的角色
 
 				// 先把部门下面的角色清空
-				Iterator iter = dept.getRoles().iterator();
+				Iterator<?> iter = dept.getRoles().iterator();
 				while (iter.hasNext()) {
 					sysDeptRoleService.delete((SysDeptRole) iter.next());
 				}

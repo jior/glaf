@@ -20,7 +20,6 @@ package com.glaf.base.modules.sys.form;
 
 public class GenericFormBean {
 
-	private static final long serialVersionUID = 1L;
 	private String name;
 
 	public String getName() {

@@ -90,7 +90,7 @@ public class SysSubjectCodeController {
 	public ModelAndView showList(ModelMap modelMap, HttpServletRequest request,
 			HttpServletResponse response) {
 		RequestUtil.setRequestParameterToAttribute(request);
-		Map filter = WebUtil.getQueryMap(request);
+		Map<String, String> filter = WebUtil.getQueryMap(request);
 		request.setAttribute("pager", subjectCodeService.getFeePage(filter));
 		return new ModelAndView("/modules/sys/subject/show_list1");
 	}
@@ -108,9 +108,9 @@ public class SysSubjectCodeController {
 			HttpServletRequest request, HttpServletResponse response) {
 		RequestUtil.setRequestParameterToAttribute(request);
 		int parent = ParamUtil.getIntParameter(request, "parent", 0);
-		Map filter = WebUtil.getQueryMap(request);
+		Map<String, String> filter = WebUtil.getQueryMap(request);
 		filter.put("parent", String.valueOf(parent));
-		List list = subjectCodeService.getSubFeeList(filter);
+		List<SubjectCode> list = subjectCodeService.getSubFeeList(filter);
 		request.setAttribute("list", list);
 		return new ModelAndView("/modules/sys/subject/show_list2");
 	}

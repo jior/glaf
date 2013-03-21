@@ -141,11 +141,13 @@ public class AuthorizeInterceptor implements MethodBeforeAdvice {
 	 * @param methodName
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	private boolean findSysFunction(String methodName) {
 		boolean ret = false;
 		try {
 			// 系统功能列表，在初始化servlet中加载
-			Iterator iter = ((List) ContextUtil.get("function")).iterator();
+			Iterator<BaseDataInfo> iter = ((List<BaseDataInfo>) ContextUtil
+					.get("function")).iterator();
 			// logger.debug("function:" + iter);
 			while (iter.hasNext()) {
 				BaseDataInfo bdi = (BaseDataInfo) iter.next();

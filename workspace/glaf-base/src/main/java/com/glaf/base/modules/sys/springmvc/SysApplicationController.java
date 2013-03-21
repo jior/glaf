@@ -118,7 +118,7 @@ public class SysApplicationController {
 		request.setAttribute("bean", bean);
 
 		SysTree parent = sysTreeService.getSysTreeByCode(Constants.TREE_APP);
-		List list = new ArrayList();
+		List<SysTree> list = new ArrayList<SysTree>();
 		parent.setDeep(0);
 		list.add(parent);
 		sysTreeService.getSysTree(list, (int) parent.getId(), 1);
@@ -295,7 +295,7 @@ public class SysApplicationController {
 			HttpServletRequest request, HttpServletResponse response) {
 		RequestUtil.setRequestParameterToAttribute(request);
 		int parent = ParamUtil.getIntParameter(request, "parent", 0);
-		List list = new ArrayList();
+		List<SysTree> list = new ArrayList<SysTree>();
 		sysTreeService.getSysTree(list, parent, 0);
 		request.setAttribute("list", list);
 		return new ModelAndView("/modules/sys/app/navmenu", modelMap);

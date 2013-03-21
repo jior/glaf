@@ -189,7 +189,7 @@ public class DictoryController {
 
 		SysTree parent = sysTreeService
 				.getSysTreeByCode(Constants.TREE_DICTORY);
-		List list = new ArrayList();
+		List<SysTree> list = new ArrayList<SysTree>();
 		parent.setDeep(0);
 		list.add(parent);
 		sysTreeService.getSysTree(list, (int) parent.getId(), 1);
@@ -355,7 +355,7 @@ public class DictoryController {
 		RequestUtil.setRequestParameterToAttribute(request);
 		ModelAndView view = null;
 		String code = ParamUtil.getParameter(request, "code");
-		Iterator iter = null;
+		Iterator<?> iter = null;
 		long parent = ParamUtil.getLongParameter(request, "parent", -1);
 		if (!(parent == -1)) {
 			// List list =

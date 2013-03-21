@@ -91,7 +91,7 @@ public interface AttachmentService {
 	 * @param parent
 	 * @return
 	 */
-	List getAttachmentList(long referId, int referType);
+	List<Attachment> getAttachmentList(long referId, int referType);
 
 	/**
 	 * 返回附件
@@ -127,7 +127,7 @@ public interface AttachmentService {
 	 * @param parent
 	 * @return
 	 */
-	Map getNameMap(long referId, int referType);
+	Map<String, String> getNameMap(long referId, int referType);
 
 	/**
 	 * 返回所有附件列表
@@ -136,7 +136,7 @@ public interface AttachmentService {
 	 * @param referType
 	 * @return
 	 */
-	List getAttachmentList(long[] referIds, int referType);
+	List<Attachment> getAttachmentList(long[] referIds, int referType);
 
 	/**
 	 * 返回附件个数
@@ -147,11 +147,5 @@ public interface AttachmentService {
 	 */
 	int getAttachmentCount(long[] referIds, int referType);
 
-	/**
-	 * 返回对应的附件列表
-	 * 
-	 * @param parent
-	 * @return
-	 */
-	List getPurchaseAttachmentList(long[] ids, int referType);
+ 
 }

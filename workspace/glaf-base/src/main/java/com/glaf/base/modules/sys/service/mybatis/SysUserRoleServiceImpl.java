@@ -35,7 +35,6 @@ import com.glaf.core.service.ITableDataService;
 import com.glaf.core.util.DateUtils;
 import com.glaf.core.util.PageResult;
 import com.glaf.core.base.TableModel;
- 
 
 import com.glaf.base.modules.Constants;
 import com.glaf.base.modules.sys.mapper.*;
@@ -165,7 +164,7 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 		return this.getSysUserRole(id);
 	}
 
-	public PageResult getAllAuthorizedUser(Map<String, Object> filter) {
+	public PageResult getAllAuthorizedUser(Map<String, String> filter) {
 		int pageNo = 1;
 		if ((String) filter.get("page_no") != null) {
 			pageNo = Integer.parseInt((String) filter.get("page_no"));

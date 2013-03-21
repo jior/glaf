@@ -20,7 +20,6 @@ package com.glaf.base.modules.sys.form;
 
 public class LoginFormBean {
 
-	private static final long serialVersionUID = 1L;
 	private String userId;
 	private String password;
 	private String password1;

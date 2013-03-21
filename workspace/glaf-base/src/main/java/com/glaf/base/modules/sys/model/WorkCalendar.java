@@ -22,7 +22,7 @@ import java.io.Serializable;
 import com.alibaba.fastjson.*;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.glaf.base.modules.others.util.WorkCalendarJsonFactory;
+import com.glaf.base.modules.sys.util.WorkCalendarJsonFactory;
 import com.glaf.core.base.JSONable;
 
 

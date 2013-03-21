@@ -102,7 +102,7 @@ public class SysUserRoleController {
 	public ModelAndView showUsers(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
 		RequestUtil.setRequestParameterToAttribute(request);
-		Map filter = WebUtil.getQueryMap(request);
+		Map<String, String> filter = WebUtil.getQueryMap(request);
 		request.setAttribute("pager",
 				sysUserRoleService.getAllAuthorizedUser(filter));
 		// 显示列表页面

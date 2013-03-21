@@ -156,7 +156,7 @@ public class BackGroundService extends HttpServlet implements Servlet {
 
 		String forwardURL = "";
 		try {
-			List items = upload.parseRequest(request);
+			List<?> items = upload.parseRequest(request);
 			// 获得返回url
 			for (int i = 0; i < items.size(); i++) {
 				FileItem item = (FileItem) items.get(i);
@@ -193,7 +193,7 @@ public class BackGroundService extends HttpServlet implements Servlet {
 					// 更新上传文件列表
 					FileUploadStatus satusBean = getStatusBean(request);
 					satusBean.getUploadFileUrlList().add(
-							new File(uploadDir, fileName).toString());
+							new File(uploadDir, fileName).getAbsolutePath());
 					saveStatusBean(request, satusBean);
 					Thread.sleep(500);
 				}

@@ -41,7 +41,7 @@ public class FileUploadStatus {
     //处理执行时间
     private long processRunningTime = 0l;
     //上传文件URL列表
-    private List uploadFileUrlList = new ArrayList();
+    private List<String> uploadFileUrlList = new ArrayList<String>();
     //取消上传
     private boolean cancel = false;
     //上传base目录
@@ -67,11 +67,11 @@ public class FileUploadStatus {
         this.cancel = cancel;
     }
 
-    public List getUploadFileUrlList() {
+    public List<String> getUploadFileUrlList() {
         return uploadFileUrlList;
     }
 
-    public void setUploadFileUrlList(List uploadFileUrlList) {
+    public void setUploadFileUrlList(List<String> uploadFileUrlList) {
         this.uploadFileUrlList = uploadFileUrlList;
     }
 

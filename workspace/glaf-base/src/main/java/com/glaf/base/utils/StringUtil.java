@@ -1,20 +1,20 @@
 /*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.glaf.base.utils;
 
@@ -194,7 +194,7 @@ public class StringUtil {
 		}
 
 		// if not an array or elements not primitive, return
-		Class clasz = vec.getClass();
+		Class<?> clasz = vec.getClass();
 		if (!clasz.isArray()) {
 			return vec;
 		}
@@ -219,8 +219,8 @@ public class StringUtil {
 	 * @param vec
 	 * @return
 	 */
-	public static List toList(Object[] vec) {
-		List list = Arrays.asList(vec);
+	public static List<?> toList(Object[] vec) {
+		List<?> list = Arrays.asList(vec);
 		return list;
 	}
 
@@ -461,8 +461,13 @@ public class StringUtil {
 		return c;
 	}
 
-	public static StringBuffer ZhuanHuan(String iin) {
-		String in = iin;
+	/**
+	 * 将输入数值转换为大写的RMB格式
+	 * @param input
+	 * @return
+	 */
+	public static StringBuffer toRMB(String input) {
+		String in = input;
 
 		boolean xb = false; // 默认没有小数
 		if (in.indexOf(".") != -1) {
@@ -484,14 +489,11 @@ public class StringUtil {
 
 		// 输出小数点左边的数
 		if (s1.length() >= 9) { // 亿
-			// System.out.println("亿区间");
 			String yi = s1.substring(0, s1.length() - 8);
 			String wan = s1.substring(s1.length() - 8, s1.length() - 4);
 			String qian = s1.substring(s1.length() - 4, s1.length());
 
 			int len = yi.length();
-			boolean b = true;
-
 			// 处理亿区间
 			for (int i = 0; i < yi.length(); i++) {
 				if (len == 4) {
@@ -499,192 +501,89 @@ public class StringUtil {
 					out.append(" 仟 ");
 					len--;
 				} else if (len == 3) {
-					/*
-					 * if (yi.charAt(i) == '0' ) { b = false ; out.append( " 零 "
-					 * ); len -- ; continue ; } else {
-					 */
 					out.append(pp(yi.charAt(i)));
 					out.append(" 佰 ");
 					len--;
 					continue;
-					// }
 				} else if (len == 2) {
-					/*
-					 * if (yi.charAt(i) == '0' && ! b) { len -- ; continue ; }
-					 * if (yi.charAt(i) == '0' && b) { b = false ; out.append( "
-					 * 零 " ); len -- ; continue ; } else {
-					 */
 					out.append(pp(yi.charAt(i)));
 					out.append(" 拾 ");
 					len--;
 					continue;
-					// }
+
 				} else if (len == 1) {
-					/*
-					 * if (yi.charAt(i) == '0' ) { out.append( " 亿 " ); len -- ;
-					 * continue ; } else {
-					 */
+
 					out.append(pp(yi.charAt(i)));
 					out.append(" 亿 ");
 					len--;
-					// }
+
 				}
 			}
-			/*
-			 * if (out.charAt(out.indexOf( " 亿 " ) - 1 ) == '零' ) {
-			 * out.deleteCharAt(out.indexOf( " 亿 " ) - 1 ); out.append( " 零 " );
-			 * } if (yi.charAt(yi.length() - 1 ) == '0' ) { out.append( " 零 " );
-			 * }
-			 * 
-			 * if (out.charAt(out.length() - 2 ) == out.charAt(out.length() - 1
-			 * )) { // 删除最后多余的零 out.deleteCharAt(out.lastIndexOf( " 零 " )); }
-			 */
+
 			// 处理万区间
 			len = wan.length();
-			b = true;
-			if (wan.charAt(0) == '0' && wan.charAt(1) == '0'
-					&& wan.charAt(2) == '0' && wan.charAt(3) == '0' && false) {
-				// 如果万区间全为0就什么也不做
-			} else {
-				for (int i = 0; i < wan.length(); i++) {
-					if (len == 4) {
-						/*
-						 * if (wan.charAt(i) == '0' ) { out.append( " 零 " ); len
-						 * -- ; continue ; }
-						 */
-						out.append(pp(wan.charAt(i)));
-						out.append(" 仟 ");
-						len--;
-						continue;
-					} else if (len == 3) {
-						/*
-						 * if (wan.charAt(i) == '0' ) { b = false ; out.append(
-						 * " 零 " ); len -- ; continue ; } else {
-						 */
-						out.append(pp(wan.charAt(i)));
-						out.append(" 佰 ");
-						len--;
-						continue;
-						// }
-					} else if (len == 2) {
-						/*
-						 * if (wan.charAt(i) == '0' && ! b) { len -- ; continue
-						 * ; } if (wan.charAt(i) == '0' && b) { b = false ;
-						 * out.append( " 零 " ); len -- ; continue ; } else {
-						 */
-						out.append(pp(wan.charAt(i)));
-						out.append(" 拾 ");
-						len--;
-						continue;
-						// }
-					} else if (len == 1) {
-						/*
-						 * if (wan.charAt(i) == '0' ) { out.append( " 万 " ); len
-						 * -- ; continue ; } else {
-						 */
-						out.append(pp(wan.charAt(i)));
-						out.append(" 万 ");
-						len--;
-						continue;
-						// }
-					}
+			for (int i = 0; i < wan.length(); i++) {
+				if (len == 4) {
+					out.append(pp(wan.charAt(i)));
+					out.append(" 仟 ");
+					len--;
+					continue;
+				} else if (len == 3) {
+					out.append(pp(wan.charAt(i)));
+					out.append(" 佰 ");
+					len--;
+					continue;
+				} else if (len == 2) {
+					out.append(pp(wan.charAt(i)));
+					out.append(" 拾 ");
+					len--;
+					continue;
+				} else if (len == 1) {
+					out.append(pp(wan.charAt(i)));
+					out.append(" 万 ");
+					len--;
+					continue;
+
 				}
-				/*
-				 * if (out.charAt(out.indexOf( " 万 " ) - 1 ) == '零' ) {
-				 * out.deleteCharAt(out.indexOf( " 万 " ) - 1 ); out.append(
-				 * " 零 " ); } if (wan.charAt(wan.length() - 1 ) == '0' ) {
-				 * out.append( " 零 " ); } if (out.charAt(out.length() - 2 ) ==
-				 * out .charAt(out.length() - 1 )) {
-				 * out.deleteCharAt(out.lastIndexOf( " 零 " )); }
-				 */
 			}
 
 			// 千区间
 			len = qian.length();
-			b = true;
-			if (qian.charAt(0) == '0' && qian.charAt(1) == '0'
-					&& qian.charAt(2) == '0' && qian.charAt(3) == '0' && false) {
-				// 如果千区间全为0就什么也不做
-			} else {
-				for (int i = 0; i < qian.length(); i++) {
-					if (len == 4) {
-						/*
-						 * if (qian.charAt(i) == '0' ) { out.append( " 零 " );
-						 * len -- ; continue ; }
-						 */
-						out.append(pp(qian.charAt(i)));
-						out.append(" 仟 ");
-						len--;
-						continue;
-					} else if (len == 3) {
-						/*
-						 * if (qian.charAt(i) == '0' ) { b = false ; out.append(
-						 * " 零 " ); len -- ; continue ; } else {
-						 */
-						out.append(pp(qian.charAt(i)));
-						out.append(" 佰 ");
-						len--;
-						continue;
-						// }
-					} else if (len == 2) {
-						/*
-						 * if (qian.charAt(i) == '0' && ! b) { len -- ; continue
-						 * ; } if (qian.charAt(i) == '0' && b) { b = false ;
-						 * out.append( " 零 " ); len -- ; continue ; } else {
-						 */
-						out.append(pp(qian.charAt(i)));
-						out.append(" 拾 ");
-						len--;
-						continue;
-						// }
-					} else if (len == 1) {
-						/*
-						 * if (qian.charAt(i) == '0' ) { out.append( " 元 " );
-						 * len -- ; continue ; } else {
-						 */
-						out.append(pp(qian.charAt(i)));
-						out.append(" 元 ");
-						len--;
-						continue;
-						// }
-					}
+			for (int i = 0; i < qian.length(); i++) {
+				if (len == 4) {
+					out.append(pp(qian.charAt(i)));
+					out.append(" 仟 ");
+					len--;
+					continue;
+				} else if (len == 3) {
+					out.append(pp(qian.charAt(i)));
+					out.append(" 佰 ");
+					len--;
+					continue;
+				} else if (len == 2) {
+					out.append(pp(qian.charAt(i)));
+					out.append(" 拾 ");
+					len--;
+					continue;
+				} else if (len == 1) {
+					out.append(pp(qian.charAt(i)));
+					out.append(" 元 ");
+					len--;
+					continue;
 				}
 			}
-			/*
-			 * if (out.charAt(out.length() - 2 ) == '零' ) {
-			 * out.deleteCharAt(out.length() - 2 ); }
-			 * 
-			 * if (out.charAt(out.length() - 1 ) == '零' ) { // 删除多余的零 while
-			 * (out.charAt(out.length() - 1 ) == '零' ) {
-			 * out.deleteCharAt(out.length() - 1 ); } out.append( " 元 " ); } for
-			 * ( int i = out.length() - 1 ; i >= 0 ; i -- ) { // 删除多余的零 if
-			 * (out.indexOf( " 零 " ) !=- 1 ) { if (out.charAt(out.lastIndexOf( "
-			 * 零 " ) - 1 ) == '零' ) { out.deleteCharAt(out.lastIndexOf( " 零 " )
-			 * - 1 ); } } }
-			 */
 
 			// 处理小数
 			if (xb) {
 				int llen = s2.length();
 				if (llen >= 2) {
-					/*
-					 * if (s2.charAt( 0 ) == '0' && s2.charAt( 1 ) == '0' ) { //
-					 * 小数为两个0就什么也不做 } else if (s2.charAt( 1 ) == '0' ) {
-					 * out.append( pp(s2.charAt( 0 ))); out.append( " 角 " ); }
-					 * else if (s2.charAt( 0 ) == '0' ) { out.append( " 零 " );
-					 * out.append( pp(s2.charAt( 1 ))); out.append( " 分 " ); }
-					 * else {
-					 */
 					out.append(pp(s2.charAt(0)));
 					out.append(" 角 ");
 					out.append(pp(s2.charAt(1)));
 					out.append(" 分 ");
-					// }
 				}
 				if (llen == 1) {
 					if (s2.charAt(0) == '0') {
-						// 小数为两个0就什么也不做
-						/* } else { */
 						out.append(pp(s2.charAt(0)));
 						out.append(" 角 ");
 					}
@@ -695,144 +594,73 @@ public class StringUtil {
 			}
 
 		} else if (s1.length() >= 5) { // 万
-			// System.out.println("万区间");
 			String wan = s1.substring(0, s1.length() - 4);
 			String qian = s1.substring(s1.length() - 4, s1.length());
 			// 处理万区间
 			int len = wan.length();
-			boolean b = true;
-			if (wan.charAt(0) == '0' && wan.charAt(1) == '0'
-					&& wan.charAt(2) == '0' && wan.charAt(3) == '0' && false) {
-				// 如果万区间全为0就什么也不做
-			} else {
-				for (int i = 0; i < wan.length(); i++) {
-					if (len == 4) {
-						out.append(pp(wan.charAt(i)));
-						out.append(" 仟 ");
-						len--;
-					} else if (len == 3) {
-						/*
-						 * if (wan.charAt(i) == '0' ) { b = false ; out.append(
-						 * " 零 " ); len -- ; continue ; } else {
-						 */
-						out.append(pp(wan.charAt(i)));
-						out.append(" 佰 ");
-						len--;
-						continue;
-						// }
-					} else if (len == 2) {
-						/*
-						 * if (wan.charAt(i) == '0' && ! b) { len -- ; continue
-						 * ; } if (wan.charAt(i) == '0' && b) { b = false ;
-						 * out.append( " 零 " ); len -- ; continue ; } else {
-						 */
-						out.append(pp(wan.charAt(i)));
-						out.append(" 拾 ");
-						len--;
-						continue;
-						// }
-					} else if (len == 1) {
-						/*
-						 * if (wan.charAt(i) == '0' ) { out.append( " 万 " ); len
-						 * -- ; continue ; } else {
-						 */
-						out.append(pp(wan.charAt(i)));
-						out.append(" 万 ");
-						len--;
-						// }
-					}
+			for (int i = 0; i < wan.length(); i++) {
+				if (len == 4) {
+					out.append(pp(wan.charAt(i)));
+					out.append(" 仟 ");
+					len--;
+				} else if (len == 3) {
+					out.append(pp(wan.charAt(i)));
+					out.append(" 佰 ");
+					len--;
+					continue;
+				} else if (len == 2) {
+					out.append(pp(wan.charAt(i)));
+					out.append(" 拾 ");
+					len--;
+					continue;
+				} else if (len == 1) {
+					out.append(pp(wan.charAt(i)));
+					out.append(" 万 ");
+					len--;
 				}
-				/*
-				 * if (out.charAt(out.indexOf( " 万 " ) - 1 ) == '零' ) {
-				 * out.deleteCharAt(out.indexOf( " 万 " ) - 1 ); out.append(
-				 * " 零 " ); } if (wan.charAt(wan.length() - 1 ) == '0' ) {
-				 * out.append( " 零 " ); } if (out.charAt(out.length() - 2 ) ==
-				 * out .charAt(out.length() - 1 )) {
-				 * out.deleteCharAt(out.lastIndexOf( " 零 " )); }
-				 */
 			}
 
 			// 千区间
 			len = qian.length();
-			b = true;
-			if (qian.charAt(0) == '0' && qian.charAt(1) == '0'
-					&& qian.charAt(2) == '0' && qian.charAt(3) == '0' && false) {
-				// 如果千区间全为0就什么也不做
-			} else {
-				for (int i = 0; i < qian.length(); i++) {
-					if (len == 4) {
-						/*
-						 * if (qian.charAt(i) == '0' && out.charAt(out.length()
-						 * - 1 ) != '零' ) { out.append( " 零 " ); len -- ;
-						 * continue ; } else if (qian.charAt(i) == '0' &&
-						 * out.charAt(out.length() - 1 ) == '零' ) { len -- ;
-						 * continue ; }
-						 */
-						out.append(pp(qian.charAt(i)));
-						out.append(" 仟 ");
-						len--;
-					} else if (len == 3) {
-						/*
-						 * if (qian.charAt(i) == '0' ) { b = false ; out.append(
-						 * " 零 " ); len -- ; continue ; } else {
-						 */
-						out.append(pp(qian.charAt(i)));
-						out.append(" 佰 ");
-						len--;
-						continue;
-						// }
-					} else if (len == 2) {
-						/*
-						 * if (qian.charAt(i) == '0' && ! b) { len -- ; continue
-						 * ; } if (qian.charAt(i) == '0' && b) { b = false ;
-						 * out.append( " 零 " ); len -- ; continue ; } else {
-						 */
-						out.append(pp(qian.charAt(i)));
-						out.append(" 拾 ");
-						len--;
-						continue;
-						// }
-					} else if (len == 1) {
-						/*
-						 * if (qian.charAt(i) == '0' ) { out.append( " 元 " );
-						 * len -- ; continue ; } else {
-						 */
-						out.append(pp(qian.charAt(i)));
-						out.append(" 元 ");
-						len--;
-						// }
-					}
+			for (int i = 0; i < qian.length(); i++) {
+				if (len == 4) {
+
+					out.append(pp(qian.charAt(i)));
+					out.append(" 仟 ");
+					len--;
+				} else if (len == 3) {
+
+					out.append(pp(qian.charAt(i)));
+					out.append(" 佰 ");
+					len--;
+					continue;
+
+				} else if (len == 2) {
+
+					out.append(pp(qian.charAt(i)));
+					out.append(" 拾 ");
+					len--;
+					continue;
+
+				} else if (len == 1) {
+
+					out.append(pp(qian.charAt(i)));
+					out.append(" 元 ");
+					len--;
+
 				}
 			}
-			/*
-			 * if (out.charAt(out.length() - 2 ) == '零' ) {
-			 * out.deleteCharAt(out.length() - 2 ); } if
-			 * (out.charAt(out.length() - 1 ) == '零' ) { // 删除多余的零 while
-			 * (out.charAt(out.length() - 1 ) == '零' ) {
-			 * out.deleteCharAt(out.length() - 1 ); } out.append( " 元 " ); } for
-			 * ( int i = out.length() - 1 ; i >= 0 ; i -- ) { // 删除多余的零 if
-			 * (out.indexOf( " 零 " ) !=- 1 ) { if (out.charAt(out.lastIndexOf( "
-			 * 零 " ) - 1 ) == '零' ) { out.deleteCharAt(out.lastIndexOf( " 零 " )
-			 * - 1 ); } } }
-			 */
 
 			// 处理小数点右边的数
 			if (xb) {
 				int llen = s2.length();
 				if (llen >= 2) {
-					/*
-					 * if (s2.charAt( 0 ) == '0' && s2.charAt( 1 ) == '0' ) { //
-					 * 小数为两个0就什么也不做 } else if (s2.charAt( 1 ) == '0' ) {
-					 * out.append( pp(s2.charAt( 0 ))); out.append( " 角 " ); }
-					 * else if (s2.charAt( 0 ) == '0' ) { out.append( " 零 " );
-					 * out.append( pp(s2.charAt( 1 ))); out.append( " 分 " ); }
-					 * else {
-					 */
+
 					out.append(pp(s2.charAt(0)));
 					out.append(" 角 ");
 					out.append(pp(s2.charAt(1)));
 					out.append(" 分 ");
-					// }
+
 				}
 				if (llen == 1) {
 					if (s2.charAt(0) == '0') {
@@ -848,11 +676,9 @@ public class StringUtil {
 			}
 
 		} else { // 千
-			// System.out.println("千区间");
 			String qian = s1;
 			// 千区间
 			int len = qian.length();
-			boolean b = true;
 			if (qian.charAt(0) == '0' && len == 1) {
 				out.append(pp(qian.charAt(0)) + " 元 ");
 			} else if (qian.charAt(0) == '0' && qian.charAt(1) == '0'
@@ -867,78 +693,34 @@ public class StringUtil {
 						out.append(" 仟 ");
 						len--;
 					} else if (len == 3) {
-						// if (qian.charAt(i) == '0' ) {
-						// b = false ;
-						// out.append( " 零 " );
-						// out.append( " 拾 " );
-						// len -- ;
-						// continue ;
-						// } else {
 						out.append(pp(qian.charAt(i)));
 						out.append(" 佰 ");
 						len--;
 						continue;
-						// }
 					} else if (len == 2) {
-						// if (qian.charAt(i) == '0' && ! b) {
-						// len -- ;
-						// continue ;
-						// }
-						// if (qian.charAt(i) == '0' && b) {
-						// b = false ;
-						// out.append( pp(qian.charAt(i)));
-						// out.append( " 拾 " );
-						// len -- ;
-						// continue ;
-						// } else {
 						out.append(pp(qian.charAt(i)));
 						out.append(" 拾 ");
 						len--;
 						continue;
-						// }
 					} else if (len == 1) {
-						// if (qian.charAt(i) == '0' ) {
-						// out.append( " 元 " );
-						// len -- ;
-						// continue ;
-						// } else {
 						out.append(pp(qian.charAt(i)));
 						out.append(" 元 ");
 						len--;
-						// }
 					}
 				}
 			}
-			/*
-			 * if (out.charAt(out.length() - 2 ) == '零' ) {
-			 * out.deleteCharAt(out.length() - 2 ); }
-			 * 
-			 * if (out.charAt(out.length() - 1 ) == '零' ) { // 删除多余的零 while
-			 * (out.charAt(out.length() - 1 ) == '零' ) {
-			 * out.deleteCharAt(out.length() - 1 ); } out.append( " 元 " ); }
-			 */
 
 			// 处理小数点右边的数
 			if (xb) {
 				int llen = s2.length();
 				if (llen >= 2) {
-					/*
-					 * if (s2.charAt( 0 ) == '0' && s2.charAt( 1 ) == '0' ) { //
-					 * 小数为两个0就什么也不做 } else if (s2.charAt( 1 ) == '0' ) {
-					 * out.append( pp(s2.charAt( 0 ))); out.append( " 角 " ); }
-					 * else if (s2.charAt( 0 ) == '0' ) { out.append( " 零 " );
-					 * out.append( pp(s2.charAt( 1 ))); out.append( " 分 " ); }
-					 * else {
-					 */
 					out.append(pp(s2.charAt(0)));
 					out.append(" 角 ");
 					out.append(pp(s2.charAt(1)));
 					out.append(" 分 ");
-					// }
 				}
 				if (llen == 1) {
 					if (s2.charAt(0) == '0') {
-						// 小数为两个0就什么也不做
 					} else {
 						out.append(pp(s2.charAt(0)));
 						out.append(" 角 ");
@@ -998,7 +780,7 @@ public class StringUtil {
 	}
 
 	/**
-	 * 取最后一个字母的下一个字母  
+	 * 取最后一个字母的下一个字母
 	 * 
 	 * @param str
 	 * @return
@@ -1074,5 +856,10 @@ public class StringUtil {
 		System.out.println(getFormatCurrencyNumber(d));
 
 		System.out.println(encodeHtml("1122\n 3  3534 <@@#>"));
+		System.out.println(toRMB("92123455856.95"));
+		System.out.println(toRMB("92123455.95"));
+		System.out.println(toRMB("92123.95"));
+		System.out.println(toRMB("955.95"));
+		System.out.println(toRMB("95.95"));
 	}
 }

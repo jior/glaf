@@ -19,7 +19,7 @@
 package com.glaf.base.modules.sys.form;
 
 public class SubjectCodeFormBean {
-	private static final long serialVersionUID = -7440549958960441410L;
+
 	private long id;
 	private long parent;
 	private String subjectCode;

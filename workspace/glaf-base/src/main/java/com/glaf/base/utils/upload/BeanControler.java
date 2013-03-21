@@ -29,7 +29,7 @@ import java.util.Vector;
 
 public class BeanControler {
 	private static BeanControler beanControler = new BeanControler();
-	private Vector vector = new Vector();
+	private Vector<FileUploadStatus> vector = new Vector<FileUploadStatus>();
 	private BeanControler() {
 	}
 	

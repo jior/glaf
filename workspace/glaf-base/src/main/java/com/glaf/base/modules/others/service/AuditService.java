@@ -92,7 +92,7 @@ public interface AuditService {
 	 * @param referType
 	 * @return
 	 */
-	List getAuditList(long referId, int referType);
+	List<Audit> getAuditList(long referId, int referType);
 
 	/**
 	 * 返回采购申请的所有审批列表(新增，变更，退单重提，废止)
@@ -101,7 +101,7 @@ public interface AuditService {
 	 * @param referType
 	 * @return
 	 */
-	List getAuditList(long referId, String referTypes);
+	List<Audit> getAuditList(long referId, String referTypes);
 
 	/**
 	 * 返回所有审批列表最终审批人列表（去除重复）
@@ -110,7 +110,7 @@ public interface AuditService {
 	 * @param referType
 	 * @return
 	 */
-	List getAuditUserList(long referId, int referType);
+	List<Audit> getAuditUserList(long referId, int referType);
 
 	/**
 	 * 返回部门最后一次的审批记录
@@ -120,7 +120,7 @@ public interface AuditService {
 	 * @param leaderId
 	 * @return
 	 */
-	List getAuditDeptList(long referId, int referType, long deptId);
+	List<Audit> getAuditDeptList(long referId, int referType, long deptId);
 
 	/**
 	 * 创建审批记录
@@ -142,5 +142,5 @@ public interface AuditService {
 	 * @param leaderId
 	 * @return
 	 */
-	List getAuditNotList(long referId);
+	List<Audit> getAuditNotList(long referId);
 }

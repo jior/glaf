@@ -111,7 +111,7 @@ public class SubjectCodeServiceImpl implements SubjectCodeService {
 		return this.getSubjectCode(id);
 	}
 
-	public PageResult getFeePage(Map<String, Object> filter) {
+	public PageResult getFeePage(Map<String, String> filter) {
 		// ¼ÆËã×ÜÊý
 		PageResult pager = new PageResult();
 		SubjectCodeQuery query = new SubjectCodeQuery();
@@ -162,7 +162,7 @@ public class SubjectCodeServiceImpl implements SubjectCodeService {
 		return pager;
 	}
 
-	public List<SubjectCode> getSubFeeList(Map<String, Object> filter) {
+	public List<SubjectCode> getSubFeeList(Map<String, String> filter) {
 		SubjectCodeQuery query = new SubjectCodeQuery();
 		String parent = (String) filter.get("parent");
 		logger.info("parent:" + parent);

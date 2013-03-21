@@ -26,33 +26,16 @@ import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.collections.map.ListOrderedMap;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 public class WebUtil {
-	private static Log logger = LogFactory.getLog(WebUtil.class);
-
-	// 页面参数类型
-	final private static String QUERY_PREFIX = "query_";
-
-	final private static String ORDER_PREFIX = "order_";
-
-	final private static String COLLE_PREFIX = "colle_";
-
-	final private static String ALIAS_PREFIX = "alias_";
-
-	//
-	final private static String QUERY_ALIAS = "othert";
-
-	final private static String QUERY_ALIAS1 = "othert1_.";
-
-	final private static String QUERY_MAINT = "this_.";
+	protected static final Log logger = LogFactory.getLog(WebUtil.class);
 
 	/**
 	 * 根据queryString构造url地址
@@ -60,7 +43,7 @@ public class WebUtil {
 	 * @param request
 	 */
 	public static String getQueryString(HttpServletRequest request) {
-		return getQueryString(request, "GBK");
+		return getQueryString(request, "UTF-8");
 	}
 
 	/**
@@ -70,20 +53,12 @@ public class WebUtil {
 	 */
 	public static String getQueryString(HttpServletRequest request,
 			String encoding) {
-		Enumeration names = request.getParameterNames();
+		Enumeration<String> names = request.getParameterNames();
 		StringBuffer sb = new StringBuffer();
 		while (names.hasMoreElements()) {
 			String name = (String) names.nextElement();
 			String value = request.getParameter(name);
-			// logger.info("param name:" + name + ",value:" + value);
-			try {
-				// sb.append(name).append("=").append(URLEncoder.encode(value,
-				// encoding)).append("&");
-				sb.append(name).append("=").append(value).append("&");
-				// logger.info("param name:" + name + ",value:" + value);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			sb.append(name).append("=").append(value).append("&");
 		}
 		return sb.toString();
 	}
@@ -95,7 +70,7 @@ public class WebUtil {
 	 * @return
 	 */
 	public static String getQueryString(String url) {
-		Map map = new HashMap();
+		Map<String, String> map = new HashMap<String, String>();
 		String[] param = url.split("&");
 		for (int i = 0; i < param.length; i++) {
 			String[] entry = param[i].split("=");
@@ -103,7 +78,7 @@ public class WebUtil {
 				map.put(entry[0], entry[1]);
 		}
 		StringBuffer sb = new StringBuffer();
-		Iterator keys = map.keySet().iterator();
+		Iterator<String> keys = map.keySet().iterator();
 		while (keys != null && keys.hasNext()) {
 			String name = (String) keys.next();
 			String value = (String) map.get(name);
@@ -117,25 +92,19 @@ public class WebUtil {
 	 * @param request
 	 * @return
 	 */
-	public static Map getQueryMap(HttpServletRequest request) {
-		Map map = new ListOrderedMap();// 排序Map
+	public static Map<String, String> getQueryMap(HttpServletRequest request) {
+		Map<String, String> map = new LinkedHashMap<String, String>();// 排序Map
 
-		Enumeration names = request.getParameterNames();
+		Enumeration<String> names = request.getParameterNames();
 		while (names.hasMoreElements()) {
 			String name = (String) names.nextElement();
-			String value = request.getParameter(name).trim();
-			map.put(name, value);
+			if (request.getParameter(name) != null) {
+				String value = request.getParameter(name).trim();
+				map.put(name, value);
+			}
 		}
 
 		return map;
-	}
-
-	private static String getNewAliasName(String aliasName, int num) {
-		String s = aliasName.toLowerCase();
-		if (s.length() > 10) {
-			s = s.substring(0, 10);
-		}
-		return s + num + "_.";
 	}
 
 	/**
