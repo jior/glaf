@@ -161,7 +161,7 @@ public class SysDepartmentController {
 		request.setAttribute("bean", bean);
 
 		SysTree parent = sysTreeService.getSysTreeByCode(Constants.TREE_DEPT);
-		List list = new ArrayList();
+		List<SysTree> list = new ArrayList<SysTree>();
 		parent.setDeep(0);
 		list.add(parent);
 		sysTreeService.getSysTree(list, (int) parent.getId(), 1);
@@ -226,8 +226,6 @@ public class SysDepartmentController {
 	@RequestMapping(params = "method=saveModify")
 	public ModelAndView saveModify(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
-
 		long id = ParamUtil.getIntParameter(request, "id", 0);
 		SysDepartment bean = sysDepartmentService.findById(id);
 		boolean ret = false;
