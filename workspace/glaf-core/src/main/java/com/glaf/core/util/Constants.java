@@ -72,7 +72,7 @@ public final class Constants {
 
 	public static final String DEFAULT_JDBC_CONFIG = "/conf/jdbc.properties";
 
-	public static final String SPRING_APPLICATION_CONTEXT = "/conf/spring/applicationContext.xml";
+	public static final String SPRING_APPLICATION_CONTEXT = "/conf/spring/spring-config.xml";
 
 	public static final String ID_EXPRESSION = "#{id}";
 

@@ -37,6 +37,7 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 
 import com.glaf.core.config.SystemProperties;
+import com.glaf.core.context.ContextFactory;
 import com.glaf.core.util.Constants;
 import com.glaf.core.util.DBUtils;
 import com.glaf.core.util.PropertiesUtils;
@@ -53,6 +54,8 @@ public class DataSourceConfig {
 
 	protected static Properties properties = new Properties();
 
+	protected static boolean loadJdbcProperties = false;
+
 	static {
 		try {
 			reload();
@@ -64,17 +67,22 @@ public class DataSourceConfig {
 		Connection connection = null;
 		DataSource ds = null;
 		try {
-			if (StringUtils.isNotEmpty(getJndiName())) {
-				InitialContext ctx = new InitialContext();
-				ds = (DataSource) ctx.lookup(getJndiName());
-				connection = ds.getConnection();
+			if (loadJdbcProperties) {
+				if (StringUtils.isNotEmpty(getJndiName())) {
+					InitialContext ctx = new InitialContext();
+					ds = (DataSource) ctx.lookup(getJndiName());
+					connection = ds.getConnection();
+				} else {
+					BasicDataSource bds = new BasicDataSource();
+					bds.setDriverClassName(getJdbcDriverClass());
+					bds.setUrl(getJdbcConnectionURL());
+					bds.setUsername(getJdbcUsername());
+					bds.setPassword(getJdbcPassword());
+					connection = bds.getConnection();
+				}
 			} else {
-				BasicDataSource bds = new BasicDataSource();
-				bds.setDriverClassName(getJdbcDriverClass());
-				bds.setUrl(getJdbcConnectionURL());
-				bds.setUsername(getJdbcUsername());
-				bds.setPassword(getJdbcPassword());
-				connection = bds.getConnection();
+				ds = ContextFactory.getBean("dataSource");
+				connection = ds.getConnection();
 			}
 
 			if (connection != null) {
@@ -116,18 +124,24 @@ public class DataSourceConfig {
 		Connection connection = null;
 		DataSource ds = null;
 		try {
-			if (StringUtils.isNotEmpty(getJndiName())) {
-				InitialContext ctx = new InitialContext();
-				ds = (DataSource) ctx.lookup(getJndiName());
-				connection = ds.getConnection();
+			if (loadJdbcProperties) {
+				if (StringUtils.isNotEmpty(getJndiName())) {
+					InitialContext ctx = new InitialContext();
+					ds = (DataSource) ctx.lookup(getJndiName());
+					connection = ds.getConnection();
+				} else {
+					BasicDataSource bds = new BasicDataSource();
+					bds.setDriverClassName(getJdbcDriverClass());
+					bds.setUrl(getJdbcConnectionURL());
+					bds.setUsername(getJdbcUsername());
+					bds.setPassword(getJdbcPassword());
+					connection = bds.getConnection();
+				}
 			} else {
-				BasicDataSource bds = new BasicDataSource();
-				bds.setDriverClassName(getJdbcDriverClass());
-				bds.setUrl(getJdbcConnectionURL());
-				bds.setUsername(getJdbcUsername());
-				bds.setPassword(getJdbcPassword());
-				connection = bds.getConnection();
+				ds = ContextFactory.getBean("dataSource");
+				connection = ds.getConnection();
 			}
+
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -138,19 +152,25 @@ public class DataSourceConfig {
 		Connection connection = null;
 		DataSource ds = null;
 		try {
-			if (StringUtils.isNotEmpty(props
-					.getProperty(Environment.DATASOURCE))) {
-				InitialContext ctx = new InitialContext();
-				ds = (DataSource) ctx.lookup(props
-						.getProperty(Environment.DATASOURCE));
-				connection = ds.getConnection();
+			if (loadJdbcProperties) {
+				if (StringUtils.isNotEmpty(props
+						.getProperty(Environment.DATASOURCE))) {
+					InitialContext ctx = new InitialContext();
+					ds = (DataSource) ctx.lookup(props
+							.getProperty(Environment.DATASOURCE));
+					connection = ds.getConnection();
+				} else {
+					BasicDataSource bds = new BasicDataSource();
+					bds.setDriverClassName(props
+							.getProperty(Environment.DRIVER));
+					bds.setUrl(props.getProperty(Environment.URL));
+					bds.setUsername(props.getProperty(Environment.USER));
+					bds.setPassword(props.getProperty(Environment.PASS));
+					connection = bds.getConnection();
+				}
 			} else {
-				BasicDataSource bds = new BasicDataSource();
-				bds.setDriverClassName(props.getProperty(Environment.DRIVER));
-				bds.setUrl(props.getProperty(Environment.URL));
-				bds.setUsername(props.getProperty(Environment.USER));
-				bds.setPassword(props.getProperty(Environment.PASS));
-				connection = bds.getConnection();
+				ds = ContextFactory.getBean("dataSource");
+				connection = ds.getConnection();
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -332,17 +352,23 @@ public class DataSourceConfig {
 		Connection connection = null;
 		DataSource ds = null;
 		try {
-			if (StringUtils.isNotEmpty(getJndiName())) {
-				InitialContext ctx = new InitialContext();
-				ds = (DataSource) ctx.lookup(getJndiName());
-				connection = ds.getConnection();
+			if (loadJdbcProperties) {
+				if (StringUtils.isNotEmpty(getJndiName())) {
+					InitialContext ctx = new InitialContext();
+					ds = (DataSource) ctx.lookup(getJndiName());
+					connection = ds.getConnection();
+				} else {
+					BasicDataSource bds = new BasicDataSource();
+					bds.setDriverClassName(getJdbcDriverClass());
+					bds.setUrl(getJdbcConnectionURL());
+					bds.setUsername(getJdbcUsername());
+					bds.setPassword(getJdbcPassword());
+					connection = bds.getConnection();
+				}
+
 			} else {
-				BasicDataSource bds = new BasicDataSource();
-				bds.setDriverClassName(getJdbcDriverClass());
-				bds.setUrl(getJdbcConnectionURL());
-				bds.setUsername(getJdbcUsername());
-				bds.setPassword(getJdbcPassword());
-				connection = bds.getConnection();
+				ds = ContextFactory.getBean("dataSource");
+				connection = ds.getConnection();
 			}
 
 			if (connection != null) {
@@ -478,8 +504,10 @@ public class DataSourceConfig {
 				}
 				inputStream.close();
 				inputStream = null;
+				loadJdbcProperties = true;
 				return p;
 			} catch (IOException ex) {
+				loadJdbcProperties = false;
 				throw new RuntimeException(ex);
 			} finally {
 				IOUtils.closeQuietly(inputStream);
