@@ -28,18 +28,24 @@ import com.glaf.core.base.JSONable;
 
 public class SysApplication implements Serializable, JSONable {
 	private static final long serialVersionUID = 5148300850285163044L;
+	private String code;
+	private String desc;
+	private Set<SysFunction> functions = new HashSet<SysFunction>();
 	private long id;
 	private String name;
-	private String desc;
-	private String url;
-	private int sort;
-	private int showMenu;
 	private SysTree node;
 	private long nodeId;
-	private Set<SysFunction> functions = new HashSet<SysFunction>();
+
+	private int showMenu;
+	private int sort;
+	private String url;
 
 	public SysApplication() {
 
+	}
+
+	public String getCode() {
+		return code;
 	}
 
 	public String getDesc() {
@@ -78,6 +84,14 @@ public class SysApplication implements Serializable, JSONable {
 		return url;
 	}
 
+	public SysApplication jsonToObject(JSONObject jsonObject) {
+		return SysApplicationJsonFactory.jsonToObject(jsonObject);
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
 	public void setDesc(String desc) {
 		this.desc = desc;
 	}
@@ -112,10 +126,6 @@ public class SysApplication implements Serializable, JSONable {
 
 	public void setUrl(String url) {
 		this.url = url;
-	}
-
-	public SysApplication jsonToObject(JSONObject jsonObject) {
-		return SysApplicationJsonFactory.jsonToObject(jsonObject);
 	}
 
 	public JSONObject toJsonObject() {

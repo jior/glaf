@@ -4,46 +4,54 @@
 
 <mapper namespace="com.glaf.base.modules.sys.mapper.SysApplicationMapper">
 
-	<resultMap id="sysApplicationResultMap"	type="com.glaf.base.modules.sys.model.SysApplication">
+	<resultMap id="sysApplicationResultMap"
+		type="com.glaf.base.modules.sys.model.SysApplication">
 		<id property="id" column="ID" jdbcType="BIGINT" />
-		<result property="name" column="NAME" jdbcType="VARCHAR"/>
-		<result property="desc" column="APPDESC" jdbcType="VARCHAR"/>
-		<result property="url" column="URL" jdbcType="VARCHAR"/>
-		<result property="sort" column="SORT" jdbcType="INTEGER"/>
-		<result property="showMenu" column="SHOWMENU" jdbcType="INTEGER"/>
-		<result property="nodeId" column="NODEID" jdbcType="BIGINT"/>
+		<result property="name" column="NAME" jdbcType="VARCHAR" />
+		<result property="desc" column="APPDESC" jdbcType="VARCHAR" />
+		<result property="url" column="URL" jdbcType="VARCHAR" />
+		<result property="code" column="CODE" jdbcType="VARCHAR" />
+		<result property="sort" column="SORT" jdbcType="INTEGER" />
+		<result property="showMenu" column="SHOWMENU" jdbcType="INTEGER" />
+		<result property="nodeId" column="NODEID" jdbcType="BIGINT" />
 	</resultMap>
 
- 
+
 	<insert id="insertSysApplication" parameterType="com.glaf.base.modules.sys.model.SysApplication">
-		insert into sys_application 
+		insert into sys_application
 		<trim prefix="(" suffix=")" suffixOverrides=",">
-		    ID
+			ID
 			<if test="name != null">
-				,NAME 
+				,NAME
+			</if>
+			<if test="code != null">
+				,CODE
 			</if>
 			<if test="desc != null">
-				,APPDESC 
+				,APPDESC
 			</if>
 			<if test="url != null">
-				,URL 
+				,URL
 			</if>
 			<if test="sort != null">
-				,SORT 
+				,SORT
 			</if>
 			<if test="showMenu != null">
-				,SHOWMENU 
+				,SHOWMENU
 			</if>
 			<if test="nodeId != null">
-				,NODEID 
+				,NODEID
 			</if>
 		</trim>
 
 		<trim prefix=" values (" suffix=")" suffixOverrides=",">
-			  #{id, jdbcType=BIGINT}
-	     
+			#{id, jdbcType=BIGINT}
+
 			<if test="name != null">
 				,#{name, jdbcType=VARCHAR}
+			</if>
+			<if test="code != null">
+				,#{code, jdbcType=VARCHAR}
 			</if>
 			<if test="desc != null">
 				,#{desc, jdbcType=VARCHAR}
@@ -63,13 +71,16 @@
 		</trim>
 	</insert>
 
-	 
+
 	<update id="updateSysApplication" parameterType="com.glaf.base.modules.sys.model.SysApplication">
 		update sys_application
 		set
-		<trim prefix="" suffix="" suffixOverrides=",">		
+		<trim prefix="" suffix="" suffixOverrides=",">
 			<if test="name != null">
 				NAME = #{name, jdbcType=VARCHAR},
+			</if>
+			<if test="code != null">
+				CODE = #{code, jdbcType=VARCHAR},
 			</if>
 			<if test="desc != null">
 				APPDESC = #{desc, jdbcType=VARCHAR},
@@ -88,76 +99,77 @@
 			</if>
 		</trim>
 		where
-          ID = #{id, jdbcType=BIGINT}
-		
+		ID = #{id, jdbcType=BIGINT}
+
 	</update>
 
- 
-	<delete id="deleteSysApplicationById" parameterType="long"> 
-        delete from sys_application
-        where ID =	#{id}
+
+	<delete id="deleteSysApplicationById" parameterType="long">
+		delete from sys_application
+		where ID = #{id}
 	</delete>
-	
+
 	<delete id="deleteSysApplications" parameterType="com.glaf.base.modules.sys.query.SysApplicationQuery">
 		delete from sys_application
-		where ( 
- 			  ID IN
-		<foreach item="x_rowId" index="index" collection="rowIds" 
+		where (
+		ID IN
+		<foreach item="x_rowId" index="index" collection="rowIds"
 			open="(" separator="," close=")">
-                  #{x_rowId}
+			#{x_rowId}
 		</foreach>
 		)
 	</delete>
-	
 
-	<select id="getSysApplicationById" parameterType="long" resultMap="sysApplicationResultMap">
+
+	<select id="getSysApplicationById" parameterType="long"
+		resultMap="sysApplicationResultMap">
 		select * from sys_application where ID = #{id}
 	</select>
-	
-	
-	<select id="getSysApplicationByRoleId" parameterType="long" resultMap="sysApplicationResultMap">
-		
+
+
+	<select id="getSysApplicationByRoleId" parameterType="long"
+		resultMap="sysApplicationResultMap">
+
 		select E.* from sys_application E
 		inner join sys_access A
 		on E.ID = A.APPID
 		where A.ROLEID = #{roleId}
- 
+
 	</select>
-	
-	
-	<select id="getSysApplicationByUserId" parameterType="long" resultMap="sysApplicationResultMap">
-		
-		select  E.* from sys_application E
+
+
+	<select id="getSysApplicationByUserId" parameterType="long"
+		resultMap="sysApplicationResultMap">
+
+		select E.* from sys_application E
 		inner join sys_access A
 		on E.id = A.appId
 		where A.roleId in (
-		    select dr.id from sys_dept_role dr
-		    inner join sys_user_role ur 
-		    on dr.id = ur.roleid
-		    where ur.userid = #{userId}
-		    and ur.authorized = 0
+		select dr.id from sys_dept_role dr
+		inner join sys_user_role ur
+		on dr.id = ur.roleid
+		where ur.userid = #{userId}
+		and ur.authorized = 0
 		)
- 
+
 	</select>
 
 
-	<select id="getSysApplications" 
-		parameterType="com.glaf.base.modules.sys.query.SysApplicationQuery"
+	<select id="getSysApplications" parameterType="com.glaf.base.modules.sys.query.SysApplicationQuery"
 		resultMap="sysApplicationResultMap">
 		select E.*
 		<include refid="selectSysApplicationsSql" />
 		<choose>
 			<when test="orderBy != null">
-		     order by ${orderBy}
+				order by ${orderBy}
 			</when>
 			<otherwise>
-		      order by E.SORT asc
+				order by E.SORT asc
 			</otherwise>
 		</choose>
 	</select>
 
-	<select id="getSysApplicationCount" 
-		parameterType="com.glaf.base.modules.sys.query.SysApplicationQuery"
+	<select id="getSysApplicationCount" parameterType="com.glaf.base.modules.sys.query.SysApplicationQuery"
 		resultType="int">
 		select count(*)
 		<include refid="selectSysApplicationsSql" />
@@ -168,17 +180,17 @@
 		from sys_application E
 
 		<if test=" parentId != null  ">
-           inner join sys_tree T
-		   on E.NODEID = T.ID
+			inner join sys_tree T
+			on E.NODEID = T.ID
 		</if>
-		 
+
 		<where>
-		       1 = 1  
+			1 = 1
 
 			<if test=" parentId != null  ">
-                and T.PARENT = #{parentId}
+				and T.PARENT = #{parentId}
 			</if>
-	        
+
 			<if test="name != null and name != '' ">
 				and E.NAME = #{name}
 			</if>
@@ -188,17 +200,21 @@
 			</if>
 
 			<if test="names != null and names.size() &gt; 0">
-			    and E.NAME IN
-				<foreach item="x_name" index="index" collection="names" 
+				and E.NAME IN
+				<foreach item="x_name" index="index" collection="names"
 					open="(" separator="," close=")">
-                  #{x_name}
+					#{x_name}
 				</foreach>
 			</if>
-	        
+			
+			<if test="codeLike != null and codeLike != '' ">
+				and E.CODE like #{codeLike}
+			</if>
+
 			<if test="descLike != null and descLike != '' ">
 				and E.APPDESC like #{descLike}
 			</if>
-	       
+
 			<if test="urlLike != null and urlLike != '' ">
 				and E.URL like #{urlLike}
 			</if>
@@ -206,7 +222,7 @@
 			<if test="sortGreaterThanOrEqual != null">
 				and E.SORT &gt;= #{sortGreaterThanOrEqual}
 			</if>
-			
+
 			<if test="sortGreaterThan != null">
 				and E.SORT &gt; #{sortGreaterThan}
 			</if>
@@ -244,10 +260,10 @@
 			</if>
 
 			<if test="nodeIds != null and nodeIds.size() &gt; 0">
-			    and E.NODEID IN
-				<foreach item="x_nodeId" index="index" collection="nodeIds" 
+				and E.NODEID IN
+				<foreach item="x_nodeId" index="index" collection="nodeIds"
 					open="(" separator="," close=")">
-                  #{x_nodeId}
+					#{x_nodeId}
 				</foreach>
 			</if>
 

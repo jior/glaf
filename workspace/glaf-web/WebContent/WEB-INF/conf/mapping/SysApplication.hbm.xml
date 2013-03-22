@@ -15,6 +15,7 @@
 		<property name="name" type="string" column="name" />
 		<property name="desc" type="string" column="appDesc" />
 		<property name="url" type="string" column="url" />
+		<property name="code" type="string" column="code" />
 		<property name="sort" type="integer" column="sort" />
 		<property name="showMenu" type="int" column="showMenu" />
 		<property name="nodeId" type="long" column="nodeId"  insert="false" update="false" />

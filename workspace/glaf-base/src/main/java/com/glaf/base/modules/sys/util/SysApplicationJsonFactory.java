@@ -39,6 +39,9 @@ public class SysApplicationJsonFactory {
 		if (jsonObject.containsKey("url")) {
 			model.setUrl(jsonObject.getString("url"));
 		}
+		if (jsonObject.containsKey("code")) {
+			model.setCode(jsonObject.getString("code"));
+		}
 		if (jsonObject.containsKey("sort")) {
 			model.setSort(jsonObject.getInteger("sort"));
 		}
@@ -66,6 +69,9 @@ public class SysApplicationJsonFactory {
 		if (model.getUrl() != null) {
 			jsonObject.put("url", model.getUrl());
 		}
+		if (model.getCode() != null) {
+			jsonObject.put("code", model.getCode());
+		}
 		jsonObject.put("sort", model.getSort());
 		jsonObject.put("showMenu", model.getShowMenu());
 		jsonObject.put("nodeId", model.getNodeId());
@@ -85,6 +91,9 @@ public class SysApplicationJsonFactory {
 		}
 		if (model.getUrl() != null) {
 			jsonObject.put("url", model.getUrl());
+		}
+		if (model.getCode() != null) {
+			jsonObject.put("code", model.getCode());
 		}
 		jsonObject.put("sort", model.getSort());
 		jsonObject.put("showMenu", model.getShowMenu());

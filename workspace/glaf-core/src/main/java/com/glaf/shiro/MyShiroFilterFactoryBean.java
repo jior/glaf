@@ -26,7 +26,7 @@ import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 
 public class MyShiroFilterFactoryBean extends ShiroFilterFactoryBean {
 
-	private static transient final Log logger = LogFactory
+	private static final Log logger = LogFactory
 			.getLog(MyShiroFilterFactoryBean.class);
 
 	private Map<String, String> filterChainDefinitionMap;

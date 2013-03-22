@@ -28,6 +28,16 @@
 				/mx/system/**=authc,perms[SystemAdministrator]
 				/mx/jbpm/deploy/**=authc,perms[SystemAdministrator]
 				/mx/activiti/deploy/**=authc,perms[SystemAdministrator]
+				/images/**=anon
+				/css/**=anon
+				/styles/**=anon
+				/js/**=anon
+				/scripts/**=anon
+				/icons/**=anon
+				/skins/**=anon
+				/error/**=anon
+				/index.jsp=anon
+				/index.html=anon
 				/**=authc
 			</value>
 		</property>
