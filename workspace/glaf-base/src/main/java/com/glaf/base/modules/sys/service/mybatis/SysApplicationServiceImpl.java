@@ -140,6 +140,11 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 		return null;
 	}
 
+	public List<RealmInfo> getRealmInfos() {
+		Map<String, Object> params = new HashMap<String, Object>();
+		return sysApplicationMapper.getRealmInfos(params);
+	}
+
 	public List<SysApplication> getAccessAppList(long parentId, SysUser user) {
 		long parentAppId = parentId;
 		SysApplication parentApp = findById(parentId);

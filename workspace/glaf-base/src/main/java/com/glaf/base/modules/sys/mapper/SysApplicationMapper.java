@@ -33,6 +33,8 @@ public interface SysApplicationMapper {
 	SysApplication getSysApplicationById(Long id);
 
 	int getSysApplicationCount(SysApplicationQuery query);
+	
+	List<RealmInfo> getRealmInfos(Map<String,Object> params);
 
 	List<SysApplication> getSysApplications(SysApplicationQuery query);
 

@@ -27,7 +27,7 @@ import com.glaf.base.modules.sys.util.SysApplicationJsonFactory;
 import com.glaf.core.base.JSONable;
 
 public class SysApplication implements Serializable, JSONable {
-	private static final long serialVersionUID = 5148300850285163044L;
+	private static final long serialVersionUID = 1L;
 	private String code;
 	private String desc;
 	private Set<SysFunction> functions = new HashSet<SysFunction>();
@@ -35,7 +35,6 @@ public class SysApplication implements Serializable, JSONable {
 	private String name;
 	private SysTree node;
 	private long nodeId;
-
 	private int showMenu;
 	private int sort;
 	private String url;

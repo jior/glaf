@@ -199,28 +199,23 @@ public class MxTableDataServiceImpl implements ITableDataService {
 	public void saveAll(TableDefinition tableDefinition,
 			Collection<TableModel> rows) {
 		logger.debug("tableDefinition=" + tableDefinition);
-		logger.debug("idColumn="
-				+ tableDefinition.getIdColumn().getColumnName());
-		Collection<String> keys = new HashSet<String>();
+		logger.debug("idColumn=" + tableDefinition.getIdColumn().toString());
+
 		Collection<String> aggregationKeys = new HashSet<String>();
 
-		TableModel tableModel = new TableModel();
-		ColumnModel idColumn = new ColumnModel();
+		Map<String, Object> colMap = new HashMap<String, Object>();
+		Map<String, Object> keyMap = new HashMap<String, Object>();
+		Map<String, String> exprMap = new HashMap<String, String>();
+		List<ColumnDefinition> exprColumns = new ArrayList<ColumnDefinition>();
 
-		tableModel.setTableName(tableDefinition.getTableName());
+		ColumnModel idColumn = new ColumnModel();
 
 		ColumnDefinition idCol = tableDefinition.getIdColumn();
 		if (idCol != null && idCol.getColumnName() != null) {
 			idColumn.setColumnName(idCol.getColumnName());
 			idColumn.setJavaType(idCol.getJavaType());
 			idColumn.setValueExpression(idCol.getValueExpression());
-			tableModel.setIdColumn(idColumn);
 		}
-
-		Map<String, Object> colMap = new HashMap<String, Object>();
-		Map<String, Object> keyMap = new HashMap<String, Object>();
-		Map<String, String> exprMap = new HashMap<String, String>();
-		List<ColumnDefinition> exprColumns = new ArrayList<ColumnDefinition>();
 
 		Iterator<ColumnDefinition> iter = tableDefinition.getColumns()
 				.iterator();
@@ -265,37 +260,41 @@ public class MxTableDataServiceImpl implements ITableDataService {
 					}
 					String aggregationKey = buffer.toString();
 					aggregationKeys.add(aggregationKey);
-					tableData.setAggregationKey(aggregationKey);// 设置聚合主键
+					tableData.setAggregationKey(aggregationKey);// 设置聚合主键值
 				}
 
 				if (aggregationKeys.size() > 0
 						&& (aggregationKeys.size() % 200 == 0)) {
-					tableModel.setAggregationKeys(aggregationKeys);
+					TableModel model = new TableModel();
+					model.setTableName(tableDefinition.getTableName());
+					model.setIdColumn(idColumn);
+					model.setAggregationKeys(aggregationKeys);
 					List<Map<String, Object>> list = tableDataMapper
-							.getTableKeyMap(tableModel);
+							.getTableKeyMap(model);
 					if (list != null && !list.isEmpty()) {
 						for (Map<String, Object> dataMap : list) {
-							Object id = dataMap.get("id");
-							String aggregationKey = (String) dataMap
-									.get("aggregationKey");
+							Object id = ParamUtils.getObject(dataMap, "id");
+							String aggregationKey = ParamUtils.getString(
+									dataMap, "aggregationKey");
 							keyMap.put(aggregationKey, id);
-							keys.add(aggregationKey);
 						}
 					}
 				}
 			}
 
 			if (aggregationKeys.size() > 0) {
-				tableModel.setAggregationKeys(aggregationKeys);
+				TableModel model = new TableModel();
+				model.setTableName(tableDefinition.getTableName());
+				model.setIdColumn(idColumn);
+				model.setAggregationKeys(aggregationKeys);
 				List<Map<String, Object>> list = tableDataMapper
-						.getTableKeyMap(tableModel);
+						.getTableKeyMap(model);
 				if (list != null && !list.isEmpty()) {
 					for (Map<String, Object> dataMap : list) {
-						Object id = dataMap.get("id");
-						String aggregationKey = (String) dataMap
-								.get("aggregationKey");
+						Object id = ParamUtils.getObject(dataMap, "id");
+						String aggregationKey = ParamUtils.getString(dataMap,
+								"aggregationKey");
 						keyMap.put(aggregationKey, id);
-						keys.add(aggregationKey);
 					}
 				}
 			}
@@ -303,44 +302,45 @@ public class MxTableDataServiceImpl implements ITableDataService {
 			List<TableModel> inertRows = new ArrayList<TableModel>();
 			List<TableModel> updateRows = new ArrayList<TableModel>();
 			logger.debug(" rows size = " + rows.size());
+			// logger.debug(" key map: " + keyMap);
 			Iterator<TableModel> iterator = rows.iterator();
 			while (iterator.hasNext()) {
-				TableModel rowData = iterator.next();
+				TableModel tableData = iterator.next();
+				ColumnModel myPK = tableData.getIdColumn();
+				ColumnModel pkColumn = new ColumnModel();
+				pkColumn.setColumnName(idColumn.getColumnName());
+				pkColumn.setJavaType(idColumn.getJavaType());
 
-				for (ColumnModel column : rowData.getColumns()) {
+				for (ColumnModel column : tableData.getColumns()) {
 					colMap.put(column.getColumnName(), column.getValue());
 				}
 
-				if (keys.contains(rowData.getAggregationKey())) {
-					Object id = keyMap.get(rowData.getAggregationKey());
-					if (idColumn != null) {
-						ColumnModel col = new ColumnModel();
-						col.setColumnName(idColumn.getColumnName());
-						col.setJavaType(idColumn.getJavaType());
-						col.setValue(id);
-						rowData.setIdColumn(col);
-						updateRows.add(rowData);
-					}
+				if (keyMap.containsKey(tableData.getAggregationKey())) {
+					Object id = keyMap.get(tableData.getAggregationKey());
+					pkColumn.setValue(id);
+					tableData.setIdColumn(pkColumn);
+					tableData.removeColumn(pkColumn);
+					updateRows.add(tableData);
 				} else {
 					ColumnModel col = new ColumnModel();
-
 					col.setColumnName("AGGREGATIONKEY");
-					col.setValue(rowData.getAggregationKey());
-					rowData.removeColumn(col);
-					rowData.addColumn(col);
+					col.setJavaType("String");
+					col.setValue(tableData.getAggregationKey());
+					tableData.removeColumn(col);
+					tableData.addColumn(col);
 
 					for (ColumnDefinition c : exprColumns) {
 						ColumnModel x = new ColumnModel();
 						x.setColumnName(c.getColumnName());
 						x.setJavaType(c.getJavaType());
 						x.setValueExpression(c.getValueExpression());
-						rowData.addColumn(x);
+						tableData.addColumn(x);
 					}
 
-					for (ColumnModel cell : rowData.getColumns()) {
+					for (ColumnModel cell : tableData.getColumns()) {
 						String expr = exprMap.get(cell.getColumnName());
 						if (StringUtils.isNotEmpty(expr)) {
-							logger.debug(cell.getColumnName() + "=" + expr);
+							// logger.debug(cell.getColumnName() + "=" + expr);
 							if (Constants.CURRENT_YYYYMMDD_EXPRESSION
 									.equals(expr)) {
 								if (cell.getDateValue() == null) {
@@ -357,16 +357,16 @@ public class MxTableDataServiceImpl implements ITableDataService {
 						}
 					}
 
-					if (idCol != null && idCol.getColumnName() != null) {
-						ColumnModel pkColumn = new ColumnModel();
-						pkColumn.setColumnName(idCol.getColumnName());
-						pkColumn.setJavaType(idCol.getJavaType());
+					if (myPK != null && myPK.getValue() != null) {
+						pkColumn.setValue(myPK.getValue());
+					} else {
 						pkColumn.setValue(idGenerator.getNextId());
-						rowData.removeColumn(pkColumn);
-						rowData.addColumn(pkColumn);
 					}
 
-					inertRows.add(rowData);
+					tableData.removeColumn(pkColumn);
+					tableData.addColumn(pkColumn);
+
+					inertRows.add(tableData);
 				}
 			}
 
@@ -381,7 +381,6 @@ public class MxTableDataServiceImpl implements ITableDataService {
 			if (!updateRows.isEmpty()) {
 				logger.debug("update rows size:" + updateRows.size());
 				for (TableModel tableData : updateRows) {
-					tableData.setIdColumn(idColumn);
 					tableData.setTableName(tableDefinition.getTableName());
 					tableDataMapper.updateTableDataByPrimaryKey(tableData);
 				}

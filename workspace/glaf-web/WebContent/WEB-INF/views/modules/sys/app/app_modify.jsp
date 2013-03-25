@@ -55,25 +55,25 @@ function setValue(obj){
         <td class="input-box">上级模块</td>
         <td><select name="parent" onChange="javascript:setValue(this);" class="input">
           <%
-if(list!=null){
-  Iterator iter=list.iterator();   
-  while(iter.hasNext()){
-    SysTree bean2=(SysTree)iter.next();
-%>
-          <option value="<%=bean2.getId()%>">
-          <%
-for(int i=0;i<bean2.getDeep();i++){
-  out.print("&nbsp;&nbsp;");
-}
-out.print(bean2.getName());
-%>
-          </option>
-          <%    
-  }
-}
-%>
+			if(list!=null){
+			  Iterator iter=list.iterator();   
+			  while(iter.hasNext()){
+				SysTree bean2=(SysTree)iter.next();
+			%>
+					  <option value="<%=bean2.getId()%>">
+					  <%
+			for(int i=0;i<bean2.getDeep();i++){
+			  out.print("&nbsp;&nbsp;");
+			}
+			out.print(bean2.getName());
+			%>
+					  </option>
+					  <%    
+			  }
+			}
+			%>
         </select>
-		<script language="JavaScript">
+		<script language="javascript">
 		  document.all.parent.value="<%=bean.getNode().getParentId()%>";	
 	    </script>
 		</td>
@@ -81,6 +81,10 @@ out.print(bean2.getName());
       <tr>
         <td class="input-box">名　　称*</td>
         <td><input name="name" type="text" class="input" value="<%=bean.getName()%>" size="37" datatype="string" nullable="no" maxsize="20" chname="名称"></td>
+      </tr>
+	  <tr>
+        <td class="input-box">权限编码</td>
+        <td><input name="code" type="text" value="<%=bean.getCode()!=null?bean.getCode():""%>" size="37" class="input" datatype="string" nullable="yes" maxsize="50" chname="代码"></td>
       </tr>
       <tr>
         <td class="input-box2" valign="top">描　　述</td>

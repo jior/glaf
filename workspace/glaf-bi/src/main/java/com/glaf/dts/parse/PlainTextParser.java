@@ -21,7 +21,6 @@ package com.glaf.dts.parse;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.Reader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -37,13 +36,14 @@ import com.glaf.core.domain.TableDefinition;
 import com.glaf.core.service.ITableDataService;
 import com.glaf.core.service.ITableDefinitionService;
 import com.glaf.core.util.DBUtils;
+import com.glaf.core.util.IOUtils;
 import com.glaf.core.xml.MetadataXmlReader;
 
 public class PlainTextParser implements TextParser {
 
 	public static void main(String[] args) throws Exception {
 		String mappingFile = "./report/mapping/ProductFact.mapping.xml";
-		String dataFile = "./report/data/PALC-PBRT-RSLT-1301040950.txt";
+		String dataFile = "./report/data/PALC-PBRT-RSLT.txt";
 		MetadataXmlReader reader = new MetadataXmlReader();
 		TableDefinition tableDefinition = reader
 				.read(new java.io.FileInputStream(mappingFile));
@@ -59,9 +59,9 @@ public class PlainTextParser implements TextParser {
 				mappingFile));
 		System.out.println("start row no:" + tableModel.getStartRow());
 		PlainTextParser textReader = new PlainTextParser();
-		InputStreamReader is = new InputStreamReader(
+
+		List<TableModel> rows = textReader.parse(tableModel,
 				new java.io.FileInputStream(dataFile));
-		List<TableModel> rows = textReader.read(tableModel, is);
 
 		ITableDefinitionService tableDefinitionService = ContextFactory
 				.getBean("tableDefinitionService");
@@ -164,41 +164,63 @@ public class PlainTextParser implements TextParser {
 		return row;
 	}
 
-	public List<TableModel> read(TableModel tableModel, Reader data)
-			throws IOException {
+	public List<TableModel> parse(TableModel tableModel,
+			java.io.InputStream data) {
 		List<TableModel> rows = new ArrayList<TableModel>();
-		BufferedReader reader = new BufferedReader(data);
+		InputStreamReader isr = null;
+		BufferedReader reader = null;
 		int startRow = tableModel.getStartRow();
 		String line = null;
 		int currentRowNo = 0;
-		while ((line = reader.readLine()) != null) {
-			// System.out.println(line);
-			/**
-			 * 如果读取到指定的结束指令，结束循环
-			 */
-			if (StringUtils.contains(line, tableModel.getStopWord())) {
-				break;
-			}
-
-			if (StringUtils.isEmpty(line)) {
-				continue;
-			}
-
-			if (currentRowNo >= startRow) {
+		try {
+			isr = new InputStreamReader(data);
+			reader = new BufferedReader(isr);
+			while ((line = reader.readLine()) != null) {
+				// System.out.println(line);
 				/**
-				 * 如果当前数据的长度大于规定的最小长度
+				 * 如果读取到指定的结束指令，结束循环
 				 */
-				if (line.length() >= tableModel.getMinLength()) {
-					try {
-						TableModel model = this.parseLine(tableModel, line);
-						rows.add(model);
-					} catch (Exception ex) {
-						ex.printStackTrace();
+				if (StringUtils.contains(line, tableModel.getStopWord())) {
+					break;
+				}
+
+				if (StringUtils.isEmpty(line)) {
+					continue;
+				}
+
+				/**
+				 * 排除不需要处理的行
+				 */
+				if (tableModel.getExcludes() != null
+						&& !tableModel.getExcludes().isEmpty()) {
+					for (String exclude : tableModel.getExcludes()) {
+						if (StringUtils.contains(line, exclude)) {
+							continue;
+						}
 					}
 				}
-			}
 
-			currentRowNo++;
+				if (currentRowNo >= startRow) {
+					/**
+					 * 如果当前数据的长度大于规定的最小长度
+					 */
+					if (line.length() >= tableModel.getMinLength()) {
+						try {
+							TableModel model = this.parseLine(tableModel, line);
+							rows.add(model);
+						} catch (Exception ex) {
+							ex.printStackTrace();
+						}
+					}
+				}
+
+				currentRowNo++;
+			}
+		} catch (IOException ex) {
+			throw new RuntimeException(ex);
+		} finally {
+			IOUtils.closeStream(isr);
+			IOUtils.closeStream(reader);
 		}
 		return rows;
 	}

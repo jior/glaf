@@ -272,6 +272,20 @@ public class ParamUtils {
 		}
 		return result;
 	}
+	
+	public static Object getObject(Map<String, Object> dataMap, String key) {
+		if (dataMap == null || key == null) {
+			return null;
+		}
+		Object result = dataMap.get(key);
+		if (result == null) {
+			result = dataMap.get(key.toLowerCase());
+		}
+		if (result == null) {
+			result = dataMap.get(key.toUpperCase());
+		}
+		return result;
+	}
 
 	public static String getString(Map<String, Object> dataMap, String key,
 			String defaultValue) {

@@ -38,6 +38,10 @@ int parent=ParamUtil.getIntParameter(request, "parent", 0);
         <td class="input-box">名　　称*</td>
         <td><input name="name" type="text" size="37" class="input" datatype="string" nullable="no" maxsize="20" chname="名称"></td>
       </tr>
+	  <tr>
+        <td class="input-box">权限编码</td>
+        <td><input name="code" type="text" size="37" class="input" datatype="string" nullable="yes" maxsize="20" chname="代码"></td>
+      </tr>
       <tr>
         <td class="input-box2" valign="top">描　　述</td>
         <td><textarea name="desc" cols="35" rows="8" class="input-multi" datatype="string" nullable="yes" maxsize="100" chname="描述"></textarea></td>

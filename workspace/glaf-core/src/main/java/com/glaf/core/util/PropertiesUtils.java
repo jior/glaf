@@ -64,8 +64,6 @@ public class PropertiesUtils {
 	public static String get(Properties properties, String key) {
 		return properties.getProperty(key);
 	}
-	
-	
 
 	public static String get(Properties properties, String key,
 			String defaultVal) {
@@ -154,7 +152,7 @@ public class PropertiesUtils {
 			IOUtils.closeStream(in);
 		}
 	}
-	
+
 	public static Properties loadFilePathResource(File file) {
 		Resource resource = new FileSystemResource(file);
 		InputStream in = null;
@@ -167,7 +165,7 @@ public class PropertiesUtils {
 			IOUtils.closeStream(in);
 		}
 	}
-	
+
 	public static LinkedHashMap<String, String> load(InputStream inputStream)
 			throws IOException {
 		LinkedHashMap<String, String> properties = new LinkedHashMap<String, String>();
@@ -206,8 +204,8 @@ public class PropertiesUtils {
 							if (whiteSpaceChars.indexOf(nextLine
 									.charAt(startIndex)) == -1)
 								break;
-						nextLine = nextLine.substring(startIndex, nextLine
-								.length());
+						nextLine = nextLine.substring(startIndex,
+								nextLine.length());
 						line = loppedLine + nextLine;
 						len = line.length();
 					}

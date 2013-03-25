@@ -49,6 +49,11 @@ public class TableModel implements java.io.Serializable {
 	protected String entityName;
 
 	/**
+	 * 需要排除的行列表
+	 */
+	protected List<String> excludes = new ArrayList<String>();
+
+	/**
 	 * 文件前缀
 	 */
 	protected String filePrefix;
@@ -80,10 +85,15 @@ public class TableModel implements java.io.Serializable {
 	 */
 	protected String primaryKey;
 
+	/**
+	 * 分隔符
+	 */
+	protected String split;
+
 	protected String sql;
 
 	/**
-	 * 开始行数
+	 * 开始行数,从1开始
 	 */
 	protected int startRow;
 
@@ -92,8 +102,14 @@ public class TableModel implements java.io.Serializable {
 	 */
 	protected int stopSkipRow;
 
+	/**
+	 * 停止解析字符
+	 */
 	protected String stopWord;
 
+	/**
+	 * 数据库表名称
+	 */
 	protected String tableName;
 
 	/**
@@ -143,6 +159,30 @@ public class TableModel implements java.io.Serializable {
 		columns.add(column);
 	}
 
+	public void addExclude(String exclude) {
+		if (excludes == null) {
+			excludes = new ArrayList<String>();
+		}
+		excludes.add(exclude);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		TableModel other = (TableModel) obj;
+		if (tableName == null) {
+			if (other.tableName != null)
+				return false;
+		} else if (!tableName.equals(other.tableName))
+			return false;
+		return true;
+	}
+
 	public String getAggregationKey() {
 		return aggregationKey;
 	}
@@ -165,6 +205,13 @@ public class TableModel implements java.io.Serializable {
 
 	public String getEntityName() {
 		return entityName;
+	}
+
+	public List<String> getExcludes() {
+		if (excludes == null) {
+			excludes = new ArrayList<String>();
+		}
+		return excludes;
 	}
 
 	public String getFilePrefix() {
@@ -195,6 +242,10 @@ public class TableModel implements java.io.Serializable {
 		return primaryKey;
 	}
 
+	public String getSplit() {
+		return split;
+	}
+
 	public String getSql() {
 		return sql;
 	}
@@ -217,6 +268,15 @@ public class TableModel implements java.io.Serializable {
 
 	public String getTitle() {
 		return title;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((tableName == null) ? 0 : tableName.hashCode());
+		return result;
 	}
 
 	public void removeColumn(ColumnModel column) {
@@ -250,6 +310,10 @@ public class TableModel implements java.io.Serializable {
 		this.entityName = entityName;
 	}
 
+	public void setExcludes(List<String> excludes) {
+		this.excludes = excludes;
+	}
+
 	public void setFilePrefix(String filePrefix) {
 		this.filePrefix = filePrefix;
 	}
@@ -276,6 +340,10 @@ public class TableModel implements java.io.Serializable {
 
 	public void setPrimaryKey(String primaryKey) {
 		this.primaryKey = primaryKey;
+	}
+
+	public void setSplit(String split) {
+		this.split = split;
 	}
 
 	public void setSql(String sql) {

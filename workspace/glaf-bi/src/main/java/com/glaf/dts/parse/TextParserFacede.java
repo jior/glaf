@@ -20,7 +20,8 @@ package com.glaf.dts.parse;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.InputStreamReader;
+import java.io.InputStream;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -29,6 +30,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -38,6 +40,7 @@ import com.glaf.core.context.ContextFactory;
 import com.glaf.core.domain.BlobItemEntity;
 import com.glaf.core.service.IBlobService;
 import com.glaf.core.service.ITableDataService;
+import com.glaf.core.util.ClassUtils;
 import com.glaf.core.util.FileUtils;
 import com.glaf.core.util.UUID32;
 
@@ -125,8 +128,10 @@ public class TextParserFacede {
 		ITableDataService tableDataService = ContextFactory
 				.getBean("tableDataService");
 		IBlobService blobService = ContextFactory.getBean("blobService");
-		InputStreamReader is = null;
-		TextParser textReader = null;
+
+		InputStream inputStream = null;
+		TextParser parser = null;
+
 		boolean insert = false;
 		DataFile dataFile = blobService.getBlobByFilename(file
 				.getAbsolutePath());
@@ -156,20 +161,29 @@ public class TextParserFacede {
 
 		String filename = file.getName();
 		for (String prefix : prefixs) {
-			textReader = null;
+			parser = null;
 			if (filename.indexOf(prefix) != -1) {
 				TableModel tableModel = tplMap.get(prefix);
-				String parseType = tableModel.getParseType();
-				if ("csv".equals(parseType)) {
-					textReader = new CsvTextParser();
-				} else if ("text".equals(parseType)) {
-					textReader = new PlainTextParser();
+				String parseClass = tableModel.getParseClass();
+				if (StringUtils.isNotEmpty(parseClass)) {
+					// 加载自定义的解析器
+					parser = (TextParser) ClassUtils
+							.instantiateClass(parseClass);
+				} else {
+					String parseType = tableModel.getParseType();
+					if ("csv".equals(parseType)) {
+						parser = new CsvTextParser();
+					} else if ("text".equals(parseType)) {
+						parser = new PlainTextParser();
+					} else if ("xls".equals(parseType)) {
+						parser = new POIExcelParser();
+					}
 				}
-				if (textReader != null) {
+				if (parser != null) {
 					try {
-						is = new InputStreamReader(new java.io.FileInputStream(
-								file));
-						List<TableModel> rows = textReader.read(tableModel, is);
+						inputStream = new java.io.FileInputStream(file);
+						List<TableModel> rows = parser.parse(tableModel,
+								inputStream);
 						if (rows != null && !rows.isEmpty()) {
 							// System.out.println("rm=="+tableModel.toString());
 							// System.out.println(" rows size:"+rows.size());
@@ -189,7 +203,7 @@ public class TextParserFacede {
 						ex.printStackTrace();
 						throw new RuntimeException(ex);
 					} finally {
-						IOUtils.closeQuietly(is);
+						IOUtils.closeQuietly(inputStream);
 					}
 				}
 			}

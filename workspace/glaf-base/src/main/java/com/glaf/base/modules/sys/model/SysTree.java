@@ -44,6 +44,7 @@ public class SysTree implements Serializable, TreeModel, JSONable {
 	protected String iconCls;
 	protected long id;
 	protected int locked;
+	protected String moveable;
 	protected String name;
 	protected TreeModel parent;
 	protected long parentId;
@@ -147,6 +148,10 @@ public class SysTree implements Serializable, TreeModel, JSONable {
 		return locked;
 	}
 
+	public String getMoveable() {
+		return moveable;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -245,6 +250,10 @@ public class SysTree implements Serializable, TreeModel, JSONable {
 
 	public void setLocked(int locked) {
 		this.locked = locked;
+	}
+
+	public void setMoveable(String moveable) {
+		this.moveable = moveable;
 	}
 
 	public void setName(String name) {

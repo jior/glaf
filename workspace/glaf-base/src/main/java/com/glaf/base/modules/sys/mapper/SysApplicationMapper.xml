@@ -17,6 +17,12 @@
 	</resultMap>
 
 
+	<resultMap id="realmInfoResultMap" type="com.glaf.base.modules.sys.model.RealmInfo">
+		<result property="item" column="CODE" jdbcType="VARCHAR" />
+		<result property="url" column="URL" jdbcType="VARCHAR" />
+	</resultMap>
+
+
 	<insert id="insertSysApplication" parameterType="com.glaf.base.modules.sys.model.SysApplication">
 		insert into sys_application
 		<trim prefix="(" suffix=")" suffixOverrides=",">
@@ -105,7 +111,8 @@
 
 
 	<delete id="deleteSysApplicationById" parameterType="long">
-		delete from sys_application
+		delete from
+		sys_application
 		where ID = #{id}
 	</delete>
 
@@ -132,7 +139,8 @@
 
 		select E.* from sys_application E
 		inner join sys_access A
-		on E.ID = A.APPID
+		on
+		E.ID = A.APPID
 		where A.ROLEID = #{roleId}
 
 	</select>
@@ -143,14 +151,35 @@
 
 		select E.* from sys_application E
 		inner join sys_access A
-		on E.id = A.appId
+		on
+		E.id = A.appId
 		where A.roleId in (
 		select dr.id from sys_dept_role dr
 		inner join sys_user_role ur
 		on dr.id = ur.roleid
-		where ur.userid = #{userId}
+		where ur.userid =
+		#{userId}
 		and ur.authorized = 0
 		)
+
+	</select>
+
+
+	<select id="getRealmInfos" parameterType="map" resultMap="realmInfoResultMap">
+
+		select
+		E.url, r.code from sys_application E
+		inner join sys_access A
+		on E.id =
+		A.appId
+		inner join sys_dept_role dr
+		on A.roleid = dr.id
+		inner join
+		sys_role r
+		on dr.sysroleid = r.id
+		where E.url is not null
+		and E.url != ''
+		order by E.url asc
 
 	</select>
 
@@ -206,7 +235,7 @@
 					#{x_name}
 				</foreach>
 			</if>
-			
+
 			<if test="codeLike != null and codeLike != '' ">
 				and E.CODE like #{codeLike}
 			</if>

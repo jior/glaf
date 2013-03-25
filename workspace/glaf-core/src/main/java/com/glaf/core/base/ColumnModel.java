@@ -84,6 +84,8 @@ public class ColumnModel implements java.io.Serializable,
 	 */
 	protected int precision;
 
+	protected boolean required;
+
 	/**
 	 * ¥Œ±ÍÃ‚
 	 */
@@ -274,6 +276,10 @@ public class ColumnModel implements java.io.Serializable,
 		return booleanValue;
 	}
 
+	public boolean isRequired() {
+		return required;
+	}
+
 	public boolean isTemporary() {
 		return temporary;
 	}
@@ -344,6 +350,10 @@ public class ColumnModel implements java.io.Serializable,
 
 	public void setPrecision(int precision) {
 		this.precision = precision;
+	}
+
+	public void setRequired(boolean required) {
+		this.required = required;
 	}
 
 	public void setSecondTitle(String secondTitle) {

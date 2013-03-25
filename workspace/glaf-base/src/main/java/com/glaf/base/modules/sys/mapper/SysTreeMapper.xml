@@ -11,6 +11,7 @@
 		<result property="desc" column="NODEDESC" jdbcType="VARCHAR" />
 		<result property="discriminator" column="DISCRIMINATOR"
 			jdbcType="VARCHAR" />
+		<result property="moveable" column="MOVEABLE" jdbcType="VARCHAR" />
 		<result property="treeId" column="TREEID" jdbcType="VARCHAR" />
 		<result property="sort" column="SORT" jdbcType="INTEGER" />
 		<result property="code" column="CODE" jdbcType="VARCHAR" />
@@ -36,6 +37,9 @@
 			</if>
 			<if test="discriminator != null">
 				,DISCRIMINATOR
+			</if>
+			<if test="moveable != null">
+				,MOVEABLE
 			</if>
 			<if test="treeId != null">
 				,TREEID
@@ -74,6 +78,9 @@
 			</if>
 			<if test="discriminator != null">
 				,#{discriminator, jdbcType=VARCHAR}
+			</if>
+			<if test="moveable != null">
+				,#{moveable, jdbcType=VARCHAR}
 			</if>
 			<if test="treeId != null">
 				,#{treeId, jdbcType=VARCHAR}

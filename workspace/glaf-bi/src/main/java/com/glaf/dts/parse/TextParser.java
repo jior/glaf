@@ -18,15 +18,12 @@
 
 package com.glaf.dts.parse;
 
-import java.io.IOException;
-import java.io.Reader;
 import java.util.List;
 
 import com.glaf.core.base.TableModel;
 
 public interface TextParser {
 
-	List<TableModel> read(TableModel tableModel, Reader data)
-			throws IOException;
+	List<TableModel> parse(TableModel tableModel, java.io.InputStream data);
 
 }

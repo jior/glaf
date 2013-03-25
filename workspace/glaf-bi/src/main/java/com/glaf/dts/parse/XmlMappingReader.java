@@ -57,6 +57,7 @@ public class XmlMappingReader {
 						.attributeValue("parseClass"));
 				classDefinition.setAggregationKey(element
 						.attributeValue("aggregationKeys"));
+				classDefinition.setSplit(element.attributeValue("split"));
 
 				String startRow = element.attributeValue("startRow");
 				if (StringUtils.isNumeric(startRow)) {
@@ -76,6 +77,15 @@ public class XmlMappingReader {
 				String batchSize = element.attributeValue("batchSize");
 				if (StringUtils.isNumeric(batchSize)) {
 					classDefinition.setBatchSize(Integer.parseInt(batchSize));
+				}
+
+				List<?> excludes = element.elements("excludes");
+				if (excludes != null && excludes.size() > 0) {
+					Iterator<?> iterator = excludes.iterator();
+					while (iterator.hasNext()) {
+						Element elem = (Element) iterator.next();
+						classDefinition.addExclude(elem.getStringValue());
+					}
 				}
 
 				List<?> rows = element.elements("property");
@@ -117,6 +127,13 @@ public class XmlMappingReader {
 		 */
 		if ("true".equals(elem.attributeValue("temporary"))) {
 			field.setTemporary(true);
+		}
+		
+		/**
+		 * 如果是必须字段
+		 */
+		if ("true".equals(elem.attributeValue("required"))) {
+			field.setRequired(true);
 		}
 
 		String length = elem.attributeValue("length");
