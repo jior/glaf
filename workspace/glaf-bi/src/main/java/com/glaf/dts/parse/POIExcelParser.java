@@ -11,59 +11,49 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-
+import org.json.*;
 import com.glaf.core.base.ColumnModel;
 import com.glaf.core.base.TableModel;
-import com.glaf.core.context.ContextFactory;
-import com.glaf.core.domain.ColumnDefinition;
-import com.glaf.core.domain.TableDefinition;
-import com.glaf.core.service.ITableDataService;
-import com.glaf.core.service.ITableDefinitionService;
-import com.glaf.core.util.DBUtils;
-import com.glaf.core.xml.MetadataXmlReader;
 
 public class POIExcelParser implements TextParser {
 
 	public static void main(String[] args) throws Exception {
 		String mappingFile = "./report/mapping/Todo.mapping.xml";
 		String dataFile = "./report/data/Todo.xls";
-		MetadataXmlReader reader = new MetadataXmlReader();
-		TableDefinition tableDefinition = reader
-				.read(new java.io.FileInputStream(mappingFile));
-		if (tableDefinition != null) {
-			ColumnDefinition column4 = new ColumnDefinition();
-			column4.setTitle("聚合主键");
-			column4.setName("aggregationKey");
-			column4.setColumnName("AGGREGATIONKEY");
-			column4.setJavaType("String");
-			column4.setLength(500);
-			tableDefinition.addColumn(column4);
-			if (DBUtils.tableExists(tableDefinition.getTableName())) {
-				com.glaf.core.util.DBUtils.alterTable(tableDefinition);
-			} else {
-				com.glaf.core.util.DBUtils.createTable(tableDefinition);
+
+		TextParserFacede parser = new TextParserFacede();
+		List<TableModel> rows = parser.parse(mappingFile, dataFile, true);
+		if (rows != null && !rows.isEmpty()) {
+			JSONArray array = new JSONArray();
+			for (TableModel model : rows) {
+				JSONObject jsonObject = new JSONObject();
+				List<ColumnModel> columns = model.getColumns();
+				if (columns != null && !columns.isEmpty()) {
+					for (ColumnModel col : columns) {
+						if (col.getName() != null) {
+							jsonObject.put(col.getName(), col.getValue());
+						}
+						if (col.getColumnName() != null) {
+							jsonObject.put(col.getColumnName().toLowerCase(), col.getValue());
+						}
+					}
+				}
+				if (model.getIdColumn() != null) {
+					ColumnModel col = model.getIdColumn();
+					if (col.getName() != null) {
+						jsonObject.put(col.getName(), col.getValue());
+					}
+					if (col.getColumnName() != null) {
+						jsonObject.put(col.getColumnName().toLowerCase(), col.getValue());
+					}
+				}
+				array.put(jsonObject);
 			}
+			System.out.println(array.toString('\n'));
 		}
-		XmlMappingReader xmlReader = new XmlMappingReader();
-		TableModel tableModel = xmlReader.read(new java.io.FileInputStream(
-				mappingFile));
-		System.out.println("start row no:" + tableModel.getStartRow());
-		TextParser parser = new POIExcelParser();
-
-		List<TableModel> rows = parser.parse(tableModel,
-				new java.io.FileInputStream(dataFile));
-
-		ITableDefinitionService tableDefinitionService = ContextFactory
-				.getBean("tableDefinitionService");
-		tableDefinitionService.save(tableDefinition);
-
-		ITableDataService tableDataService = ContextFactory
-				.getBean("tableDataService");
-		tableDataService.saveAll(tableModel.getTableName(), rows);
 	}
 
-	public List<TableModel> parse(TableModel tableModel,
-			java.io.InputStream data) {
+	public List<TableModel> parse(TableModel metadata, java.io.InputStream data) {
 		List<TableModel> rows = new ArrayList<TableModel>();
 		HSSFWorkbook wb = null;
 		try {
@@ -78,22 +68,23 @@ public class POIExcelParser implements TextParser {
 			HSSFSheet sheet = wb.getSheetAt(r);
 			int rowCount = sheet.getPhysicalNumberOfRows();
 			for (int i = 0; i < rowCount; i++) {
-				int startRow = tableModel.getStartRow();// 从1开始
+				int startRow = metadata.getStartRow();// 从1开始
 				if (startRow > 0 && i < startRow - 1) {
 					continue;// 跳过开始行
 				}
 				HSSFRow row = sheet.getRow(i);
 				TableModel model = new TableModel();
 
-				model.setIdColumn(tableModel.getIdColumn());
-				model.setTableName(tableModel.getTableName());
-				model.setAggregationKeys(tableModel.getAggregationKeys());
+				model.setIdColumn(metadata.getIdColumn());
+				model.setTableName(metadata.getTableName());
+				model.setAggregationKeys(metadata.getAggregationKeys());
 
 				int colCount = row.getPhysicalNumberOfCells();
-				for (ColumnModel cell : tableModel.getColumns()) {
+				for (ColumnModel cell : metadata.getColumns()) {
 					if (cell.getPosition() > 0 && cell.getPosition() < colCount) {
 						HSSFCell hssfCell = row.getCell(cell.getPosition() - 1);
 						ColumnModel col = new ColumnModel();
+						col.setName(cell.getName());
 						col.setColumnName(cell.getColumnName());
 						col.setValueExpression(cell.getValueExpression());
 						String javaType = cell.getType();
@@ -172,11 +163,16 @@ public class POIExcelParser implements TextParser {
 								}
 							}
 						}
-						if (tableModel.getIdColumn() != null) {
+						if (metadata.getIdColumn() != null) {
 							if (StringUtils.equals(col.getColumnName(),
-									tableModel.getIdColumn().getColumnName())) {
+									metadata.getIdColumn().getColumnName())) {
 								ColumnModel idColumn = new ColumnModel();
-								idColumn.setColumnName(col.getColumnName());
+								idColumn.setName(metadata.getIdColumn()
+										.getName());
+								idColumn.setType(metadata.getIdColumn()
+										.getType());
+								idColumn.setColumnName(metadata.getIdColumn()
+										.getColumnName());
 								idColumn.setValue(col.getValue());
 								model.setIdColumn(idColumn);
 							}
@@ -184,8 +180,8 @@ public class POIExcelParser implements TextParser {
 						model.addColumn(col);
 					}
 				}
-				if (tableModel.getIdColumn() != null
-						&& tableModel.getIdColumn().isRequired()) {
+				if (metadata.getIdColumn() != null
+						&& metadata.getIdColumn().isRequired()) {
 					if (model.getIdColumn().getValue() != null) {
 						rows.add(model);
 					}

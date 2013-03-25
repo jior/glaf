@@ -20,6 +20,8 @@ package com.glaf.dts.parse;
 
 import java.io.File;
 import java.io.FileInputStream;
+
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.Date;
@@ -38,11 +40,15 @@ import com.glaf.core.base.DataFile;
 import com.glaf.core.base.TableModel;
 import com.glaf.core.context.ContextFactory;
 import com.glaf.core.domain.BlobItemEntity;
+import com.glaf.core.domain.ColumnDefinition;
+import com.glaf.core.domain.TableDefinition;
 import com.glaf.core.service.IBlobService;
 import com.glaf.core.service.ITableDataService;
 import com.glaf.core.util.ClassUtils;
+import com.glaf.core.util.DBUtils;
 import com.glaf.core.util.FileUtils;
 import com.glaf.core.util.UUID32;
+import com.glaf.core.xml.MetadataXmlReader;
 
 public class TextParserFacede {
 	protected static final Log logger = LogFactory
@@ -53,6 +59,241 @@ public class TextParserFacede {
 		String dataDir = "./report/data";
 		TextParserFacede facede = new TextParserFacede();
 		facede.process(mappingDir, dataDir);
+	}
+
+	protected IBlobService blobService;
+
+	protected ITableDataService tableDataService;
+
+	public IBlobService getBlobService() {
+		if (blobService == null) {
+			blobService = ContextFactory.getBean("blobService");
+		}
+		return blobService;
+	}
+
+	public ITableDataService getTableDataService() {
+		if (tableDataService == null) {
+			tableDataService = ContextFactory.getBean("tableDataService");
+		}
+		return tableDataService;
+	}
+
+	public void parse(File file, Set<String> prefixs,
+			Map<String, TableModel> tplMap) {
+		InputStream inputStream = null;
+		TextParser parser = null;
+		boolean insert = false;
+		DataFile dataFile = getBlobService().getBlobByFilename(
+				file.getAbsolutePath());
+		if (dataFile == null) {
+			insert = true;
+			dataFile = new BlobItemEntity();
+			dataFile.setFileId(UUID32.getUUID());
+			dataFile.setFilename(file.getAbsolutePath());
+			dataFile.setData(FileUtils.getBytes(file));
+			dataFile.setCreateDate(new Date(file.lastModified()));
+			dataFile.setLastModified(file.lastModified());
+			dataFile.setServiceKey("DTS");
+			dataFile.setId(UUID32.getUUID());
+			dataFile.setName(file.getName());
+			dataFile.setSize(file.length());
+		} else {
+			if (dataFile.getLastModified() == file.lastModified()) {
+				logger.debug(file.getAbsolutePath() + " 已经成功处理了，不再重复处理。");
+				return;
+			}
+			insert = false;
+			dataFile.setData(FileUtils.getBytes(file));
+			dataFile.setCreateDate(new Date(file.lastModified()));
+			dataFile.setLastModified(file.lastModified());
+			dataFile.setSize(file.length());
+		}
+
+		String filename = file.getName();
+		for (String prefix : prefixs) {
+			parser = null;
+			if (filename.indexOf(prefix) != -1) {
+				TableModel tableModel = tplMap.get(prefix);
+				String parseClass = tableModel.getParseClass();
+				if (StringUtils.isNotEmpty(parseClass)) {
+					// 加载自定义的解析器
+					parser = (TextParser) ClassUtils
+							.instantiateClass(parseClass);
+				} else {
+					String parseType = tableModel.getParseType();
+					if ("csv".equals(parseType)) {
+						parser = new CsvTextParser();
+					} else if ("text".equals(parseType)) {
+						parser = new PlainTextParser();
+					} else if ("xls".equals(parseType)) {
+						parser = new POIExcelParser();
+					}
+				}
+				if (parser != null) {
+					try {
+						inputStream = new java.io.FileInputStream(file);
+						List<TableModel> rows = parser.parse(tableModel,
+								inputStream);
+						if (rows != null && !rows.isEmpty()) {
+							getTableDataService().saveAll(
+									tableModel.getTableName(), rows);
+							if (insert) {
+								dataFile.setStatus(9);
+								getBlobService().insertBlob(dataFile);
+								logger.debug(dataFile.getFilename() + "内容已经存储。");
+							} else {
+								dataFile.setStatus(9);
+								getBlobService().updateBlobFileInfo(dataFile);
+								logger.debug(dataFile.getFilename() + "内容已经更新。");
+							}
+						}
+					} catch (Exception ex) {
+						ex.printStackTrace();
+						throw new RuntimeException(ex);
+					} finally {
+						IOUtils.closeQuietly(inputStream);
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * 解析数据模型
+	 * 
+	 * @param mappingFile
+	 *            元数据配置文件
+	 * @param dataFile
+	 *            解析数据文件
+	 * @param saveToDB
+	 *            是否保存到数据库
+	 * @return
+	 */
+	public List<TableModel> parse(InputStream mappingFile,
+			InputStream dataFile, boolean saveToDB) {
+		List<TableModel> rows = null;
+		MetadataXmlReader reader = new MetadataXmlReader();
+		XmlMappingReader xmlReader = new XmlMappingReader();
+		TableDefinition tableDefinition = null;
+		TableModel tableModel = null;
+
+		tableDefinition = reader.read(mappingFile);
+
+		if (tableDefinition != null) {
+			ColumnDefinition column4 = new ColumnDefinition();
+			column4.setTitle("聚合主键");
+			column4.setName("aggregationKey");
+			column4.setColumnName("AGGREGATIONKEY");
+			column4.setJavaType("String");
+			column4.setLength(500);
+			tableDefinition.addColumn(column4);
+			if (DBUtils.tableExists(tableDefinition.getTableName())) {
+				com.glaf.core.util.DBUtils.alterTable(tableDefinition);
+			} else {
+				com.glaf.core.util.DBUtils.createTable(tableDefinition);
+			}
+		}
+
+		TextParser parser = null;
+		try {
+			tableModel = xmlReader.read(mappingFile);
+			String parseClass = tableModel.getParseClass();
+			if (StringUtils.isNotEmpty(parseClass)) {
+				// 加载自定义的解析器
+				parser = (TextParser) ClassUtils.instantiateClass(parseClass);
+			} else {
+				String parseType = tableModel.getParseType();
+				if ("csv".equals(parseType)) {
+					parser = new CsvTextParser();
+				} else if ("text".equals(parseType)) {
+					parser = new PlainTextParser();
+				} else if ("xls".equals(parseType)) {
+					parser = new POIExcelParser();
+				}
+			}
+			if (parser != null) {
+				rows = parser.parse(tableModel, dataFile);
+				if (rows != null && !rows.isEmpty()) {
+					getTableDataService().saveAll(tableModel.getTableName(),
+							rows);
+				}
+			}
+		} catch (Exception ex) {
+			throw new RuntimeException(ex);
+		}
+		return rows;
+	}
+
+	/**
+	 * 解析数据模型
+	 * 
+	 * @param mappingFile
+	 *            元数据配置文件
+	 * @param dataFile
+	 *            解析数据文件
+	 * @param saveToDB
+	 *            是否保存到数据库
+	 * @return
+	 */
+	public List<TableModel> parse(String mappingFile, String dataFile,
+			boolean saveToDB) {
+		List<TableModel> rows = null;
+		MetadataXmlReader reader = new MetadataXmlReader();
+		XmlMappingReader xmlReader = new XmlMappingReader();
+		TableDefinition tableDefinition = null;
+		TableModel tableModel = null;
+		try {
+			tableDefinition = reader.read(new FileInputStream(mappingFile));
+		} catch (IOException ex) {
+			throw new RuntimeException(ex);
+		}
+		if (tableDefinition != null) {
+			ColumnDefinition column4 = new ColumnDefinition();
+			column4.setTitle("聚合主键");
+			column4.setName("aggregationKey");
+			column4.setColumnName("AGGREGATIONKEY");
+			column4.setJavaType("String");
+			column4.setLength(500);
+			tableDefinition.addColumn(column4);
+			if (DBUtils.tableExists(tableDefinition.getTableName())) {
+				com.glaf.core.util.DBUtils.alterTable(tableDefinition);
+			} else {
+				com.glaf.core.util.DBUtils.createTable(tableDefinition);
+			}
+		}
+
+		InputStream inputStream = null;
+		TextParser parser = null;
+		try {
+			tableModel = xmlReader
+					.read(new java.io.FileInputStream(mappingFile));
+			String parseClass = tableModel.getParseClass();
+			if (StringUtils.isNotEmpty(parseClass)) {
+				// 加载自定义的解析器
+				parser = (TextParser) ClassUtils.instantiateClass(parseClass);
+			} else {
+				String parseType = tableModel.getParseType();
+				if ("csv".equals(parseType)) {
+					parser = new CsvTextParser();
+				} else if ("text".equals(parseType)) {
+					parser = new PlainTextParser();
+				} else if ("xls".equals(parseType)) {
+					parser = new POIExcelParser();
+				}
+			}
+			if (parser != null) {
+				inputStream = new java.io.FileInputStream(dataFile);
+				rows = parser.parse(tableModel, inputStream);
+				if (rows != null && !rows.isEmpty()) {
+					getTableDataService().saveAll(tableModel.getTableName(),
+							rows);
+				}
+			}
+		} catch (IOException ex) {
+			throw new RuntimeException(ex);
+		}
+		return rows;
 	}
 
 	public void process(String mappingDir, String dataDir) {
@@ -123,91 +364,12 @@ public class TextParserFacede {
 		}
 	}
 
-	public void parse(File file, Set<String> prefixs,
-			Map<String, TableModel> tplMap) {
-		ITableDataService tableDataService = ContextFactory
-				.getBean("tableDataService");
-		IBlobService blobService = ContextFactory.getBean("blobService");
+	public void setBlobService(IBlobService blobService) {
+		this.blobService = blobService;
+	}
 
-		InputStream inputStream = null;
-		TextParser parser = null;
-
-		boolean insert = false;
-		DataFile dataFile = blobService.getBlobByFilename(file
-				.getAbsolutePath());
-		if (dataFile == null) {
-			insert = true;
-			dataFile = new BlobItemEntity();
-			dataFile.setFileId(UUID32.getUUID());
-			dataFile.setFilename(file.getAbsolutePath());
-			dataFile.setData(FileUtils.getBytes(file));
-			dataFile.setCreateDate(new Date(file.lastModified()));
-			dataFile.setLastModified(file.lastModified());
-			dataFile.setServiceKey("DTS");
-			dataFile.setId(UUID32.getUUID());
-			dataFile.setName(file.getName());
-			dataFile.setSize(file.length());
-		} else {
-			if (dataFile.getLastModified() == file.lastModified()) {
-				logger.debug(file.getAbsolutePath() + " 已经成功处理了，不再重复处理。");
-				return;
-			}
-			insert = false;
-			dataFile.setData(FileUtils.getBytes(file));
-			dataFile.setCreateDate(new Date(file.lastModified()));
-			dataFile.setLastModified(file.lastModified());
-			dataFile.setSize(file.length());
-		}
-
-		String filename = file.getName();
-		for (String prefix : prefixs) {
-			parser = null;
-			if (filename.indexOf(prefix) != -1) {
-				TableModel tableModel = tplMap.get(prefix);
-				String parseClass = tableModel.getParseClass();
-				if (StringUtils.isNotEmpty(parseClass)) {
-					// 加载自定义的解析器
-					parser = (TextParser) ClassUtils
-							.instantiateClass(parseClass);
-				} else {
-					String parseType = tableModel.getParseType();
-					if ("csv".equals(parseType)) {
-						parser = new CsvTextParser();
-					} else if ("text".equals(parseType)) {
-						parser = new PlainTextParser();
-					} else if ("xls".equals(parseType)) {
-						parser = new POIExcelParser();
-					}
-				}
-				if (parser != null) {
-					try {
-						inputStream = new java.io.FileInputStream(file);
-						List<TableModel> rows = parser.parse(tableModel,
-								inputStream);
-						if (rows != null && !rows.isEmpty()) {
-							// System.out.println("rm=="+tableModel.toString());
-							// System.out.println(" rows size:"+rows.size());
-							tableDataService.saveAll(tableModel.getTableName(),
-									rows);
-							if (insert) {
-								dataFile.setStatus(9);
-								blobService.insertBlob(dataFile);
-								logger.debug(dataFile.getFilename() + "内容已经存储。");
-							} else {
-								dataFile.setStatus(9);
-								blobService.updateBlobFileInfo(dataFile);
-								logger.debug(dataFile.getFilename() + "内容已经更新。");
-							}
-						}
-					} catch (Exception ex) {
-						ex.printStackTrace();
-						throw new RuntimeException(ex);
-					} finally {
-						IOUtils.closeQuietly(inputStream);
-					}
-				}
-			}
-		}
+	public void setTableDataService(ITableDataService tableDataService) {
+		this.tableDataService = tableDataService;
 	}
 
 }

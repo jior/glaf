@@ -24,6 +24,12 @@ import com.glaf.core.base.TableModel;
 
 public interface TextParser {
 
+	/**
+	 * 将数据流解析为数据模型
+	 * @param tableModel 定义模型对象
+	 * @param data 数据流
+	 * @return
+	 */
 	List<TableModel> parse(TableModel tableModel, java.io.InputStream data);
 
 }
