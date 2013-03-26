@@ -16,6 +16,7 @@
 		<property name="name" type="string" column="name" />
 		<property name="desc" type="string" column="nodeDesc" />
 		<property name="discriminator" type="string" column="discriminator" />
+		<property name="cacheFlag" type="string" column="cacheFlag" />
 		<property name="moveable" type="string" column="moveable" />
 		<property name="treeId" type="string" column="treeId" />
 		<property name="sort" type="integer" column="sort" />
