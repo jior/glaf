@@ -19,14 +19,16 @@
 package com.glaf.base.modules.sys.springmvc;
 
 import java.util.ArrayList;
-import java.util.Date;
+
+import java.util.Collections;
+
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
@@ -34,21 +36,26 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.glaf.base.modules.BaseDataManager;
-import com.glaf.base.modules.Constants;
-import com.glaf.base.modules.sys.form.DictoryFormBean;
-import com.glaf.base.modules.sys.model.Dictory;
-import com.glaf.base.modules.sys.model.SysDepartment;
-import com.glaf.base.modules.sys.model.SysTree;
-import com.glaf.base.modules.sys.model.SysUser;
-import com.glaf.base.modules.sys.service.DictoryService;
-import com.glaf.base.modules.sys.service.SysTreeService;
-import com.glaf.base.utils.ParamUtil;
-import com.glaf.base.utils.RequestUtil;
 import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
 import com.glaf.core.res.ViewMessages;
 import com.glaf.core.util.PageResult;
+import com.glaf.core.util.ParamUtils;
+import com.glaf.core.util.RequestUtils;
+import com.glaf.core.util.Tools;
+
+import com.glaf.base.modules.BaseDataManager;
+import com.glaf.base.modules.Constants;
+
+import com.glaf.base.modules.sys.model.Dictory;
+import com.glaf.base.modules.sys.model.DictoryDefinition;
+
+import com.glaf.base.modules.sys.model.SysTree;
+import com.glaf.base.modules.sys.service.DictoryDefinitionService;
+import com.glaf.base.modules.sys.service.DictoryService;
+import com.glaf.base.modules.sys.service.SysTreeService;
+import com.glaf.base.utils.ParamUtil;
+import com.glaf.base.utils.RequestUtil;
 
 @Controller("/sys/dictory")
 @RequestMapping("/sys/dictory.do")
@@ -62,6 +69,9 @@ public class DictoryController {
 	@javax.annotation.Resource
 	private SysTreeService sysTreeService;
 
+	@javax.annotation.Resource
+	protected DictoryDefinitionService dictoryDefinitionService;
+
 	public void setDictoryService(DictoryService dictoryService) {
 		this.dictoryService = dictoryService;
 		logger.info("setDictoryService");
@@ -70,6 +80,12 @@ public class DictoryController {
 	public void setSysTreeService(SysTreeService sysTreeService) {
 		this.sysTreeService = sysTreeService;
 		logger.info("setSysTreeService");
+	}
+
+	public void setDictoryDefinitionService(
+			DictoryDefinitionService dictoryDefinitionService) {
+		this.dictoryDefinitionService = dictoryDefinitionService;
+		logger.info("setDictoryDefinitionService");
 	}
 
 	/**
@@ -109,6 +125,17 @@ public class DictoryController {
 			HttpServletRequest request, HttpServletResponse response) {
 		// 显示列表页面
 		RequestUtil.setRequestParameterToAttribute(request);
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		Long nodeId = ParamUtils.getLong(params, "parent");
+		if (nodeId > 0) {
+			List<DictoryDefinition> list = dictoryDefinitionService
+					.getDictoryDefinitions(nodeId, "sys_dictory");
+			if (list != null && !list.isEmpty()) {
+				Collections.sort(list);
+				request.setAttribute("list", list);
+			}
+		}
+
 		return new ModelAndView("/modules/sys/dictory/dictory_add", modelMap);
 	}
 
@@ -122,37 +149,17 @@ public class DictoryController {
 	 * @return
 	 */
 	@RequestMapping(params = "method=saveAdd")
-	public ModelAndView saveAdd(ModelMap modelMap, DictoryFormBean form,
-			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
-		SysUser user = RequestUtil.getLoginUser(request);
+	public ModelAndView saveAdd(ModelMap modelMap, HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		logger.debug("params:"+params);
 		Dictory bean = new Dictory();
 		try {
-			PropertyUtils.copyProperties(bean, form);
+			Tools.populate(bean, params);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 
-		if (bean.getNodeId() == 17) {
-			// 添加当前操作汇率的担当和最后修改时间
-			StringBuffer sb = new StringBuffer();
-			List<SysDepartment> list = user.getNestingDepartment();
-
-			if (list != null && list.size() > 0) {
-				SysDepartment depart = (SysDepartment) list.get(0);
-				sb.append(depart.getName());
-			}
-			if (!sb.toString().equals("")) {
-				sb.append("\\" + user.getName());
-			} else {
-				sb.append(user.getName());
-			}
-
-			bean.setExt3(sb.toString());
-			bean.setExt4(sb.toString());
-			bean.setExt5(new Date());
-			bean.setExt6(new Date());
-		}
 		ViewMessages messages = new ViewMessages();
 		if (dictoryService.create(bean)) {// 保存成功
 			if (bean.getNodeId() == 17) {
@@ -187,6 +194,23 @@ public class DictoryController {
 		Dictory bean = dictoryService.find(id);
 		request.setAttribute("bean", bean);
 
+		long nodeId = ParamUtil.getLongParameter(request, "parent", 0);
+		if (nodeId > 0) {
+			List<DictoryDefinition> list = dictoryDefinitionService
+					.getDictoryDefinitions(nodeId, "sys_dictory");
+			if (list != null && !list.isEmpty()) {
+				if (bean != null) {
+					Map<String, Object> dataMap = Tools.getDataMap(bean);
+					for (DictoryDefinition d : list) {
+						Object value = dataMap.get(d.getName());
+						d.setValue(value);
+					}
+				}
+				Collections.sort(list);
+				request.setAttribute("list", list);
+			}
+		}
+
 		SysTree parent = sysTreeService
 				.getSysTreeByCode(Constants.TREE_DICTORY);
 		List<SysTree> list = new ArrayList<SysTree>();
@@ -208,38 +232,19 @@ public class DictoryController {
 	 * @return
 	 */
 	@RequestMapping(params = "method=saveModify")
-	public ModelAndView saveModify(ModelMap modelMap, DictoryFormBean form,
+	public ModelAndView saveModify(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
 		RequestUtil.setRequestParameterToAttribute(request);
-		SysUser user = RequestUtil.getLoginUser(request);
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		long id = ParamUtil.getIntParameter(request, "id", 0);
 		Dictory bean = dictoryService.find(id);
-		bean.setName(form.getName());
-		bean.setCode(form.getCode());
-		bean.setValue(form.getValue());
-		bean.setBlocked(form.getBlocked());
-		bean.setExt1(form.getExt1());
-		bean.setExt2(form.getExt2());
-		if (bean.getNodeId() == 17) {
-			// 添加当前操作汇率的担当和最后修改时间
-			StringBuffer sb = new StringBuffer();
-			List<SysDepartment> list = user.getNestingDepartment();
-
-			if (list != null && list.size() > 0) {
-				SysDepartment depart = (SysDepartment) list.get(0);
-				sb.append(depart.getName());
-			}
-			if (!sb.toString().equals("")) {
-				sb.append("\\" + user.getName());
-			} else {
-				sb.append(user.getName());
-			}
-
-			bean.setExt3(sb.toString());
-			bean.setExt4(sb.toString());
-			bean.setExt5(new Date());
-			bean.setExt6(new Date());
+        logger.debug("params:"+params);
+		try {
+			Tools.populate(bean, params);
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		}
+
 		ViewMessages messages = new ViewMessages();
 		if (dictoryService.update(bean)) {// 保存成功
 			if (bean.getNodeId() == 17) {

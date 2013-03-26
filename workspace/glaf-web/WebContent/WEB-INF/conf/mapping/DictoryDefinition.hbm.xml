@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.glaf.base.modules.sys.model.DictoryDefinition" table="sys_dictory_def"
+		dynamic-update="true" dynamic-insert="true">
+        <id column="ID" name="id" type="long" unsaved-value="0">
+			<generator class="assigned" />
+		</id>
+
+		<property column="NODEID" name="nodeId" type="long" />
+        <property column="NAME" name="name" type="string" length="50" />  
+        <property column="COLUMNNAME" name="columnName" type="string" length="50" />  
+        <property column="TITLE" name="title" type="string" length="50" />  
+        <property column="TYPE" name="type" type="string" length="50" />  
+        <property column="LENGTH" name="length" type="integer" />
+        <property column="SORT" name="sort" type="integer" />
+        <property column="REQUIRED" name="required" type="integer" />
+        <property column="TARGET" name="target" type="string" length="50" />  
+	</class>
+</hibernate-mapping>

@@ -130,6 +130,9 @@
 			<if test="cacheFlag != null">
 				CACHEFLAG = #{cacheFlag, jdbcType=VARCHAR},
 			</if>
+			<if test="discriminator != null">
+				DISCRIMINATOR = #{discriminator, jdbcType=VARCHAR},
+			</if>
 			<if test="treeId != null">
 				TREEID = #{treeId, jdbcType=VARCHAR},
 			</if>

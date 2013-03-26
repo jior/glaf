@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="html"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.glaf.base.modules.*"%>
@@ -30,12 +30,15 @@ function checkOperation(form){
     //document.all.btn_del.disabled=false;
 	if(num==1){
 	  document.all.btn_modify.disabled=false;
+	  document.all.btn_dict.disabled=false;
 	}else{
 	  document.all.btn_modify.disabled=true;
+	  document.all.btn_dict.disabled=true;
 	}
   }else{
     //document.all.btn_del.disabled=true;
 	document.all.btn_modify.disabled=true;
+	document.all.btn_dict.disabled=true;
   }
 }
 function add(){
@@ -60,6 +63,25 @@ function modify(form){
 	  var url="tree.do?method=prepareModify&id="+id;
 	  var width=450;
 	  var height=350;
+	  var scroll="no";
+	  openWindow(url, width, height, scroll);
+  }
+}
+
+function dict(form){
+  var id = 0;
+  num = getCheckedBoxNum(form,"id");
+  if(num == 1){
+      var arr = document.getElementsByName("id");
+	  for (var i=0;i<arr.length;i++) {
+		var e = arr[i];
+		if (e.checked){
+		   id = e.value;
+		}     
+	  }
+	  var url="dictoryDefinition.do?method=edit&target=sys_dictory&nodeId="+id;
+	  var width=650;
+	  var height=780;
 	  var scroll="no";
 	  openWindow(url, width, height, scroll);
   }
@@ -133,8 +155,10 @@ for(; i<pageSize; i++){
   <tr> 
     <td width="50%"> 
 	  <input name="btn_add" type="button" value="增加" class="button" onClick="javascript:add();"> 
-      <!-- <input name="btn_del" type="button" value="删除" class="button" onClick="javascript:del();" disabled> -->
       <input name="btn_modify" type="button" value="修改" class="button" onClick="javascript:modify(this.form);" disabled>
+	  <c:if test="${parent.id == 4 or parent.discriminator == 'Y'}">
+	  <input name="btn_dict" type="button" value="字典" class="button" onClick="javascript:dict(this.form);" disabled>
+	  </c:if>
 	</td>
     <td width="50%"> 
       <%

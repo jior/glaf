@@ -70,6 +70,33 @@ public class DictoryJsonFactory {
 		if (jsonObject.containsKey("ext6")) {
 			model.setExt6(jsonObject.getDate("ext6"));
 		}
+		if (jsonObject.containsKey("ext7")) {
+			model.setExt7(jsonObject.getString("ext7"));
+		}
+		if (jsonObject.containsKey("ext8")) {
+			model.setExt8(jsonObject.getString("ext8"));
+		}
+		if (jsonObject.containsKey("ext9")) {
+			model.setExt9(jsonObject.getLong("ext9"));
+		}
+		if (jsonObject.containsKey("ext10")) {
+			model.setExt10(jsonObject.getLong("ext10"));
+		}
+		if (jsonObject.containsKey("ext11")) {
+			model.setExt11(jsonObject.getDouble("ext11"));
+		}
+		if (jsonObject.containsKey("ext12")) {
+			model.setExt12(jsonObject.getDouble("ext12"));
+		}
+		if (jsonObject.containsKey("ext13")) {
+			model.setExt13(jsonObject.getDouble("ext13"));
+		}
+		if (jsonObject.containsKey("ext14")) {
+			model.setExt14(jsonObject.getDouble("ext14"));
+		}
+		if (jsonObject.containsKey("ext15")) {
+			model.setExt15(jsonObject.getDouble("ext15"));
+		}
 
 		return model;
 	}
@@ -118,6 +145,35 @@ public class DictoryJsonFactory {
 			jsonObject.put("ext6_datetime",
 					DateUtils.getDateTime(model.getExt6()));
 		}
+
+		if (model.getExt7() != null) {
+			jsonObject.put("ext7", model.getExt7());
+		}
+		if (model.getExt8() != null) {
+			jsonObject.put("ext8", model.getExt8());
+		}
+		if (model.getExt9() != null) {
+			jsonObject.put("ext9", model.getExt9());
+		}
+		if (model.getExt10() != null) {
+			jsonObject.put("ext10", model.getExt10());
+		}
+		if (model.getExt11() != null) {
+			jsonObject.put("ext11", model.getExt11());
+		}
+		if (model.getExt12() != null) {
+			jsonObject.put("ext12", model.getExt12());
+		}
+		if (model.getExt13() != null) {
+			jsonObject.put("ext13", model.getExt13());
+		}
+		if (model.getExt14() != null) {
+			jsonObject.put("ext14", model.getExt14());
+		}
+		if (model.getExt15() != null) {
+			jsonObject.put("ext15", model.getExt15());
+		}
+
 		return jsonObject;
 	}
 
@@ -165,6 +221,35 @@ public class DictoryJsonFactory {
 			jsonObject.put("ext6_datetime",
 					DateUtils.getDateTime(model.getExt6()));
 		}
+
+		if (model.getExt7() != null) {
+			jsonObject.put("ext7", model.getExt7());
+		}
+		if (model.getExt8() != null) {
+			jsonObject.put("ext8", model.getExt8());
+		}
+		if (model.getExt9() != null) {
+			jsonObject.put("ext9", model.getExt9());
+		}
+		if (model.getExt10() != null) {
+			jsonObject.put("ext10", model.getExt10());
+		}
+		if (model.getExt11() != null) {
+			jsonObject.put("ext11", model.getExt11());
+		}
+		if (model.getExt12() != null) {
+			jsonObject.put("ext12", model.getExt12());
+		}
+		if (model.getExt13() != null) {
+			jsonObject.put("ext13", model.getExt13());
+		}
+		if (model.getExt14() != null) {
+			jsonObject.put("ext14", model.getExt14());
+		}
+		if (model.getExt15() != null) {
+			jsonObject.put("ext15", model.getExt15());
+		}
+
 		return jsonObject;
 	}
 

@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.base.modules.sys.mapper.DictoryDefinitionMapper">
+
+	<resultMap id="dictoryDefinitionResultMap"
+		type="com.glaf.base.modules.sys.model.DictoryDefinition">
+		<id property="id" column="ID" jdbcType="BIGINT" />
+		<result property="nodeId" column="NODEID" jdbcType="BIGINT" />
+		<result property="name" column="NAME" jdbcType="VARCHAR" />
+		<result property="columnName" column="COLUMNNAME" jdbcType="VARCHAR" />
+		<result property="title" column="TITLE" jdbcType="VARCHAR" />
+		<result property="type" column="TYPE" jdbcType="VARCHAR" />
+		<result property="length" column="LENGTH" jdbcType="INTEGER" />
+		<result property="sort" column="SORT" jdbcType="INTEGER" />
+		<result property="required" column="REQUIRED" jdbcType="INTEGER" />
+		<result property="target" column="TARGET" jdbcType="VARCHAR" />
+	</resultMap>
+
+
+	<insert id="insertDictoryDefinition" parameterType="com.glaf.base.modules.sys.model.DictoryDefinition">
+		insert into sys_dictory_def
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ID
+			<if test="nodeId != null">
+				,NODEID
+			</if>
+			<if test="name != null">
+				,NAME
+			</if>
+			<if test="columnName != null">
+				,COLUMNNAME
+			</if>
+			<if test="title != null">
+				,TITLE
+			</if>
+			<if test="type != null">
+				,TYPE
+			</if>
+			<if test="length != null">
+				,LENGTH
+			</if>
+			<if test="sort != null">
+				,SORT
+			</if>
+			<if test="required != null">
+				,REQUIRED
+			</if>
+			<if test="target != null">
+				,TARGET
+			</if>
+		</trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			#{id, jdbcType=BIGINT}
+
+			<if test="nodeId != null">
+				,#{nodeId, jdbcType=BIGINT}
+			</if>
+			<if test="name != null">
+				,#{name, jdbcType=VARCHAR}
+			</if>
+			<if test="columnName != null">
+				,#{columnName, jdbcType=VARCHAR}
+			</if>
+			<if test="title != null">
+				,#{title, jdbcType=VARCHAR}
+			</if>
+			<if test="type != null">
+				,#{type, jdbcType=VARCHAR}
+			</if>
+			<if test="length != null">
+				,#{length, jdbcType=INTEGER}
+			</if>
+			<if test="sort != null">
+				,#{sort, jdbcType=INTEGER}
+			</if>
+			<if test="required != null">
+				,#{required, jdbcType=INTEGER}
+			</if>
+			<if test="target != null">
+				,#{target, jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</insert>
+
+
+	<update id="updateDictoryDefinition" parameterType="com.glaf.base.modules.sys.model.DictoryDefinition">
+		update sys_dictory_def
+		set
+		<trim prefix="" suffix="" suffixOverrides=",">
+			<if test="nodeId != null">
+				NODEID = #{nodeId, jdbcType=BIGINT},
+			</if>
+			<if test="name != null">
+				NAME = #{name, jdbcType=VARCHAR},
+			</if>
+			<if test="columnName != null">
+				COLUMNNAME = #{columnName, jdbcType=VARCHAR},
+			</if>
+			<if test="title != null">
+				TITLE = #{title, jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				TYPE = #{type, jdbcType=VARCHAR},
+			</if>
+			<if test="length != null">
+				LENGTH = #{length, jdbcType=INTEGER},
+			</if>
+			<if test="sort != null">
+				SORT = #{sort, jdbcType=INTEGER},
+			</if>
+			<if test="required != null">
+				REQUIRED = #{required, jdbcType=INTEGER},
+			</if>
+			<if test="target != null">
+				TARGET = #{target, jdbcType=VARCHAR},
+			</if>
+		</trim>
+		where
+		ID = #{id, jdbcType=BIGINT}
+
+	</update>
+
+
+	<delete id="deleteDictoryDefinitionById" parameterType="long">
+		delete from sys_dictory_def
+		where ID = #{id}
+	</delete>
+
+
+	<delete id="deleteDictoryDefinitions"
+		parameterType="com.glaf.base.modules.sys.query.DictoryDefinitionQuery">
+		delete from sys_dictory_def
+		where (
+		ID IN
+		<foreach item="x_rowId" index="index" collection="rowIds"
+			open="(" separator="," close=")">
+			#{x_rowId}
+		</foreach>
+		)
+	</delete>
+
+
+	<select id="getDictoryDefinitionById" parameterType="long"
+		resultMap="dictoryDefinitionResultMap">
+		select * from sys_dictory_def where ID = #{id}
+	</select>
+
+
+	<select id="getDictoryDefinitions"
+		parameterType="com.glaf.base.modules.sys.query.DictoryDefinitionQuery"
+		resultMap="dictoryDefinitionResultMap">
+		select E.*
+		<include refid="selectDictoryDefinitionsSql" />
+		<choose>
+			<when test="orderBy != null">
+				order by ${orderBy}
+			</when>
+			<otherwise>
+				order by E.ID desc
+			</otherwise>
+		</choose>
+	</select>
+
+
+	<select id="getDictoryDefinitionCount"
+		parameterType="com.glaf.base.modules.sys.query.DictoryDefinitionQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectDictoryDefinitionsSql" />
+	</select>
+
+
+	<sql id="selectDictoryDefinitionsSql">
+
+		from sys_dictory_def E
+
+		<where>
+			1 = 1
+
+			<if test="nodeId != null">
+				and E.NODEID = #{nodeId}
+			</if>
+
+			<if test="nodeIds != null and nodeIds.size() &gt; 0">
+				and E.NODEID IN
+				<foreach item="x_nodeId" index="index" collection="nodeIds"
+					open="(" separator="," close=")">
+					#{x_nodeId}
+				</foreach>
+			</if>
+
+			<if test="name != null and name != '' ">
+				and E.NAME = #{name}
+			</if>
+
+			<if test="nameLike != null and nameLike != '' ">
+				and E.NAME like #{nameLike}
+			</if>
+
+			<if test="names != null and names.size() &gt; 0">
+				and E.NAME IN
+				<foreach item="x_name" index="index" collection="names"
+					open="(" separator="," close=")">
+					#{x_name}
+				</foreach>
+			</if>
+
+			<if test="columnName != null and columnName != '' ">
+				and E.COLUMNNAME = #{columnName}
+			</if>
+
+			<if test="columnNameLike != null and columnNameLike != '' ">
+				and E.COLUMNNAME like #{columnNameLike}
+			</if>
+
+			<if test="columnNames != null and columnNames.size() &gt; 0">
+				and E.COLUMNNAME IN
+				<foreach item="x_columnName" index="index" collection="columnNames"
+					open="(" separator="," close=")">
+					#{x_columnName}
+				</foreach>
+			</if>
+
+			<if test="titleLike != null and titleLike != '' ">
+				and E.TITLE like #{titleLike}
+			</if>
+
+			<if test="type != null and type != '' ">
+				and E.TYPE = #{type}
+			</if>
+
+			<if test="types != null and types.size() &gt; 0">
+				and E.TYPE IN
+				<foreach item="x_type" index="index" collection="types"
+					open="(" separator="," close=")">
+					#{x_type}
+				</foreach>
+			</if>
+
+			<if test="sortGreaterThanOrEqual != null">
+				and E.SORT &gt;= #{sortGreaterThanOrEqual}
+			</if>
+
+			<if test="sortLessThanOrEqual != null">
+				and E.SORT &lt;= #{sortLessThanOrEqual}
+			</if>
+
+			<if test="target != null and target != '' ">
+				and E.TARGET = #{target}
+			</if>
+
+			<if test="targetLike != null and targetLike != '' ">
+				and E.TARGET like #{targetLike}
+			</if>
+
+			<if test="targets != null and targets.size() &gt; 0">
+				and E.TARGET IN
+				<foreach item="x_target" index="index" collection="targets"
+					open="(" separator="," close=")">
+					#{x_target}
+				</foreach>
+			</if>
+
+		</where>
+	</sql>
+
+</mapper>

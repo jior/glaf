@@ -32,11 +32,20 @@ public class Dictory implements Serializable, JSONable {
 	private String code;
 	private String desc;
 	private String ext1;
+	private Long ext10;
+	private Double ext11;
+	private Double ext12;
+	private Double ext13;
+	private Double ext14;
+	private Double ext15;
 	private String ext2;
 	private String ext3;
 	private String ext4;
 	private Date ext5;
 	private Date ext6;
+	private String ext7;
+	private String ext8;
+	private Long ext9;
 	private long id;
 	private String name;
 	private long nodeId;
@@ -63,6 +72,30 @@ public class Dictory implements Serializable, JSONable {
 		return ext1;
 	}
 
+	public Long getExt10() {
+		return ext10;
+	}
+
+	public Double getExt11() {
+		return ext11;
+	}
+
+	public Double getExt12() {
+		return ext12;
+	}
+
+	public Double getExt13() {
+		return ext13;
+	}
+
+	public Double getExt14() {
+		return ext14;
+	}
+
+	public Double getExt15() {
+		return ext15;
+	}
+
 	public String getExt2() {
 		return ext2;
 	}
@@ -81,6 +114,18 @@ public class Dictory implements Serializable, JSONable {
 
 	public Date getExt6() {
 		return ext6;
+	}
+
+	public String getExt7() {
+		return ext7;
+	}
+
+	public String getExt8() {
+		return ext8;
+	}
+
+	public Long getExt9() {
+		return ext9;
 	}
 
 	public long getId() {
@@ -123,6 +168,30 @@ public class Dictory implements Serializable, JSONable {
 		this.ext1 = ext1;
 	}
 
+	public void setExt10(Long ext10) {
+		this.ext10 = ext10;
+	}
+
+	public void setExt11(Double ext11) {
+		this.ext11 = ext11;
+	}
+
+	public void setExt12(Double ext12) {
+		this.ext12 = ext12;
+	}
+
+	public void setExt13(Double ext13) {
+		this.ext13 = ext13;
+	}
+
+	public void setExt14(Double ext14) {
+		this.ext14 = ext14;
+	}
+
+	public void setExt15(Double ext15) {
+		this.ext15 = ext15;
+	}
+
 	public void setExt2(String ext2) {
 		this.ext2 = ext2;
 	}
@@ -141,6 +210,18 @@ public class Dictory implements Serializable, JSONable {
 
 	public void setExt6(Date ext6) {
 		this.ext6 = ext6;
+	}
+
+	public void setExt7(String ext7) {
+		this.ext7 = ext7;
+	}
+
+	public void setExt8(String ext8) {
+		this.ext8 = ext8;
+	}
+
+	public void setExt9(Long ext9) {
+		this.ext9 = ext9;
 	}
 
 	public void setId(long id) {

@@ -2,7 +2,7 @@
 <mapping>
     <entity name="Dictory" package="com.glaf.base.modules.sys" table="sys_dictory" title="数据字典" englishTitle="Dictory">
         <id name="id" column="ID" type="Long" englishTitle="id" length="19"  title="编号"/>
-        <property name="typeId" column="TYPEID" type="Long" englishTitle="typeId" dataType="0" length="19"  title="类型编号"/>
+        <property name="nodeId" column="TYPEID" type="Long" englishTitle="nodeId" dataType="0" length="19"  title="类型编号"/>
         <property name="name" column="NAME" type="String" englishTitle="name" dataType="0" length="50"  title="名称"/>
         <property name="desc" column="DICTDESC" type="String" englishTitle="desc" dataType="0" length="200"  title="描述"/>
         <property name="code" column="CODE" type="String" englishTitle="code" dataType="0" length="50"  title="编码"/>
@@ -14,5 +14,16 @@
         <property name="ext4" column="EXT4" type="String" englishTitle="ext4" dataType="0" length="200"  title="字符串值4"/>
         <property name="ext5" column="EXT5" type="Date" englishTitle="ext5" dataType="0" length="23"  title="日期值5"/>
         <property name="ext6" column="EXT6" type="Date" englishTitle="ext6" dataType="0" length="23"  title="日期值6"/>
+		<property name="ext7" type="String" column="ext7" title="字符串值7" englishTitle="ext7"/>
+		<property name="ext8" type="String" column="ext8" title="字符串值8" englishTitle="ext8"/>
+
+		<property name="ext9" type="Long" column="ext9"/>
+		<property name="ext10" type="Long" column="ext10"/>
+
+		<property name="ext11" type="Double" column="ext11"/>
+		<property name="ext12" type="Double" column="ext12"/>
+		<property name="ext13" type="Double" column="ext13"/>
+		<property name="ext14" type="Double" column="ext14"/>
+		<property name="ext15" type="Double" column="ext15"/>
     </entity>
 </mapping>

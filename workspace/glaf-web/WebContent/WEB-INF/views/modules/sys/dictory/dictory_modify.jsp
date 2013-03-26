@@ -1,4 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="html"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.glaf.base.modules.sys.*"%>
@@ -15,8 +17,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>基础平台系统</title>
 <link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
+<link type="text/css" rel="stylesheet" href="<%=request.getContextPath()%>/scripts/calendar/skins/aqua/theme.css"/>
 <script language="javascript" src='<%=context%>/scripts/main.js'></script>
-<script language="javascript" src='<%=context%>/scripts/verify.js'></script></head>
+<script language="javascript" src='<%=context%>/scripts/verify.js'></script>
+<script language="javascript" src="<%=request.getContextPath()%>/scripts/calendar/calendar.js" ></script>
+<script language="javascript" src="<%=request.getContextPath()%>/scripts/calendar/lang/calendar-en.js"></script>
+<script language="javascript" src="<%=request.getContextPath()%>/scripts/calendar/calendar-setup.js"></script>
 </head>
 
 <body>
@@ -37,56 +43,71 @@
     <td class="box-mm"><table width="95%" align="center" border="0" cellspacing="0" cellpadding="5">
       
       <tr>
-        <td width="21%" class="input-box">名　　称<font color="red">*</font></td>
-        <td width="79%"><input type="text" name="name" class="input" value="<%=bean.getName()%>" datatype="string" nullable="no" maxsize="50" chname="名称"></td>
+        <td width="21%" class="input-box">名称<font color="red">*</font></td>
+        <td width="79%">
+		<input type="text" name="name" class="input" value="<%=bean.getName()%>" datatype="string" nullable="no" maxsize="50"  
+		       chname="名称">
+		</td>
       </tr>
       <tr>
-        <td class="input-box2" valign="top">代　　码</td>
-        <td><input type="text" name="code" class="input" datatype="string" nullable="yes" maxsize="20" value="<%=bean.getCode()%>" chname="代码"></td>
+        <td class="input-box2" valign="top">代码</td>
+        <td>
+		<input type="text" name="code" class="input" datatype="string" nullable="yes" maxsize="20" 
+		       value="<%=bean.getCode() != null ? bean.getCode() : ""%>" 
+		       chname="代码">
+		</td>
       </tr>
 	  <tr>
-        <td class="input-box2" valign="top">属性值</td>
-        <td><input type="text" name="value" class="input" datatype="string" nullable="yes" maxsize="200" 
-		value="<%=bean.getValue() != null ? bean.getValue() :"" %>" chname="属性值"></td>
+        <td class="input-box2" valign="top">描述</td>
+        <td>
+		<input type="text" name="desc" class="input" datatype="string" nullable="yes" maxsize="20" 
+		       value="<%=bean.getDesc() != null ? bean.getDesc() : ""%>" 
+		       chname="描述">
+		</td>
       </tr>
-      <%
-      if(17 == parent){
-      %>
-      <tr>
-        <td class="input-box2" valign="top">1 日元 =<font color="red">*</font></td>
-        <td><input type="text" name="ext1" class="input" datatype="float" nullable="no" maxsize="100" chname="日元汇率" value="<%=bean.getExt1() == null ? "" : bean.getExt1()%>"> 人民币<font color="red">[汇率]</font></td>
-      </tr>
-      <tr>
-        <td class="input-box2" valign="top">1 美元 =<font color="red">*</font></td>
-        <td><input type="text" name="ext2" class="input" datatype="float" nullable="no" maxsize="100" chname="美元汇率" value="<%=bean.getExt2() == null ? "" : bean.getExt2()%>"> 人民币<font color="red">[汇率]</font></td>
-      </tr>
-      <%}else{ %>
-      <tr>
-      	<td class="input-box2" valign="top">扩展字段1</td>
-      	<td><input type="text" name="ext1" class="input" datatype="string" nullable="yes" maxsize="200" chname="扩展字段1" value="<%=bean.getExt1() == null ? "" : bean.getExt1()%>"></td>
-      </tr>
-      <tr>
-        <td class="input-box2" valign="top">扩展字段2</td>
-        <td><input type="text" name="ext2" class="input" datatype="string" nullable="yes" maxsize="200" chname="扩展字段2" value="<%=bean.getExt2() == null ? "" : bean.getExt2()%>"></td>
-      </tr>
+	 
+      <c:forEach items="${list}" var="a">
 	  <tr>
-      	<td class="input-box2" valign="top">扩展字段3</td>
-      	<td><input type="text" name="ext3" class="input" datatype="string" nullable="yes" maxsize="200" chname="扩展字段3" value="<%=bean.getExt3() == null ? "" : bean.getExt3()%>"></td>
+        <td class="input-box2" valign="top">${a.title}</td>
+        <td>
+		   <c:choose>
+		     <c:when test="${a.type=='String'}">
+			    <input type="text" name="${a.name}" class="input" datatype="string" nullable="${a.nullable}" maxsize="${a.length}" chname="${a.title}" value="${a.value}">
+             </c:when>
+			 <c:when test="${a.type=='Date'}">
+			    <input type="text" name="${a.name}" class="input" datatype="datetime" nullable="${a.nullable}" maxsize="${a.length}" chname="${a.title}" 
+				value="<fmt:formatDate value="${a.value}" pattern="yyyy-MM-dd HH:mm:ss"/>">&nbsp;
+				<img src="<%=request.getContextPath()%>/images/calendar.png"
+			     id="f_trigger_${a.name}" style="cursor: pointer; border: 1px solid red;" />
+				  <script type="text/javascript">
+				    Calendar.setup({
+							inputField     :    "${a.name}",     // id of the input field
+							ifFormat       :    "%Y-%m-%d %H:%M:%S",      // format of the input field
+							button         :    "f_trigger_${a.name}",  // trigger for the calendar (button ID)
+							align          :    "Bl",           // alignment (defaults to "Bl")
+							singleClick    :    true,
+							showsTime      :    true
+					});
+				  </script>
+             </c:when>
+			 <c:when test="${a.type=='Long'}">
+			    <input type="text" name="${a.name}" class="input" datatype="integer" nullable="${a.nullable}" maxsize="12" chname="${a.title}" value="${a.value}">
+             </c:when>
+			 <c:when test="${a.type=='Double'}">
+			    <input type="text" name="${a.name}" class="input" datatype="double" nullable="${a.nullable}" maxsize="20" chname="${a.title}" value="${a.value}">
+             </c:when>
+		   </c:choose>
+		
+		</td>
       </tr>
-      <tr>
-        <td class="input-box2" valign="top">扩展字段4</td>
-        <td><input type="text" name="ext4" class="input" datatype="string" nullable="yes" maxsize="200" chname="扩展字段4" value="<%=bean.getExt4() == null ? "" : bean.getExt4()%>"></td>
-      </tr>
-      <%} %>
-        
-      
+	  </c:forEach>
+
       <tr>
         <td class="input-box2" valign="top">是否有效</td>
         <td>
-          <input type="radio" name="blocked" value="1" <%=bean.getBlocked()==1?"checked":""%>>
-否
-<input type="radio" name="blocked" value="0" <%=bean.getBlocked()==0?"checked":""%>>
-是</td>
+          <input type="radio" name="blocked" value="1" <%=bean.getBlocked()==1?"checked":""%>>否
+          <input type="radio" name="blocked" value="0" <%=bean.getBlocked()==0?"checked":""%>>是
+        </td>
       </tr>
       <tr>
         <td colspan="2" align="center" valign="bottom" height="30">&nbsp;

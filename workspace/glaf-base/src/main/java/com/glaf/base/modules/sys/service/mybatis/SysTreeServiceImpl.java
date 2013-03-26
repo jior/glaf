@@ -64,6 +64,18 @@ public class SysTreeServiceImpl implements SysTreeService {
 
 	@Transactional
 	public boolean create(SysTree bean) {
+		if (bean.getParentId() != 0) {
+			SysTree parent = this.findById(bean.getParentId());
+			if (parent != null) {
+				if (bean.getDiscriminator() == null) {
+					bean.setDiscriminator(parent.getDiscriminator());
+				}
+				if (bean.getCacheFlag() == null) {
+					bean.setCacheFlag(parent.getCacheFlag());
+				}
+			}
+		}
+
 		this.save(bean);
 		return true;
 	}
@@ -291,13 +303,25 @@ public class SysTreeServiceImpl implements SysTreeService {
 	}
 
 	@Transactional
-	public void save(SysTree sysTree) {
-		if (sysTree.getId() == 0L) {
-			sysTree.setId(idGenerator.nextId());
+	public void save(SysTree bean) {
+		if (bean.getParentId() != 0) {
+			SysTree parent = this.findById(bean.getParentId());
+			if (parent != null) {
+				if (bean.getDiscriminator() == null) {
+					bean.setDiscriminator(parent.getDiscriminator());
+				}
+				if (bean.getCacheFlag() == null) {
+					bean.setCacheFlag(parent.getCacheFlag());
+				}
+			}
+		}
+
+		if (bean.getId() == 0L) {
+			bean.setId(idGenerator.nextId());
 			// sysTree.setCreateDate(new Date());
-			sysTreeMapper.insertSysTree(sysTree);
+			sysTreeMapper.insertSysTree(bean);
 		} else {
-			sysTreeMapper.updateSysTree(sysTree);
+			sysTreeMapper.updateSysTree(bean);
 		}
 	}
 
@@ -400,6 +424,19 @@ public class SysTreeServiceImpl implements SysTreeService {
 				}
 			}
 		}
+
+		if (bean.getParentId() != 0) {
+			SysTree parent = this.findById(bean.getParentId());
+			if (parent != null) {
+				if (bean.getDiscriminator() == null) {
+					bean.setDiscriminator(parent.getDiscriminator());
+				}
+				if (bean.getCacheFlag() == null) {
+					bean.setCacheFlag(parent.getCacheFlag());
+				}
+			}
+		}
+
 		this.save(bean);
 		return true;
 	}

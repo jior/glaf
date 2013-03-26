@@ -29,6 +29,18 @@
 		
 		<property name="ext5" type="timestamp" column="ext5"/>
         <property name="ext6" type="timestamp" column="ext6"/>
+
+		<property name="ext7" type="text" column="ext7"/>
+		<property name="ext8" type="text" column="ext8"/>
+
+		<property name="ext9" type="long" column="ext9"/>
+		<property name="ext10" type="long" column="ext10"/>
+
+		<property name="ext11" type="double" column="ext11"/>
+		<property name="ext12" type="double" column="ext12"/>
+		<property name="ext13" type="double" column="ext13"/>
+		<property name="ext14" type="double" column="ext14"/>
+		<property name="ext15" type="double" column="ext15"/>
 		
     </class>
 </hibernate-mapping>

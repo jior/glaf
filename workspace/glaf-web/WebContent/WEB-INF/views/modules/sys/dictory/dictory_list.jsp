@@ -26,18 +26,12 @@ var num=0;
 function checkOperation(form){
   num = getCheckedBoxNum(form,"id");
   if(num>0){
-  	<%if(parent != 17){%>
-    document.all.btn_del.disabled=false;
-    <%}%>
 	if(num==1){
 	  document.all.btn_modify.disabled=false;
 	}else{
 	  document.all.btn_modify.disabled=true;
 	}
   }else{
-  <%if(parent != 17){%>
-    document.all.btn_del.disabled=true;
-  <%}%>
 	document.all.btn_modify.disabled=true;
   }
 }
@@ -48,6 +42,7 @@ function add(){
   var scroll="no";
   openWindow(url, width, height, scroll);
 }
+
 function modify(form){
   var id =0;
   for (var i=0;i<form.id.length;i++) {
@@ -62,6 +57,7 @@ function modify(form){
   var scroll="no";
   openWindow(url, width, height, scroll);
 }
+
 function del(){
   var form = document.DictoryForm;
   if(confirmDelete(form)){
@@ -134,19 +130,14 @@ for(; i<pageSize; i++){
   
   <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
     <tr> 
-      <td width="50%"><input name="btn_add" type="button" value="增加" class="button" onClick="javascript:add();">
-      	<%
-      	if(parent != 17){
-      	%>
-        <input name="btn_del" type="button" value="删除" class="button" onClick="javascript:del();" disabled>
-        <%
-        }
-        %>
-        <input name="btn_modify" type="button" value="修改" class="button" onClick="javascript:modify(this.form);" disabled></td>
+      <td width="50%">
+	    <input name="btn_add" type="button" value="增加" class="button" onClick="javascript:add();">
+        <input name="btn_modify" type="button" value="修改" class="button" onClick="javascript:modify(this.form);" disabled>
+		</td>
       <td width="50%"> 
-<%
-String params = WebUtil.getQueryString(request);
-%>	  
+		<%
+		String params = WebUtil.getQueryString(request);
+		%>	  
 	  <jsp:include page="/WEB-INF/views/inc/show_page.jsp" flush="true"> 
               <jsp:param name="total" value="<%=pager.getTotalRecordCount()%>"/>
               <jsp:param name="page_count" value="<%=pager.getTotalPageCount()%>"/>

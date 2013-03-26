@@ -247,11 +247,15 @@ public class SysTreeController {
 	public ModelAndView showList(ModelMap modelMap, HttpServletRequest request,
 			HttpServletResponse response) {
 		RequestUtil.setRequestParameterToAttribute(request);
-		int parent = ParamUtil.getIntParameter(request, "parent", 0);
+		int parentId = ParamUtil.getIntParameter(request, "parent", 0);
 		int pageNo = ParamUtil.getIntParameter(request, "page_no", 1);
 		int pageSize = ParamUtil.getIntParameter(request, "page_size",
 				Constants.PAGE_SIZE);
-		PageResult pager = sysTreeService.getSysTreeList(parent, pageNo,
+		if(parentId>0){
+			SysTree parent = sysTreeService.findById(parentId);
+			request.setAttribute("parent", parent);
+		}
+		PageResult pager = sysTreeService.getSysTreeList(parentId, pageNo,
 				pageSize);
 		request.setAttribute("pager", pager);
 		return new ModelAndView("/modules/sys/tree/tree_list", modelMap);
