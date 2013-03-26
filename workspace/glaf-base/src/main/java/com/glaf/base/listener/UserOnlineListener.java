@@ -58,9 +58,9 @@ public class UserOnlineListener implements HttpSessionAttributeListener {
 	 * 
 	 */
 	private void inStack(SysUser user) {
-		if (user == null)
+		if (user == null){
 			return;
-
+		}
 		synchronized (this) {
 			logger.info("in stack userId:" + user.getId());
 			if (findUser(user.getId()) == null) {// ÓÃ»§Î´µÇÂ½
@@ -74,8 +74,9 @@ public class UserOnlineListener implements HttpSessionAttributeListener {
 	 * 
 	 */
 	private void outStack(SysUser user) {
-		if (user == null)
+		if (user == null){
 			return;
+		}
 		synchronized (this) {
 			logger.info("out stack userId:" + user.getId());
 			userList.remove(Long.valueOf(user.getId()));

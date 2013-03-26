@@ -31,7 +31,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.base.TableModel;
 import com.glaf.core.cache.CacheFactory;
-import com.glaf.core.entity.EntityDAO;
+import com.glaf.core.dao.EntityDAO;
 import com.glaf.core.id.IdGenerator;
 import com.glaf.base.modules.sys.model.*;
 import com.glaf.base.modules.sys.service.*;

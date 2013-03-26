@@ -22,8 +22,9 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.glaf.core.entity.EntityService;
+import com.glaf.core.service.EntityService;
 import com.glaf.core.todo.query.TodoQuery;
+import com.glaf.core.util.ThreadFactory;
 
 public class MyBatisTest extends AbstractTest {
 
@@ -32,10 +33,19 @@ public class MyBatisTest extends AbstractTest {
 	@Test
 	public void testList() {
 		entityService = super.getBean("entityService");
-		for (int i = 0; i <= 1000; i++) {
+		for (int i = 0; i <= 10; i++) {
 			List<Object> todoList = entityService.getList("getTodoList",
 					new TodoQuery());
 			System.out.println(todoList);
+		}
+	}
+
+	@Test
+	public void testNextDbidBlock() {
+		entityService = super.getBean("entityService");
+		Thread thread = new TestThread(entityService);
+		for (int i = 0; i <= 1000000; i++) {
+			ThreadFactory.run(thread);
 		}
 	}
 

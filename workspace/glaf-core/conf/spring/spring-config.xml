@@ -10,16 +10,7 @@
 										 http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
 			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
 
-
-    <import resource="classpath*:com/glaf/**/*-spring-context.xml" />
-
-
-	<aop:config expose-proxy="true">
-        <!-- 只对业务逻辑层实施事务 -->
-        <aop:pointcut id="txPointcut" expression="execution(* com.glaf..service.*.*(..))" />
-        <aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut"/>
-    </aop:config>
-
+	<import resource="classpath*:com/glaf/**/*-spring-context.xml" />
 
 	<tx:advice id="txAdvice" transaction-manager="transactionManager">
 		<tx:attributes>
@@ -27,21 +18,26 @@
 			<tx:method name="find*" read-only="true" />
 			<tx:method name="load*" read-only="true" />
 			<tx:method name="query*" read-only="true" />
-			<tx:method name="export*" read-only="true" />
 			<tx:method name="search*" read-only="true" />
-			<tx:method name="print*" read-only="true" />
-			<tx:method name="*" propagation="REQUIRED" />
+			<tx:method name="*" />
 		</tx:attributes>
 	</tx:advice>
 
+	<aop:config>
+		<aop:pointcut id="serviceOperation"
+			expression="execution(* *com.glaf.**..*Service.*(..))" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="serviceOperation" />
+	</aop:config>
+
 	<tx:annotation-driven transaction-manager="transactionManager" />
 
-	<aop:aspectj-autoproxy expose-proxy="true" proxy-target-class="true" />
+	<tx:annotation-driven mode="aspectj" />
+
+	<aop:aspectj-autoproxy />
 
 	<context:annotation-config />
 
 	<context:component-scan base-package="com.glaf" />
- 
 
 	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSourceC3P0Adapter"
 		destroy-method="close">
@@ -55,42 +51,12 @@
 		<property name="acquireIncrement" value="2" />
 		<property name="maxStatements" value="100" />
 		<property name="idleConnectionTestPeriod" value="3000" />
-	</bean> 
-
-	<!-- <bean id="hibernateSessionFactory"
-		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
-		<property name="dataSource">
-			<ref bean="dataSource" />
-		</property>
-		<property name="mappingDirectoryLocations">
-			<list>
-				<value>mapping</value>
-			</list>
-		</property>
-		<property name="hibernateProperties">
-			<props>
-				<prop key="hibernate.show_sql">true</prop>
-				<prop key="hibernate.format_sql">true</prop>
-				<prop key="hibernate.hbm2ddl.auto">update</prop>
-			</props>
-		</property>
-		<property name="packagesToScan">
-			<list>
-				<value>com.glaf</value>
-			</list>
-		</property>
-	</bean>  -->
-
-	<!-- <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager"> 
-		<property name="sessionFactory"> <ref bean="hibernateSessionFactory"/> </property> 
-		</bean> -->
-
+	</bean>
 
 	<bean id="transactionManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
-
 
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
@@ -122,48 +88,20 @@
 		<property name="sqlSessionTemplate" ref="sqlSession" />
 	</bean>
 
-	<bean id="myBatisDbIdGenerator" class="com.glaf.core.id.MyBatisDbIdGenerator">
-		<property name="entityDAO" ref="myBatisEntityDAO" />
-	</bean>
-
 	<bean id="idGenerator" class="com.glaf.core.id.MyBatisDbIdGenerator">
 		<property name="entityDAO" ref="myBatisEntityDAO" />
 	</bean>
 
-	<bean id="myBatisDbLongIdGenerator" class="com.glaf.core.id.MyBatisDbLongIdGenerator">
+	<bean id="myBatisDbIdGenerator" class="com.glaf.core.id.MyBatisDbIdGenerator">
 		<property name="entityDAO" ref="myBatisEntityDAO" />
 	</bean>
 
-	<bean id="longIdGenerator" class="com.glaf.core.id.MyBatisDbLongIdGenerator">
+	<bean id="entityService" class="com.glaf.core.service.impl.MyBatisEntityService">
 		<property name="entityDAO" ref="myBatisEntityDAO" />
 	</bean>
 
-	<bean id="myBatisEntityService" class="com.glaf.core.entity.mybatis.MyBatisEntityService">
+	<bean id="myBatisEntityService" class="com.glaf.core.service.impl.MyBatisEntityService">
 		<property name="entityDAO" ref="myBatisEntityDAO" />
 	</bean>
-
-	<bean id="entityService" class="com.glaf.core.entity.mybatis.MyBatisEntityService">
-		<property name="entityDAO" ref="myBatisEntityDAO" />
-	</bean>
-
-	<bean id="ehCacheManager"
-		class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
-		<property name="configLocation">
-			<value>classpath:/ehcache.xml</value>
-		</property>
-	</bean>
-
-	<bean id="ehCache" class="org.springframework.cache.ehcache.EhCacheFactoryBean">
-		<property name="cacheManager">
-			<ref local="ehCacheManager" />
-		</property>
-		<property name="cacheName">
-			<value>DEFAULT_CACHE</value>
-		</property>
-	</bean>
-
-	
 
 </beans>
-
- 

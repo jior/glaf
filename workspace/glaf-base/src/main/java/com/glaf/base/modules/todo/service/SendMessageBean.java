@@ -47,7 +47,8 @@ import com.glaf.core.todo.TodoInstance;
 import com.glaf.core.todo.query.TodoQuery;
 import com.glaf.base.modules.workspace.model.Message;
 import com.glaf.base.utils.DateTools;
-@SuppressWarnings({"rawtypes", "unchecked"})
+
+@SuppressWarnings({ "rawtypes", "unchecked" })
 public class SendMessageBean {
 	private final static Log logger = LogFactory.getLog(SendMessageBean.class);
 
@@ -120,8 +121,10 @@ public class SendMessageBean {
 				SysDeptRole sysDeptRole = (SysDeptRole) iteratorxy.next();
 				if (sysDeptRole != null) {
 					SysRole role = sysDeptRole.getRole();
-					// sysRoleService.findById(sysDeptRole.getSysRoleId());
-					// roleCodes.add(role.getCode());
+					if (role != null) {
+						// sysRoleService.findById(sysDeptRole.getSysRoleId());
+						// roleCodes.add(role.getCode());
+					}
 				}
 			}
 		}
@@ -1219,7 +1222,7 @@ public class SendMessageBean {
 						try {
 							MailSender mailSender = (MailSender) ContextFactory
 									.getBean("velocityMailSender");
-							// mailSender.send(mailMessage);
+							mailSender.send(mailMessage);
 						} catch (Exception ex) {
 							ex.printStackTrace();
 						}

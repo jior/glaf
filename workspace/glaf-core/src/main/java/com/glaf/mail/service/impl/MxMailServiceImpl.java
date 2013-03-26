@@ -34,7 +34,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.core.base.DataFile;
-import com.glaf.core.entity.EntityDAO;
+import com.glaf.core.dao.EntityDAO;
 import com.glaf.core.entity.SqlExecutor;
 import com.glaf.core.id.IdGenerator;
 import com.glaf.core.jdbc.DBConnectionFactory;

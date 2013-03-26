@@ -23,7 +23,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.glaf.core.entity.EntityService;
+import com.glaf.core.service.EntityService;
 
 public class MyBatisTest extends AbstractTest {
 

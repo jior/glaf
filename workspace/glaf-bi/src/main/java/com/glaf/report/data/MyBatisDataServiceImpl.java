@@ -26,7 +26,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.glaf.core.context.ContextFactory;
-import com.glaf.core.entity.EntityService;
+import com.glaf.core.service.EntityService;
 
 public class MyBatisDataServiceImpl implements DataManager {
 	protected final Log log = LogFactory.getLog(getClass());

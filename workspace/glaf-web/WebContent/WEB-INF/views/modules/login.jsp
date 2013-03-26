@@ -16,9 +16,7 @@
 <script src="${contextPath}/scripts/verify.js" language="javascript"></script>
 </head>
 <body class="body">
-<script language="javascript">
  
-</script>
 <br><br><br><br>
 <html:form method="post" action="${contextPath}/login.do?method=login" onsubmit="return verifyAll(this);" > 
 <table border="0" align="center" cellpadding="0" cellspacing="0" id="login">
@@ -34,16 +32,18 @@
           </tr>
           <tr>
             <td align="center"  >&nbsp;&nbsp;账号：&nbsp;&nbsp;
-              <input name="account" type="text" size="15" class="input" datatype="string" nullable="no" maxsize="20" chname="Account" value="root"></td>
+              <input name="x" type="text" size="15" class="input" datatype="string" nullable="no" maxsize="20" chname="账号" value="root"></td>
           </tr>
           <tr>
             <td align="center"  >&nbsp;&nbsp;密码：&nbsp;&nbsp;
-              <input name="password" type="password" size="16" class="input" datatype="string" nullable="no" maxsize="20" chname="Password" value="111111"></td>
+              <input name="y" type="password" size="16" class="input" datatype="string" nullable="no" maxsize="20" chname="密码" value="111111"></td>
           </tr>
           <tr>
-            <td align="right"><input name="login" type="submit" id="login" value="登录" class="login-btn">
+            <td align="right">
+			  <input name="login" type="submit" id="login" value="登录" class="login-btn">
               &nbsp;
-              <input name="f" type="reset" id="f" value="重置" class="login-btn"></td>
+              <!-- <input name="f" type="reset" id="f" value="重置" class="login-btn"> -->
+			</td>
           </tr>
         </table></td>
       </tr>

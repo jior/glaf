@@ -177,6 +177,7 @@ public class SysUserRoleController {
 	 * @param response
 	 * @return
 	 */
+	@SuppressWarnings("rawtypes")
 	@RequestMapping(params = "method=saveUserSysAuth")
 	public ModelAndView saveUserSysAuth(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {

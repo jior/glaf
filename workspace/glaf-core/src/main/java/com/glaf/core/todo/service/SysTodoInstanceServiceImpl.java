@@ -38,7 +38,7 @@ import com.glaf.core.todo.query.*;
 public class SysTodoInstanceServiceImpl implements ISysTodoInstanceService {
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
 
-	protected LongIdGenerator idGenerator;
+	protected  IdGenerator idGenerator;
 
 	protected SqlSessionTemplate sqlSessionTemplate;
 
@@ -98,7 +98,7 @@ public class SysTodoInstanceServiceImpl implements ISysTodoInstanceService {
 	@Transactional
 	public void save(TodoInstance todoInstance) {
 		if (todoInstance.getId() == 0L) {
-			todoInstance.setId(idGenerator.getNextId());
+			todoInstance.setId(idGenerator.nextId());
 			// todoInstance.setCreateDate(new Date());
 			todoInstanceMapper.insertTodoInstance(todoInstance);
 		} else {
@@ -107,8 +107,8 @@ public class SysTodoInstanceServiceImpl implements ISysTodoInstanceService {
 	}
 
 	@Resource
-	@Qualifier("myBatisDbLongIdGenerator")
-	public void setLongIdGenerator(LongIdGenerator idGenerator) {
+	@Qualifier("myBatisDbIdGenerator")
+	public void setLongIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 

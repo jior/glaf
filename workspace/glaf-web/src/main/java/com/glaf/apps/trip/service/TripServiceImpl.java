@@ -7,12 +7,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
-import org.springframework.beans.factory.annotation.*;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.core.id.*;
-
+import com.glaf.core.dao.*;
 import com.glaf.apps.trip.mapper.*;
 import com.glaf.apps.trip.model.*;
 import com.glaf.apps.trip.query.*;
@@ -21,6 +21,8 @@ import com.glaf.apps.trip.query.*;
 @Transactional(readOnly = true)
 public class TripServiceImpl implements TripService {
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
+
+	protected EntityDAO entityDAO;
 
 	protected IdGenerator idGenerator;
 
@@ -82,7 +84,7 @@ public class TripServiceImpl implements TripService {
 	@Transactional
 	public void save(Trip trip) {
 		if (StringUtils.isEmpty(trip.getId())) {
-			trip.setId(idGenerator.getNextId());
+			trip.setId(idGenerator.getNextId("X_APP_TRIP"));
 			// trip.setCreateDate(new Date());
 			tripMapper.insertTrip(trip);
 		} else {
@@ -90,8 +92,12 @@ public class TripServiceImpl implements TripService {
 		}
 	}
 
-	@Resource
-	@Qualifier("myBatisDbIdGenerator")
+	@Resource(name = "myBatisEntityDAO")
+	public void setEntityDAO(EntityDAO entityDAO) {
+		this.entityDAO = entityDAO;
+	}
+
+	@Resource(name = "myBatisDbIdGenerator")
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}

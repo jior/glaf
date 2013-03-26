@@ -29,7 +29,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.util.Assert;
 
 import com.glaf.core.util.Paging;
-import com.glaf.core.entity.EntityDAO;
+import com.glaf.core.dao.EntityDAO;
 import com.glaf.core.entity.SqlExecutor;
 import com.glaf.core.id.IdBlock;
 import com.glaf.core.util.ReflectUtils;
@@ -313,6 +313,11 @@ public class SqlMapClientDAOImpl implements EntityDAO {
 	}
 
 	public IdBlock nextDbidBlock() {
+		return null;
+	}
+
+ 
+	public IdBlock nextDbidBlock(String name) {
 		return null;
 	}
 

@@ -31,8 +31,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.core.base.Scheduler;
 import com.glaf.core.cache.CacheFactory;
+import com.glaf.core.dao.EntityDAO;
 import com.glaf.core.domain.SchedulerEntity;
-import com.glaf.core.entity.EntityDAO;
 import com.glaf.core.id.*;
 import com.glaf.core.service.ISysSchedulerService;
 import com.glaf.core.util.DateUtils;

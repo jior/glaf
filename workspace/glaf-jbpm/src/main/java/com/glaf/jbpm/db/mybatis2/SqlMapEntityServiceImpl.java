@@ -20,7 +20,10 @@ package com.glaf.jbpm.db.mybatis2;
 
 import java.util.*;
 
+import com.glaf.core.dao.EntityDAO;
 import com.glaf.core.entity.*;
+import com.glaf.core.id.IdBlock;
+import com.glaf.core.service.EntityService;
 import com.glaf.core.util.Paging;
 
 public class SqlMapEntityServiceImpl implements EntityService {
@@ -123,6 +126,10 @@ public class SqlMapEntityServiceImpl implements EntityService {
 		if (rows != null && rows.size() > 0) {
 			entityDAO.updateAll(statementId, rows);
 		}
+	}
+
+	public IdBlock nextDbidBlock(String name) {
+		return null;
 	}
 
 }

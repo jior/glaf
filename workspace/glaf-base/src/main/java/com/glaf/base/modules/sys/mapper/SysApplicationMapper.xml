@@ -157,8 +157,7 @@
 		select dr.id from sys_dept_role dr
 		inner join sys_user_role ur
 		on dr.id = ur.roleid
-		where ur.userid =
-		#{userId}
+		where ur.userid = #{userId}
 		and ur.authorized = 0
 		)
 

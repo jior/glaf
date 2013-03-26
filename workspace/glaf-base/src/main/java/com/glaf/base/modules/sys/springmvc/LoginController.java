@@ -91,8 +91,8 @@ public class LoginController {
 		HttpSession session = request.getSession(true);
 		ViewMessages messages = new ViewMessages();
 		// 获取参数
-		String account = ParamUtil.getParameter(request, "account");
-		String password = ParamUtil.getParameter(request, "password");
+		String account = ParamUtil.getParameter(request, "x");
+		String password = ParamUtil.getParameter(request, "y");
 		String pwd = password;
 		try {
 			pwd = DigestUtil.digestString(password, "MD5");

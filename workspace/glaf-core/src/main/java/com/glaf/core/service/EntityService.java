@@ -16,15 +16,15 @@
  * limitations under the License.
  */
 
-package com.glaf.core.entity;
+package com.glaf.core.service;
 
 import java.util.List;
+
+import com.glaf.core.entity.SqlExecutor;
 import com.glaf.core.id.IdBlock;
 import com.glaf.core.util.Paging;
 
-public interface EntityDAO {
-
-	void setConnection(java.sql.Connection connection);
+public interface EntityService {
 
 	/**
 	 * 删除记录
@@ -32,6 +32,7 @@ public interface EntityDAO {
 	 * @param statementId
 	 * @param parameterObject
 	 */
+
 	void delete(String statementId, Object parameterObject);
 
 	/**
@@ -40,6 +41,7 @@ public interface EntityDAO {
 	 * @param statementId
 	 * @param parameterObject
 	 */
+
 	void deleteAll(String statementId, List<Object> rowIds);
 
 	/**
@@ -48,6 +50,7 @@ public interface EntityDAO {
 	 * @param statementId
 	 * @param rowId
 	 */
+
 	void deleteById(String statementId, Object rowId);
 
 	/**
@@ -55,6 +58,7 @@ public interface EntityDAO {
 	 * 
 	 * @param sqlExecutors
 	 */
+
 	void executeBatch(List<SqlExecutor> sqlExecutors);
 
 	/**
@@ -116,18 +120,12 @@ public interface EntityDAO {
 			SqlExecutor queryExecutor);
 
 	/**
-	 * 获取下一条记录编号
-	 * 
-	 * @return
-	 */
-	IdBlock nextDbidBlock();
-
-	/**
 	 * 插入一条记录
 	 * 
 	 * @param statementId
 	 * @param parameterObject
 	 */
+
 	void insert(String statementId, Object parameterObject);
 
 	/**
@@ -136,7 +134,10 @@ public interface EntityDAO {
 	 * @param statementId
 	 * @param parameterObject
 	 */
+
 	void insertAll(String statementId, List<Object> rows);
+
+	IdBlock nextDbidBlock(String name);
 
 	/**
 	 * 修改一条记录
@@ -144,6 +145,7 @@ public interface EntityDAO {
 	 * @param statementId
 	 * @param parameterObject
 	 */
+
 	void update(String statementId, Object parameterObject);
 
 	/**
@@ -152,6 +154,7 @@ public interface EntityDAO {
 	 * @param statementId
 	 * @param parameterObject
 	 */
+
 	void updateAll(String statementId, List<Object> rows);
 
 }

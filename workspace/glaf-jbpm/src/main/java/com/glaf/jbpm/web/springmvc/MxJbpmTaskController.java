@@ -320,7 +320,7 @@ public class MxJbpmTaskController {
 		}
 
 		if (actorIds.size() > 0) {
-			if (taskInstanceId != null) {
+			if (taskInstanceId != null && taskInstanceId > 0) {
 				ProcessContainer.getContainer().reassignTask(taskInstanceId,
 						actorIds);
 			}

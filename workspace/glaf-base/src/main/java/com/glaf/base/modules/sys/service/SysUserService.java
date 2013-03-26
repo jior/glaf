@@ -28,6 +28,7 @@ import com.glaf.base.modules.sys.model.SysUser;
 
 import com.glaf.core.util.PageResult;
 
+@SuppressWarnings("rawtypes")
 @Transactional(readOnly = true)
 public interface SysUserService {
 
@@ -193,9 +194,10 @@ public interface SysUserService {
 	 * @return
 	 */
 	List<SysUser> getSupplierUser(String supplierNo);
-	
+
 	/**
 	 * 获取某个应用的权限用户
+	 * 
 	 * @param appId
 	 * @return
 	 */

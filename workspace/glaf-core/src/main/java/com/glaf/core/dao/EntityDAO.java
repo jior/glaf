@@ -16,13 +16,17 @@
  * limitations under the License.
  */
 
-package com.glaf.core.entity;
+package com.glaf.core.dao;
 
 import java.util.List;
 
+import com.glaf.core.entity.SqlExecutor;
+import com.glaf.core.id.IdBlock;
 import com.glaf.core.util.Paging;
 
-public interface EntityService {
+public interface EntityDAO {
+
+	void setConnection(java.sql.Connection connection);
 
 	/**
 	 * 删除记录
@@ -30,7 +34,6 @@ public interface EntityService {
 	 * @param statementId
 	 * @param parameterObject
 	 */
-
 	void delete(String statementId, Object parameterObject);
 
 	/**
@@ -39,7 +42,6 @@ public interface EntityService {
 	 * @param statementId
 	 * @param parameterObject
 	 */
-
 	void deleteAll(String statementId, List<Object> rowIds);
 
 	/**
@@ -48,7 +50,6 @@ public interface EntityService {
 	 * @param statementId
 	 * @param rowId
 	 */
-
 	void deleteById(String statementId, Object rowId);
 
 	/**
@@ -56,7 +57,6 @@ public interface EntityService {
 	 * 
 	 * @param sqlExecutors
 	 */
-
 	void executeBatch(List<SqlExecutor> sqlExecutors);
 
 	/**
@@ -118,12 +118,25 @@ public interface EntityService {
 			SqlExecutor queryExecutor);
 
 	/**
+	 * 获取下一条记录编号
+	 * 
+	 * @return
+	 */
+	IdBlock nextDbidBlock();
+	
+	/**
+	 * 获取下一条记录编号
+	 * @param name 名称
+	 * @return
+	 */
+	IdBlock nextDbidBlock(String name);
+
+	/**
 	 * 插入一条记录
 	 * 
 	 * @param statementId
 	 * @param parameterObject
 	 */
-
 	void insert(String statementId, Object parameterObject);
 
 	/**
@@ -132,7 +145,6 @@ public interface EntityService {
 	 * @param statementId
 	 * @param parameterObject
 	 */
-
 	void insertAll(String statementId, List<Object> rows);
 
 	/**
@@ -141,7 +153,6 @@ public interface EntityService {
 	 * @param statementId
 	 * @param parameterObject
 	 */
-
 	void update(String statementId, Object parameterObject);
 
 	/**
@@ -150,7 +161,6 @@ public interface EntityService {
 	 * @param statementId
 	 * @param parameterObject
 	 */
-
 	void updateAll(String statementId, List<Object> rows);
 
 }

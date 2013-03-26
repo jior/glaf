@@ -21,12 +21,6 @@
 
 package com.glaf.core.tag;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
 import java.net.URLEncoder;
 import java.util.Locale;
 
@@ -49,32 +43,6 @@ public class ResponseUtils {
 	 */
 	protected static MessageResources messages = MessageResources
 			.getMessageResources(Globals.DEFAULT_RESOURCE_NAME);
-
-	/**
-	 * Java 1.4 encode method to use instead of deprecated 1.3 version.
-	 */
-	private static Method encode = null;
-
-	/**
-	 * Commons logging instance.
-	 */
-	private static final Log log = LogFactory.getLog(ResponseUtils.class);
-
-	/**
-	 * Initialize the encode variable with the Java 1.4 method if available.
-	 */
-	static {
-		try {
-			// get version of encode method with two String args
-			Class<?>[] args = new Class[] { String.class, String.class };
-
-			encode = URLEncoder.class.getMethod("encode", args);
-		} catch (NoSuchMethodException e) {
-			log.debug(
-					"Could not find Java 1.4 encode method.  Using deprecated version.",
-					e);
-		}
-	}
 
 	// --------------------------------------------------------- Public Methods
 
@@ -250,26 +218,13 @@ public class ResponseUtils {
 	 * @return String The encoded url.
 	 */
 	public static String encodeURL(String url, String enc) {
-		try {
-			if ((enc == null) || (enc.length() == 0)) {
-				enc = "UTF-8";
-			}
-
-			// encode url with new 1.4 method and UTF-8 encoding
-			if (encode != null) {
-				return (String) encode.invoke(null, new Object[] { url, enc });
-			}
-		} catch (IllegalAccessException e) {
-			log.debug(
-					"Could not find Java 1.4 encode method.  Using deprecated version.",
-					e);
-		} catch (InvocationTargetException e) {
-			log.debug(
-					"Could not find Java 1.4 encode method. Using deprecated version.",
-					e);
+		if ((enc == null) || (enc.length() == 0)) {
+			enc = "UTF-8";
 		}
-
-		return URLEncoder.encode(url);
-
+		try {
+			return URLEncoder.encode(url, enc);
+		} catch (Exception ex) {
+			throw new RuntimeException(ex);
+		}
 	}
 }

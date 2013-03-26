@@ -38,10 +38,6 @@ public class SpringDispatcherServlet extends DispatcherServlet {
 
 	private static final long serialVersionUID = 1L;
 
-	private static String dispatcherAuth = "false";
-
-	private String errorUrl = "/error/error_jump.htm";
-
 	public SpringDispatcherServlet() {
 		super();
 	}
@@ -80,21 +76,13 @@ public class SpringDispatcherServlet extends DispatcherServlet {
 						|| StringUtils.contains(uri, "/sys/sysUserRole.do")
 						|| StringUtils.contains(uri, "/sys/deptRole.do")
 						|| StringUtils.contains(uri, "/sys/workCalendar.do")) {
-					response.sendRedirect(request.getContextPath() + errorUrl);
+					response.sendRedirect(request.getContextPath()
+							+ "/unauthorized.jsp");
 					return;
 				}
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
-		}
-
-		// logger.debug("dispatcher required auth:" + dispatcherAuth);
-
-		/**
-		 * 如果需要认证
-		 */
-		if ("true".equals(dispatcherAuth)) {
-
 		}
 
 		super.doService(request, response);

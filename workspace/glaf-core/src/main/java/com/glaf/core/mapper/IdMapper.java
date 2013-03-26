@@ -22,7 +22,7 @@ public interface IdMapper {
 
 	Dbid getNextDbId(String name);
 
-	void inertNextDbId();
+	void inertNextDbId(Dbid dbid);
 
 	void updateNextDbId(Dbid dbid);
 

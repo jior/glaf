@@ -27,6 +27,9 @@ import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.sys.model.SysUserRole;
 import com.glaf.core.util.PageResult;
 
+
+
+@SuppressWarnings("rawtypes")
 @Transactional(readOnly = true)
 public interface SysUserRoleService {
 

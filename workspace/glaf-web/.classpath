@@ -9,7 +9,6 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/ant-tools.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/antlr-2.7.7.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/aopalliance-1.0.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/backport-3.1.0.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/bcprov-jdk16-145.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/bsf-2.4.0.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/bsh-2.0b4.jar"/>
@@ -24,7 +23,6 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-logging.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-pool-1.6.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-resources.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/concurrent-1.3.4.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/dom4j-1.6.1.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/dwr.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/ezmorph-1.0.6.jar"/>
@@ -35,17 +33,13 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/itext-2.1.7.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/javassist.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/javax.activation-1.1.0.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/javax.jms-1.1.0.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/javax.persistence.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/javax.transaction.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jaxen-1.1.1.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jbpm-jpdl.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jdom-1.0.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/json-lib-2.4-jdk15.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/json.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jstl-1.2.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/junit-4.8.1.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/junit.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jxl.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jxls-core.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jxls-reader.jar"/>
@@ -57,8 +51,6 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/poi-ooxml-3.8-20120326.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/poi-ooxml-schemas-3.8-20120326.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/velocity-1.6.4.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/velocity-tools-2.0.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/velocity-tools-view-2.0.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/xml-apis-1.3.04.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/glaf-core"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-lang3-3.1.jar"/>

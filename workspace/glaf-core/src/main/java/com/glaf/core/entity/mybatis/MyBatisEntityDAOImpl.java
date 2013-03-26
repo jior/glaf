@@ -1,20 +1,20 @@
 /*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.glaf.core.entity.mybatis;
 
@@ -32,7 +32,9 @@ import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 
-import com.glaf.core.entity.EntityDAO;
+import com.glaf.core.config.BaseConfiguration;
+import com.glaf.core.config.Configuration;
+import com.glaf.core.dao.EntityDAO;
 import com.glaf.core.entity.SqlExecutor;
 import com.glaf.core.id.Dbid;
 import com.glaf.core.id.IdBlock;
@@ -45,6 +47,8 @@ public class MyBatisEntityDAOImpl extends SqlSessionDaoSupport implements
 		EntityDAO {
 	protected final static Log logger = LogFactory
 			.getLog(MyBatisEntityDAOImpl.class);
+
+	protected static Configuration conf = BaseConfiguration.create();
 
 	@SuppressWarnings("unchecked")
 	public void delete(String statementId, Object parameterObject) {
@@ -277,8 +281,32 @@ public class MyBatisEntityDAOImpl extends SqlSessionDaoSupport implements
 			dbid = (Dbid) getSqlSession().selectOne("getNextDbId", "next.dbid");
 		}
 		long oldValue = Long.parseLong(dbid.getValue());
-		long newValue = oldValue + 1000;
+		long newValue = oldValue + conf.getInt("dbid_step", 100);
 		dbid.setName("next.dbid");
+		dbid.setValue(Long.toString(newValue));
+		dbid.setVersion(dbid.getVersion() + 1);
+		getSqlSession().update("updateNextDbId", dbid);
+		return new IdBlock(oldValue, newValue - 1);
+	}
+
+	/**
+	 * 获取下一条记录编号
+	 * 
+	 * @return
+	 */
+	public IdBlock nextDbidBlock(String name) {
+		Dbid dbid = (Dbid) getSqlSession().selectOne("getNextDbId", name);
+		if (dbid == null) {
+			dbid = new Dbid();
+			dbid.setName(name);
+			dbid.setValue("1");
+			dbid.setVersion(1);
+			getSqlSession().insert("inertNextDbId", dbid);
+			dbid = (Dbid) getSqlSession().selectOne("getNextDbId", name);
+		}
+		long oldValue = Long.parseLong(dbid.getValue());
+		long newValue = oldValue + conf.getInt("dbid_step_" + name, 1);
+		dbid.setName(name);
 		dbid.setValue(Long.toString(newValue));
 		dbid.setVersion(dbid.getVersion() + 1);
 		getSqlSession().update("updateNextDbId", dbid);

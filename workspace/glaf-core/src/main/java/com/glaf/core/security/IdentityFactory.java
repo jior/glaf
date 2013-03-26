@@ -30,11 +30,11 @@ import org.apache.commons.logging.LogFactory;
 
 import com.glaf.core.base.TreeModel;
 import com.glaf.core.context.ContextFactory;
-import com.glaf.core.entity.EntityService;
 import com.glaf.core.identity.User;
 
 import com.glaf.core.identity.Agent;
 import com.glaf.core.query.MembershipQuery;
+import com.glaf.core.service.EntityService;
 
 public class IdentityFactory {
 	protected final static Log logger = LogFactory

@@ -7,12 +7,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
-import org.springframework.beans.factory.annotation.*;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.core.id.*;
-
+import com.glaf.core.dao.*;
 import ${packageName}.mapper.*;
 import ${packageName}.model.*;
 import ${packageName}.query.*;
@@ -21,14 +21,10 @@ import ${packageName}.query.*;
 @Transactional(readOnly = true) 
 public class ${entityName}ServiceImpl implements ${entityName}Service {
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
+ 
+        protected EntityDAO entityDAO;
 
-<#if idField.type?exists && ( idField.type== 'Integer' )>        
-        protected LongIdGenerator idGenerator;
-<#elseif idField.type?exists && ( idField.type== 'Long' )>
-        protected LongIdGenerator idGenerator;
-<#elseif idField.type?exists && ( idField.type== 'String')>
 	protected IdGenerator idGenerator;
-</#if>
 
 	protected SqlSessionTemplate sqlSessionTemplate;
 
@@ -92,12 +88,14 @@ public class ${entityName}ServiceImpl implements ${entityName}Service {
 	public void save(${entityName} ${modelName}) {
 	<#if idField.type?exists && ( idField.type== 'Integer' )>
             if ( ${modelName}.get${idField.firstUpperName}()  == 0) {
+	        ${modelName}.set${idField.firstUpperName}(idGenerator.nextId("${tableName}").intValue());
 	<#elseif idField.type?exists && ( idField.type== 'Long' )>
             if ( ${modelName}.get${idField.firstUpperName}()  == 0L) {
+	        ${modelName}.set${idField.firstUpperName}(idGenerator.nextId("${tableName}"));
 	<#else>
            if (StringUtils.isEmpty(${modelName}.get${idField.firstUpperName}())) {
 	</#if>
-			${modelName}.set${idField.firstUpperName}(idGenerator.getNextId());
+			${modelName}.set${idField.firstUpperName}(idGenerator.getNextId("${tableName}"));
 			//${modelName}.setCreateDate(new Date());
 			${modelName}Mapper.insert${entityName}(${modelName});
 		} else {
@@ -105,23 +103,17 @@ public class ${entityName}ServiceImpl implements ${entityName}Service {
 		}
 	}
 
-	@Resource
-	<#if idField.type?exists && ( idField.type== 'Integer' )>
-	@Qualifier("myBatisDbLongIdGenerator")
-	public void setLongIdGenerator(LongIdGenerator idGenerator) {
-		this.idGenerator = idGenerator;
+	@Resource(name="myBatisEntityDAO")
+	public void setEntityDAO(EntityDAO entityDAO) {
+		this.entityDAO = entityDAO;
 	}
-	<#elseif idField.type?exists && ( idField.type== 'Long' )>
-	@Qualifier("myBatisDbLongIdGenerator")
-	public void setLongIdGenerator(LongIdGenerator idGenerator) {
-		this.idGenerator = idGenerator;
-	}
-	<#elseif idField.type?exists && ( idField.type== 'String')>
-	@Qualifier("myBatisDbIdGenerator")
+
+	 
+	@Resource(name="myBatisDbIdGenerator")
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
-	</#if>
+ 
 
 	@Resource
 	public void set${entityName}Mapper(${entityName}Mapper ${modelName}Mapper) {

@@ -30,7 +30,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.core.cache.CacheFactory;
-import com.glaf.core.entity.EntityDAO;
+import com.glaf.core.dao.EntityDAO;
 import com.glaf.core.id.*;
 import com.glaf.mail.domain.*;
 import com.glaf.mail.mapper.*;

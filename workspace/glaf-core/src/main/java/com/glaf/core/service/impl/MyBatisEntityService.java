@@ -18,13 +18,14 @@
 
 
 
-package com.glaf.core.entity.mybatis;
+package com.glaf.core.service.impl;
 
 import java.util.*;
 
-import com.glaf.core.entity.EntityDAO;
-import com.glaf.core.entity.EntityService;
+import com.glaf.core.dao.EntityDAO;
 import com.glaf.core.entity.SqlExecutor;
+import com.glaf.core.id.IdBlock;
+import com.glaf.core.service.EntityService;
 import com.glaf.core.util.Paging;
 
 public class MyBatisEntityService implements EntityService {
@@ -49,12 +50,21 @@ public class MyBatisEntityService implements EntityService {
 		entityDAO.deleteById(statementId, rowId);
 	}
 
+	public void executeBatch(List<SqlExecutor> sqlExecutors) {
+		entityDAO.executeBatch(sqlExecutors);
+	}
+
 	public Object getById(String statementId, Object parameterObject) {
 		return entityDAO.getById(statementId, parameterObject);
 	}
 
 	public int getCount(String statementId, Object parameterObject) {
 		return entityDAO.getCount(statementId, parameterObject);
+	}
+
+	public List<Object> getList(int pageNo, int pageSize,
+			SqlExecutor queryExecutor) {
+		return entityDAO.getList(pageNo, pageSize, queryExecutor);
 	}
 
 	/**
@@ -68,6 +78,11 @@ public class MyBatisEntityService implements EntityService {
 		return entityDAO.getList(statementId, parameter);
 	}
 
+	public Paging getPage(int pageNo, int pageSize, SqlExecutor countExecutor,
+			SqlExecutor queryExecutor) {
+		return entityDAO.getPage(pageNo, pageSize, countExecutor, queryExecutor);
+	}
+	
 	public Object getSingleObject(String statementId, Object parameterObject) {
 		return entityDAO.getSingleObject(statementId, parameterObject);
 	}
@@ -82,6 +97,11 @@ public class MyBatisEntityService implements EntityService {
 		}
 	}
 
+	public IdBlock nextDbidBlock(String name){
+		return entityDAO.nextDbidBlock(name);
+	}
+
+  
 	public void setEntityDAO(EntityDAO entityDAO) {
 		this.entityDAO = entityDAO;
 	}
@@ -94,21 +114,6 @@ public class MyBatisEntityService implements EntityService {
 		if (rows != null && rows.size() > 0) {
 			entityDAO.updateAll(statementId, rows);
 		}
-	}
-
-  
-	public void executeBatch(List<SqlExecutor> sqlExecutors) {
-		entityDAO.executeBatch(sqlExecutors);
-	}
-
-	public List<Object> getList(int pageNo, int pageSize,
-			SqlExecutor queryExecutor) {
-		return entityDAO.getList(pageNo, pageSize, queryExecutor);
-	}
-
-	public Paging getPage(int pageNo, int pageSize, SqlExecutor countExecutor,
-			SqlExecutor queryExecutor) {
-		return entityDAO.getPage(pageNo, pageSize, countExecutor, queryExecutor);
 	}
 
 }

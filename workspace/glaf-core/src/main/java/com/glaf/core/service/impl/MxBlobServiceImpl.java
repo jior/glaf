@@ -39,8 +39,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.glaf.core.base.BlobItem;
 import com.glaf.core.base.DataFile;
 import com.glaf.core.jdbc.DBConnectionFactory;
+import com.glaf.core.dao.EntityDAO;
 import com.glaf.core.domain.BlobItemEntity;
-import com.glaf.core.entity.EntityDAO;
 import com.glaf.core.id.IdGenerator;
 import com.glaf.core.mapper.BlobItemMapper;
 import com.glaf.core.query.BlobItemQuery;
@@ -399,8 +399,7 @@ public class MxBlobServiceImpl implements IBlobService {
 		this.blobItemMapper = blobItemMapper;
 	}
 
-	@Resource
-	@Qualifier("myBatisEntityDAO")
+	@Resource(name="myBatisEntityDAO")
 	public void setEntityDAO(EntityDAO entityDAO) {
 		this.entityDAO = entityDAO;
 	}

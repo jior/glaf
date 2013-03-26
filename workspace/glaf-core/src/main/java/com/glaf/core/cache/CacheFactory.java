@@ -18,35 +18,39 @@
 
 package com.glaf.core.cache;
 
+import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Set;
 
-import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.glaf.core.config.BaseConfiguration;
+import com.glaf.core.config.Configuration;
 import com.glaf.core.config.CustomProperties;
 
 public class CacheFactory {
 	protected static final Log logger = LogFactory.getLog(CacheFactory.class);
-	private final static String DEFAULT_CONFIG = "com/glaf/core/cache/cache-context.xml";
-	private final static Map<String, Cache> cacheMap = new HashMap<String, Cache>();
-	protected static final Set<String> keys = new HashSet<String>();
+	protected static final String DEFAULT_CONFIG = "com/glaf/core/cache/cache-context.xml";
+	protected static final Map<String, Cache> cacheMap = new HashMap<String, Cache>();
+	protected static final Map<String, CacheItem> items = new LinkedHashMap<String, CacheItem>();
+	protected static Configuration conf = BaseConfiguration.create();
+
 	private static ApplicationContext ctx;
+
 	private static String CACHE_PREFIX = "GLAF_";
 
 	protected static void clearAll() {
 		try {
 			Cache cache = getCache();
 			if (cache != null) {
-				for (String cacheKey : keys) {
+				for (String cacheKey : items.keySet()) {
 					cache.remove(cacheKey);
 				}
-				keys.clear();
+				items.clear();
 				cache.clear();
 			}
 		} catch (Exception ex) {
@@ -62,7 +66,7 @@ public class CacheFactory {
 			Cache cache = getCache();
 			if (cache != null) {
 				String cacheKey = CACHE_PREFIX + key;
-				cacheKey = DigestUtils.md5Hex(cacheKey.getBytes());
+				// cacheKey = DigestUtils.md5Hex(cacheKey.getBytes());
 				Object value = cache.get(cacheKey);
 				if (value != null) {
 					logger.debug("get object'" + key + "' from cache");
@@ -98,8 +102,8 @@ public class CacheFactory {
 		return cache;
 	}
 
-	public static Set<String> getCacheKeys() {
-		return keys;
+	public static Collection<CacheItem> getItems() {
+		return items.values();
 	}
 
 	public static String getString(String key) {
@@ -107,7 +111,7 @@ public class CacheFactory {
 			Cache cache = getCache();
 			if (cache != null) {
 				String cacheKey = CACHE_PREFIX + key;
-				cacheKey = DigestUtils.md5Hex(cacheKey.getBytes());
+				// cacheKey = DigestUtils.md5Hex(cacheKey.getBytes());
 				Object value = cache.get(cacheKey);
 				if (value != null) {
 					logger.debug("get object'" + key + "' from cache");
@@ -126,11 +130,18 @@ public class CacheFactory {
 	public static void put(String key, String value) {
 		try {
 			Cache cache = getCache();
-			if (cache != null) {
+			if (cache != null && key != null && value != null) {
 				String cacheKey = CACHE_PREFIX + key;
-				cacheKey = DigestUtils.md5Hex(cacheKey.getBytes());
-				cache.put(cacheKey, value);
-				keys.add(cacheKey);
+				// cacheKey = DigestUtils.md5Hex(cacheKey.getBytes());
+				int limitSize = conf.getInt("cache.limitSize", 1024000);// 1024KB
+				if (value.length() < limitSize) {
+					cache.put(cacheKey, value);
+					CacheItem item = new CacheItem();
+					item.setKey(key);
+					item.setLastModified(System.currentTimeMillis());
+					item.setSize(value.length());
+					items.put(cacheKey, item);
+				}
 			}
 		} catch (Exception ex) {
 			if (logger.isDebugEnabled()) {
@@ -175,9 +186,9 @@ public class CacheFactory {
 			Cache cache = getCache();
 			if (cache != null) {
 				String cacheKey = CACHE_PREFIX + key;
-				cacheKey = DigestUtils.md5Hex(cacheKey.getBytes());
+				// cacheKey = DigestUtils.md5Hex(cacheKey.getBytes());
 				cache.remove(cacheKey);
-				keys.remove(cacheKey);
+				items.remove(cacheKey);
 			}
 		} catch (Exception ex) {
 			if (logger.isDebugEnabled()) {
@@ -191,7 +202,7 @@ public class CacheFactory {
 		try {
 			Cache cache = getCache();
 			if (cache != null) {
-				keys.clear();
+				items.clear();
 				cache.clear();
 				cache.shutdown();
 			}

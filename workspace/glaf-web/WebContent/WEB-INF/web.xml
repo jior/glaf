@@ -75,45 +75,6 @@
 	   <url-pattern>/*</url-pattern> 
 	</filter-mapping> 
 
-  
-	<!--权限过滤器-->
-	<!-- <filter>
-		<filter-name>Authorization Filter</filter-name>
-		<filter-class>com.glaf.base.filter.AuthorizeFilter</filter-class>
-		<init-param>
-			<param-name>login_user</param-name>
-			<param-value>LOGIN_USER</param-value>
-		</init-param>
-		<init-param>
-			<param-name>login_url</param-name>
-			<param-value>/login.do</param-value>
-		</init-param>
-		<init-param>
-			<param-name>error_url</param-name>
-			<param-value>/error/error_jump.htm</param-value>
-		</init-param>
-		<init-param>
-			<param-name>require</param-name>
-			<param-value>true</param-value>
-		</init-param>
-	</filter>
-
-	<filter-mapping>
-		<filter-name>Authorization Filter</filter-name>
-		<url-pattern>/mx/*</url-pattern>
-	</filter-mapping> 
-
-	<filter-mapping>
-		<filter-name>Authorization Filter</filter-name>
-		<url-pattern>*.do</url-pattern>
-	</filter-mapping> 
-
-	<filter-mapping>
-		<filter-name>Authorization Filter</filter-name>
-		<url-pattern>*.jsp</url-pattern>
-	</filter-mapping> -->
-	
-
 	<!--dwr-->
 	<servlet>
 		<servlet-name>dwr-invoker</servlet-name>
@@ -129,7 +90,6 @@
 		<url-pattern>/dwr/*</url-pattern>
 	</servlet-mapping>
   
-
 
 	<servlet>
 		<servlet-name>dispatcher</servlet-name>

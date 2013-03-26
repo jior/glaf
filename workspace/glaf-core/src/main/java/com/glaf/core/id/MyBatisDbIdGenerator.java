@@ -16,17 +16,17 @@ package com.glaf.core.id;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.glaf.core.entity.EntityDAO;
+import com.glaf.core.dao.EntityDAO;
 
 public class MyBatisDbIdGenerator implements IdGenerator {
 	protected final static Log logger = LogFactory
 			.getLog(MyBatisDbIdGenerator.class);
 
-	protected long nextId = 0;
+	protected EntityDAO entityDAO;
 
 	protected long lastId = -1;
 
-	protected EntityDAO entityDAO;
+	protected long nextId = 0;
 
 	public MyBatisDbIdGenerator() {
 		logger.info("----------------MyBatis3DbIdGenerator--------------");
@@ -47,11 +47,20 @@ public class MyBatisDbIdGenerator implements IdGenerator {
 		return Long.toString(this.nextId());
 	}
 
+	public String getNextId(String name) {
+		return Long.toString(this.nextId(name));
+	}
+
 	public synchronized Long nextId() {
 		if (lastId < nextId) {
 			getNewBlock();
 		}
 		return nextId++;
+	}
+
+	public Long nextId(String name) {
+		IdBlock idBlock = entityDAO.nextDbidBlock(name);
+		return idBlock.getNextId();
 	}
 
 	public synchronized void setEntityDAO(EntityDAO entityDAO) {

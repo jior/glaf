@@ -27,8 +27,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.glaf.core.entity.EntityDAO;
 import com.glaf.core.id.*;
+import com.glaf.core.dao.EntityDAO;
 import com.glaf.core.domain.*;
 import com.glaf.core.query.*;
 import com.glaf.core.mapper.*;

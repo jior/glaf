@@ -33,27 +33,19 @@
 		<property name="sqlSessionTemplate" ref="sqlSession" />
 	</bean>
 
-	<bean id="myBatisDbIdGenerator" class="com.glaf.core.id.MyBatisDbIdGenerator">
-		<property name="entityDAO" ref="myBatisEntityDAO" />
-	</bean>
-
 	<bean id="idGenerator" class="com.glaf.core.id.MyBatisDbIdGenerator">
 		<property name="entityDAO" ref="myBatisEntityDAO" />
 	</bean>
 
-	<bean id="myBatisDbLongIdGenerator" class="com.glaf.core.id.MyBatisDbLongIdGenerator">
+	<bean id="myBatisDbIdGenerator" class="com.glaf.core.id.MyBatisDbIdGenerator">
 		<property name="entityDAO" ref="myBatisEntityDAO" />
 	</bean>
 
-	<bean id="longIdGenerator" class="com.glaf.core.id.MyBatisDbLongIdGenerator">
+	<bean id="entityService" class="com.glaf.core.service.impl.MyBatisEntityService">
 		<property name="entityDAO" ref="myBatisEntityDAO" />
 	</bean>
 
-	<bean id="myBatisEntityService" class="com.glaf.core.entity.mybatis.MyBatisEntityService">
-		<property name="entityDAO" ref="myBatisEntityDAO" />
-	</bean>
-
-	<bean id="entityService" class="com.glaf.core.entity.mybatis.MyBatisEntityService">
+	<bean id="myBatisEntityService" class="com.glaf.core.service.impl.MyBatisEntityService">
 		<property name="entityDAO" ref="myBatisEntityDAO" />
 	</bean>
 

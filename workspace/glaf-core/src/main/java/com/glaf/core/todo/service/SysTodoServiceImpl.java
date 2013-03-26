@@ -40,8 +40,8 @@ import com.alibaba.fastjson.JSONObject;
 
 import com.glaf.core.cache.CacheFactory;
 import com.glaf.core.config.SystemProperties;
+import com.glaf.core.dao.EntityDAO;
 
-import com.glaf.core.entity.EntityDAO;
 
 import com.glaf.core.id.IdGenerator;
 
