@@ -87,6 +87,7 @@ CREATE TABLE sys_tree (
         parent NUMBER(19),
         name NVARCHAR2(255),
         nodedesc NVARCHAR2(255),
+	cacheFlag NVARCHAR2(1),
 	discriminator NVARCHAR2(1),
 	moveable NVARCHAR2(1),
 	treeId NVARCHAR2(200),
