@@ -11,6 +11,7 @@ CREATE TABLE sys_access(
 CREATE TABLE sys_application(
         id bigint not null,
         name nvarchar(255),
+	code nvarchar(255),
         appdesc nvarchar(255),
         url nvarchar(255),
         sort int,
@@ -87,6 +88,7 @@ CREATE TABLE sys_tree (
         name nvarchar(255),
         nodedesc nvarchar(255),
 	discriminator nvarchar(1),
+	moveable nvarchar(1),
 	treeId nvarchar(200),
         sort int,
         code nvarchar(255),
