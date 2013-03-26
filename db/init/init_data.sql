@@ -189,6 +189,26 @@ insert into sys_dictory (id, typeId, code, name, sort, dictDesc, blocked, ext1, 
 insert into sys_dictory (id, typeId, code, name, sort, dictDesc, blocked, ext1, ext2, ext3, ext4, ext5, ext6) values (3, 498, 'JPY', 'ÈÕÔª', 3, null, 0, '', '', null, null, null, null);
 
 
+insert into sys_dictory_def (id, nodeid, name, columnname, title, type, length, sort, required, target) values (1, 0, 'code', 'CODE', '±àÂë', 'String', 50, 0, 0, 'dictory');
+insert into sys_dictory_def (id, nodeid, name, columnname, title, type, length, sort, required, target) values (2, 0, 'dictdesc', 'DICTDESC', 'ÃèÊö', 'String', 200, 1, 0, 'dictory');
+insert into sys_dictory_def (id, nodeid, name, columnname, title, type, length, sort, required, target) values (3, 0, 'value', 'VALUE_', 'Öµ', 'String', 2000, 2, 0, 'dictory');
+insert into sys_dictory_def (id, nodeid, name, columnname, title, type, length, sort, required, target) values (4, 0, 'ext1', 'EXT1', 'À©Õ¹×Ö¶Î1', 'String', 200, 3, 0, 'dictory');
+insert into sys_dictory_def (id, nodeid, name, columnname, title, type, length, sort, required, target) values (5, 0, 'ext2', 'EXT2', 'À©Õ¹×Ö¶Î2', 'String', 200, 4, 0, 'dictory');
+insert into sys_dictory_def (id, nodeid, name, columnname, title, type, length, sort, required, target) values (6, 0, 'ext3', 'EXT3', 'À©Õ¹×Ö¶Î3', 'String', 200, 5, 0, 'dictory');
+insert into sys_dictory_def (id, nodeid, name, columnname, title, type, length, sort, required, target) values (7, 0, 'ext4', 'EXT4', 'À©Õ¹×Ö¶Î4', 'String', 200, 5, 0, 'dictory');
+insert into sys_dictory_def (id, nodeid, name, columnname, title, type, length, sort, required, target) values (8, 0, 'ext5', 'EXT5', 'À©Õ¹×Ö¶Î5', 'Date', 0, 7, 0, 'dictory');
+insert into sys_dictory_def (id, nodeid, name, columnname, title, type, length, sort, required, target) values (9, 0, 'ext6', 'EXT6', 'À©Õ¹×Ö¶Î6', 'Date', 0, 8, 0, 'dictory');
+insert into sys_dictory_def (id, nodeid, name, columnname, title, type, length, sort, required, target) values (10, 0, 'ext7', 'EXT7', 'À©Õ¹×Ö¶Î7', 'String', 2000, 9, 0, 'dictory');
+insert into sys_dictory_def (id, nodeid, name, columnname, title, type, length, sort, required, target) values (11, 0, 'ext8', 'EXT8', 'À©Õ¹×Ö¶Î8', 'String', 2000, 10, 0, 'dictory');
+insert into sys_dictory_def (id, nodeid, name, columnname, title, type, length, sort, required, target) values (12, 0, 'ext9', 'EXT9', 'À©Õ¹×Ö¶Î9', 'Long', 0, 11, 0, 'dictory');
+insert into sys_dictory_def (id, nodeid, name, columnname, title, type, length, sort, required, target) values (13, 0, 'ext10', 'EXT10', 'À©Õ¹×Ö¶Î10', 'Long', 0, 12, 0, 'dictory');
+insert into sys_dictory_def (id, nodeid, name, columnname, title, type, length, sort, required, target) values (14, 0, 'ext11', 'EXT11', 'À©Õ¹×Ö¶Î11', 'Double', 0, 13, 0, 'dictory');
+insert into sys_dictory_def (id, nodeid, name, columnname, title, type, length, sort, required, target) values (15, 0, 'ext12', 'EXT12', 'À©Õ¹×Ö¶Î12', 'Double', 0, 14, 0, 'dictory');
+insert into sys_dictory_def (id, nodeid, name, columnname, title, type, length, sort, required, target) values (16, 0, 'ext13', 'EXT13', 'À©Õ¹×Ö¶Î13', 'Double', 0, 15, 0, 'dictory');
+insert into sys_dictory_def (id, nodeid, name, columnname, title, type, length, sort, required, target) values (17, 0, 'ext14', 'EXT14', 'À©Õ¹×Ö¶Î14', 'Double', 0, 16, 0, 'dictory');
+insert into sys_dictory_def (id, nodeid, name, columnname, title, type, length, sort, required, target) values (18, 0, 'ext15', 'EXT15', 'À©Õ¹×Ö¶Î15', 'Double', 0, 17, 0, 'dictory');
+
+
 insert into sys_dbid (NAME_, VALUE_, VERSION_) values ('next.dbid', '10001', 1);
 
 insert into sys_property (id_, description_, locked_, name_, title_, type_, value_, category_, initvalue_) values ('1', 'ÏµÍ³Ãû³Æ', 0, 'res_system_name', 'ÏµÍ³Ãû³Æ', null, 'XX¿Æ¼¼ÐÅÏ¢ÏµÍ³', 'SYS', null);

@@ -153,9 +153,31 @@ CREATE TABLE sys_dictory (
         ext4 NVARCHAR2(200),
         ext5 TIMESTAMP(6),
         ext6 TIMESTAMP(6),
+	ext7 CLOB,
+	ext8 CLOB,
+	ext9 NUMBER(19),
+	ext10 NUMBER(19),
+	ext11 NUMBER(*,10),
+        ext12 NUMBER(*,10),
+	ext13 NUMBER(*,10),
+	ext14 NUMBER(*,10),
+	ext15 NUMBER(*,10),
         PRIMARY KEY (id)
 );
 
+create table sys_dictory_def (
+        id NUMBER(19) NOT NULL,
+        nodeId NUMBER(19),
+        name NVARCHAR2(50),
+        columnName NVARCHAR2(50),
+        title NVARCHAR2(50),
+        type NVARCHAR2(50),
+        length INTEGER,
+        sort INTEGER,
+        required INTEGER,
+        target NVARCHAR2(50),
+        PRIMARY KEY (id)
+);
 
 CREATE TABLE sys_workcalendar (
         id NUMBER(19) NOT NULL,

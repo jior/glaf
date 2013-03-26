@@ -153,9 +153,32 @@ CREATE TABLE sys_dictory (
         ext4 varchar(200),
         ext5 timestamp,
         ext6 timestamp,
+	ext7 text,
+	ext8 text,
+	ext9 bigint,
+	ext10 bigint,
+	ext11 double precision,
+        ext12 double precision,
+	ext13 double precision,
+	ext14 double precision,
+	ext15 double precision,
         PRIMARY KEY (id)
 );
 
+
+create table sys_dictory_def (
+        id bigint NOT NULL,
+        nodeId bigint,
+        name varchar(50),
+        columnName varchar(50),
+        title varchar(50),
+        type varchar(50),
+        length integer,
+        sort integer,
+        required integer,
+        target varchar(50),
+        PRIMARY KEY (id)
+);
 
 CREATE TABLE sys_workcalendar (
         id bigint   NOT NULL,
