@@ -35,8 +35,6 @@ public class InitBaseDataServlet extends HttpServlet {
 
 	private Map<String, Object> beanMap = new HashMap<String, Object>();
 
-	private Map<String, Object> serviceMap = new HashMap<String, Object>();
-
 	private BaseDataManager bdm = BaseDataManager.getInstance();// 基础信息管理
 
 	public void init() {
@@ -45,22 +43,10 @@ public class InitBaseDataServlet extends HttpServlet {
 		try {
 			WebApplicationContext wac = WebApplicationContextUtils
 					.getRequiredWebApplicationContext(getServletContext());
-			String[] beanNames = BaseDataManager.SV_NAMES;
-			for (int i = 0; i < beanNames.length; i++) {
-				logger.info("load service:" + beanNames[i]);
-				try {
-					Object bean = wac.getBean(beanNames[i]);
-					serviceMap.put(beanNames[i], bean);
-				} catch (Exception ex) {
-					logger.error(ex);
-				}
-			}
-			bdm.setServiceMap(serviceMap);
+
 			bdm.refreshBaseData();// 刷新数据
 
 			beanMap.put("todoJobBean", wac.getBean("todoJobBean"));
-
-			bdm.setBeanMap(beanMap);
 
 			logger.info("初始化基础信息完成.");
 

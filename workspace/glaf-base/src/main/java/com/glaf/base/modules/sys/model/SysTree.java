@@ -34,6 +34,7 @@ import com.glaf.core.base.TreeModel;
 public class SysTree implements Serializable, TreeModel, JSONable {
 	private static final long serialVersionUID = 2666681837822864771L;
 	protected SysApplication app;
+	protected String cacheFlag;
 	protected List<TreeModel> children = new ArrayList<TreeModel>();
 	protected String code;
 	protected int deep;
@@ -94,6 +95,10 @@ public class SysTree implements Serializable, TreeModel, JSONable {
 
 	public SysApplication getApp() {
 		return app;
+	}
+
+	public String getCacheFlag() {
+		return cacheFlag;
 	}
 
 	public List<TreeModel> getChildren() {
@@ -201,6 +206,10 @@ public class SysTree implements Serializable, TreeModel, JSONable {
 
 	public void setApp(SysApplication app) {
 		this.app = app;
+	}
+
+	public void setCacheFlag(String cacheFlag) {
+		this.cacheFlag = cacheFlag;
 	}
 
 	public void setChildren(List<TreeModel> children) {

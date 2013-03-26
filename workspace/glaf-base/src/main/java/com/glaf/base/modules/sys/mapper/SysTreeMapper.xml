@@ -11,6 +11,7 @@
 		<result property="desc" column="NODEDESC" jdbcType="VARCHAR" />
 		<result property="discriminator" column="DISCRIMINATOR"
 			jdbcType="VARCHAR" />
+		<result property="cacheFlag" column="CACHEFLAG" jdbcType="VARCHAR" />
 		<result property="moveable" column="MOVEABLE" jdbcType="VARCHAR" />
 		<result property="treeId" column="TREEID" jdbcType="VARCHAR" />
 		<result property="sort" column="SORT" jdbcType="INTEGER" />
@@ -37,6 +38,9 @@
 			</if>
 			<if test="discriminator != null">
 				,DISCRIMINATOR
+			</if>
+			<if test="cacheFlag != null">
+				,CACHEFLAG
 			</if>
 			<if test="moveable != null">
 				,MOVEABLE
@@ -79,6 +83,9 @@
 			<if test="discriminator != null">
 				,#{discriminator, jdbcType=VARCHAR}
 			</if>
+			<if test="cacheFlag != null">
+				,#{cacheFlag, jdbcType=VARCHAR}
+			</if>
 			<if test="moveable != null">
 				,#{moveable, jdbcType=VARCHAR}
 			</if>
@@ -119,6 +126,9 @@
 			</if>
 			<if test="desc != null">
 				NODEDESC = #{desc, jdbcType=VARCHAR},
+			</if>
+			<if test="cacheFlag != null">
+				CACHEFLAG = #{cacheFlag, jdbcType=VARCHAR},
 			</if>
 			<if test="treeId != null">
 				TREEID = #{treeId, jdbcType=VARCHAR},

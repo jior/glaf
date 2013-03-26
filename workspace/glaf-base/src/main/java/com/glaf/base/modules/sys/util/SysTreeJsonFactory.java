@@ -48,6 +48,12 @@ public class SysTreeJsonFactory {
 		if (jsonObject.containsKey("discriminator")) {
 			model.setDiscriminator(jsonObject.getString("discriminator"));
 		}
+		if (jsonObject.containsKey("cacheFlag")) {
+			model.setCacheFlag(jsonObject.getString("cacheFlag"));
+		}
+		if (jsonObject.containsKey("moveable")) {
+			model.setMoveable(jsonObject.getString("moveable"));
+		}
 		if (jsonObject.containsKey("treeId")) {
 			model.setTreeId(jsonObject.getString("treeId"));
 		}
@@ -73,6 +79,12 @@ public class SysTreeJsonFactory {
 		}
 		if (model.getDiscriminator() != null) {
 			jsonObject.put("discriminator", model.getDiscriminator());
+		}
+		if (model.getCacheFlag() != null) {
+			jsonObject.put("cacheFlag", model.getCacheFlag());
+		}
+		if (model.getMoveable() != null) {
+			jsonObject.put("moveable", model.getMoveable());
 		}
 		if (model.getTreeId() != null) {
 			jsonObject.put("treeId", model.getTreeId());
