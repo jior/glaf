@@ -6,14 +6,14 @@
 <head>
 <title>FormApps</title>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/yui/yui-2.8.1.css" />
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/pages/styles/styles.css"/>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/styles.css"/>
 <script type="text/javascript"	src="<%=request.getContextPath()%>/scripts/jquery/jquery.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/yui/yui-2.8.1-min.js"></script>
 </head>
 <body  class="yui-skin-sam"> 
 <div class="x_content_title">
 <img
-	src="<%=request.getContextPath()%>/pages/images/window.png"
+	src="<%=request.getContextPath()%>/images/window.png"
 	alt="${title?if_exists}">&nbsp;${title?if_exists}
 </div>
 <br>

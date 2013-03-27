@@ -233,7 +233,7 @@ public class TodoServiceMyBatisImpl implements TodoService {
 	}
 
 	public Todo getTodo(long todoId) {
-		String cacheKey = "x_todo_" + todoId;
+		String cacheKey = "todo_" + todoId;
 		if (CacheFactory.get(cacheKey) != null) {
 			String text = (String) CacheFactory.get(cacheKey);
 			JSONObject jsonObject = JSON.parseObject(text);

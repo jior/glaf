@@ -37,6 +37,19 @@ public class ClearCacheJob implements Job {
 
 	}
 
+	public void clearAll() {
+		try {
+			semaphore.acquire();
+			logger.debug("start clear cache...");
+			CacheFactory.clearAll();
+			logger.debug("end clear cache.");
+		} catch (Exception ex) {
+			logger.debug(ex);
+		} finally {
+			semaphore.release();
+		}
+	}
+
 	public void execute(JobExecutionContext context)
 			throws JobExecutionException {
 		try {

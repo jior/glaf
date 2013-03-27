@@ -34,6 +34,7 @@ public class DictoryDefinitionController {
 	public ModelAndView save(HttpServletRequest request, ModelMap modelMap,
 			DictoryDefinition dictoryDefinition) {
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		logger.debug("params:"+params);
 		String target = request.getParameter("target");
 		Long nodeId = ParamUtils.getLong(params, "nodeId");
 		if (StringUtils.isNotEmpty(target)) {
@@ -72,6 +73,7 @@ public class DictoryDefinitionController {
 	public byte[] saveDictoryDefinition(HttpServletRequest request) {
 		try {
 			Map<String, Object> params = RequestUtils.getParameterMap(request);
+			logger.debug("params:"+params);
 			String target = request.getParameter("target");
 			Long nodeId = ParamUtils.getLong(params, "nodeId");
 			if (StringUtils.isNotEmpty(target)) {
@@ -139,9 +141,9 @@ public class DictoryDefinitionController {
 						}
 					}
 				}
+				Collections.sort(list);
+				request.setAttribute("list", list);
 			}
-			Collections.sort(list);
-			request.setAttribute("list", list);
 		}
 
 		String view = request.getParameter("view");

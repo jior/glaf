@@ -38,8 +38,8 @@ function checkOperation(form){
 function add(){
   var url="dictory.do?method=prepareAdd&parent="+<%=parent%>;
   var width=480;
-  var height=380;
-  var scroll="no";
+  var height=420;
+  var scroll="yes";
   openWindow(url, width, height, scroll);
 }
 
@@ -53,8 +53,8 @@ function modify(form){
   }
   var url="dictory.do?method=prepareModify&id="+id+"&parent="+<%=parent%>;
   var width=480;
-  var height=380;
-  var scroll="no";
+  var height=420;
+  var scroll="yes";
   openWindow(url, width, height, scroll);
 }
 

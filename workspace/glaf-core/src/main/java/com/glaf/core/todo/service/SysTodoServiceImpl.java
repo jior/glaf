@@ -82,7 +82,7 @@ public class SysTodoServiceImpl implements ISysTodoService {
 	}
 
 	public Todo getTodo(Long todoId) {
-		String cacheKey = "x_todo_" + todoId;
+		String cacheKey = "todo_" + todoId;
 		if (CacheFactory.get(cacheKey) != null) {
 			String text = (String) CacheFactory.get(cacheKey);
 			JSONObject jsonObject = JSON.parseObject(text);
@@ -97,7 +97,7 @@ public class SysTodoServiceImpl implements ISysTodoService {
 	}
 
 	public Todo getTodoByCode(String code) {
-		String cacheKey = "x_todo_c_" + code;
+		String cacheKey = "todo_code_" + code;
 		if (CacheFactory.get(cacheKey) != null) {
 			String text = (String) CacheFactory.get(cacheKey);
 			JSONObject jsonObject = JSON.parseObject(text);
@@ -139,9 +139,9 @@ public class SysTodoServiceImpl implements ISysTodoService {
 		if (todo != null) {
 			todo.setEnableFlag(locked);
 			todoMapper.updateTodo(todo);
-			String cacheKey = "x_todo_c_" + todo.getCode();
+			String cacheKey = "todo_code_" + todo.getCode();
 			CacheFactory.remove(cacheKey);
-			cacheKey = "x_todo_" + todo.getId();
+			cacheKey = "todo_" + todo.getId();
 			CacheFactory.remove(cacheKey);
 		}
 	}
@@ -204,9 +204,9 @@ public class SysTodoServiceImpl implements ISysTodoService {
 		} else {
 			todoMapper.updateTodo(todo);
 		}
-		String cacheKey = "x_todo_c_" + todo.getCode();
+		String cacheKey = "todo_code_" + todo.getCode();
 		CacheFactory.remove(cacheKey);
-		cacheKey = "x_todo_" + todo.getId();
+		cacheKey = "todo_" + todo.getId();
 		CacheFactory.remove(cacheKey);
 	}
 

@@ -15,21 +15,57 @@ int nodeId=ParamUtil.getIntParameter(request, "nodeId", 0);
 <title>基础平台系统</title>
 <link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
 <script language="javascript" src='<%=context%>/scripts/jquery.min.js'></script>
+<script language="javascript" src='<%=context%>/scripts/jquery.form.js'></script>
 <script language="javascript" src='<%=context%>/scripts/main.js'></script>
 <script language="javascript" src='<%=context%>/scripts/verify.js'></script>
-
 <script type="text/javascript">
-   function clearItems(){
+
+    function clearItems(){
 	   <c:forEach items="${list}" var="a">
 		   $('#${a.name}_title').val('');
 	   </c:forEach>
-}
+    }
+
+	function changeValue(elementId){
+		 var x = document.getElementById(elementId);
+		 if(x.checked){
+			 document.getElementById(elementId).value="1";
+		 } else {
+			 document.getElementById(elementId).value="0";
+		 }
+	} 
+
+    function saveForm(){
+		var form = document.getElementById("iForm");
+        if(verifyAll(form)){
+			 var params = jQuery("#iForm").formSerialize();
+			  jQuery.ajax({
+				   type: "POST",
+				   url: '<%=request.getContextPath()%>/sys/dictoryDefinition.do?method=saveDictoryDefinition',
+				   data: params,
+				   dataType:  'json',
+				   error: function(data){
+					   alert('服务器处理错误！');
+				   },
+				   success: function(data){
+					   if(data.message != null){
+						   alert(data.message);
+					   } else {
+						 alert('操作成功完成！');
+					   }
+				   }
+			 });
+	    }
+	}
+
+
 </script>
 </head>
 
 <body>
 <div class="nav-title"><span class="Title">字典管理</span>&gt;&gt;字典设置</div>
-<html:form action="${contextPath}/sys/dictoryDefinition.do?method=save" method="post" onsubmit="return verifyAll(this);">
+<html:form name="iForm" id="iForm" action="${contextPath}/sys/dictoryDefinition.do?method=save"
+           method="post">
 <input type="hidden" id="nodeId" name="nodeId" value="${nodeId}">
 <input type="hidden" id="target" name="target" value="${target}">
 <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0" class="box">
@@ -70,7 +106,8 @@ int nodeId=ParamUtil.getIntParameter(request, "nodeId", 0);
 		   </c:choose>
 		</td>
 		<td width="20%"  >
-		  <input type="checkbox" name="${a.name}_required" value="${a.required}" >
+		  <input type="checkbox" id="${a.name}_required" name="${a.name}_required" value="${a.required}" 
+		         onclick="javascript:changeValue('${a.name}_required');">
 		</td>
 		<td width="40%"  >
 		  <input type="hidden" id="${a.name}_name" name="${a.name}_name" value="${a.name}">
@@ -80,10 +117,10 @@ int nodeId=ParamUtil.getIntParameter(request, "nodeId", 0);
      </c:forEach>
  
       <tr>
-        <td colspan="4" align="center" valign="bottom" height="30">&nbsp;
-            <input name="btn_save3" type="submit" value="保存" class="button">
-			<input name="clearItems" type="button" value="全部清空" class="button" onclick="javascript:clearItems();">
-			
+        <td colspan="4" align="center" valign="bottom" height="30">
+		    <br>&nbsp;
+            <input name="btn_save3" type="button" value="保存" class="button" onclick="javascript:saveForm();">
+			<!-- <input name="clearItems" type="button" value="全部清空" class="button" onclick="javascript:clearItems();"> -->
 		</td>
       </tr>
     </table></td>

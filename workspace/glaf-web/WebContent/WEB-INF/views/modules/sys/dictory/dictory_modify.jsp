@@ -43,7 +43,7 @@
     <td class="box-mm"><table width="95%" align="center" border="0" cellspacing="0" cellpadding="5">
       
       <tr>
-        <td width="21%" class="input-box">名称<font color="red">*</font></td>
+        <td width="21%" class="input-box">名称&nbsp;<font color="red">*</font></td>
         <td width="79%">
 		<input type="text" name="name" class="input" value="<%=bean.getName()%>" datatype="string" nullable="no" maxsize="50"  
 		       chname="名称">
@@ -68,7 +68,9 @@
 	 
       <c:forEach items="${list}" var="a">
 	  <tr>
-        <td class="input-box2" valign="top">${a.title}</td>
+        <td class="input-box2" valign="top">
+		${a.title}&nbsp;<c:if test="${a.required==1}"><font color="red">*</font></c:if>
+		</td>
         <td>
 		   <c:choose>
 		     <c:when test="${a.type=='String'}">
