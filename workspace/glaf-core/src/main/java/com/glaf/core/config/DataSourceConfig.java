@@ -482,7 +482,7 @@ public class DataSourceConfig {
 		}
 	}
 
-	public static Properties reload() {
+	public static void reload() {
 		synchronized (DataSourceConfig.class) {
 			InputStream inputStream = null;
 			try {
@@ -505,10 +505,8 @@ public class DataSourceConfig {
 				inputStream.close();
 				inputStream = null;
 				loadJdbcProperties = true;
-				return p;
 			} catch (IOException ex) {
 				loadJdbcProperties = false;
-				throw new RuntimeException(ex);
 			} finally {
 				IOUtils.closeQuietly(inputStream);
 			}

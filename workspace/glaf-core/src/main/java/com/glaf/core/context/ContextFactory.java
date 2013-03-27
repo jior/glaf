@@ -18,13 +18,18 @@
 
 package com.glaf.core.context;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import com.glaf.core.config.SystemConfig;
+
+import com.glaf.core.config.BaseConfiguration;
+import com.glaf.core.config.Configuration;
+import com.glaf.core.config.SystemProperties;
 import com.glaf.core.util.Constants;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 public final class ContextFactory {
+	private static final Configuration conf = BaseConfiguration.create();
 
 	private static org.springframework.context.ApplicationContext ctx;
 
@@ -53,6 +58,9 @@ public final class ContextFactory {
 	}
 
 	public static boolean hasBean(String name) {
+		if (ctx == null) {
+			init();
+		}
 		return ctx.containsBean(name);
 	}
 
@@ -60,10 +68,17 @@ public final class ContextFactory {
 		logger.info("◊∞‘ÿ≈‰÷√Œƒº˛......");
 		if (ctx == null) {
 			try {
-				String filename = SystemConfig.getConfigRootPath()
-						+ Constants.SPRING_APPLICATION_CONTEXT;
-				logger.info("load spring config:" + filename);
-				ctx = new FileSystemXmlApplicationContext(filename);
+				if (StringUtils.isNotEmpty(conf.get("spring-config"))) {
+					String filename = SystemProperties.getConfigRootPath()
+							+ conf.get("spring-config");
+					logger.info("load spring config:" + filename);
+					ctx = new FileSystemXmlApplicationContext(filename);
+				} else {
+					String filename = SystemProperties.getConfigRootPath()
+							+ Constants.SPRING_APPLICATION_CONTEXT;
+					logger.info("load spring config:" + filename);
+					ctx = new FileSystemXmlApplicationContext(filename);
+				}
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
@@ -75,6 +90,10 @@ public final class ContextFactory {
 		if (context != null) {
 			ctx = context;
 		}
+	}
+	
+	public static void main(String[] args){
+		System.out.println(ContextFactory.hasBean("dataSource"));
 	}
 
 }

@@ -350,8 +350,17 @@ public class MxTableDataServiceImpl implements ITableDataService {
 							}
 							if (Constants.ID_EXPRESSION.equals(expr)) {
 								if (cell.getValue() == null) {
-									cell.setStringValue(idGenerator.getNextId());
-									cell.setValue(cell.getStringValue());
+									if (StringUtils.equals(cell.getJavaType(),
+											"Integer")) {
+										cell.setValue(idGenerator.nextId()
+												.intValue());
+										logger.debug("------------int--------------");
+									} else if (StringUtils.equals(
+											cell.getJavaType(), "Long")) {
+										cell.setValue(idGenerator.nextId());
+									} else {
+										cell.setValue(idGenerator.getNextId());
+									}
 								}
 							}
 						}
@@ -360,7 +369,16 @@ public class MxTableDataServiceImpl implements ITableDataService {
 					if (myPK != null && myPK.getValue() != null) {
 						pkColumn.setValue(myPK.getValue());
 					} else {
-						pkColumn.setValue(idGenerator.getNextId());
+						if (StringUtils.equals(pkColumn.getJavaType(),
+								"Integer")) {
+							pkColumn.setValue(idGenerator.nextId().intValue());
+							logger.debug("------------int--------------");
+						} else if (StringUtils.equals(pkColumn.getJavaType(),
+								"Long")) {
+							pkColumn.setValue(idGenerator.nextId());
+						} else {
+							pkColumn.setValue(idGenerator.getNextId());
+						}
 					}
 
 					tableData.removeColumn(pkColumn);

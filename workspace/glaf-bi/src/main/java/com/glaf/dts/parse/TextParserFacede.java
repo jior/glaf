@@ -214,12 +214,16 @@ public class TextParserFacede {
 			}
 			if (parser != null) {
 				rows = parser.parse(tableModel, dataFile);
+				logger.debug("saveToDB=" + saveToDB);
 				if (rows != null && !rows.isEmpty()) {
-					getTableDataService().saveAll(tableModel.getTableName(),
-							rows);
+					if (saveToDB) {
+						logger.info("save data to " + tableModel.getTableName());
+						getTableDataService().saveAll(tableDefinition, rows);
+					}
 				}
 			}
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			throw new RuntimeException(ex);
 		}
 		return rows;
@@ -238,7 +242,6 @@ public class TextParserFacede {
 	 */
 	public List<TableModel> parse(String mappingFile, String dataFile,
 			boolean saveToDB) {
-		List<TableModel> rows = null;
 		MetadataXmlReader reader = new MetadataXmlReader();
 		XmlMappingReader xmlReader = new XmlMappingReader();
 		TableDefinition tableDefinition = null;
@@ -283,17 +286,23 @@ public class TextParserFacede {
 				}
 			}
 			if (parser != null) {
+				logger.info("parser=" + parser.getClass().getName());
 				inputStream = new java.io.FileInputStream(dataFile);
-				rows = parser.parse(tableModel, inputStream);
+				List<TableModel> rows = parser.parse(tableModel, inputStream);
+				logger.info("saveToDB=" + saveToDB);
 				if (rows != null && !rows.isEmpty()) {
-					getTableDataService().saveAll(tableModel.getTableName(),
-							rows);
+					if (saveToDB) {
+						logger.info("save data to " + tableModel.getTableName());
+						getTableDataService().saveAll(tableDefinition, rows);
+					}
 				}
+				return rows;
 			}
-		} catch (IOException ex) {
+		} catch (Exception ex) {
+			ex.printStackTrace();
 			throw new RuntimeException(ex);
 		}
-		return rows;
+		return null;
 	}
 
 	public void process(String mappingDir, String dataDir) {

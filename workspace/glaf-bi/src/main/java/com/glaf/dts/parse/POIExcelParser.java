@@ -14,13 +14,14 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.json.*;
 import com.glaf.core.base.ColumnModel;
 import com.glaf.core.base.TableModel;
+import com.glaf.core.context.ContextFactory;
 
 public class POIExcelParser implements TextParser {
 
 	public static void main(String[] args) throws Exception {
-		String mappingFile = "./report/mapping/Todo.mapping.xml";
-		String dataFile = "./report/data/Todo.xls";
-
+		String mappingFile = "./report/mapping/BaseData.mapping.xml";
+		String dataFile = "./report/data/BaseData.xls";
+        ContextFactory.hasBean("dataSource");
 		TextParserFacede parser = new TextParserFacede();
 		List<TableModel> rows = parser.parse(mappingFile, dataFile, true);
 		if (rows != null && !rows.isEmpty()) {
