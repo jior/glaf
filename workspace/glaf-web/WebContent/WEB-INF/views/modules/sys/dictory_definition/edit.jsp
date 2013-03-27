@@ -35,6 +35,15 @@ int nodeId=ParamUtil.getIntParameter(request, "nodeId", 0);
 		 }
 	} 
 
+	function initCheckValue(elementId, value){
+		 var x = document.getElementById(elementId);
+		 if(value == "1"){
+			 document.getElementById(elementId).checked=true;
+		 } else {
+			 document.getElementById(elementId).checked=false;
+		 }
+	} 
+
     function saveForm(){
 		var form = document.getElementById("iForm");
         if(verifyAll(form)){
@@ -108,6 +117,9 @@ int nodeId=ParamUtil.getIntParameter(request, "nodeId", 0);
 		<td width="20%"  >
 		  <input type="checkbox" id="${a.name}_required" name="${a.name}_required" value="${a.required}" 
 		         onclick="javascript:changeValue('${a.name}_required');">
+			<script type="text/javascript">
+			    initCheckValue('${a.name}_required', '${a.required}');
+			</script>
 		</td>
 		<td width="40%"  >
 		  <input type="hidden" id="${a.name}_name" name="${a.name}_name" value="${a.name}">
