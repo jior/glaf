@@ -13,6 +13,8 @@
 
 package com.glaf.core.mapper;
 
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
 import com.glaf.core.id.Dbid;
@@ -25,5 +27,7 @@ public interface IdMapper {
 	void inertNextDbId(Dbid dbid);
 
 	void updateNextDbId(Dbid dbid);
+
+	List<Dbid> getAllDbids();
 
 }

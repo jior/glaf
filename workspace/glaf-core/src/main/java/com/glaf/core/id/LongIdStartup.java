@@ -36,7 +36,7 @@ public class LongIdStartup {
 				insert = false;
 			}
 			if (insert) {
-				sql = "insert into SYS_DBID values ('next.dbid', '1001', 1);";
+				sql = "insert into SYS_DBID(NAME_, TITLE_, VALUE_, VERSION_) values ('next.dbid', '系统内置主键', '1001', 1)";
 				psmt = con.prepareStatement(sql);
 				psmt.executeUpdate();
 			}

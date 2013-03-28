@@ -30,31 +30,43 @@ public class Dbid {
 	@Id
 	@Column(name = "NAME_", length = 50, nullable = false)
 	private String name;
-
-	@Column(name = "VERSION_", nullable = false)
-	private int version;
+	
+	@Column(name = "TITLE_", length = 200)
+	private String title;
 
 	@Column(name = "VALUE_", length = 500, nullable = false)
 	private String value;
 
+	@Column(name = "VERSION_", nullable = false)
+	private int version;
+
+	
 	public String getName() {
 		return name;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public String getTitle() {
+		return title;
 	}
 
 	public String getValue() {
 		return value;
 	}
 
-	public void setValue(String value) {
-		this.value = value;
-	}
-
 	public int getVersion() {
 		return version;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
 	}
 
 	public void setVersion(int version) {

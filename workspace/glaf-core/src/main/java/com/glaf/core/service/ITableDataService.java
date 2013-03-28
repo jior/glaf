@@ -24,10 +24,27 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.core.base.TableModel;
 import com.glaf.core.domain.TableDefinition;
+import com.glaf.core.id.Dbid;
 import com.glaf.core.util.Paging;
 
 @Transactional(readOnly = true)
 public interface ITableDataService {
+	
+	/**
+	 * 删除数据
+	 * @param model
+	 */
+	@Transactional
+	void deleteTableData(TableModel model);
+
+	List<Dbid> getAllDbids();
+	
+	/**
+	 * 更新序列
+	 * @param rows
+	 */
+	@Transactional
+	void updateAllDbids(List<Dbid> rows);
 
 	/**
 	 * 获取一页数据
@@ -64,7 +81,7 @@ public interface ITableDataService {
 	 */
 	@Transactional
 	void insertTableData(String tableName, List<Map<String, Object>> rows);
-
+	
 	/**
 	 * 插入一条记录
 	 * 
@@ -72,24 +89,6 @@ public interface ITableDataService {
 	 */
 	@Transactional
 	void insertTableData(TableModel model);
-	
-	/**
-	 * 删除数据
-	 * @param model
-	 */
-	@Transactional
-	void deleteTableData(TableModel model);
-
-	/**
-	 * 批量新增或修改记录，如果存在，可以选择是否更新
-	 * 
-	 * @param tableName
-	 * @param updatable
-	 * @param rows
-	 */
-	@Transactional
-	void saveOrUpdate(String tableName, boolean updatable,
-			List<Map<String, Object>> rows);
 
 	/**
 	 * 批量保存记录
@@ -108,6 +107,17 @@ public interface ITableDataService {
 	 */
 	@Transactional
 	void saveAll(TableDefinition tableDefinition, Collection<TableModel> rows);
+
+	/**
+	 * 批量新增或修改记录，如果存在，可以选择是否更新
+	 * 
+	 * @param tableName
+	 * @param updatable
+	 * @param rows
+	 */
+	@Transactional
+	void saveOrUpdate(String tableName, boolean updatable,
+			List<Map<String, Object>> rows);
 
 	/**
 	 * 批量更新记录

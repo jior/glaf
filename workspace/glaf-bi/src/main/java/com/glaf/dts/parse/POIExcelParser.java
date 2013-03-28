@@ -86,7 +86,7 @@ public class POIExcelParser implements TextParser {
 				model.setAggregationKeys(metadata.getAggregationKeys());
 
 				int colCount = row.getPhysicalNumberOfCells();
-				logger.info("column count="+colCount);
+				//logger.info("column count="+colCount);
 				for (ColumnModel cell : metadata.getColumns()) {
 					if (cell.getPosition() > 0 && cell.getPosition() <= colCount) {
 						HSSFCell hssfCell = row.getCell(cell.getPosition() - 1);

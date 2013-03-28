@@ -52,22 +52,41 @@ public class MxTableDataServiceImpl implements ITableDataService {
 	protected final static Log logger = LogFactory
 			.getLog(MxTableDataServiceImpl.class);
 
-	protected IdGenerator idGenerator;
+	protected ColumnDefinitionMapper columnDefinitionMapper;
 
 	protected EntityDAO entityDAO;
 
-	protected SqlSession sqlSession;
+	protected IdGenerator idGenerator;
 
-	protected ColumnDefinitionMapper columnDefinitionMapper;
+	protected IdMapper idMapper;
+
+	protected SqlSession sqlSession;
 
 	protected TableDataMapper tableDataMapper;
 
-	protected TablePageMapper tablePageMapper;
-
 	protected ITableDefinitionService tableDefinitionService;
+
+	protected TablePageMapper tablePageMapper;
 
 	public MxTableDataServiceImpl() {
 
+	}
+
+	/**
+	 * 删除数据
+	 * 
+	 * @param model
+	 */
+	@Transactional
+	public void deleteTableData(TableModel model) {
+		if (StringUtils.isNotEmpty(model.getTableName())
+				&& model.getColumns() != null && !model.getColumns().isEmpty()) {
+			tableDataMapper.deleteTableData(model);
+		}
+	}
+
+	public List<Dbid> getAllDbids() {
+		return idMapper.getAllDbids();
 	}
 
 	/**
@@ -120,19 +139,6 @@ public class MxTableDataServiceImpl implements ITableDataService {
 			for (TableModel t : rows) {
 				tableDataMapper.insertTableData(t);
 			}
-		}
-	}
-
-	/**
-	 * 删除数据
-	 * 
-	 * @param model
-	 */
-	@Transactional
-	public void deleteTableData(TableModel model) {
-		if (StringUtils.isNotEmpty(model.getTableName())
-				&& model.getColumns() != null && !model.getColumns().isEmpty()) {
-			tableDataMapper.deleteTableData(model);
 		}
 	}
 
@@ -489,6 +495,11 @@ public class MxTableDataServiceImpl implements ITableDataService {
 	}
 
 	@Resource
+	public void setIdMapper(IdMapper idMapper) {
+		this.idMapper = idMapper;
+	}
+
+	@Resource
 	public void setSqlSession(SqlSession sqlSession) {
 		this.sqlSession = sqlSession;
 	}
@@ -561,6 +572,32 @@ public class MxTableDataServiceImpl implements ITableDataService {
 						}
 					}
 					tableDataMapper.updateTableDataByPrimaryKey(table);
+				}
+			}
+		}
+	}
+
+	@Transactional
+	public void updateAllDbids(List<Dbid> rows) {
+		if (rows != null && !rows.isEmpty()) {
+			Map<String, Long> idMap = new HashMap<String, Long>();
+			List<Dbid> list = this.getAllDbids();
+			for (Dbid id : rows) {
+				if (StringUtils.isNumeric(id.getValue())) {
+					idMap.put(id.getName(), Long.parseLong(id.getValue()));
+				}
+			}
+			if (list != null && !list.isEmpty()) {
+				for (Dbid dbid : list) {
+					if (idMap.containsKey(dbid.getName())
+							&& StringUtils.isNumeric(dbid.getValue())) {
+						if (idMap.get(dbid.getName()) > Long.parseLong(dbid
+								.getValue())) {
+							dbid.setValue(idMap.get(dbid.getName()).toString());
+							dbid.setVersion(dbid.getVersion() + 1);
+							idMapper.updateNextDbId(dbid);
+						}
+					}
 				}
 			}
 		}
