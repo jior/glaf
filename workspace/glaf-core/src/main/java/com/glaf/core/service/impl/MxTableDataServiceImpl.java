@@ -341,8 +341,9 @@ public class MxTableDataServiceImpl implements ITableDataService {
 						String expr = exprMap.get(cell.getColumnName());
 						if (StringUtils.isNotEmpty(expr)) {
 							// logger.debug(cell.getColumnName() + "=" + expr);
-							if (Constants.CURRENT_YYYYMMDD_EXPRESSION
-									.equals(expr)) {
+							if (Constants.NOW_EXPRESSION.equals(expr)
+									|| Constants.CURRENT_YYYYMMDD_EXPRESSION
+											.equals(expr)) {
 								if (cell.getDateValue() == null) {
 									cell.setDateValue(new Date());
 									cell.setValue(cell.getDateValue());
