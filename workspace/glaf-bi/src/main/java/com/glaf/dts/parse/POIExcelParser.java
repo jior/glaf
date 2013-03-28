@@ -7,6 +7,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -17,6 +19,9 @@ import com.glaf.core.base.TableModel;
 import com.glaf.core.context.ContextFactory;
 
 public class POIExcelParser implements TextParser {
+	
+	protected final static Log logger = LogFactory
+			.getLog(POIExcelParser.class);
 
 	public static void main(String[] args) throws Exception {
 		String mappingFile = "./report/mapping/BaseData.mapping.xml";
@@ -81,8 +86,9 @@ public class POIExcelParser implements TextParser {
 				model.setAggregationKeys(metadata.getAggregationKeys());
 
 				int colCount = row.getPhysicalNumberOfCells();
+				logger.info("column count="+colCount);
 				for (ColumnModel cell : metadata.getColumns()) {
-					if (cell.getPosition() > 0 && cell.getPosition() < colCount) {
+					if (cell.getPosition() > 0 && cell.getPosition() <= colCount) {
 						HSSFCell hssfCell = row.getCell(cell.getPosition() - 1);
 						ColumnModel col = new ColumnModel();
 						col.setName(cell.getName());

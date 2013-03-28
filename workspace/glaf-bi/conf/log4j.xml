@@ -124,7 +124,7 @@
 
 
   <root>
-    <level value="INFO"/>
+    <level value="DEBUG"/>
     <appender-ref ref="CONSOLE"/>
 	<appender-ref ref="ROLLING_FILE"/>
   </root>
