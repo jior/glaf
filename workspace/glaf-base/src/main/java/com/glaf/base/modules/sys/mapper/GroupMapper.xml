@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.base.modules.sys.mapper.GroupMapper">
+
+	<resultMap id="groupResultMap" type="com.glaf.base.modules.sys.model.Group">
+		<id property="groupId" column="GROUPID" jdbcType="VARCHAR" />
+		<result property="name" column="NAME" jdbcType="VARCHAR" />
+		<result property="desc" column="GROUPDESC" jdbcType="VARCHAR" />
+		<result property="type" column="TYPE" jdbcType="VARCHAR" />
+		<result property="createBy" column="CREATEBY" jdbcType="VARCHAR" />
+		<result property="sort" column="SORT" jdbcType="INTEGER" />
+	</resultMap>
+
+
+	<insert id="insertGroup" parameterType="com.glaf.base.modules.sys.model.Group">
+		insert into SYS_GROUP
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			GROUPID
+			<if test="name != null">
+				,NAME
+			</if>
+			<if test="desc != null">
+				,GROUPDESC
+			</if>
+			<if test="type != null">
+				,TYPE
+			</if>
+			<if test="createBy != null">
+				,CREATEBY
+			</if>
+			<if test="sort != null">
+				,SORT
+			</if>
+		</trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			#{groupId, jdbcType=VARCHAR}
+
+			<if test="name != null">
+				,#{name, jdbcType=VARCHAR}
+			</if>
+			<if test="desc != null">
+				,#{desc, jdbcType=VARCHAR}
+			</if>
+			<if test="type != null">
+				,#{type, jdbcType=VARCHAR}
+			</if>
+			<if test="createBy != null">
+				,#{createBy, jdbcType=VARCHAR}
+			</if>
+			<if test="sort != null">
+				,#{sort, jdbcType=INTEGER}
+			</if>
+		</trim>
+	</insert>
+
+
+	<update id="updateGroup" parameterType="com.glaf.base.modules.sys.model.Group">
+		update SYS_GROUP
+		set
+		<trim prefix="" suffix="" suffixOverrides=",">
+			<if test="name != null">
+				NAME = #{name, jdbcType=VARCHAR},
+			</if>
+			<if test="desc != null">
+				GROUPDESC = #{desc, jdbcType=VARCHAR},
+			</if>
+			<if test="sort != null">
+				SORT = #{sort, jdbcType=INTEGER},
+			</if>
+		</trim>
+		where
+		GROUPID = #{groupId, jdbcType=VARCHAR}
+
+	</update>
+
+
+	<delete id="deleteGroupById" parameterType="string">
+		delete from SYS_GROUP
+		where GROUPID = #{id}
+	</delete>
+
+
+	<delete id="deleteGroups" parameterType="com.glaf.base.modules.sys.query.GroupQuery">
+		delete from SYS_GROUP
+		where (
+		GROUPID IN
+		<foreach item="x_rowId" index="index" collection="rowIds"
+			open="(" separator="," close=")">
+			#{x_rowId}
+		</foreach>
+		)
+	</delete>
+
+
+	<select id="getGroupById" parameterType="string" resultMap="groupResultMap">
+		select * from SYS_GROUP where GROUPID = #{id}
+	</select>
+
+
+	<select id="getGroups" parameterType="com.glaf.base.modules.sys.query.GroupQuery"
+		resultMap="groupResultMap">
+		select E.*
+		<include refid="selectGroupsSql" />
+		<choose>
+			<when test="orderBy != null">
+				order by ${orderBy}
+			</when>
+			<otherwise>
+				order by E.GROUPID desc
+			</otherwise>
+		</choose>
+	</select>
+
+
+	<select id="getGroupCount" parameterType="com.glaf.base.modules.sys.query.GroupQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectGroupsSql" />
+	</select>
+
+
+	<sql id="selectGroupsSql">
+
+		from SYS_GROUP E
+
+		<where>
+			1 = 1
+
+			<if test="name != null and name != '' ">
+				and E.NAME = #{name}
+			</if>
+
+			<if test="nameLike != null and nameLike != '' ">
+				and E.NAME like #{nameLike}
+			</if>
+
+			<if test="names != null and names.size() &gt; 0">
+				and E.NAME IN
+				<foreach item="x_name" index="index" collection="names"
+					open="(" separator="," close=")">
+					#{x_name}
+				</foreach>
+			</if>
+
+			<if test="descLike != null and descLike != '' ">
+				and E.GROUPDESC like #{descLike}
+			</if>
+
+			<if test="type != null and type != '' ">
+				and E.TYPE = #{type}
+			</if>
+
+			<if test="typeLike != null and typeLike != '' ">
+				and E.TYPE like #{typeLike}
+			</if>
+
+			<if test="types != null and types.size() &gt; 0">
+				and E.TYPE IN
+				<foreach item="x_type" index="index" collection="types"
+					open="(" separator="," close=")">
+					#{x_type}
+				</foreach>
+			</if>
+
+			<if test="createBy != null and createBy != '' ">
+				and E.CREATEBY = #{createBy}
+			</if>
+
+			<if test="sortGreaterThanOrEqual != null">
+				and E.SORT &gt;= #{sortGreaterThanOrEqual}
+			</if>
+
+			<if test="sortGreaterThan  != null">
+				and E.SORT &gt; #{sortGreaterThan}
+			</if>
+
+			<if test="sortLessThanOrEqual != null">
+				and E.SORT &lt;= #{sortLessThanOrEqual}
+			</if>
+
+			<if test="sortLessThan != null">
+				and E.SORT &lt; #{sortLessThan}
+			</if>
+
+		</where>
+	</sql>
+
+</mapper>

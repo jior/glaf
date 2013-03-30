@@ -7,22 +7,27 @@
 			<param name="beanName" value="sysFunctionAjaxService"/>
 			<exclude method="setSysFunctionService"/>
 		</create>
+
 		<create creator="spring" javascript="SysDepartmentAjaxService">
 			<param name="beanName" value="sysDepartmentAjaxService"/>
 			<exclude method="setSysDepartmentService"/>
 		</create>
+
 		<create creator="spring" javascript="SysRoleAjaxService">
 			<param name="beanName" value="sysRoleAjaxService"/>
 			<exclude method="setSysRoleService"/>
 		</create>
+
 		<create creator="spring" javascript="SysApplicationAjaxService">
 			<param name="beanName" value="sysApplicationAjaxService"/>
 			<exclude method="setSysApplicationService"/>
 		</create>
+
 		<create creator="spring" javascript="SysTreeAjaxService">
 			<param name="beanName" value="sysTreeAjaxService"/>
 			<exclude method="setSysTreeService"/>
 		</create>
+
 		<create creator="spring" javascript="DictoryAjaxService">
 			<param name="beanName" value="dictoryAjaxService"/>
 			<exclude method="setDictoryService"/>
@@ -42,6 +47,11 @@
 			<param name="beanName" value="sysUserRoleAjaxService"/>
 			<exclude method="setSysUserRoleService"/>
 		</create>
+
+		<create creator="spring" javascript="GroupAjaxService">
+			<param name="beanName" value="groupAjaxService"/>
+			<exclude method="setGroupService"/>
+		</create> 
 
 	</allow>
 </dwr>

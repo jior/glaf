@@ -58,4 +58,10 @@
 		</property>
 	</bean>
 
+	<bean name="groupAjaxService" class="com.glaf.base.modules.sys.service.GroupAjaxService">
+		<property name="groupService">
+			<ref bean="groupService" />
+		</property>
+	</bean> 
+
 </beans>

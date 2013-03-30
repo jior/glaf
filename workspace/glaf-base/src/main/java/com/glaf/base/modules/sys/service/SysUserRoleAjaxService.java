@@ -24,6 +24,7 @@ import org.apache.commons.logging.LogFactory;
 public class SysUserRoleAjaxService {
 	private static final Log logger = LogFactory
 			.getLog(SysUserRoleAjaxService.class);
+
 	private SysUserRoleService sysUserRoleService;
 
 	public void setSysUserRoleService(SysUserRoleService sysUserRoleService) {

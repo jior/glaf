@@ -20,10 +20,11 @@ package com.glaf.base.modules.sys.service;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
+ 
 public class SysFunctionAjaxService {
 	private static final Log logger = LogFactory
 			.getLog(SysFunctionAjaxService.class);
+ 
 	private SysFunctionService sysFunctionService;
 
 	public void setSysFunctionService(SysFunctionService sysFunctionService) {

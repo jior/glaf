@@ -26,6 +26,7 @@ import com.glaf.base.modules.sys.model.SysApplication;
 public class SysApplicationAjaxService {
 	private static final Log logger = LogFactory
 			.getLog(SysApplicationAjaxService.class);
+
 	private SysApplicationService sysApplicationService;
 
 	public void setSysApplicationService(

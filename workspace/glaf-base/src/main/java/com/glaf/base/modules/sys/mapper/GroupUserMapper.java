@@ -15,33 +15,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.glaf.base.modules.sys.mapper;
 
-package com.glaf.base.modules.sys.service;
+import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.springframework.stereotype.Component;
+import com.glaf.base.modules.sys.model.*;
 
-import com.glaf.base.modules.sys.model.Dictory;
+@Component
+public interface GroupUserMapper {
 
-public class DictoryAjaxService {
-	private static final Log logger = LogFactory
-			.getLog(DictoryAjaxService.class);
+	void deleteGroupUsersByGroupId(String groupId);
 
-	private DictoryService dictoryService;
+	void deleteGroupUsersByUserId(String groupId);
 
-	public void setDictoryService(DictoryService dictoryService) {
-		this.dictoryService = dictoryService;
-	}
+	void insertGroupUser(GroupUser model);
+	
+	List<String> getUserIdsByGroupId(String groupId);
 
-	/**
-	 * ≈≈–Ú
-	 * 
-	 * @param id
-	 * @param operate
-	 */
-	public void sort(int parent, int id, int operate) {
-		logger.info("parent:" + parent + "; id:" + id + "; operate:" + operate);
-		Dictory bean = dictoryService.find(id);
-		dictoryService.sort(parent, bean, operate);
-	}
 }
