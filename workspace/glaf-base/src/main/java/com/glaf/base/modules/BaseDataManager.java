@@ -624,7 +624,6 @@ public class BaseDataManager {
 	 */
 	private void loadDepartments() {
 		try {
-
 			SysTree parent = getSysTreeService().getSysTreeByCode(
 					SysConstants.TREE_DEPT);
 			List<SysTree> list = new ArrayList<SysTree>();
@@ -676,9 +675,7 @@ public class BaseDataManager {
 	 */
 	public void loadDictInfo() {
 		try {
-
 			logger.info("装载字典信息开始...");
-
 			List<SysTree> trees = getDictoryService().getAllCategories();
 			for (int i = 0; i < trees.size(); i++) {
 				SysTree treeNode = trees.get(i);
@@ -715,9 +712,7 @@ public class BaseDataManager {
 					}
 				}
 			}
-
 			logger.info("装载字典信息结束.");
-
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("提取字典数据失败！");
@@ -729,9 +724,7 @@ public class BaseDataManager {
 	 */
 	public void loadFunctions() {
 		try {
-
 			logger.info("装载模块信息开始...");
-
 			List<SysFunction> list = getSysFunctionService()
 					.getSysFunctionList();
 			// 显示所有模块列表
@@ -754,7 +747,6 @@ public class BaseDataManager {
 				baseDataMap.put(Constants.BD_KEYS[15], tmp);
 			}
 			logger.info("装载模块信息结束");
-
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("提取模块数据失败！");
@@ -768,9 +760,7 @@ public class BaseDataManager {
 	 */
 	public void loadSubjectCode() {
 		try {
-
 			logger.info("装载科目代码开始...");
-
 			List<SubjectCode> list = getSubjectCodeService()
 					.getSubjectCodeList();
 			// 显示所有列表
@@ -795,7 +785,6 @@ public class BaseDataManager {
 				baseDataMap.put(Constants.BD_KEYS[22], tmp);
 			}
 			logger.info("装载科目代码信息结束");
-
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("提取科目代码数据失败！");
@@ -807,7 +796,6 @@ public class BaseDataManager {
 	 */
 	private void loadUsers() {
 		try {
-
 			List<SysUser> list = getSysUserService().getSysUserList();
 			if (list != null) {
 				Iterator<SysUser> iter = list.iterator();
@@ -830,7 +818,6 @@ public class BaseDataManager {
 				baseDataMap.put(Constants.BD_KEYS[0], tmp);
 			}
 			logger.info("装载用户信息结束");
-
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("提取用户信息失败！");
