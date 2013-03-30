@@ -86,7 +86,6 @@ public class AuthorizeFilter implements Filter {
 										"/sys/department.do")
 								|| StringUtils.contains(uri,
 										"/sys/application.do")
-								|| StringUtils.contains(uri, "/sys/dictory.do")
 								|| StringUtils.contains(uri,
 										"/sys/scheduler.do")
 								|| StringUtils

@@ -46,14 +46,14 @@ import com.glaf.core.util.RequestUtils;
 
 @Controller("/sys/scheduler")
 @RequestMapping("/sys/scheduler.do")
-public class SchedulerController {
+public class SysSchedulerController {
 	protected final static Log logger = LogFactory
-			.getLog(SchedulerController.class);
+			.getLog(SysSchedulerController.class);
 
 	@javax.annotation.Resource
 	protected ISysSchedulerService sysSchedulerService;
 
-	public SchedulerController() {
+	public SysSchedulerController() {
 
 	}
 

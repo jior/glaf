@@ -57,11 +57,11 @@ import com.glaf.base.modules.sys.service.SysTreeService;
 import com.glaf.base.utils.ParamUtil;
 import com.glaf.base.utils.RequestUtil;
 
-@Controller("/base/dictory")
-@RequestMapping("/base/dictory.do")
-public class DictoryController {
+@Controller("/sys/dictory")
+@RequestMapping("/sys/dictory.do")
+public class SysDictoryController {
 	private static final Log logger = LogFactory
-			.getLog(DictoryController.class);
+			.getLog(SysDictoryController.class);
 
 	@javax.annotation.Resource
 	private DictoryService dictoryService;
@@ -108,7 +108,7 @@ public class DictoryController {
 				pageSize);
 		request.setAttribute("pager", pager);
 		// 显示列表页面
-		return new ModelAndView("/modules/base/dictory/dictory_list", modelMap);
+		return new ModelAndView("/modules/sys/dictory/dictory_list", modelMap);
 	}
 
 	/**
@@ -136,7 +136,7 @@ public class DictoryController {
 			}
 		}
 
-		return new ModelAndView("/modules/base/dictory/dictory_add", modelMap);
+		return new ModelAndView("/modules/sys/dictory/dictory_add", modelMap);
 	}
 
 	/**
@@ -219,7 +219,7 @@ public class DictoryController {
 		sysTreeService.getSysTree(list, (int) parent.getId(), 1);
 		request.setAttribute("parent", list);
 
-		return new ModelAndView("/modules/base/dictory/dictory_modify", modelMap);
+		return new ModelAndView("/modules/sys/dictory/dictory_modify", modelMap);
 	}
 
 	/**
@@ -304,7 +304,7 @@ public class DictoryController {
 		RequestUtil.setRequestParameterToAttribute(request);
 		SysTree bean = sysTreeService.getSysTreeByCode(Constants.TREE_DICTORY);
 		request.setAttribute("parent", bean.getId() + "");
-		return new ModelAndView("/modules/base/dictory/dictory_frame", modelMap);
+		return new ModelAndView("/modules/sys/dictory/dictory_frame", modelMap);
 	}
 
 	/**
@@ -320,7 +320,7 @@ public class DictoryController {
 	public ModelAndView loadDictory(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
 		RequestUtil.setRequestParameterToAttribute(request);
-		return new ModelAndView("/modules/base/dictory/dictory_load", modelMap);
+		return new ModelAndView("/modules/sys/dictory/dictory_load", modelMap);
 	}
 
 	/**
@@ -342,7 +342,7 @@ public class DictoryController {
 				"dictory.reload_success"));
 		MessageUtils.addMessages(request, messages);
 		// 显示列表页面
-		return new ModelAndView("/modules/base/dictory/dictory_load", modelMap);
+		return new ModelAndView("/modules/sys/dictory/dictory_load", modelMap);
 	}
 
 	/**
@@ -369,7 +369,7 @@ public class DictoryController {
 			// view = new ModelAndView("show_contract_dictory_select");
 		} else {
 			iter = BaseDataManager.getInstance().getList(code);
-			view = new ModelAndView("/modules/base/dictory/dictory_select",
+			view = new ModelAndView("/modules/sys/dictory/dictory_select",
 					modelMap);
 		}
 		request.setAttribute("list", iter);

@@ -55,8 +55,8 @@ import com.glaf.core.util.RequestUtils;
 import com.glaf.core.web.callback.CallbackProperties;
 import com.glaf.core.web.callback.LoginCallback;
 
-@Controller("/sys/authorize")
-@RequestMapping("/sys/authorize.do")
+@Controller("/authorize")
+@RequestMapping("/authorize.do")
 public class AuthorizeController {
 	private static final Log logger = LogFactory
 			.getLog(AuthorizeController.class);

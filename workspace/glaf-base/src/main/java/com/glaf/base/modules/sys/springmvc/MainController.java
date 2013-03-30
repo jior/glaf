@@ -29,7 +29,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.glaf.base.utils.RequestUtil;
 
-@Controller("main")
+@Controller("/main")
 @RequestMapping("/main.do")
 public class MainController {
 

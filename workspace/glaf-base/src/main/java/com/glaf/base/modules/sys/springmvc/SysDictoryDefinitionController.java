@@ -20,13 +20,13 @@ import com.glaf.base.modules.sys.service.*;
 
 @Controller("/sys/dictoryDefinition")
 @RequestMapping("/sys/dictoryDefinition.do")
-public class DictoryDefinitionController {
+public class SysDictoryDefinitionController {
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
 
 	@javax.annotation.Resource
 	protected DictoryDefinitionService dictoryDefinitionService;
 
-	public DictoryDefinitionController() {
+	public SysDictoryDefinitionController() {
 
 	}
 
