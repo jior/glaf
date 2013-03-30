@@ -76,7 +76,7 @@ public class MxSystemSequenceController {
 	@RequestMapping("/save")
 	public byte[] save(HttpServletRequest request, ModelMap modelMap) {
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		logger.debug("params:"+params);
+		logger.debug("params:" + params);
 
 		List<Dbid> rows = tableDataService.getAllDbids();
 		if (rows != null && !rows.isEmpty()) {
