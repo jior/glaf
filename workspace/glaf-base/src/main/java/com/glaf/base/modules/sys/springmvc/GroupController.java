@@ -30,6 +30,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.glaf.base.modules.Constants;
 import com.glaf.base.modules.sys.model.Group;
+import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.sys.service.GroupService;
 import com.glaf.base.utils.ParamUtil;
 import com.glaf.base.utils.RequestUtil;
@@ -37,7 +38,7 @@ import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
 import com.glaf.core.res.ViewMessages;
 import com.glaf.core.util.PageResult;
-import com.glaf.core.util.RequestUtils;
+ 
 
 @Controller("/base/group")
 @RequestMapping("/base/group.do")
@@ -134,9 +135,9 @@ public class GroupController {
 	public ModelAndView saveAdd(ModelMap modelMap, HttpServletRequest request,
 			HttpServletResponse response) {
 		RequestUtil.setRequestParameterToAttribute(request);
-
 		boolean ret = false;
-		String actorId = RequestUtils.getActorId(request);
+		SysUser user = RequestUtil.getLoginUser(request);
+		String actorId = user.getAccount();
 		String type = request.getParameter("type");
 		Group bean = new Group();
 		bean.setName(ParamUtil.getParameter(request, "name"));
@@ -182,7 +183,6 @@ public class GroupController {
 		if (bean != null) {
 			bean.setName(ParamUtil.getParameter(request, "name"));
 			bean.setDesc(ParamUtil.getParameter(request, "desc"));
-
 		}
 		boolean ret = false;
 		try {
@@ -223,7 +223,8 @@ public class GroupController {
 	public ModelAndView showList(ModelMap modelMap, HttpServletRequest request,
 			HttpServletResponse response) {
 		RequestUtil.setRequestParameterToAttribute(request);
-		String actorId = RequestUtils.getActorId(request);
+		SysUser user = RequestUtil.getLoginUser(request);
+		String actorId = user.getAccount();
 		String type = request.getParameter("type");
 		int pageNo = ParamUtil.getIntParameter(request, "page_no", 1);
 		int pageSize = ParamUtil.getIntParameter(request, "page_size",

@@ -46,6 +46,7 @@ import com.glaf.base.modules.sys.service.SysUserService;
 import com.glaf.base.utils.ParamUtil;
 import com.glaf.base.utils.RequestUtil;
 
+import com.glaf.core.cache.CacheUtils;
 import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
 import com.glaf.core.res.ViewMessages;
@@ -192,11 +193,11 @@ public class UserController {
 			user.setEmail(ParamUtil.getParameter(request, "email"));
 			user.setTelephone(ParamUtil.getParameter(request, "telephone"));
 			ret = sysUserService.update(user);
+			CacheUtils.clearUserCache(user.getAccount());
 		}
 
 		ViewMessages messages = new ViewMessages();
 		if (ret) {// 保存成功
-			RequestUtil.setLoginUser(request, bean);
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"user.modify_success"));
 		} else {// 保存失败

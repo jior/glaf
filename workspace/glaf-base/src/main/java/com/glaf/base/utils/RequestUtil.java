@@ -40,6 +40,7 @@ import org.apache.commons.logging.LogFactory;
 import com.glaf.base.business.AuthorizeBean;
 import com.glaf.base.modules.sys.SysConstants;
 import com.glaf.base.modules.sys.model.SysUser;
+import com.glaf.core.util.RequestUtils;
 
 public class RequestUtil {
 	protected final static Log logger = LogFactory.getLog(RequestUtil.class);
@@ -247,17 +248,6 @@ public class RequestUtil {
 			}
 		}
 		return ipAddress;
-	}
-
-	public static SysUser getLoginUser(HttpServletRequest request) {
-		HttpSession session = request.getSession(false);
-		SysUser user = null;
-		if (session != null) {
-			String account = (String) session.getAttribute(SysConstants.LOGIN);
-			AuthorizeBean bean = new AuthorizeBean();
-			user = bean.getUser(account);
-		}
-		return user;
 	}
 
 	/**
@@ -537,35 +527,14 @@ public class RequestUtil {
 		return defaultValue;
 	}
 
-	public static SysUser getSysUser(HttpServletRequest request) {
-		String actorId = null;
+	public static SysUser getLoginUser(HttpServletRequest request) {
+		String actorId = RequestUtils.getActorId(request);
 		SysUser sysUser = null;
-		HttpSession session = request.getSession(false);
-		if (session != null) {
-			actorId = (String) session.getAttribute(SysConstants.LOGIN);
-			if (actorId != null) {
-				AuthorizeBean bean = new AuthorizeBean();
-				sysUser = bean.getUser(actorId);
-			}
+		if (actorId != null) {
+			AuthorizeBean bean = new AuthorizeBean();
+			sysUser = bean.getUser(actorId);
 		}
 		return sysUser;
-	}
-
-	 
-
-	 
-	public static void setLoginUser(HttpServletRequest request, String actorId) {
-		AuthorizeBean bean = new AuthorizeBean();
-		SysUser user = bean.getUser(actorId);
-		setLoginUser(request, user);
-	}
-
-	public static void setLoginUser(HttpServletRequest request, SysUser bean) {
-		HttpSession session = request.getSession(false);
-		if (session != null && bean != null) {
-			session.setAttribute(SysConstants.LOGIN, bean.getAccount());
-			session.setAttribute("LOGIN_ACTORID", bean.getAccount());
-		}
 	}
 
 	/**
