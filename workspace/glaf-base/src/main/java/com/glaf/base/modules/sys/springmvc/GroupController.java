@@ -20,8 +20,10 @@ package com.glaf.base.modules.sys.springmvc;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
 
@@ -142,35 +144,44 @@ public class GroupController {
 		SysTree root = sysTreeService.getSysTreeByCode(SysConstants.TREE_DEPT);
 		if (root != null && users != null) {
 			logger.debug(root.toJsonObject().toJSONString());
-			logger.debug("users size:"+users.size());
+			logger.debug("users size:" + users.size());
 			List<TreeModel> treeModels = new ArrayList<TreeModel>();
-			treeModels.add(root);
+			//treeModels.add(root);
 			List<SysTree> trees = sysTreeService.getSysTreeListForDept(
 					(int) root.getId(), 0);
 			if (trees != null && !trees.isEmpty()) {
-				logger.debug("dept tree size:"+trees.size());
+				logger.debug("dept tree size:" + trees.size());
+				Map<Long, SysTree> treeMap = new HashMap<Long, SysTree>();
+				for (SysTree tree : trees) {
+					SysDepartment dept = tree.getDepartment();
+					treeMap.put(dept.getId(), tree);
+				}
 				long ts = System.currentTimeMillis();
 				for (SysTree tree : trees) {
 					treeModels.add(tree);
 					SysDepartment dept = tree.getDepartment();
-					for (SysUser user : users) {
-						if (dept.getId() == user.getDeptId()) {
-							TreeModel treeModel = new BaseTree();
-							treeModel.setParentId(user.getDeptId());
-							treeModel.setId(ts++);
-							treeModel.setCode(user.getAccount());
-							treeModel.setName(user.getAccount()+" "+user.getName());
-							treeModel.setIconCls("user");
-							if (userIds != null
-									&& userIds.contains(user.getAccount())) {
-								treeModel.setChecked(true);
+					if (dept != null && dept.getId() > 0) {
+						for (SysUser user : users) {
+							SysTree t = treeMap.get(Long.valueOf(user.getDeptId()));
+							if (dept.getId() == user.getDeptId() && t != null) {
+								TreeModel treeModel = new BaseTree();
+								treeModel.setParentId(t.getId());
+								treeModel.setId(ts++);
+								treeModel.setCode(user.getAccount());
+								treeModel.setName(user.getAccount() + " "
+										+ user.getName());
+								treeModel.setIconCls("user");
+								if (userIds != null
+										&& userIds.contains(user.getAccount())) {
+									treeModel.setChecked(true);
+								}
+								treeModels.add(treeModel);
 							}
-							treeModels.add(treeModel);
 						}
 					}
 				}
 			}
-			logger.debug("treeModels:"+treeModels.size());
+			logger.debug("treeModels:" + treeModels.size());
 			TreeHelper treeHelper = new TreeHelper();
 			JSONArray jsonArray = treeHelper.getTreeJSONArray(treeModels);
 			return jsonArray.toJSONString().getBytes("UTF-8");
