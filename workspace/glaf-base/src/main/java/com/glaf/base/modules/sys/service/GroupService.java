@@ -100,6 +100,14 @@ public interface GroupService {
 	 * @return
 	 */
 	List<String> getUserIdsByGroupId(String groupId);
+	
+	/**
+	 * 根据群组名称及类型获取群组用户
+	 * @param groupName
+	 * @param groupType
+	 * @return
+	 */
+	List<String> getUserIdsByGroupNameAndType(String groupName, String groupType);
 
 	/**
 	 * 根据查询参数获取记录列表

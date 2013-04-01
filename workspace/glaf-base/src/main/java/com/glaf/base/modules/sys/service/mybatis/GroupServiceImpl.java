@@ -124,14 +124,14 @@ public class GroupServiceImpl implements GroupService {
 				rowBounds);
 		return rows;
 	}
-	
+
 	/**
 	 * 通过用户账号获取群组
 	 * 
 	 * @param userId
 	 * @return
 	 */
-	public List<Group> getGroupsByUserId(String userId){
+	public List<Group> getGroupsByUserId(String userId) {
 		return groupMapper.getGroupsByUserId(userId);
 	}
 
@@ -142,7 +142,7 @@ public class GroupServiceImpl implements GroupService {
 	 * @param type
 	 * @return
 	 */
-	public List<Group> getGroupsByUserIdAndType(String userId, String type){
+	public List<Group> getGroupsByUserIdAndType(String userId, String type) {
 		GroupQuery query = new GroupQuery();
 		query.setUserId(userId);
 		query.setType(type);
@@ -151,6 +151,26 @@ public class GroupServiceImpl implements GroupService {
 
 	public List<String> getUserIdsByGroupId(String groupId) {
 		return groupUserMapper.getUserIdsByGroupId(groupId);
+	}
+
+	/**
+	 * 根据群组名称及类型获取群组用户
+	 * 
+	 * @param groupName
+	 * @param groupType
+	 * @return
+	 */
+	public List<String> getUserIdsByGroupNameAndType(String groupName,
+			String groupType) {
+		GroupQuery query = new GroupQuery();
+		query.name(groupName);
+		query.type(groupType);
+		List<Group> list = groupMapper.getGroups(query);
+		if (list != null && list.isEmpty()) {
+			Group group = list.get(0);
+			return this.getUserIdsByGroupId(group.getGroupId());
+		}
+		return null;
 	}
 
 	public List<Group> list(GroupQuery query) {
