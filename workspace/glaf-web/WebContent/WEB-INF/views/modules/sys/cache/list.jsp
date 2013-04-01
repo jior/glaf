@@ -134,8 +134,8 @@
     <div style="background:#fafafa;padding:2px;border:1px solid #ddd;font-size:12px"> 
 	<img src="<%=request.getContextPath()%>/images/window.png">
 	&nbsp;<span class="x_content_title">缓存信息列表</span>
-    <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-view'"
-	   onclick="javascript:viewSelected();">查看</a>  
+    <!-- <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-view'"
+	   onclick="javascript:viewSelected();">查看</a> -->  
 	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-remove'"
 	   onclick="javascript:deleteSelections();">删除</a> 
 	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-clear'"

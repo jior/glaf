@@ -90,24 +90,31 @@ int nodeId=ParamUtil.getIntParameter(request, "nodeId", 0);
   <tr>
     <td class="box-mm"><table width="95%" align="center" border="0" cellspacing="0" cellpadding="5">
 	  <tr class="box">
-        <td class="input-box2" width="20%">&nbsp;名称</td>
+        <!-- <td class="input-box2" width="20%">&nbsp;名称</td> -->
         <td class="input-box2" width="20%">&nbsp;类型</td>
         <td class="input-box2" width="20%">&nbsp;必填</td>
 		<td class="input-box2" width="40%">&nbsp;标题</td>
       </tr>
 	  <c:forEach items="${list}" var="a">
       <tr>
-        <td width="20%"  >${a.name}</td>
+        <!-- <td width="20%"  >${a.name}</td> -->
         <td width="20%"  >
 		   <c:choose>
 		     <c:when test="${a.type=='String'}">
-			    字符串
+			    <c:choose>
+				 <c:when test="${a.length == 2000}">
+				   文本型
+				 </c:when>
+				 <c:otherwise>
+			       字符串
+				</c:otherwise>
+				</c:choose>
              </c:when>
 			 <c:when test="${a.type=='Date'}">
 			    日期
              </c:when>
 			 <c:when test="${a.type=='Long'}">
-			    长整型
+			    整数型
              </c:when>
 			 <c:when test="${a.type=='Double'}">
 			    数值型

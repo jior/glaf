@@ -31,7 +31,7 @@
             sx += code;  
         }  
         $("#userIds").val(sx);
-		alert($("#userIds").val());
+		//alert($("#userIds").val());
 		var params = jQuery("#iForm").formSerialize();
 		jQuery.ajax({
 				   type: "POST",
