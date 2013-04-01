@@ -106,11 +106,15 @@ public interface TreeModel extends Serializable,
 
 	String getUrl();
 
+	boolean isChecked();
+
 	/**
 	 * 删除子节点
 	 * 
 	 */
 	void removeChild(TreeModel treeModel);
+
+	void setChecked(boolean checked);
 
 	/**
 	 * 设置子节点

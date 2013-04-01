@@ -100,6 +100,28 @@
 	</select>
 
 
+	<select id="getGroupsByUserId" parameterType="string" resultMap="groupResultMap">
+		select g.*
+		from SYS_GROUP g, SYS_GROUP_USER membership
+		where g.GROUPID =
+		membership.GROUPID
+		and membership.USERID = #{userId}
+	</select>
+
+
+	<select id="getGroupsByUserIdAndType" parameterType="com.glaf.base.modules.sys.query.GroupQuery"
+		resultMap="groupResultMap">
+		select g.*
+		from SYS_GROUP g, SYS_GROUP_USER membership
+		where g.GROUPID =
+		membership.GROUPID
+		and membership.USERID = #{userId}
+		<if test="type != null and type !='' ">
+			and g.TYPE = #{type}
+		</if>
+	</select>
+
+
 	<select id="getGroups" parameterType="com.glaf.base.modules.sys.query.GroupQuery"
 		resultMap="groupResultMap">
 		select E.*

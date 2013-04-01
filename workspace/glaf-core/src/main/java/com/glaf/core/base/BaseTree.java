@@ -32,6 +32,7 @@ import com.glaf.core.tree.util.TreeJsonFactory;
 
 public class BaseTree implements Serializable, TreeModel, JSONable {
 	private static final long serialVersionUID = 2666681837822864771L;
+	protected boolean checked;
 	protected List<TreeModel> children = new ArrayList<TreeModel>();
 	protected String code;
 	protected int deep;
@@ -167,6 +168,10 @@ public class BaseTree implements Serializable, TreeModel, JSONable {
 		return result;
 	}
 
+	public boolean isChecked() {
+		return checked;
+	}
+
 	public TreeModel jsonToObject(JSONObject jsonObject) {
 		return TreeJsonFactory.jsonToObject(jsonObject);
 	}
@@ -176,6 +181,10 @@ public class BaseTree implements Serializable, TreeModel, JSONable {
 		if (children != null) {
 			children.remove(treeModel);
 		}
+	}
+
+	public void setChecked(boolean checked) {
+		this.checked = checked;
 	}
 
 	public void setChildren(List<TreeModel> children) {

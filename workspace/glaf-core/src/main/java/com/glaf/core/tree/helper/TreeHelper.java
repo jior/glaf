@@ -62,6 +62,9 @@ public class TreeHelper {
 				child.put("id", component.getId());
 				child.put("code", component.getCode());
 				child.put("text", component.getTitle());
+				if(component.isChecked()){
+				    child.put("checked", true);
+				}
 				if (node != null) {
 
 				}
@@ -97,6 +100,9 @@ public class TreeHelper {
 				child.put("code", component.getCode());
 				child.put("text", component.getTitle());
 				child.put("name", component.getTitle());
+				if (component.isChecked()) {
+					child.put("checked", true);
+				}
 				// child.put("uiProvider", "col");
 				if (component.getComponents() != null
 						&& component.getComponents().size() > 0) {
@@ -243,6 +249,9 @@ public class TreeHelper {
 							object.put("text", component.getTitle());
 							object.put("leaf", Boolean.valueOf(false));
 							object.put("cls", "folder");
+							if (component.isChecked()) {
+								object.put("checked", true);
+							}
 							this.buildTreeModel(object, component);
 						}
 					} else {
@@ -254,6 +263,9 @@ public class TreeHelper {
 							row.put("id", component.getId());
 							row.put("code", component.getCode());
 							row.put("text", component.getTitle());
+							if (component.isChecked()) {
+								row.put("checked", true);
+							}
 							if (component.getComponents() != null
 									&& component.getComponents().size() > 0) {
 								row.put("leaf", Boolean.valueOf(false));
@@ -311,6 +323,9 @@ public class TreeHelper {
 						row.put("code", component.getCode());
 						row.put("text", component.getTitle());
 						row.put("name", component.getTitle());
+						if (component.isChecked()) {
+							row.put("checked", true);
+						}
 						// row.put("uiProvider", "col");
 
 						if (component.getComponents() != null
@@ -344,13 +359,17 @@ public class TreeHelper {
 			jsonObject.put("text", tree.getName());
 		}
 
+		if (tree.isChecked()) {
+			jsonObject.put("checked", true);
+		}
+
 		if (tree.getDescription() != null) {
 			jsonObject.put("description", tree.getDescription());
 		}
 		if (tree.getIcon() != null) {
 			jsonObject.put("icon", tree.getIcon());
 		}
-		 
+
 		if (tree.getIconCls() != null) {
 			jsonObject.put("iconCls", tree.getIconCls());
 		}

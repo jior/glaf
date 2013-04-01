@@ -73,6 +73,7 @@ public class TreeRepositoryBuilder {
 			component.setLocation(treeModel.getUrl());
 			component.setUrl(treeModel.getUrl());
 			component.setTreeId(treeModel.getTreeId());
+			component.setChecked(treeModel.isChecked());
 			repository.addTree(component);
 
 			String parentId = String.valueOf(treeModel.getParentId());

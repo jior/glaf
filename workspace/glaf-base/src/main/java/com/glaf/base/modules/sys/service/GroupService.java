@@ -45,11 +45,11 @@ public interface GroupService {
 	void deleteByIds(List<String> rowIds);
 
 	/**
-	 * 根据查询参数获取记录列表
+	 * 根据主键获取一条记录
 	 * 
 	 * @return
 	 */
-	List<Group> list(GroupQuery query);
+	Group getGroup(String id);
 
 	/**
 	 * 根据查询参数获取记录总数
@@ -57,14 +57,6 @@ public interface GroupService {
 	 * @return
 	 */
 	int getGroupCountByQueryCriteria(GroupQuery query);
-
-	/**
-	 * 根据查询参数获取一页的数据
-	 * 
-	 * @return
-	 */
-	List<Group> getGroupsByQueryCriteria(int start, int pageSize,
-			GroupQuery query);
 
 	/**
 	 * 获取一页群组
@@ -76,14 +68,45 @@ public interface GroupService {
 	PageResult getGroupList(String type, String createBy, int pageNo,
 			int pageSize);
 
-	List<String> getUserIdsByGroupId(String groupId);
-
 	/**
-	 * 根据主键获取一条记录
+	 * 根据查询参数获取一页的数据
 	 * 
 	 * @return
 	 */
-	Group getGroup(String id);
+	List<Group> getGroupsByQueryCriteria(int start, int pageSize,
+			GroupQuery query);
+
+	/**
+	 * 通过用户账号获取群组
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	List<Group> getGroupsByUserId(String userId);
+
+	/**
+	 * 通过用户账号及组类型获取群组
+	 * 
+	 * @param userId
+	 * @param type
+	 * @return
+	 */
+	List<Group> getGroupsByUserIdAndType(String userId, String type);
+
+	/**
+	 * 获取某个群组的用户
+	 * 
+	 * @param groupId
+	 * @return
+	 */
+	List<String> getUserIdsByGroupId(String groupId);
+
+	/**
+	 * 根据查询参数获取记录列表
+	 * 
+	 * @return
+	 */
+	List<Group> list(GroupQuery query);
 
 	/**
 	 * 保存一条记录
@@ -92,6 +115,15 @@ public interface GroupService {
 	 */
 	@Transactional
 	void save(Group group);
+
+	/**
+	 * 保存群组用户
+	 * 
+	 * @param groupId
+	 * @param userIds
+	 */
+	@Transactional
+	void saveGroupUsers(String groupId, Set<String> userIds);
 
 	/**
 	 * 排序

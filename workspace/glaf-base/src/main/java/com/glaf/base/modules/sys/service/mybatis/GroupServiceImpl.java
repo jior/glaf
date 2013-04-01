@@ -124,13 +124,36 @@ public class GroupServiceImpl implements GroupService {
 				rowBounds);
 		return rows;
 	}
+	
+	/**
+	 * 通过用户账号获取群组
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	public List<Group> getGroupsByUserId(String userId){
+		return groupMapper.getGroupsByUserId(userId);
+	}
+
+	/**
+	 * 通过用户账号及组类型获取群组
+	 * 
+	 * @param userId
+	 * @param type
+	 * @return
+	 */
+	public List<Group> getGroupsByUserIdAndType(String userId, String type){
+		GroupQuery query = new GroupQuery();
+		query.setUserId(userId);
+		query.setType(type);
+		return groupMapper.getGroupsByUserIdAndType(query);
+	}
 
 	public List<String> getUserIdsByGroupId(String groupId) {
 		return groupUserMapper.getUserIdsByGroupId(groupId);
 	}
 
 	public List<Group> list(GroupQuery query) {
-		query.ensureInitialized();
 		List<Group> list = groupMapper.getGroups(query);
 		return list;
 	}
@@ -146,6 +169,25 @@ public class GroupServiceImpl implements GroupService {
 				groupMapper.insertGroup(group);
 			} else {
 				groupMapper.updateGroup(group);
+			}
+		}
+	}
+
+	/**
+	 * 保存群组用户
+	 * 
+	 * @param groupId
+	 * @param userIds
+	 */
+	@Transactional
+	public void saveGroupUsers(String groupId, Set<String> userIds) {
+		groupUserMapper.deleteGroupUsersByGroupId(groupId);
+		if (userIds != null && !userIds.isEmpty()) {
+			for (String userId : userIds) {
+				GroupUser gu = new GroupUser();
+				gu.setGroupId(groupId);
+				gu.setUserId(userId);
+				groupUserMapper.insertGroupUser(gu);
 			}
 		}
 	}

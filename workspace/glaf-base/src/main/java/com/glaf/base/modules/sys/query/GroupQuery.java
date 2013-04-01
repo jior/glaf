@@ -22,8 +22,6 @@ import com.glaf.core.query.DataQuery;
 
 public class GroupQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;
-	protected String createBy;
-	protected List<String> createBys;
 	protected String descLike;
 	protected String name;
 	protected String nameLike;
@@ -36,25 +34,10 @@ public class GroupQuery extends DataQuery {
 	protected String type;
 	protected String typeLike;
 	protected List<String> types;
+	protected String userId;
 
 	public GroupQuery() {
 
-	}
-
-	public GroupQuery createBy(String createBy) {
-		if (createBy == null) {
-			throw new RuntimeException("createBy is null");
-		}
-		this.createBy = createBy;
-		return this;
-	}
-
-	public GroupQuery createBys(List<String> createBys) {
-		if (createBys == null) {
-			throw new RuntimeException("createBys is empty ");
-		}
-		this.createBys = createBys;
-		return this;
 	}
 
 	public GroupQuery descLike(String descLike) {
@@ -63,14 +46,6 @@ public class GroupQuery extends DataQuery {
 		}
 		this.descLike = descLike;
 		return this;
-	}
-
-	public String getCreateBy() {
-		return createBy;
-	}
-
-	public List<String> getCreateBys() {
-		return createBys;
 	}
 
 	public String getDescLike() {
@@ -172,6 +147,10 @@ public class GroupQuery extends DataQuery {
 		return types;
 	}
 
+	public String getUserId() {
+		return userId;
+	}
+
 	@Override
 	public void initQueryColumns() {
 		super.initQueryColumns();
@@ -205,14 +184,6 @@ public class GroupQuery extends DataQuery {
 		}
 		this.names = names;
 		return this;
-	}
-
-	public void setCreateBy(String createBy) {
-		this.createBy = createBy;
-	}
-
-	public void setCreateBys(List<String> createBys) {
-		this.createBys = createBys;
 	}
 
 	public void setDescLike(String descLike) {
@@ -257,6 +228,10 @@ public class GroupQuery extends DataQuery {
 
 	public void setTypes(List<String> types) {
 		this.types = types;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 	public GroupQuery type(String type) {

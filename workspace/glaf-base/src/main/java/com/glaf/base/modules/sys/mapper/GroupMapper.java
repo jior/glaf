@@ -35,6 +35,10 @@ public interface GroupMapper {
 	int getGroupCount(GroupQuery query);
 
 	List<Group> getGroups(GroupQuery query);
+	
+	List<Group> getGroupsByUserId(String userId);
+	
+	List<Group> getGroupsByUserIdAndType(GroupQuery query);
 
 	void insertGroup(Group model);
 

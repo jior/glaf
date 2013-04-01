@@ -60,6 +60,10 @@ public class JsonTreeHelper {
 		if (treeModel.getTreeId() != null) {
 			jsonObject.put("treeId", treeModel.getTreeId());
 		}
+		
+		if(treeModel.isChecked()){
+		    jsonObject.put("checked", true);
+		}
 
 		List<TreeModel> children = treeModel.getChildren();
 
@@ -101,6 +105,9 @@ public class JsonTreeHelper {
 		}
 		if (treeModel.getUrl() != null) {
 			jsonObject.put("url", treeModel.getUrl());
+		}
+		if(treeModel.isChecked()){
+		    jsonObject.put("checked", true);
 		}
 		List<TreeModel> children = treeModel.getChildren();
 		if (children != null && children.size() > 0) {

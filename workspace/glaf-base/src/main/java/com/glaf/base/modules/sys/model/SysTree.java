@@ -35,6 +35,7 @@ public class SysTree implements Serializable, TreeModel, JSONable {
 	private static final long serialVersionUID = 2666681837822864771L;
 	protected SysApplication app;
 	protected String cacheFlag;
+	protected boolean checked;
 	protected List<TreeModel> children = new ArrayList<TreeModel>();
 	protected String code;
 	protected int deep;
@@ -193,6 +194,10 @@ public class SysTree implements Serializable, TreeModel, JSONable {
 		return result;
 	}
 
+	public boolean isChecked() {
+		return checked;
+	}
+
 	public SysTree jsonToObject(JSONObject jsonObject) {
 		return SysTreeJsonFactory.jsonToObject(jsonObject);
 	}
@@ -210,6 +215,10 @@ public class SysTree implements Serializable, TreeModel, JSONable {
 
 	public void setCacheFlag(String cacheFlag) {
 		this.cacheFlag = cacheFlag;
+	}
+
+	public void setChecked(boolean checked) {
+		this.checked = checked;
 	}
 
 	public void setChildren(List<TreeModel> children) {

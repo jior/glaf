@@ -803,7 +803,6 @@ public class SysUserController {
 	@RequestMapping(params = "method=showList")
 	public ModelAndView showList(ModelMap modelMap, HttpServletRequest request,
 			HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
 		int deptId = ParamUtil.getIntParameter(request, "parent", 0);
 		int pageNo = ParamUtil.getIntParameter(request, "page_no", 1);
 		int pageSize = ParamUtil.getIntParameter(request, "page_size",

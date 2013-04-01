@@ -21,7 +21,7 @@ List list = pager.getResults();
 <script type='text/javascript' src='<%=context%>/dwr/interface/GroupAjaxService.js'></script>
 <script type='text/javascript' src='<%=context%>/dwr/engine.js'></script>
 <script type='text/javascript' src='<%=context%>/dwr/util.js'></script>
-<script language="JavaScript">
+<script language="javascript">
 var num=0;
 function checkOperation(form){
   num = getCheckedBoxNum(form,"id");
@@ -29,14 +29,18 @@ function checkOperation(form){
     document.all.btn_del.disabled=false;
 	if(num==1){
 	  document.all.btn_modify.disabled=false;
+	  document.all.btn_users.disabled=false;
 	}else{
 	  document.all.btn_modify.disabled=true;
+	  document.all.btn_users.disabled=true;
 	}
   }else{
     document.all.btn_del.disabled=true;
 	document.all.btn_modify.disabled=true;
+	document.all.btn_users.disabled=true;
   }
 }
+
 function add(){
   var url="group.do?method=prepareAdd&type=${type}";
   var width=450;
@@ -56,6 +60,21 @@ function modify(form){
   var width=450;
   var height=250;
   var scroll="no";
+  openWindow(url, width, height, scroll);
+}
+
+function users(form){
+  var id =0;
+  for (var i=0;i<form.id.length;i++) {
+    var e = form.id[i];
+    if (e.checked){
+	  id=e.value;
+	}     
+  }
+  var url="group.do?method=groupUsers&groupId="+id;
+  var width=450;
+  var height=550;
+  var scroll="yes";
   openWindow(url, width, height, scroll);
 }
 
@@ -131,6 +150,7 @@ for(; i<pageSize; i++){
 	  <input name="btn_add" type="button" value="增加" class="button" onClick="javascript:add();"> 
       <input name="btn_del" type="button" value="删除" class="button" onClick="javascript:del();" disabled>
       <input name="btn_modify" type="button" value="修改" class="button" onClick="javascript:modify(this.form);" disabled>
+	  <input name="btn_users" type="button" value="用户" class="button" onClick="javascript:users(this.form);" disabled>
 	</td>
     <td width="50%"> 
       <%

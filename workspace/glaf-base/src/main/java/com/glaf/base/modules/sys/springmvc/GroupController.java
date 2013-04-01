@@ -18,27 +18,49 @@
 
 package com.glaf.base.modules.sys.springmvc;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.StringTokenizer;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.glaf.base.modules.Constants;
-import com.glaf.base.modules.sys.model.Group;
-import com.glaf.base.modules.sys.model.SysUser;
-import com.glaf.base.modules.sys.service.GroupService;
-import com.glaf.base.utils.ParamUtil;
-import com.glaf.base.utils.RequestUtil;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+
+import com.glaf.core.base.BaseTree;
+import com.glaf.core.base.TreeModel;
 import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
 import com.glaf.core.res.ViewMessages;
+import com.glaf.core.tree.helper.TreeHelper;
 import com.glaf.core.util.PageResult;
- 
+import com.glaf.core.util.ResponseUtils;
+
+import com.glaf.base.modules.Constants;
+import com.glaf.base.modules.sys.SysConstants;
+import com.glaf.base.modules.sys.model.Group;
+import com.glaf.base.modules.sys.model.SysDepartment;
+import com.glaf.base.modules.sys.model.SysTree;
+import com.glaf.base.modules.sys.model.SysUser;
+import com.glaf.base.modules.sys.service.GroupService;
+import com.glaf.base.modules.sys.service.SysDepartmentService;
+import com.glaf.base.modules.sys.service.SysTreeService;
+import com.glaf.base.modules.sys.service.SysUserService;
+import com.glaf.base.utils.ParamUtil;
+import com.glaf.base.utils.RequestUtil;
 
 @Controller("/base/group")
 @RequestMapping("/base/group.do")
@@ -47,6 +69,15 @@ public class GroupController {
 
 	@javax.annotation.Resource
 	private GroupService groupService;
+
+	@javax.annotation.Resource
+	private SysDepartmentService sysDepartmentService;
+
+	@javax.annotation.Resource
+	private SysTreeService sysTreeService;
+
+	@javax.annotation.Resource
+	protected SysUserService sysUserService;
 
 	/**
 	 * 批量删除信息
@@ -82,6 +113,69 @@ public class GroupController {
 
 		// 显示列表页面
 		return new ModelAndView("show_msg2", modelMap);
+	}
+
+	/**
+	 * 显示群组用户页面
+	 * 
+	 * @param modelMap
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(params = "method=groupUsers")
+	public ModelAndView groupUsers(ModelMap modelMap,
+			HttpServletRequest request, HttpServletResponse response) {
+		RequestUtil.setRequestParameterToAttribute(request);
+		// 显示群组用户页面
+		return new ModelAndView("/modules/base/group/group_users", modelMap);
+	}
+
+	@RequestMapping(params = "method=json")
+	@ResponseBody
+	public byte[] json(HttpServletRequest request, ModelMap modelMap)
+			throws IOException {
+		JSONObject result = new JSONObject();
+		String groupId = request.getParameter("groupId");
+		List<String> userIds = groupService.getUserIdsByGroupId(groupId);
+		List<SysUser> users = sysUserService.getSysUserWithDeptList();
+		SysTree root = sysTreeService.getSysTreeByCode(SysConstants.TREE_DEPT);
+		if (root != null && users != null) {
+			logger.debug(root.toJsonObject().toJSONString());
+			logger.debug("users size:"+users.size());
+			List<TreeModel> treeModels = new ArrayList<TreeModel>();
+			treeModels.add(root);
+			List<SysTree> trees = sysTreeService.getSysTreeListForDept(
+					(int) root.getId(), 0);
+			if (trees != null && !trees.isEmpty()) {
+				logger.debug("dept tree size:"+trees.size());
+				long ts = System.currentTimeMillis();
+				for (SysTree tree : trees) {
+					treeModels.add(tree);
+					SysDepartment dept = tree.getDepartment();
+					for (SysUser user : users) {
+						if (dept.getId() == user.getDeptId()) {
+							TreeModel treeModel = new BaseTree();
+							treeModel.setParentId(user.getDeptId());
+							treeModel.setId(ts++);
+							treeModel.setCode(user.getAccount());
+							treeModel.setName(user.getAccount()+" "+user.getName());
+							treeModel.setIconCls("user");
+							if (userIds != null
+									&& userIds.contains(user.getAccount())) {
+								treeModel.setChecked(true);
+							}
+							treeModels.add(treeModel);
+						}
+					}
+				}
+			}
+			logger.debug("treeModels:"+treeModels.size());
+			TreeHelper treeHelper = new TreeHelper();
+			JSONArray jsonArray = treeHelper.getTreeJSONArray(treeModels);
+			return jsonArray.toJSONString().getBytes("UTF-8");
+		}
+		return result.toString().getBytes("UTF-8");
 	}
 
 	/**
@@ -165,6 +259,29 @@ public class GroupController {
 		return new ModelAndView("show_msg", modelMap);
 	}
 
+	@RequestMapping(params = "method=saveGroupUsers")
+	@ResponseBody
+	public byte[] saveGroupUsers(HttpServletRequest request) {
+		String groupId = request.getParameter("groupId");
+		String objectId = request.getParameter("userIds");
+		if (StringUtils.isNotEmpty(groupId) && StringUtils.isNotEmpty(objectId)) {
+			Set<String> userIds = new HashSet<String>();
+			StringTokenizer token = new StringTokenizer(objectId, ",");
+			while (token.hasMoreTokens()) {
+				String userId = token.nextToken();
+				userIds.add(userId);
+			}
+			try {
+				groupService.saveGroupUsers(groupId, userIds);
+				return ResponseUtils.responseJsonResult(true);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
+
+		return ResponseUtils.responseJsonResult(false);
+	}
+
 	/**
 	 * 提交修改信息
 	 * 
@@ -208,6 +325,19 @@ public class GroupController {
 	public void setGroupService(GroupService groupService) {
 		this.groupService = groupService;
 		logger.info("setGroupService");
+	}
+
+	public void setSysDepartmentService(
+			SysDepartmentService sysDepartmentService) {
+		this.sysDepartmentService = sysDepartmentService;
+	}
+
+	public void setSysTreeService(SysTreeService sysTreeService) {
+		this.sysTreeService = sysTreeService;
+	}
+
+	public void setSysUserService(SysUserService sysUserService) {
+		this.sysUserService = sysUserService;
 	}
 
 	/**

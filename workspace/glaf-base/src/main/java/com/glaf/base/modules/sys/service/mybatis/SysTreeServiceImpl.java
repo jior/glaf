@@ -280,7 +280,7 @@ public class SysTreeServiceImpl implements SysTreeService {
 				}
 			}
 			for (SysTree bean : list) {
-				bean.setDepartment(deptMap.get(Long.valueOf(bean.getId())));
+				bean.setDepartment(deptMap.get(bean.getId()));
 			}
 		}
 	}
