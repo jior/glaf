@@ -106,7 +106,7 @@ public class BlobItemEntity implements DataFile, Serializable, BlobItem, JSONabl
 	@Column(name = "DATA_")
 	protected byte[] data = null;
 
-	@Transient
+	@Column(name = "PATH_", length = 500)
 	protected String path = null;
 
 	@Transient

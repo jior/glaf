@@ -20,6 +20,7 @@ package com.glaf.core.service.impl;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
@@ -38,6 +39,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.core.base.BlobItem;
 import com.glaf.core.base.DataFile;
+import com.glaf.core.config.SystemProperties;
 import com.glaf.core.jdbc.DBConnectionFactory;
 import com.glaf.core.dao.EntityDAO;
 import com.glaf.core.domain.BlobItemEntity;
@@ -46,6 +48,7 @@ import com.glaf.core.mapper.BlobItemMapper;
 import com.glaf.core.query.BlobItemQuery;
 import com.glaf.core.service.IBlobService;
 import com.glaf.core.util.DBUtils;
+import com.glaf.core.util.FileUtils;
 import com.glaf.core.util.UUID32;
 
 @Service("blobService")
@@ -120,8 +123,7 @@ public class MxBlobServiceImpl implements IBlobService {
 	 */
 	public DataFile getBlobByFilename(String filename) {
 		BlobItem blob = null;
-		List<BlobItem> list = blobItemMapper
-				.getBlobItemsByFilename(filename);
+		List<BlobItem> list = blobItemMapper.getBlobItemsByFilename(filename);
 		if (list != null && !list.isEmpty()) {
 			blob = list.get(0);
 		}
@@ -171,32 +173,44 @@ public class MxBlobServiceImpl implements IBlobService {
 
 	public byte[] getBytesByFileId(String fileId) {
 		BlobItem blob = null;
-		if (StringUtils
-				.equals(DBUtils.POSTGRESQL, DBConnectionFactory.getDatabaseType())) {
+		if (StringUtils.equals(DBUtils.POSTGRESQL,
+				DBConnectionFactory.getDatabaseType())) {
 			blob = (BlobItem) entityDAO.getSingleObject(
 					"getBlobItemFileInfoByFileId_postgres", fileId);
 		} else {
 			blob = (BlobItem) entityDAO.getSingleObject(
 					"getBlobItemFileInfoByFileId", fileId);
 		}
-		if (blob != null) {
+		if (blob != null && blob.getData() != null) {
 			return blob.getData();
+		} else if (blob != null && blob.getPath() != null) {
+			String rootDir = SystemProperties.getConfigRootPath();
+			File file = new File(rootDir + blob.getPath());
+			if (file.exists()) {
+				return FileUtils.getBytes(file);
+			}
 		}
 		return null;
 	}
 
 	public byte[] getBytesById(String id) {
 		BlobItem blob = null;
-		if (StringUtils
-				.equals(DBUtils.POSTGRESQL, DBConnectionFactory.getDatabaseType())) {
+		if (StringUtils.equals(DBUtils.POSTGRESQL,
+				DBConnectionFactory.getDatabaseType())) {
 			blob = (BlobItem) entityDAO.getSingleObject(
 					"getBlobItemFileInfoById_postgres", id);
 		} else {
 			blob = (BlobItem) entityDAO.getSingleObject(
 					"getBlobItemFileInfoById", id);
 		}
-		if (blob != null) {
+		if (blob != null && blob.getData() != null) {
 			return blob.getData();
+		} else if (blob != null && blob.getPath() != null) {
+			String rootDir = SystemProperties.getConfigRootPath();
+			File file = new File(rootDir + blob.getPath());
+			if (file.exists()) {
+				return FileUtils.getBytes(file);
+			}
 		}
 		return null;
 	}
@@ -243,8 +257,7 @@ public class MxBlobServiceImpl implements IBlobService {
 			Iterator<BlobItem> iterator = list.iterator();
 			while (iterator.hasNext()) {
 				BlobItem model = iterator.next();
-				if (model.getData() != null
-						&& model.getLastModified() > blob.getLastModified()) {
+				if (model.getLastModified() > blob.getLastModified()) {
 					blob = model;
 				}
 			}
@@ -284,8 +297,8 @@ public class MxBlobServiceImpl implements IBlobService {
 		if (blobItem.getFileId() == null) {
 			blobItem.setFileId(UUID32.getUUID());
 		}
-		if (StringUtils
-				.equals(DBUtils.POSTGRESQL, DBConnectionFactory.getDatabaseType())) {
+		if (StringUtils.equals(DBUtils.POSTGRESQL,
+				DBConnectionFactory.getDatabaseType())) {
 			blobItemMapper.insertBlobItem_postgres(blobItem);
 		} else {
 			blobItemMapper.insertBlobItem(blobItem);
@@ -312,6 +325,7 @@ public class MxBlobServiceImpl implements IBlobService {
 		model.setSize(dataFile.getSize());
 		model.setStatus(dataFile.getStatus());
 		model.setType(dataFile.getType());
+		model.setPath(dataFile.getPath());
 		this.insertBlobItem(model);
 	}
 
@@ -326,7 +340,7 @@ public class MxBlobServiceImpl implements IBlobService {
 		BlobItemQuery query = new BlobItemQuery();
 		query.serviceKey(serviceKey);
 		query.createBy(createBy);
-	 
+
 		List<BlobItem> list = this.list(query);
 		if (list != null && list.size() > 0) {
 			Iterator<BlobItem> iterator = list.iterator();
@@ -399,7 +413,7 @@ public class MxBlobServiceImpl implements IBlobService {
 		this.blobItemMapper = blobItemMapper;
 	}
 
-	@Resource(name="myBatisEntityDAO")
+	@Resource(name = "myBatisEntityDAO")
 	public void setEntityDAO(EntityDAO entityDAO) {
 		this.entityDAO = entityDAO;
 	}
@@ -456,8 +470,8 @@ public class MxBlobServiceImpl implements IBlobService {
 		if (model.getSize() <= 0) {
 			model.setSize(model.getData().length);
 		}
-		if (StringUtils
-				.equals(DBUtils.POSTGRESQL, DBConnectionFactory.getDatabaseType())) {
+		if (StringUtils.equals(DBUtils.POSTGRESQL,
+				DBConnectionFactory.getDatabaseType())) {
 			entityDAO.update("updateBlobItemFileInfo_postgres", model);
 		} else {
 			entityDAO.update("updateBlobItemFileInfo", model);

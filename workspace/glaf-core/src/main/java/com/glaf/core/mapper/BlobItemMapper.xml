@@ -4,83 +4,90 @@
 
 <mapper namespace="com.glaf.core.mapper.BlobItemMapper">
 
-	<resultMap id="blobItemResultMap"	type="com.glaf.core.domain.BlobItemEntity">
-		<id property="id" column="ID_"  jdbcType="VARCHAR"/>
-		<result property="resourceId" column="RESOURCEID_" jdbcType="VARCHAR"/>
-		<result property="fileId" column="FILEID_" jdbcType="VARCHAR"/>
-		<result property="serviceKey" column="SERVICEKEY_" jdbcType="VARCHAR"/>
-		<result property="name" column="NAME_" jdbcType="VARCHAR"/>
-		<result property="type" column="TYPE_" jdbcType="VARCHAR"/>
-		<result property="filename" column="FILENAME_" jdbcType="VARCHAR"/>
-		<result property="contentType" column="CONTENTTYPE_" jdbcType="VARCHAR"/>
-		<result property="deviceId" column="DEVICEID_" jdbcType="VARCHAR"/>
-		<result property="objectId" column="OBJECTID_" jdbcType="VARCHAR"/>
-		<result property="objectValue" column="OBJECTVALUE_" jdbcType="VARCHAR"/>
-		<result property="size" column="SIZE_" jdbcType="BIGINT"/>
-		<result property="lastModified" column="LASTMODIFIED_" jdbcType="BIGINT"/>
-		<result property="locked" column="LOCKED_" jdbcType="INTEGER"/>
-		<result property="status" column="STATUS_" jdbcType="INTEGER"/>
-		<result property="deleteFlag" column="DELETEFLAG_" jdbcType="INTEGER"/>
-		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR"/>
-		<result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP"/>
+	<resultMap id="blobItemResultMap" type="com.glaf.core.domain.BlobItemEntity">
+		<id property="id" column="ID_" jdbcType="VARCHAR" />
+		<result property="resourceId" column="RESOURCEID_" jdbcType="VARCHAR" />
+		<result property="fileId" column="FILEID_" jdbcType="VARCHAR" />
+		<result property="serviceKey" column="SERVICEKEY_" jdbcType="VARCHAR" />
+		<result property="name" column="NAME_" jdbcType="VARCHAR" />
+		<result property="type" column="TYPE_" jdbcType="VARCHAR" />
+		<result property="filename" column="FILENAME_" jdbcType="VARCHAR" />
+		<result property="path" column="PATH_" jdbcType="VARCHAR" />
+		<result property="contentType" column="CONTENTTYPE_" jdbcType="VARCHAR" />
+		<result property="deviceId" column="DEVICEID_" jdbcType="VARCHAR" />
+		<result property="objectId" column="OBJECTID_" jdbcType="VARCHAR" />
+		<result property="objectValue" column="OBJECTVALUE_" jdbcType="VARCHAR" />
+		<result property="size" column="SIZE_" jdbcType="BIGINT" />
+		<result property="lastModified" column="LASTMODIFIED_"
+			jdbcType="BIGINT" />
+		<result property="locked" column="LOCKED_" jdbcType="INTEGER" />
+		<result property="status" column="STATUS_" jdbcType="INTEGER" />
+		<result property="deleteFlag" column="DELETEFLAG_" jdbcType="INTEGER" />
+		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR" />
+		<result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP" />
 	</resultMap>
 
-	<resultMap id="blobItemFileInfoResultMap"	type="com.glaf.core.domain.BlobItemEntity">
-		<id property="id" column="ID_"  jdbcType="VARCHAR"/>
-		<result property="filename" column="FILENAME_" jdbcType="VARCHAR"/>
-		<result property="size" column="SIZE_" jdbcType="BIGINT"/>
-		<result property="lastModified" column="LASTMODIFIED_" jdbcType="BIGINT"/>
-		<result property="data" column="DATA_" jdbcType="BLOB"/>  
+	<resultMap id="blobItemFileInfoResultMap" type="com.glaf.core.domain.BlobItemEntity">
+		<id property="id" column="ID_" jdbcType="VARCHAR" />
+		<result property="filename" column="FILENAME_" jdbcType="VARCHAR" />
+		<result property="size" column="SIZE_" jdbcType="BIGINT" />
+		<result property="lastModified" column="LASTMODIFIED_"
+			jdbcType="BIGINT" />
+		<result property="data" column="DATA_" jdbcType="BLOB" />
 	</resultMap>
 
-	<resultMap id="blobItemFileInfoResultMap_postgres"	type="com.glaf.core.domain.BlobItemEntity">
-		<id property="id" column="ID_"  jdbcType="VARCHAR"/>
-		<result property="filename" column="FILENAME_" jdbcType="VARCHAR"/>
-		<result property="size" column="SIZE_" jdbcType="BIGINT"/>
-		<result property="lastModified" column="LASTMODIFIED_" jdbcType="BIGINT"/>
-		<result property="data" column="DATA_" jdbcType="BINARY"/>  
+	<resultMap id="blobItemFileInfoResultMap_postgres" type="com.glaf.core.domain.BlobItemEntity">
+		<id property="id" column="ID_" jdbcType="VARCHAR" />
+		<result property="filename" column="FILENAME_" jdbcType="VARCHAR" />
+		<result property="size" column="SIZE_" jdbcType="BIGINT" />
+		<result property="lastModified" column="LASTMODIFIED_"
+			jdbcType="BIGINT" />
+		<result property="data" column="DATA_" jdbcType="BINARY" />
 	</resultMap>
- 
+
 	<insert id="insertBlobItem" parameterType="com.glaf.core.domain.BlobItemEntity">
 		insert into
-		SYS_LOB ( ID_
-        ,RESOURCEID_ 
-        ,FILEID_ 
-        ,SERVICEKEY_ 
+		SYS_LOB (
+		ID_
+		,RESOURCEID_
+		,FILEID_
+		,SERVICEKEY_
 		,DEVICEID_
-        ,NAME_ 
-        ,TYPE_ 
-        ,FILENAME_ 
-        ,CONTENTTYPE_ 
-        ,OBJECTID_ 
-        ,OBJECTVALUE_ 
-        ,SIZE_ 
-        ,LASTMODIFIED_ 
-        ,LOCKED_ 
-        ,STATUS_ 
-        ,DELETEFLAG_ 
-        ,CREATEBY_ 
-        ,CREATEDATE_
+		,NAME_
+		,TYPE_
+		,FILENAME_
+		,PATH_
+		,CONTENTTYPE_
+		,OBJECTID_
+		,OBJECTVALUE_
+		,SIZE_
+		,LASTMODIFIED_
+		,LOCKED_
+		,STATUS_
+		,DELETEFLAG_
+		,CREATEBY_
+		,CREATEDATE_
 		,DATA_
 		)
 		values (#{id, jdbcType=VARCHAR}
-        ,#{resourceId, jdbcType=VARCHAR}
-        ,#{fileId, jdbcType=VARCHAR}
-        ,#{serviceKey, jdbcType=VARCHAR}
+		,#{resourceId, jdbcType=VARCHAR}
+		,#{fileId, jdbcType=VARCHAR}
+		,#{serviceKey, jdbcType=VARCHAR}
 		,#{deviceId, jdbcType=VARCHAR}
-        ,#{name, jdbcType=VARCHAR}
-        ,#{type, jdbcType=VARCHAR}
-        ,#{filename, jdbcType=VARCHAR}
-        ,#{contentType, jdbcType=VARCHAR}
-        ,#{objectId, jdbcType=VARCHAR}
-        ,#{objectValue, jdbcType=VARCHAR}
-        ,#{size, jdbcType=BIGINT}
-        ,#{lastModified, jdbcType=BIGINT}
-        ,#{locked, jdbcType=INTEGER}
-        ,#{status, jdbcType=INTEGER}
-        ,#{deleteFlag, jdbcType=INTEGER}
-        ,#{createBy, jdbcType=VARCHAR}
-        ,#{createDate, jdbcType=TIMESTAMP}
+		,#{name, jdbcType=VARCHAR}
+		,#{type, jdbcType=VARCHAR}
+		,#{filename, jdbcType=VARCHAR}
+		,#{path, jdbcType=VARCHAR}
+		,#{contentType, jdbcType=VARCHAR}
+		,#{objectId, jdbcType=VARCHAR}
+		,#{objectValue, jdbcType=VARCHAR}
+		,#{size, jdbcType=BIGINT}
+		,#{lastModified, jdbcType=BIGINT}
+		,#{locked, jdbcType=INTEGER}
+		,#{status, jdbcType=INTEGER}
+		,#{deleteFlag, jdbcType=INTEGER}
+		,#{createBy, jdbcType=VARCHAR}
+		,#{createDate, jdbcType=TIMESTAMP}
 		,#{data, jdbcType=BLOB}
 		)
 	</insert>
@@ -88,95 +95,97 @@
 	<insert id="insertBlobItem_postgres" parameterType="com.glaf.core.domain.BlobItemEntity">
 		insert into
 		SYS_LOB ( ID_
-        ,RESOURCEID_ 
-        ,FILEID_ 
-        ,SERVICEKEY_ 
+		,RESOURCEID_
+		,FILEID_
+		,SERVICEKEY_
 		,DEVICEID_
-        ,NAME_ 
-        ,TYPE_ 
-        ,FILENAME_ 
-        ,CONTENTTYPE_ 
-        ,OBJECTID_ 
-        ,OBJECTVALUE_ 
-        ,SIZE_ 
-        ,LASTMODIFIED_ 
-        ,LOCKED_ 
-        ,STATUS_ 
-        ,DELETEFLAG_ 
-        ,CREATEBY_ 
-        ,CREATEDATE_
+		,NAME_
+		,TYPE_
+		,FILENAME_
+		,PATH_
+		,CONTENTTYPE_
+		,OBJECTID_
+		,OBJECTVALUE_
+		,SIZE_
+		,LASTMODIFIED_
+		,LOCKED_
+		,STATUS_
+		,DELETEFLAG_
+		,CREATEBY_
+		,CREATEDATE_
 		,DATA_
 		)
 		values (#{id, jdbcType=VARCHAR}
-        ,#{resourceId, jdbcType=VARCHAR}
-        ,#{fileId, jdbcType=VARCHAR}
-        ,#{serviceKey, jdbcType=VARCHAR}
+		,#{resourceId, jdbcType=VARCHAR}
+		,#{fileId, jdbcType=VARCHAR}
+		,#{serviceKey, jdbcType=VARCHAR}
 		,#{deviceId, jdbcType=VARCHAR}
-        ,#{name, jdbcType=VARCHAR}
-        ,#{type, jdbcType=VARCHAR}
-        ,#{filename, jdbcType=VARCHAR}
-        ,#{contentType, jdbcType=VARCHAR}
-        ,#{objectId, jdbcType=VARCHAR}
-        ,#{objectValue, jdbcType=VARCHAR}
-        ,#{size, jdbcType=BIGINT}
-        ,#{lastModified, jdbcType=BIGINT}
-        ,#{locked, jdbcType=INTEGER}
-        ,#{status, jdbcType=INTEGER}
-        ,#{deleteFlag, jdbcType=INTEGER}
-        ,#{createBy, jdbcType=VARCHAR}
-        ,#{createDate, jdbcType=TIMESTAMP}
+		,#{name, jdbcType=VARCHAR}
+		,#{type, jdbcType=VARCHAR}
+		,#{filename, jdbcType=VARCHAR}
+		,#{path, jdbcType=VARCHAR}
+		,#{contentType, jdbcType=VARCHAR}
+		,#{objectId, jdbcType=VARCHAR}
+		,#{objectValue, jdbcType=VARCHAR}
+		,#{size, jdbcType=BIGINT}
+		,#{lastModified, jdbcType=BIGINT}
+		,#{locked, jdbcType=INTEGER}
+		,#{status, jdbcType=INTEGER}
+		,#{deleteFlag, jdbcType=INTEGER}
+		,#{createBy, jdbcType=VARCHAR}
+		,#{createDate, jdbcType=TIMESTAMP}
 		,#{data, jdbcType=BINARY}
 		)
 	</insert>
-	 
+
 	<update id="updateBlobItem" parameterType="com.glaf.core.domain.BlobItemEntity">
-	    update SYS_LOB
+		update SYS_LOB
 		set RESOURCEID_ = #{resourceId, jdbcType=VARCHAR},
-        LOCKED_ = #{locked, jdbcType=INTEGER},
-        STATUS_ = #{status, jdbcType=INTEGER}
- 		where ID_ = #{id,jdbcType=VARCHAR}
+		LOCKED_ = #{locked, jdbcType=INTEGER},
+		STATUS_ = #{status, jdbcType=INTEGER}
+		where ID_ = #{id,jdbcType=VARCHAR}
 	</update>
 
 
 	<update id="updateBlobItemFileInfo" parameterType="com.glaf.core.domain.BlobItemEntity">
-	    update SYS_LOB
+		update SYS_LOB
 		set
 		RESOURCEID_ = #{resourceId, jdbcType=VARCHAR},
-        FILENAME_ = #{filename, jdbcType=VARCHAR},
-        CONTENTTYPE_ = #{contentType, jdbcType=VARCHAR},
-        SIZE_ = #{size, jdbcType=BIGINT},
-        LASTMODIFIED_ = #{lastModified, jdbcType=BIGINT},
-        DATA_ = #{data, jdbcType=BLOB}
- 		where ID_ = #{id,jdbcType=VARCHAR}
+		FILENAME_ = #{filename, jdbcType=VARCHAR},
+		CONTENTTYPE_ = #{contentType, jdbcType=VARCHAR},
+		SIZE_ = #{size, jdbcType=BIGINT},
+		LASTMODIFIED_ = #{lastModified, jdbcType=BIGINT},
+		DATA_ = #{data, jdbcType=BLOB}
+		where ID_ = #{id,jdbcType=VARCHAR}
 	</update>
 
 
 	<update id="updateBlobItemFileInfo_postgres" parameterType="com.glaf.core.domain.BlobItemEntity">
-	    update SYS_LOB
+		update SYS_LOB
 		set
 		RESOURCEID_ = #{resourceId, jdbcType=VARCHAR},
-        FILENAME_ = #{filename, jdbcType=VARCHAR},
-        CONTENTTYPE_ = #{contentType, jdbcType=VARCHAR},
-        SIZE_ = #{size, jdbcType=BIGINT},
-        LASTMODIFIED_ = #{lastModified, jdbcType=BIGINT},
-        DATA_ = #{data, jdbcType=BINARY}
- 		where ID_ = #{id,jdbcType=VARCHAR}
+		FILENAME_ = #{filename, jdbcType=VARCHAR},
+		CONTENTTYPE_ = #{contentType, jdbcType=VARCHAR},
+		SIZE_ = #{size, jdbcType=BIGINT},
+		LASTMODIFIED_ = #{lastModified, jdbcType=BIGINT},
+		DATA_ = #{data, jdbcType=BINARY}
+		where ID_ = #{id,jdbcType=VARCHAR}
 	</update>
 
- 
-	<delete id="deleteBlobItemById" parameterType="string"> 
-        delete from SYS_LOB
-        ID_ =	#{id}
+
+	<delete id="deleteBlobItemById" parameterType="string">
+		delete from SYS_LOB
+		ID_ = #{id}
 	</delete>
 
-	<delete id="deleteBlobItemsByFileId" parameterType="string"> 
-        delete from SYS_LOB
-        where FILEID_ =	#{fileId}
+	<delete id="deleteBlobItemsByFileId" parameterType="string">
+		delete from SYS_LOB
+		where FILEID_ = #{fileId}
 	</delete>
-	
-	<delete id="deleteBlobItemsByResourceId" parameterType="string"> 
-        delete from SYS_LOB
-        where RESOURCEID_ =	#{resourceId}
+
+	<delete id="deleteBlobItemsByResourceId" parameterType="string">
+		delete from SYS_LOB
+		where RESOURCEID_ = #{resourceId}
 	</delete>
 
 	<delete id="deleteBlobItems" parameterType="com.glaf.core.query.BlobItemQuery">
@@ -184,74 +193,82 @@
 		where (
 		<foreach collection="rowIds" index="index" item="rowId">
 			<if test="index != 0"> OR </if>
-			 ID_ = #{rowId}
+			ID_ = #{rowId}
 		</foreach>
 		)
 	</delete>
 
 
 	<select id="getBlobItemById" parameterType="string" resultMap="blobItemResultMap">
-		select 
-		    ID_, RESOURCEID_ , FILEID_ , SERVICEKEY_ , NAME_ , TYPE_ , FILENAME_ ,  
-            OBJECTID_  , OBJECTVALUE_ , SIZE_ , LASTMODIFIED_ , CONTENTTYPE_,
-            LOCKED_ , STATUS_ , DELETEFLAG_  , CREATEBY_  , CREATEDATE_, DEVICEID_
-        from SYS_LOB where ID_ = #{id}
-	</select>
-
-
-	<select id="getBlobItemsByFileId" parameterType="string" resultMap="blobItemResultMap">
 		select
-		    ID_, RESOURCEID_ , FILEID_ , SERVICEKEY_ , NAME_ , TYPE_ , FILENAME_ ,  
-            OBJECTID_  , OBJECTVALUE_ , SIZE_ , LASTMODIFIED_ , CONTENTTYPE_,
-            LOCKED_ , STATUS_ , DELETEFLAG_  , CREATEBY_  , CREATEDATE_, DEVICEID_ 
-		from SYS_LOB where FILEID_ = #{fileId}
-		order by CREATEDATE_ desc 
-	</select>
-	
-	
-	<select id="getBlobItemsByFilename" parameterType="string" resultMap="blobItemResultMap">
-		select
-		    ID_, RESOURCEID_ , FILEID_ , SERVICEKEY_ , NAME_ , TYPE_ , FILENAME_ ,  
-            OBJECTID_  , OBJECTVALUE_ , SIZE_ , LASTMODIFIED_ , CONTENTTYPE_,
-            LOCKED_ , STATUS_ , DELETEFLAG_  , CREATEBY_  , CREATEDATE_, DEVICEID_ 
-		from SYS_LOB where FILENAME_ = #{filename}
-		order by CREATEDATE_ desc 
-	</select>
-	
-
-	<select id="getBlobItemFileInfoById" parameterType="string" resultMap="blobItemFileInfoResultMap">
-		select ID_, FILENAME_, DATA_, SIZE_, LASTMODIFIED_ from SYS_LOB where ID_ = #{id}
+		ID_, RESOURCEID_ , FILEID_ , SERVICEKEY_ , NAME_ , TYPE_ , FILENAME_ ,
+		OBJECTID_ , OBJECTVALUE_ , SIZE_ , LASTMODIFIED_ , CONTENTTYPE_, PATH_,
+		LOCKED_ , STATUS_ , DELETEFLAG_ , CREATEBY_ , CREATEDATE_, DEVICEID_
+		from SYS_LOB where ID_ = #{id}
 	</select>
 
-	<select id="getBlobItemFileInfoByFileId" parameterType="string" resultMap="blobItemFileInfoResultMap">
-		select ID_, FILENAME_, DATA_, SIZE_, LASTMODIFIED_ from SYS_LOB where FILEID_ = #{fileId}
-	</select>
 
-	<select id="getBlobItemFileInfoById_postgres" parameterType="string" 
-		resultMap="blobItemFileInfoResultMap_postgres">
-		select ID_, FILENAME_, DATA_, SIZE_, LASTMODIFIED_ from SYS_LOB where ID_ = #{id}
-	</select>
-
-	<select id="getBlobItemFileInfoByFileId_postgres" parameterType="string" 
-		resultMap="blobItemFileInfoResultMap_postgres">
-		select ID_, FILENAME_, DATA_, SIZE_, LASTMODIFIED_ from SYS_LOB where FILEID_ = #{fileId}
-	</select>
-
-	<select id="getBlobItems" 
-		parameterType="com.glaf.core.query.BlobItemQuery"
+	<select id="getBlobItemsByFileId" parameterType="string"
 		resultMap="blobItemResultMap">
-		select 
-            E.ID_, E.RESOURCEID_ , E.FILEID_ , E.SERVICEKEY_ , E.NAME_ , E.TYPE_ , E.FILENAME_ ,  
-            E.OBJECTID_  , E.OBJECTVALUE_ , E.SIZE_ , E.LASTMODIFIED_ , E.CONTENTTYPE_,
-            E.LOCKED_ , E.STATUS_ , E.DELETEFLAG_  , E.CREATEBY_  , E.CREATEDATE_, DEVICEID_
+		select
+		ID_, RESOURCEID_ , FILEID_ , SERVICEKEY_ , NAME_ , TYPE_ , FILENAME_ ,
+		OBJECTID_ , OBJECTVALUE_ , SIZE_ , LASTMODIFIED_ , CONTENTTYPE_, PATH_,
+		LOCKED_ , STATUS_ , DELETEFLAG_ , CREATEBY_ , CREATEDATE_, DEVICEID_
+		from SYS_LOB where FILEID_ = #{fileId}
+		order by CREATEDATE_ desc
+	</select>
+
+
+	<select id="getBlobItemsByFilename" parameterType="string"
+		resultMap="blobItemResultMap">
+		select
+		ID_, RESOURCEID_ , FILEID_ , SERVICEKEY_ , NAME_ , TYPE_ , FILENAME_ ,
+		OBJECTID_ , OBJECTVALUE_ , SIZE_ , LASTMODIFIED_ , CONTENTTYPE_, PATH_,
+		LOCKED_ , STATUS_ , DELETEFLAG_ , CREATEBY_ , CREATEDATE_, DEVICEID_
+		from SYS_LOB where FILENAME_ = #{filename}
+		order by CREATEDATE_ desc
+	</select>
+
+
+	<select id="getBlobItemFileInfoById" parameterType="string"
+		resultMap="blobItemFileInfoResultMap">
+		select ID_, FILENAME_, PATH_, DATA_, SIZE_, LASTMODIFIED_ from
+		SYS_LOB where ID_ = #{id}
+	</select>
+
+	<select id="getBlobItemFileInfoByFileId" parameterType="string"
+		resultMap="blobItemFileInfoResultMap">
+		select ID_, FILENAME_, PATH_, DATA_, SIZE_, LASTMODIFIED_ from
+		SYS_LOB where FILEID_ = #{fileId}
+	</select>
+
+	<select id="getBlobItemFileInfoById_postgres" parameterType="string"
+		resultMap="blobItemFileInfoResultMap_postgres">
+		select ID_, FILENAME_, PATH_, DATA_, SIZE_, LASTMODIFIED_ from
+		SYS_LOB where ID_ = #{id}
+	</select>
+
+	<select id="getBlobItemFileInfoByFileId_postgres" parameterType="string"
+		resultMap="blobItemFileInfoResultMap_postgres">
+		select ID_, FILENAME_, PATH_, DATA_, SIZE_, LASTMODIFIED_ from
+		SYS_LOB where FILEID_ = #{fileId}
+	</select>
+
+	<select id="getBlobItems" parameterType="com.glaf.core.query.BlobItemQuery"
+		resultMap="blobItemResultMap">
+		select
+		E.ID_, E.RESOURCEID_ , E.FILEID_ , E.SERVICEKEY_ , E.NAME_ , E.TYPE_ ,
+		E.FILENAME_ , PATH_, 
+		E.OBJECTID_ , E.OBJECTVALUE_ , E.SIZE_ , E.LASTMODIFIED_ , E.CONTENTTYPE_,
+		E.LOCKED_ , E.STATUS_ , E.DELETEFLAG_ , E.CREATEBY_ , E.CREATEDATE_,
+		DEVICEID_
 		<include refid="selectBlobItemsSql" />
 		<if test="orderBy != null">
 			order by ${orderBy}
 		</if>
 	</select>
 
-	<select id="getBlobItemCount" 
-		parameterType="com.glaf.core.query.BlobItemQuery"
+	<select id="getBlobItemCount" parameterType="com.glaf.core.query.BlobItemQuery"
 		resultType="int">
 		select count(*)
 		<include refid="selectBlobItemsSql" />
@@ -260,9 +277,9 @@
 	<sql id="selectBlobItemsSql">
 
 		from SYS_LOB E
-		 
+
 		<where>
-		       1 = 1  
+			1 = 1
 
 			<if test="deviceId != null">
 				and E.DEVICEID_ = #{deviceId}
@@ -273,13 +290,13 @@
 			</if>
 
 			<if test="resourceIds != null and resourceIds.size() &gt; 0">
-			    and E.RESOURCEID_ IN
-				<foreach item="x_resourceId" index="index" collection="resourceIds" 
+				and E.RESOURCEID_ IN
+				<foreach item="x_resourceId" index="index" collection="resourceIds"
 					open="(" separator="," close=")">
-                  #{x_resourceId}
+					#{x_resourceId}
 				</foreach>
 			</if>
-	        
+
 			<if test="fileId != null">
 				and E.FILEID_ = #{fileId}
 			</if>
@@ -295,12 +312,12 @@
 			<if test="nameLike != null">
 				and E.NAME_ like #{nameLike}
 			</if>
-	        
+
 			<if test="names != null and names.size() &gt; 0">
-			    and E.NAME_ IN
-				<foreach item="x_name" index="index" collection="names" 
+				and E.NAME_ IN
+				<foreach item="x_name" index="index" collection="names"
 					open="(" separator="," close=")">
-                  #{x_name}
+					#{x_name}
 				</foreach>
 			</if>
 
@@ -319,16 +336,16 @@
 			<if test="contentType != null">
 				and E.CONTENTTYPE_ = #{contentType}
 			</if>
-	        
+
 			<if test="objectId != null">
 				and E.OBJECTID_ = #{objectId}
 			</if>
 
 			<if test="objectIds != null and objectIds.size() &gt; 0">
-			    and E.OBJECTID_ IN
-				<foreach item="x_objectId" index="index" collection="objectIds" 
+				and E.OBJECTID_ IN
+				<foreach item="x_objectId" index="index" collection="objectIds"
 					open="(" separator="," close=")">
-                  #{x_objectId}
+					#{x_objectId}
 				</foreach>
 			</if>
 
@@ -337,10 +354,10 @@
 			</if>
 
 			<if test="objectValues != null and objectValues.size() &gt; 0">
-			    and E.OBJECTVALUE_ IN
-				<foreach item="x_objectValue" index="index" collection="objectValues" 
+				and E.OBJECTVALUE_ IN
+				<foreach item="x_objectValue" index="index" collection="objectValues"
 					open="(" separator="," close=")">
-                  #{x_objectValue}
+					#{x_objectValue}
 				</foreach>
 			</if>
 
@@ -353,7 +370,8 @@
 			</if>
 
 			<if test="lastModifiedGreaterThanOrEqual != null">
-				and E.LASTMODIFIED_ &gt;= #{lastModifiedGreaterThanOrEqual}
+				and E.LASTMODIFIED_ &gt;=
+				#{lastModifiedGreaterThanOrEqual}
 			</if>
 
 			<if test="lastModifiedLessThanOrEqual != null">
@@ -371,7 +389,7 @@
 			<if test="deleteFlag != null">
 				and E.DELETEFLAG_ = #{deleteFlag}
 			</if>
-	        
+
 			<if test="createBy != null">
 				and E.CREATEBY_ = #{createBy}
 			</if>
@@ -383,7 +401,7 @@
 			<if test="createDateLessThanOrEqual != null">
 				and E.CREATEDATE_ &lt;= #{createDateLessThanOrEqual}
 			</if>
-			 
+
 		</where>
 	</sql>
 
