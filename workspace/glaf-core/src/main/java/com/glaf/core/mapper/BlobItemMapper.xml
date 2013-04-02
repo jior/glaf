@@ -6,7 +6,7 @@
 
 	<resultMap id="blobItemResultMap" type="com.glaf.core.domain.BlobItemEntity">
 		<id property="id" column="ID_" jdbcType="VARCHAR" />
-		<result property="resourceId" column="RESOURCEID_" jdbcType="VARCHAR" />
+		<result property="businessKey" column="BUSINESSKEY_" jdbcType="VARCHAR" />
 		<result property="fileId" column="FILEID_" jdbcType="VARCHAR" />
 		<result property="serviceKey" column="SERVICEKEY_" jdbcType="VARCHAR" />
 		<result property="name" column="NAME_" jdbcType="VARCHAR" />
@@ -49,7 +49,7 @@
 		insert into
 		SYS_LOB (
 		ID_
-		,RESOURCEID_
+		,BUSINESSKEY_
 		,FILEID_
 		,SERVICEKEY_
 		,DEVICEID_
@@ -70,7 +70,7 @@
 		,DATA_
 		)
 		values (#{id, jdbcType=VARCHAR}
-		,#{resourceId, jdbcType=VARCHAR}
+		,#{businessKey, jdbcType=VARCHAR}
 		,#{fileId, jdbcType=VARCHAR}
 		,#{serviceKey, jdbcType=VARCHAR}
 		,#{deviceId, jdbcType=VARCHAR}
@@ -95,7 +95,7 @@
 	<insert id="insertBlobItem_postgres" parameterType="com.glaf.core.domain.BlobItemEntity">
 		insert into
 		SYS_LOB ( ID_
-		,RESOURCEID_
+		,BUSINESSKEY_
 		,FILEID_
 		,SERVICEKEY_
 		,DEVICEID_
@@ -116,7 +116,7 @@
 		,DATA_
 		)
 		values (#{id, jdbcType=VARCHAR}
-		,#{resourceId, jdbcType=VARCHAR}
+		,#{businessKey, jdbcType=VARCHAR}
 		,#{fileId, jdbcType=VARCHAR}
 		,#{serviceKey, jdbcType=VARCHAR}
 		,#{deviceId, jdbcType=VARCHAR}
@@ -140,7 +140,7 @@
 
 	<update id="updateBlobItem" parameterType="com.glaf.core.domain.BlobItemEntity">
 		update SYS_LOB
-		set RESOURCEID_ = #{resourceId, jdbcType=VARCHAR},
+		set BUSINESSKEY_ = #{businessKey, jdbcType=VARCHAR},
 		LOCKED_ = #{locked, jdbcType=INTEGER},
 		STATUS_ = #{status, jdbcType=INTEGER}
 		where ID_ = #{id,jdbcType=VARCHAR}
@@ -150,7 +150,7 @@
 	<update id="updateBlobItemFileInfo" parameterType="com.glaf.core.domain.BlobItemEntity">
 		update SYS_LOB
 		set
-		RESOURCEID_ = #{resourceId, jdbcType=VARCHAR},
+		BUSINESSKEY_ = #{businessKey, jdbcType=VARCHAR},
 		FILENAME_ = #{filename, jdbcType=VARCHAR},
 		CONTENTTYPE_ = #{contentType, jdbcType=VARCHAR},
 		SIZE_ = #{size, jdbcType=BIGINT},
@@ -163,7 +163,7 @@
 	<update id="updateBlobItemFileInfo_postgres" parameterType="com.glaf.core.domain.BlobItemEntity">
 		update SYS_LOB
 		set
-		RESOURCEID_ = #{resourceId, jdbcType=VARCHAR},
+		BUSINESSKEY_ = #{businessKey, jdbcType=VARCHAR},
 		FILENAME_ = #{filename, jdbcType=VARCHAR},
 		CONTENTTYPE_ = #{contentType, jdbcType=VARCHAR},
 		SIZE_ = #{size, jdbcType=BIGINT},
@@ -183,9 +183,9 @@
 		where FILEID_ = #{fileId}
 	</delete>
 
-	<delete id="deleteBlobItemsByResourceId" parameterType="string">
+	<delete id="deleteBlobItemsByBusinessKey" parameterType="string">
 		delete from SYS_LOB
-		where RESOURCEID_ = #{resourceId}
+		where BUSINESSKEY_ = #{businessKey}
 	</delete>
 
 	<delete id="deleteBlobItems" parameterType="com.glaf.core.query.BlobItemQuery">
@@ -201,7 +201,7 @@
 
 	<select id="getBlobItemById" parameterType="string" resultMap="blobItemResultMap">
 		select
-		ID_, RESOURCEID_ , FILEID_ , SERVICEKEY_ , NAME_ , TYPE_ , FILENAME_ ,
+		ID_, BUSINESSKEY_ , FILEID_ , SERVICEKEY_ , NAME_ , TYPE_ , FILENAME_ ,
 		OBJECTID_ , OBJECTVALUE_ , SIZE_ , LASTMODIFIED_ , CONTENTTYPE_, PATH_,
 		LOCKED_ , STATUS_ , DELETEFLAG_ , CREATEBY_ , CREATEDATE_, DEVICEID_
 		from SYS_LOB where ID_ = #{id}
@@ -211,7 +211,7 @@
 	<select id="getBlobItemsByFileId" parameterType="string"
 		resultMap="blobItemResultMap">
 		select
-		ID_, RESOURCEID_ , FILEID_ , SERVICEKEY_ , NAME_ , TYPE_ , FILENAME_ ,
+		ID_, BUSINESSKEY_ , FILEID_ , SERVICEKEY_ , NAME_ , TYPE_ , FILENAME_ ,
 		OBJECTID_ , OBJECTVALUE_ , SIZE_ , LASTMODIFIED_ , CONTENTTYPE_, PATH_,
 		LOCKED_ , STATUS_ , DELETEFLAG_ , CREATEBY_ , CREATEDATE_, DEVICEID_
 		from SYS_LOB where FILEID_ = #{fileId}
@@ -222,7 +222,7 @@
 	<select id="getBlobItemsByFilename" parameterType="string"
 		resultMap="blobItemResultMap">
 		select
-		ID_, RESOURCEID_ , FILEID_ , SERVICEKEY_ , NAME_ , TYPE_ , FILENAME_ ,
+		ID_, BUSINESSKEY_ , FILEID_ , SERVICEKEY_ , NAME_ , TYPE_ , FILENAME_ ,
 		OBJECTID_ , OBJECTVALUE_ , SIZE_ , LASTMODIFIED_ , CONTENTTYPE_, PATH_,
 		LOCKED_ , STATUS_ , DELETEFLAG_ , CREATEBY_ , CREATEDATE_, DEVICEID_
 		from SYS_LOB where FILENAME_ = #{filename}
@@ -232,32 +232,32 @@
 
 	<select id="getBlobItemFileInfoById" parameterType="string"
 		resultMap="blobItemFileInfoResultMap">
-		select ID_, FILENAME_, PATH_, DATA_, SIZE_, LASTMODIFIED_ from
+		select ID_, BUSINESSKEY_, FILENAME_, PATH_, DATA_, SIZE_, LASTMODIFIED_ from
 		SYS_LOB where ID_ = #{id}
 	</select>
 
 	<select id="getBlobItemFileInfoByFileId" parameterType="string"
 		resultMap="blobItemFileInfoResultMap">
-		select ID_, FILENAME_, PATH_, DATA_, SIZE_, LASTMODIFIED_ from
+		select ID_, BUSINESSKEY_, FILENAME_, PATH_, DATA_, SIZE_, LASTMODIFIED_ from
 		SYS_LOB where FILEID_ = #{fileId}
 	</select>
 
 	<select id="getBlobItemFileInfoById_postgres" parameterType="string"
 		resultMap="blobItemFileInfoResultMap_postgres">
-		select ID_, FILENAME_, PATH_, DATA_, SIZE_, LASTMODIFIED_ from
+		select ID_, BUSINESSKEY_, FILENAME_, PATH_, DATA_, SIZE_, LASTMODIFIED_ from
 		SYS_LOB where ID_ = #{id}
 	</select>
 
 	<select id="getBlobItemFileInfoByFileId_postgres" parameterType="string"
 		resultMap="blobItemFileInfoResultMap_postgres">
-		select ID_, FILENAME_, PATH_, DATA_, SIZE_, LASTMODIFIED_ from
+		select ID_, BUSINESSKEY_, FILENAME_, PATH_, DATA_, SIZE_, LASTMODIFIED_ from
 		SYS_LOB where FILEID_ = #{fileId}
 	</select>
 
 	<select id="getBlobItems" parameterType="com.glaf.core.query.BlobItemQuery"
 		resultMap="blobItemResultMap">
 		select
-		E.ID_, E.RESOURCEID_ , E.FILEID_ , E.SERVICEKEY_ , E.NAME_ , E.TYPE_ ,
+		E.ID_, E.BUSINESSKEY_ , E.FILEID_ , E.SERVICEKEY_ , E.NAME_ , E.TYPE_ ,
 		E.FILENAME_ , PATH_, 
 		E.OBJECTID_ , E.OBJECTVALUE_ , E.SIZE_ , E.LASTMODIFIED_ , E.CONTENTTYPE_,
 		E.LOCKED_ , E.STATUS_ , E.DELETEFLAG_ , E.CREATEBY_ , E.CREATEDATE_,
@@ -285,15 +285,15 @@
 				and E.DEVICEID_ = #{deviceId}
 			</if>
 
-			<if test="resourceId != null">
-				and E.RESOURCEID_ = #{resourceId}
+			<if test="businessKey != null">
+				and E.BUSINESSKEY_ = #{businessKey}
 			</if>
 
-			<if test="resourceIds != null and resourceIds.size() &gt; 0">
-				and E.RESOURCEID_ IN
-				<foreach item="x_resourceId" index="index" collection="resourceIds"
+			<if test="businessKeys != null and businessKeys.size() &gt; 0">
+				and E.BUSINESSKEY_ IN
+				<foreach item="x_businessKey" index="index" collection="businessKeys"
 					open="(" separator="," close=")">
-					#{x_resourceId}
+					#{x_businessKey}
 				</foreach>
 			</if>
 

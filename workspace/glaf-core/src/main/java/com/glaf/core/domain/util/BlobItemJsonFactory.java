@@ -31,8 +31,8 @@ public class BlobItemJsonFactory {
 		if (jsonObject.containsKey("id")) {
 			model.setId(jsonObject.getString("id"));
 		}
-		if (jsonObject.containsKey("resourceId")) {
-			model.setResourceId(jsonObject.getString("resourceId"));
+		if (jsonObject.containsKey("businessKey")) {
+			model.setBusinessKey(jsonObject.getString("businessKey"));
 		}
 		if (jsonObject.containsKey("fileId")) {
 			model.setFileId(jsonObject.getString("fileId"));
@@ -91,8 +91,8 @@ public class BlobItemJsonFactory {
 		jsonObject.put("id", model.getId());
 		jsonObject.put("_id_", model.getId());
 		jsonObject.put("_oid_", model.getId());
-		if (model.getResourceId() != null) {
-			jsonObject.put("resourceId", model.getResourceId());
+		if (model.getBusinessKey()!= null) {
+			jsonObject.put("businessKey", model.getBusinessKey());
 		}
 		if (model.getFileId() != null) {
 			jsonObject.put("fileId", model.getFileId());
@@ -145,8 +145,8 @@ public class BlobItemJsonFactory {
 		jsonObject.put("id", model.getId());
 		jsonObject.put("_id_", model.getId());
 		jsonObject.put("_oid_", model.getId());
-		if (model.getResourceId() != null) {
-			jsonObject.put("resourceId", model.getResourceId());
+		if (model.getBusinessKey()!= null) {
+			jsonObject.put("businessKey", model.getBusinessKey());
 		}
 		if (model.getFileId() != null) {
 			jsonObject.put("fileId", model.getFileId());

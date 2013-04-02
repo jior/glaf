@@ -40,7 +40,7 @@ public interface IMailService {
 
 	Mail getMailByMessageId(String messageId);
 
-	List<Mail> getMailList(String resourceId);
+	List<Mail> getMailList(String businessKey);
 
 	Paging getPage(MailQuery query);
 

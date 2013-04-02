@@ -58,8 +58,8 @@ public class MailQuery extends DataQuery {
 	protected Date lastViewDateLessThanOrEqual;
 	protected String mailBCCLike;
 	protected String mailToLike;
-	protected String resourceId;
-	protected List<String> resourceIds;
+	protected String businessKey;
+	protected List<String> businessKeys;
 	protected String mailBox;
 	protected List<String> mailBoxs;
 	protected Date sendDateGreaterThanOrEqual;
@@ -226,12 +226,12 @@ public class MailQuery extends DataQuery {
 		return receiveStatusLessThanOrEqual;
 	}
 
-	public String getResourceId() {
-		return resourceId;
+	public String getBusinessKey() {
+		return businessKey;
 	}
 
-	public List<String> getResourceIds() {
-		return resourceIds;
+	public List<String> getBusinessKeys() {
+		return businessKeys;
 	}
 
 	public Integer getRetryTimes() {
@@ -524,19 +524,19 @@ public class MailQuery extends DataQuery {
 		return this;
 	}
 
-	public MailQuery resourceId(String resourceId) {
-		if (resourceId == null) {
-			throw new RuntimeException("resourceId is null");
+	public MailQuery businessKey(String businessKey) {
+		if (businessKey == null) {
+			throw new RuntimeException("businessKey is null");
 		}
-		this.resourceId = resourceId;
+		this.businessKey = businessKey;
 		return this;
 	}
 
-	public MailQuery resourceIds(List<String> resourceIds) {
-		if (resourceIds == null) {
-			throw new RuntimeException("resourceIds is empty ");
+	public MailQuery businessKeys(List<String> businessKeys) {
+		if (businessKeys == null) {
+			throw new RuntimeException("businessKeys is empty ");
 		}
-		this.resourceIds = resourceIds;
+		this.businessKeys = businessKeys;
 		return this;
 	}
 
@@ -750,12 +750,12 @@ public class MailQuery extends DataQuery {
 		this.receiveStatusLessThanOrEqual = receiveStatusLessThanOrEqual;
 	}
 
-	public void setResourceId(String resourceId) {
-		this.resourceId = resourceId;
+	public void setBusinessKey(String businessKey) {
+		this.businessKey = businessKey;
 	}
 
-	public void setResourceIds(List<String> resourceIds) {
-		this.resourceIds = resourceIds;
+	public void setBusinessKeys(List<String> businessKeys) {
+		this.businessKeys = businessKeys;
 	}
 
 	public void setRetryTimes(Integer retryTimes) {

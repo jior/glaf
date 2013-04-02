@@ -190,7 +190,7 @@ public class MxTemplateServiceImpl implements ITemplateService {
 							BlobItem blob = new BlobItemEntity();
 							blob.setData(template.getData());
 							blob.setFileId(template.getTemplateId());
-							blob.setResourceId(template.getTemplateId());
+							blob.setBusinessKey(template.getTemplateId());
 							blob.setLastModified(template.getLastModified());
 							blob.setFilename(FileUtils.getFileName(template
 									.getDataFile()));
@@ -214,7 +214,7 @@ public class MxTemplateServiceImpl implements ITemplateService {
 						BlobItem blob = new BlobItemEntity();
 						blob.setData(template.getData());
 						blob.setFileId(template.getTemplateId());
-						blob.setResourceId(template.getTemplateId());
+						blob.setBusinessKey(template.getTemplateId());
 						blob.setLastModified(template.getLastModified());
 						blob.setFilename(FileUtils.getFileName(template
 								.getDataFile()));
@@ -281,7 +281,7 @@ public class MxTemplateServiceImpl implements ITemplateService {
 			BlobItem blob = new BlobItemEntity();
 			blob.setData(template.getData());
 			blob.setFileId(template.getTemplateId());
-			blob.setResourceId(template.getTemplateId());
+			blob.setBusinessKey(template.getTemplateId());
 			blob.setLastModified(template.getLastModified());
 			if (template.getDataFile() != null) {
 				blob.setFilename(FileUtils.getFileName(template.getDataFile()));

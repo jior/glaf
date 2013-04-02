@@ -29,6 +29,7 @@ import com.glaf.core.context.ContextFactory;
 import com.glaf.core.domain.BlobItemEntity;
 import com.glaf.core.security.LoginContext;
 import com.glaf.core.service.IBlobService;
+import com.glaf.core.util.Constants;
 import com.glaf.core.util.FileUtils;
 import com.glaf.core.util.RequestUtils;
 import com.glaf.core.util.UUID32;
@@ -39,8 +40,6 @@ public class FileUploadServlet extends HttpServlet {
 			.getLog(FileUploadServlet.class);
 
 	private static final long serialVersionUID = 1L;
-
-	private static final String UPLOAD_PATH = "/upload/files/";
 
 	private static Configuration conf = BaseConfiguration.create();
 
@@ -76,7 +75,10 @@ public class FileUploadServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// 获取客户端回调函数名
+		LoginContext loginContext = RequestUtils.getLoginContext(request);
+		if (loginContext == null) {
+			return;
+		}
 		response.setContentType("text/html;charset=UTF-8");
 		String method = request.getParameter("method");
 		if ("delete".equals(method)) {
@@ -96,8 +98,10 @@ public class FileUploadServlet extends HttpServlet {
 	public void upload(HttpServletRequest request, HttpServletResponse response) {
 		response.setContentType("text/html;charset=UTF-8");
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
+		if (loginContext == null) {
+			return;
+		}
 		String serviceKey = request.getParameter("serviceKey");
-		String resourceId = request.getParameter("resourceId");
 		String type = request.getParameter("type");
 		if (StringUtils.isEmpty(type)) {
 			type = "0";
@@ -110,13 +114,13 @@ public class FileUploadServlet extends HttpServlet {
 		try {
 			DiskFileItemFactory diskFactory = new DiskFileItemFactory();
 			// threshold 极限、临界值，即硬盘缓存 8M
-			diskFactory.setSizeThreshold(8 * 1024);
-			// repository 贮藏室，即临时文件目录
+			diskFactory.setSizeThreshold(8 * FileUtils.MB_SIZE);
+			// repository 临时文件目录
 			diskFactory.setRepository(new File(rootDir + "/temp"));
 			ServletFileUpload upload = new ServletFileUpload(diskFactory);
 			int maxUploadSize = conf.getInt(serviceKey + ".maxUploadSize", 0);
 			if (maxUploadSize == 0) {
-				maxUploadSize = conf.getInt("upload.maxUploadSize", 500);
+				maxUploadSize = conf.getInt("upload.maxUploadSize", 50);// 50MB
 			}
 			maxUploadSize = maxUploadSize * FileUtils.MB_SIZE;
 			logger.debug("maxUploadSize:" + maxUploadSize);
@@ -124,6 +128,7 @@ public class FileUploadServlet extends HttpServlet {
 			upload.setHeaderEncoding("UTF-8");
 			upload.setSizeMax(maxUploadSize);
 			upload.setFileSizeMax(maxUploadSize);
+			String uploadDir = Constants.UPLOAD_PATH;
 
 			if (ServletFileUpload.isMultipartContent(request)) {
 				logger.debug("#################start upload process#########################");
@@ -131,9 +136,7 @@ public class FileUploadServlet extends HttpServlet {
 				PrintWriter out = response.getWriter();
 				while (iter.hasNext()) {
 					FileItemStream item = iter.next();
-
 					if (!item.isFormField()) {
-						String uploadDir = UPLOAD_PATH;
 						// 每天上传的文件根据日期存放在不同的文件夹
 						String autoCreatedDateDirByParttern = "yyyy/MM/dd";
 						String autoCreatedDateDir = DateFormatUtils.format(
@@ -151,7 +154,6 @@ public class FileUploadServlet extends HttpServlet {
 
 						BlobItem dataFile = new BlobItemEntity();
 						dataFile.setLastModified(System.currentTimeMillis());
-						dataFile.setResourceId(resourceId);
 						dataFile.setCreateBy(loginContext.getActorId());
 						dataFile.setFileId(fileId);
 						dataFile.setPath(uploadDir + autoCreatedDateDir + "/"

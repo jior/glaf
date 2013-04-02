@@ -198,25 +198,25 @@ public class MxUploadController {
 		}
 		Map<String, Object> paramMap = RequestUtils.getParameterMap(request);
 		logger.debug("paramMap:" + paramMap);
-		String resourceId = request.getParameter("resourceId");
+		String businessKey = request.getParameter("businessKey");
 		int status = ParamUtils.getInt(paramMap, "status");
 		try {
 			if (request.getAttribute("dataFiles") == null) {
 				List<DataFile> dataFiles = new ArrayList<DataFile>();
-				if (StringUtils.isNotEmpty(resourceId)) {
-					List<DataFile> rows = blobService.getBlobList(resourceId);
+				if (StringUtils.isNotEmpty(businessKey)) {
+					List<DataFile> rows = blobService.getBlobList(businessKey);
 					if (rows != null && rows.size() > 0) {
 						dataFiles.addAll(rows);
 					}
 				}
 
-				paramMap.remove("resourceId");
+				paramMap.remove("businessKey");
 				paramMap.put("createBy", loginContext.getActorId());
 				paramMap.put("serviceKey", serviceKey);
 				paramMap.put("status", status);
 				BlobItemQuery query = new BlobItemQuery();
 				Tools.populate(query, paramMap);
-				query.setResourceId(null);
+	 
 				query.createBy(loginContext.getActorId());
 				query.serviceKey(serviceKey);
 				query.status(status);
@@ -268,7 +268,7 @@ public class MxUploadController {
 
 		Map<String, Object> paramMap = RequestUtils.getParameterMap(req);
 		logger.debug("paramMap:" + paramMap);
-		String resourceId = req.getParameter("resourceId");
+		String businessKey = req.getParameter("businessKey");
 		String objectId = req.getParameter("objectId");
 		String objectValue = req.getParameter("objectValue");
 		int status = ParamUtils.getInt(paramMap, "status");
@@ -276,20 +276,20 @@ public class MxUploadController {
 		try {
 			semaphore.acquire();
 
-			if (StringUtils.isNotEmpty(resourceId)) {
-				List<DataFile> rows = blobService.getBlobList(resourceId);
+			if (StringUtils.isNotEmpty(businessKey)) {
+				List<DataFile> rows = blobService.getBlobList(businessKey);
 				if (rows != null && rows.size() > 0) {
 					dataFiles.addAll(rows);
 				}
 			}
 
-			paramMap.remove("resourceId");
+			paramMap.remove("businessKey");
 			paramMap.put("createBy", loginContext.getActorId());
 			paramMap.put("serviceKey", serviceKey);
 			paramMap.put("status", status);
 			BlobItemQuery query = new BlobItemQuery();
 			Tools.populate(query, paramMap);
-			query.setResourceId(null);
+ 
 			query.createBy(loginContext.getActorId());
 			query.serviceKey(serviceKey);
 			query.status(status);
@@ -323,7 +323,6 @@ public class MxUploadController {
 					}
 					BlobItem dataFile = new BlobItemEntity();
 					dataFile.setLastModified(System.currentTimeMillis());
-					dataFile.setResourceId(resourceId);
 					dataFile.setCreateBy(loginContext.getActorId());
 					dataFile.setFileId(fileId);
 					dataFile.setData(mFile.getBytes());

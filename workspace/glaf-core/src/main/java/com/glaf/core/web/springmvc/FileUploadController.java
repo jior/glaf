@@ -53,6 +53,7 @@ import com.glaf.core.domain.BlobItemEntity;
 import com.glaf.core.query.BlobItemQuery;
 import com.glaf.core.security.LoginContext;
 import com.glaf.core.service.IBlobService;
+import com.glaf.core.util.Constants;
 import com.glaf.core.util.FileUtils;
 import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.RequestUtils;
@@ -65,8 +66,6 @@ public class FileUploadController {
 
 	protected final static Log logger = LogFactory
 			.getLog(FileUploadController.class);
-
-	private static final String UPLOAD_PATH = "/upload/files/";
 
 	private static Configuration conf = BaseConfiguration.create();
 
@@ -110,25 +109,25 @@ public class FileUploadController {
 
 		Map<String, Object> paramMap = RequestUtils.getParameterMap(request);
 		logger.debug("paramMap:" + paramMap);
-		String resourceId = request.getParameter("resourceId");
+		String businessKey = request.getParameter("businessKey");
 		int status = ParamUtils.getInt(paramMap, "status");
 		try {
 			if (request.getAttribute("dataFiles") == null) {
 				List<DataFile> dataFiles = new ArrayList<DataFile>();
-				if (StringUtils.isNotEmpty(resourceId)) {
-					List<DataFile> rows = blobService.getBlobList(resourceId);
+				if (StringUtils.isNotEmpty(businessKey)) {
+					List<DataFile> rows = blobService.getBlobList(businessKey);
 					if (rows != null && rows.size() > 0) {
 						dataFiles.addAll(rows);
 					}
 				}
 
-				paramMap.remove("resourceId");
+				paramMap.remove("businessKey");
 				paramMap.put("createBy", loginContext.getActorId());
 				paramMap.put("serviceKey", serviceKey);
 				paramMap.put("status", status);
 				BlobItemQuery query = new BlobItemQuery();
 				Tools.populate(query, paramMap);
-				query.setResourceId(null);
+ 
 				query.createBy(loginContext.getActorId());
 				query.serviceKey(serviceKey);
 				query.status(status);
@@ -168,7 +167,6 @@ public class FileUploadController {
 		response.setContentType("text/html;charset=UTF-8");
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		String serviceKey = request.getParameter("serviceKey");
-		String resourceId = request.getParameter("resourceId");
 		Map<String, Object> paramMap = RequestUtils.getParameterMap(request);
 		logger.debug("paramMap:" + paramMap);
 		MultipartHttpServletRequest req = (MultipartHttpServletRequest) request;
@@ -178,10 +176,11 @@ public class FileUploadController {
 		}
 		int maxUploadSize = conf.getInt(serviceKey + ".maxUploadSize", 0);
 		if (maxUploadSize == 0) {
-			maxUploadSize = conf.getInt("upload.maxUploadSize", 50);
+			maxUploadSize = conf.getInt("upload.maxUploadSize", 50);// 50MB
 		}
 		maxUploadSize = maxUploadSize * FileUtils.MB_SIZE;
 		logger.debug("maxUploadSize:" + maxUploadSize);
+		String uploadDir = Constants.UPLOAD_PATH;
 		InputStream inputStream = null;
 		try {
 			PrintWriter out = response.getWriter();
@@ -197,11 +196,8 @@ public class FileUploadController {
 					logger.debug("fize size:" + mFile.getSize());
 					String fileId = UUID32.getUUID();
 
-					String uploadDir = UPLOAD_PATH;
 					// 每天上传的文件根据日期存放在不同的文件夹
-					String autoCreatedDateDirByParttern = "yyyy"
-							+ File.separatorChar + "MM" + File.separatorChar
-							+ "dd" + File.separatorChar;
+					String autoCreatedDateDirByParttern = "yyyy/MM/dd";
 					String autoCreatedDateDir = DateFormatUtils.format(
 							new java.util.Date(), autoCreatedDateDirByParttern);
 					String rootDir = SystemProperties.getConfigRootPath();
@@ -218,7 +214,6 @@ public class FileUploadController {
 
 					BlobItem dataFile = new BlobItemEntity();
 					dataFile.setLastModified(System.currentTimeMillis());
-					dataFile.setResourceId(resourceId);
 					dataFile.setCreateBy(loginContext.getActorId());
 					dataFile.setFileId(fileId);
 					dataFile.setPath(uploadDir + autoCreatedDateDir + "/"

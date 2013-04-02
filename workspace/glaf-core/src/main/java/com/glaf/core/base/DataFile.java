@@ -23,6 +23,13 @@ import java.util.Date;
 public interface DataFile {
 
 	/**
+	 * 业务标识
+	 * 
+	 * @return
+	 */
+	String getBusinessKey();
+
+	/**
 	 * 获取ContentType
 	 * 
 	 * @return
@@ -123,13 +130,6 @@ public interface DataFile {
 	String getPath();
 
 	/**
-	 * 资源ID
-	 * 
-	 * @return
-	 */
-	String getResourceId();
-
-	/**
 	 * 服务标识
 	 * 
 	 * @return
@@ -156,6 +156,8 @@ public interface DataFile {
 	 * @return
 	 */
 	String getType();
+
+	void setBusinessKey(String businessKey);
 
 	void setCreateBy(String createBy);
 
@@ -216,8 +218,6 @@ public interface DataFile {
 	void setName(String name);
 
 	void setPath(String path);
-
-	void setResourceId(String resourceId);
 
 	/**
 	 * 设置服务标识

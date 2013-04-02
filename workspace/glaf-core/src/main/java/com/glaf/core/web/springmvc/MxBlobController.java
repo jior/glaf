@@ -96,9 +96,9 @@ public class MxBlobController {
 	@RequestMapping("/files")
 	public ModelAndView files(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
-		String resourceId = request.getParameter("resourceId");
-		if (StringUtils.isNotEmpty(resourceId)) {
-			List<DataFile> dataList = blobService.getBlobList(resourceId);
+		String businessKey = request.getParameter("businessKey");
+		if (StringUtils.isNotEmpty(businessKey)) {
+			List<DataFile> dataList = blobService.getBlobList(businessKey);
 			modelMap.put("dataList", dataList);
 		}
 
@@ -122,9 +122,9 @@ public class MxBlobController {
 	@RequestMapping("/showUpload")
 	public ModelAndView showUpload(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
-		String resourceId = request.getParameter("resourceId");
-		if (StringUtils.isNotEmpty(resourceId)) {
-			List<DataFile> dataList = blobService.getBlobList(resourceId);
+		String businessKey = request.getParameter("businessKey");
+		if (StringUtils.isNotEmpty(businessKey)) {
+			List<DataFile> dataList = blobService.getBlobList(businessKey);
 			modelMap.put("dataList", dataList);
 		}
 

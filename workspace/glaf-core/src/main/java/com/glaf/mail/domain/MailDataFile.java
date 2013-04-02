@@ -18,21 +18,12 @@ import com.glaf.core.util.DateUtils;
 public class MailDataFile implements Serializable, DataFile {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@Column(name = "id", length = 50, nullable = false)
-	protected String id;
-
 	/**
-	 * topid
+	 * createDate
 	 */
-	@Column(name = "topId", length = 100)
-	protected String topId;
-
-	/**
-	 * fileName
-	 */
-	@Column(name = "filename", length = 255)
-	protected String filename;
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "createDate")
+	protected Date createDate;
 
 	/**
 	 * fileContent
@@ -42,11 +33,14 @@ public class MailDataFile implements Serializable, DataFile {
 	protected byte[] fileContent;
 
 	/**
-	 * createDate
+	 * fileName
 	 */
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "createDate")
-	protected Date createDate;
+	@Column(name = "filename", length = 255)
+	protected String filename;
+
+	@Id
+	@Column(name = "id", length = 50, nullable = false)
+	protected String id;
 
 	/**
 	 * filesize
@@ -54,8 +48,18 @@ public class MailDataFile implements Serializable, DataFile {
 	@Column(name = "size")
 	protected long size;
 
+	/**
+	 * topid
+	 */
+	@Column(name = "topId", length = 100)
+	protected String topId;
+
 	public MailDataFile() {
 
+	}
+
+	public String getBusinessKey() {
+		return null;
 	}
 
 	public String getContentType() {
@@ -129,10 +133,6 @@ public class MailDataFile implements Serializable, DataFile {
 		return null;
 	}
 
-	public String getResourceId() {
-		return null;
-	}
-
 	public String getServiceKey() {
 		return null;
 	}
@@ -178,6 +178,10 @@ public class MailDataFile implements Serializable, DataFile {
 		return model;
 	}
 
+	public void setBusinessKey(String businessKey) {
+
+	}
+
 	public void setCreateBy(String createBy) {
 
 	}
@@ -219,10 +223,6 @@ public class MailDataFile implements Serializable, DataFile {
 	}
 
 	public void setPath(String path) {
-
-	}
-
-	public void setResourceId(String resourceId) {
 
 	}
 

@@ -43,57 +43,15 @@ import com.glaf.core.domain.util.*;
 
 @Entity
 @Table(name = "SYS_LOB")
-public class BlobItemEntity implements DataFile, Serializable, BlobItem, JSONable {
+public class BlobItemEntity implements DataFile, Serializable, BlobItem,
+		JSONable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@Column(name = "ID_", length = 50, nullable = false)
-	protected String id;
-
-	@Column(name = "RESOURCEID_", length = 50)
-	protected String resourceId;
-
-	@Column(name = "FILEID_", length = 50)
-	protected String fileId;
-
-	@Column(name = "SERVICEKEY_", length = 50)
-	protected String serviceKey;
-
-	@Column(name = "DEVICEID_", length = 20)
-	protected String deviceId;
-
-	@Column(name = "NAME_", length = 50)
-	protected String name;
-
-	@Column(name = "TYPE_", length = 50)
-	protected String type;
-
-	@Column(name = "FILENAME_", length = 500)
-	protected String filename;
+	@Column(name = "BUSINESSKEY_", length = 50)
+	protected String businessKey;
 
 	@Column(name = "CONTENTTYPE_", length = 50)
 	protected String contentType;
-
-	@Column(name = "OBJECTID_")
-	protected String objectId;
-
-	@Column(name = "OBJECTVALUE_")
-	protected String objectValue;
-
-	@Column(name = "SIZE_")
-	protected long size = -1;
-
-	@Column(name = "LASTMODIFIED_")
-	protected long lastModified = -1;
-
-	@Column(name = "LOCKED_")
-	protected int locked = 0;
-
-	@Column(name = "STATUS_")
-	protected int status = 0;
-
-	@Column(name = "DELETEFLAG_")
-	protected int deleteFlag = 0;
 
 	@Column(name = "CREATEBY_", length = 50)
 	protected String createBy;
@@ -106,11 +64,54 @@ public class BlobItemEntity implements DataFile, Serializable, BlobItem, JSONabl
 	@Column(name = "DATA_")
 	protected byte[] data = null;
 
-	@Column(name = "PATH_", length = 500)
-	protected String path = null;
+	@Column(name = "DELETEFLAG_")
+	protected int deleteFlag = 0;
+
+	@Column(name = "DEVICEID_", length = 20)
+	protected String deviceId;
+
+	@Column(name = "FILEID_", length = 50)
+	protected String fileId;
+
+	@Column(name = "FILENAME_", length = 500)
+	protected String filename;
+
+	@Id
+	@Column(name = "ID_", length = 50, nullable = false)
+	protected String id;
 
 	@Transient
 	protected transient InputStream inputStream = null;
+
+	@Column(name = "LASTMODIFIED_")
+	protected long lastModified = -1;
+
+	@Column(name = "LOCKED_")
+	protected int locked = 0;
+
+	@Column(name = "NAME_", length = 50)
+	protected String name;
+
+	@Column(name = "OBJECTID_")
+	protected String objectId;
+
+	@Column(name = "OBJECTVALUE_")
+	protected String objectValue;
+
+	@Column(name = "PATH_", length = 500)
+	protected String path = null;
+
+	@Column(name = "SERVICEKEY_", length = 50)
+	protected String serviceKey;
+
+	@Column(name = "SIZE_")
+	protected long size = -1;
+
+	@Column(name = "STATUS_")
+	protected int status = 0;
+
+	@Column(name = "TYPE_", length = 50)
+	protected String type;
 
 	public BlobItemEntity() {
 
@@ -131,6 +132,10 @@ public class BlobItemEntity implements DataFile, Serializable, BlobItem, JSONabl
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	public String getBusinessKey() {
+		return businessKey;
 	}
 
 	public String getContentType() {
@@ -197,10 +202,6 @@ public class BlobItemEntity implements DataFile, Serializable, BlobItem, JSONabl
 		return path;
 	}
 
-	public String getResourceId() {
-		return resourceId;
-	}
-
 	public String getServiceKey() {
 		return serviceKey;
 	}
@@ -227,6 +228,10 @@ public class BlobItemEntity implements DataFile, Serializable, BlobItem, JSONabl
 
 	public BlobItemEntity jsonToObject(JSONObject jsonObject) {
 		return BlobItemJsonFactory.jsonToObject(jsonObject);
+	}
+
+	public void setBusinessKey(String businessKey) {
+		this.businessKey = businessKey;
 	}
 
 	public void setContentType(String contentType) {
@@ -293,10 +298,6 @@ public class BlobItemEntity implements DataFile, Serializable, BlobItem, JSONabl
 		this.path = path;
 	}
 
-	public void setResourceId(String resourceId) {
-		this.resourceId = resourceId;
-	}
-
 	public void setServiceKey(String serviceKey) {
 		this.serviceKey = serviceKey;
 	}
@@ -325,5 +326,7 @@ public class BlobItemEntity implements DataFile, Serializable, BlobItem, JSONabl
 		return ToStringBuilder.reflectionToString(this,
 				ToStringStyle.MULTI_LINE_STYLE);
 	}
+
+	 
 
 }

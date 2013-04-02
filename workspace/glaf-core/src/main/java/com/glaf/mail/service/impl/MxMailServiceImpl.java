@@ -97,7 +97,7 @@ public class MxMailServiceImpl implements IMailService {
 	public void deleteMail(String mailId) {
 		Mail mail = this.getMail(mailId);
 		if (mail != null) {
-			blobService.deleteBlobByResourceId(mail.getResourceId());
+			blobService.deleteBlobByBusinessKey(mail.getBusinessKey());
 			this.deleteById(mail.getId());
 		}
 	}
@@ -107,9 +107,9 @@ public class MxMailServiceImpl implements IMailService {
 		return mail;
 	}
 
-	public List<Mail> getMailList(String resourceId) {
+	public List<Mail> getMailList(String businessKey) {
 		MailQuery query = new MailQuery();
-		query.resourceId(resourceId);
+		query.businessKey(businessKey);
 		return this.list(query);
 	}
 
@@ -150,8 +150,8 @@ public class MxMailServiceImpl implements IMailService {
 		if (StringUtils.isEmpty(mail.getMailId())) {
 			mail.setMailId(UUID32.getUUID());
 		}
-		if (StringUtils.isEmpty(mail.getResourceId())) {
-			mail.setResourceId(mail.getMailId());
+		if (StringUtils.isEmpty(mail.getBusinessKey())) {
+			mail.setBusinessKey(mail.getMailId());
 		}
 		mail.setCreateDate(new Date());
 		mail.setId(idGenerator.getNextId());

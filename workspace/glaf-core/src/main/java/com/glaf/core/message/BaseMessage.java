@@ -49,7 +49,7 @@ public class BaseMessage implements MessageProvider {
 	/**
 	 * 资源编号
 	 */
-	protected String resourceId;
+	protected String businessKey;
 
 	/**
 	 * 消息类型
@@ -200,8 +200,8 @@ public class BaseMessage implements MessageProvider {
 		return receiverName;
 	}
 
-	public String getResourceId() {
-		return resourceId;
+	public String getBusinessKey() {
+		return businessKey;
 	}
 
 	public String getSenderId() {
@@ -250,8 +250,8 @@ public class BaseMessage implements MessageProvider {
 		if (jsonObject.containsKey("createDate")) {
 			model.setCreateDate(jsonObject.getDate("createDate"));
 		}
-		if (jsonObject.containsKey("resourceId")) {
-			model.setResourceId(jsonObject.getString("resourceId"));
+		if (jsonObject.containsKey("businessKey")) {
+			model.setBusinessKey(jsonObject.getString("businessKey"));
 		}
 		if (jsonObject.containsKey("objectValue")) {
 			model.setObjectValue(jsonObject.getString("objectValue"));
@@ -340,8 +340,8 @@ public class BaseMessage implements MessageProvider {
 		this.receiverName = receiverName;
 	}
 
-	public void setResourceId(String resourceId) {
-		this.resourceId = resourceId;
+	public void setBusinessKey(String businessKey) {
+		this.businessKey = businessKey;
 	}
 
 	public void setSenderId(String senderId) {
@@ -398,8 +398,8 @@ public class BaseMessage implements MessageProvider {
 			jsonObject.put("createDate_datetime",
 					DateUtils.getDateTime(createDate));
 		}
-		if (resourceId != null) {
-			jsonObject.put("resourceId", resourceId);
+		if (businessKey != null) {
+			jsonObject.put("businessKey", businessKey);
 		}
 		if (objectValue != null) {
 			jsonObject.put("objectValue", objectValue);
@@ -458,8 +458,8 @@ public class BaseMessage implements MessageProvider {
 			jsonObject.put("createDate_datetime",
 					DateUtils.getDateTime(createDate));
 		}
-		if (resourceId != null) {
-			jsonObject.put("resourceId", resourceId);
+		if (businessKey != null) {
+			jsonObject.put("businessKey", businessKey);
 		}
 		if (objectValue != null) {
 			jsonObject.put("objectValue", objectValue);

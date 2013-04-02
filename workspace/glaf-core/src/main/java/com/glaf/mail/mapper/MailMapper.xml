@@ -29,7 +29,7 @@
 		<result property="mailBCC" column="MAILBCC_" jdbcType="VARCHAR" />
 		<result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP" />
 		<result property="mailTo" column="MAILTO_" jdbcType="VARCHAR" />
-		<result property="resourceId" column="RESOURCEID_" jdbcType="VARCHAR" />
+		<result property="businessKey" column="RESOURCEID_" jdbcType="VARCHAR" />
 		<result property="mailBox" column="MAILBOX_" jdbcType="VARCHAR" />
 		<result property="sendDate" column="SENDDATE_" jdbcType="TIMESTAMP" />
 		<result property="mailSize" column="MAILSIZE_" jdbcType="INTEGER" />
@@ -55,7 +55,7 @@
 			<if test="messageId != null">
 				,MESSAGEID_ 
 			</if>
-			<if test="resourceId != null">
+			<if test="businessKey != null">
 				,RESOURCEID_ 
 			</if>
 			<if test="username != null">
@@ -153,8 +153,8 @@
 			<if test="messageId != null">
 				,#{messageId, jdbcType=VARCHAR}
 			</if>
-			<if test="resourceId != null">
-				,#{resourceId, jdbcType=VARCHAR}
+			<if test="businessKey != null">
+				,#{businessKey, jdbcType=VARCHAR}
 			</if>
 			<if test="username != null">
 				,#{username, jdbcType=VARCHAR}
@@ -254,8 +254,8 @@
 			<if test="messageId != null">
 				MESSAGEID_ = #{messageId, jdbcType=VARCHAR},
 			</if>
-			<if test="resourceId != null">
-				RESOURCEID_ = #{resourceId, jdbcType=VARCHAR},
+			<if test="businessKey != null">
+				RESOURCEID_ = #{businessKey, jdbcType=VARCHAR},
 			</if>
 			<if test="username != null">
 				USERNAME_ = #{username, jdbcType=VARCHAR},
@@ -553,15 +553,15 @@
 				and E.MAILTO_ like #{mailToLike}
 			</if>
 
-			<if test="resourceId != null">
-				and E.RESOURCEID_ = #{resourceId}
+			<if test="businessKey != null">
+				and E.RESOURCEID_ = #{businessKey}
 			</if>
 
-			<if test="resourceIds != null and resourceIds.size() &gt; 0">
+			<if test="businessKeys != null and businessKeys.size() &gt; 0">
 				and E.RESOURCEID_ IN
-				<foreach item="x_resourceId" index="index" collection="resourceIds"
+				<foreach item="x_businessKey" index="index" collection="businessKeys"
 					open="(" separator="," close=")">
-					#{x_resourceId}
+					#{x_businessKey}
 				</foreach>
 			</if>
 

@@ -21,92 +21,86 @@ package com.glaf.core.base;
 import java.io.InputStream;
 
 import java.util.Date;
-
-import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 
 public interface BlobItem extends DataFile {
 
-	public String getContentType();
+	String getContentType();
 
-	public String getCreateBy();
+	String getCreateBy();
 
-	public Date getCreateDate();
+	Date getCreateDate();
 
-	public byte[] getData();
+	byte[] getData();
 
-	public int getDeleteFlag();
+	int getDeleteFlag();
 
-	public String getDeviceId();
+	String getDeviceId();
 
-	public String getFileId();
+	String getFileId();
 
-	public String getFilename();
+	String getFilename();
 
-	public String getId();
+	String getId();
 
-	public InputStream getInputStream();
+	InputStream getInputStream();
 
-	public long getLastModified();
+	long getLastModified();
 
-	public int getLocked();
+	int getLocked();
 
-	public String getName();
+	String getName();
 
-	public String getObjectId();
+	String getObjectId();
 
-	public String getObjectValue();
+	String getObjectValue();
 
-	public String getResourceId();
+	String getServiceKey();
 
-	public String getServiceKey();
+	long getSize();
 
-	public long getSize();
+	int getStatus();
 
-	public int getStatus();
+	String getType();
 
-	public String getType();
+	void setContentType(String contentType);
 
-	public void setContentType(String contentType);
+	void setCreateBy(String createBy);
 
-	public void setCreateBy(String createBy);
+	void setCreateDate(Date createDate);
 
-	public void setCreateDate(Date createDate);
+	void setData(byte[] data);
 
-	public void setData(byte[] data);
+	void setDeleteFlag(int deleteFlag);
 
-	public void setDeleteFlag(int deleteFlag);
+	void setDeviceId(String deviceId);
 
-	public void setDeviceId(String deviceId);
+	void setFileId(String fileId);
 
-	public void setFileId(String fileId);
+	void setFilename(String filename);
 
-	public void setFilename(String filename);
+	void setId(String id);
 
-	public void setId(String id);
+	void setInputStream(InputStream inputStream);
 
-	public void setInputStream(InputStream inputStream);
+	void setLastModified(long lastModified);
 
-	public void setLastModified(long lastModified);
+	void setLocked(int locked);
 
-	public void setLocked(int locked);
+	void setName(String name);
 
-	public void setName(String name);
+	void setObjectId(String objectId);
 
-	public void setObjectId(String objectId);
+	void setObjectValue(String objectValue);
 
-	public void setObjectValue(String objectValue);
+	void setServiceKey(String serviceKey);
 
-	public void setResourceId(String resourceId);
+	void setSize(long size);
 
-	public void setServiceKey(String serviceKey);
+	void setStatus(int status);
 
-	public void setSize(long size);
+	void setType(String type);
 
-	public void setStatus(int status);
-
-	public void setType(String type);
-
-	public JSONObject toJsonObject() throws JSONException;
+	JSONObject toJsonObject();
 
 }

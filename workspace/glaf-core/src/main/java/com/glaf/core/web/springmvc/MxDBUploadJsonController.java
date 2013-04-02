@@ -45,7 +45,7 @@ import com.glaf.core.security.LoginContext;
 import com.glaf.core.service.IBlobService;
 import com.glaf.core.util.FileUtils;
 import com.glaf.core.util.RequestUtils;
-import com.glaf.core.util.UUID32;
+ 
 
 @Controller("/uploadJson")
 @RequestMapping("/uploadJson")
@@ -122,7 +122,6 @@ public class MxDBUploadJsonController {
 					blobData.setFileId(newFileName);
 					blobData.setLastModified(System.currentTimeMillis());
 					blobData.setName(fileName);
-					blobData.setResourceId(UUID32.getUUID());
 					blobData.setServiceKey("IMG_" + loginContext.getActorId());
 					blobData.setData(mFile.getBytes());
 					blobData.setFilename(fileName);

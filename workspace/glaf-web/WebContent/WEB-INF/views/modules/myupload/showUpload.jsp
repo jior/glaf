@@ -62,7 +62,7 @@
 		</script>
 		<!--  -->
 		<span id="spanButtonPlaceholder"></span>
-		  <div id="divFileProgressContainer" style="width:200;display:none;"></div>
+		<div id="divFileProgressContainer" style="width:200;display:none;"></div>
 		<div id="thumbnails">
 			<table id="infoTable" border="0" width="50%" style="border: solid 1px #7FAAFF; background-color: #C5D9FF; padding: 2px;margin-top:8px;">
 			</table>

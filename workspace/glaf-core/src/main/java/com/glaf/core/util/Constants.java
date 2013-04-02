@@ -85,4 +85,6 @@ public final class Constants {
 	public static final String INPUT_YYYYMMDD_EXPRESSION = "#{input_yyyymmdd}";
 
 	public static final String INPUT_YYYYMM_EXPRESSION = "#{input_yyyymm}";
+	
+	public static final String UPLOAD_PATH = "/upload/files/";
 }

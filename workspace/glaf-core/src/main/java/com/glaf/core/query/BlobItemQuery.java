@@ -23,29 +23,45 @@ import java.util.List;
 
 public class BlobItemQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;
-	protected String resourceId;
-	protected List<String> resourceIds;
+	protected String businessKey;
+	protected List<String> businessKeys;
+	protected String contentType;
+	protected Date createDateGreaterThanOrEqual;
+	protected Date createDateLessThanOrEqual;
 	protected String deviceId;
 	protected String fileId;
+	protected String filename;
+	protected String filenameLike;
+	protected Long lastModifiedGreaterThanOrEqual;
+	protected Long lastModifiedLessThanOrEqual;
 	protected String name;
 	protected String nameLike;
 	protected List<String> names;
-	protected String type;
-	protected String filename;
-	protected String filenameLike;
-	protected String contentType;
 	protected List<String> objectIds;
 	protected List<String> objectValues;
 	protected Long size;
 	protected Long sizeGreaterThanOrEqual;
 	protected Long sizeLessThanOrEqual;
-	protected Long lastModifiedGreaterThanOrEqual;
-	protected Long lastModifiedLessThanOrEqual;
-	protected Date createDateGreaterThanOrEqual;
-	protected Date createDateLessThanOrEqual;
+	protected String type;
 
 	public BlobItemQuery() {
 
+	}
+
+	public BlobItemQuery businessKey(String businessKey) {
+		if (businessKey == null) {
+			throw new RuntimeException("businessKey is null");
+		}
+		this.businessKey = businessKey;
+		return this;
+	}
+
+	public BlobItemQuery businessKeys(List<String> businessKeys) {
+		if (businessKeys == null) {
+			throw new RuntimeException("businessKeys is empty ");
+		}
+		this.businessKeys = businessKeys;
+		return this;
 	}
 
 	public BlobItemQuery contentType(String contentType) {
@@ -106,6 +122,14 @@ public class BlobItemQuery extends DataQuery {
 		return this;
 	}
 
+	public String getBusinessKey() {
+		return businessKey;
+	}
+
+	public List<String> getBusinessKeys() {
+		return businessKeys;
+	}
+
 	public String getContentType() {
 		return contentType;
 	}
@@ -160,14 +184,6 @@ public class BlobItemQuery extends DataQuery {
 
 	public List<String> getObjectValues() {
 		return objectValues;
-	}
-
-	public String getResourceId() {
-		return resourceId;
-	}
-
-	public List<String> getResourceIds() {
-		return resourceIds;
 	}
 
 	public Long getSize() {
@@ -244,20 +260,12 @@ public class BlobItemQuery extends DataQuery {
 		return this;
 	}
 
-	public BlobItemQuery resourceId(String resourceId) {
-		if (resourceId == null) {
-			throw new RuntimeException("resourceId is null");
-		}
-		this.resourceId = resourceId;
-		return this;
+	public void setBusinessKey(String businessKey) {
+		this.businessKey = businessKey;
 	}
 
-	public BlobItemQuery resourceIds(List<String> resourceIds) {
-		if (resourceIds == null) {
-			throw new RuntimeException("resourceIds is empty ");
-		}
-		this.resourceIds = resourceIds;
-		return this;
+	public void setBusinessKeys(List<String> businessKeys) {
+		this.businessKeys = businessKeys;
 	}
 
 	public void setContentType(String contentType) {
@@ -316,14 +324,6 @@ public class BlobItemQuery extends DataQuery {
 
 	public void setObjectValues(List<String> objectValues) {
 		this.objectValues = objectValues;
-	}
-
-	public void setResourceId(String resourceId) {
-		this.resourceId = resourceId;
-	}
-
-	public void setResourceIds(List<String> resourceIds) {
-		this.resourceIds = resourceIds;
 	}
 
 	public void setSize(Long size) {

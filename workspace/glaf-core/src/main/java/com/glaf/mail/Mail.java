@@ -72,7 +72,7 @@ public class Mail implements MessageProvider {
 	 * ×ÊÔ´±àºÅ
 	 */
 	@Column(name = "RESOURCEID_", length = 50)
-	protected String resourceId;
+	protected String businessKey;
 
 	@Column(name = "USERNAME_", length = 100)
 	protected String username;
@@ -364,8 +364,8 @@ public class Mail implements MessageProvider {
 		return receiveStatus;
 	}
 
-	public String getResourceId() {
-		return resourceId;
+	public String getBusinessKey() {
+		return businessKey;
 	}
 
 	public int getRetryTimes() {
@@ -504,8 +504,8 @@ public class Mail implements MessageProvider {
 		this.receiveStatus = receiveStatus;
 	}
 
-	public void setResourceId(String resourceId) {
-		this.resourceId = resourceId;
+	public void setBusinessKey(String businessKey) {
+		this.businessKey = businessKey;
 	}
 
 	public void setRetryTimes(int retryTimes) {

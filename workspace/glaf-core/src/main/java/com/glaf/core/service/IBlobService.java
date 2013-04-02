@@ -54,10 +54,10 @@ public interface IBlobService {
 	/**
 	 * 根据资源编号删除数据
 	 * 
-	 * @param resourceId
+	 * @param businessKey
 	 */
 	@Transactional
-	void deleteBlobByResourceId(String resourceId);
+	void deleteBlobByBusinessKey(String businessKey);
 
 	/**
 	 * 根据主键删除数据
@@ -110,10 +110,10 @@ public interface IBlobService {
 	/**
 	 * 根据资源编号获取数据(不包含字节流)
 	 * 
-	 * @param resourceId
+	 * @param businessKey
 	 * @return
 	 */
-	List<DataFile> getBlobList(String resourceId);
+	List<DataFile> getBlobList(String businessKey);
 
 	/**
 	 * 根据文件编号获取字节流
@@ -142,18 +142,18 @@ public interface IBlobService {
 	/**
 	 * 根据资源编号获取最大数据(不包含字节流)
 	 * 
-	 * @param resourceId
+	 * @param businessKey
 	 * @return
 	 */
-	DataFile getMaxBlob(String resourceId);
+	DataFile getMaxBlob(String businessKey);
 
 	/**
 	 * 根据资源编号获取最大数据
 	 * 
-	 * @param resourceId
+	 * @param businessKey
 	 * @return
 	 */
-	DataFile getMaxBlobWithBytes(String resourceId);
+	DataFile getMaxBlobWithBytes(String businessKey);
 
 	/**
 	 * 新增记录
@@ -166,12 +166,12 @@ public interface IBlobService {
 	/**
 	 * 将记录标记为正式
 	 * 
-	 * @param createBy
-	 * @param serviceKey
-	 * @param resourceId
+	 * @param createBy 创建者
+	 * @param serviceKey 服务标识
+	 * @param businessKey 业务标识
 	 */
 	@Transactional
-	void makeMark(String createBy, String serviceKey, String resourceId);
+	void makeMark(String createBy, String serviceKey, String businessKey);
 
 	/**
 	 * 批量保存记录

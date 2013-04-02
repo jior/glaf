@@ -34,7 +34,7 @@ public interface BlobItemMapper {
 
 	void deleteBlobItemsByFileId(String fileId);
 
-	void deleteBlobItemsByResourceId(String resourceId);
+	void deleteBlobItemsByBusinessKey(String businessKey);
 
 	BlobItem getBlobItemById(String id);
 

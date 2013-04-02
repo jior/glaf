@@ -90,8 +90,8 @@ public class MxBlobServiceImpl implements IBlobService {
 	}
 
 	@Transactional
-	public void deleteBlobByResourceId(String resourceId) {
-		blobItemMapper.deleteBlobItemsByResourceId(resourceId);
+	public void deleteBlobByBusinessKey(String businessKey) {
+		blobItemMapper.deleteBlobItemsByBusinessKey(businessKey);
 	}
 
 	@Transactional
@@ -144,9 +144,9 @@ public class MxBlobServiceImpl implements IBlobService {
 		return rows;
 	}
 
-	public List<DataFile> getBlobList(String resourceId) {
+	public List<DataFile> getBlobList(String businessKey) {
 		BlobItemQuery query = new BlobItemQuery();
-		query.resourceId(resourceId);
+		query.businessKey(businessKey);
 		List<BlobItem> list = list(query);
 		List<DataFile> rows = new ArrayList<DataFile>();
 		for (BlobItem b : list) {
@@ -247,10 +247,10 @@ public class MxBlobServiceImpl implements IBlobService {
 		return blob;
 	}
 
-	public BlobItem getMaxBlob(String resourceId) {
+	public BlobItem getMaxBlob(String businessKey) {
 		BlobItem blob = null;
 		BlobItemQuery query = new BlobItemQuery();
-		query.resourceId(resourceId);
+		query.businessKey(businessKey);
 		List<BlobItem> list = this.list(query);
 		if (list != null && !list.isEmpty()) {
 			blob = list.get(0);
@@ -265,10 +265,10 @@ public class MxBlobServiceImpl implements IBlobService {
 		return blob;
 	}
 
-	public BlobItem getMaxBlobWithBytes(String resourceId) {
+	public BlobItem getMaxBlobWithBytes(String businessKey) {
 		BlobItem blob = null;
 		BlobItemQuery query = new BlobItemQuery();
-		query.resourceId(resourceId);
+		query.businessKey(businessKey);
 		List<BlobItem> list = this.list(query);
 		if (list != null && !list.isEmpty()) {
 			blob = list.get(0);
@@ -320,7 +320,7 @@ public class MxBlobServiceImpl implements IBlobService {
 		model.setName(dataFile.getName());
 		model.setObjectId(dataFile.getObjectId());
 		model.setObjectValue(dataFile.getObjectValue());
-		model.setResourceId(dataFile.getResourceId());
+		model.setBusinessKey(dataFile.getBusinessKey());
 		model.setServiceKey(dataFile.getServiceKey());
 		model.setSize(dataFile.getSize());
 		model.setStatus(dataFile.getStatus());
@@ -336,7 +336,7 @@ public class MxBlobServiceImpl implements IBlobService {
 	}
 
 	@Transactional
-	public void makeMark(String createBy, String serviceKey, String resourceId) {
+	public void makeMark(String createBy, String serviceKey, String businessKey) {
 		BlobItemQuery query = new BlobItemQuery();
 		query.serviceKey(serviceKey);
 		query.createBy(createBy);
@@ -346,8 +346,8 @@ public class MxBlobServiceImpl implements IBlobService {
 			Iterator<BlobItem> iterator = list.iterator();
 			while (iterator.hasNext()) {
 				BlobItem model = (BlobItem) iterator.next();
-				if (StringUtils.isNotEmpty(resourceId)) {
-					model.setResourceId(resourceId);
+				if (StringUtils.isNotEmpty(businessKey)) {
+					model.setBusinessKey(businessKey);
 					model.setStatus(1);
 					this.updateBlob(model);
 				}
@@ -453,7 +453,7 @@ public class MxBlobServiceImpl implements IBlobService {
 			model.setName(dataFile.getName());
 			model.setObjectId(dataFile.getObjectId());
 			model.setObjectValue(dataFile.getObjectValue());
-			model.setResourceId(dataFile.getResourceId());
+			model.setBusinessKey(dataFile.getBusinessKey());
 			model.setServiceKey(dataFile.getServiceKey());
 			model.setSize(dataFile.getSize());
 			model.setStatus(dataFile.getStatus());
@@ -497,7 +497,7 @@ public class MxBlobServiceImpl implements IBlobService {
 			model.setName(dataFile.getName());
 			model.setObjectId(dataFile.getObjectId());
 			model.setObjectValue(dataFile.getObjectValue());
-			model.setResourceId(dataFile.getResourceId());
+			model.setBusinessKey(dataFile.getBusinessKey());
 			model.setServiceKey(dataFile.getServiceKey());
 			model.setSize(dataFile.getSize());
 			model.setStatus(dataFile.getStatus());
