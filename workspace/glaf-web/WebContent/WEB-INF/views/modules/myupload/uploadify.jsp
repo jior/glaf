@@ -2,12 +2,17 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<base href="<%=request.getContextPath()%>">
-<title>文件上传</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=8" />
 <meta http-equiv="pragma" content="no-cache">
 <meta http-equiv="cache-control" content="no-cache">
-<meta http-equiv="expires" content="0">   
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/uploadify/css/uploadify.css">
+<meta http-equiv="expires" content="0">  
+<title>文件上传</title>
+<link href="<%=request.getContextPath()%>/scripts/dwz/themes/default/style.css" rel="stylesheet" type="text/css" media="screen"/>
+<link href="<%=request.getContextPath()%>/scripts/dwz/themes/css/core.css" rel="stylesheet" type="text/css" media="screen"/>
+<link href="<%=request.getContextPath()%>/scripts/dwz/themes/css/print.css" rel="stylesheet" type="text/css" media="print"/>
+<link href="<%=request.getContextPath()%>/scripts/dwz/themes/css/ieHack.css" rel="stylesheet" type="text/css" media="screen"/>
+<link href="<%=request.getContextPath()%>/scripts/uploadify/css/uploadify.css" rel="stylesheet" type="text/css" media="screen"/>
 
 <style type="text/css" media="screen">
 .my-uploadify-button {
@@ -30,16 +35,23 @@
 	margin-bottom: 10px;
 }
 </style>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/dwz/speedup.js" ></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.cookie.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.validate.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.bgiframe.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/uploadify/jquery.uploadify.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/dwz/dwz.min.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/uploadify/scripts/jquery.uploadify.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/dwz/dwz.regional.zh.js"></script>
+<script type="text/javascript">
+ 
+</script>
 </head>
 <body style="font-size: 12px;">
+  <div class="pageContent" style="margin: 0 10px" layoutH="50">
 	<input id="testFileInput" type="file" name="image" 
 		uploaderOption="{
-			swf:'<%=request.getContextPath()%>/scripts/uploadify/scripts/uploadify.swf',
+			swf:'<%=request.getContextPath()%>/scripts/uploadify/uploadify.swf',
 			uploader:'<%=request.getContextPath()%>/mx/myupload?method=upload&serviceKey=${serviceKey}&resourceId=${resourceId}',
 			formData:{aa:'xxx', bb:1},
 			buttonText:'请选择文件',
@@ -58,7 +70,7 @@
 
 	<input id="testFileInput2" type="file" name="image2" 
 		uploaderOption="{
-			swf:'<%=request.getContextPath()%>/scripts/uploadify/scripts/uploadify.swf',
+			swf:'<%=request.getContextPath()%>/scripts/uploadify/uploadify.swf',
 			uploader:'<%=request.getContextPath()%>/mx/myupload?method=upload&serviceKey=${serviceKey}&resourceId=${resourceId}',
 			formData:{aa:'xxx', bb:1},
 			queueID:'fileQueue',
