@@ -29,6 +29,7 @@ function getBrowserType() {
     } else {  
     	oType = '未知浏览器';  
     }  
+	//alert(oType);
     return oType;  
 } 
 
@@ -83,6 +84,8 @@ function fileQueued(file){
 	addReadyFileInfo(file.id,file.name,"成功加载到上传队列");
 	swfu.startUpload();
 }
+
+
 function fileDialogComplete(numFilesSelected, numFilesQueued) {
 	try {
 		if (numFilesQueued > 0) {
@@ -128,7 +131,7 @@ function uploadSuccess(file, serverData) {
 function addFileId(fileId,id){
 	var row = document.getElementById(fileId);
 	row.cells[4].innerHTML = id;
-//	alert(row.cells[4].innerHTML);
+    //alert(row.cells[4].innerHTML);
 }
 function addFileInfo(fileId,message){
 	var row = document.getElementById(fileId);
@@ -176,18 +179,18 @@ function addReadyFileInfo(fileid,fileName,message,status){
 	        break;
 	}
 	col4.align = "right";
-	col1.innerHTML = message+" : ";
+	col1.innerHTML = message+":";
 	col2.innerHTML = fileName;
 	if(status!=null&&status!=""){
 		col3.innerHTML="<font color='red'>"+status+"</font>";
 	}else{
 		col3.innerHTML="";
 	}
-	col4.innerHTML = "<a href='javascript:deleteFile(\""+fileid+"\")'>删除</a>";
-	col1.style.width="150";
-	col2.style.width="150";
-	col3.style.width="80";
-	col4.style.width="50";
+	col4.innerHTML = "<a href='#' onclick='javascript:deleteFile(\""+fileid+"\")'>删除</a>";
+	col1.style.width="250";
+	col2.style.width="250";
+	col3.style.width="180";
+	col4.style.width="180";
 	col5.style.display="none";
 }
 

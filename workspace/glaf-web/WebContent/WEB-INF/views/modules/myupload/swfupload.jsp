@@ -20,7 +20,7 @@
 					upload_url: "<%=request.getContextPath()%>/mx/myupload?method=upload&serviceKey=${serviceKey}&resourceId=${resourceId}",
 					
 					// File Upload Settings
-					file_size_limit : "50 MB",	// 50MB
+					file_size_limit : "5000 MB",	// 20MB
 					file_types : "*.*",//设置可上传的类型
 					file_types_description : "所有文件",
 					file_upload_limit : "100",
@@ -62,9 +62,9 @@
 		</script>
 		<!--  -->
 		<span id="spanButtonPlaceholder"></span>
-		<div id="divFileProgressContainer" style="width:400;display:none;"></div>
+		<div id="divFileProgressContainer" style="width:200;display:none;"></div>
 		<div id="thumbnails">
-			<table id="infoTable" border="0" width="80%" style="border: solid 1px #7FAAFF; background-color: #C5D9FF; padding: 2px;margin-top:8px;">
+			<table id="infoTable" border="0" width="50%" style="border: solid 1px #7FAAFF; background-color: #C5D9FF; padding: 2px;margin-top:8px;">
 			</table>
 		</div>
   </body>
