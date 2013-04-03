@@ -1,13 +1,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ page import="java.util.*"%>
+<%@ page import="com.glaf.core.context.*"%>
 <%@ page import="com.glaf.base.modules.sys.*"%>
 <%@ page import="com.glaf.base.modules.sys.model.*"%>
 <%@ page import="com.glaf.base.modules.sys.service.*"%>
 <%@ page import="org.springframework.web.context.*"%>
 <%@ page import="org.springframework.web.context.support.*"%>
 <%
-WebApplicationContext wac = WebApplicationContextUtils.getRequiredWebApplicationContext(session.getServletContext());
-SysApplicationService service = (SysApplicationService) wac.getBean("sysApplicationService");
+SysApplicationService service = com.glaf.core.context.ContextFactory.getBean("sysApplicationService");
 SysUser user =com.glaf.base.utils.RequestUtil.getLoginUser(request);
 int userId =0;
 if(user!=null) userId = (int)user.getId();

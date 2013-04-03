@@ -28,7 +28,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.aop.MethodBeforeAdvice;
-import org.springframework.web.context.WebApplicationContext;
 
 import com.glaf.base.modules.sys.model.BaseDataInfo;
 import com.glaf.base.modules.sys.model.SysFunction;
@@ -38,6 +37,7 @@ import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.utils.ContextUtil;
 import com.glaf.base.security.IdentityFactory;
 import com.glaf.base.utils.RequestUtil;
+import com.glaf.core.context.ContextFactory;
 import com.glaf.core.domain.SysLog;
 import com.glaf.core.service.ISysLogService;
 
@@ -52,7 +52,6 @@ public class AuthorizeInterceptor implements MethodBeforeAdvice {
 	public void before(Method method, Object[] args, Object target)
 			throws Throwable {
 		boolean authorized = false;
-
 		String objectName = target.getClass().getName();
 		String methodName = method.getName();
 		// logger.debug("object:" + objectName);
@@ -126,12 +125,13 @@ public class AuthorizeInterceptor implements MethodBeforeAdvice {
 			log.setCreateTime(new Date());
 			log.setOperate(methodName);
 			log.setFlag(flag);
-
-			WebApplicationContext wac = (WebApplicationContext) ContextUtil
-					.get("wac");
-			ISysLogService logService = (ISysLogService) wac
-					.getBean("sysLogService");
-			logService.create(log);
+			try {
+				ISysLogService logService = ContextFactory
+						.getBean("sysLogService");
+				logService.create(log);
+			} catch (Exception ex) {
+				logger.error(ex);
+			}
 		}
 	}
 

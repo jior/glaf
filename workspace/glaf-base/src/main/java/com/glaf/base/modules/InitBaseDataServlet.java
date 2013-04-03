@@ -18,13 +18,10 @@
 
 package com.glaf.base.modules;
 
-import java.util.HashMap;
-import java.util.Map;
 import javax.servlet.http.HttpServlet;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
+
 import com.glaf.base.modules.utils.ContextUtil;
 
 public class InitBaseDataServlet extends HttpServlet {
@@ -33,31 +30,20 @@ public class InitBaseDataServlet extends HttpServlet {
 	private final static Log logger = LogFactory
 			.getLog(InitBaseDataServlet.class);
 
-	private Map<String, Object> beanMap = new HashMap<String, Object>();
-
 	private BaseDataManager bdm = BaseDataManager.getInstance();// 基础信息管理
 
 	public void init() {
 		long startTime = System.currentTimeMillis();
 		logger.info("初始化基础信息...");
 		try {
-			WebApplicationContext wac = WebApplicationContextUtils
-					.getRequiredWebApplicationContext(getServletContext());
-
 			bdm.refreshBaseData();// 刷新数据
-
-			beanMap.put("todoJobBean", wac.getBean("todoJobBean"));
-
 			logger.info("初始化基础信息完成.");
-
 			// 装载系统功能列表
 			ContextUtil.put("function", bdm.getBaseData("ZD0015"));
-			ContextUtil.put("wac", wac);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			logger.error("初始化基础信息失败！");
 		}
-
 		logger.info("耗时：" + (System.currentTimeMillis() - startTime) + " ms.");
 	}
 }
