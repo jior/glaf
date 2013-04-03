@@ -23,7 +23,6 @@ import java.util.List;
 
 public class BlobItemQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;
-	protected String businessKey;
 	protected List<String> businessKeys;
 	protected String contentType;
 	protected Date createDateGreaterThanOrEqual;
@@ -46,14 +45,6 @@ public class BlobItemQuery extends DataQuery {
 
 	public BlobItemQuery() {
 
-	}
-
-	public BlobItemQuery businessKey(String businessKey) {
-		if (businessKey == null) {
-			throw new RuntimeException("businessKey is null");
-		}
-		this.businessKey = businessKey;
-		return this;
 	}
 
 	public BlobItemQuery businessKeys(List<String> businessKeys) {
@@ -120,10 +111,6 @@ public class BlobItemQuery extends DataQuery {
 		}
 		this.filenameLike = filenameLike;
 		return this;
-	}
-
-	public String getBusinessKey() {
-		return businessKey;
 	}
 
 	public List<String> getBusinessKeys() {
@@ -258,10 +245,6 @@ public class BlobItemQuery extends DataQuery {
 		}
 		this.objectValues = objectValues;
 		return this;
-	}
-
-	public void setBusinessKey(String businessKey) {
-		this.businessKey = businessKey;
 	}
 
 	public void setBusinessKeys(List<String> businessKeys) {

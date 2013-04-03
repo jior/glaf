@@ -25,54 +25,53 @@ import com.glaf.core.query.DataQuery;
 
 public class MailQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;
-	protected String templateId;
-	protected List<String> templateIds;
-	protected String receiverId;
-	protected List<String> receiverIds;
-	protected String senderId;
-	protected List<String> senderIds;
 	protected String accountId;
 	protected List<String> accountIds;
-	protected String subjectLike;
-	protected Integer retryTimes;
-	protected Integer retryTimesGreaterThanOrEqual;
-	protected Integer retryTimesLessThanOrEqual;
-	protected String mailCCLike;
-	protected String mailReplyToLike;
-	protected String taskId;
-	protected List<String> taskIds;
-	protected String nodeId;
-	protected List<String> nodeIds;
-	protected Integer receiveStatus;
-	protected Integer receiveStatusGreaterThanOrEqual;
-	protected Integer receiveStatusLessThanOrEqual;
-	protected String mailType;
-	protected List<String> mailTypes;
-	protected Integer sendStatus;
-	protected Integer sendStatusGreaterThanOrEqual;
-	protected Integer sendStatusLessThanOrEqual;
-	protected Date receiveDateGreaterThanOrEqual;
-	protected Date receiveDateLessThanOrEqual;
+	protected List<String> businessKeys;
+	protected List<String> createBys;
 	protected Date lastViewDate;
 	protected Date lastViewDateGreaterThanOrEqual;
 	protected Date lastViewDateLessThanOrEqual;
+	protected String lastViewIPLike;
 	protected String mailBCCLike;
-	protected String mailToLike;
-	protected String businessKey;
-	protected List<String> businessKeys;
 	protected String mailBox;
 	protected List<String> mailBoxs;
-	protected Date sendDateGreaterThanOrEqual;
-	protected Date sendDateLessThanOrEqual;
-	protected Integer mailSizeGreaterThanOrEqual;
-	protected Integer mailSizeLessThanOrEqual;
-	protected String lastViewIPLike;
+	protected String mailCCLike;
 	protected String mailFromLike;
-	protected List<String> createBys;
 	protected String mailId;
 	protected List<String> mailIds;
+	protected String mailReplyToLike;
+	protected Integer mailSizeGreaterThanOrEqual;
+	protected Integer mailSizeLessThanOrEqual;
+	protected String mailToLike;
+	protected String mailType;
+	protected List<String> mailTypes;
 	protected String messageId;
 	protected List<String> messageIds;
+	protected String nodeId;
+	protected List<String> nodeIds;
+	protected Date receiveDateGreaterThanOrEqual;
+	protected Date receiveDateLessThanOrEqual;
+	protected String receiverId;
+	protected List<String> receiverIds;
+	protected Integer receiveStatus;
+	protected Integer receiveStatusGreaterThanOrEqual;
+	protected Integer receiveStatusLessThanOrEqual;
+	protected Integer retryTimes;
+	protected Integer retryTimesGreaterThanOrEqual;
+	protected Integer retryTimesLessThanOrEqual;
+	protected Date sendDateGreaterThanOrEqual;
+	protected Date sendDateLessThanOrEqual;
+	protected String senderId;
+	protected List<String> senderIds;
+	protected Integer sendStatus;
+	protected Integer sendStatusGreaterThanOrEqual;
+	protected Integer sendStatusLessThanOrEqual;
+	protected String subjectLike;
+	protected String taskId;
+	protected List<String> taskIds;
+	protected String templateId;
+	protected List<String> templateIds;
 
 	public MailQuery() {
 
@@ -94,6 +93,14 @@ public class MailQuery extends DataQuery {
 		return this;
 	}
 
+	public MailQuery businessKeys(List<String> businessKeys) {
+		if (businessKeys == null) {
+			throw new RuntimeException("businessKeys is empty ");
+		}
+		this.businessKeys = businessKeys;
+		return this;
+	}
+
 	public MailQuery createBys(List<String> createBys) {
 		if (createBys == null) {
 			throw new RuntimeException("createBys is empty ");
@@ -108,6 +115,10 @@ public class MailQuery extends DataQuery {
 
 	public List<String> getAccountIds() {
 		return accountIds;
+	}
+
+	public List<String> getBusinessKeys() {
+		return businessKeys;
 	}
 
 	public List<String> getCreateBys() {
@@ -224,14 +235,6 @@ public class MailQuery extends DataQuery {
 
 	public Integer getReceiveStatusLessThanOrEqual() {
 		return receiveStatusLessThanOrEqual;
-	}
-
-	public String getBusinessKey() {
-		return businessKey;
-	}
-
-	public List<String> getBusinessKeys() {
-		return businessKeys;
 	}
 
 	public Integer getRetryTimes() {
@@ -524,22 +527,6 @@ public class MailQuery extends DataQuery {
 		return this;
 	}
 
-	public MailQuery businessKey(String businessKey) {
-		if (businessKey == null) {
-			throw new RuntimeException("businessKey is null");
-		}
-		this.businessKey = businessKey;
-		return this;
-	}
-
-	public MailQuery businessKeys(List<String> businessKeys) {
-		if (businessKeys == null) {
-			throw new RuntimeException("businessKeys is empty ");
-		}
-		this.businessKeys = businessKeys;
-		return this;
-	}
-
 	public MailQuery retryTimes(Integer retryTimes) {
 		if (retryTimes == null) {
 			throw new RuntimeException("retryTimes is null");
@@ -628,6 +615,10 @@ public class MailQuery extends DataQuery {
 
 	public void setAccountIds(List<String> accountIds) {
 		this.accountIds = accountIds;
+	}
+
+	public void setBusinessKeys(List<String> businessKeys) {
+		this.businessKeys = businessKeys;
 	}
 
 	public void setCreateBys(List<String> createBys) {
@@ -748,14 +739,6 @@ public class MailQuery extends DataQuery {
 	public void setReceiveStatusLessThanOrEqual(
 			Integer receiveStatusLessThanOrEqual) {
 		this.receiveStatusLessThanOrEqual = receiveStatusLessThanOrEqual;
-	}
-
-	public void setBusinessKey(String businessKey) {
-		this.businessKey = businessKey;
-	}
-
-	public void setBusinessKeys(List<String> businessKeys) {
-		this.businessKeys = businessKeys;
 	}
 
 	public void setRetryTimes(Integer retryTimes) {
