@@ -58,7 +58,7 @@ function modify(form){
   }
   var url="application.do?method=prepareModify&id="+id;
   var width=450;
-  var height=420;
+  var height=440;
   var scroll="no";
   openWindow(url, width, height, scroll);
 }

@@ -31,7 +31,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.glaf.core.base.DataFile;
@@ -47,25 +47,27 @@ public class MxBlobController {
 			.getLog(MxBlobController.class);
 
 	@Resource
-	protected ISysLogService sysLogService;
-
-	@Resource
 	protected IBlobService blobService;
 
+	@Resource
+	protected ISysLogService sysLogService;
+
+	@ResponseBody
 	@RequestMapping("/delete")
-	public ModelAndView delete(HttpServletRequest request, ModelMap modelMap) {
+	public byte[] delete(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		String fileId = request.getParameter("fileId");
 		if (StringUtils.isNotEmpty(fileId)) {
 			blobService.deleteBlobByFileId(fileId);
+			return ResponseUtils.responseJsonResult(true);
 		}
-		return null;
+		return ResponseUtils.responseJsonResult(false);
 	}
 
 	@RequestMapping("/download")
-	public ModelAndView download(
-			@RequestParam(value = "fileId", required = false) String fileId,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView download(HttpServletRequest request,
+			HttpServletResponse response) {
+		String fileId = request.getParameter("fileId");
 		if (StringUtils.isNotEmpty(fileId)) {
 			logger.debug("fileId:" + fileId);
 			DataFile blob = blobService.getBlobByFileId(fileId);

@@ -20,6 +20,7 @@ package com.glaf.core.web.springmvc;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -127,7 +128,7 @@ public class FileUploadController {
 				paramMap.put("status", status);
 				BlobItemQuery query = new BlobItemQuery();
 				Tools.populate(query, paramMap);
- 
+
 				query.createBy(loginContext.getActorId());
 				query.serviceKey(serviceKey);
 				query.status(status);
@@ -155,8 +156,10 @@ public class FileUploadController {
 
 		String view = request.getParameter("view");
 		if (StringUtils.isEmpty(view)) {
-			view = "/modules/myupload/showUpload";
+			view = "showUpload";
 		}
+
+		view = "/modules/myupload/" + view;
 
 		return new ModelAndView(view, modelMap);
 	}
@@ -164,9 +167,10 @@ public class FileUploadController {
 	@ResponseBody
 	@RequestMapping(params = "method=upload")
 	public void upload(HttpServletRequest request, HttpServletResponse response) {
-		response.setContentType("text/html;charset=UTF-8");
+		response.setContentType("text/plain;charset=UTF-8");
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		String serviceKey = request.getParameter("serviceKey");
+		String responseType = request.getParameter("responseType");
 		Map<String, Object> paramMap = RequestUtils.getParameterMap(request);
 		logger.debug("paramMap:" + paramMap);
 		MultipartHttpServletRequest req = (MultipartHttpServletRequest) request;
@@ -218,8 +222,8 @@ public class FileUploadController {
 					dataFile.setFileId(fileId);
 					dataFile.setPath(uploadDir + autoCreatedDateDir + "/"
 							+ fileId);
-					dataFile.setFilename(mFile.getName());
-					dataFile.setName(mFile.getName());
+					dataFile.setFilename(mFile.getOriginalFilename());
+					dataFile.setName(mFile.getOriginalFilename());
 					dataFile.setContentType(mFile.getContentType());
 					dataFile.setType(type);
 					dataFile.setStatus(0);
@@ -235,7 +239,32 @@ public class FileUploadController {
 						logger.debug(fileName + " save ok.");
 					}
 
-					out.print(fileId);
+					if (StringUtils.equalsIgnoreCase(responseType, "json")) {
+						StringBuilder json = new StringBuilder();
+						json.append("{");
+						json.append("'");
+						json.append("fileId");
+						json.append("':'");
+						json.append(fileId);
+						json.append("'");
+						Enumeration<String> pNames = request
+								.getParameterNames();
+						String pName;
+						while (pNames.hasMoreElements()) {
+							json.append(",");
+							pName = (String) pNames.nextElement();
+							json.append("'");
+							json.append(pName);
+							json.append("':'");
+							json.append(request.getParameter(pName));
+							json.append("'");
+						}
+						json.append("}");
+						logger.debug(json.toString());
+						response.getWriter().write(json.toString());
+					} else {
+						out.print(fileId);
+					}
 				}
 			}
 

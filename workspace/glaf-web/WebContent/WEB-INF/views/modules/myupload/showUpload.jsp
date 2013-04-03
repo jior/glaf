@@ -1,4 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
@@ -8,16 +10,16 @@
 <meta http-equiv="cache-control" content="no-cache">
 <meta http-equiv="expires" content="0">    
 </head>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/swfupload/swfupload.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/swfupload/handlers.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
 <body style="font-size: 12px;">
 <script type="text/javascript">
-            var contextPath = "<%=request.getContextPath()%>";
-			var swfu;
-			window.onload = function () {
+        var contextPath = "<%=request.getContextPath()%>";
+		var swfu;
+		window.onload = function () {
 				swfu = new SWFUpload({
-					upload_url: "<%=request.getContextPath()%>/mx/myupload?method=upload&serviceKey=${serviceKey}&resourceId=${resourceId}",
+					upload_url: "<%=request.getContextPath()%>/mx/myupload?method=upload&serviceKey=${serviceKey}",
 					
 					// File Upload Settings
 					file_size_limit : "50 MB",	// 50MB
@@ -55,17 +57,54 @@
 					debug: false  //是否显示调试窗口
 				});
 			};
-			function startUploadFile(){
-				swfu.startUpload();
-			}
 
-		</script>
-		<!--  -->
-		<span id="spanButtonPlaceholder"></span>
-		<div id="divFileProgressContainer" style="width:400;display:none;"></div>
-		<div id="thumbnails">
-			<table id="infoTable" border="0" width="80%" style="border: solid 1px #7FAAFF; background-color: #C5D9FF; padding: 2px;margin-top:8px;">
-			</table>
-		</div>
-  </body>
+	function startUploadFile(){
+		swfu.startUpload();
+	}
+
+    function deleteFile(fileId){
+		if(confirm("确定删除文件吗？")){
+          jQuery.ajax({
+				   type: "POST",
+				   url: '<%=request.getContextPath()%>/mx/lob/lob/delete?fileId='+fileId,
+				   dataType:  'json',
+				   error: function(data){
+					   alert('服务器处理错误！');
+				   },
+				   success: function(data){
+					   alert('操作成功！');
+                       removeElement(document.getElementById("div_"+fileId));
+				   }
+			 });
+		}
+	}
+
+	function removeElement(_element){
+         var _parentElement = _element.parentNode;
+         if(_parentElement){
+                _parentElement.removeChild(_element);
+         }
+    }
+
+</script>
+<!--  -->
+<span id="spanButtonPlaceholder"></span>
+<div id="divFileProgressContainer" style="width:400;display:none;"></div>
+<div id="thumbnails">
+<table id="infoTable" border="0" width="80%" style="border: solid 1px #7FAAFF; background-color: #C5D9FF; padding: 2px;margin-top:8px;">
+
+</table>
+    <div id="response" >
+	  <c:forEach items="${dataFiles}" var="a">
+	   <div id="div_${a.fileId}">
+	     <div>
+         <span>文件 ${a.filename}</span>
+         <span>&nbsp;<a target="_blank" href="<%=request.getContextPath()%>/mx/lob/lob/download?fileId=${a.fileId}">下载</a></span>
+		 <span>&nbsp;<span><a href="#" onclick="javascript:deleteFile('${a.fileId}');">删除</a></span>
+		 </div>
+	   </div>
+	  </c:forEach>
+	</div>
+</div>
+</body>
 </html>

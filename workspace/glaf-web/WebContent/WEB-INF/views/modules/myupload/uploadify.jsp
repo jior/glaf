@@ -1,4 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -44,7 +46,29 @@
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/dwz/dwz.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/dwz/dwz.regional.zh.js"></script>
 <script type="text/javascript">
- 
+ function deleteFile(fileId){
+		if(confirm("确定删除文件吗？")){
+          jQuery.ajax({
+				   type: "POST",
+				   url: '<%=request.getContextPath()%>/mx/lob/lob/delete?fileId='+fileId,
+				   dataType:  'json',
+				   error: function(data){
+					   alert('服务器处理错误！');
+				   },
+				   success: function(data){
+					   alert('操作成功！');
+                       removeElement(document.getElementById("div_"+fileId));
+				   }
+			 });
+		}
+	}
+
+	function removeElement(_element){
+         var _parentElement = _element.parentNode;
+         if(_parentElement){
+                _parentElement.removeChild(_element);
+         }
+    }
 </script>
 </head>
 <body style="font-size: 12px;">
@@ -52,7 +76,7 @@
 	<input id="testFileInput" type="file" name="image" 
 		uploaderOption="{
 			swf:'<%=request.getContextPath()%>/scripts/uploadify/uploadify.swf',
-			uploader:'<%=request.getContextPath()%>/mx/myupload?method=upload&serviceKey=${serviceKey}&resourceId=${resourceId}',
+			uploader:'<%=request.getContextPath()%>/mx/myupload?method=upload&serviceKey=${serviceKey}',
 			formData:{aa:'xxx', bb:1},
 			buttonText:'请选择文件',
 			fileSizeLimit:'2000KB',
@@ -71,7 +95,7 @@
 	<input id="testFileInput2" type="file" name="image2" 
 		uploaderOption="{
 			swf:'<%=request.getContextPath()%>/scripts/uploadify/uploadify.swf',
-			uploader:'<%=request.getContextPath()%>/mx/myupload?method=upload&serviceKey=${serviceKey}&resourceId=${resourceId}',
+			uploader:'<%=request.getContextPath()%>/mx/myupload?method=upload&serviceKey=${serviceKey}',
 			formData:{aa:'xxx', bb:1},
 			queueID:'fileQueue',
 			buttonImage:'<%=request.getContextPath()%>/scripts/uploadify/img/add.jpg',
@@ -89,6 +113,17 @@
 
 
 	<div class="divider"></div>
+	<div id="response" >
+	  <c:forEach items="${dataFiles}" var="a">
+	   <div id="div_${a.fileId}">
+	     <div>
+         <span>文件 ${a.filename}</span>
+         <span>&nbsp;<a target="_blank" href="<%=request.getContextPath()%>/mx/lob/lob/download?fileId=${a.fileId}">下载</a></span>
+		 <span>&nbsp;<span><a href="#" onclick="javascript:deleteFile('${a.fileId}');">删除</a></span>
+		 </div>
+	   </div>
+	  </c:forEach>
+	</div>
 </div>	
 </body>
 </html>
