@@ -25,20 +25,20 @@ public class MembershipQuery implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 	protected String actorId;
 	protected List<String> actorIds = new ArrayList<String>();
-	protected List<String> rowIds = new ArrayList<String>();
 	protected Integer nodeId;
 	protected List<Integer> nodeIds;
+	protected String objectId;
+	protected List<String> objectIds;
+	protected String objectValue;
+	protected List<String> objectValues;
+	protected String orderBy;
 	protected Integer roleId;
 	protected List<Integer> roleIds;
-	protected String objectId;
-	protected String objectValue;
-	protected String type;
-	protected List<String> objectIds;
-	protected List<String> objectValues;
-	protected List<String> types;
+	protected List<String> rowIds = new ArrayList<String>();
 	protected String sortColumn;
 	protected String sortOrder;
-	protected String orderBy;
+	protected String type;
+	protected List<String> types;
 
 	public MembershipQuery() {
 

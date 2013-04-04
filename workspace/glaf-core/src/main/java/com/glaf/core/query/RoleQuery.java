@@ -22,21 +22,21 @@ import java.util.List;
 
 public class RoleQuery extends BaseQuery {
 	private static final long serialVersionUID = 1L;
-	protected List<Integer> roleIds;
-	protected Integer roleId;
-	protected String code;
-	protected String name;
-	protected String nameLike;
-	protected Integer type;
-	protected Integer domainIndex;
-	protected Integer roleuse;
-	protected List<String> types;
 	protected Integer accessLevel;
 	protected Integer accessLevelGreaterThanOrEqual;
 	protected Integer accessLevelLessThanOrEqual;
+	protected String code;
+	protected Integer domainIndex;
+	protected String name;
+	protected String nameLike;
 	protected List<String> objectIds;
 	protected List<String> objectValues;
 	protected String remarkLike;
+	protected Integer roleId;
+	protected List<Integer> roleIds;
+	protected Integer roleuse;
+	protected Integer type;
+	protected List<String> types;
 
 	public RoleQuery() {
 

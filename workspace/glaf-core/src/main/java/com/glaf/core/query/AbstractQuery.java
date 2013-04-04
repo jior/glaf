@@ -27,11 +27,11 @@ public abstract class AbstractQuery<T> implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	protected Map<String, String> columns = new HashMap<String, String>();
+
 	protected List<QueryCondition> conditions = new ArrayList<QueryCondition>();
 
 	protected Map<String, Object> parameters = new HashMap<String, Object>();
-
-	protected Map<String, String> columns = new HashMap<String, String>();
 
 	public AbstractQuery() {
 

@@ -33,22 +33,22 @@ import com.glaf.core.util.Paging;
 public class BaseQuery extends AbstractQuery<Object> {
 	private static final long serialVersionUID = 1L;
 	protected String actorId;
-	protected String createBy;
-	List rowIds = new ArrayList();
 	protected List<String> actorIds = new ArrayList<String>();
-	protected User loginContext;
+	protected String createBy;
+	protected QueryCondition currentQueryCondition;
 	protected boolean isFilterPermission = true;
 	protected boolean isInitialized = false;
 	protected boolean isOwner = false;
 	protected Integer locked;
+	protected User loginContext;
+	protected String orderBy;
 	protected int pageNo;
 	protected int pageSize;
 	protected Object parameter;
+	List rowIds = new ArrayList();
 	protected String serviceKey;
 	protected String sortField;
 	protected String sortOrder;
-	protected String orderBy;
-	protected QueryCondition currentQueryCondition;
 
 	public BaseQuery() {
 

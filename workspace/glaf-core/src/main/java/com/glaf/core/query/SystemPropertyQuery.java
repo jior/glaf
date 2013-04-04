@@ -23,12 +23,12 @@ import java.util.List;
 public class SystemPropertyQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;
 	protected String category;
+	protected String descriptionLike;
 	protected String name;
 	protected String nameLike;
 	protected List<String> names;
 	protected String titleLike;
 	protected String type;
-	protected String descriptionLike;
 	protected String valueLike;
 
 	public SystemPropertyQuery() {

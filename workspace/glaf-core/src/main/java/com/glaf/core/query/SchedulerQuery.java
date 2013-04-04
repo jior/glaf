@@ -23,17 +23,17 @@ import java.util.List;
 
 public class SchedulerQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;
+	protected String contentLike;
+	protected Date endDateGreaterThanOrEqual;
+	protected Date endDateLessThanOrEqual;
+	protected String jobClassLike;
+	protected Date startDateGreaterThanOrEqual;
+	protected Date startDateLessThanOrEqual;
 	protected String taskId;
 	protected List<String> taskIds;
 	protected String taskNameLike;
 	protected String taskType;
-	protected String jobClassLike;
 	protected String titleLike;
-	protected String contentLike;
-	protected Date startDateGreaterThanOrEqual;
-	protected Date startDateLessThanOrEqual;
-	protected Date endDateGreaterThanOrEqual;
-	protected Date endDateLessThanOrEqual;
 
 	public SchedulerQuery() {
 

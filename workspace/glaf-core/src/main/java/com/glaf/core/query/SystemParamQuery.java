@@ -22,14 +22,13 @@ import com.glaf.core.query.DataQuery;
 
 public class SystemParamQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;
-	protected String typeCd;
-	protected List<String> typeCds;
 	protected String keyName;
 	protected List<String> keyNames;
-	protected String titleLike;
 	protected String stringValLike;
 	protected String textValLike;
-	
+	protected String titleLike;
+	protected String typeCd;
+	protected List<String> typeCds;
 
 	public SystemParamQuery() {
 
@@ -63,6 +62,10 @@ public class SystemParamQuery extends DataQuery {
 			}
 		}
 		return orderBy;
+	}
+
+	public String getSortOrder() {
+		return sortOrder;
 	}
 
 	public String getStringValLike() {
@@ -120,10 +123,6 @@ public class SystemParamQuery extends DataQuery {
 		addColumn("stringVal", "string_val");
 		addColumn("textVal", "text_val");
 		addColumn("dateVal", "date_val");
-	}
-
-	public String getSortOrder() {
-		return sortOrder;
 	}
 
 	public SystemParamQuery keyName(String keyName) {

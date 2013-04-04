@@ -23,21 +23,21 @@ import com.glaf.core.query.BaseQuery;
 
 public class ColumnDefinitionQuery extends BaseQuery {
 	private static final long serialVersionUID = 1L;
-	protected String namedColumnSetId;
-	protected String namedColumnSetIdLike;
-	protected List<String> namedColumnSetIds;
-	protected String queryId;
-	protected String targetId;
-	protected String tableName;
-	protected String tableNameLike;
-	protected List<String> tableNames;
 	protected String columnName;
 	protected String columnNameLike;
 	protected List<String> columnNames;
-	protected String name;
-	protected String nameLike;
-	protected String titleLike;
 	protected String discriminator;
+	protected String name;
+	protected String namedColumnSetId;
+	protected String namedColumnSetIdLike;
+	protected List<String> namedColumnSetIds;
+	protected String nameLike;
+	protected String queryId;
+	protected String tableName;
+	protected String tableNameLike;
+	protected List<String> tableNames;
+	protected String targetId;
+	protected String titleLike;
 
 	public ColumnDefinitionQuery() {
 
@@ -215,6 +215,10 @@ public class ColumnDefinitionQuery extends BaseQuery {
 		return sortField;
 	}
 
+	public String getSortOrder() {
+		return sortOrder;
+	}
+
 	public String getTableName() {
 		return tableName;
 	}
@@ -271,10 +275,6 @@ public class ColumnDefinitionQuery extends BaseQuery {
 		addColumn("expression", "EXPRESSION_");
 		addColumn("formula", "FORMULA_");
 		addColumn("translator", "TRANSLATOR_");
-	}
-
-	public String getSortOrder() {
-		return sortOrder;
 	}
 
 	public ColumnDefinitionQuery name(String name) {

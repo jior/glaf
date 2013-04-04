@@ -21,9 +21,9 @@
 	</resultMap>
 
 
-	<resultMap id="baseTreeResultMap"	type="com.glaf.core.base.BaseTree">
+	<resultMap id="baseTreeResultMap" type="com.glaf.core.base.BaseTree">
         <id property="id" column="id" jdbcType="BIGINT" />
-        <result property="parent" column="parent" jdbcType="BIGINT"/>
+        <result property="parentId" column="parent" jdbcType="BIGINT"/>
         <result property="name" column="name" jdbcType="VARCHAR"/>
         <result property="desc" column="nodedesc" jdbcType="VARCHAR"/>
         <result property="sort" column="sort" jdbcType="INTEGER"/>

@@ -23,17 +23,17 @@ import com.glaf.core.query.BaseQuery;
 
 public class TableDefinitionQuery extends BaseQuery {
 	private static final long serialVersionUID = 1L;
-	protected String systemFlag;
-	protected String titleLike;
 	protected Date createTimeGreaterThanOrEqual;
 	protected Date createTimeLessThanOrEqual;
 	protected String descriptionLike;
-	protected String type;
 	protected Integer lockedGreaterThanOrEqual;
 	protected Integer lockedLessThanOrEqual;
 	protected Integer revision;
 	protected Integer revisionGreaterThanOrEqual;
 	protected Integer revisionLessThanOrEqual;
+	protected String systemFlag;
+	protected String titleLike;
+	protected String type;
 
 	public TableDefinitionQuery() {
 
@@ -144,6 +144,10 @@ public class TableDefinitionQuery extends BaseQuery {
 		return revisionLessThanOrEqual;
 	}
 
+	public String getSortOrder() {
+		return sortOrder;
+	}
+
 	public String getSystemFlag() {
 		return systemFlag;
 	}
@@ -174,10 +178,6 @@ public class TableDefinitionQuery extends BaseQuery {
 		addColumn("description", "DESCRIPTION_");
 		addColumn("locked", "LOCKED_");
 		addColumn("revision", "REVISION_");
-	}
-
-	public String getSortOrder() {
-		return sortOrder;
 	}
 
 	public TableDefinitionQuery lockedGreaterThanOrEqual(

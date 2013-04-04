@@ -23,23 +23,23 @@ import java.util.List;
 
 public class AgentQuery extends BaseQuery {
 	private static final long serialVersionUID = 1L;
-	protected String assignFrom;
-	protected List<String> assignFroms;
-	protected String assignFromNameLike;
-	protected String assignTo;
-	protected List<String> assignTos;
-	protected String assignToNameLike;
 	protected Integer agentType;
 	protected List<Integer> agentTypes;
-	protected String taskName;
-	protected String taskNameLike;
-	protected List<String> taskNames;
+	protected String assignFrom;
+	protected String assignFromNameLike;
+	protected List<String> assignFroms;
+	protected String assignTo;
+	protected String assignToNameLike;
+	protected List<String> assignTos;
+	protected Date endDateGreaterThanOrEqual;
+	protected Date endDateLessThanOrEqual;
 	protected List<String> objectIds;
 	protected List<String> objectValues;
 	protected Date startDateGreaterThanOrEqual;
 	protected Date startDateLessThanOrEqual;
-	protected Date endDateGreaterThanOrEqual;
-	protected Date endDateLessThanOrEqual;
+	protected String taskName;
+	protected String taskNameLike;
+	protected List<String> taskNames;
 
 	public AgentQuery() {
 

@@ -272,10 +272,6 @@ public class ColumnModel implements java.io.Serializable,
 		return result;
 	}
 
-	public boolean isBooleanValue() {
-		return booleanValue;
-	}
-
 	public boolean isRequired() {
 		return required;
 	}

@@ -25,35 +25,35 @@ import java.util.List;
 @SuppressWarnings("rawtypes")
 public class DataQuery extends BaseQuery {
 	private static final long serialVersionUID = 1L;
+	protected Date afterCreateDate;
+	protected Date beforeCreateDate;
 	protected String businessKey;
+	protected Date createDate;
+	protected Integer deleteFlag;
 	protected String formName;
+	protected String objectId;
+	protected String objectValue;
+	protected Long parentId;
+	protected List<Long> parentIds = new ArrayList<Long>();
+	protected Object processInstanceId;
+	protected List processInstanceIds = new ArrayList();
+	protected boolean processInstanceIsNotNull;
+	protected boolean processInstanceIsNull;
 	protected String processName;
 	protected String processNameLike;
 	protected List<String> processNames;
-	protected Object processInstanceId;
-	protected Long parentId;
-	protected String objectId;
-	protected String objectValue;
-	protected String treeId;
+	protected String sortColumn;
 	protected Integer status;
-	protected Integer statusNotEqual;
 	protected Integer statusGreaterThanOrEqual;
 	protected Integer statusLessThanOrEqual;
+	protected Integer statusNotEqual;
+	protected List taskInstanceIds = new ArrayList();
+	protected String treeId;
 	protected Integer wfStatus;
-	protected Integer wfStatusNotEqual;
 	protected Integer wfStatusGreaterThanOrEqual;
 	protected Integer wfStatusLessThanOrEqual;
-	protected Integer deleteFlag;
-	protected Date createDate;
-	protected Date beforeCreateDate;
-	protected Date afterCreateDate;
-	protected boolean processInstanceIsNotNull;
-	protected boolean processInstanceIsNull;
+	protected Integer wfStatusNotEqual;
 	protected String workedProcessFlag;
-	protected List<Long> parentIds = new ArrayList<Long>();
-	protected List processInstanceIds = new ArrayList();
-	protected List taskInstanceIds = new ArrayList();
-	protected String sortColumn;
 
 	public DataQuery() {
 
@@ -223,10 +223,6 @@ public class DataQuery extends BaseQuery {
 
 	public boolean isProcessInstanceIsNull() {
 		return processInstanceIsNull;
-	}
-
-	public String isWorkedProcessFlag() {
-		return workedProcessFlag;
 	}
 
 	public DataQuery objectId(String objectId) {

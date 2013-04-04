@@ -25,31 +25,47 @@ import com.glaf.core.query.BaseQuery;
 
 public class MessageQuery extends BaseQuery {
 	private static final long serialVersionUID = 1L;
-	protected String receiverId;
-	protected List<String> receiverIds;
-	protected String templateId;
-	protected List<String> templateIds;
-	protected String senderId;
-	protected List<String> senderIds;
-	protected String subjectLike;
-	protected String messageBox;
-	protected List<String> messageBoxs;
-	protected Date lastViewDateGreaterThanOrEqual;
-	protected Date lastViewDateLessThanOrEqual;
-	protected String contentLike;
 	protected String businessKey;
 	protected List<String> businessKeys;
-	protected List<String> objectValues;
-	protected List<String> objectIds;
-	protected String lastViewIPLike;
+	protected String contentLike;
 	protected List<String> createBys;
+	protected Date lastViewDateGreaterThanOrEqual;
+	protected Date lastViewDateLessThanOrEqual;
+	protected String lastViewIPLike;
+	protected String messageBox;
+	protected List<String> messageBoxs;
 	protected String messageId;
 	protected List<String> messageIds;
 	protected String messageType;
 	protected List<String> messageTypes;
+	protected List<String> objectIds;
+	protected List<String> objectValues;
+	protected String receiverId;
+	protected List<String> receiverIds;
+	protected String senderId;
+	protected List<String> senderIds;
+	protected String subjectLike;
+	protected String templateId;
+	protected List<String> templateIds;
 
 	public MessageQuery() {
 
+	}
+
+	public MessageQuery businessKey(String businessKey) {
+		if (businessKey == null) {
+			throw new RuntimeException("businessKey is null");
+		}
+		this.businessKey = businessKey;
+		return this;
+	}
+
+	public MessageQuery businessKeys(List<String> businessKeys) {
+		if (businessKeys == null) {
+			throw new RuntimeException("businessKeys is empty ");
+		}
+		this.businessKeys = businessKeys;
+		return this;
 	}
 
 	public MessageQuery contentLike(String contentLike) {
@@ -66,6 +82,14 @@ public class MessageQuery extends BaseQuery {
 		}
 		this.createBys = createBys;
 		return this;
+	}
+
+	public String getBusinessKey() {
+		return businessKey;
+	}
+
+	public List<String> getBusinessKeys() {
+		return businessKeys;
 	}
 
 	public String getContentLike() {
@@ -126,14 +150,6 @@ public class MessageQuery extends BaseQuery {
 
 	public List<String> getReceiverIds() {
 		return receiverIds;
-	}
-
-	public String getBusinessKey() {
-		return businessKey;
-	}
-
-	public List<String> getBusinessKeys() {
-		return businessKeys;
 	}
 
 	public String getSenderId() {
@@ -262,22 +278,6 @@ public class MessageQuery extends BaseQuery {
 		return this;
 	}
 
-	public MessageQuery businessKey(String businessKey) {
-		if (businessKey == null) {
-			throw new RuntimeException("businessKey is null");
-		}
-		this.businessKey = businessKey;
-		return this;
-	}
-
-	public MessageQuery businessKeys(List<String> businessKeys) {
-		if (businessKeys == null) {
-			throw new RuntimeException("businessKeys is empty ");
-		}
-		this.businessKeys = businessKeys;
-		return this;
-	}
-
 	public MessageQuery senderId(String senderId) {
 		if (senderId == null) {
 			throw new RuntimeException("senderId is null");
@@ -292,6 +292,14 @@ public class MessageQuery extends BaseQuery {
 		}
 		this.senderIds = senderIds;
 		return this;
+	}
+
+	public void setBusinessKey(String businessKey) {
+		this.businessKey = businessKey;
+	}
+
+	public void setBusinessKeys(List<String> businessKeys) {
+		this.businessKeys = businessKeys;
 	}
 
 	public void setContentLike(String contentLike) {
@@ -353,14 +361,6 @@ public class MessageQuery extends BaseQuery {
 
 	public void setReceiverIds(List<String> receiverIds) {
 		this.receiverIds = receiverIds;
-	}
-
-	public void setBusinessKey(String businessKey) {
-		this.businessKey = businessKey;
-	}
-
-	public void setBusinessKeys(List<String> businessKeys) {
-		this.businessKeys = businessKeys;
 	}
 
 	public void setSenderId(String senderId) {

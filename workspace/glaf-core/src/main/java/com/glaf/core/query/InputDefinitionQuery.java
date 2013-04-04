@@ -22,13 +22,11 @@ import com.glaf.core.query.DataQuery;
 
 public class InputDefinitionQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;
-	protected String typeCd;
-	protected List<String> typeCds;
 	protected String keyName;
 	protected List<String> keyNames;
 	protected String titleLike;
-
-	
+	protected String typeCd;
+	protected List<String> typeCds;
 
 	public InputDefinitionQuery() {
 
@@ -68,6 +66,10 @@ public class InputDefinitionQuery extends DataQuery {
 		return orderBy;
 	}
 
+	public String getSortOrder() {
+		return sortOrder;
+	}
+
 	public String getTitleLike() {
 		if (titleLike != null && titleLike.trim().length() > 0) {
 			if (!titleLike.startsWith("%")) {
@@ -97,10 +99,6 @@ public class InputDefinitionQuery extends DataQuery {
 		addColumn("keyName", "key_name");
 		addColumn("title", "title");
 		addColumn("type", "type");
-	}
-
-	public String getSortOrder() {
-		return sortOrder;
 	}
 
 	public InputDefinitionQuery keyName(String keyName) {

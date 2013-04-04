@@ -22,20 +22,20 @@ import java.util.*;
 
 public class QueryDefinitionQuery extends BaseQuery {
 	private static final long serialVersionUID = 1L;
-	protected List<String> queryIds;
-	protected String parentId;
-	protected String titleLike;
-	protected String descriptionLike;
-	protected String name;
-	protected String dsName;
-	protected String type;
 	protected Date createTimeGreaterThanOrEqual;
 	protected Date createTimeLessThanOrEqual;
+	protected String descriptionLike;
+	protected String dsName;
 	protected Integer lockedGreaterThanOrEqual;
 	protected Integer lockedLessThanOrEqual;
+	protected String name;
+	protected String parentId;
+	protected List<String> queryIds;
 	protected Integer revision;
 	protected Integer revisionGreaterThanOrEqual;
 	protected Integer revisionLessThanOrEqual;
+	protected String titleLike;
+	protected String type;
 
 	public QueryDefinitionQuery() {
 
@@ -182,6 +182,10 @@ public class QueryDefinitionQuery extends BaseQuery {
 		return serviceKey;
 	}
 
+	public String getSortOrder() {
+		return sortOrder;
+	}
+
 	public String getTitleLike() {
 		return titleLike;
 	}
@@ -215,10 +219,6 @@ public class QueryDefinitionQuery extends BaseQuery {
 		addColumn("revision", "REVISION_");
 		addColumn("listUrl", "LISTURL_");
 		addColumn("detailUrl", "DETAILURL_");
-	}
-
-	public String getSortOrder() {
-		return sortOrder;
 	}
 
 	public QueryDefinitionQuery lockedGreaterThanOrEqual(

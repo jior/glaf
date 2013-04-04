@@ -26,10 +26,10 @@ public class QueryCondition implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 	private String alias;
 	private String column;
-	private String name;
-	private String type;
 	private String filter;
+	private String name;
 	private String stringValue;
+	private String type;
 	private Object value;
 
 	public QueryCondition() {

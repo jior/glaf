@@ -28,10 +28,10 @@ public class TablePageQuery implements Serializable {
 
 	public static final String SORTORDER_DESC = "desc";
 
-	protected String tableName;
-	protected String orderBy;
 	protected int firstResult;
 	protected int maxResults;
+	protected String orderBy;
+	protected String tableName;
 
 	public TablePageQuery() {
 
