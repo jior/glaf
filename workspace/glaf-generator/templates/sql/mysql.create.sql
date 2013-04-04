@@ -17,7 +17,7 @@ create table ${tableName} (
 	<#elseif field.type?exists && ( field.type== 'Double' )>
         ${field.columnName} double,
 	<#elseif field.type?exists && ( field.type== 'Boolean' )>
-        ${field.columnName} tinyint,
+        ${field.columnName} integer,
 	<#elseif field.type?exists && ( field.type== 'Date')>
         ${field.columnName} datetime,
 	<#elseif field.type?exists && ( field.type== 'String')>

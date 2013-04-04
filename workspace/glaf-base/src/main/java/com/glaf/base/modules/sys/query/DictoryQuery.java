@@ -24,23 +24,15 @@ import com.glaf.core.query.DataQuery;
 public class DictoryQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;
 	protected Integer blocked;
-	protected Integer blockedGreaterThanOrEqual;
-
-	protected Integer blockedLessThanOrEqual;
-	protected List<Integer> blockeds;
 	protected String code;
 	protected String codeLike;
 	protected List<String> codes;
-	protected String desc;
 	protected String descLike;
-	protected List<String> descs;
 	protected String name;
-
 	protected String nameLike;
 	protected List<String> names;
 	protected Long nodeId;
-	protected List<Long> rowIds;
-
+	protected List<Long> nodeIds;
 	protected Integer sortGreaterThan;
 	protected Integer sortGreaterThanOrEqual;
 	protected Integer sortLessThan;
@@ -55,31 +47,6 @@ public class DictoryQuery extends DataQuery {
 			throw new RuntimeException("blocked is null");
 		}
 		this.blocked = blocked;
-		return this;
-	}
-
-	public DictoryQuery blockedGreaterThanOrEqual(
-			Integer blockedGreaterThanOrEqual) {
-		if (blockedGreaterThanOrEqual == null) {
-			throw new RuntimeException("blocked is null");
-		}
-		this.blockedGreaterThanOrEqual = blockedGreaterThanOrEqual;
-		return this;
-	}
-
-	public DictoryQuery blockedLessThanOrEqual(Integer blockedLessThanOrEqual) {
-		if (blockedLessThanOrEqual == null) {
-			throw new RuntimeException("blocked is null");
-		}
-		this.blockedLessThanOrEqual = blockedLessThanOrEqual;
-		return this;
-	}
-
-	public DictoryQuery blockeds(List<Integer> blockeds) {
-		if (blockeds == null) {
-			throw new RuntimeException("blockeds is empty ");
-		}
-		this.blockeds = blockeds;
 		return this;
 	}
 
@@ -107,14 +74,6 @@ public class DictoryQuery extends DataQuery {
 		return this;
 	}
 
-	public DictoryQuery desc(String desc) {
-		if (desc == null) {
-			throw new RuntimeException("desc is null");
-		}
-		this.desc = desc;
-		return this;
-	}
-
 	public DictoryQuery descLike(String descLike) {
 		if (descLike == null) {
 			throw new RuntimeException("desc is null");
@@ -123,28 +82,8 @@ public class DictoryQuery extends DataQuery {
 		return this;
 	}
 
-	public DictoryQuery descs(List<String> descs) {
-		if (descs == null) {
-			throw new RuntimeException("descs is empty ");
-		}
-		this.descs = descs;
-		return this;
-	}
-
 	public Integer getBlocked() {
 		return blocked;
-	}
-
-	public Integer getBlockedGreaterThanOrEqual() {
-		return blockedGreaterThanOrEqual;
-	}
-
-	public Integer getBlockedLessThanOrEqual() {
-		return blockedLessThanOrEqual;
-	}
-
-	public List<Integer> getBlockeds() {
-		return blockeds;
 	}
 
 	public String getCode() {
@@ -167,10 +106,6 @@ public class DictoryQuery extends DataQuery {
 		return codes;
 	}
 
-	public String getDesc() {
-		return desc;
-	}
-
 	public String getDescLike() {
 		if (descLike != null && descLike.trim().length() > 0) {
 			if (!descLike.startsWith("%")) {
@@ -181,10 +116,6 @@ public class DictoryQuery extends DataQuery {
 			}
 		}
 		return descLike;
-	}
-
-	public List<String> getDescs() {
-		return descs;
 	}
 
 	public String getName() {
@@ -205,6 +136,14 @@ public class DictoryQuery extends DataQuery {
 
 	public List<String> getNames() {
 		return names;
+	}
+
+	public Long getNodeId() {
+		return nodeId;
+	}
+
+	public List<Long> getNodeIds() {
+		return nodeIds;
 	}
 
 	public String getOrderBy() {
@@ -336,18 +275,6 @@ public class DictoryQuery extends DataQuery {
 		this.blocked = blocked;
 	}
 
-	public void setBlockedGreaterThanOrEqual(Integer blockedGreaterThanOrEqual) {
-		this.blockedGreaterThanOrEqual = blockedGreaterThanOrEqual;
-	}
-
-	public void setBlockedLessThanOrEqual(Integer blockedLessThanOrEqual) {
-		this.blockedLessThanOrEqual = blockedLessThanOrEqual;
-	}
-
-	public void setBlockeds(List<Integer> blockeds) {
-		this.blockeds = blockeds;
-	}
-
 	public void setCode(String code) {
 		this.code = code;
 	}
@@ -360,16 +287,8 @@ public class DictoryQuery extends DataQuery {
 		this.codes = codes;
 	}
 
-	public void setDesc(String desc) {
-		this.desc = desc;
-	}
-
 	public void setDescLike(String descLike) {
 		this.descLike = descLike;
-	}
-
-	public void setDescs(List<String> descs) {
-		this.descs = descs;
 	}
 
 	public void setName(String name) {
@@ -382,6 +301,14 @@ public class DictoryQuery extends DataQuery {
 
 	public void setNames(List<String> names) {
 		this.names = names;
+	}
+
+	public void setNodeId(Long nodeId) {
+		this.nodeId = nodeId;
+	}
+
+	public void setNodeIds(List<Long> nodeIds) {
+		this.nodeIds = nodeIds;
 	}
 
 	public void setSortGreaterThan(Integer sortGreaterThan) {

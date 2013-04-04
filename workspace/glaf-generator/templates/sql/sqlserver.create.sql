@@ -3,25 +3,25 @@ create table ${tableName} (
 <#if  idField.type== 'Integer' >
         ${idField.columnName} int,
 <#elseif idField.type== 'Long' >
-        ${idField.columnName} numeric(5),
+        ${idField.columnName} bigint,
 <#else>
-        ${idField.columnName} varchar(<#if idField.length gt 0>${idField.length}<#else>50</#if>),
+        ${idField.columnName} nvarchar(<#if idField.length gt 0>${idField.length}<#else>50</#if>),
 </#if>
 <#if pojo_fields?exists>
   <#list  pojo_fields as field>
    <#if field.name?exists && field.columnName?exists && field.type?exists>
 	<#if field.type?exists && ( field.type== 'Integer' )>
-        ${field.columnName}  int,
+        ${field.columnName} int,
         <#elseif field.type?exists && ( field.type== 'Long' )>
-        ${field.columnName} numeric(5),
+        ${field.columnName} bigint,
 	<#elseif field.type?exists && ( field.type== 'Boolean' )>
-        ${field.columnName} tinyint,
+        ${field.columnName} int,
 	<#elseif field.type?exists && ( field.type== 'Double' )>
-        ${field.columnName} float,
+        ${field.columnName} double precision,
 	<#elseif field.type?exists && ( field.type== 'Date')>
         ${field.columnName} datetime,
 	<#elseif field.type?exists && ( field.type== 'String')>
-        ${field.columnName} varchar(<#if field.length gt 0>${field.length?string("####")}<#else>255</#if>),
+        ${field.columnName} nvarchar(<#if field.length gt 0>${field.length?string("####")}<#else>255</#if>),
 	</#if>
     </#if>
   </#list>

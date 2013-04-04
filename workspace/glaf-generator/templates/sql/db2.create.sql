@@ -11,11 +11,11 @@ create table ${tableName} (
   <#list  pojo_fields as field>
    <#if field.name?exists && field.columnName?exists && field.type?exists>
 	<#if field.type?exists && ( field.type== 'Integer' )>
-        ${field.columnName}  integer,
+        ${field.columnName} integer,
         <#elseif field.type?exists && ( field.type== 'Long' )>
-        ${field.columnName} bigint,
+        ${field.columnName} integer,
 	<#elseif field.type?exists && ( field.type== 'Boolean' )>
-        ${field.columnName} smallint,
+        ${field.columnName} integer,
 	<#elseif field.type?exists && ( field.type== 'Double' )>
         ${field.columnName} double precision,
 	<#elseif field.type?exists && ( field.type== 'Date')>

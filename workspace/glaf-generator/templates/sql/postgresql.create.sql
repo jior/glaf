@@ -15,7 +15,7 @@ create table ${tableName} (
         <#elseif field.type?exists && ( field.type== 'Long' )>
         ${field.columnName} bigint,
 	<#elseif field.type?exists && ( field.type== 'Boolean' )>
-        ${field.columnName} boolean,
+        ${field.columnName} integer,
 	<#elseif field.type?exists && ( field.type== 'Double' )>
         ${field.columnName} double precision,
 	<#elseif field.type?exists && ( field.type== 'Date')>

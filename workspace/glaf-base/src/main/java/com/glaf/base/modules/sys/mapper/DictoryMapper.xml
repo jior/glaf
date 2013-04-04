@@ -10,6 +10,7 @@
 		<result property="name" column="NAME" jdbcType="VARCHAR" />
 		<result property="desc" column="DICTDESC" jdbcType="VARCHAR" />
 		<result property="code" column="CODE" jdbcType="VARCHAR" />
+		<result property="value" column="VALUE_" jdbcType="VARCHAR" />
 		<result property="sort" column="SORT" jdbcType="INTEGER" />
 		<result property="blocked" column="BLOCKED" jdbcType="INTEGER" />
 		<result property="ext1" column="EXT1" jdbcType="VARCHAR" />
@@ -18,15 +19,20 @@
 		<result property="ext4" column="EXT4" jdbcType="VARCHAR" />
 		<result property="ext5" column="EXT5" jdbcType="TIMESTAMP" />
 		<result property="ext6" column="EXT6" jdbcType="TIMESTAMP" />
-		<result property="ext7" column="ext7" jdbcType="VARCHAR" />
-		<result property="ext8" column="ext8" jdbcType="VARCHAR" />
-		<result property="ext9" column="ext9" jdbcType="BIGINT" />
-		<result property="ext10" column="ext10" jdbcType="BIGINT" />
-		<result property="ext11" column="ext11" jdbcType="DOUBLE" />
-		<result property="ext12" column="ext12" jdbcType="DOUBLE" />
-		<result property="ext13" column="ext13" jdbcType="DOUBLE" />
-		<result property="ext14" column="ext14" jdbcType="DOUBLE" />
-		<result property="ext15" column="ext15" jdbcType="DOUBLE" />
+		<result property="ext7" column="ext7" jdbcType="TIMESTAMP" />
+		<result property="ext8" column="ext8" jdbcType="TIMESTAMP" />
+		<result property="ext9" column="ext9" jdbcType="TIMESTAMP" />
+		<result property="ext10" column="ext10" jdbcType="TIMESTAMP" />
+		<result property="ext11" column="ext11" jdbcType="BIGINT" />
+		<result property="ext12" column="ext12" jdbcType="BIGINT" />
+		<result property="ext13" column="ext13" jdbcType="BIGINT" />
+		<result property="ext14" column="ext14" jdbcType="BIGINT" />
+		<result property="ext15" column="ext15" jdbcType="BIGINT" />
+		<result property="ext16" column="ext16" jdbcType="DOUBLE" />
+		<result property="ext17" column="ext17" jdbcType="DOUBLE" />
+		<result property="ext18" column="ext18" jdbcType="DOUBLE" />
+		<result property="ext19" column="ext19" jdbcType="DOUBLE" />
+		<result property="ext20" column="ext20" jdbcType="DOUBLE" />
 	</resultMap>
 
 
@@ -45,6 +51,9 @@
 			</if>
 			<if test="code != null">
 				,CODE
+			</if>
+			<if test="value != null">
+				,VALUE_
 			</if>
 			<if test="sort != null">
 				,SORT
@@ -97,6 +106,21 @@
 			<if test="ext15 != null">
 				,ext15
 			</if>
+			<if test="ext16 != null">
+				,ext16
+			</if>
+			<if test="ext17 != null">
+				,ext17
+			</if>
+			<if test="ext18 != null">
+				,ext18
+			</if>
+			<if test="ext19 != null">
+				,ext19
+			</if>
+			<if test="ext20 != null">
+				,ext20
+			</if>
 		</trim>
 
 		<trim prefix=" values (" suffix=")" suffixOverrides=",">
@@ -113,6 +137,9 @@
 			</if>
 			<if test="code != null">
 				,#{code, jdbcType=VARCHAR}
+			</if>
+			<if test="value != null">
+				,#{value, jdbcType=VARCHAR}
 			</if>
 			<if test="sort != null">
 				,#{sort, jdbcType=INTEGER}
@@ -139,31 +166,46 @@
 				,#{ext6, jdbcType=TIMESTAMP}
 			</if>
 			<if test="ext7 != null">
-				,#{ext7, jdbcType=VARCHAR}
+				,#{ext7, jdbcType=TIMESTAMP}
 			</if>
 			<if test="ext8 != null">
-				,#{ext8, jdbcType=VARCHAR}
+				,#{ext8, jdbcType=TIMESTAMP}
 			</if>
 			<if test="ext9 != null">
-				,#{ext9, jdbcType=BIGINT}
+				,#{ext9, jdbcType=TIMESTAMP}
 			</if>
 			<if test="ext10 != null">
-				,#{ext10, jdbcType=BIGINT}
+				,#{ext10, jdbcType=TIMESTAMP}
 			</if>
 			<if test="ext11 != null">
-				,#{ext11, jdbcType=DOUBLE}
+				,#{ext11, jdbcType=BIGINT}
 			</if>
 			<if test="ext12 != null">
-				,#{ext12, jdbcType=DOUBLE}
+				,#{ext12, jdbcType=BIGINT}
 			</if>
 			<if test="ext13 != null">
-				,#{ext13, jdbcType=DOUBLE}
+				,#{ext13, jdbcType=BIGINT}
 			</if>
 			<if test="ext14 != null">
-				,#{ext14, jdbcType=DOUBLE}
+				,#{ext14, jdbcType=BIGINT}
 			</if>
 			<if test="ext15 != null">
-				,#{ext15, jdbcType=DOUBLE}
+				,#{ext15, jdbcType=BIGINT}
+			</if>
+			<if test="ext16 != null">
+				,#{ext16, jdbcType=DOUBLE}
+			</if>
+			<if test="ext17 != null">
+				,#{ext17, jdbcType=DOUBLE}
+			</if>
+			<if test="ext18 != null">
+				,#{ext18, jdbcType=DOUBLE}
+			</if>
+			<if test="ext19 != null">
+				,#{ext19, jdbcType=DOUBLE}
+			</if>
+			<if test="ext20 != null">
+				,#{ext20, jdbcType=DOUBLE}
 			</if>
 		</trim>
 	</insert>
@@ -184,6 +226,9 @@
 			</if>
 			<if test="code != null">
 				CODE = #{code, jdbcType=VARCHAR},
+			</if>
+			<if test="value != null">
+				VALUE_ = #{value, jdbcType=VARCHAR},
 			</if>
 			<if test="sort != null">
 				SORT = #{sort, jdbcType=INTEGER},
@@ -210,31 +255,46 @@
 				EXT6 = #{ext6, jdbcType=TIMESTAMP},
 			</if>
 			<if test="ext7 != null">
-				ext7 = #{ext7, jdbcType=VARCHAR},
+				ext7 = #{ext7, jdbcType=TIMESTAMP},
 			</if>
 			<if test="ext8 != null">
-				ext8 = #{ext8, jdbcType=VARCHAR},
+				ext8 = #{ext8, jdbcType=TIMESTAMP},
 			</if>
 			<if test="ext9 != null">
-				ext9 = #{ext9, jdbcType=BIGINT},
+				ext9 = #{ext9, jdbcType=TIMESTAMP},
 			</if>
 			<if test="ext10 != null">
-				ext10 = #{ext10, jdbcType=BIGINT},
+				ext10 = #{ext10, jdbcType=TIMESTAMP},
 			</if>
 			<if test="ext11 != null">
-				ext11 = #{ext11, jdbcType=DOUBLE},
+				ext11 = #{ext11, jdbcType=BIGINT},
 			</if>
 			<if test="ext12 != null">
-				ext12 = #{ext12, jdbcType=DOUBLE},
+				ext12 = #{ext12, jdbcType=BIGINT},
 			</if>
 			<if test="ext13 != null">
-				ext13 = #{ext13, jdbcType=DOUBLE},
+				ext13 = #{ext13, jdbcType=BIGINT},
 			</if>
 			<if test="ext14 != null">
-				ext14 = #{ext14, jdbcType=DOUBLE},
+				ext14 = #{ext14, jdbcType=BIGINT},
 			</if>
 			<if test="ext15 != null">
-				ext15 = #{ext15, jdbcType=DOUBLE},
+				ext15 = #{ext15, jdbcType=BIGINT},
+			</if>
+			<if test="ext16 != null">
+				ext16 = #{ext16, jdbcType=DOUBLE},
+			</if>
+			<if test="ext17 != null">
+				ext17 = #{ext17, jdbcType=DOUBLE},
+			</if>
+			<if test="ext18 != null">
+				ext18 = #{ext18, jdbcType=DOUBLE},
+			</if>
+			<if test="ext19 != null">
+				ext19 = #{ext19, jdbcType=DOUBLE},
+			</if>
+			<if test="ext20 != null">
+				ext20 = #{ext20, jdbcType=DOUBLE},
 			</if>
 		</trim>
 		where
@@ -248,6 +308,7 @@
 		where ID = #{id}
 	</delete>
 
+
 	<delete id="deleteDictorys" parameterType="com.glaf.base.modules.sys.query.DictoryQuery">
 		delete from sys_dictory
 		where (
@@ -258,6 +319,7 @@
 		</foreach>
 		)
 	</delete>
+
 
 	<select id="getDictoryById" parameterType="long" resultMap="dictoryResultMap">
 		select * from sys_dictory where ID = #{id}
@@ -273,16 +335,18 @@
 				order by ${orderBy}
 			</when>
 			<otherwise>
-				order by E.SORT asc
+				order by E.ID desc
 			</otherwise>
 		</choose>
 	</select>
+
 
 	<select id="getDictoryCount" parameterType="com.glaf.base.modules.sys.query.DictoryQuery"
 		resultType="int">
 		select count(*)
 		<include refid="selectDictorysSql" />
 	</select>
+
 
 	<sql id="selectDictorysSql">
 
@@ -293,6 +357,14 @@
 
 			<if test="nodeId != null">
 				and E.TYPEID = #{nodeId}
+			</if>
+
+			<if test="nodeIds != null and nodeIds.size() &gt; 0">
+				and E.TYPEID IN
+				<foreach item="x_nodeId" index="index" collection="nodeIds"
+					open="(" separator="," close=")">
+					#{x_nodeId}
+				</foreach>
 			</if>
 
 			<if test="name != null and name != '' ">
@@ -331,20 +403,20 @@
 				</foreach>
 			</if>
 
-			<if test="sortGreaterThanOrEqual != null">
-				and E.SORT &gt;= #{sortGreaterThanOrEqual}
-			</if>
-
 			<if test="sortGreaterThan != null">
 				and E.SORT &gt; #{sortGreaterThan}
 			</if>
 
-			<if test="sortLessThanOrEqual != null">
-				and E.SORT &lt;= #{sortLessThanOrEqual}
+			<if test="sortGreaterThanOrEqual != null">
+				and E.SORT &gt;= #{sortGreaterThanOrEqual}
 			</if>
 
 			<if test="sortLessThan != null">
 				and E.SORT &lt; #{sortLessThan}
+			</if>
+
+			<if test="sortLessThanOrEqual != null">
+				and E.SORT &lt;= #{sortLessThanOrEqual}
 			</if>
 
 			<if test="blocked != null">

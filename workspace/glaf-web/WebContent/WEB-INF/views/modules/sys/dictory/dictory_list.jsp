@@ -82,11 +82,11 @@ function sort(id, operate){
         <input type="checkbox" name="chkall" value="checkbox" onClick="checkAll(this.form, this)";checkOperation(this.form)>
     </td>
     <td width="5%"  align="center"><div align="center" class="fontname_12">序号</div></td>
-    <td width="20%" align="center"><div align="center" class="fontname_12">名称</div></td>
-    <td width="20%" align="center"><div align="center" class="fontname_12">代码</div></td>
-	<td width="20%" align="center"><div align="center" class="fontname_12">属性值</div></td>
-    <td width="15%" align="center"><div align="center" class="fontname_12">是否有效</div></td>
-    <td width="15%" align="center"><div align="center" class="fontname_12">排序</div></td>
+    <td  align="center"><div align="center" class="fontname_12">名称</div></td>
+    <td  align="center"><div align="center" class="fontname_12">代码</div></td>
+	<td  align="center"><div align="center" class="fontname_12">属性值</div></td>
+    <td  align="center"><div align="center" class="fontname_12">是否有效</div></td>
+    <td  align="center"><div align="center" class="fontname_12">排序</div></td>
   </tr>
   <%
 int i=0;

@@ -81,8 +81,8 @@ function dict(form){
 	  }
 	  var url="dictoryDefinition.do?method=edit&target=sys_dictory&nodeId="+id;
 	  var width=650;
-	  var height=780;
-	  var scroll="no";
+	  var height=480;
+	  var scroll="yes";
 	  openWindow(url, width, height, scroll);
   }
 }
