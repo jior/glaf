@@ -23,6 +23,7 @@ import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.base.modules.sys.model.SysDepartment;
+import com.glaf.base.modules.sys.query.SysDepartmentQuery;
 import com.glaf.core.util.PageResult;
 
 @Transactional(readOnly = true)
@@ -39,14 +40,14 @@ public interface SysDepartmentService {
 	boolean create(SysDepartment bean);
 
 	/**
-	 * 更新
+	 * 删除
 	 * 
-	 * @param bean
-	 *            SysDepartment
+	 * @param id
+	 *            int
 	 * @return boolean
 	 */
 	@Transactional
-	boolean update(SysDepartment bean);
+	boolean delete(long id);
 
 	/**
 	 * 删除
@@ -59,16 +60,6 @@ public interface SysDepartmentService {
 	boolean delete(SysDepartment bean);
 
 	/**
-	 * 删除
-	 * 
-	 * @param id
-	 *            int
-	 * @return boolean
-	 */
-	@Transactional
-	boolean delete(long id);
-
-	/**
 	 * 批量删除
 	 * 
 	 * @param ids
@@ -76,6 +67,15 @@ public interface SysDepartmentService {
 	 */
 	@Transactional
 	boolean deleteAll(long[] ids);
+
+	/**
+	 * 按编码查找对象
+	 * 
+	 * @param code
+	 * 
+	 * @return SysDepartment
+	 */
+	SysDepartment findByCode(String code);
 
 	/**
 	 * 获取对象
@@ -86,13 +86,13 @@ public interface SysDepartmentService {
 	SysDepartment findById(long id);
 
 	/**
-	 * 按编码查找对象
+	 * 按名称查找对象
 	 * 
-	 * @param code
-	 * 
+	 * @param name
+	 *            String
 	 * @return SysDepartment
 	 */
-	SysDepartment findByCode(String code);
+	SysDepartment findByName(String name);
 
 	/**
 	 * 按部门编号查找对象
@@ -105,26 +105,27 @@ public interface SysDepartmentService {
 	SysDepartment findByNo(String deptno);
 
 	/**
-	 * 按名称查找对象
+	 * 获取某个部门及下级部门列表
 	 * 
-	 * @param name
-	 *            String
-	 * @return SysDepartment
+	 * @param list
+	 * @param deptId
 	 */
-	SysDepartment findByName(String name);
+	void findNestingDepartment(List<SysDepartment> list, long deptId);
 
 	/**
-	 * 获取分页列表
+	 * 获取某个部门及下级部门列表
 	 * 
-	 * @param parent
-	 *            int
-	 * @param pageNo
-	 *            int
-	 * @param pageSize
-	 *            int
+	 * @param list
+	 * @param node
+	 */
+	void findNestingDepartment(List<SysDepartment> list, SysDepartment node);
+
+	/**
+	 * 根据查询参数获取记录总数
+	 * 
 	 * @return
 	 */
-	PageResult getSysDepartmentList(int parent, int pageNo, int pageSize);
+	int getSysDepartmentCountByQueryCriteria(SysDepartmentQuery query);
 
 	/**
 	 * 获取列表
@@ -143,6 +144,27 @@ public interface SysDepartmentService {
 	List<SysDepartment> getSysDepartmentList(int parent);
 
 	/**
+	 * 获取分页列表
+	 * 
+	 * @param parent
+	 *            int
+	 * @param pageNo
+	 *            int
+	 * @param pageSize
+	 *            int
+	 * @return
+	 */
+	PageResult getSysDepartmentList(int parent, int pageNo, int pageSize);
+
+	/**
+	 * 根据查询参数获取一页的数据
+	 * 
+	 * @return
+	 */
+	List<SysDepartment> getSysDepartmentsByQueryCriteria(int start,
+			int pageSize, SysDepartmentQuery query);
+
+	/**
 	 * 排序
 	 * 
 	 * @param bean
@@ -154,18 +176,12 @@ public interface SysDepartmentService {
 	void sort(long parent, SysDepartment bean, int operate);
 
 	/**
-	 * 获取某个部门及下级部门列表
+	 * 更新
 	 * 
-	 * @param list
-	 * @param deptId
+	 * @param bean
+	 *            SysDepartment
+	 * @return boolean
 	 */
-	void findNestingDepartment(List<SysDepartment> list, long deptId);
-
-	/**
-	 * 获取某个部门及下级部门列表
-	 * 
-	 * @param list
-	 * @param node
-	 */
-	void findNestingDepartment(List<SysDepartment> list, SysDepartment node);
+	@Transactional
+	boolean update(SysDepartment bean);
 }

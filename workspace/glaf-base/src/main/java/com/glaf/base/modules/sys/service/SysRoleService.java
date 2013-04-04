@@ -23,6 +23,7 @@ import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.base.modules.sys.model.SysRole;
+import com.glaf.base.modules.sys.query.SysRoleQuery;
 import com.glaf.core.util.PageResult;
 
 @Transactional(readOnly = true)
@@ -39,14 +40,14 @@ public interface SysRoleService {
 	boolean create(SysRole bean);
 
 	/**
-	 * 更新
+	 * 删除
 	 * 
-	 * @param bean
-	 *            SysRole
+	 * @param id
+	 *            int
 	 * @return boolean
 	 */
 	@Transactional
-	boolean update(SysRole bean);
+	boolean delete(long id);
 
 	/**
 	 * 删除
@@ -59,16 +60,6 @@ public interface SysRoleService {
 	boolean delete(SysRole bean);
 
 	/**
-	 * 删除
-	 * 
-	 * @param id
-	 *            int
-	 * @return boolean
-	 */
-	@Transactional
-	boolean delete(long id);
-
-	/**
 	 * 批量删除
 	 * 
 	 * @param ids
@@ -76,6 +67,15 @@ public interface SysRoleService {
 	 */
 	@Transactional
 	boolean deleteAll(long[] ids);
+
+	/**
+	 * 按code查找对象
+	 * 
+	 * @param name
+	 *            String
+	 * @return SysRole
+	 */
+	SysRole findByCode(String code);
 
 	/**
 	 * 获取对象
@@ -95,13 +95,18 @@ public interface SysRoleService {
 	SysRole findByName(String name);
 
 	/**
-	 * 按code查找对象
+	 * 根据查询参数获取记录总数
 	 * 
-	 * @param name
-	 *            String
-	 * @return SysRole
+	 * @return
 	 */
-	SysRole findByCode(String code);
+	int getSysRoleCountByQueryCriteria(SysRoleQuery query);
+
+	/**
+	 * 获取列表
+	 * 
+	 * @return List
+	 */
+	List<SysRole> getSysRoleList();
 
 	/**
 	 * 获取分页列表
@@ -115,11 +120,12 @@ public interface SysRoleService {
 	PageResult getSysRoleList(int pageNo, int pageSize);
 
 	/**
-	 * 获取列表
+	 * 根据查询参数获取一页的数据
 	 * 
-	 * @return List
+	 * @return
 	 */
-	List<SysRole> getSysRoleList();
+	List<SysRole> getSysRolesByQueryCriteria(int start, int pageSize,
+			SysRoleQuery query);
 
 	/**
 	 * 排序
@@ -131,5 +137,15 @@ public interface SysRoleService {
 	 */
 	@Transactional
 	void sort(SysRole bean, int operate);
+
+	/**
+	 * 更新
+	 * 
+	 * @param bean
+	 *            SysRole
+	 * @return boolean
+	 */
+	@Transactional
+	boolean update(SysRole bean);
 
 }

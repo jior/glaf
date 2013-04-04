@@ -23,6 +23,7 @@ import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.base.modules.sys.model.SysTree;
+import com.glaf.base.modules.sys.query.SysTreeQuery;
 import com.glaf.core.util.PageResult;
 
 @Transactional(readOnly = true)
@@ -85,6 +86,13 @@ public interface SysTreeService {
 	SysTree findByName(String name);
 
 	/**
+	 * 获取全部列表
+	 * 
+	 * @return List
+	 */
+	List<SysTree> getAllSysTreeList();
+
+	/**
 	 * 获取树型列表
 	 * 
 	 * @param parent
@@ -102,6 +110,13 @@ public interface SysTreeService {
 	SysTree getSysTreeByCode(String code);
 
 	/**
+	 * 根据查询参数获取记录总数
+	 * 
+	 * @return
+	 */
+	int getSysTreeCountByQueryCriteria(SysTreeQuery query);
+
+	/**
 	 * 获取全部列表
 	 * 
 	 * @param parent
@@ -109,14 +124,6 @@ public interface SysTreeService {
 	 * @return List
 	 */
 	List<SysTree> getSysTreeList(int parent);
-	
-
-	/**
-	 * 获取全部列表
-	 * 
-	 * @return List
-	 */
-	List<SysTree> getAllSysTreeList();
 
 	/**
 	 * 获取分页列表
@@ -149,6 +156,14 @@ public interface SysTreeService {
 	 * @param int id
 	 */
 	void getSysTreeParent(List<SysTree> tree, long id);
+
+	/**
+	 * 根据查询参数获取一页的数据
+	 * 
+	 * @return
+	 */
+	List<SysTree> getSysTreesByQueryCriteria(int start, int pageSize,
+			SysTreeQuery query);
 
 	/**
 	 * 排序

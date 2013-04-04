@@ -25,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.base.modules.sys.model.Dictory;
 import com.glaf.base.modules.sys.model.SysTree;
+import com.glaf.base.modules.sys.query.DictoryQuery;
 import com.glaf.core.util.PageResult;
 
 @Transactional(readOnly = true)
@@ -76,9 +77,10 @@ public interface DictoryService {
 	 * @return
 	 */
 	Dictory find(long id);
-	
+
 	/**
 	 * 获取全部基础数据的分类树
+	 * 
 	 * @return
 	 */
 	List<SysTree> getAllCategories();
@@ -98,6 +100,13 @@ public interface DictoryService {
 	 * @return
 	 */
 	String getCodeById(long id);
+
+	/**
+	 * 根据查询参数获取记录总数
+	 * 
+	 * @return
+	 */
+	int getDictoryCountByQueryCriteria(DictoryQuery query);
 
 	/**
 	 * 获取分页列表
@@ -134,6 +143,14 @@ public interface DictoryService {
 	 * @return
 	 */
 	Map<String, String> getDictoryMap(List<Dictory> list, long purchaseId);
+
+	/**
+	 * 根据查询参数获取一页的数据
+	 * 
+	 * @return
+	 */
+	List<Dictory> getDictorysByQueryCriteria(int start, int pageSize,
+			DictoryQuery query);
 
 	/**
 	 * 排序

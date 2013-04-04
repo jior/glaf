@@ -19,7 +19,6 @@
 package com.glaf.base.modules.sys.service;
 
 import java.util.List;
- 
 
 import org.json.JSONArray;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,8 +26,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.glaf.base.modules.sys.model.RealmInfo;
 import com.glaf.base.modules.sys.model.SysApplication;
 import com.glaf.base.modules.sys.model.SysUser;
+import com.glaf.base.modules.sys.query.SysApplicationQuery;
 import com.glaf.core.util.PageResult;
-
 
 @Transactional(readOnly = true)
 public interface SysApplicationService {
@@ -84,9 +83,6 @@ public interface SysApplicationService {
 	 * @return SysApplication
 	 */
 	SysApplication findByName(String name);
-	
-	
-	List<RealmInfo> getRealmInfos();
 
 	/**
 	 * 获取用户能访问到的模块列表
@@ -136,6 +132,23 @@ public interface SysApplicationService {
 	 * @return
 	 */
 	String getMenu(long parent, SysUser user);
+
+	List<RealmInfo> getRealmInfos();
+
+	/**
+	 * 根据查询参数获取记录总数
+	 * 
+	 * @return
+	 */
+	int getSysApplicationCountByQueryCriteria(SysApplicationQuery query);
+
+	/**
+	 * 根据查询参数获取一页的数据
+	 * 
+	 * @return
+	 */
+	List<SysApplication> getSysApplicationsByQueryCriteria(int start,
+			int pageSize, SysApplicationQuery query);
 
 	/**
 	 * 获取用户菜单之Json对象

@@ -25,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.base.modules.sys.model.SysDeptRole;
 import com.glaf.base.modules.sys.model.SysUser;
+import com.glaf.base.modules.sys.query.SysUserQuery;
 
 import com.glaf.core.util.PageResult;
 
@@ -43,17 +44,14 @@ public interface SysUserService {
 	boolean create(SysUser bean);
 
 	/**
-	 * 更新
+	 * 删除
 	 * 
-	 * @param bean
-	 *            SysUser
+	 * @param id
+	 *            int
 	 * @return boolean
 	 */
 	@Transactional
-	boolean update(SysUser bean);
-
-	@Transactional
-	boolean updateUser(SysUser bean);
+	boolean delete(long id);
 
 	/**
 	 * 删除
@@ -66,16 +64,6 @@ public interface SysUserService {
 	boolean delete(SysUser bean);
 
 	/**
-	 * 删除
-	 * 
-	 * @param id
-	 *            int
-	 * @return boolean
-	 */
-	@Transactional
-	boolean delete(long id);
-
-	/**
 	 * 批量删除
 	 * 
 	 * @param id
@@ -83,14 +71,6 @@ public interface SysUserService {
 	 */
 	@Transactional
 	boolean deleteAll(long[] id);
-
-	/**
-	 * 获取对象
-	 * 
-	 * @param id
-	 * @return
-	 */
-	SysUser findById(long id);
 
 	/**
 	 * 按名称查找对象
@@ -111,12 +91,53 @@ public interface SysUserService {
 	SysUser findByAccountWithAll(String account);
 
 	/**
+	 * 获取对象
+	 * 
+	 * @param id
+	 * @return
+	 */
+	SysUser findById(long id);
+
+	/**
 	 * 获取某个用户的上级
 	 * 
 	 * @param account
 	 * @return
 	 */
 	List<SysUser> getSuperiors(String account);
+
+	/**
+	 * 查找供应商用户 flag = true 表示该用户存在，否则为不存在
+	 * 
+	 * @param supplierNo
+	 * @return
+	 */
+	List<SysUser> getSupplierUser(String supplierNo);
+
+	/**
+	 * 根据查询参数获取记录总数
+	 * 
+	 * @return
+	 */
+	int getSysUserCountByQueryCriteria(SysUserQuery query);
+
+	/**
+	 * 获取列表
+	 * 
+	 * @param deptId
+	 *            int
+	 * @return List
+	 */
+	List<SysUser> getSysUserList();
+
+	/**
+	 * 获取列表
+	 * 
+	 * @param deptId
+	 *            int
+	 * @return List
+	 */
+	List<SysUser> getSysUserList(int deptId);
 
 	/**
 	 * 获取特定部门的员工数据集 分页列表
@@ -146,20 +167,25 @@ public interface SysUserService {
 	/**
 	 * 获取列表
 	 * 
-	 * @param deptId
-	 *            int
-	 * @return List
 	 */
-	List<SysUser> getSysUserList(int deptId);
+	PageResult getSysUserList(int deptId, String userName, String account,
+			int pageNo, int pageSize);
 
 	/**
-	 * 获取列表
+	 * 获取某个应用的权限用户
 	 * 
-	 * @param deptId
-	 *            int
-	 * @return List
+	 * @param appId
+	 * @return
 	 */
-	List<SysUser> getSysUserList();
+	List<SysUser> getSysUsersByAppId(Long appId);
+
+	/**
+	 * 根据查询参数获取一页的数据
+	 * 
+	 * @return
+	 */
+	List<SysUser> getSysUsersByQueryCriteria(int start, int pageSize,
+			SysUserQuery query);
 
 	/**
 	 * 获取列表
@@ -170,12 +196,7 @@ public interface SysUserService {
 	 */
 	List<SysUser> getSysUserWithDeptList();
 
-	/**
-	 * 
-	 * @param user
-	 * @return
-	 */
-	Set<SysDeptRole> getUserRoles(SysUser user);
+	SysUser getUserAndPrivileges(SysUser user);
 
 	/**
 	 * 其用户权限
@@ -185,23 +206,24 @@ public interface SysUserService {
 	 */
 	SysUser getUserPrivileges(SysUser user);
 
-	SysUser getUserAndPrivileges(SysUser user);
-
 	/**
-	 * 查找供应商用户 flag = true 表示该用户存在，否则为不存在
 	 * 
-	 * @param supplierNo
+	 * @param user
 	 * @return
 	 */
-	List<SysUser> getSupplierUser(String supplierNo);
+	Set<SysDeptRole> getUserRoles(SysUser user);
+
+	boolean isThisPlayer(SysUser user, String code);
 
 	/**
-	 * 获取某个应用的权限用户
+	 * 更新
 	 * 
-	 * @param appId
-	 * @return
+	 * @param bean
+	 *            SysUser
+	 * @return boolean
 	 */
-	List<SysUser> getSysUsersByAppId(Long appId);
+	@Transactional
+	boolean update(SysUser bean);
 
 	/**
 	 * 设置用户权限
@@ -216,13 +238,7 @@ public interface SysUserService {
 	@Transactional
 	boolean updateRole(SysUser user, Set delRoles, Set newRoles);
 
-	/**
-	 * 获取列表
-	 * 
-	 */
-	PageResult getSysUserList(int deptId, String userName, String account,
-			int pageNo, int pageSize);
-
-	boolean isThisPlayer(SysUser user, String code);
+	@Transactional
+	boolean updateUser(SysUser bean);
 
 }

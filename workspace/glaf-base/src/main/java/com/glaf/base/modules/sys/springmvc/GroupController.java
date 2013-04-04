@@ -48,8 +48,12 @@ import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
 import com.glaf.core.res.ViewMessages;
 import com.glaf.core.tree.helper.TreeHelper;
+import com.glaf.core.util.JsonUtils;
 import com.glaf.core.util.PageResult;
+import com.glaf.core.util.ParamUtils;
+import com.glaf.core.util.RequestUtils;
 import com.glaf.core.util.ResponseUtils;
+import com.glaf.core.util.Tools;
 
 import com.glaf.base.modules.Constants;
 import com.glaf.base.modules.sys.SysConstants;
@@ -57,6 +61,7 @@ import com.glaf.base.modules.sys.model.Group;
 import com.glaf.base.modules.sys.model.SysDepartment;
 import com.glaf.base.modules.sys.model.SysTree;
 import com.glaf.base.modules.sys.model.SysUser;
+import com.glaf.base.modules.sys.query.GroupQuery;
 import com.glaf.base.modules.sys.service.GroupService;
 import com.glaf.base.modules.sys.service.SysDepartmentService;
 import com.glaf.base.modules.sys.service.SysTreeService;
@@ -146,7 +151,7 @@ public class GroupController {
 			logger.debug(root.toJsonObject().toJSONString());
 			logger.debug("users size:" + users.size());
 			List<TreeModel> treeModels = new ArrayList<TreeModel>();
-			//treeModels.add(root);
+			// treeModels.add(root);
 			List<SysTree> trees = sysTreeService.getSysTreeListForDept(
 					(int) root.getId(), 0);
 			if (trees != null && !trees.isEmpty()) {
@@ -162,7 +167,8 @@ public class GroupController {
 					SysDepartment dept = tree.getDepartment();
 					if (dept != null && dept.getId() > 0) {
 						for (SysUser user : users) {
-							SysTree t = treeMap.get(Long.valueOf(user.getDeptId()));
+							SysTree t = treeMap.get(Long.valueOf(user
+									.getDeptId()));
 							if (dept.getId() == user.getDeptId() && t != null) {
 								TreeModel treeModel = new BaseTree();
 								treeModel.setParentId(t.getId());
@@ -185,6 +191,97 @@ public class GroupController {
 			TreeHelper treeHelper = new TreeHelper();
 			JSONArray jsonArray = treeHelper.getTreeJSONArray(treeModels);
 			return jsonArray.toJSONString().getBytes("UTF-8");
+		}
+		return result.toString().getBytes("UTF-8");
+	}
+
+	@RequestMapping
+	public ModelAndView list(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		String x_query = request.getParameter("x_query");
+		if (StringUtils.equals(x_query, "true")) {
+			Map<String, Object> paramMap = RequestUtils
+					.getParameterMap(request);
+			String x_complex_query = JsonUtils.encode(paramMap);
+			x_complex_query = RequestUtils.encodeString(x_complex_query);
+			request.setAttribute("x_complex_query", x_complex_query);
+		} else {
+			request.setAttribute("x_complex_query", "");
+		}
+		String view = request.getParameter("view");
+		if (StringUtils.isNotEmpty(view)) {
+			return new ModelAndView(view, modelMap);
+		}
+
+		return new ModelAndView("/modules/base/group/list", modelMap);
+	}
+
+	@RequestMapping(params = "method=listJson")
+	@ResponseBody
+	public byte[] listJson(HttpServletRequest request, ModelMap modelMap)
+			throws IOException {
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		GroupQuery query = new GroupQuery();
+		Tools.populate(query, params);
+
+		String gridType = ParamUtils.getString(params, "gridType");
+		if (gridType == null) {
+			gridType = "easyui";
+		}
+		int start = 0;
+		int limit = 10;
+		String orderName = null;
+		String order = null;
+
+		int pageNo = ParamUtils.getInt(params, "page");
+		limit = ParamUtils.getInt(params, "rows");
+		start = (pageNo - 1) * limit;
+		orderName = ParamUtils.getString(params, "sortName");
+		order = ParamUtils.getString(params, "sortOrder");
+
+		if (start < 0) {
+			start = 0;
+		}
+
+		if (limit <= 0) {
+			limit = PageResult.DEFAULT_PAGE_SIZE;
+		}
+
+		JSONObject result = new JSONObject();
+		int total = groupService.getGroupCountByQueryCriteria(query);
+		if (total > 0) {
+			result.put("total", total);
+			result.put("totalCount", total);
+			result.put("totalRecords", total);
+			result.put("start", start);
+			result.put("startIndex", start);
+			result.put("limit", limit);
+			result.put("pageSize", limit);
+
+			if (StringUtils.isNotEmpty(orderName)) {
+				query.setSortOrder(orderName);
+				if (StringUtils.equals(order, "desc")) {
+					query.setSortOrder(" desc ");
+				}
+			}
+
+			List<Group> list = groupService.getGroupsByQueryCriteria(start,
+					limit, query);
+
+			if (list != null && !list.isEmpty()) {
+				JSONArray rowsJSON = new JSONArray();
+
+				result.put("rows", rowsJSON);
+
+				for (Group group : list) {
+					JSONObject rowJSON = group.toJsonObject();
+
+					rowJSON.put("groupId", group.getGroupId());
+
+					rowsJSON.add(rowJSON);
+				}
+
+			}
 		}
 		return result.toString().getBytes("UTF-8");
 	}
