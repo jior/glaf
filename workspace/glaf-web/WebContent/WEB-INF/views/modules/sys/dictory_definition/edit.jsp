@@ -17,17 +17,12 @@
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/locale/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript">
- 
-        
 
 		function onClickRow(index){
-			 
-					$('#dg').datagrid('selectRow', index).datagrid('beginEdit', index);
-					 
+			$('#dg').datagrid('selectRow', index).datagrid('beginEdit', index);	 
 		}
 
-
-		function formatterType(val,row){
+		function formatterType(val, row){
 		   if(val=="Long"){
 			   return "整数型";
 		   } else if(val=="Double"){
@@ -36,6 +31,13 @@
 			   return "日期型";
 		   }
 		   return "字符型";
+		}
+
+		function formatterRequired(val, row){
+		   if(val=="1"){
+			   return "<div style='color:red'>是</div>";
+		   }  
+		   return "否";
 		}
 
        
@@ -88,7 +90,8 @@
 				<th data-options="field:'name', width:80">名称</th>
 				<th data-options="field:'type', width:90,formatter:formatterType">类型</th>
 				<th data-options="field:'title', width:120, editor:'text'">标题</th>
-				<th data-options="field:'required', width:90, align:'center', editor:{type:'checkbox',options:{on:'1',off:'0'}}">
+				<th data-options="field:'required', width:90, align:'center', formatter:formatterRequired, 
+				       editor:{type:'checkbox',options:{on:'1',off:'0'}}">
 				    是否必填
 				</th>
 			</tr>
