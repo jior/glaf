@@ -150,6 +150,7 @@ public class SysDictoryDefinitionController {
 						model.setType(m.getType());
 						model.setSort(m.getSort());
 						model.setColumnName(m.getColumnName());
+						model.setLength(m.getLength());
 						if (StringUtils.equals(required, "1")
 								|| StringUtils.equals(required, "on")) {
 							model.setRequired(1);
@@ -190,6 +191,7 @@ public class SysDictoryDefinitionController {
 							model.setType(m.getType());
 							model.setSort(m.getSort());
 							model.setColumnName(m.getColumnName());
+							model.setLength(m.getLength());
 							if (StringUtils.equals(required, "1")
 									|| StringUtils.equals(required, "on")) {
 								model.setRequired(1);
