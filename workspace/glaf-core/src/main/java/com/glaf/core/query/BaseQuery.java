@@ -25,8 +25,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
-import com.glaf.core.identity.User;
-
+import com.glaf.core.security.LoginContext;
 import com.glaf.core.util.Paging;
 
 @SuppressWarnings("rawtypes")
@@ -40,7 +39,7 @@ public class BaseQuery extends AbstractQuery<Object> {
 	protected boolean isInitialized = false;
 	protected boolean isOwner = false;
 	protected Integer locked;
-	protected User loginContext;
+	protected LoginContext loginContext;
 	protected String orderBy;
 	protected int pageNo;
 	protected int pageSize;
@@ -150,6 +149,10 @@ public class BaseQuery extends AbstractQuery<Object> {
 		return locked;
 	}
 
+	public LoginContext getLoginContext() {
+		return loginContext;
+	}
+
 	public boolean getOnlyDataModels() {
 		return true;
 	}
@@ -198,10 +201,6 @@ public class BaseQuery extends AbstractQuery<Object> {
 
 	public String getSortOrder() {
 		return sortOrder;
-	}
-
-	public User getUser() {
-		return loginContext;
 	}
 
 	public boolean isFilterPermission() {
@@ -253,6 +252,10 @@ public class BaseQuery extends AbstractQuery<Object> {
 		this.locked = locked;
 	}
 
+	public void setLoginContext(LoginContext loginContext) {
+		this.loginContext = loginContext;
+	}
+
 	public void setOrderBy(String orderBy) {
 		this.orderBy = orderBy;
 	}
@@ -287,10 +290,6 @@ public class BaseQuery extends AbstractQuery<Object> {
 
 	public void setSortOrder(String sortOrder) {
 		this.sortOrder = sortOrder;
-	}
-
-	public void setUser(User loginContext) {
-		this.loginContext = loginContext;
 	}
 
 	public String toString() {

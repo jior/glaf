@@ -20,10 +20,13 @@ package com.glaf.core.service;
 
 import java.util.List;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import com.glaf.core.entity.SqlExecutor;
 import com.glaf.core.id.IdBlock;
 import com.glaf.core.util.Paging;
 
+@Transactional(readOnly = true)
 public interface EntityService {
 
 	/**
@@ -32,7 +35,7 @@ public interface EntityService {
 	 * @param statementId
 	 * @param parameterObject
 	 */
-
+	@Transactional
 	void delete(String statementId, Object parameterObject);
 
 	/**
@@ -41,7 +44,7 @@ public interface EntityService {
 	 * @param statementId
 	 * @param parameterObject
 	 */
-
+	@Transactional
 	void deleteAll(String statementId, List<Object> rowIds);
 
 	/**
@@ -50,7 +53,7 @@ public interface EntityService {
 	 * @param statementId
 	 * @param rowId
 	 */
-
+	@Transactional
 	void deleteById(String statementId, Object rowId);
 
 	/**
@@ -58,7 +61,7 @@ public interface EntityService {
 	 * 
 	 * @param sqlExecutors
 	 */
-
+	@Transactional
 	void executeBatch(List<SqlExecutor> sqlExecutors);
 
 	/**
@@ -125,7 +128,7 @@ public interface EntityService {
 	 * @param statementId
 	 * @param parameterObject
 	 */
-
+	@Transactional
 	void insert(String statementId, Object parameterObject);
 
 	/**
@@ -134,9 +137,10 @@ public interface EntityService {
 	 * @param statementId
 	 * @param parameterObject
 	 */
-
+	@Transactional
 	void insertAll(String statementId, List<Object> rows);
 
+	@Transactional
 	IdBlock nextDbidBlock(String name);
 
 	/**
@@ -145,7 +149,7 @@ public interface EntityService {
 	 * @param statementId
 	 * @param parameterObject
 	 */
-
+	@Transactional
 	void update(String statementId, Object parameterObject);
 
 	/**
@@ -154,7 +158,7 @@ public interface EntityService {
 	 * @param statementId
 	 * @param parameterObject
 	 */
-
+	@Transactional
 	void updateAll(String statementId, List<Object> rows);
 
 }
