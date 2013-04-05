@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.form.core.mapper.FormDefinitionMapper">
+
+	<resultMap id="formDefinitionResultMap" type="com.glaf.form.core.graph.def.FormDefinition">
+		<id property="id" column="ID_" jdbcType="VARCHAR" />
+		<result property="name" column="NAME_" jdbcType="VARCHAR" />
+		<result property="title" column="TITLE_" jdbcType="VARCHAR" />
+		<result property="description" column="DESCRIPTION_" jdbcType="VARCHAR" />
+		<result property="formDefinitionId" column="FORMDEFINITIONID_"
+			jdbcType="VARCHAR" />
+		<result property="templateName" column="TEMPLATENAME_"
+			jdbcType="VARCHAR" />
+		<result property="tableName" column="TABLENAME_" jdbcType="VARCHAR" />
+		<result property="templateType" column="TEMPLATETYPE_"
+			jdbcType="VARCHAR" />
+		<result property="nodeId" column="NODEID_" jdbcType="BIGINT" />
+		<result property="version" column="VERSION_" jdbcType="INTEGER" />
+		<result property="x" column="X_" jdbcType="INTEGER" />
+		<result property="y" column="Y_" jdbcType="INTEGER" />
+		<result property="height" column="HEIGHT_" jdbcType="DOUBLE" />
+		<result property="width" column="WIDTH_" jdbcType="DOUBLE" />
+		<result property="rows" column="ROWS_" jdbcType="INTEGER" />
+		<result property="columns" column="COLUMNS_" jdbcType="INTEGER" />
+		<result property="locked" column="LOCKED_" jdbcType="INTEGER" />
+		<result property="objectId" column="OBJECTID_" jdbcType="VARCHAR" />
+		<result property="objectValue" column="OBJECTVALUE_" jdbcType="VARCHAR" />
+		<result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP" />
+		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR" />
+	</resultMap>
+
+
+	<insert id="insertFormDefinition" parameterType="com.glaf.form.core.graph.def.FormDefinition">
+		insert into
+		FORM_DEFINITION ( ID_
+		,NAME_
+		,TITLE_
+		,DESCRIPTION_
+		,FORMDEFINITIONID_
+		,TEMPLATENAME_
+		,TABLENAME_
+		,TEMPLATETYPE_
+		,NODEID_
+		,VERSION_
+		,X_
+		,Y_
+		,HEIGHT_
+		,WIDTH_
+		,ROWS_
+		,COLUMNS_
+		,LOCKED_
+		,OBJECTID_
+		,OBJECTVALUE_
+		,CREATEDATE_
+		,CREATEBY_
+		)
+		values (
+		#{id, jdbcType=VARCHAR}
+		,#{name,
+		jdbcType=VARCHAR}
+		,#{title, jdbcType=VARCHAR}
+		,#{description,
+		jdbcType=VARCHAR}
+		,#{formDefinitionId, jdbcType=VARCHAR}
+		,#{templateName, jdbcType=VARCHAR}
+		,#{tableName, jdbcType=VARCHAR}
+		,#{templateType, jdbcType=VARCHAR}
+		,#{nodeId, jdbcType=BIGINT}
+		,#{version, jdbcType=INTEGER}
+		,#{x, jdbcType=INTEGER}
+		,#{y,
+		jdbcType=INTEGER}
+		,#{height, jdbcType=DOUBLE}
+		,#{width, jdbcType=DOUBLE}
+		,#{rows, jdbcType=INTEGER}
+		,#{columns, jdbcType=INTEGER}
+		,#{locked,
+		jdbcType=INTEGER}
+		,#{objectId, jdbcType=VARCHAR}
+		,#{objectValue,
+		jdbcType=VARCHAR}
+		,#{createDate, jdbcType=TIMESTAMP}
+		,#{createBy,
+		jdbcType=VARCHAR}
+		)
+	</insert>
+
+	<update id="lockOldVersionFormDefinitions" parameterType="string">
+		update
+		FORM_DEFINITION set LOCKED_ = 1 where NAME_ = #{name}
+	</update>
+
+	<update id="updateFormArchivesFlag" parameterType="map">
+		update
+		${tableName} SET ARCHIVESFLAG_ = #{archivesFlag} WHERE ID_ = #{id}
+	</update>
+
+	<delete id="deleteFormDefinitionById" parameterType="string">
+		delete from
+		FORM_DEFINITION
+		where ID_ = #{id}
+	</delete>
+
+	<delete id="deleteFormDefinitionByName" parameterType="string">
+		delete
+		from FORM_DEFINITION
+		where NAME_ = #{name}
+	</delete>
+
+	<select id="getFormDefinitionById" parameterType="string"
+		resultMap="formDefinitionResultMap">
+		select * from FORM_DEFINITION where ID_ = #{id}
+	</select>
+
+	<select id="getFormDefinition" parameterType="string"
+		resultMap="formDefinitionResultMap">
+		select * from FORM_DEFINITION where FORMDEFINITIONID_ =
+		#{formDefinitionId}
+	</select>
+
+	<select id="getFormDefinitions" parameterType="com.glaf.form.core.query.FormDefinitionQuery"
+		resultMap="formDefinitionResultMap">
+		select E.*
+		<include refid="selectFormDefinitionsSql" />
+		<if test="orderBy != null">
+			order by ${orderBy}
+		</if>
+	</select>
+
+	<select id="getFormDefinitionCount" parameterType="com.glaf.form.core.query.FormDefinitionQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectFormDefinitionsSql" />
+	</select>
+
+	<sql id="selectFormDefinitionsSql">
+
+		from FORM_DEFINITION E
+
+		<where>
+			1 = 1
+
+			<if test="name != null and name != '' ">
+				and E.NAME_ = #{name}
+			</if>
+
+			<if test="nameLike != null and nameLike != '' ">
+				and E.NAME_ like #{nameLike}
+			</if>
+
+			<if test="names != null and names.size() &gt; 0">
+				and E.NAME_ IN
+				<foreach item="x_name" index="index" collection="names"
+					open="(" separator="," close=")">
+					#{x_name}
+				</foreach>
+			</if>
+
+			<if test="titleLike != null and titleLike != '' ">
+				and E.TITLE_ like #{titleLike}
+			</if>
+
+			<if test="descriptionLike != null and descriptionLike != '' ">
+				and E.DESCRIPTION_ like #{descriptionLike}
+			</if>
+
+			<if test="formDefinitionId != null and formDefinitionId != '' ">
+				and E.FORMDEFINITIONID_ = #{formDefinitionId}
+			</if>
+
+			<if test="formDefinitionIdLike != null and formDefinitionIdLike != '' ">
+				and E.FORMDEFINITIONID_ like #{formDefinitionIdLike}
+			</if>
+
+			<if test="templateNameLike != null and templateNameLike != '' ">
+				and E.TEMPLATENAME_ like #{templateNameLike}
+			</if>
+
+			<if test="tableName != null and tableName != '' ">
+				and E.TABLENAME_ = #{tableName}
+			</if>
+
+			<if test="tableNameLike != null and tableNameLike != '' ">
+				and E.TABLENAME_ like #{tableNameLike}
+			</if>
+
+			<if test="templateType != null and templateType != '' ">
+				and E.TEMPLATETYPE_ = #{templateType}
+			</if>
+
+			<if test="templateTypeLike != null and templateTypeLike != '' ">
+				and E.TEMPLATETYPE_ like #{templateTypeLike}
+			</if>
+
+			<if test="nodeId != null and nodeId != '' ">
+				and E.NODEID_ = #{nodeId}
+			</if>
+
+			<if test="nodeIds != null and nodeIds.size() &gt; 0">
+				and E.NODEID_ IN
+				<foreach item="x_nodeId" index="index" collection="nodeIds"
+					open="(" separator="," close=")">
+					#{x_nodeId}
+				</foreach>
+			</if>
+
+			<if test="locked != null">
+				and E.LOCKED_ = #{locked}
+			</if>
+
+			<if test="objectId != null and objectId != '' ">
+				and E.OBJECTID_ = #{objectId}
+			</if>
+
+			<if test="objectIds != null and objectIds.size() &gt; 0">
+				and E.OBJECTID_ IN
+				<foreach item="x_objectId" index="index" collection="objectIds"
+					open="(" separator="," close=")">
+					#{x_objectId}
+				</foreach>
+			</if>
+
+			<if test="objectValue != null and objectValue != '' ">
+				and E.OBJECTVALUE_ = #{objectValue}
+			</if>
+
+			<if test="objectValues != null and objectValues.size() &gt; 0">
+				and E.OBJECTVALUE_ IN
+				<foreach item="x_objectValue" index="index" collection="objectValues"
+					open="(" separator="," close=")">
+					#{x_objectValue}
+				</foreach>
+			</if>
+
+			<if test="createBy != null and createBy != '' ">
+				and E.CREATEBY_ = #{createBy}
+			</if>
+
+			<if test="afterCreateDate != null">
+				and E.CREATEDATE_ &gt;= #{afterCreateDate}
+			</if>
+
+			<if test="beforeCreateDate != null">
+				and E.CREATEDATE_ &lt;= #{beforeCreateDate}
+			</if>
+
+		</where>
+	</sql>
+
+</mapper>

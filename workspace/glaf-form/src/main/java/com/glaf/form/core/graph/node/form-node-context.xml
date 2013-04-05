@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="GBK"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+	http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+
+	<bean id="node" class="com.glaf.form.core.graph.def.FormNode" />
+	
+	<bean id="intfield" class="com.glaf.form.core.graph.node.IntegerFieldNode" />
+	
+	<bean id="longfield" class="com.glaf.form.core.graph.node.LongFieldNode" />
+
+	<bean id="numberfield" class="com.glaf.form.core.graph.node.NumberFieldNode" />
+
+	<bean id="datefield" class="com.glaf.form.core.graph.node.DateFieldNode" />
+
+	<bean id="timestamp" class="com.glaf.form.core.graph.node.TimestampFieldNode" />
+
+	<bean id="textfield" class="com.glaf.form.core.graph.node.TextFieldNode" />
+
+	<bean id="textarea" class="com.glaf.form.core.graph.node.TextAreaNode" />
+
+	<bean id="password" class="com.glaf.form.core.graph.node.PasswordNode" />
+
+	<bean id="select" class="com.glaf.form.core.graph.node.SelectNode" />
+
+	<bean id="radio" class="com.glaf.form.core.graph.node.RadioNode" />
+
+	<bean id="checkbox" class="com.glaf.form.core.graph.node.CheckboxNode" />
+
+	<bean id="button" class="com.glaf.form.core.graph.node.ButtonNode" />
+
+	<bean id="hidden" class="com.glaf.form.core.graph.node.HiddenNode" />
+
+	<bean id="image" class="com.glaf.form.core.graph.node.ImageNode" />
+
+	<bean id="label" class="com.glaf.form.core.graph.node.LabelNode" />
+
+	<bean id="line" class="com.glaf.form.core.graph.node.LineNode" />
+
+	<bean id="rectangle" class="com.glaf.form.core.graph.node.RectangleNode" />
+
+	<bean id="box" class="com.glaf.form.core.graph.node.BoxNode" />
+
+	<bean id="fieldset" class="com.glaf.form.core.graph.node.FieldsetNode" />
+
+</beans>

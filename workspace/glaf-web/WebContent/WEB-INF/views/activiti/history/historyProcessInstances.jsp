@@ -77,7 +77,7 @@
           oRecord = myDataTable.getRecordSet().getRecord(selectRows[0]);
           var processInstanceId = YAHOO.lang.dump(oRecord.getData("processInstanceId"));
 		  if(processInstanceId != null && processInstanceId != "null"){
-              window.open("<%=request.getContextPath()%>/mx/activiti/task/task?processInstanceId="+processInstanceId);
+              window.open("<%=request.getContextPath()%>/mx/activiti/task?processInstanceId="+processInstanceId);
 		  } else {
               alert('<%=MessageProperties.getString("res_no_process_instance")%>');
 		  }

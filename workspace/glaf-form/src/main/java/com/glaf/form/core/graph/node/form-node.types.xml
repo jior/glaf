@@ -1,0 +1,40 @@
+<node-types>
+	<node-type element="node" class="com.glaf.form.core.graph.def.FormNode" />
+	<node-type element="intfield"
+		class="com.glaf.form.core.graph.node.IntegerFieldNode" />
+	<node-type element="longfield"
+		class="com.glaf.form.core.graph.node.LongFieldNode" />
+	<node-type element="numberfield"
+		class="com.glaf.form.core.graph.node.NumberFieldNode" />
+	<node-type element="datefield"
+		class="com.glaf.form.core.graph.node.DateFieldNode" />
+	<node-type element="timestamp"
+		class="com.glaf.form.core.graph.node.TimestampFieldNode" />
+	<node-type element="textfield"
+		class="com.glaf.form.core.graph.node.TextFieldNode" />
+	<node-type element="textarea"
+		class="com.glaf.form.core.graph.node.TextAreaNode" />
+	<node-type element="password"
+		class="com.glaf.form.core.graph.node.PasswordNode" />
+	<node-type element="select"
+		class="com.glaf.form.core.graph.node.SelectNode" />
+	<node-type element="radio"
+		class="com.glaf.form.core.graph.node.RadioNode" />
+	<node-type element="checkbox"
+		class="com.glaf.form.core.graph.node.CheckboxNode" />
+	<node-type element="button"
+		class="com.glaf.form.core.graph.node.ButtonNode" />
+	<node-type element="hidden"
+		class="com.glaf.form.core.graph.node.HiddenNode" />
+	<node-type element="image"
+		class="com.glaf.form.core.graph.node.ImageNode" />
+	<node-type element="label"
+		class="com.glaf.form.core.graph.node.LabelNode" />
+	<node-type element="line"
+		class="com.glaf.form.core.graph.node.LineNode" />
+	<node-type element="rectangle"
+		class="com.glaf.form.core.graph.node.RectangleNode" />
+	<node-type element="box" class="com.glaf.form.core.graph.node.BoxNode" />
+	<node-type element="fieldset"
+		class="com.glaf.form.core.graph.node.FieldsetNode" />
+</node-types>

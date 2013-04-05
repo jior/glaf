@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.form.core.mapper.FormLinkMapper">
+
+	<resultMap id="formLinkResultMap" type="com.glaf.form.core.graph.def.FormLink">
+		<id property="id" column="ID_" jdbcType="VARCHAR" />
+		<result property="applicationName" column="APPLICATIONNAME_"
+			jdbcType="VARCHAR" />
+		<result property="childName" column="CHILDNAME_" jdbcType="VARCHAR" />
+		<result property="oneToMany" column="ONETOMANY_" jdbcType="INTEGER" />
+		<result property="orderBy" column="ORDERBY_" jdbcType="VARCHAR" />
+		<result property="sortNo" column="SORTNO_" jdbcType="INTEGER" />
+		<result property="objectId" column="OBJECTID_" jdbcType="VARCHAR" />
+		<result property="objectValue" column="OBJECTVALUE_" jdbcType="VARCHAR" />
+	</resultMap>
+
+
+	<insert id="insertFormLink" parameterType="com.glaf.form.core.graph.def.FormLink">
+		insert into
+		FORM_LINK ( ID_
+		,APPLICATIONNAME_
+		,CHILDNAME_
+		,ONETOMANY_
+		,ORDERBY_
+		,SORTNO_
+		,OBJECTID_
+		,OBJECTVALUE_
+		)
+		values (
+		#{id, jdbcType=VARCHAR}
+		,#{applicationName, jdbcType=VARCHAR}
+		,#{childName, jdbcType=VARCHAR}
+		,#{oneToMany, jdbcType=INTEGER}
+		,#{orderBy, jdbcType=VARCHAR}
+		,#{sortNo, jdbcType=INTEGER}
+		,#{objectId, jdbcType=VARCHAR}
+		,#{objectValue, jdbcType=VARCHAR}
+		)
+    </insert>
+
+	<delete id="deleteFormLinkById" parameterType="string">
+		delete from FORM_LINK
+		where ID_ = #{id}
+	</delete>
+
+	<delete id="deleteFormLinks" parameterType="string">
+		delete from FORM_LINK
+		where APPLICATIONNAME_ = #{applicationName}
+	</delete>
+
+
+	<select id="getFormLinkById" parameterType="string" resultMap="formLinkResultMap">
+		select * from FORM_LINK where ID_ = #{id}
+	</select>
+
+
+	<select id="getFormLinks" parameterType="com.glaf.form.core.query.FormLinkQuery"
+		resultMap="formLinkResultMap">
+		select E.*
+		<include refid="selectFormLinksSql" />
+		<if test="orderBy != null">
+			order by ${orderBy}
+        </if>
+	</select>
+
+	<select id="getFormLinkCount" parameterType="com.glaf.form.core.query.FormLinkQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectFormLinksSql" />
+	</select>
+
+	<sql id="selectFormLinksSql">
+
+		from FORM_LINK E
+
+		<where>
+			1 = 1
+
+			<if test="applicationName != null and applicationName != '' ">
+				and E.APPLICATIONNAME_ = #{applicationName}
+            </if>
+
+			<if  test="applicationNames != null and applicationNames.size() &gt; 0">
+				and E.APPLICATIONNAME_ IN
+				<foreach item="x_applicationName" index="index" collection="applicationNames"
+					open="(" separator="," close=")">
+					#{x_applicationName}
+                </foreach>
+			</if>
+
+			<if test="childName != null and childName != '' ">
+				and E.CHILDNAME_ = #{childName}
+            </if>
+
+			<if test="childNames != null and childNames.size() &gt; 0">
+				and E.CHILDNAME_ IN
+				<foreach item="x_childName" index="index" collection="childNames"
+					open="(" separator="," close=")">
+					#{x_childName}
+                </foreach>
+			</if>
+
+			<if test="objectId != null and objectId != '' ">
+				and E.OBJECTID_ = #{objectId}
+            </if>
+
+			<if test="objectIds != null and objectIds.size() &gt; 0">
+				and E.OBJECTID_ IN
+				<foreach item="x_objectId" index="index" collection="objectIds"
+					open="(" separator="," close=")">
+					#{x_objectId}
+                </foreach>
+			</if>
+
+			<if test="objectValue != null and objectValue != '' ">
+				and E.OBJECTVALUE_ = #{objectValue}
+            </if>
+
+			<if test="objectValues != null and objectValues.size() &gt; 0">
+				and E.OBJECTVALUE_ IN
+				<foreach item="x_objectValue" index="index" collection="objectValues"
+					open="(" separator="," close=")">
+					#{x_objectValue}
+                </foreach>
+			</if>
+
+		</where>
+	</sql>
+
+</mapper>
