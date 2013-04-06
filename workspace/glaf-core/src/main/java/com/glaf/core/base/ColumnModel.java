@@ -30,7 +30,7 @@ public class ColumnModel implements java.io.Serializable,
 
 	protected String category;
 
-	protected Collection<Object> collectionValues;
+	protected Collection<?> collectionValues;
 
 	protected String columnName;
 
@@ -173,7 +173,7 @@ public class ColumnModel implements java.io.Serializable,
 		return category;
 	}
 
-	public Collection<Object> getCollectionValues() {
+	public Collection<?> getCollectionValues() {
 		return collectionValues;
 	}
 
@@ -298,7 +298,7 @@ public class ColumnModel implements java.io.Serializable,
 		this.category = category;
 	}
 
-	public void setCollectionValues(Collection<Object> collectionValues) {
+	public void setCollectionValues(Collection<?> collectionValues) {
 		this.collectionValues = collectionValues;
 	}
 

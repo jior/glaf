@@ -24,14 +24,14 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 import org.dom4j.Document;
 
-import com.glaf.core.base.BaseDataModel;
+import com.glaf.core.base.DataModel;
 import com.glaf.form.core.context.FormContext;
 import com.glaf.form.core.graph.def.FormDefinition;
 import com.glaf.form.core.graph.def.FormNode;
 
 public class FormXmlExporter {
 
-	public Document export(BaseDataModel dataModel, FormContext formContext) {
+	public Document export(DataModel dataModel, FormContext formContext) {
 		Document doc = null;
 		FormDefinition formDefinition = formContext.getFormDefinition();
 		if (formDefinition != null) {

@@ -46,8 +46,8 @@ import com.glaf.form.core.mapper.FormDefinitionMapper;
 import com.glaf.form.core.service.FormArchiveService;
 import com.glaf.form.core.service.FormDataService;
 
-import com.glaf.core.base.BaseDataModel;
 import com.glaf.core.base.DataFile;
+import com.glaf.core.base.DataModel;
 import com.glaf.core.security.LoginContext;
 import com.glaf.core.service.IBlobService;
 import com.glaf.core.service.ISysLogService;
@@ -76,7 +76,7 @@ public class MxFormArchiveServiceImpl implements FormArchiveService {
 	@Transactional
 	public void archives(FormApplication formApplication, String businessKey,
 			Map<String, Object> dataMap) {
-		BaseDataModel dataModel = null;
+		DataModel dataModel = null;
 		FormDefinition formDefinition = null;
 		FormContext formContext = new FormContext();
 		formContext.setDataMap(dataMap);
@@ -93,8 +93,9 @@ public class MxFormArchiveServiceImpl implements FormArchiveService {
 		formContext.setFormDefinition(formDefinition);
 
 		if (StringUtils.isNotEmpty(businessKey)) {
-			dataModel = MxFormContainer.getContainer().getDataModel(
-					formContext, businessKey);
+			dataModel = MxFormContainer.getContainer()
+					.getDataModelByBusinessKey(formApplication.getId(),
+							businessKey);
 		}
 
 		if (dataModel != null
@@ -109,8 +110,7 @@ public class MxFormArchiveServiceImpl implements FormArchiveService {
 				}
 			}
 
-			DataFile blob = blobService
-					.getMaxBlob(dataModel.getBusinessKey());
+			DataFile blob = blobService.getMaxBlob(dataModel.getBusinessKey());
 			if (blob != null && blob.getData() != null) {
 				InputStream is = new BufferedInputStream(
 						new ByteArrayInputStream(blob.getData()));

@@ -24,8 +24,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import javax.persistence.*;
-
-import com.alibaba.fastjson.JSONException;
+ 
 import com.alibaba.fastjson.JSONObject;
 
 import com.glaf.form.core.context.FormContext;
@@ -90,9 +89,6 @@ public class FormDefinition extends GraphElement {
 
 	@Transient
 	protected List<FormScript> scripts = null;
-
-	@Column(name = "TABLENAME_")
-	protected String tableName;
 
 	@Transient
 	protected byte[] templateData;
@@ -250,10 +246,6 @@ public class FormDefinition extends GraphElement {
 		return supportedEventTypes;
 	}
 
-	public String getTableName() {
-		return tableName;
-	}
-
 	@Transient
 	public byte[] getTemplateData() {
 		return templateData;
@@ -392,10 +384,6 @@ public class FormDefinition extends GraphElement {
 		this.scripts = scripts;
 	}
 
-	public void setTableName(String tableName) {
-		this.tableName = tableName;
-	}
-
 	public void setTemplateData(byte[] templateData) {
 		this.templateData = templateData;
 	}
@@ -428,7 +416,7 @@ public class FormDefinition extends GraphElement {
 		this.y = y;
 	}
 
-	public JSONObject toJsonObject() throws JSONException {
+	public JSONObject toJsonObject()   {
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("id", id);
 		jsonObject.put("name", name);
@@ -442,9 +430,6 @@ public class FormDefinition extends GraphElement {
 		}
 		if (templateName != null) {
 			jsonObject.put("templateName", templateName);
-		}
-		if (tableName != null) {
-			jsonObject.put("tableName", tableName);
 		}
 
 		return jsonObject;

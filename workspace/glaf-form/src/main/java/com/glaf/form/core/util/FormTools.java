@@ -41,7 +41,7 @@ import com.glaf.form.core.graph.node.SelectNode;
 import com.glaf.form.core.graph.node.TextAreaNode;
 import com.glaf.form.core.graph.node.TextFieldNode;
 import com.glaf.form.core.graph.node.TimestampFieldNode;
-import com.glaf.core.base.BaseDataModel;
+import com.glaf.core.base.DataModel;
 import com.glaf.core.base.ColumnModel;
 import com.glaf.core.util.*;
 
@@ -49,7 +49,7 @@ public final class FormTools {
 	protected final static Log logger = LogFactory.getLog(FormTools.class);
 
 	public static Map<String, Object> distill(FormDefinition formDefinition,
-			BaseDataModel formModel) {
+			DataModel formModel) {
 		Map<String, Object> dataMap = new HashMap<String, Object>();
 		List<FormNode> nodes = formDefinition.getNodes();
 		if (nodes != null && nodes.size() > 0) {
@@ -199,7 +199,7 @@ public final class FormTools {
 	}
 
 	public static Map<String, Object> distill(Map<String, String> params,
-			FormDefinition formDefinition, BaseDataModel formModel) {
+			FormDefinition formDefinition, DataModel formModel) {
 		Map<String, Object> dataMap = new HashMap<String, Object>();
 		List<FormNode> nodes = formDefinition.getNodes();
 		if (nodes != null && nodes.size() > 0) {
@@ -350,7 +350,7 @@ public final class FormTools {
 	}
 
 	public static Map<String, Object> distill(HttpServletRequest request,
-			FormDefinition formDefinition, BaseDataModel formModel) {
+			FormDefinition formDefinition, DataModel formModel) {
 		Map<String, Object> dataMap = new HashMap<String, Object>();
 		List<FormNode> nodes = formDefinition.getNodes();
 		if (nodes != null && nodes.size() > 0) {

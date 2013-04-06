@@ -23,8 +23,7 @@ import org.apache.commons.lang.StringUtils;
 
 import com.glaf.core.base.FieldDefinition;
 import com.glaf.core.util.*;
-
-import com.glaf.form.core.graph.def.FormDefinition;
+ 
 import com.glaf.form.core.graph.def.FormNode;
 import com.glaf.form.core.graph.node.PersistenceNode;
 
@@ -50,14 +49,7 @@ public final class FormPersistenceUtil {
 		return false;
 	}
 
-	public static String getTableName(FormDefinition formDefinition) {
-		String tableName = formDefinition.getTableName();
-		if (StringUtils.isEmpty(tableName)) {
-			tableName = FormConstants.FORM_APP_TABLE_PREFIX
-					+ formDefinition.getName().toUpperCase();
-		}
-		return tableName;
-	}
+	 
 
 	public static boolean isPersistField(FormNode formNode) {
 		if (!(formNode instanceof PersistenceNode)) {

@@ -29,18 +29,20 @@ import com.glaf.core.util.Paging;
 
 @Transactional(readOnly = true)
 public interface ITableDataService {
-	
+
 	/**
 	 * 删除数据
+	 * 
 	 * @param model
 	 */
 	@Transactional
 	void deleteTableData(TableModel model);
 
 	List<Dbid> getAllDbids();
-	
+
 	/**
 	 * 更新序列
+	 * 
 	 * @param rows
 	 */
 	@Transactional
@@ -55,15 +57,6 @@ public interface ITableDataService {
 	 * @return
 	 */
 	Paging getPageData(int pageNo, int pageSize, TableModel model);
-
-	/**
-	 * 根据主键获取记录
-	 * 
-	 * @param id
-	 * @return
-	 */
-	@Transactional(readOnly = true)
-	List<Map<String, Object>> getTableDataByPrimaryKey(Object id);
 
 	/**
 	 * 批量插入数据
@@ -81,7 +74,7 @@ public interface ITableDataService {
 	 */
 	@Transactional
 	void insertTableData(String tableName, List<Map<String, Object>> rows);
-	
+
 	/**
 	 * 插入一条记录
 	 * 

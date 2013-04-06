@@ -124,6 +124,10 @@ public class FormApplication implements Serializable {
 	protected String releaseFlag = null;
 
 	@Basic
+	@Column(name = "TABLENAME_")
+	protected String tableName = null;
+
+	@Basic
 	@Column(name = "TITLE_")
 	protected String title = null;
 
@@ -306,6 +310,10 @@ public class FormApplication implements Serializable {
 		return releaseFlag;
 	}
 
+	public String getTableName() {
+		return tableName;
+	}
+
 	public String getTitle() {
 		return title;
 	}
@@ -416,6 +424,10 @@ public class FormApplication implements Serializable {
 
 	public void setReleaseFlag(String releaseFlag) {
 		this.releaseFlag = releaseFlag;
+	}
+
+	public void setTableName(String tableName) {
+		this.tableName = tableName;
 	}
 
 	public void setTitle(String title) {

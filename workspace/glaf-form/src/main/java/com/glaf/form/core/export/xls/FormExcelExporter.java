@@ -28,7 +28,7 @@ import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.util.CellRangeAddress;
 
-import com.glaf.core.base.BaseDataModel;
+import com.glaf.core.base.DataModel;
 import com.glaf.form.core.context.FormContext;
 import com.glaf.form.core.dataimport.MxFormDataImport;
 import com.glaf.form.core.dataimport.MxFormDataImportFactory;
@@ -41,7 +41,7 @@ public class FormExcelExporter {
 	protected final static Log logger = LogFactory
 			.getLog(FormExcelExporter.class);
 
-	public HSSFWorkbook export(BaseDataModel dataModel,
+	public HSSFWorkbook export(DataModel dataModel,
 			FormContext formContext) {
 		HSSFWorkbook wb = new HSSFWorkbook();
 		FormDefinition formDefinition = formContext.getFormDefinition();

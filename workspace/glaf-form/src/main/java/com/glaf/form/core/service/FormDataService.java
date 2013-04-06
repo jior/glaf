@@ -22,9 +22,10 @@ import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import com.glaf.core.base.BaseDataModel;
+import com.glaf.core.base.DataModel;
 import com.glaf.core.query.DataModelQuery;
 import com.glaf.core.util.Paging;
+
 import com.glaf.form.core.context.FormContext;
 import com.glaf.form.core.graph.def.FormApplication;
 import com.glaf.form.core.graph.def.FormDefinition;
@@ -45,11 +46,11 @@ public interface FormDataService {
 	/**
 	 * 删除表单实例数据
 	 * 
-	 * @param formName
+	 * @param appId
 	 * @param businessKeys
 	 */
 	@Transactional
-	void deleteDataModel(String formName, Collection<String> businessKeys);
+	void deleteDataModel(String appId, Collection<String> businessKeys);
 
 	/**
 	 * 删除表单应用实例
@@ -74,7 +75,16 @@ public interface FormDataService {
 	 * @param id
 	 * @return
 	 */
-	BaseDataModel getDataModel(FormContext formContext, String id);
+	DataModel getDataModel(String appId, Long id);
+	
+	/**
+	 * 根据表单实例编号获取表单实例数据
+	 * 
+	 * @param formContext
+	 * @param businessKey
+	 * @return
+	 */
+	DataModel getDataModelByBusinessKey(String appId, String businessKey);
 
 	/**
 	 * 根据表单实例编号获取表单实例数据
@@ -83,7 +93,7 @@ public interface FormDataService {
 	 * @param id
 	 * @return
 	 */
-	BaseDataModel getDataModel(String app_name, String id);
+	DataModel getDataModelByAppName(String app_name, Long id);
 
 	/**
 	 * 根据编号获取应用定义信息
@@ -130,7 +140,7 @@ public interface FormDataService {
 	/**
 	 * 根据参数获取实例数据列表
 	 * 
-	 * @param formContext
+	 * @param appId
 	 *            表单上下文
 	 * @param loginContext
 	 *            用户上下文
@@ -138,7 +148,7 @@ public interface FormDataService {
 	 *            查询上下文
 	 * @return
 	 */
-	Paging getPageDataModel(FormContext formContext, DataModelQuery query);
+	Paging getPageDataModel(String appId, DataModelQuery query);
 
 	Paging getPageFormDefinition(FormDefinitionQuery query);
 
@@ -150,7 +160,7 @@ public interface FormDataService {
 	 * @param formContext
 	 */
 	@Transactional
-	void saveDataModel(FormContext formContext);
+	void saveDataModel(String appId, FormContext formContext);
 
 	/**
 	 * 保存表单应用信息
@@ -186,6 +196,6 @@ public interface FormDataService {
 	 * @param formContext
 	 */
 	@Transactional
-	void updateDataModel(FormContext formContext);
+	void updateDataModel(String appId, FormContext formContext);
 
 }

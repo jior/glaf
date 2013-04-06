@@ -117,10 +117,7 @@ public class MxTableDataServiceImpl implements ITableDataService {
 		return page;
 	}
 
-	@Transactional(readOnly = true)
-	public List<Map<String, Object>> getTableDataByPrimaryKey(Object id) {
-		return tableDataMapper.getTableDataByPrimaryKey(id);
-	}
+	 
 
 	@Transactional(readOnly = true)
 	public List<Map<String, Object>> getTablePrimaryKeyMap(String tableName,

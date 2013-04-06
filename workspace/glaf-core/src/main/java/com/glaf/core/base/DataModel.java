@@ -19,11 +19,12 @@
 package com.glaf.core.base;
 
 import java.util.Date;
+import java.util.Map;
+
 import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public interface DataModel {
-
-	String getActorId();
 
 	String getBusinessKey();
 
@@ -37,15 +38,7 @@ public interface DataModel {
 
 	Long getId();
 
-	int getLevel();
-
-	int getListNo();
-
-	String getName();
-
-	String getObjectId();
-
-	String getObjectValue();
+	int getLocked();
 
 	Long getParentId();
 
@@ -53,15 +46,11 @@ public interface DataModel {
 
 	String getProcessName();
 
-	String getSignForFlag();
-
 	int getStatus();
 
 	String getSubject();
 
-	String getTreeId();
-
-	String getTypeId();
+	String getTableName();
 
 	String getUpdateBy();
 
@@ -71,18 +60,42 @@ public interface DataModel {
 
 	void setBusinessKey(String businessKey);
 
+	void setCreateBy(String createBy);
+
+	void setCreateDate(Date createDate);
+
+	void setDeleteFlag(int deleteFlag);
+
+	void setFormName(String formName);
+
 	void setId(Long id);
 
-	void setLevel(int level);
+	void setLocked(int locked);
 
-	void setListNo(int listNo);
-
-	void setName(String name);
+	Map<String, ColumnModel> getFields();
+	
+	Map<String, Object> getDataMap();
 
 	void setParentId(Long parentId);
 
-	void setTreeId(String treeId);
+	void setProcessInstanceId(String processInstanceId);
+
+	void setProcessName(String processName);
+
+	void setStatus(int status);
+
+	void setSubject(String subject);
+
+	void setTableName(String tableName);
+
+	void setUpdateBy(String updateBy);
+
+	void setUpdateDate(Date updateDate);
+
+	void setWfStatus(int wfStatus);
 
 	JSONObject toJsonObject();
+
+	ObjectNode toObjectNode();
 
 }

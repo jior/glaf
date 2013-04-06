@@ -31,8 +31,9 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.glaf.core.base.BaseDataModel;
+import com.glaf.core.base.DataModel;
 import com.glaf.core.identity.User;
+
 import com.glaf.core.query.DataModelQuery;
 import com.glaf.core.security.IdentityFactory;
 import com.glaf.core.security.LoginContext;
@@ -74,7 +75,7 @@ public class MxFormXmlServiceImpl implements FormXmlService {
 		query.setLoginContext(loginContext);
 		Map<String, User> userMap = IdentityFactory.getUserMap();
 		Paging page = MxFormContainer.getContainer().getPageDataModel(
-				formContext, query);
+				formApplication.getId(), query);
 		Map<String, Object> rowMap = new HashMap<String, Object>();
 		Document doc = DocumentHelper.createDocument();
 		Element root = doc.addElement("List");
@@ -103,12 +104,11 @@ public class MxFormXmlServiceImpl implements FormXmlService {
 
 		List<Object> rows = page.getRows();
 		for (Object object : rows) {
-			if (object instanceof BaseDataModel) {
-				BaseDataModel dataModel = (BaseDataModel) object;
+			if (object instanceof DataModel) {
+				DataModel dataModel = (DataModel) object;
 				Element element = root.addElement("Row");
 				element.addAttribute("id", String.valueOf(dataModel.getId()));
-				element.addAttribute("businessKey",
-						dataModel.getBusinessKey());
+				element.addAttribute("businessKey", dataModel.getBusinessKey());
 				rowMap.clear();
 				rowMap = Tools.getDataMap(dataModel);
 				if (dataModel.getDataMap() != null) {

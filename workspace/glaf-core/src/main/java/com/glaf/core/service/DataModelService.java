@@ -23,9 +23,8 @@ import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import com.glaf.core.base.DataModelEntity;
+import com.glaf.core.base.DataModel;
 import com.glaf.core.query.DataModelQuery;
-import com.glaf.core.util.Paging;
 
 @Transactional(readOnly = true)
 public interface DataModelService {
@@ -40,13 +39,22 @@ public interface DataModelService {
 	void deleteAll(String tableName, Collection<String> businessKeys);
 
 	/**
+	 * 根据主键删除记录
+	 * 
+	 * @param tableName
+	 * @param rowIds
+	 */
+	@Transactional
+	void deleteAllById(String tableName, Collection<Long> rowIds);
+
+	/**
 	 * 获取数据模型对象
 	 * 
 	 * @param tableName
 	 * @param id
 	 * @return
 	 */
-	DataModelEntity getDataModel(String tableName, Long id);
+	DataModel getDataModel(String tableName, Long id);
 
 	/**
 	 * 获取数据模型对象
@@ -55,8 +63,7 @@ public interface DataModelService {
 	 * @param businessKey
 	 * @return
 	 */
-	DataModelEntity getDataModelByBusinessKey(String tableName,
-			String businessKey);
+	DataModel getDataModelByBusinessKey(String tableName, String businessKey);
 
 	/**
 	 * 获取数据模型对象
@@ -65,7 +72,7 @@ public interface DataModelService {
 	 * @param processInstanceId
 	 * @return
 	 */
-	DataModelEntity getDataModelByProcessInstanceId(String tableName,
+	DataModel getDataModelByProcessInstanceId(String tableName,
 			String processInstanceId);
 
 	/**
@@ -77,37 +84,12 @@ public interface DataModelService {
 	int getDataModelCount(DataModelQuery query);
 
 	/**
-	 * 获取数据对象及级联对象
-	 * 
-	 * @param tableName
-	 * @param id
-	 * @return
-	 */
-	DataModelEntity getDataModelWithAll(String tableName, Long id);
-
-	/**
-	 * 获取一页数据实例
-	 * 
-	 * @param query
-	 * @return
-	 */
-	Paging getPageDataModels(DataModelQuery query);
-
-	/**
 	 * 保存数据对象实体
 	 * 
-	 * @param dataModelEntity
+	 * @param dataModel
 	 */
 	@Transactional
-	void insert(DataModelEntity dataModelEntity);
-
-	/**
-	 * 查询数据对象
-	 * 
-	 * @param query
-	 * @return
-	 */
-	List<DataModelEntity> list(DataModelQuery query);
+	void insert(DataModel dataModel);
 
 	/**
 	 * 获取一页数据对象
@@ -117,14 +99,14 @@ public interface DataModelService {
 	 * @param query
 	 * @return
 	 */
-	List<DataModelEntity> list(int pageNo, int pageSize, DataModelQuery query);
+	List<DataModel> list(int pageNo, int pageSize, DataModelQuery query);
 
 	/**
 	 * 更新数据对象
 	 * 
-	 * @param dataModelEntity
+	 * @param dataModel
 	 */
 	@Transactional
-	void update(DataModelEntity dataModelEntity);
+	void update(DataModel dataModel);
 
 }

@@ -28,8 +28,10 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.glaf.core.base.BaseDataModel;
+ 
+import com.glaf.core.base.DataModel;
 import com.glaf.core.identity.User;
+ 
 import com.glaf.core.query.DataModelQuery;
 import com.glaf.core.security.IdentityFactory;
 import com.glaf.core.security.LoginContext;
@@ -77,13 +79,13 @@ public class MxFormJsonServiceImpl implements FormJsonService {
 		query.setLoginContext(loginContext);
 		Map<String, User> userMap = IdentityFactory.getUserMap();
 		Paging page = MxFormContainer.getContainer().getPageDataModel(
-				formContext, query);
+				formApplication.getId(), query);
 
 		List<Object> list = new ArrayList<Object>();
 		List<Object> rows = page.getRows();
 		for (Object object : rows) {
-			if (object instanceof BaseDataModel) {
-				BaseDataModel dataModel = (BaseDataModel) object;
+			if (object instanceof  DataModel) {
+				 DataModel dataModel = ( DataModel) object;
 				Map<String, Object> rowMap = Tools.getDataMap(dataModel);
 				if (dataModel.getDataMap() != null) {
 					rowMap.putAll(dataModel.getDataMap());

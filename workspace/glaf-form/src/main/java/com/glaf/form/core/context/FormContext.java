@@ -38,7 +38,7 @@ public class FormContext {
 	protected FormApplication formApplication = null;
 	protected FormDefinition formDefinition = null;
 	protected LoginContext loginContext;
-	protected BaseDataModel dataModel = null;
+	protected DataModel dataModel = null;
 	protected ProcessContext processContext = null;
 	protected String resourceId = null;
 
@@ -108,7 +108,7 @@ public class FormContext {
 		return dataMap;
 	}
 
-	public BaseDataModel getDataModel() {
+	public DataModel getDataModel() {
 		return dataModel;
 	}
 
@@ -172,7 +172,7 @@ public class FormContext {
 		this.dataMap = dataMap;
 	}
 
-	public void setDataModel(BaseDataModel dataModel) {
+	public void setDataModel(DataModel dataModel) {
 		this.dataModel = dataModel;
 	}
 

@@ -48,7 +48,8 @@ import com.glaf.form.core.util.FdlConverter;
 import com.glaf.form.core.util.FormTools;
 import com.glaf.form.core.xml.FormApplicationReader;
 
-import com.glaf.core.base.BaseDataModel;
+import com.glaf.core.base.DataModel;
+import com.glaf.core.base.DataModelEntity;
 
 import com.glaf.core.config.SystemProperties;
 import com.glaf.core.context.ContextFactory;
@@ -426,7 +427,7 @@ public class MxFormArchiveImporter {
 					todo.setXb(6);
 					todo.setProcessName(formApplication.getProcessName());
 					todo.setProvider("jbpm");
-					todo.setLink("/Form.do?businessKey=${businessKey}&x_method=view&app_name="
+					todo.setLink("/mx/form?businessKey=${businessKey}&x_method=view&app_name="
 							+ formApplication.getName());
 					todo.setListLink("/mx/form/formList?taskType=running&app_name="
 							+ formApplication.getName()
@@ -489,11 +490,13 @@ public class MxFormArchiveImporter {
 						String businessKey = element
 								.attributeValue("businessKey");
 						if (businessKey != null) {
-							if (MxFormContainer.getContainer().getDataModel(
-									formContext, businessKey) != null) {
+							if (MxFormContainer.getContainer()
+									.getDataModelByBusinessKey(
+											formApplication.getId(),
+											businessKey) != null) {
 								continue;
 							}
-							BaseDataModel dataModel = new BaseDataModel();
+							DataModel dataModel = new DataModelEntity();
 							Map<String, String> params = new HashMap<String, String>();
 							List<?> fields = element.elements();
 							if (fields != null && fields.size() > 0) {
@@ -516,21 +519,18 @@ public class MxFormArchiveImporter {
 								logger.debug("dataMap:" + dataMap);
 							}
 							dataModel.setBusinessKey(businessKey);
-							if (params.get("actorId") != null) {
-								dataModel.setActorId(params.get("actorId")
-										.toString());
-							}
+
 							if (params.get("createBy") != null) {
 								dataModel.setCreateBy(params.get("createBy")
 										.toString());
 							}
 							if (params.get("status") != null) {
-								dataModel.setStatus(Integer.valueOf(params
-										.get("status").toString()));
+								dataModel.setStatus(Integer.valueOf(params.get(
+										"status").toString()));
 							}
 							if (params.get("wfStatus") != null) {
-								dataModel.setStatus(Integer.valueOf(params
-										.get("wfStatus").toString()));
+								dataModel.setStatus(Integer.valueOf(params.get(
+										"wfStatus").toString()));
 							}
 
 							formContext.setDataModel(dataModel);
@@ -538,7 +538,7 @@ public class MxFormArchiveImporter {
 							formContext.getDataMap().putAll(dataMap);
 
 							MxFormContainer.getContainer().saveDataModel(
-									formContext);
+									formApplication.getId(), formContext);
 
 						}
 					}

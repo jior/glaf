@@ -1,21 +1,20 @@
-
 /*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.glaf.form.core.archives;
 
 import java.io.*;
@@ -38,8 +37,10 @@ import com.glaf.core.base.*;
 import com.glaf.core.context.ContextFactory;
 
 import com.glaf.core.identity.User;
+
 import com.glaf.core.query.DataModelQuery;
 import com.glaf.core.security.IdentityFactory;
+import com.glaf.core.security.LoginContext;
 
 import com.glaf.core.todo.Todo;
 import com.glaf.core.util.*;
@@ -229,7 +230,7 @@ public class MxFormArchiveExporter {
 							todo.setProcessName(formApplication
 									.getProcessName());
 							todo.setProvider("jbpm");
-							todo.setLink("/Form.do?businessKey=${businessKey}&x_method=view&app_name="
+							todo.setLink("/mx/form?businessKey=${businessKey}&x_method=view&app_name="
 									+ formApplication.getName());
 							todo.setListLink("/mx/form/formList?taskType=running&app_name="
 									+ formApplication.getName()
@@ -287,17 +288,15 @@ public class MxFormArchiveExporter {
 			}
 
 			if (dataFlag) {
-				// LoginContext loginContext = new LoginContext();
-				// loginContext.addRole(LoginContext.SENIOR_MANAGER);
-				// loginContext.addRole(LoginContext.SYSTEM_ADMINISTRATOR);
+				LoginContext loginContext = new LoginContext();
 				DataModelQuery query = new DataModelQuery();
 				query.setPageNo(1);
 				query.setPageSize(50000);
-				// query.setLoginContext(loginContext);
+				query.setLoginContext(loginContext);
 				formContext.setFormApplication(formApplication);
 
 				Paging jpage = MxFormContainer.getContainer().getPageDataModel(
-						formContext, query);
+						formApplication.getId(), query);
 				List<Object> rows = jpage.getRows();
 				if (rows != null && rows.size() > 0) {
 					List<Object> list = new ArrayList<Object>();
@@ -309,8 +308,8 @@ public class MxFormArchiveExporter {
 					while (iterator.hasNext()) {
 						Object object = iterator.next();
 						Map<String, Object> dataMap = null;
-						if (object instanceof BaseDataModel) {
-							BaseDataModel dataModel = (BaseDataModel) object;
+						if (object instanceof DataModel) {
+							DataModel dataModel = (DataModel) object;
 							dataMap = dataModel.getDataMap();
 						} else {
 							dataMap = Tools.getDataMap(object);
@@ -329,8 +328,8 @@ public class MxFormArchiveExporter {
 										.toString());
 							}
 							if (dataMap.get("businessKey") != null) {
-								elem.addAttribute("businessKey", dataMap.get("businessKey")
-										.toString());
+								elem.addAttribute("businessKey",
+										dataMap.get("businessKey").toString());
 							}
 							if (dataMap.get("resourceId") != null) {
 								elem.addAttribute("resourceId",

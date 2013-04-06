@@ -42,7 +42,8 @@ import com.glaf.form.core.graph.node.SelectNode;
 import com.glaf.form.core.graph.node.TextAreaNode;
 import com.glaf.form.core.graph.node.TextFieldNode;
 import com.glaf.form.core.graph.node.TimestampFieldNode;
-import com.glaf.core.base.BaseDataModel;
+import com.glaf.core.base.DataModel;
+
 import com.glaf.core.util.DateUtils;
 import com.glaf.core.util.ReflectUtils;
 import com.glaf.core.util.StringTools;
@@ -55,7 +56,7 @@ public class EntityAssembly {
 		FormDefinition formDefinition = formContext.getFormDefinition();
 		Map<String, Object> persistMap = new HashMap<String, Object>();
 		Map<String, Object> dataMap = formContext.getDataMap();
-		BaseDataModel dataModel = formContext.getDataModel();
+		DataModel dataModel = formContext.getDataModel();
 		if (isCreate) {
 			persistMap.put("id", dataModel.getId());
 			persistMap.put("businessKey", dataModel.getBusinessKey());

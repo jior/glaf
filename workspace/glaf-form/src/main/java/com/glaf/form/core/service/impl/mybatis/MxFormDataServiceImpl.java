@@ -34,7 +34,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.glaf.core.base.BaseDataModel;
+import com.glaf.core.base.DataModel;
 import com.glaf.core.base.DataModelEntity;
 import com.glaf.core.base.ColumnModel;
 import com.glaf.core.cache.CacheFactory;
@@ -50,7 +50,6 @@ import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.SearchFilter;
 import com.glaf.core.util.Tools;
 
-import com.glaf.form.FormException;
 import com.glaf.form.core.context.FormContext;
 import com.glaf.form.core.graph.def.FormApplication;
 import com.glaf.form.core.graph.def.FormDefinition;
@@ -88,21 +87,15 @@ public class MxFormDataServiceImpl implements FormDataService {
 
 	@Transactional
 	public void deleteAllFormDefinitions(String formName) {
-		List<FormDefinition> formDefinitions = this
-				.getFormDefinitions(formName);
-		Iterator<FormDefinition> iterator = formDefinitions.iterator();
-		while (iterator.hasNext()) {
-			FormDefinition formDefinition = iterator.next();
-			formDefinitionMapper.deleteFormDefinitionById(formDefinition
-					.getId());
-		}
+
 	}
 
 	@Transactional
-	public void deleteDataModel(String formName, Collection<String> businessKeys) {
-		FormDefinition formDefinition = this.getLatestFormDefinition(formName);
-		if (formDefinition != null) {
-
+	public void deleteDataModel(String appId, Collection<String> businessKeys) {
+		FormApplication formApplication = this.getFormApplication(appId);
+		if (formApplication != null && formApplication.getTableName() != null) {
+			dataModelService.deleteAll(formApplication.getTableName(),
+					businessKeys);
 		}
 	}
 
@@ -137,33 +130,37 @@ public class MxFormDataServiceImpl implements FormDataService {
 		return list;
 	}
 
-	public BaseDataModel getDataModel(FormContext formContext, String id) {
-		FormDefinition formDefinition = formContext.getFormDefinition();
-		if (formDefinition != null) {
-
+	public DataModel getDataModel(String appId, Long id) {
+		FormApplication formApplication = this.getFormApplication(appId);
+		if (formApplication != null && formApplication.getTableName() != null) {
+			return dataModelService.getDataModel(
+					formApplication.getTableName(), id);
 		}
 		return null;
 	}
 
-	public BaseDataModel getDataModel(String app_name, String id) {
+	public DataModel getDataModelByAppName(String app_name, Long id) {
 		FormApplication formApplication = this
 				.getFormApplicationByName(app_name);
-		FormDefinition formDefinition = this
-				.getLatestFormDefinition(formApplication.getFormName());
-		FormContext formContext = new FormContext();
-		formContext.setFormApplication(formApplication);
-		formContext.setFormDefinition(formDefinition);
-		BaseDataModel dataModel = null;
-		try {
-			dataModel = this.getDataModel(formContext, id);
+		DataModel dataModel = null;
+		if (formApplication != null && formApplication.getTableName() != null) {
+			dataModel = this.getDataModel(formApplication.getTableName(), id);
 			return dataModel;
-		} catch (Exception ex) {
-			throw new FormException(ex, 1001);
 		}
+		return null;
+	}
+
+	public DataModel getDataModelByBusinessKey(String appId, String businessKey) {
+		FormApplication formApplication = this.getFormApplication(appId);
+		if (formApplication != null && formApplication.getTableName() != null) {
+			return dataModelService.getDataModelByBusinessKey(
+					formApplication.getTableName(), businessKey);
+		}
+		return null;
 	}
 
 	public FormApplication getFormApplication(String appId) {
-		String cacheKey = "x_form_app_" + appId;
+		String cacheKey = "form_app_" + appId;
 		if (CacheFactory.get(cacheKey) != null) {
 			return (FormApplication) CacheFactory.get(cacheKey);
 		}
@@ -174,7 +171,7 @@ public class MxFormDataServiceImpl implements FormDataService {
 	}
 
 	public FormApplication getFormApplicationByName(String name) {
-		String cacheKey = "x_form_app_" + name;
+		String cacheKey = "form_app_" + name;
 		if (CacheFactory.get(cacheKey) != null) {
 			return (FormApplication) CacheFactory.get(cacheKey);
 		}
@@ -267,9 +264,10 @@ public class MxFormDataServiceImpl implements FormDataService {
 	}
 
 	@SuppressWarnings("unchecked")
-	public Paging getPageDataModel(FormContext formContext, DataModelQuery query) {
+	public Paging getPageDataModel(String appId, DataModelQuery query) {
 		LoginContext loginContext = query.getLoginContext();
-		FormDefinition formDefinition = formContext.getFormDefinition();
+		FormApplication formApplication = this.getFormApplication(appId);
+		query.setTableName(formApplication.getTableName());
 
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		if (query.getParameter() != null) {
@@ -325,7 +323,6 @@ public class MxFormDataServiceImpl implements FormDataService {
 		query.setLoginContext(loginContext);
 		query.setPageNo(query.getPageNo());
 		query.setPageSize(query.getPageSize());
-		query.setServiceKey(formDefinition.getName());
 
 		Set<Entry<String, Object>> entrySet = paramMap.entrySet();
 		for (Entry<String, Object> entry : entrySet) {
@@ -396,7 +393,7 @@ public class MxFormDataServiceImpl implements FormDataService {
 	}
 
 	@Transactional
-	public void saveDataModel(FormContext formContext) {
+	public void saveDataModel(String appId, FormContext formContext) {
 		EntityAssembly assembly = new EntityAssembly();
 		Map<String, Object> persistMap = assembly.assemble(formContext, null,
 				true);
@@ -533,21 +530,18 @@ public class MxFormDataServiceImpl implements FormDataService {
 		this.sqlSession = sqlSession;
 	}
 
-	protected BaseDataModel toDataModel(FormDefinition formDefinition,
+	protected DataModel toDataModel(FormDefinition formDefinition,
 			DataModelEntity dataModelEntity) {
-		BaseDataModel dataModel = new BaseDataModel();
-		dataModel.setActorId(dataModelEntity.getCreateBy());
+		DataModelEntity dataModel = new DataModelEntity();
 		dataModel.setCreateBy(dataModelEntity.getCreateBy());
 		dataModel.setCreateDate(dataModelEntity.getCreateDate());
 		dataModel.setDeleteFlag(dataModelEntity.getDeleteFlag());
 		dataModel.setFormName(dataModelEntity.getFormName());
 		dataModel.setId(dataModelEntity.getId());
 		dataModel.setBusinessKey(dataModelEntity.getBusinessKey());
-		dataModel.setObjectId(dataModelEntity.getObjectId());
-		dataModel.setObjectValue(dataModelEntity.getObjectValue());
+
 		dataModel.setParentId(dataModelEntity.getParentId());
-		dataModel
-				.setProcessInstanceId(dataModelEntity.getProcessInstanceId());
+		dataModel.setProcessInstanceId(dataModelEntity.getProcessInstanceId());
 		dataModel.setProcessName(dataModelEntity.getProcessName());
 		dataModel.setSubject(dataModelEntity.getSubject());
 		dataModel.setStatus(dataModelEntity.getStatus());
@@ -574,7 +568,7 @@ public class MxFormDataServiceImpl implements FormDataService {
 	}
 
 	@Transactional
-	public void updateDataModel(FormContext formContext) {
+	public void updateDataModel(String appId, FormContext formContext) {
 		EntityAssembly assembly = new EntityAssembly();
 		Map<String, Object> persistMap = assembly.assemble(formContext, null,
 				false);

@@ -143,7 +143,7 @@ public class TableModel implements java.io.Serializable {
 		columns.add(column);
 	}
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@SuppressWarnings({ "rawtypes" })
 	public void addColumn(String columnName, String javaType, Object value) {
 		if (columns == null) {
 			columns = new ArrayList<ColumnModel>();

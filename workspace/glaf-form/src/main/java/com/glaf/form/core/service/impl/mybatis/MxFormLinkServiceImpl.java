@@ -71,11 +71,6 @@ public class MxFormLinkServiceImpl implements FormLinkService {
 		formLinkMapper.deleteFormLinkById(id);
 	}
 
-	@Transactional
-	public void generateMenus() {
-
-	}
-
 	public List<FormApplication> getChildrenApplication(String app_name) {
 		List<FormLink> list = this.getFormLinks(app_name);
 		List<FormApplication> rows = new ArrayList<FormApplication>();
@@ -135,7 +130,7 @@ public class MxFormLinkServiceImpl implements FormLinkService {
 	}
 
 	public FormLink getFormLink(String applicationName, String childName) {
-		String cacheKey = "x_form_link_" + applicationName + "_" + childName;
+		String cacheKey = "form_link_" + applicationName + "_" + childName;
 		if (CacheFactory.get(cacheKey) != null) {
 			return (FormLink) CacheFactory.get(cacheKey);
 		}
@@ -153,7 +148,7 @@ public class MxFormLinkServiceImpl implements FormLinkService {
 
 	@SuppressWarnings("unchecked")
 	public List<FormLink> getFormLinks(String app_name) {
-		String cacheKey = "x_form_links_" + app_name;
+		String cacheKey = "form_links_" + app_name;
 		if (CacheFactory.get(cacheKey) != null) {
 			return (List<FormLink>) CacheFactory.get(cacheKey);
 		}
@@ -176,7 +171,7 @@ public class MxFormLinkServiceImpl implements FormLinkService {
 		formContext.setFormDefinition(formDefinition);
 
 		try {
-			return formDataService.getPageDataModel(formContext, query);
+			return formDataService.getPageDataModel(formApplication.getId(), query);
 		} catch (Exception ex) {
 			if (LogUtils.isDebug()) {
 				ex.printStackTrace();
@@ -197,10 +192,10 @@ public class MxFormLinkServiceImpl implements FormLinkService {
 			formLink.setId(idGenerator.getNextId());
 			formLinkMapper.insertFormLink(formLink);
 		} else {
-			String cacheKey = "x_form_link_" + formLink.getApplicationName()
+			String cacheKey = "form_link_" + formLink.getApplicationName()
 					+ "_" + formLink.getChildName();
 			CacheFactory.remove(cacheKey);
-			cacheKey = "x_form_links_" + formLink.getApplicationName();
+			cacheKey = "form_links_" + formLink.getApplicationName();
 			CacheFactory.remove(cacheKey);
 			formLinkMapper.updateFormLink(formLink);
 		}
@@ -208,7 +203,7 @@ public class MxFormLinkServiceImpl implements FormLinkService {
 
 	@Transactional
 	public void saveAll(String app_name, List<FormLink> rows) {
-		String cacheKey = "x_form_links_" + app_name;
+		String cacheKey = "form_links_" + app_name;
 		CacheFactory.remove(cacheKey);
 		formLinkMapper.deleteFormLinks(app_name);
 		for (FormLink model : rows) {
