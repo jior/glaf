@@ -90,7 +90,7 @@ public class MxJbpmProcessDeployer {
 								"yyyyMMddHHmmss", Locale.getDefault());
 						String ret = formatter.format(new Date());
 						String filename = SystemConfig.getConfigRootPath()
-								+ "/archives/" + processName + ret + ".zip";
+								+ "/deploy/" + processName + ret + ".zip";
 						// 保存原始文件
 						FileUtils.save(filename, zipBytes);
 					} catch (Exception ex) {
@@ -134,7 +134,7 @@ public class MxJbpmProcessDeployer {
 								"yyyyMMddHHmmss", Locale.getDefault());
 						String ret = formatter.format(new Date());
 						String filename = SystemConfig.getConfigRootPath()
-								+ "/archives/" + processName + ret
+								+ "/deploy/" + processName + ret
 								+ "_repack.zip";
 						// 保存修改过的流程定义文件
 						FileUtils.save(filename, newZipBytes);

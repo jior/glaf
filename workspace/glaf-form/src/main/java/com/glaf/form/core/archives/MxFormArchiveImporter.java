@@ -83,8 +83,8 @@ public class MxFormArchiveImporter {
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss",
 					Locale.getDefault());
 			String ret = formatter.format(new Date());
-			String filename = SystemProperties.getConfigRootPath()
-					+ "/archives/" + ret + ".jar";
+			String filename = SystemProperties.getConfigRootPath() + "/deploy/"
+					+ ret + ".jar";
 			FileUtils.save(filename, zipBytes);
 		} catch (Exception ex) {
 			if (LogUtils.isDebug()) {
