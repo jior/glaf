@@ -117,8 +117,6 @@ public class MxTableDataServiceImpl implements ITableDataService {
 		return page;
 	}
 
-	 
-
 	@Transactional(readOnly = true)
 	public List<Map<String, Object>> getTablePrimaryKeyMap(String tableName,
 			String columnName) {
@@ -189,17 +187,18 @@ public class MxTableDataServiceImpl implements ITableDataService {
 	}
 
 	@Transactional
-	public void saveAll(String tableName, Collection<TableModel> rows) {
+	public void saveAll(String tableName, String seqNo,
+			Collection<TableModel> rows) {
 		TableDefinition tableDefinition = tableDefinitionService
 				.getTableDefinition(tableName);
 		if (tableDefinition != null && tableDefinition.getIdColumn() != null
 				&& tableDefinition.getAggregationKeys() != null) {
-			this.saveAll(tableDefinition, rows);
+			this.saveAll(tableDefinition, seqNo, rows);
 		}
 	}
 
 	@Transactional
-	public void saveAll(TableDefinition tableDefinition,
+	public void saveAll(TableDefinition tableDefinition, String seqNo,
 			Collection<TableModel> rows) {
 		logger.debug("tableDefinition=" + tableDefinition);
 		logger.debug("idColumn=" + tableDefinition.getIdColumn().toString());
@@ -366,6 +365,9 @@ public class MxTableDataServiceImpl implements ITableDataService {
 										cell.setValue(idGenerator.getNextId());
 									}
 								}
+							}
+							if (Constants.SEQNO_EXPRESSION.equals(expr)) {
+								cell.setValue(seqNo);
 							}
 						}
 					}

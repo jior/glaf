@@ -70,7 +70,7 @@ public class CsvTextParser implements TextParser {
 
 		ITableDataService tableDataService = ContextFactory
 				.getBean("tableDataService");
-		tableDataService.saveAll(tableModel.getTableName(), rows);
+		tableDataService.saveAll(tableModel.getTableName(), null, rows);
 	}
 
 	public TableModel parseLine(TableModel tableModel, String line) {

@@ -90,7 +90,7 @@ public interface ITableDataService {
 	 * @param rows
 	 */
 	@Transactional
-	void saveAll(String tableName, Collection<TableModel> rows);
+	void saveAll(String tableName, String seqNo, Collection<TableModel> rows);
 
 	/**
 	 * 批量保存记录
@@ -99,7 +99,8 @@ public interface ITableDataService {
 	 * @param rows
 	 */
 	@Transactional
-	void saveAll(TableDefinition tableDefinition, Collection<TableModel> rows);
+	void saveAll(TableDefinition tableDefinition, String seqNo,
+			Collection<TableModel> rows);
 
 	/**
 	 * 批量新增或修改记录，如果存在，可以选择是否更新

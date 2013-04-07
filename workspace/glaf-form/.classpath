@@ -114,7 +114,7 @@
 	<classpathentry kind="lib" path="/glaf-core/lib/spring-batch-core.RELEASE.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/spring-batch-infrastructure.RELEASE.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/spring-batch-integration.RELEASE.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/spring-beans.RELEASE.jar" sourcepath="E:/dev/java/src/org.springframework.beans-sources-3.0.6.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/spring-beans.RELEASE.jar" />
 	<classpathentry kind="lib" path="/glaf-core/lib/spring-context-support.RELEASE.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/spring-context.RELEASE.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/spring-core.RELEASE.jar"/>

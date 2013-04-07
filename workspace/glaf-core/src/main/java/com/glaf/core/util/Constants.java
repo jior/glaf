@@ -77,6 +77,8 @@ public final class Constants {
 	public static final String ID_EXPRESSION = "#{id}";
 
 	public static final String NOW_EXPRESSION = "#{now}";
+	
+	public static final String SEQNO_EXPRESSION= "#{seqNo}";
 
 	public static final String CURRENT_YYYYMMDD_EXPRESSION = "#{curr_yyyymmdd}";
 

@@ -137,7 +137,7 @@ public class TextParserFacede {
 								inputStream);
 						if (rows != null && !rows.isEmpty()) {
 							getTableDataService().saveAll(
-									tableModel.getTableName(), rows);
+									tableModel.getTableName(), null, rows);
 							if (insert) {
 								dataFile.setStatus(9);
 								getBlobService().insertBlob(dataFile);
@@ -171,7 +171,7 @@ public class TextParserFacede {
 	 * @return
 	 */
 	public List<TableModel> parse(InputStream mappingFile,
-			InputStream dataFile, boolean saveToDB) {
+			InputStream dataFile, String seqNo, boolean saveToDB) {
 		List<TableModel> rows = null;
 		MetadataXmlReader reader = new MetadataXmlReader();
 		XmlMappingReader xmlReader = new XmlMappingReader();
@@ -218,7 +218,8 @@ public class TextParserFacede {
 				if (rows != null && !rows.isEmpty()) {
 					if (saveToDB) {
 						logger.info("save data to " + tableModel.getTableName());
-						getTableDataService().saveAll(tableDefinition, rows);
+						getTableDataService().saveAll(tableDefinition, seqNo,
+								rows);
 					}
 				}
 			}
@@ -241,7 +242,7 @@ public class TextParserFacede {
 	 * @return
 	 */
 	public List<TableModel> parse(String mappingFile, String dataFile,
-			boolean saveToDB) {
+			String seqNo, boolean saveToDB) {
 		MetadataXmlReader reader = new MetadataXmlReader();
 		XmlMappingReader xmlReader = new XmlMappingReader();
 		TableDefinition tableDefinition = null;
@@ -293,7 +294,8 @@ public class TextParserFacede {
 				if (rows != null && !rows.isEmpty()) {
 					if (saveToDB) {
 						logger.info("save data to " + tableModel.getTableName());
-						getTableDataService().saveAll(tableDefinition, rows);
+						getTableDataService().saveAll(tableDefinition, seqNo,
+								rows);
 					}
 				}
 				return rows;

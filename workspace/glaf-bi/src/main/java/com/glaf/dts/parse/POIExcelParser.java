@@ -19,16 +19,15 @@ import com.glaf.core.base.TableModel;
 import com.glaf.core.context.ContextFactory;
 
 public class POIExcelParser implements TextParser {
-	
-	protected final static Log logger = LogFactory
-			.getLog(POIExcelParser.class);
+
+	protected final static Log logger = LogFactory.getLog(POIExcelParser.class);
 
 	public static void main(String[] args) throws Exception {
 		String mappingFile = "./report/mapping/BaseData.mapping.xml";
 		String dataFile = "./report/data/BaseData.xls";
-        ContextFactory.hasBean("dataSource");
+		ContextFactory.hasBean("dataSource");
 		TextParserFacede parser = new TextParserFacede();
-		List<TableModel> rows = parser.parse(mappingFile, dataFile, true);
+		List<TableModel> rows = parser.parse(mappingFile, dataFile, null, true);
 		if (rows != null && !rows.isEmpty()) {
 			JSONArray array = new JSONArray();
 			for (TableModel model : rows) {
@@ -40,7 +39,8 @@ public class POIExcelParser implements TextParser {
 							jsonObject.put(col.getName(), col.getValue());
 						}
 						if (col.getColumnName() != null) {
-							jsonObject.put(col.getColumnName().toLowerCase(), col.getValue());
+							jsonObject.put(col.getColumnName().toLowerCase(),
+									col.getValue());
 						}
 					}
 				}
@@ -50,7 +50,8 @@ public class POIExcelParser implements TextParser {
 						jsonObject.put(col.getName(), col.getValue());
 					}
 					if (col.getColumnName() != null) {
-						jsonObject.put(col.getColumnName().toLowerCase(), col.getValue());
+						jsonObject.put(col.getColumnName().toLowerCase(),
+								col.getValue());
 					}
 				}
 				array.put(jsonObject);
@@ -86,9 +87,10 @@ public class POIExcelParser implements TextParser {
 				model.setAggregationKeys(metadata.getAggregationKeys());
 
 				int colCount = row.getPhysicalNumberOfCells();
-				//logger.info("column count="+colCount);
+				// logger.info("column count="+colCount);
 				for (ColumnModel cell : metadata.getColumns()) {
-					if (cell.getPosition() > 0 && cell.getPosition() <= colCount) {
+					if (cell.getPosition() > 0
+							&& cell.getPosition() <= colCount) {
 						HSSFCell hssfCell = row.getCell(cell.getPosition() - 1);
 						ColumnModel col = new ColumnModel();
 						col.setName(cell.getName());

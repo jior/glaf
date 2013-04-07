@@ -312,7 +312,7 @@ public class MxTransformThread implements java.lang.Runnable {
 			if (resultList != null && !resultList.isEmpty()
 					&& tableDefinition.getTableName() != null
 					&& tableDefinition.getAggregationKeys() != null) {
-				tableDataService.saveAll(tableDefinition, resultList);
+				tableDataService.saveAll(tableDefinition, null, resultList);
 			}
 
 			resultList.clear();

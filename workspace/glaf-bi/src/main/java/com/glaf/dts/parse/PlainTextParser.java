@@ -69,7 +69,7 @@ public class PlainTextParser implements TextParser {
 
 		ITableDataService tableDataService = ContextFactory
 				.getBean("tableDataService");
-		tableDataService.saveAll(tableModel.getTableName(), rows);
+		tableDataService.saveAll(tableModel.getTableName(), null, rows);
 	}
 
 	public void bubbleSort(ColumnModel[] array) {
