@@ -56,7 +56,7 @@
 		<jar jarfile="${project.distname}-src.zip">
 			<fileset dir="." includes="*.bat,*.xml, src/**/*.*,conf/**/*.*" excludes="**/*.cvs,**/*.bak,**/*.tmp,**/*.scc,**/*.svn" />
 		</jar>
-		<jar jarfile="${jarfile}" basedir="${classes.dir}" includes="**/*.class" excludes="**/test/**" />
+		<jar jarfile="${jarfile}" basedir="${classes.dir}" includes="com/**/*.class,com/**/*.properties,com/**/*.xml" excludes="**/test/**" />
 	</target>
 
 

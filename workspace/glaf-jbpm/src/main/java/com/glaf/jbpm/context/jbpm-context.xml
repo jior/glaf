@@ -10,7 +10,7 @@
 		<property name="mappingLocations">
 			<list>
 				<value>classpath:resources/sqlmap/mapping/**/*.xml</value>
-				<value>classpath:com/glaf/**/mapping/*.sqlmap.xml</value>
+				<value>classpath:com/glaf/jbpm/mapping/jbpm-task.sqlmap.xml</value>
 			</list>
 		</property>
 	</bean>
@@ -19,9 +19,9 @@
 		init-method="initialize">
 		<property name="sqlMapClient" ref="sqlMapClient" />
 	</bean>
-	
+
 	<bean id="sqlMapEntityService" class="com.glaf.jbpm.db.mybatis2.SqlMapEntityServiceImpl">
 		<property name="entityDAO" ref="sqlMapClientDAO" />
-	</bean> 
+	</bean>
 
 </beans>
