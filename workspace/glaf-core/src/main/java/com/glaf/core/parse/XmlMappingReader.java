@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.glaf.dts.parse;
+package com.glaf.core.parse;
 
 import java.util.Iterator;
 import java.util.List;

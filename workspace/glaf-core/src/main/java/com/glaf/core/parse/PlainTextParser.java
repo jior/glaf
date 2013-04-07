@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.glaf.dts.parse;
+package com.glaf.core.parse;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -39,7 +39,7 @@ import com.glaf.core.util.DBUtils;
 import com.glaf.core.util.IOUtils;
 import com.glaf.core.xml.MetadataXmlReader;
 
-public class PlainTextParser implements TextParser {
+public class PlainTextParser implements Parser {
 
 	public static void main(String[] args) throws Exception {
 		String mappingFile = "./report/mapping/ProductFact.mapping.xml";

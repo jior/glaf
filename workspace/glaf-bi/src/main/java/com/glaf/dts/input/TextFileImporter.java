@@ -27,8 +27,8 @@ import org.apache.commons.lang.StringUtils;
 import com.glaf.core.config.SystemConfig;
 import com.glaf.core.context.ContextFactory;
 import com.glaf.core.domain.SystemProperty;
+import com.glaf.core.parse.ParserFacede;
 import com.glaf.core.service.ISystemPropertyService;
-import com.glaf.dts.parse.TextParserFacede;
 
 public class TextFileImporter {
 
@@ -53,7 +53,7 @@ public class TextFileImporter {
 				dataDir = SystemConfig.getDataPath();
 			}
 
-			TextParserFacede facede = new TextParserFacede();
+			ParserFacede facede = new ParserFacede();
 			boolean success = false;
 			int retry = 0;
 			while (retry < 2 && !success) {

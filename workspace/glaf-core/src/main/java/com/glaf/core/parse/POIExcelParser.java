@@ -1,4 +1,4 @@
-package com.glaf.dts.parse;
+package com.glaf.core.parse;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -18,7 +18,7 @@ import com.glaf.core.base.ColumnModel;
 import com.glaf.core.base.TableModel;
 import com.glaf.core.context.ContextFactory;
 
-public class POIExcelParser implements TextParser {
+public class POIExcelParser implements Parser {
 
 	protected final static Log logger = LogFactory.getLog(POIExcelParser.class);
 
@@ -26,7 +26,7 @@ public class POIExcelParser implements TextParser {
 		String mappingFile = "./report/mapping/BaseData.mapping.xml";
 		String dataFile = "./report/data/BaseData.xls";
 		ContextFactory.hasBean("dataSource");
-		TextParserFacede parser = new TextParserFacede();
+		ParserFacede parser = new ParserFacede();
 		List<TableModel> rows = parser.parse(mappingFile, dataFile, null, true);
 		if (rows != null && !rows.isEmpty()) {
 			JSONArray array = new JSONArray();

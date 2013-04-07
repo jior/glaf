@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.glaf.dts.parse;
+package com.glaf.core.parse;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -50,14 +50,14 @@ import com.glaf.core.util.FileUtils;
 import com.glaf.core.util.UUID32;
 import com.glaf.core.xml.MetadataXmlReader;
 
-public class TextParserFacede {
+public class ParserFacede {
 	protected static final Log logger = LogFactory
-			.getLog(TextParserFacede.class);
+			.getLog(ParserFacede.class);
 
 	public static void main(String[] args) throws Exception {
 		String mappingDir = "./report/mapping";
 		String dataDir = "./report/data";
-		TextParserFacede facede = new TextParserFacede();
+		ParserFacede facede = new ParserFacede();
 		facede.process(mappingDir, dataDir);
 	}
 
@@ -82,7 +82,7 @@ public class TextParserFacede {
 	public void parse(File file, Set<String> prefixs,
 			Map<String, TableModel> tplMap) {
 		InputStream inputStream = null;
-		TextParser parser = null;
+		Parser parser = null;
 		boolean insert = false;
 		DataFile dataFile = getBlobService().getBlobByFilename(
 				file.getAbsolutePath());
@@ -118,7 +118,7 @@ public class TextParserFacede {
 				String parseClass = tableModel.getParseClass();
 				if (StringUtils.isNotEmpty(parseClass)) {
 					// 加载自定义的解析器
-					parser = (TextParser) ClassUtils
+					parser = (Parser) ClassUtils
 							.instantiateClass(parseClass);
 				} else {
 					String parseType = tableModel.getParseType();
@@ -195,13 +195,13 @@ public class TextParserFacede {
 			}
 		}
 
-		TextParser parser = null;
+		Parser parser = null;
 		try {
 			tableModel = xmlReader.read(mappingFile);
 			String parseClass = tableModel.getParseClass();
 			if (StringUtils.isNotEmpty(parseClass)) {
 				// 加载自定义的解析器
-				parser = (TextParser) ClassUtils.instantiateClass(parseClass);
+				parser = (Parser) ClassUtils.instantiateClass(parseClass);
 			} else {
 				String parseType = tableModel.getParseType();
 				if ("csv".equals(parseType)) {
@@ -268,14 +268,14 @@ public class TextParserFacede {
 		}
 
 		InputStream inputStream = null;
-		TextParser parser = null;
+		Parser parser = null;
 		try {
 			tableModel = xmlReader
 					.read(new java.io.FileInputStream(mappingFile));
 			String parseClass = tableModel.getParseClass();
 			if (StringUtils.isNotEmpty(parseClass)) {
 				// 加载自定义的解析器
-				parser = (TextParser) ClassUtils.instantiateClass(parseClass);
+				parser = (Parser) ClassUtils.instantiateClass(parseClass);
 			} else {
 				String parseType = tableModel.getParseType();
 				if ("csv".equals(parseType)) {

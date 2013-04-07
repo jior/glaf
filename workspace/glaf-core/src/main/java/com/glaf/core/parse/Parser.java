@@ -16,13 +16,13 @@
  * limitations under the License.
  */
 
-package com.glaf.dts.parse;
+package com.glaf.core.parse;
 
 import java.util.List;
 
 import com.glaf.core.base.TableModel;
 
-public interface TextParser {
+public interface Parser {
 
 	/**
 	 * 将数据流解析为数据模型
