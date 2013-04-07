@@ -29,7 +29,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name = "MX_UI_SKIN")
+@Table(name = "UI_SKIN")
 public class Skin implements Serializable {
 	private static final long serialVersionUID = 1L;
 

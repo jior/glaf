@@ -20,7 +20,7 @@
 
 	<insert id="insertActivityInstance" parameterType="com.glaf.activiti.model.ActivityInstance">
 		insert into
-		MX_ACT_ACTIVITY_INSTANCE (ID_, ACTORID_, PROCESSINSTANCEID_,EVENTNAME_,
+		EX_ACT_ACTIVITY_INSTANCE (ID_, ACTORID_, PROCESSINSTANCEID_,EVENTNAME_,
 		STATE_,
 		OUTCOME_, APPROVE_, OPINION_, CREATETIME_, ENDTIME_, TYPE_ )
 		values (
@@ -42,12 +42,12 @@
 	</insert>
 
 	<delete id="deleteActivityInstanceById" parameterType="string">
-	<![CDATA[		delete from MX_ACT_ACTIVITY_INSTANCE		where ID_ = #{value}
+	<![CDATA[		delete from EX_ACT_ACTIVITY_INSTANCE		where ID_ = #{value}
 	]]>
 	</delete>
 
 	<delete id="deleteActivityInstances" parameterType="map">
-		delete from MX_ACT_ACTIVITY_INSTANCE
+		delete from EX_ACT_ACTIVITY_INSTANCE
 		where (
 		ID_ IN
 		<foreach item="x_rowId" index="index" collection="rowIds"
@@ -58,7 +58,7 @@
 	</delete>
 
 	<sql id="selectActivityInstancesByQueryCriteriaSql">
-		from MX_ACT_ACTIVITY_INSTANCE E
+		from EX_ACT_ACTIVITY_INSTANCE E
 		<where>
 			<if test="actorId != null and actorId != '' ">
 				and E.ACTORID_ = #{actorId}
@@ -163,7 +163,7 @@
 
 	<select id="getActivityInstanceById" parameterType="string"
 		resultMap="mxActivityInstanceResultMap">
-		select * from MX_ACT_ACTIVITY_INSTANCE where ID_ = #{value}
+		select * from EX_ACT_ACTIVITY_INSTANCE where ID_ = #{value}
 	</select>
 
 	<select id="getActivityInstances" parameterType="map"

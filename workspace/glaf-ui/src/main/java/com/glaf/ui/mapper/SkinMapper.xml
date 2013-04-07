@@ -24,7 +24,7 @@
  
 	<insert id="insertSkin" parameterType="com.glaf.ui.model.Skin">
 		insert into
-		MX_UI_SKIN ( ID_
+		UI_SKIN ( ID_
         ,NAME_ 
         ,TITLE_ 
         ,DESCRIPTION_ 
@@ -47,7 +47,7 @@
 
 	<insert id="insertSkinInstance" parameterType="com.glaf.ui.model.SkinInstance">
 		insert into
-		MX_UI_SKININSTANCE ( ID_, ACTORID_, SKIN_)
+		UI_SKININSTANCE ( ID_, ACTORID_, SKIN_)
 		values (
           #{id, jdbcType=VARCHAR},
           #{actorId, jdbcType=VARCHAR},
@@ -57,7 +57,7 @@
 
 	 
 	<update id="updateSkin" parameterType="com.glaf.ui.model.Skin">
-		update MX_UI_SKIN
+		update UI_SKIN
 		set
         TITLE_ = #{title, jdbcType=VARCHAR},
         DESCRIPTION_ = #{description, jdbcType=VARCHAR},
@@ -69,23 +69,23 @@
 
  
 	<delete id="deleteSkinById" parameterType="string"> 
-        delete from MX_UI_SKIN
+        delete from UI_SKIN
         where ID_ =	#{id}
 	</delete>
 
 
 	<delete id="deleteSkinInstanceByActorId" parameterType="string"> 
-        delete from MX_UI_SKININSTANCE
+        delete from UI_SKININSTANCE
         where ACTORID_ =	#{actorId}
 	</delete>
 
 	<select id="getSkinById" parameterType="string" resultMap="skinResultMap">
-		select * from MX_UI_SKIN where ID_ = #{id}
+		select * from UI_SKIN where ID_ = #{id}
 	</select>
 
 	<select id="getUserSkin" parameterType="string" resultMap="skinResultMap">
-		select * from MX_UI_SKIN where ID_ in (
-		    select SKIN_ from MX_UI_SKININSTANCE where ACTORID_ =  #{actorId}
+		select * from UI_SKIN where ID_ in (
+		    select SKIN_ from UI_SKININSTANCE where ACTORID_ =  #{actorId}
 		)
 	</select>
 
@@ -108,7 +108,7 @@
 
 	<sql id="selectSkinsSql">
 
-		from MX_UI_SKIN E
+		from UI_SKIN E
 		 
 		<where>
 		       1 = 1  

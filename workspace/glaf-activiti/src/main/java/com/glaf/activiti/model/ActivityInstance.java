@@ -28,7 +28,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name = "MX_ACT_ACTIVITY_INSTANCE")
+@Table(name = "EX_ACT_ACTIVITY_INSTANCE")
 public class ActivityInstance implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id

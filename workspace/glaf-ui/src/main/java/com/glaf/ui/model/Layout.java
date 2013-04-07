@@ -34,7 +34,7 @@ import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 
 @Entity
-@Table(name = "MX_UI_LAYOUT")
+@Table(name = "UI_LAYOUT")
 public class Layout implements Serializable {
 	private static final long serialVersionUID = 1L;
 

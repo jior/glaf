@@ -3,7 +3,7 @@
 	  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 		  "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping auto-import="true" default-access="field">
-	<class name="com.glaf.jbpm.model.Extension" table="MX_JBPM_EXTENSION"
+	<class name="com.glaf.jbpm.model.Extension" table="EX_JBPM_EXTENSION"
 		dynamic-update="true" dynamic-insert="true">
 		<id name="id" column="ID_" type="long" unsaved-value="0">
 			<generator class="native" />
@@ -35,7 +35,7 @@
 		</list>
 	</class>
 
-	<class name="com.glaf.jbpm.model.ExtensionField" table="MX_JBPM_EXFIELD"
+	<class name="com.glaf.jbpm.model.ExtensionField" table="EX_JBPM_EXFIELD"
 		dynamic-update="true" dynamic-insert="true">
 		<id name="id" column="ID_" type="long" unsaved-value="0">
 			<generator class="native" />
@@ -47,7 +47,7 @@
 			foreign-key="FK_EXTENSION_FIELD" index="IDX_EXTENSION_FIELD" />
 	</class>
 
-	<class name="com.glaf.jbpm.model.ExtensionParam" table="MX_JBPM_EXPARAM"
+	<class name="com.glaf.jbpm.model.ExtensionParam" table="EX_JBPM_EXPARAM"
 		dynamic-update="true" dynamic-insert="true">
 		<id name="id" column="ID_" type="long" unsaved-value="0">
 			<generator class="native" />
@@ -61,7 +61,7 @@
 	</class>
 
 	<!--####ConfigFile########################################### -->
-	<class name="com.glaf.jbpm.model.ConfigFile" table="MX_JBPM_CONFIGFILE"
+	<class name="com.glaf.jbpm.model.ConfigFile" table="EX_JBPM_CONFIGFILE"
 		dynamic-update="true" dynamic-insert="true">
 		<id name="id" type="long" unsaved-value="0">
 			<column name="ID_" not-null="true" />
@@ -75,7 +75,7 @@
 
 	<!--####ActivityInstance########################################### -->
 	<class name="com.glaf.jbpm.model.ActivityInstance"
-		dynamic-insert="true" dynamic-update="true" table="MX_JBPM_ACTIVITY_INSTANCE">
+		dynamic-insert="true" dynamic-update="true" table="EX_JBPM_ACTIVITY_INSTANCE">
 		<id name="id" column="ID_" type="long" unsaved-value="0">
 			<generator class="native" />
 		</id>

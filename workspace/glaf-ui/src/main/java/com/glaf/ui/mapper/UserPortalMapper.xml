@@ -16,7 +16,7 @@
 
 	<insert id="insertUserPortal" parameterType="com.glaf.ui.model.UserPortal">
 		insert into
-		MX_UI_USERPORTAL (
+		UI_USERPORTAL (
 		ID_
 		,ACTORID_
 		,PANELID_
@@ -38,7 +38,7 @@
 
 	<update id="updateUserPortal" parameterType="com.glaf.ui.model.UserPortal">
 		update
-		MX_UI_USERPORTAL
+		UI_USERPORTAL
 		set
         COLUMNINDEX_ = #{columnIndex, jdbcType=INTEGER},
         POSITION_ = #{position, jdbcType=INTEGER}
@@ -49,13 +49,13 @@
 
 	<delete id="deleteUserPortalByActorId" parameterType="string">
 		delete from
-		MX_UI_USERPORTAL
+		UI_USERPORTAL
 		where ACTORID_ = #{actorId}
 	</delete>
 
 
 	<select id="getUserPortals" parameterType="string" resultMap="userPortalResultMap">
-		select * from MX_UI_USERPORTAL E
+		select * from UI_USERPORTAL E
 		where E.ACTORID_ = #{actorId}
 		order by
 		E.COLUMNINDEX_ asc, E.POSITION_ asc

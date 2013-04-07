@@ -29,7 +29,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "MX_UI_PANELINSTANCE")
+@Table(name = "UI_PANELINSTANCE")
 public class PanelInstance implements Serializable {
 	private static final long serialVersionUID = 1L;
 

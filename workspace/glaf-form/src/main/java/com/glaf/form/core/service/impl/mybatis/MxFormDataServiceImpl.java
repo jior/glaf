@@ -32,6 +32,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.core.base.DataModel;
@@ -62,6 +63,7 @@ import com.glaf.form.core.query.FormDefinitionQuery;
 import com.glaf.form.core.service.FormDataService;
 import com.glaf.form.core.util.EntityAssembly;
 
+@Service("formDataService")
 @Transactional(readOnly = true)
 public class MxFormDataServiceImpl implements FormDataService {
 	protected final static Log logger = LogFactory

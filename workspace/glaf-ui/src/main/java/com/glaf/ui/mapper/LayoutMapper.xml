@@ -21,7 +21,7 @@
  
 	<insert id="insertLayout" parameterType="com.glaf.ui.model.Layout">
 		insert into
-		MX_UI_LAYOUT ( ID_
+		UI_LAYOUT ( ID_
         ,NAME_ 
         ,TITLE_ 
         ,DATAINDEX_ 
@@ -49,12 +49,12 @@
     </insert>
 
 	<delete id="deleteLayoutById" parameterType="string"> 
-        delete from MX_UI_LAYOUT
+        delete from UI_LAYOUT
         where ID_ =	#{id}
 	</delete>
 
 	<select id="getLayoutById" parameterType="string" resultMap="layoutResultMap">
-		select * from MX_UI_LAYOUT where ID_ = #{id}
+		select * from UI_LAYOUT where ID_ = #{id}
 	</select>
 
 	<select id="getLayouts" 
@@ -76,7 +76,7 @@
 
 	<sql id="selectLayoutsSql">
 
-		from MX_UI_LAYOUT E
+		from UI_LAYOUT E
 		 
 		<where>
 		       1 = 1  

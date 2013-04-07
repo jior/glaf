@@ -27,7 +27,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
 @Entity
-@Table(name = "MX_UI_USERPANEL")
+@Table(name = "UI_USERPANEL")
 public class UserPanel implements Serializable {
 	private static final long serialVersionUID = 1L;
 

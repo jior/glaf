@@ -206,13 +206,13 @@ public class JbpmExtensionManager {
 					}
 				}
 
-				String sql = " delete from MX_JBPM_EXFIELD where EXTENDID_ = '"
+				String sql = " delete from EX_JBPM_EXFIELD where EXTENDID_ = '"
 						+ extendId + "'";
 				jbpmEntityDAO.executeSqlUpdate(jbpmContext, sql);
-				sql = " delete from MX_JBPM_EXPARAM where EXTENDID_ = '"
+				sql = " delete from EX_JBPM_EXPARAM where EXTENDID_ = '"
 						+ extendId + "'";
 				jbpmEntityDAO.executeSqlUpdate(jbpmContext, sql);
-				sql = " delete from MX_JBPM_EXTENSION where EXTENDID_ = '"
+				sql = " delete from EX_JBPM_EXTENSION where EXTENDID_ = '"
 						+ extendId + "'";
 				jbpmEntityDAO.executeSqlUpdate(jbpmContext, sql);
 

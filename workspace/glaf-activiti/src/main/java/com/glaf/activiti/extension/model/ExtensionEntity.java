@@ -43,7 +43,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
 @Entity
-@Table(name = "MX_ACT_EXTENSION")
+@Table(name = "EX_ACT_EXTENSION")
 public class ExtensionEntity implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id

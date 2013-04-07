@@ -27,7 +27,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
-@Table(name = "MX_ACT_EXTENSION_FIELD")
+@Table(name = "EX_ACT_EXTENSION_FIELD")
 public class ExtensionFieldEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 

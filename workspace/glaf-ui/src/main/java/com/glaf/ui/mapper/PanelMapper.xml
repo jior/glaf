@@ -47,7 +47,7 @@
 
 	<insert id="insertPanel" parameterType="com.glaf.ui.model.Panel">
 		insert into
-		MX_UI_PANEL (
+		UI_PANEL (
 		ID_
 		,NAME_
 		,TITLE_
@@ -105,7 +105,7 @@
 
 	<insert id="insertPanelInstance" parameterType="com.glaf.ui.model.PanelInstance">
 		insert into
-		MX_UI_PANELINSTANCE ( ID_
+		UI_PANELINSTANCE ( ID_
 		,NAME_
 		,PANEL_
 		,USERPANEL_
@@ -122,7 +122,7 @@
 
 	<insert id="insertUserPanel" parameterType="com.glaf.ui.model.UserPanel">
 		insert into
-		MX_UI_USERPANEL ( ID_
+		UI_USERPANEL ( ID_
 		,ACTORID_
 		,CREATEDATE_
 		,REFRESHSECONDS_
@@ -144,7 +144,7 @@
 
 	<update id="updatePanel" parameterType="com.glaf.ui.model.Panel">
 		update
-		MX_UI_PANEL
+		UI_PANEL
 		set
 		TITLE_ = #{title, jdbcType=VARCHAR},
 		ICON_ = #{icon, jdbcType=VARCHAR},
@@ -175,33 +175,33 @@
 
 	<delete id="deletePanelById" parameterType="string">
 		delete from
-		MX_UI_PANEL
+		UI_PANEL
 		where ID_ = #{id}
 	</delete>
 
 	<delete id="deletePanelInstancesById" parameterType="string">
 		delete from
-		MX_UI_PANELINSTANCE
+		UI_PANELINSTANCE
 		where USERPANEL_ = #{userPanelId}
 	</delete>
 
 	<delete id="deleteUserPanelById" parameterType="string">
 		delete from
-		MX_UI_USERPANEL
+		UI_USERPANEL
 		where ID_ = #{id}
 	</delete>
 
 	<select id="getPanelById" parameterType="string" resultMap="panelResultMap">
-		select * from MX_UI_PANEL where ID_ = #{id}
+		select * from UI_PANEL where ID_ = #{id}
 	</select>
 
 	<select id="getUserPanel" parameterType="string" resultMap="userPanelResultMap">
-		select * from MX_UI_USERPANEL where ACTORID_ = #{actorId}
+		select * from UI_USERPANEL where ACTORID_ = #{actorId}
 	</select>
 
 	<select id="getPanelInstances" parameterType="string"
 		resultMap="panelInstanceResultMap">
-		select * from MX_UI_PANELINSTANCE where USERPANEL_ =
+		select * from UI_PANELINSTANCE where USERPANEL_ =
 		#{userPanelId}
 	</select>
 
@@ -222,7 +222,7 @@
 
 	<sql id="selectPanelsSql">
 
-		from MX_UI_PANEL E
+		from UI_PANEL E
 
 		<where>
 			1 = 1

@@ -27,7 +27,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
-@Table(name = "MX_ACT_EXTENSION_PARAM")
+@Table(name = "EX_ACT_EXTENSION_PARAM")
 public class ExtensionParamEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
