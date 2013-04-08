@@ -59,7 +59,7 @@ public class HibernateNativeSQLAction implements ActionHandler {
 	@SuppressWarnings("unchecked")
 	public void execute(ExecutionContext ctx) throws Exception {
 		logger.debug("-------------------------------------------------------");
-		logger.debug("----------------MxSimpleSQLAction----------------------");
+		logger.debug("----------------HibernateNativeSQLAction---------------");
 		logger.debug("-------------------------------------------------------");
 
 		ContextInstance contextInstance = ctx.getContextInstance();
