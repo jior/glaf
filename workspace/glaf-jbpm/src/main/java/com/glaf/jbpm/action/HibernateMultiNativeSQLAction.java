@@ -39,6 +39,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.entity.SqlExecutor;
+import com.glaf.core.util.DateUtils;
 import com.glaf.core.util.StringTools;
 import com.glaf.jbpm.el.DefaultExpressionEvaluator;
 import com.glaf.jbpm.util.Constant;
@@ -195,6 +196,27 @@ public class HibernateMultiNativeSQLAction implements ActionHandler {
 									}
 									value = DefaultExpressionEvaluator
 											.evaluate(tmp, dataMap);
+								}
+
+								if (key.endsWith("_datetime")) {
+									java.util.Date date = DateUtils.toDate(tmp);
+									value = date;
+									dataMap.put(
+											key.substring(0, key.length() - 9),
+											value);
+								}
+
+								dataMap.put(key, value);
+							}
+							if (value instanceof Long) {
+								if (key.endsWith("_datetime")) {
+									Long time = (Long) value;
+									java.util.Date date = new java.util.Date(
+											time);
+									value = date;
+									dataMap.put(
+											key.substring(0, key.length() - 9),
+											value);
 								}
 								dataMap.put(key, value);
 							} else {
