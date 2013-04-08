@@ -46,51 +46,8 @@ public class TableDefinition implements java.io.Serializable,
 
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * 表名
-	 */
-	@Id
-	@Column(name = "TABLENAME_", length = 50)
-	protected String tableName;
-
-	@Column(name = "PARENTTABLENAME_", length = 50)
-	protected String parentTableName;
-
-	@Column(name = "PACKAGENAME_", length = 200)
-	protected String packageName;
-
-	@Column(name = "ENTITYNAME_", length = 50)
-	protected String entityName;
-
-	@Column(name = "CLASSNAME_", length = 250)
-	protected String className;
-
-	/**
-	 * 标题
-	 */
-	@Column(name = "TITLE_")
-	protected String title;
-
-	/**
-	 * 标题
-	 */
-	@Column(name = "ENGLISHTITLE_")
-	protected String englishTitle;
-
-	@Column(name = "COLUMNQTY_")
-	protected int columnQty;
-
 	@Column(name = "ADDTYPE_")
 	protected int addType;
-
-	@Column(name = "SYSNUM_", length = 100)
-	protected String sysnum;
-
-	@Column(name = "ISSUBTABLE_", length = 2)
-	protected String isSubTable;
-
-	@Column(name = "TOPID_", length = 50)
-	protected String topId;
 
 	/**
 	 * 聚合主键列集
@@ -98,23 +55,20 @@ public class TableDefinition implements java.io.Serializable,
 	@Column(name = "AGGREGATIONKEYS_", length = 500)
 	protected String aggregationKeys;
 
-	/**
-	 * 组合查询的查询编号
-	 */
-	@Column(name = "QUERYIDS_", length = 500)
-	protected String queryIds;
+	@Column(name = "CLASSNAME_", length = 250)
+	protected String className;
+
+	@Column(name = "COLUMNQTY_")
+	protected int columnQty;
+
+	@Transient
+	protected List<ColumnDefinition> columns = new ArrayList<ColumnDefinition>();
 
 	/**
-	 * 是否临时表
+	 * 创建人
 	 */
-	@Column(name = "TEMPORARYFLAG_", length = 1)
-	protected String temporaryFlag;
-
-	/**
-	 * 是否删除抓取数据
-	 */
-	@Column(name = "DELETEFETCH_", length = 1)
-	protected String deleteFetch;
+	@Column(name = "CREATEBY_", length = 50)
+	protected String createBy;
 
 	/**
 	 * 创建时间
@@ -124,10 +78,19 @@ public class TableDefinition implements java.io.Serializable,
 	protected Date createTime;
 
 	/**
-	 * 创建人
+	 * 级联删除
 	 */
-	@Column(name = "CREATEBY_", length = 50)
-	protected String createBy;
+	@Column(name = "DELETECASCADE_")
+	protected int deleteCascade;
+
+	/**
+	 * 是否删除抓取数据
+	 */
+	@Column(name = "DELETEFETCH_", length = 1)
+	protected String deleteFetch;
+
+	@Column(name = "DELETEFLAG_")
+	protected int deleteFlag;
 
 	/**
 	 * 描述
@@ -136,16 +99,22 @@ public class TableDefinition implements java.io.Serializable,
 	protected String description;
 
 	/**
-	 * 表类型
-	 */
-	@Column(name = "TYPE_", length = 50)
-	protected String type;
-
-	/**
 	 * 显示类型 form,grid,tree,treegrid
 	 */
 	@Column(name = "DISPLAYTYPE_", length = 50)
 	protected String displayType;
+
+	/**
+	 * 标题
+	 */
+	@Column(name = "ENGLISHTITLE_")
+	protected String englishTitle;
+
+	@Column(name = "ENTITYNAME_", length = 50)
+	protected String entityName;
+
+	@Transient
+	protected ColumnDefinition idColumn;
 
 	/**
 	 * 级联插入
@@ -153,17 +122,11 @@ public class TableDefinition implements java.io.Serializable,
 	@Column(name = "INSERTCASCADE_")
 	protected int insertCascade;
 
-	/**
-	 * 级联更新
-	 */
-	@Column(name = "UPDATECASCADE_")
-	protected int updateCascade;
+	@Transient
+	protected boolean insertOnly;
 
-	/**
-	 * 级联删除
-	 */
-	@Column(name = "DELETECASCADE_")
-	protected int deleteCascade;
+	@Column(name = "ISSUBTABLE_", length = 2)
+	protected String isSubTable;
 
 	/**
 	 * 是否锁定
@@ -171,11 +134,20 @@ public class TableDefinition implements java.io.Serializable,
 	@Column(name = "LOCKED_")
 	protected int locked;
 
-	@Column(name = "DELETEFLAG_")
-	protected int deleteFlag;
+	@Column(name = "PACKAGENAME_", length = 200)
+	protected String packageName;
 
-	@Column(name = "SYSTEMFLAG_", length = 2)
-	protected String systemFlag;
+	@Column(name = "PARENTTABLENAME_", length = 50)
+	protected String parentTableName;
+
+	@Transient
+	protected List<QueryDefinition> queries = new ArrayList<QueryDefinition>();
+
+	/**
+	 * 组合查询的查询编号
+	 */
+	@Column(name = "QUERYIDS_", length = 500)
+	protected String queryIds;
 
 	/**
 	 * 修订版本
@@ -186,14 +158,45 @@ public class TableDefinition implements java.io.Serializable,
 	@Column(name = "SORTNO_")
 	private int sortNo;
 
-	@Transient
-	protected ColumnDefinition idColumn;
+	@Column(name = "SYSNUM_", length = 100)
+	protected String sysnum;
 
-	@Transient
-	protected List<ColumnDefinition> columns = new ArrayList<ColumnDefinition>();
+	@Column(name = "SYSTEMFLAG_", length = 2)
+	protected String systemFlag;
 
-	@Transient
-	protected List<QueryDefinition> queries = new ArrayList<QueryDefinition>();
+	/**
+	 * 表名
+	 */
+	@Id
+	@Column(name = "TABLENAME_", length = 50)
+	protected String tableName;
+
+	/**
+	 * 是否临时表
+	 */
+	@Column(name = "TEMPORARYFLAG_", length = 1)
+	protected String temporaryFlag;
+
+	/**
+	 * 标题
+	 */
+	@Column(name = "TITLE_")
+	protected String title;
+
+	@Column(name = "TOPID_", length = 50)
+	protected String topId;
+
+	/**
+	 * 表类型
+	 */
+	@Column(name = "TYPE_", length = 50)
+	protected String type;
+
+	/**
+	 * 级联更新
+	 */
+	@Column(name = "UPDATECASCADE_")
+	protected int updateCascade;
 
 	public TableDefinition() {
 
@@ -392,6 +395,10 @@ public class TableDefinition implements java.io.Serializable,
 		return result;
 	}
 
+	public boolean isInsertOnly() {
+		return insertOnly;
+	}
+
 	public TableDefinition jsonToObject(JSONObject jsonObject) {
 		return TableDefinitionJsonFactory.jsonToObject(jsonObject);
 	}
@@ -459,6 +466,10 @@ public class TableDefinition implements java.io.Serializable,
 
 	public void setInsertCascade(int insertCascade) {
 		this.insertCascade = insertCascade;
+	}
+
+	public void setInsertOnly(boolean insertOnly) {
+		this.insertOnly = insertOnly;
 	}
 
 	public void setIsSubTable(String isSubTable) {

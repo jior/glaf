@@ -61,6 +61,11 @@ public class TableModel implements java.io.Serializable {
 	protected ColumnModel idColumn;
 
 	/**
+	 * 是否插入
+	 */
+	protected boolean insertOnly;
+
+	/**
 	 * 合法数据的最小长度
 	 */
 	protected int minLength;
@@ -279,6 +284,10 @@ public class TableModel implements java.io.Serializable {
 		return result;
 	}
 
+	public boolean isInsertOnly() {
+		return insertOnly;
+	}
+
 	public void removeColumn(ColumnModel column) {
 		if (columns != null) {
 			column.setTable(null);
@@ -320,6 +329,10 @@ public class TableModel implements java.io.Serializable {
 
 	public void setIdColumn(ColumnModel idColumn) {
 		this.idColumn = idColumn;
+	}
+
+	public void setInsertOnly(boolean insertOnly) {
+		this.insertOnly = insertOnly;
 	}
 
 	public void setMinLength(int minLength) {

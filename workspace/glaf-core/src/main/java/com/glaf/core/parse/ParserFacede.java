@@ -49,6 +49,7 @@ import com.glaf.core.util.DBUtils;
 import com.glaf.core.util.FileUtils;
 import com.glaf.core.util.UUID32;
 import com.glaf.core.xml.MetadataXmlReader;
+import com.glaf.core.xml.XmlMappingReader;
 
 public class ParserFacede {
 	protected static final Log logger = LogFactory

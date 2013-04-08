@@ -107,5 +107,6 @@
 	<classpathentry kind="lib" path="/glaf-core/lib/mybatis-spring.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/mybatis.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/ehcache-core.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/junit-4.11.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

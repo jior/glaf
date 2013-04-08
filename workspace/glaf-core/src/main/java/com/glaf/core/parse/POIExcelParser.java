@@ -137,6 +137,9 @@ public class POIExcelParser implements Parser {
 
 						if (StringUtils.isNotEmpty(value)) {
 							value = value.trim();
+							if(value.endsWith(".0")){
+								value = value.substring(0, value.length()-2);
+							}
 							col.setStringValue(value);
 							col.setValue(value);
 

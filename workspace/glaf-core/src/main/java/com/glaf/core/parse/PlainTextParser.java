@@ -38,6 +38,7 @@ import com.glaf.core.service.ITableDefinitionService;
 import com.glaf.core.util.DBUtils;
 import com.glaf.core.util.IOUtils;
 import com.glaf.core.xml.MetadataXmlReader;
+import com.glaf.core.xml.XmlMappingReader;
 
 public class PlainTextParser implements Parser {
 

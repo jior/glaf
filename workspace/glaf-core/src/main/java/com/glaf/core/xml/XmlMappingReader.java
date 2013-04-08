@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.glaf.core.parse;
+package com.glaf.core.xml;
 
 import java.util.Iterator;
 import java.util.List;
@@ -58,6 +58,10 @@ public class XmlMappingReader {
 				classDefinition.setAggregationKey(element
 						.attributeValue("aggregationKeys"));
 				classDefinition.setSplit(element.attributeValue("split"));
+				if (StringUtils.equals(element.attributeValue("insertOnly"),
+						"true")) {
+					classDefinition.setInsertOnly(true);
+				}
 
 				String startRow = element.attributeValue("startRow");
 				if (StringUtils.isNumeric(startRow)) {
@@ -128,7 +132,7 @@ public class XmlMappingReader {
 		if ("true".equals(elem.attributeValue("temporary"))) {
 			field.setTemporary(true);
 		}
-		
+
 		/**
 		 * 如果是必须字段
 		 */

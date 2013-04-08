@@ -58,6 +58,11 @@ public class MetadataXmlReader {
 				tableDefinition.setEnglishTitle(element
 						.attributeValue("englishTitle"));
 				String primaryKey = element.attributeValue("primaryKey");
+				
+				if (StringUtils.equals(element.attributeValue("insertOnly"),
+						"true")) {
+					tableDefinition.setInsertOnly(true);
+				}
 
 				Element idElem = element.element("id");
 				if (idElem != null) {

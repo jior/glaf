@@ -198,10 +198,133 @@ public class MxTableDataServiceImpl implements ITableDataService {
 	}
 
 	@Transactional
+	public void insertAll(TableDefinition tableDefinition, String seqNo,
+			Collection<TableModel> rows) {
+		logger.debug("tableDefinition=" + tableDefinition);
+		logger.debug("idColumn=" + tableDefinition.getIdColumn().toString());
+
+		Map<String, Object> colMap = new HashMap<String, Object>();
+
+		Map<String, String> exprMap = new HashMap<String, String>();
+		List<ColumnDefinition> exprColumns = new ArrayList<ColumnDefinition>();
+
+		ColumnModel idColumn = new ColumnModel();
+
+		ColumnDefinition idCol = tableDefinition.getIdColumn();
+		if (idCol != null && idCol.getColumnName() != null) {
+			idColumn.setColumnName(idCol.getColumnName());
+			idColumn.setJavaType(idCol.getJavaType());
+			idColumn.setValueExpression(idCol.getValueExpression());
+		}
+
+		Iterator<ColumnDefinition> iter = tableDefinition.getColumns()
+				.iterator();
+		while (iter.hasNext()) {
+			ColumnDefinition cell = iter.next();
+			if (StringUtils.isNotEmpty(cell.getValueExpression())) {
+				exprMap.put(cell.getColumnName(), cell.getValueExpression());
+				exprColumns.add(cell);
+			}
+		}
+
+		logger.debug(exprMap);
+
+		List<TableModel> inertRows = new ArrayList<TableModel>();
+
+		logger.debug(" rows size = " + rows.size());
+		// logger.debug(" key map: " + keyMap);
+		Iterator<TableModel> iterator = rows.iterator();
+		while (iterator.hasNext()) {
+			TableModel tableData = iterator.next();
+			ColumnModel myPK = tableData.getIdColumn();
+			ColumnModel pkColumn = new ColumnModel();
+			pkColumn.setColumnName(idColumn.getColumnName());
+			pkColumn.setJavaType(idColumn.getJavaType());
+
+			for (ColumnModel column : tableData.getColumns()) {
+				colMap.put(column.getColumnName(), column.getValue());
+			}
+
+			for (ColumnDefinition c : exprColumns) {
+				ColumnModel x = new ColumnModel();
+				x.setColumnName(c.getColumnName());
+				x.setJavaType(c.getJavaType());
+				x.setValueExpression(c.getValueExpression());
+				tableData.addColumn(x);
+			}
+
+			for (ColumnModel cell : tableData.getColumns()) {
+				String expr = exprMap.get(cell.getColumnName());
+				if (StringUtils.isNotEmpty(expr)) {
+					// logger.debug(cell.getColumnName() + "=" + expr);
+					if (Constants.NOW_EXPRESSION.equals(expr)
+							|| Constants.CURRENT_YYYYMMDD_EXPRESSION
+									.equals(expr)) {
+						if (cell.getDateValue() == null) {
+							cell.setDateValue(new Date());
+							cell.setValue(cell.getDateValue());
+						}
+					}
+					if (Constants.ID_EXPRESSION.equals(expr)) {
+						if (cell.getValue() == null) {
+							if (StringUtils.equals(cell.getJavaType(),
+									"Integer")) {
+								cell.setValue(idGenerator.nextId().intValue());
+								logger.debug("------------int--------------");
+							} else if (StringUtils.equals(cell.getJavaType(),
+									"Long")) {
+								cell.setValue(idGenerator.nextId());
+							} else {
+								cell.setValue(idGenerator.getNextId());
+							}
+						}
+					}
+					if (Constants.SEQNO_EXPRESSION.equals(expr)) {
+						cell.setValue(seqNo);
+					}
+				}
+			}
+
+			if (myPK != null && myPK.getValue() != null) {
+				pkColumn.setValue(myPK.getValue());
+			} else {
+				if (StringUtils.equals(pkColumn.getJavaType(), "Integer")) {
+					pkColumn.setValue(idGenerator.nextId().intValue());
+					logger.debug("------------int--------------");
+				} else if (StringUtils.equals(pkColumn.getJavaType(), "Long")) {
+					pkColumn.setValue(idGenerator.nextId());
+				} else {
+					pkColumn.setValue(idGenerator.getNextId());
+				}
+			}
+
+			tableData.removeColumn(pkColumn);
+			tableData.addColumn(pkColumn);
+
+			inertRows.add(tableData);
+		}
+
+		if (!inertRows.isEmpty()) {
+			logger.debug("inert rows size:" + inertRows.size());
+			for (TableModel tableData : inertRows) {
+				tableData.setTableName(tableDefinition.getTableName());
+				logger.debug(tableData.toString());
+				tableDataMapper.insertTableData(tableData);
+			}
+		}
+
+	}
+
+	@Transactional
 	public void saveAll(TableDefinition tableDefinition, String seqNo,
 			Collection<TableModel> rows) {
 		logger.debug("tableDefinition=" + tableDefinition);
 		logger.debug("idColumn=" + tableDefinition.getIdColumn().toString());
+
+		if (tableDefinition.isInsertOnly()) {
+			this.insertAll(tableDefinition, seqNo, rows);
+			return;
+		}
 
 		Collection<String> aggregationKeys = new HashSet<String>();
 
