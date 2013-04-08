@@ -5,11 +5,11 @@
 		<saveName>${entityName}.java</saveName>
 		<template>/templates/java/entity/Entity.java.ftl</template>
 	</definition>
-	<definition name="Entity">
+	<!-- <definition name="Entity">
 		<savePath>/java/model</savePath>
 		<saveName>${entityName}.hbm.xml</saveName>
 		<template>/templates/java/entity/Entity.hbm.xml.ftl</template>
-	</definition>
+	</definition> -->
 	<definition name="Query">
 		<savePath>/java/query</savePath>
 		<saveName>${entityName}Query.java</saveName>
@@ -41,16 +41,16 @@
 		<saveName>${entityName}JsonFactory.java</saveName>
 		<template>/templates/java/util/JsonFactory.java.ftl</template>
 	</definition>
-	<definition name="spring-service-context">
+	<!-- <definition name="spring-service-context">
 		<savePath>/java/service</savePath>
 		<saveName>${entityName}-spring-context.xml</saveName>
 		<template>/templates/java/service/mybatis3/spring-context.xml.ftl</template>
-	</definition>
-	<definition name="ResourceRest">
+	</definition> -->
+	<!-- <definition name="ResourceRest">
 		<savePath>/java/web/rest</savePath>
 		<saveName>${entityName}ResourceRest.java</saveName>
 		<template>/templates/java/rest/ResourceRest.java.ftl</template>
-	</definition>
+	</definition> -->
 	<definition name="Controller">
 		<savePath>/java/web/springmvc</savePath>
 		<saveName>${entityName}Controller.java</saveName>
@@ -61,11 +61,11 @@
 		<saveName>${entityName}BaseController.java</saveName>
 		<template>/templates/java/springmvc/BaseController.java.ftl</template>
 	</definition>
-	<definition name="WfBaseController">
+	<!-- <definition name="WfBaseController">
 		<savePath>/java/web/springmvc</savePath>
 		<saveName>${entityName}WfController.java</saveName>
 		<template>/templates/java/springmvc/WfBaseController.java.ftl</template>
-	</definition> 
+	</definition>  -->
 	<!-- <definition name="Action">
 		<savePath>/java/action</savePath>
 		<saveName>${entityName}Action.java</saveName>
@@ -109,12 +109,12 @@
 		<encoding>UTF-8</encoding>
 	</definition>
 
-	<definition name="menu">
+	<!-- <definition name="menu">
 		<encoding>GBK</encoding>
 		<savePath>/menu</savePath>
 		<saveName>${entityName}.menu.xml</saveName>
 		<template>/templates/menu/menu.xml</template>
-	</definition>
+	</definition> -->
 	<definition name="messages_zh_CN">
 		<savePath>/i18n</savePath>
 		<saveName>messages.txt</saveName>
