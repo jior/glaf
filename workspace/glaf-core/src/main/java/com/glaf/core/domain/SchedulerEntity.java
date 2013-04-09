@@ -27,7 +27,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import com.alibaba.fastjson.*;
 import com.fasterxml.jackson.databind.node.ObjectNode;
- 
+
 import com.glaf.core.base.JSONable;
 import com.glaf.core.base.Parameter;
 import com.glaf.core.base.Scheduler;
@@ -38,62 +38,14 @@ import com.glaf.core.domain.util.SchedulerJsonFactory;
 public class SchedulerEntity implements Serializable, Scheduler, JSONable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@Column(name = "id", length = 50, nullable = false)
-	protected String id;
-
-	@Column(name = "taskName")
-	protected String taskName;
-
-	@Column(name = "taskType")
-	protected String taskType;
-
-	@Column(name = "jobClass")
-	protected String jobClass;
-
-	@Column(name = "title")
-	protected String title;
-
-	@Column(name = "content")
-	protected String content;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "startDate")
-	protected Date startDate;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "endDate")
-	protected Date endDate;
-
-	@Column(name = "threadSize")
-	protected int threadSize;
-
-	@Column(name = "repeatCount")
-	protected int repeatCount;
-
-	@Column(name = "repeatInterval")
-	protected int repeatInterval;
-
-	@Column(name = "startDelay")
-	protected int startDelay;
-
-	@Column(name = "priority_")
-	protected int priority;
-
-	@Column(name = "locked_")
-	protected int locked;
-
-	@Column(name = "startup_")
-	protected int startup;
+	@Column(name = "attribute_", length = 500)
+	protected String attribute;
 
 	@Column(name = "autoStartup")
 	protected int autoStartup;
 
-	@Column(name = "expression_")
-	protected String expression;
-
-	@Column(name = "attribute_", length = 500)
-	protected String attribute;
+	@Column(name = "content")
+	protected String content;
 
 	@Column(name = "createBy")
 	protected String createBy;
@@ -102,11 +54,71 @@ public class SchedulerEntity implements Serializable, Scheduler, JSONable {
 	@Column(name = "createDate")
 	protected Date createDate;
 
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "endDate")
+	protected Date endDate;
+
+	@Column(name = "expression_")
+	protected String expression;
+
+	@Id
+	@Column(name = "id", length = 50, nullable = false)
+	protected String id;
+
+	@Column(name = "intervalTime")
+	protected String intervalTime;
+
+	/**
+	 * second,minute,hour,day,week,month
+	 */
+	@Column(name = "intervalType")
+	protected String intervalType;
+
+	@Column(name = "intervalValue")
+	protected String intervalValue;
+
+	@Column(name = "jobClass")
+	protected String jobClass;
+
 	@javax.persistence.Transient
 	protected Map<String, Parameter> jobDataMap = new HashMap<String, Parameter>();
 
+	@Column(name = "locked_")
+	protected int locked;
+
 	@javax.persistence.Transient
 	protected List<SchedulerParam> params = new ArrayList<SchedulerParam>();
+
+	@Column(name = "priority_")
+	protected int priority;
+
+	@Column(name = "repeatCount")
+	protected int repeatCount;
+
+	@Column(name = "repeatInterval")
+	protected int repeatInterval;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "startDate")
+	protected Date startDate;
+
+	@Column(name = "startDelay")
+	protected int startDelay;
+
+	@Column(name = "startup_")
+	protected int startup;
+
+	@Column(name = "taskName")
+	protected String taskName;
+
+	@Column(name = "taskType")
+	protected String taskType;
+
+	@Column(name = "threadSize")
+	protected int threadSize;
+
+	@Column(name = "title")
+	protected String title;
 
 	public SchedulerEntity() {
 
@@ -166,6 +178,18 @@ public class SchedulerEntity implements Serializable, Scheduler, JSONable {
 
 	public String getId() {
 		return id;
+	}
+
+	public String getIntervalTime() {
+		return intervalTime;
+	}
+
+	public String getIntervalType() {
+		return intervalType;
+	}
+
+	public String getIntervalValue() {
+		return intervalValue;
 	}
 
 	public String getJobClass() {
@@ -271,7 +295,7 @@ public class SchedulerEntity implements Serializable, Scheduler, JSONable {
 		return valid;
 	}
 
-	public Scheduler  jsonToObject(JSONObject jsonObject) {
+	public Scheduler jsonToObject(JSONObject jsonObject) {
 		return SchedulerJsonFactory.jsonToObject(jsonObject);
 	}
 
@@ -313,6 +337,18 @@ public class SchedulerEntity implements Serializable, Scheduler, JSONable {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public void setIntervalTime(String intervalTime) {
+		this.intervalTime = intervalTime;
+	}
+
+	public void setIntervalType(String intervalType) {
+		this.intervalType = intervalType;
+	}
+
+	public void setIntervalValue(String intervalValue) {
+		this.intervalValue = intervalValue;
 	}
 
 	public void setJobClass(String jobClass) {
@@ -388,7 +424,7 @@ public class SchedulerEntity implements Serializable, Scheduler, JSONable {
 	}
 
 	public ObjectNode toObjectNode() {
-		 return SchedulerJsonFactory.toObjectNode(this);
+		return SchedulerJsonFactory.toObjectNode(this);
 	}
 
 	public String toString() {

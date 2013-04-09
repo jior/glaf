@@ -315,13 +315,17 @@ public class QueryUtils {
 				SystemConfig.getCurrentYYYYMMDD());
 		sql = StringTools.replace(sql, "#{now}",
 				SystemConfig.getCurrentYYYYMMDD());
-		sql = StringTools.replace(sql, Constants.INPUT_YYYYMM_EXPRESSION,
+		sql = StringTools.replace(sql,
+				ExpressionConstants.INPUT_YYYYMM_EXPRESSION,
 				SystemConfig.getInputYYYYMM());
-		sql = StringTools.replace(sql, Constants.INPUT_YYYYMMDD_EXPRESSION,
+		sql = StringTools.replace(sql,
+				ExpressionConstants.INPUT_YYYYMMDD_EXPRESSION,
 				SystemConfig.getInputYYYYMMDD());
-		sql = StringTools.replace(sql, Constants.CURRENT_YYYYMM_EXPRESSION,
+		sql = StringTools.replace(sql,
+				ExpressionConstants.CURRENT_YYYYMM_EXPRESSION,
 				SystemConfig.getCurrentYYYYMM());
-		sql = StringTools.replace(sql, Constants.CURRENT_YYYYMMDD_EXPRESSION,
+		sql = StringTools.replace(sql,
+				ExpressionConstants.CURRENT_YYYYMMDD_EXPRESSION,
 				SystemConfig.getCurrentYYYYMMDD());
 		return sql;
 	}

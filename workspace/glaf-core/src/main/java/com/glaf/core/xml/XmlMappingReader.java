@@ -32,55 +32,49 @@ import com.glaf.core.base.TableModel;
 public class XmlMappingReader {
 
 	public TableModel read(java.io.InputStream inputStream) {
-		TableModel classDefinition = new TableModel();
+		TableModel tableModel = new TableModel();
 		SAXReader xmlReader = new SAXReader();
 		try {
 			Document doc = xmlReader.read(inputStream);
 			Element root = doc.getRootElement();
 			Element element = root.element("entity");
 			if (element != null) {
-				classDefinition.setEntityName(element.attributeValue("name"));
-				classDefinition.setPrimaryKey(element
-						.attributeValue("primaryKey"));
-				classDefinition.setTableName(element.attributeValue("table"));
-				classDefinition.setTitle(element.attributeValue("title"));
-				classDefinition.setStopWord(element.attributeValue("stopWord"));
-				classDefinition.setPackageName(element
-						.attributeValue("package"));
-				classDefinition.setEnglishTitle(element
+				tableModel.setEntityName(element.attributeValue("name"));
+				tableModel.setPrimaryKey(element.attributeValue("primaryKey"));
+				tableModel.setTableName(element.attributeValue("table"));
+				tableModel.setTitle(element.attributeValue("title"));
+				tableModel.setStopWord(element.attributeValue("stopWord"));
+				tableModel.setPackageName(element.attributeValue("package"));
+				tableModel.setEnglishTitle(element
 						.attributeValue("englishTitle"));
-				classDefinition.setFilePrefix(element
-						.attributeValue("filePrefix"));
-				classDefinition.setParseType(element
-						.attributeValue("parseType"));
-				classDefinition.setParseClass(element
-						.attributeValue("parseClass"));
-				classDefinition.setAggregationKey(element
+				tableModel.setFilePrefix(element.attributeValue("filePrefix"));
+				tableModel.setParseType(element.attributeValue("parseType"));
+				tableModel.setParseClass(element.attributeValue("parseClass"));
+				tableModel.setAggregationKey(element
 						.attributeValue("aggregationKeys"));
-				classDefinition.setSplit(element.attributeValue("split"));
+				tableModel.setSplit(element.attributeValue("split"));
 				if (StringUtils.equals(element.attributeValue("insertOnly"),
 						"true")) {
-					classDefinition.setInsertOnly(true);
+					tableModel.setInsertOnly(true);
 				}
 
 				String startRow = element.attributeValue("startRow");
 				if (StringUtils.isNumeric(startRow)) {
-					classDefinition.setStartRow(Integer.parseInt(startRow));
+					tableModel.setStartRow(Integer.parseInt(startRow));
 				}
 				String stopSkipRow = element.attributeValue("stopSkipRow");
 				if (StringUtils.isNumeric(stopSkipRow)) {
-					classDefinition.setStopSkipRow(Integer
-							.parseInt(stopSkipRow));
+					tableModel.setStopSkipRow(Integer.parseInt(stopSkipRow));
 				}
 
 				String minLength = element.attributeValue("minLength");
 				if (StringUtils.isNumeric(minLength)) {
-					classDefinition.setMinLength(Integer.parseInt(minLength));
+					tableModel.setMinLength(Integer.parseInt(minLength));
 				}
 
 				String batchSize = element.attributeValue("batchSize");
 				if (StringUtils.isNumeric(batchSize)) {
-					classDefinition.setBatchSize(Integer.parseInt(batchSize));
+					tableModel.setBatchSize(Integer.parseInt(batchSize));
 				}
 
 				List<?> excludes = element.elements("excludes");
@@ -88,7 +82,7 @@ public class XmlMappingReader {
 					Iterator<?> iterator = excludes.iterator();
 					while (iterator.hasNext()) {
 						Element elem = (Element) iterator.next();
-						classDefinition.addExclude(elem.getStringValue());
+						tableModel.addExclude(elem.getStringValue());
 					}
 				}
 
@@ -99,10 +93,10 @@ public class XmlMappingReader {
 						Element elem = (Element) iterator.next();
 						ColumnModel field = new ColumnModel();
 						this.readField(elem, field);
-						classDefinition.addColumn(field);
-						if (StringUtils.equals(classDefinition.getPrimaryKey(),
+						tableModel.addColumn(field);
+						if (StringUtils.equals(tableModel.getPrimaryKey(),
 								field.getColumnName())) {
-							classDefinition.setIdColumn(field);
+							tableModel.setIdColumn(field);
 						}
 					}
 				}
@@ -112,7 +106,7 @@ public class XmlMappingReader {
 			throw new RuntimeException(ex);
 		}
 
-		return classDefinition;
+		return tableModel;
 	}
 
 	protected void readField(Element elem, ColumnModel field) {

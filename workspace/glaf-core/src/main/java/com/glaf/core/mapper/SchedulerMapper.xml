@@ -23,6 +23,9 @@
 		<result property="startup" column="STARTUP_" jdbcType="INTEGER" />
 		<result property="autoStartup" column="AUTOSTARTUP" jdbcType="INTEGER" />
 		<result property="expression" column="EXPRESSION_" jdbcType="VARCHAR" />
+		<result property="intervalType" column="INTERVALTYPE" jdbcType="VARCHAR" />
+		<result property="intervalValue" column="INTERVALVALUE" jdbcType="VARCHAR" />
+		<result property="intervalTime" column="INTERVALTIME" jdbcType="VARCHAR" />
 		<result property="createBy" column="CREATEBY" jdbcType="VARCHAR" />
 		<result property="createDate" column="CREATEDATE" jdbcType="TIMESTAMP" />
 		<result property="attribute" column="ATTRIBUTE_" jdbcType="VARCHAR" />
@@ -80,6 +83,15 @@
 			</if>
 			<if test="expression != null">
 				,EXPRESSION_
+			</if>
+			<if test="intervalType != null">
+				,INTERVALTYPE
+			</if>
+			<if test="intervalValue != null">
+				,INTERVALVALUE
+			</if>
+			<if test="intervalTime != null">
+				,INTERVALTIME
 			</if>
 			<if test="createBy != null">
 				,CREATEBY
@@ -142,6 +154,15 @@
 			</if>
 			<if test="expression != null">
 				,#{expression, jdbcType=VARCHAR}
+			</if>
+			<if test="intervalType != null">
+				,#{intervalType, jdbcType=VARCHAR}
+			</if>
+			<if test="intervalValue != null">
+				,#{intervalValue, jdbcType=VARCHAR}
+			</if>
+			<if test="intervalTime != null">
+				,#{intervalTime, jdbcType=VARCHAR}
 			</if>
 			<if test="createBy != null">
 				,#{createBy, jdbcType=VARCHAR}
@@ -207,6 +228,15 @@
 			</if>
 			<if test="expression != null">
 				EXPRESSION_ = #{expression, jdbcType=VARCHAR},
+			</if>
+			<if test="intervalType != null">
+				INTERVALTYPE = #{intervalType, jdbcType=VARCHAR},
+			</if>
+			<if test="intervalValue != null">
+				INTERVALVALUE = #{intervalValue, jdbcType=VARCHAR},
+			</if>
+			<if test="intervalTime != null">
+				INTERVALTIME = #{intervalTime, jdbcType=VARCHAR},
 			</if>
 			<if test="createBy != null">
 				CREATEBY = #{createBy, jdbcType=VARCHAR},

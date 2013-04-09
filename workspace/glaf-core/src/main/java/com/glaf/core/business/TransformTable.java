@@ -42,8 +42,9 @@ import com.glaf.core.service.IQueryDefinitionService;
 import com.glaf.core.service.ITableDataService;
 import com.glaf.core.service.ITableDefinitionService;
 import com.glaf.core.service.ITablePageService;
-import com.glaf.core.util.Constants;
+ 
 import com.glaf.core.util.DBUtils;
+import com.glaf.core.util.ExpressionConstants;
 import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.QueryUtils;
 import com.glaf.core.util.StringTools;
@@ -122,7 +123,7 @@ public class TransformTable {
 		column.setColumnName("ID");
 		column.setJavaType("String");
 		column.setLength(50);
-		column.setValueExpression(Constants.ID_EXPRESSION);
+		column.setValueExpression(ExpressionConstants.ID_EXPRESSION);
 		column.setPrimaryKey(true);
 		tableDefinition.addColumn(column);
 		tableDefinition.setIdColumn(column);
@@ -258,7 +259,7 @@ public class TransformTable {
 								ColumnModel cell01 = new ColumnModel();
 								cell01.setColumnName("ID");
 								cell01.setType("String");
-								cell01.setValueExpression(Constants.ID_EXPRESSION);
+								cell01.setValueExpression(ExpressionConstants.ID_EXPRESSION);
 								cols.add("ID");
 								rowModel.addColumn(cell01);
 								rowModel.setIdColumn(cell01);
@@ -295,7 +296,7 @@ public class TransformTable {
 			column1.setTitle("系统内置主键");
 			column1.setColumnName("ID");
 			column1.setJavaType("String");
-			column1.setValueExpression(Constants.ID_EXPRESSION);
+			column1.setValueExpression(ExpressionConstants.ID_EXPRESSION);
 
 			ColumnModel column4 = new ColumnModel();
 			column4.setTitle("聚合主键");
@@ -434,7 +435,7 @@ public class TransformTable {
 								ColumnModel cell01 = new ColumnModel();
 								cell01.setColumnName("ID");
 								cell01.setType("String");
-								cell01.setValueExpression(Constants.ID_EXPRESSION);
+								cell01.setValueExpression(ExpressionConstants.ID_EXPRESSION);
 								cols.add("ID");
 								rowModel.addColumn(cell01);
 								rowModel.setIdColumn(cell01);
@@ -469,7 +470,7 @@ public class TransformTable {
 			ColumnModel cell01 = new ColumnModel();
 			cell01.setColumnName("ID");
 			cell01.setType("String");
-			cell01.setValueExpression(Constants.ID_EXPRESSION);
+			cell01.setValueExpression(ExpressionConstants.ID_EXPRESSION);
 			rowModel.addColumn(cell01);
 			rowModel.setIdColumn(cell01);
 

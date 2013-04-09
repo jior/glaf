@@ -41,14 +41,6 @@ public interface ITableDataService {
 	List<Dbid> getAllDbids();
 
 	/**
-	 * 更新序列
-	 * 
-	 * @param rows
-	 */
-	@Transactional
-	void updateAllDbids(List<Dbid> rows);
-
-	/**
 	 * 获取一页数据
 	 * 
 	 * @param pageNo
@@ -99,7 +91,7 @@ public interface ITableDataService {
 	 * @param rows
 	 */
 	@Transactional
-	void saveAll(TableDefinition tableDefinition, String seqNo,
+	Collection<TableModel>   saveAll(TableDefinition tableDefinition, String seqNo,
 			Collection<TableModel> rows);
 
 	/**
@@ -112,6 +104,14 @@ public interface ITableDataService {
 	@Transactional
 	void saveOrUpdate(String tableName, boolean updatable,
 			List<Map<String, Object>> rows);
+
+	/**
+	 * 更新序列
+	 * 
+	 * @param rows
+	 */
+	@Transactional
+	void updateAllDbids(List<Dbid> rows);
 
 	/**
 	 * 批量更新记录
