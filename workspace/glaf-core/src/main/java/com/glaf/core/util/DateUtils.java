@@ -147,6 +147,14 @@ public class DateUtils {
 		}
 		return days;
 	}
+	
+	public static int getNowYearMonthDay(){
+		String returnStr = null;
+		SimpleDateFormat f = new SimpleDateFormat("yyyyMMdd");
+		Date date = new Date();
+		returnStr = f.format(date);
+		return Integer.parseInt(returnStr);
+	}
 
 	/**
 	 * 获取两个日期之间的天数

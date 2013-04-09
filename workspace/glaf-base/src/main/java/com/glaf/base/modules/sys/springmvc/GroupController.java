@@ -36,6 +36,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -98,7 +99,7 @@ public class GroupController {
 	@RequestMapping(params = "method=batchDelete")
 	public ModelAndView batchDelete(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		boolean ret = true;
 
 		try {
@@ -133,7 +134,7 @@ public class GroupController {
 	@RequestMapping(params = "method=groupUsers")
 	public ModelAndView groupUsers(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		// 显示群组用户页面
 		return new ModelAndView("/modules/base/group/group_users", modelMap);
 	}
@@ -298,7 +299,7 @@ public class GroupController {
 	@RequestMapping(params = "method=prepareAdd")
 	public ModelAndView prepareAdd(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		// 显示列表页面
 		return new ModelAndView("/modules/base/group/group_add", modelMap);
 	}
@@ -315,7 +316,7 @@ public class GroupController {
 	@RequestMapping(params = "method=prepareModify")
 	public ModelAndView prepareModify(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		String id = request.getParameter("groupId");
 		Group bean = groupService.getGroup(id);
 		request.setAttribute("bean", bean);
@@ -336,7 +337,7 @@ public class GroupController {
 	@RequestMapping(params = "method=saveAdd")
 	public ModelAndView saveAdd(ModelMap modelMap, HttpServletRequest request,
 			HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		boolean ret = false;
 		SysUser user = RequestUtil.getLoginUser(request);
 		String actorId = user.getAccount();
@@ -402,7 +403,7 @@ public class GroupController {
 	@RequestMapping(params = "method=saveModify")
 	public ModelAndView saveModify(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		String id = request.getParameter("groupId");
 		Group bean = groupService.getGroup(id);
 		if (bean != null) {
@@ -460,7 +461,7 @@ public class GroupController {
 	@RequestMapping(params = "method=showList")
 	public ModelAndView showList(ModelMap modelMap, HttpServletRequest request,
 			HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		SysUser user = RequestUtil.getLoginUser(request);
 		String actorId = user.getAccount();
 		String type = request.getParameter("type");
@@ -472,5 +473,13 @@ public class GroupController {
 		request.setAttribute("pager", pager);
 		// 显示列表页面
 		return new ModelAndView("/modules/base/group/group_list", modelMap);
+	}
+
+	@ResponseBody
+	@RequestMapping(params = "method=sort")
+	public void sort(@RequestParam(value = "groupId") String groupId,
+			@RequestParam(value = "operate") int operate) {
+		logger.info("groupId:" + groupId + ",operate:" + operate);
+		groupService.sort(groupService.getGroup(groupId), operate);
 	}
 }

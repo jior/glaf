@@ -3,7 +3,7 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="html"%>
 <%
     String context = request.getContextPath();
-	com.glaf.base.modules.utils.ContextUtil.getInstance().setContextPath(context);
+	com.glaf.base.utils.ContextUtil.getInstance().setContextPath(context);
 	pageContext.setAttribute("contextPath", context);
 %>
 <html>

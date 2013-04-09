@@ -26,10 +26,12 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
+import com.glaf.core.util.RequestUtils;
 
 import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.utils.Authentication;
 import com.glaf.base.utils.RequestUtil;
+ 
 
 public class SpringDispatcherServlet extends DispatcherServlet {
 
@@ -46,7 +48,7 @@ public class SpringDispatcherServlet extends DispatcherServlet {
 	protected void doService(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		try {
-			String actorId = RequestUtil.getActorId(request);
+			String actorId = RequestUtils.getActorId(request);
 			if (actorId != null) {
 				// logger.debug("actorId:" + actorId);
 				Authentication.setAuthenticatedAccount(actorId);

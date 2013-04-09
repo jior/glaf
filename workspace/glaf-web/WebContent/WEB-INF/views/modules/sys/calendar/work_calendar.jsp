@@ -10,13 +10,13 @@ int year =ParamUtil.getIntAttribute(request, "year", cal.get(Calendar.YEAR));
 <head> 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
 <link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
-<link type="text/css" rel="stylesheet" href="<%=context%>/css/calendar.css">
-<script language="javascript" src='<%=context%>/scripts/verify.js'></script>
-<script language="javascript" src='<%=context%>/scripts/main.js'></script>
-<script type='text/javascript' src='<%=context%>/dwr/interface/WorkCalendarAjaxService.js'></script>
-<script type='text/javascript' src='<%=context%>/dwr/engine.js'></script>
+<link type="text/css" rel="stylesheet" href="<%=request.getContextPath()%>/css/calendar.css">
+<script language="javascript" src='<%=request.getContextPath()%>/scripts/verify.js'></script>
+<script language="javascript" src='<%=request.getContextPath()%>/scripts/main.js'></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.form.js"></script> 
 
-<script Language="JavaScript"> 
+<script Language="javascript"> 
 var year = <%=year%>;
 
 function goYear(i){  
@@ -26,18 +26,41 @@ function goYear(i){
 function selDay(obj, month, day){
   if(obj.checked){
     //alert("选择");
-	WorkCalendarAjaxService.createData(year, month, day);
-  }else{
+	//WorkCalendarAjaxService.createData(year, month, day);
+	 
+	jQuery.ajax({
+			type: "POST",
+			url: '<%=request.getContextPath()%>/sys/workCalendar.do?method=createData&year='+year+'&month='+month+'&day='+day,
+			dataType:  'json',
+				error: function(data){
+					alert('服务器处理错误！');
+				},
+				success: function(data){
+					   
+				 }
+		});
+	 
+  } else {
     //alert("删除");
-	WorkCalendarAjaxService.deleteData(year, month, day);
+	//WorkCalendarAjaxService.deleteData(year, month, day);
+	jQuery.ajax({
+			type: "POST",
+			url: '<%=request.getContextPath()%>/sys/workCalendar.do?method=deleteData&year='+year+'&month='+month+'&day='+day,
+			dataType:  'json',
+				error: function(data){
+					alert('服务器处理错误！');
+				},
+				success: function(data){
+					   
+				 }
+		});
   }
 }
 </script> 
 </head>
 
-<body onLoad="DynarchMenu.setup('menu1', { context: true});" id="document">
-<jsp:include page="/WEB-INF/views/modules/header.jsp" flush="true"/>
-
+<body  id="document">
+ 
 <table width="90%" border="0" cellpadding="2" cellspacing="2" align="center">
   <tr>
     <td colspan="3" align="center"><span onClick="goYear(-1)" title="上一年" class="changeDate">&lt;&lt;</span>&nbsp;&nbsp;&nbsp;<b><%=year%> 工作日历</b>&nbsp;&nbsp;&nbsp;<span onClick="goYear(1)" title="下一年" class="changeDate">&gt;&gt;</span></td>

@@ -39,9 +39,12 @@ import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
 import com.glaf.core.res.ViewMessages;
 import com.glaf.core.util.PageResult;
+import com.glaf.core.util.RequestUtils;
+
+import com.glaf.core.util.StringTools;
 import com.glaf.base.utils.ParamUtil;
 import com.glaf.base.utils.RequestUtil;
-import com.glaf.base.utils.StringTools;
+ 
 
 @Controller
 @RequestMapping("/workspace/mymenu.do")
@@ -68,7 +71,7 @@ public class MyMenuController {
 	@RequestMapping(params = "method=showList")
 	public ModelAndView showList(ModelMap modelMap, HttpServletRequest request,
 			HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		SysUser user = RequestUtil.getLoginUser(request);
 		long userId = user == null ? 0L : user.getId();
 
@@ -96,7 +99,7 @@ public class MyMenuController {
 	@RequestMapping(params = "method=prepareAdd")
 	public ModelAndView prepareAdd(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		return new ModelAndView("/modules/workspace/mymenu/mymenu_add",
 				modelMap);
 	}
@@ -113,7 +116,7 @@ public class MyMenuController {
 	@RequestMapping(params = "method=prepareAddMyMenu")
 	public ModelAndView prepareAddMyMenu(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		return new ModelAndView("/modules/workspace/mymenu/mymenu_addmymenu",
 				modelMap);
 	}
@@ -130,7 +133,7 @@ public class MyMenuController {
 	@RequestMapping(params = "method=saveAdd")
 	public ModelAndView saveAdd(ModelMap modelMap, MyMenuFormBean formBean,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		MyMenu bean = new MyMenu();
 
 		SysUser user = RequestUtil.getLoginUser(request);
@@ -197,7 +200,7 @@ public class MyMenuController {
 	@RequestMapping(params = "method=prepareModify")
 	public ModelAndView prepareModify(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		long id = ParamUtil.getLongParameter(request, "id", 0);
 		MyMenu bean = myMenuService.find(id);
 		request.setAttribute("bean", bean);
@@ -219,7 +222,7 @@ public class MyMenuController {
 	@RequestMapping(params = "method=saveModify")
 	public ModelAndView saveModify(ModelMap modelMap, MyMenuFormBean formBean,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		MyMenu bean = myMenuService.find(formBean.getId());
 
 		if (bean != null) {
@@ -258,7 +261,7 @@ public class MyMenuController {
 	@RequestMapping(params = "method=batchDelete")
 	public ModelAndView batchDelete(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		boolean ret = true;
 		// if (isTokenValid(request)) {// 防止表单重复提交
 		int[] id = ParamUtil.getIntParameterValues(request, "id");

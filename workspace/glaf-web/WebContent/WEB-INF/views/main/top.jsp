@@ -4,7 +4,7 @@
 <%@ page import="com.glaf.base.utils.*" %>
 <%
  
-String userName = RequestUtil.getActorId(request);
+String userName = com.glaf.core.util.RequestUtils.getActorId(request);
 SysUser user = RequestUtil.getLoginUser(request);
 if(null==userName){
 	userName = "";

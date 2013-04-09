@@ -7,9 +7,10 @@
 <%@ page import="com.glaf.base.utils.*"%>
 <%@ page import="com.glaf.core.identity.*"%>
 <%@ page import="com.glaf.core.security.*"%>
+<%@ page import="com.glaf.core.util.*"%>
 <%
 	String context = request.getContextPath();
-	int pageSize=2*Constants.PAGE_SIZE;
+	int pageSize=2*com.glaf.base.modules.Constants.PAGE_SIZE;
 	com.glaf.core.util.PageResult pager=(com.glaf.core.util.PageResult)request.getAttribute("pager");
 	List list = pager.getResults();
 	Map userMap = IdentityFactory.getLongUserMap();
@@ -126,9 +127,9 @@ if(list!=null){
 			}
 		    if(processDescriptions.indexOf(processDescription)<0){
 				contentBuffer += userRole.getProcessDescription()+"[<font color=red>代"+userRole.getAuthorizeFromName();
-				contentBuffer += " 有效期：" + BaseUtil.dateToString(userRole.getAvailDateStart()) +"至"+ BaseUtil.dateToString(userRole.getAvailDateEnd()) + "</font>] ";
+				contentBuffer += " 有效期：" + DateUtils.getDateTime(userRole.getAvailDateStart()) +"至"+ DateUtils.getDateTime(userRole.getAvailDateEnd()) + "</font>] ";
 				contentTitle += userRole.getProcessDescription()+"[代"+userRole.getAuthorizeFromName();
-				contentTitle += " 有效期：" + BaseUtil.dateToString(userRole.getAvailDateStart()) +"至"+ BaseUtil.dateToString(userRole.getAvailDateEnd())+"]";
+				contentTitle += " 有效期：" + DateUtils.getDateTime(userRole.getAvailDateStart()) +"至"+ DateUtils.getDateTime(userRole.getAvailDateEnd())+"]";
 		    }
 		    
 			authorizeFromNames += userRole.getAuthorizeFromName();

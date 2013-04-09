@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServlet;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.glaf.base.modules.utils.ContextUtil;
+import com.glaf.base.utils.ContextUtil;
 
 public class InitBaseDataServlet extends HttpServlet {
 	private static final long serialVersionUID = 2072103368980714549L;

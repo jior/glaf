@@ -42,10 +42,11 @@ import com.glaf.base.modules.sys.service.SysDeptRoleService;
 import com.glaf.base.modules.sys.service.SysRoleService;
 import com.glaf.base.modules.sys.service.SysTreeService;
 import com.glaf.base.utils.ParamUtil;
-import com.glaf.base.utils.RequestUtil;
+ 
 import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
 import com.glaf.core.res.ViewMessages;
+import com.glaf.core.util.RequestUtils;
 
 @Controller("/sys/deptRole")
 @RequestMapping("/sys/deptRole.do")
@@ -98,7 +99,7 @@ public class SysDeptRoleController {
 	@RequestMapping(params = "method=showList")
 	public ModelAndView showList(ModelMap modelMap, HttpServletRequest request,
 			HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		long deptId = (long) ParamUtil.getIntParameter(request, "parent", 0);
 		request.setAttribute("department",
 				sysDepartmentService.findById(deptId));
@@ -119,7 +120,7 @@ public class SysDeptRoleController {
 	@RequestMapping(params = "method=showPrivilege")
 	public ModelAndView showPrivilege(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		long deptId = ParamUtil.getLongParameter(request, "deptId", 0);
 		long roleId = ParamUtil.getLongParameter(request, "roleId", 0);
 		SysDeptRole deptRole = sysDeptRoleService.find(deptId, roleId);
@@ -156,7 +157,7 @@ public class SysDeptRoleController {
 	@RequestMapping(params = "method=setPrivilege")
 	public ModelAndView setPrivilege(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		long roleId = ParamUtil.getLongParameter(request, "roleId", 0);
 		long[] appId = ParamUtil.getLongParameterValues(request, "appId");
 		for (int i = 0; i < appId.length; i++) {
@@ -195,7 +196,7 @@ public class SysDeptRoleController {
 	@RequestMapping(params = "method=setRole")
 	public ModelAndView setRole(ModelMap modelMap, HttpServletRequest request,
 			HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		ViewMessages messages = new ViewMessages();
 		long deptId = ParamUtil.getIntParameter(request, "deptId", 0);
 		SysDepartment dept = sysDepartmentService.findById(deptId);// 查找部门对象

@@ -41,7 +41,7 @@ import com.glaf.base.modules.sys.mapper.*;
 import com.glaf.base.modules.sys.model.*;
 import com.glaf.base.modules.sys.query.*;
 import com.glaf.base.modules.sys.service.*;
-import com.glaf.base.modules.utils.BaseUtil;
+ 
 
 @Service("sysUserRoleService")
 @Transactional(readOnly = true)
@@ -103,8 +103,8 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 			bean.setUserId(toUser.getId());
 			bean.setDeptRoleId(userRole.getDeptRoleId());
 			bean.setAuthorized(1);
-			bean.setAvailDateStart(BaseUtil.stringToDate(startDate));
-			bean.setAvailDateEnd(BaseUtil.stringToDate(endDate));
+			bean.setAvailDateStart(DateUtils.toDate(startDate));
+			bean.setAvailDateEnd(DateUtils.toDate(endDate));
 			bean.setProcessDescription(processDescriptions);
 			if (mark == 1) {
 				bean.setProcessDescription("全局代理");

@@ -14,18 +14,17 @@ List list = (List)request.getAttribute("authorizedUser");
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-<title>XXXX基础平台系统</title>
+<title>基础平台系统</title>
 <base target="_self">
 <link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.form.js"></script> 
 <script language="javascript" src='<%=context%>/scripts/verify.js'></script>
 <script language="javascript" src='<%=context%>/scripts/main.js'></script>
 <link href="<%=request.getContextPath()%>/scripts/calendar/skins/aqua/theme.css"  type="text/css" title="Aqua" rel="stylesheet"/>
 <script src="<%=context%>/scripts/calendar/calendar.js" language="javascript"></script>
 <script src="<%=context%>/scripts/calendar/lang/calendar-en.js" language="javascript"></script>
 <script src="<%=context%>/scripts/calendar/lang/calendar-setup.js" language="javascript"></script>
-<script type='text/javascript' src='<%=context%>/dwr/interface/SysUserRoleAjaxService.js'></script>
-<script type='text/javascript' src='<%=context%>/dwr/engine.js'></script>
-<script type='text/javascript' src='<%=context%>/dwr/util.js'></script>
 </head>
 <script language="javascript">
 var fromUserId=<%=user.getId()%>;

@@ -32,7 +32,8 @@ import org.apache.commons.logging.LogFactory;
 import com.glaf.base.business.AuthorizeBean;
 import com.glaf.base.modules.sys.model.SysDeptRole;
 import com.glaf.base.modules.sys.model.SysUser;
-import com.glaf.base.utils.RequestUtil;
+ 
+import com.glaf.core.util.RequestUtils;
 
 public class PermissionTag extends BodyTagSupport {
 	protected final transient Log logger = LogFactory
@@ -65,7 +66,7 @@ public class PermissionTag extends BodyTagSupport {
 	}
 
 	public int doStartTag() {
-		String userId = RequestUtil
+		String userId = RequestUtils
 				.getActorId((HttpServletRequest) super.pageContext.getRequest());
 		AuthorizeBean bean = new AuthorizeBean();
 		SysUser user = bean.getUser(userId);

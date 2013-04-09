@@ -28,6 +28,8 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.glaf.base.modules.sys.model.SysApplication;
@@ -35,10 +37,11 @@ import com.glaf.base.modules.sys.model.SysFunction;
 import com.glaf.base.modules.sys.service.SysApplicationService;
 import com.glaf.base.modules.sys.service.SysFunctionService;
 import com.glaf.base.utils.ParamUtil;
-import com.glaf.base.utils.RequestUtil;
+
 import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
 import com.glaf.core.res.ViewMessages;
+import com.glaf.core.util.RequestUtils;
 
 @Controller("/sys/function")
 @RequestMapping("/sys/function.do")
@@ -47,41 +50,10 @@ public class SysFunctionController {
 			.getLog(SysFunctionController.class);
 
 	@javax.annotation.Resource
-	private SysFunctionService sysFunctionService;
-
-	@javax.annotation.Resource
 	private SysApplicationService sysApplicationService;
 
-	public void setSysFunctionService(SysFunctionService sysFunctionService) {
-		this.sysFunctionService = sysFunctionService;
-		logger.info("setSysFunctionService");
-	}
-
-	public void setSysApplicationService(
-			SysApplicationService sysApplicationService) {
-		this.sysApplicationService = sysApplicationService;
-	}
-
-	/**
-	 * 显示对应模块下面的功能列表
-	 * 
-	 * @param mapping
-	 * @param actionForm
-	 * @param request
-	 * @param response
-	 * @return
-	 */
-	@RequestMapping(params = "method=showFuncList")
-	public ModelAndView showFuncList(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
-		int parent = ParamUtil.getIntParameter(request, "parent", 0);
-		List<SysFunction> list = sysFunctionService.getSysFunctionList(parent);
-		request.setAttribute("list", list);
-
-		// 显示列表页面
-		return new ModelAndView("/modules/sys/function/function_list", modelMap);
-	}
+	@javax.annotation.Resource
+	private SysFunctionService sysFunctionService;
 
 	/**
 	 * 批量删除信息
@@ -95,7 +67,7 @@ public class SysFunctionController {
 	@RequestMapping(params = "method=batchDelete")
 	public ModelAndView batchDelete(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		boolean ret = true;
 		long[] id = ParamUtil.getLongParameterValues(request, "id");
 		ret = sysFunctionService.deleteAll(id);
@@ -124,7 +96,7 @@ public class SysFunctionController {
 	@RequestMapping(params = "method=saveAdd")
 	public ModelAndView saveAdd(ModelMap modelMap, HttpServletRequest request,
 			HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		long parent = (long) ParamUtil.getIntParameter(request, "parent", 0);
 		SysApplication app = sysApplicationService.findById(parent);
 		SysFunction bean = new SysFunction();
@@ -158,7 +130,7 @@ public class SysFunctionController {
 	@RequestMapping(params = "method=saveModify")
 	public ModelAndView saveModify(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		long id = (long) ParamUtil.getIntParameter(request, "funcId", 0);
 		SysFunction bean = sysFunctionService.findById(id);
 		bean.setName(ParamUtil.getParameter(request, "funcName"));
@@ -176,5 +148,44 @@ public class SysFunctionController {
 		MessageUtils.addMessages(request, messages);
 		// 显示提交后页面
 		return new ModelAndView("show_msg2", modelMap);
+	}
+
+	public void setSysApplicationService(
+			SysApplicationService sysApplicationService) {
+		this.sysApplicationService = sysApplicationService;
+	}
+
+	public void setSysFunctionService(SysFunctionService sysFunctionService) {
+		this.sysFunctionService = sysFunctionService;
+		logger.info("setSysFunctionService");
+	}
+
+	/**
+	 * 显示对应模块下面的功能列表
+	 * 
+	 * @param mapping
+	 * @param actionForm
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(params = "method=showFuncList")
+	public ModelAndView showFuncList(ModelMap modelMap,
+			HttpServletRequest request, HttpServletResponse response) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		int parent = ParamUtil.getIntParameter(request, "parent", 0);
+		List<SysFunction> list = sysFunctionService.getSysFunctionList(parent);
+		request.setAttribute("list", list);
+
+		// 显示列表页面
+		return new ModelAndView("/modules/sys/function/function_list", modelMap);
+	}
+
+	@ResponseBody
+	@RequestMapping(params = "method=sort")
+	public void sort(@RequestParam(value = "id") int id,
+			@RequestParam(value = "operate") int operate) {
+		logger.info("id:" + id + ";operate:" + operate);
+		sysFunctionService.sort(sysFunctionService.findById(id), operate);
 	}
 }

@@ -38,8 +38,9 @@ import com.glaf.core.service.ITableDataService;
 import com.glaf.core.todo.Todo;
 import com.glaf.core.todo.TodoInstance;
 import com.glaf.core.todo.query.TodoQuery;
+import com.glaf.core.util.DateUtils;
 import com.glaf.core.util.JdbcUtils;
-import com.glaf.base.utils.DateTools;
+ 
 
 @Component("todoJobBean")
 @SuppressWarnings({"rawtypes", "unchecked"})
@@ -171,8 +172,8 @@ public class TodoJobBean {
 						limitDay);
 				long time = limitWorkDate.getTime();
 
-				Date cautionDate = new Date(time - ahour * DateTools.HOUR);
-				Date pastDueDate = new Date(time + bhour * DateTools.HOUR);
+				Date cautionDate = new Date(time - ahour * DateUtils.HOUR);
+				Date pastDueDate = new Date(time + bhour * DateUtils.HOUR);
 				model.setAlarmDate(cautionDate);
 				model.setPastDueDate(pastDueDate);
 				model.setRowId(rowId);
@@ -355,9 +356,9 @@ public class TodoJobBean {
 							long time = limitWorkDate.getTime();
 
 							Date cautionDate = new Date(time - ahour
-									* DateTools.HOUR);
+									* DateUtils.HOUR);
 							Date pastDueDate = new Date(time + bhour
-									* DateTools.HOUR);
+									* DateUtils.HOUR);
 							model.setAlarmDate(cautionDate);
 							model.setPastDueDate(pastDueDate);
 							model.setRowId(rowId);
@@ -439,8 +440,8 @@ public class TodoJobBean {
 							model.getStartDate(), limitDay);
 					long time = limitWorkDate.getTime();
 
-					Date cautionDate = new Date(time - ahour * DateTools.HOUR);
-					Date pastDueDate = new Date(time + bhour * DateTools.HOUR);
+					Date cautionDate = new Date(time - ahour * DateUtils.HOUR);
+					Date pastDueDate = new Date(time + bhour * DateUtils.HOUR);
 					model.setAlarmDate(cautionDate);
 					model.setPastDueDate(pastDueDate);
 					model.setProcessInstanceId(String.valueOf(taskItem

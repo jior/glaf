@@ -37,6 +37,7 @@ import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
 import com.glaf.core.res.ViewMessages;
+import com.glaf.core.util.RequestUtils;
 import com.glaf.base.utils.ParamUtil;
 import com.glaf.base.utils.RequestUtil;
 
@@ -60,7 +61,7 @@ public class AuditController {
 	@RequestMapping(params = "method=prepareComment")
 	public ModelAndView prepareComment(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		int referType = ParamUtil.getIntParameter(request, "referType", 0);
 		long referId = ParamUtil.getLongParameter(request, "referId", 0);
 		String confirm = ParamUtil.getParameter(request, "confirm", "true");
@@ -87,7 +88,7 @@ public class AuditController {
 	@RequestMapping(params = "method=saveComment")
 	public ModelAndView saveComment(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		long id = ParamUtil.getLongParameter(request, "id", 0);
 		String memo = ParamUtil.getParameter(request, "memo", "");
 		Audit bean = auditService.findById(id);
@@ -123,7 +124,7 @@ public class AuditController {
 	@RequestMapping(params = "method=showList")
 	public ModelAndView showList(ModelMap modelMap, HttpServletRequest request,
 			HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		long referId = ParamUtil.getLongParameter(request, "referId", 0);
 		int referType = ParamUtil.getIntParameter(request, "referType", 0);
 		String type = ParamUtil.getParameter(request, "type", "");
@@ -153,7 +154,7 @@ public class AuditController {
 	@RequestMapping(params = "method=showList2")
 	public ModelAndView showList2(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		// œ‘ æ“≥√Ê
 		return new ModelAndView("/modules/others/audit/showList2", modelMap);
 	}

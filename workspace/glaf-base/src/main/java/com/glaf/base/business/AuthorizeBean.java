@@ -34,6 +34,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.cache.CacheFactory;
 import com.glaf.core.context.ContextFactory;
+import com.glaf.core.util.ClassUtils;
 import com.glaf.core.util.RequestUtils;
 import com.glaf.core.web.callback.CallbackProperties;
 import com.glaf.core.web.callback.LoginCallback;
@@ -44,8 +45,8 @@ import com.glaf.base.modules.sys.service.AuthorizeService;
 import com.glaf.base.modules.sys.service.SysApplicationService;
 import com.glaf.base.modules.sys.service.SysUserService;
 import com.glaf.base.modules.sys.util.SysUserJsonFactory;
-import com.glaf.base.modules.utils.ContextUtil;
-import com.glaf.base.utils.ClassUtil;
+import com.glaf.base.utils.ContextUtil;
+ 
 
 public class AuthorizeBean {
 	private static final Log logger = LogFactory.getLog(AuthorizeBean.class);
@@ -137,7 +138,7 @@ public class AuthorizeBean {
 				while (e.hasMoreElements()) {
 					String className = (String) e.nextElement();
 					try {
-						Object obj = ClassUtil.instantiateObject(className);
+						Object obj = ClassUtils.instantiateObject(className);
 						if (obj instanceof LoginCallback) {
 							LoginCallback callback = (LoginCallback) obj;
 							callback.afterLogin(bean.getAccount(), request,

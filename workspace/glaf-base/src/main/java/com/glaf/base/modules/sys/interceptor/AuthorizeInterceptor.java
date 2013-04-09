@@ -34,8 +34,8 @@ import com.glaf.base.modules.sys.model.SysFunction;
 
 import com.glaf.base.modules.sys.model.SysUser;
 
-import com.glaf.base.modules.utils.ContextUtil;
 import com.glaf.base.security.IdentityFactory;
+import com.glaf.base.utils.ContextUtil;
 import com.glaf.base.utils.RequestUtil;
 import com.glaf.core.context.ContextFactory;
 import com.glaf.core.domain.SysLog;

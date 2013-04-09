@@ -41,7 +41,7 @@ import com.glaf.base.modules.sys.service.SysRoleService;
 import com.glaf.base.modules.sys.service.SysUserRoleService;
 import com.glaf.base.modules.sys.service.SysUserService;
 import com.glaf.base.modules.sys.service.SysDepartmentService;
-import com.glaf.base.modules.utils.ContextUtil;
+import com.glaf.base.utils.ContextUtil;
 
 public class IdentityFactory {
 	protected final static Log logger = LogFactory

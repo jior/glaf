@@ -25,6 +25,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.glaf.core.context.ContextFactory;
+import com.glaf.core.util.DateUtils;
 import com.glaf.core.util.UUID32;
 
 import com.glaf.mail.MailMessage;
@@ -46,7 +47,7 @@ import com.glaf.core.todo.Todo;
 import com.glaf.core.todo.TodoInstance;
 import com.glaf.core.todo.query.TodoQuery;
 import com.glaf.base.modules.workspace.model.Message;
-import com.glaf.base.utils.DateTools;
+ 
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
 public class SendMessageBean {
@@ -866,7 +867,7 @@ public class SendMessageBean {
 					Date pastDue = tdi.getPastDueDate();
 					if (pastDue != null) {
 						// 超过7天
-						if ((now.getTime() - pastDue.getTime()) > DateTools.WEEK) {
+						if ((now.getTime() - pastDue.getTime()) > DateUtils.WEEK) {
 							xy.setQtyRedWarn(xy.getQtyRedWarn() + 1);
 						}
 					}
@@ -913,7 +914,7 @@ public class SendMessageBean {
 
 					String subject = (dept != null ? dept.getName() : "") + " "
 							+ user.getName() + " "
-							+ DateTools.getDate(new Date()) + " GLAF系统Todo事项";
+							+ DateUtils.getDate(new Date()) + " GLAF系统Todo事项";
 					logger.info(subject);
 					MailMessage mailMessage = new MailMessage();
 					mailMessage.setDataMap(mailMap);
@@ -957,7 +958,7 @@ public class SendMessageBean {
 										+ " "
 										+ user.getName()
 										+ " "
-										+ DateTools.getDate(new Date())
+										+ DateUtils.getDate(new Date())
 										+ " GLAG系统超过7天期限TODO事项";
 								logger.info(subject);
 								MailMessage mailMessage = new MailMessage();
@@ -1202,9 +1203,9 @@ public class SendMessageBean {
 						mailMap.put("leader", u);
 
 						String subject = dept.getName() + " " + user.getName()
-								+ " " + DateTools.getDateTime(new Date())
+								+ " " + DateUtils.getDateTime(new Date())
 								+ " GLAF系统Todo事项";
-						String messageId = DateTools.getNowYearMonthDay()
+						String messageId = DateUtils.getNowYearMonthDay()
 								+ "-cc-" + u.getAccount();
 						MailMessage mailMessage = new MailMessage();
 						mailMessage.setDataMap(mailMap);
@@ -1231,10 +1232,10 @@ public class SendMessageBean {
 					if (!MailTools.isMailAddress(user.getEmail())) {
 						continue;
 					}
-					String messageId = DateTools.getNowYearMonthDay() + "-"
+					String messageId = DateUtils.getNowYearMonthDay() + "-"
 							+ actorId;
 					String subject = dept.getName() + " " + user.getName()
-							+ " " + DateTools.getDateTime(new Date())
+							+ " " + DateUtils.getDateTime(new Date())
 							+ " GLAF系统Todo事项";
 					MailMessage mailMessage = new MailMessage();
 					mailMessage.setDataMap(mailMap);

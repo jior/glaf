@@ -18,14 +18,6 @@
 <script language="javascript" src="<%=request.getContextPath()%>/scripts/calendar/calendar.js" ></script>
 <script language="javascript" src="<%=request.getContextPath()%>/scripts/calendar/lang/calendar-en.js"></script>
 <script language="javascript" src="<%=request.getContextPath()%>/scripts/calendar/calendar-setup.js"></script>
-<style type="text/css"> 
-@import url("<%=contextPath%>/scripts/hmenu/skin-yp.css");
-.STYLE1 {color: #FF0000}
-</style>
-<script type="text/javascript">
-_dynarch_menu_url = "<%=contextPath%>/scripts/hmenu";
-</script>
-<script type="text/javascript" src="<%=contextPath%>/scripts/hmenu/hmenu.js"></script>
 <script language="javascript">
   String.prototype.trim = function() {
      return this.replace(/(^\s*)|(\s*$)/g, "");
@@ -63,7 +55,7 @@ _dynarch_menu_url = "<%=contextPath%>/scripts/hmenu";
  }
 
 </script>
-<body onLoad="DynarchMenu.setup('menu1', { context: true});" id="document">
+<body id="document">
 <jsp:include page="/WEB-INF/views/modules/header.jsp" flush="true"/>
 <br><br>
 <html:form action="${contextPath}/sys/scheduler.do?method=saveModify" method="post"  onsubmit="return verifyAll(this);">

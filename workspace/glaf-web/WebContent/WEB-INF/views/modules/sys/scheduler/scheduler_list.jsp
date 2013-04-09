@@ -13,14 +13,6 @@
 <link href="<%=contextPath%>/css/site.css" type="text/css" rel="stylesheet">
 <script language="javascript" src='<%=contextPath%>/scripts/verify.js'></script>
 <script language="javascript" src='<%=contextPath%>/scripts/main.js'></script>
-<style type="text/css"> 
-@import url("<%=contextPath%>/scripts/hmenu/skin-yp.css");
-.STYLE1 {color: #FF0000}
-</style>
-<script type="text/javascript">
-_dynarch_menu_url = "<%=contextPath%>/scripts/hmenu";
-</script>
-<script type="text/javascript" src="<%=contextPath%>/scripts/hmenu/hmenu.js"></script>
 <script language="javascript">
 
 function createScheduler() {
@@ -53,8 +45,7 @@ function schedulerXY(taskId, startup) {
 
 </script>
 <body id="document">
-<jsp:include page="/WEB-INF/views/modules/header.jsp" flush="true"/>
-<br><br>
+ 
 
 <center>
 <!-- <div class="nav-title"><span class="Title">调度管理</span></div>

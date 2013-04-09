@@ -25,6 +25,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.glaf.core.util.DateUtils;
+
 /**
  * <p>
  * Title: ParamUtil.java
@@ -51,7 +53,7 @@ public class ParamUtil {
 		Object value = dataMap.get(key);
 		if (value != null) {
 			if (value instanceof String) {
-				result = DateTools.toTimestamp(value.toString());
+				result = DateUtils.toTimestamp(value.toString());
 			} else if (value instanceof Date) {
 				result = (Date) value;
 			}
@@ -132,7 +134,7 @@ public class ParamUtil {
 			if (value instanceof String) {
 				result = (String) value;
 			} else if (value instanceof Date) {
-				result = DateTools.getDate((Date) value);
+				result = DateUtils.getDate((Date) value);
 			} else {
 				result = value.toString();
 			}

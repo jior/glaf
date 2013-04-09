@@ -5,6 +5,7 @@
 <%@ page import="com.glaf.base.modules.utils.*"%>
 <%@ page import="com.glaf.base.modules.sys.model.*"%>
 <%@ page import="com.glaf.base.utils.*"%>
+<%@ page import="com.glaf.core.util.*"%>
 <%
 String context = request.getContextPath();
 SysUser user = (SysUser)request.getAttribute("user");
@@ -17,15 +18,14 @@ List processList = (List)request.getAttribute("processList");
 <title>基础平台系统</title>
 <base target="_self">
 <link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.form.js"></script> 
 <script language="javascript" src='<%=context%>/scripts/verify.js'></script>
 <script language="javascript" src='<%=context%>/scripts/main.js'></script>
 <link href="<%=request.getContextPath()%>/scripts/calendar/skins/aqua/theme.css"  type="text/css" title="Aqua" rel="stylesheet"/>
 <script src="<%=context%>/scripts/calendar/calendar.js" language="javascript"></script>
 <script src="<%=context%>/scripts/calendar/lang/calendar-en.js" language="javascript"></script>
 <script src="<%=context%>/scripts/calendar/lang/calendar-setup.js" language="javascript"></script>
-<script type='text/javascript' src='<%=context%>/dwr/interface/SysUserRoleAjaxService.js'></script>
-<script type='text/javascript' src='<%=context%>/dwr/engine.js'></script>
-<script type='text/javascript' src='<%=context%>/dwr/util.js'></script>
 </head>
 <script language="javascript">
 var fromUserId=<%=user.getId()%>;
@@ -90,11 +90,22 @@ function cancel(form){
       var e = form.id[i];
       if (e.checked) ids = ids + e.value + ",";
 	}
-	SysUserRoleAjaxService.removeRoleUser(fromUserId, ids, function(reply){
-      if(reply){
-        $("link").click();
-      }
-    });
+	//SysUserRoleAjaxService.removeRoleUser(fromUserId, ids, function(reply){
+    //  if(reply){
+    //    $("link").click();
+    //  }
+   // });
+	jQuery.ajax({
+			type: "POST",
+			url: '<%=request.getContextPath()%>/sys/sysUserRole.do?method=removeRoleUser&fromUserId='+fromUserId+'&toUserIds='+ids,
+			dataType:  'json',
+				error: function(data){
+					alert('服务器处理错误！');
+				},
+				success: function(data){
+					   $("link").click();
+				 }
+		});
   }
 }
 function add(){
@@ -125,13 +136,25 @@ function add(){
 	return;
   }
   if(confirm("确认要授权吗？")){
+	/*
     SysUserRoleAjaxService.addRole(fromUserId, $("userId").value,$("startDate").value,$("endDate").value,mark,processNames,processDescriptions, function(reply){
       if(reply){	    
         $("link").click();
       }else{
 	    alert($("userName").value + "不能重复授权!");
 	  }
-    });
+    });*/
+		jQuery.ajax({
+			type: "POST",
+			url: '<%=request.getContextPath()%>/sys/sysUserRole.do?method=addRole&fromUserId='+fromUserId+'&toUserId='+$("userId").value+'&startDate='+$("startDate").value+'&endDate='+$("endDate").value+'&mark='+mark+'&processNames='+processNames+'&processDescriptions='+processDescriptions,
+			dataType:  'json',
+				error: function(data){
+					alert('服务器处理错误！');
+				},
+				success: function(data){
+					   $("link").click();
+				 }
+		});
   }
 }
 </script>
@@ -241,7 +264,7 @@ while(iter.hasNext()){
   <tr>
     <td class="td-cb" height="20" ><input type="checkbox" name="id" value="<%=user2.getId()%>" onClick="checkOperation(this.form)"></td>
     <td class="td-text" title="<%=user2.getName()%>[<%=user2.getCode()%>]"><%=user2.getName()%>[<%=user2.getCode()%>]</td>
-    <td class="td-date" ><%=BaseUtil.dateToString(startDate)%> - <%=BaseUtil.dateToString(endDate)%></td>
+    <td class="td-date" ><%=DateUtils.getDateTime(startDate)%> - <%=DateUtils.getDateTime(endDate)%></td>
     <td class="td-date" title="<%=processDescription%>"><%=processDescription%></td>
   </tr>	
 <%

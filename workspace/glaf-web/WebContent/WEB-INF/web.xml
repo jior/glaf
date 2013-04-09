@@ -79,22 +79,7 @@
 	   <url-pattern>/*</url-pattern> 
 	</filter-mapping> 
 
-	<!--dwr-->
-	<servlet>
-		<servlet-name>dwr-invoker</servlet-name>
-		<servlet-class>uk.ltd.getahead.dwr.DWRServlet</servlet-class>
-		<init-param>
-			<param-name>debug</param-name>
-			<param-value>true</param-value>
-		</init-param>
-	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>dwr-invoker</servlet-name>
-		<url-pattern>/dwr/*</url-pattern>
-	</servlet-mapping>
   
-
 	<servlet>
 		<servlet-name>dispatcher</servlet-name>
 		<servlet-class>com.glaf.base.servlet.SpringDispatcherServlet</servlet-class>

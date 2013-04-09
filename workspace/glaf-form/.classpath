@@ -36,7 +36,6 @@
 	<classpathentry kind="lib" path="/glaf-core/lib/dom4j-1.6.1.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/druid-0.2.10.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/dubbo-2.4.9.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/dwr.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/ehcache-core.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/fastjson-1.1.26.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/filterbuilder.jar"/>

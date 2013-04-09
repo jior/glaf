@@ -36,11 +36,12 @@ import com.glaf.base.modules.sys.form.SubjectCodeFormBean;
 import com.glaf.base.modules.sys.model.SubjectCode;
 import com.glaf.base.modules.sys.service.SubjectCodeService;
 import com.glaf.base.utils.ParamUtil;
-import com.glaf.base.utils.RequestUtil;
 import com.glaf.base.utils.WebUtil;
+
 import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
 import com.glaf.core.res.ViewMessages;
+import com.glaf.core.util.RequestUtils;
 
 @Controller("/sys/subject")
 @RequestMapping("/sys/subject.do")
@@ -67,7 +68,7 @@ public class SysSubjectCodeController {
 	public ModelAndView showSubjectTreeList(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
 		logger.info("showExesSelect");
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		int parent = ParamUtil.getIntParameter(request, "parent", 0);
 		request.setAttribute("list",
 				subjectCodeService.getSysSubjectCodeList(parent));
@@ -89,7 +90,7 @@ public class SysSubjectCodeController {
 	 */
 	public ModelAndView showList(ModelMap modelMap, HttpServletRequest request,
 			HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		Map<String, String> filter = WebUtil.getQueryMap(request);
 		request.setAttribute("pager", subjectCodeService.getFeePage(filter));
 		return new ModelAndView("/modules/sys/subject/show_list1");
@@ -106,7 +107,7 @@ public class SysSubjectCodeController {
 	 */
 	public ModelAndView getSubFee(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		int parent = ParamUtil.getIntParameter(request, "parent", 0);
 		Map<String, String> filter = WebUtil.getQueryMap(request);
 		filter.put("parent", String.valueOf(parent));
@@ -126,7 +127,7 @@ public class SysSubjectCodeController {
 	 */
 	public ModelAndView prepareAdd(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		long parent = ParamUtil.getLongParameter(request, "parent", 0);
 		request.setAttribute("parent", subjectCodeService.findById(parent));
 		// 显示列表页面
@@ -144,7 +145,7 @@ public class SysSubjectCodeController {
 	 */
 	public ModelAndView saveAdd(ModelMap modelMap, SubjectCodeFormBean form,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		SubjectCode bean = new SubjectCode();
 		try {
 			PropertyUtils.copyProperties(bean, form);
@@ -176,7 +177,7 @@ public class SysSubjectCodeController {
 	 */
 	public ModelAndView prepareModify(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		long id = ParamUtil.getLongParameter(request, "id", 0);
 		SubjectCode bean = subjectCodeService.findById(id);
 		request.setAttribute("fee", bean);
@@ -196,7 +197,7 @@ public class SysSubjectCodeController {
 	 */
 	public ModelAndView saveModify(ModelMap modelMap, SubjectCodeFormBean form,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		long id = ParamUtil.getLongParameter(request, "id", 0);
 		SubjectCode bean = subjectCodeService.findById(id);
 		try {
@@ -228,7 +229,7 @@ public class SysSubjectCodeController {
 	 */
 	public ModelAndView batchDelete(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		boolean ret = true;
 		long[] id = ParamUtil.getLongParameterValues(request, "id");
 		ret = subjectCodeService.deleteAll(id);

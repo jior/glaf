@@ -32,6 +32,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -43,7 +44,6 @@ import com.glaf.base.modules.sys.model.SysTree;
 import com.glaf.base.modules.sys.query.SysTreeQuery;
 import com.glaf.base.modules.sys.service.SysTreeService;
 import com.glaf.base.utils.ParamUtil;
-import com.glaf.base.utils.RequestUtil;
 import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
 import com.glaf.core.res.ViewMessages;
@@ -73,7 +73,7 @@ public class TreeController {
 	@RequestMapping(params = "method=batchDelete")
 	public ModelAndView batchDelete(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		ViewMessages messages = new ViewMessages();
 		messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 				"tree.delete_failure"));
@@ -93,7 +93,7 @@ public class TreeController {
 	@RequestMapping(params = "method=getSubTree")
 	public ModelAndView getSubTree(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		int id = ParamUtil.getIntParameter(request, "id", 0);
 		List<SysTree> list = sysTreeService.getSysTreeList(id);
 		request.setAttribute("list", list);
@@ -217,7 +217,7 @@ public class TreeController {
 	@RequestMapping(params = "method=prepareModify")
 	public ModelAndView prepareModify(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		long id = ParamUtil.getIntParameter(request, "id", 0);
 		SysTree bean = sysTreeService.findById(id);
 		if (bean != null && bean.getParentId() > 0) {
@@ -243,7 +243,7 @@ public class TreeController {
 	@RequestMapping(params = "method=saveAdd")
 	public ModelAndView saveAdd(ModelMap modelMap, HttpServletRequest request,
 			HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		SysTree bean = new SysTree();
 		bean.setParentId(ParamUtil.getIntParameter(request, "parent", 0));
 		bean.setName(ParamUtil.getParameter(request, "name"));
@@ -274,7 +274,7 @@ public class TreeController {
 	@RequestMapping(params = "method=saveModify")
 	public ModelAndView saveModify(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		long id = ParamUtil.getIntParameter(request, "id", 0);
 		SysTree bean = sysTreeService.findById(id);
 		if (bean != null) {
@@ -320,7 +320,7 @@ public class TreeController {
 	@RequestMapping(params = "method=showLeft")
 	public ModelAndView showLeft(ModelMap modelMap, HttpServletRequest request,
 			HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		ModelAndView forward = new ModelAndView("/modules/base/tree/tree_left",
 				modelMap);
 		int parent = ParamUtil.getIntParameter(request, "parent",
@@ -345,7 +345,7 @@ public class TreeController {
 	@RequestMapping(params = "method=showList")
 	public ModelAndView showList(ModelMap modelMap, HttpServletRequest request,
 			HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		int parentId = ParamUtil.getIntParameter(request, "parent", 0);
 		int pageNo = ParamUtil.getIntParameter(request, "page_no", 1);
 		int pageSize = ParamUtil.getIntParameter(request, "page_size",
@@ -372,14 +372,24 @@ public class TreeController {
 	@RequestMapping(params = "method=showMain")
 	public ModelAndView showMain(ModelMap modelMap, HttpServletRequest request,
 			HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		return new ModelAndView("/modules/base/tree/tree_frame", modelMap);
 	}
 
 	@RequestMapping(params = "method=showTop")
 	public ModelAndView showTop(ModelMap modelMap, HttpServletRequest request,
 			HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		return new ModelAndView("/modules/base/tree/tree_top", modelMap);
+	}
+
+	@ResponseBody
+	@RequestMapping(params = "method=sort")
+	public void sort(@RequestParam(value = "parent") int parent,
+			@RequestParam(value = "id") int id,
+			@RequestParam(value = "operate") int operate) {
+		logger.info("parent:" + parent + "; id:" + id + "; operate:" + operate);
+		SysTree bean = sysTreeService.findById(id);
+		sysTreeService.sort(parent, bean, operate);
 	}
 }

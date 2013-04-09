@@ -36,6 +36,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -62,7 +63,6 @@ import com.glaf.base.modules.sys.service.DictoryDefinitionService;
 import com.glaf.base.modules.sys.service.DictoryService;
 import com.glaf.base.modules.sys.service.SysTreeService;
 import com.glaf.base.utils.ParamUtil;
-import com.glaf.base.utils.RequestUtil;
 
 @Controller("/base/dictory")
 @RequestMapping("/base/dictory.do")
@@ -91,7 +91,7 @@ public class DictoryController {
 	@RequestMapping(params = "method=batchDelete")
 	public ModelAndView batchDelete(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		boolean ret = true;
 		long[] id = ParamUtil.getLongParameterValues(request, "id");
 		ret = dictoryService.deleteAll(id);
@@ -207,7 +207,7 @@ public class DictoryController {
 	@RequestMapping(params = "method=loadDictory")
 	public ModelAndView loadDictory(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		return new ModelAndView("/modules/base/dictory/dictory_load", modelMap);
 	}
 
@@ -224,7 +224,7 @@ public class DictoryController {
 	public ModelAndView prepareAdd(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
 		// 显示列表页面
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		Long nodeId = ParamUtils.getLong(params, "parent");
 		if (nodeId > 0) {
@@ -251,7 +251,7 @@ public class DictoryController {
 	@RequestMapping(params = "method=prepareModify")
 	public ModelAndView prepareModify(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		long id = ParamUtil.getIntParameter(request, "id", 0);
 		Dictory bean = dictoryService.find(id);
 		request.setAttribute("bean", bean);
@@ -335,7 +335,7 @@ public class DictoryController {
 	@RequestMapping(params = "method=saveLoadDictory")
 	public ModelAndView saveLoadDictory(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		BaseDataManager.getInstance().refreshBaseData();
 		ViewMessages messages = new ViewMessages();
 		messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
@@ -357,7 +357,7 @@ public class DictoryController {
 	@RequestMapping(params = "method=saveModify")
 	public ModelAndView saveModify(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		long id = ParamUtil.getIntParameter(request, "id", 0);
 		Dictory bean = dictoryService.find(id);
@@ -412,7 +412,7 @@ public class DictoryController {
 	@RequestMapping(params = "method=showDictData")
 	public ModelAndView showDictData(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		ModelAndView view = null;
 		String code = ParamUtil.getParameter(request, "code");
 		Iterator<?> iter = null;
@@ -445,7 +445,7 @@ public class DictoryController {
 	@RequestMapping(params = "method=showFrame")
 	public ModelAndView showFrame(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		SysTree bean = sysTreeService.getSysTreeByCode(Constants.TREE_DICTORY);
 		request.setAttribute("parent", bean.getId() + "");
 		return new ModelAndView("/modules/base/dictory/dictory_frame", modelMap);
@@ -463,7 +463,7 @@ public class DictoryController {
 	@RequestMapping(params = "method=showList")
 	public ModelAndView showList(ModelMap modelMap, HttpServletRequest request,
 			HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		int parent = ParamUtil.getIntParameter(request, "parent", 0);
 		int pageNo = ParamUtil.getIntParameter(request, "page_no", 1);
 		int pageSize = ParamUtil.getIntParameter(request, "page_size", 10);
@@ -472,5 +472,15 @@ public class DictoryController {
 		request.setAttribute("pager", pager);
 		// 显示列表页面
 		return new ModelAndView("/modules/base/dictory/dictory_list", modelMap);
+	}
+
+	@ResponseBody
+	@RequestMapping(params = "method=sort")
+	public void sort(@RequestParam(value = "parent") int parent,
+			@RequestParam(value = "id") int id,
+			@RequestParam(value = "operate") int operate) {
+		logger.info("parent:" + parent + "; id:" + id + "; operate:" + operate);
+		Dictory bean = dictoryService.find(id);
+		dictoryService.sort(parent, bean, operate);
 	}
 }

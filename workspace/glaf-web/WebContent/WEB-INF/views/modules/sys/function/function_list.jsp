@@ -17,11 +17,10 @@ int parent=ParamUtil.getIntParameter(request, "parent", 0);
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
 <link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.form.js"></script> 
 <script language="javascript" src='<%=context%>/scripts/verify.js'></script>
 <script language="javascript" src='<%=context%>/scripts/main.js'></script>
-<script type='text/javascript' src='<%=context%>/dwr/interface/SysFunctionAjaxService.js'></script>
-<script type='text/javascript' src='<%=context%>/dwr/engine.js'></script>
-<script type='text/javascript' src='<%=context%>/dwr/util.js'></script>
 <script language="javascript">
 var num=0;
 function checkOperation(form){
@@ -72,7 +71,18 @@ function modify(form){
   modifyForm.funcMethod.value=form.funcMethod[i].value;
 }
 function sort(id, operate){  
-  SysFunctionAjaxService.sort(id, operate, {callback:function (){reloadPage();}});
+ // SysFunctionAjaxService.sort(id, operate, {callback:function (){reloadPage();}});
+       jQuery.ajax({
+			type: "POST",
+			url: '<%=request.getContextPath()%>/sys/function.do?method=sort&id='+id+'&operate='+operate,
+			dataType:  'json',
+				error: function(data){
+					alert('服务器处理错误！');
+				},
+				success: function(data){
+					   location.reload();
+				 }
+		});
 }
 </script>
 </head>

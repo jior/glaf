@@ -43,14 +43,14 @@ import com.glaf.base.modules.sys.service.AuthorizeService;
 import com.glaf.base.modules.sys.service.SysApplicationService;
 import com.glaf.base.modules.sys.service.SysTreeService;
 import com.glaf.base.modules.sys.service.SysUserService;
-import com.glaf.base.modules.utils.ContextUtil;
-import com.glaf.base.utils.ClassUtil;
+import com.glaf.base.utils.ContextUtil;
 import com.glaf.base.utils.ParamUtil;
 import com.glaf.base.utils.RequestUtil;
 import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
 import com.glaf.core.res.ViewMessages;
 import com.glaf.core.security.DigestUtil;
+import com.glaf.core.util.ClassUtils;
 import com.glaf.core.util.RequestUtils;
 import com.glaf.core.web.callback.CallbackProperties;
 import com.glaf.core.web.callback.LoginCallback;
@@ -89,7 +89,7 @@ public class AuthorizeController {
 	@RequestMapping(params = "method=login")
 	public ModelAndView login(ModelMap modelMap, HttpServletRequest request,
 			HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		HttpSession session = request.getSession(true);
 		ViewMessages messages = new ViewMessages();
 		// 获取参数
@@ -127,7 +127,7 @@ public class AuthorizeController {
 				while (e.hasMoreElements()) {
 					String className = (String) e.nextElement();
 					try {
-						Object obj = ClassUtil.instantiateObject(className);
+						Object obj = ClassUtils.instantiateObject(className);
 						if (obj instanceof LoginCallback) {
 							LoginCallback callback = (LoginCallback) obj;
 							callback.afterLogin(bean.getAccount(), request,
@@ -174,7 +174,7 @@ public class AuthorizeController {
 	@RequestMapping(params = "method=logout")
 	public ModelAndView logout(ModelMap modelMap, HttpServletRequest request,
 			HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		// 登出系统，清除session对象
 		request.getSession().removeAttribute(SysConstants.LOGIN);
 		request.getSession().removeAttribute(SysConstants.MENU);
@@ -193,7 +193,7 @@ public class AuthorizeController {
 	@RequestMapping(params = "method=prepareLogin")
 	public ModelAndView prepareLogin(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		// 显示登陆页面
 		return new ModelAndView("/modules/login", modelMap);
 	}
@@ -230,7 +230,7 @@ public class AuthorizeController {
 	@RequestMapping(params = "method=showMenu")
 	public ModelAndView showMenu(ModelMap modelMap, HttpServletRequest request,
 			HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		SysUser user = RequestUtil.getLoginUser(request);
 		SysTree parent = sysTreeService.getSysTreeByCode(Constants.TREE_APP);
 		List<SysApplication> list = sysApplicationService.getAccessAppList(

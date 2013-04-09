@@ -16,11 +16,10 @@ List list = pager.getResults();
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
 <link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.form.js"></script> 
 <script language="javascript" src='<%=context%>/scripts/verify.js'></script>
 <script language="javascript" src='<%=context%>/scripts/main.js'></script>
-<script type='text/javascript' src='<%=context%>/dwr/interface/GroupAjaxService.js'></script>
-<script type='text/javascript' src='<%=context%>/dwr/engine.js'></script>
-<script type='text/javascript' src='<%=context%>/dwr/util.js'></script>
 <script language="javascript">
 var num=0;
 function checkOperation(form){
@@ -87,8 +86,20 @@ function del(){
   }
 }
 
-function sort(id, operate){  
-  GroupAjaxService.sort(id, operate, {callback:function (){reloadPage();}});
+function sortGroup(id, operate){  
+  //GroupAjaxService.sort(id, operate, {callback:function (){reloadPage();}});
+  //alert('groupId='+id+'&operate='+operate);
+    	jQuery.ajax({
+			type: "POST",
+			url: '<%=request.getContextPath()%>/base/group.do?method=sort&groupId='+id+'&operate='+operate,
+			dataType:  'json',
+				error: function(data){
+					alert('服务器处理错误！');
+				},
+				success: function(data){
+					   location.reload();
+				 }
+		});
 }
 </script>
 </head>
@@ -123,8 +134,8 @@ if(list!=null){
     <td class="td-text"><%=bean.getName()%>&nbsp; </td>
     <td class="td-text"><%=bean.getDesc()%>&nbsp;</td>
     <td class="td-no">
-	<a href="javascript:sort(<%=bean.getGroupId()%>, 0);" title="上移"><img src="<%=context%>/images/up.gif" border="0" height="13" width="13"></a> 
-	<a href="javascript:sort(<%=bean.getGroupId()%>, 1);" title="下移"><img src="<%=context%>/images/down.gif" border="0" height="13" width="13"></a>
+	<a href="javascript:sortGroup('<%=bean.getGroupId()%>', 0);" title="上移"><img src="<%=context%>/images/up.gif" border="0" height="13" width="13"></a> 
+	<a href="javascript:sortGroup('<%=bean.getGroupId()%>', 1);" title="下移"><img src="<%=context%>/images/down.gif" border="0" height="13" width="13"></a>
 	</td>
   </tr>
   <%

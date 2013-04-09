@@ -33,6 +33,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -46,7 +47,6 @@ import com.glaf.base.modules.sys.query.SysDepartmentQuery;
 import com.glaf.base.modules.sys.service.SysDepartmentService;
 import com.glaf.base.modules.sys.service.SysTreeService;
 import com.glaf.base.utils.ParamUtil;
-import com.glaf.base.utils.RequestUtil;
 import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
 import com.glaf.core.res.ViewMessages;
@@ -67,7 +67,8 @@ public class SysDepartmentController {
 
 	@javax.annotation.Resource
 	private SysTreeService sysTreeService;
-
+	
+	
 	/**
 	 * 批量删除信息
 	 * 
@@ -80,7 +81,7 @@ public class SysDepartmentController {
 	@RequestMapping(params = "method=batchDelete")
 	public ModelAndView batchDelete(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		boolean ret = true;
 		long[] id = ParamUtil.getLongParameterValues(request, "id");
 		ret = sysDepartmentService.deleteAll(id);
@@ -111,7 +112,7 @@ public class SysDepartmentController {
 	@RequestMapping(params = "method=getSubDept")
 	public ModelAndView getSubDept(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		int id = ParamUtil.getIntParameter(request, "id", 0);
 		int status = ParamUtil.getIntParameter(request, "status", -1);
 		List<SysTree> list = sysTreeService.getSysTreeListForDept(id, status);
@@ -131,7 +132,7 @@ public class SysDepartmentController {
 	@RequestMapping(params = "method=getSubDeptAll")
 	public ModelAndView getSubDeptAll(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		int id = ParamUtil.getIntParameter(request, "id", 0);
 		List<SysTree> list = sysTreeService.getSysTreeList(id);
 		request.setAttribute("list", list);
@@ -241,7 +242,7 @@ public class SysDepartmentController {
 	@RequestMapping(params = "method=prepareAdd")
 	public ModelAndView prepareAdd(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		return new ModelAndView("/modules/sys/dept/dept_add", modelMap);
 	}
 
@@ -257,7 +258,7 @@ public class SysDepartmentController {
 	@RequestMapping(params = "method=prepareModify")
 	public ModelAndView prepareModify(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		long id = ParamUtil.getIntParameter(request, "id", 0);
 		SysDepartment bean = sysDepartmentService.findById(id);
 		request.setAttribute("bean", bean);
@@ -285,7 +286,7 @@ public class SysDepartmentController {
 	@RequestMapping(params = "method=saveAdd")
 	public ModelAndView saveAdd(ModelMap modelMap, HttpServletRequest request,
 			HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		// 增加部门时，同时要增加对应节点
 		SysDepartment bean = new SysDepartment();
 		bean.setName(ParamUtil.getParameter(request, "name"));
@@ -387,7 +388,7 @@ public class SysDepartmentController {
 	@RequestMapping(params = "method=showDeptAllSelect")
 	public ModelAndView showDeptAllSelect(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		ModelAndView forward = new ModelAndView(
 				"/modules/sys/dept/dept_select_all", modelMap);
 		int parent = ParamUtil.getIntParameter(request, "parent",
@@ -412,7 +413,7 @@ public class SysDepartmentController {
 	@RequestMapping(params = "method=showDeptSelect")
 	public ModelAndView showDeptSelect(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		ModelAndView forward = new ModelAndView(
 				"/modules/sys/dept/dept_select", modelMap);
 		int type = ParamUtil.getIntParameter(request, "type", 1);
@@ -446,7 +447,7 @@ public class SysDepartmentController {
 	@RequestMapping(params = "method=showFrame")
 	public ModelAndView showFrame(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		SysTree bean = sysTreeService.getSysTreeByCode(Constants.TREE_DEPT);
 		request.setAttribute("parent", bean.getId() + "");
 		// 显示列表页面
@@ -465,7 +466,7 @@ public class SysDepartmentController {
 	@RequestMapping(params = "method=showList")
 	public ModelAndView showList(ModelMap modelMap, HttpServletRequest request,
 			HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		int parent = ParamUtil.getIntParameter(request, "parent", 0);
 		int pageNo = ParamUtil.getIntParameter(request, "page_no", 1);
 		int pageSize = ParamUtil.getIntParameter(request, "page_size",
@@ -481,5 +482,15 @@ public class SysDepartmentController {
 		request.setAttribute("nav", list);
 
 		return new ModelAndView("/modules/sys/dept/dept_list", modelMap);
+	}
+
+	@ResponseBody
+	@RequestMapping(params = "method=sort")
+	public void sort(@RequestParam(value = "parent") int parent,
+			@RequestParam(value = "id") int id,
+			@RequestParam(value = "operate") int operate) {
+		logger.info("parent:" + parent + "; id:" + id + "; operate:" + operate);
+		SysDepartment bean = sysDepartmentService.findById(id);
+		sysDepartmentService.sort(parent, bean, operate);
 	}
 }

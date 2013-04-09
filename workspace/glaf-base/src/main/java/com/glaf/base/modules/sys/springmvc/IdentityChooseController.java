@@ -53,8 +53,7 @@ import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.sys.service.SysDepartmentService;
 import com.glaf.base.modules.sys.service.SysTreeService;
 import com.glaf.base.modules.sys.service.SysUserService;
-
-import com.glaf.base.utils.RequestUtil;
+ 
 
 @Controller("/base/userChoose")
 @RequestMapping("/base/userChoose.do")
@@ -82,7 +81,7 @@ public class IdentityChooseController {
 	@RequestMapping(params = "method=chooseDepts")
 	public ModelAndView chooseDepts(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		return new ModelAndView("/modules/base/choose/choose_depts", modelMap);
 	}
 
@@ -97,7 +96,7 @@ public class IdentityChooseController {
 	@RequestMapping(params = "method=chooseTrees")
 	public ModelAndView chooseTrees(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		return new ModelAndView("/modules/base/choose/choose_trees", modelMap);
 	}
 
@@ -112,7 +111,7 @@ public class IdentityChooseController {
 	@RequestMapping(params = "method=chooseUsers")
 	public ModelAndView chooseUsers(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		return new ModelAndView("/modules/base/choose/choose_users", modelMap);
 	}
 

@@ -60,7 +60,7 @@ public class SysSchedulerController {
 	@RequestMapping(params = "method=locked")
 	public ModelAndView locked(ModelMap modelMap, HttpServletRequest request,
 			HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		String taskId = request.getParameter("taskId");
 		int locked = 0;
 		Scheduler scheduler = null;
@@ -121,7 +121,7 @@ public class SysSchedulerController {
 	@RequestMapping(params = "method=showList")
 	public ModelAndView showList(ModelMap modelMap, HttpServletRequest request,
 			HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		SysUser user = RequestUtil.getLoginUser(request);
 		String actorId = user.getAccount();
 		List<Scheduler> list = sysSchedulerService.getUserSchedulers(actorId);
@@ -133,7 +133,7 @@ public class SysSchedulerController {
 	@RequestMapping(params = "method=showModify")
 	public ModelAndView showModify(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		String taskId = request.getParameter("taskId");
 		Scheduler scheduler = null;
 		if (StringUtils.isNotEmpty(taskId)) {
@@ -148,7 +148,7 @@ public class SysSchedulerController {
 	@RequestMapping(params = "method=startup")
 	public ModelAndView startup(ModelMap modelMap, HttpServletRequest request,
 			HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		String taskId = request.getParameter("taskId");
 		String startup = request.getParameter("startup");
 		Scheduler scheduler = null;

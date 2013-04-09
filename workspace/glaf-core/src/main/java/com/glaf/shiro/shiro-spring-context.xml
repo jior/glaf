@@ -28,6 +28,7 @@
 				/mx/jbpm/deploy/**=authc,perms[SystemAdministrator]
 				/mx/activiti/deploy/**=authc,perms[SystemAdministrator]
 				/mx/**=authc
+				/dwr/*=authc
 				/images/**=anon
 				/css/**=anon
 				/styles/**=anon

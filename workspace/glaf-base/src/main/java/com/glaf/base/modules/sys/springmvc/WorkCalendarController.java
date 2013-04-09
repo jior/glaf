@@ -30,12 +30,14 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.glaf.base.modules.sys.model.WorkCalendar;
 import com.glaf.base.modules.sys.service.WorkCalendarService;
-
 import com.glaf.base.utils.ParamUtil;
-import com.glaf.base.utils.RequestUtil;
+import com.glaf.core.util.RequestUtils;
 
 @Controller("/sys/workCalendar")
 @RequestMapping("/sys/workCalendar.do")
@@ -45,6 +47,46 @@ public class WorkCalendarController {
 
 	@javax.annotation.Resource
 	private WorkCalendarService workCalendarService;
+
+	/**
+	 * 创建记录
+	 * 
+	 * @param year
+	 * @param month
+	 * @param day
+	 */
+	@ResponseBody
+	@RequestMapping(params = "method=createData")
+	public void createData(@RequestParam(value = "year") int year,
+			@RequestParam(value = "month") int month,
+			@RequestParam(value = "day") int day) {
+		WorkCalendar calendar = workCalendarService.find(year, month, day);
+		if (calendar == null) {
+			calendar = new WorkCalendar();
+			calendar.setFreeYear(year);
+			calendar.setFreeMonth(month);
+			calendar.setFreeDay(day);
+			workCalendarService.create(calendar);
+		}
+	}
+
+	/**
+	 * 删除记录
+	 * 
+	 * @param year
+	 * @param month
+	 * @param day
+	 */
+	@ResponseBody
+	@RequestMapping(params = "method=deleteData")
+	public void deleteData(@RequestParam(value = "year") int year,
+			@RequestParam(value = "month") int month,
+			@RequestParam(value = "day") int day) {
+		WorkCalendar calendar = workCalendarService.find(year, month, day);
+		if (calendar != null) {
+			workCalendarService.delete(calendar.getId());
+		}
+	}
 
 	public void setWorkCalendarService(WorkCalendarService workCalendarService) {
 		this.workCalendarService = workCalendarService;
@@ -60,31 +102,10 @@ public class WorkCalendarController {
 	 * @param response
 	 * @return @
 	 */
-	@RequestMapping(params = "method=showList")
-	public ModelAndView showList(ModelMap modelMap, HttpServletRequest request,
-			HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
-		Calendar cal = Calendar.getInstance();
-		int year = ParamUtil.getIntParameter(request, "year",
-				cal.get(Calendar.YEAR));
-		request.setAttribute("year", String.valueOf(year));
-		return new ModelAndView("/modules/sys/calendar/work_calendar",
-				modelMap);
-	}
-
-	/**
-	 * 显示工作日历列表
-	 * 
-	 * @param mapping
-	 * @param actionForm
-	 * @param request
-	 * @param response
-	 * @return @
-	 */
 	@RequestMapping(params = "method=showCalendar")
 	public ModelAndView showCalendar(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		Calendar cal = Calendar.getInstance();
 		int month = ParamUtil.getIntParameter(request, "month",
 				cal.get(Calendar.MONTH));
@@ -116,8 +137,9 @@ public class WorkCalendarController {
 			days[firstIndex + i] = String.valueOf(i + 1);
 		}
 
-		List<Integer> list = workCalendarService.getWorkDateList(year, month + 1);
-		if (list == null){
+		List<Integer> list = workCalendarService.getWorkDateList(year,
+				month + 1);
+		if (list == null) {
 			list = new ArrayList<Integer>();
 		}
 
@@ -128,5 +150,25 @@ public class WorkCalendarController {
 		request.setAttribute("days", days);
 
 		return new ModelAndView("/modules/sys/calendar/calendar", modelMap);
+	}
+
+	/**
+	 * 显示工作日历列表
+	 * 
+	 * @param mapping
+	 * @param actionForm
+	 * @param request
+	 * @param response
+	 * @return @
+	 */
+	@RequestMapping(params = "method=showList")
+	public ModelAndView showList(ModelMap modelMap, HttpServletRequest request,
+			HttpServletResponse response) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		Calendar cal = Calendar.getInstance();
+		int year = ParamUtil.getIntParameter(request, "year",
+				cal.get(Calendar.YEAR));
+		request.setAttribute("year", String.valueOf(year));
+		return new ModelAndView("/modules/sys/calendar/work_calendar", modelMap);
 	}
 }

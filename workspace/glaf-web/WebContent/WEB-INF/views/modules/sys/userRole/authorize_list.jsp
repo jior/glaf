@@ -15,10 +15,10 @@ SysUser user = com.glaf.base.utils.RequestUtil.getLoginUser(request);
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
 <link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.form.js"></script> 
 <script language="javascript" src='<%=context%>/scripts/verify.js'></script>
 <script language="javascript" src='<%=context%>/scripts/main.js'></script>
-<script type='text/javascript' src='<%=context%>/dwr/interface/SysUserRoleAjaxService.js'></script>
-<script type='text/javascript' src='<%=context%>/dwr/engine.js'></script>
 </head>
 <style type="text/css">
 #b{
@@ -38,7 +38,7 @@ function add(){
 	return;	
   }
   var opt = $("available").options($("available").selectedIndex);
-  
+  /*
   SysUserRoleAjaxService.addRole(fromUserId, opt.value,  function(reply){
     if(reply){
       //删除选中的记录
@@ -46,7 +46,7 @@ function add(){
       //增加到已授权列表
       $("unavailable").add(opt);
     }
-  });
+  });*/
 }
 function remove(){
   if($("unavailable").selectedIndex==-1){
@@ -55,7 +55,7 @@ function remove(){
 	return;
   }
   var opt = $("unavailable").options($("unavailable").selectedIndex);
-  
+  /*
   SysUserRoleAjaxService.removeRole(fromUserId, opt.value,  function(reply){
     if(reply){
       //删除选中的记录
@@ -64,6 +64,18 @@ function remove(){
       $("available").add(opt);
     }
   });  
+  */
+  jQuery.ajax({
+			type: "POST",
+			url: '<%=request.getContextPath()%>/sys/sysUserRole.do?method=removeRoleUser&fromUserId='+fromUserId+'&toUserIds='+opt,
+			dataType:  'json',
+				error: function(data){
+					alert('服务器处理错误！');
+				},
+				success: function(data){
+					   $("link").click();
+				 }
+		});
 }
 </script>
 <body>

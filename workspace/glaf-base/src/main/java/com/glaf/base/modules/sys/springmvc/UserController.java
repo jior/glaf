@@ -52,6 +52,7 @@ import com.glaf.core.res.ViewMessage;
 import com.glaf.core.res.ViewMessages;
 import com.glaf.core.security.DigestUtil;
 import com.glaf.core.service.ITableDataService;
+import com.glaf.core.util.RequestUtils;
 
 @Controller("/identity/user")
 @RequestMapping("/identity/user.do")
@@ -88,7 +89,7 @@ public class UserController {
 	@RequestMapping(params = "method=prepareModifyInfo")
 	public ModelAndView prepareModifyInfo(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		SysUser user = RequestUtil.getLoginUser(request);
 		SysUser bean = sysUserService.findByAccount(user.getAccount());
 		request.setAttribute("bean", bean);
@@ -109,7 +110,7 @@ public class UserController {
 	@RequestMapping(params = "method=prepareModifyPwd")
 	public ModelAndView prepareModifyPwd(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		SysUser bean = RequestUtil.getLoginUser(request);
 		request.setAttribute("bean", bean);
 
@@ -136,7 +137,7 @@ public class UserController {
 	@RequestMapping(params = "method=saveModify")
 	public ModelAndView saveModify(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		long id = ParamUtil.getIntParameter(request, "id", 0);
 		SysUser bean = sysUserService.findById(id);
 		boolean ret = false;
@@ -181,7 +182,7 @@ public class UserController {
 	@RequestMapping(params = "method=saveModifyInfo")
 	public ModelAndView saveModifyInfo(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		SysUser bean = RequestUtil.getLoginUser(request);
 		boolean ret = false;
 		if (bean != null) {
@@ -220,7 +221,7 @@ public class UserController {
 	@RequestMapping(params = "method=savePwd")
 	public ModelAndView savePwd(ModelMap modelMap, HttpServletRequest request,
 			HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		SysUser bean = RequestUtil.getLoginUser(request);
 		boolean ret = false;
 		String oldPwd = ParamUtil.getParameter(request, "oldPwd");

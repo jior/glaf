@@ -31,6 +31,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -41,7 +42,7 @@ import com.glaf.base.modules.sys.model.SysRole;
 import com.glaf.base.modules.sys.query.SysRoleQuery;
 import com.glaf.base.modules.sys.service.SysRoleService;
 import com.glaf.base.utils.ParamUtil;
-import com.glaf.base.utils.RequestUtil;
+
 import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
 import com.glaf.core.res.ViewMessages;
@@ -72,7 +73,7 @@ public class SysRoleController {
 	@RequestMapping(params = "method=batchDelete")
 	public ModelAndView batchDelete(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		boolean ret = true;
 		long[] ids = ParamUtil.getLongParameterValues(request, "id");
 		try {
@@ -94,120 +95,6 @@ public class SysRoleController {
 
 		// 显示列表页面
 		return new ModelAndView("show_msg2", modelMap);
-	}
-
-	/**
-	 * 显示增加页面
-	 * 
-	 * @param mapping
-	 * @param form
-	 * @param request
-	 * @param response
-	 * @return
-	 */
-	@RequestMapping(params = "method=prepareAdd")
-	public ModelAndView prepareAdd(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
-		// 显示列表页面
-		return new ModelAndView("/modules/sys/role/role_add", modelMap);
-	}
-
-	/**
-	 * 显示修改页面
-	 * 
-	 * @param mapping
-	 * @param form
-	 * @param request
-	 * @param response
-	 * @return
-	 */
-	@RequestMapping(params = "method=prepareModify")
-	public ModelAndView prepareModify(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
-		long id = ParamUtil.getIntParameter(request, "id", 0);
-		SysRole bean = sysRoleService.findById(id);
-		request.setAttribute("bean", bean);
-
-		// 显示列表页面
-		return new ModelAndView("/modules/sys/role/role_modify", modelMap);
-	}
-
-	/**
-	 * 提交增加信息
-	 * 
-	 * @param mapping
-	 * @param form
-	 * @param request
-	 * @param response
-	 * @return
-	 */
-	@RequestMapping(params = "method=saveAdd")
-	public ModelAndView saveAdd(ModelMap modelMap, HttpServletRequest request,
-			HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
-
-		boolean ret = false;
-		if (sysRoleService.findByCode(ParamUtil.getParameter(request, "code")) == null) {
-			SysRole bean = new SysRole();
-			bean.setName(ParamUtil.getParameter(request, "name"));
-			bean.setDesc(ParamUtil.getParameter(request, "desc"));
-			bean.setCode(ParamUtil.getParameter(request, "code"));
-			ret = sysRoleService.create(bean);
-		}
-
-		ViewMessages messages = new ViewMessages();
-		if (ret) {// 保存成功
-			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
-					"role.add_success"));
-		} else {// 保存失败
-			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
-					"role.add_failure"));
-		}
-		MessageUtils.addMessages(request, messages);
-
-		// 显示列表页面
-		return new ModelAndView("show_msg", modelMap);
-	}
-
-	/**
-	 * 提交修改信息
-	 * 
-	 * @param mapping
-	 * @param form
-	 * @param request
-	 * @param response
-	 * @return
-	 */
-	@RequestMapping(params = "method=saveModify")
-	public ModelAndView saveModify(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
-		long id = ParamUtil.getIntParameter(request, "id", 0);
-		SysRole bean = sysRoleService.findById(id);
-		if (bean != null) {
-			bean.setName(ParamUtil.getParameter(request, "name"));
-			bean.setDesc(ParamUtil.getParameter(request, "desc"));
-			bean.setCode(ParamUtil.getParameter(request, "code"));
-		}
-		boolean ret = sysRoleService.update(bean);
-		ViewMessages messages = new ViewMessages();
-		if (ret) {// 保存成功
-			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
-					"role.modify_success"));
-		} else {// 保存失败
-			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
-					"role.modify_failure"));
-		}
-		MessageUtils.addMessages(request, messages);
-		// 显示列表页面
-		return new ModelAndView("show_msg", modelMap);
-	}
-
-	public void setSysRoleService(SysRoleService sysRoleService) {
-		this.sysRoleService = sysRoleService;
-		logger.info("setSysRoleService");
 	}
 
 	@RequestMapping(params = "method=json")
@@ -296,6 +183,120 @@ public class SysRoleController {
 	}
 
 	/**
+	 * 显示增加页面
+	 * 
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(params = "method=prepareAdd")
+	public ModelAndView prepareAdd(ModelMap modelMap,
+			HttpServletRequest request, HttpServletResponse response) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		// 显示列表页面
+		return new ModelAndView("/modules/sys/role/role_add", modelMap);
+	}
+
+	/**
+	 * 显示修改页面
+	 * 
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(params = "method=prepareModify")
+	public ModelAndView prepareModify(ModelMap modelMap,
+			HttpServletRequest request, HttpServletResponse response) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		long id = ParamUtil.getIntParameter(request, "id", 0);
+		SysRole bean = sysRoleService.findById(id);
+		request.setAttribute("bean", bean);
+
+		// 显示列表页面
+		return new ModelAndView("/modules/sys/role/role_modify", modelMap);
+	}
+
+	/**
+	 * 提交增加信息
+	 * 
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(params = "method=saveAdd")
+	public ModelAndView saveAdd(ModelMap modelMap, HttpServletRequest request,
+			HttpServletResponse response) {
+		RequestUtils.setRequestParameterToAttribute(request);
+
+		boolean ret = false;
+		if (sysRoleService.findByCode(ParamUtil.getParameter(request, "code")) == null) {
+			SysRole bean = new SysRole();
+			bean.setName(ParamUtil.getParameter(request, "name"));
+			bean.setDesc(ParamUtil.getParameter(request, "desc"));
+			bean.setCode(ParamUtil.getParameter(request, "code"));
+			ret = sysRoleService.create(bean);
+		}
+
+		ViewMessages messages = new ViewMessages();
+		if (ret) {// 保存成功
+			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
+					"role.add_success"));
+		} else {// 保存失败
+			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
+					"role.add_failure"));
+		}
+		MessageUtils.addMessages(request, messages);
+
+		// 显示列表页面
+		return new ModelAndView("show_msg", modelMap);
+	}
+
+	/**
+	 * 提交修改信息
+	 * 
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(params = "method=saveModify")
+	public ModelAndView saveModify(ModelMap modelMap,
+			HttpServletRequest request, HttpServletResponse response) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		long id = ParamUtil.getIntParameter(request, "id", 0);
+		SysRole bean = sysRoleService.findById(id);
+		if (bean != null) {
+			bean.setName(ParamUtil.getParameter(request, "name"));
+			bean.setDesc(ParamUtil.getParameter(request, "desc"));
+			bean.setCode(ParamUtil.getParameter(request, "code"));
+		}
+		boolean ret = sysRoleService.update(bean);
+		ViewMessages messages = new ViewMessages();
+		if (ret) {// 保存成功
+			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
+					"role.modify_success"));
+		} else {// 保存失败
+			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
+					"role.modify_failure"));
+		}
+		MessageUtils.addMessages(request, messages);
+		// 显示列表页面
+		return new ModelAndView("show_msg", modelMap);
+	}
+
+	public void setSysRoleService(SysRoleService sysRoleService) {
+		this.sysRoleService = sysRoleService;
+		logger.info("setSysRoleService");
+	}
+
+	/**
 	 * 显示所有列表
 	 * 
 	 * @param mapping
@@ -307,7 +308,7 @@ public class SysRoleController {
 	@RequestMapping(params = "method=showList")
 	public ModelAndView showList(ModelMap modelMap, HttpServletRequest request,
 			HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		int pageNo = ParamUtil.getIntParameter(request, "page_no", 1);
 		int pageSize = ParamUtil.getIntParameter(request, "page_size",
 				Constants.PAGE_SIZE);
@@ -315,5 +316,13 @@ public class SysRoleController {
 		request.setAttribute("pager", pager);
 		// 显示列表页面
 		return new ModelAndView("/modules/sys/role/role_list", modelMap);
+	}
+
+	@ResponseBody
+	@RequestMapping(params = "method=sort")
+	public void sort(@RequestParam(value = "id") int id,
+			@RequestParam(value = "operate") int operate) {
+		logger.info("id:" + id + ",operate:" + operate);
+		sysRoleService.sort(sysRoleService.findById(id), operate);
 	}
 }

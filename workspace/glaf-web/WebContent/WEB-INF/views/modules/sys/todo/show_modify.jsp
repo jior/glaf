@@ -30,14 +30,6 @@
 <title>基础平台系统</title>
 <link href="<%=context%>/css/site.css" rel="stylesheet" type="text/css">
 <script src="<%=context%>/scripts/main.js" language="javascript"></script>
-<style type="text/css"> 
-@import url("<%=context%>/scripts/hmenu/skin-yp.css");
-.STYLE1 {color: #FF0000}
-</style>
-<script type="text/javascript">
-_dynarch_menu_url = "<%=context%>/scripts/hmenu";
-</script>
-<script type="text/javascript" src="<%=context%>/scripts/hmenu/hmenu.js"></script>
 <script type="text/javascript" src="<%=context%>/scripts/main.js"></script>
 <script type="text/javascript" src="<%=context%>/scripts/site.js"></script>
 <script language="javascript" src='<%=context%>/scripts/verify.js'></script>
@@ -50,7 +42,7 @@ function checkForm(form){
 }
 </script>
 </head>
-<body onLoad="DynarchMenu.setup('menu1', { context: true});" id="document">
+<body id="document">
 <jsp:include page="/WEB-INF/views/modules/header.jsp" flush="true"/>
 <div class="nav-title">修改TODO信息</div>
 

@@ -42,6 +42,8 @@ import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
 import com.glaf.core.res.ViewMessages;
 import com.glaf.core.util.PageResult;
+import com.glaf.core.util.RequestUtils;
+
 import com.glaf.base.utils.ParamUtil;
 import com.glaf.base.utils.RequestUtil;
 import com.glaf.base.utils.WebUtil;
@@ -80,7 +82,7 @@ public class MessageController {
 	@RequestMapping(params = "method=showReceiveList")
 	public ModelAndView showReceiveList(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		String flag = ParamUtil.getParameter(request, "flag", null);
 
 		SysUser user = RequestUtil.getLoginUser(request);
@@ -112,7 +114,7 @@ public class MessageController {
 	@RequestMapping(params = "method=showSendedList")
 	public ModelAndView showSendedList(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		String flag = ParamUtil.getParameter(request, "flag", null);
 
 		SysUser user = RequestUtil.getLoginUser(request);
@@ -144,7 +146,7 @@ public class MessageController {
 	@RequestMapping(params = "method=prepareSend")
 	public ModelAndView prepareSend(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		long id = ParamUtil.getLongParameter(request, "id", 0);
 		Message bean = messageService.find(id);
 		request.setAttribute("bean", bean);
@@ -165,7 +167,7 @@ public class MessageController {
 	@RequestMapping(params = "method=saveSend")
 	public ModelAndView saveSend(ModelMap modelMap, MessageFormBean form,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		SysUser user = RequestUtil.getLoginUser(request);
 		int sysType = ParamUtil.getIntParameter(request, "sysType", 1);// 0：为系统警告
 																		// 1：为系统消息
@@ -245,7 +247,7 @@ public class MessageController {
 	@RequestMapping(params = "method=batchDelete")
 	public ModelAndView batchDelete(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		SysUser user = RequestUtil.getLoginUser(request);
 
 		boolean ret = true;
@@ -292,7 +294,7 @@ public class MessageController {
 	@RequestMapping(params = "method=showMessage")
 	public ModelAndView showMessage(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		long id = ParamUtil.getLongParameter(request, "id", 0);
 
 		Message bean = messageService.updateReadMessage(id);
@@ -316,7 +318,7 @@ public class MessageController {
 	@RequestMapping(params = "method=saveEmail")
 	public ModelAndView saveEmail(ModelMap modelMap, MessageFormBean form,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		SysUser user = RequestUtil.getLoginUser(request);
 
 		int recverType = ParamUtil.getIntParameter(request, "recverType", 0);
@@ -398,7 +400,7 @@ public class MessageController {
 	@RequestMapping(params = "method=saveBoth")
 	public ModelAndView saveBoth(ModelMap modelMap, MessageFormBean form,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		SysUser user = RequestUtil.getLoginUser(request);
 
 		String recverIds = ParamUtil.getParameter(request, "recverIds");

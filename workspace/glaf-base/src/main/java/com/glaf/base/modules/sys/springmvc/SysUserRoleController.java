@@ -30,18 +30,22 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.sys.service.SysUserRoleService;
 import com.glaf.base.modules.sys.service.SysUserService;
-import com.glaf.base.modules.utils.BaseUtil;
+
 import com.glaf.base.utils.ParamUtil;
 import com.glaf.base.utils.RequestUtil;
 import com.glaf.base.utils.WebUtil;
 import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
 import com.glaf.core.res.ViewMessages;
+import com.glaf.core.util.DateUtils;
+import com.glaf.core.util.RequestUtils;
 
 @Controller("/sys/sysUserRole")
 @RequestMapping("/sys/sysUserRole.do")
@@ -55,117 +59,62 @@ public class SysUserRoleController {
 	@javax.annotation.Resource
 	private SysUserService sysUserService;
 
-	public void setSysUserRoleService(SysUserRoleService sysUserRoleService) {
-		this.sysUserRoleService = sysUserRoleService;
-		logger.info("setSysUserRoleService");
-	}
-
-	public void setSysUserService(SysUserService sysUserService) {
-		this.sysUserService = sysUserService;
-		logger.info("setSysUserService");
-	}
-
-	/**
-	 * 显示授权页面
-	 * 
-	 * @param mapping
-	 * @param form
-	 * @param request
-	 * @param response
-	 * @return
-	 */
-	@RequestMapping(params = "method=showMain")
-	public ModelAndView showMain(ModelMap modelMap, HttpServletRequest request,
-			HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
-		SysUser user = RequestUtil.getLoginUser(request);
-		request.setAttribute("available",
-				sysUserRoleService.getUnAuthorizedUser(user));
-		request.setAttribute("unavailable",
-				sysUserRoleService.getAuthorizedUser(user));
-
-		// 显示列表页面
-		return new ModelAndView("/modules/sys/userRole/authorize_list",
-				modelMap);
-	}
-
-	/**
-	 * 显示授权页面
-	 * 
-	 * @param mapping
-	 * @param form
-	 * @param request
-	 * @param response
-	 * @return
-	 */
-	@RequestMapping(params = "method=showUsers")
-	public ModelAndView showUsers(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
-		Map<String, String> filter = WebUtil.getQueryMap(request);
-		request.setAttribute("pager",
-				sysUserRoleService.getAllAuthorizedUser(filter));
-		// 显示列表页面
-		return new ModelAndView("/modules/sys/userRole/authorize_users",
-				modelMap);
-	}
-
-	/**
-	 * 显示授权页面
-	 * 
-	 * @param mapping
-	 * @param form
-	 * @param request
-	 * @param response
-	 * @return
-	 */
-	@RequestMapping(params = "method=showSysAuth")
-	public ModelAndView showSysAuth(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
-		long userId = ParamUtil.getLongParameter(request, "id", 0);
-		SysUser user = (SysUser) sysUserService.findById(userId);
-		if (user == null) {
-			user = RequestUtil.getLoginUser(request);
+	@ResponseBody
+	@RequestMapping(params = "method=addRole")
+	public void addRole(HttpServletRequest request) {
+		long fromUserId = RequestUtils.getLong(request, "fromUserId");
+		long toUserId = RequestUtils.getLong(request, "toUserId");
+		String startDate = request.getParameter("startDate");
+		String endDate = request.getParameter("endDate");
+		int mark = RequestUtils.getInt(request, "mark");
+		String processNames = request.getParameter("processNames");
+		String processDescriptions = request
+				.getParameter("processDescriptions");
+		if (!sysUserRoleService.isAuthorized(fromUserId, toUserId)) {// 已授权
+			sysUserRoleService.addRole(fromUserId, toUserId, startDate,
+					endDate, mark, processNames, processDescriptions);
 		}
-
-		request.setAttribute("user", user);
-		request.setAttribute("authorizedUser",
-				sysUserRoleService.getAuthorizedUser(user));
-		request.setAttribute("processList",
-				sysUserRoleService.getProcessByUser(user));
-
-		// 显示列表页面
-		return new ModelAndView("/modules/sys/userRole/authorize_panel",
-				modelMap);
 	}
 
-	/**
-	 * 显示授权页面
-	 * 
-	 * @param mapping
-	 * @param form
-	 * @param request
-	 * @param response
-	 * @return
-	 */
-	@RequestMapping(params = "method=showUserSysAuth")
-	public ModelAndView showUserSysAuth(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
-		long userId = ParamUtil.getLongParameter(request, "id", 0);
-		SysUser user = (SysUser) sysUserService.findById(userId);
-		if (user == null) {
-			user = RequestUtil.getLoginUser(request);
+	@ResponseBody
+	@RequestMapping(params = "method=addRoleUser")
+	public void addRoleUser(HttpServletRequest request) {
+		long fromUserId = RequestUtils.getLong(request, "fromUserId");
+		String toUserIds = request.getParameter("toUserIds");
+		String startDate = request.getParameter("startDate");
+		String endDate = request.getParameter("endDate");
+		int mark = RequestUtils.getInt(request, "mark");
+		String processNames = request.getParameter("processNames");
+		String processDescriptions = request
+				.getParameter("processDescriptions");
+		String[] ids = toUserIds.split(",");
+		for (int i = 0; i < ids.length; i++) {
+			long toUserId = Long.parseLong(ids[i]);
+			if (!sysUserRoleService.isAuthorized(fromUserId, toUserId)) {// 已授权
+				sysUserRoleService.addRole(fromUserId, toUserId, startDate,
+						endDate, mark, processNames, processDescriptions);
+			}
 		}
+	}
 
-		request.setAttribute("user", user);
-		request.setAttribute("authorizedUser",
-				sysUserRoleService.getAuthorizedUser(user));
+	@ResponseBody
+	@RequestMapping(params = "method=removeRole")
+	public void removeRole(@RequestParam(value = "fromUserId") long fromUserId,
+			@RequestParam(value = "toUserId") long toUserId) {
+		sysUserRoleService.removeRole(fromUserId, toUserId);
+	}
 
-		// 显示列表页面
-		return new ModelAndView("/modules/sys/userRole/authorizeUser_panel",
-				modelMap);
+	@ResponseBody
+	@RequestMapping(params = "method=removeRoleUser")
+	public void removeRoleUser(
+			@RequestParam(value = "fromUserId") long fromUserId,
+			@RequestParam(value = "toUserIds") String toUserIds) {
+		logger.info("toUserIds:" + toUserIds);
+		String[] ids = toUserIds.split(",");
+		for (int i = 0; i < ids.length; i++) {
+			long toUserId = Long.parseLong(ids[i]);
+			removeRole(fromUserId, toUserId);
+		}
 	}
 
 	/**
@@ -181,7 +130,7 @@ public class SysUserRoleController {
 	@RequestMapping(params = "method=saveUserSysAuth")
 	public ModelAndView saveUserSysAuth(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		long fromUserId = ParamUtil.getLongParameter(request, "uid", 0);
 		long[] userIds = ParamUtil.getLongParameterValues(request, "userIds");
 
@@ -241,8 +190,8 @@ public class SysUserRoleController {
 				Date aEndDate = (Date) bean[2];
 				msgStr = msgStr + "&nbsp;&nbsp;&nbsp;&nbsp;取消授权=>"
 						+ authorUser.getName() + "[" + authorUser.getAccount()
-						+ "]&nbsp;&nbsp;" + BaseUtil.dateToString(aStartDate)
-						+ "至" + BaseUtil.dateToString(aEndDate) + "<br>";
+						+ "]&nbsp;&nbsp;" + DateUtils.getDateTime(aStartDate)
+						+ "至" + DateUtils.getDateTime(aEndDate) + "<br>";
 				logger.info(msgStr);
 			}
 		} else {
@@ -284,6 +233,119 @@ public class SysUserRoleController {
 				+ subject + "--" + context);
 
 		return rst;
+	}
+
+	public void setSysUserRoleService(SysUserRoleService sysUserRoleService) {
+		this.sysUserRoleService = sysUserRoleService;
+		logger.info("setSysUserRoleService");
+	}
+
+	public void setSysUserService(SysUserService sysUserService) {
+		this.sysUserService = sysUserService;
+		logger.info("setSysUserService");
+	}
+
+	/**
+	 * 显示授权页面
+	 * 
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(params = "method=showMain")
+	public ModelAndView showMain(ModelMap modelMap, HttpServletRequest request,
+			HttpServletResponse response) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		SysUser user = RequestUtil.getLoginUser(request);
+		request.setAttribute("available",
+				sysUserRoleService.getUnAuthorizedUser(user));
+		request.setAttribute("unavailable",
+				sysUserRoleService.getAuthorizedUser(user));
+
+		// 显示列表页面
+		return new ModelAndView("/modules/sys/userRole/authorize_list",
+				modelMap);
+	}
+
+	/**
+	 * 显示授权页面
+	 * 
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(params = "method=showSysAuth")
+	public ModelAndView showSysAuth(ModelMap modelMap,
+			HttpServletRequest request, HttpServletResponse response) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		long userId = ParamUtil.getLongParameter(request, "id", 0);
+		SysUser user = (SysUser) sysUserService.findById(userId);
+		if (user == null) {
+			user = RequestUtil.getLoginUser(request);
+		}
+
+		request.setAttribute("user", user);
+		request.setAttribute("authorizedUser",
+				sysUserRoleService.getAuthorizedUser(user));
+		request.setAttribute("processList",
+				sysUserRoleService.getProcessByUser(user));
+
+		// 显示列表页面
+		return new ModelAndView("/modules/sys/userRole/authorize_panel",
+				modelMap);
+	}
+
+	/**
+	 * 显示授权页面
+	 * 
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(params = "method=showUsers")
+	public ModelAndView showUsers(ModelMap modelMap,
+			HttpServletRequest request, HttpServletResponse response) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		Map<String, String> filter = WebUtil.getQueryMap(request);
+		request.setAttribute("pager",
+				sysUserRoleService.getAllAuthorizedUser(filter));
+		// 显示列表页面
+		return new ModelAndView("/modules/sys/userRole/authorize_users",
+				modelMap);
+	}
+
+	/**
+	 * 显示授权页面
+	 * 
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(params = "method=showUserSysAuth")
+	public ModelAndView showUserSysAuth(ModelMap modelMap,
+			HttpServletRequest request, HttpServletResponse response) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		long userId = ParamUtil.getLongParameter(request, "id", 0);
+		SysUser user = (SysUser) sysUserService.findById(userId);
+		if (user == null) {
+			user = RequestUtil.getLoginUser(request);
+		}
+
+		request.setAttribute("user", user);
+		request.setAttribute("authorizedUser",
+				sysUserRoleService.getAuthorizedUser(user));
+
+		// 显示列表页面
+		return new ModelAndView("/modules/sys/userRole/authorizeUser_panel",
+				modelMap);
 	}
 
 }

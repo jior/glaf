@@ -34,6 +34,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.glaf.core.id.*;
 import com.glaf.core.service.ITableDataService;
 import com.glaf.core.util.PageResult;
+import com.glaf.core.util.StringTools;
 import com.glaf.core.base.TableModel;
  
 
@@ -41,7 +42,7 @@ import com.glaf.base.modules.sys.mapper.*;
 import com.glaf.base.modules.sys.model.*;
 import com.glaf.base.modules.sys.query.*;
 import com.glaf.base.modules.sys.service.*;
-import com.glaf.base.utils.StringTools;
+ 
 
 @Service("sysUserService")
 @Transactional(readOnly = true)

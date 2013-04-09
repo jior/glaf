@@ -15,13 +15,12 @@ List list = pager.getResults();
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>基础平台系统</title>
-<script type='text/javascript' src='<%=context%>/dwr/interface/DictoryAjaxService.js'></script>
-<script type='text/javascript' src='<%=context%>/dwr/engine.js'></script>
-<script type='text/javascript' src='<%=context%>/dwr/util.js'></script>
 <link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.form.js"></script> 
 <script language="javascript" src='<%=context%>/scripts/verify.js'></script>
 <script language="javascript" src='<%=context%>/scripts/main.js'></script>
-<script language="JavaScript">
+<script language="javascript">
 var num=0;
 function checkOperation(form){
   num = getCheckedBoxNum(form,"id");
@@ -66,8 +65,20 @@ function del(){
     form.submit();
   }
 }
+
 function sort(id, operate){  
-  DictoryAjaxService.sort(<%=parent%>, id, operate, {callback:function (){reloadPage();}});
+  //DictoryAjaxService.sort(<%=parent%>, id, operate, {callback:function (){reloadPage();}});
+  	jQuery.ajax({
+			type: "POST",
+			url: '<%=request.getContextPath()%>/sys/dictory.do?method=sort&parent=<%=parent%>&id='+id+'&operate='+operate,
+			dataType:  'json',
+				error: function(data){
+					alert('服务器处理错误！');
+				},
+				success: function(data){
+					   location.reload();
+				 }
+		});
 }
 </script>
 </head>

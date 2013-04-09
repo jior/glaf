@@ -105,7 +105,7 @@ public class SysUserController {
 	public ModelAndView addRoleUser(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
 		logger.debug("---------addRoleUser---------------------------");
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		int deptId = ParamUtil.getIntParameter(request, "deptId", 0);
 		int roleId = ParamUtil.getIntParameter(request, "roleId", 0);
 		SysDeptRole deptRole = sysDeptRoleService.find(deptId, roleId);
@@ -158,7 +158,7 @@ public class SysUserController {
 	@RequestMapping(params = "method=batchDelete")
 	public ModelAndView batchDelete(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		boolean ret = true;
 		long[] id = ParamUtil.getLongParameterValues(request, "id");
 		ret = sysUserService.deleteAll(id);
@@ -186,7 +186,7 @@ public class SysUserController {
 	@RequestMapping(params = "method=delRoleUser")
 	public ModelAndView delRoleUser(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		int deptId = ParamUtil.getIntParameter(request, "deptId", 0);
 		int roleId = ParamUtil.getIntParameter(request, "roleId", 0);
 		SysDeptRole deptRole = sysDeptRoleService.find(deptId, roleId);
@@ -363,7 +363,7 @@ public class SysUserController {
 	@RequestMapping(params = "method=prepareAdd")
 	public ModelAndView prepareAdd(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		// RequestUtil.setRequestParameterToAttribute(request);
+		// RequestUtils.setRequestParameterToAttribute(request);
 		return new ModelAndView("/modules/sys/user/user_add", modelMap);
 	}
 
@@ -379,7 +379,7 @@ public class SysUserController {
 	@RequestMapping(params = "method=prepareModify")
 	public ModelAndView prepareModify(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		long id = ParamUtil.getLongParameter(request, "id", 0);
 		SysUser bean = sysUserService.findById(id);
 		request.setAttribute("bean", bean);
@@ -406,7 +406,7 @@ public class SysUserController {
 	@RequestMapping(params = "method=prepareModifyInfo")
 	public ModelAndView prepareModifyInfo(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		SysUser user = RequestUtil.getLoginUser(request);
 		SysUser bean = sysUserService.findByAccount(user.getAccount());
 		request.setAttribute("bean", bean);
@@ -426,7 +426,7 @@ public class SysUserController {
 	@RequestMapping(params = "method=prepareModifyPwd")
 	public ModelAndView prepareModifyPwd(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		SysUser bean = RequestUtil.getLoginUser(request);
 		request.setAttribute("bean", bean);
 
@@ -452,7 +452,7 @@ public class SysUserController {
 	@RequestMapping(params = "method=prepareResetPwd")
 	public ModelAndView prepareResetPwd(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		long id = ParamUtil.getLongParameter(request, "id", 0);
 		SysUser bean = sysUserService.findById(id);
 		request.setAttribute("bean", bean);
@@ -472,7 +472,7 @@ public class SysUserController {
 	@RequestMapping(params = "method=resetPwd")
 	public ModelAndView resetPwd(ModelMap modelMap, HttpServletRequest request,
 			HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		SysUser login = RequestUtil.getLoginUser(request);
 		boolean ret = false;
 
@@ -524,7 +524,7 @@ public class SysUserController {
 	@RequestMapping(params = "method=saveAdd")
 	public ModelAndView saveAdd(ModelMap modelMap, HttpServletRequest request,
 			HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		SysUser bean = new SysUser();
 		SysDepartment department = sysDepartmentService.findById(ParamUtil
 				.getIntParameter(request, "parent", 0));
@@ -589,7 +589,7 @@ public class SysUserController {
 	@RequestMapping(params = "method=saveModify")
 	public ModelAndView saveModify(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		long id = ParamUtil.getIntParameter(request, "id", 0);
 		SysUser bean = sysUserService.findById(id);
 		boolean ret = false;
@@ -634,7 +634,7 @@ public class SysUserController {
 	@RequestMapping(params = "method=saveModifyInfo")
 	public ModelAndView saveModifyInfo(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		SysUser bean = RequestUtil.getLoginUser(request);
 		boolean ret = false;
 		if (bean != null) {
@@ -673,7 +673,7 @@ public class SysUserController {
 	@RequestMapping(params = "method=savePwd")
 	public ModelAndView savePwd(ModelMap modelMap, HttpServletRequest request,
 			HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		SysUser bean = RequestUtil.getLoginUser(request);
 		boolean ret = false;
 		String oldPwd = ParamUtil.getParameter(request, "oldPwd");
@@ -716,7 +716,7 @@ public class SysUserController {
 	@RequestMapping(params = "method=selectSysUser")
 	public ModelAndView selectSysUser(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		int pageNo = ParamUtil.getIntParameter(request, "page_no", 1);
 		int pageSize = Constants.PAGE_SIZE;
 		int deptId = ParamUtil.getIntParameter(request, "deptId", 0);
@@ -742,7 +742,7 @@ public class SysUserController {
 	@RequestMapping(params = "method=selectSysUserByDept")
 	public ModelAndView selectSysUserByDept(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		int pageNo = ParamUtil.getIntParameter(request, "page_no", 1);
 		int pageSize = Constants.PAGE_SIZE;
 		int deptId = ParamUtil.getIntParameter(request, "deptId", 0);
@@ -774,8 +774,8 @@ public class SysUserController {
 	@RequestMapping(params = "method=setRole")
 	public ModelAndView setRole(ModelMap modelMap, HttpServletRequest request,
 			HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
-		logger.debug(RequestUtil.getParameterMap(request));
+		RequestUtils.setRequestParameterToAttribute(request);
+		logger.debug(RequestUtils.getParameterMap(request));
 		ViewMessages messages = new ViewMessages();
 		long userId = ParamUtil.getIntParameter(request, "user_id", 0);
 		SysUser user = sysUserService.findById(userId);// 查找用户对象
@@ -852,7 +852,7 @@ public class SysUserController {
 	@RequestMapping(params = "method=showDeptUsers")
 	public ModelAndView showDeptUsers(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		List<SysDepartment> list = new ArrayList<SysDepartment>();
 		Set<SysUser> set = new HashSet<SysUser>();
 		// 6:
@@ -885,7 +885,7 @@ public class SysUserController {
 	@RequestMapping(params = "method=showFrame")
 	public ModelAndView showFrame(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		SysTree bean = sysTreeService.getSysTreeByCode(Constants.TREE_DEPT);
 		request.setAttribute("parent", bean.getId() + "");
 		return new ModelAndView("/modules/sys/user/user_frame", modelMap);
@@ -933,7 +933,7 @@ public class SysUserController {
 	@RequestMapping(params = "method=showPasswordList")
 	public ModelAndView showPasswordList(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		String userName = ParamUtil.getParameter(request, "userName");
 		String account = ParamUtil.getParameter(request, "account");
 		int deptId = ParamUtil.getIntParameter(request, "deptId", 0);
@@ -959,7 +959,7 @@ public class SysUserController {
 	@RequestMapping(params = "method=showRole")
 	public ModelAndView showRole(ModelMap modelMap, HttpServletRequest request,
 			HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		long id = ParamUtil.getIntParameter(request, "user_id", 0);
 		SysUser bean = sysUserService.findById(id);
 		SysUser user = sysUserService.findByAccountWithAll(bean.getAccount());
@@ -982,7 +982,7 @@ public class SysUserController {
 	@RequestMapping(params = "method=showRoleUser")
 	public ModelAndView showRoleUser(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		int deptId = ParamUtil.getIntParameter(request, "deptId", 0);
 		long roleId = ParamUtil.getLongParameter(request, "roleId", 0);
 
@@ -1014,7 +1014,7 @@ public class SysUserController {
 	@RequestMapping(params = "method=showSelUser")
 	public ModelAndView showSelUser(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		int deptId = ParamUtil.getIntParameter(request, "deptId2", 0);
 		if (deptId != 0) {
 			request.setAttribute("list", sysUserService.getSysUserList(deptId));
@@ -1035,7 +1035,7 @@ public class SysUserController {
 	@RequestMapping(params = "method=showUser")
 	public ModelAndView showUser(ModelMap modelMap, HttpServletRequest request,
 			HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		long userId = ParamUtil.getLongParameter(request, "userId", 0);
 		SysUser user = sysUserService.findById(userId);
 		request.setAttribute("user", user);

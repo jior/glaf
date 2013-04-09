@@ -36,8 +36,9 @@ import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.todo.TodoXlsReader;
 
 import com.glaf.core.todo.Todo;
-import com.glaf.base.modules.todo.service.TodoService;
+import com.glaf.core.util.RequestUtils;
 
+import com.glaf.base.modules.todo.service.TodoService;
 import com.glaf.base.utils.RequestUtil;
 
 @Controller("/sys/todo")
@@ -60,7 +61,7 @@ public class TodoController {
 	@RequestMapping(params = "method=save")
 	public ModelAndView save(ModelMap modelMap, HttpServletRequest request,
 			HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		SysUser user = RequestUtil.getLoginUser(request);
 		if (user.isSystemAdmin()) {
 			String id = request.getParameter("id");
@@ -102,7 +103,7 @@ public class TodoController {
 	@RequestMapping(params = "method=showList")
 	public ModelAndView showList(ModelMap modelMap, HttpServletRequest request,
 			HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		List<Todo> rows = todoService.getAllTodoList();
 		request.setAttribute("rows", rows);
 		return new ModelAndView("/modules/sys/todo/show_list", modelMap);
@@ -120,7 +121,7 @@ public class TodoController {
 	@RequestMapping(params = "method=showModify")
 	public ModelAndView showModify(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		return new ModelAndView("/modules/sys/todo/show_modify", modelMap);
 	}
 
@@ -136,7 +137,7 @@ public class TodoController {
 	@RequestMapping(params = "method=showUpload")
 	public ModelAndView showUpload(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtil.setRequestParameterToAttribute(request);
+		RequestUtils.setRequestParameterToAttribute(request);
 		return new ModelAndView("/modules/sys/todo/show_upload", modelMap);
 	}
 
