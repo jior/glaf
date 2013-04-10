@@ -159,15 +159,18 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 		SysApplicationQuery query = new SysApplicationQuery();
 		query.parentId(parentAppId);
 		query.setOrderBy(" E.SORT desc ");
+		List<Long> nodeIds = new ArrayList<Long>();
+		nodeIds.add(-1L);
+
 		List<SysApplication> apps = sysApplicationMapper
 				.getSysApplicationByUserId(user.getId());
 		if (apps != null && !apps.isEmpty()) {
-			List<Long> nodeIds = new ArrayList<Long>();
 			for (SysApplication app : apps) {
 				nodeIds.add(app.getNodeId());
 			}
-			query.nodeIds(nodeIds);
 		}
+		query.nodeIds(nodeIds);
+		
 		return this.list(query);
 	}
 
@@ -290,12 +293,14 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 		JSONArray array = new JSONArray();
 		SysUser user = authorizeService.login(userId);
 		if (user != null) {
-			logger.debug("#user=" + user.getName());
 			List<SysApplication> list = null;
 			if (user.isSystemAdmin()) {
+				logger.debug("#admin user=" + user.getName());
 				list = getApplicationList((int) parent);
 			} else {
+				logger.debug("#user=" + user.getName());
 				list = getAccessAppList(parent, user);
+				logger.debug("#app list=" + list);
 			}
 			if (list != null && list.size() > 0) {
 				Iterator<SysApplication> iter = list.iterator();

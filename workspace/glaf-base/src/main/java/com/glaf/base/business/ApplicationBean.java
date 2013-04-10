@@ -46,7 +46,7 @@ public class ApplicationBean {
 	public String getMenuScripts(long parent, String userId, String contextPath) {
 		JSONArray jsonArray = getSysApplicationService().getUserMenu(parent,
 				userId);
-		//logger.debug(jsonArray.toString('\n'));
+		logger.debug(jsonArray.toString('\n'));
 		String sMenu = "";
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject rootJson = jsonArray.getJSONObject(i);
