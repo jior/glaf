@@ -15,6 +15,7 @@ import com.glaf.core.base.JSONable;
 @Entity
 @Table(name = "sys_dictory")
 public class Dictory implements Serializable, JSONable {
+
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -65,31 +66,31 @@ public class Dictory implements Serializable, JSONable {
 	 * null
 	 */
 	@Column(name = "ext11")
-	protected long ext11;
+	protected Long ext11;
 
 	/**
 	 * null
 	 */
 	@Column(name = "ext12")
-	protected long ext12;
+	protected Long ext12;
 
 	/**
 	 * null
 	 */
 	@Column(name = "ext13")
-	protected long ext13;
+	protected Long ext13;
 
 	/**
 	 * null
 	 */
 	@Column(name = "ext14")
-	protected long ext14;
+	protected Long ext14;
 
 	/**
 	 * null
 	 */
 	@Column(name = "ext15")
-	protected long ext15;
+	protected Long ext15;
 
 	/**
 	 * null
@@ -176,7 +177,7 @@ public class Dictory implements Serializable, JSONable {
 
 	@Id
 	@Column(name = "ID", length = 50, nullable = false)
-	protected long id;
+	protected Long id;
 
 	/**
 	 * √˚≥∆
@@ -188,7 +189,7 @@ public class Dictory implements Serializable, JSONable {
 	 * ¿‡–Õ±‡∫≈
 	 */
 	@Column(name = "TYPEID")
-	protected long nodeId;
+	protected Long nodeId;
 
 	/**
 	 * –Ú∫≈
@@ -261,23 +262,23 @@ public class Dictory implements Serializable, JSONable {
 		return this.ext10;
 	}
 
-	public long getExt11() {
+	public Long getExt11() {
 		return this.ext11;
 	}
 
-	public long getExt12() {
+	public Long getExt12() {
 		return this.ext12;
 	}
 
-	public long getExt13() {
+	public Long getExt13() {
 		return this.ext13;
 	}
 
-	public long getExt14() {
+	public Long getExt14() {
 		return this.ext14;
 	}
 
-	public long getExt15() {
+	public Long getExt15() {
 		return this.ext15;
 	}
 
@@ -333,7 +334,7 @@ public class Dictory implements Serializable, JSONable {
 		return this.ext9;
 	}
 
-	public long getId() {
+	public Long getId() {
 		return this.id;
 	}
 
@@ -341,7 +342,7 @@ public class Dictory implements Serializable, JSONable {
 		return this.name;
 	}
 
-	public long getNodeId() {
+	public Long getNodeId() {
 		return this.nodeId;
 	}
 
@@ -401,23 +402,23 @@ public class Dictory implements Serializable, JSONable {
 		this.ext10 = ext10;
 	}
 
-	public void setExt11(long ext11) {
+	public void setExt11(Long ext11) {
 		this.ext11 = ext11;
 	}
 
-	public void setExt12(long ext12) {
+	public void setExt12(Long ext12) {
 		this.ext12 = ext12;
 	}
 
-	public void setExt13(long ext13) {
+	public void setExt13(Long ext13) {
 		this.ext13 = ext13;
 	}
 
-	public void setExt14(long ext14) {
+	public void setExt14(Long ext14) {
 		this.ext14 = ext14;
 	}
 
-	public void setExt15(long ext15) {
+	public void setExt15(Long ext15) {
 		this.ext15 = ext15;
 	}
 
@@ -473,7 +474,7 @@ public class Dictory implements Serializable, JSONable {
 		this.ext9 = ext9;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -481,7 +482,7 @@ public class Dictory implements Serializable, JSONable {
 		this.name = name;
 	}
 
-	public void setNodeId(long nodeId) {
+	public void setNodeId(Long nodeId) {
 		this.nodeId = nodeId;
 	}
 

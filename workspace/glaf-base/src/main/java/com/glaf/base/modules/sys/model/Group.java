@@ -27,10 +27,11 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import com.glaf.base.modules.sys.util.*;
+import com.glaf.core.base.JSONable;
 
 @Entity
 @Table(name = "SYS_GROUP")
-public class Group implements Serializable {
+public class Group implements Serializable, JSONable {
 	private static final long serialVersionUID = 1L;
 
 	/**
