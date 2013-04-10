@@ -1,0 +1,1 @@
+put your hibernate mapping xml file
