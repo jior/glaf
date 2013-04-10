@@ -55,7 +55,10 @@ public class RealmBuilder {
 				if (perms.endsWith(",")) {
 					perms = perms.substring(0, perms.lastIndexOf(","));
 				}
-				props.put(url, "authc, perms['" + perms + "']");
+				if(url.indexOf("?") != -1){
+					url = url.substring(0, url.indexOf("?"));
+				}
+				props.put(url, "authc, perms[\"" + perms + "\"]");
 			}
 		}
 		return props;

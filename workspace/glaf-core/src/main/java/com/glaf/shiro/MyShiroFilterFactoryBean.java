@@ -56,22 +56,7 @@ public class MyShiroFilterFactoryBean extends ShiroFilterFactoryBean {
 		 * 如下定义是为了防止配置错误导致安全漏洞
 		 */
 		filterChainDefinitionMap.put("/rs/**", "authc");
-		filterChainDefinitionMap.put("/activiti/deploy.do",
-				"authc, perms[SystemAdministrator]");
-		filterChainDefinitionMap.put("/jbpm/deploy.do",
-				"authc, perms[SystemAdministrator]");
-		filterChainDefinitionMap.put("/mx/activiti/deploy",
-				"authc, perms[SystemAdministrator]");
-		filterChainDefinitionMap.put("/mx/jbpm/deploy",
-				"authc, perms[SystemAdministrator]");
-		filterChainDefinitionMap.put("/sys/**",
-				"authc, perms[SystemAdministrator]");
-		filterChainDefinitionMap.put("/system/**",
-				"authc, perms[SystemAdministrator]");
-		filterChainDefinitionMap.put("/mx/sys/**",
-				"authc, perms[SystemAdministrator]");
-		filterChainDefinitionMap.put("/mx/system/**",
-				"authc, perms[SystemAdministrator]");
+		filterChainDefinitionMap.put("/mx/**", "authc");
 		logger.debug(filterChainDefinitionMap);
 		return filterChainDefinitionMap;
 	}

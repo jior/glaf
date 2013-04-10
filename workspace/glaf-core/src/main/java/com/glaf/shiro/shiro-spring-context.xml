@@ -18,30 +18,6 @@
 				<entry key="authc" value-ref="formAuthenticationFilter" />
 			</util:map>
 		</property>
-		<property name="filterChainDefinitions">
-			<value>
-				/=anon
-				/login.do*=authc
-				/logout.do*=anon
-				/rs/**=authc
-				/mx/system/**=authc,perms[SystemAdministrator]
-				/mx/jbpm/deploy/**=authc,perms[SystemAdministrator]
-				/mx/activiti/deploy/**=authc,perms[SystemAdministrator]
-				/mx/**=authc
-				/dwr/*=authc
-				/images/**=anon
-				/css/**=anon
-				/styles/**=anon
-				/js/**=anon
-				/scripts/**=anon
-				/icons/**=anon
-				/skins/**=anon
-				/error/**=anon
-				/index.jsp=anon
-				/index.html=anon
-				/**=authc
-			</value>
-		</property>
 	</bean>
 
 	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
