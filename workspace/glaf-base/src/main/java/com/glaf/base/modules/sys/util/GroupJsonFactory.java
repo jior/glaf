@@ -22,6 +22,7 @@ import com.alibaba.fastjson.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.glaf.base.modules.sys.model.*;
+import com.glaf.core.util.DateUtils;
 
 public class GroupJsonFactory {
 
@@ -39,8 +40,17 @@ public class GroupJsonFactory {
 		if (jsonObject.containsKey("type")) {
 			model.setType(jsonObject.getString("type"));
 		}
+		if (jsonObject.containsKey("createDate")) {
+			model.setCreateDate(jsonObject.getDate("createDate"));
+		}
 		if (jsonObject.containsKey("createBy")) {
 			model.setCreateBy(jsonObject.getString("createBy"));
+		}
+		if (jsonObject.containsKey("updateBy")) {
+			model.setUpdateBy(jsonObject.getString("updateBy"));
+		}
+		if (jsonObject.containsKey("updateDate")) {
+			model.setUpdateDate(jsonObject.getDate("updateDate"));
 		}
 		if (jsonObject.containsKey("sort")) {
 			model.setSort(jsonObject.getInteger("sort"));
@@ -62,8 +72,27 @@ public class GroupJsonFactory {
 		if (model.getType() != null) {
 			jsonObject.put("type", model.getType());
 		}
+		if (model.getCreateDate() != null) {
+			jsonObject.put("createDate",
+					DateUtils.getDate(model.getCreateDate()));
+			jsonObject.put("createDate_date",
+					DateUtils.getDate(model.getCreateDate()));
+			jsonObject.put("createDate_datetime",
+					DateUtils.getDateTime(model.getCreateDate()));
+		}
 		if (model.getCreateBy() != null) {
 			jsonObject.put("createBy", model.getCreateBy());
+		}
+		if (model.getUpdateBy() != null) {
+			jsonObject.put("updateBy", model.getUpdateBy());
+		}
+		if (model.getUpdateDate() != null) {
+			jsonObject.put("updateDate",
+					DateUtils.getDate(model.getUpdateDate()));
+			jsonObject.put("updateDate_date",
+					DateUtils.getDate(model.getUpdateDate()));
+			jsonObject.put("updateDate_datetime",
+					DateUtils.getDateTime(model.getUpdateDate()));
 		}
 		jsonObject.put("sort", model.getSort());
 		return jsonObject;
@@ -82,8 +111,27 @@ public class GroupJsonFactory {
 		if (model.getType() != null) {
 			jsonObject.put("type", model.getType());
 		}
+		if (model.getCreateDate() != null) {
+			jsonObject.put("createDate",
+					DateUtils.getDate(model.getCreateDate()));
+			jsonObject.put("createDate_date",
+					DateUtils.getDate(model.getCreateDate()));
+			jsonObject.put("createDate_datetime",
+					DateUtils.getDateTime(model.getCreateDate()));
+		}
 		if (model.getCreateBy() != null) {
 			jsonObject.put("createBy", model.getCreateBy());
+		}
+		if (model.getUpdateBy() != null) {
+			jsonObject.put("updateBy", model.getUpdateBy());
+		}
+		if (model.getUpdateDate() != null) {
+			jsonObject.put("updateDate",
+					DateUtils.getDate(model.getUpdateDate()));
+			jsonObject.put("updateDate_date",
+					DateUtils.getDate(model.getUpdateDate()));
+			jsonObject.put("updateDate_datetime",
+					DateUtils.getDateTime(model.getUpdateDate()));
 		}
 		jsonObject.put("sort", model.getSort());
 		return jsonObject;

@@ -24,6 +24,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import javax.persistence.*;
 import com.alibaba.fastjson.*;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -31,23 +32,105 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.glaf.base.modules.sys.util.SysDepartmentJsonFactory;
 import com.glaf.core.base.JSONable;
 
+@Entity
+@Table(name = "sys_department")
 public class SysDepartment implements Serializable, JSONable {
 	private static final long serialVersionUID = -1700125499848402378L;
-	private long id;
-	private String name;
-	private String desc;
-	private Date createTime;
-	private int sort;
-	private String no;
-	private String code;
-	private String code2;
-	private SysTree node;
-	private String fincode;
-	private long nodeId;
-	private SysDepartment parent;
-	private Set<SysDeptRole> roles = new HashSet<SysDeptRole>();
+	@javax.persistence.Transient
 	private List<SysDepartment> children = new ArrayList<SysDepartment>();
-	private int status = 0;// 是否有效[默认有效]
+
+	/**
+	 * 编码
+	 */
+	@Column(name = "CODE")
+	protected String code;
+
+	/**
+	 * 编码2
+	 */
+	@Column(name = "CODE2")
+	protected String code2;
+
+	/**
+	 * 创建人
+	 */
+	@Column(name = "CREATEBY")
+	protected String createBy;
+
+	/**
+	 * 创建日期
+	 */
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "CREATETIME")
+	protected Date createTime;
+
+	/**
+	 * 描述
+	 */
+	@Column(name = "DEPTDESC")
+	protected String desc;
+
+	/**
+	 * 财务代码
+	 */
+	@Column(name = "FINCODE")
+	protected String fincode;
+
+	@Id
+	@Column(name = "ID", length = 50, nullable = false)
+	protected long id;
+
+	/**
+	 * 名称
+	 */
+	@Column(name = "NAME")
+	protected String name;
+
+	/**
+	 * 部门编号
+	 */
+	@Column(name = "DEPTNO")
+	protected String no;
+
+	@javax.persistence.Transient
+	private SysTree node;
+
+	/**
+	 * 节点编号
+	 */
+	@Column(name = "NODEID")
+	protected long nodeId;
+
+	@javax.persistence.Transient
+	private SysDepartment parent;
+
+	@javax.persistence.Transient
+	private Set<SysDeptRole> roles = new HashSet<SysDeptRole>();
+
+	/**
+	 * 序号
+	 */
+	@Column(name = "SORT")
+	protected int sort;
+
+	/**
+	 * 状态
+	 */
+	@Column(name = "STATUS")
+	protected int status = 0;// 是否有效[默认有效]
+
+	/**
+	 * 修改人
+	 */
+	@Column(name = "UPDATEBY")
+	protected String updateBy;
+
+	/**
+	 * 修改日期
+	 */
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "UPDATEDATE")
+	protected Date updateDate;
 
 	public SysDepartment() {
 
@@ -71,6 +154,10 @@ public class SysDepartment implements Serializable, JSONable {
 
 	public String getCode2() {
 		return code2;
+	}
+
+	public String getCreateBy() {
+		return createBy;
 	}
 
 	public Date getCreateTime() {
@@ -124,6 +211,14 @@ public class SysDepartment implements Serializable, JSONable {
 		return status;
 	}
 
+	public String getUpdateBy() {
+		return updateBy;
+	}
+
+	public Date getUpdateDate() {
+		return updateDate;
+	}
+
 	public SysDepartment jsonToObject(JSONObject jsonObject) {
 		return SysDepartmentJsonFactory.jsonToObject(jsonObject);
 	}
@@ -138,6 +233,10 @@ public class SysDepartment implements Serializable, JSONable {
 
 	public void setCode2(String code2) {
 		this.code2 = code2;
+	}
+
+	public void setCreateBy(String createBy) {
+		this.createBy = createBy;
 	}
 
 	public void setCreateTime(Date createTime) {
@@ -186,6 +285,14 @@ public class SysDepartment implements Serializable, JSONable {
 
 	public void setStatus(int status) {
 		this.status = status;
+	}
+
+	public void setUpdateBy(String updateBy) {
+		this.updateBy = updateBy;
+	}
+
+	public void setUpdateDate(Date updateDate) {
+		this.updateDate = updateDate;
 	}
 
 	public JSONObject toJsonObject() {

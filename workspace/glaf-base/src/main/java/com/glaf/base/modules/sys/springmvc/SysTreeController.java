@@ -251,6 +251,8 @@ public class SysTreeController {
 		bean.setName(ParamUtil.getParameter(request, "name"));
 		bean.setDesc(ParamUtil.getParameter(request, "desc"));
 		bean.setCode(ParamUtil.getParameter(request, "code"));
+		bean.setCreateBy(RequestUtils.getActorId(request));
+		bean.setUpdateBy(RequestUtils.getActorId(request));
 		boolean ret = sysTreeService.create(bean);
 		ViewMessages messages = new ViewMessages();
 		if (ret) {// ±£´æ³É¹¦
@@ -284,6 +286,7 @@ public class SysTreeController {
 			bean.setName(ParamUtil.getParameter(request, "name"));
 			bean.setDesc(ParamUtil.getParameter(request, "desc"));
 			bean.setCode(ParamUtil.getParameter(request, "code"));
+			bean.setUpdateBy(RequestUtils.getActorId(request));
 		}
 		boolean ret = false;
 		try {

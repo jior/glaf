@@ -75,7 +75,7 @@ public class SysTreeServiceImpl implements SysTreeService {
 				}
 			}
 		}
-
+		bean.setCreateDate(new Date());
 		this.save(bean);
 		return true;
 	}
@@ -318,9 +318,10 @@ public class SysTreeServiceImpl implements SysTreeService {
 
 		if (bean.getId() == 0L) {
 			bean.setId(idGenerator.nextId());
-			// sysTree.setCreateDate(new Date());
+			bean.setCreateDate(new Date());
 			sysTreeMapper.insertSysTree(bean);
 		} else {
+			bean.setUpdateDate(new Date());
 			sysTreeMapper.updateSysTree(bean);
 		}
 	}

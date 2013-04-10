@@ -20,6 +20,7 @@ package com.glaf.base.modules.others.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.*;
 import com.alibaba.fastjson.*;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.glaf.base.modules.others.util.AttachmentJsonFactory;
@@ -28,15 +29,50 @@ import com.glaf.core.base.JSONable;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
+@Entity
+@Table(name = "Attachment")
 public class Attachment implements Serializable, JSONable {
 	private static final long serialVersionUID = 3825200508464771531L;
-	private long id;
-	private long referId;
-	private int referType;
-	private String name;
-	private String url;
-	private Date createDate;
-	private long createId;
+	@Id
+	@Column(name = "ID", nullable = false)
+	protected long id;
+
+	/**
+	 * 引用ID
+	 */
+	@Column(name = "REFERID")
+	protected long referId;
+
+	/**
+	 * 引用类型
+	 */
+	@Column(name = "REFERTYPE")
+	protected int referType;
+
+	/**
+	 * 名称
+	 */
+	@Column(name = "NAME")
+	protected String name;
+
+	/**
+	 * URL
+	 */
+	@Column(name = "URL")
+	protected String url;
+
+	/**
+	 * 创建日期
+	 */
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "CREATEDATE")
+	protected Date createDate;
+
+	/**
+	 * 创建人编号
+	 */
+	@Column(name = "CREATEID")
+	protected long createId;
 
 	public long getCreateId() {
 		return createId;

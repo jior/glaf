@@ -17,14 +17,14 @@ public class SysAccess implements Serializable, JSONable {
 	 */
 	@Id
 	@Column(name = "APPID", length = 50, nullable = false)
-	protected Long appId;
+	protected long appId;
 
 	/**
 	 * ½ÇÉ«±àºÅ
 	 */
 	@Id
 	@Column(name = "ROLEID")
-	protected Long roleId;
+	protected long roleId;
 
 	public SysAccess() {
 
@@ -39,19 +39,18 @@ public class SysAccess implements Serializable, JSONable {
 		if (getClass() != obj.getClass())
 			return false;
 		SysAccess other = (SysAccess) obj;
-		if (appId == null) {
-			if (other.appId != null)
-				return false;
-		} else if (!appId.equals(other.appId))
+		if (appId != other.appId)
+			return false;
+		if (roleId != other.roleId)
 			return false;
 		return true;
 	}
 
-	public Long getAppId() {
+	public long getAppId() {
 		return this.appId;
 	}
 
-	public Long getRoleId() {
+	public long getRoleId() {
 		return this.roleId;
 	}
 
@@ -59,7 +58,8 @@ public class SysAccess implements Serializable, JSONable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((appId == null) ? 0 : appId.hashCode());
+		result = prime * result + (int) (appId ^ (appId >>> 32));
+		result = prime * result + (int) (roleId ^ (roleId >>> 32));
 		return result;
 	}
 
@@ -67,11 +67,11 @@ public class SysAccess implements Serializable, JSONable {
 		return SysAccessJsonFactory.jsonToObject(jsonObject);
 	}
 
-	public void setAppId(Long appId) {
+	public void setAppId(long appId) {
 		this.appId = appId;
 	}
 
-	public void setRoleId(Long roleId) {
+	public void setRoleId(long roleId) {
 		this.roleId = roleId;
 	}
 

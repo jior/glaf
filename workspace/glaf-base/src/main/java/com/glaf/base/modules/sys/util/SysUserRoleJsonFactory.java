@@ -54,6 +54,13 @@ public class SysUserRoleJsonFactory {
 					.getString("processDescription"));
 		}
 
+		if (jsonObject.containsKey("createDate")) {
+			model.setCreateDate(jsonObject.getDate("createDate"));
+		}
+		if (jsonObject.containsKey("createBy")) {
+			model.setCreateBy(jsonObject.getString("createBy"));
+		}
+
 		return model;
 	}
 
@@ -85,6 +92,19 @@ public class SysUserRoleJsonFactory {
 		if (model.getProcessDescription() != null) {
 			jsonObject.put("processDescription", model.getProcessDescription());
 		}
+
+		if (model.getCreateDate() != null) {
+			jsonObject.put("createDate",
+					DateUtils.getDate(model.getCreateDate()));
+			jsonObject.put("createDate_date",
+					DateUtils.getDate(model.getCreateDate()));
+			jsonObject.put("createDate_datetime",
+					DateUtils.getDateTime(model.getCreateDate()));
+		}
+		if (model.getCreateBy() != null) {
+			jsonObject.put("createBy", model.getCreateBy());
+		}
+
 		return jsonObject;
 	}
 
@@ -116,6 +136,19 @@ public class SysUserRoleJsonFactory {
 		if (model.getProcessDescription() != null) {
 			jsonObject.put("processDescription", model.getProcessDescription());
 		}
+
+		if (model.getCreateDate() != null) {
+			jsonObject.put("createDate",
+					DateUtils.getDate(model.getCreateDate()));
+			jsonObject.put("createDate_date",
+					DateUtils.getDate(model.getCreateDate()));
+			jsonObject.put("createDate_datetime",
+					DateUtils.getDateTime(model.getCreateDate()));
+		}
+		if (model.getCreateBy() != null) {
+			jsonObject.put("createBy", model.getCreateBy());
+		}
+
 		return jsonObject;
 	}
 

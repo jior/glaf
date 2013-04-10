@@ -12,5 +12,11 @@
         <property name="status" column="STATUS" type="Integer" englishTitle="STATUS" dataType="0" length="10"  title="状态"/>
         <property name="fincode" column="FINCODE" type="String" englishTitle="FINCODE" dataType="0" length="255"  title="财务代码"/>
         <property name="nodeId" column="NODEID" type="Long" englishTitle="NODEID" dataType="0" length="19" nullable="false"  title="节点编号"/>
+		<property name="createBy" column="CREATEBY" title="创建人" 
+		    englishTitle="Create By"	type="String" displayType="4" length="50" />
+		<property name="updateBy"  column="UPDATEBY" title="修改人" 
+		    englishTitle="Update By"	type="String" displayType="4" length="50" />
+		<property name="updateDate" column="UPDATEDATE" title="修改日期"
+			englishTitle="Update Date" type="Date" displayType="4" nullable="false"/>
     </entity>
 </mapping>

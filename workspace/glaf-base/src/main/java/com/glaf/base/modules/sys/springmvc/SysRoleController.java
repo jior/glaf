@@ -240,6 +240,8 @@ public class SysRoleController {
 			bean.setName(ParamUtil.getParameter(request, "name"));
 			bean.setDesc(ParamUtil.getParameter(request, "desc"));
 			bean.setCode(ParamUtil.getParameter(request, "code"));
+			bean.setCreateBy(RequestUtils.getActorId(request));
+			bean.setUpdateBy(RequestUtils.getActorId(request));
 			ret = sysRoleService.create(bean);
 		}
 
@@ -276,6 +278,7 @@ public class SysRoleController {
 			bean.setName(ParamUtil.getParameter(request, "name"));
 			bean.setDesc(ParamUtil.getParameter(request, "desc"));
 			bean.setCode(ParamUtil.getParameter(request, "code"));
+			bean.setUpdateBy(RequestUtils.getActorId(request));
 		}
 		boolean ret = sysRoleService.update(bean);
 		ViewMessages messages = new ViewMessages();

@@ -23,5 +23,11 @@
         <property name="deptId" column="DEPTID" type="Long" englishTitle="deptId" dataType="0" length="19" title="部门编号" />
         <property name="adminFlag" column="ADMINFLAG" type="String" englishTitle="adminFlag" dataType="0" length="1" title="管理员标识" />
         <property name="superiorIds" column="SUPERIORIDS" type="String" englishTitle="superiorIds" dataType="0" length="255" title="上级领导" />
+		<property name="createBy" column="CREATEBY" title="创建人" 
+		    englishTitle="Create By"	type="String" displayType="4" length="50" />
+		<property name="updateBy"  column="UPDATEBY" title="修改人" 
+		    englishTitle="Update By"	type="String" displayType="4" length="50" />
+		<property name="updateDate" column="UPDATEDATE" title="修改日期"
+			englishTitle="Update Date" type="Date" displayType="4" nullable="false"/>
     </entity>
 </mapping>

@@ -1,6 +1,9 @@
 package com.glaf.base.modules.sys.model;
 
 import java.io.*;
+import java.util.Date;
+
+import javax.persistence.*;
 
 import com.alibaba.fastjson.*;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -8,58 +11,99 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
 import com.glaf.base.modules.sys.util.*;
+import com.glaf.core.base.JSONable;
 
-public class DictoryDefinition implements Serializable,
+@Entity
+@Table(name = "SYS_DICTORY_DEF")
+public class DictoryDefinition implements Serializable, JSONable,
 		java.lang.Comparable<DictoryDefinition> {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * 列名
 	 */
+	@Column(name = "COLUMNNAME")
 	protected String columnName;
 
-	protected Long id;
+	/**
+	 * 创建人
+	 */
+	@Column(name = "CREATEBY")
+	protected String createBy;
+
+	/**
+	 * 创建日期
+	 */
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "CREATEDATE")
+	protected Date createDate;
+
+	@Id
+	@Column(name = "ID", length = 50, nullable = false)
+	protected long id;
 
 	/**
 	 * 数据长度
 	 */
-	protected Integer length;
+	@Column(name = "LENGTH")
+	protected int length;
 
 	/**
 	 * 名称
 	 */
+	@Column(name = "NAME")
 	protected String name;
 
 	/**
 	 * 节点编号
 	 */
-	protected Long nodeId = 0L;
+	@Column(name = "NODEID")
+	protected long nodeId;
 
 	/**
 	 * 必填项
 	 */
-	protected Integer required = 0;
+	@Column(name = "REQUIRED")
+	protected int required;
 
 	/**
 	 * 顺序号
 	 */
-	protected Integer sort = 0;
+	@Column(name = "SORT")
+	protected int sort;
 
 	/**
 	 * 目标
 	 */
+	@Column(name = "TARGET")
 	protected String target;
 
 	/**
 	 * 标题
 	 */
+	@Column(name = "TITLE")
 	protected String title;
 
 	/**
 	 * 数据类型
 	 */
+	@Column(name = "TYPE")
 	protected String type;
 
+	/**
+	 * 修改人
+	 */
+	@Column(name = "UPDATEBY")
+	protected String updateBy;
+
+	/**
+	 * 修改日期
+	 */
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "UPDATEDATE")
+	protected Date updateDate;
+
+	@javax.persistence.Transient
 	protected Object value;
 
 	public DictoryDefinition() {
@@ -94,10 +138,7 @@ public class DictoryDefinition implements Serializable,
 		if (getClass() != obj.getClass())
 			return false;
 		DictoryDefinition other = (DictoryDefinition) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
+		if (id != other.id)
 			return false;
 		return true;
 	}
@@ -106,15 +147,23 @@ public class DictoryDefinition implements Serializable,
 		return this.columnName;
 	}
 
+	public String getCreateBy() {
+		return createBy;
+	}
+
+	public Date getCreateDate() {
+		return createDate;
+	}
+
 	public String getDateType() {
 		return this.type.toLowerCase();
 	}
 
-	public Long getId() {
+	public long getId() {
 		return this.id;
 	}
 
-	public Integer getLength() {
+	public int getLength() {
 		return this.length;
 	}
 
@@ -122,22 +171,22 @@ public class DictoryDefinition implements Serializable,
 		return this.name;
 	}
 
-	public Long getNodeId() {
+	public long getNodeId() {
 		return this.nodeId;
 	}
 
 	public String getNullable() {
-		if (required != null && required == 1) {
+		if (required == 1) {
 			return "no";
 		}
 		return "yes";
 	}
 
-	public Integer getRequired() {
+	public int getRequired() {
 		return this.required;
 	}
 
-	public Integer getSort() {
+	public int getSort() {
 		return this.sort;
 	}
 
@@ -153,6 +202,14 @@ public class DictoryDefinition implements Serializable,
 		return this.type;
 	}
 
+	public String getUpdateBy() {
+		return updateBy;
+	}
+
+	public Date getUpdateDate() {
+		return updateDate;
+	}
+
 	public Object getValue() {
 		return value;
 	}
@@ -161,7 +218,7 @@ public class DictoryDefinition implements Serializable,
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + (int) (id ^ (id >>> 32));
 		return result;
 	}
 
@@ -173,11 +230,19 @@ public class DictoryDefinition implements Serializable,
 		this.columnName = columnName;
 	}
 
-	public void setId(Long id) {
+	public void setCreateBy(String createBy) {
+		this.createBy = createBy;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+
+	public void setId(long id) {
 		this.id = id;
 	}
 
-	public void setLength(Integer length) {
+	public void setLength(int length) {
 		this.length = length;
 	}
 
@@ -185,15 +250,15 @@ public class DictoryDefinition implements Serializable,
 		this.name = name;
 	}
 
-	public void setNodeId(Long nodeId) {
+	public void setNodeId(long nodeId) {
 		this.nodeId = nodeId;
 	}
 
-	public void setRequired(Integer required) {
+	public void setRequired(int required) {
 		this.required = required;
 	}
 
-	public void setSort(Integer sort) {
+	public void setSort(int sort) {
 		this.sort = sort;
 	}
 
@@ -207,6 +272,14 @@ public class DictoryDefinition implements Serializable,
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public void setUpdateBy(String updateBy) {
+		this.updateBy = updateBy;
+	}
+
+	public void setUpdateDate(Date updateDate) {
+		this.updateDate = updateDate;
 	}
 
 	public void setValue(Object value) {

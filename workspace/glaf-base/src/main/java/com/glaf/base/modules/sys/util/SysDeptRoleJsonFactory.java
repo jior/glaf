@@ -22,6 +22,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.glaf.base.modules.sys.model.SysDeptRole;
+import com.glaf.core.util.DateUtils;
 
 public class SysDeptRoleJsonFactory {
 
@@ -46,6 +47,13 @@ public class SysDeptRoleJsonFactory {
 			model.setDeptId(jsonObject.getLong("deptId"));
 		}
 
+		if (jsonObject.containsKey("createDate")) {
+			model.setCreateDate(jsonObject.getDate("createDate"));
+		}
+		if (jsonObject.containsKey("createBy")) {
+			model.setCreateBy(jsonObject.getString("createBy"));
+		}
+
 		return model;
 	}
 
@@ -61,6 +69,17 @@ public class SysDeptRoleJsonFactory {
 		jsonObject.put("sort", model.getSort());
 		jsonObject.put("sysRoleId", model.getSysRoleId());
 		jsonObject.put("deptId", model.getDeptId());
+		if (model.getCreateDate() != null) {
+			jsonObject.put("createDate",
+					DateUtils.getDate(model.getCreateDate()));
+			jsonObject.put("createDate_date",
+					DateUtils.getDate(model.getCreateDate()));
+			jsonObject.put("createDate_datetime",
+					DateUtils.getDateTime(model.getCreateDate()));
+		}
+		if (model.getCreateBy() != null) {
+			jsonObject.put("createBy", model.getCreateBy());
+		}
 		return jsonObject;
 	}
 
@@ -76,6 +95,17 @@ public class SysDeptRoleJsonFactory {
 		jsonObject.put("sort", model.getSort());
 		jsonObject.put("sysRoleId", model.getSysRoleId());
 		jsonObject.put("deptId", model.getDeptId());
+		if (model.getCreateDate() != null) {
+			jsonObject.put("createDate",
+					DateUtils.getDate(model.getCreateDate()));
+			jsonObject.put("createDate_date",
+					DateUtils.getDate(model.getCreateDate()));
+			jsonObject.put("createDate_datetime",
+					DateUtils.getDateTime(model.getCreateDate()));
+		}
+		if (model.getCreateBy() != null) {
+			jsonObject.put("createBy", model.getCreateBy());
+		}
 		return jsonObject;
 	}
 

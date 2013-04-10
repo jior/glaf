@@ -19,7 +19,7 @@
 package com.glaf.base.modules.workspace.model;
 
 import java.io.Serializable;
-
+import javax.persistence.*;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
@@ -28,19 +28,39 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.glaf.base.modules.workspace.util.MyMenuJsonFactory;
 import com.glaf.core.base.JSONable;
 
+@Entity
+@Table(name = "MyMenu")
 public class MyMenu implements Serializable, JSONable {
 
 	private static final long serialVersionUID = 3488265849082732239L;
 
-	private long id;
+	@Id
+	@Column(name = "ID", nullable = false)
+	protected long id;
 
-	private long userId;
+	/**
+	 * 用户ID
+	 */
+	@Column(name = "USERID")
+	protected long userId;
 
-	private String title;
+	/**
+	 * 标题
+	 */
+	@Column(name = "TITLE")
+	protected String title;
 
-	private String url;
+	/**
+	 * 链接
+	 */
+	@Column(name = "URL")
+	protected String url;
 
-	private int sort;
+	/**
+	 * 顺序
+	 */
+	@Column(name = "SORT")
+	protected int sort;
 
 	public long getId() {
 		return id;

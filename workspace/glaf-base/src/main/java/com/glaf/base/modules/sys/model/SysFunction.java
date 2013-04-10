@@ -19,20 +19,55 @@
 package com.glaf.base.modules.sys.model;
 
 import java.io.Serializable;
+
+import javax.persistence.*;
+
 import com.alibaba.fastjson.*;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.glaf.base.modules.sys.util.SysFunctionJsonFactory;
 import com.glaf.core.base.JSONable;
 
+@Entity
+@Table(name = "sys_function")
 public class SysFunction implements Serializable, JSONable {
 	private static final long serialVersionUID = -4669036487930746301L;
-	private long id;
+
+	@javax.persistence.Transient
 	private SysApplication app;
-	private long appId;
-	private String name;
-	private String funcDesc;
-	private String funcMethod;
-	private int sort;
+
+	/**
+	 * 应用编号
+	 */
+	@Column(name = "APPID")
+	protected long appId;
+
+	/**
+	 * 描述
+	 */
+	@Column(name = "FUNCDESC")
+	protected String funcDesc;
+
+	/**
+	 * 方法
+	 */
+	@Column(name = "FUNCMETHOD")
+	protected String funcMethod;
+
+	@Id
+	@Column(name = "ID", length = 50, nullable = false)
+	protected long id;
+
+	/**
+	 * 名称
+	 */
+	@Column(name = "NAME")
+	protected String name;
+
+	/**
+	 * 序号
+	 */
+	@Column(name = "SORT")
+	protected int sort;
 
 	public SysFunction() {
 
@@ -66,6 +101,10 @@ public class SysFunction implements Serializable, JSONable {
 		return sort;
 	}
 
+	public SysFunction jsonToObject(JSONObject jsonObject) {
+		return SysFunctionJsonFactory.jsonToObject(jsonObject);
+	}
+
 	public void setApp(SysApplication app) {
 		this.app = app;
 	}
@@ -92,10 +131,6 @@ public class SysFunction implements Serializable, JSONable {
 
 	public void setSort(int sort) {
 		this.sort = sort;
-	}
-
-	public SysFunction jsonToObject(JSONObject jsonObject) {
-		return SysFunctionJsonFactory.jsonToObject(jsonObject);
 	}
 
 	public JSONObject toJsonObject() {

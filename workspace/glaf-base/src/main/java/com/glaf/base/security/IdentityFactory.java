@@ -103,7 +103,7 @@ public class IdentityFactory {
 			String roleCode) {
 		SysRole role = sysRoleService.findByCode(roleCode);
 		return sysUserRoleService.getChildrenMembershipUsers(deptId,
-				(int) role.getId());
+				 role.getId());
 	}
 
 	/**
@@ -209,10 +209,10 @@ public class IdentityFactory {
 	 * @param roleId
 	 * @return
 	 */
-	public static List<SysUser> getMembershipUsers(int deptId, String roleCode) {
+	public static List<SysUser> getMembershipUsers(long deptId, String roleCode) {
 		SysRole role = sysRoleService.findByCode(roleCode);
 		return sysUserRoleService
-				.getMembershipUsers(deptId, (int) role.getId());
+				.getMembershipUsers(deptId,  role.getId());
 	}
 
 	/**
@@ -238,7 +238,7 @@ public class IdentityFactory {
 			String roleCode) {
 		SysRole role = sysRoleService.findByCode(roleCode);
 		return sysUserRoleService.getMembershipUsers(deptIds,
-				(int) role.getId());
+				 role.getId());
 	}
 
 	/**

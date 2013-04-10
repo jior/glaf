@@ -94,6 +94,18 @@ public class DictoryJsonFactory {
 		if (jsonObject.containsKey("ext20")) {
 			model.setExt20(jsonObject.getDouble("ext20"));
 		}
+		if (jsonObject.containsKey("createDate")) {
+			model.setCreateDate(jsonObject.getDate("createDate"));
+		}
+		if (jsonObject.containsKey("createBy")) {
+			model.setCreateBy(jsonObject.getString("createBy"));
+		}
+		if (jsonObject.containsKey("updateBy")) {
+			model.setUpdateBy(jsonObject.getString("updateBy"));
+		}
+		if (jsonObject.containsKey("updateDate")) {
+			model.setUpdateDate(jsonObject.getDate("updateDate"));
+		}
 
 		return model;
 	}
@@ -176,6 +188,30 @@ public class DictoryJsonFactory {
 		jsonObject.put("ext18", model.getExt18());
 		jsonObject.put("ext19", model.getExt19());
 		jsonObject.put("ext20", model.getExt20());
+
+		if (model.getCreateDate() != null) {
+			jsonObject.put("createDate",
+					DateUtils.getDate(model.getCreateDate()));
+			jsonObject.put("createDate_date",
+					DateUtils.getDate(model.getCreateDate()));
+			jsonObject.put("createDate_datetime",
+					DateUtils.getDateTime(model.getCreateDate()));
+		}
+		if (model.getCreateBy() != null) {
+			jsonObject.put("createBy", model.getCreateBy());
+		}
+		if (model.getUpdateBy() != null) {
+			jsonObject.put("updateBy", model.getUpdateBy());
+		}
+		if (model.getUpdateDate() != null) {
+			jsonObject.put("updateDate",
+					DateUtils.getDate(model.getUpdateDate()));
+			jsonObject.put("updateDate_date",
+					DateUtils.getDate(model.getUpdateDate()));
+			jsonObject.put("updateDate_datetime",
+					DateUtils.getDateTime(model.getUpdateDate()));
+		}
+
 		return jsonObject;
 	}
 
@@ -257,6 +293,29 @@ public class DictoryJsonFactory {
 		jsonObject.put("ext18", model.getExt18());
 		jsonObject.put("ext19", model.getExt19());
 		jsonObject.put("ext20", model.getExt20());
+
+		if (model.getCreateDate() != null) {
+			jsonObject.put("createDate",
+					DateUtils.getDate(model.getCreateDate()));
+			jsonObject.put("createDate_date",
+					DateUtils.getDate(model.getCreateDate()));
+			jsonObject.put("createDate_datetime",
+					DateUtils.getDateTime(model.getCreateDate()));
+		}
+		if (model.getCreateBy() != null) {
+			jsonObject.put("createBy", model.getCreateBy());
+		}
+		if (model.getUpdateBy() != null) {
+			jsonObject.put("updateBy", model.getUpdateBy());
+		}
+		if (model.getUpdateDate() != null) {
+			jsonObject.put("updateDate",
+					DateUtils.getDate(model.getUpdateDate()));
+			jsonObject.put("updateDate_date",
+					DateUtils.getDate(model.getUpdateDate()));
+			jsonObject.put("updateDate_datetime",
+					DateUtils.getDateTime(model.getUpdateDate()));
+		}
 		return jsonObject;
 	}
 

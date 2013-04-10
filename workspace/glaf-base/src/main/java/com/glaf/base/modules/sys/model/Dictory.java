@@ -3,121 +3,216 @@ package com.glaf.base.modules.sys.model;
 import java.io.*;
 import java.util.*;
 
+import javax.persistence.*;
+
 import com.alibaba.fastjson.*;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
-
 import com.glaf.base.modules.sys.util.*;
+import com.glaf.core.base.JSONable;
 
-public class Dictory implements Serializable {
+@Entity
+@Table(name = "sys_dictory")
+public class Dictory implements Serializable, JSONable {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * 是否启用
 	 */
-	protected Integer blocked;
+	@Column(name = "BLOCKED")
+	protected int blocked;
 
 	/**
 	 * 编码
 	 */
+	@Column(name = "CODE")
 	protected String code;
+
+	/**
+	 * 创建人
+	 */
+	@Column(name = "CREATEBY")
+	protected String createBy;
+
+	/**
+	 * 创建日期
+	 */
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "CREATEDATE")
+	protected Date createDate;
 
 	/**
 	 * 描述
 	 */
+	@Column(name = "DICTDESC")
 	protected String desc;
 
 	/**
 	 * 字符串值1
 	 */
+	@Column(name = "EXT1")
 	protected String ext1;
 
 	/**
 	 * 日期值10
 	 */
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "ext10")
 	protected Date ext10;
 
-	protected Long ext11;
+	/**
+	 * null
+	 */
+	@Column(name = "ext11")
+	protected long ext11;
 
-	protected Long ext12;
+	/**
+	 * null
+	 */
+	@Column(name = "ext12")
+	protected long ext12;
 
-	protected Long ext13;
+	/**
+	 * null
+	 */
+	@Column(name = "ext13")
+	protected long ext13;
 
-	protected Long ext14;
+	/**
+	 * null
+	 */
+	@Column(name = "ext14")
+	protected long ext14;
 
-	protected Long ext15;
+	/**
+	 * null
+	 */
+	@Column(name = "ext15")
+	protected long ext15;
 
+	/**
+	 * null
+	 */
+	@Column(name = "ext16")
 	protected Double ext16;
 
+	/**
+	 * null
+	 */
+	@Column(name = "ext17")
 	protected Double ext17;
 
+	/**
+	 * null
+	 */
+	@Column(name = "ext18")
 	protected Double ext18;
 
+	/**
+	 * null
+	 */
+	@Column(name = "ext19")
 	protected Double ext19;
 
 	/**
 	 * 字符串值2
 	 */
+	@Column(name = "EXT2")
 	protected String ext2;
 
+	/**
+	 * null
+	 */
+	@Column(name = "ext20")
 	protected Double ext20;
 
 	/**
 	 * 字符串值3
 	 */
+	@Column(name = "EXT3")
 	protected String ext3;
 
 	/**
 	 * 字符串值4
 	 */
+	@Column(name = "EXT4")
 	protected String ext4;
 
 	/**
 	 * 日期值5
 	 */
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "EXT5")
 	protected Date ext5;
 
 	/**
 	 * 日期值6
 	 */
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "EXT6")
 	protected Date ext6;
 
 	/**
 	 * 日期值7
 	 */
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "ext7")
 	protected Date ext7;
 
 	/**
 	 * 日期值8
 	 */
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "ext8")
 	protected Date ext8;
 
 	/**
 	 * 日期值9
 	 */
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "ext9")
 	protected Date ext9;
 
-	protected Long id;
+	@Id
+	@Column(name = "ID", length = 50, nullable = false)
+	protected long id;
 
 	/**
 	 * 名称
 	 */
+	@Column(name = "NAME")
 	protected String name;
 
 	/**
 	 * 类型编号
 	 */
-	protected Long nodeId;
+	@Column(name = "TYPEID")
+	protected long nodeId;
 
 	/**
 	 * 序号
 	 */
-	protected Integer sort;
+	@Column(name = "SORT")
+	protected int sort;
+
+	/**
+	 * 修改人
+	 */
+	@Column(name = "UPDATEBY")
+	protected String updateBy;
+
+	/**
+	 * 修改日期
+	 */
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "UPDATEDATE")
+	protected Date updateDate;
 
 	/**
 	 * 值
 	 */
+	@Column(name = "VALUE_")
 	protected String value;
 
 	public Dictory() {
@@ -133,20 +228,25 @@ public class Dictory implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Dictory other = (Dictory) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
+		if (id != other.id)
 			return false;
 		return true;
 	}
 
-	public Integer getBlocked() {
+	public int getBlocked() {
 		return this.blocked;
 	}
 
 	public String getCode() {
 		return this.code;
+	}
+
+	public String getCreateBy() {
+		return createBy;
+	}
+
+	public Date getCreateDate() {
+		return createDate;
 	}
 
 	public String getDesc() {
@@ -161,23 +261,23 @@ public class Dictory implements Serializable {
 		return this.ext10;
 	}
 
-	public Long getExt11() {
+	public long getExt11() {
 		return this.ext11;
 	}
 
-	public Long getExt12() {
+	public long getExt12() {
 		return this.ext12;
 	}
 
-	public Long getExt13() {
+	public long getExt13() {
 		return this.ext13;
 	}
 
-	public Long getExt14() {
+	public long getExt14() {
 		return this.ext14;
 	}
 
-	public Long getExt15() {
+	public long getExt15() {
 		return this.ext15;
 	}
 
@@ -233,7 +333,7 @@ public class Dictory implements Serializable {
 		return this.ext9;
 	}
 
-	public Long getId() {
+	public long getId() {
 		return this.id;
 	}
 
@@ -241,12 +341,20 @@ public class Dictory implements Serializable {
 		return this.name;
 	}
 
-	public Long getNodeId() {
+	public long getNodeId() {
 		return this.nodeId;
 	}
 
-	public Integer getSort() {
+	public int getSort() {
 		return this.sort;
+	}
+
+	public String getUpdateBy() {
+		return updateBy;
+	}
+
+	public Date getUpdateDate() {
+		return updateDate;
 	}
 
 	public String getValue() {
@@ -257,7 +365,7 @@ public class Dictory implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + (int) (id ^ (id >>> 32));
 		return result;
 	}
 
@@ -265,12 +373,20 @@ public class Dictory implements Serializable {
 		return DictoryJsonFactory.jsonToObject(jsonObject);
 	}
 
-	public void setBlocked(Integer blocked) {
+	public void setBlocked(int blocked) {
 		this.blocked = blocked;
 	}
 
 	public void setCode(String code) {
 		this.code = code;
+	}
+
+	public void setCreateBy(String createBy) {
+		this.createBy = createBy;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
 	}
 
 	public void setDesc(String desc) {
@@ -285,23 +401,23 @@ public class Dictory implements Serializable {
 		this.ext10 = ext10;
 	}
 
-	public void setExt11(Long ext11) {
+	public void setExt11(long ext11) {
 		this.ext11 = ext11;
 	}
 
-	public void setExt12(Long ext12) {
+	public void setExt12(long ext12) {
 		this.ext12 = ext12;
 	}
 
-	public void setExt13(Long ext13) {
+	public void setExt13(long ext13) {
 		this.ext13 = ext13;
 	}
 
-	public void setExt14(Long ext14) {
+	public void setExt14(long ext14) {
 		this.ext14 = ext14;
 	}
 
-	public void setExt15(Long ext15) {
+	public void setExt15(long ext15) {
 		this.ext15 = ext15;
 	}
 
@@ -357,7 +473,7 @@ public class Dictory implements Serializable {
 		this.ext9 = ext9;
 	}
 
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -365,12 +481,20 @@ public class Dictory implements Serializable {
 		this.name = name;
 	}
 
-	public void setNodeId(Long nodeId) {
+	public void setNodeId(long nodeId) {
 		this.nodeId = nodeId;
 	}
 
-	public void setSort(Integer sort) {
+	public void setSort(int sort) {
 		this.sort = sort;
+	}
+
+	public void setUpdateBy(String updateBy) {
+		this.updateBy = updateBy;
+	}
+
+	public void setUpdateDate(Date updateDate) {
+		this.updateDate = updateDate;
 	}
 
 	public void setValue(String value) {

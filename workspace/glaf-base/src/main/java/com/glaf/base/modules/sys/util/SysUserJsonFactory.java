@@ -76,6 +76,16 @@ public class SysUserJsonFactory {
 			model.setCreateDate(jsonObject.getDate("createDate"));
 		}
 
+		if (jsonObject.containsKey("createBy")) {
+			model.setCreateBy(jsonObject.getString("createBy"));
+		}
+		if (jsonObject.containsKey("updateBy")) {
+			model.setUpdateBy(jsonObject.getString("updateBy"));
+		}
+		if (jsonObject.containsKey("updateDate")) {
+			model.setUpdateDate(jsonObject.getDate("updateDate"));
+		}
+
 		if (jsonObject.containsKey("lastLoginTime")) {
 			model.setLastLoginTime(jsonObject.getDate("lastLoginTime"));
 		}
@@ -212,6 +222,21 @@ public class SysUserJsonFactory {
 			jsonObject.put("loginIP", user.getLastLoginIP());
 		}
 
+		if (user.getCreateBy() != null) {
+			jsonObject.put("createBy", user.getCreateBy());
+		}
+		if (user.getUpdateBy() != null) {
+			jsonObject.put("updateBy", user.getUpdateBy());
+		}
+		if (user.getUpdateDate() != null) {
+			jsonObject.put("updateDate",
+					DateUtils.getDate(user.getUpdateDate()));
+			jsonObject.put("updateDate_date",
+					DateUtils.getDate(user.getUpdateDate()));
+			jsonObject.put("updateDate_datetime",
+					DateUtils.getDateTime(user.getUpdateDate()));
+		}
+
 		if (user.getUserRoles() != null && !user.getUserRoles().isEmpty()) {
 			JSONArray array = new JSONArray();
 			for (SysUserRole sysUserRole : user.getUserRoles()) {
@@ -288,6 +313,21 @@ public class SysUserJsonFactory {
 		}
 		if (user.getLastLoginIP() != null) {
 			jsonObject.put("loginIP", user.getLastLoginIP());
+		}
+
+		if (user.getCreateBy() != null) {
+			jsonObject.put("createBy", user.getCreateBy());
+		}
+		if (user.getUpdateBy() != null) {
+			jsonObject.put("updateBy", user.getUpdateBy());
+		}
+		if (user.getUpdateDate() != null) {
+			jsonObject.put("updateDate",
+					DateUtils.getDate(user.getUpdateDate()));
+			jsonObject.put("updateDate_date",
+					DateUtils.getDate(user.getUpdateDate()));
+			jsonObject.put("updateDate_datetime",
+					DateUtils.getDateTime(user.getUpdateDate()));
 		}
 
 		if (user.getUserRoles() != null && !user.getUserRoles().isEmpty()) {

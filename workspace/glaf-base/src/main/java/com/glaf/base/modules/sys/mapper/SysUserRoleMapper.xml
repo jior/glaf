@@ -4,48 +4,59 @@
 
 <mapper namespace="com.glaf.base.modules.sys.mapper.SysUserRoleMapper">
 
-	<resultMap id="sysUserRoleResultMap"	type="com.glaf.base.modules.sys.model.SysUserRole">
+	<resultMap id="sysUserRoleResultMap" type="com.glaf.base.modules.sys.model.SysUserRole">
 		<id property="id" column="ID" jdbcType="BIGINT" />
-		<result property="userId" column="USERID" jdbcType="BIGINT"/>
-		<result property="deptRoleId" column="ROLEID" jdbcType="BIGINT"/>
-		<result property="authorized" column="AUTHORIZED" jdbcType="INTEGER"/>
-		<result property="authorizeFrom" column="AUTHORIZEFROM" jdbcType="BIGINT"/>
-		<result property="availDateStart" column="AVAILDATESTART" jdbcType="TIMESTAMP"/>
-		<result property="availDateEnd" column="AVAILDATEEND" jdbcType="TIMESTAMP"/>
-		<result property="processDescription" column="PROCESSDESCRIPTION" jdbcType="VARCHAR"/>
+		<result property="userId" column="USERID" jdbcType="BIGINT" />
+		<result property="deptRoleId" column="ROLEID" jdbcType="BIGINT" />
+		<result property="authorized" column="AUTHORIZED" jdbcType="INTEGER" />
+		<result property="authorizeFrom" column="AUTHORIZEFROM"
+			jdbcType="BIGINT" />
+		<result property="availDateStart" column="AVAILDATESTART"
+			jdbcType="TIMESTAMP" />
+		<result property="availDateEnd" column="AVAILDATEEND" jdbcType="TIMESTAMP" />
+		<result property="processDescription" column="PROCESSDESCRIPTION"
+			jdbcType="VARCHAR" />
+		<result property="createDate" column="CREATEDATE" jdbcType="TIMESTAMP" />
+		<result property="createBy" column="CREATEBY" jdbcType="VARCHAR" />
 	</resultMap>
 
- 
+
 	<insert id="insertSysUserRole" parameterType="com.glaf.base.modules.sys.model.SysUserRole">
-		insert into sys_user_role 
+		insert into sys_user_role
 		<trim prefix="(" suffix=")" suffixOverrides=",">
-		    ID
+			ID
 			<if test="userId != null">
-				,USERID 
+				,USERID
 			</if>
 			<if test="deptRoleId != null">
-				,ROLEID 
+				,ROLEID
 			</if>
 			<if test="authorized != null">
-				,AUTHORIZED 
+				,AUTHORIZED
 			</if>
 			<if test="authorizeFrom != null">
-				,AUTHORIZEFROM 
+				,AUTHORIZEFROM
 			</if>
 			<if test="availDateStart != null">
-				,AVAILDATESTART 
+				,AVAILDATESTART
 			</if>
 			<if test="availDateEnd != null">
-				,AVAILDATEEND 
+				,AVAILDATEEND
 			</if>
 			<if test="processDescription != null">
-				,PROCESSDESCRIPTION 
+				,PROCESSDESCRIPTION
+			</if>
+			<if test="createDate != null">
+				,CREATEDATE
+			</if>
+			<if test="createBy != null">
+				,CREATEBY
 			</if>
 		</trim>
 
 		<trim prefix=" values (" suffix=")" suffixOverrides=",">
-			  #{id, jdbcType=BIGINT}
-	     
+			#{id, jdbcType=BIGINT}
+
 			<if test="userId != null">
 				,#{userId, jdbcType=BIGINT}
 			</if>
@@ -67,14 +78,20 @@
 			<if test="processDescription != null">
 				,#{processDescription, jdbcType=VARCHAR}
 			</if>
+			<if test="createDate != null">
+				,#{createDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="createBy != null">
+				,#{createBy, jdbcType=VARCHAR}
+			</if>
 		</trim>
 	</insert>
 
-	 
+
 	<update id="updateSysUserRole" parameterType="com.glaf.base.modules.sys.model.SysUserRole">
 		update sys_user_role
 		set
-		<trim prefix="" suffix="" suffixOverrides=",">		
+		<trim prefix="" suffix="" suffixOverrides=",">
 			<if test="userId != null">
 				USERID = #{userId, jdbcType=BIGINT},
 			</if>
@@ -94,85 +111,94 @@
 				AVAILDATEEND = #{availDateEnd, jdbcType=TIMESTAMP},
 			</if>
 			<if test="processDescription != null">
-				PROCESSDESCRIPTION = #{processDescription, jdbcType=VARCHAR},
+				PROCESSDESCRIPTION = #{processDescription,
+				jdbcType=VARCHAR},
 			</if>
 		</trim>
 		where
-          ID = #{id, jdbcType=BIGINT}
-		
+		ID = #{id, jdbcType=BIGINT}
+
 	</update>
 
- 
-	<delete id="deleteSysUserRoleById" parameterType="long"> 
-        delete from sys_user_role
-        where ID =	#{id}
+
+	<delete id="deleteSysUserRoleById" parameterType="long">
+		delete from
+		sys_user_role
+		where ID = #{id}
 	</delete>
-	
-	
+
+
 	<delete id="deleteSysUserRoles" parameterType="com.glaf.base.modules.sys.query.SysUserRoleQuery">
 		delete from sys_user_role
-		where ( 
- 			  ID IN
-		<foreach item="x_rowId" index="index" collection="rowIds" 
+		where (
+		ID IN
+		<foreach item="x_rowId" index="index" collection="rowIds"
 			open="(" separator="," close=")">
-                  #{x_rowId}
+			#{x_rowId}
 		</foreach>
 		)
 	</delete>
-	
 
-	<select id="getSysUserRoleById" parameterType="long" resultMap="sysUserRoleResultMap">
+
+	<select id="getSysUserRoleById" parameterType="long"
+		resultMap="sysUserRoleResultMap">
 		select * from sys_user_role where ID = #{id}
 	</select>
-	
-	
-	<select id="getSysUserRolesByUserId" parameterType="long" resultMap="sysUserRoleResultMap">
+
+
+	<select id="getSysUserRolesByUserId" parameterType="long"
+		resultMap="sysUserRoleResultMap">
 		select * from sys_user_role where USERID = #{userId}
 	</select>
-	
-	
-	<select id="getProcessByUser" parameterType="long" resultType="map">
-		 select distinct t.MODULENAME as moduleName, t.PROCESSNAME as processName, t.OBJECTVALUE as objectValue
-		 from sys_todo t 
-		 where t.TYPE='1' 
-		 and t.ROLEID in  
-		  ( 
-		    select r.ID from sys_dept_role sdr, sys_role r where r.ID=sdr.SYSROLEID and sdr.id in 
-		    ( select dr.ID from sys_user_role sur, sys_dept_role dr where sur.ROLEID = dr.ID and  sur.userid=#{userId} )
-		  ) 
-	</select>
-	
 
-	<select id="getSysUserRoles" 
-		parameterType="com.glaf.base.modules.sys.query.SysUserRoleQuery"
+
+	<select id="getProcessByUser" parameterType="long" resultType="map">
+		select distinct t.MODULENAME as moduleName, t.PROCESSNAME as
+		processName, t.OBJECTVALUE as objectValue
+		from sys_todo t
+		where
+		t.TYPE='1'
+		and t.ROLEID in
+		(
+		select r.ID from sys_dept_role sdr, sys_role
+		r where r.ID=sdr.SYSROLEID and
+		sdr.id in
+		( select dr.ID from
+		sys_user_role sur, sys_dept_role dr where
+		sur.ROLEID = dr.ID and
+		sur.userid=#{userId} )
+		)
+	</select>
+
+
+	<select id="getSysUserRoles" parameterType="com.glaf.base.modules.sys.query.SysUserRoleQuery"
 		resultMap="sysUserRoleResultMap">
 		select E.*
 		<include refid="selectSysUserRolesSql" />
 		<choose>
 			<when test="orderBy != null">
-		     order by ${orderBy}
+				order by ${orderBy}
 			</when>
 			<otherwise>
-		      order by E.ID desc
+				order by E.ID desc
 			</otherwise>
 		</choose>
 	</select>
-	
 
-	<select id="getSysUserRoleCount" 
-		parameterType="com.glaf.base.modules.sys.query.SysUserRoleQuery"
+
+	<select id="getSysUserRoleCount" parameterType="com.glaf.base.modules.sys.query.SysUserRoleQuery"
 		resultType="int">
 		select count(*)
 		<include refid="selectSysUserRolesSql" />
 	</select>
-	
+
 
 	<sql id="selectSysUserRolesSql">
 
 		from sys_user_role E
 
 		<where>
-		       1 = 1  
+			1 = 1
 
 			<if test="userId != null">
 				and E.USERID = #{userId}
@@ -187,10 +213,10 @@
 			</if>
 
 			<if test="userIds != null and userIds.size() &gt; 0">
-			    and E.USERID IN
-				<foreach item="x_userId" index="index" collection="userIds" 
+				and E.USERID IN
+				<foreach item="x_userId" index="index" collection="userIds"
 					open="(" separator="," close=")">
-                  #{x_userId}
+					#{x_userId}
 				</foreach>
 			</if>
 
@@ -207,10 +233,10 @@
 			</if>
 
 			<if test="deptRoleIds != null and deptRoleIds.size() &gt; 0">
-			    and E.ROLEID IN
-				<foreach item="x_deptRoleId" index="index" collection="deptRoleIds" 
+				and E.ROLEID IN
+				<foreach item="x_deptRoleId" index="index" collection="deptRoleIds"
 					open="(" separator="," close=")">
-                  #{x_deptRoleId}
+					#{x_deptRoleId}
 				</foreach>
 			</if>
 
@@ -223,33 +249,37 @@
 			</if>
 
 			<if test="authorizeFroms != null and authorizeFroms.size() &gt; 0">
-			    and E.AUTHORIZEFROM IN
-				<foreach item="x_authorizeFrom" index="index" collection="authorizeFroms" 
+				and E.AUTHORIZEFROM IN
+				<foreach item="x_authorizeFrom" index="index" collection="authorizeFroms"
 					open="(" separator="," close=")">
-                  #{x_authorizeFrom}
+					#{x_authorizeFrom}
 				</foreach>
 			</if>
 
 			<if test="availDateStartGreaterThanOrEqual != null">
-				and E.AVAILDATESTART &gt;= #{availDateStartGreaterThanOrEqual}
+				and E.AVAILDATESTART &gt;=
+				#{availDateStartGreaterThanOrEqual}
 			</if>
 
 			<if test="availDateStartLessThanOrEqual != null">
-				and E.AVAILDATESTART &lt;= #{availDateStartLessThanOrEqual}
+				and E.AVAILDATESTART &lt;=
+				#{availDateStartLessThanOrEqual}
 			</if>
 
 			<if test="availDateEndGreaterThanOrEqual != null">
-				and E.AVAILDATEEND &gt;= #{availDateEndGreaterThanOrEqual}
+				and E.AVAILDATEEND &gt;=
+				#{availDateEndGreaterThanOrEqual}
 			</if>
 
 			<if test="availDateEndLessThanOrEqual != null">
 				and E.AVAILDATEEND &lt;= #{availDateEndLessThanOrEqual}
 			</if>
-	        
-			<if test="processDescriptionLike != null and processDescriptionLike != '' ">
+
+			<if
+				test="processDescriptionLike != null and processDescriptionLike != '' ">
 				and E.PROCESSDESCRIPTION like #{processDescriptionLike}
 			</if>
-			 
+
 		</where>
 	</sql>
 

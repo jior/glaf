@@ -4,68 +4,77 @@
 
 <mapper namespace="com.glaf.base.modules.sys.mapper.SysDepartmentMapper">
 
- 	<resultMap id="sysDepartmentResultMap"	type="com.glaf.base.modules.sys.model.SysDepartment">
-        <id property="id" column="ID" jdbcType="BIGINT" />
-        <result property="name" column="NAME" jdbcType="VARCHAR"/>
-        <result property="desc" column="DEPTDESC" jdbcType="VARCHAR"/>
-        <result property="createTime" column="CREATETIME" jdbcType="TIMESTAMP"/>
-        <result property="sort" column="SORT" jdbcType="INTEGER"/>
-        <result property="no" column="DEPTNO" jdbcType="VARCHAR"/>
-        <result property="code" column="CODE" jdbcType="VARCHAR"/>
-        <result property="code2" column="CODE2" jdbcType="VARCHAR"/>
-        <result property="status" column="STATUS" jdbcType="INTEGER"/>
-        <result property="fincode" column="FINCODE" jdbcType="VARCHAR"/>
-        <result property="nodeId" column="NODEID" jdbcType="BIGINT"/>
+	<resultMap id="sysDepartmentResultMap" type="com.glaf.base.modules.sys.model.SysDepartment">
+		<id property="id" column="ID" jdbcType="BIGINT" />
+		<result property="name" column="NAME" jdbcType="VARCHAR" />
+		<result property="desc" column="DEPTDESC" jdbcType="VARCHAR" />
+		<result property="sort" column="SORT" jdbcType="INTEGER" />
+		<result property="no" column="DEPTNO" jdbcType="VARCHAR" />
+		<result property="code" column="CODE" jdbcType="VARCHAR" />
+		<result property="code2" column="CODE2" jdbcType="VARCHAR" />
+		<result property="status" column="STATUS" jdbcType="INTEGER" />
+		<result property="fincode" column="FINCODE" jdbcType="VARCHAR" />
+		<result property="nodeId" column="NODEID" jdbcType="BIGINT" />
+		<result property="createBy" column="CREATEBY" jdbcType="VARCHAR" />
+		<result property="createTime" column="CREATETIME" jdbcType="TIMESTAMP" />
+		<result property="updateBy" column="UPDATEBY" jdbcType="VARCHAR" />
+		<result property="updateDate" column="UPDATEDATE" jdbcType="TIMESTAMP" />
 	</resultMap>
 
- 
+
 	<insert id="insertSysDepartment" parameterType="com.glaf.base.modules.sys.model.SysDepartment">
-		insert into sys_department 
+		insert into sys_department
 		<trim prefix="(" suffix=")" suffixOverrides=",">
-		    ID
+			ID
 			<if test="name != null">
-				,NAME 
+				,NAME
 			</if>
 			<if test="desc != null">
-				,DEPTDESC 
-			</if>
-			<if test="createTime != null">
-				,CREATETIME 
+				,DEPTDESC
 			</if>
 			<if test="sort != null">
-				,SORT 
+				,SORT
 			</if>
 			<if test="no != null">
-				,DEPTNO 
+				,DEPTNO
 			</if>
 			<if test="code != null">
-				,CODE 
+				,CODE
 			</if>
 			<if test="code2 != null">
-				,CODE2 
+				,CODE2
 			</if>
 			<if test="status != null">
-				,STATUS 
+				,STATUS
 			</if>
 			<if test="fincode != null">
-				,FINCODE 
+				,FINCODE
 			</if>
 			<if test="nodeId != null">
-				,NODEID 
+				,NODEID
 			</if>
-        </trim>
+			<if test="createBy != null">
+				,CREATEBY
+			</if>
+			<if test="createTime != null">
+				,CREATETIME
+			</if>
+			<if test="updateBy != null">
+				,UPDATEBY
+			</if>
+			<if test="updateDate != null">
+				,UPDATEDATE
+			</if>
+		</trim>
 
 		<trim prefix=" values (" suffix=")" suffixOverrides=",">
-			  #{id, jdbcType=BIGINT}
-	     
+			#{id, jdbcType=BIGINT}
+
 			<if test="name != null">
 				,#{name, jdbcType=VARCHAR}
 			</if>
 			<if test="desc != null">
 				,#{desc, jdbcType=VARCHAR}
-			</if>
-			<if test="createTime != null">
-				,#{createTime, jdbcType=TIMESTAMP}
 			</if>
 			<if test="sort != null">
 				,#{sort, jdbcType=INTEGER}
@@ -88,14 +97,26 @@
 			<if test="nodeId != null">
 				,#{nodeId, jdbcType=BIGINT}
 			</if>
-	    </trim>
-    </insert>
+			<if test="createBy != null">
+				,#{createBy, jdbcType=VARCHAR}
+			</if>
+			<if test="createTime != null">
+				,#{createTime, jdbcType=TIMESTAMP}
+			</if>
+			<if test="updateBy != null">
+				,#{updateBy, jdbcType=VARCHAR}
+			</if>
+			<if test="updateDate != null">
+				,#{updateDate, jdbcType=TIMESTAMP}
+			</if>
+		</trim>
+	</insert>
 
-	 
+
 	<update id="updateSysDepartment" parameterType="com.glaf.base.modules.sys.model.SysDepartment">
 		update sys_department
 		set
-        <trim prefix="" suffix="" suffixOverrides=",">		
+		<trim prefix="" suffix="" suffixOverrides=",">
 			<if test="name != null">
 				NAME = #{name, jdbcType=VARCHAR},
 			</if>
@@ -126,51 +147,56 @@
 			<if test="nodeId != null">
 				NODEID = #{nodeId, jdbcType=BIGINT},
 			</if>
-        </trim>
+			<if test="updateBy != null">
+				UPDATEBY = #{updateBy, jdbcType=VARCHAR},
+			</if>
+			<if test="updateDate != null">
+				UPDATEDATE = #{updateDate, jdbcType=TIMESTAMP},
+			</if>
+		</trim>
 		where
-          ID = #{id, jdbcType=BIGINT}
-		
-    </update>
+		ID = #{id, jdbcType=BIGINT}
 
- 
-	<delete id="deleteSysDepartmentById" parameterType="long"> 
-        delete from sys_department
-        where ID =	#{id}
+	</update>
+
+
+	<delete id="deleteSysDepartmentById" parameterType="long">
+		delete from sys_department
+		where ID = #{id}
 	</delete>
-	
+
 	<delete id="deleteSysDepartments" parameterType="com.glaf.base.modules.sys.query.SysDepartmentQuery">
 		delete from sys_department
-		where ( 
- 			  ID IN
-              <foreach item="x_rowId" index="index" collection="rowIds" 
-                     open="(" separator="," close=")">
-                  #{x_rowId}
-              </foreach>
+		where (
+		ID IN
+		<foreach item="x_rowId" index="index" collection="rowIds"
+			open="(" separator="," close=")">
+			#{x_rowId}
+		</foreach>
 		)
 	</delete>
 
-	<select id="getSysDepartmentById" parameterType="long" resultMap="sysDepartmentResultMap">
+	<select id="getSysDepartmentById" parameterType="long"
+		resultMap="sysDepartmentResultMap">
 		select * from sys_department where ID = #{id}
 	</select>
 
 
-	<select id="getSysDepartments" 
-	    parameterType="com.glaf.base.modules.sys.query.SysDepartmentQuery"
+	<select id="getSysDepartments" parameterType="com.glaf.base.modules.sys.query.SysDepartmentQuery"
 		resultMap="sysDepartmentResultMap">
 		select E.*
 		<include refid="selectSysDepartmentsSql" />
 		<choose>
-		  <when test="orderBy != null">
-		     order by ${orderBy}
-          </when>
-		  <otherwise>
-		      order by E.SORT asc
-		  </otherwise>
-        </choose>
+			<when test="orderBy != null">
+				order by ${orderBy}
+			</when>
+			<otherwise>
+				order by E.SORT asc
+			</otherwise>
+		</choose>
 	</select>
 
-	<select id="getSysDepartmentCount" 
-	    parameterType="com.glaf.base.modules.sys.query.SysDepartmentQuery"
+	<select id="getSysDepartmentCount" parameterType="com.glaf.base.modules.sys.query.SysDepartmentQuery"
 		resultType="int">
 		select count(*)
 		<include refid="selectSysDepartmentsSql" />
@@ -179,121 +205,121 @@
 	<sql id="selectSysDepartmentsSql">
 
 		from sys_department E
-		
+
 		<if test=" parentId != null  ">
-           inner join sys_tree T
-		   on E.NODEID = T.ID
+			inner join sys_tree T
+			on E.NODEID = T.ID
 		</if>
-		 
+
 		<where>
-		       1 = 1  
+			1 = 1
 
 			<if test=" parentId != null  ">
-               and T.PARENT = #{parentId}
+				and T.PARENT = #{parentId}
 			</if>
-				        
+
 			<if test="name != null and name != '' ">
 				and E.NAME = #{name}
-            </if>
+			</if>
 
 			<if test="nameLike != null and nameLike != '' ">
 				and E.NAME like #{nameLike}
-            </if>
+			</if>
 
 			<if test="names != null and names.size() &gt; 0">
-			    and E.NAME IN
-                <foreach item="x_name" index="index" collection="names" 
-                     open="(" separator="," close=")">
-                  #{x_name}
-                </foreach>
+				and E.NAME IN
+				<foreach item="x_name" index="index" collection="names"
+					open="(" separator="," close=")">
+					#{x_name}
+				</foreach>
 			</if>
 
 			<if test="descLike != null and descLike != '' ">
 				and E.DEPTDESC like #{descLike}
-            </if>
+			</if>
 
 			<if test="createTimeGreaterThanOrEqual != null">
 				and E.CREATETIME &gt;= #{createTimeGreaterThanOrEqual}
-            </if>
+			</if>
 
 			<if test="createTimeLessThanOrEqual != null">
 				and E.CREATETIME &lt;= #{createTimeLessThanOrEqual}
-            </if>
+			</if>
 
 			<if test="sortGreaterThanOrEqual != null">
 				and E.SORT &gt;= #{sortGreaterThanOrEqual}
-            </if>
+			</if>
 
 			<if test="sortLessThanOrEqual != null">
 				and E.SORT &lt;= #{sortLessThanOrEqual}
-            </if>
-	        
+			</if>
+
 			<if test="no != null and no != '' ">
 				and E.DEPTNO = #{no}
-            </if>
+			</if>
 
 			<if test="noLike != null and noLike != '' ">
 				and E.DEPTNO like #{noLike}
-            </if>
-	        
+			</if>
+
 			<if test="code != null and code != '' ">
 				and E.CODE = #{code}
-            </if>
+			</if>
 
 			<if test="codeLike != null and codeLike != '' ">
 				and E.CODE like #{codeLike}
-            </if>
+			</if>
 
 			<if test="codes != null and codes.size() &gt; 0">
-			    and E.CODE IN
-                <foreach item="x_code" index="index" collection="codes" 
-                     open="(" separator="," close=")">
-                  #{x_code}
-                </foreach>
+				and E.CODE IN
+				<foreach item="x_code" index="index" collection="codes"
+					open="(" separator="," close=")">
+					#{x_code}
+				</foreach>
 			</if>
-	        
+
 			<if test="code2 != null and code2 != '' ">
 				and E.CODE2 = #{code2}
-            </if>
+			</if>
 
 			<if test="status != null">
 				and E.STATUS = #{status}
-            </if>
+			</if>
 
 			<if test="statusGreaterThanOrEqual != null">
 				and E.STATUS &gt;= #{statusGreaterThanOrEqual}
-            </if>
+			</if>
 
 			<if test="statusLessThanOrEqual != null">
 				and E.STATUS &lt;= #{statusLessThanOrEqual}
-            </if>
-	        
+			</if>
+
 			<if test="fincode != null and fincode != '' ">
 				and E.FINCODE = #{fincode}
-            </if>
+			</if>
 
 			<if test="fincodeLike != null and fincodeLike != '' ">
 				and E.FINCODE like #{fincodeLike}
-            </if>
+			</if>
 
 			<if test="nodeId != null">
 				and E.NODEID = #{nodeId}
-            </if>
+			</if>
 
 			<if test="nodeIdGreaterThanOrEqual != null">
 				and E.NODEID &gt;= #{nodeIdGreaterThanOrEqual}
-            </if>
+			</if>
 
 			<if test="nodeIdLessThanOrEqual != null">
 				and E.NODEID &lt;= #{nodeIdLessThanOrEqual}
-            </if>
+			</if>
 
 			<if test="nodeIds != null and nodeIds.size() &gt; 0">
-			    and E.NODEID IN
-                <foreach item="x_nodeId" index="index" collection="nodeIds" 
-                     open="(" separator="," close=")">
-                  #{x_nodeId}
-                </foreach>
+				and E.NODEID IN
+				<foreach item="x_nodeId" index="index" collection="nodeIds"
+					open="(" separator="," close=")">
+					#{x_nodeId}
+				</foreach>
 			</if>
 
 		</where>

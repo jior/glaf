@@ -30,7 +30,7 @@ public interface User extends java.io.Serializable {
 
 	String getAdminFlag();
 
-	int getDeptId();
+	long getDeptId();
 
 	String getFax();
 
@@ -68,7 +68,7 @@ public interface User extends java.io.Serializable {
 
 	void setCreateDate(Date createDate);
 
-	void setDeptId(int deptId);
+	void setDeptId(long deptId);
 
 	void setId(long id);
 

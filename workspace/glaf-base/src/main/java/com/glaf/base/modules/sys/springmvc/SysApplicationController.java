@@ -245,11 +245,12 @@ public class SysApplicationController {
 		bean.setDesc(ParamUtil.getParameter(request, "desc"));
 		bean.setUrl(ParamUtil.getParameter(request, "url"));
 		bean.setShowMenu(ParamUtil.getIntParameter(request, "showMenu", 0));
-
+        bean.setCreateBy(RequestUtils.getActorId(request));
 		SysTree node = new SysTree();
 		node.setName(bean.getName());
 		node.setDesc(bean.getName());
 		node.setCode("");
+		node.setCreateBy(RequestUtils.getActorId(request));
 		node.setParentId((long) ParamUtil.getIntParameter(request, "parent", 0));
 		bean.setNode(node);
 
@@ -286,7 +287,8 @@ public class SysApplicationController {
 			bean.setDesc(ParamUtil.getParameter(request, "desc"));
 			bean.setUrl(ParamUtil.getParameter(request, "url"));
 			bean.setShowMenu(ParamUtil.getIntParameter(request, "showMenu", 0));
-
+            bean.setUpdateBy(RequestUtils.getActorId(request));
+            
 			SysTree node = bean.getNode();
 			node.setName(bean.getName());
 			node.setDesc(bean.getName());

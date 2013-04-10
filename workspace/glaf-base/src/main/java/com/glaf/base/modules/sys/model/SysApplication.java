@@ -19,25 +19,98 @@
 package com.glaf.base.modules.sys.model;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.*;
+
 import com.alibaba.fastjson.*;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.glaf.base.modules.sys.util.SysApplicationJsonFactory;
 import com.glaf.core.base.JSONable;
 
+@Entity
+@Table(name = "sys_application")
 public class SysApplication implements Serializable, JSONable {
 	private static final long serialVersionUID = 1L;
-	private String code;
-	private String desc;
+
+	/**
+	 * 编码
+	 */
+	@Column(name = "CODE")
+	protected String code;
+
+	/**
+	 * 创建人
+	 */
+	@Column(name = "CREATEBY")
+	protected String createBy;
+
+	/**
+	 * 创建日期
+	 */
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "CREATEDATE")
+	protected Date createDate;
+
+	/**
+	 * 描述
+	 */
+	@Column(name = "APPDESC")
+	protected String desc;
+
+	@javax.persistence.Transient
 	private Set<SysFunction> functions = new HashSet<SysFunction>();
-	private long id;
-	private String name;
+
+	@Id
+	@Column(name = "ID", length = 50, nullable = false)
+	protected long id;
+
+	/**
+	 * 名称
+	 */
+	@Column(name = "NAME")
+	protected String name;
+
+	@javax.persistence.Transient
 	private SysTree node;
-	private long nodeId;
-	private int showMenu;
-	private int sort;
-	private String url;
+
+	/**
+	 * 节点编号
+	 */
+	@Column(name = "NODEID")
+	protected long nodeId;
+
+	/**
+	 * 显示菜单
+	 */
+	@Column(name = "SHOWMENU")
+	protected int showMenu;
+
+	/**
+	 * 序号
+	 */
+	@Column(name = "SORT")
+	protected int sort;
+
+	/**
+	 * 修改人
+	 */
+	@Column(name = "UPDATEBY")
+	protected String updateBy;
+
+	/**
+	 * 修改日期
+	 */
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "UPDATEDATE")
+	protected Date updateDate;
+
+	/**
+	 * URL
+	 */
+	@Column(name = "URL")
+	protected String url;
 
 	public SysApplication() {
 
@@ -45,6 +118,14 @@ public class SysApplication implements Serializable, JSONable {
 
 	public String getCode() {
 		return code;
+	}
+
+	public String getCreateBy() {
+		return createBy;
+	}
+
+	public Date getCreateDate() {
+		return createDate;
 	}
 
 	public String getDesc() {
@@ -79,6 +160,14 @@ public class SysApplication implements Serializable, JSONable {
 		return sort;
 	}
 
+	public String getUpdateBy() {
+		return updateBy;
+	}
+
+	public Date getUpdateDate() {
+		return updateDate;
+	}
+
 	public String getUrl() {
 		return url;
 	}
@@ -89,6 +178,14 @@ public class SysApplication implements Serializable, JSONable {
 
 	public void setCode(String code) {
 		this.code = code;
+	}
+
+	public void setCreateBy(String createBy) {
+		this.createBy = createBy;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
 	}
 
 	public void setDesc(String desc) {
@@ -121,6 +218,14 @@ public class SysApplication implements Serializable, JSONable {
 
 	public void setSort(int sort) {
 		this.sort = sort;
+	}
+
+	public void setUpdateBy(String updateBy) {
+		this.updateBy = updateBy;
+	}
+
+	public void setUpdateDate(Date updateDate) {
+		this.updateDate = updateDate;
 	}
 
 	public void setUrl(String url) {

@@ -19,6 +19,8 @@
 			englishTitle="Money" displayType="4" mask="9999" nullable="false" editable="true"/>
 		<property name="cause" column="CAUSE_" title="事由"
 			englishTitle="cause" type="String" length="500" nullable="false" editable="true"/>
+		<property name="deleteFlag" column="DELETEFLAG_" title="删除标记" type="Integer"
+			englishTitle="Delete Flag"  mask="9" nullable="false"/>
 		<property name="createDate" column="CREATEDATE_" title="创建日期"
 			englishTitle="Create Date" type="Date" displayType="4" nullable="false"/>
 		<property name="createBy" column="CREATEBY_" title="创建人" 
@@ -29,8 +31,7 @@
 			englishTitle="Update Date" type="Date" displayType="4" nullable="false"/>
 		<property name="locked" column="LOCKED_" title="是否锁定" type="Integer"
 			englishTitle="Locked" displayType="4" mask="9" nullable="false"/>
-		<property name="deleteFlag" column="DELETEFLAG_" title="删除标记" type="Integer"
-			englishTitle="Delete Flag"  mask="9" nullable="false"/>
+		
 		<property name="status" column="STATUS_" title="状态" type="Integer"
 			englishTitle="status" displayType="4" mask="9" nullable="false"/>
 		<property name="processName" column="PROCESSNAME_" title="流程名称" 

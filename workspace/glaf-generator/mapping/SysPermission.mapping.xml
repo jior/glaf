@@ -3,5 +3,13 @@
     <entity name="SysPermission" package="com.glaf.base.modules.sys" table="sys_permission" title="功能权限" englishTitle="SysPermission">
         <id name="funcId" column="FUNCID" type="Long" englishTitle="funcId" length="19" title="功能编号" />
 		<property name="roleId" column="ROLEID" type="Long" englishTitle="roleId" length="19" title="角色编号" />
+		<property name="createDate" column="CREATEDATE" title="创建日期"
+			englishTitle="Create Date" type="Date" displayType="4" nullable="false"/>
+		<property name="createBy" column="CREATEBY" title="创建人" 
+		    englishTitle="Create By"	type="String" displayType="4" length="50" />
+		<property name="updateBy"  column="UPDATEBY" title="修改人" 
+		    englishTitle="Update By"	type="String" displayType="4" length="50" />
+		<property name="updateDate" column="UPDATEDATE" title="修改日期"
+			englishTitle="Update Date" type="Date" displayType="4" nullable="false"/>
     </entity>
 </mapping>

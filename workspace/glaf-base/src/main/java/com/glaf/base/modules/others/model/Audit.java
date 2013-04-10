@@ -20,6 +20,7 @@ package com.glaf.base.modules.others.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.*;
 import com.alibaba.fastjson.*;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.glaf.base.modules.others.util.AuditJsonFactory;
@@ -28,110 +29,165 @@ import com.glaf.core.base.JSONable;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
+@Entity
+@Table(name = "Audit")
 public class Audit implements Serializable, JSONable {
 	private static final long serialVersionUID = 4192168036356165765L;
-	private long id;
-	private long referId;
-	private int referType;
-	private long deptId;
-	private String deptName;
-	private String headship;
-	private String leaderName;
-	private long leaderId;
-	private Date createDate;
-	private String memo;
-	private int flag;
+	/**
+	 * 创建日期
+	 */
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "CREATEDATE")
+	protected Date createDate;
 
-	public int getFlag() {
-		return flag;
-	}
+	/**
+	 * 部门编号
+	 */
+	@Column(name = "DEPTID")
+	protected long deptId;
 
-	public void setFlag(int flag) {
-		this.flag = flag;
-	}
+	/**
+	 * 部门名称
+	 */
+	@Column(name = "DEPTNAME")
+	protected String deptName;
+
+	/**
+	 * 标记
+	 */
+	@Column(name = "FLAG")
+	protected int flag;
+
+	/**
+	 * 职位
+	 */
+	@Column(name = "HEADSHIP")
+	protected String headship;
+
+	@Id
+	@Column(name = "ID",  nullable = false)
+	protected long id;
+
+	/**
+	 * 领导编号
+	 */
+	@Column(name = "LEADERID")
+	protected long leaderId;
+
+	/**
+	 * 领导名称
+	 */
+	@Column(name = "LEADERNAME")
+	protected String leaderName;
+
+	/**
+	 * 评价
+	 */
+	@Column(name = "MEMO")
+	protected String memo;
+
+	/**
+	 * 引用ID
+	 */
+	@Column(name = "REFERID")
+	protected long referId;
+
+	/**
+	 * 引用类型
+	 */
+	@Column(name = "REFERTYPE")
+	protected int referType;
 
 	public Date getCreateDate() {
 		return createDate;
-	}
-
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
 	}
 
 	public long getDeptId() {
 		return deptId;
 	}
 
-	public void setDeptId(long deptId) {
-		this.deptId = deptId;
+	public String getDeptName() {
+		return deptName;
+	}
+
+	public int getFlag() {
+		return flag;
 	}
 
 	public String getHeadship() {
 		return headship;
 	}
 
-	public void setHeadship(String headship) {
-		this.headship = headship;
-	}
-
 	public long getId() {
 		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	public long getLeaderId() {
 		return leaderId;
 	}
 
-	public void setLeaderId(long leaderId) {
-		this.leaderId = leaderId;
-	}
-
 	public String getLeaderName() {
 		return leaderName;
-	}
-
-	public void setLeaderName(String leaderName) {
-		this.leaderName = leaderName;
 	}
 
 	public String getMemo() {
 		return memo;
 	}
 
-	public void setMemo(String memo) {
-		this.memo = memo;
-	}
-
 	public long getReferId() {
 		return referId;
-	}
-
-	public void setReferId(long referId) {
-		this.referId = referId;
 	}
 
 	public int getReferType() {
 		return referType;
 	}
 
-	public void setReferType(int referType) {
-		this.referType = referType;
+	public Audit jsonToObject(JSONObject jsonObject) {
+		return AuditJsonFactory.jsonToObject(jsonObject);
 	}
 
-	public String getDeptName() {
-		return deptName;
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+
+	public void setDeptId(long deptId) {
+		this.deptId = deptId;
 	}
 
 	public void setDeptName(String deptName) {
 		this.deptName = deptName;
 	}
 
-	public Audit jsonToObject(JSONObject jsonObject) {
-		return AuditJsonFactory.jsonToObject(jsonObject);
+	public void setFlag(int flag) {
+		this.flag = flag;
+	}
+
+	public void setHeadship(String headship) {
+		this.headship = headship;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public void setLeaderId(long leaderId) {
+		this.leaderId = leaderId;
+	}
+
+	public void setLeaderName(String leaderName) {
+		this.leaderName = leaderName;
+	}
+
+	public void setMemo(String memo) {
+		this.memo = memo;
+	}
+
+	public void setReferId(long referId) {
+		this.referId = referId;
+	}
+
+	public void setReferType(int referType) {
+		this.referType = referType;
 	}
 
 	public JSONObject toJsonObject() {

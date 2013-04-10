@@ -67,8 +67,7 @@ public class SysDepartmentController {
 
 	@javax.annotation.Resource
 	private SysTreeService sysTreeService;
-	
-	
+
 	/**
 	 * 批量删除信息
 	 * 
@@ -297,11 +296,13 @@ public class SysDepartmentController {
 		bean.setCreateTime(new Date());
 
 		SysTree node = new SysTree();
+		node.setCreateBy(RequestUtils.getActorId(request));
 		node.setName(bean.getName());
 		node.setDesc(bean.getName());
 		node.setCode(bean.getCode());
 		node.setParentId((long) ParamUtil.getIntParameter(request, "parent", 0));
 		bean.setNode(node);
+		bean.setCreateBy(RequestUtils.getActorId(request));
 		boolean ret = sysDepartmentService.create(bean);
 
 		ViewMessages messages = new ViewMessages();
@@ -333,6 +334,7 @@ public class SysDepartmentController {
 		SysDepartment bean = sysDepartmentService.findById(id);
 		boolean ret = false;
 		if (bean != null) {
+			bean.setUpdateBy(RequestUtils.getActorId(request));
 			bean.setName(ParamUtil.getParameter(request, "name"));
 			bean.setDesc(ParamUtil.getParameter(request, "desc"));
 			bean.setCode(ParamUtil.getParameter(request, "code"));
@@ -340,6 +342,7 @@ public class SysDepartmentController {
 			bean.setNo(ParamUtil.getParameter(request, "no"));
 			bean.setStatus(ParamUtil.getIntParameter(request, "status", 0));
 			SysTree node = bean.getNode();
+			node.setUpdateBy(RequestUtils.getActorId(request));
 			node.setName(bean.getName());
 			node.setParentId((long) ParamUtil.getIntParameter(request,
 					"parent", 0));

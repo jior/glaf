@@ -19,27 +19,82 @@
 package com.glaf.base.modules.sys.model;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.*;
+
 import com.alibaba.fastjson.*;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.glaf.base.modules.sys.util.SysDeptRoleJsonFactory;
 import com.glaf.core.base.JSONable;
 
+@Entity
+@Table(name = "sys_dept_role")
 public class SysDeptRole implements Serializable, JSONable {
 	private static final long serialVersionUID = 273479478656626289L;
-	private long id;
-	private SysRole role;
-	private SysDepartment dept;
-	private long deptId;
-	private int grade;
-	private String code;
-	private int sort;
-	private long sysRoleId;
 
-	private Set<SysUser> users = new HashSet<SysUser>();
-	private Set<SysFunction> functions = new HashSet<SysFunction>();
-	private Set<SysApplication> apps = new HashSet<SysApplication>();
+	@javax.persistence.Transient
+	protected Set<SysApplication> apps = new HashSet<SysApplication>();
+
+	/**
+	 * 编码
+	 */
+	@Column(name = "CODE")
+	protected String code;
+
+	/**
+	 * 创建人
+	 */
+	@Column(name = "CREATEBY")
+	protected String createBy;
+
+	/**
+	 * 创建日期
+	 */
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "CREATEDATE")
+	protected Date createDate;
+
+	@javax.persistence.Transient
+	protected SysDepartment dept;
+
+	/**
+	 * 部门编号
+	 */
+	@Column(name = "DEPTID")
+	protected long deptId;
+
+	@javax.persistence.Transient
+	protected Set<SysFunction> functions = new HashSet<SysFunction>();
+
+	/**
+	 * 级别
+	 */
+	@Column(name = "GRADE")
+	protected int grade;
+
+	@Id
+	@Column(name = "ID", length = 50, nullable = false)
+	protected long id;
+
+	@javax.persistence.Transient
+	protected SysRole role;
+
+	/**
+	 * 序号
+	 */
+	@Column(name = "SORT")
+	protected int sort;
+
+	/**
+	 * 角色编号
+	 */
+	@Column(name = "SYSROLEID")
+	protected long sysRoleId;
+
+	@javax.persistence.Transient
+	protected Set<SysUser> users = new HashSet<SysUser>();
 
 	public SysDeptRole() {
 
@@ -54,6 +109,14 @@ public class SysDeptRole implements Serializable, JSONable {
 
 	public String getCode() {
 		return code;
+	}
+
+	public String getCreateBy() {
+		return createBy;
+	}
+
+	public Date getCreateDate() {
+		return createDate;
 	}
 
 	public SysDepartment getDept() {
@@ -92,10 +155,14 @@ public class SysDeptRole implements Serializable, JSONable {
 	}
 
 	public Set<SysUser> getUsers() {
-		if(users == null){
+		if (users == null) {
 			users = new HashSet<SysUser>();
 		}
 		return users;
+	}
+
+	public SysDeptRole jsonToObject(JSONObject jsonObject) {
+		return SysDeptRoleJsonFactory.jsonToObject(jsonObject);
 	}
 
 	public void setApps(Set<SysApplication> apps) {
@@ -104,6 +171,14 @@ public class SysDeptRole implements Serializable, JSONable {
 
 	public void setCode(String code) {
 		this.code = code;
+	}
+
+	public void setCreateBy(String createBy) {
+		this.createBy = createBy;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
 	}
 
 	public void setDept(SysDepartment dept) {
@@ -140,10 +215,6 @@ public class SysDeptRole implements Serializable, JSONable {
 
 	public void setUsers(Set<SysUser> users) {
 		this.users = users;
-	}
-
-	public SysDeptRole jsonToObject(JSONObject jsonObject) {
-		return SysDeptRoleJsonFactory.jsonToObject(jsonObject);
 	}
 
 	public JSONObject toJsonObject() {

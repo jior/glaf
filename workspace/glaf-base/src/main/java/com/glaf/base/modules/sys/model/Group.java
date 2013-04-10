@@ -18,7 +18,10 @@
 package com.glaf.base.modules.sys.model;
 
 import java.io.*;
+import java.util.Date;
+
 import javax.persistence.*;
+
 import com.alibaba.fastjson.*;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -30,21 +33,28 @@ import com.glaf.base.modules.sys.util.*;
 public class Group implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@Column(name = "GROUPID", length = 50, nullable = false)
-	protected String groupId;
-
 	/**
 	 * 创建人
 	 */
-	@Column(name = "CREATEBY", length = 50)
+	@Column(name = "CREATEBY")
 	protected String createBy;
+
+	/**
+	 * 创建日期
+	 */
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "CREATEDATE")
+	protected Date createDate;
 
 	/**
 	 * 描述
 	 */
 	@Column(name = "GROUPDESC", length = 500)
 	protected String desc;
+
+	@Id
+	@Column(name = "GROUPID", length = 50, nullable = false)
+	protected String groupId;
 
 	/**
 	 * 名称
@@ -56,13 +66,26 @@ public class Group implements Serializable {
 	 * 顺序号
 	 */
 	@Column(name = "SORT")
-	protected Integer sort;
+	protected int sort;
 
 	/**
 	 * 类型
 	 */
 	@Column(name = "TYPE", length = 50)
 	protected String type;
+
+	/**
+	 * 修改人
+	 */
+	@Column(name = "UPDATEBY")
+	protected String updateBy;
+
+	/**
+	 * 修改日期
+	 */
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "UPDATEDATE")
+	protected Date updateDate;
 
 	public Group() {
 
@@ -89,6 +112,10 @@ public class Group implements Serializable {
 		return this.createBy;
 	}
 
+	public Date getCreateDate() {
+		return createDate;
+	}
+
 	public String getDesc() {
 		return this.desc;
 	}
@@ -101,12 +128,20 @@ public class Group implements Serializable {
 		return this.name;
 	}
 
-	public Integer getSort() {
+	public int getSort() {
 		return this.sort;
 	}
 
 	public String getType() {
 		return this.type;
+	}
+
+	public String getUpdateBy() {
+		return updateBy;
+	}
+
+	public Date getUpdateDate() {
+		return updateDate;
 	}
 
 	@Override
@@ -125,6 +160,10 @@ public class Group implements Serializable {
 		this.createBy = createBy;
 	}
 
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+
 	public void setDesc(String desc) {
 		this.desc = desc;
 	}
@@ -137,12 +176,20 @@ public class Group implements Serializable {
 		this.name = name;
 	}
 
-	public void setSort(Integer sort) {
+	public void setSort(int sort) {
 		this.sort = sort;
 	}
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public void setUpdateBy(String updateBy) {
+		this.updateBy = updateBy;
+	}
+
+	public void setUpdateDate(Date updateDate) {
+		this.updateDate = updateDate;
 	}
 
 	public JSONObject toJsonObject() {

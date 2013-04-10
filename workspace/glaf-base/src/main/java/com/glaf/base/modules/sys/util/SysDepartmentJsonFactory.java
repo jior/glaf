@@ -40,6 +40,15 @@ public class SysDepartmentJsonFactory {
 		if (jsonObject.containsKey("createTime")) {
 			model.setCreateTime(jsonObject.getDate("createTime"));
 		}
+		if (jsonObject.containsKey("createBy")) {
+			model.setCreateBy(jsonObject.getString("createBy"));
+		}
+		if (jsonObject.containsKey("updateBy")) {
+			model.setUpdateBy(jsonObject.getString("updateBy"));
+		}
+		if (jsonObject.containsKey("updateDate")) {
+			model.setUpdateDate(jsonObject.getDate("updateDate"));
+		}
 		if (jsonObject.containsKey("sort")) {
 			model.setSort(jsonObject.getInteger("sort"));
 		}
@@ -84,6 +93,20 @@ public class SysDepartmentJsonFactory {
 			jsonObject.put("createTime_datetime",
 					DateUtils.getDateTime(model.getCreateTime()));
 		}
+		if (model.getCreateBy() != null) {
+			jsonObject.put("createBy", model.getCreateBy());
+		}
+		if (model.getUpdateBy() != null) {
+			jsonObject.put("updateBy", model.getUpdateBy());
+		}
+		if (model.getUpdateDate() != null) {
+			jsonObject.put("updateDate",
+					DateUtils.getDate(model.getUpdateDate()));
+			jsonObject.put("updateDate_date",
+					DateUtils.getDate(model.getUpdateDate()));
+			jsonObject.put("updateDate_datetime",
+					DateUtils.getDateTime(model.getUpdateDate()));
+		}
 		jsonObject.put("sort", model.getSort());
 		if (model.getNo() != null) {
 			jsonObject.put("no", model.getNo());
@@ -120,6 +143,20 @@ public class SysDepartmentJsonFactory {
 					DateUtils.getDate(model.getCreateTime()));
 			jsonObject.put("createTime_datetime",
 					DateUtils.getDateTime(model.getCreateTime()));
+		}
+		if (model.getCreateBy() != null) {
+			jsonObject.put("createBy", model.getCreateBy());
+		}
+		if (model.getUpdateBy() != null) {
+			jsonObject.put("updateBy", model.getUpdateBy());
+		}
+		if (model.getUpdateDate() != null) {
+			jsonObject.put("updateDate",
+					DateUtils.getDate(model.getUpdateDate()));
+			jsonObject.put("updateDate_date",
+					DateUtils.getDate(model.getUpdateDate()));
+			jsonObject.put("updateDate_datetime",
+					DateUtils.getDateTime(model.getUpdateDate()));
 		}
 		jsonObject.put("sort", model.getSort());
 		if (model.getNo() != null) {

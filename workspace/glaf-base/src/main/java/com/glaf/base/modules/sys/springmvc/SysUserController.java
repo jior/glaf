@@ -496,6 +496,7 @@ public class SysUserController {
 				} catch (Exception ex) {
 					ex.printStackTrace();
 				}
+				bean.setUpdateBy(bean.getAccount());
 				ret = sysUserService.update(bean);
 			}
 		}
@@ -551,6 +552,8 @@ public class SysUserController {
 		bean.setEvection(0);
 		bean.setCreateTime(new Date());
 		bean.setLastLoginTime(new Date());
+		bean.setCreateBy(bean.getAccount());
+		bean.setUpdateBy(bean.getAccount());
 
 		int ret = 0;
 		if (sysUserService.findByAccount(bean.getAccount()) == null) {
@@ -607,6 +610,7 @@ public class SysUserController {
 			bean.setBlocked(ParamUtil.getIntParameter(request, "blocked", 0));
 			bean.setHeadship(ParamUtil.getParameter(request, "headship"));
 			bean.setUserType(ParamUtil.getIntParameter(request, "userType", 0));
+			bean.setUpdateBy(bean.getAccount());
 			ret = sysUserService.update(bean);
 		}
 
@@ -645,6 +649,7 @@ public class SysUserController {
 			user.setMobile(ParamUtil.getParameter(request, "mobile"));
 			user.setEmail(ParamUtil.getParameter(request, "email"));
 			user.setTelephone(ParamUtil.getParameter(request, "telephone"));
+			user.setUpdateBy(bean.getAccount());
 			ret = sysUserService.update(user);
 			CacheUtils.clearUserCache(user.getAccount());
 		}
@@ -685,6 +690,7 @@ public class SysUserController {
 				String encPwd = DigestUtil.digestString(oldPwd, "MD5");
 				if (StringUtils.equals(encPwd, user.getPassword())) {
 					user.setPassword(DigestUtil.digestString(newPwd, "MD5"));
+					user.setUpdateBy(bean.getAccount());
 					ret = sysUserService.update(user);
 				}
 			} catch (Exception ex) {
@@ -779,6 +785,7 @@ public class SysUserController {
 		ViewMessages messages = new ViewMessages();
 		long userId = ParamUtil.getIntParameter(request, "user_id", 0);
 		SysUser user = sysUserService.findById(userId);// 查找用户对象
+		 
 		if (user != null) {// 用户存在
 			long[] id = ParamUtil.getLongParameterValues(request, "id");// 获取页面参数
 			if (id != null) {
@@ -796,7 +803,8 @@ public class SysUserController {
 				oldRoles.retainAll(newRoles);// 公共权限
 				delRoles.removeAll(newRoles);// 待删除的权限
 				newRoles.removeAll(oldRoles);// 待增加的权限
-
+                user.setUpdateBy(RequestUtils.getActorId(request));
+                
 				if (sysUserService.updateRole(user, delRoles, newRoles)) {// 授权成功
 					messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 							"user.role_success"));

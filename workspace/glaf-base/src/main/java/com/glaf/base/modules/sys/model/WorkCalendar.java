@@ -19,19 +19,38 @@
 package com.glaf.base.modules.sys.model;
 
 import java.io.Serializable;
+import javax.persistence.*;
 import com.alibaba.fastjson.*;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.glaf.base.modules.sys.util.WorkCalendarJsonFactory;
 import com.glaf.core.base.JSONable;
 
-
+@Entity
+@Table(name = "sys_workcalendar")
 public class WorkCalendar implements Serializable, JSONable {
 	private static final long serialVersionUID = -5396045849722935648L;
-	private long id;
-	private int freeDay;
-	private int freeMonth;
-	private int freeYear;
+	@Id
+	@Column(name = "ID", length = 50, nullable = false)
+	protected long id;
+
+	/**
+	 * 休息日
+	 */
+	@Column(name = "FREEDAY")
+	protected int freeDay;
+
+	/**
+	 * 月
+	 */
+	@Column(name = "FREEMONTH")
+	protected int freeMonth;
+
+	/**
+	 * 年
+	 */
+	@Column(name = "FREEYEAR")
+	protected int freeYear;
 
 	public int getFreeDay() {
 		return freeDay;

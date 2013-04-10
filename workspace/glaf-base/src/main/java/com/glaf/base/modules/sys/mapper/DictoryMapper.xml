@@ -13,6 +13,10 @@
 		<result property="value" column="VALUE_" jdbcType="VARCHAR" />
 		<result property="sort" column="SORT" jdbcType="INTEGER" />
 		<result property="blocked" column="BLOCKED" jdbcType="INTEGER" />
+		<result property="createDate" column="CREATEDATE" jdbcType="TIMESTAMP" />
+		<result property="createBy" column="CREATEBY" jdbcType="VARCHAR" />
+		<result property="updateBy" column="UPDATEBY" jdbcType="VARCHAR" />
+		<result property="updateDate" column="UPDATEDATE" jdbcType="TIMESTAMP" />
 		<result property="ext1" column="EXT1" jdbcType="VARCHAR" />
 		<result property="ext2" column="EXT2" jdbcType="VARCHAR" />
 		<result property="ext3" column="EXT3" jdbcType="VARCHAR" />
@@ -60,6 +64,18 @@
 			</if>
 			<if test="blocked != null">
 				,BLOCKED
+			</if>
+			<if test="createDate != null">
+				,CREATEDATE
+			</if>
+			<if test="createBy != null">
+				,CREATEBY
+			</if>
+			<if test="updateBy != null">
+				,UPDATEBY
+			</if>
+			<if test="updateDate != null">
+				,UPDATEDATE
 			</if>
 			<if test="ext1 != null">
 				,EXT1
@@ -146,6 +162,18 @@
 			</if>
 			<if test="blocked != null">
 				,#{blocked, jdbcType=INTEGER}
+			</if>
+			<if test="createDate != null">
+				,#{createDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="createBy != null">
+				,#{createBy, jdbcType=VARCHAR}
+			</if>
+			<if test="updateBy != null">
+				,#{updateBy, jdbcType=VARCHAR}
+			</if>
+			<if test="updateDate != null">
+				,#{updateDate, jdbcType=TIMESTAMP}
 			</if>
 			<if test="ext1 != null">
 				,#{ext1, jdbcType=VARCHAR}
@@ -236,6 +264,12 @@
 			<if test="blocked != null">
 				BLOCKED = #{blocked, jdbcType=INTEGER},
 			</if>
+			<if test="updateBy != null">
+				UPDATEBY = #{updateBy, jdbcType=VARCHAR},
+			</if>
+			<if test="updateDate != null">
+				UPDATEDATE = #{updateDate, jdbcType=TIMESTAMP},
+			</if>
 			<if test="ext1 != null">
 				EXT1 = #{ext1, jdbcType=VARCHAR},
 			</if>
@@ -304,7 +338,8 @@
 
 
 	<delete id="deleteDictoryById" parameterType="long">
-		delete from sys_dictory
+		delete from
+		sys_dictory
 		where ID = #{id}
 	</delete>
 

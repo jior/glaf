@@ -17,33 +17,17 @@ public class SysPermission implements Serializable, JSONable {
 	 */
 	@Id
 	@Column(name = "FUNCID", length = 50, nullable = false)
-	protected Long funcId;
+	protected long funcId;
 
 	/**
 	 * ½ÇÉ«±àºÅ
 	 */
 	@Id
 	@Column(name = "ROLEID")
-	protected Long roleId;
+	protected long roleId;
 
 	public SysPermission() {
 
-	}
-
-	public Long getFuncId() {
-		return this.funcId;
-	}
-
-	public Long getRoleId() {
-		return this.roleId;
-	}
-
-	public void setFuncId(Long funcId) {
-		this.funcId = funcId;
-	}
-
-	public void setRoleId(Long roleId) {
-		this.roleId = roleId;
 	}
 
 	@Override
@@ -55,24 +39,40 @@ public class SysPermission implements Serializable, JSONable {
 		if (getClass() != obj.getClass())
 			return false;
 		SysPermission other = (SysPermission) obj;
-		if (funcId == null) {
-			if (other.funcId != null)
-				return false;
-		} else if (!funcId.equals(other.funcId))
+		if (funcId != other.funcId)
+			return false;
+		if (roleId != other.roleId)
 			return false;
 		return true;
+	}
+
+	public long getFuncId() {
+		return this.funcId;
+	}
+
+	public long getRoleId() {
+		return this.roleId;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((funcId == null) ? 0 : funcId.hashCode());
+		result = prime * result + (int) (funcId ^ (funcId >>> 32));
+		result = prime * result + (int) (roleId ^ (roleId >>> 32));
 		return result;
 	}
 
 	public SysPermission jsonToObject(JSONObject jsonObject) {
 		return SysPermissionJsonFactory.jsonToObject(jsonObject);
+	}
+
+	public void setFuncId(long funcId) {
+		this.funcId = funcId;
+	}
+
+	public void setRoleId(long roleId) {
+		this.roleId = roleId;
 	}
 
 	public JSONObject toJsonObject() {

@@ -8,5 +8,13 @@
         <property name="sort" column="SORT" type="Integer" englishTitle="sort" dataType="0" length="10"  title="序号"/>
         <property name="showMenu" column="SHOWMENU" type="Integer" englishTitle="showMenu" dataType="0" length="10"  title="显示菜单"/>
         <property name="nodeId" column="NODEID" type="Long" englishTitle="nodeId" dataType="0" length="19" nullable="false"  title="节点编号"/>
+		<property name="createDate" column="CREATEDATE" title="创建日期"
+			englishTitle="Create Date" type="Date" displayType="4" nullable="false"/>
+		<property name="createBy" column="CREATEBY" title="创建人" 
+		    englishTitle="Create By"	type="String" displayType="4" length="50" />
+		<property name="updateBy"  column="UPDATEBY" title="修改人" 
+		    englishTitle="Update By"	type="String" displayType="4" length="50" />
+		<property name="updateDate" column="UPDATEDATE" title="修改日期"
+			englishTitle="Update Date" type="Date" displayType="4" nullable="false"/>
     </entity>
 </mapping>

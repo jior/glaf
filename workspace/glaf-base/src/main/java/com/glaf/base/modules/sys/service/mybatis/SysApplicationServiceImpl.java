@@ -74,10 +74,12 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 		}
 		if (bean.getNode() != null) {
 			bean.getNode().setDiscriminator("A");
+			bean.getNode().setCreateBy(bean.getCreateBy());
 			sysTreeService.create(bean.getNode());
 			bean.setNodeId(bean.getNode().getId());
 		}
 		bean.setSort((int) bean.getId());// 设置排序号为刚插入的id值
+		bean.setCreateDate(new Date());
 		sysApplicationMapper.insertSysApplication(bean);
 		ret = true;
 		return ret;
@@ -433,8 +435,10 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 
 	@Transactional
 	public boolean update(SysApplication bean) {
+		bean.setUpdateDate(new Date());
 		this.sysApplicationMapper.updateSysApplication(bean);
 		if (bean.getNode() != null) {
+			bean.getNode().setUpdateBy(bean.getUpdateBy());
 			sysTreeService.update(bean.getNode());
 		}
 		return true;

@@ -305,6 +305,8 @@ public class DictoryController {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
+		
+		bean.setCreateBy(RequestUtils.getActorId(request));
 
 		ViewMessages messages = new ViewMessages();
 		if (dictoryService.create(bean)) {// 保存成功
@@ -367,7 +369,7 @@ public class DictoryController {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-
+		bean.setUpdateBy(RequestUtils.getActorId(request));
 		ViewMessages messages = new ViewMessages();
 		if (dictoryService.update(bean)) {// 保存成功
 			if (bean.getNodeId() == 17) {

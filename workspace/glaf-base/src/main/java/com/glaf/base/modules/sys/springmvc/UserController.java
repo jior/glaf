@@ -155,6 +155,7 @@ public class UserController {
 			bean.setBlocked(ParamUtil.getIntParameter(request, "blocked", 0));
 			bean.setHeadship(ParamUtil.getParameter(request, "headship"));
 			bean.setUserType(ParamUtil.getIntParameter(request, "userType", 0));
+			bean.setUpdateBy(bean.getAccount());
 			ret = sysUserService.update(bean);
 		}
 
@@ -193,6 +194,7 @@ public class UserController {
 			user.setMobile(ParamUtil.getParameter(request, "mobile"));
 			user.setEmail(ParamUtil.getParameter(request, "email"));
 			user.setTelephone(ParamUtil.getParameter(request, "telephone"));
+			user.setUpdateBy(bean.getAccount());
 			ret = sysUserService.update(user);
 			CacheUtils.clearUserCache(user.getAccount());
 		}
@@ -233,6 +235,7 @@ public class UserController {
 				String encPwd = DigestUtil.digestString(oldPwd, "MD5");
 				if (StringUtils.equals(encPwd, user.getPassword())) {
 					user.setPassword(DigestUtil.digestString(newPwd, "MD5"));
+					user.setUpdateBy(bean.getAccount());
 					ret = sysUserService.update(user);
 				}
 			} catch (Exception ex) {

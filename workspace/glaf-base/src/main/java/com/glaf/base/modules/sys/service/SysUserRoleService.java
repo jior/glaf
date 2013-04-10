@@ -103,7 +103,7 @@ public interface SysUserRoleService {
 	 * @param roleId
 	 * @return
 	 */
-	List<SysUser> getChildrenMembershipUsers(int deptId, int roleId);
+	List<SysUser> getChildrenMembershipUsers(long deptId, long roleId);
 
 	/**
 	 * 获取某个部门某个角色的用户
@@ -112,7 +112,7 @@ public interface SysUserRoleService {
 	 * @param roleId
 	 * @return
 	 */
-	List<SysUser> getMembershipUsers(int deptId, int roleId);
+	List<SysUser> getMembershipUsers(long deptId, long roleId);
 
 	/**
 	 * 获取多个部门某个角色的用户
@@ -121,7 +121,7 @@ public interface SysUserRoleService {
 	 * @param roleId
 	 * @return
 	 */
-	List<SysUser> getMembershipUsers(List<Integer> deptIds, int roleId);
+	List<SysUser> getMembershipUsers(List<Integer> deptIds, long roleId);
 
 	/**
 	 * 某人已授权的用户列表

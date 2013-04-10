@@ -28,7 +28,7 @@ import com.glaf.core.domain.*;
 public class SchedulerJsonFactory {
 
 	public static Scheduler jsonToObject(JSONObject jsonObject) {
-		Scheduler model = new SchedulerEntity();
+		SchedulerEntity model = new SchedulerEntity();
 		if (jsonObject.containsKey("id")) {
 			model.setId(jsonObject.getString("id"));
 		}
@@ -88,6 +88,15 @@ public class SchedulerJsonFactory {
 		}
 		if (jsonObject.containsKey("attribute")) {
 			model.setAttribute(jsonObject.getString("attribute"));
+		}
+		if (jsonObject.containsKey("intervalType")) {
+			model.setIntervalType(jsonObject.getString("intervalType"));
+		}
+		if (jsonObject.containsKey("intervalValue")) {
+			model.setIntervalValue(jsonObject.getString("intervalValue"));
+		}
+		if (jsonObject.containsKey("intervalTime")) {
+			model.setIntervalTime(jsonObject.getString("intervalTime"));
 		}
 
 		return model;
@@ -153,6 +162,17 @@ public class SchedulerJsonFactory {
 		if (model.getAttribute() != null) {
 			jsonObject.put("attribute", model.getAttribute());
 		}
+		
+		if (model.getIntervalType() != null) {
+			jsonObject.put("intervalType", model.getIntervalType());
+		} 
+		if (model.getIntervalValue() != null) {
+			jsonObject.put("intervalValue", model.getIntervalValue());
+		} 
+		if (model.getIntervalTime() != null) {
+			jsonObject.put("intervalTime", model.getIntervalTime());
+		} 
+		
 		return jsonObject;
 	}
 
@@ -216,6 +236,16 @@ public class SchedulerJsonFactory {
 		if (model.getAttribute() != null) {
 			jsonObject.put("attribute", model.getAttribute());
 		}
+		
+		if (model.getIntervalType() != null) {
+			jsonObject.put("intervalType", model.getIntervalType());
+		} 
+		if (model.getIntervalValue() != null) {
+			jsonObject.put("intervalValue", model.getIntervalValue());
+		} 
+		if (model.getIntervalTime() != null) {
+			jsonObject.put("intervalTime", model.getIntervalTime());
+		} 
 		return jsonObject;
 	}
 

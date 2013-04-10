@@ -25,9 +25,12 @@
 		<result property="fax" column="FAX" jdbcType="VARCHAR" />
 		<result property="accountType" column="ACCOUNTTYPE" jdbcType="INTEGER" />
 		<result property="dumpFlag" column="DUMPFLAG" jdbcType="INTEGER" />
-		<result property="deptId" column="DEPTID" jdbcType="INTEGER" />
+		<result property="deptId" column="DEPTID" jdbcType="BIGINT" />
 		<result property="adminFlag" column="ADMINFLAG" jdbcType="VARCHAR" />
 		<result property="superiorIds" column="SUPERIORIDS" jdbcType="VARCHAR" />
+		<result property="createBy" column="CREATEBY" jdbcType="VARCHAR" />
+		<result property="updateBy" column="UPDATEBY" jdbcType="VARCHAR" />
+		<result property="updateDate" column="UPDATEDATE" jdbcType="TIMESTAMP" />
 	</resultMap>
 
 
@@ -98,6 +101,15 @@
 			<if test="superiorIds != null">
 				,SUPERIORIDS
 			</if>
+			<if test="createBy != null">
+				,CREATEBY
+			</if>
+			<if test="updateBy != null">
+				,UPDATEBY
+			</if>
+			<if test="updateDate != null">
+				,UPDATEDATE
+			</if>
 		</trim>
 
 		<trim prefix=" values (" suffix=")" suffixOverrides=",">
@@ -158,13 +170,22 @@
 				,#{dumpFlag, jdbcType=INTEGER}
 			</if>
 			<if test="deptId != null">
-				,#{deptId, jdbcType=INTEGER}
+				,#{deptId, jdbcType=BIGINT}
 			</if>
 			<if test="adminFlag != null">
 				,#{adminFlag, jdbcType=VARCHAR}
 			</if>
 			<if test="superiorIds != null">
 				,#{superiorIds, jdbcType=VARCHAR}
+			</if>
+			<if test="createBy != null">
+				,#{createBy, jdbcType=VARCHAR}
+			</if>
+			<if test="updateBy != null">
+				,#{updateBy, jdbcType=VARCHAR}
+			</if>
+			<if test="updateDate != null">
+				,#{updateDate, jdbcType=TIMESTAMP}
 			</if>
 		</trim>
 	</insert>
@@ -229,13 +250,19 @@
 				DUMPFLAG = #{dumpFlag, jdbcType=INTEGER},
 			</if>
 			<if test="deptId != null">
-				DEPTID = #{deptId, jdbcType=INTEGER},
+				DEPTID = #{deptId, jdbcType=BIGINT},
 			</if>
 			<if test="adminFlag != null">
 				ADMINFLAG = #{adminFlag, jdbcType=VARCHAR},
 			</if>
 			<if test="superiorIds != null">
 				SUPERIORIDS = #{superiorIds, jdbcType=VARCHAR},
+			</if>
+			<if test="updateBy != null">
+				UPDATEBY = #{updateBy, jdbcType=VARCHAR},
+			</if>
+			<if test="updateDate != null">
+				UPDATEDATE = #{updateDate, jdbcType=TIMESTAMP},
 			</if>
 		</trim>
 		where
@@ -264,16 +291,16 @@
 	<select id="getSysUserById" parameterType="long" resultMap="sysUserResultMap">
 		select * from sys_user where ID = #{id}
 	</select>
-	
-	
+
+
 	<select id="getSysUsersByAppId" parameterType="long" resultMap="sysUserResultMap">
-		
+
 		select distinct a.*
-		from sys_user a 
-		inner join sys_user_role b 
-		on a.id = b.userId 
-		inner join sys_access c 
-		on b.roleId = c.roleId 
+		from sys_user a
+		inner join sys_user_role b
+		on a.id = b.userId
+		inner join sys_access c
+		on b.roleId = c.roleId
 		where c.appId = #{appId}
 
 	</select>
@@ -326,7 +353,8 @@
 
 		select distinct E.* from sys_user E
 		inner join sys_user_role R
-		on E.ID = R.USERID
+		on E.ID =
+		R.USERID
 		where E.ACCOUNTTYPE = 0
 
 		<if test=" deptId != null  ">
@@ -364,7 +392,8 @@
 		resultMap="sysUserResultMap">
 
 		select distinct E.* from sys_user E
-		inner join sys_user_role R
+		inner join sys_user_role
+		R
 		on E.ID = R.USERID
 		where E.ACCOUNTTYPE = 0
 		and R.AUTHORIZEFROM =
@@ -377,7 +406,8 @@
 
 		select distinct E.* from sys_user E
 		inner join sys_user_role R
-		on E.ID = R.USERID
+		on E.ID =
+		R.USERID
 		where R.ROLEID = #{roleId}
 
 	</select>
@@ -389,12 +419,13 @@
 		SELECT E.*
 		FROM sys_user E
 		WHERE E.blocked = 0 AND E.id IN
-		( SELECT r.userId FROM sys_user_role r
-		  WHERE r.authorized = 0 AND r.roleId IN ( 
-		    SELECT a.id FROM sys_dept_role a
-		    INNER JOIN sys_role b
-		    ON a.sysRoleId = b.id
-		    WHERE 1=1
+		( SELECT
+		r.userId FROM sys_user_role r
+		WHERE r.authorized = 0 AND r.roleId IN (
+		SELECT a.id FROM sys_dept_role a
+		INNER JOIN sys_role b
+		ON a.sysRoleId = b.id
+		WHERE 1=1
 
 		<if test="deptRoleId != null">
 			AND a.id = #{deptRoleId}

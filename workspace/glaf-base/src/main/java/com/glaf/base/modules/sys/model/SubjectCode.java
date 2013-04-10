@@ -19,18 +19,44 @@
 package com.glaf.base.modules.sys.model;
 
 import java.io.Serializable;
+import javax.persistence.*;
+
 import com.alibaba.fastjson.*;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.glaf.base.modules.sys.util.SubjectCodeJsonFactory;
 import com.glaf.core.base.JSONable;
 
+@Entity
+@Table(name = "SubjectCode")
 public class SubjectCode implements Serializable, JSONable {
 	private static final long serialVersionUID = -1L;
-	private long id;
-	private long parent;
-	private String subjectCode;
-	private String subjectName;
-	private int sort;
+	@Id
+	@Column(name = "ID", nullable = false)
+	protected long id;
+
+	/**
+	 * ¸¸½Úµã±àºÅ
+	 */
+	@Column(name = "PARENT")
+	protected long parent;
+
+	/**
+	 * ±àÂë
+	 */
+	@Column(name = "SUBJECTCODE")
+	protected String subjectCode;
+
+	/**
+	 * Ãû³Æ
+	 */
+	@Column(name = "SUBJECTNAME")
+	protected String subjectName;
+
+	/**
+	 * Ë³Ðò
+	 */
+	@Column(name = "SORT")
+	protected int sort;
 
 	public long getId() {
 		return id;

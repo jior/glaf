@@ -222,9 +222,10 @@ public class DictoryServiceImpl implements DictoryService {
 	public void save(Dictory dictory) {
 		if (dictory.getId() == 0L) {
 			dictory.setId(idGenerator.nextId());
-			// dictory.setCreateDate(new Date());
+			dictory.setCreateDate(new Date());
 			dictoryMapper.insertDictory(dictory);
 		} else {
+			dictory.setUpdateDate(new Date());
 			dictoryMapper.updateDictory(dictory);
 		}
 	}

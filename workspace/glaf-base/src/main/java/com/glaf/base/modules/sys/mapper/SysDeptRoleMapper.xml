@@ -11,6 +11,8 @@
 		<result property="sort" column="SORT" jdbcType="INTEGER"/>
 		<result property="sysRoleId" column="SYSROLEID" jdbcType="BIGINT"/>
 		<result property="deptId" column="DEPTID" jdbcType="BIGINT"/>
+		<result property="createDate" column="CREATEDATE" jdbcType="TIMESTAMP"/>
+        <result property="createBy" column="CREATEBY" jdbcType="VARCHAR"/>
 	</resultMap>
 
  
@@ -33,6 +35,12 @@
 			<if test="deptId != null">
 				,DEPTID 
 			</if>
+			<if test="createDate != null">
+				,CREATEDATE 
+			</if>
+			<if test="createBy != null">
+				,CREATEBY 
+			</if>
 		</trim>
 
 		<trim prefix=" values (" suffix=")" suffixOverrides=",">
@@ -52,6 +60,12 @@
 			</if>
 			<if test="deptId != null">
 				,#{deptId, jdbcType=BIGINT}
+			</if>
+			<if test="createDate != null">
+				,#{createDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="createBy != null">
+				,#{createBy, jdbcType=VARCHAR}
 			</if>
 		</trim>
 	</insert>

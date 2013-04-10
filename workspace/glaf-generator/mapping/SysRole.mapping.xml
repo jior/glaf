@@ -6,5 +6,13 @@
         <property name="desc" column="ROLEDESC" type="String" englishTitle="desc" dataType="0" length="255" title="描述" />
         <property name="code" column="CODE" type="String" englishTitle="code" dataType="0" length="255" title="编码" />
         <property name="sort" column="SORT" type="Integer" englishTitle="sort" dataType="0" length="10" title="序号" />
+		<property name="createDate" column="CREATEDATE" title="创建日期"
+			englishTitle="Create Date" type="Date" displayType="4" nullable="false"/>
+		<property name="createBy" column="CREATEBY" title="创建人" 
+		    englishTitle="Create By"	type="String" displayType="4" length="50" />
+		<property name="updateBy"  column="UPDATEBY" title="修改人" 
+		    englishTitle="Update By"	type="String" displayType="4" length="50" />
+		<property name="updateDate" column="UPDATEDATE" title="修改日期"
+			englishTitle="Update Date" type="Date" displayType="4" nullable="false"/>
     </entity>
 </mapping>

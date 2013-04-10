@@ -9,8 +9,11 @@
 		<result property="name" column="NAME" jdbcType="VARCHAR" />
 		<result property="desc" column="GROUPDESC" jdbcType="VARCHAR" />
 		<result property="type" column="TYPE" jdbcType="VARCHAR" />
-		<result property="createBy" column="CREATEBY" jdbcType="VARCHAR" />
 		<result property="sort" column="SORT" jdbcType="INTEGER" />
+		<result property="createDate" column="CREATEDATE" jdbcType="TIMESTAMP" />
+		<result property="createBy" column="CREATEBY" jdbcType="VARCHAR" />
+		<result property="updateBy" column="UPDATEBY" jdbcType="VARCHAR" />
+		<result property="updateDate" column="UPDATEDATE" jdbcType="TIMESTAMP" />
 	</resultMap>
 
 
@@ -27,11 +30,20 @@
 			<if test="type != null">
 				,TYPE
 			</if>
+			<if test="sort != null">
+				,SORT
+			</if>
+			<if test="createDate != null">
+				,CREATEDATE
+			</if>
 			<if test="createBy != null">
 				,CREATEBY
 			</if>
-			<if test="sort != null">
-				,SORT
+			<if test="updateBy != null">
+				,UPDATEBY
+			</if>
+			<if test="updateDate != null">
+				,UPDATEDATE
 			</if>
 		</trim>
 
@@ -47,11 +59,20 @@
 			<if test="type != null">
 				,#{type, jdbcType=VARCHAR}
 			</if>
+			<if test="sort != null">
+				,#{sort, jdbcType=INTEGER}
+			</if>
+			<if test="createDate != null">
+				,#{createDate, jdbcType=TIMESTAMP}
+			</if>
 			<if test="createBy != null">
 				,#{createBy, jdbcType=VARCHAR}
 			</if>
-			<if test="sort != null">
-				,#{sort, jdbcType=INTEGER}
+			<if test="updateBy != null">
+				,#{updateBy, jdbcType=VARCHAR}
+			</if>
+			<if test="updateDate != null">
+				,#{updateDate, jdbcType=TIMESTAMP}
 			</if>
 		</trim>
 	</insert>
@@ -69,6 +90,12 @@
 			</if>
 			<if test="sort != null">
 				SORT = #{sort, jdbcType=INTEGER},
+			</if>
+			<if test="updateBy != null">
+				UPDATEBY = #{updateBy, jdbcType=VARCHAR},
+			</if>
+			<if test="updateDate != null">
+				UPDATEDATE = #{updateDate, jdbcType=TIMESTAMP},
 			</if>
 		</trim>
 		where

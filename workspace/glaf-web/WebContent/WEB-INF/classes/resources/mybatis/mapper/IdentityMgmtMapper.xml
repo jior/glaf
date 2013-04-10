@@ -14,7 +14,7 @@
 		<id property="actorId" column="account" jdbcType="VARCHAR" />
 		<result property="activationCode" column="account" jdbcType="VARCHAR" />
 		<result property="name" column="name" jdbcType="VARCHAR" />
-		<result property="deptId" column="deptId" jdbcType="INTEGER" />
+		<result property="deptId" column="deptId" jdbcType="BIGINT" />
 		<result property="mail" column="email" jdbcType="VARCHAR" />
 		<result property="mobile" column="mobile" jdbcType="VARCHAR" />
 		<result property="adminFlag" column="adminFlag" jdbcType="VARCHAR" />

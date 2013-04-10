@@ -31,6 +31,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.core.id.*;
+import com.glaf.core.security.Authentication;
 import com.glaf.core.service.ITableDataService;
 import com.glaf.core.util.DateUtils;
 import com.glaf.core.util.PageResult;
@@ -109,6 +110,9 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 			if (mark == 1) {
 				bean.setProcessDescription("全局代理");
 			}
+			
+			bean.setCreateDate(new Date());
+			bean.setCreateBy(Authentication.getAuthenticatedActorId());
 
 			sysUserRoleMapper.insertSysUserRole(bean);
 
@@ -128,6 +132,7 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 		if (bean.getId() == 0L) {
 			bean.setId(idGenerator.nextId());
 		}
+		bean.setCreateDate(new Date());
 		sysUserRoleMapper.insertSysUserRole(bean);
 		return true;
 	}
@@ -254,7 +259,7 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 		return list;
 	}
 
-	public List<SysUser> getChildrenMembershipUsers(int deptId, int roleId) {
+	public List<SysUser> getChildrenMembershipUsers(long deptId, long roleId) {
 		List<SysUser> users = new ArrayList<SysUser>();
 		SysDepartment dept = sysDepartmentService.findById(deptId);
 		if (dept != null) {
@@ -275,7 +280,7 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 		return users;
 	}
 
-	public List<SysUser> getMembershipUsers(int deptId, int roleId) {
+	public List<SysUser> getMembershipUsers(long deptId, long roleId) {
 		List<SysUser> users = new ArrayList<SysUser>();
 		SysDepartment dept = sysDepartmentService.findById(deptId);
 		if (dept != null && dept.getRoles() != null) {
@@ -292,7 +297,7 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 		return users;
 	}
 
-	public List<SysUser> getMembershipUsers(List<Integer> deptIds, int roleId) {
+	public List<SysUser> getMembershipUsers(List<Integer> deptIds, long roleId) {
 		List<SysUser> users = new ArrayList<SysUser>();
 		for (Integer deptId : deptIds) {
 			List<SysUser> list = this.getMembershipUsers(deptId, roleId);
@@ -523,7 +528,7 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 	public void save(SysUserRole sysUserRole) {
 		if (sysUserRole.getId() == 0L) {
 			sysUserRole.setId(idGenerator.nextId());
-			// sysUserRole.setCreateDate(new Date());
+			sysUserRole.setCreateDate(new Date());
 			sysUserRoleMapper.insertSysUserRole(sysUserRole);
 		} else {
 			sysUserRoleMapper.updateSysUserRole(sysUserRole);

@@ -20,7 +20,7 @@ package com.glaf.base.modules.workspace.model;
 
 import java.io.Serializable;
 import java.util.Date;
-
+import javax.persistence.*;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
@@ -30,36 +30,82 @@ import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.workspace.util.MessageJsonFactory;
 import com.glaf.core.base.JSONable;
 
+@Entity
+@Table(name = "Message")
 public class Message implements Serializable, JSONable {
 
 	private static final long serialVersionUID = -3111749338365950889L;
 
-	private long id;
+	@Id
+	@Column(name = "ID", nullable = false)
+	protected long id;
 
-	private int type;
+	/**
+	 * 消息类型
+	 */
+	@Column(name = "TYPE")
+	protected int type;
 
-	// sysType 0:系统警告 1:系统消息
-	private int sysType;
+	/**
+	        *
+	        */
+	@Column(name = "SYSTYPE")
+	protected int sysType;
 
-	private SysUser sender;
+	/**
+	 * 接收人列表
+	 */
+	@Column(name = "RECVERLIST")
+	protected String recverList;
 
-	private Long senderId;
+	/**
+	 * 标题
+	 */
+	@Column(name = "TITLE")
+	protected String title;
 
-	private SysUser recver;
+	/**
+	 * 内容
+	 */
+	@Column(name = "CONTENT")
+	protected String content;
 
-	private Long recverId;
+	/**
+	 * 创建时间
+	 */
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "CREATEDATE")
+	protected Date createDate;
 
-	private String recverList;
+	/**
+	 * 已读标记
+	 */
+	@Column(name = "READED")
+	protected int readed;
 
-	private String title;
+	/**
+	 * 分类
+	 */
+	@Column(name = "CATEGORY")
+	protected int category;
 
-	private String content;
+	/**
+	 * 发送者
+	 */
+	@Column(name = "SENDER")
+	protected long senderId;
 
-	private Date createDate;
+	/**
+	 * 接收者
+	 */
+	@Column(name = "RECVER")
+	protected long recverId;
 
-	private int readed;
+	@javax.persistence.Transient
+	protected SysUser recver;
 
-	private int category;
+	@javax.persistence.Transient
+	protected SysUser sender;
 
 	public int getCategory() {
 		return category;
@@ -85,7 +131,7 @@ public class Message implements Serializable, JSONable {
 		return recver;
 	}
 
-	public Long getRecverId() {
+	public long getRecverId() {
 		return recverId;
 	}
 
@@ -97,7 +143,7 @@ public class Message implements Serializable, JSONable {
 		return sender;
 	}
 
-	public Long getSenderId() {
+	public long getSenderId() {
 		return senderId;
 	}
 
@@ -137,7 +183,7 @@ public class Message implements Serializable, JSONable {
 		this.recver = recver;
 	}
 
-	public void setRecverId(Long recverId) {
+	public void setRecverId(long recverId) {
 		this.recverId = recverId;
 	}
 
@@ -149,7 +195,7 @@ public class Message implements Serializable, JSONable {
 		this.sender = sender;
 	}
 
-	public void setSenderId(Long senderId) {
+	public void setSenderId(long senderId) {
 		this.senderId = senderId;
 	}
 

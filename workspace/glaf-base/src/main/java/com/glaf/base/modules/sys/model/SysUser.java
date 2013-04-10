@@ -23,7 +23,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
+import javax.persistence.*;
 import org.apache.commons.lang.StringUtils;
 
 import com.alibaba.fastjson.JSONObject;
@@ -32,38 +32,182 @@ import com.glaf.base.modules.sys.util.SysUserJsonFactory;
 import com.glaf.core.base.JSONable;
 import com.glaf.core.identity.User;
 
+@Entity
+@Table(name = "sys_user")
 public class SysUser implements Serializable, User, JSONable {
 	private static final long serialVersionUID = -7677600372139823989L;
-	private String account;
-	private int accountType;
-	private String adminFlag;
+
+	/**
+	 * 用户名
+	 */
+	@Column(name = "ACCOUNT")
+	protected String account;
+
+	/**
+	 * 账号类型
+	 */
+	@Column(name = "ACCOUNTTYPE")
+	protected int accountType;
+
+	/**
+	 * 管理员标识
+	 */
+	@Column(name = "ADMINFLAG")
+	protected String adminFlag;
+
+	@javax.persistence.Transient
 	private Set<SysApplication> apps = new HashSet<SysApplication>();
-	private int blocked;
-	private String code;
-	private Date createTime;
+
+	/**
+	 * 启用标记
+	 */
+	@Column(name = "BLOCKED")
+	protected int blocked;
+
+	/**
+	 * 编码
+	 */
+	@Column(name = "CODE")
+	protected String code;
+
+	/**
+	 * 创建人
+	 */
+	@Column(name = "CREATEBY")
+	protected String createBy;
+
+	/**
+	 * 创建时间
+	 */
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "CREATETIME")
+	protected Date createTime;
+
+	@javax.persistence.Transient
 	private SysDepartment department;
-	private int deptId;
-	private int dumpFlag;
-	private String email;
-	private int evection;
-	private String fax;
+
+	/**
+	 * 部门编号
+	 */
+	@Column(name = "DEPTID")
+	protected long deptId;
+
+	/**
+	 * 废弃标记
+	 */
+	@Column(name = "DUMPFLAG")
+	protected int dumpFlag;
+
+	/**
+	 * 邮件
+	 */
+	@Column(name = "EMAIL")
+	protected String email;
+
+	/**
+	 * 出差
+	 */
+	@Column(name = "EVECTION")
+	protected int evection;
+
+	/**
+	 * 传真
+	 */
+	@Column(name = "FAX")
+	protected String fax;
+
+	@javax.persistence.Transient
 	private Set<SysFunction> functions = new HashSet<SysFunction>();
-	private int gender;
-	private String headship;
-	private long id;
-	private String lastLoginIP;
-	private Date lastLoginTime;
-	private String loginIP;
-	private String menus;
-	private String mobile;
-	private String name;
+
+	/**
+	 * 性别
+	 */
+	@Column(name = "GENDER")
+	protected int gender;
+
+	/**
+	 * 职务
+	 */
+	@Column(name = "HEADSHIP")
+	protected String headship;
+
+	@Id
+	@Column(name = "ID", length = 50, nullable = false)
+	protected long id;
+
+	/**
+	 * 最后登录IP
+	 */
+	@Column(name = "LASTLOGINIP")
+	protected String lastLoginIP;
+
+	/**
+	 * 最后登录时间
+	 */
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "LASTLOGINTIME")
+	protected Date lastLoginTime;
+
+	@javax.persistence.Transient
+	protected String menus;
+
+	/**
+	 * 手机
+	 */
+	@Column(name = "MOBILE")
+	protected String mobile;
+
+	/**
+	 * 姓名
+	 */
+	@Column(name = "NAME")
+	protected String name;
+
+	@javax.persistence.Transient
 	private List<SysDepartment> nestingDepartment;
-	private String password;
+
+	/**
+	 * 密码
+	 */
+	@Column(name = "PASSWORD")
+	protected String password;
+
+	@javax.persistence.Transient
 	private Set<SysDeptRole> roles = new HashSet<SysDeptRole>();
-	private String superiorIds;
-	private String telephone;
+
+	/**
+	 * 上级领导
+	 */
+	@Column(name = "SUPERIORIDS")
+	protected String superiorIds;
+
+	/**
+	 * 电话
+	 */
+	@Column(name = "TELEPHONE")
+	protected String telephone;
+
+	/**
+	 * 修改人
+	 */
+	@Column(name = "UPDATEBY")
+	protected String updateBy;
+
+	/**
+	 * 修改日期
+	 */
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "UPDATEDATE")
+	protected Date updateDate;
+
+	@javax.persistence.Transient
 	private Set<SysUserRole> userRoles = new HashSet<SysUserRole>();
-	private int userType;
+
+	/**
+	 * 用户类别
+	 */
+	@Column(name = "USERTYPE")
+	protected int userType;
 
 	public SysUser() {
 
@@ -100,6 +244,10 @@ public class SysUser implements Serializable, User, JSONable {
 		return code;
 	}
 
+	public String getCreateBy() {
+		return createBy;
+	}
+
 	public Date getCreateTime() {
 		return createTime;
 	}
@@ -108,9 +256,9 @@ public class SysUser implements Serializable, User, JSONable {
 		return department;
 	}
 
-	public int getDeptId() {
+	public long getDeptId() {
 		if (department != null) {
-			return (int) department.getId();
+			return department.getId();
 		}
 		return deptId;
 	}
@@ -167,7 +315,7 @@ public class SysUser implements Serializable, User, JSONable {
 	}
 
 	public String getLoginIP() {
-		return loginIP;
+		return lastLoginIP;
 	}
 
 	public int getLoginRetry() {
@@ -215,6 +363,14 @@ public class SysUser implements Serializable, User, JSONable {
 
 	public String getTelephone() {
 		return telephone;
+	}
+
+	public String getUpdateBy() {
+		return updateBy;
+	}
+
+	public Date getUpdateDate() {
+		return updateDate;
 	}
 
 	public Set<SysUserRole> getUserRoles() {
@@ -327,6 +483,10 @@ public class SysUser implements Serializable, User, JSONable {
 		this.code = code;
 	}
 
+	public void setCreateBy(String createBy) {
+		this.createBy = createBy;
+	}
+
 	public void setCreateDate(Date createDate) {
 		this.createTime = createDate;
 	}
@@ -339,7 +499,7 @@ public class SysUser implements Serializable, User, JSONable {
 		this.department = department;
 	}
 
-	public void setDeptId(int deptId) {
+	public void setDeptId(long deptId) {
 		this.deptId = deptId;
 	}
 
@@ -392,7 +552,7 @@ public class SysUser implements Serializable, User, JSONable {
 	}
 
 	public void setLoginIP(String loginIP) {
-		this.loginIP = loginIP;
+		this.lastLoginIP = loginIP;
 	}
 
 	public void setLoginRetry(int loginRetry) {
@@ -439,6 +599,14 @@ public class SysUser implements Serializable, User, JSONable {
 		this.telephone = telephone;
 	}
 
+	public void setUpdateBy(String updateBy) {
+		this.updateBy = updateBy;
+	}
+
+	public void setUpdateDate(Date updateDate) {
+		this.updateDate = updateDate;
+	}
+
 	public void setUserRoles(Set<SysUserRole> userRoles) {
 		this.userRoles = userRoles;
 	}
@@ -458,4 +626,5 @@ public class SysUser implements Serializable, User, JSONable {
 	public String toString() {
 		return toJsonObject().toJSONString();
 	}
+
 }

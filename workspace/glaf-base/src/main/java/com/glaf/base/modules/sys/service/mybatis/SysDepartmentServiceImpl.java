@@ -76,6 +76,7 @@ public class SysDepartmentServiceImpl implements SysDepartmentService {
 			sysTreeService.create(bean.getNode());
 			bean.setNodeId(bean.getNode().getId());
 		}
+		bean.setCreateTime(new Date());
 		sysDepartmentMapper.insertSysDepartment(bean);
 		return true;
 	}
@@ -420,6 +421,7 @@ public class SysDepartmentServiceImpl implements SysDepartmentService {
 			}
 			sysTreeService.update(bean.getNode());
 		}
+		bean.setUpdateDate(new Date());
 		sysDepartmentMapper.updateSysDepartment(bean);
 		return true;
 	}

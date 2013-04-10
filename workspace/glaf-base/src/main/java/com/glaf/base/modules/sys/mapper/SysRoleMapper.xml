@@ -4,36 +4,52 @@
 
 <mapper namespace="com.glaf.base.modules.sys.mapper.SysRoleMapper">
 
-	<resultMap id="sysRoleResultMap"	type="com.glaf.base.modules.sys.model.SysRole">
+	<resultMap id="sysRoleResultMap" type="com.glaf.base.modules.sys.model.SysRole">
 		<id property="id" column="ID" jdbcType="BIGINT" />
-		<result property="name" column="NAME" jdbcType="VARCHAR"/>
-		<result property="desc" column="ROLEDESC" jdbcType="VARCHAR"/>
-		<result property="code" column="CODE" jdbcType="VARCHAR"/>
-		<result property="sort" column="SORT" jdbcType="INTEGER"/>
+		<result property="name" column="NAME" jdbcType="VARCHAR" />
+		<result property="desc" column="ROLEDESC" jdbcType="VARCHAR" />
+		<result property="code" column="CODE" jdbcType="VARCHAR" />
+		<result property="sort" column="SORT" jdbcType="INTEGER" />
+		<result property="createDate" column="CREATEDATE" jdbcType="TIMESTAMP" />
+		<result property="createBy" column="CREATEBY" jdbcType="VARCHAR" />
+		<result property="updateBy" column="UPDATEBY" jdbcType="VARCHAR" />
+		<result property="updateDate" column="UPDATEDATE" jdbcType="TIMESTAMP" />
 	</resultMap>
 
- 
+
 	<insert id="insertSysRole" parameterType="com.glaf.base.modules.sys.model.SysRole">
-		insert into sys_role 
+		insert into sys_role
 		<trim prefix="(" suffix=")" suffixOverrides=",">
-		    ID
+			ID
 			<if test="name != null">
-				,NAME 
+				,NAME
 			</if>
 			<if test="desc != null">
-				,ROLEDESC 
+				,ROLEDESC
 			</if>
 			<if test="code != null">
-				,CODE 
+				,CODE
 			</if>
 			<if test="sort != null">
-				,SORT 
+				,SORT
+			</if>
+			<if test="createDate != null">
+				,CREATEDATE
+			</if>
+			<if test="createBy != null">
+				,CREATEBY
+			</if>
+			<if test="updateBy != null">
+				,UPDATEBY
+			</if>
+			<if test="updateDate != null">
+				,UPDATEDATE
 			</if>
 		</trim>
 
 		<trim prefix=" values (" suffix=")" suffixOverrides=",">
-			  #{id, jdbcType=BIGINT}
-	     
+			#{id, jdbcType=BIGINT}
+
 			<if test="name != null">
 				,#{name, jdbcType=VARCHAR}
 			</if>
@@ -46,14 +62,26 @@
 			<if test="sort != null">
 				,#{sort, jdbcType=INTEGER}
 			</if>
+			<if test="createDate != null">
+				,#{createDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="createBy != null">
+				,#{createBy, jdbcType=VARCHAR}
+			</if>
+			<if test="updateBy != null">
+				,#{updateBy, jdbcType=VARCHAR}
+			</if>
+			<if test="updateDate != null">
+				,#{updateDate, jdbcType=TIMESTAMP}
+			</if>
 		</trim>
 	</insert>
 
-	 
+
 	<update id="updateSysRole" parameterType="com.glaf.base.modules.sys.model.SysRole">
 		update sys_role
 		set
-		<trim prefix="" suffix="" suffixOverrides=",">		
+		<trim prefix="" suffix="" suffixOverrides=",">
 			<if test="name != null">
 				NAME = #{name, jdbcType=VARCHAR},
 			</if>
@@ -66,38 +94,45 @@
 			<if test="sort != null">
 				SORT = #{sort, jdbcType=INTEGER},
 			</if>
+			<if test="updateBy != null">
+				UPDATEBY = #{updateBy, jdbcType=VARCHAR},
+			</if>
+			<if test="updateDate != null">
+				UPDATEDATE = #{updateDate, jdbcType=TIMESTAMP},
+			</if>
 		</trim>
 		where
-          ID = #{id, jdbcType=BIGINT}
-		
+		ID = #{id, jdbcType=BIGINT}
+
 	</update>
 
- 
-	<delete id="deleteSysRoleById" parameterType="long"> 
-        delete from sys_role
-        where ID =	#{id}
+
+	<delete id="deleteSysRoleById" parameterType="long">
+		delete from sys_role
+		where ID = #{id}
 	</delete>
-	
-	
+
+
 	<delete id="deleteSysRoles" parameterType="com.glaf.base.modules.sys.query.SysRoleQuery">
 		delete from sys_role
-		where ( 
- 			  ID IN
-		<foreach item="x_rowId" index="index" collection="rowIds" 
+		where (
+		ID IN
+		<foreach item="x_rowId" index="index" collection="rowIds"
 			open="(" separator="," close=")">
-                  #{x_rowId}
+			#{x_rowId}
 		</foreach>
 		)
 	</delete>
-	
+
 
 	<select id="getSysRoleById" parameterType="long" resultMap="sysRoleResultMap">
 		select * from sys_role where ID = #{id}
 	</select>
-	
-	
-	<select id="getSysRolesOfDeptRole" parameterType="long" resultMap="sysRoleResultMap">
-		
+
+
+	<select id="getSysRolesOfDeptRole" parameterType="long"
+		resultMap="sysRoleResultMap">
+
 		select * from sys_role E
 		inner join sys_dept_role R
 		on E.ID = R.SYSROLEID
@@ -106,36 +141,34 @@
 	</select>
 
 
-	<select id="getSysRoles" 
-		parameterType="com.glaf.base.modules.sys.query.SysRoleQuery"
+	<select id="getSysRoles" parameterType="com.glaf.base.modules.sys.query.SysRoleQuery"
 		resultMap="sysRoleResultMap">
 		select E.*
 		<include refid="selectSysRolesSql" />
 		<choose>
 			<when test="orderBy != null">
-		     order by ${orderBy}
+				order by ${orderBy}
 			</when>
 			<otherwise>
-		      order by E.SORT asc
+				order by E.SORT asc
 			</otherwise>
 		</choose>
 	</select>
-	
 
-	<select id="getSysRoleCount" 
-		parameterType="com.glaf.base.modules.sys.query.SysRoleQuery"
+
+	<select id="getSysRoleCount" parameterType="com.glaf.base.modules.sys.query.SysRoleQuery"
 		resultType="int">
 		select count(*)
 		<include refid="selectSysRolesSql" />
 	</select>
-	
+
 
 	<sql id="selectSysRolesSql">
 
 		from sys_role E
-		 
+
 		<where>
-		       1 = 1  
+			1 = 1
 
 			<if test="name != null and name != '' ">
 				and E.NAME = #{name}
@@ -146,10 +179,10 @@
 			</if>
 
 			<if test="names != null and names.size() &gt; 0">
-			    and E.NAME IN
-				<foreach item="x_name" index="index" collection="names" 
+				and E.NAME IN
+				<foreach item="x_name" index="index" collection="names"
 					open="(" separator="," close=")">
-                  #{x_name}
+					#{x_name}
 				</foreach>
 			</if>
 
@@ -166,17 +199,17 @@
 			</if>
 
 			<if test="codes != null and codes.size() &gt; 0">
-			    and E.CODE IN
-				<foreach item="x_code" index="index" collection="codes" 
+				and E.CODE IN
+				<foreach item="x_code" index="index" collection="codes"
 					open="(" separator="," close=")">
-                  #{x_code}
+					#{x_code}
 				</foreach>
 			</if>
 
 			<if test="sortGreaterThanOrEqual != null">
 				and E.SORT &gt;= #{sortGreaterThanOrEqual}
 			</if>
-            
+
 			<if test="sortGreaterThan  != null">
 				and E.SORT &gt; #{sortGreaterThan}
 			</if>
@@ -184,11 +217,11 @@
 			<if test="sortLessThanOrEqual != null">
 				and E.SORT &lt;= #{sortLessThanOrEqual}
 			</if>
-            
+
 			<if test="sortLessThan != null">
 				and E.SORT &lt; #{sortLessThan}
 			</if>
-			 
+
 		</where>
 	</sql>
 

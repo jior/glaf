@@ -20,34 +20,96 @@ package com.glaf.base.modules.sys.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.*;
 import com.alibaba.fastjson.*;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.glaf.base.modules.sys.util.SysUserRoleJsonFactory;
 import com.glaf.core.base.JSONable;
 
+@Entity
+@Table(name = "sys_user_role")
 public class SysUserRole implements Serializable, JSONable {
 	private static final long serialVersionUID = 4335486314285694158L;
-	private Long id;
-	private Long userId;
-	private Long deptRoleId;
-	private Integer authorized;// 0-角色用户 1-代理用户
-	private Long authorizeFrom;
-	private String authorizeFromName;
-	private Date availDateStart;
-	private Date availDateEnd;
-	private String processDescription;
-	private SysUser user;
+
+	/**
+	 * 授权人
+	 */
+	@Column(name = "AUTHORIZED")
+	protected int authorized;// 0-角色用户 1-代理用户
+
+	/**
+	 * 委托人
+	 */
+	@Column(name = "AUTHORIZEFROM")
+	protected long authorizeFrom;
+
+	@javax.persistence.Transient
+	protected String authorizeFromName;
+
+	/**
+	 * 结束时间
+	 */
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "AVAILDATEEND")
+	protected Date availDateEnd;
+
+	/**
+	 * 开始时间
+	 */
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "AVAILDATESTART")
+	protected Date availDateStart;
+
+	/**
+	 * 创建人
+	 */
+	@Column(name = "CREATEBY")
+	protected String createBy;
+
+	/**
+	 * 创建日期
+	 */
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "CREATEDATE")
+	protected Date createDate;
+
+	@javax.persistence.Transient
 	private SysDeptRole deptRole;
+
+	/**
+	 * 部门角色编号
+	 */
+	@Column(name = "ROLEID")
+	protected long deptRoleId;
+
+	@Id
+	@Column(name = "ID", length = 50, nullable = false)
+	protected long id;
+
+	/**
+	 * 流程描述
+	 */
+	@Column(name = "PROCESSDESCRIPTION")
+	protected String processDescription;
+
+	@javax.persistence.Transient
+	private SysUser user;
+
+	/**
+	 * 用户名
+	 */
+	@Column(name = "USERID")
+	protected long userId;
 
 	public SysUserRole() {
 
 	}
 
-	public Integer getAuthorized() {
+	public int getAuthorized() {
 		return authorized;
 	}
 
-	public Long getAuthorizeFrom() {
+	public long getAuthorizeFrom() {
 		return authorizeFrom;
 	}
 
@@ -63,15 +125,23 @@ public class SysUserRole implements Serializable, JSONable {
 		return availDateStart;
 	}
 
+	public String getCreateBy() {
+		return createBy;
+	}
+
+	public Date getCreateDate() {
+		return createDate;
+	}
+
 	public SysDeptRole getDeptRole() {
 		return deptRole;
 	}
 
-	public Long getDeptRoleId() {
+	public long getDeptRoleId() {
 		return deptRoleId;
 	}
 
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 
@@ -83,7 +153,7 @@ public class SysUserRole implements Serializable, JSONable {
 		return user;
 	}
 
-	public Long getUserId() {
+	public long getUserId() {
 		return userId;
 	}
 
@@ -91,11 +161,11 @@ public class SysUserRole implements Serializable, JSONable {
 		return SysUserRoleJsonFactory.jsonToObject(jsonObject);
 	}
 
-	public void setAuthorized(Integer authorized) {
+	public void setAuthorized(int authorized) {
 		this.authorized = authorized;
 	}
 
-	public void setAuthorizeFrom(Long authorizeFrom) {
+	public void setAuthorizeFrom(long authorizeFrom) {
 		this.authorizeFrom = authorizeFrom;
 	}
 
@@ -111,15 +181,23 @@ public class SysUserRole implements Serializable, JSONable {
 		this.availDateStart = availDateStart;
 	}
 
+	public void setCreateBy(String createBy) {
+		this.createBy = createBy;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+
 	public void setDeptRole(SysDeptRole deptRole) {
 		this.deptRole = deptRole;
 	}
 
-	public void setDeptRoleId(Long deptRoleId) {
+	public void setDeptRoleId(long deptRoleId) {
 		this.deptRoleId = deptRoleId;
 	}
 
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -131,7 +209,7 @@ public class SysUserRole implements Serializable, JSONable {
 		this.user = user;
 	}
 
-	public void setUserId(Long userId) {
+	public void setUserId(long userId) {
 		this.userId = userId;
 	}
 

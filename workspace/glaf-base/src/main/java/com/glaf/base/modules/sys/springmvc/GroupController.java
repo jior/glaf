@@ -339,13 +339,13 @@ public class GroupController {
 			HttpServletResponse response) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		boolean ret = false;
-		SysUser user = RequestUtil.getLoginUser(request);
-		String actorId = user.getAccount();
+ 
 		String type = request.getParameter("type");
 		Group bean = new Group();
 		bean.setName(ParamUtil.getParameter(request, "name"));
 		bean.setDesc(ParamUtil.getParameter(request, "desc"));
-		bean.setCreateBy(actorId);
+		bean.setCreateBy(RequestUtils.getActorId(request));
+		bean.setUpdateBy(RequestUtils.getActorId(request));
 		bean.setType(type);
 		try {
 			groupService.save(bean);
@@ -409,6 +409,7 @@ public class GroupController {
 		if (bean != null) {
 			bean.setName(ParamUtil.getParameter(request, "name"));
 			bean.setDesc(ParamUtil.getParameter(request, "desc"));
+			bean.setUpdateBy(RequestUtils.getActorId(request));
 		}
 		boolean ret = false;
 		try {

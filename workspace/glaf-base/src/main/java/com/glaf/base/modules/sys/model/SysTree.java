@@ -20,9 +20,10 @@ package com.glaf.base.modules.sys.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
+import javax.persistence.*;
 import com.alibaba.fastjson.*;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
@@ -31,28 +32,127 @@ import com.glaf.base.modules.sys.util.SysTreeJsonFactory;
 import com.glaf.core.base.JSONable;
 import com.glaf.core.base.TreeModel;
 
+@Entity
+@Table(name = "sys_tree")
 public class SysTree implements Serializable, TreeModel, JSONable {
 	private static final long serialVersionUID = 2666681837822864771L;
+	@javax.persistence.Transient
 	protected SysApplication app;
+
+	@javax.persistence.Transient
 	protected String cacheFlag;
+
+	@javax.persistence.Transient
 	protected boolean checked;
+
+	@javax.persistence.Transient
 	protected List<TreeModel> children = new ArrayList<TreeModel>();
+
+	/**
+	 * 编码
+	 */
+	@Column(name = "CODE")
 	protected String code;
+
+	/**
+	 * 创建人
+	 */
+	@Column(name = "CREATEBY")
+	protected String createBy;
+
+	/**
+	 * 创建日期
+	 */
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "CREATEDATE")
+	protected Date createDate;
+
+	@javax.persistence.Transient
 	protected int deep;
+
+	@javax.persistence.Transient
 	protected SysDepartment department;
+
+	/**
+	 * 节点描述
+	 */
+	@Column(name = "NODEDESC")
 	protected String desc;
+
+	@Column(name = "DISCRIMINATOR")
 	protected String discriminator;
+
+	/**
+	 * 图标
+	 */
+	@Column(name = "icon")
 	protected String icon;
+
+	/**
+	 * 图标样式
+	 */
+	@Column(name = "iconCls")
 	protected String iconCls;
+
+	@Id
+	@Column(name = "ID", length = 50, nullable = false)
 	protected long id;
+
+	/**
+	 * 是否启用
+	 */
+	@Column(name = "locked")
 	protected int locked;
+
+	@Column(name = "MOVEABLE")
 	protected String moveable;
+
+	/**
+	 * 名称
+	 */
+	@Column(name = "NAME")
 	protected String name;
+
+	@javax.persistence.Transient
 	protected TreeModel parent;
+
+	/**
+	 * 父节点编号
+	 */
+	@Column(name = "PARENT")
 	protected long parentId;
+
+	/**
+	 * 序号
+	 */
+	@Column(name = "SORT")
 	protected int sort;
+
+	@Column(name = "TREEID")
 	protected String treeId;
+
+	/**
+	 * 修改人
+	 */
+	@Column(name = "UPDATEBY")
+	protected String updateBy;
+
+	/**
+	 * 修改日期
+	 */
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "UPDATEDATE")
+	protected Date updateDate;
+
+	/**
+	 * url
+	 */
+	@Column(name = "url")
 	protected String url;
+
+	public SysTree() {
+
+	}
 
 	public void addChild(TreeModel treeModel) {
 		if (children == null) {
@@ -108,6 +208,14 @@ public class SysTree implements Serializable, TreeModel, JSONable {
 
 	public String getCode() {
 		return code;
+	}
+
+	public String getCreateBy() {
+		return createBy;
+	}
+
+	public Date getCreateDate() {
+		return createDate;
 	}
 
 	public Map<String, Object> getDataMap() {
@@ -182,6 +290,14 @@ public class SysTree implements Serializable, TreeModel, JSONable {
 		return treeId;
 	}
 
+	public String getUpdateBy() {
+		return updateBy;
+	}
+
+	public Date getUpdateDate() {
+		return updateDate;
+	}
+
 	public String getUrl() {
 		return url;
 	}
@@ -227,6 +343,14 @@ public class SysTree implements Serializable, TreeModel, JSONable {
 
 	public void setCode(String code) {
 		this.code = code;
+	}
+
+	public void setCreateBy(String createBy) {
+		this.createBy = createBy;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
 	}
 
 	public void setDeep(int deep) {
@@ -296,6 +420,14 @@ public class SysTree implements Serializable, TreeModel, JSONable {
 
 	public void setTreeId(String treeId) {
 		this.treeId = treeId;
+	}
+
+	public void setUpdateBy(String updateBy) {
+		this.updateBy = updateBy;
+	}
+
+	public void setUpdateDate(Date updateDate) {
+		this.updateDate = updateDate;
 	}
 
 	public void setUrl(String url) {

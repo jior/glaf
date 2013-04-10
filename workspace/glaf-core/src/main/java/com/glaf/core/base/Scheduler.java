@@ -24,6 +24,8 @@ public interface Scheduler {
 
 	String getAttribute();
 
+	int getAutoStartup();
+
 	String getContent();
 
 	String getCreateBy();
@@ -35,6 +37,12 @@ public interface Scheduler {
 	String getExpression();
 
 	String getId();
+
+	String getIntervalTime();
+
+	String getIntervalType();
+
+	String getIntervalValue();
 
 	String getJobClass();
 
@@ -52,6 +60,8 @@ public interface Scheduler {
 
 	int getStartDelay();
 
+	int getStartup();
+
 	String getTaskId();
 
 	String getTaskName();
@@ -61,10 +71,6 @@ public interface Scheduler {
 	int getThreadSize();
 
 	String getTitle();
-
-	int getStartup();
-
-	int getAutoStartup();
 
 	boolean isSchedulerAutoStartup();
 
@@ -87,6 +93,12 @@ public interface Scheduler {
 	void setExpression(String expression);
 
 	void setId(String id);
+
+	void setIntervalTime(String intervalTime);
+
+	void setIntervalType(String intervalType);
+
+	void setIntervalValue(String intervalValue);
 
 	void setJobClass(String jobClass);
 

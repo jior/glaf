@@ -23,5 +23,9 @@
         <property name="createBy" column="CREATEBY" type="String" length="50" title="创建用户" englishTitle="createBy"/>
         <property name="createDate" column="CREATEDATE" type="Date" title="创建日期" englishTitle="createDate"/>
 		<property name="attribute" column="ATTRIBUTE_" type="String" length="500" title="扩展属性" englishTitle="attribute"/>
+		<property name="intervalType" column="intervalType" type="String" length="500" title="间隔类型" englishTitle="intervalType"/>
+		<property name="intervalValue" column="intervalValue" type="String" length="500" title="间隔值" englishTitle="intervalValue"/>
+		<property name="intervalTime" column="intervalTime" type="String" length="500" title="间隔时间" englishTitle="intervalTime"/>
+
     </entity>
 </mapping>

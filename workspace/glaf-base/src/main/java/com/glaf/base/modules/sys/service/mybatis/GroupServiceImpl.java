@@ -183,11 +183,14 @@ public class GroupServiceImpl implements GroupService {
 		if (StringUtils.isEmpty(group.getGroupId())) {
 			group.setGroupId(UUID32.getUUID());
 			group.setSort(0);
+			group.setCreateDate(new Date());
 			groupMapper.insertGroup(group);
 		} else {
 			if (groupMapper.getGroupById(group.getGroupId()) == null) {
+				group.setCreateDate(new Date());
 				groupMapper.insertGroup(group);
 			} else {
+				group.setUpdateDate(new Date());
 				groupMapper.updateGroup(group);
 			}
 		}
@@ -300,6 +303,7 @@ public class GroupServiceImpl implements GroupService {
 
 	@Transactional
 	public void update(Group group) {
+		group.setUpdateDate(new Date());
 		groupMapper.updateGroup(group);
 	}
 

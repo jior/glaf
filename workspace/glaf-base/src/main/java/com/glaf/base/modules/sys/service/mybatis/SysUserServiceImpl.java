@@ -36,13 +36,11 @@ import com.glaf.core.service.ITableDataService;
 import com.glaf.core.util.PageResult;
 import com.glaf.core.util.StringTools;
 import com.glaf.core.base.TableModel;
- 
 
 import com.glaf.base.modules.sys.mapper.*;
 import com.glaf.base.modules.sys.model.*;
 import com.glaf.base.modules.sys.query.*;
 import com.glaf.base.modules.sys.service.*;
- 
 
 @Service("sysUserService")
 @Transactional(readOnly = true)
@@ -85,6 +83,7 @@ public class SysUserServiceImpl implements SysUserService {
 
 	@Transactional
 	public boolean create(SysUser bean) {
+		bean.setCreateTime(new Date());
 		this.save(bean);
 		return true;
 	}
@@ -326,13 +325,14 @@ public class SysUserServiceImpl implements SysUserService {
 		}
 		return users;
 	}
-	
+
 	/**
 	 * 获取某个应用的权限用户
+	 * 
 	 * @param appId
 	 * @return
 	 */
-	public List<SysUser> getSysUsersByAppId(Long appId){
+	public List<SysUser> getSysUsersByAppId(Long appId) {
 		return sysUserMapper.getSysUsersByAppId(appId);
 	}
 
@@ -383,8 +383,7 @@ public class SysUserServiceImpl implements SysUserService {
 		List<SysUserRole> userRoles = sysUserRoleMapper.getSysUserRoles(query);
 		if (userRoles != null && !userRoles.isEmpty()) {
 			for (SysUserRole userRole : userRoles) {
-				if (userRole.getDeptRoleId() != null
-						&& userRole.getDeptRoleId() > 0) {
+				if (userRole.getDeptRoleId() > 0) {
 					SysDeptRole deptRole = sysDeptRoleMapper
 							.getSysDeptRoleById(userRole.getDeptRoleId());
 					deptRoles.add(deptRole);
@@ -439,9 +438,10 @@ public class SysUserServiceImpl implements SysUserService {
 	public void save(SysUser sysUser) {
 		if (sysUser.getId() == 0L) {
 			sysUser.setId(idGenerator.nextId());
-			// sysUser.setCreateDate(new Date());
+			sysUser.setCreateTime(new Date());
 			sysUserMapper.insertSysUser(sysUser);
 		} else {
+			sysUser.setUpdateDate(new Date());
 			sysUserMapper.updateSysUser(sysUser);
 		}
 	}
@@ -511,6 +511,7 @@ public class SysUserServiceImpl implements SysUserService {
 
 	@Transactional
 	public boolean update(SysUser bean) {
+		bean.setUpdateDate(new Date());
 		sysUserMapper.updateSysUser(bean);
 		return true;
 	}
@@ -539,6 +540,8 @@ public class SysUserServiceImpl implements SysUserService {
 				if (object instanceof SysUserRole) {
 					SysUserRole r = (SysUserRole) object;
 					r.setId(idGenerator.nextId());
+					r.setCreateDate(new Date());
+					r.setCreateBy(user.getUpdateBy());
 					sysUserRoleMapper.insertSysUserRole(r);
 				}
 				if (object instanceof SysDeptRole) {
@@ -547,6 +550,8 @@ public class SysUserServiceImpl implements SysUserService {
 					userRole.setId(idGenerator.nextId());
 					userRole.setUserId(user.getId());
 					userRole.setDeptRoleId(deptRole.getId());
+					userRole.setCreateDate(new Date());
+					userRole.setCreateBy(user.getUpdateBy());
 					sysUserRoleMapper.insertSysUserRole(userRole);
 				}
 			}

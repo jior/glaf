@@ -282,7 +282,7 @@ public class SysDeptRoleServiceImpl implements SysDeptRoleService {
 	public void save(SysDeptRole sysDeptRole) {
 		if (sysDeptRole.getId() == 0L) {
 			sysDeptRole.setId(idGenerator.nextId());
-			// sysDeptRole.setCreateDate(new Date());
+			sysDeptRole.setCreateDate(new Date());
 			sysDeptRoleMapper.insertSysDeptRole(sysDeptRole);
 		} else {
 			sysDeptRoleMapper.updateSysDeptRole(sysDeptRole);
@@ -494,6 +494,8 @@ public class SysDeptRoleServiceImpl implements SysDeptRoleService {
 				userRole.setUserId(user.getId());
 				userRole.setDeptRoleId(bean.getId());
 				userRole.setDeptRole(bean);
+				userRole.setCreateBy(bean.getCreateBy());
+				userRole.setCreateDate(new Date());
 				sysUserRoleMapper.insertSysUserRole(userRole);
 			}
 		}

@@ -46,7 +46,7 @@ public class UserImpl implements User {
 
 	protected Date createDate;
 
-	protected int deptId;
+	protected long deptId;
 
 	protected int domainIndex;
 
@@ -137,7 +137,7 @@ public class UserImpl implements User {
 		return createDate;
 	}
 
-	public int getDeptId() {
+	public long getDeptId() {
 		return deptId;
 	}
 
@@ -332,7 +332,7 @@ public class UserImpl implements User {
 		this.createDate = createDate;
 	}
 
-	public void setDeptId(int deptId) {
+	public void setDeptId(long deptId) {
 		this.deptId = deptId;
 	}
 

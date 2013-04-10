@@ -20,6 +20,7 @@ package com.glaf.base.modules.sys.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.*;
 import com.alibaba.fastjson.*;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.glaf.base.modules.sys.util.SerialNumberJsonFactory;
@@ -28,13 +29,38 @@ import com.glaf.core.base.JSONable;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
+@Entity
+@Table(name = "SerialNumber")
 public class SerialNumber implements Serializable, JSONable {
 	private static final long serialVersionUID = 7285967860734876783L;
-	private long id;
-	private String moduleNo;
-	private Date lastDate;
-	private int intervelNo;
-	private int currentSerail;
+	@Id
+	@Column(name = "ID", nullable = false)
+	protected long id;
+
+	/**
+	 * 模块编号
+	 */
+	@Column(name = "moduleNo")
+	protected String moduleNo;
+
+	/**
+	 * 日期
+	 */
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "lastDate")
+	protected Date lastDate;
+
+	/**
+	 * 间隔
+	 */
+	@Column(name = "intervelNo")
+	protected int intervelNo;
+
+	/**
+	 * 当前序号
+	 */
+	@Column(name = "currentSerail")
+	protected int currentSerail;
 
 	public int getCurrentSerail() {
 		return currentSerail;

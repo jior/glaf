@@ -66,7 +66,8 @@ public class SysRoleServiceImpl implements SysRoleService {
 		if (bean.getId() == 0L) {
 			bean.setId(idGenerator.nextId());
 		}
-		bean.setSort((int) bean.getId());
+		bean.setCreateDate(new Date());
+		bean.setSort( (int) bean.getId() );
 		sysRoleMapper.insertSysRole(bean);
 		return true;
 	}
@@ -205,9 +206,10 @@ public class SysRoleServiceImpl implements SysRoleService {
 	public void save(SysRole sysRole) {
 		if (sysRole.getId() == 0L) {
 			sysRole.setId(idGenerator.nextId());
-			// sysRole.setCreateDate(new Date());
+			sysRole.setCreateDate(new Date());
 			sysRoleMapper.insertSysRole(sysRole);
 		} else {
+			sysRole.setUpdateDate(new Date());
 			sysRoleMapper.updateSysRole(sysRole);
 		}
 	}
@@ -297,6 +299,7 @@ public class SysRoleServiceImpl implements SysRoleService {
 
 	@Transactional
 	public boolean update(SysRole bean) {
+		bean.setUpdateDate(new Date());
 		sysRoleMapper.updateSysRole(bean);
 		return true;
 	}

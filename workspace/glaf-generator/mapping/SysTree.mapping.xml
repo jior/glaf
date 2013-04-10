@@ -11,5 +11,13 @@
 		<property name="iconCls" type="String" column="iconCls"  englishTitle="iconCls" length="255" title="图标样式"/>
 		<property name="url" type="String" column="url"  englishTitle="url" length="255" title="url"/>
 		<property name="locked" type="Integer" column="locked"  englishTitle="locked" title="是否启用"/>
+		<property name="createDate" column="CREATEDATE" title="创建日期"
+			englishTitle="Create Date" type="Date" displayType="4" nullable="false"/>
+		<property name="createBy" column="CREATEBY" title="创建人" 
+		    englishTitle="Create By"	type="String" displayType="4" length="50" />
+		<property name="updateBy"  column="UPDATEBY" title="修改人" 
+		    englishTitle="Update By"	type="String" displayType="4" length="50" />
+		<property name="updateDate" column="UPDATEDATE" title="修改日期"
+			englishTitle="Update Date" type="Date" displayType="4" nullable="false"/>
     </entity>
 </mapping>
