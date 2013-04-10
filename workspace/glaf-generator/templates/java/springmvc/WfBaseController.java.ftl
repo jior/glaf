@@ -33,7 +33,7 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 
 	}
 
-	@RequestMapping("/startProcess")
+	@RequestMapping(params = "method=startProcess")
 	public ModelAndView startProcess(HttpServletRequest request,
 			ModelMap modelMap) {
 		User user = RequestUtils.getUser(request);
@@ -64,7 +64,7 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 		return this.list(request, modelMap);
 	}
 
-	@RequestMapping("/completeTask")
+	@RequestMapping(params = "method=completeTask")
 	public ModelAndView completeTask(HttpServletRequest request,
 			ModelMap modelMap) {
 		User user = RequestUtils.getUser(request);
@@ -123,7 +123,7 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 		return this.list(request, modelMap);
 	}
 
-	@RequestMapping("/edit")
+	@RequestMapping(params = "method=edit")
 	public ModelAndView edit(HttpServletRequest request, ModelMap modelMap) {
 		User user = RequestUtils.getUser(request);
 		String actorId = user.getActorId();
@@ -194,7 +194,7 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 		return new ModelAndView("/apps/${modelName}/edit", modelMap);
 	}
 
-	@RequestMapping("/view")
+	@RequestMapping(params = "method=view")
 	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
@@ -230,7 +230,7 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 		return new ModelAndView("/apps/${modelName}/view");
 	}
 
-	@RequestMapping("/json")
+	@RequestMapping(params = "method=json")
 	@ResponseBody
 	public byte[] json(HttpServletRequest request, ModelMap modelMap)
 			throws IOException {

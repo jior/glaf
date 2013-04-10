@@ -34,7 +34,7 @@ public class TripBaseController {
 	}
 
 
-	@RequestMapping("/save")
+	@RequestMapping(params = "method=save")
 	public ModelAndView save(HttpServletRequest request, ModelMap modelMap, Trip trip) {
 		User user = RequestUtils.getUser(request);
 		String actorId =  user.getActorId();
@@ -50,12 +50,15 @@ public class TripBaseController {
 	}
 
         @ResponseBody
-	@RequestMapping("/saveTrip")
+	@RequestMapping(params = "method=saveTrip")
 	public byte[] saveTrip(HttpServletRequest request ) { 
+	        User user = RequestUtils.getUser(request);
+		String actorId =  user.getActorId();
 	        Map<String, Object> params = RequestUtils.getParameterMap(request);
 		Trip trip = new Trip();
 		try {
 		    Tools.populate(trip, params);
+		    trip.setCreateBy(actorId);
 		    this.tripService.save(trip);
 
 		    return ResponseUtils.responseJsonResult(true);
@@ -65,7 +68,7 @@ public class TripBaseController {
 		return ResponseUtils.responseJsonResult(false);
 	}
 
-        @RequestMapping("/update")
+        @RequestMapping(params = "method=update")
 	public ModelAndView update(HttpServletRequest request, ModelMap modelMap, Trip trip) {
 		User user = RequestUtils.getUser(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
@@ -76,9 +79,10 @@ public class TripBaseController {
 		return this.list(request, modelMap);
 	}
 
-        @RequestMapping("/delete")
-	public ModelAndView delete(HttpServletRequest request, ModelMap modelMap) {
-		User user = RequestUtils.getUser(request);
+        @ResponseBody
+        @RequestMapping(params = "method=delete")
+	public void delete(HttpServletRequest request, ModelMap modelMap) {
+		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		String rowId = ParamUtils.getString(params, "rowId");
 		String rowIds = request.getParameter("rowIds");
@@ -88,7 +92,11 @@ public class TripBaseController {
 				String x = token.nextToken();
 				if (StringUtils.isNotEmpty(x)) {
 					Trip trip = tripService.getTrip(x);
-					if (trip != null && StringUtils.equals(trip.getCreateBy(), user.getActorId())) {
+					/**
+		                         * 此处业务逻辑需自行调整
+		                         */
+					 //TODO
+					if (trip != null && (StringUtils.equals(trip.getCreateBy(), loginContext.getActorId()) || loginContext.isSystemAdministrator())) {
 						trip.setDeleteFlag(1);
 						tripService.save(trip);
 					}
@@ -97,18 +105,19 @@ public class TripBaseController {
 		} else if (StringUtils.isNotEmpty(rowId)) {
 			Trip trip = tripService
 					.getTrip(rowId);
-			if (trip != null && StringUtils.equals(trip.getCreateBy(), user.getActorId())) {
+			/**
+		         * 此处业务逻辑需自行调整
+		         */
+		        //TODO
+			if (trip != null && ( StringUtils.equals(trip.getCreateBy(), loginContext.getActorId()) || loginContext.isSystemAdministrator())) {
 				trip.setDeleteFlag(1);
 				tripService.save(trip);
 			}
 		}
-
-		return this.list(request, modelMap);
 	}
-
     
 
-        @RequestMapping("/edit")
+        @RequestMapping(params = "method=edit")
 	public ModelAndView edit(HttpServletRequest request, ModelMap modelMap) {
 		User user = RequestUtils.getUser(request);
 		String actorId =  user.getActorId();
@@ -155,7 +164,7 @@ public class TripBaseController {
 		return new ModelAndView("/apps/trip/edit", modelMap);
 	}
 
-        @RequestMapping("/view")
+        @RequestMapping(params = "method=view")
 	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
@@ -181,7 +190,7 @@ public class TripBaseController {
 		return new ModelAndView("/apps/trip/view");
 	}
 
-        @RequestMapping("/query")
+        @RequestMapping(params = "method=query")
 	public ModelAndView query(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		String view = request.getParameter("view");
@@ -195,12 +204,21 @@ public class TripBaseController {
 		return new ModelAndView("/apps/trip/query", modelMap);
 	}
 
-	@RequestMapping("/json")
+	@RequestMapping(params = "method=json")
 	@ResponseBody
 	public byte[] json(HttpServletRequest request, ModelMap modelMap) throws IOException {
+	        LoginContext loginContext = RequestUtils.getLoginContext(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		TripQuery query = new TripQuery();
 		Tools.populate(query, params);
+		query.deleteFlag(0);
+		/**
+		 * 此处业务逻辑需自行调整
+		*/
+		if(!loginContext.isSystemAdministrator()){
+		  String actorId = loginContext.getActorId();
+		  query.createBy(actorId);
+		}
 
                 String gridType = ParamUtils.getString(params, "gridType");
 		if (gridType == null) {

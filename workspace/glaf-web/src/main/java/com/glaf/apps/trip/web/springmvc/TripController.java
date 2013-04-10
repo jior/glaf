@@ -7,8 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
  
 
-@Controller
-@RequestMapping("/apps/trip")
+@Controller("/apps/trip")
+@RequestMapping("/apps/trip.do")
 public class TripController extends TripBaseController {
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
 

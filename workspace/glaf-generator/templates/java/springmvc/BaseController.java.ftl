@@ -34,7 +34,7 @@ public class ${entityName}BaseController {
 	}
 
 
-	@RequestMapping("/save")
+	@RequestMapping(params = "method=save")
 	public ModelAndView save(HttpServletRequest request, ModelMap modelMap, ${entityName} ${modelName}) {
 		User user = RequestUtils.getUser(request);
 		String actorId =  user.getActorId();
@@ -50,12 +50,15 @@ public class ${entityName}BaseController {
 	}
 
         @ResponseBody
-	@RequestMapping("/save${entityName}")
+	@RequestMapping(params = "method=save${entityName}")
 	public byte[] save${entityName}(HttpServletRequest request ) { 
+	        User user = RequestUtils.getUser(request);
+		String actorId =  user.getActorId();
 	        Map<String, Object> params = RequestUtils.getParameterMap(request);
 		${entityName} ${modelName} = new ${entityName}();
 		try {
 		    Tools.populate(${modelName}, params);
+		    ${modelName}.setCreateBy(actorId);
 		    this.${modelName}Service.save(${modelName});
 
 		    return ResponseUtils.responseJsonResult(true);
@@ -65,7 +68,7 @@ public class ${entityName}BaseController {
 		return ResponseUtils.responseJsonResult(false);
 	}
 
-        @RequestMapping("/update")
+        @RequestMapping(params = "method=update")
 	public ModelAndView update(HttpServletRequest request, ModelMap modelMap, ${entityName} ${modelName}) {
 		User user = RequestUtils.getUser(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
@@ -76,9 +79,10 @@ public class ${entityName}BaseController {
 		return this.list(request, modelMap);
 	}
 
-        @RequestMapping("/delete")
-	public ModelAndView delete(HttpServletRequest request, ModelMap modelMap) {
-		User user = RequestUtils.getUser(request);
+        @ResponseBody
+        @RequestMapping(params = "method=delete")
+	public void delete(HttpServletRequest request, ModelMap modelMap) {
+		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		String rowId = ParamUtils.getString(params, "rowId");
 		String rowIds = request.getParameter("rowIds");
@@ -88,7 +92,11 @@ public class ${entityName}BaseController {
 				String x = token.nextToken();
 				if (StringUtils.isNotEmpty(x)) {
 					${entityName} ${modelName} = ${modelName}Service.get${entityName}(x);
-					if (${modelName} != null && StringUtils.equals(${modelName}.getCreateBy(), user.getActorId())) {
+					/**
+		                         * 此处业务逻辑需自行调整
+		                         */
+					 //TODO
+					if (${modelName} != null && (StringUtils.equals(${modelName}.getCreateBy(), loginContext.getActorId()) || loginContext.isSystemAdministrator())) {
 						${modelName}.setDeleteFlag(1);
 						${modelName}Service.save(${modelName});
 					}
@@ -97,18 +105,19 @@ public class ${entityName}BaseController {
 		} else if (StringUtils.isNotEmpty(rowId)) {
 			${entityName} ${modelName} = ${modelName}Service
 					.get${entityName}(rowId);
-			if (${modelName} != null && StringUtils.equals(${modelName}.getCreateBy(), user.getActorId())) {
+			/**
+		         * 此处业务逻辑需自行调整
+		         */
+		        //TODO
+			if (${modelName} != null && ( StringUtils.equals(${modelName}.getCreateBy(), loginContext.getActorId()) || loginContext.isSystemAdministrator())) {
 				${modelName}.setDeleteFlag(1);
 				${modelName}Service.save(${modelName});
 			}
 		}
-
-		return this.list(request, modelMap);
 	}
-
     
 
-        @RequestMapping("/edit")
+        @RequestMapping(params = "method=edit")
 	public ModelAndView edit(HttpServletRequest request, ModelMap modelMap) {
 		User user = RequestUtils.getUser(request);
 		String actorId =  user.getActorId();
@@ -155,7 +164,7 @@ public class ${entityName}BaseController {
 		return new ModelAndView("/apps/${modelName}/edit", modelMap);
 	}
 
-        @RequestMapping("/view")
+        @RequestMapping(params = "method=view")
 	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
@@ -181,7 +190,7 @@ public class ${entityName}BaseController {
 		return new ModelAndView("/apps/${modelName}/view");
 	}
 
-        @RequestMapping("/query")
+        @RequestMapping(params = "method=query")
 	public ModelAndView query(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		String view = request.getParameter("view");
@@ -195,12 +204,21 @@ public class ${entityName}BaseController {
 		return new ModelAndView("/apps/${modelName}/query", modelMap);
 	}
 
-	@RequestMapping("/json")
+	@RequestMapping(params = "method=json")
 	@ResponseBody
 	public byte[] json(HttpServletRequest request, ModelMap modelMap) throws IOException {
+	        LoginContext loginContext = RequestUtils.getLoginContext(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		${entityName}Query query = new ${entityName}Query();
 		Tools.populate(query, params);
+		query.deleteFlag(0);
+		/**
+		 * 此处业务逻辑需自行调整
+		*/
+		if(!loginContext.isSystemAdministrator()){
+		  String actorId = loginContext.getActorId();
+		  query.createBy(actorId);
+		}
 
                 String gridType = ParamUtils.getString(params, "gridType");
 		if (gridType == null) {

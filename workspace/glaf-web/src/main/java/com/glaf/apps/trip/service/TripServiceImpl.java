@@ -86,6 +86,7 @@ public class TripServiceImpl implements TripService {
 		if (StringUtils.isEmpty(trip.getId())) {
 			trip.setId(idGenerator.getNextId("X_APP_TRIP"));
 			// trip.setCreateDate(new Date());
+			trip.setDeleteFlag(0);
 			tripMapper.insertTrip(trip);
 		} else {
 			tripMapper.updateTrip(trip);

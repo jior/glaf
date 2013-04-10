@@ -11,7 +11,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>出差申请</title>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/easyui/themes/${theme}/easyui.css">
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/easyui/themes/icon.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/icons/styles.css">
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.form.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/jquery.easyui.min.js"></script>
@@ -27,7 +27,7 @@
 				nowrap: false,
 				striped: true,
 				collapsible:true,
-				url:'<%=request.getContextPath()%>/mx/apps/trip/json',
+				url:'<%=request.getContextPath()%>/apps/trip.do?method=json',
 				sortName: 'id',
 				sortOrder: 'desc',
 				remoteSort: false,
@@ -67,11 +67,11 @@
 
 		 
 	function addNew(){
-		location.href="<%=request.getContextPath()%>/mx/apps/trip/edit";
+		location.href="<%=request.getContextPath()%>/apps/trip.do?method=edit";
 	}
 
 	function onRowClick(rowIndex, row){
-            window.open('<%=request.getContextPath()%>/mx/apps/trip/edit?rowId='+row.id);
+            window.open('<%=request.getContextPath()%>/apps/trip.do?method=edit&rowId='+row.id);
 	}
 
 	function searchWin(){
@@ -94,7 +94,7 @@
 		}
 		var selected = jQuery('#mydatagrid').datagrid('getSelected');
 		if (selected ){
-			location.href="<%=request.getContextPath()%>/mx/apps/trip/edit?rowId="+selected.id;
+			location.href="<%=request.getContextPath()%>/apps/trip.do?method=edit&rowId="+selected.id;
 		}
 	}
 
@@ -106,7 +106,7 @@
 		}
 		var selected = jQuery('#mydatagrid').datagrid('getSelected');
 		if (selected ){
-		    location.href="<%=request.getContextPath()%>/mx/apps/trip/edit?readonly=true&rowId="+selected.id;
+		    location.href="<%=request.getContextPath()%>/apps/trip.do?method=edit&readonly=true&rowId="+selected.id;
 		}
 	}
 
@@ -120,13 +120,13 @@
 		    var rowIds = ids.join(',');
 			jQuery.ajax({
 				   type: "POST",
-				   url: '<%=request.getContextPath()%>/mx/apps/trip/delete?rowIds='+rowIds,
+				   url: '<%=request.getContextPath()%>/apps/trip.do?method=delete&rowIds='+rowIds,
 				   dataType:  'json',
 				   error: function(data){
 					   alert('服务器处理错误！');
 				   },
 				   success: function(data){
-					   if(data.message != null){
+					   if(data != null && data.message != null){
 						   alert(data.message);
 					   } else {
 						 alert('操作成功完成！');

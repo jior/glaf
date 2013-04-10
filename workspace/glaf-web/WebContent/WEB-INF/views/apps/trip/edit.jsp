@@ -12,7 +12,7 @@
 <title>出差申请</title>
 <link href="<%=request.getContextPath()%>/css/site.css" type="text/css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/easyui/themes/${theme}/easyui.css">
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/easyui/themes/icon.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/icons/styles.css">
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.form.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/jquery.easyui.min.js"></script>
@@ -23,7 +23,7 @@
 		var params = jQuery("#iForm").formSerialize();
 		jQuery.ajax({
 				   type: "POST",
-				   url: '<%=request.getContextPath()%>/mx/apps/trip/saveTrip',
+				   url: '<%=request.getContextPath()%>/apps/trip.do?method=saveTrip',
 				   data: params,
 				   dataType:  'json',
 				   error: function(data){
@@ -45,7 +45,7 @@
 		var params = jQuery("#iForm").formSerialize();
 		jQuery.ajax({
 				   type: "POST",
-				   url: '<%=request.getContextPath()%>/mx/apps/trip/saveTrip',
+				   url: '<%=request.getContextPath()%>/apps/trip.do?method=saveTrip',
 				   data: params,
 				   dataType:  'json',
 				   error: function(data){
@@ -70,7 +70,7 @@
 <div class="easyui-layout" data-options="fit:true">  
   <div data-options="region:'north',split:true,border:true" style="height:40px"> 
     <div style="background:#fafafa;padding:2px;border:1px solid #ddd;font-size:12px"> 
-	编辑出差申请
+	<span class="x_content_title">编辑出差申请</span>
 	<!-- <input type="button" name="save" value=" 保存 " class="button btn btn-primary" onclick="javascript:saveData();">
 	<input type="button" name="saveAs" value=" 另存 " class="button btn" onclick="javascript:saveAsData();">
 	<input type="button" name="back" value=" 返回 " class="button btn" onclick="javascript:history.back();"> -->

@@ -23,14 +23,14 @@
 		var params = jQuery("#iForm").formSerialize();
 		jQuery.ajax({
 				   type: "POST",
-				   url: '<%=request.getContextPath()%>/mx/apps/${modelName}/save${entityName}',
+				   url: '<%=request.getContextPath()%>/apps/${modelName}.do?method=save${entityName}',
 				   data: params,
 				   dataType:  'json',
 				   error: function(data){
 					   alert('服务器处理错误！');
 				   },
 				   success: function(data){
-					   if(data.message != null){
+					   if(data != null && data.message != null){
 						   alert(data.message);
 					   } else {
 						 alert('操作成功完成！');
@@ -45,14 +45,14 @@
 		var params = jQuery("#iForm").formSerialize();
 		jQuery.ajax({
 				   type: "POST",
-				   url: '<%=request.getContextPath()%>/mx/apps/${modelName}/save${entityName}',
+				   url: '<%=request.getContextPath()%>/apps/${modelName}.do?method=save${entityName}',
 				   data: params,
 				   dataType:  'json',
 				   error: function(data){
 					   alert('服务器处理错误！');
 				   },
 				   success: function(data){
-					   if(data.message != null){
+					   if(data != null && data.message != null){
 						   alert(data.message);
 					   } else {
 						 alert('操作成功完成！');

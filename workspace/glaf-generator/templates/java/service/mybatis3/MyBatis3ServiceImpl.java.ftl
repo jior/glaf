@@ -97,6 +97,7 @@ public class ${entityName}ServiceImpl implements ${entityName}Service {
 	</#if>
 			${modelName}.set${idField.firstUpperName}(idGenerator.getNextId("${tableName}"));
 			//${modelName}.setCreateDate(new Date());
+			${modelName}.setDeleteFlag(0);
 			${modelName}Mapper.insert${entityName}(${modelName});
 		} else {
 			${modelName}Mapper.update${entityName}(${modelName});
