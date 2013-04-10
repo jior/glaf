@@ -94,9 +94,6 @@
 	<classpathentry kind="lib" path="/glaf-core/lib/netty.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/ognl-2.7.3.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/oscache-2.4.1.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/poi-3.8-20120326.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/poi-ooxml-3.8-20120326.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/poi-ooxml-schemas-3.8-20120326.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/postgresql-9.1-902.jdbc4.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/primefaces-all-themes.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/primefaces.jar"/>
@@ -130,5 +127,8 @@
 	<classpathentry kind="lib" path="/glaf-core/lib/xml-apis-1.3.04.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/xml-apis-ext-1.3.04.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/xmlgraphics-commons-1.2.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/poi-3.9-20121203.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/poi-ooxml-3.9-20121203.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/poi-ooxml-schemas-3.9-20121203.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

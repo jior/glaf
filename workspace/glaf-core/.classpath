@@ -73,9 +73,6 @@
 	<classpathentry kind="lib" path="lib/mysql-connector-java-5.1.22-bin.jar"/>
 	<classpathentry kind="lib" path="lib/ognl-2.7.3.jar"/>
 	<classpathentry kind="lib" path="lib/oscache-2.4.1.jar"/>
-	<classpathentry kind="lib" path="lib/poi-3.8-20120326.jar"/>
-	<classpathentry kind="lib" path="lib/poi-ooxml-3.8-20120326.jar"/>
-	<classpathentry kind="lib" path="lib/poi-ooxml-schemas-3.8-20120326.jar"/>
 	<classpathentry kind="lib" path="lib/postgresql-9.1-902.jdbc4.jar"/>
 	<classpathentry kind="lib" path="lib/quartz-all-2.1.6.jar"/>
 	<classpathentry kind="lib" path="lib/servlet-api.jar"/>
@@ -122,5 +119,9 @@
 	<classpathentry kind="lib" path="lib/shiro-all.jar"/>
 	<classpathentry kind="lib" path="lib/hamcrest-core.jar"/>
 	<classpathentry kind="lib" path="lib/hibernate-validator-4.2.0.Final.jar"/>
+	<classpathentry kind="lib" path="lib/commons-compress.jar"/>
+	<classpathentry kind="lib" path="lib/poi-3.9-20121203.jar"/>
+	<classpathentry kind="lib" path="lib/poi-ooxml-3.9-20121203.jar"/>
+	<classpathentry kind="lib" path="lib/poi-ooxml-schemas-3.9-20121203.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
