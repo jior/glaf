@@ -1,9 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ page import="com.glaf.core.security.*"%>
 <%
     String context = request.getContextPath();
 	String isSystem = request.getParameter("isSystem"); 
+	LoginContext loginContext = RequestUtils.getLoginContext(request);
 %>
 <!DOCTYPE html>
 <html>

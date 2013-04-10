@@ -54,7 +54,7 @@
                   jsonObject.put("href", request.getContextPath()+"/mx/panel/content?pid="+p.getPanel().getId());
 			 } else {
                  if(p.getPanel().getLink() != null){
-					if(p.getPanel().getLink().startsWith("/mx/")){
+					if(p.getPanel().getLink().startsWith("/mx/") || p.getPanel().getLink().indexOf(".do?")!=-1){
 			           jsonObject.put("href", request.getContextPath()+p.getPanel().getLink());
 					} else {
 					   jsonObject.put("href", p.getPanel().getLink());

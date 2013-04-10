@@ -19,6 +19,7 @@
 package com.glaf.base.modules.workspace.springmvc;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -59,181 +60,6 @@ public class MessageController {
 
 	@javax.annotation.Resource
 	private SysUserService sysUserService;
-
-	public void setSysUserService(SysUserService sysUserService) {
-		this.sysUserService = sysUserService;
-		logger.info("setsysUserService");
-	}
-
-	public void setMessageService(MessageService messageService) {
-		this.messageService = messageService;
-		logger.info("setMessageService");
-	}
-
-	/**
-	 * 显示收件箱列表
-	 * 
-	 * @param mapping
-	 * @param actionForm
-	 * @param request
-	 * @param response
-	 * @return
-	 */
-	@RequestMapping(params = "method=showReceiveList")
-	public ModelAndView showReceiveList(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtils.setRequestParameterToAttribute(request);
-		String flag = ParamUtil.getParameter(request, "flag", null);
-
-		SysUser user = RequestUtil.getLoginUser(request);
-		long userId = user == null ? 0L : user.getId();
-
-		int pageNo = ParamUtil.getIntParameter(request, "page_no", 1);
-		int pageSize = ParamUtil.getIntParameter(request, "page_size",
-				Constants.PAGE_SIZE);
-
-		PageResult pager = messageService.getReceiveList(userId,
-				WebUtil.getQueryMap(request), pageNo, pageSize);
-		request.setAttribute("pager", pager);
-		request.setAttribute("flag", flag);
-
-		// 显示列表页面
-		return new ModelAndView("/modules/workspace/message/message_list",
-				modelMap);
-	}
-
-	/**
-	 * 显示发件箱列表
-	 * 
-	 * @param mapping
-	 * @param actionForm
-	 * @param request
-	 * @param response
-	 * @return
-	 */
-	@RequestMapping(params = "method=showSendedList")
-	public ModelAndView showSendedList(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtils.setRequestParameterToAttribute(request);
-		String flag = ParamUtil.getParameter(request, "flag", null);
-
-		SysUser user = RequestUtil.getLoginUser(request);
-		long userId = user == null ? 0L : user.getId();
-
-		int pageNo = ParamUtil.getIntParameter(request, "page_no", 1);
-		int pageSize = ParamUtil.getIntParameter(request, "page_size",
-				Constants.PAGE_SIZE);
-
-		PageResult pager = messageService.getSendedList(userId,
-				WebUtil.getQueryMap(request), pageNo, pageSize);
-		request.setAttribute("pager", pager);
-		request.setAttribute("flag", flag);
-
-		// 显示列表页面
-		return new ModelAndView(
-				"/modules/workspace/message/message_sended_list", modelMap);
-	}
-
-	/**
-	 * 显示发送消息页面
-	 * 
-	 * @param mapping
-	 * @param actionForm
-	 * @param request
-	 * @param response
-	 * @return
-	 */
-	@RequestMapping(params = "method=prepareSend")
-	public ModelAndView prepareSend(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtils.setRequestParameterToAttribute(request);
-		long id = ParamUtil.getLongParameter(request, "id", 0);
-		Message bean = messageService.find(id);
-		request.setAttribute("bean", bean);
-
-		return new ModelAndView("/modules/workspace/message/message_send",
-				modelMap);
-	}
-
-	/**
-	 * 保存消息
-	 * 
-	 * @param mapping
-	 * @param actionForm
-	 * @param request
-	 * @param response
-	 * @return
-	 */
-	@RequestMapping(params = "method=saveSend")
-	public ModelAndView saveSend(ModelMap modelMap, MessageFormBean form,
-			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtils.setRequestParameterToAttribute(request);
-		SysUser user = RequestUtil.getLoginUser(request);
-		int sysType = ParamUtil.getIntParameter(request, "sysType", 1);// 0：为系统警告
-																		// 1：为系统消息
-		String recverIds = ParamUtil.getParameter(request, "recverIds");
-		// 用户或部门
-		int recverType = ParamUtil.getIntParameter(request, "recverType", 0);
-
-		MessageFormBean formBean = new MessageFormBean();
-		WebUtil.copyProperties(formBean, form);
-
-		Message bean = new Message();
-		bean.setSysType(sysType);
-		bean.setTitle(formBean.getTitle());
-		bean.setContent(formBean.getContent());
-		bean.setSender(user);
-		bean.setSenderId(user.getId());
-		bean.setCategory(0);// 收件箱
-		bean.setReaded(0);
-		bean.setCreateDate(new Date());
-
-		int type = 1;// 用户消息
-		if (bean.getSender().getId() == 0) {
-			type = 0;// 系统消息
-		}
-		bean.setType(type);
-
-		boolean ret = false;
-		// if (isTokenValid(request)) {// 防止表单重复提交
-		if (recverType == 0) {
-			ret = messageService.saveSendMessage(bean, recverIds.split(","));
-		}
-		if (recverType == 1) {
-			ret = messageService.saveSendMessageToDept(bean,
-					recverIds.split(","));
-		}
-		if (recverType == 2) {
-			List<SysUser> userList = sysUserService.getSupplierUser(recverIds);
-			if (userList != null) {
-				Iterator<SysUser> iter = userList.iterator();
-				StringBuffer sb = new StringBuffer();
-				while (iter.hasNext()) {
-					SysUser user_sp = (SysUser) iter.next();
-					if (user_sp.getAccountType() == 1) {
-						sb.append(user_sp.getId() + ",");
-					}
-					String userIds = sb.toString();
-					ret = messageService.saveSendMessage(bean,
-							userIds.split(","));
-				}
-			}
-		}
-		// }
-		// saveToken(request);
-
-		ViewMessages messages = new ViewMessages();
-		if (ret) {// 保存成功
-			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
-					"message.send_success"));
-		} else {// 保存失败
-			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
-					"message.send_failure"));
-		}
-		MessageUtils.addMessages(request, messages);
-		// 显示提交后页面
-		return new ModelAndView("show_msg", modelMap);
-	}
 
 	/**
 	 * 批量删除消息
@@ -283,7 +109,7 @@ public class MessageController {
 	}
 
 	/**
-	 * 显示消息信息
+	 * 显示收件箱列表
 	 * 
 	 * @param mapping
 	 * @param actionForm
@@ -291,22 +117,25 @@ public class MessageController {
 	 * @param response
 	 * @return
 	 */
-	@RequestMapping(params = "method=showMessage")
-	public ModelAndView showMessage(ModelMap modelMap,
+	@RequestMapping(params = "method=indexList")
+	public ModelAndView indexList(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtils.setRequestParameterToAttribute(request);
-		long id = ParamUtil.getLongParameter(request, "id", 0);
+		SysUser user = com.glaf.base.utils.RequestUtil.getLoginUser(request);
 
-		Message bean = messageService.updateReadMessage(id);
-		request.setAttribute("bean", bean);
+		int msgPageSize = 5;
+		com.glaf.core.util.PageResult messagePager = messageService
+				.getNoReadList(user.getId(), new HashMap<String, Object>(), 1,
+						msgPageSize);
+		List<?> messageList = messagePager.getResults();
+		request.setAttribute("messageList", messageList);
 
-		// 显示消息页面
-		return new ModelAndView("/modules/workspace/message/message_detail",
+		// 显示列表页面
+		return new ModelAndView("/modules/workspace/message/indexList",
 				modelMap);
 	}
 
 	/**
-	 * 发送email
+	 * 显示发送消息页面
 	 * 
 	 * @param mapping
 	 * @param actionForm
@@ -314,78 +143,16 @@ public class MessageController {
 	 * @param response
 	 * @return
 	 */
-
-	@RequestMapping(params = "method=saveEmail")
-	public ModelAndView saveEmail(ModelMap modelMap, MessageFormBean form,
+	@RequestMapping(params = "method=prepareSend")
+	public ModelAndView prepareSend(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
 		RequestUtils.setRequestParameterToAttribute(request);
-		SysUser user = RequestUtil.getLoginUser(request);
+		long id = ParamUtil.getLongParameter(request, "id", 0);
+		Message bean = messageService.find(id);
+		request.setAttribute("bean", bean);
 
-		int recverType = ParamUtil.getIntParameter(request, "recverType", 0);
-		String recverIds = ParamUtil.getParameter(request, "recverIds");
-		String recverName = ParamUtil.getParameter(request, "recverName");
-		MessageFormBean formBean = new MessageFormBean();
-		WebUtil.copyProperties(formBean, form);
-
-		if (recverType == 0 || recverType == 2) {
-			String toEmail = ParamUtil.getParameter(request, "toEmail");
-			String[] email = toEmail.split(",");
-			for (int i = 0; i < email.length; i++) {
-				// EMail.send(sendEmail,email[i],title,content,null);
-			}
-		}
-		// 部门群发
-		if (recverType == 1) {
-			logger.debug("string to int" + Integer.parseInt(recverIds));
-			List<SysUser> list = sysUserService.getSysUserList(Integer
-					.parseInt(recverIds));
-			// System.out.println("list.size"+list.size());
-			if (list != null) {
-				Iterator<SysUser> iter = list.iterator();
-				while (iter.hasNext()) {
-					SysUser sysUser = (SysUser) iter.next();
-					String email = sysUser.getEmail();
-					if (email != null) {
-						// EMail.send(sendEmail, email, title, content, null);
-					}
-				}
-			}
-
-		}
-		// 发送信息放入发件箱
-		Message bean = new Message();
-		bean.setTitle(formBean.getTitle());
-		bean.setContent(formBean.getContent());
-		bean.setSender(user);
-		bean.setRecver(user);
-		bean.setRecverList(recverName);
-		bean.setCategory(1);// 发件箱
-		bean.setReaded(0);
-		bean.setCreateDate(new Date());
-
-		int type = 1;// 用户消息
-		if (bean.getSender().getId() == 0) {
-			type = 0;// 系统消息
-		}
-		bean.setType(type);
-
-		boolean ret = false;
-		// if (isTokenValid(request)) {// 防止表单重复提交
-		ret = messageService.saveOrUpdate(bean);
-		// }
-		// saveToken(request);
-
-		ViewMessages messages = new ViewMessages();
-		if (ret) {// 保存成功
-			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
-					"message.send_success"));
-		} else {// 保存失败
-			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
-					"message.send_failure"));
-		}
-		MessageUtils.addMessages(request, messages);
-		// 显示提交后页面
-		return new ModelAndView("show_msg", modelMap);
+		return new ModelAndView("/modules/workspace/message/message_send",
+				modelMap);
 	}
 
 	/**
@@ -490,6 +257,266 @@ public class MessageController {
 		MessageUtils.addMessages(request, messages);
 		// 显示提交后页面
 		return new ModelAndView("show_msg", modelMap);
+	}
+
+	/**
+	 * 发送email
+	 * 
+	 * @param mapping
+	 * @param actionForm
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+
+	@RequestMapping(params = "method=saveEmail")
+	public ModelAndView saveEmail(ModelMap modelMap, MessageFormBean form,
+			HttpServletRequest request, HttpServletResponse response) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		SysUser user = RequestUtil.getLoginUser(request);
+
+		int recverType = ParamUtil.getIntParameter(request, "recverType", 0);
+		String recverIds = ParamUtil.getParameter(request, "recverIds");
+		String recverName = ParamUtil.getParameter(request, "recverName");
+		MessageFormBean formBean = new MessageFormBean();
+		WebUtil.copyProperties(formBean, form);
+
+		if (recverType == 0 || recverType == 2) {
+			String toEmail = ParamUtil.getParameter(request, "toEmail");
+			String[] email = toEmail.split(",");
+			for (int i = 0; i < email.length; i++) {
+				// EMail.send(sendEmail,email[i],title,content,null);
+			}
+		}
+		// 部门群发
+		if (recverType == 1) {
+			logger.debug("string to int" + Integer.parseInt(recverIds));
+			List<SysUser> list = sysUserService.getSysUserList(Integer
+					.parseInt(recverIds));
+			// System.out.println("list.size"+list.size());
+			if (list != null) {
+				Iterator<SysUser> iter = list.iterator();
+				while (iter.hasNext()) {
+					SysUser sysUser = (SysUser) iter.next();
+					String email = sysUser.getEmail();
+					if (email != null) {
+						// EMail.send(sendEmail, email, title, content, null);
+					}
+				}
+			}
+
+		}
+		// 发送信息放入发件箱
+		Message bean = new Message();
+		bean.setTitle(formBean.getTitle());
+		bean.setContent(formBean.getContent());
+		bean.setSender(user);
+		bean.setRecver(user);
+		bean.setRecverList(recverName);
+		bean.setCategory(1);// 发件箱
+		bean.setReaded(0);
+		bean.setCreateDate(new Date());
+
+		int type = 1;// 用户消息
+		if (bean.getSender().getId() == 0) {
+			type = 0;// 系统消息
+		}
+		bean.setType(type);
+
+		boolean ret = false;
+		// if (isTokenValid(request)) {// 防止表单重复提交
+		ret = messageService.saveOrUpdate(bean);
+		// }
+		// saveToken(request);
+
+		ViewMessages messages = new ViewMessages();
+		if (ret) {// 保存成功
+			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
+					"message.send_success"));
+		} else {// 保存失败
+			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
+					"message.send_failure"));
+		}
+		MessageUtils.addMessages(request, messages);
+		// 显示提交后页面
+		return new ModelAndView("show_msg", modelMap);
+	}
+
+	/**
+	 * 保存消息
+	 * 
+	 * @param mapping
+	 * @param actionForm
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(params = "method=saveSend")
+	public ModelAndView saveSend(ModelMap modelMap, MessageFormBean form,
+			HttpServletRequest request, HttpServletResponse response) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		SysUser user = RequestUtil.getLoginUser(request);
+		int sysType = ParamUtil.getIntParameter(request, "sysType", 1);// 0：为系统警告
+																		// 1：为系统消息
+		String recverIds = ParamUtil.getParameter(request, "recverIds");
+		// 用户或部门
+		int recverType = ParamUtil.getIntParameter(request, "recverType", 0);
+
+		MessageFormBean formBean = new MessageFormBean();
+		WebUtil.copyProperties(formBean, form);
+
+		Message bean = new Message();
+		bean.setSysType(sysType);
+		bean.setTitle(formBean.getTitle());
+		bean.setContent(formBean.getContent());
+		bean.setSender(user);
+		bean.setSenderId(user.getId());
+		bean.setCategory(0);// 收件箱
+		bean.setReaded(0);
+		bean.setCreateDate(new Date());
+
+		int type = 1;// 用户消息
+		if (bean.getSender().getId() == 0) {
+			type = 0;// 系统消息
+		}
+		bean.setType(type);
+
+		boolean ret = false;
+		// if (isTokenValid(request)) {// 防止表单重复提交
+		if (recverType == 0) {
+			ret = messageService.saveSendMessage(bean, recverIds.split(","));
+		}
+		if (recverType == 1) {
+			ret = messageService.saveSendMessageToDept(bean,
+					recverIds.split(","));
+		}
+		if (recverType == 2) {
+			List<SysUser> userList = sysUserService.getSupplierUser(recverIds);
+			if (userList != null) {
+				Iterator<SysUser> iter = userList.iterator();
+				StringBuffer sb = new StringBuffer();
+				while (iter.hasNext()) {
+					SysUser user_sp = (SysUser) iter.next();
+					if (user_sp.getAccountType() == 1) {
+						sb.append(user_sp.getId() + ",");
+					}
+					String userIds = sb.toString();
+					ret = messageService.saveSendMessage(bean,
+							userIds.split(","));
+				}
+			}
+		}
+		// }
+		// saveToken(request);
+
+		ViewMessages messages = new ViewMessages();
+		if (ret) {// 保存成功
+			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
+					"message.send_success"));
+		} else {// 保存失败
+			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
+					"message.send_failure"));
+		}
+		MessageUtils.addMessages(request, messages);
+		// 显示提交后页面
+		return new ModelAndView("show_msg", modelMap);
+	}
+
+	public void setMessageService(MessageService messageService) {
+		this.messageService = messageService;
+		logger.info("setMessageService");
+	}
+
+	public void setSysUserService(SysUserService sysUserService) {
+		this.sysUserService = sysUserService;
+		logger.info("setsysUserService");
+	}
+
+	/**
+	 * 显示消息信息
+	 * 
+	 * @param mapping
+	 * @param actionForm
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(params = "method=showMessage")
+	public ModelAndView showMessage(ModelMap modelMap,
+			HttpServletRequest request, HttpServletResponse response) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		long id = ParamUtil.getLongParameter(request, "id", 0);
+
+		Message bean = messageService.updateReadMessage(id);
+		request.setAttribute("bean", bean);
+
+		// 显示消息页面
+		return new ModelAndView("/modules/workspace/message/message_detail",
+				modelMap);
+	}
+
+	/**
+	 * 显示收件箱列表
+	 * 
+	 * @param mapping
+	 * @param actionForm
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(params = "method=showReceiveList")
+	public ModelAndView showReceiveList(ModelMap modelMap,
+			HttpServletRequest request, HttpServletResponse response) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		String flag = ParamUtil.getParameter(request, "flag", null);
+
+		SysUser user = RequestUtil.getLoginUser(request);
+		long userId = user == null ? 0L : user.getId();
+
+		int pageNo = ParamUtil.getIntParameter(request, "page_no", 1);
+		int pageSize = ParamUtil.getIntParameter(request, "page_size",
+				Constants.PAGE_SIZE);
+
+		PageResult pager = messageService.getReceiveList(userId,
+				WebUtil.getQueryMap(request), pageNo, pageSize);
+		request.setAttribute("pager", pager);
+		request.setAttribute("flag", flag);
+
+		// 显示列表页面
+		return new ModelAndView("/modules/workspace/message/message_list",
+				modelMap);
+	}
+
+	/**
+	 * 显示发件箱列表
+	 * 
+	 * @param mapping
+	 * @param actionForm
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(params = "method=showSendedList")
+	public ModelAndView showSendedList(ModelMap modelMap,
+			HttpServletRequest request, HttpServletResponse response) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		String flag = ParamUtil.getParameter(request, "flag", null);
+
+		SysUser user = RequestUtil.getLoginUser(request);
+		long userId = user == null ? 0L : user.getId();
+
+		int pageNo = ParamUtil.getIntParameter(request, "page_no", 1);
+		int pageSize = ParamUtil.getIntParameter(request, "page_size",
+				Constants.PAGE_SIZE);
+
+		PageResult pager = messageService.getSendedList(userId,
+				WebUtil.getQueryMap(request), pageNo, pageSize);
+		request.setAttribute("pager", pager);
+		request.setAttribute("flag", flag);
+
+		// 显示列表页面
+		return new ModelAndView(
+				"/modules/workspace/message/message_sended_list", modelMap);
 	}
 
 }

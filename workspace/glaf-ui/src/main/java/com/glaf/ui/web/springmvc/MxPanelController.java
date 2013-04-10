@@ -40,7 +40,7 @@ import com.glaf.ui.service.PanelService;
 import com.glaf.ui.service.SkinService;
 import com.glaf.core.config.ViewProperties;
 import com.glaf.core.security.LoginContext;
- 
+
 import com.glaf.core.util.RequestUtils;
 import com.glaf.core.util.UUID32;
 
@@ -60,8 +60,6 @@ public class MxPanelController {
 
 	@Resource
 	protected LayoutService layoutService;
-
-	 
 
 	@RequestMapping("/content")
 	@ResponseBody
@@ -190,7 +188,5 @@ public class MxPanelController {
 	public void setSkinService(SkinService skinService) {
 		this.skinService = skinService;
 	}
-
-	 
 
 }

@@ -78,8 +78,14 @@ function addPanel(){
 		<tr onmouseover="this.className='x-row-over';"
 			onmouseout="this.className='x-row-out';" class="x-content">
 			<td align="left" noWrap>&nbsp; <%=sortNo++%></td>
-			<td align="left" noWrap>&nbsp; <a
-				href="<%=request.getContextPath()%>/mx/panel/edit?isSystem=${isSystem}&panelId=${panel.id}"> ${panel.title}</a></td>
+			<td align="left" noWrap>&nbsp; 
+			<a href="<%=request.getContextPath()%>/mx/panel/edit?isSystem=${isSystem}&panelId=${panel.id}"> ${panel.title}</a>
+			&nbsp;
+			<c:if test="${!empty panel.link }">
+			   <a href="<%=request.getContextPath()%>/${panel.link}"><img
+				src="<%=contextPath%>/images/link.png" border="0" title="查看链接内容"/></a>
+			</c:if>
+			</td>
             <td align="left" noWrap>&nbsp; <%=createDate%></td>
 			<td align="left" noWrap>&nbsp; <b><%=title%></b></td>
 			<td align="left" width="10%" noWrap>&nbsp; <a><img
