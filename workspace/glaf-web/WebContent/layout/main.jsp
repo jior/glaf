@@ -1,26 +1,64 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ page import="java.util.*" %>
+<%@ page import="org.json.*" %>
+<%@ page import="com.glaf.base.utils.*" %>
+<%@ page import="com.glaf.base.business.*" %>
+<%@ page import="com.glaf.core.context.*" %>
+<%@ page import="com.glaf.core.util.*" %>
+<%@ page import="com.glaf.base.modules.sys.model.*" %>
+<%@ page import="com.glaf.base.modules.sys.service.*" %>
 <%
+	 
     String context = request.getContextPath();
 	com.glaf.base.utils.ContextUtil.getInstance().setContextPath(context);
 	pageContext.setAttribute("contextPath", context);
     String theme = com.glaf.core.util.RequestUtils.getTheme(request);
 	request.setAttribute("theme", theme);
+
+	String userId = RequestUtils.getActorId(request);
+ 	SysApplicationService sysApplicationService = ContextFactory.getBean("sysApplicationService");
+	JSONArray array = sysApplicationService.getUserMenu(3, userId);
+	String scripts = array.toString('\n');
 %>
-<!DOCTYPE html >
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>GLAF基础应用框架</title>
-<link href="${contextPath}/layout/css/default.css" rel="stylesheet" type="text/css" />
 <link href="${contextPath}/scripts/easyui/themes/${theme}/easyui.css" rel="stylesheet" type="text/css" />
+<link href="<%=request.getContextPath()%>/icons/styles.css" rel="stylesheet" type="text/css" >
 <link href="${contextPath}/themes/${theme}/styles.css" rel="stylesheet" type="text/css" />
 <link href="${contextPath}/icons/styles.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="${contextPath}/scripts/jquery.min.js"></script>
 <script type="text/javascript" src="${contextPath}/scripts/jquery.cookie.js"></script>
 <script type="text/javascript" src="${contextPath}/scripts/easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src='${contextPath}/layout/js/outlook.js'> </script>
- 
-    <style type="text/css">
+<style type="text/css">
+*{font-size:12px; font-family:Tahoma,Verdana,微软雅黑,新宋体}
+body{background:#D2E0F2; }
+a{ color:Black; text-decoration:none;}
+a:hover{ color:Red; text-decoration:underline;}
+.textbox03 {border: #878787 1px solid;padding: 4px 3px;font:Verdana, Geneva, sans-serif,宋体;line-height: 14px; background-color: #fff;  height: auto; font-size: 14px;  font-weight: bold; width: 190px; }
+
+.txt01{font:Verdana, Geneva, sans-serif,宋体;padding:3px 2px 2px 2px; border-width:1px; border-color:#ddd;  color:#000;}
+.txt {border: #878787 1px solid;padding: 4px 3px;font:Verdana, Geneva, sans-serif,宋体;line-height: 14px; background-color: #fff;  height: auto; font-size: 14px;}
+.footer{text-align:center;color:#15428B; margin:0px; padding:0px;line-height:23px; font-weight:bold;}
+
+.head a{color:White;text-decoration:underline;}
+
+.easyui-accordion ul{list-style-type:none;margin:0px; padding:10px;}
+.easyui-accordion ul li{ padding:0px;}
+.easyui-accordion ul li a{line-height:24px;}
+.easyui-accordion ul li div{margin:2px 0px;padding-left:10px;padding-top:2px;}
+.easyui-accordion ul li div.hover{border:1px dashed #99BBE8; background:#E0ECFF;cursor:pointer;}
+.easyui-accordion ul li div.hover a{color:#416AA3;}
+.easyui-accordion ul li div.selected{border:1px solid #99BBE8; background:#E0ECFF;cursor:default;}
+.easyui-accordion ul li div.selected a{color:#416AA3; font-weight:bold;}
+
+.icon-add1{background:url('icon/edit_add.png') no-repeat;}
+.icon-delete16{background:url('icon/delete.gif') no-repeat;width:18px; line-height:18px; display:inline-block;}
+.icon-expand{ background:url('/images/coll2.gif') no-repeat;}
+.icon-collapse{ background:url('/images/coll3.gif') no-repeat;}
         #css3menu li
         {
             float: left;
@@ -37,6 +75,7 @@
         }
 </style>
 <script type="text/javascript">
+   var contextPath = "<%=request.getContextPath()%>";
 
    function setMyTheme(){
 	   var theme = $('#theme').val();
@@ -74,77 +113,9 @@
     });
 
    var _menus = {
-    basic: [{
-        "menuid": "10",
-        "icon": "icon-sys",
-        "menuname": "常用菜单",
-        "menus":
-                 [{
-                     "menuid": "111",
-                     "menuname": "基础数据1",
-                     "icon": "icon-nav",
-                     "url": "#"
-                 }, {
-                     "menuid": "113",
-                     "menuname": "基础数据12",
-                     "icon": "icon-nav",
-                     "url": "#"
-                 },
-        //
-				  {
-				  "menuid": "119",
-				  "menuname": "这个是有子菜单的",
-				  "icon": "icon-nav",
-				  "menus": [{
-				      "menuid": "120",
-				      "menuname": "子菜单1",
-				      "icon": "icon-nav",
-				      "menus": [{
-				      "menuid": "120",
-				      "menuname": "子子菜单11111",
-				      "icon": "icon-nav",
-				      "url": "#"
-				      }]
-				      }]
-
-				  },
-
-        //
-                 {
-                 "menuid": "115",
-                 "menuname": "基础数据13",
-                 "icon": "icon-nav",
-                 "url": "#"
-             }, {
-                 "menuid": "117",
-                 "menuname": "基础数据14",
-                 "icon": "icon-nav",
-                 "url": "#"
-             }, {
-                 "menuid": "119",
-                 "menuname": "基础数据15",
-                 "icon": "icon-nav",
-                 "url": "#"
-}]
-    }, {
-        "menuid": "20",
-        "icon": "icon-sys",
-        "menuname": "测试一",
-        "menus": [{
-            "menuid": "211",
-            "menuname": "测试一11",
-            "icon": "icon-nav",
-            "url": "#"
-        }, {
-            "menuid": "213",
-            "menuname": "测试一22",
-            "icon": "icon-nav",
-            "url": "#"
-}]
- 
-         
-}]
-                };
+          "children":  
+             <%=scripts%>
+          };
 </script>
 </head>
 <body class="easyui-layout" style="overflow-y: hidden" scroll="no">
@@ -164,7 +135,7 @@
                 GLAF基础应用框架</span>
         <ul id="css3menu" style="padding: 0px; margin: 0px; list-type: none; float: left; 
             margin-left: 40px;">
-            <li><a class="active" name="basic" href="javascript:;" title="常用菜单">
+            <li><a class="active" name="menus" href="javascript:;" title="常用菜单">
 			<span style="font-size: 16px;">常用菜单</span></a></li>
             <!-- <li><a name="point" href="javascript:;" title="邮件列表">
 			<span style="font-size: 16px;">邮件列表</span></a></li> -->

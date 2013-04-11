@@ -10,8 +10,7 @@
 <script type="text/javascript" src="../scripts/jquery.cookie.js"></script>
 <script type="text/javascript" src="../scripts/easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src='js/outlook.js'> </script>
- 
-    <style type="text/css">
+<style type="text/css">
         #css3menu li
         {
             float: left;
@@ -28,35 +27,44 @@
         }
 </style>
 <script type="text/javascript">
- var _menus = {
+
+    $(function() {
+        changeTheme();
+        $('#editTheme').click(function() {
+                $('#w').window('open');
+        });           
+	    $('#btnCancel').click(function(){closePwd();})
+    });
+
+ var _children = {
     basic: [{
-        "menuid": "10",
+        "nodeId": "10",
         "icon": "icon-sys",
-        "menuname": "常用菜单",
-        "menus":
+        "name": "常用菜单",
+        "children":
                  [{
-                     "menuid": "111",
-                     "menuname": "基础数据1",
+                     "nodeId": "111",
+                     "name": "基础数据1",
                      "icon": "icon-nav",
                      "url": "#"
                  }, {
-                     "menuid": "113",
-                     "menuname": "基础数据12",
+                     "nodeId": "113",
+                     "name": "基础数据12",
                      "icon": "icon-nav",
                      "url": "#"
                  },
         //
 				  {
-				  "menuid": "119",
-				  "menuname": "这个是有子菜单的",
+				  "nodeId": "119",
+				  "name": "这个是有子菜单的",
 				  "icon": "icon-nav",
-				  "menus": [{
-				      "menuid": "120",
-				      "menuname": "子菜单1",
+				  "children": [{
+				      "nodeId": "120",
+				      "name": "子菜单1",
 				      "icon": "icon-nav",
-				      "menus": [{
-				      "menuid": "120",
-				      "menuname": "子子菜单11111",
+				      "children": [{
+				      "nodeId": "120",
+				      "name": "子子菜单11111",
 				      "icon": "icon-nav",
 				      "url": "#"
 				      }]
@@ -66,49 +74,49 @@
 
         //
                  {
-                 "menuid": "115",
-                 "menuname": "基础数据13",
+                 "nodeId": "115",
+                 "name": "基础数据13",
                  "icon": "icon-nav",
                  "url": "#"
              }, {
-                 "menuid": "117",
-                 "menuname": "基础数据14",
+                 "nodeId": "117",
+                 "name": "基础数据14",
                  "icon": "icon-nav",
                  "url": "#"
              }, {
-                 "menuid": "119",
-                 "menuname": "基础数据15",
+                 "nodeId": "119",
+                 "name": "基础数据15",
                  "icon": "icon-nav",
                  "url": "#"
 }]
     }, {
-        "menuid": "20",
+        "nodeId": "20",
         "icon": "icon-sys",
-        "menuname": "测试一",
-        "menus": [{
-            "menuid": "211",
-            "menuname": "测试一11",
+        "name": "测试一",
+        "children": [{
+            "nodeId": "211",
+            "name": "测试一11",
             "icon": "icon-nav",
             "url": "#"
         }, {
-            "menuid": "213",
-            "menuname": "测试一22",
+            "nodeId": "213",
+            "name": "测试一22",
             "icon": "icon-nav",
             "url": "#"
 }]
 }],
             point: [{
-                "menuid": "20",
+                "nodeId": "20",
                 "icon": "icon-sys",
-                "menuname": "邮件列表",
-                "menus": [{
-                    "menuid": "211",
-                    "menuname": "邮件用途",
+                "name": "邮件列表",
+                "children": [{
+                    "nodeId": "211",
+                    "name": "邮件用途",
                     "icon": "icon-nav",
                     "url": "#"
                 }, {
-                    "menuid": "213",
-                    "menuname": "邮件调整",
+                    "nodeId": "213",
+                    "name": "邮件调整",
                     "icon": "icon-nav",
                     "url": "#"
 }]
@@ -127,7 +135,7 @@
     <div region="north" split="true" border="false" style="overflow: hidden; height: 63px;
         background: url(images/top_bar_bg.jpg) #7f99be repeat-x center 50%;
         line-height: 63px; color: #fff; font-family: Verdana, 微软雅黑,黑体">
-        <span style="float: right; padding-right: 20px;" class="head">欢迎 admin <a href="#" id="editpass">
+        <span style="float: right; padding-right: 20px;" class="head">欢迎 admin <a href="#" id="editTheme">
             切换主题</a> <a href="#" id="loginOut">退出</a></span> <span style="padding-left: 10px;
                 font-size: 18px; float: left;">
                 <img src="images/logo.png" width="53" height="53" align="absmiddle" />

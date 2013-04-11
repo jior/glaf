@@ -40,18 +40,18 @@ function Clearnav() {
 }
 
 function GetMenuList(data, menulist) {
-    if (data.menus == null)
+    if (data.children == null)
         return menulist;
     else {
         menulist += '<ul>';
-        $.each(data.menus, function(i, sm) {
+        $.each(data.children, function(i, sm) {
             if (sm.url != null) {
-                menulist += '<li ><a ref="' + sm.menuid + '" href="#" rel="'
-					+ sm.url + '" ><span class="nav">' + sm.menuname
+                menulist += '<li ><a ref="' + sm.nodeId + '" href="#" rel="'
+					+ sm.url + '" ><span class="nav">' + sm.name
 					+ '</span></a>'
             }
             else {
-                menulist += '<li state="closed"><span class="nav">' + sm.menuname + '</span>'
+                menulist += '<li state="closed"><span class="nav">' + sm.name + '</span>'
             }
             menulist = GetMenuList(sm, menulist);
         })
@@ -64,11 +64,11 @@ function addNav(data) {
 
     $.each(data, function(i, sm) {
         var menulist1 = "";
-        //sm 常用菜单  邮件 列表
+        //sm 常用菜单   
         menulist1 = GetMenuList(sm, menulist1);
         menulist1 = "<ul id='tt1' class='easyui-tree' animate='true' dnd='true'>" + menulist1.substring(4); 
         $('#wnav').accordion('add', {
-            title: sm.menuname,
+            title: sm.name,
             content: menulist1,
             iconCls: 'icon ' + sm.icon
         });
@@ -90,8 +90,9 @@ function InitLeftMenu() {
         var tabTitle = $(this).children('.nav').text();
 
         var url = $(this).attr("rel");
-        var menuid = $(this).attr("ref");
-        var icon = getIcon(menuid, icon);
+        var nodeId = $(this).attr("ref");
+        //var icon = getIcon(nodeId, icon);
+		var icon = "icon-sys";
 
         addTab(tabTitle, url, icon);
         $('#wnav li div').removeClass("selected");
@@ -112,12 +113,12 @@ function hoverMenuItem() {
 }
 
 // 获取左侧导航的图标Tab
-function getIcon(menuid) {
+function getIcon(nodeId) {
     var icon = 'icon ';
     $.each(_menus, function(i, n) {
         $.each(n, function(j, o) {
-            $.each(o.menus, function(k, m) {
-                if (m.menuid == menuid) {
+            $.each(o.children, function(k, m) {
+                if (m.nodeId == nodeId && m.icon != null) {
                     icon += m.icon;
                     return false;
                 }
@@ -143,7 +144,9 @@ function addTab(subtitle, url, icon) {
 }
 
 function createFrame(url) {
-    var s = '<iframe scrolling="auto" frameborder="0"  src="' + url + '" style="width:100%;height:100%;"></iframe>';
+	var link = contextPath+url;
+	//alert(link);
+    var s = '<iframe scrolling="auto" frameborder="0"  src="' + link + '" style="width:100%;height:100%;"></iframe>';
     return s;
 }
 

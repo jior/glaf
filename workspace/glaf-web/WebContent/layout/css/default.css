@@ -20,7 +20,7 @@ a:hover{ color:Red; text-decoration:underline;}
 .easyui-accordion ul li div.selected a{color:#416AA3; font-weight:bold;}
 
 
-.icon-sys{ background:url(../images/gears.png) no-repeat;width:18px; line-height:18px; display:inline-block;}
+.icon-sys{ background:url('../images/gears.png') no-repeat;width:18px; line-height:18px; display:inline-block;}
 .icon-add1{background:url('icon/edit_add.png') no-repeat;}
 .icon-delete16{background:url('icon/delete.gif') no-repeat;width:18px; line-height:18px; display:inline-block;}
 .icon-expand{ background:url('/images/coll2.gif') no-repeat;}

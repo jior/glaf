@@ -170,7 +170,7 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 			}
 		}
 		query.nodeIds(nodeIds);
-		
+
 		return this.list(query);
 	}
 
@@ -307,11 +307,13 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 				while (iter.hasNext()) {
 					SysApplication bean = (SysApplication) iter.next();
 					JSONObject item = new JSONObject();
+					item.put("id", String.valueOf(bean.getId()));
 					item.put("nodeId", bean.getNodeId());
 					item.put("showMenu", bean.getShowMenu());
 					item.put("sort", bean.getSort());
 					item.put("description", bean.getDesc());
 					item.put("name", bean.getName());
+					item.put("icon", "icon-sys");
 					item.put("url", bean.getUrl());
 
 					List<SysApplication> childrenNodes = null;
