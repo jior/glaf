@@ -6,62 +6,93 @@
 	com.glaf.base.utils.ContextUtil.getInstance().setContextPath(context);
 	pageContext.setAttribute("contextPath", context);
 %>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>基础平台系统</title>
+<!DOCTYPE html >
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>GLAF基础应用框架-系统登录</title>
 <link href="${contextPath}/css/system.css" type="text/css" rel="stylesheet">
 <link href="${contextPath}/css/site.css" rel="stylesheet" type="text/css">
-<script src="${contextPath}/scripts/css.js" language="javascript"></script>
-<script src="${contextPath}/scripts/verify.js" language="javascript"></script>
-</head>
-<body class="body">
- 
-<br><br><br><br>
-<html:form method="post" action="${contextPath}/login.do?method=login" onsubmit="return verifyAll(this);" > 
-<table border="0" align="center" cellpadding="0" cellspacing="0" id="login">
-
-  <tr>
-    <td width="201" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
-  
-      <tr>
-        <td height="262"><table border="0" align="center" cellpadding="4" cellspacing="0">
-          <tr>
-            <td align="center" class="login-box">
-			</td>
-          </tr>
-          <tr>
-            <td align="center"  >&nbsp;&nbsp;账号：&nbsp;&nbsp;
-              <input name="x" type="text" size="15" class="input" datatype="string" nullable="no" maxsize="20" chname="账号" value="root"></td>
-          </tr>
-          <tr>
-            <td align="center"  >&nbsp;&nbsp;密码：&nbsp;&nbsp;
-              <input name="y" type="password" size="16" class="input" datatype="string" nullable="no" maxsize="20" chname="密码" value="111111"></td>
-          </tr>
-          <tr>
-            <td align="right">
-			  <input name="login" type="submit" id="login" value="登录" class="login-btn">
-              &nbsp;
-              <!-- <input name="f" type="reset" id="f" value="重置" class="login-btn"> -->
-			</td>
-          </tr>
-        </table></td>
-      </tr>
-    
-    </table></td>
-    
-  </tr>
-</table>
-</html:form>
+<link href="${contextPath}/icons/styles.css" rel="stylesheet" type="text/css" />
+<link href="${contextPath}/scripts/easyui/themes/gray/easyui.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="${contextPath}/scripts/jquery.min.js"></script>
+<script type="text/javascript" src="${contextPath}/scripts/verify.js" ></script>
+<script type="text/javascript" src="${contextPath}/scripts/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="${contextPath}/scripts/easyui/locale/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript">
-<!--
-function setVmiddle() {
-  var obj = document.getElementById('login');
-	var clientHeight = document.body.clientHeight;
-	obj.style.marginTop = (clientHeight - 380) / 2;
-}
-//setVmiddle();
-//-->
-</script>
+        $(function() {
+            $("#loginWindow").window({
+                title: 'GLAF基础应用框架',
+                width: 290,
+                height: 180,
+                modal: true,
+                shadow: false,
+                closable: false,
+                maximizable: false,
+                minimizable: false,
+                collapsible: false,
+                resizable: false
+            });
+            //登录
+            $("#btnLogin").click(function() {
+                var x = document.getElementById("x").value;
+                var y = document.getElementById("y").value;
+				if(x==''){
+					alert("请输入您的用户名。");
+					document.getElementById("x").focus();
+                    return;
+				}
+				if(y==''){
+                    alert("请输入您的密码。");
+					document.getElementById("y").focus();
+                    return;
+				}
+
+                loginSys(x, y);
+            });
+
+            
+        });
+
+        //登陆操作方法
+        function loginSys(x, y) {
+            window.location = "${contextPath}/login.do?method=login&x="+x+"&y="+y;
+        }
+    </script>
+
+</head>
+<body>
+
+    <div id="loginWindow" class="easyui-window" title="Login Form" iconcls="icon-login"
+        style="width: 300px; height: 180px; padding: 5px; background: #fafafa;">
+        <div border="false" style="padding-left: 30px;  border: 1px solid #ccc;">
+            <html:form method="post" action="${contextPath}/login.do?method=login" onsubmit="return verifyAll(this);" > 
+            <table>
+                <tr>
+                    <td>
+                        用户名：
+                    </td>
+                    <td>
+                        <input id="x" class="easyui-validatebox input" required="true" validtype="length[1,15]"
+                            style="width: 150px;" datatype="string" nullable="no" maxsize="20" chname="用户名" value="root" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        密&nbsp;&nbsp;&nbsp;&nbsp;码：
+                    </td>
+                    <td>
+                        <input type="password" id="y" style="width: 150px;" class="easyui-validatebox input"
+                            required="true" validtype="length[3,10]" datatype="string" nullable="no" maxsize="20" chname="密码" value="111111"/>
+                    </td>
+                </tr>
+            </table>
+            </html:form>
+        </div>
+             
+        <div class="toolbar" style="text-align: center; margin-top: 20px;">
+             <a href="#" class="easyui-linkbutton" iconcls="icon-ok" id="btnLogin" style="margin-left: 10px;">登录</a>
+        </div>
+    </div>
 </body>
 </html>

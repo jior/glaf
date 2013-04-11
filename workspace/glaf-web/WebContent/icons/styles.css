@@ -78,6 +78,10 @@
 	background:url('icons/role.gif') no-repeat ;
 }
 
+.icon-sys{ 
+    background:url('icons/gears.png') no-repeat;
+}
+
 .icon-actor{
 	background:url('icons/actor.gif') no-repeat ;
 }
