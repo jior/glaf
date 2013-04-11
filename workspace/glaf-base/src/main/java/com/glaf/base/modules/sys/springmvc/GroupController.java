@@ -45,6 +45,7 @@ import com.alibaba.fastjson.JSONObject;
 
 import com.glaf.core.base.BaseTree;
 import com.glaf.core.base.TreeModel;
+import com.glaf.core.config.ViewProperties;
 import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
 import com.glaf.core.res.ViewMessages;
@@ -135,6 +136,11 @@ public class GroupController {
 	public ModelAndView groupUsers(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
 		RequestUtils.setRequestParameterToAttribute(request);
+		
+		String x_view = ViewProperties.getString("group.groupUsers");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
 		// 显示群组用户页面
 		return new ModelAndView("/modules/base/group/group_users", modelMap);
 	}
@@ -212,6 +218,11 @@ public class GroupController {
 		String view = request.getParameter("view");
 		if (StringUtils.isNotEmpty(view)) {
 			return new ModelAndView(view, modelMap);
+		}
+		
+		String x_view = ViewProperties.getString("group.list");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
 		}
 
 		return new ModelAndView("/modules/base/group/list", modelMap);
@@ -300,6 +311,12 @@ public class GroupController {
 	public ModelAndView prepareAdd(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
 		RequestUtils.setRequestParameterToAttribute(request);
+		
+		String x_view = ViewProperties.getString("group.prepareAdd");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+		
 		// 显示列表页面
 		return new ModelAndView("/modules/base/group/group_add", modelMap);
 	}
@@ -320,6 +337,11 @@ public class GroupController {
 		String id = request.getParameter("groupId");
 		Group bean = groupService.getGroup(id);
 		request.setAttribute("bean", bean);
+		
+		String x_view = ViewProperties.getString("group.prepareModify");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
 
 		// 显示列表页面
 		return new ModelAndView("/modules/base/group/group_modify", modelMap);
@@ -472,6 +494,11 @@ public class GroupController {
 		PageResult pager = groupService.getGroupList(type, actorId, pageNo,
 				pageSize);
 		request.setAttribute("pager", pager);
+		
+		String x_view = ViewProperties.getString("group.showList");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
 		// 显示列表页面
 		return new ModelAndView("/modules/base/group/group_list", modelMap);
 	}

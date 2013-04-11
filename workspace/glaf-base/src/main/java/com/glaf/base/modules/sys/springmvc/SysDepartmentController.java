@@ -47,6 +47,7 @@ import com.glaf.base.modules.sys.query.SysDepartmentQuery;
 import com.glaf.base.modules.sys.service.SysDepartmentService;
 import com.glaf.base.modules.sys.service.SysTreeService;
 import com.glaf.base.utils.ParamUtil;
+import com.glaf.core.config.ViewProperties;
 import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
 import com.glaf.core.res.ViewMessages;
@@ -116,6 +117,12 @@ public class SysDepartmentController {
 		int status = ParamUtil.getIntParameter(request, "status", -1);
 		List<SysTree> list = sysTreeService.getSysTreeListForDept(id, status);
 		request.setAttribute("list", list);
+
+		String x_view = ViewProperties.getString("department.getSubDept");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
 		return new ModelAndView("/modules/sys/dept/subdept_list", modelMap);
 	}
 
@@ -135,6 +142,12 @@ public class SysDepartmentController {
 		int id = ParamUtil.getIntParameter(request, "id", 0);
 		List<SysTree> list = sysTreeService.getSysTreeList(id);
 		request.setAttribute("list", list);
+
+		String x_view = ViewProperties.getString("department.getSubDeptAll");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
 		return new ModelAndView("/modules/sys/dept/subdeptall_list", modelMap);
 	}
 
@@ -221,6 +234,12 @@ public class SysDepartmentController {
 		} else {
 			request.setAttribute("x_complex_query", "");
 		}
+
+		String x_view = ViewProperties.getString("department.list");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
 		String view = request.getParameter("view");
 		if (StringUtils.isNotEmpty(view)) {
 			return new ModelAndView(view, modelMap);
@@ -242,6 +261,12 @@ public class SysDepartmentController {
 	public ModelAndView prepareAdd(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
 		RequestUtils.setRequestParameterToAttribute(request);
+
+		String x_view = ViewProperties.getString("department.prepareAdd");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
 		return new ModelAndView("/modules/sys/dept/dept_add", modelMap);
 	}
 
@@ -268,6 +293,11 @@ public class SysDepartmentController {
 		list.add(parent);
 		sysTreeService.getSysTree(list, (int) parent.getId(), 1);
 		request.setAttribute("parent", list);
+
+		String x_view = ViewProperties.getString("department.prepareModify");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
 
 		// 显示列表页面
 		return new ModelAndView("/modules/sys/dept/dept_modify", modelMap);
@@ -400,6 +430,12 @@ public class SysDepartmentController {
 		String url = ParamUtil.getParameter(request, "url");
 		request.setAttribute("url", url);
 
+		String x_view = ViewProperties
+				.getString("department.showDeptAllSelect");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
 		// 显示列表页面
 		return forward;
 	}
@@ -428,6 +464,12 @@ public class SysDepartmentController {
 					modelMap);
 		}
 
+		String x_view = ViewProperties
+				.getString("department.showDeptSelect.type");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
 		int parent = ParamUtil.getIntParameter(request, "parent",
 				SysConstants.TREE_ROOT);
 		request.setAttribute("parent", sysTreeService.findById(parent));
@@ -453,6 +495,12 @@ public class SysDepartmentController {
 		RequestUtils.setRequestParameterToAttribute(request);
 		SysTree bean = sysTreeService.getSysTreeByCode(Constants.TREE_DEPT);
 		request.setAttribute("parent", bean.getId() + "");
+
+		String x_view = ViewProperties.getString("department.showFrame");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
 		// 显示列表页面
 		return new ModelAndView("/modules/sys/dept/dept_frame", modelMap);
 	}
@@ -483,6 +531,11 @@ public class SysDepartmentController {
 		List<SysDepartment> list = new ArrayList<SysDepartment>();
 		sysDepartmentService.findNestingDepartment(list, dept);
 		request.setAttribute("nav", list);
+
+		String x_view = ViewProperties.getString("department.showList");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
 
 		return new ModelAndView("/modules/sys/dept/dept_list", modelMap);
 	}

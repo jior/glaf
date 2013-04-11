@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.glaf.base.modules.others.service.AttachmentService;
+import com.glaf.core.config.ViewProperties;
 import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
 import com.glaf.core.res.ViewMessages;
@@ -67,6 +68,11 @@ public class AttachmentController {
 
 		request.setAttribute("list",
 				attachmentService.getAttachmentList(referId, referType));
+		
+		String x_view = ViewProperties.getString("attachment.showList.referType");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
 
 		if (viewType == 1) {
 			return new ModelAndView(
@@ -99,6 +105,11 @@ public class AttachmentController {
 
 		request.setAttribute("list",
 				attachmentService.getAttachmentList(referId, referType));
+		
+		String x_view = ViewProperties.getString("attachment.showList2");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
 
 		return new ModelAndView("/modules/others/attachment/attachment_list2",
 				modelMap);
@@ -154,6 +165,11 @@ public class AttachmentController {
 
 		request.setAttribute("list",
 				attachmentService.getAttachmentList(referId, referType));
+		
+		String x_view = ViewProperties.getString("attachment.showLists");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
 
 		return new ModelAndView("/modules/others/attachment/attachment_list2",
 				modelMap);
@@ -183,6 +199,12 @@ public class AttachmentController {
 				.getAttachmentCount(longReferId, referType);
 		String Strcount = count + "";
 		request.setAttribute("count", Strcount);
+		
+		String x_view = ViewProperties.getString("attachment.showCount");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+		
 		return new ModelAndView("/modules/others/attachment/showCount",
 				modelMap);
 	}

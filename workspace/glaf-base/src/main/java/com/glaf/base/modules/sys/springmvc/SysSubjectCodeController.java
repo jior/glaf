@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
@@ -38,13 +39,14 @@ import com.glaf.base.modules.sys.service.SubjectCodeService;
 import com.glaf.base.utils.ParamUtil;
 import com.glaf.base.utils.WebUtil;
 
+import com.glaf.core.config.ViewProperties;
 import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
 import com.glaf.core.res.ViewMessages;
 import com.glaf.core.util.RequestUtils;
 
-@Controller("/sys/subject")
-@RequestMapping("/sys/subject.do")
+@Controller("/sys/subjectCode")
+@RequestMapping("/sys/subjectCode.do")
 public class SysSubjectCodeController {
 	private static final Log logger = LogFactory
 			.getLog(SysSubjectCodeController.class);
@@ -75,6 +77,12 @@ public class SysSubjectCodeController {
 		String url = ParamUtil.getParameter(request, "url");
 		request.setAttribute("url", url);
 
+		String x_view = ViewProperties
+				.getString("subjectCode.showSubjectTreeList");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
 		// 显示列表页面
 		return new ModelAndView("/modules/sys/subject/subjecttree_list");
 	}
@@ -93,6 +101,12 @@ public class SysSubjectCodeController {
 		RequestUtils.setRequestParameterToAttribute(request);
 		Map<String, String> filter = WebUtil.getQueryMap(request);
 		request.setAttribute("pager", subjectCodeService.getFeePage(filter));
+
+		String x_view = ViewProperties.getString("subjectCode.showList");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
 		return new ModelAndView("/modules/sys/subject/show_list1");
 	}
 
@@ -113,6 +127,12 @@ public class SysSubjectCodeController {
 		filter.put("parent", String.valueOf(parent));
 		List<SubjectCode> list = subjectCodeService.getSubFeeList(filter);
 		request.setAttribute("list", list);
+
+		String x_view = ViewProperties.getString("subjectCode.getSubFee");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
 		return new ModelAndView("/modules/sys/subject/show_list2");
 	}
 
@@ -130,6 +150,12 @@ public class SysSubjectCodeController {
 		RequestUtils.setRequestParameterToAttribute(request);
 		long parent = ParamUtil.getLongParameter(request, "parent", 0);
 		request.setAttribute("parent", subjectCodeService.findById(parent));
+
+		String x_view = ViewProperties.getString("subjectCode.prepareAdd");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
 		// 显示列表页面
 		return new ModelAndView("/modules/sys/subject/show_add");
 	}
@@ -183,6 +209,12 @@ public class SysSubjectCodeController {
 		request.setAttribute("fee", bean);
 		request.setAttribute("parent",
 				subjectCodeService.findById(bean.getParent()));
+
+		String x_view = ViewProperties.getString("subjectCode.prepareModify");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
 		return new ModelAndView("/modules/sys/subject/show_modify");
 	}
 
@@ -225,7 +257,7 @@ public class SysSubjectCodeController {
 	 * @param form
 	 * @param request
 	 * @param response
-	 * @return @
+	 * @return
 	 */
 	public ModelAndView batchDelete(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {

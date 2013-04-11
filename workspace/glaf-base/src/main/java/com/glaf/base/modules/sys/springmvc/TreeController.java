@@ -44,6 +44,7 @@ import com.glaf.base.modules.sys.model.SysTree;
 import com.glaf.base.modules.sys.query.SysTreeQuery;
 import com.glaf.base.modules.sys.service.SysTreeService;
 import com.glaf.base.utils.ParamUtil;
+import com.glaf.core.config.ViewProperties;
 import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
 import com.glaf.core.res.ViewMessages;
@@ -97,6 +98,12 @@ public class TreeController {
 		int id = ParamUtil.getIntParameter(request, "id", 0);
 		List<SysTree> list = sysTreeService.getSysTreeList(id);
 		request.setAttribute("list", list);
+		
+		String x_view = ViewProperties.getString("baseTree.getSubTree");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+		
 		return new ModelAndView("/modules/base/tree/subtree_list", modelMap);
 	}
 
@@ -181,10 +188,18 @@ public class TreeController {
 		} else {
 			request.setAttribute("x_complex_query", "");
 		}
+		
+		String x_view = ViewProperties.getString("baseTree.list");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+		
 		String view = request.getParameter("view");
 		if (StringUtils.isNotEmpty(view)) {
 			return new ModelAndView(view, modelMap);
 		}
+		
+		
 
 		return new ModelAndView("/modules/base/tree/list", modelMap);
 	}
@@ -202,6 +217,12 @@ public class TreeController {
 	public ModelAndView prepareAdd(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
 		request.setAttribute("contextPath", request.getContextPath());
+		
+		String x_view = ViewProperties.getString("baseTree.prepareAdd");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+		
 		return new ModelAndView("/modules/base/tree/tree_add", modelMap);
 	}
 
@@ -228,6 +249,12 @@ public class TreeController {
 		List<SysTree> list = new ArrayList<SysTree>();
 		sysTreeService.getSysTree(list, 0, 0);
 		request.setAttribute("parent", list);
+		
+		String x_view = ViewProperties.getString("baseTree.prepareModify");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+		
 		return new ModelAndView("/modules/base/tree/tree_modify", modelMap);
 	}
 
@@ -327,6 +354,12 @@ public class TreeController {
 				SysConstants.TREE_ROOT);
 		request.setAttribute("parent", sysTreeService.findById(parent));
 		String url = ParamUtil.getParameter(request, "url");
+		
+		String x_view = ViewProperties.getString("baseTree.showLeft");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+		
 		request.setAttribute("url", url);
 
 		// 显示列表页面
@@ -357,6 +390,12 @@ public class TreeController {
 		PageResult pager = sysTreeService.getSysTreeList(parentId, pageNo,
 				pageSize);
 		request.setAttribute("pager", pager);
+		
+		String x_view = ViewProperties.getString("baseTree.showList");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+		
 		return new ModelAndView("/modules/base/tree/tree_list", modelMap);
 	}
 
@@ -373,6 +412,12 @@ public class TreeController {
 	public ModelAndView showMain(ModelMap modelMap, HttpServletRequest request,
 			HttpServletResponse response) {
 		RequestUtils.setRequestParameterToAttribute(request);
+		
+		String x_view = ViewProperties.getString("baseTree.showMain");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+		
 		return new ModelAndView("/modules/base/tree/tree_frame", modelMap);
 	}
 
@@ -380,6 +425,10 @@ public class TreeController {
 	public ModelAndView showTop(ModelMap modelMap, HttpServletRequest request,
 			HttpServletResponse response) {
 		RequestUtils.setRequestParameterToAttribute(request);
+		String x_view = ViewProperties.getString("baseTree.showTop");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
 		return new ModelAndView("/modules/base/tree/tree_top", modelMap);
 	}
 

@@ -57,6 +57,7 @@ import com.glaf.base.utils.ParamUtil;
 import com.glaf.base.utils.RequestUtil;
 import com.glaf.core.base.TableModel;
 import com.glaf.core.cache.CacheUtils;
+import com.glaf.core.config.ViewProperties;
 import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
 import com.glaf.core.res.ViewMessages;
@@ -343,6 +344,12 @@ public class SysUserController {
 		} else {
 			request.setAttribute("x_complex_query", "");
 		}
+
+		String x_view = ViewProperties.getString("user.list");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
 		String view = request.getParameter("view");
 		if (StringUtils.isNotEmpty(view)) {
 			return new ModelAndView(view, modelMap);
@@ -364,6 +371,12 @@ public class SysUserController {
 	public ModelAndView prepareAdd(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
 		// RequestUtils.setRequestParameterToAttribute(request);
+
+		String x_view = ViewProperties.getString("user.prepareAdd");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
 		return new ModelAndView("/modules/sys/user/user_add", modelMap);
 	}
 
@@ -391,6 +404,11 @@ public class SysUserController {
 		sysTreeService.getSysTree(list, (int) parent.getId(), 1);
 		request.setAttribute("parent", list);
 
+		String x_view = ViewProperties.getString("user.prepareModify");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
 		return new ModelAndView("/modules/sys/user/user_modify", modelMap);
 	}
 
@@ -410,6 +428,11 @@ public class SysUserController {
 		SysUser user = RequestUtil.getLoginUser(request);
 		SysUser bean = sysUserService.findByAccount(user.getAccount());
 		request.setAttribute("bean", bean);
+
+		String x_view = ViewProperties.getString("user.prepareModifyInfo");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
 
 		return new ModelAndView("/modules/sys/user/user_change_info", modelMap);
 	}
@@ -437,6 +460,11 @@ public class SysUserController {
 		sysTreeService.getSysTree(list, (int) parent.getId(), 1);
 		request.setAttribute("parent", list);
 
+		String x_view = ViewProperties.getString("user.prepareModifyPwd");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
 		return new ModelAndView("/modules/sys/user/user_modify_pwd", modelMap);
 	}
 
@@ -456,6 +484,11 @@ public class SysUserController {
 		long id = ParamUtil.getLongParameter(request, "id", 0);
 		SysUser bean = sysUserService.findById(id);
 		request.setAttribute("bean", bean);
+
+		String x_view = ViewProperties.getString("user.prepareResetPwd");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
 
 		return new ModelAndView("/modules/sys/user/user_reset_pwd", modelMap);
 	}
@@ -733,6 +766,11 @@ public class SysUserController {
 		request.setAttribute("pager", pager);
 		request.setAttribute("multDate", new Integer(multDate));
 
+		String x_view = ViewProperties.getString("user.selectSysUser");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
 		return new ModelAndView("/modules/sys/user/user_select", modelMap);
 	}
 
@@ -765,6 +803,11 @@ public class SysUserController {
 		}
 		request.setAttribute("pager", pager);
 
+		String x_view = ViewProperties.getString("user.selectSysUserByDept");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
 		return new ModelAndView("/modules/sys/user/userByDept_list", modelMap);
 	}
 
@@ -785,7 +828,7 @@ public class SysUserController {
 		ViewMessages messages = new ViewMessages();
 		long userId = ParamUtil.getIntParameter(request, "user_id", 0);
 		SysUser user = sysUserService.findById(userId);// 查找用户对象
-		 
+
 		if (user != null) {// 用户存在
 			long[] id = ParamUtil.getLongParameterValues(request, "id");// 获取页面参数
 			if (id != null) {
@@ -803,8 +846,8 @@ public class SysUserController {
 				oldRoles.retainAll(newRoles);// 公共权限
 				delRoles.removeAll(newRoles);// 待删除的权限
 				newRoles.removeAll(oldRoles);// 待增加的权限
-                user.setUpdateBy(RequestUtils.getActorId(request));
-                
+				user.setUpdateBy(RequestUtils.getActorId(request));
+
 				if (sysUserService.updateRole(user, delRoles, newRoles)) {// 授权成功
 					messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 							"user.role_success"));
@@ -878,6 +921,12 @@ public class SysUserController {
 			this.getRoleUser(set, element.getId(), roleCode);
 		}
 		request.setAttribute("user", set);
+
+		String x_view = ViewProperties.getString("user.showDeptUsers");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
 		return new ModelAndView("/modules/sys/user/duty_select", modelMap);
 	}
 
@@ -896,6 +945,12 @@ public class SysUserController {
 		RequestUtils.setRequestParameterToAttribute(request);
 		SysTree bean = sysTreeService.getSysTreeByCode(Constants.TREE_DEPT);
 		request.setAttribute("parent", bean.getId() + "");
+
+		String x_view = ViewProperties.getString("user.showFrame");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
 		return new ModelAndView("/modules/sys/user/user_frame", modelMap);
 	}
 
@@ -926,6 +981,11 @@ public class SysUserController {
 		sysDepartmentService.findNestingDepartment(list, dept);
 		request.setAttribute("nav", list);
 
+		String x_view = ViewProperties.getString("user.showList");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
 		return new ModelAndView("/modules/sys/user/user_list", modelMap);
 	}
 
@@ -951,6 +1011,12 @@ public class SysUserController {
 		PageResult pager = sysUserService.getSysUserList(deptId, userName,
 				account, pageNo, pageSize);
 		request.setAttribute("pager", pager);
+
+		String x_view = ViewProperties.getString("user.showPasswordList");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
 		return new ModelAndView("/modules/sys/user/user_password_list",
 				modelMap);
 	}
@@ -974,6 +1040,12 @@ public class SysUserController {
 		request.setAttribute("user", user);
 		request.setAttribute("list",
 				sysDeptRoleService.getRoleList(user.getDepartment().getId()));
+
+		String x_view = ViewProperties.getString("user.showRole");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
 		// 显示列表页面
 		return new ModelAndView("/modules/sys/user/user_role", modelMap);
 	}
@@ -1007,6 +1079,11 @@ public class SysUserController {
 		Set<?> users = sysDeptRoleService.findRoleUser(deptId, role.getCode());
 		request.setAttribute("list", users);
 
+		String x_view = ViewProperties.getString("user.showRoleUser");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
 		return new ModelAndView("/modules/sys/user/deptRole_user", modelMap);
 	}
 
@@ -1028,6 +1105,11 @@ public class SysUserController {
 			request.setAttribute("list", sysUserService.getSysUserList(deptId));
 		}
 
+		String x_view = ViewProperties.getString("user.showSelUser");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
 		return new ModelAndView("/modules/sys/user/dept_user_sel", modelMap);
 	}
 
@@ -1047,6 +1129,11 @@ public class SysUserController {
 		long userId = ParamUtil.getLongParameter(request, "userId", 0);
 		SysUser user = sysUserService.findById(userId);
 		request.setAttribute("user", user);
+
+		String x_view = ViewProperties.getString("user.showUser");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
 
 		return new ModelAndView("/modules/sys/user/user_info", modelMap);
 	}

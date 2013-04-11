@@ -27,6 +27,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
@@ -40,6 +41,7 @@ import com.alibaba.fastjson.JSONObject;
 
 import com.glaf.core.base.BaseTree;
 import com.glaf.core.base.TreeModel;
+import com.glaf.core.config.ViewProperties;
 import com.glaf.core.tree.helper.TreeHelper;
 import com.glaf.core.util.RequestUtils;
 import com.glaf.core.util.StringTools;
@@ -55,8 +57,8 @@ import com.glaf.base.modules.sys.service.SysTreeService;
 import com.glaf.base.modules.sys.service.SysUserService;
  
 
-@Controller("/base/userChoose")
-@RequestMapping("/base/userChoose.do")
+@Controller("/base/identityChoose")
+@RequestMapping("/base/identityChoose.do")
 public class IdentityChooseController {
 	private static final Log logger = LogFactory
 			.getLog(IdentityChooseController.class);
@@ -82,6 +84,10 @@ public class IdentityChooseController {
 	public ModelAndView chooseDepts(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
 		RequestUtils.setRequestParameterToAttribute(request);
+		String x_view = ViewProperties.getString("identityChoose.chooseDepts");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
 		return new ModelAndView("/modules/base/choose/choose_depts", modelMap);
 	}
 
@@ -97,6 +103,10 @@ public class IdentityChooseController {
 	public ModelAndView chooseTrees(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
 		RequestUtils.setRequestParameterToAttribute(request);
+		String x_view = ViewProperties.getString("identityChoose.chooseTrees");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
 		return new ModelAndView("/modules/base/choose/choose_trees", modelMap);
 	}
 
@@ -112,6 +122,10 @@ public class IdentityChooseController {
 	public ModelAndView chooseUsers(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
 		RequestUtils.setRequestParameterToAttribute(request);
+		String x_view = ViewProperties.getString("identityChoose.chooseUsers");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
 		return new ModelAndView("/modules/base/choose/choose_users", modelMap);
 	}
 

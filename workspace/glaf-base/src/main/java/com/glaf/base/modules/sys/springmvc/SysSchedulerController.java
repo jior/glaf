@@ -39,6 +39,7 @@ import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.utils.ParamUtil;
 import com.glaf.base.utils.RequestUtil;
 import com.glaf.core.base.Scheduler;
+import com.glaf.core.config.ViewProperties;
 import com.glaf.core.domain.SchedulerEntity;
 import com.glaf.core.service.ISysSchedulerService;
 import com.glaf.core.util.QuartzUtils;
@@ -126,6 +127,12 @@ public class SysSchedulerController {
 		String actorId = user.getAccount();
 		List<Scheduler> list = sysSchedulerService.getUserSchedulers(actorId);
 		request.setAttribute("schedulers", list);
+		
+		String x_view = ViewProperties.getString("scheduler.showList");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+		
 		return new ModelAndView("/modules/sys/scheduler/scheduler_list",
 				modelMap);
 	}
@@ -140,6 +147,11 @@ public class SysSchedulerController {
 			scheduler = sysSchedulerService.getSchedulerByTaskId(taskId);
 		}
 		request.setAttribute("scheduler", scheduler);
+		
+		String x_view = ViewProperties.getString("scheduler.showModify");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}	
 
 		return new ModelAndView("/modules/sys/scheduler/scheduler_modify",
 				modelMap);

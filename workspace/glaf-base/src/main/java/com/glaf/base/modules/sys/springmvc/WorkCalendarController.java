@@ -25,6 +25,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
@@ -37,6 +38,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.glaf.base.modules.sys.model.WorkCalendar;
 import com.glaf.base.modules.sys.service.WorkCalendarService;
 import com.glaf.base.utils.ParamUtil;
+import com.glaf.core.config.ViewProperties;
 import com.glaf.core.util.RequestUtils;
 
 @Controller("/sys/workCalendar")
@@ -148,6 +150,11 @@ public class WorkCalendarController {
 		request.setAttribute("month", String.valueOf(month));
 		request.setAttribute("weeks", String.valueOf(weeks));
 		request.setAttribute("days", days);
+		
+		String x_view = ViewProperties.getString("calendar.showCalendar");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
 
 		return new ModelAndView("/modules/sys/calendar/calendar", modelMap);
 	}
@@ -169,6 +176,12 @@ public class WorkCalendarController {
 		int year = ParamUtil.getIntParameter(request, "year",
 				cal.get(Calendar.YEAR));
 		request.setAttribute("year", String.valueOf(year));
+		
+		String x_view = ViewProperties.getString("calendar.showList");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+		
 		return new ModelAndView("/modules/sys/calendar/work_calendar", modelMap);
 	}
 }

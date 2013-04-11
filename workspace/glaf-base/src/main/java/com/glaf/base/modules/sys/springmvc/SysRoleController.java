@@ -43,6 +43,7 @@ import com.glaf.base.modules.sys.query.SysRoleQuery;
 import com.glaf.base.modules.sys.service.SysRoleService;
 import com.glaf.base.utils.ParamUtil;
 
+import com.glaf.core.config.ViewProperties;
 import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
 import com.glaf.core.res.ViewMessages;
@@ -174,6 +175,12 @@ public class SysRoleController {
 		} else {
 			request.setAttribute("x_complex_query", "");
 		}
+
+		String x_view = ViewProperties.getString("role.list");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
 		String view = request.getParameter("view");
 		if (StringUtils.isNotEmpty(view)) {
 			return new ModelAndView(view, modelMap);
@@ -195,6 +202,12 @@ public class SysRoleController {
 	public ModelAndView prepareAdd(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
 		RequestUtils.setRequestParameterToAttribute(request);
+
+		String x_view = ViewProperties.getString("role.prepareAdd");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
 		// 显示列表页面
 		return new ModelAndView("/modules/sys/role/role_add", modelMap);
 	}
@@ -215,6 +228,11 @@ public class SysRoleController {
 		long id = ParamUtil.getIntParameter(request, "id", 0);
 		SysRole bean = sysRoleService.findById(id);
 		request.setAttribute("bean", bean);
+
+		String x_view = ViewProperties.getString("role.prepareModify");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
 
 		// 显示列表页面
 		return new ModelAndView("/modules/sys/role/role_modify", modelMap);
@@ -317,6 +335,12 @@ public class SysRoleController {
 				Constants.PAGE_SIZE);
 		PageResult pager = sysRoleService.getSysRoleList(pageNo, pageSize);
 		request.setAttribute("pager", pager);
+
+		String x_view = ViewProperties.getString("role.showList");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
 		// 显示列表页面
 		return new ModelAndView("/modules/sys/role/role_list", modelMap);
 	}

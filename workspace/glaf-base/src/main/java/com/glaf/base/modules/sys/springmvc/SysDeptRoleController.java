@@ -25,6 +25,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
@@ -43,6 +44,7 @@ import com.glaf.base.modules.sys.service.SysRoleService;
 import com.glaf.base.modules.sys.service.SysTreeService;
 import com.glaf.base.utils.ParamUtil;
  
+import com.glaf.core.config.ViewProperties;
 import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
 import com.glaf.core.res.ViewMessages;
@@ -104,6 +106,11 @@ public class SysDeptRoleController {
 		request.setAttribute("department",
 				sysDepartmentService.findById(deptId));
 		request.setAttribute("list", sysRoleService.getSysRoleList());
+		
+		String x_view = ViewProperties.getString("deptRole.showList");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
 		// 显示列表页面
 		return new ModelAndView("/modules/sys/deptRole/deptRole_list", modelMap);
 	}
@@ -140,6 +147,11 @@ public class SysDeptRoleController {
 		sysTreeService.getSysTree(list, (int) parent.getId(), 0);
 		request.setAttribute("list", list);
 		logger.debug("------------list size:"+list.size());
+		
+		String x_view = ViewProperties.getString("deptRole.showPrivilege");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
 		
 		return new ModelAndView("/modules/sys/deptRole/deptRole_privilege",
 				modelMap);

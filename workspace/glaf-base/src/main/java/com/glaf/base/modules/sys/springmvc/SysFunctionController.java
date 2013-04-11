@@ -23,6 +23,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
@@ -38,6 +39,7 @@ import com.glaf.base.modules.sys.service.SysApplicationService;
 import com.glaf.base.modules.sys.service.SysFunctionService;
 import com.glaf.base.utils.ParamUtil;
 
+import com.glaf.core.config.ViewProperties;
 import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
 import com.glaf.core.res.ViewMessages;
@@ -176,6 +178,11 @@ public class SysFunctionController {
 		int parent = ParamUtil.getIntParameter(request, "parent", 0);
 		List<SysFunction> list = sysFunctionService.getSysFunctionList(parent);
 		request.setAttribute("list", list);
+		
+		String x_view = ViewProperties.getString("function.showFuncList");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
 
 		// 显示列表页面
 		return new ModelAndView("/modules/sys/function/function_list", modelMap);

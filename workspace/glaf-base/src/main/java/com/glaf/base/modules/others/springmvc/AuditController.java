@@ -23,6 +23,7 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
@@ -34,6 +35,7 @@ import com.glaf.base.modules.others.model.Audit;
 import com.glaf.base.modules.others.service.AuditService;
 
 import com.glaf.base.modules.sys.model.SysUser;
+import com.glaf.core.config.ViewProperties;
 import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
 import com.glaf.core.res.ViewMessages;
@@ -80,6 +82,11 @@ public class AuditController {
 		bean.setCreateDate(new Date());
 		auditService.create(bean);
 		request.setAttribute("id", String.valueOf(bean.getId()));
+		
+		String x_view = ViewProperties.getString("audit.prepareComment");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
 
 		// 显示修改页面
 		return new ModelAndView("/modules/others/audit/audit_comment", modelMap);
@@ -137,6 +144,11 @@ public class AuditController {
 			request.setAttribute("list",
 					auditService.getAuditList(referId, referType));
 		}
+		
+		String x_view = ViewProperties.getString("audit.showList");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
 
 		// 显示修改页面
 		return new ModelAndView("/modules/others/audit/audit_list", modelMap);
@@ -155,6 +167,11 @@ public class AuditController {
 	public ModelAndView showList2(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
 		RequestUtils.setRequestParameterToAttribute(request);
+		
+		String x_view = ViewProperties.getString("audit.showList2");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
 		// 显示页面
 		return new ModelAndView("/modules/others/audit/showList2", modelMap);
 	}

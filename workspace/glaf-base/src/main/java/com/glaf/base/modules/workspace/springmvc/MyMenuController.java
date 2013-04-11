@@ -23,6 +23,7 @@ import java.net.URLDecoder;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
@@ -35,6 +36,7 @@ import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.workspace.form.MyMenuFormBean;
 import com.glaf.base.modules.workspace.model.MyMenu;
 import com.glaf.base.modules.workspace.service.MyMenuService;
+import com.glaf.core.config.ViewProperties;
 import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
 import com.glaf.core.res.ViewMessages;
@@ -81,6 +83,11 @@ public class MyMenuController {
 		PageResult pager = myMenuService
 				.getMyMenuList(userId, pageNo, pageSize);
 		request.setAttribute("pager", pager);
+		
+		String x_view = ViewProperties.getString("mymenu.showList");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
 
 		// 显示列表页面
 		return new ModelAndView("/modules/workspace/mymenu/mymenu_list",
@@ -100,6 +107,11 @@ public class MyMenuController {
 	public ModelAndView prepareAdd(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
 		RequestUtils.setRequestParameterToAttribute(request);
+		
+		String x_view = ViewProperties.getString("mymenu.prepareAdd");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
 		return new ModelAndView("/modules/workspace/mymenu/mymenu_add",
 				modelMap);
 	}
@@ -117,6 +129,12 @@ public class MyMenuController {
 	public ModelAndView prepareAddMyMenu(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
 		RequestUtils.setRequestParameterToAttribute(request);
+		
+		String x_view = ViewProperties.getString("mymenu.prepareAddMyMenu");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+		
 		return new ModelAndView("/modules/workspace/mymenu/mymenu_addmymenu",
 				modelMap);
 	}
@@ -204,6 +222,11 @@ public class MyMenuController {
 		long id = ParamUtil.getLongParameter(request, "id", 0);
 		MyMenu bean = myMenuService.find(id);
 		request.setAttribute("bean", bean);
+		
+		String x_view = ViewProperties.getString("mymenu.prepareModify");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
 
 		// 显示修改页面
 		return new ModelAndView("/modules/workspace/mymenu/mymenu_modify",

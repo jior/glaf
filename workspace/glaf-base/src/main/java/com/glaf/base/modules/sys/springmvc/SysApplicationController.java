@@ -45,6 +45,7 @@ import com.glaf.base.modules.sys.query.SysApplicationQuery;
 import com.glaf.base.modules.sys.service.SysApplicationService;
 import com.glaf.base.modules.sys.service.SysTreeService;
 import com.glaf.base.utils.ParamUtil;
+import com.glaf.core.config.ViewProperties;
 import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
 import com.glaf.core.res.ViewMessages;
@@ -181,6 +182,11 @@ public class SysApplicationController {
 			return new ModelAndView(view, modelMap);
 		}
 
+		String x_view = ViewProperties.getString("application.list");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+		
 		return new ModelAndView("/modules/sys/app/list", modelMap);
 	}
 
@@ -197,6 +203,12 @@ public class SysApplicationController {
 	public ModelAndView prepareAdd(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
 		// RequestUtils.setRequestParameterToAttribute(request);
+		
+		String x_view = ViewProperties.getString("application.prepareAdd");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+		
 		return new ModelAndView("/modules/sys/app/app_add", modelMap);
 	}
 
@@ -223,6 +235,11 @@ public class SysApplicationController {
 		list.add(parent);
 		sysTreeService.getSysTree(list, (int) parent.getId(), 1);
 		request.setAttribute("parent", list);
+		
+		String x_view = ViewProperties.getString("application.prepareModify");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
 
 		return new ModelAndView("/modules/sys/app/app_modify", modelMap);
 	}
@@ -338,6 +355,10 @@ public class SysApplicationController {
 	public ModelAndView showBase(ModelMap modelMap, HttpServletRequest request,
 			HttpServletResponse response) {
 		RequestUtils.setRequestParameterToAttribute(request);
+		String x_view = ViewProperties.getString("application.showBase");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
 		return new ModelAndView("/modules/sys/app/basedata_frame", modelMap);
 	}
 
@@ -356,6 +377,10 @@ public class SysApplicationController {
 		RequestUtils.setRequestParameterToAttribute(request);
 		SysTree bean = sysTreeService.getSysTreeByCode(Constants.TREE_APP);
 		request.setAttribute("parent", bean.getId() + "");
+		String x_view = ViewProperties.getString("application.showFrame");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
 		return new ModelAndView("/modules/sys/app/app_frame", modelMap);
 	}
 
@@ -379,6 +404,11 @@ public class SysApplicationController {
 		PageResult pager = sysApplicationService.getApplicationList(parent,
 				pageNo, pageSize);
 		request.setAttribute("pager", pager);
+		
+		String x_view = ViewProperties.getString("application.showList");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
 		// 显示列表页面
 		return new ModelAndView("/modules/sys/app/app_list", modelMap);
 	}
@@ -400,6 +430,12 @@ public class SysApplicationController {
 		List<SysTree> list = new ArrayList<SysTree>();
 		sysTreeService.getSysTree(list, parent, 0);
 		request.setAttribute("list", list);
+		
+		String x_view = ViewProperties.getString("application.showNavMenu");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+		
 		return new ModelAndView("/modules/sys/app/navmenu", modelMap);
 	}
 
@@ -416,6 +452,12 @@ public class SysApplicationController {
 	public ModelAndView showPermission(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
 		RequestUtils.setRequestParameterToAttribute(request);
+		
+		String x_view = ViewProperties.getString("application.showPermission");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+		
 		return new ModelAndView("/modules/sys/app/permission_frame", modelMap);
 	}
 

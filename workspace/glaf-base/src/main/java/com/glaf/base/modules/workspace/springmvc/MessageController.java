@@ -26,6 +26,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
@@ -39,6 +40,7 @@ import com.glaf.base.modules.sys.service.SysUserService;
 import com.glaf.base.modules.workspace.form.MessageFormBean;
 import com.glaf.base.modules.workspace.model.Message;
 import com.glaf.base.modules.workspace.service.MessageService;
+import com.glaf.core.config.ViewProperties;
 import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
 import com.glaf.core.res.ViewMessages;
@@ -128,6 +130,11 @@ public class MessageController {
 						msgPageSize);
 		List<?> messageList = messagePager.getResults();
 		request.setAttribute("messageList", messageList);
+		
+		String x_view = ViewProperties.getString("message.indexList");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
 
 		// 显示列表页面
 		return new ModelAndView("/modules/workspace/message/indexList",
@@ -150,6 +157,11 @@ public class MessageController {
 		long id = ParamUtil.getLongParameter(request, "id", 0);
 		Message bean = messageService.find(id);
 		request.setAttribute("bean", bean);
+		
+		String x_view = ViewProperties.getString("message.prepareSend");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
 
 		return new ModelAndView("/modules/workspace/message/message_send",
 				modelMap);
@@ -449,6 +461,12 @@ public class MessageController {
 
 		Message bean = messageService.updateReadMessage(id);
 		request.setAttribute("bean", bean);
+		
+		
+		String x_view = ViewProperties.getString("message.showMessage");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
 
 		// 显示消息页面
 		return new ModelAndView("/modules/workspace/message/message_detail",
@@ -481,6 +499,11 @@ public class MessageController {
 				WebUtil.getQueryMap(request), pageNo, pageSize);
 		request.setAttribute("pager", pager);
 		request.setAttribute("flag", flag);
+		
+		String x_view = ViewProperties.getString("message.showReceiveList");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
 
 		// 显示列表页面
 		return new ModelAndView("/modules/workspace/message/message_list",
@@ -513,6 +536,11 @@ public class MessageController {
 				WebUtil.getQueryMap(request), pageNo, pageSize);
 		request.setAttribute("pager", pager);
 		request.setAttribute("flag", flag);
+		
+		String x_view = ViewProperties.getString("message.showSendedList");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
 
 		// 显示列表页面
 		return new ModelAndView(

@@ -47,6 +47,7 @@ import com.glaf.base.utils.ParamUtil;
 import com.glaf.base.utils.RequestUtil;
 
 import com.glaf.core.cache.CacheUtils;
+import com.glaf.core.config.ViewProperties;
 import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
 import com.glaf.core.res.ViewMessages;
@@ -94,6 +95,12 @@ public class UserController {
 		SysUser bean = sysUserService.findByAccount(user.getAccount());
 		request.setAttribute("bean", bean);
 
+		String x_view = ViewProperties
+				.getString("identity.user.prepareModifyInfo");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
 		return new ModelAndView("/modules/identity/user/user_change_info",
 				modelMap);
 	}
@@ -120,6 +127,12 @@ public class UserController {
 		list.add(parent);
 		sysTreeService.getSysTree(list, (int) parent.getId(), 1);
 		request.setAttribute("parent", list);
+
+		String x_view = ViewProperties
+				.getString("identity.user.prepareModifyPwd");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
 
 		return new ModelAndView("/modules/identity/user/user_modify_pwd",
 				modelMap);

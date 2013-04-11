@@ -42,6 +42,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.glaf.core.config.ViewProperties;
 import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
 import com.glaf.core.res.ViewMessages;
@@ -187,6 +188,12 @@ public class DictoryController {
 		} else {
 			request.setAttribute("x_complex_query", "");
 		}
+		
+		String x_view = ViewProperties.getString("base_dictory.list");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+		
 		String view = request.getParameter("view");
 		if (StringUtils.isNotEmpty(view)) {
 			return new ModelAndView(view, modelMap);
@@ -208,6 +215,12 @@ public class DictoryController {
 	public ModelAndView loadDictory(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
 		RequestUtils.setRequestParameterToAttribute(request);
+		
+		String x_view = ViewProperties.getString("base_dictory.loadDictory");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+		
 		return new ModelAndView("/modules/base/dictory/dictory_load", modelMap);
 	}
 
@@ -234,6 +247,11 @@ public class DictoryController {
 				Collections.sort(list);
 				request.setAttribute("list", list);
 			}
+		}
+		
+		String x_view = ViewProperties.getString("base_dictory.prepareAdd");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
 		}
 
 		return new ModelAndView("/modules/base/dictory/dictory_add", modelMap);
@@ -280,6 +298,11 @@ public class DictoryController {
 		list.add(parent);
 		sysTreeService.getSysTree(list, (int) parent.getId(), 1);
 		request.setAttribute("parent", list);
+		
+		String x_view = ViewProperties.getString("base_dictory.prepareModify");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
 
 		return new ModelAndView("/modules/base/dictory/dictory_modify",
 				modelMap);
@@ -343,6 +366,11 @@ public class DictoryController {
 		messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 				"dictory.reload_success"));
 		MessageUtils.addMessages(request, messages);
+		
+		String x_view = ViewProperties.getString("base_dictory.saveLoadDictory");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
 		// 显示列表页面
 		return new ModelAndView("/modules/base/dictory/dictory_load", modelMap);
 	}
@@ -450,6 +478,12 @@ public class DictoryController {
 		RequestUtils.setRequestParameterToAttribute(request);
 		SysTree bean = sysTreeService.getSysTreeByCode(Constants.TREE_DICTORY);
 		request.setAttribute("parent", bean.getId() + "");
+		
+		String x_view = ViewProperties.getString("base_dictory.showFrame");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+		
 		return new ModelAndView("/modules/base/dictory/dictory_frame", modelMap);
 	}
 
@@ -472,6 +506,11 @@ public class DictoryController {
 		PageResult pager = dictoryService.getDictoryList(parent, pageNo,
 				pageSize);
 		request.setAttribute("pager", pager);
+		
+		String x_view = ViewProperties.getString("base_dictory.showList");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
 		// 显示列表页面
 		return new ModelAndView("/modules/base/dictory/dictory_list", modelMap);
 	}

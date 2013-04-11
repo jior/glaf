@@ -25,6 +25,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
@@ -41,6 +42,7 @@ import com.glaf.base.modules.sys.service.SysUserService;
 import com.glaf.base.utils.ParamUtil;
 import com.glaf.base.utils.RequestUtil;
 import com.glaf.base.utils.WebUtil;
+import com.glaf.core.config.ViewProperties;
 import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
 import com.glaf.core.res.ViewMessages;
@@ -264,6 +266,11 @@ public class SysUserRoleController {
 		request.setAttribute("unavailable",
 				sysUserRoleService.getAuthorizedUser(user));
 
+		String x_view = ViewProperties.getString("userRole.showMain");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
 		// 显示列表页面
 		return new ModelAndView("/modules/sys/userRole/authorize_list",
 				modelMap);
@@ -294,6 +301,11 @@ public class SysUserRoleController {
 		request.setAttribute("processList",
 				sysUserRoleService.getProcessByUser(user));
 
+		String x_view = ViewProperties.getString("userRole.showSysAuth");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
 		// 显示列表页面
 		return new ModelAndView("/modules/sys/userRole/authorize_panel",
 				modelMap);
@@ -315,6 +327,12 @@ public class SysUserRoleController {
 		Map<String, String> filter = WebUtil.getQueryMap(request);
 		request.setAttribute("pager",
 				sysUserRoleService.getAllAuthorizedUser(filter));
+
+		String x_view = ViewProperties.getString("userRole.showUsers");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
 		// 显示列表页面
 		return new ModelAndView("/modules/sys/userRole/authorize_users",
 				modelMap);
@@ -342,6 +360,11 @@ public class SysUserRoleController {
 		request.setAttribute("user", user);
 		request.setAttribute("authorizedUser",
 				sysUserRoleService.getAuthorizedUser(user));
+
+		String x_view = ViewProperties.getString("userRole.showUserSysAuth");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
 
 		// 显示列表页面
 		return new ModelAndView("/modules/sys/userRole/authorizeUser_panel",
