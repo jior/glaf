@@ -106,7 +106,7 @@
 		<a href="#" id="loginOut">退出</a>
         </span>
         <span style="padding-left:10px; font-size: 24px; ">
-		<img src="images/blocks.gif" width="20" height="20" align="absmiddle" /> GLAF基础应用框架</span>
+		<img src="images/logo.gif" border="0" align="absmiddle" /> GLAF基础应用框架</span>
     </div>
     <div region="south" split="true" style="height: 30px; background: #eeeeee; ">
         <div class="footer">By &nbsp;Global Application Framework</div>
