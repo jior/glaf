@@ -45,10 +45,11 @@ function GetMenuList(data, menulist) {
     else {
         menulist += '<ul>';
         $.each(data.children, function(i, sm) {
-            if (sm.url != null) {
-                menulist += '<li ><a ref="' + sm.nodeId + '" href="#" rel="'
-					+ sm.url + '" ><span class="nav">' + sm.name
-					+ '</span></a>'
+            if (sm.url != null && sm.url.length  > 0) {
+				var link = contextPath+sm.url;
+                menulist += '<li><a ref="' + sm.id + '" href="#" rel="'
+					+ sm.url + '" onclickxy="javascript:addTab(\''+sm.name+'\',\''+link+'\',\''+sm.icon+'\');" ><span class="icon '+sm.icon+'" >&nbsp;</span><span class="nav">' + sm.name
+					+ '</span></a></li>'
             }
             else {
                 menulist += '<li state="closed"><span class="nav">' + sm.name + '</span>'
@@ -57,6 +58,7 @@ function GetMenuList(data, menulist) {
         })
         menulist += '</ul>';
     }
+	//alert(menulist);
     return menulist;
 }
 //左侧导航加载
@@ -64,9 +66,10 @@ function addNav(data) {
 
     $.each(data, function(i, sm) {
         var menulist1 = "";
-        //sm 常用菜单   
+        //sm 常用菜单  
         menulist1 = GetMenuList(sm, menulist1);
-        menulist1 = "<ul id='tt1' class='easyui-tree' animate='true' dnd='true'>" + menulist1.substring(4); 
+        //menulist1 = "<ul id='tt1' class='easyui-tree' animate='true' dnd='false'>" + menulist1.substring(4); 
+		//alert(menulist1);
         $('#wnav').accordion('add', {
             title: sm.name,
             content: menulist1,
@@ -84,20 +87,23 @@ function addNav(data) {
 // 初始化左侧
 function InitLeftMenu() {
 
+    $("#wnav").accordion({animate:false,fit:true,border:false});
+
     hoverMenuItem();
 
+    
     $('#wnav li a').live('click', function() {
         var tabTitle = $(this).children('.nav').text();
 
         var url = $(this).attr("rel");
-        var nodeId = $(this).attr("ref");
-        //var icon = getIcon(nodeId, icon);
-		var icon = "icon-sys";
+        var id = $(this).attr("ref");
+        var icon = getIcon(id, icon);
 
         addTab(tabTitle, url, icon);
         $('#wnav li div').removeClass("selected");
         $(this).parent().addClass("selected");
     });
+	
 
 }
 
@@ -113,12 +119,12 @@ function hoverMenuItem() {
 }
 
 // 获取左侧导航的图标Tab
-function getIcon(nodeId) {
+function getIcon(id) {
     var icon = 'icon ';
     $.each(_menus, function(i, n) {
         $.each(n, function(j, o) {
             $.each(o.children, function(k, m) {
-                if (m.nodeId == nodeId && m.icon != null) {
+                if (m.id == id) {
                     icon += m.icon;
                     return false;
                 }
@@ -144,9 +150,12 @@ function addTab(subtitle, url, icon) {
 }
 
 function createFrame(url) {
-	var link = contextPath+url;
-	//alert(link);
-    var s = '<iframe scrolling="auto" frameborder="0"  src="' + link + '" style="width:100%;height:100%;"></iframe>';
+	//alert(url);
+	//var link = contextPath+ url;
+	if(url.indexOf(contextPath)){
+		url = contextPath+ url;
+	}
+    var s = '<iframe scrolling="auto" frameborder="0"  src="' + url + '" style="width:100%;height:100%;"></iframe>';
     return s;
 }
 

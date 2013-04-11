@@ -20,60 +20,19 @@
 	JSONArray array = sysApplicationService.getUserMenu(3, userId);
 	String scripts = array.toString('\n');
 %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head id="Head1">
+<!DOCTYPE html >
+<html>
+<head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>GLAF基础应用框架</title>
+<link href="${contextPath}/layout/css/default.css" rel="stylesheet" type="text/css" />
 <link href="${contextPath}/scripts/easyui/themes/${theme}/easyui.css" rel="stylesheet" type="text/css" />
-<link href="<%=request.getContextPath()%>/icons/styles.css" rel="stylesheet" type="text/css" >
 <link href="${contextPath}/themes/${theme}/styles.css" rel="stylesheet" type="text/css" />
 <link href="${contextPath}/icons/styles.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="${contextPath}/scripts/jquery.min.js"></script>
 <script type="text/javascript" src="${contextPath}/scripts/jquery.cookie.js"></script>
 <script type="text/javascript" src="${contextPath}/scripts/easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src='${contextPath}/layout/js/outlook.js'> </script>
-<style type="text/css">
-*{font-size:12px; font-family:Tahoma,Verdana,微软雅黑,新宋体}
-body{background:#D2E0F2; }
-a{ color:Black; text-decoration:none;}
-a:hover{ color:Red; text-decoration:underline;}
-.textbox03 {border: #878787 1px solid;padding: 4px 3px;font:Verdana, Geneva, sans-serif,宋体;line-height: 14px; background-color: #fff;  height: auto; font-size: 14px;  font-weight: bold; width: 190px; }
-
-.txt01{font:Verdana, Geneva, sans-serif,宋体;padding:3px 2px 2px 2px; border-width:1px; border-color:#ddd;  color:#000;}
-.txt {border: #878787 1px solid;padding: 4px 3px;font:Verdana, Geneva, sans-serif,宋体;line-height: 14px; background-color: #fff;  height: auto; font-size: 14px;}
-.footer{text-align:center;color:#15428B; margin:0px; padding:0px;line-height:23px; font-weight:bold;}
-
-.head a{color:White;text-decoration:underline;}
-
-.easyui-accordion ul{list-style-type:none;margin:0px; padding:10px;}
-.easyui-accordion ul li{ padding:0px;}
-.easyui-accordion ul li a{line-height:24px;}
-.easyui-accordion ul li div{margin:2px 0px;padding-left:10px;padding-top:2px;}
-.easyui-accordion ul li div.hover{border:1px dashed #99BBE8; background:#E0ECFF;cursor:pointer;}
-.easyui-accordion ul li div.hover a{color:#416AA3;}
-.easyui-accordion ul li div.selected{border:1px solid #99BBE8; background:#E0ECFF;cursor:default;}
-.easyui-accordion ul li div.selected a{color:#416AA3; font-weight:bold;}
-
-.icon-add1{background:url('icon/edit_add.png') no-repeat;}
-.icon-delete16{background:url('icon/delete.gif') no-repeat;width:18px; line-height:18px; display:inline-block;}
-.icon-expand{ background:url('/images/coll2.gif') no-repeat;}
-.icon-collapse{ background:url('/images/coll3.gif') no-repeat;}
-        #css3menu li
-        {
-            float: left;
-            list-style-type: none;
-        }
-        #css3menu li a
-        {
-            color: #fff;
-            padding-right: 20px;
-        }
-        #css3menu li a.active
-        {
-            color: yellow;
-        }
-</style>
 <script type="text/javascript">
    var contextPath = "<%=request.getContextPath()%>";
 
@@ -92,7 +51,7 @@ a:hover{ color:Red; text-decoration:underline;}
 			 });
    }
 
-   function changeTheme(){
+       function changeTheme(){
 	    $('#w').window({
                 title: '设置主题',
                 width: 300,
@@ -107,15 +66,23 @@ a:hover{ color:Red; text-decoration:underline;}
     $(function() {
         changeTheme();
         $('#editTheme').click(function() {
-                $('#w').window('open');
+            $('#w').window('open');
         });           
-	    $('#btnCancel').click(function(){closePwd();})
+	    $('#btnCancel').click(function(){closePwd();});
+
+		$('#loginOut').click(function() {
+             $.messager.confirm('系统提示', '您确定要退出本次登录吗?', function(r) {
+                  if (r) {
+                        location.href = '${contextPath}/login.do?method=logout';
+                    }
+                });
+         })
+
     });
 
-   var _menus = {
-          "children":  
-             <%=scripts%>
-          };
+    var _menus = {
+       basic:  <%=scripts%>
+    };
 </script>
 </head>
 <body class="easyui-layout" style="overflow-y: hidden" scroll="no">
@@ -128,15 +95,15 @@ a:hover{ color:Red; text-decoration:underline;}
     <div region="north" split="true" border="false" style="overflow: hidden; height: 63px;
         background: url(${contextPath}/themes/${theme}/images/top_bar_bg.jpg) #7f99be repeat-x center 50%;
         line-height: 63px; color: #fff; font-family: Verdana, 微软雅黑,黑体">
-        <span style="float: right; padding-right: 20px;" class="head">欢迎 admin <a href="#" id="editTheme" onclick="javascript:changeTheme();">
+        <span style="float: right; padding-right: 20px;" class="head">欢迎 admin <a href="#" id="editTheme">
             切换主题</a> <a href="#" id="loginOut">退出</a></span> <span style="padding-left: 10px;
                 font-size: 18px; float: left;">
                 <img src="${contextPath}/images/logo.png" width="53" height="53" align="absmiddle" />
                 GLAF基础应用框架</span>
         <ul id="css3menu" style="padding: 0px; margin: 0px; list-type: none; float: left; 
             margin-left: 40px;">
-            <li><a class="active" name="menus" href="javascript:;" title="常用菜单">
-			<span style="font-size: 16px;">常用菜单</span></a></li>
+             <a class="active" name="basic" href="javascript:;" title="常用菜单">
+			<span style="font-size: 16px;"></span></a> 
             <!-- <li><a name="point" href="javascript:;" title="邮件列表">
 			<span style="font-size: 16px;">邮件列表</span></a></li> -->
         </ul>

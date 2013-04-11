@@ -65,8 +65,9 @@
     $(function() {
         changeTheme();
         $('#editTheme').click(function() {
-                $('#w').window('open');
-        });           
+            $('#w').window('open');
+        });         
+		
 	    $('#btnCancel').click(function(){closePwd();});
 
 		$('#loginOut').click(function() {
@@ -78,8 +79,6 @@
          })
 
     });
-
- 
 
 	var _mxm_ = {
 	  "children":  <%=scripts%>
