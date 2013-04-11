@@ -53,7 +53,27 @@
 			 });
    }
 
- var _menus = {
+   function changeTheme(){
+	    $('#w').window({
+                title: '设置主题',
+                width: 300,
+                modal: true,
+                shadow: true,
+                closed: true,
+                height: 160,
+                resizable:false
+            });
+   }
+
+    $(function() {
+        changeTheme();
+        $('#editTheme').click(function() {
+                $('#w').window('open');
+        });           
+	    $('#btnCancel').click(function(){closePwd();})
+    });
+
+   var _menus = {
     basic: [{
         "menuid": "10",
         "icon": "icon-sys",
@@ -137,7 +157,7 @@
     <div region="north" split="true" border="false" style="overflow: hidden; height: 63px;
         background: url(${contextPath}/themes/${theme}/images/top_bar_bg.jpg) #7f99be repeat-x center 50%;
         line-height: 63px; color: #fff; font-family: Verdana, 微软雅黑,黑体">
-        <span style="float: right; padding-right: 20px;" class="head">欢迎 admin <a href="#" id="editpass">
+        <span style="float: right; padding-right: 20px;" class="head">欢迎 admin <a href="#" id="editTheme" onclick="javascript:changeTheme();">
             切换主题</a> <a href="#" id="loginOut">退出</a></span> <span style="padding-left: 10px;
                 font-size: 18px; float: left;">
                 <img src="${contextPath}/images/logo.png" width="53" height="53" align="absmiddle" />
