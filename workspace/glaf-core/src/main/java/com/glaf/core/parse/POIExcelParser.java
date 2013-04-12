@@ -92,6 +92,9 @@ public class POIExcelParser implements Parser {
 					if (cell.getPosition() > 0
 							&& cell.getPosition() <= colCount) {
 						HSSFCell hssfCell = row.getCell(cell.getPosition() - 1);
+						if (hssfCell == null) {
+							continue;
+						}
 						ColumnModel col = new ColumnModel();
 						col.setName(cell.getName());
 						col.setColumnName(cell.getColumnName());
@@ -137,8 +140,8 @@ public class POIExcelParser implements Parser {
 
 						if (StringUtils.isNotEmpty(value)) {
 							value = value.trim();
-							if(value.endsWith(".0")){
-								value = value.substring(0, value.length()-2);
+							if (value.endsWith(".0")) {
+								value = value.substring(0, value.length() - 2);
 							}
 							col.setStringValue(value);
 							col.setValue(value);
