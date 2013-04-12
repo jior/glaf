@@ -23,10 +23,11 @@
 <!DOCTYPE html >
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>GLAF基础应用框架</title>
 <link href="<%=request.getContextPath()%>/layout/css/styles.css" rel="stylesheet" type="text/css" />
 <link href="<%=request.getContextPath()%>/scripts/easyui/themes/${theme}/easyui.css" rel="stylesheet" type="text/css" />
+<link href="<%=request.getContextPath()%>/themes/${theme}/styles.css" rel="stylesheet" type="text/css" />
 <link href="<%=request.getContextPath()%>/icons/styles.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/jquery.easyui.min.js"></script>
@@ -46,6 +47,7 @@
 				   },
 				   success: function(data){
 					    location.reload();
+                        //document.getElementById("themeui").href=contextPath+"/scripts/easyui/themes/"+theme+"/easyui.css";
 				   }
 			 });
    }
@@ -90,34 +92,38 @@
 <noscript>
 <div style=" position:absolute; z-index:100000; height:2046px;top:0px;left:0px; width:100%; background:white; text-align:center;">
     <img src="images/noscript.gif" alt='抱歉，请开启脚本支持！' />
-</div></noscript>
+</div>
+</noscript>
 
 <div id="loading-mask" style="position:absolute;top:0px; left:0px; width:100%; height:100%; background:#D2E0F2; z-index:20000">
 <div id="pageloading" style="position:absolute; top:50%; left:50%; margin:-120px 0px 0px -120px; text-align:center;  border:2px solid #8DB2E3; width:200px; height:40px;  font-size:14px;padding:10px; font-weight:bold; background:#fff; color:#15428B;"> 
     <img src="${contextPath}/images/loading.gif" align="absmiddle" /> 正在加载中,请稍候...</div>
 </div>
 
-    <div region="north" split="true" border="false" style="overflow: hidden; height: 63px;
+<div region="north" split="true" border="false" style="overflow: hidden; height: 63px;
         background: url(${contextPath}/themes/${theme}/images/top_bar_bg.jpg) #7f99be repeat-x center 50%;
         line-height: 63px;color: #fff; font-family: Verdana, 微软雅黑,黑体">
-        <span style="float:right; padding-right:20px;" class="head">欢迎 admin 
+        <span style="float:right; padding-right:20px;" class="head">
+		欢迎 <%=RequestUtils.getLoginContext(request).getUser().getName()%> 
 		<a href="#" id="editTheme" onclick="javascript:changeTheme();">切换主题</a>
 		<a href="#" id="loginOut">退出</a>
         </span>
         <span style="padding-left:10px; font-size: 24px; ">
 		<img src="images/logo.gif" border="0" align="absmiddle" /> GLAF基础应用框架</span>
-    </div>
-    <div region="south" split="true" style="height: 30px; background: #eeeeee; ">
+</div>
+
+<div region="south" split="true" class="south-backgroud" style="height: 30px;   ">
         <div class="footer">By &nbsp;Global Application Framework</div>
-    </div>
-    <div region="west" split="true"  title="导航菜单" style="width:180px;" id="west">
+</div>
+
+<div region="west" split="true"  title="导航菜单" style="width:180px;" id="west">
 			<div id="nav">
 		     <!--  导航内容 -->
 				
 			</div>
+</div>
 
-    </div>
-    <div id="mainPanle" region="center" style="background: #eee; overflow-y:hidden">
+<div id="mainPanle" region="center" style="background: #eee; overflow-y:hidden">
         <div id="tabs" class="easyui-tabs"  fit="true" border="false" >
 			<div title="我的桌面" style="padding:0px;overflow:hidden; color:red; " >
 				<iframe
@@ -125,13 +131,13 @@
 					width='100%' height='100%' frameborder='0' scrolling='no' noResize></iframe>
 			</div>
 		</div>
-    </div>
+</div>
     
     
     <!--修改密码窗口-->
-    <div id="w" class="easyui-window" title="修改密码" collapsible="false" minimizable="false"
-        maximizable="false" icon="icon-save"  style="width: 300px; height: 150px; padding: 5px;
-        background: #fafafa;">
+    <div id="w" class="easyui-window" title="修改密码" collapsible="false" 
+         minimizable="false" maximizable="false" icon="icon-save"  
+		 style="width: 300px; height: 150px; padding: 5px; background: #fafafa;">
         <div class="easyui-layout" fit="true">
             <div region="center" border="false" style="padding: 10px; background: #fff; border: 1px solid #ccc;">
                 <table cellpadding=3>
@@ -146,12 +152,15 @@
 								<!-- <option value="red">红色</option> -->
 								<option value="sunny">橙色</option>
                              </select> 
+							 <script type="text/javascript">
+							    document.getElementById("theme").value="${theme}";
+							 </script>
                         </td>
                     </tr>
                 </table>
             </div>
-            <div region="south" border="false" style="text-align: right; height: 30px; line-height: 30px;">
-                <a id="btnEp" class="easyui-linkbutton" icon="icon-ok"  href="javascript:setMyTheme();">确定</a>  
+            <div region="south" border="false" style="text-align: right; margin-top:2px; height: 32px; line-height: 32px;">
+                <input type="button" id="btnEp" class="button"  value="确 定"   onclick="javascript:setMyTheme();"/> 
             </div>
         </div>
     </div>
@@ -166,7 +175,6 @@
 		<div id="closeright">当前页右侧全部关闭</div>
 		<div id="closeleft">当前页左侧全部关闭</div>
 	</div>
-
 
 </body>
 </html>
