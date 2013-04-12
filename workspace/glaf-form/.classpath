@@ -57,7 +57,6 @@
 	<classpathentry kind="lib" path="/glaf-core/lib/jackson-databind-2.1.2.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/jasperreports-5.0.0.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/jasperreports-fonts-5.0.0.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/java_memcached-release.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/javassist.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/javax.activation-1.1.0.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/javax.jms-1.1.0.jar"/>

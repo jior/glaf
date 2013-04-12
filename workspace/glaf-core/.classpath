@@ -100,7 +100,6 @@
 	<classpathentry kind="lib" path="lib/jasperreports-fonts-5.0.0.jar"/>
 	<classpathentry kind="lib" path="lib/jcommon-1.0.18.jar"/>
 	<classpathentry kind="lib" path="lib/jfreechart-1.0.14.jar"/>
-	<classpathentry kind="lib" path="lib/java_memcached-release.jar"/>
 	<classpathentry kind="lib" path="lib/spymemcached.jar"/>
 	<classpathentry kind="lib" path="lib/xmemcached.jar"/>
 	<classpathentry kind="lib" path="lib/jedis.jar"/>
@@ -123,5 +122,6 @@
 	<classpathentry kind="lib" path="lib/poi-3.9-20121203.jar"/>
 	<classpathentry kind="lib" path="lib/poi-ooxml-3.9-20121203.jar"/>
 	<classpathentry kind="lib" path="lib/poi-ooxml-schemas-3.9-20121203.jar"/>
+	<classpathentry kind="lib" path="lib/memcached-java-client.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

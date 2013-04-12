@@ -20,7 +20,7 @@ package com.glaf.core.cache.memcache;
 
 import org.springframework.beans.factory.FactoryBean;
 
-import com.danga.MemCached.MemCachedClient;
+import com.whalin.MemCached.MemCachedClient;
 
 public class MemCachedClientFactoryBean implements FactoryBean<Object> {
 	private MemCachedClient memCachedClient;

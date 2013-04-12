@@ -19,7 +19,7 @@ package com.glaf.core.cache.memcache;
 
 import java.util.Date;
 import java.util.Properties;
-import com.danga.MemCached.MemCachedClient;
+import com.whalin.MemCached.MemCachedClient;
 import com.glaf.core.cache.Cache;
 
 public class MemCachedImpl implements Cache {

@@ -119,8 +119,10 @@
     </div>
     <div id="mainPanle" region="center" style="background: #eee; overflow-y:hidden">
         <div id="tabs" class="easyui-tabs"  fit="true" border="false" >
-			<div title="我的桌面" style="padding:20px;overflow:hidden; color:red; " >
-				 
+			<div title="我的桌面" style="padding:0px;overflow:hidden; color:red; " >
+				<iframe
+					src="${contextPath}/mx/user/portal"
+					width='100%' height='100%' frameborder='0' scrolling='no' noResize></iframe>
 			</div>
 		</div>
     </div>
