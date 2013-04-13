@@ -275,7 +275,7 @@ public class ${entityName}BaseController {
 					JSONObject rowJSON = ${modelName}.toJsonObject();
 					rowJSON.put("id", ${modelName}.getId());
 					rowJSON.put("${modelName}Id", ${modelName}.getId());
-
+                                        rowJSON.put("startIndex", ++start);
  					rowsJSON.add(rowJSON);
 				}
 

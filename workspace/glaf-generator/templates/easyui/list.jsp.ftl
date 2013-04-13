@@ -190,11 +190,17 @@
 	 <table id="mydatagrid"></table>
   </div>  
 </div>
+<div id="edit_dlg" class="easyui-dialog" style="width:400px;height:280px;padding:10px 20px"
+	closed="true" buttons="#dlg-buttons">
+    <form id="editForm" name="editForm" method="post">
+         
+    </form>
+</div>
 <div id="dlg" class="easyui-dialog" style="width:400px;height:280px;padding:10px 20px"
 	closed="true" buttons="#dlg-buttons">
- <form id="searchForm" name="searchForm" method="post">
-	 <table class="easyui-form" >
-		<tbody>
+    <form id="searchForm" name="searchForm" method="post">
+	<table class="easyui-form" >
+            <tbody>
         <#if pojo_fields?exists>
          <#list  pojo_fields as field>	
 		   <#if field.editable>
@@ -217,8 +223,9 @@
 	  </#if>	 
     </#list>
     </#if>
-	</tbody>
-</table>
+	    </tbody>
+        </table>
+    </form>
 </div>
 <div id="dlg-buttons">
 	<a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="javascript:searchData()">≤È—Ø</a>

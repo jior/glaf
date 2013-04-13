@@ -98,6 +98,25 @@ public class SysRoleController {
 		return new ModelAndView("show_msg2", modelMap);
 	}
 
+	@RequestMapping(params = "method=edit")
+	public ModelAndView edit(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+
+		long id = ParamUtil.getIntParameter(request, "id", 0);
+		SysRole sysRole = null;
+		if (id > 0) {
+			sysRole = sysRoleService.findById(id);
+			request.setAttribute("sysRole", sysRole);
+		}
+
+		String x_view = ViewProperties.getString("role.edit");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
+		return new ModelAndView("/modules/sys/role/edit", modelMap);
+	}
+
 	@RequestMapping(params = "method=json")
 	@ResponseBody
 	public byte[] json(HttpServletRequest request) throws IOException {
@@ -155,6 +174,7 @@ public class SysRoleController {
 				for (SysRole sysRole : list) {
 					JSONObject rowJSON = sysRole.toJsonObject();
 					rowJSON.put("id", sysRole.getId());
+					rowJSON.put("startIndex", ++start);
 					rowsJSON.add(rowJSON);
 				}
 			}

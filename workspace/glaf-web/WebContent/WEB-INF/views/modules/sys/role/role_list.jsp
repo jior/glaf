@@ -20,7 +20,7 @@ List list = pager.getResults();
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.form.js"></script> 
 <script language="javascript" src='<%=context%>/scripts/verify.js'></script>
 <script language="javascript" src='<%=context%>/scripts/main.js'></script>
-<script language="JavaScript">
+<script language="javascript">
 var num=0;
 function checkOperation(form){
   num = getCheckedBoxNum(form,"id");
