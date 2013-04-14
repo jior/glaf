@@ -42,10 +42,13 @@ if(status!=''){
 	alert("<%=status%>");
 }
 if(refreshStr != 'false'){
-  if (window.opener) {
+    if (window.opener) {
 	  window.opener.location.reload();
+	} else if (window.parent) {
+	  window.parent.location.reload();
 	}
 }
+ 
 Close();
 </script>
 </html>

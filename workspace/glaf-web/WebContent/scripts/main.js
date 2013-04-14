@@ -582,10 +582,7 @@ function addToMyMenu() {
 					+ window.location.search), 600, 450);
 }
 
-function openUpload(obj, type) {
-	return ShowDialog(context + '/inc/upload/fileUpload.jsp'
-			+ (type ? '?type=' + type : ''), 450, 230, 'no', false, obj);
-}
+ 
 
 // 第一个日期是否大于或等于第二个日期
 function checkDate(DateOne, DateTwo, opgt) {

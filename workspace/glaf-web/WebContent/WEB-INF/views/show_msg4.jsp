@@ -35,7 +35,7 @@ if (message.length > 0) {
 }
 if(refreshStr != 'false'){
   if (window.opener) {
-  //解决重新发送信息刷新页面的问题
+      //解决重新发送信息刷新页面的问题
 	  window.opener.location.href=window.opener.location.href;
 	}
 }
