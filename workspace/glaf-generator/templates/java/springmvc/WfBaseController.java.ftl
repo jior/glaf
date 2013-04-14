@@ -359,7 +359,7 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 
 			}
 		}
-		return result.toString().getBytes("UTF-8");
+		return result.toJSONString().getBytes("UTF-8");
 	}
 
 }

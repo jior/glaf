@@ -812,6 +812,40 @@ public final class StringTools {
 		}
 		return pieces;
 	}
+	
+	public static List<Long> splitToLong(String text) {
+		return splitToLong(text, ",");
+	}
+
+	@SuppressWarnings("unchecked")
+	public static List<Long> splitToLong(String text, String delimiter) {
+		if (delimiter == null) {
+			throw new RuntimeException("delimiter is null");
+		}
+		if (text == null) {
+			return Collections.EMPTY_LIST;
+		}
+		List<Long> pieces = new ArrayList<Long>();
+		int start = 0;
+		int end = text.indexOf(delimiter);
+		while (end != -1) {
+			String tmp = text.substring(start, end);
+			if (StringUtils.isNotEmpty(tmp) && StringUtils.isNumeric(tmp)) {
+				pieces.add(Long.parseLong(tmp));
+			}
+			start = end + delimiter.length();
+			end = text.indexOf(delimiter, start);
+		}
+		if (start < text.length()) {
+			String tmp = text.substring(start);
+			if (tmp != null && tmp.trim().length() > 0) {
+				if (StringUtils.isNumeric(tmp)) {
+					pieces.add(Long.parseLong(tmp));
+				}
+			}
+		}
+		return pieces;
+	}
 
 	public static Collection<String> stringToCollection(String string) {
 		if (string == null || string.trim().length() == 0) {
