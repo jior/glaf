@@ -692,14 +692,30 @@ public class BaseDataManager {
 							bdi.setName(bean.getName());// 字典名称
 							bdi.setCode(bean.getCode());// 字典代码
 							bdi.setValue(bean.getValue());// 字典代码
-							bdi.setExt1(bean.getExt1());// 扩展字段1(投资汇率)
-							bdi.setExt2(bean.getExt2());// 扩展字段2(费用汇率)
+							bdi.setExt1(bean.getExt1());// 扩展字段1
+							bdi.setExt2(bean.getExt2());// 扩展字段2
 
-							bdi.setExt3(bean.getExt3());// 扩展字段1(投资汇率设置人)
-							bdi.setExt4(bean.getExt4());// 扩展字段1(费用汇率设置人)
+							bdi.setExt3(bean.getExt3());// 扩展字段3
+							bdi.setExt4(bean.getExt4());// 扩展字段4
 
-							bdi.setExt5(bean.getExt5());// 扩展字段1(投资汇率最后修改时间)
-							bdi.setExt6(bean.getExt6());// 扩展字段1(费用汇率最后修改时间)
+							bdi.setExt5(bean.getExt5());// 扩展字段5
+							bdi.setExt6(bean.getExt6());// 扩展字段6
+							bdi.setExt7(bean.getExt7());
+							bdi.setExt8(bean.getExt8());
+							bdi.setExt9(bean.getExt9());
+
+							bdi.setExt10(bean.getExt10());
+							bdi.setExt11(bean.getExt11());
+							bdi.setExt12(bean.getExt12());
+							bdi.setExt13(bean.getExt13());
+							bdi.setExt14(bean.getExt14());
+							bdi.setExt15(bean.getExt15());
+							bdi.setExt16(bean.getExt16());
+							bdi.setExt17(bean.getExt17());
+							bdi.setExt18(bean.getExt18());
+							bdi.setExt19(bean.getExt19());
+							bdi.setExt20(bean.getExt20());
+
 							bdi.setDeep(0);
 
 							logger.info("id:" + bean.getId() + ",name:"
