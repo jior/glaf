@@ -28,7 +28,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.glaf.core.util.RequestUtils;
- 
 
 @Controller("/main")
 @RequestMapping("/main.do")
@@ -55,6 +54,13 @@ public class MainController {
 			HttpServletResponse response) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		return new ModelAndView("/main/header", modelMap);
+	}
+
+	@RequestMapping(params = "method=home")
+	public ModelAndView home(ModelMap modelMap, HttpServletRequest request,
+			HttpServletResponse response) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		return new ModelAndView("/main/home", modelMap);
 	}
 
 	@RequestMapping
