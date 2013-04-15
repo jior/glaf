@@ -11,6 +11,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>角色列表</title>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/easyui/themes/${theme}/easyui.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/themes/${theme}/styles.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/icons/styles.css">
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.form.js"></script>
@@ -61,7 +62,7 @@
 	function addNew(){
 		var url="role.do?method=prepareAdd";
 	    var width=450;
-	    var height=250;
+	    var height=280;
 	    var scroll="no";
 	    openWindow(url, width, height, scroll);
 	}
@@ -70,7 +71,7 @@
 		//alert(row.id+"  "+row.name);
 		var url="role.do?method=prepareModify&id="+row.id;
 	    var width=450;
-	    var height=250;
+	    var height=280;
 	    var scroll="no";
 	    //openWindow(url, width, height, scroll);
 		jQuery('#edit_dlg').dialog('open').dialog('setTitle','角色编辑');
@@ -123,7 +124,7 @@
 		if (selected ){
 			var url="role.do?method=prepareModify&id="+selected.id;
 			var width=450;
-			var height=250;
+			var height=280;
 			var scroll="no";
 			openWindow(url, width, height, scroll);
 		}
@@ -140,7 +141,7 @@
 		if (selected ){
 		    var url="role.do?method=prepareModify&id="+selected.id;
 			var width=450;
-			var height=250;
+			var height=280;
 			var scroll="no";
 			openWindow(url, width, height, scroll);
 		}
@@ -259,7 +260,7 @@
 <div style="margin:0;"></div>  
 <div class="easyui-layout" data-options="fit:true">  
    <div data-options="region:'north',split:true,border:true" style="height:40px"> 
-    <div style="padding-left:5px;padding-top:5px;font-size:12px"> 
+    <div class="toolbar-backgroud"> 
 	<img src="<%=request.getContextPath()%>/images/window.png">
 	&nbsp;<span class="x_content_title">角色列表</span>
     <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-add'" 
@@ -277,7 +278,7 @@
   </div>  
 </div>
 
-<div id="edit_dlg" class="easyui-dialog" style="width:480px;height:320px;padding:10px 20px"
+<div id="edit_dlg" class="easyui-dialog" style="width:480px;height:280px;padding:10px 20px"
 	closed="true" >
     <form id="editForm" name="editForm" method="post">
 	     <input type="hidden" id="id" name="id" value="">

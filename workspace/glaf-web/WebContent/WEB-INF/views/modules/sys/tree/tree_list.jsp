@@ -88,8 +88,8 @@ function dict(form){
 	  }
 	  var url="dictoryDefinition.do?method=edit&target=sys_dictory&nodeId="+id;
 	  var link = "<%=request.getContextPath()%>/sys/"+url;
-	  var width=650;
-	  var height=480;
+	  var width=605;
+	  var height=380;
 	  var scroll="yes";
 	  //openWindow(url, width, height, scroll);
 	  art.dialog.open(link, { height: height, width: width, title: "分类字典", lock: true, scrollbars:"no" }, false);

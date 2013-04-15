@@ -16,13 +16,10 @@ List list = pager.getResults();
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title></title>
+<title>用户管理</title>
 <link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
-<link href="<%=request.getContextPath()%>/scripts/artDialog/skins/default.css" rel="stylesheet" />
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.form.js"></script> 
-<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/artDialog/artDialog.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/artDialog/plugins/iframeTools.js"></script>
 <script language="javascript" src='<%=context%>/scripts/verify.js'></script>
 <script language="javascript" src='<%=context%>/scripts/main.js'></script>
 <script language="JavaScript">
@@ -118,7 +115,7 @@ function roles(form){
 </script>
 </head>
 
-<body>
+<body style="margin-left:5px;">
 <div class="nav-title"><span class="Title">用户管理</span>&gt;&gt;
 <%
 List nav = (List)request.getAttribute("nav");
@@ -137,16 +134,18 @@ while(navIter.hasNext()){
 <input type="hidden" name="id" value="0">
 <table width="100%" border="0" cellspacing="1" cellpadding="0" class="list-box">
   <tr class="list-title"> 
-    <td width="5%" align="center"> <input type="checkbox" name="chkall" value="checkbox" onClick="checkAll(this.form, this);checkOperation(this.form)">    </td>
+    <td width="5%" align="center"> 
+	<input type="checkbox" name="chkall" value="checkbox" onClick="checkAll(this.form, this);checkOperation(this.form)">    
+	</td>
     <td width="5%" align="center">序号</td>
     <td width="8%" align="center" >帐号</td>
     <td width="10%" align="center" >姓名</td>
     <td width="15%" align="center" >部门</td>
-    <td width="20%" align="center" >角色</td>
-    <td width="5%" align="center" >是否有效</td>
+    <td width="25%" align="center" >角色</td>
+    <td width="8%" align="center" >是否有效</td>
     <td width="12%" align="center" >创建日期</td>
-    <td width="15%" align="center" >上次登陆时间</td>
-    </tr>
+    <td width="12%" align="center" >上次登陆时间</td>
+  </tr>
   <%
 int i=0;
 if(list!=null){
@@ -170,16 +169,21 @@ if(list!=null){
 	}
 %>
   <tr <%=i%2==0?"":"class='list-back'"%>> 
-    <td class="td-cb"> <input type="checkbox" name="id" value="<%=bean.getId()%>" onClick="checkOperation(this.form)">    </td>
-    <td class="td-no"><%=((pager.getCurrentPageNo()-1)*pageSize + i+1)%></td>
-    <td class="td-text"><%=bean.getAccount()%>&nbsp;</td>
-    <td class="td-text"><%=bean.getName()%>&nbsp;</td>
-    <td class="td-c"><%=bean.getDepartment().getName()%>&nbsp;</td>
-    <td class="td-text" title="<%=roleName%>"><%=roleName%>
+    <td width="5%" class="td-cb"> 
+	<input type="checkbox" name="id" value="<%=bean.getId()%>" onClick="checkOperation(this.form)"> 
 	</td>
-    <td class="td-no"><%=bean.getBlocked()==1?"否":"是"%>&nbsp;</td>
-    <td class="td-time"><%=new java.text.SimpleDateFormat("yyyy-MM-dd").format(bean.getCreateTime())%>&nbsp;</td>
-    <td align="center" class="list"><%=new java.text.SimpleDateFormat("yyyy-MM-dd mm:ss").format(bean.getLastLoginTime())%>&nbsp;</td>
+    <td width="5%" class="td-no"><%=((pager.getCurrentPageNo()-1)*pageSize + i+1)%></td>
+    <td width="8%" class="td-text"><%=bean.getAccount()%>&nbsp;</td>
+    <td width="10%" class="td-text"><%=bean.getName()%>&nbsp;</td>
+    <td width="15%" class="td-c"><%=bean.getDepartment().getName()%>&nbsp;</td>
+    <td width="25%" class="td-text" title="<%=roleName%>"><%=roleName%></td>
+    <td width="8%" class="td-no"><%=bean.getBlocked()==1?"否":"是"%>&nbsp;</td>
+    <td width="12%" class="td-time">
+	<%=new java.text.SimpleDateFormat("yyyy-MM-dd").format(bean.getCreateTime())%>&nbsp;
+	</td>
+    <td width="12%" align="center" class="list">
+	<%=new java.text.SimpleDateFormat("yyyy-MM-dd").format(bean.getLastLoginTime())%>&nbsp;
+	</td>
     </tr>
   <%
     i++;
@@ -204,14 +208,14 @@ for(; i<pageSize; i++){
 </table>
 <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
   <tr> 
-    <td colspan="5" width="50%"> 
+    <td  width="46%"> 
 	  <input name="btn_add" type="button" value="增加" class="button" onClick="javascript:add();"> 
       <input name="btn_del" type="button" value="删除" class="button" onClick="javascript:del();" disabled>
       <input name="btn_modify" type="button" value="修改" class="button" onClick="javascript:modify(this.form);" disabled>
 	  <input name="btn_reset_pwd" type="button" value="重置密码" class="button" onClick="javascript:resetPwd(this.form);" disabled>
       <input name="btn_role" type="button" value="角色设置" class="button" onClick="javascript:roles(this.form);" disabled>
 	</td>
-    <td colspan="4" width="50%"> 
+    <td  width="54%"> 
       <%
         String params = WebUtil.getQueryString(request);
       %>
@@ -228,7 +232,7 @@ for(; i<pageSize; i++){
 </table>
 </html:form> 
 <script language="javascript">
-attachFrame();
+//attachFrame();
 </script>
 </body>
 </html>

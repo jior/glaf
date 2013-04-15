@@ -63,7 +63,7 @@ a:hover {
   background:url(../images/s_01.jpg) no-repeat;
 }
 .nav-title {
-  margin:20px 0 0 0;
+    margin:1px 0 0 0;
 	line-height:20px;
 	background:url(../images/s_04.jpg) 16px bottom no-repeat;
 	padding:6px 0 0 26px;
@@ -502,7 +502,7 @@ color:#FFBC13
 	background:#fafafa url('../images/datagrid_header_bg.gif') repeat-x left bottom;
 }
 .page-footer{
-	width:385px;
+	width:375px;
 	overflow:hidden;
 }
 .page-footer table{

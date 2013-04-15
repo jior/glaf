@@ -10,12 +10,16 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>${classDefinition.title}</title>
+<link href="<%=request.getContextPath()%>/scripts/artDialog/skins/default.css" rel="stylesheet" />
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/easyui/themes/#F{theme}/easyui.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/themes/#F{theme}/styles.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/icons/styles.css">
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.form.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/artDialog/artDialog.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/artDialog/plugins/iframeTools.js"></script>
 <script type="text/javascript">
 
    jQuery(function(){
@@ -61,16 +65,19 @@
 
 		 
 	function addNew(){
-		location.href="<%=request.getContextPath()%>/apps/${modelName}.do?method=edit";
+	    //location.href="<%=request.getContextPath()%>/apps/${modelName}.do?method=edit";
+	    art.dialog.open(link, { height: 420, width: 680, title: "添加记录", lock: true, scrollbars:"no" }, false);
 	}
 
 	function onRowClick(rowIndex, row){
-            window.open('<%=request.getContextPath()%>/apps/${modelName}.do?method=edit&rowId='+row.id);
+            //window.open('<%=request.getContextPath()%>/apps/${modelName}.do?method=edit&rowId='+row.id);
+	    var link = '<%=request.getContextPath()%>/apps/${modelName}.do?method=edit&rowId='+row.id;
+	    art.dialog.open(link, { height: 420, width: 680, title: "修改记录", lock: true, scrollbars:"no" }, false);
 	}
 
 	function searchWin(){
-		jQuery('#dlg').dialog('open').dialog('setTitle','${classDefinition.title}查询');
-		//jQuery('#searchForm').form('clear');
+	    jQuery('#dlg').dialog('open').dialog('setTitle','${classDefinition.title}查询');
+	    //jQuery('#searchForm').form('clear');
 	}
 
 	function resize(){
@@ -81,15 +88,17 @@
 	}
 
 	function editSelected(){
-		var rows = jQuery('#mydatagrid').datagrid('getSelections');
-		if(rows == null || rows.length !=1){
-			alert("请选择其中一条记录。");
-			return;
-		}
-		var selected = jQuery('#mydatagrid').datagrid('getSelected');
-		if (selected ){
-			location.href="<%=request.getContextPath()%>/apps/${modelName}.do?method=edit&rowId="+selected.id;
-		}
+	    var rows = jQuery('#mydatagrid').datagrid('getSelections');
+	    if(rows == null || rows.length !=1){
+		alert("请选择其中一条记录。");
+		return;
+	    }
+	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
+	    if (selected ){
+		//location.href="<%=request.getContextPath()%>/apps/${modelName}.do?method=edit&rowId="+selected.id;
+		var link = "<%=request.getContextPath()%>/apps/${modelName}.do?method=edit&rowId="+selected.id;
+		art.dialog.open(link, { height: 420, width: 680, title: "修改记录", lock: true, scrollbars:"no" }, false);
+	    }
 	}
 
 	function viewSelected(){
@@ -133,38 +142,42 @@
 		}
 	}
 
+	function reloadGrid(){
+	    jQuery('#mydatagrid').datagrid('reload');
+	}
+
 	function getSelected(){
-		var selected = jQuery('#mydatagrid').datagrid('getSelected');
-		if (selected){
-			alert(selected.code+":"+selected.name+":"+selected.addr+":"+selected.col4);
-		}
+	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
+	    if (selected){
+		alert(selected.code+":"+selected.name+":"+selected.addr+":"+selected.col4);
+	    }
 	}
 
 	function getSelections(){
-		var ids = [];
-		var rows = jQuery('#mydatagrid').datagrid('getSelections');
-		for(var i=0;i<rows.length;i++){
-			ids.push(rows[i].code);
-		}
-		alert(ids.join(':'));
+	    var ids = [];
+	    var rows = jQuery('#mydatagrid').datagrid('getSelections');
+	    for(var i=0;i<rows.length;i++){
+		ids.push(rows[i].code);
+	    }
+	    alert(ids.join(':'));
 	}
 
 	function clearSelections(){
-		jQuery('#mydatagrid').datagrid('clearSelections');
+	    jQuery('#mydatagrid').datagrid('clearSelections');
 	}
 
 	function searchData(){
-		var params = jQuery("#searchForm").formSerialize();
-		var queryParams = jQuery('#mydatagrid').datagrid('options').queryParams;
+	    var params = jQuery("#searchForm").formSerialize();
+	    var queryParams = jQuery('#mydatagrid').datagrid('options').queryParams;
 	    <#if pojo_fields?exists>
-         <#list  pojo_fields as field>	
-		   <#if field.editable>
-		queryParams.${field.name} = document.getElementById("query_${field.name}").value;
-	      </#if>	 
-         </#list>
-        </#if>		   
-		jQuery('#mydatagrid').datagrid('reload');	
-		jQuery('#dlg').dialog('close');
+            <#list  pojo_fields as field>	
+	     <#if field.editable>
+	    queryParams.${field.name} = document.getElementById("query_${field.name}").value;
+	     </#if>	 
+            </#list>
+            </#if>		   
+	    jQuery('#mydatagrid').datagrid('reload');	
+	    jQuery('#dlg').dialog('close');
 	}
 		 
 </script>
@@ -173,7 +186,7 @@
 <div style="margin:0;"></div>  
 <div class="easyui-layout" data-options="fit:true">  
    <div data-options="region:'north',split:true,border:true" style="height:40px"> 
-    <div style="background:#fafafa;padding:2px;border:1px solid #ddd;font-size:12px"> 
+    <div class="toolbar-backgroud"  > 
 	<img src="<%=request.getContextPath()%>/images/window.png">
 	&nbsp;<span class="x_content_title">${classDefinition.title}列表</span>
     <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-add'" 

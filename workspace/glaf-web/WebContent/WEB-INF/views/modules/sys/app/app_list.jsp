@@ -15,8 +15,9 @@ List list = pager.getResults();
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title></title>
+<title>模块管理</title>
 <link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/icons/styles.css">
 <link href="<%=request.getContextPath()%>/scripts/artDialog/skins/default.css" rel="stylesheet" />
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.form.js"></script> 
@@ -24,7 +25,7 @@ List list = pager.getResults();
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/artDialog/plugins/iframeTools.js"></script>
 <script language="javascript" src='<%=context%>/scripts/verify.js'></script>
 <script language="javascript" src='<%=context%>/scripts/main.js'></script>
-<script language="JavaScript">
+<script language="javascript">
 var num=0;
 function checkOperation(form){
   num = getCheckedBoxNum(form,"id");
@@ -46,8 +47,8 @@ function checkOperation(form){
 function add(){
   var url="application.do?method=prepareAdd&parent="+<%=parent%>;
   var link = "<%=request.getContextPath()%>/sys/"+url;
-  var width=450;
-  var height=420;
+  var width=480;
+  var height=450;
   var scroll="no";
   //openWindow(url, width, height, scroll);
   art.dialog.open(link, { height: height, width: width, title: "添加模块", lock: true, scrollbars:"no" }, false);
@@ -62,8 +63,8 @@ function modify(form){
   }
   var url="application.do?method=prepareModify&id="+id;
   var link = "<%=request.getContextPath()%>/sys/"+url;
-  var width=450;
-  var height=440;
+  var width=480;
+  var height=450;
   var scroll="no";
   //openWindow(url, width, height, scroll);
   art.dialog.open(link, { height: height, width: width, title: "修改模块", lock: true, scrollbars:"no" }, false);

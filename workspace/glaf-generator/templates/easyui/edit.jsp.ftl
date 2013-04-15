@@ -12,6 +12,7 @@
 <title>${classDefinition.title}</title>
 <link href="<%=request.getContextPath()%>/css/site.css" type="text/css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/easyui/themes/#F{theme}/easyui.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/themes/#F{theme}/styles.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/icons/styles.css">
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.form.js"></script>
@@ -69,7 +70,7 @@
 
 <div class="easyui-layout" data-options="fit:true">  
   <div data-options="region:'north',split:true,border:true" style="height:40px"> 
-    <div style="background:#fafafa;padding:2px;border:1px solid #ddd;font-size:12px"> 
+    <div class="toolbar-backgroud"> 
 	<span class="x_content_title">±à¼­${classDefinition.title}</span>
 	<!-- <input type="button" name="save" value=" ±£´æ " class="button btn btn-primary" onclick="javascript:saveData();">
 	<input type="button" name="saveAs" value=" Áí´æ " class="button btn" onclick="javascript:saveAsData();">
@@ -86,7 +87,7 @@
   <form id="iForm" name="iForm" method="post">
   <input type="hidden" id="id" name="id" value="#F{${modelName}.${idField.name}}"/>
   <input type="hidden" id="rowId" name="rowId" value="#F{${modelName}.${idField.name}}"/>
-  <table class="easyui-form" style="width:800px;" align="center">
+  <table class="easyui-form" style="width:600px;" align="center">
     <tbody>
   <#if pojo_fields?exists>
     <#list  pojo_fields as field>	

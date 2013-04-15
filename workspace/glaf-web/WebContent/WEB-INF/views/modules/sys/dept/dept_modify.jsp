@@ -32,103 +32,8 @@ function checkForm(form){
 function setValue(obj){
   obj.value=obj[obj.selectedIndex].value;
 }
-//添加历史部门
-function addHistory(form){
-	var departIds = "";
-	var departNames = "";
-	var url = context + "/sys/department.do?method=showDeptAllSelect&parent=5";
-  	var features="dialogHeight:310px; dialogWidth:360px; center: yes; resizable: no; status: no; help:no";
-  	var ret = window.showModalDialog(url, window, features);
-  	if(ret!=null){
-  		for(var i=0; i<ret.length; i++){
-			var depart ;
-			eval("depart="+ret[i]);
-			if(!isAddDepart(depart)){
-				addTableRow(depart);
-			}
-		}
-  	}
-}
-//添加到table中
-function addTableRow(depart){
-	var index = $("historyTb").rows.length;
-	var row = $("historyTb").insertRow(index);
-	var col = row.insertCell(0); 
-	col.align="center"; 
-	col.className = "td-cb";
-	col.innerHTML = "<input type=\"checkbox\" name=\"historyId\" value=\""+ depart.id +"\">";
-	col = row.insertCell(1); 
-	col.align="center"; 
-	col.className = "td-no";
-	col.innerHTML = ""+index; 
-	
-	col = row.insertCell(2); 
-	col.align="center"; 
-	col.className = "td-text";
-	col.innerHTML = ""+depart.name;
-	
-	if(index % 2 == 0){
-		row.className="list-back";
-	}
-}
-//全选历史部门
-function selectCB(name){
-	var obj = document.getElementsByName(name);
-	for (var i = 0; i < obj.length; i++) {
-		 var o = obj.item(i);
-		 if (o.type=="checkbox") {
-				o.checked = true;
-		 }
-	}
-}
-//判断是否可以添加到table中
-function isAddDepart(depart){
-	var ret = false;
-	var obj = document.getElementsByName("historyId");
-	for (var i = 0; i < obj.length; i++) {
-		 var o = obj.item(i);
-		 if (o.type=="checkbox" && o.value == depart.id) {
-				ret = true;
-				break;
-		 }
-	}
-	return ret;
-}
-//删除历史部门
-function deleteHistory(form){
-	var num = getCheckedBoxNum(form,"historyId");
-	var rows = $("historyTb").rows
-	if(num == 0){
-		alert("请选择需要删除的部门!");
-		return;
-	}else{
-		var obj = document.getElementsByName("historyId");
-		for (var i = 0; i < obj.length; i++) {
-			 var o = obj.item(i);
-			 if (o.type=="checkbox" && o.checked == true) {
-			 	row = o.parentNode.parentNode;
-				$("historyTb").deleteRow(row.rowIndex);
-				i=i-1;
-			 }
-			 
-		}
-		reloadHistoryTable();
-	}
-}
-
-function reloadHistoryTable(){
-	var tab = $("historyTb");
-	for(var i = 1; i< tab.rows.length; i++){
-		var row = tab.rows[i];
-		var col = row.cells[1];
-		col.innerHTML = ""+i;
-		if(i % 2 == 0){
-			row.className="list-back";
-		}else{
-			row.className="";
-		}
-	}
-}
+  
+ 
 </script>
 </head>
 
@@ -147,7 +52,8 @@ function reloadHistoryTable(){
     </table></td>
   </tr>
   <tr>
-    <td class="box-mm"><table width="95%" align="center" border="0" cellspacing="0" cellpadding="5">
+    <td class="box-mm">
+	<table width="95%" align="center" border="0" cellspacing="0" cellpadding="5">
       <tr>
         <td class="input-box">上级部门</td>
         <td><select name="parent" onChange="javascript:setValue(this);" class="input">
@@ -158,14 +64,14 @@ function reloadHistoryTable(){
 				SysTree bean2=(SysTree)iter.next();
 			%>
 					  <option value="<%=bean2.getId()%>">
-					  <%
+			<%
 			for(int i=1;i<bean2.getDeep();i++){
 			  out.print("&nbsp;&nbsp;");
 			}
 			out.print(bean2.getName());
 			%>
 					  </option>
-					  <%    
+			<%    
 			  }
 			}
 			%>
@@ -203,17 +109,14 @@ function reloadHistoryTable(){
           否
 		</td>
       </tr>
-     
-    </table>
-		</DIV>
-		</td>
-        </tr>
-      <tr>
+
+	  <tr>
         <td colspan="2" align="center" valign="bottom" height="30">&nbsp;
               <input name="btn_save" type="submit" value="保存" class="button">
 		</td>
       </tr>
-    </table></td>
+    </table>
+   </td>
   </tr>
   <tr>
     <td><table width="100%" border="0" cellspacing="0" cellpadding="0">

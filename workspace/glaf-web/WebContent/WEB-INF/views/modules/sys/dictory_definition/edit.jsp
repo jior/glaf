@@ -11,7 +11,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>字典设置</title>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/easyui/themes/${theme}/easyui.css">
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/easyui/themes/icon.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/icons/styles.css">
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.form.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/jquery.easyui.min.js"></script>
@@ -74,11 +74,13 @@
 </script>
 </head>
 <body style="margin:1px;">  
-<div style="margin:0;"></div>  
+ 
 <div class="easyui-layout" data-options="fit:true">  
   <div data-options="region:'center',border:true">
-	 <table id="dg" class="easyui-datagrid" title="字典设置"  
+	 <table id="dg" class="easyui-datagrid" 
 			data-options="
+			    width:600,
+				height:350,
 				iconCls: 'icon-edit',
 				singleSelect: true,
 				toolbar: '#tb',
@@ -86,11 +88,11 @@
 				onClickRow: onClickRow">
 		<thead>
 			<tr>
-				<th data-options="field:'id', width:80">编号</th>
-				<th data-options="field:'name', width:80">名称</th>
-				<th data-options="field:'type', width:90,formatter:formatterType">类型</th>
-				<th data-options="field:'title', width:120, editor:'text'">标题</th>
-				<th data-options="field:'required', width:90, align:'center', formatter:formatterRequired, 
+				<!-- <th data-options="field:'id', width:80">编号</th> -->
+				<th data-options="field:'name', width:120">名称</th>
+				<th data-options="field:'type', width:120,formatter:formatterType">类型</th>
+				<th data-options="field:'title', width:180, editor:'text'">标题</th>
+				<th data-options="field:'required', width:80, align:'center', formatter:formatterRequired, 
 				       editor:{type:'checkbox',options:{on:'1',off:'0'}}">
 				    是否必填
 				</th>

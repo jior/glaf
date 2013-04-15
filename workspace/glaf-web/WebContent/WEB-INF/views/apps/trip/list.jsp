@@ -12,6 +12,7 @@
 <title>出差申请</title>
 <link href="<%=request.getContextPath()%>/scripts/artDialog/skins/default.css" rel="stylesheet" />
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/easyui/themes/${theme}/easyui.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/themes/${theme}/styles.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/icons/styles.css">
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.form.js"></script>
@@ -168,6 +169,10 @@
 		jQuery('#mydatagrid').datagrid('clearSelections');
 	}
 
+	function reloadGrid(){
+		jQuery('#mydatagrid').datagrid('reload');
+	}
+
 	function searchData(){
 		var params = jQuery("#searchForm").formSerialize();
 		var queryParams = jQuery('#mydatagrid').datagrid('options').queryParams;
@@ -188,7 +193,7 @@
 <div style="margin:0;"></div>  
 <div class="easyui-layout" data-options="fit:true">  
    <div data-options="region:'north',split:true,border:true" style="height:40px"> 
-    <div style="padding-left:5px;padding-top:5px;font-size:12px">  
+    <div class="toolbar-backgroud">  
 	<img src="<%=request.getContextPath()%>/images/window.png">
 	&nbsp;<span class="x_content_title">出差申请列表</span>
     <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-add'" 

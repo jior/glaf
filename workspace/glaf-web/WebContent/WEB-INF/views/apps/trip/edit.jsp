@@ -34,7 +34,7 @@
 						   alert(data.message);
 					   } else {
 						 alert('操作成功完成！');
-					   }
+					   }					
 				   }
 			 });
 	}
@@ -55,8 +55,10 @@
 					   if(data.message != null){
 						   alert(data.message);
 					   } else {
-						 alert('操作成功完成！');
+						   alert('操作成功完成！');
 					   }
+					   window.parent.location.reload();
+					   window.close();
 				   }
 			 });
 	}
@@ -69,7 +71,7 @@
 
 <div class="easyui-layout" data-options="fit:true">  
   <div data-options="region:'north',split:true,border:true" style="height:40px"> 
-    <div style="background:#fafafa;padding:2px;border:1px solid #ddd;font-size:12px"> 
+    <div class="toolbar-backgroud"> 
 	<span class="x_content_title">编辑出差申请</span>
 	<!-- <input type="button" name="save" value=" 保存 " class="button btn btn-primary" onclick="javascript:saveData();">
 	<input type="button" name="saveAs" value=" 另存 " class="button btn" onclick="javascript:saveAsData();">
