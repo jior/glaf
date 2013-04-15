@@ -1,0 +1,2 @@
+<%@ page contentType="text/plain;charset=UTF-8" language="java"%><%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%><%@ taglib uri="http://github.com/jior/glaf/tags" prefix="glaf"%><%@ taglib uri="http://www.springframework.org/tags/form" prefix="html"%>
+{<c:if test="${!empty statusCode}">"statusCode":${statusCode},</c:if>"message":"<glaf:messages id="message" message="true"><glaf:write name="message"/></glaf:messages>"}
