@@ -20,8 +20,38 @@
 <script type="text/javascript" src="${contextPath}/scripts/easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="${contextPath}/scripts/easyui/locale/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript">
-        $(function() {
-            $("#loginWindow").window({
+    var login='${requestContext.login}';
+
+    function openMainPage(){
+		var browser=navigator.appName
+		//alert(browser);
+		//alert(navigator.userAgent);
+		if(browser=="Microsoft Internet Explorer") {
+		//页面加载时即关闭父窗口，此页面全屏显示
+	    if(window.opener!=null){
+            if(login!='true') {
+	    	   window.opener.opener = null;
+	           window.opener.open('','_self');
+	           window.opener.close();
+	           window.opener = null;
+             }
+		} else if(login!='true') {
+	        var screenWidth = screen.availWidth, screenHeight = screen.availHeight;
+            var args = "top=0,left=0,toolbar=no,menubar=no,scrollbars=yes, resizable=yes,location=no, status=no,titlebar=no";
+	        //打开全屏的新窗口
+	        var win = window.open(window.location.href+"?login=true","fullscreen", args);
+	        if(win){
+	            win.resizeTo(screenWidth, screenHeight);
+	            win.outerWidth = screenWidth;
+	            win.outerHeight = screenHeight;
+	            win.moveTo(0,0);
+	        }
+	      }
+	    }
+	}
+
+    $(function() {
+        $("#loginWindow").window({
                 title: 'GLAF基础应用框架',
                 width: 290,
                 height: 180,
@@ -61,8 +91,7 @@
     </script>
 
 </head>
-<body>
-
+<body onloadx="openMainPage();">
     <div id="loginWindow" class="easyui-window" title="Login Form" iconcls="icon-login"
         style="width: 300px; height: 180px; padding: 5px; background: #fafafa;">
         <div border="false" style="padding-left: 30px;  border: 1px solid #ccc;">

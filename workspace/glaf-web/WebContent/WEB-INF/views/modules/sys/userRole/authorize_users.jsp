@@ -58,7 +58,7 @@ function auth(form){
   var features="dialogHeight:580px; dialogWidth:600px; center: yes; resizable: no; status: no; help:no";
   //window.showModalDialog(url, window, features);
   //window.open(url);
-  art.dialog.open(url, { height: 620, width: 600, title: "用户授权", lock: true, scrollbars:"no" }, false);
+  art.dialog.open(url, { height: 580, width: 600, title: "用户授权", lock: true, scrollbars:"no" }, false);
 }
 function doSearch(form){
   var url="sysUserRole.do?method=showUsers&" + getSearchElement(form);

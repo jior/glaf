@@ -27,7 +27,7 @@ while(roles.hasNext()){
 function privilege(roleId){
   var url="deptRole.do?method=showPrivilege&deptId=<%=department.getId()%>&roleId="+roleId;
   var width=650;
-  var height=600;
+  var height=580;
   var scroll="no";
   openWindow(url, width, height, scroll);
 }
