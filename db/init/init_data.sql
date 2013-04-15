@@ -92,11 +92,10 @@ insert into sys_tree (id, parent, name, nodedesc, sort, code) values (512, 10, '
 
 
 /*初始化部门信息*/
-insert into sys_department (id, name, deptdesc, createtime, sort, deptno, code, code2, status, fincode, nodeid) values (6, '技术部', '技术部', '2006-07-16 16:30:39', 284, 'JS000', 'JS', 'J', 0, 'JS000', 6);
+insert into sys_department (id, name, deptdesc, createtime, sort, deptno, code, code2, status, fincode, nodeid) values (6, '技术部', '技术部', null, 284, 'JS000', 'JS', 'J', 0, 'JS000', 6);
  
 /*初始化用户信息*/
-insert into sys_user (id, deptId, account, password, code, name, blocked, createTime, lastLoginTime, lastLoginIP, mobile, email, telephone, evection, gender, headship, userType, fax, accountType, dumpFlag, adminFlag) values (1, 6, 'root', 'lueSGJZetyySpUndWjMB', 'root', 'root', 0, '2006-07-16 16:41:52', '2009-07-08 10:27:05', '127.0.0.1', '111', 'admin@127.0.0.1', '111', 0, 0, '担当', 40, null, 0, 0, '1');
-insert into sys_user (id, deptId, account, password, code, name, blocked, createTime, lastLoginTime, lastLoginIP, mobile, email, telephone, evection, gender, headship, userType, fax, accountType, dumpFlag, adminFlag) values (2, 6, 'admin', 'lueSGJZetyySpUndWjMB', 'admin', 'admin', 0, '2006-07-16 16:41:52', '2009-07-08 10:27:05', '127.0.0.1', '111', 'admin@127.0.0.1', '111', 0, 0, '担当', 40, null, 0, 0, '1');
+insert into sys_user (id, deptId, account, password, code, name, blocked, createTime, lastLoginTime, lastLoginIP, mobile, email, telephone, evection, gender, headship, userType, fax, accountType, dumpFlag, adminFlag) values (1, 6, 'root', 'lueSGJZetyySpUndWjMB', 'root', 'root', 0, null, null, '127.0.0.1', '111', 'root@127.0.0.1', '111', 0, 0, '管理员', 40, null, 0, 0, '1');
 
 /*初始化应用信息*/
 insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (3, '应用模块', '应用模块', '', 3, 1, 3);
@@ -147,8 +146,7 @@ insert into sys_dept_role (id, grade, code, sort, sysroleid, deptid) values (1, 
 
 /*插入用户角色*/
 insert into sys_user_role (id, userid, roleid, authorized, authorizefrom, availdatestart, availdateend, processdescription) values (2, 1, 1, 1, 1, null, null, null);
-insert into sys_user_role (id, userid, roleid, authorized, authorizefrom, availdatestart, availdateend, processdescription) values (4, 2, 1, 2, 2, null, null, null);
-
+ 
    
  
 /*插入访问权限*/
