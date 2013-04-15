@@ -11,14 +11,17 @@ int parent=ParamUtil.getIntParameter(request, "parent", 0);
 com.glaf.core.util.PageResult pager=(com.glaf.core.util.PageResult)request.getAttribute("pager");
 List list = pager.getResults();
 %>
-
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
 <link href="<%=request.getContextPath()%>/css/site.css" type="text/css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/scripts/artDialog/skins/default.css" rel="stylesheet" />
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.form.js"></script> 
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/artDialog/artDialog.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/artDialog/plugins/iframeTools.js"></script>
 <script language="javascript" src='<%=context%>/scripts/verify.js'></script>
 <script language="javascript" src='<%=context%>/scripts/main.js'></script>
 <script language="JavaScript">
@@ -43,10 +46,12 @@ function checkOperation(form){
 }
 function add(){
   var url="department.do?method=prepareAdd&parent="+<%=parent%>;
+  var link = "<%=request.getContextPath()%>/sys/"+url;
   var width=630;
   var height=450;
   var scroll="no";  
-  openWindow(url, width, height, scroll);
+  //openWindow(url, width, height, scroll);
+  art.dialog.open(link, { height: height, width: width, title: "添加部门", scrollbars:"no" , lock: true });
 }
 function modify(form){
   var id =0;
@@ -57,10 +62,12 @@ function modify(form){
 	}     
   }
   var url="department.do?method=prepareModify&id="+id;
+  var link = "<%=request.getContextPath()%>/sys/"+url;
   var width=720;
   var height=480;
   var scroll="no";
-  openWindow(url, width, height, scroll);
+  //openWindow(url, width, height, scroll);
+  art.dialog.open(link, { height: height, width: width, title: "修改部门", scrollbars:"no" , lock: true });
 }
 
 function sort(id, operate){  
@@ -86,10 +93,12 @@ function users(form){
 	}     
   }
   var url="user.do?method=showList&parent="+id;
+  var link = "<%=request.getContextPath()%>/sys/"+url;
   var width=850;
   var height=400;
   var scroll="no";
-  openWindow(url, width, height, scroll);
+  //openWindow(url, width, height, scroll);
+  art.dialog.open(link, { height: height, width: width, title: "部门用户", scrollbars:"no" , lock: true });
 }
 function roles(form){
   var id =0;
@@ -100,10 +109,12 @@ function roles(form){
 	}     
   }
   var url="deptRole.do?method=showList&parent="+id;
+  var link = "<%=request.getContextPath()%>/sys/"+url;
   var width=680;
   var height=400;
   var scroll="no";
-  openWindow(url, width, height, scroll);
+  //openWindow(url, width, height, scroll);
+  art.dialog.open(link, { height: height, width: width, title: "部门角色", scrollbars:"no" , lock: true });
 }
 </script>
 </head>

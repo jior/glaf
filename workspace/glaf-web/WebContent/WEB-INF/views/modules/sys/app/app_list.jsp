@@ -11,14 +11,17 @@ int parent=ParamUtil.getIntParameter(request, "parent", 0);
 com.glaf.core.util.PageResult pager=(com.glaf.core.util.PageResult)request.getAttribute("pager");
 List list = pager.getResults();
 %>
-
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
 <link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/scripts/artDialog/skins/default.css" rel="stylesheet" />
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.form.js"></script> 
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/artDialog/artDialog.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/artDialog/plugins/iframeTools.js"></script>
 <script language="javascript" src='<%=context%>/scripts/verify.js'></script>
 <script language="javascript" src='<%=context%>/scripts/main.js'></script>
 <script language="JavaScript">
@@ -42,10 +45,12 @@ function checkOperation(form){
 }
 function add(){
   var url="application.do?method=prepareAdd&parent="+<%=parent%>;
+  var link = "<%=request.getContextPath()%>/sys/"+url;
   var width=450;
   var height=420;
   var scroll="no";
-  openWindow(url, width, height, scroll);
+  //openWindow(url, width, height, scroll);
+  art.dialog.open(link, { height: height, width: width, title: "添加模块", lock: true, scrollbars:"no" }, false);
 }
 function modify(form){
   var id =0;
@@ -56,10 +61,12 @@ function modify(form){
 	}     
   }
   var url="application.do?method=prepareModify&id="+id;
+  var link = "<%=request.getContextPath()%>/sys/"+url;
   var width=450;
   var height=440;
   var scroll="no";
-  openWindow(url, width, height, scroll);
+  //openWindow(url, width, height, scroll);
+  art.dialog.open(link, { height: height, width: width, title: "修改模块", lock: true, scrollbars:"no" }, false);
 }
 function func(form){
   var id =0;
@@ -70,10 +77,12 @@ function func(form){
 	}     
   }
   var url="function.do?method=showFuncList&parent="+id;
+  var link = "<%=request.getContextPath()%>/sys/"+url;
   var width=580;
   var height=330;
   var scroll="yes";
-  openWindow(url, width, height, scroll);
+  //openWindow(url, width, height, scroll);
+  art.dialog.open(link, { height: height, width: width, title: "模块功能", lock: true, scrollbars:"no" }, false);
 }
 function del(){
   var form = document.all.GenericForm;

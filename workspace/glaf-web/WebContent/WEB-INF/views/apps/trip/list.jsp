@@ -10,12 +10,15 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>出差申请</title>
+<link href="<%=request.getContextPath()%>/scripts/artDialog/skins/default.css" rel="stylesheet" />
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/easyui/themes/${theme}/easyui.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/icons/styles.css">
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.form.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/artDialog/artDialog.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/artDialog/plugins/iframeTools.js"></script>
 <script type="text/javascript">
 
    jQuery(function(){
@@ -67,11 +70,15 @@
 
 		 
 	function addNew(){
-		location.href="<%=request.getContextPath()%>/apps/trip.do?method=edit";
+		var link = "<%=request.getContextPath()%>/apps/trip.do?method=edit";
+		//location.href="<%=request.getContextPath()%>/apps/trip.do?method=edit";
+		art.dialog.open(link, { height: 420, width: 680, title: "添加记录", lock: true, scrollbars:"no" }, false);
 	}
 
 	function onRowClick(rowIndex, row){
-            window.open('<%=request.getContextPath()%>/apps/trip.do?method=edit&rowId='+row.id);
+        //window.open('<%=request.getContextPath()%>/apps/trip.do?method=edit&rowId='+row.id);
+		var link = "<%=request.getContextPath()%>/apps/trip.do?method=edit&rowId="+row.id;
+		art.dialog.open(link, { height: 420, width: 680, title: "修改记录", lock: true, scrollbars:"no" }, false);
 	}
 
 	function searchWin(){
@@ -94,7 +101,9 @@
 		}
 		var selected = jQuery('#mydatagrid').datagrid('getSelected');
 		if (selected ){
-			location.href="<%=request.getContextPath()%>/apps/trip.do?method=edit&rowId="+selected.id;
+			//location.href="<%=request.getContextPath()%>/apps/trip.do?method=edit&rowId="+selected.id;
+			var link = "<%=request.getContextPath()%>/apps/trip.do?method=edit&rowId="+selected.id;
+		    art.dialog.open(link, { height: 420, width: 680, title: "修改记录", lock: true, scrollbars:"no" }, false);
 		}
 	}
 
@@ -179,7 +188,7 @@
 <div style="margin:0;"></div>  
 <div class="easyui-layout" data-options="fit:true">  
    <div data-options="region:'north',split:true,border:true" style="height:40px"> 
-    <div style="background:#fafafa;padding:2px;border:1px solid #ddd;font-size:12px"> 
+    <div style="padding-left:5px;padding-top:5px;font-size:12px">  
 	<img src="<%=request.getContextPath()%>/images/window.png">
 	&nbsp;<span class="x_content_title">出差申请列表</span>
     <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-add'" 

@@ -11,16 +11,20 @@ int pageSize=Constants.PAGE_SIZE;
 com.glaf.core.util.PageResult pager=(com.glaf.core.util.PageResult)request.getAttribute("pager");
 List list = pager.getResults();
 %>
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>基础平台系统</title>
+<link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/scripts/artDialog/skins/default.css" rel="stylesheet" />
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.form.js"></script> 
-<link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/artDialog/artDialog.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/artDialog/plugins/iframeTools.js"></script>
 <script language="javascript" src='<%=context%>/scripts/verify.js'></script>
 <script language="javascript" src='<%=context%>/scripts/main.js'></script>
-<script language="JavaScript">
+<script language="javascript">
 var num=0;
 function checkOperation(form){
   num = getCheckedBoxNum(form,"id");
@@ -36,10 +40,12 @@ function checkOperation(form){
 }
 function add(){
   var url="dictory.do?method=prepareAdd&parent="+<%=parent%>;
+  var link = "<%=request.getContextPath()%>/base/"+url;
   var width=480;
   var height=420;
   var scroll="yes";
-  openWindow(url, width, height, scroll);
+  //openWindow(url, width, height, scroll);
+  art.dialog.open(link, { height: height, width: width, title: "添加字典", lock: true, scrollbars:"no" }, false);
 }
 
 function modify(form){
@@ -51,10 +57,12 @@ function modify(form){
 	}     
   }
   var url="dictory.do?method=prepareModify&id="+id+"&parent="+<%=parent%>;
+  var link = "<%=request.getContextPath()%>/base/"+url;
   var width=480;
   var height=420;
   var scroll="yes";
-  openWindow(url, width, height, scroll);
+  //openWindow(url, width, height, scroll);
+  art.dialog.open(link, { height: height, width: width, title: "修改字典", lock: true, scrollbars:"no" }, false);
 }
 
 function del(){

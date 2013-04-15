@@ -12,12 +12,17 @@ SysDepartment department = (SysDepartment)request.getAttribute("department");
 com.glaf.core.util.PageResult pager=(com.glaf.core.util.PageResult)request.getAttribute("pager");
 List list = pager.getResults();
 %>
-
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
 <link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/scripts/artDialog/skins/default.css" rel="stylesheet" />
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.form.js"></script> 
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/artDialog/artDialog.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/artDialog/plugins/iframeTools.js"></script>
 <script language="javascript" src='<%=context%>/scripts/verify.js'></script>
 <script language="javascript" src='<%=context%>/scripts/main.js'></script>
 <script language="JavaScript">
@@ -45,10 +50,12 @@ function checkOperation(form){
 
 function add(){
   var url="user.do?method=prepareAdd&parent=<%=department.getId()%>";
+  var link = "<%=request.getContextPath()%>/sys/"+url;
   var width=480;
   var height=450;
   var scroll="no";
   openWindow(url, width, height, scroll);
+  //art.dialog.open(link, { height: height, width: width, title: "添加用户", lock: true, scrollbars:"no" }, false);
 }
 function modify(form){
   var id =0;
@@ -59,10 +66,12 @@ function modify(form){
 	}     
   }
   var url="user.do?method=prepareModify&id="+id;
+  var link = "<%=request.getContextPath()%>/sys/"+url;
   var width=480;
   var height=450;
   var scroll="no";
   openWindow(url, width, height, scroll);
+  //art.dialog.open(link, { height: height, width: width, title: "修改用户", lock: true, scrollbars:"no" }, false);
 }
 
 function resetPwd(form){
@@ -74,10 +83,12 @@ function resetPwd(form){
 	}     
   }
   var url="user.do?method=prepareResetPwd&id="+id;
+  var link = "<%=request.getContextPath()%>/sys/"+url;
   var width=450;
   var height=300;
   var scroll="no";
   openWindow(url, width, height, scroll);
+  //art.dialog.open(link, { height: height, width: width, title: "重置用户密码", lock: true, scrollbars:"no" }, false);
 }
 
 function del(){
@@ -97,10 +108,12 @@ function roles(form){
 	}     
   }
   var url="user.do?method=showRole&user_id="+id;
+  var link = "<%=request.getContextPath()%>/sys/"+url;
   var width=450;
   var height=350;
   var scroll="yes";
   openWindow(url, width, height, scroll);
+  //art.dialog.open(link, { height: height, width: width, title: "用户角色", lock: true, scrollbars:"no" }, false);
 }
 </script>
 </head>

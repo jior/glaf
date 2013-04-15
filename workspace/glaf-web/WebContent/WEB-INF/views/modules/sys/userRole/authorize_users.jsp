@@ -15,17 +15,23 @@
 	List list = pager.getResults();
 	Map userMap = IdentityFactory.getLongUserMap();
 %>
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
 <link href="<%=request.getContextPath()%>/css/site.css" type="text/css" rel="stylesheet">
-<script language="javascript" src='<%=request.getContextPath()%>/scripts/verify.js'></script>
-<script language="javascript" src='<%=request.getContextPath()%>/scripts/main.js'></script>
-<link href="<%=request.getContextPath()%>/scripts/calendar/skins/aqua/theme.css"  type="text/css" title="Aqua" rel="stylesheet"/>
-<script src="<%=context%>/scripts/calendar/calendar.js" language="javascript"></script>
-<script src="<%=context%>/scripts/calendar/lang/calendar-en.js" language="javascript"></script>
-<script src="<%=context%>/scripts/calendar/lang/calendar-setup.js" language="javascript"></script>
+<link href="<%=request.getContextPath()%>/scripts/artDialog/skins/default.css" rel="stylesheet" />
+<link href="<%=request.getContextPath()%>/scripts/calendar/skins/aqua/theme.css" type="text/css" rel="stylesheet"/>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.form.js"></script> 
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/artDialog/artDialog.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/artDialog/plugins/iframeTools.js"></script>
+<script type="text/javascript" src='<%=request.getContextPath()%>/scripts/verify.js'></script>
+<script type="text/javascript" src='<%=request.getContextPath()%>/scripts/main.js'></script>
+<script src="<%=context%>/scripts/calendar/calendar.js" type="text/javascript"></script>
+<script src="<%=context%>/scripts/calendar/lang/calendar-en.js" type="text/javascript"></script>
+<script src="<%=context%>/scripts/calendar/lang/calendar-setup.js" type="text/javascript"></script>
 <script language="javascript">
 var num=0;
 function checkOperation(form){
@@ -50,8 +56,9 @@ function auth(form){
   }
   var url = context + "/sys/sysUserRole.do?method=showSysAuth&id="+id;
   var features="dialogHeight:580px; dialogWidth:600px; center: yes; resizable: no; status: no; help:no";
-  window.showModalDialog(url, window, features);
+  //window.showModalDialog(url, window, features);
   //window.open(url);
+  art.dialog.open(url, { height: 620, width: 600, title: "用户授权", lock: true, scrollbars:"no" }, false);
 }
 function doSearch(form){
   var url="sysUserRole.do?method=showUsers&" + getSearchElement(form);

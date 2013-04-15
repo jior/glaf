@@ -78,7 +78,7 @@
 	<!-- 
 	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-saveas'" onclick="javascript:saveAsData();" >另存</a> 
         -->
-	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-back'" onclick="javascript:history.back();">返回</a>	
+	<!-- <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-back'" onclick="javascript:history.back();">返回</a>	 -->
     </div> 
   </div>
 
@@ -86,7 +86,7 @@
   <form id="iForm" name="iForm" method="post">
   <input type="hidden" id="id" name="id" value="${trip.id}"/>
   <input type="hidden" id="rowId" name="rowId" value="${trip.id}"/>
-  <table class="easyui-form" style="width:800px;" align="center">
+  <table class="easyui-form" style="width:500px;" align="center">
     <tbody>
 	<tr>
 		<td width="20%" align="left">交通工具</td>
