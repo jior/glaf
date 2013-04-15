@@ -10,8 +10,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>出差申请</title>
-<link href="<%=request.getContextPath()%>/css/site.css" type="text/css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/easyui/themes/${theme}/easyui.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/themes/${theme}/styles.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/icons/styles.css">
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.form.js"></script>
@@ -95,7 +95,7 @@
 		<td align="left">
             <input id="transType" name="transType" type="text" 
 			       class="easyui-validatebox"  
-			
+			       data-options="required:true"
 				   value="${trip.transType}"/>
 		</td>
 	</tr>
@@ -103,7 +103,7 @@
 		<td width="20%" align="left">申请日期</td>
 		<td align="left">
 			<input id="applyDate" name="applyDate" type="text" 
-			       class="easyui-datebox"
+			       class="easyui-datebox" data-options="required:true"
 			 required="true" 
 				  value="<fmt:formatDate value="${trip.applyDate}" pattern="yyyy-MM-dd"/>"/>
 		</td>
@@ -112,7 +112,7 @@
 		<td width="20%" align="left">开始日期</td>
 		<td align="left">
 			<input id="startDate" name="startDate" type="text" 
-			       class="easyui-datebox"
+			       class="easyui-datebox" data-options="required:true"
 			 required="true" 
 				  value="<fmt:formatDate value="${trip.startDate}" pattern="yyyy-MM-dd"/>"/>
 		</td>
@@ -121,7 +121,7 @@
 		<td width="20%" align="left">结束日期</td>
 		<td align="left">
 			<input id="endDate" name="endDate" type="text" 
-			       class="easyui-datebox"
+			       class="easyui-datebox" data-options="required:true"
 			 required="true" 
 				  value="<fmt:formatDate value="${trip.endDate}" pattern="yyyy-MM-dd"/>"/>
 		</td>
@@ -131,7 +131,7 @@
 		<td align="left">
 			<input id="days" name="days" type="text"
 			       class="easyui-numberbox"  precision="2" 
-			 required="true" 
+			 required="true"  data-options="required:true"
 				  value="${trip.days}"/>
 		</td>
 	</tr>
@@ -140,7 +140,7 @@
 		<td align="left">
 			<input id="money" name="money" type="text"
 			       class="easyui-numberbox"  precision="2" 
-			 required="true" 
+			 required="true"  data-options="required:true"
 				  value="${trip.money}"/>
 		</td>
 	</tr>
@@ -149,7 +149,7 @@
 		<td align="left">
             <input id="cause" name="cause" type="text" 
 			       class="easyui-validatebox"  
-			 required="true" 
+			 required="true"  data-options="required:true"
 				   value="${trip.cause}"/>
 		</td>
 	</tr>

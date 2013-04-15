@@ -10,7 +10,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>${classDefinition.title}</title>
-<link href="<%=request.getContextPath()%>/css/site.css" type="text/css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/easyui/themes/#F{theme}/easyui.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/themes/#F{theme}/styles.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/icons/styles.css">
@@ -98,27 +97,27 @@
 		<#if field.type?exists && field.type== 'Date'>
 			<input id="${field.name}" name="${field.name}" type="text" 
 			       class="easyui-datebox"
-			<#if field.nullable == false> required="true" </#if>
+			<#if field.nullable == false> required="true" data-options="required:true" </#if>
 				  value="<fmt:formatDate value="#F{${modelName}.${field.name}}" pattern="yyyy-MM-dd"/>"/>
             <#elseif field.type?exists && field.type== 'Integer'>
 			<input id="${field.name}" name="${field.name}" type="text" 
 			       class="easyui-numberspinner" value="0" 
-				   increment="10"  <#if field.nullable == false> required="true" </#if>
+				   increment="10"  <#if field.nullable == false> required="true" data-options="required:true" </#if>
 				   value="#F{${modelName}.${field.name}}"/>
 			<#elseif field.type?exists && field.type== 'Long'>
 			<input id="${field.name}" name="${field.name}" type="text"
 			       class="easyui-numberspinner" value="0" 
-				   increment="100"  <#if field.nullable == false> required="true" </#if>
+				   increment="100"  <#if field.nullable == false> required="true" data-options="required:true" </#if>
 				   value="#F{${modelName}.${field.name}}"/>
 			<#elseif field.type?exists && field.type== 'Double'>
 			<input id="${field.name}" name="${field.name}" type="text"
 			       class="easyui-numberbox"  precision="2" 
-			<#if field.nullable == false> required="true" </#if>
+			<#if field.nullable == false> required="true" data-options="required:true" </#if>
 				  value="#F{${modelName}.${field.name}}"/>
 			<#else>
             <input id="${field.name}" name="${field.name}" type="text" 
 			       class="easyui-validatebox"  
-			<#if field.nullable == false> required="true" </#if>
+			<#if field.nullable == false> required="true" data-options="required:true" </#if>
 				   value="#F{${modelName}.${field.name}}"/>
 			</#if>
 		</td>
