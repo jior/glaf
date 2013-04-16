@@ -14,6 +14,7 @@
 		<result property="sort" column="SORT" jdbcType="INTEGER" />
 		<result property="showMenu" column="SHOWMENU" jdbcType="INTEGER" />
 		<result property="nodeId" column="NODEID" jdbcType="BIGINT" />
+		<result property="locked" column="LOCKED" jdbcType="INTEGER" />
 		<result property="createDate" column="CREATEDATE" jdbcType="TIMESTAMP" />
 		<result property="createBy" column="CREATEBY" jdbcType="VARCHAR" />
 		<result property="updateBy" column="UPDATEBY" jdbcType="VARCHAR" />
@@ -52,6 +53,9 @@
 			<if test="nodeId != null">
 				,NODEID
 			</if>
+			<if test="locked != null">
+				,LOCKED
+			</if>
 			<if test="createDate != null">
 				,CREATEDATE
 			</if>
@@ -89,6 +93,9 @@
 			</if>
 			<if test="nodeId != null">
 				,#{nodeId, jdbcType=BIGINT}
+			</if>
+			<if test="locked != null">
+				,#{locked, jdbcType=INTEGER}
 			</if>
 			<if test="createDate != null">
 				,#{createDate, jdbcType=TIMESTAMP}
@@ -131,6 +138,9 @@
 			<if test="nodeId != null">
 				NODEID = #{nodeId, jdbcType=BIGINT},
 			</if>
+			<if test="locked != null">
+				LOCKED = #{locked, jdbcType=INTEGER},
+			</if>
 			<if test="updateBy != null">
 				UPDATEBY = #{updateBy, jdbcType=VARCHAR},
 			</if>
@@ -149,6 +159,7 @@
 		sys_application
 		where ID = #{id}
 	</delete>
+
 
 	<delete id="deleteSysApplications" parameterType="com.glaf.base.modules.sys.query.SysApplicationQuery">
 		delete from sys_application
@@ -328,6 +339,11 @@
 					open="(" separator="," close=")">
 					#{x_nodeId}
 				</foreach>
+			</if>
+			
+			<if test="locked != null">
+				and E.LOCKED is not null 
+				and E.LOCKED = #{locked}
 			</if>
 
 		</where>

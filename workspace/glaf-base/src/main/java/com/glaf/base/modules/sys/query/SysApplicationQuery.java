@@ -25,6 +25,7 @@ public class SysApplicationQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;
 	protected String codeLike;
 	protected String descLike;
+	protected Integer locked;
 	protected String name;
 	protected String nameLike;
 	protected List<String> names;
@@ -67,6 +68,10 @@ public class SysApplicationQuery extends DataQuery {
 			}
 		}
 		return descLike;
+	}
+
+	public Integer getLocked() {
+		return locked;
 	}
 
 	public String getName() {
@@ -192,6 +197,14 @@ public class SysApplicationQuery extends DataQuery {
 		addColumn("nodeId", "NODEID");
 	}
 
+	public SysApplicationQuery locked(Integer locked) {
+		if (locked == null) {
+			throw new RuntimeException("locked is null");
+		}
+		this.locked = locked;
+		return this;
+	}
+
 	public SysApplicationQuery name(String name) {
 		if (name == null) {
 			throw new RuntimeException("name is null");
@@ -255,6 +268,10 @@ public class SysApplicationQuery extends DataQuery {
 
 	public void setDescLike(String descLike) {
 		this.descLike = descLike;
+	}
+
+	public void setLocked(Integer locked) {
+		this.locked = locked;
 	}
 
 	public void setName(String name) {

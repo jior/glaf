@@ -99,10 +99,16 @@ function setValue(obj){
       <tr>
         <td class="input-box2" valign="top">是否弹出窗</td>
         <td>
-          <input type="radio" name="showMenu" value="2" <%=bean.getShowMenu()==2?"checked":""%>>
-是
-<input type="radio" name="showMenu" value="1" <%=bean.getShowMenu()!=2?"checked":""%>>
-否</td>
+          <input type="radio" name="showMenu" value="2" <%=bean.getShowMenu()==2?"checked":""%>>是
+		  <input type="radio" name="showMenu" value="1" <%=bean.getShowMenu()!=2?"checked":""%>>否
+		  </td>
+      </tr>
+	  <tr>
+        <td class="input-box2" valign="top">是否有效</td>
+        <td>
+		  <input type="radio" name="locked" value="0" <%=bean.getLocked()==0?"checked":""%>>是
+          <input type="radio" name="locked" value="1" <%=bean.getLocked()==1?"checked":""%>>否
+        </td>
       </tr>
       <tr>
         <td colspan="2" align="center" valign="bottom" height="30">&nbsp;

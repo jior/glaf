@@ -67,6 +67,12 @@ public class SysApplication implements Serializable, JSONable {
 	protected long id;
 
 	/**
+	 *  «∑Ò∆Ù”√
+	 */
+	@Column(name = "locked")
+	protected int locked;
+
+	/**
 	 * √˚≥∆
 	 */
 	@Column(name = "NAME")
@@ -140,6 +146,10 @@ public class SysApplication implements Serializable, JSONable {
 		return id;
 	}
 
+	public int getLocked() {
+		return locked;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -198,6 +208,10 @@ public class SysApplication implements Serializable, JSONable {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	public void setLocked(int locked) {
+		this.locked = locked;
 	}
 
 	public void setName(String name) {

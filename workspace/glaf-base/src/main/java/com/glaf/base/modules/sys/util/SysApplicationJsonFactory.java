@@ -43,6 +43,11 @@ public class SysApplicationJsonFactory {
 		if (jsonObject.containsKey("code")) {
 			model.setCode(jsonObject.getString("code"));
 		}
+
+		if (jsonObject.containsKey("locked")) {
+			model.setLocked(jsonObject.getInteger("locked"));
+		}
+
 		if (jsonObject.containsKey("sort")) {
 			model.setSort(jsonObject.getInteger("sort"));
 		}
@@ -88,6 +93,7 @@ public class SysApplicationJsonFactory {
 		jsonObject.put("sort", model.getSort());
 		jsonObject.put("showMenu", model.getShowMenu());
 		jsonObject.put("nodeId", model.getNodeId());
+		jsonObject.put("locked", model.getLocked());
 
 		if (model.getCreateDate() != null) {
 			jsonObject.put("createDate",
@@ -135,6 +141,8 @@ public class SysApplicationJsonFactory {
 		jsonObject.put("sort", model.getSort());
 		jsonObject.put("showMenu", model.getShowMenu());
 		jsonObject.put("nodeId", model.getNodeId());
+		jsonObject.put("locked", model.getLocked());
+
 		if (model.getCreateBy() != null) {
 			jsonObject.put("createBy", model.getCreateBy());
 		}

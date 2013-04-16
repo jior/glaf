@@ -159,6 +159,7 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 		SysApplicationQuery query = new SysApplicationQuery();
 		query.parentId(parentAppId);
 		query.setOrderBy(" E.SORT desc ");
+		query.setLocked(0);
 		List<Long> nodeIds = new ArrayList<Long>();
 		nodeIds.add(-1L);
 
@@ -191,6 +192,7 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 
 		SysApplicationQuery query = new SysApplicationQuery();
 		query.parentId(Long.valueOf(parentAppId));
+		query.setLocked(0);
 		query.setOrderBy(" E.SORT desc ");
 		List<SysApplication> apps = this.list(query);
 		logger.debug("----------------apps size:" + apps.size());
@@ -306,6 +308,9 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 				Iterator<SysApplication> iter = list.iterator();
 				while (iter.hasNext()) {
 					SysApplication bean = (SysApplication) iter.next();
+					if (bean.getLocked() == 1) {
+						continue;
+					}
 					JSONObject item = new JSONObject();
 					item.put("id", String.valueOf(bean.getId()));
 					item.put("nodeId", bean.getNodeId());
@@ -445,6 +450,7 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 		bean.setUpdateDate(new Date());
 		this.sysApplicationMapper.updateSysApplication(bean);
 		if (bean.getNode() != null) {
+			bean.getNode().setLocked(bean.getLocked());
 			bean.getNode().setUpdateBy(bean.getUpdateBy());
 			sysTreeService.update(bean.getNode());
 		}

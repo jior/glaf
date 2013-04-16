@@ -31,6 +31,7 @@
 		<jar jarfile="glaf-core.jar">
 			<fileset dir="bin" 
 			   includes="com/glaf/core/**/*.class,com/glaf/core/**/*.xml,com/glaf/core/**/*.properties"  />
+			<fileset dir="jar-conf" includes="**/*.xml,**/*.properties"  />
 		</jar>
 
 		<jar jarfile="glaf-mail.jar">

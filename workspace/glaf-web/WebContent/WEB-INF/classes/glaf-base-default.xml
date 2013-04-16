@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="GBK"?>
+
+<configuration>
+
+	<property>
+		<name>bpm.system</name>
+		<value>jbpm</value>
+	</property>
+ 
+
+</configuration>

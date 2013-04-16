@@ -56,9 +56,12 @@
 		<jar jarfile="${project.distname}-src.zip">
 			<fileset dir="." includes="*.bat,*.xml, src/**/*.*,conf/**/*.*" excludes="**/*.cvs,**/*.bak,**/*.tmp,**/*.scc,**/*.svn" />
 		</jar>
-		<jar jarfile="${jarfile}" basedir="${classes.dir}" includes="com/**/*.class,com/**/*.properties,com/**/*.xml" excludes="**/test/**" />
-	</target>
-
+		<jar jarfile="glaf-base.jar">
+			<fileset dir="bin" 
+			   includes="com/glaf/base/**/*.class,com/glaf/base/**/*.xml,com/glaf/base/**/*.properties"  />
+			<fileset dir="jar-conf" includes="**/*.xml,**/*.properties"  />
+		</jar>
+    </target>
 
 	<!-- 制作 Javadoc 任务 -->
 	<target name="javadoc" description="Generate JavaDoc API docs">

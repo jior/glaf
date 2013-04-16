@@ -305,6 +305,7 @@ public class SysApplicationController {
 			bean.setUrl(ParamUtil.getParameter(request, "url"));
 			bean.setShowMenu(ParamUtil.getIntParameter(request, "showMenu", 0));
             bean.setUpdateBy(RequestUtils.getActorId(request));
+            bean.setLocked(ParamUtil.getIntParameter(request, "locked", 0));
             
 			SysTree node = bean.getNode();
 			node.setName(bean.getName());

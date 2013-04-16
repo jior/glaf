@@ -123,7 +123,7 @@ function sort(id, operate){
     <td width="20%" align="center">名称</td>
     <td width="20%" align="center">描述</td>
     <td width="32%" align="center">链接</td>
-    <td width="10%" align="center">是否弹出窗</td>
+    <td width="10%" align="center">是否有效</td>
     <td width="8%" align="center">排序</td>
   </tr>
   <%
@@ -139,7 +139,9 @@ if(list!=null){
     <td class="td-text"><%=bean.getName()%>&nbsp;</td>
     <td class="td-text"><%=bean.getDesc()%>&nbsp;</td>
     <td class="td-text"><%=bean.getUrl()%>&nbsp;</td>
-    <td class="td-no"><%=bean.getShowMenu()==2?"是":"否"%>&nbsp;</td>
+    <td class="td-no">
+	<%=bean.getLocked()==0?"<span style='color:blue'>是</span>":"<span style='color:red'>否</span>"%>&nbsp;
+	</td>
     <td class="td-no"><a href="javascript:sort(<%=bean.getId()%>, 0);" title="上移"><img src="<%=context%>/images/up.gif" border="0" height="13" width="13"></a> <a href="javascript:sort(<%=bean.getId()%>, 1);" title="下移"><img src="<%=context%>/images/down.gif" border="0" height="13" width="13"></a></td>
   </tr>
   <%

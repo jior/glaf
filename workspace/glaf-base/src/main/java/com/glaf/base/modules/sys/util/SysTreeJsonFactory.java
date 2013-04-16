@@ -59,6 +59,10 @@ public class SysTreeJsonFactory {
 			model.setTreeId(jsonObject.getString("treeId"));
 		}
 
+		if (jsonObject.containsKey("locked")) {
+			model.setLocked(jsonObject.getInteger("locked"));
+		}
+
 		if (jsonObject.containsKey("createDate")) {
 			model.setCreateDate(jsonObject.getDate("createDate"));
 		}
@@ -103,6 +107,8 @@ public class SysTreeJsonFactory {
 		if (model.getTreeId() != null) {
 			jsonObject.put("treeId", model.getTreeId());
 		}
+
+		jsonObject.put("locked", model.getLocked());
 
 		if (model.getCreateDate() != null) {
 			jsonObject.put("createDate",
@@ -151,6 +157,8 @@ public class SysTreeJsonFactory {
 		if (model.getTreeId() != null) {
 			jsonObject.put("treeId", model.getTreeId());
 		}
+
+		jsonObject.put("locked", model.getLocked());
 
 		if (model.getCreateDate() != null) {
 			jsonObject.put("createDate",
