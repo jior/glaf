@@ -5,6 +5,12 @@
     String context = request.getContextPath();
 	com.glaf.base.utils.ContextUtil.getInstance().setContextPath(context);
 	pageContext.setAttribute("contextPath", context);
+	boolean debug = false;
+	String host = com.glaf.core.util.RequestUtils.getIPAddress(request);
+	System.out.println("host:"+host);
+	if("127.0.0.1".equals(host)){
+		debug = true;
+	}
 %>
 <!DOCTYPE html >
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -91,7 +97,7 @@
     </script>
 
 </head>
-<body onloadx="openMainPage();">
+<body <%if(!debug){%>onload="openMainPage();"<%}%>>
     <div id="loginWindow" class="easyui-window" title="Login Form" iconcls="icon-login"
         style="width: 300px; height: 180px; padding: 5px; background: #fafafa;">
         <div border="false" style="padding-left: 30px;  border: 1px solid #ccc;">
