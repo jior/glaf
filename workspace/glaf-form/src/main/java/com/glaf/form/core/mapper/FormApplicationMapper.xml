@@ -172,13 +172,6 @@
 		select * from FORM_APPLICATION where NAME_ = #{name}
 	</select>
 
-	<select id="getFormApplicationProperties" parameterType="string"
-		resultMap="formApplicationPropertyResultMap">
-		select * from FORM_APPLICATION where FORMAPPLICATION_ =
-		#{appId}
-	</select>
-
-
 	<select id="getFormApplications" parameterType="com.glaf.form.core.query.FormApplicationQuery"
 		resultMap="formApplicationResultMap">
 		select E.*
