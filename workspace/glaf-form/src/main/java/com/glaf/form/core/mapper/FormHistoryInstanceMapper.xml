@@ -4,8 +4,7 @@
 
 <mapper namespace="com.glaf.form.core.mapper.FormHistoryInstanceMapper">
 
-	<resultMap id="formHistoryInstanceResultMap"
-		type="com.glaf.form.core.history.FormHistoryInstance">
+	<resultMap id="formHistoryInstanceResultMap" type="com.glaf.form.core.domain.FormHistoryInstance">
 		<id property="id" column="ID_" jdbcType="VARCHAR" />
 		<result property="name" column="NAME_" jdbcType="VARCHAR" />
 		<result property="nodeId" column="NODEID_" jdbcType="VARCHAR" />
@@ -24,7 +23,7 @@
 	</resultMap>
 
 
-	<insert id="insertFormHistoryInstance" parameterType="com.glaf.form.core.history.FormHistoryInstance">
+	<insert id="insertFormHistoryInstance" parameterType="com.glaf.form.core.domain.FormHistoryInstance">
 		insert into
 		FORM_HISTORY_INSTANCE ( ID_
 		,NAME_
@@ -44,9 +43,11 @@
 		#{id, jdbcType=VARCHAR}
 		,#{name, jdbcType=VARCHAR}
 		,#{nodeId, jdbcType=VARCHAR}
-		,#{objectId, jdbcType=VARCHAR}
+		,#{objectId,
+		jdbcType=VARCHAR}
 		,#{objectValue, jdbcType=VARCHAR}
-		,#{objectType, jdbcType=INTEGER}
+		,#{objectType,
+		jdbcType=INTEGER}
 		,#{processInstanceId, jdbcType=VARCHAR}
 		,#{taskInstanceId, jdbcType=VARCHAR}
 		,#{actorId, jdbcType=VARCHAR}
@@ -55,11 +56,12 @@
 		,#{content, jdbcType=VARCHAR}
 		,#{versionNo, jdbcType=BIGINT}
 		)
-    </insert>
+	</insert>
 
 
 	<delete id="deleteFormHistoryInstanceById" parameterType="string">
-		delete from FORM_HISTORY_INSTANCE
+		delete
+		from FORM_HISTORY_INSTANCE
 		where ID_ = #{id}
 	</delete>
 
@@ -75,7 +77,7 @@
 		<include refid="selectFormHistoryInstancesSql" />
 		<if test="orderBy != null">
 			order by ${orderBy}
-        </if>
+		</if>
 	</select>
 
 	<select id="getFormHistoryInstanceCount" parameterType="com.glaf.form.core.query.FormHistoryInstanceQuery"
@@ -93,94 +95,92 @@
 
 			<if test="name != null and name != '' ">
 				and E.NAME_ = #{name}
-            </if>
+			</if>
 
 			<if test="names != null and names.size() &gt; 0">
 				and E.NAME_ IN
 				<foreach item="x_name" index="index" collection="names"
 					open="(" separator="," close=")">
 					#{x_name}
-                </foreach>
+				</foreach>
 			</if>
 
 
 			<if test="nodeId != null and nodeId != '' ">
 				and E.NODEID_ = #{nodeId}
-            </if>
+			</if>
 
 			<if test="nodeIds != null and nodeIds.size() &gt; 0">
 				and E.NODEID_ IN
 				<foreach item="x_nodeId" index="index" collection="nodeIds"
 					open="(" separator="," close=")">
 					#{x_nodeId}
-                </foreach>
+				</foreach>
 			</if>
 
 			<if test="objectId != null and objectId != '' ">
 				and E.OBJECTID_ = #{objectId}
-            </if>
+			</if>
 
 			<if test="objectIds != null and objectIds.size() &gt; 0">
 				and E.OBJECTID_ IN
 				<foreach item="x_objectId" index="index" collection="objectIds"
 					open="(" separator="," close=")">
 					#{x_objectId}
-                </foreach>
+				</foreach>
 			</if>
 
 			<if test="objectValue != null and objectValue != '' ">
 				and E.OBJECTVALUE_ = #{objectValue}
-            </if>
+			</if>
 
 			<if test="objectValues != null and objectValues.size() &gt; 0">
 				and E.OBJECTVALUE_ IN
 				<foreach item="x_objectValue" index="index" collection="objectValues"
 					open="(" separator="," close=")">
 					#{x_objectValue}
-                </foreach>
+				</foreach>
 			</if>
 
 			<if test="processInstanceId != null and processInstanceId != '' ">
 				and E.PROCESSINSTANCEID_ = #{processInstanceId}
-            </if>
+			</if>
 
-			<if
-				test="processInstanceIds != null and processInstanceIds.size() &gt; 0">
+			<if test="processInstanceIds != null and processInstanceIds.size() &gt; 0">
 				and E.PROCESSINSTANCEID_ IN
 				<foreach item="x_processInstanceId" index="index"
 					collection="processInstanceIds" open="(" separator="," close=")">
 					#{x_processInstanceId}
-                </foreach>
+				</foreach>
 			</if>
 
 			<if test="taskInstanceId != null and taskInstanceId != '' ">
 				and E.TASKINSTANCEID_ = #{taskInstanceId}
-            </if>
+			</if>
 
-			<if
-				test="taskInstanceIds != null and taskInstanceIds.size() &gt; 0">
+			<if test="taskInstanceIds != null and taskInstanceIds.size() &gt; 0">
 				and E.TASKINSTANCEID_ IN
 				<foreach item="x_taskInstanceId" index="index" collection="taskInstanceIds"
 					open="(" separator="," close=")">
 					#{x_taskInstanceId}
-                </foreach>
+				</foreach>
 			</if>
 
 			<if test="actorId != null and actorId != '' ">
 				and E.ACTORID_ = #{actorId}
-            </if>
+			</if>
 
 			<if test="actorIds != null and actorIds.size() &gt; 0">
 				and E.ACTORID_ IN
 				<foreach item="x_actorId" index="index" collection="actorIds"
 					open="(" separator="," close=")">
 					#{x_actorId}
-                </foreach>
+				</foreach>
 			</if>
 
 			<if test="contentLike != null and contentLike != '' ">
 				and E.CONTENT_ like #{contentLike}
-            </if>
+			</if>
 
 			<if test="versionNoGreaterThanOrEqual != null">
 				and E.VERSIONNO_ &gt;= #{versionNoGreaterThanOrEqual}
@@ -188,7 +188,7 @@
 
 			<if test="versionNoLessThanOrEqual != null">
 				and E.VERSIONNO_ &lt;= #{versionNoLessThanOrEqual}
-            </if>
+			</if>
 
 			<if test="afterCreateDate != null">
 				and E.CREATEDATE_ &gt;= #{afterCreateDate}
@@ -196,7 +196,7 @@
 
 			<if test="beforeCreateDate != null">
 				and E.CREATEDATE_ &lt;= #{beforeCreateDate}
-            </if>
+			</if>
 
 		</where>
 	</sql>

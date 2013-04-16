@@ -26,7 +26,7 @@ import org.dom4j.Document;
 
 import com.glaf.core.base.DataModel;
 import com.glaf.form.core.context.FormContext;
-import com.glaf.form.core.graph.def.FormDefinition;
+import com.glaf.form.core.domain.FormDefinition;
 import com.glaf.form.core.graph.def.FormNode;
 
 public class FormXmlExporter {

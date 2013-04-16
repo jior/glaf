@@ -24,7 +24,7 @@ import com.glaf.core.context.ContextFactory;
 import com.glaf.core.query.DataModelQuery;
 import com.glaf.core.util.Paging;
 import com.glaf.form.core.context.FormContext;
-import com.glaf.form.core.graph.def.FormApplication;
+import com.glaf.form.core.domain.FormApplication;
 import com.glaf.form.core.service.FormDataService;
 
 public class MxFormContainer {

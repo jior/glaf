@@ -21,7 +21,8 @@ import java.util.*;
 import java.util.Map.Entry;
 
 import org.dom4j.*;
-import com.glaf.form.core.graph.def.*;
+
+import com.glaf.form.core.domain.FormApplication;
 import com.glaf.core.util.*;
 
 public class FormApplicationWriter {

@@ -28,7 +28,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.glaf.form.core.graph.def.FormDefinition;
+import com.glaf.form.core.domain.FormDefinition;
 import com.glaf.form.core.graph.def.FormEvent;
 import com.glaf.form.core.graph.def.FormNode;
 import com.glaf.form.core.graph.def.FormProperty;

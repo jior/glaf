@@ -4,7 +4,7 @@
 
 <mapper namespace="com.glaf.form.core.mapper.FormApplicationMapper">
 
-	<resultMap id="formApplicationResultMap" type="com.glaf.form.core.graph.def.FormApplication">
+	<resultMap id="formApplicationResultMap" type="com.glaf.form.core.domain.FormApplication">
 		<id property="id" column="ID_" jdbcType="VARCHAR" />
 		<result property="nodeId" column="NODEID_" jdbcType="BIGINT" />
 		<result property="name" column="NAME_" jdbcType="VARCHAR" />
@@ -45,7 +45,7 @@
 
 
 
-	<insert id="insertFormApplication" parameterType="com.glaf.form.core.graph.def.FormApplication">
+	<insert id="insertFormApplication" parameterType="com.glaf.form.core.domain.FormApplication">
 		insert into
 		FORM_APPLICATION ( ID_
 		,NODEID_
@@ -76,63 +76,89 @@
 		values (
 		#{id, jdbcType=VARCHAR}
 		,#{nodeId, jdbcType=BIGINT}
-		,#{name, jdbcType=VARCHAR}
+		,#{name,
+		jdbcType=VARCHAR}
 		,#{title, jdbcType=VARCHAR}
-		,#{description, jdbcType=VARCHAR}
+		,#{description,
+		jdbcType=VARCHAR}
 		,#{formName, jdbcType=VARCHAR}
-		,#{processName, jdbcType=VARCHAR}
+		,#{processName,
+		jdbcType=VARCHAR}
 		,#{processDefinitionId, jdbcType=VARCHAR}
 		,#{linkTemplateId, jdbcType=VARCHAR}
-		,#{linkControllerName, jdbcType=VARCHAR}
+		,#{linkControllerName,
+		jdbcType=VARCHAR}
 		,#{listTemplateId, jdbcType=VARCHAR}
 		,#{listControllerName, jdbcType=VARCHAR}
-		,#{formRendererType, jdbcType=VARCHAR}
+		,#{formRendererType,
+		jdbcType=VARCHAR}
 		,#{releaseFlag, jdbcType=VARCHAR}
-		,#{releaseDate, jdbcType=TIMESTAMP}
+		,#{releaseDate,
+		jdbcType=TIMESTAMP}
 		,#{uploadFlag, jdbcType=VARCHAR}
 		,#{docRequiredFlag, jdbcType=VARCHAR}
-		,#{auditUploadFlag, jdbcType=VARCHAR}
+		,#{auditUploadFlag,
+		jdbcType=VARCHAR}
 		,#{autoArchivesFlag, jdbcType=VARCHAR}
 		,#{manualRouteFlag, jdbcType=VARCHAR}
-		,#{archivesNode, jdbcType=VARCHAR}
+		,#{archivesNode,
+		jdbcType=VARCHAR}
 		,#{objectId, jdbcType=VARCHAR}
-		,#{objectValue, jdbcType=VARCHAR}
+		,#{objectValue,
+		jdbcType=VARCHAR}
 		,#{createDate, jdbcType=TIMESTAMP}
-		,#{createBy, jdbcType=VARCHAR}
+		,#{createBy,
+		jdbcType=VARCHAR}
 		)
 	</insert>
 
 
 
-	<update id="updateFormApplication" parameterType="com.glaf.form.core.graph.def.FormApplication">
+	<update id="updateFormApplication" parameterType="com.glaf.form.core.domain.FormApplication">
 		update
 		FORM_APPLICATION
 		set NODEID_ = #{nodeId, jdbcType=BIGINT},
-		TITLE_ = #{title, jdbcType=VARCHAR},
-		DESCRIPTION_ = #{description, jdbcType=VARCHAR},
+		TITLE_ =
+		#{title, jdbcType=VARCHAR},
+		DESCRIPTION_ = #{description,
+		jdbcType=VARCHAR},
 		FORMNAME_ = #{formName, jdbcType=VARCHAR},
 		PROCESSNAME_ = #{processName, jdbcType=VARCHAR},
-		PROCESSDEFINITIONID_ = #{processDefinitionId, jdbcType=VARCHAR},
-		LINKTEMPLATEID_ = #{linkTemplateId, jdbcType=VARCHAR},
-		LINKCONTROLLERNAME_ = #{linkControllerName, jdbcType=VARCHAR},
-		LISTTEMPLATEID_ = #{listTemplateId, jdbcType=VARCHAR},
-		LISTCONTROLLERNAME_ = #{listControllerName, jdbcType=VARCHAR},
-		FORMRENDERERTYPE_ = #{formRendererType, jdbcType=VARCHAR},
-		RELEASEFLAG_ = #{releaseFlag, jdbcType=VARCHAR},
+		PROCESSDEFINITIONID_ =
+		#{processDefinitionId, jdbcType=VARCHAR},
+		LINKTEMPLATEID_ =
+		#{linkTemplateId, jdbcType=VARCHAR},
+		LINKCONTROLLERNAME_ =
+		#{linkControllerName, jdbcType=VARCHAR},
+		LISTTEMPLATEID_ =
+		#{listTemplateId, jdbcType=VARCHAR},
+		LISTCONTROLLERNAME_ =
+		#{listControllerName, jdbcType=VARCHAR},
+		FORMRENDERERTYPE_ =
+		#{formRendererType, jdbcType=VARCHAR},
+		RELEASEFLAG_ = #{releaseFlag,
+		jdbcType=VARCHAR},
 		RELEASEDATE_ = #{releaseDate, jdbcType=TIMESTAMP},
 		UPLOADFLAG_ = #{uploadFlag, jdbcType=VARCHAR},
-		DOCREQUIREDFLAG_ = #{docRequiredFlag, jdbcType=VARCHAR},
-		AUDITUPLOADFLAG_ = #{auditUploadFlag, jdbcType=VARCHAR},
-		AUTOARCHIVESFLAG_ = #{autoArchivesFlag, jdbcType=VARCHAR},
-		MANUALROUTEFLAG_ = #{manualRouteFlag, jdbcType=VARCHAR},
-		ARCHIVESNODE_ = #{archivesNode, jdbcType=VARCHAR},
+		DOCREQUIREDFLAG_ =
+		#{docRequiredFlag, jdbcType=VARCHAR},
+		AUDITUPLOADFLAG_ =
+		#{auditUploadFlag, jdbcType=VARCHAR},
+		AUTOARCHIVESFLAG_ =
+		#{autoArchivesFlag, jdbcType=VARCHAR},
+		MANUALROUTEFLAG_ =
+		#{manualRouteFlag, jdbcType=VARCHAR},
+		ARCHIVESNODE_ = #{archivesNode,
+		jdbcType=VARCHAR},
 		OBJECTID_ = #{objectId, jdbcType=VARCHAR},
 		OBJECTVALUE_ = #{objectValue, jdbcType=VARCHAR}
-		where ID_ = #{id, jdbcType=VARCHAR}
+		where ID_ = #{id,
+		jdbcType=VARCHAR}
 	</update>
 
 	<delete id="deleteFormApplicationById" parameterType="string">
-		delete from FORM_APPLICATION
+		delete from
+		FORM_APPLICATION
 		where ID_ = #{id}
 	</delete>
 

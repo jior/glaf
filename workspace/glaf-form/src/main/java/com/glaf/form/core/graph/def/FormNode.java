@@ -26,6 +26,7 @@ import org.apache.commons.logging.LogFactory;
 
 import com.glaf.core.util.DateUtils;
 import com.glaf.core.util.FieldType;
+import com.glaf.form.core.domain.FormDefinition;
 
 public class FormNode extends GraphElement implements Comparable<FormNode> {
 

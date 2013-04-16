@@ -21,7 +21,7 @@ import java.util.Map;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import com.glaf.form.core.graph.def.FormApplication;
+import com.glaf.form.core.domain.FormApplication;
 
 @Transactional 
 public interface FormArchiveService {

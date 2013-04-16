@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.glaf.form.core.graph.def;
+package com.glaf.form.core.domain;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -28,6 +28,10 @@ import javax.persistence.*;
 import com.alibaba.fastjson.JSONObject;
 
 import com.glaf.form.core.context.FormContext;
+import com.glaf.form.core.graph.def.FormEvent;
+import com.glaf.form.core.graph.def.FormNode;
+import com.glaf.form.core.graph.def.FormScript;
+import com.glaf.form.core.graph.def.GraphElement;
 
 @Entity
 @Table(name = "FORM_DEFINITION")

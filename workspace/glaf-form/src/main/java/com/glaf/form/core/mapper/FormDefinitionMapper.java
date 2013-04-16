@@ -21,7 +21,7 @@ import java.util.*;
 
 import org.springframework.stereotype.Component;
 
-import com.glaf.form.core.graph.def.*;
+import com.glaf.form.core.domain.FormDefinition;
 import com.glaf.form.core.query.FormDefinitionQuery;
 
 @Component

@@ -34,9 +34,9 @@ import com.glaf.core.query.DataModelQuery;
 import com.glaf.core.util.Paging;
 
 import com.glaf.form.core.context.FormContext;
-import com.glaf.form.core.graph.def.FormApplication;
-import com.glaf.form.core.graph.def.FormDefinition;
-import com.glaf.form.core.graph.def.FormLink;
+import com.glaf.form.core.domain.FormApplication;
+import com.glaf.form.core.domain.FormDefinition;
+import com.glaf.form.core.domain.FormLink;
 import com.glaf.form.core.mapper.FormLinkMapper;
 import com.glaf.form.core.query.FormLinkQuery;
 import com.glaf.form.core.service.FormDataService;

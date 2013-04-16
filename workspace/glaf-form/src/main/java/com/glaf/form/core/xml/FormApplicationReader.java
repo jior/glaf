@@ -25,7 +25,7 @@ import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
-import com.glaf.form.core.graph.def.*;
+import com.glaf.form.core.domain.FormApplication;
 import com.glaf.core.util.*;
 
 public class FormApplicationReader {

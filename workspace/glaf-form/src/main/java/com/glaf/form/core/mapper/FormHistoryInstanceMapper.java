@@ -21,7 +21,7 @@ import java.util.*;
 
 import org.springframework.stereotype.Component;
 
-import com.glaf.form.core.history.FormHistoryInstance;
+import com.glaf.form.core.domain.FormHistoryInstance;
 import com.glaf.form.core.query.FormHistoryInstanceQuery;
 
 @Component

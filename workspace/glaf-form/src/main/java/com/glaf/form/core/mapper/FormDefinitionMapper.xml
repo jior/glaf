@@ -4,7 +4,7 @@
 
 <mapper namespace="com.glaf.form.core.mapper.FormDefinitionMapper">
 
-	<resultMap id="formDefinitionResultMap" type="com.glaf.form.core.graph.def.FormDefinition">
+	<resultMap id="formDefinitionResultMap" type="com.glaf.form.core.domain.FormDefinition">
 		<id property="id" column="ID_" jdbcType="VARCHAR" />
 		<result property="name" column="NAME_" jdbcType="VARCHAR" />
 		<result property="title" column="TITLE_" jdbcType="VARCHAR" />
@@ -32,7 +32,7 @@
 	</resultMap>
 
 
-	<insert id="insertFormDefinition" parameterType="com.glaf.form.core.graph.def.FormDefinition">
+	<insert id="insertFormDefinition" parameterType="com.glaf.form.core.domain.FormDefinition">
 		insert into
 		FORM_DEFINITION ( ID_
 		,NAME_

@@ -24,8 +24,8 @@ import java.util.Map;
 import com.glaf.core.base.*;
 import com.glaf.core.security.LoginContext;
 
-import com.glaf.form.core.graph.def.FormApplication;
-import com.glaf.form.core.graph.def.FormDefinition;
+import com.glaf.form.core.domain.FormApplication;
+import com.glaf.form.core.domain.FormDefinition;
 import com.glaf.jbpm.context.ProcessContext;
 
 public class FormContext {

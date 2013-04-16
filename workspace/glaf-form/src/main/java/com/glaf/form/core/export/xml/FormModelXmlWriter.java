@@ -23,6 +23,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dom4j.*;
 
+import com.glaf.form.core.domain.FormDefinition;
 import com.glaf.form.core.graph.def.*;
 import com.glaf.core.util.DateUtils;
 

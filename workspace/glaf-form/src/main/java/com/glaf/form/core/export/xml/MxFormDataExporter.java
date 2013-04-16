@@ -27,8 +27,8 @@ import org.dom4j.Element;
 
 import com.glaf.core.context.ContextFactory;
 import com.glaf.core.util.Paging;
-import com.glaf.form.core.graph.def.FormApplication;
-import com.glaf.form.core.graph.def.FormDefinition;
+import com.glaf.form.core.domain.FormApplication;
+import com.glaf.form.core.domain.FormDefinition;
 import com.glaf.form.core.query.FormApplicationQuery;
 import com.glaf.form.core.query.FormDefinitionQuery;
 import com.glaf.form.core.service.FormDataService;

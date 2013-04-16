@@ -28,7 +28,8 @@ import org.dom4j.io.SAXReader;
 
 import com.glaf.core.base.ClassDefinition;
 import com.glaf.form.core.dataimport.MxFormDataImportFactory;
-import com.glaf.form.core.graph.def.*;
+import com.glaf.form.core.domain.FormApplication;
+import com.glaf.form.core.domain.FormDefinition;
 import com.glaf.form.core.model.FormDefinitionType;
 import com.glaf.form.core.util.FdlConverter;
 import com.glaf.form.core.xml.FormApplicationReader;

@@ -52,8 +52,8 @@ import com.glaf.jbpm.model.Extension;
 
 import com.glaf.form.core.container.MxFormContainer;
 import com.glaf.form.core.context.FormContext;
-import com.glaf.form.core.graph.def.FormApplication;
-import com.glaf.form.core.graph.def.FormDefinition;
+import com.glaf.form.core.domain.FormApplication;
+import com.glaf.form.core.domain.FormDefinition;
 
 import com.glaf.form.core.model.FormDefinitionType;
 import com.glaf.form.core.query.FormApplicationQuery;

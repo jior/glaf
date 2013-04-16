@@ -23,6 +23,8 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.glaf.form.core.domain.FormDefinition;
+
 public abstract class GraphElement implements Serializable {
 	private static final long serialVersionUID = 1L;
 	protected Map<String, Object> dataMap = null;

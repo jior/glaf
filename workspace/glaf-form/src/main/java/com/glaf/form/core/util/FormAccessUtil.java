@@ -28,7 +28,7 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 
 import com.glaf.form.core.context.FormContext;
-import com.glaf.form.core.graph.def.FormDefinition;
+import com.glaf.form.core.domain.FormDefinition;
 import com.glaf.form.core.graph.def.FormNode;
 
 import com.glaf.form.core.graph.node.CheckboxNode;

@@ -32,6 +32,7 @@ import com.glaf.core.base.DataModel;
 import com.glaf.form.core.context.FormContext;
 import com.glaf.form.core.dataimport.MxFormDataImport;
 import com.glaf.form.core.dataimport.MxFormDataImportFactory;
+import com.glaf.form.core.domain.FormDefinition;
 import com.glaf.form.core.graph.def.*;
 import com.glaf.form.core.graph.node.*;
 import com.glaf.form.core.model.FormDefinitionType;

@@ -32,6 +32,7 @@ import org.apache.poi.ss.util.CellRangeAddress;
 import com.glaf.core.util.*;
 
 import com.glaf.form.core.context.FormContext;
+import com.glaf.form.core.domain.FormDefinition;
 
 import com.glaf.form.core.export.FormTemplateExporter;
 import com.glaf.form.core.graph.def.*;
