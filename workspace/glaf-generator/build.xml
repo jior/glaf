@@ -23,6 +23,7 @@
 		<pathelement location="./bin" />
 		<pathelement location="../glaf-bi/bin" />
 		<pathelement location="../glaf-core/bin" />
+		<pathelement location="../glaf-form/bin" />
 		<pathelement location="./conf" />
 	</path>
 

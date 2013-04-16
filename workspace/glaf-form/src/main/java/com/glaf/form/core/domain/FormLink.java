@@ -25,9 +25,17 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
+import com.alibaba.fastjson.*;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.glaf.core.base.JSONable;
+import com.glaf.form.core.util.*;
+
 @Entity
 @Table(name = "FORM_LINK")
-public class FormLink implements java.lang.Comparable<FormLink>, Serializable {
+public class FormLink implements java.lang.Comparable<FormLink>, Serializable,
+		JSONable {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -188,6 +196,23 @@ public class FormLink implements java.lang.Comparable<FormLink>, Serializable {
 
 	public void setSortNo(int sortNo) {
 		this.sortNo = sortNo;
+	}
+
+	public FormLink jsonToObject(JSONObject jsonObject) {
+		return FormLinkJsonFactory.jsonToObject(jsonObject);
+	}
+
+	public JSONObject toJsonObject() {
+		return FormLinkJsonFactory.toJsonObject(this);
+	}
+
+	public ObjectNode toObjectNode() {
+		return FormLinkJsonFactory.toObjectNode(this);
+	}
+
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this,
+				ToStringStyle.MULTI_LINE_STYLE);
 	}
 
 }

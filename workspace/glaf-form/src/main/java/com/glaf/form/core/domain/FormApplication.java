@@ -21,9 +21,16 @@ import java.io.*;
 import java.util.*;
 import javax.persistence.*;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
+import com.alibaba.fastjson.*;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.glaf.core.base.JSONable;
+import com.glaf.form.core.util.*;
+
 @Entity
 @Table(name = "FORM_APPLICATION")
-public class FormApplication implements Serializable {
+public class FormApplication implements Serializable, JSONable {
 	private static final long serialVersionUID = 1L;
 
 	@Basic
@@ -365,6 +372,23 @@ public class FormApplication implements Serializable {
 
 	public void setUploadFlag(String uploadFlag) {
 		this.uploadFlag = uploadFlag;
+	}
+
+	public FormApplication jsonToObject(JSONObject jsonObject) {
+		return FormApplicationJsonFactory.jsonToObject(jsonObject);
+	}
+
+	public JSONObject toJsonObject() {
+		return FormApplicationJsonFactory.toJsonObject(this);
+	}
+
+	public ObjectNode toObjectNode() {
+		return FormApplicationJsonFactory.toObjectNode(this);
+	}
+
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this,
+				ToStringStyle.MULTI_LINE_STYLE);
 	}
 
 }

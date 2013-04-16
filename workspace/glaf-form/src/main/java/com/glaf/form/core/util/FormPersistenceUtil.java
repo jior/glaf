@@ -23,7 +23,7 @@ import org.apache.commons.lang.StringUtils;
 
 import com.glaf.core.base.FieldDefinition;
 import com.glaf.core.util.*;
- 
+
 import com.glaf.form.core.graph.def.FormNode;
 import com.glaf.form.core.graph.node.PersistenceNode;
 
@@ -48,8 +48,6 @@ public final class FormPersistenceUtil {
 		}
 		return false;
 	}
-
-	 
 
 	public static boolean isPersistField(FormNode formNode) {
 		if (!(formNode instanceof PersistenceNode)) {

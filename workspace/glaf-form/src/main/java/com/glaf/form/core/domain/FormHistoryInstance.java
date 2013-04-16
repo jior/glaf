@@ -21,9 +21,16 @@ import java.io.Serializable;
 import java.util.*;
 import javax.persistence.*;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
+import com.alibaba.fastjson.*;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.glaf.core.base.JSONable;
+import com.glaf.form.core.util.*;
+
 @Entity
 @Table(name = "FORM_HISTORY_INSTANCE")
-public class FormHistoryInstance implements Serializable {
+public class FormHistoryInstance implements Serializable, JSONable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -173,5 +180,22 @@ public class FormHistoryInstance implements Serializable {
 
 	public void setVersionNo(long versionNo) {
 		this.versionNo = versionNo;
+	}
+
+	public FormHistoryInstance jsonToObject(JSONObject jsonObject) {
+		return FormHistoryInstanceJsonFactory.jsonToObject(jsonObject);
+	}
+
+	public JSONObject toJsonObject() {
+		return FormHistoryInstanceJsonFactory.toJsonObject(this);
+	}
+
+	public ObjectNode toObjectNode() {
+		return FormHistoryInstanceJsonFactory.toObjectNode(this);
+	}
+
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this,
+				ToStringStyle.MULTI_LINE_STYLE);
 	}
 }

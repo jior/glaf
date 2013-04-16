@@ -24,8 +24,13 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import javax.persistence.*;
- 
-import com.alibaba.fastjson.JSONObject;
+
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
+import com.alibaba.fastjson.*;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.glaf.core.base.JSONable;
+import com.glaf.form.core.util.*;
 
 import com.glaf.form.core.context.FormContext;
 import com.glaf.form.core.graph.def.FormEvent;
@@ -35,7 +40,7 @@ import com.glaf.form.core.graph.def.GraphElement;
 
 @Entity
 @Table(name = "FORM_DEFINITION")
-public class FormDefinition extends GraphElement {
+public class FormDefinition extends GraphElement implements JSONable {
 	private static final long serialVersionUID = 1L;
 	public static final String[] supportedEventTypes = new String[] {
 			FormEvent.EVENTTYPE_RENDER, FormEvent.EVENTTYPE_BEFORE_RENDER,
@@ -420,23 +425,21 @@ public class FormDefinition extends GraphElement {
 		this.y = y;
 	}
 
-	public JSONObject toJsonObject()   {
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("id", id);
-		jsonObject.put("name", name);
-		jsonObject.put("title", title);
-		jsonObject.put("formDefinitionId", formDefinitionId);
-		jsonObject.put("locked", Integer.valueOf(locked));
-		jsonObject.put("version", Integer.valueOf(version));
+	public FormDefinition jsonToObject(JSONObject jsonObject) {
+		return FormDefinitionJsonFactory.jsonToObject(jsonObject);
+	}
 
-		if (description != null) {
-			jsonObject.put("description", description);
-		}
-		if (templateName != null) {
-			jsonObject.put("templateName", templateName);
-		}
+	public JSONObject toJsonObject() {
+		return FormDefinitionJsonFactory.toJsonObject(this);
+	}
 
-		return jsonObject;
+	public ObjectNode toObjectNode() {
+		return FormDefinitionJsonFactory.toObjectNode(this);
+	}
+
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this,
+				ToStringStyle.MULTI_LINE_STYLE);
 	}
 
 }
