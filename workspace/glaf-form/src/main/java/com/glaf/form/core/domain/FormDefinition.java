@@ -75,7 +75,7 @@ public class FormDefinition extends GraphElement implements JSONable {
 	@Column(name = "LOCKED_")
 	protected Integer locked = 0;
 
-	@Column(name = "NAME_", updatable = false)
+	@Column(name = "NAME_", updatable = false, length = 100)
 	protected String name;
 
 	@Column(name = "NODEID_")
