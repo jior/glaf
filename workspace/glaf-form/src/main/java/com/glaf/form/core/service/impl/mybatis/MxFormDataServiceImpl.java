@@ -17,15 +17,19 @@
  */
 package com.glaf.form.core.service.impl.mybatis;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+
+import javax.annotation.Resource;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
@@ -35,21 +39,27 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.glaf.core.base.DataFile;
 import com.glaf.core.base.DataModel;
 import com.glaf.core.base.DataModelEntity;
 import com.glaf.core.base.ColumnModel;
 import com.glaf.core.cache.CacheFactory;
 import com.glaf.core.dao.EntityDAO;
+import com.glaf.core.domain.BlobItemEntity;
+import com.glaf.core.domain.ColumnDefinition;
 import com.glaf.core.entity.SqlExecutor;
 import com.glaf.core.id.IdGenerator;
 import com.glaf.core.query.DataModelQuery;
 import com.glaf.core.security.LoginContext;
 import com.glaf.core.service.DataModelService;
 import com.glaf.core.service.IBlobService;
+import com.glaf.core.service.ITableDefinitionService;
 import com.glaf.core.util.Paging;
 import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.SearchFilter;
+import com.glaf.core.util.StringTools;
 import com.glaf.core.util.Tools;
+import com.glaf.core.util.UUID32;
 
 import com.glaf.form.core.context.FormContext;
 import com.glaf.form.core.graph.def.FormApplication;
@@ -61,7 +71,6 @@ import com.glaf.form.core.mapper.FormDefinitionMapper;
 import com.glaf.form.core.query.FormApplicationQuery;
 import com.glaf.form.core.query.FormDefinitionQuery;
 import com.glaf.form.core.service.FormDataService;
-import com.glaf.form.core.util.EntityAssembly;
 
 @Service("formDataService")
 @Transactional(readOnly = true)
@@ -83,6 +92,8 @@ public class MxFormDataServiceImpl implements FormDataService {
 
 	protected SqlSession sqlSession;
 
+	protected ITableDefinitionService tableDefinitionService;
+
 	public MxFormDataServiceImpl() {
 
 	}
@@ -103,7 +114,6 @@ public class MxFormDataServiceImpl implements FormDataService {
 
 	@Transactional
 	public void deleteFormApplication(String appId) {
-		formApplicationMapper.deleteFormApplicationProperties(appId);
 		formApplicationMapper.deleteFormApplicationById(appId);
 	}
 
@@ -396,32 +406,57 @@ public class MxFormDataServiceImpl implements FormDataService {
 
 	@Transactional
 	public void saveDataModel(String appId, FormContext formContext) {
-		EntityAssembly assembly = new EntityAssembly();
-		Map<String, Object> persistMap = assembly.assemble(formContext, null,
-				true);
+		Map<String, Object> dataMap = formContext.getDataMap();
 		FormDefinition formDefinition = formContext.getFormDefinition();
-		String entityName = formDefinition.getName();
+		FormApplication formApplication = this.getFormApplication(appId);
+		String tableName = formApplication.getTableName();
+		List<ColumnDefinition> columns = tableDefinitionService
+				.getColumnDefinitionsByTableName(tableName);
+		Map<String, ColumnDefinition> columnMap = new HashMap<String, ColumnDefinition>();
+		for (ColumnDefinition column : columns) {
+			columnMap.put(column.getColumnName(), column);
+			columnMap.put(column.getColumnName().toLowerCase(), column);
+		}
+
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd",
+				Locale.getDefault());
+		String ret = formatter.format(new Date());
+
+		Long sid = System.currentTimeMillis();
+		String serialNumber = ret + StringTools.getDigit4Id(sid.intValue());
+		dataMap.put("serialNumber", serialNumber);
+
 		DataModelEntity dataModelEntity = new DataModelEntity();
-		Tools.populate(dataModelEntity, persistMap);
 
-		dataModelEntity.setId(idGenerator.nextId(entityName));
-
+		try {
+			Tools.populate(dataModelEntity, dataMap);
+		} catch (Exception ex) {
+			logger.error(ex);
+		}
+		dataModelEntity.setDataMap(dataMap);
+		dataModelEntity.setId(idGenerator.nextId());
+		dataModelEntity.setBusinessKey(UUID32.getUUID());
 		dataModelEntity.setCreateBy(formContext.getActorId());
-		dataModelEntity.setServiceKey(entityName);
+		dataModelEntity.setDeleteFlag(0);
+		dataModelEntity.setServiceKey(formApplication.getName());
 		dataModelEntity.setFormName(formDefinition.getName());
+		dataModelEntity.setStatus(0);
 
-		Set<Entry<String, Object>> entrySet = persistMap.entrySet();
+		Set<Entry<String, Object>> entrySet = dataMap.entrySet();
 		for (Entry<String, Object> entry : entrySet) {
 			String name = entry.getKey();
 			Object value = entry.getValue();
 			if (value != null) {
-				ColumnModel field = new ColumnModel();
-				field.setName(name);
-				field.setValue(value);
-				dataModelEntity.addField(field);
+				if (columnMap.containsKey(name.toLowerCase())) {
+					ColumnModel field = new ColumnModel();
+					field.setName(name);
+					field.setValue(value);
+					dataModelEntity.addField(field);
+				}
 			}
 		}
 
+		dataModelService.insert(dataModelEntity);
 	}
 
 	@Transactional
@@ -435,10 +470,6 @@ public class MxFormDataServiceImpl implements FormDataService {
 			formApplication.setId(idGenerator.getNextId());
 			formApplication.setCreateDate(new Date());
 			formApplicationMapper.insertFormApplication(formApplication);
-			try {
-
-			} catch (Exception ex) {
-			}
 		} else {
 			formApplicationMapper.updateFormApplication(formApplication);
 		}
@@ -455,12 +486,6 @@ public class MxFormDataServiceImpl implements FormDataService {
 
 	@Transactional
 	public void saveFormDefinition(FormDefinition formDefinition) {
-
-		try {
-
-		} catch (Exception ex) {
-			throw new RuntimeException(ex);
-		}
 		formDefinitionMapper.lockOldVersionFormDefinitions(formDefinition
 				.getName());
 		if (StringUtils.isEmpty(formDefinition.getId())) {
@@ -483,14 +508,20 @@ public class MxFormDataServiceImpl implements FormDataService {
 		formDefinitionMapper.insertFormDefinition(formDefinition);
 
 		if (formDefinition.getTemplateData() != null) {
-
+			DataFile dataFile = new BlobItemEntity();
+			dataFile.setBusinessKey(formDefinition.getFormDefinitionId());
+			dataFile.setCreateBy(formDefinition.getCreateBy());
+			dataFile.setCreateDate(new Date());
+			dataFile.setData(formDefinition.getTemplateData());
+			dataFile.setFilename(formDefinition.getTemplateName());
+			dataFile.setName(formDefinition.getName());
+			dataFile.setServiceKey("FormDefinition");
+			dataFile.setType(formDefinition.getTemplateType());
+			dataFile.setFileId(formDefinition.getFormDefinitionId());
+			dataFile.setStatus(9);
+			dataFile.setLastModified(System.currentTimeMillis());
+			blobService.insertBlob(dataFile);
 		}
-	}
-
-	@Transactional
-	public void saveFormDefinition(FormDefinition formDefinition,
-			boolean updateEntity) {
-		this.saveFormDefinition(formDefinition);
 	}
 
 	@javax.annotation.Resource
@@ -532,6 +563,12 @@ public class MxFormDataServiceImpl implements FormDataService {
 		this.sqlSession = sqlSession;
 	}
 
+	@Resource
+	public void setTableDefinitionService(
+			ITableDefinitionService tableDefinitionService) {
+		this.tableDefinitionService = tableDefinitionService;
+	}
+
 	protected DataModel toDataModel(FormDefinition formDefinition,
 			DataModelEntity dataModelEntity) {
 		DataModelEntity dataModel = new DataModelEntity();
@@ -571,30 +608,52 @@ public class MxFormDataServiceImpl implements FormDataService {
 
 	@Transactional
 	public void updateDataModel(String appId, FormContext formContext) {
-		EntityAssembly assembly = new EntityAssembly();
-		Map<String, Object> persistMap = assembly.assemble(formContext, null,
-				false);
+		Map<String, Object> dataMap = formContext.getDataMap();
+
 		FormDefinition formDefinition = formContext.getFormDefinition();
+		FormApplication formApplication = this.getFormApplication(appId);
+		String tableName = formApplication.getTableName();
+		List<ColumnDefinition> columns = tableDefinitionService
+				.getColumnDefinitionsByTableName(tableName);
+		Map<String, ColumnDefinition> columnMap = new HashMap<String, ColumnDefinition>();
+		for (ColumnDefinition column : columns) {
+			columnMap.put(column.getColumnName(), column);
+			columnMap.put(column.getColumnName().toLowerCase(), column);
+		}
+
 		DataModelEntity dataModelEntity = new DataModelEntity();
-		Tools.populate(dataModelEntity, persistMap);
+		try {
+			Tools.populate(dataModelEntity, dataMap);
+		} catch (Exception ex) {
+			logger.error(ex);
+		}
+		dataModelEntity.setDataMap(dataMap);
+		String id = formContext.getString("id");
 		String businessKey = formContext.getString("businessKey");
 		String subject = formContext.getString("subject");
-		dataModelEntity.setId(Long.parseLong(businessKey));
+		dataModelEntity.setId(Long.parseLong(id));
 		dataModelEntity.setSubject(subject);
-		dataModelEntity.setServiceKey(formDefinition.getName());
+		dataModelEntity.setBusinessKey(businessKey);
+		dataModelEntity.setServiceKey(formApplication.getName());
 		dataModelEntity.setFormName(formDefinition.getName());
+		dataModelEntity.setUpdateBy(formContext.getActorId());
+		dataModelEntity.setUpdateDate(new Date());
 
-		Set<Entry<String, Object>> entrySet = persistMap.entrySet();
+		Set<Entry<String, Object>> entrySet = dataMap.entrySet();
 		for (Entry<String, Object> entry : entrySet) {
 			String name = entry.getKey();
 			Object value = entry.getValue();
 			if (value != null) {
-				ColumnModel field = new ColumnModel();
-				field.setName(name);
-				field.setValue(value);
-				dataModelEntity.addField(field);
+				if (columnMap.containsKey(name.toLowerCase())) {
+					ColumnModel field = new ColumnModel();
+					field.setName(name);
+					field.setValue(value);
+					dataModelEntity.addField(field);
+				}
 			}
 		}
+
+		dataModelService.update(dataModelEntity);
 	}
 
 }

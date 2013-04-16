@@ -79,33 +79,7 @@ public class FormApplicationReader {
 
 		dataMap.remove("id");
 
-		dataMap.remove("properties");
-
 		Tools.populate(formApplication, dataMap);
-
-		Element elem = element.element("properties");
-		if (elem != null) {
-			List<?> events = elem.elements("property");
-			if (events != null && events.size() > 0) {
-				Iterator<?> iter = events.iterator();
-				while (iter.hasNext()) {
-					Element em = (Element) iter.next();
-					String propertyName = em.attributeValue("name");
-					String propertyValue = null;
-					if (StringUtils.isNotEmpty(em.attributeValue("value"))) {
-						propertyValue = em.attributeValue("value");
-					} else {
-						propertyValue = em.getTextTrim();
-					}
-					FormApplicationProperty property = new FormApplicationProperty();
-					property.setName(propertyName);
-					property.setValue(propertyValue);
-					property.setTitle(em.attributeValue("title"));
-					property.setFormApplication(formApplication);
-					formApplication.addProperty(property);
-				}
-			}
-		}
 
 		return formApplication;
 	}

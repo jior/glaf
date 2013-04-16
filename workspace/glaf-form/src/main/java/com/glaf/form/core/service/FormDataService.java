@@ -47,6 +47,7 @@ public interface FormDataService {
 	 * 删除表单实例数据
 	 * 
 	 * @param appId
+	 *            应用编号
 	 * @param businessKeys
 	 */
 	@Transactional
@@ -55,7 +56,8 @@ public interface FormDataService {
 	/**
 	 * 删除表单应用实例
 	 * 
-	 * @param id
+	 * @param appId
+	 *            应用编号
 	 */
 	@Transactional
 	void deleteFormApplication(String appId);
@@ -71,16 +73,18 @@ public interface FormDataService {
 	/**
 	 * 根据表单实例编号获取表单实例数据
 	 * 
-	 * @param formContext
+	 * @param appId
+	 *            应用编号
 	 * @param id
 	 * @return
 	 */
 	DataModel getDataModel(String appId, Long id);
-	
+
 	/**
-	 * 根据表单实例编号获取表单实例数据
+	 * 根据表单业务编号获取表单实例数据
 	 * 
-	 * @param formContext
+	 * @param appId
+	 *            应用编号
 	 * @param businessKey
 	 * @return
 	 */
@@ -90,6 +94,7 @@ public interface FormDataService {
 	 * 根据表单实例编号获取表单实例数据
 	 * 
 	 * @param app_name
+	 *            应用名称
 	 * @param id
 	 * @return
 	 */
@@ -98,7 +103,8 @@ public interface FormDataService {
 	/**
 	 * 根据编号获取应用定义信息
 	 * 
-	 * @param id
+	 * @param appId
+	 *            应用编号
 	 * @return
 	 */
 	FormApplication getFormApplication(String appId);
@@ -107,6 +113,7 @@ public interface FormDataService {
 	 * 根据名称获取应用定义信息
 	 * 
 	 * @param name
+	 *            应用名称
 	 * @return
 	 */
 	FormApplication getFormApplicationByName(String name);
@@ -115,6 +122,7 @@ public interface FormDataService {
 	 * 根据表单名称获取表单定义信息
 	 * 
 	 * @param formDefinitionId
+	 *            表单定义编号
 	 * @return
 	 */
 	FormDefinition getFormDefinition(String formDefinitionId);
@@ -123,6 +131,7 @@ public interface FormDataService {
 	 * 根据表单名称获取表单定义信息
 	 * 
 	 * @param name
+	 *            表单名称
 	 * @return
 	 */
 	FormDefinition getLatestFormDefinition(String name);
@@ -131,32 +140,42 @@ public interface FormDataService {
 	 * 根据表单名称获取表单定义信息
 	 * 
 	 * @param name
+	 *            表单名称
 	 * @return
 	 */
 	FormDefinition getLatestFormDefinitionReference(String name);
 
+	/**
+	 * 获取一页表单应用信息
+	 * 
+	 * @param query
+	 * @return
+	 */
 	Paging getPageApplication(FormApplicationQuery query);
 
 	/**
 	 * 根据参数获取实例数据列表
 	 * 
 	 * @param appId
-	 *            表单上下文
-	 * @param loginContext
-	 *            用户上下文
-	 * @param DataQuery
+	 *            应用编号
+	 * @param query
 	 *            查询上下文
 	 * @return
 	 */
 	Paging getPageDataModel(String appId, DataModelQuery query);
 
+	/**
+	 * 获取一页表单对象
+	 * @param query
+	 * @return
+	 */
 	Paging getPageFormDefinition(FormDefinitionQuery query);
 
 	/**
 	 * 保存表单实例数据<br>
 	 * 主要操作：根据表单定义和从客户端获取的用户输入数据进行数据组装，形成表单数据实例，根据表单实例信息保存表单数据。<br>
 	 * 在处理数据过程中为了避免数据处理程序的错误引起数据丢失的情况，需要将从客户端输入的信息保存到文件系统中以便日后使用。
-	 * 
+	 * @param appId 应用编号
 	 * @param formContext
 	 */
 	@Transactional
@@ -171,9 +190,8 @@ public interface FormDataService {
 	void saveFormApplication(FormApplication formApplication);
 
 	/**
-	 * 保存表单应用信息
-	 * 
-	 * @param formContext
+	 * 保存多个表单应用信息
+	 *  
 	 */
 	@Transactional
 	void saveFormApplications(List<FormApplication> apps);
@@ -182,17 +200,16 @@ public interface FormDataService {
 	 * 保存表单定义信息 <br>
 	 * 主要操作：保存表单定义的基本属性，节点信息及更新表单的数据库结构
 	 * 
-	 * @param formContext
-	 * @param updateEntity
+	 * @param formDefinition 表单定义信息
 	 */
 	@Transactional
-	void saveFormDefinition(FormDefinition formDefinition, boolean updateEntity);
+	void saveFormDefinition(FormDefinition formDefinition);
 
 	/**
 	 * 保存表单实例数据<br>
 	 * 主要操作：根据表单定义和从客户端获取的用户输入数据进行数据组装，形成表单数据实例，根据表单实例信息保存表单数据。<br>
 	 * 在处理数据过程中为了避免数据处理程序的错误引起数据丢失的情况，需要将从客户端输入的信息保存到文件系统中以便日后使用。
-	 * 
+	 * @param appId 应用编号
 	 * @param formContext
 	 */
 	@Transactional

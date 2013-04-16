@@ -34,8 +34,7 @@ import org.jbpm.JbpmContext;
 import org.jbpm.JbpmException;
 import org.jbpm.graph.def.ProcessDefinition;
 import org.jbpm.taskmgmt.def.Task;
-
-import com.glaf.form.FormException;
+ 
 import com.glaf.form.core.container.MxFormContainer;
 import com.glaf.form.core.context.FormContext;
 import com.glaf.form.core.dataimport.MxFormDataImport;
@@ -106,7 +105,7 @@ public class MxFormArchiveImporter {
 				logger.debug(ex);
 				ex.printStackTrace();
 			}
-			throw new FormException(ex, 5200);
+			throw new RuntimeException(ex);
 		} finally {
 			try {
 				if (zipInputStream != null) {
@@ -126,7 +125,7 @@ public class MxFormArchiveImporter {
 				logger.debug(ex);
 				ex.printStackTrace();
 			}
-			throw new FormException(ex, 5201);
+			throw new RuntimeException(ex);
 		}
 
 		try {
@@ -140,7 +139,7 @@ public class MxFormArchiveImporter {
 				logger.debug(ex);
 				ex.printStackTrace();
 			}
-			throw new FormException(ex, 5204);
+			throw new RuntimeException(ex);
 		}
 
 		try {
@@ -155,7 +154,7 @@ public class MxFormArchiveImporter {
 				logger.debug(ex);
 				ex.printStackTrace();
 			}
-			throw new FormException(ex, 5203);
+			throw new RuntimeException(ex);
 		}
 
 		try {
@@ -169,7 +168,7 @@ public class MxFormArchiveImporter {
 				logger.debug(ex);
 				ex.printStackTrace();
 			}
-			throw new FormException(ex, 5202);
+			throw new RuntimeException(ex);
 		}
 
 		if (formApplication != null && formApplication.getProcessName() != null) {
@@ -187,7 +186,7 @@ public class MxFormArchiveImporter {
 				logger.debug(ex);
 				ex.printStackTrace();
 			}
-			throw new FormException(ex, 5207);
+			throw new RuntimeException(ex);
 		}
 
 	}
@@ -308,8 +307,7 @@ public class MxFormArchiveImporter {
 						formDefinition.setFormContext(formContext);
 						FormDataService formDataService = (FormDataService) ContextFactory
 								.getBean("formDataService");
-						formDataService
-								.saveFormDefinition(formDefinition, true);
+						formDataService.saveFormDefinition(formDefinition);
 					}
 				}
 

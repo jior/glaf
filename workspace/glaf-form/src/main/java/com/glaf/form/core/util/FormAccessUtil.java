@@ -49,10 +49,10 @@ import com.glaf.core.util.ReflectUtils;
 import com.glaf.core.util.StringTools;
 import com.glaf.core.util.Tools;
 
-public class EntityAssembly {
+public class FormAccessUtil {
 
-	public Map<String, Object> assemble(FormContext formContext, Object entity,
-			boolean isCreate) {
+	public static Map<String, Object> process(FormContext formContext,
+			Object entity, boolean isCreate) {
 		FormDefinition formDefinition = formContext.getFormDefinition();
 		Map<String, Object> persistMap = new HashMap<String, Object>();
 		Map<String, Object> dataMap = formContext.getDataMap();

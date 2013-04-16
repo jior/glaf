@@ -20,7 +20,6 @@ package com.glaf.form.core.graph.def;
 import java.io.*;
 import java.util.*;
 import javax.persistence.*;
-import org.apache.commons.lang.StringUtils;
 
 @Entity
 @Table(name = "FORM_APPLICATION")
@@ -111,10 +110,6 @@ public class FormApplication implements Serializable {
 	@Column(name = "PROCESSNAME_")
 	protected String processName = null;
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "formApplication")
-	@MapKey(name = "name")
-	protected Map<String, FormApplicationProperty> properties = null;
-
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "RELEASEDATE_")
 	protected Date releaseDate = null;
@@ -137,42 +132,6 @@ public class FormApplication implements Serializable {
 
 	public FormApplication() {
 
-	}
-
-	@Transient
-	public void addProperty(FormApplicationProperty property) {
-		if (property != null && StringUtils.isNotEmpty(property.getName())
-				&& StringUtils.isNotEmpty(property.getValue())) {
-			property.setFormApplication(this);
-			if (properties == null) {
-				properties = new HashMap<String, FormApplicationProperty>();
-			}
-			FormApplicationProperty p = properties.get(property.getName());
-			if (p == null) {
-				p = new FormApplicationProperty();
-			}
-			p.setName(property.getName());
-			p.setValue(property.getValue());
-			p.setFormApplication(this);
-			properties.put(name, p);
-		}
-	}
-
-	@Transient
-	public void addProperty(String name, String value) {
-		if (StringUtils.isNotEmpty(name) && StringUtils.isNotEmpty(value)) {
-			if (properties == null) {
-				properties = new HashMap<String, FormApplicationProperty>();
-			}
-			FormApplicationProperty p = properties.get(name);
-			if (p == null) {
-				p = new FormApplicationProperty();
-			}
-			p.setName(name);
-			p.setValue(value);
-			p.setFormApplication(this);
-			properties.put(name, p);
-		}
 	}
 
 	@Override
@@ -274,32 +233,6 @@ public class FormApplication implements Serializable {
 
 	public String getProcessName() {
 		return processName;
-	}
-
-	public Map<String, FormApplicationProperty> getProperties() {
-		return properties;
-	}
-
-	@Transient
-	public String getProperty(String name) {
-		if (properties != null) {
-			FormApplicationProperty p = properties.get(name);
-			if (p != null) {
-				return p.getValue();
-			}
-		}
-		return null;
-	}
-
-	@Transient
-	public String getProperty(String name, String defaultValue) {
-		if (properties != null) {
-			FormApplicationProperty p = properties.get(name);
-			if (p != null && StringUtils.isNotEmpty(p.getValue())) {
-				return p.getValue();
-			}
-		}
-		return defaultValue;
 	}
 
 	public Date getReleaseDate() {
@@ -412,10 +345,6 @@ public class FormApplication implements Serializable {
 
 	public void setProcessName(String processName) {
 		this.processName = processName;
-	}
-
-	public void setProperties(Map<String, FormApplicationProperty> properties) {
-		this.properties = properties;
 	}
 
 	public void setReleaseDate(Date releaseDate) {

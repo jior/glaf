@@ -47,26 +47,6 @@ public class FormApplicationWriter {
 			}
 		}
 
-		Map<String, FormApplicationProperty> properties = formApplication
-				.getProperties();
-		if (properties != null && properties.size() > 0) {
-			Element element = root.addElement("properties");
-			Set<Entry<String, FormApplicationProperty>> entrySet3 = properties
-					.entrySet();
-			for (Entry<String, FormApplicationProperty> entry : entrySet3) {
-				String name = entry.getKey();
-				FormApplicationProperty p = entry.getValue();
-				Element elem = element.addElement("property");
-				elem.addAttribute("name", name);
-				if (p.getTitle() != null) {
-					elem.addAttribute("title", p.getTitle());
-				}
-				if (p.getValue() != null) {
-					elem.addCDATA(p.getValue());
-				}
-			}
-		}
-
 		return doc;
 	}
 

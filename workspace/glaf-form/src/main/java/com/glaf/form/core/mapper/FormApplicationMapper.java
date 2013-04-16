@@ -29,8 +29,6 @@ public interface FormApplicationMapper {
 
 	void deleteFormApplicationById(String id);
 
-	void deleteFormApplicationProperties(String appId);
-
 	FormApplication getFormApplicationById(String id);
 
 	FormApplication getFormApplicationByName(String name);
@@ -40,8 +38,6 @@ public interface FormApplicationMapper {
 	List<FormApplication> getFormApplications(FormApplicationQuery query);
 
 	void insertFormApplication(FormApplication model);
-
-	void insertFormApplicationProperty(FormApplicationProperty model);
 
 	void updateFormApplication(FormApplication model);
 

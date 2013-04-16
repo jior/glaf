@@ -4,180 +4,165 @@
 
 <mapper namespace="com.glaf.form.core.mapper.FormApplicationMapper">
 
- 	<resultMap id="formApplicationResultMap"	type="com.glaf.form.core.graph.def.FormApplication">
-        <id property="id" column="ID_" jdbcType="VARCHAR"/>
-        <result property="nodeId" column="NODEID_" jdbcType="BIGINT"/>
-        <result property="name" column="NAME_" jdbcType="VARCHAR"/>
-        <result property="title" column="TITLE_" jdbcType="VARCHAR"/>
-        <result property="description" column="DESCRIPTION_" jdbcType="VARCHAR"/>
-        <result property="formName" column="FORMNAME_" jdbcType="VARCHAR"/>
-        <result property="processName" column="PROCESSNAME_" jdbcType="VARCHAR"/>
-        <result property="processDefinitionId" column="PROCESSDEFINITIONID_" jdbcType="VARCHAR"/>
-        <result property="linkTemplateId" column="LINKTEMPLATEID_" jdbcType="VARCHAR"/>
-        <result property="linkControllerName" column="LINKCONTROLLERNAME_" jdbcType="VARCHAR"/>
-        <result property="listTemplateId" column="LISTTEMPLATEID_" jdbcType="VARCHAR"/>
-        <result property="listControllerName" column="LISTCONTROLLERNAME_" jdbcType="VARCHAR"/>
-        <result property="formRendererType" column="FORMRENDERERTYPE_" jdbcType="VARCHAR"/>
-        <result property="releaseFlag" column="RELEASEFLAG_" jdbcType="VARCHAR"/>
-        <result property="releaseDate" column="RELEASEDATE_" jdbcType="TIMESTAMP"/>
-        <result property="uploadFlag" column="UPLOADFLAG_" jdbcType="VARCHAR"/>
-        <result property="docRequiredFlag" column="DOCREQUIREDFLAG_" jdbcType="VARCHAR"/>
-        <result property="auditUploadFlag" column="AUDITUPLOADFLAG_" jdbcType="VARCHAR"/>
-        <result property="autoArchivesFlag" column="AUTOARCHIVESFLAG_" jdbcType="VARCHAR"/>
-        <result property="manualRouteFlag" column="MANUALROUTEFLAG_" jdbcType="VARCHAR"/>
-        <result property="archivesNode" column="ARCHIVESNODE_" jdbcType="VARCHAR"/>
-        <result property="objectId" column="OBJECTID_" jdbcType="VARCHAR"/>
-        <result property="objectValue" column="OBJECTVALUE_" jdbcType="VARCHAR"/>
-        <result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP"/>
-        <result property="createBy" column="CREATEBY_" jdbcType="VARCHAR"/>
+	<resultMap id="formApplicationResultMap" type="com.glaf.form.core.graph.def.FormApplication">
+		<id property="id" column="ID_" jdbcType="VARCHAR" />
+		<result property="nodeId" column="NODEID_" jdbcType="BIGINT" />
+		<result property="name" column="NAME_" jdbcType="VARCHAR" />
+		<result property="title" column="TITLE_" jdbcType="VARCHAR" />
+		<result property="description" column="DESCRIPTION_" jdbcType="VARCHAR" />
+		<result property="formName" column="FORMNAME_" jdbcType="VARCHAR" />
+		<result property="processName" column="PROCESSNAME_" jdbcType="VARCHAR" />
+		<result property="processDefinitionId" column="PROCESSDEFINITIONID_"
+			jdbcType="VARCHAR" />
+		<result property="linkTemplateId" column="LINKTEMPLATEID_"
+			jdbcType="VARCHAR" />
+		<result property="linkControllerName" column="LINKCONTROLLERNAME_"
+			jdbcType="VARCHAR" />
+		<result property="listTemplateId" column="LISTTEMPLATEID_"
+			jdbcType="VARCHAR" />
+		<result property="listControllerName" column="LISTCONTROLLERNAME_"
+			jdbcType="VARCHAR" />
+		<result property="formRendererType" column="FORMRENDERERTYPE_"
+			jdbcType="VARCHAR" />
+		<result property="releaseFlag" column="RELEASEFLAG_" jdbcType="VARCHAR" />
+		<result property="releaseDate" column="RELEASEDATE_" jdbcType="TIMESTAMP" />
+		<result property="uploadFlag" column="UPLOADFLAG_" jdbcType="VARCHAR" />
+		<result property="docRequiredFlag" column="DOCREQUIREDFLAG_"
+			jdbcType="VARCHAR" />
+		<result property="auditUploadFlag" column="AUDITUPLOADFLAG_"
+			jdbcType="VARCHAR" />
+		<result property="autoArchivesFlag" column="AUTOARCHIVESFLAG_"
+			jdbcType="VARCHAR" />
+		<result property="manualRouteFlag" column="MANUALROUTEFLAG_"
+			jdbcType="VARCHAR" />
+		<result property="archivesNode" column="ARCHIVESNODE_"
+			jdbcType="VARCHAR" />
+		<result property="objectId" column="OBJECTID_" jdbcType="VARCHAR" />
+		<result property="objectValue" column="OBJECTVALUE_" jdbcType="VARCHAR" />
+		<result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP" />
+		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR" />
 	</resultMap>
 
-  	<resultMap id="formApplicationPropertyResultMap"	
-	        type="com.glaf.form.core.graph.def.FormApplicationProperty">
-        <id property="id" column="ID_" jdbcType="VARCHAR"/>
-        <result property="name" column="NAME_" jdbcType="VARCHAR"/>
-        <result property="value" column="VALUE_" jdbcType="VARCHAR"/>
-        <result property="title" column="TITLE_" jdbcType="VARCHAR"/>
-		<result property="appId" column="FORMAPPLICATION_" jdbcType="VARCHAR"/>
-	</resultMap>
+
 
 	<insert id="insertFormApplication" parameterType="com.glaf.form.core.graph.def.FormApplication">
 		insert into
 		FORM_APPLICATION ( ID_
-        ,NODEID_ 
-        ,NAME_ 
-        ,TITLE_ 
-        ,DESCRIPTION_ 
-        ,FORMNAME_ 
-        ,PROCESSNAME_ 
-        ,PROCESSDEFINITIONID_ 
-        ,LINKTEMPLATEID_ 
-        ,LINKCONTROLLERNAME_ 
-        ,LISTTEMPLATEID_ 
-        ,LISTCONTROLLERNAME_ 
-        ,FORMRENDERERTYPE_ 
-        ,RELEASEFLAG_ 
-        ,RELEASEDATE_ 
-        ,UPLOADFLAG_ 
-        ,DOCREQUIREDFLAG_ 
-        ,AUDITUPLOADFLAG_ 
-        ,AUTOARCHIVESFLAG_ 
-        ,MANUALROUTEFLAG_ 
-        ,ARCHIVESNODE_ 
-        ,OBJECTID_ 
-        ,OBJECTVALUE_ 
-        ,CREATEDATE_ 
-        ,CREATEBY_ 
+		,NODEID_
+		,NAME_
+		,TITLE_
+		,DESCRIPTION_
+		,FORMNAME_
+		,PROCESSNAME_
+		,PROCESSDEFINITIONID_
+		,LINKTEMPLATEID_
+		,LINKCONTROLLERNAME_
+		,LISTTEMPLATEID_
+		,LISTCONTROLLERNAME_
+		,FORMRENDERERTYPE_
+		,RELEASEFLAG_
+		,RELEASEDATE_
+		,UPLOADFLAG_
+		,DOCREQUIREDFLAG_
+		,AUDITUPLOADFLAG_
+		,AUTOARCHIVESFLAG_
+		,MANUALROUTEFLAG_
+		,ARCHIVESNODE_
+		,OBJECTID_
+		,OBJECTVALUE_
+		,CREATEDATE_
+		,CREATEBY_
 		)
 		values (
-          #{id, jdbcType=VARCHAR}
-        ,#{nodeId, jdbcType=BIGINT}
-        ,#{name, jdbcType=VARCHAR}
-        ,#{title, jdbcType=VARCHAR}
-        ,#{description, jdbcType=VARCHAR}
-        ,#{formName, jdbcType=VARCHAR}
-        ,#{processName, jdbcType=VARCHAR}
-        ,#{processDefinitionId, jdbcType=VARCHAR}
-        ,#{linkTemplateId, jdbcType=VARCHAR}
-        ,#{linkControllerName, jdbcType=VARCHAR}
-        ,#{listTemplateId, jdbcType=VARCHAR}
-        ,#{listControllerName, jdbcType=VARCHAR}
-        ,#{formRendererType, jdbcType=VARCHAR}
-        ,#{releaseFlag, jdbcType=VARCHAR}
-        ,#{releaseDate, jdbcType=TIMESTAMP}
-        ,#{uploadFlag, jdbcType=VARCHAR}
-        ,#{docRequiredFlag, jdbcType=VARCHAR}
-        ,#{auditUploadFlag, jdbcType=VARCHAR}
-        ,#{autoArchivesFlag, jdbcType=VARCHAR}
-        ,#{manualRouteFlag, jdbcType=VARCHAR}
-        ,#{archivesNode, jdbcType=VARCHAR}
-        ,#{objectId, jdbcType=VARCHAR}
-        ,#{objectValue, jdbcType=VARCHAR}
-        ,#{createDate, jdbcType=TIMESTAMP}
-        ,#{createBy, jdbcType=VARCHAR}
+		#{id, jdbcType=VARCHAR}
+		,#{nodeId, jdbcType=BIGINT}
+		,#{name, jdbcType=VARCHAR}
+		,#{title, jdbcType=VARCHAR}
+		,#{description, jdbcType=VARCHAR}
+		,#{formName, jdbcType=VARCHAR}
+		,#{processName, jdbcType=VARCHAR}
+		,#{processDefinitionId, jdbcType=VARCHAR}
+		,#{linkTemplateId, jdbcType=VARCHAR}
+		,#{linkControllerName, jdbcType=VARCHAR}
+		,#{listTemplateId, jdbcType=VARCHAR}
+		,#{listControllerName, jdbcType=VARCHAR}
+		,#{formRendererType, jdbcType=VARCHAR}
+		,#{releaseFlag, jdbcType=VARCHAR}
+		,#{releaseDate, jdbcType=TIMESTAMP}
+		,#{uploadFlag, jdbcType=VARCHAR}
+		,#{docRequiredFlag, jdbcType=VARCHAR}
+		,#{auditUploadFlag, jdbcType=VARCHAR}
+		,#{autoArchivesFlag, jdbcType=VARCHAR}
+		,#{manualRouteFlag, jdbcType=VARCHAR}
+		,#{archivesNode, jdbcType=VARCHAR}
+		,#{objectId, jdbcType=VARCHAR}
+		,#{objectValue, jdbcType=VARCHAR}
+		,#{createDate, jdbcType=TIMESTAMP}
+		,#{createBy, jdbcType=VARCHAR}
 		)
-    </insert>
+	</insert>
 
-	<insert id="insertFormApplicationProperty" 
-	    parameterType="com.glaf.form.core.graph.def.FormApplicationProperty">
-		insert into
-		FORM_APPLICATION_PROP ( ID_
-        ,NAME_ 
-        ,VALUE_ 
-        ,TITLE_
-		,FORMAPPLICATION_
-		)
-		values (
-          #{id, jdbcType=VARCHAR}
-        ,#{name, jdbcType=VARCHAR}
-        ,#{value, jdbcType=VARCHAR}
-        ,#{title, jdbcType=VARCHAR}
-		,#{appId, jdbcType=VARCHAR}
-		)
-    </insert>
+
 
 	<update id="updateFormApplication" parameterType="com.glaf.form.core.graph.def.FormApplication">
-		update FORM_APPLICATION
+		update
+		FORM_APPLICATION
 		set NODEID_ = #{nodeId, jdbcType=BIGINT},
-        TITLE_ = #{title, jdbcType=VARCHAR},
-        DESCRIPTION_ = #{description, jdbcType=VARCHAR},
-        FORMNAME_ = #{formName, jdbcType=VARCHAR},
-        PROCESSNAME_ = #{processName, jdbcType=VARCHAR},
-        PROCESSDEFINITIONID_ = #{processDefinitionId, jdbcType=VARCHAR},
-        LINKTEMPLATEID_ = #{linkTemplateId, jdbcType=VARCHAR},
-        LINKCONTROLLERNAME_ = #{linkControllerName, jdbcType=VARCHAR},
-        LISTTEMPLATEID_ = #{listTemplateId, jdbcType=VARCHAR},
-        LISTCONTROLLERNAME_ = #{listControllerName, jdbcType=VARCHAR},
-        FORMRENDERERTYPE_ = #{formRendererType, jdbcType=VARCHAR},
-        RELEASEFLAG_ = #{releaseFlag, jdbcType=VARCHAR},
-        RELEASEDATE_ = #{releaseDate, jdbcType=TIMESTAMP},
-        UPLOADFLAG_ = #{uploadFlag, jdbcType=VARCHAR},
-        DOCREQUIREDFLAG_ = #{docRequiredFlag, jdbcType=VARCHAR},
-        AUDITUPLOADFLAG_ = #{auditUploadFlag, jdbcType=VARCHAR},
-        AUTOARCHIVESFLAG_ = #{autoArchivesFlag, jdbcType=VARCHAR},
-        MANUALROUTEFLAG_ = #{manualRouteFlag, jdbcType=VARCHAR},
-        ARCHIVESNODE_ = #{archivesNode, jdbcType=VARCHAR},
-        OBJECTID_ = #{objectId, jdbcType=VARCHAR},
-        OBJECTVALUE_ = #{objectValue, jdbcType=VARCHAR}
-		where ID_ = #{id, jdbcType=VARCHAR}	
-    </update>
+		TITLE_ = #{title, jdbcType=VARCHAR},
+		DESCRIPTION_ = #{description, jdbcType=VARCHAR},
+		FORMNAME_ = #{formName, jdbcType=VARCHAR},
+		PROCESSNAME_ = #{processName, jdbcType=VARCHAR},
+		PROCESSDEFINITIONID_ = #{processDefinitionId, jdbcType=VARCHAR},
+		LINKTEMPLATEID_ = #{linkTemplateId, jdbcType=VARCHAR},
+		LINKCONTROLLERNAME_ = #{linkControllerName, jdbcType=VARCHAR},
+		LISTTEMPLATEID_ = #{listTemplateId, jdbcType=VARCHAR},
+		LISTCONTROLLERNAME_ = #{listControllerName, jdbcType=VARCHAR},
+		FORMRENDERERTYPE_ = #{formRendererType, jdbcType=VARCHAR},
+		RELEASEFLAG_ = #{releaseFlag, jdbcType=VARCHAR},
+		RELEASEDATE_ = #{releaseDate, jdbcType=TIMESTAMP},
+		UPLOADFLAG_ = #{uploadFlag, jdbcType=VARCHAR},
+		DOCREQUIREDFLAG_ = #{docRequiredFlag, jdbcType=VARCHAR},
+		AUDITUPLOADFLAG_ = #{auditUploadFlag, jdbcType=VARCHAR},
+		AUTOARCHIVESFLAG_ = #{autoArchivesFlag, jdbcType=VARCHAR},
+		MANUALROUTEFLAG_ = #{manualRouteFlag, jdbcType=VARCHAR},
+		ARCHIVESNODE_ = #{archivesNode, jdbcType=VARCHAR},
+		OBJECTID_ = #{objectId, jdbcType=VARCHAR},
+		OBJECTVALUE_ = #{objectValue, jdbcType=VARCHAR}
+		where ID_ = #{id, jdbcType=VARCHAR}
+	</update>
 
-	<delete id="deleteFormApplicationById" parameterType="string"> 
-        delete from FORM_APPLICATION
-        where ID_ =	#{id}
+	<delete id="deleteFormApplicationById" parameterType="string">
+		delete from FORM_APPLICATION
+		where ID_ = #{id}
 	</delete>
 
-	<delete id="deleteFormApplicationProperties" parameterType="string">
-		delete from FORM_APPLICATION_PROP
-		where  FORMAPPLICATION_ = #{appId}
-	</delete>
-
-	<select id="getFormApplicationById" parameterType="string" resultMap="formApplicationResultMap">
+	<select id="getFormApplicationById" parameterType="string"
+		resultMap="formApplicationResultMap">
 		select * from FORM_APPLICATION where ID_ = #{id}
 	</select>
 
-	<select id="getFormApplicationByName" parameterType="string" resultMap="formApplicationResultMap">
+	<select id="getFormApplicationByName" parameterType="string"
+		resultMap="formApplicationResultMap">
 		select * from FORM_APPLICATION where NAME_ = #{name}
 	</select>
 
-	<select id="getFormApplicationProperties" parameterType="string" 
-	    resultMap="formApplicationPropertyResultMap">
-		select * from FORM_APPLICATION where FORMAPPLICATION_ = #{appId}
+	<select id="getFormApplicationProperties" parameterType="string"
+		resultMap="formApplicationPropertyResultMap">
+		select * from FORM_APPLICATION where FORMAPPLICATION_ =
+		#{appId}
 	</select>
 
 
-	<select id="getFormApplications" 
-	    parameterType="com.glaf.form.core.query.FormApplicationQuery"
+	<select id="getFormApplications" parameterType="com.glaf.form.core.query.FormApplicationQuery"
 		resultMap="formApplicationResultMap">
 		select E.*
 		<include refid="selectFormApplicationsSql" />
 		<if test="orderBy != null">
-		   order by ${orderBy}
-        </if>
+			order by ${orderBy}
+		</if>
 	</select>
 
-	<select id="getFormApplicationCount" 
-	    parameterType="com.glaf.form.core.query.FormApplicationQuery"
+	<select id="getFormApplicationCount" parameterType="com.glaf.form.core.query.FormApplicationQuery"
 		resultType="int">
 		select count(*)
 		<include refid="selectFormApplicationsSql" />
@@ -186,145 +171,146 @@
 	<sql id="selectFormApplicationsSql">
 
 		from FORM_APPLICATION E
-		 
+
 		<where>
-		       1 = 1  
+			1 = 1
 
 			<if test="nodeId != null and nodeId != '' ">
 				and E.NODEID_ = #{nodeId}
-            </if>
+			</if>
 
 			<if test="nodeIds != null and nodeIds.size() &gt; 0">
-			    and E.NODEID_ IN
-                <foreach item="x_nodeId" index="index" collection="nodeIds" 
-                     open="(" separator="," close=")">
-                  #{x_nodeId}
-                </foreach>
+				and E.NODEID_ IN
+				<foreach item="x_nodeId" index="index" collection="nodeIds"
+					open="(" separator="," close=")">
+					#{x_nodeId}
+				</foreach>
 			</if>
-	        
+
 			<if test="name != null and name != '' ">
 				and E.NAME_ = #{name}
-            </if>
+			</if>
 
 			<if test="names != null and names.size() &gt; 0">
-			    and E.NAME_ IN
-                <foreach item="x_name" index="index" collection="names" 
-                     open="(" separator="," close=")">
-                  #{x_name}
-                </foreach>
+				and E.NAME_ IN
+				<foreach item="x_name" index="index" collection="names"
+					open="(" separator="," close=")">
+					#{x_name}
+				</foreach>
 			</if>
 
 			<if test="titleLike != null and titleLike != '' ">
 				and E.TITLE_ like #{titleLike}
-            </if>
-	        
+			</if>
+
 			<if test="descriptionLike != null and descriptionLike != '' ">
 				and E.DESCRIPTION_ like #{descriptionLike}
-            </if>
-	        
+			</if>
+
 			<if test="formName != null and formName != '' ">
 				and E.FORMNAME_ = #{formName}
-            </if>
+			</if>
 
 			<if test="formNames != null and formNames.size() &gt; 0">
-			    and E.FORMNAME_ IN
-                <foreach item="x_formName" index="index" collection="formNames" 
-                     open="(" separator="," close=")">
-                  #{x_formName}
-                </foreach>
+				and E.FORMNAME_ IN
+				<foreach item="x_formName" index="index" collection="formNames"
+					open="(" separator="," close=")">
+					#{x_formName}
+				</foreach>
 			</if>
 
 			<if test="processName != null and processName != '' ">
 				and E.PROCESSNAME_ = #{processName}
-            </if>
+			</if>
 
 			<if test="processNames != null and processNames.size() &gt; 0">
-			    and E.PROCESSNAME_ IN
-                <foreach item="x_processName" index="index" collection="processNames" 
-                     open="(" separator="," close=")">
-                  #{x_processName}
-                </foreach>
+				and E.PROCESSNAME_ IN
+				<foreach item="x_processName" index="index" collection="processNames"
+					open="(" separator="," close=")">
+					#{x_processName}
+				</foreach>
 			</if>
-  
+
 			<if test="processDefinitionId != null and processDefinitionId != '' ">
 				and E.PROCESSDEFINITIONID_ = #{processDefinitionId}
-            </if>
-
-			<if test="processDefinitionIds != null and processDefinitionIds.size() &gt; 0">
-			    and E.PROCESSDEFINITIONID_ IN
-                <foreach item="x_processDefinitionId" index="index" collection="processDefinitionIds" 
-                     open="(" separator="," close=")">
-                  #{x_processDefinitionId}
-                </foreach>
 			</if>
-	        
+
+			<if
+				test="processDefinitionIds != null and processDefinitionIds.size() &gt; 0">
+				and E.PROCESSDEFINITIONID_ IN
+				<foreach item="x_processDefinitionId" index="index"
+					collection="processDefinitionIds" open="(" separator="," close=")">
+					#{x_processDefinitionId}
+				</foreach>
+			</if>
+
 			<if test="releaseFlag != null and releaseFlag != '' ">
 				and E.RELEASEFLAG_ = #{releaseFlag}
-            </if>
+			</if>
 
 			<if test="releaseDateGreaterThanOrEqual != null">
 				and E.RELEASEDATE_ &gt;= #{releaseDateGreaterThanOrEqual}
-            </if>
+			</if>
 
 			<if test="releaseDateLessThanOrEqual != null">
 				and E.RELEASEDATE_ &lt;= #{releaseDateLessThanOrEqual}
-            </if>
-	        
+			</if>
+
 			<if test="uploadFlag != null and uploadFlag != '' ">
 				and E.UPLOADFLAG_ = #{uploadFlag}
-            </if>
-	        
+			</if>
+
 			<if test="docRequiredFlag != null and docRequiredFlag != '' ">
 				and E.DOCREQUIREDFLAG_ = #{docRequiredFlag}
-            </if>
-	        
+			</if>
+
 			<if test="auditUploadFlag != null and auditUploadFlag != '' ">
 				and E.AUDITUPLOADFLAG_ = #{auditUploadFlag}
-            </if>
-	        
+			</if>
+
 			<if test="autoArchivesFlag != null and autoArchivesFlag != '' ">
 				and E.AUTOARCHIVESFLAG_ = #{autoArchivesFlag}
-            </if>
-	        
+			</if>
+
 			<if test="manualRouteFlag != null and manualRouteFlag != '' ">
 				and E.MANUALROUTEFLAG_ = #{manualRouteFlag}
-            </if>
-	        
+			</if>
+
 			<if test="objectId != null and objectId != '' ">
 				and E.OBJECTID_ = #{objectId}
-            </if>
+			</if>
 
 			<if test="objectIds != null and objectIds.size() &gt; 0">
-			    and E.OBJECTID_ IN
-                <foreach item="x_objectId" index="index" collection="objectIds" 
-                     open="(" separator="," close=")">
-                  #{x_objectId}
-                </foreach>
+				and E.OBJECTID_ IN
+				<foreach item="x_objectId" index="index" collection="objectIds"
+					open="(" separator="," close=")">
+					#{x_objectId}
+				</foreach>
 			</if>
 
 			<if test="objectValue != null and objectValue != '' ">
 				and E.OBJECTVALUE_ = #{objectValue}
-            </if>
+			</if>
 
 			<if test="objectValues != null and objectValues.size() &gt; 0">
-			    and E.OBJECTVALUE_ IN
-                <foreach item="x_objectValue" index="index" collection="objectValues" 
-                     open="(" separator="," close=")">
-                  #{x_objectValue}
-                </foreach>
+				and E.OBJECTVALUE_ IN
+				<foreach item="x_objectValue" index="index" collection="objectValues"
+					open="(" separator="," close=")">
+					#{x_objectValue}
+				</foreach>
 			</if>
-   
+
 			<if test="createBy != null and createBy != '' ">
 				and E.CREATEBY_ = #{createBy}
-            </if>
-	
+			</if>
+
 			<if test="afterCreateDate != null">
 				and E.CREATEDATE_ &gt;= #{afterCreateDate}
 			</if>
 
 			<if test="beforeCreateDate != null">
 				and E.CREATEDATE_ &lt;= #{beforeCreateDate}
-            </if>		 
+			</if>
 		</where>
 	</sql>
 

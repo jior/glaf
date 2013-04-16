@@ -28,15 +28,11 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.glaf.core.cache.CacheFactory;
-
 import com.glaf.core.dao.EntityDAO;
 import com.glaf.core.id.IdGenerator;
-
 import com.glaf.core.query.DataModelQuery;
-import com.glaf.core.util.LogUtils;
 import com.glaf.core.util.Paging;
-import com.glaf.form.FormException;
+
 import com.glaf.form.core.context.FormContext;
 import com.glaf.form.core.graph.def.FormApplication;
 import com.glaf.form.core.graph.def.FormDefinition;
@@ -71,7 +67,7 @@ public class MxFormLinkServiceImpl implements FormLinkService {
 		formLinkMapper.deleteFormLinkById(id);
 	}
 
-	public List<FormApplication> getChildrenApplication(String app_name) {
+	public List<FormApplication> getChildrenApplications(String app_name) {
 		List<FormLink> list = this.getFormLinks(app_name);
 		List<FormApplication> rows = new ArrayList<FormApplication>();
 		if (list != null && !list.isEmpty()) {
@@ -130,10 +126,7 @@ public class MxFormLinkServiceImpl implements FormLinkService {
 	}
 
 	public FormLink getFormLink(String applicationName, String childName) {
-		String cacheKey = "form_link_" + applicationName + "_" + childName;
-		if (CacheFactory.get(cacheKey) != null) {
-			return (FormLink) CacheFactory.get(cacheKey);
-		}
+
 		FormLinkQuery query = new FormLinkQuery();
 		query.applicationName(applicationName);
 		query.childName(childName);
@@ -146,12 +139,8 @@ public class MxFormLinkServiceImpl implements FormLinkService {
 		return formLink;
 	}
 
-	@SuppressWarnings("unchecked")
 	public List<FormLink> getFormLinks(String app_name) {
-		String cacheKey = "form_links_" + app_name;
-		if (CacheFactory.get(cacheKey) != null) {
-			return (List<FormLink>) CacheFactory.get(cacheKey);
-		}
+
 		FormLinkQuery query = new FormLinkQuery();
 		query.applicationName(app_name);
 		List<FormLink> list = this.list(query);
@@ -170,14 +159,7 @@ public class MxFormLinkServiceImpl implements FormLinkService {
 		formContext.setFormApplication(formApplication);
 		formContext.setFormDefinition(formDefinition);
 
-		try {
-			return formDataService.getPageDataModel(formApplication.getId(), query);
-		} catch (Exception ex) {
-			if (LogUtils.isDebug()) {
-				ex.printStackTrace();
-			}
-			throw new FormException(ex, 1004);
-		}
+		return formDataService.getPageDataModel(formApplication.getId(), query);
 	}
 
 	public List<FormLink> list(FormLinkQuery query) {
@@ -192,19 +174,12 @@ public class MxFormLinkServiceImpl implements FormLinkService {
 			formLink.setId(idGenerator.getNextId());
 			formLinkMapper.insertFormLink(formLink);
 		} else {
-			String cacheKey = "form_link_" + formLink.getApplicationName()
-					+ "_" + formLink.getChildName();
-			CacheFactory.remove(cacheKey);
-			cacheKey = "form_links_" + formLink.getApplicationName();
-			CacheFactory.remove(cacheKey);
 			formLinkMapper.updateFormLink(formLink);
 		}
 	}
 
 	@Transactional
 	public void saveAll(String app_name, List<FormLink> rows) {
-		String cacheKey = "form_links_" + app_name;
-		CacheFactory.remove(cacheKey);
 		formLinkMapper.deleteFormLinks(app_name);
 		for (FormLink model : rows) {
 			model.setApplicationName(app_name);

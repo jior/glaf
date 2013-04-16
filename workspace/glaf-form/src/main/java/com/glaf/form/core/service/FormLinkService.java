@@ -38,7 +38,7 @@ public interface FormLinkService {
 	 *            应用名称
 	 * @param rows
 	 */
-	List<FormApplication> getChildrenApplication(String app_name);
+	List<FormApplication> getChildrenApplications(String app_name);
 
 	/**
 	 * 获取应用关联表单定义
