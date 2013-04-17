@@ -39,6 +39,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.base.DataFile;
 import com.glaf.core.base.DataModel;
 import com.glaf.core.base.DataModelEntity;
@@ -54,6 +56,7 @@ import com.glaf.core.security.LoginContext;
 import com.glaf.core.service.DataModelService;
 import com.glaf.core.service.IBlobService;
 import com.glaf.core.service.ITableDefinitionService;
+
 import com.glaf.core.util.Paging;
 import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.SearchFilter;
@@ -71,6 +74,8 @@ import com.glaf.form.core.mapper.FormDefinitionMapper;
 import com.glaf.form.core.query.FormApplicationQuery;
 import com.glaf.form.core.query.FormDefinitionQuery;
 import com.glaf.form.core.service.FormDataService;
+import com.glaf.form.core.util.FormApplicationJsonFactory;
+import com.glaf.form.core.util.FormDefinitionJsonFactory;
 
 @Service("formDataService")
 @Transactional(readOnly = true)
@@ -174,10 +179,16 @@ public class MxFormDataServiceImpl implements FormDataService {
 	public FormApplication getFormApplication(String appId) {
 		String cacheKey = "form_app_" + appId;
 		if (CacheFactory.get(cacheKey) != null) {
-			return (FormApplication) CacheFactory.get(cacheKey);
+			String text = (String) CacheFactory.get(cacheKey);
+			JSONObject jsonObject = JSON.parseObject(text);
+			return FormApplicationJsonFactory.jsonToObject(jsonObject);
 		}
 		FormApplication formApplication = formApplicationMapper
 				.getFormApplicationById(appId);
+		if (formApplication != null) {
+			CacheFactory.put(cacheKey, formApplication.toJsonObject()
+					.toJSONString());
+		}
 
 		return formApplication;
 	}
@@ -185,11 +196,16 @@ public class MxFormDataServiceImpl implements FormDataService {
 	public FormApplication getFormApplicationByName(String name) {
 		String cacheKey = "form_app_" + name;
 		if (CacheFactory.get(cacheKey) != null) {
-			return (FormApplication) CacheFactory.get(cacheKey);
+			String text = (String) CacheFactory.get(cacheKey);
+			JSONObject jsonObject = JSON.parseObject(text);
+			return FormApplicationJsonFactory.jsonToObject(jsonObject);
 		}
 		FormApplication formApplication = formApplicationMapper
 				.getFormApplicationByName(name);
-
+		if (formApplication != null) {
+			CacheFactory.put(cacheKey, formApplication.toJsonObject()
+					.toJSONString());
+		}
 		return formApplication;
 	}
 
@@ -208,10 +224,16 @@ public class MxFormDataServiceImpl implements FormDataService {
 	public FormDefinition getFormDefinition(String formDefinitionId) {
 		String cacheKey = "form_def_" + formDefinitionId;
 		if (CacheFactory.get(cacheKey) != null) {
-			return (FormDefinition) CacheFactory.get(cacheKey);
+			String text = (String) CacheFactory.get(cacheKey);
+			JSONObject jsonObject = JSON.parseObject(text);
+			return FormDefinitionJsonFactory.jsonToObject(jsonObject);
 		}
 		FormDefinition formDefinition = formDefinitionMapper
 				.getFormDefinition(formDefinitionId);
+		if (formDefinition != null) {
+			CacheFactory.put(cacheKey, formDefinition.toJsonObject()
+					.toJSONString());
+		}
 		return formDefinition;
 	}
 
@@ -224,7 +246,9 @@ public class MxFormDataServiceImpl implements FormDataService {
 	public FormDefinition getLatestFormDefinition(String name) {
 		String cacheKey = "form_def_" + name;
 		if (CacheFactory.get(cacheKey) != null) {
-			return (FormDefinition) CacheFactory.get(cacheKey);
+			String text = (String) CacheFactory.get(cacheKey);
+			JSONObject jsonObject = JSON.parseObject(text);
+			return FormDefinitionJsonFactory.jsonToObject(jsonObject);
 		}
 		FormDefinitionQuery query = new FormDefinitionQuery();
 		query.name(name);
@@ -233,23 +257,10 @@ public class MxFormDataServiceImpl implements FormDataService {
 		List<FormDefinition> list = this.formDefinitionList(query);
 		if (list != null && !list.isEmpty()) {
 			formDefinition = list.get(0);
-
-		}
-		return formDefinition;
-	}
-
-	public FormDefinition getLatestFormDefinitionReference(String name) {
-		String cacheKey = "form_def_ref_" + name;
-		if (CacheFactory.get(cacheKey) != null) {
-			return (FormDefinition) CacheFactory.get(cacheKey);
-		}
-		FormDefinitionQuery query = new FormDefinitionQuery();
-		query.name(name);
-		query.setOrderBy(" E.VERSION_ desc ");
-		List<FormDefinition> list = this.formDefinitionList(query);
-		FormDefinition formDefinition = null;
-		if (list != null && !list.isEmpty()) {
-			formDefinition = list.get(0);
+			if (formDefinition != null) {
+				CacheFactory.put(cacheKey, formDefinition.toJsonObject()
+						.toJSONString());
+			}
 		}
 		return formDefinition;
 	}
@@ -472,6 +483,8 @@ public class MxFormDataServiceImpl implements FormDataService {
 			formApplicationMapper.insertFormApplication(formApplication);
 		} else {
 			formApplicationMapper.updateFormApplication(formApplication);
+			CacheFactory.remove("form_app_" + formApplication.getId());
+			CacheFactory.remove("form_app_" + formApplication.getName());
 		}
 	}
 
@@ -491,8 +504,8 @@ public class MxFormDataServiceImpl implements FormDataService {
 		if (StringUtils.isEmpty(formDefinition.getId())) {
 			formDefinition.setId(idGenerator.getNextId());
 		}
-		FormDefinition model = this
-				.getLatestFormDefinitionReference(formDefinition.getName());
+		FormDefinition model = this.getLatestFormDefinition(formDefinition
+				.getName());
 		if (model != null) {
 			formDefinition.setVersion(model.getVersion() + 1);
 		} else {
@@ -506,6 +519,7 @@ public class MxFormDataServiceImpl implements FormDataService {
 		}
 
 		formDefinitionMapper.insertFormDefinition(formDefinition);
+		CacheFactory.remove("form_def_" + formDefinition.getName());
 
 		if (formDefinition.getTemplateData() != null) {
 			DataFile dataFile = new BlobItemEntity();

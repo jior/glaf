@@ -136,14 +136,7 @@ public interface FormDataService {
 	 */
 	FormDefinition getLatestFormDefinition(String name);
 
-	/**
-	 * 根据表单名称获取表单定义信息
-	 * 
-	 * @param name
-	 *            表单名称
-	 * @return
-	 */
-	FormDefinition getLatestFormDefinitionReference(String name);
+ 
 
 	/**
 	 * 获取一页表单应用信息

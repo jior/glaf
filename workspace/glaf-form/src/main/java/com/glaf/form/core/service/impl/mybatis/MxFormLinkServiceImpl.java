@@ -91,7 +91,7 @@ public class MxFormLinkServiceImpl implements FormLinkService {
 				FormApplication childApplication = formDataService
 						.getFormApplicationByName(model.getChildName());
 				FormDefinition formDefinition = formDataService
-						.getLatestFormDefinitionReference(childApplication
+						.getLatestFormDefinition(childApplication
 								.getFormName());
 				if (formDefinition != null && formDefinition.getLocked() != 1) {
 					rows.add(formDefinition);

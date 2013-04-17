@@ -245,7 +245,7 @@ public class MxFormArchiveImporter {
 			formApplication.setCreateDate(model.getCreateDate());
 		}
 		FormDefinition formDefinition = formDataService
-				.getLatestFormDefinitionReference(formApplication.getFormName());
+				.getLatestFormDefinition(formApplication.getFormName());
 		if (formDefinition != null) {
 			formApplication.setFormName(formDefinition.getName());
 		}
