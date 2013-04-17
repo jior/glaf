@@ -20,6 +20,7 @@ package com.glaf.core.base;
 
 import java.io.Serializable;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -55,9 +56,15 @@ public interface TreeModel extends Serializable,
 	 */
 	String getCode();
 
+	String getCreateBy();
+
+	Date getCreateDate();
+
 	Map<String, Object> getDataMap();
 
 	String getDescription();
+
+	String getDiscriminator();
 
 	String getIcon();
 
@@ -104,6 +111,10 @@ public interface TreeModel extends Serializable,
 
 	String getTreeId();
 
+	String getUpdateBy();
+
+	Date getUpdateDate();
+
 	String getUrl();
 
 	boolean isChecked();
@@ -124,7 +135,13 @@ public interface TreeModel extends Serializable,
 
 	void setCode(String code);
 
+	void setCreateBy(String createBy);
+
+	void setCreateDate(Date createDate);
+
 	void setDescription(String description);
+
+	void setDiscriminator(String discriminator);
 
 	void setIcon(String icon);
 
@@ -145,6 +162,10 @@ public interface TreeModel extends Serializable,
 	void setSortNo(int sortNo);
 
 	void setTreeId(String treeId);
+
+	void setUpdateBy(String updateBy);
+
+	void setUpdateDate(Date updateDate);
 
 	void setUrl(String url);
 

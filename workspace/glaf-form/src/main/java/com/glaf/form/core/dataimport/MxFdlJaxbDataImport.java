@@ -27,7 +27,7 @@ import org.apache.commons.logging.LogFactory;
 import com.glaf.form.core.model.FormDefinitionType;
 import com.glaf.core.util.LogUtils;
 
-public class MxFdlJaxbDataImport implements MxFormDataImport {
+public class MxFdlJaxbDataImport implements FormDataImport {
 	private static final Log logger = LogFactory
 			.getLog(MxFdlJaxbDataImport.class);
 

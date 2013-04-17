@@ -33,8 +33,13 @@
 					   if(data.message != null){
 						   alert(data.message);
 					   } else {
-						 alert('操作成功完成！');
-					   }					
+						   alert('操作成功完成！');
+					   }
+					   if (window.opener) {
+						  window.opener.location.reload();
+						} else if (window.parent) {
+						  window.parent.location.reload();
+						}
 				   }
 			 });
 	}

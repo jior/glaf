@@ -33,8 +33,6 @@ public class FormDefinitionQuery extends DataQuery {
 	protected List<String> formDefinitionIds;
 	protected String templateName;
 	protected String templateNameLike;
-	protected String tableName;
-	protected String tableNameLike;
 	protected String templateType;
 	protected String templateTypeLike;
 	protected List<String> templateTypes;
@@ -46,8 +44,6 @@ public class FormDefinitionQuery extends DataQuery {
 	public FormDefinitionQuery() {
 
 	}
-
-
 
 	public FormDefinitionQuery descriptionLike(String descriptionLike) {
 		if (descriptionLike == null) {
@@ -81,7 +77,6 @@ public class FormDefinitionQuery extends DataQuery {
 		return this;
 	}
 
-	
 	public String getDescriptionLike() {
 		return descriptionLike;
 	}
@@ -124,14 +119,6 @@ public class FormDefinitionQuery extends DataQuery {
 
 	public List<String> getObjectValues() {
 		return objectValues;
-	}
-
-	public String getTableName() {
-		return tableName;
-	}
-
-	public String getTableNameLike() {
-		return tableNameLike;
 	}
 
 	public String getTemplateName() {
@@ -262,14 +249,6 @@ public class FormDefinitionQuery extends DataQuery {
 		this.objectValues = objectValues;
 	}
 
-	public void setTableName(String tableName) {
-		this.tableName = tableName;
-	}
-
-	public void setTableNameLike(String tableNameLike) {
-		this.tableNameLike = tableNameLike;
-	}
-
 	public void setTemplateName(String templateName) {
 		this.templateName = templateName;
 	}
@@ -296,22 +275,6 @@ public class FormDefinitionQuery extends DataQuery {
 
 	public void setTitleLike(String titleLike) {
 		this.titleLike = titleLike;
-	}
-
-	public FormDefinitionQuery tableName(String tableName) {
-		if (tableName == null) {
-			throw new RuntimeException("tableName is null");
-		}
-		this.tableName = tableName;
-		return this;
-	}
-
-	public FormDefinitionQuery tableNameLike(String tableNameLike) {
-		if (tableNameLike == null) {
-			throw new RuntimeException("tableName is null");
-		}
-		this.tableNameLike = tableNameLike;
-		return this;
 	}
 
 	public FormDefinitionQuery templateName(String templateName) {

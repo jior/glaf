@@ -37,8 +37,8 @@ import org.jbpm.taskmgmt.def.Task;
  
 import com.glaf.form.core.container.MxFormContainer;
 import com.glaf.form.core.context.FormContext;
-import com.glaf.form.core.dataimport.MxFormDataImport;
-import com.glaf.form.core.dataimport.MxFormDataImportFactory;
+import com.glaf.form.core.dataimport.FormDataImport;
+import com.glaf.form.core.dataimport.FormDataImportFactory;
 import com.glaf.form.core.domain.FormApplication;
 import com.glaf.form.core.domain.FormDefinition;
 import com.glaf.form.core.model.FormDefinitionType;
@@ -268,19 +268,19 @@ public class MxFormArchiveImporter {
 				for (Entry<String, byte[]> entry : entrySet) {
 					String name = entry.getKey();
 					byte[] bytes = entry.getValue();
-					MxFormDataImport dx = null;
+					FormDataImport dx = null;
 					String templateType = null;
 					FormDefinition formDefinition = null;
 
 					if (StringUtils.endsWith(name, ".xls")) {
 						templateType = "xls";
-						dx = MxFormDataImportFactory
+						dx = FormDataImportFactory
 								.getDataImport(templateType);
 					}
 
 					if (StringUtils.endsWith(name, ".fdl.xml")) {
 						templateType = "fdl";
-						dx = MxFormDataImportFactory
+						dx = FormDataImportFactory
 								.getDataImport(templateType);
 					}
 

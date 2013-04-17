@@ -27,7 +27,7 @@ import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
 import com.glaf.core.base.ClassDefinition;
-import com.glaf.form.core.dataimport.MxFormDataImportFactory;
+import com.glaf.form.core.dataimport.FormDataImportFactory;
 import com.glaf.form.core.domain.FormApplication;
 import com.glaf.form.core.domain.FormDefinition;
 import com.glaf.form.core.model.FormDefinitionType;
@@ -262,14 +262,14 @@ public class MxFormArchiveReader {
 				bos = null;
 
 				if (name.equals("formdefinition.xml")) {
-					FormDefinitionType formDefinitionType = MxFormDataImportFactory
+					FormDefinitionType formDefinitionType = FormDataImportFactory
 							.read("xml", bytes);
 					formDefinition = FdlConverter
 							.toFormDefinition(formDefinitionType);
 				}
 
 				if (name.endsWith(".fdl.xml")) {
-					FormDefinitionType formDefinitionType = MxFormDataImportFactory
+					FormDefinitionType formDefinitionType = FormDataImportFactory
 							.read("fdl", bytes);
 					formDefinition = FdlConverter
 							.toFormDefinition(formDefinitionType);

@@ -13,7 +13,6 @@
 			jdbcType="VARCHAR" />
 		<result property="templateName" column="TEMPLATENAME_"
 			jdbcType="VARCHAR" />
-		<result property="tableName" column="TABLENAME_" jdbcType="VARCHAR" />
 		<result property="templateType" column="TEMPLATETYPE_"
 			jdbcType="VARCHAR" />
 		<result property="nodeId" column="NODEID_" jdbcType="BIGINT" />
@@ -40,7 +39,6 @@
 		,DESCRIPTION_
 		,FORMDEFINITIONID_
 		,TEMPLATENAME_
-		,TABLENAME_
 		,TEMPLATETYPE_
 		,NODEID_
 		,VERSION_
@@ -65,7 +63,6 @@
 		jdbcType=VARCHAR}
 		,#{formDefinitionId, jdbcType=VARCHAR}
 		,#{templateName, jdbcType=VARCHAR}
-		,#{tableName, jdbcType=VARCHAR}
 		,#{templateType, jdbcType=VARCHAR}
 		,#{nodeId, jdbcType=BIGINT}
 		,#{version, jdbcType=INTEGER}
@@ -176,14 +173,6 @@
 
 			<if test="templateNameLike != null and templateNameLike != '' ">
 				and E.TEMPLATENAME_ like #{templateNameLike}
-			</if>
-
-			<if test="tableName != null and tableName != '' ">
-				and E.TABLENAME_ = #{tableName}
-			</if>
-
-			<if test="tableNameLike != null and tableNameLike != '' ">
-				and E.TABLENAME_ like #{tableNameLike}
 			</if>
 
 			<if test="templateType != null and templateType != '' ">

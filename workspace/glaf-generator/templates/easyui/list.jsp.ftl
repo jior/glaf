@@ -66,6 +66,7 @@
 		 
 	function addNew(){
 	    //location.href="<%=request.getContextPath()%>/apps/${modelName}.do?method=edit";
+	    var link="<%=request.getContextPath()%>/apps/${modelName}.do?method=edit";
 	    art.dialog.open(link, { height: 420, width: 680, title: "Ìí¼Ó¼ÇÂ¼", lock: true, scrollbars:"no" }, false);
 	}
 

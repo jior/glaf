@@ -43,6 +43,9 @@ public class FormDefinitionJsonFactory {
 		if (jsonObject.containsKey("title")) {
 			model.setTitle(jsonObject.getString("title"));
 		}
+		if (jsonObject.containsKey("version")) {
+			model.setVersion(jsonObject.getInteger("version"));
+		}
 
 		return model;
 	}
@@ -87,6 +90,7 @@ public class FormDefinitionJsonFactory {
 		if (model.getTitle() != null) {
 			jsonObject.put("title", model.getTitle());
 		}
+		jsonObject.put("version", model.getVersion());
 		return jsonObject;
 	}
 
@@ -130,6 +134,7 @@ public class FormDefinitionJsonFactory {
 		if (model.getTitle() != null) {
 			jsonObject.put("title", model.getTitle());
 		}
+		jsonObject.put("version", model.getVersion());
 		return jsonObject;
 	}
 

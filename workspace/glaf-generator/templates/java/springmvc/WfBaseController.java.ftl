@@ -5,8 +5,8 @@ import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.ModelMap;
@@ -27,7 +27,7 @@ import ${packageName}.model.*;
 import ${packageName}.query.*;
 
 public class ${entityName}WfController extends ${entityName}BaseController {
-	protected final Logger logger = LoggerFactory.getLogger(getClass());
+	private static final Log logger = LogFactory.getLog(${entityName}WfController.class);
 
 	public ${entityName}WfController() {
 

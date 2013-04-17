@@ -26,12 +26,12 @@ import org.apache.commons.logging.LogFactory;
 import com.glaf.form.core.domain.FormDefinition;
 
 public abstract class GraphElement implements Serializable {
+	protected final transient Log logger = LogFactory
+			.getLog(GraphElement.class);
 	private static final long serialVersionUID = 1L;
 	protected Map<String, Object> dataMap = null;
 	protected Map<String, FormEvent> events = null;
 	protected FormDefinition formDefinition = null;
-	protected final transient Log logger = LogFactory
-			.getLog(GraphElement.class);
 	protected Map<String, FormProperty> properties = null;
 
 	public GraphElement() {

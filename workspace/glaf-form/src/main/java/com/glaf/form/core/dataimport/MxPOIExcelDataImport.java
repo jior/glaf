@@ -42,7 +42,7 @@ import com.glaf.core.util.JsonUtils;
 import com.glaf.core.util.StringTools;
 import com.glaf.core.util.Tools;
 
-public class MxPOIExcelDataImport implements MxFormDataImport {
+public class MxPOIExcelDataImport implements FormDataImport {
 	protected final static Log logger = LogFactory
 			.getLog(MxPOIExcelDataImport.class);
 

@@ -25,20 +25,25 @@ public class TreeModelQuery extends DataQuery {
 	protected String code;
 	protected String codeLike;
 	protected List<String> codes;
+	protected String discriminator;
+	protected Integer lockedGreaterThanOrEqual;
+	protected Integer lockedLessThanOrEqual;
 	protected String name;
 	protected String nameLike;
-	protected List<Integer> nodeIds;
 	protected String nodeType;
 	protected List<String> nodeTypes;
 	protected List<String> objectIds;
 	protected List<String> objectValues;
 	protected String projectId;
 	protected List<String> projectIds;
-	protected String propsFlag;
 	protected Integer readAccessLevel;
 	protected Integer readAccessLevelGreaterThanOrEqual;
 	protected Integer readAccessLevelLessThanOrEqual;
 	protected List<Integer> readAccessLevels;
+	protected Integer sortGreaterThan;
+	protected Integer sortGreaterThanOrEqual;
+	protected Integer sortLessThan;
+	protected Integer sortLessThanOrEqual;
 	protected String treeCode;
 	protected String treeType;
 	protected List<String> treeTypes;
@@ -88,16 +93,28 @@ public class TreeModelQuery extends DataQuery {
 		return codes;
 	}
 
+	public String getDiscriminator() {
+		return discriminator;
+	}
+
+	public Integer getLocked() {
+		return locked;
+	}
+
+	public Integer getLockedGreaterThanOrEqual() {
+		return lockedGreaterThanOrEqual;
+	}
+
+	public Integer getLockedLessThanOrEqual() {
+		return lockedLessThanOrEqual;
+	}
+
 	public String getName() {
 		return name;
 	}
 
 	public String getNameLike() {
 		return nameLike;
-	}
-
-	public List<Integer> getNodeIds() {
-		return nodeIds;
 	}
 
 	public String getNodeType() {
@@ -124,10 +141,6 @@ public class TreeModelQuery extends DataQuery {
 		return projectIds;
 	}
 
-	public String getPropsFlag() {
-		return propsFlag;
-	}
-
 	public Integer getReadAccessLevel() {
 		return readAccessLevel;
 	}
@@ -142,6 +155,22 @@ public class TreeModelQuery extends DataQuery {
 
 	public List<Integer> getReadAccessLevels() {
 		return readAccessLevels;
+	}
+
+	public Integer getSortGreaterThan() {
+		return sortGreaterThan;
+	}
+
+	public Integer getSortGreaterThanOrEqual() {
+		return sortGreaterThanOrEqual;
+	}
+
+	public Integer getSortLessThan() {
+		return sortLessThan;
+	}
+
+	public Integer getSortLessThanOrEqual() {
+		return sortLessThanOrEqual;
 	}
 
 	public String getTreeCode() {
@@ -189,14 +218,6 @@ public class TreeModelQuery extends DataQuery {
 			throw new RuntimeException("name is null");
 		}
 		this.nameLike = nameLike;
-		return this;
-	}
-
-	public TreeModelQuery nodeIds(List<Integer> nodeIds) {
-		if (nodeIds == null) {
-			throw new RuntimeException("nodeIds is empty ");
-		}
-		this.nodeIds = nodeIds;
 		return this;
 	}
 
@@ -248,14 +269,6 @@ public class TreeModelQuery extends DataQuery {
 		return this;
 	}
 
-	public TreeModelQuery propsFlag(String propsFlag) {
-		if (propsFlag == null) {
-			throw new RuntimeException("propsFlag is null");
-		}
-		this.propsFlag = propsFlag;
-		return this;
-	}
-
 	public TreeModelQuery readAccessLevel(Integer readAccessLevel) {
 		if (readAccessLevel == null) {
 			throw new RuntimeException("readAccessLevel is null");
@@ -302,16 +315,24 @@ public class TreeModelQuery extends DataQuery {
 		this.codes = codes;
 	}
 
+	public void setDiscriminator(String discriminator) {
+		this.discriminator = discriminator;
+	}
+
+	public void setLockedGreaterThanOrEqual(Integer lockedGreaterThanOrEqual) {
+		this.lockedGreaterThanOrEqual = lockedGreaterThanOrEqual;
+	}
+
+	public void setLockedLessThanOrEqual(Integer lockedLessThanOrEqual) {
+		this.lockedLessThanOrEqual = lockedLessThanOrEqual;
+	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
 
 	public void setNameLike(String nameLike) {
 		this.nameLike = nameLike;
-	}
-
-	public void setNodeIds(List<Integer> nodeIds) {
-		this.nodeIds = nodeIds;
 	}
 
 	public void setNodeType(String nodeType) {
@@ -338,10 +359,6 @@ public class TreeModelQuery extends DataQuery {
 		this.projectIds = projectIds;
 	}
 
-	public void setPropsFlag(String propsFlag) {
-		this.propsFlag = propsFlag;
-	}
-
 	public void setReadAccessLevel(Integer readAccessLevel) {
 		this.readAccessLevel = readAccessLevel;
 	}
@@ -358,6 +375,22 @@ public class TreeModelQuery extends DataQuery {
 
 	public void setReadAccessLevels(List<Integer> readAccessLevels) {
 		this.readAccessLevels = readAccessLevels;
+	}
+
+	public void setSortGreaterThan(Integer sortGreaterThan) {
+		this.sortGreaterThan = sortGreaterThan;
+	}
+
+	public void setSortGreaterThanOrEqual(Integer sortGreaterThanOrEqual) {
+		this.sortGreaterThanOrEqual = sortGreaterThanOrEqual;
+	}
+
+	public void setSortLessThan(Integer sortLessThan) {
+		this.sortLessThan = sortLessThan;
+	}
+
+	public void setSortLessThanOrEqual(Integer sortLessThanOrEqual) {
+		this.sortLessThanOrEqual = sortLessThanOrEqual;
 	}
 
 	public void setTreeCode(String treeCode) {

@@ -20,6 +20,7 @@ package com.glaf.core.base;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -35,8 +36,11 @@ public class BaseTree implements Serializable, TreeModel, JSONable {
 	protected boolean checked;
 	protected List<TreeModel> children = new ArrayList<TreeModel>();
 	protected String code;
+	protected String createBy;
+	protected Date createDate;
 	protected int deep;
 	protected String desc;
+	protected String discriminator;
 	protected String icon;
 	protected String iconCls;
 	protected long id;
@@ -46,7 +50,13 @@ public class BaseTree implements Serializable, TreeModel, JSONable {
 	protected long parentId;
 	protected int sort;
 	protected String treeId;
+	protected String updateBy;
+	protected Date updateDate;
 	protected String url;
+
+	public BaseTree() {
+
+	}
 
 	public void addChild(TreeModel treeModel) {
 		if (children == null) {
@@ -96,6 +106,14 @@ public class BaseTree implements Serializable, TreeModel, JSONable {
 		return code;
 	}
 
+	public String getCreateBy() {
+		return createBy;
+	}
+
+	public Date getCreateDate() {
+		return createDate;
+	}
+
 	public Map<String, Object> getDataMap() {
 		return null;
 	}
@@ -110,6 +128,10 @@ public class BaseTree implements Serializable, TreeModel, JSONable {
 
 	public String getDescription() {
 		return desc;
+	}
+
+	public String getDiscriminator() {
+		return discriminator;
 	}
 
 	public String getIcon() {
@@ -156,6 +178,14 @@ public class BaseTree implements Serializable, TreeModel, JSONable {
 		return treeId;
 	}
 
+	public String getUpdateBy() {
+		return updateBy;
+	}
+
+	public Date getUpdateDate() {
+		return updateDate;
+	}
+
 	public String getUrl() {
 		return url;
 	}
@@ -195,6 +225,14 @@ public class BaseTree implements Serializable, TreeModel, JSONable {
 		this.code = code;
 	}
 
+	public void setCreateBy(String createBy) {
+		this.createBy = createBy;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+
 	public void setDeep(int deep) {
 		this.deep = deep;
 	}
@@ -206,6 +244,10 @@ public class BaseTree implements Serializable, TreeModel, JSONable {
 	public void setDescription(String description) {
 		this.desc = description;
 
+	}
+
+	public void setDiscriminator(String discriminator) {
+		this.discriminator = discriminator;
 	}
 
 	public void setIcon(String icon) {
@@ -250,6 +292,14 @@ public class BaseTree implements Serializable, TreeModel, JSONable {
 
 	public void setTreeId(String treeId) {
 		this.treeId = treeId;
+	}
+
+	public void setUpdateBy(String updateBy) {
+		this.updateBy = updateBy;
+	}
+
+	public void setUpdateDate(Date updateDate) {
+		this.updateDate = updateDate;
 	}
 
 	public void setUrl(String url) {

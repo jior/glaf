@@ -31,9 +31,14 @@
 				   },
 				   success: function(data){
 					   if(data != null && data.message != null){
-						   alert(data.message);
+						 alert(data.message);
 					   } else {
 						 alert('操作成功完成！');
+					   }
+					   if (window.opener) {
+						window.opener.location.reload();
+					   } else if (window.parent) {
+						window.parent.location.reload();
 					   }
 				   }
 			 });

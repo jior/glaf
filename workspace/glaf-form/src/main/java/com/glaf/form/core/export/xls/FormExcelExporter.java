@@ -30,8 +30,8 @@ import org.apache.poi.ss.util.CellRangeAddress;
 
 import com.glaf.core.base.DataModel;
 import com.glaf.form.core.context.FormContext;
-import com.glaf.form.core.dataimport.MxFormDataImport;
-import com.glaf.form.core.dataimport.MxFormDataImportFactory;
+import com.glaf.form.core.dataimport.FormDataImport;
+import com.glaf.form.core.dataimport.FormDataImportFactory;
 import com.glaf.form.core.domain.FormDefinition;
 import com.glaf.form.core.graph.def.*;
 import com.glaf.form.core.graph.node.*;
@@ -263,7 +263,7 @@ public class FormExcelExporter {
 		String str = args[0];
 		String type = str.substring(str.lastIndexOf(".") + 1, str.length());
 		System.out.println(type);
-		MxFormDataImport di = MxFormDataImportFactory.getDataImport(type);
+		FormDataImport di = FormDataImportFactory.getDataImport(type);
 		FormDefinitionType formDefinitionType = di
 				.read(new java.io.FileInputStream(args[0]));
 
