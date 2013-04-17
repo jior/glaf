@@ -49,6 +49,7 @@ import com.glaf.core.res.ViewMessages;
 import com.glaf.core.security.DigestUtil;
 import com.glaf.core.util.ClassUtils;
 import com.glaf.core.util.RequestUtils;
+import com.glaf.core.util.StringTools;
 import com.glaf.core.web.callback.CallbackProperties;
 import com.glaf.core.web.callback.LoginCallback;
 import com.glaf.shiro.ShiroSecurity;
@@ -88,11 +89,16 @@ public class LoginController {
 	public ModelAndView login(ModelMap modelMap, HttpServletRequest request,
 			HttpServletResponse response) {
 		RequestUtils.setRequestParameterToAttribute(request);
-		HttpSession session = request.getSession(true);
+		HttpSession session = request.getSession(false);
 		ViewMessages messages = new ViewMessages();
 		// 获取参数
 		String account = ParamUtil.getParameter(request, "x");
 		String password = ParamUtil.getParameter(request, "y");
+
+		String rand = (String) session.getAttribute("x_y");
+		if (rand != null) {
+			password = StringTools.replace(password, rand, "");
+		}
 		String pwd = password;
 		try {
 			pwd = DigestUtil.digestString(password, "MD5");

@@ -11,6 +11,12 @@
 	if("127.0.0.1".equals(host)){
 		debug = true;
 	}
+	java.util.Random random = new java.util.Random();
+	String rand = Math.abs(random.nextInt(999999))+com.glaf.core.util.UUID32.getUUID();
+	session = request.getSession(true);
+	if (session != null) {
+       session.setAttribute("x_y", rand);
+	}
 %>
 <!DOCTYPE html >
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -89,7 +95,7 @@
 
         //登陆操作方法
         function loginSys(x, y) {
-            window.location = "${contextPath}/login.do?method=login&x="+x+"&y="+y;
+            location.href("${contextPath}/login.do?method=login&x="+x+"&y=<%=rand%>"+y);
         }
     </script>
 
