@@ -17,16 +17,13 @@
 <head id="Head1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>GLAF基础应用框架-系统登录</title>
-<link href="${contextPath}/css/system.css" type="text/css" rel="stylesheet">
-<link href="${contextPath}/css/site.css" rel="stylesheet" type="text/css">
-<link href="${contextPath}/icons/styles.css" rel="stylesheet" type="text/css" />
 <link href="${contextPath}/scripts/easyui/themes/gray/easyui.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="${contextPath}/scripts/jquery.min.js"></script>
 <script type="text/javascript" src="${contextPath}/scripts/verify.js" ></script>
 <script type="text/javascript" src="${contextPath}/scripts/easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="${contextPath}/scripts/easyui/locale/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript">
-    var login='${requestContext.login}';
+    var login='<%=request.getParameter("login")%>';
 
     function openMainPage(){
 		var browser=navigator.appName
@@ -45,7 +42,7 @@
 	        var screenWidth = screen.availWidth, screenHeight = screen.availHeight;
             var args = "top=0,left=0,toolbar=no,menubar=no,scrollbars=yes, resizable=yes,location=no, status=no,titlebar=no";
 	        //打开全屏的新窗口
-	        var win = window.open(window.location.href+"?login=true","fullscreen", args);
+	        var win = window.open(window.location.href+"&login=true","fullscreen", args);
 	        if(win){
 	            win.resizeTo(screenWidth, screenHeight);
 	            win.outerWidth = screenWidth;
@@ -108,7 +105,7 @@
                         用户名：
                     </td>
                     <td>
-                        <input id="x" class="easyui-validatebox input" required="true" validtype="length[1,15]"
+                        <input id="x" class="easyui-validatebox input" required="true" validtype="length[3,20]"
                             style="width: 150px;" datatype="string" nullable="no" maxsize="20" chname="用户名" value="root" />
                     </td>
                 </tr>
@@ -118,7 +115,7 @@
                     </td>
                     <td>
                         <input type="password" id="y" style="width: 150px;" class="easyui-validatebox input"
-                            required="true" validtype="length[3,10]" datatype="string" nullable="no" maxsize="20" chname="密码" value="111111"/>
+                            required="true" validtype="length[6,20]" datatype="string" nullable="no" maxsize="20" chname="密码" value="111111"/>
                     </td>
                 </tr>
             </table>
@@ -126,7 +123,7 @@
         </div>
              
         <div class="toolbar" style="text-align: center; margin-top: 20px;">
-             <a href="#" class="easyui-linkbutton" iconcls="icon-ok" id="btnLogin" style="margin-left: 10px;">登录</a>
+             <a href="#" class="easyui-linkbutton" iconcls="icon-ok" id="btnLogin" style="margin-left: 2px;"> 登 录 </a>
         </div>
     </div>
 </body>
