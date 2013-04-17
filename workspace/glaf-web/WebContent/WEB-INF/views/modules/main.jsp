@@ -1,4 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <script type="text/javascript">
-    location.href="<%=request.getContextPath()%>/main.do?method=home";
+    location.href="<%=request.getContextPath()%>/home.do";
 </script>

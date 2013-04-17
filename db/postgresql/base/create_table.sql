@@ -16,6 +16,7 @@ CREATE TABLE sys_application(
         sort int4,
         showmenu int4,
         nodeid int8 NOT NULL,
+	locked int default 0,
         PRIMARY KEY (id)
 );
 
