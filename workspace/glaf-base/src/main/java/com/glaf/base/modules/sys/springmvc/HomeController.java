@@ -14,6 +14,7 @@ import com.glaf.core.util.RequestUtils;
 @RequestMapping("/home.do")
 public class HomeController {
 
+	@RequestMapping
 	public ModelAndView home(ModelMap modelMap, HttpServletRequest request,
 			HttpServletResponse response) {
 		RequestUtils.setRequestParameterToAttribute(request);
