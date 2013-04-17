@@ -33,47 +33,47 @@ import com.glaf.form.core.util.*;
 public class FormHistoryInstance implements Serializable, JSONable {
 	private static final long serialVersionUID = 1L;
 
+	@Column(name = "ACTORID_")
+	protected String actorId;
+
+	@Lob
+	@Column(name = "CONTENT_")
+	protected String content;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "CREATEDATE_")
+	protected Date createDate;
+
 	@Id
-	@Column(name = "ID_", length = 50, nullable = false)
-	protected String id = null;
+	@Column(name = "ID_", length = 100, nullable = false)
+	protected String id;
 
 	@Column(name = "NAME_")
-	protected String name = null;
+	protected String name;
 
 	@Column(name = "NODEID_")
-	protected String nodeId = null;
+	protected String nodeId;
 
 	@Column(name = "OBJECTID_")
-	protected String objectId = null;
-
-	@Column(name = "OBJECTVALUE_")
-	protected String objectValue = null;
+	protected String objectId;
 
 	@Column(name = "OBJECTTYPE_")
 	protected int objectType = 0;
 
+	@Column(name = "OBJECTVALUE_")
+	protected String objectValue;
+
 	@Column(name = "PROCESSINSTANCEID_")
-	protected String processInstanceId = null;
+	protected String processInstanceId;
+
+	@Column(name = "REFID_")
+	protected Long refId;
 
 	@Column(name = "TASKINSTANCEID_")
-	protected String taskInstanceId = null;
-
-	@Column(name = "ACTORID_")
-	protected String actorId = null;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "CREATEDATE_")
-	protected Date createDate = null;
-
-	@Column(name = "REMOTEADDR_")
-	protected String remoteAddr = null;
-
-	@Lob
-	@Column(name = "CONTENT_")
-	protected String content = null;
+	protected String taskInstanceId;
 
 	@Column(name = "VERSIONNO_")
-	protected long versionNo = 0;
+	protected long versionNo;
 
 	public FormHistoryInstance() {
 	}
@@ -118,8 +118,8 @@ public class FormHistoryInstance implements Serializable, JSONable {
 		return processInstanceId;
 	}
 
-	public String getRemoteAddr() {
-		return remoteAddr;
+	public Long getRefId() {
+		return refId;
 	}
 
 	public String getTaskInstanceId() {
@@ -128,6 +128,10 @@ public class FormHistoryInstance implements Serializable, JSONable {
 
 	public long getVersionNo() {
 		return versionNo;
+	}
+
+	public FormHistoryInstance jsonToObject(JSONObject jsonObject) {
+		return FormHistoryInstanceJsonFactory.jsonToObject(jsonObject);
 	}
 
 	public void setActorId(String actorId) {
@@ -170,8 +174,8 @@ public class FormHistoryInstance implements Serializable, JSONable {
 		this.processInstanceId = processInstanceId;
 	}
 
-	public void setRemoteAddr(String remoteAddr) {
-		this.remoteAddr = remoteAddr;
+	public void setRefId(Long refId) {
+		this.refId = refId;
 	}
 
 	public void setTaskInstanceId(String taskInstanceId) {
@@ -180,10 +184,6 @@ public class FormHistoryInstance implements Serializable, JSONable {
 
 	public void setVersionNo(long versionNo) {
 		this.versionNo = versionNo;
-	}
-
-	public FormHistoryInstance jsonToObject(JSONObject jsonObject) {
-		return FormHistoryInstanceJsonFactory.jsonToObject(jsonObject);
 	}
 
 	public JSONObject toJsonObject() {

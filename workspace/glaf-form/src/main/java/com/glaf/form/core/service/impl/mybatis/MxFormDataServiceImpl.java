@@ -29,8 +29,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import javax.annotation.Resource;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -67,10 +65,12 @@ import com.glaf.core.util.UUID32;
 import com.glaf.form.core.context.FormContext;
 import com.glaf.form.core.domain.FormApplication;
 import com.glaf.form.core.domain.FormDefinition;
+import com.glaf.form.core.domain.FormHistoryInstance;
 import com.glaf.form.core.graph.def.FormNode;
 import com.glaf.form.core.graph.node.PersistenceNode;
 import com.glaf.form.core.mapper.FormApplicationMapper;
 import com.glaf.form.core.mapper.FormDefinitionMapper;
+import com.glaf.form.core.mapper.FormHistoryInstanceMapper;
 import com.glaf.form.core.query.FormApplicationQuery;
 import com.glaf.form.core.query.FormDefinitionQuery;
 import com.glaf.form.core.service.FormDataService;
@@ -92,6 +92,8 @@ public class MxFormDataServiceImpl implements FormDataService {
 	protected FormApplicationMapper formApplicationMapper;
 
 	protected FormDefinitionMapper formDefinitionMapper;
+
+	protected FormHistoryInstanceMapper formHistoryInstanceMapper;
 
 	protected IdGenerator idGenerator;
 
@@ -468,6 +470,21 @@ public class MxFormDataServiceImpl implements FormDataService {
 		}
 
 		dataModelService.insert(dataModelEntity);
+
+		FormHistoryInstance historyInstance = new FormHistoryInstance();
+		historyInstance.setActorId(formContext.getActorId());
+		historyInstance.setContent(dataModelEntity.toJsonObject()
+				.toJSONString());
+		historyInstance.setCreateDate(new Date());
+		historyInstance.setId(formApplication.getName() + "_"
+				+ idGenerator.nextId());
+		historyInstance.setVersionNo(System.currentTimeMillis());
+		historyInstance.setRefId(dataModelEntity.getId());
+		historyInstance.setNodeId(formContext.getString("nodeId"));
+		historyInstance.setObjectId(formContext.getString("objectId"));
+		historyInstance.setObjectValue(formContext.getString("objectValue"));
+
+		formHistoryInstanceMapper.insertFormHistoryInstance(historyInstance);
 	}
 
 	@Transactional
@@ -577,7 +594,13 @@ public class MxFormDataServiceImpl implements FormDataService {
 		this.sqlSession = sqlSession;
 	}
 
-	@Resource
+	@javax.annotation.Resource
+	public void setFormHistoryInstanceMapper(
+			FormHistoryInstanceMapper formHistoryInstanceMapper) {
+		this.formHistoryInstanceMapper = formHistoryInstanceMapper;
+	}
+
+	@javax.annotation.Resource
 	public void setTableDefinitionService(
 			ITableDefinitionService tableDefinitionService) {
 		this.tableDefinitionService = tableDefinitionService;
@@ -668,6 +691,25 @@ public class MxFormDataServiceImpl implements FormDataService {
 		}
 
 		dataModelService.update(dataModelEntity);
+
+		FormHistoryInstance historyInstance = new FormHistoryInstance();
+		historyInstance.setActorId(formContext.getActorId());
+		historyInstance.setContent(dataModelEntity.toJsonObject()
+				.toJSONString());
+		historyInstance.setCreateDate(new Date());
+		historyInstance.setId(formApplication.getName() + "_"
+				+ idGenerator.nextId());
+		historyInstance.setVersionNo(System.currentTimeMillis());
+		historyInstance.setRefId(dataModelEntity.getId());
+		historyInstance.setNodeId(formContext.getString("nodeId"));
+		historyInstance.setObjectId(formContext.getString("objectId"));
+		historyInstance.setObjectValue(formContext.getString("objectValue"));
+		historyInstance.setProcessInstanceId(formContext
+				.getString("processInstanceId"));
+		historyInstance.setTaskInstanceId(formContext
+				.getString("taskInstanceId"));
+
+		formHistoryInstanceMapper.insertFormHistoryInstance(historyInstance);
 	}
 
 }

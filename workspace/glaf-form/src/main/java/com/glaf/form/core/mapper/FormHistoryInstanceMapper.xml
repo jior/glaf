@@ -17,7 +17,7 @@
 			jdbcType="VARCHAR" />
 		<result property="actorId" column="ACTORID_" jdbcType="VARCHAR" />
 		<result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP" />
-		<result property="remoteAddr" column="REMOTEADDR_" jdbcType="VARCHAR" />
+		<result property="refId" column="REFID_" jdbcType="VARCHAR" />
 		<result property="content" column="CONTENT_" jdbcType="VARCHAR" />
 		<result property="versionNo" column="VERSIONNO_" jdbcType="BIGINT" />
 	</resultMap>
@@ -35,13 +35,14 @@
 		,TASKINSTANCEID_
 		,ACTORID_
 		,CREATEDATE_
-		,REMOTEADDR_
+		,REFID_
 		,CONTENT_
 		,VERSIONNO_
 		)
 		values (
 		#{id, jdbcType=VARCHAR}
-		,#{name, jdbcType=VARCHAR}
+		,#{name,
+		jdbcType=VARCHAR}
 		,#{nodeId, jdbcType=VARCHAR}
 		,#{objectId,
 		jdbcType=VARCHAR}
@@ -52,7 +53,7 @@
 		,#{taskInstanceId, jdbcType=VARCHAR}
 		,#{actorId, jdbcType=VARCHAR}
 		,#{createDate, jdbcType=TIMESTAMP}
-		,#{remoteAddr, jdbcType=VARCHAR}
+		,#{refId, jdbcType=VARCHAR}
 		,#{content, jdbcType=VARCHAR}
 		,#{versionNo, jdbcType=BIGINT}
 		)
@@ -65,9 +66,23 @@
 		where ID_ = #{id}
 	</delete>
 
+
+	<delete id="deleteFormHistoryInstanceByRefId" parameterType="long">
+		delete
+		from FORM_HISTORY_INSTANCE
+		where REFID_ = #{refId}
+	</delete>
+
+
 	<select id="getFormHistoryInstanceById" parameterType="string"
 		resultMap="formHistoryInstanceResultMap">
 		select * from FORM_HISTORY_INSTANCE where ID_ = #{id}
+	</select>
+
+
+	<select id="getFormHistoryInstanceByRefId" parameterType="long"
+		resultMap="formHistoryInstanceResultMap">
+		select * from FORM_HISTORY_INSTANCE where REFID_ = #{refId}
 	</select>
 
 
@@ -116,6 +131,10 @@
 					open="(" separator="," close=")">
 					#{x_nodeId}
 				</foreach>
+			</if>
+
+			<if test="refId != null and refId != 0 ">
+				and E.REFID_ = #{refId}
 			</if>
 
 			<if test="objectId != null and objectId != '' ">

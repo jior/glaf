@@ -41,8 +41,8 @@ public class FormHistoryInstanceJsonFactory {
 		if (jsonObject.containsKey("createDate")) {
 			model.setCreateDate(jsonObject.getDate("createDate"));
 		}
-		if (jsonObject.containsKey("remoteAddr")) {
-			model.setRemoteAddr(jsonObject.getString("remoteAddr"));
+		if (jsonObject.containsKey("refId")) {
+			model.setRefId(jsonObject.getLong("refId"));
 		}
 		if (jsonObject.containsKey("content")) {
 			model.setContent(jsonObject.getString("content"));
@@ -89,8 +89,8 @@ public class FormHistoryInstanceJsonFactory {
 			jsonObject.put("createDate_datetime",
 					DateUtils.getDateTime(model.getCreateDate()));
 		}
-		if (model.getRemoteAddr() != null) {
-			jsonObject.put("remoteAddr", model.getRemoteAddr());
+		if (model.getRefId() != null) {
+			jsonObject.put("refId", model.getRefId());
 		}
 		if (model.getContent() != null) {
 			jsonObject.put("content", model.getContent());
@@ -134,8 +134,8 @@ public class FormHistoryInstanceJsonFactory {
 			jsonObject.put("createDate_datetime",
 					DateUtils.getDateTime(model.getCreateDate()));
 		}
-		if (model.getRemoteAddr() != null) {
-			jsonObject.put("remoteAddr", model.getRemoteAddr());
+		if (model.getRefId() != null) {
+			jsonObject.put("refId", model.getRefId());
 		}
 		if (model.getContent() != null) {
 			jsonObject.put("content", model.getContent());

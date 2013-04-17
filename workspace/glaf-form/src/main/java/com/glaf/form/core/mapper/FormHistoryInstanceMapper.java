@@ -29,7 +29,11 @@ public interface FormHistoryInstanceMapper {
 
 	void deleteFormHistoryInstanceById(String id);
 
+	void deleteFormHistoryInstanceByRefId(Long refId);
+
 	FormHistoryInstance getFormHistoryInstanceById(String id);
+
+	List<FormHistoryInstance> getFormHistoryInstanceByRefId(Long refId);
 
 	int getFormHistoryInstanceCount(FormHistoryInstanceQuery query);
 
@@ -37,7 +41,5 @@ public interface FormHistoryInstanceMapper {
 			FormHistoryInstanceQuery query);
 
 	void insertFormHistoryInstance(FormHistoryInstance model);
-
-	void updateFormHistoryInstance(FormHistoryInstance model);
 
 }

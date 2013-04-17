@@ -22,13 +22,14 @@ import com.glaf.core.query.*;
 
 public class FormHistoryInstanceQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;
+	protected String contentLike;
 	protected String name;
 	protected List<String> names;
 	protected String nodeId;
 	protected List<String> nodeIds;
 	protected List<String> objectIds;
 	protected List<String> objectValues;
-	protected String contentLike;
+	protected Long refId;
 	protected Long versionNoGreaterThanOrEqual;
 	protected Long versionNoLessThanOrEqual;
 
@@ -70,6 +71,10 @@ public class FormHistoryInstanceQuery extends DataQuery {
 
 	public List<String> getObjectValues() {
 		return objectValues;
+	}
+
+	public Long getRefId() {
+		return refId;
 	}
 
 	public Long getVersionNoGreaterThanOrEqual() {
@@ -128,6 +133,14 @@ public class FormHistoryInstanceQuery extends DataQuery {
 		return this;
 	}
 
+	public FormHistoryInstanceQuery refId(Long refId) {
+		if (refId == null) {
+			throw new RuntimeException("refId is null");
+		}
+		this.refId = refId;
+		return this;
+	}
+
 	public void setContentLike(String contentLike) {
 		this.contentLike = contentLike;
 	}
@@ -154,6 +167,10 @@ public class FormHistoryInstanceQuery extends DataQuery {
 
 	public void setObjectValues(List<String> objectValues) {
 		this.objectValues = objectValues;
+	}
+
+	public void setRefId(Long refId) {
+		this.refId = refId;
 	}
 
 	public void setVersionNoGreaterThanOrEqual(Long versionNoGreaterThanOrEqual) {
