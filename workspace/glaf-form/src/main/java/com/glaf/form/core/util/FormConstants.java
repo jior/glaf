@@ -19,8 +19,6 @@ package com.glaf.form.core.util;
 
 public final class FormConstants {
 
-	public static final String FORM_APP_TABLE_PREFIX = "GA_APP_";
-
 	public static final String TEXT_ALIGN_LEFT = "left";
 	public static final String TEXT_ALIGN_RIGHT = "right";
 	public static final String TEXT_ALIGN_CENTER = "center";
@@ -41,9 +39,5 @@ public final class FormConstants {
 	public static final String FORM_ERROR = "error";
 	public static final String FORM_FINISH = "finish";
 	public static final String REDIRECT = "redirect";
-
-	public static final String CURRENT_USER = "x_current_user";
-
-	public static final String CURRENT_DEPT = "x_current_dept";
 
 }

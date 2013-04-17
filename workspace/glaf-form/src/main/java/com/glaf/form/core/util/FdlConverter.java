@@ -28,6 +28,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.glaf.core.util.IOUtils;
 import com.glaf.form.core.domain.FormDefinition;
 import com.glaf.form.core.graph.def.FormEvent;
 import com.glaf.form.core.graph.def.FormNode;
@@ -59,17 +60,8 @@ public class FdlConverter {
 		} catch (Exception ex) {
 			throw new RuntimeException(ex);
 		} finally {
-			try {
-				if (baos != null) {
-					baos.close();
-					baos = null;
-				}
-				if (bos != null) {
-					bos.close();
-					bos = null;
-				}
-			} catch (IOException ioe) {
-			}
+			IOUtils.closeStream(baos);
+			IOUtils.closeStream(bos);
 		}
 	}
 

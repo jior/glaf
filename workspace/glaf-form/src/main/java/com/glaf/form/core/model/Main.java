@@ -28,7 +28,6 @@ import javax.xml.bind.Unmarshaller;
 public class Main {
 
 	public static void main(String arg[]) throws Exception {
-
 		JAXBContext jc = JAXBContext.newInstance("com.glaf.form.core.model");
 		Unmarshaller u = jc.createUnmarshaller();
 		// System.out.println(jc.createBinder().getXMLNode());
