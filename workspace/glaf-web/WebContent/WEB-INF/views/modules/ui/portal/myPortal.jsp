@@ -159,7 +159,7 @@
 
 		function getPortalState(){
 			var aa = [];
-			for(var columnIndex=0; columnIndex<<%=columnQty%>; columnIndex++){
+			for(var columnIndex=0; columnIndex < <%=columnQty%>; columnIndex++){
 				var cc = [];
 				var panels = $('#pp').portal('getPanels', columnIndex);
 				for(var i=0; i<panels.length; i++){

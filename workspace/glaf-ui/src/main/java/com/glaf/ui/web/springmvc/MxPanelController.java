@@ -18,7 +18,6 @@
 
 package com.glaf.ui.web.springmvc;
 
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -74,11 +73,7 @@ public class MxPanelController {
 		}
 
 		if (panel != null && panel.getContent() != null) {
-			try {
-				return panel.getContent().getBytes("UTF-8");
-			} catch (UnsupportedEncodingException e) {
-				return panel.getContent().getBytes();
-			}
+			return panel.getContent().getBytes();
 		}
 
 		return null;
