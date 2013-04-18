@@ -32,6 +32,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.glaf.core.config.MessageProperties;
+import com.glaf.core.config.SystemConfig;
+import com.glaf.core.config.SystemProperties;
 import com.glaf.core.config.ViewProperties;
 import com.glaf.core.domain.SystemProperty;
 import com.glaf.core.service.ISystemPropertyService;
@@ -116,6 +119,10 @@ public class MxSystemPropertyController {
 				}
 			}
 			systemPropertyService.saveAll(rows);
+			
+			SystemProperties.reload();
+			SystemConfig.reload();
+			MessageProperties.reload();
 			return ResponseUtils.responseJsonResult(true, "±£´æ³É¹¦£¡");
 		}
 		return ResponseUtils.responseJsonResult(false);

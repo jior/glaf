@@ -20,6 +20,7 @@ package com.glaf.base.modules.sys.springmvc;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -99,6 +100,7 @@ public class SysTreeController {
 		RequestUtils.setRequestParameterToAttribute(request);
 		int id = ParamUtil.getIntParameter(request, "id", 0);
 		List<SysTree> list = sysTreeService.getSysTreeList(id);
+		Collections.sort(list);
 		request.setAttribute("list", list);
 
 		String x_view = ViewProperties.getString("tree.getSubTree");

@@ -22,10 +22,14 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Properties;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.glaf.core.context.ContextFactory;
+import com.glaf.core.domain.SystemProperty;
+import com.glaf.core.service.ISystemPropertyService;
 import com.glaf.core.util.PropertiesUtils;
 
 public class MessageProperties {
@@ -109,7 +113,8 @@ public class MessageProperties {
 
 	public synchronized static void reload() {
 		try {
-			String config = SystemConfig.getConfigRootPath() + "/conf/props/messages";
+			String config = SystemConfig.getConfigRootPath()
+					+ "/conf/props/messages";
 			File directory = new File(config);
 			if (directory.exists() && directory.isDirectory()) {
 				String[] filelist = directory.list();
@@ -137,6 +142,17 @@ public class MessageProperties {
 					}
 				}
 			}
+
+			ISystemPropertyService systemPropertyService = ContextFactory
+					.getBean("systemPropertyService");
+			List<SystemProperty> list = systemPropertyService
+					.getAllSystemProperties();
+			if (list != null && !list.isEmpty()) {
+				for (SystemProperty p : list) {
+					properties.put(p.getName(), p);
+				}
+			}
+
 		} catch (Exception ex) {
 			throw new RuntimeException(ex);
 		}

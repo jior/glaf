@@ -33,6 +33,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.core.id.*;
 import com.glaf.core.util.PageResult;
+import com.glaf.core.base.BaseTree;
+import com.glaf.core.base.TreeModel;
 import com.glaf.core.context.ApplicationContext;
 
 import com.glaf.base.modules.sys.SysConstants;
@@ -142,11 +144,6 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 		return null;
 	}
 
-	public List<RealmInfo> getRealmInfos() {
-		Map<String, Object> params = new HashMap<String, Object>();
-		return sysApplicationMapper.getRealmInfos(params);
-	}
-
 	public List<SysApplication> getAccessAppList(long parentId, SysUser user) {
 		long parentAppId = parentId;
 		SysApplication parentApp = findById(parentId);
@@ -158,7 +155,7 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 
 		SysApplicationQuery query = new SysApplicationQuery();
 		query.parentId(parentAppId);
-		query.setOrderBy(" E.SORT desc ");
+		query.setOrderBy(" E.SORT asc ");
 		query.setLocked(0);
 		List<Long> nodeIds = new ArrayList<Long>();
 		nodeIds.add(-1L);
@@ -177,7 +174,7 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 
 	public List<SysApplication> getApplicationList() {
 		SysApplicationQuery query = new SysApplicationQuery();
-		query.setOrderBy(" E.SORT desc ");
+		query.setOrderBy(" E.SORT asc ");
 		return this.list(query);
 	}
 
@@ -193,7 +190,7 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 		SysApplicationQuery query = new SysApplicationQuery();
 		query.parentId(Long.valueOf(parentAppId));
 		query.setLocked(0);
-		query.setOrderBy(" E.SORT desc ");
+		query.setOrderBy(" E.SORT asc ");
 		List<SysApplication> apps = this.list(query);
 		logger.debug("----------------apps size:" + apps.size());
 		return apps;
@@ -209,7 +206,7 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 			pager.setPageSize(pageSize);
 			return pager;
 		}
-		query.setOrderBy(" E.SORT desc");
+		query.setOrderBy(" E.SORT asc");
 
 		int start = pageSize * (pageNo - 1);
 		List<SysApplication> list = this.getSysApplicationsByQueryCriteria(
@@ -266,6 +263,11 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 		return menu.toString();
 	}
 
+	public List<RealmInfo> getRealmInfos() {
+		Map<String, Object> params = new HashMap<String, Object>();
+		return sysApplicationMapper.getRealmInfos(params);
+	}
+
 	public SysApplication getSysApplication(Long id) {
 		if (id == null) {
 			return null;
@@ -289,6 +291,40 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 		List<SysApplication> rows = sqlSessionTemplate.selectList(
 				"getSysApplications", query, rowBounds);
 		return rows;
+	}
+
+	public TreeModel getTreeModelByAppId(long appId) {
+		SysApplication bean = this.findById(appId);
+		if (bean != null) {
+			TreeModel treeModel = new BaseTree();
+			treeModel.setCode(bean.getCode());
+			treeModel.setId(bean.getId());
+			treeModel.setName(bean.getName());
+			treeModel.setLocked(bean.getLocked());
+			treeModel.setDescription(bean.getDesc());
+			treeModel.setUrl(bean.getUrl());
+			treeModel.setSortNo(bean.getSort());
+			return treeModel;
+		}
+		return null;
+	}
+
+	/**
+	 * 获取用户某个分类下的全部分类节点
+	 * 
+	 * @param parent
+	 *            父节点编号
+	 * @param userId
+	 *            用户登录账号
+	 * @return
+	 */
+	public List<TreeModel> getTreeModels(long parentId, String userId) {
+		List<TreeModel> treeModels = new ArrayList<TreeModel>();
+		SysUser user = authorizeService.login(userId);
+		if (user != null) {
+			this.loadChildrenTreeModels(treeModels, parentId, user);
+		}
+		return treeModels;
 	}
 
 	public JSONArray getUserMenu(long parent, String userId) {
@@ -348,6 +384,48 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 		return list;
 	}
 
+	protected void loadChildrenTreeModels(List<TreeModel> treeModels,
+			long parentId, SysUser user) {
+		List<SysApplication> list = null;
+		if (user.isSystemAdmin()) {
+			logger.debug("#admin user=" + user.getName());
+			list = getApplicationList((int) parentId);
+		} else {
+			logger.debug("#user=" + user.getName());
+			list = getAccessAppList(parentId, user);
+			logger.debug("#app list=" + list);
+		}
+		if (list != null && list.size() > 0) {
+			Iterator<SysApplication> iter = list.iterator();
+			while (iter.hasNext()) {
+				SysApplication bean = (SysApplication) iter.next();
+				if (bean.getLocked() == 1) {
+					continue;
+				}
+				TreeModel treeModel = new BaseTree();
+				treeModel.setCode(bean.getCode());
+				treeModel.setId(bean.getId());
+				treeModel.setParentId(parentId);
+				treeModel.setName(bean.getName());
+				treeModel.setLocked(bean.getLocked());
+				treeModel.setDescription(bean.getDesc());
+				treeModel.setUrl(bean.getUrl());
+				treeModel.setSortNo(bean.getSort());
+
+				List<SysApplication> childrenNodes = null;
+				if (user.isSystemAdmin()) {
+					childrenNodes = getApplicationList((int) bean.getId());
+				} else {
+					childrenNodes = getAccessAppList(bean.getId(), user);
+				}
+				if (childrenNodes != null && childrenNodes.size() > 0) {// 有子菜单
+					this.loadChildrenTreeModels(treeModels, bean.getId(), user);
+				}
+				treeModels.add(treeModel);
+			}
+		}
+	}
+
 	@Resource
 	public void setAuthorizeService(AuthorizeService authorizeService) {
 		this.authorizeService = authorizeService;
@@ -404,13 +482,13 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 			this.update(bean);// 更新bean
 			SysTree node = sysTreeService.findById(bean.getNodeId());
 			node.setSort(bean.getSort());
-			sysTreeService.update(node);// TODOX
+			sysTreeService.update(node); 
 
 			temp.setSort(i);
 			this.update(temp);// 更新temp
 			node = sysTreeService.findById(temp.getNodeId());
 			node.setSort(temp.getSort());
-			sysTreeService.update(node);// TODOX
+			sysTreeService.update(node); 
 		}
 	}
 
@@ -435,13 +513,13 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 			this.update(bean);// 更新bean
 			SysTree node = sysTreeService.findById(bean.getNodeId());
 			node.setSort(bean.getSort());
-			sysTreeService.update(node);// TODOX
+			sysTreeService.update(node); 
 
 			temp.setSort(i);
 			this.update(temp);// 更新temp
 			node = sysTreeService.findById(temp.getNodeId());
 			node.setSort(temp.getSort());
-			sysTreeService.update(node);// TODOX
+			sysTreeService.update(node); 
 		}
 	}
 

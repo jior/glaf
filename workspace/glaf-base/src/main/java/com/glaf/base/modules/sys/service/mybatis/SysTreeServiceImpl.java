@@ -137,6 +137,7 @@ public class SysTreeServiceImpl implements SysTreeService {
 	public List<SysTree> getAllSysTreeList() {
 		SysTreeQuery query = new SysTreeQuery();
 		List<SysTree> list = this.list(query);
+		Collections.sort(list);
 		return list;
 	}
 
@@ -185,9 +186,10 @@ public class SysTreeServiceImpl implements SysTreeService {
 	public List<SysTree> getSysTreeList(int parentId) {
 		SysTreeQuery query = new SysTreeQuery();
 		query.setParentId(Long.valueOf(parentId));
-		query.setOrderBy("  E.SORT desc ");
-		List<SysTree> trees = this.list(query);
-		return trees;
+		query.setOrderBy("  E.SORT asc ");
+		List<SysTree> list = this.list(query);
+		Collections.sort(list);
+		return list;
 	}
 
 	public PageResult getSysTreeList(int parent, int pageNo, int pageSize) {
@@ -205,6 +207,7 @@ public class SysTreeServiceImpl implements SysTreeService {
 		int start = pageSize * (pageNo - 1);
 		List<SysTree> list = this.getSysTreesByQueryCriteria(start, pageSize,
 				query);
+		Collections.sort(list);
 		pager.setResults(list);
 		pager.setPageSize(pageSize);
 		pager.setCurrentPageNo(pageNo);
@@ -221,6 +224,7 @@ public class SysTreeServiceImpl implements SysTreeService {
 		}
 		query.setOrderBy(" E.SORT desc");
 		List<SysTree> list = this.list(query);
+		Collections.sort(list);
 		this.initDepartments(list);
 		return list;
 	}
@@ -247,6 +251,7 @@ public class SysTreeServiceImpl implements SysTreeService {
 		RowBounds rowBounds = new RowBounds(start, pageSize);
 		List<SysTree> rows = sqlSessionTemplate.selectList("getSysTrees",
 				query, rowBounds);
+		Collections.sort(rows);
 		return rows;
 	}
 

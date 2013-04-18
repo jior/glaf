@@ -9,3 +9,27 @@
  .x_content_title {
    text-transform: uppercase; background-color: inherit; color: #789030; font-size: 14px; font-weight: bold; text-align: center;
 }
+
+.sys_name {
+	margin-top: 15px;
+	font-size: 24px;
+	color: #ffffff;
+}
+
+.sys_version {
+	margin-top: 25px;
+	font-size: 14px;
+	color: #ffffff;
+}
+
+.user_name {
+	margin-top: 15px;
+	font-size: 14px;
+	color: #ffffff;
+}
+
+.curr_date {
+	margin-top: 15px;
+	font-size: 12px;
+	color: #ffffff;
+}

@@ -63,13 +63,6 @@ public class MainController {
 		return new ModelAndView("/main/home", modelMap);
 	}
 
-	@RequestMapping
-	public ModelAndView index(ModelMap modelMap, HttpServletRequest request,
-			HttpServletResponse response) {
-		RequestUtils.setRequestParameterToAttribute(request);
-		return new ModelAndView("/main/index", modelMap);
-	}
-
 	@RequestMapping(params = "method=left")
 	public ModelAndView left(ModelMap modelMap, HttpServletRequest request,
 			HttpServletResponse response) {

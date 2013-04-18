@@ -49,6 +49,7 @@ public class SystemConfig {
 
 	/**
 	 * 返回web应用的WEB-INF目录的全路径
+	 * 
 	 * @return
 	 */
 	public static String getConfigRootPath() {
@@ -207,17 +208,7 @@ public class SystemConfig {
 			if (StringUtils.isEmpty(value)) {
 				value = prop.getInitValue();
 			}
-			if (StringUtils.isNotEmpty(value)) {
-				Date now = new Date();
-				Map<String, Object> sysMap = new HashMap<String, Object>();
-				sysMap.put("now", DateUtils.getYearMonthDay(now));
-				sysMap.put("curr_yyyymm", DateUtils.getYearMonth(now));
-				sysMap.put("curr_yyyymmdd", DateUtils.getYearMonthDay(now));
-				Object obj = Mvel2ExpressionEvaluator.evaluate(value, sysMap);
-				if (obj != null) {
-					ret = obj.toString();
-				}
-			}
+			ret = value;
 		}
 		return ret;
 	}

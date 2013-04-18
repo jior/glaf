@@ -3,6 +3,7 @@
 <%@ page import="org.json.*" %>
 <%@ page import="com.glaf.base.utils.*" %>
 <%@ page import="com.glaf.base.business.*" %>
+<%@ page import="com.glaf.core.config.*"%>
 <%@ page import="com.glaf.core.context.*" %>
 <%@ page import="com.glaf.core.util.*" %>
 <%@ page import="com.glaf.base.modules.sys.model.*" %>
@@ -17,14 +18,15 @@
 
 	String userId = RequestUtils.getActorId(request);
  	SysApplicationService sysApplicationService = ContextFactory.getBean("sysApplicationService");
-	JSONArray array = sysApplicationService.getUserMenu(3, userId);
+	long appId = RequestUtils.getLong(request, "appId", 3);
+	JSONArray array = sysApplicationService.getUserMenu(appId, userId);
 	String scripts = array.toString('\n');
 %>
-<!DOCTYPE html >
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>GLAF基础应用框架</title>
+<title><%=SystemConfig.getString("res_system_name")%></title>
 <link href="<%=request.getContextPath()%>/layout/css/styles.css" rel="stylesheet" type="text/css" />
 <link href="<%=request.getContextPath()%>/scripts/easyui/themes/${theme}/easyui.css" rel="stylesheet" type="text/css" />
 <link href="<%=request.getContextPath()%>/themes/${theme}/styles.css" rel="stylesheet" type="text/css" />
@@ -109,11 +111,15 @@
 		<a href="#" id="loginOut">退出</a>
         </span>
         <span style="padding-left:10px; font-size: 24px; ">
-		<img src="<%=request.getContextPath()%>/layout/images/logo.gif" border="0" align="absmiddle" /> GLAF基础应用框架</span>
+		<img src="<%=request.getContextPath()%>/layout/images/logo.gif" border="0" align="absmiddle" /> 
+		<span class="sys_name" style="padding-left:10px; font-size: 24px; ">
+		<%=SystemConfig.getString("res_system_name")%></span>&nbsp;
+	   <span class="sys_version"><%=SystemConfig.getString("res_version")%></span>
+      </span>
 </div>
 
 <div region="south" split="true" class="south-backgroud" style="height: 30px;   ">
-        <div class="footer">By &nbsp;Global Application Framework</div>
+        <div class="footer"><%=SystemConfig.getString("res_copyright")%></div>
 </div>
 
 <div region="west" split="true"  title="导航菜单" style="width:180px;" id="west">

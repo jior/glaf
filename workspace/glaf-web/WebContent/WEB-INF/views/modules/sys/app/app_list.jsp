@@ -142,7 +142,7 @@ if(list!=null){
     <td class="td-no">
 	<%=bean.getLocked()==0?"<span style='color:blue'>是</span>":"<span style='color:red'>否</span>"%>&nbsp;
 	</td>
-    <td class="td-no"><a href="javascript:sort(<%=bean.getId()%>, 0);" title="上移"><img src="<%=context%>/images/up.gif" border="0" height="13" width="13"></a> <a href="javascript:sort(<%=bean.getId()%>, 1);" title="下移"><img src="<%=context%>/images/down.gif" border="0" height="13" width="13"></a></td>
+    <td class="td-no"><a href="javascript:sort(<%=bean.getId()%>, 1);" title="上移"><img src="<%=context%>/images/up.gif" border="0" height="13" width="13"></a> <a href="javascript:sort(<%=bean.getId()%>, 0);" title="下移"><img src="<%=context%>/images/down.gif" border="0" height="13" width="13"></a></td>
   </tr>
   <%
     i++;

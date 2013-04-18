@@ -27,6 +27,7 @@ import com.glaf.base.modules.sys.model.RealmInfo;
 import com.glaf.base.modules.sys.model.SysApplication;
 import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.sys.query.SysApplicationQuery;
+import com.glaf.core.base.TreeModel;
 import com.glaf.core.util.PageResult;
 
 @Transactional(readOnly = true)
@@ -151,15 +152,25 @@ public interface SysApplicationService {
 			int pageSize, SysApplicationQuery query);
 
 	/**
-	 * 获取用户菜单之Json对象
+	 * 获取用户菜单之json对象
 	 * 
-	 * @param parent
+	 * @param parentId
 	 *            父节点编号
 	 * @param userId
 	 *            用户登录账号
 	 * @return
 	 */
-	JSONArray getUserMenu(long parent, String userId);
+	JSONArray getUserMenu(long parentId, String userId);
+	
+	TreeModel getTreeModelByAppId(long appId);
+	
+	/**
+	 * 获取用户某个分类下的全部分类节点
+	 * @param parent 父节点编号
+	 * @param userId 用户登录账号
+	 * @return
+	 */
+	List<TreeModel> getTreeModels(long parentId, String userId);
 
 	/**
 	 * 排序
