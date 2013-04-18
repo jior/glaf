@@ -30,5 +30,6 @@ and ID in (
   on T.ID = X.TYPEID
 );
 
-update SYS_APPLICATION set locked = 0 where locked is null;
+update sys_application set locked = 0 where locked is null;
 
+update sys_tree set locked = 0 where locked is null;
