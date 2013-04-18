@@ -80,7 +80,7 @@ function users(form){
   var url="group.do?method=groupUsers&groupId="+id;
   var link = "<%=request.getContextPath()%>/base/"+url;
   var width=450;
-  var height=550;
+  var height=480;
   var scroll="yes";
   //openWindow(url, width, height, scroll);
   art.dialog.open(link, { height: height, width: width, title: "群组用户", lock: true, scrollbars:"no" }, false);

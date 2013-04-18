@@ -7,7 +7,7 @@
 	pageContext.setAttribute("contextPath", context);
 	boolean debug = false;
 	String host = com.glaf.core.util.RequestUtils.getIPAddress(request);
-	System.out.println("host:"+host);
+	//System.out.println("host:"+host);
 	if("127.0.0.1".equals(host)){
 		debug = true;
 	}
@@ -37,14 +37,14 @@
 		//alert(navigator.userAgent);
 		if(browser=="Microsoft Internet Explorer") {
 		//页面加载时即关闭父窗口，此页面全屏显示
-	    if(window.opener!=null){
+	      if(window.opener!=null){
             if(login!='true') {
 	    	   window.opener.opener = null;
 	           window.opener.open('','_self');
 	           window.opener.close();
 	           window.opener = null;
              }
-		} else if(login!='true') {
+		  } else if(login!='true') {
 	        var screenWidth = screen.availWidth, screenHeight = screen.availHeight;
             var args = "top=0,left=0,toolbar=no,menubar=no,scrollbars=yes, resizable=yes,location=no, status=no,titlebar=no";
 	        //打开全屏的新窗口
@@ -71,34 +71,27 @@
                 minimizable: false,
                 collapsible: false,
                 resizable: false
-            });
-            //登录
-            $("#btnLogin").click(function() {
-                var x = document.getElementById("x").value;
-                var y = document.getElementById("y").value;
-				if(x==''){
-					alert("请输入您的用户名。");
-					document.getElementById("x").focus();
-                    return;
-				}
-				if(y==''){
-                    alert("请输入您的密码。");
-					document.getElementById("y").focus();
-                    return;
-				}
+        });                    
+    });
 
-                loginSys(x, y);
-            });
+	function doLogin(){
+	    var x = document.getElementById("x").value;
+        var y = document.getElementById("y").value;
+		if(x==''){
+			alert("请输入您的用户名。");
+			document.getElementById("x").focus();
+            return;
+		}
+		if(y==''){
+            alert("请输入您的密码。");
+			document.getElementById("y").focus();
+            return;
+		}
+        location.href="${contextPath}/login.do?method=login&x="+x+"&y=<%=rand%>"+y;
+	}
 
-            
-        });
-
-        //登陆操作方法
-        function loginSys(x, y) {
-            location.href("${contextPath}/login.do?method=login&x="+x+"&y=<%=rand%>"+y);
-        }
-    </script>
-
+       
+</script>
 </head>
 <body <%if(!debug){%>onload="openMainPage();"<%}%>>
     <div id="loginWindow" class="easyui-window" title="Login Form" iconcls="icon-login"
@@ -111,7 +104,7 @@
                         用户名：
                     </td>
                     <td>
-                        <input id="x" class="easyui-validatebox input" required="true" validtype="length[3,20]"
+                        <input id="x" name="x" class="easyui-validatebox input" required="true" validtype="length[3,20]"
                             style="width: 150px;" datatype="string" nullable="no" maxsize="20" chname="用户名" value="root" />
                     </td>
                 </tr>
@@ -120,7 +113,7 @@
                         密&nbsp;&nbsp;&nbsp;&nbsp;码：
                     </td>
                     <td>
-                        <input type="password" id="y" style="width: 150px;" class="easyui-validatebox input"
+                        <input type="password" id="y" name="y" style="width: 150px;" class="easyui-validatebox input"
                             required="true" validtype="length[6,20]" datatype="string" nullable="no" maxsize="20" chname="密码" value="111111"/>
                     </td>
                 </tr>
@@ -129,7 +122,8 @@
         </div>
              
         <div class="toolbar" style="text-align: center; margin-top: 20px;">
-             <a href="#" class="easyui-linkbutton" iconcls="icon-ok" id="btnLogin" style="margin-left: 2px;"> 登 录 </a>
+             <a href="#" class="easyui-linkbutton" iconcls="icon-ok" id="btnLogin" style="margin-left: 2px;" 
+			    onclick="javascript:doLogin();"> 登 录 </a>
         </div>
     </div>
 </body>
