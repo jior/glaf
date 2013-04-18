@@ -61,8 +61,7 @@ public class MxPanelController {
 	protected LayoutService layoutService;
 
 	@RequestMapping("/content")
-	@ResponseBody
-	public byte[] content(
+	public ModelAndView content(
 			@RequestParam(value = "pid", required = true) String panelId,
 			ModelMap modelMap) {
 
@@ -72,11 +71,16 @@ public class MxPanelController {
 			panel = panelService.getPanel(panelId);
 		}
 
-		if (panel != null && panel.getContent() != null) {
-			return panel.getContent().getBytes();
+		if (panel != null) {
+			modelMap.addAttribute("panel", panel);
 		}
 
-		return null;
+		String x_view = ViewProperties.getString("sys_panel.content");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
+		return new ModelAndView("/modules/ui/panel/content", modelMap);
 
 	}
 
