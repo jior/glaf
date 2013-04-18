@@ -16,11 +16,17 @@
     String theme = com.glaf.core.util.RequestUtils.getTheme(request);
 	request.setAttribute("theme", theme);
 
-	String userId = RequestUtils.getActorId(request);
- 	SysApplicationService sysApplicationService = ContextFactory.getBean("sysApplicationService");
-	long appId = RequestUtils.getLong(request, "appId", 3);
-	JSONArray array = sysApplicationService.getUserMenu(appId, userId);
-	String scripts = array.toString('\n');
+	//String userId = RequestUtils.getActorId(request);
+ 	//SysApplicationService sysApplicationService = ContextFactory.getBean("sysApplicationService");
+	//long appId = RequestUtils.getLong(request, "appId", 3);
+	//String scripts = "";
+	//try{
+	  //JSONArray array = sysApplicationService.getUserMenu(appId, userId);
+	  //scripts = array.toString('\n');
+	//}catch(Exception ex){
+	//	ex.printStackTrace();
+	//}
+	String scripts = (String) request.getAttribute("scripts");
 %>
 <!DOCTYPE html>
 <html>

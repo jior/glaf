@@ -127,7 +127,7 @@
 		<table width="100%" border="0" cellspacing="0" cellpadding="0">
 			<tr
 				style="overflow: hidden; height: 63px; background: url(${contextPath}/themes/<%=theme%>/images/top_bar_bg.jpg)">
-				<td width="5%" align="right" valign="middle"><img
+				<td width="5%" align="center" valign="middle"><img
 					src="<%=request.getContextPath()%>/layout/images/logo.gif"
 					border="0"></td>
 				<td width="25%" align="left" valign="middle"><span

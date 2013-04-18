@@ -108,6 +108,21 @@ public class MyPortalController {
 	public ModelAndView home(ModelMap modelMap, HttpServletRequest request,
 			HttpServletResponse response) {
 		RequestUtils.setRequestParameterToAttribute(request);
+
+		String userId = RequestUtils.getActorId(request);
+
+		long appId = RequestUtils.getLong(request, "appId", 3);
+		String scripts = "";
+		try {
+			org.json.JSONArray array = sysApplicationService.getUserMenu(appId,
+					userId);
+			scripts = array.toString('\n');
+			request.setAttribute("scripts", scripts);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			logger.error(ex);
+		}
+
 		return new ModelAndView("/modules/portal/home", modelMap);
 	}
 
