@@ -30,23 +30,15 @@ public class DateUtils {
 
 	public static final long SECOND = 1000L;
 
+	public static final String DATE_PATTERN = "yyyy-MM-dd";
+
+	public static final String DATE_TIME_PATTERN = "yyyy-MM-dd HH:mm:ss";
+
 	public static final long MINUTE = 60L * SECOND;
 
 	public static final long HOUR = 60L * MINUTE;
 
 	public static final long DAY = 24L * HOUR;
-
-	public static final long WEEK = 7L * DAY;
-
-	public static final String DATE_PATTERN = "yyyy-MM-dd";
-
-	public static final String DATE_TIME_PATTERN = "yyyy-MM-dd HH:mm:ss";
-
-	public static final String YEAR_FORMAT = "yyyy";
-
-	public static final String YEAR_MONTH_DAY_FORMAT = "yyyyMMdd";
-
-	public static final String MONTH_FORMAT = "yyyy-MM";
 
 	public static final String DAY_FORMAT = "yyyy-MM-dd";
 
@@ -54,7 +46,15 @@ public class DateUtils {
 
 	public static final String MINUTE_FORMAT = "yyyy-MM-dd HH:mm";
 
+	public static final String MONTH_FORMAT = "yyyy-MM";
+
 	public static final String SECOND_FORMAT = "yyyy-MM-dd HH:mm:ss";
+
+	public static final long WEEK = 7L * DAY;
+
+	public static final String YEAR_FORMAT = "yyyy";
+
+	public static final String YEAR_MONTH_DAY_FORMAT = "yyyyMMdd";
 
 	/**
 	 * 判断某个时间time2是否在另一个时间time1之前
@@ -147,14 +147,6 @@ public class DateUtils {
 		}
 		return days;
 	}
-	
-	public static int getNowYearMonthDay(){
-		String returnStr = null;
-		SimpleDateFormat f = new SimpleDateFormat("yyyyMMdd");
-		Date date = new Date();
-		returnStr = f.format(date);
-		return Integer.parseInt(returnStr);
-	}
 
 	/**
 	 * 获取两个日期之间的天数
@@ -196,6 +188,14 @@ public class DateUtils {
 			result.add(Calendar.DATE, 1);
 		} while (result.get(Calendar.DAY_OF_WEEK) != 2);
 		return result;
+	}
+
+	public static int getNowYearMonthDay() {
+		String returnStr = null;
+		SimpleDateFormat f = new SimpleDateFormat("yyyyMMdd");
+		Date date = new Date();
+		returnStr = f.format(date);
+		return Integer.parseInt(returnStr);
 	}
 
 	/**
@@ -315,7 +315,6 @@ public class DateUtils {
 			throw new IllegalArgumentException(
 					"Date and Patterns must not be null");
 		}
-
 		SimpleDateFormat parser = null;
 		ParsePosition pos = new ParsePosition(0);
 		for (int i = 0; i < parsePatterns.length; i++) {

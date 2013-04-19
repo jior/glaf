@@ -17,6 +17,8 @@ import org.json.*;
 import com.glaf.core.base.ColumnModel;
 import com.glaf.core.base.TableModel;
 import com.glaf.core.context.ContextFactory;
+import com.glaf.core.util.DateUtils;
+import com.glaf.core.util.StringTools;
 
 public class POIExcelParser implements Parser {
 
@@ -88,9 +90,11 @@ public class POIExcelParser implements Parser {
 
 				int colCount = row.getPhysicalNumberOfCells();
 				// logger.info("column count="+colCount);
+				int colIndex = 0;
 				for (ColumnModel cell : metadata.getColumns()) {
 					if (cell.getPosition() > 0
 							&& cell.getPosition() <= colCount) {
+						colIndex++;
 						HSSFCell hssfCell = row.getCell(cell.getPosition() - 1);
 						if (hssfCell == null) {
 							continue;
@@ -167,14 +171,32 @@ public class POIExcelParser implements Parser {
 								col.setDoubleValue(Double.parseDouble(value));
 								col.setValue(Double.parseDouble(value));
 							} else if ("Date".equals(javaType)) {
-								formatter = new SimpleDateFormat(
-										cell.getFormat());
-								try {
-									Date date = formatter.parse(value);
-									col.setDateValue(date);
-									col.setValue(date);
-								} catch (ParseException ex) {
-									ex.printStackTrace();
+								if (cell.getFormat() != null) {
+									try {
+										formatter = new SimpleDateFormat(
+												cell.getFormat());
+										Date date = formatter.parse(value);
+										col.setDateValue(date);
+										col.setValue(date);
+									} catch (ParseException ex) {
+										logger.debug("error date format: row("
+												+ startRow + ") col("
+												+ colIndex + ")");
+										ex.printStackTrace();
+									}
+								} else {
+									try {
+										value = StringTools.replace(value, "/",
+												"-");
+										Date date = DateUtils.toDate(value);
+										col.setDateValue(date);
+										col.setValue(date);
+									} catch (Exception ex) {
+										logger.debug("error date format: row("
+												+ startRow + ") col("
+												+ colIndex + ")");
+										ex.printStackTrace();
+									}
 								}
 							}
 						}
