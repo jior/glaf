@@ -78,13 +78,17 @@ public class FormDefinitionController {
 	public ModelAndView edit(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		String rowId = ParamUtils.getString(params, "rowId");
+		String formDefinitionId = ParamUtils.getString(params,
+				"formDefinitionId");
 		FormDefinition formDefinition = null;
-		if (StringUtils.isNotEmpty(rowId)) {
-			formDefinition = formDataService.getFormDefinition(rowId);
-			request.setAttribute("formDefinition", formDefinition);
-			JSONObject rowJSON = formDefinition.toJsonObject();
-			request.setAttribute("x_json", rowJSON.toString());
+		if (StringUtils.isNotEmpty(formDefinitionId)) {
+			formDefinition = formDataService
+					.getFormDefinition(formDefinitionId);
+			if (formDefinition != null) {
+				request.setAttribute("formDefinition", formDefinition);
+				JSONObject rowJSON = formDefinition.toJsonObject();
+				request.setAttribute("x_json", rowJSON.toJSONString());
+			}
 		}
 
 		String view = request.getParameter("view");
@@ -173,6 +177,12 @@ public class FormDefinitionController {
 					rowsJSON.add(rowJSON);
 				}
 			}
+		} else {
+			JSONArray rowsJSON = new JSONArray();
+			result.put("total", 0);
+			result.put("totalCount", 0);
+			result.put("totalRecords", 0);
+			result.put("rows", rowsJSON);
 		}
 		return result.toJSONString().getBytes("UTF-8");
 	}

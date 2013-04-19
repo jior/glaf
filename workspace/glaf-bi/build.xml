@@ -58,6 +58,11 @@
 		     includes="com/**/*.class,com/**/*.properties,com/**/*.xml" 
 			 excludes="**/test/**" />
 
+		<jar jarfile="glaf-chart.jar">
+			<fileset dir="bin" 
+			   includes="com/glaf/chart/**/*.class,com/glaf/chart/**/*.xml,com/glaf/chart/**/*.properties" />
+		</jar>
+
 	</target>
 
 

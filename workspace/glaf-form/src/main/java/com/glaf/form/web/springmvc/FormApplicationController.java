@@ -29,7 +29,8 @@ public class FormApplicationController {
 	@javax.annotation.Resource
 	protected FormDataService formDataService;
 
-	private static final Log logger = LogFactory.getLog(FormApplicationController.class);
+	private static final Log logger = LogFactory
+			.getLog(FormApplicationController.class);
 
 	public FormApplicationController() {
 
@@ -40,10 +41,10 @@ public class FormApplicationController {
 	public void delete(HttpServletRequest request, ModelMap modelMap) {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		String rowId = ParamUtils.getString(params, "rowId");
-		String rowIds = request.getParameter("rowIds");
-		if (StringUtils.isNotEmpty(rowIds)) {
-			StringTokenizer token = new StringTokenizer(rowIds, ",");
+		String appId = ParamUtils.getString(params, "appId");
+		String appIds = request.getParameter("appIds");
+		if (StringUtils.isNotEmpty(appIds)) {
+			StringTokenizer token = new StringTokenizer(appIds, ",");
 			while (token.hasMoreTokens()) {
 				String x = token.nextToken();
 				if (StringUtils.isNotEmpty(x)) {
@@ -59,9 +60,9 @@ public class FormApplicationController {
 					}
 				}
 			}
-		} else if (StringUtils.isNotEmpty(rowId)) {
+		} else if (StringUtils.isNotEmpty(appId)) {
 			FormApplication formApplication = formDataService
-					.getFormApplication(rowId);
+					.getFormApplication(appId);
 
 			if (formApplication != null
 					&& (StringUtils.equals(formApplication.getCreateBy(),
@@ -77,10 +78,10 @@ public class FormApplicationController {
 		RequestUtils.setRequestParameterToAttribute(request);
 
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		String rowId = ParamUtils.getString(params, "rowId");
+		String appId = ParamUtils.getString(params, "appId");
 		FormApplication formApplication = null;
-		if (StringUtils.isNotEmpty(rowId)) {
-			formApplication = formDataService.getFormApplication(rowId);
+		if (StringUtils.isNotEmpty(appId)) {
+			formApplication = formDataService.getFormApplication(appId);
 			request.setAttribute("formApplication", formApplication);
 			JSONObject rowJSON = formApplication.toJsonObject();
 			request.setAttribute("x_json", rowJSON.toString());
@@ -173,8 +174,13 @@ public class FormApplicationController {
 					rowJSON.put("startIndex", ++start);
 					rowsJSON.add(rowJSON);
 				}
-
 			}
+		} else {
+			JSONArray rowsJSON = new JSONArray();
+			result.put("total", 0);
+			result.put("totalCount", 0);
+			result.put("totalRecords", 0);
+			result.put("rows", rowsJSON);
 		}
 		return result.toJSONString().getBytes("UTF-8");
 	}
@@ -258,10 +264,10 @@ public class FormApplicationController {
 	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		String rowId = ParamUtils.getString(params, "rowId");
+		String appId = ParamUtils.getString(params, "appId");
 		FormApplication formApplication = null;
-		if (StringUtils.isNotEmpty(rowId)) {
-			formApplication = formDataService.getFormApplication(rowId);
+		if (StringUtils.isNotEmpty(appId)) {
+			formApplication = formDataService.getFormApplication(appId);
 			request.setAttribute("formApplication", formApplication);
 			JSONObject rowJSON = formApplication.toJsonObject();
 			request.setAttribute("x_json", rowJSON.toString());

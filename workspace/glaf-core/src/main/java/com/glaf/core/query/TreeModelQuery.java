@@ -25,6 +25,7 @@ public class TreeModelQuery extends DataQuery {
 	protected String code;
 	protected String codeLike;
 	protected List<String> codes;
+	protected String descLike;
 	protected String discriminator;
 	protected Integer lockedGreaterThanOrEqual;
 	protected Integer lockedLessThanOrEqual;
@@ -91,6 +92,10 @@ public class TreeModelQuery extends DataQuery {
 
 	public List<String> getCodes() {
 		return codes;
+	}
+
+	public String getDescLike() {
+		return descLike;
 	}
 
 	public String getDiscriminator() {
@@ -313,6 +318,10 @@ public class TreeModelQuery extends DataQuery {
 
 	public void setCodes(List<String> codes) {
 		this.codes = codes;
+	}
+
+	public void setDescLike(String descLike) {
+		this.descLike = descLike;
 	}
 
 	public void setDiscriminator(String discriminator) {

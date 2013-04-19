@@ -1,5 +1,5 @@
 cd workspace
-copy .\glaf-bi\*.jar .\glaf-web\WebContent\WEB-INF\lib
+copy .\glaf-bi\glaf-bi.jar .\glaf-web\WebContent\WEB-INF\lib
 copy .\glaf-ui\*.jar .\glaf-web\WebContent\WEB-INF\lib
 copy .\glaf-base\*.jar .\glaf-web\WebContent\WEB-INF\lib
 copy .\glaf-core\*.jar .\glaf-web\WebContent\WEB-INF\lib

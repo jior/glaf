@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 /**
  * 
@@ -170,5 +171,7 @@ public interface TreeModel extends Serializable,
 	void setUrl(String url);
 
 	JSONObject toJsonObject();
+	
+	ObjectNode toObjectNode();
 
 }
