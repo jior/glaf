@@ -1,15 +1,31 @@
-
+<?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	                                     http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+										 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
-	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
-		<property name="jndiName">
-			<value>java:comp/env/jdbc/glafdb</value>
-		</property>
-	</bean>
 
-	<bean id="hibernateSessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean"> 
+		<property name="jndiName"> <value>java:comp/env/jdbc/glafdb</value></property> 
+	</bean> 
+
+	<!-- <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSourceC3P0Adapter"
+		destroy-method="close">
+		<property name="driverClass" value="org.h2.Driver" />
+		<property name="jdbcUrl" value="jdbc:h2:tcp://localhost/glafdb" />
+		<property name="user" value="sa" />
+		<property name="password" value="" />
+		<property name="minPoolSize" value="20" />
+		<property name="maxPoolSize" value="120" />
+		<property name="maxIdleTime" value="5000" />
+		<property name="acquireIncrement" value="2" />
+		<property name="maxStatements" value="100" />
+		<property name="idleConnectionTestPeriod" value="3000" />
+	</bean> --> 
+
+	<bean id="hibernateSessionFactory"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
 		<property name="dataSource">
 			<ref bean="dataSource" />
 		</property>
@@ -29,19 +45,12 @@
 			<list>
 				<value>com.glaf</value>
 			</list>
-	   </property>
-	</bean> 
-
-	<!-- <bean id="transactionManager" 
-		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
-		<property name="sessionFactory">
-			<ref bean="hibernateSessionFactory"/>
 		</property>
-	</bean> -->
+	</bean>
 
 	<bean id="transactionManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />
-	</bean> 
+	</bean>
 
 </beans>  

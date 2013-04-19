@@ -1,4 +1,4 @@
- 
+<?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
@@ -16,7 +16,7 @@
 	</bean>
 
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
-	    <constructor-arg index="0" ref="sqlSessionFactory" />
+		<constructor-arg index="0" ref="sqlSessionFactory" />
 	</bean>
 
 	<bean id="baseMapper" class="org.mybatis.spring.mapper.MapperFactoryBean"
