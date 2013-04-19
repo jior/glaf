@@ -24,6 +24,81 @@
 		<property name="idleConnectionTestPeriod" value="3000" />
 	</bean> --> 
 
+	<!-- <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSourceC3P0Adapter"
+		destroy-method="close">
+		<property name="driverClass" value="org.postgresql.Driver" />
+		<property name="jdbcUrl" value=" jdbc:postgresql://127.0.0.1:5432/glafdb" />
+		<property name="user" value="root" />
+		<property name="password" value="" />
+		<property name="minPoolSize" value="20" />
+		<property name="maxPoolSize" value="120" />
+		<property name="maxIdleTime" value="5000" />
+		<property name="acquireIncrement" value="2" />
+		<property name="maxStatements" value="100" />
+		<property name="idleConnectionTestPeriod" value="3000" />
+	</bean> -->
+
+ 
+    <!-- <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSourceC3P0Adapter"
+		destroy-method="close">
+		<property name="driverClass" value="oracle.jdbc.OracleDriver" />
+		<property name="jdbcUrl" value=" jdbc:oracle:thin:@127.0.0.1:1521:orcl" />
+		<property name="user" value="system" />
+		<property name="password" value="" />
+		<property name="minPoolSize" value="20" />
+		<property name="maxPoolSize" value="120" />
+		<property name="maxIdleTime" value="5000" />
+		<property name="acquireIncrement" value="2" />
+		<property name="maxStatements" value="100" />
+		<property name="idleConnectionTestPeriod" value="3000" />
+	</bean> -->
+
+
+    <!-- <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSourceC3P0Adapter"
+		destroy-method="close">
+		<property name="driverClass" value="com.ibm.db2.jcc.DB2Driver" />
+		<property name="jdbcUrl" value=" jdbc:db2://127.0.0.1:50100/GLAFDB" />
+		<property name="user" value=" " />
+		<property name="password" value="" />
+		<property name="minPoolSize" value="20" />
+		<property name="maxPoolSize" value="120" />
+		<property name="maxIdleTime" value="5000" />
+		<property name="acquireIncrement" value="2" />
+		<property name="maxStatements" value="100" />
+		<property name="idleConnectionTestPeriod" value="3000" />
+	</bean> -->
+
+
+	<!-- <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSourceC3P0Adapter"
+			destroy-method="close">
+	    <property name="driverClass" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
+	    <property name="jdbcUrl" value=" jdbc:sqlserver://127.0.0.1:1433;databaseName=glafdb" />
+	    <property name="user" value="sa" />
+	    <property name="password" value="" />
+	    <property name="minPoolSize" value="20" />
+	    <property name="maxPoolSize" value="120" />
+	    <property name="maxIdleTime" value="5000" />
+	    <property name="acquireIncrement" value="2" />
+	    <property name="maxStatements" value="100" />
+	    <property name="idleConnectionTestPeriod" value="3000" />
+	</bean> -->
+ 
+
+    <!-- <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSourceC3P0Adapter"
+		destroy-method="close">
+		<property name="driverClass" value="com.mysql.jdbc.Driver" />
+		<property name="jdbcUrl" value=" jdbc:mysql://localhost/glafdb" />
+		<property name="user" value="root" />
+		<property name="password" value="" />
+		<property name="minPoolSize" value="20" />
+		<property name="maxPoolSize" value="120" />
+		<property name="maxIdleTime" value="5000" />
+		<property name="acquireIncrement" value="2" />
+		<property name="maxStatements" value="100" />
+		<property name="idleConnectionTestPeriod" value="3000" />
+	</bean> -->
+
+
 	<bean id="hibernateSessionFactory"
 		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
 		<property name="dataSource">
