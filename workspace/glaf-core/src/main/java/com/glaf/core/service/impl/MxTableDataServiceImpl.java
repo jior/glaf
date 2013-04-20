@@ -636,7 +636,6 @@ public class MxTableDataServiceImpl implements ITableDataService {
 	 */
 	@Transactional
 	public void saveTableData(String tableName, JSONObject jsonObject) {
-
 		TableDefinition tableDefinition = tableDefinitionService
 				.getTableDefinition(tableName);
 		if (tableDefinition != null && tableDefinition.getIdColumn() != null) {
