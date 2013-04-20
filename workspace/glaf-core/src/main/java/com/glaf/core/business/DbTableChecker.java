@@ -70,6 +70,9 @@ public class DbTableChecker {
 				if (tableName.startsWith("temp_")) {
 					continue;
 				}
+				if (tableName.startsWith("demo_")) {
+					continue;
+				}
 				if (tableMap.get(tableName) == null) {
 					try {
 						List<ColumnDefinition> columns = DBUtils
