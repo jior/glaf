@@ -23,6 +23,7 @@ import java.util.*;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.base.TableModel;
 import com.glaf.core.domain.TableDefinition;
 import com.glaf.core.id.Dbid;
@@ -114,6 +115,15 @@ public interface ITableDataService {
 	 */
 	@Transactional
 	void saveTableData(String tableName, JSONArray rows);
+
+	/**
+	 * 保存JSON数据到指定的表
+	 * 
+	 * @param tableName
+	 * @param jsonObject
+	 */
+	@Transactional
+	void saveTableData(String tableName, JSONObject jsonObject);
 
 	/**
 	 * 更新序列
