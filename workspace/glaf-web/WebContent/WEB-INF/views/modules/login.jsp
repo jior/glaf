@@ -19,7 +19,7 @@
 	}
 %>
 <!DOCTYPE html >
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 <head id="Head1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>GLAF基础应用框架-系统登录</title>
@@ -63,7 +63,7 @@
         $("#loginWindow").window({
                 title: 'GLAF基础应用框架',
                 width: 290,
-                height: 180,
+                height: 190,
                 modal: true,
                 shadow: false,
                 closable: false,

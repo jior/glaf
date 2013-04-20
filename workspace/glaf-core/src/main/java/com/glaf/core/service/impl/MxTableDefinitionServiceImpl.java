@@ -45,15 +45,15 @@ public class MxTableDefinitionServiceImpl implements ITableDefinitionService {
 	protected final static Log logger = LogFactory
 			.getLog(MxTableDefinitionServiceImpl.class);
 
-	protected IdGenerator idGenerator;
+	protected ColumnDefinitionMapper columnDefinitionMapper;
 
-	protected SqlSession sqlSession;
+	protected IdGenerator idGenerator;
 
 	protected QueryDefinitionMapper queryDefinitionMapper;
 
-	protected TableDefinitionMapper tableDefinitionMapper;
+	protected SqlSession sqlSession;
 
-	protected ColumnDefinitionMapper columnDefinitionMapper;
+	protected TableDefinitionMapper tableDefinitionMapper;
 
 	public MxTableDefinitionServiceImpl() {
 
@@ -79,8 +79,7 @@ public class MxTableDefinitionServiceImpl implements ITableDefinitionService {
 	 */
 	@Transactional
 	public void deleteTable(String tableName) {
-		columnDefinitionMapper
-				.deleteColumnDefinitionByTableName(tableName);
+		columnDefinitionMapper.deleteColumnDefinitionByTableName(tableName);
 		tableDefinitionMapper.deleteTableDefinitionById(tableName);
 	}
 
@@ -95,6 +94,12 @@ public class MxTableDefinitionServiceImpl implements ITableDefinitionService {
 			return tableDefinition.getColumns();
 		}
 		return null;
+	}
+
+	public List<TableDefinition> getTableColumnsCount(TableDefinitionQuery query) {
+		List<TableDefinition> list = tableDefinitionMapper
+				.getTableColumnsCount(query);
+		return list;
 	}
 
 	public TableDefinition getTableDefinition(String tableName) {
@@ -175,14 +180,11 @@ public class MxTableDefinitionServiceImpl implements ITableDefinitionService {
 		return list;
 	}
 
-	public List<TableDefinition> getTableColumnsCount(TableDefinitionQuery query) {
-		List<TableDefinition> list = tableDefinitionMapper
-				.getTableColumnsCount(query);
-		return list;
-	}
-
 	@Transactional
 	public void save(TableDefinition tableDefinition) {
+		String tableName = tableDefinition.getTableName();
+		tableName = tableName.toLowerCase();
+		tableDefinition.setTableName(tableName);
 		TableDefinition table = this.getTableDefinition(tableDefinition
 				.getTableName());
 		if (table == null) {
@@ -207,12 +209,11 @@ public class MxTableDefinitionServiceImpl implements ITableDefinitionService {
 		if (tableDefinition.getColumns() != null
 				&& !tableDefinition.getColumns().isEmpty()) {
 			for (ColumnDefinition column : tableDefinition.getColumns()) {
-				String id = (tableDefinition.getTableName().toLowerCase() + "_" + column
-						.getColumnName()).toLowerCase();
+				String id = (tableName + "_" + column.getColumnName())
+						.toLowerCase();
 				if (columnDefinitionMapper.getColumnDefinitionById(id) == null) {
 					column.setId(id);
-					column.setTableName(tableDefinition.getTableName()
-							.toLowerCase());
+					column.setTableName(tableName);
 					if ("SYS".equals(tableDefinition.getType())) {
 						column.setSystemFlag("1");
 					}
@@ -224,8 +225,7 @@ public class MxTableDefinitionServiceImpl implements ITableDefinitionService {
 		}
 
 		if ("SYS".equals(tableDefinition.getType())) {
-			String id = (tableDefinition.getTableName() + "_ID")
-					.toLowerCase();
+			String id = (tableDefinition.getTableName() + "_ID").toLowerCase();
 			if (columnDefinitionMapper.getColumnDefinitionById(id) == null) {
 				ColumnDefinition column = new ColumnDefinition();
 				column.setColumnName("ID");
@@ -236,8 +236,7 @@ public class MxTableDefinitionServiceImpl implements ITableDefinitionService {
 				column.setJavaType("String");
 				column.setLength(50);
 				column.setSystemFlag("1");
-				column.setTableName(tableDefinition.getTableName()
-						.toLowerCase());
+				column.setTableName(tableName);
 				columnDefinitionMapper.insertColumnDefinition(column);
 			}
 		}
@@ -245,6 +244,7 @@ public class MxTableDefinitionServiceImpl implements ITableDefinitionService {
 
 	@Transactional
 	public void saveColumn(String tableName, ColumnDefinition columnDefinition) {
+		tableName = tableName.toLowerCase();
 		TableDefinition tableDefinition = this.getTableDefinition(tableName);
 		if (tableDefinition != null) {
 			List<ColumnDefinition> columns = tableDefinition.getColumns();
@@ -281,27 +281,25 @@ public class MxTableDefinitionServiceImpl implements ITableDefinitionService {
 						column.setSummaryExpr(columnDefinition.getSummaryExpr());
 						column.setSummaryType(columnDefinition.getSummaryType());
 
-						columnDefinitionMapper
-								.updateColumnDefinition(column);
+						columnDefinitionMapper.updateColumnDefinition(column);
 						exists = true;
 						break;
 					}
 				}
 			}
 			if (!exists) {
-				String id = (tableDefinition.getTableName().toLowerCase() + "_" + columnDefinition
-						.getColumnName()).toLowerCase();
+				String id = (tableName + "_" + columnDefinition.getColumnName())
+						.toLowerCase();
 				columnDefinition.setId(id);
-				columnDefinition.setTableName(tableDefinition.getTableName()
-						.toLowerCase());
-				columnDefinitionMapper
-						.insertColumnDefinition(columnDefinition);
+				columnDefinition.setTableName(tableName);
+				columnDefinitionMapper.insertColumnDefinition(columnDefinition);
 			}
 		}
 	}
 
 	@Transactional
 	public void saveSystemTable(String tableName, List<ColumnDefinition> rows) {
+		tableName = tableName.toLowerCase();
 		List<ColumnDefinition> list = columnDefinitionMapper
 				.getColumnDefinitionsByTableName(tableName);
 		TableDefinition table = this.getTableDefinition(tableName);
@@ -324,19 +322,17 @@ public class MxTableDefinitionServiceImpl implements ITableDefinitionService {
 		}
 		if (list != null && !list.isEmpty()) {
 			for (ColumnDefinition c : list) {
-				columnDefinitionMapper.deleteColumnDefinitionById(c
-						.getId());
+				columnDefinitionMapper.deleteColumnDefinitionById(c.getId());
 			}
 		}
 		for (ColumnDefinition column : rows) {
-			String id = (tableName.toLowerCase() + "_" + column.getColumnName())
+			String id = (tableName + "_" + column.getColumnName())
 					.toLowerCase();
 			column.setId(id);
 			column.setSystemFlag("1");
-			column.setTableName(tableName.toLowerCase());
+			column.setTableName(tableName);
 			columnDefinitionMapper.insertColumnDefinition(column);
 		}
-
 	}
 
 	@Resource
@@ -352,14 +348,14 @@ public class MxTableDefinitionServiceImpl implements ITableDefinitionService {
 	}
 
 	@Resource
-	public void setSqlSession(SqlSession sqlSession) {
-		this.sqlSession = sqlSession;
-	}
-
-	@Resource
 	public void setQueryDefinitionMapper(
 			QueryDefinitionMapper queryDefinitionMapper) {
 		this.queryDefinitionMapper = queryDefinitionMapper;
+	}
+
+	@Resource
+	public void setSqlSession(SqlSession sqlSession) {
+		this.sqlSession = sqlSession;
 	}
 
 	@Resource

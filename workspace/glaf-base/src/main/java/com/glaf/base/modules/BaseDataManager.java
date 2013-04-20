@@ -46,7 +46,9 @@ import com.glaf.base.modules.sys.service.SysRoleService;
 import com.glaf.base.modules.sys.service.SysTreeService;
 import com.glaf.base.modules.sys.service.SysUserRoleService;
 import com.glaf.base.modules.sys.service.SysUserService;
+import com.glaf.core.business.DbTableChecker;
 import com.glaf.core.context.ContextFactory;
+import com.glaf.core.service.ITableDefinitionService;
 
 public class BaseDataManager {
 	private static Map<String, List<BaseDataInfo>> baseDataMap = new Hashtable<String, List<BaseDataInfo>>();
@@ -617,6 +619,21 @@ public class BaseDataManager {
 		loadDictInfo();
 		// ¿ÆÄ¿´úÂë
 		loadSubjectCode();
+		
+		logger.debug("load table meta...");
+		ITableDefinitionService tableDefinitionService = null;
+		try {
+			tableDefinitionService = ContextFactory
+					.getBean("tableDefinitionService");
+			if (tableDefinitionService != null) {
+				DbTableChecker checker = new DbTableChecker();
+				checker.setTableDefinitionService(tableDefinitionService);
+				checker.checkTables();
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		logger.debug("load table meta finish.");
 	}
 
 	/**
