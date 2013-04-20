@@ -22,6 +22,7 @@ import java.util.*;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import com.alibaba.fastjson.JSONArray;
 import com.glaf.core.base.TableModel;
 import com.glaf.core.domain.TableDefinition;
 import com.glaf.core.id.Dbid;
@@ -91,8 +92,8 @@ public interface ITableDataService {
 	 * @param rows
 	 */
 	@Transactional
-	Collection<TableModel>   saveAll(TableDefinition tableDefinition, String seqNo,
-			Collection<TableModel> rows);
+	Collection<TableModel> saveAll(TableDefinition tableDefinition,
+			String seqNo, Collection<TableModel> rows);
 
 	/**
 	 * 批量新增或修改记录，如果存在，可以选择是否更新
@@ -104,6 +105,15 @@ public interface ITableDataService {
 	@Transactional
 	void saveOrUpdate(String tableName, boolean updatable,
 			List<Map<String, Object>> rows);
+
+	/**
+	 * 保存JSON数组数据到指定的表
+	 * 
+	 * @param tableName
+	 * @param rows
+	 */
+	@Transactional
+	void saveTableData(String tableName, JSONArray rows);
 
 	/**
 	 * 更新序列

@@ -31,6 +31,8 @@ import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.id.*;
 import com.glaf.core.base.ColumnModel;
 import com.glaf.core.base.TableModel;
@@ -41,6 +43,7 @@ import com.glaf.core.mapper.*;
 import com.glaf.core.query.TablePageQuery;
 import com.glaf.core.service.ITableDataService;
 import com.glaf.core.service.ITableDefinitionService;
+import com.glaf.core.util.DateUtils;
 import com.glaf.core.util.ExpressionConstants;
 import com.glaf.core.util.Paging;
 import com.glaf.core.util.ParamUtils;
@@ -602,6 +605,178 @@ public class MxTableDataServiceImpl implements ITableDataService {
 			}
 		}
 
+	}
+
+	/**
+	 * 保存JSON数组数据到指定的表
+	 * 
+	 * @param tableName
+	 * @param rows
+	 */
+	@Transactional
+	public void saveTableData(String tableName, JSONArray rows) {
+		if (rows == null || rows.isEmpty()) {
+			return;
+		}
+		TableDefinition tableDefinition = tableDefinitionService
+				.getTableDefinition(tableName);
+		if (tableDefinition != null && tableDefinition.getIdColumn() != null) {
+			ColumnDefinition idColumn = tableDefinition.getIdColumn();
+			for (int i = 0; i < rows.size(); i++) {
+				JSONObject jsonObject = rows.getJSONObject(i);
+				boolean insertData = true;
+				Object primaryKey = null;
+				if (idColumn.getColumnName() != null) {
+					primaryKey = jsonObject.get(idColumn.getColumnName());
+				} else if (idColumn.getName() != null) {
+					primaryKey = jsonObject.get(idColumn.getName());
+				}
+				if (primaryKey != null) {
+					insertData = false;
+				}
+
+				TableModel tableModel = new TableModel();
+				tableModel.setTableName(tableName);
+
+				List<ColumnDefinition> columns = tableDefinition.getColumns();
+				if (columns != null && !columns.isEmpty()) {
+					for (ColumnDefinition col : columns) {
+						if (StringUtils.equalsIgnoreCase(
+								idColumn.getColumnName(), col.getColumnName())) {
+							continue;
+						}
+						String javaType = col.getJavaType();
+						String columnName = col.getColumnName();
+						String name = col.getName();
+						ColumnModel cm = new ColumnModel();
+						cm.setJavaType(javaType);
+						cm.setColumnName(col.getColumnName());
+						Object value = null;
+
+						if (jsonObject.containsKey(columnName)) {
+							value = jsonObject.get(columnName);
+							if (StringUtils.equalsIgnoreCase("Integer",
+									javaType)) {
+								if (value instanceof Integer) {
+									cm.setValue(jsonObject
+											.getInteger(columnName));
+								} else {
+									cm.setValue(Integer.parseInt(value
+											.toString()));
+								}
+							} else if (StringUtils.equalsIgnoreCase("Long",
+									javaType)) {
+								if (value instanceof Long) {
+									cm.setValue(jsonObject.getLong(columnName));
+								} else {
+									cm.setValue(Long.parseLong(value.toString()));
+								}
+							} else if (StringUtils.equalsIgnoreCase("Double",
+									javaType)) {
+								if (value instanceof Double) {
+									cm.setValue(jsonObject
+											.getDouble(columnName));
+								} else {
+									cm.setValue(Double.parseDouble(value
+											.toString()));
+								}
+							} else if (StringUtils.equalsIgnoreCase("Date",
+									javaType)) {
+								if (value instanceof Date) {
+									cm.setValue(jsonObject.getDate(columnName));
+								} else if (value instanceof Long) {
+									Long t = jsonObject.getLong(columnName);
+									cm.setValue(new Date(t));
+								} else {
+									cm.setValue(DateUtils.toDate(value
+											.toString()));
+								}
+							} else if (StringUtils.equalsIgnoreCase("String",
+									javaType)) {
+								if (value instanceof String) {
+									cm.setValue(jsonObject
+											.getString(columnName));
+								} else {
+									cm.setValue(value.toString());
+								}
+							} else {
+								cm.setValue(value);
+							}
+						} else if (jsonObject.containsKey(name)) {
+							value = jsonObject.get(name);
+							if (StringUtils.equalsIgnoreCase("Integer",
+									javaType)) {
+								if (value instanceof Integer) {
+									cm.setValue(jsonObject.getInteger(name));
+								} else {
+									cm.setValue(Integer.parseInt(value
+											.toString()));
+								}
+							} else if (StringUtils.equalsIgnoreCase("Long",
+									javaType)) {
+								if (value instanceof Long) {
+									cm.setValue(jsonObject.getLong(name));
+								} else {
+									cm.setValue(Long.parseLong(value.toString()));
+								}
+							} else if (StringUtils.equalsIgnoreCase("Double",
+									javaType)) {
+								if (value instanceof Double) {
+									cm.setValue(jsonObject.getDouble(name));
+								} else {
+									cm.setValue(Double.parseDouble(value
+											.toString()));
+								}
+							} else if (StringUtils.equalsIgnoreCase("Date",
+									javaType)) {
+								if (value instanceof Date) {
+									cm.setValue(jsonObject.getDate(name));
+								} else if (value instanceof Long) {
+									Long t = jsonObject.getLong(name);
+									cm.setValue(new Date(t));
+								} else {
+									cm.setValue(DateUtils.toDate(value
+											.toString()));
+								}
+							} else if (StringUtils.equalsIgnoreCase("String",
+									javaType)) {
+								if (value instanceof String) {
+									cm.setValue(jsonObject.getString(name));
+								} else {
+									cm.setValue(value.toString());
+								}
+							} else {
+								cm.setValue(value);
+							}
+						}
+						tableModel.addColumn(cm);
+					}
+				}
+
+				if (insertData) {
+					ColumnModel idCol = new ColumnModel();
+					idCol.setJavaType(idColumn.getJavaType());
+					if (StringUtils.equalsIgnoreCase("Integer",
+							idColumn.getJavaType())) {
+						idCol.setValue(idGenerator.nextId().intValue());
+					} else if (StringUtils.equalsIgnoreCase("Long",
+							idColumn.getJavaType())) {
+						idCol.setValue(idGenerator.nextId());
+					} else {
+						idCol.setValue(idGenerator.getNextId());
+					}
+					tableModel.setIdColumn(idCol);
+
+					tableDataMapper.insertTableData(tableModel);
+				} else {
+					ColumnModel idCol = new ColumnModel();
+					idCol.setJavaType(idColumn.getJavaType());
+					idCol.setValue(primaryKey);
+					tableModel.setIdColumn(idCol);
+					tableDataMapper.updateTableDataByPrimaryKey(tableModel);
+				}
+			}
+		}
 	}
 
 	@Resource
