@@ -55,7 +55,6 @@ import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.sys.service.SysDepartmentService;
 import com.glaf.base.modules.sys.service.SysTreeService;
 import com.glaf.base.modules.sys.service.SysUserService;
- 
 
 @Controller("/base/identityChoose")
 @RequestMapping("/base/identityChoose.do")
@@ -63,13 +62,10 @@ public class IdentityChooseController {
 	private static final Log logger = LogFactory
 			.getLog(IdentityChooseController.class);
 
-	@javax.annotation.Resource
-	private SysDepartmentService sysDepartmentService;
+	protected SysDepartmentService sysDepartmentService;
 
-	@javax.annotation.Resource
-	private SysTreeService sysTreeService;
+	protected SysTreeService sysTreeService;
 
-	@javax.annotation.Resource
 	protected SysUserService sysUserService;
 
 	/**
@@ -224,15 +220,18 @@ public class IdentityChooseController {
 		return result.toString().getBytes("UTF-8");
 	}
 
+	@javax.annotation.Resource
 	public void setSysDepartmentService(
 			SysDepartmentService sysDepartmentService) {
 		this.sysDepartmentService = sysDepartmentService;
 	}
 
+	@javax.annotation.Resource
 	public void setSysTreeService(SysTreeService sysTreeService) {
 		this.sysTreeService = sysTreeService;
 	}
 
+	@javax.annotation.Resource
 	public void setSysUserService(SysUserService sysUserService) {
 		this.sysUserService = sysUserService;
 	}

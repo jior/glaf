@@ -60,11 +60,11 @@ public class SysApplicationResource {
 	private static final Log logger = LogFactory
 			.getLog(SysApplicationResource.class);
 
-	@javax.annotation.Resource
-	private SysApplicationService sysApplicationService;
+ 
+	protected SysApplicationService sysApplicationService;
 
-	@javax.annotation.Resource
-	private SysTreeService sysTreeService;
+ 
+	protected SysTreeService sysTreeService;
 
 	/**
 	 * 批量删除信息
@@ -260,12 +260,14 @@ public class SysApplicationResource {
 		return new ModelAndView("show_json_msg");
 	}
 
+	@javax.annotation.Resource
 	public void setSysApplicationService(
 			SysApplicationService sysApplicationService) {
 		this.sysApplicationService = sysApplicationService;
 		logger.info("setSysApplicationService");
 	}
 
+	@javax.annotation.Resource
 	public void setSysTreeService(SysTreeService sysTreeService) {
 		this.sysTreeService = sysTreeService;
 		logger.info("setSysTreeService");

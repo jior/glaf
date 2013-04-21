@@ -26,7 +26,6 @@ import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Set;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -53,7 +52,6 @@ public class MxDBUploadJsonController {
 
 	public final static String sp = System.getProperty("file.separator");
 
-	@Resource
 	protected IBlobService blobService;
 
 	private String getError(String message) throws Exception {
@@ -63,6 +61,7 @@ public class MxDBUploadJsonController {
 		return object.toString();
 	}
 
+	@javax.annotation.Resource
 	public void setBlobService(IBlobService blobService) {
 		this.blobService = blobService;
 	}

@@ -1,20 +1,20 @@
 /*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.glaf.mail.web.rest;
 
@@ -42,7 +42,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
- 
 import com.glaf.core.util.DateUtils;
 import com.glaf.core.util.Paging;
 import com.glaf.core.util.ParamUtils;
@@ -55,18 +54,15 @@ import com.glaf.mail.business.MailDataFacede;
 import com.glaf.mail.domain.MailStorage;
 import com.glaf.mail.query.MailStorageQuery;
 import com.glaf.mail.service.IMailStorageService;
- 
 
 @Controller("/rs/mail/mailStorage")
 @Path("/rs/mail/mailStorage")
 public class MailStorageResource {
 	protected static Log logger = LogFactory.getLog(MailStorageResource.class);
 
-	@javax.annotation.Resource
-	protected IMailStorageService mailStorageService;
-
-	@javax.annotation.Resource
 	protected MailDataFacede mailDataFacede;
+
+	protected IMailStorageService mailStorageService;
 
 	@GET
 	@POST
@@ -197,41 +193,42 @@ public class MailStorageResource {
 	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
 	public byte[] save(@Context HttpServletRequest request,
 			@Context UriInfo uriInfo) {
-		 
-			String mailStorageId = request.getParameter("storageId");
-			if (StringUtils.isEmpty(mailStorageId)) {
-				mailStorageId = request.getParameter("id");
-			}
-			MailStorage mailStorage = null;
-			if (StringUtils.isNotEmpty(mailStorageId)) {
-				mailStorage = mailStorageService.getMailStorage(mailStorageId);
-			}
 
-			if (mailStorage == null) {
-				SimpleDateFormat formatter = new SimpleDateFormat(
-						"yyyyMMddHHmmss", Locale.getDefault());
-				String ret = formatter.format(new Date());
-				mailStorage = new MailStorage();
-				mailStorage.setDataSpace("datastg_" + ret);
-				mailStorage.setDataTable("mail_" + ret);
-			}
+		String mailStorageId = request.getParameter("storageId");
+		if (StringUtils.isEmpty(mailStorageId)) {
+			mailStorageId = request.getParameter("id");
+		}
+		MailStorage mailStorage = null;
+		if (StringUtils.isNotEmpty(mailStorageId)) {
+			mailStorage = mailStorageService.getMailStorage(mailStorageId);
+		}
 
-			Map<String, Object> params = RequestUtils.getParameterMap(request);
-			Tools.populate(mailStorage, params);
+		if (mailStorage == null) {
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss",
+					Locale.getDefault());
+			String ret = formatter.format(new Date());
+			mailStorage = new MailStorage();
+			mailStorage.setDataSpace("datastg_" + ret);
+			mailStorage.setDataTable("mail_" + ret);
+		}
 
-			mailStorage.setCreateBy(RequestUtils.getActorId(request));
-			mailStorage.setCreateDate(new Date());
-			mailDataFacede
-					.addDataTable(mailStorage.getDataTable(), mailStorage);
-			mailStorageService.save(mailStorage);
-            return ResponseUtils.responseJsonResult(true);
- 
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		Tools.populate(mailStorage, params);
+
+		mailStorage.setCreateBy(RequestUtils.getActorId(request));
+		mailStorage.setCreateDate(new Date());
+		mailDataFacede.addDataTable(mailStorage.getDataTable(), mailStorage);
+		mailStorageService.save(mailStorage);
+		return ResponseUtils.responseJsonResult(true);
+
 	}
 
+	@javax.annotation.Resource
 	public void setMailDataFacede(MailDataFacede mailDataFacede) {
 		this.mailDataFacede = mailDataFacede;
 	}
 
+	@javax.annotation.Resource
 	public void setMailStorageService(IMailStorageService mailStorageService) {
 		this.mailStorageService = mailStorageService;
 	}

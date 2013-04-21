@@ -21,8 +21,7 @@ package com.glaf.chart.web.rest;
 import java.io.IOException;
 import java.util.*;
 import java.util.Map.Entry;
-
-import javax.annotation.Resource;
+ 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -60,13 +59,10 @@ import com.glaf.core.util.Tools;
 public class ChartResource {
 	protected static Log logger = LogFactory.getLog(ChartResource.class);
 
-	@Resource
 	protected IChartService chartService;
 
-	@Resource
 	protected ITableDataService tableDataService;
 
-	@Resource
 	protected ITablePageService tablePageService;
 
 	@GET
@@ -294,12 +290,19 @@ public class ChartResource {
 		return ResponseUtils.responseJsonResult(true);
 	}
 
+	@javax.annotation.Resource
 	public void setChartService(IChartService chartService) {
 		this.chartService = chartService;
 	}
 
+	@javax.annotation.Resource
 	public void setTableDataService(ITableDataService tableDataService) {
 		this.tableDataService = tableDataService;
+	}
+
+	@javax.annotation.Resource
+	public void setTablePageService(ITablePageService tablePageService) {
+		this.tablePageService = tablePageService;
 	}
 
 	@GET

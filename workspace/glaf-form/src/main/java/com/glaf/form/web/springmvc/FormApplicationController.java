@@ -26,11 +26,11 @@ import com.glaf.form.core.service.*;
 @Controller("/form/application")
 @RequestMapping("/form/application.do")
 public class FormApplicationController {
-	@javax.annotation.Resource
-	protected FormDataService formDataService;
 
 	private static final Log logger = LogFactory
 			.getLog(FormApplicationController.class);
+
+	protected FormDataService formDataService;
 
 	public FormApplicationController() {
 
@@ -50,25 +50,21 @@ public class FormApplicationController {
 				if (StringUtils.isNotEmpty(x)) {
 					FormApplication formApplication = formDataService
 							.getFormApplication(x);
-
 					if (formApplication != null
 							&& (StringUtils.equals(
 									formApplication.getCreateBy(),
 									loginContext.getActorId()) || loginContext
 									.isSystemAdministrator())) {
-
 					}
 				}
 			}
 		} else if (StringUtils.isNotEmpty(appId)) {
 			FormApplication formApplication = formDataService
 					.getFormApplication(appId);
-
 			if (formApplication != null
 					&& (StringUtils.equals(formApplication.getCreateBy(),
 							loginContext.getActorId()) || loginContext
 							.isSystemAdministrator())) {
-
 			}
 		}
 	}
@@ -76,7 +72,6 @@ public class FormApplicationController {
 	@RequestMapping(params = "method=edit")
 	public ModelAndView edit(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
-
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		String appId = ParamUtils.getString(params, "appId");
 		FormApplication formApplication = null;
@@ -249,6 +244,11 @@ public class FormApplicationController {
 			logger.error(ex);
 		}
 		return ResponseUtils.responseJsonResult(false);
+	}
+
+	@javax.annotation.Resource
+	public void setFormDataService(FormDataService formDataService) {
+		this.formDataService = formDataService;
 	}
 
 	@RequestMapping(params = "method=update")

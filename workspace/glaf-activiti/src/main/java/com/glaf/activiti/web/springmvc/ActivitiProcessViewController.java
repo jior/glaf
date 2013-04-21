@@ -31,7 +31,6 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -52,25 +51,25 @@ public class ActivitiProcessViewController {
 	protected static final Log logger = LogFactory
 			.getLog(ActivitiProcessViewController.class);
 
-	@Autowired
-	protected ActivitiProcessService activitiProcessService;
-
-	@Autowired
 	protected ActivitiProcessQueryService activitiProcessQueryService;
 
-	@Autowired
+	protected ActivitiProcessService activitiProcessService;
+
 	protected ActivitiTaskQueryService activitiTaskQueryService;
 
+	@javax.annotation.Resource
 	public void setActivitiProcessQueryService(
 			ActivitiProcessQueryService activitiProcessQueryService) {
 		this.activitiProcessQueryService = activitiProcessQueryService;
 	}
 
+	@javax.annotation.Resource
 	public void setActivitiProcessService(
 			ActivitiProcessService activitiProcessService) {
 		this.activitiProcessService = activitiProcessService;
 	}
 
+	@javax.annotation.Resource
 	public void setActivitiTaskQueryService(
 			ActivitiTaskQueryService activitiTaskQueryService) {
 		this.activitiTaskQueryService = activitiTaskQueryService;

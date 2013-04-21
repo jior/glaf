@@ -37,7 +37,7 @@ public class MailStorageBaseController {
 	protected final transient Log logger = LogFactory
 			.getLog(MailStorageBaseController.class);
 
-	@javax.annotation.Resource
+	 
 	protected IMailStorageService mailStorageService;
 
 	public MailStorageBaseController() {
@@ -113,6 +113,7 @@ public class MailStorageBaseController {
 		return new ModelAndView("/modules/mail/mailStorage/query", modelMap);
 	}
 
+	@javax.annotation.Resource
 	public void setMailStorageService(IMailStorageService mailStorageService) {
 		this.mailStorageService = mailStorageService;
 	}

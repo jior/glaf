@@ -25,7 +25,7 @@ import org.activiti.engine.repository.ProcessDefinition;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+ 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,13 +46,13 @@ public class ActivitiDeployController {
 	protected final static Log logger = LogFactory
 			.getLog(ActivitiDeployController.class);
 
-	@Autowired
+	 
 	protected ActivitiDeployService activitiDeployService;
 
-	@Autowired
+	 
 	protected ActivitiDeployQueryService activitiDeployQueryService;
 
-	@Autowired
+	 
 	protected ActivitiProcessQueryService activitiProcessQueryService;
 
 	/**
@@ -121,16 +121,19 @@ public class ActivitiDeployController {
 		return "/activiti/deploy/deploy";
 	}
 
+	@javax.annotation.Resource
 	public void setActivitiDeployService(
 			ActivitiDeployService activitiDeployService) {
 		this.activitiDeployService = activitiDeployService;
 	}
 
+	@javax.annotation.Resource
 	public void setActivitiDeployQueryService(
 			ActivitiDeployQueryService activitiDeployQueryService) {
 		this.activitiDeployQueryService = activitiDeployQueryService;
 	}
 
+	@javax.annotation.Resource
 	public void setActivitiProcessQueryService(
 			ActivitiProcessQueryService activitiProcessQueryService) {
 		this.activitiProcessQueryService = activitiProcessQueryService;

@@ -42,9 +42,10 @@ public class AttachmentController {
 	private static final Log logger = LogFactory
 			.getLog(AttachmentController.class);
 
-	@javax.annotation.Resource
+	
 	private AttachmentService attachmentService;
 
+	@javax.annotation.Resource
 	public void setAttachmentService(AttachmentService attachmentService) {
 		this.attachmentService = attachmentService;
 		logger.info("setAttachmentService");

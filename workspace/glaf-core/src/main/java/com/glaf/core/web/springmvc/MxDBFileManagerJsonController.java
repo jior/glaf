@@ -25,8 +25,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Hashtable;
 import java.util.List;
-
-import javax.annotation.Resource;
+ 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -44,7 +43,7 @@ import com.glaf.core.util.RequestUtils;
 @RequestMapping("/fileManagerJson")
 public class MxDBFileManagerJsonController {
 
-	@Resource
+	 
 	protected IBlobService blobService;
 
 	private static class NameComparator implements Comparator<Object>,
@@ -188,6 +187,7 @@ public class MxDBFileManagerJsonController {
 		response.getWriter().write(result.toString());
 	}
 
+	@javax.annotation.Resource
 	public void setBlobService(IBlobService blobService) {
 		this.blobService = blobService;
 	}

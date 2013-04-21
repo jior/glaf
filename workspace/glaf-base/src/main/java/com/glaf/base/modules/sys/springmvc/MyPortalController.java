@@ -64,16 +64,16 @@ public class MyPortalController {
 	protected final static Log logger = LogFactory
 			.getLog(MyPortalController.class);
 
-	@javax.annotation.Resource
+ 
 	protected LayoutService layoutService;
 
-	@javax.annotation.Resource
+ 
 	protected PanelService panelService;
 
-	@javax.annotation.Resource
+ 
 	protected SysApplicationService sysApplicationService;
 
-	@javax.annotation.Resource
+ 
 	protected UserPortalService userPortalService;
 
 	protected void fill(JSONObject jsonObject, StringBuffer buffer) {
@@ -288,19 +288,23 @@ public class MyPortalController {
 		return new ModelAndView("/modules/portal/main", modelMap);
 	}
 
+	@javax.annotation.Resource
 	public void setLayoutService(LayoutService layoutService) {
 		this.layoutService = layoutService;
 	}
 
+	@javax.annotation.Resource
 	public void setPanelService(PanelService panelService) {
 		this.panelService = panelService;
 	}
 
+	@javax.annotation.Resource
 	public void setSysApplicationService(
 			SysApplicationService sysApplicationService) {
 		this.sysApplicationService = sysApplicationService;
 	}
 
+	@javax.annotation.Resource
 	public void setUserPortalService(UserPortalService userPortalService) {
 		this.userPortalService = userPortalService;
 	}

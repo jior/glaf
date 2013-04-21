@@ -48,7 +48,7 @@ import com.glaf.base.utils.RequestUtil;
 public class AuditController {
 	private static final Log logger = LogFactory.getLog(AuditController.class);
 
-	@javax.annotation.Resource
+	 
 	private AuditService auditService;
 
 	/**
@@ -114,6 +114,7 @@ public class AuditController {
 		return new ModelAndView("show_msg", modelMap);
 	}
 
+	@javax.annotation.Resource
 	public void setAuditService(AuditService auditService) {
 		logger.info("setAuditService");
 		this.auditService = auditService;

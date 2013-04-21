@@ -60,14 +60,14 @@ import com.glaf.core.util.Tools;
 public class DictoryResource {
 	private static final Log logger = LogFactory.getLog(DictoryResource.class);
 
-	@javax.annotation.Resource
+	 
 	protected DictoryDefinitionService dictoryDefinitionService;
 
-	@javax.annotation.Resource
-	private DictoryService dictoryService;
+	 
+	protected DictoryService dictoryService;
 
-	@javax.annotation.Resource
-	private SysTreeService sysTreeService;
+ 
+	protected SysTreeService sysTreeService;
 
 	/**
 	 * Ìá½»É¾³ý
@@ -253,17 +253,20 @@ public class DictoryResource {
 		return new ModelAndView("show_json_msg");
 	}
 
+	@javax.annotation.Resource
 	public void setDictoryDefinitionService(
 			DictoryDefinitionService dictoryDefinitionService) {
 		this.dictoryDefinitionService = dictoryDefinitionService;
 		logger.info("setDictoryDefinitionService");
 	}
 
+	@javax.annotation.Resource
 	public void setDictoryService(DictoryService dictoryService) {
 		this.dictoryService = dictoryService;
 		logger.info("setDictoryService");
 	}
 
+	@javax.annotation.Resource
 	public void setSysTreeService(SysTreeService sysTreeService) {
 		this.sysTreeService = sysTreeService;
 		logger.info("setSysTreeService");

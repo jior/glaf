@@ -41,7 +41,7 @@ public class MxReportFileController {
 	protected static final Log logger = LogFactory
 			.getLog(MxReportFileController.class);
 
-	@javax.annotation.Resource
+ 
 	protected IReportFileService reportFileService;
 
 	public MxReportFileController() {
@@ -164,6 +164,7 @@ public class MxReportFileController {
 		return this.list(request, modelMap);
 	}
 
+	@javax.annotation.Resource
 	public void setReportFileService(IReportFileService reportFileService) {
 		this.reportFileService = reportFileService;
 	}

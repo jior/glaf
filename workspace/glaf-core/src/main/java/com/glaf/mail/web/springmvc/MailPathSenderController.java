@@ -27,7 +27,6 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
@@ -51,7 +50,6 @@ public class MailPathSenderController {
 	protected static final Log logger = LogFactory
 			.getLog(MailPathSenderController.class);
 
-	@Autowired
 	protected IMailPathSenderService mailPathSenderService;
 
 	public MailPathSenderController() {
@@ -60,7 +58,6 @@ public class MailPathSenderController {
 
 	@RequestMapping("/delete")
 	public ModelAndView delete(HttpServletRequest request, ModelMap modelMap) {
-
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		String rowId = ParamUtils.getString(params, "rowId");
 		String rowIds = request.getParameter("rowIds");
@@ -235,6 +232,7 @@ public class MailPathSenderController {
 		return this.list(request, modelMap);
 	}
 
+	@javax.annotation.Resource
 	public void setMailPathSenderService(
 			IMailPathSenderService mailPathSenderService) {
 		this.mailPathSenderService = mailPathSenderService;

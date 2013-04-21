@@ -51,7 +51,7 @@ public class SysSchedulerController {
 	protected final static Log logger = LogFactory
 			.getLog(SysSchedulerController.class);
 
-	@javax.annotation.Resource
+ 
 	protected ISysSchedulerService sysSchedulerService;
 
 	public SysSchedulerController() {
@@ -115,6 +115,7 @@ public class SysSchedulerController {
 		return this.showList(modelMap, request, response);
 	}
 
+	@javax.annotation.Resource
 	public void setSysSchedulerService(ISysSchedulerService sysSchedulerService) {
 		this.sysSchedulerService = sysSchedulerService;
 	}

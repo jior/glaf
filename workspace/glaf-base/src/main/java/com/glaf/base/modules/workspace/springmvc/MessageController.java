@@ -57,10 +57,10 @@ public class MessageController {
 	private static final Log logger = LogFactory
 			.getLog(MessageController.class);
 
-	@javax.annotation.Resource
+	
 	private MessageService messageService;
 
-	@javax.annotation.Resource
+ 
 	private SysUserService sysUserService;
 
 	/**
@@ -434,11 +434,13 @@ public class MessageController {
 		return new ModelAndView("show_msg", modelMap);
 	}
 
+	@javax.annotation.Resource
 	public void setMessageService(MessageService messageService) {
 		this.messageService = messageService;
 		logger.info("setMessageService");
 	}
 
+	@javax.annotation.Resource
 	public void setSysUserService(SysUserService sysUserService) {
 		this.sysUserService = sysUserService;
 		logger.info("setsysUserService");

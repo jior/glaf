@@ -62,7 +62,6 @@ public class MxSystemParamResource {
 	protected static final Log logger = LogFactory
 			.getLog(MxSystemParamResource.class);
 
-	@javax.annotation.Resource
 	protected ISystemParamService systemParamService;
 
 	@POST
@@ -161,10 +160,9 @@ public class MxSystemParamResource {
 					ObjectNode json = new ObjectMapper().createObjectNode();
 					InputDefinition def = paramMap.get(param.getKeyName());
 					if (param.getTitle() != null) {
-						json.put(
-								"name",
-								param.getTitle() + " ("
-										+ param.getKeyName() + ")");
+						json.put("name",
+								param.getTitle() + " (" + param.getKeyName()
+										+ ")");
 					} else {
 						json.put("name", param.getKeyName());
 					}
@@ -193,7 +191,7 @@ public class MxSystemParamResource {
 						if (def != null) {
 							String inputType = def.getInputType();
 							String validType = def.getValidType();
-						 
+
 							if (StringUtils.isNotEmpty(def.getRequired())) {
 								json.put("required", def.getRequired());
 							}
@@ -214,7 +212,8 @@ public class MxSystemParamResource {
 											def.getValueField());
 									options.put("textField", def.getTextField());
 									if (def.getUrl() != null) {
-										options.put("url",
+										options.put(
+												"url",
 												request.getContextPath()
 														+ def.getUrl());
 									}
@@ -338,37 +337,6 @@ public class MxSystemParamResource {
 	}
 
 	@POST
-	@Path("/save")
-	@ResponseBody
-	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
-	public byte[] saveSystemParam(@Context HttpServletRequest request,
-			@Context UriInfo uriInfo) {
-		String systemParamId = request.getParameter("systemParamId");
-		if (StringUtils.isEmpty(systemParamId)) {
-			systemParamId = request.getParameter("id");
-		}
-		SystemParam systemParam = null;
-		if (StringUtils.isNotEmpty(systemParamId)) {
-			systemParam = systemParamService.getSystemParam(systemParamId);
-		}
-
-		if (systemParam == null) {
-			systemParam = new SystemParam();
-		}
-
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		Tools.populate(systemParam, params);
-
-		try {
-			this.systemParamService.save(systemParam);
-			return ResponseUtils.responseJsonResult(true, "保存成功！");
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-		return ResponseUtils.responseJsonResult(false, "保存失败！");
-	}
-
-	@POST
 	@Path("/saveAll")
 	@ResponseBody
 	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
@@ -427,6 +395,38 @@ public class MxSystemParamResource {
 		return ResponseUtils.responseJsonResult(false, "保存失败！");
 	}
 
+	@POST
+	@Path("/save")
+	@ResponseBody
+	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
+	public byte[] saveSystemParam(@Context HttpServletRequest request,
+			@Context UriInfo uriInfo) {
+		String systemParamId = request.getParameter("systemParamId");
+		if (StringUtils.isEmpty(systemParamId)) {
+			systemParamId = request.getParameter("id");
+		}
+		SystemParam systemParam = null;
+		if (StringUtils.isNotEmpty(systemParamId)) {
+			systemParam = systemParamService.getSystemParam(systemParamId);
+		}
+
+		if (systemParam == null) {
+			systemParam = new SystemParam();
+		}
+
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		Tools.populate(systemParam, params);
+
+		try {
+			this.systemParamService.save(systemParam);
+			return ResponseUtils.responseJsonResult(true, "保存成功！");
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return ResponseUtils.responseJsonResult(false, "保存失败！");
+	}
+
+	@javax.annotation.Resource
 	public void setSystemParamService(ISystemParamService systemParamService) {
 		this.systemParamService = systemParamService;
 	}

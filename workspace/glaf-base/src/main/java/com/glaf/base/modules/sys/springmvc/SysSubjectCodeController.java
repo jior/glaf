@@ -51,63 +51,34 @@ public class SysSubjectCodeController {
 	private static final Log logger = LogFactory
 			.getLog(SysSubjectCodeController.class);
 
-	@javax.annotation.Resource
+ 
 	private SubjectCodeService subjectCodeService;
 
-	public void setSubjectCodeService(SubjectCodeService subjectCodeService) {
-		this.subjectCodeService = subjectCodeService;
-	}
-
 	/**
-	 * 显示菜单选择页面
+	 * 提交删除
 	 * 
 	 * @param mapping
-	 * @param actionForm
+	 * @param form
 	 * @param request
 	 * @param response
-	 * @return @
+	 * @return
 	 */
-	public ModelAndView showSubjectTreeList(ModelMap modelMap,
+	public ModelAndView batchDelete(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		logger.info("showExesSelect");
 		RequestUtils.setRequestParameterToAttribute(request);
-		int parent = ParamUtil.getIntParameter(request, "parent", 0);
-		request.setAttribute("list",
-				subjectCodeService.getSysSubjectCodeList(parent));
-		String url = ParamUtil.getParameter(request, "url");
-		request.setAttribute("url", url);
-
-		String x_view = ViewProperties
-				.getString("subjectCode.showSubjectTreeList");
-		if (StringUtils.isNotEmpty(x_view)) {
-			return new ModelAndView(x_view, modelMap);
+		boolean ret = true;
+		long[] id = ParamUtil.getLongParameterValues(request, "id");
+		ret = subjectCodeService.deleteAll(id);
+		ViewMessages messages = new ViewMessages();
+		if (ret) {// 保存成功
+			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
+					"fee.delete_success"));
+		} else { // 删除失败
+			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
+					"fee.delete_failure"));
 		}
-
-		// 显示列表页面
-		return new ModelAndView("/modules/sys/subject/subjecttree_list");
-	}
-
-	/**
-	 * 显示列表页面
-	 * 
-	 * @param mapping
-	 * @param actionForm
-	 * @param request
-	 * @param response
-	 * @return @
-	 */
-	public ModelAndView showList(ModelMap modelMap, HttpServletRequest request,
-			HttpServletResponse response) {
-		RequestUtils.setRequestParameterToAttribute(request);
-		Map<String, String> filter = WebUtil.getQueryMap(request);
-		request.setAttribute("pager", subjectCodeService.getFeePage(filter));
-
-		String x_view = ViewProperties.getString("subjectCode.showList");
-		if (StringUtils.isNotEmpty(x_view)) {
-			return new ModelAndView(x_view, modelMap);
-		}
-
-		return new ModelAndView("/modules/sys/subject/show_list1");
+		MessageUtils.addMessages(request, messages);
+		return new ModelAndView("show_msg2");
 	}
 
 	/**
@@ -161,38 +132,6 @@ public class SysSubjectCodeController {
 	}
 
 	/**
-	 * 保存费用科目
-	 * 
-	 * @param mapping
-	 * @param form
-	 * @param request
-	 * @param response
-	 * @return @
-	 */
-	public ModelAndView saveAdd(ModelMap modelMap, SubjectCodeFormBean form,
-			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtils.setRequestParameterToAttribute(request);
-		SubjectCode bean = new SubjectCode();
-		try {
-			PropertyUtils.copyProperties(bean, form);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-
-		ViewMessages messages = new ViewMessages();
-		if (subjectCodeService.create(bean)) {
-			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
-					"fee.add_success"));
-		} else {// 保存失败
-			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
-					"fee.add_failure"));
-		}
-		MessageUtils.addMessages(request, messages);
-
-		return new ModelAndView("show_msg");
-	}
-
-	/**
 	 * 显示修改页面
 	 * 
 	 * @param mapping
@@ -227,6 +166,38 @@ public class SysSubjectCodeController {
 	 * @param response
 	 * @return @
 	 */
+	public ModelAndView saveAdd(ModelMap modelMap, SubjectCodeFormBean form,
+			HttpServletRequest request, HttpServletResponse response) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		SubjectCode bean = new SubjectCode();
+		try {
+			PropertyUtils.copyProperties(bean, form);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+		ViewMessages messages = new ViewMessages();
+		if (subjectCodeService.create(bean)) {
+			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
+					"fee.add_success"));
+		} else {// 保存失败
+			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
+					"fee.add_failure"));
+		}
+		MessageUtils.addMessages(request, messages);
+
+		return new ModelAndView("show_msg");
+	}
+
+	/**
+	 * 保存费用科目
+	 * 
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @param response
+	 * @return @
+	 */
 	public ModelAndView saveModify(ModelMap modelMap, SubjectCodeFormBean form,
 			HttpServletRequest request, HttpServletResponse response) {
 		RequestUtils.setRequestParameterToAttribute(request);
@@ -250,30 +221,60 @@ public class SysSubjectCodeController {
 		return new ModelAndView("show_msg");
 	}
 
+	@javax.annotation.Resource
+	public void setSubjectCodeService(SubjectCodeService subjectCodeService) {
+		this.subjectCodeService = subjectCodeService;
+	}
+
 	/**
-	 * 提交删除
+	 * 显示列表页面
 	 * 
 	 * @param mapping
-	 * @param form
+	 * @param actionForm
 	 * @param request
 	 * @param response
-	 * @return
+	 * @return @
 	 */
-	public ModelAndView batchDelete(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView showList(ModelMap modelMap, HttpServletRequest request,
+			HttpServletResponse response) {
 		RequestUtils.setRequestParameterToAttribute(request);
-		boolean ret = true;
-		long[] id = ParamUtil.getLongParameterValues(request, "id");
-		ret = subjectCodeService.deleteAll(id);
-		ViewMessages messages = new ViewMessages();
-		if (ret) {// 保存成功
-			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
-					"fee.delete_success"));
-		} else { // 删除失败
-			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
-					"fee.delete_failure"));
+		Map<String, String> filter = WebUtil.getQueryMap(request);
+		request.setAttribute("pager", subjectCodeService.getFeePage(filter));
+
+		String x_view = ViewProperties.getString("subjectCode.showList");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
 		}
-		MessageUtils.addMessages(request, messages);
-		return new ModelAndView("show_msg2");
+
+		return new ModelAndView("/modules/sys/subject/show_list1");
+	}
+
+	/**
+	 * 显示菜单选择页面
+	 * 
+	 * @param mapping
+	 * @param actionForm
+	 * @param request
+	 * @param response
+	 * @return @
+	 */
+	public ModelAndView showSubjectTreeList(ModelMap modelMap,
+			HttpServletRequest request, HttpServletResponse response) {
+		logger.info("showExesSelect");
+		RequestUtils.setRequestParameterToAttribute(request);
+		int parent = ParamUtil.getIntParameter(request, "parent", 0);
+		request.setAttribute("list",
+				subjectCodeService.getSysSubjectCodeList(parent));
+		String url = ParamUtil.getParameter(request, "url");
+		request.setAttribute("url", url);
+
+		String x_view = ViewProperties
+				.getString("subjectCode.showSubjectTreeList");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
+		// 显示列表页面
+		return new ModelAndView("/modules/sys/subject/subjecttree_list");
 	}
 }

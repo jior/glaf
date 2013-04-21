@@ -34,7 +34,6 @@ import org.activiti.engine.task.IdentityLink;
 import org.activiti.engine.task.Task;
 import org.apache.commons.lang.StringUtils;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -61,25 +60,25 @@ import com.glaf.activiti.service.ActivitiTaskQueryService;
 @RequestMapping("/activiti/task")
 public class ActivitiTaskController {
 
-	@Autowired
-	protected ActivitiProcessService activitiProcessService;
-
-	@Autowired
 	protected ActivitiProcessQueryService activitiProcessQueryService;
 
-	@Autowired
+	protected ActivitiProcessService activitiProcessService;
+
 	protected ActivitiTaskQueryService activitiTaskQueryService;
 
+	@javax.annotation.Resource
 	public void setActivitiProcessQueryService(
 			ActivitiProcessQueryService activitiProcessQueryService) {
 		this.activitiProcessQueryService = activitiProcessQueryService;
 	}
 
+	@javax.annotation.Resource
 	public void setActivitiProcessService(
 			ActivitiProcessService activitiProcessService) {
 		this.activitiProcessService = activitiProcessService;
 	}
 
+	@javax.annotation.Resource
 	public void setActivitiTaskQueryService(
 			ActivitiTaskQueryService activitiTaskQueryService) {
 		this.activitiTaskQueryService = activitiTaskQueryService;

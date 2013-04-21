@@ -60,22 +60,16 @@ import com.glaf.core.util.RequestUtils;
 public class UserController {
 	private static final Log logger = LogFactory.getLog(UserController.class);
 
-	@javax.annotation.Resource
 	protected SysDepartmentService sysDepartmentService;
 
-	@javax.annotation.Resource
 	protected SysDeptRoleService sysDeptRoleService;
 
-	@javax.annotation.Resource
 	protected SysRoleService sysRoleService;
 
-	@javax.annotation.Resource
 	protected SysTreeService sysTreeService;
 
-	@javax.annotation.Resource
 	protected SysUserService sysUserService;
 
-	@javax.annotation.Resource
 	protected ITableDataService tableDataService;
 
 	/**
@@ -268,32 +262,38 @@ public class UserController {
 		return new ModelAndView("show_msg", modelMap);
 	}
 
+	@javax.annotation.Resource
 	public void setSysDepartmentService(
 			SysDepartmentService sysDepartmentService) {
 		this.sysDepartmentService = sysDepartmentService;
 		logger.info("setSysDepartmentService");
 	}
 
+	@javax.annotation.Resource
 	public void setSysDeptRoleService(SysDeptRoleService sysDeptRoleService) {
 		this.sysDeptRoleService = sysDeptRoleService;
 		logger.info("setSysDeptRoleService");
 	}
 
+	@javax.annotation.Resource
 	public void setSysRoleService(SysRoleService sysRoleService) {
 		this.sysRoleService = sysRoleService;
 		logger.info("setSysRoleService");
 	}
 
+	@javax.annotation.Resource
 	public void setSysTreeService(SysTreeService sysTreeService) {
 		this.sysTreeService = sysTreeService;
 		logger.info("setSysTreeService");
 	}
 
+	@javax.annotation.Resource
 	public void setSysUserService(SysUserService sysUserService) {
 		this.sysUserService = sysUserService;
 		logger.info("setSysUserService");
 	}
 
+	@javax.annotation.Resource
 	public void setTableDataService(ITableDataService tableDataService) {
 		this.tableDataService = tableDataService;
 	}

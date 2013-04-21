@@ -21,7 +21,6 @@ package com.glaf.core.web.springmvc;
 import java.io.InputStream;
 import java.util.List;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -46,10 +45,8 @@ public class MxBlobController {
 	protected final static Log logger = LogFactory
 			.getLog(MxBlobController.class);
 
-	@Resource
 	protected IBlobService blobService;
 
-	@Resource
 	protected ISysLogService sysLogService;
 
 	@ResponseBody
@@ -113,10 +110,12 @@ public class MxBlobController {
 		return new ModelAndView("/modules/main/lob/files", modelMap);
 	}
 
+	@javax.annotation.Resource
 	public void setBlobService(IBlobService blobService) {
 		this.blobService = blobService;
 	}
 
+	@javax.annotation.Resource
 	public void setSysLogService(ISysLogService sysLogService) {
 		this.sysLogService = sysLogService;
 	}

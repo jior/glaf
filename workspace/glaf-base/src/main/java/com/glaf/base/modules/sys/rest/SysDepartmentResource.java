@@ -61,11 +61,9 @@ public class SysDepartmentResource {
 	private static final Log logger = LogFactory
 			.getLog(SysDepartmentResource.class);
 
-	@javax.annotation.Resource
-	private SysDepartmentService sysDepartmentService;
+	protected SysDepartmentService sysDepartmentService;
 
-	@javax.annotation.Resource
-	private SysTreeService sysTreeService;
+	protected SysTreeService sysTreeService;
 
 	/**
 	 * 批量删除信息
@@ -274,12 +272,14 @@ public class SysDepartmentResource {
 		return new ModelAndView("show_json_msg");
 	}
 
+	@javax.annotation.Resource
 	public void setSysDepartmentService(
 			SysDepartmentService sysDepartmentService) {
 		this.sysDepartmentService = sysDepartmentService;
 		logger.info("setSysDepartmentService");
 	}
 
+	@javax.annotation.Resource
 	public void setSysTreeService(SysTreeService sysTreeService) {
 		this.sysTreeService = sysTreeService;
 		logger.info("setSysTreeService");

@@ -59,7 +59,7 @@ import com.glaf.core.util.Tools;
 public class SysRoleResource {
 	private static final Log logger = LogFactory.getLog(SysRoleResource.class);
 
-	@javax.annotation.Resource
+	 
 	private SysRoleService sysRoleService;
 
 	/**
@@ -293,6 +293,7 @@ public class SysRoleResource {
 		return new ModelAndView("show_json_msg");
 	}
 
+	@javax.annotation.Resource
 	public void setSysRoleService(SysRoleService sysRoleService) {
 		this.sysRoleService = sysRoleService;
 		logger.info("setSysRoleService");

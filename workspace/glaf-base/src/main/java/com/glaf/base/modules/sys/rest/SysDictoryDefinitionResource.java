@@ -36,7 +36,7 @@ import com.glaf.core.util.RequestUtils;
 @Controller("/rs/sys/dictoryDefinition")
 @Path("/rs/sys/dictoryDefinition")
 public class SysDictoryDefinitionResource {
-	@javax.annotation.Resource
+
 	protected DictoryDefinitionService dictoryDefinitionService;
 
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
@@ -205,6 +205,12 @@ public class SysDictoryDefinitionResource {
 		MessageUtils.addMessages(request, messages);
 
 		return new ModelAndView("show_json_msg");
+	}
+
+	@javax.annotation.Resource
+	public void setDictoryDefinitionService(
+			DictoryDefinitionService dictoryDefinitionService) {
+		this.dictoryDefinitionService = dictoryDefinitionService;
 	}
 
 }

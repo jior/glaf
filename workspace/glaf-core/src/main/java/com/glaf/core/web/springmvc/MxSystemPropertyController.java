@@ -19,8 +19,7 @@
 package com.glaf.core.web.springmvc;
 
 import java.util.List;
-
-import javax.annotation.Resource;
+ 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
@@ -48,7 +47,7 @@ public class MxSystemPropertyController {
 	protected static final Log logger = LogFactory
 			.getLog(MxSystemPropertyController.class);
 
-	@Resource
+	 
 	protected ISystemPropertyService systemPropertyService;
 
 	@RequestMapping("/edit")
@@ -128,6 +127,7 @@ public class MxSystemPropertyController {
 		return ResponseUtils.responseJsonResult(false);
 	}
 
+	@javax.annotation.Resource
 	public void setSystemPropertyService(
 			ISystemPropertyService systemPropertyService) {
 		this.systemPropertyService = systemPropertyService;

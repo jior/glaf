@@ -36,7 +36,7 @@ import org.activiti.engine.repository.ProcessDefinition;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
@@ -60,37 +60,18 @@ import com.glaf.activiti.util.ProcessUtils;
 @Controller("/rs/activiti/process")
 @Path("/rs/activiti/process")
 public class ActivitiProcessResource {
+	private static ConcurrentMap<String, Object> cache = new ConcurrentHashMap<String, Object>();
+
 	protected static final Log logger = LogFactory
 			.getLog(ActivitiProcessResource.class);
 
-	private static ConcurrentMap<String, Object> cache = new ConcurrentHashMap<String, Object>();
-
-	@Autowired
-	protected ActivitiProcessService activitiProcessService;
-
-	@Autowired
 	protected ActivitiDeployQueryService activitiDeployQueryService;
 
-	@Autowired
 	protected ActivitiProcessQueryService activitiProcessQueryService;
 
-	@Autowired
+	protected ActivitiProcessService activitiProcessService;
+
 	protected ActivitiTaskQueryService activitiTaskQueryService;
-
-	public void setActivitiProcessQueryService(
-			ActivitiProcessQueryService activitiProcessQueryService) {
-		this.activitiProcessQueryService = activitiProcessQueryService;
-	}
-
-	public void setActivitiProcessService(
-			ActivitiProcessService activitiProcessService) {
-		this.activitiProcessService = activitiProcessService;
-	}
-
-	public void setActivitiTaskQueryService(
-			ActivitiTaskQueryService activitiTaskQueryService) {
-		this.activitiTaskQueryService = activitiTaskQueryService;
-	}
 
 	@GET
 	@Path("image/{processInstanceId}")
@@ -112,6 +93,30 @@ public class ActivitiProcessResource {
 		}
 
 		return null;
+	}
+
+	@javax.annotation.Resource
+	public void setActivitiDeployQueryService(
+			ActivitiDeployQueryService activitiDeployQueryService) {
+		this.activitiDeployQueryService = activitiDeployQueryService;
+	}
+
+	@javax.annotation.Resource
+	public void setActivitiProcessQueryService(
+			ActivitiProcessQueryService activitiProcessQueryService) {
+		this.activitiProcessQueryService = activitiProcessQueryService;
+	}
+
+	@javax.annotation.Resource
+	public void setActivitiProcessService(
+			ActivitiProcessService activitiProcessService) {
+		this.activitiProcessService = activitiProcessService;
+	}
+
+	@javax.annotation.Resource
+	public void setActivitiTaskQueryService(
+			ActivitiTaskQueryService activitiTaskQueryService) {
+		this.activitiTaskQueryService = activitiTaskQueryService;
 	}
 
 	@GET

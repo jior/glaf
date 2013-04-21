@@ -56,8 +56,7 @@ import com.glaf.core.util.Tools;
 @Path("/rs/sys/tree")
 public class SysTreeResource {
 	private static final Log logger = LogFactory.getLog(SysTreeResource.class);
-
-	@javax.annotation.Resource
+ 
 	private SysTreeService sysTreeService;
 
 	/**
@@ -232,6 +231,7 @@ public class SysTreeResource {
 		return new ModelAndView("show_json_msg");
 	}
 
+	@javax.annotation.Resource
 	public void setSysTreeService(SysTreeService sysTreeService) {
 		this.sysTreeService = sysTreeService;
 		logger.info("setSysTreeService");

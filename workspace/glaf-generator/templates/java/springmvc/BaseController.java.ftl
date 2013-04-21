@@ -27,11 +27,15 @@ import ${packageName}.service.*;
 public class ${entityName}BaseController {
 	private static final Log logger = LogFactory.getLog(${entityName}BaseController.class);
 
-        @javax.annotation.Resource
 	protected ${entityName}Service ${modelName}Service;
 
 	public ${entityName}BaseController() {
 
+	}
+
+        @javax.annotation.Resource
+	public void set${entityName}Service(${entityName}Service ${modelName}Service) {
+		this.${modelName}Service = ${modelName}Service;
 	}
 
 

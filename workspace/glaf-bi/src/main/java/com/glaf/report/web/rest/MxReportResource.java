@@ -20,8 +20,7 @@ package com.glaf.report.web.rest;
 
 import java.io.IOException;
 import java.util.*;
-
-import javax.annotation.Resource;
+ 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -64,10 +63,9 @@ public class MxReportResource {
 	protected static final Log logger = LogFactory
 			.getLog(MxReportResource.class);
 
-	@Resource
+ 
 	protected IReportService reportService;
-
-	@Resource
+ 
 	protected ITableDefinitionService tableDefinitionService;
 
 	@POST
@@ -332,10 +330,12 @@ public class MxReportResource {
 		return result.toString().getBytes("UTF-8");
 	}
 
+	@javax.annotation.Resource
 	public void setReportService(IReportService reportService) {
 		this.reportService = reportService;
 	}
 
+	@javax.annotation.Resource
 	public void setTableDefinitionService(
 			ITableDefinitionService tableDefinitionService) {
 		this.tableDefinitionService = tableDefinitionService;

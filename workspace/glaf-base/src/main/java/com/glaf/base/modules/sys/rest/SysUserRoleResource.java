@@ -51,10 +51,10 @@ public class SysUserRoleResource {
 	private static final Log logger = LogFactory
 			.getLog(SysUserRoleResource.class);
 
-	@javax.annotation.Resource
+ 
 	private SysUserRoleService sysUserRoleService;
 
-	@javax.annotation.Resource
+ 
 	private SysUserService sysUserService;
 
 	@ResponseBody
@@ -244,11 +244,13 @@ public class SysUserRoleResource {
 		return rst;
 	}
 
+	@javax.annotation.Resource
 	public void setSysUserRoleService(SysUserRoleService sysUserRoleService) {
 		this.sysUserRoleService = sysUserRoleService;
 		logger.info("setSysUserRoleService");
 	}
 
+	@javax.annotation.Resource
 	public void setSysUserService(SysUserService sysUserService) {
 		this.sysUserService = sysUserService;
 		logger.info("setSysUserService");

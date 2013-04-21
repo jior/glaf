@@ -30,7 +30,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -53,10 +53,8 @@ public class MxUserPortalController {
 	protected static final Log logger = LogFactory
 			.getLog(MxUserPortalController.class);
 
-	@Autowired
 	protected UserPortalService userPortalService;
 
-	@Autowired
 	protected PanelService panelService;
 
 	@RequestMapping
@@ -232,10 +230,12 @@ public class MxUserPortalController {
 		}
 	}
 
+	@javax.annotation.Resource
 	public void setPanelService(PanelService panelService) {
 		this.panelService = panelService;
 	}
 
+	@javax.annotation.Resource
 	public void setUserPortalService(UserPortalService userPortalService) {
 		this.userPortalService = userPortalService;
 	}

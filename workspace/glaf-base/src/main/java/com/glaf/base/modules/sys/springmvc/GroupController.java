@@ -65,7 +65,6 @@ import com.glaf.base.modules.sys.model.SysTree;
 import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.sys.query.GroupQuery;
 import com.glaf.base.modules.sys.service.GroupService;
-import com.glaf.base.modules.sys.service.SysDepartmentService;
 import com.glaf.base.modules.sys.service.SysTreeService;
 import com.glaf.base.modules.sys.service.SysUserService;
 import com.glaf.base.utils.ParamUtil;
@@ -76,16 +75,10 @@ import com.glaf.base.utils.RequestUtil;
 public class GroupController {
 	private static final Log logger = LogFactory.getLog(GroupController.class);
 
-	@javax.annotation.Resource
 	private GroupService groupService;
 
-	@javax.annotation.Resource
-	private SysDepartmentService sysDepartmentService;
-
-	@javax.annotation.Resource
 	private SysTreeService sysTreeService;
 
-	@javax.annotation.Resource
 	protected SysUserService sysUserService;
 
 	/**
@@ -136,7 +129,7 @@ public class GroupController {
 	public ModelAndView groupUsers(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
 		RequestUtils.setRequestParameterToAttribute(request);
-		
+
 		String x_view = ViewProperties.getString("group.groupUsers");
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);
@@ -219,7 +212,7 @@ public class GroupController {
 		if (StringUtils.isNotEmpty(view)) {
 			return new ModelAndView(view, modelMap);
 		}
-		
+
 		String x_view = ViewProperties.getString("group.list");
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);
@@ -311,12 +304,12 @@ public class GroupController {
 	public ModelAndView prepareAdd(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
 		RequestUtils.setRequestParameterToAttribute(request);
-		
+
 		String x_view = ViewProperties.getString("group.prepareAdd");
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);
 		}
-		
+
 		// 显示列表页面
 		return new ModelAndView("/modules/base/group/group_add", modelMap);
 	}
@@ -337,7 +330,7 @@ public class GroupController {
 		String id = request.getParameter("groupId");
 		Group bean = groupService.getGroup(id);
 		request.setAttribute("bean", bean);
-		
+
 		String x_view = ViewProperties.getString("group.prepareModify");
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);
@@ -361,7 +354,7 @@ public class GroupController {
 			HttpServletResponse response) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		boolean ret = false;
- 
+
 		String type = request.getParameter("type");
 		Group bean = new Group();
 		bean.setName(ParamUtil.getParameter(request, "name"));
@@ -454,20 +447,18 @@ public class GroupController {
 		return new ModelAndView("show_msg", modelMap);
 	}
 
+	@javax.annotation.Resource
 	public void setGroupService(GroupService groupService) {
 		this.groupService = groupService;
 		logger.info("setGroupService");
 	}
 
-	public void setSysDepartmentService(
-			SysDepartmentService sysDepartmentService) {
-		this.sysDepartmentService = sysDepartmentService;
-	}
-
+	@javax.annotation.Resource
 	public void setSysTreeService(SysTreeService sysTreeService) {
 		this.sysTreeService = sysTreeService;
 	}
 
+	@javax.annotation.Resource
 	public void setSysUserService(SysUserService sysUserService) {
 		this.sysUserService = sysUserService;
 	}
@@ -494,7 +485,7 @@ public class GroupController {
 		PageResult pager = groupService.getGroupList(type, actorId, pageNo,
 				pageSize);
 		request.setAttribute("pager", pager);
-		
+
 		String x_view = ViewProperties.getString("group.showList");
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);

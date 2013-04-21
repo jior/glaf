@@ -23,8 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
-
-import javax.annotation.Resource;
+ 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -64,13 +63,13 @@ import com.glaf.report.service.IReportService;
 @RequestMapping("/bi/report")
 public class MxReportController {
 
-	@Resource
+ 
 	protected IReportService reportService;
 
-	@Resource
+ 
 	protected IChartService chartService;
 
-	@Resource
+ 
 	protected IQueryDefinitionService queryDefinitionService;
 
 	@RequestMapping("/chooseChart")
@@ -392,15 +391,18 @@ public class MxReportController {
 		return this.list(request, modelMap);
 	}
 
+	@javax.annotation.Resource
 	public void setChartService(IChartService chartService) {
 		this.chartService = chartService;
 	}
 
+	@javax.annotation.Resource
 	public void setQueryDefinitionService(
 			IQueryDefinitionService queryDefinitionService) {
 		this.queryDefinitionService = queryDefinitionService;
 	}
 
+	@javax.annotation.Resource
 	public void setReportService(IReportService reportService) {
 		this.reportService = reportService;
 	}

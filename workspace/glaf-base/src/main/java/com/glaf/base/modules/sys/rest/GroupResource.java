@@ -52,7 +52,6 @@ import com.glaf.base.modules.sys.model.SysTree;
 import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.sys.query.GroupQuery;
 import com.glaf.base.modules.sys.service.GroupService;
-import com.glaf.base.modules.sys.service.SysDepartmentService;
 import com.glaf.base.modules.sys.service.SysTreeService;
 import com.glaf.base.modules.sys.service.SysUserService;
 import com.glaf.base.utils.ParamUtil;
@@ -73,16 +72,10 @@ import com.glaf.core.util.Tools;
 public class GroupResource {
 	private static final Log logger = LogFactory.getLog(GroupResource.class);
 
-	@javax.annotation.Resource
 	private GroupService groupService;
 
-	@javax.annotation.Resource
-	private SysDepartmentService sysDepartmentService;
-
-	@javax.annotation.Resource
 	private SysTreeService sysTreeService;
 
-	@javax.annotation.Resource
 	protected SysUserService sysUserService;
 
 	/**
@@ -368,20 +361,18 @@ public class GroupResource {
 		return new ModelAndView("show_json_msg");
 	}
 
+	@javax.annotation.Resource
 	public void setGroupService(GroupService groupService) {
 		this.groupService = groupService;
 		logger.info("setGroupService");
 	}
 
-	public void setSysDepartmentService(
-			SysDepartmentService sysDepartmentService) {
-		this.sysDepartmentService = sysDepartmentService;
-	}
-
+	@javax.annotation.Resource
 	public void setSysTreeService(SysTreeService sysTreeService) {
 		this.sysTreeService = sysTreeService;
 	}
 
+	@javax.annotation.Resource
 	public void setSysUserService(SysUserService sysUserService) {
 		this.sysUserService = sysUserService;
 	}

@@ -20,8 +20,7 @@ package com.glaf.dts.web.springmvc;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.annotation.Resource;
+ 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
@@ -41,7 +40,7 @@ import com.glaf.core.util.RequestUtils;
 @RequestMapping("/dts/query")
 public class MxDtsQueryController {
 
-	@Resource
+ 
 	protected IQueryDefinitionService queryDefinitionService;
 
 	@RequestMapping("/chooseQuery")
@@ -116,6 +115,7 @@ public class MxDtsQueryController {
 		return new ModelAndView("/bi/dts/query/list", modelMap);
 	}
 
+	@javax.annotation.Resource
 	public void setQueryDefinitionService(
 			IQueryDefinitionService queryDefinitionService) {
 		this.queryDefinitionService = queryDefinitionService;

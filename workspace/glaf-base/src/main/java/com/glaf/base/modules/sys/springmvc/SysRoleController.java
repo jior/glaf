@@ -59,7 +59,7 @@ public class SysRoleController {
 	private static final Log logger = LogFactory
 			.getLog(SysRoleController.class);
 
-	@javax.annotation.Resource
+ 
 	private SysRoleService sysRoleService;
 
 	/**
@@ -332,6 +332,7 @@ public class SysRoleController {
 		return new ModelAndView("show_msg", modelMap);
 	}
 
+	@javax.annotation.Resource
 	public void setSysRoleService(SysRoleService sysRoleService) {
 		this.sysRoleService = sysRoleService;
 		logger.info("setSysRoleService");

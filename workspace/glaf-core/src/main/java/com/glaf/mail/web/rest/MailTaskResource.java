@@ -72,13 +72,13 @@ import com.glaf.mail.service.IMailTaskService;
 public class MailTaskResource {
 	protected static Log logger = LogFactory.getLog(MailTaskResource.class);
 
-	@javax.annotation.Resource
+	 
 	protected IMailDataService mailDataService;
 
-	@javax.annotation.Resource
+	 
 	protected IMailTaskService mailTaskService;
 
-	@javax.annotation.Resource
+	 
 	protected MailDataFacede mailDataFacede;
 
 	@POST
@@ -498,14 +498,17 @@ public class MailTaskResource {
 		}
 	}
 
+	@javax.annotation.Resource
 	public void setMailDataFacede(MailDataFacede mailDataFacede) {
 		this.mailDataFacede = mailDataFacede;
 	}
 
+	@javax.annotation.Resource
 	public void setMailDataService(IMailDataService mailDataService) {
 		this.mailDataService = mailDataService;
 	}
 
+	@javax.annotation.Resource
 	public void setMailTaskService(IMailTaskService mailTaskService) {
 		this.mailTaskService = mailTaskService;
 	}

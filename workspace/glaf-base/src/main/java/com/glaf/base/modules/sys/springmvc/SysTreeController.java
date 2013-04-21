@@ -62,7 +62,7 @@ public class SysTreeController {
 	private static final Log logger = LogFactory
 			.getLog(SysTreeController.class);
 
-	@javax.annotation.Resource
+ 
 	private SysTreeService sysTreeService;
 
 	/**
@@ -335,6 +335,7 @@ public class SysTreeController {
 		return new ModelAndView("show_msg", modelMap);
 	}
 
+	@javax.annotation.Resource
 	public void setSysTreeService(SysTreeService sysTreeService) {
 		this.sysTreeService = sysTreeService;
 		logger.info("setSysTreeService");

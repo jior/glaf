@@ -39,7 +39,6 @@ import com.glaf.base.modules.sys.model.SysRole;
 import com.glaf.base.modules.sys.service.SysDepartmentService;
 import com.glaf.base.modules.sys.service.SysDeptRoleService;
 import com.glaf.base.modules.sys.service.SysRoleService;
-import com.glaf.base.modules.sys.service.SysTreeService;
 import com.glaf.base.utils.ParamUtil;
 import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
@@ -52,17 +51,11 @@ public class SysDeptRoleResource {
 	private static final Log logger = LogFactory
 			.getLog(SysDeptRoleResource.class);
 
-	@javax.annotation.Resource
 	private SysDepartmentService sysDepartmentService;
 
-	@javax.annotation.Resource
 	private SysDeptRoleService sysDeptRoleService;
 
-	@javax.annotation.Resource
 	private SysRoleService sysRoleService;
-
-	@javax.annotation.Resource
-	private SysTreeService sysTreeService;
 
 	/**
 	 * …Ë÷√»®œﬁ
@@ -152,24 +145,23 @@ public class SysDeptRoleResource {
 		return new ModelAndView("show_json_msg");
 	}
 
+	@javax.annotation.Resource
 	public void setSysDepartmentService(
 			SysDepartmentService sysDepartmentService) {
 		this.sysDepartmentService = sysDepartmentService;
 		logger.info("setSysDepartmentService");
 	}
 
+	@javax.annotation.Resource
 	public void setSysDeptRoleService(SysDeptRoleService sysDeptRoleService) {
 		this.sysDeptRoleService = sysDeptRoleService;
 		logger.info("setSysDeptRoleService");
 	}
 
+	@javax.annotation.Resource
 	public void setSysRoleService(SysRoleService sysRoleService) {
 		this.sysRoleService = sysRoleService;
 		logger.info("setSysRoleService");
 	}
 
-	public void setSysTreeService(SysTreeService sysTreeService) {
-		this.sysTreeService = sysTreeService;
-		logger.info("setSysTreeService");
-	}
 }

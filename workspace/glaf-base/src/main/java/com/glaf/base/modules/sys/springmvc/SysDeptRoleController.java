@@ -43,7 +43,7 @@ import com.glaf.base.modules.sys.service.SysDeptRoleService;
 import com.glaf.base.modules.sys.service.SysRoleService;
 import com.glaf.base.modules.sys.service.SysTreeService;
 import com.glaf.base.utils.ParamUtil;
- 
+
 import com.glaf.core.config.ViewProperties;
 import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
@@ -56,106 +56,13 @@ public class SysDeptRoleController {
 	private static final Log logger = LogFactory
 			.getLog(SysDeptRoleController.class);
 
-	@javax.annotation.Resource
-	private SysDeptRoleService sysDeptRoleService;
-
-	@javax.annotation.Resource
-	private SysTreeService sysTreeService;
-
-	@javax.annotation.Resource
 	private SysDepartmentService sysDepartmentService;
 
-	@javax.annotation.Resource
+	private SysDeptRoleService sysDeptRoleService;
+
 	private SysRoleService sysRoleService;
 
-	public void setSysDeptRoleService(SysDeptRoleService sysDeptRoleService) {
-		this.sysDeptRoleService = sysDeptRoleService;
-		logger.info("setSysDeptRoleService");
-	}
-
-	public void setSysTreeService(SysTreeService sysTreeService) {
-		this.sysTreeService = sysTreeService;
-		logger.info("setSysTreeService");
-	}
-
-	public void setSysDepartmentService(
-			SysDepartmentService sysDepartmentService) {
-		this.sysDepartmentService = sysDepartmentService;
-		logger.info("setSysDepartmentService");
-	}
-
-	public void setSysRoleService(SysRoleService sysRoleService) {
-		this.sysRoleService = sysRoleService;
-		logger.info("setSysRoleService");
-	}
-
-	/**
-	 * 显示所有列表
-	 * 
-	 * @param mapping
-	 * @param form
-	 * @param request
-	 * @param response
-	 * @return
-	 */
-	@RequestMapping(params = "method=showList")
-	public ModelAndView showList(ModelMap modelMap, HttpServletRequest request,
-			HttpServletResponse response) {
-		RequestUtils.setRequestParameterToAttribute(request);
-		long deptId = (long) ParamUtil.getIntParameter(request, "parent", 0);
-		request.setAttribute("department",
-				sysDepartmentService.findById(deptId));
-		request.setAttribute("list", sysRoleService.getSysRoleList());
-		
-		String x_view = ViewProperties.getString("deptRole.showList");
-		if (StringUtils.isNotEmpty(x_view)) {
-			return new ModelAndView(x_view, modelMap);
-		}
-		// 显示列表页面
-		return new ModelAndView("/modules/sys/deptRole/deptRole_list", modelMap);
-	}
-
-	/**
-	 * 显示角色权限映射页面
-	 * 
-	 * @param mapping
-	 * @param actionForm
-	 * @param request
-	 * @param response
-	 * @return
-	 */
-	@RequestMapping(params = "method=showPrivilege")
-	public ModelAndView showPrivilege(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtils.setRequestParameterToAttribute(request);
-		long deptId = ParamUtil.getLongParameter(request, "deptId", 0);
-		long roleId = ParamUtil.getLongParameter(request, "roleId", 0);
-		SysDeptRole deptRole = sysDeptRoleService.find(deptId, roleId);
-		if (deptRole == null) {// 如果没有找到则创建一个
-			deptRole = new SysDeptRole();
-			deptRole.setDept(sysDepartmentService.findById(deptId));
-			deptRole.setDeptId(deptId);
-			deptRole.setRole(sysRoleService.findById(roleId));
-			deptRole.setSysRoleId(roleId);
-			sysDeptRoleService.create(deptRole);
-		}
-		request.setAttribute("role", deptRole);
-		logger.debug("#########################################");
-		logger.debug("apps:"+deptRole.getApps());
-		SysTree parent = sysTreeService.getSysTreeByCode(Constants.TREE_APP);
-		List<SysTree> list = new ArrayList<SysTree>();
-		sysTreeService.getSysTree(list, (int) parent.getId(), 0);
-		request.setAttribute("list", list);
-		logger.debug("------------list size:"+list.size());
-		
-		String x_view = ViewProperties.getString("deptRole.showPrivilege");
-		if (StringUtils.isNotEmpty(x_view)) {
-			return new ModelAndView(x_view, modelMap);
-		}
-		
-		return new ModelAndView("/modules/sys/deptRole/deptRole_privilege",
-				modelMap);
-	}
+	private SysTreeService sysTreeService;
 
 	/**
 	 * 设置权限
@@ -239,5 +146,98 @@ public class SysDeptRoleController {
 		}
 		MessageUtils.addMessages(request, messages);
 		return new ModelAndView("show_msg", modelMap);
+	}
+
+	@javax.annotation.Resource
+	public void setSysDepartmentService(
+			SysDepartmentService sysDepartmentService) {
+		this.sysDepartmentService = sysDepartmentService;
+		logger.info("setSysDepartmentService");
+	}
+
+	@javax.annotation.Resource
+	public void setSysDeptRoleService(SysDeptRoleService sysDeptRoleService) {
+		this.sysDeptRoleService = sysDeptRoleService;
+		logger.info("setSysDeptRoleService");
+	}
+
+	@javax.annotation.Resource
+	public void setSysRoleService(SysRoleService sysRoleService) {
+		this.sysRoleService = sysRoleService;
+		logger.info("setSysRoleService");
+	}
+
+	@javax.annotation.Resource
+	public void setSysTreeService(SysTreeService sysTreeService) {
+		this.sysTreeService = sysTreeService;
+		logger.info("setSysTreeService");
+	}
+
+	/**
+	 * 显示所有列表
+	 * 
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(params = "method=showList")
+	public ModelAndView showList(ModelMap modelMap, HttpServletRequest request,
+			HttpServletResponse response) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		long deptId = (long) ParamUtil.getIntParameter(request, "parent", 0);
+		request.setAttribute("department",
+				sysDepartmentService.findById(deptId));
+		request.setAttribute("list", sysRoleService.getSysRoleList());
+
+		String x_view = ViewProperties.getString("deptRole.showList");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+		// 显示列表页面
+		return new ModelAndView("/modules/sys/deptRole/deptRole_list", modelMap);
+	}
+
+	/**
+	 * 显示角色权限映射页面
+	 * 
+	 * @param mapping
+	 * @param actionForm
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(params = "method=showPrivilege")
+	public ModelAndView showPrivilege(ModelMap modelMap,
+			HttpServletRequest request, HttpServletResponse response) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		long deptId = ParamUtil.getLongParameter(request, "deptId", 0);
+		long roleId = ParamUtil.getLongParameter(request, "roleId", 0);
+		SysDeptRole deptRole = sysDeptRoleService.find(deptId, roleId);
+		if (deptRole == null) {// 如果没有找到则创建一个
+			deptRole = new SysDeptRole();
+			deptRole.setDept(sysDepartmentService.findById(deptId));
+			deptRole.setDeptId(deptId);
+			deptRole.setRole(sysRoleService.findById(roleId));
+			deptRole.setSysRoleId(roleId);
+			sysDeptRoleService.create(deptRole);
+		}
+		request.setAttribute("role", deptRole);
+		logger.debug("#########################################");
+		logger.debug("apps:" + deptRole.getApps());
+		SysTree parent = sysTreeService.getSysTreeByCode(Constants.TREE_APP);
+		List<SysTree> list = new ArrayList<SysTree>();
+		sysTreeService.getSysTree(list, (int) parent.getId(), 0);
+		request.setAttribute("list", list);
+		logger.debug("------------list size:" + list.size());
+
+		String x_view = ViewProperties.getString("deptRole.showPrivilege");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
+		return new ModelAndView("/modules/sys/deptRole/deptRole_privilege",
+				modelMap);
 	}
 }

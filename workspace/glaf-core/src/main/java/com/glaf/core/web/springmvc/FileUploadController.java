@@ -27,7 +27,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -70,7 +69,6 @@ public class FileUploadController {
 
 	private static Configuration conf = BaseConfiguration.create();
 
-	@Resource
 	protected IBlobService blobService;
 
 	@ResponseBody
@@ -94,6 +92,7 @@ public class FileUploadController {
 		}
 	}
 
+	@javax.annotation.Resource
 	public void setBlobService(IBlobService blobService) {
 		this.blobService = blobService;
 	}

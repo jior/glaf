@@ -20,8 +20,7 @@ package com.glaf.dts.web.rest;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.annotation.Resource;
+ 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -48,13 +47,10 @@ import com.glaf.dts.service.ITransformTaskService;
 @Path("/rs/dts/transform/task")
 public class MxTransformTaskResource {
 
-	@Resource
 	protected ITableDefinitionService tableDefinitionService;
 
-	@Resource
 	protected IQueryDefinitionService queryDefinitionService;
 
-	@Resource
 	protected ITransformTaskService transformTaskService;
 
 	@POST
@@ -123,16 +119,19 @@ public class MxTransformTaskResource {
 		}
 	}
 
+	@javax.annotation.Resource
 	public void setQueryDefinitionService(
 			IQueryDefinitionService queryDefinitionService) {
 		this.queryDefinitionService = queryDefinitionService;
 	}
 
+	@javax.annotation.Resource
 	public void setTableDefinitionService(
 			ITableDefinitionService tableDefinitionService) {
 		this.tableDefinitionService = tableDefinitionService;
 	}
 
+	@javax.annotation.Resource
 	public void setTransformTaskService(
 			ITransformTaskService transformTaskService) {
 		this.transformTaskService = transformTaskService;

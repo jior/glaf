@@ -41,7 +41,7 @@ public class MxSystemParamController {
 	protected static final Log logger = LogFactory
 			.getLog(MxSystemParamController.class);
 
-	@javax.annotation.Resource
+	 
 	protected ISystemParamService systemParamService;
 
 	public MxSystemParamController() {
@@ -166,6 +166,7 @@ public class MxSystemParamController {
 		return this.list(request, modelMap);
 	}
 
+	@javax.annotation.Resource
 	public void setSystemParamService(ISystemParamService systemParamService) {
 		this.systemParamService = systemParamService;
 	}

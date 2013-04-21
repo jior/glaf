@@ -62,11 +62,10 @@ import com.glaf.core.util.Tools;
 public class SysDepartmentController {
 	private static final Log logger = LogFactory
 			.getLog(SysDepartmentController.class);
-
-	@javax.annotation.Resource
+ 
 	private SysDepartmentService sysDepartmentService;
 
-	@javax.annotation.Resource
+ 
 	private SysTreeService sysTreeService;
 
 	/**
@@ -398,12 +397,14 @@ public class SysDepartmentController {
 		return new ModelAndView("show_msg", modelMap);
 	}
 
+	@javax.annotation.Resource
 	public void setSysDepartmentService(
 			SysDepartmentService sysDepartmentService) {
 		this.sysDepartmentService = sysDepartmentService;
 		logger.info("setSysDepartmentService");
 	}
 
+	@javax.annotation.Resource
 	public void setSysTreeService(SysTreeService sysTreeService) {
 		this.sysTreeService = sysTreeService;
 		logger.info("setSysTreeService");

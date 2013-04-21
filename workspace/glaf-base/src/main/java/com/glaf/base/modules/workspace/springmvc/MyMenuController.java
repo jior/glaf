@@ -46,23 +46,16 @@ import com.glaf.core.util.RequestUtils;
 import com.glaf.core.util.StringTools;
 import com.glaf.base.utils.ParamUtil;
 import com.glaf.base.utils.RequestUtil;
- 
 
 @Controller
 @RequestMapping("/workspace/mymenu.do")
 public class MyMenuController {
 	private static final Log logger = LogFactory.getLog(MyMenuController.class);
 
-	@javax.annotation.Resource
 	private MyMenuService myMenuService;
 
-	public void setMyMenuService(MyMenuService myMenuService) {
-		this.myMenuService = myMenuService;
-		logger.info("setMyMenuService");
-	}
-
 	/**
-	 * 显示列表
+	 * 批量删除信息
 	 * 
 	 * @param mapping
 	 * @param actionForm
@@ -70,28 +63,34 @@ public class MyMenuController {
 	 * @param response
 	 * @return
 	 */
-	@RequestMapping(params = "method=showList")
-	public ModelAndView showList(ModelMap modelMap, HttpServletRequest request,
-			HttpServletResponse response) {
+	@RequestMapping(params = "method=batchDelete")
+	public ModelAndView batchDelete(ModelMap modelMap,
+			HttpServletRequest request, HttpServletResponse response) {
 		RequestUtils.setRequestParameterToAttribute(request);
-		SysUser user = RequestUtil.getLoginUser(request);
-		long userId = user == null ? 0L : user.getId();
-
-		int pageNo = ParamUtil.getIntParameter(request, "page_no", 1);
-		int pageSize = ParamUtil.getIntParameter(request, "page_size",
-				Constants.PAGE_SIZE);
-		PageResult pager = myMenuService
-				.getMyMenuList(userId, pageNo, pageSize);
-		request.setAttribute("pager", pager);
-		
-		String x_view = ViewProperties.getString("mymenu.showList");
-		if (StringUtils.isNotEmpty(x_view)) {
-			return new ModelAndView(x_view, modelMap);
+		boolean ret = true;
+		// if (isTokenValid(request)) {// 防止表单重复提交
+		int[] id = ParamUtil.getIntParameterValues(request, "id");
+		if (id != null) {
+			for (int i = 0; i < id.length; i++) {
+				if (!myMenuService.delete((long) id[i])) {
+					ret = false;
+				}
+			}
 		}
+		// }
+		// saveToken(request);
 
-		// 显示列表页面
-		return new ModelAndView("/modules/workspace/mymenu/mymenu_list",
-				modelMap);
+		ViewMessages messages = new ViewMessages();
+		if (ret) {// 保存成功
+			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
+					"myMenu.delete_success"));
+		} else {// 保存失败
+			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
+					"myMenu.delete_failure"));
+		}
+		MessageUtils.addMessages(request, messages);
+		// 显示提交后页面
+		return new ModelAndView("show_msg", modelMap);
 	}
 
 	/**
@@ -107,7 +106,7 @@ public class MyMenuController {
 	public ModelAndView prepareAdd(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
 		RequestUtils.setRequestParameterToAttribute(request);
-		
+
 		String x_view = ViewProperties.getString("mymenu.prepareAdd");
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);
@@ -129,13 +128,40 @@ public class MyMenuController {
 	public ModelAndView prepareAddMyMenu(ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
 		RequestUtils.setRequestParameterToAttribute(request);
-		
+
 		String x_view = ViewProperties.getString("mymenu.prepareAddMyMenu");
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);
 		}
-		
+
 		return new ModelAndView("/modules/workspace/mymenu/mymenu_addmymenu",
+				modelMap);
+	}
+
+	/**
+	 * 显示修改页面
+	 * 
+	 * @param mapping
+	 * @param actionForm
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(params = "method=prepareModify")
+	public ModelAndView prepareModify(ModelMap modelMap,
+			HttpServletRequest request, HttpServletResponse response) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		long id = ParamUtil.getLongParameter(request, "id", 0);
+		MyMenu bean = myMenuService.find(id);
+		request.setAttribute("bean", bean);
+
+		String x_view = ViewProperties.getString("mymenu.prepareModify");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
+		// 显示修改页面
+		return new ModelAndView("/modules/workspace/mymenu/mymenu_modify",
 				modelMap);
 	}
 
@@ -207,33 +233,6 @@ public class MyMenuController {
 	}
 
 	/**
-	 * 显示修改页面
-	 * 
-	 * @param mapping
-	 * @param actionForm
-	 * @param request
-	 * @param response
-	 * @return
-	 */
-	@RequestMapping(params = "method=prepareModify")
-	public ModelAndView prepareModify(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtils.setRequestParameterToAttribute(request);
-		long id = ParamUtil.getLongParameter(request, "id", 0);
-		MyMenu bean = myMenuService.find(id);
-		request.setAttribute("bean", bean);
-		
-		String x_view = ViewProperties.getString("mymenu.prepareModify");
-		if (StringUtils.isNotEmpty(x_view)) {
-			return new ModelAndView(x_view, modelMap);
-		}
-
-		// 显示修改页面
-		return new ModelAndView("/modules/workspace/mymenu/mymenu_modify",
-				modelMap);
-	}
-
-	/**
 	 * 提交修改信息
 	 * 
 	 * @param mapping
@@ -272,8 +271,14 @@ public class MyMenuController {
 		return new ModelAndView("show_msg", modelMap);
 	}
 
+	@javax.annotation.Resource
+	public void setMyMenuService(MyMenuService myMenuService) {
+		this.myMenuService = myMenuService;
+		logger.info("setMyMenuService");
+	}
+
 	/**
-	 * 批量删除信息
+	 * 显示列表
 	 * 
 	 * @param mapping
 	 * @param actionForm
@@ -281,34 +286,28 @@ public class MyMenuController {
 	 * @param response
 	 * @return
 	 */
-	@RequestMapping(params = "method=batchDelete")
-	public ModelAndView batchDelete(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+	@RequestMapping(params = "method=showList")
+	public ModelAndView showList(ModelMap modelMap, HttpServletRequest request,
+			HttpServletResponse response) {
 		RequestUtils.setRequestParameterToAttribute(request);
-		boolean ret = true;
-		// if (isTokenValid(request)) {// 防止表单重复提交
-		int[] id = ParamUtil.getIntParameterValues(request, "id");
-		if (id != null) {
-			for (int i = 0; i < id.length; i++) {
-				if (!myMenuService.delete((long) id[i])) {
-					ret = false;
-				}
-			}
-		}
-		// }
-		// saveToken(request);
+		SysUser user = RequestUtil.getLoginUser(request);
+		long userId = user == null ? 0L : user.getId();
 
-		ViewMessages messages = new ViewMessages();
-		if (ret) {// 保存成功
-			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
-					"myMenu.delete_success"));
-		} else {// 保存失败
-			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
-					"myMenu.delete_failure"));
+		int pageNo = ParamUtil.getIntParameter(request, "page_no", 1);
+		int pageSize = ParamUtil.getIntParameter(request, "page_size",
+				Constants.PAGE_SIZE);
+		PageResult pager = myMenuService
+				.getMyMenuList(userId, pageNo, pageSize);
+		request.setAttribute("pager", pager);
+
+		String x_view = ViewProperties.getString("mymenu.showList");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
 		}
-		MessageUtils.addMessages(request, messages);
-		// 显示提交后页面
-		return new ModelAndView("show_msg", modelMap);
+
+		// 显示列表页面
+		return new ModelAndView("/modules/workspace/mymenu/mymenu_list",
+				modelMap);
 	}
 
 }

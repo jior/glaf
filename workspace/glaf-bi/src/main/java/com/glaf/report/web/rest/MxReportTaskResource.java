@@ -59,8 +59,7 @@ import com.glaf.report.service.IReportTaskService;
 public class MxReportTaskResource {
 	protected static final Log logger = LogFactory
 			.getLog(MxReportTaskResource.class);
-
-	@javax.annotation.Resource
+ 
 	protected IReportTaskService reportTaskService;
 
 	@POST
@@ -266,6 +265,7 @@ public class MxReportTaskResource {
 		return ResponseUtils.responseJsonResult(false, "±£¥Ê ß∞‹£°");
 	}
 
+	@javax.annotation.Resource
 	public void setReportTaskService(IReportTaskService reportTaskService) {
 		this.reportTaskService = reportTaskService;
 	}

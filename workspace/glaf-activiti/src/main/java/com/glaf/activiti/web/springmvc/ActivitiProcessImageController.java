@@ -19,7 +19,6 @@
 package com.glaf.activiti.web.springmvc;
 
 import java.io.IOException;
- 
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -27,7 +26,7 @@ import org.activiti.engine.repository.ProcessDefinition;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -44,16 +43,13 @@ import com.glaf.activiti.util.ProcessUtils;
 public class ActivitiProcessImageController {
 	protected final static Log logger = LogFactory
 			.getLog(ActivitiProcessImageController.class);
-	@Autowired
+
 	protected ActivitiDeployService activitiDeployService;
 
-	@Autowired
 	protected ActivitiDeployQueryService activitiDeployQueryService;
 
-	@Autowired
 	protected ActivitiProcessQueryService activitiProcessQueryService;
 
-	@Autowired
 	protected ActivitiTaskQueryService activitiTaskQueryService;
 
 	@RequestMapping("/image")
@@ -78,21 +74,25 @@ public class ActivitiProcessImageController {
 		return null;
 	}
 
+	@javax.annotation.Resource
 	public void setActivitiDeployService(
 			ActivitiDeployService activitiDeployService) {
 		this.activitiDeployService = activitiDeployService;
 	}
 
+	@javax.annotation.Resource
 	public void setActivitiDeployQueryService(
 			ActivitiDeployQueryService activitiDeployQueryService) {
 		this.activitiDeployQueryService = activitiDeployQueryService;
 	}
 
+	@javax.annotation.Resource
 	public void setActivitiProcessQueryService(
 			ActivitiProcessQueryService activitiProcessQueryService) {
 		this.activitiProcessQueryService = activitiProcessQueryService;
 	}
 
+	@javax.annotation.Resource
 	public void setActivitiTaskQueryService(
 			ActivitiTaskQueryService activitiTaskQueryService) {
 		this.activitiTaskQueryService = activitiTaskQueryService;

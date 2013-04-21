@@ -51,10 +51,10 @@ public class SysFunctionController {
 	private static final Log logger = LogFactory
 			.getLog(SysFunctionController.class);
 
-	@javax.annotation.Resource
+ 
 	private SysApplicationService sysApplicationService;
 
-	@javax.annotation.Resource
+	 
 	private SysFunctionService sysFunctionService;
 
 	/**
@@ -152,11 +152,13 @@ public class SysFunctionController {
 		return new ModelAndView("show_msg2", modelMap);
 	}
 
+	@javax.annotation.Resource
 	public void setSysApplicationService(
 			SysApplicationService sysApplicationService) {
 		this.sysApplicationService = sysApplicationService;
 	}
 
+	@javax.annotation.Resource
 	public void setSysFunctionService(SysFunctionService sysFunctionService) {
 		this.sysFunctionService = sysFunctionService;
 		logger.info("setSysFunctionService");

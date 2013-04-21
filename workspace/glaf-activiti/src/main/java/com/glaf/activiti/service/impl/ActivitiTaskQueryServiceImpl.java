@@ -1,20 +1,20 @@
 /*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.glaf.activiti.service.impl;
 
@@ -22,8 +22,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
-import javax.annotation.Resource;
 
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.RepositoryService;
@@ -38,7 +36,7 @@ import org.activiti.engine.task.TaskQuery;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
- 
+
 import com.glaf.activiti.model.TaskItem;
 import com.glaf.activiti.service.*;
 import com.glaf.core.util.DateUtils;
@@ -47,17 +45,13 @@ import com.glaf.core.util.DateUtils;
 @Transactional(readOnly = true)
 public class ActivitiTaskQueryServiceImpl implements ActivitiTaskQueryService {
 
-	@Resource
+	protected HistoryService historyService;
+
 	protected RepositoryService repositoryService;
 
-	@Resource
 	protected RuntimeService runtimeService;
 
-	@Resource
 	protected TaskService taskService;
-
-	@Resource
-	protected HistoryService historyService;
 
 	public List<Task> getAllTasks() {
 		List<Task> tasks = new ArrayList<Task>();
@@ -302,33 +296,6 @@ public class ActivitiTaskQueryServiceImpl implements ActivitiTaskQueryService {
 
 	public List<IdentityLink> getTaskIdentityLinks(String taskId) {
 		return taskService.getIdentityLinksForTask(taskId);
-	}
-
-	public List<String> getWorkedProcessInstanceIds(String processName,
-			String actorId) {
-		List<String> processInstanceIds = new ArrayList<String>();
-		HistoricTaskInstanceQuery query = historyService
-				.createHistoricTaskInstanceQuery();
-		query.processDefinitionKey(processName);
-		query.taskAssignee(actorId);
-		List<HistoricTaskInstance> list = query.list();
-		if (list != null && !list.isEmpty()) {
-			for (HistoricTaskInstance t : list) {
-				processInstanceIds.add(t.getProcessInstanceId());
-			}
-		}
-
-		query = historyService.createHistoricTaskInstanceQuery();
-		query.processDefinitionKey(processName);
-		query.taskOwner(actorId);
-		list = query.list();
-		if (list != null && !list.isEmpty()) {
-			for (HistoricTaskInstance t : list) {
-				processInstanceIds.add(t.getProcessInstanceId());
-			}
-		}
-
-		return processInstanceIds;
 	}
 
 	public List<TaskItem> getTaskItems(String processInstanceId) {
@@ -618,32 +585,6 @@ public class ActivitiTaskQueryServiceImpl implements ActivitiTaskQueryService {
 		return query.list();
 	}
 
-	public List<Task> getUserTasks(String processInstanceId, String actorId) {
-		List<Task> tasks = new ArrayList<Task>();
-		TaskQuery query01 = taskService.createTaskQuery();
-		query01.processInstanceId(processInstanceId);
-		query01.taskAssignee(actorId);
-		List<Task> tasks01 = query01.list();
-		if (tasks01 != null && tasks01.size() > 0) {
-			for (Task task : tasks01) {
-				tasks.add(task);
-			}
-		}
-
-		TaskQuery query02 = taskService.createTaskQuery();
-		query02.taskCandidateUser(actorId);
-		query02.processInstanceId(processInstanceId);
-		List<Task> tasks02 = query02.list();
-		if (tasks02 != null && tasks02.size() > 0) {
-			for (Task task : tasks02) {
-				tasks.add(task);
-			}
-		}
-
-		return tasks;
-	}
-
-	
 	public List<Task> getTasks(String processInstanceId) {
 		TaskQuery query = taskService.createTaskQuery();
 		query.processInstanceId(processInstanceId);
@@ -682,18 +623,74 @@ public class ActivitiTaskQueryServiceImpl implements ActivitiTaskQueryService {
 		return tasks;
 	}
 
+	public List<Task> getUserTasks(String processInstanceId, String actorId) {
+		List<Task> tasks = new ArrayList<Task>();
+		TaskQuery query01 = taskService.createTaskQuery();
+		query01.processInstanceId(processInstanceId);
+		query01.taskAssignee(actorId);
+		List<Task> tasks01 = query01.list();
+		if (tasks01 != null && tasks01.size() > 0) {
+			for (Task task : tasks01) {
+				tasks.add(task);
+			}
+		}
+
+		TaskQuery query02 = taskService.createTaskQuery();
+		query02.taskCandidateUser(actorId);
+		query02.processInstanceId(processInstanceId);
+		List<Task> tasks02 = query02.list();
+		if (tasks02 != null && tasks02.size() > 0) {
+			for (Task task : tasks02) {
+				tasks.add(task);
+			}
+		}
+
+		return tasks;
+	}
+
+	public List<String> getWorkedProcessInstanceIds(String processName,
+			String actorId) {
+		List<String> processInstanceIds = new ArrayList<String>();
+		HistoricTaskInstanceQuery query = historyService
+				.createHistoricTaskInstanceQuery();
+		query.processDefinitionKey(processName);
+		query.taskAssignee(actorId);
+		List<HistoricTaskInstance> list = query.list();
+		if (list != null && !list.isEmpty()) {
+			for (HistoricTaskInstance t : list) {
+				processInstanceIds.add(t.getProcessInstanceId());
+			}
+		}
+
+		query = historyService.createHistoricTaskInstanceQuery();
+		query.processDefinitionKey(processName);
+		query.taskOwner(actorId);
+		list = query.list();
+		if (list != null && !list.isEmpty()) {
+			for (HistoricTaskInstance t : list) {
+				processInstanceIds.add(t.getProcessInstanceId());
+			}
+		}
+
+		return processInstanceIds;
+	}
+
+	@javax.annotation.Resource
 	public void setHistoryService(HistoryService historyService) {
 		this.historyService = historyService;
 	}
 
+	@javax.annotation.Resource
 	public void setRepositoryService(RepositoryService repositoryService) {
 		this.repositoryService = repositoryService;
 	}
 
+	@javax.annotation.Resource
 	public void setRuntimeService(RuntimeService runtimeService) {
 		this.runtimeService = runtimeService;
 	}
 
+	@javax.annotation.Resource
 	public void setTaskService(TaskService taskService) {
 		this.taskService = taskService;
 	}

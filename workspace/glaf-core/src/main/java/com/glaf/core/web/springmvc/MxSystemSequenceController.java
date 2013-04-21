@@ -45,12 +45,7 @@ public class MxSystemSequenceController {
 	protected static final Log logger = LogFactory
 			.getLog(MxSystemSequenceController.class);
 
-	@javax.annotation.Resource
 	protected ITableDataService tableDataService;
-
-	public void setTableDataService(ITableDataService tableDataService) {
-		this.tableDataService = tableDataService;
-	}
 
 	@RequestMapping
 	public ModelAndView edit(HttpServletRequest request, ModelMap modelMap) {
@@ -121,6 +116,11 @@ public class MxSystemSequenceController {
 			return new ModelAndView(x_view, modelMap);
 		}
 		return this.edit(request, modelMap);
+	}
+
+	@javax.annotation.Resource
+	public void setTableDataService(ITableDataService tableDataService) {
+		this.tableDataService = tableDataService;
 	}
 
 }

@@ -31,8 +31,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.apache.commons.lang.StringUtils;
-
-import org.springframework.beans.factory.annotation.Autowired;
+ 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -54,16 +53,16 @@ import com.glaf.core.util.RequestUtils;
 @RequestMapping("/activiti/history")
 public class ActivitiProcessHistoryController {
 
-	@Autowired
+	 
 	protected ActivitiDeployService activitiDeployService;
 
-	@Autowired
+ 
 	protected ActivitiProcessService activitiProcessService;
 
-	@Autowired
+	 
 	protected ActivitiProcessQueryService activitiProcessQueryService;
 
-	@Autowired
+	 
 	protected ActivitiTaskQueryService activitiTaskQueryService;
 
 	@RequestMapping("/historyProcessInstanceJson")
@@ -169,21 +168,25 @@ public class ActivitiProcessHistoryController {
 		return "/activiti/history/historyProcessInstances";
 	}
 
+	@javax.annotation.Resource
 	public void setActivitiDeployService(
 			ActivitiDeployService activitiDeployService) {
 		this.activitiDeployService = activitiDeployService;
 	}
 
+	@javax.annotation.Resource
 	public void setActivitiProcessQueryService(
 			ActivitiProcessQueryService activitiProcessQueryService) {
 		this.activitiProcessQueryService = activitiProcessQueryService;
 	}
 
+	@javax.annotation.Resource
 	public void setActivitiProcessService(
 			ActivitiProcessService activitiProcessService) {
 		this.activitiProcessService = activitiProcessService;
 	}
 
+	@javax.annotation.Resource
 	public void setActivitiTaskQueryService(
 			ActivitiTaskQueryService activitiTaskQueryService) {
 		this.activitiTaskQueryService = activitiTaskQueryService;

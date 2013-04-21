@@ -25,7 +25,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
@@ -57,7 +56,7 @@ import com.glaf.core.util.Tools;
 public class MxSysTemplateController {
 	protected final static Log logger = LogFactory
 			.getLog(MxSysTemplateController.class);
-	@Resource
+
 	protected ITemplateService templateService;
 
 	@RequestMapping("/delete")
@@ -223,6 +222,7 @@ public class MxSysTemplateController {
 		return this.list(request, modelMap);
 	}
 
+	@javax.annotation.Resource
 	public void setTemplateService(ITemplateService templateService) {
 		this.templateService = templateService;
 	}

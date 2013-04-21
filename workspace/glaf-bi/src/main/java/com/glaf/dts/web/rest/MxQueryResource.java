@@ -21,8 +21,7 @@ package com.glaf.dts.web.rest;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-
-import javax.annotation.Resource;
+ 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -64,10 +63,9 @@ import com.glaf.dts.util.Constants;
 public class MxQueryResource {
 	private static Log logger = LogFactory.getLog(MxQueryResource.class);
 
-	@Resource
+ 
 	protected ITableDefinitionService tableDefinitionService;
-
-	@Resource
+ 
 	protected IQueryDefinitionService queryDefinitionService;
 
 	@POST
@@ -216,11 +214,13 @@ public class MxQueryResource {
 		return ResponseUtils.responseJsonResult(true);
 	}
 
+	@javax.annotation.Resource
 	public void setQueryDefinitionService(
 			IQueryDefinitionService queryDefinitionService) {
 		this.queryDefinitionService = queryDefinitionService;
 	}
 
+	@javax.annotation.Resource
 	public void setTableDefinitionService(
 			ITableDefinitionService tableDefinitionService) {
 		this.tableDefinitionService = tableDefinitionService;

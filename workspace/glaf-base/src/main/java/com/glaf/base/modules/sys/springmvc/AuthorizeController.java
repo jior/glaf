@@ -42,7 +42,7 @@ import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.sys.service.AuthorizeService;
 import com.glaf.base.modules.sys.service.SysApplicationService;
 import com.glaf.base.modules.sys.service.SysTreeService;
-import com.glaf.base.modules.sys.service.SysUserService;
+
 import com.glaf.base.utils.ContextUtil;
 import com.glaf.base.utils.ParamUtil;
 import com.glaf.base.utils.RequestUtil;
@@ -61,21 +61,11 @@ public class AuthorizeController {
 	private static final Log logger = LogFactory
 			.getLog(AuthorizeController.class);
 
-	@javax.annotation.Resource
 	private SysApplicationService sysApplicationService;
 
-	@javax.annotation.Resource
 	private AuthorizeService authorizeService;
 
-	@javax.annotation.Resource
 	private SysTreeService sysTreeService;
-
-	@javax.annotation.Resource
-	private SysUserService sysUserService;
-
-	public SysUserService getSysUserService() {
-		return sysUserService;
-	}
 
 	/**
 	 * µÇÂ¼
@@ -198,24 +188,23 @@ public class AuthorizeController {
 		return new ModelAndView("/modules/login", modelMap);
 	}
 
+	@javax.annotation.Resource
 	public void setAuthorizeService(AuthorizeService authorizeService) {
 		this.authorizeService = authorizeService;
 		logger.info("setAuthorizeService");
 	}
 
+	@javax.annotation.Resource
 	public void setSysApplicationService(
 			SysApplicationService sysApplicationService) {
 		this.sysApplicationService = sysApplicationService;
 		logger.info("setSysApplicationService");
 	}
 
+	@javax.annotation.Resource
 	public void setSysTreeService(SysTreeService sysTreeService) {
 		this.sysTreeService = sysTreeService;
 		logger.info("setSysTreeService");
-	}
-
-	public void setSysUserService(SysUserService sysUserService) {
-		this.sysUserService = sysUserService;
 	}
 
 	/**

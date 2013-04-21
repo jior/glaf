@@ -26,7 +26,7 @@ import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.IdentityLinkType;
 import org.activiti.engine.task.Task;
 import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -41,13 +41,10 @@ import com.glaf.core.util.StringTools;
 @RequestMapping("/activiti/monitor")
 public class ActivitiMonitorController {
 
-	@Autowired
 	protected ActivitiProcessService activitiProcessService;
 
-	@Autowired
 	protected ActivitiProcessQueryService activitiProcessQueryService;
 
-	@Autowired
 	protected ActivitiTaskQueryService activitiTaskQueryService;
 
 	@RequestMapping("/addGroupIdentityLink")
@@ -141,16 +138,19 @@ public class ActivitiMonitorController {
 		return null;
 	}
 
+	@javax.annotation.Resource
 	public void setActivitiProcessQueryService(
 			ActivitiProcessQueryService activitiProcessQueryService) {
 		this.activitiProcessQueryService = activitiProcessQueryService;
 	}
 
+	@javax.annotation.Resource
 	public void setActivitiProcessService(
 			ActivitiProcessService activitiProcessService) {
 		this.activitiProcessService = activitiProcessService;
 	}
 
+	@javax.annotation.Resource
 	public void setActivitiTaskQueryService(
 			ActivitiTaskQueryService activitiTaskQueryService) {
 		this.activitiTaskQueryService = activitiTaskQueryService;

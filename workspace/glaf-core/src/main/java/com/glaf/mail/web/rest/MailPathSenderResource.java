@@ -31,7 +31,6 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.apache.commons.lang.StringUtils;
@@ -58,7 +57,7 @@ public class MailPathSenderResource {
 	protected static final Log logger = LogFactory
 			.getLog(MailPathSenderResource.class);
 
-	@Autowired
+	 
 	protected IMailPathSenderService mailPathSenderService;
 
 	@POST
@@ -252,6 +251,7 @@ public class MailPathSenderResource {
 		return result.toString().getBytes("UTF-8");
 	}
 
+	@javax.annotation.Resource
 	public void setMailPathSenderService(
 			IMailPathSenderService mailPathSenderService) {
 		this.mailPathSenderService = mailPathSenderService;

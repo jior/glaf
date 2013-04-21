@@ -20,8 +20,7 @@ package com.glaf.chart.web.springmvc;
 
 import java.io.IOException;
 import java.util.*;
-
-import javax.annotation.Resource;
+ 
 import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
@@ -60,10 +59,8 @@ public class ChartController {
 	protected static final Log logger = LogFactory
 			.getLog(ChartController.class);
 
-	@Resource
 	protected IChartService chartService;
 
-	@Resource
 	protected IQueryDefinitionService queryDefinitionService;
 
 	public ChartController() {
@@ -333,6 +330,17 @@ public class ChartController {
 		chartService.save(chart);
 
 		return this.list(request, modelMap);
+	}
+
+	@javax.annotation.Resource
+	public void setChartService(IChartService chartService) {
+		this.chartService = chartService;
+	}
+
+	@javax.annotation.Resource
+	public void setQueryDefinitionService(
+			IQueryDefinitionService queryDefinitionService) {
+		this.queryDefinitionService = queryDefinitionService;
 	}
 
 	@RequestMapping("/update")

@@ -32,8 +32,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
-import javax.annotation.Resource;
-
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -49,7 +47,6 @@ import com.glaf.core.tree.helper.JacksonTreeHelper;
 @Path("/rs/tree")
 public class MxTreeModelResource {
 
-	@Resource
 	protected ITreeModelService treeModelService;
 
 	protected JSONObject fillTreeDataChildren(TreeModel treeNode)
@@ -108,6 +105,7 @@ public class MxTreeModelResource {
 		}
 	}
 
+	@javax.annotation.Resource
 	public void setTreeModelService(ITreeModelService treeModelService) {
 		this.treeModelService = treeModelService;
 	}

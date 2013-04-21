@@ -60,7 +60,7 @@ import com.glaf.core.util.Tools;
 public class MailAccountResource {
 	protected static Log logger = LogFactory.getLog(MailAccountResource.class);
 
-	@javax.annotation.Resource
+	 
 	protected IMailAccountService mailAccountService;
 
 	@POST
@@ -276,6 +276,7 @@ public class MailAccountResource {
 		this.mailAccountService.save(mailAccount);
 	}
 
+	@javax.annotation.Resource
 	public void setMailAccountService(IMailAccountService mailAccountService) {
 		this.mailAccountService = mailAccountService;
 	}

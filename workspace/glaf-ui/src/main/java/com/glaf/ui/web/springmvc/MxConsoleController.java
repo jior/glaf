@@ -26,8 +26,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import javax.annotation.Resource;
+ 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
@@ -66,16 +65,16 @@ public class MxConsoleController {
 	protected final static Log logger = LogFactory
 			.getLog(MxConsoleController.class);
 
-	@Resource
+ 
 	protected SkinService skinService;
 
-	@Resource
+ 
 	protected PanelService panelService;
 
-	@Resource
+ 
 	protected LayoutService layoutService;
 
-	@Resource
+ 
 	protected UserPortalService userPortalService;
 
 	@RequestMapping("/footer")
@@ -123,18 +122,22 @@ public class MxConsoleController {
 
 	}
 
+	@javax.annotation.Resource
 	public void setLayoutService(LayoutService layoutService) {
 		this.layoutService = layoutService;
 	}
 
+	@javax.annotation.Resource
 	public void setPanelService(PanelService panelService) {
 		this.panelService = panelService;
 	}
 
+	@javax.annotation.Resource
 	public void setSkinService(SkinService skinService) {
 		this.skinService = skinService;
 	}
 
+	@javax.annotation.Resource
 	public void setUserPortalService(UserPortalService userPortalService) {
 		this.userPortalService = userPortalService;
 	}

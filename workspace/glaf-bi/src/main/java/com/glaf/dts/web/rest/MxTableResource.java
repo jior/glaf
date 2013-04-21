@@ -25,8 +25,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-
-import javax.annotation.Resource;
+ 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -77,13 +76,11 @@ public class MxTableResource {
 	protected static final Log logger = LogFactory
 			.getLog(MxTableResource.class);
 
-	@Resource
+ 
 	protected ITableDefinitionService tableDefinitionService;
-
-	@Resource
+ 
 	protected IQueryDefinitionService queryDefinitionService;
-
-	@Resource
+ 
 	protected ITablePageService tablePageService;
 
 	@POST
@@ -435,16 +432,19 @@ public class MxTableResource {
 
 	}
 
+	@javax.annotation.Resource
 	public void setQueryDefinitionService(
 			IQueryDefinitionService queryDefinitionService) {
 		this.queryDefinitionService = queryDefinitionService;
 	}
 
+	@javax.annotation.Resource
 	public void setTableDefinitionService(
 			ITableDefinitionService tableDefinitionService) {
 		this.tableDefinitionService = tableDefinitionService;
 	}
 
+	@javax.annotation.Resource
 	public void setTablePageService(ITablePageService tablePageService) {
 		this.tablePageService = tablePageService;
 	}

@@ -24,7 +24,7 @@ import com.glaf.base.modules.sys.service.*;
 @Controller("/sys/dictoryDefinition")
 @RequestMapping("/sys/dictoryDefinition.do")
 public class SysDictoryDefinitionController {
-	@javax.annotation.Resource
+
 	protected DictoryDefinitionService dictoryDefinitionService;
 
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
@@ -207,6 +207,12 @@ public class SysDictoryDefinitionController {
 			ex.printStackTrace();
 		}
 		return ResponseUtils.responseJsonResult(false);
+	}
+
+	@javax.annotation.Resource
+	public void setDictoryDefinitionService(
+			DictoryDefinitionService dictoryDefinitionService) {
+		this.dictoryDefinitionService = dictoryDefinitionService;
 	}
 
 }

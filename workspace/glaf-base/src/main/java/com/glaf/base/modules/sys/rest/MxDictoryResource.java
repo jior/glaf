@@ -49,10 +49,8 @@ import com.glaf.base.modules.sys.service.SysTreeService;
 @Path("/rs/dictory")
 public class MxDictoryResource {
 
-	@javax.annotation.Resource
 	private DictoryService dictoryService;
 
-	@javax.annotation.Resource
 	private SysTreeService sysTreeService;
 
 	@GET
@@ -109,10 +107,12 @@ public class MxDictoryResource {
 		}
 	}
 
+	@javax.annotation.Resource
 	public void setDictoryService(DictoryService dictoryService) {
 		this.dictoryService = dictoryService;
 	}
 
+	@javax.annotation.Resource
 	public void setSysTreeService(SysTreeService sysTreeService) {
 		this.sysTreeService = sysTreeService;
 	}

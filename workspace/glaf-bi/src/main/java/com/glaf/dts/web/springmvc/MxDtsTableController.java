@@ -22,7 +22,6 @@ import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -53,10 +52,8 @@ public class MxDtsTableController {
 	protected static final Log logger = LogFactory
 			.getLog(MxDtsTableController.class);
 
-	@Resource
 	protected IQueryDefinitionService queryDefinitionService;
 
-	@Resource
 	protected ITableDefinitionService tableDefinitionService;
 
 	@RequestMapping("/edit")
@@ -154,6 +151,18 @@ public class MxDtsTableController {
 			return new ModelAndView(x_view, modelMap);
 		}
 		return new ModelAndView("/bi/dts/table/resultList", modelMap);
+	}
+
+	@javax.annotation.Resource
+	public void setQueryDefinitionService(
+			IQueryDefinitionService queryDefinitionService) {
+		this.queryDefinitionService = queryDefinitionService;
+	}
+
+	@javax.annotation.Resource
+	public void setTableDefinitionService(
+			ITableDefinitionService tableDefinitionService) {
+		this.tableDefinitionService = tableDefinitionService;
 	}
 
 	@RequestMapping("/tableData")

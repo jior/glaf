@@ -22,7 +22,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -62,7 +61,7 @@ import com.glaf.dts.util.Constants;
 public class MxSchedulerResource {
 	protected final static Log logger = LogFactory
 			.getLog(MxSchedulerResource.class);
-	@Resource
+
 	protected ISysSchedulerService sysSchedulerService;
 
 	public MxSchedulerResource() {
@@ -203,6 +202,7 @@ public class MxSchedulerResource {
 		}
 	}
 
+	@javax.annotation.Resource
 	public void setSysSchedulerService(ISysSchedulerService sysSchedulerService) {
 		this.sysSchedulerService = sysSchedulerService;
 	}

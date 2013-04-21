@@ -43,10 +43,8 @@ public class MxReportTaskController {
 	protected static final Log logger = LogFactory
 			.getLog(MxReportTaskController.class);
 
-	@javax.annotation.Resource
 	protected IReportService reportService;
 
-	@javax.annotation.Resource
 	protected IReportTaskService reportTaskService;
 
 	public MxReportTaskController() {
@@ -241,6 +239,12 @@ public class MxReportTaskController {
 		return this.list(request, modelMap);
 	}
 
+	@javax.annotation.Resource
+	public void setReportService(IReportService reportService) {
+		this.reportService = reportService;
+	}
+
+	@javax.annotation.Resource
 	public void setReportTaskService(IReportTaskService reportTaskService) {
 		this.reportTaskService = reportTaskService;
 	}

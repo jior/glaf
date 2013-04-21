@@ -39,7 +39,6 @@ public class WorkCalendarResource {
 	private static final Log logger = LogFactory
 			.getLog(WorkCalendarResource.class);
 
-	@javax.annotation.Resource
 	private WorkCalendarService workCalendarService;
 
 	/**
@@ -88,6 +87,7 @@ public class WorkCalendarResource {
 		}
 	}
 
+	@javax.annotation.Resource
 	public void setWorkCalendarService(WorkCalendarService workCalendarService) {
 		this.workCalendarService = workCalendarService;
 		logger.info("setWorkCalendarService");

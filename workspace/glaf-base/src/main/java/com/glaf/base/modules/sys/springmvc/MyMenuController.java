@@ -42,10 +42,10 @@ public class MyMenuController {
 	protected final static Log logger = LogFactory
 			.getLog(MyMenuController.class);
 
-	@javax.annotation.Resource
+	 
 	protected SysApplicationService sysApplicationService;
 
-	@javax.annotation.Resource
+ 
 	protected ITreeModelService treeModelService;
 
 	@RequestMapping(params = "method=jump")
@@ -101,11 +101,13 @@ public class MyMenuController {
 		}
 	}
 
+	@javax.annotation.Resource
 	public void setSysApplicationService(
 			SysApplicationService sysApplicationService) {
 		this.sysApplicationService = sysApplicationService;
 	}
 
+	@javax.annotation.Resource
 	public void setTreeModelService(ITreeModelService treeModelService) {
 		this.treeModelService = treeModelService;
 	}

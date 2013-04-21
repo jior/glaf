@@ -22,8 +22,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.List;
-
-import javax.annotation.Resource;
+ 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
@@ -53,16 +52,11 @@ public class MxLayoutController {
 
 	protected final static String SHOW_ACTION = "redirect:/mx/layout";
 
-	@Resource
 	protected SkinService skinService;
 
-	@Resource
 	protected PanelService panelService;
 
-	@Resource
 	protected LayoutService layoutService;
-
-
 
 	@RequestMapping("/save")
 	public ModelAndView save(ModelMap modelMap, HttpServletRequest request) {
@@ -113,19 +107,20 @@ public class MxLayoutController {
 		return showLayout(modelMap, request);
 	}
 
+	@javax.annotation.Resource
 	public void setLayoutService(LayoutService layoutService) {
 		this.layoutService = layoutService;
 	}
 
+	@javax.annotation.Resource
 	public void setPanelService(PanelService panelService) {
 		this.panelService = panelService;
 	}
 
+	@javax.annotation.Resource
 	public void setSkinService(SkinService skinService) {
 		this.skinService = skinService;
 	}
-
-	
 
 	@RequestMapping
 	public ModelAndView showLayout(ModelMap modelMap, HttpServletRequest request) {
@@ -145,7 +140,7 @@ public class MxLayoutController {
 
 		if (userPanel != null && userPanel.getLayout() != null) {
 			if (userPanel.getLayout().getTemplateId() != null) {
-				
+
 			}
 		}
 

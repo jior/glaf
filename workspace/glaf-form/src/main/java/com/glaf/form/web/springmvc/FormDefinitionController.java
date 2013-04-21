@@ -30,7 +30,6 @@ public class FormDefinitionController {
 	private static final Log logger = LogFactory
 			.getLog(FormDefinitionController.class);
 
-	@javax.annotation.Resource
 	protected FormDataService formDataService;
 
 	public FormDefinitionController() {
@@ -51,25 +50,21 @@ public class FormDefinitionController {
 				if (StringUtils.isNotEmpty(x)) {
 					FormDefinition formDefinition = formDataService
 							.getFormDefinition(x);
-
 					if (formDefinition != null
 							&& (StringUtils.equals(
 									formDefinition.getCreateBy(),
 									loginContext.getActorId()) || loginContext
 									.isSystemAdministrator())) {
-
 					}
 				}
 			}
 		} else if (StringUtils.isNotEmpty(rowId)) {
 			FormDefinition formDefinition = formDataService
 					.getFormDefinition(rowId);
-
 			if (formDefinition != null
 					&& (StringUtils.equals(formDefinition.getCreateBy(),
 							loginContext.getActorId()) || loginContext
 							.isSystemAdministrator())) {
-
 			}
 		}
 	}
@@ -255,6 +250,11 @@ public class FormDefinitionController {
 			logger.error(ex);
 		}
 		return ResponseUtils.responseJsonResult(false);
+	}
+
+	@javax.annotation.Resource
+	public void setFormDataService(FormDataService formDataService) {
+		this.formDataService = formDataService;
 	}
 
 	@RequestMapping(params = "method=update")

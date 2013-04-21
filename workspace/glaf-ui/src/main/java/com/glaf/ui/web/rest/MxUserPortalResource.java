@@ -33,7 +33,7 @@ import javax.ws.rs.core.UriInfo;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+ 
 import org.springframework.stereotype.Controller;
 import com.glaf.core.util.RequestUtils;
 import com.glaf.core.util.StringTools;
@@ -47,10 +47,10 @@ import com.glaf.ui.service.UserPortalService;
 public class MxUserPortalResource {
 	protected static Log logger = LogFactory.getLog(MxUserPortalResource.class);
 
-	@Autowired
+	 
 	protected UserPortalService userPortalService;
 
-	@Autowired
+ 
 	protected PanelService panelService;
 
 	@POST
@@ -130,10 +130,12 @@ public class MxUserPortalResource {
 		}
 	}
 
+	@javax.annotation.Resource
 	public void setPanelService(PanelService panelService) {
 		this.panelService = panelService;
 	}
 
+	@javax.annotation.Resource
 	public void setUserPortalService(UserPortalService userPortalService) {
 		this.userPortalService = userPortalService;
 	}

@@ -33,7 +33,6 @@ import ${packageName}.service.${entityName}Service;
 public class ${entityName}ResourceRest {
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
 
-	@javax.annotation.Resource
 	protected ${entityName}Service ${modelName}Service;
 
 	@POST
@@ -182,6 +181,7 @@ public class ${entityName}ResourceRest {
 		return ResponseUtils.responseJsonResult(false);
 	}
 
+        @javax.annotation.Resource
 	public void set${entityName}Service(${entityName}Service ${modelName}Service) {
 		this.${modelName}Service = ${modelName}Service;
 	}

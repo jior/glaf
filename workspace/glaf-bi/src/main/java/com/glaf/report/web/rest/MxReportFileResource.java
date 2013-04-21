@@ -59,7 +59,7 @@ public class MxReportFileResource {
 	protected static final Log logger = LogFactory
 			.getLog(MxReportFileResource.class);
 
-	@javax.annotation.Resource
+	 
 	protected IReportFileService reportFileService;
 
 	@POST
@@ -254,6 +254,7 @@ public class MxReportFileResource {
 		return ResponseUtils.responseJsonResult(false, "±£¥Ê ß∞‹£°");
 	}
 
+	@javax.annotation.Resource
 	public void setReportFileService(IReportFileService reportFileService) {
 		this.reportFileService = reportFileService;
 	}

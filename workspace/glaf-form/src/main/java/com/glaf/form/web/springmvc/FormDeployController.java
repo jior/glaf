@@ -30,15 +30,10 @@ public class FormDeployController {
 	private static final Log logger = LogFactory
 			.getLog(FormDeployController.class);
 
-	@javax.annotation.Resource
 	protected FormDataService formDataService;
 
 	public FormDeployController() {
 
-	}
-
-	public void setFormDataService(FormDataService formDataService) {
-		this.formDataService = formDataService;
 	}
 
 	@RequestMapping
@@ -107,6 +102,11 @@ public class FormDeployController {
 		}
 
 		return null;
+	}
+
+	@javax.annotation.Resource
+	public void setFormDataService(FormDataService formDataService) {
+		this.formDataService = formDataService;
 	}
 
 }

@@ -24,8 +24,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
-
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.RepositoryService;
@@ -49,19 +47,14 @@ import com.glaf.core.util.UUID32;
 @Transactional
 public class ActivitiProcessServiceImpl implements ActivitiProcessService {
 
-	@Resource
 	protected RepositoryService repositoryService;
 
-	@Resource
 	protected RuntimeService runtimeService;
 
-	@Resource
 	protected TaskService taskService;
 
-	@Resource
 	protected HistoryService historyService;
 
-	@Resource
 	protected IdentityService identityService;
 
 	public ActivitiProcessServiceImpl() {
@@ -291,10 +284,12 @@ public class ActivitiProcessServiceImpl implements ActivitiProcessService {
 		taskService.setAssignee(taskId, actorId);
 	}
 
+	@javax.annotation.Resource
 	public void setHistoryService(HistoryService historyService) {
 		this.historyService = historyService;
 	}
 
+	@javax.annotation.Resource
 	public void setIdentityService(IdentityService identityService) {
 		this.identityService = identityService;
 	}
@@ -309,14 +304,17 @@ public class ActivitiProcessServiceImpl implements ActivitiProcessService {
 		taskService.setPriority(taskId, priority);
 	}
 
+	@javax.annotation.Resource
 	public void setRepositoryService(RepositoryService repositoryService) {
 		this.repositoryService = repositoryService;
 	}
 
+	@javax.annotation.Resource
 	public void setRuntimeService(RuntimeService runtimeService) {
 		this.runtimeService = runtimeService;
 	}
 
+	@javax.annotation.Resource
 	public void setTaskService(TaskService taskService) {
 		this.taskService = taskService;
 	}

@@ -46,8 +46,7 @@ import com.glaf.core.util.RequestUtils;
 public class WorkCalendarController {
 	private static final Log logger = LogFactory
 			.getLog(WorkCalendarController.class);
-
-	@javax.annotation.Resource
+ 
 	private WorkCalendarService workCalendarService;
 
 	/**
@@ -90,6 +89,7 @@ public class WorkCalendarController {
 		}
 	}
 
+	@javax.annotation.Resource
 	public void setWorkCalendarService(WorkCalendarService workCalendarService) {
 		this.workCalendarService = workCalendarService;
 		logger.info("setWorkCalendarService");

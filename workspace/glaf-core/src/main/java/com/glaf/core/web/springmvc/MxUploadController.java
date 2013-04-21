@@ -27,8 +27,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.Semaphore;
-
-import javax.annotation.Resource;
+ 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -61,10 +60,11 @@ public class MxUploadController {
 	protected final static Log logger = LogFactory
 			.getLog(MxUploadController.class);
 	private static final int MAX_AVAILABLE = 10;
-	private final Semaphore semaphore = new Semaphore(MAX_AVAILABLE, true);
-	@Resource
 	protected IBlobService blobService;
-
+	 
+	private final Semaphore semaphore = new Semaphore(MAX_AVAILABLE, true);
+	
+	
 	@RequestMapping("/main")
 	public ModelAndView main(HttpServletRequest request, ModelMap modelMap) {
 		String serviceKey = request.getParameter("serviceKey");
@@ -185,6 +185,11 @@ public class MxUploadController {
 		}
 
 		return this.showUpload(request, modelMap);
+	}
+
+	@javax.annotation.Resource
+	public void setBlobService(IBlobService blobService) {
+		this.blobService = blobService;
 	}
 
 	@RequestMapping("/showUpload")

@@ -19,8 +19,7 @@
 package com.glaf.ui.web.springmvc;
 
 import java.util.List;
-
-import javax.annotation.Resource;
+ 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
@@ -49,11 +48,10 @@ public class MxSkinController {
 
 	protected final static String LIST_ACTION = "redirect:/mx/skin";
 
-	@Resource
 	protected SkinService skinService;
-	@Resource
+
 	protected PanelService panelService;
-	@Resource
+
 	protected LayoutService layoutService;
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
@@ -67,14 +65,17 @@ public class MxSkinController {
 		return LIST_ACTION;
 	}
 
+	@javax.annotation.Resource
 	public void setLayoutService(LayoutService layoutService) {
 		this.layoutService = layoutService;
 	}
 
+	@javax.annotation.Resource
 	public void setPanelService(PanelService panelService) {
 		this.panelService = panelService;
 	}
 
+	@javax.annotation.Resource
 	public void setSkinService(SkinService skinService) {
 		this.skinService = skinService;
 	}
