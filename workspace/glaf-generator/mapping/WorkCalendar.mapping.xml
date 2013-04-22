@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <mapping>
     <entity name="WorkCalendar" package="com.glaf.base.modules.others" table="sys_workcalendar" title="工作日历" englishTitle="WorkCalendar">
-        <id name="id" column="ID" type="Long" englishTitle="id" length="19" title="编号" />
-        <property name="freeDay" column="FREEDAY" type="Integer" englishTitle="freeDay" dataType="0" length="10" title="休息日" />
-        <property name="freeMonth" column="FREEMONTH" type="Integer" englishTitle="freeMonth" dataType="0" length="10" title="月" />
-        <property name="freeYear" column="FREEYEAR" type="Integer" englishTitle="freeYear" dataType="0" length="10" title="年" />
+        <id name="id" column="ID" type="Long" englishTitle="id" title="编号" />
+        <property name="freeDay" column="FREEDAY" type="Integer" englishTitle="freeDay" length="10" title="休息日" />
+        <property name="freeMonth" column="FREEMONTH" type="Integer" englishTitle="freeMonth" length="10" title="月" />
+        <property name="freeYear" column="FREEYEAR" type="Integer" englishTitle="freeYear" length="10" title="年" />
     </entity>
 </mapping>

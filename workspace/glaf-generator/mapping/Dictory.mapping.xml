@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <mapping>
     <entity name="Dictory" package="com.glaf.base.modules.sys" table="sys_dictory" title="数据字典" englishTitle="Dictory">
-        <id name="id" column="ID" type="Long" englishTitle="id" length="19"  title="编号"/>
+        <id name="id" column="ID" type="Long" englishTitle="id"  title="编号"/>
         <property name="nodeId" column="TYPEID" type="Long" englishTitle="nodeId"  title="类型编号"/>
         <property name="name" column="NAME" type="String" englishTitle="name" length="50"  title="名称"/>
         <property name="desc" column="DICTDESC" type="String" englishTitle="desc" length="200"  title="描述"/>

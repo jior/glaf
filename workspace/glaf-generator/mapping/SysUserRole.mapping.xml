@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <mapping>
     <entity name="SysUserRole" package="com.glaf.base.modules.sys" table="sys_user_role" title="用户角色" englishTitle="SysUserRole">
-        <id name="id" column="ID" type="Long" englishTitle="id" length="19" title="编号" />
-        <property name="userId" column="USERID" type="Long" englishTitle="userId" dataType="0" length="19" nullable="false" title="用户名" />
-        <property name="deptRoleId" column="ROLEID" type="Long" englishTitle="deptRoleId" dataType="0" length="19" nullable="false" title="部门角色编号" />
-        <property name="authorized" column="AUTHORIZED" type="Integer" englishTitle="authorized" dataType="0" length="10" title="授权人" />
-        <property name="authorizeFromId" column="AUTHORIZEFROM" type="Long" englishTitle="authorizeFromId" dataType="0" length="19" title="委托人" />
-        <property name="availDateStart" column="AVAILDATESTART" type="Date" englishTitle="availDateStart" dataType="0" length="23" title="开始时间" />
-        <property name="availDateEnd" column="AVAILDATEEND" type="Date" englishTitle="availDateEnd" dataType="0" length="23" title="结束时间" />
-        <property name="processDescription" column="PROCESSDESCRIPTION" type="String" englishTitle="processDescription" dataType="0" length="255" title="流程描述" />
+        <id name="id" column="ID" type="Long" englishTitle="id" title="编号" />
+        <property name="userId" column="USERID" type="Long" englishTitle="userId" nullable="false" title="用户名" />
+        <property name="deptRoleId" column="ROLEID" type="Long" englishTitle="deptRoleId" nullable="false" title="部门角色编号" />
+        <property name="authorized" column="AUTHORIZED" type="Integer" englishTitle="authorized" length="10" title="授权人" />
+        <property name="authorizeFromId" column="AUTHORIZEFROM" type="Long" englishTitle="authorizeFromId" title="委托人" />
+        <property name="availDateStart" column="AVAILDATESTART" type="Date" englishTitle="availDateStart" length="23" title="开始时间" />
+        <property name="availDateEnd" column="AVAILDATEEND" type="Date" englishTitle="availDateEnd" length="23" title="结束时间" />
+        <property name="processDescription" column="PROCESSDESCRIPTION" type="String" englishTitle="processDescription" length="255" title="流程描述" />
 		<property name="createDate" column="CREATEDATE" title="创建日期"
 			englishTitle="Create Date" type="Date" displayType="4" nullable="false"/>
 		<property name="createBy" column="CREATEBY" title="创建人" 

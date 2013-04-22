@@ -2,7 +2,7 @@
 <mapping>
 	<entity name="TodoInstance" package="com.glaf.core.todo"  table="sys_todo_instance"
 		title="待办任务" englishTitle="TodoInstance">
-		<id name="id" column="ID" type="Long" englishTitle="ID" length="19" title="编号" />
+		<id name="id" column="ID" type="Long" englishTitle="ID" title="编号" />
 		<property column="actorId" name="actorId" type="String" englishTitle="actorId" title="参与者" />
 		<property column="actorName" name="actorName" type="String" englishTitle="actorName" title="参与者姓名" />
 		<property column="title" name="title" type="String" englishTitle="title" title="主题" />

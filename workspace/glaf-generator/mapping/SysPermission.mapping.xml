@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <mapping>
     <entity name="SysPermission" package="com.glaf.base.modules.sys" table="sys_permission" title="功能权限" englishTitle="SysPermission">
-        <id name="funcId" column="FUNCID" type="Long" englishTitle="funcId" length="19" title="功能编号" />
-		<property name="roleId" column="ROLEID" type="Long" englishTitle="roleId" length="19" title="角色编号" />
+        <id name="funcId" column="FUNCID" type="Long" englishTitle="funcId" title="功能编号" />
+		<property name="roleId" column="ROLEID" type="Long" englishTitle="roleId" title="角色编号" />
 		<property name="createDate" column="CREATEDATE" title="创建日期"
 			englishTitle="Create Date" type="Date" displayType="4" nullable="false"/>
 		<property name="createBy" column="CREATEBY" title="创建人" 

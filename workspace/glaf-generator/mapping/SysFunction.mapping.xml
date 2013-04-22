@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <mapping>
     <entity name="SysFunction" package="com.glaf.base.modules.sys" table="sys_function" title="系统功能" englishTitle="SysFunction">
-        <id name="id" column="ID" type="Long" englishTitle="id" length="19" title="编号" />
-        <property name="name" column="NAME" type="String" englishTitle="name" dataType="0" length="255" title="名称" />
-        <property name="funcDesc" column="FUNCDESC" type="String" englishTitle="funcDesc" dataType="0" length="255" title="描述" />
-        <property name="funcMethod" column="FUNCMETHOD" type="String" englishTitle="funcMethod" dataType="0" length="255" title="方法" />
-        <property name="sort" column="SORT" type="Integer" englishTitle="sort" dataType="0" length="10" title="序号" />
-        <property name="appId" column="APPID" type="Long" englishTitle="appId" dataType="0" length="19" nullable="false" title="应用编号" />
+        <id name="id" column="ID" type="Long" englishTitle="id" title="编号" />
+        <property name="name" column="NAME" type="String" englishTitle="name" length="255" title="名称" />
+        <property name="funcDesc" column="FUNCDESC" type="String" englishTitle="funcDesc" length="255" title="描述" />
+        <property name="funcMethod" column="FUNCMETHOD" type="String" englishTitle="funcMethod" length="255" title="方法" />
+        <property name="sort" column="SORT" type="Integer" englishTitle="sort" length="10" title="序号" />
+        <property name="appId" column="APPID" type="Long" englishTitle="appId" nullable="false" title="应用编号" />
 		<property name="createDate" column="CREATEDATE" title="创建日期"
 			englishTitle="Create Date" type="Date" displayType="4" nullable="false"/>
 		<property name="createBy" column="CREATEBY" title="创建人" 

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <mapping>
     <entity name="SysTree" package="com.glaf.base.modules.sys" table="sys_tree" title="目录树" englishTitle="SysTree">
-        <id name="id" column="ID" type="Long" englishTitle="Id" length="19" title="编号" />
-        <property name="parent" column="PARENT" type="Long" englishTitle="parent" length="19" title="父节点编号" />
+        <id name="id" column="ID" type="Long" englishTitle="Id" title="编号" />
+        <property name="parent" column="PARENT" type="Long" englishTitle="parent" title="父节点编号" />
         <property name="name" column="NAME" type="String" englishTitle="name" length="255" title="名称" />
         <property name="desc" column="NODEDESC" type="String" englishTitle="desc" length="255" title="节点描述" />
         <property name="sort" column="SORT" type="Integer" englishTitle="sort" length="10" title="序号" />
