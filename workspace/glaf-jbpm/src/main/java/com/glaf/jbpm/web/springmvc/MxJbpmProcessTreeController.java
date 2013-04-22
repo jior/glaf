@@ -93,7 +93,7 @@ public class MxJbpmProcessTreeController {
 			if (StringUtils.isNotEmpty(processDefinitionId)
 					&& StringUtils.isNumeric(processDefinitionId)) {
 				ProcessDefinition pd = graphSession.getProcessDefinition(Long
-						.valueOf(processDefinitionId));
+						.parseLong(processDefinitionId));
 				if (pd != null) {
 					Map<String, Task> tasks = pd.getTaskMgmtDefinition()
 							.getTasks();
