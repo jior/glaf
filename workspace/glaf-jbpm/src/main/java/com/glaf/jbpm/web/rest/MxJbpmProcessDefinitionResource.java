@@ -37,7 +37,7 @@ public class MxJbpmProcessDefinitionResource {
 	@GET
 	@POST
 	@Path("/json")
-	@Produces({ MediaType.TEXT_HTML })
+	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
 	@ResponseBody
 	public byte[] json(@javax.ws.rs.core.Context HttpServletRequest request)
 			throws IOException {
@@ -78,7 +78,7 @@ public class MxJbpmProcessDefinitionResource {
 	@GET
 	@POST
 	@Path("/taskJson")
-	@Produces({ MediaType.TEXT_HTML })
+	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
 	@ResponseBody
 	public byte[] taskJson(@javax.ws.rs.core.Context HttpServletRequest request)
 			throws IOException {

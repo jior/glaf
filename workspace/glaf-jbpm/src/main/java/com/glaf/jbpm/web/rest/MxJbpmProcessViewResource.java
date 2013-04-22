@@ -85,7 +85,7 @@ public class MxJbpmProcessViewResource {
 	@GET
 	@POST
 	@Path("detail/{processInstanceId}")
-	@Produces({ MediaType.TEXT_HTML })
+	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
 	@ResponseBody
 	public byte[] detail(@javax.ws.rs.core.Context HttpServletRequest request,
 			@PathParam("processInstanceId") String pid) {
