@@ -167,7 +167,7 @@ public class FormDefinitionController {
 					FormDefinition formDefinition = (FormDefinition) object;
 					JSONObject rowJSON = formDefinition.toJsonObject();
 					rowJSON.put("id", formDefinition.getId());
-					rowJSON.put("formDefinitionId", formDefinition.getId());
+					rowJSON.put("formDefinitionId", formDefinition.getFormDefinitionId());
 					rowJSON.put("startIndex", ++start);
 					rowsJSON.add(rowJSON);
 				}
