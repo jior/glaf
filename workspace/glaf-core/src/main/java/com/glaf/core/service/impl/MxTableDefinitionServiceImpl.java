@@ -300,8 +300,6 @@ public class MxTableDefinitionServiceImpl implements ITableDefinitionService {
 	@Transactional
 	public void saveSystemTable(String tableName, List<ColumnDefinition> rows) {
 		tableName = tableName.toLowerCase();
-		List<ColumnDefinition> list = columnDefinitionMapper
-				.getColumnDefinitionsByTableName(tableName);
 		TableDefinition table = this.getTableDefinition(tableName);
 		if (table == null) {
 			table = new TableDefinition();
@@ -320,18 +318,18 @@ public class MxTableDefinitionServiceImpl implements ITableDefinitionService {
 			table.setColumnQty(rows.size());
 			tableDefinitionMapper.updateTableDefinition(table);
 		}
-		if (list != null && !list.isEmpty()) {
-			for (ColumnDefinition c : list) {
-				columnDefinitionMapper.deleteColumnDefinitionById(c.getId());
-			}
-		}
+		columnDefinitionMapper.deleteColumnDefinitionByTableName(tableName);
+		Set<String> cols = new HashSet<String>();
 		for (ColumnDefinition column : rows) {
 			String id = (tableName + "_" + column.getColumnName())
 					.toLowerCase();
-			column.setId(id);
-			column.setSystemFlag("1");
-			column.setTableName(tableName);
-			columnDefinitionMapper.insertColumnDefinition(column);
+			if (!cols.contains(id)) {
+				column.setId(id);
+				column.setSystemFlag("1");
+				column.setTableName(tableName);
+				columnDefinitionMapper.insertColumnDefinition(column);
+				cols.add(id);
+			}
 		}
 	}
 

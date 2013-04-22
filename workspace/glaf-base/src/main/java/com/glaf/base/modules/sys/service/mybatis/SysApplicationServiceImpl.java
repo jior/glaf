@@ -234,7 +234,7 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 				menu.append("<li>");
 				menu.append("<a href=\"javascript:jump('");
 				// System.out.println("ContextUtil.getContextPath():"+ContextUtil.getContextPath());
-				if (bean.getUrl().startsWith("/")) {
+				if (bean.getUrl() != null && bean.getUrl().startsWith("/")) {
 					if (ApplicationContext.getContextPath() != null) {
 						menu.append(ApplicationContext.getContextPath());
 					}
