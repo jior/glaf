@@ -234,7 +234,7 @@ CREATE TABLE sys_todo_instance(
         title nvarchar(255),
         content nvarchar(255),
         provider nvarchar(255),
-        link nvarchar(255),
+        link_ nvarchar(255),
         linktype nvarchar(255),
         createdate datetime,
         startdate datetime,
@@ -247,7 +247,7 @@ CREATE TABLE sys_todo_instance(
         deptname nvarchar(255),
         roleid bigint,
         rolecode nvarchar(255),
-        rowid nvarchar(255),
+        rowid_ nvarchar(255),
         todoid bigint,
         appid bigint,
         moduleid bigint,
@@ -353,7 +353,7 @@ CREATE TABLE  Attachment (
 );
 
 
-  CREATE TABLE  Audit (
+  CREATE TABLE  MyAudit (
 	id bigint not null,
 	referId bigint ,
 	referType int ,
