@@ -34,6 +34,21 @@ public class DbTableChecker {
 
 	protected final static Log logger = LogFactory.getLog(DbTableChecker.class);
 
+	public static void main(String[] args) {
+		ITableDefinitionService tableDefinitionService = null;
+		try {
+			tableDefinitionService = ContextFactory
+					.getBean("tableDefinitionService");
+			if (tableDefinitionService != null) {
+				DbTableChecker checker = new DbTableChecker();
+				checker.setTableDefinitionService(tableDefinitionService);
+				checker.checkTables();
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
+
 	protected ITableDefinitionService tableDefinitionService;
 
 	public DbTableChecker() {
@@ -73,6 +88,67 @@ public class DbTableChecker {
 				if (tableName.startsWith("demo_")) {
 					continue;
 				}
+				if (tableName.startsWith("wwv_")) {
+					continue;
+				}
+				if (tableName.startsWith("aq_")) {
+					continue;
+				}
+				if (tableName.startsWith("bsln_")) {
+					continue;
+				}
+				if (tableName.startsWith("mgmt_")) {
+					continue;
+				}
+				if (tableName.startsWith("ogis_")) {
+					continue;
+				}
+				if (tableName.startsWith("ols_")) {
+					continue;
+				}
+				if (tableName.startsWith("em_")) {
+					continue;
+				}
+				if (tableName.startsWith("openls_")) {
+					continue;
+				}
+				if (tableName.startsWith("mrac_")) {
+					continue;
+				}
+				if (tableName.startsWith("orddcm_")) {
+					continue;
+				}
+
+				if (tableName.startsWith("ggs_")) {
+					continue;
+				}
+
+				if (tableName.startsWith("ggs_")) {
+					continue;
+				}
+
+				if (tableName.startsWith("sdo_")) {
+					continue;
+				}
+				if (tableName.startsWith("sys_iot_")) {
+					continue;
+				}
+
+				if (tableName.indexOf("$") != -1) {
+					continue;
+				}
+				if (tableName.indexOf("+") != -1) {
+					continue;
+				}
+				if (tableName.indexOf("-") != -1) {
+					continue;
+				}
+				if (tableName.indexOf("?") != -1) {
+					continue;
+				}
+				if (tableName.indexOf("=") != -1) {
+					continue;
+				}
 				if (tableMap.get(tableName) == null) {
 					try {
 						List<ColumnDefinition> columns = DBUtils
@@ -110,21 +186,6 @@ public class DbTableChecker {
 	public void setTableDefinitionService(
 			ITableDefinitionService tableDefinitionService) {
 		this.tableDefinitionService = tableDefinitionService;
-	}
-
-	public static void main(String[] args) {
-		ITableDefinitionService tableDefinitionService = null;
-		try {
-			tableDefinitionService = ContextFactory
-					.getBean("tableDefinitionService");
-			if (tableDefinitionService != null) {
-				DbTableChecker checker = new DbTableChecker();
-				checker.setTableDefinitionService(tableDefinitionService);
-				checker.checkTables();
-			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
 	}
 
 }
