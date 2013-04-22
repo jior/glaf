@@ -39,6 +39,10 @@ public interface FormDefinitionMapper {
 
 	List<FormDefinition> getFormDefinitions(FormDefinitionQuery query);
 
+	FormDefinition getLatestFormDefinitionByName(String name);
+
+	List<FormDefinition> getLatestFormDefinitions(FormDefinitionQuery query);
+
 	void insertFormDefinition(FormDefinition model);
 
 	void lockOldVersionFormDefinitions(String name);

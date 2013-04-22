@@ -252,19 +252,18 @@ public class MxFormDataServiceImpl implements FormDataService {
 			JSONObject jsonObject = JSON.parseObject(text);
 			return FormDefinitionJsonFactory.jsonToObject(jsonObject);
 		}
-		FormDefinitionQuery query = new FormDefinitionQuery();
-		query.name(name);
-		query.setOrderBy(" E.VERSION_ desc ");
-		FormDefinition formDefinition = null;
-		List<FormDefinition> list = this.formDefinitionList(query);
-		if (list != null && !list.isEmpty()) {
-			formDefinition = list.get(0);
-			if (formDefinition != null) {
-				CacheFactory.put(cacheKey, formDefinition.toJsonObject()
-						.toJSONString());
-			}
+		FormDefinition formDefinition = formDefinitionMapper
+				.getLatestFormDefinitionByName(name);
+		if (formDefinition != null) {
+			CacheFactory.put(cacheKey, formDefinition.toJsonObject()
+					.toJSONString());
 		}
 		return formDefinition;
+	}
+
+	public List<FormDefinition> getLatestFormDefinitions(
+			FormDefinitionQuery query) {
+		return formDefinitionMapper.getLatestFormDefinitions(query);
 	}
 
 	public Paging getPageApplication(FormApplicationQuery query) {
@@ -584,6 +583,12 @@ public class MxFormDataServiceImpl implements FormDataService {
 	}
 
 	@javax.annotation.Resource
+	public void setFormHistoryInstanceMapper(
+			FormHistoryInstanceMapper formHistoryInstanceMapper) {
+		this.formHistoryInstanceMapper = formHistoryInstanceMapper;
+	}
+
+	@javax.annotation.Resource
 	@Qualifier("myBatisDbIdGenerator")
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
@@ -592,12 +597,6 @@ public class MxFormDataServiceImpl implements FormDataService {
 	@javax.annotation.Resource
 	public void setSqlSession(SqlSession sqlSession) {
 		this.sqlSession = sqlSession;
-	}
-
-	@javax.annotation.Resource
-	public void setFormHistoryInstanceMapper(
-			FormHistoryInstanceMapper formHistoryInstanceMapper) {
-		this.formHistoryInstanceMapper = formHistoryInstanceMapper;
 	}
 
 	@javax.annotation.Resource

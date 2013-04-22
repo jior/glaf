@@ -81,16 +81,6 @@ public interface FormDataService {
 	DataModel getDataModel(String appId, Long id);
 
 	/**
-	 * 根据表单业务编号获取表单实例数据
-	 * 
-	 * @param appId
-	 *            应用编号
-	 * @param businessKey
-	 * @return
-	 */
-	DataModel getDataModelByBusinessKey(String appId, String businessKey);
-
-	/**
 	 * 根据表单实例编号获取表单实例数据
 	 * 
 	 * @param app_name
@@ -99,6 +89,16 @@ public interface FormDataService {
 	 * @return
 	 */
 	DataModel getDataModelByAppName(String app_name, Long id);
+
+	/**
+	 * 根据表单业务编号获取表单实例数据
+	 * 
+	 * @param appId
+	 *            应用编号
+	 * @param businessKey
+	 * @return
+	 */
+	DataModel getDataModelByBusinessKey(String appId, String businessKey);
 
 	/**
 	 * 根据编号获取应用定义信息
@@ -136,7 +136,13 @@ public interface FormDataService {
 	 */
 	FormDefinition getLatestFormDefinition(String name);
 
- 
+	/**
+	 * 根据条件获取最新版本的表单定义信息
+	 * 
+	 * @param query
+	 * @return
+	 */
+	List<FormDefinition> getLatestFormDefinitions(FormDefinitionQuery query);
 
 	/**
 	 * 获取一页表单应用信息
@@ -159,6 +165,7 @@ public interface FormDataService {
 
 	/**
 	 * 获取一页表单对象
+	 * 
 	 * @param query
 	 * @return
 	 */
@@ -168,7 +175,9 @@ public interface FormDataService {
 	 * 保存表单实例数据<br>
 	 * 主要操作：根据表单定义和从客户端获取的用户输入数据进行数据组装，形成表单数据实例，根据表单实例信息保存表单数据。<br>
 	 * 在处理数据过程中为了避免数据处理程序的错误引起数据丢失的情况，需要将从客户端输入的信息保存到文件系统中以便日后使用。
-	 * @param appId 应用编号
+	 * 
+	 * @param appId
+	 *            应用编号
 	 * @param formContext
 	 */
 	@Transactional
@@ -184,7 +193,7 @@ public interface FormDataService {
 
 	/**
 	 * 保存多个表单应用信息
-	 *  
+	 * 
 	 */
 	@Transactional
 	void saveFormApplications(List<FormApplication> apps);
@@ -193,7 +202,8 @@ public interface FormDataService {
 	 * 保存表单定义信息 <br>
 	 * 主要操作：保存表单定义的基本属性，节点信息及更新表单的数据库结构
 	 * 
-	 * @param formDefinition 表单定义信息
+	 * @param formDefinition
+	 *            表单定义信息
 	 */
 	@Transactional
 	void saveFormDefinition(FormDefinition formDefinition);
@@ -202,7 +212,9 @@ public interface FormDataService {
 	 * 保存表单实例数据<br>
 	 * 主要操作：根据表单定义和从客户端获取的用户输入数据进行数据组装，形成表单数据实例，根据表单实例信息保存表单数据。<br>
 	 * 在处理数据过程中为了避免数据处理程序的错误引起数据丢失的情况，需要将从客户端输入的信息保存到文件系统中以便日后使用。
-	 * @param appId 应用编号
+	 * 
+	 * @param appId
+	 *            应用编号
 	 * @param formContext
 	 */
 	@Transactional

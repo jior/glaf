@@ -58,20 +58,25 @@
 		#{id, jdbcType=VARCHAR}
 		,#{name,
 		jdbcType=VARCHAR}
-		,#{title, jdbcType=VARCHAR}
+		,#{title,
+		jdbcType=VARCHAR}
 		,#{description,
 		jdbcType=VARCHAR}
-		,#{formDefinitionId, jdbcType=VARCHAR}
+		,#{formDefinitionId,
+		jdbcType=VARCHAR}
 		,#{templateName, jdbcType=VARCHAR}
-		,#{templateType, jdbcType=VARCHAR}
+		,#{templateType,
+		jdbcType=VARCHAR}
 		,#{nodeId, jdbcType=BIGINT}
-		,#{version, jdbcType=INTEGER}
+		,#{version,
+		jdbcType=INTEGER}
 		,#{x, jdbcType=INTEGER}
 		,#{y,
 		jdbcType=INTEGER}
 		,#{height, jdbcType=DOUBLE}
 		,#{width, jdbcType=DOUBLE}
-		,#{rows, jdbcType=INTEGER}
+		,#{rows,
+		jdbcType=INTEGER}
 		,#{columns, jdbcType=INTEGER}
 		,#{locked,
 		jdbcType=INTEGER}
@@ -117,6 +122,35 @@
 		#{formDefinitionId}
 	</select>
 
+
+	<select id="getLatestFormDefinitionByName" parameterType="string"
+		resultMap="formDefinitionResultMap">
+		select *
+		from FORM_DEFINITION
+		where NAME_ = #{name} and
+		VERSION_ = (select max(VERSION_) from FORM_DEFINITION where NAME_ =
+		#{name})
+	</select>
+
+
+	<select id="getLatestFormDefinitions" parameterType="com.glaf.form.core.query.FormDefinitionQuery"
+		resultMap="formDefinitionResultMap">
+
+		select E.* from FORM_DEFINITION E
+		where E.LOCKED_ = 0
+		<include refid="chooseFormDefinitionsSql" />
+		and
+		E.VERSION_ =
+		(
+		select max(E.VERSION_) from FORM_DEFINITION E
+		where
+		E.LOCKED_ = 0
+		<include refid="chooseFormDefinitionsSql" />
+		)
+		
+	</select>
+
+
 	<select id="getFormDefinitions" parameterType="com.glaf.form.core.query.FormDefinitionQuery"
 		resultMap="formDefinitionResultMap">
 		select E.*
@@ -131,6 +165,7 @@
 		select count(*)
 		<include refid="selectFormDefinitionsSql" />
 	</select>
+
 
 	<sql id="selectFormDefinitionsSql">
 
@@ -236,6 +271,107 @@
 			</if>
 
 		</where>
+	</sql>
+
+
+	<sql id="chooseFormDefinitionsSql">
+
+		<if test="name != null and name != '' ">
+			and E.NAME_ = #{name}
+		</if>
+
+		<if test="nameLike != null and nameLike != '' ">
+			and E.NAME_ like #{nameLike}
+		</if>
+
+		<if test="names != null and names.size() &gt; 0">
+			and E.NAME_ IN
+			<foreach item="x_name" index="index" collection="names" open="("
+				separator="," close=")">
+				#{x_name}
+			</foreach>
+		</if>
+
+		<if test="titleLike != null and titleLike != '' ">
+			and E.TITLE_ like #{titleLike}
+		</if>
+
+		<if test="descriptionLike != null and descriptionLike != '' ">
+			and E.DESCRIPTION_ like #{descriptionLike}
+		</if>
+
+		<if test="formDefinitionId != null and formDefinitionId != '' ">
+			and E.FORMDEFINITIONID_ = #{formDefinitionId}
+		</if>
+
+		<if test="formDefinitionIdLike != null and formDefinitionIdLike != '' ">
+			and E.FORMDEFINITIONID_ like #{formDefinitionIdLike}
+		</if>
+
+		<if test="templateNameLike != null and templateNameLike != '' ">
+			and E.TEMPLATENAME_ like #{templateNameLike}
+		</if>
+
+		<if test="templateType != null and templateType != '' ">
+			and E.TEMPLATETYPE_ = #{templateType}
+		</if>
+
+		<if test="templateTypeLike != null and templateTypeLike != '' ">
+			and E.TEMPLATETYPE_ like #{templateTypeLike}
+		</if>
+
+		<if test="nodeId != null and nodeId != '' ">
+			and E.NODEID_ = #{nodeId}
+		</if>
+
+		<if test="nodeIds != null and nodeIds.size() &gt; 0">
+			and E.NODEID_ IN
+			<foreach item="x_nodeId" index="index" collection="nodeIds"
+				open="(" separator="," close=")">
+				#{x_nodeId}
+			</foreach>
+		</if>
+
+		<if test="locked != null">
+			and E.LOCKED_ = #{locked}
+		</if>
+
+		<if test="objectId != null and objectId != '' ">
+			and E.OBJECTID_ = #{objectId}
+		</if>
+
+		<if test="objectIds != null and objectIds.size() &gt; 0">
+			and E.OBJECTID_ IN
+			<foreach item="x_objectId" index="index" collection="objectIds"
+				open="(" separator="," close=")">
+				#{x_objectId}
+			</foreach>
+		</if>
+
+		<if test="objectValue != null and objectValue != '' ">
+			and E.OBJECTVALUE_ = #{objectValue}
+		</if>
+
+		<if test="objectValues != null and objectValues.size() &gt; 0">
+			and E.OBJECTVALUE_ IN
+			<foreach item="x_objectValue" index="index" collection="objectValues"
+				open="(" separator="," close=")">
+				#{x_objectValue}
+			</foreach>
+		</if>
+
+		<if test="createBy != null and createBy != '' ">
+			and E.CREATEBY_ = #{createBy}
+		</if>
+
+		<if test="afterCreateDate != null">
+			and E.CREATEDATE_ &gt;= #{afterCreateDate}
+		</if>
+
+		<if test="beforeCreateDate != null">
+			and E.CREATEDATE_ &lt;= #{beforeCreateDate}
+		</if>
+
 	</sql>
 
 </mapper>
