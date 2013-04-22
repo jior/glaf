@@ -11,7 +11,7 @@
 		<result property="title" column="title" jdbcType="VARCHAR" />
 		<result property="content" column="content" jdbcType="VARCHAR" />
 		<result property="provider" column="provider" jdbcType="VARCHAR" />
-		<result property="link" column="link" jdbcType="VARCHAR" />
+		<result property="link" column="link_" jdbcType="VARCHAR" />
 		<result property="linkType" column="linkType" jdbcType="VARCHAR" />
 		<result property="createDate" column="createDate" jdbcType="TIMESTAMP" />
 		<result property="startDate" column="startDate" jdbcType="TIMESTAMP" />
@@ -26,7 +26,7 @@
 		<result property="deptName" column="deptName" jdbcType="VARCHAR" />
 		<result property="roleId" column="roleId" jdbcType="BIGINT" />
 		<result property="roleCode" column="roleCode" jdbcType="VARCHAR" />
-		<result property="rowId" column="rowId" jdbcType="VARCHAR" />
+		<result property="rowId" column="rowId_" jdbcType="VARCHAR" />
 		<result property="todoId" column="todoId" jdbcType="BIGINT" />
 		<result property="appId" column="appId" jdbcType="BIGINT" />
 		<result property="moduleId" column="moduleId" jdbcType="BIGINT" />
@@ -39,7 +39,7 @@
 	<insert id="insertTodoInstance" parameterType="com.glaf.core.todo.TodoInstance">
 		insert into sys_todo_instance
 		<trim prefix="(" suffix=")" suffixOverrides=",">
-			ID
+			id
 			<if test="actorId != null">
 				,actorId
 			</if>
@@ -56,7 +56,7 @@
 				,provider
 			</if>
 			<if test="link != null">
-				,link
+				,link_
 			</if>
 			<if test="linkType != null">
 				,linkType
@@ -95,7 +95,7 @@
 				,roleCode
 			</if>
 			<if test="rowId != null">
-				,rowId
+				,rowId_
 			</if>
 			<if test="todoId != null">
 				,todoId
@@ -219,7 +219,7 @@
 				provider = #{provider, jdbcType=VARCHAR},
 			</if>
 			<if test="link != null">
-				link = #{link, jdbcType=VARCHAR},
+				link_ = #{link, jdbcType=VARCHAR},
 			</if>
 			<if test="linkType != null">
 				linkType = #{linkType, jdbcType=VARCHAR},
@@ -259,7 +259,7 @@
 				roleCode = #{roleCode, jdbcType=VARCHAR},
 			</if>
 			<if test="rowId != null">
-				rowId = #{rowId, jdbcType=VARCHAR},
+				rowId_ = #{rowId, jdbcType=VARCHAR},
 			</if>
 			<if test="todoId != null">
 				todoId = #{todoId, jdbcType=BIGINT},
@@ -287,7 +287,8 @@
 
 
 	<delete id="deleteTodoInstanceById" parameterType="long">
-		delete from sys_todo_instance
+		delete from
+		sys_todo_instance
 		where ID = #{id}
 	</delete>
 
@@ -384,9 +385,7 @@
 				</foreach>
 			</if>
 
-			<if test="linkLike != null and linkLike != '' ">
-				and E.link like #{linkLike}
-			</if>
+
 
 			<if test="linkType != null and linkType != '' ">
 				and E.linkType = #{linkType}
@@ -493,22 +492,6 @@
 				<foreach item="x_roleCode" index="index" collection="roleCodes"
 					open="(" separator="," close=")">
 					#{x_roleCode}
-				</foreach>
-			</if>
-
-			<if test="rowId != null and rowId != '' ">
-				and E.rowId = #{rowId}
-			</if>
-
-			<if test="rowIdLike != null and rowIdLike != '' ">
-				and E.rowId like #{rowIdLike}
-			</if>
-
-			<if test="rowIds != null and rowIds.size() &gt; 0">
-				and E.rowId IN
-				<foreach item="x_rowId" index="index" collection="rowIds"
-					open="(" separator="," close=")">
-					#{x_rowId}
 				</foreach>
 			</if>
 

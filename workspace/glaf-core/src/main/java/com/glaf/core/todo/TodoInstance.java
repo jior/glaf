@@ -102,7 +102,7 @@ public class TodoInstance implements Serializable, JSONable {
 	/**
 	 * Á´½Ó
 	 */
-	@Column(name = "link")
+	@Column(name = "link_")
 	protected String link;
 
 	/**
@@ -178,7 +178,7 @@ public class TodoInstance implements Serializable, JSONable {
 	/**
 	 * ÒµÎñ±àºÅ
 	 */
-	@Column(name = "rowId")
+	@Column(name = "rowId_")
 	protected String rowId;
 
 	/**

@@ -20,7 +20,7 @@
 
  
 	<insert id="insertAudit" parameterType="com.glaf.base.modules.others.model.Audit">
-		insert into Audit 
+		insert into MyAudit 
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 		    ID
 			<if test="referId != null">
@@ -93,7 +93,7 @@
 
 	 
 	<update id="updateAudit" parameterType="com.glaf.base.modules.others.model.Audit">
-		update Audit
+		update MyAudit
 		set
         <trim prefix="" suffix="" suffixOverrides=",">		
 			<if test="referId != null">
@@ -134,13 +134,13 @@
 
  
 	<delete id="deleteAuditById" parameterType="long"> 
-        delete from Audit
+        delete from MyAudit
         where ID =	#{id}
 	</delete>
 
 	
 	<delete id="deleteAudits" parameterType="com.glaf.base.modules.others.query.AuditQuery">
-		delete from Audit
+		delete from MyAudit
 		where ( 
  			  ID IN
               <foreach item="x_rowId" index="index" collection="rowIds" 
@@ -152,7 +152,7 @@
 
 
 	<select id="getAuditById" parameterType="long" resultMap="auditResultMap">
-		select * from Audit where ID = #{id}
+		select * from MyAudit where ID = #{id}
 	</select>
 
 
@@ -182,7 +182,7 @@
 
 	<sql id="selectAuditsSql">
 
-		from Audit E
+		from MyAudit E
 		 
 		<where>
 		       1 = 1  

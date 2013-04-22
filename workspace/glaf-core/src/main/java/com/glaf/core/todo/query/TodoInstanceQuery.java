@@ -23,7 +23,6 @@ import com.glaf.core.query.DataQuery;
 
 public class TodoInstanceQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;
-
 	protected String actorNameLike;
 	protected Date alarmDateGreaterThanOrEqual;
 	protected Date alarmDateLessThanOrEqual;
@@ -37,7 +36,6 @@ public class TodoInstanceQuery extends DataQuery {
 	protected String deptNameLike;
 	protected Date endDateGreaterThanOrEqual;
 	protected Date endDateLessThanOrEqual;
-	protected String linkLike;
 	protected String linkType;
 	protected List<String> linkTypes;
 	protected Long moduleId;
@@ -53,9 +51,6 @@ public class TodoInstanceQuery extends DataQuery {
 	protected List<String> roleCodes;
 	protected Long roleId;
 	protected List<Long> roleIds;
-	protected String rowId;
-	protected String rowIdLike;
-	protected List<String> rowIds;
 	protected Date startDateGreaterThanOrEqual;
 	protected Date startDateLessThanOrEqual;
 	protected String taskInstanceId;
@@ -266,18 +261,6 @@ public class TodoInstanceQuery extends DataQuery {
 		return endDateLessThanOrEqual;
 	}
 
-	public String getLinkLike() {
-		if (linkLike != null && linkLike.trim().length() > 0) {
-			if (!linkLike.startsWith("%")) {
-				linkLike = "%" + linkLike;
-			}
-			if (!linkLike.endsWith("%")) {
-				linkLike = linkLike + "%";
-			}
-		}
-		return linkLike;
-	}
-
 	public String getLinkType() {
 		return linkType;
 	}
@@ -465,26 +448,6 @@ public class TodoInstanceQuery extends DataQuery {
 		return roleIds;
 	}
 
-	public String getRowId() {
-		return rowId;
-	}
-
-	public String getRowIdLike() {
-		if (rowIdLike != null && rowIdLike.trim().length() > 0) {
-			if (!rowIdLike.startsWith("%")) {
-				rowIdLike = "%" + rowIdLike;
-			}
-			if (!rowIdLike.endsWith("%")) {
-				rowIdLike = rowIdLike + "%";
-			}
-		}
-		return rowIdLike;
-	}
-
-	public List<String> getRowIds() {
-		return rowIds;
-	}
-
 	public Date getStartDateGreaterThanOrEqual() {
 		return startDateGreaterThanOrEqual;
 	}
@@ -554,14 +517,6 @@ public class TodoInstanceQuery extends DataQuery {
 		addColumn("objectId", "objectId");
 		addColumn("objectValue", "objectValue");
 		addColumn("versionNo", "versionNo");
-	}
-
-	public TodoInstanceQuery linkLike(String linkLike) {
-		if (linkLike == null) {
-			throw new RuntimeException("link is null");
-		}
-		this.linkLike = linkLike;
-		return this;
 	}
 
 	public TodoInstanceQuery linkType(String linkType) {
@@ -693,22 +648,6 @@ public class TodoInstanceQuery extends DataQuery {
 		return this;
 	}
 
-	public TodoInstanceQuery rowId(String rowId) {
-		if (rowId == null) {
-			throw new RuntimeException("rowId is null");
-		}
-		this.rowId = rowId;
-		return this;
-	}
-
-	public TodoInstanceQuery rowIdLike(String rowIdLike) {
-		if (rowIdLike == null) {
-			throw new RuntimeException("rowId is null");
-		}
-		this.rowIdLike = rowIdLike;
-		return this;
-	}
-
 	public void setActorId(String actorId) {
 		this.actorId = actorId;
 	}
@@ -772,10 +711,6 @@ public class TodoInstanceQuery extends DataQuery {
 
 	public void setEndDateLessThanOrEqual(Date endDateLessThanOrEqual) {
 		this.endDateLessThanOrEqual = endDateLessThanOrEqual;
-	}
-
-	public void setLinkLike(String linkLike) {
-		this.linkLike = linkLike;
 	}
 
 	public void setLinkType(String linkType) {
@@ -845,10 +780,6 @@ public class TodoInstanceQuery extends DataQuery {
 
 	public void setRoleIds(List<Long> roleIds) {
 		this.roleIds = roleIds;
-	}
-
-	public void setRowId(String rowId) {
-		this.rowId = rowId;
 	}
 
 	public void setStartDateGreaterThanOrEqual(Date startDateGreaterThanOrEqual) {

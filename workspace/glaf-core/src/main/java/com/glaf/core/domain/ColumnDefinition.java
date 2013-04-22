@@ -47,7 +47,7 @@ public class ColumnDefinition implements java.io.Serializable, JSONable {
 	 * Ö÷¼ü
 	 */
 	@Id
-	@Column(name = "ID_", length = 50, nullable = false)
+	@Column(name = "ID_", length = 100, nullable = false)
 	protected String id;
 
 	/**
