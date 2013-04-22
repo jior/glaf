@@ -38,18 +38,44 @@ import org.apache.commons.lang.builder.ToStringStyle;
 public class Panel implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@Column(name = "ACTORID_")
+	protected String actorId = null;
+
+	@Column(name = "CLOSE_")
+	protected int close;
+
+	@Column(name = "COLLAPSIBLE_")
+	protected int collapsible;
+
+	@Column(name = "COLOR_", length = 50)
+	protected String color = null;
+
+	@Column(name = "COLUMNINDEX_")
+	protected int columnIndex;
+
+	@Lob
+	@Column(name = "CONTENT_")
+	protected String content = null;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "CREATEDATE_")
+	protected Date createDate = null;
+
+	@Column(name = "HEIGHT_")
+	protected int height;
+
+	@Column(name = "ICON_")
+	protected String icon = null;
+
 	@Id
 	@Column(name = "ID_", length = 50, nullable = false)
 	protected String id = null;
 
-	@Column(name = "NAME_", nullable = false, length = 50)
-	protected String name = null;
+	@Column(name = "LINK_", length = 200)
+	protected String link = null;
 
-	@Column(name = "TITLE_")
-	protected String title = null;
-
-	@Column(name = "ICON_")
-	protected String icon = null;
+	@Column(name = "LOCKED_")
+	protected int locked;
 
 	@Column(name = "MODULEID_")
 	protected String moduleId = null;
@@ -57,58 +83,32 @@ public class Panel implements Serializable {
 	@Column(name = "MODULENAME_")
 	protected String moduleName = null;
 
-	@Column(name = "TYPE_", length = 20)
-	protected String type = null;
-
-	@Column(name = "LINK_", length = 200)
-	protected String link = null;
-
 	@Column(name = "MORELINK_", length = 200)
 	protected String moreLink = null;
+
+	@Column(name = "NAME_", nullable = false, length = 50)
+	protected String name = null;
 
 	@Column(name = "QUERYID_", length = 200)
 	protected String queryId = null;
 
-	@Lob
-	@Column(name = "CONTENT_")
-	protected String content = null;
-
-	@Column(name = "COLOR_", length = 50)
-	protected String color = null;
-
-	@Column(name = "STYLE_", length = 200)
-	protected String style = null;
-
-	@Column(name = "COLUMNINDEX_")
-	protected int columnIndex;
+	@Column(name = "RESIZE_")
+	protected int resize;
 
 	@Transient
 	protected String script = null;
 
+	@Column(name = "STYLE_", length = 200)
+	protected String style = null;
+
+	@Column(name = "TITLE_")
+	protected String title = null;
+
+	@Column(name = "TYPE_", length = 20)
+	protected String type = null;
+
 	@Column(name = "WIDTH_")
 	protected int width;
-
-	@Column(name = "HEIGHT_")
-	protected int height;
-
-	@Column(name = "LOCKED_")
-	protected int locked;
-
-	@Column(name = "CLOSE_")
-	protected boolean close;
-
-	@Column(name = "RESIZE_")
-	protected boolean resize;
-
-	@Column(name = "COLLAPSIBLE_")
-	protected boolean collapsible;
-
-	@Column(name = "ACTORID_")
-	protected String actorId = null;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "CREATEDATE_")
-	protected Date createDate = null;
 
 	public Panel() {
 
@@ -116,6 +116,14 @@ public class Panel implements Serializable {
 
 	public String getActorId() {
 		return actorId;
+	}
+
+	public int getClose() {
+		return close;
+	}
+
+	public int getCollapsible() {
+		return collapsible;
 	}
 
 	public String getColor() {
@@ -174,6 +182,10 @@ public class Panel implements Serializable {
 		return queryId;
 	}
 
+	public int getResize() {
+		return resize;
+	}
+
 	public String getScript() {
 		return script;
 	}
@@ -195,26 +207,26 @@ public class Panel implements Serializable {
 	}
 
 	public boolean isClose() {
-		return close;
+		return close == 1 ? true : false;
 	}
 
 	public boolean isCollapsible() {
-		return collapsible;
+		return collapsible == 1 ? true : false;
 	}
 
 	public boolean isResize() {
-		return resize;
+		return resize == 1 ? true : false;
 	}
 
 	public void setActorId(String actorId) {
 		this.actorId = actorId;
 	}
 
-	public void setClose(boolean close) {
+	public void setClose(int close) {
 		this.close = close;
 	}
 
-	public void setCollapsible(boolean collapsible) {
+	public void setCollapsible(int collapsible) {
 		this.collapsible = collapsible;
 	}
 
@@ -274,7 +286,7 @@ public class Panel implements Serializable {
 		this.queryId = queryId;
 	}
 
-	public void setResize(boolean resize) {
+	public void setResize(int resize) {
 		this.resize = resize;
 	}
 

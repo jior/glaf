@@ -21,9 +21,9 @@
 		<result property="width" column="WIDTH_" jdbcType="INTEGER" />
 		<result property="height" column="HEIGHT_" jdbcType="INTEGER" />
 		<result property="locked" column="LOCKED_" jdbcType="INTEGER" />
-		<result property="close" column="CLOSE_" jdbcType="BOOLEAN" />
-		<result property="collapsible" column="COLLAPSIBLE_" jdbcType="BOOLEAN" />
-		<result property="resize" column="RESIZE_" jdbcType="BOOLEAN" />
+		<result property="close" column="CLOSE_" jdbcType="INTEGER" />
+		<result property="collapsible" column="COLLAPSIBLE_" jdbcType="INTEGER" />
+		<result property="resize" column="RESIZE_" jdbcType="INTEGER" />
 		<result property="actorId" column="ACTORID_" jdbcType="VARCHAR" />
 		<result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP" />
 	</resultMap>
@@ -93,10 +93,10 @@
 		,#{height, jdbcType=INTEGER}
 		,#{locked,
 		jdbcType=INTEGER}
-		,#{close, jdbcType=BOOLEAN}
+		,#{close, jdbcType=INTEGER}
 		,#{collapsible,
-		jdbcType=BOOLEAN}
-		,#{resize, jdbcType=BOOLEAN}
+		jdbcType=INTEGER}
+		,#{resize, jdbcType=INTEGER}
 		,#{actorId,
 		jdbcType=VARCHAR}
 		,#{createDate, jdbcType=TIMESTAMP}
@@ -146,7 +146,8 @@
 		update
 		UI_PANEL
 		set
-		TITLE_ = #{title, jdbcType=VARCHAR},
+		TITLE_ =
+		#{title, jdbcType=VARCHAR},
 		ICON_ = #{icon, jdbcType=VARCHAR},
 		MODULENAME_ = #{moduleName, jdbcType=VARCHAR},
 		TYPE_ = #{type,
@@ -161,12 +162,12 @@
 		COLUMNINDEX_ = #{columnIndex, jdbcType=INTEGER},
 		LOCKED_ = #{locked, jdbcType=INTEGER},
 		CLOSE_ = #{close,
-		jdbcType=BOOLEAN},
-		RESIZE_ = #{resize, jdbcType=BOOLEAN},
+		jdbcType=INTEGER},
+		RESIZE_ = #{resize, jdbcType=INTEGER},
 		WIDTH_ =
 		#{width, jdbcType=INTEGER},
 		HEIGHT_ = #{height, jdbcType=INTEGER},
-		COLLAPSIBLE_ = #{collapsible, jdbcType=BOOLEAN}
+		COLLAPSIBLE_ = #{collapsible, jdbcType=INTEGER}
 		where
 		ID_ = #{id,
 		jdbcType=VARCHAR}

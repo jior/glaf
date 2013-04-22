@@ -110,9 +110,10 @@
 	}
 
 	function onRowClick(rowIndex, row){
-            //window.open('<%=request.getContextPath()%>/form/definition.do?method=edit&rowId='+row.id);
-	    var link = '<%=request.getContextPath()%>/form/definition.do?method=edit&formDefinitionId='+row.formDefinitionId;
-	    art.dialog.open(link, { height: 420, width: 680, title: "修改记录", lock: true, scrollbars:"no" }, false);
+        //window.open('<%=request.getContextPath()%>/form/definition.do?method=edit&rowId='+row.id);
+	    //var link = '<%=request.getContextPath()%>/form/definition.do?method=edit&formDefinitionId='+row.formDefinitionId;
+	    //art.dialog.open(link, { height: 420, width: 680, title: "修改记录", lock: true, scrollbars:"no" }, false);
+		window.open('<%=request.getContextPath()%>/rs/form/definition/download?formDefinitionId='+row.formDefinitionId);
 	}
 
 	function searchWin(){
