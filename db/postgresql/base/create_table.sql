@@ -373,6 +373,7 @@ CREATE TABLE  Attachment (
 
 create table sys_dbid(
         name_ varchar(50)  not null,
+	title_ varchar(255)  null,
         value_ varchar(255) not null,
         version_ int not null,
         primary key (name_)
