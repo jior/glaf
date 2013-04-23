@@ -168,7 +168,6 @@ CREATE TABLE sys_dictory (
         ext18 double precision,
         ext19 double precision,
         ext20 double precision,
-	ext15 double precision,
         PRIMARY KEY (id)
 );
 
@@ -374,7 +373,7 @@ CREATE TABLE  Attachment (
 
 create table sys_dbid(
         name_ nvarchar(50)  not null,
-	title_ varchar(255)  null,
+	title_ varchar(255),
         value_ nvarchar(255) not null,
         version_ int not null,
         primary key (name_)
@@ -409,3 +408,64 @@ CREATE TABLE sys_property (
         value_ nvarchar(1000),
         PRIMARY KEY (id_)
 );
+
+
+  alter table sys_access 
+        add constraint FK_ACCESS_APP 
+        foreign key (appId) 
+        references sys_application;
+
+    alter table sys_access 
+        add constraint FK_ACCESS_DEPTROLE 
+        foreign key (roleId) 
+        references sys_dept_role;
+
+    alter table sys_application 
+        add constraint FK_APP_TREE 
+        foreign key (nodeId) 
+        references sys_tree;
+
+    alter table sys_department 
+        add constraint FK_DEPT_TREE 
+        foreign key (nodeId) 
+        references sys_tree;
+
+    alter table sys_dept_role 
+        add constraint FK_DEPTROLE_DEPT 
+        foreign key (deptId) 
+        references sys_department;
+
+    alter table sys_dept_role 
+        add constraint FK_DEPTROLE_ROLE 
+        foreign key (sysRoleId) 
+        references sys_role;
+
+    alter table sys_function 
+        add constraint FK_FUN_APP 
+        foreign key (appId) 
+        references sys_application;
+
+    alter table sys_permission 
+        add constraint FK_PERM_DEPTROLE 
+        foreign key (roleId) 
+        references sys_dept_role;
+
+    alter table sys_permission 
+        add constraint FK_PERM_FUN
+        foreign key (funcId) 
+        references sys_function;
+
+    alter table sys_user 
+        add constraint FK_USER_DEPT 
+        foreign key (deptId) 
+        references sys_department;
+
+    alter table sys_user_role 
+        add constraint FK_USERROLE_ROLE 
+        foreign key (roleId) 
+        references sys_dept_role;
+
+    alter table sys_user_role 
+        add constraint FK_USERROLE_USER 
+        foreign key (userId) 
+        references sys_user;

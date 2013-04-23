@@ -373,7 +373,7 @@ CREATE TABLE  ATTACHMENT (
 
 CREATE TABLE SYS_DBID(
         NAME_ NVARCHAR2(50)  NOT NULL,
-	TITLE_ NVARCHAR2(255)  NULL,
+	TITLE_ NVARCHAR2(255),
         VALUE_ NVARCHAR2(255) NOT NULL,
         VERSION_ INTEGER NOT NULL,
         PRIMARY KEY (NAME_)
@@ -408,3 +408,64 @@ CREATE TABLE SYS_PROPERTY (
         VALUE_ NVARCHAR2(1000),
         PRIMARY KEY (ID_)
 );
+
+
+  alter table SYS_ACCESS 
+        add constraint FK_ACCESS_APP 
+        foreign key (APPID) 
+        references SYS_APPLICATION;
+
+    alter table SYS_ACCESS 
+        add constraint FK_ACCESS_DEPTROLE 
+        foreign key (ROLEID) 
+        references SYS_DEPT_ROLE;
+
+    alter table SYS_APPLICATION 
+        add constraint FK_APP_TREE 
+        foreign key (NODEID) 
+        references SYS_TREE;
+
+    alter table SYS_DEPARTMENT 
+        add constraint FK_DEPT_TREE 
+        foreign key (NODEID) 
+        references SYS_TREE;
+
+    alter table SYS_DEPT_ROLE 
+        add constraint FK_DEPTROLE_DEPT 
+        foreign key (DEPTID) 
+        references SYS_DEPARTMENT;
+
+    alter table SYS_DEPT_ROLE 
+        add constraint FK_DEPTROLE_ROLE 
+        foreign key (SYSROLEID) 
+        references SYS_ROLE;
+
+    alter table SYS_FUNCTION 
+        add constraint FK_FUN_APP 
+        foreign key (APPID) 
+        references SYS_APPLICATION;
+
+    alter table SYS_PERMISSION 
+        add constraint FK_PERM_DEPTROLE 
+        foreign key (ROLEID) 
+        references SYS_DEPT_ROLE;
+
+    alter table SYS_PERMISSION 
+        add constraint FK_PERM_FUN
+        foreign key (FUNCID) 
+        references SYS_FUNCTION;
+
+    alter table SYS_USER 
+        add constraint FK_USER_DEPT 
+        foreign key (DEPTID) 
+        references SYS_DEPARTMENT;
+
+    alter table SYS_USER_ROLE 
+        add constraint FK_USERROLE_ROLE 
+        foreign key (ROLEID) 
+        references SYS_DEPT_ROLE;
+
+    alter table SYS_USER_ROLE 
+        add constraint FK_USERROLE_USER 
+        foreign key (USERID) 
+        references SYS_USER;

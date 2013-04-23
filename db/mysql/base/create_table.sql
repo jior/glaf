@@ -374,7 +374,7 @@ CREATE TABLE  Attachment (
 
 create table sys_dbid(
         name_ varchar(50)  not null,
-	title_ varchar(255)  null,
+	title_ varchar(255),
         value_ varchar(255) not null,
         version_ integer not null,
         primary key (name_)
@@ -412,3 +412,76 @@ CREATE TABLE sys_property (
         value_ varchar(1000),
         PRIMARY KEY (id_)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_bin;
+
+
+  alter table sys_access 
+        add index FK_ACCESS_APP (appId), 
+        add constraint FK_ACCESS_APP 
+        foreign key (appId) 
+        references sys_application (id);
+
+    alter table sys_access 
+        add index FK_ACCESS_DEPTROLE (roleId), 
+        add constraint FK_ACCESS_DEPTROLE 
+        foreign key (roleId) 
+        references sys_dept_role (id);
+
+    alter table sys_application 
+        add index FK_APP_TREE (nodeId), 
+        add constraint FK_APP_TREE 
+        foreign key (nodeId) 
+        references sys_tree (id);
+
+    alter table sys_department 
+        add index FK_DEPT_TREE (nodeId), 
+        add constraint FK_DEPT_TREE 
+        foreign key (nodeId) 
+        references sys_tree (id);
+
+    alter table sys_dept_role 
+        add index FK_DEPTROLE_DEPT (deptId), 
+        add constraint FK_DEPTROLE_DEPT 
+        foreign key (deptId) 
+        references sys_department (id);
+
+    alter table sys_dept_role 
+        add index FK_DEPTROLE_ROLE (sysRoleId), 
+        add constraint FK_DEPTROLE_ROLE 
+        foreign key (sysRoleId) 
+        references sys_role (id);
+
+    alter table sys_function 
+        add index FK_FUN_APP (appId), 
+        add constraint FK_FUN_APP 
+        foreign key (appId) 
+        references sys_application (id);
+
+    alter table sys_permission 
+        add index FK_PERM_DEPTROLE (roleId), 
+        add constraint FK_PERM_DEPTROLE 
+        foreign key (roleId) 
+        references sys_dept_role (id);
+
+    alter table sys_permission 
+        add index FK_PERM_FUN (funcId), 
+        add constraint FK_PERM_FUN 
+        foreign key (funcId) 
+        references sys_function (id);
+
+    alter table sys_user 
+        add index FK_USER_DEPT (deptId), 
+        add constraint FK_USER_DEPT 
+        foreign key (deptId) 
+        references sys_department (id);
+
+    alter table sys_user_role 
+        add index FK_USERROLE_ROLE (roleId), 
+        add constraint FK_USERROLE_ROLE 
+        foreign key (roleId) 
+        references sys_dept_role (id);
+
+    alter table sys_user_role 
+        add index FK_USERROLE_USER (userId), 
+        add constraint FK_USERROLE_USER 
+        foreign key (userId) 
+        references sys_user (id);
