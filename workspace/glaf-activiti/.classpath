@@ -47,9 +47,9 @@
 	<classpathentry kind="lib" path="/glaf-core/lib/htmlparser.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/itext-2.1.7.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/jackson-all-1.9.8.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/jackson-annotations-2.1.2.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/jackson-core-2.1.2.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/jackson-databind-2.1.2.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/jackson-annotations.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/jackson-core.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/jackson-databind.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/javassist.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/javax.activation-1.1.0.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/javax.jms-1.1.0.jar"/>

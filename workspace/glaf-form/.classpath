@@ -49,9 +49,9 @@
 	<classpathentry kind="lib" path="/glaf-core/lib/httpcore-4.2.3.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/itext-2.1.7.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/jackson-all-1.9.8.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/jackson-annotations-2.1.2.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/jackson-core-2.1.2.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/jackson-databind-2.1.2.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/jackson-annotations.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/jackson-core.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/jackson-databind.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/jasperreports-5.0.0.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/jasperreports-fonts-5.0.0.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/javassist.jar"/>

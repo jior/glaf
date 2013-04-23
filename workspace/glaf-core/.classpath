@@ -45,9 +45,9 @@
 	<classpathentry kind="lib" path="lib/htmlparser.jar"/>
 	<classpathentry kind="lib" path="lib/itext-2.1.7.jar"/>
 	<classpathentry kind="lib" path="lib/jackson-all-1.9.8.jar"/>
-	<classpathentry kind="lib" path="lib/jackson-annotations-2.1.2.jar"/>
-	<classpathentry kind="lib" path="lib/jackson-core-2.1.2.jar"/>
-	<classpathentry kind="lib" path="lib/jackson-databind-2.1.2.jar"/>
+	<classpathentry kind="lib" path="lib/jackson-annotations.jar"/>
+	<classpathentry kind="lib" path="lib/jackson-core.jar"/>
+	<classpathentry kind="lib" path="lib/jackson-databind.jar"/>
 	<classpathentry kind="lib" path="lib/javassist.jar"/>
 	<classpathentry kind="lib" path="lib/javax.activation-1.1.0.jar"/>
 	<classpathentry kind="lib" path="lib/javax.jms-1.1.0.jar"/>
