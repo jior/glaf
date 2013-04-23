@@ -40,7 +40,9 @@ List  list = (List)request.getAttribute("parent");
       </tr>
       <tr>
         <td class="input-box2" valign="top">描　　述</td>
-        <td><textarea name="desc" cols="35" rows="3" class="input-multi" datatype="string" nullable="yes" maxsize="100" chname="描述"><%=bean.getDesc()%></textarea>        </td>
+        <td>
+		<textarea name="desc" cols="35" rows="3" class="input-multi" datatype="string" nullable="yes" maxsize="100" chname="描述"><%=bean.getDesc() != null ? bean.getDesc() : ""%></textarea>        
+		</td>
       </tr>
       <tr>
         <td class="input-box2" valign="top">代码*</td>

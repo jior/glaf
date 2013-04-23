@@ -97,19 +97,25 @@ function setValue(obj){
       <tr>
         <td class="input-box2" valign="top">手　　机</td>
         <td>
-          <input name="mobile" type="text" size="30" class="input" datatype="string" value="<%=bean.getMobile()%>" nullable="yes" maxsize="12" chname="手机">        
+          <input name="mobile" type="text" size="30" class="input" datatype="string" 
+		         value="<%=bean.getMobile() != null ? bean.getMobile() :""%>" 
+			     nullable="yes" maxsize="12" chname="手机">        
 		</td>
       </tr>
       <tr>
         <td class="input-box2" valign="top">邮　　件</td>
         <td>
-          <input name="email" type="text" size="30" class="input" datatype="email" value="<%=bean.getEmail()%>" nullable="yes" maxsize="50" chname="邮件">       
+          <input name="email" type="text" size="30" class="input" datatype="email" 
+		         value="<%=bean.getEmail() != null ? bean.getEmail() : ""%>" 
+				 nullable="yes" maxsize="50" chname="邮件">       
 		</td>
       </tr>
       <tr>
         <td class="input-box2" valign="top">办公电话</td>
         <td>
-          <input name="telephone" type="text" size="30" class="input" datatype="string" value="<%=bean.getTelephone()%>" nullable="yes" maxsize="20" chname="办公电话">        
+          <input name="telephone" type="text" size="30" class="input" datatype="string" 
+		         value="<%=bean.getTelephone() != null ? bean.getTelephone() : ""%>" 
+				 nullable="yes" maxsize="20" chname="办公电话">        
 		</td>
       </tr>
 	  <tr>

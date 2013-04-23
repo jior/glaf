@@ -137,8 +137,8 @@ if(list!=null){
     <td align="center" class="td-cb"> <input type="checkbox" name="id" value="<%=bean.getId()%>" onClick="checkOperation(this.form)">    </td>
     <td align="center" class="td-no"><%=((pager.getCurrentPageNo()-1)*pageSize + i+1)%></td>
     <td class="td-text"><%=bean.getName()%>&nbsp;</td>
-    <td class="td-text"><%=bean.getDesc()%>&nbsp;</td>
-    <td class="td-text"><%=bean.getUrl()%>&nbsp;</td>
+    <td class="td-text"><%=bean.getDesc() !=null ? bean.getDesc() : ""%>&nbsp;</td>
+    <td class="td-text"><%=bean.getUrl() != null ? bean.getUrl() : ""%>&nbsp;</td>
     <td class="td-no">
 	<%=bean.getLocked()==0?"<span style='color:blue'>是</span>":"<span style='color:red'>否</span>"%>&nbsp;
 	</td>
