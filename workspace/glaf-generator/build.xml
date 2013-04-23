@@ -22,8 +22,11 @@
 		</fileset>
 		<pathelement location="./bin" />
 		<pathelement location="../glaf-bi/bin" />
+		<pathelement location="../glaf-base/bin" />
 		<pathelement location="../glaf-core/bin" />
 		<pathelement location="../glaf-form/bin" />
+		<pathelement location="../glaf-jbpm/bin" />
+		<pathelement location="../glaf-ui/bin" />
 		<pathelement location="./conf" />
 	</path>
 
@@ -72,6 +75,36 @@
 	</target>
 
 
+	<target name="HibernateSchemaExport" >
+
+	     <java classname="org.hibernate.tool.hbm2ddl.SchemaExport" fork="true">
+			<classpath refid="compile.classpath"/>
+			<arg line=" --properties=hibernate.properties --text --output=glaf.ddl --format --delimiter=;  hibernate/SysApplication.hbm.xml hibernate/SysFunction.hbm.xml hibernate/SysTree.hbm.xml hibernate/SysDepartment.hbm.xml hibernate/SysDeptRole.hbm.xml hibernate/SysRole.hbm.xml hibernate/SysUser.hbm.xml hibernate/SysUserRole.hbm.xml "/>
+		</java> 
+
+	</target>
+
+
+	<target name="schemaexport">
+		<taskdef name="schemaexport"
+			classname="org.hibernate.tool.hbm2ddl.SchemaExportTask">
+		  <classpath refid="compile.classpath"/>
+	    </taskdef>
+		<schemaexport
+			properties="hibernate.properties"
+			quiet="no"
+			text="no"
+			create="no"
+			drop="no"
+			delimiter=";"
+			output="schema-export.sql">
+			<fileset dir="hibernate">
+				<include name="*.hbm.xml"/>
+			</fileset>
+		</schemaexport>
+	</target>
+
+
 	<target name="GenAll" depends="build">
 
          <java classname="com.glaf.generator.GenAll" fork="true">
@@ -85,7 +118,7 @@
 	<!-- 编译任务 -->
 	<target name="jar" depends="build" description="Create java jar file">
 		<jar jarfile="${project.distname}-src.zip">
-			<fileset dir="." includes="*.bat,*.xml, src/**/*.*,mapping/**/*.xml,templates/**/*.*" excludes="**/*.cvs,**/*.bak,**/*.tmp,**/*.scc,**/*.svn" />
+			<fileset dir="." includes="*.bat,*.xml,*.properties, src/**/*.*,hibernate/**/*.xml,mapping/**/*.xml,templates/**/*.*" excludes="**/*.cvs,**/*.bak,**/*.tmp,**/*.scc,**/*.svn" />
 		</jar>
 		<jar jarfile="${jarfile}" basedir="${classes.dir}" includes="**/*.class" excludes="**/test/**" />
 	</target>

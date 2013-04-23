@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.glaf.base.modules.sys.model">
+	<class name="SysRole" table="sys_role" dynamic-update="true"
+		dynamic-insert="true" lazy="true">
+
+		<id name="id" type="long" unsaved-value="0">
+			<column name="id" not-null="true" />
+			<generator class="native" />
+		</id>
+
+		<property name="name" type="string" column="name" />
+		<property name="desc" type="string" column="roleDesc" />
+		<property name="code" type="string" column="code" />
+		<property name="sort" type="integer" column="sort" />
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+	
+<hibernate-mapping package="com.glaf.base.modules.sys.model">
+    <class name="Dictory" 
+           table="sys_dictory"
+           dynamic-update="true"
+           dynamic-insert="true">
+        <id name="id" type="long" unsaved-value="0">
+            <column name="id" not-null="true"/>
+            <generator class="native"/>
+        </id>
+                
+        <property name="nodeId" type="long" column="typeId"/>
+        <property name="code" type="string" column="code" length="50"/>        
+        <property name="name" type="string" column="name" length="50"/>        
+        <property name="desc" type="string" column="dictDesc" length="200"/>  
+		<property name="value" type="string" column="value_" length="2000"/>
+		<property name="sort" type="integer" column="sort"/>   
+        <property name="blocked" type="integer" column="blocked"/>
+		
+        <property column="EXT1" name="ext1" type="string" length="200" />  
+        <property column="EXT2" name="ext2" type="string" length="200" />  
+        <property column="EXT3" name="ext3" type="string" length="200" />  
+        <property column="EXT4" name="ext4" type="string" length="200" />  
+		<property column="EXT5" name="ext5" type="timestamp" />
+		<property column="EXT6" name="ext6" type="timestamp" />
+		<property column="ext7" name="ext7" type="timestamp" />
+		<property column="ext8" name="ext8" type="timestamp" />
+		<property column="ext9" name="ext9" type="timestamp" />
+		<property column="ext10" name="ext10" type="timestamp" />
+		<property column="ext11" name="ext11" type="long" />
+		<property column="ext12" name="ext12" type="long" />
+		<property column="ext13" name="ext13" type="long" />
+		<property column="ext14" name="ext14" type="long" />
+		<property column="ext15" name="ext15" type="long" />
+		<property column="ext16" name="ext16" type="double" />	 
+		<property column="ext17" name="ext17" type="double" />	 
+		<property column="ext18" name="ext18" type="double" />	 
+		<property column="ext19" name="ext19" type="double" />	 
+		<property column="ext20" name="ext20" type="double" />	 
+		
+    </class>
+</hibernate-mapping>
