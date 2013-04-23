@@ -372,7 +372,7 @@ public class MxFormArchiveImporter {
 		MxJbpmProcessDeployer deployer = new MxJbpmProcessDeployer();
 		try {
 			jbpmContext = ProcessContainer.getContainer().createJbpmContext();
-			if (jbpmContext != null && jbpmContext.getSession() != null) {
+			if (jbpmContext != null ) {
 				processDefinition = deployer.deploy(jbpmContext, zipBytes);
 			}
 		} catch (Exception ex) {

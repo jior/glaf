@@ -43,8 +43,6 @@
 	<classpathentry kind="lib" path="/glaf-core/lib/filterbuilder.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/freemarker.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/h2.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/hibernate-jpa-2.0-api-1.0.0.Final.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/hibernate3.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/htmlparser.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/itext-2.1.7.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/jackson-all-1.9.8.jar"/>
