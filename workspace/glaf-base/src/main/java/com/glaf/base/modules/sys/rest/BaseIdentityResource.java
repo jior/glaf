@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.glaf.base.modules.sys.springmvc;
+package com.glaf.base.modules.sys.rest;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -25,23 +25,26 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang.StringUtils;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.UriInfo;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
 import com.glaf.core.base.BaseTree;
 import com.glaf.core.base.TreeModel;
-import com.glaf.core.config.ViewProperties;
+
 import com.glaf.core.tree.helper.TreeHelper;
 import com.glaf.core.util.RequestUtils;
 import com.glaf.core.util.StringTools;
@@ -56,11 +59,11 @@ import com.glaf.base.modules.sys.service.SysDepartmentService;
 import com.glaf.base.modules.sys.service.SysTreeService;
 import com.glaf.base.modules.sys.service.SysUserService;
 
-@Controller("/base/identityChoose")
-@RequestMapping("/base/identityChoose.do")
-public class IdentityChooseController {
+@Controller("/rs/base/identity")
+@Path("/rs/base/identity")
+public class BaseIdentityResource {
 	private static final Log logger = LogFactory
-			.getLog(IdentityChooseController.class);
+			.getLog(BaseIdentityResource.class);
 
 	protected SysDepartmentService sysDepartmentService;
 
@@ -68,67 +71,13 @@ public class IdentityChooseController {
 
 	protected SysUserService sysUserService;
 
-	/**
-	 * 显示选择部门页面
-	 * 
-	 * @param modelMap
-	 * @param request
-	 * @param response
-	 * @return
-	 */
-	@RequestMapping(params = "method=chooseDepts")
-	public ModelAndView chooseDepts(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtils.setRequestParameterToAttribute(request);
-		String x_view = ViewProperties.getString("identityChoose.chooseDepts");
-		if (StringUtils.isNotEmpty(x_view)) {
-			return new ModelAndView(x_view, modelMap);
-		}
-		return new ModelAndView("/modules/base/choose/choose_depts", modelMap);
-	}
-
-	/**
-	 * 显示选择部门页面
-	 * 
-	 * @param modelMap
-	 * @param request
-	 * @param response
-	 * @return
-	 */
-	@RequestMapping(params = "method=chooseTrees")
-	public ModelAndView chooseTrees(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtils.setRequestParameterToAttribute(request);
-		String x_view = ViewProperties.getString("identityChoose.chooseTrees");
-		if (StringUtils.isNotEmpty(x_view)) {
-			return new ModelAndView(x_view, modelMap);
-		}
-		return new ModelAndView("/modules/base/choose/choose_trees", modelMap);
-	}
-
-	/**
-	 * 显示选择用户页面
-	 * 
-	 * @param modelMap
-	 * @param request
-	 * @param response
-	 * @return
-	 */
-	@RequestMapping(params = "method=chooseUsers")
-	public ModelAndView chooseUsers(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtils.setRequestParameterToAttribute(request);
-		String x_view = ViewProperties.getString("identityChoose.chooseUsers");
-		if (StringUtils.isNotEmpty(x_view)) {
-			return new ModelAndView(x_view, modelMap);
-		}
-		return new ModelAndView("/modules/base/choose/choose_users", modelMap);
-	}
-
-	@RequestMapping(params = "method=deptJson")
+	@GET
+	@POST
+	@Path("deptJson")
+	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
 	@ResponseBody
-	public byte[] deptJson(HttpServletRequest request, ModelMap modelMap)
-			throws IOException {
+	public byte[] deptJson(@Context HttpServletRequest request,
+			@Context UriInfo uriInfo) throws IOException {
 		JSONObject result = new JSONObject();
 		String objectIds = request.getParameter("objectIds");
 		List<String> deptIds = StringTools.split(objectIds);
@@ -163,10 +112,13 @@ public class IdentityChooseController {
 		return result.toString().getBytes("UTF-8");
 	}
 
-	@RequestMapping(params = "method=json")
+	@GET
+	@POST
+	@Path("json")
+	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
 	@ResponseBody
-	public byte[] json(HttpServletRequest request, ModelMap modelMap)
-			throws IOException {
+	public byte[] json(@Context HttpServletRequest request,
+			@Context UriInfo uriInfo) throws IOException {
 		JSONObject result = new JSONObject();
 		String objectIds = request.getParameter("objectIds");
 		List<String> userIds = StringTools.split(objectIds);
@@ -236,10 +188,13 @@ public class IdentityChooseController {
 		this.sysUserService = sysUserService;
 	}
 
-	@RequestMapping(params = "method=treeJson")
+	@GET
+	@POST
+	@Path("treeJson")
+	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
 	@ResponseBody
-	public byte[] treeJson(HttpServletRequest request, ModelMap modelMap)
-			throws IOException {
+	public byte[] treeJson(@Context HttpServletRequest request,
+			@Context UriInfo uriInfo) throws IOException {
 		JSONObject result = new JSONObject();
 		Long parentId = RequestUtils.getLong(request, "parentId");
 		String objectIds = request.getParameter("objectIds");
@@ -275,10 +230,13 @@ public class IdentityChooseController {
 		return result.toString().getBytes("UTF-8");
 	}
 
-	@RequestMapping(params = "method=userJson")
+	@GET
+	@POST
+	@Path("userJson")
+	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
 	@ResponseBody
-	public byte[] userJson(HttpServletRequest request, ModelMap modelMap)
-			throws IOException {
+	public byte[] userJson(@Context HttpServletRequest request,
+			@Context UriInfo uriInfo) throws IOException {
 		JSONObject result = new JSONObject();
 		String objectIds = request.getParameter("objectIds");
 		List<String> userIds = StringTools.split(objectIds);

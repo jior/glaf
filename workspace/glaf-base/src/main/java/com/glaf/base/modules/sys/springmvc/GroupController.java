@@ -251,6 +251,13 @@ public class GroupController {
 		if (limit <= 0) {
 			limit = PageResult.DEFAULT_PAGE_SIZE;
 		}
+		
+		SysUser user = RequestUtil.getLoginUser(request);
+		String actorId = user.getAccount();
+		String type = request.getParameter("type");
+		query.type(type);
+		query.actorId(actorId);
+		query.createBy(actorId);
 
 		JSONObject result = new JSONObject();
 		int total = groupService.getGroupCountByQueryCriteria(query);
@@ -280,9 +287,8 @@ public class GroupController {
 
 				for (Group group : list) {
 					JSONObject rowJSON = group.toJsonObject();
-
+					rowJSON.put("startIndex", ++start);
 					rowJSON.put("groupId", group.getGroupId());
-
 					rowsJSON.add(rowJSON);
 				}
 

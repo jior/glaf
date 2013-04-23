@@ -55,6 +55,7 @@ import com.glaf.base.modules.sys.service.GroupService;
 import com.glaf.base.modules.sys.service.SysTreeService;
 import com.glaf.base.modules.sys.service.SysUserService;
 import com.glaf.base.utils.ParamUtil;
+import com.glaf.base.utils.RequestUtil;
 import com.glaf.core.base.BaseTree;
 import com.glaf.core.base.TreeModel;
 import com.glaf.core.res.MessageUtils;
@@ -114,6 +115,23 @@ public class GroupResource {
 
 		// 显示列表页面
 		return new ModelAndView("show_json_msg");
+	}
+	
+	@GET
+	@POST
+	@Path("detail")
+	@ResponseBody
+	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
+	public byte[] detail(@Context HttpServletRequest request,
+			@Context UriInfo uriInfo) throws IOException {
+		String groupId = request.getParameter("groupId");
+		if (groupId !=null) {
+			Group group = groupService.getGroup(groupId);
+			if (group != null) {
+				return group.toJsonObject().toJSONString().getBytes("UTF-8");
+			}
+		}
+		return null;
 	}
 
 	@GET
@@ -208,6 +226,13 @@ public class GroupResource {
 		if (limit <= 0) {
 			limit = PageResult.DEFAULT_PAGE_SIZE;
 		}
+		
+		SysUser user = RequestUtil.getLoginUser(request);
+		String actorId = user.getAccount();
+		String type = request.getParameter("type");
+		query.type(type);
+		query.actorId(actorId);
+		query.createBy(actorId);
 
 		JSONObject result = new JSONObject();
 		int total = groupService.getGroupCountByQueryCriteria(query);
@@ -237,9 +262,8 @@ public class GroupResource {
 
 				for (Group group : list) {
 					JSONObject rowJSON = group.toJsonObject();
-
 					rowJSON.put("groupId", group.getGroupId());
-
+					rowJSON.put("startIndex", ++start);
 					rowsJSON.add(rowJSON);
 				}
 
