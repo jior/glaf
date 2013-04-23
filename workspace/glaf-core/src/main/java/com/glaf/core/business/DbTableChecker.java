@@ -118,22 +118,42 @@ public class DbTableChecker {
 				if (tableName.startsWith("orddcm_")) {
 					continue;
 				}
-
+				if (tableName.startsWith("x_")) {
+					continue;
+				}
+				if (tableName.startsWith("wlm_")) {
+					continue;
+				}
+				if (tableName.startsWith("olap_")) {
+					continue;
+				}
 				if (tableName.startsWith("ggs_")) {
 					continue;
 				}
-
-				if (tableName.startsWith("ggs_")) {
+				if (tableName.startsWith("jpage_")) {
 					continue;
 				}
-
+				if (tableName.startsWith("ex_")) {
+					continue;
+				}
+				if (tableName.startsWith("logmnrc_")) {
+					continue;
+				}
+				if (tableName.startsWith("logmnrg_")) {
+					continue;
+				}
+				if (tableName.startsWith("olap_")) {
+					continue;
+				}
+				if (tableName.startsWith("sto_")) {
+					continue;
+				}
 				if (tableName.startsWith("sdo_")) {
 					continue;
 				}
 				if (tableName.startsWith("sys_iot_")) {
 					continue;
 				}
-
 				if (tableName.indexOf("$") != -1) {
 					continue;
 				}
@@ -161,18 +181,24 @@ public class DbTableChecker {
 					}
 				} else {
 					TableDefinition table = tableMap.get(tableName);
-					try {
-						List<ColumnDefinition> columns = DBUtils
-								.getColumnDefinitions(tbl);
-						if (table.getColumnQty() != columns.size()) {
-							tableDefinitionService.saveSystemTable(tableName,
-									columns);
-							logger.debug(tableName + " save ok");
-						} else {
-							logger.debug(tableName + " check ok");
+					boolean success = false;
+					int retry = 0;
+					while (retry < 2 && !success) {
+						try {
+							retry++;
+							List<ColumnDefinition> columns = DBUtils
+									.getColumnDefinitions(tbl);
+							if (table.getColumnQty() != columns.size()) {
+								tableDefinitionService.saveSystemTable(
+										tableName, columns);
+								logger.debug(tableName + " save ok");
+							} else {
+								logger.debug(tableName + " check ok");
+							}
+							success = true;
+						} catch (Exception ex) {
+							ex.printStackTrace();
 						}
-					} catch (Exception ex) {
-						ex.printStackTrace();
 					}
 				}
 			}

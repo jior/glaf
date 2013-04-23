@@ -247,6 +247,7 @@ public class MxTableDefinitionServiceImpl implements ITableDefinitionService {
 		tableName = tableName.toLowerCase();
 		TableDefinition tableDefinition = this.getTableDefinition(tableName);
 		if (tableDefinition != null) {
+			Set<String> cols = new HashSet<String>();
 			List<ColumnDefinition> columns = tableDefinition.getColumns();
 			boolean exists = false;
 			if (columns != null && !columns.isEmpty()) {
@@ -290,9 +291,13 @@ public class MxTableDefinitionServiceImpl implements ITableDefinitionService {
 			if (!exists) {
 				String id = (tableName + "_" + columnDefinition.getColumnName())
 						.toLowerCase();
-				columnDefinition.setId(id);
-				columnDefinition.setTableName(tableName);
-				columnDefinitionMapper.insertColumnDefinition(columnDefinition);
+				if (!cols.contains(id)) {
+					columnDefinition.setId(id);
+					columnDefinition.setTableName(tableName);
+					columnDefinitionMapper
+							.insertColumnDefinition(columnDefinition);
+					cols.add(id);
+				}
 			}
 		}
 	}

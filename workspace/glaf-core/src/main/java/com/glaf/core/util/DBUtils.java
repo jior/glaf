@@ -783,8 +783,10 @@ public class DBUtils {
 		Connection conn = null;
 		ResultSet rs = null;
 		try {
+			List<String> primaryKeys = getPrimaryKeys( tableName);
+			
 			conn = DBConnectionFactory.getConnection();
-			List<String> primaryKeys = getPrimaryKeys(conn, tableName);
+			
 			DatabaseMetaData metaData = conn.getMetaData();
 			if ("postgresql".equals(DBConnectionFactory.getDatabaseType(conn))) {
 				tableName = tableName.toLowerCase();
@@ -1826,6 +1828,7 @@ public class DBUtils {
 			}
 			// logger.debug(tableName + " primaryKeys:" + primaryKeys);
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			throw new RuntimeException(ex);
 		} finally {
 			JdbcUtils.close(connection);
