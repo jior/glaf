@@ -59,9 +59,10 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.codehaus.jackson.JsonFactory;
+import org.codehaus.jackson.JsonGenerator;
 
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonGenerator;
+ 
 import com.glaf.core.util.ReflectUtils;
 import com.glaf.core.util.StringTools;
 
@@ -1232,12 +1233,7 @@ public class Configuration implements Iterable<Map.Entry<String, String>> {
 
 			// allow includes in the xml file
 			docBuilderFactory.setNamespaceAware(true);
-			try {
-				docBuilderFactory.setXIncludeAware(true);
-			} catch (UnsupportedOperationException e) {
-				LOG.error("Failed to set setXIncludeAware(true) for parser "
-						+ docBuilderFactory + ":" + e, e);
-			}
+			 
 			DocumentBuilder builder = docBuilderFactory.newDocumentBuilder();
 			Document doc = null;
 			Element root = null;
