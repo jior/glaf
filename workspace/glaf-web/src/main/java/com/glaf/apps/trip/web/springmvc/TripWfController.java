@@ -1,4 +1,4 @@
-package ${packageName}.web.springmvc;
+package com.glaf.apps.trip.web.springmvc;
 
 import java.io.IOException;
 import java.util.*;
@@ -23,13 +23,13 @@ import com.glaf.jbpm.model.*;
 import com.glaf.jbpm.container.*;
 
 
-import ${packageName}.model.*;
-import ${packageName}.query.*;
+import com.glaf.apps.trip.model.*;
+import com.glaf.apps.trip.query.*;
 
-public class ${entityName}WfController extends ${entityName}BaseController {
-	private static final Log logger = LogFactory.getLog(${entityName}WfController.class);
+public class TripWfController extends TripBaseController {
+	private static final Log logger = LogFactory.getLog(TripWfController.class);
 
-	public ${entityName}WfController() {
+	public TripWfController() {
 
 	}
 
@@ -40,24 +40,18 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 		User user = RequestUtils.getUser(request);
 		String actorId = user.getActorId();
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		<#if idField.type=='Integer' >
-                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(RequestUtils.getInt(request, "rowId"));
-		<#elseif idField.type== 'Long' >
-                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(RequestUtils.getLong(request, "rowId"));
-		<#else>
-                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(request.getParameter("rowId"));
-		</#if>
-		if (${modelName} != null) {
-			String processName = ViewProperties.getString("${entityName}.processName");
+                Trip trip = tripService.getTrip(request.getParameter("rowId"));
+		if (trip != null) {
+			String processName = ViewProperties.getString("Trip.processName");
 			if (StringUtils.isEmpty(processName)) {
-				processName = "${entityName}Process";
-				${modelName}.setProcessName(processName);
+				processName = "TripProcess";
+				trip.setProcessName(processName);
 			}
 			ProcessContext ctx = new ProcessContext();
-			ctx.setRowId(${modelName}.getId());
+			ctx.setRowId(trip.getId());
 			ctx.setActorId(actorId);
-			ctx.setTitle(ViewProperties.getString("res_rowId") + ${modelName}.getId());
-			ctx.setProcessName(${modelName}.getProcessName());
+			ctx.setTitle(ViewProperties.getString("res_rowId") + trip.getId());
+			ctx.setProcessName(trip.getProcessName());
 			try{
 			    Long processInstanceId = ProcessContainer.getContainer()
 					.startProcess(ctx);
@@ -81,15 +75,9 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 		String actorId = user.getActorId();
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		String taskInstanceId = ParamUtils.getString(params, "taskInstanceId");
-		<#if idField.type=='Integer' >
-                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(RequestUtils.getInt(request, "rowId"));
-		<#elseif idField.type== 'Long' >
-                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(RequestUtils.getLong(request, "rowId"));
-		<#else>
-                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(request.getParameter("rowId"));
-		</#if>
-		if (${modelName} != null && ${modelName}.getProcessInstanceId() != null && ${modelName}.getWfStatus() != 9999) {
-			TaskItem taskItem = ProcessContainer.getContainer().getMinTaskItem(actorId, ${modelName}.getProcessInstanceId());
+                Trip trip = tripService.getTrip(request.getParameter("rowId"));
+		if (trip != null && trip.getProcessInstanceId() != null && trip.getWfStatus() != 9999) {
+			TaskItem taskItem = ProcessContainer.getContainer().getMinTaskItem(actorId, trip.getProcessInstanceId());
 			if (taskItem != null && StringUtils.equals(String.valueOf(taskItem.getTaskInstanceId()), taskInstanceId)) {				
 				String route = request.getParameter("route");
 				String isAgree = request.getParameter("isAgree");
@@ -113,7 +101,7 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 				ctx.setContextMap(params);
 				ctx.setDataFields(datafields);
 				ctx.setTaskInstanceId(Long.parseLong(taskInstanceId));
-				ctx.setProcessInstanceId(${modelName}.getProcessInstanceId());
+				ctx.setProcessInstanceId(trip.getProcessInstanceId());
 				try{
 					boolean isOK = ProcessContainer.getContainer().completeTask(ctx);
 					if (isOK) {
@@ -137,17 +125,11 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 		request.removeAttribute("canSubmit");
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 
-		<#if idField.type=='Integer' >
-                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(RequestUtils.getInt(request, "rowId"));
-		<#elseif idField.type== 'Long' >
-                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(RequestUtils.getLong(request, "rowId"));
-		<#else>
-                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(request.getParameter("rowId"));
-		</#if>
+                Trip trip = tripService.getTrip(request.getParameter("rowId"));
 
-                if (${modelName} != null) {
-		    request.setAttribute("${modelName}", ${modelName});
-		    JSONObject rowJSON = ${modelName}.toJsonObject();
+                if (trip != null) {
+		    request.setAttribute("trip", trip);
+		    JSONObject rowJSON = trip.toJsonObject();
 		    request.setAttribute("x_json", rowJSON.toJSONString());
 		}
 	
@@ -156,22 +138,22 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 		boolean canSubmit = false;
 		String x_method = request.getParameter("x_method");
 		if (StringUtils.equals(x_method, "submit")) {
-			if (${modelName} != null && ${modelName}.getProcessInstanceId() != null) {
+			if (trip != null && trip.getProcessInstanceId() != null) {
 				ProcessContainer container = ProcessContainer.getContainer();
 				Collection<Long> processInstanceIds = container
 						.getRunningProcessInstanceIds(actorId);
-				if (processInstanceIds.contains(${modelName}.getProcessInstanceId())) {
+				if (processInstanceIds.contains(trip.getProcessInstanceId())) {
 					canSubmit = true;
 				}
-				if (${modelName}.getStatus() == 0 || ${modelName}.getStatus() == -1) {
+				if (trip.getStatus() == 0 || trip.getStatus() == -1) {
 					canUpdate = true;
 				}
-				TaskItem taskItem = container.getMinTaskItem(actorId, ${modelName}.getProcessInstanceId());
+				TaskItem taskItem = container.getMinTaskItem(actorId, trip.getProcessInstanceId());
 				if (taskItem != null) {
 					request.setAttribute("taskItem", taskItem);
 				}
 				List<ActivityInstance> stepInstances = container
-						.getActivityInstances(${modelName}.getProcessInstanceId());
+						.getActivityInstances(trip.getProcessInstanceId());
 				request.setAttribute("stepInstances", stepInstances);
 				request.setAttribute("stateInstances", stepInstances);
 			} else {
@@ -181,8 +163,8 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 		}
 
 		if (StringUtils.containsIgnoreCase(x_method, "update")) {
-			if (${modelName} != null) {
-				if (${modelName}.getStatus() == 0 || ${modelName}.getStatus() == -1) {
+			if (trip != null) {
+				if (trip.getStatus() == 0 || trip.getStatus() == -1) {
 					canUpdate = true;
 				}
 			}
@@ -196,34 +178,28 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 			return new ModelAndView(view, modelMap);
 		}
 
-		String x_view = ViewProperties.getString("${modelName}.edit");
+		String x_view = ViewProperties.getString("trip.edit");
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);
 		}
 
-		return new ModelAndView("/apps/${modelName}/edit", modelMap);
+		return new ModelAndView("/apps/trip/edit", modelMap);
 	}
 
 	@RequestMapping(params = "method=view")
 	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		<#if idField.type=='Integer' >
-                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(RequestUtils.getInt(request, "rowId"));
-		<#elseif idField.type== 'Long' >
-                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(RequestUtils.getLong(request, "rowId"));
-		<#else>
-                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(request.getParameter("rowId"));
-		</#if>
-		request.setAttribute("${modelName}", ${modelName});
+                Trip trip = tripService.getTrip(request.getParameter("rowId"));
+		request.setAttribute("trip", trip);
  
-		JSONObject rowJSON = ${modelName}.toJsonObject();
+		JSONObject rowJSON = trip.toJsonObject();
 		request.setAttribute("x_json", rowJSON.toJSONString());
 
-		if ( ${modelName}.getProcessInstanceId() != null) {
+		if ( trip.getProcessInstanceId() != null) {
 			ProcessContainer container = ProcessContainer.getContainer();
 			List<ActivityInstance> stepInstances = container
-						.getActivityInstances(${modelName}.getProcessInstanceId());
+						.getActivityInstances(trip.getProcessInstanceId());
 			request.setAttribute("stepInstances", stepInstances);
 			request.setAttribute("stateInstances", stepInstances);
 		}
@@ -234,12 +210,12 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 			return new ModelAndView(view);
 		}
 
-		String x_view = ViewProperties.getString("${modelName}.view");
+		String x_view = ViewProperties.getString("trip.view");
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view);
 		}
 
-		return new ModelAndView("/apps/${modelName}/view");
+		return new ModelAndView("/apps/trip/view");
 	}
 
 	@RequestMapping(params = "method=json")
@@ -250,9 +226,9 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 	 
 		RequestUtils.setRequestParameterToAttribute(request);
 
-		String processName = ViewProperties.getString("${entityName}.processName");
+		String processName = ViewProperties.getString("Trip.processName");
 		if (StringUtils.isEmpty(processName)) {
-			processName = "${entityName}Process";
+			processName = "TripProcess";
 		}
 
 		String workedProcessFlag = request.getParameter("workedProcessFlag");
@@ -261,9 +237,8 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 		}
 
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		${entityName}Query query = new ${entityName}Query();
+		TripQuery query = new TripQuery();
 		Tools.populate(query, params);
-		query.setWorkedProcessFlag(workedProcessFlag);
 
 		ProcessContainer container = ProcessContainer.getContainer();
 		if (StringUtils.equals(workedProcessFlag, "PD")) {
@@ -336,7 +311,7 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 		}
 
 		JSONObject result = new JSONObject();
-		int total = ${modelName}Service.get${entityName}CountByQueryCriteria(query);
+		int total = tripService.getTripCountByQueryCriteria(query);
 		if (total > 0) {
 			result.put("total", total);
 			result.put("totalCount", total);
@@ -354,7 +329,7 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 			}
 
 			Map<String, User> userMap = IdentityFactory.getUserMap();
-			List<${entityName}> list = ${modelName}Service.get${entityName}sByQueryCriteria(start, limit,
+			List<Trip> list = tripService.getTripsByQueryCriteria(start, limit,
 					query);
 
 			if (list != null && !list.isEmpty()) {
@@ -362,10 +337,10 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 
 				result.put("rows", rowsJSON);
 
-				for (${entityName} ${modelName} : list) {
-					JSONObject rowJSON = ${modelName}.toJsonObject();
-					rowJSON.put("id", ${modelName}.getId());
-					rowJSON.put("${modelName}Id", ${modelName}.getId());
+				for (Trip trip : list) {
+					JSONObject rowJSON = trip.toJsonObject();
+					rowJSON.put("id", trip.getId());
+					rowJSON.put("tripId", trip.getId());
                                         rowJSON.put("startIndex", ++start);
 					rowsJSON.add(rowJSON);
 				}
