@@ -34,7 +34,8 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 	}
 
 	@RequestMapping(params = "method=startProcess")
-	public ModelAndView startProcess(HttpServletRequest request,
+	@ResponseBody
+	public byte[] startProcess(HttpServletRequest request,
 			ModelMap modelMap) {
 		User user = RequestUtils.getUser(request);
 		String actorId = user.getActorId();
@@ -53,24 +54,28 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 				${modelName}.setProcessName(processName);
 			}
 			ProcessContext ctx = new ProcessContext();
-			ctx.setRowId(String.valueOf(${modelName}.getId()));
+			ctx.setRowId(${modelName}.getId());
 			ctx.setActorId(actorId);
 			ctx.setTitle(ViewProperties.getString("res_rowId") + ${modelName}.getId());
 			ctx.setProcessName(${modelName}.getProcessName());
-			Object processInstanceId = ProcessContainer.getContainer()
+			try{
+			    Long processInstanceId = ProcessContainer.getContainer()
 					.startProcess(ctx);
-			if (processInstanceId == null) {
-				request.setAttribute("error_message",
-						ViewProperties.getString("res_process_start_error"));
-				return new ModelAndView("/error", modelMap);
+			    if (processInstanceId != null && processInstanceId > 0) {
+			        return ResponseUtils.responseJsonResult(true);	 
+			   }
+			} catch(Exception ex){
+			   ex.printStackTrace();
+			   logger.error(ex);
 			}
 		}
 
-		return this.list(request, modelMap);
+	    return ResponseUtils.responseJsonResult(false);	 
 	}
 
 	@RequestMapping(params = "method=completeTask")
-	public ModelAndView completeTask(HttpServletRequest request,
+	@ResponseBody
+	public byte[] completeTask(HttpServletRequest request,
 			ModelMap modelMap) {
 		User user = RequestUtils.getUser(request);
 		String actorId = user.getActorId();
@@ -83,52 +88,45 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 		<#else>
                 ${entityName} ${modelName} = ${modelName}Service.get${entityName}(request.getParameter("rowId"));
 		</#if>
-		if (${modelName} != null && ${modelName}.getStatus() != 50) {
-				TaskItem taskItem = ProcessContainer.getContainer()
-						.getMinTaskItem(actorId,
-								Long.parseLong(${modelName}.getProcessInstanceId()));
-				if (taskItem != null
-						&& StringUtils.equals(
-								String.valueOf(taskItem.getTaskInstanceId()),
-								taskInstanceId)) {
-					if (StringUtils.isNotEmpty(${modelName}.getProcessInstanceId())) {
-						String route = request.getParameter("route");
-						String isAgree = request.getParameter("isAgree");
-						String opinion = request.getParameter("opinion");
-						ProcessContext ctx = new ProcessContext();
-						Collection<DataField> datafields = new ArrayList<DataField>();
-						if (StringUtils.isNotEmpty(isAgree)) {
-							DataField datafield = new DataField();
-							datafield.setName("isAgree");
-							datafield.setValue(isAgree);
-							datafields.add(datafield);
-						}
-						if (StringUtils.isNotEmpty(route)) {
-							DataField datafield = new DataField();
-							datafield.setName("route");
-							datafield.setValue(route);
-							datafields.add(datafield);
-						}
-						ctx.setActorId(actorId);
-						ctx.setOpinion(opinion);
-						ctx.setContextMap(params);
-						ctx.setDataFields(datafields);
-						ctx.setTaskInstanceId(Long.parseLong(taskInstanceId));
-						ctx.setProcessInstanceId(Long.parseLong(${modelName}
-								.getProcessInstanceId()));
-						boolean isOK = ProcessContainer.getContainer()
-								.completeTask(ctx);
-						if (!isOK) {
-							request.setAttribute("error_message", ViewProperties
-									.getString("res_complete_task_error"));
-							return new ModelAndView("/error", modelMap);
-						}
+		if (${modelName} != null && ${modelName}.getProcessInstanceId() != null && ${modelName}.getWfStatus() != 9999) {
+			TaskItem taskItem = ProcessContainer.getContainer().getMinTaskItem(actorId, ${modelName}.getProcessInstanceId());
+			if (taskItem != null && StringUtils.equals(String.valueOf(taskItem.getTaskInstanceId()), taskInstanceId)) {				
+				String route = request.getParameter("route");
+				String isAgree = request.getParameter("isAgree");
+				String opinion = request.getParameter("opinion");
+				ProcessContext ctx = new ProcessContext();
+				Collection<DataField> datafields = new ArrayList<DataField>();
+				if (StringUtils.isNotEmpty(isAgree)) {
+					DataField datafield = new DataField();
+					datafield.setName("isAgree");
+					datafield.setValue(isAgree);
+					datafields.add(datafield);
+				}
+				if (StringUtils.isNotEmpty(route)) {
+					DataField datafield = new DataField();
+					datafield.setName("route");
+					datafield.setValue(route);
+					datafields.add(datafield);
+				}
+				ctx.setActorId(actorId);
+				ctx.setOpinion(opinion);
+				ctx.setContextMap(params);
+				ctx.setDataFields(datafields);
+				ctx.setTaskInstanceId(Long.parseLong(taskInstanceId));
+				ctx.setProcessInstanceId(${modelName}.getProcessInstanceId());
+				try{
+					boolean isOK = ProcessContainer.getContainer().completeTask(ctx);
+					if (isOK) {
+					    return ResponseUtils.responseJsonResult(true);	  
+					}
+				} catch(Exception ex){
+				    ex.printStackTrace();
+				    logger.error(ex);
 				}
 			}
-		}
+	     }
 		
-
-		return this.list(request, modelMap);
+            return ResponseUtils.responseJsonResult(false);	 
 	}
 
 	@RequestMapping(params = "method=edit")
@@ -146,17 +144,19 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 		<#else>
                 ${entityName} ${modelName} = ${modelName}Service.get${entityName}(request.getParameter("rowId"));
 		</#if>
-		request.setAttribute("${modelName}", ${modelName});
-		JSONObject rowJSON = ${modelName}.toJsonObject();
-		request.setAttribute("x_json", rowJSON.toJSONString());
+
+                if (${modelName} != null) {
+		    request.setAttribute("${modelName}", ${modelName});
+		    JSONObject rowJSON = ${modelName}.toJsonObject();
+		    request.setAttribute("x_json", rowJSON.toJSONString());
+		}
 	
 
 		boolean canUpdate = false;
 		boolean canSubmit = false;
 		String x_method = request.getParameter("x_method");
 		if (StringUtils.equals(x_method, "submit")) {
-			if (${modelName} != null
-					&& StringUtils.isNotEmpty(${modelName}.getProcessInstanceId())) {
+			if (${modelName} != null && ${modelName}.getProcessInstanceId() != null) {
 				ProcessContainer container = ProcessContainer.getContainer();
 				Collection<Long> processInstanceIds = container
 						.getRunningProcessInstanceIds(actorId);
@@ -166,14 +166,12 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 				if (${modelName}.getStatus() == 0 || ${modelName}.getStatus() == -1) {
 					canUpdate = true;
 				}
-				TaskItem taskItem = container.getMinTaskItem(actorId,
-						Long.parseLong(${modelName}.getProcessInstanceId()));
+				TaskItem taskItem = container.getMinTaskItem(actorId, ${modelName}.getProcessInstanceId());
 				if (taskItem != null) {
 					request.setAttribute("taskItem", taskItem);
 				}
 				List<ActivityInstance> stepInstances = container
-						.getActivityInstances(Long.parseLong(${modelName}
-								.getProcessInstanceId()));
+						.getActivityInstances(${modelName}.getProcessInstanceId());
 				request.setAttribute("stepInstances", stepInstances);
 				request.setAttribute("stateInstances", stepInstances);
 			} else {
@@ -222,11 +220,10 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 		JSONObject rowJSON = ${modelName}.toJsonObject();
 		request.setAttribute("x_json", rowJSON.toJSONString());
 
-		if (StringUtils.isNotEmpty(${modelName}.getProcessInstanceId())) {
+		if ( ${modelName}.getProcessInstanceId() != null) {
 			ProcessContainer container = ProcessContainer.getContainer();
 			List<ActivityInstance> stepInstances = container
-						.getActivityInstances(Long.parseLong(${modelName}
-								.getProcessInstanceId()));
+						.getActivityInstances(${modelName}.getProcessInstanceId());
 			request.setAttribute("stepInstances", stepInstances);
 			request.setAttribute("stateInstances", stepInstances);
 		}
@@ -368,7 +365,7 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 					JSONObject rowJSON = ${modelName}.toJsonObject();
 					rowJSON.put("id", ${modelName}.getId());
 					rowJSON.put("${modelName}Id", ${modelName}.getId());
-
+                                        rowJSON.put("startIndex", ++start);
 					rowsJSON.add(rowJSON);
 				}
 

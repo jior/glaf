@@ -193,15 +193,17 @@
 	<sql id="select${entityName}sSql">
 
 		from ${tableName} E
-
+		
+		<#if classDefinition.jbpmSupport >
 		<if test=" workedProcessFlag == 'WD' and appActorIds != null and appActorIds.size != 0  ">
            inner join JBPM_TASKINSTANCE T
 		   on E.PROCESSINSTANCEID_ = T.PROCINST_
 		</if>
+		</#if>
 		 
 		<where>
 		       1 = 1  
-
+			  <#if classDefinition.jbpmSupport >
 			   <if test="workedProcessFlag == 'WD' and appActorIds != null and appActorIds.size != 0 ">
 			     and ( T.END_ IS NOT NULL)
                  and ( T.ACTORID in
@@ -282,6 +284,7 @@
 					#GG{x_processInstanceId}
                 </foreach>
 			</if>
+		  </#if>
 
 <#if pojo_fields?exists>
   <#list  pojo_fields as field>

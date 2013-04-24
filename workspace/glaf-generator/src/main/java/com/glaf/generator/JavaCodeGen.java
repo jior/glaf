@@ -109,6 +109,58 @@ public class JavaCodeGen {
 
 		logger.debug(context);
 
+		if (classDefinition.isJbpmSupport()) {
+			FieldDefinition f0 = new FieldDefinition();
+			f0.setName("status");
+			f0.setColumnName("status");
+			f0.setEnglishTitle("status");
+			f0.setTitle("业务状态");
+			f0.setType("Integer");
+			classDefinition.addField(f0);
+
+			FieldDefinition f1 = new FieldDefinition();
+			f1.setName("processName");
+			f1.setColumnName("processName");
+			f1.setEnglishTitle("processName");
+			f1.setTitle("流程名称");
+			f1.setLength(100);
+			f1.setType("String");
+			classDefinition.addField(f1);
+
+			FieldDefinition f2 = new FieldDefinition();
+			f2.setName("processInstanceId");
+			f2.setColumnName("processInstanceId");
+			f2.setEnglishTitle("processInstanceId");
+			f2.setTitle("流程实例编号");
+			f2.setType("Long");
+			classDefinition.addField(f2);
+
+			FieldDefinition f3 = new FieldDefinition();
+			f3.setName("wfStatus");
+			f3.setColumnName("wfStatus");
+			f3.setEnglishTitle("wfStatus");
+			f3.setTitle("工作流状态");
+			f3.setType("Integer");
+			classDefinition.addField(f3);
+
+			FieldDefinition f4 = new FieldDefinition();
+			f4.setName("wfStartDate");
+			f4.setColumnName("wfStartDate");
+			f4.setEnglishTitle("wfStartDate");
+			f4.setTitle("工作流启动日期");
+			f4.setType("Date");
+			classDefinition.addField(f4);
+
+			FieldDefinition f5 = new FieldDefinition();
+			f5.setName("wfEndDate");
+			f5.setColumnName("wfEndDate");
+			f5.setEnglishTitle("wfEndDate");
+			f5.setTitle("工作流结束日期");
+			f5.setType("Date");
+			classDefinition.addField(f5);
+
+		}
+
 		Map<String, FieldDefinition> fields = classDefinition.getFields();
 
 		context.put("pojo_fields", fields.values());
@@ -434,8 +486,7 @@ public class JavaCodeGen {
 
 	public static void main(String[] args) throws Exception {
 		FileInputStream fin = new FileInputStream(args[0]);
-		ClassDefinition def = new com.glaf.core.xml.XmlReader()
-				.read(fin);
+		ClassDefinition def = new com.glaf.core.xml.XmlReader().read(fin);
 		JavaCodeGen gen = new JavaCodeGen();
 		File outputDir = new File(args[1]);
 		String config = JavaCodeGen.DEFAULT_CONFIG;

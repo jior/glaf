@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <mapping>
 	<entity name="Trip" package="com.glaf.apps.trip" 
-	            table="X_APP_TRIP" title="出差申请" englishTitle="Trip Apply">
+	            table="X_APP_TRIP" title="出差申请" englishTitle="Trip Apply" jbpmSupport="true">
 		<id  name="id" column="ID_" title="编号" 
 		    englishTitle="ID"	type="String" displayType="4" length="50" sortNo="0"/>
 		<property name="transType" column="TRANSTYPE_" title="交通工具" 
@@ -31,12 +31,7 @@
 			englishTitle="Update Date" type="Date" displayType="4" nullable="false"/>
 		<property name="locked" column="LOCKED_" title="是否锁定" type="Integer"
 			englishTitle="Locked" displayType="4" mask="9" nullable="false"/>
-		
 		<property name="status" column="STATUS_" title="状态" type="Integer"
 			englishTitle="status" displayType="4" mask="9" nullable="false"/>
-		<property name="processName" column="PROCESSNAME_" title="流程名称" 
-		    englishTitle="Process Name"	type="String" displayType="4" length="200" />
-		<property name="processInstanceId" column="PROCESSINSTANCEID_" title="流程实例编号" 
-		    englishTitle="ProcessInstanceId"	type="String" displayType="4" length="200" />
 	</entity>
 </mapping>
