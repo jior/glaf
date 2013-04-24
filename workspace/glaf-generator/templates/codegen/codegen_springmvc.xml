@@ -46,11 +46,11 @@
 		<saveName>${entityName}-spring-context.xml</saveName>
 		<template>/templates/java/service/mybatis3/spring-context.xml.ftl</template>
 	</definition> -->
-	<!-- <definition name="ResourceRest">
+	<definition name="ResourceRest">
 		<savePath>/java/web/rest</savePath>
 		<saveName>${entityName}ResourceRest.java</saveName>
 		<template>/templates/java/rest/ResourceRest.java.ftl</template>
-	</definition> -->
+	</definition> 
 	<definition name="Controller">
 		<savePath>/java/web/springmvc</savePath>
 		<saveName>${entityName}Controller.java</saveName>
@@ -60,6 +60,11 @@
 		<savePath>/java/web/springmvc</savePath>
 		<saveName>${entityName}BaseController.java</saveName>
 		<template>/templates/java/springmvc/BaseController.java.ftl</template>
+	</definition>
+	<definition name="WfBaseController">
+		<savePath>/java/web/springmvc</savePath>
+		<saveName>${entityName}WfController.java</saveName>
+		<template>/templates/java/springmvc/WfBaseController.java.ftl</template>
 	</definition>
 	<!-- <definition name="WfBaseController">
 		<savePath>/java/web/springmvc</savePath>

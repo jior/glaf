@@ -7,12 +7,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -31,7 +30,7 @@ import ${packageName}.service.${entityName}Service;
 @Controller
 @Path("/rs/apps/${modelName}")
 public class ${entityName}ResourceRest {
-	protected final Logger logger = LoggerFactory.getLogger(getClass());
+	protected static final Log logger = LogFactory.getLog(${entityName}ResourceRest.class);
 
 	protected ${entityName}Service ${modelName}Service;
 
@@ -43,25 +42,22 @@ public class ${entityName}ResourceRest {
 			throws IOException {
 		String rowIds = request.getParameter("rowIds");
 		if (rowIds != null) {
-			List<String> ids = StringTools.split(rowIds);
+		    <#if idField.type=='Integer' >
+			List<Integer> ids = StringTools.splitToInt(rowIds);
 			if (ids != null && !ids.isEmpty()) {
 				${modelName}Service.deleteByIds(ids);
 			}
-		}
-		return ResponseUtils.responseJsonResult(true);
-	}
-
-	@POST
-	@Path("/delete/{rowIds}")
-	@ResponseBody
-	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
-	public byte[] deleteAll(@PathParam("rowIds") String rowIds,
-			@Context HttpServletRequest request) throws IOException {
-		if (rowIds != null) {
-			List<String> ids = StringTools.split(rowIds);
+		    <#elseif idField.type== 'Long' >
+			List<Long> ids = StringTools.splitToLong(rowIds);
 			if (ids != null && !ids.isEmpty()) {
 				${modelName}Service.deleteByIds(ids);
 			}
+                    <#else>
+ 			List<String> ids = StringTools.split(rowIds);
+			if (ids != null && !ids.isEmpty()) {
+				${modelName}Service.deleteByIds(ids);
+			}
+		    </#if>
 		}
 		return ResponseUtils.responseJsonResult(true);
 	}
@@ -70,23 +66,14 @@ public class ${entityName}ResourceRest {
 	@Path("/delete")
 	@ResponseBody
 	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
-	public byte[] deleteById(@Context HttpServletRequest request)
-			throws IOException {
-		String ${modelName}Id = request.getParameter("${modelName}Id");
-		if (StringUtils.isEmpty(${modelName}Id)) {
-                      ${modelName}Id = request.getParameter("id");
-		}
-		${modelName}Service.deleteById(${modelName}Id);
-		return ResponseUtils.responseJsonResult(true);
-	}
-
-	@POST
-	@Path("/delete/{${modelName}Id}")
-	@ResponseBody
-	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
-	public byte[] deleteById(@PathParam("${modelName}Id") String ${modelName}Id,
-			@Context HttpServletRequest request) throws IOException {
-		${modelName}Service.deleteById(${modelName}Id);
+	public byte[] deleteById(@Context HttpServletRequest request) throws IOException {
+		<#if idField.type=='Integer' >
+                ${modelName}Service.deleteById(RequestUtils.getInt(request, "rowId"));
+		<#elseif idField.type== 'Long' >
+                ${modelName}Service.deleteById(RequestUtils.getLong(request, "rowId"));
+		<#else>
+                ${modelName}Service.deleteById(request.getParameter("rowId"));
+		</#if>
 		return ResponseUtils.responseJsonResult(true);
 	}
 
@@ -155,12 +142,13 @@ public class ${entityName}ResourceRest {
 					JSONObject rowJSON = ${modelName}.toJsonObject();
 					rowJSON.put("id", ${modelName}.getId());
 					rowJSON.put("${modelName}Id", ${modelName}.getId());
+					rowJSON.put("startIndex", ++start);
  					rowsJSON.add(rowJSON);
 				}
 
 			}
 		}
-		return result.toString().getBytes("UTF-8");
+		return result.toJSONString().getBytes("UTF-8");
 	}
 
 	@POST
@@ -172,6 +160,23 @@ public class ${entityName}ResourceRest {
 		${entityName} ${modelName} = new ${entityName}();
 		try {
 		    Tools.populate(${modelName}, params);
+
+ <#if pojo_fields?exists>
+    <#list  pojo_fields as field>	
+      <#if field.type?exists && ( field.type== 'Integer')>
+                    ${modelName}.set${field.firstUpperName}(RequestUtils.getInt(request, "${field.name}"));
+      <#elseif field.type?exists && ( field.type== 'Long')>
+                    ${modelName}.set${field.firstUpperName}(RequestUtils.getLong(request, "${field.name}"));
+      <#elseif field.type?exists && ( field.type== 'Double')>
+                    ${modelName}.set${field.firstUpperName}(RequestUtils.getDouble(request, "${field.name}"));
+      <#elseif field.type?exists && ( field.type== 'Date')>
+                    ${modelName}.set${field.firstUpperName}(RequestUtils.getDate(request, "${field.name}"));
+      <#elseif field.type?exists && ( field.type== 'String')>
+                    ${modelName}.set${field.firstUpperName}(request.getParameter("${field.name}"));
+      </#if>
+    </#list>
+</#if>
+
 		    this.${modelName}Service.save(${modelName});
 
 		    return ResponseUtils.responseJsonResult(true);
@@ -188,14 +193,19 @@ public class ${entityName}ResourceRest {
 
 	@GET
 	@POST
-	@Path("/view/{${modelName}Id}")
+	@Path("/view")
 	@ResponseBody
 	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
-	public byte[] view(@PathParam("${modelName}Id") String ${modelName}Id,
-			@Context HttpServletRequest request) throws IOException {
+	public byte[] view(@Context HttpServletRequest request) throws IOException {
 		${entityName} ${modelName} = null;
-		if (StringUtils.isNotEmpty(${modelName}Id)) {
-			${modelName} = ${modelName}Service.get${entityName}(${modelName}Id);
+		if (StringUtils.isNotEmpty(request.getParameter("rowId"))) {
+		<#if idField.type=='Integer' >
+                  ${modelName} = ${modelName}Service.get${entityName}(RequestUtils.getInt(request, "rowId"));
+		<#elseif idField.type== 'Long' >
+                  ${modelName} = ${modelName}Service.get${entityName}(RequestUtils.getLong(request, "rowId"));
+		<#else>
+                  ${modelName} = ${modelName}Service.get${entityName}(request.getParameter("rowId"));
+		</#if>
 		}
 		JSONObject result = new JSONObject();
 		if (${modelName} != null) {
@@ -204,6 +214,6 @@ public class ${entityName}ResourceRest {
 		    result.put("id", ${modelName}.getId());
 		    result.put("${modelName}Id", ${modelName}.getId());
 		}
-		return result.toString().getBytes("UTF-8");
+		return result.toJSONString().getBytes("UTF-8");
 	}
 }

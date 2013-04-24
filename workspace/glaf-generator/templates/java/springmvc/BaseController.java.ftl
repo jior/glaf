@@ -25,7 +25,7 @@ import ${packageName}.service.*;
 
 
 public class ${entityName}BaseController {
-	private static final Log logger = LogFactory.getLog(${entityName}BaseController.class);
+	protected static final Log logger = LogFactory.getLog(${entityName}BaseController.class);
 
 	protected ${entityName}Service ${modelName}Service;
 
@@ -40,12 +40,31 @@ public class ${entityName}BaseController {
 
 
 	@RequestMapping(params = "method=save")
-	public ModelAndView save(HttpServletRequest request, ModelMap modelMap, ${entityName} ${modelName}) {
+	public ModelAndView save(HttpServletRequest request, ModelMap modelMap) {
 		User user = RequestUtils.getUser(request);
 		String actorId =  user.getActorId();
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
                 params.remove("status");
 		params.remove("wfStatus");
+
+		${entityName} ${modelName} = new ${entityName}();
+		//Tools.populate(${modelName}, params);
+
+ <#if pojo_fields?exists>
+    <#list  pojo_fields as field>	
+      <#if field.type?exists && ( field.type== 'Integer')>
+                ${modelName}.set${field.firstUpperName}(RequestUtils.getInt(request, "${field.name}"));
+      <#elseif field.type?exists && ( field.type== 'Long')>
+                ${modelName}.set${field.firstUpperName}(RequestUtils.getLong(request, "${field.name}"));
+      <#elseif field.type?exists && ( field.type== 'Double')>
+                ${modelName}.set${field.firstUpperName}(RequestUtils.getDouble(request, "${field.name}"));
+      <#elseif field.type?exists && ( field.type== 'Date')>
+                ${modelName}.set${field.firstUpperName}(RequestUtils.getDate(request, "${field.name}"));
+      <#elseif field.type?exists && ( field.type== 'String')>
+                ${modelName}.set${field.firstUpperName}(request.getParameter("${field.name}"));
+      </#if>
+    </#list>
+</#if>
 		
 		${modelName}.setCreateBy(actorId);
          
@@ -63,22 +82,63 @@ public class ${entityName}BaseController {
 		${entityName} ${modelName} = new ${entityName}();
 		try {
 		    Tools.populate(${modelName}, params);
+ <#if pojo_fields?exists>
+    <#list  pojo_fields as field>	
+      <#if field.type?exists && ( field.type== 'Integer')>
+                    ${modelName}.set${field.firstUpperName}(RequestUtils.getInt(request, "${field.name}"));
+      <#elseif field.type?exists && ( field.type== 'Long')>
+                    ${modelName}.set${field.firstUpperName}(RequestUtils.getLong(request, "${field.name}"));
+      <#elseif field.type?exists && ( field.type== 'Double')>
+                    ${modelName}.set${field.firstUpperName}(RequestUtils.getDouble(request, "${field.name}"));
+      <#elseif field.type?exists && ( field.type== 'Date')>
+                    ${modelName}.set${field.firstUpperName}(RequestUtils.getDate(request, "${field.name}"));
+      <#elseif field.type?exists && ( field.type== 'String')>
+                    ${modelName}.set${field.firstUpperName}(request.getParameter("${field.name}"));
+      </#if>
+    </#list>
+</#if>
 		    ${modelName}.setCreateBy(actorId);
 		    this.${modelName}Service.save(${modelName});
 
 		    return ResponseUtils.responseJsonResult(true);
 		} catch (Exception ex) {
 		    ex.printStackTrace();
+		    logger.error(ex);
 		}
 		return ResponseUtils.responseJsonResult(false);
 	}
 
         @RequestMapping(params = "method=update")
-	public ModelAndView update(HttpServletRequest request, ModelMap modelMap, ${entityName} ${modelName}) {
+	public ModelAndView update(HttpServletRequest request, ModelMap modelMap) {
 		User user = RequestUtils.getUser(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
                 params.remove("status");
 		params.remove("wfStatus");
+
+		<#if idField.type=='Integer' >
+                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(RequestUtils.getInt(request, "rowId"));
+		<#elseif idField.type== 'Long' >
+                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(RequestUtils.getLong(request, "rowId"));
+		<#else>
+                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(request.getParameter("rowId"));
+		</#if>
+
+ <#if pojo_fields?exists>
+    <#list  pojo_fields as field>	
+      <#if field.type?exists && ( field.type== 'Integer')>
+                ${modelName}.set${field.firstUpperName}(RequestUtils.getInt(request, "${field.name}"));
+      <#elseif field.type?exists && ( field.type== 'Long')>
+                ${modelName}.set${field.firstUpperName}(RequestUtils.getLong(request, "${field.name}"));
+      <#elseif field.type?exists && ( field.type== 'Double')>
+                ${modelName}.set${field.firstUpperName}(RequestUtils.getDouble(request, "${field.name}"));
+      <#elseif field.type?exists && ( field.type== 'Date')>
+                ${modelName}.set${field.firstUpperName}(RequestUtils.getDate(request, "${field.name}"));
+      <#elseif field.type?exists && ( field.type== 'String')>
+                ${modelName}.set${field.firstUpperName}(request.getParameter("${field.name}"));
+      </#if>
+    </#list>
+</#if>
+	
 		${modelName}Service.save(${modelName});   
 
 		return this.list(request, modelMap);
@@ -129,14 +189,19 @@ public class ${entityName}BaseController {
 		RequestUtils.setRequestParameterToAttribute(request);
 		request.removeAttribute("canSubmit");
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		String rowId = ParamUtils.getString(params, "rowId");
-		${entityName} ${modelName} = null;
-		if (StringUtils.isNotEmpty(rowId)) {
-			${modelName} = ${modelName}Service.get${entityName}(rowId);
-			request.setAttribute("${modelName}", ${modelName});
-			JSONObject rowJSON =  ${modelName}.toJsonObject();
-			request.setAttribute("x_json", rowJSON.toString());
+		<#if idField.type=='Integer' >
+                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(RequestUtils.getInt(request, "rowId"));
+		<#elseif idField.type== 'Long' >
+                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(RequestUtils.getLong(request, "rowId"));
+		<#else>
+                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(request.getParameter("rowId"));
+		</#if>
+		if(${modelName} != null) {
+		    request.setAttribute("${modelName}", ${modelName});
+		    JSONObject rowJSON =  ${modelName}.toJsonObject();
+		    request.setAttribute("x_json", rowJSON.toJSONString());
 		}
+	
 
                 boolean canUpdate = false;
 		String x_method = request.getParameter("x_method");
@@ -173,14 +238,17 @@ public class ${entityName}BaseController {
 	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		String rowId = ParamUtils.getString(params, "rowId");
-		${entityName} ${modelName} = null;
-		if (StringUtils.isNotEmpty(rowId)) {
-			${modelName} = ${modelName}Service.get${entityName}(rowId);
-			request.setAttribute("${modelName}", ${modelName});
-			JSONObject rowJSON =  ${modelName}.toJsonObject();
-			request.setAttribute("x_json", rowJSON.toString());
-		}
+		<#if idField.type=='Integer' >
+                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(RequestUtils.getInt(request, "rowId"));
+		<#elseif idField.type== 'Long' >
+                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(RequestUtils.getLong(request, "rowId"));
+		<#else>
+                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(request.getParameter("rowId"));
+		</#if>
+		request.setAttribute("${modelName}", ${modelName});
+		JSONObject rowJSON =  ${modelName}.toJsonObject();
+		request.setAttribute("x_json", rowJSON.toJSONString());
+
 
 		String view = request.getParameter("view");
 		if (StringUtils.isNotEmpty(view)) {

@@ -39,8 +39,13 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 		User user = RequestUtils.getUser(request);
 		String actorId = user.getActorId();
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		String rowId = ParamUtils.getString(params, "rowId");
-		${entityName} ${modelName} = ${modelName}Service.get${entityName}(rowId);
+		<#if idField.type=='Integer' >
+                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(RequestUtils.getInt(request, "rowId"));
+		<#elseif idField.type== 'Long' >
+                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(RequestUtils.getLong(request, "rowId"));
+		<#else>
+                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(request.getParameter("rowId"));
+		</#if>
 		if (${modelName} != null) {
 			String processName = ViewProperties.getString("${entityName}.processName");
 			if (StringUtils.isEmpty(processName)) {
@@ -71,11 +76,14 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 		String actorId = user.getActorId();
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		String taskInstanceId = ParamUtils.getString(params, "taskInstanceId");
-		String rowId = ParamUtils.getString(params, "rowId");
-		${entityName} ${modelName} = null;
-		if (StringUtils.isNotEmpty(rowId)) {
-			${modelName} = ${modelName}Service.get${entityName}(rowId);
-			if (${modelName} != null && ${modelName}.getStatus() != 50) {
+		<#if idField.type=='Integer' >
+                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(RequestUtils.getInt(request, "rowId"));
+		<#elseif idField.type== 'Long' >
+                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(RequestUtils.getLong(request, "rowId"));
+		<#else>
+                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(request.getParameter("rowId"));
+		</#if>
+		if (${modelName} != null && ${modelName}.getStatus() != 50) {
 				TaskItem taskItem = ProcessContainer.getContainer()
 						.getMinTaskItem(actorId,
 								Long.parseLong(${modelName}.getProcessInstanceId()));
@@ -115,10 +123,10 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 									.getString("res_complete_task_error"));
 							return new ModelAndView("/error", modelMap);
 						}
-					}
 				}
 			}
 		}
+		
 
 		return this.list(request, modelMap);
 	}
@@ -130,14 +138,18 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 		RequestUtils.setRequestParameterToAttribute(request);
 		request.removeAttribute("canSubmit");
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		String rowId = ParamUtils.getString(params, "rowId");
-		${entityName} ${modelName} = null;
-		if (StringUtils.isNotEmpty(rowId)) {
-			${modelName} = ${modelName}Service.get${entityName}(rowId);
-			request.setAttribute("${modelName}", ${modelName});
-			JSONObject rowJSON = ${modelName}.toJsonObject();
-			request.setAttribute("x_json", rowJSON.toString());
-		}
+
+		<#if idField.type=='Integer' >
+                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(RequestUtils.getInt(request, "rowId"));
+		<#elseif idField.type== 'Long' >
+                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(RequestUtils.getLong(request, "rowId"));
+		<#else>
+                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(request.getParameter("rowId"));
+		</#if>
+		request.setAttribute("${modelName}", ${modelName});
+		JSONObject rowJSON = ${modelName}.toJsonObject();
+		request.setAttribute("x_json", rowJSON.toJSONString());
+	
 
 		boolean canUpdate = false;
 		boolean canSubmit = false;
@@ -198,24 +210,27 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		String rowId = ParamUtils.getString(params, "rowId");
-		${entityName} ${modelName} = null;
-		if (StringUtils.isNotEmpty(rowId)) {
-			${modelName} = ${modelName}Service.get${entityName}(rowId);
-			request.setAttribute("${modelName}", ${modelName});
+		<#if idField.type=='Integer' >
+                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(RequestUtils.getInt(request, "rowId"));
+		<#elseif idField.type== 'Long' >
+                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(RequestUtils.getLong(request, "rowId"));
+		<#else>
+                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(request.getParameter("rowId"));
+		</#if>
+		request.setAttribute("${modelName}", ${modelName});
  
-			JSONObject rowJSON = ${modelName}.toJsonObject();
-			request.setAttribute("x_json", rowJSON.toString());
+		JSONObject rowJSON = ${modelName}.toJsonObject();
+		request.setAttribute("x_json", rowJSON.toJSONString());
 
-			if (StringUtils.isNotEmpty(${modelName}.getProcessInstanceId())) {
-				ProcessContainer container = ProcessContainer.getContainer();
-				List<ActivityInstance> stepInstances = container
+		if (StringUtils.isNotEmpty(${modelName}.getProcessInstanceId())) {
+			ProcessContainer container = ProcessContainer.getContainer();
+			List<ActivityInstance> stepInstances = container
 						.getActivityInstances(Long.parseLong(${modelName}
 								.getProcessInstanceId()));
-				request.setAttribute("stepInstances", stepInstances);
-				request.setAttribute("stateInstances", stepInstances);
-			}
+			request.setAttribute("stepInstances", stepInstances);
+			request.setAttribute("stateInstances", stepInstances);
 		}
+		
 
 		String view = request.getParameter("view");
 		if (StringUtils.isNotEmpty(view)) {
