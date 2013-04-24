@@ -84,7 +84,6 @@ public class BaseIdentityResource {
 		SysTree root = sysTreeService.getSysTreeByCode(SysConstants.TREE_DEPT);
 		if (root != null) {
 			logger.debug(root.toJsonObject().toJSONString());
-
 			List<TreeModel> treeModels = new ArrayList<TreeModel>();
 			// treeModels.add(root);
 			List<SysTree> trees = sysTreeService.getSysTreeListForDept(
@@ -202,7 +201,6 @@ public class BaseIdentityResource {
 		SysTree root = sysTreeService.findById(parentId);
 		if (root != null) {
 			logger.debug(root.toJsonObject().toJSONString());
-
 			List<TreeModel> treeModels = new ArrayList<TreeModel>();
 			// treeModels.add(root);
 			List<SysTree> trees = sysTreeService.getSysTreeListForDept(
@@ -214,7 +212,6 @@ public class BaseIdentityResource {
 					SysDepartment dept = tree.getDepartment();
 					treeMap.put(dept.getId(), tree);
 				}
-
 				for (SysTree tree : trees) {
 					if (deptIds.contains(String.valueOf(tree.getId()))) {
 						tree.setChecked(true);
