@@ -141,10 +141,8 @@ public class LoginController {
 
 			ContextUtil.put(bean.getAccount(), bean);// 传入全局变量
 
-			if (session != null) {
-				RequestUtils.setLoginUser(request, response, "GLAF",
-						bean.getAccount());
-			}
+			RequestUtils.setLoginUser(request, response, "GLAF",
+					bean.getAccount());
 
 			request.setAttribute(SysConstants.MENU, menus);
 
