@@ -412,9 +412,40 @@ CREATE TABLE sys_property (
         PRIMARY KEY (id_)
 );
 
+    create index IDX_USER_ACCOUNT on SYS_USER (ACCOUNT);
+
+    create index IDX_USER_NAME on SYS_USER (NAME);
+
+    create index IDX_TREE_NAME on SYS_TREE (NAME);
+
+    create index IDX_TREE_CODE on SYS_TREE (CODE);
+
+    create index IDX_ROLE_NAME on SYS_ROLE (NAME);
+
+    create index IDX_ROLE_CODE on SYS_ROLE (CODE);
+
+    create index SYS_DEPT_NAME on SYS_DEPARTMENT (NAME);
+
+    create index SYS_DEPT_CODE on SYS_DEPARTMENT (CODE);
+
+    create index SYS_DEPT_NODE on SYS_DEPARTMENT (NODEID);
+
+    create index SYS_APP_NAME on SYS_APPLICATION (NAME);
+
+    create index SYS_APP_CODE on SYS_APPLICATION (CODE);
+
+    create index SYS_APP_NODE on SYS_APPLICATION (NODEID);
+
+    create index SYS_DEPTROLE_DEPT on SYS_DEPT_ROLE (DEPTID);
+
+    create index SYS_DEPTROLE_ROLE on SYS_DEPT_ROLE (SYSROLEID);
+
+    create index SYS_USERROLE_ROLE on SYS_USER_ROLE (ROLEID);
+
+    create index SYS_USERROLE_USER on SYS_USER_ROLE (USERID);
 
 
-  alter table sys_access 
+    alter table sys_access 
         add constraint FK_ACCESS_APP 
         foreign key (appId) 
         references sys_application;
