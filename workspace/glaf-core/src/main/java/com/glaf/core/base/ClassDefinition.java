@@ -23,30 +23,12 @@ public class ClassDefinition implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * Java 包名
-	 */
-	protected String packageName;
-
-	/**
-	 * Java 实体类名
-	 */
-	protected String entityName;
+	protected byte[] bytes;
 
 	/**
 	 * 类名
 	 */
 	protected String className;
-
-	/**
-	 * 表单资源名
-	 */
-	protected String formResourceName;
-
-	/**
-	 * 标题
-	 */
-	protected String title;
 
 	/**
 	 * 英文标题
@@ -59,17 +41,40 @@ public class ClassDefinition implements java.io.Serializable {
 	protected Class<?> entityClass;
 
 	/**
+	 * Java 实体类名
+	 */
+	protected String entityName;
+
+	protected Map<String, FieldDefinition> fields = new LinkedHashMap<String, FieldDefinition>();
+
+	protected byte[] formBytes;
+
+	/**
+	 * 表单资源名
+	 */
+	protected String formResourceName;
+
+	protected FieldDefinition idField;
+
+	/**
+	 * 是否需要JBPM工作流支持
+	 */
+	protected boolean jbpmSupport;
+
+	/**
+	 * Java 包名
+	 */
+	protected String packageName;
+
+	/**
 	 * 数据库表名
 	 */
 	protected String tableName;
 
-	protected byte[] bytes;
-
-	protected byte[] formBytes;
-
-	protected FieldDefinition idField;
-
-	protected Map<String, FieldDefinition> fields = new LinkedHashMap<String, FieldDefinition>();
+	/**
+	 * 标题
+	 */
+	protected String title;
 
 	public ClassDefinition() {
 
@@ -138,6 +143,10 @@ public class ClassDefinition implements java.io.Serializable {
 		return title;
 	}
 
+	public boolean isJbpmSupport() {
+		return jbpmSupport;
+	}
+
 	public void setBytes(byte[] bytes) {
 		this.bytes = bytes;
 	}
@@ -172,6 +181,10 @@ public class ClassDefinition implements java.io.Serializable {
 
 	public void setIdField(FieldDefinition idField) {
 		this.idField = idField;
+	}
+
+	public void setJbpmSupport(boolean jbpmSupport) {
+		this.jbpmSupport = jbpmSupport;
 	}
 
 	public void setPackageName(String packageName) {

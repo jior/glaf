@@ -25,8 +25,6 @@ import com.glaf.core.base.ClassDefinition;
 import com.glaf.core.base.FieldDefinition;
 import com.glaf.core.util.FieldType;
 
- 
-
 public class XmlReader {
 
 	public ClassDefinition read(java.io.InputStream inputStream) {
@@ -46,6 +44,10 @@ public class XmlReader {
 						.attributeValue("englishTitle"));
 				classDefinition.setFormResourceName(element
 						.attributeValue("formResourceName"));
+				if (StringUtils.equals("true",
+						element.attributeValue("jbpmSupport"))) {
+					classDefinition.setJbpmSupport(true);
+				}
 				Element idElem = element.element("id");
 				if (idElem != null) {
 					FieldDefinition idField = new FieldDefinition();
