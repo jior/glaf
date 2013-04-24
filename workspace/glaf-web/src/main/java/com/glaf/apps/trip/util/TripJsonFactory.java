@@ -3,11 +3,24 @@ package com.glaf.apps.trip.util;
 import com.alibaba.fastjson.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode; 
-import com.glaf.core.base.*;
 import com.glaf.core.util.DateUtils;
 import com.glaf.apps.trip.model.*;
 
 public class TripJsonFactory {
+	
+	public static void main(String[] args){
+		 Trip model = new Trip();
+		 model.setApplyDate(new java.util.Date());
+		 model.setDays(2.5D);
+		 model.setMoney(2000D);
+		 model.setCreateBy("sys");
+		 JSONObject jsonObject = TripJsonFactory.toJsonObject(model);
+		 System.out.println(jsonObject.toJSONString());
+		 Trip trip = TripJsonFactory.jsonToObject(jsonObject);
+		 System.out.println(trip.getApplyDate());
+		 System.out.println(trip.getDays());
+		 System.out.println(trip.getMoney());
+	}
 
 	public static Trip jsonToObject(JSONObject jsonObject) {
             Trip model = new Trip();

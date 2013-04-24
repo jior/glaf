@@ -5,11 +5,12 @@ import java.util.*;
  
 import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import com.alibaba.fastjson.*;
  
@@ -24,23 +25,47 @@ import com.glaf.apps.trip.service.*;
 
 
 public class TripBaseController {
-	protected final Logger logger = LoggerFactory.getLogger(getClass());
+	protected static final Log logger = LogFactory.getLog(TripBaseController.class);
 
-        @javax.annotation.Resource
 	protected TripService tripService;
 
 	public TripBaseController() {
 
 	}
 
+        @javax.annotation.Resource
+	public void setTripService(TripService tripService) {
+		this.tripService = tripService;
+	}
+
 
 	@RequestMapping(params = "method=save")
-	public ModelAndView save(HttpServletRequest request, ModelMap modelMap, Trip trip) {
+	public ModelAndView save(HttpServletRequest request, ModelMap modelMap) {
 		User user = RequestUtils.getUser(request);
 		String actorId =  user.getActorId();
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
                 params.remove("status");
 		params.remove("wfStatus");
+
+		Trip trip = new Trip();
+		//Tools.populate(trip, params);
+
+                trip.setTransType(request.getParameter("transType"));
+                trip.setApplyDate(RequestUtils.getDate(request, "applyDate"));
+                trip.setStartDate(RequestUtils.getDate(request, "startDate"));
+                trip.setEndDate(RequestUtils.getDate(request, "endDate"));
+                trip.setDays(RequestUtils.getDouble(request, "days"));
+                trip.setMoney(RequestUtils.getDouble(request, "money"));
+                trip.setCause(request.getParameter("cause"));
+                trip.setDeleteFlag(RequestUtils.getInt(request, "deleteFlag"));
+                trip.setCreateDate(RequestUtils.getDate(request, "createDate"));
+                trip.setCreateBy(request.getParameter("createBy"));
+                trip.setCreateByName(request.getParameter("createByName"));
+                trip.setUpdateDate(RequestUtils.getDate(request, "updateDate"));
+                trip.setLocked(RequestUtils.getInt(request, "locked"));
+                trip.setStatus(RequestUtils.getInt(request, "status"));
+                trip.setProcessName(request.getParameter("processName"));
+                trip.setProcessInstanceId(request.getParameter("processInstanceId"));
 		
 		trip.setCreateBy(actorId);
          
@@ -58,22 +83,59 @@ public class TripBaseController {
 		Trip trip = new Trip();
 		try {
 		    Tools.populate(trip, params);
+                    trip.setTransType(request.getParameter("transType"));
+                    trip.setApplyDate(RequestUtils.getDate(request, "applyDate"));
+                    trip.setStartDate(RequestUtils.getDate(request, "startDate"));
+                    trip.setEndDate(RequestUtils.getDate(request, "endDate"));
+                    trip.setDays(RequestUtils.getDouble(request, "days"));
+                    trip.setMoney(RequestUtils.getDouble(request, "money"));
+                    trip.setCause(request.getParameter("cause"));
+                    trip.setDeleteFlag(RequestUtils.getInt(request, "deleteFlag"));
+                    trip.setCreateDate(RequestUtils.getDate(request, "createDate"));
+                    trip.setCreateBy(request.getParameter("createBy"));
+                    trip.setCreateByName(request.getParameter("createByName"));
+                    trip.setUpdateDate(RequestUtils.getDate(request, "updateDate"));
+                    trip.setLocked(RequestUtils.getInt(request, "locked"));
+                    trip.setStatus(RequestUtils.getInt(request, "status"));
+                    trip.setProcessName(request.getParameter("processName"));
+                    trip.setProcessInstanceId(request.getParameter("processInstanceId"));
 		    trip.setCreateBy(actorId);
 		    this.tripService.save(trip);
 
 		    return ResponseUtils.responseJsonResult(true);
 		} catch (Exception ex) {
 		    ex.printStackTrace();
+		    logger.error(ex);
 		}
 		return ResponseUtils.responseJsonResult(false);
 	}
 
         @RequestMapping(params = "method=update")
-	public ModelAndView update(HttpServletRequest request, ModelMap modelMap, Trip trip) {
+	public ModelAndView update(HttpServletRequest request, ModelMap modelMap) {
 		User user = RequestUtils.getUser(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
                 params.remove("status");
 		params.remove("wfStatus");
+
+                Trip trip = tripService.getTrip(request.getParameter("rowId"));
+
+                trip.setTransType(request.getParameter("transType"));
+                trip.setApplyDate(RequestUtils.getDate(request, "applyDate"));
+                trip.setStartDate(RequestUtils.getDate(request, "startDate"));
+                trip.setEndDate(RequestUtils.getDate(request, "endDate"));
+                trip.setDays(RequestUtils.getDouble(request, "days"));
+                trip.setMoney(RequestUtils.getDouble(request, "money"));
+                trip.setCause(request.getParameter("cause"));
+                trip.setDeleteFlag(RequestUtils.getInt(request, "deleteFlag"));
+                trip.setCreateDate(RequestUtils.getDate(request, "createDate"));
+                trip.setCreateBy(request.getParameter("createBy"));
+                trip.setCreateByName(request.getParameter("createByName"));
+                trip.setUpdateDate(RequestUtils.getDate(request, "updateDate"));
+                trip.setLocked(RequestUtils.getInt(request, "locked"));
+                trip.setStatus(RequestUtils.getInt(request, "status"));
+                trip.setProcessName(request.getParameter("processName"));
+                trip.setProcessInstanceId(request.getParameter("processInstanceId"));
+	
 		tripService.save(trip);   
 
 		return this.list(request, modelMap);
@@ -93,8 +155,8 @@ public class TripBaseController {
 				if (StringUtils.isNotEmpty(x)) {
 					Trip trip = tripService.getTrip(x);
 					/**
-		                         * 此处业务逻辑需自行调整
-		                         */
+		                     * 此处业务逻辑需自行调整
+		                       */
 					 //TODO
 					if (trip != null && (StringUtils.equals(trip.getCreateBy(), loginContext.getActorId()) || loginContext.isSystemAdministrator())) {
 						trip.setDeleteFlag(1);
@@ -124,14 +186,13 @@ public class TripBaseController {
 		RequestUtils.setRequestParameterToAttribute(request);
 		request.removeAttribute("canSubmit");
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		String rowId = ParamUtils.getString(params, "rowId");
-		Trip trip = null;
-		if (StringUtils.isNotEmpty(rowId)) {
-			trip = tripService.getTrip(rowId);
-			request.setAttribute("trip", trip);
-			JSONObject rowJSON =  trip.toJsonObject();
-			request.setAttribute("x_json", rowJSON.toString());
+                Trip trip = tripService.getTrip(request.getParameter("rowId"));
+		if(trip != null) {
+		    request.setAttribute("trip", trip);
+		    JSONObject rowJSON =  trip.toJsonObject();
+		    request.setAttribute("x_json", rowJSON.toJSONString());
 		}
+	
 
                 boolean canUpdate = false;
 		String x_method = request.getParameter("x_method");
@@ -168,14 +229,11 @@ public class TripBaseController {
 	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		String rowId = ParamUtils.getString(params, "rowId");
-		Trip trip = null;
-		if (StringUtils.isNotEmpty(rowId)) {
-			trip = tripService.getTrip(rowId);
-			request.setAttribute("trip", trip);
-			JSONObject rowJSON =  trip.toJsonObject();
-			request.setAttribute("x_json", rowJSON.toString());
-		}
+                Trip trip = tripService.getTrip(request.getParameter("rowId"));
+		request.setAttribute("trip", trip);
+		JSONObject rowJSON =  trip.toJsonObject();
+		request.setAttribute("x_json", rowJSON.toJSONString());
+
 
 		String view = request.getParameter("view");
 		if (StringUtils.isNotEmpty(view)) {
@@ -275,13 +333,13 @@ public class TripBaseController {
 					JSONObject rowJSON = trip.toJsonObject();
 					rowJSON.put("id", trip.getId());
 					rowJSON.put("tripId", trip.getId());
-
+                                        rowJSON.put("startIndex", ++start);
  					rowsJSON.add(rowJSON);
 				}
 
 			}
 		}
-		return result.toString().getBytes("UTF-8");
+		return result.toJSONString().getBytes("UTF-8");
 	}
 
         @RequestMapping 

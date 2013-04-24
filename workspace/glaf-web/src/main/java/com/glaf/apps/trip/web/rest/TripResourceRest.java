@@ -7,12 +7,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -31,9 +30,8 @@ import com.glaf.apps.trip.service.TripService;
 @Controller
 @Path("/rs/apps/trip")
 public class TripResourceRest {
-	protected final Logger logger = LoggerFactory.getLogger(getClass());
+	protected static final Log logger = LogFactory.getLog(TripResourceRest.class);
 
-	@javax.annotation.Resource
 	protected TripService tripService;
 
 	@POST
@@ -44,22 +42,7 @@ public class TripResourceRest {
 			throws IOException {
 		String rowIds = request.getParameter("rowIds");
 		if (rowIds != null) {
-			List<String> ids = StringTools.split(rowIds);
-			if (ids != null && !ids.isEmpty()) {
-				tripService.deleteByIds(ids);
-			}
-		}
-		return ResponseUtils.responseJsonResult(true);
-	}
-
-	@POST
-	@Path("/delete/{rowIds}")
-	@ResponseBody
-	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
-	public byte[] deleteAll(@PathParam("rowIds") String rowIds,
-			@Context HttpServletRequest request) throws IOException {
-		if (rowIds != null) {
-			List<String> ids = StringTools.split(rowIds);
+ 			List<String> ids = StringTools.split(rowIds);
 			if (ids != null && !ids.isEmpty()) {
 				tripService.deleteByIds(ids);
 			}
@@ -71,23 +54,8 @@ public class TripResourceRest {
 	@Path("/delete")
 	@ResponseBody
 	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
-	public byte[] deleteById(@Context HttpServletRequest request)
-			throws IOException {
-		String tripId = request.getParameter("tripId");
-		if (StringUtils.isEmpty(tripId)) {
-                      tripId = request.getParameter("id");
-		}
-		tripService.deleteById(tripId);
-		return ResponseUtils.responseJsonResult(true);
-	}
-
-	@POST
-	@Path("/delete/{tripId}")
-	@ResponseBody
-	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
-	public byte[] deleteById(@PathParam("tripId") String tripId,
-			@Context HttpServletRequest request) throws IOException {
-		tripService.deleteById(tripId);
+	public byte[] deleteById(@Context HttpServletRequest request) throws IOException {
+                tripService.deleteById(request.getParameter("rowId"));
 		return ResponseUtils.responseJsonResult(true);
 	}
 
@@ -156,12 +124,13 @@ public class TripResourceRest {
 					JSONObject rowJSON = trip.toJsonObject();
 					rowJSON.put("id", trip.getId());
 					rowJSON.put("tripId", trip.getId());
+					rowJSON.put("startIndex", ++start);
  					rowsJSON.add(rowJSON);
 				}
 
 			}
 		}
-		return result.toString().getBytes("UTF-8");
+		return result.toJSONString().getBytes("UTF-8");
 	}
 
 	@POST
@@ -173,6 +142,24 @@ public class TripResourceRest {
 		Trip trip = new Trip();
 		try {
 		    Tools.populate(trip, params);
+
+                    trip.setTransType(request.getParameter("transType"));
+                    trip.setApplyDate(RequestUtils.getDate(request, "applyDate"));
+                    trip.setStartDate(RequestUtils.getDate(request, "startDate"));
+                    trip.setEndDate(RequestUtils.getDate(request, "endDate"));
+                    trip.setDays(RequestUtils.getDouble(request, "days"));
+                    trip.setMoney(RequestUtils.getDouble(request, "money"));
+                    trip.setCause(request.getParameter("cause"));
+                    trip.setDeleteFlag(RequestUtils.getInt(request, "deleteFlag"));
+                    trip.setCreateDate(RequestUtils.getDate(request, "createDate"));
+                    trip.setCreateBy(request.getParameter("createBy"));
+                    trip.setCreateByName(request.getParameter("createByName"));
+                    trip.setUpdateDate(RequestUtils.getDate(request, "updateDate"));
+                    trip.setLocked(RequestUtils.getInt(request, "locked"));
+                    trip.setStatus(RequestUtils.getInt(request, "status"));
+                    trip.setProcessName(request.getParameter("processName"));
+                    trip.setProcessInstanceId(request.getParameter("processInstanceId"));
+
 		    this.tripService.save(trip);
 
 		    return ResponseUtils.responseJsonResult(true);
@@ -182,20 +169,20 @@ public class TripResourceRest {
 		return ResponseUtils.responseJsonResult(false);
 	}
 
+        @javax.annotation.Resource
 	public void setTripService(TripService tripService) {
 		this.tripService = tripService;
 	}
 
 	@GET
 	@POST
-	@Path("/view/{tripId}")
+	@Path("/view")
 	@ResponseBody
 	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
-	public byte[] view(@PathParam("tripId") String tripId,
-			@Context HttpServletRequest request) throws IOException {
+	public byte[] view(@Context HttpServletRequest request) throws IOException {
 		Trip trip = null;
-		if (StringUtils.isNotEmpty(tripId)) {
-			trip = tripService.getTrip(tripId);
+		if (StringUtils.isNotEmpty(request.getParameter("rowId"))) {
+                  trip = tripService.getTrip(request.getParameter("rowId"));
 		}
 		JSONObject result = new JSONObject();
 		if (trip != null) {
@@ -204,6 +191,6 @@ public class TripResourceRest {
 		    result.put("id", trip.getId());
 		    result.put("tripId", trip.getId());
 		}
-		return result.toString().getBytes("UTF-8");
+		return result.toJSONString().getBytes("UTF-8");
 	}
 }
