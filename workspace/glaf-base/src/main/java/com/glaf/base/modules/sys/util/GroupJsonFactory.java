@@ -26,6 +26,16 @@ import com.glaf.core.util.DateUtils;
 
 public class GroupJsonFactory {
 
+	public static java.util.List<Group> arrayToList(JSONArray array) {
+		java.util.List<Group> list = new java.util.ArrayList<Group>();
+		for (int i = 0; i < array.size(); i++) {
+			JSONObject jsonObject = array.getJSONObject(i);
+			Group model = jsonToObject(jsonObject);
+			list.add(model);
+		}
+		return list;
+	}
+
 	public static Group jsonToObject(JSONObject jsonObject) {
 		Group model = new Group();
 		if (jsonObject.containsKey("groupId")) {
@@ -57,6 +67,17 @@ public class GroupJsonFactory {
 		}
 
 		return model;
+	}
+
+	public static JSONArray listToArray(java.util.List<Group> list) {
+		JSONArray array = new JSONArray();
+		if (list != null && !list.isEmpty()) {
+			for (Group model : list) {
+				JSONObject jsonObject = model.toJsonObject();
+				array.add(jsonObject);
+			}
+		}
+		return array;
 	}
 
 	public static JSONObject toJsonObject(Group model) {

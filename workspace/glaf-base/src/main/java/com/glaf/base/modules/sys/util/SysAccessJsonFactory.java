@@ -18,12 +18,23 @@
 
 package com.glaf.base.modules.sys.util;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.glaf.base.modules.sys.model.SysAccess;
 
 public class SysAccessJsonFactory {
+
+	public static java.util.List<SysAccess> arrayToList(JSONArray array) {
+		java.util.List<SysAccess> list = new java.util.ArrayList<SysAccess>();
+		for (int i = 0; i < array.size(); i++) {
+			JSONObject jsonObject = array.getJSONObject(i);
+			SysAccess model = jsonToObject(jsonObject);
+			list.add(model);
+		}
+		return list;
+	}
 
 	public static SysAccess jsonToObject(JSONObject jsonObject) {
 		SysAccess model = new SysAccess();
@@ -35,6 +46,17 @@ public class SysAccessJsonFactory {
 		}
 
 		return model;
+	}
+
+	public static JSONArray listToArray(java.util.List<SysAccess> list) {
+		JSONArray array = new JSONArray();
+		if (list != null && !list.isEmpty()) {
+			for (SysAccess model : list) {
+				JSONObject jsonObject = model.toJsonObject();
+				array.add(jsonObject);
+			}
+		}
+		return array;
 	}
 
 	public static JSONObject toJsonObject(SysAccess model) {

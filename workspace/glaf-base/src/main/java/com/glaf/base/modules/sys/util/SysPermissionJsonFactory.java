@@ -18,12 +18,23 @@
 
 package com.glaf.base.modules.sys.util;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.glaf.base.modules.sys.model.SysPermission;
 
 public class SysPermissionJsonFactory {
+
+	public static java.util.List<SysPermission> arrayToList(JSONArray array) {
+		java.util.List<SysPermission> list = new java.util.ArrayList<SysPermission>();
+		for (int i = 0; i < array.size(); i++) {
+			JSONObject jsonObject = array.getJSONObject(i);
+			SysPermission model = jsonToObject(jsonObject);
+			list.add(model);
+		}
+		return list;
+	}
 
 	public static SysPermission jsonToObject(JSONObject jsonObject) {
 		SysPermission model = new SysPermission();
@@ -35,6 +46,17 @@ public class SysPermissionJsonFactory {
 		}
 
 		return model;
+	}
+
+	public static JSONArray listToArray(java.util.List<SysPermission> list) {
+		JSONArray array = new JSONArray();
+		if (list != null && !list.isEmpty()) {
+			for (SysPermission model : list) {
+				JSONObject jsonObject = model.toJsonObject();
+				array.add(jsonObject);
+			}
+		}
+		return array;
 	}
 
 	public static JSONObject toJsonObject(SysPermission model) {

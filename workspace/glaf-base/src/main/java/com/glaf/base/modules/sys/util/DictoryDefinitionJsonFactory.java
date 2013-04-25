@@ -7,6 +7,16 @@ import com.glaf.base.modules.sys.model.*;
 
 public class DictoryDefinitionJsonFactory {
 
+	public static java.util.List<DictoryDefinition> arrayToList(JSONArray array) {
+		java.util.List<DictoryDefinition> list = new java.util.ArrayList<DictoryDefinition>();
+		for (int i = 0; i < array.size(); i++) {
+			JSONObject jsonObject = array.getJSONObject(i);
+			DictoryDefinition model = jsonToObject(jsonObject);
+			list.add(model);
+		}
+		return list;
+	}
+
 	public static DictoryDefinition jsonToObject(JSONObject jsonObject) {
 		DictoryDefinition model = new DictoryDefinition();
 		if (jsonObject.containsKey("id")) {
@@ -41,6 +51,17 @@ public class DictoryDefinitionJsonFactory {
 		}
 
 		return model;
+	}
+
+	public static JSONArray listToArray(java.util.List<DictoryDefinition> list) {
+		JSONArray array = new JSONArray();
+		if (list != null && !list.isEmpty()) {
+			for (DictoryDefinition model : list) {
+				JSONObject jsonObject = model.toJsonObject();
+				array.add(jsonObject);
+			}
+		}
+		return array;
 	}
 
 	public static JSONObject toJsonObject(DictoryDefinition model) {

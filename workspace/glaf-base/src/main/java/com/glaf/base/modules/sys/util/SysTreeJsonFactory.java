@@ -18,6 +18,7 @@
 
 package com.glaf.base.modules.sys.util;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -25,6 +26,16 @@ import com.glaf.base.modules.sys.model.SysTree;
 import com.glaf.core.util.DateUtils;
 
 public class SysTreeJsonFactory {
+
+	public static java.util.List<SysTree> arrayToList(JSONArray array) {
+		java.util.List<SysTree> list = new java.util.ArrayList<SysTree>();
+		for (int i = 0; i < array.size(); i++) {
+			JSONObject jsonObject = array.getJSONObject(i);
+			SysTree model = jsonToObject(jsonObject);
+			list.add(model);
+		}
+		return list;
+	}
 
 	public static SysTree jsonToObject(JSONObject jsonObject) {
 		SysTree model = new SysTree();
@@ -77,6 +88,17 @@ public class SysTreeJsonFactory {
 		}
 
 		return model;
+	}
+
+	public static JSONArray listToArray(java.util.List<SysTree> list) {
+		JSONArray array = new JSONArray();
+		if (list != null && !list.isEmpty()) {
+			for (SysTree model : list) {
+				JSONObject jsonObject = model.toJsonObject();
+				array.add(jsonObject);
+			}
+		}
+		return array;
 	}
 
 	public static JSONObject toJsonObject(SysTree model) {

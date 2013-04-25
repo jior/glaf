@@ -8,6 +8,16 @@ import com.glaf.core.util.DateUtils;
 
 public class SerialNumberJsonFactory {
 
+	public static java.util.List<SerialNumber> arrayToList(JSONArray array) {
+		java.util.List<SerialNumber> list = new java.util.ArrayList<SerialNumber>();
+		for (int i = 0; i < array.size(); i++) {
+			JSONObject jsonObject = array.getJSONObject(i);
+			SerialNumber model = jsonToObject(jsonObject);
+			list.add(model);
+		}
+		return list;
+	}
+
 	public static SerialNumber jsonToObject(JSONObject jsonObject) {
 		SerialNumber model = new SerialNumber();
 		if (jsonObject.containsKey("id")) {
@@ -27,6 +37,17 @@ public class SerialNumberJsonFactory {
 		}
 
 		return model;
+	}
+
+	public static JSONArray listToArray(java.util.List<SerialNumber> list) {
+		JSONArray array = new JSONArray();
+		if (list != null && !list.isEmpty()) {
+			for (SerialNumber model : list) {
+				JSONObject jsonObject = model.toJsonObject();
+				array.add(jsonObject);
+			}
+		}
+		return array;
 	}
 
 	public static JSONObject toJsonObject(SerialNumber model) {

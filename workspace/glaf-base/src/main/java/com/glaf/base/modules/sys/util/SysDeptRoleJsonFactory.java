@@ -18,6 +18,7 @@
 
 package com.glaf.base.modules.sys.util;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -25,6 +26,16 @@ import com.glaf.base.modules.sys.model.SysDeptRole;
 import com.glaf.core.util.DateUtils;
 
 public class SysDeptRoleJsonFactory {
+
+	public static java.util.List<SysDeptRole> arrayToList(JSONArray array) {
+		java.util.List<SysDeptRole> list = new java.util.ArrayList<SysDeptRole>();
+		for (int i = 0; i < array.size(); i++) {
+			JSONObject jsonObject = array.getJSONObject(i);
+			SysDeptRole model = jsonToObject(jsonObject);
+			list.add(model);
+		}
+		return list;
+	}
 
 	public static SysDeptRole jsonToObject(JSONObject jsonObject) {
 		SysDeptRole model = new SysDeptRole();
@@ -55,6 +66,17 @@ public class SysDeptRoleJsonFactory {
 		}
 
 		return model;
+	}
+
+	public static JSONArray listToArray(java.util.List<SysDeptRole> list) {
+		JSONArray array = new JSONArray();
+		if (list != null && !list.isEmpty()) {
+			for (SysDeptRole model : list) {
+				JSONObject jsonObject = model.toJsonObject();
+				array.add(jsonObject);
+			}
+		}
+		return array;
 	}
 
 	public static JSONObject toJsonObject(SysDeptRole model) {

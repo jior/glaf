@@ -18,6 +18,7 @@
 
 package com.glaf.base.modules.sys.util;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -25,6 +26,16 @@ import com.glaf.base.modules.sys.model.SysDepartment;
 import com.glaf.core.util.DateUtils;
 
 public class SysDepartmentJsonFactory {
+
+	public static java.util.List<SysDepartment> arrayToList(JSONArray array) {
+		java.util.List<SysDepartment> list = new java.util.ArrayList<SysDepartment>();
+		for (int i = 0; i < array.size(); i++) {
+			JSONObject jsonObject = array.getJSONObject(i);
+			SysDepartment model = jsonToObject(jsonObject);
+			list.add(model);
+		}
+		return list;
+	}
 
 	public static SysDepartment jsonToObject(JSONObject jsonObject) {
 		SysDepartment model = new SysDepartment();
@@ -72,6 +83,17 @@ public class SysDepartmentJsonFactory {
 		}
 
 		return model;
+	}
+
+	public static JSONArray listToArray(java.util.List<SysDepartment> list) {
+		JSONArray array = new JSONArray();
+		if (list != null && !list.isEmpty()) {
+			for (SysDepartment model : list) {
+				JSONObject jsonObject = model.toJsonObject();
+				array.add(jsonObject);
+			}
+		}
+		return array;
 	}
 
 	public static JSONObject toJsonObject(SysDepartment model) {

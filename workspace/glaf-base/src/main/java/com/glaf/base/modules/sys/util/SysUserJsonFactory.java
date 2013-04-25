@@ -32,6 +32,16 @@ import com.glaf.core.util.DateUtils;
 
 public class SysUserJsonFactory {
 
+	public static java.util.List<SysUser> arrayToList(JSONArray array) {
+		java.util.List<SysUser> list = new java.util.ArrayList<SysUser>();
+		for (int i = 0; i < array.size(); i++) {
+			JSONObject jsonObject = array.getJSONObject(i);
+			SysUser model = jsonToObject(jsonObject);
+			list.add(model);
+		}
+		return list;
+	}
+
 	public static SysUser jsonToObject(JSONObject jsonObject) {
 		SysUser model = new SysUser();
 		if (jsonObject.containsKey("id")) {
@@ -179,6 +189,17 @@ public class SysUserJsonFactory {
 		}
 
 		return model;
+	}
+
+	public static JSONArray listToArray(java.util.List<SysUser> list) {
+		JSONArray array = new JSONArray();
+		if (list != null && !list.isEmpty()) {
+			for (SysUser model : list) {
+				JSONObject jsonObject = model.toJsonObject();
+				array.add(jsonObject);
+			}
+		}
+		return array;
 	}
 
 	public static JSONObject toJsonObject(SysUser user) {
