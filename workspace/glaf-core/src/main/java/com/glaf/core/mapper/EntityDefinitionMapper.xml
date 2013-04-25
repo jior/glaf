@@ -19,6 +19,8 @@
 			jdbcType="VARCHAR" />
 		<result property="startRow" column="STARTROW_" jdbcType="INTEGER" />
 		<result property="insertOnly" column="INSERTONLY_" jdbcType="VARCHAR" />
+		<result property="nodeId" column="NODEID_" jdbcType="BIGINT" />
+		<result property="filename" column="FILENAME_" jdbcType="VARCHAR"/>
 		<result property="fileContent" column="FILECONTENT_" jdbcType="VARCHAR" />
 		<result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP" />
 		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR" />
@@ -43,6 +45,9 @@
 			<if test="tablename != null">
 				,TABLENAME_
 			</if>
+			<if test="nodeId != null">
+				,NODEID_
+			</if>
 			<if test="parseType != null">
 				,PARSETYPE_
 			</if>
@@ -66,6 +71,9 @@
 			</if>
 			<if test="insertOnly != null">
 				,INSERTONLY_
+			</if>
+			<if test="filename != null">
+				,FILENAME_ 
 			</if>
 			<if test="fileContent != null">
 				,FILECONTENT_
@@ -99,6 +107,9 @@
 			<if test="tablename != null">
 				,#{tablename, jdbcType=VARCHAR}
 			</if>
+			<if test="nodeId != null">
+				,#{nodeId, jdbcType=BIGINT}
+			</if>
 			<if test="parseType != null">
 				,#{parseType, jdbcType=VARCHAR}
 			</if>
@@ -122,6 +133,9 @@
 			</if>
 			<if test="insertOnly != null">
 				,#{insertOnly, jdbcType=VARCHAR}
+			</if>
+			<if test="filename != null">
+				,#{filename, jdbcType=VARCHAR}
 			</if>
 			<if test="fileContent != null">
 				,#{fileContent, jdbcType=VARCHAR}
@@ -181,6 +195,9 @@
 			</if>
 			<if test="insertOnly != null">
 				INSERTONLY_ = #{insertOnly, jdbcType=VARCHAR},
+			</if>
+			<if test="filename != null">
+				FILENAME_ = #{filename, jdbcType=VARCHAR},
 			</if>
 			<if test="fileContent != null">
 				FILECONTENT_ = #{fileContent, jdbcType=VARCHAR},
@@ -257,6 +274,10 @@
 
 		<where>
 			1 = 1
+			
+			<if test="nodeId != null ">
+			    and E.NODEID_ = #{nodeId}
+		    </if>
 
 			<if test="name != null and name != '' ">
 				and E.NAME_ = #{name}

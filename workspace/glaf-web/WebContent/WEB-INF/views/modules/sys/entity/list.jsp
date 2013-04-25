@@ -9,7 +9,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>表单应用</title>
+<title>表单定义</title>
 <link href="<%=request.getContextPath()%>/scripts/artDialog/skins/default.css" rel="stylesheet" />
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/easyui/themes/${theme}/easyui.css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/scripts/ztree/css/zTreeStyle/zTreeStyle.css" type="text/css">
@@ -24,10 +24,10 @@
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/artDialog/plugins/iframeTools.js"></script>
 <script type="text/javascript">
 
-   var setting = {
+ var setting = {
 			async: {
 				enable: true,
-				url:"<%=request.getContextPath()%>/rs/tree/treeJson?nodeCode=FormApp",
+				url:"<%=request.getContextPath()%>/rs/tree/treeJson?nodeCode=${nodeCode}",
 				dataFilter: filter
 			},
 			callback: {
@@ -47,7 +47,7 @@
 
     function zTreeOnClick(event, treeId, treeNode, clickFlag) {
 		jQuery("#nodeId").val(treeNode.id);
-		loadData('<%=request.getContextPath()%>/system/form/application.do?method=json&nodeId='+treeNode.id);
+		loadData('<%=request.getContextPath()%>/mx/system/entity/json?type=${type}&nodeId='+treeNode.id);
 	}
 
 	function loadData(url){
@@ -60,9 +60,9 @@
 
     jQuery(document).ready(function(){
 			jQuery.fn.zTree.init(jQuery("#myTree"), setting);
-		});
+	});
 
-    jQuery(function(){
+   jQuery(function(){
 		jQuery('#mydatagrid').datagrid({
 				width:1000,
 				height:480,
@@ -71,7 +71,7 @@
 				nowrap: false,
 				striped: true,
 				collapsible:true,
-				url:'<%=request.getContextPath()%>/system/form/application.do?method=json',
+				url:'<%=request.getContextPath()%>/mx/system/entity/json?type=${type}',
 				sortName: 'id',
 				sortOrder: 'desc',
 				remoteSort: false,
@@ -81,8 +81,10 @@
 	                {title:'序号',field:'startIndex',width:80,sortable:false},
 					{title:'名称',field:'name',width:120,sortable:false},
 					{title:'标题',field:'title',width:150,sortable:false},
-					{title:'数据表',field:'tableName',width:120,sortable:false},
-					{title:'发布日期',field:'releaseDate',width:90,sortable:false} 
+					{title:'数据表',field:'tablename',width:80,sortable:false},
+					{title:'文件名称',field:'filename',width:90,sortable:false},
+					{title:'类型',field:'type',width:90,sortable:false},
+					{title:'创建日期',field:'createDate',width:90,sortable:false} 
 				]],
 				rownumbers:false,
 				pagination:true,
@@ -101,20 +103,21 @@
 
 		 
 	function addNew(){
-	    //location.href="<%=request.getContextPath()%>/system/form/application.do?method=edit";
+	    //location.href="<%=request.getContextPath()%>/mx/system/entity/edit";
 		var nodeId = jQuery("#nodeId").val();
-		var link="<%=request.getContextPath()%>/system/form/application.do?method=edit&nodeId="+nodeId;
+		var link = "<%=request.getContextPath()%>/mx/system/entity/edit?type=${type}&nodeId="+nodeId;
 	    art.dialog.open(link, { height: 420, width: 680, title: "添加记录", lock: true, scrollbars:"no" }, false);
 	}
 
 	function onRowClick(rowIndex, row){
-            //window.open('<%=request.getContextPath()%>/system/form/application.do?method=edit&appId='+row.id);
-	    var link = '<%=request.getContextPath()%>/system/form/application.do?method=edit&appId='+row.id;
-	    art.dialog.open(link, { height: 420, width: 680, title: "修改记录", lock: true, scrollbars:"no" }, false);
+        //window.open('<%=request.getContextPath()%>/mx/system/entity/edit&rowId='+row.id);
+	    //var link = '<%=request.getContextPath()%>/mx/system/entity/edit&entityDefinitionId='+row.entityDefinitionId;
+	    //art.dialog.open(link, { height: 420, width: 680, title: "修改记录", lock: true, scrollbars:"no" }, false);
+		//window.open('<%=request.getContextPath()%>/rs/form/definition/download?entityDefinitionId='+row.entityDefinitionId);
 	}
 
 	function searchWin(){
-	    jQuery('#dlg').dialog('open').dialog('setTitle','表单应用查询');
+	    jQuery('#dlg').dialog('open').dialog('setTitle','表单定义查询');
 	    //jQuery('#searchForm').form('clear');
 	}
 
@@ -133,8 +136,8 @@
 	    }
 	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
 	    if (selected ){
-		//location.href="<%=request.getContextPath()%>/system/form/application.do?method=edit&appId="+selected.id;
-		var link = "<%=request.getContextPath()%>/system/form/application.do?method=edit&appId="+selected.id;
+		//location.href="<%=request.getContextPath()%>/mx/system/entity/edit&rowId="+selected.id;
+		var link = "<%=request.getContextPath()%>/mx/system/entity/edit?type=${type}&rowId="+selected.id;
 		art.dialog.open(link, { height: 420, width: 680, title: "修改记录", lock: true, scrollbars:"no" }, false);
 	    }
 	}
@@ -147,7 +150,7 @@
 		}
 		var selected = jQuery('#mydatagrid').datagrid('getSelected');
 		if (selected ){
-		    location.href="<%=request.getContextPath()%>/system/form/application.do?method=edit&appId="+selected.id;
+		    location.href="<%=request.getContextPath()%>/mx/system/entity/edit?type=${type}&rowId="+selected.id;
 		}
 	}
 
@@ -158,10 +161,10 @@
 			ids.push(rows[i].id);
 		}
 		if(ids.length > 0 && confirm("数据删除后不能恢复，确定删除吗？")){
-		    var appIds = ids.join(',');
+		    var rowIds = ids.join(',');
 			jQuery.ajax({
 				   type: "POST",
-				   url: '<%=request.getContextPath()%>/system/form/application.do?method=delete&appIds='+appIds,
+				   url: '<%=request.getContextPath()%>/mx/system/entity/delete?rowIds='+rowIds,
 				   dataType:  'json',
 				   error: function(data){
 					   alert('服务器处理错误！');
@@ -215,7 +218,6 @@
 </head>
 <body style="margin:1px;">  
 <input type="hidden" id="nodeId" name="nodeId" value="" >
-<div style="margin:0;"></div>  
 <div class="easyui-layout" data-options="fit:true">  
     <div data-options="region:'west',split:true" style="width:180px;">
 	  <div class="easyui-layout" data-options="fit:true">  
@@ -226,27 +228,27 @@
 			 
         </div>  
 	</div> 
-   <div data-options="region:'center'">  
-     <div class="easyui-layout" data-options="fit:true"> 
-	   <div data-options="region:'north',split:true,border:true" style="height:40px"> 
-		<div class="toolbar-backgroud"  > 
-		<img src="<%=request.getContextPath()%>/images/window.png">
-		&nbsp;<span class="x_content_title">表单应用列表</span>
-		<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-add'" 
-		   onclick="javascript:addNew();">新增</a>  
-		<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-edit'"
-		   onclick="javascript:editSelected();">修改</a>  
-		<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-remove'"
-		   onclick="javascript:deleteSelections();">删除</a> 
-		<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-search'"
-		   onclick="javascript:searchWin();">查找</a>
-	   </div> 
-	  </div> 
-	  <div data-options="region:'center',border:true">
-		 <table id="mydatagrid"></table>
-	  </div>  
-    </div>
-  </div>
+   <div data-options="region:'center'">   
+		<div class="easyui-layout" data-options="fit:true">  
+		   <div data-options="region:'north',split:true,border:true" style="height:40px"> 
+			<div class="toolbar-backgroud"  > 
+			<img src="<%=request.getContextPath()%>/images/window.png">
+			&nbsp;<span class="x_content_title">表单定义列表</span>
+			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-add'" 
+			   onclick="javascript:addNew();">新增</a>  
+			<!-- <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-edit'"
+			   onclick="javascript:editSelected();">修改</a> -->  
+			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-remove'"
+			   onclick="javascript:deleteSelections();">删除</a> 
+			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-search'"
+			   onclick="javascript:searchWin();">查找</a>
+		   </div> 
+		  </div> 
+		  <div data-options="region:'center',border:true">
+			 <table id="mydatagrid"></table>
+		  </div>  
+      </div>
+	</div>
 </div>
 <div id="edit_dlg" class="easyui-dialog" style="width:400px;height:280px;padding:10px 20px"
 	closed="true" buttons="#dlg-buttons">

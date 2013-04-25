@@ -371,6 +371,10 @@ public class ${entityName}BaseController {
 				}
 
 			}
+		} else {
+			JSONArray rowsJSON = new JSONArray();
+			result.put("rows", rowsJSON);
+			result.put("total", total);
 		}
 		return result.toJSONString().getBytes("UTF-8");
 	}

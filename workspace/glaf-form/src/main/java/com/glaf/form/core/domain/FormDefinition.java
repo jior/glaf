@@ -65,9 +65,6 @@ public class FormDefinition extends GraphElement implements JSONable {
 	@Column(name = "FORMDEFINITIONID_", updatable = false)
 	protected String formDefinitionId;
 
-	@Column(name = "HEIGHT_")
-	protected Integer height;
-
 	@Id
 	@Column(name = "ID_", length = 50, nullable = false)
 	protected String id;
@@ -113,15 +110,6 @@ public class FormDefinition extends GraphElement implements JSONable {
 
 	@Column(name = "VERSION_")
 	protected Integer version = 1;
-
-	@Column(name = "WIDTH_")
-	protected Integer width;
-
-	@Column(name = "X_")
-	protected Integer x;
-
-	@Column(name = "Y_")
-	protected Integer y;
 
 	public FormDefinition() {
 
@@ -177,10 +165,6 @@ public class FormDefinition extends GraphElement implements JSONable {
 
 	public String getFormDefinitionId() {
 		return formDefinitionId;
-	}
-
-	public Integer getHeight() {
-		return height;
 	}
 
 	public String getId() {
@@ -276,18 +260,6 @@ public class FormDefinition extends GraphElement implements JSONable {
 		return version;
 	}
 
-	public Integer getWidth() {
-		return width;
-	}
-
-	public Integer getX() {
-		return x;
-	}
-
-	public Integer getY() {
-		return y;
-	}
-
 	@Transient
 	public boolean hasNode(String name) {
 		if (nodes == null) {
@@ -349,10 +321,6 @@ public class FormDefinition extends GraphElement implements JSONable {
 		this.formDefinitionId = formDefinitionId;
 	}
 
-	public void setHeight(Integer height) {
-		this.height = height;
-	}
-
 	public void setId(String id) {
 		this.id = id;
 	}
@@ -411,18 +379,6 @@ public class FormDefinition extends GraphElement implements JSONable {
 
 	public void setVersion(Integer version) {
 		this.version = version;
-	}
-
-	public void setWidth(Integer width) {
-		this.width = width;
-	}
-
-	public void setX(Integer x) {
-		this.x = x;
-	}
-
-	public void setY(Integer y) {
-		this.y = y;
 	}
 
 	public FormDefinition jsonToObject(JSONObject jsonObject) {

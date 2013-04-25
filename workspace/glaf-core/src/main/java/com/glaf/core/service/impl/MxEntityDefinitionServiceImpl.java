@@ -134,7 +134,7 @@ public class MxEntityDefinitionServiceImpl implements EntityDefinitionService {
 			blob.setFileId(entityDefinition.getId());
 			blob.setBusinessKey(entityDefinition.getId());
 			blob.setLastModified(System.currentTimeMillis());
-			blob.setFilename(entityDefinition.getName() + ".mapping.xml");
+			blob.setFilename(entityDefinition.getFilename());
 			blob.setStatus(1);
 			blob.setCreateBy(entityDefinition.getCreateBy());
 			blob.setName(entityDefinition.getName());

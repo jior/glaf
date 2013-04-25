@@ -17,10 +17,6 @@
 			jdbcType="VARCHAR" />
 		<result property="nodeId" column="NODEID_" jdbcType="BIGINT" />
 		<result property="version" column="VERSION_" jdbcType="INTEGER" />
-		<result property="x" column="X_" jdbcType="INTEGER" />
-		<result property="y" column="Y_" jdbcType="INTEGER" />
-		<result property="height" column="HEIGHT_" jdbcType="DOUBLE" />
-		<result property="width" column="WIDTH_" jdbcType="DOUBLE" />
 		<result property="rows" column="ROWS_" jdbcType="INTEGER" />
 		<result property="columns" column="COLUMNS_" jdbcType="INTEGER" />
 		<result property="locked" column="LOCKED_" jdbcType="INTEGER" />
@@ -32,61 +28,105 @@
 
 
 	<insert id="insertFormDefinition" parameterType="com.glaf.form.core.domain.FormDefinition">
-		insert into
-		FORM_DEFINITION ( ID_
-		,NAME_
-		,TITLE_
-		,DESCRIPTION_
-		,FORMDEFINITIONID_
-		,TEMPLATENAME_
-		,TEMPLATETYPE_
-		,NODEID_
-		,VERSION_
-		,X_
-		,Y_
-		,HEIGHT_
-		,WIDTH_
-		,ROWS_
-		,COLUMNS_
-		,LOCKED_
-		,OBJECTID_
-		,OBJECTVALUE_
-		,CREATEDATE_
-		,CREATEBY_
-		)
-		values (
-		#{id, jdbcType=VARCHAR}
-		,#{name,
-		jdbcType=VARCHAR}
-		,#{title,
-		jdbcType=VARCHAR}
-		,#{description,
-		jdbcType=VARCHAR}
-		,#{formDefinitionId,
-		jdbcType=VARCHAR}
-		,#{templateName, jdbcType=VARCHAR}
-		,#{templateType,
-		jdbcType=VARCHAR}
-		,#{nodeId, jdbcType=BIGINT}
-		,#{version,
-		jdbcType=INTEGER}
-		,#{x, jdbcType=INTEGER}
-		,#{y,
-		jdbcType=INTEGER}
-		,#{height, jdbcType=DOUBLE}
-		,#{width, jdbcType=DOUBLE}
-		,#{rows,
-		jdbcType=INTEGER}
-		,#{columns, jdbcType=INTEGER}
-		,#{locked,
-		jdbcType=INTEGER}
-		,#{objectId, jdbcType=VARCHAR}
-		,#{objectValue,
-		jdbcType=VARCHAR}
-		,#{createDate, jdbcType=TIMESTAMP}
-		,#{createBy,
-		jdbcType=VARCHAR}
-		)
+		insert into FORM_DEFINITION
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ID_
+			<if test="createBy != null">
+				,CREATEBY_
+			</if>
+			<if test="createDate != null">
+				,CREATEDATE_
+			</if>
+			<if test="description != null">
+				,DESCRIPTION_
+			</if>
+			<if test="formDefinitionId != null">
+				,FORMDEFINITIONID_
+			</if>
+			<if test="name != null">
+				,NAME_
+			</if>
+			<if test="nodeId != null">
+				,NODEID_
+			</if>
+			<if test="objectId != null">
+				,OBJECTID_
+			</if>
+			<if test="objectValue != null">
+				,OBJECTVALUE_
+			</if>
+			<if test="templateName != null">
+				,TEMPLATENAME_
+			</if>
+			<if test="templateType != null">
+				,TEMPLATETYPE_
+			</if>
+			<if test="title != null">
+				,TITLE_
+			</if>
+			<if test="version != null">
+				,VERSION_
+			</if>
+			<if test="locked != null">
+				,LOCKED_
+			</if>
+			<if test="rows != null">
+				,ROWS_
+			</if>
+			<if test="columns != null">
+				,COLUMNS_
+			</if>
+		</trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			#{id, jdbcType=VARCHAR}
+
+			<if test="createBy != null">
+				,#{createBy, jdbcType=VARCHAR}
+			</if>
+			<if test="createDate != null">
+				,#{createDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="description != null">
+				,#{description, jdbcType=VARCHAR}
+			</if>
+			<if test="formDefinitionId != null">
+				,#{formDefinitionId, jdbcType=VARCHAR}
+			</if>
+			<if test="name != null">
+				,#{name, jdbcType=VARCHAR}
+			</if>
+			<if test="nodeId != null">
+				,#{nodeId, jdbcType=BIGINT}
+			</if>
+			<if test="objectId != null">
+				,#{objectId, jdbcType=VARCHAR}
+			</if>
+			<if test="objectValue != null">
+				,#{objectValue, jdbcType=VARCHAR}
+			</if>
+			<if test="templateName != null">
+				,#{templateName, jdbcType=VARCHAR}
+			</if>
+			<if test="templateType != null">
+				,#{templateType, jdbcType=VARCHAR}
+			</if>
+			<if test="title != null">
+				,#{title, jdbcType=VARCHAR}
+			</if>
+			<if test="version != null">
+				,#{version, jdbcType=INTEGER}
+			</if>
+			<if test="locked != null">
+				,#{locked, jdbcType=INTEGER}
+			</if>
+			<if test="rows != null">
+				,#{rows, jdbcType=INTEGER}
+			</if>
+			<if test="columns != null">
+				,#{columns, jdbcType=INTEGER}
+			</if>
+		</trim>
 	</insert>
 
 	<update id="lockOldVersionFormDefinitions" parameterType="string">
@@ -147,7 +187,7 @@
 		E.LOCKED_ = 0
 		<include refid="chooseFormDefinitionsSql" />
 		)
-		
+
 	</select>
 
 
@@ -320,7 +360,7 @@
 			and E.TEMPLATETYPE_ like #{templateTypeLike}
 		</if>
 
-		<if test="nodeId != null and nodeId != '' ">
+		<if test="nodeId != null ">
 			and E.NODEID_ = #{nodeId}
 		</if>
 

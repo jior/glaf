@@ -47,7 +47,7 @@
 
     function zTreeOnClick(event, treeId, treeNode, clickFlag) {
 		jQuery("#nodeId").val(treeNode.id);
-		loadData('<%=request.getContextPath()%>/form/definition.do?method=json&nodeId='+treeNode.id);
+		loadData('<%=request.getContextPath()%>/system/form/definition.do?method=json&nodeId='+treeNode.id);
 	}
 
 	function loadData(url){
@@ -71,7 +71,7 @@
 				nowrap: false,
 				striped: true,
 				collapsible:true,
-				url:'<%=request.getContextPath()%>/form/definition.do?method=json',
+				url:'<%=request.getContextPath()%>/system/form/definition.do?method=json',
 				sortName: 'id',
 				sortOrder: 'desc',
 				remoteSort: false,
@@ -103,15 +103,15 @@
 
 		 
 	function addNew(){
-	    //location.href="<%=request.getContextPath()%>/form/definition.do?method=edit";
+	    //location.href="<%=request.getContextPath()%>/system/form/definition.do?method=edit";
 		var nodeId = jQuery("#nodeId").val();
-		var link = "<%=request.getContextPath()%>/form/definition.do?method=edit&nodeId="+nodeId;
+		var link = "<%=request.getContextPath()%>/system/form/definition.do?method=edit&nodeId="+nodeId;
 	    art.dialog.open(link, { height: 420, width: 680, title: "添加记录", lock: true, scrollbars:"no" }, false);
 	}
 
 	function onRowClick(rowIndex, row){
-        //window.open('<%=request.getContextPath()%>/form/definition.do?method=edit&rowId='+row.id);
-	    //var link = '<%=request.getContextPath()%>/form/definition.do?method=edit&formDefinitionId='+row.formDefinitionId;
+        //window.open('<%=request.getContextPath()%>/system/form/definition.do?method=edit&rowId='+row.id);
+	    //var link = '<%=request.getContextPath()%>/system/form/definition.do?method=edit&formDefinitionId='+row.formDefinitionId;
 	    //art.dialog.open(link, { height: 420, width: 680, title: "修改记录", lock: true, scrollbars:"no" }, false);
 		window.open('<%=request.getContextPath()%>/rs/form/definition/download?formDefinitionId='+row.formDefinitionId);
 	}
@@ -136,8 +136,8 @@
 	    }
 	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
 	    if (selected ){
-		//location.href="<%=request.getContextPath()%>/form/definition.do?method=edit&rowId="+selected.id;
-		var link = "<%=request.getContextPath()%>/form/definition.do?method=edit&formDefinitionId="+selected.formDefinitionId;
+		//location.href="<%=request.getContextPath()%>/system/form/definition.do?method=edit&rowId="+selected.id;
+		var link = "<%=request.getContextPath()%>/system/form/definition.do?method=edit&formDefinitionId="+selected.formDefinitionId;
 		art.dialog.open(link, { height: 420, width: 680, title: "修改记录", lock: true, scrollbars:"no" }, false);
 	    }
 	}
@@ -150,7 +150,7 @@
 		}
 		var selected = jQuery('#mydatagrid').datagrid('getSelected');
 		if (selected ){
-		    location.href="<%=request.getContextPath()%>/form/definition.do?method=edit&readonly=true&formDefinitionId="+selected.formDefinitionId;
+		    location.href="<%=request.getContextPath()%>/system/form/definition.do?method=edit&readonly=true&formDefinitionId="+selected.formDefinitionId;
 		}
 	}
 
@@ -164,7 +164,7 @@
 		    var rowIds = ids.join(',');
 			jQuery.ajax({
 				   type: "POST",
-				   url: '<%=request.getContextPath()%>/form/definition.do?method=delete&rowIds='+rowIds,
+				   url: '<%=request.getContextPath()%>/system/form/definition.do?method=delete&rowIds='+rowIds,
 				   dataType:  'json',
 				   error: function(data){
 					   alert('服务器处理错误！');
@@ -217,7 +217,7 @@
 </script>
 </head>
 <body style="margin:1px;">  
-<input type="hidden" id="nodeId" name="nodeId" >
+<input type="hidden" id="nodeId" name="nodeId" value="" >
 <div class="easyui-layout" data-options="fit:true">  
     <div data-options="region:'west',split:true" style="width:180px;">
 	  <div class="easyui-layout" data-options="fit:true">  

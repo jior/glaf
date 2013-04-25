@@ -23,7 +23,7 @@
 		var params = jQuery("#iForm").formSerialize();
 		jQuery.ajax({
 				   type: "POST",
-				   url: '<%=request.getContextPath()%>/system/form/definition.do?method=saveFormDefinition',
+				   url: '<%=request.getContextPath()%>/mx/system/entity/saveFormDefinition?type=${type}&nodeId=${nodeId}',
 				   data: params,
 				   dataType:  'json',
 				   error: function(data){
@@ -45,7 +45,7 @@
 		var params = jQuery("#iForm").formSerialize();
 		jQuery.ajax({
 				   type: "POST",
-				   url: '<%=request.getContextPath()%>/system/form/definition.do?method=saveFormDefinition',
+				   url: '<%=request.getContextPath()%>/mx/system/entity/saveFormDefinition?type=${type}&nodeId=${nodeId}',
 				   data: params,
 				   dataType:  'json',
 				   error: function(data){
@@ -97,16 +97,16 @@
   </div>
 
   <div data-options="region:'center',border:false,cache:true">
-  <form action="<%=request.getContextPath()%>/system/form/deploy.do"
+  <form action="<%=request.getContextPath()%>/mx/system/entity/deploy?type=${type}&nodeId=${nodeId}"
 	    method="post" enctype="multipart/form-data" id="iForm" name="iForm" class="x-form">
   <input type="hidden" id="nodeId" name="nodeId" value="${nodeId}" >
-  <input type="hidden" id="id" name="id" value="${formDefinition.id}"/>
-  <input type="hidden" id="rowId" name="rowId" value="${formDefinition.id}"/>
+  <input type="hidden" id="id" name="id" value="${entityDefinition.id}"/>
+  <input type="hidden" id="rowId" name="rowId" value="${entityDefinition.id}"/>
   <table class="easyui-form" style="width:600px;" align="center">
     <tbody>
        <tr>
 	   <td>
-	     <label for="file">&nbsp;&nbsp; 请选择表单</label>&nbsp;&nbsp; 
+	     <label for="file">&nbsp;&nbsp; 请选择实体模板</label>&nbsp;&nbsp; 
 		 <input type="file" id="file" name="file" size="50" class="easyui-validatebox" data-options="required:true">
 	   </td>
 	   </tr>

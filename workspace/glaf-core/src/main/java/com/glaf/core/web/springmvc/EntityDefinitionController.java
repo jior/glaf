@@ -22,20 +22,27 @@ import java.io.IOException;
 import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import com.alibaba.fastjson.*;
 
+import com.glaf.core.base.TableModel;
 import com.glaf.core.config.ViewProperties;
 import com.glaf.core.identity.*;
+import com.glaf.core.res.MessageUtils;
+import com.glaf.core.res.ViewMessage;
+import com.glaf.core.res.ViewMessages;
 import com.glaf.core.security.*;
 import com.glaf.core.util.*;
+import com.glaf.core.xml.XmlMappingReader;
 
 import com.glaf.core.domain.*;
 import com.glaf.core.query.*;
@@ -94,6 +101,56 @@ public class EntityDefinitionController {
 				entityDefinitionService.save(entityDefinition);
 			}
 		}
+	}
+
+	@RequestMapping("/deploy")
+	public ModelAndView deploy(HttpServletRequest request,
+			@RequestParam("file") MultipartFile mFile) throws IOException {
+		boolean ret = false;
+		String type = request.getParameter("type");
+		Long nodeId = RequestUtils.getLong(request, "nodeId");
+		LoginContext loginContext = RequestUtils.getLoginContext(request);
+		if (type != null && mFile != null) {
+			if (mFile.getOriginalFilename().endsWith(".mapping.xml")) {
+				XmlMappingReader reader = new XmlMappingReader();
+				byte[] bytes = mFile.getBytes();
+				TableModel tableModel = reader.read(mFile.getInputStream());
+				EntityDefinition entity = new EntityDefinition();
+				entity.setAggregationKeys(tableModel.getAggregationKey());
+				entity.setCreateBy(loginContext.getActorId());
+				entity.setUpdateBy(loginContext.getActorId());
+				entity.setFileContent(new String(bytes));
+				entity.setTablename(tableModel.getTableName());
+				entity.setName(tableModel.getEntityName());
+				entity.setParseType(tableModel.getParseType());
+				entity.setStartRow(tableModel.getStartRow());
+				entity.setStopWord(tableModel.getStopWord());
+				entity.setTitle(tableModel.getTitle());
+				entity.setType(type);
+				entity.setNodeId(nodeId);
+				entity.setId(entity.getTablename());
+				if (mFile.getOriginalFilename() != null) {
+					entity.setFilename(mFile.getOriginalFilename());
+				}
+				if (entity.getType() != null) {
+					entity.setId(entity.getTablename() + "_" + entity.getType());
+				}
+				entity.setData(bytes);
+				entityDefinitionService.save(entity);
+				ret = true;
+			}
+		}
+
+		ViewMessages messages = new ViewMessages();
+		if (ret) {// 保存成功
+			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
+					"entity.save_success"));
+		} else {// 保存失败
+			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
+					"entity.save_failure"));
+		}
+		MessageUtils.addMessages(request, messages);
+		return new ModelAndView("show_msg2");
 	}
 
 	@ResponseBody
@@ -210,9 +267,7 @@ public class EntityDefinitionController {
 
 			if (list != null && !list.isEmpty()) {
 				JSONArray rowsJSON = new JSONArray();
-
 				result.put("rows", rowsJSON);
-
 				for (EntityDefinition entityDefinition : list) {
 					JSONObject rowJSON = entityDefinition.toJsonObject();
 					rowJSON.put("id", entityDefinition.getId());
@@ -220,8 +275,11 @@ public class EntityDefinitionController {
 					rowJSON.put("startIndex", ++start);
 					rowsJSON.add(rowJSON);
 				}
-
 			}
+		} else {
+			JSONArray rowsJSON = new JSONArray();
+			result.put("rows", rowsJSON);
+			result.put("total", total);
 		}
 		return result.toJSONString().getBytes("UTF-8");
 	}

@@ -29,8 +29,8 @@ public class EntityDefinitionQuery extends DataQuery {
 	protected Date createDateLessThanOrEqual;
 	protected String name;
 	protected String nameLike;
+	protected Long nodeId;
 	protected String parseType;
-	protected List<String> rowIds;
 	protected String tablename;
 	protected String titleLike;
 	protected String type;
@@ -42,6 +42,8 @@ public class EntityDefinitionQuery extends DataQuery {
 	public EntityDefinitionQuery() {
 
 	}
+	
+	
 
 	public EntityDefinitionQuery createBy(String createBy) {
 		if (createBy == null) {
@@ -51,6 +53,8 @@ public class EntityDefinitionQuery extends DataQuery {
 		return this;
 	}
 
+
+
 	public EntityDefinitionQuery createBys(List<String> createBys) {
 		if (createBys == null) {
 			throw new RuntimeException("createBys is empty ");
@@ -58,6 +62,8 @@ public class EntityDefinitionQuery extends DataQuery {
 		this.createBys = createBys;
 		return this;
 	}
+
+
 
 	public EntityDefinitionQuery createDateGreaterThanOrEqual(
 			Date createDateGreaterThanOrEqual) {
@@ -107,6 +113,10 @@ public class EntityDefinitionQuery extends DataQuery {
 			}
 		}
 		return nameLike;
+	}
+
+	public Long getNodeId() {
+		return nodeId;
 	}
 
 	public String getOrderBy() {
@@ -298,6 +308,10 @@ public class EntityDefinitionQuery extends DataQuery {
 
 	public void setNameLike(String nameLike) {
 		this.nameLike = nameLike;
+	}
+
+	public void setNodeId(Long nodeId) {
+		this.nodeId = nodeId;
 	}
 
 	public void setParseType(String parseType) {

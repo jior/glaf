@@ -24,8 +24,8 @@ import com.glaf.form.core.context.FormContext;
 import com.glaf.form.core.service.*;
 import com.glaf.form.core.util.FdlConverter;
 
-@Controller("/form/deploy")
-@RequestMapping("/form/deploy.do")
+@Controller("/system/form/deploy")
+@RequestMapping("/system/form/deploy.do")
 public class FormDeployController {
 	private static final Log logger = LogFactory
 			.getLog(FormDeployController.class);

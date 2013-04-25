@@ -72,10 +72,6 @@ public class FdlConverter {
 		fdt.setTitle(formDefinition.getTitle());
 		fdt.setRows(formDefinition.getRows());
 		fdt.setColumns(formDefinition.getColumns());
-		fdt.setHeight(formDefinition.getHeight());
-		fdt.setWidth(formDefinition.getWidth());
-		fdt.setX(formDefinition.getX());
-		fdt.setY(formDefinition.getY());
 
 		Collection<FormProperty> props = formDefinition.getProperties()
 				.values();
@@ -259,10 +255,6 @@ public class FdlConverter {
 		formDefinition.setTitle(fd.getTitle());
 		formDefinition.setRows(fd.getRows());
 		formDefinition.setColumns(fd.getColumns());
-		formDefinition.setHeight(fd.getHeight());
-		formDefinition.setWidth(fd.getWidth());
-		formDefinition.setX(fd.getX());
-		formDefinition.setY(fd.getY());
 		formDefinition.setTemplateType("fdl");
 
 		List<PropertyType> props = fd.getProperty();

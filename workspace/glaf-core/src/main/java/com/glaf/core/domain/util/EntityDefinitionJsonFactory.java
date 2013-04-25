@@ -66,6 +66,9 @@ public class EntityDefinitionJsonFactory {
 		if (jsonObject.containsKey("insertOnly")) {
 			model.setInsertOnly(jsonObject.getString("insertOnly"));
 		}
+		if (jsonObject.containsKey("filename")) {
+			model.setFilename(jsonObject.getString("filename"));
+		}
 		if (jsonObject.containsKey("fileContent")) {
 			model.setFileContent(jsonObject.getString("fileContent"));
 		}
@@ -123,6 +126,9 @@ public class EntityDefinitionJsonFactory {
 		jsonObject.put("startRow", model.getStartRow());
 		if (model.getInsertOnly() != null) {
 			jsonObject.put("insertOnly", model.getInsertOnly());
+		}
+		if (model.getFilename() != null) {
+			jsonObject.put("filename", model.getFilename());
 		}
 		if (model.getFileContent() != null) {
 			jsonObject.put("fileContent", model.getFileContent());
@@ -190,6 +196,9 @@ public class EntityDefinitionJsonFactory {
 		jsonObject.put("startRow", model.getStartRow());
 		if (model.getInsertOnly() != null) {
 			jsonObject.put("insertOnly", model.getInsertOnly());
+		}
+		if (model.getFilename() != null) {
+			jsonObject.put("filename", model.getFilename());
 		}
 		if (model.getFileContent() != null) {
 			jsonObject.put("fileContent", model.getFileContent());

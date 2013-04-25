@@ -18,8 +18,11 @@ import org.springframework.ui.ModelMap;
 import com.alibaba.fastjson.*;
 
 import com.glaf.core.config.ViewProperties;
+import com.glaf.core.domain.EntityDefinition;
 import com.glaf.core.identity.*;
+import com.glaf.core.query.EntityDefinitionQuery;
 import com.glaf.core.security.*;
+import com.glaf.core.service.EntityDefinitionService;
 import com.glaf.core.util.*;
 
 import com.glaf.form.core.domain.*;
@@ -28,12 +31,14 @@ import com.glaf.form.core.service.*;
 import com.glaf.jbpm.container.ProcessContainer;
 import com.glaf.jbpm.context.Context;
 
-@Controller("/form/application")
-@RequestMapping("/form/application.do")
+@Controller("/system/form/application")
+@RequestMapping("/system/form/application.do")
 public class FormApplicationController {
 
 	private static final Log logger = LogFactory
 			.getLog(FormApplicationController.class);
+
+	protected EntityDefinitionService entityDefinitionService;
 
 	protected FormDataService formDataService;
 
@@ -85,15 +90,31 @@ public class FormApplicationController {
 			request.setAttribute("formApplication", formApplication);
 			JSONObject rowJSON = formApplication.toJsonObject();
 			request.setAttribute("x_json", rowJSON.toString());
+			logger.debug(formApplication.toJsonObject().toJSONString());
 		}
-		
+
 		FormDefinitionQuery query = new FormDefinitionQuery();
 		query.locked(0);
 		query.setNodeId(RequestUtils.getLong(request, "nodeId"));
-		
-		List<FormDefinition> formDefinitions=	formDataService.getLatestFormDefinitions(query);
+		if (formApplication != null && formApplication.getNodeId() != null) {
+			query.setNodeId(formApplication.getNodeId());
+		}
+
+		List<FormDefinition> formDefinitions = formDataService
+				.getLatestFormDefinitions(query);
 		request.setAttribute("formDefinitions", formDefinitions);
-		
+
+		EntityDefinitionQuery q = new EntityDefinitionQuery();
+		q.setNodeId(RequestUtils.getLong(request, "nodeId"));
+		q.setType("FormApp");
+		if (formApplication != null && formApplication.getNodeId() != null) {
+			q.setNodeId(formApplication.getNodeId());
+		}
+
+		List<EntityDefinition> entityDefinitions = entityDefinitionService
+				.list(q);
+		request.setAttribute("entityDefinitions", entityDefinitions);
+
 		JbpmContext jbpmContext = null;
 		GraphSession graphSession = null;
 		try {
@@ -269,9 +290,16 @@ public class FormApplicationController {
 			this.formDataService.saveFormApplication(formApplication);
 			return ResponseUtils.responseJsonResult(true);
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			logger.error(ex);
 		}
 		return ResponseUtils.responseJsonResult(false);
+	}
+
+	@javax.annotation.Resource
+	public void setEntityDefinitionService(
+			EntityDefinitionService entityDefinitionService) {
+		this.entityDefinitionService = entityDefinitionService;
 	}
 
 	@javax.annotation.Resource

@@ -88,6 +88,9 @@ public class FormApplicationJsonFactory {
 		if (jsonObject.containsKey("uploadFlag")) {
 			model.setUploadFlag(jsonObject.getString("uploadFlag"));
 		}
+		if (jsonObject.containsKey("nodeId")) {
+			model.setNodeId(jsonObject.getLong("nodeId"));
+		}
 
 		return model;
 	}
@@ -146,6 +149,9 @@ public class FormApplicationJsonFactory {
 		}
 		if (model.getName() != null) {
 			jsonObject.put("name", model.getName());
+		}
+		if (model.getNodeId() != null) {
+			jsonObject.put("nodeId", model.getNodeId());
 		}
 		if (model.getObjectId() != null) {
 			jsonObject.put("objectId", model.getObjectId());
@@ -270,6 +276,9 @@ public class FormApplicationJsonFactory {
 		}
 		if (model.getUploadFlag() != null) {
 			jsonObject.put("uploadFlag", model.getUploadFlag());
+		}
+		if (model.getNodeId() != null) {
+			jsonObject.put("nodeId", model.getNodeId());
 		}
 		return jsonObject;
 	}

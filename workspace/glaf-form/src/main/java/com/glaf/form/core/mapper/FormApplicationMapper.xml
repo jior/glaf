@@ -10,6 +10,7 @@
 		<result property="name" column="NAME_" jdbcType="VARCHAR" />
 		<result property="title" column="TITLE_" jdbcType="VARCHAR" />
 		<result property="description" column="DESCRIPTION_" jdbcType="VARCHAR" />
+		<result property="tableName" column="TABLENAME_" jdbcType="VARCHAR" />
 		<result property="formName" column="FORMNAME_" jdbcType="VARCHAR" />
 		<result property="processName" column="PROCESSNAME_" jdbcType="VARCHAR" />
 		<result property="processDefinitionId" column="PROCESSDEFINITIONID_"
@@ -44,116 +45,271 @@
 	</resultMap>
 
 
-
 	<insert id="insertFormApplication" parameterType="com.glaf.form.core.domain.FormApplication">
-		insert into
-		FORM_APPLICATION ( ID_
-		,NODEID_
-		,NAME_
-		,TITLE_
-		,DESCRIPTION_
-		,FORMNAME_
-		,PROCESSNAME_
-		,PROCESSDEFINITIONID_
-		,LINKTEMPLATEID_
-		,LINKCONTROLLERNAME_
-		,LISTTEMPLATEID_
-		,LISTCONTROLLERNAME_
-		,FORMRENDERERTYPE_
-		,RELEASEFLAG_
-		,RELEASEDATE_
-		,UPLOADFLAG_
-		,DOCREQUIREDFLAG_
-		,AUDITUPLOADFLAG_
-		,AUTOARCHIVESFLAG_
-		,MANUALROUTEFLAG_
-		,ARCHIVESNODE_
-		,OBJECTID_
-		,OBJECTVALUE_
-		,CREATEDATE_
-		,CREATEBY_
-		)
-		values (
-		#{id, jdbcType=VARCHAR}
-		,#{nodeId, jdbcType=BIGINT}
-		,#{name,
-		jdbcType=VARCHAR}
-		,#{title, jdbcType=VARCHAR}
-		,#{description,
-		jdbcType=VARCHAR}
-		,#{formName, jdbcType=VARCHAR}
-		,#{processName,
-		jdbcType=VARCHAR}
-		,#{processDefinitionId, jdbcType=VARCHAR}
-		,#{linkTemplateId, jdbcType=VARCHAR}
-		,#{linkControllerName,
-		jdbcType=VARCHAR}
-		,#{listTemplateId, jdbcType=VARCHAR}
-		,#{listControllerName, jdbcType=VARCHAR}
-		,#{formRendererType,
-		jdbcType=VARCHAR}
-		,#{releaseFlag, jdbcType=VARCHAR}
-		,#{releaseDate,
-		jdbcType=TIMESTAMP}
-		,#{uploadFlag, jdbcType=VARCHAR}
-		,#{docRequiredFlag, jdbcType=VARCHAR}
-		,#{auditUploadFlag,
-		jdbcType=VARCHAR}
-		,#{autoArchivesFlag, jdbcType=VARCHAR}
-		,#{manualRouteFlag, jdbcType=VARCHAR}
-		,#{archivesNode,
-		jdbcType=VARCHAR}
-		,#{objectId, jdbcType=VARCHAR}
-		,#{objectValue,
-		jdbcType=VARCHAR}
-		,#{createDate, jdbcType=TIMESTAMP}
-		,#{createBy,
-		jdbcType=VARCHAR}
-		)
+		insert into FORM_APPLICATION
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ID_
+			<if test="nodeId != null">
+				,NODEID_
+			</if>
+			<if test="archivesNode != null">
+				,ARCHIVESNODE_
+			</if>
+			<if test="auditUploadFlag != null">
+				,AUDITUPLOADFLAG_
+			</if>
+			<if test="autoArchivesFlag != null">
+				,AUTOARCHIVESFLAG_
+			</if>
+			<if test="createBy != null">
+				,CREATEBY_
+			</if>
+			<if test="createDate != null">
+				,CREATEDATE_
+			</if>
+			<if test="description != null">
+				,DESCRIPTION_
+			</if>
+			<if test="docRequiredFlag != null">
+				,DOCREQUIREDFLAG_
+			</if>
+			<if test="tableName != null">
+				,TABLENAME_
+			</if>
+			<if test="formName != null">
+				,FORMNAME_
+			</if>
+			<if test="formRendererType != null">
+				,FORMRENDERERTYPE_
+			</if>
+			<if test="linkControllerName != null">
+				,LINKCONTROLLERNAME_
+			</if>
+			<if test="linkTemplateId != null">
+				,LINKTEMPLATEID_
+			</if>
+			<if test="listControllerName != null">
+				,LISTCONTROLLERNAME_
+			</if>
+			<if test="listTemplateId != null">
+				,LISTTEMPLATEID_
+			</if>
+			<if test="manualRouteFlag != null">
+				,MANUALROUTEFLAG_
+			</if>
+			<if test="name != null">
+				,NAME_
+			</if>
+			<if test="objectId != null">
+				,OBJECTID_
+			</if>
+			<if test="objectValue != null">
+				,OBJECTVALUE_
+			</if>
+			<if test="processDefinitionId != null">
+				,PROCESSDEFINITIONID_
+			</if>
+			<if test="processName != null">
+				,PROCESSNAME_
+			</if>
+			<if test="releaseDate != null">
+				,RELEASEDATE_
+			</if>
+			<if test="releaseFlag != null">
+				,RELEASEFLAG_
+			</if>
+			<if test="tableName != null">
+				,TABLENAME_
+			</if>
+			<if test="title != null">
+				,TITLE_
+			</if>
+			<if test="uploadFlag != null">
+				,UPLOADFLAG_
+			</if>
+			<if test="updateBy != null">
+				,UPDATEBY
+			</if>
+			<if test="updateDate != null">
+				,UPDATEDATE
+			</if>
+		</trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			#{id, jdbcType=VARCHAR}
+            
+            <if test="nodeId != null">
+				,#{nodeId, jdbcType=BIGINT}
+			</if>
+			
+			<if test="archivesNode != null">
+				,#{archivesNode, jdbcType=VARCHAR}
+			</if>
+			<if test="auditUploadFlag != null">
+				,#{auditUploadFlag, jdbcType=VARCHAR}
+			</if>
+			<if test="autoArchivesFlag != null">
+				,#{autoArchivesFlag, jdbcType=VARCHAR}
+			</if>
+			<if test="createBy != null">
+				,#{createBy, jdbcType=VARCHAR}
+			</if>
+			<if test="createDate != null">
+				,#{createDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="description != null">
+				,#{description, jdbcType=VARCHAR}
+			</if>
+			<if test="docRequiredFlag != null">
+				,#{docRequiredFlag, jdbcType=VARCHAR}
+			</if>
+			<if test="tableName != null">
+				,#{tableName, jdbcType=VARCHAR}
+			</if>
+			<if test="formName != null">
+				,#{formName, jdbcType=VARCHAR}
+			</if>
+			<if test="formRendererType != null">
+				,#{formRendererType, jdbcType=VARCHAR}
+			</if>
+			<if test="linkControllerName != null">
+				,#{linkControllerName, jdbcType=VARCHAR}
+			</if>
+			<if test="linkTemplateId != null">
+				,#{linkTemplateId, jdbcType=VARCHAR}
+			</if>
+			<if test="listControllerName != null">
+				,#{listControllerName, jdbcType=VARCHAR}
+			</if>
+			<if test="listTemplateId != null">
+				,#{listTemplateId, jdbcType=VARCHAR}
+			</if>
+			<if test="manualRouteFlag != null">
+				,#{manualRouteFlag, jdbcType=VARCHAR}
+			</if>
+			<if test="name != null">
+				,#{name, jdbcType=VARCHAR}
+			</if>
+			<if test="objectId != null">
+				,#{objectId, jdbcType=VARCHAR}
+			</if>
+			<if test="objectValue != null">
+				,#{objectValue, jdbcType=VARCHAR}
+			</if>
+			<if test="processDefinitionId != null">
+				,#{processDefinitionId, jdbcType=VARCHAR}
+			</if>
+			<if test="processName != null">
+				,#{processName, jdbcType=VARCHAR}
+			</if>
+			<if test="releaseDate != null">
+				,#{releaseDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="releaseFlag != null">
+				,#{releaseFlag, jdbcType=VARCHAR}
+			</if>
+			<if test="tableName != null">
+				,#{tableName, jdbcType=VARCHAR}
+			</if>
+			<if test="title != null">
+				,#{title, jdbcType=VARCHAR}
+			</if>
+			<if test="uploadFlag != null">
+				,#{uploadFlag, jdbcType=VARCHAR}
+			</if>
+			<if test="updateBy != null">
+				,#{updateBy, jdbcType=VARCHAR}
+			</if>
+			<if test="updateDate != null">
+				,#{updateDate, jdbcType=TIMESTAMP}
+			</if>
+		</trim>
 	</insert>
 
 
-
 	<update id="updateFormApplication" parameterType="com.glaf.form.core.domain.FormApplication">
-		update
-		FORM_APPLICATION
-		set NODEID_ = #{nodeId, jdbcType=BIGINT},
-		TITLE_ =
-		#{title, jdbcType=VARCHAR},
-		DESCRIPTION_ = #{description,
-		jdbcType=VARCHAR},
-		FORMNAME_ = #{formName, jdbcType=VARCHAR},
-		PROCESSNAME_ = #{processName, jdbcType=VARCHAR},
-		PROCESSDEFINITIONID_ =
-		#{processDefinitionId, jdbcType=VARCHAR},
-		LINKTEMPLATEID_ =
-		#{linkTemplateId, jdbcType=VARCHAR},
-		LINKCONTROLLERNAME_ =
-		#{linkControllerName, jdbcType=VARCHAR},
-		LISTTEMPLATEID_ =
-		#{listTemplateId, jdbcType=VARCHAR},
-		LISTCONTROLLERNAME_ =
-		#{listControllerName, jdbcType=VARCHAR},
-		FORMRENDERERTYPE_ =
-		#{formRendererType, jdbcType=VARCHAR},
-		RELEASEFLAG_ = #{releaseFlag,
-		jdbcType=VARCHAR},
-		RELEASEDATE_ = #{releaseDate, jdbcType=TIMESTAMP},
-		UPLOADFLAG_ = #{uploadFlag, jdbcType=VARCHAR},
-		DOCREQUIREDFLAG_ =
-		#{docRequiredFlag, jdbcType=VARCHAR},
-		AUDITUPLOADFLAG_ =
-		#{auditUploadFlag, jdbcType=VARCHAR},
-		AUTOARCHIVESFLAG_ =
-		#{autoArchivesFlag, jdbcType=VARCHAR},
-		MANUALROUTEFLAG_ =
-		#{manualRouteFlag, jdbcType=VARCHAR},
-		ARCHIVESNODE_ = #{archivesNode,
-		jdbcType=VARCHAR},
-		OBJECTID_ = #{objectId, jdbcType=VARCHAR},
-		OBJECTVALUE_ = #{objectValue, jdbcType=VARCHAR}
-		where ID_ = #{id,
-		jdbcType=VARCHAR}
+
+		update FORM_APPLICATION
+		set
+		<trim prefix="" suffix="" suffixOverrides=",">
+			<if test="archivesNode != null">
+				ARCHIVESNODE_ = #{archivesNode, jdbcType=VARCHAR},
+			</if>
+			<if test="auditUploadFlag != null">
+				AUDITUPLOADFLAG_ = #{auditUploadFlag, jdbcType=VARCHAR},
+			</if>
+			<if test="autoArchivesFlag != null">
+				AUTOARCHIVESFLAG_ = #{autoArchivesFlag,
+				jdbcType=VARCHAR},
+			</if>
+			<if test="description != null">
+				DESCRIPTION_ = #{description, jdbcType=VARCHAR},
+			</if>
+			<if test="docRequiredFlag != null">
+				DOCREQUIREDFLAG_ = #{docRequiredFlag, jdbcType=VARCHAR},
+			</if>
+			<if test="formName != null">
+				FORMNAME_ = #{formName, jdbcType=VARCHAR},
+			</if>
+			<if test="formRendererType != null">
+				FORMRENDERERTYPE_ = #{formRendererType,
+				jdbcType=VARCHAR},
+			</if>
+			<if test="linkControllerName != null">
+				LINKCONTROLLERNAME_ = #{linkControllerName,
+				jdbcType=VARCHAR},
+			</if>
+			<if test="linkTemplateId != null">
+				LINKTEMPLATEID_ = #{linkTemplateId, jdbcType=VARCHAR},
+			</if>
+			<if test="listControllerName != null">
+				LISTCONTROLLERNAME_ = #{listControllerName,
+				jdbcType=VARCHAR},
+			</if>
+			<if test="listTemplateId != null">
+				LISTTEMPLATEID_ = #{listTemplateId, jdbcType=VARCHAR},
+			</if>
+			<if test="manualRouteFlag != null">
+				MANUALROUTEFLAG_ = #{manualRouteFlag, jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				NAME_ = #{name, jdbcType=VARCHAR},
+			</if>
+			<if test="objectId != null">
+				OBJECTID_ = #{objectId, jdbcType=VARCHAR},
+			</if>
+			<if test="objectValue != null">
+				OBJECTVALUE_ = #{objectValue, jdbcType=VARCHAR},
+			</if>
+			<if test="processDefinitionId != null">
+				PROCESSDEFINITIONID_ = #{processDefinitionId,
+				jdbcType=VARCHAR},
+			</if>
+			<if test="processName != null">
+				PROCESSNAME_ = #{processName, jdbcType=VARCHAR},
+			</if>
+			<if test="releaseDate != null">
+				RELEASEDATE_ = #{releaseDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="releaseFlag != null">
+				RELEASEFLAG_ = #{releaseFlag, jdbcType=VARCHAR},
+			</if>
+			<if test="title != null">
+				TITLE_ = #{title, jdbcType=VARCHAR},
+			</if>
+			<if test="uploadFlag != null">
+				UPLOADFLAG_ = #{uploadFlag, jdbcType=VARCHAR},
+			</if>
+			<if test="updateBy != null">
+				UPDATEBY = #{updateBy, jdbcType=VARCHAR},
+			</if>
+			<if test="updateDate != null">
+				UPDATEDATE = #{updateDate, jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+		where
+		ID_ = #{id, jdbcType=VARCHAR}
+
 	</update>
 
 	<delete id="deleteFormApplicationById" parameterType="string">
@@ -194,7 +350,7 @@
 		<where>
 			1 = 1
 
-			<if test="nodeId != null and nodeId != '' ">
+			<if test="nodeId != null ">
 				and E.NODEID_ = #{nodeId}
 			</if>
 

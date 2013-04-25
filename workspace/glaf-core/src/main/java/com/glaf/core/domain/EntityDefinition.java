@@ -20,6 +20,7 @@ package com.glaf.core.domain;
 import java.io.*;
 import java.util.*;
 import javax.persistence.*;
+
 import com.alibaba.fastjson.*;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -36,13 +37,13 @@ public class EntityDefinition implements Serializable, JSONable {
 	/**
 	 * 聚合主键
 	 */
-	@Column(name = "AGGREGATIONKEYS_")
+	@Column(name = "AGGREGATIONKEYS_", length = 200)
 	protected String aggregationKeys;
 
 	/**
 	 * 创建人
 	 */
-	@Column(name = "CREATEBY_")
+	@Column(name = "CREATEBY_", length = 50)
 	protected String createBy;
 
 	/**
@@ -62,44 +63,53 @@ public class EntityDefinition implements Serializable, JSONable {
 	@Column(name = "FILECONTENT_")
 	protected String fileContent;
 
+	@Column(name = "FILENAME_", length = 200)
+	protected String filename;
+
 	/**
 	 * 文件前缀
 	 */
-	@Column(name = "FILEPREFIX_")
+	@Column(name = "FILEPREFIX_", length = 200)
 	protected String filePrefix;
 
 	@Id
-	@Column(name = "ID_", length = 50, nullable = false)
+	@Column(name = "ID_", length = 100, nullable = false)
 	protected String id;
 
 	/**
 	 * 是否只做Insert
 	 */
-	@Column(name = "INSERTONLY_")
+	@Column(name = "INSERTONLY_", length = 20)
 	protected String insertOnly;
 
 	/**
 	 * 类型
 	 */
-	@Column(name = "JAVATYPE_")
+	@Column(name = "JAVATYPE_", length = 200)
 	protected String javaType;
 
 	/**
 	 * 名称
 	 */
-	@Column(name = "NAME_")
+	@Column(name = "NAME_", length = 100)
 	protected String name;
+
+	/**
+	 * 节点编号
+	 */
+	@Column(name = "NODEID_")
+	protected Long nodeId;
 
 	/**
 	 * 解析类型
 	 */
-	@Column(name = "PARSETYPE_")
+	@Column(name = "PARSETYPE_", length = 20)
 	protected String parseType;
 
 	/**
 	 * 主键
 	 */
-	@Column(name = "primaryKey")
+	@Column(name = "primaryKey", length = 50)
 	protected String primaryKey;
 
 	/**
@@ -117,25 +127,25 @@ public class EntityDefinition implements Serializable, JSONable {
 	/**
 	 * 数据表
 	 */
-	@Column(name = "TABLENAME_")
+	@Column(name = "TABLENAME_", length = 50)
 	protected String tablename;
 
 	/**
 	 * 标题
 	 */
-	@Column(name = "TITLE_")
+	@Column(name = "TITLE_", length = 200)
 	protected String title;
 
 	/**
 	 * 类型
 	 */
-	@Column(name = "TYPE_")
+	@Column(name = "TYPE_", length = 50)
 	protected String type;
 
 	/**
 	 * 修改人
 	 */
-	@Column(name = "UPDATEBY_")
+	@Column(name = "UPDATEBY_", length = 50)
 	protected String updateBy;
 
 	/**
@@ -186,6 +196,10 @@ public class EntityDefinition implements Serializable, JSONable {
 		return this.fileContent;
 	}
 
+	public String getFilename() {
+		return filename;
+	}
+
 	public String getFilePrefix() {
 		return this.filePrefix;
 	}
@@ -204,6 +218,10 @@ public class EntityDefinition implements Serializable, JSONable {
 
 	public String getName() {
 		return this.name;
+	}
+
+	public Long getNodeId() {
+		return nodeId;
 	}
 
 	public String getParseType() {
@@ -274,6 +292,10 @@ public class EntityDefinition implements Serializable, JSONable {
 		this.fileContent = fileContent;
 	}
 
+	public void setFilename(String filename) {
+		this.filename = filename;
+	}
+
 	public void setFilePrefix(String filePrefix) {
 		this.filePrefix = filePrefix;
 	}
@@ -292,6 +314,10 @@ public class EntityDefinition implements Serializable, JSONable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public void setNodeId(Long nodeId) {
+		this.nodeId = nodeId;
 	}
 
 	public void setParseType(String parseType) {

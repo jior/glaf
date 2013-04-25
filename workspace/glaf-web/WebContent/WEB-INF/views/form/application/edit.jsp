@@ -35,7 +35,7 @@
 		var params = jQuery("#iForm").formSerialize();
 		jQuery.ajax({
 				   type: "POST",
-				   url: '<%=request.getContextPath()%>/form/application.do?method=saveFormApplication',
+				   url: '<%=request.getContextPath()%>/system/form/application.do?method=saveFormApplication',
 				   data: params,
 				   dataType:  'json',
 				   error: function(data){
@@ -57,7 +57,7 @@
 		var params = jQuery("#iForm").formSerialize();
 		jQuery.ajax({
 				   type: "POST",
-				   url: '<%=request.getContextPath()%>/form/application.do?method=saveFormApplication',
+				   url: '<%=request.getContextPath()%>/system/form/application.do?method=saveFormApplication',
 				   data: params,
 				   dataType:  'json',
 				   error: function(data){
@@ -182,6 +182,25 @@
 		        document.getElementById("linkTemplateId").value="${formApplication.linkTemplateId}";
 			</script>
 		</c:if>
+		</td>
+	</tr>
+	<tr>
+		<td align="left"  width="20%" height="27">数据表</td>
+		<td align="left"  width="80%">
+		 <c:choose>
+		 <c:when test="${! empty formApplication.tableName}">
+		    ${formApplication.tableName}
+		 </c:when>
+		 <c:otherwise>
+		   <select id="tableName" name="tableName">
+		   <option value="">----请选择----</option>
+			<c:forEach items="${entityDefinitions}" var="a">
+				<option value="${a.tablename}">${a.title}</option>
+			</c:forEach>
+		   </select> 
+		   <span style="color:red">(选择后不允许修改)</span>
+         </c:otherwise>
+		 </c:choose>
 		</td>
 	</tr>
 	<tr>

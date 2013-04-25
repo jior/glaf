@@ -43,6 +43,9 @@ public class FormDefinitionJsonFactory {
 		if (jsonObject.containsKey("title")) {
 			model.setTitle(jsonObject.getString("title"));
 		}
+		if (jsonObject.containsKey("nodeId")) {
+			model.setNodeId(jsonObject.getLong("nodeId"));
+		}
 		if (jsonObject.containsKey("version")) {
 			model.setVersion(jsonObject.getInteger("version"));
 		}
@@ -91,6 +94,9 @@ public class FormDefinitionJsonFactory {
 			jsonObject.put("title", model.getTitle());
 		}
 		jsonObject.put("version", model.getVersion());
+		if (model.getNodeId() != null) {
+			jsonObject.put("nodeId", model.getNodeId());
+		}
 		return jsonObject;
 	}
 
@@ -135,6 +141,9 @@ public class FormDefinitionJsonFactory {
 			jsonObject.put("title", model.getTitle());
 		}
 		jsonObject.put("version", model.getVersion());
+		if (model.getNodeId() != null) {
+			jsonObject.put("nodeId", model.getNodeId());
+		}
 		return jsonObject;
 	}
 

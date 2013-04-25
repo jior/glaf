@@ -24,8 +24,8 @@ import com.glaf.form.core.domain.FormDefinition;
 import com.glaf.form.core.query.*;
 import com.glaf.form.core.service.*;
 
-@Controller("/form/definition")
-@RequestMapping("/form/definition.do")
+@Controller("/system/form/definition")
+@RequestMapping("/system/form/definition.do")
 public class FormDefinitionController {
 	private static final Log logger = LogFactory
 			.getLog(FormDefinitionController.class);
