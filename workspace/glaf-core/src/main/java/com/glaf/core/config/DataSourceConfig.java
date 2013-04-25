@@ -504,8 +504,31 @@ public class DataSourceConfig {
 				}
 				inputStream.close();
 				inputStream = null;
-				if (properties.getProperty("type") != null) {
-					databaseType = properties.getProperty("type");
+
+				if (StringUtils.isNotEmpty(getJdbcConnectionURL())) {
+					if (StringUtils
+							.contains(getJdbcConnectionURL(), "jdbc:h2:")) {
+						databaseType = "h2";
+					} else if (StringUtils.contains(getJdbcConnectionURL(),
+							"jdbc:oracle:")) {
+						databaseType = "oracle";
+					} else if (StringUtils.contains(getJdbcConnectionURL(),
+							"jdbc:postgresql:")) {
+						databaseType = "postgresql";
+					} else if (StringUtils.contains(getJdbcConnectionURL(),
+							"jdbc:db2:")) {
+						databaseType = "db2";
+					} else if (StringUtils.contains(getJdbcConnectionURL(),
+							"jdbc:sqlserver:")) {
+						databaseType = "sqlserver";
+					} else if (StringUtils.contains(getJdbcConnectionURL(),
+							"jdbc:mysql:")) {
+						databaseType = "mysql";
+					}
+				} else {
+					if (properties.getProperty("type") != null) {
+						databaseType = properties.getProperty("type");
+					}
 				}
 				loadJdbcProperties = true;
 			} catch (IOException ex) {
