@@ -180,6 +180,24 @@ public class ${entityName}BaseController {
 			}
 		}
 	}
+
+
+        @ResponseBody
+	@RequestMapping(params = "method=detail")
+	public byte[] detail(HttpServletRequest request) throws IOException{
+	    //RequestUtils.setRequestParameterToAttribute(request);
+	    //Map<String, Object> params = RequestUtils.getParameterMap(request);
+	    <#if idField.type=='Integer' >
+            ${entityName} ${modelName} = ${modelName}Service.get${entityName}(RequestUtils.getInt(request, "rowId"));
+	    <#elseif idField.type== 'Long' >
+            ${entityName} ${modelName} = ${modelName}Service.get${entityName}(RequestUtils.getLong(request, "rowId"));
+	    <#else>
+            ${entityName} ${modelName} = ${modelName}Service.get${entityName}(request.getParameter("rowId"));
+	    </#if>
+		 
+	    JSONObject rowJSON =  ${modelName}.toJsonObject();
+	    return rowJSON.toJSONString().getBytes("UTF-8");
+        }
     
 
         @RequestMapping(params = "method=edit")
