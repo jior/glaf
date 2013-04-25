@@ -18,6 +18,7 @@
 
 package com.glaf.core.domain.util;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -25,6 +26,16 @@ import com.glaf.core.domain.SysLog;
 import com.glaf.core.util.DateUtils;
 
 public class SysLogJsonFactory {
+
+	public static java.util.List<SysLog> arrayToList(JSONArray array) {
+		java.util.List<SysLog> list = new java.util.ArrayList<SysLog>();
+		for (int i = 0; i < array.size(); i++) {
+			JSONObject jsonObject = array.getJSONObject(i);
+			SysLog model = jsonToObject(jsonObject);
+			list.add(model);
+		}
+		return list;
+	}
 
 	public static SysLog jsonToObject(JSONObject jsonObject) {
 		SysLog model = new SysLog();
@@ -48,6 +59,17 @@ public class SysLogJsonFactory {
 		}
 
 		return model;
+	}
+
+	public static JSONArray listToArray(java.util.List<SysLog> list) {
+		JSONArray array = new JSONArray();
+		if (list != null && !list.isEmpty()) {
+			for (SysLog model : list) {
+				JSONObject jsonObject = model.toJsonObject();
+				array.add(jsonObject);
+			}
+		}
+		return array;
 	}
 
 	public static JSONObject toJsonObject(SysLog model) {

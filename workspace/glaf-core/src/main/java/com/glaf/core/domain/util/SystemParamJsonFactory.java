@@ -26,6 +26,16 @@ import com.glaf.core.domain.*;
 
 public class SystemParamJsonFactory {
 
+	public static java.util.List<SystemParam> arrayToList(JSONArray array) {
+		java.util.List<SystemParam> list = new java.util.ArrayList<SystemParam>();
+		for (int i = 0; i < array.size(); i++) {
+			JSONObject jsonObject = array.getJSONObject(i);
+			SystemParam model = jsonToObject(jsonObject);
+			list.add(model);
+		}
+		return list;
+	}
+
 	public static SystemParam jsonToObject(JSONObject jsonObject) {
 		SystemParam model = new SystemParam();
 		if (jsonObject.containsKey("id")) {
@@ -60,6 +70,17 @@ public class SystemParamJsonFactory {
 		}
 
 		return model;
+	}
+
+	public static JSONArray listToArray(java.util.List<SystemParam> list) {
+		JSONArray array = new JSONArray();
+		if (list != null && !list.isEmpty()) {
+			for (SystemParam model : list) {
+				JSONObject jsonObject = model.toJsonObject();
+				array.add(jsonObject);
+			}
+		}
+		return array;
 	}
 
 	public static JSONObject toJsonObject(SystemParam model) {

@@ -1,20 +1,20 @@
 /*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.glaf.core.todo.util;
 
@@ -25,12 +25,22 @@ import com.glaf.core.todo.*;
 
 public class TodoJsonFactory {
 
+	public static java.util.List<Todo> arrayToList(JSONArray array) {
+		java.util.List<Todo> list = new java.util.ArrayList<Todo>();
+		for (int i = 0; i < array.size(); i++) {
+			JSONObject jsonObject = array.getJSONObject(i);
+			Todo model = jsonToObject(jsonObject);
+			list.add(model);
+		}
+		return list;
+	}
+
 	public static Todo jsonToObject(JSONObject jsonObject) {
 		Todo model = new Todo();
 		if (jsonObject.containsKey("id")) {
 			model.setId(jsonObject.getLong("id"));
 		}
-	 
+
 		if (jsonObject.containsKey("code")) {
 			model.setCode(jsonObject.getString("code"));
 		}
@@ -46,7 +56,7 @@ public class TodoJsonFactory {
 		if (jsonObject.containsKey("enableFlag")) {
 			model.setEnableFlag(jsonObject.getInteger("enableFlag"));
 		}
-		 
+
 		if (jsonObject.containsKey("limitDay")) {
 			model.setLimitDay(jsonObject.getInteger("limitDay"));
 		}
@@ -74,7 +84,7 @@ public class TodoJsonFactory {
 		if (jsonObject.containsKey("moduleName")) {
 			model.setModuleName(jsonObject.getString("moduleName"));
 		}
-		 
+
 		if (jsonObject.containsKey("objectId")) {
 			model.setObjectId(jsonObject.getString("objectId"));
 		}
@@ -87,7 +97,7 @@ public class TodoJsonFactory {
 		if (jsonObject.containsKey("roleId")) {
 			model.setRoleId(jsonObject.getLong("roleId"));
 		}
-		 
+
 		if (jsonObject.containsKey("processName")) {
 			model.setProcessName(jsonObject.getString("processName"));
 		}
@@ -110,12 +120,23 @@ public class TodoJsonFactory {
 		return model;
 	}
 
+	public static JSONArray listToArray(java.util.List<Todo> list) {
+		JSONArray array = new JSONArray();
+		if (list != null && !list.isEmpty()) {
+			for (Todo model : list) {
+				JSONObject jsonObject = model.toJsonObject();
+				array.add(jsonObject);
+			}
+		}
+		return array;
+	}
+
 	public static JSONObject toJsonObject(Todo model) {
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("id", model.getId());
 		jsonObject.put("_id_", model.getId());
 		jsonObject.put("_oid_", model.getId());
-		 
+
 		if (model.getCode() != null) {
 			jsonObject.put("code", model.getCode());
 		}
@@ -123,9 +144,9 @@ public class TodoJsonFactory {
 			jsonObject.put("content", model.getContent());
 		}
 		jsonObject.put("deptId", model.getDeptId());
-		 
+
 		jsonObject.put("enableFlag", model.getEnableFlag());
-		 
+
 		jsonObject.put("limitDay", model.getLimitDay());
 		jsonObject.put("xa", model.getXa());
 		jsonObject.put("xb", model.getXb());
@@ -143,7 +164,7 @@ public class TodoJsonFactory {
 		if (model.getModuleName() != null) {
 			jsonObject.put("moduleName", model.getModuleName());
 		}
-		 
+
 		if (model.getObjectId() != null) {
 			jsonObject.put("objectId", model.getObjectId());
 		}
@@ -154,7 +175,7 @@ public class TodoJsonFactory {
 			jsonObject.put("roleCode", model.getRoleCode());
 		}
 		jsonObject.put("roleId", model.getRoleId());
-		 
+
 		if (model.getProcessName() != null) {
 			jsonObject.put("processName", model.getProcessName());
 		}
@@ -179,7 +200,7 @@ public class TodoJsonFactory {
 		jsonObject.put("id", model.getId());
 		jsonObject.put("_id_", model.getId());
 		jsonObject.put("_oid_", model.getId());
-		 
+
 		if (model.getCode() != null) {
 			jsonObject.put("code", model.getCode());
 		}
@@ -187,9 +208,9 @@ public class TodoJsonFactory {
 			jsonObject.put("content", model.getContent());
 		}
 		jsonObject.put("deptId", model.getDeptId());
-		 
+
 		jsonObject.put("enableFlag", model.getEnableFlag());
-		 
+
 		jsonObject.put("limitDay", model.getLimitDay());
 		jsonObject.put("xa", model.getXa());
 		jsonObject.put("xb", model.getXb());
@@ -207,7 +228,7 @@ public class TodoJsonFactory {
 		if (model.getModuleName() != null) {
 			jsonObject.put("moduleName", model.getModuleName());
 		}
-		 
+
 		if (model.getObjectId() != null) {
 			jsonObject.put("objectId", model.getObjectId());
 		}
@@ -218,7 +239,7 @@ public class TodoJsonFactory {
 			jsonObject.put("roleCode", model.getRoleCode());
 		}
 		jsonObject.put("roleId", model.getRoleId());
-		 
+
 		if (model.getProcessName() != null) {
 			jsonObject.put("processName", model.getProcessName());
 		}

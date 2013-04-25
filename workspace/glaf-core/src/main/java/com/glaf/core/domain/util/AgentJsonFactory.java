@@ -26,6 +26,16 @@ import com.glaf.core.domain.*;
 
 public class AgentJsonFactory {
 
+	public static java.util.List<AgentEntity> arrayToList(JSONArray array) {
+		java.util.List<AgentEntity> list = new java.util.ArrayList<AgentEntity>();
+		for (int i = 0; i < array.size(); i++) {
+			JSONObject jsonObject = array.getJSONObject(i);
+			AgentEntity model = jsonToObject(jsonObject);
+			list.add(model);
+		}
+		return list;
+	}
+
 	public static AgentEntity jsonToObject(JSONObject jsonObject) {
 		AgentEntity model = new AgentEntity();
 		if (jsonObject.containsKey("id")) {
@@ -69,6 +79,17 @@ public class AgentJsonFactory {
 		}
 
 		return model;
+	}
+
+	public static JSONArray listToArray(java.util.List<AgentEntity> list) {
+		JSONArray array = new JSONArray();
+		if (list != null && !list.isEmpty()) {
+			for (AgentEntity model : list) {
+				JSONObject jsonObject = model.toJsonObject();
+				array.add(jsonObject);
+			}
+		}
+		return array;
 	}
 
 	public static JSONObject toJsonObject(AgentEntity model) {

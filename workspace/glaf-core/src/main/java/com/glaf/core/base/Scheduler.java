@@ -20,6 +20,8 @@ package com.glaf.core.base;
 
 import java.util.*;
 
+import com.alibaba.fastjson.JSONObject;
+
 public interface Scheduler {
 
 	String getAttribute();
@@ -78,6 +80,8 @@ public interface Scheduler {
 
 	boolean isValid();
 
+	Scheduler jsonToObject(JSONObject jsonObject);
+
 	void setAttribute(String attribute);
 
 	void setAutoStartup(int autoStartup);
@@ -127,5 +131,7 @@ public interface Scheduler {
 	void setThreadSize(int threadSize);
 
 	void setTitle(String title);
+
+	JSONObject toJsonObject();
 
 }

@@ -25,6 +25,16 @@ import com.glaf.core.domain.*;
 
 public class ColumnDefinitionJsonFactory {
 
+	public static java.util.List<ColumnDefinition> arrayToList(JSONArray array) {
+		java.util.List<ColumnDefinition> list = new java.util.ArrayList<ColumnDefinition>();
+		for (int i = 0; i < array.size(); i++) {
+			JSONObject jsonObject = array.getJSONObject(i);
+			ColumnDefinition model = jsonToObject(jsonObject);
+			list.add(model);
+		}
+		return list;
+	}
+
 	public static ColumnDefinition jsonToObject(JSONObject jsonObject) {
 		ColumnDefinition model = new ColumnDefinition();
 		if (jsonObject.containsKey("id")) {
@@ -188,6 +198,17 @@ public class ColumnDefinitionJsonFactory {
 		}
 
 		return model;
+	}
+
+	public static JSONArray listToArray(java.util.List<ColumnDefinition> list) {
+		JSONArray array = new JSONArray();
+		if (list != null && !list.isEmpty()) {
+			for (ColumnDefinition model : list) {
+				JSONObject jsonObject = model.toJsonObject();
+				array.add(jsonObject);
+			}
+		}
+		return array;
 	}
 
 	public static JSONObject toJsonObject(ColumnDefinition model) {

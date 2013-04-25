@@ -25,6 +25,16 @@ import com.glaf.core.domain.*;
 
 public class SystemPropertyJsonFactory {
 
+	public static java.util.List<SystemProperty> arrayToList(JSONArray array) {
+		java.util.List<SystemProperty> list = new java.util.ArrayList<SystemProperty>();
+		for (int i = 0; i < array.size(); i++) {
+			JSONObject jsonObject = array.getJSONObject(i);
+			SystemProperty model = jsonToObject(jsonObject);
+			list.add(model);
+		}
+		return list;
+	}
+
 	public static SystemProperty jsonToObject(JSONObject jsonObject) {
 		SystemProperty model = new SystemProperty();
 		if (jsonObject.containsKey("id")) {
@@ -56,6 +66,17 @@ public class SystemPropertyJsonFactory {
 		}
 
 		return model;
+	}
+
+	public static JSONArray listToArray(java.util.List<SystemProperty> list) {
+		JSONArray array = new JSONArray();
+		if (list != null && !list.isEmpty()) {
+			for (SystemProperty model : list) {
+				JSONObject jsonObject = model.toJsonObject();
+				array.add(jsonObject);
+			}
+		}
+		return array;
 	}
 
 	public static JSONObject toJsonObject(SystemProperty model) {

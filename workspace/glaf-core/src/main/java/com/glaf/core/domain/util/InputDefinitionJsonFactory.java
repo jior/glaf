@@ -25,6 +25,16 @@ import com.glaf.core.domain.*;
 
 public class InputDefinitionJsonFactory {
 
+	public static java.util.List<InputDefinition> arrayToList(JSONArray array) {
+		java.util.List<InputDefinition> list = new java.util.ArrayList<InputDefinition>();
+		for (int i = 0; i < array.size(); i++) {
+			JSONObject jsonObject = array.getJSONObject(i);
+			InputDefinition model = jsonToObject(jsonObject);
+			list.add(model);
+		}
+		return list;
+	}
+
 	public static InputDefinition jsonToObject(JSONObject jsonObject) {
 		InputDefinition model = new InputDefinition();
 		if (jsonObject.containsKey("id")) {
@@ -71,6 +81,17 @@ public class InputDefinitionJsonFactory {
 		}
 
 		return model;
+	}
+
+	public static JSONArray listToArray(java.util.List<InputDefinition> list) {
+		JSONArray array = new JSONArray();
+		if (list != null && !list.isEmpty()) {
+			for (InputDefinition model : list) {
+				JSONObject jsonObject = model.toJsonObject();
+				array.add(jsonObject);
+			}
+		}
+		return array;
 	}
 
 	public static JSONObject toJsonObject(InputDefinition model) {

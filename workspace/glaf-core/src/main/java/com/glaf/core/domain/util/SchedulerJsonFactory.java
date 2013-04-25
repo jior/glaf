@@ -27,6 +27,16 @@ import com.glaf.core.domain.*;
 
 public class SchedulerJsonFactory {
 
+	public static java.util.List<Scheduler> arrayToList(JSONArray array) {
+		java.util.List<Scheduler> list = new java.util.ArrayList<Scheduler>();
+		for (int i = 0; i < array.size(); i++) {
+			JSONObject jsonObject = array.getJSONObject(i);
+			Scheduler model = jsonToObject(jsonObject);
+			list.add(model);
+		}
+		return list;
+	}
+
 	public static Scheduler jsonToObject(JSONObject jsonObject) {
 		SchedulerEntity model = new SchedulerEntity();
 		if (jsonObject.containsKey("id")) {
@@ -102,6 +112,17 @@ public class SchedulerJsonFactory {
 		return model;
 	}
 
+	public static JSONArray listToArray(java.util.List<Scheduler> list) {
+		JSONArray array = new JSONArray();
+		if (list != null && !list.isEmpty()) {
+			for (Scheduler model : list) {
+				JSONObject jsonObject = model.toJsonObject();
+				array.add(jsonObject);
+			}
+		}
+		return array;
+	}
+
 	public static JSONObject toJsonObject(Scheduler model) {
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("id", model.getId());
@@ -162,17 +183,17 @@ public class SchedulerJsonFactory {
 		if (model.getAttribute() != null) {
 			jsonObject.put("attribute", model.getAttribute());
 		}
-		
+
 		if (model.getIntervalType() != null) {
 			jsonObject.put("intervalType", model.getIntervalType());
-		} 
+		}
 		if (model.getIntervalValue() != null) {
 			jsonObject.put("intervalValue", model.getIntervalValue());
-		} 
+		}
 		if (model.getIntervalTime() != null) {
 			jsonObject.put("intervalTime", model.getIntervalTime());
-		} 
-		
+		}
+
 		return jsonObject;
 	}
 
@@ -236,16 +257,16 @@ public class SchedulerJsonFactory {
 		if (model.getAttribute() != null) {
 			jsonObject.put("attribute", model.getAttribute());
 		}
-		
+
 		if (model.getIntervalType() != null) {
 			jsonObject.put("intervalType", model.getIntervalType());
-		} 
+		}
 		if (model.getIntervalValue() != null) {
 			jsonObject.put("intervalValue", model.getIntervalValue());
-		} 
+		}
 		if (model.getIntervalTime() != null) {
 			jsonObject.put("intervalTime", model.getIntervalTime());
-		} 
+		}
 		return jsonObject;
 	}
 

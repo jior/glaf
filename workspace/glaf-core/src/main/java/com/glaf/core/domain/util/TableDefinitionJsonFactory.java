@@ -26,6 +26,16 @@ import com.glaf.core.domain.*;
 
 public class TableDefinitionJsonFactory {
 
+	public static java.util.List<TableDefinition> arrayToList(JSONArray array) {
+		java.util.List<TableDefinition> list = new java.util.ArrayList<TableDefinition>();
+		for (int i = 0; i < array.size(); i++) {
+			JSONObject jsonObject = array.getJSONObject(i);
+			TableDefinition model = jsonToObject(jsonObject);
+			list.add(model);
+		}
+		return list;
+	}
+
 	public static TableDefinition jsonToObject(JSONObject jsonObject) {
 		TableDefinition model = new TableDefinition();
 		if (jsonObject.containsKey("tableName")) {
@@ -114,6 +124,17 @@ public class TableDefinitionJsonFactory {
 		}
 
 		return model;
+	}
+
+	public static JSONArray listToArray(java.util.List<TableDefinition> list) {
+		JSONArray array = new JSONArray();
+		if (list != null && !list.isEmpty()) {
+			for (TableDefinition model : list) {
+				JSONObject jsonObject = model.toJsonObject();
+				array.add(jsonObject);
+			}
+		}
+		return array;
 	}
 
 	public static JSONObject toJsonObject(TableDefinition model) {

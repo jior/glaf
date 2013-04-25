@@ -26,6 +26,16 @@ import com.glaf.core.domain.*;
 
 public class BlobItemJsonFactory {
 
+	public static java.util.List<BlobItemEntity> arrayToList(JSONArray array) {
+		java.util.List<BlobItemEntity> list = new java.util.ArrayList<BlobItemEntity>();
+		for (int i = 0; i < array.size(); i++) {
+			JSONObject jsonObject = array.getJSONObject(i);
+			BlobItemEntity model = jsonToObject(jsonObject);
+			list.add(model);
+		}
+		return list;
+	}
+
 	public static BlobItemEntity jsonToObject(JSONObject jsonObject) {
 		BlobItemEntity model = new BlobItemEntity();
 		if (jsonObject.containsKey("id")) {
@@ -86,12 +96,23 @@ public class BlobItemJsonFactory {
 		return model;
 	}
 
+	public static JSONArray listToArray(java.util.List<BlobItemEntity> list) {
+		JSONArray array = new JSONArray();
+		if (list != null && !list.isEmpty()) {
+			for (BlobItemEntity model : list) {
+				JSONObject jsonObject = model.toJsonObject();
+				array.add(jsonObject);
+			}
+		}
+		return array;
+	}
+
 	public static JSONObject toJsonObject(BlobItemEntity model) {
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("id", model.getId());
 		jsonObject.put("_id_", model.getId());
 		jsonObject.put("_oid_", model.getId());
-		if (model.getBusinessKey()!= null) {
+		if (model.getBusinessKey() != null) {
 			jsonObject.put("businessKey", model.getBusinessKey());
 		}
 		if (model.getFileId() != null) {
@@ -145,7 +166,7 @@ public class BlobItemJsonFactory {
 		jsonObject.put("id", model.getId());
 		jsonObject.put("_id_", model.getId());
 		jsonObject.put("_oid_", model.getId());
-		if (model.getBusinessKey()!= null) {
+		if (model.getBusinessKey() != null) {
 			jsonObject.put("businessKey", model.getBusinessKey());
 		}
 		if (model.getFileId() != null) {

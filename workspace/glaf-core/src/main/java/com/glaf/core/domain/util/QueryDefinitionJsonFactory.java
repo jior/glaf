@@ -26,6 +26,16 @@ import com.glaf.core.domain.*;
 
 public class QueryDefinitionJsonFactory {
 
+	public static java.util.List<QueryDefinition> arrayToList(JSONArray array) {
+		java.util.List<QueryDefinition> list = new java.util.ArrayList<QueryDefinition>();
+		for (int i = 0; i < array.size(); i++) {
+			JSONObject jsonObject = array.getJSONObject(i);
+			QueryDefinition model = jsonToObject(jsonObject);
+			list.add(model);
+		}
+		return list;
+	}
+
 	public static QueryDefinition jsonToObject(JSONObject jsonObject) {
 		QueryDefinition model = new QueryDefinition();
 		if (jsonObject.containsKey("id")) {
@@ -102,6 +112,17 @@ public class QueryDefinitionJsonFactory {
 		}
 
 		return model;
+	}
+
+	public static JSONArray listToArray(java.util.List<QueryDefinition> list) {
+		JSONArray array = new JSONArray();
+		if (list != null && !list.isEmpty()) {
+			for (QueryDefinition model : list) {
+				JSONObject jsonObject = model.toJsonObject();
+				array.add(jsonObject);
+			}
+		}
+		return array;
 	}
 
 	public static JSONObject toJsonObject(QueryDefinition model) {
