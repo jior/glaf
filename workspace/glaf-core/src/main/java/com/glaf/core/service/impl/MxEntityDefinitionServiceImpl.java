@@ -1,4 +1,3 @@
-
 /*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -30,43 +29,31 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.core.id.*;
+import com.glaf.core.base.BlobItem;
 import com.glaf.core.dao.*;
 import com.glaf.core.mapper.*;
 import com.glaf.core.domain.*;
 import com.glaf.core.query.*;
 import com.glaf.core.service.EntityDefinitionService;
+import com.glaf.core.service.IBlobService;
 
 @Service("entityDefinitionService")
-@Transactional(readOnly = true) 
+@Transactional(readOnly = true)
 public class MxEntityDefinitionServiceImpl implements EntityDefinitionService {
-	protected final Logger logger = LoggerFactory.getLogger(getClass());
- 
-        protected EntityDAO entityDAO;
+	protected IBlobService blobService;
 
-	protected IdGenerator idGenerator;
-
-	protected SqlSessionTemplate sqlSessionTemplate;
+	protected EntityDAO entityDAO;
 
 	protected EntityDefinitionMapper entityDefinitionMapper;
 
+	protected IdGenerator idGenerator;
+
+	protected final Logger logger = LoggerFactory.getLogger(getClass());
+
+	protected SqlSessionTemplate sqlSessionTemplate;
+
 	public MxEntityDefinitionServiceImpl() {
 
-	}
-
-	@Transactional
-	public void deleteById(String id) {
-	     if(id != null ){
-		entityDefinitionMapper.deleteEntityDefinitionById(id);
-	     }
-	}
-
-	@Transactional
-	public void deleteByIds(List<String> rowIds) {
-	    if(rowIds != null && !rowIds.isEmpty()){
-		EntityDefinitionQuery query = new EntityDefinitionQuery();
-		query.rowIds(rowIds);
-		entityDefinitionMapper.deleteEntityDefinitions(query);
-	    }
 	}
 
 	public int count(EntityDefinitionQuery query) {
@@ -74,65 +61,111 @@ public class MxEntityDefinitionServiceImpl implements EntityDefinitionService {
 		return entityDefinitionMapper.getEntityDefinitionCount(query);
 	}
 
-	public List<EntityDefinition> list(EntityDefinitionQuery query) {
-		query.ensureInitialized();
-		List<EntityDefinition> list = entityDefinitionMapper.getEntityDefinitions(query);
-		return list;
+	@Transactional
+	public void deleteById(String id) {
+		if (id != null) {
+			entityDefinitionMapper.deleteEntityDefinitionById(id);
+		}
 	}
 
-         
-	public int getEntityDefinitionCountByQueryCriteria(EntityDefinitionQuery query) {
+	@Transactional
+	public void deleteByIds(List<String> rowIds) {
+		if (rowIds != null && !rowIds.isEmpty()) {
+			EntityDefinitionQuery query = new EntityDefinitionQuery();
+			query.rowIds(rowIds);
+			entityDefinitionMapper.deleteEntityDefinitions(query);
+		}
+	}
+
+	public EntityDefinition getEntityDefinition(String id) {
+		if (id == null) {
+			return null;
+		}
+		EntityDefinition entityDefinition = entityDefinitionMapper
+				.getEntityDefinitionById(id);
+		return entityDefinition;
+	}
+
+	public int getEntityDefinitionCountByQueryCriteria(
+			EntityDefinitionQuery query) {
 		return entityDefinitionMapper.getEntityDefinitionCount(query);
 	}
 
-	 
-	public List<EntityDefinition> getEntityDefinitionsByQueryCriteria(int start, int pageSize,
-			EntityDefinitionQuery query) {
+	public List<EntityDefinition> getEntityDefinitionsByQueryCriteria(
+			int start, int pageSize, EntityDefinitionQuery query) {
 		RowBounds rowBounds = new RowBounds(start, pageSize);
 		List<EntityDefinition> rows = sqlSessionTemplate.selectList(
 				"getEntityDefinitions", query, rowBounds);
 		return rows;
 	}
 
-
-	public EntityDefinition getEntityDefinition(String id) {
-	        if(id == null){
-		    return null;
-		}
-		EntityDefinition entityDefinition = entityDefinitionMapper.getEntityDefinitionById(id);
-		return entityDefinition;
+	public List<EntityDefinition> list(EntityDefinitionQuery query) {
+		query.ensureInitialized();
+		List<EntityDefinition> list = entityDefinitionMapper
+				.getEntityDefinitions(query);
+		return list;
 	}
 
 	@Transactional
 	public void save(EntityDefinition entityDefinition) {
-           if (StringUtils.isEmpty(entityDefinition.getId())) {
-			entityDefinition.setId(idGenerator.getNextId("SYS_ENTITY"));
-			//entityDefinition.setCreateDate(new Date());
-			//entityDefinition.setDeleteFlag(0);
+		if (StringUtils.isEmpty(entityDefinition.getId())) {
+			entityDefinition.setId(entityDefinition.getTablename());
+			if (entityDefinition.getType() != null) {
+				entityDefinition.setId(entityDefinition.getTablename() + "_"
+						+ entityDefinition.getType());
+			}
+			entityDefinition.setCreateDate(new Date());
 			entityDefinitionMapper.insertEntityDefinition(entityDefinition);
 		} else {
-			entityDefinitionMapper.updateEntityDefinition(entityDefinition);
+			EntityDefinition model = this.getEntityDefinition(entityDefinition
+					.getId());
+			if (model == null) {
+				entityDefinition.setCreateDate(new Date());
+				entityDefinitionMapper.insertEntityDefinition(entityDefinition);
+			} else {
+				entityDefinition.setUpdateDate(new Date());
+				entityDefinitionMapper.updateEntityDefinition(entityDefinition);
+			}
+		}
+
+		if (entityDefinition.getData() != null) {
+			BlobItem blob = new BlobItemEntity();
+			blob.setData(entityDefinition.getData());
+			blob.setFileId(entityDefinition.getId());
+			blob.setBusinessKey(entityDefinition.getId());
+			blob.setLastModified(System.currentTimeMillis());
+			blob.setFilename(entityDefinition.getName() + ".mapping.xml");
+			blob.setStatus(1);
+			blob.setCreateBy(entityDefinition.getCreateBy());
+			blob.setName(entityDefinition.getName());
+			blob.setType(entityDefinition.getType());
+
+			blobService.insertBlob(blob);
 		}
 	}
 
-	@Resource(name="myBatisEntityDAO")
+	@Resource
+	public void setBlobService(IBlobService blobService) {
+		this.blobService = blobService;
+	}
+
+	@Resource(name = "myBatisEntityDAO")
 	public void setEntityDAO(EntityDAO entityDAO) {
 		this.entityDAO = entityDAO;
 	}
 
-	 
-	@Resource(name="myBatisDbIdGenerator")
-	public void setIdGenerator(IdGenerator idGenerator) {
-		this.idGenerator = idGenerator;
-	}
- 
-
 	@Resource
-	public void setEntityDefinitionMapper(EntityDefinitionMapper entityDefinitionMapper) {
+	public void setEntityDefinitionMapper(
+			EntityDefinitionMapper entityDefinitionMapper) {
 		this.entityDefinitionMapper = entityDefinitionMapper;
 	}
 
-        @Resource
+	@Resource(name = "myBatisDbIdGenerator")
+	public void setIdGenerator(IdGenerator idGenerator) {
+		this.idGenerator = idGenerator;
+	}
+
+	@Resource
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}

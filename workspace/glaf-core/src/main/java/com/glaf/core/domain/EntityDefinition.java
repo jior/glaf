@@ -52,6 +52,9 @@ public class EntityDefinition implements Serializable, JSONable {
 	@Column(name = "CREATEDATE_")
 	protected Date createDate;
 
+	@javax.persistence.Transient
+	protected byte[] data;
+
 	/**
 	 * ÎÄ¼şÄÚÈİ
 	 */
@@ -175,6 +178,10 @@ public class EntityDefinition implements Serializable, JSONable {
 		return this.createDate;
 	}
 
+	public byte[] getData() {
+		return data;
+	}
+
 	public String getFileContent() {
 		return this.fileContent;
 	}
@@ -257,6 +264,10 @@ public class EntityDefinition implements Serializable, JSONable {
 
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
+	}
+
+	public void setData(byte[] data) {
+		this.data = data;
 	}
 
 	public void setFileContent(String fileContent) {

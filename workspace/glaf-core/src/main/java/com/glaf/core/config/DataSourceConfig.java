@@ -504,6 +504,9 @@ public class DataSourceConfig {
 				}
 				inputStream.close();
 				inputStream = null;
+				if (properties.getProperty("type") != null) {
+					databaseType = properties.getProperty("type");
+				}
 				loadJdbcProperties = true;
 			} catch (IOException ex) {
 				loadJdbcProperties = false;
