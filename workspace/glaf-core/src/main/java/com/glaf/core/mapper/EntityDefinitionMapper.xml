@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.core.mapper.EntityDefinitionMapper">
+
+	<resultMap id="entityDefinitionResultMap" type="com.glaf.core.domain.EntityDefinition">
+		<id property="id" column="ID_" jdbcType="VARCHAR" />
+		<result property="name" column="NAME_" jdbcType="VARCHAR" />
+		<result property="type" column="TYPE_" jdbcType="VARCHAR" />
+		<result property="title" column="TITLE_" jdbcType="VARCHAR" />
+		<result property="tablename" column="TABLENAME_" jdbcType="VARCHAR" />
+		<result property="parseType" column="PARSETYPE_" jdbcType="VARCHAR" />
+		<result property="primaryKey" column="primaryKey" jdbcType="VARCHAR" />
+		<result property="filePrefix" column="FILEPREFIX_" jdbcType="VARCHAR" />
+		<result property="stopWord" column="STOPWORD_" jdbcType="VARCHAR" />
+		<result property="javaType" column="JAVATYPE_" jdbcType="VARCHAR" />
+		<result property="aggregationKeys" column="AGGREGATIONKEYS_"
+			jdbcType="VARCHAR" />
+		<result property="startRow" column="STARTROW_" jdbcType="INTEGER" />
+		<result property="insertOnly" column="INSERTONLY_" jdbcType="VARCHAR" />
+		<result property="fileContent" column="FILECONTENT_" jdbcType="VARCHAR" />
+		<result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP" />
+		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR" />
+		<result property="updateBy" column="UPDATEBY_" jdbcType="VARCHAR" />
+		<result property="updateDate" column="UPDATEDATE_" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+
+	<insert id="insertEntityDefinition" parameterType="com.glaf.core.domain.EntityDefinition">
+		insert into SYS_ENTITY
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ID_
+			<if test="name != null">
+				,NAME_
+			</if>
+			<if test="type != null">
+				,TYPE_
+			</if>
+			<if test="title != null">
+				,TITLE_
+			</if>
+			<if test="tablename != null">
+				,TABLENAME_
+			</if>
+			<if test="parseType != null">
+				,PARSETYPE_
+			</if>
+			<if test="primaryKey != null">
+				,primaryKey
+			</if>
+			<if test="filePrefix != null">
+				,FILEPREFIX_
+			</if>
+			<if test="stopWord != null">
+				,STOPWORD_
+			</if>
+			<if test="javaType != null">
+				,JAVATYPE_
+			</if>
+			<if test="aggregationKeys != null">
+				,AGGREGATIONKEYS_
+			</if>
+			<if test="startRow != null">
+				,STARTROW_
+			</if>
+			<if test="insertOnly != null">
+				,INSERTONLY_
+			</if>
+			<if test="fileContent != null">
+				,FILECONTENT_
+			</if>
+			<if test="createDate != null">
+				,CREATEDATE_
+			</if>
+			<if test="createBy != null">
+				,CREATEBY_
+			</if>
+			<if test="updateBy != null">
+				,UPDATEBY_
+			</if>
+			<if test="updateDate != null">
+				,UPDATEDATE_
+			</if>
+		</trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			#{id, jdbcType=VARCHAR}
+
+			<if test="name != null">
+				,#{name, jdbcType=VARCHAR}
+			</if>
+			<if test="type != null">
+				,#{type, jdbcType=VARCHAR}
+			</if>
+			<if test="title != null">
+				,#{title, jdbcType=VARCHAR}
+			</if>
+			<if test="tablename != null">
+				,#{tablename, jdbcType=VARCHAR}
+			</if>
+			<if test="parseType != null">
+				,#{parseType, jdbcType=VARCHAR}
+			</if>
+			<if test="primaryKey != null">
+				,#{primaryKey, jdbcType=VARCHAR}
+			</if>
+			<if test="filePrefix != null">
+				,#{filePrefix, jdbcType=VARCHAR}
+			</if>
+			<if test="stopWord != null">
+				,#{stopWord, jdbcType=VARCHAR}
+			</if>
+			<if test="javaType != null">
+				,#{javaType, jdbcType=VARCHAR}
+			</if>
+			<if test="aggregationKeys != null">
+				,#{aggregationKeys, jdbcType=VARCHAR}
+			</if>
+			<if test="startRow != null">
+				,#{startRow, jdbcType=INTEGER}
+			</if>
+			<if test="insertOnly != null">
+				,#{insertOnly, jdbcType=VARCHAR}
+			</if>
+			<if test="fileContent != null">
+				,#{fileContent, jdbcType=VARCHAR}
+			</if>
+			<if test="createDate != null">
+				,#{createDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="createBy != null">
+				,#{createBy, jdbcType=VARCHAR}
+			</if>
+			<if test="updateBy != null">
+				,#{updateBy, jdbcType=VARCHAR}
+			</if>
+			<if test="updateDate != null">
+				,#{updateDate, jdbcType=TIMESTAMP}
+			</if>
+		</trim>
+	</insert>
+
+
+	<update id="updateEntityDefinition" parameterType="com.glaf.core.domain.EntityDefinition">
+		update SYS_ENTITY
+		set
+		<trim prefix="" suffix="" suffixOverrides=",">
+			<if test="name != null">
+				NAME_ = #{name, jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				TYPE_ = #{type, jdbcType=VARCHAR},
+			</if>
+			<if test="title != null">
+				TITLE_ = #{title, jdbcType=VARCHAR},
+			</if>
+			<if test="tablename != null">
+				TABLENAME_ = #{tablename, jdbcType=VARCHAR},
+			</if>
+			<if test="parseType != null">
+				PARSETYPE_ = #{parseType, jdbcType=VARCHAR},
+			</if>
+			<if test="primaryKey != null">
+				primaryKey = #{primaryKey, jdbcType=VARCHAR},
+			</if>
+			<if test="filePrefix != null">
+				FILEPREFIX_ = #{filePrefix, jdbcType=VARCHAR},
+			</if>
+			<if test="stopWord != null">
+				STOPWORD_ = #{stopWord, jdbcType=VARCHAR},
+			</if>
+			<if test="javaType != null">
+				JAVATYPE_ = #{javaType, jdbcType=VARCHAR},
+			</if>
+			<if test="aggregationKeys != null">
+				AGGREGATIONKEYS_ = #{aggregationKeys, jdbcType=VARCHAR},
+			</if>
+			<if test="startRow != null">
+				STARTROW_ = #{startRow, jdbcType=INTEGER},
+			</if>
+			<if test="insertOnly != null">
+				INSERTONLY_ = #{insertOnly, jdbcType=VARCHAR},
+			</if>
+			<if test="fileContent != null">
+				FILECONTENT_ = #{fileContent, jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				CREATEDATE_ = #{createDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="createBy != null">
+				CREATEBY_ = #{createBy, jdbcType=VARCHAR},
+			</if>
+			<if test="updateBy != null">
+				UPDATEBY_ = #{updateBy, jdbcType=VARCHAR},
+			</if>
+			<if test="updateDate != null">
+				UPDATEDATE_ = #{updateDate, jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+		where
+		ID_ = #{id, jdbcType=VARCHAR}
+
+	</update>
+
+
+	<delete id="deleteEntityDefinitionById" parameterType="string">
+		delete
+		from SYS_ENTITY
+		where ID_ = #{id}
+	</delete>
+
+
+	<delete id="deleteEntityDefinitions" parameterType="com.glaf.core.query.EntityDefinitionQuery">
+		delete from SYS_ENTITY
+		where (
+		ID_ IN
+		<foreach item="x_rowId" index="index" collection="rowIds"
+			open="(" separator="," close=")">
+			#{x_rowId}
+		</foreach>
+		)
+	</delete>
+
+
+	<select id="getEntityDefinitionById" parameterType="string"
+		resultMap="entityDefinitionResultMap">
+		select * from SYS_ENTITY where ID_ = #{id}
+	</select>
+
+
+	<select id="getEntityDefinitions" parameterType="com.glaf.core.query.EntityDefinitionQuery"
+		resultMap="entityDefinitionResultMap">
+		select E.*
+		<include refid="selectEntityDefinitionsSql" />
+		<choose>
+			<when test="orderBy != null">
+				order by ${orderBy}
+			</when>
+			<otherwise>
+				order by E.ID_ desc
+			</otherwise>
+		</choose>
+	</select>
+
+
+	<select id="getEntityDefinitionCount" parameterType="com.glaf.core.query.EntityDefinitionQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectEntityDefinitionsSql" />
+	</select>
+
+
+	<sql id="selectEntityDefinitionsSql">
+
+		from SYS_ENTITY E
+
+		<where>
+			1 = 1
+
+			<if test="name != null and name != '' ">
+				and E.NAME_ = #{name}
+			</if>
+
+			<if test="nameLike != null and nameLike != '' ">
+				and E.NAME_ like #{nameLike}
+			</if>
+
+			<if test="type != null and type != '' ">
+				and E.TYPE_ = #{type}
+			</if>
+
+			<if test="titleLike != null and titleLike != '' ">
+				and E.TITLE_ like #{titleLike}
+			</if>
+
+			<if test="tablename != null and tablename != '' ">
+				and E.TABLENAME_ = #{tablename}
+			</if>
+
+			<if test="parseType != null and parseType != '' ">
+				and E.PARSETYPE_ = #{parseType}
+			</if>
+
+			<if test="createDateGreaterThanOrEqual != null">
+				and E.CREATEDATE_ &gt;= #{createDateGreaterThanOrEqual}
+			</if>
+
+			<if test="createDateLessThanOrEqual != null">
+				and E.CREATEDATE_ &lt;= #{createDateLessThanOrEqual}
+			</if>
+
+			<if test="createBy != null and createBy != '' ">
+				and E.CREATEBY_ = #{createBy}
+			</if>
+
+			<if test="createBys != null and createBys.size() &gt; 0">
+				and E.CREATEBY_ IN
+				<foreach item="x_createBy" index="index" collection="createBys"
+					open="(" separator="," close=")">
+					#{x_createBy}
+				</foreach>
+			</if>
+
+			<if test="updateBy != null and updateBy != '' ">
+				and E.UPDATEBY_ = #{updateBy}
+			</if>
+
+			<if test="updateBys != null and updateBys.size() &gt; 0">
+				and E.UPDATEBY_ IN
+				<foreach item="x_updateBy" index="index" collection="updateBys"
+					open="(" separator="," close=")">
+					#{x_updateBy}
+				</foreach>
+			</if>
+
+			<if test="updateDateGreaterThanOrEqual != null">
+				and E.UPDATEDATE_ &gt;= #{updateDateGreaterThanOrEqual}
+			</if>
+
+			<if test="updateDateLessThanOrEqual != null">
+				and E.UPDATEDATE_ &lt;= #{updateDateLessThanOrEqual}
+			</if>
+
+		</where>
+	</sql>
+
+</mapper>

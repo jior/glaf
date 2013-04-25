@@ -18,7 +18,7 @@ public class ParseTest {
 	@Test
 	public void testImportXls() {
 		String mappingFile = "./report/mapping/Plans.mapping.xml";
-		String dataFile = "./report/data/importparts-3.xls";
+		String dataFile = "./report/data/logistics_Plans_Temp01.xls";
 		ContextFactory.hasBean("dataSource");
 		ParserFacede parser = new ParserFacede();
 		List<TableModel> rows = parser.parse(mappingFile, dataFile, "root_"

@@ -24,13 +24,13 @@ import com.glaf.core.util.StringTools;
 import com.glaf.core.util.ZipUtils;
 
 public class JavaCodeGen {
-	private final static String DEFAULT_CONFIG = "templates/codegen/codegen_all.xml";
+	protected static Configuration cfg = new Configuration();
 
-	public final static String newline = System.getProperty("line.separator");
+	private final static String DEFAULT_CONFIG = "templates/codegen/codegen_all.xml";
 
 	private static Log logger = LogFactory.getLog(JavaCodeGen.class);
 
-	protected static Configuration cfg = new Configuration();
+	public final static String newline = System.getProperty("line.separator");
 
 	static {
 		try {
@@ -47,28 +47,18 @@ public class JavaCodeGen {
 		cfg.setObjectWrapper(new DefaultObjectWrapper());
 	}
 
-	public byte[] zipCodeGen(ClassDefinition classDefinition, String config)
-			throws Exception {
-		byte[] bytes = null;
-		Map<String, byte[]> zipMap = new HashMap<String, byte[]>();
-		List<CodeDef> rows = this.codeGen(classDefinition, null, config);
-		for (CodeDef def : rows) {
-			String content = def.getContent();
-			String savePath = def.getSavePath();
-			String saveName = def.getSaveName();
-			String filename = savePath + "/" + saveName;
-			if (filename.startsWith("/") || filename.startsWith("\\")) {
-				filename = filename.substring(1, filename.length());
-			}
-			zipMap.put(filename, content.getBytes());
+	public static void main(String[] args) throws Exception {
+		FileInputStream fin = new FileInputStream(args[0]);
+		ClassDefinition def = new com.glaf.core.xml.XmlReader().read(fin);
+		JavaCodeGen gen = new JavaCodeGen();
+		File outputDir = new File(args[1]);
+		String config = JavaCodeGen.DEFAULT_CONFIG;
+		if (args.length > 2) {
+			config = args[2];
 		}
-		bytes = ZipUtils.toZipBytes(zipMap);
-		return bytes;
-	}
-
-	public List<CodeDef> codeGen(ClassDefinition classDefinition, String config)
-			throws Exception {
-		return this.codeGen(classDefinition, null, config);
+		System.out.println(outputDir);
+		System.out.println(config);
+		gen.codeGen(def, outputDir, config);
 	}
 
 	public List<CodeDef> codeGen(ClassDefinition classDefinition,
@@ -158,6 +148,137 @@ public class JavaCodeGen {
 			f5.setTitle("工作流结束日期");
 			f5.setType("Date");
 			classDefinition.addField(f5);
+
+		}
+
+		if (classDefinition.isTreeSupport()) {
+			FieldDefinition idField = new FieldDefinition();
+			idField.setName("id");
+			idField.setColumnName("id");
+			idField.setEnglishTitle("Id");
+			idField.setTitle("主键");
+			idField.setType("Long");
+			classDefinition.setIdField(idField);
+
+			FieldDefinition f1 = new FieldDefinition();
+			f1.setName("parentId");
+			f1.setColumnName("parentId");
+			f1.setEnglishTitle("parentId");
+			f1.setTitle("父节点编号");
+			f1.setType("Long");
+			classDefinition.addField(f1);
+
+			FieldDefinition f2 = new FieldDefinition();
+			f2.setName("code");
+			f2.setColumnName("code");
+			f2.setEnglishTitle("Code");
+			f2.setTitle("编码");
+			f2.setType("String");
+			classDefinition.addField(f2);
+
+			FieldDefinition f3 = new FieldDefinition();
+			f3.setName("createBy");
+			f3.setColumnName("createBy");
+			f3.setEnglishTitle("createBy");
+			f3.setTitle("创建人");
+			f3.setType("String");
+			classDefinition.addField(f3);
+
+			FieldDefinition f4 = new FieldDefinition();
+			f4.setName("createDate");
+			f4.setColumnName("createDate");
+			f4.setEnglishTitle("createDate");
+			f4.setTitle("创建日期");
+			f4.setType("Date");
+			classDefinition.addField(f4);
+
+			FieldDefinition f5 = new FieldDefinition();
+			f5.setName("updateDate");
+			f5.setColumnName("updateDate");
+			f5.setEnglishTitle("updateDate");
+			f5.setTitle("修改日期");
+			f5.setType("Date");
+			classDefinition.addField(f5);
+
+			FieldDefinition f6 = new FieldDefinition();
+			f6.setName("updateBy");
+			f6.setColumnName("updateBy");
+			f6.setEnglishTitle("updateBy");
+			f6.setTitle("修改人");
+			f6.setType("String");
+			classDefinition.addField(f6);
+
+			FieldDefinition f7 = new FieldDefinition();
+			f7.setName("discriminator");
+			f7.setColumnName("discriminator");
+			f7.setEnglishTitle("discriminator");
+			f7.setTitle("标识符");
+			f7.setType("String");
+			classDefinition.addField(f7);
+
+			FieldDefinition f8 = new FieldDefinition();
+			f8.setName("description");
+			f8.setColumnName("description");
+			f8.setEnglishTitle("description");
+			f8.setTitle("描述");
+			f8.setType("String");
+			classDefinition.addField(f8);
+
+			FieldDefinition f9 = new FieldDefinition();
+			f9.setName("icon");
+			f9.setColumnName("icon");
+			f9.setEnglishTitle("icon");
+			f9.setTitle("图标");
+			f9.setType("String");
+			classDefinition.addField(f9);
+
+			FieldDefinition f92 = new FieldDefinition();
+			f92.setName("iconCls");
+			f92.setColumnName("iconCls");
+			f92.setEnglishTitle("iconCls");
+			f92.setTitle("图标样式");
+			f92.setType("String");
+			classDefinition.addField(f92);
+
+			FieldDefinition f10 = new FieldDefinition();
+			f10.setName("locked");
+			f10.setColumnName("locked");
+			f10.setEnglishTitle("locked");
+			f10.setTitle("锁定标识");
+			f10.setType("Integer");
+			classDefinition.addField(f10);
+
+			FieldDefinition f11 = new FieldDefinition();
+			f11.setName("sortNo");
+			f11.setColumnName("sortNo");
+			f11.setEnglishTitle("sortNo");
+			f11.setTitle("顺序号");
+			f11.setType("Integer");
+			classDefinition.addField(f11);
+
+			FieldDefinition f12 = new FieldDefinition();
+			f12.setName("name");
+			f12.setColumnName("name");
+			f12.setEnglishTitle("name");
+			f12.setTitle("名称");
+			f12.setType("String");
+			classDefinition.addField(f12);
+
+			FieldDefinition f13 = new FieldDefinition();
+			f13.setName("treeId");
+			f13.setColumnName("treeId");
+			f13.setEnglishTitle("treeId");
+			f13.setTitle("树编号");
+			f13.setType("String");
+			classDefinition.addField(f13);
+
+			FieldDefinition f14 = new FieldDefinition();
+			f14.setName("url");
+			f14.setColumnName("url");
+			f14.setEnglishTitle("url");
+			f14.setTitle("链接地址");
+			f14.setType("String");
+			classDefinition.addField(f14);
 
 		}
 
@@ -484,18 +605,28 @@ public class JavaCodeGen {
 		return defs;
 	}
 
-	public static void main(String[] args) throws Exception {
-		FileInputStream fin = new FileInputStream(args[0]);
-		ClassDefinition def = new com.glaf.core.xml.XmlReader().read(fin);
-		JavaCodeGen gen = new JavaCodeGen();
-		File outputDir = new File(args[1]);
-		String config = JavaCodeGen.DEFAULT_CONFIG;
-		if (args.length > 2) {
-			config = args[2];
+	public List<CodeDef> codeGen(ClassDefinition classDefinition, String config)
+			throws Exception {
+		return this.codeGen(classDefinition, null, config);
+	}
+
+	public byte[] zipCodeGen(ClassDefinition classDefinition, String config)
+			throws Exception {
+		byte[] bytes = null;
+		Map<String, byte[]> zipMap = new HashMap<String, byte[]>();
+		List<CodeDef> rows = this.codeGen(classDefinition, null, config);
+		for (CodeDef def : rows) {
+			String content = def.getContent();
+			String savePath = def.getSavePath();
+			String saveName = def.getSaveName();
+			String filename = savePath + "/" + saveName;
+			if (filename.startsWith("/") || filename.startsWith("\\")) {
+				filename = filename.substring(1, filename.length());
+			}
+			zipMap.put(filename, content.getBytes());
 		}
-		System.out.println(outputDir);
-		System.out.println(config);
-		gen.codeGen(def, outputDir, config);
+		bytes = ZipUtils.toZipBytes(zipMap);
+		return bytes;
 	}
 
 }

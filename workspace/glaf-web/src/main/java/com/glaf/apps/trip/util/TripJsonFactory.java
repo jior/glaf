@@ -1,31 +1,42 @@
 package com.glaf.apps.trip.util;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.alibaba.fastjson.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode; 
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.glaf.core.base.*;
 import com.glaf.core.util.DateUtils;
 import com.glaf.apps.trip.model.*;
 
 public class TripJsonFactory {
-	
-	public static void main(String[] args){
-		 Trip model = new Trip();
-		 model.setApplyDate(new java.util.Date());
-		 model.setDays(2.5D);
-		 model.setMoney(2000D);
-		 model.setCreateBy("sys");
-		 JSONObject jsonObject = TripJsonFactory.toJsonObject(model);
-		 System.out.println(jsonObject.toJSONString());
-		 Trip trip = TripJsonFactory.jsonToObject(jsonObject);
-		 System.out.println(trip.getApplyDate());
-		 System.out.println(trip.getDays());
-		 System.out.println(trip.getMoney());
+
+	public static JSONArray listToArray(List<Trip> list) {
+		JSONArray array = new JSONArray();
+		if (list != null && !list.isEmpty()) {
+			for (Trip trip : list) {
+				JSONObject jsonObject = trip.toJsonObject();
+				array.add(jsonObject);
+			}
+		}
+		return array;
+	}
+
+	public static List<Trip> arrayToList(JSONArray array) {
+		List<Trip> list = new ArrayList<Trip>();
+		for (int i = 0; i < array.size(); i++) {
+			JSONObject jsonObject = array.getJSONObject(i);
+			Trip model = jsonToObject(jsonObject);
+			list.add(model);
+		}
+		return list;
 	}
 
 	public static Trip jsonToObject(JSONObject jsonObject) {
-            Trip model = new Trip();
-            if (jsonObject.containsKey("id")) {
-		    model.setId(jsonObject.getString("id"));
+		Trip model = new Trip();
+		if (jsonObject.containsKey("id")) {
+			model.setId(jsonObject.getString("id"));
 		}
 		if (jsonObject.containsKey("transType")) {
 			model.setTransType(jsonObject.getString("transType"));
@@ -48,6 +59,9 @@ public class TripJsonFactory {
 		if (jsonObject.containsKey("cause")) {
 			model.setCause(jsonObject.getString("cause"));
 		}
+		if (jsonObject.containsKey("deleteFlag")) {
+			model.setDeleteFlag(jsonObject.getInteger("deleteFlag"));
+		}
 		if (jsonObject.containsKey("createDate")) {
 			model.setCreateDate(jsonObject.getDate("createDate"));
 		}
@@ -63,9 +77,6 @@ public class TripJsonFactory {
 		if (jsonObject.containsKey("locked")) {
 			model.setLocked(jsonObject.getInteger("locked"));
 		}
-		if (jsonObject.containsKey("deleteFlag")) {
-			model.setDeleteFlag(jsonObject.getInteger("deleteFlag"));
-		}
 		if (jsonObject.containsKey("status")) {
 			model.setStatus(jsonObject.getInteger("status"));
 		}
@@ -73,10 +84,19 @@ public class TripJsonFactory {
 			model.setProcessName(jsonObject.getString("processName"));
 		}
 		if (jsonObject.containsKey("processInstanceId")) {
-			model.setProcessInstanceId(jsonObject.getString("processInstanceId"));
+			model.setProcessInstanceId(jsonObject.getLong("processInstanceId"));
+		}
+		if (jsonObject.containsKey("wfStatus")) {
+			model.setWfStatus(jsonObject.getInteger("wfStatus"));
+		}
+		if (jsonObject.containsKey("wfStartDate")) {
+			model.setWfStartDate(jsonObject.getDate("wfStartDate"));
+		}
+		if (jsonObject.containsKey("wfEndDate")) {
+			model.setWfEndDate(jsonObject.getDate("wfEndDate"));
 		}
 
-            return model;
+		return model;
 	}
 
 	public static JSONObject toJsonObject(Trip model) {
@@ -86,112 +106,168 @@ public class TripJsonFactory {
 		jsonObject.put("_oid_", model.getId());
 		if (model.getTransType() != null) {
 			jsonObject.put("transType", model.getTransType());
-		} 
-                if (model.getApplyDate() != null) {
-                      jsonObject.put("applyDate", DateUtils.getDate(model.getApplyDate()));
-		      jsonObject.put("applyDate_date", DateUtils.getDate(model.getApplyDate()));
-		      jsonObject.put("applyDate_datetime", DateUtils.getDateTime(model.getApplyDate()));
-                }
-                if (model.getStartDate() != null) {
-                      jsonObject.put("startDate", DateUtils.getDate(model.getStartDate()));
-		      jsonObject.put("startDate_date", DateUtils.getDate(model.getStartDate()));
-		      jsonObject.put("startDate_datetime", DateUtils.getDateTime(model.getStartDate()));
-                }
-                if (model.getEndDate() != null) {
-                      jsonObject.put("endDate", DateUtils.getDate(model.getEndDate()));
-		      jsonObject.put("endDate_date", DateUtils.getDate(model.getEndDate()));
-		      jsonObject.put("endDate_datetime", DateUtils.getDateTime(model.getEndDate()));
-                }
-        jsonObject.put("days", model.getDays());
-        jsonObject.put("money", model.getMoney());
+		}
+		if (model.getApplyDate() != null) {
+			jsonObject
+					.put("applyDate", DateUtils.getDate(model.getApplyDate()));
+			jsonObject.put("applyDate_date",
+					DateUtils.getDate(model.getApplyDate()));
+			jsonObject.put("applyDate_datetime",
+					DateUtils.getDateTime(model.getApplyDate()));
+		}
+		if (model.getStartDate() != null) {
+			jsonObject
+					.put("startDate", DateUtils.getDate(model.getStartDate()));
+			jsonObject.put("startDate_date",
+					DateUtils.getDate(model.getStartDate()));
+			jsonObject.put("startDate_datetime",
+					DateUtils.getDateTime(model.getStartDate()));
+		}
+		if (model.getEndDate() != null) {
+			jsonObject.put("endDate", DateUtils.getDate(model.getEndDate()));
+			jsonObject.put("endDate_date",
+					DateUtils.getDate(model.getEndDate()));
+			jsonObject.put("endDate_datetime",
+					DateUtils.getDateTime(model.getEndDate()));
+		}
+		jsonObject.put("days", model.getDays());
+		jsonObject.put("money", model.getMoney());
 		if (model.getCause() != null) {
 			jsonObject.put("cause", model.getCause());
-		} 
-                if (model.getCreateDate() != null) {
-                      jsonObject.put("createDate", DateUtils.getDate(model.getCreateDate()));
-		      jsonObject.put("createDate_date", DateUtils.getDate(model.getCreateDate()));
-		      jsonObject.put("createDate_datetime", DateUtils.getDateTime(model.getCreateDate()));
-                }
+		}
+		jsonObject.put("deleteFlag", model.getDeleteFlag());
+		if (model.getCreateDate() != null) {
+			jsonObject.put("createDate",
+					DateUtils.getDate(model.getCreateDate()));
+			jsonObject.put("createDate_date",
+					DateUtils.getDate(model.getCreateDate()));
+			jsonObject.put("createDate_datetime",
+					DateUtils.getDateTime(model.getCreateDate()));
+		}
 		if (model.getCreateBy() != null) {
 			jsonObject.put("createBy", model.getCreateBy());
-		} 
+		}
 		if (model.getCreateByName() != null) {
 			jsonObject.put("createByName", model.getCreateByName());
-		} 
-                if (model.getUpdateDate() != null) {
-                      jsonObject.put("updateDate", DateUtils.getDate(model.getUpdateDate()));
-		      jsonObject.put("updateDate_date", DateUtils.getDate(model.getUpdateDate()));
-		      jsonObject.put("updateDate_datetime", DateUtils.getDateTime(model.getUpdateDate()));
-                }
-        jsonObject.put("locked", model.getLocked());
-        jsonObject.put("deleteFlag", model.getDeleteFlag());
-        jsonObject.put("status", model.getStatus());
+		}
+		if (model.getUpdateDate() != null) {
+			jsonObject.put("updateDate",
+					DateUtils.getDate(model.getUpdateDate()));
+			jsonObject.put("updateDate_date",
+					DateUtils.getDate(model.getUpdateDate()));
+			jsonObject.put("updateDate_datetime",
+					DateUtils.getDateTime(model.getUpdateDate()));
+		}
+		jsonObject.put("locked", model.getLocked());
+		jsonObject.put("status", model.getStatus());
 		if (model.getProcessName() != null) {
 			jsonObject.put("processName", model.getProcessName());
-		} 
-		if (model.getProcessInstanceId() != null) {
-			jsonObject.put("processInstanceId", model.getProcessInstanceId());
-		} 
+		}
+		jsonObject.put("processInstanceId", model.getProcessInstanceId());
+		jsonObject.put("wfStatus", model.getWfStatus());
+		if (model.getWfStartDate() != null) {
+			jsonObject.put("wfStartDate",
+					DateUtils.getDate(model.getWfStartDate()));
+			jsonObject.put("wfStartDate_date",
+					DateUtils.getDate(model.getWfStartDate()));
+			jsonObject.put("wfStartDate_datetime",
+					DateUtils.getDateTime(model.getWfStartDate()));
+		}
+		if (model.getWfEndDate() != null) {
+			jsonObject
+					.put("wfEndDate", DateUtils.getDate(model.getWfEndDate()));
+			jsonObject.put("wfEndDate_date",
+					DateUtils.getDate(model.getWfEndDate()));
+			jsonObject.put("wfEndDate_datetime",
+					DateUtils.getDateTime(model.getWfEndDate()));
+		}
 		return jsonObject;
 	}
 
-
-	public static ObjectNode toObjectNode(Trip model){
-                ObjectNode jsonObject = new ObjectMapper().createObjectNode();
+	public static ObjectNode toObjectNode(Trip model) {
+		ObjectNode jsonObject = new ObjectMapper().createObjectNode();
 		jsonObject.put("id", model.getId());
 		jsonObject.put("_id_", model.getId());
 		jsonObject.put("_oid_", model.getId());
-                if (model.getTransType() != null) {
-                     jsonObject.put("transType", model.getTransType());
-                } 
-                if (model.getApplyDate() != null) {
-                      jsonObject.put("applyDate", DateUtils.getDate(model.getApplyDate()));
-		      jsonObject.put("applyDate_date", DateUtils.getDate(model.getApplyDate()));
-		      jsonObject.put("applyDate_datetime", DateUtils.getDateTime(model.getApplyDate()));
-                }
-                if (model.getStartDate() != null) {
-                      jsonObject.put("startDate", DateUtils.getDate(model.getStartDate()));
-		      jsonObject.put("startDate_date", DateUtils.getDate(model.getStartDate()));
-		      jsonObject.put("startDate_datetime", DateUtils.getDateTime(model.getStartDate()));
-                }
-                if (model.getEndDate() != null) {
-                      jsonObject.put("endDate", DateUtils.getDate(model.getEndDate()));
-		      jsonObject.put("endDate_date", DateUtils.getDate(model.getEndDate()));
-		      jsonObject.put("endDate_datetime", DateUtils.getDateTime(model.getEndDate()));
-                }
-                jsonObject.put("days", model.getDays());
-                jsonObject.put("money", model.getMoney());
-                if (model.getCause() != null) {
-                     jsonObject.put("cause", model.getCause());
-                } 
-                if (model.getCreateDate() != null) {
-                      jsonObject.put("createDate", DateUtils.getDate(model.getCreateDate()));
-		      jsonObject.put("createDate_date", DateUtils.getDate(model.getCreateDate()));
-		      jsonObject.put("createDate_datetime", DateUtils.getDateTime(model.getCreateDate()));
-                }
-                if (model.getCreateBy() != null) {
-                     jsonObject.put("createBy", model.getCreateBy());
-                } 
-                if (model.getCreateByName() != null) {
-                     jsonObject.put("createByName", model.getCreateByName());
-                } 
-                if (model.getUpdateDate() != null) {
-                      jsonObject.put("updateDate", DateUtils.getDate(model.getUpdateDate()));
-		      jsonObject.put("updateDate_date", DateUtils.getDate(model.getUpdateDate()));
-		      jsonObject.put("updateDate_datetime", DateUtils.getDateTime(model.getUpdateDate()));
-                }
-                jsonObject.put("locked", model.getLocked());
-                jsonObject.put("deleteFlag", model.getDeleteFlag());
-                jsonObject.put("status", model.getStatus());
-                if (model.getProcessName() != null) {
-                     jsonObject.put("processName", model.getProcessName());
-                } 
-                if (model.getProcessInstanceId() != null) {
-                     jsonObject.put("processInstanceId", model.getProcessInstanceId());
-                } 
-                return jsonObject;
+		if (model.getTransType() != null) {
+			jsonObject.put("transType", model.getTransType());
+		}
+		if (model.getApplyDate() != null) {
+			jsonObject
+					.put("applyDate", DateUtils.getDate(model.getApplyDate()));
+			jsonObject.put("applyDate_date",
+					DateUtils.getDate(model.getApplyDate()));
+			jsonObject.put("applyDate_datetime",
+					DateUtils.getDateTime(model.getApplyDate()));
+		}
+		if (model.getStartDate() != null) {
+			jsonObject
+					.put("startDate", DateUtils.getDate(model.getStartDate()));
+			jsonObject.put("startDate_date",
+					DateUtils.getDate(model.getStartDate()));
+			jsonObject.put("startDate_datetime",
+					DateUtils.getDateTime(model.getStartDate()));
+		}
+		if (model.getEndDate() != null) {
+			jsonObject.put("endDate", DateUtils.getDate(model.getEndDate()));
+			jsonObject.put("endDate_date",
+					DateUtils.getDate(model.getEndDate()));
+			jsonObject.put("endDate_datetime",
+					DateUtils.getDateTime(model.getEndDate()));
+		}
+		jsonObject.put("days", model.getDays());
+		jsonObject.put("money", model.getMoney());
+		if (model.getCause() != null) {
+			jsonObject.put("cause", model.getCause());
+		}
+		jsonObject.put("deleteFlag", model.getDeleteFlag());
+		if (model.getCreateDate() != null) {
+			jsonObject.put("createDate",
+					DateUtils.getDate(model.getCreateDate()));
+			jsonObject.put("createDate_date",
+					DateUtils.getDate(model.getCreateDate()));
+			jsonObject.put("createDate_datetime",
+					DateUtils.getDateTime(model.getCreateDate()));
+		}
+		if (model.getCreateBy() != null) {
+			jsonObject.put("createBy", model.getCreateBy());
+		}
+		if (model.getCreateByName() != null) {
+			jsonObject.put("createByName", model.getCreateByName());
+		}
+		if (model.getUpdateDate() != null) {
+			jsonObject.put("updateDate",
+					DateUtils.getDate(model.getUpdateDate()));
+			jsonObject.put("updateDate_date",
+					DateUtils.getDate(model.getUpdateDate()));
+			jsonObject.put("updateDate_datetime",
+					DateUtils.getDateTime(model.getUpdateDate()));
+		}
+		jsonObject.put("locked", model.getLocked());
+		jsonObject.put("status", model.getStatus());
+		if (model.getProcessName() != null) {
+			jsonObject.put("processName", model.getProcessName());
+		}
+		jsonObject.put("processInstanceId", model.getProcessInstanceId());
+		jsonObject.put("wfStatus", model.getWfStatus());
+		if (model.getWfStartDate() != null) {
+			jsonObject.put("wfStartDate",
+					DateUtils.getDate(model.getWfStartDate()));
+			jsonObject.put("wfStartDate_date",
+					DateUtils.getDate(model.getWfStartDate()));
+			jsonObject.put("wfStartDate_datetime",
+					DateUtils.getDateTime(model.getWfStartDate()));
+		}
+		if (model.getWfEndDate() != null) {
+			jsonObject
+					.put("wfEndDate", DateUtils.getDate(model.getWfEndDate()));
+			jsonObject.put("wfEndDate_date",
+					DateUtils.getDate(model.getWfEndDate()));
+			jsonObject.put("wfEndDate_datetime",
+					DateUtils.getDateTime(model.getWfEndDate()));
+		}
+		return jsonObject;
 	}
-
 
 	private TripJsonFactory() {
 

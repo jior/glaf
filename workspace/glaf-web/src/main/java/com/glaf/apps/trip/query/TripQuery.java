@@ -32,6 +32,10 @@ public class TripQuery extends DataQuery {
   	protected String cause;
   	protected String causeLike;
   	protected List<String> causes;
+  	protected Integer deleteFlag;
+  	protected Integer deleteFlagGreaterThanOrEqual;
+  	protected Integer deleteFlagLessThanOrEqual;
+  	protected List<Integer> deleteFlags;
   	protected Date createDate;
   	protected Date createDateGreaterThanOrEqual;
   	protected Date createDateLessThanOrEqual;
@@ -50,10 +54,6 @@ public class TripQuery extends DataQuery {
   	protected Integer lockedGreaterThanOrEqual;
   	protected Integer lockedLessThanOrEqual;
   	protected List<Integer> lockeds;
-  	protected Integer deleteFlag;
-  	protected Integer deleteFlagGreaterThanOrEqual;
-  	protected Integer deleteFlagLessThanOrEqual;
-  	protected List<Integer> deleteFlags;
   	protected Integer status;
   	protected Integer statusGreaterThanOrEqual;
   	protected Integer statusLessThanOrEqual;
@@ -61,6 +61,18 @@ public class TripQuery extends DataQuery {
   	protected String processName;
   	protected String processNameLike;
   	protected List<String> processNames;
+  	protected Integer wfStatus;
+  	protected Integer wfStatusGreaterThanOrEqual;
+  	protected Integer wfStatusLessThanOrEqual;
+  	protected List<Integer> wfStatuss;
+  	protected Date wfStartDate;
+  	protected Date wfStartDateGreaterThanOrEqual;
+  	protected Date wfStartDateLessThanOrEqual;
+  	protected List<Date> wfStartDates;
+  	protected Date wfEndDate;
+  	protected Date wfEndDateGreaterThanOrEqual;
+  	protected Date wfEndDateLessThanOrEqual;
+  	protected List<Date> wfEndDates;
 
     public TripQuery() {
 
@@ -194,6 +206,23 @@ public class TripQuery extends DataQuery {
     }
 
 
+    public Integer getDeleteFlag(){
+        return deleteFlag;
+    }
+
+    public Integer getDeleteFlagGreaterThanOrEqual(){
+        return deleteFlagGreaterThanOrEqual;
+    }
+
+    public Integer getDeleteFlagLessThanOrEqual(){
+	return deleteFlagLessThanOrEqual;
+    }
+
+    public List<Integer> getDeleteFlags(){
+	return deleteFlags;
+    }
+
+
     public Date getCreateDate(){
         return createDate;
     }
@@ -287,23 +316,6 @@ public class TripQuery extends DataQuery {
     }
 
 
-    public Integer getDeleteFlag(){
-        return deleteFlag;
-    }
-
-    public Integer getDeleteFlagGreaterThanOrEqual(){
-        return deleteFlagGreaterThanOrEqual;
-    }
-
-    public Integer getDeleteFlagLessThanOrEqual(){
-	return deleteFlagLessThanOrEqual;
-    }
-
-    public List<Integer> getDeleteFlags(){
-	return deleteFlags;
-    }
-
-
     public Integer getStatus(){
         return status;
     }
@@ -339,6 +351,57 @@ public class TripQuery extends DataQuery {
 
     public List<String> getProcessNames(){
 	return processNames;
+    }
+
+
+    public Integer getWfStatus(){
+        return wfStatus;
+    }
+
+    public Integer getWfStatusGreaterThanOrEqual(){
+        return wfStatusGreaterThanOrEqual;
+    }
+
+    public Integer getWfStatusLessThanOrEqual(){
+	return wfStatusLessThanOrEqual;
+    }
+
+    public List<Integer> getWfStatuss(){
+	return wfStatuss;
+    }
+
+
+    public Date getWfStartDate(){
+        return wfStartDate;
+    }
+
+    public Date getWfStartDateGreaterThanOrEqual(){
+        return wfStartDateGreaterThanOrEqual;
+    }
+
+    public Date getWfStartDateLessThanOrEqual(){
+	return wfStartDateLessThanOrEqual;
+    }
+
+    public List<Date> getWfStartDates(){
+	return wfStartDates;
+    }
+
+
+    public Date getWfEndDate(){
+        return wfEndDate;
+    }
+
+    public Date getWfEndDateGreaterThanOrEqual(){
+        return wfEndDateGreaterThanOrEqual;
+    }
+
+    public Date getWfEndDateLessThanOrEqual(){
+	return wfEndDateLessThanOrEqual;
+    }
+
+    public List<Date> getWfEndDates(){
+	return wfEndDates;
     }
 
 
@@ -455,6 +518,23 @@ public class TripQuery extends DataQuery {
     }
 
 
+    public void setDeleteFlag(Integer deleteFlag){
+        this.deleteFlag = deleteFlag;
+    }
+
+    public void setDeleteFlagGreaterThanOrEqual(Integer deleteFlagGreaterThanOrEqual){
+        this.deleteFlagGreaterThanOrEqual = deleteFlagGreaterThanOrEqual;
+    }
+
+    public void setDeleteFlagLessThanOrEqual(Integer deleteFlagLessThanOrEqual){
+	this.deleteFlagLessThanOrEqual = deleteFlagLessThanOrEqual;
+    }
+
+    public void setDeleteFlags(List<Integer> deleteFlags){
+        this.deleteFlags = deleteFlags;
+    }
+
+
     public void setCreateDate(Date createDate){
         this.createDate = createDate;
     }
@@ -532,23 +612,6 @@ public class TripQuery extends DataQuery {
     }
 
 
-    public void setDeleteFlag(Integer deleteFlag){
-        this.deleteFlag = deleteFlag;
-    }
-
-    public void setDeleteFlagGreaterThanOrEqual(Integer deleteFlagGreaterThanOrEqual){
-        this.deleteFlagGreaterThanOrEqual = deleteFlagGreaterThanOrEqual;
-    }
-
-    public void setDeleteFlagLessThanOrEqual(Integer deleteFlagLessThanOrEqual){
-	this.deleteFlagLessThanOrEqual = deleteFlagLessThanOrEqual;
-    }
-
-    public void setDeleteFlags(List<Integer> deleteFlags){
-        this.deleteFlags = deleteFlags;
-    }
-
-
     public void setStatus(Integer status){
         this.status = status;
     }
@@ -576,6 +639,57 @@ public class TripQuery extends DataQuery {
 
     public void setProcessNames(List<String> processNames){
         this.processNames = processNames;
+    }
+
+
+    public void setWfStatus(Integer wfStatus){
+        this.wfStatus = wfStatus;
+    }
+
+    public void setWfStatusGreaterThanOrEqual(Integer wfStatusGreaterThanOrEqual){
+        this.wfStatusGreaterThanOrEqual = wfStatusGreaterThanOrEqual;
+    }
+
+    public void setWfStatusLessThanOrEqual(Integer wfStatusLessThanOrEqual){
+	this.wfStatusLessThanOrEqual = wfStatusLessThanOrEqual;
+    }
+
+    public void setWfStatuss(List<Integer> wfStatuss){
+        this.wfStatuss = wfStatuss;
+    }
+
+
+    public void setWfStartDate(Date wfStartDate){
+        this.wfStartDate = wfStartDate;
+    }
+
+    public void setWfStartDateGreaterThanOrEqual(Date wfStartDateGreaterThanOrEqual){
+        this.wfStartDateGreaterThanOrEqual = wfStartDateGreaterThanOrEqual;
+    }
+
+    public void setWfStartDateLessThanOrEqual(Date wfStartDateLessThanOrEqual){
+	this.wfStartDateLessThanOrEqual = wfStartDateLessThanOrEqual;
+    }
+
+    public void setWfStartDates(List<Date> wfStartDates){
+        this.wfStartDates = wfStartDates;
+    }
+
+
+    public void setWfEndDate(Date wfEndDate){
+        this.wfEndDate = wfEndDate;
+    }
+
+    public void setWfEndDateGreaterThanOrEqual(Date wfEndDateGreaterThanOrEqual){
+        this.wfEndDateGreaterThanOrEqual = wfEndDateGreaterThanOrEqual;
+    }
+
+    public void setWfEndDateLessThanOrEqual(Date wfEndDateLessThanOrEqual){
+	this.wfEndDateLessThanOrEqual = wfEndDateLessThanOrEqual;
+    }
+
+    public void setWfEndDates(List<Date> wfEndDates){
+        this.wfEndDates = wfEndDates;
     }
 
 
@@ -796,6 +910,39 @@ public class TripQuery extends DataQuery {
     }
 
 
+    public TripQuery deleteFlag(Integer deleteFlag){
+	if (deleteFlag == null) {
+            throw new RuntimeException("deleteFlag is null");
+        }         
+	this.deleteFlag = deleteFlag;
+	return this;
+    }
+
+    public TripQuery deleteFlagGreaterThanOrEqual(Integer deleteFlagGreaterThanOrEqual){
+	if (deleteFlagGreaterThanOrEqual == null) {
+	    throw new RuntimeException("deleteFlag is null");
+        }         
+	this.deleteFlagGreaterThanOrEqual = deleteFlagGreaterThanOrEqual;
+        return this;
+    }
+
+    public TripQuery deleteFlagLessThanOrEqual(Integer deleteFlagLessThanOrEqual){
+        if (deleteFlagLessThanOrEqual == null) {
+            throw new RuntimeException("deleteFlag is null");
+        }
+        this.deleteFlagLessThanOrEqual = deleteFlagLessThanOrEqual;
+        return this;
+    }
+
+    public TripQuery deleteFlags(List<Integer> deleteFlags){
+        if (deleteFlags == null) {
+            throw new RuntimeException("deleteFlags is empty ");
+        }
+        this.deleteFlags = deleteFlags;
+        return this;
+    }
+
+
     public TripQuery createDate(Date createDate){
 	if (createDate == null) {
             throw new RuntimeException("createDate is null");
@@ -945,39 +1092,6 @@ public class TripQuery extends DataQuery {
     }
 
 
-    public TripQuery deleteFlag(Integer deleteFlag){
-	if (deleteFlag == null) {
-            throw new RuntimeException("deleteFlag is null");
-        }         
-	this.deleteFlag = deleteFlag;
-	return this;
-    }
-
-    public TripQuery deleteFlagGreaterThanOrEqual(Integer deleteFlagGreaterThanOrEqual){
-	if (deleteFlagGreaterThanOrEqual == null) {
-	    throw new RuntimeException("deleteFlag is null");
-        }         
-	this.deleteFlagGreaterThanOrEqual = deleteFlagGreaterThanOrEqual;
-        return this;
-    }
-
-    public TripQuery deleteFlagLessThanOrEqual(Integer deleteFlagLessThanOrEqual){
-        if (deleteFlagLessThanOrEqual == null) {
-            throw new RuntimeException("deleteFlag is null");
-        }
-        this.deleteFlagLessThanOrEqual = deleteFlagLessThanOrEqual;
-        return this;
-    }
-
-    public TripQuery deleteFlags(List<Integer> deleteFlags){
-        if (deleteFlags == null) {
-            throw new RuntimeException("deleteFlags is empty ");
-        }
-        this.deleteFlags = deleteFlags;
-        return this;
-    }
-
-
     public TripQuery status(Integer status){
 	if (status == null) {
             throw new RuntimeException("status is null");
@@ -1036,6 +1150,105 @@ public class TripQuery extends DataQuery {
     }
 
 
+    public TripQuery wfStatus(Integer wfStatus){
+	if (wfStatus == null) {
+            throw new RuntimeException("wfStatus is null");
+        }         
+	this.wfStatus = wfStatus;
+	return this;
+    }
+
+    public TripQuery wfStatusGreaterThanOrEqual(Integer wfStatusGreaterThanOrEqual){
+	if (wfStatusGreaterThanOrEqual == null) {
+	    throw new RuntimeException("wfStatus is null");
+        }         
+	this.wfStatusGreaterThanOrEqual = wfStatusGreaterThanOrEqual;
+        return this;
+    }
+
+    public TripQuery wfStatusLessThanOrEqual(Integer wfStatusLessThanOrEqual){
+        if (wfStatusLessThanOrEqual == null) {
+            throw new RuntimeException("wfStatus is null");
+        }
+        this.wfStatusLessThanOrEqual = wfStatusLessThanOrEqual;
+        return this;
+    }
+
+    public TripQuery wfStatuss(List<Integer> wfStatuss){
+        if (wfStatuss == null) {
+            throw new RuntimeException("wfStatuss is empty ");
+        }
+        this.wfStatuss = wfStatuss;
+        return this;
+    }
+
+
+    public TripQuery wfStartDate(Date wfStartDate){
+	if (wfStartDate == null) {
+            throw new RuntimeException("wfStartDate is null");
+        }         
+	this.wfStartDate = wfStartDate;
+	return this;
+    }
+
+    public TripQuery wfStartDateGreaterThanOrEqual(Date wfStartDateGreaterThanOrEqual){
+	if (wfStartDateGreaterThanOrEqual == null) {
+	    throw new RuntimeException("wfStartDate is null");
+        }         
+	this.wfStartDateGreaterThanOrEqual = wfStartDateGreaterThanOrEqual;
+        return this;
+    }
+
+    public TripQuery wfStartDateLessThanOrEqual(Date wfStartDateLessThanOrEqual){
+        if (wfStartDateLessThanOrEqual == null) {
+            throw new RuntimeException("wfStartDate is null");
+        }
+        this.wfStartDateLessThanOrEqual = wfStartDateLessThanOrEqual;
+        return this;
+    }
+
+    public TripQuery wfStartDates(List<Date> wfStartDates){
+        if (wfStartDates == null) {
+            throw new RuntimeException("wfStartDates is empty ");
+        }
+        this.wfStartDates = wfStartDates;
+        return this;
+    }
+
+
+    public TripQuery wfEndDate(Date wfEndDate){
+	if (wfEndDate == null) {
+            throw new RuntimeException("wfEndDate is null");
+        }         
+	this.wfEndDate = wfEndDate;
+	return this;
+    }
+
+    public TripQuery wfEndDateGreaterThanOrEqual(Date wfEndDateGreaterThanOrEqual){
+	if (wfEndDateGreaterThanOrEqual == null) {
+	    throw new RuntimeException("wfEndDate is null");
+        }         
+	this.wfEndDateGreaterThanOrEqual = wfEndDateGreaterThanOrEqual;
+        return this;
+    }
+
+    public TripQuery wfEndDateLessThanOrEqual(Date wfEndDateLessThanOrEqual){
+        if (wfEndDateLessThanOrEqual == null) {
+            throw new RuntimeException("wfEndDate is null");
+        }
+        this.wfEndDateLessThanOrEqual = wfEndDateLessThanOrEqual;
+        return this;
+    }
+
+    public TripQuery wfEndDates(List<Date> wfEndDates){
+        if (wfEndDates == null) {
+            throw new RuntimeException("wfEndDates is empty ");
+        }
+        this.wfEndDates = wfEndDates;
+        return this;
+    }
+
+
 
     public String getOrderBy() {
         if (sortColumn != null) {
@@ -1072,6 +1285,10 @@ public class TripQuery extends DataQuery {
                 orderBy = "E.CAUSE_" + a_x;
             } 
 
+            if ("deleteFlag".equals(sortColumn)) {
+                orderBy = "E.DELETEFLAG_" + a_x;
+            } 
+
             if ("createDate".equals(sortColumn)) {
                 orderBy = "E.CREATEDATE_" + a_x;
             } 
@@ -1088,20 +1305,28 @@ public class TripQuery extends DataQuery {
                 orderBy = "E.LOCKED_" + a_x;
             } 
 
-            if ("deleteFlag".equals(sortColumn)) {
-                orderBy = "E.DELETEFLAG_" + a_x;
-            } 
-
             if ("status".equals(sortColumn)) {
                 orderBy = "E.STATUS_" + a_x;
             } 
 
             if ("processName".equals(sortColumn)) {
-                orderBy = "E.PROCESSNAME_" + a_x;
+                orderBy = "E.processName" + a_x;
             } 
 
             if ("processInstanceId".equals(sortColumn)) {
-                orderBy = "E.PROCESSINSTANCEID_" + a_x;
+                orderBy = "E.processInstanceId" + a_x;
+            } 
+
+            if ("wfStatus".equals(sortColumn)) {
+                orderBy = "E.wfStatus" + a_x;
+            } 
+
+            if ("wfStartDate".equals(sortColumn)) {
+                orderBy = "E.wfStartDate" + a_x;
+            } 
+
+            if ("wfEndDate".equals(sortColumn)) {
+                orderBy = "E.wfEndDate" + a_x;
             } 
 
         }
@@ -1119,14 +1344,17 @@ public class TripQuery extends DataQuery {
         addColumn("days", "DAYS_");
         addColumn("money", "MONEY_");
         addColumn("cause", "CAUSE_");
+        addColumn("deleteFlag", "DELETEFLAG_");
         addColumn("createDate", "CREATEDATE_");
         addColumn("createBy", "CREATEBY_");
         addColumn("updateDate", "UPDATEDATE_");
         addColumn("locked", "LOCKED_");
-        addColumn("deleteFlag", "DELETEFLAG_");
         addColumn("status", "STATUS_");
-        addColumn("processName", "PROCESSNAME_");
-        addColumn("processInstanceId", "PROCESSINSTANCEID_");
+        addColumn("processName", "processName");
+        addColumn("processInstanceId", "processInstanceId");
+        addColumn("wfStatus", "wfStatus");
+        addColumn("wfStartDate", "wfStartDate");
+        addColumn("wfEndDate", "wfEndDate");
     }
 
 }

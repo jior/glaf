@@ -15,16 +15,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.glaf.form.core.service;
+package com.glaf.core.service;
 
 import java.util.*;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.glaf.form.core.domain.FormAction;
-import com.glaf.form.core.query.*;
+import com.glaf.core.domain.*;
+import com.glaf.core.query.*;
 
 @Transactional(readOnly = true)
-public interface FormActionService {
+public interface EntityDefinitionService {
 
 	/**
 	 * 根据主键删除记录
@@ -47,29 +47,29 @@ public interface FormActionService {
 	 * 
 	 * @return
 	 */
-	List<FormAction> list(FormActionQuery query);
+	List<EntityDefinition> list(EntityDefinitionQuery query);
 
 	/**
 	 * 根据查询参数获取记录总数
 	 * 
 	 * @return
 	 */
-	int getFormActionCountByQueryCriteria(FormActionQuery query);
+	int getEntityDefinitionCountByQueryCriteria(EntityDefinitionQuery query);
 
 	/**
 	 * 根据查询参数获取一页的数据
 	 * 
 	 * @return
 	 */
-	List<FormAction> getFormActionsByQueryCriteria(int start, int pageSize,
-			FormActionQuery query);
+	List<EntityDefinition> getEntityDefinitionsByQueryCriteria(int start,
+			int pageSize, EntityDefinitionQuery query);
 
 	/**
 	 * 根据主键获取一条记录
 	 * 
 	 * @return
 	 */
-	FormAction getFormAction(String id);
+	EntityDefinition getEntityDefinition(String id);
 
 	/**
 	 * 保存一条记录
@@ -77,6 +77,6 @@ public interface FormActionService {
 	 * @return
 	 */
 	@Transactional
-	void save(FormAction formAction);
+	void save(EntityDefinition entityDefinition);
 
 }

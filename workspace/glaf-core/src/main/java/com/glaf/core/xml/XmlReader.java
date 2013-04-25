@@ -48,6 +48,10 @@ public class XmlReader {
 						element.attributeValue("jbpmSupport"))) {
 					classDefinition.setJbpmSupport(true);
 				}
+				if (StringUtils.equals("true",
+						element.attributeValue("treeSupport"))) {
+					classDefinition.setTreeSupport(true);
+				}
 				Element idElem = element.element("id");
 				if (idElem != null) {
 					FieldDefinition idField = new FieldDefinition();

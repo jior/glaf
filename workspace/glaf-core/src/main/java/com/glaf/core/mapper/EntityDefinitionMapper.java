@@ -15,29 +15,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.glaf.form.core.mapper;
+package com.glaf.core.mapper;
 
 import java.util.*;
 import org.springframework.stereotype.Component;
-
-import com.glaf.form.core.domain.FormAction;
-import com.glaf.form.core.query.*;
+import com.glaf.core.domain.*;
+import com.glaf.core.query.*;
 
 @Component
-public interface FormActionMapper {
+public interface EntityDefinitionMapper {
 
-	void deleteFormActions(FormActionQuery query);
+	void deleteEntityDefinitions(EntityDefinitionQuery query);
 
-	void deleteFormActionById(String id);
+	void deleteEntityDefinitionById(String id);
 
-	FormAction getFormActionById(String id);
+	EntityDefinition getEntityDefinitionById(String id);
 
-	int getFormActionCount(FormActionQuery query);
+	int getEntityDefinitionCount(EntityDefinitionQuery query);
 
-	List<FormAction> getFormActions(FormActionQuery query);
+	List<EntityDefinition> getEntityDefinitions(EntityDefinitionQuery query);
 
-	void insertFormAction(FormAction model);
+	void insertEntityDefinition(EntityDefinition model);
 
-	void updateFormAction(FormAction model);
+	void updateEntityDefinition(EntityDefinition model);
 
 }

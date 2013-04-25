@@ -18,11 +18,11 @@ import com.glaf.apps.trip.model.*;
 import com.glaf.apps.trip.query.*;
 
 @Service("tripService")
-@Transactional(readOnly = true)
+@Transactional(readOnly = true) 
 public class TripServiceImpl implements TripService {
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
-
-	protected EntityDAO entityDAO;
+ 
+        protected EntityDAO entityDAO;
 
 	protected IdGenerator idGenerator;
 
@@ -36,18 +36,18 @@ public class TripServiceImpl implements TripService {
 
 	@Transactional
 	public void deleteById(String id) {
-		if (id != null) {
-			tripMapper.deleteTripById(id);
-		}
+	     if(id != null ){
+		tripMapper.deleteTripById(id);
+	     }
 	}
 
 	@Transactional
 	public void deleteByIds(List<String> rowIds) {
-		if (rowIds != null && !rowIds.isEmpty()) {
-			TripQuery query = new TripQuery();
-			query.rowIds(rowIds);
-			tripMapper.deleteTrips(query);
-		}
+	    if(rowIds != null && !rowIds.isEmpty()){
+		TripQuery query = new TripQuery();
+		query.rowIds(rowIds);
+		tripMapper.deleteTrips(query);
+	    }
 	}
 
 	public int count(TripQuery query) {
@@ -61,21 +61,24 @@ public class TripServiceImpl implements TripService {
 		return list;
 	}
 
+         
 	public int getTripCountByQueryCriteria(TripQuery query) {
 		return tripMapper.getTripCount(query);
 	}
 
+	 
 	public List<Trip> getTripsByQueryCriteria(int start, int pageSize,
 			TripQuery query) {
 		RowBounds rowBounds = new RowBounds(start, pageSize);
-		List<Trip> rows = sqlSessionTemplate.selectList("getTrips", query,
-				rowBounds);
+		List<Trip> rows = sqlSessionTemplate.selectList(
+				"getTrips", query, rowBounds);
 		return rows;
 	}
 
+
 	public Trip getTrip(String id) {
-		if (id == null) {
-			return null;
+	        if(id == null){
+		    return null;
 		}
 		Trip trip = tripMapper.getTripById(id);
 		return trip;
@@ -83,9 +86,9 @@ public class TripServiceImpl implements TripService {
 
 	@Transactional
 	public void save(Trip trip) {
-		if (StringUtils.isEmpty(trip.getId())) {
+           if (StringUtils.isEmpty(trip.getId())) {
 			trip.setId(idGenerator.getNextId("X_APP_TRIP"));
-			// trip.setCreateDate(new Date());
+			//trip.setCreateDate(new Date());
 			trip.setDeleteFlag(0);
 			tripMapper.insertTrip(trip);
 		} else {
@@ -93,22 +96,24 @@ public class TripServiceImpl implements TripService {
 		}
 	}
 
-	@Resource(name = "myBatisEntityDAO")
+	@Resource(name="myBatisEntityDAO")
 	public void setEntityDAO(EntityDAO entityDAO) {
 		this.entityDAO = entityDAO;
 	}
 
-	@Resource(name = "myBatisDbIdGenerator")
+	 
+	@Resource(name="myBatisDbIdGenerator")
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
+ 
 
 	@Resource
 	public void setTripMapper(TripMapper tripMapper) {
 		this.tripMapper = tripMapper;
 	}
 
-	@Resource
+        @Resource
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}

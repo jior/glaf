@@ -158,7 +158,10 @@ public class TripResourceRest {
                     trip.setLocked(RequestUtils.getInt(request, "locked"));
                     trip.setStatus(RequestUtils.getInt(request, "status"));
                     trip.setProcessName(request.getParameter("processName"));
-                    trip.setProcessInstanceId(request.getParameter("processInstanceId"));
+                    trip.setProcessInstanceId(RequestUtils.getLong(request, "processInstanceId"));
+                    trip.setWfStatus(RequestUtils.getInt(request, "wfStatus"));
+                    trip.setWfStartDate(RequestUtils.getDate(request, "wfStartDate"));
+                    trip.setWfEndDate(RequestUtils.getDate(request, "wfEndDate"));
 
 		    this.tripService.save(trip);
 

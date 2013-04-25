@@ -71,6 +71,12 @@ public class Trip implements Serializable {
         protected String cause;
 
         /**
+        *删除标记
+        */
+        @Column(name = "DELETEFLAG_")
+        protected Integer deleteFlag;
+
+        /**
         *创建日期
         */
         @Temporal(TemporalType.TIMESTAMP)
@@ -103,12 +109,6 @@ public class Trip implements Serializable {
         protected Integer locked;
 
         /**
-        *删除标记
-        */
-        @Column(name = "DELETEFLAG_")
-        protected Integer deleteFlag;
-
-        /**
         *状态
         */
         @Column(name = "STATUS_")
@@ -117,14 +117,34 @@ public class Trip implements Serializable {
         /**
         *流程名称
         */
-        @Column(name = "PROCESSNAME_")
+        @Column(name = "processName")
         protected String processName;
 
         /**
         *流程实例编号
         */
-        @Column(name = "PROCESSINSTANCEID_")
-        protected String processInstanceId;
+        @Column(name = "processInstanceId")
+        protected Long processInstanceId;
+
+        /**
+        *工作流状态
+        */
+        @Column(name = "wfStatus")
+        protected Integer wfStatus;
+
+        /**
+        *工作流启动日期
+        */
+        @Temporal(TemporalType.TIMESTAMP)
+        @Column(name = "wfStartDate")
+        protected Date wfStartDate;
+
+        /**
+        *工作流结束日期
+        */
+        @Temporal(TemporalType.TIMESTAMP)
+        @Column(name = "wfEndDate")
+        protected Date wfEndDate;
 
          
 	public Trip() {
@@ -171,6 +191,10 @@ public class Trip implements Serializable {
             return this.cause;
         }
 
+        public Integer getDeleteFlag(){
+            return this.deleteFlag;
+        }
+
         public Date getCreateDate(){
             return this.createDate;
         }
@@ -191,10 +215,6 @@ public class Trip implements Serializable {
             return this.locked;
         }
 
-        public Integer getDeleteFlag(){
-            return this.deleteFlag;
-        }
-
         public Integer getStatus(){
             return this.status;
         }
@@ -203,8 +223,20 @@ public class Trip implements Serializable {
             return this.processName;
         }
 
-        public String getProcessInstanceId(){
+        public Long getProcessInstanceId(){
             return this.processInstanceId;
+        }
+
+        public Integer getWfStatus(){
+            return this.wfStatus;
+        }
+
+        public Date getWfStartDate(){
+            return this.wfStartDate;
+        }
+
+        public Date getWfEndDate(){
+            return this.wfEndDate;
         }
 
 
@@ -246,6 +278,10 @@ public class Trip implements Serializable {
               this.cause=cause;
         }
 
+        public void  setDeleteFlag(Integer deleteFlag){
+              this.deleteFlag=deleteFlag;
+        }
+
         public void  setCreateDate(Date createDate){
               this.createDate=createDate;
         }
@@ -266,10 +302,6 @@ public class Trip implements Serializable {
               this.locked=locked;
         }
 
-        public void  setDeleteFlag(Integer deleteFlag){
-              this.deleteFlag=deleteFlag;
-        }
-
         public void  setStatus(Integer status){
               this.status=status;
         }
@@ -278,8 +310,20 @@ public class Trip implements Serializable {
               this.processName=processName;
         }
 
-        public void  setProcessInstanceId(String processInstanceId){
+        public void  setProcessInstanceId(Long processInstanceId){
               this.processInstanceId=processInstanceId;
+        }
+
+        public void  setWfStatus(Integer wfStatus){
+              this.wfStatus=wfStatus;
+        }
+
+        public void  setWfStartDate(Date wfStartDate){
+              this.wfStartDate=wfStartDate;
+        }
+
+        public void  setWfEndDate(Date wfEndDate){
+              this.wfEndDate=wfEndDate;
         }
 
 

@@ -65,7 +65,10 @@ public class TripBaseController {
                 trip.setLocked(RequestUtils.getInt(request, "locked"));
                 trip.setStatus(RequestUtils.getInt(request, "status"));
                 trip.setProcessName(request.getParameter("processName"));
-                trip.setProcessInstanceId(request.getParameter("processInstanceId"));
+                trip.setProcessInstanceId(RequestUtils.getLong(request, "processInstanceId"));
+                trip.setWfStatus(RequestUtils.getInt(request, "wfStatus"));
+                trip.setWfStartDate(RequestUtils.getDate(request, "wfStartDate"));
+                trip.setWfEndDate(RequestUtils.getDate(request, "wfEndDate"));
 		
 		trip.setCreateBy(actorId);
          
@@ -98,7 +101,10 @@ public class TripBaseController {
                     trip.setLocked(RequestUtils.getInt(request, "locked"));
                     trip.setStatus(RequestUtils.getInt(request, "status"));
                     trip.setProcessName(request.getParameter("processName"));
-                    trip.setProcessInstanceId(request.getParameter("processInstanceId"));
+                    trip.setProcessInstanceId(RequestUtils.getLong(request, "processInstanceId"));
+                    trip.setWfStatus(RequestUtils.getInt(request, "wfStatus"));
+                    trip.setWfStartDate(RequestUtils.getDate(request, "wfStartDate"));
+                    trip.setWfEndDate(RequestUtils.getDate(request, "wfEndDate"));
 		    trip.setCreateBy(actorId);
 		    this.tripService.save(trip);
 
@@ -134,7 +140,10 @@ public class TripBaseController {
                 trip.setLocked(RequestUtils.getInt(request, "locked"));
                 trip.setStatus(RequestUtils.getInt(request, "status"));
                 trip.setProcessName(request.getParameter("processName"));
-                trip.setProcessInstanceId(request.getParameter("processInstanceId"));
+                trip.setProcessInstanceId(RequestUtils.getLong(request, "processInstanceId"));
+                trip.setWfStatus(RequestUtils.getInt(request, "wfStatus"));
+                trip.setWfStartDate(RequestUtils.getDate(request, "wfStartDate"));
+                trip.setWfEndDate(RequestUtils.getDate(request, "wfEndDate"));
 	
 		tripService.save(trip);   
 
@@ -155,8 +164,8 @@ public class TripBaseController {
 				if (StringUtils.isNotEmpty(x)) {
 					Trip trip = tripService.getTrip(x);
 					/**
-		                     * 此处业务逻辑需自行调整
-		                       */
+		                         * 此处业务逻辑需自行调整
+		                         */
 					 //TODO
 					if (trip != null && (StringUtils.equals(trip.getCreateBy(), loginContext.getActorId()) || loginContext.isSystemAdministrator())) {
 						trip.setDeleteFlag(1);

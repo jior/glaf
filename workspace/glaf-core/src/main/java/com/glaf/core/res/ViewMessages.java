@@ -51,6 +51,7 @@ import java.util.List;
  * @version $Rev: 471754 $ $Date: 2005-08-26 21:58:39 -0400 (Fri, 26 Aug 2005) $
  * @since Struts 1.1
  */
+@SuppressWarnings({"rawtypes", "unchecked"})
 public class ViewMessages implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -233,6 +234,8 @@ public class ViewMessages implements Serializable {
 	 * 
 	 * @return An iterator over the messages for all properties.
 	 */
+	
+ 
 	public Iterator get() {
 		this.accessed = true;
 
@@ -392,6 +395,9 @@ public class ViewMessages implements Serializable {
 	 * </p>
 	 */
 	protected class ViewMessageItem implements Serializable {
+		 
+		private static final long serialVersionUID = 1L;
+
 		/**
 		 * <p>
 		 * The list of <code>ViewMessage</code>s.

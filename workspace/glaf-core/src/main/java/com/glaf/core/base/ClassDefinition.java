@@ -76,6 +76,11 @@ public class ClassDefinition implements java.io.Serializable {
 	 */
 	protected String title;
 
+	/**
+	 * 是否树型结构
+	 */
+	protected boolean treeSupport;
+
 	public ClassDefinition() {
 
 	}
@@ -147,6 +152,10 @@ public class ClassDefinition implements java.io.Serializable {
 		return jbpmSupport;
 	}
 
+	public boolean isTreeSupport() {
+		return treeSupport;
+	}
+
 	public void setBytes(byte[] bytes) {
 		this.bytes = bytes;
 	}
@@ -197,6 +206,10 @@ public class ClassDefinition implements java.io.Serializable {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public void setTreeSupport(boolean treeSupport) {
+		this.treeSupport = treeSupport;
 	}
 
 	public String toString() {
