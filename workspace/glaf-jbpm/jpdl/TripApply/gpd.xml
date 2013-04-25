@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root-container name="TripApply" width="828" height="547">
+  <node name="启动流程" x="59" y="15" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="部门经理审核" x="58" y="158" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="部门经理审核通过？" x="48" y="319" width="154" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="-18" y="-25"/>
+      <bendpoint w1="72" h1="-105" w2="-182" h2="-1"/>
+    </edge>
+  </node>
+  <node name="公司领导审批" x="60" y="477" width="132" height="36">
+    <edge>
+      <label x="-7" y="6"/>
+      <bendpoint w1="181" h1="-1" w2="-71" h2="96"/>
+    </edge>
+  </node>
+  <node name="公司领导审批通过？" x="305" y="380" width="147" height="36">
+    <edge>
+      <label x="-61" y="-11"/>
+    </edge>
+    <edge>
+      <label x="31" y="-29"/>
+      <bendpoint w1="96" h1="-167" w2="-178" h2="-1"/>
+    </edge>
+  </node>
+  <node name="综管部签收" x="586" y="214" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="审核不通过" x="313" y="215" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="重新修改" x="314" y="28" width="132" height="36">
+    <edge>
+      <label x="21" y="-27"/>
+      <bendpoint w1="-161" h1="-1" w2="95" h2="-131"/>
+    </edge>
+  </node>
+  <node name="完成" x="585" y="391" width="132" height="36"/>
+</root-container>

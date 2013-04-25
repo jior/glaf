@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.jbpm.JbpmContext;
+import org.jbpm.db.GraphSession;
+import org.jbpm.graph.def.ProcessDefinition;
 
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +25,8 @@ import com.glaf.core.util.*;
 import com.glaf.form.core.domain.*;
 import com.glaf.form.core.query.*;
 import com.glaf.form.core.service.*;
+import com.glaf.jbpm.container.ProcessContainer;
+import com.glaf.jbpm.context.Context;
 
 @Controller("/form/application")
 @RequestMapping("/form/application.do")
@@ -80,6 +85,29 @@ public class FormApplicationController {
 			request.setAttribute("formApplication", formApplication);
 			JSONObject rowJSON = formApplication.toJsonObject();
 			request.setAttribute("x_json", rowJSON.toString());
+		}
+		
+		FormDefinitionQuery query = new FormDefinitionQuery();
+		query.locked(0);
+		query.setNodeId(RequestUtils.getLong(request, "nodeId"));
+		
+		List<FormDefinition> formDefinitions=	formDataService.getLatestFormDefinitions(query);
+		request.setAttribute("formDefinitions", formDefinitions);
+		
+		JbpmContext jbpmContext = null;
+		GraphSession graphSession = null;
+		try {
+			jbpmContext = ProcessContainer.getContainer().createJbpmContext();
+			if (jbpmContext != null) {
+				graphSession = jbpmContext.getGraphSession();
+				List<ProcessDefinition> processDefinitions = graphSession
+						.findLatestProcessDefinitions();
+				modelMap.put("processDefinitions", processDefinitions);
+			}
+		} catch (Exception ex) {
+			logger.error(ex);
+		} finally {
+			Context.close(jbpmContext);
 		}
 
 		String view = request.getParameter("view");

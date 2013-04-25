@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process-definition xmlns="urn:jbpm.org:jpdl-3.2" name="TripApply">
+	<description>出差申请流程</description>
+	<swimlane name="starter">
+		<assignment class="com.glaf.jbpm.assignment.GeneralAssignment" />
+	</swimlane>
+
+	<swimlane name="submiter">
+		<assignment class="com.glaf.jbpm.assignment.ProcessStarterAssignment" />
+	</swimlane>
+
+	<action name="create_task01" class="com.glaf.jbpm.action.SqlMapTaskInstanceAction">
+		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
+		<taskName>task01</taskName>
+		<queryId>getXYDeptRoleUsers</queryId>
+		<roleId>DepartmentManager</roleId>
+		<deptId>#P{deptId}</deptId>
+	</action>
+
+	<action name="create_task61" class="com.glaf.jbpm.action.SqlMapTaskInstanceAction">
+	    <leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
+		<taskName>task61</taskName>
+		<queryId>getXYDeptRoleUsers</queryId>
+		<roleId>CompositiveManager</roleId>
+	</action>
+
+	<action name="create_task62" class="com.glaf.jbpm.action.SqlMapTaskInstanceAction">
+	    <leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
+		<taskName>task62</taskName>
+		<queryId>getXYDeptRoleUsers</queryId>
+		<roleId>Cashier</roleId>
+	</action>
+
+	<action name="create_task63" class="com.glaf.jbpm.action.SqlMapTaskInstanceAction">
+		<taskName>task63</taskName>
+		<queryId>getXYDeptRoleUsers</queryId>
+		<roleId>FinanceManager</roleId>
+	</action>
+
+	<action name="create_task64" class="com.glaf.jbpm.action.SqlMapTaskInstanceAction">
+	    <leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
+		<taskName>task64</taskName>
+		<queryId>getXYDeptRoleUsers</queryId>
+		<roleId>ReceptionDesk</roleId>
+	</action>
+
+	<action name="create_task09" class="com.glaf.jbpm.action.SqlMapTaskInstanceAction">
+		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
+		<taskName>task09</taskName>
+		<queryId>getXYDeptRoleUsers</queryId>
+		<roleId>GeneralManager</roleId>
+	</action>
+
+	<action name="EndCounterSigningAction" class="com.glaf.jbpm.action.EndCounterSigningAction">
+		<expression>#{isAgree eq 'false'}</expression>
+	</action>
+
+	<action name="xyz_1000" class="com.glaf.jbpm.action.HibernateNativeSQLAction">
+		<sql>
+		    UPDATE #{tableName} SET PROCESSNAME_='TripApply',
+			PROCESSINSTANCEID_ = ${processInstanceId}, STATUS_ = 40, WFSTATUS_ = 1000 WHERE ID_ = ${rowId}
+		</sql>
+	</action>
+
+	<action name="xyz_1002" class="com.glaf.jbpm.action.HibernateNativeSQLAction">
+		<sql>UPDATE #{tableName} SET STATUS_ = 40, WFSTATUS_ = 1002,
+			FALLBACKFLAG_ = '1' WHERE ID_ = ${rowId}</sql>
+	</action>
+
+	<action name="xyz_1002x" class="com.glaf.jbpm.action.HibernateNativeSQLAction">
+		<sql>UPDATE #{tableName} SET DEPTOPINION_ = ${opinion} WHERE ID_ = ${rowId}</sql>
+	</action>
+
+	<action name="xyz_1006" class="com.glaf.jbpm.action.HibernateNativeSQLAction">
+		<sql>UPDATE #{tableName} SET STATUS_ = 40, WFSTATUS_ = 1002,
+			FALLBACKFLAG_ = '0' WHERE ID_ = ${rowId}</sql>
+	</action>
+
+	<action name="xyz_1064" class="com.glaf.jbpm.action.HibernateNativeSQLAction">
+		<sql>UPDATE #{tableName} SET FALLBACKFLAG_ = '0' WHERE ID_ = ${rowId}</sql>
+	</action>
+
+	<action name="xyz_1009" class="com.glaf.jbpm.action.HibernateNativeSQLAction">
+		<sql>
+		    UPDATE #{tableName} SET STATUS_ = 40, WFSTATUS_ = 1009,
+			FALLBACKFLAG_ = '1' WHERE ID_ = ${rowId}
+		</sql>
+	</action>
+
+	<action name="xyz_1009x" class="com.glaf.jbpm.action.HibernateNativeSQLAction">
+		<sql>UPDATE #{tableName} SET COMPANYOPINION_ = ${opinion} WHERE ID_ = ${rowId}</sql>
+	</action>
+
+	<action name="xyz_5555" class="com.glaf.jbpm.action.HibernateNativeSQLAction">
+		<sql>
+		    UPDATE #{tableName} SET STATUS_ = -1, WFSTATUS_ = -5555,
+			FALLBACKFLAG_ = '0' WHERE ID_ = ${rowId}
+		</sql>
+	</action>
+
+	<action name="xyz_9999" class="com.glaf.jbpm.action.HibernateNativeSQLAction">
+		<sql>
+		    UPDATE #{tableName} SET STATUS_ = 50, WFSTATUS_ = 9999 WHERE
+			ID_ = ${rowId}
+		</sql>
+	</action>
+
+	<action name="xyz_1030" class="com.glaf.jbpm.action.HibernateNativeSQLAction">
+		<sql>
+		    UPDATE #{tableName} SET STATUS_ = 40, WFSTATUS_ = 1030,
+			FALLBACKFLAG_ = '0' WHERE ID_ = ${rowId}
+		</sql>
+	</action>
+
+	<start-state name="启动流程">
+		<task name="task100" description="启动流程" swimlane="starter">
+			<controller>
+				<variable name="money" access="read,write,required"
+					mapped-name="money" />
+			</controller>
+			<event type="task-create">
+				<action ref-name="xyz_1000" />
+			</event>
+		</task>
+		<transition to="部门经理审核" name="提交" />
+	</start-state>
+
+	<task-node name="部门经理审核" create-tasks="false" end-tasks="true"
+		signal="first">
+		<event type="node-enter">
+			<action ref-name="create_task01" />
+			<action ref-name="xyz_1002" />
+		</event>
+		<task name="task01" description="部门经理审核">
+			<controller>
+				<variable name="isAgree" access="read,write,required"
+					mapped-name="isAgree" />
+			</controller>
+			<event type="task-end">
+				<action ref-name="xyz_1002x" />
+				<action ref-name="EndCounterSigningAction" />
+			</event>
+		</task>
+		<transition name="判断" to="部门经理审核通过？" />
+	</task-node>
+
+	<decision name="部门经理审核通过？">
+		<transition to="公司领导审批" name="to 公司领导审批">
+			<condition expression="#{isAgree eq 'true'}" />
+		</transition>
+		<transition to="审核不通过" name="未通过部门审核" />
+	</decision>
+
+	<task-node name="公司领导审批" create-tasks="false" end-tasks="true"
+		signal="last">
+		<event type="node-enter">
+			<action ref-name="create_task09" />
+			<action ref-name="xyz_1009" />
+		</event>
+		<task name="task09" description="公司领导审核">
+			<controller>
+				<variable name="isAgree" access="read,write,required"
+					mapped-name="isAgree" />
+			</controller>
+			<event type="task-end">
+				<action ref-name="xyz_1009x" />
+				<action ref-name="EndCounterSigningAction" />
+			</event>
+		</task>
+		<transition to="公司领导审批通过？" name="判断" />
+	</task-node>
+
+	<decision name="公司领导审批通过？">
+		<transition to="审核不通过" name="审批不通过" />
+		<transition to="综管部签收" name="审批通过">
+			<condition expression="#{isAgree eq 'true'}" />
+		</transition>
+	</decision>
+
+	<task-node name="综管部签收" create-tasks="false" end-tasks="true"
+		signal="last">
+		<event type="node-enter">
+			<action ref-name="create_task61" />
+			<action ref-name="create_task62" />
+			<action ref-name="create_task64" />
+			<action ref-name="xyz_1064" />
+		</event>
+		<transition to="完成"></transition>
+		<!-- 综管经理 -->
+		<task name="task61" description="综合管理部经理签收" />
+		<!-- 出纳 -->
+		<task name="task62" description="综合管理部出纳签收" />
+		<!-- 前台 -->
+		<task name="task64" description="综合管理部前台签收" />
+		<!-- 技术前台 -->
+		<task name="task65" description="综合管理部前台签收" />
+	</task-node>
+
+	<node name="审核不通过">
+		<event type="node-enter">
+			<action ref-name="xyz_5555" />
+		</event>
+		<transition name="退回" to="重新修改" />
+	</node>
+
+	<task-node name="重新修改">
+		<task name="task555" description="重新修改" swimlane="submiter" />
+		<transition name="重新提交" to="部门经理审核" />
+	</task-node>
+
+	<end-state name="完成">
+		<event type="node-enter">
+			<action ref-name="xyz_9999" />
+		</event>
+	</end-state>
+
+</process-definition>

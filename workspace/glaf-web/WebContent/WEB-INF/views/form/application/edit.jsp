@@ -1,9 +1,21 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page import="java.util.*"%>
+<%@ page import="org.jbpm.*"%>
+<%@ page import="org.jbpm.graph.def.*"%>
+<%@ page import="com.glaf.form.core.domain.*"%>
+<%@ page import="com.glaf.core.util.*"%>
+<%@ page import="org.apache.commons.lang.StringUtils"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%
     String theme = com.glaf.core.util.RequestUtils.getTheme(request);
     request.setAttribute("theme", theme);
+
+    FormApplication formApplication = (FormApplication)request.getAttribute("formApplication");
+	if(formApplication == null){
+		formApplication = new FormApplication();
+	}
+
 %>
 <!DOCTYPE html>
 <html>
@@ -89,10 +101,248 @@
   <input type="hidden" id="appId" name="appId" value="${formApplication.id}"/>
   <table class="easyui-form" style="width:600px;" align="center">
     <tbody>
- 
+      <tr>
+		<td align="left"  width="20%" height="27" noWrap>应用名称</td>
+		<td align="left"  width="80%" noWrap>
+		<input type="text" name="name" value="${formApplication.name}" 
+               class="easyui-validatebox" data-options="required:true,validType:'length[3,50]'"
+			   maxLength="50" size="30">（只能输入字母）
+		</td>
+	</tr>
+	<tr>
+		<td align="left"  width="20%" height="27" noWrap>应用主题</td>
+		<td align="left"  width="80%" noWrap>
+		<input type="text" name="title" value="${formApplication.title}" 
+               class="easyui-validatebox" data-options="required:true,validType:'length[3,50]'"
+			   maxLength="50" size="30">
+	    </td>
+	</tr>
+	<tr>
+		<td align="left"  width="20%" height="27">列表网格控件名称</td>
+		<td align="left"  width="80%">
+		<select id="listControllerName" name="listControllerName">
+		    <option value="">----请选择----</option>
+			<c:forEach items="${dataItems}" var="a">
+				<option value="${a.code}">${a.name}</option>
+			</c:forEach>
+		</select> 
+		<c:if test="${!empty formApplication.listControllerName}">
+			<script language="javascript">
+		        document.getElementById("listControllerName").value="${formApplication.listControllerName}";
+			</script>
+		</c:if>
+		</td>
+	</tr>
+	<tr>
+		<td align="left"  width="20%" height="27">列表模板编号</td>
+		<td align="left"  width="80%">
+		<select id="listTemplateId" name="listTemplateId">
+		    <option value="">----请选择----</option>
+			<c:forEach items="${listTemplates}" var="a">
+				<option value="${a.templateId}">${a.name}</option>
+			</c:forEach>
+		</select> 
+		<c:if test="${! empty formApplication.listTemplateId}">
+			<script language="javascript">
+		        document.getElementById("listTemplateId").value="${formApplication.listTemplateId}";
+			</script>
+		</c:if>
+		</td>
+	</tr>
+
+	<tr>
+		<td align="left"  width="20%" height="27">表单渲染控件名称</td>
+		<td align="left"  width="80%">
+		<select id="linkControllerName" name="linkControllerName">
+		   <option value="">----请选择----</option>
+			<c:forEach items="${dataItems2}" var="b">
+				<option value="${b.code}">${b.name}</option>
+			</c:forEach>
+		</select> 
+		<c:if test="${!empty formApplication.linkControllerName}">
+			<script language="javascript">
+		        document.getElementById("linkControllerName").value="${formApplication.linkControllerName}";
+			</script>
+		</c:if>
+		</td>
+	</tr>
+
+
+	<tr>
+		<td align="left"  width="20%" height="27">表单模板编号</td>
+		<td align="left"  width="80%">
+		 <select id="linkTemplateId" name="linkTemplateId">
+		   <option value="">----请选择----</option>
+			<c:forEach items="${formTemplates}" var="a">
+				<option value="${a.templateId}">${a.name}</option>
+			</c:forEach>
+		</select> 
+		<c:if test="${! empty formApplication.linkTemplateId}">
+			<script language="javascript">
+		        document.getElementById("linkTemplateId").value="${formApplication.linkTemplateId}";
+			</script>
+		</c:if>
+		</td>
+	</tr>
+	<tr>
+		<td align="left"  width="20%" height="27">业务流程</td>
+		<td align="left"  width="80%">
+		<select id="processName" name="processName" class="x-form-select-one">
+			<option value="">----请选择----</option>
+		<%
+        List processDefinitions = (List)request.getAttribute("processDefinitions");
+         if(processDefinitions != null && processDefinitions.size() > 0){
+        	Set names = new HashSet();
+        	Iterator iterator = processDefinitions.iterator();
+        	while(iterator.hasNext()){
+        		  ProcessDefinition pd = (ProcessDefinition)iterator.next();        
+        		  if(!names.contains(pd.getName())){
+        			   names.add(pd.getName());
+        			   String selected = "";
+        			   if(formApplication != null && StringUtils.equals(formApplication.getProcessName(), pd.getName())){
+        				   selected = " selected ";
+        			   }
+        			   out.print("\n<option value=\""+pd.getName()+"\" "+selected+">"+pd.getName());	
+        			   out.print(pd.getDescription() != null ? " "+pd.getDescription() : ""); 
+        			   out.print(" V"+pd.getVersion()+".0");
+        			   out.print("</option>");
+        			  }
+        	    }
+        }
+   %>
+		</select>
+	  </td>
+	</tr>
+	<td align="left"  width="20%" height="27">默认表单</td>
+	<td align="left"  width="80%">
+	  <select id="formName" name="formName" class="x-form-select-one">
+		<option value="">----请选择----</option>
+		<%
+        List formDefinitions = (List)request.getAttribute("formDefinitions");
+        if(formDefinitions != null && formDefinitions.size() > 0){
+        	Set names = new HashSet();
+        	Iterator iterator = formDefinitions.iterator();
+        	while(iterator.hasNext()){
+        		  FormDefinition formDefinition = (FormDefinition)iterator.next();        
+        		  if(!names.contains(formDefinition.getName())){
+        			   names.add(formDefinition.getName());
+        			   String selected = "";
+        			   if(formApplication != null && StringUtils.equals(formApplication.getFormName(), formDefinition.getName())){
+        				   selected = " selected ";
+        			   }
+        			   out.print("\n<option value=\""+formDefinition.getName()+"\" "+selected+">"+formDefinition.getName());	
+        			   out.print("  "+formDefinition.getTitle()); 
+        			   out.print(" V"+formDefinition.getVersion()+".0");
+        			   out.print(" [" +DateUtils.getDate(formDefinition.getCreateDate())+"]");
+        			   out.print("</option>");
+        			  }
+        	    }
+        }
+  %>
+	</select>
+	</td>
+	</tr>
+	<tr>
+		<td align="left"  width="20%" height="27">流程运行方式</td>
+		<td align="left"  width="80%">
+		<input type="hidden" id="manualRouteFlag" name="manualRouteFlag" value="${formApplication.manualRouteFlag}">
+		  <c:choose>
+			<c:when test="${formApplication.manualRouteFlag eq 'MANUAL' }">
+				<input type="radio" name="_manualRouteFlag"
+					onclick="document.getElementById('manualRouteFlag').value='AUTO';"> 自动流程
+                <input type="radio" name="_manualRouteFlag" checked
+					onclick="document.getElementById('manualRouteFlag').value='MANUAL';"> 人工流程
+				<input type="radio" name="_manualRouteFlag"
+					onclick="document.getElementById('manualRouteFlag').value='FREE';"> 自由流程
+	           </c:when>
+			<c:when test="${formApplication.manualRouteFlag eq 'FREE' }">
+				<input type="radio" name="_manualRouteFlag"
+					onclick="document.getElementById('manualRouteFlag').value='AUTO';"> 自动流程
+                <input type="radio" name="_manualRouteFlag"
+					onclick="document.getElementById('manualRouteFlag').value='MANUAL';"> 人工流程
+				<input type="radio" name="_manualRouteFlag" checked
+					onclick="document.getElementById('manualRouteFlag').value='FREE';"> 自由流程
+	           </c:when>
+			<c:otherwise>
+				<input type="radio" name="_manualRouteFlag" checked
+					onclick="document.getElementById('manualRouteFlag').value='AUTO';"> 自动流程
+                <input type="radio" name="_manualRouteFlag"
+					onclick="document.getElementById('manualRouteFlag').value='MANUAL';"> 人工流程
+				<input type="radio" name="_manualRouteFlag"
+					onclick="document.getElementById('manualRouteFlag').value='FREE';"> 自由流程
+			</c:otherwise>
+		</c:choose>
+	  </td>
+	</tr>
+
+	<tr>
+		<td align="left"  width="20%" height="27">是否发布</td>
+		<td align="left"  width="80%">
+		<input type="hidden" id="releaseFlag" name="releaseFlag" value="${formApplication.releaseFlag}"> 
+			<c:choose>
+			<c:when test="${formApplication.releaseFlag eq 'Y' }">
+				<input type="radio" name="_releaseFlag" checked
+					onclick="document.getElementById('releaseFlag').value='Y';"> 是
+                <input type="radio" name="_releaseFlag"
+					onclick="document.getElementById('releaseFlag').value='N';"> 否
+	           </c:when>
+			<c:otherwise>
+				<input type="radio" name="_releaseFlag"
+					onclick="document.getElementById('releaseFlag').value='Y';"> 是
+                <input type="radio" name="_releaseFlag" checked
+					onclick="document.getElementById('releaseFlag').value='N';"> 否
+			</c:otherwise>
+		   </c:choose>
+		</td>
+	</tr>
+
+	<tr>
+		<td align="left"  width="20%" height="27">允许上传附件</td>
+		<td align="left"  width="80%">
+		<input type="hidden" id="uploadFlag" name="uploadFlag" value="${formApplication.uploadFlag}"> 
+			<c:choose>
+			<c:when test="${formApplication.uploadFlag eq 'Y' }">
+				<input type="radio" name="_uploadFlag" checked
+					onclick="document.getElementById('uploadFlag').value='Y';"> 是
+                <input type="radio" name="_uploadFlag"
+					onclick="document.getElementById('uploadFlag').value='N';"> 否
+	           </c:when>
+			<c:otherwise>
+				<input type="radio" name="_uploadFlag"
+					onclick="document.getElementById('uploadFlag').value='Y';"> 是
+                <input type="radio" name="_uploadFlag" checked
+					onclick="document.getElementById('uploadFlag').value='N';"> 否
+			</c:otherwise>
+		</c:choose>
+		</td>
+	</tr>
+
+	<tr>
+		<td align="left"  width="20%" height="27">审核时允许上传附件</td>
+		<td align="left"  width="80%">
+		<input type="hidden" id="auditUploadFlag" name="auditUploadFlag" value="${formApplication.auditUploadFlag}">
+		<c:choose>
+			<c:when test="${formApplication.auditUploadFlag eq 'Y' }">
+				<input type="radio" name="_auditUploadFlag" checked
+					onclick="document.getElementById('auditUploadFlag').value='Y';"> 是
+                <input type="radio" name="_auditUploadFlag"
+					onclick="document.getElementById('auditUploadFlag').value='N';"> 否
+	           </c:when>
+			<c:otherwise>
+				<input type="radio" name="_auditUploadFlag"
+					onclick="document.getElementById('auditUploadFlag').value='Y';"> 是
+               <input type="radio" name="_auditUploadFlag" checked
+					onclick="document.getElementById('auditUploadFlag').value='N';"> 否
+			</c:otherwise>
+		</c:choose>
+	   </td>
+	</tr>
+
     </tbody>
   </table>
-  </form>
+ </form>
+ <br/>
+ <br/>
 </div>
 </div>
 </body>
