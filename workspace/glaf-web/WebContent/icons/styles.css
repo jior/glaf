@@ -10,9 +10,11 @@
 .icon-remove{
 	background:url('icons/remove.png') no-repeat ;
 }
-
 .icon-clear{
 	background:url('icons/clear.png') no-repeat ;
+}
+.icon-list{
+	background:url('icons/list.gif') no-repeat ;
 }
 .icon-review{
 	background:url('icons/review.png') no-repeat ;

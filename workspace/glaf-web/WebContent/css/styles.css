@@ -71,7 +71,7 @@ select {
 }
 
  .x_content_title {
-   text-transform: uppercase; background-color: inherit; color: #789030; font-size: 14px; font-weight: bold; text-align: center;
+   text-transform: uppercase; background-color: inherit; color: #789030; font-size: 13px; font-weight: bold; text-align: center;
 }
  
 .widget-content{

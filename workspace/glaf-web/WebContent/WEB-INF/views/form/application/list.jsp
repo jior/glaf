@@ -252,7 +252,7 @@
 		   onclick="javascript:editSelected();">修改</a>  
 		<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-remove'"
 		   onclick="javascript:deleteSelections();">删除</a> 
-		<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-edit'"
+		<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-list'"
 		   onclick="javascript:listColumns();">列表设置</a>  
 		<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-search'"
 		   onclick="javascript:searchWin();">查找</a>
