@@ -30,6 +30,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.core.id.*;
 import com.glaf.core.base.BlobItem;
+import com.glaf.core.base.DataFile;
 import com.glaf.core.dao.*;
 import com.glaf.core.mapper.*;
 import com.glaf.core.domain.*;
@@ -83,6 +84,18 @@ public class MxEntityDefinitionServiceImpl implements EntityDefinitionService {
 		}
 		EntityDefinition entityDefinition = entityDefinitionMapper
 				.getEntityDefinitionById(id);
+		if (entityDefinition != null) {
+			DataFile dataFile = blobService
+					.getBlobWithBytesByFileId(entityDefinition.getId());
+			if (dataFile != null && dataFile.getData() != null) {
+				entityDefinition.setData(dataFile.getData());
+			} else {
+				if (entityDefinition.getFileContent() != null) {
+					entityDefinition.setData(entityDefinition.getFileContent()
+							.getBytes());
+				}
+			}
+		}
 		return entityDefinition;
 	}
 

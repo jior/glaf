@@ -37,7 +37,6 @@ public class XmlReader {
 			Element root = doc.getRootElement();
 			Element element = root.element("entity");
 			if (element != null) {
-
 				List<?> attrs = element.attributes();
 				if (attrs != null && !attrs.isEmpty()) {
 					Map<String, Object> dataMap = new HashMap<String, Object>();

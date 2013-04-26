@@ -139,6 +139,20 @@
 	    }
 	}
 
+	function listColumns(){
+       var rows = jQuery('#mydatagrid').datagrid('getSelections');
+	   if(rows == null || rows.length !=1){
+		  alert("请选择其中一条记录。");
+          return;
+	    }
+	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
+	    if (selected ){
+		//location.href="<%=request.getContextPath()%>/system/form/application.do?method=edit&appId="+selected.id;
+		  var link = "<%=request.getContextPath()%>/system/form/application.do?method=editListColumns&appId="+selected.id;
+		  art.dialog.open(link, { height: 380, width: 620, title: "设置列表显示字段", lock: true, scrollbars:"no" }, false);
+	    }
+	}
+
 	function viewSelected(){
 		var rows = jQuery('#mydatagrid').datagrid('getSelections');
 		if(rows == null || rows.length !=1){
@@ -238,6 +252,8 @@
 		   onclick="javascript:editSelected();">修改</a>  
 		<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-remove'"
 		   onclick="javascript:deleteSelections();">删除</a> 
+		<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-edit'"
+		   onclick="javascript:listColumns();">列表设置</a>  
 		<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-search'"
 		   onclick="javascript:searchWin();">查找</a>
 	   </div> 

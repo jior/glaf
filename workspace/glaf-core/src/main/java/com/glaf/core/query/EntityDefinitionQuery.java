@@ -23,7 +23,6 @@ import com.glaf.core.query.DataQuery;
 
 public class EntityDefinitionQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;
-	protected String createBy;
 	protected List<String> createBys;
 	protected Date createDateGreaterThanOrEqual;
 	protected Date createDateLessThanOrEqual;
@@ -42,18 +41,6 @@ public class EntityDefinitionQuery extends DataQuery {
 	public EntityDefinitionQuery() {
 
 	}
-	
-	
-
-	public EntityDefinitionQuery createBy(String createBy) {
-		if (createBy == null) {
-			throw new RuntimeException("createBy is null");
-		}
-		this.createBy = createBy;
-		return this;
-	}
-
-
 
 	public EntityDefinitionQuery createBys(List<String> createBys) {
 		if (createBys == null) {
@@ -62,8 +49,6 @@ public class EntityDefinitionQuery extends DataQuery {
 		this.createBys = createBys;
 		return this;
 	}
-
-
 
 	public EntityDefinitionQuery createDateGreaterThanOrEqual(
 			Date createDateGreaterThanOrEqual) {
@@ -81,10 +66,6 @@ public class EntityDefinitionQuery extends DataQuery {
 		}
 		this.createDateLessThanOrEqual = createDateLessThanOrEqual;
 		return this;
-	}
-
-	public String getCreateBy() {
-		return createBy;
 	}
 
 	public List<String> getCreateBys() {
@@ -283,10 +264,6 @@ public class EntityDefinitionQuery extends DataQuery {
 		}
 		this.parseType = parseType;
 		return this;
-	}
-
-	public void setCreateBy(String createBy) {
-		this.createBy = createBy;
 	}
 
 	public void setCreateBys(List<String> createBys) {

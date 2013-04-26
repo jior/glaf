@@ -1,5 +1,6 @@
 package com.glaf.form.web.springmvc;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.*;
 
@@ -20,12 +21,14 @@ import com.alibaba.fastjson.*;
 import com.glaf.core.config.ViewProperties;
 import com.glaf.core.domain.ColumnDefinition;
 import com.glaf.core.domain.EntityDefinition;
+import com.glaf.core.domain.TableDefinition;
 import com.glaf.core.identity.*;
 import com.glaf.core.query.EntityDefinitionQuery;
 import com.glaf.core.security.*;
 import com.glaf.core.service.EntityDefinitionService;
 import com.glaf.core.service.ITableDefinitionService;
 import com.glaf.core.util.*;
+import com.glaf.core.xml.XmlReader;
 
 import com.glaf.form.core.domain.*;
 import com.glaf.form.core.query.*;
@@ -81,37 +84,6 @@ public class FormApplicationController {
 							.isSystemAdministrator())) {
 			}
 		}
-	}
-
-	@RequestMapping(params = "method=editListColumns")
-	public ModelAndView editListColumns(HttpServletRequest request,
-			ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		String appId = ParamUtils.getString(params, "appId");
-		FormApplication formApplication = null;
-		if (StringUtils.isNotEmpty(appId)) {
-			formApplication = formDataService.getFormApplication(appId);
-			request.setAttribute("formApplication", formApplication);
-            String targetId = formApplication.getName()+"_FormApp";
-            List<ColumnDefinition> columns = tableDefinitionService.getColumnDefinitionsByTargetId(targetId);
-            EntityDefinition entityDefinition = entityDefinitionService.getEntityDefinition(targetId);
-		    if(entityDefinition != null){
-		    	
-		    }
-		}
-
-		String view = request.getParameter("view");
-		if (StringUtils.isNotEmpty(view)) {
-			return new ModelAndView(view, modelMap);
-		}
-
-		String x_view = ViewProperties.getString("formApplication.edit");
-		if (StringUtils.isNotEmpty(x_view)) {
-			return new ModelAndView(x_view, modelMap);
-		}
-
-		return new ModelAndView("/form/application/edit", modelMap);
 	}
 
 	@RequestMapping(params = "method=edit")
@@ -177,6 +149,60 @@ public class FormApplicationController {
 		}
 
 		return new ModelAndView("/form/application/edit", modelMap);
+	}
+
+	@RequestMapping(params = "method=editListColumns")
+	public ModelAndView editListColumns(HttpServletRequest request,
+			ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		String appId = ParamUtils.getString(params, "appId");
+		FormApplication formApplication = null;
+		if (StringUtils.isNotEmpty(appId)) {
+			formApplication = formDataService.getFormApplication(appId);
+			request.setAttribute("formApplication", formApplication);
+			String targetId = formApplication.getTableName() + "_FormApp";
+			List<ColumnDefinition> columns = tableDefinitionService
+					.getColumnDefinitionsByTargetId(targetId);
+			EntityDefinition entityDefinition = entityDefinitionService
+					.getEntityDefinition(targetId);
+			if (entityDefinition != null) {
+				//logger.debug(entityDefinition.toJsonObject().toJSONString());
+				XmlReader reader = new XmlReader();
+				TableDefinition tableDefinition = reader
+						.read(new ByteArrayInputStream(entityDefinition
+								.getData()));
+
+				List<ColumnDefinition> unselectColumns = new ArrayList<ColumnDefinition>();
+				if (tableDefinition.getColumns() != null) {
+					for (ColumnDefinition c : tableDefinition.getColumns()) {
+						if (columns != null && columns.contains(c)) {
+							continue;
+						}
+						unselectColumns.add(c);
+					}
+				}
+				
+				logger.debug("column size:"+tableDefinition.getColumns().size());
+
+				request.setAttribute("tableDefinition", tableDefinition);
+				request.setAttribute("unselectColumns", unselectColumns);
+				request.setAttribute("selectedColumns", columns);
+			}
+		}
+
+		String view = request.getParameter("view");
+		if (StringUtils.isNotEmpty(view)) {
+			return new ModelAndView(view, modelMap);
+		}
+
+		String x_view = ViewProperties
+				.getString("formApplication.editListColumns");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
+		return new ModelAndView("/form/application/editListColumns", modelMap);
 	}
 
 	@RequestMapping(params = "method=json")
@@ -327,6 +353,46 @@ public class FormApplicationController {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			logger.error(ex);
+		}
+		return ResponseUtils.responseJsonResult(false);
+	}
+
+	@ResponseBody
+	@RequestMapping(params = "method=saveListColumns")
+	public byte[] saveListColumns(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		String appId = ParamUtils.getString(params, "appId");
+		String objectIds = request.getParameter("objectIds");
+		FormApplication formApplication = null;
+		if (StringUtils.isNotEmpty(appId)) {
+			try {
+				formApplication = formDataService.getFormApplication(appId);
+				request.setAttribute("formApplication", formApplication);
+				String targetId = formApplication.getTableName() + "_FormApp";
+				EntityDefinition entityDefinition = entityDefinitionService
+						.getEntityDefinition(targetId);
+				if (entityDefinition != null) {
+					List<ColumnDefinition> selectColumns = new ArrayList<ColumnDefinition>();
+					XmlReader reader = new XmlReader();
+					TableDefinition tableDefinition = reader
+							.read(new ByteArrayInputStream(entityDefinition
+									.getData()));
+					if (tableDefinition.getColumns() != null) {
+						for (ColumnDefinition c : tableDefinition.getColumns()) {
+							if (StringUtils.contains(objectIds,
+									c.getColumnName())) {
+								selectColumns.add(c);
+							}
+						}
+					}
+					tableDefinitionService.saveColumns(targetId, selectColumns);
+					return ResponseUtils.responseJsonResult(true);
+				}
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				logger.error(ex);
+			}
 		}
 		return ResponseUtils.responseJsonResult(false);
 	}
