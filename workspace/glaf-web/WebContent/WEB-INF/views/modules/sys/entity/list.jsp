@@ -9,7 +9,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>表单定义</title>
+<title>数据表管理</title>
 <link href="<%=request.getContextPath()%>/scripts/artDialog/skins/default.css" rel="stylesheet" />
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/easyui/themes/${theme}/easyui.css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/scripts/ztree/css/zTreeStyle/zTreeStyle.css" type="text/css">
@@ -117,7 +117,7 @@
 	}
 
 	function searchWin(){
-	    jQuery('#dlg').dialog('open').dialog('setTitle','表单定义查询');
+	    jQuery('#dlg').dialog('open').dialog('setTitle','数据表查询');
 	    //jQuery('#searchForm').form('clear');
 	}
 
@@ -233,7 +233,7 @@
 		   <div data-options="region:'north',split:true,border:true" style="height:40px"> 
 			<div class="toolbar-backgroud"  > 
 			<img src="<%=request.getContextPath()%>/images/window.png">
-			&nbsp;<span class="x_content_title">表单定义列表</span>
+			&nbsp;<span class="x_content_title">数据表信息</span>
 			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-add'" 
 			   onclick="javascript:addNew();">新增</a>  
 			<!-- <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-edit'"

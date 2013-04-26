@@ -5,7 +5,6 @@ import java.util.*;
 
 import freemarker.cache.*;
 import freemarker.template.*;
-import freemarker.template.Template;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
@@ -16,6 +15,7 @@ import org.springframework.core.io.Resource;
 import com.glaf.core.base.*;
 
 import com.glaf.generator.xml.XmlReader;
+import com.glaf.core.domain.ColumnDefinition;
 import com.glaf.core.el.*;
 
 import com.glaf.core.util.ClassUtils;
@@ -69,7 +69,7 @@ public class JavaCodeGen {
 	public List<CodeDef> codeGen(ClassDefinition classDefinition,
 			java.io.File outputDir, String config) throws Exception {
 		if (classDefinition.getIdField() == null) {
-			FieldDefinition idField = new FieldDefinition();
+			FieldDefinition idField = new ColumnDefinition();
 			idField.setName("id");
 			idField.setColumnName("ID_");
 			idField.setType("String");
@@ -100,7 +100,7 @@ public class JavaCodeGen {
 		logger.debug(context);
 
 		if (classDefinition.isJbpmSupport()) {
-			FieldDefinition f0 = new FieldDefinition();
+			FieldDefinition f0 = new ColumnDefinition();
 			f0.setName("status");
 			f0.setColumnName("status");
 			f0.setEnglishTitle("status");
@@ -108,7 +108,7 @@ public class JavaCodeGen {
 			f0.setType("Integer");
 			classDefinition.addField(f0);
 
-			FieldDefinition f1 = new FieldDefinition();
+			FieldDefinition f1 = new ColumnDefinition();
 			f1.setName("processName");
 			f1.setColumnName("processName");
 			f1.setEnglishTitle("processName");
@@ -117,7 +117,7 @@ public class JavaCodeGen {
 			f1.setType("String");
 			classDefinition.addField(f1);
 
-			FieldDefinition f2 = new FieldDefinition();
+			FieldDefinition f2 = new ColumnDefinition();
 			f2.setName("processInstanceId");
 			f2.setColumnName("processInstanceId");
 			f2.setEnglishTitle("processInstanceId");
@@ -125,7 +125,7 @@ public class JavaCodeGen {
 			f2.setType("Long");
 			classDefinition.addField(f2);
 
-			FieldDefinition f3 = new FieldDefinition();
+			FieldDefinition f3 = new ColumnDefinition();
 			f3.setName("wfStatus");
 			f3.setColumnName("wfStatus");
 			f3.setEnglishTitle("wfStatus");
@@ -133,7 +133,7 @@ public class JavaCodeGen {
 			f3.setType("Integer");
 			classDefinition.addField(f3);
 
-			FieldDefinition f4 = new FieldDefinition();
+			FieldDefinition f4 = new ColumnDefinition();
 			f4.setName("wfStartDate");
 			f4.setColumnName("wfStartDate");
 			f4.setEnglishTitle("wfStartDate");
@@ -141,7 +141,7 @@ public class JavaCodeGen {
 			f4.setType("Date");
 			classDefinition.addField(f4);
 
-			FieldDefinition f5 = new FieldDefinition();
+			FieldDefinition f5 = new ColumnDefinition();
 			f5.setName("wfEndDate");
 			f5.setColumnName("wfEndDate");
 			f5.setEnglishTitle("wfEndDate");
@@ -152,7 +152,7 @@ public class JavaCodeGen {
 		}
 
 		if (classDefinition.isTreeSupport()) {
-			FieldDefinition idField = new FieldDefinition();
+			FieldDefinition idField = new ColumnDefinition();
 			idField.setName("id");
 			idField.setColumnName("id");
 			idField.setEnglishTitle("Id");
@@ -160,7 +160,7 @@ public class JavaCodeGen {
 			idField.setType("Long");
 			classDefinition.setIdField(idField);
 
-			FieldDefinition f1 = new FieldDefinition();
+			FieldDefinition f1 = new ColumnDefinition();
 			f1.setName("parentId");
 			f1.setColumnName("parentId");
 			f1.setEnglishTitle("parentId");
@@ -168,7 +168,7 @@ public class JavaCodeGen {
 			f1.setType("Long");
 			classDefinition.addField(f1);
 
-			FieldDefinition f2 = new FieldDefinition();
+			FieldDefinition f2 = new ColumnDefinition();
 			f2.setName("code");
 			f2.setColumnName("code");
 			f2.setEnglishTitle("Code");
@@ -176,7 +176,7 @@ public class JavaCodeGen {
 			f2.setType("String");
 			classDefinition.addField(f2);
 
-			FieldDefinition f3 = new FieldDefinition();
+			FieldDefinition f3 = new ColumnDefinition();
 			f3.setName("createBy");
 			f3.setColumnName("createBy");
 			f3.setEnglishTitle("createBy");
@@ -184,7 +184,7 @@ public class JavaCodeGen {
 			f3.setType("String");
 			classDefinition.addField(f3);
 
-			FieldDefinition f4 = new FieldDefinition();
+			FieldDefinition f4 = new ColumnDefinition();
 			f4.setName("createDate");
 			f4.setColumnName("createDate");
 			f4.setEnglishTitle("createDate");
@@ -192,7 +192,7 @@ public class JavaCodeGen {
 			f4.setType("Date");
 			classDefinition.addField(f4);
 
-			FieldDefinition f5 = new FieldDefinition();
+			FieldDefinition f5 = new ColumnDefinition();
 			f5.setName("updateDate");
 			f5.setColumnName("updateDate");
 			f5.setEnglishTitle("updateDate");
@@ -200,7 +200,7 @@ public class JavaCodeGen {
 			f5.setType("Date");
 			classDefinition.addField(f5);
 
-			FieldDefinition f6 = new FieldDefinition();
+			FieldDefinition f6 = new ColumnDefinition();
 			f6.setName("updateBy");
 			f6.setColumnName("updateBy");
 			f6.setEnglishTitle("updateBy");
@@ -208,7 +208,7 @@ public class JavaCodeGen {
 			f6.setType("String");
 			classDefinition.addField(f6);
 
-			FieldDefinition f7 = new FieldDefinition();
+			FieldDefinition f7 = new ColumnDefinition();
 			f7.setName("discriminator");
 			f7.setColumnName("discriminator");
 			f7.setEnglishTitle("discriminator");
@@ -216,7 +216,7 @@ public class JavaCodeGen {
 			f7.setType("String");
 			classDefinition.addField(f7);
 
-			FieldDefinition f8 = new FieldDefinition();
+			FieldDefinition f8 = new ColumnDefinition();
 			f8.setName("description");
 			f8.setColumnName("description");
 			f8.setEnglishTitle("description");
@@ -224,7 +224,7 @@ public class JavaCodeGen {
 			f8.setType("String");
 			classDefinition.addField(f8);
 
-			FieldDefinition f9 = new FieldDefinition();
+			FieldDefinition f9 = new ColumnDefinition();
 			f9.setName("icon");
 			f9.setColumnName("icon");
 			f9.setEnglishTitle("icon");
@@ -232,7 +232,7 @@ public class JavaCodeGen {
 			f9.setType("String");
 			classDefinition.addField(f9);
 
-			FieldDefinition f92 = new FieldDefinition();
+			FieldDefinition f92 = new ColumnDefinition();
 			f92.setName("iconCls");
 			f92.setColumnName("iconCls");
 			f92.setEnglishTitle("iconCls");
@@ -240,7 +240,7 @@ public class JavaCodeGen {
 			f92.setType("String");
 			classDefinition.addField(f92);
 
-			FieldDefinition f10 = new FieldDefinition();
+			FieldDefinition f10 = new ColumnDefinition();
 			f10.setName("locked");
 			f10.setColumnName("locked");
 			f10.setEnglishTitle("locked");
@@ -248,7 +248,7 @@ public class JavaCodeGen {
 			f10.setType("Integer");
 			classDefinition.addField(f10);
 
-			FieldDefinition f11 = new FieldDefinition();
+			FieldDefinition f11 = new ColumnDefinition();
 			f11.setName("sortNo");
 			f11.setColumnName("sortNo");
 			f11.setEnglishTitle("sortNo");
@@ -256,7 +256,7 @@ public class JavaCodeGen {
 			f11.setType("Integer");
 			classDefinition.addField(f11);
 
-			FieldDefinition f12 = new FieldDefinition();
+			FieldDefinition f12 = new ColumnDefinition();
 			f12.setName("name");
 			f12.setColumnName("name");
 			f12.setEnglishTitle("name");
@@ -264,7 +264,7 @@ public class JavaCodeGen {
 			f12.setType("String");
 			classDefinition.addField(f12);
 
-			FieldDefinition f13 = new FieldDefinition();
+			FieldDefinition f13 = new ColumnDefinition();
 			f13.setName("treeId");
 			f13.setColumnName("treeId");
 			f13.setEnglishTitle("treeId");
@@ -272,7 +272,7 @@ public class JavaCodeGen {
 			f13.setType("String");
 			classDefinition.addField(f13);
 
-			FieldDefinition f14 = new FieldDefinition();
+			FieldDefinition f14 = new ColumnDefinition();
 			f14.setName("url");
 			f14.setColumnName("url");
 			f14.setEnglishTitle("url");

@@ -25,13 +25,12 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Table;
-
 import org.apache.commons.lang.StringUtils;
- 
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.glaf.core.base.JSONable;
-import com.glaf.core.domain.util.ColumnDefinitionJsonFactory;
 import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.glaf.core.base.ClassDefinition;
+import com.glaf.core.base.FieldDefinition;
+import com.glaf.core.domain.util.ColumnDefinitionJsonFactory;
 
 /**
  * 数据字段定义
@@ -39,34 +38,11 @@ import com.alibaba.fastjson.JSONObject;
  */
 @Entity
 @Table(name = "SYS_COLUMN")
-public class ColumnDefinition implements java.io.Serializable, JSONable {
+public class ColumnDefinition implements
+		java.lang.Comparable<ColumnDefinition>, java.io.Serializable,
+		FieldDefinition {
 
 	private static final long serialVersionUID = 1L;
-
-	/**
-	 * 主键
-	 */
-	@Id
-	@Column(name = "ID_", length = 100, nullable = false)
-	protected String id;
-
-	/**
-	 * 查询编号
-	 */
-	@Column(name = "QUERYID_", length = 50, nullable = true)
-	protected String queryId;
-
-	/**
-	 * 表名
-	 */
-	@Column(name = "TABLENAME_", length = 50, nullable = true)
-	protected String tableName;
-
-	/**
-	 * 目标ID
-	 */
-	@Column(name = "TARGETID_", length = 50, nullable = true)
-	protected String targetId;
 
 	/**
 	 * 数据库中表的别名
@@ -74,11 +50,8 @@ public class ColumnDefinition implements java.io.Serializable, JSONable {
 	@Column(name = "ALIAS_", length = 50)
 	protected String alias;
 
-	/**
-	 * 数据库字段名称
-	 */
-	@Column(name = "COLUMNNAME_", length = 50)
-	protected String columnName;
+	@Column(name = "ALIGN_", length = 50)
+	protected String align;
 
 	/**
 	 * 数据库字段标签
@@ -87,94 +60,13 @@ public class ColumnDefinition implements java.io.Serializable, JSONable {
 	protected String columnLabel;
 
 	/**
-	 * 属性名称
+	 * 数据库字段名称
 	 */
-	@Column(name = "NAME_", length = 50)
-	protected String name;
+	@Column(name = "COLUMNNAME_", length = 50)
+	protected String columnName;
 
-	/**
-	 * 标题
-	 */
-	@Column(name = "TITLE_", length = 100)
-	protected String title;
-
-	/**
-	 * ENGLISH标题
-	 */
-	@Column(name = "ENGLISHTITLE_", length = 100)
-	protected String englishTitle;
-
-	/**
-	 * 字段长度
-	 */
-	@Column(name = "LENGTH_")
-	protected int length;
-
-	/**
-	 * 小数位数
-	 */
-	@Column(name = "SCALE_")
-	protected int scale;
-
-	/**
-	 * 字段精度
-	 */
-	@Column(name = "PRECISION_")
-	protected int precision;
-
-	/**
-	 * 是否主键
-	 */
-	@Column(name = "PRIMARYKEY_", length = 10)
-	protected String primaryKey;
-
-	/**
-	 * 是否为空
-	 */
-	@Column(name = "NULL_", length = 10)
-	protected String nullable = "1";
-
-	/**
-	 * 是否冻结列
-	 */
-	@Column(name = "FROZEN_", length = 10)
-	protected String frozen;
-
-	@Column(name = "UNIQUE_", length = 10)
-	protected String unique;
-
-	@Column(name = "SEARCHABLE_", length = 10)
-	protected String searchable;
-
-	@Column(name = "EDITABLE_", length = 10)
-	protected String editable;
-
-	@Column(name = "UPDATEABLE_", length = 10)
-	protected String updatable;
-
-	/**
-	 * 是否可调整列宽
-	 */
-	@Column(name = "RESIZABLE_", length = 10)
-	protected String resizable;
-
-	/**
-	 * 是否隐藏列
-	 */
-	@Column(name = "HIDDEN_", length = 10)
-	protected String hidden;
-
-	/**
-	 * 在列头部显示的提示文字
-	 */
-	@Column(name = "TOOLTIP_", length = 100)
-	protected String tooltip;
-
-	/**
-	 * 字段顺序号
-	 */
-	@Column(name = "ORDINAL_")
-	protected int ordinal;
+	@Column(name = "DATACODE_", length = 50)
+	protected String dataCode;
 
 	/**
 	 * 数据库类型
@@ -182,53 +74,8 @@ public class ColumnDefinition implements java.io.Serializable, JSONable {
 	@javax.persistence.Transient
 	protected int dataType;
 
-	/**
-	 * Java类型
-	 */
-	@Column(name = "JAVATYPE_", length = 20)
-	protected String javaType;
-
-	/**
-	 * 输入类型（文本框、数值输入、日期输入、下拉列表、复选框）
-	 */
-	@Column(name = "INPUTTYPE_", length = 50)
-	protected String inputType;
-
-	/**
-	 * 下拉列表的值字段
-	 */
-	@Column(name = "VALUEFIELD_", length = 50)
-	protected String valueField;
-
-	/**
-	 * 下拉列表的文本字段
-	 */
-	@Column(name = "TEXTFIELD_", length = 50)
-	protected String textField;
-
-	/**
-	 * 下拉列表的取数URL
-	 */
-	@Column(name = "URL_", length = 250)
-	protected String url;
-
-	/**
-	 * 验证类型
-	 */
-	@Column(name = "VALIDTYPE_", length = 50)
-	protected String validType;
-
-	/**
-	 * 是否必填
-	 */
-	@Column(name = "required", length = 10)
-	protected String required = "0";
-
-	/**
-	 * 正则表达式
-	 */
-	@Column(name = "REGEX_", length = 100)
-	protected String regex;
+	@javax.persistence.Transient
+	protected Date dateValue;
 
 	/**
 	 * 默认值
@@ -243,43 +90,165 @@ public class ColumnDefinition implements java.io.Serializable, JSONable {
 	protected String discriminator;
 
 	/**
+	 * 显示类型 0-不显示，1-表单，2-表单及列表
+	 */
+	@Column(name = "DISPLAYTYPE_")
+	protected int displayType;
+
+	@javax.persistence.Transient
+	protected double doubleValue;
+
+	@Column(name = "EDITABLE_", length = 10)
+	protected String editable;
+
+	/**
+	 * ENGLISH标题
+	 */
+	@Column(name = "ENGLISHTITLE_", length = 100)
+	protected String englishTitle;
+
+	/**
+	 * 显示格式
+	 */
+	@Column(name = "FORMATTER_", length = 200)
+	protected String formatter;
+
+	/**
 	 * 公式
 	 */
 	@Column(name = "FORMULA_", length = 200)
 	protected String formula;
 
+	/**
+	 * 是否冻结列
+	 */
+	@Column(name = "FROZEN_", length = 10)
+	protected String frozen;
+
+	@Column(name = "HEIGHT_", length = 50)
+	protected String height;
+
+	/**
+	 * 是否隐藏列
+	 */
+	@Column(name = "HIDDEN_", length = 10)
+	protected String hidden;
+
+	/**
+	 * 主键
+	 */
+	@Id
+	@Column(name = "ID_", length = 100, nullable = false)
+	protected String id;
+
+	/**
+	 * 输入类型（文本框、数值输入、日期输入、下拉列表、复选框）
+	 */
+	@Column(name = "INPUTTYPE_", length = 50)
+	protected String inputType;
+
+	@javax.persistence.Transient
+	protected int intValue;
+
+	/**
+	 * 参数是否为集合类型
+	 */
+	@Column(name = "ISCOLLECTION_", length = 10)
+	protected String isCollection;
+
+	/**
+	 * Java类型
+	 */
+	@Column(name = "JAVATYPE_", length = 20)
+	protected String javaType;
+
+	/**
+	 * 字段长度
+	 */
+	@Column(name = "LENGTH_")
+	protected int length;
+
+	@Column(name = "LINK_", length = 200)
+	protected String link;
+
+	@javax.persistence.Transient
+	protected boolean listShow;
+
+	@javax.persistence.Transient
+	protected long longValue;
+
 	@Column(name = "MASK_", length = 100)
 	protected String mask;
 
-	@Column(name = "DATACODE_", length = 50)
-	protected String dataCode;
+	/**
+	 * 属性名称
+	 */
+	@Column(name = "NAME_", length = 50)
+	protected String name;
+
+	/**
+	 * 是否为空
+	 */
+	@Column(name = "NULL_", length = 10)
+	protected String nullable = "1";
+
+	/**
+	 * 字段顺序号
+	 */
+	@Column(name = "ORDINAL_")
+	protected int ordinal;
+
+	/**
+	 * 字段精度
+	 */
+	@Column(name = "PRECISION_")
+	protected int precision;
+
+	/**
+	 * 是否主键
+	 */
+	@Column(name = "PRIMARYKEY_", length = 10)
+	protected String primaryKey;
+
+	/**
+	 * 查询编号
+	 */
+	@Column(name = "QUERYID_", length = 50, nullable = true)
+	protected String queryId;
+
+	/**
+	 * 正则表达式
+	 */
+	@Column(name = "REGEX_", length = 100)
+	protected String regex;
+
+	@Lob
+	@Column(name = "RENDERER_", length = 100)
+	protected String renderer;
 
 	@Column(name = "RENDERTYPE_", length = 50)
 	protected String renderType;
 
 	/**
-	 * 转换器
+	 * 是否必填
 	 */
-	@Column(name = "TRANSLATOR_", length = 100)
-	protected String translator;
+	@Column(name = "required", length = 10)
+	protected String required = "0";
 
 	/**
-	 * 汇总类型，sum-求和、count-算个数
+	 * 是否可调整列宽
 	 */
-	@Column(name = "SUMMARYTYPE_", length = 50)
-	protected String summaryType;
+	@Column(name = "RESIZABLE_", length = 10)
+	protected String resizable;
 
 	/**
-	 * 汇总表达式
+	 * 小数位数
 	 */
-	@Column(name = "SUMMARYEXPR_", length = 200)
-	protected String summaryExpr;
+	@Column(name = "SCALE_")
+	protected int scale;
 
-	/**
-	 * 显示类型 0-不显示，1-表单，2-表单及列表
-	 */
-	@Column(name = "DISPLAYTYPE_")
-	protected int displayType;
+	@Column(name = "SEARCHABLE_", length = 10)
+	protected String searchable;
 
 	/**
 	 * 是否可排序
@@ -293,63 +262,114 @@ public class ColumnDefinition implements java.io.Serializable, JSONable {
 	@Column(name = "SORTTYPE_", length = 50)
 	protected String sortType;
 
+	@javax.persistence.Transient
+	protected String stringValue;
+
+	/**
+	 * 汇总表达式
+	 */
+	@Column(name = "SUMMARYEXPR_", length = 200)
+	protected String summaryExpr;
+
+	/**
+	 * 汇总类型，sum-求和、count-算个数
+	 */
+	@Column(name = "SUMMARYTYPE_", length = 50)
+	protected String summaryType;
+
 	@Column(name = "SYSTEMFLAG_", length = 2)
 	protected String systemFlag;
 
 	/**
-	 * 显示格式
+	 * 表名
 	 */
-	@Column(name = "FORMATTER_", length = 200)
-	protected String formatter;
-
-	@Column(name = "ALIGN_", length = 50)
-	protected String align;
-
-	@Column(name = "HEIGHT_", length = 50)
-	protected String height;
-
-	@Column(name = "WIDTH_", length = 50)
-	protected String width;
-
-	@Column(name = "LINK_", length = 200)
-	protected String link;
+	@Column(name = "TABLENAME_", length = 50, nullable = true)
+	protected String tableName;
 
 	/**
-	 * 参数是否为集合类型
+	 * 目标ID
 	 */
-	@Column(name = "ISCOLLECTION_", length = 10)
-	protected String isCollection;
+	@Column(name = "TARGETID_", length = 50, nullable = true)
+	protected String targetId;
 
-	@Column(name = "VALUEEXPRESSION_", length = 200)
-	protected String valueExpression;
+	/**
+	 * 下拉列表的文本字段
+	 */
+	@Column(name = "TEXTFIELD_", length = 50)
+	protected String textField;
 
-	@Lob
-	@Column(name = "RENDERER_", length = 100)
-	protected String renderer;
+	/**
+	 * 标题
+	 */
+	@Column(name = "TITLE_", length = 100)
+	protected String title;
 
-	@javax.persistence.Transient
-	protected boolean listShow;
+	/**
+	 * 在列头部显示的提示文字
+	 */
+	@Column(name = "TOOLTIP_", length = 100)
+	protected String tooltip;
 
-	@javax.persistence.Transient
-	protected String stringValue;
+	/**
+	 * 转换器
+	 */
+	@Column(name = "TRANSLATOR_", length = 100)
+	protected String translator;
 
-	@javax.persistence.Transient
-	protected int intValue;
+	@Column(name = "UNIQUE_", length = 10)
+	protected String unique;
 
-	@javax.persistence.Transient
-	protected long longValue;
+	@Column(name = "UPDATEABLE_", length = 10)
+	protected String updatable;
 
-	@javax.persistence.Transient
-	protected double doubleValue;
+	/**
+	 * 下拉列表的取数URL
+	 */
+	@Column(name = "URL_", length = 250)
+	protected String url;
 
-	@javax.persistence.Transient
-	protected Date dateValue;
+	/**
+	 * 验证类型
+	 */
+	@Column(name = "VALIDTYPE_", length = 50)
+	protected String validType;
 
 	@javax.persistence.Transient
 	protected Object value;
 
+	@Column(name = "VALUEEXPRESSION_", length = 200)
+	protected String valueExpression;
+
+	/**
+	 * 下拉列表的值字段
+	 */
+	@Column(name = "VALUEFIELD_", length = 50)
+	protected String valueField;
+
+	@Column(name = "WIDTH_", length = 50)
+	protected String width;
+
 	public ColumnDefinition() {
 
+	}
+
+	public int compareTo(ColumnDefinition o) {
+		if (o == null) {
+			return -1;
+		}
+
+		ColumnDefinition field = o;
+
+		int l = this.ordinal - field.getSortNo();
+
+		int ret = 0;
+
+		if (l > 0) {
+			ret = 1;
+		} else if (l < 0) {
+			ret = -1;
+		}
+		return ret;
 	}
 
 	@Override
@@ -375,6 +395,11 @@ public class ColumnDefinition implements java.io.Serializable, JSONable {
 
 	public String getAlign() {
 		return align;
+	}
+
+	public ClassDefinition getClassDefinition() {
+
+		return null;
 	}
 
 	public String getColumnLabel() {
@@ -481,8 +506,20 @@ public class ColumnDefinition implements java.io.Serializable, JSONable {
 		return longValue;
 	}
 
+	public String getLowerCaseType() {
+		return javaType.toLowerCase();
+	}
+
 	public String getMask() {
 		return mask;
+	}
+
+	public int getMaxLength() {
+		return length;
+	}
+
+	public int getMinLength() {
+		return 0;
 	}
 
 	public String getName() {
@@ -541,6 +578,10 @@ public class ColumnDefinition implements java.io.Serializable, JSONable {
 		return sortable;
 	}
 
+	public int getSortNo() {
+		return this.ordinal;
+	}
+
 	public String getSortType() {
 		return sortType;
 	}
@@ -583,6 +624,10 @@ public class ColumnDefinition implements java.io.Serializable, JSONable {
 
 	public String getTranslator() {
 		return translator;
+	}
+
+	public String getType() {
+		return javaType;
 	}
 
 	public String getUnique() {
@@ -753,6 +798,10 @@ public class ColumnDefinition implements java.io.Serializable, JSONable {
 		this.align = align;
 	}
 
+	public void setClassDefinition(ClassDefinition classDefinition) {
+
+	}
+
 	public void setCollection(boolean isCollection) {
 		if (isCollection) {
 			this.isCollection = "1";
@@ -889,6 +938,14 @@ public class ColumnDefinition implements java.io.Serializable, JSONable {
 		this.mask = mask;
 	}
 
+	public void setMaxLength(int maxLength) {
+		this.length = maxLength;
+	}
+
+	public void setMinLength(int minLength) {
+
+	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -994,6 +1051,10 @@ public class ColumnDefinition implements java.io.Serializable, JSONable {
 		this.sortable = sortable;
 	}
 
+	public void setSortNo(int sortNo) {
+		this.ordinal = sortNo;
+	}
+
 	public void setSortType(String sortType) {
 		this.sortType = sortType;
 	}
@@ -1036,6 +1097,10 @@ public class ColumnDefinition implements java.io.Serializable, JSONable {
 
 	public void setTranslator(String translator) {
 		this.translator = translator;
+	}
+
+	public void setType(String javaType) {
+		this.javaType = javaType;
 	}
 
 	public void setUnique(boolean unique) {

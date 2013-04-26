@@ -37,7 +37,7 @@ import com.glaf.core.service.ITableDataService;
 import com.glaf.core.service.ITableDefinitionService;
 import com.glaf.core.util.DBUtils;
 import com.glaf.core.util.IOUtils;
-import com.glaf.core.xml.MetadataXmlReader;
+import com.glaf.core.xml.XmlReader;
 import com.glaf.core.xml.XmlMappingReader;
 
 public class PlainTextParser implements Parser {
@@ -45,7 +45,7 @@ public class PlainTextParser implements Parser {
 	public static void main(String[] args) throws Exception {
 		String mappingFile = "./report/mapping/ProductFact.mapping.xml";
 		String dataFile = "./report/data/PALC-PBRT-RSLT.txt";
-		MetadataXmlReader reader = new MetadataXmlReader();
+		XmlReader reader = new XmlReader();
 		TableDefinition tableDefinition = reader
 				.read(new java.io.FileInputStream(mappingFile));
 		if (tableDefinition != null) {

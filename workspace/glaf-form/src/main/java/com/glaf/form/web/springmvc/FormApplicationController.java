@@ -18,11 +18,13 @@ import org.springframework.ui.ModelMap;
 import com.alibaba.fastjson.*;
 
 import com.glaf.core.config.ViewProperties;
+import com.glaf.core.domain.ColumnDefinition;
 import com.glaf.core.domain.EntityDefinition;
 import com.glaf.core.identity.*;
 import com.glaf.core.query.EntityDefinitionQuery;
 import com.glaf.core.security.*;
 import com.glaf.core.service.EntityDefinitionService;
+import com.glaf.core.service.ITableDefinitionService;
 import com.glaf.core.util.*;
 
 import com.glaf.form.core.domain.*;
@@ -41,6 +43,8 @@ public class FormApplicationController {
 	protected EntityDefinitionService entityDefinitionService;
 
 	protected FormDataService formDataService;
+
+	protected ITableDefinitionService tableDefinitionService;
 
 	public FormApplicationController() {
 
@@ -77,6 +81,37 @@ public class FormApplicationController {
 							.isSystemAdministrator())) {
 			}
 		}
+	}
+
+	@RequestMapping(params = "method=editListColumns")
+	public ModelAndView editListColumns(HttpServletRequest request,
+			ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		String appId = ParamUtils.getString(params, "appId");
+		FormApplication formApplication = null;
+		if (StringUtils.isNotEmpty(appId)) {
+			formApplication = formDataService.getFormApplication(appId);
+			request.setAttribute("formApplication", formApplication);
+            String targetId = formApplication.getName()+"_FormApp";
+            List<ColumnDefinition> columns = tableDefinitionService.getColumnDefinitionsByTargetId(targetId);
+            EntityDefinition entityDefinition = entityDefinitionService.getEntityDefinition(targetId);
+		    if(entityDefinition != null){
+		    	
+		    }
+		}
+
+		String view = request.getParameter("view");
+		if (StringUtils.isNotEmpty(view)) {
+			return new ModelAndView(view, modelMap);
+		}
+
+		String x_view = ViewProperties.getString("formApplication.edit");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
+		return new ModelAndView("/form/application/edit", modelMap);
 	}
 
 	@RequestMapping(params = "method=edit")
@@ -307,12 +342,16 @@ public class FormApplicationController {
 		this.formDataService = formDataService;
 	}
 
+	@javax.annotation.Resource
+	public void setTableDefinitionService(
+			ITableDefinitionService tableDefinitionService) {
+		this.tableDefinitionService = tableDefinitionService;
+	}
+
 	@RequestMapping(params = "method=update")
 	public ModelAndView update(HttpServletRequest request, ModelMap modelMap,
 			FormApplication formApplication) {
-
 		formDataService.saveFormApplication(formApplication);
-
 		return this.list(request, modelMap);
 	}
 

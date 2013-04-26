@@ -8,6 +8,7 @@ import org.dom4j.io.OutputFormat;
 
 import com.glaf.core.base.ClassDefinition;
 import com.glaf.core.base.FieldDefinition;
+import com.glaf.core.domain.TableDefinition;
 import com.glaf.core.xml.XmlWriter;
 import com.glaf.core.util.DBUtils;
 import com.glaf.core.util.Dom4jUtils;
@@ -42,7 +43,7 @@ public class Database2XmlMapping {
 				List<FieldDefinition> fields = DBUtils
 						.getFieldDefinitions(tableName);
 
-				ClassDefinition classDefinition = new ClassDefinition();
+				ClassDefinition classDefinition = new TableDefinition();
 				classDefinition.setTableName(tableName.toLowerCase());
 				classDefinition.setTitle(StringTools.upper(StringTools
 						.camelStyle(tableName)));

@@ -29,6 +29,8 @@ import javassist.*;
 
 import com.glaf.core.base.ClassDefinition;
 import com.glaf.core.base.FieldDefinition;
+import com.glaf.core.domain.ColumnDefinition;
+import com.glaf.core.domain.TableDefinition;
 import com.glaf.core.util.AnnotationUtils;
 import com.glaf.core.util.Dom4jUtils;
 import com.glaf.core.util.FileUtils;
@@ -49,7 +51,7 @@ public class JPAEntityToXmlMapping {
 	}
 
 	public ClassDefinition convert(String className) throws Exception {
-		ClassDefinition classDefinition = new ClassDefinition();
+		ClassDefinition classDefinition = new TableDefinition();
 
 		String simpleName = className;
 		String packageName = "";
@@ -86,7 +88,7 @@ public class JPAEntityToXmlMapping {
 				boolean isPK = false;
 				System.out.println(field.getName() + " "
 						+ field.getType().getName());
-				FieldDefinition fieldDefinition = new FieldDefinition();
+				FieldDefinition fieldDefinition = new ColumnDefinition();
 				fieldDefinition.setTitle(StringTools.upper(field.getName()));
 				fieldDefinition.setEditable(true);
 				fieldDefinition.setEnglishTitle(StringTools.upper(field
@@ -154,7 +156,7 @@ public class JPAEntityToXmlMapping {
 					String x_mm = StringTools.lower(mm);
 					System.out.println(method.getName() + " "
 							+ method.getReturnType().getName());
-					FieldDefinition fieldDefinition = new FieldDefinition();
+					FieldDefinition fieldDefinition = new ColumnDefinition();
 					fieldDefinition.setTitle(StringTools.upper(mm));
 					fieldDefinition.setEnglishTitle(StringTools.upper(mm));
 					fieldDefinition.setName(x_mm);

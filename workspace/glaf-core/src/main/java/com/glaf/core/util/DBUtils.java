@@ -1586,7 +1586,7 @@ public class DBUtils {
 				int nullable = rs.getInt("NULLABLE");
 				int length = rs.getInt("COLUMN_SIZE");
 				int ordinal = rs.getInt("ORDINAL_POSITION");
-				FieldDefinition column = new FieldDefinition();
+				FieldDefinition column = new ColumnDefinition();
 				column.setColumnName(name);
 				column.setType(FieldType.getJavaType(dataType));
 				if (nullable == 1) {

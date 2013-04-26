@@ -13,208 +13,57 @@
 
 package com.glaf.core.base;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
+import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
-public class ClassDefinition implements java.io.Serializable {
+public interface ClassDefinition extends JSONable {
 
-	private static final long serialVersionUID = 1L;
+	void addField(FieldDefinition field);
 
-	protected byte[] bytes;
+	String getClassName();
 
-	/**
-	 * 类名
-	 */
-	protected String className;
+	String getEnglishTitle();
 
-	/**
-	 * 英文标题
-	 */
-	protected String englishTitle;
+	String getEntityName();
 
-	/**
-	 * 实体类
-	 */
-	protected Class<?> entityClass;
+	Map<String, FieldDefinition> getFields();
 
-	/**
-	 * Java 实体类名
-	 */
-	protected String entityName;
+	FieldDefinition getIdField();
 
-	protected Map<String, FieldDefinition> fields = new LinkedHashMap<String, FieldDefinition>();
+	String getPackageName();
 
-	protected byte[] formBytes;
+	String getTableName();
 
-	/**
-	 * 表单资源名
-	 */
-	protected String formResourceName;
+	String getTitle();
 
-	protected FieldDefinition idField;
+	boolean isJbpmSupport();
 
-	/**
-	 * 是否需要JBPM工作流支持
-	 */
-	protected boolean jbpmSupport;
+	boolean isTreeSupport();
 
-	/**
-	 * Java 包名
-	 */
-	protected String packageName;
+	ClassDefinition jsonToObject(JSONObject jsonObject);
 
-	/**
-	 * 数据库表名
-	 */
-	protected String tableName;
+	void setClassName(String className);
 
-	/**
-	 * 标题
-	 */
-	protected String title;
+	void setEnglishTitle(String englishTitle);
 
-	/**
-	 * 是否树型结构
-	 */
-	protected boolean treeSupport;
+	void setEntityName(String entityName);
 
-	public ClassDefinition() {
+	void setIdField(FieldDefinition idField);
 
-	}
+	void setJbpmSupport(boolean jbpmSupport);
 
-	public void addField(FieldDefinition field) {
-		if (fields == null) {
-			fields = new LinkedHashMap<String, FieldDefinition>();
-		}
-		if (!fields.containsKey(field.getName())) {
-			fields.put(field.getName(), field);
-			field.setClassDefinition(this);
-		}
-	}
+	void setPackageName(String packageName);
 
-	public byte[] getBytes() {
-		return bytes;
-	}
+	void setTableName(String tableName);
 
-	public String getClassName() {
-		if (className == null) {
-			if (packageName != null && entityName != null) {
-				className = packageName + ".model." + entityName;
-			}
-		}
-		return className;
-	}
+	void setTitle(String title);
 
-	public String getEnglishTitle() {
-		return englishTitle;
-	}
+	void setTreeSupport(boolean treeSupport);
 
-	public Class<?> getEntityClass() {
-		return entityClass;
-	}
+	JSONObject toJsonObject();
 
-	public String getEntityName() {
-		return entityName;
-	}
-
-	public Map<String, FieldDefinition> getFields() {
-		return fields;
-	}
-
-	public byte[] getFormBytes() {
-		return formBytes;
-	}
-
-	public String getFormResourceName() {
-		return formResourceName;
-	}
-
-	public FieldDefinition getIdField() {
-		return idField;
-	}
-
-	public String getPackageName() {
-		return packageName;
-	}
-
-	public String getTableName() {
-		return tableName;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public boolean isJbpmSupport() {
-		return jbpmSupport;
-	}
-
-	public boolean isTreeSupport() {
-		return treeSupport;
-	}
-
-	public void setBytes(byte[] bytes) {
-		this.bytes = bytes;
-	}
-
-	public void setClassName(String className) {
-		this.className = className;
-	}
-
-	public void setEnglishTitle(String englishTitle) {
-		this.englishTitle = englishTitle;
-	}
-
-	public void setEntityClass(Class<?> entityClass) {
-		this.entityClass = entityClass;
-	}
-
-	public void setEntityName(String entityName) {
-		this.entityName = entityName;
-	}
-
-	public void setFields(Map<String, FieldDefinition> fields) {
-		this.fields = fields;
-	}
-
-	public void setFormBytes(byte[] formBytes) {
-		this.formBytes = formBytes;
-	}
-
-	public void setFormResourceName(String formResourceName) {
-		this.formResourceName = formResourceName;
-	}
-
-	public void setIdField(FieldDefinition idField) {
-		this.idField = idField;
-	}
-
-	public void setJbpmSupport(boolean jbpmSupport) {
-		this.jbpmSupport = jbpmSupport;
-	}
-
-	public void setPackageName(String packageName) {
-		this.packageName = packageName;
-	}
-
-	public void setTableName(String tableName) {
-		this.tableName = tableName;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public void setTreeSupport(boolean treeSupport) {
-		this.treeSupport = treeSupport;
-	}
-
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this,
-				ToStringStyle.MULTI_LINE_STYLE);
-	}
+	ObjectNode toObjectNode();
 
 }

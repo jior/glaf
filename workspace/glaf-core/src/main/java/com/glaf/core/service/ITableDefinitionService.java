@@ -59,6 +59,8 @@ public interface ITableDefinitionService {
 	TableDefinition getTableDefinition(String tableName);
 
 	List<ColumnDefinition> getColumnDefinitionsByTableName(String tableName);
+	
+	List<ColumnDefinition> getColumnDefinitionsByTargetId(String targetId);
 
 	/**
 	 * 根据查询参数获取记录总数
@@ -100,6 +102,14 @@ public interface ITableDefinitionService {
 	 */
 	@Transactional
 	void saveColumn(String tableName, ColumnDefinition columnDefinition);
+	
+	/**
+	 * 保存列定义信息
+	 * @param targetId
+	 * @param columnDefinitions
+	 */
+	@Transactional
+	void saveColumns(String targetId, List<ColumnDefinition> columnDefinitions);
 
 	/**
 	 * 保存定义

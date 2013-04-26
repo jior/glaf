@@ -30,7 +30,9 @@ import javax.persistence.Transient;
 
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.glaf.core.base.JSONable;
+import com.glaf.core.base.ClassDefinition;
+import com.glaf.core.base.FieldDefinition;
+import com.glaf.core.domain.util.ColumnDefinitionJsonFactory;
 import com.glaf.core.domain.util.TableDefinitionJsonFactory;
 
 /**
@@ -42,7 +44,7 @@ import com.glaf.core.domain.util.TableDefinitionJsonFactory;
 @Entity
 @Table(name = "SYS_TABLE")
 public class TableDefinition implements java.io.Serializable,
-		java.lang.Comparable<TableDefinition>, JSONable {
+		java.lang.Comparable<TableDefinition>, ClassDefinition {
 
 	private static final long serialVersionUID = 1L;
 
@@ -129,6 +131,12 @@ public class TableDefinition implements java.io.Serializable,
 	protected String isSubTable;
 
 	/**
+	 * 是否需要JBPM工作流支持
+	 */
+	@Transient
+	protected boolean jbpmSupport;
+
+	/**
 	 * 是否锁定
 	 */
 	@Column(name = "LOCKED_")
@@ -187,6 +195,12 @@ public class TableDefinition implements java.io.Serializable,
 	protected String topId;
 
 	/**
+	 * 是否树型结构
+	 */
+	@Transient
+	protected boolean treeSupport;
+
+	/**
 	 * 表类型
 	 */
 	@Column(name = "TYPE_", length = 50)
@@ -206,6 +220,16 @@ public class TableDefinition implements java.io.Serializable,
 		if (columns == null) {
 			columns = new ArrayList<ColumnDefinition>();
 		}
+		columns.add(column);
+	}
+
+	public void addField(FieldDefinition field) {
+		if (columns == null) {
+			columns = new ArrayList<ColumnDefinition>();
+		}
+		JSONObject jsonObject = field.toJsonObject();
+		ColumnDefinition column = ColumnDefinitionJsonFactory
+				.jsonToObject(jsonObject);
 		columns.add(column);
 	}
 
@@ -314,7 +338,21 @@ public class TableDefinition implements java.io.Serializable,
 		return entityName;
 	}
 
+	public Map<String, FieldDefinition> getFields() {
+		Map<String, FieldDefinition> fieldMap = new HashMap<String, FieldDefinition>();
+		if (columns != null && !columns.isEmpty()) {
+			for (ColumnDefinition column : columns) {
+				fieldMap.put(column.getName(), column);
+			}
+		}
+		return fieldMap;
+	}
+
 	public ColumnDefinition getIdColumn() {
+		return idColumn;
+	}
+
+	public FieldDefinition getIdField() {
 		return idColumn;
 	}
 
@@ -399,6 +437,14 @@ public class TableDefinition implements java.io.Serializable,
 		return insertOnly;
 	}
 
+	public boolean isJbpmSupport() {
+		return jbpmSupport;
+	}
+
+	public boolean isTreeSupport() {
+		return treeSupport;
+	}
+
 	public TableDefinition jsonToObject(JSONObject jsonObject) {
 		return TableDefinitionJsonFactory.jsonToObject(jsonObject);
 	}
@@ -460,8 +506,14 @@ public class TableDefinition implements java.io.Serializable,
 	}
 
 	public void setIdColumn(ColumnDefinition idColumn) {
-		idColumn.setPrimaryKey(true);
 		this.idColumn = idColumn;
+		this.idColumn.setPrimaryKey(true);
+	}
+
+	public void setIdField(FieldDefinition idField) {
+		JSONObject jsonObject = idField.toJsonObject();
+		this.idColumn = ColumnDefinitionJsonFactory.jsonToObject(jsonObject);
+		idColumn.setPrimaryKey(true);
 	}
 
 	public void setInsertCascade(int insertCascade) {
@@ -474,6 +526,10 @@ public class TableDefinition implements java.io.Serializable,
 
 	public void setIsSubTable(String isSubTable) {
 		this.isSubTable = isSubTable;
+	}
+
+	public void setJbpmSupport(boolean jbpmSupport) {
+		this.jbpmSupport = jbpmSupport;
 	}
 
 	public void setLocked(int locked) {
@@ -526,6 +582,10 @@ public class TableDefinition implements java.io.Serializable,
 
 	public void setTopId(String topId) {
 		this.topId = topId;
+	}
+
+	public void setTreeSupport(boolean treeSupport) {
+		this.treeSupport = treeSupport;
 	}
 
 	public void setType(String type) {

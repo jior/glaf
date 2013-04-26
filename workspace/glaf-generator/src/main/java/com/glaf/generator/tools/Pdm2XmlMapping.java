@@ -11,6 +11,8 @@ import org.dom4j.io.SAXReader;
 
 import com.glaf.core.base.ClassDefinition;
 import com.glaf.core.base.FieldDefinition;
+import com.glaf.core.domain.ColumnDefinition;
+import com.glaf.core.domain.TableDefinition;
 import com.glaf.core.xml.*;
 import com.glaf.core.util.*;
 
@@ -73,12 +75,13 @@ public class Pdm2XmlMapping {
 				System.out.println("------------------------------");
 				System.out.println(title + " [" + entityName + "]");
 
-				ClassDefinition classDefinition = new ClassDefinition();
+				ClassDefinition classDefinition = new TableDefinition();
 				classDefinition.setTableName(table.toUpperCase());
 				classDefinition.setTitle(title);
 				classDefinition.setEntityName(entityName);
 				classDefinition.setEnglishTitle(entityName);
-				classDefinition.setPackageName("com.glaf.apps."+entityName.toLowerCase());
+				classDefinition.setPackageName("com.glaf.apps."
+						+ entityName.toLowerCase());
 
 				Map<String, String> idMap = new HashMap<String, String>();
 
@@ -97,7 +100,7 @@ public class Pdm2XmlMapping {
 
 						String name = StringTools.lower(colName);
 						name = StringTools.replace(name, "_", "");
-						FieldDefinition field = new FieldDefinition();
+						FieldDefinition field = new ColumnDefinition();
 						field.setColumnName(colName.toUpperCase());
 						field.setName(name);
 						field.setTitle(colLabel);

@@ -48,7 +48,7 @@ import com.glaf.core.util.ClassUtils;
 import com.glaf.core.util.DBUtils;
 import com.glaf.core.util.FileUtils;
 import com.glaf.core.util.UUID32;
-import com.glaf.core.xml.MetadataXmlReader;
+import com.glaf.core.xml.XmlReader;
 import com.glaf.core.xml.XmlMappingReader;
 
 public class ParserFacede {
@@ -174,7 +174,7 @@ public class ParserFacede {
 	public List<TableModel> parse(InputStream mappingFile,
 			InputStream dataFile, String seqNo, boolean saveToDB) {
 		List<TableModel> rows = null;
-		MetadataXmlReader reader = new MetadataXmlReader();
+		XmlReader reader = new XmlReader();
 		XmlMappingReader xmlReader = new XmlMappingReader();
 		TableDefinition tableDefinition = null;
 		TableModel tableModel = null;
@@ -244,7 +244,7 @@ public class ParserFacede {
 	 */
 	public List<TableModel> parse(String mappingFile, String dataFile,
 			String seqNo, boolean saveToDB) {
-		MetadataXmlReader reader = new MetadataXmlReader();
+		XmlReader reader = new XmlReader();
 		XmlMappingReader xmlReader = new XmlMappingReader();
 		TableDefinition tableDefinition = null;
 		TableModel tableModel = null;

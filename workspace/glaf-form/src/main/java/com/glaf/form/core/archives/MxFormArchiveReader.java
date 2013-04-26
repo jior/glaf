@@ -1,21 +1,20 @@
-
 /*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.glaf.form.core.archives;
 
 import java.io.*;
@@ -26,7 +25,6 @@ import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
-import com.glaf.core.base.ClassDefinition;
 import com.glaf.form.core.dataimport.FormDataImportFactory;
 import com.glaf.form.core.domain.FormApplication;
 import com.glaf.form.core.domain.FormDefinition;
@@ -39,105 +37,6 @@ import com.glaf.core.util.ZipUtils;
 public class MxFormArchiveReader {
 
 	private static int BUFFER = 4096;
-
-	/**
-	 * 获取类定义
-	 * 
-	 * @param zipBytes
-	 * @return
-	 */
-	public List<ClassDefinition> getClassDefinitions(byte[] zipBytes) {
-		ByteArrayInputStream bais = null;
-		try {
-			bais = new ByteArrayInputStream(zipBytes);
-			return this.getClassDefinitions(bais);
-		} catch (Exception ex) {
-			throw new RuntimeException(ex);
-		} finally {
-			if (bais != null) {
-				try {
-					bais.close();
-				} catch (Exception ex) {
-				}
-			}
-		}
-	}
-
-	/**
-	 * 获取类定义
-	 * 
-	 * @param is
-	 * @return
-	 */
-	public List<ClassDefinition> getClassDefinitions(InputStream is) {
-		List<ClassDefinition> rows = new ArrayList<ClassDefinition>();
-		ZipInputStream zipInputStream = null;
-		ByteArrayOutputStream baos = null;
-		BufferedOutputStream bos = null;
-		BufferedInputStream bis = null;
-		ZipEntry zipEntry = null;
-		try {
-			bis = new BufferedInputStream(is);
-			zipInputStream = new ZipInputStream(bis);
-			while ((zipEntry = zipInputStream.getNextEntry()) != null) {
-				String name = zipEntry.getName();
-				if (name.endsWith(".class")) {
-					ClassDefinition classDefinition = new ClassDefinition();
-					byte abyte0[] = new byte[BUFFER];
-					baos = new ByteArrayOutputStream();
-					bos = new BufferedOutputStream(baos, BUFFER);
-					int i = 0;
-					while ((i = zipInputStream.read(abyte0, 0, BUFFER)) != -1) {
-						bos.write(abyte0, 0, i);
-					}
-					bos.flush();
-					byte[] bytes = baos.toByteArray();
-					bos.close();
-					baos.close();
-					baos = null;
-					bos = null;
-					String className = name.replace('/', '.');
-					className = className.substring(0,
-							className.lastIndexOf("."));
-					classDefinition.setClassName(className);
-					classDefinition.setBytes(bytes);
-					rows.add(classDefinition);
-				}
-			}
-		} catch (Exception ex) {
-			throw new RuntimeException(ex);
-		} finally {
-			if (bos != null) {
-				try {
-					bos.close();
-					bos = null;
-				} catch (Exception ex) {
-				}
-			}
-			if (baos != null) {
-				try {
-					baos.close();
-					baos = null;
-				} catch (Exception ex) {
-				}
-			}
-			if (bis != null) {
-				try {
-					bis.close();
-					bis = null;
-				} catch (Exception ex) {
-				}
-			}
-			if (zipInputStream != null) {
-				try {
-					zipInputStream.close();
-					zipInputStream = null;
-				} catch (Exception ex) {
-				}
-			}
-		}
-		return rows;
-	}
 
 	/**
 	 * 获取应用定义

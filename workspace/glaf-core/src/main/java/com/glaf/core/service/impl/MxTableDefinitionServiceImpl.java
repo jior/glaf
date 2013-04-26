@@ -96,6 +96,10 @@ public class MxTableDefinitionServiceImpl implements ITableDefinitionService {
 		return null;
 	}
 
+	public List<ColumnDefinition> getColumnDefinitionsByTargetId(String targetId) {
+		return columnDefinitionMapper.getColumnDefinitionsByTargetId(targetId);
+	}
+
 	public List<TableDefinition> getTableColumnsCount(TableDefinitionQuery query) {
 		List<TableDefinition> list = tableDefinitionMapper
 				.getTableColumnsCount(query);
@@ -298,6 +302,21 @@ public class MxTableDefinitionServiceImpl implements ITableDefinitionService {
 							.insertColumnDefinition(columnDefinition);
 					cols.add(id);
 				}
+			}
+		}
+	}
+
+	@Transactional
+	public void saveColumns(String targetId,
+			List<ColumnDefinition> columnDefinitions) {
+		columnDefinitionMapper.deleteColumnDefinitionByTargetId(targetId);
+		if (columnDefinitions != null && !columnDefinitions.isEmpty()) {
+			for (ColumnDefinition col : columnDefinitions) {
+				if (StringUtils.isEmpty(col.getId())) {
+					col.setId(col.getTargetId() + "_" + col.getColumnName());
+				}
+				col.setTargetId(targetId);
+				columnDefinitionMapper.insertColumnDefinition(col);
 			}
 		}
 	}

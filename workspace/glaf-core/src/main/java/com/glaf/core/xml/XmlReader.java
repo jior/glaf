@@ -13,60 +13,86 @@
 
 package com.glaf.core.xml;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
-import org.dom4j.Document;
-import org.dom4j.Element;
+import org.dom4j.*;
 import org.dom4j.io.SAXReader;
 
-import com.glaf.core.base.ClassDefinition;
-import com.glaf.core.base.FieldDefinition;
+import com.glaf.core.domain.ColumnDefinition;
+import com.glaf.core.domain.TableDefinition;
 import com.glaf.core.util.FieldType;
+import com.glaf.core.util.Tools;
 
 public class XmlReader {
 
-	public ClassDefinition read(java.io.InputStream inputStream) {
-		ClassDefinition classDefinition = new ClassDefinition();
+	public TableDefinition read(java.io.InputStream inputStream) {
+		TableDefinition tableDefinition = new TableDefinition();
 		SAXReader xmlReader = new SAXReader();
 		try {
 			Document doc = xmlReader.read(inputStream);
 			Element root = doc.getRootElement();
 			Element element = root.element("entity");
 			if (element != null) {
-				classDefinition.setEntityName(element.attributeValue("name"));
-				classDefinition.setPackageName(element
+
+				List<?> attrs = element.attributes();
+				if (attrs != null && !attrs.isEmpty()) {
+					Map<String, Object> dataMap = new HashMap<String, Object>();
+					Iterator<?> iter = attrs.iterator();
+					while (iter.hasNext()) {
+						Attribute attr = (Attribute) iter.next();
+						dataMap.put(attr.getName(), attr.getStringValue());
+					}
+					Tools.populate(tableDefinition, dataMap);
+				}
+
+				tableDefinition.setEntityName(element.attributeValue("name"));
+				tableDefinition.setPackageName(element
 						.attributeValue("package"));
-				classDefinition.setTableName(element.attributeValue("table"));
-				classDefinition.setTitle(element.attributeValue("title"));
-				classDefinition.setEnglishTitle(element
+				tableDefinition.setTableName(element.attributeValue("table"));
+				tableDefinition.setTitle(element.attributeValue("title"));
+				tableDefinition.setEnglishTitle(element
 						.attributeValue("englishTitle"));
-				classDefinition.setFormResourceName(element
-						.attributeValue("formResourceName"));
+
 				if (StringUtils.equals("true",
 						element.attributeValue("jbpmSupport"))) {
-					classDefinition.setJbpmSupport(true);
+					tableDefinition.setJbpmSupport(true);
 				}
 				if (StringUtils.equals("true",
 						element.attributeValue("treeSupport"))) {
-					classDefinition.setTreeSupport(true);
+					tableDefinition.setTreeSupport(true);
 				}
-				Element idElem = element.element("id");
-				if (idElem != null) {
-					FieldDefinition idField = new FieldDefinition();
-					this.read(idElem, idField);
-					classDefinition.setIdField(idField);
-				}
+
+				tableDefinition.setAggregationKeys(element
+						.attributeValue("aggregationKeys"));
+
+				String primaryKey = element.attributeValue("primaryKey");
+
 				List<?> rows = element.elements("property");
 				if (rows != null && rows.size() > 0) {
 					Iterator<?> iterator = rows.iterator();
 					while (iterator.hasNext()) {
 						Element elem = (Element) iterator.next();
-						FieldDefinition field = new FieldDefinition();
+						ColumnDefinition field = new ColumnDefinition();
 						this.read(elem, field);
-						classDefinition.addField(field);
+						if (primaryKey != null
+								&& StringUtils.equals(primaryKey,
+										field.getColumnName())) {
+							tableDefinition.setIdColumn(field);
+						} else {
+							tableDefinition.addColumn(field);
+						}
 					}
+				}
+
+				Element idElem = element.element("id");
+				if (idElem != null) {
+					ColumnDefinition idField = new ColumnDefinition();
+					this.read(idElem, idField);
+					tableDefinition.setIdColumn(idField);
 				}
 			}
 
@@ -74,10 +100,21 @@ public class XmlReader {
 			throw new RuntimeException(ex);
 		}
 
-		return classDefinition;
+		return tableDefinition;
 	}
 
-	protected void read(Element elem, FieldDefinition field) {
+	protected void read(Element elem, ColumnDefinition field) {
+		List<?> attrs = elem.attributes();
+		if (attrs != null && !attrs.isEmpty()) {
+			Map<String, Object> dataMap = new HashMap<String, Object>();
+			Iterator<?> iter = attrs.iterator();
+			while (iter.hasNext()) {
+				Attribute attr = (Attribute) iter.next();
+				dataMap.put(attr.getName(), attr.getStringValue());
+			}
+			Tools.populate(field, dataMap);
+		}
+
 		field.setName(elem.attributeValue("name"));
 		field.setMask(elem.attributeValue("mask"));
 		field.setTitle(elem.attributeValue("title"));

@@ -9,7 +9,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>表单定义</title>
+<title>数据表信息</title>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/easyui/themes/${theme}/easyui.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/themes/${theme}/styles.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/icons/styles.css">
@@ -83,7 +83,7 @@
 <div class="easyui-layout" data-options="fit:true">  
   <div data-options="region:'north',split:true,border:true" style="height:40px"> 
     <div class="toolbar-backgroud"> 
-	<span class="x_content_title">编辑表单定义</span>
+	<span class="x_content_title">编辑数据表定义</span>
 	<!-- <input type="button" name="save" value=" 保存 " class="button btn btn-primary" onclick="javascript:saveData();">
 	<input type="button" name="saveAs" value=" 另存 " class="button btn" onclick="javascript:saveAsData();">
 	<input type="button" name="back" value=" 返回 " class="button btn" onclick="javascript:history.back();"> -->

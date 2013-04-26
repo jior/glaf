@@ -38,7 +38,7 @@ import com.glaf.core.service.ITableDataService;
 import com.glaf.core.service.ITableDefinitionService;
 import com.glaf.core.util.DBUtils;
 import com.glaf.core.util.IOUtils;
-import com.glaf.core.xml.MetadataXmlReader;
+import com.glaf.core.xml.XmlReader;
 import com.glaf.core.xml.XmlMappingReader;
 
 public class CsvTextParser implements Parser {
@@ -46,7 +46,7 @@ public class CsvTextParser implements Parser {
 	public static void main(String[] args) throws Exception {
 		String mappingFile = "./report/mapping/CarType.mapping.xml";
 		String dataFile = "./report/data/SDCMS-PBRT-SPCR.csv";
-		MetadataXmlReader reader = new MetadataXmlReader();
+		XmlReader reader = new XmlReader();
 		TableDefinition tableDefinition = reader
 				.read(new java.io.FileInputStream(mappingFile));
 		if (tableDefinition != null) {

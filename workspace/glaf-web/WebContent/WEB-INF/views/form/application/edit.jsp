@@ -195,7 +195,7 @@
 		   <select id="tableName" name="tableName">
 		   <option value="">----请选择----</option>
 			<c:forEach items="${entityDefinitions}" var="a">
-				<option value="${a.tablename}">${a.title}</option>
+				<option value="${a.tablename}">${a.title}[${a.tablename}]</option>
 			</c:forEach>
 		   </select> 
 		   <span style="color:red">(选择后不允许修改)</span>

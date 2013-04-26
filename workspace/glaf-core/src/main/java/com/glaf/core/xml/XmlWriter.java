@@ -71,8 +71,7 @@ public class XmlWriter {
 				elem.addAttribute("type", field.getType());
 				elem.addAttribute("title", field.getTitle());
 				elem.addAttribute("englishTitle", field.getEnglishTitle());
-				elem.addAttribute("dataType",
-						String.valueOf(field.getDataType()));
+				 
 				if (field.getLength() > 0) {
 					elem.addAttribute("length",
 							String.valueOf(field.getLength()));
