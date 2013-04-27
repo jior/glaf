@@ -22,8 +22,7 @@ import java.util.Date;
 import java.util.List;
 
 public class BlobItemQuery extends DataQuery {
-	private static final long serialVersionUID = 1L;
-	protected List<String> businessKeys;
+	private static final long serialVersionUID = 1L; 
 	protected String contentType;
 	protected Date createDateGreaterThanOrEqual;
 	protected Date createDateLessThanOrEqual;
@@ -47,13 +46,7 @@ public class BlobItemQuery extends DataQuery {
 
 	}
 
-	public BlobItemQuery businessKeys(List<String> businessKeys) {
-		if (businessKeys == null) {
-			throw new RuntimeException("businessKeys is empty ");
-		}
-		this.businessKeys = businessKeys;
-		return this;
-	}
+	 
 
 	public BlobItemQuery contentType(String contentType) {
 		if (contentType == null) {
@@ -113,9 +106,7 @@ public class BlobItemQuery extends DataQuery {
 		return this;
 	}
 
-	public List<String> getBusinessKeys() {
-		return businessKeys;
-	}
+	 
 
 	public String getContentType() {
 		return contentType;

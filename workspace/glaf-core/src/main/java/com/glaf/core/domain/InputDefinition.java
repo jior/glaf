@@ -121,6 +121,7 @@ public class InputDefinition implements Serializable, JSONable {
 	 */
 	@Column(name = "init_value", length = 500)
 	protected String initValue;
+	
 
 	public InputDefinition() {
 

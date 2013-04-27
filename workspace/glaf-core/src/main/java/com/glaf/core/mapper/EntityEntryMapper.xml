@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.core.mapper.EntityEntryMapper">
+
+	<resultMap id="entityEntryResultMap" type="com.glaf.core.domain.EntityEntry">
+		<id property="id" column="ID_" jdbcType="VARCHAR" />
+		<result property="nodeId" column="NODEID_" jdbcType="BIGINT" />
+		<result property="entityId" column="ENTITYID_" jdbcType="VARCHAR" />
+		<result property="entryKey" column="ENTRYKEY_" jdbcType="VARCHAR" />
+		<result property="entryType" column="ENTRYTYPE_" jdbcType="INTEGER" />
+		<result property="moduleId" column="MODULEID_" jdbcType="VARCHAR" />
+		<result property="dataCode" column="DATACODE_" jdbcType="VARCHAR" />
+		<result property="isPropagationAllowed" column="ISPROPAGATIONALLOWED_"
+			jdbcType="VARCHAR" />
+		<result property="startDate" column="STARTDATE_" jdbcType="TIMESTAMP" />
+		<result property="endDate" column="ENDDATE_" jdbcType="TIMESTAMP" />
+		<result property="subject" column="SUBJECT_" jdbcType="VARCHAR" />
+		<result property="objectId" column="OBJECTID_" jdbcType="VARCHAR" />
+		<result property="objectValue" column="OBJECTVALUE_" jdbcType="VARCHAR" />
+		<result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP" />
+		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<resultMap id="entryPointResultMap" type="com.glaf.core.domain.EntryPoint">
+		<id property="id" column="ID_" jdbcType="VARCHAR" />
+		<result property="nodeId" column="NODEID_" jdbcType="BIGINT" />
+		<result property="entityId" column="ENTITYID_" jdbcType="VARCHAR" />
+		<result property="entryKey" column="ENTRYKEY_" jdbcType="VARCHAR" />
+		<result property="entityEntryId" column="ENTITYENTRY_"
+			jdbcType="VARCHAR" />
+		<result property="name" column="NAME_" jdbcType="VARCHAR" />
+		<result property="value" column="VALUE_" jdbcType="VARCHAR" />
+	</resultMap>
+
+
+	<insert id="insertEntityEntry" parameterType="com.glaf.core.domain.EntityEntry">
+		insert into
+		SYS_ENTITYENTRY ( ID_
+		,NODEID_
+		,ENTITYID_
+		,ENTRYKEY_
+		,ENTRYTYPE_
+		,MODULEID_
+		,DATACODE_
+		,ISPROPAGATIONALLOWED_
+		,STARTDATE_
+		,ENDDATE_
+		,SUBJECT_
+		,OBJECTID_
+		,OBJECTVALUE_
+		,CREATEDATE_
+		,CREATEBY_
+		)
+		values (
+		#{id, jdbcType=VARCHAR}
+		,#{nodeId, jdbcType=BIGINT}
+		,#{entityId,
+		jdbcType=VARCHAR}
+		,#{entryKey, jdbcType=VARCHAR}
+		,#{entryType,
+		jdbcType=INTEGER}
+		,#{moduleId, jdbcType=VARCHAR}
+		,#{dataCode,
+		jdbcType=VARCHAR}
+		,#{isPropagationAllowed, jdbcType=VARCHAR}
+		,#{startDate, jdbcType=TIMESTAMP}
+		,#{endDate, jdbcType=TIMESTAMP}
+		,#{subject, jdbcType=VARCHAR}
+		,#{objectId, jdbcType=VARCHAR}
+		,#{objectValue, jdbcType=VARCHAR}
+		,#{createDate, jdbcType=TIMESTAMP}
+		,#{createBy, jdbcType=VARCHAR}
+		)
+    </insert>
+
+	<insert id="insertEntryPoint" parameterType="com.glaf.core.domain.EntryPoint">
+		insert into
+		SYS_ENTRYPOINT ( ID_
+		,NODEID_
+		,ENTITYID_
+		,ENTRYKEY_
+		,NAME_
+		,VALUE_
+		,ENTITYENTRY_
+		)
+		values (
+		#{id, jdbcType=VARCHAR}
+		,#{nodeId, jdbcType=BIGINT}
+		,#{entityId,
+		jdbcType=VARCHAR}
+		,#{entryKey, jdbcType=VARCHAR}
+		,#{name,
+		jdbcType=VARCHAR}
+		,#{value, jdbcType=VARCHAR}
+		,#{entityEntryId,
+		jdbcType=VARCHAR}
+		)
+    </insert>
+
+
+	<delete id="deleteEntityEntryById" parameterType="string">
+		delete from
+		SYS_ENTITYENTRY
+		where ID_ = #{id}
+	</delete>
+
+	<delete id="deleteEntryPoint" parameterType="string">
+		delete from
+		SYS_ENTRYPOINT
+		where ENTITYENTRY_ = #{entityEntryId}
+	</delete>
+
+	<delete id="deleteEntityEntrys" parameterType="com.glaf.core.query.EntityEntryQuery">
+		delete from SYS_ENTITYENTRY
+		where (
+		ID_ IN
+		<foreach item="x_rowId" index="index" collection="rowIds"
+			open="(" separator="," close=")">
+			#{x_rowId}
+              </foreach>
+		)
+	</delete>
+
+	<select id="getEntityEntryById" parameterType="string"
+		resultMap="entityEntryResultMap">
+		select * from SYS_ENTITYENTRY where ID_ = #{id}
+	</select>
+
+
+	<select id="getEntityEntries" parameterType="com.glaf.core.query.EntityEntryQuery"
+		resultMap="entityEntryResultMap">
+		select E.*
+		<include refid="selectEntityEntrysSql" />
+		<if test="orderBy != null">
+			order by ${orderBy}
+        </if>
+	</select>
+
+	<select id="getEntityEntryCount" parameterType="com.glaf.core.query.EntityEntryQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectEntityEntrysSql" />
+	</select>
+
+	<sql id="selectEntityEntrysSql">
+
+		from SYS_ENTITYENTRY E
+
+		<where>
+			1 = 1
+
+			<if test="nodeId != null">
+				and E.NODEID_ = #{nodeId}
+            </if>
+
+			<if test="nodeIds != null and nodeIds.size() &gt; 0">
+				and E.NODEID_ IN
+				<foreach item="x_nodeId" index="index" collection="nodeIds"
+					open="(" separator="," close=")">
+					#{x_nodeId}
+                </foreach>
+			</if>
+
+			<if test="entityId != null">
+				and E.ENTITYID_ = #{entityId}
+            </if>
+
+			<if test="entityIds != null and entityIds.size() &gt; 0">
+				and E.ENTITYID_ IN
+				<foreach item="x_entityId" index="index" collection="entityIds"
+					open="(" separator="," close=")">
+					#{x_entityId}
+                </foreach>
+			</if>
+
+			<if test="entryKey != null">
+				and E.ENTRYKEY_ = #{entryKey}
+            </if>
+
+			<if test="entryKeys != null and entryKeys.size() &gt; 0">
+				and E.ENTRYKEY_ IN
+				<foreach item="x_entryKey" index="index" collection="entryKeys"
+					open="(" separator="," close=")">
+					#{x_entryKey}
+                </foreach>
+			</if>
+
+			<if test="entryType != null">
+				and E.ENTRYTYPE_ = #{entryType}
+            </if>
+
+			<if test="entryTypeGreaterThanOrEqual != null">
+				and E.ENTRYTYPE_ &gt;= #{entryTypeGreaterThanOrEqual}
+			</if>
+
+			<if test="entryTypeLessThanOrEqual != null">
+				and E.ENTRYTYPE_ &lt;= #{entryTypeLessThanOrEqual}
+            </if>
+
+			<if test="entryTypes != null and entryTypes.size() &gt; 0">
+				and E.ENTRYTYPE_ IN
+				<foreach item="x_entryType" index="index" collection="entryTypes"
+					open="(" separator="," close=")">
+					#{x_entryType}
+                </foreach>
+			</if>
+
+			<if test="moduleId != null">
+				and E.MODULEID_ = #{moduleId}
+            </if>
+
+			<if test="moduleIds != null and moduleIds.size() &gt; 0">
+				and E.MODULEID_ IN
+				<foreach item="x_moduleId" index="index" collection="moduleIds"
+					open="(" separator="," close=")">
+					#{x_moduleId}
+                </foreach>
+			</if>
+
+			<if test="dataCode != null">
+				and E.DATACODE_ = #{dataCode}
+            </if>
+
+			<if test="dataCodes != null and dataCodes.size() &gt; 0">
+				and E.DATACODE_ IN
+				<foreach item="x_dataCode" index="index" collection="dataCodes"
+					open="(" separator="," close=")">
+					#{x_dataCode}
+                </foreach>
+			</if>
+
+			<if test="startDateGreaterThanOrEqual != null">
+				and E.STARTDATE_ &gt;= #{startDateGreaterThanOrEqual}
+			</if>
+
+			<if test="startDateLessThanOrEqual != null">
+				and E.STARTDATE_ &lt;= #{startDateLessThanOrEqual}
+            </if>
+
+			<if test="endDateGreaterThanOrEqual != null">
+				and E.ENDDATE_ &gt;= #{endDateGreaterThanOrEqual}
+            </if>
+
+			<if test="endDateLessThanOrEqual != null">
+				and E.ENDDATE_ &lt;= #{endDateLessThanOrEqual}
+            </if>
+
+			<if test="objectId != null">
+				and E.OBJECTID_ = #{objectId}
+            </if>
+
+			<if test="objectIds != null and objectIds.size() &gt; 0">
+				and E.OBJECTID_ IN
+				<foreach item="x_objectId" index="index" collection="objectIds"
+					open="(" separator="," close=")">
+					#{x_objectId}
+                </foreach>
+			</if>
+
+			<if test="objectValue != null">
+				and E.OBJECTVALUE_ = #{objectValue}
+            </if>
+
+			<if test="objectValues != null and objectValues.size() &gt; 0">
+				and E.OBJECTVALUE_ IN
+				<foreach item="x_objectValue" index="index" collection="objectValues"
+					open="(" separator="," close=")">
+					#{x_objectValue}
+                </foreach>
+			</if>
+
+			<if test="createBy != null">
+				and E.CREATEBY_ = #{createBy}
+            </if>
+
+		</where>
+	</sql>
+
+	<select id="getEntryPoints" parameterType="com.glaf.core.query.EntryPointQuery"
+		resultMap="entryPointResultMap">
+		select E.*
+		<include refid="selectEntryPointsSql" />
+	</select>
+
+	<select id="getEntryPointCount" parameterType="com.glaf.core.query.EntryPointQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectEntryPointsSql" />
+	</select>
+
+	<sql id="selectEntryPointsSql">
+
+		from SYS_ENTRYPOINT E
+
+		<where>
+			1 = 1
+
+			<if test="nodeId != null">
+				and E.NODEID_ = #{nodeId}
+            </if>
+
+			<if test="nodeIds != null and nodeIds.size() &gt; 0">
+				and E.NODEID_ IN
+				<foreach item="x_nodeId" index="index" collection="nodeIds"
+					open="(" separator="," close=")">
+					#{x_nodeId}
+                </foreach>
+			</if>
+
+			<if test="entityId != null">
+				and E.ENTITYID_ = #{entityId}
+            </if>
+
+			<if test="entityIds != null and entityIds.size() &gt; 0">
+				and E.ENTITYID_ IN
+				<foreach item="x_entityId" index="index" collection="entityIds"
+					open="(" separator="," close=")">
+					#{x_entityId}
+                </foreach>
+			</if>
+
+			<if test="entryKey != null">
+				and E.ENTRYKEY_ = #{entryKey}
+            </if>
+
+			<if test="entryKeys != null and entryKeys.size() &gt; 0">
+				and E.ENTRYKEY_ IN
+				<foreach item="x_entryKey" index="index" collection="entryKeys"
+					open="(" separator="," close=")">
+					#{x_entryKey}
+                </foreach>
+			</if>
+
+			<if test="name != null">
+				and E.NAME_ = #{name}
+            </if>
+
+			<if test="names != null and names.size() &gt; 0">
+				and E.NAME_ IN
+				<foreach item="x_name" index="index" collection="names"
+					open="(" separator="," close=")">
+					#{x_name}
+                </foreach>
+			</if>
+
+			<if test="value != null">
+				and E.VALUE_ = #{value}
+            </if>
+
+			<if test="values != null and values.size() &gt; 0">
+				and E.VALUE_ IN
+				<foreach item="x_value" index="index" collection="values"
+					open="(" separator="," close=")">
+					#{x_value}
+                </foreach>
+			</if>
+
+		</where>
+	</sql>
+
+</mapper>

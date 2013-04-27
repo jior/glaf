@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.core.mapper.AccessEntryMapper">
+
+	<resultMap id="accessEntryResultMap" type="com.glaf.core.domain.AccessEntryEntity">
+		<id property="id" column="ID_" jdbcType="VARCHAR" />
+		<result property="applicationName" column="APPLICATIONNAME_"
+			jdbcType="VARCHAR" />
+		<result property="processDefinitionId" column="PROCESSDEFINITIONID_"
+			jdbcType="VARCHAR" />
+		<result property="processName" column="PROCESSNAME_" jdbcType="VARCHAR" />
+		<result property="taskName" column="TASKNAME_" jdbcType="VARCHAR" />
+		<result property="formName" column="FORMNAME_" jdbcType="VARCHAR" />
+		<result property="roleId" column="ROLEID_" jdbcType="BIGINT" />
+		<result property="entryType" column="ENTRYTYPE_" jdbcType="INTEGER" />
+		<result property="editFile" column="EDITFILE_" jdbcType="VARCHAR" />
+		<result property="objectId" column="OBJECTID_" jdbcType="VARCHAR" />
+		<result property="objectValue" column="OBJECTVALUE_" jdbcType="VARCHAR" />
+		<result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP" />
+		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<insert id="insertAccessEntry" parameterType="com.glaf.core.domain.AccessEntryEntity">
+		insert into
+		SYS_ACCESSENTRY ( ID_
+		,APPLICATIONNAME_
+		,PROCESSDEFINITIONID_
+		,PROCESSNAME_
+		,TASKNAME_
+		,FORMNAME_
+		,ROLEID_
+		,ENTRYTYPE_
+		,EDITFILE_
+		,OBJECTID_
+		,OBJECTVALUE_
+		,CREATEDATE_
+		,CREATEBY_
+		)
+		values (
+		#{id,
+		jdbcType=VARCHAR}
+		,#{applicationName, jdbcType=VARCHAR}
+		,#{processDefinitionId, jdbcType=VARCHAR}
+		,#{processName,
+		jdbcType=VARCHAR}
+		,#{taskName, jdbcType=VARCHAR}
+		,#{formName,
+		jdbcType=VARCHAR}
+		,#{roleId, jdbcType=BIGINT}
+		,#{entryType,
+		jdbcType=INTEGER}
+		,#{editFile, jdbcType=VARCHAR}
+		,#{objectId,
+		jdbcType=VARCHAR}
+		,#{objectValue, jdbcType=VARCHAR}
+		,#{createDate,
+		jdbcType=TIMESTAMP}
+		,#{createBy, jdbcType=VARCHAR}
+		)
+	</insert>
+
+
+	<delete id="deleteAccessEntryById" parameterType="string">
+		delete from
+		SYS_ACCESSENTRY
+		where ID_ = #{id}
+	</delete>
+
+	<delete id="deleteAccessEntries" parameterType="com.glaf.core.query.AccessEntryQuery">
+		delete from SYS_ACCESSENTRY
+		where (
+		ID_ IN
+		<foreach item="x_rowId" index="index" collection="rowIds"
+			open="(" separator="," close=")">
+			#{x_rowId}
+		</foreach>
+		)
+	</delete>
+
+	<select id="getAccessEntryById" parameterType="string"
+		resultMap="accessEntryResultMap">
+		select * from SYS_ACCESSENTRY where ID_ = #{id}
+	</select>
+
+	<select id="getAccessEntries" parameterType="com.glaf.core.query.AccessEntryQuery"
+		resultMap="accessEntryResultMap">
+		select E.*
+		<include refid="selectAccessEntrysSql" />
+		<if test="orderBy != null">
+			order by ${orderBy}
+		</if>
+	</select>
+
+	<select id="getAccessEntryCount" parameterType="com.glaf.core.query.AccessEntryQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectAccessEntrysSql" />
+	</select>
+
+	<sql id="selectAccessEntrysSql">
+
+		from SYS_ACCESSENTRY E
+
+		<where>
+			1 = 1
+
+			<if test="applicationName != null">
+				and E.APPLICATIONNAME_ = #{applicationName}
+			</if>
+
+			<if test="applicationNames != null and applicationNames.size() &gt; 0">
+				and E.APPLICATIONNAME_ IN
+				<foreach item="x_applicationName" index="index" collection="applicationNames"
+					open="(" separator="," close=")">
+					#{x_applicationName}
+				</foreach>
+			</if>
+
+			<if test="processDefinitionId != null">
+				and E.PROCESSDEFINITIONID_ = #{processDefinitionId}
+			</if>
+
+			<if
+				test="processDefinitionIds != null and processDefinitionIds.size() &gt; 0">
+				and E.PROCESSDEFINITIONID_ IN
+				<foreach item="x_processDefinitionId" index="index"
+					collection="processDefinitionIds" open="(" separator="," close=")">
+					#{x_processDefinitionId}
+				</foreach>
+			</if>
+
+			<if test="processName != null">
+				and E.PROCESSNAME_ = #{processName}
+			</if>
+
+			<if test="processNames != null and processNames.size() &gt; 0">
+				and E.PROCESSNAME_ IN
+				<foreach item="x_processName" index="index" collection="processNames"
+					open="(" separator="," close=")">
+					#{x_processName}
+				</foreach>
+			</if>
+
+			<if test="taskName != null">
+				and E.TASKNAME_ = #{taskName}
+			</if>
+
+			<if test="taskNames != null and taskNames.size() &gt; 0">
+				and E.TASKNAME_ IN
+				<foreach item="x_taskName" index="index" collection="taskNames"
+					open="(" separator="," close=")">
+					#{x_taskName}
+				</foreach>
+			</if>
+
+			<if test="formName != null">
+				and E.FORMNAME_ = #{formName}
+			</if>
+
+			<if test="formNames != null and formNames.size() &gt; 0">
+				and E.FORMNAME_ IN
+				<foreach item="x_formName" index="index" collection="formNames"
+					open="(" separator="," close=")">
+					#{x_formName}
+				</foreach>
+			</if>
+
+			<if test="roleId != null">
+				and E.ROLEID_ = #{roleId}
+			</if>
+
+			<if test="roleIds != null and roleIds.size() &gt; 0">
+				and E.ROLEID_ IN
+				<foreach item="x_roleId" index="index" collection="roleIds"
+					open="(" separator="," close=")">
+					#{x_roleId}
+				</foreach>
+			</if>
+
+			<if test="entryType != null">
+				and E.ENTRYTYPE_ = #{entryType}
+			</if>
+
+			<if test="entryTypeGreaterThanOrEqual != null">
+				and E.ENTRYTYPE_ &gt;= #{entryTypeGreaterThanOrEqual}
+			</if>
+
+			<if test="entryTypeLessThanOrEqual != null">
+				and E.ENTRYTYPE_ &lt;= #{entryTypeLessThanOrEqual}
+			</if>
+
+			<if test="entryTypes != null and entryTypes.size() &gt; 0">
+				and E.ENTRYTYPE_ IN
+				<foreach item="x_entryType" index="index" collection="entryTypes"
+					open="(" separator="," close=")">
+					#{x_entryType}
+				</foreach>
+			</if>
+
+			<if test="objectId != null">
+				and E.OBJECTID_ = #{objectId}
+			</if>
+
+			<if test="objectIds != null and objectIds.size() &gt; 0">
+				and E.OBJECTID_ IN
+				<foreach item="x_objectId" index="index" collection="objectIds"
+					open="(" separator="," close=")">
+					#{x_objectId}
+				</foreach>
+			</if>
+
+			<if test="objectValue != null">
+				and E.OBJECTVALUE_ = #{objectValue}
+			</if>
+
+			<if test="objectValues != null and objectValues.size() &gt; 0">
+				and E.OBJECTVALUE_ IN
+				<foreach item="x_objectValue" index="index" collection="objectValues"
+					open="(" separator="," close=")">
+					#{x_objectValue}
+				</foreach>
+			</if>
+
+			<if test="createBy != null">
+				and E.CREATEBY_ = #{createBy}
+			</if>
+
+			<if test="createBys != null and createBys.size() &gt; 0">
+				and E.CREATEBY_ IN
+				<foreach item="x_createBy" index="index" collection="createBys"
+					open="(" separator="," close=")">
+					#{x_createBy}
+				</foreach>
+			</if>
+
+			<if test="afterCreateDate != null">
+				and E.CREATEDATE_ &gt;= #{afterCreateDate}
+			</if>
+
+			<if test="beforeCreateDate != null">
+				and E.CREATEDATE_ &lt;= #{beforeCreateDate}
+			</if>
+		</where>
+	</sql>
+
+</mapper>

@@ -26,7 +26,6 @@ import com.glaf.core.query.BaseQuery;
 public class MessageQuery extends BaseQuery {
 	private static final long serialVersionUID = 1L;
 	protected String businessKey;
-	protected List<String> businessKeys;
 	protected String contentLike;
 	protected List<String> createBys;
 	protected Date lastViewDateGreaterThanOrEqual;
@@ -60,14 +59,6 @@ public class MessageQuery extends BaseQuery {
 		return this;
 	}
 
-	public MessageQuery businessKeys(List<String> businessKeys) {
-		if (businessKeys == null) {
-			throw new RuntimeException("businessKeys is empty ");
-		}
-		this.businessKeys = businessKeys;
-		return this;
-	}
-
 	public MessageQuery contentLike(String contentLike) {
 		if (contentLike == null) {
 			throw new RuntimeException("content is null");
@@ -86,10 +77,6 @@ public class MessageQuery extends BaseQuery {
 
 	public String getBusinessKey() {
 		return businessKey;
-	}
-
-	public List<String> getBusinessKeys() {
-		return businessKeys;
 	}
 
 	public String getContentLike() {
@@ -296,10 +283,6 @@ public class MessageQuery extends BaseQuery {
 
 	public void setBusinessKey(String businessKey) {
 		this.businessKey = businessKey;
-	}
-
-	public void setBusinessKeys(List<String> businessKeys) {
-		this.businessKeys = businessKeys;
 	}
 
 	public void setContentLike(String contentLike) {

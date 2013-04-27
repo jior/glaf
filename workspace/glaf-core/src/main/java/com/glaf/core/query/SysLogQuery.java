@@ -35,7 +35,7 @@ public class SysLogQuery extends DataQuery {
 	protected String operate;
 	protected String operateLike;
 	protected List<String> operates;
-	protected List<Long> rowIds;
+ 
 
 	public SysLogQuery() {
 

@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.core.mapper.DataAccessMapper">
+
+	<resultMap id="dataAccessResultMap" type="com.glaf.core.domain.DataAccessEntity">
+		<id property="id" column="ID_" jdbcType="VARCHAR" />
+		<result property="baseCode" column="BASECODE_" jdbcType="VARCHAR" />
+		<result property="serviceKey" column="SERVICEKEY_" jdbcType="VARCHAR" />
+		<result property="businessKey" column="BUSINESSKEY_" jdbcType="VARCHAR" />
+		<result property="target" column="TARGET_" jdbcType="VARCHAR" />
+		<result property="targetType" column="TARGETTYPE_" jdbcType="INTEGER" />
+		<result property="objectId" column="OBJECTID_" jdbcType="VARCHAR" />
+		<result property="objectValue" column="OBJECTVALUE_" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<resultMap id="dynamicAccessResultMap" type="com.glaf.core.domain.DynamicAccessEntity">
+		<id property="id" column="ID_" jdbcType="VARCHAR" />
+		<result property="entityType" column="ENTITYTYPE_" jdbcType="VARCHAR" />
+		<result property="filterSql" column="FILTERSQL_" jdbcType="VARCHAR" />
+		<result property="serviceKey" column="SERVICEKEY_" jdbcType="VARCHAR" />
+		<result property="target" column="TARGET_" jdbcType="VARCHAR" />
+		<result property="targetType" column="TARGETTYPE_" jdbcType="INTEGER" />
+		<result property="objectId" column="OBJECTID_" jdbcType="VARCHAR" />
+		<result property="objectValue" column="OBJECTVALUE_" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<resultMap id="moduleAccessResultMap" type="com.glaf.core.domain.ModuleAccessEntity">
+		<id property="id" column="ID_" jdbcType="VARCHAR" />
+		<result property="serviceKey" column="SERVICEKEY_" jdbcType="VARCHAR" />
+		<result property="target" column="TARGET_" jdbcType="VARCHAR" />
+		<result property="targetType" column="TARGETTYPE_" jdbcType="INTEGER" />
+		<result property="baseCode" column="BASECODE_" jdbcType="VARCHAR" />
+		<result property="operation" column="OPERATION_" jdbcType="VARCHAR" />
+		<result property="objectId" column="OBJECTID_" jdbcType="VARCHAR" />
+		<result property="objectValue" column="OBJECTVALUE_" jdbcType="VARCHAR" />
+	</resultMap>
+
+
+	<insert id="insertDataAccess" parameterType="com.glaf.core.domain.DataAccessEntity">
+		insert into
+		SYS_DATAACCESS
+		( ID_, BASECODE_, BUSINESSKEY_, SERVICEKEY_,
+		TARGET_,
+		TARGETTYPE_,
+		OBJECTID_, OBJECTVALUE_ )
+		values (
+		#{id,
+		jdbcType=VARCHAR},
+		#{baseCode,
+		jdbcType=VARCHAR},
+		#{businessKey, jdbcType=VARCHAR},
+		#{serviceKey, jdbcType=VARCHAR},
+		#{target,
+		jdbcType=VARCHAR},
+		#{targetType, jdbcType=INTEGER},
+		#{objectId,
+		jdbcType=VARCHAR},
+		#{objectValue,
+		jdbcType=VARCHAR}
+		)
+	</insert>
+
+	<insert id="insertDynamicAccess" parameterType="com.glaf.core.domain.DynamicAccessEntity">
+		insert into
+		SYS_DYNAMICACCESS
+		( ID_, ENTITYTYPE_, FILTERSQL_, SERVICEKEY_,
+		TARGET_,
+		TARGETTYPE_,
+		OBJECTID_, OBJECTVALUE_ )
+		values (
+		#{id,
+		jdbcType=VARCHAR},
+		#{entityType, jdbcType=VARCHAR},
+		#{filterSql,
+		jdbcType=VARCHAR},
+		#{serviceKey, jdbcType=VARCHAR},
+		#{target,
+		jdbcType=VARCHAR},
+		#{targetType, jdbcType=INTEGER},
+		#{objectId,
+		jdbcType=VARCHAR},
+		#{objectValue,
+		jdbcType=VARCHAR}
+		)
+	</insert>
+
+	<insert id="insertModuleAccess" parameterType="com.glaf.core.domain.ModuleAccessEntity">
+		insert into
+		SYS_MODULEACCESS
+		( ID_, BASECODE_, SERVICEKEY_, TARGET_, TARGETTYPE_,
+		OPERATION,
+		OBJECTID_, OBJECTVALUE_ )
+		values (
+		#{id, jdbcType=VARCHAR},
+		#{baseCode, jdbcType=VARCHAR},
+		#{serviceKey, jdbcType=VARCHAR},
+		#{target, jdbcType=VARCHAR},
+		#{targetType, jdbcType=INTEGER},
+		#{operation, jdbcType=VARCHAR},
+		#{objectId,
+		jdbcType=VARCHAR},
+		#{objectValue, jdbcType=VARCHAR}
+		)
+	</insert>
+
+
+	<update id="updateDynamicAccess" parameterType="com.glaf.core.domain.DynamicAccessEntity">
+		update
+		SYS_DYNAMICACCESS
+		set
+		FILTERSQL_ = #{filterSql, jdbcType=VARCHAR},
+		OBJECTID_ = #{objectId, jdbcType=VARCHAR},
+		OBJECTVALUE_ =
+		#{objectValue, jdbcType=VARCHAR},
+		OPERATION_ = #{operation,
+		jdbcType=VARCHAR},
+		TARGET_ = #{target, jdbcType=VARCHAR},
+		TARGETTYPE_ =
+		#{ targetType, jdbcType=INTEGER}
+		where ID_ = #{id, jdbcType=VARCHAR}
+	</update>
+
+	<update id="updateModuleAccess" parameterType="com.glaf.core.domain.ModuleAccessEntity">
+		update
+		SYS_MODULEACCESS
+		set
+		BASECODE_ = #{baseCode, jdbcType=VARCHAR},
+		OBJECTID_
+		= #{objectId, jdbcType=VARCHAR},
+		OBJECTVALUE_ =
+		#{objectValue,
+		jdbcType=VARCHAR},
+		OPERATION_ = #{operation,
+		jdbcType=VARCHAR},
+		TARGET_ =
+		#{target, jdbcType=VARCHAR},
+		TARGETTYPE_ =
+		#{ targetType,
+		jdbcType=INTEGER}
+		where ID_ = #{id, jdbcType=VARCHAR}
+	</update>
+
+	<delete id="deleteDataAccess" parameterType="map">
+		delete from
+		SYS_DATAACCESS
+		where BUSINESSKEY_ = #{businessKey,
+		jdbcType=VARCHAR}
+		and
+		SERVICEKEY_
+		= #{serviceKey}
+	</delete>
+
+	<delete id="deleteDynamicAccess" parameterType="map">
+		delete from
+		SYS_DYNAMICACCESS
+		where SERVICEKEY_ = #{serviceKey}
+		and ENTITYTYPE_ =
+		#{entityType}
+		and
+		OPERATION_ = #{operation}
+	</delete>
+
+	<delete id="deleteDynamicAccessByServiceKey" parameterType="map">
+		delete from SYS_DYNAMICACCESS
+		where SERVICEKEY_ = #{serviceKey}
+		and
+		ENTITYTYPE_ = #{entityType}
+	</delete>
+
+	<delete id="deleteModuleAccess" parameterType="map">
+		delete from
+		SYS_MODULEACCESS
+		where SERVICEKEY_ = #{serviceKey}
+		and OPERATION_ =
+		#{operation}
+	</delete>
+
+	<delete id="deleteModuleAccessByServiceKey" parameterType="map">
+		delete from SYS_MODULEACCESS
+		where SERVICEKEY_ = #{serviceKey}
+	</delete>
+
+	<select id="getDataAccessByBusinessKey" parameterType="map"
+		resultMap="dataAccessResultMap">
+		select * from SYS_DATAACCESS S
+		where S.BUSINESSKEY_ =
+		#{businessKey, jdbcType=VARCHAR}
+		and
+		S.SERVICEKEY_ = #{serviceKey}
+	</select>
+
+	<select id="getDynamicAccessByServiceKey" parameterType="map"
+		resultMap="dynamicAccessResultMap">
+		select * from SYS_DYNAMICACCESS D
+		where D.SERVICEKEY_ =
+		#{serviceKey}
+		and D.ENTITYTYPE_ = #{entityType}
+	</select>
+
+
+	<select id="getModuleAccessByServiceKey" parameterType="string"
+		resultMap="moduleAccessResultMap">
+		select * from SYS_MODULEACCESS M
+		where M.SERVICEKEY_ =
+		#{serviceKey}
+	</select>
+
+</mapper>

@@ -31,6 +31,7 @@ public class TreeModelQuery extends DataQuery {
 	protected Integer lockedLessThanOrEqual;
 	protected String name;
 	protected String nameLike;
+	protected List<Long> nodeIds;
 	protected String nodeType;
 	protected List<String> nodeTypes;
 	protected List<String> objectIds;
@@ -120,6 +121,10 @@ public class TreeModelQuery extends DataQuery {
 
 	public String getNameLike() {
 		return nameLike;
+	}
+
+	public List<Long> getNodeIds() {
+		return nodeIds;
 	}
 
 	public String getNodeType() {
@@ -223,6 +228,14 @@ public class TreeModelQuery extends DataQuery {
 			throw new RuntimeException("name is null");
 		}
 		this.nameLike = nameLike;
+		return this;
+	}
+
+	public TreeModelQuery nodeIds(List<Long> nodeIds) {
+		if (nodeIds == null) {
+			throw new RuntimeException("nodeIds is null");
+		}
+		this.nodeIds = nodeIds;
 		return this;
 	}
 
@@ -342,6 +355,10 @@ public class TreeModelQuery extends DataQuery {
 
 	public void setNameLike(String nameLike) {
 		this.nameLike = nameLike;
+	}
+
+	public void setNodeIds(List<Long> nodeIds) {
+		this.nodeIds = nodeIds;
 	}
 
 	public void setNodeType(String nodeType) {

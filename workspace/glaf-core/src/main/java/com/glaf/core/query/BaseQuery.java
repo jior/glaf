@@ -33,6 +33,7 @@ public class BaseQuery extends AbstractQuery<Object> {
 	private static final long serialVersionUID = 1L;
 	protected String actorId;
 	protected List<String> actorIds = new ArrayList<String>();
+	protected List<String> businessKeys = new ArrayList<String>();
 	protected String createBy;
 	protected QueryCondition currentQueryCondition;
 	protected boolean isFilterPermission = true;
@@ -44,7 +45,7 @@ public class BaseQuery extends AbstractQuery<Object> {
 	protected int pageNo;
 	protected int pageSize;
 	protected Object parameter;
-	List rowIds = new ArrayList();
+	protected List rowIds = new ArrayList();
 	protected String serviceKey;
 	protected String sortField;
 	protected String sortOrder;
@@ -66,6 +67,14 @@ public class BaseQuery extends AbstractQuery<Object> {
 			throw new RuntimeException("actorIds is null");
 		}
 		this.actorIds = actorIds;
+		return this;
+	}
+
+	public BaseQuery businessKeys(List<String> businessKeys) {
+		if (businessKeys == null) {
+			throw new RuntimeException("businessKeys is null");
+		}
+		this.businessKeys = businessKeys;
 		return this;
 	}
 
@@ -135,6 +144,10 @@ public class BaseQuery extends AbstractQuery<Object> {
 
 		int begin = (pageNo - 1) * pageSize;
 		return begin;
+	}
+
+	public List<String> getBusinessKeys() {
+		return businessKeys;
 	}
 
 	public String getCreateBy() {
@@ -238,6 +251,10 @@ public class BaseQuery extends AbstractQuery<Object> {
 
 	public void setActorIds(List<String> actorIds) {
 		this.actorIds = actorIds;
+	}
+
+	public void setBusinessKeys(List<String> businessKeys) {
+		this.businessKeys = businessKeys;
 	}
 
 	public void setCreateBy(String createBy) {
