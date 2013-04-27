@@ -41,11 +41,11 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 		String actorId = user.getActorId();
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		<#if idField.type=='Integer' >
-                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(RequestUtils.getInt(request, "rowId"));
+                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(RequestUtils.getInt(request, "${idField.name}"));
 		<#elseif idField.type== 'Long' >
-                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(RequestUtils.getLong(request, "rowId"));
+                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(RequestUtils.getLong(request, "${idField.name}"));
 		<#else>
-                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(request.getParameter("rowId"));
+                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(request.getParameter("${idField.name}"));
 		</#if>
 		if (${modelName} != null) {
 			String processName = ViewProperties.getString("${entityName}.processName");
@@ -56,7 +56,7 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 			ProcessContext ctx = new ProcessContext();
 			ctx.setRowId(${modelName}.getId());
 			ctx.setActorId(actorId);
-			ctx.setTitle(ViewProperties.getString("res_rowId") + ${modelName}.getId());
+			ctx.setTitle(ViewProperties.getString("res_${idField.name}") + ${modelName}.getId());
 			ctx.setProcessName(${modelName}.getProcessName());
 			try{
 			    Long processInstanceId = ProcessContainer.getContainer()
@@ -82,11 +82,11 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		String taskInstanceId = ParamUtils.getString(params, "taskInstanceId");
 		<#if idField.type=='Integer' >
-                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(RequestUtils.getInt(request, "rowId"));
+                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(RequestUtils.getInt(request, "${idField.name}"));
 		<#elseif idField.type== 'Long' >
-                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(RequestUtils.getLong(request, "rowId"));
+                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(RequestUtils.getLong(request, "${idField.name}"));
 		<#else>
-                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(request.getParameter("rowId"));
+                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(request.getParameter("${idField.name}"));
 		</#if>
 		if (${modelName} != null && ${modelName}.getProcessInstanceId() != null && ${modelName}.getWfStatus() != 9999) {
 			TaskItem taskItem = ProcessContainer.getContainer().getMinTaskItem(actorId, ${modelName}.getProcessInstanceId());
@@ -138,11 +138,11 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 
 		<#if idField.type=='Integer' >
-                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(RequestUtils.getInt(request, "rowId"));
+                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(RequestUtils.getInt(request, "${idField.name}"));
 		<#elseif idField.type== 'Long' >
-                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(RequestUtils.getLong(request, "rowId"));
+                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(RequestUtils.getLong(request, "${idField.name}"));
 		<#else>
-                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(request.getParameter("rowId"));
+                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(request.getParameter("${idField.name}"));
 		</#if>
 
                 if (${modelName} != null) {
@@ -209,11 +209,11 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 		RequestUtils.setRequestParameterToAttribute(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		<#if idField.type=='Integer' >
-                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(RequestUtils.getInt(request, "rowId"));
+                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(RequestUtils.getInt(request, "${idField.name}"));
 		<#elseif idField.type== 'Long' >
-                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(RequestUtils.getLong(request, "rowId"));
+                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(RequestUtils.getLong(request, "${idField.name}"));
 		<#else>
-                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(request.getParameter("rowId"));
+                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(request.getParameter("${idField.name}"));
 		</#if>
 		request.setAttribute("${modelName}", ${modelName});
  

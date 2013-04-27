@@ -208,15 +208,15 @@ public class ${entityName}Bean implements Serializable  {
 	public void removeManyAction(ActionEvent actionEvent) {
 		logger.debug("remove ${modelName}s....");
 		if (selected${entityName}s != null) {
-			List<${idField.type}> rowIds = new ArrayList<${idField.type}>();
+			List<${idField.type}> ${idField.name}s = new ArrayList<${idField.type}>();
 			for (${entityName} model : selected${entityName}s) {
-				if (!rowIds.contains(model.get${idField.firstUpperName}())) {
-					rowIds.add(model.get${idField.firstUpperName}());
+				if (!${idField.name}s.contains(model.get${idField.firstUpperName}())) {
+					${idField.name}s.add(model.get${idField.firstUpperName}());
 				}
 			}
-			if (rowIds.size() > 0) {
-				logger.debug("remove ${modelName}s:" + rowIds);
-				get${entityName}Service().deleteByIds(rowIds);
+			if (${idField.name}s.size() > 0) {
+				logger.debug("remove ${modelName}s:" + ${idField.name}s);
+				get${entityName}Service().deleteByIds(${idField.name}s);
 				FacesMessage facesMessage = new FacesMessage(
 						FacesMessage.SEVERITY_INFO,
 						"É¾³ý³É¹¦", "OK");

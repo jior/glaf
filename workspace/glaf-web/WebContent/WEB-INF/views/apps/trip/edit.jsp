@@ -30,23 +30,23 @@
 					   alert('服务器处理错误！');
 				   },
 				   success: function(data){
-					   if(data.message != null){
-						   alert(data.message);
+					   if(data != null && data.message != null){
+						 alert(data.message);
 					   } else {
-						   alert('操作成功完成！');
+						 alert('操作成功完成！');
 					   }
 					   if (window.opener) {
-						  window.opener.location.reload();
-						} else if (window.parent) {
-						  window.parent.location.reload();
-						}
+						window.opener.location.reload();
+					   } else if (window.parent) {
+						window.parent.location.reload();
+					   }
 				   }
 			 });
 	}
 
 	function saveAsData(){
 		document.getElementById("id").value="";
-		document.getElementById("rowId").value="";
+		document.getElementById("id").value="";
 		var params = jQuery("#iForm").formSerialize();
 		jQuery.ajax({
 				   type: "POST",
@@ -57,13 +57,11 @@
 					   alert('服务器处理错误！');
 				   },
 				   success: function(data){
-					   if(data.message != null){
+					   if(data != null && data.message != null){
 						   alert(data.message);
 					   } else {
-						   alert('操作成功完成！');
+						 alert('操作成功完成！');
 					   }
-					   window.parent.location.reload();
-					   window.close();
 				   }
 			 });
 	}
@@ -85,50 +83,58 @@
 	<!-- 
 	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-saveas'" onclick="javascript:saveAsData();" >另存</a> 
         -->
-	<!-- <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-back'" onclick="javascript:history.back();">返回</a>	 -->
+	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-back'" onclick="javascript:history.back();">返回</a>	
     </div> 
   </div>
 
   <div data-options="region:'center',border:false,cache:true">
   <form id="iForm" name="iForm" method="post">
   <input type="hidden" id="id" name="id" value="${trip.id}"/>
-  <input type="hidden" id="rowId" name="rowId" value="${trip.id}"/>
-  <table class="easyui-form" style="width:500px;" align="center">
+  <table class="easyui-form" style="width:600px;" align="center">
     <tbody>
-	<tr>
-		<td width="20%" align="left">交通工具</td>
-		<td align="left">
-            <input id="transType" name="transType" type="text" 
-			       class="easyui-validatebox"  
-			       data-options="required:true"
-				   value="${trip.transType}"/>
-		</td>
-	</tr>
-	<tr>
-		<td width="20%" align="left">申请日期</td>
-		<td align="left">
-			<input id="applyDate" name="applyDate" type="text" 
-			       class="easyui-datebox" data-options="required:true"
-			 required="true" 
-				  value="<fmt:formatDate value="${trip.applyDate}" pattern="yyyy-MM-dd"/>"/>
-		</td>
-	</tr>
 	<tr>
 		<td width="20%" align="left">开始日期</td>
 		<td align="left">
 			<input id="startDate" name="startDate" type="text" 
-			       class="easyui-datebox" data-options="required:true"
-			 required="true" 
+			       class="easyui-datebox"
+			 required="true" data-options="required:true" 
 				  value="<fmt:formatDate value="${trip.startDate}" pattern="yyyy-MM-dd"/>"/>
+		</td>
+	</tr>
+	<tr>
+		<td width="20%" align="left">事由</td>
+		<td align="left">
+            <input id="cause" name="cause" type="text" 
+			       class="easyui-validatebox"  
+			 required="true" data-options="required:true" 
+				   value="${trip.cause}"/>
 		</td>
 	</tr>
 	<tr>
 		<td width="20%" align="left">结束日期</td>
 		<td align="left">
 			<input id="endDate" name="endDate" type="text" 
-			       class="easyui-datebox" data-options="required:true"
-			 required="true" 
+			       class="easyui-datebox"
+			 required="true" data-options="required:true" 
 				  value="<fmt:formatDate value="${trip.endDate}" pattern="yyyy-MM-dd"/>"/>
+		</td>
+	</tr>
+	<tr>
+		<td width="20%" align="left">申请日期</td>
+		<td align="left">
+			<input id="applyDate" name="applyDate" type="text" 
+			       class="easyui-datebox"
+			 required="true" data-options="required:true" 
+				  value="<fmt:formatDate value="${trip.applyDate}" pattern="yyyy-MM-dd"/>"/>
+		</td>
+	</tr>
+	<tr>
+		<td width="20%" align="left">交通工具</td>
+		<td align="left">
+            <input id="transType" name="transType" type="text" 
+			       class="easyui-validatebox"  
+			
+				   value="${trip.transType}"/>
 		</td>
 	</tr>
 	<tr>
@@ -136,7 +142,7 @@
 		<td align="left">
 			<input id="days" name="days" type="text"
 			       class="easyui-numberbox"  precision="2" 
-			 required="true"  data-options="required:true"
+			 required="true" data-options="required:true" 
 				  value="${trip.days}"/>
 		</td>
 	</tr>
@@ -145,17 +151,8 @@
 		<td align="left">
 			<input id="money" name="money" type="text"
 			       class="easyui-numberbox"  precision="2" 
-			 required="true"  data-options="required:true"
+			 required="true" data-options="required:true" 
 				  value="${trip.money}"/>
-		</td>
-	</tr>
-	<tr>
-		<td width="20%" align="left">事由</td>
-		<td align="left">
-            <input id="cause" name="cause" type="text" 
-			       class="easyui-validatebox"  
-			 required="true"  data-options="required:true"
-				   value="${trip.cause}"/>
 		</td>
 	</tr>
  

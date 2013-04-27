@@ -41,7 +41,7 @@
 
 	function saveAsData(){
 		document.getElementById("id").value="";
-		document.getElementById("rowId").value="";
+		document.getElementById("${idField.name}").value="";
 		var params = jQuery("#iForm").formSerialize();
 		jQuery.ajax({
 				   type: "POST",
@@ -85,7 +85,7 @@
   <div data-options="region:'center',border:false,cache:true">
   <form id="iForm" name="iForm" method="post">
   <input type="hidden" id="id" name="id" value="#F{${modelName}.${idField.name}}"/>
-  <input type="hidden" id="rowId" name="rowId" value="#F{${modelName}.${idField.name}}"/>
+  <input type="hidden" id="${idField.name}" name="${idField.name}" value="#F{${modelName}.${idField.name}}"/>
   <table class="easyui-form" style="width:800px;" align="center">
     <tbody>
   <#if pojo_fields?exists>

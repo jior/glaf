@@ -71,8 +71,8 @@
 	}
 
 	function onRowClick(rowIndex, row){
-            //window.open('<%=request.getContextPath()%>/apps/${modelName}.do?method=edit&rowId='+row.id);
-	    var link = '<%=request.getContextPath()%>/apps/${modelName}.do?method=edit&rowId='+row.id;
+            //window.open('<%=request.getContextPath()%>/apps/${modelName}.do?method=edit&${idField.name}='+row.id);
+	    var link = '<%=request.getContextPath()%>/apps/${modelName}.do?method=edit&${idField.name}='+row.id;
 	    art.dialog.open(link, { height: 420, width: 680, title: "修改记录", lock: true, scrollbars:"no" }, false);
 	}
 
@@ -96,8 +96,8 @@
 	    }
 	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
 	    if (selected ){
-		//location.href="<%=request.getContextPath()%>/apps/${modelName}.do?method=edit&rowId="+selected.id;
-		var link = "<%=request.getContextPath()%>/apps/${modelName}.do?method=edit&rowId="+selected.id;
+		//location.href="<%=request.getContextPath()%>/apps/${modelName}.do?method=edit&${idField.name}="+selected.id;
+		var link = "<%=request.getContextPath()%>/apps/${modelName}.do?method=edit&${idField.name}="+selected.id;
 		art.dialog.open(link, { height: 420, width: 680, title: "修改记录", lock: true, scrollbars:"no" }, false);
 	    }
 	}
@@ -110,7 +110,7 @@
 		}
 		var selected = jQuery('#mydatagrid').datagrid('getSelected');
 		if (selected ){
-		    location.href="<%=request.getContextPath()%>/apps/${modelName}.do?method=edit&readonly=true&rowId="+selected.id;
+		    location.href="<%=request.getContextPath()%>/apps/${modelName}.do?method=edit&readonly=true&${idField.name}="+selected.id;
 		}
 	}
 
@@ -121,10 +121,10 @@
 			ids.push(rows[i].id);
 		}
 		if(ids.length > 0 && confirm("数据删除后不能恢复，确定删除吗？")){
-		    var rowIds = ids.join(',');
+		    var ${idField.name}s = ids.join(',');
 			jQuery.ajax({
 				   type: "POST",
-				   url: '<%=request.getContextPath()%>/apps/${modelName}.do?method=delete&rowIds='+rowIds,
+				   url: '<%=request.getContextPath()%>/apps/${modelName}.do?method=delete&${idField.name}s='+${idField.name}s,
 				   dataType:  'json',
 				   error: function(data){
 					   alert('服务器处理错误！');

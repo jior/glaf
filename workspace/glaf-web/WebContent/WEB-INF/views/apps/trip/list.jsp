@@ -39,19 +39,16 @@
 				idField:'id',
 				columns:[[
 	                {title:'编号',field:'id',width:80,sortable:true},
-					{title:'交通工具',field:'transType', width:120},
 					{title:'开始日期',field:'startDate', width:120},
 					{title:'结束日期',field:'endDate', width:120},
-					{title:'天数',field:'days', width:120},
-					{title:'费用',field:'money', width:120},
-					{title:'创建日期',field:'createDate', width:120},
 					{title:'创建人',field:'createBy', width:120},
 					{title:'创建人',field:'createByName', width:120},
 					{title:'修改日期',field:'updateDate', width:120},
+					{title:'交通工具',field:'transType', width:120},
+					{title:'天数',field:'days', width:120},
+					{title:'费用',field:'money', width:120},
 					{title:'是否锁定',field:'locked', width:120},
-					{title:'状态',field:'status', width:120},
-					{title:'流程名称',field:'processName', width:120},
-					{title:'流程实例编号',field:'processInstanceId', width:120},
+					{title:'创建日期',field:'createDate', width:120},
 					{field:'functionKey',title:'功能键',width:120}
 				]],
 				rownumbers:false,
@@ -71,20 +68,20 @@
 
 		 
 	function addNew(){
-		var link = "<%=request.getContextPath()%>/apps/trip.do?method=edit";
-		//location.href="<%=request.getContextPath()%>/apps/trip.do?method=edit";
-		art.dialog.open(link, { height: 420, width: 680, title: "添加记录", lock: true, scrollbars:"no" }, false);
+	    //location.href="<%=request.getContextPath()%>/apps/trip.do?method=edit";
+	    var link="<%=request.getContextPath()%>/apps/trip.do?method=edit";
+	    art.dialog.open(link, { height: 420, width: 680, title: "添加记录", lock: true, scrollbars:"no" }, false);
 	}
 
 	function onRowClick(rowIndex, row){
-        //window.open('<%=request.getContextPath()%>/apps/trip.do?method=edit&rowId='+row.id);
-		var link = "<%=request.getContextPath()%>/apps/trip.do?method=edit&rowId="+row.id;
-		art.dialog.open(link, { height: 420, width: 680, title: "修改记录", lock: true, scrollbars:"no" }, false);
+            //window.open('<%=request.getContextPath()%>/apps/trip.do?method=edit&id='+row.id);
+	    var link = '<%=request.getContextPath()%>/apps/trip.do?method=edit&id='+row.id;
+	    art.dialog.open(link, { height: 420, width: 680, title: "修改记录", lock: true, scrollbars:"no" }, false);
 	}
 
 	function searchWin(){
-		jQuery('#dlg').dialog('open').dialog('setTitle','出差申请查询');
-		//jQuery('#searchForm').form('clear');
+	    jQuery('#dlg').dialog('open').dialog('setTitle','出差申请查询');
+	    //jQuery('#searchForm').form('clear');
 	}
 
 	function resize(){
@@ -95,17 +92,17 @@
 	}
 
 	function editSelected(){
-		var rows = jQuery('#mydatagrid').datagrid('getSelections');
-		if(rows == null || rows.length !=1){
-			alert("请选择其中一条记录。");
-			return;
-		}
-		var selected = jQuery('#mydatagrid').datagrid('getSelected');
-		if (selected ){
-			//location.href="<%=request.getContextPath()%>/apps/trip.do?method=edit&rowId="+selected.id;
-			var link = "<%=request.getContextPath()%>/apps/trip.do?method=edit&rowId="+selected.id;
-		    art.dialog.open(link, { height: 420, width: 680, title: "修改记录", lock: true, scrollbars:"no" }, false);
-		}
+	    var rows = jQuery('#mydatagrid').datagrid('getSelections');
+	    if(rows == null || rows.length !=1){
+		alert("请选择其中一条记录。");
+		return;
+	    }
+	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
+	    if (selected ){
+		//location.href="<%=request.getContextPath()%>/apps/trip.do?method=edit&id="+selected.id;
+		var link = "<%=request.getContextPath()%>/apps/trip.do?method=edit&id="+selected.id;
+		art.dialog.open(link, { height: 420, width: 680, title: "修改记录", lock: true, scrollbars:"no" }, false);
+	    }
 	}
 
 	function viewSelected(){
@@ -116,7 +113,7 @@
 		}
 		var selected = jQuery('#mydatagrid').datagrid('getSelected');
 		if (selected ){
-		    location.href="<%=request.getContextPath()%>/apps/trip.do?method=edit&readonly=true&rowId="+selected.id;
+		    location.href="<%=request.getContextPath()%>/apps/trip.do?method=edit&readonly=true&id="+selected.id;
 		}
 	}
 
@@ -127,10 +124,10 @@
 			ids.push(rows[i].id);
 		}
 		if(ids.length > 0 && confirm("数据删除后不能恢复，确定删除吗？")){
-		    var rowIds = ids.join(',');
+		    var ids = ids.join(',');
 			jQuery.ajax({
 				   type: "POST",
-				   url: '<%=request.getContextPath()%>/apps/trip.do?method=delete&rowIds='+rowIds,
+				   url: '<%=request.getContextPath()%>/apps/trip.do?method=delete&ids='+ids,
 				   dataType:  'json',
 				   error: function(data){
 					   alert('服务器处理错误！');
@@ -149,42 +146,42 @@
 		}
 	}
 
+	function reloadGrid(){
+	    jQuery('#mydatagrid').datagrid('reload');
+	}
+
 	function getSelected(){
-		var selected = jQuery('#mydatagrid').datagrid('getSelected');
-		if (selected){
-			alert(selected.code+":"+selected.name+":"+selected.addr+":"+selected.col4);
-		}
+	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
+	    if (selected){
+		alert(selected.code+":"+selected.name+":"+selected.addr+":"+selected.col4);
+	    }
 	}
 
 	function getSelections(){
-		var ids = [];
-		var rows = jQuery('#mydatagrid').datagrid('getSelections');
-		for(var i=0;i<rows.length;i++){
-			ids.push(rows[i].code);
-		}
-		alert(ids.join(':'));
+	    var ids = [];
+	    var rows = jQuery('#mydatagrid').datagrid('getSelections');
+	    for(var i=0;i<rows.length;i++){
+		ids.push(rows[i].code);
+	    }
+	    alert(ids.join(':'));
 	}
 
 	function clearSelections(){
-		jQuery('#mydatagrid').datagrid('clearSelections');
-	}
-
-	function reloadGrid(){
-		jQuery('#mydatagrid').datagrid('reload');
+	    jQuery('#mydatagrid').datagrid('clearSelections');
 	}
 
 	function searchData(){
-		var params = jQuery("#searchForm").formSerialize();
-		var queryParams = jQuery('#mydatagrid').datagrid('options').queryParams;
-		queryParams.transType = document.getElementById("query_transType").value;
-		queryParams.applyDate = document.getElementById("query_applyDate").value;
-		queryParams.startDate = document.getElementById("query_startDate").value;
-		queryParams.endDate = document.getElementById("query_endDate").value;
-		queryParams.days = document.getElementById("query_days").value;
-		queryParams.money = document.getElementById("query_money").value;
-		queryParams.cause = document.getElementById("query_cause").value;
-		jQuery('#mydatagrid').datagrid('reload');	
-		jQuery('#dlg').dialog('close');
+	    var params = jQuery("#searchForm").formSerialize();
+	    var queryParams = jQuery('#mydatagrid').datagrid('options').queryParams;
+	    queryParams.startDate = document.getElementById("query_startDate").value;
+	    queryParams.cause = document.getElementById("query_cause").value;
+	    queryParams.endDate = document.getElementById("query_endDate").value;
+	    queryParams.applyDate = document.getElementById("query_applyDate").value;
+	    queryParams.transType = document.getElementById("query_transType").value;
+	    queryParams.days = document.getElementById("query_days").value;
+	    queryParams.money = document.getElementById("query_money").value;
+	    jQuery('#mydatagrid').datagrid('reload');	
+	    jQuery('#dlg').dialog('close');
 	}
 		 
 </script>
@@ -193,7 +190,7 @@
 <div style="margin:0;"></div>  
 <div class="easyui-layout" data-options="fit:true">  
    <div data-options="region:'north',split:true,border:true" style="height:40px"> 
-    <div class="toolbar-backgroud">  
+    <div class="toolbar-backgroud"  > 
 	<img src="<%=request.getContextPath()%>/images/window.png">
 	&nbsp;<span class="x_content_title">出差申请列表</span>
     <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-add'" 
@@ -210,45 +207,21 @@
 	 <table id="mydatagrid"></table>
   </div>  
 </div>
+<div id="edit_dlg" class="easyui-dialog" style="width:400px;height:280px;padding:10px 20px"
+	closed="true" buttons="#dlg-buttons">
+    <form id="editForm" name="editForm" method="post">
+         
+    </form>
+</div>
 <div id="dlg" class="easyui-dialog" style="width:400px;height:280px;padding:10px 20px"
 	closed="true" buttons="#dlg-buttons">
- <form id="searchForm" name="searchForm" method="post">
-	 <table class="easyui-form" >
-		<tbody>
-			<tr>
-				 <td>交通工具</td>
-				 <td>
-                 <input id="query_transType" name="query_transType" class="easyui-validatebox" type="text"></input>
-				</td>
-			</tr>
-			<tr>
-				 <td>申请日期</td>
-				 <td>
-                 <input id="query_applyDate" name="query_applyDate" class="easyui-validatebox" type="text"></input>
-				</td>
-			</tr>
+    <form id="searchForm" name="searchForm" method="post">
+	<table class="easyui-form" >
+            <tbody>
 			<tr>
 				 <td>开始日期</td>
 				 <td>
-                 <input id="query_startDate" name="query_startDate" class="easyui-validatebox" type="text"></input>
-				</td>
-			</tr>
-			<tr>
-				 <td>结束日期</td>
-				 <td>
-                 <input id="query_endDate" name="query_endDate" class="easyui-validatebox" type="text"></input>
-				</td>
-			</tr>
-			<tr>
-				 <td>天数</td>
-				 <td>
-                 <input id="query_days" name="query_days" class="easyui-validatebox" type="text"></input>
-				</td>
-			</tr>
-			<tr>
-				 <td>费用</td>
-				 <td>
-                 <input id="query_money" name="query_money" class="easyui-validatebox" type="text"></input>
+				  <input id="query_startDate" name="query_startDate" class="easyui-datebox"></input>
 				</td>
 			</tr>
 			<tr>
@@ -257,8 +230,39 @@
                  <input id="query_cause" name="query_cause" class="easyui-validatebox" type="text"></input>
 				</td>
 			</tr>
-	</tbody>
-</table>
+			<tr>
+				 <td>结束日期</td>
+				 <td>
+				  <input id="query_endDate" name="query_endDate" class="easyui-datebox"></input>
+				</td>
+			</tr>
+			<tr>
+				 <td>申请日期</td>
+				 <td>
+				  <input id="query_applyDate" name="query_applyDate" class="easyui-datebox"></input>
+				</td>
+			</tr>
+			<tr>
+				 <td>交通工具</td>
+				 <td>
+                 <input id="query_transType" name="query_transType" class="easyui-validatebox" type="text"></input>
+				</td>
+			</tr>
+			<tr>
+				 <td>天数</td>
+				 <td>
+				 <input id="query_days" name="query_days" class="easyui-numberbox" ></input>
+				</td>
+			</tr>
+			<tr>
+				 <td>费用</td>
+				 <td>
+				 <input id="query_money" name="query_money" class="easyui-numberbox" ></input>
+				</td>
+			</tr>
+	    </tbody>
+        </table>
+    </form>
 </div>
 <div id="dlg-buttons">
 	<a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="javascript:searchData()">查询</a>

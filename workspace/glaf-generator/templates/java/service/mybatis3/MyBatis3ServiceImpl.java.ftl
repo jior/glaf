@@ -42,11 +42,11 @@ public class ${entityName}ServiceImpl implements ${entityName}Service {
 	}
 
 	@Transactional
-	public void deleteByIds(List<${idField.type}> rowIds) {
-	    if(rowIds != null && !rowIds.isEmpty()){
-		${entityName}Query query = new ${entityName}Query();
-		query.rowIds(rowIds);
-		${modelName}Mapper.delete${entityName}s(query);
+	public void deleteByIds(List<${idField.type}> ${idField.name}s) {
+	    if(${idField.name}s != null && !${idField.name}s.isEmpty()){
+		for(${idField.type} id : ${idField.name}s){
+		    ${modelName}Mapper.delete${entityName}ById(id);
+		}
 	    }
 	}
 

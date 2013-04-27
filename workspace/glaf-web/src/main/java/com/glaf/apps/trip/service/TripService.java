@@ -24,7 +24,7 @@ public interface TripService {
 	 * @return
 	 */
 	@Transactional
-	 void deleteByIds(List<String> rowIds);
+	 void deleteByIds(List<String> ids);
 
           /**
 	 * 根据查询参数获取记录列表

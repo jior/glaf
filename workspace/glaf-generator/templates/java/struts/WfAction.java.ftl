@@ -46,8 +46,8 @@ public class ${entityName}WfAction extends ${entityName}BaseAction {
 		User user = RequestUtils.getUser(request);
 		String actorId = user.getActorId();
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		String rowId = ParamUtils.getString(params, "rowId");
-		${entityName} ${modelName} = ${modelName}Service.get${entityName}(rowId);
+		String ${idField.name} = ParamUtils.getString(params, "${idField.name}");
+		${entityName} ${modelName} = ${modelName}Service.get${entityName}(${idField.name});
 		if (${modelName} != null) {
 			String processName = SystemConfig.getString("${entityName}.processName");
 			if (StringUtils.isEmpty(processName)) {
@@ -57,7 +57,7 @@ public class ${entityName}WfAction extends ${entityName}BaseAction {
 			ProcessContext ctx = new ProcessContext();
 			ctx.setRowId(String.valueOf(${modelName}.getId()));
 			ctx.setActorId(actorId);
-			ctx.setTitle(SystemConfig.getString("res_rowId") + ${modelName}.getId());
+			ctx.setTitle(SystemConfig.getString("res_${idField.name}") + ${modelName}.getId());
 			ctx.setProcessName(${modelName}.getProcessName());
 			String processInstanceId = ProcessContainer.getContainer()
 					.startProcess(ctx);
@@ -80,10 +80,10 @@ public class ${entityName}WfAction extends ${entityName}BaseAction {
 		String actorId = user.getActorId();
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		String taskInstanceId = ParamUtils.getString(params, "taskInstanceId");
-		String rowId = ParamUtils.getString(params, "rowId");
+		String ${idField.name} = ParamUtils.getString(params, "${idField.name}");
 		${entityName} ${modelName} = null;
-		if (StringUtils.isNotEmpty(rowId)) {
-			${modelName} = ${modelName}Service.get${entityName}(rowId);
+		if (StringUtils.isNotEmpty(${idField.name})) {
+			${modelName} = ${modelName}Service.get${entityName}(${idField.name});
 			if (${modelName} != null && ${modelName}.getStatus() != 50) {
 				TaskItem taskItem = ProcessContainer.getContainer()
 						.getMinTaskItem(actorId, ${modelName}.getProcessInstanceId());
@@ -139,10 +139,10 @@ public class ${entityName}WfAction extends ${entityName}BaseAction {
 		RequestUtils.setRequestParameterToAttribute(request);
 		request.removeAttribute("canSubmit");
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		String rowId = ParamUtils.getString(params, "rowId");
+		String ${idField.name} = ParamUtils.getString(params, "${idField.name}");
 		${entityName} ${modelName} = null;
-		if (StringUtils.isNotEmpty(rowId)) {
-			${modelName} = ${modelName}Service.get${entityName}(rowId);
+		if (StringUtils.isNotEmpty(${idField.name})) {
+			${modelName} = ${modelName}Service.get${entityName}(${idField.name});
 			request.setAttribute("${modelName}", ${modelName});
 			JSONObject rowJSON = ${modelName}.toJsonObject();
 			request.setAttribute("x_json", rowJSON.toString());
@@ -197,10 +197,10 @@ public class ${entityName}WfAction extends ${entityName}BaseAction {
 			throws Exception {
 		RequestUtils.setRequestParameterToAttribute(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		String rowId = ParamUtils.getString(params, "rowId");
+		String ${idField.name} = ParamUtils.getString(params, "${idField.name}");
 		${entityName} ${modelName} = null;
-		if (StringUtils.isNotEmpty(rowId)) {
-			${modelName} = ${modelName}Service.get${entityName}(rowId);
+		if (StringUtils.isNotEmpty(${idField.name})) {
+			${modelName} = ${modelName}Service.get${entityName}(${idField.name});
 			request.setAttribute("${modelName}", ${modelName});
 			Map<String, Object> dataMap = Tools.getDataMap(${modelName});
 			String x_json = JSONTools.encode(dataMap);

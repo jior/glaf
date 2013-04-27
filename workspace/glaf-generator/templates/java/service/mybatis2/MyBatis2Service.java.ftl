@@ -39,8 +39,8 @@ public class ${entityName}Service {
 	}
 
 	@Transactional
-	public void deleteByIds(List<Object> rowIds) {
-		entityDAO.deleteAll("delete${entityName}s", rowIds);
+	public void deleteByIds(List<Object> ${idField.name}s) {
+		entityDAO.deleteAll("delete${entityName}s", ${idField.name}s);
 	}
 
 	public PageResult getPageResult${entityName}s(QueryContext queryContext) {

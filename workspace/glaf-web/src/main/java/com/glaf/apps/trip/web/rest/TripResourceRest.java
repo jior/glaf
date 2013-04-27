@@ -40,7 +40,7 @@ public class TripResourceRest {
 	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
 	public byte[] deleteAll(@Context HttpServletRequest request)
 			throws IOException {
-		String rowIds = request.getParameter("rowIds");
+		String rowIds = request.getParameter("ids");
 		if (rowIds != null) {
  			List<String> ids = StringTools.split(rowIds);
 			if (ids != null && !ids.isEmpty()) {
@@ -55,7 +55,7 @@ public class TripResourceRest {
 	@ResponseBody
 	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
 	public byte[] deleteById(@Context HttpServletRequest request) throws IOException {
-                tripService.deleteById(request.getParameter("rowId"));
+                tripService.deleteById(request.getParameter("id"));
 		return ResponseUtils.responseJsonResult(true);
 	}
 
@@ -129,6 +129,10 @@ public class TripResourceRest {
 				}
 
 			}
+		} else {
+			JSONArray rowsJSON = new JSONArray();
+			result.put("rows", rowsJSON);
+			result.put("total", total);
 		}
 		return result.toJSONString().getBytes("UTF-8");
 	}
@@ -143,25 +147,25 @@ public class TripResourceRest {
 		try {
 		    Tools.populate(trip, params);
 
-                    trip.setTransType(request.getParameter("transType"));
-                    trip.setApplyDate(RequestUtils.getDate(request, "applyDate"));
+                    trip.setWfStatus(RequestUtils.getInt(request, "wfStatus"));
                     trip.setStartDate(RequestUtils.getDate(request, "startDate"));
-                    trip.setEndDate(RequestUtils.getDate(request, "endDate"));
-                    trip.setDays(RequestUtils.getDouble(request, "days"));
-                    trip.setMoney(RequestUtils.getDouble(request, "money"));
                     trip.setCause(request.getParameter("cause"));
-                    trip.setDeleteFlag(RequestUtils.getInt(request, "deleteFlag"));
-                    trip.setCreateDate(RequestUtils.getDate(request, "createDate"));
+                    trip.setStatus(RequestUtils.getInt(request, "status"));
+                    trip.setProcessName(request.getParameter("processName"));
+                    trip.setEndDate(RequestUtils.getDate(request, "endDate"));
                     trip.setCreateBy(request.getParameter("createBy"));
                     trip.setCreateByName(request.getParameter("createByName"));
                     trip.setUpdateDate(RequestUtils.getDate(request, "updateDate"));
-                    trip.setLocked(RequestUtils.getInt(request, "locked"));
-                    trip.setStatus(RequestUtils.getInt(request, "status"));
-                    trip.setProcessName(request.getParameter("processName"));
-                    trip.setProcessInstanceId(RequestUtils.getLong(request, "processInstanceId"));
-                    trip.setWfStatus(RequestUtils.getInt(request, "wfStatus"));
+                    trip.setApplyDate(RequestUtils.getDate(request, "applyDate"));
+                    trip.setTransType(request.getParameter("transType"));
                     trip.setWfStartDate(RequestUtils.getDate(request, "wfStartDate"));
+                    trip.setProcessInstanceId(RequestUtils.getLong(request, "processInstanceId"));
+                    trip.setDays(RequestUtils.getDouble(request, "days"));
+                    trip.setMoney(RequestUtils.getDouble(request, "money"));
                     trip.setWfEndDate(RequestUtils.getDate(request, "wfEndDate"));
+                    trip.setLocked(RequestUtils.getInt(request, "locked"));
+                    trip.setDeleteFlag(RequestUtils.getInt(request, "deleteFlag"));
+                    trip.setCreateDate(RequestUtils.getDate(request, "createDate"));
 
 		    this.tripService.save(trip);
 
@@ -184,8 +188,8 @@ public class TripResourceRest {
 	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
 	public byte[] view(@Context HttpServletRequest request) throws IOException {
 		Trip trip = null;
-		if (StringUtils.isNotEmpty(request.getParameter("rowId"))) {
-                  trip = tripService.getTrip(request.getParameter("rowId"));
+		if (StringUtils.isNotEmpty(request.getParameter("id"))) {
+                  trip = tripService.getTrip(request.getParameter("id"));
 		}
 		JSONObject result = new JSONObject();
 		if (trip != null) {

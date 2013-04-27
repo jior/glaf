@@ -6,24 +6,24 @@
 
  	<resultMap id="tripResultMap"	type="com.glaf.apps.trip.model.Trip">
         <id property="id" column="ID_" jdbcType="VARCHAR"/>
-        <result property="transType" column="TRANSTYPE_" jdbcType="VARCHAR"/>
-        <result property="applyDate" column="APPLYDATE_" jdbcType="TIMESTAMP"/>
+        <result property="wfStatus" column="wfStatus" jdbcType="INTEGER"/>
         <result property="startDate" column="STARTDATE_" jdbcType="TIMESTAMP"/>
-        <result property="endDate" column="ENDDATE_" jdbcType="TIMESTAMP"/>
-        <result property="days" column="DAYS_" jdbcType="DOUBLE"/>
-        <result property="money" column="MONEY_" jdbcType="DOUBLE"/>
         <result property="cause" column="CAUSE_" jdbcType="VARCHAR"/>
-        <result property="deleteFlag" column="DELETEFLAG_" jdbcType="INTEGER"/>
-        <result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+        <result property="processName" column="processName" jdbcType="VARCHAR"/>
+        <result property="endDate" column="ENDDATE_" jdbcType="TIMESTAMP"/>
         <result property="createBy" column="CREATEBY_" jdbcType="VARCHAR"/>
         <result property="updateDate" column="UPDATEDATE_" jdbcType="TIMESTAMP"/>
-        <result property="locked" column="LOCKED_" jdbcType="INTEGER"/>
-        <result property="status" column="STATUS_" jdbcType="INTEGER"/>
-        <result property="processName" column="processName" jdbcType="VARCHAR"/>
-        <result property="processInstanceId" column="processInstanceId" jdbcType="BIGINT"/>
-        <result property="wfStatus" column="wfStatus" jdbcType="INTEGER"/>
+        <result property="applyDate" column="APPLYDATE_" jdbcType="TIMESTAMP"/>
+        <result property="transType" column="TRANSTYPE_" jdbcType="VARCHAR"/>
         <result property="wfStartDate" column="wfStartDate" jdbcType="TIMESTAMP"/>
+        <result property="processInstanceId" column="processInstanceId" jdbcType="BIGINT"/>
+        <result property="days" column="DAYS_" jdbcType="DOUBLE"/>
+        <result property="money" column="MONEY_" jdbcType="DOUBLE"/>
         <result property="wfEndDate" column="wfEndDate" jdbcType="TIMESTAMP"/>
+        <result property="locked" column="LOCKED_" jdbcType="INTEGER"/>
+        <result property="deleteFlag" column="DELETEFLAG_" jdbcType="INTEGER"/>
+        <result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP"/>
 	</resultMap>
 
  
@@ -31,32 +31,23 @@
 		insert into X_APP_TRIP 
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 		    ID_
-			<if test="transType != null">
-				,TRANSTYPE_ 
-			</if>
-			<if test="applyDate != null">
-				,APPLYDATE_ 
+			<if test="wfStatus != null">
+				,wfStatus 
 			</if>
 			<if test="startDate != null">
 				,STARTDATE_ 
 			</if>
-			<if test="endDate != null">
-				,ENDDATE_ 
-			</if>
-			<if test="days != null">
-				,DAYS_ 
-			</if>
-			<if test="money != null">
-				,MONEY_ 
-			</if>
 			<if test="cause != null">
 				,CAUSE_ 
 			</if>
-			<if test="deleteFlag != null">
-				,DELETEFLAG_ 
+			<if test="status != null">
+				,status 
 			</if>
-			<if test="createDate != null">
-				,CREATEDATE_ 
+			<if test="processName != null">
+				,processName 
+			</if>
+			<if test="endDate != null">
+				,ENDDATE_ 
 			</if>
 			<if test="createBy != null">
 				,CREATEBY_ 
@@ -64,67 +55,49 @@
 			<if test="updateDate != null">
 				,UPDATEDATE_ 
 			</if>
-			<if test="locked != null">
-				,LOCKED_ 
+			<if test="applyDate != null">
+				,APPLYDATE_ 
 			</if>
-			<if test="status != null">
-				,STATUS_ 
-			</if>
-			<if test="processName != null">
-				,processName 
-			</if>
-			<if test="processInstanceId != null">
-				,processInstanceId 
-			</if>
-			<if test="wfStatus != null">
-				,wfStatus 
+			<if test="transType != null">
+				,TRANSTYPE_ 
 			</if>
 			<if test="wfStartDate != null">
 				,wfStartDate 
 			</if>
+			<if test="processInstanceId != null">
+				,processInstanceId 
+			</if>
+			<if test="days != null">
+				,DAYS_ 
+			</if>
+			<if test="money != null">
+				,MONEY_ 
+			</if>
 			<if test="wfEndDate != null">
 				,wfEndDate 
+			</if>
+			<if test="locked != null">
+				,LOCKED_ 
+			</if>
+			<if test="deleteFlag != null">
+				,DELETEFLAG_ 
+			</if>
+			<if test="createDate != null">
+				,CREATEDATE_ 
 			</if>
         </trim>
 
 		<trim prefix=" values (" suffix=")" suffixOverrides=",">
 			  #{id, jdbcType=VARCHAR}
 	     
-			<if test="transType != null">
-				,#{transType, jdbcType=VARCHAR}
-			</if>
-			<if test="applyDate != null">
-				,#{applyDate, jdbcType=TIMESTAMP}
+			<if test="wfStatus != null">
+				,#{wfStatus, jdbcType=INTEGER}
 			</if>
 			<if test="startDate != null">
 				,#{startDate, jdbcType=TIMESTAMP}
 			</if>
-			<if test="endDate != null">
-				,#{endDate, jdbcType=TIMESTAMP}
-			</if>
-			<if test="days != null">
-				,#{days, jdbcType=DOUBLE}
-			</if>
-			<if test="money != null">
-				,#{money, jdbcType=DOUBLE}
-			</if>
 			<if test="cause != null">
 				,#{cause, jdbcType=VARCHAR}
-			</if>
-			<if test="deleteFlag != null">
-				,#{deleteFlag, jdbcType=INTEGER}
-			</if>
-			<if test="createDate != null">
-				,#{createDate, jdbcType=TIMESTAMP}
-			</if>
-			<if test="createBy != null">
-				,#{createBy, jdbcType=VARCHAR}
-			</if>
-			<if test="updateDate != null">
-				,#{updateDate, jdbcType=TIMESTAMP}
-			</if>
-			<if test="locked != null">
-				,#{locked, jdbcType=INTEGER}
 			</if>
 			<if test="status != null">
 				,#{status, jdbcType=INTEGER}
@@ -132,17 +105,44 @@
 			<if test="processName != null">
 				,#{processName, jdbcType=VARCHAR}
 			</if>
-			<if test="processInstanceId != null">
-				,#{processInstanceId, jdbcType=BIGINT}
+			<if test="endDate != null">
+				,#{endDate, jdbcType=TIMESTAMP}
 			</if>
-			<if test="wfStatus != null">
-				,#{wfStatus, jdbcType=INTEGER}
+			<if test="createBy != null">
+				,#{createBy, jdbcType=VARCHAR}
+			</if>
+			<if test="updateDate != null">
+				,#{updateDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="applyDate != null">
+				,#{applyDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="transType != null">
+				,#{transType, jdbcType=VARCHAR}
 			</if>
 			<if test="wfStartDate != null">
 				,#{wfStartDate, jdbcType=TIMESTAMP}
 			</if>
+			<if test="processInstanceId != null">
+				,#{processInstanceId, jdbcType=BIGINT}
+			</if>
+			<if test="days != null">
+				,#{days, jdbcType=DOUBLE}
+			</if>
+			<if test="money != null">
+				,#{money, jdbcType=DOUBLE}
+			</if>
 			<if test="wfEndDate != null">
 				,#{wfEndDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="locked != null">
+				,#{locked, jdbcType=INTEGER}
+			</if>
+			<if test="deleteFlag != null">
+				,#{deleteFlag, jdbcType=INTEGER}
+			</if>
+			<if test="createDate != null">
+				,#{createDate, jdbcType=TIMESTAMP}
 			</if>
 	    </trim>
     </insert>
@@ -152,32 +152,23 @@
 		update X_APP_TRIP
 		set
         <trim prefix="" suffix="" suffixOverrides=",">		
-			<if test="transType != null">
-				TRANSTYPE_ = #{transType, jdbcType=VARCHAR},
-			</if>
-			<if test="applyDate != null">
-				APPLYDATE_ = #{applyDate, jdbcType=TIMESTAMP},
+			<if test="wfStatus != null">
+				wfStatus = #{wfStatus, jdbcType=INTEGER},
 			</if>
 			<if test="startDate != null">
 				STARTDATE_ = #{startDate, jdbcType=TIMESTAMP},
 			</if>
-			<if test="endDate != null">
-				ENDDATE_ = #{endDate, jdbcType=TIMESTAMP},
-			</if>
-			<if test="days != null">
-				DAYS_ = #{days, jdbcType=DOUBLE},
-			</if>
-			<if test="money != null">
-				MONEY_ = #{money, jdbcType=DOUBLE},
-			</if>
 			<if test="cause != null">
 				CAUSE_ = #{cause, jdbcType=VARCHAR},
 			</if>
-			<if test="deleteFlag != null">
-				DELETEFLAG_ = #{deleteFlag, jdbcType=INTEGER},
+			<if test="status != null">
+				status = #{status, jdbcType=INTEGER},
 			</if>
-			<if test="createDate != null">
-				CREATEDATE_ = #{createDate, jdbcType=TIMESTAMP},
+			<if test="processName != null">
+				processName = #{processName, jdbcType=VARCHAR},
+			</if>
+			<if test="endDate != null">
+				ENDDATE_ = #{endDate, jdbcType=TIMESTAMP},
 			</if>
 			<if test="createBy != null">
 				CREATEBY_ = #{createBy, jdbcType=VARCHAR},
@@ -185,26 +176,35 @@
 			<if test="updateDate != null">
 				UPDATEDATE_ = #{updateDate, jdbcType=TIMESTAMP},
 			</if>
-			<if test="locked != null">
-				LOCKED_ = #{locked, jdbcType=INTEGER},
+			<if test="applyDate != null">
+				APPLYDATE_ = #{applyDate, jdbcType=TIMESTAMP},
 			</if>
-			<if test="status != null">
-				STATUS_ = #{status, jdbcType=INTEGER},
-			</if>
-			<if test="processName != null">
-				processName = #{processName, jdbcType=VARCHAR},
-			</if>
-			<if test="processInstanceId != null">
-				processInstanceId = #{processInstanceId, jdbcType=BIGINT},
-			</if>
-			<if test="wfStatus != null">
-				wfStatus = #{wfStatus, jdbcType=INTEGER},
+			<if test="transType != null">
+				TRANSTYPE_ = #{transType, jdbcType=VARCHAR},
 			</if>
 			<if test="wfStartDate != null">
 				wfStartDate = #{wfStartDate, jdbcType=TIMESTAMP},
 			</if>
+			<if test="processInstanceId != null">
+				processInstanceId = #{processInstanceId, jdbcType=BIGINT},
+			</if>
+			<if test="days != null">
+				DAYS_ = #{days, jdbcType=DOUBLE},
+			</if>
+			<if test="money != null">
+				MONEY_ = #{money, jdbcType=DOUBLE},
+			</if>
 			<if test="wfEndDate != null">
 				wfEndDate = #{wfEndDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="locked != null">
+				LOCKED_ = #{locked, jdbcType=INTEGER},
+			</if>
+			<if test="deleteFlag != null">
+				DELETEFLAG_ = #{deleteFlag, jdbcType=INTEGER},
+			</if>
+			<if test="createDate != null">
+				CREATEDATE_ = #{createDate, jdbcType=TIMESTAMP},
 			</if>
         </trim>
 		where
@@ -223,9 +223,9 @@
 		delete from X_APP_TRIP
 		where ( 
  			  ID_ IN
-              <foreach item="x_rowId" index="index" collection="rowIds" 
+              <foreach item="x_id" index="index" collection="ids" 
                      open="(" separator="," close=")">
-                  #{x_rowId}
+                  #{x_id}
               </foreach>
 		)
 	</delete>
@@ -352,40 +352,24 @@
                 </foreach>
 			</if>
 
-	        
-			<if test="transType != null and transType != '' ">
-				and E.TRANSTYPE_ = #{transType}
+
+			<if test="wfStatus != null">
+				and E.wfStatus = #{wfStatus}
             </if>
 
-			<if test="transTypeLike != null and transTypeLike != '' ">
-				and E.TRANSTYPE_ like #{transTypeLike}
+			<if test="wfStatusGreaterThanOrEqual != null">
+				and E.wfStatus &gt;= #{wfStatusGreaterThanOrEqual}
             </if>
 
-			<if test="transTypes != null and transTypes.size() &gt; 0">
-			    and E.TRANSTYPE_ IN
-                <foreach item="x_transType" index="index" collection="transTypes" 
+			<if test="wfStatusLessThanOrEqual != null">
+				and E.wfStatus &lt;= #{wfStatusLessThanOrEqual}
+            </if>
+
+			<if test="wfStatuss != null and wfStatuss.size() &gt; 0">
+			    and E.wfStatus IN
+                <foreach item="x_wfStatus" index="index" collection="wfStatuss" 
                      open="(" separator="," close=")">
-                  #{x_transType}
-                </foreach>
-			</if>
-
-			<if test="applyDate != null">
-				and E.APPLYDATE_ = #{applyDate}
-            </if>
-
-			<if test="applyDateGreaterThanOrEqual != null">
-				and E.APPLYDATE_ &gt;= #{applyDateGreaterThanOrEqual}
-            </if>
-
-			<if test="applyDateLessThanOrEqual != null">
-				and E.APPLYDATE_ &lt;= #{applyDateLessThanOrEqual}
-            </if>
-
-			<if test="applyDates != null and applyDates.size() &gt; 0">
-			    and E.APPLYDATE_ IN
-                <foreach item="x_applyDate" index="index" collection="applyDates" 
-                     open="(" separator="," close=")">
-                  #{x_applyDate}
+                  #{x_wfStatus}
                 </foreach>
 			</if>
 
@@ -410,6 +394,59 @@
                 </foreach>
 			</if>
 
+	        
+			<if test="cause != null and cause != '' ">
+				and E.CAUSE_ = #{cause}
+            </if>
+
+			<if test="causeLike != null and causeLike != '' ">
+				and E.CAUSE_ like #{causeLike}
+            </if>
+
+			<if test="causes != null and causes.size() &gt; 0">
+			    and E.CAUSE_ IN
+                <foreach item="x_cause" index="index" collection="causes" 
+                     open="(" separator="," close=")">
+                  #{x_cause}
+                </foreach>
+			</if>
+
+			<if test="status != null">
+				and E.status = #{status}
+            </if>
+
+			<if test="statusGreaterThanOrEqual != null">
+				and E.status &gt;= #{statusGreaterThanOrEqual}
+            </if>
+
+			<if test="statusLessThanOrEqual != null">
+				and E.status &lt;= #{statusLessThanOrEqual}
+            </if>
+
+			<if test="statuss != null and statuss.size() &gt; 0">
+			    and E.status IN
+                <foreach item="x_status" index="index" collection="statuss" 
+                     open="(" separator="," close=")">
+                  #{x_status}
+                </foreach>
+			</if>
+
+	        
+			<if test="processName != null and processName != '' ">
+				and E.processName = #{processName}
+            </if>
+
+			<if test="processNameLike != null and processNameLike != '' ">
+				and E.processName like #{processNameLike}
+            </if>
+
+			<if test="processNames != null and processNames.size() &gt; 0">
+			    and E.processName IN
+                <foreach item="x_processName" index="index" collection="processNames" 
+                     open="(" separator="," close=")">
+                  #{x_processName}
+                </foreach>
+			</if>
 
 			<if test="endDate != null">
 				and E.ENDDATE_ = #{endDate}
@@ -428,6 +465,101 @@
                 <foreach item="x_endDate" index="index" collection="endDates" 
                      open="(" separator="," close=")">
                   #{x_endDate}
+                </foreach>
+			</if>
+
+	        
+			<if test="createBy != null and createBy != '' ">
+				and E.CREATEBY_ = #{createBy}
+            </if>
+
+			<if test="createByLike != null and createByLike != '' ">
+				and E.CREATEBY_ like #{createByLike}
+            </if>
+
+			<if test="createBys != null and createBys.size() &gt; 0">
+			    and E.CREATEBY_ IN
+                <foreach item="x_createBy" index="index" collection="createBys" 
+                     open="(" separator="," close=")">
+                  #{x_createBy}
+                </foreach>
+			</if>
+
+			<if test="updateDate != null">
+				and E.UPDATEDATE_ = #{updateDate}
+            </if>
+
+			<if test="updateDateGreaterThanOrEqual != null">
+				and E.UPDATEDATE_ &gt;= #{updateDateGreaterThanOrEqual}
+            </if>
+
+			<if test="updateDateLessThanOrEqual != null">
+				and E.UPDATEDATE_ &lt;= #{updateDateLessThanOrEqual}
+            </if>
+
+			<if test="updateDates != null and updateDates.size() &gt; 0">
+			    and E.UPDATEDATE_ IN
+                <foreach item="x_updateDate" index="index" collection="updateDates" 
+                     open="(" separator="," close=")">
+                  #{x_updateDate}
+                </foreach>
+			</if>
+
+
+			<if test="applyDate != null">
+				and E.APPLYDATE_ = #{applyDate}
+            </if>
+
+			<if test="applyDateGreaterThanOrEqual != null">
+				and E.APPLYDATE_ &gt;= #{applyDateGreaterThanOrEqual}
+            </if>
+
+			<if test="applyDateLessThanOrEqual != null">
+				and E.APPLYDATE_ &lt;= #{applyDateLessThanOrEqual}
+            </if>
+
+			<if test="applyDates != null and applyDates.size() &gt; 0">
+			    and E.APPLYDATE_ IN
+                <foreach item="x_applyDate" index="index" collection="applyDates" 
+                     open="(" separator="," close=")">
+                  #{x_applyDate}
+                </foreach>
+			</if>
+
+	        
+			<if test="transType != null and transType != '' ">
+				and E.TRANSTYPE_ = #{transType}
+            </if>
+
+			<if test="transTypeLike != null and transTypeLike != '' ">
+				and E.TRANSTYPE_ like #{transTypeLike}
+            </if>
+
+			<if test="transTypes != null and transTypes.size() &gt; 0">
+			    and E.TRANSTYPE_ IN
+                <foreach item="x_transType" index="index" collection="transTypes" 
+                     open="(" separator="," close=")">
+                  #{x_transType}
+                </foreach>
+			</if>
+
+			<if test="wfStartDate != null">
+				and E.wfStartDate = #{wfStartDate}
+            </if>
+
+			<if test="wfStartDateGreaterThanOrEqual != null">
+				and E.wfStartDate &gt;= #{wfStartDateGreaterThanOrEqual}
+            </if>
+
+			<if test="wfStartDateLessThanOrEqual != null">
+				and E.wfStartDate &lt;= #{wfStartDateLessThanOrEqual}
+            </if>
+
+			<if test="wfStartDates != null and wfStartDates.size() &gt; 0">
+			    and E.wfStartDate IN
+                <foreach item="x_wfStartDate" index="index" collection="wfStartDates" 
+                     open="(" separator="," close=")">
+                  #{x_wfStartDate}
                 </foreach>
 			</if>
 
@@ -473,22 +605,48 @@
                 </foreach>
 			</if>
 
-	        
-			<if test="cause != null and cause != '' ">
-				and E.CAUSE_ = #{cause}
+
+			<if test="wfEndDate != null">
+				and E.wfEndDate = #{wfEndDate}
             </if>
 
-			<if test="causeLike != null and causeLike != '' ">
-				and E.CAUSE_ like #{causeLike}
+			<if test="wfEndDateGreaterThanOrEqual != null">
+				and E.wfEndDate &gt;= #{wfEndDateGreaterThanOrEqual}
             </if>
 
-			<if test="causes != null and causes.size() &gt; 0">
-			    and E.CAUSE_ IN
-                <foreach item="x_cause" index="index" collection="causes" 
+			<if test="wfEndDateLessThanOrEqual != null">
+				and E.wfEndDate &lt;= #{wfEndDateLessThanOrEqual}
+            </if>
+
+			<if test="wfEndDates != null and wfEndDates.size() &gt; 0">
+			    and E.wfEndDate IN
+                <foreach item="x_wfEndDate" index="index" collection="wfEndDates" 
                      open="(" separator="," close=")">
-                  #{x_cause}
+                  #{x_wfEndDate}
                 </foreach>
 			</if>
+
+
+			<if test="locked != null">
+				and E.LOCKED_ = #{locked}
+            </if>
+
+			<if test="lockedGreaterThanOrEqual != null">
+				and E.LOCKED_ &gt;= #{lockedGreaterThanOrEqual}
+            </if>
+
+			<if test="lockedLessThanOrEqual != null">
+				and E.LOCKED_ &lt;= #{lockedLessThanOrEqual}
+            </if>
+
+			<if test="lockeds != null and lockeds.size() &gt; 0">
+			    and E.LOCKED_ IN
+                <foreach item="x_locked" index="index" collection="lockeds" 
+                     open="(" separator="," close=")">
+                  #{x_locked}
+                </foreach>
+			</if>
+
 
 			<if test="deleteFlag != null">
 				and E.DELETEFLAG_ = #{deleteFlag}
@@ -528,164 +686,6 @@
                 <foreach item="x_createDate" index="index" collection="createDates" 
                      open="(" separator="," close=")">
                   #{x_createDate}
-                </foreach>
-			</if>
-
-	        
-			<if test="createBy != null and createBy != '' ">
-				and E.CREATEBY_ = #{createBy}
-            </if>
-
-			<if test="createByLike != null and createByLike != '' ">
-				and E.CREATEBY_ like #{createByLike}
-            </if>
-
-			<if test="createBys != null and createBys.size() &gt; 0">
-			    and E.CREATEBY_ IN
-                <foreach item="x_createBy" index="index" collection="createBys" 
-                     open="(" separator="," close=")">
-                  #{x_createBy}
-                </foreach>
-			</if>
-
-			<if test="updateDate != null">
-				and E.UPDATEDATE_ = #{updateDate}
-            </if>
-
-			<if test="updateDateGreaterThanOrEqual != null">
-				and E.UPDATEDATE_ &gt;= #{updateDateGreaterThanOrEqual}
-            </if>
-
-			<if test="updateDateLessThanOrEqual != null">
-				and E.UPDATEDATE_ &lt;= #{updateDateLessThanOrEqual}
-            </if>
-
-			<if test="updateDates != null and updateDates.size() &gt; 0">
-			    and E.UPDATEDATE_ IN
-                <foreach item="x_updateDate" index="index" collection="updateDates" 
-                     open="(" separator="," close=")">
-                  #{x_updateDate}
-                </foreach>
-			</if>
-
-
-			<if test="locked != null">
-				and E.LOCKED_ = #{locked}
-            </if>
-
-			<if test="lockedGreaterThanOrEqual != null">
-				and E.LOCKED_ &gt;= #{lockedGreaterThanOrEqual}
-            </if>
-
-			<if test="lockedLessThanOrEqual != null">
-				and E.LOCKED_ &lt;= #{lockedLessThanOrEqual}
-            </if>
-
-			<if test="lockeds != null and lockeds.size() &gt; 0">
-			    and E.LOCKED_ IN
-                <foreach item="x_locked" index="index" collection="lockeds" 
-                     open="(" separator="," close=")">
-                  #{x_locked}
-                </foreach>
-			</if>
-
-
-			<if test="status != null">
-				and E.STATUS_ = #{status}
-            </if>
-
-			<if test="statusGreaterThanOrEqual != null">
-				and E.STATUS_ &gt;= #{statusGreaterThanOrEqual}
-            </if>
-
-			<if test="statusLessThanOrEqual != null">
-				and E.STATUS_ &lt;= #{statusLessThanOrEqual}
-            </if>
-
-			<if test="statuss != null and statuss.size() &gt; 0">
-			    and E.STATUS_ IN
-                <foreach item="x_status" index="index" collection="statuss" 
-                     open="(" separator="," close=")">
-                  #{x_status}
-                </foreach>
-			</if>
-
-	        
-			<if test="processName != null and processName != '' ">
-				and E.processName = #{processName}
-            </if>
-
-			<if test="processNameLike != null and processNameLike != '' ">
-				and E.processName like #{processNameLike}
-            </if>
-
-			<if test="processNames != null and processNames.size() &gt; 0">
-			    and E.processName IN
-                <foreach item="x_processName" index="index" collection="processNames" 
-                     open="(" separator="," close=")">
-                  #{x_processName}
-                </foreach>
-			</if>
-
-			<if test="wfStatus != null">
-				and E.wfStatus = #{wfStatus}
-            </if>
-
-			<if test="wfStatusGreaterThanOrEqual != null">
-				and E.wfStatus &gt;= #{wfStatusGreaterThanOrEqual}
-            </if>
-
-			<if test="wfStatusLessThanOrEqual != null">
-				and E.wfStatus &lt;= #{wfStatusLessThanOrEqual}
-            </if>
-
-			<if test="wfStatuss != null and wfStatuss.size() &gt; 0">
-			    and E.wfStatus IN
-                <foreach item="x_wfStatus" index="index" collection="wfStatuss" 
-                     open="(" separator="," close=")">
-                  #{x_wfStatus}
-                </foreach>
-			</if>
-
-
-			<if test="wfStartDate != null">
-				and E.wfStartDate = #{wfStartDate}
-            </if>
-
-			<if test="wfStartDateGreaterThanOrEqual != null">
-				and E.wfStartDate &gt;= #{wfStartDateGreaterThanOrEqual}
-            </if>
-
-			<if test="wfStartDateLessThanOrEqual != null">
-				and E.wfStartDate &lt;= #{wfStartDateLessThanOrEqual}
-            </if>
-
-			<if test="wfStartDates != null and wfStartDates.size() &gt; 0">
-			    and E.wfStartDate IN
-                <foreach item="x_wfStartDate" index="index" collection="wfStartDates" 
-                     open="(" separator="," close=")">
-                  #{x_wfStartDate}
-                </foreach>
-			</if>
-
-
-			<if test="wfEndDate != null">
-				and E.wfEndDate = #{wfEndDate}
-            </if>
-
-			<if test="wfEndDateGreaterThanOrEqual != null">
-				and E.wfEndDate &gt;= #{wfEndDateGreaterThanOrEqual}
-            </if>
-
-			<if test="wfEndDateLessThanOrEqual != null">
-				and E.wfEndDate &lt;= #{wfEndDateLessThanOrEqual}
-            </if>
-
-			<if test="wfEndDates != null and wfEndDates.size() &gt; 0">
-			    and E.wfEndDate IN
-                <foreach item="x_wfEndDate" index="index" collection="wfEndDates" 
-                     open="(" separator="," close=")">
-                  #{x_wfEndDate}
                 </foreach>
 			</if>
 

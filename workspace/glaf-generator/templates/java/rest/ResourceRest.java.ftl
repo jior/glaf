@@ -40,7 +40,7 @@ public class ${entityName}ResourceRest {
 	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
 	public byte[] deleteAll(@Context HttpServletRequest request)
 			throws IOException {
-		String rowIds = request.getParameter("rowIds");
+		String rowIds = request.getParameter("${idField.name}s");
 		if (rowIds != null) {
 		    <#if idField.type=='Integer' >
 			List<Integer> ids = StringTools.splitToInt(rowIds);
@@ -68,11 +68,11 @@ public class ${entityName}ResourceRest {
 	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
 	public byte[] deleteById(@Context HttpServletRequest request) throws IOException {
 		<#if idField.type=='Integer' >
-                ${modelName}Service.deleteById(RequestUtils.getInt(request, "rowId"));
+                ${modelName}Service.deleteById(RequestUtils.getInt(request, "${idField.name}"));
 		<#elseif idField.type== 'Long' >
-                ${modelName}Service.deleteById(RequestUtils.getLong(request, "rowId"));
+                ${modelName}Service.deleteById(RequestUtils.getLong(request, "${idField.name}"));
 		<#else>
-                ${modelName}Service.deleteById(request.getParameter("rowId"));
+                ${modelName}Service.deleteById(request.getParameter("${idField.name}"));
 		</#if>
 		return ResponseUtils.responseJsonResult(true);
 	}
@@ -202,13 +202,13 @@ public class ${entityName}ResourceRest {
 	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
 	public byte[] view(@Context HttpServletRequest request) throws IOException {
 		${entityName} ${modelName} = null;
-		if (StringUtils.isNotEmpty(request.getParameter("rowId"))) {
+		if (StringUtils.isNotEmpty(request.getParameter("${idField.name}"))) {
 		<#if idField.type=='Integer' >
-                  ${modelName} = ${modelName}Service.get${entityName}(RequestUtils.getInt(request, "rowId"));
+                  ${modelName} = ${modelName}Service.get${entityName}(RequestUtils.getInt(request, "${idField.name}"));
 		<#elseif idField.type== 'Long' >
-                  ${modelName} = ${modelName}Service.get${entityName}(RequestUtils.getLong(request, "rowId"));
+                  ${modelName} = ${modelName}Service.get${entityName}(RequestUtils.getLong(request, "${idField.name}"));
 		<#else>
-                  ${modelName} = ${modelName}Service.get${entityName}(request.getParameter("rowId"));
+                  ${modelName} = ${modelName}Service.get${entityName}(request.getParameter("${idField.name}"));
 		</#if>
 		}
 		JSONObject result = new JSONObject();

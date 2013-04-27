@@ -116,11 +116,11 @@ public class ${entityName}BaseController {
 		params.remove("wfStatus");
 
 		<#if idField.type=='Integer' >
-                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(RequestUtils.getInt(request, "rowId"));
+                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(RequestUtils.getInt(request, "${idField.name}"));
 		<#elseif idField.type== 'Long' >
-                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(RequestUtils.getLong(request, "rowId"));
+                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(RequestUtils.getLong(request, "${idField.name}"));
 		<#else>
-                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(request.getParameter("rowId"));
+                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(request.getParameter("${idField.name}"));
 		</#if>
 
  <#if pojo_fields?exists>
@@ -149,10 +149,10 @@ public class ${entityName}BaseController {
 	public void delete(HttpServletRequest request, ModelMap modelMap) {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		String rowId = ParamUtils.getString(params, "rowId");
-		String rowIds = request.getParameter("rowIds");
-		if (StringUtils.isNotEmpty(rowIds)) {
-			StringTokenizer token = new StringTokenizer(rowIds, ",");
+		String ${idField.name} = ParamUtils.getString(params, "${idField.name}");
+		String ${idField.name}s = request.getParameter("${idField.name}s");
+		if (StringUtils.isNotEmpty(${idField.name}s)) {
+			StringTokenizer token = new StringTokenizer(${idField.name}s, ",");
 			while (token.hasMoreTokens()) {
 				String x = token.nextToken();
 				if (StringUtils.isNotEmpty(x)) {
@@ -167,9 +167,9 @@ public class ${entityName}BaseController {
 					}
 				}
 			}
-		} else if (StringUtils.isNotEmpty(rowId)) {
+		} else if (StringUtils.isNotEmpty(${idField.name})) {
 			${entityName} ${modelName} = ${modelName}Service
-					.get${entityName}(rowId);
+					.get${entityName}(${idField.name});
 			/**
 		         * 此处业务逻辑需自行调整
 		         */
@@ -188,11 +188,11 @@ public class ${entityName}BaseController {
 	    //RequestUtils.setRequestParameterToAttribute(request);
 	    //Map<String, Object> params = RequestUtils.getParameterMap(request);
 	    <#if idField.type=='Integer' >
-            ${entityName} ${modelName} = ${modelName}Service.get${entityName}(RequestUtils.getInt(request, "rowId"));
+            ${entityName} ${modelName} = ${modelName}Service.get${entityName}(RequestUtils.getInt(request, "${idField.name}"));
 	    <#elseif idField.type== 'Long' >
-            ${entityName} ${modelName} = ${modelName}Service.get${entityName}(RequestUtils.getLong(request, "rowId"));
+            ${entityName} ${modelName} = ${modelName}Service.get${entityName}(RequestUtils.getLong(request, "${idField.name}"));
 	    <#else>
-            ${entityName} ${modelName} = ${modelName}Service.get${entityName}(request.getParameter("rowId"));
+            ${entityName} ${modelName} = ${modelName}Service.get${entityName}(request.getParameter("${idField.name}"));
 	    </#if>
 		 
 	    JSONObject rowJSON =  ${modelName}.toJsonObject();
@@ -208,11 +208,11 @@ public class ${entityName}BaseController {
 		request.removeAttribute("canSubmit");
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		<#if idField.type=='Integer' >
-                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(RequestUtils.getInt(request, "rowId"));
+                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(RequestUtils.getInt(request, "${idField.name}"));
 		<#elseif idField.type== 'Long' >
-                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(RequestUtils.getLong(request, "rowId"));
+                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(RequestUtils.getLong(request, "${idField.name}"));
 		<#else>
-                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(request.getParameter("rowId"));
+                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(request.getParameter("${idField.name}"));
 		</#if>
 		if(${modelName} != null) {
 		    request.setAttribute("${modelName}", ${modelName});
@@ -257,11 +257,11 @@ public class ${entityName}BaseController {
 		RequestUtils.setRequestParameterToAttribute(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		<#if idField.type=='Integer' >
-                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(RequestUtils.getInt(request, "rowId"));
+                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(RequestUtils.getInt(request, "${idField.name}"));
 		<#elseif idField.type== 'Long' >
-                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(RequestUtils.getLong(request, "rowId"));
+                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(RequestUtils.getLong(request, "${idField.name}"));
 		<#else>
-                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(request.getParameter("rowId"));
+                ${entityName} ${modelName} = ${modelName}Service.get${entityName}(request.getParameter("${idField.name}"));
 		</#if>
 		request.setAttribute("${modelName}", ${modelName});
 		JSONObject rowJSON =  ${modelName}.toJsonObject();

@@ -24,7 +24,7 @@ public interface ${entityName}Service {
 	 * @return
 	 */
 	@Transactional
-	 void deleteByIds(List<${idField.type}> rowIds);
+	 void deleteByIds(List<${idField.type}> ${idField.name}s);
 
           /**
 	 * 根据查询参数获取记录列表

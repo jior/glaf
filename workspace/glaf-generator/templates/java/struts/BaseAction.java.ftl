@@ -103,10 +103,10 @@ public class ${entityName}BaseAction extends DispatchActionSupport {
 			throws Exception {
 		User user = RequestUtils.getUser(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		String rowId = ParamUtils.getString(params, "rowId");
-		String rowIds = request.getParameter("rowIds");
-		if (StringUtils.isNotEmpty(rowIds)) {
-			StringTokenizer token = new StringTokenizer(rowIds, ",");
+		String ${idField.name} = ParamUtils.getString(params, "${idField.name}");
+		String ${idField.name}s = request.getParameter("${idField.name}s");
+		if (StringUtils.isNotEmpty(${idField.name}s)) {
+			StringTokenizer token = new StringTokenizer(${idField.name}s, ",");
 			while (token.hasMoreTokens()) {
 				String x = token.nextToken();
 				if (StringUtils.isNotEmpty(x)) {
@@ -119,8 +119,8 @@ public class ${entityName}BaseAction extends DispatchActionSupport {
 					}
 				}
 			}
-		} else if (StringUtils.isNotEmpty(rowId)) {
-			${entityName} ${modelName} = ${modelName}Service.get${entityName}(rowId);
+		} else if (StringUtils.isNotEmpty(${idField.name})) {
+			${entityName} ${modelName} = ${modelName}Service.get${entityName}(${idField.name});
 			if (${modelName} != null
 					&& StringUtils
 							.equals(${modelName}.getCreateBy(), user.getActorId())) {
@@ -140,10 +140,10 @@ public class ${entityName}BaseAction extends DispatchActionSupport {
 		RequestUtils.setRequestParameterToAttribute(request);
 		request.removeAttribute("canSubmit");
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		String rowId = ParamUtils.getString(params, "rowId");
+		String ${idField.name} = ParamUtils.getString(params, "${idField.name}");
 		${entityName} ${modelName} = null;
-		if (StringUtils.isNotEmpty(rowId)) {
-			${modelName} = ${modelName}Service.get${entityName}(rowId);
+		if (StringUtils.isNotEmpty(${idField.name})) {
+			${modelName} = ${modelName}Service.get${entityName}(${idField.name});
 			request.setAttribute("${modelName}", ${modelName});
 			JSONObject rowJSON = ${modelName}.toJsonObject();
 			request.setAttribute("x_json", rowJSON.toString());
@@ -173,10 +173,10 @@ public class ${entityName}BaseAction extends DispatchActionSupport {
 			throws Exception {
 		RequestUtils.setRequestParameterToAttribute(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		String rowId = ParamUtils.getString(params, "rowId");
+		String ${idField.name} = ParamUtils.getString(params, "${idField.name}");
 		${entityName} ${modelName} = null;
-		if (StringUtils.isNotEmpty(rowId)) {
-			${modelName} = ${modelName}Service.get${entityName}(rowId);
+		if (StringUtils.isNotEmpty(${idField.name})) {
+			${modelName} = ${modelName}Service.get${entityName}(${idField.name});
 			request.setAttribute("${modelName}", ${modelName});
 			JSONObject rowJSON = ${modelName}.toJsonObject();
 			request.setAttribute("x_json", rowJSON.toString());

@@ -65,7 +65,7 @@
 	}
 
 	function onRowClick(rowIndex, row){
-            window.open('<%=request.getContextPath()%><%=request.getContextPath()%>/apps/${modelName}.do?method=edit&rowId='+row.id);
+            window.open('<%=request.getContextPath()%><%=request.getContextPath()%>/apps/${modelName}.do?method=edit&${idField.name}='+row.id);
 	}
 
 	function searchWin(){
@@ -88,7 +88,7 @@
 		}
 		var selected = jQuery('#mydatagrid').datagrid('getSelected');
 		if (selected ){
-			location.href="<%=request.getContextPath()%>/apps/${modelName}.do?method=edit&rowId="+selected.id;
+			location.href="<%=request.getContextPath()%>/apps/${modelName}.do?method=edit&${idField.name}="+selected.id;
 		}
 	}
 
@@ -100,7 +100,7 @@
 		}
 		var selected = jQuery('#mydatagrid').datagrid('getSelected');
 		if (selected ){
-		    location.href="<%=request.getContextPath()%>/apps/${modelName}.do?method=edit&readonly=true&rowId="+selected.id;
+		    location.href="<%=request.getContextPath()%>/apps/${modelName}.do?method=edit&readonly=true&${idField.name}="+selected.id;
 		}
 	}
 
@@ -111,10 +111,10 @@
 			ids.push(rows[i].id);
 		}
 		if(ids.length > 0 && confirm("数据删除后不能恢复，确定删除吗？")){
-		    var rowIds = ids.join(',');
+		    var ${idField.name}s = ids.join(',');
 			jQuery.ajax({
 				   type: "POST",
-				   url: '<%=request.getContextPath()%>/apps/${modelName}.do?method=delete&rowIds='+rowIds,
+				   url: '<%=request.getContextPath()%>/apps/${modelName}.do?method=delete&${idField.name}s='+${idField.name}s,
 				   dataType:  'json',
 				   error: function(data){
 					   alert('服务器处理错误！');

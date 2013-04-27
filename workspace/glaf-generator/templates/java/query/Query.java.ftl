@@ -5,7 +5,7 @@ import com.glaf.core.query.DataQuery;
 
 public class ${entityName}Query extends DataQuery {
         private static final long serialVersionUID = 1L;
-	protected List<${idField.type}> rowIds;
+	protected List<${idField.type}> ${idField.name}s;
  <#if pojo_fields?exists>
     <#list  pojo_fields as field>
      <#if field.name != 'processInstanceId'>

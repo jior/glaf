@@ -87,9 +87,9 @@
 <input type="hidden" id="x_json" name="x_json" value="<c:out value="#F{x_json}" escapeXml="true"/>">
 <input type="hidden" id="status" name="status" value="0">
 <input type="hidden" id="method" name="method" value="x"> 
-<input type="hidden" id="rowId" name="rowId" value="<c:out value="#F{rowId}"/>">
+<input type="hidden" id="${idField.name}" name="${idField.name}" value="<c:out value="#F{${idField.name}}"/>">
 <input type="hidden" id="gridType" name="gridType" value="<c:out value="#F{gridType}"/>">
-<input type="hidden"	id="taskInstanceId" name="taskInstanceId" value="<c:out value="#F{taskItem.taskInstanceId}"/>">
+<input type="hidden" id="taskInstanceId" name="taskInstanceId" value="<c:out value="#F{taskItem.taskInstanceId}"/>">
 <c:if	test="#F{not empty ${modelName}.formName}">
 <input type="hidden" id="formName" name="formName" value="<c:out value="#F{${modelName}.formName}"/>">
 </c:if> 

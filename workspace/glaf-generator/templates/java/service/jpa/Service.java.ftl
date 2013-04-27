@@ -47,8 +47,8 @@ public class ${entityName}Service {
 	}
 
 	@Transactional
-	public void deleteByIds(Collection<Object> rowIds) {
-		if (rowIds != null && rowIds.size() > 0) {
+	public void deleteByIds(Collection<Object> ${idField.name}s) {
+		if (${idField.name}s != null && ${idField.name}s.size() > 0) {
 		    Map<String, Object> params = new HashMap<String, Object>();
 		    StringBuffer buffer = new StringBuffer();
 		    buffer.append(" delete from ")
@@ -56,11 +56,11 @@ public class ${entityName}Service {
 				.append(" a where 1=1 ");
 			buffer.append(" and ( ");
 			int index = 0;
-			for (Object object : rowIds) {
+			for (Object object : ${idField.name}s) {
 				if (index > 0) {
 					buffer.append(" or ");
 				}
-				String p_name = "rowId_" + index;
+				String p_name = "${idField.name}_" + index;
 				buffer.append(" a.id = :").append(p_name);
 				params.put(p_name, object);
 				index++;

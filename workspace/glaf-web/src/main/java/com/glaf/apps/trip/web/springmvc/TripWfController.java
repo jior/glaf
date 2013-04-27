@@ -40,7 +40,7 @@ public class TripWfController extends TripBaseController {
 		User user = RequestUtils.getUser(request);
 		String actorId = user.getActorId();
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
-                Trip trip = tripService.getTrip(request.getParameter("rowId"));
+                Trip trip = tripService.getTrip(request.getParameter("id"));
 		if (trip != null) {
 			String processName = ViewProperties.getString("Trip.processName");
 			if (StringUtils.isEmpty(processName)) {
@@ -50,7 +50,7 @@ public class TripWfController extends TripBaseController {
 			ProcessContext ctx = new ProcessContext();
 			ctx.setRowId(trip.getId());
 			ctx.setActorId(actorId);
-			ctx.setTitle(ViewProperties.getString("res_rowId") + trip.getId());
+			ctx.setTitle(ViewProperties.getString("res_id") + trip.getId());
 			ctx.setProcessName(trip.getProcessName());
 			try{
 			    Long processInstanceId = ProcessContainer.getContainer()
@@ -75,7 +75,7 @@ public class TripWfController extends TripBaseController {
 		String actorId = user.getActorId();
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		String taskInstanceId = ParamUtils.getString(params, "taskInstanceId");
-                Trip trip = tripService.getTrip(request.getParameter("rowId"));
+                Trip trip = tripService.getTrip(request.getParameter("id"));
 		if (trip != null && trip.getProcessInstanceId() != null && trip.getWfStatus() != 9999) {
 			TaskItem taskItem = ProcessContainer.getContainer().getMinTaskItem(actorId, trip.getProcessInstanceId());
 			if (taskItem != null && StringUtils.equals(String.valueOf(taskItem.getTaskInstanceId()), taskInstanceId)) {				
@@ -125,7 +125,7 @@ public class TripWfController extends TripBaseController {
 		request.removeAttribute("canSubmit");
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 
-                Trip trip = tripService.getTrip(request.getParameter("rowId"));
+                Trip trip = tripService.getTrip(request.getParameter("id"));
 
                 if (trip != null) {
 		    request.setAttribute("trip", trip);
@@ -190,7 +190,7 @@ public class TripWfController extends TripBaseController {
 	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
-                Trip trip = tripService.getTrip(request.getParameter("rowId"));
+                Trip trip = tripService.getTrip(request.getParameter("id"));
 		request.setAttribute("trip", trip);
  
 		JSONObject rowJSON = trip.toJsonObject();
@@ -239,6 +239,7 @@ public class TripWfController extends TripBaseController {
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		TripQuery query = new TripQuery();
 		Tools.populate(query, params);
+		query.setWorkedProcessFlag(workedProcessFlag);
 
 		ProcessContainer container = ProcessContainer.getContainer();
 		if (StringUtils.equals(workedProcessFlag, "PD")) {

@@ -42,11 +42,11 @@ public class TripServiceImpl implements TripService {
 	}
 
 	@Transactional
-	public void deleteByIds(List<String> rowIds) {
-	    if(rowIds != null && !rowIds.isEmpty()){
-		TripQuery query = new TripQuery();
-		query.rowIds(rowIds);
-		tripMapper.deleteTrips(query);
+	public void deleteByIds(List<String> ids) {
+	    if(ids != null && !ids.isEmpty()){
+		 for(String id:ids){
+			 tripMapper.deleteTripById(id);
+		 }
 	    }
 	}
 

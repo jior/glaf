@@ -153,9 +153,9 @@
 		delete from ${tableName}
 		where ( 
  			  ${idField.columnName} IN
-              <foreach item="x_rowId" index="index" collection="rowIds" 
+              <foreach item="x_${idField.name}" index="index" collection="${idField.name}s" 
                      open="(" separator="," close=")">
-                  #GG{x_rowId}
+                  #GG{x_${idField.name}}
               </foreach>
 		)
 	</delete>

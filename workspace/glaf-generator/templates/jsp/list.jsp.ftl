@@ -124,8 +124,8 @@
           oRecord = myDataTable.getRecordSet().getRecord(selectRows[0]);
           var status = YAHOO.lang.dump(oRecord.getData("status"));    	
           if(status == 0 || status == -1){
-              var rowId = YAHOO.lang.dump(oRecord.getData("rowId"));
-              location.href="<%=request.getContextPath()%>/apps/${modelName?if_exists}.do?method=edit&gridType=yuigrid&x_method=saveOrUpdate&rowId="+rowId+x_app;
+              var ${idField.name} = YAHOO.lang.dump(oRecord.getData("${idField.name}"));
+              location.href="<%=request.getContextPath()%>/apps/${modelName?if_exists}.do?method=edit&gridType=yuigrid&x_method=saveOrUpdate&${idField.name}="+${idField.name}+x_app;
           } else {
                alert("${res_update_audit_deny?if_exists}");
           }
@@ -138,8 +138,8 @@
     	var selectRows = myDataTable.getSelectedRows();
     	 if(selectRows.length!=null && selectRows.length==1){
           oRecord = myDataTable.getRecordSet().getRecord(selectRows[0]);
-          var rowId = YAHOO.lang.dump(oRecord.getData("rowId"));
-          window.open("<%=request.getContextPath()%>/apps/${modelName?if_exists}.do?method=view&gridType=yuigrid&x_method=view&gridType=yuigrid&rowId="+rowId+x_app);
+          var ${idField.name} = YAHOO.lang.dump(oRecord.getData("${idField.name}"));
+          window.open("<%=request.getContextPath()%>/apps/${modelName?if_exists}.do?method=view&gridType=yuigrid&x_method=view&gridType=yuigrid&${idField.name}="+${idField.name}+x_app);
         } else{
           alert("${res_choose_one_only?if_exists}");
     	}
@@ -164,8 +164,8 @@
     	var selectRows = myDataTable.getSelectedRows();
     	 if(selectRows.length!=null && selectRows.length==1){
           oRecord = myDataTable.getRecordSet().getRecord(selectRows[0]);
-          var rowId = YAHOO.lang.dump(oRecord.getData("rowId"));
-          location.href="<%=request.getContextPath()%>/apps/${modelName?if_exists}.do?method=edit&gridType=yuigrid&x_method=submit&taskType=<c:out value="#F{taskType}"/>&rowId="+rowId+x_app;
+          var ${idField.name} = YAHOO.lang.dump(oRecord.getData("${idField.name}"));
+          location.href="<%=request.getContextPath()%>/apps/${modelName?if_exists}.do?method=edit&gridType=yuigrid&x_method=submit&taskType=<c:out value="#F{taskType}"/>&${idField.name}="+${idField.name}+x_app;
         } else{
           alert("${res_choose_one_only?if_exists}");
     	}
@@ -177,7 +177,7 @@
           oRecord = myDataTable.getRecordSet().getRecord(selectRows[0]);
           var status = YAHOO.lang.dump(oRecord.getData("status"));    	
           if(status == 0 ){
-              var rowId = YAHOO.lang.dump(oRecord.getData("rowId"));
+              var ${idField.name} = YAHOO.lang.dump(oRecord.getData("${idField.name}"));
            } else {
                alert("${res_delete_audit_deny?if_exists}");
            }
@@ -227,13 +227,13 @@
 	 
 
 	 var formatFunKey = function(elCell, oRecord, oColumn, oData) {
-        var rowId = YAHOO.lang.dump(oRecord.getData("rowId"));
+        var ${idField.name} = YAHOO.lang.dump(oRecord.getData("${idField.name}"));
 		var processInstanceId = YAHOO.lang.dump(oRecord.getData("processInstanceId"));
-        var link = "<%=request.getContextPath()%>/apps/${modelName?if_exists}.do?method=view&gridType=yuigrid&x_method=view&gridType=yuigrid&rowId="+rowId+x_app;
+        var link = "<%=request.getContextPath()%>/apps/${modelName?if_exists}.do?method=view&gridType=yuigrid&x_method=view&gridType=yuigrid&${idField.name}="+${idField.name}+x_app;
 		var msg = "<a href=\""+link+"\" target='_blank'>${res_view?if_exists}</a>";
 		if(processInstanceId != null && processInstanceId != "null"){
 			 <c:if test="#F{ taskType == 'running' || taskType =='fallback' }">
-			 msg = msg + "&nbsp;<a href='<%=request.getContextPath()%>/FormService.do?method=view&gridType=yuigrid&x_method=submit&taskType=<c:out value="#F{taskType}"/>&rowId="+rowId+x_app+"'>${res_audit?if_exists}</a>";
+			 msg = msg + "&nbsp;<a href='<%=request.getContextPath()%>/FormService.do?method=view&gridType=yuigrid&x_method=submit&taskType=<c:out value="#F{taskType}"/>&${idField.name}="+${idField.name}+x_app+"'>${res_audit?if_exists}</a>";
 			 </c:if>
              msg = msg + "&nbsp;<a href='<%=request.getContextPath()%>/pages/jbpm/jsp/task/task.jsp?processInstanceId="+processInstanceId+"' target='_blank'>${res_process_status?if_exists}</a>";
 		}
@@ -241,8 +241,8 @@
       }
 
 	  var formatRow = function(elCell, oRecord, oColumn, oData) {
-        var rowId = YAHOO.lang.dump(oRecord.getData("rowId"));
-        var link = "<%=request.getContextPath()%>/apps/${modelName?if_exists}.do?method=view&gridType=yuigrid&x_method=view&gridType=yuigrid&rowId="+rowId+x_app;
+        var ${idField.name} = YAHOO.lang.dump(oRecord.getData("${idField.name}"));
+        var link = "<%=request.getContextPath()%>/apps/${modelName?if_exists}.do?method=view&gridType=yuigrid&x_method=view&gridType=yuigrid&${idField.name}="+${idField.name}+x_app;
         elCell.innerHTML = "<a href=\""+link+"\" target='_blank'>"+oData+"</a>";
       }
 
