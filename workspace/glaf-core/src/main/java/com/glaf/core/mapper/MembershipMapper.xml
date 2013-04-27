@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.core.mapper.MembershipMapper">
+
+	<resultMap id="membershipResultMap" type="com.glaf.core.domain.Membership">
+		<id property="id" column="ID_" jdbcType="BIGINT" />
+		<result property="superiorId" column="SUPERIORID_" jdbcType="VARCHAR" />
+		<result property="nodeId" column="NODEID_" jdbcType="BIGINT" />
+		<result property="modifyBy" column="MODIFYBY_" jdbcType="VARCHAR" />
+		<result property="objectId" column="OBJECTID_" jdbcType="VARCHAR" />
+		<result property="actorId" column="ACTORID_" jdbcType="VARCHAR" />
+		<result property="attribute" column="ATTRIBUTE_" jdbcType="VARCHAR" />
+		<result property="modifyDate" column="MODIFYDATE_" jdbcType="TIMESTAMP" />
+		<result property="type" column="TYPE_" jdbcType="VARCHAR" />
+		<result property="objectValue" column="OBJECTVALUE_" jdbcType="VARCHAR" />
+		<result property="roleId" column="ROLEID_" jdbcType="BIGINT" />
+	</resultMap>
+
+
+	<insert id="insertMembership" parameterType="com.glaf.core.domain.Membership">
+		insert into SYS_MEMBERSHIP
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ID_
+			<if test="superiorId != null">
+				,SUPERIORID_
+			</if>
+			<if test="nodeId != null">
+				,NODEID_
+			</if>
+			<if test="modifyBy != null">
+				,MODIFYBY_
+			</if>
+			<if test="objectId != null">
+				,OBJECTID_
+			</if>
+			<if test="actorId != null">
+				,ACTORID_
+			</if>
+			<if test="attribute != null">
+				,ATTRIBUTE_
+			</if>
+			<if test="modifyDate != null">
+				,MODIFYDATE_
+			</if>
+			<if test="type != null">
+				,TYPE_
+			</if>
+			<if test="objectValue != null">
+				,OBJECTVALUE_
+			</if>
+			<if test="roleId != null">
+				,ROLEID_
+			</if>
+		</trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			#{id, jdbcType=BIGINT}
+
+			<if test="superiorId != null">
+				,#{superiorId, jdbcType=VARCHAR}
+			</if>
+			<if test="nodeId != null">
+				,#{nodeId, jdbcType=BIGINT}
+			</if>
+			<if test="modifyBy != null">
+				,#{modifyBy, jdbcType=VARCHAR}
+			</if>
+			<if test="objectId != null">
+				,#{objectId, jdbcType=VARCHAR}
+			</if>
+			<if test="actorId != null">
+				,#{actorId, jdbcType=VARCHAR}
+			</if>
+			<if test="attribute != null">
+				,#{attribute, jdbcType=VARCHAR}
+			</if>
+			<if test="modifyDate != null">
+				,#{modifyDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="type != null">
+				,#{type, jdbcType=VARCHAR}
+			</if>
+			<if test="objectValue != null">
+				,#{objectValue, jdbcType=VARCHAR}
+			</if>
+			<if test="roleId != null">
+				,#{roleId, jdbcType=BIGINT}
+			</if>
+		</trim>
+	</insert>
+
+
+	<update id="updateMembership" parameterType="com.glaf.core.domain.Membership">
+		update SYS_MEMBERSHIP
+		set
+		<trim prefix="" suffix="" suffixOverrides=",">
+			<if test="superiorId != null">
+				SUPERIORID_ = #{superiorId, jdbcType=VARCHAR},
+			</if>
+			<if test="nodeId != null">
+				NODEID_ = #{nodeId, jdbcType=BIGINT},
+			</if>
+			<if test="modifyBy != null">
+				MODIFYBY_ = #{modifyBy, jdbcType=VARCHAR},
+			</if>
+			<if test="objectId != null">
+				OBJECTID_ = #{objectId, jdbcType=VARCHAR},
+			</if>
+			<if test="actorId != null">
+				ACTORID_ = #{actorId, jdbcType=VARCHAR},
+			</if>
+			<if test="attribute != null">
+				ATTRIBUTE_ = #{attribute, jdbcType=VARCHAR},
+			</if>
+			<if test="modifyDate != null">
+				MODIFYDATE_ = #{modifyDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="type != null">
+				TYPE_ = #{type, jdbcType=VARCHAR},
+			</if>
+			<if test="objectValue != null">
+				OBJECTVALUE_ = #{objectValue, jdbcType=VARCHAR},
+			</if>
+			<if test="roleId != null">
+				ROLEID_ = #{roleId, jdbcType=BIGINT},
+			</if>
+		</trim>
+		where
+		ID_ = #{id, jdbcType=BIGINT}
+
+	</update>
+
+
+	<delete id="deleteMembershipById" parameterType="long">
+		delete from SYS_MEMBERSHIP
+		where ID_ = #{id}
+	</delete>
+
+
+	<delete id="deleteMemberships" parameterType="com.glaf.core.query.MembershipQuery">
+		delete from SYS_MEMBERSHIP
+		where (
+		ID_ IN
+		<foreach item="x_rowId" index="index" collection="rowIds"
+			open="(" separator="," close=")">
+			#{x_rowId}
+		</foreach>
+		)
+	</delete>
+
+
+	<select id="getMembershipById" parameterType="long"
+		resultMap="membershipResultMap">
+		select * from SYS_MEMBERSHIP where ID_ = #{id}
+	</select>
+
+
+	<select id="getMemberships" parameterType="com.glaf.core.query.MembershipQuery"
+		resultMap="membershipResultMap">
+		select E.*
+		<include refid="selectMembershipsSql" />
+		<choose>
+			<when test="orderBy != null">
+				order by ${orderBy}
+			</when>
+			<otherwise>
+				order by E.ID_ desc
+			</otherwise>
+		</choose>
+	</select>
+
+
+	<select id="getMembershipCount" parameterType="com.glaf.core.query.MembershipQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectMembershipsSql" />
+	</select>
+
+
+	<sql id="selectMembershipsSql">
+
+		from SYS_MEMBERSHIP E
+
+
+		<where>
+			1 = 1
+
+			<if test="superiorId != null and superiorId != '' ">
+				and E.SUPERIORID_ = #{superiorId}
+			</if>
+
+			<if test="superiorIds != null and superiorIds.size() &gt; 0">
+				and E.SUPERIORID_ IN
+				<foreach item="x_superiorId" index="index" collection="superiorIds"
+					open="(" separator="," close=")">
+					#{x_superiorId}
+				</foreach>
+			</if>
+
+			<if test="nodeId != null">
+				and E.NODEID_ = #{nodeId}
+			</if>
+
+			<if test="nodeIds != null and nodeIds.size() &gt; 0">
+				and E.NODEID_ IN
+				<foreach item="x_nodeId" index="index" collection="nodeIds"
+					open="(" separator="," close=")">
+					#{x_nodeId}
+				</foreach>
+			</if>
+
+			<if test="modifyBy != null and modifyBy != '' ">
+				and E.MODIFYBY_ = #{modifyBy}
+			</if>
+
+			<if test="objectId != null and objectId != '' ">
+				and E.OBJECTID_ = #{objectId}
+			</if>
+
+			<if test="objectIds != null and objectIds.size() &gt; 0">
+				and E.OBJECTID_ IN
+				<foreach item="x_objectId" index="index" collection="objectIds"
+					open="(" separator="," close=")">
+					#{x_objectId}
+				</foreach>
+			</if>
+
+			<if test="actorId != null and actorId != '' ">
+				and E.ACTORID_ = #{actorId}
+			</if>
+
+			<if test="actorIds != null and actorIds.size() &gt; 0">
+				and E.ACTORID_ IN
+				<foreach item="x_actorId" index="index" collection="actorIds"
+					open="(" separator="," close=")">
+					#{x_actorId}
+				</foreach>
+			</if>
+
+			<if test="attribute != null and attribute != '' ">
+				and E.ATTRIBUTE_ = #{attribute}
+			</if>
+
+			<if test="attributeLike != null and attributeLike != '' ">
+				and E.ATTRIBUTE_ like #{attributeLike}
+			</if>
+
+			<if test="type != null and type != '' ">
+				and E.TYPE_ = #{type}
+			</if>
+
+			<if test="types != null and types.size() &gt; 0">
+				and E.TYPE_ IN
+				<foreach item="x_type" index="index" collection="types"
+					open="(" separator="," close=")">
+					#{x_type}
+				</foreach>
+			</if>
+
+			<if test="objectValue != null and objectValue != '' ">
+				and E.OBJECTVALUE_ = #{objectValue}
+			</if>
+
+			<if test="objectValues != null and objectValues.size() &gt; 0">
+				and E.OBJECTVALUE_ IN
+				<foreach item="x_objectValue" index="index" collection="objectValues"
+					open="(" separator="," close=")">
+					#{x_objectValue}
+				</foreach>
+			</if>
+
+			<if test="roleId != null and roleId != '' ">
+				and E.ROLEID_ = #{roleId}
+			</if>
+
+			<if test="roleIds != null and roleIds.size() &gt; 0">
+				and E.ROLEID_ IN
+				<foreach item="x_roleId" index="index" collection="roleIds"
+					open="(" separator="," close=")">
+					#{x_roleId}
+				</foreach>
+			</if>
+
+		</where>
+	</sql>
+
+</mapper>

@@ -18,26 +18,37 @@
 
 package com.glaf.core.query;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import com.glaf.core.query.DataQuery;
 
-public class MembershipQuery implements java.io.Serializable {
+public class MembershipQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;
+
 	protected String actorId;
-	protected List<String> actorIds = new ArrayList<String>();
-	protected Integer nodeId;
-	protected List<Integer> nodeIds;
+
+	protected List<String> actorIds;
+	protected String attribute;
+
+	protected String attributeLike;
+	protected String modifyBy;
+
+	protected Long nodeId;
+
+	protected List<Long> nodeIds;
 	protected String objectId;
+
 	protected List<String> objectIds;
 	protected String objectValue;
 	protected List<String> objectValues;
-	protected String orderBy;
-	protected Integer roleId;
-	protected List<Integer> roleIds;
-	protected List<String> rowIds = new ArrayList<String>();
-	protected String sortColumn;
-	protected String sortOrder;
+
+	protected Long roleId;
+
+	protected List<Long> roleIds;
+	protected String superiorId;
+
+	protected List<String> superiorIds;
 	protected String type;
+
 	protected List<String> types;
 
 	public MembershipQuery() {
@@ -60,6 +71,22 @@ public class MembershipQuery implements java.io.Serializable {
 		return this;
 	}
 
+	public MembershipQuery attribute(String attribute) {
+		if (attribute == null) {
+			throw new RuntimeException("attribute is null");
+		}
+		this.attribute = attribute;
+		return this;
+	}
+
+	public MembershipQuery attributeLike(String attributeLike) {
+		if (attributeLike == null) {
+			throw new RuntimeException("attribute is null");
+		}
+		this.attributeLike = attributeLike;
+		return this;
+	}
+
 	public String getActorId() {
 		return actorId;
 	}
@@ -68,11 +95,31 @@ public class MembershipQuery implements java.io.Serializable {
 		return actorIds;
 	}
 
-	public Integer getNodeId() {
+	public String getAttribute() {
+		return attribute;
+	}
+
+	public String getAttributeLike() {
+		if (attributeLike != null && attributeLike.trim().length() > 0) {
+			if (!attributeLike.startsWith("%")) {
+				attributeLike = "%" + attributeLike;
+			}
+			if (!attributeLike.endsWith("%")) {
+				attributeLike = attributeLike + "%";
+			}
+		}
+		return attributeLike;
+	}
+
+	public String getModifyBy() {
+		return modifyBy;
+	}
+
+	public Long getNodeId() {
 		return nodeId;
 	}
 
-	public List<Integer> getNodeIds() {
+	public List<Long> getNodeIds() {
 		return nodeIds;
 	}
 
@@ -93,27 +140,70 @@ public class MembershipQuery implements java.io.Serializable {
 	}
 
 	public String getOrderBy() {
+		if (sortColumn != null) {
+			String a_x = " asc ";
+			if (sortOrder != null) {
+				a_x = sortOrder;
+			}
+
+			if ("superiorId".equals(sortColumn)) {
+				orderBy = "E.SUPERIORID_" + a_x;
+			}
+
+			if ("nodeId".equals(sortColumn)) {
+				orderBy = "E.NODEID_" + a_x;
+			}
+
+			if ("modifyBy".equals(sortColumn)) {
+				orderBy = "E.MODIFYBY_" + a_x;
+			}
+
+			if ("objectId".equals(sortColumn)) {
+				orderBy = "E.OBJECTID_" + a_x;
+			}
+
+			if ("actorId".equals(sortColumn)) {
+				orderBy = "E.ACTORID_" + a_x;
+			}
+
+			if ("attribute".equals(sortColumn)) {
+				orderBy = "E.ATTRIBUTE_" + a_x;
+			}
+
+			if ("modifyDate".equals(sortColumn)) {
+				orderBy = "E.MODIFYDATE_" + a_x;
+			}
+
+			if ("type".equals(sortColumn)) {
+				orderBy = "E.TYPE_" + a_x;
+			}
+
+			if ("objectValue".equals(sortColumn)) {
+				orderBy = "E.OBJECTVALUE_" + a_x;
+			}
+
+			if ("roleId".equals(sortColumn)) {
+				orderBy = "E.ROLEID_" + a_x;
+			}
+
+		}
 		return orderBy;
 	}
 
-	public Integer getRoleId() {
+	public Long getRoleId() {
 		return roleId;
 	}
 
-	public List<Integer> getRoleIds() {
+	public List<Long> getRoleIds() {
 		return roleIds;
 	}
 
-	public List<String> getRowIds() {
-		return rowIds;
+	public String getSuperiorId() {
+		return superiorId;
 	}
 
-	public String getSortColumn() {
-		return sortColumn;
-	}
-
-	public String getSortOrder() {
-		return sortOrder;
+	public List<String> getSuperiorIds() {
+		return superiorIds;
 	}
 
 	public String getType() {
@@ -124,7 +214,31 @@ public class MembershipQuery implements java.io.Serializable {
 		return types;
 	}
 
-	public MembershipQuery nodeId(Integer nodeId) {
+	@Override
+	public void initQueryColumns() {
+		super.initQueryColumns();
+		addColumn("id", "ID_");
+		addColumn("superiorId", "SUPERIORID_");
+		addColumn("nodeId", "NODEID_");
+		addColumn("modifyBy", "MODIFYBY_");
+		addColumn("objectId", "OBJECTID_");
+		addColumn("actorId", "ACTORID_");
+		addColumn("attribute", "ATTRIBUTE_");
+		addColumn("modifyDate", "MODIFYDATE_");
+		addColumn("type", "TYPE_");
+		addColumn("objectValue", "OBJECTVALUE_");
+		addColumn("roleId", "ROLEID_");
+	}
+
+	public MembershipQuery modifyBy(String modifyBy) {
+		if (modifyBy == null) {
+			throw new RuntimeException("modifyBy is null");
+		}
+		this.modifyBy = modifyBy;
+		return this;
+	}
+
+	public MembershipQuery nodeId(Long nodeId) {
 		if (nodeId == null) {
 			throw new RuntimeException("nodeId is null");
 		}
@@ -132,7 +246,7 @@ public class MembershipQuery implements java.io.Serializable {
 		return this;
 	}
 
-	public MembershipQuery nodeIds(List<Integer> nodeIds) {
+	public MembershipQuery nodeIds(List<Long> nodeIds) {
 		if (nodeIds == null) {
 			throw new RuntimeException("nodeIds is empty ");
 		}
@@ -172,7 +286,7 @@ public class MembershipQuery implements java.io.Serializable {
 		return this;
 	}
 
-	public MembershipQuery roleId(Integer roleId) {
+	public MembershipQuery roleId(Long roleId) {
 		if (roleId == null) {
 			throw new RuntimeException("roleId is null");
 		}
@@ -180,19 +294,11 @@ public class MembershipQuery implements java.io.Serializable {
 		return this;
 	}
 
-	public MembershipQuery roleIds(List<Integer> roleIds) {
+	public MembershipQuery roleIds(List<Long> roleIds) {
 		if (roleIds == null) {
 			throw new RuntimeException("roleIds is empty ");
 		}
 		this.roleIds = roleIds;
-		return this;
-	}
-
-	public MembershipQuery rowIds(List<String> rowIds) {
-		if (rowIds == null) {
-			throw new RuntimeException("rowIds is null");
-		}
-		this.rowIds = rowIds;
 		return this;
 	}
 
@@ -204,11 +310,23 @@ public class MembershipQuery implements java.io.Serializable {
 		this.actorIds = actorIds;
 	}
 
-	public void setNodeId(Integer nodeId) {
+	public void setAttribute(String attribute) {
+		this.attribute = attribute;
+	}
+
+	public void setAttributeLike(String attributeLike) {
+		this.attributeLike = attributeLike;
+	}
+
+	public void setModifyBy(String modifyBy) {
+		this.modifyBy = modifyBy;
+	}
+
+	public void setNodeId(Long nodeId) {
 		this.nodeId = nodeId;
 	}
 
-	public void setNodeIds(List<Integer> nodeIds) {
+	public void setNodeIds(List<Long> nodeIds) {
 		this.nodeIds = nodeIds;
 	}
 
@@ -228,28 +346,20 @@ public class MembershipQuery implements java.io.Serializable {
 		this.objectValues = objectValues;
 	}
 
-	public void setOrderBy(String orderBy) {
-		this.orderBy = orderBy;
-	}
-
-	public void setRoleId(Integer roleId) {
+	public void setRoleId(Long roleId) {
 		this.roleId = roleId;
 	}
 
-	public void setRoleIds(List<Integer> roleIds) {
+	public void setRoleIds(List<Long> roleIds) {
 		this.roleIds = roleIds;
 	}
 
-	public void setRowIds(List<String> rowIds) {
-		this.rowIds = rowIds;
+	public void setSuperiorId(String superiorId) {
+		this.superiorId = superiorId;
 	}
 
-	public void setSortColumn(String sortColumn) {
-		this.sortColumn = sortColumn;
-	}
-
-	public void setSortOrder(String sortOrder) {
-		this.sortOrder = sortOrder;
+	public void setSuperiorIds(List<String> superiorIds) {
+		this.superiorIds = superiorIds;
 	}
 
 	public void setType(String type) {
@@ -258,6 +368,22 @@ public class MembershipQuery implements java.io.Serializable {
 
 	public void setTypes(List<String> types) {
 		this.types = types;
+	}
+
+	public MembershipQuery superiorId(String superiorId) {
+		if (superiorId == null) {
+			throw new RuntimeException("superiorId is null");
+		}
+		this.superiorId = superiorId;
+		return this;
+	}
+
+	public MembershipQuery superiorIds(List<String> superiorIds) {
+		if (superiorIds == null) {
+			throw new RuntimeException("superiorIds is empty ");
+		}
+		this.superiorIds = superiorIds;
+		return this;
 	}
 
 	public MembershipQuery type(String type) {
