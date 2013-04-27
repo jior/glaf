@@ -6,16 +6,16 @@
 
 	<resultMap id="membershipResultMap" type="com.glaf.core.domain.Membership">
 		<id property="id" column="ID_" jdbcType="BIGINT" />
-		<result property="superiorId" column="SUPERIORID_" jdbcType="VARCHAR" />
-		<result property="nodeId" column="NODEID_" jdbcType="BIGINT" />
-		<result property="modifyBy" column="MODIFYBY_" jdbcType="VARCHAR" />
-		<result property="objectId" column="OBJECTID_" jdbcType="VARCHAR" />
 		<result property="actorId" column="ACTORID_" jdbcType="VARCHAR" />
-		<result property="attribute" column="ATTRIBUTE_" jdbcType="VARCHAR" />
+		<result property="nodeId" column="NODEID_" jdbcType="BIGINT" />
+		<result property="roleId" column="ROLEID_" jdbcType="BIGINT" />
+		<result property="superiorId" column="SUPERIORID_" jdbcType="VARCHAR" />
+		<result property="modifyBy" column="MODIFYBY_" jdbcType="VARCHAR" />
 		<result property="modifyDate" column="MODIFYDATE_" jdbcType="TIMESTAMP" />
 		<result property="type" column="TYPE_" jdbcType="VARCHAR" />
+		<result property="objectId" column="OBJECTID_" jdbcType="VARCHAR" />
 		<result property="objectValue" column="OBJECTVALUE_" jdbcType="VARCHAR" />
-		<result property="roleId" column="ROLEID_" jdbcType="BIGINT" />
+		<result property="attribute" column="ATTRIBUTE_" jdbcType="VARCHAR" />
 	</resultMap>
 
 
@@ -28,6 +28,9 @@
 			</if>
 			<if test="nodeId != null">
 				,NODEID_
+			</if>
+			<if test="roleId != null">
+				,ROLEID_
 			</if>
 			<if test="modifyBy != null">
 				,MODIFYBY_
@@ -50,9 +53,7 @@
 			<if test="objectValue != null">
 				,OBJECTVALUE_
 			</if>
-			<if test="roleId != null">
-				,ROLEID_
-			</if>
+
 		</trim>
 
 		<trim prefix=" values (" suffix=")" suffixOverrides=",">
@@ -63,6 +64,9 @@
 			</if>
 			<if test="nodeId != null">
 				,#{nodeId, jdbcType=BIGINT}
+			</if>
+			<if test="roleId != null">
+				,#{roleId, jdbcType=BIGINT}
 			</if>
 			<if test="modifyBy != null">
 				,#{modifyBy, jdbcType=VARCHAR}
@@ -84,9 +88,6 @@
 			</if>
 			<if test="objectValue != null">
 				,#{objectValue, jdbcType=VARCHAR}
-			</if>
-			<if test="roleId != null">
-				,#{roleId, jdbcType=BIGINT}
 			</if>
 		</trim>
 	</insert>
@@ -134,7 +135,8 @@
 
 
 	<delete id="deleteMembershipById" parameterType="long">
-		delete from SYS_MEMBERSHIP
+		delete from
+		SYS_MEMBERSHIP
 		where ID_ = #{id}
 	</delete>
 
@@ -183,7 +185,6 @@
 
 		from SYS_MEMBERSHIP E
 
-
 		<where>
 			1 = 1
 
@@ -215,18 +216,6 @@
 				and E.MODIFYBY_ = #{modifyBy}
 			</if>
 
-			<if test="objectId != null and objectId != '' ">
-				and E.OBJECTID_ = #{objectId}
-			</if>
-
-			<if test="objectIds != null and objectIds.size() &gt; 0">
-				and E.OBJECTID_ IN
-				<foreach item="x_objectId" index="index" collection="objectIds"
-					open="(" separator="," close=")">
-					#{x_objectId}
-				</foreach>
-			</if>
-
 			<if test="actorId != null and actorId != '' ">
 				and E.ACTORID_ = #{actorId}
 			</if>
@@ -256,6 +245,18 @@
 				<foreach item="x_type" index="index" collection="types"
 					open="(" separator="," close=")">
 					#{x_type}
+				</foreach>
+			</if>
+
+			<if test="objectId != null and objectId != '' ">
+				and E.OBJECTID_ = #{objectId}
+			</if>
+
+			<if test="objectIds != null and objectIds.size() &gt; 0">
+				and E.OBJECTID_ IN
+				<foreach item="x_objectId" index="index" collection="objectIds"
+					open="(" separator="," close=")">
+					#{x_objectId}
 				</foreach>
 			</if>
 

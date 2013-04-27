@@ -613,8 +613,8 @@ public class SysUserResource {
 		if (user != null) {// 用户存在
 			long[] id = ParamUtil.getLongParameterValues(request, "id");// 获取页面参数
 			if (id != null) {
-				Set<?> delRoles = new HashSet<Object>();
-				Set<?> oldRoles = user.getRoles();
+				Set<SysDeptRole> delRoles = new HashSet<SysDeptRole>();
+				Set<SysDeptRole> oldRoles = user.getRoles();
 				Set<SysDeptRole> newRoles = new HashSet<SysDeptRole>();
 				for (int i = 0; i < id.length; i++) {
 					logger.debug("id[" + i + "]=" + id[i]);

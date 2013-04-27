@@ -31,9 +31,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.core.id.*;
 import com.glaf.core.service.ITableDataService;
+import com.glaf.core.service.MembershipService;
 import com.glaf.core.util.PageResult;
 import com.glaf.core.base.TableModel;
- 
+import com.glaf.core.domain.Membership;
 
 import com.glaf.base.modules.sys.SysConstants;
 import com.glaf.base.modules.sys.mapper.*;
@@ -48,6 +49,8 @@ public class SysDeptRoleServiceImpl implements SysDeptRoleService {
 			.getLog(SysDeptRoleServiceImpl.class);
 
 	protected IdGenerator idGenerator;
+
+	protected MembershipService membershipService;
 
 	protected SqlSessionTemplate sqlSessionTemplate;
 
@@ -287,6 +290,16 @@ public class SysDeptRoleServiceImpl implements SysDeptRoleService {
 		} else {
 			sysDeptRoleMapper.updateSysDeptRole(sysDeptRole);
 		}
+
+		Membership membership = new Membership();
+		membership.setModifyBy(sysDeptRole.getCreateBy());
+		membership.setModifyDate(new java.util.Date());
+		membership.setNodeId(sysDeptRole.getDeptId());
+		membership.setRoleId(sysDeptRole.getSysRoleId());
+		membership.setObjectId("SYS_DEPT_ROLE");
+		membership.setObjectValue(String.valueOf(sysDeptRole.getId()));
+		membership.setType("SysDeptRole");
+		membershipService.save(membership);
 	}
 
 	/**
@@ -335,6 +348,11 @@ public class SysDeptRoleServiceImpl implements SysDeptRoleService {
 	@Qualifier("myBatisDbIdGenerator")
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
+	}
+
+	@Resource
+	public void setMembershipService(MembershipService membershipService) {
+		this.membershipService = membershipService;
 	}
 
 	@Resource
@@ -486,6 +504,7 @@ public class SysDeptRoleServiceImpl implements SysDeptRoleService {
 		table.addColumn("ROLEID", "Long", bean.getId());
 		tableDataService.deleteTableData(table);
 
+		List<Membership> memberships = new ArrayList<Membership>();
 		Set<SysUser> users = bean.getUsers();
 		if (users != null && !users.isEmpty()) {
 			for (SysUser user : users) {
@@ -497,8 +516,21 @@ public class SysDeptRoleServiceImpl implements SysDeptRoleService {
 				userRole.setCreateBy(bean.getCreateBy());
 				userRole.setCreateDate(new Date());
 				sysUserRoleMapper.insertSysUserRole(userRole);
+
+				Membership membership = new Membership();
+				membership.setActorId(user.getAccount());
+				membership.setModifyBy(bean.getCreateBy());
+				membership.setModifyDate(new java.util.Date());
+				membership.setNodeId(bean.getDeptId());
+				membership.setRoleId(bean.getSysRoleId());
+				membership.setObjectId("SYS_USER_ROLE");
+				membership.setObjectValue(String.valueOf(userRole.getId()));
+				memberships.add(membership);
 			}
 		}
+
+		membershipService.saveMemberships(bean.getDeptId(),
+				bean.getSysRoleId(), "DeptRoleUser", memberships);
 
 		return true;
 	}

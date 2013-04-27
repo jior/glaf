@@ -38,18 +38,23 @@ import com.glaf.core.service.MembershipService;
 @Service("membershipService")
 @Transactional(readOnly = true)
 public class MxMembershipServiceImpl implements MembershipService {
-	protected final Logger logger = LoggerFactory.getLogger(getClass());
-
 	protected EntityDAO entityDAO;
 
 	protected IdGenerator idGenerator;
 
-	protected SqlSessionTemplate sqlSessionTemplate;
+	protected final Logger logger = LoggerFactory.getLogger(getClass());
 
 	protected MembershipMapper membershipMapper;
 
+	protected SqlSessionTemplate sqlSessionTemplate;
+
 	public MxMembershipServiceImpl() {
 
+	}
+
+	public int count(MembershipQuery query) {
+		query.ensureInitialized();
+		return membershipMapper.getMembershipCount(query);
 	}
 
 	@Transactional
@@ -68,15 +73,12 @@ public class MxMembershipServiceImpl implements MembershipService {
 		}
 	}
 
-	public int count(MembershipQuery query) {
-		query.ensureInitialized();
-		return membershipMapper.getMembershipCount(query);
-	}
-
-	public List<Membership> list(MembershipQuery query) {
-		query.ensureInitialized();
-		List<Membership> list = membershipMapper.getMemberships(query);
-		return list;
+	public Membership getMembership(Long id) {
+		if (id == null) {
+			return null;
+		}
+		Membership membership = membershipMapper.getMembershipById(id);
+		return membership;
 	}
 
 	public int getMembershipCountByQueryCriteria(MembershipQuery query) {
@@ -91,23 +93,69 @@ public class MxMembershipServiceImpl implements MembershipService {
 		return rows;
 	}
 
-	public Membership getMembership(Long id) {
-		if (id == null) {
-			return null;
-		}
-		Membership membership = membershipMapper.getMembershipById(id);
-		return membership;
+	public List<Membership> list(MembershipQuery query) {
+		query.ensureInitialized();
+		List<Membership> list = membershipMapper.getMemberships(query);
+		return list;
 	}
 
 	@Transactional
 	public void save(Membership membership) {
-		if (membership.getId() == 0L) {
+		if (membership.getId() == null) {
 			membership.setId(idGenerator.nextId());
 			membership.setModifyDate(new Date());
 			membershipMapper.insertMembership(membership);
 		} else {
 			membership.setModifyDate(new Date());
 			membershipMapper.updateMembership(membership);
+		}
+	}
+
+	@Transactional
+	public void saveMemberships(Long nodeId, Long roleId, String type,
+			List<Membership> memberships) {
+		MembershipQuery query = new MembershipQuery();
+		query.nodeId(nodeId);
+		query.roleId(roleId);
+		query.type(type);
+		List<Membership> list = membershipMapper.getMemberships(query);
+		if (list != null && !list.isEmpty()) {
+			for (Membership m : list) {
+				membershipMapper.deleteMembershipById(m.getId());
+			}
+		}
+		if (memberships != null && !memberships.isEmpty()) {
+			for (Membership m : memberships) {
+				m.setNodeId(nodeId);
+				m.setRoleId(roleId);
+				m.setType(type);
+				m.setId(idGenerator.nextId());
+				m.setModifyDate(new java.util.Date());
+				membershipMapper.insertMembership(m);
+			}
+		}
+	}
+
+	@Transactional
+	public void saveMemberships(Long nodeId, String type,
+			List<Membership> memberships) {
+		MembershipQuery query = new MembershipQuery();
+		query.nodeId(nodeId);
+		query.type(type);
+		List<Membership> list = membershipMapper.getMemberships(query);
+		if (list != null && !list.isEmpty()) {
+			for (Membership m : list) {
+				membershipMapper.deleteMembershipById(m.getId());
+			}
+		}
+		if (memberships != null && !memberships.isEmpty()) {
+			for (Membership m : memberships) {
+				m.setNodeId(nodeId);
+				m.setType(type);
+				m.setId(idGenerator.nextId());
+				m.setModifyDate(new java.util.Date());
+				membershipMapper.insertMembership(m);
+			}
 		}
 	}
 

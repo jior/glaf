@@ -29,7 +29,6 @@ import com.glaf.base.modules.sys.query.SysUserQuery;
 
 import com.glaf.core.util.PageResult;
 
-@SuppressWarnings("rawtypes")
 @Transactional(readOnly = true)
 public interface SysUserService {
 
@@ -71,6 +70,14 @@ public interface SysUserService {
 	 */
 	@Transactional
 	boolean deleteAll(long[] id);
+
+	/**
+	 * 删除部门角色用户
+	 * @param deptRole
+	 * @param userIds
+	 */
+	@Transactional
+	void deleteRoleUsers(SysDeptRole deptRole, long[] userIds);
 
 	/**
 	 * 按名称查找对象
@@ -214,7 +221,7 @@ public interface SysUserService {
 	Set<SysDeptRole> getUserRoles(SysUser user);
 
 	boolean isThisPlayer(SysUser user, String code);
-
+	
 	/**
 	 * 更新
 	 * 
@@ -236,7 +243,8 @@ public interface SysUserService {
 	 *            要增加的用户权限
 	 */
 	@Transactional
-	boolean updateRole(SysUser user, Set delRoles, Set newRoles);
+	boolean updateRole(SysUser user, Set<SysDeptRole> delRoles,
+			Set<SysDeptRole> newRoles);
 
 	@Transactional
 	boolean updateUser(SysUser bean);

@@ -41,6 +41,20 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+
+import com.glaf.core.cache.CacheUtils;
+import com.glaf.core.config.ViewProperties;
+import com.glaf.core.res.MessageUtils;
+import com.glaf.core.res.ViewMessage;
+import com.glaf.core.res.ViewMessages;
+import com.glaf.core.security.DigestUtil;
+import com.glaf.core.service.ITableDataService;
+import com.glaf.core.util.JsonUtils;
+import com.glaf.core.util.PageResult;
+import com.glaf.core.util.ParamUtils;
+import com.glaf.core.util.RequestUtils;
+import com.glaf.core.util.Tools;
+
 import com.glaf.base.modules.Constants;
 import com.glaf.base.modules.sys.model.SysDepartment;
 import com.glaf.base.modules.sys.model.SysDeptRole;
@@ -55,19 +69,6 @@ import com.glaf.base.modules.sys.service.SysTreeService;
 import com.glaf.base.modules.sys.service.SysUserService;
 import com.glaf.base.utils.ParamUtil;
 import com.glaf.base.utils.RequestUtil;
-import com.glaf.core.base.TableModel;
-import com.glaf.core.cache.CacheUtils;
-import com.glaf.core.config.ViewProperties;
-import com.glaf.core.res.MessageUtils;
-import com.glaf.core.res.ViewMessage;
-import com.glaf.core.res.ViewMessages;
-import com.glaf.core.security.DigestUtil;
-import com.glaf.core.service.ITableDataService;
-import com.glaf.core.util.JsonUtils;
-import com.glaf.core.util.PageResult;
-import com.glaf.core.util.ParamUtils;
-import com.glaf.core.util.RequestUtils;
-import com.glaf.core.util.Tools;
 
 @Controller("/sys/user")
 @RequestMapping("/sys/user.do")
@@ -185,23 +186,10 @@ public class SysUserController {
 		int deptId = ParamUtil.getIntParameter(request, "deptId", 0);
 		int roleId = ParamUtil.getIntParameter(request, "roleId", 0);
 		SysDeptRole deptRole = sysDeptRoleService.find(deptId, roleId);
-		Set<SysUser> users = deptRole.getUsers();
 		boolean sucess = false;
 		try {
 			long[] userIds = ParamUtil.getLongParameterValues(request, "id");
-			for (int i = 0; i < userIds.length; i++) {
-				SysUser user = sysUserService.findById(userIds[i]);
-				if (user != null) {
-					logger.info(user.getName());
-					users.remove(user);
-					TableModel table = new TableModel();
-					table.setTableName("sys_user_role");
-					table.addColumn("AUTHORIZED", "Integer", 0);
-					table.addColumn("ROLEID", "Long", deptRole.getId());
-					table.addColumn("USERID", "Long", user.getId());
-					tableDataService.deleteTableData(table);
-				}
-			}
+			sysUserService.deleteRoleUsers(deptRole, userIds);
 			sucess = true;
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -826,8 +814,8 @@ public class SysUserController {
 		if (user != null) {// 用户存在
 			long[] id = ParamUtil.getLongParameterValues(request, "id");// 获取页面参数
 			if (id != null) {
-				Set<?> delRoles = new HashSet<Object>();
-				Set<?> oldRoles = user.getRoles();
+				Set<SysDeptRole> delRoles = new HashSet<SysDeptRole>();
+				Set<SysDeptRole> oldRoles = user.getRoles();
 				Set<SysDeptRole> newRoles = new HashSet<SysDeptRole>();
 				for (int i = 0; i < id.length; i++) {
 					logger.debug("id[" + i + "]=" + id[i]);

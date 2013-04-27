@@ -33,9 +33,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.core.id.*;
 import com.glaf.core.service.ITableDataService;
+import com.glaf.core.service.MembershipService;
 import com.glaf.core.util.PageResult;
 import com.glaf.core.util.StringTools;
 import com.glaf.core.base.TableModel;
+import com.glaf.core.domain.Membership;
 
 import com.glaf.base.modules.sys.mapper.*;
 import com.glaf.base.modules.sys.model.*;
@@ -49,6 +51,8 @@ public class SysUserServiceImpl implements SysUserService {
 			.getLog(SysUserServiceImpl.class);
 
 	protected IdGenerator idGenerator;
+
+	protected MembershipService membershipService;
 
 	protected SqlSessionTemplate sqlSessionTemplate;
 
@@ -116,6 +120,35 @@ public class SysUserServiceImpl implements SysUserService {
 			SysUserQuery query = new SysUserQuery();
 			query.rowIds(rowIds);
 			sysUserMapper.deleteSysUsers(query);
+		}
+	}
+
+	/**
+	 * 删除部门角色用户
+	 * 
+	 * @param deptRole
+	 * @param userIds
+	 */
+	@Transactional
+	public void deleteRoleUsers(SysDeptRole deptRole, long[] userIds) {
+		for (int i = 0; i < userIds.length; i++) {
+			SysUser user = this.findById(userIds[i]);
+			if (user != null) {
+				logger.info(user.getName());
+				TableModel table = new TableModel();
+				table.setTableName("sys_user_role");
+				table.addColumn("AUTHORIZED", "Integer", 0);
+				table.addColumn("ROLEID", "Long", deptRole.getId());
+				table.addColumn("USERID", "Long", user.getId());
+				tableDataService.deleteTableData(table);
+
+				TableModel table2 = new TableModel();
+				table2.setTableName("SYS_MEMBERSHIP");
+				table2.addColumn("ACTORID_", "String", user.getAccount());
+				table2.addColumn("ROLEID_", "Long", deptRole.getSysRoleId());
+				table2.addColumn("NODEID_", "Long", deptRole.getDeptId());
+				tableDataService.deleteTableData(table2);
+			}
 		}
 	}
 
@@ -308,6 +341,16 @@ public class SysUserServiceImpl implements SysUserService {
 		return pager;
 	}
 
+	/**
+	 * 获取某个应用的权限用户
+	 * 
+	 * @param appId
+	 * @return
+	 */
+	public List<SysUser> getSysUsersByAppId(Long appId) {
+		return sysUserMapper.getSysUsersByAppId(appId);
+	}
+
 	public List<SysUser> getSysUsersByQueryCriteria(int start, int pageSize,
 			SysUserQuery query) {
 		RowBounds rowBounds = new RowBounds(start, pageSize);
@@ -324,16 +367,6 @@ public class SysUserServiceImpl implements SysUserService {
 			this.initUserDepartments(users);
 		}
 		return users;
-	}
-
-	/**
-	 * 获取某个应用的权限用户
-	 * 
-	 * @param appId
-	 * @return
-	 */
-	public List<SysUser> getSysUsersByAppId(Long appId) {
-		return sysUserMapper.getSysUsersByAppId(appId);
 	}
 
 	public SysUser getUserAndPrivileges(SysUser user) {
@@ -453,6 +486,11 @@ public class SysUserServiceImpl implements SysUserService {
 	}
 
 	@Resource
+	public void setMembershipService(MembershipService membershipService) {
+		this.membershipService = membershipService;
+	}
+
+	@Resource
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}
@@ -517,8 +555,8 @@ public class SysUserServiceImpl implements SysUserService {
 	}
 
 	@Transactional
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public boolean updateRole(SysUser user, Set delRoles, Set newRoles) {
+	public boolean updateRole(SysUser user, Set<SysDeptRole> delRoles,
+			Set<SysDeptRole> newRoles) {
 		// 先删除用户之前的权限
 		List<SysUserRole> userRoles = sysUserRoleMapper
 				.getSysUserRolesByUserId(user.getId());
@@ -532,30 +570,35 @@ public class SysUserServiceImpl implements SysUserService {
 			}
 		}
 
+		List<Membership> memberships = new ArrayList<Membership>();
+
 		// 增加新权限
 		if (newRoles != null && !newRoles.isEmpty()) {
-			Iterator<Object> iter = newRoles.iterator();
+			Iterator<SysDeptRole> iter = newRoles.iterator();
 			while (iter.hasNext()) {
-				Object object = iter.next();
-				if (object instanceof SysUserRole) {
-					SysUserRole r = (SysUserRole) object;
-					r.setId(idGenerator.nextId());
-					r.setCreateDate(new Date());
-					r.setCreateBy(user.getUpdateBy());
-					sysUserRoleMapper.insertSysUserRole(r);
-				}
-				if (object instanceof SysDeptRole) {
-					SysDeptRole deptRole = (SysDeptRole) object;
-					SysUserRole userRole = new SysUserRole();
-					userRole.setId(idGenerator.nextId());
-					userRole.setUserId(user.getId());
-					userRole.setDeptRoleId(deptRole.getId());
-					userRole.setCreateDate(new Date());
-					userRole.setCreateBy(user.getUpdateBy());
-					sysUserRoleMapper.insertSysUserRole(userRole);
-				}
+				SysDeptRole deptRole = iter.next();
+				SysUserRole userRole = new SysUserRole();
+				userRole.setId(idGenerator.nextId());
+				userRole.setUserId(user.getId());
+				userRole.setDeptRoleId(deptRole.getId());
+				userRole.setCreateDate(new Date());
+				userRole.setCreateBy(user.getUpdateBy());
+				sysUserRoleMapper.insertSysUserRole(userRole);
+
+				Membership membership = new Membership();
+				membership.setActorId(user.getAccount());
+				membership.setModifyBy(user.getUpdateBy());
+				membership.setModifyDate(new java.util.Date());
+				membership.setNodeId(deptRole.getDeptId());
+				membership.setRoleId(deptRole.getSysRoleId());
+				membership.setObjectId("SYS_USER_ROLE");
+				membership.setObjectValue(String.valueOf(userRole.getId()));
+				memberships.add(membership);
 			}
 		}
+
+		membershipService.saveMemberships(user.getDeptId(), "UserRole",
+				memberships);
 
 		return true;
 	}

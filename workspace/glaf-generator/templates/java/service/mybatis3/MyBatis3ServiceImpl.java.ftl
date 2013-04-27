@@ -87,10 +87,10 @@ public class ${entityName}ServiceImpl implements ${entityName}Service {
 	@Transactional
 	public void save(${entityName} ${modelName}) {
 	<#if idField.type?exists && ( idField.type== 'Integer' )>
-            if ( ${modelName}.get${idField.firstUpperName}()  == 0) {
+            if ( ${modelName}.get${idField.firstUpperName}()  == null) {
 	        ${modelName}.set${idField.firstUpperName}(idGenerator.nextId("${tableName}").intValue());
 	<#elseif idField.type?exists && ( idField.type== 'Long' )>
-            if ( ${modelName}.get${idField.firstUpperName}()  == 0L) {
+            if ( ${modelName}.get${idField.firstUpperName}()  == null) {
 	        ${modelName}.set${idField.firstUpperName}(idGenerator.nextId("${tableName}"));
 	<#else>
            if (StringUtils.isEmpty(${modelName}.get${idField.firstUpperName}())) {

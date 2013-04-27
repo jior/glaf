@@ -48,7 +48,8 @@ function checkForm(form){
 <input type="hidden" name="user_id" value="<%=user.getId()%>">
 <table width="95%" border="0" align="center" cellspacing="1" cellpadding="0" class="list-box">
   <tr class="list-title"> 
-    <td width="9%" align="center"><input type="checkbox" name="chkall" value="checkbox" onClick="checkAll(this.form, this)">
+    <td width="9%" align="center">
+	  <input type="checkbox" name="chkall" value="checkbox" onClick="checkAll(this.form, this)">
     </td>
     <td width="10%" align="center">序号</td>
     <td width="37%" align="center">名称</td>
@@ -86,7 +87,8 @@ for(; i<10; i++){
 </table>
 <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
   <tr>
-    <td align="center" height="30" valign="bottom"><input name="btn_add" type="submit" value="保存" class="button">
+    <td align="center" height="30" valign="bottom">
+	  <input name="btn_add" type="submit" value="保存" class="button">
     </td>
   </tr>
 </table>

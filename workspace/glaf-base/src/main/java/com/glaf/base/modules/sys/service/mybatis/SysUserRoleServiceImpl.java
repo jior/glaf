@@ -33,16 +33,17 @@ import org.springframework.transaction.annotation.Transactional;
 import com.glaf.core.id.*;
 import com.glaf.core.security.Authentication;
 import com.glaf.core.service.ITableDataService;
+import com.glaf.core.service.MembershipService;
 import com.glaf.core.util.DateUtils;
 import com.glaf.core.util.PageResult;
 import com.glaf.core.base.TableModel;
+import com.glaf.core.domain.Membership;
 
 import com.glaf.base.modules.Constants;
 import com.glaf.base.modules.sys.mapper.*;
 import com.glaf.base.modules.sys.model.*;
 import com.glaf.base.modules.sys.query.*;
 import com.glaf.base.modules.sys.service.*;
- 
 
 @Service("sysUserRoleService")
 @Transactional(readOnly = true)
@@ -52,6 +53,8 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 
 	protected IdGenerator idGenerator;
 
+	protected MembershipService membershipService;
+
 	protected SqlSessionTemplate sqlSessionTemplate;
 
 	protected SysDepartmentService sysDepartmentService;
@@ -59,6 +62,8 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 	protected SysDeptRoleMapper sysDeptRoleMapper;
 
 	protected SysUserMapper sysUserMapper;
+
+	protected SysRoleMapper sysRoleMapper;
 
 	protected SysUserRoleMapper sysUserRoleMapper;
 
@@ -110,7 +115,7 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 			if (mark == 1) {
 				bean.setProcessDescription("全局代理");
 			}
-			
+
 			bean.setCreateDate(new Date());
 			bean.setCreateBy(Authentication.getAuthenticatedActorId());
 
@@ -280,6 +285,18 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 		return users;
 	}
 
+	public List<SysUser> getMembershipUsers(List<Integer> deptIds, long roleId) {
+		List<SysUser> users = new ArrayList<SysUser>();
+		for (Integer deptId : deptIds) {
+			List<SysUser> list = this.getMembershipUsers(deptId, roleId);
+			if (!list.isEmpty()) {
+				users.addAll(list);
+			}
+		}
+		this.initUserDepartments(users);
+		return users;
+	}
+
 	public List<SysUser> getMembershipUsers(long deptId, long roleId) {
 		List<SysUser> users = new ArrayList<SysUser>();
 		SysDepartment dept = sysDepartmentService.findById(deptId);
@@ -291,18 +308,6 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 						users.addAll(role.getUsers());
 					}
 				}
-			}
-		}
-		this.initUserDepartments(users);
-		return users;
-	}
-
-	public List<SysUser> getMembershipUsers(List<Integer> deptIds, long roleId) {
-		List<SysUser> users = new ArrayList<SysUser>();
-		for (Integer deptId : deptIds) {
-			List<SysUser> list = this.getMembershipUsers(deptId, roleId);
-			if (!list.isEmpty()) {
-				users.addAll(list);
 			}
 		}
 		this.initUserDepartments(users);
@@ -526,12 +531,29 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 
 	@Transactional
 	public void save(SysUserRole sysUserRole) {
-		if (sysUserRole.getId() == 0L) {
+		if (sysUserRole.getId() == 0) {
 			sysUserRole.setId(idGenerator.nextId());
 			sysUserRole.setCreateDate(new Date());
 			sysUserRoleMapper.insertSysUserRole(sysUserRole);
 		} else {
 			sysUserRoleMapper.updateSysUserRole(sysUserRole);
+		}
+
+		SysDeptRole sysDeptRole = sysDeptRoleMapper
+				.getSysDeptRoleById(sysUserRole.getDeptRoleId());
+		if (sysDeptRole != null) {
+			SysUser user = sysUserMapper
+					.getSysUserById(sysUserRole.getUserId());
+			Membership membership = new Membership();
+			membership.setActorId(user.getAccount());
+			membership.setModifyBy(sysUserRole.getCreateBy());
+			membership.setModifyDate(new java.util.Date());
+			membership.setNodeId(sysDeptRole.getDeptId());
+			membership.setRoleId(sysDeptRole.getSysRoleId());
+			membership.setObjectId("SYS_USER_ROLE");
+			membership.setObjectValue(String.valueOf(sysUserRole.getId()));
+			membership.setType("SysUserRole");
+			membershipService.save(membership);
 		}
 	}
 
@@ -539,6 +561,11 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 	@Qualifier("myBatisDbIdGenerator")
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
+	}
+
+	@Resource
+	public void setMembershipService(MembershipService membershipService) {
+		this.membershipService = membershipService;
 	}
 
 	@Resource
@@ -550,6 +577,11 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 	public void setSysDepartmentService(
 			SysDepartmentService sysDepartmentService) {
 		this.sysDepartmentService = sysDepartmentService;
+	}
+
+	@Resource
+	public void setSysRoleMapper(SysRoleMapper sysRoleMapper) {
+		this.sysRoleMapper = sysRoleMapper;
 	}
 
 	@Resource
