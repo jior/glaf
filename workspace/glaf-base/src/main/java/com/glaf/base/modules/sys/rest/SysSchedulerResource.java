@@ -54,7 +54,6 @@ public class SysSchedulerResource {
 	protected final static Log logger = LogFactory
 			.getLog(SysSchedulerResource.class);
 
-	 
 	protected ISysSchedulerService sysSchedulerService;
 
 	public SysSchedulerResource() {

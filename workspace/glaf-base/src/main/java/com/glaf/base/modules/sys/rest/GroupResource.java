@@ -82,10 +82,8 @@ public class GroupResource {
 	/**
 	 * 批量删除信息
 	 * 
-	 * 
-	 * @param actionForm
 	 * @param request
-	 * @param response
+	 * @param uriInfo
 	 * @return
 	 */
 	@Path("batchDelete")
@@ -116,7 +114,7 @@ public class GroupResource {
 		// 显示列表页面
 		return new ModelAndView("show_json_msg");
 	}
-	
+
 	@GET
 	@POST
 	@Path("detail")
@@ -125,7 +123,7 @@ public class GroupResource {
 	public byte[] detail(@Context HttpServletRequest request,
 			@Context UriInfo uriInfo) throws IOException {
 		String groupId = request.getParameter("groupId");
-		if (groupId !=null) {
+		if (groupId != null) {
 			Group group = groupService.getGroup(groupId);
 			if (group != null) {
 				return group.toJsonObject().toJSONString().getBytes("UTF-8");
@@ -226,7 +224,7 @@ public class GroupResource {
 		if (limit <= 0) {
 			limit = PageResult.DEFAULT_PAGE_SIZE;
 		}
-		
+
 		SysUser user = RequestUtil.getLoginUser(request);
 		String actorId = user.getAccount();
 		String type = request.getParameter("type");
@@ -278,7 +276,7 @@ public class GroupResource {
 	 * 
 	 * 
 	 * @param request
-	 * @param response
+	 * @param uriInfo
 	 * @return
 	 */
 	@Path("saveAdd")
@@ -345,10 +343,8 @@ public class GroupResource {
 	/**
 	 * 提交修改信息
 	 * 
-	 * 
-	 * 
 	 * @param request
-	 * @param response
+	 * @param uriInfo
 	 * @return
 	 */
 	@Path("saveModify")

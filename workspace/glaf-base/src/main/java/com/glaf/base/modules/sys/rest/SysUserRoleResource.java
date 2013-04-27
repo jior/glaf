@@ -51,10 +51,8 @@ public class SysUserRoleResource {
 	private static final Log logger = LogFactory
 			.getLog(SysUserRoleResource.class);
 
- 
 	private SysUserRoleService sysUserRoleService;
 
- 
 	private SysUserService sysUserService;
 
 	@ResponseBody
@@ -127,10 +125,8 @@ public class SysUserRoleResource {
 	/**
 	 * 保存用户授权
 	 * 
-	 * 
-	 * 
 	 * @param request
-	 * @param response
+	 * @param uriInfo
 	 * @return
 	 */
 	@SuppressWarnings("rawtypes")

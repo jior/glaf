@@ -60,19 +60,15 @@ public class SysApplicationResource {
 	private static final Log logger = LogFactory
 			.getLog(SysApplicationResource.class);
 
- 
 	protected SysApplicationService sysApplicationService;
 
- 
 	protected SysTreeService sysTreeService;
 
 	/**
 	 * 批量删除信息
 	 * 
-	 * 
-	 * @param actionForm
 	 * @param request
-	 * @param response
+	 * @param uriInfo
 	 * @return
 	 */
 	@Path("batchDelete")
@@ -161,6 +157,7 @@ public class SysApplicationResource {
 				for (SysApplication sysApplication : list) {
 					JSONObject rowJSON = sysApplication.toJsonObject();
 					rowJSON.put("id", sysApplication.getId());
+					rowJSON.put("startIndex", ++start);
 					rowsJSON.add(rowJSON);
 				}
 
@@ -172,10 +169,8 @@ public class SysApplicationResource {
 	/**
 	 * 提交增加信息
 	 * 
-	 * 
-	 * 
 	 * @param request
-	 * @param response
+	 * @param uriInfo
 	 * @return
 	 */
 	@Path("saveAdd")
@@ -214,10 +209,8 @@ public class SysApplicationResource {
 	/**
 	 * 提交修改信息
 	 * 
-	 * 
-	 * 
 	 * @param request
-	 * @param response
+	 * @param uriInfo
 	 * @return
 	 */
 	@Path("saveModify")

@@ -60,13 +60,10 @@ import com.glaf.core.util.Tools;
 public class DictoryResource {
 	private static final Log logger = LogFactory.getLog(DictoryResource.class);
 
-	 
 	protected DictoryDefinitionService dictoryDefinitionService;
 
-	 
 	protected DictoryService dictoryService;
 
- 
 	protected SysTreeService sysTreeService;
 
 	/**
@@ -75,7 +72,7 @@ public class DictoryResource {
 	 * 
 	 * 
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@Path("batchDelete")
@@ -162,6 +159,7 @@ public class DictoryResource {
 				for (Dictory dictory : list) {
 					JSONObject rowJSON = dictory.toJsonObject();
 					rowJSON.put("id", dictory.getId());
+					rowJSON.put("startIndex", ++start);
 					rowsJSON.add(rowJSON);
 				}
 
@@ -176,7 +174,7 @@ public class DictoryResource {
 	 * 
 	 * 
 	 * @param request
-	 * @param response
+	 * @param uriInfo
 	 * @return
 	 */
 	@Path("saveAdd")
@@ -218,7 +216,7 @@ public class DictoryResource {
 	 * 
 	 * 
 	 * @param request
-	 * @param response
+	 * @param uriInfo
 	 * @return
 	 */
 	@Path("saveModify")

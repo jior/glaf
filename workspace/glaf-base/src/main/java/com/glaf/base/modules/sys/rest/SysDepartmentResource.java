@@ -68,10 +68,8 @@ public class SysDepartmentResource {
 	/**
 	 * 批量删除信息
 	 * 
-	 * 
-	 * @param actionForm
 	 * @param request
-	 * @param response
+	 * @param uriInfo
 	 * @return
 	 */
 
@@ -164,7 +162,7 @@ public class SysDepartmentResource {
 					JSONObject rowJSON = sysDepartment.toJsonObject();
 					rowJSON.put("id", sysDepartment.getId());
 					rowJSON.put("sysDepartmentId", sysDepartment.getId());
-
+					rowJSON.put("startIndex", ++start);
 					rowsJSON.add(rowJSON);
 				}
 
@@ -176,10 +174,8 @@ public class SysDepartmentResource {
 	/**
 	 * 提交增加信息
 	 * 
-	 * 
-	 * 
 	 * @param request
-	 * @param response
+	 * @param uriInfo
 	 * @return
 	 */
 	@Path("saveAdd")
@@ -223,10 +219,8 @@ public class SysDepartmentResource {
 	/**
 	 * 提交修改信息
 	 * 
-	 * 
-	 * 
 	 * @param request
-	 * @param response
+	 * @param uriInfo
 	 * @return
 	 */
 	@Path("saveModify")

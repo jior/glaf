@@ -70,10 +70,8 @@ public class SysDictoryResource {
 	/**
 	 * 提交删除
 	 * 
-	 * 
-	 * 
 	 * @param request
-	 * @param response
+	 * @param uriInfo
 	 * @return
 	 */
 	@Path("batchDelete")
@@ -160,6 +158,7 @@ public class SysDictoryResource {
 				for (Dictory dictory : list) {
 					JSONObject rowJSON = dictory.toJsonObject();
 					rowJSON.put("id", dictory.getId());
+					rowJSON.put("startIndex", ++start);
 					rowsJSON.add(rowJSON);
 				}
 
@@ -171,10 +170,8 @@ public class SysDictoryResource {
 	/**
 	 * 提交增加字典信息
 	 * 
-	 * 
-	 * 
 	 * @param request
-	 * @param response
+	 * @param uriInfo
 	 * @return
 	 */
 	@Path("saveAdd")
@@ -195,9 +192,7 @@ public class SysDictoryResource {
 
 		ViewMessages messages = new ViewMessages();
 		if (dictoryService.create(bean)) {// 保存成功
-			if (bean.getNodeId() == 17) {
-				BaseDataManager.getInstance().loadDictInfo();
-			}
+			BaseDataManager.getInstance().loadDictInfo();
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"dictory.add_success"));
 		} else {// 保存失败
@@ -213,10 +208,8 @@ public class SysDictoryResource {
 	/**
 	 * 提交修改字典信息
 	 * 
-	 * 
-	 * 
 	 * @param request
-	 * @param response
+	 * @param uriInfo
 	 * @return
 	 */
 	@Path("saveModify")
@@ -239,9 +232,7 @@ public class SysDictoryResource {
 
 		ViewMessages messages = new ViewMessages();
 		if (dictoryService.update(bean)) {// 保存成功
-			if (bean.getNodeId() == 17) {
-				BaseDataManager.getInstance().loadDictInfo();
-			}
+			BaseDataManager.getInstance().loadDictInfo();
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"dictory.modify_success"));
 		} else {// 保存失败

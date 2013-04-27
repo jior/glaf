@@ -60,10 +60,8 @@ public class SysDeptRoleResource {
 	/**
 	 * 设置权限
 	 * 
-	 * 
-	 * @param actionForm
 	 * @param request
-	 * @param response
+	 * @param uriInfo
 	 * @return
 	 */
 	@Path("setPrivilege")
@@ -101,10 +99,8 @@ public class SysDeptRoleResource {
 	/**
 	 * 设置部门角色
 	 * 
-	 * 
-	 * @param actionForm
 	 * @param request
-	 * @param response
+	 * @param uriInfo
 	 * @return
 	 */
 	@Path("setRole")
@@ -131,9 +127,9 @@ public class SysDeptRoleResource {
 				// 创建新角色
 				for (int i = 0; i < id.length; i++) {
 					SysRole role = sysRoleService.findById(id[i]);
-					if (role == null)
+					if (role == null) {
 						continue;
-
+					}
 					SysDeptRole deptRole = new SysDeptRole();
 					deptRole.setDept(dept);
 					deptRole.setRole(role);

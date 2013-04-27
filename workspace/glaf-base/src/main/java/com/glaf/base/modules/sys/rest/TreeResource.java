@@ -57,16 +57,13 @@ import com.glaf.core.util.Tools;
 public class TreeResource {
 	private static final Log logger = LogFactory.getLog(TreeResource.class);
 
-	 
 	private SysTreeService sysTreeService;
 
 	/**
 	 * 批量删除信息
 	 * 
-	 * 
-	 * @param actionForm
 	 * @param request
-	 * @param response
+	 * @param uriInfo
 	 * @return
 	 */
 	@Path("batchDelete")
@@ -145,6 +142,7 @@ public class TreeResource {
 				for (SysTree sysTree : list) {
 					JSONObject rowJSON = sysTree.toJsonObject();
 					rowJSON.put("id", sysTree.getId());
+					rowJSON.put("startIndex", ++start);
 					rowsJSON.add(rowJSON);
 				}
 
@@ -156,10 +154,8 @@ public class TreeResource {
 	/**
 	 * 提交增加信息
 	 * 
-	 * 
-	 * 
 	 * @param request
-	 * @param response
+	 * @param uriInfo
 	 * @return
 	 */
 	@Path("saveAdd")
@@ -189,10 +185,8 @@ public class TreeResource {
 	/**
 	 * 提交修改信息
 	 * 
-	 * 
-	 * 
 	 * @param request
-	 * @param response
+	 * @param uriInfo
 	 * @return
 	 */
 	@Path("saveModify")

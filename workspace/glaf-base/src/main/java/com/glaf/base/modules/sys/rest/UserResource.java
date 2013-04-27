@@ -69,10 +69,8 @@ public class UserResource {
 	/**
 	 * 提交修改信息
 	 * 
-	 * 
-	 * 
 	 * @param request
-	 * @param response
+	 * @param uriInfo
 	 * @return
 	 */
 	@Path("saveModify")
@@ -117,10 +115,8 @@ public class UserResource {
 	/**
 	 * 提交修改信息
 	 * 
-	 * 
-	 * 
 	 * @param request
-	 * @param response
+	 * @param uriInfo
 	 * @return
 	 */
 	@Path("saveModifyInfo")
@@ -132,9 +128,6 @@ public class UserResource {
 		SysUser bean = RequestUtil.getLoginUser(request);
 		boolean ret = false;
 		if (bean != null) {
-			// bean.setPassword(ParamUtil.getParameter(request, "password"));
-			// bean.setPassword(CryptUtil.EnCryptPassword(ParamUtil.getParameter(request,
-			// "password")));
 			SysUser user = sysUserService.findById(bean.getId());
 			user.setMobile(ParamUtil.getParameter(request, "mobile"));
 			user.setEmail(ParamUtil.getParameter(request, "email"));
@@ -159,10 +152,8 @@ public class UserResource {
 	/**
 	 * 修改用户密码
 	 * 
-	 * 
-	 * 
 	 * @param request
-	 * @param response
+	 * @param uriInfo
 	 * @return
 	 */
 	@Path("savePwd")

@@ -87,7 +87,7 @@ public class SysUserResource {
 	 * 增加角色用户
 	 * 
 	 * @param request
-	 * @param response
+	 * @param uriInfo
 	 * @return
 	 */
 	@Path("addRoleUser")
@@ -140,10 +140,8 @@ public class SysUserResource {
 	/**
 	 * 批量删除信息
 	 * 
-	 * 
-	 * @param actionForm
 	 * @param request
-	 * @param response
+	 * @param uriInfo
 	 * @return
 	 */
 	@Path("batchDelete")
@@ -170,10 +168,8 @@ public class SysUserResource {
 	/**
 	 * 删除角色用户
 	 * 
-	 * 
-	 * 
 	 * @param request
-	 * @param response
+	 * @param uriInfo
 	 * @return
 	 */
 	@Path("delRoleUser")
@@ -306,8 +302,8 @@ public class SysUserResource {
 				for (SysUser sysUser : list) {
 					JSONObject rowJSON = sysUser.toJsonObject();
 					rowJSON.put("id", sysUser.getId());
-					rowJSON.put("sysUserId", sysUser.getId());
-
+					rowJSON.put("actorId", sysUser.getAccount());
+					rowJSON.put("startIndex", ++start);
 					rowsJSON.add(rowJSON);
 				}
 
@@ -319,10 +315,8 @@ public class SysUserResource {
 	/**
 	 * 重置用户密码
 	 * 
-	 * 
-	 * 
 	 * @param request
-	 * @param response
+	 * @param uriInfo
 	 * @return
 	 */
 	@Path("resetPwd")
@@ -374,10 +368,8 @@ public class SysUserResource {
 	/**
 	 * 提交增加信息
 	 * 
-	 * 
-	 * 
 	 * @param request
-	 * @param response
+	 * @param uriInfo
 	 * @return
 	 */
 	@Path("saveAdd")
@@ -393,7 +385,7 @@ public class SysUserResource {
 		bean.setCode(ParamUtil.getParameter(request, "code"));
 		bean.setAccount(bean.getCode());
 		bean.setName(ParamUtil.getParameter(request, "name"));
-		// bean.setPassword(ParamUtil.getParameter(request, "password"));
+
 		String password = ParamUtil.getParameter(request, "password");
 		try {
 			String pwd = DigestUtil.digestString(password, "MD5");
@@ -443,10 +435,8 @@ public class SysUserResource {
 	/**
 	 * 提交修改信息
 	 * 
-	 * 
-	 * 
 	 * @param request
-	 * @param response
+	 * @param uriInfo
 	 * @return
 	 */
 	@Path("saveModify")
@@ -491,10 +481,8 @@ public class SysUserResource {
 	/**
 	 * 提交修改信息
 	 * 
-	 * 
-	 * 
 	 * @param request
-	 * @param response
+	 * @param uriInfo
 	 * @return
 	 */
 	@Path("saveModifyInfo")
@@ -506,9 +494,6 @@ public class SysUserResource {
 		SysUser bean = RequestUtil.getLoginUser(request);
 		boolean ret = false;
 		if (bean != null) {
-			// bean.setPassword(ParamUtil.getParameter(request, "password"));
-			// bean.setPassword(CryptUtil.EnCryptPassword(ParamUtil.getParameter(request,
-			// "password")));
 			SysUser user = sysUserService.findById(bean.getId());
 			user.setMobile(ParamUtil.getParameter(request, "mobile"));
 			user.setEmail(ParamUtil.getParameter(request, "email"));
@@ -533,10 +518,8 @@ public class SysUserResource {
 	/**
 	 * 修改用户密码
 	 * 
-	 * 
-	 * 
 	 * @param request
-	 * @param response
+	 * @param uriInfo
 	 * @return
 	 */
 	@Path("savePwd")
@@ -579,10 +562,8 @@ public class SysUserResource {
 	/**
 	 * 设置用户角色
 	 * 
-	 * 
-	 * @param actionForm
 	 * @param request
-	 * @param response
+	 * @param uriInfo
 	 * @return
 	 */
 	@Path("setRole")

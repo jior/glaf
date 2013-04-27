@@ -59,16 +59,13 @@ import com.glaf.core.util.Tools;
 public class SysRoleResource {
 	private static final Log logger = LogFactory.getLog(SysRoleResource.class);
 
-	 
 	private SysRoleService sysRoleService;
 
 	/**
 	 * 批量删除信息
 	 * 
-	 * 
-	 * @param actionForm
 	 * @param request
-	 * @param response
+	 * @param uriInfo
 	 * @return
 	 */
 	@GET
@@ -203,10 +200,8 @@ public class SysRoleResource {
 	/**
 	 * 提交增加信息
 	 * 
-	 * 
-	 * 
 	 * @param request
-	 * @param response
+	 * @param uriInfo
 	 * @return
 	 */
 	@POST
@@ -251,10 +246,8 @@ public class SysRoleResource {
 	/**
 	 * 提交修改信息
 	 * 
-	 * 
-	 * 
 	 * @param request
-	 * @param response
+	 * @param uriInfo
 	 * @return
 	 */
 	@POST
