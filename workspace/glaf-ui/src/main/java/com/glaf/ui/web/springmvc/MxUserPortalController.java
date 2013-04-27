@@ -80,7 +80,7 @@ public class MxUserPortalController {
 			while (iter.hasNext()) {
 				PanelInstance p = iter.next();
 				if (StringUtils.isNumeric(p.getName())) {
-					int pos = Integer.parseInt(p.getName());
+					int pos = Math.abs(Integer.parseInt(p.getName()));
 					if (pos > 0) {
 						panelPxMap.put(p.getPanelId(), pos);
 
