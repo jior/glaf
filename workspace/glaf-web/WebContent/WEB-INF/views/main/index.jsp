@@ -1,31 +1,116 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<%@ page import="java.util.*"%>
+<%@ page import="java.net.*"%>
+<%@ page import="com.glaf.core.context.*"%>
+<%@ page import="com.glaf.core.util.*"%>
+<%@ page import="com.glaf.base.utils.*"%>
+<%@ page import="com.glaf.base.modules.sys.*"%>
+<%@ page import="com.glaf.base.modules.sys.model.*"%>
+<%@ page import="com.glaf.base.modules.sys.service.*"%>
+<%@ page import="org.springframework.web.context.*"%>
+<%@ page import="org.springframework.web.context.support.*"%>
+<%@ page import="com.glaf.base.modules.workspace.model.*"%>
+<%@ page import="com.glaf.base.modules.workspace.service.*"%>
+<%
+SysUser user = com.glaf.base.utils.RequestUtil.getLoginUser(request);
+MessageService messageService = ContextFactory.getBean("messageService");
+int msgPageSize = 5;
+com.glaf.core.util.PageResult messagePager = messageService.getNoReadList(user.getId(), new HashMap(), 1, msgPageSize);
+List messageList = messagePager.getResults();
+int count = 0;
+%>
+<!DOCTYPE html>
+<html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>GLAF基础应用框架</title>
- <script type="text/javascript">
-  function setIframeHeigh(){
-	var frameId = document.getElementById("mainFrame");
-	frameId.style.pixelHeight = frameId.Document.body.scrollHeight+20;
-	//frameId.style.pixelWidth = frameId.Document.body.scrollWidth+20;
- }
- </script>
-</head>
-
-<frameset rows="59,*" cols="*" frameborder="no" id="fraMain" border="0" framespacing="0">
-  <frame src="<%=request.getContextPath()%>/main.do?method=top" name="topFrame" scrolling="no" noresize="noresize" id="topFrame" title="topFrame" />
-  <frameset id="frame_mid" cols="189,10,*" rows="*"  framespacing="1" frameborder="yes" border="1">
-    <frame src="<%=request.getContextPath()%>/main.do?method=left" name="leftFrame" frameBorder="0" scrolling="yes" noresize="noresize" id="leftFrame" />
-    <frame border="0" frameBorder="0" marginHeight="0" marginWidth="0" name="leftban" scrolling="no" scrolling="no" noresize="noresize" src="<%=request.getContextPath()%>/main.do?method=leftbar" style="BORDER-BOTTOM: medium none; BORDER-LEFT: medium none; BORDER-RIGHT: medium none; BORDER-TOP: medium none" leftmargin="0" topmargin="0" target="_self">
-     <frame src="<%=request.getContextPath()%>/main.do?method=main" name="mainFrame" id="mainFrame" title="mainFrame" frameBorder="0" scrolling="auto" />
-  </frameset>
-</frameset>
-
-<noframes>
-<body>
-</body>
-</noframes>
-</html>
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="expires" content="0">
+<title>首页</title>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/site.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/style-custom.css">
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/main.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/site.js"></script>
 <script type="text/javascript">
- setIframeHeigh();
+
+   function openMoreMsg() {
+	    openWindow('<%=request.getContextPath()%>/workspace/message.do?method=showReceiveList', 600, 450);
+	}
+
+	function openMsg(id) {
+		openWindow('<%=request.getContextPath()%>/workspace/message.do?method=showMessage&id=' + id, 600, 450);
+	}
+
 </script>
+</head>
+<body>
+<table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top" class="m-right">
+  <table width="100%" border="0" cellpadding="0" cellspacing="0" class="m-box">
+      <tr><td>&nbsp;</td></tr>
+      <tr>
+        <td class="m-newsalarm" >&nbsp;</td>
+        <td class="m-more" width="130"><a href="javascript:openMoreMsg()">更多&gt;&gt;</a></td>
+      </tr>
+      <tr>
+        <td colspan="2"><table width="620" border="0" cellspacing="1" cellpadding="0" class="list-box">
+          <tr class="list-title">
+            <td width="120" align="center">发布时间</td>
+            <td align="center">主 题</td>
+            <td width="125" align="center">发布者</td>
+          </tr>
+          <%
+		 if (messageList != null) {
+			count = 0;
+			Iterator msgIter = messageList.iterator();
+			while(msgIter.hasNext()) {
+				Message msg = (Message) msgIter.next();
+				SysUser sender = msg.getSender();
+				String senderName = sender == null ? "" : sender.getName();
+				String colorClass = "";
+				if (msg.getType() == 0) {
+					String sysType = msg.getSysType()==0?"Alarm":"News";
+					senderName = "系统自动("+sysType+")";
+					colorClass = "redcolor";
+				}
+			%>
+			<tr class="<%= count % 2 == 0 ? "list-w" : "list-a" %>">
+            <td class="<%= colorClass %>" height="20" align="center"><%= WebUtil.dateToString(msg.getCreateDate(), "yyyy-MM-dd HH:mm:ss") %></td>
+            <td class="<%= colorClass %>"><a href="javascript:openMsg(<%= msg.getId() %>)" title="<%= msg.getTitle() %>"><%= msg.getTitle() %></a></td>
+            <td class="<%= colorClass %>" align="center"><%= senderName %></td>
+          </tr>
+		<%
+			count++;
+			}
+		}
+		for(; count < msgPageSize; count++) {
+		%>
+		<tr class="<%= count % 2 == 0 ? "list-w" : "list-a" %>">
+            <td height="20">&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+          </tr>
+		<%
+		}
+		%>
+        </table></td>
+      </tr>
+      <tr>
+        <td class="m-todo">&nbsp;</td>
+        <td class="m-more"><a href="#"></a></td>
+      </tr>
+      <tr>
+        <td colspan="2">
+             <jsp:include page="/WEB-INF/views/modules/sys/todo/todo_index.jsp" />
+		</td>
+      </tr>
+      <tr>
+        <td height="20" colspan="2">&nbsp;</td>
+      </tr>
+    </table>
+	</td>
+</tr>
+</table>
+</body>
+</html>
