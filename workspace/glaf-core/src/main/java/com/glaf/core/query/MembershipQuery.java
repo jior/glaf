@@ -23,52 +23,22 @@ import com.glaf.core.query.DataQuery;
 
 public class MembershipQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;
-
-	protected String actorId;
-
-	protected List<String> actorIds;
 	protected String attribute;
-
 	protected String attributeLike;
 	protected String modifyBy;
-
 	protected Long nodeId;
-
 	protected List<Long> nodeIds;
-	protected String objectId;
-
 	protected List<String> objectIds;
-	protected String objectValue;
 	protected List<String> objectValues;
-
 	protected Long roleId;
-
 	protected List<Long> roleIds;
 	protected String superiorId;
-
 	protected List<String> superiorIds;
 	protected String type;
-
 	protected List<String> types;
 
 	public MembershipQuery() {
 
-	}
-
-	public MembershipQuery actorId(String actorId) {
-		if (actorId == null) {
-			throw new RuntimeException("actorId is null");
-		}
-		this.actorId = actorId;
-		return this;
-	}
-
-	public MembershipQuery actorIds(List<String> actorIds) {
-		if (actorIds == null) {
-			throw new RuntimeException("actorIds is empty ");
-		}
-		this.actorIds = actorIds;
-		return this;
 	}
 
 	public MembershipQuery attribute(String attribute) {
@@ -85,14 +55,6 @@ public class MembershipQuery extends DataQuery {
 		}
 		this.attributeLike = attributeLike;
 		return this;
-	}
-
-	public String getActorId() {
-		return actorId;
-	}
-
-	public List<String> getActorIds() {
-		return actorIds;
 	}
 
 	public String getAttribute() {
@@ -123,16 +85,8 @@ public class MembershipQuery extends DataQuery {
 		return nodeIds;
 	}
 
-	public String getObjectId() {
-		return objectId;
-	}
-
 	public List<String> getObjectIds() {
 		return objectIds;
-	}
-
-	public String getObjectValue() {
-		return objectValue;
 	}
 
 	public List<String> getObjectValues() {
@@ -254,27 +208,11 @@ public class MembershipQuery extends DataQuery {
 		return this;
 	}
 
-	public MembershipQuery objectId(String objectId) {
-		if (objectId == null) {
-			throw new RuntimeException("objectId is null");
-		}
-		this.objectId = objectId;
-		return this;
-	}
-
 	public MembershipQuery objectIds(List<String> objectIds) {
 		if (objectIds == null) {
 			throw new RuntimeException("objectIds is empty ");
 		}
 		this.objectIds = objectIds;
-		return this;
-	}
-
-	public MembershipQuery objectValue(String objectValue) {
-		if (objectValue == null) {
-			throw new RuntimeException("objectValue is null");
-		}
-		this.objectValue = objectValue;
 		return this;
 	}
 
@@ -302,14 +240,6 @@ public class MembershipQuery extends DataQuery {
 		return this;
 	}
 
-	public void setActorId(String actorId) {
-		this.actorId = actorId;
-	}
-
-	public void setActorIds(List<String> actorIds) {
-		this.actorIds = actorIds;
-	}
-
 	public void setAttribute(String attribute) {
 		this.attribute = attribute;
 	}
@@ -330,16 +260,8 @@ public class MembershipQuery extends DataQuery {
 		this.nodeIds = nodeIds;
 	}
 
-	public void setObjectId(String objectId) {
-		this.objectId = objectId;
-	}
-
 	public void setObjectIds(List<String> objectIds) {
 		this.objectIds = objectIds;
-	}
-
-	public void setObjectValue(String objectValue) {
-		this.objectValue = objectValue;
 	}
 
 	public void setObjectValues(List<String> objectValues) {
