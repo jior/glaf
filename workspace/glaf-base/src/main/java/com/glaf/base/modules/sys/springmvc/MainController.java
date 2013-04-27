@@ -18,7 +18,6 @@
 package com.glaf.base.modules.sys.springmvc;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -36,71 +35,61 @@ public class MainController {
 	protected static final Log logger = LogFactory.getLog(MainController.class);
 
 	@RequestMapping(params = "method=footer")
-	public ModelAndView footer(ModelMap modelMap, HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView footer(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		return new ModelAndView("/main/footer", modelMap);
 	}
 
 	@RequestMapping(params = "method=frame")
-	public ModelAndView frame(ModelMap modelMap, HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView frame(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		return new ModelAndView("/main/frame", modelMap);
 	}
 
 	@RequestMapping(params = "method=header")
-	public ModelAndView header(ModelMap modelMap, HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView header(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		return new ModelAndView("/main/header", modelMap);
 	}
 
 	@RequestMapping(params = "method=home")
-	public ModelAndView home(ModelMap modelMap, HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView home(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		return new ModelAndView("/main/home", modelMap);
 	}
 
 	@RequestMapping(params = "method=index")
-	public ModelAndView index(ModelMap modelMap, HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView index(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		return new ModelAndView("/main/index", modelMap);
 	}
 
 	@RequestMapping(params = "method=left")
-	public ModelAndView left(ModelMap modelMap, HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView left(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		return new ModelAndView("/main/left", modelMap);
 	}
 
 	@RequestMapping(params = "method=leftbar")
-	public ModelAndView leftbar(ModelMap modelMap, HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView leftbar(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		return new ModelAndView("/main/leftbar", modelMap);
 	}
 
 	@RequestMapping
-	public ModelAndView main(ModelMap modelMap, HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView main(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		return new ModelAndView("/main/main", modelMap);
 	}
 
 	@RequestMapping(params = "method=spframe")
-	public ModelAndView spframe(ModelMap modelMap, HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView spframe(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		return new ModelAndView("/main/spframe", modelMap);
 	}
 
 	@RequestMapping(params = "method=top")
-	public ModelAndView top(ModelMap modelMap, HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView top(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		return new ModelAndView("/main/top", modelMap);
 	}

@@ -28,7 +28,6 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
@@ -91,15 +90,13 @@ public class SysUserController {
 	/**
 	 * 增加角色用户
 	 * 
-	 * @param mapping
-	 * @param form
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=addRoleUser")
-	public ModelAndView addRoleUser(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView addRoleUser(HttpServletRequest request,
+			ModelMap modelMap) {
 		logger.debug("---------addRoleUser---------------------------");
 		RequestUtils.setRequestParameterToAttribute(request);
 		int deptId = ParamUtil.getIntParameter(request, "deptId", 0);
@@ -145,15 +142,13 @@ public class SysUserController {
 	/**
 	 * 批量删除信息
 	 * 
-	 * @param mapping
-	 * @param actionForm
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=batchDelete")
-	public ModelAndView batchDelete(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView batchDelete(HttpServletRequest request,
+			ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		boolean ret = true;
 		long[] id = ParamUtil.getLongParameterValues(request, "id");
@@ -173,15 +168,13 @@ public class SysUserController {
 	/**
 	 * 删除角色用户
 	 * 
-	 * @param mapping
-	 * @param form
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=delRoleUser")
-	public ModelAndView delRoleUser(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView delRoleUser(HttpServletRequest request,
+			ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		int deptId = ParamUtil.getIntParameter(request, "deptId", 0);
 		int roleId = ParamUtil.getIntParameter(request, "roleId", 0);
@@ -303,8 +296,8 @@ public class SysUserController {
 				for (SysUser sysUser : list) {
 					JSONObject rowJSON = sysUser.toJsonObject();
 					rowJSON.put("id", sysUser.getId());
-					rowJSON.put("sysUserId", sysUser.getId());
-
+					rowJSON.put("actorId", sysUser.getAccount());
+					rowJSON.put("startIndex", ++start);
 					rowsJSON.add(rowJSON);
 				}
 
@@ -343,17 +336,12 @@ public class SysUserController {
 	/**
 	 * 显示增加页面
 	 * 
-	 * @param mapping
-	 * @param form
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=prepareAdd")
-	public ModelAndView prepareAdd(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
-		// RequestUtils.setRequestParameterToAttribute(request);
-
+	public ModelAndView prepareAdd(HttpServletRequest request, ModelMap modelMap) {
 		String x_view = ViewProperties.getString("user.prepareAdd");
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);
@@ -365,15 +353,13 @@ public class SysUserController {
 	/**
 	 * 显示修改页面
 	 * 
-	 * @param mapping
-	 * @param form
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=prepareModify")
-	public ModelAndView prepareModify(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView prepareModify(HttpServletRequest request,
+			ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		long id = ParamUtil.getLongParameter(request, "id", 0);
 		SysUser bean = sysUserService.findById(id);
@@ -397,15 +383,13 @@ public class SysUserController {
 	/**
 	 * 显示修改页面
 	 * 
-	 * @param mapping
-	 * @param form
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=prepareModifyInfo")
-	public ModelAndView prepareModifyInfo(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView prepareModifyInfo(HttpServletRequest request,
+			ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		SysUser user = RequestUtil.getLoginUser(request);
 		SysUser bean = sysUserService.findByAccount(user.getAccount());
@@ -422,15 +406,13 @@ public class SysUserController {
 	/**
 	 * 显示修改页面
 	 * 
-	 * @param mapping
-	 * @param form
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=prepareModifyPwd")
-	public ModelAndView prepareModifyPwd(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView prepareModifyPwd(HttpServletRequest request,
+			ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		SysUser bean = RequestUtil.getLoginUser(request);
 		request.setAttribute("bean", bean);
@@ -453,15 +435,13 @@ public class SysUserController {
 	/**
 	 * 显示重置密码页面
 	 * 
-	 * @param mapping
-	 * @param form
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=prepareResetPwd")
-	public ModelAndView prepareResetPwd(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView prepareResetPwd(HttpServletRequest request,
+			ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		long id = ParamUtil.getLongParameter(request, "id", 0);
 		SysUser bean = sysUserService.findById(id);
@@ -478,15 +458,12 @@ public class SysUserController {
 	/**
 	 * 重置用户密码
 	 * 
-	 * @param mapping
-	 * @param form
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=resetPwd")
-	public ModelAndView resetPwd(ModelMap modelMap, HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView resetPwd(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		SysUser login = RequestUtil.getLoginUser(request);
 		boolean ret = false;
@@ -531,15 +508,12 @@ public class SysUserController {
 	/**
 	 * 提交增加信息
 	 * 
-	 * @param mapping
-	 * @param form
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=saveAdd")
-	public ModelAndView saveAdd(ModelMap modelMap, HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView saveAdd(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		SysUser bean = new SysUser();
 		SysDepartment department = sysDepartmentService.findById(ParamUtil
@@ -598,15 +572,12 @@ public class SysUserController {
 	/**
 	 * 提交修改信息
 	 * 
-	 * @param mapping
-	 * @param form
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=saveModify")
-	public ModelAndView saveModify(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView saveModify(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		long id = ParamUtil.getIntParameter(request, "id", 0);
 		SysUser bean = sysUserService.findById(id);
@@ -644,22 +615,17 @@ public class SysUserController {
 	/**
 	 * 提交修改信息
 	 * 
-	 * @param mapping
-	 * @param form
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=saveModifyInfo")
-	public ModelAndView saveModifyInfo(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView saveModifyInfo(HttpServletRequest request,
+			ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		SysUser bean = RequestUtil.getLoginUser(request);
 		boolean ret = false;
 		if (bean != null) {
-			// bean.setPassword(ParamUtil.getParameter(request, "password"));
-			// bean.setPassword(CryptUtil.EnCryptPassword(ParamUtil.getParameter(request,
-			// "password")));
 			SysUser user = sysUserService.findById(bean.getId());
 			user.setMobile(ParamUtil.getParameter(request, "mobile"));
 			user.setEmail(ParamUtil.getParameter(request, "email"));
@@ -684,15 +650,12 @@ public class SysUserController {
 	/**
 	 * 修改用户密码
 	 * 
-	 * @param mapping
-	 * @param form
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=savePwd")
-	public ModelAndView savePwd(ModelMap modelMap, HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView savePwd(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		SysUser bean = RequestUtil.getLoginUser(request);
 		boolean ret = false;
@@ -728,15 +691,13 @@ public class SysUserController {
 	/**
 	 * 查询获取用户列表
 	 * 
-	 * @param mapping
-	 * @param actionForm
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=selectSysUser")
-	public ModelAndView selectSysUser(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView selectSysUser(HttpServletRequest request,
+			ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		int pageNo = ParamUtil.getIntParameter(request, "page_no", 1);
 		int pageSize = Constants.PAGE_SIZE;
@@ -759,15 +720,13 @@ public class SysUserController {
 	/**
 	 * 查询获取特定部门用户列表
 	 * 
-	 * @param mapping
-	 * @param actionForm
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=selectSysUserByDept")
-	public ModelAndView selectSysUserByDept(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView selectSysUserByDept(HttpServletRequest request,
+			ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		int pageNo = ParamUtil.getIntParameter(request, "page_no", 1);
 		int pageSize = Constants.PAGE_SIZE;
@@ -796,15 +755,12 @@ public class SysUserController {
 	/**
 	 * 设置用户角色
 	 * 
-	 * @param mapping
-	 * @param actionForm
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=setRole")
-	public ModelAndView setRole(ModelMap modelMap, HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView setRole(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		logger.debug(RequestUtils.getParameterMap(request));
 		ViewMessages messages = new ViewMessages();
@@ -882,15 +838,13 @@ public class SysUserController {
 	/**
 	 * 显示部门下所有人
 	 * 
-	 * @param mapping
-	 * @param actionForm
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=showDeptUsers")
-	public ModelAndView showDeptUsers(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView showDeptUsers(HttpServletRequest request,
+			ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		List<SysDepartment> list = new ArrayList<SysDepartment>();
 		Set<SysUser> set = new HashSet<SysUser>();
@@ -921,15 +875,12 @@ public class SysUserController {
 	/**
 	 * 显示框架页面
 	 * 
-	 * @param mapping
-	 * @param actionForm
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=showFrame")
-	public ModelAndView showFrame(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView showFrame(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		SysTree bean = sysTreeService.getSysTreeByCode(Constants.TREE_DEPT);
 		request.setAttribute("parent", bean.getId() + "");
@@ -945,15 +896,12 @@ public class SysUserController {
 	/**
 	 * 显示所有列表
 	 * 
-	 * @param mapping
-	 * @param form
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=showList")
-	public ModelAndView showList(ModelMap modelMap, HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView showList(HttpServletRequest request, ModelMap modelMap) {
 		int deptId = ParamUtil.getIntParameter(request, "parent", 0);
 		int pageNo = ParamUtil.getIntParameter(request, "page_no", 1);
 		int pageSize = ParamUtil.getIntParameter(request, "page_size",
@@ -980,15 +928,13 @@ public class SysUserController {
 	/**
 	 * 显示所有列表
 	 * 
-	 * @param mapping
-	 * @param form
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=showPasswordList")
-	public ModelAndView showPasswordList(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView showPasswordList(HttpServletRequest request,
+			ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		String userName = ParamUtil.getParameter(request, "userName");
 		String account = ParamUtil.getParameter(request, "account");
@@ -1012,15 +958,12 @@ public class SysUserController {
 	/**
 	 * 显示角色
 	 * 
-	 * @param mapping
-	 * @param actionForm
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=showRole")
-	public ModelAndView showRole(ModelMap modelMap, HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView showRole(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		long id = ParamUtil.getIntParameter(request, "user_id", 0);
 		SysUser bean = sysUserService.findById(id);
@@ -1041,15 +984,13 @@ public class SysUserController {
 	/**
 	 * 显示角色用户列表
 	 * 
-	 * @param mapping
-	 * @param form
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=showRoleUser")
-	public ModelAndView showRoleUser(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView showRoleUser(HttpServletRequest request,
+			ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		int deptId = ParamUtil.getIntParameter(request, "deptId", 0);
 		long roleId = ParamUtil.getLongParameter(request, "roleId", 0);
@@ -1078,15 +1019,13 @@ public class SysUserController {
 	/**
 	 * 显示角色用户列表
 	 * 
-	 * @param mapping
-	 * @param form
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=showSelUser")
-	public ModelAndView showSelUser(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView showSelUser(HttpServletRequest request,
+			ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		int deptId = ParamUtil.getIntParameter(request, "deptId2", 0);
 		if (deptId != 0) {
@@ -1104,15 +1043,12 @@ public class SysUserController {
 	/**
 	 * 增加角色用户
 	 * 
-	 * @param mapping
-	 * @param form
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=showUser")
-	public ModelAndView showUser(ModelMap modelMap, HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView showUser(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		long userId = ParamUtil.getLongParameter(request, "userId", 0);
 		SysUser user = sysUserService.findById(userId);

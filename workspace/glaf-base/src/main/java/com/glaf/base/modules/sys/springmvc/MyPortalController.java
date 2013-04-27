@@ -28,7 +28,6 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
@@ -64,16 +63,12 @@ public class MyPortalController {
 	protected final static Log logger = LogFactory
 			.getLog(MyPortalController.class);
 
- 
 	protected LayoutService layoutService;
 
- 
 	protected PanelService panelService;
 
- 
 	protected SysApplicationService sysApplicationService;
 
- 
 	protected UserPortalService userPortalService;
 
 	protected void fill(JSONObject jsonObject, StringBuffer buffer) {
@@ -105,8 +100,7 @@ public class MyPortalController {
 	}
 
 	@RequestMapping("/my/home.do")
-	public ModelAndView home(ModelMap modelMap, HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView home(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 
 		String userId = RequestUtils.getActorId(request);
@@ -127,7 +121,7 @@ public class MyPortalController {
 	}
 
 	@RequestMapping("/my/main.do")
-	public ModelAndView main(ModelMap modelMap, HttpServletRequest request) {
+	public ModelAndView main(HttpServletRequest request, ModelMap modelMap) {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 
 		RequestUtils.setRequestParameterToAttribute(request);
@@ -164,7 +158,7 @@ public class MyPortalController {
 			while (iter.hasNext()) {
 				PanelInstance p = iter.next();
 				if (StringUtils.isNumeric(p.getName())) {
-					int pos = Integer.parseInt(p.getName());
+					int pos = Math.abs(Integer.parseInt(p.getName()));
 					panelPxMap.put(p.getPanelId(), pos);
 
 					if ("P2".equals(layoutName)) {

@@ -23,7 +23,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.StringUtils;
@@ -51,7 +50,6 @@ public class SysSchedulerController {
 	protected final static Log logger = LogFactory
 			.getLog(SysSchedulerController.class);
 
- 
 	protected ISysSchedulerService sysSchedulerService;
 
 	public SysSchedulerController() {
@@ -59,8 +57,7 @@ public class SysSchedulerController {
 	}
 
 	@RequestMapping(params = "method=locked")
-	public ModelAndView locked(ModelMap modelMap, HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView locked(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		String taskId = request.getParameter("taskId");
 		int locked = 0;
@@ -74,13 +71,12 @@ public class SysSchedulerController {
 				}
 			}
 		}
-		return this.showList(modelMap, request, response);
+		return this.showList(request, modelMap);
 	}
 
 	@RequestMapping(params = "method=saveModify")
-	public ModelAndView saveModify(ModelMap modelMap,
-			SchedulerFormBean schedulerForm, HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView saveModify(HttpServletRequest request,
+			ModelMap modelMap, SchedulerFormBean schedulerForm) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		Scheduler scheduler = new SchedulerEntity();
 
@@ -112,7 +108,7 @@ public class SysSchedulerController {
 		scheduler.setCreateBy(actorId);
 		sysSchedulerService.save(scheduler);
 
-		return this.showList(modelMap, request, response);
+		return this.showList(request, modelMap);
 	}
 
 	@javax.annotation.Resource
@@ -121,26 +117,24 @@ public class SysSchedulerController {
 	}
 
 	@RequestMapping(params = "method=showList")
-	public ModelAndView showList(ModelMap modelMap, HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView showList(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		SysUser user = RequestUtil.getLoginUser(request);
 		String actorId = user.getAccount();
 		List<Scheduler> list = sysSchedulerService.getUserSchedulers(actorId);
 		request.setAttribute("schedulers", list);
-		
+
 		String x_view = ViewProperties.getString("scheduler.showList");
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);
 		}
-		
+
 		return new ModelAndView("/modules/sys/scheduler/scheduler_list",
 				modelMap);
 	}
 
 	@RequestMapping(params = "method=showModify")
-	public ModelAndView showModify(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView showModify(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		String taskId = request.getParameter("taskId");
 		Scheduler scheduler = null;
@@ -148,19 +142,18 @@ public class SysSchedulerController {
 			scheduler = sysSchedulerService.getSchedulerByTaskId(taskId);
 		}
 		request.setAttribute("scheduler", scheduler);
-		
+
 		String x_view = ViewProperties.getString("scheduler.showModify");
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);
-		}	
+		}
 
 		return new ModelAndView("/modules/sys/scheduler/scheduler_modify",
 				modelMap);
 	}
 
 	@RequestMapping(params = "method=startup")
-	public ModelAndView startup(ModelMap modelMap, HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView startup(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		String taskId = request.getParameter("taskId");
 		String startup = request.getParameter("startup");
@@ -176,7 +169,7 @@ public class SysSchedulerController {
 				}
 			}
 		}
-		return this.showList(modelMap, request, response);
+		return this.showList(request, modelMap);
 	}
 
 }

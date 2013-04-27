@@ -21,7 +21,6 @@ package com.glaf.base.modules.sys.springmvc;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
@@ -51,24 +50,20 @@ public class SysFunctionController {
 	private static final Log logger = LogFactory
 			.getLog(SysFunctionController.class);
 
- 
 	private SysApplicationService sysApplicationService;
 
-	 
 	private SysFunctionService sysFunctionService;
 
 	/**
 	 * 批量删除信息
 	 * 
-	 * @param mapping
-	 * @param actionForm
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=batchDelete")
-	public ModelAndView batchDelete(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView batchDelete(HttpServletRequest request,
+			ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		boolean ret = true;
 		long[] id = ParamUtil.getLongParameterValues(request, "id");
@@ -89,15 +84,12 @@ public class SysFunctionController {
 	/**
 	 * 提交增加信息
 	 * 
-	 * @param mapping
-	 * @param form
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=saveAdd")
-	public ModelAndView saveAdd(ModelMap modelMap, HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView saveAdd(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		long parent = (long) ParamUtil.getIntParameter(request, "parent", 0);
 		SysApplication app = sysApplicationService.findById(parent);
@@ -123,15 +115,12 @@ public class SysFunctionController {
 	/**
 	 * 提交修改信息
 	 * 
-	 * @param mapping
-	 * @param form
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=saveModify")
-	public ModelAndView saveModify(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView saveModify(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		long id = (long) ParamUtil.getIntParameter(request, "funcId", 0);
 		SysFunction bean = sysFunctionService.findById(id);
@@ -167,20 +156,18 @@ public class SysFunctionController {
 	/**
 	 * 显示对应模块下面的功能列表
 	 * 
-	 * @param mapping
-	 * @param actionForm
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=showFuncList")
-	public ModelAndView showFuncList(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView showFuncList(HttpServletRequest request,
+			ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		int parent = ParamUtil.getIntParameter(request, "parent", 0);
 		List<SysFunction> list = sysFunctionService.getSysFunctionList(parent);
 		request.setAttribute("list", list);
-		
+
 		String x_view = ViewProperties.getString("function.showFuncList");
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);

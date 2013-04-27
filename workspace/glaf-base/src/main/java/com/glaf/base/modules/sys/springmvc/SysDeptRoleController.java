@@ -23,7 +23,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
@@ -67,15 +66,13 @@ public class SysDeptRoleController {
 	/**
 	 * 设置权限
 	 * 
-	 * @param mapping
-	 * @param actionForm
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=setPrivilege")
-	public ModelAndView setPrivilege(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView setPrivilege(HttpServletRequest request,
+			ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		long roleId = ParamUtil.getLongParameter(request, "roleId", 0);
 		long[] appId = ParamUtil.getLongParameterValues(request, "appId");
@@ -106,15 +103,12 @@ public class SysDeptRoleController {
 	/**
 	 * 设置部门角色
 	 * 
-	 * @param mapping
-	 * @param actionForm
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=setRole")
-	public ModelAndView setRole(ModelMap modelMap, HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView setRole(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		ViewMessages messages = new ViewMessages();
 		long deptId = ParamUtil.getIntParameter(request, "deptId", 0);
@@ -176,15 +170,12 @@ public class SysDeptRoleController {
 	/**
 	 * 显示所有列表
 	 * 
-	 * @param mapping
-	 * @param form
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=showList")
-	public ModelAndView showList(ModelMap modelMap, HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView showList(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		long deptId = (long) ParamUtil.getIntParameter(request, "parent", 0);
 		request.setAttribute("department",
@@ -202,15 +193,13 @@ public class SysDeptRoleController {
 	/**
 	 * 显示角色权限映射页面
 	 * 
-	 * @param mapping
-	 * @param actionForm
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=showPrivilege")
-	public ModelAndView showPrivilege(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView showPrivilege(HttpServletRequest request,
+			ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		long deptId = ParamUtil.getLongParameter(request, "deptId", 0);
 		long roleId = ParamUtil.getLongParameter(request, "roleId", 0);

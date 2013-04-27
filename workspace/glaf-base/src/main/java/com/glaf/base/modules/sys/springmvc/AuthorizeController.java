@@ -70,15 +70,15 @@ public class AuthorizeController {
 	/**
 	 * 登录
 	 * 
-	 * @param mapping
+	 * 
 	 * @param form
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=login")
-	public ModelAndView login(ModelMap modelMap, HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView login(HttpServletRequest request,
+			HttpServletResponse response, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		HttpSession session = request.getSession(true);
 		ViewMessages messages = new ViewMessages();
@@ -155,15 +155,15 @@ public class AuthorizeController {
 	/**
 	 * 登出
 	 * 
-	 * @param mapping
+	 * 
 	 * @param form
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=logout")
-	public ModelAndView logout(ModelMap modelMap, HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView logout(HttpServletRequest request,
+			HttpServletResponse response, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		// 登出系统，清除session对象
 		request.getSession().removeAttribute(SysConstants.LOGIN);
@@ -174,15 +174,15 @@ public class AuthorizeController {
 	/**
 	 * 准备登录
 	 * 
-	 * @param mapping
+	 * 
 	 * @param form
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=prepareLogin")
-	public ModelAndView prepareLogin(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView prepareLogin(HttpServletRequest request,
+			ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		// 显示登陆页面
 		return new ModelAndView("/modules/login", modelMap);
@@ -210,15 +210,15 @@ public class AuthorizeController {
 	/**
 	 * 显示菜单
 	 * 
-	 * @param mapping
-	 * @param actionForm
+	 * 
+	 * 
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=showMenu")
-	public ModelAndView showMenu(ModelMap modelMap, HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView showMenu(HttpServletRequest request,
+			HttpServletResponse response, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		SysUser user = RequestUtil.getLoginUser(request);
 		SysTree parent = sysTreeService.getSysTreeByCode(Constants.TREE_APP);
@@ -231,15 +231,15 @@ public class AuthorizeController {
 	/**
 	 * 显示子菜单
 	 * 
-	 * @param mapping
-	 * @param actionForm
+	 * 
+	 * 
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=showSubMenu")
-	public ModelAndView showSubMenu(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView showSubMenu(HttpServletRequest request,
+			ModelMap modelMap) {
 		SysUser user = RequestUtil.getLoginUser(request);
 		long parent = ParamUtil.getIntParameter(request, "parent", 0);
 		List<SysApplication> list = sysApplicationService.getAccessAppList(

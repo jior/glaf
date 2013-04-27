@@ -23,7 +23,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
@@ -59,21 +58,18 @@ public class SysRoleController {
 	private static final Log logger = LogFactory
 			.getLog(SysRoleController.class);
 
- 
 	private SysRoleService sysRoleService;
 
 	/**
 	 * 批量删除信息
 	 * 
-	 * @param mapping
-	 * @param actionForm
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=batchDelete")
-	public ModelAndView batchDelete(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView batchDelete(HttpServletRequest request,
+			ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		boolean ret = true;
 		long[] ids = ParamUtil.getLongParameterValues(request, "id");
@@ -212,15 +208,12 @@ public class SysRoleController {
 	/**
 	 * 显示增加页面
 	 * 
-	 * @param mapping
-	 * @param form
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=prepareAdd")
-	public ModelAndView prepareAdd(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView prepareAdd(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 
 		String x_view = ViewProperties.getString("role.prepareAdd");
@@ -235,15 +228,13 @@ public class SysRoleController {
 	/**
 	 * 显示修改页面
 	 * 
-	 * @param mapping
-	 * @param form
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=prepareModify")
-	public ModelAndView prepareModify(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView prepareModify(HttpServletRequest request,
+			ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		long id = ParamUtil.getIntParameter(request, "id", 0);
 		SysRole bean = sysRoleService.findById(id);
@@ -261,15 +252,12 @@ public class SysRoleController {
 	/**
 	 * 提交增加信息
 	 * 
-	 * @param mapping
-	 * @param form
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=saveAdd")
-	public ModelAndView saveAdd(ModelMap modelMap, HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView saveAdd(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 
 		boolean ret = false;
@@ -300,15 +288,12 @@ public class SysRoleController {
 	/**
 	 * 提交修改信息
 	 * 
-	 * @param mapping
-	 * @param form
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=saveModify")
-	public ModelAndView saveModify(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView saveModify(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		long id = ParamUtil.getIntParameter(request, "id", 0);
 		SysRole bean = sysRoleService.findById(id);
@@ -341,15 +326,12 @@ public class SysRoleController {
 	/**
 	 * 显示所有列表
 	 * 
-	 * @param mapping
-	 * @param form
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=showList")
-	public ModelAndView showList(ModelMap modelMap, HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView showList(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		int pageNo = ParamUtil.getIntParameter(request, "page_no", 1);
 		int pageSize = ParamUtil.getIntParameter(request, "page_size",

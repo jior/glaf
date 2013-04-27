@@ -28,7 +28,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
@@ -71,27 +70,22 @@ public class SysDictoryController {
 	private static final Log logger = LogFactory
 			.getLog(SysDictoryController.class);
 
-	 
 	protected DictoryDefinitionService dictoryDefinitionService;
 
- 
 	private DictoryService dictoryService;
 
- 
 	private SysTreeService sysTreeService;
 
 	/**
 	 * 提交删除
 	 * 
-	 * @param mapping
-	 * @param form
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=batchDelete")
-	public ModelAndView batchDelete(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView batchDelete(HttpServletRequest request,
+			ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		boolean ret = true;
 		long[] id = ParamUtil.getLongParameterValues(request, "id");
@@ -167,6 +161,7 @@ public class SysDictoryController {
 				for (Dictory dictory : list) {
 					JSONObject rowJSON = dictory.toJsonObject();
 					rowJSON.put("id", dictory.getId());
+					rowJSON.put("startIndex", ++start);
 					rowsJSON.add(rowJSON);
 				}
 
@@ -188,12 +183,12 @@ public class SysDictoryController {
 		} else {
 			request.setAttribute("x_complex_query", "");
 		}
-		
+
 		String x_view = ViewProperties.getString("dictory.list");
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);
 		}
-		
+
 		String view = request.getParameter("view");
 		if (StringUtils.isNotEmpty(view)) {
 			return new ModelAndView(view, modelMap);
@@ -205,37 +200,32 @@ public class SysDictoryController {
 	/**
 	 * 显示框架页面
 	 * 
-	 * @param mapping
-	 * @param actionForm
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=loadDictory")
-	public ModelAndView loadDictory(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView loadDictory(HttpServletRequest request,
+			ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
-		
+
 		String x_view = ViewProperties.getString("dictory.loadDictory");
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);
 		}
-		
+
 		return new ModelAndView("/modules/sys/dictory/dictory_load", modelMap);
 	}
 
 	/**
 	 * 显示增加字典页面
 	 * 
-	 * @param mapping
-	 * @param form
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=prepareAdd")
-	public ModelAndView prepareAdd(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView prepareAdd(HttpServletRequest request, ModelMap modelMap) {
 		// 显示列表页面
 		RequestUtils.setRequestParameterToAttribute(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
@@ -248,7 +238,7 @@ public class SysDictoryController {
 				request.setAttribute("list", list);
 			}
 		}
-		
+
 		String x_view = ViewProperties.getString("dictory.prepareAdd");
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);
@@ -260,15 +250,13 @@ public class SysDictoryController {
 	/**
 	 * 显示修改页面
 	 * 
-	 * @param mapping
-	 * @param form
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=prepareModify")
-	public ModelAndView prepareModify(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView prepareModify(HttpServletRequest request,
+			ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		long id = ParamUtil.getIntParameter(request, "id", 0);
 		Dictory bean = dictoryService.find(id);
@@ -298,7 +286,6 @@ public class SysDictoryController {
 		list.add(parent);
 		sysTreeService.getSysTree(list, (int) parent.getId(), 1);
 		request.setAttribute("parent", list);
-		
 
 		String x_view = ViewProperties.getString("dictory.prepareModify");
 		if (StringUtils.isNotEmpty(x_view)) {
@@ -311,15 +298,12 @@ public class SysDictoryController {
 	/**
 	 * 提交增加字典信息
 	 * 
-	 * @param mapping
-	 * @param form
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=saveAdd")
-	public ModelAndView saveAdd(ModelMap modelMap, HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView saveAdd(HttpServletRequest request, ModelMap modelMap) {
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		logger.debug("params:" + params);
 		Dictory bean = new Dictory();
@@ -328,14 +312,12 @@ public class SysDictoryController {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-		
+
 		bean.setCreateBy(RequestUtils.getActorId(request));
 
 		ViewMessages messages = new ViewMessages();
 		if (dictoryService.create(bean)) {// 保存成功
-			if (bean.getNodeId() == 17) {
-				BaseDataManager.getInstance().loadDictInfo();
-			}
+			BaseDataManager.getInstance().loadDictInfo();
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"dictory.add_success"));
 		} else {// 保存失败
@@ -351,27 +333,25 @@ public class SysDictoryController {
 	/**
 	 * 显示重载数据
 	 * 
-	 * @param mapping
-	 * @param form
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=saveLoadDictory")
-	public ModelAndView saveLoadDictory(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView saveLoadDictory(HttpServletRequest request,
+			ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		BaseDataManager.getInstance().refreshBaseData();
 		ViewMessages messages = new ViewMessages();
 		messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 				"dictory.reload_success"));
 		MessageUtils.addMessages(request, messages);
-		
+
 		String x_view = ViewProperties.getString("dictory.saveLoadDictory");
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);
 		}
-		
+
 		// 显示列表页面
 		return new ModelAndView("/modules/sys/dictory/dictory_load", modelMap);
 	}
@@ -379,15 +359,12 @@ public class SysDictoryController {
 	/**
 	 * 提交修改字典信息
 	 * 
-	 * @param mapping
-	 * @param form
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=saveModify")
-	public ModelAndView saveModify(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView saveModify(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		long id = ParamUtil.getIntParameter(request, "id", 0);
@@ -398,14 +375,12 @@ public class SysDictoryController {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-		
+
 		bean.setUpdateBy(RequestUtils.getActorId(request));
 
 		ViewMessages messages = new ViewMessages();
 		if (dictoryService.update(bean)) {// 保存成功
-			if (bean.getNodeId() == 17) {
-				BaseDataManager.getInstance().loadDictInfo();
-			}
+			BaseDataManager.getInstance().loadDictInfo();
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"dictory.modify_success"));
 		} else {// 保存失败
@@ -439,25 +414,20 @@ public class SysDictoryController {
 	/**
 	 * 显示字典数据
 	 * 
-	 * @param mapping
-	 * @param actionForm
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=showDictData")
-	public ModelAndView showDictData(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView showDictData(HttpServletRequest request,
+			ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		ModelAndView view = null;
 		String code = ParamUtil.getParameter(request, "code");
 		Iterator<?> iter = null;
 		long parent = ParamUtil.getLongParameter(request, "parent", -1);
 		if (!(parent == -1)) {
-			// List list =
-			// this.goodsCategoryService.getGoodsCategoryList(parent);
-			// iter = list.iterator();
-			// view = new ModelAndView("show_contract_dictory_select");
+
 		} else {
 			iter = BaseDataManager.getInstance().getList(code);
 			view = new ModelAndView("/modules/sys/dictory/dictory_select",
@@ -472,39 +442,33 @@ public class SysDictoryController {
 	/**
 	 * 显示框架页面
 	 * 
-	 * @param mapping
-	 * @param actionForm
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=showFrame")
-	public ModelAndView showFrame(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView showFrame(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		SysTree bean = sysTreeService.getSysTreeByCode(Constants.TREE_DICTORY);
 		request.setAttribute("parent", bean.getId() + "");
-		
+
 		String x_view = ViewProperties.getString("dictory.showFrame");
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);
 		}
-		
+
 		return new ModelAndView("/modules/sys/dictory/dictory_frame", modelMap);
 	}
 
 	/**
 	 * 显示所有列表
 	 * 
-	 * @param mapping
-	 * @param form
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=showList")
-	public ModelAndView showList(ModelMap modelMap, HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView showList(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		int parent = ParamUtil.getIntParameter(request, "parent", 0);
 		int pageNo = ParamUtil.getIntParameter(request, "page_no", 1);
@@ -512,7 +476,7 @@ public class SysDictoryController {
 		PageResult pager = dictoryService.getDictoryList(parent, pageNo,
 				pageSize);
 		request.setAttribute("pager", pager);
-		
+
 		String x_view = ViewProperties.getString("dictory.showList");
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);

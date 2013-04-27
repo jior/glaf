@@ -16,7 +16,7 @@ import com.glaf.core.util.RequestUtils;
 @Controller("menu")
 @RequestMapping("/menu.do")
 public class MenuController {
- 
+
 	private SysApplicationService sysApplicationService;
 
 	@javax.annotation.Resource

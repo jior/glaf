@@ -25,7 +25,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
@@ -62,21 +61,18 @@ public class SysTreeController {
 	private static final Log logger = LogFactory
 			.getLog(SysTreeController.class);
 
- 
 	private SysTreeService sysTreeService;
 
 	/**
 	 * 批量删除信息
 	 * 
-	 * @param mapping
-	 * @param actionForm
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=batchDelete")
-	public ModelAndView batchDelete(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView batchDelete(HttpServletRequest request,
+			ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		ViewMessages messages = new ViewMessages();
 		messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
@@ -88,15 +84,12 @@ public class SysTreeController {
 	/**
 	 * 显示下级节点
 	 * 
-	 * @param mapping
-	 * @param actionForm
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=getSubTree")
-	public ModelAndView getSubTree(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView getSubTree(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		int id = ParamUtil.getIntParameter(request, "id", 0);
 		List<SysTree> list = sysTreeService.getSysTreeList(id);
@@ -171,6 +164,7 @@ public class SysTreeController {
 				for (SysTree sysTree : list) {
 					JSONObject rowJSON = sysTree.toJsonObject();
 					rowJSON.put("id", sysTree.getId());
+					rowJSON.put("startIndex", ++start);
 					rowsJSON.add(rowJSON);
 				}
 
@@ -209,15 +203,12 @@ public class SysTreeController {
 	/**
 	 * 显示增加页面
 	 * 
-	 * @param mapping
-	 * @param form
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=prepareAdd")
-	public ModelAndView prepareAdd(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView prepareAdd(HttpServletRequest request, ModelMap modelMap) {
 		request.setAttribute("contextPath", request.getContextPath());
 
 		String x_view = ViewProperties.getString("tree.prepareAdd");
@@ -231,15 +222,13 @@ public class SysTreeController {
 	/**
 	 * 显示修改页面
 	 * 
-	 * @param mapping
-	 * @param form
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=prepareModify")
-	public ModelAndView prepareModify(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView prepareModify(HttpServletRequest request,
+			ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		long id = ParamUtil.getIntParameter(request, "id", 0);
 		SysTree bean = sysTreeService.findById(id);
@@ -263,15 +252,12 @@ public class SysTreeController {
 	/**
 	 * 提交增加信息
 	 * 
-	 * @param mapping
-	 * @param form
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=saveAdd")
-	public ModelAndView saveAdd(ModelMap modelMap, HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView saveAdd(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		SysTree bean = new SysTree();
 		bean.setParentId(ParamUtil.getIntParameter(request, "parent", 0));
@@ -296,15 +282,12 @@ public class SysTreeController {
 	/**
 	 * 提交修改信息
 	 * 
-	 * @param mapping
-	 * @param form
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=saveModify")
-	public ModelAndView saveModify(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView saveModify(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		long id = ParamUtil.getIntParameter(request, "id", 0);
 		SysTree bean = sysTreeService.findById(id);
@@ -344,15 +327,12 @@ public class SysTreeController {
 	/**
 	 * 显示左边菜单
 	 * 
-	 * @param mapping
-	 * @param actionForm
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=showLeft")
-	public ModelAndView showLeft(ModelMap modelMap, HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView showLeft(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		ModelAndView forward = new ModelAndView("/modules/sys/tree/tree_left",
 				modelMap);
@@ -374,15 +354,12 @@ public class SysTreeController {
 	/**
 	 * 显示所有列表
 	 * 
-	 * @param mapping
-	 * @param form
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=showList")
-	public ModelAndView showList(ModelMap modelMap, HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView showList(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		int parentId = ParamUtil.getIntParameter(request, "parent", 0);
 		int pageNo = ParamUtil.getIntParameter(request, "page_no", 1);
@@ -407,15 +384,12 @@ public class SysTreeController {
 	/**
 	 * 显示主页面
 	 * 
-	 * @param mapping
-	 * @param actionForm
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=showMain")
-	public ModelAndView showMain(ModelMap modelMap, HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView showMain(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 
 		String x_view = ViewProperties.getString("tree.showMain");
@@ -427,8 +401,7 @@ public class SysTreeController {
 	}
 
 	@RequestMapping(params = "method=showTop")
-	public ModelAndView showTop(ModelMap modelMap, HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView showTop(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 
 		String x_view = ViewProperties.getString("tree.showTop");

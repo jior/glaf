@@ -66,16 +66,13 @@ public class LoginController {
 
 	/**
 	 * 登录
-	 * 
-	 * @param mapping
-	 * @param form
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=login")
-	public ModelAndView login(ModelMap modelMap, HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView login(HttpServletRequest request,
+			HttpServletResponse response, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		HttpSession session = request.getSession(false);
 		ViewMessages messages = new ViewMessages();
@@ -155,17 +152,15 @@ public class LoginController {
 	}
 
 	/**
-	 * 登出
+	 * 注销
 	 * 
-	 * @param mapping
-	 * @param form
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=logout")
-	public ModelAndView logout(ModelMap modelMap, HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView logout(HttpServletRequest request,
+			HttpServletResponse response, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		// 登出系统，清除session对象
 		request.getSession().removeAttribute(SysConstants.LOGIN);
@@ -177,15 +172,13 @@ public class LoginController {
 	/**
 	 * 准备登录
 	 * 
-	 * @param mapping
-	 * @param form
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping
-	public ModelAndView prepareLogin(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView prepareLogin(HttpServletRequest request,
+			ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		// 显示登陆页面
 		return new ModelAndView("/modules/login", modelMap);

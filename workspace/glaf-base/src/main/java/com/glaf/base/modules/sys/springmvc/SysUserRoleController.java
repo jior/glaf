@@ -23,7 +23,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
@@ -48,6 +47,7 @@ import com.glaf.core.res.ViewMessage;
 import com.glaf.core.res.ViewMessages;
 import com.glaf.core.util.DateUtils;
 import com.glaf.core.util.RequestUtils;
+import com.glaf.core.util.ResponseUtils;
 
 @Controller("/sys/sysUserRole")
 @RequestMapping("/sys/sysUserRole.do")
@@ -55,15 +55,13 @@ public class SysUserRoleController {
 	private static final Log logger = LogFactory
 			.getLog(SysUserRoleController.class);
 
- 
 	private SysUserRoleService sysUserRoleService;
 
-	 
 	private SysUserService sysUserService;
 
 	@ResponseBody
 	@RequestMapping(params = "method=addRole")
-	public void addRole(HttpServletRequest request) {
+	public byte[] addRole(HttpServletRequest request) {
 		long fromUserId = RequestUtils.getLong(request, "fromUserId");
 		long toUserId = RequestUtils.getLong(request, "toUserId");
 		String startDate = request.getParameter("startDate");
@@ -76,11 +74,12 @@ public class SysUserRoleController {
 			sysUserRoleService.addRole(fromUserId, toUserId, startDate,
 					endDate, mark, processNames, processDescriptions);
 		}
+		return ResponseUtils.responseJsonResult(true);
 	}
 
 	@ResponseBody
 	@RequestMapping(params = "method=addRoleUser")
-	public void addRoleUser(HttpServletRequest request) {
+	public byte[] addRoleUser(HttpServletRequest request) {
 		long fromUserId = RequestUtils.getLong(request, "fromUserId");
 		String toUserIds = request.getParameter("toUserIds");
 		String startDate = request.getParameter("startDate");
@@ -97,18 +96,21 @@ public class SysUserRoleController {
 						endDate, mark, processNames, processDescriptions);
 			}
 		}
+		return ResponseUtils.responseJsonResult(true);
 	}
 
 	@ResponseBody
 	@RequestMapping(params = "method=removeRole")
-	public void removeRole(@RequestParam(value = "fromUserId") long fromUserId,
+	public byte[] removeRole(
+			@RequestParam(value = "fromUserId") long fromUserId,
 			@RequestParam(value = "toUserId") long toUserId) {
 		sysUserRoleService.removeRole(fromUserId, toUserId);
+		return ResponseUtils.responseJsonResult(true);
 	}
 
 	@ResponseBody
 	@RequestMapping(params = "method=removeRoleUser")
-	public void removeRoleUser(
+	public byte[] removeRoleUser(
 			@RequestParam(value = "fromUserId") long fromUserId,
 			@RequestParam(value = "toUserIds") String toUserIds) {
 		logger.info("toUserIds:" + toUserIds);
@@ -117,21 +119,20 @@ public class SysUserRoleController {
 			long toUserId = Long.parseLong(ids[i]);
 			removeRole(fromUserId, toUserId);
 		}
+		return ResponseUtils.responseJsonResult(true);
 	}
 
 	/**
 	 * 保存用户授权
 	 * 
-	 * @param mapping
-	 * @param form
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(params = "method=saveUserSysAuth")
-	public ModelAndView saveUserSysAuth(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView saveUserSysAuth(HttpServletRequest request,
+			ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		long fromUserId = ParamUtil.getLongParameter(request, "uid", 0);
 		long[] userIds = ParamUtil.getLongParameterValues(request, "userIds");
@@ -147,7 +148,7 @@ public class SysUserRoleController {
 			List userList = sysUserRoleService.getAuthorizedUser(user);
 			logger.info("userList.size()=>" + userList.size());
 
-			authorStart: for (int i = 0; i < userIds.length; i++) {
+			for (int i = 0; i < userIds.length; i++) {
 				SysUser sysUser = sysUserService.findById(userIds[i]);
 
 				String startDate = ParamUtil.getParameter(request, "startDate_"
@@ -167,7 +168,7 @@ public class SysUserRoleController {
 							logger.info(msgStr);
 							userList.remove(j);
 
-							continue authorStart;
+							continue;
 						}
 					}
 
@@ -252,15 +253,12 @@ public class SysUserRoleController {
 	/**
 	 * 显示授权页面
 	 * 
-	 * @param mapping
-	 * @param form
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=showMain")
-	public ModelAndView showMain(ModelMap modelMap, HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView showMain(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		SysUser user = RequestUtil.getLoginUser(request);
 		request.setAttribute("available",
@@ -281,15 +279,13 @@ public class SysUserRoleController {
 	/**
 	 * 显示授权页面
 	 * 
-	 * @param mapping
-	 * @param form
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=showSysAuth")
-	public ModelAndView showSysAuth(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView showSysAuth(HttpServletRequest request,
+			ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		long userId = ParamUtil.getLongParameter(request, "id", 0);
 		SysUser user = (SysUser) sysUserService.findById(userId);
@@ -316,15 +312,12 @@ public class SysUserRoleController {
 	/**
 	 * 显示授权页面
 	 * 
-	 * @param mapping
-	 * @param form
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=showUsers")
-	public ModelAndView showUsers(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView showUsers(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		Map<String, String> filter = WebUtil.getQueryMap(request);
 		request.setAttribute("pager",
@@ -343,15 +336,13 @@ public class SysUserRoleController {
 	/**
 	 * 显示授权页面
 	 * 
-	 * @param mapping
-	 * @param form
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=showUserSysAuth")
-	public ModelAndView showUserSysAuth(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView showUserSysAuth(HttpServletRequest request,
+			ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		long userId = ParamUtil.getLongParameter(request, "id", 0);
 		SysUser user = (SysUser) sysUserService.findById(userId);

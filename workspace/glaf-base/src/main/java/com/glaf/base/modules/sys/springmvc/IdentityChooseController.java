@@ -25,7 +25,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
@@ -73,12 +72,12 @@ public class IdentityChooseController {
 	 * 
 	 * @param modelMap
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=chooseDepts")
-	public ModelAndView chooseDepts(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView chooseDepts(HttpServletRequest request,
+			ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		String x_view = ViewProperties.getString("identityChoose.chooseDepts");
 		if (StringUtils.isNotEmpty(x_view)) {
@@ -92,12 +91,12 @@ public class IdentityChooseController {
 	 * 
 	 * @param modelMap
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=chooseTrees")
-	public ModelAndView chooseTrees(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView chooseTrees(HttpServletRequest request,
+			ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		String x_view = ViewProperties.getString("identityChoose.chooseTrees");
 		if (StringUtils.isNotEmpty(x_view)) {
@@ -111,12 +110,12 @@ public class IdentityChooseController {
 	 * 
 	 * @param modelMap
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=chooseUsers")
-	public ModelAndView chooseUsers(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView chooseUsers(HttpServletRequest request,
+			ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		String x_view = ViewProperties.getString("identityChoose.chooseUsers");
 		if (StringUtils.isNotEmpty(x_view)) {

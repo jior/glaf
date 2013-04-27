@@ -55,7 +55,6 @@ import com.glaf.base.modules.sys.service.SysTreeService;
 import com.glaf.base.modules.sys.service.SysUserService;
 import com.glaf.base.utils.ParamUtil;
 import com.glaf.base.utils.RequestUtil;
-import com.glaf.core.base.TableModel;
 import com.glaf.core.cache.CacheUtils;
 import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
@@ -186,23 +185,10 @@ public class SysUserResource {
 		int deptId = ParamUtil.getIntParameter(request, "deptId", 0);
 		int roleId = ParamUtil.getIntParameter(request, "roleId", 0);
 		SysDeptRole deptRole = sysDeptRoleService.find(deptId, roleId);
-		Set<SysUser> users = deptRole.getUsers();
 		boolean sucess = false;
 		try {
 			long[] userIds = ParamUtil.getLongParameterValues(request, "id");
-			for (int i = 0; i < userIds.length; i++) {
-				SysUser user = sysUserService.findById(userIds[i]);
-				if (user != null) {
-					logger.info(user.getName());
-					users.remove(user);
-					TableModel table = new TableModel();
-					table.setTableName("sys_user_role");
-					table.addColumn("AUTHORIZED", "Integer", 0);
-					table.addColumn("ROLEID", "Long", deptRole.getId());
-					table.addColumn("USERID", "Long", user.getId());
-					tableDataService.deleteTableData(table);
-				}
-			}
+			sysUserService.deleteRoleUsers(deptRole, userIds);
 			sucess = true;
 		} catch (Exception ex) {
 			ex.printStackTrace();

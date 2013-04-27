@@ -22,7 +22,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.StringUtils;
@@ -51,20 +50,17 @@ public class SysSubjectCodeController {
 	private static final Log logger = LogFactory
 			.getLog(SysSubjectCodeController.class);
 
- 
 	private SubjectCodeService subjectCodeService;
 
 	/**
 	 * 提交删除
 	 * 
-	 * @param mapping
-	 * @param form
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
-	public ModelAndView batchDelete(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView batchDelete(HttpServletRequest request,
+			ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		boolean ret = true;
 		long[] id = ParamUtil.getLongParameterValues(request, "id");
@@ -84,14 +80,11 @@ public class SysSubjectCodeController {
 	/**
 	 * 显示下级节点
 	 * 
-	 * @param mapping
-	 * @param actionForm
 	 * @param request
-	 * @param response
-	 * @return @
+	 * @param modelMap
+	 * @return
 	 */
-	public ModelAndView getSubFee(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView getSubFee(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		int parent = ParamUtil.getIntParameter(request, "parent", 0);
 		Map<String, String> filter = WebUtil.getQueryMap(request);
@@ -110,14 +103,11 @@ public class SysSubjectCodeController {
 	/**
 	 * 显示增加费用科目
 	 * 
-	 * @param mapping
-	 * @param form
 	 * @param request
-	 * @param response
-	 * @return @
+	 * @param modelMap
+	 * @return
 	 */
-	public ModelAndView prepareAdd(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView prepareAdd(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		long parent = ParamUtil.getLongParameter(request, "parent", 0);
 		request.setAttribute("parent", subjectCodeService.findById(parent));
@@ -134,14 +124,12 @@ public class SysSubjectCodeController {
 	/**
 	 * 显示修改页面
 	 * 
-	 * @param mapping
-	 * @param form
 	 * @param request
-	 * @param response
-	 * @return @
+	 * @param modelMap
+	 * @return
 	 */
-	public ModelAndView prepareModify(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView prepareModify(HttpServletRequest request,
+			ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		long id = ParamUtil.getLongParameter(request, "id", 0);
 		SubjectCode bean = subjectCodeService.findById(id);
@@ -160,14 +148,12 @@ public class SysSubjectCodeController {
 	/**
 	 * 保存费用科目
 	 * 
-	 * @param mapping
-	 * @param form
 	 * @param request
-	 * @param response
-	 * @return @
+	 * @param modelMap
+	 * @return
 	 */
-	public ModelAndView saveAdd(ModelMap modelMap, SubjectCodeFormBean form,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView saveAdd(SubjectCodeFormBean form,
+			HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		SubjectCode bean = new SubjectCode();
 		try {
@@ -192,14 +178,12 @@ public class SysSubjectCodeController {
 	/**
 	 * 保存费用科目
 	 * 
-	 * @param mapping
-	 * @param form
 	 * @param request
-	 * @param response
-	 * @return @
+	 * @param modelMap
+	 * @return
 	 */
-	public ModelAndView saveModify(ModelMap modelMap, SubjectCodeFormBean form,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView saveModify(SubjectCodeFormBean form,
+			HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		long id = ParamUtil.getLongParameter(request, "id", 0);
 		SubjectCode bean = subjectCodeService.findById(id);
@@ -229,14 +213,11 @@ public class SysSubjectCodeController {
 	/**
 	 * 显示列表页面
 	 * 
-	 * @param mapping
-	 * @param actionForm
 	 * @param request
-	 * @param response
-	 * @return @
+	 * @param modelMap
+	 * @return
 	 */
-	public ModelAndView showList(ModelMap modelMap, HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView showList(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		Map<String, String> filter = WebUtil.getQueryMap(request);
 		request.setAttribute("pager", subjectCodeService.getFeePage(filter));
@@ -252,14 +233,12 @@ public class SysSubjectCodeController {
 	/**
 	 * 显示菜单选择页面
 	 * 
-	 * @param mapping
-	 * @param actionForm
 	 * @param request
-	 * @param response
-	 * @return @
+	 * @param modelMap
+	 * @return 
 	 */
-	public ModelAndView showSubjectTreeList(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView showSubjectTreeList(HttpServletRequest request,
+			ModelMap modelMap) {
 		logger.info("showExesSelect");
 		RequestUtils.setRequestParameterToAttribute(request);
 		int parent = ParamUtil.getIntParameter(request, "parent", 0);

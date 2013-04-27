@@ -23,7 +23,6 @@ import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
@@ -46,7 +45,7 @@ import com.glaf.core.util.RequestUtils;
 public class WorkCalendarController {
 	private static final Log logger = LogFactory
 			.getLog(WorkCalendarController.class);
- 
+
 	private WorkCalendarService workCalendarService;
 
 	/**
@@ -98,15 +97,13 @@ public class WorkCalendarController {
 	/**
 	 * 显示工作日历列表
 	 * 
-	 * @param mapping
-	 * @param actionForm
 	 * @param request
-	 * @param response
-	 * @return @
+	 * @param modelMap
+	 * @return
 	 */
 	@RequestMapping(params = "method=showCalendar")
-	public ModelAndView showCalendar(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView showCalendar(HttpServletRequest request,
+			ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		Calendar cal = Calendar.getInstance();
 		int month = ParamUtil.getIntParameter(request, "month",
@@ -150,7 +147,7 @@ public class WorkCalendarController {
 		request.setAttribute("month", String.valueOf(month));
 		request.setAttribute("weeks", String.valueOf(weeks));
 		request.setAttribute("days", days);
-		
+
 		String x_view = ViewProperties.getString("calendar.showCalendar");
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);
@@ -162,26 +159,23 @@ public class WorkCalendarController {
 	/**
 	 * 显示工作日历列表
 	 * 
-	 * @param mapping
-	 * @param actionForm
 	 * @param request
-	 * @param response
-	 * @return @
+	 * @param modelMap
+	 * @return
 	 */
 	@RequestMapping(params = "method=showList")
-	public ModelAndView showList(ModelMap modelMap, HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView showList(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		Calendar cal = Calendar.getInstance();
 		int year = ParamUtil.getIntParameter(request, "year",
 				cal.get(Calendar.YEAR));
 		request.setAttribute("year", String.valueOf(year));
-		
+
 		String x_view = ViewProperties.getString("calendar.showList");
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);
 		}
-		
+
 		return new ModelAndView("/modules/sys/calendar/work_calendar", modelMap);
 	}
 }
