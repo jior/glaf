@@ -175,16 +175,8 @@ public class JbpmProcessImageTag extends TagSupport {
 				}
 
 				jspOut.println(" " + borderWidth + "px groove; " + "width: "
-						+ boxConstraint[2] + "px; height: " + boxConstraint[3]
-						+ "px;'>");
-
-				/**
-				 * if (token.getName() != null) { jspOut
-				 * .println("<span style='color:" + tokenNameColor +
-				 * ";font-size:12px;font-weight:bold;font-style:italic;position:absolute;left:"
-				 * + (boxConstraint[2] + 10) + "px;top:" + ((i - offset) * 20) +
-				 * ";'>&nbsp;" + token.getName() + "</span>"); }
-				 */
+						+ (boxConstraint[2] - 2) + "px; height: "
+						+ (boxConstraint[3] - 2) + "px;'>");
 
 				jspOut.println("</div>");
 			}
