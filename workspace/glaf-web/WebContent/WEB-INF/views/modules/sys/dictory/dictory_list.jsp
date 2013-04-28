@@ -120,8 +120,8 @@ if(list!=null){
 	</td>
     <td class="td-no"><%=(pager.getCurrentPageNo()-1)*10 + i+1%>&nbsp;</td>
     <td class="td-text"><%=bean.getName()%>&nbsp;</td>
-    <td class="td-no"><%=bean.getCode()%>&nbsp;</td>
-	<td class="td-no"><%=bean.getValue() != null ? bean.getValue():""%>&nbsp;</td>
+    <td class="td-no"><%=bean.getCode() != null  ? bean.getCode()  : ""%>&nbsp;</td>
+	<td class="td-no"><%=bean.getValue() != null ? bean.getValue() : ""%>&nbsp;</td>
     <td class="td-no"><%=bean.getBlocked()==0?"是":"否"%></td>
     <td class="td-no">
 	<a href="javascript:sort(<%=bean.getId()%>, 0);" title="上移"><img src="<%=context%>/images/up.gif" border="0" height="13" width="13"></a> <a href="javascript:sort(<%=bean.getId()%>, 1);" title="下移"><img src="<%=context%>/images/down.gif" border="0" height="13" width="13"></a>

@@ -58,6 +58,14 @@
 		</td>
       </tr>
 	  <tr>
+        <td class="input-box2" valign="top">属性值</td>
+        <td>
+		<input type="text" name="value" class="input" datatype="string" nullable="yes" maxsize="20" 
+		       value="<%=bean.getValue() != null ? bean.getValue() : ""%>" 
+		       chname="属性值">
+		</td>
+      </tr>
+	  <tr>
         <td class="input-box2" valign="top">描述</td>
         <td>
 		<input type="text" name="desc" class="input" datatype="string" nullable="yes" maxsize="20" 
