@@ -47,11 +47,11 @@ public class DictoryServiceImpl implements DictoryService {
 
 	protected DictoryMapper dictoryMapper;
 
-	protected SysTreeMapper sysTreeMapper;
-
 	protected IdGenerator idGenerator;
 
 	protected SqlSessionTemplate sqlSessionTemplate;
+
+	protected SysTreeMapper sysTreeMapper;
 
 	public DictoryServiceImpl() {
 
@@ -129,7 +129,7 @@ public class DictoryServiceImpl implements DictoryService {
 		query.setOrderBy(" E.SORT desc");
 		return this.list(query);
 	}
-
+	
 	public String getCodeById(long id) {
 		Dictory dic = find(id);
 		return dic.getCode();
@@ -197,6 +197,22 @@ public class DictoryServiceImpl implements DictoryService {
 		pager.setTotalRecordCount(count);
 
 		return pager;
+	}
+
+	/**
+	 * 返回某分类下的所有字典列表
+	 * 
+	 * @param nodeCode
+	 * @return
+	 */
+	public List<Dictory> getDictoryList(String nodeCode){
+		SysTreeQuery query = new SysTreeQuery();
+		query.code(nodeCode);
+		List<SysTree> trees = sysTreeMapper.getSysTrees(query);
+		if(trees != null && !trees.isEmpty()){
+		   return getAvailableDictoryList(trees.get(0).getId());	
+		}
+		return null;
 	}
 
 	public Map<String, String> getDictoryMap(List<Dictory> list, long purchaseId) {

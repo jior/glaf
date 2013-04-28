@@ -81,6 +81,9 @@ public class SysDepartmentJsonFactory {
 		if (jsonObject.containsKey("nodeId")) {
 			model.setNodeId(jsonObject.getLong("nodeId"));
 		}
+		if (jsonObject.containsKey("level")) {
+			model.setLevel(jsonObject.getInteger("level"));
+		}
 
 		return model;
 	}
@@ -144,6 +147,7 @@ public class SysDepartmentJsonFactory {
 			jsonObject.put("fincode", model.getFincode());
 		}
 		jsonObject.put("nodeId", model.getNodeId());
+		jsonObject.put("level", model.getLevel());
 		return jsonObject;
 	}
 
@@ -195,6 +199,7 @@ public class SysDepartmentJsonFactory {
 			jsonObject.put("fincode", model.getFincode());
 		}
 		jsonObject.put("nodeId", model.getNodeId());
+		jsonObject.put("level", model.getLevel());
 		return jsonObject;
 	}
 

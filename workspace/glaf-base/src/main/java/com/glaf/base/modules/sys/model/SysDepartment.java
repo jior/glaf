@@ -81,6 +81,12 @@ public class SysDepartment implements Serializable, JSONable {
 	protected long id;
 
 	/**
+	 * 部门级别
+	 */
+	@Column(name = "DEPTLEVEL")
+	protected Integer level;
+
+	/**
 	 * 名称
 	 */
 	@Column(name = "NAME")
@@ -176,6 +182,10 @@ public class SysDepartment implements Serializable, JSONable {
 		return id;
 	}
 
+	public Integer getLevel() {
+		return level;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -253,6 +263,10 @@ public class SysDepartment implements Serializable, JSONable {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	public void setLevel(Integer level) {
+		this.level = level;
 	}
 
 	public void setName(String name) {

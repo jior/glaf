@@ -190,6 +190,7 @@ public class SysDepartmentResource {
 		bean.setDesc(ParamUtil.getParameter(request, "desc"));
 		bean.setCode(ParamUtil.getParameter(request, "code"));
 		bean.setCode2(ParamUtil.getParameter(request, "code2"));
+		bean.setLevel(RequestUtils.getInt(request, "level"));
 		bean.setNo(ParamUtil.getParameter(request, "no"));
 		bean.setCreateTime(new Date());
 
@@ -237,6 +238,7 @@ public class SysDepartmentResource {
 			bean.setDesc(ParamUtil.getParameter(request, "desc"));
 			bean.setCode(ParamUtil.getParameter(request, "code"));
 			bean.setCode2(ParamUtil.getParameter(request, "code2"));
+			bean.setLevel(RequestUtils.getInt(request, "level"));
 			bean.setNo(ParamUtil.getParameter(request, "no"));
 			bean.setStatus(ParamUtil.getIntParameter(request, "status", 0));
 			SysTree node = bean.getNode();

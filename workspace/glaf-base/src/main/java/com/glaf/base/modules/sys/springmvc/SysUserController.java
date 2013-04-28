@@ -55,12 +55,15 @@ import com.glaf.core.util.RequestUtils;
 import com.glaf.core.util.Tools;
 
 import com.glaf.base.modules.Constants;
+import com.glaf.base.modules.sys.SysConstants;
+import com.glaf.base.modules.sys.model.Dictory;
 import com.glaf.base.modules.sys.model.SysDepartment;
 import com.glaf.base.modules.sys.model.SysDeptRole;
 import com.glaf.base.modules.sys.model.SysRole;
 import com.glaf.base.modules.sys.model.SysTree;
 import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.sys.query.SysUserQuery;
+import com.glaf.base.modules.sys.service.DictoryService;
 import com.glaf.base.modules.sys.service.SysDepartmentService;
 import com.glaf.base.modules.sys.service.SysDeptRoleService;
 import com.glaf.base.modules.sys.service.SysRoleService;
@@ -74,6 +77,8 @@ import com.glaf.base.utils.RequestUtil;
 public class SysUserController {
 	private static final Log logger = LogFactory
 			.getLog(SysUserController.class);
+
+	protected DictoryService dictoryService;
 
 	protected SysDepartmentService sysDepartmentService;
 
@@ -342,6 +347,11 @@ public class SysUserController {
 	 */
 	@RequestMapping(params = "method=prepareAdd")
 	public ModelAndView prepareAdd(HttpServletRequest request, ModelMap modelMap) {
+
+		List<Dictory> dictories = dictoryService
+				.getDictoryList(SysConstants.USER_HEADSHIP);
+		modelMap.put("dictories", dictories);
+
 		String x_view = ViewProperties.getString("user.prepareAdd");
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);
@@ -364,6 +374,10 @@ public class SysUserController {
 		long id = ParamUtil.getLongParameter(request, "id", 0);
 		SysUser bean = sysUserService.findById(id);
 		request.setAttribute("bean", bean);
+
+		List<Dictory> dictories = dictoryService
+				.getDictoryList(SysConstants.USER_HEADSHIP);
+		modelMap.put("dictories", dictories);
 
 		SysTree parent = sysTreeService.getSysTreeByCode(Constants.TREE_DEPT);
 		List<SysTree> list = new ArrayList<SysTree>();
@@ -394,6 +408,10 @@ public class SysUserController {
 		SysUser user = RequestUtil.getLoginUser(request);
 		SysUser bean = sysUserService.findByAccount(user.getAccount());
 		request.setAttribute("bean", bean);
+
+		List<Dictory> dictories = dictoryService
+				.getDictoryList(SysConstants.USER_HEADSHIP);
+		modelMap.put("dictories", dictories);
 
 		String x_view = ViewProperties.getString("user.prepareModifyInfo");
 		if (StringUtils.isNotEmpty(x_view)) {
@@ -522,7 +540,6 @@ public class SysUserController {
 		bean.setCode(ParamUtil.getParameter(request, "code"));
 		bean.setAccount(bean.getCode());
 		bean.setName(ParamUtil.getParameter(request, "name"));
-		// bean.setPassword(ParamUtil.getParameter(request, "password"));
 		String password = ParamUtil.getParameter(request, "password");
 		try {
 			String pwd = DigestUtil.digestString(password, "MD5");
@@ -541,8 +558,8 @@ public class SysUserController {
 		bean.setEvection(0);
 		bean.setCreateTime(new Date());
 		bean.setLastLoginTime(new Date());
-		bean.setCreateBy(bean.getAccount());
-		bean.setUpdateBy(bean.getAccount());
+		bean.setCreateBy(RequestUtils.getActorId(request));
+		bean.setUpdateBy(RequestUtils.getActorId(request));
 
 		int ret = 0;
 		if (sysUserService.findByAccount(bean.getAccount()) == null) {
@@ -668,7 +685,7 @@ public class SysUserController {
 				String encPwd = DigestUtil.digestString(oldPwd, "MD5");
 				if (StringUtils.equals(encPwd, user.getPassword())) {
 					user.setPassword(DigestUtil.digestString(newPwd, "MD5"));
-					user.setUpdateBy(bean.getAccount());
+					user.setUpdateBy(RequestUtils.getActorId(request));
 					ret = sysUserService.update(user);
 				}
 			} catch (Exception ex) {
@@ -750,6 +767,11 @@ public class SysUserController {
 		}
 
 		return new ModelAndView("/modules/sys/user/userByDept_list", modelMap);
+	}
+
+	@javax.annotation.Resource
+	public void setDictoryService(DictoryService dictoryService) {
+		this.dictoryService = dictoryService;
 	}
 
 	/**

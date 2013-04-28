@@ -12,6 +12,7 @@
 		<result property="no" column="DEPTNO" jdbcType="VARCHAR" />
 		<result property="code" column="CODE" jdbcType="VARCHAR" />
 		<result property="code2" column="CODE2" jdbcType="VARCHAR" />
+		<result property="level" column="DEPTLEVEL" jdbcType="INTEGER" />
 		<result property="status" column="STATUS" jdbcType="INTEGER" />
 		<result property="fincode" column="FINCODE" jdbcType="VARCHAR" />
 		<result property="nodeId" column="NODEID" jdbcType="BIGINT" />
@@ -43,6 +44,9 @@
 			</if>
 			<if test="code2 != null">
 				,CODE2
+			</if>
+			<if test="level != null">
+				,DEPTLEVEL
 			</if>
 			<if test="status != null">
 				,STATUS
@@ -87,6 +91,9 @@
 			</if>
 			<if test="code2 != null">
 				,#{code2, jdbcType=VARCHAR}
+			</if>
+			<if test="level != null">
+				,#{level, jdbcType=INTEGER}
 			</if>
 			<if test="status != null">
 				,#{status, jdbcType=INTEGER}
@@ -138,6 +145,9 @@
 			<if test="code2 != null">
 				CODE2 = #{code2, jdbcType=VARCHAR},
 			</if>
+			<if test="level != null">
+				DEPTLEVEL = #{level, jdbcType=INTEGER},
+			</if>
 			<if test="status != null">
 				STATUS = #{status, jdbcType=INTEGER},
 			</if>
@@ -161,7 +171,8 @@
 
 
 	<delete id="deleteSysDepartmentById" parameterType="long">
-		delete from sys_department
+		delete from
+		sys_department
 		where ID = #{id}
 	</delete>
 
@@ -320,6 +331,18 @@
 					open="(" separator="," close=")">
 					#{x_nodeId}
 				</foreach>
+			</if>
+
+			<if test="level != null">
+				and E.DEPTLEVEL = #{level}
+			</if>
+
+			<if test="levelGreaterThanOrEqual != null">
+				and E.DEPTLEVEL &gt;= #{levelGreaterThanOrEqual}
+			</if>
+
+			<if test="levelLessThanOrEqual != null">
+				and E.DEPTLEVEL &lt;= #{levelLessThanOrEqual}
 			</if>
 
 		</where>

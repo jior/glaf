@@ -404,8 +404,8 @@ public class SysUserResource {
 		bean.setEvection(0);
 		bean.setCreateTime(new Date());
 		bean.setLastLoginTime(new Date());
-		bean.setCreateBy(bean.getAccount());
-		bean.setUpdateBy(bean.getAccount());
+		bean.setCreateBy(RequestUtils.getActorId(request));
+		bean.setUpdateBy(RequestUtils.getActorId(request));
 
 		int ret = 0;
 		if (sysUserService.findByAccount(bean.getAccount()) == null) {
@@ -462,7 +462,7 @@ public class SysUserResource {
 			bean.setBlocked(ParamUtil.getIntParameter(request, "blocked", 0));
 			bean.setHeadship(ParamUtil.getParameter(request, "headship"));
 			bean.setUserType(ParamUtil.getIntParameter(request, "userType", 0));
-			bean.setUpdateBy(bean.getAccount());
+			bean.setUpdateBy(RequestUtils.getActorId(request));
 			ret = sysUserService.update(bean);
 		}
 
@@ -498,7 +498,7 @@ public class SysUserResource {
 			user.setMobile(ParamUtil.getParameter(request, "mobile"));
 			user.setEmail(ParamUtil.getParameter(request, "email"));
 			user.setTelephone(ParamUtil.getParameter(request, "telephone"));
-			user.setUpdateBy(bean.getAccount());
+			user.setUpdateBy(RequestUtils.getActorId(request));
 			ret = sysUserService.update(user);
 			CacheUtils.clearUserCache(user.getAccount());
 		}
@@ -539,7 +539,7 @@ public class SysUserResource {
 				String encPwd = DigestUtil.digestString(oldPwd, "MD5");
 				if (StringUtils.equals(encPwd, user.getPassword())) {
 					user.setPassword(DigestUtil.digestString(newPwd, "MD5"));
-					user.setUpdateBy(bean.getAccount());
+					user.setUpdateBy(RequestUtils.getActorId(request));
 					ret = sysUserService.update(user);
 				}
 			} catch (Exception ex) {

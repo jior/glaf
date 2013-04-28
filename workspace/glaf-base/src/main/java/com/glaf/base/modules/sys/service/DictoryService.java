@@ -92,6 +92,14 @@ public interface DictoryService {
 	 * @return
 	 */
 	List<Dictory> getAvailableDictoryList(long parent);
+	
+	/**
+	 * 返回某分类下的所有字典列表
+	 * 
+	 * @param nodeCode
+	 * @return
+	 */
+	List<Dictory> getDictoryList(String nodeCode);
 
 	/**
 	 * 根据ID拿code

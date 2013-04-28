@@ -40,9 +40,11 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.glaf.base.modules.Constants;
 import com.glaf.base.modules.sys.SysConstants;
+import com.glaf.base.modules.sys.model.Dictory;
 import com.glaf.base.modules.sys.model.SysDepartment;
 import com.glaf.base.modules.sys.model.SysTree;
 import com.glaf.base.modules.sys.query.SysDepartmentQuery;
+import com.glaf.base.modules.sys.service.DictoryService;
 import com.glaf.base.modules.sys.service.SysDepartmentService;
 import com.glaf.base.modules.sys.service.SysTreeService;
 import com.glaf.base.utils.ParamUtil;
@@ -61,6 +63,8 @@ import com.glaf.core.util.Tools;
 public class SysDepartmentController {
 	private static final Log logger = LogFactory
 			.getLog(SysDepartmentController.class);
+
+	private DictoryService dictoryService;
 
 	private SysDepartmentService sysDepartmentService;
 
@@ -256,7 +260,10 @@ public class SysDepartmentController {
 	@RequestMapping(params = "method=prepareAdd")
 	public ModelAndView prepareAdd(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
-
+		
+		List<Dictory> dictories = dictoryService.getDictoryList(SysConstants.DEPT_LEVEL);
+		modelMap.put("dictories", dictories);
+		
 		String x_view = ViewProperties.getString("department.prepareAdd");
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);
@@ -288,6 +295,9 @@ public class SysDepartmentController {
 		list.add(parent);
 		sysTreeService.getSysTree(list, (int) parent.getId(), 1);
 		request.setAttribute("parent", list);
+		
+		List<Dictory> dictories = dictoryService.getDictoryList(SysConstants.DEPT_LEVEL);
+		modelMap.put("dictories", dictories);
 
 		String x_view = ViewProperties.getString("department.prepareModify");
 		if (StringUtils.isNotEmpty(x_view)) {
@@ -315,6 +325,7 @@ public class SysDepartmentController {
 		bean.setCode(ParamUtil.getParameter(request, "code"));
 		bean.setCode2(ParamUtil.getParameter(request, "code2"));
 		bean.setNo(ParamUtil.getParameter(request, "no"));
+		bean.setLevel(RequestUtils.getInt(request, "level"));
 		bean.setCreateTime(new Date());
 
 		SysTree node = new SysTree();
@@ -362,6 +373,7 @@ public class SysDepartmentController {
 			bean.setCode2(ParamUtil.getParameter(request, "code2"));
 			bean.setNo(ParamUtil.getParameter(request, "no"));
 			bean.setStatus(ParamUtil.getIntParameter(request, "status", 0));
+			bean.setLevel(RequestUtils.getInt(request, "level"));
 			SysTree node = bean.getNode();
 			node.setUpdateBy(RequestUtils.getActorId(request));
 			node.setName(bean.getName());
@@ -387,6 +399,11 @@ public class SysDepartmentController {
 
 		// 显示列表页面
 		return new ModelAndView("show_msg", modelMap);
+	}
+
+	@javax.annotation.Resource
+	public void setDictoryService(DictoryService dictoryService) {
+		this.dictoryService = dictoryService;
 	}
 
 	@javax.annotation.Resource
