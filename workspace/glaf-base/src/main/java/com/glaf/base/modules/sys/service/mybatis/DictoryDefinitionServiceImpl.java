@@ -96,7 +96,7 @@ public class DictoryDefinitionServiceImpl implements DictoryDefinitionService {
 
 	@Transactional
 	public void save(DictoryDefinition dictoryDefinition) {
-		if (dictoryDefinition.getId() == 0L) {
+		if (dictoryDefinition.getId() == 0) {
 			dictoryDefinition.setId(idGenerator.nextId());
 			// dictoryDefinition.setCreateDate(new Date());
 			dictoryDefinitionMapper.insertDictoryDefinition(dictoryDefinition);

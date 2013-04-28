@@ -67,7 +67,7 @@ public class SysDepartmentServiceImpl implements SysDepartmentService {
 
 	@Transactional
 	public boolean create(SysDepartment bean) {
-		if (bean.getId() == 0L) {
+		if (bean.getId() == 0) {
 			bean.setId(idGenerator.nextId());
 		}
 		bean.setSort((int) bean.getId());

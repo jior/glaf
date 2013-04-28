@@ -71,7 +71,7 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 	@Transactional
 	public boolean create(SysApplication bean) {
 		boolean ret = false;
-		if (bean.getId() == 0L) {
+		if (bean.getId() == 0) {
 			bean.setId(idGenerator.nextId());
 		}
 		if (bean.getNode() != null) {

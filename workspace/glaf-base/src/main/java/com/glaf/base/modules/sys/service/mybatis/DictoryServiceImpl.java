@@ -220,7 +220,7 @@ public class DictoryServiceImpl implements DictoryService {
 
 	@Transactional
 	public void save(Dictory dictory) {
-		if (dictory.getId() == 0L) {
+		if (dictory.getId() == 0) {
 			dictory.setId(idGenerator.nextId());
 			dictory.setCreateDate(new Date());
 			dictoryMapper.insertDictory(dictory);

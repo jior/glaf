@@ -177,7 +177,7 @@ public class Dictory implements Serializable, JSONable {
 
 	@Id
 	@Column(name = "ID", length = 50, nullable = false)
-	protected Long id;
+	protected long id;
 
 	/**
 	 * Ãû³Æ
@@ -229,10 +229,7 @@ public class Dictory implements Serializable, JSONable {
 		if (getClass() != obj.getClass())
 			return false;
 		Dictory other = (Dictory) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
+		if (id != other.id)
 			return false;
 		return true;
 	}
@@ -337,7 +334,7 @@ public class Dictory implements Serializable, JSONable {
 		return this.ext9;
 	}
 
-	public Long getId() {
+	public long getId() {
 		return this.id;
 	}
 
@@ -369,7 +366,7 @@ public class Dictory implements Serializable, JSONable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + (int) (id ^ (id >>> 32));
 		return result;
 	}
 
@@ -477,7 +474,7 @@ public class Dictory implements Serializable, JSONable {
 		this.ext9 = ext9;
 	}
 
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 

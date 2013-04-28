@@ -217,9 +217,8 @@ public class SubjectCodeServiceImpl implements SubjectCodeService {
 
 	@Transactional
 	public void save(SubjectCode subjectCode) {
-		if (subjectCode.getId() == 0L) {
+		if (subjectCode.getId() == 0) {
 			subjectCode.setId(idGenerator.nextId());
-			// subjectCode.setCreateDate(new Date());
 			subjectCodeMapper.insertSubjectCode(subjectCode);
 		} else {
 			subjectCodeMapper.updateSubjectCode(subjectCode);

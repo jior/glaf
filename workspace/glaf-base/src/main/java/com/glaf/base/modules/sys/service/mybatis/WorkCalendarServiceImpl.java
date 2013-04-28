@@ -74,7 +74,7 @@ public class WorkCalendarServiceImpl implements WorkCalendarService {
 
 	@Transactional
 	public boolean create(WorkCalendar bean) {
-		if (bean.getId() == 0L) {
+		if (bean.getId() == 0) {
 			bean.setId(idGenerator.nextId());
 		}
 		this.workCalendarMapper.insertWorkCalendar(bean);
@@ -264,7 +264,7 @@ public class WorkCalendarServiceImpl implements WorkCalendarService {
 
 	@Transactional
 	public void save(WorkCalendar workCalendar) {
-		if (workCalendar.getId() == 0L) {
+		if (workCalendar.getId() == 0) {
 			workCalendar.setId(idGenerator.nextId());
 			// workCalendar.setCreateDate(new Date());
 			workCalendarMapper.insertWorkCalendar(workCalendar);

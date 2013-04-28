@@ -134,7 +134,7 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 
 	@Transactional
 	public boolean create(SysUserRole bean) {
-		if (bean.getId() == 0L) {
+		if (bean.getId() == 0) {
 			bean.setId(idGenerator.nextId());
 		}
 		bean.setCreateDate(new Date());

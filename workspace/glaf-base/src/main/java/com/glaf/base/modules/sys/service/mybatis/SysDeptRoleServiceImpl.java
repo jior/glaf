@@ -283,7 +283,7 @@ public class SysDeptRoleServiceImpl implements SysDeptRoleService {
 
 	@Transactional
 	public void save(SysDeptRole sysDeptRole) {
-		if (sysDeptRole.getId() == 0L) {
+		if (sysDeptRole.getId() == 0) {
 			sysDeptRole.setId(idGenerator.nextId());
 			sysDeptRole.setCreateDate(new Date());
 			sysDeptRoleMapper.insertSysDeptRole(sysDeptRole);

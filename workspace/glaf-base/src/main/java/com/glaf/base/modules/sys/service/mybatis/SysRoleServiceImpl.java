@@ -63,7 +63,7 @@ public class SysRoleServiceImpl implements SysRoleService {
 
 	@Transactional
 	public boolean create(SysRole bean) {
-		if (bean.getId() == 0L) {
+		if (bean.getId() == 0) {
 			bean.setId(idGenerator.nextId());
 		}
 		bean.setCreateDate(new Date());
@@ -204,7 +204,7 @@ public class SysRoleServiceImpl implements SysRoleService {
 
 	@Transactional
 	public void save(SysRole sysRole) {
-		if (sysRole.getId() == 0L) {
+		if (sysRole.getId() == 0) {
 			sysRole.setId(idGenerator.nextId());
 			sysRole.setCreateDate(new Date());
 			sysRoleMapper.insertSysRole(sysRole);

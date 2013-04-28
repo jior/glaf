@@ -469,7 +469,7 @@ public class SysUserServiceImpl implements SysUserService {
 
 	@Transactional
 	public void save(SysUser sysUser) {
-		if (sysUser.getId() == 0L) {
+		if (sysUser.getId() == 0) {
 			sysUser.setId(idGenerator.nextId());
 			sysUser.setCreateTime(new Date());
 			sysUserMapper.insertSysUser(sysUser);

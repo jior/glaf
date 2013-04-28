@@ -321,7 +321,7 @@ public class SysTreeServiceImpl implements SysTreeService {
 			}
 		}
 
-		if (bean.getId() == 0L) {
+		if (bean.getId() == 0) {
 			bean.setId(idGenerator.nextId());
 			bean.setCreateDate(new Date());
 			sysTreeMapper.insertSysTree(bean);

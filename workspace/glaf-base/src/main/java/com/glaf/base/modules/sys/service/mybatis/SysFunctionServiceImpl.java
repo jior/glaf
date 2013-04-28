@@ -152,7 +152,7 @@ public class SysFunctionServiceImpl implements SysFunctionService {
 
 	@Transactional
 	public void save(SysFunction sysFunction) {
-		if (sysFunction.getId() == 0L) {
+		if (sysFunction.getId() == 0) {
 			sysFunction.setId(idGenerator.nextId());
 			// sysFunction.setCreateDate(new Date());
 			sysFunctionMapper.insertSysFunction(sysFunction);
