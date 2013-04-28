@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="html"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.glaf.base.modules.sys.*"%>
@@ -116,6 +117,20 @@ function setValue(obj){
           <input name="telephone" type="text" size="30" class="input" datatype="string" 
 		         value="<%=bean.getTelephone() != null ? bean.getTelephone() : ""%>" 
 				 nullable="yes" maxsize="20" chname="办公电话">        
+		</td>
+      </tr>
+	  <tr>
+        <td class="input-box2" valign="top">职位</td>
+        <td>
+		    <select id="headship" name="headship">
+			  <option value="0">----请选择----</option>
+			  <c:forEach items="${dictories}" var="a">
+				<option value="${a.code}">${a.name} [${a.code}]</option>
+			  </c:forEach>
+		   </select>
+		   <script type="text/javascript">
+		        document.getElementById("headship").value="${bean.headship}";
+		   </script>
 		</td>
       </tr>
 	  <tr>

@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="html"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.glaf.base.modules.sys.*"%>
@@ -54,6 +54,18 @@ int parent=ParamUtil.getIntParameter(request, "parent", 0);
         <td class="input-box2" valign="top">部门区分*</td>
         <td><input name="code2" type="text" size="37" class="input"  datatype="string" nullable="no" maxsize="10" chname="部门区分"></td>
       </tr>
+	  <tr>
+        <td class="input-box2" valign="top">部门层级</td>
+        <td>
+		    <select id="level" name="level">
+			  <option value="0">----请选择----</option>
+			  <c:forEach items="${dictories}" var="a">
+				<option value="${a.ext11}">${a.name} [${a.ext11}]</option>
+			  </c:forEach>
+		   </select>
+		</td>
+      </tr>
+	  
       <tr>
         <td colspan="2" align="center" valign="bottom" height="30">&nbsp;
               <input name="btn_save" type="submit" value="保存" class="button"></td>

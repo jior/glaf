@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="html"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.glaf.base.modules.sys.*"%>
@@ -100,6 +101,20 @@ function setValue(obj){
       <tr>
         <td class="input-box2" valign="top">部门区分*</td>
         <td><input name="code2" type="text" size="37" class="input" value="<%=bean.getCode2()%>" datatype="string" nullable="no" maxsize="10" chname="部门区分"></td>
+      </tr>
+	  <tr>
+        <td class="input-box2" valign="top">部门层级</td>
+        <td>
+		    <select id="level" name="level">
+			  <option value="0">----请选择----</option>
+			  <c:forEach items="${dictories}" var="a">
+				<option value="${a.ext11}">${a.name} [${a.code}]</option>
+			  </c:forEach>
+		   </select>
+		   <script type="text/javascript">
+		        document.getElementById("level").value="${bean.level}";
+		   </script>
+		</td>
       </tr>
       <tr>
         <td class="input-box2" valign="top">是否有效*</td>
