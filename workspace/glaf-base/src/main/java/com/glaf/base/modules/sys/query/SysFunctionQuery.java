@@ -23,26 +23,22 @@ import com.glaf.core.query.DataQuery;
 
 public class SysFunctionQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;
-	protected List<Long> rowIds;
-	protected String name;
-	protected String nameLike;
-	protected List<String> names;
+	protected Long appId;
+	protected List<Long> appIds;
 	protected String funcDesc;
 	protected String funcDescLike;
 	protected List<String> funcDescs;
 	protected String funcMethod;
 	protected String funcMethodLike;
 	protected List<String> funcMethods;
+	protected String name;
+	protected String nameLike;
+	protected List<String> names;
 	protected Integer sort;
-	protected Integer sortGreaterThanOrEqual;
 	protected Integer sortGreaterThan;
-	protected Integer sortLessThanOrEqual;
+	protected Integer sortGreaterThanOrEqual;
 	protected Integer sortLessThan;
-	protected List<Integer> sorts;
-	protected Long appId;
-	protected Long appIdGreaterThanOrEqual;
-	protected Long appIdLessThanOrEqual;
-	protected List<Long> appIds;
+	protected Integer sortLessThanOrEqual;
 
 	public SysFunctionQuery() {
 
@@ -53,22 +49,6 @@ public class SysFunctionQuery extends DataQuery {
 			throw new RuntimeException("appId is null");
 		}
 		this.appId = appId;
-		return this;
-	}
-
-	public SysFunctionQuery appIdGreaterThanOrEqual(Long appIdGreaterThanOrEqual) {
-		if (appIdGreaterThanOrEqual == null) {
-			throw new RuntimeException("appId is null");
-		}
-		this.appIdGreaterThanOrEqual = appIdGreaterThanOrEqual;
-		return this;
-	}
-
-	public SysFunctionQuery appIdLessThanOrEqual(Long appIdLessThanOrEqual) {
-		if (appIdLessThanOrEqual == null) {
-			throw new RuntimeException("appId is null");
-		}
-		this.appIdLessThanOrEqual = appIdLessThanOrEqual;
 		return this;
 	}
 
@@ -130,14 +110,6 @@ public class SysFunctionQuery extends DataQuery {
 
 	public Long getAppId() {
 		return appId;
-	}
-
-	public Long getAppIdGreaterThanOrEqual() {
-		return appIdGreaterThanOrEqual;
-	}
-
-	public Long getAppIdLessThanOrEqual() {
-		return appIdLessThanOrEqual;
 	}
 
 	public List<Long> getAppIds() {
@@ -255,10 +227,6 @@ public class SysFunctionQuery extends DataQuery {
 		return sortLessThanOrEqual;
 	}
 
-	public List<Integer> getSorts() {
-		return sorts;
-	}
-
 	@Override
 	public void initQueryColumns() {
 		super.initQueryColumns();
@@ -296,14 +264,6 @@ public class SysFunctionQuery extends DataQuery {
 
 	public void setAppId(Long appId) {
 		this.appId = appId;
-	}
-
-	public void setAppIdGreaterThanOrEqual(Long appIdGreaterThanOrEqual) {
-		this.appIdGreaterThanOrEqual = appIdGreaterThanOrEqual;
-	}
-
-	public void setAppIdLessThanOrEqual(Long appIdLessThanOrEqual) {
-		this.appIdLessThanOrEqual = appIdLessThanOrEqual;
 	}
 
 	public void setAppIds(List<Long> appIds) {
@@ -366,10 +326,6 @@ public class SysFunctionQuery extends DataQuery {
 		this.sortLessThanOrEqual = sortLessThanOrEqual;
 	}
 
-	public void setSorts(List<Integer> sorts) {
-		this.sorts = sorts;
-	}
-
 	public SysFunctionQuery sort(Integer sort) {
 		if (sort == null) {
 			throw new RuntimeException("sort is null");
@@ -392,14 +348,6 @@ public class SysFunctionQuery extends DataQuery {
 			throw new RuntimeException("sort is null");
 		}
 		this.sortLessThanOrEqual = sortLessThanOrEqual;
-		return this;
-	}
-
-	public SysFunctionQuery sorts(List<Integer> sorts) {
-		if (sorts == null) {
-			throw new RuntimeException("sorts is empty ");
-		}
-		this.sorts = sorts;
 		return this;
 	}
 

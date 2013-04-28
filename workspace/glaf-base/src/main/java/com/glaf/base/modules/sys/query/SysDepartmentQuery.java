@@ -29,13 +29,9 @@ public class SysDepartmentQuery extends DataQuery {
 	protected List<String> codes;
 	protected Date createTimeGreaterThanOrEqual;
 	protected Date createTimeLessThanOrEqual;
-	protected List<Date> createTimes;
-	protected String desc;
 	protected String descLike;
-	protected List<String> descs;
 	protected String fincode;
 	protected String fincodeLike;
-	protected List<String> fincodes;
 	protected Integer level;
 	protected Integer levelGreaterThanOrEqual;
 	protected Integer levelLessThanOrEqual;
@@ -48,13 +44,11 @@ public class SysDepartmentQuery extends DataQuery {
 	protected Long nodeIdLessThanOrEqual;
 	protected List<Long> nodeIds;
 	protected String noLike;
-	protected List<String> nos;
 	protected Integer sort;
 	protected Integer sortGreaterThan;
 	protected Integer sortGreaterThanOrEqual;
 	protected Integer sortLessThan;
 	protected Integer sortLessThanOrEqual;
-	protected List<Integer> sorts;
 
 	public SysDepartmentQuery() {
 
@@ -110,35 +104,11 @@ public class SysDepartmentQuery extends DataQuery {
 		return this;
 	}
 
-	public SysDepartmentQuery createTimes(List<Date> createTimes) {
-		if (createTimes == null) {
-			throw new RuntimeException("createTimes is empty ");
-		}
-		this.createTimes = createTimes;
-		return this;
-	}
-
-	public SysDepartmentQuery desc(String desc) {
-		if (desc == null) {
-			throw new RuntimeException("desc is null");
-		}
-		this.desc = desc;
-		return this;
-	}
-
 	public SysDepartmentQuery descLike(String descLike) {
 		if (descLike == null) {
 			throw new RuntimeException("desc is null");
 		}
 		this.descLike = descLike;
-		return this;
-	}
-
-	public SysDepartmentQuery descs(List<String> descs) {
-		if (descs == null) {
-			throw new RuntimeException("descs is empty ");
-		}
-		this.descs = descs;
 		return this;
 	}
 
@@ -155,14 +125,6 @@ public class SysDepartmentQuery extends DataQuery {
 			throw new RuntimeException("fincode is null");
 		}
 		this.fincodeLike = fincodeLike;
-		return this;
-	}
-
-	public SysDepartmentQuery fincodes(List<String> fincodes) {
-		if (fincodes == null) {
-			throw new RuntimeException("fincodes is empty ");
-		}
-		this.fincodes = fincodes;
 		return this;
 	}
 
@@ -198,14 +160,6 @@ public class SysDepartmentQuery extends DataQuery {
 		return createTimeLessThanOrEqual;
 	}
 
-	public List<Date> getCreateTimes() {
-		return createTimes;
-	}
-
-	public String getDesc() {
-		return desc;
-	}
-
 	public String getDescLike() {
 		if (descLike != null && descLike.trim().length() > 0) {
 			if (!descLike.startsWith("%")) {
@@ -216,10 +170,6 @@ public class SysDepartmentQuery extends DataQuery {
 			}
 		}
 		return descLike;
-	}
-
-	public List<String> getDescs() {
-		return descs;
 	}
 
 	public String getFincode() {
@@ -236,10 +186,6 @@ public class SysDepartmentQuery extends DataQuery {
 			}
 		}
 		return fincodeLike;
-	}
-
-	public List<String> getFincodes() {
-		return fincodes;
 	}
 
 	public Integer getLevel() {
@@ -304,10 +250,6 @@ public class SysDepartmentQuery extends DataQuery {
 			}
 		}
 		return noLike;
-	}
-
-	public List<String> getNos() {
-		return nos;
 	}
 
 	public String getOrderBy() {
@@ -379,10 +321,6 @@ public class SysDepartmentQuery extends DataQuery {
 
 	public Integer getSortLessThanOrEqual() {
 		return sortLessThanOrEqual;
-	}
-
-	public List<Integer> getSorts() {
-		return sorts;
 	}
 
 	@Override
@@ -499,14 +437,6 @@ public class SysDepartmentQuery extends DataQuery {
 		return this;
 	}
 
-	public SysDepartmentQuery nos(List<String> nos) {
-		if (nos == null) {
-			throw new RuntimeException("nos is empty ");
-		}
-		this.nos = nos;
-		return this;
-	}
-
 	public void setCode(String code) {
 		this.code = code;
 	}
@@ -532,20 +462,8 @@ public class SysDepartmentQuery extends DataQuery {
 		this.createTimeLessThanOrEqual = createTimeLessThanOrEqual;
 	}
 
-	public void setCreateTimes(List<Date> createTimes) {
-		this.createTimes = createTimes;
-	}
-
-	public void setDesc(String desc) {
-		this.desc = desc;
-	}
-
 	public void setDescLike(String descLike) {
 		this.descLike = descLike;
-	}
-
-	public void setDescs(List<String> descs) {
-		this.descs = descs;
 	}
 
 	public void setFincode(String fincode) {
@@ -554,10 +472,6 @@ public class SysDepartmentQuery extends DataQuery {
 
 	public void setFincodeLike(String fincodeLike) {
 		this.fincodeLike = fincodeLike;
-	}
-
-	public void setFincodes(List<String> fincodes) {
-		this.fincodes = fincodes;
 	}
 
 	public void setLevel(Integer level) {
@@ -608,10 +522,6 @@ public class SysDepartmentQuery extends DataQuery {
 		this.noLike = noLike;
 	}
 
-	public void setNos(List<String> nos) {
-		this.nos = nos;
-	}
-
 	public void setSort(Integer sort) {
 		this.sort = sort;
 	}
@@ -630,10 +540,6 @@ public class SysDepartmentQuery extends DataQuery {
 
 	public void setSortLessThanOrEqual(Integer sortLessThanOrEqual) {
 		this.sortLessThanOrEqual = sortLessThanOrEqual;
-	}
-
-	public void setSorts(List<Integer> sorts) {
-		this.sorts = sorts;
 	}
 
 	public void setStatus(Integer status) {
@@ -670,14 +576,6 @@ public class SysDepartmentQuery extends DataQuery {
 			throw new RuntimeException("sort is null");
 		}
 		this.sortLessThanOrEqual = sortLessThanOrEqual;
-		return this;
-	}
-
-	public SysDepartmentQuery sorts(List<Integer> sorts) {
-		if (sorts == null) {
-			throw new RuntimeException("sorts is empty ");
-		}
-		this.sorts = sorts;
 		return this;
 	}
 

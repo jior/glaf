@@ -5,7 +5,6 @@ import com.glaf.core.query.DataQuery;
 
 public class SerialNumberQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;
-	protected List<Long> rowIds;
 	protected String moduleNo;
 	protected String moduleNoLike;
 	protected List<String> moduleNos;

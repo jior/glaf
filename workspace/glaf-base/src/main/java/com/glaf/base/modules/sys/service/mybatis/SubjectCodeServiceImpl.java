@@ -119,7 +119,7 @@ public class SubjectCodeServiceImpl implements SubjectCodeService {
 		String parent = (String) filter.get("parent");
 		logger.info("parent:" + parent);
 		if (parent != null) {
-			query.parent(Long.parseLong(parent));
+			query.parentId(Long.parseLong(parent));
 		}
 
 		// ∑—”√±‡∫≈
@@ -167,7 +167,7 @@ public class SubjectCodeServiceImpl implements SubjectCodeService {
 		String parent = (String) filter.get("parent");
 		logger.info("parent:" + parent);
 		if (parent != null) {
-			query.parent(Long.parseLong(parent));
+			query.parentId(Long.parseLong(parent));
 		}
 		query.setOrderBy(" E.subjectCode asc ");
 		List<SubjectCode> list = this.list(query);
@@ -203,7 +203,7 @@ public class SubjectCodeServiceImpl implements SubjectCodeService {
 
 	public List<SubjectCode> getSysSubjectCodeList(long parent) {
 		SubjectCodeQuery query = new SubjectCodeQuery();
-		query.parent(parent);
+		query.parentId(parent);
 		query.setOrderBy(" E.subjectCode asc ");
 		List<SubjectCode> list = this.list(query);
 		return list;

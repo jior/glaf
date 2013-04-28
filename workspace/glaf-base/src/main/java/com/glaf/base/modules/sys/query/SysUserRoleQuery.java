@@ -23,7 +23,6 @@ import com.glaf.core.query.DataQuery;
 
 public class SysUserRoleQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;
-	protected List<Long> rowIds;
 	protected Long userId;
 	protected Long userIdGreaterThanOrEqual;
 	protected Long userIdLessThanOrEqual;
@@ -35,13 +34,10 @@ public class SysUserRoleQuery extends DataQuery {
 	protected Integer authorized;
 	protected Long authorizeFrom;
 	protected List<Long> authorizeFroms;
-
 	protected Date availDateStartGreaterThanOrEqual;
 	protected Date availDateStartLessThanOrEqual;
-
 	protected Date availDateEndGreaterThanOrEqual;
 	protected Date availDateEndLessThanOrEqual;
-
 	protected String processDescriptionLike;
 
 	public SysUserRoleQuery() {

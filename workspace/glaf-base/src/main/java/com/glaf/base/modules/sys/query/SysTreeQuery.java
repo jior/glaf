@@ -34,8 +34,6 @@ public class SysTreeQuery extends DataQuery {
 	protected String name;
 	protected String nameLike;
 	protected List<String> names;
-	protected List<Long> parents;
-	protected List<Long> rowIds;
 	protected Integer sortGreaterThan;
 	protected Integer sortGreaterThanOrEqual;
 	protected Integer sortLessThan;
@@ -198,10 +196,6 @@ public class SysTreeQuery extends DataQuery {
 		return orderBy;
 	}
 
-	public List<Long> getParentIds() {
-		return parents;
-	}
-
 	public Integer getSortGreaterThan() {
 		return sortGreaterThan;
 	}
@@ -304,22 +298,6 @@ public class SysTreeQuery extends DataQuery {
 		return this;
 	}
 
-	public SysTreeQuery parentId(Long parentId) {
-		if (parentId == null) {
-			throw new RuntimeException("parentId is null");
-		}
-		this.parentId = parentId;
-		return this;
-	}
-
-	public SysTreeQuery parents(List<Long> parents) {
-		if (parents == null) {
-			throw new RuntimeException("parents is empty ");
-		}
-		this.parents = parents;
-		return this;
-	}
-
 	public void setCode(String code) {
 		this.code = code;
 	}
@@ -366,10 +344,6 @@ public class SysTreeQuery extends DataQuery {
 
 	public void setNames(List<String> names) {
 		this.names = names;
-	}
-
-	public void setParents(List<Long> parents) {
-		this.parents = parents;
 	}
 
 	public void setSortGreaterThan(Integer sortGreaterThan) {

@@ -209,14 +209,6 @@
 				and E.APPID = #{appId}
 			</if>
 
-			<if test="appIdGreaterThanOrEqual != null">
-				and E.APPID &gt;= #{appIdGreaterThanOrEqual}
-			</if>
-
-			<if test="appIdLessThanOrEqual != null">
-				and E.APPID &lt;= #{appIdLessThanOrEqual}
-			</if>
-
 			<if test="appIds != null and appIds.size() &gt; 0">
 			    and E.APPID IN
 				<foreach item="x_appId" index="index" collection="appIds" 

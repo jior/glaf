@@ -23,7 +23,6 @@ import com.glaf.core.query.DataQuery;
 
 public class SysRoleQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;
-	protected List<Long> rowIds;
 	protected String name;
 	protected String nameLike;
 	protected List<String> names;

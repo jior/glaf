@@ -313,14 +313,6 @@
 				and E.SHOWMENU = #{showMenu}
 			</if>
 
-			<if test="showMenuGreaterThanOrEqual != null">
-				and E.SHOWMENU &gt;= #{showMenuGreaterThanOrEqual}
-			</if>
-
-			<if test="showMenuLessThanOrEqual != null">
-				and E.SHOWMENU &lt;= #{showMenuLessThanOrEqual}
-			</if>
-
 			<if test="nodeId != null">
 				and E.NODEID = #{nodeId}
 			</if>

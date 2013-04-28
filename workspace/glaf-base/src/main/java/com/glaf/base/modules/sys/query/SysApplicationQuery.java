@@ -33,8 +33,6 @@ public class SysApplicationQuery extends DataQuery {
 	protected Long nodeIdLessThanOrEqual;
 	protected List<Long> nodeIds;
 	protected Integer showMenu;
-	protected Integer showMenuGreaterThanOrEqual;
-	protected Integer showMenuLessThanOrEqual;
 	protected Integer sortGreaterThan;
 	protected Integer sortGreaterThanOrEqual;
 	protected Integer sortLessThan;
@@ -142,14 +140,6 @@ public class SysApplicationQuery extends DataQuery {
 
 	public Integer getShowMenu() {
 		return showMenu;
-	}
-
-	public Integer getShowMenuGreaterThanOrEqual() {
-		return showMenuGreaterThanOrEqual;
-	}
-
-	public Integer getShowMenuLessThanOrEqual() {
-		return showMenuLessThanOrEqual;
 	}
 
 	public Integer getSortGreaterThan() {
@@ -289,14 +279,6 @@ public class SysApplicationQuery extends DataQuery {
 		this.showMenu = showMenu;
 	}
 
-	public void setShowMenuGreaterThanOrEqual(Integer showMenuGreaterThanOrEqual) {
-		this.showMenuGreaterThanOrEqual = showMenuGreaterThanOrEqual;
-	}
-
-	public void setShowMenuLessThanOrEqual(Integer showMenuLessThanOrEqual) {
-		this.showMenuLessThanOrEqual = showMenuLessThanOrEqual;
-	}
-
 	public void setSortGreaterThan(Integer sortGreaterThan) {
 		this.sortGreaterThan = sortGreaterThan;
 	}
@@ -322,24 +304,6 @@ public class SysApplicationQuery extends DataQuery {
 			throw new RuntimeException("showMenu is null");
 		}
 		this.showMenu = showMenu;
-		return this;
-	}
-
-	public SysApplicationQuery showMenuGreaterThanOrEqual(
-			Integer showMenuGreaterThanOrEqual) {
-		if (showMenuGreaterThanOrEqual == null) {
-			throw new RuntimeException("showMenu is null");
-		}
-		this.showMenuGreaterThanOrEqual = showMenuGreaterThanOrEqual;
-		return this;
-	}
-
-	public SysApplicationQuery showMenuLessThanOrEqual(
-			Integer showMenuLessThanOrEqual) {
-		if (showMenuLessThanOrEqual == null) {
-			throw new RuntimeException("showMenu is null");
-		}
-		this.showMenuLessThanOrEqual = showMenuLessThanOrEqual;
 		return this;
 	}
 

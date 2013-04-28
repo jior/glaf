@@ -5,11 +5,6 @@ import com.glaf.core.query.DataQuery;
 
 public class SubjectCodeQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;
-	protected Long parent;
-	protected Long parentGreaterThanOrEqual;
-	protected Long parentLessThanOrEqual;
-	protected List<Long> parents;
-	protected List<Long> rowIds;
 	protected Integer sortGreaterThanOrEqual;
 	protected Integer sortLessThanOrEqual;
 	protected String subjectCode;
@@ -28,7 +23,7 @@ public class SubjectCodeQuery extends DataQuery {
 				a_x = sortOrder;
 			}
 
-			if ("parent".equals(sortColumn)) {
+			if ("parentId".equals(sortColumn)) {
 				orderBy = "E.PARENT" + a_x;
 			}
 
@@ -48,21 +43,7 @@ public class SubjectCodeQuery extends DataQuery {
 		return orderBy;
 	}
 
-	public Long getParent() {
-		return parent;
-	}
-
-	public Long getParentGreaterThanOrEqual() {
-		return parentGreaterThanOrEqual;
-	}
-
-	public Long getParentLessThanOrEqual() {
-		return parentLessThanOrEqual;
-	}
-
-	public List<Long> getParents() {
-		return parents;
-	}
+	
 
 	public Integer getSortGreaterThanOrEqual() {
 		return sortGreaterThanOrEqual;
@@ -108,60 +89,22 @@ public class SubjectCodeQuery extends DataQuery {
 	public void initQueryColumns() {
 		super.initQueryColumns();
 		addColumn("id", "ID");
-		addColumn("parent", "PARENT");
+		addColumn("parentId", "PARENT");
 		addColumn("subjectCode", "SUBJECTCODE");
 		addColumn("subjectName", "SUBJECTNAME");
 		addColumn("sort", "SORT");
 	}
 
-	public SubjectCodeQuery parent(Long parent) {
-		if (parent == null) {
-			throw new RuntimeException("parent is null");
+	public SubjectCodeQuery parentId(Long parentId) {
+		if (parentId == null) {
+			throw new RuntimeException("parentId is null");
 		}
-		this.parent = parent;
+		this.parentId = parentId;
 		return this;
 	}
 
-	public SubjectCodeQuery parentGreaterThanOrEqual(
-			Long parentGreaterThanOrEqual) {
-		if (parentGreaterThanOrEqual == null) {
-			throw new RuntimeException("parent is null");
-		}
-		this.parentGreaterThanOrEqual = parentGreaterThanOrEqual;
-		return this;
-	}
+	
 
-	public SubjectCodeQuery parentLessThanOrEqual(Long parentLessThanOrEqual) {
-		if (parentLessThanOrEqual == null) {
-			throw new RuntimeException("parent is null");
-		}
-		this.parentLessThanOrEqual = parentLessThanOrEqual;
-		return this;
-	}
-
-	public SubjectCodeQuery parents(List<Long> parents) {
-		if (parents == null) {
-			throw new RuntimeException("parents is empty ");
-		}
-		this.parents = parents;
-		return this;
-	}
-
-	public void setParent(Long parent) {
-		this.parent = parent;
-	}
-
-	public void setParentGreaterThanOrEqual(Long parentGreaterThanOrEqual) {
-		this.parentGreaterThanOrEqual = parentGreaterThanOrEqual;
-	}
-
-	public void setParentLessThanOrEqual(Long parentLessThanOrEqual) {
-		this.parentLessThanOrEqual = parentLessThanOrEqual;
-	}
-
-	public void setParents(List<Long> parents) {
-		this.parents = parents;
-	}
 
 	public void setSortGreaterThanOrEqual(Integer sortGreaterThanOrEqual) {
 		this.sortGreaterThanOrEqual = sortGreaterThanOrEqual;

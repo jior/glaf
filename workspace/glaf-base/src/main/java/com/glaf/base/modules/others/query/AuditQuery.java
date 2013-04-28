@@ -23,7 +23,6 @@ import com.glaf.core.query.DataQuery;
 
 public class AuditQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;
-	protected List<Long> rowIds;
 	protected Long referId;
 	protected Long referIdGreaterThanOrEqual;
 	protected Long referIdLessThanOrEqual;

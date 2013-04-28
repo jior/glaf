@@ -127,23 +127,15 @@
 		<where>
 		       1 = 1  
 
-			<if test="parent != null">
-				and E.PARENT = #{parent}
+			<if test="parentId != null">
+				and E.PARENT = #{parentId}
 			</if>
 
-			<if test="parentGreaterThanOrEqual != null">
-				and E.PARENT &gt;= #{parentGreaterThanOrEqual}
-			</if>
-
-			<if test="parentLessThanOrEqual != null">
-				and E.PARENT &lt;= #{parentLessThanOrEqual}
-			</if>
-
-			<if test="parents != null and parents.size() &gt; 0">
+			<if test="parentIds != null and parentIds.size() &gt; 0">
 			    and E.PARENT IN
-				<foreach item="x_parent" index="index" collection="parents" 
+				<foreach item="x_parentId" index="index" collection="parentIds" 
 					open="(" separator="," close=")">
-                  #{x_parent}
+                  #{x_parentId}
 				</foreach>
 			</if>
 

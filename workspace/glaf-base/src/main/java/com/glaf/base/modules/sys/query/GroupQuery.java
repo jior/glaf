@@ -26,7 +26,6 @@ public class GroupQuery extends DataQuery {
 	protected String name;
 	protected String nameLike;
 	protected List<String> names;
-	protected List<String> rowIds;
 	protected Integer sortGreaterThan;
 	protected Integer sortGreaterThanOrEqual;
 	protected Integer sortLessThan;

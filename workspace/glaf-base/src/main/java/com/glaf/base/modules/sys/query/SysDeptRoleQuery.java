@@ -38,7 +38,6 @@ public class SysDeptRoleQuery extends DataQuery {
 	protected List<Integer> grades;
 	protected String roleCode;
 	protected List<String> roleCodes;
-	protected List<Long> rowIds;
 	protected Integer sortGreaterThan;
 	protected Integer sortGreaterThanOrEqual;
 	protected Integer sortLessThan;
