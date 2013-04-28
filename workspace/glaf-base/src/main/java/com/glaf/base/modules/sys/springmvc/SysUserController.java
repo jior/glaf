@@ -596,7 +596,7 @@ public class SysUserController {
 			bean.setBlocked(ParamUtil.getIntParameter(request, "blocked", 0));
 			bean.setHeadship(ParamUtil.getParameter(request, "headship"));
 			bean.setUserType(ParamUtil.getIntParameter(request, "userType", 0));
-			bean.setUpdateBy(bean.getAccount());
+			bean.setUpdateBy(RequestUtils.getActorId(request));
 			ret = sysUserService.update(bean);
 		}
 
@@ -630,7 +630,7 @@ public class SysUserController {
 			user.setMobile(ParamUtil.getParameter(request, "mobile"));
 			user.setEmail(ParamUtil.getParameter(request, "email"));
 			user.setTelephone(ParamUtil.getParameter(request, "telephone"));
-			user.setUpdateBy(bean.getAccount());
+			user.setUpdateBy(RequestUtils.getActorId(request));
 			ret = sysUserService.update(user);
 			CacheUtils.clearUserCache(user.getAccount());
 		}

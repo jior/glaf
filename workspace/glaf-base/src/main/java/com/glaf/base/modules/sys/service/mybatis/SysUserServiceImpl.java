@@ -477,6 +477,32 @@ public class SysUserServiceImpl implements SysUserService {
 			sysUser.setUpdateDate(new Date());
 			sysUserMapper.updateSysUser(sysUser);
 		}
+
+		TableModel table = new TableModel();
+		table.setTableName("SYS_MEMBERSHIP");
+		table.addColumn("ACTORID_", "String", sysUser.getAccount());
+		table.addColumn("TYPE_", "String", "Superior");
+		tableDataService.deleteTableData(table);
+
+		if (StringUtils.isNotEmpty(sysUser.getSuperiorIds())) {
+			List<String> superiorIds = StringTools.split(sysUser
+					.getSuperiorIds());
+			if (superiorIds != null && !superiorIds.isEmpty()) {
+				for (String superiorId : superiorIds) {
+					if (!StringUtils.equals(superiorId, sysUser.getAccount())) {
+						Membership membership = new Membership();
+						membership.setActorId(sysUser.getAccount());
+						membership.setSuperiorId(superiorId);
+						membership.setModifyBy(sysUser.getUpdateBy());
+						membership.setModifyDate(new java.util.Date());
+						membership.setType("Superior");
+						membership.setObjectId("Superior");
+						membership.setObjectValue(superiorId);
+						membershipService.save(membership);
+					}
+				}
+			}
+		}
 	}
 
 	@Resource
@@ -548,9 +574,34 @@ public class SysUserServiceImpl implements SysUserService {
 	}
 
 	@Transactional
-	public boolean update(SysUser bean) {
-		bean.setUpdateDate(new Date());
-		sysUserMapper.updateSysUser(bean);
+	public boolean update(SysUser sysUser) {
+		sysUser.setUpdateDate(new Date());
+		sysUserMapper.updateSysUser(sysUser);
+		TableModel table = new TableModel();
+		table.setTableName("SYS_MEMBERSHIP");
+		table.addColumn("ACTORID_", "String", sysUser.getAccount());
+		table.addColumn("TYPE_", "String", "Superior");
+		tableDataService.deleteTableData(table);
+
+		if (StringUtils.isNotEmpty(sysUser.getSuperiorIds())) {
+			List<String> superiorIds = StringTools.split(sysUser
+					.getSuperiorIds());
+			if (superiorIds != null && !superiorIds.isEmpty()) {
+				for (String superiorId : superiorIds) {
+					if (!StringUtils.equals(superiorId, sysUser.getAccount())) {
+						Membership membership = new Membership();
+						membership.setActorId(sysUser.getAccount());
+						membership.setSuperiorId(superiorId);
+						membership.setModifyBy(sysUser.getUpdateBy());
+						membership.setModifyDate(new java.util.Date());
+						membership.setType("Superior");
+						membership.setObjectId("Superior");
+						membership.setObjectValue(superiorId);
+						membershipService.save(membership);
+					}
+				}
+			}
+		}
 		return true;
 	}
 
@@ -604,8 +655,8 @@ public class SysUserServiceImpl implements SysUserService {
 	}
 
 	@Transactional
-	public boolean updateUser(SysUser bean) {
-		sysUserMapper.updateSysUser(bean);
+	public boolean updateUser(SysUser sysUser) {
+		sysUserMapper.updateSysUser(sysUser);
 		return true;
 	}
 
