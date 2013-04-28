@@ -24,6 +24,16 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>GLAF基础应用框架-系统登录</title>
 <link href="${contextPath}/scripts/easyui/themes/gray/easyui.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+.default {
+	font-weight:normal;
+	color:#ff3333;
+}
+.puton{
+	font-weight:normal;
+	color:black;
+}
+</style>
 <script type="text/javascript" src="${contextPath}/scripts/jquery.min.js"></script>
 <script type="text/javascript" src="${contextPath}/scripts/verify.js" ></script>
 <script type="text/javascript" src="${contextPath}/scripts/easyui/jquery.easyui.min.js"></script>
@@ -59,22 +69,7 @@
 	    }
 	}
 
-	$(document).ready(function(){
-		$("#x").click(
-			function(){
-			  if($(this).val()=="请输入用户名"){
-			    $(this).val("");
-			  }
-		})
-		$("#x").blur(
-			function(){
-			  if($(this).val()=="")
-			  {
-			    $(this).val("请输入用户名");
-			  }
-		   })
-	});
-
+	 
     $(function() {
         $("#loginWindow").window({
                 title: 'GLAF基础应用框架',
@@ -106,7 +101,34 @@
         location.href="${contextPath}/login.do?method=login&x="+x+"&y=<%=rand%>"+y;
 	}
 
-       
+
+	$(document).ready(function(){
+		$("#x").focus(function () {
+                var $this = $(this);
+                if ($this.val() == $this[0].defaultValue) {
+                    $this.val("");
+                }
+            }).blur(function () {
+                var $this = $(this);
+                if ($this.val() == "") {
+                    $this.val($this[0].defaultValue);
+                }
+            })
+	});
+
+	$(document).ready(function(){
+		 $("#y").focus(function () {
+                var $this = $(this);
+                if ($this.val() == $this[0].defaultValue) {
+                    $this.val("");
+                }
+            }).blur(function () {
+                var $this = $(this);
+                if ($this.val() == "") {
+                    $this.val($this[0].defaultValue);
+                }
+            })
+	});
 </script>
 </head>
 <body <%if(!debug){%>onload="openMainPage();"<%}%>>
