@@ -59,6 +59,22 @@
 	    }
 	}
 
+	$(document).ready(function(){
+		$("#x").click(
+			function(){
+			  if($(this).val()=="请输入用户名"){
+			    $(this).val("");
+			  }
+		})
+		$("#x").blur(
+			function(){
+			  if($(this).val()=="")
+			  {
+			    $(this).val("请输入用户名");
+			  }
+		   })
+	});
+
     $(function() {
         $("#loginWindow").window({
                 title: 'GLAF基础应用框架',
