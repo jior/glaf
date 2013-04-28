@@ -50,7 +50,7 @@ public class DynamicAccessEntity implements DynamicAccess, JSONable {
 	protected String serviceKey;
 
 	/**
-	 * 实体类型（mybatis3或jpa）
+	 * 实体类型（mybatis或jpa）
 	 */
 	@Column(name = "ENTITYTYPE_", length = 10)
 	protected String entityType;

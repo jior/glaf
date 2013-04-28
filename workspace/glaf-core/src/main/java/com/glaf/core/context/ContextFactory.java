@@ -42,7 +42,8 @@ public final class ContextFactory {
 	@SuppressWarnings("unchecked")
 	public static <T> T getBean(Class<?> clazz) {
 		if (ctx == null) {
-
+			throw new RuntimeException(
+					" Spring context is null, please check your spring config.");
 		}
 		String name = clazz.getSimpleName();
 		name = name.substring(0, 1).toLowerCase() + name.substring(1);
@@ -54,12 +55,20 @@ public final class ContextFactory {
 		if (ctx == null) {
 			init();
 		}
+		if (ctx == null) {
+			throw new RuntimeException(
+					" Spring context is null, please check your spring config.");
+		}
 		return (T) ctx.getBean(name);
 	}
 
 	public static boolean hasBean(String name) {
 		if (ctx == null) {
 			init();
+		}
+		if (ctx == null) {
+			throw new RuntimeException(
+					" Spring context is null, please check your spring config.");
 		}
 		return ctx.containsBean(name);
 	}
@@ -91,8 +100,8 @@ public final class ContextFactory {
 			ctx = context;
 		}
 	}
-	
-	public static void main(String[] args){
+
+	public static void main(String[] args) {
 		System.out.println(ContextFactory.hasBean("dataSource"));
 	}
 
