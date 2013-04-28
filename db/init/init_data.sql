@@ -187,7 +187,6 @@ insert into sys_dictory (id, typeId, code, name, sort, dictDesc, blocked, ext1, 
 insert into sys_dictory (id, typeId, code, name, sort, dictDesc, blocked, ext1, ext2, ext3, ext4, ext5, ext6) values (3, 498, 'JPY', 'ÈÕÔª', 3, null, 0, '', '', null, null, null, null);
 
 
-insert into sys_dictory_def (id, nodeid, name, columnname, title, type, length, sort, required, target) values (3,  0, 'value', 'VALUE_', '', 'String', 2000, 2, 0, 'sys_dictory');
 insert into sys_dictory_def (id, nodeid, name, columnname, title, type, length, sort, required, target) values (4,  0, 'ext1',  'EXT1', '',  'String', 200, 3, 0, 'sys_dictory');
 insert into sys_dictory_def (id, nodeid, name, columnname, title, type, length, sort, required, target) values (5,  0, 'ext2',  'EXT2', '',  'String', 200, 4, 0, 'sys_dictory');
 insert into sys_dictory_def (id, nodeid, name, columnname, title, type, length, sort, required, target) values (6,  0, 'ext3',  'EXT3', '',  'String', 200, 5, 0, 'sys_dictory');
