@@ -9,6 +9,7 @@
         <property name="no" column="DEPTNO" type="String" englishTitle="DEPTNO" length="255"  title="部门编号"/>
         <property name="code" column="CODE" type="String" englishTitle="CODE" length="255"  title="编码"/>
         <property name="code2" column="CODE2" type="String" englishTitle="CODE2" length="255"  title="编码2"/>
+		<property name="level" column="DEPTLEVEL" type="Integer" englishTitle="Level" length="10"  title="层级"/>
         <property name="status" column="STATUS" type="Integer" englishTitle="STATUS" length="10"  title="状态"/>
         <property name="fincode" column="FINCODE" type="String" englishTitle="FINCODE" length="255"  title="财务代码"/>
         <property name="nodeId" column="NODEID" type="Long" englishTitle="NODEID" nullable="false"  title="节点编号"/>
