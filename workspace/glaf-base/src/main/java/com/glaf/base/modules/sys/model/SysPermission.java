@@ -16,14 +16,14 @@ public class SysPermission implements Serializable, JSONable {
 	 * ¹¦ÄÜ±àºÅ
 	 */
 	@Id
-	@Column(name = "FUNCID", length = 50, nullable = false)
+	@Column(name = "FUNCID", nullable = false)
 	protected long funcId;
 
 	/**
 	 * ½ÇÉ«±àºÅ
 	 */
 	@Id
-	@Column(name = "ROLEID")
+	@Column(name = "ROLEID", nullable = false)
 	protected long roleId;
 
 	public SysPermission() {

@@ -144,6 +144,14 @@ public interface SysDepartmentService {
 	List<SysDepartment> getSysDepartmentList(int parent);
 
 	/**
+	 * 获取部门列表信息
+	 * 
+	 * @param query
+	 * @return
+	 */
+	List<SysDepartment> list(SysDepartmentQuery query);
+
+	/**
 	 * 获取分页列表
 	 * 
 	 * @param parent

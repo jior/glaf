@@ -39,7 +39,7 @@ public class DictoryDefinition implements Serializable, JSONable,
 	protected Date createDate;
 
 	@Id
-	@Column(name = "ID", length = 50, nullable = false)
+	@Column(name = "ID", nullable = false)
 	protected long id;
 
 	/**

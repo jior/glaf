@@ -176,7 +176,7 @@ public class Dictory implements Serializable, JSONable {
 	protected Date ext9;
 
 	@Id
-	@Column(name = "ID", length = 50, nullable = false)
+	@Column(name = "ID", nullable = false)
 	protected long id;
 
 	/**

@@ -65,7 +65,7 @@ public class Audit implements Serializable, JSONable {
 	protected String headship;
 
 	@Id
-	@Column(name = "ID",  nullable = false)
+	@Column(name = "ID", nullable = false)
 	protected long id;
 
 	/**

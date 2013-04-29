@@ -31,7 +31,7 @@ import com.glaf.core.base.JSONable;
 public class WorkCalendar implements Serializable, JSONable {
 	private static final long serialVersionUID = -5396045849722935648L;
 	@Id
-	@Column(name = "ID", length = 50, nullable = false)
+	@Column(name = "ID", nullable = false)
 	protected long id;
 
 	/**

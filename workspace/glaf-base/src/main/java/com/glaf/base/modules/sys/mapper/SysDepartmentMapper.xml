@@ -273,12 +273,28 @@
 				and E.DEPTNO like #{noLike}
 			</if>
 
+			<if test="noLeftLike != null and noLeftLike != '' ">
+				and E.DEPTNO like #{noLeftLike}
+			</if>
+
+			<if test="noRightLike != null and noRightLike != '' ">
+				and E.DEPTNO like #{noRightLike}
+			</if>
+
 			<if test="code != null and code != '' ">
 				and E.CODE = #{code}
 			</if>
 
 			<if test="codeLike != null and codeLike != '' ">
 				and E.CODE like #{codeLike}
+			</if>
+
+			<if test="codeLeftLike != null and codeLeftLike != '' ">
+				and E.CODE like #{codeLeftLike}
+			</if>
+
+			<if test="codeRightLike != null and codeRightLike != '' ">
+				and E.CODE like #{codeRightLike}
 			</if>
 
 			<if test="codes != null and codes.size() &gt; 0">
@@ -291,6 +307,18 @@
 
 			<if test="code2 != null and code2 != '' ">
 				and E.CODE2 = #{code2}
+			</if>
+
+			<if test="code2Like != null and code2Like != '' ">
+				and E.CODE like #{code2Like}
+			</if>
+
+			<if test="code2LeftLike != null and code2LeftLike != '' ">
+				and E.CODE like #{code2LeftLike}
+			</if>
+
+			<if test="code2RightLike != null and code2RightLike != '' ">
+				and E.CODE like #{code2RightLike}
 			</if>
 
 			<if test="status != null">
@@ -311,6 +339,14 @@
 
 			<if test="fincodeLike != null and fincodeLike != '' ">
 				and E.FINCODE like #{fincodeLike}
+			</if>
+
+			<if test="fincodeLeftLike != null and fincodeLeftLike != '' ">
+				and E.FINCODE like #{fincodeLeftLike}
+			</if>
+
+			<if test="fincodeRightLike != null and fincodeRightLike != '' ">
+				and E.FINCODE like #{fincodeRightLike}
 			</if>
 
 			<if test="nodeId != null">

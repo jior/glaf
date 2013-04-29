@@ -95,7 +95,7 @@ public class SysTree implements Serializable, TreeModel, JSONable {
 	protected String iconCls;
 
 	@Id
-	@Column(name = "ID", length = 50, nullable = false)
+	@Column(name = "ID", nullable = false)
 	protected long id;
 
 	/**

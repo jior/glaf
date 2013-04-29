@@ -132,7 +132,7 @@ public class SysUser implements Serializable, User, JSONable {
 	protected String headship;
 
 	@Id
-	@Column(name = "ID", length = 50, nullable = false)
+	@Column(name = "ID", nullable = false)
 	protected long id;
 
 	/**

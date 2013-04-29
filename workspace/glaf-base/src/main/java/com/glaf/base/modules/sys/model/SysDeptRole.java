@@ -75,7 +75,7 @@ public class SysDeptRole implements Serializable, JSONable {
 	protected int grade;
 
 	@Id
-	@Column(name = "ID", length = 50, nullable = false)
+	@Column(name = "ID", nullable = false)
 	protected long id;
 
 	@javax.persistence.Transient

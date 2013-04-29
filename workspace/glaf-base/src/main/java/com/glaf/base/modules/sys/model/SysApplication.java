@@ -63,7 +63,7 @@ public class SysApplication implements Serializable, JSONable {
 	private Set<SysFunction> functions = new HashSet<SysFunction>();
 
 	@Id
-	@Column(name = "ID", length = 50, nullable = false)
+	@Column(name = "ID", nullable = false)
 	protected long id;
 
 	/**

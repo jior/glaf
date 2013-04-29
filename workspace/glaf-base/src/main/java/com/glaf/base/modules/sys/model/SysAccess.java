@@ -16,14 +16,14 @@ public class SysAccess implements Serializable, JSONable {
 	 * Ó¦ÓÃ±àºÅ
 	 */
 	@Id
-	@Column(name = "APPID", length = 50, nullable = false)
+	@Column(name = "APPID", nullable = false)
 	protected long appId;
 
 	/**
 	 * ½ÇÉ«±àºÅ
 	 */
 	@Id
-	@Column(name = "ROLEID")
+	@Column(name = "ROLEID", nullable = false)
 	protected long roleId;
 
 	public SysAccess() {

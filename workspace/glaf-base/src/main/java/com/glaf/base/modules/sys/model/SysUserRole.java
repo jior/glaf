@@ -83,7 +83,7 @@ public class SysUserRole implements Serializable, JSONable {
 	protected long deptRoleId;
 
 	@Id
-	@Column(name = "ID", length = 50, nullable = false)
+	@Column(name = "ID", nullable = false)
 	protected long id;
 
 	/**

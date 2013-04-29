@@ -25,13 +25,20 @@ public class SysDepartmentQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;
 	protected String code;
 	protected String code2;
+	protected String code2LeftLike;
+	protected String code2Like;
+	protected String code2RightLike;
+	protected String codeLeftLike;
 	protected String codeLike;
+	protected String codeRightLike;
 	protected List<String> codes;
 	protected Date createTimeGreaterThanOrEqual;
 	protected Date createTimeLessThanOrEqual;
 	protected String descLike;
 	protected String fincode;
+	protected String fincodeLeftLike;
 	protected String fincodeLike;
+	protected String fincodeRightLike;
 	protected Integer level;
 	protected Integer levelGreaterThanOrEqual;
 	protected Integer levelLessThanOrEqual;
@@ -43,7 +50,9 @@ public class SysDepartmentQuery extends DataQuery {
 	protected Long nodeIdGreaterThanOrEqual;
 	protected Long nodeIdLessThanOrEqual;
 	protected List<Long> nodeIds;
+	protected String noLeftLike;
 	protected String noLike;
+	protected String noRightLike;
 	protected Integer sort;
 	protected Integer sortGreaterThan;
 	protected Integer sortGreaterThanOrEqual;
@@ -136,6 +145,45 @@ public class SysDepartmentQuery extends DataQuery {
 		return code2;
 	}
 
+	public String getCode2LeftLike() {
+		if (code2LeftLike != null && code2LeftLike.trim().length() > 0) {
+			if (!code2LeftLike.endsWith("%")) {
+				code2LeftLike = codeLeftLike + "%";
+			}
+		}
+		return code2LeftLike;
+	}
+
+	public String getCode2Like() {
+		if (code2Like != null && code2Like.trim().length() > 0) {
+			if (!code2Like.startsWith("%")) {
+				code2Like = "%" + code2Like;
+			}
+			if (!code2Like.endsWith("%")) {
+				code2Like = code2Like + "%";
+			}
+		}
+		return code2Like;
+	}
+
+	public String getCode2RightLike() {
+		if (code2RightLike != null && code2RightLike.trim().length() > 0) {
+			if (!code2RightLike.startsWith("%")) {
+				code2RightLike = "%" + code2RightLike;
+			}
+		}
+		return code2RightLike;
+	}
+
+	public String getCodeLeftLike() {
+		if (codeLeftLike != null && codeLeftLike.trim().length() > 0) {
+			if (!codeLeftLike.endsWith("%")) {
+				codeLeftLike = codeLeftLike + "%";
+			}
+		}
+		return codeLeftLike;
+	}
+
 	public String getCodeLike() {
 		if (codeLike != null && codeLike.trim().length() > 0) {
 			if (!codeLike.startsWith("%")) {
@@ -146,6 +194,15 @@ public class SysDepartmentQuery extends DataQuery {
 			}
 		}
 		return codeLike;
+	}
+
+	public String getCodeRightLike() {
+		if (codeRightLike != null && codeRightLike.trim().length() > 0) {
+			if (!codeRightLike.startsWith("%")) {
+				codeRightLike = "%" + codeRightLike;
+			}
+		}
+		return codeRightLike;
 	}
 
 	public List<String> getCodes() {
@@ -176,6 +233,15 @@ public class SysDepartmentQuery extends DataQuery {
 		return fincode;
 	}
 
+	public String getFincodeLeftLike() {
+		if (fincodeLeftLike != null && fincodeLeftLike.trim().length() > 0) {
+			if (!fincodeLeftLike.endsWith("%")) {
+				fincodeLeftLike = fincodeLeftLike + "%";
+			}
+		}
+		return fincodeLeftLike;
+	}
+
 	public String getFincodeLike() {
 		if (fincodeLike != null && fincodeLike.trim().length() > 0) {
 			if (!fincodeLike.startsWith("%")) {
@@ -186,6 +252,15 @@ public class SysDepartmentQuery extends DataQuery {
 			}
 		}
 		return fincodeLike;
+	}
+
+	public String getFincodeRightLike() {
+		if (fincodeRightLike != null && fincodeRightLike.trim().length() > 0) {
+			if (!fincodeRightLike.startsWith("%")) {
+				fincodeRightLike = "%" + fincodeRightLike;
+			}
+		}
+		return fincodeRightLike;
 	}
 
 	public Integer getLevel() {
@@ -240,6 +315,15 @@ public class SysDepartmentQuery extends DataQuery {
 		return nodeIds;
 	}
 
+	public String getNoLeftLike() {
+		if (noLeftLike != null && noLeftLike.trim().length() > 0) {
+			if (!noLeftLike.endsWith("%")) {
+				noLeftLike = noLeftLike + "%";
+			}
+		}
+		return noLeftLike;
+	}
+
 	public String getNoLike() {
 		if (noLike != null && noLike.trim().length() > 0) {
 			if (!noLike.startsWith("%")) {
@@ -250,6 +334,15 @@ public class SysDepartmentQuery extends DataQuery {
 			}
 		}
 		return noLike;
+	}
+
+	public String getNoRightLike() {
+		if (noRightLike != null && noRightLike.trim().length() > 0) {
+			if (!noRightLike.startsWith("%")) {
+				noRightLike = "%" + noLike;
+			}
+		}
+		return noRightLike;
 	}
 
 	public String getOrderBy() {
@@ -445,8 +538,28 @@ public class SysDepartmentQuery extends DataQuery {
 		this.code2 = code2;
 	}
 
+	public void setCode2LeftLike(String code2LeftLike) {
+		this.code2LeftLike = code2LeftLike;
+	}
+
+	public void setCode2Like(String code2Like) {
+		this.code2Like = code2Like;
+	}
+
+	public void setCode2RightLike(String code2RightLike) {
+		this.code2RightLike = code2RightLike;
+	}
+
+	public void setCodeLeftLike(String codeLeftLike) {
+		this.codeLeftLike = codeLeftLike;
+	}
+
 	public void setCodeLike(String codeLike) {
 		this.codeLike = codeLike;
+	}
+
+	public void setCodeRightLike(String codeRightLike) {
+		this.codeRightLike = codeRightLike;
 	}
 
 	public void setCodes(List<String> codes) {
@@ -470,8 +583,16 @@ public class SysDepartmentQuery extends DataQuery {
 		this.fincode = fincode;
 	}
 
+	public void setFincodeLeftLike(String fincodeLeftLike) {
+		this.fincodeLeftLike = fincodeLeftLike;
+	}
+
 	public void setFincodeLike(String fincodeLike) {
 		this.fincodeLike = fincodeLike;
+	}
+
+	public void setFincodeRightLike(String fincodeRightLike) {
+		this.fincodeRightLike = fincodeRightLike;
 	}
 
 	public void setLevel(Integer level) {
@@ -518,8 +639,16 @@ public class SysDepartmentQuery extends DataQuery {
 		this.nodeIds = nodeIds;
 	}
 
+	public void setNoLeftLike(String noLeftLike) {
+		this.noLeftLike = noLeftLike;
+	}
+
 	public void setNoLike(String noLike) {
 		this.noLike = noLike;
+	}
+
+	public void setNoRightLike(String noRightLike) {
+		this.noRightLike = noRightLike;
 	}
 
 	public void setSort(Integer sort) {
