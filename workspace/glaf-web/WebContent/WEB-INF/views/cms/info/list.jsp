@@ -373,7 +373,7 @@
 		   <span>
 		      状态&nbsp;
 			  <select id="workedProcessFlag" name="workedProcessFlag" onchange="javascript:switchTasks();">
-				<option value="">全部</option>
+				<option value="">--请选择--</option>
 				<option value="DF">未提交</option>
 				<option value="PD">待审</option>
 				<option value="WD">已审</option>

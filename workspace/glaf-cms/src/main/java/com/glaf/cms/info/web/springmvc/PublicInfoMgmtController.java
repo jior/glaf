@@ -366,6 +366,11 @@ public class PublicInfoMgmtController {
 		} else if (StringUtils.equals(workedProcessFlag, "DF")) {
 			query.setWorkedProcessFlag(null);
 			query.setStatus(0);
+			// 如果不是系统管理员或信息审核员，只能看自己发布的信息
+			if (!(loginContext.isSystemAdministrator() || loginContext
+					.hasPermission("Auditor", "and"))) {
+				query.setCreateBy(loginContext.getActorId());
+			}
 		}
 
 		String gridType = ParamUtils.getString(params, "gridType");
@@ -633,19 +638,26 @@ public class PublicInfoMgmtController {
 	@ResponseBody
 	@RequestMapping("/publish")
 	public byte[] publish(HttpServletRequest request) {
-		String id = request.getParameter("id");
-		int publishFlag = RequestUtils.getInt(request, "publishFlag");
-		PublicInfo publicInfo = null;
-		try {
-			if (StringUtils.isNotEmpty(id)) {
-				publicInfo = publicInfoService.getPublicInfo(id);
-				publicInfo.setPublishFlag(publishFlag);
-				publicInfoService.save(publicInfo);
-				return ResponseUtils.responseJsonResult(true);
+		LoginContext loginContext = RequestUtils.getLoginContext(request);
+		/**
+		 * 只有系统管理员及信息审核员才能发布信息
+		 */
+		if (loginContext.isSystemAdministrator()
+				|| loginContext.hasPermission("Auditor", "and")) {
+			String id = request.getParameter("id");
+			int publishFlag = RequestUtils.getInt(request, "publishFlag");
+			PublicInfo publicInfo = null;
+			try {
+				if (StringUtils.isNotEmpty(id)) {
+					publicInfo = publicInfoService.getPublicInfo(id);
+					publicInfo.setPublishFlag(publishFlag);
+					publicInfoService.save(publicInfo);
+					return ResponseUtils.responseJsonResult(true);
+				}
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				logger.error(ex);
 			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			logger.error(ex);
 		}
 		return ResponseUtils.responseJsonResult(false);
 	}
