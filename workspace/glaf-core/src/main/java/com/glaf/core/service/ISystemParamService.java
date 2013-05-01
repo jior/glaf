@@ -45,12 +45,20 @@ public interface ISystemParamService {
 	void deleteById(String id);
 
 	/**
-	 * 根据主键删除记录
+	 * 根据服务主键获取内容
 	 * 
+	 * @param serviceKey
 	 * @return
 	 */
-	@Transactional
-	void deleteByIds(List<String> rowIds);
+	List<InputDefinition> getInputDefinitions(String serviceKey);
+
+	/**
+	 * 根据服务主键获取内容
+	 * 
+	 * @param serviceKey
+	 * @return
+	 */
+	List<InputDefinition> getInputDefinitions(String serviceKey, String typeCd);
 
 	/**
 	 * 根据主键获取一条记录
@@ -58,6 +66,17 @@ public interface ISystemParamService {
 	 * @return
 	 */
 	SystemParam getSystemParam(String id);
+
+	/**
+	 * 获取系统参数
+	 * 
+	 * @param serviceKey
+	 * @param businessKey
+	 * @param keyName
+	 * @return
+	 */
+	SystemParam getSystemParam(String serviceKey, String businessKey,
+			String keyName);
 
 	/**
 	 * 根据查询参数获取记录总数
@@ -74,22 +93,6 @@ public interface ISystemParamService {
 	int getSystemParamCountByQueryCriteria(SystemParamQuery query);
 
 	/**
-	 * 根据服务主键获取内容
-	 * 
-	 * @param serviceKey
-	 * @return
-	 */
-	List<InputDefinition> getInputDefinitions(String serviceKey);
-	
-	/**
-	 * 根据服务主键获取内容
-	 * 
-	 * @param serviceKey
-	 * @return
-	 */
-	List<InputDefinition> getInputDefinitions(String serviceKey,String typeCd);
-
-	/**
 	 * 根据查询参数获取记录列表
 	 * 
 	 * @return
@@ -104,15 +107,6 @@ public interface ISystemParamService {
 	 * @return
 	 */
 	List<SystemParam> getSystemParams(String serviceKey, String businessKey);
-	
-	/**
-	 * 获取系统参数
-	 * @param serviceKey
-	 * @param businessKey
-	 * @param keyName
-	 * @return
-	 */
-	SystemParam getSystemParam(String serviceKey, String businessKey, String keyName);
 
 	/**
 	 * 根据查询参数获取一页的数据
