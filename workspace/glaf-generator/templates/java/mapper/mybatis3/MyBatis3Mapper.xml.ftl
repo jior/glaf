@@ -169,7 +169,7 @@
 	<select id="get${entityName}s" 
 	    parameterType="${packageName}.query.${entityName}Query"
 		resultMap="${modelName}ResultMap">
-		select E.*
+		select distinct E.*
 		<include refid="select${entityName}sSql" />
 		<choose>
 		  <when test="orderBy != null">
@@ -206,7 +206,7 @@
 			  <#if classDefinition.jbpmSupport >
 			   <if test="workedProcessFlag == 'WD' and appActorIds != null and appActorIds.size != 0 ">
 			     and ( T.END_ IS NOT NULL)
-                 and ( T.ACTORID in
+                 and ( T.ACTORID_ in
                  <foreach item="x_actorId" index="index" collection="appActorIds" 
 						open="(" separator="," close=")">
 					#GG{x_actorId}

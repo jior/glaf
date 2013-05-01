@@ -345,7 +345,7 @@
 
 	<select id="getPublicInfos" parameterType="com.glaf.cms.info.query.PublicInfoQuery"
 		resultMap="publicInfoResultMap">
-		select E.*
+		select distinct E.*
 		<include refid="selectPublicInfosSql" />
 		<choose>
 			<when test="orderBy != null">
@@ -382,7 +382,7 @@
 			<if
 				test="workedProcessFlag == 'WD' and appActorIds != null and appActorIds.size != 0 ">
 				and ( T.END_ IS NOT NULL)
-				and ( T.ACTORID in
+				and ( T.ACTORID_ in
 				<foreach item="x_actorId" index="index" collection="appActorIds"
 					open="(" separator="," close=")">
 					#{x_actorId}

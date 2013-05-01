@@ -331,6 +331,7 @@ public class PublicInfoMgmtController {
 				query.processInstanceIds(processInstanceIds);
 			}
 		} else if (StringUtils.equals(workedProcessFlag, "FB")) {
+			query.setStatus(-1);
 			List<Long> processInstanceIds = container
 					.getFinishedProcessInstanceIds(processName,
 							user.getActorId());
@@ -352,6 +353,9 @@ public class PublicInfoMgmtController {
 				processInstanceIds.add(0L);
 				query.processInstanceIds(processInstanceIds);
 			}
+		} else if (StringUtils.equals(workedProcessFlag, "DF")) {
+			query.setWorkedProcessFlag(null);
+			query.setStatus(0);
 		}
 
 		String gridType = ParamUtils.getString(params, "gridType");
@@ -604,6 +608,26 @@ public class PublicInfoMgmtController {
 			publicInfoService.save(publicInfo);
 
 			return ResponseUtils.responseJsonResult(true);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			logger.error(ex);
+		}
+		return ResponseUtils.responseJsonResult(false);
+	}
+
+	@ResponseBody
+	@RequestMapping("/publish")
+	public byte[] publish(HttpServletRequest request) {
+		String id = request.getParameter("id");
+		int publishFlag = RequestUtils.getInt(request, "publishFlag");
+		PublicInfo publicInfo = null;
+		try {
+			if (StringUtils.isNotEmpty(id)) {
+				publicInfo = publicInfoService.getPublicInfo(id);
+				publicInfo.setPublishFlag(publishFlag);
+				publicInfoService.save(publicInfo);
+				return ResponseUtils.responseJsonResult(true);
+			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			logger.error(ex);
