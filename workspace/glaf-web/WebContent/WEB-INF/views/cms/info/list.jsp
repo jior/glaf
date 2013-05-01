@@ -79,7 +79,7 @@
 				idField:'id',
 				columns:[[
 	                {title:'序号',field:'startIndex',width:80,sortable:false},
-					{title:'主题',field:'subject',width:250,sortable:false},
+					{title:'主题',field:'subject',width:350,sortable:false},
 					{title:'栏目名称',field:'categoryName',width:120,sortable:false},
 					{title:'发布单位',field:'unitName',width:120,sortable:false},
 					{title:'发布日期',field:'createDate',width:90,sortable:false},
@@ -263,6 +263,8 @@
 		var selected = jQuery('#mydatagrid').datagrid('getSelected');
 		if (selected &&  selected.processInstanceId && selected.processInstanceId != null){
 		    window.open('<%=request.getContextPath()%>/mx/jbpm/task/task?processInstanceId='+selected.processInstanceId);
+		} else {
+            alert("该记录没有启动工作流，不能查看流程进度。");
 		}
 	}
 
@@ -371,7 +373,7 @@
 		   <span>
 		      状态&nbsp;
 			  <select id="workedProcessFlag" name="workedProcessFlag" onchange="javascript:switchTasks();">
-				<option value="ALL">全部</option>
+				<option value="">全部</option>
 				<option value="DF">未提交</option>
 				<option value="PD">待审</option>
 				<option value="WD">已审</option>

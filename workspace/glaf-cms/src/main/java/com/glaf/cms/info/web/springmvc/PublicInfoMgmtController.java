@@ -274,10 +274,18 @@ public class PublicInfoMgmtController {
 		String serviceKey = request.getParameter("serviceKey");
 		Long nodeId = RequestUtils.getLong(request, "nodeId");
 
+		Map<Long, TreeModel> treeModelMap = new HashMap<Long, TreeModel>();
 		TreeModel treeModel = null;
 		if (StringUtils.isNotEmpty(serviceKey)) {
 			treeModel = treeModelService.getTreeModelByCode(serviceKey);
 			request.setAttribute("treeModel", treeModel);
+			List<TreeModel> treeModels = treeModelService
+					.getChildrenTreeModels(treeModel.getId());
+			if (treeModels != null && !treeModels.isEmpty()) {
+				for (TreeModel t : treeModels) {
+					treeModelMap.put(t.getId(), t);
+				}
+			}
 		}
 
 		if (nodeId > 0) {
@@ -320,11 +328,13 @@ public class PublicInfoMgmtController {
 				query.processInstanceIds(processInstanceIds);
 			}
 		} else if (StringUtils.equals(workedProcessFlag, "END")) {
+			query.setStatus(50);
+			query.setWfStatus(9999);
 			List<Long> processInstanceIds = container
 					.getFinishedProcessInstanceIds(processName,
 							user.getActorId());
 			if (processInstanceIds != null && processInstanceIds.size() > 0) {
-				query.processInstanceIds(processInstanceIds);
+				// query.processInstanceIds(processInstanceIds);
 			} else {
 				processInstanceIds = new ArrayList<Long>();
 				processInstanceIds.add(0L);
@@ -336,7 +346,7 @@ public class PublicInfoMgmtController {
 					.getFinishedProcessInstanceIds(processName,
 							user.getActorId());
 			if (processInstanceIds != null && processInstanceIds.size() > 0) {
-				query.processInstanceIds(processInstanceIds);
+				// query.processInstanceIds(processInstanceIds);
 			} else {
 				processInstanceIds = new ArrayList<Long>();
 				processInstanceIds.add(0L);
@@ -347,7 +357,7 @@ public class PublicInfoMgmtController {
 					.getFinishedProcessInstanceIds(processName,
 							user.getActorId());
 			if (processInstanceIds != null && processInstanceIds.size() > 0) {
-				query.processInstanceIds(processInstanceIds);
+				// query.processInstanceIds(processInstanceIds);
 			} else {
 				processInstanceIds = new ArrayList<Long>();
 				processInstanceIds.add(0L);
@@ -412,6 +422,11 @@ public class PublicInfoMgmtController {
 					rowJSON.put("id", publicInfo.getId());
 					rowJSON.put("publicInfoId", publicInfo.getId());
 					rowJSON.put("startIndex", ++start);
+					Long nid = publicInfo.getNodeId();
+					TreeModel tree = treeModelMap.get(nid);
+					if (tree != null) {
+						rowJSON.put("categoryName", tree.getName());
+					}
 					rowsJSON.add(rowJSON);
 				}
 
