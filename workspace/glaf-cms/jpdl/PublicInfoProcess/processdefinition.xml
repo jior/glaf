@@ -26,7 +26,7 @@
 		<expression>#{isAgree eq 'false'}</expression>
 	</action>
 
-	<action name="xyz_1000" class="com.glaf.jbpm.action.HibernateNativeHibernateNativeSQLAction">
+	<action name="xyz_1000" class="com.glaf.jbpm.action.HibernateNativeSQLAction">
 		<sql>
 			UPDATE #{tableName} 
 			SET PROCESSNAME_='PublicInfoProcess',

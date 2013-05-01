@@ -80,7 +80,7 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 		User user = RequestUtils.getUser(request);
 		String actorId = user.getActorId();
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		String taskInstanceId = ParamUtils.getString(params, "taskInstanceId");
+		
 		<#if idField.type=='Integer' >
                 ${entityName} ${modelName} = ${modelName}Service.get${entityName}(RequestUtils.getInt(request, "${idField.name}"));
 		<#elseif idField.type== 'Long' >
@@ -90,7 +90,7 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 		</#if>
 		if (${modelName} != null && ${modelName}.getProcessInstanceId() != null && ${modelName}.getWfStatus() != 9999) {
 			TaskItem taskItem = ProcessContainer.getContainer().getMinTaskItem(actorId, ${modelName}.getProcessInstanceId());
-			if (taskItem != null && StringUtils.equals(String.valueOf(taskItem.getTaskInstanceId()), taskInstanceId)) {				
+			if (taskItem != null) {				
 				String route = request.getParameter("route");
 				String isAgree = request.getParameter("isAgree");
 				String opinion = request.getParameter("opinion");
@@ -112,7 +112,7 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 				ctx.setOpinion(opinion);
 				ctx.setContextMap(params);
 				ctx.setDataFields(datafields);
-				ctx.setTaskInstanceId(Long.parseLong(taskInstanceId));
+				ctx.setTaskInstanceId(taskItem.getTaskInstanceId());
 				ctx.setProcessInstanceId(${modelName}.getProcessInstanceId());
 				try{
 					boolean isOK = ProcessContainer.getContainer().completeTask(ctx);

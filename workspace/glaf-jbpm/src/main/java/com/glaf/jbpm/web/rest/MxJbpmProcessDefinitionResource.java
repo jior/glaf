@@ -53,7 +53,7 @@ public class MxJbpmProcessDefinitionResource {
 				result = graphSession
 						.findAllProcessDefinitionVersions(processName);
 			} else {
-				result = graphSession.findAllProcessDefinitions();
+				result = graphSession.findLatestProcessDefinitions();
 			}
 
 			if (result != null && !result.isEmpty()) {
@@ -63,6 +63,8 @@ public class MxJbpmProcessDefinitionResource {
 					json.put("name", pd.getName());
 					json.put("description", pd.getDescription());
 					json.put("version", pd.getVersion());
+					json.put("text", pd.getDescription() + "(" + pd.getName()
+							+ ") V" + pd.getVersion() + ".0");
 					array.add(json);
 				}
 			}

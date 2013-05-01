@@ -1,0 +1,619 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.cms.info.mapper.PublicInfoMapper">
+
+	<resultMap id="publicInfoResultMap" type="com.glaf.cms.info.model.PublicInfo">
+		<id property="id" column="ID_" jdbcType="VARCHAR" />
+		<result property="wfStatus" column="WFSTATUS_" jdbcType="INTEGER" />
+		<result property="originalFlag" column="ORIGINALFLAG_"
+			jdbcType="INTEGER" />
+		<result property="startDate" column="STARTDATE_" jdbcType="TIMESTAMP" />
+		<result property="serviceKey" column="SERVICEKEY_" jdbcType="VARCHAR" />
+		<result property="tag" column="TAG_" jdbcType="VARCHAR" />
+		<result property="subject" column="SUBJECT_" jdbcType="VARCHAR" />
+		<result property="link" column="LINK_" jdbcType="VARCHAR" />
+		<result property="processName" column="PROCESSNAME_" jdbcType="VARCHAR" />
+		<result property="sortNo" column="SORTNO_" jdbcType="INTEGER" />
+		<result property="endDate" column="ENDDATE_" jdbcType="TIMESTAMP" />
+		<result property="refererUrl" column="REFERERURL_" jdbcType="VARCHAR" />
+		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR" />
+		<result property="publishFlag" column="PUBLISHFLAG_" jdbcType="INTEGER" />
+		<result property="author" column="AUTHOR_" jdbcType="VARCHAR" />
+		<result property="nodeId" column="NODEID_" jdbcType="BIGINT" />
+		<result property="processInstanceId" column="PROCESSINSTANCEID_"
+			jdbcType="BIGINT" />
+		<result property="name" column="NAME_" jdbcType="VARCHAR" />
+		<result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP" />
+		<result property="deleteFlag" column="DELETEFLAG_" jdbcType="INTEGER" />
+		<result property="commentFlag" column="COMMENTFLAG_" jdbcType="INTEGER" />
+		<result property="updateBy" column="UPDATEBY_" jdbcType="VARCHAR" />
+		<result property="fallbackFlag" column="FALLBACKFLAG_"
+			jdbcType="VARCHAR" />
+		<result property="keywords" column="KEYWORDS_" jdbcType="VARCHAR" />
+		<result property="summary" column="SUMMARY_" jdbcType="VARCHAR" />
+		<result property="status" column="STATUS_" jdbcType="INTEGER" />
+		<result property="digg" column="DIGG_" jdbcType="INTEGER" />
+		<result property="bury" column="BURY_" jdbcType="INTEGER" />
+		<result property="commentCount" column="COMMENTCOUNT_"
+			jdbcType="INTEGER" />
+		<result property="updateDate" column="UPDATEDATE_" jdbcType="TIMESTAMP" />
+		<result property="content" column="CONTENT_" jdbcType="VARCHAR" />
+		<result property="unitName" column="UNITNAME_" jdbcType="VARCHAR" />
+		<result property="viewCount" column="VIEWCOUNT_" jdbcType="INTEGER" />
+	</resultMap>
+
+
+	<insert id="insertPublicInfo" parameterType="com.glaf.cms.info.model.PublicInfo">
+		insert into CMS_PUBLICINFO
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ID_
+			<if test="originalFlag != null">
+				,ORIGINALFLAG_
+			</if>
+			<if test="startDate != null">
+				,STARTDATE_
+			</if>
+			<if test="serviceKey != null">
+				,SERVICEKEY_
+			</if>
+			<if test="tag != null">
+				,TAG_
+			</if>
+			<if test="subject != null">
+				,SUBJECT_
+			</if>
+			<if test="link != null">
+				,LINK_
+			</if>
+			<if test="sortNo != null">
+				,SORTNO_
+			</if>
+			<if test="endDate != null">
+				,ENDDATE_
+			</if>
+			<if test="refererUrl != null">
+				,REFERERURL_
+			</if>
+			<if test="createBy != null">
+				,CREATEBY_
+			</if>
+			<if test="publishFlag != null">
+				,PUBLISHFLAG_
+			</if>
+			<if test="author != null">
+				,AUTHOR_
+			</if>
+			<if test="nodeId != null">
+				,NODEID_
+			</if>
+			<if test="name != null">
+				,NAME_
+			</if>
+			<if test="createDate != null">
+				,CREATEDATE_
+			</if>
+			<if test="deleteFlag != null">
+				,DELETEFLAG_
+			</if>
+			<if test="commentFlag != null">
+				,COMMENTFLAG_
+			</if>
+			<if test="updateBy != null">
+				,UPDATEBY_
+			</if>
+			<if test="fallbackFlag != null">
+				,FALLBACKFLAG_
+			</if>
+			<if test="keywords != null">
+				,KEYWORDS_
+			</if>
+			<if test="summary != null">
+				,SUMMARY_
+			</if>
+			<if test="status != null">
+				,STATUS_
+			</if>
+			<if test="digg != null">
+				,DIGG_
+			</if>
+			<if test="bury != null">
+				,BURY_
+			</if>
+			<if test="updateDate != null">
+				,UPDATEDATE_
+			</if>
+			<if test="content != null">
+				,CONTENT_
+			</if>
+			<if test="unitName != null">
+				,UNITNAME_
+			</if>
+			<if test="viewCount != null">
+				,VIEWCOUNT_
+			</if>
+		</trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			#{id, jdbcType=VARCHAR}
+
+			<if test="originalFlag != null">
+				,#{originalFlag, jdbcType=INTEGER}
+			</if>
+			<if test="startDate != null">
+				,#{startDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="serviceKey != null">
+				,#{serviceKey, jdbcType=VARCHAR}
+			</if>
+			<if test="tag != null">
+				,#{tag, jdbcType=VARCHAR}
+			</if>
+			<if test="subject != null">
+				,#{subject, jdbcType=VARCHAR}
+			</if>
+			<if test="link != null">
+				,#{link, jdbcType=VARCHAR}
+			</if>
+			<if test="sortNo != null">
+				,#{sortNo, jdbcType=INTEGER}
+			</if>
+			<if test="endDate != null">
+				,#{endDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="refererUrl != null">
+				,#{refererUrl, jdbcType=VARCHAR}
+			</if>
+			<if test="createBy != null">
+				,#{createBy, jdbcType=VARCHAR}
+			</if>
+			<if test="publishFlag != null">
+				,#{publishFlag, jdbcType=INTEGER}
+			</if>
+			<if test="author != null">
+				,#{author, jdbcType=VARCHAR}
+			</if>
+			<if test="nodeId != null">
+				,#{nodeId, jdbcType=BIGINT}
+			</if>
+			<if test="name != null">
+				,#{name, jdbcType=VARCHAR}
+			</if>
+			<if test="createDate != null">
+				,#{createDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="deleteFlag != null">
+				,#{deleteFlag, jdbcType=INTEGER}
+			</if>
+			<if test="commentFlag != null">
+				,#{commentFlag, jdbcType=INTEGER}
+			</if>
+			<if test="updateBy != null">
+				,#{updateBy, jdbcType=VARCHAR}
+			</if>
+			<if test="fallbackFlag != null">
+				,#{fallbackFlag, jdbcType=VARCHAR}
+			</if>
+			<if test="keywords != null">
+				,#{keywords, jdbcType=VARCHAR}
+			</if>
+			<if test="summary != null">
+				,#{summary, jdbcType=VARCHAR}
+			</if>
+			<if test="status != null">
+				,#{status, jdbcType=INTEGER}
+			</if>
+			<if test="digg != null">
+				,#{digg, jdbcType=INTEGER}
+			</if>
+			<if test="bury != null">
+				,#{bury, jdbcType=INTEGER}
+			</if>
+			<if test="updateDate != null">
+				,#{updateDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="content != null">
+				,#{content, jdbcType=VARCHAR}
+			</if>
+			<if test="unitName != null">
+				,#{unitName, jdbcType=VARCHAR}
+			</if>
+			<if test="viewCount != null">
+				,#{viewCount, jdbcType=INTEGER}
+			</if>
+		</trim>
+	</insert>
+
+
+	<update id="updatePublicInfo" parameterType="com.glaf.cms.info.model.PublicInfo">
+		update CMS_PUBLICINFO
+		set
+		<trim prefix="" suffix="" suffixOverrides=",">
+			<if test="originalFlag != null">
+				ORIGINALFLAG_ = #{originalFlag, jdbcType=INTEGER},
+			</if>
+			<if test="startDate != null">
+				STARTDATE_ = #{startDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="tag != null">
+				TAG_ = #{tag, jdbcType=VARCHAR},
+			</if>
+			<if test="subject != null">
+				SUBJECT_ = #{subject, jdbcType=VARCHAR},
+			</if>
+			<if test="link != null">
+				LINK_ = #{link, jdbcType=VARCHAR},
+			</if>
+			<if test="sortNo != null">
+				SORTNO_ = #{sortNo, jdbcType=INTEGER},
+			</if>
+			<if test="endDate != null">
+				ENDDATE_ = #{endDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="refererUrl != null">
+				REFERERURL_ = #{refererUrl, jdbcType=VARCHAR},
+			</if>
+			<if test="createBy != null">
+				CREATEBY_ = #{createBy, jdbcType=VARCHAR},
+			</if>
+			<if test="publishFlag != null">
+				PUBLISHFLAG_ = #{publishFlag, jdbcType=INTEGER},
+			</if>
+			<if test="author != null">
+				AUTHOR_ = #{author, jdbcType=VARCHAR},
+			</if>
+			<if test="nodeId != null">
+				NODEID_ = #{nodeId, jdbcType=BIGINT},
+			</if>
+			<if test="name != null">
+				NAME_ = #{name, jdbcType=VARCHAR},
+			</if>
+			<if test="deleteFlag != null">
+				DELETEFLAG_ = #{deleteFlag, jdbcType=INTEGER},
+			</if>
+			<if test="commentFlag != null">
+				COMMENTFLAG_ = #{commentFlag, jdbcType=INTEGER},
+			</if>
+			<if test="updateBy != null">
+				UPDATEBY_ = #{updateBy, jdbcType=VARCHAR},
+			</if>
+			<if test="fallbackFlag != null">
+				FALLBACKFLAG_ = #{fallbackFlag, jdbcType=VARCHAR},
+			</if>
+			<if test="keywords != null">
+				KEYWORDS_ = #{keywords, jdbcType=VARCHAR},
+			</if>
+			<if test="summary != null">
+				SUMMARY_ = #{summary, jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				STATUS_ = #{status, jdbcType=INTEGER},
+			</if>
+			<if test="digg != null">
+				DIGG_ = #{digg, jdbcType=INTEGER},
+			</if>
+			<if test="bury != null">
+				BURY_ = #{bury, jdbcType=INTEGER},
+			</if>
+			<if test="commentCount != null">
+				COMMENTCOUNT_ = #{commentCount, jdbcType=INTEGER},
+			</if>
+			<if test="updateDate != null">
+				UPDATEDATE_ = #{updateDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="content != null">
+				CONTENT_ = #{content, jdbcType=VARCHAR},
+			</if>
+			<if test="unitName != null">
+				UNITNAME_ = #{unitName, jdbcType=VARCHAR},
+			</if>
+			<if test="viewCount != null">
+				VIEWCOUNT_ = #{viewCount, jdbcType=INTEGER},
+			</if>
+		</trim>
+		where
+		ID_ = #{id, jdbcType=VARCHAR}
+
+	</update>
+
+
+	<delete id="deletePublicInfoById" parameterType="string">
+		delete from
+		CMS_PUBLICINFO
+		where ID_ = #{id}
+	</delete>
+
+
+	<delete id="deletePublicInfos" parameterType="com.glaf.cms.info.query.PublicInfoQuery">
+		delete from CMS_PUBLICINFO
+		where (
+		ID_ IN
+		<foreach item="x_id" index="index" collection="ids" open="("
+			separator="," close=")">
+			#{x_id}
+		</foreach>
+		)
+	</delete>
+
+
+	<select id="getPublicInfoById" parameterType="string"
+		resultMap="publicInfoResultMap">
+		select * from CMS_PUBLICINFO where ID_ = #{id}
+	</select>
+
+
+	<select id="getPublicInfos" parameterType="com.glaf.cms.info.query.PublicInfoQuery"
+		resultMap="publicInfoResultMap">
+		select E.*
+		<include refid="selectPublicInfosSql" />
+		<choose>
+			<when test="orderBy != null">
+				order by ${orderBy}
+			</when>
+			<otherwise>
+				order by E.ID_ desc
+			</otherwise>
+		</choose>
+	</select>
+
+
+	<select id="getPublicInfoCount" parameterType="com.glaf.cms.info.query.PublicInfoQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectPublicInfosSql" />
+	</select>
+
+
+	<sql id="selectPublicInfosSql">
+
+		from CMS_PUBLICINFO E
+
+		<if
+			test=" workedProcessFlag == 'WD' and appActorIds != null and appActorIds.size != 0  ">
+			inner join JBPM_TASKINSTANCE T
+			on E.PROCESSINSTANCEID_ =
+			T.PROCINST_
+		</if>
+
+		<where>
+			1 = 1
+
+			<if
+				test="workedProcessFlag == 'WD' and appActorIds != null and appActorIds.size != 0 ">
+				and ( T.END_ IS NOT NULL)
+				and ( T.ACTORID in
+				<foreach item="x_actorId" index="index" collection="appActorIds"
+					open="(" separator="," close=")">
+					#{x_actorId}
+				</foreach>
+				)
+			</if>
+
+			<if
+				test="workedProcessFlag == 'PD' and appActorIds != null and appActorIds.size != 0 ">
+				and E.PROCESSINSTANCEID_ in (
+				SELECT a.PROCINST_
+				FROM
+				JBPM_TASKINSTANCE a
+				WHERE (1 = 1)
+				AND (a.END_ IS NULL)
+				AND (a.ACTORID_
+				IS NOT NULL)
+				AND (a.ACTORID_ in
+				<foreach item="x_actorId2" index="index" collection="appActorIds"
+					open="(" separator="," close=")">
+					#{x_actorId2}
+				</foreach>
+				)
+				union
+				SELECT a.PROCINST_
+				FROM JBPM_TASKINSTANCE a
+				INNER JOIN
+				JBPM_TASKACTORPOOL t
+				ON a.ID_ = t.TASKINSTANCE_
+				INNER JOIN
+				JBPM_POOLEDACTOR p
+				ON p.ID_ = t.POOLEDACTOR_
+				WHERE (1 = 1)
+				AND (a.END_
+				IS NULL)
+				AND (a.ACTORID_ IS NULL)
+				AND (p.ACTORID_ in
+				<foreach item="x_actorId3" index="index" collection="appActorIds"
+					open="(" separator="," close=")">
+					#{x_actorId3}
+				</foreach>
+				)
+				)
+			</if>
+
+			<if
+				test="workedProcessFlag == 'ALL' and appActorIds != null and appActorIds.size != 0 ">
+				and E.PROCESSINSTANCEID_ in (
+				SELECT a.PROCINST_
+				FROM
+				JBPM_TASKINSTANCE a
+				WHERE (1 = 1)
+				AND (a.ACTORID_ IS NOT NULL)
+				AND
+				(a.ACTORID_ in
+				<foreach item="x_actorId2" index="index" collection="appActorIds"
+					open="(" separator="," close=")">
+					#{x_actorId2}
+				</foreach>
+				)
+				union
+				SELECT a.PROCINST_
+				FROM JBPM_TASKINSTANCE a
+				INNER JOIN
+				JBPM_TASKACTORPOOL t
+				ON a.ID_ = t.TASKINSTANCE_
+				INNER JOIN
+				JBPM_POOLEDACTOR p
+				ON p.ID_ = t.POOLEDACTOR_
+				WHERE (1 = 1)
+				AND
+				(a.ACTORID_ IS NULL)
+				AND (p.ACTORID_ in
+				<foreach item="x_actorId3" index="index" collection="appActorIds"
+					open="(" separator="," close=")">
+					#{x_actorId3}
+				</foreach>
+				)
+				)
+			</if>
+
+
+			<if test="processInstanceIds != null and processInstanceIds.size() &gt; 0">
+				and E.PROCESSINSTANCEID_ IN
+				<foreach item="x_processInstanceId" index="index"
+					collection="processInstanceIds" open="(" separator="," close=")">
+					#{x_processInstanceId}
+				</foreach>
+			</if>
+
+			<if test="processName != null and processName != '' ">
+				and E.PROCESSNAME_ = #{processName}
+			</if>
+
+			<if test="processNames != null and processNames.size() &gt; 0">
+				and E.PROCESSNAME_ IN
+				<foreach item="x_processName" index="index" collection="processNames"
+					open="(" separator="," close=")">
+					#{x_processName}
+				</foreach>
+			</if>
+
+			<if test="wfStatus != null">
+				and E.WFSTATUS_ = #{wfStatus}
+			</if>
+
+			<if test="originalFlag != null">
+				and E.ORIGINALFLAG_ = #{originalFlag}
+			</if>
+
+			<if test="startDateGreaterThanOrEqual != null">
+				and E.STARTDATE_ &gt;= #{startDateGreaterThanOrEqual}
+			</if>
+
+			<if test="startDateLessThanOrEqual != null">
+				and E.STARTDATE_ &lt;= #{startDateLessThanOrEqual}
+			</if>
+
+			<if test="serviceKey != null and serviceKey != '' ">
+				and E.SERVICEKEY_ = #{serviceKey}
+			</if>
+
+			<if test="tagLike != null and tagLike != '' ">
+				and E.TAG_ like #{tagLike}
+			</if>
+
+			<if test="subjectLike != null and subjectLike != '' ">
+				and E.SUBJECT_ like #{subjectLike}
+			</if>
+
+			<if test="linkLike != null and linkLike != '' ">
+				and E.LINK_ like #{linkLike}
+			</if>
+
+			<if test="sortNoGreaterThanOrEqual != null">
+				and E.SORTNO_ &gt;= #{sortNoGreaterThanOrEqual}
+			</if>
+
+			<if test="sortNoLessThanOrEqual != null">
+				and E.SORTNO_ &lt;= #{sortNoLessThanOrEqual}
+			</if>
+
+			<if test="endDateGreaterThanOrEqual != null">
+				and E.ENDDATE_ &gt;= #{endDateGreaterThanOrEqual}
+			</if>
+
+			<if test="endDateLessThanOrEqual != null">
+				and E.ENDDATE_ &lt;= #{endDateLessThanOrEqual}
+			</if>
+
+			<if test="refererUrlLike != null and refererUrlLike != '' ">
+				and E.REFERERURL_ like #{refererUrlLike}
+			</if>
+
+			<if test="createBy != null and createBy != '' ">
+				and E.CREATEBY_ = #{createBy}
+			</if>
+
+			<if test="publishFlag != null">
+				and E.PUBLISHFLAG_ = #{publishFlag}
+			</if>
+
+			<if test="authorLike != null and authorLike != '' ">
+				and E.AUTHOR_ like #{authorLike}
+			</if>
+
+			<if test="nodeId != null">
+				and E.NODEID_ = #{nodeId}
+			</if>
+
+			<if test="nodeIds != null and nodeIds.size() &gt; 0">
+				and E.NODEID_ IN
+				<foreach item="x_nodeId" index="index" collection="nodeIds"
+					open="(" separator="," close=")">
+					#{x_nodeId}
+				</foreach>
+			</if>
+
+			<if test="nameLike != null and nameLike != '' ">
+				and E.NAME_ like #{nameLike}
+			</if>
+
+			<if test="createDateGreaterThanOrEqual != null">
+				and E.CREATEDATE_ &gt;= #{createDateGreaterThanOrEqual}
+			</if>
+
+			<if test="createDateLessThanOrEqual != null">
+				and E.CREATEDATE_ &lt;= #{createDateLessThanOrEqual}
+			</if>
+
+			<if test="deleteFlag != null">
+				and E.DELETEFLAG_ = #{deleteFlag}
+			</if>
+
+			<if test="updateBy != null and updateBy != '' ">
+				and E.UPDATEBY_ = #{updateBy}
+			</if>
+
+			<if test="fallbackFlag != null and fallbackFlag != '' ">
+				and E.FALLBACKFLAG_ = #{fallbackFlag}
+			</if>
+
+			<if test="keywordsLike != null and keywordsLike != '' ">
+				and E.KEYWORDS_ like #{keywordsLike}
+			</if>
+
+			<if test="status != null">
+				and E.STATUS_ = #{status}
+			</if>
+
+			<if test="updateDateGreaterThanOrEqual != null">
+				and E.UPDATEDATE_ &gt;= #{updateDateGreaterThanOrEqual}
+			</if>
+
+			<if test="updateDateLessThanOrEqual != null">
+				and E.UPDATEDATE_ &lt;= #{updateDateLessThanOrEqual}
+			</if>
+
+			<if test="contentLike != null and contentLike != '' ">
+				and E.CONTENT_ like #{contentLike}
+			</if>
+
+			<if test="unitNameLike != null and unitNameLike != '' ">
+				and E.UNITNAME_ like #{unitNameLike}
+			</if>
+
+			<if test="summaryLike != null and summaryLike != '' ">
+				and E.SUMMARY_ like #{summaryLike}
+			</if>
+
+		</where>
+	</sql>
+
+</mapper>

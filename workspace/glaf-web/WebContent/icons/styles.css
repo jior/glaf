@@ -13,6 +13,9 @@
 .icon-clear{
 	background:url('icons/clear.png') no-repeat ;
 }
+.icon-props{
+	background:url('icons/props.png') no-repeat ;
+}
 .icon-list{
 	background:url('icons/list.gif') no-repeat ;
 }
@@ -25,6 +28,14 @@
 
 .icon-exp{
 	background:url('icons/exp.gif') no-repeat ;
+}
+
+.icon-submit{
+	background:url('icons/submit.gif') no-repeat ;
+}
+
+.icon-process{
+	background:url('icons/process.gif') no-repeat ;
 }
 
 .icon-mail{

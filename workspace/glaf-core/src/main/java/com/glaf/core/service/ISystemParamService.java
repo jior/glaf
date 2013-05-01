@@ -104,6 +104,15 @@ public interface ISystemParamService {
 	 * @return
 	 */
 	List<SystemParam> getSystemParams(String serviceKey, String businessKey);
+	
+	/**
+	 * 获取系统参数
+	 * @param serviceKey
+	 * @param businessKey
+	 * @param keyName
+	 * @return
+	 */
+	SystemParam getSystemParam(String serviceKey, String businessKey, String keyName);
 
 	/**
 	 * 根据查询参数获取一页的数据

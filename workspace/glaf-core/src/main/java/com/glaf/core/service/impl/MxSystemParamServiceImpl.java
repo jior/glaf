@@ -187,6 +187,25 @@ public class MxSystemParamServiceImpl implements ISystemParamService {
 		query.setBusinessKey(businessKey);
 		return this.list(query);
 	}
+	
+	/**
+	 * 获取系统参数
+	 * @param serviceKey
+	 * @param businessKey
+	 * @param keyName
+	 * @return
+	 */
+	public SystemParam getSystemParam(String serviceKey, String businessKey, String keyName){
+		SystemParamQuery query = new SystemParamQuery();
+		query.serviceKey(serviceKey);
+		query.setBusinessKey(businessKey);
+		query.setKeyName(keyName);
+		List<SystemParam> list = this.list(query);
+		if(list != null && !list.isEmpty()){
+			return list.get(0);
+		}
+		return null;
+	}
 
 	/**
 	 * 根据查询参数获取一页的数据
