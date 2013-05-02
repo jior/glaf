@@ -99,6 +99,14 @@
 	background:url('icons/actor.gif') no-repeat ;
 }
 
+.icon-user{
+	background:url('icons/user.gif') no-repeat ;
+}
+
+.user{
+	background:url('icons/user.gif') no-repeat ;
+}
+
 .icon-accounts{
 	background:url('icons/accounts.gif') no-repeat ;
 }

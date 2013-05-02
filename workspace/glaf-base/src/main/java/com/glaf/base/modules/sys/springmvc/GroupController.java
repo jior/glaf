@@ -147,7 +147,7 @@ public class GroupController {
 			logger.debug("users size:" + users.size());
 			List<TreeModel> treeModels = new ArrayList<TreeModel>();
 			// treeModels.add(root);
-			List<SysTree> trees = sysTreeService.getSysTreeListForDept(
+			List<SysTree> trees = sysTreeService.getAllSysTreeListForDept(
 					(int) root.getId(), 0);
 			if (trees != null && !trees.isEmpty()) {
 				logger.debug("dept tree size:" + trees.size());
@@ -171,7 +171,7 @@ public class GroupController {
 								treeModel.setCode(user.getAccount());
 								treeModel.setName(user.getAccount() + " "
 										+ user.getName());
-								treeModel.setIconCls("user");
+								treeModel.setIconCls("icon-user");
 								if (userIds != null
 										&& userIds.contains(user.getAccount())) {
 									treeModel.setChecked(true);

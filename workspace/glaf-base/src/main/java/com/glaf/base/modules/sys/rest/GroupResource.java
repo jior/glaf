@@ -149,7 +149,7 @@ public class GroupResource {
 			logger.debug("users size:" + users.size());
 			List<TreeModel> treeModels = new ArrayList<TreeModel>();
 			// treeModels.add(root);
-			List<SysTree> trees = sysTreeService.getSysTreeListForDept(
+			List<SysTree> trees = sysTreeService.getAllSysTreeListForDept(
 					(int) root.getId(), 0);
 			if (trees != null && !trees.isEmpty()) {
 				logger.debug("dept tree size:" + trees.size());

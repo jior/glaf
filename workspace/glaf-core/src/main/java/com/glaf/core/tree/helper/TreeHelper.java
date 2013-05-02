@@ -62,8 +62,8 @@ public class TreeHelper {
 				child.put("id", component.getId());
 				child.put("code", component.getCode());
 				child.put("text", component.getTitle());
-				if(component.isChecked()){
-				    child.put("checked", true);
+				if (component.isChecked()) {
+					child.put("checked", true);
 				}
 				if (node != null) {
 
@@ -78,6 +78,10 @@ public class TreeHelper {
 					child.put("leaf", Boolean.valueOf(false));
 				} else {
 					child.put("leaf", Boolean.valueOf(true));
+				}
+				if (component.getCls() != null) {
+					child.put("cls", component.getCls());
+					child.put("iconCls", component.getCls());
 				}
 				array.add(child);
 				this.buildTree(child, component, checkedNodes, nodeMap);
@@ -110,6 +114,10 @@ public class TreeHelper {
 					this.buildTreeModel(child, component);
 				} else {
 					child.put("leaf", Boolean.valueOf(true));
+				}
+				if (component.getCls() != null) {
+					child.put("cls", component.getCls());
+					child.put("iconCls", component.getCls());
 				}
 				array.add(child);
 			}
@@ -171,6 +179,11 @@ public class TreeHelper {
 							} else {
 								row.put("checked", Boolean.valueOf(false));
 							}
+							if (menu.getCls() != null) {
+								row.put("cls", menu.getCls());
+								row.put("iconCls", menu.getCls());
+							}
+
 							array.add(row);
 							object.put("children", array);
 							this.buildTree(row, menu, checkedNodes, nodeMap);
@@ -186,6 +199,10 @@ public class TreeHelper {
 							row.put("id", menu.getId());
 							row.put("code", menu.getCode());
 							row.put("text", menu.getTitle());
+							if (menu.getCls() != null) {
+								row.put("cls", menu.getCls());
+								row.put("iconCls", menu.getCls());
+							}
 							if (node != null) {
 
 							}
@@ -252,6 +269,10 @@ public class TreeHelper {
 							if (component.isChecked()) {
 								object.put("checked", true);
 							}
+							if (component.getCls() != null) {
+								object.put("cls", component.getCls());
+								object.put("iconCls", component.getCls());
+							}
 							this.buildTreeModel(object, component);
 						}
 					} else {
@@ -273,6 +294,10 @@ public class TreeHelper {
 								this.buildTreeModel(row, component);
 							} else {
 								row.put("leaf", Boolean.valueOf(true));
+							}
+							if (component.getCls() != null) {
+								row.put("cls", component.getCls());
+								row.put("iconCls", component.getCls());
 							}
 							array.add(row);
 						}
@@ -336,6 +361,10 @@ public class TreeHelper {
 							this.buildTreeModel(row, component);
 						} else {
 							row.put("leaf", Boolean.valueOf(true));
+						}
+						if (component.getCls() != null) {
+							row.put("cls", component.getCls());
+							row.put("iconCls", component.getCls());
 						}
 						result.add(row);
 					}

@@ -216,7 +216,7 @@ public class SysTreeServiceImpl implements SysTreeService {
 		return pager;
 	}
 
-	public List<SysTree> getSysTreeListForDept(int parentId, int status) {
+	public List<SysTree> getSysTreeListForDept(long parentId, int status) {
 		SysTreeQuery query = new SysTreeQuery();
 		query.setParentId(Long.valueOf(parentId));
 		if (status != -1) {
@@ -227,6 +227,31 @@ public class SysTreeServiceImpl implements SysTreeService {
 		Collections.sort(list);
 		this.initDepartments(list);
 		return list;
+	}
+
+	public List<SysTree> getAllSysTreeListForDept(long parentId, int status) {
+		List<SysTree> list = new ArrayList<SysTree>();
+		this.loadChildrenTreeListForDept(list, parentId, status);
+		Collections.sort(list);
+		this.initDepartments(list);
+		return list;
+	}
+
+	protected void loadChildrenTreeListForDept(List<SysTree> list,
+			long parentId, int status) {
+		SysTreeQuery query = new SysTreeQuery();
+		query.setParentId(Long.valueOf(parentId));
+		if (status != -1) {
+			query.setDepartmentStatus(status);
+		}
+		query.setOrderBy(" E.SORT desc");
+		List<SysTree> trees = this.list(query);
+		if (trees != null && !trees.isEmpty()) {
+			for (SysTree tt : trees) {
+				list.add(tt);
+				this.loadChildrenTreeListForDept(list, tt.getId(), status);
+			}
+		}
 	}
 
 	/**

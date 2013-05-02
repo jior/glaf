@@ -66,11 +66,11 @@
 	   onclick="saveData();">保存</a>  
    </div> 
   </div> 
-  <div data-options="region:'center',border:false">
+  <div data-options="region:'center',border:false,fit:true">
      <form id="iForm" name="iForm">
 	   <input type="hidden" id="serviceKey" name="serviceKey" value="${serviceKey}">
 	   <input type="hidden" id="businessKey" name="businessKey" value="${businessKey}">
-	   <table id="tt" class="easyui-propertygrid" style="width:500px"
+	   <table id="tt" class="easyui-propertygrid" style="width:500px;height:300px"
 			data-options="url:'<%=request.getContextPath()%>/rs/system/param/json?serviceKey=${serviceKey}&businessKey=${businessKey}',showGroup:true,scrollbarSize:0, columns: mycolumns "></table>
 	</form>
   </div>  

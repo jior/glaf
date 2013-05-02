@@ -70,7 +70,7 @@
      <form id="iForm" name="iForm">
 	   <input type="hidden" id="serviceKey" name="serviceKey" value="${serviceKey}">
 	   <input type="hidden" id="businessKey" name="businessKey" value="${businessKey}">
-	   <table id="tt" class="easyui-propertygrid" style="width:580px"
+	   <table id="tt" class="easyui-propertygrid" style="width:580px;height:300px"
 			data-options="url:'<%=request.getContextPath()%>/rs/system/param/json?serviceKey=${serviceKey}&businessKey=${treeModel.code}',showGroup:true,scrollbarSize:0, columns: mycolumns "></table>
 	</form>
   </div>  

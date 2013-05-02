@@ -70,11 +70,11 @@ while(navIter.hasNext()){
     <td width="40%" align="center">所在部门</td>
   </tr>
   <%
-int i=0;
-if(list!=null){
-  Iterator iter=list.iterator();   
-  while(iter.hasNext()){
-    SysUser bean=(SysUser)iter.next();
+	int i=0;
+	if(list!=null){
+	  Iterator iter=list.iterator();   
+	  while(iter.hasNext()){
+		SysUser bean=(SysUser)iter.next();
 %>  
   <tr <%=i%2==0?"":"class='list-back'"%>> 
     <td class="td-cb"> <input type="checkbox" name="id" value="<%=bean.getId()%>" onClick="checkOperation(this.form)"></td>
@@ -98,13 +98,14 @@ for(; i<10; i++){
 }
 %>
 </table>
-</DIV>
+</div>
 <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
   <tr> 
-    <td align="left" height="30" valign="bottom"> 
-	<input name="btn_del" type="button" value="删除用户" class="button" onClick="delUser(this.form)" disabled>
-	<input name="btn_add" type="button" value="增加用户" class="button" onClick="addUser()"></td>
-    </tr>
+    <td align="left" height="30" valign="bottom"> &nbsp;&nbsp;&nbsp;&nbsp;
+	  <input name="btn_add" type="button" value="增加用户" class="button" onClick="addUser()">&nbsp;
+	  <input name="btn_del" type="button" value="删除用户" class="button" onClick="delUser(this.form)" disabled>
+	</td>
+  </tr>
 </table>
 </html:form> 
 <script language="javascript">

@@ -147,7 +147,19 @@ public interface SysTreeService {
 	 *            int 状态
 	 * @return List
 	 */
-	List<SysTree> getSysTreeListForDept(int parent, int status);
+	List<SysTree> getSysTreeListForDept(long parent, int status);
+	
+	
+	/**
+	 * 获取全部列表
+	 * 
+	 * @param parent
+	 *            int 父ID
+	 * @param status
+	 *            int 状态
+	 * @return List
+	 */
+	List<SysTree> getAllSysTreeListForDept(long parent, int status);
 
 	/**
 	 * 获取父节点列表，如:根目录>A>A1>A11
