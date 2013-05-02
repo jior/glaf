@@ -20,7 +20,7 @@ package com.glaf.core.base;
 
 import java.util.Date;
 
-public interface DataFile {
+public interface DataFile extends JSONable {
 
 	/**
 	 * 业务标识

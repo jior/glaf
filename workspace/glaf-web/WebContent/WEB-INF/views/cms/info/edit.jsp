@@ -14,14 +14,14 @@
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/glaf-core.js"></script>
 <script type="text/javascript">
 
-        KE.show({  id : 'content',
-	               allowFileManager : true,
-	               imageUploadJson : '<%=request.getContextPath()%>/mx/uploadJson',
-			       fileManagerJson : '<%=request.getContextPath()%>/mx/fileManagerJson'
-        });
+    KE.show({  id : 'content',
+	           allowFileManager : true,
+	           imageUploadJson : '<%=request.getContextPath()%>/mx/uploadJson',
+			   fileManagerJson : '<%=request.getContextPath()%>/mx/fileManagerJson'
+    });
 
 		 
-		function saveData(){
+	function saveData(){
 			document.getElementById("content").value=KE.html('content');
 			var params = jQuery("#iForm").formSerialize();
 			jQuery.ajax({
@@ -39,10 +39,10 @@
 						 alert('操作成功完成！');
 					   }
 				   }
-			});
-		}
+		});
+	}
 
-		function publishXY(publishFlag){
+	function publishXY(publishFlag){
 		   var msg="";
            if(publishFlag==1){
 			   msg="确定要发布该条信息吗？";
@@ -66,8 +66,59 @@
 					   window.location.reload();
 				   }
 			});
-		   }
 		}
+	}
+
+
+	function startProcess(){
+		var rowId = jQuery('#id').val();
+        jQuery.ajax({
+				   type: "POST",
+				   url: '<%=request.getContextPath()%>/mx/cms/info/startProcess?id='+rowId,
+				   dataType:  'json',
+				   error: function(data){
+					   alert('服务器处理错误！');
+				   },
+				   success: function(data){
+					   if(data.message != null){
+						   alert(data.message);
+					   } else {
+						 alert('操作成功完成！');
+					   }
+					  window.location.reload();
+				   }
+			 });
+	}
+
+    function completeTask(isAgree){
+        if(isAgree == 'false'){
+			if(jQuery('#opinion').val() == ""){
+				alert("请输入不通过的原因。");
+				document.getElementById('#opinion').focus();
+				return;
+			}
+		}
+		var rowId = jQuery('#id').val();
+        var opinion = jQuery('#opinion').val();
+		var params = jQuery("#iForm").formSerialize();
+        jQuery.ajax({
+			type: "POST",
+			url: '<%=request.getContextPath()%>/mx/cms/info/completeTask?id='+rowId+'&isAgree='+isAgree,
+			data: params,
+			dataType:  'json',
+			error: function(data){
+				alert('服务器处理错误！');
+			},
+			success: function(data){
+				if(data.message != null){
+					alert(data.message);
+				} else {
+					alert('操作成功完成！');
+				}
+				window.location.reload();
+			}
+		 });
+	}
 
 </script>
 </head>
@@ -145,6 +196,44 @@
 				 <br>  
 				 </td>
 			</tr>
+
+			<tr>
+			  <td>已上传附件</td>
+			  <td>
+			    <c:forEach items="${dataFiles}" var="a">
+				   <div id="div_${a.fileId}">
+					 <div>
+					 <span>${a.filename}</span>
+					 <span>&nbsp;<a target="_blank" href="<%=request.getContextPath()%>/mx/lob/lob/download?fileId=${a.fileId}"><img src="<%=request.getContextPath()%>/images/download.gif" border="0">下载</a></span>
+					 <c:if test="${(empty publicInfo) || (publicInfo.status <= 0)  }">
+					 &nbsp;<span><a href="#" onclick="javascript:deleteFile('${a.fileId}');"><img src="<%=request.getContextPath()%>/images/delete.gif" border="0">删除</a></span>
+					 </c:if>
+					 </div>
+				   </div>
+				</c:forEach>
+				<br>
+			  </td>
+		    </tr>
+
+           <c:if test="${(empty publicInfo) || (publicInfo.status <= 0)  }">
+			<tr>
+			  <td>上传附件</td>
+			  <td valign="middle">
+			    <iframe src="<%=request.getContextPath()%>/myupload.do?method=showUpload&serviceKey=${serviceKey}&view=operamasksUpload"
+				border="0" frameborder="0" width="680" height="180"></iframe>
+			  </td>
+		    </tr>
+			</c:if>
+
+            <c:if test="${publicInfo.processInstanceId != null && publicInfo.processInstanceId > 0 && publicInfo.status != -1 && publicInfo.wfStatus != 9999 }">
+			<tr>
+			  <td>审批意见</td>
+			  <td>
+				<input type="hidden" id="isAgree" name="isAgree" value="true">
+				<textarea id="opinion" name="opinion" rows="7" cols="42" style="padding:5px;width:365px;height:150px;"></textarea>
+			  </td>
+			</tr>
+			</c:if>
  
 	  <tr>
 		<td colspan="4" align="center">
@@ -161,7 +250,8 @@
 		</c:choose>
 		
 		&nbsp;&nbsp;
-		<c:if test="${publicInfo.status == 50}">
+		<c:choose>
+		  <c:when test="${publicInfo.status == 50}">
 		    <c:choose>
 			<c:when test="${publicInfo.publishFlag==1}">
 			  <input type="button" name="save" value=" 取消发布 " class=" btn btn-primary" 
@@ -172,14 +262,28 @@
 				onclick="javascript:publishXY(1);" />
 			</c:otherwise>
 			</c:choose>
-		</c:if>
-		<input name="btn_back" type="button" value=" 返 回 " class=" btn" onclick="javascript:history.back(0);">
+		  </c:when>
+		  <c:when test="${publicInfo.status == 0 }">
+             <input name="btn_submit" type="button" class="btn" value=" 提 交 "  onclick="javascript:startProcess();">
+		  </c:when>
+		  <c:when test="${ publicInfo.status ==-1}">
+             <input name="btn_resubmit" type="button" class="btn" value=" 重新提交 "  onclick="javascript:completeTask('true');">
+		  </c:when>
+		  <c:otherwise>
+		    <input name="btn_yes" type="button" class="btn" value=" 通 过 "  onclick="javascript:completeTask('true');">
+		    <input name="btn_no"  type="button" class="btn" value=" 不通过 " onclick="javascript:completeTask('false');">
+		  </c:otherwise>
+
+		 </c:choose>
+
+		 <input name="btn_back" type="button" value=" 返 回 " class=" btn" onclick="javascript:history.back(0);">
 		</td>
 	 </tr>
 	</tbody>
    </table>
   </form>
   <br> <br> <br>
+
   <script type="text/javascript">
          initData();
   </script>

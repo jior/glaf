@@ -26,10 +26,11 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
 import com.glaf.cms.info.util.*;
+import com.glaf.core.base.JSONable;
 
 @Entity
 @Table(name = "CMS_PUBLICINFO")
-public class PublicInfo implements Serializable {
+public class PublicInfo implements Serializable, JSONable {
 	private static final long serialVersionUID = 1L;
 
 	/**

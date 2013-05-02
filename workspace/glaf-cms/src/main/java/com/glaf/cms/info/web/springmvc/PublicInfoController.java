@@ -33,9 +33,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import com.alibaba.fastjson.*;
 
+import com.glaf.core.base.DataFile;
 import com.glaf.core.base.TreeModel;
 import com.glaf.core.config.ViewProperties;
 
+import com.glaf.core.service.IBlobService;
 import com.glaf.core.service.ISystemParamService;
 import com.glaf.core.service.ITreeModelService;
 import com.glaf.core.util.*;
@@ -49,6 +51,8 @@ import com.glaf.cms.info.service.*;
 public class PublicInfoController {
 	protected static final Log logger = LogFactory
 			.getLog(PublicInfoController.class);
+
+	protected IBlobService blobService;
 
 	protected PublicInfoService publicInfoService;
 
@@ -75,6 +79,19 @@ public class PublicInfoController {
 		}
 
 		JSONObject rowJSON = publicInfo.toJsonObject();
+
+		List<DataFile> dataFiles = blobService.getBlobList(publicInfo.getId());
+		if (dataFiles != null && !dataFiles.isEmpty()) {
+			JSONArray array = new JSONArray();
+			if (dataFiles != null && !dataFiles.isEmpty()) {
+				for (DataFile model : dataFiles) {
+					JSONObject jsonObject = model.toJsonObject();
+					array.add(jsonObject);
+				}
+			}
+			rowJSON.put("files", array);
+		}
+
 		return rowJSON.toJSONString().getBytes("UTF-8");
 	}
 
@@ -92,20 +109,19 @@ public class PublicInfoController {
 		if (StringUtils.isNotEmpty(serviceKey)) {
 			treeModel = treeModelService.getTreeModelByCode(serviceKey);
 			request.setAttribute("treeModel", treeModel);
-			List<TreeModel> treeModels = treeModelService.getChildrenTreeModels(treeModel.getId());
-		    if(treeModels != null && !treeModels.isEmpty()){
-		    	for(TreeModel t:treeModels){
-		    		treeModelMap.put(t.getId(), t);
-		    	}
-		    }
+			List<TreeModel> treeModels = treeModelService
+					.getChildrenTreeModels(treeModel.getId());
+			if (treeModels != null && !treeModels.isEmpty()) {
+				for (TreeModel t : treeModels) {
+					treeModelMap.put(t.getId(), t);
+				}
+			}
 		}
 
 		if (nodeId > 0) {
 			treeModel = treeModelService.getTreeModel(nodeId);
 			request.setAttribute("treeModel", treeModel);
 		}
-		
-		 
 
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		PublicInfoQuery query = new PublicInfoQuery();
@@ -168,7 +184,7 @@ public class PublicInfoController {
 					rowJSON.put("id", publicInfo.getId());
 					rowJSON.put("publicInfoId", publicInfo.getId());
 					rowJSON.put("startIndex", ++start);
-					if(tree != null){
+					if (tree != null) {
 						rowJSON.put("categoryName", tree.getName());
 					}
 					rowsJSON.add(rowJSON);
@@ -227,6 +243,11 @@ public class PublicInfoController {
 	}
 
 	@javax.annotation.Resource
+	public void setBlobService(IBlobService blobService) {
+		this.blobService = blobService;
+	}
+
+	@javax.annotation.Resource
 	public void setPublicInfoService(PublicInfoService publicInfoService) {
 		this.publicInfoService = publicInfoService;
 	}
@@ -257,6 +278,9 @@ public class PublicInfoController {
 
 		JSONObject rowJSON = publicInfo.toJsonObject();
 		request.setAttribute("x_json", rowJSON.toJSONString());
+
+		List<DataFile> dataFiles = blobService.getBlobList(publicInfo.getId());
+		request.setAttribute("dataFiles", dataFiles);
 
 		String view = request.getParameter("view");
 		if (StringUtils.isNotEmpty(view)) {

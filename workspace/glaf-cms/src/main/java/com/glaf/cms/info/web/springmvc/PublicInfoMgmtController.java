@@ -36,11 +36,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import com.alibaba.fastjson.*;
 
+import com.glaf.core.base.DataFile;
 import com.glaf.core.base.TreeModel;
 import com.glaf.core.config.ViewProperties;
 import com.glaf.core.domain.SystemParam;
 import com.glaf.core.identity.*;
 import com.glaf.core.security.*;
+import com.glaf.core.service.IBlobService;
 import com.glaf.core.service.ISystemParamService;
 import com.glaf.core.service.ITreeModelService;
 import com.glaf.core.util.*;
@@ -60,6 +62,8 @@ import com.glaf.jbpm.model.TaskItem;
 public class PublicInfoMgmtController {
 	protected static final Log logger = LogFactory
 			.getLog(PublicInfoMgmtController.class);
+
+	protected IBlobService blobService;
 
 	protected PublicInfoService publicInfoService;
 
@@ -105,7 +109,6 @@ public class PublicInfoMgmtController {
 				}
 				ctx.setActorId(actorId);
 				ctx.setOpinion(opinion);
-				ctx.setContextMap(params);
 				ctx.setDataFields(datafields);
 				ctx.setTaskInstanceId(taskItem.getTaskInstanceId());
 				ctx.setProcessInstanceId(publicInfo.getProcessInstanceId());
@@ -245,6 +248,12 @@ public class PublicInfoMgmtController {
 					canUpdate = true;
 				}
 			}
+		}
+
+		if (publicInfo != null) {
+			List<DataFile> dataFiles = blobService.getBlobList(publicInfo
+					.getId());
+			request.setAttribute("dataFiles", dataFiles);
 		}
 
 		request.setAttribute("canSubmit", canSubmit);
@@ -520,6 +529,33 @@ public class PublicInfoMgmtController {
 		return new ModelAndView("/cms/info/props", modelMap);
 	}
 
+	@ResponseBody
+	@RequestMapping("/publish")
+	public byte[] publish(HttpServletRequest request) {
+		LoginContext loginContext = RequestUtils.getLoginContext(request);
+		/**
+		 * 只有系统管理员及信息审核员才能发布信息
+		 */
+		if (loginContext.isSystemAdministrator()
+				|| loginContext.hasPermission("Auditor", "and")) {
+			String id = request.getParameter("id");
+			int publishFlag = RequestUtils.getInt(request, "publishFlag");
+			PublicInfo publicInfo = null;
+			try {
+				if (StringUtils.isNotEmpty(id)) {
+					publicInfo = publicInfoService.getPublicInfo(id);
+					publicInfo.setPublishFlag(publishFlag);
+					publicInfoService.save(publicInfo);
+					return ResponseUtils.responseJsonResult(true);
+				}
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				logger.error(ex);
+			}
+		}
+		return ResponseUtils.responseJsonResult(false);
+	}
+
 	@RequestMapping("/query")
 	public ModelAndView query(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
@@ -635,31 +671,9 @@ public class PublicInfoMgmtController {
 		return ResponseUtils.responseJsonResult(false);
 	}
 
-	@ResponseBody
-	@RequestMapping("/publish")
-	public byte[] publish(HttpServletRequest request) {
-		LoginContext loginContext = RequestUtils.getLoginContext(request);
-		/**
-		 * 只有系统管理员及信息审核员才能发布信息
-		 */
-		if (loginContext.isSystemAdministrator()
-				|| loginContext.hasPermission("Auditor", "and")) {
-			String id = request.getParameter("id");
-			int publishFlag = RequestUtils.getInt(request, "publishFlag");
-			PublicInfo publicInfo = null;
-			try {
-				if (StringUtils.isNotEmpty(id)) {
-					publicInfo = publicInfoService.getPublicInfo(id);
-					publicInfo.setPublishFlag(publishFlag);
-					publicInfoService.save(publicInfo);
-					return ResponseUtils.responseJsonResult(true);
-				}
-			} catch (Exception ex) {
-				ex.printStackTrace();
-				logger.error(ex);
-			}
-		}
-		return ResponseUtils.responseJsonResult(false);
+	@javax.annotation.Resource
+	public void setBlobService(IBlobService blobService) {
+		this.blobService = blobService;
 	}
 
 	@javax.annotation.Resource
@@ -788,6 +802,9 @@ public class PublicInfoMgmtController {
 			request.setAttribute("stepInstances", stepInstances);
 			request.setAttribute("stateInstances", stepInstances);
 		}
+
+		List<DataFile> dataFiles = blobService.getBlobList(publicInfo.getId());
+		request.setAttribute("dataFiles", dataFiles);
 
 		String view = request.getParameter("view");
 		if (StringUtils.isNotEmpty(view)) {
