@@ -90,6 +90,19 @@ insert into sys_tree (id, parent, name, nodeDesc, sort, code) values (498, 4, '»
 insert into sys_tree (id, parent, name, nodedesc, sort, code) values (512, 10, 'ÊÚÈ¨¹ÜÀí', 'ÊÚÈ¨¹ÜÀí', 512, '');
 
 
+insert into sys_tree (id, parent, name, nodedesc, sort, code) values (701, 3, 'ÄÚÈİ¹ÜÀí', 'ÄÚÈİ¹ÜÀí', 0, '');
+insert into sys_tree (id, parent, name, nodedesc, sort, code) values (702, 701, 'ĞÂÎÅ¹ÜÀí', 'ĞÂÎÅ¹ÜÀí', 0, '');
+insert into sys_tree (id, parent, name, nodedesc, sort, code) values (703, 701, '¹«¸æ¹ÜÀí', '¹«¸æ¹ÜÀí', 0, '');
+insert into sys_tree (id, parent, name, nodedesc, sort, code) values (720, 1, 'ÄÚÈİ¹ÜÀí·ÖÀà', '', 0, '');
+insert into sys_tree (id, parent, name, nodedesc, sort, code) values (721, 720, 'ĞÂÎÅ', 'ĞÂÎÅ', 0, 'news');
+insert into sys_tree (id, parent, name, nodedesc, sort, code) values (722, 721, '¹«Ë¾ĞÂÎÅ', '¹«Ë¾ĞÂÎÅ', 0, 'news_01');
+insert into sys_tree (id, parent, name, nodedesc, sort, code) values (723, 721, 'Òµ½çĞÂÎÅ', 'Òµ½çĞÂÎÅ', 0, 'news_02');
+insert into sys_tree (id, parent, name, nodedesc, sort, code) values (731, 720, '¹«¸æ', '¹«¸æ', 0, 'bulletin');
+insert into sys_tree (id, parent, name, nodedesc, sort, code) values (732, 731, 'ÆÕÍ¨', '', 0, '');
+insert into sys_tree (id, parent, name, nodedesc, sort, code) values (733, 731, 'ÖØÒª', '', 0, '');
+
+
+
 
 /*³õÊ¼»¯²¿ÃÅĞÅÏ¢*/
 insert into sys_department (id, name, deptdesc, createtime, sort, deptno, code, code2, status, fincode, nodeid) values (6, '¼¼Êõ²¿', '¼¼Êõ²¿', null, 284, 'JS000', 'JS', 'J', 0, 'JS000', 6);
@@ -139,6 +152,10 @@ insert into sys_application (id, name, appDesc, url, sort, showMenu, nodeId) val
 insert into sys_application (id, name, appDesc, url, sort, showMenu, nodeId) values (57, 'ÀúÊ·Á÷³ÌÊµÀı', 'ÀúÊ·Á÷³ÌÊµÀı', '/mx/activiti/history/historyProcessInstances', 57, 1, 57);
 insert into sys_application (id, name, appDesc, url, sort, showMenu, nodeId) values (58, 'ÈÎÎñÁĞ±í', 'ÈÎÎñÁĞ±í', '/mx/activiti/task/taskList', 58, 1, 58);
 insert into sys_application (id, name, appDesc, url, sort, showMenu, nodeId) values (59, 'Á÷³ÌÑİÊ¾', 'Á÷³ÌÑİÊ¾', '/workflow/activiti/index.jsp', 59, 1, 59);
+
+insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid, code) values (71, 'ÄÚÈİ¹ÜÀí', '', '', 1, 1, 701, null);
+insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid, code) values (72, 'ĞÂÎÅ¹ÜÀí', '', '/mx/cms/info?serviceKey=news', 2, 1, 702, null);
+insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid, code) values (73, '¹«¸æ¹ÜÀí', '', '/mx/cms/info?serviceKey=bulletin', 3, 1, 703, null);
 
 /*²åÈë²¿ÃÅ½ÇÉ«*/ 
 insert into sys_dept_role (id, grade, code, sort, sysroleid, deptid) values (1, 0, null, 0, 15, 6);
@@ -331,6 +348,12 @@ insert into sys_workcalendar (id, freeday, freemonth, freeyear) values (106, 13,
 insert into sys_workcalendar (id, freeday, freemonth, freeyear) values (107, 20, 10, 2013);
 insert into sys_workcalendar (id, freeday, freemonth, freeyear) values (108, 27, 10, 2013);
 
+
+insert into sys_params (id, business_key, date_val, double_val, int_val, java_type, key_name, long_val, service_key, string_val, text_val, title, type_cd) values ('news__news_processName', 'news', null, null, null, 'string', 'processName', null, 'news', 'PublicInfoProcess', 'PublicInfoProcess', 'Á÷³ÌÃû³Æ', 'news');
+insert into sys_params (id, business_key, date_val, double_val, int_val, java_type, key_name, long_val, service_key, string_val, text_val, title, type_cd) values ('bulletin__bulletin_processName', 'bulletin', null, null, null, 'string', 'processName', null, 'bulletin', 'PublicInfoProcess', 'PublicInfoProcess', 'Á÷³ÌÃû³Æ', 'bulletin');
+
+insert into sys_input_def (id, init_value, input_type, java_type, key_name, required, service_key, text_field, title, type_cd, type_title, url, valid_type, value_field) values ('7', '/rs/jbpm/definition/json', 'combobox', 'String', 'processName', null, 'news', 'text', 'Á÷³ÌÃû³Æ', 'news', 'ĞÂÎÅ·¢²¼', '/rs/jbpm/definition/json', null, 'name');
+insert into sys_input_def (id, init_value, input_type, java_type, key_name, required, service_key, text_field, title, type_cd, type_title, url, valid_type, value_field) values ('8', '/rs/jbpm/definition/json', 'combobox', 'String', 'processName', null, 'bulletin', 'text', 'Á÷³ÌÃû³Æ', 'bulletin', '¹«¸æ·¢²¼', '/rs/jbpm/definition/json', null, 'name');
 
 
 update sys_application set locked = 0 where locked is null;

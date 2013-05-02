@@ -412,6 +412,43 @@ CREATE TABLE sys_property (
 );
 
 
+create table sys_params(
+        id varchar(50) not null,
+        business_key varchar(200) not null,
+        date_val timestamp,
+        double_val double precision,
+        int_val integer,
+        java_type varchar(20) not null,
+        key_name varchar(50) not null,
+        long_val bigint,
+        service_key varchar(50) not null,
+        string_val varchar(2000),
+        text_val clob,
+        title varchar(200),
+        type_cd varchar(20) not null,
+        primary key (id)
+);
+
+
+create table sys_input_def (
+        id varchar(50) not null,
+        init_value varchar(500),
+        input_type varchar(50),
+        java_type varchar(20) not null,
+        key_name varchar(50) not null,
+        required varchar(10),
+        service_key varchar(50) not null,
+        text_field varchar(50),
+        title varchar(200) not null,
+        type_cd varchar(20) not null,
+        type_title varchar(200),
+        url varchar(250),
+        valid_type varchar(50),
+        value_field varchar(50),
+        primary key (id)
+);
+
+
 
     create index IDX_USER_ACCOUNT on SYS_USER (ACCOUNT);
 
