@@ -284,10 +284,9 @@
 	</tbody>
    </table>
   </form>
-  <br> <br> <br>
-
-  <script type="text/javascript">
-         initData();
-  </script>
+  <br> 
+  <br>
+  <br>
+ 
 </body>
 </html>
