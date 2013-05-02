@@ -74,22 +74,30 @@ public final class ContextFactory {
 	}
 
 	protected static void init() {
+		reload();
+	}
+
+	public static void reload() {
 		logger.info("◊∞‘ÿ≈‰÷√Œƒº˛......");
 		if (ctx == null) {
 			try {
 				if (StringUtils.isNotEmpty(conf.get("spring-config"))) {
 					String filename = SystemProperties.getConfigRootPath()
 							+ conf.get("spring-config");
-					logger.info("load spring config:" + filename);
+					logger.info("load custom spring config:" + filename);
+					if (filename.startsWith("/")) {
+						filename = "/" + filename;// For linux
+					}
 					ctx = new FileSystemXmlApplicationContext(filename);
 				} else {
 					String filename = SystemProperties.getConfigRootPath()
 							+ Constants.SPRING_APPLICATION_CONTEXT;
-					logger.info("load spring config:" + filename);
+					logger.info("load default spring config:" + filename);
 					ctx = new FileSystemXmlApplicationContext(filename);
 				}
 			} catch (Exception ex) {
 				ex.printStackTrace();
+				logger.error(ex);
 			}
 		}
 	}
