@@ -40,14 +40,14 @@ public class ${entityName}BaseController {
 
 
 	@RequestMapping(params = "method=save")
-	public ModelAndView save(HttpServletRequest request, ModelMap modelMap) {
+	public ModelAndView save(HttpServletRequest request, ModelMap modelMap, ${entityName} ${modelName}) {
 		User user = RequestUtils.getUser(request);
 		String actorId =  user.getActorId();
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
                 params.remove("status");
 		params.remove("wfStatus");
 
-		${entityName} ${modelName} = new ${entityName}();
+		//${entityName} ${modelName} = new ${entityName}();
 		//Tools.populate(${modelName}, params);
 
  <#if pojo_fields?exists>
@@ -75,11 +75,11 @@ public class ${entityName}BaseController {
 
         @ResponseBody
 	@RequestMapping(params = "method=save${entityName}")
-	public byte[] save${entityName}(HttpServletRequest request ) { 
+	public byte[] save${entityName}(HttpServletRequest request, ${entityName} ${modelName} ) { 
 	        User user = RequestUtils.getUser(request);
 		String actorId =  user.getActorId();
 	        Map<String, Object> params = RequestUtils.getParameterMap(request);
-		${entityName} ${modelName} = new ${entityName}();
+		//${entityName} ${modelName} = new ${entityName}();
 		try {
 		    Tools.populate(${modelName}, params);
  <#if pojo_fields?exists>
@@ -297,12 +297,14 @@ public class ${entityName}BaseController {
 
 	@RequestMapping(params = "method=json")
 	@ResponseBody
-	public byte[] json(HttpServletRequest request, ModelMap modelMap) throws IOException {
+	public byte[] json(HttpServletRequest request, ModelMap modelMap, ${entityName}Query query) throws IOException {
 	        LoginContext loginContext = RequestUtils.getLoginContext(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		${entityName}Query query = new ${entityName}Query();
+		//${entityName}Query query = new ${entityName}Query();
 		Tools.populate(query, params);
 		query.deleteFlag(0);
+		query.setActorId(loginContext.getActorId());
+		query.setLoginContext(loginContext);
 		/**
 		 * 此处业务逻辑需自行调整
 		*/

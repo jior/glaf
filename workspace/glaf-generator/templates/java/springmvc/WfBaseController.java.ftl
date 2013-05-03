@@ -35,8 +35,7 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 
 	@RequestMapping(params = "method=startProcess")
 	@ResponseBody
-	public byte[] startProcess(HttpServletRequest request,
-			ModelMap modelMap) {
+	public byte[] startProcess(HttpServletRequest request, ModelMap modelMap) {
 		User user = RequestUtils.getUser(request);
 		String actorId = user.getActorId();
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
@@ -75,8 +74,7 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 
 	@RequestMapping(params = "method=completeTask")
 	@ResponseBody
-	public byte[] completeTask(HttpServletRequest request,
-			ModelMap modelMap) {
+	public byte[] completeTask(HttpServletRequest request, ModelMap modelMap) {
 		User user = RequestUtils.getUser(request);
 		String actorId = user.getActorId();
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
@@ -129,6 +127,7 @@ public class ${entityName}WfController extends ${entityName}BaseController {
             return ResponseUtils.responseJsonResult(false);	 
 	}
 
+        @Override
 	@RequestMapping(params = "method=edit")
 	public ModelAndView edit(HttpServletRequest request, ModelMap modelMap) {
 		User user = RequestUtils.getUser(request);
@@ -204,6 +203,7 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 		return new ModelAndView("/apps/${modelName}/edit", modelMap);
 	}
 
+        @Override
 	@RequestMapping(params = "method=view")
 	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
@@ -242,11 +242,12 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 		return new ModelAndView("/apps/${modelName}/view");
 	}
 
+        @Override
 	@RequestMapping(params = "method=json")
 	@ResponseBody
-	public byte[] json(HttpServletRequest request, ModelMap modelMap)
+	public byte[] json(HttpServletRequest request, ModelMap modelMap, ${entityName}Query query)
 			throws IOException {
-		User user = RequestUtils.getUser(request);
+		LoginContext loginContext = RequestUtils.getLoginContext(request);
 	 
 		RequestUtils.setRequestParameterToAttribute(request);
 
@@ -261,15 +262,17 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 		}
 
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		${entityName}Query query = new ${entityName}Query();
+		//${entityName}Query query = new ${entityName}Query();
 		Tools.populate(query, params);
 		query.setWorkedProcessFlag(workedProcessFlag);
+		query.setActorId(loginContext.getActorId());
+		query.setLoginContext(loginContext);
 
 		ProcessContainer container = ProcessContainer.getContainer();
 		if (StringUtils.equals(workedProcessFlag, "PD")) {
 			List<Long> processInstanceIds = container
 					.getRunningProcessInstanceIdsByName(processName,
-							user.getActorId());
+							loginContext.getActorId());
 			if (processInstanceIds != null && processInstanceIds.size() > 0) {
 				query.processInstanceIds(processInstanceIds);
 			} else {
@@ -280,7 +283,7 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 		} else if (StringUtils.equals(workedProcessFlag, "END")) {
 			List<Long> processInstanceIds = container
 					.getFinishedProcessInstanceIds(processName,
-							user.getActorId());
+							loginContext.getActorId());
 			if (processInstanceIds != null && processInstanceIds.size() > 0) {
 				query.processInstanceIds(processInstanceIds);
 			} else {
@@ -291,7 +294,7 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 		} else if (StringUtils.equals(workedProcessFlag, "FB")) {
 			List<Long> processInstanceIds = container
 					.getFinishedProcessInstanceIds(processName,
-							user.getActorId());
+							loginContext.getActorId());
 			if (processInstanceIds != null && processInstanceIds.size() > 0) {
 				query.processInstanceIds(processInstanceIds);
 			} else {
@@ -302,7 +305,7 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 		} else if (StringUtils.equals(workedProcessFlag, "WD")) {
 			List<Long> processInstanceIds = container
 					.getFinishedProcessInstanceIds(processName,
-							user.getActorId());
+							loginContext.getActorId());
 			if (processInstanceIds != null && processInstanceIds.size() > 0) {
 				query.processInstanceIds(processInstanceIds);
 			} else {
