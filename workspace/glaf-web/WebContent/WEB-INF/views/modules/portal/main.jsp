@@ -102,6 +102,9 @@
 		}
 	}
  
+    jQuery(document).ready(function(){
+        $('#themeWin').window('close'); 
+	});
 	
 </script>
 </head>
@@ -245,5 +248,5 @@
 </body>
 </html>
 <script type="text/javascript">
-  $('#themeWin').window('close');  
+   
 </script>

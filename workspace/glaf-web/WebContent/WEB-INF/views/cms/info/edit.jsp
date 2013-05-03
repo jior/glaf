@@ -14,10 +14,12 @@
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/glaf-core.js"></script>
 <script type="text/javascript">
 
-    KE.show({  id : 'content',
-	           allowFileManager : true,
-	           imageUploadJson : '<%=request.getContextPath()%>/mx/uploadJson',
-			   fileManagerJson : '<%=request.getContextPath()%>/mx/fileManagerJson'
+    KE.show({  id : 'content'
+	           <c:if test="${(empty publicInfo) || (publicInfo.status <= 0)  }">
+	           ,allowFileManager : true
+	           ,imageUploadJson : '<%=request.getContextPath()%>/mx/uploadJson'
+			   ,fileManagerJson : '<%=request.getContextPath()%>/mx/fileManagerJson'
+			   </c:if>
     });
 
 		 
