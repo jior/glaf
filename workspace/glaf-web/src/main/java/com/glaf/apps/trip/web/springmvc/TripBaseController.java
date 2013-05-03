@@ -40,14 +40,14 @@ public class TripBaseController {
 
 
 	@RequestMapping(params = "method=save")
-	public ModelAndView save(HttpServletRequest request, ModelMap modelMap) {
+	public ModelAndView save(HttpServletRequest request, ModelMap modelMap, Trip trip) {
 		User user = RequestUtils.getUser(request);
 		String actorId =  user.getActorId();
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
                 params.remove("status");
 		params.remove("wfStatus");
 
-		Trip trip = new Trip();
+		//Trip trip = new Trip();
 		//Tools.populate(trip, params);
 
                 trip.setWfStatus(RequestUtils.getInt(request, "wfStatus"));
@@ -79,11 +79,11 @@ public class TripBaseController {
 
         @ResponseBody
 	@RequestMapping(params = "method=saveTrip")
-	public byte[] saveTrip(HttpServletRequest request ) { 
+	public byte[] saveTrip(HttpServletRequest request, Trip trip ) { 
 	        User user = RequestUtils.getUser(request);
 		String actorId =  user.getActorId();
 	        Map<String, Object> params = RequestUtils.getParameterMap(request);
-		Trip trip = new Trip();
+		//Trip trip = new Trip();
 		try {
 		    Tools.populate(trip, params);
                     trip.setWfStatus(RequestUtils.getInt(request, "wfStatus"));
@@ -285,12 +285,14 @@ public class TripBaseController {
 
 	@RequestMapping(params = "method=json")
 	@ResponseBody
-	public byte[] json(HttpServletRequest request, ModelMap modelMap) throws IOException {
+	public byte[] json(HttpServletRequest request, ModelMap modelMap, TripQuery query) throws IOException {
 	        LoginContext loginContext = RequestUtils.getLoginContext(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		TripQuery query = new TripQuery();
+		//TripQuery query = new TripQuery();
 		Tools.populate(query, params);
 		query.deleteFlag(0);
+		query.setActorId(loginContext.getActorId());
+		query.setLoginContext(loginContext);
 		/**
 		 * 此处业务逻辑需自行调整
 		*/

@@ -218,11 +218,11 @@
 
            <c:if test="${(empty publicInfo) || (publicInfo.status <= 0)  }">
 			<tr>
-			  <td>上传附件</td>
+			  <td valign="middle">上传附件</td>
 			  <td valign="middle">
 			    <br>
 			    <iframe src="<%=request.getContextPath()%>/myupload.do?method=showUpload&serviceKey=${serviceKey}&view=operamasksUpload"
-				border="0" frameborder="0" width="680" height="180"></iframe>
+				border="0" frameborder="0" width="680" height="240"></iframe>
 			  </td>
 		    </tr>
 			</c:if>
@@ -266,18 +266,23 @@
 			</c:choose>
 		  </c:when>
 		  <c:when test="${publicInfo.status == 0 }">
-             <input name="btn_submit" type="button" class="btn" value=" 提 交 "  onclick="javascript:startProcess();">
+             <input name="btn_submit" type="button" class="btn" value=" 提 交 "  
+			        onclick="javascript:startProcess();">
 		  </c:when>
 		  <c:when test="${ publicInfo.status ==-1}">
-             <input name="btn_resubmit" type="button" class="btn" value=" 重新提交 "  onclick="javascript:completeTask('true');">
+             <input name="btn_resubmit" type="button" class="btn" value=" 重新提交 "  
+			        onclick="javascript:completeTask('true');">
+		  </c:when>
+		  <c:when test="${ publicInfo.processInstanceId > 0 && publicInfo.wfStatus != 9999 }">
+             <input name="btn_yes" type="button" class="btn btn-primary" value=" 通 过 "  
+			        onclick="javascript:completeTask('true');">
+		     <input name="btn_no"  type="button" class="btn" value=" 不通过 " 
+			        onclick="javascript:completeTask('false');">
 		  </c:when>
 		  <c:otherwise>
-		    <input name="btn_yes" type="button" class="btn btn-primary" value=" 通 过 "  onclick="javascript:completeTask('true');">
-		    <input name="btn_no"  type="button" class="btn" value=" 不通过 " onclick="javascript:completeTask('false');">
+		  
 		  </c:otherwise>
-
 		 </c:choose>
-
 		 <input name="btn_back" type="button" value=" 返 回 " class=" btn" onclick="javascript:history.back(0);">
 		</td>
 	 </tr>

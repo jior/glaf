@@ -35,8 +35,7 @@ public class TripWfController extends TripBaseController {
 
 	@RequestMapping(params = "method=startProcess")
 	@ResponseBody
-	public byte[] startProcess(HttpServletRequest request,
-			ModelMap modelMap) {
+	public byte[] startProcess(HttpServletRequest request, ModelMap modelMap) {
 		User user = RequestUtils.getUser(request);
 		String actorId = user.getActorId();
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
@@ -69,16 +68,15 @@ public class TripWfController extends TripBaseController {
 
 	@RequestMapping(params = "method=completeTask")
 	@ResponseBody
-	public byte[] completeTask(HttpServletRequest request,
-			ModelMap modelMap) {
+	public byte[] completeTask(HttpServletRequest request, ModelMap modelMap) {
 		User user = RequestUtils.getUser(request);
 		String actorId = user.getActorId();
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		String taskInstanceId = ParamUtils.getString(params, "taskInstanceId");
+		
                 Trip trip = tripService.getTrip(request.getParameter("id"));
 		if (trip != null && trip.getProcessInstanceId() != null && trip.getWfStatus() != 9999) {
 			TaskItem taskItem = ProcessContainer.getContainer().getMinTaskItem(actorId, trip.getProcessInstanceId());
-			if (taskItem != null && StringUtils.equals(String.valueOf(taskItem.getTaskInstanceId()), taskInstanceId)) {				
+			if (taskItem != null) {				
 				String route = request.getParameter("route");
 				String isAgree = request.getParameter("isAgree");
 				String opinion = request.getParameter("opinion");
@@ -100,7 +98,7 @@ public class TripWfController extends TripBaseController {
 				ctx.setOpinion(opinion);
 				ctx.setContextMap(params);
 				ctx.setDataFields(datafields);
-				ctx.setTaskInstanceId(Long.parseLong(taskInstanceId));
+				ctx.setTaskInstanceId(taskItem.getTaskInstanceId());
 				ctx.setProcessInstanceId(trip.getProcessInstanceId());
 				try{
 					boolean isOK = ProcessContainer.getContainer().completeTask(ctx);
@@ -117,6 +115,7 @@ public class TripWfController extends TripBaseController {
             return ResponseUtils.responseJsonResult(false);	 
 	}
 
+        @Override
 	@RequestMapping(params = "method=edit")
 	public ModelAndView edit(HttpServletRequest request, ModelMap modelMap) {
 		User user = RequestUtils.getUser(request);
@@ -186,6 +185,7 @@ public class TripWfController extends TripBaseController {
 		return new ModelAndView("/apps/trip/edit", modelMap);
 	}
 
+        @Override
 	@RequestMapping(params = "method=view")
 	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
@@ -218,11 +218,12 @@ public class TripWfController extends TripBaseController {
 		return new ModelAndView("/apps/trip/view");
 	}
 
+        @Override
 	@RequestMapping(params = "method=json")
 	@ResponseBody
-	public byte[] json(HttpServletRequest request, ModelMap modelMap)
+	public byte[] json(HttpServletRequest request, ModelMap modelMap, TripQuery query)
 			throws IOException {
-		User user = RequestUtils.getUser(request);
+		LoginContext loginContext = RequestUtils.getLoginContext(request);
 	 
 		RequestUtils.setRequestParameterToAttribute(request);
 
@@ -237,15 +238,17 @@ public class TripWfController extends TripBaseController {
 		}
 
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		TripQuery query = new TripQuery();
+		//TripQuery query = new TripQuery();
 		Tools.populate(query, params);
 		query.setWorkedProcessFlag(workedProcessFlag);
+		query.setActorId(loginContext.getActorId());
+		query.setLoginContext(loginContext);
 
 		ProcessContainer container = ProcessContainer.getContainer();
 		if (StringUtils.equals(workedProcessFlag, "PD")) {
 			List<Long> processInstanceIds = container
 					.getRunningProcessInstanceIdsByName(processName,
-							user.getActorId());
+							loginContext.getActorId());
 			if (processInstanceIds != null && processInstanceIds.size() > 0) {
 				query.processInstanceIds(processInstanceIds);
 			} else {
@@ -256,7 +259,7 @@ public class TripWfController extends TripBaseController {
 		} else if (StringUtils.equals(workedProcessFlag, "END")) {
 			List<Long> processInstanceIds = container
 					.getFinishedProcessInstanceIds(processName,
-							user.getActorId());
+							loginContext.getActorId());
 			if (processInstanceIds != null && processInstanceIds.size() > 0) {
 				query.processInstanceIds(processInstanceIds);
 			} else {
@@ -267,7 +270,7 @@ public class TripWfController extends TripBaseController {
 		} else if (StringUtils.equals(workedProcessFlag, "FB")) {
 			List<Long> processInstanceIds = container
 					.getFinishedProcessInstanceIds(processName,
-							user.getActorId());
+							loginContext.getActorId());
 			if (processInstanceIds != null && processInstanceIds.size() > 0) {
 				query.processInstanceIds(processInstanceIds);
 			} else {
@@ -278,7 +281,7 @@ public class TripWfController extends TripBaseController {
 		} else if (StringUtils.equals(workedProcessFlag, "WD")) {
 			List<Long> processInstanceIds = container
 					.getFinishedProcessInstanceIds(processName,
-							user.getActorId());
+							loginContext.getActorId());
 			if (processInstanceIds != null && processInstanceIds.size() > 0) {
 				query.processInstanceIds(processInstanceIds);
 			} else {
