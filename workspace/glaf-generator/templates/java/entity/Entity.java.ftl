@@ -14,13 +14,40 @@ import ${packageName}.util.*;
 @Entity
 @Table(name = "${tableName}")
 public class ${entityName} implements Serializable {
-	private static final long serialVersionUID = 1L;
+        private static final long serialVersionUID = 1L;
 
         @Id
-	@Column(name = "${idField.columnName}", length = 50, nullable = false)
-	protected ${idField.type} ${idField.name};
+        @Column(name = "${idField.columnName}", nullable = false)
+        protected ${idField.type} ${idField.name};
 
-	${jpa_fields?if_exists}
+<#if pojo_fields?exists>
+<#list  pojo_fields as field>	
+  <#if field.type?exists >
+    <#if field.columnName?exists >
+	<#if ( field.type== 'Integer')>
+        @Column(name = "${field.columnName}")
+	<#elseif ( field.type== 'Long' )>
+        @Column(name = "${field.columnName}")	 
+	<#elseif ( field.type== 'Double' )>
+        @Column(name = "${field.columnName}")	 
+	<#elseif ( field.type== 'Date' )>
+        @Temporal(TemporalType.TIMESTAMP)
+        @Column(name = "${field.columnName}")	
+	<#elseif ( field.type== 'Clob' )>
+        @Column(name = "${field.columnName}") 
+	<#elseif ( field.type== 'String' )>
+        @Column(name = "${field.columnName}", length=${field.length}) 
+	<#else>
+        @Column(name = "${field.columnName}")  
+        </#if>
+    <#else>
+        @Transient
+    </#if>
+        protected ${field.type} ${field.name};
+
+  </#if>
+</#list>
+</#if>
 
          
 	public ${entityName}() {
@@ -31,16 +58,33 @@ public class ${entityName} implements Serializable {
 	    return this.${idField.name};
 	}
 
-
-
-	${jpa_get_methods?if_exists}
-
-
 	public void set${idField.firstUpperName}(${idField.type} ${idField.name}) {
 	    this.${idField.name} = ${idField.name}; 
 	}
 
-	${jpa_set_methods?if_exists}
+
+<#if pojo_fields?exists>
+<#list  pojo_fields as field>	
+  <#if  field.type?exists >
+	public ${field.type} get${field.firstUpperName}(){
+	    return this.${field.name};
+	}
+
+  </#if>
+</#list>
+</#if>
+
+
+<#if pojo_fields?exists>
+<#list  pojo_fields as field>	
+  <#if  field.type?exists >
+	public void set${field.firstUpperName}(${field.type} ${field.name}) {
+	    this.${field.name} = ${field.name}; 
+	}	 
+
+  </#if>
+</#list>
+</#if>
 
 
 	@Override
@@ -84,7 +128,7 @@ public class ${entityName} implements Serializable {
             return ${entityName}JsonFactory.toObjectNode(this);
 	}
 
-
+        @Override
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this,
 				ToStringStyle.MULTI_LINE_STYLE);
