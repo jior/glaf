@@ -285,9 +285,7 @@ public class JavaCodeGen {
 		Map<String, FieldDefinition> fields = classDefinition.getFields();
 
 		context.put("pojo_fields", fields.values());
-		StringBuffer b01 = new StringBuffer();
-		StringBuffer b02 = new StringBuffer();
-		StringBuffer b03 = new StringBuffer();
+
 		StringBuffer b04 = new StringBuffer();
 		StringBuffer b05 = new StringBuffer();
 
@@ -296,14 +294,9 @@ public class JavaCodeGen {
 			if (field.getDisplayType() == 4) {
 				displaySize++;
 			}
-			b01.append(newline).append(newline).append("        /**")
-					.append(newline).append("        *")
-					.append(field.getTitle()).append(newline)
-					.append("        */");
 
 			if (StringUtils.equalsIgnoreCase(field.getType(), "Date")) {
-				b01.append(newline).append(
-						"        @Temporal(TemporalType.TIMESTAMP)");
+
 				b04.append(newline).append(newline)
 						.append("		if(paramMap.get(\"").append(field.getName())
 						.append("\") != null ){");
@@ -457,71 +450,8 @@ public class JavaCodeGen {
 					b05.append(newline).append("		}");
 				}
 			}
-			if (StringUtils.isNotEmpty(field.getColumnName())) {
-				if (StringUtils.equals(field.getName(), classDefinition
-						.getIdField().getName())) {
-					b01.append(newline).append("        @Id");
-				}
-				b01.append(newline).append("        @Column(name = \"")
-						.append(field.getColumnName()).append("\")");
-			} else {
-				b01.append(newline).append("        @Transient");
-			}
-
-			b01.append(newline).append("        protected ")
-					.append(field.getType()).append(" ")
-					.append(field.getName()).append(";");
-
-			if (StringUtils.isNotEmpty(field.getDataCode())) {
-				b01.append(newline).append(newline)
-						.append("        @Transient");
-				b01.append(newline).append("        protected ")
-						.append(field.getType()).append(" ")
-						.append(field.getName()).append("Name;");
-			}
-
-			b02.append(newline).append(newline).append("        public ")
-					.append(field.getType()).append(" get")
-					.append(StringTools.upper(field.getName())).append("(){");
-			b02.append(newline).append("            return this.")
-					.append(field.getName()).append(";");
-			b02.append(newline).append("        }");
-
-			if (StringUtils.isNotEmpty(field.getDataCode())) {
-				b02.append(newline).append(newline).append("        public ")
-						.append(field.getType()).append(" get")
-						.append(StringTools.upper(field.getName()))
-						.append("Name(){");
-				b02.append(newline).append("            return this.")
-						.append(field.getName()).append("Name;");
-				b02.append(newline).append("        }");
-			}
-
-			b03.append(newline).append(newline).append("        public void ")
-					.append(" set").append(StringTools.upper(field.getName()))
-					.append("(").append(field.getType()).append(" ")
-					.append(field.getName()).append("){");
-			b03.append(newline).append("              this.")
-					.append(field.getName()).append("=")
-					.append(field.getName()).append(";");
-			b03.append(newline).append("        }");
-
-			if (StringUtils.isNotEmpty(field.getDataCode())) {
-				b03.append(newline).append(newline)
-						.append("        public void ").append(" set")
-						.append(StringTools.upper(field.getName()))
-						.append("Name(").append(field.getType()).append(" ")
-						.append(field.getName()).append("Name){");
-				b03.append(newline).append("              this.")
-						.append(field.getName()).append("Name = ")
-						.append(field.getName()).append("Name;");
-				b03.append(newline).append("        }");
-			}
 		}
 
-		context.put("jpa_fields", b01.toString());
-		context.put("jpa_get_methods", b02.toString());
-		context.put("jpa_set_methods", b03.toString());
 		context.put("query_params", b04.toString());
 		context.put("query_paramMap", b05.toString());
 		context.put("displaySize", displaySize);
