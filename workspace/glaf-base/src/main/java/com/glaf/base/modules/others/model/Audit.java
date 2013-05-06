@@ -49,7 +49,7 @@ public class Audit implements Serializable, JSONable {
 	/**
 	 * 部门名称
 	 */
-	@Column(name = "DEPTNAME")
+	@Column(name = "DEPTNAME", length = 250)
 	protected String deptName;
 
 	/**
@@ -61,7 +61,7 @@ public class Audit implements Serializable, JSONable {
 	/**
 	 * 职位
 	 */
-	@Column(name = "HEADSHIP")
+	@Column(name = "HEADSHIP", length = 50)
 	protected String headship;
 
 	@Id
@@ -77,13 +77,13 @@ public class Audit implements Serializable, JSONable {
 	/**
 	 * 领导名称
 	 */
-	@Column(name = "LEADERNAME")
+	@Column(name = "LEADERNAME", length = 50)
 	protected String leaderName;
 
 	/**
 	 * 评价
 	 */
-	@Column(name = "MEMO")
+	@Column(name = "MEMO", length = 500)
 	protected String memo;
 
 	/**

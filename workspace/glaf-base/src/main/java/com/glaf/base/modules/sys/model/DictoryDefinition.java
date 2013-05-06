@@ -22,13 +22,13 @@ public class DictoryDefinition implements Serializable, JSONable,
 	/**
 	 * 列名
 	 */
-	@Column(name = "COLUMNNAME")
+	@Column(name = "COLUMNNAME", length = 50)
 	protected String columnName;
 
 	/**
 	 * 创建人
 	 */
-	@Column(name = "CREATEBY")
+	@Column(name = "CREATEBY", length = 50)
 	protected String createBy;
 
 	/**
@@ -51,7 +51,7 @@ public class DictoryDefinition implements Serializable, JSONable,
 	/**
 	 * 名称
 	 */
-	@Column(name = "NAME")
+	@Column(name = "NAME", length = 50)
 	protected String name;
 
 	/**
@@ -75,25 +75,25 @@ public class DictoryDefinition implements Serializable, JSONable,
 	/**
 	 * 目标
 	 */
-	@Column(name = "TARGET")
+	@Column(name = "TARGET", length = 100)
 	protected String target;
 
 	/**
 	 * 标题
 	 */
-	@Column(name = "TITLE")
+	@Column(name = "TITLE", length = 250)
 	protected String title;
 
 	/**
 	 * 数据类型
 	 */
-	@Column(name = "TYPE")
+	@Column(name = "TYPE", length = 50)
 	protected String type;
 
 	/**
 	 * 修改人
 	 */
-	@Column(name = "UPDATEBY")
+	@Column(name = "UPDATEBY", length = 50)
 	protected String updateBy;
 
 	/**

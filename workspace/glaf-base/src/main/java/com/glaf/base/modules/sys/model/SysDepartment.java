@@ -42,19 +42,19 @@ public class SysDepartment implements Serializable, JSONable {
 	/**
 	 * 编码
 	 */
-	@Column(name = "CODE")
+	@Column(name = "CODE", length = 250)
 	protected String code;
 
 	/**
 	 * 编码2
 	 */
-	@Column(name = "CODE2")
+	@Column(name = "CODE2", length = 250)
 	protected String code2;
 
 	/**
 	 * 创建人
 	 */
-	@Column(name = "CREATEBY")
+	@Column(name = "CREATEBY", length = 50)
 	protected String createBy;
 
 	/**
@@ -67,13 +67,13 @@ public class SysDepartment implements Serializable, JSONable {
 	/**
 	 * 描述
 	 */
-	@Column(name = "DEPTDESC")
+	@Column(name = "DEPTDESC", length = 500)
 	protected String desc;
 
 	/**
 	 * 财务代码
 	 */
-	@Column(name = "FINCODE")
+	@Column(name = "FINCODE", length = 250)
 	protected String fincode;
 
 	@Id
@@ -89,7 +89,7 @@ public class SysDepartment implements Serializable, JSONable {
 	/**
 	 * 名称
 	 */
-	@Column(name = "NAME")
+	@Column(name = "NAME", length = 200)
 	protected String name;
 
 	/**
@@ -128,7 +128,7 @@ public class SysDepartment implements Serializable, JSONable {
 	/**
 	 * 修改人
 	 */
-	@Column(name = "UPDATEBY")
+	@Column(name = "UPDATEBY", length = 50)
 	protected String updateBy;
 
 	/**

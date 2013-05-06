@@ -36,6 +36,7 @@ import com.glaf.core.base.TreeModel;
 @Table(name = "sys_tree")
 public class SysTree implements Serializable, TreeModel, JSONable {
 	private static final long serialVersionUID = 2666681837822864771L;
+
 	@javax.persistence.Transient
 	protected SysApplication app;
 
@@ -51,13 +52,13 @@ public class SysTree implements Serializable, TreeModel, JSONable {
 	/**
 	 * 编码
 	 */
-	@Column(name = "CODE")
+	@Column(name = "CODE", length = 50)
 	protected String code;
 
 	/**
 	 * 创建人
 	 */
-	@Column(name = "CREATEBY")
+	@Column(name = "CREATEBY", length = 50)
 	protected String createBy;
 
 	/**
@@ -76,22 +77,22 @@ public class SysTree implements Serializable, TreeModel, JSONable {
 	/**
 	 * 节点描述
 	 */
-	@Column(name = "NODEDESC")
+	@Column(name = "NODEDESC", length = 500)
 	protected String desc;
 
-	@Column(name = "DISCRIMINATOR")
+	@Column(name = "DISCRIMINATOR", length = 10)
 	protected String discriminator;
 
 	/**
 	 * 图标
 	 */
-	@Column(name = "icon")
+	@Column(name = "icon", length = 50)
 	protected String icon;
 
 	/**
 	 * 图标样式
 	 */
-	@Column(name = "iconCls")
+	@Column(name = "iconCls", length = 50)
 	protected String iconCls;
 
 	@Id
@@ -104,13 +105,13 @@ public class SysTree implements Serializable, TreeModel, JSONable {
 	@Column(name = "locked")
 	protected int locked;
 
-	@Column(name = "MOVEABLE")
+	@Column(name = "MOVEABLE", length = 10)
 	protected String moveable;
 
 	/**
 	 * 名称
 	 */
-	@Column(name = "NAME")
+	@Column(name = "NAME", length = 100)
 	protected String name;
 
 	@javax.persistence.Transient
@@ -128,13 +129,13 @@ public class SysTree implements Serializable, TreeModel, JSONable {
 	@Column(name = "SORT")
 	protected int sort;
 
-	@Column(name = "TREEID")
+	@Column(name = "TREEID", length = 500)
 	protected String treeId;
 
 	/**
 	 * 修改人
 	 */
-	@Column(name = "UPDATEBY")
+	@Column(name = "UPDATEBY", length = 50)
 	protected String updateBy;
 
 	/**
@@ -147,7 +148,7 @@ public class SysTree implements Serializable, TreeModel, JSONable {
 	/**
 	 * url
 	 */
-	@Column(name = "url")
+	@Column(name = "url", length = 500)
 	protected String url;
 
 	public SysTree() {

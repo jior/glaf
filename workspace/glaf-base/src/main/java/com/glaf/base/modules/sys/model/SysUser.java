@@ -40,7 +40,7 @@ public class SysUser implements Serializable, User, JSONable {
 	/**
 	 * 用户名
 	 */
-	@Column(name = "ACCOUNT")
+	@Column(name = "ACCOUNT", length = 50)
 	protected String account;
 
 	/**
@@ -52,7 +52,7 @@ public class SysUser implements Serializable, User, JSONable {
 	/**
 	 * 管理员标识
 	 */
-	@Column(name = "ADMINFLAG")
+	@Column(name = "ADMINFLAG", length = 10)
 	protected String adminFlag;
 
 	@javax.persistence.Transient
@@ -67,13 +67,13 @@ public class SysUser implements Serializable, User, JSONable {
 	/**
 	 * 编码
 	 */
-	@Column(name = "CODE")
+	@Column(name = "CODE", length = 200)
 	protected String code;
 
 	/**
 	 * 创建人
 	 */
-	@Column(name = "CREATEBY")
+	@Column(name = "CREATEBY", length = 50)
 	protected String createBy;
 
 	/**
@@ -101,7 +101,7 @@ public class SysUser implements Serializable, User, JSONable {
 	/**
 	 * 邮件
 	 */
-	@Column(name = "EMAIL")
+	@Column(name = "EMAIL", length = 200)
 	protected String email;
 
 	/**
@@ -113,7 +113,7 @@ public class SysUser implements Serializable, User, JSONable {
 	/**
 	 * 传真
 	 */
-	@Column(name = "FAX")
+	@Column(name = "FAX", length = 50)
 	protected String fax;
 
 	@javax.persistence.Transient
@@ -128,7 +128,7 @@ public class SysUser implements Serializable, User, JSONable {
 	/**
 	 * 职务
 	 */
-	@Column(name = "HEADSHIP")
+	@Column(name = "HEADSHIP", length = 50)
 	protected String headship;
 
 	@Id
@@ -138,7 +138,7 @@ public class SysUser implements Serializable, User, JSONable {
 	/**
 	 * 最后登录IP
 	 */
-	@Column(name = "LASTLOGINIP")
+	@Column(name = "LASTLOGINIP", length = 80)
 	protected String lastLoginIP;
 
 	/**
@@ -154,13 +154,13 @@ public class SysUser implements Serializable, User, JSONable {
 	/**
 	 * 手机
 	 */
-	@Column(name = "MOBILE")
+	@Column(name = "MOBILE", length = 50)
 	protected String mobile;
 
 	/**
 	 * 姓名
 	 */
-	@Column(name = "NAME")
+	@Column(name = "NAME", length = 50)
 	protected String name;
 
 	@javax.persistence.Transient
@@ -169,7 +169,7 @@ public class SysUser implements Serializable, User, JSONable {
 	/**
 	 * 密码
 	 */
-	@Column(name = "PASSWORD")
+	@Column(name = "PASSWORD", length = 50)
 	protected String password;
 
 	@javax.persistence.Transient
@@ -178,19 +178,19 @@ public class SysUser implements Serializable, User, JSONable {
 	/**
 	 * 上级领导
 	 */
-	@Column(name = "SUPERIORIDS")
+	@Column(name = "SUPERIORIDS", length = 250)
 	protected String superiorIds;
 
 	/**
 	 * 电话
 	 */
-	@Column(name = "TELEPHONE")
+	@Column(name = "TELEPHONE", length = 50)
 	protected String telephone;
 
 	/**
 	 * 修改人
 	 */
-	@Column(name = "UPDATEBY")
+	@Column(name = "UPDATEBY", length = 50)
 	protected String updateBy;
 
 	/**

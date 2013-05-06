@@ -27,13 +27,13 @@ public class Dictory implements Serializable, JSONable {
 	/**
 	 * ±‡¬Î
 	 */
-	@Column(name = "CODE")
+	@Column(name = "CODE", length = 50)
 	protected String code;
 
 	/**
 	 * ¥¥Ω®»À
 	 */
-	@Column(name = "CREATEBY")
+	@Column(name = "CREATEBY", length = 50)
 	protected String createBy;
 
 	/**
@@ -46,7 +46,7 @@ public class Dictory implements Serializable, JSONable {
 	/**
 	 * √Ë ˆ
 	 */
-	@Column(name = "DICTDESC")
+	@Column(name = "DICTDESC", length = 500)
 	protected String desc;
 
 	/**

@@ -55,19 +55,20 @@ public class Message implements Serializable, JSONable {
 	/**
 	 * 接收人列表
 	 */
-	@Column(name = "RECVERLIST")
+	@Column(name = "RECVERLIST", length = 500)
 	protected String recverList;
 
 	/**
 	 * 标题
 	 */
-	@Column(name = "TITLE")
+	@Column(name = "TITLE", length = 250)
 	protected String title;
 
 	/**
 	 * 内容
 	 */
-	@Column(name = "CONTENT")
+	@Lob
+	@Column(name = "CONTENT", length = 2000)
 	protected String content;
 
 	/**

@@ -47,13 +47,13 @@ public class MyMenu implements Serializable, JSONable {
 	/**
 	 * ±ÍÃ‚
 	 */
-	@Column(name = "TITLE")
+	@Column(name = "TITLE", length = 250)
 	protected String title;
 
 	/**
 	 * ¡¥Ω”
 	 */
-	@Column(name = "URL")
+	@Column(name = "URL", length = 500)
 	protected String url;
 
 	/**

@@ -40,13 +40,13 @@ public class SysDeptRole implements Serializable, JSONable {
 	/**
 	 * ±‡¬Î
 	 */
-	@Column(name = "CODE")
+	@Column(name = "CODE", length = 50)
 	protected String code;
 
 	/**
 	 * ¥¥Ω®»À
 	 */
-	@Column(name = "CREATEBY")
+	@Column(name = "CREATEBY", length = 50)
 	protected String createBy;
 
 	/**

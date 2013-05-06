@@ -52,13 +52,13 @@ public class Attachment implements Serializable, JSONable {
 	/**
 	 * Ãû³Æ
 	 */
-	@Column(name = "NAME")
+	@Column(name = "NAME", length = 250)
 	protected String name;
 
 	/**
 	 * URL
 	 */
-	@Column(name = "URL")
+	@Column(name = "URL", length = 500)
 	protected String url;
 
 	/**

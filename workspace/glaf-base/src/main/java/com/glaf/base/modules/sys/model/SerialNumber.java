@@ -40,7 +40,7 @@ public class SerialNumber implements Serializable, JSONable {
 	/**
 	 * Ä£¿é±àºÅ
 	 */
-	@Column(name = "moduleNo")
+	@Column(name = "moduleNo", length = 50)
 	protected String moduleNo;
 
 	/**

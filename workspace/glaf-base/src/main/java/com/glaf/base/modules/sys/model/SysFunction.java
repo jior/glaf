@@ -44,13 +44,13 @@ public class SysFunction implements Serializable, JSONable {
 	/**
 	 * ÃèÊö
 	 */
-	@Column(name = "FUNCDESC")
+	@Column(name = "FUNCDESC", length = 500)
 	protected String funcDesc;
 
 	/**
 	 * ·½·¨
 	 */
-	@Column(name = "FUNCMETHOD")
+	@Column(name = "FUNCMETHOD", length = 250)
 	protected String funcMethod;
 
 	@Id
@@ -60,7 +60,7 @@ public class SysFunction implements Serializable, JSONable {
 	/**
 	 * Ãû³Æ
 	 */
-	@Column(name = "NAME")
+	@Column(name = "NAME", length = 100)
 	protected String name;
 
 	/**

@@ -26,12 +26,19 @@ public class BaseDataInfo implements Serializable {
 	private String code; // 代码
 	private int deep; // 树状结构基础信息深度
 	protected String ext1;
+
 	protected Date ext10;
+
 	protected Long ext11;
+
 	protected Long ext12;
+
 	protected Long ext13;
+
 	protected Long ext14;
+
 	protected Long ext15;
+
 	protected Double ext16;
 
 	protected Double ext17;

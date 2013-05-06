@@ -43,13 +43,13 @@ public class SubjectCode implements Serializable, JSONable {
 	/**
 	 * ±àÂë
 	 */
-	@Column(name = "SUBJECTCODE")
+	@Column(name = "SUBJECTCODE", length = 50)
 	protected String subjectCode;
 
 	/**
 	 * Ãû³Æ
 	 */
-	@Column(name = "SUBJECTNAME")
+	@Column(name = "SUBJECTNAME", length = 250)
 	protected String subjectName;
 
 	/**

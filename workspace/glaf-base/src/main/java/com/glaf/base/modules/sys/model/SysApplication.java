@@ -37,13 +37,13 @@ public class SysApplication implements Serializable, JSONable {
 	/**
 	 * 编码
 	 */
-	@Column(name = "CODE")
+	@Column(name = "CODE", length = 50)
 	protected String code;
 
 	/**
 	 * 创建人
 	 */
-	@Column(name = "CREATEBY")
+	@Column(name = "CREATEBY", length = 50)
 	protected String createBy;
 
 	/**
@@ -56,7 +56,7 @@ public class SysApplication implements Serializable, JSONable {
 	/**
 	 * 描述
 	 */
-	@Column(name = "APPDESC")
+	@Column(name = "APPDESC", length = 500)
 	protected String desc;
 
 	@javax.persistence.Transient
@@ -75,7 +75,7 @@ public class SysApplication implements Serializable, JSONable {
 	/**
 	 * 名称
 	 */
-	@Column(name = "NAME")
+	@Column(name = "NAME", length = 250)
 	protected String name;
 
 	@javax.persistence.Transient
@@ -102,7 +102,7 @@ public class SysApplication implements Serializable, JSONable {
 	/**
 	 * 修改人
 	 */
-	@Column(name = "UPDATEBY")
+	@Column(name = "UPDATEBY", length = 50)
 	protected String updateBy;
 
 	/**
@@ -115,7 +115,7 @@ public class SysApplication implements Serializable, JSONable {
 	/**
 	 * URL
 	 */
-	@Column(name = "URL")
+	@Column(name = "URL", length = 500)
 	protected String url;
 
 	public SysApplication() {

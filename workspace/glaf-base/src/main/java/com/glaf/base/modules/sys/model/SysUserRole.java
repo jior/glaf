@@ -63,7 +63,7 @@ public class SysUserRole implements Serializable, JSONable {
 	/**
 	 * 创建人
 	 */
-	@Column(name = "CREATEBY")
+	@Column(name = "CREATEBY", length = 50)
 	protected String createBy;
 
 	/**
@@ -89,7 +89,7 @@ public class SysUserRole implements Serializable, JSONable {
 	/**
 	 * 流程描述
 	 */
-	@Column(name = "PROCESSDESCRIPTION")
+	@Column(name = "PROCESSDESCRIPTION", length = 500)
 	protected String processDescription;
 
 	@javax.persistence.Transient
