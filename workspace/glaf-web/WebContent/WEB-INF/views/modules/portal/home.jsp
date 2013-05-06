@@ -158,15 +158,15 @@
                           请选择主题   
                         </td>
                         <td>
-                            <select id="theme" name="theme">
-								<option value="default" selected>蓝色</option>
-								<option value="gray">灰色</option>
-								<!-- <option value="red">红色</option> -->
-								<option value="sunny">橙色</option>
-                             </select> 
-							 <script type="text/javascript">
-							    document.getElementById("theme").value="${theme}";
-							 </script>
+                        <select id="theme" name="theme">
+							<option value="default" selected>蓝色</option>
+							<option value="gray">灰色</option>
+							<option value="bootstrap">bootstrap</option>
+							<option value="metro">metro</option>
+						</select>
+					    <script type="text/javascript">
+							document.getElementById("theme").value="${theme}";
+					    </script>
                         </td>
                     </tr>
                 </table>

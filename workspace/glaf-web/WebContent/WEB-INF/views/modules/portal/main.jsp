@@ -211,18 +211,14 @@
 				<table cellpadding="3">
 					<tr>
 						<td>切换主题</td>
-						<td><select id="theme" name="theme">
-								<option value="default" selected>蓝色</option>
-								<option value="gray">灰色</option>
-								<option value="sunny">橙色</option>
-								<!-- <option value="bootstrap">bootstrap</option>
-								<option value="metro">metro</option> -->
-								<!-- <option value="metro-orange">metro-orange</option> -->
-
-								<!-- <option value="red">红色</option>
-							    <option value="orange">橙色</option>
-							    <option value="green">绿色</option> -->
-						</select></td>
+						<td>
+						<select id="theme" name="theme">
+							<option value="default" selected>蓝色</option>
+							<option value="gray">灰色</option>
+							<option value="bootstrap">bootstrap</option>
+							<option value="metro">metro</option>
+						</select>
+						</td>
 						<td>&nbsp;<a id="btnEp" class="easyui-linkbutton"
 							icon="icon-ok" href="javascript:changeTheme();">确定</a>
 						</td>

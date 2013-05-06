@@ -10,9 +10,10 @@
 <%@ include file="/WEB-INF/views/tm/mx_header.jsp"%>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/easyui/themes/default/easyui.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/easyui/themes/icon.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/kindeditor/skins/default.css">
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.form.js"></script>
-<script language="javascript" src="<%=request.getContextPath()%>/scripts/kindeditor/kindeditor-min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/kindeditor/kindeditor-min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/mxcore.js"></script>
 <script type="text/javascript">
 
@@ -199,7 +200,7 @@
 				 </td>
 			</tr>
 			<tr>
-				 <td>邮件模板</td>
+				 <td>邮件内容</td>
 				 <td colspan="3">
 				 <textarea  id="textContent" name="textContent" class="x-textarea" rows="5" cols="58" style="width:758px;height:380px;">${mailPathSender.textContent}</textarea> 
 				 <br> （支持Freemarker模板语言）
