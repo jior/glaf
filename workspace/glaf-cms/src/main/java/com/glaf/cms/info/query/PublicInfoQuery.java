@@ -29,7 +29,6 @@ public class PublicInfoQuery extends DataQuery {
 	protected String contentLike;
 	protected Date createDateGreaterThanOrEqual;
 	protected Date createDateLessThanOrEqual;
-	protected Integer deleteFlag;
 	protected Date endDateGreaterThanOrEqual;
 	protected Date endDateLessThanOrEqual;
 	protected String fallbackFlag;
@@ -39,16 +38,12 @@ public class PublicInfoQuery extends DataQuery {
 	protected Long nodeId;
 	protected List<Long> nodeIds;
 	protected Integer originalFlag;
-	protected String processName;
-	protected List<String> processNames;
 	protected Integer publishFlag;
 	protected String refererUrlLike;
-	protected String serviceKey;
 	protected Integer sortNoGreaterThanOrEqual;
 	protected Integer sortNoLessThanOrEqual;
 	protected Date startDateGreaterThanOrEqual;
 	protected Date startDateLessThanOrEqual;
-	protected Integer status;
 	protected String subjectLike;
 	protected String summaryLike;
 	protected String tagLike;
@@ -56,7 +51,6 @@ public class PublicInfoQuery extends DataQuery {
 	protected String updateBy;
 	protected Date updateDateGreaterThanOrEqual;
 	protected Date updateDateLessThanOrEqual;
-	protected Integer wfStatus;
 
 	public PublicInfoQuery() {
 
@@ -101,14 +95,6 @@ public class PublicInfoQuery extends DataQuery {
 			throw new RuntimeException("createDate is null");
 		}
 		this.createDateLessThanOrEqual = createDateLessThanOrEqual;
-		return this;
-	}
-
-	public PublicInfoQuery deleteFlag(Integer deleteFlag) {
-		if (deleteFlag == null) {
-			throw new RuntimeException("deleteFlag is null");
-		}
-		this.deleteFlag = deleteFlag;
 		return this;
 	}
 
@@ -169,24 +155,12 @@ public class PublicInfoQuery extends DataQuery {
 		return contentLike;
 	}
 
-	public String getCreateBy() {
-		return createBy;
-	}
-
-	public Date getCreateDate() {
-		return createDate;
-	}
-
 	public Date getCreateDateGreaterThanOrEqual() {
 		return createDateGreaterThanOrEqual;
 	}
 
 	public Date getCreateDateLessThanOrEqual() {
 		return createDateLessThanOrEqual;
-	}
-
-	public Integer getDeleteFlag() {
-		return deleteFlag;
 	}
 
 	public Date getEndDateGreaterThanOrEqual() {
@@ -384,10 +358,6 @@ public class PublicInfoQuery extends DataQuery {
 		return originalFlag;
 	}
 
-	public String getProcessName() {
-		return processName;
-	}
-
 	public String getProcessNameLike() {
 		if (processNameLike != null && processNameLike.trim().length() > 0) {
 			if (!processNameLike.startsWith("%")) {
@@ -398,10 +368,6 @@ public class PublicInfoQuery extends DataQuery {
 			}
 		}
 		return processNameLike;
-	}
-
-	public List<String> getProcessNames() {
-		return processNames;
 	}
 
 	public Integer getPublishFlag() {
@@ -420,10 +386,6 @@ public class PublicInfoQuery extends DataQuery {
 		return refererUrlLike;
 	}
 
-	public String getServiceKey() {
-		return serviceKey;
-	}
-
 	public Integer getSortNoGreaterThanOrEqual() {
 		return sortNoGreaterThanOrEqual;
 	}
@@ -438,10 +400,6 @@ public class PublicInfoQuery extends DataQuery {
 
 	public Date getStartDateLessThanOrEqual() {
 		return startDateLessThanOrEqual;
-	}
-
-	public Integer getStatus() {
-		return status;
 	}
 
 	public Integer getStatusGreaterThanOrEqual() {
@@ -510,10 +468,6 @@ public class PublicInfoQuery extends DataQuery {
 
 	public Date getUpdateDateLessThanOrEqual() {
 		return updateDateLessThanOrEqual;
-	}
-
-	public Integer getWfStatus() {
-		return wfStatus;
 	}
 
 	public Integer getWfStatusGreaterThanOrEqual() {
@@ -649,14 +603,6 @@ public class PublicInfoQuery extends DataQuery {
 		return this;
 	}
 
-	public PublicInfoQuery serviceKey(String serviceKey) {
-		if (serviceKey == null) {
-			throw new RuntimeException("serviceKey is null");
-		}
-		this.serviceKey = serviceKey;
-		return this;
-	}
-
 	public void setAppActorIds(List<String> appActorIds) {
 		this.appActorIds = appActorIds;
 	}
@@ -673,14 +619,6 @@ public class PublicInfoQuery extends DataQuery {
 		this.contentLike = contentLike;
 	}
 
-	public void setCreateBy(String createBy) {
-		this.createBy = createBy;
-	}
-
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
-	}
-
 	public void setCreateDateGreaterThanOrEqual(
 			Date createDateGreaterThanOrEqual) {
 		this.createDateGreaterThanOrEqual = createDateGreaterThanOrEqual;
@@ -688,10 +626,6 @@ public class PublicInfoQuery extends DataQuery {
 
 	public void setCreateDateLessThanOrEqual(Date createDateLessThanOrEqual) {
 		this.createDateLessThanOrEqual = createDateLessThanOrEqual;
-	}
-
-	public void setDeleteFlag(Integer deleteFlag) {
-		this.deleteFlag = deleteFlag;
 	}
 
 	public void setEndDateGreaterThanOrEqual(Date endDateGreaterThanOrEqual) {
@@ -750,10 +684,6 @@ public class PublicInfoQuery extends DataQuery {
 		this.refererUrlLike = refererUrlLike;
 	}
 
-	public void setServiceKey(String serviceKey) {
-		this.serviceKey = serviceKey;
-	}
-
 	public void setSortNoGreaterThanOrEqual(Integer sortNoGreaterThanOrEqual) {
 		this.sortNoGreaterThanOrEqual = sortNoGreaterThanOrEqual;
 	}
@@ -768,10 +698,6 @@ public class PublicInfoQuery extends DataQuery {
 
 	public void setStartDateLessThanOrEqual(Date startDateLessThanOrEqual) {
 		this.startDateLessThanOrEqual = startDateLessThanOrEqual;
-	}
-
-	public void setStatus(Integer status) {
-		this.status = status;
 	}
 
 	public void setStatusGreaterThanOrEqual(Integer statusGreaterThanOrEqual) {
@@ -811,10 +737,6 @@ public class PublicInfoQuery extends DataQuery {
 		this.updateDateLessThanOrEqual = updateDateLessThanOrEqual;
 	}
 
-	public void setWfStatus(Integer wfStatus) {
-		this.wfStatus = wfStatus;
-	}
-
 	public void setWfStatusGreaterThanOrEqual(Integer wfStatusGreaterThanOrEqual) {
 		this.wfStatusGreaterThanOrEqual = wfStatusGreaterThanOrEqual;
 	}
@@ -838,14 +760,6 @@ public class PublicInfoQuery extends DataQuery {
 			throw new RuntimeException("startDate is null");
 		}
 		this.startDateLessThanOrEqual = startDateLessThanOrEqual;
-		return this;
-	}
-
-	public PublicInfoQuery status(Integer status) {
-		if (status == null) {
-			throw new RuntimeException("status is null");
-		}
-		this.status = status;
 		return this;
 	}
 
@@ -921,14 +835,6 @@ public class PublicInfoQuery extends DataQuery {
 			throw new RuntimeException("updateDate is null");
 		}
 		this.updateDateLessThanOrEqual = updateDateLessThanOrEqual;
-		return this;
-	}
-
-	public PublicInfoQuery wfStatus(Integer wfStatus) {
-		if (wfStatus == null) {
-			throw new RuntimeException("wfStatus is null");
-		}
-		this.wfStatus = wfStatus;
 		return this;
 	}
 
