@@ -169,6 +169,11 @@ public class SysTreeController {
 				}
 
 			}
+		} else {
+			result.put("total", total);
+			result.put("totalCount", total);
+			JSONArray rowsJSON = new JSONArray();
+			result.put("rows", rowsJSON);
 		}
 		return result.toString().getBytes("UTF-8");
 	}

@@ -51,7 +51,7 @@ function add(){
   var height=350;
   var scroll="no";
   //openWindow(url, width, height, scroll);
-  art.dialog.open(link, { height: height, width: width, title: "添加分类", lock: true, scrollbars:"no" }, false);
+  art.dialog.open(link, { height: height, width: width, title: "添加分类", lock: false, scrollbars:"no" }, false);
 }
 
 function modify(form){
@@ -71,7 +71,7 @@ function modify(form){
 	  var height=350;
 	  var scroll="no";
 	  //openWindow(url, width, height, scroll);
-	  art.dialog.open(link, { height: height, width: width, title: "修改分类", lock: true, scrollbars:"no" }, false);
+	  art.dialog.open(link, { height: height, width: width, title: "修改分类", lock: false, scrollbars:"no" }, false);
   }
 }
 
@@ -92,7 +92,7 @@ function dict(form){
 	  var height=380;
 	  var scroll="yes";
 	  //openWindow(url, width, height, scroll);
-	  art.dialog.open(link, { height: height, width: width, title: "分类字典", lock: true, scrollbars:"no" }, false);
+	  art.dialog.open(link, { height: height, width: width, title: "分类字典", lock: false, scrollbars:"no" }, false);
   }
 }
 

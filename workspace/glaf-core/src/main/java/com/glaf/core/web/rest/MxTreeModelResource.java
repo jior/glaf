@@ -33,6 +33,8 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -42,10 +44,13 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.glaf.core.base.TreeModel;
 import com.glaf.core.service.ITreeModelService;
 import com.glaf.core.tree.helper.JacksonTreeHelper;
+import com.glaf.core.util.RequestUtils;
 
 @Controller("/rs/tree")
 @Path("/rs/tree")
 public class MxTreeModelResource {
+	protected static final Log logger = LogFactory
+			.getLog(MxTreeModelResource.class);
 
 	protected ITreeModelService treeModelService;
 
@@ -108,6 +113,40 @@ public class MxTreeModelResource {
 	@javax.annotation.Resource
 	public void setTreeModelService(ITreeModelService treeModelService) {
 		this.treeModelService = treeModelService;
+	}
+
+	@GET
+	@POST
+	@Path("/subJson")
+	@ResponseBody
+	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
+	public byte[] subJson(@Context HttpServletRequest request) {
+		String nodeCode = request.getParameter("nodeCode");
+		Long nodeId = RequestUtils.getLong(request, "id");
+		logger.debug(RequestUtils.getParameterMap(request));
+		List<TreeModel> treeModels = new ArrayList<TreeModel>();
+
+		if (nodeId > 0) {
+			TreeModel treeNode = treeModelService.getTreeModel(nodeId);
+			if (treeNode != null) {
+				treeModels = treeModelService
+						.getSubTreeModels(treeNode.getId());
+			}
+		} else if (StringUtils.isNotEmpty(nodeCode)) {
+			TreeModel treeNode = treeModelService.getTreeModelByCode(nodeCode);
+			if (treeNode != null) {
+				treeModels = treeModelService
+						.getSubTreeModels(treeNode.getId());
+			}
+		}
+
+		JacksonTreeHelper treeHelper = new JacksonTreeHelper();
+		ArrayNode responseJSON = treeHelper.getTreeArrayNode(treeModels);
+		try {
+			return responseJSON.toString().getBytes("UTF-8");
+		} catch (IOException e) {
+			return responseJSON.toString().getBytes();
+		}
 	}
 
 	@GET

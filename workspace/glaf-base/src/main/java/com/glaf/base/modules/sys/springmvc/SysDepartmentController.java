@@ -217,6 +217,11 @@ public class SysDepartmentController {
 				}
 
 			}
+		} else {
+			result.put("total", total);
+			result.put("totalCount", total);
+			JSONArray rowsJSON = new JSONArray();
+			result.put("rows", rowsJSON);
 		}
 		return result.toString().getBytes("UTF-8");
 	}
@@ -260,10 +265,11 @@ public class SysDepartmentController {
 	@RequestMapping(params = "method=prepareAdd")
 	public ModelAndView prepareAdd(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
-		
-		List<Dictory> dictories = dictoryService.getDictoryList(SysConstants.DEPT_LEVEL);
+
+		List<Dictory> dictories = dictoryService
+				.getDictoryList(SysConstants.DEPT_LEVEL);
 		modelMap.put("dictories", dictories);
-		
+
 		String x_view = ViewProperties.getString("department.prepareAdd");
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);
@@ -295,8 +301,9 @@ public class SysDepartmentController {
 		list.add(parent);
 		sysTreeService.getSysTree(list, (int) parent.getId(), 1);
 		request.setAttribute("parent", list);
-		
-		List<Dictory> dictories = dictoryService.getDictoryList(SysConstants.DEPT_LEVEL);
+
+		List<Dictory> dictories = dictoryService
+				.getDictoryList(SysConstants.DEPT_LEVEL);
 		modelMap.put("dictories", dictories);
 
 		String x_view = ViewProperties.getString("department.prepareModify");

@@ -51,7 +51,7 @@ function add(){
   var height=450;
   var scroll="no";
   //openWindow(url, width, height, scroll);
-  art.dialog.open(link, { height: height, width: width, title: "添加模块", lock: true, scrollbars:"no" }, false);
+  art.dialog.open(link, { height: height, width: width, title: "添加模块", lock: false, scrollbars:"no" }, false);
 }
 function modify(form){
   var id =0;
@@ -67,7 +67,7 @@ function modify(form){
   var height=450;
   var scroll="no";
   //openWindow(url, width, height, scroll);
-  art.dialog.open(link, { height: height, width: width, title: "修改模块", lock: true, scrollbars:"no" }, false);
+  art.dialog.open(link, { height: height, width: width, title: "修改模块", lock: false, scrollbars:"no" }, false);
 }
 function func(form){
   var id =0;
@@ -83,7 +83,7 @@ function func(form){
   var height=330;
   var scroll="yes";
   //openWindow(url, width, height, scroll);
-  art.dialog.open(link, { height: height, width: width, title: "模块功能", lock: true, scrollbars:"no" }, false);
+  art.dialog.open(link, { height: height, width: width, title: "模块功能", lock: false, scrollbars:"no" }, false);
 }
 function del(){
   var form = document.all.GenericForm;

@@ -51,7 +51,7 @@ function add(){
   var height=420;
   var scroll="no";  
   //openWindow(url, width, height, scroll);
-  art.dialog.open(link, { height: height, width: width, title: "添加部门", scrollbars:"no" , lock: true });
+  art.dialog.open(link, { height: height, width: width, title: "添加部门", scrollbars:"no" , lock: false });
 }
 function modify(form){
   var id =0;
@@ -67,7 +67,7 @@ function modify(form){
   var height=435;
   var scroll="no";
   //openWindow(url, width, height, scroll);
-  art.dialog.open(link, { height: height, width: width, title: "修改部门", scrollbars:"no" , lock: true });
+  art.dialog.open(link, { height: height, width: width, title: "修改部门", scrollbars:"no" , lock: false });
 }
 
 function sort(id, operate){  
@@ -98,7 +98,7 @@ function users(form){
   var height=380;
   var scroll="no";
   //openWindow(url, width, height, scroll);
-  art.dialog.open(link, { height: height, width: width, title: "部门用户", scrollbars:"no" , lock: true });
+  art.dialog.open(link, { height: height, width: width, title: "部门用户", scrollbars:"no" , lock: false });
 }
 function roles(form){
   var id =0;
@@ -114,7 +114,7 @@ function roles(form){
   var height=400;
   var scroll="no";
   //openWindow(url, width, height, scroll);
-  art.dialog.open(link, { height: height, width: width, title: "部门角色", scrollbars:"no" , lock: true });
+  art.dialog.open(link, { height: height, width: width, title: "部门角色", scrollbars:"no" , lock: false });
 }
 </script>
 </head>

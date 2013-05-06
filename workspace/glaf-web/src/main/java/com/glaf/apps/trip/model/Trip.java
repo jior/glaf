@@ -14,137 +14,76 @@ import com.glaf.apps.trip.util.*;
 @Entity
 @Table(name = "X_APP_TRIP")
 public class Trip implements Serializable {
-	private static final long serialVersionUID = 1L;
+        private static final long serialVersionUID = 1L;
 
         @Id
-	@Column(name = "ID_", length = 50, nullable = false)
-	protected String id;
+        @Column(name = "ID_", nullable = false)
+        protected String id;
 
-	
-
-        /**
-        *工作流状态
-        */
         @Column(name = "wfStatus")
         protected Integer wfStatus;
 
-        /**
-        *开始日期
-        */
         @Temporal(TemporalType.TIMESTAMP)
-        @Column(name = "STARTDATE_")
+        @Column(name = "STARTDATE_")	
         protected Date startDate;
 
-        /**
-        *事由
-        */
-        @Column(name = "CAUSE_")
+        @Column(name = "CAUSE_", length=500) 
         protected String cause;
 
-        /**
-        *业务状态
-        */
         @Column(name = "status")
         protected Integer status;
 
-        /**
-        *流程名称
-        */
-        @Column(name = "processName")
+        @Column(name = "processName", length=100) 
         protected String processName;
 
-        /**
-        *结束日期
-        */
         @Temporal(TemporalType.TIMESTAMP)
-        @Column(name = "ENDDATE_")
+        @Column(name = "ENDDATE_")	
         protected Date endDate;
 
-        /**
-        *创建人
-        */
-        @Column(name = "CREATEBY_")
+        @Column(name = "CREATEBY_", length=50) 
         protected String createBy;
 
-        /**
-        *创建人
-        */
         @Transient
         protected String createByName;
 
-        /**
-        *修改日期
-        */
         @Temporal(TemporalType.TIMESTAMP)
-        @Column(name = "UPDATEDATE_")
+        @Column(name = "UPDATEDATE_")	
         protected Date updateDate;
 
-        /**
-        *申请日期
-        */
         @Temporal(TemporalType.TIMESTAMP)
-        @Column(name = "APPLYDATE_")
+        @Column(name = "APPLYDATE_")	
         protected Date applyDate;
 
-        /**
-        *交通工具
-        */
-        @Column(name = "TRANSTYPE_")
+        @Column(name = "TRANSTYPE_", length=50) 
         protected String transType;
 
-        @Transient
-        protected String transTypeName;
-
-        /**
-        *工作流启动日期
-        */
         @Temporal(TemporalType.TIMESTAMP)
-        @Column(name = "wfStartDate")
+        @Column(name = "wfStartDate")	
         protected Date wfStartDate;
 
-        /**
-        *流程实例编号
-        */
-        @Column(name = "processInstanceId")
+        @Column(name = "processInstanceId")	 
         protected Long processInstanceId;
 
-        /**
-        *天数
-        */
-        @Column(name = "DAYS_")
+        @Column(name = "DAYS_")	 
         protected Double days;
 
-        /**
-        *费用
-        */
-        @Column(name = "MONEY_")
+        @Column(name = "MONEY_")	 
         protected Double money;
 
-        /**
-        *工作流结束日期
-        */
         @Temporal(TemporalType.TIMESTAMP)
-        @Column(name = "wfEndDate")
+        @Column(name = "wfEndDate")	
         protected Date wfEndDate;
 
-        /**
-        *是否锁定
-        */
         @Column(name = "LOCKED_")
         protected Integer locked;
 
-        /**
-        *删除标记
-        */
         @Column(name = "DELETEFLAG_")
         protected Integer deleteFlag;
 
-        /**
-        *创建日期
-        */
         @Temporal(TemporalType.TIMESTAMP)
-        @Column(name = "CREATEDATE_")
+        @Column(name = "CREATEDATE_")	
         protected Date createDate;
+
 
          
 	public Trip() {
@@ -155,176 +94,165 @@ public class Trip implements Serializable {
 	    return this.id;
 	}
 
-
-
-	
-
-        public Integer getWfStatus(){
-            return this.wfStatus;
-        }
-
-        public Date getStartDate(){
-            return this.startDate;
-        }
-
-        public String getCause(){
-            return this.cause;
-        }
-
-        public Integer getStatus(){
-            return this.status;
-        }
-
-        public String getProcessName(){
-            return this.processName;
-        }
-
-        public Date getEndDate(){
-            return this.endDate;
-        }
-
-        public String getCreateBy(){
-            return this.createBy;
-        }
-
-        public String getCreateByName(){
-            return this.createByName;
-        }
-
-        public Date getUpdateDate(){
-            return this.updateDate;
-        }
-
-        public Date getApplyDate(){
-            return this.applyDate;
-        }
-
-        public String getTransType(){
-            return this.transType;
-        }
-
-        public String getTransTypeName(){
-            return this.transTypeName;
-        }
-
-        public Date getWfStartDate(){
-            return this.wfStartDate;
-        }
-
-        public Long getProcessInstanceId(){
-            return this.processInstanceId;
-        }
-
-        public Double getDays(){
-            return this.days;
-        }
-
-        public Double getMoney(){
-            return this.money;
-        }
-
-        public Date getWfEndDate(){
-            return this.wfEndDate;
-        }
-
-        public Integer getLocked(){
-            return this.locked;
-        }
-
-        public Integer getDeleteFlag(){
-            return this.deleteFlag;
-        }
-
-        public Date getCreateDate(){
-            return this.createDate;
-        }
-
-
 	public void setId(String id) {
 	    this.id = id; 
 	}
 
-	
 
-        public void  setWfStatus(Integer wfStatus){
-              this.wfStatus=wfStatus;
-        }
+	public Integer getWfStatus(){
+	    return this.wfStatus;
+	}
 
-        public void  setStartDate(Date startDate){
-              this.startDate=startDate;
-        }
+	public Date getStartDate(){
+	    return this.startDate;
+	}
 
-        public void  setCause(String cause){
-              this.cause=cause;
-        }
+	public String getCause(){
+	    return this.cause;
+	}
 
-        public void  setStatus(Integer status){
-              this.status=status;
-        }
+	public Integer getStatus(){
+	    return this.status;
+	}
 
-        public void  setProcessName(String processName){
-              this.processName=processName;
-        }
+	public String getProcessName(){
+	    return this.processName;
+	}
 
-        public void  setEndDate(Date endDate){
-              this.endDate=endDate;
-        }
+	public Date getEndDate(){
+	    return this.endDate;
+	}
 
-        public void  setCreateBy(String createBy){
-              this.createBy=createBy;
-        }
+	public String getCreateBy(){
+	    return this.createBy;
+	}
 
-        public void  setCreateByName(String createByName){
-              this.createByName=createByName;
-        }
+	public String getCreateByName(){
+	    return this.createByName;
+	}
 
-        public void  setUpdateDate(Date updateDate){
-              this.updateDate=updateDate;
-        }
+	public Date getUpdateDate(){
+	    return this.updateDate;
+	}
 
-        public void  setApplyDate(Date applyDate){
-              this.applyDate=applyDate;
-        }
+	public Date getApplyDate(){
+	    return this.applyDate;
+	}
 
-        public void  setTransType(String transType){
-              this.transType=transType;
-        }
+	public String getTransType(){
+	    return this.transType;
+	}
 
-        public void  setTransTypeName(String transTypeName){
-              this.transTypeName = transTypeName;
-        }
+	public Date getWfStartDate(){
+	    return this.wfStartDate;
+	}
 
-        public void  setWfStartDate(Date wfStartDate){
-              this.wfStartDate=wfStartDate;
-        }
+	public Long getProcessInstanceId(){
+	    return this.processInstanceId;
+	}
 
-        public void  setProcessInstanceId(Long processInstanceId){
-              this.processInstanceId=processInstanceId;
-        }
+	public Double getDays(){
+	    return this.days;
+	}
 
-        public void  setDays(Double days){
-              this.days=days;
-        }
+	public Double getMoney(){
+	    return this.money;
+	}
 
-        public void  setMoney(Double money){
-              this.money=money;
-        }
+	public Date getWfEndDate(){
+	    return this.wfEndDate;
+	}
 
-        public void  setWfEndDate(Date wfEndDate){
-              this.wfEndDate=wfEndDate;
-        }
+	public Integer getLocked(){
+	    return this.locked;
+	}
 
-        public void  setLocked(Integer locked){
-              this.locked=locked;
-        }
+	public Integer getDeleteFlag(){
+	    return this.deleteFlag;
+	}
 
-        public void  setDeleteFlag(Integer deleteFlag){
-              this.deleteFlag=deleteFlag;
-        }
+	public Date getCreateDate(){
+	    return this.createDate;
+	}
 
-        public void  setCreateDate(Date createDate){
-              this.createDate=createDate;
-        }
+
+
+	public void setWfStatus(Integer wfStatus) {
+	    this.wfStatus = wfStatus; 
+	}	 
+
+	public void setStartDate(Date startDate) {
+	    this.startDate = startDate; 
+	}	 
+
+	public void setCause(String cause) {
+	    this.cause = cause; 
+	}	 
+
+	public void setStatus(Integer status) {
+	    this.status = status; 
+	}	 
+
+	public void setProcessName(String processName) {
+	    this.processName = processName; 
+	}	 
+
+	public void setEndDate(Date endDate) {
+	    this.endDate = endDate; 
+	}	 
+
+	public void setCreateBy(String createBy) {
+	    this.createBy = createBy; 
+	}	 
+
+	public void setCreateByName(String createByName) {
+	    this.createByName = createByName; 
+	}	 
+
+	public void setUpdateDate(Date updateDate) {
+	    this.updateDate = updateDate; 
+	}	 
+
+	public void setApplyDate(Date applyDate) {
+	    this.applyDate = applyDate; 
+	}	 
+
+	public void setTransType(String transType) {
+	    this.transType = transType; 
+	}	 
+
+	public void setWfStartDate(Date wfStartDate) {
+	    this.wfStartDate = wfStartDate; 
+	}	 
+
+	public void setProcessInstanceId(Long processInstanceId) {
+	    this.processInstanceId = processInstanceId; 
+	}	 
+
+	public void setDays(Double days) {
+	    this.days = days; 
+	}	 
+
+	public void setMoney(Double money) {
+	    this.money = money; 
+	}	 
+
+	public void setWfEndDate(Date wfEndDate) {
+	    this.wfEndDate = wfEndDate; 
+	}	 
+
+	public void setLocked(Integer locked) {
+	    this.locked = locked; 
+	}	 
+
+	public void setDeleteFlag(Integer deleteFlag) {
+	    this.deleteFlag = deleteFlag; 
+	}	 
+
+	public void setCreateDate(Date createDate) {
+	    this.createDate = createDate; 
+	}	 
+
 
 
 	@Override
@@ -368,7 +296,7 @@ public class Trip implements Serializable {
             return TripJsonFactory.toObjectNode(this);
 	}
 
-
+        @Override
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this,
 				ToStringStyle.MULTI_LINE_STYLE);

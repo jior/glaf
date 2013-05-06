@@ -47,7 +47,7 @@ function add(){
   var height=320;
   var scroll="no";
   //openWindow(url, width, height, scroll);
-  art.dialog.open(link, { height: height, width: width, title: "添加角色", lock: true, scrollbars:"no" }, false);
+  art.dialog.open(link, { height: height, width: width, title: "添加角色", lock: false, scrollbars:"no" }, false);
 }
 function modify(form){
   var id =0;
@@ -63,7 +63,7 @@ function modify(form){
   var height=320;
   var scroll="no";
   //openWindow(url, width, height, scroll);
-  art.dialog.open(link, { height: height, width: width, title: "修改角色", scrollbars:"no" , lock: true });
+  art.dialog.open(link, { height: height, width: width, title: "修改角色", scrollbars:"no" , lock: false });
 }
 
 function del(){

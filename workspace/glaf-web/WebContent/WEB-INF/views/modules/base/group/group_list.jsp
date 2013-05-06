@@ -50,7 +50,7 @@ function add(){
   var height=250;
   var scroll="no";
   //openWindow(url, width, height, scroll);
-  art.dialog.open(link, { height: height, width: width, title: "添加群组", lock: true, scrollbars:"no" }, false);
+  art.dialog.open(link, { height: height, width: width, title: "添加群组", lock: false, scrollbars:"no" }, false);
 }
 function modify(form){
   var id =0;
@@ -66,7 +66,7 @@ function modify(form){
   var height=250;
   var scroll="no";
   //openWindow(url, width, height, scroll);
-  art.dialog.open(link, { height: height, width: width, title: "修改群组", lock: true, scrollbars:"no" }, false);
+  art.dialog.open(link, { height: height, width: width, title: "修改群组", lock: false, scrollbars:"no" }, false);
 }
 
 function users(form){
@@ -83,7 +83,7 @@ function users(form){
   var height=480;
   var scroll="yes";
   //openWindow(url, width, height, scroll);
-  art.dialog.open(link, { height: height, width: width, title: "群组用户", lock: true, scrollbars:"no" }, false);
+  art.dialog.open(link, { height: height, width: width, title: "群组用户", lock: false, scrollbars:"no" }, false);
 }
 
 function del(){

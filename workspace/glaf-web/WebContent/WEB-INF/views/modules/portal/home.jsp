@@ -163,6 +163,7 @@
 							<option value="gray">灰色</option>
 							<option value="bootstrap">bootstrap</option>
 							<option value="metro">metro</option>
+							<!-- <option value="metro-blue">metro-blue</option> -->
 						</select>
 					    <script type="text/javascript">
 							document.getElementById("theme").value="${theme}";

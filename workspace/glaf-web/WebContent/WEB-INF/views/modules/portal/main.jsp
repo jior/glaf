@@ -217,6 +217,7 @@
 							<option value="gray">灰色</option>
 							<option value="bootstrap">bootstrap</option>
 							<option value="metro">metro</option>
+							<!-- <option value="metro-blue">metro-blue</option> -->
 						</select>
 						</td>
 						<td>&nbsp;<a id="btnEp" class="easyui-linkbutton"

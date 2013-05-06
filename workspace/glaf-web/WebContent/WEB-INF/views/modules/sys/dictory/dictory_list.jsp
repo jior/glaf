@@ -45,7 +45,7 @@ function add(){
   var height=420;
   var scroll="yes";
   //openWindow(url, width, height, scroll);
-  art.dialog.open(link, { height: height, width: width, title: "添加字典", lock: true, scrollbars:"no" }, false);
+  art.dialog.open(link, { height: height, width: width, title: "添加字典", lock: false, scrollbars:"no" }, false);
 }
 
 function modify(form){
@@ -62,7 +62,7 @@ function modify(form){
   var height=420;
   var scroll="yes";
   //openWindow(url, width, height, scroll);
-  art.dialog.open(link, { height: height, width: width, title: "修改字典", lock: true, scrollbars:"no" }, false);
+  art.dialog.open(link, { height: height, width: width, title: "修改字典", lock: false, scrollbars:"no" }, false);
 }
 
 function del(){
