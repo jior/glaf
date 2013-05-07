@@ -7,10 +7,11 @@
      String contextPath = request.getContextPath();
 	 java.util.Date today = new java.util.Date();
 %>
+<!DOCTYPE html>
 <html>
 <title>任务调度管理</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link href="<%=contextPath%>/css/site.css" type="text/css" rel="stylesheet">
+<%@ include file="/WEB-INF/views/tm/mx_header.jsp"%>
 <script language="javascript" src='<%=contextPath%>/scripts/verify.js'></script>
 <script language="javascript" src='<%=contextPath%>/scripts/main.js'></script>
 <script language="javascript">
@@ -44,26 +45,28 @@ function schedulerXY(taskId, startup) {
 }
 
 </script>
-<body id="document">
+<body id="document" style="padding-left:20px;padding-right:20px">
+<br> 
  
+<div class="x_content_title"><img
+	src="<%=request.getContextPath()%>/images/window.png"
+	alt="调度管理"> &nbsp;调度管理
+</div>
 
-<center>
-<!-- <div class="nav-title"><span class="Title">调度管理</span></div>
- -->
- <br>
 <table align="center" class="table-border" cellspacing="0"
 	cellpadding="0" width="90%">
 	<tr>
-		<td height="30" align="right"><input type="button" value="新增任务调度"
-			name="createScheduler" class="button"
-			onclick="javascript:createScheduler();"></td>
+		<td height="30" align="right">
+		<input type="button" value="新增任务调度" name="createScheduler" class="btn"
+			   onclick="javascript:createScheduler();">
+		</td>
 	</tr>
 </table>
 
 <br>
 
-<table align="center" class="list-box" cellspacing="1"
-	cellpadding="4" width="90%">
+<table align="center"  cellspacing="1" cellpadding="4" width="90%"
+       class="table table-striped table-bordered table-condensed">
 	<tr class="list-title">
 		<td align="center" noWrap>任务名称</td>
 		<td align="center" noWrap>主题</td>
@@ -152,7 +155,7 @@ function schedulerXY(taskId, startup) {
 	</c:forEach>
 
 </table>
-</center>
+ 
 </form>
 </body>
 </html>

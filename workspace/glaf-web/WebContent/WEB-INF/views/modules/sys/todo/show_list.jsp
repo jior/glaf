@@ -20,21 +20,12 @@
 	List rows = (List)request.getAttribute("rows");
 
 %>
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>基础平台系统</title>
-<link href="../css/site.css" rel="stylesheet" type="text/css">
-<link href="<%=context%>/css/site.css" rel="stylesheet" type="text/css">
-<script src="<%=context%>/scripts/main.js" language="javascript"></script>
-<style type="text/css"> 
-@import url("<%=context%>/scripts/hmenu/skin-yp.css");
-.STYLE1 {color: #FF0000}
-</style>
-<script type="text/javascript">
-_dynarch_menu_url = "<%=context%>/scripts/hmenu";
-</script>
-<script type="text/javascript" src="<%=context%>/scripts/hmenu/hmenu.js"></script>
+<%@ include file="/WEB-INF/views/tm/mx_header.jsp"%>
 <script type="text/javascript" src="<%=context%>/scripts/main.js"></script>
 <script type="text/javascript" src="<%=context%>/scripts/site.js"></script>
 <script type="text/javascript">
@@ -43,20 +34,25 @@ _dynarch_menu_url = "<%=context%>/scripts/hmenu";
     }
 </script>
 </head>
-<body  id="document">
-<jsp:include page="/WEB-INF/views/modules/header.jsp" flush="true"/>
+<body  id="document" style="padding-left:20px;padding-right:20px">
 <br>
+<div class="x_content_title"><img
+	src="<%=request.getContextPath()%>/images/window.png"
+	alt="TODO信息"> &nbsp;TODO信息
+</div>
 <table align="center" class="table-border" cellspacing="0"
 	cellpadding="0" width="90%">
 	<tr>
-		<td colspan="10" height="30" align="right"><input type="button" value="导入"
-			name="createScheduler" class="button"
-			onclick="javascript:importXls();"></td>
+		<td colspan="10" height="30" align="right">
+		<input type="button" value="导入" name="createScheduler" class=" btn btn-primary "
+			   onclick="javascript:importXls();">
+		</td>
 	</tr>
 </table>
 <br>
 
- <table align="center" width="90%" border="0" cellspacing="1" cellpadding="0" class="list-box">
+ <table align="center" width="90%" border="0" cellspacing="1" cellpadding="0"
+        class="table table-striped table-bordered table-condensed">
           <tr class="list-title">
 		    <td align="center" width="60">序号</td>
             <td align="center" width="120">模块名称</td>
@@ -114,7 +110,7 @@ _dynarch_menu_url = "<%=context%>/scripts/hmenu";
 			   </c:if>
 			</td>
 			<td align="center" width="60">
-			    <a href="<%=context%>/sys/todo.do?method=showModify&id=<c:out value="${todo.id}"/>"><img src="<%=context%>/images/edit_profile.png" border="0"></a>
+			    <a href="<%=context%>/sys/todo.do?method=showModify&id=<c:out value="${todo.id}"/>"><img src="<%=context%>/images/edit.gif" border="0"></a>
 			</td>
           </tr>
 		  <%     }

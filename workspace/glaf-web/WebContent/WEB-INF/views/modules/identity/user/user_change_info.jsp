@@ -8,14 +8,15 @@
 String context = request.getContextPath();
 SysUser bean=(SysUser)request.getAttribute("bean");
 %>
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title></title>
-<link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
+<title>修改用户信息</title>
+<%@ include file="/WEB-INF/views/tm/mx_header.jsp"%>
 <script language="javascript" src='<%=context%>/scripts/main.js'></script>
 <script language="javascript" src='<%=context%>/scripts/verify.js'></script></head>
-<script language="JavaScript">
+<script language="javascript">
 function checkForm(form){
   if(verifyAll(form)){
      //if(form.password.value!=form.password2.value){
@@ -50,7 +51,7 @@ function setValue(obj){
   <tr>
     <td class="box-mm"><table width="95%" align="center" border="0" cellspacing="0" cellpadding="5">
       <tr>
-        <td width="20%" class="input-box">员工编码</td>
+        <td width="20%" class="input-box">用户名</td>
         <td width="80%"><%=bean.getCode()%></td>
       </tr>
       <tr>
@@ -60,24 +61,24 @@ function setValue(obj){
       <tr>
         <td class="input-box2" valign="top">手　　机*</td>
         <td>
-          <input name="mobile" type="text" size="30" class="input" datatype="string" value="<%=bean.getMobile()%>" nullable="no" maxsize="12" chname="手机">        
+          <input name="mobile" type="text" size="30"  class="input span3 x-text" datatype="string" value="<%=bean.getMobile()%>" nullable="no" maxsize="12" chname="手机">        
 		</td>
       </tr>
       <tr>
         <td class="input-box2" valign="top">邮　　件*</td>
         <td>
-          <input name="email" type="text" size="30" class="input" datatype="email" value="<%=bean.getEmail()%>" nullable="no" maxsize="50" chname="邮件">        
+          <input name="email" type="text" size="30"  class="input span3 x-text" datatype="email" value="<%=bean.getEmail()%>" nullable="no" maxsize="50" chname="邮件">        
 		</td>
       </tr>
       <tr>
         <td class="input-box2" valign="top">办公电话*</td>
         <td>
-          <input name="telephone" type="text" size="30" class="input" datatype="string" value="<%=bean.getTelephone()%>" nullable="no" maxsize="20" chname="办公电话">        
+          <input name="telephone" type="text" size="30"  class="input span3 x-text" datatype="string" value="<%=bean.getTelephone()%>" nullable="no" maxsize="20" chname="办公电话">        
 		</td>
       </tr>
       <tr>
         <td colspan="2" align="center" valign="bottom" height="30">&nbsp;
-              <input name="btn_save2" type="submit" value="保存" class="button">
+              <input name="btn_save2" type="submit" value="保存" class="  btn btn-primary">
 		</td>
       </tr>
     </table></td>

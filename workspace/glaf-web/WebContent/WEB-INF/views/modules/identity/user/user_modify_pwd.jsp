@@ -8,11 +8,12 @@
 String context = request.getContextPath();
 pageContext.setAttribute("contextPath", context); 
 %>
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title></title>
-<link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
+<title>修改密码</title>
+<%@ include file="/WEB-INF/views/tm/mx_header.jsp"%>
 <script language="javascript" src='<%=context%>/scripts/main.js'></script>
 <script language="javascript" src='<%=context%>/scripts/verify.js'></script></head>
 <script language="JavaScript">
@@ -51,19 +52,19 @@ function setValue(obj){
     <td class="box-mm"><table width="95%" align="center" border="0" cellspacing="0" cellpadding="5">
 	  <tr>
         <td class="input-box2" valign="top">原密码*</td>
-        <td><input name="oldPwd" type="password" size="30" class="input" value="" datatype="string" nullable="no" minsize="6" maxsize="20" chname="密码"></td>
+        <td><input name="oldPwd" type="password" size="30"  class="input span3 x-text" value="" datatype="string" nullable="no" minsize="6" maxsize="20" chname="密码"></td>
       </tr>
       <tr>
         <td class="input-box2" valign="top">新密码*</td>
-        <td><input name="newPwd" type="password" size="30" class="input" value="" datatype="string" nullable="no" minsize="6" maxsize="20" chname="密码"></td>
+        <td><input name="newPwd" type="password" size="30"  class="input span3 x-text" value="" datatype="string" nullable="no" minsize="6" maxsize="20" chname="密码"></td>
       </tr>
       <tr>
         <td class="input-box2" valign="top">确认密码*</td>
-        <td><input name="password2" type="password" size="30" class="input" value=""  datatype="string" nullable="no" minsize="6" maxsize="20" chname="确认密码"></td>
+        <td><input name="password2" type="password" size="30"  class="input span3 x-text" value=""  datatype="string" nullable="no" minsize="6" maxsize="20" chname="确认密码"></td>
       </tr>
       <tr>
         <td colspan="2" align="center" valign="bottom" height="30">&nbsp;
-           <input name="btn_save2" type="submit" value="修改密码" class="button">
+           <input name="btn_save2" type="submit" value="修改密码" class="btn btn-primary">
 		</td>
       </tr>
     </table></td>

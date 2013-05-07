@@ -3,22 +3,23 @@
 <%@ page import="com.glaf.core.job.*"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="html"%>
 <%
  String contextPath = request.getContextPath();
 %>
+<!DOCTYPE html>
 <html>
 <head>
 <title>任务调度管理</title>
+<%@ include file="/WEB-INF/views/tm/mx_header.jsp"%>
 <link type="text/css" rel="stylesheet" href="<%=request.getContextPath()%>/scripts/calendar/skins/aqua/theme.css"/>
-<link type="text/css" rel="stylesheet" href="<%=contextPath%>/css/site.css" >
 <script language="javascript" src='<%=contextPath%>/scripts/main.js'></script>
 <script language="javascript" src='<%=contextPath%>/scripts/verify.js'></script>
 <script language="javascript" src="<%=request.getContextPath()%>/scripts/calendar/calendar.js" ></script>
 <script language="javascript" src="<%=request.getContextPath()%>/scripts/calendar/lang/calendar-en.js"></script>
 <script language="javascript" src="<%=request.getContextPath()%>/scripts/calendar/calendar-setup.js"></script>
 <script language="javascript">
+
   String.prototype.trim = function() {
      return this.replace(/(^\s*)|(\s*$)/g, "");
   }
@@ -55,54 +56,49 @@
  }
 
 </script>
-<body id="document">
-<jsp:include page="/WEB-INF/views/modules/header.jsp" flush="true"/>
-<br><br>
+<body id="document" style="padding-left:120px;padding-right:120px">
+ 
+<br> 
 <html:form action="${contextPath}/sys/scheduler.do?method=saveModify" method="post"  onsubmit="return verifyAll(this);">
 <input type="hidden" name="status" value="0">
 <c:if test="${not empty scheduler.id}">
 <input type="hidden" name="id" value="${scheduler.id}">
 </c:if>
 
-<div class="nav-title"><span class="Title">调度管理</span>&gt;&gt;修改调度</div>
-<table width="95%" border="0" align="center" cellpadding="0" cellspacing="0" class="box">
-  <tr>
-    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
-      <tr class="box">
-        <td class="box-lt">&nbsp;</td>
-        <td class="box-mt">&nbsp;</td>
-        <td class="box-rt">&nbsp;</td>
-      </tr>
-    </table></td>
-  </tr>
-  <tr>
-    <td class="box-mm" width="95%">
-
-<table border="0" cellpadding="0" cellspacing="0">
+<div class="x_content_title"><img
+	src="<%=request.getContextPath()%>/images/window.png"
+	alt="调度管理"> &nbsp;调度管理
+</div>
+<br>
+ 
+<table border="0" cellpadding="0" cellspacing="0"  class="table table-striped table-bordered table-condensed">
 	<tr>
-		<td width="25%" height="27">名称&nbsp;*</td>
-		<td height="27"><input name="taskName" size="50" maxlength="50"
-			class="input" value="${scheduler.taskName}" datatype="string" nullable="no" maxsize="50" chname="调度名称">
+		<td width="25%" height="24">名称&nbsp;*</td>
+		<td height="24">
+		<input type="text" name="taskName" size="50" maxlength="50"
+		       class="input span3 x-text" value="${scheduler.taskName}" datatype="string" nullable="no" maxsize="50" 
+			   chname="调度名称">
 		</td>
 	</tr>
 
 	<tr>
-		<td width="25%" height="27">主题&nbsp;*</td>
-		<td height="27"><input name="title" size="50" class="input"
+		<td width="25%" height="24">主题&nbsp;*</td>
+		<td height="24">
+		<input type="text" name="title" size="50"  class="input span3 x-text"
 			maxlength="255" value="${scheduler.title}" datatype="string" nullable="no" maxsize="50" chname="调度主题">
 		</td>
 	</tr>
 
 	<tr>
-		<td width="25%" height="27">内容&nbsp;&nbsp;</td>
-		<td height="27"><textarea name="content" rows="8" cols="39"
-			class="input"><c:out value="${scheduler.content}" /></textarea>
+		<td width="25%" height="24">内容&nbsp;&nbsp;</td>
+		<td height="24"><textarea name="content" rows="8" cols="39"
+			 class="input span3 x-text"  style="width:240px;height:120px;"><c:out value="${scheduler.content}" /></textarea>
 		</td>
 	</tr>
 
 	<tr>
-		<td width="25%" height="27">任务类名&nbsp;</td>
-		<td height="27">
+		<td width="25%" height="24">任务类名&nbsp;</td>
+		<td height="24">
 			<select id="jobClass" name="jobClass" nullable="no" chname="任务类名">
 			<%
 			  Properties props =  JobProperties.getProperties();
@@ -122,8 +118,8 @@
 
    <tr>
 		<td width="25%" height="60">时间表达式&nbsp;</td>
-		<td height="60" ><input name="expression" size="50"
-			class="input" maxlength="255"
+		<td height="60" ><input type="text" name="expression" size="50"
+			 class="input span3 x-text" maxlength="255"
 			value="${scheduler.expression}">
 			<br />&nbsp;(可不填,可以参考<a href="<%=request.getContextPath()%>/quartz.txt">quartz</a>文件)
 			<br>示例：每周一到周五凌晨5点执行一次（ 0 0 5 ? * MON-FRI  ）
@@ -132,9 +128,9 @@
 	</tr>
 
 	<tr>
-		<td width="25%" height="27">开始日期&nbsp;&nbsp;</td>
-		<td height="27"><input id="startDate" name="startDate" size="18"
-			type="text" class="input" required="true"
+		<td width="25%" height="24">开始日期&nbsp;&nbsp;</td>
+		<td height="24"><input id="startDate" name="startDate" size="18"
+			type="text"  class="input span3 x-text" required="true"
 			value="<fmt:formatDate value="${scheduler.startDate}" pattern="yyyy-MM-dd HH:mm:ss"/>" />&nbsp;
 		<img src="<%=request.getContextPath()%>/images/calendar.png"
 			id="f_trigger_1" style="cursor: pointer; border: 1px solid red;" />
@@ -142,9 +138,9 @@
 	</tr>
 
 	<tr>
-		<td width="25%" height="27">结束日期&nbsp;&nbsp;</td>
-		<td height="27"><input id="endDate" name="endDate" size="18"
-			type="text" class="input" required="true"
+		<td width="25%" height="24">结束日期&nbsp;&nbsp;</td>
+		<td height="24"><input id="endDate" name="endDate" size="18"
+			type="text"  class="input span3 x-text" required="true"
 			value="<fmt:formatDate value="${scheduler.endDate}" pattern="yyyy-MM-dd HH:mm:ss"/>" />&nbsp;
 		<img src="<%=request.getContextPath()%>/images/calendar.png"
 			id="f_trigger_2" style="cursor: pointer; border: 1px solid red;" />
@@ -152,26 +148,26 @@
 	</tr>
 
 	<tr>
-		<td width="25%" height="27">重复次数&nbsp;</td>
-		<td height="27"><input name="repeatCount" size="18"
-			class="input" maxlength="255"
+		<td width="25%" height="24">重复次数&nbsp;</td>
+		<td height="24"><input type="text" name="repeatCount" size="18"
+			 class="input span1 x-text" maxlength="255"
 			value="${scheduler.repeatCount}"
 			onKeyPress="return check_integer(this);">
 		&nbsp;(-1代表不限制重复次数)</td>
 	</tr>
 
 	<tr>
-		<td width="25%" height="27">间隔时间&nbsp;</td>
-		<td height="27"><input name="repeatInterval" size="18"
-			class="input" maxlength="255"
+		<td width="25%" height="24">间隔时间&nbsp;</td>
+		<td height="24"><input type="text" name="repeatInterval" size="18"
+			 class="input span1 x-text" maxlength="255"
 			value="${scheduler.repeatInterval}"
 			onKeyPress="return check_integer(this);"> &nbsp;
 		(以秒计算，必须是大于0的整数)</td>
 	</tr>
 
 	<tr>
-		<td width="25%" height="27">是否自动启动&nbsp;</td>
-		<td height="27">
+		<td width="25%" height="24">是否自动启动&nbsp;</td>
+		<td height="24">
 		<c:choose>
 			<c:when test="${scheduler.autoStartup == 1}">
 				<input type="radio" name="autoStartup" value="1" checked>是
@@ -186,8 +182,8 @@
 	</tr>
 
 	<tr>
-		<td width="25%" height="27">是否启用&nbsp;</td>
-		<td height="27">
+		<td width="25%" height="24">是否启用&nbsp;</td>
+		<td height="24">
 		<c:choose>
 			<c:when test="${scheduler.locked == 0}">
 				<input type="radio" name="locked" value="0" checked>是
@@ -200,23 +196,13 @@
 		</c:choose>
 		</td>
 	</tr>
+ 
+    </table> 
 
-      <tr>
-        <td colspan="2" align="center" valign="bottom" height="30">&nbsp;
-              <input name="btn_save" type="submit" value="保存" class="button"></td>
-      </tr>
-    </table></td>
-  </tr>
-  <tr>
-    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
-      <tr class="box">
-        <td class="box-lb">&nbsp;</td>
-        <td class="box-mb">&nbsp;</td>
-        <td class="box-rb">&nbsp;</td>
-      </tr>
-    </table></td>
-  </tr>
-</table>
+	<div align="center">
+	 <input name="btn_save" type="submit" value="保存" class="btn btn-primary">
+	</div>
+
 </html:form>
 
 <script language="javascript">
@@ -243,6 +229,6 @@
 
 </script>
 <br/>
-<br/>
+ 
 </body> 
 </html>
