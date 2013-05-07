@@ -245,7 +245,7 @@ public class ${entityName}WfController extends ${entityName}BaseController {
         @Override
 	@RequestMapping(params = "method=json")
 	@ResponseBody
-	public byte[] json(HttpServletRequest request, ModelMap modelMap, ${entityName}Query query)
+	public byte[] json(HttpServletRequest request, ModelMap modelMap)
 			throws IOException {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 	 
@@ -262,7 +262,7 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 		}
 
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		//${entityName}Query query = new ${entityName}Query();
+		${entityName}Query query = new ${entityName}Query();
 		Tools.populate(query, params);
 		query.setWorkedProcessFlag(workedProcessFlag);
 		query.setActorId(loginContext.getActorId());

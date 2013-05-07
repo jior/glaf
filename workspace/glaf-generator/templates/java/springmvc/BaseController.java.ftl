@@ -297,10 +297,10 @@ public class ${entityName}BaseController {
 
 	@RequestMapping(params = "method=json")
 	@ResponseBody
-	public byte[] json(HttpServletRequest request, ModelMap modelMap, ${entityName}Query query) throws IOException {
+	public byte[] json(HttpServletRequest request, ModelMap modelMap) throws IOException {
 	        LoginContext loginContext = RequestUtils.getLoginContext(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		//${entityName}Query query = new ${entityName}Query();
+		${entityName}Query query = new ${entityName}Query();
 		Tools.populate(query, params);
 		query.deleteFlag(0);
 		query.setActorId(loginContext.getActorId());
