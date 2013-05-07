@@ -363,7 +363,8 @@ public class RequestUtils {
 	 * @param paramName
 	 * @return
 	 */
-	public static int getInteger(HttpServletRequest request, String paramName) {
+	public static Integer getInteger(HttpServletRequest request,
+			String paramName) {
 		return getInteger(request, paramName, null);
 	}
 
@@ -375,8 +376,8 @@ public class RequestUtils {
 	 * @param defaultValue
 	 * @return
 	 */
-	public static int getInteger(HttpServletRequest request, String paramName,
-			Integer defaultValue) {
+	public static Integer getInteger(HttpServletRequest request,
+			String paramName, Integer defaultValue) {
 		String paramValue = request.getParameter(paramName);
 		if (StringUtils.isNotEmpty(paramValue)) {
 			return Integer.parseInt(paramValue);
