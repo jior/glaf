@@ -209,8 +209,11 @@ public class SysUserJsonFactory {
 		jsonObject.put("code", user.getCode());
 		jsonObject.put("name", user.getName());
 		jsonObject.put("locked", user.getBlocked());
+		jsonObject.put("blocked", user.getBlocked());
+		
 		if (user.getDepartment() != null) {
 			jsonObject.put("deptId", user.getDepartment().getId());
+			jsonObject.put("deptName", user.getDepartment().getName());
 		} else {
 			jsonObject.put("deptId", user.getDeptId());
 		}
@@ -301,8 +304,10 @@ public class SysUserJsonFactory {
 		jsonObject.put("code", user.getCode());
 		jsonObject.put("name", user.getName());
 		jsonObject.put("locked", user.getBlocked());
+		jsonObject.put("blocked", user.getBlocked());
 		if (user.getDepartment() != null) {
 			jsonObject.put("deptId", user.getDepartment().getId());
+			jsonObject.put("deptName", user.getDepartment().getName());
 		} else {
 			jsonObject.put("deptId", user.getDeptId());
 		}

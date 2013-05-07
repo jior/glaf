@@ -20,10 +20,10 @@
 		<result property="iconCls" column="iconCls" jdbcType="VARCHAR" />
 		<result property="url" column="url" jdbcType="VARCHAR" />
 		<result property="locked" column="locked" jdbcType="INTEGER" />
-		<result property="createDate" column="CREATEDATE" jdbcType="TIMESTAMP"/>
-        <result property="createBy" column="CREATEBY" jdbcType="VARCHAR"/>
-        <result property="updateBy" column="UPDATEBY" jdbcType="VARCHAR"/>
-        <result property="updateDate" column="UPDATEDATE" jdbcType="TIMESTAMP"/>
+		<result property="createDate" column="CREATEDATE" jdbcType="TIMESTAMP" />
+		<result property="createBy" column="CREATEBY" jdbcType="VARCHAR" />
+		<result property="updateBy" column="UPDATEBY" jdbcType="VARCHAR" />
+		<result property="updateDate" column="UPDATEDATE" jdbcType="TIMESTAMP" />
 	</resultMap>
 
 
@@ -71,16 +71,16 @@
 				,locked
 			</if>
 			<if test="createDate != null">
-				,CREATEDATE 
+				,CREATEDATE
 			</if>
 			<if test="createBy != null">
-				,CREATEBY 
+				,CREATEBY
 			</if>
 			<if test="updateBy != null">
-				,UPDATEBY 
+				,UPDATEBY
 			</if>
 			<if test="updateDate != null">
-				,UPDATEDATE 
+				,UPDATEDATE
 			</if>
 		</trim>
 
@@ -223,7 +223,57 @@
 		inner join sys_dictory D
 		on E.ID =
 		D.TYPEID
-		where E.LOCKED = 0
+		where 1=1
+
+		<include refid="getSysTreesSql" />
+
+	</select>
+
+	<select id="getDepartmentSysTrees" parameterType="com.glaf.base.modules.sys.query.SysTreeQuery"
+		resultMap="sysTreeResultMap">
+
+		select distinct E.* from sys_tree E
+		inner join sys_department D
+		on E.ID
+		=D.NODEID
+		where 1=1
+
+		<include refid="getSysTreesSql" />
+
+		order by E.PARENT asc, E.SORT asc
+
+	</select>
+
+
+	<select id="getApplicationSysTrees" parameterType="com.glaf.base.modules.sys.query.SysTreeQuery"
+		resultMap="sysTreeResultMap">
+
+		select distinct E.* from sys_tree E
+		inner join
+		sys_application D
+		on E.ID
+		= D.NODEID
+		where 1=1
+
+		<include refid="getSysTreesSql" />
+
+		order by E.PARENT asc, E.SORT asc
+
+	</select>
+
+
+	<select id="getRelationSysTrees" parameterType="com.glaf.base.modules.sys.query.SysTreeQuery"
+		resultMap="sysTreeResultMap">
+
+		select distinct E.* from sys_tree E
+		inner join ${relationTable} R
+		on
+		E.ID = R.${relationColumn}
+		where 1=1
+
+		<include refid="getSysTreesSql" />
+
+		order by E.PARENT asc, E.SORT asc
 
 	</select>
 
@@ -353,6 +403,99 @@
 			</if>
 
 		</where>
+	</sql>
+
+
+	<sql id="getSysTreesSql">
+
+		<if test="parentId != null">
+			and E.PARENT = #{parentId}
+		</if>
+
+		<if test="parentIds != null and parentIds.size() &gt; 0">
+			and E.PARENT IN
+			<foreach item="x_parentId" index="index" collection="parentIds"
+				open="(" separator="," close=")">
+				#{x_parentId}
+			</foreach>
+		</if>
+
+		<if test="discriminator != null and discriminator != '' ">
+			and E.DISCRIMINATOR = #{discriminator}
+		</if>
+
+		<if test="name != null and name != '' ">
+			and E.NAME = #{name}
+		</if>
+
+		<if test="nameLike != null and nameLike != '' ">
+			and E.NAME like #{nameLike}
+		</if>
+
+		<if test="names != null and names.size() &gt; 0">
+			and E.NAME IN
+			<foreach item="x_name" index="index" collection="names" open="("
+				separator="," close=")">
+				#{x_name}
+			</foreach>
+		</if>
+
+		<if test="descLike != null and descLike != '' ">
+			and E.NODEDESC like #{descLike}
+		</if>
+
+		<if test="sortGreaterThanOrEqual != null">
+			and E.SORT &gt;= #{sortGreaterThanOrEqual}
+		</if>
+
+		<if test="sortGreaterThan != null">
+			and E.SORT &gt; #{sortGreaterThan}
+		</if>
+
+		<if test="sortLessThanOrEqual != null">
+			and E.SORT &lt;= #{sortLessThanOrEqual}
+		</if>
+
+		<if test="sortLessThan != null">
+			and E.SORT &lt; #{sortLessThan}
+		</if>
+
+		<if test="code != null and code != '' ">
+			and E.CODE = #{code}
+		</if>
+
+		<if test="codeLike != null and codeLike != '' ">
+			and E.CODE like #{codeLike}
+		</if>
+
+		<if test="codes != null and codes.size() &gt; 0">
+			and E.CODE IN
+			<foreach item="x_code" index="index" collection="codes" open="("
+				separator="," close=")">
+				#{x_code}
+			</foreach>
+		</if>
+
+		<if test="treeIdLike != null and treeIdLike != '' ">
+			and E.TREEID like #{treeIdLike}
+		</if>
+
+		<if test="urlLike != null and urlLike != '' ">
+			and E.url like #{urlLike}
+		</if>
+
+		<if test="locked != null">
+			and E.locked = #{locked}
+		</if>
+
+		<if test="lockedGreaterThanOrEqual != null">
+			and E.locked &gt;= #{lockedGreaterThanOrEqual}
+		</if>
+
+		<if test="lockedLessThanOrEqual != null">
+			and E.locked &lt;= #{lockedLessThanOrEqual}
+		</if>
+
 	</sql>
 
 </mapper>

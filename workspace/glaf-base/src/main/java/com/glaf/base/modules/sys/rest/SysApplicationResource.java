@@ -19,6 +19,7 @@
 package com.glaf.base.modules.sys.rest;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -40,15 +41,19 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.glaf.base.modules.sys.model.SysApplication;
 import com.glaf.base.modules.sys.model.SysTree;
 import com.glaf.base.modules.sys.query.SysApplicationQuery;
+import com.glaf.base.modules.sys.query.SysTreeQuery;
 import com.glaf.base.modules.sys.service.SysApplicationService;
 import com.glaf.base.modules.sys.service.SysTreeService;
 import com.glaf.base.utils.ParamUtil;
+import com.glaf.core.base.TreeModel;
 import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
 import com.glaf.core.res.ViewMessages;
+import com.glaf.core.tree.helper.JacksonTreeHelper;
 import com.glaf.core.util.PageResult;
 import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.RequestUtils;
@@ -277,5 +282,41 @@ public class SysApplicationResource {
 		logger.info("parent:" + parent + "; id:" + id + "; operate:" + operate);
 		SysApplication bean = sysApplicationService.findById(id);
 		sysApplicationService.sort(parent, bean, operate);
+	}
+
+	@GET
+	@POST
+	@Path("/treeJson")
+	@ResponseBody
+	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
+	public byte[] treeJson(@Context HttpServletRequest request) {
+		String nodeCode = request.getParameter("nodeCode");
+
+		List<TreeModel> treeModels = new ArrayList<TreeModel>();
+		if (StringUtils.isNotEmpty(nodeCode)) {
+			TreeModel treeModel = sysTreeService.getSysTreeByCode(nodeCode);
+			if (treeModel != null) {
+				SysTreeQuery query = new SysTreeQuery();
+				Map<String, Object> params = RequestUtils
+						.getParameterMap(request);
+				Tools.populate(query, params);
+				//query.setParentId(treeModel.getId());
+				List<SysTree> trees = sysTreeService
+						.getApplicationSysTrees(query);
+				if (trees != null && !trees.isEmpty()) {
+					for (SysTree tree : trees) {
+						treeModels.add(tree);
+					}
+				}
+			}
+		}
+
+		JacksonTreeHelper treeHelper = new JacksonTreeHelper();
+		ArrayNode responseJSON = treeHelper.getTreeArrayNode(treeModels);
+		try {
+			return responseJSON.toString().getBytes("UTF-8");
+		} catch (IOException e) {
+			return responseJSON.toString().getBytes();
+		}
 	}
 }

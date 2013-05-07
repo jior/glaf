@@ -94,14 +94,14 @@ public class ${entityName}ServiceImpl implements ${entityName}Service {
 	        ${modelName}.set${idField.firstUpperName}(idGenerator.nextId("${tableName}"));
 	<#else>
            if (StringUtils.isEmpty(${modelName}.get${idField.firstUpperName}())) {
+	        ${modelName}.set${idField.firstUpperName}(idGenerator.getNextId("${tableName}"));
 	</#if>
-			${modelName}.set${idField.firstUpperName}(idGenerator.getNextId("${tableName}"));
-			//${modelName}.setCreateDate(new Date());
-			${modelName}.setDeleteFlag(0);
-			${modelName}Mapper.insert${entityName}(${modelName});
-		} else {
-			${modelName}Mapper.update${entityName}(${modelName});
-		}
+		//${modelName}.setCreateDate(new Date());
+		//${modelName}.setDeleteFlag(0);
+		${modelName}Mapper.insert${entityName}(${modelName});
+	       } else {
+		${modelName}Mapper.update${entityName}(${modelName});
+	      }
 	}
 
 	@Resource(name="myBatisEntityDAO")

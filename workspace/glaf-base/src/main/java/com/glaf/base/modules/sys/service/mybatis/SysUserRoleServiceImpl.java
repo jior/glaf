@@ -188,7 +188,7 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 
 		String deptId = (String) filter.get("deptId");
 		if (deptId != null) {
-			query.deptId(Integer.parseInt(deptId));
+			query.deptId(Long.parseLong(deptId));
 		}
 
 		String name = (String) filter.get("name");

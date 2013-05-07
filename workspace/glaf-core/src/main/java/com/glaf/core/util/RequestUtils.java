@@ -51,11 +51,11 @@ import com.glaf.core.security.IdentityFactory;
 import com.glaf.core.security.LoginContext;
 
 public class RequestUtils {
+	private static final int COOKIE_LIVING_SECONDS = 3600 * 2;
+
 	protected final static Log logger = LogFactory.getLog(RequestUtils.class);
 
 	private static final Map<String, Object> paramMap = new HashMap<String, Object>();
-
-	private static final int COOKIE_LIVING_SECONDS = 3600 * 2;
 
 	static {
 		paramMap.put("submit", "submit");
@@ -233,22 +233,6 @@ public class RequestUtils {
 		return actorId;
 	}
 
-	public static User getUser(HttpServletRequest request) {
-		String actorId = getActorId(request);
-		if (StringUtils.isNotEmpty(actorId)) {
-			return IdentityFactory.getUser(actorId);
-		}
-		return null;
-	}
-
-	public static LoginContext getLoginContext(HttpServletRequest request) {
-		String actorId = getActorId(request);
-		if (StringUtils.isNotEmpty(actorId)) {
-			return IdentityFactory.getLoginContext(actorId);
-		}
-		return null;
-	}
-
 	public static String getAttribute(HttpServletRequest request, String name) {
 		Object value = request.getAttribute(name);
 		if (value != null) {
@@ -373,6 +357,34 @@ public class RequestUtils {
 	}
 
 	/**
+	 * 从request中获取int参数
+	 * 
+	 * @param request
+	 * @param paramName
+	 * @return
+	 */
+	public static int getInteger(HttpServletRequest request, String paramName) {
+		return getInteger(request, paramName, null);
+	}
+
+	/**
+	 * 从request中获取int参数
+	 * 
+	 * @param request
+	 * @param paramName
+	 * @param defaultValue
+	 * @return
+	 */
+	public static int getInteger(HttpServletRequest request, String paramName,
+			Integer defaultValue) {
+		String paramValue = request.getParameter(paramName);
+		if (StringUtils.isNotEmpty(paramValue)) {
+			return Integer.parseInt(paramValue);
+		}
+		return defaultValue;
+	}
+
+	/**
 	 * 获取Web客户端的真实IP地址
 	 * 
 	 * @param request
@@ -401,6 +413,14 @@ public class RequestUtils {
 			}
 		}
 		return ipAddress;
+	}
+
+	public static LoginContext getLoginContext(HttpServletRequest request) {
+		String actorId = getActorId(request);
+		if (StringUtils.isNotEmpty(actorId)) {
+			return IdentityFactory.getLoginContext(actorId);
+		}
+		return null;
 	}
 
 	/**
@@ -822,6 +842,14 @@ public class RequestUtils {
 			theme = request.getParameter("theme");
 		}
 		return theme;
+	}
+
+	public static User getUser(HttpServletRequest request) {
+		String actorId = getActorId(request);
+		if (StringUtils.isNotEmpty(actorId)) {
+			return IdentityFactory.getUser(actorId);
+		}
+		return null;
 	}
 
 	public static void removeTicket(HttpServletRequest request) {

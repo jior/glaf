@@ -73,8 +73,8 @@ public class SysUserQuery extends DataQuery {
 	protected Integer dumpFlagGreaterThanOrEqual;
 	protected Integer dumpFlagLessThanOrEqual;
 	protected List<Integer> dumpFlags;
-	protected Integer deptId;
-	protected List<Integer> deptIds;
+	protected Long deptId;
+	protected List<Long> deptIds;
 	protected String adminFlag;
 	protected List<String> adminFlags;
 	protected String superiorIdsLike;
@@ -235,7 +235,7 @@ public class SysUserQuery extends DataQuery {
 		return this;
 	}
 
-	public SysUserQuery deptId(Integer deptId) {
+	public SysUserQuery deptId(Long deptId) {
 		if (deptId == null) {
 			throw new RuntimeException("deptId is null");
 		}
@@ -243,7 +243,7 @@ public class SysUserQuery extends DataQuery {
 		return this;
 	}
 
-	public SysUserQuery deptIds(List<Integer> deptIds) {
+	public SysUserQuery deptIds(List<Long> deptIds) {
 		if (deptIds == null) {
 			throw new RuntimeException("deptIds is empty ");
 		}
@@ -478,11 +478,11 @@ public class SysUserQuery extends DataQuery {
 		return createTimeLessThanOrEqual;
 	}
 
-	public Integer getDeptId() {
+	public Long getDeptId() {
 		return deptId;
 	}
 
-	public List<Integer> getDeptIds() {
+	public List<Long> getDeptIds() {
 		return deptIds;
 	}
 
@@ -998,11 +998,11 @@ public class SysUserQuery extends DataQuery {
 		this.createTimeLessThanOrEqual = createTimeLessThanOrEqual;
 	}
 
-	public void setDeptId(Integer deptId) {
+	public void setDeptId(Long deptId) {
 		this.deptId = deptId;
 	}
 
-	public void setDeptIds(List<Integer> deptIds) {
+	public void setDeptIds(List<Long> deptIds) {
 		this.deptIds = deptIds;
 	}
 

@@ -93,6 +93,52 @@ public interface SysTreeService {
 	List<SysTree> getAllSysTreeList();
 
 	/**
+	 * 获取全部列表
+	 * 
+	 * @param parent
+	 *            int 父ID
+	 * @param status
+	 *            int 状态
+	 * @return List
+	 */
+	List<SysTree> getAllSysTreeListForDept(long parent, int status);
+
+	/**
+	 * 获取应用模块树型结构
+	 * 
+	 * @param query
+	 * @return
+	 */
+	List<SysTree> getApplicationSysTrees(SysTreeQuery query);
+
+	/**
+	 * 获取部门树型结构
+	 * 
+	 * @param query
+	 * @return
+	 */
+	List<SysTree> getDepartmentSysTrees(SysTreeQuery query);
+
+	/**
+	 * 获取字典树型结构
+	 * 
+	 * @param query
+	 * @return
+	 */
+	List<SysTree> getDictorySysTrees(SysTreeQuery query);
+
+	/**
+	 * 获取关联表树型结构
+	 * 
+	 * @param relationTable 表名
+	 * @param relationColumn 关联字段名
+	 * @param query
+	 * @return
+	 */
+	List<SysTree> getRelationSysTrees(String relationTable,
+			String relationColumn, SysTreeQuery query);
+
+	/**
 	 * 获取树型列表
 	 * 
 	 * @param parent
@@ -148,18 +194,6 @@ public interface SysTreeService {
 	 * @return List
 	 */
 	List<SysTree> getSysTreeListForDept(long parent, int status);
-	
-	
-	/**
-	 * 获取全部列表
-	 * 
-	 * @param parent
-	 *            int 父ID
-	 * @param status
-	 *            int 状态
-	 * @return List
-	 */
-	List<SysTree> getAllSysTreeListForDept(long parent, int status);
 
 	/**
 	 * 获取父节点列表，如:根目录>A>A1>A11

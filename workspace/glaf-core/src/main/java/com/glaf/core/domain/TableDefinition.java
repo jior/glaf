@@ -339,7 +339,7 @@ public class TableDefinition implements java.io.Serializable,
 	}
 
 	public Map<String, FieldDefinition> getFields() {
-		Map<String, FieldDefinition> fieldMap = new HashMap<String, FieldDefinition>();
+		Map<String, FieldDefinition> fieldMap = new LinkedHashMap<String, FieldDefinition>();
 		if (columns != null && !columns.isEmpty()) {
 			for (ColumnDefinition column : columns) {
 				fieldMap.put(column.getName(), column);

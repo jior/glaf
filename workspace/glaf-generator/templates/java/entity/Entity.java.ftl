@@ -36,7 +36,7 @@ public class ${entityName} implements Serializable {
 	<#elseif ( field.type== 'Clob' )>
         @Column(name = "${field.columnName}") 
 	<#elseif ( field.type== 'String' )>
-        @Column(name = "${field.columnName}", length=${field.length}) 
+        @Column(name = "${field.columnName}", length=${field.length?c}) 
 	<#else>
         @Column(name = "${field.columnName}")  
         </#if>

@@ -103,6 +103,13 @@ public interface SysDepartmentService {
 	 */
 
 	SysDepartment findByNo(String deptno);
+	
+	/**
+	 * 通过节点编号获取部门信息
+	 * @param nodeId
+	 * @return
+	 */
+	SysDepartment getSysDepartmentByNodeId(long nodeId);
 
 	/**
 	 * 获取某个部门及下级部门列表

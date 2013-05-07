@@ -50,7 +50,7 @@ public class Pdm2XmlMapping {
 
 	public void convert(File file) throws Exception {
 		if (file.isFile() && file.getName().toLowerCase().endsWith(".pdm")) {
-			String dt = DateUtils.getDateTime("yyyyMMddHHmmss", new Date());
+			String dt = DateUtils.getDateTime("yyyyMMddHHmm", new Date());
 			InputStream inputStream = new FileInputStream(file);
 			SAXReader xmlReader = new SAXReader(false);
 			Document doc = xmlReader.read(inputStream);
@@ -115,6 +115,8 @@ public class Pdm2XmlMapping {
 							field.setDataType(FieldType.DOUBLE_TYPE);
 							field.setType("Double");
 						} else if (StringUtils.startsWith(dataType, "INT")
+								|| StringUtils.startsWith(dataType, "INT2")
+								|| StringUtils.startsWith(dataType, "INT4")
 								|| StringUtils.startsWith(dataType, "INTEGER")
 								|| StringUtils.startsWith(dataType, "SMALLINT")) {
 							field.setDataType(FieldType.INTEGER_TYPE);
@@ -125,7 +127,8 @@ public class Pdm2XmlMapping {
 										.startsWith(dataType, "TIMESTAMP")) {
 							field.setDataType(FieldType.TIMESTAMP_TYPE);
 							field.setType("Date");
-						} else if (StringUtils.startsWith(dataType, "BIGINT")) {
+						} else if (StringUtils.startsWith(dataType, "BIGINT")
+								|| StringUtils.startsWith(dataType, "INT8")) {
 							field.setDataType(FieldType.LONG_TYPE);
 							field.setType("Long");
 						} else {
@@ -137,6 +140,8 @@ public class Pdm2XmlMapping {
 								field.setMaxLength(Integer.valueOf(length));
 							}
 						}
+						field.setDisplayType(4);
+						field.setEditable(true);
 						classDefinition.addField(field);
 					}
 				}
@@ -198,6 +203,8 @@ public class Pdm2XmlMapping {
 				Document d = xmlWriter.write(classDefinition);
 				byte[] bytes = Dom4jUtils.getBytesFromDocument(d, format);
 				FileUtils.save(toFile, bytes);
+				
+				System.out.println("gen mapping file:"+toFile);
 
 			}
 

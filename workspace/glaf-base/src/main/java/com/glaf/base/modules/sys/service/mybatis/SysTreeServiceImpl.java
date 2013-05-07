@@ -141,6 +141,43 @@ public class SysTreeServiceImpl implements SysTreeService {
 		return list;
 	}
 
+	public List<SysTree> getAllSysTreeListForDept(long parentId, int status) {
+		List<SysTree> list = new ArrayList<SysTree>();
+		this.loadChildrenTreeListForDept(list, parentId, status);
+		Collections.sort(list);
+		this.initDepartments(list);
+		return list;
+	}
+
+	public List<SysTree> getApplicationSysTrees(SysTreeQuery query) {
+		return sysTreeMapper.getApplicationSysTrees(query);
+	}
+
+	public List<SysTree> getDepartmentSysTrees(SysTreeQuery query) {
+		return sysTreeMapper.getDepartmentSysTrees(query);
+	}
+
+	public List<SysTree> getDictorySysTrees(SysTreeQuery query) {
+		return sysTreeMapper.getDictorySysTrees(query);
+	}
+
+	/**
+	 * 获取关联表树型结构
+	 * 
+	 * @param relationTable
+	 *            表名
+	 * @param relationColumn
+	 *            关联字段名
+	 * @param query
+	 * @return
+	 */
+	public List<SysTree> getRelationSysTrees(String relationTable,
+			String relationColumn, SysTreeQuery query) {
+		query.setRelationTable(relationTable);
+		query.setRelationColumn(relationColumn);
+		return sysTreeMapper.getRelationSysTrees(query);
+	}
+
 	public void getSysTree(List<SysTree> tree, int parentId, int deep) {
 		SysTreeQuery query = new SysTreeQuery();
 		query.setParentId(Long.valueOf(parentId));
@@ -229,31 +266,6 @@ public class SysTreeServiceImpl implements SysTreeService {
 		return list;
 	}
 
-	public List<SysTree> getAllSysTreeListForDept(long parentId, int status) {
-		List<SysTree> list = new ArrayList<SysTree>();
-		this.loadChildrenTreeListForDept(list, parentId, status);
-		Collections.sort(list);
-		this.initDepartments(list);
-		return list;
-	}
-
-	protected void loadChildrenTreeListForDept(List<SysTree> list,
-			long parentId, int status) {
-		SysTreeQuery query = new SysTreeQuery();
-		query.setParentId(Long.valueOf(parentId));
-		if (status != -1) {
-			query.setDepartmentStatus(status);
-		}
-		query.setOrderBy(" E.SORT desc");
-		List<SysTree> trees = this.list(query);
-		if (trees != null && !trees.isEmpty()) {
-			for (SysTree tt : trees) {
-				list.add(tt);
-				this.loadChildrenTreeListForDept(list, tt.getId(), status);
-			}
-		}
-	}
-
 	/**
 	 * 获取父节点列表，如:根目录>A>A1>A11
 	 * 
@@ -328,6 +340,23 @@ public class SysTreeServiceImpl implements SysTreeService {
 			for (SysTree node : nodes) {
 				list.add(node);
 				this.loadChildren(list, node.getId());
+			}
+		}
+	}
+
+	protected void loadChildrenTreeListForDept(List<SysTree> list,
+			long parentId, int status) {
+		SysTreeQuery query = new SysTreeQuery();
+		query.setParentId(Long.valueOf(parentId));
+		if (status != -1) {
+			query.setDepartmentStatus(status);
+		}
+		query.setOrderBy(" E.SORT desc");
+		List<SysTree> trees = this.list(query);
+		if (trees != null && !trees.isEmpty()) {
+			for (SysTree tt : trees) {
+				list.add(tt);
+				this.loadChildrenTreeListForDept(list, tt.getId(), status);
 			}
 		}
 	}

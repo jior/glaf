@@ -79,11 +79,11 @@ public class TripBaseController {
 
         @ResponseBody
 	@RequestMapping(params = "method=saveTrip")
-	public byte[] saveTrip(HttpServletRequest request, Trip trip ) { 
+	public byte[] saveTrip(HttpServletRequest request  ) { 
 	        User user = RequestUtils.getUser(request);
 		String actorId =  user.getActorId();
 	        Map<String, Object> params = RequestUtils.getParameterMap(request);
-		//Trip trip = new Trip();
+		Trip trip = new Trip();
 		try {
 		    Tools.populate(trip, params);
                     trip.setWfStatus(RequestUtils.getInt(request, "wfStatus"));

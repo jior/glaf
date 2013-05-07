@@ -40,15 +40,15 @@ public class ${entityName}BaseController {
 
 
 	@RequestMapping(params = "method=save")
-	public ModelAndView save(HttpServletRequest request, ModelMap modelMap, ${entityName} ${modelName}) {
+	public ModelAndView save(HttpServletRequest request, ModelMap modelMap) {
 		User user = RequestUtils.getUser(request);
 		String actorId =  user.getActorId();
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
                 params.remove("status");
 		params.remove("wfStatus");
 
-		//${entityName} ${modelName} = new ${entityName}();
-		//Tools.populate(${modelName}, params);
+		${entityName} ${modelName} = new ${entityName}();
+		Tools.populate(${modelName}, params);
 
  <#if pojo_fields?exists>
     <#list  pojo_fields as field>	
@@ -75,11 +75,11 @@ public class ${entityName}BaseController {
 
         @ResponseBody
 	@RequestMapping(params = "method=save${entityName}")
-	public byte[] save${entityName}(HttpServletRequest request, ${entityName} ${modelName} ) { 
+	public byte[] save${entityName}(HttpServletRequest request) { 
 	        User user = RequestUtils.getUser(request);
 		String actorId =  user.getActorId();
 	        Map<String, Object> params = RequestUtils.getParameterMap(request);
-		//${entityName} ${modelName} = new ${entityName}();
+		${entityName} ${modelName} = new ${entityName}();
 		try {
 		    Tools.populate(${modelName}, params);
  <#if pojo_fields?exists>
@@ -149,14 +149,14 @@ public class ${entityName}BaseController {
 	public void delete(HttpServletRequest request, ModelMap modelMap) {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		String ${idField.name} = ParamUtils.getString(params, "${idField.name}");
+		${idField.type} ${idField.name} = RequestUtils.get${idField.type}(request, "${idField.name}");
 		String ${idField.name}s = request.getParameter("${idField.name}s");
 		if (StringUtils.isNotEmpty(${idField.name}s)) {
 			StringTokenizer token = new StringTokenizer(${idField.name}s, ",");
 			while (token.hasMoreTokens()) {
 				String x = token.nextToken();
 				if (StringUtils.isNotEmpty(x)) {
-					${entityName} ${modelName} = ${modelName}Service.get${entityName}(x);
+					${entityName} ${modelName} = ${modelName}Service.get${entityName}(${idField.type}.valueOf(x));
 					/**
 		                         * 此处业务逻辑需自行调整
 		                         */
@@ -167,9 +167,9 @@ public class ${entityName}BaseController {
 					}
 				}
 			}
-		} else if (StringUtils.isNotEmpty(${idField.name})) {
+		} else if (${idField.name} != null) {
 			${entityName} ${modelName} = ${modelName}Service
-					.get${entityName}(${idField.name});
+					.get${entityName}(${idField.type}.valueOf(${idField.name}));
 			/**
 		         * 此处业务逻辑需自行调整
 		         */

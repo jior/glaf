@@ -34,6 +34,8 @@ public class SysTreeQuery extends DataQuery {
 	protected String name;
 	protected String nameLike;
 	protected List<String> names;
+	protected String relationColumn;
+	protected String relationTable;
 	protected Integer sortGreaterThan;
 	protected Integer sortGreaterThanOrEqual;
 	protected Integer sortLessThan;
@@ -196,6 +198,14 @@ public class SysTreeQuery extends DataQuery {
 		return orderBy;
 	}
 
+	public String getRelationColumn() {
+		return relationColumn;
+	}
+
+	public String getRelationTable() {
+		return relationTable;
+	}
+
 	public Integer getSortGreaterThan() {
 		return sortGreaterThan;
 	}
@@ -344,6 +354,14 @@ public class SysTreeQuery extends DataQuery {
 
 	public void setNames(List<String> names) {
 		this.names = names;
+	}
+
+	public void setRelationColumn(String relationColumn) {
+		this.relationColumn = relationColumn;
+	}
+
+	public void setRelationTable(String relationTable) {
+		this.relationTable = relationTable;
 	}
 
 	public void setSortGreaterThan(Integer sortGreaterThan) {

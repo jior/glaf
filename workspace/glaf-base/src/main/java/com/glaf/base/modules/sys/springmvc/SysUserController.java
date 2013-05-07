@@ -207,6 +207,33 @@ public class SysUserController {
 		return new ModelAndView("show_msg2", modelMap);
 	}
 
+	@RequestMapping(params = "method=deptUsers")
+	public ModelAndView deptUsers(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		String x_query = request.getParameter("x_query");
+		if (StringUtils.equals(x_query, "true")) {
+			Map<String, Object> paramMap = RequestUtils
+					.getParameterMap(request);
+			String x_complex_query = JsonUtils.encode(paramMap);
+			x_complex_query = RequestUtils.encodeString(x_complex_query);
+			request.setAttribute("x_complex_query", x_complex_query);
+		} else {
+			request.setAttribute("x_complex_query", "");
+		}
+
+		String x_view = ViewProperties.getString("user.deptUsers");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
+		String view = request.getParameter("view");
+		if (StringUtils.isNotEmpty(view)) {
+			return new ModelAndView(view, modelMap);
+		}
+
+		return new ModelAndView("/modules/sys/user/deptUsers", modelMap);
+	}
+
 	/**
 	 * 得到部门下所有部门列表
 	 * 
@@ -245,9 +272,20 @@ public class SysUserController {
 	@RequestMapping(params = "method=json")
 	@ResponseBody
 	public byte[] json(HttpServletRequest request) throws IOException {
+		Long deptId = ParamUtil.getLongParameter(request, "parent", 0);
+		Long nodeId = RequestUtils.getLong(request, "nodeId");
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		SysUserQuery query = new SysUserQuery();
 		Tools.populate(query, params);
+		if (nodeId > 0) {
+			SysDepartment dept = sysDepartmentService
+					.getSysDepartmentByNodeId(nodeId);
+			if (dept != null) {
+				query.deptId(dept.getId());
+			}
+		} else if (deptId > 0) {
+			query.deptId(deptId);
+		}
 
 		String gridType = ParamUtils.getString(params, "gridType");
 		if (gridType == null) {

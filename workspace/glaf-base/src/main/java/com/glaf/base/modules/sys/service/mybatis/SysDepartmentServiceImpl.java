@@ -119,6 +119,25 @@ public class SysDepartmentServiceImpl implements SysDepartmentService {
 		}
 	}
 
+	/**
+	 * 通过节点编号获取部门信息
+	 * 
+	 * @param nodeId
+	 * @return
+	 */
+	public SysDepartment getSysDepartmentByNodeId(long nodeId) {
+		SysDepartmentQuery query = new SysDepartmentQuery();
+		query.nodeId(nodeId);
+		query.setOrderBy(" E.ID asc ");
+
+		List<SysDepartment> list = this.list(query);
+		if (list != null && !list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
 	public SysDepartment findByCode(String code) {
 		SysDepartmentQuery query = new SysDepartmentQuery();
 		query.code(code);

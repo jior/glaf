@@ -19,6 +19,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
@@ -65,13 +66,18 @@ public class XmlWriter {
 			for (Entry<String, FieldDefinition> entry : entrySet) {
 				String name = entry.getKey();
 				FieldDefinition field = entry.getValue();
+				if (idField != null
+						&& StringUtils.equalsIgnoreCase(
+								idField.getColumnName(), field.getColumnName())) {
+					continue;
+				}
 				Element elem = element.addElement("property");
 				elem.addAttribute("name", name);
 				elem.addAttribute("column", field.getColumnName());
 				elem.addAttribute("type", field.getType());
 				elem.addAttribute("title", field.getTitle());
 				elem.addAttribute("englishTitle", field.getEnglishTitle());
-				 
+
 				if (field.getLength() > 0) {
 					elem.addAttribute("length",
 							String.valueOf(field.getLength()));
@@ -92,6 +98,11 @@ public class XmlWriter {
 					elem.addAttribute("updatable",
 							String.valueOf(field.isUpdatable()));
 				}
+				if (field.isEditable()) {
+					elem.addAttribute("editable",
+							String.valueOf(field.isEditable()));
+				}
+				elem.addAttribute("displayType", String.valueOf(field.getDisplayType()));
 			}
 		}
 		return doc;
