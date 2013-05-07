@@ -167,17 +167,29 @@
 	    jQuery('#mydatagrid').datagrid('clearSelections');
 	}
 
+	function loadGridData(url){
+            jQuery.post(url,{qq:'xx'},function(data){
+            //var text = JSON.stringify(data); 
+            //alert(text);
+            jQuery('#mydatagrid').datagrid('loadData', data);
+            },'json');
+	  }
+
 	function searchData(){
-	    var params = jQuery("#searchForm").formSerialize();
-	    var queryParams = jQuery('#mydatagrid').datagrid('options').queryParams;
-	    <#if pojo_fields?exists>
-            <#list  pojo_fields as field>	
-	     <#if field.editable>
-	    queryParams.${field.name} = document.getElementById("query_${field.name}").value;
-	     </#if>	 
-            </#list>
-            </#if>		   
-	    jQuery('#mydatagrid').datagrid('reload');	
+            var params = jQuery("#searchForm").formSerialize();
+            jQuery.ajax({
+                        type: "POST",
+                        url: '<%=request.getContextPath()%>/apps/${modelName}.do?method=json',
+                        dataType:  'json',
+                        data: params,
+                        error: function(data){
+                                  alert('服务器处理错误！');
+                        },
+                        success: function(data){
+                                  jQuery('#mydatagrid').datagrid('loadData', data);
+                        }
+                        });
+
 	    jQuery('#dlg').dialog('close');
 	}
 		 
@@ -212,34 +224,34 @@
 </div>
 <div id="dlg" class="easyui-dialog" style="width:400px;height:280px;padding:10px 20px"
 	closed="true" buttons="#dlg-buttons">
-    <form id="searchForm" name="searchForm" method="post">
-	<table class="easyui-form" >
-            <tbody>
-        <#if pojo_fields?exists>
-         <#list  pojo_fields as field>	
-		   <#if field.editable>
-			<tr>
-				 <td>${field.title}</td>
-				 <td>
-				 <#if field.javaType?exists && field.javaType== 'Date'>
-				  <input id="query_${field.name}" name="query_${field.name}" class="easyui-datebox"></input>
-                 <#elseif field.javaType?exists && field.javaType== 'Integer'>
-				 <input id="query_${field.name}" name="query_${field.name}" class="easyui-numberbox" precision="0" ></input>
-				 <#elseif field.javaType?exists && field.javaType== 'Long'>
-				 <input id="query_${field.name}" name="query_${field.name}" class="easyui-numberbox" precision="0" ></input>
-				 <#elseif field.javaType?exists && field.javaType== 'Double'>
-				 <input id="query_${field.name}" name="query_${field.name}" class="easyui-numberbox" ></input>
-				 <#else>
-                 <input id="query_${field.name}" name="query_${field.name}" class="easyui-validatebox" type="text"></input>
-				 </#if>
-				</td>
-			</tr>
-	  </#if>	 
-    </#list>
+  <form id="searchForm" name="searchForm" method="post">
+  <table class="easyui-form" >
+    <tbody>
+<#if pojo_fields?exists>
+  <#list  pojo_fields as field>	
+    <#if field.editable>
+    <tr>
+	<td>${field.title}</td>
+	<td>
+    <#if field.javaType?exists && field.javaType== 'Date'>
+	<input id="${field.name}LessThanOrEqual" name="${field.name}LessThanOrEqual" class="easyui-datebox"></input>
+    <#elseif field.javaType?exists && field.javaType== 'Integer'>
+	<input id="${field.name}" name="${field.name}" class="easyui-numberbox" precision="0" ></input>
+    <#elseif field.javaType?exists && field.javaType== 'Long'>
+	<input id="${field.name}" name="${field.name}" class="easyui-numberbox" precision="0" ></input>
+    <#elseif field.javaType?exists && field.javaType== 'Double'>
+	<input id="${field.name}" name="${field.name}" class="easyui-numberbox" ></input>
+    <#elseif field.javaType?exists && field.javaType== 'String'>
+        <input id="${field.name}Like" name="${field.name}Like" class="easyui-validatebox" type="text"></input>
     </#if>
-	    </tbody>
-        </table>
-    </form>
+       </td>
+     </tr>
+    </#if>	 
+  </#list>
+</#if>
+      </tbody>
+    </table>
+  </form>
 </div>
 <div id="dlg-buttons">
 	<a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="javascript:searchData()">查询</a>
