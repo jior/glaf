@@ -169,8 +169,10 @@ public class JacksonTreeHelper {
 				if (component.getComponents() != null
 						&& component.getComponents().size() > 0) {
 					child.put("leaf", Boolean.valueOf(false));
+					child.put("isParent", true);
 				} else {
 					child.put("leaf", Boolean.valueOf(true));
+					child.put("isParent", false);
 				}
 				array.add(child);
 				this.buildTree(child, component, checkedNodes, nodeMap);
@@ -198,10 +200,12 @@ public class JacksonTreeHelper {
 				if (component.getComponents() != null
 						&& component.getComponents().size() > 0) {
 					child.put("leaf", Boolean.valueOf(false));
+					child.put("isParent", true);
 					array.add(child);
 					this.buildTreeModel(child, component);
 				} else {
 					child.put("leaf", Boolean.valueOf(true));
+					child.put("isParent", false);
 					array.add(child);
 				}
 			}
@@ -235,6 +239,7 @@ public class JacksonTreeHelper {
 			object.put("name", root.getName());
 			object.put("text", root.getName());
 			object.put("leaf", Boolean.valueOf(false));
+			object.put("isParent", true);
 			object.put("checked", root.isChecked());
 			if (checkedNodes.contains(String.valueOf(root.getId()))) {
 				object.put("checked", Boolean.valueOf(true));
@@ -263,6 +268,7 @@ public class JacksonTreeHelper {
 							row.put("name", menu.getTitle());
 							row.put("text", menu.getTitle());
 							row.put("leaf", Boolean.valueOf(false));
+							row.put("isParent", true);
 							row.put("checked", menu.isChecked());
 							if (checkedNodes.contains(menu.getId())) {
 								row.put("checked", Boolean.valueOf(true));
@@ -298,8 +304,10 @@ public class JacksonTreeHelper {
 							if (menu.getComponents() != null
 									&& menu.getComponents().size() > 0) {
 								row.put("leaf", Boolean.valueOf(false));
+								row.put("isParent", true);
 							} else {
 								row.put("leaf", Boolean.valueOf(true));
+								row.put("isParent", false);
 							}
 							array.add(row);
 							this.buildTree(row, menu, checkedNodes, nodeMap);
@@ -340,11 +348,13 @@ public class JacksonTreeHelper {
 							&& component.getComponents().size() > 0) {
 						row.put("leaf", Boolean.valueOf(false));
 						row.put("cls", "folder");
+						row.put("isParent", true);
 						row.put("classes", "folder");
 						result.add(row);
 						this.buildTreeModel(row, component);
 					} else {
 						row.put("leaf", Boolean.valueOf(true));
+						row.put("isParent", false);
 						if (showParentIfNotChildren) {
 							result.add(row);
 						}
@@ -380,6 +390,7 @@ public class JacksonTreeHelper {
 			object.put("text", root.getName());
 			object.put("leaf", Boolean.valueOf(false));
 			object.put("cls", "folder");
+			object.put("isParent", true);
 			object.put("checked", root.isChecked());
 		}
 
@@ -406,6 +417,7 @@ public class JacksonTreeHelper {
 							object.put("leaf", Boolean.valueOf(false));
 							object.put("cls", "folder");
 							object.put("checked", component.isChecked());
+							object.put("isParent", true);
 							this.buildTreeModel(object, component);
 						}
 					} else {
@@ -424,11 +436,13 @@ public class JacksonTreeHelper {
 									&& component.getComponents().size() > 0) {
 								row.put("leaf", Boolean.valueOf(false));
 								row.put("cls", "folder");
+								row.put("isParent", true);
 								array.add(row);
 								this.buildTreeModel(row, component);
 							} else {
 								if (showParentIfNotChildren) {
 									row.put("leaf", Boolean.valueOf(true));
+									row.put("isParent", false);
 									array.add(row);
 								}
 							}

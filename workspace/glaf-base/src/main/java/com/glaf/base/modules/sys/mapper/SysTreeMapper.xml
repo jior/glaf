@@ -200,6 +200,7 @@
 		sys_tree where ID = #{id}
 	</delete>
 
+
 	<delete id="deleteSysTrees" parameterType="com.glaf.base.modules.sys.query.SysTreeQuery">
 		delete from sys_tree
 		where (
@@ -211,6 +212,7 @@
 		)
 	</delete>
 
+
 	<select id="getSysTreeById" parameterType="long" resultMap="sysTreeResultMap">
 		select * from sys_tree where ID = #{id}
 	</select>
@@ -221,8 +223,7 @@
 
 		select distinct E.* from sys_tree E
 		inner join sys_dictory D
-		on E.ID =
-		D.TYPEID
+		on E.ID = D.TYPEID
 		where 1=1
 
 		<include refid="getSysTreesSql" />
@@ -234,8 +235,7 @@
 
 		select distinct E.* from sys_tree E
 		inner join sys_department D
-		on E.ID
-		=D.NODEID
+		on E.ID = D.NODEID
 		where 1=1
 
 		<include refid="getSysTreesSql" />
@@ -249,10 +249,8 @@
 		resultMap="sysTreeResultMap">
 
 		select distinct E.* from sys_tree E
-		inner join
-		sys_application D
-		on E.ID
-		= D.NODEID
+		inner join sys_application D
+		on E.ID = D.NODEID
 		where 1=1
 
 		<include refid="getSysTreesSql" />
@@ -267,8 +265,7 @@
 
 		select distinct E.* from sys_tree E
 		inner join ${relationTable} R
-		on
-		E.ID = R.${relationColumn}
+		on E.ID = R.${relationColumn}
 		where 1=1
 
 		<include refid="getSysTreesSql" />

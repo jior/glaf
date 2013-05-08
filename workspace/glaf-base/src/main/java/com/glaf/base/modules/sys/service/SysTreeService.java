@@ -145,7 +145,7 @@ public interface SysTreeService {
 	 *            int
 	 * @return List
 	 */
-	void getSysTree(List<SysTree> tree, int parent, int deep);
+	void getSysTree(List<SysTree> tree, long parentId, int deep);
 
 	/**
 	 * 按树编号获取树节点
@@ -169,7 +169,7 @@ public interface SysTreeService {
 	 *            int
 	 * @return List
 	 */
-	List<SysTree> getSysTreeList(int parent);
+	List<SysTree> getSysTreeList(long parentId);
 
 	/**
 	 * 获取分页列表
@@ -182,7 +182,7 @@ public interface SysTreeService {
 	 *            int
 	 * @return
 	 */
-	PageResult getSysTreeList(int parent, int pageNo, int pageSize);
+	PageResult getSysTreeList(long parentId, int pageNo, int pageSize);
 
 	/**
 	 * 获取全部列表

@@ -177,6 +177,8 @@ public class SysTreeController {
 		}
 		return result.toString().getBytes("UTF-8");
 	}
+	
+	
 
 	@RequestMapping
 	public ModelAndView list(HttpServletRequest request, ModelMap modelMap) {

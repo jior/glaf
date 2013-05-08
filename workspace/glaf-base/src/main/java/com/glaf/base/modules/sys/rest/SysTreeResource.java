@@ -19,6 +19,7 @@
 package com.glaf.base.modules.sys.rest;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -40,13 +41,16 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.glaf.base.modules.sys.model.SysTree;
 import com.glaf.base.modules.sys.query.SysTreeQuery;
 import com.glaf.base.modules.sys.service.SysTreeService;
 import com.glaf.base.utils.ParamUtil;
+import com.glaf.core.base.TreeModel;
 import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
 import com.glaf.core.res.ViewMessages;
+import com.glaf.core.tree.helper.JacksonTreeHelper;
 import com.glaf.core.util.PageResult;
 import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.RequestUtils;
@@ -58,6 +62,29 @@ public class SysTreeResource {
 	private static final Log logger = LogFactory.getLog(SysTreeResource.class);
 
 	private SysTreeService sysTreeService;
+
+	@GET
+	@POST
+	@Path("/allTreeJson")
+	@ResponseBody
+	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
+	public byte[] allTreeJson(@Context HttpServletRequest request) {
+		logger.debug("params:" + RequestUtils.getParameterMap(request));
+		List<TreeModel> treeModels = new ArrayList<TreeModel>();
+		List<SysTree> trees = sysTreeService.getAllSysTreeList();
+		if (trees != null && !trees.isEmpty()) {
+			for (SysTree tree : trees) {
+				treeModels.add(tree);
+			}
+		}
+		JacksonTreeHelper treeHelper = new JacksonTreeHelper();
+		ArrayNode array = treeHelper.getTreeArrayNode(treeModels);
+		try {
+			return array.toString().getBytes("UTF-8");
+		} catch (IOException e) {
+			return array.toString().getBytes();
+		}
+	}
 
 	/**
 	 * 批量删除信息
@@ -243,5 +270,74 @@ public class SysTreeResource {
 		logger.info("parent:" + parent + "; id:" + id + "; operate:" + operate);
 		SysTree bean = sysTreeService.findById(id);
 		sysTreeService.sort(parent, bean, operate);
+	}
+
+	@GET
+	@POST
+	@Path("/treeJson")
+	@ResponseBody
+	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
+	public byte[] treeJson(@Context HttpServletRequest request) {
+		logger.debug("params:" + RequestUtils.getParameterMap(request));
+		String nodeCode = request.getParameter("nodeCode");
+
+		String parent_id = request.getParameter("node");
+		if (StringUtils.isEmpty(parent_id)) {
+			parent_id = request.getParameter("parentId");
+		}
+		if (StringUtils.isEmpty(parent_id)) {
+			parent_id = request.getParameter("pId");
+		}
+		if (StringUtils.isEmpty(parent_id)) {
+			parent_id = request.getParameter("parent_id");
+		}
+		TreeModel treeModel = null;
+		List<TreeModel> treeModels = new ArrayList<TreeModel>();
+		if (StringUtils.isNotEmpty(parent_id)
+				&& StringUtils.isNumeric(parent_id)) {
+			treeModel = sysTreeService.findById(Long.parseLong(parent_id));
+			if (treeModel != null) {
+				List<SysTree> trees = sysTreeService.getSysTreeList(treeModel
+						.getId());
+				if (trees != null && !trees.isEmpty()) {
+					for (SysTree tree : trees) {
+						treeModels.add(tree);
+					}
+				}
+			}
+		} else if (StringUtils.isNotEmpty(nodeCode)) {
+			treeModel = sysTreeService.getSysTreeByCode(nodeCode);
+			if (treeModel != null) {
+				List<SysTree> trees = sysTreeService.getSysTreeList(treeModel
+						.getId());
+				if (trees != null && !trees.isEmpty()) {
+					for (SysTree tree : trees) {
+						treeModels.add(tree);
+					}
+				}
+			}
+		}
+
+		JSONArray array = new JSONArray();
+		if (treeModel != null && treeModels != null && !treeModels.isEmpty()) {
+			for (TreeModel t : treeModels) {
+				JSONObject json = t.toJsonObject();
+				json.put("isParent", true);
+				// json.put("halfCheck", true);
+				// json.put("check", true);
+				json.put("pId", treeModel.getId());
+				array.add(json);
+			}
+		}
+
+		logger.debug(array.toJSONString());
+
+		// JacksonTreeHelper treeHelper = new JacksonTreeHelper();
+		// ArrayNode responseJSON = treeHelper.getTreeArrayNode(treeModels);
+		try {
+			return array.toJSONString().getBytes("UTF-8");
+		} catch (IOException e) {
+			return array.toJSONString().getBytes();
+		}
 	}
 }

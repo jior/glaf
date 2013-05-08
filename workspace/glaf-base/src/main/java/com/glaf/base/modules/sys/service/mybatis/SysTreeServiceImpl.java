@@ -178,7 +178,7 @@ public class SysTreeServiceImpl implements SysTreeService {
 		return sysTreeMapper.getRelationSysTrees(query);
 	}
 
-	public void getSysTree(List<SysTree> tree, int parentId, int deep) {
+	public void getSysTree(List<SysTree> tree, long parentId, int deep) {
 		SysTreeQuery query = new SysTreeQuery();
 		query.setParentId(Long.valueOf(parentId));
 		query.setOrderBy("  E.SORT desc ");
@@ -220,7 +220,7 @@ public class SysTreeServiceImpl implements SysTreeService {
 		return sysTreeMapper.getSysTreeCount(query);
 	}
 
-	public List<SysTree> getSysTreeList(int parentId) {
+	public List<SysTree> getSysTreeList(long parentId) {
 		SysTreeQuery query = new SysTreeQuery();
 		query.setParentId(Long.valueOf(parentId));
 		query.setOrderBy("  E.SORT asc ");
@@ -229,11 +229,11 @@ public class SysTreeServiceImpl implements SysTreeService {
 		return list;
 	}
 
-	public PageResult getSysTreeList(int parent, int pageNo, int pageSize) {
+	public PageResult getSysTreeList(long parentId, int pageNo, int pageSize) {
 		// 计算总数
 		PageResult pager = new PageResult();
 		SysTreeQuery query = new SysTreeQuery();
-		query.parentId(Long.valueOf(parent));
+		query.parentId(Long.valueOf(parentId));
 		int count = this.count(query);
 		if (count == 0) {// 结果集为空
 			pager.setPageSize(pageSize);

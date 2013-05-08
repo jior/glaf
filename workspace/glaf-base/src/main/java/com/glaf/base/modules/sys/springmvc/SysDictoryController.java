@@ -107,6 +107,7 @@ public class SysDictoryController {
 	public byte[] json(HttpServletRequest request) throws IOException {
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		DictoryQuery query = new DictoryQuery();
+		query.setNodeId(-1L);
 		Tools.populate(query, params);
 
 		String gridType = ParamUtils.getString(params, "gridType");
@@ -268,6 +269,9 @@ public class SysDictoryController {
 		request.setAttribute("bean", bean);
 
 		long nodeId = ParamUtil.getLongParameter(request, "parent", 0);
+		if (bean != null && bean.getNodeId() > 0) {
+			nodeId = bean.getNodeId();
+		}
 		if (nodeId > 0) {
 			List<DictoryDefinition> list = dictoryDefinitionService
 					.getDictoryDefinitions(nodeId, "sys_dictory");

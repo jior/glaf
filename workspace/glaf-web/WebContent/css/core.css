@@ -1,0 +1,146 @@
+/*-----------------------------glaf---------------------------------------------------*/
+
+body,table,td,th{
+   font-size:15px;  font-weight:normal; font-family: 宋体,Arial,sans-serif; color:#656565
+}
+
+a:link,a:visited,a:active{color:#656565; text-decoration:none}
+a:hover{color:#F3A36E; text-decoration:none}
+
+.x-title {
+	height: 20px; 
+	line-height:20px;
+	text-align: center; 
+	font: bold 15px 宋体; 
+	color: #484848; 
+	background: url(../images/panel_title.gif) #fff repeat-x left bottom; 
+	border: #d9d9d9 1px solid; 
+}
+
+.x-paging{ 
+	background-color: #ffffff; 
+ 	border: 0px solid; 
+	text-decoration: none ; 
+	font-family:"宋体";
+	font-size: 15px;
+	height: 24px; 
+}
+
+.button {
+	BACKGROUND-IMAGE: url(../images/bluebg.gif); BORDER-BOTTOM: #909090 1px solid; BORDER-LEFT: #909090 1px solid; BACKGROUND-COLOR: #fff; PADDING-LEFT: 5px; PADDING-RIGHT: 5px; BACKGROUND-REPEAT: repeat-x; font: 12px "宋体",tahoma,arial,helvetica,sans-serif; HEIGHT: 25px; COLOR: #333; FONT-SIZE: 13px; BORDER-TOP: #909090 1px solid; CURSOR: pointer; BORDER-RIGHT: #909090 1px solid; PADDING-TOP: 2px
+} 
+
+.x-text {
+	height: 20px; border-bottom: #b5b8c8 1px solid; border-left: #b5b8c8 1px solid; padding-top: 1px;padding-bottom: 1px; padding-left: 1px; padding-right: 1px; background: url(../images/text-bg.gif) #fff repeat-x 0px 0px; border-top: #b5b8c8 1px solid; border-right: #b5b8c8 1px solid; padding-top: 1px
+} 
+
+.x-textarea {
+	padding: 1px 3px;
+	background: #fff url(../images/text-bg.gif) repeat-x 0 0;
+	border: 1px solid #B5B8C8;
+}
+
+ .x_content_title {
+   text-transform: uppercase; background-color: inherit; color: #789030; font-size: 14px; font-weight: bold; text-align: center;
+}
+ 
+.x-fieldset {
+	 
+}
+
+.x-fieldset legend {
+	font: bold 15px tahoma,arial,helvetica,sans-serif; color: #15428b
+}
+ 
+ .x-tabs-box {
+	height:23px; margin-bottom:-1px;
+}
+
+.x-tab-lc {
+	background:url(../images/s_14.jpg); width:6px; overflow:hidden; font-size:0px
+}
+.x-tab-mc {
+    background:url(../images/s_16.jpg);
+	text-align:center; vertical-align:bottom;	line-height:23px;	white-space:nowrap;	color:#125282;
+}
+.x-tab-mc a:link,.x-tab-mc a:active,.x-tab-mc a:visited{
+    color:#fff;
+}
+.x-tab-rc {
+    background:url(../images/s_15.jpg) no-repeat left bottom; height:23px; width:8px;overflow:hidden; font-size:0px
+}
+.x-tab-l {
+    background:url(../images/s_17.jpg) bottom no-repeat;width:5px; overflow:hidden; font-size:0px
+}
+.x-tab-m {
+    background:url(../images/s_19.jpg) bottom repeat-x;
+	text-align:center; vertical-align:bottom;	line-height:23px; white-space:nowrap;
+}
+.x-tab-r {
+    background:url(../images/s_18.jpg) left bottom no-repeat;width:8px; overflow:hidden; font-size:0px
+}
+
+.menu_line{overflow:hidden; font-size:0px; height:1px; border:1px solid #287EBC; background:#C8E3F7}
+
+/* next & previous page navigation */
+.page-nav {
+	clear: both;
+	padding: 5px 0 5px 0;
+	margin-bottom: .6em;
+	background-color: #ffffff;
+	border: 1px solid #c0c0c0;
+}
+
+.page-nav a, .page-nav a:visited {
+	color: #0066ff;
+	text-decoration: none;
+}
+.page-nav a:hover,
+.navigation .suf-page-nav a:hover {
+	text-decoration: none;
+}
+
+.suf-page-nav {
+	text-align: center;
+	margin: 5px 0;
+}
+
+.suf-page-nav a,
+.suf-page-nav span {
+	padding: 2px 5px 2px 5px;
+	border: 1px solid;
+	margin: 2px;
+}
+
+.suf-page-nav span.dots {
+	border: none;
+}
+
+.suf-page-nav a.page-numbers:hover {
+	color: #0066ff;
+}
+
+.page-current {
+    color:#ffffff;
+	background-color: #0066ff;
+}
+
+.fix:after {
+	content:".";
+	display:block;
+	height:0;
+	clear:both;
+	visibility:hidden;
+}
+.fix { display: inline-block; }
+/* Hide from IE Mac \*/
+.fix {display:block;}
+/* End hide from IE Mac */
+
+ .required {
+	font-size: 12px;
+	text-decoration: none;
+	color: #ee0000;
+	font-weight: bold;
+}
+ 

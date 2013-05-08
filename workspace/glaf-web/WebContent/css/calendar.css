@@ -1,0 +1,33 @@
+.mainTable {
+  background-color: #cccccc;
+}
+.header {
+  background-color: #6694DF;
+  font-family: "Verdana", "Arial", "Helvetica", "sans-serif"; 
+  font-size: 8pt;
+}
+.changeDate {
+  cursor: hand; 
+  font-size: 8pt; 
+  font-family: "Georgia", "Times New Roman", "Times", "serif";
+}
+.weekDay {
+  font-family: "Verdana", "Arial", "Helvetica", "sans-serif"; 
+  font-size: 8pt;
+}
+.eachDay{
+  background-color: #F5F5F5;
+  color: #000000;
+  font-family: "Verdana", "Arial", "Helvetica", "sans-serif"; 
+  font-size: 8pt;
+}
+.weekend {
+  background-color: #DBE1E3;
+  color: #000000;
+  font-family: "Verdana", "Arial", "Helvetica", "sans-serif"; 
+  font-size: 8pt;
+}
+.today {
+  background-color: #CCD5D7;
+  font-weight: bold;
+}
