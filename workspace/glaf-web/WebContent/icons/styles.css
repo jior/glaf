@@ -155,6 +155,49 @@
 .icon-gears {
 	background: url("icons/gears.png") no-repeat;
 }
+
+.icon-key{
+	background:url('icons/key.gif') no-repeat ;
+}
+
+.icon_user_group{
+	background:url('icons/user_group.gif') no-repeat ;
+} 
+
+.icon-flag{
+	background:url('icons/flag.gif') no-repeat ;
+} 
+
+
+.icon_img{
+	background:url('icons/img.gif') no-repeat ;
+} 
+
+.icon_pause{
+	background:url('icons/pause.gif') no-repeat ;
+} 
+
+
+.icon_stop{
+	background:url('icons/stop.gif') no-repeat ;
+} 
+
+
+.icon_print{
+	background:url('icons/print.gif') no-repeat ;
+} 
+
+
+.icon_save{
+	background:url('icons/save.gif') no-repeat ;
+} 
+
+
+.icon_lock{
+	background:url('icons/lock.gif') no-repeat ;
+} 
+
+
 .icon-1 {
     background: url("../images/icons/1.png") no-repeat;
 }
