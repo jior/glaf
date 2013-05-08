@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.batch.mapper.JobInstanceMapper">
+
+	<resultMap id="jobInstanceResultMap"	type="com.glaf.batch.domain.JobInstance">
+		<id property="jobInstanceId" column="job_instance_id" jdbcType="INTEGER" />
+		<result property="version" column="version" jdbcType="INTEGER"/>
+		<result property="jobName" column="job_name" jdbcType="VARCHAR"/>
+		<result property="jobKey" column="job_key" jdbcType="VARCHAR"/>
+	</resultMap>
+
+ 
+	<insert id="insertJobInstance" parameterType="com.glaf.batch.domain.JobInstance">
+		insert into SYS_JOB_INSTANCE 
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+		    job_instance_id
+			<if test="version != null">
+				,version 
+			</if>
+			<if test="jobName != null">
+				,job_name 
+			</if>
+			<if test="jobKey != null">
+				,job_key 
+			</if>
+		</trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			  #{jobInstanceId, jdbcType=INTEGER}
+	     
+			<if test="version != null">
+				,#{version, jdbcType=INTEGER}
+			</if>
+			<if test="jobName != null">
+				,#{jobName, jdbcType=VARCHAR}
+			</if>
+			<if test="jobKey != null">
+				,#{jobKey, jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</insert>
+
+	 
+	<update id="updateJobInstance" parameterType="com.glaf.batch.domain.JobInstance">
+		update
+		SYS_JOB_INSTANCE
+		set
+		<trim prefix="" suffix="" suffixOverrides=",">		
+			<if test="version != null">
+				version = #{version, jdbcType=INTEGER},
+			</if>
+			<if test="jobName != null">
+				job_name = #{jobName, jdbcType=VARCHAR},
+			</if>
+			<if test="jobKey != null">
+				job_key = #{jobKey, jdbcType=VARCHAR},
+			</if>
+		</trim>
+		where
+          job_instance_id = #{jobInstanceId, jdbcType=INTEGER}
+		
+	</update>
+
+ 
+	<delete id="deleteJobInstanceById" parameterType="string"> 
+        delete from SYS_JOB_INSTANCE
+        where job_instance_id = #{id}
+	</delete>
+	
+
+	<delete id="deleteJobInstances" parameterType="com.glaf.batch.query.JobInstanceQuery">
+		delete from SYS_JOB_INSTANCE
+		where ( job_instance_id IN
+		<foreach item="x_rowId" index="index" collection="rowIds" open="(" separator="," close=")">
+              #{x_rowId}
+		</foreach>
+		)
+	</delete>
+
+
+	<select id="getJobInstanceById" parameterType="string" resultMap="jobInstanceResultMap">
+		select * from SYS_JOB_INSTANCE where job_instance_id = #{id}
+	</select>
+	
+	<select id="getJobInstanceByJobKey" parameterType="string" resultMap="jobInstanceResultMap">
+		select * from SYS_JOB_INSTANCE where job_key = #{jobKey}
+	</select>
+
+
+	<select id="getJobInstanceCountBy" 
+		parameterType="java.util.HashMap"
+		resultType="int">
+		select count(*)
+		<include refid="selectJobInstancesSql" />
+	</select>
+
+
+	<select id="getJobInstanceCountByQueryCriteria" 
+		parameterType="com.glaf.batch.query.JobInstanceQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectJobInstancesSql" />
+	</select>
+
+
+	<select id="getJobInstances" 
+		parameterType="java.util.HashMap"
+		resultMap="jobInstanceResultMap">
+		select E.*
+		<include refid="selectJobInstancesSql" />
+		<if test="orderBy != null">
+		   order by ${orderBy}
+		</if>
+	</select>
+
+	<select id="getJobInstancesByQueryCriteria" 
+		parameterType="com.glaf.batch.query.JobInstanceQuery"
+		resultMap="jobInstanceResultMap">
+		select E.*
+		<include refid="selectJobInstancesSql" />
+		<if test="orderBy != null">
+		   order by ${orderBy}
+		</if>
+	</select>
+
+
+	<sql id="selectJobInstancesSql">
+
+		from SYS_JOB_INSTANCE E
+		 
+		<where>
+
+		       1 = 1       
+
+			<if test="jobNameLike != null and jobNameLike != '' ">
+				and E.job_name like #{jobNameLike}
+			</if>
+	        
+			<if test="jobKey != null and jobKey != '' ">
+				and E.job_key = #{jobKey}
+			</if>
+
+			<if test="jobKeys != null and jobKeys.size() &gt; 0">
+			    and E.job_key IN
+				<foreach item="x_jobKey" index="index" collection="jobKeys" 
+					open="(" separator="," close=")">
+                  #{x_jobKey}
+				</foreach>
+			</if>
+			 
+		</where>
+	</sql>
+
+</mapper>

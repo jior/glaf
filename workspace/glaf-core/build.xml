@@ -34,6 +34,11 @@
 			<fileset dir="jar-conf" includes="**/*.xml,**/*.properties"  />
 		</jar>
 
+		<jar jarfile="glaf-batch.jar">
+			<fileset dir="bin" 
+			   includes="com/glaf/batch/**/*.class,com/glaf/batch/**/*.xml,com/glaf/batch/**/*.properties" />
+		</jar>
+
 		<jar jarfile="glaf-mail.jar">
 			<fileset dir="bin" 
 			   includes="com/glaf/mail/**/*.class,com/glaf/mail/**/*.xml,com/glaf/mail/**/*.properties" />

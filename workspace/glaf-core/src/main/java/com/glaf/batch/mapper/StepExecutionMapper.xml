@@ -1,0 +1,482 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.batch.mapper.StepExecutionMapper">
+
+	<resultMap id="stepExecutionResultMap"	type="com.glaf.batch.domain.StepExecution">
+		<id property="stepExecutionId" column="step_execution_id" jdbcType="INTEGER" />
+		<result property="version" column="version" jdbcType="INTEGER"/>
+		<result property="stepKey" column="step_key" jdbcType="VARCHAR"/>
+		<result property="stepName" column="step_name" jdbcType="VARCHAR"/>
+		<result property="jobStepKey" column="job_step_key" jdbcType="VARCHAR"/>
+		<result property="jobClass" column="job_class" jdbcType="VARCHAR"/>
+		<result property="jobExecutionId" column="job_execution_id" jdbcType="INTEGER"/>
+		<result property="jobInstanceId" column="job_instance_id" jdbcType="INTEGER"/>
+		<result property="startTime" column="start_time" jdbcType="TIMESTAMP"/>
+		<result property="endTime" column="end_time" jdbcType="TIMESTAMP"/>
+		<result property="status" column="status" jdbcType="VARCHAR"/>
+		<result property="commitCount" column="commit_count" jdbcType="INTEGER"/>
+		<result property="readCount" column="read_count" jdbcType="INTEGER"/>
+		<result property="filterCount" column="filter_count" jdbcType="INTEGER"/>
+		<result property="writeCount" column="write_count" jdbcType="INTEGER"/>
+		<result property="readSkipCount" column="read_skip_count" jdbcType="INTEGER"/>
+		<result property="writeSkipCount" column="write_skip_count" jdbcType="INTEGER"/>
+		<result property="processSkipCount" column="process_skip_count" jdbcType="INTEGER"/>
+		<result property="rollbackCount" column="rollback_count" jdbcType="INTEGER"/>
+		<result property="listno" column="listno" jdbcType="INTEGER"/>
+		<result property="exitCode" column="exit_code" jdbcType="VARCHAR"/>
+		<result property="exitMessage" column="exit_message" jdbcType="VARCHAR"/>
+		<result property="lastUpdated" column="last_updated" jdbcType="TIMESTAMP"/>
+	</resultMap>
+
+ 
+	<insert id="insertStepExecution" parameterType="com.glaf.batch.domain.StepExecution">
+		insert into SYS_STEP_EXECUTION 
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+		    step_execution_id
+			<if test="version != null">
+				,version 
+			</if>
+			<if test="stepKey != null">
+				,step_key 
+			</if>
+			<if test="stepName != null">
+				,step_name 
+			</if>
+			<if test="jobStepKey != null">
+				,job_step_key 
+			</if>
+			<if test="jobClass != null">
+				,job_class 
+			</if>
+			<if test="jobExecutionId != null">
+				,job_execution_id 
+			</if>
+			<if test="jobInstanceId != null">
+				,job_instance_id 
+			</if>
+			<if test="startTime != null">
+				,start_time 
+			</if>
+			<if test="endTime != null">
+				,end_time 
+			</if>
+			<if test="status != null">
+				,status 
+			</if>
+			<if test="commitCount != null">
+				,commit_count 
+			</if>
+			<if test="readCount != null">
+				,read_count 
+			</if>
+			<if test="filterCount != null">
+				,filter_count 
+			</if>
+			<if test="writeCount != null">
+				,write_count 
+			</if>
+			<if test="readSkipCount != null">
+				,read_skip_count 
+			</if>
+			<if test="writeSkipCount != null">
+				,write_skip_count 
+			</if>
+			<if test="processSkipCount != null">
+				,process_skip_count 
+			</if>
+			<if test="rollbackCount != null">
+				,rollback_count 
+			</if>
+			<if test="listno != null">
+				,listno 
+			</if>
+			<if test="exitCode != null">
+				,exit_code 
+			</if>
+			<if test="exitMessage != null">
+				,exit_message 
+			</if>
+			<if test="lastUpdated != null">
+				,last_updated 
+			</if>
+		</trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			  #{stepExecutionId, jdbcType=INTEGER}
+	     
+			<if test="version != null">
+				,#{version, jdbcType=INTEGER}
+			</if>
+			<if test="stepKey != null">
+				,#{stepKey, jdbcType=VARCHAR}
+			</if>
+			<if test="stepName != null">
+				,#{stepName, jdbcType=VARCHAR}
+			</if>
+			<if test="jobStepKey != null">
+				,#{jobStepKey, jdbcType=VARCHAR}
+			</if>
+			<if test="jobClass != null">
+				,#{jobClass, jdbcType=VARCHAR}
+			</if>
+			<if test="jobExecutionId != null">
+				,#{jobExecutionId, jdbcType=INTEGER}
+			</if>
+			<if test="jobInstanceId != null">
+				,#{jobInstanceId, jdbcType=INTEGER}
+			</if>
+			<if test="startTime != null">
+				,#{startTime, jdbcType=TIMESTAMP}
+			</if>
+			<if test="endTime != null">
+				,#{endTime, jdbcType=TIMESTAMP}
+			</if>
+			<if test="status != null">
+				,#{status, jdbcType=VARCHAR}
+			</if>
+			<if test="commitCount != null">
+				,#{commitCount, jdbcType=INTEGER}
+			</if>
+			<if test="readCount != null">
+				,#{readCount, jdbcType=INTEGER}
+			</if>
+			<if test="filterCount != null">
+				,#{filterCount, jdbcType=INTEGER}
+			</if>
+			<if test="writeCount != null">
+				,#{writeCount, jdbcType=INTEGER}
+			</if>
+			<if test="readSkipCount != null">
+				,#{readSkipCount, jdbcType=INTEGER}
+			</if>
+			<if test="writeSkipCount != null">
+				,#{writeSkipCount, jdbcType=INTEGER}
+			</if>
+			<if test="processSkipCount != null">
+				,#{processSkipCount, jdbcType=INTEGER}
+			</if>
+			<if test="rollbackCount != null">
+				,#{rollbackCount, jdbcType=INTEGER}
+			</if>
+			<if test="listno != null">
+				,#{listno, jdbcType=INTEGER}
+			</if>
+			<if test="exitCode != null">
+				,#{exitCode, jdbcType=VARCHAR}
+			</if>
+			<if test="exitMessage != null">
+				,#{exitMessage, jdbcType=VARCHAR}
+			</if>
+			<if test="lastUpdated != null">
+				,#{lastUpdated, jdbcType=TIMESTAMP}
+			</if>
+		</trim>
+	</insert>
+
+	 
+	<update id="updateStepExecution" parameterType="com.glaf.batch.domain.StepExecution">
+		update
+		SYS_STEP_EXECUTION
+		set
+		<trim prefix="" suffix="" suffixOverrides=",">		
+			<if test="stepName != null">
+				step_name = #{stepName, jdbcType=VARCHAR},
+			</if>
+			<if test="startTime != null">
+				start_time = #{startTime, jdbcType=TIMESTAMP},
+			</if>
+			<if test="endTime != null">
+				end_time = #{endTime, jdbcType=TIMESTAMP},
+			</if>
+			<if test="status != null">
+				status = #{status, jdbcType=VARCHAR},
+			</if>
+			<if test="commitCount != null">
+				commit_count = #{commitCount, jdbcType=INTEGER},
+			</if>
+			<if test="readCount != null">
+				read_count = #{readCount, jdbcType=INTEGER},
+			</if>
+			<if test="filterCount != null">
+				filter_count = #{filterCount, jdbcType=INTEGER},
+			</if>
+			<if test="writeCount != null">
+				write_count = #{writeCount, jdbcType=INTEGER},
+			</if>
+			<if test="readSkipCount != null">
+				read_skip_count = #{readSkipCount, jdbcType=INTEGER},
+			</if>
+			<if test="writeSkipCount != null">
+				write_skip_count = #{writeSkipCount, jdbcType=INTEGER},
+			</if>
+			<if test="processSkipCount != null">
+				process_skip_count = #{processSkipCount, jdbcType=INTEGER},
+			</if>
+			<if test="rollbackCount != null">
+				rollback_count = #{rollbackCount, jdbcType=INTEGER},
+			</if>
+			<if test="exitCode != null">
+				exit_code = #{exitCode, jdbcType=VARCHAR},
+			</if>
+			<if test="exitMessage != null">
+				exit_message = #{exitMessage, jdbcType=VARCHAR},
+			</if>
+			<if test="lastUpdated != null">
+				last_updated = #{lastUpdated, jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+		where
+          step_execution_id = #{stepExecutionId, jdbcType=INTEGER}
+		
+	</update>
+
+ 
+	<delete id="deleteStepExecutionById" parameterType="string"> 
+        delete from SYS_STEP_EXECUTION
+        where step_execution_id = #{id}
+	</delete>
+	
+
+	<delete id="deleteStepExecutionByJobInstanceId" parameterType="string">
+		
+		delete from SYS_STEP_EXECUTION  
+		where exists (
+		     select job_execution_id from SYS_JOB_EXECUTION 
+		     where job_instance_id = #{jobInstanceId}
+		)
+		
+	</delete>
+
+
+	<select id="getStepExecutionById" parameterType="string" resultMap="stepExecutionResultMap">
+		select * from SYS_STEP_EXECUTION where step_execution_id = #{id}
+	</select>
+	
+	<select id="getStepExecutionByKey" parameterType="string" resultMap="stepExecutionResultMap">
+		select * from SYS_STEP_EXECUTION where job_step_key = #{jobStepKey}
+	</select>
+	
+	
+	<select id="getStepExecutionsByJobInstanceId" parameterType="string" resultMap="stepExecutionResultMap">
+		
+		select S.* from SYS_STEP_EXECUTION S
+		inner join SYS_JOB_EXECUTION E
+		on S.job_execution_id = E.job_execution_id
+		where E.job_instance_id = #{jobInstanceId}
+		order by S.listno asc
+		
+	</select>
+
+
+	<select id="getStepExecutionCountBy" 
+		parameterType="java.util.HashMap"
+		resultType="int">
+		select count(*)
+		<include refid="selectStepExecutionsSql" />
+	</select>
+
+
+	<select id="getStepExecutionCountByQueryCriteria" 
+		parameterType="com.glaf.batch.query.StepExecutionQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectStepExecutionsSql" />
+	</select>
+
+
+	<select id="getStepExecutions" 
+		parameterType="java.util.HashMap"
+		resultMap="stepExecutionResultMap">
+		select E.*
+		<include refid="selectStepExecutionsSql" />
+		<if test="orderBy != null">
+		   order by ${orderBy}
+		</if>
+	</select>
+
+
+	<select id="getStepExecutionsByQueryCriteria" 
+		parameterType="com.glaf.batch.query.StepExecutionQuery"
+		resultMap="stepExecutionResultMap">
+		select E.*
+		<include refid="selectStepExecutionsSql" />
+		<if test="orderBy != null">
+		   order by ${orderBy}
+		</if>
+	</select>
+
+
+	<sql id="selectStepExecutionsSql">
+
+		from SYS_STEP_EXECUTION E
+		 
+		<where>
+
+		       1 = 1  
+
+			<if test="stepNameLike != null and stepNameLike != '' ">
+				and E.step_name like #{stepNameLike}
+			</if>
+			
+			<if test="jobInstanceId != null">
+				and E.job_instance_id = #{jobInstanceId}
+			</if>
+
+			<if test="jobExecutionId != null">
+				and E.job_execution_id = #{jobExecutionId}
+			</if>
+
+			<if test="jobExecutionIds != null and jobExecutionIds.size() &gt; 0">
+			    and E.job_execution_id IN
+				<foreach item="x_jobExecutionId" index="index" collection="jobExecutionIds" 
+					open="(" separator="," close=")">
+                  #{x_jobExecutionId}
+				</foreach>
+			</if>
+
+			<if test="startTimeGreaterThanOrEqual != null">
+				and E.start_time &gt;= #{startTimeGreaterThanOrEqual}
+			</if>
+
+			<if test="startTimeLessThanOrEqual != null">
+				and E.start_time &lt;= #{startTimeLessThanOrEqual}
+			</if>
+
+			<if test="endTimeGreaterThanOrEqual != null">
+				and E.end_time &gt;= #{endTimeGreaterThanOrEqual}
+			</if>
+
+			<if test="endTimeLessThanOrEqual != null">
+				and E.end_time &lt;= #{endTimeLessThanOrEqual}
+			</if>
+	        
+			<if test="status != null and status != '' ">
+				and E.status = #{status}
+			</if>
+
+			<if test="commitCount != null">
+				and E.commit_count = #{commitCount}
+			</if>
+
+			<if test="commitCountGreaterThanOrEqual != null">
+				and E.commit_count &gt;= #{commitCountGreaterThanOrEqual}
+			</if>
+
+			<if test="commitCountLessThanOrEqual != null">
+				and E.commit_count &lt;= #{commitCountLessThanOrEqual}
+			</if>
+
+			<if test="readCount != null">
+				and E.read_count = #{readCount}
+			</if>
+
+			<if test="readCountGreaterThanOrEqual != null">
+				and E.read_count &gt;= #{readCountGreaterThanOrEqual}
+			</if>
+
+			<if test="readCountLessThanOrEqual != null">
+				and E.read_count &lt;= #{readCountLessThanOrEqual}
+			</if>
+ 
+			<if test="filterCount != null">
+				and E.filter_count = #{filterCount}
+			</if>
+
+			<if test="filterCountGreaterThanOrEqual != null">
+				and E.filter_count &gt;= #{filterCountGreaterThanOrEqual}
+			</if>
+
+			<if test="filterCountLessThanOrEqual != null">
+				and E.filter_count &lt;= #{filterCountLessThanOrEqual}
+			</if>
+
+			<if test="writeCount != null">
+				and E.write_count = #{writeCount}
+			</if>
+
+			<if test="writeCountGreaterThanOrEqual != null">
+				and E.write_count &gt;= #{writeCountGreaterThanOrEqual}
+			</if>
+
+			<if test="writeCountLessThanOrEqual != null">
+				and E.write_count &lt;= #{writeCountLessThanOrEqual}
+			</if>	 
+
+			<if test="readSkipCount != null">
+				and E.read_skip_count = #{readSkipCount}
+			</if>
+
+			<if test="readSkipCountGreaterThanOrEqual != null">
+				and E.read_skip_count &gt;= #{readSkipCountGreaterThanOrEqual}
+			</if>
+
+			<if test="readSkipCountLessThanOrEqual != null">
+				and E.read_skip_count &lt;= #{readSkipCountLessThanOrEqual}
+			</if>
+
+			<if test="writeSkipCount != null">
+				and E.write_skip_count = #{writeSkipCount}
+			</if>
+
+			<if test="writeSkipCountGreaterThanOrEqual != null">
+				and E.write_skip_count &gt;= #{writeSkipCountGreaterThanOrEqual}
+			</if>
+
+			<if test="writeSkipCountLessThanOrEqual != null">
+				and E.write_skip_count &lt;= #{writeSkipCountLessThanOrEqual}
+			</if>
+
+			<if test="processSkipCount != null">
+				and E.process_skip_count = #{processSkipCount}
+			</if>
+
+			<if test="processSkipCountGreaterThanOrEqual != null">
+				and E.process_skip_count &gt;= #{processSkipCountGreaterThanOrEqual}
+			</if>
+
+			<if test="processSkipCountLessThanOrEqual != null">
+				and E.process_skip_count &lt;= #{processSkipCountLessThanOrEqual}
+			</if>
+
+			<if test="rollbackCount != null">
+				and E.rollback_count = #{rollbackCount}
+			</if>
+
+			<if test="rollbackCountGreaterThanOrEqual != null">
+				and E.rollback_count &gt;= #{rollbackCountGreaterThanOrEqual}
+			</if>
+
+			<if test="rollbackCountLessThanOrEqual != null">
+				and E.rollback_count &lt;= #{rollbackCountLessThanOrEqual}
+			</if>
+        
+			<if test="exitCode != null and exitCode != '' ">
+				and E.exit_code = #{exitCode}
+			</if>
+
+			<if test="exitCodeLike != null and exitCodeLike != '' ">
+				and E.exit_code like #{exitCodeLike}
+			</if>
+
+			<if test="exitMessageLike != null and exitMessageLike != '' ">
+				and E.exit_message like #{exitMessageLike}
+			</if>
+
+			<if test="lastUpdated != null">
+				and E.last_updated = #{lastUpdated}
+			</if>
+
+			<if test="lastUpdatedGreaterThanOrEqual != null">
+				and E.last_updated &gt;= #{lastUpdatedGreaterThanOrEqual}
+			</if>
+
+			<if test="lastUpdatedLessThanOrEqual != null">
+				and E.last_updated &lt;= #{lastUpdatedLessThanOrEqual}
+			</if>
+
+		</where>
+	</sql>
+
+</mapper>
