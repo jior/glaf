@@ -7,60 +7,55 @@
 <%@ page import="com.glaf.base.modules.sys.model.*"%>
 <%@ page import="com.glaf.base.utils.*"%>
 <%
-String context = request.getContextPath();
-int parent=ParamUtil.getIntParameter(request, "parent", 0);
+    String context = request.getContextPath();
+    int parent=ParamUtil.getIntParameter(request, "parent", 0);
+	String theme = com.glaf.core.util.RequestUtils.getTheme(request);
+    request.setAttribute("theme", theme);
 %>
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>基础平台系统</title>
-<link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
-<link type="text/css" rel="stylesheet" href="<%=request.getContextPath()%>/scripts/calendar/skins/aqua/theme.css"/>
-<script language="javascript" src="<%=request.getContextPath()%>/scripts/calendar/calendar.js" ></script>
-<script language="javascript" src="<%=request.getContextPath()%>/scripts/calendar/lang/calendar-en.js"></script>
-<script language="javascript" src="<%=request.getContextPath()%>/scripts/calendar/calendar-setup.js"></script>
-<script language="javascript" src='<%=context%>/scripts/main.js'></script>
-<script language="javascript" src='<%=context%>/scripts/verify.js'></script></head>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/site.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/easyui/themes/${theme}/easyui.css">
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src='<%=context%>/scripts/main.js'></script>
+<script type="text/javascript" src='<%=context%>/scripts/verify.js'></script> 
 </head>
-
-<body>
-<div class="nav-title"><span class="Title">字典管理</span>&gt;&gt;增加字典</div>
-<html:form action="${contextPath}/sys/dictory.do?method=saveAdd" method="post" onsubmit="return verifyAll(this);">
+<body style="margin:10px;">
+<html:form  id="editForm"  action="${contextPath}/sys/dictory.do?method=saveAdd" method="post" 
+      onsubmit="return verifyAll(this);">
 <input type="hidden" name="nodeId" value="<%=parent%>">
-<table width="95%" border="0" align="center" cellpadding="0" cellspacing="0" class="box">
-  <tr>
-    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
-      <tr class="box">
-        <td class="box-lt">&nbsp;</td>
-        <td class="box-mt">&nbsp;</td>
-        <td class="box-rt">&nbsp;</td>
-      </tr>
-    </table></td>
-  </tr>
-  <tr>
-    <td class="box-mm"><table width="95%" align="center" border="0" cellspacing="0" cellpadding="5">
+<div class="easyui-panel" title="新增数据字典" style="width:450px;padding:10px"> 
+<table width="95%" align="center" border="0" cellspacing="0" cellpadding="5">
       <tr>
         <td width="21%" class="input-box">名称&nbsp;<font color="red">*</font></td>
         <td width="79%">
-		<input type="text" name="name" class="input" datatype="string" nullable="no" maxsize="50" chname="名称">
+		<input type="text" name="name"  datatype="string" nullable="no" maxsize="50" chname="名称"
+		       class="easyui-validatebox" data-options="required:true" >
 		</td>
       </tr>
       <tr>
         <td class="input-box2" valign="top">代码</td>
         <td>
-		<input type="text" name="code" class="input" datatype="string" nullable="yes" maxsize="20" chname="代码">
+		<input type="text" name="code" datatype="string" nullable="yes" maxsize="20" chname="代码"
+		       class="easyui-validatebox" >
 		</td>
       </tr>
 	  <tr>
         <td class="input-box2" valign="top">属性值</td>
         <td>
-		<input type="text" name="value" class="input" datatype="string" nullable="yes" maxsize="20" chname="属性值">
+		<input type="text" name="value" datatype="string" nullable="yes" maxsize="20" chname="属性值"
+		       class="easyui-validatebox" >
 		</td>
       </tr>
 	  <tr>
         <td class="input-box2" valign="top">描述</td>
         <td>
-		<input type="text" name="desc" class="input" datatype="string" nullable="yes" maxsize="20" chname="描述">
+		<input type="text" name="desc" class="easyui-validatebox" datatype="string" nullable="yes" maxsize="20" chname="描述">
 		</td>
       </tr>
 
@@ -72,29 +67,27 @@ int parent=ParamUtil.getIntParameter(request, "parent", 0);
         <td>
 		   <c:choose>
 		     <c:when test="${a.type=='String'}">
-			    <input type="text" name="${a.name}" class="input" datatype="string" nullable="${a.nullable}" maxsize="${a.length}" chname="${a.title}" value="${a.value}">
+			    <input type="text" name="${a.name}" datatype="string" nullable="${a.nullable}" maxsize="${a.length}" chname="${a.title}" value="${a.value}"
+				class="easyui-validatebox"
+				<c:if test="${a.required==1}">data-options="required:true"</c:if>>
              </c:when>
 			 <c:when test="${a.type=='Date'}">
-			    <input type="text" name="${a.name}" class="input" datatype="datetime" nullable="${a.nullable}" maxsize="${a.length}" chname="${a.title}" 
-				value="<fmt:formatDate value="${a.value}" pattern="yyyy-MM-dd HH:mm:ss"/>">&nbsp;
-				<img src="<%=request.getContextPath()%>/images/calendar.png"
-			     id="f_trigger_${a.name}" style="cursor: pointer; border: 1px solid red;" />
-				  <script type="text/javascript">
-				    Calendar.setup({
-							inputField     :    "${a.name}",     // id of the input field
-							ifFormat       :    "%Y-%m-%d %H:%M:%S",      // format of the input field
-							button         :    "f_trigger_${a.name}",  // trigger for the calendar (button ID)
-							align          :    "Bl",           // alignment (defaults to "Bl")
-							singleClick    :    true,
-							showsTime      :    true
-					});
-				  </script>
+			    <input type="text" name="${a.name}" class="easyui-datebox"  datatype="datetime" nullable="${a.nullable}" maxsize="${a.length}" chname="${a.title}" 
+				value="<fmt:formatDate value="${a.value}" pattern="yyyy-MM-dd HH:mm:ss"/>"
+				<c:if test="${a.required==1}">data-options="required:true"</c:if>
+				>&nbsp;
+				 
              </c:when>
 			 <c:when test="${a.type=='Long'}">
-			    <input type="text" name="${a.name}" class="input" datatype="integer" nullable="${a.nullable}" maxsize="12" chname="${a.title}" value="${a.value}">
+			    <input type="text" name="${a.name}" datatype="integer" nullable="${a.nullable}" maxsize="12" chname="${a.title}" value="${a.value}"
+				 class="easyui-validatebox"
+				<c:if test="${a.required==1}">data-options="required:true"</c:if>>
              </c:when>
 			 <c:when test="${a.type=='Double'}">
-			    <input type="text" name="${a.name}" class="input" datatype="double" nullable="${a.nullable}" maxsize="20" chname="${a.title}" value="${a.value}">
+			    <input type="text" name="${a.name}" datatype="double" nullable="${a.nullable}" maxsize="20" chname="${a.title}" value="${a.value}"
+				class="easyui-validatebox"
+				<c:if test="${a.required==1}">data-options="required:true"</c:if>
+				>
              </c:when>
 		   </c:choose>
 		
@@ -113,18 +106,8 @@ int parent=ParamUtil.getIntParameter(request, "parent", 0);
         <td colspan="2" align="center" valign="bottom" height="30">&nbsp;
               <input name="btn_save3" type="submit" value="保存" class="button"></td>
       </tr>
-    </table></td>
-  </tr>
-  <tr>
-    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
-      <tr class="box">
-        <td class="box-lb">&nbsp;</td>
-        <td class="box-mb">&nbsp;</td>
-        <td class="box-rb">&nbsp;</td>
-      </tr>
-    </table></td>
-  </tr>
-</table>
+  </table> 
+ </div>
 </html:form> 
 </body>
 </html>
