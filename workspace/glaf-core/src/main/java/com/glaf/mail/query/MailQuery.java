@@ -27,7 +27,6 @@ public class MailQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;
 	protected String accountId;
 	protected List<String> accountIds;
-	protected List<String> businessKeys;
 	protected List<String> createBys;
 	protected Date lastViewDate;
 	protected Date lastViewDateGreaterThanOrEqual;
@@ -90,14 +89,6 @@ public class MailQuery extends DataQuery {
 			throw new RuntimeException("accountIds is empty ");
 		}
 		this.accountIds = accountIds;
-		return this;
-	}
-
-	public MailQuery businessKeys(List<String> businessKeys) {
-		if (businessKeys == null) {
-			throw new RuntimeException("businessKeys is empty ");
-		}
-		this.businessKeys = businessKeys;
 		return this;
 	}
 
@@ -615,10 +606,6 @@ public class MailQuery extends DataQuery {
 
 	public void setAccountIds(List<String> accountIds) {
 		this.accountIds = accountIds;
-	}
-
-	public void setBusinessKeys(List<String> businessKeys) {
-		this.businessKeys = businessKeys;
 	}
 
 	public void setCreateBys(List<String> createBys) {
