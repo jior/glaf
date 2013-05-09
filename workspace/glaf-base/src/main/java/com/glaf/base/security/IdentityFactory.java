@@ -38,35 +38,29 @@ import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.sys.service.SysApplicationService;
 import com.glaf.base.modules.sys.service.SysDeptRoleService;
 import com.glaf.base.modules.sys.service.SysRoleService;
+import com.glaf.base.modules.sys.service.SysTreeService;
 import com.glaf.base.modules.sys.service.SysUserRoleService;
 import com.glaf.base.modules.sys.service.SysUserService;
 import com.glaf.base.modules.sys.service.SysDepartmentService;
 import com.glaf.base.utils.ContextUtil;
 
 public class IdentityFactory {
-	protected final static Log logger = LogFactory
+	protected static final Log logger = LogFactory
 			.getLog(IdentityFactory.class);
-
-	protected static SysUserService sysUserService;
-
-	protected static SysRoleService sysRoleService;
-
-	protected static SysUserRoleService sysUserRoleService;
-
-	protected static SysDeptRoleService sysDeptRoleService;
-
-	protected static SysDepartmentService sysDepartmentService;
 
 	protected static SysApplicationService sysApplicationService;
 
-	static {
-		sysUserService = ContextFactory.getBean("sysUserService");
-		sysRoleService = ContextFactory.getBean("sysRoleService");
-		sysDeptRoleService = ContextFactory.getBean("sysDeptRoleService");
-		sysUserRoleService = ContextFactory.getBean("sysUserRoleService");
-		sysDepartmentService = ContextFactory.getBean("sysDepartmentService");
-		sysApplicationService = ContextFactory.getBean("sysApplicationService");
-	}
+	protected static SysDepartmentService sysDepartmentService;
+
+	protected static SysDeptRoleService sysDeptRoleService;
+
+	protected static SysRoleService sysRoleService;
+
+	protected static SysTreeService sysTreeService;
+
+	protected static SysUserRoleService sysUserRoleService;
+
+	protected static SysUserService sysUserService;
 
 	/**
 	 * 获取委托人编号集合
@@ -89,7 +83,8 @@ public class IdentityFactory {
 	 */
 	public static List<SysUser> getChildrenMembershipUsers(int deptId,
 			int roleId) {
-		return sysUserRoleService.getChildrenMembershipUsers(deptId, roleId);
+		return getSysUserRoleService().getChildrenMembershipUsers(deptId,
+				roleId);
 	}
 
 	/**
@@ -101,9 +96,9 @@ public class IdentityFactory {
 	 */
 	public static List<SysUser> getChildrenMembershipUsers(int deptId,
 			String roleCode) {
-		SysRole role = sysRoleService.findByCode(roleCode);
-		return sysUserRoleService.getChildrenMembershipUsers(deptId,
-				 role.getId());
+		SysRole role = getSysRoleService().findByCode(roleCode);
+		return getSysUserRoleService().getChildrenMembershipUsers(deptId,
+				role.getId());
 	}
 
 	/**
@@ -113,7 +108,7 @@ public class IdentityFactory {
 	 * @return
 	 */
 	public static SysDepartment getDepartmentByCode(String code) {
-		SysDepartment model = sysDepartmentService.findByCode(code);
+		SysDepartment model = getSysDepartmentService().findByCode(code);
 		return model;
 	}
 
@@ -124,7 +119,7 @@ public class IdentityFactory {
 	 * @return
 	 */
 	public static SysDepartment getDepartmentById(int id) {
-		SysDepartment model = sysDepartmentService.findById(id);
+		SysDepartment model = getSysDepartmentService().findById(id);
 		return model;
 	}
 
@@ -135,7 +130,7 @@ public class IdentityFactory {
 	 * @return
 	 */
 	public static SysDepartment getDepartmentByNo(String deptno) {
-		SysDepartment model = sysDepartmentService.findByNo(deptno);
+		SysDepartment model = getSysDepartmentService().findByNo(deptno);
 		return model;
 	}
 
@@ -146,7 +141,8 @@ public class IdentityFactory {
 	 */
 	public static Map<String, SysDepartment> getDepartmentMap() {
 		Map<String, SysDepartment> deptMap = new HashMap<String, SysDepartment>();
-		List<SysDepartment> depts = sysDepartmentService.getSysDepartmentList();
+		List<SysDepartment> depts = getSysDepartmentService()
+				.getSysDepartmentList();
 		if (depts != null && !depts.isEmpty()) {
 			for (SysDepartment dept : depts) {
 				depts.add(dept);
@@ -161,7 +157,8 @@ public class IdentityFactory {
 	 * @return
 	 */
 	public static List<SysDepartment> getDepartments() {
-		List<SysDepartment> depts = sysDepartmentService.getSysDepartmentList();
+		List<SysDepartment> depts = getSysDepartmentService()
+				.getSysDepartmentList();
 		return depts;
 	}
 
@@ -172,7 +169,7 @@ public class IdentityFactory {
 	 */
 	public static Map<String, SysUser> getLowerCaseUserMap() {
 		Map<String, SysUser> userMap = new LinkedHashMap<String, SysUser>();
-		List<SysUser> users = sysUserService.getSysUserList();
+		List<SysUser> users = getSysUserService().getSysUserList();
 		if (users != null && !users.isEmpty()) {
 			for (SysUser user : users) {
 				userMap.put(user.getAccount().toLowerCase(), user);
@@ -188,7 +185,7 @@ public class IdentityFactory {
 	 * @return
 	 */
 	public static List<SysUser> getMembershipUsers(int deptId) {
-		return sysUserService.getSysUserList(deptId);
+		return getSysUserService().getSysUserList(deptId);
 	}
 
 	/**
@@ -199,20 +196,7 @@ public class IdentityFactory {
 	 * @return
 	 */
 	public static List<SysUser> getMembershipUsers(int deptId, int roleId) {
-		return sysUserRoleService.getMembershipUsers(deptId, roleId);
-	}
-
-	/**
-	 * 获取某个部门某个角色的用户
-	 * 
-	 * @param deptId
-	 * @param roleId
-	 * @return
-	 */
-	public static List<SysUser> getMembershipUsers(long deptId, String roleCode) {
-		SysRole role = sysRoleService.findByCode(roleCode);
-		return sysUserRoleService
-				.getMembershipUsers(deptId,  role.getId());
+		return getSysUserRoleService().getMembershipUsers(deptId, roleId);
 	}
 
 	/**
@@ -224,7 +208,7 @@ public class IdentityFactory {
 	 */
 	public static List<SysUser> getMembershipUsers(List<Integer> deptIds,
 			int roleId) {
-		return sysUserRoleService.getMembershipUsers(deptIds, roleId);
+		return getSysUserRoleService().getMembershipUsers(deptIds, roleId);
 	}
 
 	/**
@@ -236,9 +220,21 @@ public class IdentityFactory {
 	 */
 	public static List<SysUser> getMembershipUsers(List<Integer> deptIds,
 			String roleCode) {
-		SysRole role = sysRoleService.findByCode(roleCode);
-		return sysUserRoleService.getMembershipUsers(deptIds,
-				 role.getId());
+		SysRole role = getSysRoleService().findByCode(roleCode);
+		return getSysUserRoleService()
+				.getMembershipUsers(deptIds, role.getId());
+	}
+
+	/**
+	 * 获取某个部门某个角色的用户
+	 * 
+	 * @param deptId
+	 * @param roleId
+	 * @return
+	 */
+	public static List<SysUser> getMembershipUsers(long deptId, String roleCode) {
+		SysRole role = getSysRoleService().findByCode(roleCode);
+		return getSysUserRoleService().getMembershipUsers(deptId, role.getId());
 	}
 
 	/**
@@ -253,21 +249,11 @@ public class IdentityFactory {
 	public static List<SysDepartment> getParentAndChildrenDepartments(
 			int deptId, String treeType) {
 		List<SysDepartment> list = new ArrayList<SysDepartment>();
-		SysDepartment dept = sysDepartmentService.findById(deptId);
+		SysDepartment dept = getSysDepartmentService().findById(deptId);
 		if (dept != null) {
-			sysDepartmentService.findNestingDepartment(list, dept.getId());
+			getSysDepartmentService().findNestingDepartment(list, dept.getId());
 		}
 		return list;
-	}
-
-	/**
-	 * 通过角色编号获取角色
-	 * 
-	 * @param id
-	 * @return
-	 */
-	public static SysRole getRoleById(int id) {
-		return sysRoleService.findById(id);
 	}
 
 	/**
@@ -277,7 +263,17 @@ public class IdentityFactory {
 	 * @return
 	 */
 	public static SysRole getRoleByCode(String code) {
-		return sysRoleService.findByCode(code);
+		return getSysRoleService().findByCode(code);
+	}
+
+	/**
+	 * 通过角色编号获取角色
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public static SysRole getRoleById(int id) {
+		return getSysRoleService().findById(id);
 	}
 
 	/**
@@ -287,7 +283,7 @@ public class IdentityFactory {
 	 */
 	public static Map<String, SysRole> getRoleMap() {
 		Map<String, SysRole> roleMap = new HashMap<String, SysRole>();
-		List<SysRole> roles = sysRoleService.getSysRoleList();
+		List<SysRole> roles = getSysRoleService().getSysRoleList();
 		if (roles != null && !roles.isEmpty()) {
 			for (SysRole role : roles) {
 				roleMap.put(role.getCode(), role);
@@ -302,8 +298,46 @@ public class IdentityFactory {
 	 * @return
 	 */
 	public static List<SysRole> getRoles() {
-		List<SysRole> roles = sysRoleService.getSysRoleList();
+		List<SysRole> roles = getSysRoleService().getSysRoleList();
 		return roles;
+	}
+
+	public static SysApplicationService getSysApplicationService() {
+		if (sysApplicationService == null) {
+			sysApplicationService = ContextFactory
+					.getBean("sysApplicationService");
+		}
+		return sysApplicationService;
+	}
+
+	public static SysDepartmentService getSysDepartmentService() {
+		if (sysDepartmentService == null) {
+			sysDepartmentService = ContextFactory
+					.getBean("sysDepartmentService");
+		}
+		return sysDepartmentService;
+	}
+
+	public static SysDeptRoleService getSysDeptRoleService() {
+		if (sysDeptRoleService == null) {
+			sysDeptRoleService = ContextFactory.getBean("sysDeptRoleService");
+		}
+		return sysDeptRoleService;
+	}
+
+	public static SysRoleService getSysRoleService() {
+		if (sysRoleService == null) {
+			sysRoleService = ContextFactory.getBean("sysRoleService");
+		}
+		return sysRoleService;
+	}
+
+	public static SysTreeService getSysTreeService() {
+		if (sysTreeService == null) {
+			sysTreeService = ContextFactory.getBean("sysTreeService");
+		}
+
+		return sysTreeService;
 	}
 
 	/**
@@ -313,7 +347,21 @@ public class IdentityFactory {
 	 * @return
 	 */
 	public static SysUser getSysUser(String actorId) {
-		return sysUserService.findByAccountWithAll(actorId);
+		return getSysUserService().findByAccountWithAll(actorId);
+	}
+
+	public static SysUserRoleService getSysUserRoleService() {
+		if (sysUserRoleService == null) {
+			sysUserRoleService = ContextFactory.getBean("sysUserRoleService");
+		}
+		return sysUserRoleService;
+	}
+
+	public static SysUserService getSysUserService() {
+		if (sysUserService == null) {
+			sysUserService = ContextFactory.getBean("sysUserService");
+		}
+		return sysUserService;
 	}
 
 	/**
@@ -323,7 +371,7 @@ public class IdentityFactory {
 	 * @return
 	 */
 	public static SysUser getSysUserWithAll(String actorId) {
-		SysUser user = sysUserService.findByAccountWithAll(actorId);
+		SysUser user = getSysUserService().findByAccountWithAll(actorId);
 		if (user != null) {
 			ContextUtil.put(actorId, user);
 		}
@@ -337,7 +385,7 @@ public class IdentityFactory {
 	 */
 	public static Map<String, SysUser> getUserMap() {
 		Map<String, SysUser> userMap = new LinkedHashMap<String, SysUser>();
-		List<SysUser> users = sysUserService.getSysUserList();
+		List<SysUser> users = getSysUserService().getSysUserList();
 		if (users != null && !users.isEmpty()) {
 			for (SysUser user : users) {
 				userMap.put(user.getAccount(), user);
@@ -352,8 +400,21 @@ public class IdentityFactory {
 	 * @param actorIds
 	 * @return
 	 */
-	public static List<String> getUserRoles(List<String> actorIds) {
+	public static List<String> getUserRoleCodes(List<String> actorIds) {
+		List<String> codes = new ArrayList<String>();
+		List<SysRole> list = getUserRoles(actorIds);
+		if (list != null && !list.isEmpty()) {
+			for (SysRole role : list) {
+				if (!codes.contains(role.getCode())) {
+					codes.add(role.getCode());
+				}
+			}
+		}
 		return null;
+	}
+
+	public static List<SysRole> getUserRoles(List<String> actorIds) {
+		return getSysUserService().getUserRoles(actorIds);
 	}
 
 	/**
@@ -365,7 +426,7 @@ public class IdentityFactory {
 	public static List<String> getUserRoles(String actorId) {
 		List<String> actorIds = new ArrayList<String>();
 		actorIds.add(actorId);
-		return getUserRoles(actorIds);
+		return getUserRoleCodes(actorIds);
 	}
 
 	/**
@@ -374,7 +435,39 @@ public class IdentityFactory {
 	 * @return
 	 */
 	public static List<SysUser> getUsers() {
-		return sysUserService.getSysUserList();
+		return getSysUserService().getSysUserList();
+	}
+
+	public static void setSysApplicationService(
+			SysApplicationService sysApplicationService) {
+		IdentityFactory.sysApplicationService = sysApplicationService;
+	}
+
+	public static void setSysDepartmentService(
+			SysDepartmentService sysDepartmentService) {
+		IdentityFactory.sysDepartmentService = sysDepartmentService;
+	}
+
+	public static void setSysDeptRoleService(
+			SysDeptRoleService sysDeptRoleService) {
+		IdentityFactory.sysDeptRoleService = sysDeptRoleService;
+	}
+
+	public static void setSysRoleService(SysRoleService sysRoleService) {
+		IdentityFactory.sysRoleService = sysRoleService;
+	}
+
+	public static void setSysTreeService(SysTreeService sysTreeService) {
+		IdentityFactory.sysTreeService = sysTreeService;
+	}
+
+	public static void setSysUserRoleService(
+			SysUserRoleService sysUserRoleService) {
+		IdentityFactory.sysUserRoleService = sysUserRoleService;
+	}
+
+	public static void setSysUserService(SysUserService sysUserService) {
+		IdentityFactory.sysUserService = sysUserService;
 	}
 
 	/**
@@ -385,7 +478,7 @@ public class IdentityFactory {
 	 * @return
 	 */
 	public JSONArray getUserMenu(long parentId, String actorId) {
-		return sysApplicationService.getUserMenu(parentId, actorId);
+		return getSysApplicationService().getUserMenu(parentId, actorId);
 	}
 
 }

@@ -24,6 +24,7 @@ import java.util.Set;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.base.modules.sys.model.SysDeptRole;
+import com.glaf.base.modules.sys.model.SysRole;
 import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.sys.query.SysUserQuery;
 
@@ -145,6 +146,13 @@ public interface SysUserService {
 	 * @return List
 	 */
 	List<SysUser> getSysUserList(int deptId);
+	
+	/**
+	 * 获取某些用户的角色
+	 * @param actorIds
+	 * @return
+	 */
+	List<SysRole> getUserRoles(List<String> actorIds);
 
 	/**
 	 * 获取特定部门的员工数据集 分页列表

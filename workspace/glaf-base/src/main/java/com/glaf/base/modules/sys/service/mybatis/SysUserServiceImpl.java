@@ -168,6 +168,29 @@ public class SysUserServiceImpl implements SysUserService {
 		return null;
 	}
 
+	/**
+	 * 获取某些用户的角色
+	 * 
+	 * @param actorIds
+	 * @return
+	 */
+	public List<SysRole> getUserRoles(List<String> actorIds) {
+		List<SysRole> roles = new ArrayList<SysRole>();
+		if (actorIds != null && !actorIds.isEmpty()) {
+			for (String actorId : actorIds) {
+				List<SysRole> list = sysRoleMapper.getSysRolesOfUser(actorId);
+				if (list != null && !list.isEmpty()) {
+					for (SysRole role : list) {
+						if (!roles.contains(role)) {
+							roles.add(role);
+						}
+					}
+				}
+			}
+		}
+		return roles;
+	}
+
 	public SysUser findByAccountWithAll(String account) {
 		SysUserQuery query = new SysUserQuery();
 		query.account(account);
