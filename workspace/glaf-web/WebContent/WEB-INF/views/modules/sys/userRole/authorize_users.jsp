@@ -9,7 +9,7 @@
 <%@ page import="com.glaf.core.util.*"%>
 <%
 	String context = request.getContextPath();
-	int pageSize=2*com.glaf.base.modules.Constants.PAGE_SIZE;
+	int pageSize= 15;
 	com.glaf.core.util.PageResult pager=(com.glaf.core.util.PageResult)request.getAttribute("pager");
 	List list = pager.getResults();
 	Map userMap = IdentityFactory.getLongUserMap();
@@ -26,11 +26,11 @@
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.form.js"></script> 
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/artDialog/artDialog.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/artDialog/plugins/iframeTools.js"></script>
-<script type="text/javascript" src='<%=request.getContextPath()%>/scripts/verify.js'></script>
-<script type="text/javascript" src='<%=request.getContextPath()%>/scripts/main.js'></script>
-<script src="<%=context%>/scripts/calendar/calendar.js" type="text/javascript"></script>
-<script src="<%=context%>/scripts/calendar/lang/calendar-en.js" type="text/javascript"></script>
-<script src="<%=context%>/scripts/calendar/lang/calendar-setup.js" type="text/javascript"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/verify.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/main.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/calendar/calendar.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/calendar/lang/calendar-en.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/calendar/lang/calendar-setup.js"></script>
 <script language="javascript">
 var num=0;
 function checkOperation(form){
@@ -146,7 +146,9 @@ if(list!=null){
 	}
 %>  
   <tr> 
-    <td class="td-cb" height="20"> <input type="checkbox" name="id" value="<%=bean.getId()%>" onClick="checkOperation(this.form)">    </td>
+    <td class="td-cb" height="20"> 
+	  <input type="checkbox" name="id" value="<%=bean.getId()%>" onclick="checkOperation(this.form)">    
+	</td>
     <td class="td-no"><%=(pager.getCurrentPageNo()-1)*10 + i+1%></td>
     <td class="td-text"><%=bean.getName()%></td>
     <td class="td-no"><%=bean.getDepartment().getName()%></td>
@@ -169,7 +171,8 @@ for(; i<pageSize; i++){
 }
 %>	
 </table>
-<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" background="<%=request.getContextPath()%>/images/conetent_2_bg2.jpg">
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" 
+       background="<%=request.getContextPath()%>/images/conetent_2_bg2.jpg">
   <tr> 
     <td height="5" background="<%=request.getContextPath()%>/images/content_2_bg2.jpg"></td>
   </tr>
@@ -177,10 +180,11 @@ for(; i<pageSize; i++){
 <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
   <tr> 
     <td width="40%"> 
-	  <input name="btn_auth" type="button" value="授权" class="button" onClick="javascript:auth(this.form);" disabled></td>
+	  <input name="btn_auth" type="button" value="授权" class="button" onclick="javascript:auth(this.form);" disabled>
+	</td>
     <td width="40%" align="left">
 <%
-String params = WebUtil.getQueryString(request);
+   String params = WebUtil.getQueryString(request);
 %>
     <jsp:include page="/WEB-INF/views/inc/show_page.jsp" flush="true">
       <jsp:param name="total" value="<%=pager.getTotalRecordCount()%>"/>      

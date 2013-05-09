@@ -27,18 +27,18 @@
 				width:1000,
 				height:480,
 				fit:true,
-				fitColumns:true,
+				fitColumns: true,
 				nowrap: false,
 				striped: true,
-				collapsible:true,
-				url:'<%=request.getContextPath()%>/apps/${modelName}.do?method=json',
+				collapsible: true,
+				url: '<%=request.getContextPath()%>/apps/${modelName}.do?method=json',
 				sortName: 'id',
 				sortOrder: 'desc',
 				remoteSort: false,
-				singleSelect:true,
-				idField:'${idField.name}',
+				singleSelect: true,
+				idField: '${idField.name}',
 				columns:[[
-	                {title:'±àºÅ',field:'${idField.name}',width:80,sortable:true},
+				        {title:'ÐòºÅ', field:'startIndex', width:80, sortable:false},
 					<#if pojo_fields?exists>
 					<#list  pojo_fields as field>
 					 <#if field.displayType == 4>
@@ -48,9 +48,9 @@
 					</#if>	 
 					{field:'functionKey',title:'¹¦ÄÜ¼ü',width:120}
 				]],
-				rownumbers:false,
-				pagination:true,
-				pageSize:15,
+				rownumbers: false,
+				pagination: true,
+				pageSize: 15,
 				pageList: [10,15,20,25,30,40,50,100],
 				onDblClickRow: onRowClick 
 			});

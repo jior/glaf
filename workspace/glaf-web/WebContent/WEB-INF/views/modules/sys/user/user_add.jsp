@@ -6,16 +6,18 @@
 <%@ page import="com.glaf.base.modules.sys.model.*"%>
 <%@ page import="com.glaf.base.utils.*"%>
 <%
-String context = request.getContextPath();
-pageContext.setAttribute("contextPath", context);
-List  list = (List)request.getAttribute("parent");
-int parent=ParamUtil.getIntParameter(request, "parent", 0);
+    String context = request.getContextPath();
+    pageContext.setAttribute("contextPath", context);
+    List  list = (List)request.getAttribute("parent");
+    int parent=ParamUtil.getIntParameter(request, "parent", 0);
+    String theme = com.glaf.core.util.RequestUtils.getTheme(request);
+    request.setAttribute("theme", theme);
 %>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
-<link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
+<link type="text/css" rel="stylesheet" href="<%=context%>/css/site.css" >
 <script language="javascript" src='<%=context%>/scripts/main.js'></script>
 <script language="javascript" src='<%=context%>/scripts/verify.js'></script></head>
 <script language="javascript">

@@ -79,7 +79,7 @@ function func(form){
   }
   var url="function.do?method=showFuncList&parent="+id;
   var link = "<%=request.getContextPath()%>/sys/"+url;
-  var width=580;
+  var width=680;
   var height=330;
   var scroll="yes";
   //openWindow(url, width, height, scroll);
@@ -110,7 +110,7 @@ function sort(id, operate){
 </script>
 </head>
 
-<body style="padding-top:10px;padding-left:2px;padding-right:20px;">
+<body style="padding-top:2px;padding-left:2px;padding-right:20px;">
 <div class="nav-title"><span class="Title">模块管理</span>&gt;&gt;模块列表</div>
 <html:form name="GenericForm" action="${contextPath}/sys/application.do?method=batchDelete" method="post" target="_self"> 
 <input name="page_no" type="hidden" value="<%=pager.getCurrentPageNo()%>">
@@ -118,7 +118,9 @@ function sort(id, operate){
 <input type="hidden" name="id" value="0">
 <table width="100%" border="0" cellspacing="1" cellpadding="0" class="list-box">
   <tr class="list-title"> 
-    <td width="5%"  align="center"> <input type="checkbox" name="chkall" value="checkbox" onClick="checkAll(this.form, this);checkOperation(this.form)">    </td>
+    <td width="5%"  align="center"> 
+	<input type="checkbox" name="chkall" value="checkbox" onclick="checkAll(this.form, this);checkOperation(this.form)">    
+	</td>
     <td width="5%" align="center">序号</td>
     <td width="20%" align="center">名称</td>
     <td width="20%" align="center">描述</td>

@@ -121,7 +121,7 @@ public interface SysUserRoleService {
 	 * @param roleId
 	 * @return
 	 */
-	List<SysUser> getMembershipUsers(List<Integer> deptIds, long roleId);
+	List<SysUser> getMembershipUsers(List<Long> deptIds, long roleId);
 
 	/**
 	 * 某人已授权的用户列表

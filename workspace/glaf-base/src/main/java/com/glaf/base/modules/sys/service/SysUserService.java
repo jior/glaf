@@ -145,7 +145,7 @@ public interface SysUserService {
 	 *            int
 	 * @return List
 	 */
-	List<SysUser> getSysUserList(int deptId);
+	List<SysUser> getSysUserList(long deptId);
 	
 	/**
 	 * 获取某些用户的角色
@@ -165,7 +165,7 @@ public interface SysUserService {
 	 *            int
 	 * @return
 	 */
-	PageResult getSysUserList(int deptId, int pageNo, int pageSize);
+	PageResult getSysUserList(long deptId, int pageNo, int pageSize);
 
 	/**
 	 * 查询获取sysUser列表
@@ -176,14 +176,14 @@ public interface SysUserService {
 	 * @param pageSize
 	 * @return
 	 */
-	PageResult getSysUserList(int deptId, String fullName, int pageNo,
+	PageResult getSysUserList(long deptId, String fullName, int pageNo,
 			int pageSize);
 
 	/**
 	 * 获取列表
 	 * 
 	 */
-	PageResult getSysUserList(int deptId, String userName, String account,
+	PageResult getSysUserList(long deptId, String userName, String account,
 			int pageNo, int pageSize);
 
 	/**
@@ -193,6 +193,13 @@ public interface SysUserService {
 	 * @return
 	 */
 	List<SysUser> getSysUsersByAppId(Long appId);
+	
+	/**
+	 * 获取某个角色代码的用户
+	 * @param roleCode
+	 * @return
+	 */
+	List<SysUser> getSysUsersByRoleCode(String roleCode);
 
 	/**
 	 * 根据查询参数获取一页的数据

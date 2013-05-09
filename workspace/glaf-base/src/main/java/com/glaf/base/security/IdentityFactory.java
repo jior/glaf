@@ -81,8 +81,8 @@ public class IdentityFactory {
 	 * @param roleId
 	 * @return
 	 */
-	public static List<SysUser> getChildrenMembershipUsers(int deptId,
-			int roleId) {
+	public static List<SysUser> getChildrenMembershipUsers(Long deptId,
+			Long roleId) {
 		return getSysUserRoleService().getChildrenMembershipUsers(deptId,
 				roleId);
 	}
@@ -94,7 +94,7 @@ public class IdentityFactory {
 	 * @param roleId
 	 * @return
 	 */
-	public static List<SysUser> getChildrenMembershipUsers(int deptId,
+	public static List<SysUser> getChildrenMembershipUsers(Long deptId,
 			String roleCode) {
 		SysRole role = getSysRoleService().findByCode(roleCode);
 		return getSysUserRoleService().getChildrenMembershipUsers(deptId,
@@ -118,7 +118,7 @@ public class IdentityFactory {
 	 * @param id
 	 * @return
 	 */
-	public static SysDepartment getDepartmentById(int id) {
+	public static SysDepartment getDepartmentById(Long id) {
 		SysDepartment model = getSysDepartmentService().findById(id);
 		return model;
 	}
@@ -184,7 +184,7 @@ public class IdentityFactory {
 	 * @param deptId
 	 * @return
 	 */
-	public static List<SysUser> getMembershipUsers(int deptId) {
+	public static List<SysUser> getMembershipUsers(Long deptId) {
 		return getSysUserService().getSysUserList(deptId);
 	}
 
@@ -195,7 +195,7 @@ public class IdentityFactory {
 	 * @param roleId
 	 * @return
 	 */
-	public static List<SysUser> getMembershipUsers(int deptId, int roleId) {
+	public static List<SysUser> getMembershipUsers(Long deptId, Long roleId) {
 		return getSysUserRoleService().getMembershipUsers(deptId, roleId);
 	}
 
@@ -206,7 +206,7 @@ public class IdentityFactory {
 	 * @param roleId
 	 * @return
 	 */
-	public static List<SysUser> getMembershipUsers(List<Integer> deptIds,
+	public static List<SysUser> getMembershipUsers(List<Long> deptIds,
 			int roleId) {
 		return getSysUserRoleService().getMembershipUsers(deptIds, roleId);
 	}
@@ -218,7 +218,7 @@ public class IdentityFactory {
 	 * @param roleId
 	 * @return
 	 */
-	public static List<SysUser> getMembershipUsers(List<Integer> deptIds,
+	public static List<SysUser> getMembershipUsers(List<Long> deptIds,
 			String roleCode) {
 		SysRole role = getSysRoleService().findByCode(roleCode);
 		return getSysUserRoleService()
@@ -232,7 +232,7 @@ public class IdentityFactory {
 	 * @param roleId
 	 * @return
 	 */
-	public static List<SysUser> getMembershipUsers(long deptId, String roleCode) {
+	public static List<SysUser> getMembershipUsers(Long deptId, String roleCode) {
 		SysRole role = getSysRoleService().findByCode(roleCode);
 		return getSysUserRoleService().getMembershipUsers(deptId, role.getId());
 	}
@@ -247,7 +247,7 @@ public class IdentityFactory {
 	 * @return
 	 */
 	public static List<SysDepartment> getParentAndChildrenDepartments(
-			int deptId, String treeType) {
+			Long deptId, String treeType) {
 		List<SysDepartment> list = new ArrayList<SysDepartment>();
 		SysDepartment dept = getSysDepartmentService().findById(deptId);
 		if (dept != null) {
@@ -272,7 +272,7 @@ public class IdentityFactory {
 	 * @param id
 	 * @return
 	 */
-	public static SysRole getRoleById(int id) {
+	public static SysRole getRoleById(Long id) {
 		return getSysRoleService().findById(id);
 	}
 
@@ -477,7 +477,7 @@ public class IdentityFactory {
 	 * @param actorId
 	 * @return
 	 */
-	public JSONArray getUserMenu(long parentId, String actorId) {
+	public JSONArray getUserMenu(Long parentId, String actorId) {
 		return getSysApplicationService().getUserMenu(parentId, actorId);
 	}
 

@@ -70,40 +70,11 @@ a:hover {
 }
 
 .box {
-  background:#FBF9E4;
+  background:#fff;
 }
-.box-lt {
-  background:url(../images/s_05.jpg) no-repeat;
-	width:7px;
-	height:14px;
-}
-.box-mt {
-  border-top:1px solid #D8D7A7;
-}
-.box-rt {
-  background:url(../images/s_06.jpg) no-repeat;
-	width:7px;
-	height:14px;
-}
-.box-mm {
-  border:solid #D8D7A7;
-	border-width:0 1px 0 1px;
-}
-.box-lb {
-  background:url(../images/s_07.jpg) no-repeat;
-	width:7px;
-	height:14px;
-}
-.box-mb {
-  border-bottom:1px solid #D8D7A7;
-}
-.box-rb {
-  background:url(../images/s_08.jpg) no-repeat;
-	width:7px;
-	height:14px;
-}
+ 
 .line {
-  border-bottom:1px solid #D8D7A7;
+  border-bottom:1px solid #f5f5f5;
 }
 
 .input {
@@ -118,11 +89,11 @@ a:hover {
   border:1px solid #8BAEB4;
 }
 .input-box {
-  background:url(../images/s_09.jpg) left no-repeat;
+    background:url(../images/s_09.jpg) left no-repeat;
 	padding-left:12px;
 }
 .input-box2 {
-  background:url(../images/s_09.jpg) 0 6px no-repeat;
+    background:url(../images/s_09.jpg) 0 6px no-repeat;
 	padding-left:12px;
 }
 .submit-search {
@@ -242,7 +213,7 @@ a:hover {
   table-layout:fixed;
 }
 .list-box td {
-  background:#FCF9E8;
+    background:#fff;
 	overflow:hidden;
 	text-overflow:ellipsis;
 	white-space:nowrap;
@@ -263,7 +234,7 @@ a:hover {
 }
 .list-title td, .list-box .td-title {
 	line-height:22px;
-	background:#fafafa url('../images/datagrid_title_bg.png') repeat-x left bottom;
+	background:#f5f5f5   repeat-x left bottom;
 	border-bottom:1px solid #ccc;
 	cursor:default;
 }
@@ -292,7 +263,7 @@ a:hover {
 	font-size: 17px;
 }
 .list-back td {
-  background:#EAE7D8;
+  background:#efefef;
 }
 .list-back2 td {
   background:#999999;
@@ -316,7 +287,7 @@ a:hover {
   background:#55EE55;
 }
 .list-over td {
-  background:#D8D7A7;
+  background:#f5f5f5;
 }
 .list-del td, .list-del input {
   color:#999;

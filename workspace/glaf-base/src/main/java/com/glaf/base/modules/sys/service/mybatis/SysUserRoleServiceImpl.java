@@ -285,9 +285,9 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 		return users;
 	}
 
-	public List<SysUser> getMembershipUsers(List<Integer> deptIds, long roleId) {
+	public List<SysUser> getMembershipUsers(List<Long> deptIds, long roleId) {
 		List<SysUser> users = new ArrayList<SysUser>();
-		for (Integer deptId : deptIds) {
+		for (Long deptId : deptIds) {
 			List<SysUser> list = this.getMembershipUsers(deptId, roleId);
 			if (!list.isEmpty()) {
 				users.addAll(list);

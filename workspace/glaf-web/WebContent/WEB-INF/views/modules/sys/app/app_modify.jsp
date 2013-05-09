@@ -35,7 +35,7 @@ function setValue(obj){
 </head>
 
 <body>
-<div class="nav-title">模块管理&gt;&gt;增加模块</div>
+<div class="nav-title">模块管理&gt;&gt;修改模块</div>
 <html:form action="${contextPath}/sys/application.do?method=saveModify" method="post"  onsubmit="return checkForm(this);"> 
 <input type="hidden" name="id" value="<%=bean.getId()%>">
 

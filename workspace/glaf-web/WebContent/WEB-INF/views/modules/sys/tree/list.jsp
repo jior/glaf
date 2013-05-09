@@ -9,18 +9,70 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>出差申请</title>
+<title>分类树</title>
 <link href="<%=request.getContextPath()%>/scripts/artDialog/skins/default.css" rel="stylesheet" />
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/easyui/themes/${theme}/easyui.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/scripts/ztree/css/zTreeStyle/zTreeStyle.css" type="text/css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/themes/${theme}/styles.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/icons/styles.css">
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.form.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/ztree/js/jquery.ztree.all.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/artDialog/artDialog.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/artDialog/plugins/iframeTools.js"></script>
+<script type="text/javascript" src='<%=request.getContextPath()%>/scripts/main.js'></script>
 <script type="text/javascript">
+
+    var prevTreeNode;
+
+    var setting = {
+			async: {
+				enable: true,
+				//url: getAjaxTreeUrl,
+				url: "<%=request.getContextPath()%>/rs/sys/tree/allTreeJson?nodeCode=0",
+				dataFilter: filter
+			},
+			callback: {
+				onClick: zTreeOnClick
+			}
+		};
+  
+  	function filter(treeId, parentNode, childNodes) {
+		if (!childNodes) return null;
+		for (var i=0, l=childNodes.length; i<l; i++) {
+			childNodes[i].name = childNodes[i].name.replace(/\.n/g, '.');
+			if(childNodes[i].isParent){
+			    //childNodes[i].icon="<%=request.getContextPath()%>/icons/icons/orm_root.gif";
+			}
+		}
+		return childNodes;
+	}
+
+	function getAjaxTreeUrl(treeId, treeNode) {
+		if(treeNode){
+		    return "<%=request.getContextPath()%>/rs/sys/tree/treeJson?nodeCode=0&node="+treeNode.id;
+		}
+        return "<%=request.getContextPath()%>/rs/sys/tree/treeJson?nodeCode=0";
+	}
+ 
+    function zTreeOnClick(event, treeId, treeNode, clickFlag) {
+		jQuery("#nodeId").val(treeNode.id);
+		loadData('<%=request.getContextPath()%>/sys/tree.do?method=json&parentId='+treeNode.id);
+	}
+
+	function loadData(url){
+		  jQuery.get(url,{qq:'xx'},function(data){
+		      //var text = JSON.stringify(data); 
+              //alert(text);
+			  jQuery('#mydatagrid').datagrid('loadData', data);
+		  },'json');
+	  }
+
+    jQuery(document).ready(function(){
+			jQuery.fn.zTree.init(jQuery("#myTree"), setting);
+	});
 
    jQuery(function(){
 		jQuery('#mydatagrid').datagrid({
@@ -31,25 +83,18 @@
 				nowrap: false,
 				striped: true,
 				collapsible:true,
-				url:'<%=request.getContextPath()%>/apps/trip.do?method=json',
+				url:'<%=request.getContextPath()%>/sys/tree.do?method=json',
 				sortName: 'id',
 				sortOrder: 'desc',
 				remoteSort: false,
 				singleSelect:true,
 				idField:'id',
 				columns:[[
-	                {title:'序号',field:'startIndex',width:80,sortable:false},
-					{title:'开始日期',field:'startDate', width:120},
-					{title:'结束日期',field:'endDate', width:120},
-					{title:'创建人',field:'createBy', width:120},
-					{title:'创建人',field:'createByName', width:120},
-					{title:'修改日期',field:'updateDate', width:120},
-					{title:'交通工具',field:'transType', width:120},
-					{title:'天数',field:'days', width:120},
-					{title:'费用',field:'money', width:120},
-					{title:'是否锁定',field:'locked', width:120},
-					{title:'创建日期',field:'createDate', width:120},
-					{field:'functionKey',title:'功能键',width:120}
+	                {title:'序号',field:'startIndex',width:80,sortable:true},
+					{title:'名称',field:'name', width:120},
+					{title:'代码',field:'code', width:120},
+					{title:'描述',field:'desc', width:180},
+					{title:'是否有效',field:'locked', width:90, formatter:formatterStatus}
 				]],
 				rownumbers:false,
 				pagination:true,
@@ -66,23 +111,38 @@
 		    });
 	});
 
+
 		 
-	function addNew(){
-	    //location.href="<%=request.getContextPath()%>/apps/trip.do?method=edit";
-	    var link="<%=request.getContextPath()%>/apps/trip.do?method=edit";
-	    art.dialog.open(link, { height: 420, width: 680, title: "添加记录", lock: true, scrollbars:"no" }, false);
+	function formatterStatus(val, row){
+       if(val == 0){
+			return '<span style="color:green; font: bold 13px 宋体;">是</span>';
+	   } else  {
+			return '<span style="color:red; font: bold 13px 宋体;">否</span>';
+	   }  
 	}
+
+
+	function addNew(){
+		var nodeId = jQuery("#nodeId").val();
+		var link = "<%=request.getContextPath()%>/sys/tree.do?method=prepareAdd&parent="+nodeId;
+	    art.dialog.open(link, { height: 400, width: 480, title: "添加分类", lock: true, scrollbars:"yes" }, false);
+		//openWindow(link, 400, 480, "yes");
+	}
+
 
 	function onRowClick(rowIndex, row){
-            //window.open('<%=request.getContextPath()%>/apps/trip.do?method=edit&id='+row.id);
-	    var link = '<%=request.getContextPath()%>/apps/trip.do?method=edit&id='+row.id;
-	    art.dialog.open(link, { height: 420, width: 680, title: "修改记录", lock: true, scrollbars:"no" }, false);
+		var nodeId = jQuery("#nodeId").val();
+	    var link = '<%=request.getContextPath()%>/sys/tree.do?method=prepareModify&id='+row.id;
+	    art.dialog.open(link, { height: 400, width: 480, title: "修改分类", lock: true, scrollbars:"yes" }, false);
+		//openWindow(link, 400, 480, "yes");
 	}
 
+
 	function searchWin(){
-	    jQuery('#dlg').dialog('open').dialog('setTitle','出差申请查询');
+	    jQuery('#dlg').dialog('open').dialog('setTitle','分类树查询');
 	    //jQuery('#searchForm').form('clear');
 	}
+
 
 	function resize(){
 		jQuery('#mydatagrid').datagrid('resize', {
@@ -90,6 +150,7 @@
 			height:400
 		});
 	}
+
 
 	function editSelected(){
 	    var rows = jQuery('#mydatagrid').datagrid('getSelections');
@@ -99,11 +160,13 @@
 	    }
 	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
 	    if (selected ){
-		//location.href="<%=request.getContextPath()%>/apps/trip.do?method=edit&id="+selected.id;
-		var link = "<%=request.getContextPath()%>/apps/trip.do?method=edit&id="+selected.id;
-		art.dialog.open(link, { height: 420, width: 680, title: "修改记录", lock: true, scrollbars:"no" }, false);
+		  //location.href="<%=request.getContextPath()%>/sys/tree.do?method=edit&rowId="+selected.id;
+		  var link = "<%=request.getContextPath()%>/sys/tree.do?method=prepareModify&id="+selected.id;
+		  art.dialog.open(link, { height: 400, width: 480, title: "修改分类", lock: true, scrollbars:"yes" }, false);
+		  //openWindow(link, 400, 480, "yes");
 	    }
 	}
+ 
 
 	function viewSelected(){
 		var rows = jQuery('#mydatagrid').datagrid('getSelections');
@@ -113,7 +176,7 @@
 		}
 		var selected = jQuery('#mydatagrid').datagrid('getSelected');
 		if (selected ){
-		    location.href="<%=request.getContextPath()%>/apps/trip.do?method=edit&readonly=true&id="+selected.id;
+		    location.href="<%=request.getContextPath()%>/sys/tree.do?method=prepareModify&id="+selected.id;
 		}
 	}
 
@@ -124,10 +187,10 @@
 			ids.push(rows[i].id);
 		}
 		if(ids.length > 0 && confirm("数据删除后不能恢复，确定删除吗？")){
-		    var ids = ids.join(',');
+		    var rowIds = ids.join(',');
 			jQuery.ajax({
 				   type: "POST",
-				   url: '<%=request.getContextPath()%>/apps/trip.do?method=delete&ids='+ids,
+				   url: '<%=request.getContextPath()%>/sys/tree.do?method=delete&rowIds='+rowIds,
 				   dataType:  'json',
 				   error: function(data){
 					   alert('服务器处理错误！');
@@ -173,13 +236,6 @@
 	function searchData(){
 	    var params = jQuery("#searchForm").formSerialize();
 	    var queryParams = jQuery('#mydatagrid').datagrid('options').queryParams;
-	    queryParams.startDate = document.getElementById("query_startDate").value;
-	    queryParams.cause = document.getElementById("query_cause").value;
-	    queryParams.endDate = document.getElementById("query_endDate").value;
-	    queryParams.applyDate = document.getElementById("query_applyDate").value;
-	    queryParams.transType = document.getElementById("query_transType").value;
-	    queryParams.days = document.getElementById("query_days").value;
-	    queryParams.money = document.getElementById("query_money").value;
 	    jQuery('#mydatagrid').datagrid('reload');	
 	    jQuery('#dlg').dialog('close');
 	}
@@ -187,25 +243,38 @@
 </script>
 </head>
 <body style="margin:1px;">  
-<div style="margin:0;"></div>  
+<input type="hidden" id="nodeId" name="nodeId" value="" >
 <div class="easyui-layout" data-options="fit:true">  
-   <div data-options="region:'north',split:true,border:true" style="height:40px"> 
-    <div class="toolbar-backgroud"  > 
-	<img src="<%=request.getContextPath()%>/images/window.png">
-	&nbsp;<span class="x_content_title">出差申请列表</span>
-    <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-add'" 
-	   onclick="javascript:addNew();">新增</a>  
-    <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-edit'"
-	   onclick="javascript:editSelected();">修改</a>  
-	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-remove'"
-	   onclick="javascript:deleteSelections();">删除</a> 
-	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-search'"
-	   onclick="javascript:searchWin();">查找</a>
-   </div> 
-  </div> 
-  <div data-options="region:'center',border:true">
-	 <table id="mydatagrid"></table>
-  </div>  
+    <div data-options="region:'west',split:true" style="width:195px;">
+	  <div class="easyui-layout" data-options="fit:true">  
+           
+			 <div data-options="region:'center',border:false">
+			    <ul id="myTree" class="ztree"></ul>  
+			 </div> 
+			 
+        </div>  
+	</div> 
+   <div data-options="region:'center'">   
+		<div class="easyui-layout" data-options="fit:true">  
+		   <div data-options="region:'north',split:true,border:true" style="height:40px"> 
+			<div class="toolbar-backgroud"  > 
+			<img src="<%=request.getContextPath()%>/images/window.png">
+			&nbsp;<span class="x_content_title">分类树列表</span>
+			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-add'" 
+			   onclick="javascript:addNew();">新增</a>  
+			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-edit'"
+			   onclick="javascript:editSelected();">修改</a>  
+			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-remove'"
+			   onclick="javascript:deleteSelections();">删除</a> 
+			<!-- <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-search'"
+			   onclick="javascript:searchWin();">查找</a> -->
+		   </div> 
+		  </div> 
+		  <div data-options="region:'center',border:true">
+			 <table id="mydatagrid"></table>
+		  </div>  
+      </div>
+	</div>
 </div>
 <div id="edit_dlg" class="easyui-dialog" style="width:400px;height:280px;padding:10px 20px"
 	closed="true" buttons="#dlg-buttons">
@@ -218,48 +287,6 @@
     <form id="searchForm" name="searchForm" method="post">
 	<table class="easyui-form" >
             <tbody>
-			<tr>
-				 <td>开始日期</td>
-				 <td>
-				  <input id="query_startDate" name="query_startDate" class="easyui-datebox"></input>
-				</td>
-			</tr>
-			<tr>
-				 <td>事由</td>
-				 <td>
-                 <input id="query_cause" name="query_cause" class="easyui-validatebox" type="text"></input>
-				</td>
-			</tr>
-			<tr>
-				 <td>结束日期</td>
-				 <td>
-				  <input id="query_endDate" name="query_endDate" class="easyui-datebox"></input>
-				</td>
-			</tr>
-			<tr>
-				 <td>申请日期</td>
-				 <td>
-				  <input id="query_applyDate" name="query_applyDate" class="easyui-datebox"></input>
-				</td>
-			</tr>
-			<tr>
-				 <td>交通工具</td>
-				 <td>
-                 <input id="query_transType" name="query_transType" class="easyui-validatebox" type="text"></input>
-				</td>
-			</tr>
-			<tr>
-				 <td>天数</td>
-				 <td>
-				 <input id="query_days" name="query_days" class="easyui-numberbox" ></input>
-				</td>
-			</tr>
-			<tr>
-				 <td>费用</td>
-				 <td>
-				 <input id="query_money" name="query_money" class="easyui-numberbox" ></input>
-				</td>
-			</tr>
 	    </tbody>
         </table>
     </form>

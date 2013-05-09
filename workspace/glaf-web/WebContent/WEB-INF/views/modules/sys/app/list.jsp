@@ -33,7 +33,6 @@
 				dataFilter: filter
 			},
 			callback: {
-				onExpand: zTreeOnExpand,
 				onClick: zTreeOnClick
 			}
 		};
@@ -47,17 +46,7 @@
 		return childNodes;
 	}
 
-	function zTreeOnExpand(treeId, treeNode){
-		var zTree1 = $.fn.zTree.getZTreeObj("myTree");
-        treeNode.icon="<%=request.getContextPath()%>/scripts/ztree/css/zTreeStyle/img/diy8.png";
-		if(prevTreeNode){
-			prevTreeNode.icon="<%=request.getContextPath()%>/scripts/ztree/css/zTreeStyle/img/diy/2.png";
-			zTree1.updateNode(prevTreeNode);
-		}
-		
-		zTree1.updateNode(treeNode);
-		prevTreeNode = treeNode; 
-	}
+ 
 
     function zTreeOnClick(event, treeId, treeNode, clickFlag) {
 		jQuery("#nodeId").val(treeNode.id);

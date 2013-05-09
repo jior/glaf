@@ -19,6 +19,10 @@
 package com.glaf.base.modules.sys.springmvc;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -37,15 +41,24 @@ import org.springframework.web.servlet.ModelAndView;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.glaf.base.modules.Constants;
+import com.glaf.base.modules.sys.SysConstants;
+import com.glaf.base.modules.sys.model.SysDepartment;
 import com.glaf.base.modules.sys.model.SysRole;
+import com.glaf.base.modules.sys.model.SysTree;
+import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.sys.query.SysRoleQuery;
 import com.glaf.base.modules.sys.service.SysRoleService;
+import com.glaf.base.modules.sys.service.SysTreeService;
+import com.glaf.base.modules.sys.service.SysUserService;
 import com.glaf.base.utils.ParamUtil;
 
+import com.glaf.core.base.BaseTree;
+import com.glaf.core.base.TreeModel;
 import com.glaf.core.config.ViewProperties;
 import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
 import com.glaf.core.res.ViewMessages;
+import com.glaf.core.tree.helper.TreeHelper;
 import com.glaf.core.util.JsonUtils;
 import com.glaf.core.util.PageResult;
 import com.glaf.core.util.ParamUtils;
@@ -58,7 +71,11 @@ public class SysRoleController {
 	private static final Log logger = LogFactory
 			.getLog(SysRoleController.class);
 
-	private SysRoleService sysRoleService;
+	protected SysRoleService sysRoleService;
+
+	protected SysTreeService sysTreeService;
+
+	protected SysUserService sysUserService;
 
 	/**
 	 * 批量删除信息
@@ -254,6 +271,89 @@ public class SysRoleController {
 		return new ModelAndView("/modules/sys/role/role_modify", modelMap);
 	}
 
+	@RequestMapping(params = "method=roleUsers")
+	public ModelAndView roleUsers(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+
+		long id = ParamUtil.getIntParameter(request, "id", 0);
+		SysRole sysRole = null;
+		if (id > 0) {
+			sysRole = sysRoleService.findById(id);
+			request.setAttribute("sysRole", sysRole);
+		}
+
+		String x_view = ViewProperties.getString("role.roleUsers");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
+		return new ModelAndView("/modules/sys/role/roleUsers", modelMap);
+	}
+
+	@RequestMapping(params = "method=roleUsersJson")
+	@ResponseBody
+	public byte[] roleUsersJson(HttpServletRequest request, ModelMap modelMap)
+			throws IOException {
+		JSONObject result = new JSONObject();
+		String roleCode = request.getParameter("roleCode");
+		List<SysUser> roleUsers = sysUserService
+				.getSysUsersByRoleCode(roleCode);
+		Collection<String> userIds = new HashSet<String>();
+		if (roleUsers != null && !roleUsers.isEmpty()) {
+			for (SysUser u : roleUsers) {
+				userIds.add(u.getAccount());
+			}
+		}
+		List<SysUser> users = sysUserService.getSysUserWithDeptList();
+		SysTree root = sysTreeService.getSysTreeByCode(SysConstants.TREE_DEPT);
+		if (root != null && users != null) {
+			logger.debug(root.toJsonObject().toJSONString());
+			logger.debug("users size:" + users.size());
+			List<TreeModel> treeModels = new ArrayList<TreeModel>();
+			// treeModels.add(root);
+			List<SysTree> trees = sysTreeService.getAllSysTreeListForDept(
+					(int) root.getId(), 0);
+			if (trees != null && !trees.isEmpty()) {
+				logger.debug("dept tree size:" + trees.size());
+				Map<Long, SysTree> treeMap = new HashMap<Long, SysTree>();
+				for (SysTree tree : trees) {
+					SysDepartment dept = tree.getDepartment();
+					treeMap.put(dept.getId(), tree);
+				}
+				long ts = System.currentTimeMillis();
+				for (SysTree tree : trees) {
+					treeModels.add(tree);
+					SysDepartment dept = tree.getDepartment();
+					if (dept != null && dept.getId() > 0) {
+						for (SysUser user : users) {
+							SysTree t = treeMap.get(Long.valueOf(user
+									.getDeptId()));
+							if (dept.getId() == user.getDeptId() && t != null) {
+								TreeModel treeModel = new BaseTree();
+								treeModel.setParentId(t.getId());
+								treeModel.setId(ts++);
+								treeModel.setCode(user.getAccount());
+								treeModel.setName(user.getAccount() + " "
+										+ user.getName());
+								treeModel.setIconCls("icon-user");
+								if (userIds != null
+										&& userIds.contains(user.getAccount())) {
+									treeModel.setChecked(true);
+								}
+								treeModels.add(treeModel);
+							}
+						}
+					}
+				}
+			}
+			logger.debug("treeModels:" + treeModels.size());
+			TreeHelper treeHelper = new TreeHelper();
+			JSONArray jsonArray = treeHelper.getTreeJSONArray(treeModels);
+			return jsonArray.toJSONString().getBytes("UTF-8");
+		}
+		return result.toString().getBytes("UTF-8");
+	}
+
 	/**
 	 * 提交增加信息
 	 * 
@@ -326,6 +426,18 @@ public class SysRoleController {
 	public void setSysRoleService(SysRoleService sysRoleService) {
 		this.sysRoleService = sysRoleService;
 		logger.info("setSysRoleService");
+	}
+
+	@javax.annotation.Resource
+	public void setSysUserService(SysUserService sysUserService) {
+		this.sysUserService = sysUserService;
+		logger.info("setSysUserService");
+	}
+	
+	@javax.annotation.Resource
+	public void setSysTreeService(SysTreeService sysTreeService) {
+		this.sysTreeService = sysTreeService;
+		logger.info("setSysTreeService");
 	}
 
 	/**

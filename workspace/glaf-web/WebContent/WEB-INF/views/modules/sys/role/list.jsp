@@ -17,6 +17,7 @@
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.form.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/main.js"></script>
 <script type="text/javascript">
 
    jQuery(function(){
@@ -32,7 +33,7 @@
 				sortName: 'id',
 				sortOrder: 'desc',
 				remoteSort: false,
-				//singleSelect:true,
+				singleSelect: true,
 				idField:'id',
 				columns:[[
 	                {title:'序号',field:'startIndex',width:80,sortable:true},
@@ -110,6 +111,20 @@
 		if (selected ){
 			 jQuery('#edit_dlg').dialog('open').dialog('setTitle','角色编辑');
 			 jQuery('#editForm').form('load', '<%=request.getContextPath()%>/rs/sys/role/detail?id='+selected.id);
+		}
+	}
+
+	function roleUsers(){
+		var rows = jQuery('#mydatagrid').datagrid('getSelections');
+		if(rows == null || rows.length !=1){
+			//alert("请选择其中一条记录。");
+			jQuery.messager.alert('Info', '请选择其中一条记录。', 'info');
+			return;
+		}
+		var selected = jQuery('#mydatagrid').datagrid('getSelected');
+		if (selected ){
+			 var url='<%=request.getContextPath()%>/sys/role.do?method=roleUsers&id='+selected.id;
+			 openWindow(url, 480, 580, "yes");
 		}
 	}
 
@@ -269,6 +284,8 @@
 	   onclick="javascript:editSelected();">修改</a>  
 	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-remove'"
 	   onclick="javascript:deleteSelections();">删除</a> 
+	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-user'"
+	   onclick="javascript:roleUsers();">角色用户</a>  
 	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-search'"
 	   onclick="javascript:searchWin();">查找</a>
    </div> 

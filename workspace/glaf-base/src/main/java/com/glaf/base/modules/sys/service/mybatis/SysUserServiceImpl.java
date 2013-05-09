@@ -279,13 +279,13 @@ public class SysUserServiceImpl implements SysUserService {
 		return this.list(query);
 	}
 
-	public List<SysUser> getSysUserList(int deptId) {
+	public List<SysUser> getSysUserList(long deptId) {
 		SysUserQuery query = new SysUserQuery();
 		query.deptId(Long.valueOf(deptId));
 		return this.list(query);
 	}
 
-	public PageResult getSysUserList(int deptId, int pageNo, int pageSize) {
+	public PageResult getSysUserList(long deptId, int pageNo, int pageSize) {
 		// 计算总数
 		PageResult pager = new PageResult();
 		SysUserQuery query = new SysUserQuery();
@@ -310,7 +310,7 @@ public class SysUserServiceImpl implements SysUserService {
 		return pager;
 	}
 
-	public PageResult getSysUserList(int deptId, String fullName, int pageNo,
+	public PageResult getSysUserList(long deptId, String fullName, int pageNo,
 			int pageSize) {
 		// 计算总数
 		PageResult pager = new PageResult();
@@ -339,7 +339,7 @@ public class SysUserServiceImpl implements SysUserService {
 		return pager;
 	}
 
-	public PageResult getSysUserList(int deptId, String userName,
+	public PageResult getSysUserList(long deptId, String userName,
 			String account, int pageNo, int pageSize) {
 		// 计算总数
 		PageResult pager = new PageResult();
@@ -372,6 +372,21 @@ public class SysUserServiceImpl implements SysUserService {
 	 */
 	public List<SysUser> getSysUsersByAppId(Long appId) {
 		return sysUserMapper.getSysUsersByAppId(appId);
+	}
+
+	/**
+	 * 获取某个角色代码的用户
+	 * 
+	 * @param roleCode
+	 * @return
+	 */
+	public List<SysUser> getSysUsersByRoleCode(String roleCode) {
+		if (roleCode == null) {
+			return null;
+		}
+		SysDeptRoleQuery query = new SysDeptRoleQuery();
+		query.setRoleCode(roleCode);
+		return sysUserMapper.getSysDeptRoleUsers(query);
 	}
 
 	public List<SysUser> getSysUsersByQueryCriteria(int start, int pageSize,
