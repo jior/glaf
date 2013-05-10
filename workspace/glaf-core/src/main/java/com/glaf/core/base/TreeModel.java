@@ -140,6 +140,8 @@ public interface TreeModel extends Serializable,
 
 	void setCreateDate(Date createDate);
 
+	void setDataMap(Map<String, Object> dataMap);
+
 	void setDescription(String description);
 
 	void setDiscriminator(String discriminator);
@@ -171,7 +173,7 @@ public interface TreeModel extends Serializable,
 	void setUrl(String url);
 
 	JSONObject toJsonObject();
-	
+
 	ObjectNode toObjectNode();
 
 }

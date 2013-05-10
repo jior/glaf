@@ -69,6 +69,9 @@ public class SysTree implements Serializable, TreeModel, JSONable {
 	protected Date createDate;
 
 	@javax.persistence.Transient
+	protected Map<String, Object> dataMap;
+
+	@javax.persistence.Transient
 	protected int deep;
 
 	@javax.persistence.Transient
@@ -220,7 +223,7 @@ public class SysTree implements Serializable, TreeModel, JSONable {
 	}
 
 	public Map<String, Object> getDataMap() {
-		return null;
+		return dataMap;
 	}
 
 	public int getDeep() {
@@ -352,6 +355,10 @@ public class SysTree implements Serializable, TreeModel, JSONable {
 
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
+	}
+
+	public void setDataMap(Map<String, Object> dataMap) {
+		this.dataMap = dataMap;
 	}
 
 	public void setDeep(int deep) {

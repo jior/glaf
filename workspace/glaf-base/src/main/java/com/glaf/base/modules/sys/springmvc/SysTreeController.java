@@ -177,8 +177,6 @@ public class SysTreeController {
 		}
 		return result.toString().getBytes("UTF-8");
 	}
-	
-	
 
 	@RequestMapping
 	public ModelAndView list(HttpServletRequest request, ModelMap modelMap) {
@@ -403,6 +401,35 @@ public class SysTreeController {
 		}
 
 		return new ModelAndView("/modules/sys/tree/tree_frame", modelMap);
+	}
+
+	/**
+	 * ÏÔÊ¾ÐÞ¸ÄÒ³Ãæ
+	 * 
+	 * @param request
+	 * @param modelMap
+	 * @return
+	 */
+	@RequestMapping(params = "method=showPerms")
+	public ModelAndView showPerms(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		long id = ParamUtil.getIntParameter(request, "id", 0);
+		SysTree bean = sysTreeService.findById(id);
+		if (bean != null && bean.getParentId() > 0) {
+			SysTree parent = sysTreeService.findById(bean.getParentId());
+			bean.setParent(parent);
+		}
+		request.setAttribute("bean", bean);
+		List<SysTree> list = new ArrayList<SysTree>();
+		sysTreeService.getSysTree(list, 0, 0);
+		request.setAttribute("parent", list);
+
+		String x_view = ViewProperties.getString("tree.showPerms");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
+		return new ModelAndView("/modules/sys/tree/showPerms", modelMap);
 	}
 
 	@RequestMapping(params = "method=showTop")

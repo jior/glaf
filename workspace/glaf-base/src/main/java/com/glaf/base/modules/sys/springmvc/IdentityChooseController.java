@@ -48,10 +48,12 @@ import com.glaf.core.util.StringTools;
 import com.glaf.base.modules.sys.SysConstants;
 
 import com.glaf.base.modules.sys.model.SysDepartment;
+import com.glaf.base.modules.sys.model.SysRole;
 import com.glaf.base.modules.sys.model.SysTree;
 import com.glaf.base.modules.sys.model.SysUser;
 
 import com.glaf.base.modules.sys.service.SysDepartmentService;
+import com.glaf.base.modules.sys.service.SysRoleService;
 import com.glaf.base.modules.sys.service.SysTreeService;
 import com.glaf.base.modules.sys.service.SysUserService;
 
@@ -66,6 +68,8 @@ public class IdentityChooseController {
 	protected SysTreeService sysTreeService;
 
 	protected SysUserService sysUserService;
+
+	protected SysRoleService sysRoleService;
 
 	/**
 	 * 显示选择部门页面
@@ -84,6 +88,31 @@ public class IdentityChooseController {
 			return new ModelAndView(x_view, modelMap);
 		}
 		return new ModelAndView("/modules/base/choose/choose_depts", modelMap);
+	}
+
+	/**
+	 * 显示选择角色页面
+	 * 
+	 * @param modelMap
+	 * @param request
+	 * @param modelMap
+	 * @return
+	 */
+	@RequestMapping(params = "method=chooseRoles")
+	public ModelAndView chooseRoles(HttpServletRequest request,
+			ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		
+		List<SysRole>  roles = sysRoleService.getSysRoleList();
+		String selecteds = request.getParameter("selecteds");
+		request.setAttribute("roles", roles);
+		request.setAttribute("selecteds", StringTools.split(selecteds));
+
+		String x_view = ViewProperties.getString("identityChoose.chooseRoles");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+		return new ModelAndView("/modules/base/choose/choose_roles", modelMap);
 	}
 
 	/**
@@ -129,8 +158,8 @@ public class IdentityChooseController {
 	public byte[] deptJson(HttpServletRequest request, ModelMap modelMap)
 			throws IOException {
 		JSONObject result = new JSONObject();
-		String objectIds = request.getParameter("objectIds");
-		List<String> deptIds = StringTools.split(objectIds);
+		String selecteds = request.getParameter("selecteds");
+		List<String> deptIds = StringTools.split(selecteds);
 		SysTree root = sysTreeService.getSysTreeByCode(SysConstants.TREE_DEPT);
 		if (root != null) {
 			logger.debug(root.toJsonObject().toJSONString());
@@ -167,8 +196,8 @@ public class IdentityChooseController {
 	public byte[] json(HttpServletRequest request, ModelMap modelMap)
 			throws IOException {
 		JSONObject result = new JSONObject();
-		String objectIds = request.getParameter("objectIds");
-		List<String> userIds = StringTools.split(objectIds);
+		String selecteds = request.getParameter("selecteds");
+		List<String> userIds = StringTools.split(selecteds);
 		List<SysUser> users = sysUserService.getSysUserWithDeptList();
 		SysTree root = sysTreeService.getSysTreeByCode(SysConstants.TREE_DEPT);
 		if (root != null && users != null) {
@@ -235,14 +264,19 @@ public class IdentityChooseController {
 		this.sysUserService = sysUserService;
 	}
 
+	@javax.annotation.Resource
+	public void setSysRoleService(SysRoleService sysRoleService) {
+		this.sysRoleService = sysRoleService;
+	}
+
 	@RequestMapping(params = "method=treeJson")
 	@ResponseBody
 	public byte[] treeJson(HttpServletRequest request, ModelMap modelMap)
 			throws IOException {
 		JSONObject result = new JSONObject();
 		Long parentId = RequestUtils.getLong(request, "parentId");
-		String objectIds = request.getParameter("objectIds");
-		List<String> deptIds = StringTools.split(objectIds);
+		String selecteds = request.getParameter("selecteds");
+		List<String> deptIds = StringTools.split(selecteds);
 		SysTree root = sysTreeService.findById(parentId);
 		if (root != null) {
 			logger.debug(root.toJsonObject().toJSONString());
@@ -279,8 +313,8 @@ public class IdentityChooseController {
 	public byte[] userJson(HttpServletRequest request, ModelMap modelMap)
 			throws IOException {
 		JSONObject result = new JSONObject();
-		String objectIds = request.getParameter("objectIds");
-		List<String> userIds = StringTools.split(objectIds);
+		String selecteds = request.getParameter("selecteds");
+		List<String> userIds = StringTools.split(selecteds);
 		List<SysUser> users = sysUserService.getSysUserWithDeptList();
 		SysTree root = sysTreeService.getSysTreeByCode(SysConstants.TREE_DEPT);
 		if (root != null && users != null) {
@@ -307,12 +341,16 @@ public class IdentityChooseController {
 									.getDeptId()));
 							if (dept.getId() == user.getDeptId() && t != null) {
 								TreeModel treeModel = new BaseTree();
+								Map<String, Object> dataMap = new HashMap<String, Object>();
+								dataMap.put("actorId", user.getAccount());
+								treeModel.setDataMap(dataMap);
 								treeModel.setParentId(t.getId());
 								treeModel.setId(ts++);
 								treeModel.setCode(user.getAccount());
 								treeModel.setName(user.getAccount() + " "
 										+ user.getName());
 								treeModel.setIconCls("icon-user");
+								treeModel.setIcon(request.getContextPath()+"/icons/icons/user.gif");
 								if (userIds != null
 										&& userIds.contains(user.getAccount())) {
 									treeModel.setChecked(true);
@@ -326,6 +364,7 @@ public class IdentityChooseController {
 			logger.debug("treeModels:" + treeModels.size());
 			TreeHelper treeHelper = new TreeHelper();
 			JSONArray jsonArray = treeHelper.getTreeJSONArray(treeModels);
+			logger.debug(jsonArray.toJSONString());
 			return jsonArray.toJSONString().getBytes("UTF-8");
 		}
 		return result.toString().getBytes("UTF-8");

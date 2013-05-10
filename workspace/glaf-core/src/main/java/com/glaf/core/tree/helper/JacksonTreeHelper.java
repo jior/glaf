@@ -131,6 +131,7 @@ public class JacksonTreeHelper {
 			component.setUrl(treeModel.getUrl());
 			component.setTreeId(treeModel.getTreeId());
 			component.setCls(treeModel.getIconCls());
+			component.setDataMap(treeModel.getDataMap());
 			repository.addTree(component);
 
 			long parentId = treeModel.getParentId();

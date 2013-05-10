@@ -103,7 +103,7 @@ public class MxEntryServiceImpl implements IEntryService {
 		return list;
 	}
 
-	public EntityEntry getEntityEntry(int nodeId, String entryKey) {
+	public EntityEntry getEntityEntry(long nodeId, String entryKey) {
 		EntityEntry entityEntry = null;
 		if (StringUtils.isNotEmpty(entryKey)) {
 			Map<String, Object> params = new HashMap<String, Object>();
@@ -415,12 +415,10 @@ public class MxEntryServiceImpl implements IEntryService {
 	 *            È¨ÏÞµã
 	 * @return
 	 */
-	public boolean hasPermission(LoginContext loginContext, int nodeId,
+	public boolean hasPermission(LoginContext loginContext, long nodeId,
 			String permKey) {
 		boolean hasPermission = false;
-		if (StringUtils.equals(loginContext.getActorId(), "admin")) {
-			return true;
-		}
+
 		if (loginContext.isSystemAdministrator()) {
 			return true;
 		}

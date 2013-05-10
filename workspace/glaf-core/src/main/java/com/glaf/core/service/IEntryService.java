@@ -59,7 +59,7 @@ public interface IEntryService {
 	 * @param entryKey
 	 * @return
 	 */
-	EntityEntry getEntityEntry(int nodeId, String entryKey);
+	EntityEntry getEntityEntry(long nodeId, String entryKey);
 
 	/**
 	 * 根据参数获取实体访问项
@@ -126,7 +126,7 @@ public interface IEntryService {
 	 *            权限点
 	 * @return
 	 */
-	boolean hasPermission(LoginContext loginContext, int nodeId, String permKey);
+	boolean hasPermission(LoginContext loginContext, long nodeId, String permKey);
 
 	/**
 	 * 检查某个用户是否有某个记录的某个权限
@@ -150,7 +150,6 @@ public interface IEntryService {
 	 * 
 	 * @param entityEntry
 	 */
-
 	void saveEntityEntry(EntityEntry entityEntry);
 
 }

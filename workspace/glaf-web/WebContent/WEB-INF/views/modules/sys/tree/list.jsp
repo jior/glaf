@@ -155,8 +155,8 @@
 	function editSelected(){
 	    var rows = jQuery('#mydatagrid').datagrid('getSelections');
 	    if(rows == null || rows.length !=1){
-		alert("请选择其中一条记录。");
-		return;
+		    alert("请选择其中一条记录。");
+		    return;
 	    }
 	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
 	    if (selected ){
@@ -164,6 +164,21 @@
 		  var link = "<%=request.getContextPath()%>/sys/tree.do?method=prepareModify&id="+selected.id;
 		  art.dialog.open(link, { height: 400, width: 480, title: "修改分类", lock: true, scrollbars:"yes" }, false);
 		  //openWindow(link, 400, 480, "yes");
+	    }
+	}
+
+
+	function categoryPerms(){
+		 var rows = jQuery('#mydatagrid').datagrid('getSelections');
+	    if(rows == null || rows.length !=1){
+		    alert("请选择其中一条记录。");
+		    return;
+	    }
+	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
+	    if (selected ){
+		  var link = "<%=request.getContextPath()%>/sys/tree.do?method=showPerms&id="+selected.id;
+		  //art.dialog.open(link, { height: 400, width: 480, title: "修改分类", lock: true, scrollbars:"yes" }, false);
+		  openWindow(link, 680, 560, "yes");
 	    }
 	}
  
@@ -245,7 +260,7 @@
 <body style="margin:1px;">  
 <input type="hidden" id="nodeId" name="nodeId" value="" >
 <div class="easyui-layout" data-options="fit:true">  
-    <div data-options="region:'west',split:true" style="width:195px;">
+    <div data-options="region:'west',split:true" style="width:245px;">
 	  <div class="easyui-layout" data-options="fit:true">  
            
 			 <div data-options="region:'center',border:false">
@@ -266,6 +281,8 @@
 			   onclick="javascript:editSelected();">修改</a>  
 			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-remove'"
 			   onclick="javascript:deleteSelections();">删除</a> 
+			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-sys'"
+			   onclick="javascript:categoryPerms();">栏目权限</a> 
 			<!-- <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-search'"
 			   onclick="javascript:searchWin();">查找</a> -->
 		   </div> 

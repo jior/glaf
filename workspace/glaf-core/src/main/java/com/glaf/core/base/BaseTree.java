@@ -38,6 +38,7 @@ public class BaseTree implements Serializable, TreeModel, JSONable {
 	protected String code;
 	protected String createBy;
 	protected Date createDate;
+	protected Map<String,Object> dataMap;
 	protected int deep;
 	protected String desc;
 	protected String discriminator;
@@ -57,6 +58,8 @@ public class BaseTree implements Serializable, TreeModel, JSONable {
 	public BaseTree() {
 
 	}
+	
+	
 
 	public void addChild(TreeModel treeModel) {
 		if (children == null) {
@@ -115,7 +118,7 @@ public class BaseTree implements Serializable, TreeModel, JSONable {
 	}
 
 	public Map<String, Object> getDataMap() {
-		return null;
+		return dataMap;
 	}
 
 	public int getDeep() {
@@ -233,6 +236,10 @@ public class BaseTree implements Serializable, TreeModel, JSONable {
 		this.createDate = createDate;
 	}
 
+	public void setDataMap(Map<String, Object> dataMap) {
+		this.dataMap = dataMap;
+	}
+
 	public void setDeep(int deep) {
 		this.deep = deep;
 	}
@@ -317,5 +324,9 @@ public class BaseTree implements Serializable, TreeModel, JSONable {
 	public String toString() {
 		return toJsonObject().toJSONString();
 	}
+	
+	
+
+	 
 
 }
