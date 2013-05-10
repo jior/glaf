@@ -43,8 +43,7 @@
 					{title:'编码',field:'code', width:120},
 					{title:'描述',field:'desc', width:120},
 					{title:'创建人',field:'createBy', width:120},
-					{title:'创建日期',field:'createDate', width:120},
-					{field:'functionKey',title:'功能键',width:120}
+					{title:'创建日期',field:'createDate', width:120} 
 				]],
 				rownumbers:false,
 				pagination:true,
@@ -292,7 +291,7 @@
 	   onclick="javascript:editSelected();">修改</a>  
 	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-remove'"
 	   onclick="javascript:deleteSelections();">删除</a> 
-	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-actor'"
+	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-user'"
 	   onclick="javascript:groupUser();">群组用户</a> 
 	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-search'"
 	   onclick="javascript:searchWin();">查找</a>

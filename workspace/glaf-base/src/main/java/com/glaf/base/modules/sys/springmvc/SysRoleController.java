@@ -336,6 +336,7 @@ public class SysRoleController {
 								treeModel.setName(user.getAccount() + " "
 										+ user.getName());
 								treeModel.setIconCls("icon-user");
+								treeModel.setIcon(request.getContextPath()+"/icons/icons/user.gif");
 								if (userIds != null
 										&& userIds.contains(user.getAccount())) {
 									treeModel.setChecked(true);
@@ -349,6 +350,7 @@ public class SysRoleController {
 			logger.debug("treeModels:" + treeModels.size());
 			TreeHelper treeHelper = new TreeHelper();
 			JSONArray jsonArray = treeHelper.getTreeJSONArray(treeModels);
+			//logger.debug(jsonArray.toJSONString());
 			return jsonArray.toJSONString().getBytes("UTF-8");
 		}
 		return result.toString().getBytes("UTF-8");

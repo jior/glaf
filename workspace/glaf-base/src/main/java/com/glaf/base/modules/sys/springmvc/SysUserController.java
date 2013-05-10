@@ -575,11 +575,19 @@ public class SysUserController {
 	 */
 	@RequestMapping(params = "method=saveAdd")
 	public ModelAndView saveAdd(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
 		SysUser bean = new SysUser();
-		SysDepartment department = sysDepartmentService.findById(ParamUtil
-				.getIntParameter(request, "parent", 0));
-		bean.setDepartment(department);
+		long nodeId = RequestUtils.getLong(request, "nodeId");
+		if (nodeId > 0) {
+			SysDepartment department = sysDepartmentService
+					.getSysDepartmentByNodeId(nodeId);
+			bean.setDepartment(department);
+			bean.setDeptId(department.getId());
+		} else {
+			SysDepartment department = sysDepartmentService.findById(ParamUtil
+					.getIntParameter(request, "parent", 0));
+			bean.setDepartment(department);
+			bean.setDeptId(department.getId());
+		}
 		bean.setCode(ParamUtil.getParameter(request, "code"));
 		bean.setAccount(bean.getCode());
 		bean.setName(ParamUtil.getParameter(request, "name"));

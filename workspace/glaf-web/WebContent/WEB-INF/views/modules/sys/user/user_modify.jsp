@@ -9,6 +9,7 @@
 String context = request.getContextPath();
 SysUser bean=(SysUser)request.getAttribute("bean");
 List  list = (List)request.getAttribute("parent");
+int nodeId=ParamUtil.getIntParameter(request, "nodeId", 0);
 %>
 <html>
 <head>
@@ -39,6 +40,7 @@ function setValue(obj){
 <div class="nav-title"><span class="Title">用户管理</span>&gt;&gt;修改用户</div>
 <html:form action="${contextPath}/sys/user.do?method=saveModify" method="post"  onsubmit="return checkForm(this);"> 
 <input type="hidden" name="id" value="<%=bean.getId()%>">
+<input type="hidden" name="nodeId" value="<%=nodeId%>">
 <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0" class="box">
   <tr>
     <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -57,7 +59,8 @@ function setValue(obj){
       </tr>
       <tr>
         <td class="input-box2" valign="top">部　　门</td>
-        <td><select name="parent" onChange="javascript:setValue(this);">
+        <td>
+		<select name="parent" onchange="javascript:setValue(this);">
           <%
 			if(list!=null){
 			  Iterator iter=list.iterator();   
@@ -65,15 +68,15 @@ function setValue(obj){
 				SysTree bean2=(SysTree)iter.next();	
 				SysDepartment dept = bean2.getDepartment();
 			%>
-					  <option value="<%=dept!=null?dept.getId():""%>">
-					  <%
+			<option value="<%=dept!=null?dept.getId():""%>">
+			<%
 			for(int i=1;i<bean2.getDeep();i++){
 			  out.print("&nbsp;&nbsp;");
 			}
 			out.print(bean2.getName());
 			%>
-					  </option>
-					  <%    
+			</option>
+			<%    
 			  }
 			}
 			%>
@@ -90,10 +93,9 @@ function setValue(obj){
       <tr>
         <td class="input-box2" valign="top">性　　别</td>
         <td>
-          <input type="radio" name="gender" value="0" <%=bean.getGender()==0?"checked":""%>>
-男
-<input type="radio" name="gender" value="1" <%=bean.getGender()==1?"checked":""%>>
-女</td>
+          <input type="radio" name="gender" value="0" <%=bean.getGender()==0?"checked":""%>>男
+          <input type="radio" name="gender" value="1" <%=bean.getGender()==1?"checked":""%>>女
+		</td>
       </tr>
       <tr>
         <td class="input-box2" valign="top">手　　机</td>
@@ -144,10 +146,9 @@ function setValue(obj){
       <tr>
         <td class="input-box2" valign="top">是否有效</td>
         <td>
-          <input type="radio" name="blocked" value="0" <%=bean.getBlocked()==0?"checked":""%>>
-          是
-          <input type="radio" name="blocked" value="1" <%=bean.getBlocked()==1?"checked":""%>>
-          否</td>
+          <input type="radio" name="blocked" value="0" <%=bean.getBlocked()==0?"checked":""%>>是
+          <input type="radio" name="blocked" value="1" <%=bean.getBlocked()==1?"checked":""%>>否
+		</td>
       </tr>
  
       <tr>

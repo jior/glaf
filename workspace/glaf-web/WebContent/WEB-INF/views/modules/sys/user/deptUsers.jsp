@@ -111,13 +111,15 @@ var setting = {
 
 	function addNew(){
 	    //location.href="<%=request.getContextPath()%>/sys/user.do?method=edit";
-	    var link="<%=request.getContextPath()%>/sys/user.do?method=prepareAdd&parent=${parent}&deptId=${deptId}";
+		var nodeId = jQuery("#nodeId").val();
+	    var link="<%=request.getContextPath()%>/sys/user.do?method=prepareAdd&nodeId="+nodeId+"&deptId=${deptId}";
 	    art.dialog.open(link, { height: 420, width: 680, title: "添加用户", lock: true, scrollbars:"no" }, false);
 	}
 
 	function onRowClick(rowIndex, row){
             //window.open('<%=request.getContextPath()%>/sys/user.do?method=edit&id='+row.id);
-	    var link = '<%=request.getContextPath()%>/sys/user.do?method=prepareModify&parent=${parent}&deptId=${deptId}&id='+row.id;
+		var nodeId = jQuery("#nodeId").val();
+	    var link = '<%=request.getContextPath()%>/sys/user.do?method=prepareModify&nodeId='+nodeId+'&deptId=${deptId}&id='+row.id;
 	    art.dialog.open(link, { height: 420, width: 680, title: "修改用户", lock: true, scrollbars:"no" }, false);
 	}
 

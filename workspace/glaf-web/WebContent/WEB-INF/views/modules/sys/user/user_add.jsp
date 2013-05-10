@@ -10,6 +10,7 @@
     pageContext.setAttribute("contextPath", context);
     List  list = (List)request.getAttribute("parent");
     int parent=ParamUtil.getIntParameter(request, "parent", 0);
+	int nodeId=ParamUtil.getIntParameter(request, "nodeId", 0);
     String theme = com.glaf.core.util.RequestUtils.getTheme(request);
     request.setAttribute("theme", theme);
 %>
@@ -38,6 +39,7 @@ function checkForm(form){
 <div class="nav-title"><span class="Title">用户管理</span>&gt;&gt;增加用户</div>
 <html:form action="${contextPath}/sys/user.do?method=saveAdd" method="post" onsubmit="return checkForm(this);" > 
 <input type="hidden" name="parent" value="<%=parent%>">
+<input type="hidden" name="nodeId" value="<%=nodeId%>">
 <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0" class="box">
   <tr>
     <td><table width="100%" border="0" cellspacing="0" cellpadding="0">

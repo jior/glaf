@@ -1,0 +1,2 @@
+<%@ page contentType="text/plain;charset=UTF-8" language="java"%><%@ taglib uri="http://github.com/jior/glaf/tags" prefix="glaf"%><%@ taglib uri="http://www.springframework.org/tags/form" prefix="html"%>
+{"message":"<glaf:messages id="message" message="true"><glaf:write name="message"/></glaf:messages>"}

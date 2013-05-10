@@ -103,13 +103,6 @@ public interface SysDepartmentService {
 	 */
 
 	SysDepartment findByNo(String deptno);
-	
-	/**
-	 * 通过节点编号获取部门信息
-	 * @param nodeId
-	 * @return
-	 */
-	SysDepartment getSysDepartmentByNodeId(long nodeId);
 
 	/**
 	 * 获取某个部门及下级部门列表
@@ -126,6 +119,14 @@ public interface SysDepartmentService {
 	 * @param node
 	 */
 	void findNestingDepartment(List<SysDepartment> list, SysDepartment node);
+
+	/**
+	 * 通过节点编号获取部门信息
+	 * 
+	 * @param nodeId
+	 * @return
+	 */
+	SysDepartment getSysDepartmentByNodeId(long nodeId);
 
 	/**
 	 * 根据查询参数获取记录总数
@@ -151,14 +152,6 @@ public interface SysDepartmentService {
 	List<SysDepartment> getSysDepartmentList(int parent);
 
 	/**
-	 * 获取部门列表信息
-	 * 
-	 * @param query
-	 * @return
-	 */
-	List<SysDepartment> list(SysDepartmentQuery query);
-
-	/**
 	 * 获取分页列表
 	 * 
 	 * @param parent
@@ -178,6 +171,14 @@ public interface SysDepartmentService {
 	 */
 	List<SysDepartment> getSysDepartmentsByQueryCriteria(int start,
 			int pageSize, SysDepartmentQuery query);
+
+	/**
+	 * 获取部门列表信息
+	 * 
+	 * @param query
+	 * @return
+	 */
+	List<SysDepartment> list(SysDepartmentQuery query);
 
 	/**
 	 * 排序
