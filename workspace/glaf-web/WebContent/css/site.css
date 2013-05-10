@@ -163,8 +163,8 @@ a:hover {
   border: none;
   line-height: 16px;
   font-family: Arial, Verdana, sans-serif;
-  font-size: 10px;
-	cursor:hand;
+  font-size: 10px; 
+  cursor:hand;
 }
 /* tabs-box */
 .tabs-box {
@@ -172,11 +172,11 @@ a:hover {
 	margin-bottom:-1px;
 }
 .tab-lc {
-  background:url(../images/s_14.jpg);
+    background:url(../images/s_14.jpg);
 	width:9px;
 }
 .tab-mc {
-  background:url(../images/s_16.jpg);
+    background:url(../images/s_16.jpg);
 	text-align:center;
 	vertical-align:bottom;
 	line-height:23px;
@@ -187,22 +187,22 @@ a:hover {
   color:#125282;
 }
 .tab-rc {
-  background:url(../images/s_15.jpg);
+    background:url(../images/s_15.jpg);
 	width:9px;
 }
 .tab-l {
-  background:url(../images/s_17.jpg) bottom no-repeat;
+    background:url(../images/s_17.jpg) bottom no-repeat;
 	width:5px;
 }
 .tab-m {
-  background:url(../images/s_19.jpg) bottom repeat-x;
+    background:url(../images/s_19.jpg) bottom repeat-x;
 	text-align:center;
 	vertical-align:bottom;
 	line-height:23px;
 	white-space:nowrap;
 }
 .tab-r {
-  background:url(../images/s_18.jpg) bottom no-repeat;
+    background:url(../images/s_18.jpg) bottom no-repeat;
 	width:7px;
 }
 
@@ -223,13 +223,13 @@ a:hover {
   table-layout:auto;
 }
 .list-box .fix-box0 {
-  width:120px;
-  overflow:hidden;
+    width:120px;
+    overflow:hidden;
 	text-overflow:ellipsis;
 }
 .list-box .fix-box1 {
-  width:97px;
-  overflow:hidden;
+    width:97px;
+    overflow:hidden;
 	text-overflow:ellipsis;
 }
 .list-title td, .list-box .td-title {
@@ -239,19 +239,19 @@ a:hover {
 	cursor:default;
 }
 .list-title .title {
-  background:url(../images/s_21.jpg) repeat-x bottom #629DE1;
+    background:url(../images/s_21.jpg) repeat-x bottom #629DE1;
 	line-height:22px;
 	color:#FFF;
 	white-space:nowrap;
 }
 .list-title .title1 {
-  background:#009900;
+    background:#009900;
 	line-height:22px;
 	color:#FFF;
 	white-space:nowrap;
 }
 .list-title .title2 {
-  background:#3399FF;
+    background:#3399FF;
 	line-height:22px;
 	color:#FFF;
 	white-space:nowrap;
@@ -259,7 +259,7 @@ a:hover {
 .td-font{
 	color: #0000CC;
 	font-weight: bold;
-	font-family:"华文楷体";
+	font-family:"宋体";
 	font-size: 17px;
 }
 .list-back td {
@@ -404,16 +404,7 @@ textarea:focus, input:focus, .sffocus, .sftarget{
   color:#FF0000;
 	font-weight:bold;
 }
-/*其它的 */
-.skyblue{
-  color:#0690D5;
-  height:35px;
-  padding-left:10px;
-}
-.ptd {
-  padding:3px;
-	line-height:18px;
-}
+ 
 .list-box .readno {
   background:url(../images/readno.jpg) no-repeat 0 50%;
 	width:15px;
@@ -431,7 +422,7 @@ textarea:focus, input:focus, .sffocus, .sftarget{
   color:#F00;
 }
 .submitIframe {
-  width:0;
+    width:0;
 	height:0;
 	border:0;
 }
@@ -455,7 +446,6 @@ textarea:focus, input:focus, .sffocus, .sftarget{
 .change-content {
 }
 
-/*author: zoumin  可视化看板管理*/
 .line-font-red{
 color:#FF0000
 }
@@ -465,7 +455,6 @@ color:#008000
 .line-font-yellow{
 color:#FFBC13
 }
-
 
 .gamma {
 	font-size:12px;

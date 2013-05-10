@@ -40,8 +40,9 @@
 		class="org.springframework.context.support.ResourceBundleMessageSource">
 		<property name="basenames">
 			<list>
-				<value>config/i18n/messages</value>
-				<value>config/i18n/content</value>
+			    <value>conf/i18n/ApplicationStrings</value>
+				<value>conf/i18n/messages</value>
+				<value>conf/i18n/content</value>
 			</list>
 		</property>
 	</bean>

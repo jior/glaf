@@ -8,15 +8,22 @@
 	String context = request.getContextPath();
 	SysTree bean=(SysTree)request.getAttribute("bean");
 	List list = (List)request.getAttribute("parent");
+	String theme = com.glaf.core.util.RequestUtils.getTheme(request);
+    request.setAttribute("theme", theme);
 %>
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
-<link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
+<link href="<%=context%>/css/core.css" type="text/css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/easyui/themes/${theme}/easyui.css">
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/locale/easyui-lang-zh_CN.js"></script>
 <script language="javascript" src='<%=context%>/scripts/main.js'></script>
-<script language="javascript" src='<%=context%>/scripts/verify.js'></script></head>
-<script language="JavaScript">
+<script language="javascript" src='<%=context%>/scripts/verify.js'></script>
+<script language="javascript">
 function checkForm(form){
   if(verifyAll(form)){
      if(form.parent.value=='<%=bean.getId()%>'){
@@ -33,22 +40,12 @@ function setValue(obj){
 </script>
 </head>
 
-<body>
-<div class="nav-title"><span class="Title">目录管理</span>&gt;&gt;修改节点</div>
+<body style="margin:10px;">
+ 
+<div class="easyui-panel" title="修改节点" style="width:450px;padding:10px"> 
 <html:form action="${contextPath}/sys/tree.do?method=saveModify" method="post"  onsubmit="return checkForm(this);"> 
 <input type="hidden" name="id" value="<%=bean.getId()%>">
-<table width="95%" border="0" align="center" cellpadding="0" cellspacing="0" class="box">
-  <tr>
-    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
-      <tr class="box">
-        <td class="box-lt">&nbsp;</td>
-        <td class="box-mt">&nbsp;</td>
-        <td class="box-rt">&nbsp;</td>
-      </tr>
-    </table></td>
-  </tr>
-  <tr>
-    <td class="box-mm"><table width="95%" align="center" border="0" cellspacing="0" cellpadding="5">
+ <table width="95%" align="center" border="0" cellspacing="0" cellpadding="5">
       <tr>
         <td class="input-box">上级节点</td>
         <td><select name="parent" onChange="javascript:setValue(this);">
@@ -78,32 +75,22 @@ function setValue(obj){
       </tr>
       <tr>
         <td class="input-box">名　　称*</td>
-        <td><input name="name" type="text" size="37" class="input" value="<%=bean.getName()%>" datatype="string" nullable="no" maxsize="30" chname="名称"></td>
+        <td><input name="name" type="text" size="37" class="easyui-validatebox" value="<%=bean.getName()%>" datatype="string" nullable="no" maxsize="30" chname="名称" data-options="required:true"></td>
       </tr>
       <tr>
         <td class="input-box2" valign="top">描　　述</td>
-        <td><textarea name="desc" cols="35" rows="8" class="input" datatype="string" nullable="yes" maxsize="100" chname="描述"><%=bean.getDesc() != null ? bean.getDesc(): ""%></textarea></td>
+        <td><textarea name="desc" cols="35" rows="8" class="easyui-validatebox" datatype="string" nullable="yes" maxsize="100" chname="描述"><%=bean.getDesc() != null ? bean.getDesc(): ""%></textarea></td>
       </tr>
       <tr>
         <td class="input-box2" valign="top">编　　码*</td>
-        <td><input name="code" type="text" size="10" class="input" value="<%=bean.getCode()%>"  datatype="string" nullable="no" maxsize="20" chname="编码"></td>
+        <td><input name="code" type="text" size="30" class="easyui-validatebox" value="<%=bean.getCode()%>"  datatype="string" nullable="no" maxsize="20" chname="编码" data-options="required:true"></td>
       </tr>
       <tr>
         <td colspan="2" align="center" valign="bottom" height="30">&nbsp;
               <input name="btn_save" type="submit" value="保存" class="button"></td>
       </tr>
-    </table></td>
-  </tr>
-  <tr>
-    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
-      <tr class="box">
-        <td class="box-lb">&nbsp;</td>
-        <td class="box-mb">&nbsp;</td>
-        <td class="box-rb">&nbsp;</td>
-      </tr>
-    </table></td>
-  </tr>
-</table>
+    </table> 
 </html:form>
+</div>
 </body>
 </html>

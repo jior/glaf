@@ -1,23 +1,29 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
-
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="html"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.glaf.base.modules.sys.*"%>
 <%@ page import="com.glaf.base.modules.sys.model.*"%>
 <%@ page import="com.glaf.base.utils.*"%>
 <%
-String context = request.getContextPath();
-SysApplication bean=(SysApplication)request.getAttribute("bean");
-List  list = (List)request.getAttribute("parent");
+    String context = request.getContextPath();
+    SysApplication bean=(SysApplication)request.getAttribute("bean");
+    List  list = (List)request.getAttribute("parent");
+	String theme = com.glaf.core.util.RequestUtils.getTheme(request);
+    request.setAttribute("theme", theme);
 %>
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
-<link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
-<script language="javascript" src='<%=context%>/scripts/verify.js'></script>
-<script language="javascript" src='<%=context%>/scripts/main.js'></script>
-<script language="JavaScript">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/site.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/easyui/themes/${theme}/easyui.css">
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src='<%=context%>/scripts/main.js'></script>
+<script type="text/javascript" src='<%=context%>/scripts/verify.js'></script> 
+<script language="javascript">
 function checkForm(form){
   if(verifyAll(form)){
      if(form.parent.value=='<%=bean.getId()%>'){
@@ -34,23 +40,11 @@ function setValue(obj){
 </script>
 </head>
 
-<body>
-<div class="nav-title">模块管理&gt;&gt;修改模块</div>
+<body style="margin:10px;">
 <html:form action="${contextPath}/sys/application.do?method=saveModify" method="post"  onsubmit="return checkForm(this);"> 
+<div class="easyui-panel" title="修改模块" style="width:550px;padding:10px">
 <input type="hidden" name="id" value="<%=bean.getId()%>">
-
-<table width="95%" border="0" align="center" cellpadding="0" cellspacing="0" class="box">
-  <tr>
-    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
-      <tr class="box">
-        <td class="box-lt">&nbsp;</td>
-        <td class="box-mt">&nbsp;</td>
-        <td class="box-rt">&nbsp;</td>
-      </tr>
-    </table></td>
-  </tr>
-  <tr>
-    <td class="box-mm"><table width="95%" align="center" border="0" cellspacing="0" cellpadding="5">
+<table width="95%" align="center" border="0" cellspacing="0" cellpadding="5">
       <tr>
         <td class="input-box">上级模块</td>
         <td><select name="parent" onChange="javascript:setValue(this);" class="input">
@@ -80,20 +74,20 @@ function setValue(obj){
       </tr>
       <tr>
         <td class="input-box">名　　称*</td>
-        <td><input name="name" type="text" class="input" value="<%=bean.getName()%>" size="37" datatype="string" nullable="no" maxsize="20" chname="名称"></td>
+        <td><input name="name" type="text" class="input easyui-validatebox" value="<%=bean.getName()%>" size="35" datatype="string" nullable="no" maxsize="20" chname="名称" data-options="required:true"></td>
       </tr>
 	  <tr>
         <td class="input-box">权限编码</td>
-        <td><input name="code" type="text" value="<%=bean.getCode()!=null?bean.getCode():""%>" size="37" class="input" datatype="string" nullable="yes" maxsize="50" chname="代码"></td>
+        <td><input name="code" type="text" value="<%=bean.getCode()!=null?bean.getCode():""%>" size="35" class="input easyui-validatebox" datatype="string" nullable="yes" maxsize="50" chname="代码"></td>
       </tr>
       <tr>
         <td class="input-box2" valign="top">描　　述</td>
-        <td><textarea name="desc" cols="35" rows="6" class="input-multi" datatype="string" nullable="yes" maxsize="100" chname="描述"><%=bean.getDesc() != null ? bean.getDesc() : ""%></textarea></td>
+        <td><textarea name="desc" cols="38" rows="6" class="input-multi" datatype="string" nullable="yes" maxsize="100" chname="描述"><%=bean.getDesc() != null ? bean.getDesc() : ""%></textarea></td>
       </tr>
       <tr>
         <td class="input-box2" valign="top">链　　接</td>
         <td> 
-		<textarea name="url" cols="35" rows="5" class="input-multi" datatype="string" nullable="yes" maxsize="100" chname="链接"><%=bean.getUrl() != null ? bean.getUrl() :""%></textarea>
+		<textarea name="url" cols="38" rows="5" class="input-multi" datatype="string" nullable="yes" maxsize="100" chname="链接"><%=bean.getUrl() != null ? bean.getUrl() :""%></textarea>
 		</td>
       </tr>
       <tr>
@@ -114,18 +108,8 @@ function setValue(obj){
         <td colspan="2" align="center" valign="bottom" height="30">&nbsp;
               <input name="btn_save" type="submit" value="保存" class="button"></td>
       </tr>
-    </table></td>
-  </tr>
-  <tr>
-    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
-      <tr class="box">
-        <td class="box-lb">&nbsp;</td>
-        <td class="box-mb">&nbsp;</td>
-        <td class="box-rb">&nbsp;</td>
-      </tr>
-    </table></td>
-  </tr>
-</table>
+    </table>
+</div>
 </html:form>
 </body>
 </html>

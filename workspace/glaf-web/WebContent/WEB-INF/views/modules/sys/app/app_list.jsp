@@ -64,7 +64,7 @@ function modify(form){
   var url="application.do?method=prepareModify&id="+id;
   var link = "<%=request.getContextPath()%>/sys/"+url;
   var width=480;
-  var height=450;
+  var height=460;
   var scroll="no";
   //openWindow(url, width, height, scroll);
   art.dialog.open(link, { height: height, width: width, title: "修改模块", lock: false, scrollbars:"no" }, false);

@@ -105,5 +105,6 @@
 	<classpathentry kind="lib" path="/glaf-core/lib/mybatis.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/ehcache-core.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/glaf-jbpm"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/javax.validation.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
