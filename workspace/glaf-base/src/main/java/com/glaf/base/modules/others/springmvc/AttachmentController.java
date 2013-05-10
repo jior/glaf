@@ -19,7 +19,6 @@
 package com.glaf.base.modules.others.springmvc;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
@@ -42,7 +41,6 @@ public class AttachmentController {
 	private static final Log logger = LogFactory
 			.getLog(AttachmentController.class);
 
-	
 	private AttachmentService attachmentService;
 
 	@javax.annotation.Resource
@@ -55,22 +53,20 @@ public class AttachmentController {
 	 * 显示附件列表
 	 * 
 	 * @param mapping
-	 * @param actionForm
 	 * @param request
-	 * @param response
 	 * @return
 	 */
 	@RequestMapping(params = "method=showList")
-	public ModelAndView showList(ModelMap modelMap, HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView showList(ModelMap modelMap, HttpServletRequest request) {
 		long referId = ParamUtil.getLongParameter(request, "referId", 0);
 		int referType = ParamUtil.getIntParameter(request, "referType", 0);
 		int viewType = ParamUtil.getIntParameter(request, "viewType", 0);
 
 		request.setAttribute("list",
 				attachmentService.getAttachmentList(referId, referType));
-		
-		String x_view = ViewProperties.getString("attachment.showList.referType");
+
+		String x_view = ViewProperties
+				.getString("attachment.showList.referType");
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);
 		}
@@ -98,15 +94,13 @@ public class AttachmentController {
 	 * @return
 	 */
 	@RequestMapping(params = "method=showList2")
-	public ModelAndView showList2(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView showList2(ModelMap modelMap, HttpServletRequest request) {
 		long referId = ParamUtil.getLongParameter(request, "referId", 0);
 		int referType = ParamUtil.getIntParameter(request, "referType", 0);
-	 
 
 		request.setAttribute("list",
 				attachmentService.getAttachmentList(referId, referType));
-		
+
 		String x_view = ViewProperties.getString("attachment.showList2");
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);
@@ -127,7 +121,7 @@ public class AttachmentController {
 	 */
 	@RequestMapping(params = "method=batchDelete")
 	public ModelAndView batchDelete(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+			HttpServletRequest request) {
 		boolean ret = true;
 		long[] id = ParamUtil.getLongParameterValues(request, "id");
 		ret = attachmentService.deleteAll(id);
@@ -154,8 +148,7 @@ public class AttachmentController {
 	 * @return
 	 */
 	@RequestMapping(params = "method=showLists")
-	public ModelAndView showLists(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView showLists(ModelMap modelMap, HttpServletRequest request) {
 		String referIds = ParamUtil.getParameter(request, "referId");
 		int referType = ParamUtil.getIntParameter(request, "referType", 0);
 		String[] referIdArray = StringUtils.split(referIds, ",");
@@ -166,7 +159,7 @@ public class AttachmentController {
 
 		request.setAttribute("list",
 				attachmentService.getAttachmentList(referId, referType));
-		
+
 		String x_view = ViewProperties.getString("attachment.showLists");
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);
@@ -187,8 +180,7 @@ public class AttachmentController {
 	 * @return
 	 */
 	@RequestMapping(params = "method=showCount")
-	public ModelAndView showCount(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView showCount(ModelMap modelMap, HttpServletRequest request) {
 		String referId = ParamUtil.getParameter(request, "referId");
 		int referType = ParamUtil.getIntParameter(request, "referType", 0);
 		String[] referIdArray = StringUtils.split(referId, ",");
@@ -200,12 +192,12 @@ public class AttachmentController {
 				.getAttachmentCount(longReferId, referType);
 		String Strcount = count + "";
 		request.setAttribute("count", Strcount);
-		
+
 		String x_view = ViewProperties.getString("attachment.showCount");
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);
 		}
-		
+
 		return new ModelAndView("/modules/others/attachment/showCount",
 				modelMap);
 	}

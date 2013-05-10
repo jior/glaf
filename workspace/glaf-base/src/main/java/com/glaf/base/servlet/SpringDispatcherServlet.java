@@ -21,7 +21,6 @@ package com.glaf.base.servlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.web.context.WebApplicationContext;
@@ -31,7 +30,6 @@ import com.glaf.core.util.RequestUtils;
 import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.utils.Authentication;
 import com.glaf.base.utils.RequestUtil;
- 
 
 public class SpringDispatcherServlet extends DispatcherServlet {
 
@@ -67,21 +65,7 @@ public class SpringDispatcherServlet extends DispatcherServlet {
 			if ((user == null) || (!user.isSystemAdmin())) {
 				String uri = request.getRequestURI();
 				logger.debug("request uri:" + uri);
-				if (StringUtils.contains(uri, "/sys/role.do")
-						|| StringUtils.contains(uri, "/sys/department.do")
-						|| StringUtils.contains(uri, "/sys/application.do")
-						|| StringUtils.contains(uri, "/sys/dictory.do")
-						|| StringUtils.contains(uri, "/sys/scheduler.do")
-						|| StringUtils.contains(uri, "/sys/function.do")
-						|| StringUtils.contains(uri, "/sys/todo.do")
-						|| StringUtils.contains(uri, "/sys/user.do")
-						|| StringUtils.contains(uri, "/sys/sysUserRole.do")
-						|| StringUtils.contains(uri, "/sys/deptRole.do")
-						|| StringUtils.contains(uri, "/sys/workCalendar.do")) {
-					response.sendRedirect(request.getContextPath()
-							+ "/unauthorized.jsp");
-					return;
-				}
+
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();

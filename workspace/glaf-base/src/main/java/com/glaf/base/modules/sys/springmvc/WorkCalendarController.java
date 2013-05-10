@@ -38,7 +38,7 @@ import com.glaf.base.modules.sys.model.WorkCalendar;
 import com.glaf.base.modules.sys.service.WorkCalendarService;
 import com.glaf.base.utils.ParamUtil;
 import com.glaf.core.config.ViewProperties;
-import com.glaf.core.util.RequestUtils;
+ 
 
 @Controller("/sys/workCalendar")
 @RequestMapping("/sys/workCalendar.do")
@@ -104,7 +104,6 @@ public class WorkCalendarController {
 	@RequestMapping(params = "method=showCalendar")
 	public ModelAndView showCalendar(HttpServletRequest request,
 			ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
 		Calendar cal = Calendar.getInstance();
 		int month = ParamUtil.getIntParameter(request, "month",
 				cal.get(Calendar.MONTH));
@@ -165,7 +164,6 @@ public class WorkCalendarController {
 	 */
 	@RequestMapping(params = "method=showList")
 	public ModelAndView showList(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
 		Calendar cal = Calendar.getInstance();
 		int year = ParamUtil.getIntParameter(request, "year",
 				cal.get(Calendar.YEAR));

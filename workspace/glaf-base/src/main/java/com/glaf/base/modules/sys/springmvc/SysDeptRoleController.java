@@ -73,7 +73,6 @@ public class SysDeptRoleController {
 	@RequestMapping(params = "method=setPrivilege")
 	public ModelAndView setPrivilege(HttpServletRequest request,
 			ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
 		long roleId = ParamUtil.getLongParameter(request, "roleId", 0);
 		long[] appId = ParamUtil.getLongParameterValues(request, "appId");
 		for (int i = 0; i < appId.length; i++) {
@@ -109,7 +108,6 @@ public class SysDeptRoleController {
 	 */
 	@RequestMapping(params = "method=setRole")
 	public ModelAndView setRole(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
 		ViewMessages messages = new ViewMessages();
 		long deptId = ParamUtil.getIntParameter(request, "deptId", 0);
 		SysDepartment dept = sysDepartmentService.findById(deptId);// 查找部门对象

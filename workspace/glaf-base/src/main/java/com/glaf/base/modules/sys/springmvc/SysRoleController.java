@@ -365,8 +365,6 @@ public class SysRoleController {
 	 */
 	@RequestMapping(params = "method=saveAdd")
 	public ModelAndView saveAdd(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
-
 		boolean ret = false;
 		if (sysRoleService.findByCode(ParamUtil.getParameter(request, "code")) == null) {
 			SysRole bean = new SysRole();
@@ -401,7 +399,6 @@ public class SysRoleController {
 	 */
 	@RequestMapping(params = "method=saveModify")
 	public ModelAndView saveModify(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
 		long id = ParamUtil.getIntParameter(request, "id", 0);
 		SysRole bean = sysRoleService.findById(id);
 		if (bean != null) {

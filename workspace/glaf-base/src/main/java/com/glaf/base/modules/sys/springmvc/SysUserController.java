@@ -646,7 +646,6 @@ public class SysUserController {
 	 */
 	@RequestMapping(params = "method=saveModify")
 	public ModelAndView saveModify(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
 		long id = ParamUtil.getIntParameter(request, "id", 0);
 		SysUser bean = sysUserService.findById(id);
 		boolean ret = false;
@@ -690,7 +689,6 @@ public class SysUserController {
 	@RequestMapping(params = "method=saveModifyInfo")
 	public ModelAndView saveModifyInfo(HttpServletRequest request,
 			ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
 		SysUser bean = RequestUtil.getLoginUser(request);
 		boolean ret = false;
 		if (bean != null) {
@@ -724,7 +722,6 @@ public class SysUserController {
 	 */
 	@RequestMapping(params = "method=savePwd")
 	public ModelAndView savePwd(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
 		SysUser bean = RequestUtil.getLoginUser(request);
 		boolean ret = false;
 		String oldPwd = ParamUtil.getParameter(request, "oldPwd");
@@ -834,7 +831,6 @@ public class SysUserController {
 	 */
 	@RequestMapping(params = "method=setRole")
 	public ModelAndView setRole(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
 		logger.debug(RequestUtils.getParameterMap(request));
 		ViewMessages messages = new ViewMessages();
 		long userId = ParamUtil.getIntParameter(request, "user_id", 0);

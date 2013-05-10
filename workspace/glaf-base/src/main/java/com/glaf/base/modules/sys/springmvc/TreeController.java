@@ -261,7 +261,6 @@ public class TreeController {
 	 */
 	@RequestMapping(params = "method=saveAdd")
 	public ModelAndView saveAdd(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
 		SysTree bean = new SysTree();
 		bean.setParentId(ParamUtil.getIntParameter(request, "parent", 0));
 		bean.setName(ParamUtil.getParameter(request, "name"));
@@ -289,7 +288,6 @@ public class TreeController {
 	 */
 	@RequestMapping(params = "method=saveModify")
 	public ModelAndView saveModify(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
 		long id = ParamUtil.getIntParameter(request, "id", 0);
 		SysTree bean = sysTreeService.findById(id);
 		if (bean != null) {

@@ -58,7 +58,6 @@ public class SysSchedulerController {
 
 	@RequestMapping(params = "method=locked")
 	public ModelAndView locked(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
 		String taskId = request.getParameter("taskId");
 		int locked = 0;
 		Scheduler scheduler = null;
@@ -77,7 +76,6 @@ public class SysSchedulerController {
 	@RequestMapping(params = "method=saveModify")
 	public ModelAndView saveModify(HttpServletRequest request,
 			ModelMap modelMap, SchedulerFormBean schedulerForm) {
-		RequestUtils.setRequestParameterToAttribute(request);
 		Scheduler scheduler = new SchedulerEntity();
 
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
@@ -154,7 +152,6 @@ public class SysSchedulerController {
 
 	@RequestMapping(params = "method=startup")
 	public ModelAndView startup(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
 		String taskId = request.getParameter("taskId");
 		String startup = request.getParameter("startup");
 		Scheduler scheduler = null;

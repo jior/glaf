@@ -136,7 +136,6 @@ public class UserController {
 	 */
 	@RequestMapping(params = "method=saveModify")
 	public ModelAndView saveModify(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
 		long id = ParamUtil.getIntParameter(request, "id", 0);
 		SysUser bean = sysUserService.findById(id);
 		boolean ret = false;
@@ -180,7 +179,6 @@ public class UserController {
 	@RequestMapping(params = "method=saveModifyInfo")
 	public ModelAndView saveModifyInfo(HttpServletRequest request,
 			ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
 		SysUser bean = RequestUtil.getLoginUser(request);
 		boolean ret = false;
 		if (bean != null) {
@@ -214,7 +212,6 @@ public class UserController {
 	 */
 	@RequestMapping(params = "method=savePwd")
 	public ModelAndView savePwd(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
 		SysUser bean = RequestUtil.getLoginUser(request);
 		boolean ret = false;
 		String oldPwd = ParamUtil.getParameter(request, "oldPwd");

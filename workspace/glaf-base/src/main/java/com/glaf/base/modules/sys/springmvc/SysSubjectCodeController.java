@@ -154,7 +154,6 @@ public class SysSubjectCodeController {
 	 */
 	public ModelAndView saveAdd(SubjectCodeFormBean form,
 			HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
 		SubjectCode bean = new SubjectCode();
 		try {
 			PropertyUtils.copyProperties(bean, form);
@@ -184,7 +183,6 @@ public class SysSubjectCodeController {
 	 */
 	public ModelAndView saveModify(SubjectCodeFormBean form,
 			HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
 		long id = ParamUtil.getLongParameter(request, "id", 0);
 		SubjectCode bean = subjectCodeService.findById(id);
 		try {
@@ -235,7 +233,7 @@ public class SysSubjectCodeController {
 	 * 
 	 * @param request
 	 * @param modelMap
-	 * @return 
+	 * @return
 	 */
 	public ModelAndView showSubjectTreeList(HttpServletRequest request,
 			ModelMap modelMap) {

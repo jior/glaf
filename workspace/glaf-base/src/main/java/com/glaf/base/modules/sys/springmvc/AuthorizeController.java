@@ -162,8 +162,7 @@ public class AuthorizeController {
 	 * @return
 	 */
 	@RequestMapping(params = "method=logout")
-	public ModelAndView logout(HttpServletRequest request,
-			HttpServletResponse response, ModelMap modelMap) {
+	public ModelAndView logout(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		// 登出系统，清除session对象
 		request.getSession().removeAttribute(SysConstants.LOGIN);
@@ -217,8 +216,7 @@ public class AuthorizeController {
 	 * @return
 	 */
 	@RequestMapping(params = "method=showMenu")
-	public ModelAndView showMenu(HttpServletRequest request,
-			HttpServletResponse response, ModelMap modelMap) {
+	public ModelAndView showMenu(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		SysUser user = RequestUtil.getLoginUser(request);
 		SysTree parent = sysTreeService.getSysTreeByCode(Constants.TREE_APP);

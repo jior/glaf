@@ -183,7 +183,6 @@ public class SysApplicationResource {
 	@Produces(MediaType.TEXT_PLAIN)
 	public ModelAndView saveAdd(@Context HttpServletRequest request,
 			@Context UriInfo uriInfo) {
-		RequestUtils.setRequestParameterToAttribute(request);
 		SysApplication bean = new SysApplication();
 		bean.setName(ParamUtil.getParameter(request, "name"));
 		bean.setDesc(ParamUtil.getParameter(request, "desc"));
@@ -223,7 +222,6 @@ public class SysApplicationResource {
 	@Produces(MediaType.TEXT_PLAIN)
 	public ModelAndView saveModify(@Context HttpServletRequest request,
 			@Context UriInfo uriInfo) {
-		RequestUtils.setRequestParameterToAttribute(request);
 		long id = ParamUtil.getIntParameter(request, "id", 0);
 		SysApplication bean = sysApplicationService.findById(id);
 		if (bean != null) {
@@ -300,7 +298,7 @@ public class SysApplicationResource {
 				Map<String, Object> params = RequestUtils
 						.getParameterMap(request);
 				Tools.populate(query, params);
-				//query.setParentId(treeModel.getId());
+				// query.setParentId(treeModel.getId());
 				List<SysTree> trees = sysTreeService
 						.getApplicationSysTrees(query);
 				if (trees != null && !trees.isEmpty()) {

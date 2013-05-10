@@ -249,7 +249,6 @@ public class SysApplicationController {
 	 */
 	@RequestMapping(params = "method=saveAdd")
 	public ModelAndView saveAdd(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
 		SysApplication bean = new SysApplication();
 		bean.setName(ParamUtil.getParameter(request, "name"));
 		bean.setDesc(ParamUtil.getParameter(request, "desc"));
@@ -286,7 +285,6 @@ public class SysApplicationController {
 	 */
 	@RequestMapping(params = "method=saveModify")
 	public ModelAndView saveModify(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
 		long id = ParamUtil.getIntParameter(request, "id", 0);
 		SysApplication bean = sysApplicationService.findById(id);
 		if (bean != null) {

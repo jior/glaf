@@ -21,7 +21,6 @@ package com.glaf.base.modules.todo.springmvc;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -50,8 +49,7 @@ public class TodoController {
 	 * @return
 	 */
 	@RequestMapping(params = "method=indexList")
-	public ModelAndView indexList(ModelMap modelMap, HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView indexList(ModelMap modelMap, HttpServletRequest request) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		List<Todo> rows = todoService.getAllTodoList();
 		request.setAttribute("rows", rows);
@@ -64,8 +62,7 @@ public class TodoController {
 	 * @return
 	 */
 	@RequestMapping(params = "method=list")
-	public ModelAndView list(ModelMap modelMap, HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView list(ModelMap modelMap, HttpServletRequest request) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		List<Todo> rows = todoService.getAllTodoList();
 		request.setAttribute("rows", rows);
@@ -83,8 +80,7 @@ public class TodoController {
 	 * @return
 	 */
 	@RequestMapping(params = "method=taskList")
-	public ModelAndView taskList(ModelMap modelMap, HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView taskList(ModelMap modelMap, HttpServletRequest request) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		List<Todo> rows = todoService.getAllTodoList();
 		request.setAttribute("rows", rows);

@@ -21,7 +21,6 @@ package com.glaf.base.modules.todo.springmvc;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -44,25 +43,21 @@ import com.glaf.base.utils.RequestUtil;
 @Controller("/sys/todo")
 @RequestMapping("/sys/todo.do")
 public class SysTodoController {
-	private static final Log logger = LogFactory.getLog(SysTodoController.class);
+	private static final Log logger = LogFactory
+			.getLog(SysTodoController.class);
 
 	@javax.annotation.Resource
 	private TodoService todoService;
 
-	 
-
 	/**
 	 * 显示TODO列表
 	 * 
-	 * @param mapping
-	 * @param actionForm
+	 * @param modelMap
 	 * @param request
-	 * @param response
-	 * @return @
+	 * @return
 	 */
 	@RequestMapping(params = "method=save")
-	public ModelAndView save(ModelMap modelMap, HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView save(ModelMap modelMap, HttpServletRequest request) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		SysUser user = RequestUtil.getLoginUser(request);
 		if (user.isSystemAdmin()) {
@@ -85,7 +80,7 @@ public class SysTodoController {
 			}
 		}
 
-		return this.showList(modelMap, request, response);
+		return this.showList(modelMap, request);
 	}
 
 	public void setTodoService(TodoService todoService) {
@@ -96,15 +91,12 @@ public class SysTodoController {
 	/**
 	 * 显示TODO列表
 	 * 
-	 * @param mapping
-	 * @param actionForm
+	 * @param modelMap
 	 * @param request
-	 * @param response
 	 * @return
 	 */
 	@RequestMapping(params = "method=showList")
-	public ModelAndView showList(ModelMap modelMap, HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView showList(ModelMap modelMap, HttpServletRequest request) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		List<Todo> rows = todoService.getAllTodoList();
 		request.setAttribute("rows", rows);
@@ -114,15 +106,12 @@ public class SysTodoController {
 	/**
 	 * 显示TODO列表
 	 * 
-	 * @param mapping
-	 * @param actionForm
+	 * @param modelMap
 	 * @param request
-	 * @param response
 	 * @return
 	 */
 	@RequestMapping(params = "method=showModify")
-	public ModelAndView showModify(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView showModify(ModelMap modelMap, HttpServletRequest request) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		return new ModelAndView("/modules/sys/todo/show_modify", modelMap);
 	}
@@ -130,15 +119,12 @@ public class SysTodoController {
 	/**
 	 * 上传文件
 	 * 
-	 * @param mapping
-	 * @param form
+	 * @param modelMap
 	 * @param request
-	 * @param response
-	 * @return @
+	 * @return
 	 */
 	@RequestMapping(params = "method=showUpload")
-	public ModelAndView showUpload(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView showUpload(ModelMap modelMap, HttpServletRequest request) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		return new ModelAndView("/modules/sys/todo/show_upload", modelMap);
 	}
@@ -146,16 +132,13 @@ public class SysTodoController {
 	/**
 	 * 上传文件
 	 * 
-	 * @param mapping
-	 * @param form
 	 * @param request
-	 * @param response
-	 * @return @
+	 * @param modelMap
+	 * @return
 	 */
 	@RequestMapping(params = "method=uploadFile")
-	public ModelAndView uploadFile(ModelMap modelMap,
-			@RequestParam("file") MultipartFile file,
-			HttpServletRequest request, HttpServletResponse response)
+	public ModelAndView uploadFile(HttpServletRequest request,
+			ModelMap modelMap, @RequestParam("file") MultipartFile file)
 			throws Exception {
 		TodoXlsReader reader = new TodoXlsReader();
 		List<Todo> todos = reader.readXls(file.getInputStream());
@@ -166,6 +149,6 @@ public class SysTodoController {
 			}
 			todoService.saveAll(todos);
 		}
-		return this.showList(modelMap, request, response);
+		return this.showList(modelMap, request);
 	}
 }

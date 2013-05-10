@@ -346,7 +346,6 @@ public class GroupController {
 	 */
 	@RequestMapping(params = "method=saveAdd")
 	public ModelAndView saveAdd(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
 		boolean ret = false;
 
 		String type = request.getParameter("type");
@@ -409,7 +408,6 @@ public class GroupController {
 	 */
 	@RequestMapping(params = "method=saveModify")
 	public ModelAndView saveModify(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
 		String id = request.getParameter("groupId");
 		Group bean = groupService.getGroup(id);
 		if (bean != null) {

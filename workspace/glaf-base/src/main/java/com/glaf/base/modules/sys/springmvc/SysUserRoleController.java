@@ -133,7 +133,6 @@ public class SysUserRoleController {
 	@RequestMapping(params = "method=saveUserSysAuth")
 	public ModelAndView saveUserSysAuth(HttpServletRequest request,
 			ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
 		long fromUserId = ParamUtil.getLongParameter(request, "uid", 0);
 		long[] userIds = ParamUtil.getLongParameterValues(request, "userIds");
 

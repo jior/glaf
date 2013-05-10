@@ -21,7 +21,6 @@ package com.glaf.base.modules.others.springmvc;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
@@ -48,21 +47,18 @@ import com.glaf.base.utils.RequestUtil;
 public class AuditController {
 	private static final Log logger = LogFactory.getLog(AuditController.class);
 
-	 
 	private AuditService auditService;
 
 	/**
 	 * 显示审批意见页面
 	 * 
 	 * @param mapping
-	 * @param actionForm
 	 * @param request
-	 * @param response
-	 * @return @
+	 * @return
 	 */
 	@RequestMapping(params = "method=prepareComment")
 	public ModelAndView prepareComment(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+			HttpServletRequest request) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		int referType = ParamUtil.getIntParameter(request, "referType", 0);
 		long referId = ParamUtil.getLongParameter(request, "referId", 0);
@@ -82,7 +78,7 @@ public class AuditController {
 		bean.setCreateDate(new Date());
 		auditService.create(bean);
 		request.setAttribute("id", String.valueOf(bean.getId()));
-		
+
 		String x_view = ViewProperties.getString("audit.prepareComment");
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);
@@ -94,8 +90,7 @@ public class AuditController {
 
 	@RequestMapping(params = "method=saveComment")
 	public ModelAndView saveComment(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtils.setRequestParameterToAttribute(request);
+			HttpServletRequest request) {
 		long id = ParamUtil.getLongParameter(request, "id", 0);
 		String memo = ParamUtil.getParameter(request, "memo", "");
 		Audit bean = auditService.findById(id);
@@ -124,14 +119,11 @@ public class AuditController {
 	 * 显示审批意见列表
 	 * 
 	 * @param mapping
-	 * @param actionForm
 	 * @param request
-	 * @param response
-	 * @return @
+	 * @return
 	 */
 	@RequestMapping(params = "method=showList")
-	public ModelAndView showList(ModelMap modelMap, HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView showList(ModelMap modelMap, HttpServletRequest request) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		long referId = ParamUtil.getLongParameter(request, "referId", 0);
 		int referType = ParamUtil.getIntParameter(request, "referType", 0);
@@ -145,7 +137,7 @@ public class AuditController {
 			request.setAttribute("list",
 					auditService.getAuditList(referId, referType));
 		}
-		
+
 		String x_view = ViewProperties.getString("audit.showList");
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);
@@ -159,16 +151,13 @@ public class AuditController {
 	 * 显示审批意见列表
 	 * 
 	 * @param mapping
-	 * @param actionForm
 	 * @param request
-	 * @param response
-	 * @return @
+	 * @return
 	 */
 	@RequestMapping(params = "method=showList2")
-	public ModelAndView showList2(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView showList2(ModelMap modelMap, HttpServletRequest request) {
 		RequestUtils.setRequestParameterToAttribute(request);
-		
+
 		String x_view = ViewProperties.getString("audit.showList2");
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);

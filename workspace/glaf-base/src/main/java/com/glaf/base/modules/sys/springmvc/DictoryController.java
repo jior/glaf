@@ -346,7 +346,6 @@ public class DictoryController {
 	@RequestMapping(params = "method=saveLoadDictory")
 	public ModelAndView saveLoadDictory(HttpServletRequest request,
 			ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
 		BaseDataManager.getInstance().refreshBaseData();
 		ViewMessages messages = new ViewMessages();
 		messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
@@ -371,7 +370,6 @@ public class DictoryController {
 	 */
 	@RequestMapping(params = "method=saveModify")
 	public ModelAndView saveModify(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		long id = ParamUtil.getIntParameter(request, "id", 0);
 		Dictory bean = dictoryService.find(id);

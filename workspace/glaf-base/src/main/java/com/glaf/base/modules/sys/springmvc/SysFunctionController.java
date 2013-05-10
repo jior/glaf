@@ -90,7 +90,6 @@ public class SysFunctionController {
 	 */
 	@RequestMapping(params = "method=saveAdd")
 	public ModelAndView saveAdd(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
 		long parent = (long) ParamUtil.getIntParameter(request, "parent", 0);
 		SysApplication app = sysApplicationService.findById(parent);
 		SysFunction bean = new SysFunction();
@@ -121,7 +120,6 @@ public class SysFunctionController {
 	 */
 	@RequestMapping(params = "method=saveModify")
 	public ModelAndView saveModify(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
 		long id = (long) ParamUtil.getIntParameter(request, "funcId", 0);
 		SysFunction bean = sysFunctionService.findById(id);
 		bean.setName(ParamUtil.getParameter(request, "funcName"));

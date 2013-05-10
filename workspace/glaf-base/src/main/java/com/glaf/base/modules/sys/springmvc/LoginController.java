@@ -66,6 +66,7 @@ public class LoginController {
 
 	/**
 	 * 登录
+	 * 
 	 * @param request
 	 * @param modelMap
 	 * @return
@@ -159,8 +160,7 @@ public class LoginController {
 	 * @return
 	 */
 	@RequestMapping(params = "method=logout")
-	public ModelAndView logout(HttpServletRequest request,
-			HttpServletResponse response, ModelMap modelMap) {
+	public ModelAndView logout(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		// 登出系统，清除session对象
 		request.getSession().removeAttribute(SysConstants.LOGIN);

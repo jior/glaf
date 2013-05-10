@@ -24,7 +24,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
@@ -57,10 +56,8 @@ public class MessageController {
 	private static final Log logger = LogFactory
 			.getLog(MessageController.class);
 
-	
 	private MessageService messageService;
 
- 
 	private SysUserService sysUserService;
 
 	/**
@@ -74,8 +71,7 @@ public class MessageController {
 	 */
 	@RequestMapping(params = "method=batchDelete")
 	public ModelAndView batchDelete(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtils.setRequestParameterToAttribute(request);
+			HttpServletRequest request) {
 		SysUser user = RequestUtil.getLoginUser(request);
 
 		boolean ret = true;
@@ -120,8 +116,7 @@ public class MessageController {
 	 * @return
 	 */
 	@RequestMapping(params = "method=indexList")
-	public ModelAndView indexList(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView indexList(ModelMap modelMap, HttpServletRequest request) {
 		SysUser user = com.glaf.base.utils.RequestUtil.getLoginUser(request);
 
 		int msgPageSize = 5;
@@ -130,7 +125,7 @@ public class MessageController {
 						msgPageSize);
 		List<?> messageList = messagePager.getResults();
 		request.setAttribute("messageList", messageList);
-		
+
 		String x_view = ViewProperties.getString("message.indexList");
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);
@@ -152,12 +147,12 @@ public class MessageController {
 	 */
 	@RequestMapping(params = "method=prepareSend")
 	public ModelAndView prepareSend(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+			HttpServletRequest request) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		long id = ParamUtil.getLongParameter(request, "id", 0);
 		Message bean = messageService.find(id);
 		request.setAttribute("bean", bean);
-		
+
 		String x_view = ViewProperties.getString("message.prepareSend");
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);
@@ -178,8 +173,7 @@ public class MessageController {
 	 */
 	@RequestMapping(params = "method=saveBoth")
 	public ModelAndView saveBoth(ModelMap modelMap, MessageFormBean form,
-			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtils.setRequestParameterToAttribute(request);
+			HttpServletRequest request) {
 		SysUser user = RequestUtil.getLoginUser(request);
 
 		String recverIds = ParamUtil.getParameter(request, "recverIds");
@@ -283,7 +277,7 @@ public class MessageController {
 
 	@RequestMapping(params = "method=saveEmail")
 	public ModelAndView saveEmail(ModelMap modelMap, MessageFormBean form,
-			HttpServletRequest request, HttpServletResponse response) {
+			HttpServletRequest request) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		SysUser user = RequestUtil.getLoginUser(request);
 
@@ -365,8 +359,7 @@ public class MessageController {
 	 */
 	@RequestMapping(params = "method=saveSend")
 	public ModelAndView saveSend(ModelMap modelMap, MessageFormBean form,
-			HttpServletRequest request, HttpServletResponse response) {
-		RequestUtils.setRequestParameterToAttribute(request);
+			HttpServletRequest request) {
 		SysUser user = RequestUtil.getLoginUser(request);
 		int sysType = ParamUtil.getIntParameter(request, "sysType", 1);// 0：为系统警告
 																		// 1：为系统消息
@@ -457,14 +450,13 @@ public class MessageController {
 	 */
 	@RequestMapping(params = "method=showMessage")
 	public ModelAndView showMessage(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+			HttpServletRequest request) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		long id = ParamUtil.getLongParameter(request, "id", 0);
 
 		Message bean = messageService.updateReadMessage(id);
 		request.setAttribute("bean", bean);
-		
-		
+
 		String x_view = ViewProperties.getString("message.showMessage");
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);
@@ -486,7 +478,7 @@ public class MessageController {
 	 */
 	@RequestMapping(params = "method=showReceiveList")
 	public ModelAndView showReceiveList(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+			HttpServletRequest request) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		String flag = ParamUtil.getParameter(request, "flag", null);
 
@@ -501,7 +493,7 @@ public class MessageController {
 				WebUtil.getQueryMap(request), pageNo, pageSize);
 		request.setAttribute("pager", pager);
 		request.setAttribute("flag", flag);
-		
+
 		String x_view = ViewProperties.getString("message.showReceiveList");
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);
@@ -523,7 +515,7 @@ public class MessageController {
 	 */
 	@RequestMapping(params = "method=showSendedList")
 	public ModelAndView showSendedList(ModelMap modelMap,
-			HttpServletRequest request, HttpServletResponse response) {
+			HttpServletRequest request) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		String flag = ParamUtil.getParameter(request, "flag", null);
 
@@ -538,7 +530,7 @@ public class MessageController {
 				WebUtil.getQueryMap(request), pageNo, pageSize);
 		request.setAttribute("pager", pager);
 		request.setAttribute("flag", flag);
-		
+
 		String x_view = ViewProperties.getString("message.showSendedList");
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);

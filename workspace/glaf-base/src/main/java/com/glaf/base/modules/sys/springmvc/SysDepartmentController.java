@@ -324,7 +324,6 @@ public class SysDepartmentController {
 	 */
 	@RequestMapping(params = "method=saveAdd")
 	public ModelAndView saveAdd(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
 		// 增加部门时，同时要增加对应节点
 		SysDepartment bean = new SysDepartment();
 		bean.setName(ParamUtil.getParameter(request, "name"));
