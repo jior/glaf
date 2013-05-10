@@ -66,14 +66,18 @@ public class TreeRepositoryBuilder {
 			}
 			TreeComponent component = new TreeComponent();
 			component.setId(String.valueOf(treeModel.getId()));
+			component.setCode(String.valueOf(treeModel.getId()));
+			component.setTitle(treeModel.getName());
+			component.setChecked(treeModel.isChecked());
+			component.setTreeObject(treeModel);
+			component.setImage(treeModel.getIcon());
+			component.setId(String.valueOf(treeModel.getId()));
 			component.setCode(treeModel.getCode());
 			component.setTreeModel(treeModel);
-			component.setTitle(treeModel.getName());
 			component.setDescription(treeModel.getDescription());
 			component.setLocation(treeModel.getUrl());
 			component.setUrl(treeModel.getUrl());
 			component.setTreeId(treeModel.getTreeId());
-			component.setChecked(treeModel.isChecked());
 			component.setCls(treeModel.getIconCls());
 			repository.addTree(component);
 
@@ -87,6 +91,7 @@ public class TreeRepositoryBuilder {
 					parentTree.setId(String.valueOf(parent.getId()));
 					parentTree.setCode(parent.getCode());
 					parentTree.setTitle(parent.getName());
+					parentTree.setChecked(parent.isChecked());
 					parentTree.setTreeModel(parent);
 					repository.addTree(parentTree);
 				}

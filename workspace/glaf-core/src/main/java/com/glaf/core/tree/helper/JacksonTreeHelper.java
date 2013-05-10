@@ -95,6 +95,9 @@ public class JacksonTreeHelper {
 				row.put("text", tree.getName());
 				row.put("checked", tree.isChecked());
 				row.put("level", tree.getLevel());
+				row.put("icon", tree.getIcon());
+				row.put("img", tree.getIcon());
+				row.put("image", tree.getIcon());
 			}
 		}
 	}
@@ -119,6 +122,15 @@ public class JacksonTreeHelper {
 			component.setTitle(treeModel.getName());
 			component.setChecked(treeModel.isChecked());
 			component.setTreeObject(treeModel);
+			component.setImage(treeModel.getIcon());
+			component.setId(String.valueOf(treeModel.getId()));
+			component.setCode(treeModel.getCode());
+			component.setTreeModel(treeModel);
+			component.setDescription(treeModel.getDescription());
+			component.setLocation(treeModel.getUrl());
+			component.setUrl(treeModel.getUrl());
+			component.setTreeId(treeModel.getTreeId());
+			component.setCls(treeModel.getIconCls());
 			repository.addTree(component);
 
 			long parentId = treeModel.getParentId();
@@ -158,6 +170,10 @@ public class JacksonTreeHelper {
 				child.put("name", component.getTitle());
 				child.put("text", component.getTitle());
 				child.put("checked", component.isChecked());
+				child.put("icon", component.getImage());
+				child.put("img", component.getImage());
+				child.put("image", component.getImage());
+
 				if (node != null) {
 
 				}
@@ -196,6 +212,9 @@ public class JacksonTreeHelper {
 				child.put("text", component.getTitle());
 				child.put("name", component.getTitle());
 				child.put("checked", component.isChecked());
+				child.put("icon", component.getImage());
+				child.put("img", component.getImage());
+				child.put("image", component.getImage());
 
 				if (component.getComponents() != null
 						&& component.getComponents().size() > 0) {
@@ -241,6 +260,10 @@ public class JacksonTreeHelper {
 			object.put("leaf", Boolean.valueOf(false));
 			object.put("isParent", true);
 			object.put("checked", root.isChecked());
+			object.put("icon", root.getIcon());
+			object.put("img", root.getIcon());
+			object.put("image", root.getIcon());
+
 			if (checkedNodes.contains(String.valueOf(root.getId()))) {
 				object.put("checked", Boolean.valueOf(true));
 			} else {
@@ -255,62 +278,74 @@ public class JacksonTreeHelper {
 				List<?> topTrees = repository.getTopTrees();
 				if (topTrees != null && topTrees.size() > 0) {
 					if (topTrees.size() == 1) {
-						TreeComponent menu = (TreeComponent) topTrees.get(0);
-						if (StringUtils.equals(menu.getId(),
+						TreeComponent component = (TreeComponent) topTrees
+								.get(0);
+						if (StringUtils.equals(component.getId(),
 								String.valueOf(root.getId()))) {
-							this.buildTree(object, menu, checkedNodes, nodeMap);
+							this.buildTree(object, component, checkedNodes,
+									nodeMap);
 						} else {
-							ObjectNode row = new ObjectMapper()
+							ObjectNode child = new ObjectMapper()
 									.createObjectNode();
-							this.addDataMap(menu, row);
-							row.put("id", menu.getId());
-							row.put("code", menu.getCode());
-							row.put("name", menu.getTitle());
-							row.put("text", menu.getTitle());
-							row.put("leaf", Boolean.valueOf(false));
-							row.put("isParent", true);
-							row.put("checked", menu.isChecked());
-							if (checkedNodes.contains(menu.getId())) {
-								row.put("checked", Boolean.valueOf(true));
+							this.addDataMap(component, child);
+							child.put("id", component.getId());
+							child.put("code", component.getCode());
+							child.put("name", component.getTitle());
+							child.put("text", component.getTitle());
+							child.put("leaf", Boolean.valueOf(false));
+							child.put("isParent", true);
+							child.put("checked", component.isChecked());
+							child.put("icon", component.getImage());
+							child.put("img", component.getImage());
+							child.put("image", component.getImage());
+
+							if (checkedNodes.contains(component.getId())) {
+								child.put("checked", Boolean.valueOf(true));
 							} else {
-								row.put("checked", Boolean.valueOf(false));
+								child.put("checked", Boolean.valueOf(false));
 							}
-							array.add(row);
+							array.add(child);
 							object.put("children", array);
-							this.buildTree(row, menu, checkedNodes, nodeMap);
+							this.buildTree(child, component, checkedNodes,
+									nodeMap);
 						}
 					} else {
 						for (int i = 0; i < topTrees.size(); i++) {
-							TreeComponent menu = (TreeComponent) topTrees
+							TreeComponent component = (TreeComponent) topTrees
 									.get(i);
-							TreeModel node = (TreeModel) nodeMap.get(menu
+							TreeModel node = (TreeModel) nodeMap.get(component
 									.getId());
-							ObjectNode row = new ObjectMapper()
+							ObjectNode child = new ObjectMapper()
 									.createObjectNode();
-							this.addDataMap(menu, row);
-							row.put("id", menu.getId());
-							row.put("code", menu.getCode());
-							row.put("name", menu.getTitle());
-							row.put("text", menu.getTitle());
-							row.put("checked", menu.isChecked());
+							this.addDataMap(component, child);
+							child.put("id", component.getId());
+							child.put("code", component.getCode());
+							child.put("name", component.getTitle());
+							child.put("text", component.getTitle());
+							child.put("checked", component.isChecked());
+							child.put("icon", component.getImage());
+							child.put("img", component.getImage());
+							child.put("image", component.getImage());
+
 							if (node != null) {
 
 							}
-							if (checkedNodes.contains(menu.getId())) {
-								row.put("checked", Boolean.valueOf(true));
+							if (checkedNodes.contains(component.getId())) {
+								child.put("checked", Boolean.valueOf(true));
 							} else {
-								row.put("checked", Boolean.valueOf(false));
+								child.put("checked", Boolean.valueOf(false));
 							}
-							if (menu.getComponents() != null
-									&& menu.getComponents().size() > 0) {
-								row.put("leaf", Boolean.valueOf(false));
-								row.put("isParent", true);
+							if (component.getComponents() != null
+									&& component.getComponents().size() > 0) {
+								child.put("leaf", Boolean.valueOf(false));
+								child.put("isParent", true);
 							} else {
-								row.put("leaf", Boolean.valueOf(true));
-								row.put("isParent", false);
+								child.put("leaf", Boolean.valueOf(true));
+								child.put("isParent", false);
 							}
-							array.add(row);
-							this.buildTree(row, menu, checkedNodes, nodeMap);
+							array.add(child);
+							this.buildTree(child, component, checkedNodes,
+									nodeMap);
 						}
 						object.put("children", array);
 					}
@@ -335,28 +370,31 @@ public class JacksonTreeHelper {
 			if (topTrees != null && topTrees.size() > 0) {
 				for (int i = 0; i < topTrees.size(); i++) {
 					TreeComponent component = (TreeComponent) topTrees.get(i);
-					ObjectNode row = new ObjectMapper().createObjectNode();
-					this.addDataMap(component, row);
+					ObjectNode child = new ObjectMapper().createObjectNode();
+					this.addDataMap(component, child);
 
-					row.put("id", component.getId());
-					row.put("code", component.getCode());
-					row.put("text", component.getTitle());
-					row.put("name", component.getTitle());
-					row.put("checked", component.isChecked());
+					child.put("id", component.getId());
+					child.put("code", component.getCode());
+					child.put("text", component.getTitle());
+					child.put("name", component.getTitle());
+					child.put("checked", component.isChecked());
+					child.put("icon", component.getImage());
+					child.put("img", component.getImage());
+					child.put("image", component.getImage());
 
 					if (component.getComponents() != null
 							&& component.getComponents().size() > 0) {
-						row.put("leaf", Boolean.valueOf(false));
-						row.put("cls", "folder");
-						row.put("isParent", true);
-						row.put("classes", "folder");
-						result.add(row);
-						this.buildTreeModel(row, component);
+						child.put("leaf", Boolean.valueOf(false));
+						child.put("cls", "folder");
+						child.put("isParent", true);
+						child.put("classes", "folder");
+						result.add(child);
+						this.buildTreeModel(child, component);
 					} else {
-						row.put("leaf", Boolean.valueOf(true));
-						row.put("isParent", false);
+						child.put("leaf", Boolean.valueOf(true));
+						child.put("isParent", false);
 						if (showParentIfNotChildren) {
-							result.add(row);
+							result.add(child);
 						}
 					}
 				}
@@ -392,6 +430,9 @@ public class JacksonTreeHelper {
 			object.put("cls", "folder");
 			object.put("isParent", true);
 			object.put("checked", root.isChecked());
+			object.put("icon", root.getIcon());
+			object.put("img", root.getIcon());
+			object.put("image", root.getIcon());
 		}
 
 		if (treeModels != null && treeModels.size() > 0) {
@@ -424,26 +465,30 @@ public class JacksonTreeHelper {
 						for (int i = 0; i < topTrees.size(); i++) {
 							TreeComponent component = (TreeComponent) topTrees
 									.get(i);
-							ObjectNode row = new ObjectMapper()
+							ObjectNode child = new ObjectMapper()
 									.createObjectNode();
-							this.addDataMap(component, row);
-							row.put("id", component.getId());
-							row.put("code", component.getCode());
-							row.put("name", component.getTitle());
-							row.put("text", component.getTitle());
-							row.put("checked", component.isChecked());
+							this.addDataMap(component, child);
+							child.put("id", component.getId());
+							child.put("code", component.getCode());
+							child.put("name", component.getTitle());
+							child.put("text", component.getTitle());
+							child.put("checked", component.isChecked());
+							child.put("icon", component.getImage());
+							child.put("img", component.getImage());
+							child.put("image", component.getImage());
+
 							if (component.getComponents() != null
 									&& component.getComponents().size() > 0) {
-								row.put("leaf", Boolean.valueOf(false));
-								row.put("cls", "folder");
-								row.put("isParent", true);
-								array.add(row);
-								this.buildTreeModel(row, component);
+								child.put("leaf", Boolean.valueOf(false));
+								child.put("cls", "folder");
+								child.put("isParent", true);
+								array.add(child);
+								this.buildTreeModel(child, component);
 							} else {
 								if (showParentIfNotChildren) {
-									row.put("leaf", Boolean.valueOf(true));
-									row.put("isParent", false);
-									array.add(row);
+									child.put("leaf", Boolean.valueOf(true));
+									child.put("isParent", false);
+									array.add(child);
 								}
 							}
 						}

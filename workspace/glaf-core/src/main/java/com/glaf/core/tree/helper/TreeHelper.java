@@ -49,6 +49,26 @@ public class TreeHelper {
 
 	}
 
+	public void addDataMap(TreeComponent component, JSONObject row) {
+		if (component.getTreeModel() != null
+				&& component.getTreeModel().getDataMap() != null) {
+			Map<String, Object> dataMap = component.getTreeModel().getDataMap();
+			Set<Entry<String, Object>> entrySet = dataMap.entrySet();
+			for (Entry<String, Object> entry : entrySet) {
+				String name = entry.getKey();
+				Object value = entry.getValue();
+				if (value != null) {
+					if (value instanceof Date) {
+						Date d = (Date) value;
+						row.put(name, DateUtils.getDate(d));
+					} else {
+						row.put(name, value);
+					}
+				}
+			}
+		}
+	}
+
 	public void buildTree(JSONObject row, TreeComponent menu,
 			Collection<String> checkedNodes, Map<String, TreeModel> nodeMap) {
 		if (menu.getComponents() != null && menu.getComponents().size() > 0) {
@@ -62,6 +82,9 @@ public class TreeHelper {
 				child.put("id", component.getId());
 				child.put("code", component.getCode());
 				child.put("text", component.getTitle());
+				child.put("icon", component.getImage());
+				child.put("img", component.getImage());
+				child.put("image", component.getImage());
 				if (component.isChecked()) {
 					child.put("checked", true);
 				}
@@ -104,6 +127,9 @@ public class TreeHelper {
 				child.put("code", component.getCode());
 				child.put("text", component.getTitle());
 				child.put("name", component.getTitle());
+				child.put("icon", component.getImage());
+				child.put("img", component.getImage());
+				child.put("image", component.getImage());
 				if (component.isChecked()) {
 					child.put("checked", true);
 				}
@@ -149,6 +175,10 @@ public class TreeHelper {
 		object.put("code", root.getCode());
 		object.put("text", root.getName());
 		object.put("leaf", Boolean.valueOf(false));
+		object.put("icon", root.getIcon());
+		object.put("img", root.getIcon());
+		object.put("image", root.getIcon());
+
 		if (checkedNodes.contains(String.valueOf(root.getId()))) {
 			object.put("checked", Boolean.valueOf(true));
 		} else {
@@ -163,62 +193,74 @@ public class TreeHelper {
 				List<?> topTrees = menuRepository.getTopTrees();
 				if (topTrees != null && topTrees.size() > 0) {
 					if (topTrees.size() == 1) {
-						TreeComponent menu = (TreeComponent) topTrees.get(0);
-						if (StringUtils.equals(menu.getId(),
+						TreeComponent component = (TreeComponent) topTrees
+								.get(0);
+						if (StringUtils.equals(component.getId(),
 								String.valueOf(root.getId()))) {
-							this.buildTree(object, menu, checkedNodes, nodeMap);
+							this.buildTree(object, component, checkedNodes,
+									nodeMap);
 						} else {
-							JSONObject row = new JSONObject();
-							this.addDataMap(menu, row);
-							row.put("id", menu.getId());
-							row.put("code", menu.getCode());
-							row.put("text", menu.getTitle());
-							row.put("leaf", Boolean.valueOf(false));
-							if (checkedNodes.contains(menu.getId())) {
-								row.put("checked", Boolean.valueOf(true));
+							JSONObject child = new JSONObject();
+							this.addDataMap(component, child);
+							child.put("id", component.getId());
+							child.put("code", component.getCode());
+							child.put("text", component.getTitle());
+							child.put("leaf", Boolean.valueOf(false));
+							child.put("icon", component.getImage());
+							child.put("img", component.getImage());
+							child.put("image", component.getImage());
+
+							if (checkedNodes.contains(component.getId())) {
+								child.put("checked", Boolean.valueOf(true));
 							} else {
-								row.put("checked", Boolean.valueOf(false));
+								child.put("checked", Boolean.valueOf(false));
 							}
-							if (menu.getCls() != null) {
-								row.put("cls", menu.getCls());
-								row.put("iconCls", menu.getCls());
+							if (component.getCls() != null) {
+								child.put("cls", component.getCls());
+								child.put("iconCls", component.getCls());
 							}
 
-							array.add(row);
+							array.add(child);
 							object.put("children", array);
-							this.buildTree(row, menu, checkedNodes, nodeMap);
+							this.buildTree(child, component, checkedNodes,
+									nodeMap);
 						}
 					} else {
 						for (int i = 0; i < topTrees.size(); i++) {
-							TreeComponent menu = (TreeComponent) topTrees
+							TreeComponent component = (TreeComponent) topTrees
 									.get(i);
-							TreeModel node = (TreeModel) nodeMap.get(menu
+							TreeModel node = (TreeModel) nodeMap.get(component
 									.getId());
-							JSONObject row = new JSONObject();
-							this.addDataMap(menu, row);
-							row.put("id", menu.getId());
-							row.put("code", menu.getCode());
-							row.put("text", menu.getTitle());
-							if (menu.getCls() != null) {
-								row.put("cls", menu.getCls());
-								row.put("iconCls", menu.getCls());
+							JSONObject child = new JSONObject();
+							this.addDataMap(component, child);
+							child.put("id", component.getId());
+							child.put("code", component.getCode());
+							child.put("text", component.getTitle());
+							child.put("icon", component.getImage());
+							child.put("img", component.getImage());
+							child.put("image", component.getImage());
+
+							if (component.getCls() != null) {
+								child.put("cls", component.getCls());
+								child.put("iconCls", component.getCls());
 							}
 							if (node != null) {
 
 							}
-							if (checkedNodes.contains(menu.getId())) {
-								row.put("checked", Boolean.valueOf(true));
+							if (checkedNodes.contains(component.getId())) {
+								child.put("checked", Boolean.valueOf(true));
 							} else {
-								row.put("checked", Boolean.valueOf(false));
+								child.put("checked", Boolean.valueOf(false));
 							}
-							if (menu.getComponents() != null
-									&& menu.getComponents().size() > 0) {
-								row.put("leaf", Boolean.valueOf(false));
+							if (component.getComponents() != null
+									&& component.getComponents().size() > 0) {
+								child.put("leaf", Boolean.valueOf(false));
 							} else {
-								row.put("leaf", Boolean.valueOf(true));
+								child.put("leaf", Boolean.valueOf(true));
 							}
-							array.add(row);
-							this.buildTree(row, menu, checkedNodes, nodeMap);
+							array.add(child);
+							this.buildTree(child, component, checkedNodes,
+									nodeMap);
 						}
 						object.put("children", array);
 					}
@@ -266,6 +308,10 @@ public class TreeHelper {
 							object.put("text", component.getTitle());
 							object.put("leaf", Boolean.valueOf(false));
 							object.put("cls", "folder");
+							object.put("icon", component.getImage());
+							object.put("img", component.getImage());
+							object.put("image", component.getImage());
+
 							if (component.isChecked()) {
 								object.put("checked", true);
 							}
@@ -279,27 +325,31 @@ public class TreeHelper {
 						for (int i = 0; i < topTrees.size(); i++) {
 							TreeComponent component = (TreeComponent) topTrees
 									.get(i);
-							JSONObject row = new JSONObject();
-							this.addDataMap(component, row);
-							row.put("id", component.getId());
-							row.put("code", component.getCode());
-							row.put("text", component.getTitle());
+							JSONObject child = new JSONObject();
+							this.addDataMap(component, child);
+							child.put("id", component.getId());
+							child.put("code", component.getCode());
+							child.put("text", component.getTitle());
+							child.put("icon", component.getImage());
+							child.put("img", component.getImage());
+							child.put("image", component.getImage());
+
 							if (component.isChecked()) {
-								row.put("checked", true);
+								child.put("checked", true);
 							}
 							if (component.getComponents() != null
 									&& component.getComponents().size() > 0) {
-								row.put("leaf", Boolean.valueOf(false));
+								child.put("leaf", Boolean.valueOf(false));
 								object.put("cls", "folder");
-								this.buildTreeModel(row, component);
+								this.buildTreeModel(child, component);
 							} else {
-								row.put("leaf", Boolean.valueOf(true));
+								child.put("leaf", Boolean.valueOf(true));
 							}
 							if (component.getCls() != null) {
-								row.put("cls", component.getCls());
-								row.put("iconCls", component.getCls());
+								child.put("cls", component.getCls());
+								child.put("iconCls", component.getCls());
 							}
-							array.add(row);
+							array.add(child);
 						}
 						object.put("children", array);
 					}
@@ -308,26 +358,6 @@ public class TreeHelper {
 		}
 
 		return object;
-	}
-
-	public void addDataMap(TreeComponent component, JSONObject row) {
-		if (component.getTreeModel() != null
-				&& component.getTreeModel().getDataMap() != null) {
-			Map<String, Object> dataMap = component.getTreeModel().getDataMap();
-			Set<Entry<String, Object>> entrySet = dataMap.entrySet();
-			for (Entry<String, Object> entry : entrySet) {
-				String name = entry.getKey();
-				Object value = entry.getValue();
-				if (value != null) {
-					if (value instanceof Date) {
-						Date d = (Date) value;
-						row.put(name, DateUtils.getDate(d));
-					} else {
-						row.put(name, value);
-					}
-				}
-			}
-		}
 	}
 
 	public JSONArray getTreeJSONArray(List<TreeModel> treeModels) {
@@ -341,32 +371,36 @@ public class TreeHelper {
 					for (int i = 0; i < topTrees.size(); i++) {
 						TreeComponent component = (TreeComponent) topTrees
 								.get(i);
-						JSONObject row = new JSONObject();
-						this.addDataMap(component, row);
+						JSONObject child = new JSONObject();
+						this.addDataMap(component, child);
 
-						row.put("id", component.getId());
-						row.put("code", component.getCode());
-						row.put("text", component.getTitle());
-						row.put("name", component.getTitle());
+						child.put("id", component.getId());
+						child.put("code", component.getCode());
+						child.put("text", component.getTitle());
+						child.put("name", component.getTitle());
+						child.put("icon", component.getImage());
+						child.put("img", component.getImage());
+						child.put("image", component.getImage());
+
 						if (component.isChecked()) {
-							row.put("checked", true);
+							child.put("checked", true);
 						}
 						// row.put("uiProvider", "col");
 
 						if (component.getComponents() != null
 								&& component.getComponents().size() > 0) {
-							row.put("leaf", Boolean.valueOf(false));
-							row.put("cls", "folder");
-							row.put("classes", "folder");
-							this.buildTreeModel(row, component);
+							child.put("leaf", Boolean.valueOf(false));
+							child.put("cls", "folder");
+							child.put("classes", "folder");
+							this.buildTreeModel(child, component);
 						} else {
-							row.put("leaf", Boolean.valueOf(true));
+							child.put("leaf", Boolean.valueOf(true));
 						}
 						if (component.getCls() != null) {
-							row.put("cls", component.getCls());
-							row.put("iconCls", component.getCls());
+							child.put("cls", component.getCls());
+							child.put("iconCls", component.getCls());
 						}
-						result.add(row);
+						result.add(child);
 					}
 				}
 			}
