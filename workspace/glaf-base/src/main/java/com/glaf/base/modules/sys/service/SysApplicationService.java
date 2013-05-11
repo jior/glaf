@@ -110,7 +110,7 @@ public interface SysApplicationService {
 	 *            int
 	 * @return List
 	 */
-	List<SysApplication> getApplicationList(int parent);
+	List<SysApplication> getApplicationList(long parent);
 
 	/**
 	 * 获取分页列表
@@ -123,7 +123,7 @@ public interface SysApplicationService {
 	 *            int
 	 * @return
 	 */
-	PageResult getApplicationList(int parent, int pageNo, int pageSize);
+	PageResult getApplicationList(long parent, int pageNo, int pageSize);
 
 	/**
 	 * 获取菜单

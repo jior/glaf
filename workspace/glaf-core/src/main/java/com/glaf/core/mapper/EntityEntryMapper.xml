@@ -54,7 +54,8 @@
 		,CREATEBY_
 		)
 		values (
-		#{id, jdbcType=VARCHAR}
+		#{id,
+		jdbcType=VARCHAR}
 		,#{nodeId, jdbcType=BIGINT}
 		,#{entityId,
 		jdbcType=VARCHAR}
@@ -73,7 +74,7 @@
 		,#{createDate, jdbcType=TIMESTAMP}
 		,#{createBy, jdbcType=VARCHAR}
 		)
-    </insert>
+	</insert>
 
 	<insert id="insertEntryPoint" parameterType="com.glaf.core.domain.EntryPoint">
 		insert into
@@ -87,17 +88,19 @@
 		)
 		values (
 		#{id, jdbcType=VARCHAR}
-		,#{nodeId, jdbcType=BIGINT}
+		,#{nodeId,
+		jdbcType=BIGINT}
 		,#{entityId,
 		jdbcType=VARCHAR}
-		,#{entryKey, jdbcType=VARCHAR}
+		,#{entryKey,
+		jdbcType=VARCHAR}
 		,#{name,
 		jdbcType=VARCHAR}
 		,#{value, jdbcType=VARCHAR}
 		,#{entityEntryId,
 		jdbcType=VARCHAR}
 		)
-    </insert>
+	</insert>
 
 
 	<delete id="deleteEntityEntryById" parameterType="string">
@@ -108,10 +111,11 @@
 
 
 	<delete id="deleteEntryPoint" parameterType="string">
-		delete from SYS_ENTRYPOINT
+		delete from
+		SYS_ENTRYPOINT
 		where ENTITYENTRY_ = #{entityEntryId}
 	</delete>
-	
+
 
 	<select id="getEntityEntryById" parameterType="string"
 		resultMap="entityEntryResultMap">
@@ -125,7 +129,7 @@
 		<include refid="selectEntityEntrysSql" />
 		<if test="orderBy != null">
 			order by ${orderBy}
-        </if>
+		</if>
 	</select>
 
 	<select id="getEntityEntryCount" parameterType="com.glaf.core.query.EntityEntryQuery"
@@ -143,43 +147,43 @@
 
 			<if test="nodeId != null">
 				and E.NODEID_ = #{nodeId}
-            </if>
+			</if>
 
 			<if test="nodeIds != null and nodeIds.size() &gt; 0">
 				and E.NODEID_ IN
 				<foreach item="x_nodeId" index="index" collection="nodeIds"
 					open="(" separator="," close=")">
 					#{x_nodeId}
-                </foreach>
+				</foreach>
 			</if>
 
 			<if test="entityId != null">
 				and E.ENTITYID_ = #{entityId}
-            </if>
+			</if>
 
 			<if test="entityIds != null and entityIds.size() &gt; 0">
 				and E.ENTITYID_ IN
 				<foreach item="x_entityId" index="index" collection="entityIds"
 					open="(" separator="," close=")">
 					#{x_entityId}
-                </foreach>
+				</foreach>
 			</if>
 
 			<if test="entryKey != null">
 				and E.ENTRYKEY_ = #{entryKey}
-            </if>
+			</if>
 
 			<if test="entryKeys != null and entryKeys.size() &gt; 0">
 				and E.ENTRYKEY_ IN
 				<foreach item="x_entryKey" index="index" collection="entryKeys"
 					open="(" separator="," close=")">
 					#{x_entryKey}
-                </foreach>
+				</foreach>
 			</if>
 
 			<if test="entryType != null">
 				and E.ENTRYTYPE_ = #{entryType}
-            </if>
+			</if>
 
 			<if test="entryTypeGreaterThanOrEqual != null">
 				and E.ENTRYTYPE_ &gt;= #{entryTypeGreaterThanOrEqual}
@@ -187,38 +191,38 @@
 
 			<if test="entryTypeLessThanOrEqual != null">
 				and E.ENTRYTYPE_ &lt;= #{entryTypeLessThanOrEqual}
-            </if>
+			</if>
 
 			<if test="entryTypes != null and entryTypes.size() &gt; 0">
 				and E.ENTRYTYPE_ IN
 				<foreach item="x_entryType" index="index" collection="entryTypes"
 					open="(" separator="," close=")">
 					#{x_entryType}
-                </foreach>
+				</foreach>
 			</if>
 
 			<if test="moduleId != null">
 				and E.MODULEID_ = #{moduleId}
-            </if>
+			</if>
 
 			<if test="moduleIds != null and moduleIds.size() &gt; 0">
 				and E.MODULEID_ IN
 				<foreach item="x_moduleId" index="index" collection="moduleIds"
 					open="(" separator="," close=")">
 					#{x_moduleId}
-                </foreach>
+				</foreach>
 			</if>
 
 			<if test="dataCode != null">
 				and E.DATACODE_ = #{dataCode}
-            </if>
+			</if>
 
 			<if test="dataCodes != null and dataCodes.size() &gt; 0">
 				and E.DATACODE_ IN
 				<foreach item="x_dataCode" index="index" collection="dataCodes"
 					open="(" separator="," close=")">
 					#{x_dataCode}
-                </foreach>
+				</foreach>
 			</if>
 
 			<if test="startDateGreaterThanOrEqual != null">
@@ -227,50 +231,50 @@
 
 			<if test="startDateLessThanOrEqual != null">
 				and E.STARTDATE_ &lt;= #{startDateLessThanOrEqual}
-            </if>
+			</if>
 
 			<if test="endDateGreaterThanOrEqual != null">
 				and E.ENDDATE_ &gt;= #{endDateGreaterThanOrEqual}
-            </if>
+			</if>
 
 			<if test="endDateLessThanOrEqual != null">
 				and E.ENDDATE_ &lt;= #{endDateLessThanOrEqual}
-            </if>
+			</if>
 
 			<if test="objectId != null">
 				and E.OBJECTID_ = #{objectId}
-            </if>
+			</if>
 
 			<if test="objectIds != null and objectIds.size() &gt; 0">
 				and E.OBJECTID_ IN
 				<foreach item="x_objectId" index="index" collection="objectIds"
 					open="(" separator="," close=")">
 					#{x_objectId}
-                </foreach>
+				</foreach>
 			</if>
 
 			<if test="objectValue != null">
 				and E.OBJECTVALUE_ = #{objectValue}
-            </if>
+			</if>
 
 			<if test="objectValues != null and objectValues.size() &gt; 0">
 				and E.OBJECTVALUE_ IN
 				<foreach item="x_objectValue" index="index" collection="objectValues"
 					open="(" separator="," close=")">
 					#{x_objectValue}
-                </foreach>
+				</foreach>
 			</if>
 
 			<if test="createBy != null">
 				and E.CREATEBY_ = #{createBy}
-            </if>
+			</if>
 
 		</where>
 	</sql>
 
 	<select id="getEntryPoints" parameterType="com.glaf.core.query.EntryPointQuery"
 		resultMap="entryPointResultMap">
-		select E.*
+		select P.*
 		<include refid="selectEntryPointsSql" />
 	</select>
 
@@ -282,69 +286,83 @@
 
 	<sql id="selectEntryPointsSql">
 
-		from SYS_ENTRYPOINT E
+		from SYS_ENTRYPOINT P
+
+		<if test="moduleId != null">
+			inner join SYS_ENTITYENTRY E
+			on E.ID_ = P.ENTITYENTRY_
+		</if>
 
 		<where>
+		
 			1 = 1
 
+			<if test="moduleId != null">
+				and E.MODULEID_ = #{moduleId}
+			</if>
+
 			<if test="nodeId != null">
-				and E.NODEID_ = #{nodeId}
-            </if>
+				and P.NODEID_ = #{nodeId}
+			</if>
 
 			<if test="nodeIds != null and nodeIds.size() &gt; 0">
-				and E.NODEID_ IN
+				and P.NODEID_ IN
 				<foreach item="x_nodeId" index="index" collection="nodeIds"
 					open="(" separator="," close=")">
 					#{x_nodeId}
-                </foreach>
+				</foreach>
+			</if>
+			
+			<if test="entityEntryId != null">
+				and P.ENTITYENTRY_ = #{entityEntryId}
 			</if>
 
 			<if test="entityId != null">
-				and E.ENTITYID_ = #{entityId}
-            </if>
+				and P.ENTITYID_ = #{entityId}
+			</if>
 
 			<if test="entityIds != null and entityIds.size() &gt; 0">
-				and E.ENTITYID_ IN
+				and P.ENTITYID_ IN
 				<foreach item="x_entityId" index="index" collection="entityIds"
 					open="(" separator="," close=")">
 					#{x_entityId}
-                </foreach>
+				</foreach>
 			</if>
 
 			<if test="entryKey != null">
-				and E.ENTRYKEY_ = #{entryKey}
-            </if>
+				and P.ENTRYKEY_ = #{entryKey}
+			</if>
 
 			<if test="entryKeys != null and entryKeys.size() &gt; 0">
-				and E.ENTRYKEY_ IN
+				and P.ENTRYKEY_ IN
 				<foreach item="x_entryKey" index="index" collection="entryKeys"
 					open="(" separator="," close=")">
 					#{x_entryKey}
-                </foreach>
+				</foreach>
 			</if>
 
 			<if test="name != null">
-				and E.NAME_ = #{name}
-            </if>
+				and P.NAME_ = #{name}
+			</if>
 
 			<if test="names != null and names.size() &gt; 0">
-				and E.NAME_ IN
+				and P.NAME_ IN
 				<foreach item="x_name" index="index" collection="names"
 					open="(" separator="," close=")">
 					#{x_name}
-                </foreach>
+				</foreach>
 			</if>
 
 			<if test="value != null">
-				and E.VALUE_ = #{value}
-            </if>
+				and P.VALUE_ = #{value}
+			</if>
 
 			<if test="values != null and values.size() &gt; 0">
-				and E.VALUE_ IN
+				and P.VALUE_ IN
 				<foreach item="x_value" index="index" collection="values"
 					open="(" separator="," close=")">
 					#{x_value}
-                </foreach>
+				</foreach>
 			</if>
 
 		</where>

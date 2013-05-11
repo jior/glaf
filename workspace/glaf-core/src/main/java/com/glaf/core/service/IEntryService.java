@@ -19,10 +19,8 @@
 package com.glaf.core.service;
 
 import java.util.List;
-import java.util.Map;
 
 import com.glaf.core.domain.EntityEntry;
-import com.glaf.core.domain.EntryPoint;
 import com.glaf.core.base.TreeModel;
 import com.glaf.core.security.LoginContext;
 
@@ -35,14 +33,6 @@ public interface IEntryService {
 	 */
 
 	void deleteEntityEntry(String rowId);
-
-	/**
-	 * 根据参数获取实体访问项
-	 * 
-	 * @param paramMap
-	 * @return
-	 */
-	List<EntityEntry> getEntityEntries(Map<String, Object> paramMap);
 
 	/**
 	 * 根据主键获取实体访问项
@@ -88,14 +78,6 @@ public interface IEntryService {
 	 */
 	List<String> getEntityIds(LoginContext loginContext, String moduleId,
 			String entryKey);
-
-	/**
-	 * 根据参数获取访问点
-	 * 
-	 * @param paramMap
-	 * @return
-	 */
-	List<EntryPoint> getEntityPoints(Map<String, Object> paramMap);
 
 	/**
 	 * 获取某个用户某个模块的访问权限

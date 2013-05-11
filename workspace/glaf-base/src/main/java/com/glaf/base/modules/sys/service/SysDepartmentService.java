@@ -149,7 +149,7 @@ public interface SysDepartmentService {
 	 *            int
 	 * @return List
 	 */
-	List<SysDepartment> getSysDepartmentList(int parent);
+	List<SysDepartment> getSysDepartmentList(long parent);
 
 	/**
 	 * 获取分页列表
@@ -162,7 +162,7 @@ public interface SysDepartmentService {
 	 *            int
 	 * @return
 	 */
-	PageResult getSysDepartmentList(int parent, int pageNo, int pageSize);
+	PageResult getSysDepartmentList(long parent, int pageNo, int pageSize);
 
 	/**
 	 * 根据查询参数获取一页的数据

@@ -23,8 +23,8 @@ import java.util.List;
 
 public class EntityEntryQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;
-	protected Integer nodeId;
-	protected List<Integer> nodeIds;
+	protected Long nodeId;
+	protected List<Long> nodeIds;
 	protected String entityId;
 	protected List<String> entityIds;
 	protected String entryKey;
@@ -208,11 +208,11 @@ public class EntityEntryQuery extends DataQuery {
 		return moduleIds;
 	}
 
-	public Integer getNodeId() {
+	public Long getNodeId() {
 		return nodeId;
 	}
 
-	public List<Integer> getNodeIds() {
+	public List<Long> getNodeIds() {
 		return nodeIds;
 	}
 
@@ -256,7 +256,7 @@ public class EntityEntryQuery extends DataQuery {
 		return this;
 	}
 
-	public EntityEntryQuery nodeId(Integer nodeId) {
+	public EntityEntryQuery nodeId(Long nodeId) {
 		if (nodeId == null) {
 			throw new RuntimeException("nodeId is null");
 		}
@@ -264,7 +264,7 @@ public class EntityEntryQuery extends DataQuery {
 		return this;
 	}
 
-	public EntityEntryQuery nodeIds(List<Integer> nodeIds) {
+	public EntityEntryQuery nodeIds(List<Long> nodeIds) {
 		if (nodeIds == null) {
 			throw new RuntimeException("nodeIds is empty ");
 		}
@@ -349,11 +349,11 @@ public class EntityEntryQuery extends DataQuery {
 		this.moduleIds = moduleIds;
 	}
 
-	public void setNodeId(Integer nodeId) {
+	public void setNodeId(Long nodeId) {
 		this.nodeId = nodeId;
 	}
 
-	public void setNodeIds(List<Integer> nodeIds) {
+	public void setNodeIds(List<Long> nodeIds) {
 		this.nodeIds = nodeIds;
 	}
 

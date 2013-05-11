@@ -241,14 +241,14 @@ public class SysDepartmentServiceImpl implements SysDepartmentService {
 		return this.list(query);
 	}
 
-	public List<SysDepartment> getSysDepartmentList(int parent) {
+	public List<SysDepartment> getSysDepartmentList(long parent) {
 		SysDepartmentQuery query = new SysDepartmentQuery();
 		query.parentId(Long.valueOf(parent));
 		return this.list(query);
 	}
 
 	@Override
-	public PageResult getSysDepartmentList(int parent, int pageNo, int pageSize) {
+	public PageResult getSysDepartmentList(long parent, int pageNo, int pageSize) {
 		// ¼ÆËã×ÜÊý
 		PageResult pager = new PageResult();
 		SysDepartmentQuery query = new SysDepartmentQuery();

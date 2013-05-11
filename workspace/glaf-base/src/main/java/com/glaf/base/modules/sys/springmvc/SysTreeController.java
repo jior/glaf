@@ -426,7 +426,7 @@ public class SysTreeController {
 	public byte[] savePerms(HttpServletRequest request, ModelMap modelMap) {
 		Map<String, Object> paramMap = RequestUtils.getParameterMap(request);
 		logger.debug(paramMap);
-		String rowId = ParamUtils.getString(paramMap, "id");
+
 		long nodeId = ParamUtil.getIntParameter(request, "nodeId", 0);
 		String moduleId = ParamUtils.getString(paramMap, "moduleId");
 		String entityId = ParamUtils.getString(paramMap, "entityId");
@@ -435,9 +435,7 @@ public class SysTreeController {
 
 		EntityEntry entityEntry = null;
 
-		if (StringUtils.isNotEmpty(rowId)) {
-			entityEntry = entryService.getEntityEntry(rowId);
-		} else if (nodeId > 0) {
+		if (nodeId > 0) {
 			entityEntry = entryService.getEntityEntry(nodeId, entryKey);
 		} else if (StringUtils.isNotEmpty(moduleId)
 				&& StringUtils.isNotEmpty(entityId)
@@ -448,7 +446,7 @@ public class SysTreeController {
 
 		if (entityEntry != null && entityEntry.getId() != null) {
 			entryService.deleteEntityEntry(entityEntry.getId());
-			logger.debug(rowId + " remove ok.");
+			logger.debug(entityEntry.getId() + " remove ok.");
 		}
 
 		entityEntry = new EntityEntry();

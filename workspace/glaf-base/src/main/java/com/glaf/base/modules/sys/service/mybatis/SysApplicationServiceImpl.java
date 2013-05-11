@@ -178,7 +178,7 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 		return this.list(query);
 	}
 
-	public List<SysApplication> getApplicationList(int parentId) {
+	public List<SysApplication> getApplicationList(long parentId) {
 		long parentAppId = parentId;
 		SysApplication parentApp = findById(parentId);
 		if (parentApp != null) {
@@ -196,7 +196,7 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 		return apps;
 	}
 
-	public PageResult getApplicationList(int parentId, int pageNo, int pageSize) {
+	public PageResult getApplicationList(long parentId, int pageNo, int pageSize) {
 		// 计算总数
 		PageResult pager = new PageResult();
 		SysApplicationQuery query = new SysApplicationQuery();
@@ -482,13 +482,13 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 			this.update(bean);// 更新bean
 			SysTree node = sysTreeService.findById(bean.getNodeId());
 			node.setSort(bean.getSort());
-			sysTreeService.update(node); 
+			sysTreeService.update(node);
 
 			temp.setSort(i);
 			this.update(temp);// 更新temp
 			node = sysTreeService.findById(temp.getNodeId());
 			node.setSort(temp.getSort());
-			sysTreeService.update(node); 
+			sysTreeService.update(node);
 		}
 	}
 
@@ -513,13 +513,13 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 			this.update(bean);// 更新bean
 			SysTree node = sysTreeService.findById(bean.getNodeId());
 			node.setSort(bean.getSort());
-			sysTreeService.update(node); 
+			sysTreeService.update(node);
 
 			temp.setSort(i);
 			this.update(temp);// 更新temp
 			node = sysTreeService.findById(temp.getNodeId());
 			node.setSort(temp.getSort());
-			sysTreeService.update(node); 
+			sysTreeService.update(node);
 		}
 	}
 

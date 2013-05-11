@@ -1,20 +1,20 @@
 /*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.glaf.core.query;
 
@@ -22,9 +22,10 @@ import java.util.List;
 
 public class EntryPointQuery extends BaseQuery {
 	private static final long serialVersionUID = 1L;
+	protected String moduleId;
 	protected String entityEntryId;
-	protected Integer nodeId;
-	protected List<Integer> nodeIds;
+	protected Long nodeId;
+	protected List<Long> nodeIds;
 	protected String entityId;
 	protected List<String> entityIds;
 	protected String entryKey;
@@ -36,6 +37,22 @@ public class EntryPointQuery extends BaseQuery {
 
 	public EntryPointQuery() {
 
+	}
+
+	public EntryPointQuery moduleId(String moduleId) {
+		if (moduleId == null) {
+			throw new RuntimeException("moduleId is null");
+		}
+		this.moduleId = moduleId;
+		return this;
+	}
+
+	public String getModuleId() {
+		return moduleId;
+	}
+
+	public void setModuleId(String moduleId) {
+		this.moduleId = moduleId;
 	}
 
 	public EntryPointQuery entityEntryId(String entityEntryId) {
@@ -106,11 +123,11 @@ public class EntryPointQuery extends BaseQuery {
 		return names;
 	}
 
-	public Integer getNodeId() {
+	public Long getNodeId() {
 		return nodeId;
 	}
 
-	public List<Integer> getNodeIds() {
+	public List<Long> getNodeIds() {
 		return nodeIds;
 	}
 
@@ -138,7 +155,7 @@ public class EntryPointQuery extends BaseQuery {
 		return this;
 	}
 
-	public EntryPointQuery nodeId(Integer nodeId) {
+	public EntryPointQuery nodeId(Long nodeId) {
 		if (nodeId == null) {
 			throw new RuntimeException("nodeId is null");
 		}
@@ -146,7 +163,7 @@ public class EntryPointQuery extends BaseQuery {
 		return this;
 	}
 
-	public EntryPointQuery nodeIds(List<Integer> nodeIds) {
+	public EntryPointQuery nodeIds(List<Long> nodeIds) {
 		if (nodeIds == null) {
 			throw new RuntimeException("nodeIds is empty ");
 		}
@@ -182,11 +199,11 @@ public class EntryPointQuery extends BaseQuery {
 		this.names = names;
 	}
 
-	public void setNodeId(Integer nodeId) {
+	public void setNodeId(Long nodeId) {
 		this.nodeId = nodeId;
 	}
 
-	public void setNodeIds(List<Integer> nodeIds) {
+	public void setNodeIds(List<Long> nodeIds) {
 		this.nodeIds = nodeIds;
 	}
 

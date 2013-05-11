@@ -60,7 +60,7 @@ public class LoginContext implements java.io.Serializable, Cloneable {
 	/**
 	 * 部门编号
 	 */
-	protected int deptId;
+	protected Long deptId;
 
 	/**
 	 * 功能集合
@@ -80,7 +80,7 @@ public class LoginContext implements java.io.Serializable, Cloneable {
 	/**
 	 * 角色编号集合
 	 */
-	protected Collection<Integer> roleIds = new HashSet<Integer>();
+	protected Collection<Long> roleIds = new HashSet<Long>();
 
 	/**
 	 * 角色代码集合
@@ -95,7 +95,7 @@ public class LoginContext implements java.io.Serializable, Cloneable {
 	/**
 	 * 子部门编号
 	 */
-	protected Collection<Integer> subDeptIds = new HashSet<Integer>();
+	protected Collection<Long> subDeptIds = new HashSet<Long>();
 
 	/**
 	 * 用户系统
@@ -161,9 +161,9 @@ public class LoginContext implements java.io.Serializable, Cloneable {
 		this.addPermission(String.valueOf(role));
 	}
 
-	public void addRoleId(Integer role) {
+	public void addRoleId(Long role) {
 		if (roleIds == null) {
-			roleIds = new HashSet<Integer>();
+			roleIds = new HashSet<Long>();
 		}
 		if (!roleIds.contains(role)) {
 			roleIds.add(role);
@@ -171,9 +171,9 @@ public class LoginContext implements java.io.Serializable, Cloneable {
 		this.addPermission(String.valueOf(role));
 	}
 
-	public void addSubDept(Integer deptId) {
+	public void addSubDept(Long deptId) {
 		if (subDeptIds == null) {
-			subDeptIds = new HashSet<Integer>();
+			subDeptIds = new HashSet<Long>();
 		}
 		if (!subDeptIds.contains(deptId)) {
 			subDeptIds.add(deptId);
@@ -223,13 +223,13 @@ public class LoginContext implements java.io.Serializable, Cloneable {
 		}
 
 		if (loginContext.getRoleIds() != null) {
-			for (Integer x : loginContext.getRoleIds()) {
+			for (Long x : loginContext.getRoleIds()) {
 				m.addRoleId(x);
 			}
 		}
 
 		if (loginContext.getSubDeptIds() != null) {
-			for (Integer x : loginContext.getSubDeptIds()) {
+			for (Long x : loginContext.getSubDeptIds()) {
 				m.addSubDept(x);
 			}
 		}
@@ -274,7 +274,7 @@ public class LoginContext implements java.io.Serializable, Cloneable {
 		return currentAccessLevel;
 	}
 
-	public int getDeptId() {
+	public Long getDeptId() {
 		return deptId;
 	}
 
@@ -293,9 +293,9 @@ public class LoginContext implements java.io.Serializable, Cloneable {
 		return permissions;
 	}
 
-	public Collection<Integer> getRoleIds() {
+	public Collection<Long> getRoleIds() {
 		if (roleIds == null) {
-			roleIds = new HashSet<Integer>();
+			roleIds = new HashSet<Long>();
 		}
 		return roleIds;
 	}
@@ -311,7 +311,7 @@ public class LoginContext implements java.io.Serializable, Cloneable {
 		return skin;
 	}
 
-	public Collection<Integer> getSubDeptIds() {
+	public Collection<Long> getSubDeptIds() {
 		return subDeptIds;
 	}
 
@@ -325,7 +325,7 @@ public class LoginContext implements java.io.Serializable, Cloneable {
 
 	public boolean hasAdvancedPermission() {
 		boolean hasPermission = false;
-		Collection<Integer> roles = this.getRoleIds();
+		Collection<Long> roles = this.getRoleIds();
 		if (roles != null) {
 			if (roles.contains(10000)) {
 				hasPermission = true;
@@ -376,7 +376,7 @@ public class LoginContext implements java.io.Serializable, Cloneable {
 			return true;
 		}
 		boolean hasPermission = false;
-		Collection<Integer> roleIds = this.getRoleIds();
+		Collection<Long> roleIds = this.getRoleIds();
 		if (roleIds != null) {
 			if (roleIds.contains(10000)) {
 				hasPermission = true;
@@ -393,7 +393,7 @@ public class LoginContext implements java.io.Serializable, Cloneable {
 
 	public boolean isSystemAdministrator() {
 		boolean isSystemAdministrator = false;
-		Collection<Integer> roleIds = this.getRoleIds();
+		Collection<Long> roleIds = this.getRoleIds();
 		if (roleIds != null) {
 			if (roleIds.contains(10000)) {
 				isSystemAdministrator = true;
@@ -429,7 +429,7 @@ public class LoginContext implements java.io.Serializable, Cloneable {
 		}
 
 		if (jsonObject.containsKey("deptId")) {
-			loginContext.setDeptId(jsonObject.getInteger("deptId"));
+			loginContext.setDeptId(jsonObject.getLong("deptId"));
 		}
 
 		if (jsonObject.containsKey("systemType")) {
@@ -454,7 +454,7 @@ public class LoginContext implements java.io.Serializable, Cloneable {
 			Iterator<Object> iterator = jsonArray.iterator();
 			while (iterator.hasNext()) {
 				String role = (String) iterator.next();
-				loginContext.addRoleId(Integer.parseInt(role));
+				loginContext.addRoleId(Long.parseLong(role));
 			}
 		}
 
@@ -463,7 +463,7 @@ public class LoginContext implements java.io.Serializable, Cloneable {
 			Iterator<Object> iterator = jsonArray.iterator();
 			while (iterator.hasNext()) {
 				String subDeptId = (String) iterator.next();
-				loginContext.addSubDept(Integer.parseInt(subDeptId));
+				loginContext.addSubDept(Long.parseLong(subDeptId));
 			}
 		}
 
@@ -516,7 +516,7 @@ public class LoginContext implements java.io.Serializable, Cloneable {
 		this.currentAccessLevel = currentAccessLevel;
 	}
 
-	public void setDeptId(int deptId) {
+	public void setDeptId(Long deptId) {
 		this.deptId = deptId;
 	}
 
@@ -532,7 +532,7 @@ public class LoginContext implements java.io.Serializable, Cloneable {
 		this.permissions = permissions;
 	}
 
-	public void setRoleIds(Collection<Integer> roleIds) {
+	public void setRoleIds(Collection<Long> roleIds) {
 		this.roleIds = roleIds;
 	}
 
@@ -544,7 +544,7 @@ public class LoginContext implements java.io.Serializable, Cloneable {
 		this.skin = skin;
 	}
 
-	public void setSubDeptIds(Collection<Integer> subDeptIds) {
+	public void setSubDeptIds(Collection<Long> subDeptIds) {
 		this.subDeptIds = subDeptIds;
 	}
 
@@ -583,7 +583,7 @@ public class LoginContext implements java.io.Serializable, Cloneable {
 
 		if (roleIds != null && !roleIds.isEmpty()) {
 			JSONArray jsonArray = new JSONArray();
-			for (Integer roleId : roleIds) {
+			for (Long roleId : roleIds) {
 				jsonArray.add(String.valueOf(roleId));
 			}
 			jsonObject.put("roleIds", jsonArray);
@@ -591,7 +591,7 @@ public class LoginContext implements java.io.Serializable, Cloneable {
 
 		if (subDeptIds != null && !subDeptIds.isEmpty()) {
 			JSONArray jsonArray = new JSONArray();
-			for (Integer subDeptId : subDeptIds) {
+			for (Long subDeptId : subDeptIds) {
 				jsonArray.add(String.valueOf(subDeptId));
 			}
 			jsonObject.put("subDeptIds", jsonArray);

@@ -129,7 +129,7 @@ public class SysFunctionServiceImpl implements SysFunctionService {
 		return this.list(query);
 	}
 
-	public List<SysFunction> getSysFunctionList(int appId) {
+	public List<SysFunction> getSysFunctionList(long appId) {
 		SysFunctionQuery query = new SysFunctionQuery();
 		query.appId(Long.valueOf(appId));
 		query.setOrderBy(" E.SORT desc ");

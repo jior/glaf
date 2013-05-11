@@ -19,6 +19,7 @@
 package com.glaf.core.service.impl;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -49,7 +50,6 @@ import com.glaf.core.query.TreeModelQuery;
 import com.glaf.core.security.LoginContext;
 import com.glaf.core.service.IEntryService;
 import com.glaf.core.service.ITreeModelService;
-import com.glaf.core.util.Tools;
 
 @Service("entryService")
 @Transactional(readOnly = true)
@@ -87,29 +87,13 @@ public class MxEntryServiceImpl implements IEntryService {
 		entityEntryMapper.deleteEntityEntryById(id);
 	}
 
-	public List<EntityEntry> getEntityEntries(Map<String, Object> paramMap) {
-		List<EntityEntry> list = new ArrayList<EntityEntry>();
-		EntityEntryQuery query = new EntityEntryQuery();
-		Tools.populate(query, paramMap);
-		List<EntityEntry> rows = this.list(query);
-		if (rows != null && rows.size() > 0) {
-			Iterator<EntityEntry> iterator = rows.iterator();
-			while (iterator.hasNext()) {
-				EntityEntry entityEntry = iterator.next();
-				this.initializeEntryPoints(entityEntry);
-				list.add(entityEntry);
-			}
-		}
-		return list;
-	}
-
 	public EntityEntry getEntityEntry(long nodeId, String entryKey) {
 		EntityEntry entityEntry = null;
 		if (StringUtils.isNotEmpty(entryKey)) {
-			Map<String, Object> params = new HashMap<String, Object>();
-			params.put("nodeId", nodeId);
-			params.put("entryKey", entryKey);
-			List<EntityEntry> rows = this.getEntityEntries(params);
+			EntityEntryQuery query = new EntityEntryQuery();
+			query.nodeId(nodeId);
+			query.entryKey(entryKey);
+			List<EntityEntry> rows = entityEntryMapper.getEntityEntries(query);
 			if (rows != null && rows.size() > 0) {
 				entityEntry = rows.get(0);
 				this.initializeEntryPoints(entityEntry);
@@ -136,11 +120,11 @@ public class MxEntryServiceImpl implements IEntryService {
 		if (StringUtils.isNotEmpty(moduleId)
 				&& StringUtils.isNotEmpty(entityId)
 				&& StringUtils.isNotEmpty(entryKey)) {
-			Map<String, Object> params = new HashMap<String, Object>();
-			params.put("entityId", entityId);
-			params.put("entryKey", entryKey);
-			params.put("moduleId", moduleId);
-			List<EntityEntry> rows = this.getEntityEntries(params);
+			EntityEntryQuery query = new EntityEntryQuery();
+			query.entityId(entityId);
+			query.moduleId(moduleId);
+			query.entryKey(entryKey);
+			List<EntityEntry> rows = entityEntryMapper.getEntityEntries(query);
 			if (rows != null && rows.size() > 0) {
 				entityEntry = rows.get(0);
 				this.initializeEntryPoints(entityEntry);
@@ -170,38 +154,55 @@ public class MxEntryServiceImpl implements IEntryService {
 		}
 		List<String> entityIds = new ArrayList<String>();
 		Map<String, Object> params = new HashMap<String, Object>();
+		List<EntryPoint> entryPoints = null;
 
 		params.put("moduleId", moduleId);
 		params.put("entryKey", entryKey);
+
+		EntryPointQuery query = new EntryPointQuery();
+
+		query.moduleId(moduleId);
+		query.entryKey(entryKey);
 
 		/**
 		 * 角色拥有的记录编号
 		 */
 		params.put("name", "ROLE");
-		params.put("values", loginContext.getRoles());
+		params.put("value", loginContext.getRoles());
 
-		List<EntryPoint> entryPoints = this.getEntityPoints(params);
-		if (entryPoints != null && entryPoints.size() > 0) {
-			Iterator<EntryPoint> iter = entryPoints.iterator();
-			while (iter.hasNext()) {
-				EntryPoint entryPoint = iter.next();
-				entityIds.add(entryPoint.getEntityId());
+		Collection<Long> roleIds = loginContext.getRoleIds();
+		if (roleIds != null && !roleIds.isEmpty()) {
+			query.name("ROLE");
+			for (Long roleId : roleIds) {
+				query.value(String.valueOf(roleId));
+				entryPoints = entityEntryMapper.getEntryPoints(query);
+				if (entryPoints != null && entryPoints.size() > 0) {
+					Iterator<EntryPoint> iter = entryPoints.iterator();
+					while (iter.hasNext()) {
+						EntryPoint entryPoint = iter.next();
+						entityIds.add(entryPoint.getEntityId());
+					}
+				}
 			}
 		}
 
-		/**
-		 * 部门拥有的记录编号
-		 */
-		params.remove("values");
-		params.put("name", "DEPT");
-		params.put("value", loginContext.getDeptId());
+		if (loginContext.getDeptId() != null) {
+			/**
+			 * 部门拥有的记录编号
+			 */
+			params.remove("values");
+			params.put("name", "DEPT");
+			params.put("value", loginContext.getDeptId());
+			query.name("DEPT");
+			query.value(String.valueOf(loginContext.getDeptId()));
 
-		entryPoints = this.getEntityPoints(params);
-		if (entryPoints != null && entryPoints.size() > 0) {
-			Iterator<EntryPoint> iter = entryPoints.iterator();
-			while (iter.hasNext()) {
-				EntryPoint entryPoint = iter.next();
-				entityIds.add(entryPoint.getEntityId());
+			entryPoints = entityEntryMapper.getEntryPoints(query);
+			if (entryPoints != null && entryPoints.size() > 0) {
+				Iterator<EntryPoint> iter = entryPoints.iterator();
+				while (iter.hasNext()) {
+					EntryPoint entryPoint = iter.next();
+					entityIds.add(entryPoint.getEntityId());
+				}
 			}
 		}
 
@@ -210,8 +211,10 @@ public class MxEntryServiceImpl implements IEntryService {
 		 */
 		params.put("name", "USER");
 		params.put("value", loginContext.getActorId());
+		query.name("USER");
+		query.value(loginContext.getActorId());
 
-		entryPoints = this.getEntityPoints(params);
+		entryPoints = entityEntryMapper.getEntryPoints(query);
 		if (entryPoints != null && entryPoints.size() > 0) {
 			Iterator<EntryPoint> iter = entryPoints.iterator();
 			while (iter.hasNext()) {
@@ -221,24 +224,6 @@ public class MxEntryServiceImpl implements IEntryService {
 		}
 
 		return entityIds;
-	}
-
-	public List<EntryPoint> getEntityPoints(Map<String, Object> paramMap) {
-		List<EntryPoint> list = new ArrayList<EntryPoint>();
-		EntryPointQuery query = new EntryPointQuery();
-		Tools.populate(query, paramMap);
-
-		List<EntryPoint> rows = this.getEntryPoints(query);
-
-		if (rows != null && rows.size() > 0) {
-			Iterator<EntryPoint> iterator = rows.iterator();
-			while (iterator.hasNext()) {
-				EntryPoint entryPoint = iterator.next();
-				list.add(entryPoint);
-			}
-		}
-
-		return list;
 	}
 
 	/**
@@ -258,34 +243,51 @@ public class MxEntryServiceImpl implements IEntryService {
 
 		params.put("moduleId", moduleId);
 
+		List<EntryPoint> entryPoints = null;
+		EntryPointQuery query = new EntryPointQuery();
+
+		query.moduleId(moduleId);
+
 		/**
 		 * 角色拥有的记录编号
 		 */
 		params.put("name", "ROLE");
 		params.put("values", loginContext.getRoles());
 
-		List<EntryPoint> entryPoints = this.getEntityPoints(params);
-		if (entryPoints != null && entryPoints.size() > 0) {
-			Iterator<EntryPoint> iter = entryPoints.iterator();
-			while (iter.hasNext()) {
-				EntryPoint entryPoint = iter.next();
-				entryKeys.add(entryPoint.getEntryKey());
+		Collection<Long> roleIds = loginContext.getRoleIds();
+		if (roleIds != null && !roleIds.isEmpty()) {
+			query.name("ROLE");
+			for (Long roleId : roleIds) {
+				query.value(String.valueOf(roleId));
+				entryPoints = entityEntryMapper.getEntryPoints(query);
+				if (entryPoints != null && entryPoints.size() > 0) {
+					Iterator<EntryPoint> iter = entryPoints.iterator();
+					while (iter.hasNext()) {
+						EntryPoint entryPoint = iter.next();
+						entryKeys.add(entryPoint.getEntryKey());
+					}
+				}
 			}
 		}
 
 		/**
 		 * 部门拥有的记录编号
 		 */
-		params.remove("values");
-		params.put("name", "DEPT");
-		params.put("value", loginContext.getDeptId());
+		if (loginContext.getDeptId() != null) {
+			params.remove("values");
+			params.put("name", "DEPT");
+			params.put("value", loginContext.getDeptId());
 
-		entryPoints = this.getEntityPoints(params);
-		if (entryPoints != null && entryPoints.size() > 0) {
-			Iterator<EntryPoint> iter = entryPoints.iterator();
-			while (iter.hasNext()) {
-				EntryPoint entryPoint = iter.next();
-				entryKeys.add(entryPoint.getEntryKey());
+			query.name("DEPT");
+			query.value(String.valueOf(loginContext.getDeptId()));
+
+			entryPoints = entityEntryMapper.getEntryPoints(query);
+			if (entryPoints != null && entryPoints.size() > 0) {
+				Iterator<EntryPoint> iter = entryPoints.iterator();
+				while (iter.hasNext()) {
+					EntryPoint entryPoint = iter.next();
+					entryKeys.add(entryPoint.getEntryKey());
+				}
 			}
 		}
 
@@ -295,7 +297,11 @@ public class MxEntryServiceImpl implements IEntryService {
 		params.put("name", "USER");
 		params.put("value", loginContext.getActorId());
 
-		entryPoints = this.getEntityPoints(params);
+		query.name("USER");
+		query.value(loginContext.getActorId());
+
+		entryPoints = entityEntryMapper.getEntryPoints(query);
+
 		if (entryPoints != null && entryPoints.size() > 0) {
 			Iterator<EntryPoint> iter = entryPoints.iterator();
 			while (iter.hasNext()) {
@@ -326,9 +332,11 @@ public class MxEntryServiceImpl implements IEntryService {
 		if (CacheFactory.get(cacheKey) != null) {
 
 		}
-		List<TreeModel> treeNodes = new ArrayList<TreeModel>();
+		List<TreeModel> treeModels = new ArrayList<TreeModel>();
 		List<Long> nodeIds = new ArrayList<Long>();
 		Map<String, Object> params = new HashMap<String, Object>();
+		EntryPointQuery query = new EntryPointQuery();
+		List<EntryPoint> entryPoints = null;
 
 		/**
 		 * 角色拥有的节点
@@ -336,38 +344,55 @@ public class MxEntryServiceImpl implements IEntryService {
 		params.put("name", "ROLE");
 		params.put("values", loginContext.getRoles());
 
-		List<EntryPoint> entryPoints = this.getEntityPoints(params);
-		if (entryPoints != null && entryPoints.size() > 0) {
-			Iterator<EntryPoint> iter = entryPoints.iterator();
-			while (iter.hasNext()) {
-				EntryPoint entryPoint = iter.next();
-				nodeIds.add(entryPoint.getNodeId());
+		Collection<Long> roleIds = loginContext.getRoleIds();
+		if (roleIds != null && !roleIds.isEmpty()) {
+			query.name("ROLE");
+			for (Long roleId : roleIds) {
+				query.value(String.valueOf(roleId));
+				entryPoints = entityEntryMapper.getEntryPoints(query);
+				if (entryPoints != null && entryPoints.size() > 0) {
+					Iterator<EntryPoint> iter = entryPoints.iterator();
+					while (iter.hasNext()) {
+						EntryPoint entryPoint = iter.next();
+						nodeIds.add(entryPoint.getNodeId());
+					}
+				}
 			}
 		}
 
 		/**
 		 * 部门拥有的节点
 		 */
-		params.remove("values");
-		params.put("name", "DEPT");
-		params.put("value", loginContext.getDeptId());
+		if (loginContext.getDeptId() != null) {
+			params.remove("values");
+			params.put("name", "DEPT");
+			params.put("value", loginContext.getDeptId());
 
-		entryPoints = this.getEntityPoints(params);
-		if (entryPoints != null && entryPoints.size() > 0) {
-			Iterator<EntryPoint> iter = entryPoints.iterator();
-			while (iter.hasNext()) {
-				EntryPoint entryPoint = iter.next();
-				nodeIds.add(entryPoint.getNodeId());
+			query.name("DEPT");
+			query.value(String.valueOf(loginContext.getDeptId()));
+
+			entryPoints = entityEntryMapper.getEntryPoints(query);
+
+			if (entryPoints != null && entryPoints.size() > 0) {
+				Iterator<EntryPoint> iter = entryPoints.iterator();
+				while (iter.hasNext()) {
+					EntryPoint entryPoint = iter.next();
+					nodeIds.add(entryPoint.getNodeId());
+				}
 			}
 		}
 
 		/**
 		 * 用户拥有的节点
 		 */
+
 		params.put("name", "USER");
 		params.put("value", loginContext.getActorId());
 
-		entryPoints = this.getEntityPoints(params);
+		query.name("USER");
+		query.value(loginContext.getActorId());
+
+		entryPoints = entityEntryMapper.getEntryPoints(query);
 		if (entryPoints != null && entryPoints.size() > 0) {
 			Iterator<EntryPoint> iter = entryPoints.iterator();
 			while (iter.hasNext()) {
@@ -379,7 +404,8 @@ public class MxEntryServiceImpl implements IEntryService {
 		if (nodeIds.size() > 0) {
 			params.clear();
 			params.put("nodeIds", nodeIds);
-			List<EntityEntry> list = this.getEntityEntries(params);
+			EntityEntryQuery qx = new EntityEntryQuery();
+			List<EntityEntry> list = this.list(qx);
 			Iterator<EntityEntry> iter = list.iterator();
 			while (iter.hasNext()) {
 				EntityEntry entityEntry = iter.next();
@@ -395,13 +421,12 @@ public class MxEntryServiceImpl implements IEntryService {
 					}
 				}
 			}
-			TreeModelQuery query = new TreeModelQuery();
-			query.nodeIds(nodeIds);
-			treeNodes = treeModelService.getTreeModels(query);
+			TreeModelQuery q = new TreeModelQuery();
+			q.nodeIds(nodeIds);
+			treeModels = treeModelService.getTreeModels(q);
 		}
 
-		// CacheFactory.put(cacheKey, treeNodes);
-		return treeNodes;
+		return treeModels;
 	}
 
 	/**
@@ -422,9 +447,11 @@ public class MxEntryServiceImpl implements IEntryService {
 		if (loginContext.isSystemAdministrator()) {
 			return true;
 		}
+
 		if (loginContext.hasAdvancedPermission()) {
 			return true;
 		}
+
 		TreeModel treeNode = treeModelService.getTreeModel(nodeId);
 		if (treeNode != null) {
 			if (StringUtils.equals(treeNode.getCreateBy(),
@@ -449,65 +476,92 @@ public class MxEntryServiceImpl implements IEntryService {
 		params.put("name", "ROLE");
 		params.put("values", loginContext.getRoles());
 
-		List<EntryPoint> entryPoints = this.getEntityPoints(params);
-		if (entryPoints != null && entryPoints.size() > 0) {
+		List<EntryPoint> entryPoints = null;
+		EntryPointQuery query = new EntryPointQuery();
 
-			return true;
-		}
-
-		/**
-		 * 部门是否具有该节点的权限
-		 */
-		params.remove("values");
-		params.put("name", "DEPT");
-		params.put("value", loginContext.getDeptId());
-
-		entryPoints = this.getEntityPoints(params);
-		if (entryPoints != null && entryPoints.size() > 0) {
-			// CacheFactory.put(cacheKey, true);
-			return true;
-		}
+		query.nodeId(nodeId);
+		query.entryKey(permKey);
 
 		/**
-		 * 用户是否具有该节点的权限
+		 * 角色拥有的记录编号
 		 */
-		params.put("name", "USER");
-		params.put("value", loginContext.getActorId());
+		params.put("name", "ROLE");
+		params.put("values", loginContext.getRoles());
 
-		entryPoints = this.getEntityPoints(params);
-		if (entryPoints != null && entryPoints.size() > 0) {
-			// CacheFactory.put(cacheKey, true);
-			return true;
-		}
-
-		/**
-		 * 查找该节点的所有上级节点，判断是否有权限
-		 */
-		List<TreeModel> treeNodes = treeModelService
-				.getAncestorTreeModels(nodeId);
-		if (treeNodes != null && treeNodes.size() > 0) {
-			List<Long> nodeIds = new ArrayList<Long>();
-			Iterator<TreeModel> it = treeNodes.iterator();
-			while (it.hasNext()) {
-				TreeModel nd = it.next();
-				nodeIds.add(nd.getId());
-			}
-			params.clear();
-			params.put("entryKey", permKey);
-			params.put("nodeIds", nodeIds);
-			List<EntityEntry> list = this.getEntityEntries(params);
-			Iterator<EntityEntry> iter = list.iterator();
-			while (iter.hasNext()) {
-				EntityEntry entityEntry = iter.next();
-				if (entityEntry.isPropagationAllowed()) {
+		Collection<Long> roleIds = loginContext.getRoleIds();
+		if (roleIds != null && !roleIds.isEmpty()) {
+			query.name("ROLE");
+			for (Long roleId : roleIds) {
+				query.value(String.valueOf(roleId));
+				entryPoints = entityEntryMapper.getEntryPoints(query);
+				if (entryPoints != null && entryPoints.size() > 0) {
 					hasPermission = true;
-					// CacheFactory.put(cacheKey, true);
 					break;
 				}
 			}
 		}
 
-		// CacheFactory.put(cacheKey, hasPermission);
+		/**
+		 * 部门是否具有该节点的权限
+		 */
+		if (!hasPermission && loginContext.getDeptId() != null) {
+			params.remove("values");
+			params.put("name", "DEPT");
+			params.put("value", loginContext.getDeptId());
+
+			query.name("DEPT");
+			query.value(String.valueOf(loginContext.getDeptId()));
+			entryPoints = entityEntryMapper.getEntryPoints(query);
+			if (entryPoints != null && entryPoints.size() > 0) {
+				hasPermission = true;
+			}
+		}
+
+		/**
+		 * 用户是否具有该节点的权限
+		 */
+		if (!hasPermission) {
+			params.put("name", "USER");
+			params.put("value", loginContext.getActorId());
+
+			query.name("USER");
+			query.value(loginContext.getActorId());
+			entryPoints = entityEntryMapper.getEntryPoints(query);
+			if (entryPoints != null && entryPoints.size() > 0) {
+				hasPermission = true;
+			}
+		}
+
+		if (!hasPermission) {
+			/**
+			 * 查找该节点的所有上级节点，判断是否有权限
+			 */
+			List<TreeModel> treeNodes = treeModelService
+					.getAncestorTreeModels(nodeId);
+			if (treeNodes != null && treeNodes.size() > 0) {
+				List<Long> nodeIds = new ArrayList<Long>();
+				Iterator<TreeModel> it = treeNodes.iterator();
+				while (it.hasNext()) {
+					TreeModel nd = it.next();
+					nodeIds.add(nd.getId());
+				}
+				params.clear();
+				params.put("entryKey", permKey);
+				params.put("nodeIds", nodeIds);
+				EntityEntryQuery qx = new EntityEntryQuery();
+				qx.entryKey(permKey);
+				qx.nodeIds(nodeIds);
+				List<EntityEntry> list = this.list(qx);
+				Iterator<EntityEntry> iter = list.iterator();
+				while (iter.hasNext()) {
+					EntityEntry entityEntry = iter.next();
+					if (entityEntry.isPropagationAllowed()) {
+						hasPermission = true;
+						break;
+					}
+				}
+			}
+		}
 
 		return hasPermission;
 	}
@@ -529,6 +583,7 @@ public class MxEntryServiceImpl implements IEntryService {
 	public boolean hasPermission(LoginContext loginContext, String moduleId,
 			String entityId, String permKey) {
 		boolean hasPermission = false;
+
 		if (StringUtils.equals(loginContext.getActorId(), "admin")) {
 			return true;
 		}
@@ -552,38 +607,56 @@ public class MxEntryServiceImpl implements IEntryService {
 		params.put("name", "ROLE");
 		params.put("values", loginContext.getRoles());
 
-		List<EntryPoint> entryPoints = this.getEntityPoints(params);
-		if (entryPoints != null && entryPoints.size() > 0) {
-			// CacheFactory.put(cacheKey, true);
-			return true;
+		List<EntryPoint> entryPoints = null;
+		EntryPointQuery query = new EntryPointQuery();
+
+		query.moduleId(moduleId);
+		query.entryKey(permKey);
+		query.entityId(entityId);
+
+		Collection<Long> roleIds = loginContext.getRoleIds();
+		if (roleIds != null && !roleIds.isEmpty()) {
+			query.name("ROLE");
+			for (Long roleId : roleIds) {
+				query.value(String.valueOf(roleId));
+				entryPoints = entityEntryMapper.getEntryPoints(query);
+				if (entryPoints != null && entryPoints.size() > 0) {
+					hasPermission = true;
+					break;
+				}
+			}
 		}
 
 		/**
-		 * 部门是否具有该记录的权限
+		 * 部门是否具有该节点的权限
 		 */
-		params.remove("values");
-		params.put("name", "DEPT");
-		params.put("value", loginContext.getDeptId());
+		if (!hasPermission && loginContext.getDeptId() != null) {
+			params.remove("values");
+			params.put("name", "DEPT");
+			params.put("value", loginContext.getDeptId());
 
-		entryPoints = this.getEntityPoints(params);
-		if (entryPoints != null && entryPoints.size() > 0) {
-			// CacheFactory.put(cacheKey, true);
-			return true;
+			query.name("DEPT");
+			query.value(String.valueOf(loginContext.getDeptId()));
+			entryPoints = entityEntryMapper.getEntryPoints(query);
+			if (entryPoints != null && entryPoints.size() > 0) {
+				hasPermission = true;
+			}
 		}
 
 		/**
-		 * 用户是否具有该记录的权限
+		 * 用户是否具有该节点的权限
 		 */
-		params.put("name", "USER");
-		params.put("value", loginContext.getActorId());
+		if (!hasPermission) {
+			params.put("name", "USER");
+			params.put("value", loginContext.getActorId());
 
-		entryPoints = this.getEntityPoints(params);
-		if (entryPoints != null && entryPoints.size() > 0) {
-			// CacheFactory.put(cacheKey, true);
-			return true;
+			query.name("USER");
+			query.value(loginContext.getActorId());
+			entryPoints = entityEntryMapper.getEntryPoints(query);
+			if (entryPoints != null && entryPoints.size() > 0) {
+				hasPermission = true;
+			}
 		}
-
-		// CacheFactory.put(cacheKey, hasPermission);
 
 		return hasPermission;
 	}

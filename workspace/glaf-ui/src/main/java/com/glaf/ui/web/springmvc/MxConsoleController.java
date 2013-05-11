@@ -170,10 +170,10 @@ public class MxConsoleController {
 		List<TreeModel> treeModels = IdentityFactory.getChildrenTreeModels(root
 				.getId());
 
-		Collection<Integer> roles = loginContext.getRoleIds();
-		List<Integer> list = new ArrayList<Integer>();
+		Collection<Long> roles = loginContext.getRoleIds();
+		List<Long> list = new ArrayList<Long>();
 		if (roles != null && !roles.isEmpty()) {
-			for (Integer r : roles) {
+			for (Long r : roles) {
 				list.add(r);
 			}
 		}

@@ -91,7 +91,7 @@ public interface SysFunctionService {
 	 *            int
 	 * @return List
 	 */
-	List<SysFunction> getSysFunctionList(int appId);
+	List<SysFunction> getSysFunctionList(long appId);
 
 	/**
 	 * 获取全部列表
