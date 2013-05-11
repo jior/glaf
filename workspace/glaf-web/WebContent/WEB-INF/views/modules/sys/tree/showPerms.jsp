@@ -19,6 +19,7 @@
 <link href="<%=context%>/css/core.css" type="text/css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/easyui/themes/${theme}/easyui.css">
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.form.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/locale/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/glaf-base.js"></script>
@@ -36,8 +37,29 @@
 	 }
 
     function saveForm(){
-
+		var params = jQuery("#iForm").formSerialize();
+		jQuery.ajax({
+				   type: "POST",
+				   url: '<%=request.getContextPath()%>/sys/tree.do?method=savePerms',
+				   dataType: 'json',
+				   data: params,
+				   error: function(data){
+					   alert('服务器处理错误！');
+				   },
+				   success: function(data){
+					   if(data != null && data.message != null){
+						   alert(data.message);
+					   } else {
+						 alert('操作成功完成！');
+					   }
+				   }
+			 });
     }
+
+	function switchPerms(){
+        var entryKey = jQuery("#entryKey").val();
+		location.href="<%=request.getContextPath()%>/sys/tree.do?method=showPerms&nodeId=<%=bean.getId()%>&entryKey="+entryKey;
+	}
 </script>
 </head>
 
@@ -45,17 +67,21 @@
  
 <div class="easyui-panel" title="栏目权限" style="width:668px;padding:5px"> 
 <html:form id="iForm" name="iForm" action="${contextPath}/sys/tree.do?method=savePerms" method="post"  > 
-<input type="hidden" name="id" value="<%=bean.getId()%>">
+<input type="hidden" name="nodeId" value="<%=bean.getId()%>">
+<input type="hidden" name="id" value="${entityEntry.id}">
  <table width="98%" align="center" border="0" cellspacing="0" cellpadding="5">
       
       <tr>
         <td width="20%" >权限类别</td>
         <td colspan="2">
-           <select id="entryKey" name="entryKey">
+           <select id="entryKey" name="entryKey" onchange="javascript:switchPerms();">
 			<option value="r" selected>访问（可读）</option>
 			<option value="rw">操作（读写）</option>
 			<option value="admin">管理权限</option>
            </select>
+		   <script type="text/javascript">
+		       jQuery("#entryKey").val("${entryKey}");
+		   </script>
 		</td>
       </tr>
 
@@ -72,9 +98,9 @@
 	 <tr >
 		<td height="27" width="20%" valign="middle" noWrap> 授权范围（角色）</td>
 		<td height="27" valign="middle" noWrap> 
-		<input type="hidden" id="x_roles" name="x_roles" value="">
+		<input type="hidden" id="x_roles" name="x_roles" value="${x_roles}">
         <textarea cols="40" id="x_roles_name" name="x_roles_name" rows="8"  wrap="yes" readonly  
-		    style="height:100px;width:350px;color: #000066; background: #ffffff;"></textarea>
+		    style="height:100px;width:350px;color: #000066; background: #ffffff;">${x_roles_name}</textarea>
 		</td>
 		<td height="27" width="20%" valign="bottom" noWrap>
 		    &nbsp;&nbsp;<input type="button" name="button" value="添加" class="button" 
@@ -87,9 +113,9 @@
     <tr >
 		<td height="27" width="20%" valign="middle" noWrap> 授权范围（部门）</td>
 		<td height="27" valign="middle" noWrap> 
-		<input type="hidden" id="x_departments" name="x_departments" value="">
+		<input type="hidden" id="x_departments" name="x_departments" value="${x_departments}">
         <textarea cols="40" id="x_departments_name" name="x_departments_name" rows="8"  wrap="yes" readonly  
-		    style="height:100px;width:350px;color: #000066; background: #ffffff;"></textarea>
+		    style="height:100px;width:350px;color: #000066; background: #ffffff;">${x_departments_name}</textarea>
 		</td>
 		<td height="27" width="20%"   valign="bottom" noWrap>
 		    &nbsp;&nbsp;<input type="button" name="button" value="添加" class="button" 
@@ -102,9 +128,9 @@
     <tr >
 		<td height="27" width="20%" valign="middle" noWrap> 授权范围（用户）</td>
 		<td height="27" valign="middle" noWrap> 
-		<input type="hidden" id="x_users" name="x_users" value="">
+		<input type="hidden" id="x_users" name="x_users" value="${x_users}">
         <textarea cols="40" id="x_users_name" name="x_users_name" rows="8"  wrap="yes" readonly  
-		    style="height:100px;width:350px;color: #000066; background: #ffffff;"></textarea>
+		    style="height:100px;width:350px;color: #000066; background: #ffffff;">${x_users_name}</textarea>
 		</td>
 		<td height="27" width="20%"  valign="bottom" noWrap>
 		    &nbsp;&nbsp;<input type="button" name="button" value="添加" class="button" 

@@ -13,10 +13,10 @@
 				SysRole r = (SysRole) roles.get(j);
 				if(selecteds != null && selecteds.contains(String.valueOf(r.getId()))){
                     buffery.append("\n<option value=\"").append(r.getId()).append("\" selected>")
-						   .append(r.getName()).append("</option>");
+						   .append(r.getName()).append(" [").append(r.getCode()).append("]</option>");
 				} else {
 				    bufferx.append("\n<option value=\"").append(r.getId()).append("\">")
-						   .append(r.getName()).append("</option>");
+						   .append(r.getName()).append(" [").append(r.getCode()).append("]</option>");
 				}
 			}
 		}
@@ -136,7 +136,7 @@ var contextPath="<%=request.getContextPath()%>";
 			<td class="beta" width="18">&nbsp;</td>
 			<td class="table-content" height="26" valign="top" width="390">
 			<div align="center"><select class="list"
-				style="width: 150px; height: 250px;" multiple="multiple" size="12"
+				style="width: 180px; height: 250px;" multiple="multiple" size="12"
 				name="noselected" ondblclick="addElement()"><%=bufferx.toString()%>
 			</select></div>
 			</td>
@@ -149,7 +149,7 @@ var contextPath="<%=request.getContextPath()%>";
 			</td>
 			<td class="table-content" height="26" valign="top" width="359">
 			<div align="center"><select class="list"
-				style="width: 150px; height: 250px;" multiple="multiple" size="12"
+				style="width: 180px; height: 250px;" multiple="multiple" size="12"
 				name="selected" ondblclick="removeElement()"><%=buffery.toString()%>
 			</select></div>
 			</td>

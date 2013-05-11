@@ -102,8 +102,8 @@ public class IdentityChooseController {
 	public ModelAndView chooseRoles(HttpServletRequest request,
 			ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
-		
-		List<SysRole>  roles = sysRoleService.getSysRoleList();
+
+		List<SysRole> roles = sysRoleService.getSysRoleList();
 		String selecteds = request.getParameter("selecteds");
 		request.setAttribute("roles", roles);
 		request.setAttribute("selecteds", StringTools.split(selecteds));
@@ -170,17 +170,26 @@ public class IdentityChooseController {
 					(int) root.getId(), 0);
 			if (trees != null && !trees.isEmpty()) {
 				logger.debug("dept tree size:" + trees.size());
-				Map<Long, SysTree> treeMap = new HashMap<Long, SysTree>();
+				Map<Long, SysDepartment> deptMap = new HashMap<Long, SysDepartment>();
 				for (SysTree tree : trees) {
 					SysDepartment dept = tree.getDepartment();
-					treeMap.put(dept.getId(), tree);
+					deptMap.put(dept.getNodeId(), dept);
 				}
 
 				for (SysTree tree : trees) {
-					if (deptIds.contains(String.valueOf(tree.getId()))) {
-						tree.setChecked(true);
+					SysDepartment dept = tree.getDepartment();
+					if (dept != null) {
+						if (deptIds.contains(String.valueOf(dept.getId()))) {
+							tree.setChecked(true);
+						}
+						Map<String, Object> dataMap = tree.getDataMap();
+						if (dataMap == null) {
+							dataMap = new HashMap<String, Object>();
+						}
+						dataMap.put("deptId", dept.getId());
+						tree.setDataMap(dataMap);
+						treeModels.add(tree);
 					}
-					treeModels.add(tree);
 				}
 			}
 			logger.debug("treeModels:" + treeModels.size());
@@ -350,7 +359,8 @@ public class IdentityChooseController {
 								treeModel.setName(user.getAccount() + " "
 										+ user.getName());
 								treeModel.setIconCls("icon-user");
-								treeModel.setIcon(request.getContextPath()+"/icons/icons/user.gif");
+								treeModel.setIcon(request.getContextPath()
+										+ "/icons/icons/user.gif");
 								if (userIds != null
 										&& userIds.contains(user.getAccount())) {
 									treeModel.setChecked(true);

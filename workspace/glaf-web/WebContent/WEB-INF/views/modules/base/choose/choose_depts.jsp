@@ -30,7 +30,7 @@
 			},
 			check: {
 				enable: true,
-				nocheckInherit: true
+				chkboxType: { "Y": "s", "N": "s" } 
 			}
 		};
 
@@ -55,8 +55,10 @@
 			if (sx_name != ''){ 
 				sx_name += ','; 
 			}
-			sx += selectedNodes[i].id; 
-            sx_name += selectedNodes[i].name; 
+			if(selectedNodes[i].deptId){
+			  sx += selectedNodes[i].deptId; 
+              sx_name += selectedNodes[i].name; 
+			}
         }  
         //alert(sx);
 
@@ -79,7 +81,7 @@
   <div data-options="region:'north',split:true,border:true" style="height:40px"> 
     <div style="background:#fafafa;padding:2px;border:1px solid #ddd;font-size:12px"> 
 	<span class="x_content_title">部门选择</span>
-	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-save'" 
+	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-ok'" 
 	   onclick="javascript:chooseMyFormData();" >确定</a> 
     </div> 
   </div>

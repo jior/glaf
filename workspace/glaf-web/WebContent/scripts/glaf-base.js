@@ -36,7 +36,7 @@ function selectRole(formName, elementId, elementName){
 	    x=document.body.scrollLeft+event.clientX-event.offsetX-100;
 	    y=document.body.scrollTop+event.clientY-event.offsetY+70;
      }
-     openWindow(url,self,x, y, 458, 420);
+     openWindow(url,self,x, y, 498, 420);
  }
 
  function selectUsers(formName, elementId, elementName, deptId, roleId){

@@ -176,7 +176,7 @@
 	    }
 	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
 	    if (selected ){
-		  var link = "<%=request.getContextPath()%>/sys/tree.do?method=showPerms&id="+selected.id;
+		  var link = "<%=request.getContextPath()%>/sys/tree.do?method=showPerms&nodeId="+selected.id;
 		  //art.dialog.open(link, { height: 400, width: 480, title: "修改分类", lock: true, scrollbars:"yes" }, false);
 		  openWindow(link, 680, 560, "yes");
 	    }

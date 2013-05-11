@@ -30,8 +30,6 @@ import com.glaf.core.query.EntryPointQuery;
 @Component
 public interface EntityEntryMapper {
 
-	void deleteEntityEntrys(EntityEntryQuery query);
-
 	void deleteEntityEntryById(String id);
 
 	void deleteEntryPoint(String entityEntryId);

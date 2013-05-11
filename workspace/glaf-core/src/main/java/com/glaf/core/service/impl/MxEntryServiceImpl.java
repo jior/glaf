@@ -83,8 +83,8 @@ public class MxEntryServiceImpl implements IEntryService {
 	 */
 	@Transactional
 	public void deleteEntityEntry(String id) {
-		entityEntryMapper.deleteEntityEntryById(id);
 		entityEntryMapper.deleteEntryPoint(id);
+		entityEntryMapper.deleteEntityEntryById(id);
 	}
 
 	public List<EntityEntry> getEntityEntries(Map<String, Object> paramMap) {

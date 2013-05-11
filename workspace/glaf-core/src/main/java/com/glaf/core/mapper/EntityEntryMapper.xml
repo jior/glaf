@@ -106,22 +106,12 @@
 		where ID_ = #{id}
 	</delete>
 
+
 	<delete id="deleteEntryPoint" parameterType="string">
-		delete from
-		SYS_ENTRYPOINT
+		delete from SYS_ENTRYPOINT
 		where ENTITYENTRY_ = #{entityEntryId}
 	</delete>
-
-	<delete id="deleteEntityEntrys" parameterType="com.glaf.core.query.EntityEntryQuery">
-		delete from SYS_ENTITYENTRY
-		where (
-		ID_ IN
-		<foreach item="x_rowId" index="index" collection="rowIds"
-			open="(" separator="," close=")">
-			#{x_rowId}
-              </foreach>
-		)
-	</delete>
+	
 
 	<select id="getEntityEntryById" parameterType="string"
 		resultMap="entityEntryResultMap">

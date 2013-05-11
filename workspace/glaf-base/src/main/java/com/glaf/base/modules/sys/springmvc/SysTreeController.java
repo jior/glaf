@@ -21,6 +21,7 @@ package com.glaf.base.modules.sys.springmvc;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -45,14 +46,23 @@ import com.glaf.base.modules.sys.query.SysTreeQuery;
 import com.glaf.base.modules.sys.service.SysTreeService;
 import com.glaf.base.utils.ParamUtil;
 
+import com.glaf.core.base.TreeModel;
 import com.glaf.core.config.ViewProperties;
+import com.glaf.core.domain.EntityEntry;
+import com.glaf.core.domain.EntryPoint;
+import com.glaf.core.identity.Role;
+import com.glaf.core.identity.User;
 import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
 import com.glaf.core.res.ViewMessages;
+import com.glaf.core.security.IdentityFactory;
+import com.glaf.core.service.IEntryService;
 import com.glaf.core.util.JsonUtils;
 import com.glaf.core.util.PageResult;
 import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.RequestUtils;
+import com.glaf.core.util.ResponseUtils;
+import com.glaf.core.util.StringTools;
 import com.glaf.core.util.Tools;
 
 @Controller("/sys/tree")
@@ -62,6 +72,8 @@ public class SysTreeController {
 			.getLog(SysTreeController.class);
 
 	private SysTreeService sysTreeService;
+
+	private IEntryService entryService;
 
 	/**
 	 * 批量删除信息
@@ -327,6 +339,12 @@ public class SysTreeController {
 		logger.info("setSysTreeService");
 	}
 
+	@javax.annotation.Resource
+	public void setEntryService(IEntryService entryService) {
+		this.entryService = entryService;
+		logger.info("setEntryService");
+	}
+
 	/**
 	 * 显示左边菜单
 	 * 
@@ -403,6 +421,109 @@ public class SysTreeController {
 		return new ModelAndView("/modules/sys/tree/tree_frame", modelMap);
 	}
 
+	@ResponseBody
+	@RequestMapping(params = "method=savePerms")
+	public byte[] savePerms(HttpServletRequest request, ModelMap modelMap) {
+		Map<String, Object> paramMap = RequestUtils.getParameterMap(request);
+		logger.debug(paramMap);
+		String rowId = ParamUtils.getString(paramMap, "id");
+		long nodeId = ParamUtil.getIntParameter(request, "nodeId", 0);
+		String moduleId = ParamUtils.getString(paramMap, "moduleId");
+		String entityId = ParamUtils.getString(paramMap, "entityId");
+		String entryKey = ParamUtils.getString(paramMap, "entryKey");
+		String dataCode = ParamUtils.getString(paramMap, "dataCode");
+
+		EntityEntry entityEntry = null;
+
+		if (StringUtils.isNotEmpty(rowId)) {
+			entityEntry = entryService.getEntityEntry(rowId);
+		} else if (nodeId > 0) {
+			entityEntry = entryService.getEntityEntry(nodeId, entryKey);
+		} else if (StringUtils.isNotEmpty(moduleId)
+				&& StringUtils.isNotEmpty(entityId)
+				&& StringUtils.isNotEmpty(entryKey)) {
+			entityEntry = entryService.getEntityEntry(moduleId, entityId,
+					entryKey);
+		}
+
+		if (entityEntry != null && entityEntry.getId() != null) {
+			entryService.deleteEntityEntry(entityEntry.getId());
+			logger.debug(rowId + " remove ok.");
+		}
+
+		entityEntry = new EntityEntry();
+
+		if (StringUtils.isEmpty(dataCode)) {
+			dataCode = "entityEntryCode";
+		}
+
+		if (StringUtils.isEmpty(entityId)) {
+			entityId = nodeId + "_" + entryKey;
+		}
+
+		Tools.populate(entityEntry, paramMap);
+		entityEntry.setNodeId(nodeId);
+		entityEntry.setEntityId(entityId);
+
+		String x_departments = request.getParameter("x_departments");
+		List<String> departments = StringTools.split(x_departments, ",");
+		if (departments != null && departments.size() > 0) {
+			Iterator<String> iter = departments.iterator();
+			while (iter.hasNext()) {
+				String value = iter.next();
+				EntryPoint entryPoint = new EntryPoint();
+				entryPoint.setEntityEntry(entityEntry);
+				entryPoint.setEntryKey(entryKey);
+				entryPoint.setEntityId(entityId);
+				entryPoint.setName("DEPT");
+				entryPoint.setValue(value);
+				entityEntry.addEntryPoint(entryPoint);
+			}
+		}
+
+		String x_roles = request.getParameter("x_roles");
+		List<String> roles = StringTools.split(x_roles, ",");
+		if (roles != null && roles.size() > 0) {
+			Iterator<String> iter = roles.iterator();
+			while (iter.hasNext()) {
+				String value = iter.next();
+				EntryPoint entryPoint = new EntryPoint();
+				entryPoint.setEntityEntry(entityEntry);
+				entryPoint.setEntryKey(entryKey);
+				entryPoint.setEntityId(entityId);
+				entryPoint.setName("ROLE");
+				entryPoint.setValue(value);
+				entityEntry.addEntryPoint(entryPoint);
+			}
+		}
+
+		String x_users = request.getParameter("x_users");
+		List<String> users = StringTools.split(x_users, ",");
+		if (users != null && users.size() > 0) {
+			Iterator<String> iter = users.iterator();
+			while (iter.hasNext()) {
+				String value = iter.next();
+				EntryPoint entryPoint = new EntryPoint();
+				entryPoint.setEntityEntry(entityEntry);
+				entryPoint.setEntryKey(entryKey);
+				entryPoint.setEntityId(entityId);
+				entryPoint.setName("USER");
+				entryPoint.setValue(value);
+				entityEntry.addEntryPoint(entryPoint);
+			}
+		}
+
+		entityEntry.setDataCode(dataCode);
+		entityEntry.setCreateBy(RequestUtils.getActorId(request));
+
+		if (entityEntry.getEntryPoints().size() > 0) {
+			entryService.saveEntityEntry(entityEntry);
+			return ResponseUtils.responseJsonResult(true);
+		}
+
+		return ResponseUtils.responseJsonResult(false);
+	}
+
 	/**
 	 * 显示修改页面
 	 * 
@@ -413,8 +534,8 @@ public class SysTreeController {
 	@RequestMapping(params = "method=showPerms")
 	public ModelAndView showPerms(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
-		long id = ParamUtil.getIntParameter(request, "id", 0);
-		SysTree bean = sysTreeService.findById(id);
+		long nodeId = ParamUtil.getIntParameter(request, "nodeId", 0);
+		SysTree bean = sysTreeService.findById(nodeId);
 		if (bean != null && bean.getParentId() > 0) {
 			SysTree parent = sysTreeService.findById(bean.getParentId());
 			bean.setParent(parent);
@@ -423,6 +544,108 @@ public class SysTreeController {
 		List<SysTree> list = new ArrayList<SysTree>();
 		sysTreeService.getSysTree(list, 0, 0);
 		request.setAttribute("parent", list);
+
+		Map<String, Object> paramMap = RequestUtils.getParameterMap(request);
+
+		String rowId = ParamUtils.getString(paramMap, "id");
+		String moduleId = ParamUtils.getString(paramMap, "moduleId");
+		String entityId = ParamUtils.getString(paramMap, "entityId");
+		String entryKey = ParamUtils.getString(paramMap, "entryKey");
+		String dataCode = ParamUtils.getString(paramMap, "dataCode");
+		StringBuffer rolesBuffer = new StringBuffer();
+		StringBuffer rolesNameBuffer = new StringBuffer();
+		StringBuffer deptsBuffer = new StringBuffer();
+		StringBuffer deptsNameBuffer = new StringBuffer();
+		StringBuffer usersBuffer = new StringBuffer();
+		StringBuffer usersNameBuffer = new StringBuffer();
+
+		Map<Long, Role> roleMap = IdentityFactory.getRoleMap();
+		Map<String, User> userMap = IdentityFactory.getUserMap();
+		Map<Long, TreeModel> deptMap = IdentityFactory.getDepartmentMap();
+
+		if (entryKey == null) {
+			entryKey = "r";
+		}
+
+		EntityEntry entityEntry = null;
+
+		if (StringUtils.isNotEmpty(moduleId)
+				&& StringUtils.isNotEmpty(entityId)
+				&& StringUtils.isNotEmpty(entryKey)) {
+			entityEntry = entryService.getEntityEntry(moduleId, entityId,
+					entryKey);
+		} else if (nodeId > 0) {
+			entityEntry = entryService.getEntityEntry(nodeId, entryKey);
+		} else if (StringUtils.isNotEmpty(rowId)) {
+			entityEntry = entryService.getEntityEntry(rowId);
+		}
+
+		if (entityEntry != null && entityEntry.getEntryPoints() != null) {
+			Iterator<EntryPoint> iter = entityEntry.getEntryPoints().iterator();
+			while (iter.hasNext()) {
+				EntryPoint entryPoint = iter.next();
+				String value = entryPoint.getValue();
+				if ("ROLE".equals(entryPoint.getName())) {
+					Role role = roleMap.get(Long.parseLong(value));
+					if (role != null) {
+						rolesBuffer.append(role.getRoleId()).append(',');
+						rolesNameBuffer.append(role.getName()).append(',');
+					}
+				} else if ("DEPT".equals(entryPoint.getName())) {
+					TreeModel treeModel = deptMap.get(Long.parseLong(value));
+					if (treeModel != null) {
+						deptsBuffer.append(treeModel.getId()).append(',');
+						deptsNameBuffer.append(treeModel.getName()).append(',');
+					}
+				} else if ("USER".equals(entryPoint.getName())) {
+					User user = userMap.get(value);
+					if (user != null) {
+						usersBuffer.append(user.getActorId()).append(',');
+						usersNameBuffer.append(user.getName()).append(',');
+					}
+				}
+			}
+		}
+
+		if (rolesBuffer.length() > 0) {
+			rolesBuffer.delete(rolesBuffer.length() - 1, rolesBuffer.length());
+		}
+
+		if (rolesNameBuffer.length() > 0) {
+			rolesNameBuffer.delete(rolesNameBuffer.length() - 1,
+					rolesNameBuffer.length());
+		}
+
+		if (deptsBuffer.length() > 0) {
+			deptsBuffer.delete(deptsBuffer.length() - 1, deptsBuffer.length());
+		}
+
+		if (deptsNameBuffer.length() > 0) {
+			deptsNameBuffer.delete(deptsNameBuffer.length() - 1,
+					deptsNameBuffer.length());
+		}
+
+		if (usersBuffer.length() > 0) {
+			usersBuffer.delete(usersBuffer.length() - 1, usersBuffer.length());
+		}
+
+		if (usersNameBuffer.length() > 0) {
+			usersNameBuffer.delete(usersNameBuffer.length() - 1,
+					usersNameBuffer.length());
+		}
+
+		if (StringUtils.isEmpty(dataCode)) {
+			dataCode = "entityEntryCode";
+		}
+
+		modelMap.put("entityEntry", entityEntry);
+		modelMap.put("roleMap", roleMap);
+		modelMap.put("x_roles", rolesBuffer.toString());
+		modelMap.put("x_roles_name", rolesNameBuffer.toString());
+		modelMap.put("x_users", usersBuffer.toString());
+		modelMap.put("x_users_name", usersNameBuffer.toString());
+		modelMap.put("x_departments", deptsBuffer.toString());
+		modelMap.put("x_departments_name", deptsNameBuffer.toString());
 
 		String x_view = ViewProperties.getString("tree.showPerms");
 		if (StringUtils.isNotEmpty(x_view)) {
