@@ -162,7 +162,7 @@ public class IdentityChooseController {
 		List<String> deptIds = StringTools.split(selecteds);
 		SysTree root = sysTreeService.getSysTreeByCode(SysConstants.TREE_DEPT);
 		if (root != null) {
-			logger.debug(root.toJsonObject().toJSONString());
+			//logger.debug(root.toJsonObject().toJSONString());
 
 			List<TreeModel> treeModels = new ArrayList<TreeModel>();
 			// treeModels.add(root);
@@ -374,7 +374,7 @@ public class IdentityChooseController {
 			logger.debug("treeModels:" + treeModels.size());
 			TreeHelper treeHelper = new TreeHelper();
 			JSONArray jsonArray = treeHelper.getTreeJSONArray(treeModels);
-			logger.debug(jsonArray.toJSONString());
+			//logger.debug(jsonArray.toJSONString());
 			return jsonArray.toJSONString().getBytes("UTF-8");
 		}
 		return result.toString().getBytes("UTF-8");
