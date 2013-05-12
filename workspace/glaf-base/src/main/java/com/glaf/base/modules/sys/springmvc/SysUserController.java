@@ -52,6 +52,7 @@ import com.glaf.core.util.JsonUtils;
 import com.glaf.core.util.PageResult;
 import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.RequestUtils;
+import com.glaf.core.util.StringTools;
 import com.glaf.core.util.Tools;
 
 import com.glaf.base.modules.Constants;
@@ -418,6 +419,21 @@ public class SysUserController {
 		SysUser bean = sysUserService.findById(id);
 		request.setAttribute("bean", bean);
 
+		if (bean != null && StringUtils.isNotEmpty(bean.getSuperiorIds())) {
+			List<String> userIds = StringTools.split(bean.getSuperiorIds());
+			StringBuffer buffer = new StringBuffer();
+			if (userIds != null && !userIds.isEmpty()) {
+				for (String userId : userIds) {
+					SysUser u = sysUserService.findByAccount(userId);
+					if (u != null) {
+						buffer.append(u.getName()).append("[")
+								.append(u.getAccount()).append("] ");
+					}
+				}
+				request.setAttribute("x_users_name", buffer.toString());
+			}
+		}
+
 		List<Dictory> dictories = dictoryService
 				.getDictoryList(SysConstants.USER_HEADSHIP);
 		modelMap.put("dictories", dictories);
@@ -451,6 +467,21 @@ public class SysUserController {
 		SysUser user = RequestUtil.getLoginUser(request);
 		SysUser bean = sysUserService.findByAccount(user.getAccount());
 		request.setAttribute("bean", bean);
+		
+		if (bean != null && StringUtils.isNotEmpty(bean.getSuperiorIds())) {
+			List<String> userIds = StringTools.split(bean.getSuperiorIds());
+			StringBuffer buffer = new StringBuffer();
+			if (userIds != null && !userIds.isEmpty()) {
+				for (String userId : userIds) {
+					SysUser u = sysUserService.findByAccount(userId);
+					if (u != null) {
+						buffer.append(u.getName()).append("[")
+								.append(u.getAccount()).append("] ");
+					}
+				}
+				request.setAttribute("x_users_name", buffer.toString());
+			}
+		}
 
 		List<Dictory> dictories = dictoryService
 				.getDictoryList(SysConstants.USER_HEADSHIP);
@@ -542,15 +573,20 @@ public class SysUserController {
 			long id = ParamUtil.getIntParameter(request, "id", 0);
 			SysUser bean = sysUserService.findById(id);
 
-			String newPwd = ParamUtil.getParameter(request, "newPwd");
-			if (bean != null && StringUtils.isNotEmpty(newPwd)) {
-				try {
-					bean.setPassword(DigestUtil.digestString(newPwd, "MD5"));
-				} catch (Exception ex) {
-					ex.printStackTrace();
+			/**
+			 * 系统管理员的密码不允许重置
+			 */
+			if (!bean.isSystemAdministrator()) {
+				String newPwd = ParamUtil.getParameter(request, "newPwd");
+				if (bean != null && StringUtils.isNotEmpty(newPwd)) {
+					try {
+						bean.setPassword(DigestUtil.digestString(newPwd, "MD5"));
+					} catch (Exception ex) {
+						ex.printStackTrace();
+					}
+					bean.setUpdateBy(bean.getAccount());
+					ret = sysUserService.update(bean);
 				}
-				bean.setUpdateBy(bean.getAccount());
-				ret = sysUserService.update(bean);
 			}
 		}
 

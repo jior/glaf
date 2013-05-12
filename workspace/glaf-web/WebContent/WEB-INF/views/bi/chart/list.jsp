@@ -37,7 +37,7 @@
 				remoteSort: false,
 				singleSelect:true,
 				idField:'id',
-				pageSize:50,
+				pageSize:20,
 				columns:[[
 	                {title:'编号',field:'id',width:80,sortable:true},
 					{field:'subject',title:'标题',width:180},

@@ -18,7 +18,11 @@ int nodeId=ParamUtil.getIntParameter(request, "nodeId", 0);
 <link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
 <script language="javascript" src='<%=context%>/scripts/main.js'></script>
 <script language="javascript" src='<%=context%>/scripts/verify.js'></script></head>
-<script language="JavaScript">
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/glaf-base.js"></script>
+<script language="javascript">
+
+var contextPath = "<%=request.getContextPath()%>";
+
 function checkForm(form){
   if(verifyAll(form)){
      //if(form.password.value!=form.password2.value){
@@ -38,7 +42,8 @@ function setValue(obj){
 
 <body>
 <div class="nav-title"><span class="Title">用户管理</span>&gt;&gt;修改用户</div>
-<html:form action="${contextPath}/sys/user.do?method=saveModify" method="post"  onsubmit="return checkForm(this);"> 
+<html:form id="iForm" name="iForm" action="${contextPath}/sys/user.do?method=saveModify" 
+      method="post"  onsubmit="return checkForm(this);"> 
 <input type="hidden" name="id" value="<%=bean.getId()%>">
 <input type="hidden" name="nodeId" value="<%=nodeId%>">
 <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0" class="box">
@@ -138,9 +143,11 @@ function setValue(obj){
 	  <tr>
         <td class="input-box2" valign="top">直接上级</td>
         <td>
-          <input name="superiorIds" type="text" size="30" class="input" datatype="string" nullable="yes" maxsize="20"
-		  chname="直接上级" value="<%=bean.getSuperiorIds() != null ?bean.getSuperiorIds() :""%>"> 
-		  <br>（直接上级领导的账号，如果有多个，用半角的逗号“,”分隔）       
+          <input id="superiorIds" name="superiorIds" type="hidden" 
+		         value="<%=bean.getSuperiorIds() != null ?bean.getSuperiorIds() :""%>"> 
+		  <textarea cols="40" id="x_users_name" name="x_users_name" rows="8"  wrap="yes" readonly  
+             onclick="javascript:selectUser('iForm', 'superiorIds','x_users_name');"
+		     style="height:25px;width:250px;color: #000066; background: #ffffff;">${x_users_name}</textarea>       
 		</td>
       </tr>
       <tr>

@@ -53,6 +53,7 @@ import com.glaf.core.res.ViewMessages;
 import com.glaf.core.security.DigestUtil;
 import com.glaf.core.service.ITableDataService;
 import com.glaf.core.util.RequestUtils;
+import com.glaf.core.util.StringTools;
 
 @Controller("/identity/user")
 @RequestMapping("/identity/user.do")
@@ -85,6 +86,21 @@ public class UserController {
 		SysUser user = RequestUtil.getLoginUser(request);
 		SysUser bean = sysUserService.findByAccount(user.getAccount());
 		request.setAttribute("bean", bean);
+		
+		if (bean != null && StringUtils.isNotEmpty(bean.getSuperiorIds())) {
+			List<String> userIds = StringTools.split(bean.getSuperiorIds());
+			StringBuffer buffer = new StringBuffer();
+			if (userIds != null && !userIds.isEmpty()) {
+				for (String userId : userIds) {
+					SysUser u = sysUserService.findByAccount(userId);
+					if (u != null) {
+						buffer.append(u.getName()).append("[")
+								.append(u.getAccount()).append("] ");
+					}
+				}
+				request.setAttribute("x_users_name", buffer.toString());
+			}
+		}
 
 		String x_view = ViewProperties
 				.getString("identity.user.prepareModifyInfo");

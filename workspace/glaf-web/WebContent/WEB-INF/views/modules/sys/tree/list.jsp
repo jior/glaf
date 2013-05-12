@@ -282,7 +282,7 @@
 			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-remove'"
 			   onclick="javascript:deleteSelections();">删除</a> 
 			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-sys'"
-			   onclick="javascript:categoryPerms();">栏目权限</a> 
+			   onclick="javascript:categoryPerms();">分类权限</a> 
 			<!-- <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-search'"
 			   onclick="javascript:searchWin();">查找</a> -->
 		   </div> 

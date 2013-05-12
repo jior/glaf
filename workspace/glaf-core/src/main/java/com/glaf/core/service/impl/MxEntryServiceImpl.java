@@ -32,7 +32,6 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.SqlSession;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -93,7 +92,7 @@ public class MxEntryServiceImpl implements IEntryService {
 			EntityEntryQuery query = new EntityEntryQuery();
 			query.nodeId(nodeId);
 			query.entryKey(entryKey);
-			List<EntityEntry> rows = entityEntryMapper.getEntityEntries(query);
+			List<EntityEntry> rows = this.list(query);
 			if (rows != null && rows.size() > 0) {
 				entityEntry = rows.get(0);
 				this.initializeEntryPoints(entityEntry);
@@ -110,7 +109,9 @@ public class MxEntryServiceImpl implements IEntryService {
 
 	public EntityEntry getEntityEntry(String id) {
 		EntityEntry entityEntry = entityEntryMapper.getEntityEntryById(id);
-		this.initializeEntryPoints(entityEntry);
+		if (entityEntry != null) {
+			this.initializeEntryPoints(entityEntry);
+		}
 		return entityEntry;
 	}
 
@@ -136,7 +137,6 @@ public class MxEntryServiceImpl implements IEntryService {
 	/**
 	 * 获取某个用户能访问的记录集合
 	 * 
-	 * 
 	 * @param loginContext
 	 *            用户上下文
 	 * @param moduleId
@@ -147,7 +147,7 @@ public class MxEntryServiceImpl implements IEntryService {
 	 */
 	public List<String> getEntityIds(LoginContext loginContext,
 			String moduleId, String entryKey) {
-		String cacheKey = "eix_" + loginContext.getActorId() + "_" + moduleId
+		String cacheKey = "mx_" + loginContext.getActorId() + "_" + moduleId
 				+ "_" + entryKey;
 		if (CacheFactory.get(cacheKey) != null) {
 
@@ -175,6 +175,22 @@ public class MxEntryServiceImpl implements IEntryService {
 			query.name("ROLE");
 			for (Long roleId : roleIds) {
 				query.value(String.valueOf(roleId));
+				entryPoints = entityEntryMapper.getEntryPoints(query);
+				if (entryPoints != null && entryPoints.size() > 0) {
+					Iterator<EntryPoint> iter = entryPoints.iterator();
+					while (iter.hasNext()) {
+						EntryPoint entryPoint = iter.next();
+						entityIds.add(entryPoint.getEntityId());
+					}
+				}
+			}
+		}
+
+		Collection<String> roles = loginContext.getRoles();
+		if (roles != null && !roles.isEmpty()) {
+			query.name("ROLE");
+			for (String role : roles) {
+				query.value(role);
 				entryPoints = entityEntryMapper.getEntryPoints(query);
 				if (entryPoints != null && entryPoints.size() > 0) {
 					Iterator<EntryPoint> iter = entryPoints.iterator();
@@ -234,7 +250,7 @@ public class MxEntryServiceImpl implements IEntryService {
 	 * @return
 	 */
 	public List<String> getEntryKeys(LoginContext loginContext, String moduleId) {
-		String cacheKey = "ecx_" + loginContext.getActorId() + "_" + moduleId;
+		String cacheKey = "mx_ek_" + loginContext.getActorId() + "_" + moduleId;
 		if (CacheFactory.get(cacheKey) != null) {
 
 		}
@@ -259,6 +275,22 @@ public class MxEntryServiceImpl implements IEntryService {
 			query.name("ROLE");
 			for (Long roleId : roleIds) {
 				query.value(String.valueOf(roleId));
+				entryPoints = entityEntryMapper.getEntryPoints(query);
+				if (entryPoints != null && entryPoints.size() > 0) {
+					Iterator<EntryPoint> iter = entryPoints.iterator();
+					while (iter.hasNext()) {
+						EntryPoint entryPoint = iter.next();
+						entryKeys.add(entryPoint.getEntryKey());
+					}
+				}
+			}
+		}
+
+		Collection<String> roles = loginContext.getRoles();
+		if (roles != null && !roles.isEmpty()) {
+			query.name("ROLE");
+			for (String role : roles) {
+				query.value(role);
 				entryPoints = entityEntryMapper.getEntryPoints(query);
 				if (entryPoints != null && entryPoints.size() > 0) {
 					Iterator<EntryPoint> iter = entryPoints.iterator();
@@ -328,7 +360,7 @@ public class MxEntryServiceImpl implements IEntryService {
 	 * @return
 	 */
 	public List<TreeModel> getTreeModels(LoginContext loginContext) {
-		String cacheKey = "cx_" + loginContext.getActorId();
+		String cacheKey = "mx_" + loginContext.getActorId();
 		if (CacheFactory.get(cacheKey) != null) {
 
 		}
@@ -349,6 +381,22 @@ public class MxEntryServiceImpl implements IEntryService {
 			query.name("ROLE");
 			for (Long roleId : roleIds) {
 				query.value(String.valueOf(roleId));
+				entryPoints = entityEntryMapper.getEntryPoints(query);
+				if (entryPoints != null && entryPoints.size() > 0) {
+					Iterator<EntryPoint> iter = entryPoints.iterator();
+					while (iter.hasNext()) {
+						EntryPoint entryPoint = iter.next();
+						nodeIds.add(entryPoint.getNodeId());
+					}
+				}
+			}
+		}
+
+		Collection<String> roles = loginContext.getRoles();
+		if (roles != null && !roles.isEmpty()) {
+			query.name("ROLE");
+			for (String role : roles) {
+				query.value(role);
 				entryPoints = entityEntryMapper.getEntryPoints(query);
 				if (entryPoints != null && entryPoints.size() > 0) {
 					Iterator<EntryPoint> iter = entryPoints.iterator();
@@ -473,8 +521,6 @@ public class MxEntryServiceImpl implements IEntryService {
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("nodeId", nodeId);
 		params.put("entryKey", permKey);
-		params.put("name", "ROLE");
-		params.put("values", loginContext.getRoles());
 
 		List<EntryPoint> entryPoints = null;
 		EntryPointQuery query = new EntryPointQuery();
@@ -493,6 +539,19 @@ public class MxEntryServiceImpl implements IEntryService {
 			query.name("ROLE");
 			for (Long roleId : roleIds) {
 				query.value(String.valueOf(roleId));
+				entryPoints = entityEntryMapper.getEntryPoints(query);
+				if (entryPoints != null && entryPoints.size() > 0) {
+					hasPermission = true;
+					break;
+				}
+			}
+		}
+
+		Collection<String> roles = loginContext.getRoles();
+		if (roles != null && !roles.isEmpty()) {
+			query.name("ROLE");
+			for (String role : roles) {
+				query.value(role);
 				entryPoints = entityEntryMapper.getEntryPoints(query);
 				if (entryPoints != null && entryPoints.size() > 0) {
 					hasPermission = true;
@@ -536,11 +595,11 @@ public class MxEntryServiceImpl implements IEntryService {
 			/**
 			 * 查找该节点的所有上级节点，判断是否有权限
 			 */
-			List<TreeModel> treeNodes = treeModelService
+			List<TreeModel> treeModels = treeModelService
 					.getAncestorTreeModels(nodeId);
-			if (treeNodes != null && treeNodes.size() > 0) {
+			if (treeModels != null && treeModels.size() > 0) {
 				List<Long> nodeIds = new ArrayList<Long>();
-				Iterator<TreeModel> it = treeNodes.iterator();
+				Iterator<TreeModel> it = treeModels.iterator();
 				while (it.hasNext()) {
 					TreeModel nd = it.next();
 					nodeIds.add(nd.getId());
@@ -627,6 +686,19 @@ public class MxEntryServiceImpl implements IEntryService {
 			}
 		}
 
+		Collection<String> roles = loginContext.getRoles();
+		if (roles != null && !roles.isEmpty()) {
+			query.name("ROLE");
+			for (String role : roles) {
+				query.value(role);
+				entryPoints = entityEntryMapper.getEntryPoints(query);
+				if (entryPoints != null && entryPoints.size() > 0) {
+					hasPermission = true;
+					break;
+				}
+			}
+		}
+
 		/**
 		 * 部门是否具有该节点的权限
 		 */
@@ -700,8 +772,7 @@ public class MxEntryServiceImpl implements IEntryService {
 		}
 	}
 
-	@Resource
-	@Qualifier("myBatisEntityDAO")
+	@Resource(name = "myBatisEntityDAO")
 	public void setEntityDAO(EntityDAO entityDAO) {
 		this.entityDAO = entityDAO;
 	}
@@ -711,8 +782,7 @@ public class MxEntryServiceImpl implements IEntryService {
 		this.entityEntryMapper = entityEntryMapper;
 	}
 
-	@Resource
-	@Qualifier("myBatisDbIdGenerator")
+	@Resource(name = "myBatisDbIdGenerator")
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}

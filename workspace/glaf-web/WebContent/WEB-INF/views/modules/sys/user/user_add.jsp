@@ -20,24 +20,30 @@
 <title></title>
 <link type="text/css" rel="stylesheet" href="<%=context%>/css/site.css" >
 <script language="javascript" src='<%=context%>/scripts/main.js'></script>
-<script language="javascript" src='<%=context%>/scripts/verify.js'></script></head>
+<script language="javascript" src='<%=context%>/scripts/verify.js'></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/glaf-base.js"></script>
 <script language="javascript">
-function checkForm(form){
-  if(verifyAll(form)){
+
+  var contextPath = "<%=request.getContextPath()%>";
+
+  function checkForm(form){
+    if(verifyAll(form)){
      if(form.password.value!=form.password2.value){
 	   alert("密码与确认密码不匹配!");
 	 }else{
 	   return true;
 	 }
+    }
+     return false;
   }
-   return false;
-}
+
 </script>
 </head>
 
 <body>
 <div class="nav-title"><span class="Title">用户管理</span>&gt;&gt;增加用户</div>
-<html:form action="${contextPath}/sys/user.do?method=saveAdd" method="post" onsubmit="return checkForm(this);" > 
+<html:form id="iForm" name="iForm" action="${contextPath}/sys/user.do?method=saveAdd"
+           method="post" onsubmit="return checkForm(this);" > 
 <input type="hidden" name="parent" value="<%=parent%>">
 <input type="hidden" name="nodeId" value="<%=nodeId%>">
 <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0" class="box">
@@ -117,8 +123,11 @@ function checkForm(form){
 	  <tr>
         <td class="input-box2" valign="top">直接上级</td>
         <td>
-          <input name="superiorIds" type="text" size="30" class="input" datatype="string" nullable="yes" maxsize="20" chname="直接上级">
-          <br>（直接上级领导的账号，如果有多个，用半角的逗号“,”分隔）       
+		  <input type="hidden" id="superiorIds" name="superiorIds" value="">
+          <textarea cols="40" id="x_users_name" name="x_users_name" rows="8"  wrap="yes" readonly  
+             onclick="javascript:selectUser('iForm', 'superiorIds','x_users_name');"
+		     style="height:25px;width:250px;color: #000066; background: #ffffff;"></textarea>
+           <br>       
 		  </td>
       </tr>
       <tr>
