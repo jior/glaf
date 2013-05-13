@@ -10,7 +10,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <title>角色用户</title>
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/site.css"/>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/core.css"/>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/ztree/css/zTreeStyle/zTreeStyle.css"/>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/icons/styles.css"/>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
@@ -55,16 +55,12 @@
 </script>
 </head>
 
-<body>
-
-<div style="margin:0;"></div>  
-
+<body style="margin:0;"> 
 <div style="background:#fafafa;padding:2px;border:1px solid #ddd;font-size:12px"> 
 <span class="x_content_title">查看角色【${sysRole.name}】的用户</span>
 </div> 
 <div>
 	<ul id="myTree" class="ztree"></ul> 
 </div>
-
 </body>
 </html>
