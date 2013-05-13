@@ -19,6 +19,7 @@
 package com.glaf.core.query;
 
 import java.util.*;
+
 import com.glaf.core.query.DataQuery;
 
 public class MembershipQuery extends DataQuery {
@@ -30,6 +31,8 @@ public class MembershipQuery extends DataQuery {
 	protected List<Long> nodeIds;
 	protected List<String> objectIds;
 	protected List<String> objectValues;
+	protected String roleCode;
+	protected List<String> roleCodes;
 	protected Long roleId;
 	protected List<Long> roleIds;
 	protected String superiorId;
@@ -142,6 +145,14 @@ public class MembershipQuery extends DataQuery {
 
 		}
 		return orderBy;
+	}
+
+	public String getRoleCode() {
+		return roleCode;
+	}
+
+	public List<String> getRoleCodes() {
+		return roleCodes;
 	}
 
 	public Long getRoleId() {
@@ -266,6 +277,14 @@ public class MembershipQuery extends DataQuery {
 
 	public void setObjectValues(List<String> objectValues) {
 		this.objectValues = objectValues;
+	}
+
+	public void setRoleCode(String roleCode) {
+		this.roleCode = roleCode;
+	}
+
+	public void setRoleCodes(List<String> roleCodes) {
+		this.roleCodes = roleCodes;
 	}
 
 	public void setRoleId(Long roleId) {

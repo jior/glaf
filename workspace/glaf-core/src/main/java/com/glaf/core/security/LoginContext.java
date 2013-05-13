@@ -327,7 +327,7 @@ public class LoginContext implements java.io.Serializable, Cloneable {
 		boolean hasPermission = false;
 		Collection<Long> roles = this.getRoleIds();
 		if (roles != null) {
-			if (roles.contains(10000)) {
+			if (roles.contains(10000L)) {
 				hasPermission = true;
 			}
 		}
@@ -378,7 +378,7 @@ public class LoginContext implements java.io.Serializable, Cloneable {
 		boolean hasPermission = false;
 		Collection<Long> roleIds = this.getRoleIds();
 		if (roleIds != null) {
-			if (roleIds.contains(10000)) {
+			if (roleIds.contains(10000L)) {
 				hasPermission = true;
 			}
 		}
@@ -395,7 +395,7 @@ public class LoginContext implements java.io.Serializable, Cloneable {
 		boolean isSystemAdministrator = false;
 		Collection<Long> roleIds = this.getRoleIds();
 		if (roleIds != null) {
-			if (roleIds.contains(10000)) {
+			if (roleIds.contains(10000L)) {
 				isSystemAdministrator = true;
 			}
 		}
