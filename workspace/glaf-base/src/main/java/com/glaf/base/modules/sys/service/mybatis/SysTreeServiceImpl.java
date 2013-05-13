@@ -177,6 +177,14 @@ public class SysTreeServiceImpl implements SysTreeService {
 		query.setRelationColumn(relationColumn);
 		return sysTreeMapper.getRelationSysTrees(query);
 	}
+	/**
+	 * 获取某个用户某个角色的树节点
+	 * @param query
+	 * @return
+	 */
+	public List<SysTree> getRoleUserTrees(SysUserQuery query){
+		return sysTreeMapper.getRoleUserTrees(query);
+	}
 
 	public void getSysTree(List<SysTree> tree, long parentId, int deep) {
 		SysTreeQuery query = new SysTreeQuery();

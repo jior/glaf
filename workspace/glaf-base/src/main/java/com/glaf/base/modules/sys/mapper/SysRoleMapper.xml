@@ -108,7 +108,8 @@
 
 
 	<delete id="deleteSysRoleById" parameterType="long">
-		delete from sys_role
+		delete from
+		sys_role
 		where ID = #{id}
 	</delete>
 
@@ -130,25 +131,45 @@
 	</select>
 
 
+	<select id="getSysRolesOfDepts" parameterType="com.glaf.base.modules.sys.query.SysDepartmentQuery"
+		resultMap="sysRoleResultMap">
+
+		select R.* from SYS_ROLE R
+		inner join SYS_DEPT_ROLE DR
+		on DR.SYSROLEID =
+		R.ID
+		inner join sys_department D
+		on DR.DEPTID = D.ID
+		where D.NODEID IN
+		<foreach item="x_nodeId" index="index" collection="nodeIds"
+			open="(" separator="," close=")">
+			#{x_nodeId}
+		</foreach>
+
+	</select>
+
+
 	<select id="getSysRolesOfDeptRole" parameterType="long"
 		resultMap="sysRoleResultMap">
 
 		select * from sys_role E
 		inner join sys_dept_role R
-		on E.ID = R.SYSROLEID
+		on E.ID =
+		R.SYSROLEID
 		where E.ID = #{id}
 
 	</select>
-	
-	<select id="getSysRolesOfUser" parameterType="string"
-		resultMap="sysRoleResultMap">
+
+	<select id="getSysRolesOfUser" parameterType="string" resultMap="sysRoleResultMap">
 
 		select E.* from sys_role E
 		inner join sys_dept_role R
-		on E.ID = R.SYSROLEID
+		on E.ID =
+		R.SYSROLEID
 		inner join SYS_USER_ROLE UR
 		on R.ID = UR.ROLEID
-		inner join  SYS_USER U
+		inner join
+		SYS_USER U
 		on UR.USERID=U.ID
 		where U.ACCOUNT=#{acorId}
 

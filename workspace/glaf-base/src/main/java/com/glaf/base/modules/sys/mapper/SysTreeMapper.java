@@ -26,23 +26,25 @@ import com.glaf.base.modules.sys.query.*;
 @Component
 public interface SysTreeMapper {
 
+	void deleteSysTreeById(Long id);
+
 	void deleteSysTrees(SysTreeQuery query);
 
-	void deleteSysTreeById(Long id);
+	List<SysTree> getApplicationSysTrees(SysTreeQuery query);
+
+	List<SysTree> getDepartmentSysTrees(SysTreeQuery query);
+
+	List<SysTree> getDictorySysTrees(SysTreeQuery query);
+
+	List<SysTree> getRelationSysTrees(SysTreeQuery query);
+
+	List<SysTree> getRoleUserTrees(SysUserQuery query);
 
 	SysTree getSysTreeById(Long id);
 
 	int getSysTreeCount(SysTreeQuery query);
 
 	List<SysTree> getSysTrees(SysTreeQuery query);
-
-	List<SysTree> getDictorySysTrees(SysTreeQuery query);
-
-	List<SysTree> getDepartmentSysTrees(SysTreeQuery query);
-
-	List<SysTree> getApplicationSysTrees(SysTreeQuery query);
-	
-	List<SysTree>  getRelationSysTrees(SysTreeQuery query);
 
 	void insertSysTree(SysTree model);
 

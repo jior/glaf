@@ -24,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.base.modules.sys.model.SysTree;
 import com.glaf.base.modules.sys.query.SysTreeQuery;
+import com.glaf.base.modules.sys.query.SysUserQuery;
 import com.glaf.core.util.PageResult;
 
 @Transactional(readOnly = true)
@@ -137,6 +138,13 @@ public interface SysTreeService {
 	 */
 	List<SysTree> getRelationSysTrees(String relationTable,
 			String relationColumn, SysTreeQuery query);
+	
+	/**
+	 * 获取某个用户某个角色的树节点
+	 * @param query
+	 * @return
+	 */
+	List<SysTree> getRoleUserTrees(SysUserQuery query);
 
 	/**
 	 * 获取树型列表

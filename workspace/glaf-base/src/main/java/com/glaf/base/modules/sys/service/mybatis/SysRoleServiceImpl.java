@@ -164,6 +164,10 @@ public class SysRoleServiceImpl implements SysRoleService {
 		List<SysRole> list = this.list(query);
 		return list;
 	}
+	
+	public List<SysRole> getSysRolesOfDepts(SysDepartmentQuery query){
+		return sysRoleMapper.getSysRolesOfDepts(query);
+	}
 
 	public PageResult getSysRoleList(int pageNo, int pageSize) {
 		// ¼ÆËã×ÜÊý

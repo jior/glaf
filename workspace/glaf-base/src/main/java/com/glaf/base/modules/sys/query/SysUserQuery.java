@@ -27,61 +27,63 @@ public class SysUserQuery extends DataQuery {
 	protected String account;
 	protected String accountLike;
 	protected List<String> accounts;
-	protected String code;
-	protected String codeLike;
-	protected List<String> codes;
-	protected String name;
-	protected String nameLike;
-	protected List<String> names;
+	protected Integer accountType;
+	protected Integer accountTypeGreaterThanOrEqual;
+	protected Integer accountTypeLessThanOrEqual;
+	protected List<Integer> accountTypes;
+	protected String adminFlag;
+	protected List<String> adminFlags;
+	protected Date availDateEndGreaterThanOrEqual;
+	protected Date availDateEndLessThanOrEqual;
+	protected Date availDateStartGreaterThanOrEqual;
+	protected Date availDateStartLessThanOrEqual;
 	protected Integer blocked;
 	protected Integer blockedGreaterThanOrEqual;
 	protected Integer blockedLessThanOrEqual;
 	protected List<Integer> blockeds;
+	protected String code;
+	protected String codeLike;
+	protected List<String> codes;
 	protected Date createTimeGreaterThanOrEqual;
 	protected Date createTimeLessThanOrEqual;
-	protected Date lastLoginTimeGreaterThanOrEqual;
-	protected Date lastLoginTimeLessThanOrEqual;
-	protected String lastLoginIP;
-	protected String lastLoginIPLike;
-	protected List<String> lastLoginIPs;
+	protected Long deptId;
+	protected List<Long> deptIds;
+	protected Integer dumpFlag;
+	protected Integer dumpFlagGreaterThanOrEqual;
+	protected Integer dumpFlagLessThanOrEqual;
+	protected List<Integer> dumpFlags;
+	protected String email;
+	protected String emailLike;
 	protected Integer evection;
 	protected Integer evectionGreaterThanOrEqual;
 	protected Integer evectionLessThanOrEqual;
 	protected List<Integer> evections;
-	protected String mobile;
-	protected String mobileLike;
-	protected String email;
-	protected String emailLike;
-	protected String telephone;
-	protected String telephoneLike;
+	protected String fax;
+	protected String faxLike;
 	protected Integer gender;
 	protected Integer genderGreaterThanOrEqual;
 	protected Integer genderLessThanOrEqual;
 	protected String headship;
 	protected String headshipLike;
+	protected String lastLoginIP;
+	protected String lastLoginIPLike;
+	protected List<String> lastLoginIPs;
+	protected Date lastLoginTimeGreaterThanOrEqual;
+	protected Date lastLoginTimeLessThanOrEqual;
+	protected String mobile;
+	protected String mobileLike;
+	protected String name;
+	protected String nameLike;
+	protected List<String> names;
+	protected String roleCode;
+	protected List<String> roleCodes;
+	protected String superiorIdsLike;
+	protected String telephone;
+	protected String telephoneLike;
 	protected Integer userType;
 	protected Integer userTypeGreaterThanOrEqual;
 	protected Integer userTypeLessThanOrEqual;
 	protected List<Integer> userTypes;
-	protected String fax;
-	protected String faxLike;
-	protected Integer accountType;
-	protected Integer accountTypeGreaterThanOrEqual;
-	protected Integer accountTypeLessThanOrEqual;
-	protected List<Integer> accountTypes;
-	protected Integer dumpFlag;
-	protected Integer dumpFlagGreaterThanOrEqual;
-	protected Integer dumpFlagLessThanOrEqual;
-	protected List<Integer> dumpFlags;
-	protected Long deptId;
-	protected List<Long> deptIds;
-	protected String adminFlag;
-	protected List<String> adminFlags;
-	protected String superiorIdsLike;
-	protected Date availDateStartGreaterThanOrEqual;
-	protected Date availDateStartLessThanOrEqual;
-	protected Date availDateEndGreaterThanOrEqual;
-	protected Date availDateEndLessThanOrEqual;
 
 	public SysUserQuery() {
 
@@ -737,6 +739,14 @@ public class SysUserQuery extends DataQuery {
 		return orderBy;
 	}
 
+	public String getRoleCode() {
+		return roleCode;
+	}
+
+	public List<String> getRoleCodes() {
+		return roleCodes;
+	}
+
 	public String getSuperiorIdsLike() {
 		if (superiorIdsLike != null && superiorIdsLike.trim().length() > 0) {
 			if (!superiorIdsLike.startsWith("%")) {
@@ -902,6 +912,14 @@ public class SysUserQuery extends DataQuery {
 			throw new RuntimeException("names is empty ");
 		}
 		this.names = names;
+		return this;
+	}
+
+	public SysUserQuery roleCode(String roleCode) {
+		if (roleCode == null) {
+			throw new RuntimeException("roleCode is null");
+		}
+		this.roleCode = roleCode;
 		return this;
 	}
 
@@ -1114,6 +1132,14 @@ public class SysUserQuery extends DataQuery {
 
 	public void setNames(List<String> names) {
 		this.names = names;
+	}
+
+	public void setRoleCode(String roleCode) {
+		this.roleCode = roleCode;
+	}
+
+	public void setRoleCodes(List<String> roleCodes) {
+		this.roleCodes = roleCodes;
 	}
 
 	public void setSuperiorIdsLike(String superiorIdsLike) {

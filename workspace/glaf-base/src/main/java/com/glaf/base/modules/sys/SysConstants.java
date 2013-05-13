@@ -24,12 +24,14 @@ public class SysConstants {
 
 	public static int BLOCKED_1 = 1; // 是
 
+	public static String BRANCH_ADMIN = "BranchAdmin";// 分级管理员角色代码
+
 	public static String DEPT_LEVEL = "DeptLevel";// 部门层级代码，取值为SYS_DICTORY表的ext11
 
 	// 部门状态
 	public static Integer DEPT_STATUS_0 = Integer.valueOf(0); // 有效
-
 	public static Integer DEPT_STATUS_1 = Integer.valueOf(1); // 失效
+
 	// 用户session名称
 	public static String LOGIN = "SYS_LOGIN_USER";
 
@@ -50,5 +52,4 @@ public class SysConstants {
 	public static int TREE_ROOT = 1;// 目录根节点
 
 	public static String USER_HEADSHIP = "UserHeadship";// 用户职位代码，取值为SYS_DICTORY表的code
-
 }

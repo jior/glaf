@@ -1,0 +1,137 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.glaf.base.modules.sys.springmvc;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.glaf.base.modules.sys.model.SysDepartment;
+import com.glaf.base.modules.sys.query.SysDepartmentQuery;
+import com.glaf.base.modules.sys.service.SysDepartmentService;
+import com.glaf.base.modules.sys.service.SysDeptRoleService;
+import com.glaf.base.modules.sys.service.SysRoleService;
+import com.glaf.base.modules.sys.service.SysTreeService;
+import com.glaf.base.utils.ParamUtil;
+
+import com.glaf.core.base.TreeModel;
+import com.glaf.core.config.ViewProperties;
+
+import com.glaf.core.service.ITreeModelService;
+import com.glaf.core.util.RequestUtils;
+
+@Controller("/branch/deptRole")
+@RequestMapping("/branch/deptRole.do")
+public class BranchDeptRoleController {
+	private static final Log logger = LogFactory
+			.getLog(BranchDeptRoleController.class);
+
+	protected SysDepartmentService sysDepartmentService;
+
+	protected SysDeptRoleService sysDeptRoleService;
+
+	protected SysRoleService sysRoleService;
+
+	protected SysTreeService sysTreeService;
+
+	protected ITreeModelService treeModelService;
+
+	@javax.annotation.Resource
+	public void setSysDepartmentService(
+			SysDepartmentService sysDepartmentService) {
+		this.sysDepartmentService = sysDepartmentService;
+		logger.info("setSysDepartmentService");
+	}
+
+	@javax.annotation.Resource
+	public void setSysDeptRoleService(SysDeptRoleService sysDeptRoleService) {
+		this.sysDeptRoleService = sysDeptRoleService;
+		logger.info("setSysDeptRoleService");
+	}
+
+	@javax.annotation.Resource
+	public void setSysRoleService(SysRoleService sysRoleService) {
+		this.sysRoleService = sysRoleService;
+		logger.info("setSysRoleService");
+	}
+
+	@javax.annotation.Resource
+	public void setSysTreeService(SysTreeService sysTreeService) {
+		this.sysTreeService = sysTreeService;
+		logger.info("setSysTreeService");
+	}
+
+	@javax.annotation.Resource
+	public void setTreeModelService(ITreeModelService treeModelService) {
+		this.treeModelService = treeModelService;
+		logger.info("setTreeModelService");
+	}
+
+	/**
+	 * 显示所有列表
+	 * 
+	 * @param request
+	 * @param modelMap
+	 * @return
+	 */
+	@RequestMapping(params = "method=showList")
+	public ModelAndView showList(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		long deptId = (long) ParamUtil.getIntParameter(request, "parent", 0);
+		SysDepartment department = sysDepartmentService.findById(deptId);
+		request.setAttribute("department", department);
+		// request.setAttribute("list", sysRoleService.getSysRoleList());
+
+		long nodeId = department.getNodeId();
+		List<Long> nodeIds = new ArrayList<Long>();
+		nodeIds.add(nodeId);
+
+		List<TreeModel> treeModels = treeModelService
+				.getChildrenTreeModels(nodeId);
+		if (treeModels != null && !treeModels.isEmpty()) {
+			for (TreeModel t : treeModels) {
+				if (!nodeIds.contains(t.getId())) {
+					nodeIds.add(t.getId());
+				}
+			}
+		}
+
+		SysDepartmentQuery query = new SysDepartmentQuery();
+		query.nodeIds(nodeIds);
+		sysRoleService.getSysRolesOfDepts(query);
+
+		String x_view = ViewProperties.getString("deptRole.showList");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+		// 显示列表页面
+		return new ModelAndView("/modules/branch/deptRole/deptRole_list",
+				modelMap);
+	}
+
+}

@@ -23,6 +23,7 @@ import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.base.modules.sys.model.SysRole;
+import com.glaf.base.modules.sys.query.SysDepartmentQuery;
 import com.glaf.base.modules.sys.query.SysRoleQuery;
 import com.glaf.core.util.PageResult;
 
@@ -107,6 +108,9 @@ public interface SysRoleService {
 	 * @return List
 	 */
 	List<SysRole> getSysRoleList();
+	
+	
+	List<SysRole> getSysRolesOfDepts(SysDepartmentQuery query);
 
 	/**
 	 * 获取分页列表

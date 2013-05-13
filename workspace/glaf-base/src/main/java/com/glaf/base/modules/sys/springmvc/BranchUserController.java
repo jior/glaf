@@ -41,13 +41,14 @@ import org.springframework.web.servlet.ModelAndView;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
-import com.glaf.core.cache.CacheUtils;
+import com.glaf.core.base.TreeModel;
 import com.glaf.core.config.ViewProperties;
 import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
 import com.glaf.core.res.ViewMessages;
 import com.glaf.core.security.DigestUtil;
 import com.glaf.core.service.ITableDataService;
+import com.glaf.core.service.ITreeModelService;
 import com.glaf.core.util.JsonUtils;
 import com.glaf.core.util.PageResult;
 import com.glaf.core.util.ParamUtils;
@@ -71,13 +72,12 @@ import com.glaf.base.modules.sys.service.SysRoleService;
 import com.glaf.base.modules.sys.service.SysTreeService;
 import com.glaf.base.modules.sys.service.SysUserService;
 import com.glaf.base.utils.ParamUtil;
-import com.glaf.base.utils.RequestUtil;
 
-@Controller("/sys/user")
-@RequestMapping("/sys/user.do")
-public class SysUserController {
+@Controller("/branch/user")
+@RequestMapping("/branch/user.do")
+public class BranchUserController {
 	private static final Log logger = LogFactory
-			.getLog(SysUserController.class);
+			.getLog(BranchUserController.class);
 
 	protected DictoryService dictoryService;
 
@@ -93,6 +93,8 @@ public class SysUserController {
 
 	protected ITableDataService tableDataService;
 
+	protected ITreeModelService treeModelService;
+
 	/**
 	 * 增加角色用户
 	 * 
@@ -107,29 +109,56 @@ public class SysUserController {
 		RequestUtils.setRequestParameterToAttribute(request);
 		int deptId = ParamUtil.getIntParameter(request, "deptId", 0);
 		int roleId = ParamUtil.getIntParameter(request, "roleId", 0);
-		SysDeptRole deptRole = sysDeptRoleService.find(deptId, roleId);
 		boolean success = false;
-		if (deptRole == null) {
-			deptRole = new SysDeptRole();
-			deptRole.setDeptId(deptId);
-			deptRole.setDept(sysDepartmentService.findById(deptId));
-			deptRole.setSysRoleId(roleId);
-			deptRole.setRole(sysRoleService.findById(roleId));
-			sysDeptRoleService.create(deptRole);
-		}
-		if (deptRole != null) {
-			Set<SysUser> users = deptRole.getUsers();
-
-			long[] userIds = ParamUtil.getLongParameterValues(request, "id");
-			for (int i = 0; i < userIds.length; i++) {
-				SysUser user = sysUserService.findById(userIds[i]);
-				if (user != null) {
-					logger.info(user.getName());
-					users.add(user);
+		String actorId = RequestUtils.getActorId(request);
+		List<Long> nodeIds = new ArrayList<Long>();
+		nodeIds.add(-1L);
+		SysUserQuery qx = new SysUserQuery();
+		qx.setAccount(actorId);
+		qx.setRoleCode(SysConstants.BRANCH_ADMIN);
+		List<SysTree> subTrees = sysTreeService.getRoleUserTrees(qx);
+		if (subTrees != null && !subTrees.isEmpty()) {
+			for (SysTree tree : subTrees) {
+				List<TreeModel> children = treeModelService
+						.getChildrenTreeModels(tree.getId());
+				if (children != null && !children.isEmpty()) {
+					for (TreeModel child : children) {
+						if (!nodeIds.contains(child.getId())) {
+							nodeIds.add(child.getId());
+						}
+					}
 				}
 			}
-			deptRole.setUsers(users);
-			success = sysDeptRoleService.update(deptRole);
+		}
+
+		SysDepartment department = sysDepartmentService.findById(deptId);
+		if (department != null) {
+			SysTree tree = sysTreeService.findById(department.getNodeId());
+			if (tree != null && nodeIds.contains(tree.getId())) {
+				SysDeptRole deptRole = sysDeptRoleService.find(deptId, roleId);
+				if (deptRole == null) {
+					deptRole = new SysDeptRole();
+					deptRole.setDeptId(deptId);
+					deptRole.setDept(sysDepartmentService.findById(deptId));
+					deptRole.setSysRoleId(roleId);
+					deptRole.setRole(sysRoleService.findById(roleId));
+					sysDeptRoleService.create(deptRole);
+				}
+				if (deptRole != null) {
+					Set<SysUser> users = deptRole.getUsers();
+					long[] userIds = ParamUtil.getLongParameterValues(request,
+							"id");
+					for (int i = 0; i < userIds.length; i++) {
+						SysUser user = sysUserService.findById(userIds[i]);
+						if (user != null) {
+							logger.info(user.getName());
+							users.add(user);
+						}
+					}
+					deptRole.setUsers(users);
+					success = sysDeptRoleService.update(deptRole);
+				}
+			}
 		}
 
 		ViewMessages messages = new ViewMessages();
@@ -143,69 +172,6 @@ public class SysUserController {
 		MessageUtils.addMessages(request, messages);
 
 		return new ModelAndView("show_msg", modelMap);
-	}
-
-	/**
-	 * 批量删除信息
-	 * 
-	 * @param request
-	 * @param modelMap
-	 * @return
-	 */
-	@RequestMapping(params = "method=batchDelete")
-	public ModelAndView batchDelete(HttpServletRequest request,
-			ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
-		boolean ret = true;
-		long[] id = ParamUtil.getLongParameterValues(request, "id");
-		ret = sysUserService.deleteAll(id);
-		ViewMessages messages = new ViewMessages();
-		if (ret) {// 保存成功
-			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
-					"user.delete_success"));
-		} else {// 保存失败
-			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
-					"user.delete_failure"));
-		}
-		MessageUtils.addMessages(request, messages);
-		return new ModelAndView("show_msg2", modelMap);
-	}
-
-	/**
-	 * 删除角色用户
-	 * 
-	 * @param request
-	 * @param modelMap
-	 * @return
-	 */
-	@RequestMapping(params = "method=delRoleUser")
-	public ModelAndView delRoleUser(HttpServletRequest request,
-			ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
-		int deptId = ParamUtil.getIntParameter(request, "deptId", 0);
-		int roleId = ParamUtil.getIntParameter(request, "roleId", 0);
-		SysDeptRole deptRole = sysDeptRoleService.find(deptId, roleId);
-		boolean sucess = false;
-		try {
-			long[] userIds = ParamUtil.getLongParameterValues(request, "id");
-			sysUserService.deleteRoleUsers(deptRole, userIds);
-			sucess = true;
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			sucess = false;
-		}
-
-		ViewMessages messages = new ViewMessages();
-		if (sucess) {
-			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
-					"user.delete_success"));
-		} else {// 保存失败
-			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
-					"user.delete_failure"));
-		}
-		MessageUtils.addMessages(request, messages);
-
-		return new ModelAndView("show_msg2", modelMap);
 	}
 
 	@RequestMapping(params = "method=deptUsers")
@@ -222,7 +188,7 @@ public class SysUserController {
 			request.setAttribute("x_complex_query", "");
 		}
 
-		String x_view = ViewProperties.getString("user.deptUsers");
+		String x_view = ViewProperties.getString("branch.user.deptUsers");
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);
 		}
@@ -232,7 +198,7 @@ public class SysUserController {
 			return new ModelAndView(view, modelMap);
 		}
 
-		return new ModelAndView("/modules/sys/user/deptUsers", modelMap);
+		return new ModelAndView("/modules/branch/user/deptUsers", modelMap);
 	}
 
 	/**
@@ -286,6 +252,8 @@ public class SysUserController {
 			}
 		} else if (deptId > 0) {
 			query.deptId(deptId);
+		} else {
+			query.deptId(-1L);
 		}
 
 		String gridType = ParamUtils.getString(params, "gridType");
@@ -369,7 +337,7 @@ public class SysUserController {
 			request.setAttribute("x_complex_query", "");
 		}
 
-		String x_view = ViewProperties.getString("user.list");
+		String x_view = ViewProperties.getString("branch.user.list");
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);
 		}
@@ -379,7 +347,7 @@ public class SysUserController {
 			return new ModelAndView(view, modelMap);
 		}
 
-		return new ModelAndView("/modules/sys/user/list", modelMap);
+		return new ModelAndView("/modules/branch/user/list", modelMap);
 	}
 
 	/**
@@ -396,12 +364,12 @@ public class SysUserController {
 				.getDictoryList(SysConstants.USER_HEADSHIP);
 		modelMap.put("dictories", dictories);
 
-		String x_view = ViewProperties.getString("user.prepareAdd");
+		String x_view = ViewProperties.getString("branch.user.prepareAdd");
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);
 		}
 
-		return new ModelAndView("/modules/sys/user/user_add", modelMap);
+		return new ModelAndView("/modules/branch/user/user_add", modelMap);
 	}
 
 	/**
@@ -445,83 +413,12 @@ public class SysUserController {
 		sysTreeService.getSysTree(list, (int) parent.getId(), 1);
 		request.setAttribute("parent", list);
 
-		String x_view = ViewProperties.getString("user.prepareModify");
+		String x_view = ViewProperties.getString("branch.user.prepareModify");
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);
 		}
 
-		return new ModelAndView("/modules/sys/user/user_modify", modelMap);
-	}
-
-	/**
-	 * 显示修改页面
-	 * 
-	 * @param request
-	 * @param modelMap
-	 * @return
-	 */
-	@RequestMapping(params = "method=prepareModifyInfo")
-	public ModelAndView prepareModifyInfo(HttpServletRequest request,
-			ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
-		SysUser user = RequestUtil.getLoginUser(request);
-		SysUser bean = sysUserService.findByAccount(user.getAccount());
-		request.setAttribute("bean", bean);
-
-		if (bean != null && StringUtils.isNotEmpty(bean.getSuperiorIds())) {
-			List<String> userIds = StringTools.split(bean.getSuperiorIds());
-			StringBuffer buffer = new StringBuffer();
-			if (userIds != null && !userIds.isEmpty()) {
-				for (String userId : userIds) {
-					SysUser u = sysUserService.findByAccount(userId);
-					if (u != null) {
-						buffer.append(u.getName()).append("[")
-								.append(u.getAccount()).append("] ");
-					}
-				}
-				request.setAttribute("x_users_name", buffer.toString());
-			}
-		}
-
-		List<Dictory> dictories = dictoryService
-				.getDictoryList(SysConstants.USER_HEADSHIP);
-		modelMap.put("dictories", dictories);
-
-		String x_view = ViewProperties.getString("user.prepareModifyInfo");
-		if (StringUtils.isNotEmpty(x_view)) {
-			return new ModelAndView(x_view, modelMap);
-		}
-
-		return new ModelAndView("/modules/sys/user/user_change_info", modelMap);
-	}
-
-	/**
-	 * 显示修改页面
-	 * 
-	 * @param request
-	 * @param modelMap
-	 * @return
-	 */
-	@RequestMapping(params = "method=prepareModifyPwd")
-	public ModelAndView prepareModifyPwd(HttpServletRequest request,
-			ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
-		SysUser bean = RequestUtil.getLoginUser(request);
-		request.setAttribute("bean", bean);
-
-		SysTree parent = sysTreeService.getSysTreeByCode(Constants.TREE_DEPT);
-		List<SysTree> list = new ArrayList<SysTree>();
-		parent.setDeep(0);
-		list.add(parent);
-		sysTreeService.getSysTree(list, (int) parent.getId(), 1);
-		request.setAttribute("parent", list);
-
-		String x_view = ViewProperties.getString("user.prepareModifyPwd");
-		if (StringUtils.isNotEmpty(x_view)) {
-			return new ModelAndView(x_view, modelMap);
-		}
-
-		return new ModelAndView("/modules/sys/user/user_modify_pwd", modelMap);
+		return new ModelAndView("/modules/branch/user/user_modify", modelMap);
 	}
 
 	/**
@@ -544,7 +441,7 @@ public class SysUserController {
 			return new ModelAndView(x_view, modelMap);
 		}
 
-		return new ModelAndView("/modules/sys/user/user_reset_pwd", modelMap);
+		return new ModelAndView("/modules/branch/user/user_reset_pwd", modelMap);
 	}
 
 	/**
@@ -556,36 +453,54 @@ public class SysUserController {
 	 */
 	@RequestMapping(params = "method=resetPwd")
 	public ModelAndView resetPwd(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
-		SysUser login = RequestUtil.getLoginUser(request);
 		boolean ret = false;
-
-		if (login.isSystemAdmin()) {
-			logger.debug(login.getAccount() + " is system admin");
-		}
-
-		if (login.isDepartmentAdmin()) {
-			logger.debug(login.getAccount() + " is dept admin");
-		}
-
-		if (login.isDepartmentAdmin() || login.isSystemAdmin()) {
-
-			long id = ParamUtil.getIntParameter(request, "id", 0);
-			SysUser bean = sysUserService.findById(id);
-
-			/**
-			 * 系统管理员的密码不允许重置
-			 */
-			if (bean != null && !bean.isSystemAdministrator()) {
-				String newPwd = ParamUtil.getParameter(request, "newPwd");
-				if (bean != null && StringUtils.isNotEmpty(newPwd)) {
-					try {
-						bean.setPassword(DigestUtil.digestString(newPwd, "MD5"));
-					} catch (Exception ex) {
-						ex.printStackTrace();
+		String actorId = RequestUtils.getActorId(request);
+		List<Long> nodeIds = new ArrayList<Long>();
+		nodeIds.add(-1L);
+		SysUserQuery qx = new SysUserQuery();
+		qx.setAccount(actorId);
+		qx.setRoleCode(SysConstants.BRANCH_ADMIN);
+		List<SysTree> subTrees = sysTreeService.getRoleUserTrees(qx);
+		if (subTrees != null && !subTrees.isEmpty()) {
+			for (SysTree tree : subTrees) {
+				List<TreeModel> children = treeModelService
+						.getChildrenTreeModels(tree.getId());
+				if (children != null && !children.isEmpty()) {
+					for (TreeModel child : children) {
+						if (!nodeIds.contains(child.getId())) {
+							nodeIds.add(child.getId());
+						}
 					}
-					bean.setUpdateBy(bean.getAccount());
-					ret = sysUserService.update(bean);
+				}
+			}
+		}
+
+		long id = ParamUtil.getIntParameter(request, "id", 0);
+		SysUser bean = sysUserService.findById(id);
+
+		/**
+		 * 系统管理员的密码不允许重置
+		 */
+		if (bean != null && !bean.isSystemAdministrator()) {
+			/**
+			 * 保修改的用户所属部门是分级管理员管辖的部门
+			 */
+			SysDepartment department = sysDepartmentService.findById(bean
+					.getDeptId());
+			if (department != null) {
+				SysTree tree = sysTreeService.findById(department.getNodeId());
+				if (tree != null && nodeIds.contains(tree.getId())) {
+					String newPwd = ParamUtil.getParameter(request, "newPwd");
+					if (bean != null && StringUtils.isNotEmpty(newPwd)) {
+						try {
+							bean.setPassword(DigestUtil.digestString(newPwd,
+									"MD5"));
+						} catch (Exception ex) {
+							ex.printStackTrace();
+						}
+						bean.setUpdateBy(bean.getAccount());
+						ret = sysUserService.update(bean);
+					}
 				}
 			}
 		}
@@ -612,48 +527,79 @@ public class SysUserController {
 	@RequestMapping(params = "method=saveAdd")
 	public ModelAndView saveAdd(HttpServletRequest request, ModelMap modelMap) {
 		SysUser bean = new SysUser();
-		long nodeId = RequestUtils.getLong(request, "nodeId");
-		if (nodeId > 0) {
-			SysDepartment department = sysDepartmentService
-					.getSysDepartmentByNodeId(nodeId);
-			bean.setDepartment(department);
-			bean.setDeptId(department.getId());
-		} else {
-			SysDepartment department = sysDepartmentService.findById(ParamUtil
-					.getIntParameter(request, "parent", 0));
-			bean.setDepartment(department);
-			bean.setDeptId(department.getId());
+		String actorId = RequestUtils.getActorId(request);
+		List<Long> nodeIds = new ArrayList<Long>();
+		nodeIds.add(-1L);
+		SysUserQuery qx = new SysUserQuery();
+		qx.setAccount(actorId);
+		qx.setRoleCode(SysConstants.BRANCH_ADMIN);
+		List<SysTree> subTrees = sysTreeService.getRoleUserTrees(qx);
+		if (subTrees != null && !subTrees.isEmpty()) {
+			for (SysTree tree : subTrees) {
+				List<TreeModel> children = treeModelService
+						.getChildrenTreeModels(tree.getId());
+				if (children != null && !children.isEmpty()) {
+					for (TreeModel child : children) {
+						if (!nodeIds.contains(child.getId())) {
+							nodeIds.add(child.getId());
+						}
+					}
+				}
+			}
 		}
-		bean.setCode(ParamUtil.getParameter(request, "code"));
-		bean.setAccount(bean.getCode());
-		bean.setName(ParamUtil.getParameter(request, "name"));
-		String password = ParamUtil.getParameter(request, "password");
-		try {
-			String pwd = DigestUtil.digestString(password, "MD5");
-			bean.setPassword(pwd);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-		bean.setSuperiorIds(ParamUtil.getParameter(request, "superiorIds"));
-		bean.setGender(ParamUtil.getIntParameter(request, "gender", 0));
-		bean.setMobile(ParamUtil.getParameter(request, "mobile"));
-		bean.setEmail(ParamUtil.getParameter(request, "email"));
-		bean.setTelephone(ParamUtil.getParameter(request, "telephone"));
-		bean.setBlocked(ParamUtil.getIntParameter(request, "blocked", 0));
-		bean.setHeadship(ParamUtil.getParameter(request, "headship"));
-		bean.setUserType(ParamUtil.getIntParameter(request, "userType", 0));
-		bean.setEvection(0);
-		bean.setCreateTime(new Date());
-		bean.setLastLoginTime(new Date());
-		bean.setCreateBy(RequestUtils.getActorId(request));
-		bean.setUpdateBy(RequestUtils.getActorId(request));
 
 		int ret = 0;
-		if (sysUserService.findByAccount(bean.getAccount()) == null) {
-			if (sysUserService.create(bean))
-				ret = 2;
-		} else {// 帐号存在
-			ret = 1;
+		SysDepartment department = null;
+		long nodeId = RequestUtils.getLong(request, "nodeId");
+		if (nodeId > 0) {
+			department = sysDepartmentService.getSysDepartmentByNodeId(nodeId);
+			bean.setDepartment(department);
+		} else {
+			department = sysDepartmentService.findById(ParamUtil
+					.getIntParameter(request, "parent", 0));
+			bean.setDepartment(department);
+		}
+		/**
+		 * 保证添加的用户所属部门是分级管理员管辖的部门
+		 */
+		if (department != null) {
+			SysTree tree = sysTreeService.findById(department.getNodeId());
+			if (tree != null && nodeIds.contains(tree.getId())) {
+				bean.setDeptId(department.getId());
+				bean.setCode(ParamUtil.getParameter(request, "code"));
+				bean.setAccount(bean.getCode());
+				bean.setName(ParamUtil.getParameter(request, "name"));
+				String password = ParamUtil.getParameter(request, "password");
+				try {
+					String pwd = DigestUtil.digestString(password, "MD5");
+					bean.setPassword(pwd);
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+				bean.setSuperiorIds(ParamUtil.getParameter(request,
+						"superiorIds"));
+				bean.setGender(ParamUtil.getIntParameter(request, "gender", 0));
+				bean.setMobile(ParamUtil.getParameter(request, "mobile"));
+				bean.setEmail(ParamUtil.getParameter(request, "email"));
+				bean.setTelephone(ParamUtil.getParameter(request, "telephone"));
+				bean.setBlocked(ParamUtil
+						.getIntParameter(request, "blocked", 0));
+				bean.setHeadship(ParamUtil.getParameter(request, "headship"));
+				bean.setUserType(ParamUtil.getIntParameter(request, "userType",
+						0));
+				bean.setEvection(0);
+				bean.setCreateTime(new Date());
+				bean.setLastLoginTime(new Date());
+				bean.setCreateBy(RequestUtils.getActorId(request));
+				bean.setUpdateBy(RequestUtils.getActorId(request));
+
+				if (sysUserService.findByAccount(bean.getAccount()) == null) {
+					if (sysUserService.create(bean))
+						ret = 2;
+				} else {// 帐号存在
+					ret = 1;
+				}
+			}
 		}
 
 		ViewMessages messages = new ViewMessages();
@@ -688,92 +634,54 @@ public class SysUserController {
 		if (bean != null) {
 			SysDepartment department = sysDepartmentService.findById(ParamUtil
 					.getIntParameter(request, "parent", 0));
-			bean.setDepartment(department);
-			bean.setName(ParamUtil.getParameter(request, "name"));
-			bean.setSuperiorIds(ParamUtil.getParameter(request, "superiorIds"));
-			bean.setGender(ParamUtil.getIntParameter(request, "gender", 0));
-			bean.setMobile(ParamUtil.getParameter(request, "mobile"));
-			bean.setEmail(ParamUtil.getParameter(request, "email"));
-			bean.setTelephone(ParamUtil.getParameter(request, "telephone"));
-			bean.setEvection(ParamUtil.getIntParameter(request, "evection", 0));
-			bean.setBlocked(ParamUtil.getIntParameter(request, "blocked", 0));
-			bean.setHeadship(ParamUtil.getParameter(request, "headship"));
-			bean.setUserType(ParamUtil.getIntParameter(request, "userType", 0));
-			bean.setUpdateBy(RequestUtils.getActorId(request));
-			ret = sysUserService.update(bean);
-		}
-
-		ViewMessages messages = new ViewMessages();
-		if (ret) {// 保存成功
-			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
-					"user.modify_success"));
-		} else {// 保存失败
-			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
-					"user.modify_failure"));
-		}
-		MessageUtils.addMessages(request, messages);
-		return new ModelAndView("show_msg", modelMap);
-	}
-
-	/**
-	 * 提交修改信息
-	 * 
-	 * @param request
-	 * @param modelMap
-	 * @return
-	 */
-	@RequestMapping(params = "method=saveModifyInfo")
-	public ModelAndView saveModifyInfo(HttpServletRequest request,
-			ModelMap modelMap) {
-		SysUser bean = RequestUtil.getLoginUser(request);
-		boolean ret = false;
-		if (bean != null) {
-			SysUser user = sysUserService.findById(bean.getId());
-			user.setMobile(ParamUtil.getParameter(request, "mobile"));
-			user.setEmail(ParamUtil.getParameter(request, "email"));
-			user.setTelephone(ParamUtil.getParameter(request, "telephone"));
-			user.setUpdateBy(RequestUtils.getActorId(request));
-			ret = sysUserService.update(user);
-			CacheUtils.clearUserCache(user.getAccount());
-		}
-
-		ViewMessages messages = new ViewMessages();
-		if (ret) {// 保存成功
-			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
-					"user.modify_success"));
-		} else {// 保存失败
-			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
-					"user.modify_failure"));
-		}
-		MessageUtils.addMessages(request, messages);
-		return new ModelAndView("show_msg", modelMap);
-	}
-
-	/**
-	 * 修改用户密码
-	 * 
-	 * @param request
-	 * @param modelMap
-	 * @return
-	 */
-	@RequestMapping(params = "method=savePwd")
-	public ModelAndView savePwd(HttpServletRequest request, ModelMap modelMap) {
-		SysUser bean = RequestUtil.getLoginUser(request);
-		boolean ret = false;
-		String oldPwd = ParamUtil.getParameter(request, "oldPwd");
-		String newPwd = ParamUtil.getParameter(request, "newPwd");
-		if (bean != null && StringUtils.isNotEmpty(oldPwd)
-				&& StringUtils.isNotEmpty(newPwd)) {
-			SysUser user = sysUserService.findById(bean.getId());
-			try {
-				String encPwd = DigestUtil.digestString(oldPwd, "MD5");
-				if (StringUtils.equals(encPwd, user.getPassword())) {
-					user.setPassword(DigestUtil.digestString(newPwd, "MD5"));
-					user.setUpdateBy(RequestUtils.getActorId(request));
-					ret = sysUserService.update(user);
+			String actorId = RequestUtils.getActorId(request);
+			List<Long> nodeIds = new ArrayList<Long>();
+			nodeIds.add(-1L);
+			SysUserQuery qx = new SysUserQuery();
+			qx.setAccount(actorId);
+			qx.setRoleCode(SysConstants.BRANCH_ADMIN);
+			List<SysTree> subTrees = sysTreeService.getRoleUserTrees(qx);
+			if (subTrees != null && !subTrees.isEmpty()) {
+				for (SysTree tree : subTrees) {
+					List<TreeModel> children = treeModelService
+							.getChildrenTreeModels(tree.getId());
+					if (children != null && !children.isEmpty()) {
+						for (TreeModel child : children) {
+							if (!nodeIds.contains(child.getId())) {
+								nodeIds.add(child.getId());
+							}
+						}
+					}
 				}
-			} catch (Exception ex) {
-				ex.printStackTrace();
+			}
+
+			/**
+			 * 保证添加的用户所属部门是分级管理员管辖的部门
+			 */
+			if (department != null) {
+				SysTree tree = sysTreeService.findById(department.getNodeId());
+				if (tree != null && nodeIds.contains(tree.getId())) {
+					bean.setDepartment(department);
+					bean.setName(ParamUtil.getParameter(request, "name"));
+					bean.setSuperiorIds(ParamUtil.getParameter(request,
+							"superiorIds"));
+					bean.setGender(ParamUtil.getIntParameter(request, "gender",
+							0));
+					bean.setMobile(ParamUtil.getParameter(request, "mobile"));
+					bean.setEmail(ParamUtil.getParameter(request, "email"));
+					bean.setTelephone(ParamUtil.getParameter(request,
+							"telephone"));
+					bean.setEvection(ParamUtil.getIntParameter(request,
+							"evection", 0));
+					bean.setBlocked(ParamUtil.getIntParameter(request,
+							"blocked", 0));
+					bean.setHeadship(ParamUtil
+							.getParameter(request, "headship"));
+					bean.setUserType(ParamUtil.getIntParameter(request,
+							"userType", 0));
+					bean.setUpdateBy(RequestUtils.getActorId(request));
+					ret = sysUserService.update(bean);
+				}
 			}
 		}
 
@@ -810,12 +718,12 @@ public class SysUserController {
 		request.setAttribute("pager", pager);
 		request.setAttribute("multDate", new Integer(multDate));
 
-		String x_view = ViewProperties.getString("user.selectSysUser");
+		String x_view = ViewProperties.getString("branch.user.selectSysUser");
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);
 		}
 
-		return new ModelAndView("/modules/sys/user/user_select", modelMap);
+		return new ModelAndView("/modules/branch/user/user_select", modelMap);
 	}
 
 	/**
@@ -845,12 +753,14 @@ public class SysUserController {
 		}
 		request.setAttribute("pager", pager);
 
-		String x_view = ViewProperties.getString("user.selectSysUserByDept");
+		String x_view = ViewProperties
+				.getString("branch.user.selectSysUserByDept");
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);
 		}
 
-		return new ModelAndView("/modules/sys/user/userByDept_list", modelMap);
+		return new ModelAndView("/modules/branch/user/userByDept_list",
+				modelMap);
 	}
 
 	@javax.annotation.Resource
@@ -871,32 +781,63 @@ public class SysUserController {
 		ViewMessages messages = new ViewMessages();
 		long userId = ParamUtil.getIntParameter(request, "user_id", 0);
 		SysUser user = sysUserService.findById(userId);// 查找用户对象
-
-		if (user != null) {// 用户存在
-			long[] id = ParamUtil.getLongParameterValues(request, "id");// 获取页面参数
-			if (id != null) {
-				Set<SysDeptRole> delRoles = new HashSet<SysDeptRole>();
-				Set<SysDeptRole> oldRoles = user.getRoles();
-				Set<SysDeptRole> newRoles = new HashSet<SysDeptRole>();
-				for (int i = 0; i < id.length; i++) {
-					logger.debug("id[" + i + "]=" + id[i]);
-					SysDeptRole role = sysDeptRoleService.findById(id[i]);// 查找角色对象
-					if (role != null) {
-						newRoles.add(role);// 加入到角色列表
+		if (user != null && user.getDeptId() > 0) {// 用户存在
+			String actorId = RequestUtils.getActorId(request);
+			List<Long> nodeIds = new ArrayList<Long>();
+			nodeIds.add(-1L);
+			SysUserQuery qx = new SysUserQuery();
+			qx.setAccount(actorId);
+			qx.setRoleCode(SysConstants.BRANCH_ADMIN);
+			List<SysTree> subTrees = sysTreeService.getRoleUserTrees(qx);
+			if (subTrees != null && !subTrees.isEmpty()) {
+				for (SysTree tree : subTrees) {
+					List<TreeModel> children = treeModelService
+							.getChildrenTreeModels(tree.getId());
+					if (children != null && !children.isEmpty()) {
+						for (TreeModel child : children) {
+							if (!nodeIds.contains(child.getId())) {
+								nodeIds.add(child.getId());
+							}
+						}
 					}
 				}
+			}
 
-				oldRoles.retainAll(newRoles);// 公共权限
-				delRoles.removeAll(newRoles);// 待删除的权限
-				newRoles.removeAll(oldRoles);// 待增加的权限
-				user.setUpdateBy(RequestUtils.getActorId(request));
+			SysDepartment department = sysDepartmentService.findById(user
+					.getDeptId());
+			/**
+			 * 保证添加的用户所属部门是分级管理员管辖的部门
+			 */
+			if (department != null && department.getNodeId() > 0) {
+				SysTree tree = sysTreeService.findById(department.getNodeId());
+				if (tree != null && nodeIds.contains(tree.getId())) {
+					long[] id = ParamUtil.getLongParameterValues(request, "id");// 获取页面参数
+					if (id != null) {
+						Set<SysDeptRole> delRoles = new HashSet<SysDeptRole>();
+						Set<SysDeptRole> oldRoles = user.getRoles();
+						Set<SysDeptRole> newRoles = new HashSet<SysDeptRole>();
+						for (int i = 0; i < id.length; i++) {
+							logger.debug("id[" + i + "]=" + id[i]);
+							SysDeptRole role = sysDeptRoleService
+									.findById(id[i]);// 查找角色对象
+							if (role != null) {
+								newRoles.add(role);// 加入到角色列表
+							}
+						}
 
-				if (sysUserService.updateRole(user, delRoles, newRoles)) {// 授权成功
-					messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
-							"user.role_success"));
-				} else {// 保存失败
-					messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
-							"user.role_failure"));
+						oldRoles.retainAll(newRoles);// 公共权限
+						delRoles.removeAll(newRoles);// 待删除的权限
+						newRoles.removeAll(oldRoles);// 待增加的权限
+						user.setUpdateBy(RequestUtils.getActorId(request));
+
+						if (sysUserService.updateRole(user, delRoles, newRoles)) {// 授权成功
+							messages.add(ViewMessages.GLOBAL_MESSAGE,
+									new ViewMessage("user.role_success"));
+						} else {// 保存失败
+							messages.add(ViewMessages.GLOBAL_MESSAGE,
+									new ViewMessage("user.role_failure"));
+						}
+					}
 				}
 			}
 		}
@@ -940,6 +881,12 @@ public class SysUserController {
 		this.tableDataService = tableDataService;
 	}
 
+	@javax.annotation.Resource
+	public void setTreeModelService(ITreeModelService treeModelService) {
+		this.treeModelService = treeModelService;
+		logger.info("setTreeModelService");
+	}
+
 	/**
 	 * 显示部门下所有人
 	 * 
@@ -969,33 +916,12 @@ public class SysUserController {
 		}
 		request.setAttribute("user", set);
 
-		String x_view = ViewProperties.getString("user.showDeptUsers");
+		String x_view = ViewProperties.getString("branch.user.showDeptUsers");
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);
 		}
 
-		return new ModelAndView("/modules/sys/user/duty_select", modelMap);
-	}
-
-	/**
-	 * 显示框架页面
-	 * 
-	 * @param request
-	 * @param modelMap
-	 * @return
-	 */
-	@RequestMapping(params = "method=showFrame")
-	public ModelAndView showFrame(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
-		SysTree bean = sysTreeService.getSysTreeByCode(Constants.TREE_DEPT);
-		request.setAttribute("parent", bean.getId() + "");
-
-		String x_view = ViewProperties.getString("user.showFrame");
-		if (StringUtils.isNotEmpty(x_view)) {
-			return new ModelAndView(x_view, modelMap);
-		}
-
-		return new ModelAndView("/modules/sys/user/user_frame", modelMap);
+		return new ModelAndView("/modules/branch/user/duty_select", modelMap);
 	}
 
 	/**
@@ -1022,42 +948,12 @@ public class SysUserController {
 		sysDepartmentService.findNestingDepartment(list, dept);
 		request.setAttribute("nav", list);
 
-		String x_view = ViewProperties.getString("user.showList");
+		String x_view = ViewProperties.getString("branch.user.showList");
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);
 		}
 
-		return new ModelAndView("/modules/sys/user/user_list", modelMap);
-	}
-
-	/**
-	 * 显示所有列表
-	 * 
-	 * @param request
-	 * @param modelMap
-	 * @return
-	 */
-	@RequestMapping(params = "method=showPasswordList")
-	public ModelAndView showPasswordList(HttpServletRequest request,
-			ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
-		String userName = ParamUtil.getParameter(request, "userName");
-		String account = ParamUtil.getParameter(request, "account");
-		int deptId = ParamUtil.getIntParameter(request, "deptId", 0);
-		int pageNo = ParamUtil.getIntParameter(request, "page_no", 1);
-		int pageSize = ParamUtil.getIntParameter(request, "page_size", 20);
-
-		PageResult pager = sysUserService.getSysUserList(deptId, userName,
-				account, pageNo, pageSize);
-		request.setAttribute("pager", pager);
-
-		String x_view = ViewProperties.getString("user.showPasswordList");
-		if (StringUtils.isNotEmpty(x_view)) {
-			return new ModelAndView(x_view, modelMap);
-		}
-
-		return new ModelAndView("/modules/sys/user/user_password_list",
-				modelMap);
+		return new ModelAndView("/modules/branch/user/user_list", modelMap);
 	}
 
 	/**
@@ -1077,13 +973,13 @@ public class SysUserController {
 		request.setAttribute("list",
 				sysDeptRoleService.getRoleList(user.getDepartment().getId()));
 
-		String x_view = ViewProperties.getString("user.showRole");
+		String x_view = ViewProperties.getString("branch.user.showRole");
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);
 		}
 
 		// 显示列表页面
-		return new ModelAndView("/modules/sys/user/user_role", modelMap);
+		return new ModelAndView("/modules/branch/user/user_role", modelMap);
 	}
 
 	/**
@@ -1113,12 +1009,12 @@ public class SysUserController {
 		Set<?> users = sysDeptRoleService.findRoleUser(deptId, role.getCode());
 		request.setAttribute("list", users);
 
-		String x_view = ViewProperties.getString("user.showRoleUser");
+		String x_view = ViewProperties.getString("branch.user.showRoleUser");
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);
 		}
 
-		return new ModelAndView("/modules/sys/user/deptRole_user", modelMap);
+		return new ModelAndView("/modules/branch/user/deptRole_user", modelMap);
 	}
 
 	/**
@@ -1137,16 +1033,16 @@ public class SysUserController {
 			request.setAttribute("list", sysUserService.getSysUserList(deptId));
 		}
 
-		String x_view = ViewProperties.getString("user.showSelUser");
+		String x_view = ViewProperties.getString("branch.user.showSelUser");
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);
 		}
 
-		return new ModelAndView("/modules/sys/user/dept_user_sel", modelMap);
+		return new ModelAndView("/modules/branch/user/dept_user_sel", modelMap);
 	}
 
 	/**
-	 * 增加角色用户
+	 * 显示用户信息
 	 * 
 	 * @param request
 	 * @param modelMap
@@ -1157,13 +1053,14 @@ public class SysUserController {
 		RequestUtils.setRequestParameterToAttribute(request);
 		long userId = ParamUtil.getLongParameter(request, "userId", 0);
 		SysUser user = sysUserService.findById(userId);
+		user.setPassword(null);
 		request.setAttribute("user", user);
 
-		String x_view = ViewProperties.getString("user.showUser");
+		String x_view = ViewProperties.getString("branch.user.showUser");
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);
 		}
 
-		return new ModelAndView("/modules/sys/user/user_info", modelMap);
+		return new ModelAndView("/modules/branch/user/user_info", modelMap);
 	}
 }
