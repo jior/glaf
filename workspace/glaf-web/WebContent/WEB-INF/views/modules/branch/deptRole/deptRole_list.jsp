@@ -24,14 +24,8 @@ while(roles.hasNext()){
 <script language="javascript" src='<%=context%>/scripts/verify.js'></script>
 <script language="javascript" src='<%=context%>/scripts/main.js'></script>
 <script language="JavaScript">
-function privilege(roleId){
-  var url="deptRole.do?method=showPrivilege&deptId=<%=department.getId()%>&roleId="+roleId;
-  var width=650;
-  var height=580;
-  var scroll="yes";
-  openWindow(url, width, height, scroll);
-}
-function users(roleId){
+ 
+function roleUsers(roleId){
   var url="user.do?method=showRoleUser&deptId=<%=department.getId()%>&roleId=" + roleId;
   var width=600;
   var height=350;
@@ -42,7 +36,7 @@ function users(roleId){
 </head>
 <body>
 <div class="nav-title"><span class="Title">部门管理</span>&gt;&gt;<%=department.getName()%>-角色列表</div>
-<html:form action="${contextPath}/sys/deptRole.do?method=setRole" method="post" target="_self" onsubmit="return confirm('确认要重新设置吗？')"> 
+<html:form   method="post" target="_self" onsubmit="return confirm('确认要重新设置吗？')"> 
 <input type="hidden" name="deptId" value="<%=department.getId()%>"> 
 <input type="hidden" name="id" value="0"> 
 <div style="width:100%; height:350px;overflow-x:auto; overflow-y:auto;">
@@ -51,7 +45,7 @@ function users(roleId){
     <td width="5%" align="center"> <input type="checkbox" name="chkall" value="checkbox" onClick="checkAll(this.form, this);">    </td>
     <td width="5%" align="center">序号</td>
     <td width="35%" align="center">角色名称</td>
-    <td width="40%" align="center">权限</td>
+    <td width="40%" align="center">角色用户</td>
   </tr>
   <%
 int i=0;
@@ -64,7 +58,9 @@ if(list!=null){
     <td class="td-cb"> <input type="checkbox" name="id" value="<%=bean.getId()%>" <%=roleId.contains(new Long(bean.getId()))?"checked":""%>>    </td>
     <td class="td-no"><%=i+1%></td>
     <td class="td-text"> <%=bean.getName()%>&nbsp; </td>
-    <td class="td-text"><a href="javascript:privilege(<%=bean.getId()%>)">设置权限</a> <a href="javascript:users(<%=bean.getId()%>)">用户列表</a></td>
+    <td class="td-text"> 
+	<a href="javascript:roleUsers(<%=bean.getId()%>)">用户列表</a>
+	</td>
   </tr>
   <%
     i++;

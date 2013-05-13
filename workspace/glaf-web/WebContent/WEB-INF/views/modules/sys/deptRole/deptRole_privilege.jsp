@@ -29,7 +29,7 @@
 <link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
 <script language="javascript" src='<%=context%>/scripts/verify.js'></script>
 <script language="javascript" src='<%=context%>/scripts/main.js'></script>
-<script language="JavaScript">
+<script language="javascript">
 function checkForm(form){
   var isChecked = false;
   for(var i = 0; i < form.elements.length; i++){
@@ -86,10 +86,16 @@ function unSelApp(id){
 <div class="nav-title"><span class="Title">角色管理</span>&gt;&gt;设置角色 <b><%=role.getDept().getName()+role.getRole().getName()%></b> 的权限</div>
 <html:form action="${contextPath}/sys/deptRole.do?method=setPrivilege" method="post" target="_self" onsubmit="return checkForm(this);">
 <input type="hidden" name="roleId" value="<%=role.getId()%>" />
-<div style="border:1px solid #FFFFFF;">
-<div style="width:100%; height:500px;overflow-x:auto; overflow-y:auto;">
+<table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td align="center" height="30" valign="bottom">
+	<input name="btn_add" type="submit"  onclick="" value="保存" class="button" >
+	</td>
+  </tr>
+</table> 
+<br>
 <table width="95%" border="0" align="center" cellspacing="1" cellpadding="0" class="list-box">
-  <tr class="list-title" style="position:relative; top:expression(this.offsetParent.scrollTop-2);"> 
+  <tr class="list-title"  > 
     <td width="5%" class="listborder">序号</td>
     <td width="30%" class="listborder">模块名称</td>
     <td width="65%" class="listborder">操作</td>
@@ -146,12 +152,15 @@ out.print(bean.getName());
 }
 %>
 </table>
-</div></div>
+ 
 <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
   <tr>
-    <td align="center" height="30" valign="bottom"><input name="btn_add" type="submit"  onclick="" value="保存" class="button" ></td>
+    <td align="center" height="30" valign="bottom">
+	<input name="btn_add" type="submit"  onclick="" value="保存" class="button" >
+	</td>
   </tr>
 </table>
 </html:form>
+<br><br>
 </body>
 </html>

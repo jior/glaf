@@ -9,72 +9,18 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>部门列表</title>
+<title>用户列表</title>
 <link href="<%=request.getContextPath()%>/scripts/artDialog/skins/default.css" rel="stylesheet" />
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/easyui/themes/${theme}/easyui.css">
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/ztree/css/zTreeStyle/zTreeStyle.css" >
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/themes/${theme}/styles.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/icons/styles.css">
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.form.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/locale/easyui-lang-zh_CN.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/ztree/js/jquery.ztree.all.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/artDialog/artDialog.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/artDialog/plugins/iframeTools.js"></script>
 <script type="text/javascript">
-
-    var prevTreeNode;
-
-    var setting = {
-			async: {
-				enable: true,
-				url:"<%=request.getContextPath()%>/rs/sys/department/treeJson?nodeCode=012",
-				dataFilter: filter
-			},
-			callback: {
-				onExpand: zTreeOnExpand,
-				onClick: zTreeOnClick
-			}
-		};
-  
-  	function filter(treeId, parentNode, childNodes) {
-		if (!childNodes) return null;
-		for (var i=0, l=childNodes.length; i<l; i++) {
-			childNodes[i].name = childNodes[i].name.replace(/\.n/g, '.');
-			childNodes[i].icon="<%=request.getContextPath()%>/icons/icons/basic.gif";
-		}
-		return childNodes;
-	}
-
-	function zTreeOnExpand(treeId, treeNode){
-		var zTree1 = $.fn.zTree.getZTreeObj("myTree");
-        treeNode.icon="<%=request.getContextPath()%>/scripts/ztree/css/zTreeStyle/img/diy8.png";
-		if(prevTreeNode){
-			prevTreeNode.icon="<%=request.getContextPath()%>/scripts/ztree/css/zTreeStyle/img/diy/2.png";
-			zTree1.updateNode(prevTreeNode);
-		}
-		
-		zTree1.updateNode(treeNode);
-		prevTreeNode = treeNode; 
-	}
-
-    function zTreeOnClick(event, treeId, treeNode, clickFlag) {
-		jQuery("#nodeId").val(treeNode.id);
-		loadData('<%=request.getContextPath()%>/sys/department.do?method=json&parentId='+treeNode.id);
-	}
-
-	function loadData(url){
-		  jQuery.get(url,{qq:'xx'},function(data){
-		      //var text = JSON.stringify(data); 
-              //alert(text);
-			  jQuery('#mydatagrid').datagrid('loadData', data);
-		  },'json');
-	  }
-
-    jQuery(document).ready(function(){
-			jQuery.fn.zTree.init(jQuery("#myTree"), setting);
-	});
 
    jQuery(function(){
 		jQuery('#mydatagrid').datagrid({
@@ -85,7 +31,7 @@
 				nowrap: false,
 				striped: true,
 				collapsible:true,
-				url:'<%=request.getContextPath()%>/sys/department.do?method=json',
+				url:'<%=request.getContextPath()%>/branch/user.do?method=json&parent=${parent}&deptId=${deptId}',
 				sortName: 'id',
 				sortOrder: 'desc',
 				remoteSort: false,
@@ -93,16 +39,15 @@
 				idField:'id',
 				columns:[[
 	                {title:'序号',field:'startIndex',width:80,sortable:true},
-					{title:'名称',field:'name', width:180},
-					{title:'描述',field:'desc', width:180},
-					{title:'代码',field:'code', width:120},
-					{title:'编码',field:'no', width:120},
-					{title:'部门区分',field:'code2', width:120},
-					{title:'是否有效',field:'status', width:90, formatter:formatterStatus}
+					{title:'用户名',field:'actorId', width:120},
+					{title:'姓名',field:'name', width:120},
+					{title:'部门',field:'deptName', width:180},
+					{title:'最近登录日期',field:'lastLoginTime', width:120},
+					{title:'是否有效',field:'blocked', width:90, formatter:formatterStatus}
 				]],
 				rownumbers:false,
 				pagination:true,
-				pageSize:15,
+				pageSize:10,
 				pageList: [10,15,20,25,30,40,50,100],
 				onDblClickRow: onRowClick 
 			});
@@ -116,7 +61,6 @@
 	});
 
 
-		 
 	function formatterStatus(val, row){
        if(val == 0){
 			return '<span style="color:green; font: bold 13px 宋体;">是</span>';
@@ -125,22 +69,20 @@
 	   }  
 	}
 
-
 	function addNew(){
-	    //location.href="<%=request.getContextPath()%>/sys/department.do?method=edit";
-		var nodeId = jQuery("#nodeId").val();
-		var link = "<%=request.getContextPath()%>/sys/department.do?method=prepareAdd&parent="+nodeId;
-	    art.dialog.open(link, { height: 420, width: 680, title: "添加记录", lock: true, scrollbars:"yes" }, false);
+	    //location.href="<%=request.getContextPath()%>/branch/user.do?method=edit";
+	    var link="<%=request.getContextPath()%>/branch/user.do?method=prepareAdd&parent=${parent}&deptId=${deptId}";
+	    art.dialog.open(link, { height: 430, width: 620, title: "添加用户", lock: true, scrollbars:"no" }, false);
 	}
 
 	function onRowClick(rowIndex, row){
-        //window.open('<%=request.getContextPath()%>/sys/department.do?method=edit&rowId='+row.id);
-	    var link = '<%=request.getContextPath()%>/sys/department.do?method=prepareModify&id='+row.id;
-	    art.dialog.open(link, { height: 450, width: 680, title: "修改记录", lock: true, scrollbars:"yes" }, false);
+            //window.open('<%=request.getContextPath()%>/branch/user.do?method=edit&id='+row.id);
+	    var link = '<%=request.getContextPath()%>/branch/user.do?method=prepareModify&parent=${parent}&deptId=${deptId}&id='+row.id;
+	    art.dialog.open(link, { height: 430, width: 620, title: "修改用户", lock: true, scrollbars:"no" }, false);
 	}
 
 	function searchWin(){
-	    jQuery('#dlg').dialog('open').dialog('setTitle','部门列表查询');
+	    jQuery('#dlg').dialog('open').dialog('setTitle','用户查询');
 	    //jQuery('#searchForm').form('clear');
 	}
 
@@ -154,54 +96,55 @@
 	function editSelected(){
 	    var rows = jQuery('#mydatagrid').datagrid('getSelections');
 	    if(rows == null || rows.length !=1){
-		alert("请选择其中一条记录。");
-		return;
-	    }
-	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
-	    if (selected ){
-		//location.href="<%=request.getContextPath()%>/sys/department.do?method=edit&rowId="+selected.id;
-		var link = "<%=request.getContextPath()%>/sys/department.do?method=prepareModify&id="+selected.id;
-		art.dialog.open(link, { height: 450, width: 680, title: "修改记录", lock: true, scrollbars:"yes" }, false);
-	    }
-	}
-
-	function deptRoles(){
-		var rows = jQuery('#mydatagrid').datagrid('getSelections');
-	    if(rows == null || rows.length !=1){
-		  alert("请选择其中一条记录。");
+		  alert("请选择其中一条用户。");
 		  return;
 	    }
 	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
 	    if (selected ){
-		  //location.href="<%=request.getContextPath()%>/sys/department.do?method=edit&rowId="+selected.id;
-		  var link = "<%=request.getContextPath()%>/sys/deptRole.do?method=showList&parent="+selected.id;
-		  art.dialog.open(link, { height: 420, width: 680, title: "部门角色", lock: true, scrollbars:"yes" }, false);
+		  //location.href="<%=request.getContextPath()%>/branch/user.do?method=edit&id="+selected.id;
+		  var link = "<%=request.getContextPath()%>/branch/user.do?method=prepareModify&parent=${parent}&deptId=${deptId}&id="+selected.id;
+		  art.dialog.open(link, { height: 430, width: 620, title: "修改用户", lock: true, scrollbars:"no" }, false);
 	    }
 	}
 
-	function deptUsers(){
+
+	function resetPwd(){
 		var rows = jQuery('#mydatagrid').datagrid('getSelections');
 	    if(rows == null || rows.length !=1){
-		  alert("请选择其中一条记录。");
+		  alert("请选择其中一条用户。");
 		  return;
 	    }
 	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
 	    if (selected ){
-		  //location.href="<%=request.getContextPath()%>/sys/department.do?method=edit&rowId="+selected.id;
-		  var link = "<%=request.getContextPath()%>/sys/user.do?parent="+selected.id;
-		  art.dialog.open(link, { height: 430, width: 880, title: "部门用户", lock: true, scrollbars:"yes" }, false);
+		  //location.href="<%=request.getContextPath()%>/branch/user.do?method=edit&id="+selected.id;
+		  var link = "<%=request.getContextPath()%>/branch/user.do?method=prepareResetPwd&parent=${parent}&deptId=${deptId}&id="+selected.id;
+		  art.dialog.open(link, { height: 300, width: 465, title: "重置用户密码", lock: true, scrollbars:"no" }, false);
+	    }
+	}
+
+	function userRoles(){
+		var rows = jQuery('#mydatagrid').datagrid('getSelections');
+	    if(rows == null || rows.length !=1){
+		  alert("请选择其中一条用户。");
+		  return;
+	    }
+	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
+	    if (selected ){
+		  //location.href="<%=request.getContextPath()%>/branch/user.do?method=edit&id="+selected.id;
+		  var link = "<%=request.getContextPath()%>/branch/user.do?method=showRole&parent=${parent}&deptId=${deptId}&user_id="+selected.id;
+		  art.dialog.open(link, { height: 420, width: 620, title: "用户角色设置", lock: true, scrollbars:"no" }, false);
 	    }
 	}
 
 	function viewSelected(){
 		var rows = jQuery('#mydatagrid').datagrid('getSelections');
 		if(rows == null || rows.length !=1){
-			alert("请选择其中一条记录。");
+			alert("请选择其中一条用户。");
 			return;
 		}
 		var selected = jQuery('#mydatagrid').datagrid('getSelected');
 		if (selected ){
-		    location.href="<%=request.getContextPath()%>/sys/department.do?method=prepareModify&id="+selected.id;
+		    location.href="<%=request.getContextPath()%>/branch/user.do?method=prepareModify&parent=${parent}&deptId=${deptId}&id="+selected.id;
 		}
 	}
 
@@ -212,10 +155,10 @@
 			ids.push(rows[i].id);
 		}
 		if(ids.length > 0 && confirm("数据删除后不能恢复，确定删除吗？")){
-		    var rowIds = ids.join(',');
+		    var ids = ids.join(',');
 			jQuery.ajax({
 				   type: "POST",
-				   url: '<%=request.getContextPath()%>/sys/department.do?method=delete&rowIds='+rowIds,
+				   url: '<%=request.getContextPath()%>/branch/user.do?method=delete&ids='+ids,
 				   dataType:  'json',
 				   error: function(data){
 					   alert('服务器处理错误！');
@@ -230,7 +173,7 @@
 				   }
 			 });
 		} else {
-			alert("请选择至少一条记录。");
+			alert("请选择至少一条用户。");
 		}
 	}
 
@@ -268,40 +211,29 @@
 </script>
 </head>
 <body style="margin:1px;">  
-<input type="hidden" id="nodeId" name="nodeId" value="" >
+<div style="margin:0;"></div>  
 <div class="easyui-layout" data-options="fit:true">  
-    <div data-options="region:'west',split:true" style="width:195px;">
-	  <div class="easyui-layout" data-options="fit:true">  
-           
-			 <div data-options="region:'center',border:false">
-			    <ul id="myTree" class="ztree"></ul>  
-			 </div> 
-			 
-        </div>  
-	</div> 
-   <div data-options="region:'center'">   
-		<div class="easyui-layout" data-options="fit:true">  
-		   <div data-options="region:'north',split:true,border:true" style="height:40px"> 
-			<div class="toolbar-backgroud"  > 
-			<img src="<%=request.getContextPath()%>/images/window.png">
-			&nbsp;<span class="x_content_title">部门列表列表</span>
-			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-add'" 
-			   onclick="javascript:addNew();">新增</a>  
-			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-edit'"
-			   onclick="javascript:editSelected();">修改</a>  
-			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-user'"
-			   onclick="javascript:deptUsers();">部门用户</a> 
-			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-actor'"
-			   onclick="javascript:deptRoles();">部门角色</a> 
-			<!-- <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-search'"
-			   onclick="javascript:searchWin();">查找</a> -->
-		   </div> 
-		  </div> 
-		  <div data-options="region:'center',border:true">
-			 <table id="mydatagrid"></table>
-		  </div>  
-      </div>
-	</div>
+   <div data-options="region:'north',split:true,border:true" style="height:40px"> 
+    <div class="toolbar-backgroud"  > 
+	<img src="<%=request.getContextPath()%>/images/window.png">
+	&nbsp;<span class="x_content_title">用户列表</span>
+    <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-add'" 
+	   onclick="javascript:addNew();">新增</a>  
+    <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-edit'"
+	   onclick="javascript:editSelected();">修改</a>  
+	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-pwd'"
+	   onclick="javascript:resetPwd();">重置密码</a>  
+	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-actor'"
+	   onclick="javascript:userRoles();">用户角色</a>  
+	<!-- <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-remove'"
+	   onclick="javascript:deleteSelections();">删除</a>  -->
+	<!-- <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-search'"
+	   onclick="javascript:searchWin();">查找</a> -->
+   </div> 
+  </div> 
+  <div data-options="region:'center',border:true">
+	 <table id="mydatagrid"></table>
+  </div>  
 </div>
 <div id="edit_dlg" class="easyui-dialog" style="width:400px;height:280px;padding:10px 20px"
 	closed="true" buttons="#dlg-buttons">

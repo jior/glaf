@@ -29,7 +29,7 @@
     var setting = {
 			async: {
 				enable: true,
-				url:"<%=request.getContextPath()%>/rs/sys/department/treeJson?nodeCode=012",
+				url:"<%=request.getContextPath()%>/branch/department.do?method=treeJson",
 				dataFilter: filter
 			},
 			callback: {
@@ -61,7 +61,7 @@
 
     function zTreeOnClick(event, treeId, treeNode, clickFlag) {
 		jQuery("#nodeId").val(treeNode.id);
-		loadData('<%=request.getContextPath()%>/sys/department.do?method=json&parentId='+treeNode.id);
+		loadData('<%=request.getContextPath()%>/branch/department.do?method=json&parentId='+treeNode.id);
 	}
 
 	function loadData(url){
@@ -85,7 +85,7 @@
 				nowrap: false,
 				striped: true,
 				collapsible:true,
-				url:'<%=request.getContextPath()%>/sys/department.do?method=json',
+				url:'<%=request.getContextPath()%>/branch/department.do?method=json',
 				sortName: 'id',
 				sortOrder: 'desc',
 				remoteSort: false,
@@ -127,15 +127,15 @@
 
 
 	function addNew(){
-	    //location.href="<%=request.getContextPath()%>/sys/department.do?method=edit";
+	    //location.href="<%=request.getContextPath()%>/branch/department.do?method=edit";
 		var nodeId = jQuery("#nodeId").val();
-		var link = "<%=request.getContextPath()%>/sys/department.do?method=prepareAdd&parent="+nodeId;
+		var link = "<%=request.getContextPath()%>/branch/department.do?method=prepareAdd&parent="+nodeId;
 	    art.dialog.open(link, { height: 420, width: 680, title: "添加记录", lock: true, scrollbars:"yes" }, false);
 	}
 
 	function onRowClick(rowIndex, row){
-        //window.open('<%=request.getContextPath()%>/sys/department.do?method=edit&rowId='+row.id);
-	    var link = '<%=request.getContextPath()%>/sys/department.do?method=prepareModify&id='+row.id;
+        //window.open('<%=request.getContextPath()%>/branch/department.do?method=edit&rowId='+row.id);
+	    var link = '<%=request.getContextPath()%>/branch/department.do?method=prepareModify&id='+row.id;
 	    art.dialog.open(link, { height: 450, width: 680, title: "修改记录", lock: true, scrollbars:"yes" }, false);
 	}
 
@@ -159,8 +159,8 @@
 	    }
 	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
 	    if (selected ){
-		//location.href="<%=request.getContextPath()%>/sys/department.do?method=edit&rowId="+selected.id;
-		var link = "<%=request.getContextPath()%>/sys/department.do?method=prepareModify&id="+selected.id;
+		//location.href="<%=request.getContextPath()%>/branch/department.do?method=edit&rowId="+selected.id;
+		var link = "<%=request.getContextPath()%>/branch/department.do?method=prepareModify&id="+selected.id;
 		art.dialog.open(link, { height: 450, width: 680, title: "修改记录", lock: true, scrollbars:"yes" }, false);
 	    }
 	}
@@ -173,8 +173,8 @@
 	    }
 	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
 	    if (selected ){
-		  //location.href="<%=request.getContextPath()%>/sys/department.do?method=edit&rowId="+selected.id;
-		  var link = "<%=request.getContextPath()%>/sys/deptRole.do?method=showList&parent="+selected.id;
+		  //location.href="<%=request.getContextPath()%>/branch/department.do?method=edit&rowId="+selected.id;
+		  var link = "<%=request.getContextPath()%>/branch/deptRole.do?method=showList&parent="+selected.id;
 		  art.dialog.open(link, { height: 420, width: 680, title: "部门角色", lock: true, scrollbars:"yes" }, false);
 	    }
 	}
@@ -187,8 +187,8 @@
 	    }
 	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
 	    if (selected ){
-		  //location.href="<%=request.getContextPath()%>/sys/department.do?method=edit&rowId="+selected.id;
-		  var link = "<%=request.getContextPath()%>/sys/user.do?parent="+selected.id;
+		  //location.href="<%=request.getContextPath()%>/branch/department.do?method=edit&rowId="+selected.id;
+		  var link = "<%=request.getContextPath()%>/branch/user.do?parent="+selected.id;
 		  art.dialog.open(link, { height: 430, width: 880, title: "部门用户", lock: true, scrollbars:"yes" }, false);
 	    }
 	}
@@ -201,7 +201,7 @@
 		}
 		var selected = jQuery('#mydatagrid').datagrid('getSelected');
 		if (selected ){
-		    location.href="<%=request.getContextPath()%>/sys/department.do?method=prepareModify&id="+selected.id;
+		    location.href="<%=request.getContextPath()%>/branch/department.do?method=prepareModify&id="+selected.id;
 		}
 	}
 
@@ -215,7 +215,7 @@
 		    var rowIds = ids.join(',');
 			jQuery.ajax({
 				   type: "POST",
-				   url: '<%=request.getContextPath()%>/sys/department.do?method=delete&rowIds='+rowIds,
+				   url: '<%=request.getContextPath()%>/branch/department.do?method=delete&rowIds='+rowIds,
 				   dataType:  'json',
 				   error: function(data){
 					   alert('服务器处理错误！');
@@ -291,8 +291,8 @@
 			   onclick="javascript:editSelected();">修改</a>  
 			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-user'"
 			   onclick="javascript:deptUsers();">部门用户</a> 
-			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-actor'"
-			   onclick="javascript:deptRoles();">部门角色</a> 
+			<!-- <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-actor'"
+			   onclick="javascript:deptRoles();">部门角色</a> --> 
 			<!-- <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-search'"
 			   onclick="javascript:searchWin();">查找</a> -->
 		   </div> 
