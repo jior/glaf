@@ -115,11 +115,6 @@ public class SysDeptRoleResource {
 		if (dept != null) {// 部门存在
 			long[] id = ParamUtil.getLongParameterValues(request, "id");// 获取roleId
 			if (id != null) {
-				// 先确定要删除的角色
-
-				// 再确定要增加的角色
-
-				// 先把部门下面的角色清空
 				Iterator<?> iter = dept.getRoles().iterator();
 				while (iter.hasNext()) {
 					sysDeptRoleService.delete((SysDeptRole) iter.next());

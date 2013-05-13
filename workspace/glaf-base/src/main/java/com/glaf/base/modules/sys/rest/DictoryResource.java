@@ -69,10 +69,8 @@ public class DictoryResource {
 	/**
 	 * 提交删除
 	 * 
-	 * 
-	 * 
 	 * @param request
-	 * @param modelMap
+	 * @param uriInfo
 	 * @return
 	 */
 	@Path("batchDelete")
@@ -171,8 +169,6 @@ public class DictoryResource {
 	/**
 	 * 提交增加字典信息
 	 * 
-	 * 
-	 * 
 	 * @param request
 	 * @param uriInfo
 	 * @return
@@ -212,8 +208,6 @@ public class DictoryResource {
 
 	/**
 	 * 提交修改字典信息
-	 * 
-	 * 
 	 * 
 	 * @param request
 	 * @param uriInfo

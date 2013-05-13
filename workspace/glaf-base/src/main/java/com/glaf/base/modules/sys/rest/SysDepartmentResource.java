@@ -77,7 +77,6 @@ public class SysDepartmentResource {
 	 * @param uriInfo
 	 * @return
 	 */
-
 	@Path("batchDelete")
 	@POST
 	@Produces(MediaType.TEXT_PLAIN)

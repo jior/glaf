@@ -273,8 +273,6 @@ public class GroupResource {
 	/**
 	 * 提交增加信息
 	 * 
-	 * 
-	 * 
 	 * @param request
 	 * @param uriInfo
 	 * @return

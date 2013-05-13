@@ -341,15 +341,17 @@ public class SysUserResource {
 			long id = ParamUtil.getIntParameter(request, "id", 0);
 			SysUser bean = sysUserService.findById(id);
 
-			String newPwd = ParamUtil.getParameter(request, "newPwd");
-			if (bean != null && StringUtils.isNotEmpty(newPwd)) {
-				try {
-					bean.setPassword(DigestUtil.digestString(newPwd, "MD5"));
-				} catch (Exception ex) {
-					ex.printStackTrace();
+			if (bean != null && !bean.isSystemAdministrator()) {
+				String newPwd = ParamUtil.getParameter(request, "newPwd");
+				if (StringUtils.isNotEmpty(newPwd)) {
+					try {
+						bean.setPassword(DigestUtil.digestString(newPwd, "MD5"));
+					} catch (Exception ex) {
+						ex.printStackTrace();
+					}
+					bean.setUpdateBy(bean.getAccount());
+					ret = sysUserService.update(bean);
 				}
-				bean.setUpdateBy(bean.getAccount());
-				ret = sysUserService.update(bean);
 			}
 		}
 

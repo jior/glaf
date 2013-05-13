@@ -45,8 +45,8 @@ import com.glaf.core.res.ViewMessages;
 import com.glaf.core.util.DateUtils;
 import com.glaf.core.util.RequestUtils;
 
-@Controller("/rs/sys/sysUserRole")
-@Path("/rs/sys/sysUserRole")
+@Controller("/rs/sys/userRole")
+@Path("/rs/sys/userRole")
 public class SysUserRoleResource {
 	private static final Log logger = LogFactory
 			.getLog(SysUserRoleResource.class);
