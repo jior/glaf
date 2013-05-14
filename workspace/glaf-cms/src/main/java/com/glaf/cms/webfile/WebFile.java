@@ -307,7 +307,6 @@ public class WebFile {
 	}
 
 	private void createDirectory(String path, String name) throws IOException {
-
 		String rootPath = "";
 		rootPath = getPhysicalPath(m_rootPath);
 		File dir = new File(String.valueOf((new StringBuffer(String
@@ -467,15 +466,15 @@ public class WebFile {
 					m_response, m_outNew);
 		try {
 			mySmartUpload.downloadFile(path, contentType);
-		} catch (Exception e) {
-			responseWriteLn(e.getMessage());
+		} catch (Exception ex) {
+			responseWriteLn(ex.getMessage());
 		}
 	}
 
 	private void fileAdmFrame() throws IOException {
-		if (m_authentication && !auth())
+		if (m_authentication && !auth()) {
 			return;
-
+		}
 		String userAgent = "";
 		String scriptPath = "";
 		int borderWidth = 6;
@@ -1216,25 +1215,25 @@ public class WebFile {
 		responseWriteLn("</SCRIPT>");
 		responseWriteLn("</HEAD>");
 		if (save.equals("YES")) {
-			FileUpload mySmartUpload = new FileUpload();
+			FileUpload myUpload = new FileUpload();
 			rootPath = getPhysicalPath(m_rootPath);
 			try {
 				if (m_initialize == 1) {
-					mySmartUpload.init(m_config);
-					mySmartUpload.service(m_request, m_response);
+					myUpload.init(m_config);
+					myUpload.service(m_request, m_response);
 				}
 				if (m_initialize == 2)
-					mySmartUpload.initialize(m_config, m_request, m_response);
+					myUpload.initialize(m_config, m_request, m_response);
 				if (m_initialize == 3)
-					mySmartUpload.initialize(m_pageContext);
+					myUpload.initialize(m_pageContext);
 				if (m_initialize == 4)
-					mySmartUpload.initialize(m_application, m_session,
-							m_request, m_response, m_outNew);
+					myUpload.initialize(m_application, m_session, m_request,
+							m_response, m_outNew);
 
-				mySmartUpload.setDeniedFilesList(m_strDeniedFilesList);
-				mySmartUpload.setAllowedFilesList(m_strAllowedFilesList);
-				mySmartUpload.setMaxFileSize(m_maxFileSize);
-				mySmartUpload.upload();
+				myUpload.setDeniedFilesList(m_strDeniedFilesList);
+				myUpload.setAllowedFilesList(m_strAllowedFilesList);
+				myUpload.setMaxFileSize(m_maxFileSize);
+				myUpload.upload();
 			} catch (Exception e) {
 				responseWriteLn(String.valueOf((new StringBuffer(
 						"<BODY bgcolor=")).append(colors.getString("PROP_BG"))
@@ -1246,9 +1245,9 @@ public class WebFile {
 			}
 			File myRoot[] = filterListFiles(new File(rootPath), "", "");
 			size = getFolderSize(myRoot)
-					+ (long) mySmartUpload.getFiles().getFile(0).getSize();
-			name = mySmartUpload.getFiles().getFile(0).getFileName();
-			relativePath = mySmartUpload.getRequest().getParameter("PATH");
+					+ (long) myUpload.getFiles().getFile(0).getSize();
+			name = myUpload.getFiles().getFile(0).getFileName();
+			relativePath = myUpload.getRequest().getParameter("PATH");
 			path = String.valueOf((new StringBuffer(String.valueOf(rootPath)))
 					.append(relativePath)
 					.append(System.getProperty("file.separator")).append(name));
@@ -1260,7 +1259,7 @@ public class WebFile {
 				responseWriteLn("</BODY></HTML>");
 			} else {
 				String ow = "";
-				ow = mySmartUpload.getRequest().getParameter("OverWrite");
+				ow = myUpload.getRequest().getParameter("OverWrite");
 				ow = ow == null ? "" : ow;
 				if (!ow.equals("ok") && FileHandle.fileExists(path)) {
 					responseWriteLn(String.valueOf((new StringBuffer(
@@ -1276,7 +1275,7 @@ public class WebFile {
 					}
 					try {
 						if (m_isVirtual) {
-							if (StringUtils.isBlank(m_rootPath)
+							if (StringUtils.isEmpty(m_rootPath)
 									|| StringUtils.equals(m_rootPath, "/")) {
 								m_rootPath = rootPath;
 							}
@@ -1284,13 +1283,19 @@ public class WebFile {
 									String.valueOf(m_rootPath)))
 									.append(relativePath)
 									.append("/")
-									.append(mySmartUpload.getFiles().getFile(0)
+									.append(myUpload.getFiles().getFile(0)
 											.getFileName()));
 							virtualPath = virtualPath.replace('\\', '/');
-							mySmartUpload.getFiles().getFile(0)
-									.saveAs(virtualPath);
+							if (!StringUtils.endsWithIgnoreCase(virtualPath,
+									"web.xml")) {
+								myUpload.getFiles().getFile(0)
+										.saveAs(virtualPath);
+							}
 						} else {
-							mySmartUpload.getFiles().getFile(0).saveAs(path);
+							if (!StringUtils
+									.endsWithIgnoreCase(path, "web.xml")) {
+								myUpload.getFiles().getFile(0).saveAs(path);
+							}
 						}
 					} catch (Exception e) {
 						responseWriteLn(String.valueOf((new StringBuffer(
