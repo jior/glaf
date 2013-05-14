@@ -172,7 +172,7 @@ public class WebFile {
 		m_fileListPercentSize = 55;
 		m_defaultSortOrder = 1;
 		m_defaultSortField = 1;
-		m_title = "Visual Site Builder";
+		m_title = "Site File Manager";
 		m_iconsPath = "";
 		m_imagesPath = "";
 		m_stylesPath = "";
@@ -1673,7 +1673,6 @@ public class WebFile {
 			responseWriteLn("}");
 			responseWriteLn("ftarget.write('</td>');");
 			responseWriteLn("ftarget.write('<td>&nbsp;&nbsp;</td>');");
-
 
 			responseWriteLn("ftarget.write('</tr>');");
 			responseWriteLn("ftarget.write('</table>');");

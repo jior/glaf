@@ -2,7 +2,7 @@
 	import="com.glaf.cms.webfile.*"%><jsp:useBean id="mySmartFile"
 	scope="page" class="com.glaf.cms.webfile.WebFile" /><%	
         com.glaf.core.security.LoginContext loginContext = com.glaf.core.util.RequestUtils.getLoginContext(request);
-        if (!(loginContext.hasSystemPermission())) {
+        if (!(loginContext.isSystemAdministrator())) {
 			 return;
 		}
 	    // Initialization
