@@ -1,0 +1,102 @@
+body {
+	font-size: 13px;;
+	font-style: normal;
+	font-weight: normal;
+	line-height: normal
+}
+
+treeBody {
+	font-weight: normal;
+	font-size: 13px;;
+	line-height: normal;
+	font-style: normal;
+	background-color: #d0e3f8
+}
+
+p {
+	font-size: 13px;;
+	font-style: normal;
+	font-weight: normal;
+	line-height: normal
+}
+
+td {
+	font-size: 13px;;
+	font-style: normal;
+	line-height: normal
+}
+
+input {
+	font-size: 13px;;
+	font-style: normal;
+	font-weight: normal;
+	line-height: normal
+}
+
+select {
+	font-size: 13px;;
+	font-style: normal;
+	font-weight: normal;
+	line-height: normal
+}
+
+.mainMenuItem {
+	color: #0000ff;
+}
+
+a.b1:visited {
+	color: #ffffff;
+	text-decoration: none
+}
+
+a.b1:active {
+	color: #ffffff;
+	text-decoration: none
+}
+
+a.b1:link {
+	color: #006600;
+	text-decoration: none
+}
+
+a:link {
+	color: #000000;
+	text-decoration: none
+}
+
+a:hover {
+	cursor: hand;
+	color: #000000;
+	border-bottom: #ff6600 1px dotted
+}
+
+a:active {
+	color: #000000;
+	text-decoration: none
+}
+
+a:visited {
+	color: #000000;
+	text-decoration: none
+}
+
+form input,form textarea,form select {
+	padding-left: 4px;
+	color: #666;
+}
+
+input.button {
+	color: #000;
+}
+
+form input.focus,form textarea.focus,form select.focus {
+	border-bottom: #ffdead solid 2px;
+	border-right: #ffdead solid 2px;
+	border-left: #c07300 solid 2px;
+	border-top: #c07300 solid 2px;
+	color: #000;
+}
+
+form select {
+	padding-left: 0px;
+}
