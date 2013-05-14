@@ -40,7 +40,9 @@ public class SysTreeQuery extends DataQuery {
 	protected Integer sortGreaterThanOrEqual;
 	protected Integer sortLessThan;
 	protected Integer sortLessThanOrEqual;
+	protected String treeIdLeftLike;
 	protected String treeIdLike;
+	protected String treeIdRightLike;
 	protected String urlLike;
 
 	public SysTreeQuery() {
@@ -222,14 +224,37 @@ public class SysTreeQuery extends DataQuery {
 		return sortLessThanOrEqual;
 	}
 
+	public String getTreeIdLeftLike() {
+		if (treeIdLeftLike != null && treeIdLeftLike.trim().length() > 0) {
+			if (!treeIdLeftLike.endsWith("%")) {
+				treeIdLeftLike = treeIdLeftLike + "%";
+			}
+		}
+
+		return treeIdLeftLike;
+	}
+
 	public String getTreeIdLike() {
 		if (treeIdLike != null && treeIdLike.trim().length() > 0) {
+			if (!treeIdLike.startsWith("%")) {
+				treeIdLike = "%" + treeIdLike;
+			}
 			if (!treeIdLike.endsWith("%")) {
 				treeIdLike = treeIdLike + "%";
 			}
 		}
 
 		return treeIdLike;
+	}
+
+	public String getTreeIdRightLike() {
+		if (treeIdRightLike != null && treeIdRightLike.trim().length() > 0) {
+			if (!treeIdRightLike.startsWith("%")) {
+				treeIdRightLike = "%" + treeIdRightLike;
+			}
+		}
+
+		return treeIdRightLike;
 	}
 
 	public String getUrlLike() {
@@ -380,8 +405,16 @@ public class SysTreeQuery extends DataQuery {
 		this.sortLessThanOrEqual = sortLessThanOrEqual;
 	}
 
+	public void setTreeIdLeftLike(String treeIdLeftLike) {
+		this.treeIdLeftLike = treeIdLeftLike;
+	}
+
 	public void setTreeIdLike(String treeIdLike) {
 		this.treeIdLike = treeIdLike;
+	}
+
+	public void setTreeIdRightLike(String treeIdRightLike) {
+		this.treeIdRightLike = treeIdRightLike;
 	}
 
 	public void setUrlLike(String urlLike) {

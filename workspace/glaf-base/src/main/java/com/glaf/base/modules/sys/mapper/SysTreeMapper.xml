@@ -284,16 +284,19 @@
 		resultMap="sysTreeResultMap">
 
 		select distinct E.* from sys_tree E
-		inner join sys_department D
+		inner join sys_department
+		D
 		on E.ID =
 		D.NODEID
 		inner join SYS_DEPT_ROLE DR
 		on D.ID = DR.DEPTID
-		inner join
+		inner
+		join
 		SYS_ROLE R
 		on DR.SYSROLEID = R.ID
 		inner join SYS_USER_ROLE UR
-		on DR.ID =
+		on
+		DR.ID =
 		UR.ROLEID
 		inner join SYS_USER U
 		on UR.USERID = U.ID
@@ -504,8 +507,16 @@
 			</foreach>
 		</if>
 
+		<if test="treeIdLeftLike != null and treeIdLeftLike != '' ">
+			and E.TREEID like #{treeIdLeftLike}
+		</if>
+
 		<if test="treeIdLike != null and treeIdLike != '' ">
 			and E.TREEID like #{treeIdLike}
+		</if>
+
+		<if test="treeIdRightLike != null and treeIdRightLike != '' ">
+			and E.TREEID like #{treeIdRightLike}
 		</if>
 
 		<if test="urlLike != null and urlLike != '' ">
