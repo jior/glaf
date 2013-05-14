@@ -29,6 +29,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.glaf.base.modules.sys.SysConstants;
+import com.glaf.base.modules.sys.business.UpdateTreeBean;
 import com.glaf.base.modules.sys.model.BaseDataInfo;
 import com.glaf.base.modules.sys.model.Dictory;
 import com.glaf.base.modules.sys.model.SubjectCode;
@@ -609,6 +610,14 @@ public class BaseDataManager {
 	 * 
 	 */
 	private void initBaseData() {
+		try {
+			UpdateTreeBean bean = new UpdateTreeBean();
+			bean.setSysTreeService(getSysTreeService());
+			bean.updateTreeIds();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
 		// 用户信息
 		loadUsers();
 		// 部门结构
@@ -619,7 +628,7 @@ public class BaseDataManager {
 		loadDictInfo();
 		// 科目代码
 		loadSubjectCode();
-		
+
 		logger.debug("load table meta...");
 		ITableDefinitionService tableDefinitionService = null;
 		try {

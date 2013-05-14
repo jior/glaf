@@ -19,6 +19,7 @@
 package com.glaf.base.modules.sys.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.transaction.annotation.Transactional;
 
@@ -131,16 +132,19 @@ public interface SysTreeService {
 	/**
 	 * 获取关联表树型结构
 	 * 
-	 * @param relationTable 表名
-	 * @param relationColumn 关联字段名
+	 * @param relationTable
+	 *            表名
+	 * @param relationColumn
+	 *            关联字段名
 	 * @param query
 	 * @return
 	 */
 	List<SysTree> getRelationSysTrees(String relationTable,
 			String relationColumn, SysTreeQuery query);
-	
+
 	/**
 	 * 获取某个用户某个角色的树节点
+	 * 
 	 * @param query
 	 * @return
 	 */
@@ -239,4 +243,20 @@ public interface SysTreeService {
 	 */
 	@Transactional
 	boolean update(SysTree bean);
+
+	/**
+	 * 更新树的treeId字段
+	 * 
+	 * @param treeMap
+	 */
+	@Transactional
+	void updateTreeIds();
+
+	/**
+	 * 更新指定树的treeId字段
+	 * 
+	 * @param treeMap
+	 */
+	@Transactional
+	void updateTreeIds(Map<Long, String> treeMap);
 }
