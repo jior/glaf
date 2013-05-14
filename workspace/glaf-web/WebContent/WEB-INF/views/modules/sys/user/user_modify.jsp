@@ -59,11 +59,11 @@ function setValue(obj){
   <tr>
     <td class="box-mm"><table width="95%" align="center" border="0" cellspacing="0" cellpadding="5">
       <tr>
-        <td width="20%" class="input-box">员工编码*</td>
+        <td width="20%" class="input-box">用户名*</td>
         <td width="80%"><%=bean.getCode()%></td>
       </tr>
       <tr>
-        <td class="input-box2" valign="top">部　　门</td>
+        <td class="input-box2" valign="top">部　门</td>
         <td>
 		<select name="parent" onchange="javascript:setValue(this);">
           <%
@@ -92,18 +92,18 @@ function setValue(obj){
 	   </td>
       </tr>
       <tr>
-        <td class="input-box2" valign="top">姓　　名*</td>
+        <td class="input-box2" valign="top">姓　名*</td>
         <td><input name="name" type="text" size="28" class="input" value="<%=bean.getName()%>" datatype="string" nullable="no" maxsize="20" chname="姓名"></td>
       </tr>
       <tr>
-        <td class="input-box2" valign="top">性　　别</td>
+        <td class="input-box2" valign="top">性　别</td>
         <td>
           <input type="radio" name="gender" value="0" <%=bean.getGender()==0?"checked":""%>>男
           <input type="radio" name="gender" value="1" <%=bean.getGender()==1?"checked":""%>>女
 		</td>
       </tr>
       <tr>
-        <td class="input-box2" valign="top">手　　机</td>
+        <td class="input-box2" valign="top">手　机</td>
         <td>
           <input name="mobile" type="text" size="30" class="input" datatype="string" 
 		         value="<%=bean.getMobile() != null ? bean.getMobile() :""%>" 
@@ -111,7 +111,7 @@ function setValue(obj){
 		</td>
       </tr>
       <tr>
-        <td class="input-box2" valign="top">邮　　件</td>
+        <td class="input-box2" valign="top">邮　件</td>
         <td>
           <input name="email" type="text" size="30" class="input" datatype="email" 
 		         value="<%=bean.getEmail() != null ? bean.getEmail() : ""%>" 
@@ -127,7 +127,7 @@ function setValue(obj){
 		</td>
       </tr>
 	  <tr>
-        <td class="input-box2" valign="top">职位</td>
+        <td class="input-box2" valign="top">职　位</td>
         <td>
 		    <select id="headship" name="headship">
 			  <option value="0">----请选择----</option>

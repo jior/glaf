@@ -59,13 +59,13 @@
   <tr>
     <td class="box-mm"><table width="95%" align="center" border="0" cellspacing="0" cellpadding="5">
       <tr>
-        <td width="20%" class="input-box">员工编码*</td>
+        <td width="20%" class="input-box">用户名*</td>
         <td width="80%">
 		<input name="code" type="text" size="30" class="input" datatype="string" nullable="no" maxsize="10" chname="员工编码">
 		</td>
       </tr>
       <tr>
-        <td class="input-box2" valign="top">密　　码*</td>
+        <td class="input-box2" valign="top">密　码*</td>
         <td>
 		<input name="password" type="password" size="30" class="input" datatype="string" nullable="no" minsize="6" maxsize="20" chname="密码">
 		</td>
@@ -77,25 +77,25 @@
 		</td>
       </tr>
       <tr>
-        <td class="input-box2" valign="top">姓　　名*</td>
+        <td class="input-box2" valign="top">姓　名*</td>
         <td>
 		<input name="name" type="text" size="30" class="input" datatype="string" nullable="no" maxsize="20" chname="姓名">
 		</td>
       </tr>
       <tr>
-        <td class="input-box2" valign="top">性　　别</td>
+        <td class="input-box2" valign="top">性　别</td>
         <td>
           <input type="radio" name="gender" value="0">男
           <input type="radio" name="gender" value="1" checked>女
 		</td>
       </tr>
       <tr>
-        <td class="input-box2" valign="top">手　　机</td>
+        <td class="input-box2" valign="top">手　机</td>
         <td>
           <input name="mobile" type="text" size="30" class="input" datatype="string" nullable="yes" maxsize="12" chname="手机"> </td>
       </tr>
       <tr>
-        <td class="input-box2" valign="top">邮　　件</td>
+        <td class="input-box2" valign="top">邮　件</td>
         <td>
           <input name="email" type="text" size="30" class="input" datatype="email" nullable="yes" maxsize="50" chname="邮件">
 		  </td>
@@ -107,7 +107,7 @@
 		  </td>
       </tr>
 	  <tr>
-        <td class="input-box2" valign="top">职位</td>
+        <td class="input-box2" valign="top">职　位</td>
         <td>
 		    <select id="headship" name="headship">
 			  <option value="0">----请选择----</option>

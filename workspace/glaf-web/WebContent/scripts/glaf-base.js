@@ -30,8 +30,8 @@ function selectRole(formName, elementId, elementName){
     if(x_selected != null && x_selected.value != ""){
 	    url = url + "&selecteds="+x_selected.value;
     }
-    var x=100;
-    var y=100;
+    var x=200;
+    var y=150;
     if(is_ie) {
 	    x=document.body.scrollLeft+event.clientX-event.offsetX-100;
 	    y=document.body.scrollTop+event.clientY-event.offsetY+70;
@@ -45,8 +45,8 @@ function selectRole(formName, elementId, elementName){
     if(x_selected != null && x_selected.value != ""){
 	    url = url + "&selecteds="+x_selected.value;
     }
-    var x=200;
-    var y=200;
+    var x=150;
+    var y=100;
     if(is_ie) {
 	    x=document.body.scrollLeft+event.clientX-event.offsetX-100;
 	    y=document.body.scrollTop+event.clientY-event.offsetY+70;
@@ -60,13 +60,13 @@ function selectDept(formName, elementId, elementName){
     if(x_selected != null && x_selected.value != ""){
 	    url = url + "&selecteds="+x_selected.value;
     }
-    var x=100;
-    var y=100;
+    var x=150;
+    var y=50;
     if(is_ie) {
 	    x=document.body.scrollLeft+event.clientX-event.offsetX-200;
 	    y=document.body.scrollTop+event.clientY-event.offsetY-200;
      }
-     openWindow(url,self,x, y, 585, 610);
+     openWindow(url,self,x, y, 565, 600);
 }
 
 function selectDept(formName, elementId, elementName, exclusive){
@@ -78,13 +78,13 @@ function selectDept(formName, elementId, elementName, exclusive){
 	if(exclusive != null){
 		url = url + "&exclusive="+exclusive;
 	}
-    var x=100;
-    var y=100;
+    var x=150;
+    var y=50;
     if(is_ie) {
 	    x=document.body.scrollLeft+event.clientX-event.offsetX-200;
 	    y=document.body.scrollTop+event.clientY-event.offsetY-200;
      }
-     openWindow(url,self,x, y, 585, 610);
+     openWindow(url,self,x, y, 565, 600);
 }
 
 function selectTreeNode(treeCode, formName, elementId, elementName, exclusive){
@@ -97,13 +97,13 @@ function selectTreeNode(treeCode, formName, elementId, elementName, exclusive){
 	if(exclusive != null){
 		url = url + "&exclusive="+exclusive;
 	}
-    var x=100;
-    var y=100;
+    var x=150;
+    var y=50;
     if(is_ie) {
 	    x=document.body.scrollLeft+event.clientX-event.offsetX-200;
 	    y=document.body.scrollTop+event.clientY-event.offsetY-200;
      }
-     openWindow(url,self,x, y, 585, 610);
+     openWindow(url,self,x, y, 565, 600);
 }
 
 function selectUser(formName, elementId, elementName){
@@ -112,13 +112,13 @@ function selectUser(formName, elementId, elementName){
     if(x_selected != null && x_selected.value != ""){
 	    url = url + "&selecteds="+x_selected.value;
     }
-    var x=100;
-    var y=100;
+    var x=150;
+    var y=50;
     if(is_ie) {
 	    x=document.body.scrollLeft+event.clientX-event.offsetX-200;
 	    y=document.body.scrollTop+event.clientY-event.offsetY-200;
      }
-    openWindow(url,self,x, y, 585, 610);
+    openWindow(url,self,x, y, 565, 600);
 }
 
 function selectUser(formName, elementId, elementName, exclusive){
@@ -130,13 +130,13 @@ function selectUser(formName, elementId, elementName, exclusive){
 	if(exclusive != null){
 		url = url + "&exclusive="+exclusive;
 	}
-    var x=100;
-    var y=100;
+    var x=150;
+    var y=50;
     if(is_ie) {
 	    x=document.body.scrollLeft+event.clientX-event.offsetX-200;
 	    y=document.body.scrollTop+event.clientY-event.offsetY-200;
      }
-    openWindow(url,self,x, y, 585, 610);
+    openWindow(url,self,x, y, 565, 600);
 }
 	 
  

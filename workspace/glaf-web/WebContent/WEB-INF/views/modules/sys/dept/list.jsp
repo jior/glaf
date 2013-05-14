@@ -130,13 +130,13 @@
 	    //location.href="<%=request.getContextPath()%>/sys/department.do?method=edit";
 		var nodeId = jQuery("#nodeId").val();
 		var link = "<%=request.getContextPath()%>/sys/department.do?method=prepareAdd&parent="+nodeId;
-	    art.dialog.open(link, { height: 420, width: 680, title: "添加记录", lock: true, scrollbars:"yes" }, false);
+	    art.dialog.open(link, { height: 420, width: 600, title: "添加记录", lock: true, scrollbars:"yes" }, false);
 	}
 
 	function onRowClick(rowIndex, row){
         //window.open('<%=request.getContextPath()%>/sys/department.do?method=edit&rowId='+row.id);
 	    var link = '<%=request.getContextPath()%>/sys/department.do?method=prepareModify&id='+row.id;
-	    art.dialog.open(link, { height: 450, width: 680, title: "修改记录", lock: true, scrollbars:"yes" }, false);
+	    art.dialog.open(link, { height: 460, width: 600, title: "修改记录", lock: true, scrollbars:"yes" }, false);
 	}
 
 	function searchWin(){
@@ -161,7 +161,7 @@
 	    if (selected ){
 		//location.href="<%=request.getContextPath()%>/sys/department.do?method=edit&rowId="+selected.id;
 		var link = "<%=request.getContextPath()%>/sys/department.do?method=prepareModify&id="+selected.id;
-		art.dialog.open(link, { height: 450, width: 680, title: "修改记录", lock: true, scrollbars:"yes" }, false);
+		art.dialog.open(link, { height: 460, width: 600, title: "修改记录", lock: true, scrollbars:"yes" }, false);
 	    }
 	}
 

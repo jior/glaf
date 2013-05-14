@@ -72,13 +72,13 @@
 	function addNew(){
 	    //location.href="<%=request.getContextPath()%>/sys/user.do?method=edit";
 	    var link="<%=request.getContextPath()%>/sys/user.do?method=prepareAdd&parent=${parent}&deptId=${deptId}";
-	    art.dialog.open(link, { height: 430, width: 620, title: "添加用户", lock: true, scrollbars:"no" }, false);
+	    art.dialog.open(link, { height: 580, width: 620, title: "添加用户", lock: true, scrollbars:"no" }, false);
 	}
 
 	function onRowClick(rowIndex, row){
             //window.open('<%=request.getContextPath()%>/sys/user.do?method=edit&id='+row.id);
 	    var link = '<%=request.getContextPath()%>/sys/user.do?method=prepareModify&parent=${parent}&deptId=${deptId}&id='+row.id;
-	    art.dialog.open(link, { height: 430, width: 620, title: "修改用户", lock: true, scrollbars:"no" }, false);
+	    art.dialog.open(link, { height: 450, width: 620, title: "修改用户", lock: true, scrollbars:"no" }, false);
 	}
 
 	function searchWin(){
@@ -103,7 +103,7 @@
 	    if (selected ){
 		  //location.href="<%=request.getContextPath()%>/sys/user.do?method=edit&id="+selected.id;
 		  var link = "<%=request.getContextPath()%>/sys/user.do?method=prepareModify&parent=${parent}&deptId=${deptId}&id="+selected.id;
-		  art.dialog.open(link, { height: 430, width: 620, title: "修改用户", lock: true, scrollbars:"no" }, false);
+		  art.dialog.open(link, { height: 450, width: 620, title: "修改用户", lock: true, scrollbars:"no" }, false);
 	    }
 	}
 
