@@ -47,7 +47,7 @@ function checkOperation(form){
 function add(){
   var url="tree.do?method=prepareAdd&parent=<%=parent%>";
   var link = "<%=request.getContextPath()%>/sys/"+url;
-  var width=450;
+  var width=480;
   var height=350;
   var scroll="no";
   //openWindow(url, width, height, scroll);
@@ -67,7 +67,7 @@ function modify(form){
 	  }
 	  var url="tree.do?method=prepareModify&id="+id;
 	  var link = "<%=request.getContextPath()%>/sys/"+url;
-	  var width=450;
+	  var width=480;
 	  var height=350;
 	  var scroll="no";
 	  //openWindow(url, width, height, scroll);

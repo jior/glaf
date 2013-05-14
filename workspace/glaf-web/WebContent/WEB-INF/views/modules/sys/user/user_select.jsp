@@ -26,8 +26,8 @@ int multDate = Date.intValue();
 <link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
 <script language="javascript" src='<%=context%>/scripts/main.js'></script>
 <script language="javascript" src='<%=context%>/scripts/verify.js'></script>
-</head>
 <script language="javascript">
+var context = "<%=request.getContextPath()%>";
 function selMultData(){	
   window.returnValue = getCheckboxValue( 'id','value', 'title', 'code', 'account');
   window.close();
@@ -37,6 +37,7 @@ function selOneData(){
   window.close();
 }
 </script>
+</head>
 <body>
 <table width="430" border="0" align="center" cellspacing="0" cellpadding="0">      
       <tr>

@@ -39,6 +39,7 @@ if(refreshStr != 'false'){
 	  window.opener.location.href=window.opener.location.href;
 	}
 }
-Close();
+//Close();
+window.close(); 
 </script>
 </html>

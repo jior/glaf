@@ -1,4 +1,4 @@
-var context = "/glaf";
+//var context = "/glaf";
 
 /**
  * 打开弹出窗口 url 页面地址 width 数字，窗口宽度 height 数字窗口高度 scroll true/false, 是否有滚动条

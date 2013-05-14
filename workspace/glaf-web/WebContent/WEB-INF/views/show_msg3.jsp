@@ -41,6 +41,7 @@ if(reloadStr == 'true'){
 }else if(reloadStr == 'false'){
 	window.opener.showmessage(msgstr);
 }
-Close();
+//Close();
+window.close(); 
 </script>
 </html>

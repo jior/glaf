@@ -48,7 +48,7 @@ if(refreshStr != 'false'){
 	  window.parent.location.reload();
 	}
 }
- 
-Close();
+window.close(); 
+//Close();
 </script>
 </html>

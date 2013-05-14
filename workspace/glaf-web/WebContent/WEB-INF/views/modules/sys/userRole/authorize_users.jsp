@@ -32,6 +32,8 @@
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/calendar/lang/calendar-en.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/calendar/lang/calendar-setup.js"></script>
 <script language="javascript">
+var context = "<%=request.getContextPath()%>";
+
 var num=0;
 function checkOperation(form){
   num = getCheckedBoxNum(form,"id");

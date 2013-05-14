@@ -48,7 +48,7 @@ function add(){
   var url="department.do?method=prepareAdd&parent="+<%=parent%>;
   var link = "<%=request.getContextPath()%>/sys/"+url;
   var width=530;
-  var height=420;
+  var height=410;
   var scroll="no";  
   //openWindow(url, width, height, scroll);
   art.dialog.open(link, { height: height, width: width, title: "添加部门", scrollbars:"no" , lock: false });
@@ -64,7 +64,7 @@ function modify(form){
   var url="department.do?method=prepareModify&id="+id;
   var link = "<%=request.getContextPath()%>/sys/"+url;
   var width=530;
-  var height=435;
+  var height=425;
   var scroll="no";
   //openWindow(url, width, height, scroll);
   art.dialog.open(link, { height: height, width: width, title: "修改部门", scrollbars:"no" , lock: false });

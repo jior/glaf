@@ -18,6 +18,7 @@ SysTree parent= (SysTree)request.getAttribute("parent");
 <link href="<%=request.getContextPath()%>/scripts/dtree/dtree.css" type="text/css" rel="stylesheet">
 <script src="<%=request.getContextPath()%>/scripts/dtree/deptTree.js" type="text/javascript"></script>
 <script language="javascript">
+var context = "<%=request.getContextPath()%>";
 function selData(value, title){  
   var a= new Array(value, title);
   window.returnValue=a;
