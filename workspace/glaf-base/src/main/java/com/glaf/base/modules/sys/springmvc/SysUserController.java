@@ -1158,6 +1158,13 @@ public class SysUserController {
 		long userId = ParamUtil.getLongParameter(request, "userId", 0);
 		SysUser user = sysUserService.findById(userId);
 		request.setAttribute("user", user);
+		
+		SysTree parent = sysTreeService.getSysTreeByCode(Constants.TREE_DEPT);
+		List<SysTree> list = new ArrayList<SysTree>();
+		parent.setDeep(0);
+		list.add(parent);
+		sysTreeService.getSysTree(list, (int) parent.getId(), 1);
+		request.setAttribute("parent", list);
 
 		String x_view = ViewProperties.getString("user.showUser");
 		if (StringUtils.isNotEmpty(x_view)) {

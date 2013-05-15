@@ -140,11 +140,20 @@
 		R.ID
 		inner join sys_department D
 		on DR.DEPTID = D.ID
-		where D.NODEID IN
-		<foreach item="x_nodeId" index="index" collection="nodeIds"
-			open="(" separator="," close=")">
-			#{x_nodeId}
-		</foreach>
+		where 1=1
+
+		<choose>
+			<when test="nodeIds != null and nodeIds.size !=0 ">
+				and D.NODEID IN
+				<foreach item="x_nodeId" index="index" collection="nodeIds"
+					open="(" separator="," close=")">
+					#{x_nodeId}
+				</foreach>
+			</when>
+			<otherwise>
+				and D.NODEID = #{nodeId}
+			</otherwise>
+		</choose>
 
 	</select>
 

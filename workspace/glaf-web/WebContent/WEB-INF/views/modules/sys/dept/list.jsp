@@ -284,7 +284,7 @@
 		   <div data-options="region:'north',split:true,border:true" style="height:40px"> 
 			<div class="toolbar-backgroud"  > 
 			<img src="<%=request.getContextPath()%>/images/window.png">
-			&nbsp;<span class="x_content_title">部门列表列表</span>
+			&nbsp;<span class="x_content_title">部门列表</span>
 			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-add'" 
 			   onclick="javascript:addNew();">新增</a>  
 			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-edit'"

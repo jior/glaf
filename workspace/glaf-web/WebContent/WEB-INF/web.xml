@@ -23,10 +23,6 @@
 	<listener>
 		<listener-class>com.glaf.core.context.StartupListener</listener-class>
 	</listener>
-
-	<!-- <listener>
-        <listener-class>org.apache.shiro.web.env.EnvironmentLoaderListener</listener-class>
-    </listener> -->
  
 	<listener> 
 		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class> 

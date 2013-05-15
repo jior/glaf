@@ -66,6 +66,9 @@ public class SysRole implements Serializable, JSONable {
 	@Column(name = "NAME", length = 100)
 	protected String name;
 
+	@javax.persistence.Transient
+	protected long nodeId;
+
 	/**
 	 * ÐòºÅ
 	 */
@@ -113,6 +116,10 @@ public class SysRole implements Serializable, JSONable {
 		return this.name;
 	}
 
+	public long getNodeId() {
+		return nodeId;
+	}
+
 	public int getSort() {
 		return this.sort;
 	}
@@ -151,6 +158,10 @@ public class SysRole implements Serializable, JSONable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public void setNodeId(long nodeId) {
+		this.nodeId = nodeId;
 	}
 
 	public void setSort(int sort) {

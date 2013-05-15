@@ -406,8 +406,7 @@
 
 		select distinct E.* from sys_user E
 		inner join sys_user_role R
-		on E.ID =
-		R.USERID
+		on E.ID = R.USERID
 		where R.ROLEID = #{roleId}
 
 	</select>

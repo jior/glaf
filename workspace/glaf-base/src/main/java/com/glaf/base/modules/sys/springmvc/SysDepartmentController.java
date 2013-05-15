@@ -24,6 +24,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -45,11 +46,16 @@ import com.glaf.base.modules.Constants;
 import com.glaf.base.modules.sys.SysConstants;
 import com.glaf.base.modules.sys.model.Dictory;
 import com.glaf.base.modules.sys.model.SysDepartment;
+import com.glaf.base.modules.sys.model.SysRole;
 import com.glaf.base.modules.sys.model.SysTree;
+import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.sys.query.SysDepartmentQuery;
 import com.glaf.base.modules.sys.service.DictoryService;
 import com.glaf.base.modules.sys.service.SysDepartmentService;
+import com.glaf.base.modules.sys.service.SysDeptRoleService;
+import com.glaf.base.modules.sys.service.SysRoleService;
 import com.glaf.base.modules.sys.service.SysTreeService;
+import com.glaf.base.modules.sys.util.SysRoleJsonFactory;
 import com.glaf.base.utils.ParamUtil;
 import com.glaf.core.base.TreeModel;
 import com.glaf.core.config.ViewProperties;
@@ -69,11 +75,15 @@ public class SysDepartmentController {
 	private static final Log logger = LogFactory
 			.getLog(SysDepartmentController.class);
 
-	private DictoryService dictoryService;
+	protected DictoryService dictoryService;
 
-	private SysDepartmentService sysDepartmentService;
+	protected SysDepartmentService sysDepartmentService;
 
-	private SysTreeService sysTreeService;
+	protected SysDeptRoleService sysDeptRoleService;
+
+	protected SysRoleService sysRoleService;
+
+	protected SysTreeService sysTreeService;
 
 	/**
 	 * 批量删除信息
@@ -104,6 +114,31 @@ public class SysDepartmentController {
 
 		// 显示列表页面
 		return new ModelAndView("show_msg2", modelMap);
+	}
+
+	@ResponseBody
+	@RequestMapping(params = "method=deptRolesJson")
+	public byte[] deptRolesJson(HttpServletRequest request) {
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		logger.debug(params);
+
+		long nodeId = RequestUtils.getLong(request, "nodeId", -1);
+		SysDepartmentQuery query = new SysDepartmentQuery();
+		query.nodeId(nodeId);
+		List<SysRole> roles = sysRoleService.getSysRolesOfDepts(query);
+
+		for (SysRole role : roles) {
+			role.setNodeId(nodeId);
+		}
+
+		JSONArray array = SysRoleJsonFactory.listToArray(roles);
+
+		logger.debug(array.toString());
+		try {
+			return array.toString().getBytes("UTF-8");
+		} catch (IOException e) {
+			return array.toString().getBytes();
+		}
 	}
 
 	/**
@@ -423,6 +458,18 @@ public class SysDepartmentController {
 	}
 
 	@javax.annotation.Resource
+	public void setSysDeptRoleService(SysDeptRoleService sysDeptRoleService) {
+		this.sysDeptRoleService = sysDeptRoleService;
+		logger.info("setSysDeptRoleService");
+	}
+
+	@javax.annotation.Resource
+	public void setSysRoleService(SysRoleService sysRoleService) {
+		this.sysRoleService = sysRoleService;
+		logger.info("setSysRoleService");
+	}
+
+	@javax.annotation.Resource
 	public void setSysTreeService(SysTreeService sysTreeService) {
 		this.sysTreeService = sysTreeService;
 		logger.info("setSysTreeService");
@@ -460,9 +507,39 @@ public class SysDepartmentController {
 	}
 
 	/**
+	 * 显示所有列表
+	 * 
+	 * @param request
+	 * @param modelMap
+	 * @return
+	 */
+	@RequestMapping(params = "method=showDeptRoleUsers")
+	public ModelAndView showDeptRoleUsers(HttpServletRequest request,
+			ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		long nodeId = ParamUtil.getIntParameter(request, "nodeId", 0);
+		String roleCode = request.getParameter("roleCode");
+
+		SysDepartment dept = sysDepartmentService
+				.getSysDepartmentByNodeId(nodeId);
+		if (dept != null) {
+			Set<SysUser> users = sysDeptRoleService.findRoleUser(dept.getId(),
+					roleCode);
+			request.setAttribute("department", dept);
+			request.setAttribute("users", users);
+		}
+
+		String x_view = ViewProperties
+				.getString("department.showDeptRoleUsers");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
+		return new ModelAndView("/modules/sys/dept/dept_role_user", modelMap);
+	}
+
+	/**
 	 * 显示菜单选择页面
-	 * 
-	 * 
 	 * 
 	 * @param request
 	 * @param modelMap
@@ -501,8 +578,6 @@ public class SysDepartmentController {
 
 	/**
 	 * 显示框架页面
-	 * 
-	 * 
 	 * 
 	 * @param request
 	 * @param modelMap
@@ -627,7 +702,7 @@ public class SysDepartmentController {
 
 		JacksonTreeHelper treeHelper = new JacksonTreeHelper();
 		responseJSON = treeHelper.getTreeArrayNode(treeModels);
-        logger.debug(responseJSON.toString());
+		logger.debug(responseJSON.toString());
 		try {
 			return responseJSON.toString().getBytes("UTF-8");
 		} catch (IOException e) {
