@@ -21,6 +21,7 @@ package com.glaf.base.modules.sys.springmvc;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -38,6 +39,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.glaf.base.modules.Constants;
 import com.glaf.base.modules.sys.SysConstants;
 import com.glaf.base.modules.sys.model.Dictory;
@@ -48,10 +51,12 @@ import com.glaf.base.modules.sys.service.DictoryService;
 import com.glaf.base.modules.sys.service.SysDepartmentService;
 import com.glaf.base.modules.sys.service.SysTreeService;
 import com.glaf.base.utils.ParamUtil;
+import com.glaf.core.base.TreeModel;
 import com.glaf.core.config.ViewProperties;
 import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
 import com.glaf.core.res.ViewMessages;
+import com.glaf.core.tree.helper.JacksonTreeHelper;
 import com.glaf.core.util.JsonUtils;
 import com.glaf.core.util.PageResult;
 import com.glaf.core.util.ParamUtils;
@@ -256,8 +261,6 @@ public class SysDepartmentController {
 	/**
 	 * 显示增加页面
 	 * 
-	 * 
-	 * @param form
 	 * @param request
 	 * @param modelMap
 	 * @return
@@ -560,5 +563,75 @@ public class SysDepartmentController {
 		logger.info("parent:" + parent + "; id:" + id + "; operate:" + operate);
 		SysDepartment bean = sysDepartmentService.findById(id);
 		sysDepartmentService.sort(parent, bean, operate);
+	}
+
+	@RequestMapping(params = "method=treegrid")
+	public ModelAndView treegrid(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+
+		String x_view = ViewProperties.getString("department.treegrid");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
+		String view = request.getParameter("view");
+		if (StringUtils.isNotEmpty(view)) {
+			return new ModelAndView(view, modelMap);
+		}
+
+		return new ModelAndView("/modules/sys/dept/treegrid", modelMap);
+	}
+
+	@ResponseBody
+	@RequestMapping(params = "method=treegridJson")
+	public byte[] treegridJson(HttpServletRequest request) {
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		logger.debug(params);
+
+		long parentId = RequestUtils.getLong(request, "parentId", -1);
+
+		List<SysTree> trees = sysTreeService.getSysTreeListForDept(parentId, 0);
+		List<SysDepartment> depts = sysDepartmentService
+				.getSysDepartmentList(parentId);
+
+		ArrayNode responseJSON = new ObjectMapper().createArrayNode();
+
+		List<TreeModel> treeModels = new ArrayList<TreeModel>();
+
+		if (trees != null && !trees.isEmpty() && depts != null
+				&& !depts.isEmpty()) {
+			Map<Long, SysDepartment> deptMap = new HashMap<Long, SysDepartment>();
+			for (SysDepartment dept : depts) {
+				deptMap.put(dept.getNodeId(), dept);
+			}
+			for (SysTree tree : trees) {
+				SysDepartment dept = deptMap.get(tree.getId());
+				if (dept != null) {
+					Map<String, Object> dataMap = tree.getDataMap();
+					if (dataMap == null) {
+						dataMap = new HashMap<String, Object>();
+					}
+					dataMap.put("deptId", dept.getId());
+					dataMap.put("deptName", dept.getName());
+					dataMap.put("deptCode", dept.getCode());
+					dataMap.put("deptCode2", dept.getCode2());
+					dataMap.put("deptNo", dept.getNo());
+					dataMap.put("deptDesc", dept.getDesc());
+					dataMap.put("deptFincode", dept.getFincode());
+					dataMap.put("deptLevel", dept.getLevel());
+					tree.setDataMap(dataMap);
+				}
+				treeModels.add(tree);
+			}
+		}
+
+		JacksonTreeHelper treeHelper = new JacksonTreeHelper();
+		responseJSON = treeHelper.getTreeArrayNode(treeModels);
+        logger.debug(responseJSON.toString());
+		try {
+			return responseJSON.toString().getBytes("UTF-8");
+		} catch (IOException e) {
+			return responseJSON.toString().getBytes();
+		}
 	}
 }
