@@ -93,12 +93,13 @@
 <div id="thumbnails">
 <table id="infoTable" border="0" width="50%" style="border: solid 1px #7FAAFF; background-color: #C5D9FF; padding: 2px;margin-top:8px;">
 </table>
+<iframe id="newFrame" name="newFrame" width="0" height="0"></iframe>
     <div id="response" >
 	  <c:forEach items="${dataFiles}" var="a">
 	   <div id="div_${a.fileId}">
 	     <div>
          <span>文件 ${a.filename}</span>
-         <span>&nbsp;<a target="_blank" href="<%=request.getContextPath()%>/mx/lob/lob/download?fileId=${a.fileId}">下载</a></span>
+         <span>&nbsp;<a target="newFrame" href="<%=request.getContextPath()%>/mx/lob/lob/download?fileId=${a.fileId}">下载</a></span>
 		 <span>&nbsp;<span><a href="#" onclick="javascript:deleteFile('${a.fileId}');">删除</a></span>
 		 </div>
 	   </div>

@@ -30,7 +30,7 @@
 			//alert(jsonData);
 	    	$('#response').append('<div><div id="div_'+jsonData.fileId+'">')
 	    				  .append('<span>文件' + fileObj.name + '</span>')
-	    				  .append('<span>&nbsp;<a target="_blank" href="<%=request.getContextPath()%>/mx/lob/lob/download?fileId='+jsonData.fileId+'">点击下载</a></span>')
+	    				  .append('<span>&nbsp;<a target="newFrame" href="<%=request.getContextPath()%>/mx/lob/lob/download?fileId='+jsonData.fileId+'">点击下载</a></span>')
 				          .append('&nbsp;<span><a href="#" onclick="javascript:deleteFile(\''+jsonData.fileId+'\');">删除</a></span>')
 	    				  .append('<hr/><br/></div></div>');
 
@@ -75,12 +75,13 @@
     <button value="取消所有" onclick="$('#file_upload').omFileUpload('cancel')" class="button">取消所有</button>
 	<br />
 	<br />
+	<iframe id="newFrame" name="newFrame" width="0" height="0"></iframe>
     <div id="response" >
 	  <c:forEach items="${dataFiles}" var="a">
 	   <div id="div_${a.fileId}">
 	     <div>
          <span>文件 ${a.filename}</span>
-         <span>&nbsp;<a target="_blank" href="<%=request.getContextPath()%>/mx/lob/lob/download?fileId=${a.fileId}">下载</a></span>
+         <span>&nbsp;<a target="newFrame" href="<%=request.getContextPath()%>/mx/lob/lob/download?fileId=${a.fileId}">下载</a></span>
 		 <span>&nbsp;<span><a href="#" onclick="javascript:deleteFile('${a.fileId}');">删除</a></span>
 		 </div>
 	   </div>
