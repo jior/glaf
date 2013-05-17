@@ -182,6 +182,15 @@ public class FileUploadController {
 			maxUploadSize = conf.getInt("upload.maxUploadSize", 50);// 50MB
 		}
 		maxUploadSize = maxUploadSize * FileUtils.MB_SIZE;
+
+		/**
+		 * 文件大小超过maxDiskSize时将文件写到本地硬盘,默认超过5MB的将写到本地硬盘
+		 */
+		int maxDiskSize = conf.getInt(serviceKey + ".maxDiskSize", 0);
+		if (maxDiskSize == 0) {
+			maxDiskSize = conf.getInt("upload.maxDiskSize", 1024 * 1024 * 2);// 2MB
+		}
+
 		logger.debug("maxUploadSize:" + maxUploadSize);
 		String uploadDir = Constants.UPLOAD_PATH;
 		InputStream inputStream = null;
@@ -227,13 +236,13 @@ public class FileUploadController {
 					dataFile.setType(type);
 					dataFile.setStatus(0);
 					dataFile.setServiceKey(serviceKey);
-					if (mFile.getSize() <= 5 * FileUtils.MB_SIZE) {
+					if (mFile.getSize() <= maxDiskSize) {
 						dataFile.setData(mFile.getBytes());
 					}
 					blobService.insertBlob(dataFile);
 					dataFile.setData(null);
 
-					if (mFile.getSize() > 5 * FileUtils.MB_SIZE) {
+					if (mFile.getSize() > maxDiskSize) {
 						FileUtils.save(fileName, inputStream);
 						logger.debug(fileName + " save ok.");
 					}

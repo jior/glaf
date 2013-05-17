@@ -60,6 +60,12 @@ public class AuthorizeInterceptor implements MethodBeforeAdvice {
 				"org.springframework.web.servlet.view")) {
 			return;
 		}
+		if (StringUtils.startsWith(methodName, "login")) {
+			return;
+		}
+		if (StringUtils.startsWith(methodName, "logout")) {
+			return;
+		}
 		String ip = "";
 		String account = "";
 

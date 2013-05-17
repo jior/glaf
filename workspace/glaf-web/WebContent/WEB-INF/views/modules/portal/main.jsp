@@ -31,6 +31,9 @@
 <script type="text/javascript" src='${contextPath}/scripts/easyui.simple.extend.js'></script> 
 <script type="text/javascript">
 
+    var openTabSize = 0;  
+
+
 	$(function() {
         changeTheme();
         $('#editTheme').click(function() {
@@ -52,6 +55,10 @@
 	function openTabs(subtitle,menuId){
 	  if(!$('#tabs').tabs('exists',subtitle)){
 		//alert(menuId);
+		openTabSize = openTabSize + 1;
+		if(openTabSize > 10){
+			$('#tabs').tabs('close', 1);//关闭第二个,第一个为我的桌面，不能关闭
+		}
 		var url = "${contextPath}/my/menu.do?method=jump&id="+menuId;
 		$('#tabs').tabs('add',{
 			title:subtitle,

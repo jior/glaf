@@ -137,6 +137,7 @@ public class FileUpload {
 			m_response.setHeader("Content-Disposition",
 					"attachment; filename=".concat(filename));
 		}
+		m_response.setContentType("application/octet-stream");
 		while (totalRead < fileLen) {
 			readBytes = fileIn.read(b, 0, blockSize);
 			totalRead += readBytes;

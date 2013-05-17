@@ -318,6 +318,9 @@ public class SysTreeServiceImpl implements SysTreeService {
 			if (StringUtils.isEmpty(parent.getTreeId())) {
 				return getTreeId(dataMap, parent) + id + "|";
 			}
+			if (!parent.getTreeId().endsWith("|")) {
+				parent.setTreeId(parent.getTreeId() + "|");
+			}
 			return parent.getTreeId() + id + "|";
 		}
 		return tree.getTreeId();

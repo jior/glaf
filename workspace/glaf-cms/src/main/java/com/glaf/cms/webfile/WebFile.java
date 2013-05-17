@@ -201,6 +201,8 @@ public class WebFile {
 		m_folderVirtualPath = "";
 		currentLocale = new Locale(Locale.getDefault().getLanguage(), Locale
 				.getDefault().getCountry());
+		//System.out.println(Locale.getDefault().getLanguage());
+		//System.out.println(Locale.getDefault().getCountry());
 		labels = ResourceBundle.getBundle("com.glaf.cms.webfile.WebFileLabels",
 				currentLocale);
 		mimes = ResourceBundle.getBundle(

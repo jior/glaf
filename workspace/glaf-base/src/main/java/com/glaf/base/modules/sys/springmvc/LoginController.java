@@ -76,6 +76,9 @@ public class LoginController {
 			HttpServletResponse response, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		HttpSession session = request.getSession(false);
+		if (session == null) {
+			return new ModelAndView("/modules/login", modelMap);
+		}
 		ViewMessages messages = new ViewMessages();
 		// 获取参数
 		String account = ParamUtil.getParameter(request, "x");

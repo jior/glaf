@@ -1,4 +1,4 @@
- 
+var openTabSize = 0; 
 
 window.onload = function(){
 	$('#loading-mask').fadeOut();
@@ -164,6 +164,10 @@ function addMxTab(o){
 
 function addTab(subtitle, url, icon){
 	if(!$('#tabs').tabs('exists', subtitle)){
+		openTabSize = openTabSize + 1;
+		if(openTabSize > 10){
+			$('#tabs').tabs('close', 1);//关闭第二个,第一个为我的桌面，不能关闭
+		}
 		$('#tabs').tabs('add',{
 			title:subtitle,
 			content:createFrame(url),
