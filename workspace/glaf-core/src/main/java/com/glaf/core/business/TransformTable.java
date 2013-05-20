@@ -42,7 +42,7 @@ import com.glaf.core.service.IQueryDefinitionService;
 import com.glaf.core.service.ITableDataService;
 import com.glaf.core.service.ITableDefinitionService;
 import com.glaf.core.service.ITablePageService;
- 
+
 import com.glaf.core.util.DBUtils;
 import com.glaf.core.util.ExpressionConstants;
 import com.glaf.core.util.ParamUtils;
@@ -164,9 +164,14 @@ public class TransformTable {
 				columnMap.put(column.getColumnName(), column);
 				columnMap.put(column.getColumnName().toLowerCase(), column);
 			}
-
+			List<String> aggregationKeys = new ArrayList<String>();
 			List<String> keys = StringTools.split(tableDefinition
 					.getAggregationKeys());
+			for (String key : keys) {
+				key = key.toLowerCase();
+				aggregationKeys.add(key);
+			}
+			logger.debug("aggregationKeys=" + aggregationKeys);
 			StringBuffer sb = new StringBuffer();
 
 			List<ColumnModel> cellModelList = new ArrayList<ColumnModel>();
@@ -177,6 +182,7 @@ public class TransformTable {
 				sql = QueryUtils.replaceSQLVars(sql);
 				sql = QueryUtils.replaceSQLParas(sql, params);
 				logger.debug("sql=" + sql);
+				logger.debug("columnMap=" + columnMap.keySet());
 
 				List<Map<String, Object>> rows = getTablePageService()
 						.getListData(sql, params);
@@ -187,7 +193,7 @@ public class TransformTable {
 						sb.delete(0, sb.length());
 						cols.clear();
 						cellModelList.clear();
-
+						logger.debug(dataMap);
 						Set<Entry<String, Object>> entrySet = dataMap
 								.entrySet();
 						for (Entry<String, Object> entry : entrySet) {
@@ -203,10 +209,11 @@ public class TransformTable {
 								continue;
 							}
 							if (columnMap.get(key.toLowerCase()) == null) {
+								logger.debug(key + " definition is null");
 								continue;
 							}
 
-							if (keys.contains(key)) {
+							if (aggregationKeys.contains(key.toLowerCase())) {
 								sb.append(value).append("_");
 							}
 
@@ -245,6 +252,8 @@ public class TransformTable {
 							cellModelList.add(cell);
 							cols.add(cell.getColumnName());
 						}
+
+						// logger.debug(sb.toString());
 
 						/**
 						 * 处理其中一条记录

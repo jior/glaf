@@ -783,12 +783,15 @@ public class DBUtils {
 		Connection conn = null;
 		ResultSet rs = null;
 		try {
-			List<String> primaryKeys = getPrimaryKeys( tableName);
-			
+			List<String> primaryKeys = getPrimaryKeys(tableName);
+
 			conn = DBConnectionFactory.getConnection();
-			
+
 			DatabaseMetaData metaData = conn.getMetaData();
-			if ("postgresql".equals(DBConnectionFactory.getDatabaseType(conn))) {
+			if ("h2".equals(DBConnectionFactory.getDatabaseType(conn))) {
+				tableName = tableName.toUpperCase();
+			} else if ("postgresql".equals(DBConnectionFactory
+					.getDatabaseType(conn))) {
 				tableName = tableName.toLowerCase();
 			}
 			rs = metaData.getColumns(null, null, tableName, null);
@@ -1794,7 +1797,9 @@ public class DBUtils {
 		try {
 			DatabaseMetaData metaData = connection.getMetaData();
 
-			if ("postgresql".equals(DBConnectionFactory
+			if ("h2".equals(DBConnectionFactory.getDatabaseType(connection))) {
+				tableName = tableName.toUpperCase();
+			} else if ("postgresql".equals(DBConnectionFactory
 					.getDatabaseType(connection))) {
 				tableName = tableName.toLowerCase();
 			}
@@ -1817,7 +1822,9 @@ public class DBUtils {
 			connection = DBConnectionFactory.getConnection();
 			DatabaseMetaData metaData = connection.getMetaData();
 
-			if ("postgresql".equals(DBConnectionFactory
+			if ("h2".equals(DBConnectionFactory.getDatabaseType(connection))) {
+				tableName = tableName.toUpperCase();
+			} else if ("postgresql".equals(DBConnectionFactory
 					.getDatabaseType(connection))) {
 				tableName = tableName.toLowerCase();
 			}

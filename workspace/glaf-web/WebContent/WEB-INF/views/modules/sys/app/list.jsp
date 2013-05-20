@@ -162,7 +162,7 @@
 	    if (selected ){
 		  //location.href="<%=request.getContextPath()%>/sys/application.do?method=edit&rowId="+selected.id;
 		  var link = "<%=request.getContextPath()%>/sys/function.do?method=showFuncList&parent="+selected.id;
-		  art.dialog.open(link, { height: 280, width: 680, title: "修改记录", lock: true, scrollbars:"yes" }, false);
+		  art.dialog.open(link, { height: 350, width: 680, title: "修改记录", lock: true, scrollbars:"yes" }, false);
 	    }
 	}
 

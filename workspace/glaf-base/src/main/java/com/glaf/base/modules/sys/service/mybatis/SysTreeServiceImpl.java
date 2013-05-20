@@ -414,6 +414,7 @@ public class SysTreeServiceImpl implements SysTreeService {
 		}
 
 		if (bean.getId() == 0) {
+			bean.setSort(1);
 			bean.setId(idGenerator.nextId());
 			bean.setCreateDate(new Date());
 			if (parentTreeId != null) {

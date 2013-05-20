@@ -239,6 +239,7 @@ public class DictoryServiceImpl implements DictoryService {
 		if (dictory.getId() == 0) {
 			dictory.setId(idGenerator.nextId());
 			dictory.setCreateDate(new Date());
+			dictory.setSort(1);
 			dictoryMapper.insertDictory(dictory);
 		} else {
 			dictory.setUpdateDate(new Date());
@@ -293,7 +294,7 @@ public class DictoryServiceImpl implements DictoryService {
 		if (list != null && list.size() > 0) {// 有记录
 			Dictory temp = (Dictory) list.get(0);
 			int i = bean.getSort();
-			bean.setSort(temp.getSort());
+			bean.setSort(temp.getSort()+1);
 			this.update(bean);// 更新bean
 
 			temp.setSort(i);
@@ -316,7 +317,7 @@ public class DictoryServiceImpl implements DictoryService {
 		if (list != null && list.size() > 0) {// 有记录
 			Dictory temp = (Dictory) list.get(0);
 			int i = bean.getSort();
-			bean.setSort(temp.getSort());
+			bean.setSort(temp.getSort()-1);
 			this.update(bean);// 更新bean
 
 			temp.setSort(i);

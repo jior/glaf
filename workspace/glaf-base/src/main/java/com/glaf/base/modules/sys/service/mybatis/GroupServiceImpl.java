@@ -182,7 +182,7 @@ public class GroupServiceImpl implements GroupService {
 	public void save(Group group) {
 		if (StringUtils.isEmpty(group.getGroupId())) {
 			group.setGroupId(UUID32.getUUID());
-			group.setSort(0);
+			group.setSort(1);
 			group.setCreateDate(new Date());
 			groupMapper.insertGroup(group);
 		} else {
