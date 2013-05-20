@@ -260,6 +260,9 @@ public class MxReportResource {
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		logger.debug(params);
 		Tools.populate(report, params);
+		
+		report.setChartIds(request.getParameter("chartIds"));
+		report.setQueryIds(request.getParameter("queryIds"));
 
 		try {
 			this.reportService.save(report);

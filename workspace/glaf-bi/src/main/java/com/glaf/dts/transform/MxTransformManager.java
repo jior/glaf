@@ -36,7 +36,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.codehaus.jackson.JsonFactory;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import com.glaf.core.business.TransformTable;
 import com.glaf.core.context.ContextFactory;
@@ -532,11 +531,13 @@ public class MxTransformManager {
 		transformTaskService.save(task);
 
 		MxTransformThread thread = new MxTransformThread(taskId);
-		ThreadPoolTaskExecutor executor = (ThreadPoolTaskExecutor) ContextFactory
-				.getBean("threadPoolTaskExecutor");
-		if (executor != null) {
-			executor.execute(thread);
-		}
+		thread.run();
+		// org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor
+		// executor = ContextFactory
+		// .getBean("threadPoolTaskExecutor");
+		// if (executor != null) {
+		// executor.execute(thread);
+		// }
 	}
 
 	/**

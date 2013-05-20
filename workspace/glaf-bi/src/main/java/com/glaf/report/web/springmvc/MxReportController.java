@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
- 
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -51,6 +51,7 @@ import com.glaf.core.util.Paging;
 import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.RequestUtils;
 import com.glaf.core.util.ResponseUtils;
+import com.glaf.core.util.StringTools;
 import com.glaf.core.util.Tools;
 import com.glaf.report.config.ReportConfig;
 import com.glaf.report.domain.Report;
@@ -63,13 +64,10 @@ import com.glaf.report.service.IReportService;
 @RequestMapping("/bi/report")
 public class MxReportController {
 
- 
 	protected IReportService reportService;
 
- 
 	protected IChartService chartService;
 
- 
 	protected IQueryDefinitionService queryDefinitionService;
 
 	@RequestMapping("/chooseChart")
@@ -90,8 +88,9 @@ public class MxReportController {
 				StringBuffer sb01 = new StringBuffer();
 				StringBuffer sb02 = new StringBuffer();
 				List<String> selecteds = new ArrayList<String>();
+				List<String> chartIds = StringTools.split(report.getChartIds());
 				for (Chart c : list) {
-					if (StringUtils.contains(report.getChartIds(), c.getId())) {
+					if (chartIds.contains(c.getId())) {
 						selecteds.add(c.getId());
 						sb01.append(c.getId()).append(",");
 						sb02.append(c.getSubject()).append(",");
@@ -107,6 +106,29 @@ public class MxReportController {
 				request.setAttribute("chartIds", sb01.toString());
 
 				request.setAttribute("chartNames", sb02.toString());
+			}
+
+			if (StringUtils.isNotEmpty(report.getQueryIds())) {
+				List<String> queryIds = StringTools.split(report.getQueryIds());
+				StringBuffer sb01 = new StringBuffer();
+				StringBuffer sb02 = new StringBuffer();
+				for (String queryId : queryIds) {
+					QueryDefinition queryDefinition = queryDefinitionService
+							.getQueryDefinition(queryId);
+					if (queryDefinition != null) {
+						sb01.append(queryDefinition.getId()).append(",");
+						sb02.append(queryDefinition.getTitle()).append("[")
+								.append(queryDefinition.getId()).append("],");
+					}
+				}
+				if (sb01.toString().endsWith(",")) {
+					sb01.delete(sb01.length() - 1, sb01.length());
+				}
+				if (sb02.toString().endsWith(",")) {
+					sb02.delete(sb02.length() - 1, sb02.length());
+				}
+				request.setAttribute("queryIds", sb01.toString());
+				request.setAttribute("queryNames", sb02.toString());
 			}
 		}
 
