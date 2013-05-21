@@ -20,12 +20,13 @@ package com.glaf.dts.web.rest;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
- 
+
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -76,11 +77,10 @@ public class MxTableResource {
 	protected static final Log logger = LogFactory
 			.getLog(MxTableResource.class);
 
- 
-	protected ITableDefinitionService tableDefinitionService;
- 
 	protected IQueryDefinitionService queryDefinitionService;
- 
+
+	protected ITableDefinitionService tableDefinitionService;
+
 	protected ITablePageService tablePageService;
 
 	@POST
@@ -568,6 +568,41 @@ public class MxTableResource {
 		} catch (IOException e) {
 			return responseJSON.toString().getBytes();
 		}
+	}
+
+	@POST
+	@Path("/transformAll")
+	@ResponseBody
+	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
+	public byte[] transformAll(@Context HttpServletRequest request) {
+		String tableName = request.getParameter("tableName");
+		if (StringUtils.isNotEmpty(tableName)) {
+			MxTransformManager manager = new MxTransformManager();
+			try {
+				manager.transformTable(tableName);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				return ResponseUtils.responseJsonResult(false);
+			}
+		} else {
+			TableDefinitionQuery query = new TableDefinitionQuery();
+			query.type("DTS");
+			List<TableDefinition> tables = tableDefinitionService.list(query);
+			if (tables != null && !tables.isEmpty()) {
+				Collections.sort(tables);
+				MxTransformManager manager = new MxTransformManager();
+				for (TableDefinition tableDefinition : tables) {
+					try {
+						manager.transformTable(tableDefinition.getTableName());
+						Thread.sleep(200);
+					} catch (Exception ex) {
+						ex.printStackTrace();
+						return ResponseUtils.responseJsonResult(false);
+					}
+				}
+			}
+		}
+		return ResponseUtils.responseJsonResult(true);
 	}
 
 	@POST

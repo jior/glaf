@@ -19,6 +19,7 @@
 package com.glaf.chart.service.impl;
 
 import java.util.*;
+import java.util.Map.Entry;
 
 import javax.annotation.Resource;
 
@@ -111,7 +112,17 @@ public class MxChartServiceImpl implements IChartService {
 			if (rows != null && !rows.isEmpty()) {
 				logger.debug(rows);
 				int index = 0;
-				for (Map<String, Object> dataMap : rows) {
+				Map<String, Object> dataMap = new HashMap<String, Object>();
+				for (Map<String, Object> rowMap : rows) {
+					dataMap.clear();
+					Set<Entry<String, Object>> entrySet = rowMap.entrySet();
+					for (Entry<String, Object> entry : entrySet) {
+						String key = entry.getKey();
+						Object value = entry.getValue();
+						dataMap.put(key, value);
+						dataMap.put(key.toLowerCase(), value);
+					}
+
 					if ("pie".equals(chart.getChartType())) {
 						index++;
 						ColumnModel cell = new ColumnModel();

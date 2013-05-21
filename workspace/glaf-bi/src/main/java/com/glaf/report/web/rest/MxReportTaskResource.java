@@ -59,7 +59,7 @@ import com.glaf.report.service.IReportTaskService;
 public class MxReportTaskResource {
 	protected static final Log logger = LogFactory
 			.getLog(MxReportTaskResource.class);
- 
+
 	protected IReportTaskService reportTaskService;
 
 	@POST
@@ -245,6 +245,8 @@ public class MxReportTaskResource {
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		Tools.populate(reportTask, params);
 		logger.debug(params);
+
+		reportTask.setReportIds(request.getParameter("reportIds"));
 
 		try {
 			this.reportTaskService.save(reportTask);
