@@ -38,7 +38,7 @@
 <body style="margin:1px;">  
 <div style="margin:0;"></div> 
 <div class="easyui-layout" data-options="fit:true">  
-<div data-options="region:'center',border:false">
+  <div data-options="region:'center',border:false">
 	 <table id="easyui_data_grid" class="easyui-datagrid" style="width:1000px;height:445px"
 			url="<%=request.getContextPath()%>/rs/dts/table/tablePage?tableName_enc=<c:out value='${tableName_enc}'/>&gridType=easyui"
 			title="${tableName} 数据列表 " iconCls="icon-list" remoteSort="true"  

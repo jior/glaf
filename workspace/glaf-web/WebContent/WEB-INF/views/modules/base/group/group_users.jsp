@@ -25,7 +25,7 @@
     var setting = {
 			async: {
 				enable: true,
-				url: "<%=request.getContextPath()%>/base/group.do?method=json&groupId=${groupId}"
+				url: "<%=request.getContextPath()%>/rs/base/group/json?groupId=${groupId}"
 			},
 			check: {
 				enable: true

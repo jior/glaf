@@ -20,7 +20,7 @@
 	 var setting = {
 			async: {
 				enable: true,
-				url: "<%=request.getContextPath()%>/sys/role.do?method=roleUsersJson&roleCode=${sysRole.code}",
+				url: "<%=request.getContextPath()%>/rs/sys/role/roleUsersJson?roleCode=${sysRole.code}",
 				dataFilter: filter
 			},
 			check: {

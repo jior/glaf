@@ -26,7 +26,7 @@
     var setting = {
 			async: {
 				enable: true,
-				url: "<%=request.getContextPath()%>/base/identityChoose.do?method=deptJson&selecteds=${selecteds}"
+				url: "<%=request.getContextPath()%>/rs/base/identity/choose/deptJson?selecteds=${selecteds}"
 			},
 			check: {
 				enable: true,
