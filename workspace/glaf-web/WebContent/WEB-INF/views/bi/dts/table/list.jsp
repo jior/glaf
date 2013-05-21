@@ -23,7 +23,7 @@
 	 List<QueryDefinition> queries = queryDefinitionService.list(q);
 %>
 <!DOCTYPE html >
-<html >
+<html>
 <head>
 <title>表管理 </title>
 <%@ include file="/WEB-INF/views/tm/mx_header.jsp"%>
@@ -90,6 +90,28 @@
 				 });
 		  }
 	  }
+
+	 function loadAndFetchData(){
+          if(confirm("重新加载数据并取数，确定吗？")){
+				 var params = jQuery("#iForm").formSerialize();
+				  jQuery.ajax({
+					   type: "POST",
+					   url: '<%=request.getContextPath()%>/rs/dts/table/transformAll',
+					   data: params,
+					   dataType:  'json',
+					   error: function(data){
+						   alert('服务器处理错误！');
+					   },
+					   success: function(data){
+						   if(data.message != null){
+                             alert(data.message);
+						   } else {
+							 alert('操作成功完成！');
+						   }
+					   }
+				 });
+		  }
+	 }
  
 	 function showData(tableName){
 		var link= '<%=request.getContextPath()%>/mx/dts/table/resultList?q=1';
@@ -104,12 +126,9 @@
 		document.getElementById("iForm").submit();
 	}
 
-	</script>
-	
-
+</script>
 </head>
 <body style="padding-left:20px;padding-right:20px">
-
 <form id="iForm"  name="iForm" method="post" >
 <input type="hidden" id="tableName" name="tableName" />
 <input type="hidden" id="actionType" name="actionType" />
@@ -126,11 +145,13 @@
 		<td height="28" align="right">
 		    <!-- <input type="button" value="查询定义" name="edit" class="btn" 
 			           onclick="javascript:location.href='<%=request.getContextPath()%>/mx/dts/query';"> -->
+			<input type="button" value="加载并抽取数据" name="edit" class="btn btn-primary" 
+			       onclick="javascript: loadAndFetchData(); ">
 		</td>
 	</tr>
 </table>
 </div>
- 
+<br>
 
  <table align="center" class="x-table-border table table-striped table-bordered table-condensed" cellspacing="1"
 	cellpadding="4" width="90%" border="0">
