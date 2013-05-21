@@ -804,6 +804,22 @@ public class RequestUtils {
 	 * @param defaultValue
 	 * @return
 	 */
+	public static String getString(HttpServletRequest request, String paramName) {
+		String paramValue = getParameter(request, paramName);
+		if (StringUtils.isNotEmpty(paramValue)) {
+			return paramValue;
+		}
+		return null;
+	}
+
+	/**
+	 * 从request中获取字符串参数
+	 * 
+	 * @param request
+	 * @param paramName
+	 * @param defaultValue
+	 * @return
+	 */
 	public static String getString(HttpServletRequest request,
 			String paramName, String defaultValue) {
 		String paramValue = getParameter(request, paramName);
