@@ -40,11 +40,15 @@ import com.glaf.base.modules.workspace.form.MessageFormBean;
 import com.glaf.base.modules.workspace.model.Message;
 import com.glaf.base.modules.workspace.service.MessageService;
 import com.glaf.core.config.ViewProperties;
+import com.glaf.core.context.ContextFactory;
 import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
 import com.glaf.core.res.ViewMessages;
 import com.glaf.core.util.PageResult;
 import com.glaf.core.util.RequestUtils;
+import com.glaf.core.util.StringTools;
+import com.glaf.mail.MailMessage;
+import com.glaf.mail.MailSender;
 
 import com.glaf.base.utils.ParamUtil;
 import com.glaf.base.utils.RequestUtil;
@@ -63,19 +67,17 @@ public class MessageController {
 	/**
 	 * 批量删除消息
 	 * 
-	 * @param mapping
-	 * @param actionForm
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
 	@RequestMapping(params = "method=batchDelete")
-	public ModelAndView batchDelete(ModelMap modelMap,
-			HttpServletRequest request) {
+	public ModelAndView batchDelete(HttpServletRequest request,
+			ModelMap modelMap) {
 		SysUser user = RequestUtil.getLoginUser(request);
 
 		boolean ret = true;
-		// if (isTokenValid(request)) {// 防止表单重复提交
+
 		int[] id = ParamUtil.getIntParameterValues(request, "id");
 		if (id != null) {
 			for (int i = 0; i < id.length; i++) {
@@ -90,8 +92,6 @@ public class MessageController {
 				}
 			}
 		}
-		// }
-		// saveToken(request);
 
 		ViewMessages messages = new ViewMessages();
 		if (ret) {// 删除成功
@@ -165,210 +165,84 @@ public class MessageController {
 	/**
 	 * 发送系统信息和Email
 	 * 
-	 * @param mapping
-	 * @param actionForm
 	 * @param request
-	 * @param response
+	 * @param modelMap
 	 * @return
 	 */
-	@RequestMapping(params = "method=saveBoth")
-	public ModelAndView saveBoth(ModelMap modelMap, MessageFormBean form,
-			HttpServletRequest request) {
+	@RequestMapping(params = "method=saveAndSend")
+	public ModelAndView saveAndSend(HttpServletRequest request,
+			MessageFormBean form, ModelMap modelMap) {
+		logger.debug(RequestUtils.getParameterMap(request));
 		SysUser user = RequestUtil.getLoginUser(request);
 
-		String recverIds = ParamUtil.getParameter(request, "recverIds");
-		// 用户或部门
-		int recverType = ParamUtil.getIntParameter(request, "recverType", 0);
+		String messageType = request.getParameter("messageType");
 
-		int sysType = ParamUtil.getIntParameter(request, "sysType", 1);// 0：为系统警告
-																		// 1：为系统消息
-
-		MessageFormBean formBean = new MessageFormBean();
-		WebUtil.copyProperties(formBean, form);
-
-		if (recverType == 0 || recverType == 2) {
-			String toEmail = ParamUtil.getParameter(request, "toEmail");
-			String[] email = toEmail.split(",");
-
-			for (int i = 0; i < email.length; i++) {
-				// EMail.send(sendEmail,email[i],title,content,null);
-			}
-		}
-		if (recverType == 1) {
-			List<SysUser> list = sysUserService.getSysUserList(Integer
-					.parseInt(recverIds));
-			if (list != null) {
-				Iterator<SysUser> iter = list.iterator();
-				while (iter.hasNext()) {
-					SysUser sysUser = (SysUser) iter.next();
-					String email = sysUser.getEmail();
-					if (email != null) {
-						// EMail.send(sendEmail, email, title, content, null);
-					}
-				}
-			}
-		}
-		Message bean = new Message();
-		bean.setSysType(sysType);
-		bean.setTitle(formBean.getTitle());
-		bean.setContent(formBean.getContent());
-		bean.setSender(user);
-		bean.setCategory(0);// 收件箱
-		bean.setReaded(0);
-		bean.setCreateDate(new Date());
-
-		int type = 1;// 用户消息
-		if (bean.getSender().getId() == 0) {
-			type = 0;// 系统消息
-		}
-		bean.setType(type);
-
-		boolean ret = false;
-		// if (isTokenValid(request)) {// 防止表单重复提交
-		if (recverType == 0) {
-			ret = messageService.saveSendMessage(bean, recverIds.split(","));
-		}
-		if (recverType == 1) {
-			ret = messageService.saveSendMessageToDept(bean,
-					recverIds.split(","));
-		}
-		if (recverType == 2) {
-			List<SysUser> userList = sysUserService.getSupplierUser(recverIds);
-			if (userList != null) {
-				Iterator<SysUser> iter = userList.iterator();
-				StringBuffer sb = new StringBuffer();
-				while (iter.hasNext()) {
-					SysUser user_sp = (SysUser) iter.next();
-					if (user_sp.getAccountType() == 1) {
-
-						sb.append(user_sp.getId() + ",");
-					}
-					String userIds = sb.toString();
-					ret = messageService.saveSendMessage(bean,
-							userIds.split(","));
-				}
-			}
-		}
-		// }
-		// saveToken(request);
-
-		ViewMessages messages = new ViewMessages();
-		if (ret) {// 保存成功
-			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
-					"message.send_success"));
-		} else {// 保存失败
-			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
-					"message.send_failure"));
-		}
-		MessageUtils.addMessages(request, messages);
-		// 显示提交后页面
-		return new ModelAndView("show_msg", modelMap);
-	}
-
-	/**
-	 * 发送email
-	 * 
-	 * @param mapping
-	 * @param actionForm
-	 * @param request
-	 * @param response
-	 * @return
-	 */
-
-	@RequestMapping(params = "method=saveEmail")
-	public ModelAndView saveEmail(ModelMap modelMap, MessageFormBean form,
-			HttpServletRequest request) {
-		RequestUtils.setRequestParameterToAttribute(request);
-		SysUser user = RequestUtil.getLoginUser(request);
-
-		int recverType = ParamUtil.getIntParameter(request, "recverType", 0);
 		String recverIds = ParamUtil.getParameter(request, "recverIds");
 		String recverName = ParamUtil.getParameter(request, "recverName");
-		MessageFormBean formBean = new MessageFormBean();
-		WebUtil.copyProperties(formBean, form);
-
-		if (recverType == 0 || recverType == 2) {
-			String toEmail = ParamUtil.getParameter(request, "toEmail");
-			String[] email = toEmail.split(",");
-			for (int i = 0; i < email.length; i++) {
-				// EMail.send(sendEmail,email[i],title,content,null);
-			}
-		}
-		// 部门群发
-		if (recverType == 1) {
-			logger.debug("string to int" + Integer.parseInt(recverIds));
-			List<SysUser> list = sysUserService.getSysUserList(Integer
-					.parseInt(recverIds));
-			// System.out.println("list.size"+list.size());
-			if (list != null) {
-				Iterator<SysUser> iter = list.iterator();
-				while (iter.hasNext()) {
-					SysUser sysUser = (SysUser) iter.next();
-					String email = sysUser.getEmail();
-					if (email != null) {
-						// EMail.send(sendEmail, email, title, content, null);
-					}
-				}
-			}
-
-		}
-		// 发送信息放入发件箱
-		Message bean = new Message();
-		bean.setTitle(formBean.getTitle());
-		bean.setContent(formBean.getContent());
-		bean.setSender(user);
-		bean.setRecver(user);
-		bean.setRecverList(recverName);
-		bean.setCategory(1);// 发件箱
-		bean.setReaded(0);
-		bean.setCreateDate(new Date());
-
-		int type = 1;// 用户消息
-		if (bean.getSender().getId() == 0) {
-			type = 0;// 系统消息
-		}
-		bean.setType(type);
-
-		boolean ret = false;
-		// if (isTokenValid(request)) {// 防止表单重复提交
-		ret = messageService.saveOrUpdate(bean);
-		// }
-		// saveToken(request);
-
-		ViewMessages messages = new ViewMessages();
-		if (ret) {// 保存成功
-			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
-					"message.send_success"));
-		} else {// 保存失败
-			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
-					"message.send_failure"));
-		}
-		MessageUtils.addMessages(request, messages);
-		// 显示提交后页面
-		return new ModelAndView("show_msg", modelMap);
-	}
-
-	/**
-	 * 保存消息
-	 * 
-	 * @param mapping
-	 * @param actionForm
-	 * @param request
-	 * @param response
-	 * @return
-	 */
-	@RequestMapping(params = "method=saveSend")
-	public ModelAndView saveSend(ModelMap modelMap, MessageFormBean form,
-			HttpServletRequest request) {
-		SysUser user = RequestUtil.getLoginUser(request);
-		int sysType = ParamUtil.getIntParameter(request, "sysType", 1);// 0：为系统警告
-																		// 1：为系统消息
-		String recverIds = ParamUtil.getParameter(request, "recverIds");
 		// 用户或部门
 		int recverType = ParamUtil.getIntParameter(request, "recverType", 0);
 
+		int sysType = ParamUtil.getIntParameter(request, "sysType", 1);// 0：为系统警告
+																		// 1：为系统消息
+		MailMessage mailMessage = new MailMessage();
+		if (user.getEmail() != null) {
+			mailMessage.setFrom(user.getEmail());
+		}
+		mailMessage.setSubject(request.getParameter("title"));
+		mailMessage.setContent(request.getParameter("content"));
+		mailMessage.setSupportExpression(false);
+		mailMessage.setSaveMessage(false);
+
+		MailSender mailSender = ContextFactory.getBean("mailSender");
+
 		MessageFormBean formBean = new MessageFormBean();
 		WebUtil.copyProperties(formBean, form);
+
+		if (StringUtils.equals(messageType, "email")
+				|| StringUtils.equals(messageType, "both")) {
+			if (recverType == 0 || recverType == 2) {
+				List<String> actorIds = StringTools.split(recverIds);
+				for (int i = 0; i < actorIds.size(); i++) {
+					String actorId = actorIds.get(i);
+					try {
+						logger.debug(" find user:" + actorId);
+						SysUser sysUser = sysUserService.findByAccount(actorId);
+						if (sysUser != null
+								&& StringUtils.isNotEmpty(sysUser.getEmail())) {
+							logger.debug(" send mail to user:" + sysUser.getName());
+							mailMessage.setTo(sysUser.getEmail());
+							mailSender.send(mailMessage);
+						}
+					} catch (Exception ex) {
+						ex.printStackTrace();
+					}
+				}
+			}
+		}
+
+		if (recverType == 1) {
+			if (StringUtils.equals(messageType, "email")
+					|| StringUtils.equals(messageType, "both")) {
+				List<SysUser> list = sysUserService.getSysUserList(Long
+						.parseLong(recverIds));
+				if (list != null) {
+					Iterator<SysUser> iter = list.iterator();
+					while (iter.hasNext()) {
+						SysUser sysUser = (SysUser) iter.next();
+						String email = sysUser.getEmail();
+						if (email != null) {
+							try {
+								logger.debug(" send mail to user:" + sysUser.getName());
+								mailMessage.setTo(email);
+								mailSender.send(mailMessage);
+							} catch (Exception ex) {
+								ex.printStackTrace();
+							}
+						}
+					}
+				}
+			}
+		}
 
 		Message bean = new Message();
 		bean.setSysType(sysType);
@@ -381,38 +255,51 @@ public class MessageController {
 		bean.setCreateDate(new Date());
 
 		int type = 1;// 用户消息
-		if (bean.getSender().getId() == 0) {
+		if (bean.getSender().getId() == 0
+				|| StringUtils.equals(user.getAccount(), "10000")) {
 			type = 0;// 系统消息
 		}
 		bean.setType(type);
 
 		boolean ret = false;
-		// if (isTokenValid(request)) {// 防止表单重复提交
-		if (recverType == 0) {
-			ret = messageService.saveSendMessage(bean, recverIds.split(","));
-		}
-		if (recverType == 1) {
-			ret = messageService.saveSendMessageToDept(bean,
-					recverIds.split(","));
-		}
-		if (recverType == 2) {
-			List<SysUser> userList = sysUserService.getSupplierUser(recverIds);
-			if (userList != null) {
-				Iterator<SysUser> iter = userList.iterator();
-				StringBuffer sb = new StringBuffer();
-				while (iter.hasNext()) {
-					SysUser user_sp = (SysUser) iter.next();
-					if (user_sp.getAccountType() == 1) {
-						sb.append(user_sp.getId() + ",");
+
+		if (StringUtils.equals(messageType, "msg")
+				|| StringUtils.equals(messageType, "both")) {
+			if (recverType == 0) {
+				ret = messageService
+						.saveSendMessage(bean, recverIds.split(","));
+			}
+			if (recverType == 1) {
+				ret = messageService.saveSendMessageToDept(bean,
+						recverIds.split(","));
+			}
+			if (recverType == 2) {
+				List<SysUser> userList = sysUserService
+						.getSupplierUser(recverIds);
+				if (userList != null) {
+					Iterator<SysUser> iter = userList.iterator();
+					StringBuffer sb = new StringBuffer();
+					while (iter.hasNext()) {
+						SysUser user_sp = (SysUser) iter.next();
+						if (user_sp.getAccountType() == 1) {
+
+							sb.append(user_sp.getId() + ",");
+						}
+						String userIds = sb.toString();
+						ret = messageService.saveSendMessage(bean,
+								userIds.split(","));
 					}
-					String userIds = sb.toString();
-					ret = messageService.saveSendMessage(bean,
-							userIds.split(","));
 				}
 			}
+		} else {
+			// 如果发送邮件，保存该信息即可
+			bean.setRecver(user);
+			bean.setRecverId(user.getId());
+			bean.setRecverList(recverName);
+			bean.setCategory(1);// 发件箱
+			bean.setReaded(0);
+			ret = messageService.saveOrUpdate(bean);
 		}
-		// }
-		// saveToken(request);
 
 		ViewMessages messages = new ViewMessages();
 		if (ret) {// 保存成功
