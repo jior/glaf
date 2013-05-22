@@ -174,7 +174,7 @@ public class QueryUtils {
 		return false;
 	}
 
-	private static Map<String, Object> lowerKeyMap(Map<String, Object> paramMap) {
+	public static Map<String, Object> lowerKeyMap(Map<String, Object> paramMap) {
 		Map<String, Object> dataMap = new HashMap<String, Object>();
 		Set<Entry<String, Object>> entrySet = paramMap.entrySet();
 		for (Entry<String, Object> entry : entrySet) {
