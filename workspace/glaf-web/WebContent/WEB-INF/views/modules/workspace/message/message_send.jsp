@@ -56,43 +56,16 @@ function changeSelect() {
 	}
 }
 
-
-function saveMessage(form){
+function saveAndSend(form, type){
     if($('recverName').value==''){
-     alert("请选择收件人");
-     return false;
+        alert("请选择收件人");
+        return false;
     }
     if($('title').value==''){
-     alert("主题不能为空");
-     return false;
+        alert("主题不能为空");
+        return false;
     }
-    form.action="<%=request.getContextPath()%>/workspace/message.do?method=saveSend";
-    form.submit();
-}
-
-function saveEmail(form){
-    if($('recverName').value==''){
-     alert("请选择收件人");
-     return false;
-    }
-    if($('title').value==''){
-     alert("主题不能为空");
-     return false;
-    }
-    form.action="<%=request.getContextPath()%>/workspace/message.do?method=saveEmail";
-    form.submit();
-}
-
-function saveBoth(form){
-    if($('recverName').value==''){
-     alert("请选择收件人");
-     return false;
-    }
-    if($('title').value==''){
-     alert("主题不能为空");
-     return false;
-    }
-    form.action= "<%=request.getContextPath()%>/workspace/message.do?method=saveBoth";
+    form.action= "<%=request.getContextPath()%>/workspace/message.do?method=saveAndSend&messageType="+type;
     form.submit();
 }
 
@@ -151,9 +124,10 @@ function saveBoth(form){
       </tr>
       <tr>
         <td valign="top">&nbsp;</td>
-        <td><input name="btn_save" type="button" class="button" value="发送系统消息"  onClick="saveMessage(this.form)">
-            <input name="btn_email" type="button" class="button" value="发送Email"  onClick="saveEmail(this.form)">
-            <input name="btn_both" type="button" class="button" value="双发送"  onClick="saveBoth(this.form)">
+        <td>
+		    <input name="btn_save" type="button" class="button" value="发送系统消息"  onClick="saveAndSend(this.form, 'msg')">
+            <input name="btn_email" type="button" class="button" value="发送Email"  onClick="saveAndSend(this.form, 'email')">
+            <input name="btn_both" type="button" class="button" value="双发送"  onClick="saveAndSend(this.form, 'both')">
         </td>
       </tr>
     </table>
