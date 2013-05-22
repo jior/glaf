@@ -45,7 +45,7 @@
 	<classpathentry kind="lib" path="/glaf-core/lib/scannotation-1.0.3.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/javassist.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/javax.persistence.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/junit-4.11.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/junit.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/hibernate3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

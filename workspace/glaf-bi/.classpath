@@ -39,7 +39,7 @@
 	<classpathentry kind="lib" path="/glaf-core/lib/commons-validator-1.4.0.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/concurrent-1.3.4.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/dom4j-1.6.1.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/druid-0.2.10.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/druid.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/fastjson-1.1.26.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/filterbuilder.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/freemarker.jar"/>
@@ -59,7 +59,7 @@
 	<classpathentry kind="lib" path="/glaf-core/lib/jaxrs-api-2.3.5.Final.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/jbpm-jpdl.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/jdom-1.0.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/jetty-util-8.1.8.v20121106.jar"/>
+	
 	<classpathentry kind="lib" path="/glaf-core/lib/json.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/jsp-api.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/jstl-1.2.jar"/>
@@ -94,14 +94,14 @@
 	<classpathentry kind="lib" path="/glaf-core/lib/spring-web.RELEASE.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/spring-webmvc.RELEASE.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/xml-apis-1.3.04.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/jasperreports-5.0.0.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/jasperreports-fonts-5.0.0.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/jasperreports.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/jasperreports-fonts.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/jcommon-1.0.18.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/jfreechart-1.0.14.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/mybatis-spring.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/mybatis.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/ehcache-core.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/junit-4.11.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/junit.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/poi-3.9-20121203.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/poi-ooxml-3.9-20121203.jar"/>
 	<classpathentry kind="output" path="bin"/>
