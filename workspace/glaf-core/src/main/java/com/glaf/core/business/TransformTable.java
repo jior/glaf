@@ -20,6 +20,7 @@ package com.glaf.core.business;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -44,6 +45,7 @@ import com.glaf.core.service.ITableDefinitionService;
 import com.glaf.core.service.ITablePageService;
 
 import com.glaf.core.util.DBUtils;
+import com.glaf.core.util.DateUtils;
 import com.glaf.core.util.ExpressionConstants;
 import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.QueryUtils;
@@ -54,14 +56,53 @@ public class TransformTable {
 
 	protected IQueryDefinitionService queryDefinitionService;
 
+	protected ITableDataService tableDataService;
+
 	protected ITableDefinitionService tableDefinitionService;
 
 	protected ITablePageService tablePageService;
 
-	protected ITableDataService tableDataService;
-
 	public TransformTable() {
 
+	}
+
+	/**
+	 * 创建数据库表，如果已经存在，则修改表结构
+	 * 
+	 * @param tableDefinition
+	 *            表定义
+	 */
+	public void createOrAlterTable(TableDefinition tableDefinition) {
+		ColumnDefinition column = new ColumnDefinition();
+		column.setName("id");
+		column.setTitle("系统内置主键");
+		column.setColumnName("ID");
+		column.setJavaType("String");
+		column.setLength(50);
+		column.setValueExpression(ExpressionConstants.ID_EXPRESSION);
+		column.setPrimaryKey(true);
+		tableDefinition.addColumn(column);
+		tableDefinition.setIdColumn(column);
+
+		ColumnDefinition column4 = new ColumnDefinition();
+		column4.setTitle("聚合主键");
+		column4.setName("aggregationKey");
+		column4.setColumnName("AGGREGATIONKEY");
+		column4.setJavaType("String");
+		column4.setLength(500);
+		tableDefinition.addColumn(column4);
+
+		if (DBUtils.tableExists(tableDefinition.getTableName())) {
+			logger.info("---------------------------------------------");
+			logger.info("------------alter table----------------------");
+			DBUtils.alterTable(tableDefinition);
+		} else {
+			logger.info("---------------------------------------------");
+			logger.info("------------create table---------------------");
+			DBUtils.createTable(tableDefinition);
+		}
+
+		getTableDefinitionService().save(tableDefinition);
 	}
 
 	public IQueryDefinitionService getQueryDefinitionService() {
@@ -106,47 +147,6 @@ public class TransformTable {
 	public void setTableDefinitionService(
 			ITableDefinitionService tableDefinitionService) {
 		this.tableDefinitionService = tableDefinitionService;
-	}
-
-	/**
-	 * 创建数据库表，如果已经存在，则删除重建
-	 * 
-	 * @param dsName
-	 *            dsName 数据源名称
-	 * @param tableDefinition
-	 *            表定义
-	 */
-	public void createOrAlterTable(TableDefinition tableDefinition) {
-		ColumnDefinition column = new ColumnDefinition();
-		column.setName("id");
-		column.setTitle("系统内置主键");
-		column.setColumnName("ID");
-		column.setJavaType("String");
-		column.setLength(50);
-		column.setValueExpression(ExpressionConstants.ID_EXPRESSION);
-		column.setPrimaryKey(true);
-		tableDefinition.addColumn(column);
-		tableDefinition.setIdColumn(column);
-
-		ColumnDefinition column4 = new ColumnDefinition();
-		column4.setTitle("聚合主键");
-		column4.setName("aggregationKey");
-		column4.setColumnName("AGGREGATIONKEY");
-		column4.setJavaType("String");
-		column4.setLength(500);
-		tableDefinition.addColumn(column4);
-
-		if (DBUtils.tableExists(tableDefinition.getTableName())) {
-			logger.info("---------------------------------------------");
-			logger.info("------------alter table----------------------");
-			DBUtils.alterTable(tableDefinition);
-		} else {
-			logger.info("---------------------------------------------");
-			logger.info("------------create table---------------------");
-			DBUtils.createTable(tableDefinition);
-		}
-
-		getTableDefinitionService().save(tableDefinition);
 	}
 
 	public void transform(String tableName) {
@@ -326,7 +326,9 @@ public class TransformTable {
 			Collection<TableModel> rows = resultMap.values();
 			logger.debug("fetch data list size:" + rows.size());
 			if (rows.size() > 0) {
-				getTableDataService().saveAll(rowModel.getTableName(), null,
+				String seqNo = rowModel.getTableName() + "-"
+						+ DateUtils.getDateTime(new Date());
+				getTableDataService().saveAll(rowModel.getTableName(), seqNo,
 						rows);
 			}
 		}
@@ -498,7 +500,9 @@ public class TransformTable {
 			Collection<TableModel> rows = resultMap.values();
 			logger.debug("fetch data list size:" + rows.size());
 			if (rows.size() > 0) {
-				getTableDataService().saveAll(rowModel.getTableName(), null,
+				String seqNo = rowModel.getTableName() + "-"
+						+ DateUtils.getDateTime(new Date());
+				getTableDataService().saveAll(rowModel.getTableName(), seqNo,
 						rows);
 			}
 		}

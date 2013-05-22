@@ -70,19 +70,19 @@ public class MailSenderImpl implements MailSender {
 		dataMap.put("callback", "http://127.0.0.1:8080/jbpm/task.jsp");
 
 		MailMessage mailMessage = new MailMessage();
-		mailMessage.setFrom("john@glaf.com");
-		mailMessage.setTo("john@glaf.com");
+		mailMessage.setFrom("joy@127.0.0.1");
+		mailMessage.setTo("joy@127.0.0.1");
 		mailMessage.setSubject("ÓÊ¼ş²âÊÔ");
 		mailMessage.setDataMap(dataMap);
-		mailMessage.setTemplateId(args[0]);
+		mailMessage.setContent("²âÊÔ²âÊÔ");
+		//mailMessage.setTemplateId(args[0]);
 		mailMessage.setSupportExpression(false);
 
 		Collection<Object> files = new HashSet<Object>();
 
 		mailMessage.setFiles(files);
 		mailMessage.setSaveMessage(false);
-		MailSender mailSender = (MailSender) ContextFactory
-				.getBean("mailSender");
+		MailSender mailSender = ContextFactory.getBean("mailSender");
 		mailSender.send(mailMessage);
 	}
 
