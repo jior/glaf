@@ -25,17 +25,19 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link href="../../css/site.css" type="text/css" rel="stylesheet">
 <link href="<%= request.getContextPath() %>/css/site.css" type="text/css" rel="stylesheet">
-<script type='text/javascript' src="<%= request.getContextPath() %>/scripts/css.js"></script>
 <script type='text/javascript' src='<%= request.getContextPath() %>/scripts/main.js'></script>
 <script type='text/javascript' src="<%= request.getContextPath() %>/scripts/verify.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/scripts/glaf-base.js"></script>
 <script type="text/javascript">
+var context = "<%= request.getContextPath() %>";
+var contextPath = "<%= request.getContextPath() %>";
+
 function changeSelect() {
   var recverType = getRadioValue('recverType');
 	  $('recverName').value = '';
 	  $('recverIds').value = '';
-	   $('toEmail').value='';
+	  //$('toEmail').value='';
 	if (recverType == 0) {
 	 
 	  $('add_user').disabled = false;
@@ -54,23 +56,6 @@ function changeSelect() {
 	}
 }
 
-function selectSpForEmail(type,referId,referTitle,referCode,category){
-    var url =  '<%=request.getContextPath()%>/spadmin/supplier.do?method=showSpForEmailList';
-	if (type) {
-		url += '&query_type_ex=' + type;
-	}
-	if (category) {
-		url += '&query_category_el=' + category;
-	}
-	return ShowDialog(url, 500, 450, false, false, referId, referTitle, referCode);
-}
-
-function selectSysUser(deptId,referId,referTitle,referCode){
-   var url = '<%=request.getContextPath()%>/sys/user.do?method=selectSysUser';
-   
-   return ShowDialog(url,430,450,false,false,referId, referTitle, referCode);
-
-}
 
 function saveMessage(form){
     if($('recverName').value==''){
@@ -84,6 +69,7 @@ function saveMessage(form){
     form.action="<%=request.getContextPath()%>/workspace/message.do?method=saveSend";
     form.submit();
 }
+
 function saveEmail(form){
     if($('recverName').value==''){
      alert("请选择收件人");
@@ -95,7 +81,6 @@ function saveEmail(form){
     }
     form.action="<%=request.getContextPath()%>/workspace/message.do?method=saveEmail";
     form.submit();
-
 }
 
 function saveBoth(form){
@@ -121,7 +106,8 @@ function saveBoth(form){
     <td class="nav-title"><span class="Title">工作台</span>&gt;&gt; 发送消息</td>
   </tr>
 </table>
-<html:form action="/workspace/message.do?method=saveSend" method="post" onsubmit="return verifyAll(this);" >
+<html:form id="iForm" name="iForm" 
+      action="/workspace/message.do?method=saveSend" method="post" onsubmit="return verifyAll(this);" >
 <input type="hidden" name="sysType" value="1">
 <table width="99%" border="0" align="center" cellpadding="0" cellspacing="0" class="box">
   <tr>
@@ -136,29 +122,31 @@ function saveBoth(form){
   <tr>
     <td class="box-mm"><table width="95%" border="0" align="center" cellpadding="5" cellspacing="0">
       <tr>
-        <td width="50" class="input-box">收件人<font color="#FF0000">*</font></td>
-        <td><input name="recverName" type="text" class="input" size="25" value="<%= recverName %>" readonly="readonly" datatype="string" nullable="no" chname="接收人">
-            <input name="recverIds" type="hidden" value="<%= recverIds %>">
+        <td width="50" class="input-box">收件人 <font color="#FF0000">*</font></td>
+        <td>
+		    <input id="recverName" name="recverName" type="text" class="input" size="45" value="<%= recverName %>" readonly="readonly" datatype="string" nullable="no" chname="接收人">
+            <input id="recverIds" name="recverIds" type="hidden" value="<%= recverIds %>">
             
             <input name="recverType" type="radio" value="0" checked onClick="changeSelect()">
-            <input name="add_user" type="button" class="button" value="增加用户" onClick="selectSysUser(0, $('recverIds'), $('recverName'),$(toEmail))">
-          <input type="radio" name="recverType" value="1" onClick="changeSelect()">
-          <input name="add_dept" type="button" class="button" value="选择部门" onClick="selectDept(5, $('recverIds'), $('recverName'),document.all.toEmail)" disabled="disabled">
-          <!-- <input type="radio" name="recverType" value="2" onClick="changeSelect()">
-          <input name="add_supplier" type="button" class="button" value="选择供应商"  onClick="selectSpForEmail(-1, $('recverIds'), $('recverName'),document.all.toEmail)" disabled="disabled"> -->
-           </td>
+            <input name="add_user" type="button" class="button" value="选择用户"
+			       onclick="javascript:selectUser('iForm', 'recverIds','recverName');">
+            <input type="radio" name="recverType" value="1" onClick="changeSelect()">
+            <input name="add_dept" type="button" class="button" value="选择部门"  disabled="disabled"
+			       onclick="javascript:selectDept('iForm', 'recverIds','recverName');">
+     
+         </td>
       </tr>
-      <tr><td width="50" class="input-box">邮&nbsp;&nbsp;箱</td>
+      <!-- <tr><td width="50" class="input-box">邮&nbsp;&nbsp;箱</td>
           <td><input name="toEmail" type="text" datatype="string" nullable="no" searchflag="1" size="25"  readonly="readonly" class="input" value="<%=recverEmail %>" >
-            <!-- &nbsp;&nbsp;注意： *选择供应商必需是系统用户才能发送系统信息* -->
+            &nbsp;&nbsp;注意： *选择供应商必需是系统用户才能发送系统信息* 
           </td>
+      </tr> -->
+      <tr>
+        <td class="input-box">主&nbsp;&nbsp;题 <font color="#FF0000">*</font></td>
+        <td><input name="title" type="text" class="input" size="80" maxlength="250" value="<%= title %>" datatype="string" nullable="no" chname="标题" maxsize="50"></td>
       </tr>
       <tr>
-        <td class="input-box">主&nbsp;&nbsp;题<font color="#FF0000">*</font></td>
-        <td><input name="title" type="text" class="input" size="60" maxlength="50" value="<%= title %>" datatype="string" nullable="no" chname="标题" maxsize="50"></td>
-      </tr>
-      <tr>
-        <td valign="top" class="input-box2">内&nbsp;&nbsp;容</td>
+        <td valign="top" class="input-box2">内&nbsp;&nbsp;容 <font color="#FF0000">*</font></td>
         <td><textarea name="content" cols="58" rows="10" class="input" datatype="string" nullable="no" chname="内容" maxsize="2000"></textarea></td>
       </tr>
       <tr>

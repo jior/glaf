@@ -473,3 +473,30 @@ color:#FFBC13
    text-transform: uppercase; background-color: inherit; color: #789030; font-size: 14px; font-weight: bold; text-align: center;
 }
  
+ .x-tabs-box {
+	height:23px; margin-bottom:-1px;
+}
+
+.x-tab-lc {
+	background:url(../images/s_14.jpg); width:6px; overflow:hidden; font-size:0px
+}
+.x-tab-mc {
+    background:url(../images/s_16.jpg);
+	text-align:center; vertical-align:bottom;	line-height:23px;	white-space:nowrap;	color:#125282;
+}
+.x-tab-mc a:link,.x-tab-mc a:active,.x-tab-mc a:visited{
+    color:#fff;
+}
+.x-tab-rc {
+    background:url(../images/s_15.jpg) no-repeat left bottom; height:23px; width:8px;overflow:hidden; font-size:0px
+}
+.x-tab-l {
+    background:url(../images/s_17.jpg) bottom no-repeat;width:5px; overflow:hidden; font-size:0px
+}
+.x-tab-m {
+    background:url(../images/s_19.jpg) bottom repeat-x;
+	text-align:center; vertical-align:bottom;	line-height:23px; white-space:nowrap;
+}
+.x-tab-r {
+    background:url(../images/s_18.jpg) left bottom no-repeat;width:8px; overflow:hidden; font-size:0px
+}

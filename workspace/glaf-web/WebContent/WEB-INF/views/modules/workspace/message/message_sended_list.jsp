@@ -1,5 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
-
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="html"%>
 <%@ page import="java.util.*"%>
 <%@ page import="java.net.*"%>
@@ -17,7 +16,6 @@ String flag = (String)request.getAttribute("flag");
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link href="../../css/site.css" type="text/css" rel="stylesheet">
 <link href="<%= request.getContextPath() %>/css/site.css" type="text/css" rel="stylesheet">
 <script type='text/javascript' src="<%= request.getContextPath() %>/scripts/css.js"></script>
 <script type='text/javascript' src='<%= request.getContextPath() %>/scripts/main.js'></script>
@@ -76,14 +74,15 @@ function checkOperation(){
     <td class="box-mm"><html:form method="post" action="/workspace/message.do">
         <table width="99%" border="0" align="center" cellpadding="0" cellspacing="0">
           <tr>
-            <td><table border="0" cellspacing="0" cellpadding="0" class="tabs-box">
+            <td colspan="20"><table border="0" cellspacing="0" cellpadding="0" class="x-tabs-box">
               <tr>
-                <td class="tab-l">&nbsp;</td>
-                    <td width="60" class="tab-m"><a href="?method=showReceiveList">收件箱</a></td>
-                    <td class="tab-r">&nbsp;</td>
-                    <td class="tab-lc">&nbsp;</td>
-                    <td width="60" class="tab-mc">已发送</td>
-                    <td class="tab-rc">&nbsp;</td>
+                    <td class="x-tab-l">&nbsp;</td>
+                    <td width="60" class="x-tab-m"><a href="?method=showReceiveList">收件箱</a></td>
+                    <td class="x-tab-r">&nbsp;</td>
+
+                    <td class="x-tab-lc">&nbsp;</td>
+                    <td width="60" class="x-tab-mc">已发送</td>
+                    <td class="x-tab-rc">&nbsp;</td>
                 </tr>
               </table>
                   <table width="100%" border="0" cellspacing="1" cellpadding="0" class="list-box">
@@ -96,14 +95,14 @@ function checkOperation(){
                       <td width="120" align="center">发送日期</td>
                     </tr>
                     <%
-											int i = 0;
-									  if (list != null) {
-										  Iterator iter = list.iterator();
-											while (iter.hasNext()) {
-											  Message bean = (Message) iter.next();
-												String recverList = bean.getRecverList() == null ? "" : bean.getRecverList();
-									%>
-                    <tr class="<%= i % 2 == 0 ? "list-a" : "list-w" %>">
+						int i = 0;
+						if (list != null) {
+							Iterator iter = list.iterator();
+							while (iter.hasNext()) {
+								Message bean = (Message) iter.next();
+								String recverList = bean.getRecverList() == null ? "" : bean.getRecverList();
+						%>
+                    <tr class="<%= i % 2 == 0 ? "list-w" : "list-a" %>">
                       <td height="20" class="td-cb"><input type="checkbox" name="id" value="<%= bean.getId() %>" onClick="checkOperation()">                      </td>
                       <td clase="td-no"><%=((pager.getCurrentPageNo()-1)*pageSize + i+1)%></td>
                       <td class="td-text" title="<%= recverList %>"><%= recverList %></td>
@@ -111,12 +110,12 @@ function checkOperation(){
                       <td class="td-date"><%= WebUtil.dateToString(bean.getCreateDate(), "yyyy-MM-dd HH:mm:ss") %></td>
                     </tr>
                     <%
-											  i++;
-									    }
-									  }
-										for(; i < pageSize; i++) {
-									%>
-                    <tr class="<%= i % 2 == 0 ? "list-a" : "list-w" %>">
+								 i++;
+							}
+						}
+						for(; i < pageSize; i++) {
+					%>
+                    <tr class="<%= i % 2 == 0 ? "list-w" : "list-a" %>">
                       <td height="20">&nbsp;</td>
                       <td>&nbsp;</td>
                       <td>&nbsp;</td>
@@ -124,10 +123,10 @@ function checkOperation(){
                       <td>&nbsp;</td>
                     </tr>
                     <%
-									  }
-									%>
+						 }
+					%>
               </table>
-                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <table width="90%" border="0" cellspacing="0" cellpadding="0">
                   <tr>
                     <td height="35" valign="bottom" nowrap>
 					<%
@@ -137,10 +136,10 @@ function checkOperation(){
 					<%
 					}
 					%>
-                      <input name="btn_del" id="btn_del" type="button" class="button" onClick="javascript:del(this.form);" value="删除" disabled="disabled"></td>
-                    <td align="right" valign="bottom"><%
-String params = "method=showSendedList";
-%>
+                      <input name="btn_del" id="btn_del" type="button" class="button" onClick="javascript:del(this.form);" value="删除" disabled="disabled">
+					</td>
+                    <td align="right" valign="bottom">
+					<% String params = "method=showSendedList";%>
                         <jsp:include page="/WEB-INF/views/inc/show_page.jsp" flush="true">
                         <jsp:param name="total" value="<%=pager.getTotalRecordCount()%>"/>            
                         <jsp:param name="page_count" value="<%=pager.getTotalPageCount()%>"/>            

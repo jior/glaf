@@ -12,13 +12,12 @@ int pageSize = Constants.PAGE_SIZE;
 com.glaf.core.util.PageResult pager = (com.glaf.core.util.PageResult)request.getAttribute("pager");
 List list = pager.getResults();
 String flag = (String)request.getAttribute("flag");
+
 %>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link href="../../css/site.css" type="text/css" rel="stylesheet">
 <link href="<%= request.getContextPath() %>/css/site.css" type="text/css" rel="stylesheet">
-<script type='text/javascript' src="<%= request.getContextPath() %>/scripts/css.js"></script>
 <script type='text/javascript' src='<%= request.getContextPath() %>/scripts/main.js'></script>
 <script type='text/javascript' src="<%= request.getContextPath() %>/scripts/verify.js"></script>
 <script type="text/javascript">
@@ -78,17 +77,18 @@ function checkOperation(){
     </table></td>
   </tr>
   <tr>
-    <td class="box-mm"><html:form method="post" action="/workspace/message.do">
+    <td class="box-mm" colspan="20"><html:form method="post" action="/workspace/message.do">
         <table width="99%" border="0" align="center" cellpadding="0" cellspacing="0">
           <tr>
-            <td><table border="0" cellspacing="0" cellpadding="0" class="tabs-box">
+            <td><table border="0" cellspacing="0" cellpadding="0" class="x-tabs-box">
               <tr>
-                <td class="tab-lc">&nbsp;</td>
-                    <td width="60" class="tab-mc">收件箱</td>
-                    <td class="tab-rc">&nbsp;</td>
-                    <td class="tab-l">&nbsp;</td>
-                    <td width="60" class="tab-m"><a href="?method=showSendedList&flag=supplier">已发送</a></td>
-                    <td class="tab-r">&nbsp;</td>
+                    <td class="x-tab-lc">&nbsp;</td>
+                    <td width="60" class="x-tab-mc">收件箱</td>
+                    <td class="x-tab-rc">&nbsp;</td>
+
+                    <td class="x-tab-l">&nbsp;</td>
+                    <td width="60" class="x-tab-m"><a href="?method=showSendedList&flag=supplier">已发送</a></td>
+                    <td class="x-tab-r">&nbsp;</td>
                 </tr>
               </table>
                   <table width="100%" border="0" cellspacing="1" cellpadding="0" class="list-box">
@@ -120,7 +120,7 @@ function checkOperation(){
                         		colorClass = "redcolor";
                         	}
 									%>
-                    <tr class="<%= i % 2 == 0 ? "list-a" : "list-w" %>">
+                    <tr class="<%= i % 2 == 0 ? "list-w" : "list-a" %>">
                       <td height="20" class="td-cb"><table border="0" cellpadding="0" cellspacing="0">
                         <tr>
                           <td><input type="checkbox" name="id" value="<%= bean.getId() %>" onClick="checkOperation()"></td>
@@ -139,7 +139,7 @@ function checkOperation(){
 
 					for(; i < pageSize; i++) {
 					%>
-                    <tr class="<%= i % 2 == 0 ? "list-a" : "list-w" %>">
+                    <tr class="<%= i % 2 == 0 ? "list-w" : "list-a" %>">
                       <td height="20">&nbsp;</td>                      
                       <td>&nbsp;</td>
                       <td>&nbsp;</td>
@@ -150,7 +150,7 @@ function checkOperation(){
                          }
 					%>
               </table>
-                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <table width="90%" border="0" cellspacing="0" cellpadding="0">
                   <tr>
                     <td height="35" valign="bottom" nowrap>
 					<%

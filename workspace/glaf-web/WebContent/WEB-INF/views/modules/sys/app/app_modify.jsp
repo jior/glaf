@@ -10,6 +10,7 @@
     List  list = (List)request.getAttribute("parent");
 	String theme = com.glaf.core.util.RequestUtils.getTheme(request);
     request.setAttribute("theme", theme);
+	request.setAttribute("contextPath", request.getContextPath());
 %>
 <!DOCTYPE html>
 <html>
