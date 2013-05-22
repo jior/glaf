@@ -12,6 +12,20 @@
 
 	<!-- <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSourceC3P0Adapter"
 		destroy-method="close">
+		<property name="driverClass" value="${jdbc.driver}" />
+		<property name="jdbcUrl" value="${jdbc.url}" />
+		<property name="user" value="${jdbc.user}" />
+		<property name="password" value="${jdbc.password}" />
+		<property name="minPoolSize" value="20" />
+		<property name="maxPoolSize" value="120" />
+		<property name="maxIdleTime" value="5000" />
+		<property name="acquireIncrement" value="2" />
+		<property name="maxStatements" value="100" />
+		<property name="idleConnectionTestPeriod" value="3000" />
+	</bean> -->
+
+	<!-- <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSourceC3P0Adapter"
+		destroy-method="close">
 		<property name="driverClass" value="oracle.jdbc.OracleDriver" />
 		<property name="jdbcUrl" value="jdbc:oracle:thin:@127.0.0.1:1521:orcl" />
 		<property name="user" value="glaf" />
