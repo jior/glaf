@@ -348,9 +348,8 @@ public class MessageServiceImpl implements MessageService {
 			if (recver != null) {
 				newMessage.setRecver(recver);
 				newMessage.setRecverId(recver.getId());
+				recverList.append(recver.getName()).append(",");
 			}
-
-			recverList.append(recver.getName()).append(",");
 
 			if (!saveOrUpdate(newMessage)) {
 				rst = false;

@@ -63,10 +63,10 @@ public class BaseIdentityFactory {
 	protected static SysUserService sysUserService;
 
 	/**
-	 * 获取委托人编号集合
+	 * 获取委托人编号集合（用户登录账号的集合）
 	 * 
 	 * @param assignTo
-	 *            受托人编号
+	 *            受托人编号（登录账号）
 	 * @return
 	 */
 	public static List<String> getAgentIds(String assignTo) {
@@ -78,7 +78,9 @@ public class BaseIdentityFactory {
 	 * 获取某个部门及所有下级部门的某个角色的用户
 	 * 
 	 * @param deptId
+	 *            部门编号
 	 * @param roleId
+	 *            角色编号
 	 * @return
 	 */
 	public static List<SysUser> getChildrenMembershipUsers(Long deptId,
@@ -91,7 +93,9 @@ public class BaseIdentityFactory {
 	 * 获取某个部门及所有下级部门的某个角色的用户
 	 * 
 	 * @param deptId
+	 *            部门编号
 	 * @param roleId
+	 *            角色编号
 	 * @return
 	 */
 	public static List<SysUser> getChildrenMembershipUsers(Long deptId,
@@ -105,6 +109,7 @@ public class BaseIdentityFactory {
 	 * 根据部门代码获取部门(sys_department表的code字段)
 	 * 
 	 * @param code
+	 *            部门代码
 	 * @return
 	 */
 	public static SysDepartment getDepartmentByCode(String code) {
@@ -116,6 +121,7 @@ public class BaseIdentityFactory {
 	 * 根据部门编号获取部门(sys_department表的id字段)
 	 * 
 	 * @param id
+	 *            部门ID
 	 * @return
 	 */
 	public static SysDepartment getDepartmentById(Long id) {
@@ -127,6 +133,7 @@ public class BaseIdentityFactory {
 	 * 根据部门代码获取部门(sys_department表的deptno字段)
 	 * 
 	 * @param deptno
+	 *            部门deptno
 	 * @return
 	 */
 	public static SysDepartment getDepartmentByNo(String deptno) {
@@ -182,6 +189,7 @@ public class BaseIdentityFactory {
 	 * 获取某个部门的用户
 	 * 
 	 * @param deptId
+	 *            部门ID
 	 * @return
 	 */
 	public static List<SysUser> getMembershipUsers(Long deptId) {
@@ -192,7 +200,9 @@ public class BaseIdentityFactory {
 	 * 获取某个部门某个角色的用户
 	 * 
 	 * @param deptId
+	 *            部门ID
 	 * @param roleId
+	 *            角色ID
 	 * @return
 	 */
 	public static List<SysUser> getMembershipUsers(Long deptId, Long roleId) {
@@ -203,7 +213,9 @@ public class BaseIdentityFactory {
 	 * 获取某个部门某个角色的用户
 	 * 
 	 * @param deptIds
+	 *            部门ID
 	 * @param roleId
+	 *            角色ID
 	 * @return
 	 */
 	public static List<SysUser> getMembershipUsers(List<Long> deptIds,
@@ -215,7 +227,9 @@ public class BaseIdentityFactory {
 	 * 获取某个部门某个角色的用户
 	 * 
 	 * @param deptIds
-	 * @param roleId
+	 *            部门ID
+	 * @param roleCode
+	 *            角色代码
 	 * @return
 	 */
 	public static List<SysUser> getMembershipUsers(List<Long> deptIds,
@@ -229,7 +243,9 @@ public class BaseIdentityFactory {
 	 * 获取某个部门某个角色的用户
 	 * 
 	 * @param deptId
-	 * @param roleId
+	 *            部门ID
+	 * @param roleCode
+	 *            角色代码
 	 * @return
 	 */
 	public static List<SysUser> getMembershipUsers(Long deptId, String roleCode) {
@@ -260,6 +276,7 @@ public class BaseIdentityFactory {
 	 * 通过角色代码获取角色
 	 * 
 	 * @param code
+	 *            角色代码
 	 * @return
 	 */
 	public static SysRole getRoleByCode(String code) {
@@ -270,6 +287,7 @@ public class BaseIdentityFactory {
 	 * 通过角色编号获取角色
 	 * 
 	 * @param id
+	 *            角色ID
 	 * @return
 	 */
 	public static SysRole getRoleById(Long id) {
@@ -344,6 +362,7 @@ public class BaseIdentityFactory {
 	 * 根据用户名获取用户对象
 	 * 
 	 * @param actorId
+	 *            用户登录账号
 	 * @return
 	 */
 	public static SysUser getSysUser(String actorId) {
@@ -368,6 +387,7 @@ public class BaseIdentityFactory {
 	 * 根据用户名获取用户对象
 	 * 
 	 * @param actorId
+	 *            用户登录账号
 	 * @return
 	 */
 	public static SysUser getSysUserWithAll(String actorId) {
@@ -421,6 +441,7 @@ public class BaseIdentityFactory {
 	 * 获取某个用户及代理人的角色编号
 	 * 
 	 * @param actorId
+	 *            用户登录账号
 	 * @return
 	 */
 	public static List<String> getUserRoles(String actorId) {
@@ -474,7 +495,9 @@ public class BaseIdentityFactory {
 	 * 获取用户菜单
 	 * 
 	 * @param parentId
+	 *            父应用编号
 	 * @param actorId
+	 *            用户登录账号
 	 * @return
 	 */
 	public JSONArray getUserMenu(Long parentId, String actorId) {
