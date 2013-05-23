@@ -44,9 +44,9 @@ import com.glaf.base.modules.sys.service.SysUserService;
 import com.glaf.base.modules.sys.service.SysDepartmentService;
 import com.glaf.base.utils.ContextUtil;
 
-public class IdentityFactory {
+public class BaseIdentityFactory {
 	protected static final Log logger = LogFactory
-			.getLog(IdentityFactory.class);
+			.getLog(BaseIdentityFactory.class);
 
 	protected static SysApplicationService sysApplicationService;
 
@@ -440,34 +440,34 @@ public class IdentityFactory {
 
 	public static void setSysApplicationService(
 			SysApplicationService sysApplicationService) {
-		IdentityFactory.sysApplicationService = sysApplicationService;
+		BaseIdentityFactory.sysApplicationService = sysApplicationService;
 	}
 
 	public static void setSysDepartmentService(
 			SysDepartmentService sysDepartmentService) {
-		IdentityFactory.sysDepartmentService = sysDepartmentService;
+		BaseIdentityFactory.sysDepartmentService = sysDepartmentService;
 	}
 
 	public static void setSysDeptRoleService(
 			SysDeptRoleService sysDeptRoleService) {
-		IdentityFactory.sysDeptRoleService = sysDeptRoleService;
+		BaseIdentityFactory.sysDeptRoleService = sysDeptRoleService;
 	}
 
 	public static void setSysRoleService(SysRoleService sysRoleService) {
-		IdentityFactory.sysRoleService = sysRoleService;
+		BaseIdentityFactory.sysRoleService = sysRoleService;
 	}
 
 	public static void setSysTreeService(SysTreeService sysTreeService) {
-		IdentityFactory.sysTreeService = sysTreeService;
+		BaseIdentityFactory.sysTreeService = sysTreeService;
 	}
 
 	public static void setSysUserRoleService(
 			SysUserRoleService sysUserRoleService) {
-		IdentityFactory.sysUserRoleService = sysUserRoleService;
+		BaseIdentityFactory.sysUserRoleService = sysUserRoleService;
 	}
 
 	public static void setSysUserService(SysUserService sysUserService) {
-		IdentityFactory.sysUserService = sysUserService;
+		BaseIdentityFactory.sysUserService = sysUserService;
 	}
 
 	/**
