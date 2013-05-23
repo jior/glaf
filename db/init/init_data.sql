@@ -9,6 +9,13 @@ delete from sys_application;
 delete from sys_tree;
 delete from sys_role;
 delete from sys_dictory;
+delete from sys_dictory_def;
+delete from sys_dbid;
+delete from sys_property;
+delete from sys_workcalendar;
+delete from sys_params;
+delete from sys_input_def;
+
 **/
 
 
@@ -109,7 +116,7 @@ insert into sys_user (id, deptId, account, password, code, name, blocked, create
 /*初始化应用信息*/
 insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (3, '应用模块', '应用模块', '', 3, 1, 3);
 insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (8, '系统管理', '系统管理', '', 5, 1, 8);
-insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (9, '基础数据', '基础数据', '', 30, 1, 9);
+insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (9, '基础数据', '基础数据', '', 30, 1, 4);
 insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (10, '安全设置', '', '', 14, 2, 10);
 insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (11, '系统目录', '', '/sys/tree.do?method=showMain', 10, 2, 11);
 insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (12, '部门管理', '', '/sys/department.do?method=showFrame', 20, 2, 12);
@@ -221,7 +228,7 @@ insert into sys_dictory_def (id, nodeid, name, columnname, title, type, length, 
 insert into sys_dictory_def (id, nodeid, name, columnname, title, type, length, sort, required, target) values (22, 0, 'ext19', 'EXT19', '', 'Double', 20, 21, 0, 'sys_dictory');
 insert into sys_dictory_def (id, nodeid, name, columnname, title, type, length, sort, required, target) values (23, 0, 'ext20', 'EXT20', '', 'Double', 20, 22, 0, 'sys_dictory');
 
-insert into SYS_DBID(NAME_, TITLE_, VALUE_, VERSION_) values ('next.dbid', '系统内置主键', '1001', 1);
+insert into sys_dbid(name_, title_, value_, version_) values ('next.dbid', '系统内置主键', '1001', 1);
 
 insert into sys_property (id_, description_, locked_, name_, title_, type_, value_, category_, initvalue_) values ('1', '系统名称', 0, 'res_system_name', '系统名称', null, 'GLAF基础应用框架', 'SYS', null);
 insert into sys_property (id_, description_, locked_, name_, title_, type_, value_, category_, initvalue_) values ('2', '系统版本', 0, 'res_version', '系统版本', null, 'V3.0', 'SYS', null);
