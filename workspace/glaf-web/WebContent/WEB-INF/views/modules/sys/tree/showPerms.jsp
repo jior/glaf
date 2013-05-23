@@ -95,7 +95,7 @@
 		</td>
 		<td></td>
       </tr>
-	 <tr >
+	 <tr>
 		<td height="27" width="20%" valign="middle" noWrap> 授权范围（角色）</td>
 		<td height="27" valign="middle" noWrap> 
 		<input type="hidden" id="x_roles" name="x_roles" value="${x_roles}">

@@ -44,6 +44,7 @@ import com.glaf.core.service.IQueryDefinitionService;
 import com.glaf.core.service.ITableDataService;
 import com.glaf.core.service.ITableDefinitionService;
 
+import com.glaf.core.util.DBUtils;
 import com.glaf.core.util.DateUtils;
 import com.glaf.core.util.FieldType;
 import com.glaf.core.util.JdbcUtils;
@@ -285,6 +286,7 @@ public class MxTransformThread implements java.lang.Runnable {
 		} catch (Exception ex) {
 			success = false;
 			ex.printStackTrace();
+			logger.error(ex);
 			throw new RuntimeException(ex);
 		} finally {
 			JdbcUtils.close(conn);
@@ -303,11 +305,10 @@ public class MxTransformThread implements java.lang.Runnable {
 			TransformTable tbl = new TransformTable();
 			tbl.createOrAlterTable(tableDefinition);
 
-			if ("1".equals(tableDefinition.getTemporaryFlag())) {
-				// DBUtils.deleteEtlTemporaryTable(tableDefinition.getTableName());
-			} else {
-				// DBTools.deleteCurrentDayEtlMiddleTable(tableDefinition
-				// .getTableName());
+			List<ColumnDefinition> columns = DBUtils
+					.getColumnDefinitions(tableDefinition.getTableName());
+			if (columns != null && !columns.isEmpty()) {
+				tableDefinition.setColumns(columns);
 			}
 			if (resultList != null && !resultList.isEmpty()
 					&& tableDefinition.getTableName() != null
@@ -331,6 +332,7 @@ public class MxTransformThread implements java.lang.Runnable {
 				task.setStatus(2);
 			}
 			ex.printStackTrace();
+			logger.error(ex);
 			throw new RuntimeException(ex);
 		} finally {
 			if (task != null) {

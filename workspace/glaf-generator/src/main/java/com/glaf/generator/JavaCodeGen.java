@@ -98,6 +98,8 @@ public class JavaCodeGen {
 		context.put("blank32", "                                ");
 
 		logger.debug(context);
+		
+		
 
 		if (classDefinition.isJbpmSupport()) {
 			FieldDefinition f0 = new ColumnDefinition();
@@ -176,38 +178,6 @@ public class JavaCodeGen {
 			f2.setType("String");
 			classDefinition.addField(f2);
 
-			FieldDefinition f3 = new ColumnDefinition();
-			f3.setName("createBy");
-			f3.setColumnName("createBy");
-			f3.setEnglishTitle("createBy");
-			f3.setTitle("创建人");
-			f3.setType("String");
-			classDefinition.addField(f3);
-
-			FieldDefinition f4 = new ColumnDefinition();
-			f4.setName("createDate");
-			f4.setColumnName("createDate");
-			f4.setEnglishTitle("createDate");
-			f4.setTitle("创建日期");
-			f4.setType("Date");
-			classDefinition.addField(f4);
-
-			FieldDefinition f5 = new ColumnDefinition();
-			f5.setName("updateDate");
-			f5.setColumnName("updateDate");
-			f5.setEnglishTitle("updateDate");
-			f5.setTitle("修改日期");
-			f5.setType("Date");
-			classDefinition.addField(f5);
-
-			FieldDefinition f6 = new ColumnDefinition();
-			f6.setName("updateBy");
-			f6.setColumnName("updateBy");
-			f6.setEnglishTitle("updateBy");
-			f6.setTitle("修改人");
-			f6.setType("String");
-			classDefinition.addField(f6);
-
 			FieldDefinition f7 = new ColumnDefinition();
 			f7.setName("discriminator");
 			f7.setColumnName("discriminator");
@@ -281,6 +251,38 @@ public class JavaCodeGen {
 			classDefinition.addField(f14);
 
 		}
+		
+		FieldDefinition f3 = new ColumnDefinition();
+		f3.setName("createBy");
+		f3.setColumnName("createBy");
+		f3.setEnglishTitle("createBy");
+		f3.setTitle("创建人");
+		f3.setType("String");
+		classDefinition.addField(f3);
+
+		FieldDefinition f4 = new ColumnDefinition();
+		f4.setName("createDate");
+		f4.setColumnName("createDate");
+		f4.setEnglishTitle("createDate");
+		f4.setTitle("创建日期");
+		f4.setType("Date");
+		classDefinition.addField(f4);
+
+		FieldDefinition f5 = new ColumnDefinition();
+		f5.setName("updateDate");
+		f5.setColumnName("updateDate");
+		f5.setEnglishTitle("updateDate");
+		f5.setTitle("修改日期");
+		f5.setType("Date");
+		classDefinition.addField(f5);
+
+		FieldDefinition f6 = new ColumnDefinition();
+		f6.setName("updateBy");
+		f6.setColumnName("updateBy");
+		f6.setEnglishTitle("updateBy");
+		f6.setTitle("修改人");
+		f6.setType("String");
+		classDefinition.addField(f6);
 
 		Map<String, FieldDefinition> fields = classDefinition.getFields();
 

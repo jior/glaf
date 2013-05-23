@@ -69,7 +69,7 @@
 
 	<target name="war">
 		<jar jarfile="glaf.war">
-			<fileset dir="WebContent" includes="**/*.*"  excludes="**/*.class,**/*.cvs,**/*.bak,**/*.tmp,**/*.scc,**/*.svn,eclipselink.jar,openjpa-2.0.0.jar,**/archives/*.*,**/test/**/*.*,upload/***.*, data/**/*.*, db/**" casesensitive="yes"/>
+			<fileset dir="WebContent" includes="**/*.*"  excludes="**/*.class,**/*.cvs,**/*.bak,**/*.tmp,**/*.scc,**/*.svn,**/archives/*.*,**/test/**/*.*,upload/***.*, data/**/*.*, db/**, **/work/**, **/tmp/**" casesensitive="yes"/>
 		</jar>
     </target>
 
