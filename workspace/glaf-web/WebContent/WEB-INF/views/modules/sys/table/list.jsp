@@ -99,8 +99,23 @@
 		}
 	}
 
+	function genMappings(){
+		var ids = [];
+		var rows = jQuery('#mydatagrid').datagrid('getSelections');
+		for(var i=0;i<rows.length;i++){
+			ids.push(rows[i].tablename);
+		}
+		if(ids.length > 0 ){
+		    var ids = ids.join(',');
+			var dbType = jQuery('#dbType').val();
+			window.open('<%=request.getContextPath()%>/mx/system/table/genMappings?tables='+ids+'&dbType='+dbType);
+		} else {
+			alert("请选择至少一条记录。");
+		}
+	}
+
 	function updateHibernateDDL(){
-		if(confirm("确定配置文件/WEB-INF/conf/dynamic.jdbc.properties文件已经修改正确？")){
+		if(confirm("确定配置文件/WEB-INF/conf/jdbc/dynamic.jdbc.properties文件已经修改正确？")){
 		  jQuery.ajax({
 				   type: "POST",
 				   url: '<%=request.getContextPath()%>/mx/system/table/updateHibernateDDL',
@@ -140,6 +155,9 @@
 
 	   <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-save'"
 	   onclick="javascript:genCreateScripts();">生成数据库建表脚本</a> 
+
+	   <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-save'"
+	   onclick="javascript:genMappings();">生成Mapping文件</a> 
 
 	   <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-save'"
 	   onclick="javascript:updateHibernateDDL();">更新本数据库结构</a> 
