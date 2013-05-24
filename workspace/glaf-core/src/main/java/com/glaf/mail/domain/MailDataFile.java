@@ -45,7 +45,7 @@ public class MailDataFile implements Serializable, DataFile {
 	/**
 	 * filesize
 	 */
-	@Column(name = "size")
+	@Column(name = "size_")
 	protected long size;
 
 	/**

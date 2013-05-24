@@ -9,7 +9,7 @@
 		<result property="topId" column="topId" jdbcType="VARCHAR"/>
 		<result property="filename" column="filename" jdbcType="VARCHAR"/>
 		<result property="createDate" column="createDate" jdbcType="TIMESTAMP"/>
-		<result property="size" column="size" jdbcType="INTEGER"/>
+		<result property="size" column="size_" jdbcType="INTEGER"/>
 		<result property="fileContent" column="fileContent" jdbcType="BLOB"/>
 	</resultMap>
 	
@@ -18,7 +18,7 @@
 		<result property="topId" column="topId" jdbcType="VARCHAR"/>
 		<result property="filename" column="filename" jdbcType="VARCHAR"/>
 		<result property="createDate" column="createDate" jdbcType="TIMESTAMP"/>
-		<result property="size" column="size" jdbcType="INTEGER"/>
+		<result property="size" column="size_" jdbcType="INTEGER"/>
 		<result property="fileContent" column="fileContent" jdbcType="BINARY"/>
 	</resultMap>
  
@@ -38,7 +38,7 @@
 				,createDate 
 			</if>
 			<if test="size != null">
-				,size 
+				,size_ 
 			</if>
 			<if test="fileContent != null">
 				,fileContent 
@@ -85,7 +85,7 @@
 				,createDate 
 			</if>
 			<if test="size != null">
-				,size 
+				,size_ 
 			</if>
 			<if test="fileContent != null">
 				,fileContent 
@@ -132,7 +132,7 @@
 				createDate = #{createDate, jdbcType=TIMESTAMP},
 			</if>
 			<if test="size != null">
-				size = #{size, jdbcType=INTEGER},
+				size_ = #{size, jdbcType=INTEGER},
 			</if>
 		</trim>
 		where
@@ -181,7 +181,7 @@
 	<select id="getMailDataFiles" 
 		parameterType="map"
 		resultMap="mailDataFileResultMap">
-		select E.id, E.topId, E.filename, E.createDate, E.size from SYS_MAIL_FILE E
+		select E.id, E.topId, E.filename, E.createDate, E.size_ from SYS_MAIL_FILE E
 		<include refid="selectMailDataFileSql" />
 		<if test="orderBy != null">
 		   order by ${orderBy}
@@ -190,7 +190,7 @@
 
 
 	<select id="getMailDataFileMapList" parameterType="map" resultType="map">
-		select E.id, E.topId, E.filename, E.createDate, E.size from SYS_MAIL_FILE E 
+		select E.id, E.topId, E.filename, E.createDate, E.size_ from SYS_MAIL_FILE E 
 		<include refid="selectMailDataFileSql" />
 		<if test="orderBy != null">
 		   order by ${orderBy}
@@ -201,7 +201,7 @@
 	<select id="getMailDataFilesByQueryCriteria" 
 		parameterType="com.glaf.mail.query.MailDataFileQuery"
 		resultMap="mailDataFileResultMap">
-		select E.id, E.topId, E.filename, E.createDate, E.size from SYS_MAIL_FILE E
+		select E.id, E.topId, E.filename, E.createDate, E.size_ from SYS_MAIL_FILE E
 		<include refid="selectMailDataFileSql" />
 		<if test="orderBy != null">
 		   order by ${orderBy}
@@ -244,11 +244,11 @@
 			</if>
 
 			<if test="sizeGreaterThanOrEqual != null">
-				and E.size &gt;= #{sizeGreaterThanOrEqual}
+				and E.size_ &gt;= #{sizeGreaterThanOrEqual}
 			</if>
 
 			<if test="sizeLessThanOrEqual != null">
-				and E.size &lt;= #{sizeLessThanOrEqual}
+				and E.size_ &lt;= #{sizeLessThanOrEqual}
 			</if>
 			 
 		</where>

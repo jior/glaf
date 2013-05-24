@@ -723,7 +723,16 @@ public class DBUtils {
 		try {
 			List<String> primaryKeys = getPrimaryKeys(conn, tableName);
 			DatabaseMetaData metaData = conn.getMetaData();
-			if ("postgresql".equals(DBConnectionFactory.getDatabaseType(conn))) {
+			if ("h2".equals(DBConnectionFactory.getDatabaseType(conn))) {
+				tableName = tableName.toUpperCase();
+			} else if ("oracle".equals(DBConnectionFactory
+					.getDatabaseType(conn))) {
+				tableName = tableName.toUpperCase();
+			} else if ("mysql"
+					.equals(DBConnectionFactory.getDatabaseType(conn))) {
+				tableName = tableName.toLowerCase();
+			} else if ("postgresql".equals(DBConnectionFactory
+					.getDatabaseType(conn))) {
 				tableName = tableName.toLowerCase();
 			}
 			rs = metaData.getColumns(null, null, tableName, null);
@@ -790,6 +799,12 @@ public class DBUtils {
 			DatabaseMetaData metaData = conn.getMetaData();
 			if ("h2".equals(DBConnectionFactory.getDatabaseType(conn))) {
 				tableName = tableName.toUpperCase();
+			} else if ("oracle".equals(DBConnectionFactory
+					.getDatabaseType(conn))) {
+				tableName = tableName.toUpperCase();
+			} else if ("mysql"
+					.equals(DBConnectionFactory.getDatabaseType(conn))) {
+				tableName = tableName.toLowerCase();
 			} else if ("postgresql".equals(DBConnectionFactory
 					.getDatabaseType(conn))) {
 				tableName = tableName.toLowerCase();
@@ -1583,7 +1598,16 @@ public class DBUtils {
 			conn = DBConnectionFactory.getConnection();
 			List<String> primaryKeys = getPrimaryKeys(conn, tableName);
 			DatabaseMetaData metaData = conn.getMetaData();
-			if ("postgresql".equals(DBConnectionFactory.getDatabaseType(conn))) {
+			if ("h2".equals(DBConnectionFactory.getDatabaseType(conn))) {
+				tableName = tableName.toUpperCase();
+			} else if ("oracle".equals(DBConnectionFactory
+					.getDatabaseType(conn))) {
+				tableName = tableName.toUpperCase();
+			} else if ("mysql"
+					.equals(DBConnectionFactory.getDatabaseType(conn))) {
+				tableName = tableName.toLowerCase();
+			} else if ("postgresql".equals(DBConnectionFactory
+					.getDatabaseType(conn))) {
 				tableName = tableName.toLowerCase();
 			}
 			rs = metaData.getColumns(null, null, tableName, null);
@@ -1803,6 +1827,12 @@ public class DBUtils {
 
 			if ("h2".equals(DBConnectionFactory.getDatabaseType(connection))) {
 				tableName = tableName.toUpperCase();
+			} else if ("oracle".equals(DBConnectionFactory
+					.getDatabaseType(connection))) {
+				tableName = tableName.toUpperCase();
+			} else if ("mysql".equals(DBConnectionFactory
+					.getDatabaseType(connection))) {
+				tableName = tableName.toLowerCase();
 			} else if ("postgresql".equals(DBConnectionFactory
 					.getDatabaseType(connection))) {
 				tableName = tableName.toLowerCase();
@@ -1828,6 +1858,12 @@ public class DBUtils {
 
 			if ("h2".equals(DBConnectionFactory.getDatabaseType(connection))) {
 				tableName = tableName.toUpperCase();
+			} else if ("oracle".equals(DBConnectionFactory
+					.getDatabaseType(connection))) {
+				tableName = tableName.toUpperCase();
+			} else if ("mysql".equals(DBConnectionFactory
+					.getDatabaseType(connection))) {
+				tableName = tableName.toLowerCase();
 			} else if ("postgresql".equals(DBConnectionFactory
 					.getDatabaseType(connection))) {
 				tableName = tableName.toLowerCase();

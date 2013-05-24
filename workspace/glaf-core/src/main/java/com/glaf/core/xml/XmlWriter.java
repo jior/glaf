@@ -42,6 +42,7 @@ public class XmlWriter {
 			Element element = root.addElement("entity");
 			element.addAttribute("name", classDefinition.getEntityName());
 			element.addAttribute("package", classDefinition.getPackageName());
+			element.addAttribute("moduleName", classDefinition.getModuleName());
 			element.addAttribute("table", classDefinition.getTableName());
 			element.addAttribute("title", classDefinition.getTitle());
 			element.addAttribute("englishTitle",
@@ -94,15 +95,12 @@ public class XmlWriter {
 					elem.addAttribute("nullable",
 							String.valueOf(field.isNullable()));
 				}
-				if (!field.isUpdatable()) {
-					elem.addAttribute("updatable",
-							String.valueOf(field.isUpdatable()));
-				}
 				if (field.isEditable()) {
 					elem.addAttribute("editable",
 							String.valueOf(field.isEditable()));
 				}
-				elem.addAttribute("displayType", String.valueOf(field.getDisplayType()));
+				elem.addAttribute("displayType",
+						String.valueOf(field.getDisplayType()));
 			}
 		}
 		return doc;
