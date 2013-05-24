@@ -142,6 +142,12 @@ public class TableDefinition implements java.io.Serializable,
 	@Column(name = "LOCKED_")
 	protected int locked;
 
+	/**
+	 * Ä£¿éÃû³Æ
+	 */
+	@javax.persistence.Transient
+	protected String moduleName;
+
 	@Column(name = "PACKAGENAME_", length = 200)
 	protected String packageName;
 
@@ -368,6 +374,13 @@ public class TableDefinition implements java.io.Serializable,
 		return locked;
 	}
 
+	public String getModuleName() {
+		if (moduleName == null) {
+			moduleName = "apps";
+		}
+		return moduleName;
+	}
+
 	public String getPackageName() {
 		return packageName;
 	}
@@ -534,6 +547,10 @@ public class TableDefinition implements java.io.Serializable,
 
 	public void setLocked(int locked) {
 		this.locked = locked;
+	}
+
+	public void setModuleName(String moduleName) {
+		this.moduleName = moduleName;
 	}
 
 	public void setPackageName(String packageName) {

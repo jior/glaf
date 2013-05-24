@@ -68,6 +68,9 @@ public class XmlReader {
 				tableDefinition.setAggregationKeys(element
 						.attributeValue("aggregationKeys"));
 
+				tableDefinition.setModuleName(element
+						.attributeValue("moduleName"));
+
 				String primaryKey = element.attributeValue("primaryKey");
 
 				List<?> rows = element.elements("property");

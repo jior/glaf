@@ -32,6 +32,8 @@ public interface ClassDefinition extends JSONable {
 
 	FieldDefinition getIdField();
 
+	String getModuleName();
+
 	String getPackageName();
 
 	String getTableName();
@@ -53,6 +55,8 @@ public interface ClassDefinition extends JSONable {
 	void setIdField(FieldDefinition idField);
 
 	void setJbpmSupport(boolean jbpmSupport);
+
+	void setModuleName(String moduleName);
 
 	void setPackageName(String packageName);
 
