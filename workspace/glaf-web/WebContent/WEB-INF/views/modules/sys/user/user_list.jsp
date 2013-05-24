@@ -1,10 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
-
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="html"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.glaf.base.modules.*"%>
 <%@ page import="com.glaf.base.modules.sys.model.*"%>
 <%@ page import="com.glaf.base.utils.*"%>
+<%@ page import="com.glaf.core.util.DateUtils"%>
 <%
 String context = request.getContextPath();
 int pageSize=Constants.PAGE_SIZE;
@@ -179,10 +179,10 @@ if(list!=null){
     <!-- <td width="25%" class="td-text" title="<%=roleName%>"><%=roleName%></td> -->
     <td width="8%" class="td-no"><%=bean.getBlocked()==1?"否":"是"%>&nbsp;</td>
     <td width="12%" class="td-time">
-	<%=new java.text.SimpleDateFormat("yyyy-MM-dd").format(bean.getCreateTime())%>&nbsp;
+	    <%=DateUtils.getDate(bean.getCreateTime())%>&nbsp;
 	</td>
     <td width="12%" align="center" class="list">
-	<%=new java.text.SimpleDateFormat("yyyy-MM-dd").format(bean.getLastLoginTime())%>&nbsp;
+	   <%=DateUtils.getDate(bean.getLastLoginTime())%>&nbsp;
 	</td>
     </tr>
   <%
