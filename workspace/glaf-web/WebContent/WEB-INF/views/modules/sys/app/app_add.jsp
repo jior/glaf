@@ -10,6 +10,7 @@
     int parent=ParamUtil.getIntParameter(request, "parent", 0);
 	String theme = com.glaf.core.util.RequestUtils.getTheme(request);
     request.setAttribute("theme", theme);
+	request.setAttribute("contextPath", request.getContextPath());
 %>
 <!DOCTYPE html>
 <html>
