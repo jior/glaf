@@ -127,7 +127,7 @@
 	</bean> -->
 
 
-	<bean id="hibernateSessionFactory"
+	<!-- <bean id="hibernateSessionFactory"
 		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
 		<property name="dataSource">
 			<ref bean="dataSource" />
@@ -149,7 +149,7 @@
 				<value>com.glaf</value>
 			</list>
 		</property>
-	</bean>
+	</bean> -->
 
 	<bean id="transactionManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">

@@ -40,14 +40,14 @@
 <div class="easyui-layout" data-options="fit:true">  
   <div data-options="region:'center',border:false">
 	 <table id="easyui_data_grid" class="easyui-datagrid" style="width:1000px;height:445px"
-			url="<%=request.getContextPath()%>/rs/dts/table/tablePage?tableName_enc=<c:out value='${tableName_enc}'/>&gridType=easyui"
+			url="<%=request.getContextPath()%>/rs/system/table/resultList?tableName_enc=<c:out value='${tableName_enc}'/>&gridType=easyui"
 			title="${tableName} 数据列表 " iconCls="icon-list" remoteSort="true"  
 			method="post" pageSize="15" pageList="[10,15,20,30,40,50,100,200,500]"
 			rownumbers="true" pagination="true" fit="true" fitColumn="true">
 		<thead>
 			<tr>
 			   <c:forEach items="${columns}" var="column">
-				<th field="${column.columnName}" sortable="false" width="120">
+				<th field="${column.columnName}" sortable="true" width="120">
 				${column.columnName}
 				</th>
 				</c:forEach>

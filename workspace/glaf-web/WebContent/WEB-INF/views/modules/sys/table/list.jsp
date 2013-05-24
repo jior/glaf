@@ -47,7 +47,8 @@
 				rownumbers:false,
 				pagination:false,
 				pageSize:15,
-				pageList: [10,15,20,25,30,40,50,100]
+				pageList: [10,15,20,25,30,40,50,100],
+				onDblClickRow: onRowClick 
 			});
 
 			var p = jQuery('#mydatagrid').datagrid('getPager');
@@ -133,6 +134,19 @@
 			 });
 		}
 	}
+
+	function showData(){
+		var rows = jQuery('#mydatagrid').datagrid('getSelections');
+		if(rows.length ==1){
+		    var tablename = rows[0].tablename;
+		    window.open('<%=request.getContextPath()%>/mx/dts/table/resultList?q=1&tableName='+tablename);
+		}
+	 }
+
+	 function onRowClick(rowIndex, row){
+	    var link = '<%=request.getContextPath()%>/mx/dts/table/resultList?q=1&tableName='+row.tablename;
+	    art.dialog.open(link, { height: 425, width: 880, title: "记录信息", lock: true, scrollbars:"no" }, false);
+	}
 	 
 		 
 </script>
@@ -161,6 +175,9 @@
 
 	   <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-save'"
 	   onclick="javascript:updateHibernateDDL();">更新本数据库结构</a> 
+
+	   <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-list'"
+	   onclick="javascript:showData();">查看数据</a> 
    </div> 
   </div> 
   <div data-options="region:'center',border:true">

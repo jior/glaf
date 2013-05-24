@@ -136,12 +136,21 @@ public class MxSystemTableResource {
 						if (value instanceof Date) {
 							Date date = (Date) value;
 							rowJSON.put(name, DateUtils.getDate(date));
+						} else if (value instanceof byte[]) {
+							rowJSON.put(name, "二进制流");
+						} else if (value instanceof java.io.InputStream) {
+							rowJSON.put(name, "二进制流");
+						} else if (value instanceof java.sql.Blob) {
+							rowJSON.put(name, "二进制流");
+						} else if (value instanceof java.sql.Clob) {
+							rowJSON.put(name, "长文本");
 						} else {
 							rowJSON.put(name, value);
 						}
 					}
 				}
 				rowsJSON.add(rowJSON);
+				dataMap.clear();
 			}
 		}
 
