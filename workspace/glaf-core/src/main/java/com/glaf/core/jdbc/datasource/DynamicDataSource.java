@@ -39,22 +39,6 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
 	private static ConcurrentMap<Object, Object> targetDataSources = new ConcurrentHashMap<Object, Object>();
 
 	private static Object defaultTargetDataSource;
-	
-	static{
-		String filename = SystemProperties.getAppPath()
-				+ "/WEB-INF/conf/jdbc/dynamic.jdbc.properties";
-		Properties props = PropertiesUtils.loadFilePathResource(filename);
-		if (props != null) {
-			try {
-				ConnectionProvider provider = ConnectionProviderFactory
-						.createProvider("dynamic");
-				targetDataSources.put("dynamic", provider.getDataSource());
-				defaultTargetDataSource = provider.getDataSource();
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
-		}
-	}
 
 	public DynamicDataSource() {
 
@@ -62,6 +46,19 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
 
 	@Override
 	public void afterPropertiesSet() {
+		String filename = SystemProperties.getAppPath()
+				+ "/WEB-INF/conf/jdbc/dynamic.jdbc.properties";
+		Properties props = PropertiesUtils.loadFilePathResource(filename);
+		if (props != null) {
+			try {
+				ConnectionProvider provider = ConnectionProviderFactory
+						.createProvider("dynamic", props);
+				targetDataSources.put("dynamic", provider.getDataSource());
+				defaultTargetDataSource = provider.getDataSource();
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
 		setDefaultTargetDataSource(defaultTargetDataSource);
 		setTargetDataSources(targetDataSources);
 		super.afterPropertiesSet();
