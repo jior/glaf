@@ -85,6 +85,7 @@ public class JavaCodeGen {
 		String packageName = classDefinition.getPackageName();
 
 		context.put("classDefinition", classDefinition);
+		context.put("tableDefinition", classDefinition);
 		context.put("idField", classDefinition.getIdField());
 		context.put("packageName", packageName);
 		context.put("entityName", entityName);

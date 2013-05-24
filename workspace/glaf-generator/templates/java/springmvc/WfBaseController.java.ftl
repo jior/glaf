@@ -200,7 +200,7 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 			return new ModelAndView(x_view, modelMap);
 		}
 
-		return new ModelAndView("/apps/${modelName}/edit", modelMap);
+		return new ModelAndView("/${classDefinition.moduleName}/${modelName}/edit", modelMap);
 	}
 
         @Override
@@ -239,7 +239,7 @@ public class ${entityName}WfController extends ${entityName}BaseController {
 			return new ModelAndView(x_view);
 		}
 
-		return new ModelAndView("/apps/${modelName}/view");
+		return new ModelAndView("/${classDefinition.moduleName}/${modelName}/view");
 	}
 
         @Override

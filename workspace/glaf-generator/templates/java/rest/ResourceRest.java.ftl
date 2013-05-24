@@ -28,7 +28,7 @@ import ${packageName}.query.${entityName}Query;
 import ${packageName}.service.${entityName}Service;
 
 @Controller
-@Path("/rs/apps/${modelName}")
+@Path("/rs/${classDefinition.moduleName}/${modelName}")
 public class ${entityName}ResourceRest {
 	protected static final Log logger = LogFactory.getLog(${entityName}ResourceRest.class);
 

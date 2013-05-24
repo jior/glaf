@@ -7,8 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
  
 
-@Controller("/apps/${modelName}")
-@RequestMapping("/apps/${modelName}.do")
+@Controller("/${classDefinition.moduleName}/${modelName}")
+@RequestMapping("/${classDefinition.moduleName}/${modelName}.do")
 public class ${entityName}Controller extends ${entityName}BaseController {
 	private static final Log logger = LogFactory.getLog(${entityName}Controller.class);
 

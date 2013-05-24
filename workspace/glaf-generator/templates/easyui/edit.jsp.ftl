@@ -23,7 +23,7 @@
 		var params = jQuery("#iForm").formSerialize();
 		jQuery.ajax({
 				   type: "POST",
-				   url: '<%=request.getContextPath()%>/apps/${modelName}.do?method=save${entityName}',
+				   url: '<%=request.getContextPath()%>/${classDefinition.moduleName}/${modelName}.do?method=save${entityName}',
 				   data: params,
 				   dataType:  'json',
 				   error: function(data){
@@ -50,7 +50,7 @@
 		var params = jQuery("#iForm").formSerialize();
 		jQuery.ajax({
 				   type: "POST",
-				   url: '<%=request.getContextPath()%>/apps/${modelName}.do?method=save${entityName}',
+				   url: '<%=request.getContextPath()%>/${classDefinition.moduleName}/${modelName}.do?method=save${entityName}',
 				   data: params,
 				   dataType:  'json',
 				   error: function(data){

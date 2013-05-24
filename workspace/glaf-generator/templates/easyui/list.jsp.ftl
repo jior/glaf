@@ -31,7 +31,7 @@
 				nowrap: false,
 				striped: true,
 				collapsible: true,
-				url: '<%=request.getContextPath()%>/apps/${modelName}.do?method=json',
+				url: '<%=request.getContextPath()%>/${classDefinition.moduleName}/${modelName}.do?method=json',
 				sortName: 'id',
 				sortOrder: 'desc',
 				remoteSort: false,
@@ -65,14 +65,14 @@
 
 		 
 	function addNew(){
-	    //location.href="<%=request.getContextPath()%>/apps/${modelName}.do?method=edit";
-	    var link="<%=request.getContextPath()%>/apps/${modelName}.do?method=edit";
+	    //location.href="<%=request.getContextPath()%>/${classDefinition.moduleName}/${modelName}.do?method=edit";
+	    var link="<%=request.getContextPath()%>/${classDefinition.moduleName}/${modelName}.do?method=edit";
 	    art.dialog.open(link, { height: 420, width: 680, title: "添加记录", lock: true, scrollbars:"no" }, false);
 	}
 
 	function onRowClick(rowIndex, row){
-            //window.open('<%=request.getContextPath()%>/apps/${modelName}.do?method=edit&${idField.name}='+row.id);
-	    var link = '<%=request.getContextPath()%>/apps/${modelName}.do?method=edit&${idField.name}='+row.id;
+            //window.open('<%=request.getContextPath()%>/${classDefinition.moduleName}/${modelName}.do?method=edit&${idField.name}='+row.id);
+	    var link = '<%=request.getContextPath()%>/${classDefinition.moduleName}/${modelName}.do?method=edit&${idField.name}='+row.id;
 	    art.dialog.open(link, { height: 420, width: 680, title: "修改记录", lock: true, scrollbars:"no" }, false);
 	}
 
@@ -96,8 +96,8 @@
 	    }
 	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
 	    if (selected ){
-		//location.href="<%=request.getContextPath()%>/apps/${modelName}.do?method=edit&${idField.name}="+selected.id;
-		var link = "<%=request.getContextPath()%>/apps/${modelName}.do?method=edit&${idField.name}="+selected.id;
+		//location.href="<%=request.getContextPath()%>/${classDefinition.moduleName}/${modelName}.do?method=edit&${idField.name}="+selected.id;
+		var link = "<%=request.getContextPath()%>/${classDefinition.moduleName}/${modelName}.do?method=edit&${idField.name}="+selected.id;
 		art.dialog.open(link, { height: 420, width: 680, title: "修改记录", lock: true, scrollbars:"no" }, false);
 	    }
 	}
@@ -110,7 +110,7 @@
 		}
 		var selected = jQuery('#mydatagrid').datagrid('getSelected');
 		if (selected ){
-		    location.href="<%=request.getContextPath()%>/apps/${modelName}.do?method=edit&readonly=true&${idField.name}="+selected.id;
+		    location.href="<%=request.getContextPath()%>/${classDefinition.moduleName}/${modelName}.do?method=edit&readonly=true&${idField.name}="+selected.id;
 		}
 	}
 
@@ -124,7 +124,7 @@
 		    var ${idField.name}s = ids.join(',');
 			jQuery.ajax({
 				   type: "POST",
-				   url: '<%=request.getContextPath()%>/apps/${modelName}.do?method=delete&${idField.name}s='+${idField.name}s,
+				   url: '<%=request.getContextPath()%>/${classDefinition.moduleName}/${modelName}.do?method=delete&${idField.name}s='+${idField.name}s,
 				   dataType:  'json',
 				   error: function(data){
 					   alert('服务器处理错误！');
@@ -179,7 +179,7 @@
             var params = jQuery("#searchForm").formSerialize();
             jQuery.ajax({
                         type: "POST",
-                        url: '<%=request.getContextPath()%>/apps/${modelName}.do?method=json',
+                        url: '<%=request.getContextPath()%>/${classDefinition.moduleName}/${modelName}.do?method=json',
                         dataType:  'json',
                         data: params,
                         error: function(data){

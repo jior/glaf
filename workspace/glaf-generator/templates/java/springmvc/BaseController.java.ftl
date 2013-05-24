@@ -249,7 +249,7 @@ public class ${entityName}BaseController {
 			return new ModelAndView(x_view, modelMap);
 		}
 
-		return new ModelAndView("/apps/${modelName}/edit", modelMap);
+		return new ModelAndView("/${classDefinition.moduleName}/${modelName}/edit", modelMap);
 	}
 
         @RequestMapping(params = "method=view")
@@ -278,7 +278,7 @@ public class ${entityName}BaseController {
 			return new ModelAndView(x_view);
 		}
 
-		return new ModelAndView("/apps/${modelName}/view");
+		return new ModelAndView("/${classDefinition.moduleName}/${modelName}/view");
 	}
 
         @RequestMapping(params = "method=query")
@@ -292,7 +292,7 @@ public class ${entityName}BaseController {
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);
 		}
-		return new ModelAndView("/apps/${modelName}/query", modelMap);
+		return new ModelAndView("/${classDefinition.moduleName}/${modelName}/query", modelMap);
 	}
 
 	@RequestMapping(params = "method=json")
@@ -399,7 +399,7 @@ public class ${entityName}BaseController {
 		}
  
 
-		return new ModelAndView("/apps/${modelName}/list", modelMap);
+		return new ModelAndView("/${classDefinition.moduleName}/${modelName}/list", modelMap);
 	}
 
 }
