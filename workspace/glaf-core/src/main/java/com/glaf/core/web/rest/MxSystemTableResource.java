@@ -1,8 +1,11 @@
 package com.glaf.core.web.rest;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,26 +26,26 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.base.TablePage;
+import com.glaf.core.config.BaseConfiguration;
+import com.glaf.core.config.Configuration;
 import com.glaf.core.query.TablePageQuery;
 import com.glaf.core.service.ITablePageService;
 import com.glaf.core.util.DateUtils;
 import com.glaf.core.util.Paging;
 import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.RequestUtils;
+import com.glaf.core.util.StringTools;
 
 @Controller("/rs/system/table")
 @Path("/rs/system/table")
 public class MxSystemTableResource {
 
+	protected static Configuration conf = BaseConfiguration.create();
+
 	protected static final Log logger = LogFactory
 			.getLog(MxSystemTableResource.class);
 
 	protected ITablePageService tablePageService;
-
-	@javax.annotation.Resource
-	public void setTablePageService(ITablePageService tablePageService) {
-		this.tablePageService = tablePageService;
-	}
 
 	@GET
 	@POST
@@ -93,6 +96,21 @@ public class MxSystemTableResource {
 			limit = Paging.MAX_RECORD_COUNT;
 		}
 
+		tableName = tableName.toUpperCase();
+
+		Collection<String> rejects = new ArrayList<String>();
+		rejects.add("FILEATT");
+		rejects.add("SYS_LOB");
+		rejects.add("SYS_MAIL_FILE");
+
+		if (conf.get("table.rejects") != null) {
+			String str = conf.get("table.rejects");
+			List<String> list = StringTools.split(str);
+			for (String t : list) {
+				rejects.add(t.toUpperCase());
+			}
+		}
+
 		TablePage tablePage = null;
 		TablePageQuery tablePageQuery = new TablePageQuery();
 		tablePageQuery.tableName(tableName);
@@ -105,20 +123,22 @@ public class MxSystemTableResource {
 			tablePageQuery.orderDesc(orderName);
 		}
 
-		try {
-			long startTs = System.currentTimeMillis();
-			tablePage = tablePageService.getTablePage(tablePageQuery, start,
-					limit);
-			long time = System.currentTimeMillis() - startTs;
-			logger.debug("查询完成,记录总数:" + tablePage.getTotal() + " 用时(毫秒):"
-					+ time);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			logger.error(ex);
+		if (!rejects.contains(tableName)) {
+			try {
+				long startTs = System.currentTimeMillis();
+				tablePage = tablePageService.getTablePage(tablePageQuery,
+						start, limit);
+				long time = System.currentTimeMillis() - startTs;
+				logger.debug("查询完成,记录总数:" + tablePage.getTotal() + " 用时(毫秒):"
+						+ time);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				logger.error(ex);
+			}
 		}
 
 		JSONObject responseJSON = new JSONObject();
-
+		responseJSON.put("total", 0);
 		JSONArray rowsJSON = new JSONArray();
 		if (tablePage != null && tablePage.getRows() != null) {
 			responseJSON.put("total", tablePage.getTotal());
@@ -165,6 +185,11 @@ public class MxSystemTableResource {
 		} catch (IOException e) {
 			return responseJSON.toString().getBytes();
 		}
+	}
+
+	@javax.annotation.Resource
+	public void setTablePageService(ITablePageService tablePageService) {
+		this.tablePageService = tablePageService;
 	}
 
 }
