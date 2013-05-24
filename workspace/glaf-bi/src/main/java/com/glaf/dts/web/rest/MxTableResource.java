@@ -51,8 +51,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.glaf.core.jdbc.DBConnectionFactory;
 
-import com.glaf.core.base.ResultModel;
-import com.glaf.core.base.RowModel;
+ 
 import com.glaf.core.business.TransformTable;
 import com.glaf.core.domain.*;
 import com.glaf.core.query.*;
@@ -65,8 +64,7 @@ import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.RequestUtils;
 import com.glaf.core.util.ResponseUtils;
 import com.glaf.core.util.Tools;
-
-import com.glaf.dts.jdbc.QueryExecutor;
+ 
 import com.glaf.dts.transform.MxTransformManager;
 import com.glaf.dts.util.Constants;
 
@@ -273,124 +271,7 @@ public class MxTableResource {
 		}
 	}
 
-	@GET
-	@POST
-	@Path("/resultList")
-	@ResponseBody
-	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
-	public byte[] resultList(@Context HttpServletRequest request,
-			@Context UriInfo uriInfo) {
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		logger.debug(params);
-
-		String tableName = ParamUtils.getString(params, "tableName_enc");
-		String gridType = ParamUtils.getString(params, "gridType");
-		if (gridType == null) {
-			gridType = "easyui";
-		}
-		if (StringUtils.isNotEmpty(tableName)) {
-			tableName = RequestUtils.decodeString(tableName);
-		}
-
-		int start = 0;
-		int limit = 10;
-		String orderName = null;
-		String order = null;
-		if ("easyui".equals(gridType)) {
-			int pageNo = ParamUtils.getInt(params, "page");
-			limit = ParamUtils.getInt(params, "rows");
-			start = (pageNo - 1) * limit;
-			orderName = ParamUtils.getString(params, "sort");
-			order = ParamUtils.getString(params, "order");
-		} else if ("extjs".equals(gridType)) {
-			start = ParamUtils.getInt(params, "start");
-			limit = ParamUtils.getInt(params, "limit");
-			orderName = ParamUtils.getString(params, "sort");
-			order = ParamUtils.getString(params, "dir");
-		} else if ("yui".equals(gridType)) {
-			start = ParamUtils.getInt(params, "startIndex");
-			limit = ParamUtils.getInt(params, "results");
-			orderName = ParamUtils.getString(params, "sort");
-			order = ParamUtils.getString(params, "dir");
-		}
-
-		if (start < 0) {
-			start = 0;
-		}
-
-		if (limit <= 0 || limit > 10000) {
-			limit = Paging.DEFAULT_PAGE_SIZE;
-		}
-
-		QueryExecutor builder = new QueryExecutor();
-
-		Connection connection = null;
-
-		ResultModel resultModel = null;
-		String sql = "select count(*) from " + tableName;
-
-		try {
-			connection = DBConnectionFactory.getConnection();
-			int total = builder.getTotal(connection, sql, params);
-			if (total > 0) {
-				sql = "select * from " + tableName;
-				if (orderName != null) {
-					sql += " order by " + orderName;
-					if (StringUtils.equals(order, "desc")) {
-						sql += " desc";
-					}
-				}
-				resultModel = builder.getList(connection, start, limit, sql,
-						params);
-				resultModel.setStart(start);
-				resultModel.setPageSize(limit);
-				resultModel.setTotal(total);
-			}
-		} catch (Exception ex) {
-			logger.error(ex);
-		} finally {
-			JdbcUtils.close(connection);
-		}
-
-		ObjectNode responseJSON = new ObjectMapper().createObjectNode();
-
-		ArrayNode rowsJSON = new ObjectMapper().createArrayNode();
-		if (resultModel != null && resultModel.getRows() != null) {
-			responseJSON.put("total", resultModel.getTotal());
-			for (RowModel rowModel : resultModel.getRows()) {
-				ObjectNode rowJSON = new ObjectMapper().createObjectNode();
-				List<ColumnDefinition> columns = rowModel.getColumns();
-				for (ColumnDefinition column : columns) {
-					Object value = column.getValue();
-					if (value != null) {
-						if (value instanceof Date) {
-							Date date = (Date) value;
-							rowJSON.put(column.getColumnName(),
-									DateUtils.getDateTime(date));
-						} else {
-							rowJSON.put(column.getColumnName(),
-									value.toString());
-						}
-					} else {
-						rowJSON.put(column.getColumnName(), "");
-					}
-				}
-				rowsJSON.add(rowJSON);
-			}
-		}
-
-		if ("yui".equals(gridType)) {
-			responseJSON.put("records", rowsJSON);
-		} else {
-			responseJSON.put("rows", rowsJSON);
-		}
-
-		try {
-			return responseJSON.toString().getBytes("UTF-8");
-		} catch (IOException e) {
-			return responseJSON.toString().getBytes();
-		}
-	}
+	 
 
 	@POST
 	@Path("/saveTable")
