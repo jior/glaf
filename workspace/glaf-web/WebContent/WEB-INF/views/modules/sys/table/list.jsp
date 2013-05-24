@@ -98,6 +98,26 @@
 			alert("请选择至少一条记录。");
 		}
 	}
+
+	function updateHibernateDDL(){
+		if(confirm("确定配置文件/WEB-INF/conf/dynamic.jdbc.properties文件已经修改正确？")){
+		  jQuery.ajax({
+				   type: "POST",
+				   url: '<%=request.getContextPath()%>/mx/system/table/updateHibernateDDL',
+				   dataType:  'json',
+				   error: function(data){
+					   alert('服务器处理错误！');
+				   },
+				   success: function(data){
+					   if(data != null && data.message != null){
+						 alert(data.message);
+					   } else {
+						 alert('操作成功完成！');
+					   }
+				   }
+			 });
+		}
+	}
 	 
 		 
 </script>
@@ -109,8 +129,6 @@
     <div class="toolbar-backgroud"  > 
 	<img src="<%=request.getContextPath()%>/images/window.png">
 	&nbsp;<span class="x_content_title">数据表</span>
-	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-save'"
-	   onclick="javascript:genCreateScripts();">生成数据库建表脚本</a> 
         数据库类型：<select id="dbType" name="dbType">
 			<option value="h2" selected>H2</option>
 			<option value="db2">DB2</option>
@@ -119,6 +137,12 @@
 			<option value="sqlserver">SQLServer</option>
 			<option value="postgresql">PostgreSQL</option>
 		</select>
+
+	   <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-save'"
+	   onclick="javascript:genCreateScripts();">生成数据库建表脚本</a> 
+
+	   <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-save'"
+	   onclick="javascript:updateHibernateDDL();">更新本数据库结构</a> 
    </div> 
   </div> 
   <div data-options="region:'center',border:true">
