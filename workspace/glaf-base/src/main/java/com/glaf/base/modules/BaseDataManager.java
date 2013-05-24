@@ -28,6 +28,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.glaf.base.config.BaseConfiguration;
 import com.glaf.base.modules.sys.SysConstants;
 import com.glaf.base.modules.sys.business.UpdateTreeBean;
 import com.glaf.base.modules.sys.model.BaseDataInfo;
@@ -47,6 +48,7 @@ import com.glaf.base.modules.sys.service.SysRoleService;
 import com.glaf.base.modules.sys.service.SysTreeService;
 import com.glaf.base.modules.sys.service.SysUserRoleService;
 import com.glaf.base.modules.sys.service.SysUserService;
+import com.glaf.core.config.*;
 import com.glaf.core.business.DbTableChecker;
 import com.glaf.core.context.ContextFactory;
 import com.glaf.core.service.ITableDefinitionService;
@@ -55,6 +57,8 @@ public class BaseDataManager {
 	private static Map<String, List<BaseDataInfo>> baseDataMap = new Hashtable<String, List<BaseDataInfo>>();
 
 	protected static BaseDataManager instance = new BaseDataManager();
+
+	protected static Configuration conf = BaseConfiguration.create();
 
 	private final static Log logger = LogFactory.getLog(BaseDataManager.class);
 
@@ -629,20 +633,29 @@ public class BaseDataManager {
 		// 科目代码
 		loadSubjectCode();
 
-		logger.debug("load table meta...");
-		ITableDefinitionService tableDefinitionService = null;
-		try {
-			tableDefinitionService = ContextFactory
-					.getBean("tableDefinitionService");
-			if (tableDefinitionService != null) {
-				DbTableChecker checker = new DbTableChecker();
-				checker.setTableDefinitionService(tableDefinitionService);
-				checker.checkTables();
+		// 需要在glaf-base-site.xml中配置load.table.meta=true
+		/**
+		 * 
+		 * <property> <name>load.table.meta</name>
+		 * <value>true</value></property>
+		 * 
+		 */
+		if (conf.getBoolean("load.table.meta", false)) {
+			logger.debug("load table meta...");
+			ITableDefinitionService tableDefinitionService = null;
+			try {
+				tableDefinitionService = ContextFactory
+						.getBean("tableDefinitionService");
+				if (tableDefinitionService != null) {
+					DbTableChecker checker = new DbTableChecker();
+					checker.setTableDefinitionService(tableDefinitionService);
+					checker.checkTables();
+				}
+			} catch (Exception ex) {
+				ex.printStackTrace();
 			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
+			logger.debug("load table meta finish.");
 		}
-		logger.debug("load table meta finish.");
 	}
 
 	/**
