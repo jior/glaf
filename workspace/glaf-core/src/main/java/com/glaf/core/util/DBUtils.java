@@ -824,7 +824,9 @@ public class DBUtils {
 					}
 				}
 
-				if (primaryKeys.contains(name)) {
+				if (primaryKeys.contains(name)
+						|| primaryKeys.contains(name.toUpperCase())
+						|| primaryKeys.contains(name.toLowerCase())) {
 					column.setPrimaryKey(true);
 				}
 
@@ -1087,6 +1089,7 @@ public class DBUtils {
 		int index = 0;
 		for (ColumnDefinition column : columns) {
 			if (StringUtils.isEmpty(column.getColumnName())
+					|| StringUtils.isEmpty(column.getJavaType())
 					|| (idField != null && StringUtils.equalsIgnoreCase(
 							idField.getColumnName(), column.getColumnName()))) {
 				continue;
@@ -1098,6 +1101,7 @@ public class DBUtils {
 					buffer.append(",");
 				}
 			}
+
 			index++;
 			buffer.append(newline);
 			buffer.append("    ").append(column.getColumnName());
