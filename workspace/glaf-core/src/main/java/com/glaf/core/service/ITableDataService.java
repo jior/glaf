@@ -41,6 +41,9 @@ public interface ITableDataService {
 	void deleteTableData(TableModel model);
 
 	List<Dbid> getAllDbids();
+	
+	
+	Map<String, Object> getTableDataByPrimaryKey(TableModel model);
 
 	/**
 	 * 获取一页数据

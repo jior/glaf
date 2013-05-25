@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +22,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
+
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONArray;
@@ -28,12 +30,18 @@ import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.base.TablePage;
 import com.glaf.core.config.BaseConfiguration;
 import com.glaf.core.config.Configuration;
+import com.glaf.core.domain.ColumnDefinition;
+import com.glaf.core.domain.TableDefinition;
+import com.glaf.core.query.TableDefinitionQuery;
 import com.glaf.core.query.TablePageQuery;
+import com.glaf.core.service.ITableDefinitionService;
 import com.glaf.core.service.ITablePageService;
+import com.glaf.core.util.DBUtils;
 import com.glaf.core.util.DateUtils;
 import com.glaf.core.util.Paging;
 import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.RequestUtils;
+import com.glaf.core.util.ResponseUtils;
 import com.glaf.core.util.StringTools;
 
 @Controller("/rs/system/table")
@@ -47,6 +55,169 @@ public class MxSystemTableResource {
 
 	protected ITablePageService tablePageService;
 
+	protected ITableDefinitionService tableDefinitionService;
+
+	@POST
+	@Path("/updateMetaInfo")
+	@ResponseBody
+	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
+	public byte[] updateMetaInfo(@Context HttpServletRequest request,
+			@Context UriInfo uriInfo) throws IOException {
+		String tables = request.getParameter("tables");
+
+		if (StringUtils.isNotEmpty(tables)) {
+			TableDefinitionQuery query = new TableDefinitionQuery();
+
+			List<TableDefinition> list = tableDefinitionService
+					.getTableColumnsCount(query);
+			Map<String, TableDefinition> tableMap = new HashMap<String, TableDefinition>();
+			if (list != null && !list.isEmpty()) {
+				for (TableDefinition t : list) {
+					tableMap.put(t.getTableName().toLowerCase(), t);
+				}
+				list.clear();
+			}
+
+			List<String> list2 = StringTools.split(tables);
+			for (String tableName : list2) {
+				String tbl = tableName;
+				tableName = tableName.toLowerCase();
+				if (tableName.startsWith("act_")) {
+					continue;
+				}
+				if (tableName.startsWith("jbpm_")) {
+					continue;
+				}
+				if (tableName.startsWith("tmp_")) {
+					continue;
+				}
+				if (tableName.startsWith("temp_")) {
+					continue;
+				}
+				if (tableName.startsWith("demo_")) {
+					continue;
+				}
+				if (tableName.startsWith("wwv_")) {
+					continue;
+				}
+				if (tableName.startsWith("aq_")) {
+					continue;
+				}
+				if (tableName.startsWith("bsln_")) {
+					continue;
+				}
+				if (tableName.startsWith("mgmt_")) {
+					continue;
+				}
+				if (tableName.startsWith("ogis_")) {
+					continue;
+				}
+				if (tableName.startsWith("ols_")) {
+					continue;
+				}
+				if (tableName.startsWith("em_")) {
+					continue;
+				}
+				if (tableName.startsWith("openls_")) {
+					continue;
+				}
+				if (tableName.startsWith("mrac_")) {
+					continue;
+				}
+				if (tableName.startsWith("orddcm_")) {
+					continue;
+				}
+				if (tableName.startsWith("x_")) {
+					continue;
+				}
+				if (tableName.startsWith("wlm_")) {
+					continue;
+				}
+				if (tableName.startsWith("olap_")) {
+					continue;
+				}
+				if (tableName.startsWith("ggs_")) {
+					continue;
+				}
+				if (tableName.startsWith("jpage_")) {
+					continue;
+				}
+				if (tableName.startsWith("ex_")) {
+					continue;
+				}
+				if (tableName.startsWith("logmnrc_")) {
+					continue;
+				}
+				if (tableName.startsWith("logmnrg_")) {
+					continue;
+				}
+				if (tableName.startsWith("olap_")) {
+					continue;
+				}
+				if (tableName.startsWith("sto_")) {
+					continue;
+				}
+				if (tableName.startsWith("sdo_")) {
+					continue;
+				}
+				if (tableName.startsWith("sys_iot_")) {
+					continue;
+				}
+				if (tableName.indexOf("$") != -1) {
+					continue;
+				}
+				if (tableName.indexOf("+") != -1) {
+					continue;
+				}
+				if (tableName.indexOf("-") != -1) {
+					continue;
+				}
+				if (tableName.indexOf("?") != -1) {
+					continue;
+				}
+				if (tableName.indexOf("=") != -1) {
+					continue;
+				}
+				if (tableMap.get(tableName) == null) {
+					try {
+						List<ColumnDefinition> columns = DBUtils
+								.getColumnDefinitions(tbl);
+						tableDefinitionService.saveSystemTable(tableName,
+								columns);
+						logger.debug(tableName + " save ok");
+					} catch (Exception ex) {
+						ex.printStackTrace();
+					}
+				} else {
+					TableDefinition table = tableMap.get(tableName);
+					boolean success = false;
+					int retry = 0;
+					while (retry < 2 && !success) {
+						try {
+							retry++;
+							List<ColumnDefinition> columns = DBUtils
+									.getColumnDefinitions(tbl);
+							if (table.getColumnQty() != columns.size()) {
+								tableDefinitionService.saveSystemTable(
+										tableName, columns);
+								logger.debug(tableName + " save ok");
+							} else {
+								logger.debug(tableName + " check ok");
+							}
+							success = true;
+						} catch (Exception ex) {
+							ex.printStackTrace();
+						}
+					}
+				}
+			}
+
+			return ResponseUtils.responseJsonResult(true);
+		}
+
+		return ResponseUtils.responseJsonResult(false);
+	}
+
 	@GET
 	@POST
 	@Path("/resultList")
@@ -57,13 +228,16 @@ public class MxSystemTableResource {
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		logger.debug(params);
 
-		String tableName = ParamUtils.getString(params, "tableName_enc");
+		String tableName = request.getParameter("tableName_enc");
+		if (StringUtils.isNotEmpty(tableName)) {
+			tableName = RequestUtils.decodeString(tableName);
+		} else {
+			tableName = request.getParameter("tableName");
+		}
+
 		String gridType = ParamUtils.getString(params, "gridType");
 		if (gridType == null) {
 			gridType = "easyui";
-		}
-		if (StringUtils.isNotEmpty(tableName)) {
-			tableName = RequestUtils.decodeString(tableName);
 		}
 
 		int start = 0;
@@ -117,10 +291,12 @@ public class MxSystemTableResource {
 		tablePageQuery.setFirstResult(start);
 		tablePageQuery.setMaxResults(limit);
 
-		if (StringUtils.equals(order, "asc")) {
-			tablePageQuery.orderAsc(orderName);
-		} else {
-			tablePageQuery.orderDesc(orderName);
+		if (orderName != null && orderName.trim().length() > 0) {
+			if (StringUtils.equals(order, "asc")) {
+				tablePageQuery.orderAsc(orderName);
+			} else {
+				tablePageQuery.orderDesc(orderName);
+			}
 		}
 
 		if (!rejects.contains(tableName)) {
@@ -156,6 +332,8 @@ public class MxSystemTableResource {
 						if (value instanceof Date) {
 							Date date = (Date) value;
 							rowJSON.put(name, DateUtils.getDate(date));
+							rowJSON.put(name.toLowerCase(),
+									DateUtils.getDate(date));
 						} else if (value instanceof byte[]) {
 							rowJSON.put(name, "二进制流");
 						} else if (value instanceof java.io.InputStream) {
@@ -166,6 +344,7 @@ public class MxSystemTableResource {
 							rowJSON.put(name, "长文本");
 						} else {
 							rowJSON.put(name, value);
+							rowJSON.put(name.toLowerCase(), value);
 						}
 					}
 				}
@@ -190,6 +369,12 @@ public class MxSystemTableResource {
 	@javax.annotation.Resource
 	public void setTablePageService(ITablePageService tablePageService) {
 		this.tablePageService = tablePageService;
+	}
+
+	@javax.annotation.Resource
+	public void setTableDefinitionService(
+			ITableDefinitionService tableDefinitionService) {
+		this.tableDefinitionService = tableDefinitionService;
 	}
 
 }

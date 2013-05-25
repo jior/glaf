@@ -75,7 +75,7 @@ public class MxTableDataServiceImpl implements ITableDataService {
 	public MxTableDataServiceImpl() {
 
 	}
-
+	
 	/**
 	 * É¾³ýÊý¾Ý
 	 * 
@@ -119,6 +119,10 @@ public class MxTableDataServiceImpl implements ITableDataService {
 			page.setRows(rows);
 		}
 		return page;
+	}
+
+	public Map<String, Object> getTableDataByPrimaryKey(TableModel model){
+		return tableDataMapper.getTableDataByPrimaryKey(model);
 	}
 
 	@Transactional(readOnly = true)

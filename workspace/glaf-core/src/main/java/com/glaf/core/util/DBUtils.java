@@ -811,7 +811,7 @@ public class DBUtils {
 			}
 			rs = metaData.getColumns(null, null, tableName, null);
 			while (rs.next()) {
-				String name = rs.getString("COLUMN_NAME").toLowerCase();
+				String name = rs.getString("COLUMN_NAME");
 				int dataType = rs.getInt("DATA_TYPE");
 				int nullable = rs.getInt("NULLABLE");
 				int length = rs.getInt("COLUMN_SIZE");
