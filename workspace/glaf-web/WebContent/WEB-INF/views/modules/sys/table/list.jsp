@@ -135,17 +135,44 @@
 		}
 	}
 
+	function updateMetaInfo(){
+	    var ids = [];
+		var rows = jQuery('#mydatagrid').datagrid('getSelections');
+		for(var i=0;i<rows.length;i++){
+			ids.push(rows[i].tablename);
+		}
+		if(ids.length > 0 ){
+			if(confirm("确定更新表元数据信息吗？")){
+			  jQuery.ajax({
+					   type: "POST",
+					   url: '<%=request.getContextPath()%>/rs/system/table/updateMetaInfo?tables='+ids,
+					   dataType: 'json',
+					   error: function(data){
+						   alert('服务器处理错误！');
+					   },
+					   success: function(data){
+						   if(data != null && data.message != null){
+							 alert(data.message);
+						   } else {
+							 alert('操作成功完成！');
+						   }
+					   }
+				 });
+			}
+		}
+	}
+
 	function showData(){
 		var rows = jQuery('#mydatagrid').datagrid('getSelections');
 		if(rows.length ==1){
-		    var tablename = rows[0].tablename;
-		    window.open('<%=request.getContextPath()%>/mx/dts/table/resultList?q=1&tableName='+tablename);
+		    var tablename = rows[0].tableName_enc;
+		    window.open('<%=request.getContextPath()%>/mx/system/table/resultList?q=1&tableName_enc='+tablename);
 		}
 	 }
 
 	 function onRowClick(rowIndex, row){
-	    var link = '<%=request.getContextPath()%>/mx/dts/table/resultList?q=1&tableName='+row.tablename;
-	    art.dialog.open(link, { height: 425, width: 880, title: "记录信息", lock: true, scrollbars:"no" }, false);
+	    var link = '<%=request.getContextPath()%>/mx/system/table/resultList?q=1&tableName_enc='+row.tableName_enc;
+	    art.dialog.open(link, { height: 425, width: 880, title: row.tablename+"列表信息", lock: true, scrollbars:"no" }, false);
 	}
 	 
 		 
@@ -172,6 +199,9 @@
 
 	   <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-save'"
 	   onclick="javascript:genMappings();">生成Mapping文件</a> 
+
+	   <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-save'"
+	   onclick="javascript:updateMetaInfo();">更新元数据</a> 
 
 	   <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-save'"
 	   onclick="javascript:updateHibernateDDL();">更新本数据库结构</a> 
