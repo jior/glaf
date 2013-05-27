@@ -55,7 +55,7 @@
 <div style="margin:0;"></div>  
 
 <div class="easyui-layout" data-options="fit:true">  
-  <div data-options="region:'north',split:true,border:true" style="height:42px"> 
+  <div data-options="region:'north',split:true,border:true" style="height:40px"> 
     <div class="toolbar-backgroud"> 
 	<%if (StringUtils.isNotEmpty(tableName)
 					&& !StringUtils.equalsIgnoreCase(tableName,

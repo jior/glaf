@@ -1,11 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
-
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="html"%>
 <%@ page import="java.util.*"%>
-<%@ page import="com.glaf.base.modules.utils.*"%>
+<%@ page import="com.glaf.core.util.DateUtils"%>
 <%@ page import="com.glaf.base.modules.others.*"%>
 <%@ page import="com.glaf.base.modules.others.model.*"%>
 <%@ page import="com.glaf.base.utils.*"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="html"%>
 <%
 int referType=ParamUtil.getIntParameter(request, "referType", 0);
 int referId=ParamUtil.getIntParameter(request, "referId", 0);
@@ -16,19 +15,34 @@ List list = (List)request.getAttribute("list");
 <base target="_self" />
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-<title>XXXX基础平台系统</title>
+<title>GLAF基础平台系统</title>
 <link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
 <script language="javascript" src='<%=context%>/scripts/verify.js'></script>
 <script language="javascript" src='<%=context%>/scripts/main.js'></script>
-<script type='text/javascript' src='<%=context%>/dwr/interface/AttachmentAjaxService.js'></script>
-<script type='text/javascript' src='<%=context%>/dwr/engine.js'></script>
-<script type='text/javascript' src='<%=context%>/dwr/util.js'></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.form.js"></script> 
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/artDialog/artDialog.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/artDialog/plugins/iframeTools.js"></script>
 <script language="javascript">
+var contextPath="<%=request.getContextPath()%>";
+
 function uploadFile(){
-  var file = openUpload();
-  if(file==null || file==""){
+  var json = openUpload();
+  if(json==null || json==""){
   }else{
-  	AttachmentAjaxService.create(<%=referType%>, <%=referId%>, file, {callback:function (){reloadPage();refreshCount();}});
+	//alert(json);
+  	jQuery.ajax({
+			type: "POST",
+			url: '<%=request.getContextPath()%>/others/attachment.do?method=save&referId=<%=referId%>&referType=<%=referId%>&json='+json,
+			dataType:  'json',
+				error: function(data){
+					alert('服务器处理错误！');
+				},
+				success: function(data){
+					refreshCount();
+					location.reload();
+				}
+		});
   }
 }
 var num=0;
@@ -51,11 +65,15 @@ function del(form){
 function refreshCount() {
   if (window.opener) {
 	  try {
-	    window.opener.location.reload();//getCount<%= referType + "" + referId %>();
-		} catch(e){}
+	    window.opener.location.reload();
+	  } catch(e){}
 	}else{
-	window.parent.location.reload();
+		var origin = artDialog.open.origin;
+		origin.location.reload();
+	}
 }
+function openUpload(obj, type){  
+	return ShowDialog('<%=request.getContextPath()%>/others/attachment.do?method=showUpload' + (type ? '?type=' + type : ''), 450, 230, 'no', false, obj);
 }
 </script>
 </head>
@@ -84,8 +102,8 @@ if(list!=null){
   <TD class="td-c"><span class="td-cb">
     <input type="checkbox" name="id" value="<%=bean.getId()%>" onClick="checkOperation(this.form)">
   </span></TD>
-   <TD height="20" class="td-text"><a href="../attachment/download.do?referType=<%=referType%>&referId=<%=referId%>&id=<%=bean.getId()%>"><%=bean.getName()%></a></TD>
-   <TD class="td-date"><%=glafUtil.dateToString(bean.getCreateDate())%></TD>
+   <TD height="20" class="td-text" title="<%=bean.getName()%>"><a href="<%=request.getContextPath()%>/others/attachment.do?method=download&referType=<%=referType%>&referId=<%=referId%>&id=<%=bean.getId()%>"><%=bean.getName()%></a></TD>
+   <TD class="td-date"><%=DateUtils.getDateTime(bean.getCreateDate())%></TD>
 </TR>
 <%
   }

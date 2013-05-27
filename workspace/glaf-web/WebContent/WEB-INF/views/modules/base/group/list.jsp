@@ -49,7 +49,7 @@
 				pagination:true,
 				pageSize:15,
 				pageList: [10,15,20,25,30,40,50,100],
-				onDblClickRow: onMyRowClick 
+				onClickRow: onMyRowClick 
 			});
 
 			var p = jQuery('#mydatagrid').datagrid('getPager');

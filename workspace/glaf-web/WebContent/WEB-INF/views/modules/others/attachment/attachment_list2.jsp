@@ -1,12 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
-
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="html"%>
 <%@ page import="java.util.*"%>
-<%@ page import="com.glaf.base.modules.utils.*"%>
+<%@ page import="com.glaf.core.util.DateUtils"%>
 <%@ page import="com.glaf.base.modules.others.*"%>
 <%@ page import="com.glaf.base.modules.others.model.*"%>
 <%@ page import="com.glaf.base.utils.*"%>
 <%@ page import="org.apache.commons.lang.StringUtils"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="html"%>
 <%
 int referType=ParamUtil.getIntParameter(request, "referType", 0);
 int referId=ParamUtil.getIntParameter(request, "referId", 0);
@@ -19,19 +18,16 @@ String referIds = StringUtils.replace(ParamUtil.getParameter(request, "referIds"
 <base target="_self" />
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-<title>XXXX基础平台系统</title>
+<title>GLAF基础平台系统</title>
 <link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
 <script language="javascript" src='<%=context%>/scripts/verify.js'></script>
 <script language="javascript" src='<%=context%>/scripts/main.js'></script>
-<script type='text/javascript' src='<%=context%>/dwr/interface/AttachmentAjaxService.js'></script>
-<script type='text/javascript' src='<%=context%>/dwr/engine.js'></script>
-<script type='text/javascript' src='<%=context%>/dwr/util.js'></script>
 <script language="javascript">
 function uploadFile(){
   var file = openUpload();
   if(file==null || file==""){
   }else{
-  	AttachmentAjaxService.create(<%=referType%>, <%=referId%>, file, {callback:function (){reloadPage();}});
+  	 
   }
 }
 var num=0;
@@ -80,8 +76,8 @@ if(list!=null){
     Attachment bean = (Attachment)iter.next();
 %>
 <TR>
-  <TD height="20" class="td-text"><a href="../attachment/download.do?referType=<%=referType%>&referId=<%=referId%>&id=<%=bean.getId()%>"><%=bean.getName()%></a></TD>
-   <TD class="td-date"><%=glafUtil.dateToString(bean.getCreateDate())%></TD>
+  <TD height="20" class="td-text"><a href="<%=request.getContextPath()%>/others/attachment.do?method=download&referType=<%=referType%>&referId=<%=referId%>&id=<%=bean.getId()%>"><%=bean.getName()%></a></TD>
+   <TD class="td-date"><%=DateUtils.getDateTime(bean.getCreateDate())%></TD>
 </TR>
 <%
   }

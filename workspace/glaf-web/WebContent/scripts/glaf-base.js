@@ -1,8 +1,10 @@
-var userAgent = navigator.userAgent.toLowerCase();
+﻿var userAgent = navigator.userAgent.toLowerCase();
 var isSafari = userAgent.indexOf("Safari")>=0;
 var is_opera = userAgent.indexOf('opera') != -1 && opera.version();
 var is_moz = (navigator.product == 'Gecko') && userAgent.substr(userAgent.indexOf('firefox') + 8, 3);
 var is_ie = (userAgent.indexOf('msie') != -1 && !is_opera) && userAgent.substr(userAgent.indexOf('msie') + 5, 3);
+
+var contextPath = "/glaf";
 
 function getOpener() {
    if(is_moz){
@@ -137,6 +139,28 @@ function selectUser(formName, elementId, elementName, exclusive){
 	    y=document.body.scrollTop+event.clientY-event.offsetY-200;
      }
     openWindow(url,self,x, y, 565, 600);
+}
+
+/**
+选择基础数据
+**/
+function selectData(dataCode, referId, referTitle, referCode,parent){
+	var url = contextPath+"/sys/dictory.do?method=showDictData&code="+dataCode+"&parent="+parent;
+	var features="dialogHeight:310px; dialogWidth:360px; center: yes; resizable: no; status: no; help:no";
+	var ret = window.showModalDialog(url, window, features);
+	if(ret!=null){
+		if(referId!=null) referId.value=ret[0];
+		if(referTitle!=null) referTitle.value=ret[1];
+		if(referCode!=null) referCode.value=ret[2];
+	}
+}
+
+/**
+上传下载附件
+**/
+function uploadFile(referType, referId, viewType){
+	var link = contextPath+"/others/attachment.do?method=showList&referType=" + referType + "&referId=" + referId + "&viewType="+viewType;
+	art.dialog.open(link, { height: 300, width: 500, title: "上传下载", lock: true, scrollbars:"no" }, false);
 }
 	 
  

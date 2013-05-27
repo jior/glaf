@@ -23,6 +23,10 @@
 	<listener>
 		<listener-class>com.glaf.core.context.StartupListener</listener-class>
 	</listener>
+
+	<!-- <listener>
+        <listener-class>org.apache.shiro.web.env.EnvironmentLoaderListener</listener-class>
+    </listener> -->
  
 	<listener> 
 		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class> 
@@ -126,6 +130,16 @@
 	<servlet-mapping>
         <servlet-name>FileUploadServlet</servlet-name>
         <url-pattern>/myupload</url-pattern>
+    </servlet-mapping>
+
+	<servlet>
+		<servlet-name>FileUploadBackGroundServlet</servlet-name>
+		<servlet-class>com.glaf.base.utils.upload.FileUploadBackGroundServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+		<servlet-name>FileUploadBackGroundServlet</servlet-name>
+		<url-pattern>/fileUploadService</url-pattern>
     </servlet-mapping>
 
 	<welcome-file-list>
