@@ -27,6 +27,8 @@ import java.util.Random;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.glaf.core.util.DateUtils;
+
 /**
  * <p>
  * Title: StringUtil.java
@@ -144,17 +146,18 @@ public class StringUtil {
 	 * @return
 	 */
 	public static String createDir(String root) {
-		String path = randomNumString(4);
-		String slash = File.separator;
-		String first = path.substring(0, 2);
-		String second = path.substring(2, 4);
-		File dir = new File(root + slash + first);
-		if (!dir.isDirectory())
-			dir.mkdir();
-		dir = new File(root + slash + first + slash + second);
-		if (!dir.isDirectory())
-			dir.mkdir();
-		return first + slash + second + slash;
+		String sp = File.separator;
+		String first = String.valueOf(DateUtils.getNowYearMonth());
+		String second = String.valueOf(DateUtils.getNowYearMonthDay());
+		File dir = new File(root + sp + first);
+		if (!dir.isDirectory()) {
+			dir.mkdirs();
+		}
+		dir = new File(root + sp + first + sp + second);
+		if (!dir.isDirectory()) {
+			dir.mkdirs();
+		}
+		return first + sp + second + sp;
 	}
 
 	/**
@@ -463,6 +466,7 @@ public class StringUtil {
 
 	/**
 	 * 将输入数值转换为大写的RMB格式
+	 * 
 	 * @param input
 	 * @return
 	 */

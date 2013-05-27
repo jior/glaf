@@ -18,12 +18,14 @@
 
 package com.glaf.base.modules;
 
+ 
+
 public class Constants {
 
 	public static int PAGE_SIZE = 10;// 缺省页面大小
 
-	// 上传文件参数
-	public static String UPLOAD_DIR = "/upload/";
+	public static final String UPLOAD_DIR = "/WEB-INF/upload/files/";
+
 	public static long UPLOAD_MAX_SIZE = 2 * 1024 * 1024;// 20M
 	public static long UPLOAD_FILE_SIZE_MAX = 2 * 1024 * 1024;// 20M
 
