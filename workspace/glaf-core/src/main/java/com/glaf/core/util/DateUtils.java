@@ -30,13 +30,13 @@ public class DateUtils {
 
 	public static final long SECOND = 1000L;
 
-	public static final String DATE_PATTERN = "yyyy-MM-dd";
-
-	public static final String DATE_TIME_PATTERN = "yyyy-MM-dd HH:mm:ss";
-
 	public static final long MINUTE = 60L * SECOND;
 
 	public static final long HOUR = 60L * MINUTE;
+
+	public static final String DATE_PATTERN = "yyyy-MM-dd";
+
+	public static final String DATE_TIME_PATTERN = "yyyy-MM-dd HH:mm:ss";
 
 	public static final long DAY = 24L * HOUR;
 
@@ -188,6 +188,14 @@ public class DateUtils {
 			result.add(Calendar.DATE, 1);
 		} while (result.get(Calendar.DAY_OF_WEEK) != 2);
 		return result;
+	}
+
+	public static int getNowYearMonth() {
+		String returnStr = null;
+		SimpleDateFormat f = new SimpleDateFormat("yyyyMM");
+		Date date = new Date();
+		returnStr = f.format(date);
+		return Integer.parseInt(returnStr);
 	}
 
 	public static int getNowYearMonthDay() {
