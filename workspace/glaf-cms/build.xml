@@ -21,6 +21,9 @@
 			<include name="test/java/com/**/*.java" />
 			<classpath refid="classpath" />
 		</javac>
+		<copy todir="bin">
+			<fileset dir="src/main/java" includes="com/**/*.conf,com/**/*.sql,com/**/*.properties,com/**/*.xml" />
+		</copy>
 	</target>
 
 	<target name="jar"  >

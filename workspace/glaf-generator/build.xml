@@ -43,6 +43,9 @@
 			<include name="main/config/**/*.*" />
 			<classpath refid="compile.classpath" />
 		</javac>
+		<copy todir="bin">
+			<fileset dir="src/main/java" includes="com/**/*.conf,com/**/*.sql,com/**/*.properties,com/**/*.xml" />
+		</copy>
 	</target>
 
 	<target name="Database2XmlMapping" >

@@ -43,8 +43,8 @@
 			<include name="test/java/**/*.java" />
 			<classpath refid="compile.classpath" />
 		</javac>
-		<copy todir="WebContent/WEB-INF/classes">
-			<fileset dir="bin" includes="com/**/*.class,com/**/*.properties,com/**/*.xml" />
+		<copy todir="bin">
+			<fileset dir="src/main/java" includes="com/**/*.conf,com/**/*.sql,com/**/*.properties,com/**/*.xml" />
 		</copy>
 	</target>
 
