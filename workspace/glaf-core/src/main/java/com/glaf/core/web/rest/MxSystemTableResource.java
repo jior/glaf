@@ -276,6 +276,7 @@ public class MxSystemTableResource {
 		rejects.add("FILEATT");
 		rejects.add("SYS_LOB");
 		rejects.add("SYS_MAIL_FILE");
+		rejects.add("Attachment");
 
 		if (conf.get("table.rejects") != null) {
 			String str = conf.get("table.rejects");

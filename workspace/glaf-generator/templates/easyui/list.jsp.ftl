@@ -21,6 +21,7 @@
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/artDialog/artDialog.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/artDialog/plugins/iframeTools.js"></script>
 <script type="text/javascript">
+   var contextPath="<%=request.getContextPath()%>";
 
    jQuery(function(){
 		jQuery('#mydatagrid').datagrid({
@@ -52,7 +53,7 @@
 				pagination: true,
 				pageSize: 15,
 				pageList: [10,15,20,25,30,40,50,100],
-				onDblClickRow: onRowClick 
+				onClickRow: onRowClick 
 			});
 
 			var p = jQuery('#mydatagrid').datagrid('getPager');

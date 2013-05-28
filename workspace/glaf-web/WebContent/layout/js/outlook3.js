@@ -247,6 +247,7 @@ function closeTab(action)
         case "close":
             var currtab_title = currentTab.panel('options').title;
             $('#tabs').tabs('close', currtab_title);
+			openTabSize = openTabSize - 1;
             break;
         case "closeall":
             $.each(allTabtitle, function (i, n) {
@@ -254,6 +255,7 @@ function closeTab(action)
                     $('#tabs').tabs('close', n);
 				}
             });
+			openTabSize = 0;
             break;
         case "closeother":
             var currtab_title = currentTab.panel('options').title;
@@ -261,20 +263,22 @@ function closeTab(action)
                 if (n != currtab_title && n != onlyOpenTitle)
 				{
                     $('#tabs').tabs('close', n);
+					//openTabSize = openTabSize - 1;
 				}
             });
+			openTabSize = 1;
             break;
         case "closeright":
             var tabIndex = $('#tabs').tabs('getTabIndex', currentTab);
 
             if (tabIndex == alltabs.length - 1){
-                alert('亲，后边没有啦 ^@^!!');
                 return false;
             }
             $.each(allTabtitle, function (i, n) {
                 if (i > tabIndex) {
                     if (n != onlyOpenTitle){
                         $('#tabs').tabs('close', n);
+						openTabSize = openTabSize - 1;
 					}
                 }
             });
@@ -283,13 +287,13 @@ function closeTab(action)
         case "closeleft":
             var tabIndex = $('#tabs').tabs('getTabIndex', currentTab);
             if (tabIndex == 1) {
-                alert('亲，前边那个上头有人，咱惹不起哦。 ^@^!!');
                 return false;
             }
             $.each(allTabtitle, function (i, n) {
                 if (i < tabIndex) {
                     if (n != onlyOpenTitle){
                         $('#tabs').tabs('close', n);
+						openTabSize = openTabSize - 1;
 					}
                 }
             });

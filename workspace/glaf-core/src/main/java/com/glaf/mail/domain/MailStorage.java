@@ -21,7 +21,6 @@ package com.glaf.mail.domain;
 import java.io.*;
 import java.util.*;
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlRootElement;
 import com.alibaba.fastjson.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -32,7 +31,6 @@ import com.glaf.core.util.DateUtils;
 
 @Entity
 @Table(name = "SYS_MAIL_STORAGE")
-@XmlRootElement
 public class MailStorage implements Serializable {
 
 	public final static String DEFAULT_DATA_SPACE = "storageDB";

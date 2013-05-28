@@ -39,7 +39,7 @@ function uploadFile(){
 					alert('服务器处理错误！');
 				},
 				success: function(data){
-					refreshCount();
+					//refreshCount();
 					location.reload();
 				}
 		});
@@ -60,7 +60,7 @@ function del(form){
     form.action="attachment.do?method=batchDelete";
 	form.submit();
   }
-  refreshCount();
+  //refreshCount();
 }
 function refreshCount() {
   if (window.opener) {

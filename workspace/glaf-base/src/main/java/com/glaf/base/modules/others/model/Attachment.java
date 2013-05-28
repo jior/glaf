@@ -74,6 +74,10 @@ public class Attachment implements Serializable, JSONable {
 	@Column(name = "CREATEID")
 	protected long createId;
 
+	public Attachment() {
+
+	}
+
 	public long getCreateId() {
 		return createId;
 	}

@@ -18,6 +18,7 @@
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/locale/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript">
+        var contextPath="<%=request.getContextPath()%>";
 
 	function saveData(){
 		var params = jQuery("#iForm").formSerialize();
