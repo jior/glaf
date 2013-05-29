@@ -111,7 +111,7 @@ public class BaseDataManager {
 	/**
 	 * 根据数据对象name和类型返回对象
 	 * 
-	 * @param value
+	 * @param name
 	 * @param key
 	 * @return
 	 */

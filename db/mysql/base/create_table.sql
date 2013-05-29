@@ -630,12 +630,6 @@ create table sys_table (
         foreign key (funcId) 
         references sys_function (id);
 
-    alter table sys_user 
-        add index FK_USER_DEPT (deptId), 
-        add constraint FK_USER_DEPT 
-        foreign key (deptId) 
-        references sys_department (id);
-
     alter table sys_user_role 
         add index FK_USERROLE_ROLE (roleId), 
         add constraint FK_USERROLE_ROLE 

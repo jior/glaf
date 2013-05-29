@@ -641,11 +641,6 @@ CREATE TABLE SYS_INPUT_DEF (
         foreign key (FUNCID) 
         references SYS_FUNCTION;
 
-    alter table SYS_USER 
-        add constraint FK_USER_DEPT 
-        foreign key (DEPTID) 
-        references SYS_DEPARTMENT;
-
     alter table SYS_USER_ROLE 
         add constraint FK_USERROLE_ROLE 
         foreign key (ROLEID) 
