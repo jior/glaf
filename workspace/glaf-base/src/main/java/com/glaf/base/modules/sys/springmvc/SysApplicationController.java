@@ -327,13 +327,13 @@ public class SysApplicationController {
 	public void setSysApplicationService(
 			SysApplicationService sysApplicationService) {
 		this.sysApplicationService = sysApplicationService;
-		logger.info("setSysApplicationService");
+
 	}
 
 	@javax.annotation.Resource
 	public void setSysTreeService(SysTreeService sysTreeService) {
 		this.sysTreeService = sysTreeService;
-		logger.info("setSysTreeService");
+
 	}
 
 	/**

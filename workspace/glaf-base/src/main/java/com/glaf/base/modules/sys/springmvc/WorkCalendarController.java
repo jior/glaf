@@ -38,7 +38,6 @@ import com.glaf.base.modules.sys.model.WorkCalendar;
 import com.glaf.base.modules.sys.service.WorkCalendarService;
 import com.glaf.base.utils.ParamUtil;
 import com.glaf.core.config.ViewProperties;
- 
 
 @Controller("/sys/workCalendar")
 @RequestMapping("/sys/workCalendar.do")
@@ -91,7 +90,7 @@ public class WorkCalendarController {
 	@javax.annotation.Resource
 	public void setWorkCalendarService(WorkCalendarService workCalendarService) {
 		this.workCalendarService = workCalendarService;
-		logger.info("setWorkCalendarService");
+
 	}
 
 	/**

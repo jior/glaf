@@ -58,7 +58,7 @@ import com.glaf.core.util.StringTools;
 @Controller("/identity/user")
 @RequestMapping("/identity/user.do")
 public class UserController {
-	private static final Log logger = LogFactory.getLog(UserController.class);
+	protected static final Log logger = LogFactory.getLog(UserController.class);
 
 	protected SysDepartmentService sysDepartmentService;
 
@@ -86,7 +86,7 @@ public class UserController {
 		SysUser user = RequestUtil.getLoginUser(request);
 		SysUser bean = sysUserService.findByAccount(user.getAccount());
 		request.setAttribute("bean", bean);
-		
+
 		if (bean != null && StringUtils.isNotEmpty(bean.getSuperiorIds())) {
 			List<String> userIds = StringTools.split(bean.getSuperiorIds());
 			StringBuffer buffer = new StringBuffer();
@@ -263,31 +263,31 @@ public class UserController {
 	public void setSysDepartmentService(
 			SysDepartmentService sysDepartmentService) {
 		this.sysDepartmentService = sysDepartmentService;
-		logger.info("setSysDepartmentService");
+
 	}
 
 	@javax.annotation.Resource
 	public void setSysDeptRoleService(SysDeptRoleService sysDeptRoleService) {
 		this.sysDeptRoleService = sysDeptRoleService;
-		logger.info("setSysDeptRoleService");
+
 	}
 
 	@javax.annotation.Resource
 	public void setSysRoleService(SysRoleService sysRoleService) {
 		this.sysRoleService = sysRoleService;
-		logger.info("setSysRoleService");
+
 	}
 
 	@javax.annotation.Resource
 	public void setSysTreeService(SysTreeService sysTreeService) {
 		this.sysTreeService = sysTreeService;
-		logger.info("setSysTreeService");
+
 	}
 
 	@javax.annotation.Resource
 	public void setSysUserService(SysUserService sysUserService) {
 		this.sysUserService = sysUserService;
-		logger.info("setSysUserService");
+
 	}
 
 	@javax.annotation.Resource

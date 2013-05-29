@@ -403,19 +403,19 @@ public class SysDictoryController {
 	public void setDictoryDefinitionService(
 			DictoryDefinitionService dictoryDefinitionService) {
 		this.dictoryDefinitionService = dictoryDefinitionService;
-		logger.info("setDictoryDefinitionService");
+
 	}
 
 	@javax.annotation.Resource
 	public void setDictoryService(DictoryService dictoryService) {
 		this.dictoryService = dictoryService;
-		logger.info("setDictoryService");
+
 	}
 
 	@javax.annotation.Resource
 	public void setSysTreeService(SysTreeService sysTreeService) {
 		this.sysTreeService = sysTreeService;
-		logger.info("setSysTreeService");
+
 	}
 
 	/**

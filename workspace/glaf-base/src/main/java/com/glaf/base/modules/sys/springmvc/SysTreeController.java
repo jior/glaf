@@ -336,13 +336,13 @@ public class SysTreeController {
 	@javax.annotation.Resource
 	public void setSysTreeService(SysTreeService sysTreeService) {
 		this.sysTreeService = sysTreeService;
-		logger.info("setSysTreeService");
+
 	}
 
 	@javax.annotation.Resource
 	public void setEntryService(IEntryService entryService) {
 		this.entryService = entryService;
-		logger.info("setEntryService");
+
 	}
 
 	/**

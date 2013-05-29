@@ -178,7 +178,6 @@ public class AttachmentController {
 	@javax.annotation.Resource
 	public void setAttachmentService(AttachmentService attachmentService) {
 		this.attachmentService = attachmentService;
-		logger.info("setAttachmentService");
 	}
 
 	/**

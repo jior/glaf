@@ -240,13 +240,13 @@ public class SysUserRoleController {
 	@javax.annotation.Resource
 	public void setSysUserRoleService(SysUserRoleService sysUserRoleService) {
 		this.sysUserRoleService = sysUserRoleService;
-		logger.info("setSysUserRoleService");
+
 	}
 
 	@javax.annotation.Resource
 	public void setSysUserService(SysUserService sysUserService) {
 		this.sysUserService = sysUserService;
-		logger.info("setSysUserService");
+
 	}
 
 	/**

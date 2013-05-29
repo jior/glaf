@@ -209,7 +209,8 @@ public class MessageController {
 						SysUser sysUser = sysUserService.findByAccount(actorId);
 						if (sysUser != null
 								&& StringUtils.isNotEmpty(sysUser.getEmail())) {
-							logger.debug(" send mail to user:" + sysUser.getName());
+							logger.debug(" send mail to user:"
+									+ sysUser.getName());
 							mailMessage.setTo(sysUser.getEmail());
 							mailSender.send(mailMessage);
 						}
@@ -232,7 +233,8 @@ public class MessageController {
 						String email = sysUser.getEmail();
 						if (email != null) {
 							try {
-								logger.debug(" send mail to user:" + sysUser.getName());
+								logger.debug(" send mail to user:"
+										+ sysUser.getName());
 								mailMessage.setTo(email);
 								mailSender.send(mailMessage);
 							} catch (Exception ex) {
@@ -317,13 +319,11 @@ public class MessageController {
 	@javax.annotation.Resource
 	public void setMessageService(MessageService messageService) {
 		this.messageService = messageService;
-		logger.info("setMessageService");
 	}
 
 	@javax.annotation.Resource
 	public void setSysUserService(SysUserService sysUserService) {
 		this.sysUserService = sysUserService;
-		logger.info("setsysUserService");
 	}
 
 	/**

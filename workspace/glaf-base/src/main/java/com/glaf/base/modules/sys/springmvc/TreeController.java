@@ -319,7 +319,7 @@ public class TreeController {
 	@javax.annotation.Resource
 	public void setSysTreeService(SysTreeService sysTreeService) {
 		this.sysTreeService = sysTreeService;
-		logger.info("setSysTreeService");
+
 	}
 
 	/**

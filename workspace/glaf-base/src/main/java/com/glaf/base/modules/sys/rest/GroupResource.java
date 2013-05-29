@@ -382,7 +382,6 @@ public class GroupResource {
 	@javax.annotation.Resource
 	public void setGroupService(GroupService groupService) {
 		this.groupService = groupService;
-		logger.info("setGroupService");
 	}
 
 	@javax.annotation.Resource

@@ -49,17 +49,14 @@ import com.glaf.base.utils.RequestUtil;
 @Controller
 @RequestMapping("/workspace/mymenu.do")
 public class MyMenuController {
-	private static final Log logger = LogFactory.getLog(MyMenuController.class);
+	protected static final Log logger = LogFactory
+			.getLog(MyMenuController.class);
 
 	private MyMenuService myMenuService;
 
 	/**
 	 * 批量删除信息
 	 * 
-	 * @param mapping
-	 * @param actionForm
-	 * @param request
-	 * @param response
 	 * @return
 	 */
 	@RequestMapping(params = "method=batchDelete")
@@ -94,10 +91,6 @@ public class MyMenuController {
 	/**
 	 * 显示增加页面
 	 * 
-	 * @param mapping
-	 * @param actionForm
-	 * @param request
-	 * @param response
 	 * @return
 	 */
 	@RequestMapping(params = "method=prepareAdd")
@@ -115,10 +108,6 @@ public class MyMenuController {
 	/**
 	 * 显示增加我的菜单页面
 	 * 
-	 * @param mapping
-	 * @param actionForm
-	 * @param request
-	 * @param response
 	 * @return
 	 */
 	@RequestMapping(params = "method=prepareAddMyMenu")
@@ -138,10 +127,6 @@ public class MyMenuController {
 	/**
 	 * 显示修改页面
 	 * 
-	 * @param mapping
-	 * @param actionForm
-	 * @param request
-	 * @param response
 	 * @return
 	 */
 	@RequestMapping(params = "method=prepareModify")
@@ -165,10 +150,6 @@ public class MyMenuController {
 	/**
 	 * 提交增加信息
 	 * 
-	 * @param mapping
-	 * @param actionForm
-	 * @param request
-	 * @param response
 	 * @return
 	 */
 	@RequestMapping(params = "method=saveAdd")
@@ -231,10 +212,6 @@ public class MyMenuController {
 	/**
 	 * 提交修改信息
 	 * 
-	 * @param mapping
-	 * @param actionForm
-	 * @param request
-	 * @param response
 	 * @return
 	 */
 	@RequestMapping(params = "method=saveModify")
@@ -269,16 +246,11 @@ public class MyMenuController {
 	@javax.annotation.Resource
 	public void setMyMenuService(MyMenuService myMenuService) {
 		this.myMenuService = myMenuService;
-		logger.info("setMyMenuService");
 	}
 
 	/**
 	 * 显示列表
 	 * 
-	 * @param mapping
-	 * @param actionForm
-	 * @param request
-	 * @param response
 	 * @return
 	 */
 	@RequestMapping(params = "method=showList")

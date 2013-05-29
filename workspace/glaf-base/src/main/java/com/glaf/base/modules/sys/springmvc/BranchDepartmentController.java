@@ -416,19 +416,19 @@ public class BranchDepartmentController {
 	public void setSysDepartmentService(
 			SysDepartmentService sysDepartmentService) {
 		this.sysDepartmentService = sysDepartmentService;
-		logger.info("setSysDepartmentService");
+
 	}
 
 	@javax.annotation.Resource
 	public void setSysTreeService(SysTreeService sysTreeService) {
 		this.sysTreeService = sysTreeService;
-		logger.info("setSysTreeService");
+
 	}
 
 	@javax.annotation.Resource
 	public void setTreeModelService(ITreeModelService treeModelService) {
 		this.treeModelService = treeModelService;
-		logger.info("setTreeModelService");
+
 	}
 
 	/**

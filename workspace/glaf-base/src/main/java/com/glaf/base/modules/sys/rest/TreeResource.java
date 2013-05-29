@@ -226,7 +226,6 @@ public class TreeResource {
 	@javax.annotation.Resource
 	public void setSysTreeService(SysTreeService sysTreeService) {
 		this.sysTreeService = sysTreeService;
-		logger.info("setSysTreeService");
 	}
 
 	@POST

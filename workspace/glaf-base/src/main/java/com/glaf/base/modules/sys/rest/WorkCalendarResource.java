@@ -36,7 +36,7 @@ import com.glaf.base.utils.ParamUtil;
 @Controller("/rs/sys/workCalendar")
 @Path("/rs/sys/workCalendar")
 public class WorkCalendarResource {
-	private static final Log logger = LogFactory
+	protected static final Log logger = LogFactory
 			.getLog(WorkCalendarResource.class);
 
 	private WorkCalendarService workCalendarService;
@@ -90,7 +90,6 @@ public class WorkCalendarResource {
 	@javax.annotation.Resource
 	public void setWorkCalendarService(WorkCalendarService workCalendarService) {
 		this.workCalendarService = workCalendarService;
-		logger.info("setWorkCalendarService");
 	}
 
 }

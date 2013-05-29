@@ -172,7 +172,8 @@ public class GroupController {
 								treeModel.setName(user.getAccount() + " "
 										+ user.getName());
 								treeModel.setIconCls("icon-user");
-								treeModel.setIcon(request.getContextPath()+"/icons/icons/user.gif");
+								treeModel.setIcon(request.getContextPath()
+										+ "/icons/icons/user.gif");
 								if (userIds != null
 										&& userIds.contains(user.getAccount())) {
 									treeModel.setChecked(true);
@@ -439,7 +440,6 @@ public class GroupController {
 	@javax.annotation.Resource
 	public void setGroupService(GroupService groupService) {
 		this.groupService = groupService;
-		logger.info("setGroupService");
 	}
 
 	@javax.annotation.Resource

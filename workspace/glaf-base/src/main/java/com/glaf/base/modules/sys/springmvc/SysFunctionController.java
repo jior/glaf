@@ -148,7 +148,6 @@ public class SysFunctionController {
 	@javax.annotation.Resource
 	public void setSysFunctionService(SysFunctionService sysFunctionService) {
 		this.sysFunctionService = sysFunctionService;
-		logger.info("setSysFunctionService");
 	}
 
 	/**

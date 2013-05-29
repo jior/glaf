@@ -46,7 +46,6 @@ public class SysTodoController {
 	private static final Log logger = LogFactory
 			.getLog(SysTodoController.class);
 
-	@javax.annotation.Resource
 	private TodoService todoService;
 
 	/**
@@ -83,9 +82,9 @@ public class SysTodoController {
 		return this.showList(modelMap, request);
 	}
 
+	@javax.annotation.Resource
 	public void setTodoService(TodoService todoService) {
 		this.todoService = todoService;
-		logger.info("setTodoService");
 	}
 
 	/**

@@ -38,9 +38,9 @@ import com.glaf.base.modules.todo.service.TodoService;
 @Controller("/user/todo")
 @RequestMapping("/user/todo.do")
 public class TodoController {
-	private static final Log logger = LogFactory.getLog(TodoController.class);
 
-	@javax.annotation.Resource
+	protected static final Log logger = LogFactory.getLog(TodoController.class);
+
 	private TodoService todoService;
 
 	/**
@@ -69,9 +69,9 @@ public class TodoController {
 		return new ModelAndView("/modules/sys/todo/list", modelMap);
 	}
 
+	@javax.annotation.Resource
 	public void setTodoService(TodoService todoService) {
 		this.todoService = todoService;
-		logger.info("setTodoService");
 	}
 
 	/**

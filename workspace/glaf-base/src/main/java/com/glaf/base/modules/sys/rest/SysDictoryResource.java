@@ -72,8 +72,7 @@ public class SysDictoryResource {
 	protected DictoryService dictoryService;
 
 	protected SysTreeService sysTreeService;
-	
-	
+
 	/**
 	 * Ìá½»É¾³ý
 	 * 
@@ -255,19 +254,16 @@ public class SysDictoryResource {
 	public void setDictoryDefinitionService(
 			DictoryDefinitionService dictoryDefinitionService) {
 		this.dictoryDefinitionService = dictoryDefinitionService;
-		logger.info("setDictoryDefinitionService");
 	}
 
 	@javax.annotation.Resource
 	public void setDictoryService(DictoryService dictoryService) {
 		this.dictoryService = dictoryService;
-		logger.info("setDictoryService");
 	}
 
 	@javax.annotation.Resource
 	public void setSysTreeService(SysTreeService sysTreeService) {
 		this.sysTreeService = sysTreeService;
-		logger.info("setSysTreeService");
 	}
 
 	@POST
@@ -299,9 +295,8 @@ public class SysDictoryResource {
 				Map<String, Object> params = RequestUtils
 						.getParameterMap(request);
 				Tools.populate(query, params);
-				//query.setParentId(treeModel.getId());
-				List<SysTree> trees = sysTreeService
-						.getDictorySysTrees(query);
+				// query.setParentId(treeModel.getId());
+				List<SysTree> trees = sysTreeService.getDictorySysTrees(query);
 				if (trees != null && !trees.isEmpty()) {
 					for (SysTree tree : trees) {
 						treeModels.add(tree);

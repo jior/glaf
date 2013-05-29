@@ -48,7 +48,7 @@ import com.glaf.core.util.RequestUtils;
 @Controller("/rs/sys/deptRole")
 @Path("/rs/sys/deptRole")
 public class SysDeptRoleResource {
-	private static final Log logger = LogFactory
+	protected static final Log logger = LogFactory
 			.getLog(SysDeptRoleResource.class);
 
 	private SysDepartmentService sysDepartmentService;
@@ -140,19 +140,16 @@ public class SysDeptRoleResource {
 	public void setSysDepartmentService(
 			SysDepartmentService sysDepartmentService) {
 		this.sysDepartmentService = sysDepartmentService;
-		logger.info("setSysDepartmentService");
 	}
 
 	@javax.annotation.Resource
 	public void setSysDeptRoleService(SysDeptRoleService sysDeptRoleService) {
 		this.sysDeptRoleService = sysDeptRoleService;
-		logger.info("setSysDeptRoleService");
 	}
 
 	@javax.annotation.Resource
 	public void setSysRoleService(SysRoleService sysRoleService) {
 		this.sysRoleService = sysRoleService;
-		logger.info("setSysRoleService");
 	}
 
 }

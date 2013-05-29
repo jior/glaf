@@ -908,31 +908,31 @@ public class SysUserController {
 	public void setSysDepartmentService(
 			SysDepartmentService sysDepartmentService) {
 		this.sysDepartmentService = sysDepartmentService;
-		logger.info("setSysDepartmentService");
+
 	}
 
 	@javax.annotation.Resource
 	public void setSysDeptRoleService(SysDeptRoleService sysDeptRoleService) {
 		this.sysDeptRoleService = sysDeptRoleService;
-		logger.info("setSysDeptRoleService");
+
 	}
 
 	@javax.annotation.Resource
 	public void setSysRoleService(SysRoleService sysRoleService) {
 		this.sysRoleService = sysRoleService;
-		logger.info("setSysRoleService");
+
 	}
 
 	@javax.annotation.Resource
 	public void setSysTreeService(SysTreeService sysTreeService) {
 		this.sysTreeService = sysTreeService;
-		logger.info("setSysTreeService");
+
 	}
 
 	@javax.annotation.Resource
 	public void setSysUserService(SysUserService sysUserService) {
 		this.sysUserService = sysUserService;
-		logger.info("setSysUserService");
+
 	}
 
 	@javax.annotation.Resource
@@ -1158,7 +1158,7 @@ public class SysUserController {
 		long userId = ParamUtil.getLongParameter(request, "userId", 0);
 		SysUser user = sysUserService.findById(userId);
 		request.setAttribute("user", user);
-		
+
 		SysTree parent = sysTreeService.getSysTreeByCode(Constants.TREE_DEPT);
 		List<SysTree> list = new ArrayList<SysTree>();
 		parent.setDeep(0);

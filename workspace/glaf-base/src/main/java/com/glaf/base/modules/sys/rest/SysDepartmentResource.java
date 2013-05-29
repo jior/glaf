@@ -276,13 +276,11 @@ public class SysDepartmentResource {
 	public void setSysDepartmentService(
 			SysDepartmentService sysDepartmentService) {
 		this.sysDepartmentService = sysDepartmentService;
-		logger.info("setSysDepartmentService");
 	}
 
 	@javax.annotation.Resource
 	public void setSysTreeService(SysTreeService sysTreeService) {
 		this.sysTreeService = sysTreeService;
-		logger.info("setSysTreeService");
 	}
 
 	@POST
@@ -314,7 +312,7 @@ public class SysDepartmentResource {
 				Map<String, Object> params = RequestUtils
 						.getParameterMap(request);
 				Tools.populate(query, params);
-				//query.setParentId(treeModel.getId());
+				// query.setParentId(treeModel.getId());
 				List<SysTree> trees = sysTreeService
 						.getDepartmentSysTrees(query);
 				if (trees != null && !trees.isEmpty()) {
