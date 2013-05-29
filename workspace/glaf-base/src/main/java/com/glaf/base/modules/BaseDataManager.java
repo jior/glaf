@@ -699,7 +699,7 @@ public class BaseDataManager {
 						tmp.add(bdi);
 					}
 				}
-				baseDataMap.put(Constants.BD_KEYS[1], tmp);
+				baseDataMap.put(Constants.SYS_DEPTS, tmp);
 			}
 			logger.info("装载部门信息结束");
 
@@ -799,7 +799,7 @@ public class BaseDataManager {
 						tmp.add(bdi);
 					}
 				}
-				baseDataMap.put(Constants.BD_KEYS[15], tmp);
+				baseDataMap.put(Constants.SYS_FUNCTIONS, tmp);
 			}
 			logger.info("装载模块信息结束");
 		} catch (Exception e) {
@@ -837,7 +837,7 @@ public class BaseDataManager {
 						tmp.add(bdi);
 					}
 				}
-				baseDataMap.put(Constants.BD_KEYS[22], tmp);
+				baseDataMap.put(Constants.SYS_SUBJECTS, tmp);
 			}
 			logger.info("装载科目代码信息结束");
 		} catch (Exception e) {
@@ -870,7 +870,7 @@ public class BaseDataManager {
 						tmp.add(bdi);
 					}
 				}
-				baseDataMap.put(Constants.BD_KEYS[0], tmp);
+				baseDataMap.put(Constants.SYS_USERS, tmp);
 			}
 			logger.info("装载用户信息结束");
 		} catch (Exception e) {
