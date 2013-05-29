@@ -199,7 +199,8 @@ public class MxReportController {
 				String filename = report.getSubject() + "."
 						+ report.getReportFormat();
 				try {
-					byte[] bytes = ReportFactory.createReportStream(report);
+					byte[] bytes = ReportFactory.createReportStream(report,
+							params);
 					if (bytes != null) {
 						String destFileName = ReportConfig
 								.getReportDestFileName(report);

@@ -32,7 +32,11 @@ import org.apache.commons.logging.LogFactory;
 
 import com.glaf.core.config.CustomProperties;
 import com.glaf.core.config.SystemProperties;
+import com.glaf.core.context.ContextFactory;
 import com.glaf.report.def.ReportDefinition;
+import com.glaf.report.domain.Report;
+import com.glaf.report.query.ReportQuery;
+import com.glaf.report.service.IReportService;
 import com.glaf.report.xml.ReportDefinitionReader;
 import com.glaf.core.util.FileUtils;
 
@@ -91,6 +95,7 @@ public class ReportContainer {
 				}
 			}
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			throw new RuntimeException(ex);
 		} finally {
 			if (inputStream != null) {
@@ -99,6 +104,46 @@ public class ReportContainer {
 				} catch (IOException e) {
 				}
 			}
+		}
+
+		try {
+			IReportService reportService = ContextFactory
+					.getBean("reportService");
+			ReportQuery query = new ReportQuery();
+			query.enableFlag("1");
+			List<Report> reports = reportService.list(query);
+			if (reports != null && !reports.isEmpty()) {
+				for (Report rpt : reports) {
+					if (StringUtils.isNotEmpty(rpt.getReportTemplate())) {
+						String filename = rpt.getReportTemplate();
+						if (StringUtils.startsWith(rpt.getReportTemplate(),
+								"/WEB-INF")) {
+							filename = SystemProperties.getAppPath()
+									+ rpt.getReportTemplate();
+						}
+						File file = new File(filename);
+						if (file.exists() && file.isFile()) {
+							logger.debug(file.getAbsolutePath());
+							byte[] bytes = FileUtils.getBytes(file);
+							ReportDefinition rd = new ReportDefinition();
+							rd.setData(bytes);
+							rd.setReportId(rpt.getId());
+							rd.setTemplateFile(rpt.getReportTemplate());
+							reportMap.put(rd.getReportId(), rd);
+
+							ReportDefinition rd2 = new ReportDefinition();
+							rd2.setData(bytes);
+							rd2.setReportId(rpt.getName());
+							rd2.setTemplateFile(rpt.getReportTemplate());
+							reportMap.put(rd2.getReportId(), rd2);
+						}
+					}
+				}
+			}
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			throw new RuntimeException(ex);
 		}
 		return reportMap;
 	}
