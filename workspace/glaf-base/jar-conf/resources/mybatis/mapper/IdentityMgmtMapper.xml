@@ -581,7 +581,7 @@
 		parameterType="com.glaf.core.query.TreeModelQuery">
 
 		select D.ID as id, D.NAME as name, D.CODE as code, D.DEPTDESC as description, D.SORT as sortNo,
-        D.CREATETIME as createDate, D.CREATEBY as createBy, D.DEPTLEVEL as level, D.STATUS as locked
+        D.CREATETIME as createDate, D.CREATEBY as createBy, D.DEPTLEVEL as deep, D.STATUS as locked
 		from SYS_DEPARTMENT D
 		inner join SYS_TREE T
 		on D.NODEID = T.ID

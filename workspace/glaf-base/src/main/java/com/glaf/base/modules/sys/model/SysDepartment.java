@@ -85,6 +85,7 @@ public class SysDepartment implements Serializable, JSONable {
 	 */
 	@Column(name = "DEPTLEVEL")
 	protected Integer level;
+	
 
 	/**
 	 * Ãû³Æ
@@ -185,6 +186,10 @@ public class SysDepartment implements Serializable, JSONable {
 	public Integer getLevel() {
 		return level;
 	}
+	
+	public Integer getDeptLevel() {
+		return level;
+	}
 
 	public String getName() {
 		return name;
@@ -266,6 +271,10 @@ public class SysDepartment implements Serializable, JSONable {
 	}
 
 	public void setLevel(Integer level) {
+		this.level = level;
+	}
+	
+	public void setDeptLevel(Integer level) {
 		this.level = level;
 	}
 
