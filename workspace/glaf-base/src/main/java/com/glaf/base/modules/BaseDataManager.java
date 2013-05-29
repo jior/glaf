@@ -56,9 +56,9 @@ import com.glaf.core.service.ITableDefinitionService;
 public class BaseDataManager {
 	private static Map<String, List<BaseDataInfo>> baseDataMap = new Hashtable<String, List<BaseDataInfo>>();
 
-	protected static BaseDataManager instance = new BaseDataManager();
-
 	protected static Configuration conf = BaseConfiguration.create();
+
+	protected static BaseDataManager instance = new BaseDataManager();
 
 	private final static Log logger = LogFactory.getLog(BaseDataManager.class);
 
@@ -158,6 +158,22 @@ public class BaseDataManager {
 		return ContextFactory.getBean(beanId);
 	}
 
+	/**
+	 * 根据类型返回对象列表
+	 * 
+	 * @param
+	 * 
+	 * @return
+	 */
+	public List<BaseDataInfo> getDataList(String key) {
+		List<BaseDataInfo> list = getBaseData(key);
+		if (list != null) {
+			return list;
+		} else {
+			return null;
+		}
+	}
+
 	public DictoryService getDictoryService() {
 		if (dictoryService == null) {
 			dictoryService = ContextFactory.getBean("dictoryService");
@@ -175,22 +191,6 @@ public class BaseDataManager {
 		List<BaseDataInfo> list = getBaseData(key);
 		if (list != null) {
 			return list.iterator();
-		} else {
-			return null;
-		}
-	}
-
-	/**
-	 * 根据类型返回对象列表
-	 * 
-	 * @param 新增
-	 * 
-	 * @return
-	 */
-	public List<BaseDataInfo> getList2(String key) {
-		List<BaseDataInfo> list = getBaseData(key);
-		if (list != null) {
-			return list;
 		} else {
 			return null;
 		}
@@ -482,8 +482,10 @@ public class BaseDataManager {
 	/**
 	 * 根据数据对象code和类型返回对象
 	 * 
-	 * @param valueId
+	 * @param code
+	 *            基础数据代码
 	 * @param key
+	 *            分类代码
 	 * @return
 	 */
 	public BaseDataInfo getValue(String code, String key) {
