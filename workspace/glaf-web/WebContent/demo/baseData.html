@@ -1,0 +1,99 @@
+<!DOCTYPE html >
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>基础数据</title>
+<link href="../scripts/easyui/themes/gray/easyui.css" rel="stylesheet" type="text/css" />
+<link href="../icons/styles.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../scripts/jquery.min.js"></script>
+<script type="text/javascript" src="../scripts/jquery.form.js"></script>
+<script type="text/javascript" src="../scripts/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="../scripts/easyui/locale/easyui-lang-zh_CN.js"></script>
+<script type='text/javascript' src="../scripts/easyui/jquery.edatagrid.js"></script>
+<script type='text/javascript' src="../scripts/glaf-base.js"></script>
+<script type="text/javascript">
+  
+    var contextPath="/glaf";
+
+    function submitForm(){
+        var currencyCode = jQuery("#currencyCode").val();
+        alert("选择的货币代码是："+currencyCode);
+
+		var money = jQuery('#money').combobox('getValue');
+        alert("选择的货币是："+money);
+
+		//var x_dataitems = jQuery("#x_dataitems").val();
+        //alert("选择的基础数据是："+x_dataitems);
+ 
+	    var params = jQuery("#iForm").formSerialize();
+		jQuery.ajax({
+				   type: "POST",
+				   url: '',
+				   dataType: 'json',
+				   data: params,
+				   error: function(data){
+					   alert('服务器处理错误！');
+				   },
+				   success: function(data){
+					   if(data != null && data.message != null){
+						   alert(data.message);
+					   } else {
+						   alert('操作成功完成！');
+					   }
+				   }
+			 });
+    }
+
+</script>
+</head>
+<body>
+<form id="iForm" name="iForm" method="post"  > 
+   
+
+  <table width="58%" align="center" border="0" cellspacing="0" cellpadding="5">
+    <tr>														
+		<td width="20%" align="left">币种</td>																
+		<td align="left">				
+		      <input id="currency" name="currency" type="easyui-validatebox"								
+						   onclick="javascript:selectData('money', document.all.currencyId,this,document.all.currencyCode);"	
+					       class="easyui-validatebox" />																		
+				<input type="hidden" id="currencyId" name="currencyId" >							
+		        <input type="hidden" id="currencyCode" name="currencyCode" >												
+		</td>																					
+	</tr>	
+
+	 <tr>														
+		<td width="20%" align="left">币种</td>
+		<td align="left">	
+		<input id="money" name="money" class="easyui-combobox" style="width:250px" data-options="  
+					 url: '/glaf/rs/dictory/jsonArray/money',
+					 valueField: 'code',  
+					 textField: 'name',
+					 panelHeight:'auto'  
+				 ">  
+	</td>																					
+	</tr>
+    <!-- <tr>
+		<td height="27" width="20%" valign="middle" noWrap> 基础数据 </td>
+		<td height="27" valign="middle" noWrap> 
+		<input type="hidden" id="x_dataitems" name="x_dataitems" value="">
+        <textarea cols="40" id="x_dataitems_name" name="x_dataitems_name" rows="8"  wrap="yes" readonly  
+		    style="height:100px;width:350px;color: #000066; background: #ffffff;"></textarea>
+		</td>
+		<td height="27" width="20%" valign="bottom" noWrap>
+		    &nbsp;&nbsp;<input type="button" name="button" value="添加" class="button" 
+			           onclick="javascript:selectBaseData('iForm', 'x_dataitems','x_dataitems_name');"> 
+			<br><br>
+			&nbsp;&nbsp;<input type="button" name="button" value="清空" class="button" 
+			           onclick="javascript:clearSelected('x_dataitems','x_dataitems_name');"> 
+		</td>
+	</tr> -->
+    
+  </table> 
+  <div align="center">
+      <br><br>
+      <input type="button" name="button" value=" 确定 " class="button" onclick="javascript:submitForm();"> 
+  </div>
+ </form>
+</body>
+</html>

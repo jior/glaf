@@ -160,7 +160,6 @@ public class DictoryResource {
 					rowJSON.put("startIndex", ++start);
 					rowsJSON.add(rowJSON);
 				}
-
 			}
 		}
 		return result.toJSONString().getBytes("UTF-8");
@@ -191,9 +190,7 @@ public class DictoryResource {
 
 		ViewMessages messages = new ViewMessages();
 		if (dictoryService.create(bean)) {// 保存成功
-			if (bean.getNodeId() == 17) {
-				BaseDataManager.getInstance().loadDictInfo();
-			}
+			BaseDataManager.getInstance().loadDictInfo();
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"dictory.add_success"));
 		} else {// 保存失败
@@ -231,9 +228,7 @@ public class DictoryResource {
 		bean.setUpdateBy(RequestUtils.getActorId(request));
 		ViewMessages messages = new ViewMessages();
 		if (dictoryService.update(bean)) {// 保存成功
-			if (bean.getNodeId() == 17) {
-				BaseDataManager.getInstance().loadDictInfo();
-			}
+			BaseDataManager.getInstance().loadDictInfo();
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"dictory.modify_success"));
 		} else {// 保存失败
@@ -259,7 +254,6 @@ public class DictoryResource {
 	@javax.annotation.Resource
 	public void setSysTreeService(SysTreeService sysTreeService) {
 		this.sysTreeService = sysTreeService;
-
 	}
 
 	@POST
