@@ -136,6 +136,7 @@ public class AuthorizeInterceptor implements MethodBeforeAdvice {
 						.getBean("sysLogService");
 				logService.create(log);
 			} catch (Exception ex) {
+				ex.printStackTrace();
 				logger.error(ex);
 			}
 		}
@@ -164,8 +165,9 @@ public class AuthorizeInterceptor implements MethodBeforeAdvice {
 				}
 			}
 			iter = null;
-		} catch (Exception e) {
-			logger.error(e);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			logger.error(ex);
 		}
 		return ret;
 	}

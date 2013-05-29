@@ -39,7 +39,7 @@ public class InitBaseDataServlet extends HttpServlet {
 			bdm.refreshBaseData();// 刷新数据
 			logger.info("初始化基础信息完成.");
 			// 装载系统功能列表
-			ContextUtil.put("function", bdm.getBaseData("ZD0015"));
+			ContextUtil.put("function", bdm.getBaseData(Constants.SYS_FUNCTIONS));
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			logger.error("初始化基础信息失败！");
