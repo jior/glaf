@@ -220,7 +220,6 @@
 			}
 		}
 		var rowId = jQuery('#rowId').val();
-        var opinion = jQuery('#opinion').val();
 		var params = jQuery("#auditForm").formSerialize();
         jQuery.ajax({
 			type: "POST",
@@ -275,10 +274,10 @@
 			ids.push(rows[i].id);
 		}
 		if(ids.length > 0 && confirm("数据删除后不能恢复，确定删除吗？")){
-		    var ids = ids.join(',');
+		    var str = ids.join(',');
 			jQuery.ajax({
 				   type: "POST",
-				   url: '<%=request.getContextPath()%>/mx/cms/info/delete?ids='+ids,
+				   url: '<%=request.getContextPath()%>/mx/cms/info/delete?ids='+str,
 				   dataType:  'json',
 				   error: function(data){
 					   alert('服务器处理错误！');
@@ -322,8 +321,8 @@
 	}
 
 	function searchData(){
-	    var params = jQuery("#searchForm").formSerialize();
-	    var queryParams = jQuery('#mydatagrid').datagrid('options').queryParams;
+	    // var params = jQuery("#searchForm").formSerialize();
+	    // var queryParams = jQuery('#mydatagrid').datagrid('options').queryParams;
 	    jQuery('#mydatagrid').datagrid('reload');	
 	    jQuery('#dlg').dialog('close');
 	}

@@ -5,6 +5,7 @@
 <%
     String theme = com.glaf.core.util.RequestUtils.getTheme(request);
 	request.setAttribute("theme", theme);
+	request.setAttribute("contextPath", request.getContextPath());
 	//mx/system/param/edit?serviceKey=chart&businessKey=29
 %>
 <!DOCTYPE html>
