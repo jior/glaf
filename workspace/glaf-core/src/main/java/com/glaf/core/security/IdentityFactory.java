@@ -136,10 +136,45 @@ public class IdentityFactory {
 	 * @return
 	 */
 	public static LoginContext getLoginContext(String actorId) {
+		LoginHandler loginHandler = null;
+		/**
+		 * 获取Spring容器中定义的登录Handler，该Handler必须实现LoginHandler接口
+		 */
+		if (ContextFactory.hasBean("loginHandler")) {
+			loginHandler = ContextFactory.getBean("loginHandler");
+			if (loginHandler != null) {
+				/**
+				 * 获取自定义的登录上下文
+				 */
+				return loginHandler.getLoginContext(actorId);
+			}
+		}
 		User user = (User) getEntityService().getById("getUserById", actorId);
 		if (user != null) {
 			LoginContext loginContext = new LoginContext(user);
-			List<String> roles = getUserRoleCodes(actorId);
+			List<String> roles = new ArrayList<String>();
+
+			/**
+			 * 获取本人的角色权限
+			 */
+			List<String> list = getUserRoleCodes(actorId);
+			if (list != null && !list.isEmpty()) {
+				roles.addAll(list);
+			}
+
+			/**
+			 * 获取代理人的角色权限
+			 */
+			List<String> agentIds = getAgentIds(actorId);
+			if (agentIds != null && !agentIds.isEmpty()) {
+				for (String agentId : agentIds) {
+					list = getUserRoleCodes(agentId);
+					if (list != null && !list.isEmpty()) {
+						roles.addAll(list);
+					}
+				}
+			}
+
 			loginContext.setRoles(roles);
 			return loginContext;
 		}

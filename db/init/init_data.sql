@@ -196,16 +196,18 @@ insert into sys_access (roleid, appid) values (1, 495);
 
 /*插入系统功能*/
 
-insert into sys_function (id, appId, name, funcDesc, funcMethod, sort) values (11, 15, '模块列表', null, 'com.glaf.base.modules.sys.springmvc.SysApplicationController.showList', 5);
-insert into sys_function (id, appId, name, funcDesc, funcMethod, sort) values (12, 15, '增加模块', null, 'com.glaf.base.modules.sys.springmvc.SysApplicationController.prepareAdd', 3);
-insert into sys_function (id, appId, name, funcDesc, funcMethod, sort) values (13, 15, '修改模块', null, 'com.glaf.base.modules.sys.springmvc.SysApplicationController.prepareModify', 2);
-insert into sys_function (id, appId, name, funcDesc, funcMethod, sort) values (14, 15, '删除模块', null, 'com.glaf.base.modules.sys.springmvc.SysApplicationController.batchDelete', 1);
+insert into sys_function (id, name, funcdesc, funcmethod, sort, appid, code) values (1, '模块列表', '模块列表', 'com.glaf.base.modules.sys.springmvc.sysapplicationcontroller.showList', 1, 15, 'app:list');
+insert into sys_function (id, name, funcdesc, funcmethod, sort, appid, code) values (2, '增加模块', '增加模块', 'com.glaf.base.modules.sys.springmvc.sysapplicationcontroller.prepareAdd', 2, 15, 'app:create');
+insert into sys_function (id, name, funcdesc, funcmethod, sort, appid, code) values (3, '修改模块', '修改模块', 'com.glaf.base.modules.sys.springmvc.sysapplicationcontroller.prepareModify', 3, 15, 'app:update');
+insert into sys_function (id, name, funcdesc, funcmethod, sort, appid, code) values (4, '删除模块', '删除模块', 'com.glaf.base.modules.sys.springmvc.sysapplicationcontroller.batchDelete', 4, 15, 'app:delete');
 
 
-insert into sys_dictory (id, typeId, code, name, sort, dictDesc, blocked, ext1, ext2, ext3, ext4, ext5, ext6) values (1, 498, 'RMB', '人民币', 1, null, 0, '', '', null, null, null, null);
-insert into sys_dictory (id, typeId, code, name, sort, dictDesc, blocked, ext1, ext2, ext3, ext4, ext5, ext6) values (2, 498, 'USD', '美元', 2, null, 0, '', '', null, null, null, null);
-insert into sys_dictory (id, typeId, code, name, sort, dictDesc, blocked, ext1, ext2, ext3, ext4, ext5, ext6) values (3, 498, 'JPY', '日元', 3, null, 0, '', '', null, null, null, null);
-
+insert into sys_dictory (id, typeId, code, name, sort, dictDesc, blocked, ext1, ext2) values (1, 498, 'RMB', '人民币', 1, null, 0, '', '');
+insert into sys_dictory (id, typeId, code, name, sort, dictDesc, blocked, ext1, ext2) values (2, 498, 'USD', '美元', 2, null, 0, '', '');
+insert into sys_dictory (id, typeId, code, name, sort, dictDesc, blocked, ext1, ext2) values (3, 498, 'JPY', '日元', 3, null, 0, '', '');
+insert into sys_dictory (id, typeId, code, name, sort, dictDesc, blocked, ext1, ext2) values (4, 498, 'HKD', '港币', 4, null, 0, '', '');
+insert into sys_dictory (id, typeId, code, name, sort, dictDesc, blocked, ext1, ext2) values (5, 498, 'EUR', '欧元', 5, null, 0, '', '');
+ 
 
 insert into sys_dictory_def (id, nodeid, name, columnname, title, type, length, sort, required, target) values (4,  0, 'ext1',  'EXT1', '',  'String', 200, 3, 0, 'sys_dictory');
 insert into sys_dictory_def (id, nodeid, name, columnname, title, type, length, sort, required, target) values (5,  0, 'ext2',  'EXT2', '',  'String', 200, 4, 0, 'sys_dictory');

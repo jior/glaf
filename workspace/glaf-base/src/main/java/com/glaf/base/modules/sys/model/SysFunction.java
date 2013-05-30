@@ -42,6 +42,12 @@ public class SysFunction implements Serializable, JSONable {
 	protected long appId;
 
 	/**
+	 * È¨ÏÞ´úÂë
+	 */
+	@Column(name = "CODE", length = 50)
+	protected String code;
+
+	/**
 	 * ÃèÊö
 	 */
 	@Column(name = "FUNCDESC", length = 500)
@@ -81,6 +87,10 @@ public class SysFunction implements Serializable, JSONable {
 		return appId;
 	}
 
+	public String getCode() {
+		return code;
+	}
+
 	public String getFuncDesc() {
 		return funcDesc;
 	}
@@ -111,6 +121,10 @@ public class SysFunction implements Serializable, JSONable {
 
 	public void setAppId(long appId) {
 		this.appId = appId;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 	public void setFuncDesc(String funcDesc) {

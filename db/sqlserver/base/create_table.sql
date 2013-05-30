@@ -50,6 +50,7 @@ CREATE TABLE sys_dept_role(
 CREATE TABLE sys_function(
         id bigint not null,
         name nvarchar(255),
+	code nvarchar(50),
         funcdesc nvarchar(255),
         funcmethod nvarchar(255),
         sort int,

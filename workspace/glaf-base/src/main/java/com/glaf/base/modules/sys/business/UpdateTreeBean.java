@@ -10,8 +10,20 @@ public class UpdateTreeBean {
 
 	protected SysTreeService sysTreeService;
 
-	public SysTreeService getSysTreeService() {
-		return sysTreeService;
+	protected String getTreeId(Map<Long, SysTree> dataMap, SysTree tree) {
+		long parentId = tree.getParentId();
+		long id = tree.getId();
+		SysTree parent = dataMap.get(parentId);
+		if (parent != null && parent.getParentId() != 0) {
+			if (StringUtils.isEmpty(parent.getTreeId())) {
+				return getTreeId(dataMap, parent) + id + "|";
+			}
+			if (!parent.getTreeId().endsWith("|")) {
+				parent.setTreeId(parent.getTreeId() + "|");
+			}
+			return parent.getTreeId() + id + "|";
+		}
+		return tree.getTreeId();
 	}
 
 	public void setSysTreeService(SysTreeService sysTreeService) {
@@ -43,22 +55,6 @@ public class UpdateTreeBean {
 				sysTreeService.updateTreeIds(treeIdMap);
 			}
 		}
-	}
-
-	protected String getTreeId(Map<Long, SysTree> dataMap, SysTree tree) {
-		long parentId = tree.getParentId();
-		long id = tree.getId();
-		SysTree parent = dataMap.get(parentId);
-		if (parent != null && parent.getParentId() != 0) {
-			if (StringUtils.isEmpty(parent.getTreeId())) {
-				return getTreeId(dataMap, parent) + id + "|";
-			}
-			if (!parent.getTreeId().endsWith("|")) {
-				parent.setTreeId(parent.getTreeId() + "|");
-			}
-			return parent.getTreeId() + id + "|";
-		}
-		return tree.getTreeId();
 	}
 
 }

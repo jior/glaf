@@ -25,6 +25,7 @@ public class SysFunctionQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;
 	protected Long appId;
 	protected List<Long> appIds;
+	protected String codeLike;
 	protected String funcDesc;
 	protected String funcDescLike;
 	protected List<String> funcDescs;
@@ -57,6 +58,14 @@ public class SysFunctionQuery extends DataQuery {
 			throw new RuntimeException("appIds is empty ");
 		}
 		this.appIds = appIds;
+		return this;
+	}
+
+	public SysFunctionQuery codeLike(String codeLike) {
+		if (codeLike == null) {
+			throw new RuntimeException("code is null");
+		}
+		this.codeLike = codeLike;
 		return this;
 	}
 
@@ -114,6 +123,18 @@ public class SysFunctionQuery extends DataQuery {
 
 	public List<Long> getAppIds() {
 		return appIds;
+	}
+
+	public String getCodeLike() {
+		if (codeLike != null && codeLike.trim().length() > 0) {
+			if (!codeLike.startsWith("%")) {
+				codeLike = "%" + codeLike;
+			}
+			if (!codeLike.endsWith("%")) {
+				codeLike = codeLike + "%";
+			}
+		}
+		return codeLike;
 	}
 
 	public String getFuncDesc() {
@@ -268,6 +289,10 @@ public class SysFunctionQuery extends DataQuery {
 
 	public void setAppIds(List<Long> appIds) {
 		this.appIds = appIds;
+	}
+
+	public void setCodeLike(String codeLike) {
+		this.codeLike = codeLike;
 	}
 
 	public void setFuncDesc(String funcDesc) {

@@ -615,7 +615,7 @@ public class BaseDataManager {
 	 * 初始化内存中基础数据
 	 * 
 	 */
-	private void initBaseData() {
+	protected void initBaseData() {
 		try {
 			UpdateTreeBean bean = new UpdateTreeBean();
 			bean.setSysTreeService(getSysTreeService());

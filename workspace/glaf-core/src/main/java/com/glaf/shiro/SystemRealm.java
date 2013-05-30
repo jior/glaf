@@ -57,8 +57,10 @@ public class SystemRealm extends AuthorizingRealm {
 		Set<String> roles = new HashSet<String>();
 		Set<String> perms = new HashSet<String>();
 		if (actorId != null) {
+
 			LoginContext loginContext = IdentityFactory
 					.getLoginContext(actorId);
+
 			if (loginContext.isSystemAdministrator()) {
 				perms.add("SystemAdministrator");
 				roles.add("SystemAdministrator");
@@ -71,6 +73,12 @@ public class SystemRealm extends AuthorizingRealm {
 				}
 			}
 			Collection<String> permissions = loginContext.getPermissions();
+			if (permissions != null && !permissions.isEmpty()) {
+				for (String p : permissions) {
+					perms.add(p);
+				}
+			}
+			permissions = loginContext.getFunctions();
 			if (permissions != null && !permissions.isEmpty()) {
 				for (String p : permissions) {
 					perms.add(p);

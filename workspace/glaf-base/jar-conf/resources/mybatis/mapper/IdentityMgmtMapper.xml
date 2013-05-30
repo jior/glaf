@@ -470,7 +470,7 @@
 		on dr.ID = ur.ROLEID
 		inner join SYS_USER u
 		on ur.USERID = u.ID
-		where 1=1
+		where r.CODE is not null
 
 		<choose>
 			<when test="actorId != null">
@@ -497,8 +497,90 @@
 			  and 1=0
 			</otherwise>
 		</choose>
-	 
 
+		union 
+
+		select E.code from sys_application E
+		inner join sys_access A
+		on
+		E.id = A.appId
+		where E.code is not null 
+		and A.roleId in (
+			select dr.id from sys_dept_role dr
+			inner join sys_user_role ur
+			on dr.id = ur.roleid
+			inner join sys_user u
+			on ur.userid = u.id
+			where ur.authorized = 0
+
+			 <choose>
+				<when test="actorId != null">
+					and u.account = #{actorId} 
+				</when>
+				<when test="actorIds != null and actorIds.size !=0">
+					and u.account IN
+					<foreach item="x_actorId" index="index" collection="actorIds"
+						open="(" separator="," close=")">
+						#{x_actorId}
+					</foreach>
+				</when>
+				<when test="nodeId != null">
+					and ( u.deptid = #{nodeId} ) 
+				</when>
+				<when test="nodeIds != null and nodeIds.size !=0">
+					and u.deptid IN
+					<foreach item="x_nodeId" index="index" collection="nodeIds"
+						open="(" separator="," close=")">
+						#{x_nodeId}
+					</foreach>
+				</when>
+				<otherwise>
+				  and 1=0
+				</otherwise>
+			</choose>
+		) 
+
+        union 
+
+		select E.CODE from sys_function E
+		inner join sys_permission A
+		on E.id = A.funcId
+		where E.CODE is not null
+		and A.roleId in (
+			select dr.id from sys_dept_role dr
+			inner join sys_user_role ur
+			on dr.id = ur.roleid
+			inner join sys_user u
+			on u.id = ur.userid
+			where ur.authorized = 0
+
+			 <choose>
+				<when test="actorId != null">
+					and u.account = #{actorId} 
+				</when>
+				<when test="actorIds != null and actorIds.size !=0">
+					and u.account IN
+					<foreach item="x_actorId" index="index" collection="actorIds"
+						open="(" separator="," close=")">
+						#{x_actorId}
+					</foreach>
+				</when>
+				<when test="nodeId != null">
+					and ( u.deptid = #{nodeId} ) 
+				</when>
+				<when test="nodeIds != null and nodeIds.size !=0">
+					and u.deptid IN
+					<foreach item="x_nodeId" index="index" collection="nodeIds"
+						open="(" separator="," close=")">
+						#{x_nodeId}
+					</foreach>
+				</when>
+				<otherwise>
+				  and 1=0
+				</otherwise>
+			</choose>
+		)
+ 
 	</select>
 
 

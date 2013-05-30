@@ -4,42 +4,49 @@
 
 <mapper namespace="com.glaf.base.modules.sys.mapper.SysFunctionMapper">
 
-	<resultMap id="sysFunctionResultMap"	type="com.glaf.base.modules.sys.model.SysFunction">
+	<resultMap id="sysFunctionResultMap" type="com.glaf.base.modules.sys.model.SysFunction">
 		<id property="id" column="ID" jdbcType="BIGINT" />
-		<result property="name" column="NAME" jdbcType="VARCHAR"/>
-		<result property="funcDesc" column="FUNCDESC" jdbcType="VARCHAR"/>
-		<result property="funcMethod" column="FUNCMETHOD" jdbcType="VARCHAR"/>
-		<result property="sort" column="SORT" jdbcType="INTEGER"/>
-		<result property="appId" column="APPID" jdbcType="BIGINT"/>
+		<result property="name" column="NAME" jdbcType="VARCHAR" />
+		<result property="code" column="CODE" jdbcType="VARCHAR" />
+		<result property="funcDesc" column="FUNCDESC" jdbcType="VARCHAR" />
+		<result property="funcMethod" column="FUNCMETHOD" jdbcType="VARCHAR" />
+		<result property="sort" column="SORT" jdbcType="INTEGER" />
+		<result property="appId" column="APPID" jdbcType="BIGINT" />
 	</resultMap>
 
- 
+
 	<insert id="insertSysFunction" parameterType="com.glaf.base.modules.sys.model.SysFunction">
-		insert into sys_function 
+		insert into sys_function
 		<trim prefix="(" suffix=")" suffixOverrides=",">
-		    ID
+			ID
 			<if test="name != null">
-				,NAME 
+				,NAME
+			</if>
+			<if test="code != null">
+				,CODE
 			</if>
 			<if test="funcDesc != null">
-				,FUNCDESC 
+				,FUNCDESC
 			</if>
 			<if test="funcMethod != null">
-				,FUNCMETHOD 
+				,FUNCMETHOD
 			</if>
 			<if test="sort != null">
-				,SORT 
+				,SORT
 			</if>
 			<if test="appId != null">
-				,APPID 
+				,APPID
 			</if>
 		</trim>
 
 		<trim prefix=" values (" suffix=")" suffixOverrides=",">
-			  #{id, jdbcType=BIGINT}
-	     
+			#{id, jdbcType=BIGINT}
+
 			<if test="name != null">
 				,#{name, jdbcType=VARCHAR}
+			</if>
+			<if test="code != null">
+				,#{code, jdbcType=VARCHAR}
 			</if>
 			<if test="funcDesc != null">
 				,#{funcDesc, jdbcType=VARCHAR}
@@ -56,13 +63,16 @@
 		</trim>
 	</insert>
 
-	 
+
 	<update id="updateSysFunction" parameterType="com.glaf.base.modules.sys.model.SysFunction">
 		update sys_function
 		set
-		<trim prefix="" suffix="" suffixOverrides=",">		
+		<trim prefix="" suffix="" suffixOverrides=",">
 			<if test="name != null">
 				NAME = #{name, jdbcType=VARCHAR},
+			</if>
+			<if test="code != null">
+				CODE = #{code, jdbcType=VARCHAR},
 			</if>
 			<if test="funcDesc != null">
 				FUNCDESC = #{funcDesc, jdbcType=VARCHAR},
@@ -78,77 +88,78 @@
 			</if>
 		</trim>
 		where
-          ID = #{id, jdbcType=BIGINT}
-		
+		ID = #{id, jdbcType=BIGINT}
+
 	</update>
 
- 
-	<delete id="deleteSysFunctionById" parameterType="long"> 
-        delete from sys_function
-        where ID =	#{id}
+
+	<delete id="deleteSysFunctionById" parameterType="long">
+		delete from sys_function
+		where ID = #{id}
 	</delete>
-	
-	
+
+
 	<delete id="deleteSysFunctions" parameterType="com.glaf.base.modules.sys.query.SysFunctionQuery">
 		delete from sys_function
-		where ( 
- 			  ID IN
-		<foreach item="x_rowId" index="index" collection="rowIds" 
+		where (
+		ID IN
+		<foreach item="x_rowId" index="index" collection="rowIds"
 			open="(" separator="," close=")">
-                  #{x_rowId}
+			#{x_rowId}
 		</foreach>
 		)
 	</delete>
 
 
-	<select id="getSysFunctionById" parameterType="long" resultMap="sysFunctionResultMap">
+	<select id="getSysFunctionById" parameterType="long"
+		resultMap="sysFunctionResultMap">
 		select * from sys_function where ID = #{id}
 	</select>
-	
-	
-	<select id="getSysFunctionByRoleId" parameterType="long" resultMap="sysFunctionResultMap">
-		
+
+
+	<select id="getSysFunctionByRoleId" parameterType="long"
+		resultMap="sysFunctionResultMap">
+
 		select E.* from sys_function E
 		inner join sys_permission P
 		on E.ID = P.FUNCID
 		where P.ROLEID = #{roleId}
- 
+
 	</select>
-	
-	
-	<select id="getSysFunctionByUserId" parameterType="long" resultMap="sysFunctionResultMap">
-		
-		select  E.* from sys_function E
+
+
+	<select id="getSysFunctionByUserId" parameterType="long"
+		resultMap="sysFunctionResultMap">
+
+		select E.* from sys_function E
 		inner join sys_permission A
 		on E.id = A.funcId
 		where A.roleId in (
-		    select dr.id from sys_dept_role dr
-		    inner join sys_user_role ur 
-		    on dr.id = ur.roleid
-		    where ur.userid = #{userId}
-		    and ur.authorized = 0
+		select dr.id from sys_dept_role dr
+		inner join sys_user_role ur
+		on dr.id = ur.roleid
+		where ur.userid = #{userId}
+		and ur.authorized = 0
 		)
- 
+
 	</select>
 
 
-	<select id="getSysFunctions" 
-		parameterType="com.glaf.base.modules.sys.query.SysFunctionQuery"
+	<select id="getSysFunctions" parameterType="com.glaf.base.modules.sys.query.SysFunctionQuery"
 		resultMap="sysFunctionResultMap">
 		select E.*
 		<include refid="selectSysFunctionsSql" />
 		<choose>
 			<when test="orderBy != null">
-		     order by ${orderBy}
+				order by ${orderBy}
 			</when>
 			<otherwise>
-		      order by E.SORT asc
+				order by E.SORT asc
 			</otherwise>
 		</choose>
 	</select>
 
-	<select id="getSysFunctionCount" 
-		parameterType="com.glaf.base.modules.sys.query.SysFunctionQuery"
+	<select id="getSysFunctionCount" parameterType="com.glaf.base.modules.sys.query.SysFunctionQuery"
 		resultType="int">
 		select count(*)
 		<include refid="selectSysFunctionsSql" />
@@ -157,9 +168,9 @@
 	<sql id="selectSysFunctionsSql">
 
 		from sys_function E
-		 
+
 		<where>
-		       1 = 1  
+			1 = 1
 
 			<if test="name != null and name != '' ">
 				and E.NAME = #{name}
@@ -170,11 +181,15 @@
 			</if>
 
 			<if test="names != null and names.size() &gt; 0">
-			    and E.NAME IN
-				<foreach item="x_name" index="index" collection="names" 
+				and E.NAME IN
+				<foreach item="x_name" index="index" collection="names"
 					open="(" separator="," close=")">
-                  #{x_name}
+					#{x_name}
 				</foreach>
+			</if>
+
+			<if test="codeLike != null and codeLike != '' ">
+				and E.CODE like #{codeLike}
 			</if>
 
 			<if test="funcDescLike != null and funcDescLike != '' ">
@@ -192,7 +207,7 @@
 			<if test="sortGreaterThanOrEqual != null">
 				and E.SORT &gt;= #{sortGreaterThanOrEqual}
 			</if>
-            
+
 			<if test="sortGreaterThan != null">
 				and E.SORT &gt; #{sortGreaterThan}
 			</if>
@@ -200,7 +215,7 @@
 			<if test="sortLessThanOrEqual != null">
 				and E.SORT &lt;= #{sortLessThanOrEqual}
 			</if>
-            
+
 			<if test="sortLessThan != null">
 				and E.SORT &lt; #{sortLessThan}
 			</if>
@@ -210,13 +225,13 @@
 			</if>
 
 			<if test="appIds != null and appIds.size() &gt; 0">
-			    and E.APPID IN
-				<foreach item="x_appId" index="index" collection="appIds" 
+				and E.APPID IN
+				<foreach item="x_appId" index="index" collection="appIds"
 					open="(" separator="," close=")">
-                  #{x_appId}
+					#{x_appId}
 				</foreach>
 			</if>
-			 
+
 		</where>
 	</sql>
 
