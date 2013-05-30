@@ -148,8 +148,7 @@ public class PublicInfoMgmtController {
 							&& (StringUtils.equals(publicInfo.getCreateBy(),
 									loginContext.getActorId()) || loginContext
 									.isSystemAdministrator())) {
-						publicInfo.setDeleteFlag(1);
-						publicInfoService.save(publicInfo);
+						publicInfoService.deleteById(publicInfo.getId());
 					}
 				}
 			}
@@ -162,8 +161,7 @@ public class PublicInfoMgmtController {
 					&& (StringUtils.equals(publicInfo.getCreateBy(),
 							loginContext.getActorId()) || loginContext
 							.isSystemAdministrator())) {
-				publicInfo.setDeleteFlag(1);
-				publicInfoService.save(publicInfo);
+				publicInfoService.deleteById(publicInfo.getId());
 			}
 		}
 	}
