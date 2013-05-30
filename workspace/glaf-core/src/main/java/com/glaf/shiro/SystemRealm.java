@@ -19,6 +19,7 @@ package com.glaf.shiro;
 
 import java.util.*;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.shiro.authc.AuthenticationException;
@@ -68,20 +69,28 @@ public class SystemRealm extends AuthorizingRealm {
 			Collection<String> roleIds = loginContext.getRoles();
 			if (roleIds != null && !roleIds.isEmpty()) {
 				for (String roleId : roleIds) {
-					roles.add(roleId);
-					perms.add(roleId);
+					if (StringUtils.isNotEmpty(roleId)) {
+						if (!StringUtils.contains(roleId, ":")) {
+							roles.add(roleId);
+						}
+						perms.add(roleId);
+					}
 				}
 			}
 			Collection<String> permissions = loginContext.getPermissions();
 			if (permissions != null && !permissions.isEmpty()) {
 				for (String p : permissions) {
-					perms.add(p);
+					if (StringUtils.isNotEmpty(p)) {
+						perms.add(p);
+					}
 				}
 			}
 			permissions = loginContext.getFunctions();
 			if (permissions != null && !permissions.isEmpty()) {
 				for (String p : permissions) {
-					perms.add(p);
+					if (StringUtils.isNotEmpty(p)) {
+						perms.add(p);
+					}
 				}
 			}
 		}

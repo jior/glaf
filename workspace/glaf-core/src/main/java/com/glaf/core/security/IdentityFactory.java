@@ -175,6 +175,8 @@ public class IdentityFactory {
 				}
 			}
 
+			logger.debug("user roles:" + roles);
+
 			loginContext.setRoles(roles);
 			return loginContext;
 		}
