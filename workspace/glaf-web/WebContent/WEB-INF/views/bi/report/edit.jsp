@@ -126,7 +126,7 @@
 			<tr>
 				 <td width="180">名称</td>
 				 <td >
-                 <input id="name" name="name" class="span5 x-text" type="text"
+                 <input id="name" name="name" class="span7 x-text" type="text"
 				        value="${report.name}" size="80"
 				 ></input>
 				 </td>
@@ -134,7 +134,7 @@
 			<tr>
 				 <td>标题</td>
 				 <td >
-                 <input id="subject" name="subject" class="span5 x-text" type="text"
+                 <input id="subject" name="subject" class="span7 x-text" type="text"
 				        value="${report.subject}" size="80"
 				 ></input>
 				 </td>
@@ -143,7 +143,7 @@
 			<tr>
 				 <td>报表名称</td>
 				 <td >
-                 <input id="reportName" name="reportName" class="span5 x-text" type="text"
+                 <input id="reportName" name="reportName" class="span7 x-text" type="text"
 				        value="${report.reportName}" size="80"
 				 ></input>
 				 </td>
@@ -151,7 +151,7 @@
 			<tr>
 				 <td>模板文件</td>
 				 <td >
-                 <input id="reportTemplate" name="reportTemplate" class="span5 x-text" type="text"
+                 <input id="reportTemplate" name="reportTemplate" class="span7 x-text" type="text"
 				        value="${report.reportTemplate}" size="80"
 				 ></input>
 				 </td>
@@ -159,7 +159,7 @@
 			<tr>
 				 <td>报表标题日期</td>
 				 <td >
-                 <input id="reportTitleDate" name="reportTitleDate" class="span5 x-text" type="text"
+                 <input id="reportTitleDate" name="reportTitleDate" class="span7 x-text" type="text"
 				        value="${report.reportTitleDate}" size="80"
 				 ></input>
 				 </td>
@@ -167,7 +167,7 @@
 			<tr>
 				 <td>报表年月</td>
 				 <td >
-                 <input id="reportMonth" name="reportMonth" class="span5 x-text" type="text"
+                 <input id="reportMonth" name="reportMonth" class="span7 x-text" type="text"
 				        value="${report.reportMonth}" size="80"
 				 ></input>
 				 </td>
@@ -175,7 +175,7 @@
 			<tr>
 				 <td>报表年月日参数</td>
 				 <td >
-                 <input id="reportDateYYYYMMDD" name="reportDateYYYYMMDD" class="span5 x-text" type="text"
+                 <input id="reportDateYYYYMMDD" name="reportDateYYYYMMDD" class="span7 x-text" type="text"
 				        value="${report.reportDateYYYYMMDD}" size="80"
 				 ></input>
 				 </td>
@@ -222,7 +222,7 @@
 			<tr>
 				 <td>邮件标题</td>
 				 <td >
-                 <input id="textTitle" name="textTitle" class="span9 x-text" type="text"
+                 <input id="textTitle" name="textTitle" class="span7 x-text" type="text"
 				        value="${report.textTitle}" size="80"
 				 ></input>
 				 </td>
@@ -230,21 +230,21 @@
 			<tr>
 				 <td>邮件模板</td>
 				 <td >
-				 <textarea  id="textContent" name="textContent" class="x-textarea"  rows="5" cols="58" style="width:715px;height:380px;">${report.textContent}</textarea> 
+				 <textarea  id="textContent" name="textContent" class="x-textarea"  rows="5" cols="58" style="width:715px;height:480px;">${report.textContent}</textarea> 
 				 <br> （支持Freemarker模板语言）
 				 </td>
 			</tr>
 			<tr>
 				 <td>邮件接收人</td>
 				 <td >
-				 <textarea  id="mailRecipient" name="mailRecipient" class="x-textarea" rows="5" cols="58" style="width:715px;height:120px;">${report.mailRecipient}</textarea>
+				 <textarea  id="mailRecipient" name="mailRecipient" class="x-textarea" rows="5" cols="58" style="width:535px;height:90px;">${report.mailRecipient}</textarea>
 				 <br>（多个邮件接收人以,分隔）
 				 </td>
 			</tr>
 			<tr>
 				 <td>JSON格式参数</td>
 				 <td >
-				 <textarea  id="jsonParameter" name="jsonParameter" class="x-textarea" rows="5" cols="58" style="width:715px;height:80px;">${report.jsonParameter}</textarea>
+				 <textarea  id="jsonParameter" name="jsonParameter" class="x-textarea" rows="5" cols="58" style="width:535px;height:90px;">${report.jsonParameter}</textarea>
 				 </td>
 			</tr>
 			<tr>
@@ -252,7 +252,7 @@
                  <td >
 				   <input type="hidden" id="queryIds" name="queryIds" value="${report.queryIds}">
 				   <textarea type="textarea" id="queryNames" name="queryNames" value="${queryNames}"
-				          readonly="true"    onclick="javascript:openQx();" style="width:715px;height:80px;">${queryNames}</textarea>
+				          readonly="true"    onclick="javascript:openQx();" style="width:535px;height:90px;">${queryNames}</textarea>
 						  &nbsp;
 						  <a href="#" onclick="javascript:openQx();">
 						  <img src="<%=request.getContextPath()%>/images/search_results.gif" border="0"
@@ -266,7 +266,7 @@
 				   <input type="hidden" id="chartIds" name="chartIds" value="${report.chartIds}">
 				   <textarea type="textarea" id="chartNames" name="chartNames" value="${chartNames}"
 				          readonly="true"  onclick="javascript:openChart();"  
-						  style="width:715px;height:120px;">${chartNames}</textarea>
+						  style="width:535px;height:90px;">${chartNames}</textarea>
 						  &nbsp;
 						  <a href="#" onclick="javascript:openChart();">
 						  <img src="<%=request.getContextPath()%>/images/process.gif" border="0">

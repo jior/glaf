@@ -188,7 +188,7 @@
 			<tr>
 				 <td>标题</td>
 				 <td colspan="3">
-                 <input id="subject" name="subject" class="span3 x-text" type="text"
+                 <input id="subject" name="subject" class="span8 x-text" type="text"
 				        value="${chart.subject}" size="30"
 				 ></input>
 				 </td>
