@@ -45,7 +45,7 @@ jvm_args    : -Xms1024m -Xmx1024m -XX:NewSize=64m -XX:MaxNewSize=64m -XX:PermSiz
 <Context path="/glaf" docBase="../../workspace/glaf-web/WebContent" reloadable="false"/>
 启动server服务器
 访问如下地址：
-http://127.0.0.1:9090/glaf
+http://127.0.0.1:8080/glaf
 用户名为root，密码111111
 
 正式发布时请去掉测试文件,位于glaf-web\WebContent\workflow\test目录。
