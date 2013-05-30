@@ -48,6 +48,21 @@ public class SystemRealm extends AuthorizingRealm {
 	}
 
 	@Override
+	protected AuthenticationInfo doGetAuthenticationInfo(
+			AuthenticationToken token) throws AuthenticationException {
+		UsernamePasswordToken upToken = (UsernamePasswordToken) token;
+		String actorId = upToken.getUsername();
+		User user = IdentityFactory.getUser(actorId);
+		String password = user.getPassword();
+		if (password == null) {
+			throw new RuntimeException("No password for user [" + actorId + "]");
+		}
+		AuthenticationInfo info = new SimpleAuthenticationInfo(actorId,
+				password.toCharArray(), getName());
+		return info;
+	}
+
+	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(
 			PrincipalCollection principals) {
 		if (principals == null) {
@@ -81,6 +96,9 @@ public class SystemRealm extends AuthorizingRealm {
 			if (permissions != null && !permissions.isEmpty()) {
 				for (String p : permissions) {
 					if (StringUtils.isNotEmpty(p)) {
+						if (!StringUtils.contains(p, ":")) {
+							roles.add(p);
+						}
 						perms.add(p);
 					}
 				}
@@ -99,21 +117,6 @@ public class SystemRealm extends AuthorizingRealm {
 		logger.info("shiro perms:{" + perms + "}");
 		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo(roles);
 		info.setStringPermissions(perms);
-		return info;
-	}
-
-	@Override
-	protected AuthenticationInfo doGetAuthenticationInfo(
-			AuthenticationToken token) throws AuthenticationException {
-		UsernamePasswordToken upToken = (UsernamePasswordToken) token;
-		String actorId = upToken.getUsername();
-		User user = IdentityFactory.getUser(actorId);
-		String password = user.getPassword();
-		if (password == null) {
-			throw new RuntimeException("No password for user [" + actorId + "]");
-		}
-		AuthenticationInfo info = new SimpleAuthenticationInfo(actorId,
-				password.toCharArray(), getName());
 		return info;
 	}
 
