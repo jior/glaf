@@ -22,6 +22,7 @@ int parent=ParamUtil.getIntParameter(request, "parent", 0);
 <script language="javascript" src='<%=context%>/scripts/verify.js'></script>
 <script language="javascript" src='<%=context%>/scripts/main.js'></script>
 <script language="javascript">
+
 var num=0;
 function checkOperation(form){
   num = getCheckedBoxNum(form,"id");
@@ -37,6 +38,7 @@ function checkOperation(form){
 	document.all.btn_modify.disabled=true;
   }
 }
+
 function del(form){
   if(confirmDelete(form)){
     form.target="hiddenFrame";
@@ -44,12 +46,14 @@ function del(form){
 	form.submit();
   }
 }
+
 function create(){
   var newDiv = document.all.newDiv;
   newDiv.style.display="block";
   var modifyDiv = document.all.modifyDiv;
   modifyDiv.style.display="none";
 }
+
 function modify(form){
   var modifyDiv= document.all.modifyDiv;
   modifyDiv.style.display="block";
@@ -69,7 +73,9 @@ function modify(form){
   modifyForm.funcId.value=form.id[i].value;
   modifyForm.funcName.value=form.funcName[i].value;
   modifyForm.funcMethod.value=form.funcMethod[i].value;
+  modifyForm.code.value=form.code[i].value;
 }
+
 function sort(id, operate){  
  // SysFunctionAjaxService.sort(id, operate, {callback:function (){reloadPage();}});
        jQuery.ajax({
@@ -94,14 +100,15 @@ function sort(id, operate){
 <input type="hidden" name="id" value="0">
 <input type="hidden" name="funcName" value="">
 <input type="hidden" name="funcMethod" value="">
+<input type="hidden" name="code" value="">
 <table width="100%" border="0" cellspacing="1" cellpadding="0" class="list-box" align="center">
   <tr class="list-title"> 
     <td width="5%" align="center">
 	  <input type="checkbox" name="chkall" value="checkbox" onclick="checkAll(this.form, this);checkOperation(this.form)">    
 	</td>
     <td width="15%" align="center">功能名称</td>
-    <td width="80%" align="center">调用方法</td>
-    <!-- <td width="15%" align="center">排序</td> -->
+    <td width="65%" align="center">调用方法</td>
+    <td width="15%" align="center">权限代码</td> 
   </tr>
 <%
 int i=0;
@@ -115,9 +122,11 @@ if(list!=null){
 	  <input type="checkbox" name="id" value="<%=bean.getId()%>" onclick="checkOperation(this.form);">   
 	  <input type="hidden" name="funcName" value="<%=bean.getName()%>">
 	  <input type="hidden" name="funcMethod" value="<%=bean.getFuncMethod()%>">
+	  <input type="hidden" name="code" value="<%=bean.getCode() != null ? bean.getCode() : ""%>">
 	</td>
     <td class="td-text"><%=bean.getName()%>&nbsp;</td>
     <td class="td-text"><%=bean.getFuncMethod()%>&nbsp;</td>
+	<td class="td-text"><%=bean.getCode() != null ? bean.getCode() : ""%>&nbsp;</td>
 	<!--
     <td class="td-no"> 
       <a href="#" onClick="modify(<%=bean.getId()%>, '<%=bean.getName()%>', '<%=bean.getFuncMethod()%>')"></a>
@@ -135,6 +144,7 @@ for(; i<pageSize; i++){
     <td height="20">&nbsp;</td>
     <td>&nbsp;</td>
     <td>&nbsp; </td>
+	<td>&nbsp; </td>
     <!-- <td>&nbsp;</td> -->
   </tr>
 <%
@@ -182,6 +192,12 @@ for(; i<pageSize; i++){
 			</td>
 		  </tr>
 		  <tr>
+			<td width="15%" class="fontname_12">权限代码*</td>
+			<td width="85%">
+			<input name="code" type="text" size="80" class="input" datatype="string" nullable="no" maxsize="50" chname="权限代码">
+			</td>
+		  </tr>
+		  <tr>
 			<td><input name="btn_save" type="submit" value="保存" class="button"></td>
 			<td>&nbsp;</td>
 		  </tr>
@@ -223,6 +239,12 @@ for(; i<pageSize; i++){
   <tr>
     <td width="15%" class="fontname_12">调用方法：</td>
     <td width="85%"><input name="funcMethod" type="text" size="80" class="input" datatype="string" nullable="no" maxsize="200" chname="调用方法"></td>
+  </tr>
+  <tr>
+    <td width="15%" class="fontname_12">权限代码*</td>
+	<td width="85%">
+	  <input name="code" type="text" size="80" class="input" datatype="string" nullable="no" maxsize="50" chname="权限代码">
+	</td>
   </tr>
   <tr>
     <td><input name="btn_save" type="submit" value="保存" class="button"></td>
