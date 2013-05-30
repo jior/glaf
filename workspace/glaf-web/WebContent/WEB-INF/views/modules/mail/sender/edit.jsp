@@ -135,8 +135,7 @@
 				 &nbsp;&nbsp; 
 				 <input type="text" id="cronExpression" name="cronExpression" value="${mailPathSender.cronExpression}" size="20"
 				        class="x-text span2"> 
-				 &nbsp;&nbsp;
-				 (可以参考<a href="<%=request.getContextPath()%>/quartz.txt" target="_blank">quartz</a>文件)
+				 &nbsp;&nbsp;(可以参考<a href="<%=request.getContextPath()%>/quartz.txt" target="_blank">quartz</a>文件)
 				 </td>
 			</tr>
 
@@ -152,7 +151,7 @@
 				 </script>
 				 &nbsp;&nbsp;&nbsp;&nbsp;
                  邮件大小
-				 &nbsp;&nbsp; 
+				 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
 				 <select id="size" name="size" class="span2">
 					<option value="2">2MB</option>
 					<option value="5">5MB</option>
@@ -160,7 +159,7 @@
 					<option value="15">15MB</option>
 					<option value="20">20MB</option>
 					<option value="30">30MB</option>
-				 </select>（最大30兆）
+				 </select>&nbsp;&nbsp;&nbsp;&nbsp;(最大30兆)
 				 <script type="text/javascript">
 				    $('#size').val('${mailPathSender.size}');
 				 </script>
@@ -170,7 +169,7 @@
 			<tr>
 				 <td>附件路径</td>
 				 <td colspan="3">
-				 <textarea  id="mailFilePath" name="mailFilePath" class="x-textarea" rows="5" cols="58" style="width:715px;height:80px;">${mailPathSender.mailFilePath}</textarea>
+				 <textarea  id="mailFilePath" name="mailFilePath" class="x-textarea" rows="5" cols="58" style="width:535px;height:80px;">${mailPathSender.mailFilePath}</textarea>
 				 <br>（多个路径以,分隔）
 				 </td>
 			</tr>
