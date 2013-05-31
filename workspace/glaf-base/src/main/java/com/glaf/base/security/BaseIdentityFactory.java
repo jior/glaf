@@ -369,6 +369,17 @@ public class BaseIdentityFactory {
 		return getSysUserService().findByAccountWithAll(actorId);
 	}
 
+	/**
+	 * 根据用户名获取用户对象
+	 * 
+	 * @param id
+	 *            用户ID
+	 * @return
+	 */
+	public static SysUser getSysUserById(Long id) {
+		return getSysUserService().findById(id);
+	}
+
 	public static SysUserRoleService getSysUserRoleService() {
 		if (sysUserRoleService == null) {
 			sysUserRoleService = ContextFactory.getBean("sysUserRoleService");

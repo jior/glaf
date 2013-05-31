@@ -13,7 +13,7 @@ import ${packageName}.util.*;
 
 @Entity
 @Table(name = "${tableName}")
-public class ${entityName} implements Serializable {
+public class ${entityName} implements Serializable, JSONable {
         private static final long serialVersionUID = 1L;
 
         @Id

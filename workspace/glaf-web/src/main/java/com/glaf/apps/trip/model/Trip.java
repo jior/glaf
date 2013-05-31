@@ -8,12 +8,11 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import com.glaf.core.base.*;
-import com.glaf.core.util.DateUtils;
 import com.glaf.apps.trip.util.*;
 
 @Entity
 @Table(name = "X_APP_TRIP")
-public class Trip implements Serializable {
+public class Trip implements Serializable, JSONable {
         private static final long serialVersionUID = 1L;
 
         @Id
