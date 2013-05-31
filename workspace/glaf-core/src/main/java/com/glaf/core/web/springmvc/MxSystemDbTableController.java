@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +28,8 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.base.ColumnModel;
 import com.glaf.core.base.TableModel;
+import com.glaf.core.config.BaseConfiguration;
+import com.glaf.core.config.Configuration;
 import com.glaf.core.config.ViewProperties;
 import com.glaf.core.domain.ColumnDefinition;
 import com.glaf.core.domain.TableDefinition;
@@ -50,6 +54,8 @@ import com.glaf.core.xml.XmlWriter;
 @Controller("/system/table")
 @RequestMapping("/system/table")
 public class MxSystemDbTableController {
+
+	protected static Configuration conf = BaseConfiguration.create();
 
 	protected static final Log logger = LogFactory
 			.getLog(MxSystemDbTableController.class);
@@ -432,6 +438,23 @@ public class MxSystemDbTableController {
 		} else {
 			tableName = request.getParameter("tableName");
 		}
+
+		Collection<String> rejects = new ArrayList<String>();
+		rejects.add("FILEATT");
+		rejects.add("ATTACHMENT");
+		rejects.add("CMS_PUBLICINFO");
+		rejects.add("SYS_LOB");
+		rejects.add("SYS_MAIL_FILE");
+		rejects.add("SYS_DBID");
+
+		if (conf.get("table.rejects") != null) {
+			String str = conf.get("table.rejects");
+			List<String> list = StringTools.split(str);
+			for (String t : list) {
+				rejects.add(t.toUpperCase());
+			}
+		}
+
 		String businessKey = request.getParameter("businessKey");
 		String primaryKey = null;
 		ColumnDefinition idColumn = null;
@@ -441,8 +464,7 @@ public class MxSystemDbTableController {
 			 * 保证系统安全性不得修改系统表及工作流的数据
 			 */
 			if (StringUtils.isNotEmpty(tableName)
-					&& !StringUtils.equalsIgnoreCase(tableName,
-							"cms_publicinfo")
+					&& !rejects.contains(tableName.toUpperCase())
 					&& !StringUtils.startsWithIgnoreCase(tableName, "sys")
 					&& !StringUtils.startsWithIgnoreCase(tableName, "jbpm")
 					&& !StringUtils.startsWithIgnoreCase(tableName, "act")) {

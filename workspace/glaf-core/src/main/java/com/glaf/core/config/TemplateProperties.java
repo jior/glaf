@@ -50,7 +50,7 @@ public class TemplateProperties {
 
 	public synchronized static void reload() {
 		try {
-			String config = SystemConfig.getConfigRootPath()
+			String config = SystemProperties.getConfigRootPath()
 					+ "/conf/templates";
 			File directory = new File(config);
 			if (directory.exists() && directory.isDirectory()) {
