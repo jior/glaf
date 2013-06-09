@@ -146,6 +146,13 @@ public interface AttachmentService {
 	 * @return
 	 */
 	int getAttachmentCount(long[] referIds, int referType);
+	
+	int getAttachmentCount(long[] referIds, int referType,long createId);
+	
+	List<Attachment> getAttachmentList(long referId, int referType,long createId);
+	
+	@Transactional
+	void updateByReferTypeAndCreateId(long referId,int referType,long createId);
 
  
 }

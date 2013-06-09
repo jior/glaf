@@ -287,14 +287,19 @@ public class DictoryServiceImpl implements DictoryService {
 	private void sortByForward(long nodeId, Dictory bean) {
 		DictoryQuery query = new DictoryQuery();
 		query.nodeId(nodeId);
-		query.setSortLessThan(bean.getSort());
+		//query.setSortLessThan(bean.getSort());
+		query.setSortLessThanOrEqual(bean.getSort());
+		query.setIdNotEqual(bean.getId());
 		query.setOrderBy(" E.SORT desc");
 
 		List<?> list = this.list(query);
 		if (list != null && list.size() > 0) {// 有记录
 			Dictory temp = (Dictory) list.get(0);
 			int i = bean.getSort();
-			bean.setSort(temp.getSort()+1);
+			bean.setSort(temp.getSort()-1);
+			if(i!=temp.getSort()){
+				bean.setSort(temp.getSort());
+			}
 			this.update(bean);// 更新bean
 
 			temp.setSort(i);
@@ -310,14 +315,19 @@ public class DictoryServiceImpl implements DictoryService {
 	private void sortByPrevious(long nodeId, Dictory bean) {
 		DictoryQuery query = new DictoryQuery();
 		query.nodeId(nodeId);
-		query.setSortGreaterThan(bean.getSort());
+		//query.setSortGreaterThan(bean.getSort());
+		query.setSortGreaterThanOrEqual(bean.getSort());
+		query.setIdNotEqual(bean.getId());
 		query.setOrderBy(" E.SORT asc");
 
 		List<?> list = this.list(query);
 		if (list != null && list.size() > 0) {// 有记录
 			Dictory temp = (Dictory) list.get(0);
 			int i = bean.getSort();
-			bean.setSort(temp.getSort()-1);
+			bean.setSort(temp.getSort()+1);
+			if(i!=temp.getSort()){
+				bean.setSort(temp.getSort());
+			}
 			this.update(bean);// 更新bean
 
 			temp.setSort(i);

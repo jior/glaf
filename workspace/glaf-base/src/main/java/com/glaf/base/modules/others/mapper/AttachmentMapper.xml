@@ -236,5 +236,23 @@
 			 
 		</where>
 	</sql>
+	
+	<update id="updateAttachmentByReferTypeAndCreateId" parameterType="com.glaf.base.modules.others.model.Attachment">
+		update Attachment
+		set
+		<trim prefix="" suffix="" suffixOverrides=",">		
+			<if test="referId != null">
+				REFERID = #{referId, jdbcType=BIGINT} 
+			</if>
+		</trim>
+		where 
+          referId = 0 
+          <if test="referType != null">
+				and REFERTYPE = #{referType}
+			</if>
+          <if test="createId != null">
+				and CREATEID = #{createId}
+		  </if>
+	</update>
 
 </mapper>

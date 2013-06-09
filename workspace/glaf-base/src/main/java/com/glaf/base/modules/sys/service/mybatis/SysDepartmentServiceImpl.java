@@ -201,7 +201,7 @@ public class SysDepartmentServiceImpl implements SysDepartmentService {
 		}
 		SysTree tree = node.getNode();
 		if (tree.getParentId() == 0) {// 找到根节点
-			logger.info("findFirstNode:" + node.getId());
+			logger.debug("findFirstNode:" + node.getId());
 			list.add(node);
 		} else {
 			SysTree treeParent = sysTreeService.findById(tree.getParentId());

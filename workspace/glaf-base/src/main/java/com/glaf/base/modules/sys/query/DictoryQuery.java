@@ -37,6 +37,15 @@ public class DictoryQuery extends DataQuery {
 	protected Integer sortGreaterThanOrEqual;
 	protected Integer sortLessThan;
 	protected Integer sortLessThanOrEqual;
+	protected Long idNotEqual;
+
+	public Long getIdNotEqual() {
+		return idNotEqual;
+	}
+
+	public void setIdNotEqual(Long idNotEqual) {
+		this.idNotEqual = idNotEqual;
+	}
 
 	public DictoryQuery() {
 

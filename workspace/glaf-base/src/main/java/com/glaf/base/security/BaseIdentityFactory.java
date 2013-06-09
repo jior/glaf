@@ -258,12 +258,12 @@ public class BaseIdentityFactory {
 	 * 
 	 * @param deptId
 	 *            部门编号
-	 * @param treeType
+	 * @param deptLevel
 	 *            级别 0-公司,1(B)-部,2(K)-科,3-系,4-室(班)
 	 * @return
 	 */
 	public static List<SysDepartment> getParentAndChildrenDepartments(
-			Long deptId, String treeType) {
+			Long deptId, Integer deptLevel) {
 		List<SysDepartment> list = new ArrayList<SysDepartment>();
 		SysDepartment dept = getSysDepartmentService().findById(deptId);
 		if (dept != null) {

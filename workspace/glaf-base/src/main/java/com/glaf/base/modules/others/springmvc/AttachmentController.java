@@ -178,6 +178,7 @@ public class AttachmentController {
 	@javax.annotation.Resource
 	public void setAttachmentService(AttachmentService attachmentService) {
 		this.attachmentService = attachmentService;
+		logger.info("setAttachmentService");
 	}
 
 	/**
@@ -191,11 +192,12 @@ public class AttachmentController {
 		int referType = ParamUtil.getIntParameter(request, "referType", 0);
 		String[] referIdArray = StringUtils.split(referId, ",");
 		long[] longReferId = new long[referIdArray.length];
+		long createId = RequestUtil.getLoginUser(request).getId();
 		for (int i = 0; i < referIdArray.length; i++) {
 			longReferId[i] = Long.parseLong(referIdArray[i]);
 		}
 		int count = attachmentService
-				.getAttachmentCount(longReferId, referType);
+				.getAttachmentCount(longReferId, referType,createId);
 		String Strcount = count + "";
 		request.setAttribute("count", Strcount);
 
@@ -220,9 +222,10 @@ public class AttachmentController {
 		long referId = ParamUtil.getLongParameter(request, "referId", 0);
 		int referType = ParamUtil.getIntParameter(request, "referType", 0);
 		int viewType = ParamUtil.getIntParameter(request, "viewType", 0);
+		long createId = RequestUtil.getLoginUser(request).getId();
 
-		request.setAttribute("list",
-				attachmentService.getAttachmentList(referId, referType));
+		//request.setAttribute("list",attachmentService.getAttachmentList(referId, referType));
+		request.setAttribute("list",attachmentService.getAttachmentList(referId, referType,createId));
 
 		String x_view = ViewProperties
 				.getString("attachment.showList.referType");

@@ -259,5 +259,35 @@ public class AttachmentServiceImpl implements AttachmentService {
 		query.setOrderBy(" E.ID desc ");
 		return this.list(query);
 	}
+	
+	public List<Attachment> getAttachmentList(long referId, int referType,long createId) {
+		AttachmentQuery query = new AttachmentQuery();
+		query.referId(referId);
+		query.referType(referType);
+		query.setCreateId(createId);
+		query.setOrderBy(" E.ID desc ");
+		return this.list(query);
+	}
+	
+	public int getAttachmentCount(long[] referIds, int referType,long createId) {
+		List<Long> rows = new ArrayList<Long>();
+		for (int i = 0; i < referIds.length; i++) {
+			rows.add(referIds[i]);
+		}
+		AttachmentQuery query = new AttachmentQuery();
+		query.referIds(rows);
+		query.referType(referType);
+		query.setOrderBy(" E.ID desc ");
+		return this.count(query);
+	}
+	
+	@Transactional
+	public void updateByReferTypeAndCreateId(long referId,int referType,long createId) {
+		Attachment model = new Attachment();
+		model.setReferId(referId);
+		model.setReferType(referType);
+		model.setCreateId(createId);
+		attachmentMapper.updateAttachmentByReferTypeAndCreateId(model);
+	}
 
 }

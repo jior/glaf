@@ -457,6 +457,10 @@
 			<if test="blocked != null">
 				and E.BLOCKED = #{blocked}
 			</if>
+			
+			<if test="idNotEqual != null">
+				and E.id != #{idNotEqual}
+			</if>
 
 		</where>
 	</sql>

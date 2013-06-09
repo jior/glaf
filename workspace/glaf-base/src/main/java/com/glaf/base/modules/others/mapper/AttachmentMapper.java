@@ -39,5 +39,7 @@ public interface AttachmentMapper {
 	void insertAttachment(Attachment model);
 
 	void updateAttachment(Attachment model);
+	
+	void updateAttachmentByReferTypeAndCreateId(Attachment model);
 
 }
