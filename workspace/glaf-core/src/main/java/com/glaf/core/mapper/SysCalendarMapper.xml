@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.core.mapper.SysCalendarMapper">
+
+	<resultMap id="sysCalendarResultMap" type="com.glaf.core.domain.SysCalendar">
+		<id property="id" column="ID_" jdbcType="BIGINT" />
+		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR" />
+		<result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP" />
+		<result property="day" column="DAY_" jdbcType="INTEGER" />
+		<result property="week" column="WEEK_" jdbcType="INTEGER" />
+		<result property="month" column="MONTH_" jdbcType="INTEGER" />
+		<result property="year" column="YEAR_" jdbcType="INTEGER" />
+		<result property="dutyA" column="DUTYA_" jdbcType="VARCHAR" />
+		<result property="dutyB" column="DUTYB_" jdbcType="VARCHAR" />
+		<result property="groupA" column="GROUPA_" jdbcType="VARCHAR" />
+		<result property="groupB" column="GROUPB_" jdbcType="VARCHAR" />
+		<result property="productionLine" column="PRODUCTIONLINE_"
+			jdbcType="VARCHAR" />
+		<result property="isFreeDay" column="ISFREEDAY_" jdbcType="INTEGER" />
+		<result property="workDate" column="WORKDATE_" jdbcType="TIMESTAMP" />
+ 	</resultMap>
+
+
+	<insert id="insertSysCalendar" parameterType="com.glaf.core.domain.SysCalendar">
+		insert into SYS_CALENDAR
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ID_
+			<if test="createBy != null">
+				,CREATEBY_
+			</if>
+			<if test="createDate != null">
+				,CREATEDATE_
+			</if>
+			<if test="day != null">
+				,DAY_
+			</if>
+			<if test="week != null">
+				,WEEK_
+			</if>
+			<if test="month != null">
+				,MONTH_
+			</if>
+			<if test="year != null">
+				,YEAR_
+			</if>
+			<if test="dutyA != null">
+				,DUTYA_
+			</if>
+			<if test="dutyB != null">
+				,DUTYB_
+			</if>
+			<if test="groupA != null">
+				,GROUPA_
+			</if>
+			<if test="groupB != null">
+				,GROUPB_
+			</if>
+			<if test="productionLine != null">
+				,PRODUCTIONLINE_
+			</if>
+			<if test="isFreeDay != null">
+				,ISFREEDAY_
+			</if>
+			<if test="workDate != null">
+				,WORKDATE_
+			</if>
+		</trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			#{id, jdbcType=BIGINT}
+
+			<if test="createBy != null">
+				,#{createBy, jdbcType=VARCHAR}
+			</if>
+			<if test="createDate != null">
+				,#{createDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="day != null">
+				,#{day, jdbcType=INTEGER}
+			</if>
+			<if test="week != null">
+				,#{week, jdbcType=INTEGER}
+			</if>
+			<if test="month != null">
+				,#{month, jdbcType=INTEGER}
+			</if>
+			<if test="year != null">
+				,#{year, jdbcType=INTEGER}
+			</if>
+			<if test="dutyA != null">
+				,#{dutyA, jdbcType=VARCHAR}
+			</if>
+			<if test="dutyB != null">
+				,#{dutyB, jdbcType=VARCHAR}
+			</if>
+			<if test="groupA != null">
+				,#{groupA, jdbcType=VARCHAR}
+			</if>
+			<if test="groupB != null">
+				,#{groupB, jdbcType=VARCHAR}
+			</if>
+			<if test="productionLine != null">
+				,#{productionLine, jdbcType=VARCHAR}
+			</if>
+			<if test="isFreeDay != null">
+				,#{isFreeDay, jdbcType=INTEGER}
+			</if>
+			<if test="workDate != null">
+				,#{workDate, jdbcType=TIMESTAMP}
+			</if>
+		</trim>
+	</insert>
+
+
+	<update id="updateSysCalendar" parameterType="com.glaf.core.domain.SysCalendar">
+		update SYS_CALENDAR
+		set
+		<trim prefix="" suffix="" suffixOverrides=",">
+			<if test="day != null">
+				DAY_ = #{day, jdbcType=INTEGER},
+			</if>
+			<if test="week != null">
+				WEEK_ = #{week, jdbcType=INTEGER},
+			</if>
+			<if test="month != null">
+				MONTH_ = #{month, jdbcType=INTEGER},
+			</if>
+			<if test="year != null">
+				YEAR_ = #{year, jdbcType=INTEGER},
+			</if>
+			<if test="dutyA != null">
+				DUTYA_ = #{dutyA, jdbcType=VARCHAR},
+			</if>
+			<if test="dutyB != null">
+				DUTYB_ = #{dutyB, jdbcType=VARCHAR},
+			</if>
+			<if test="groupA != null">
+				GROUPA_ = #{groupA, jdbcType=VARCHAR},
+			</if>
+			<if test="groupB != null">
+				GROUPB_ = #{groupB, jdbcType=VARCHAR},
+			</if>
+			<if test="productionLine != null">
+				PRODUCTIONLINE_ = #{productionLine, jdbcType=VARCHAR},
+			</if>
+			<if test="isFreeDay != null">
+				ISFREEDAY_ = #{isFreeDay, jdbcType=INTEGER},
+			</if>
+			<if test="workDate != null">
+				WORKDATE_ = #{workDate, jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+		where
+		ID_ = #{id, jdbcType=BIGINT}
+
+	</update>
+
+
+	<delete id="deleteSysCalendarById" parameterType="long">
+		delete from SYS_CALENDAR
+		where ID_ = #{id}
+	</delete>
+
+
+	<delete id="deleteSysCalendars" parameterType="com.glaf.core.query.SysCalendarQuery">
+		delete from SYS_CALENDAR
+		where (
+		ID_ IN
+		<foreach item="x_id" index="index" collection="ids" open="("
+			separator="," close=")">
+			#{x_id}
+		</foreach>
+		)
+	</delete>
+
+
+	<select id="getSysCalendarById" parameterType="long"
+		resultMap="sysCalendarResultMap">
+		select * from SYS_CALENDAR where ID_ = #{id}
+	</select>
+
+
+	<select id="getSysCalendars" parameterType="com.glaf.core.query.SysCalendarQuery"
+		resultMap="sysCalendarResultMap">
+		select distinct E.*
+		<include refid="selectSysCalendarsSql" />
+		<choose>
+			<when test="orderBy != null">
+				order by ${orderBy}
+			</when>
+			<otherwise>
+				order by E.ID_ desc
+			</otherwise>
+		</choose>
+	</select>
+
+
+	<select id="getSysCalendarCount" parameterType="com.glaf.core.query.SysCalendarQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectSysCalendarsSql" />
+	</select>
+
+
+	<sql id="selectSysCalendarsSql">
+
+		from SYS_CALENDAR E
+
+
+		<where>
+			1 = 1
+
+			<if test="day != null">
+				and E.DAY_ = #{day}
+			</if>
+
+			<if test="dayGreaterThanOrEqual != null">
+				and E.DAY_ &gt;= #{dayGreaterThanOrEqual}
+			</if>
+
+			<if test="dayLessThanOrEqual != null">
+				and E.DAY_ &lt;= #{dayLessThanOrEqual}
+			</if>
+
+			<if test="week != null">
+				and E.WEEK_ = #{week}
+			</if>
+
+			<if test="weekGreaterThanOrEqual != null">
+				and E.WEEK_ &gt;= #{weekGreaterThanOrEqual}
+			</if>
+
+			<if test="weekLessThanOrEqual != null">
+				and E.WEEK_ &lt;= #{weekLessThanOrEqual}
+			</if>
+
+			<if test="month != null">
+				and E.MONTH_ = #{month}
+			</if>
+
+			<if test="monthGreaterThanOrEqual != null">
+				and E.MONTH_ &gt;= #{monthGreaterThanOrEqual}
+			</if>
+
+			<if test="monthLessThanOrEqual != null">
+				and E.MONTH_ &lt;= #{monthLessThanOrEqual}
+			</if>
+
+			<if test="months != null and months.size() &gt; 0">
+				and E.MONTH_ IN
+				<foreach item="x_month" index="index" collection="months"
+					open="(" separator="," close=")">
+					#{x_month}
+				</foreach>
+			</if>
+
+			<if test="year != null">
+				and E.YEAR_ = #{year}
+			</if>
+
+			<if test="yearGreaterThanOrEqual != null">
+				and E.YEAR_ &gt;= #{yearGreaterThanOrEqual}
+			</if>
+
+			<if test="yearLessThanOrEqual != null">
+				and E.YEAR_ &lt;= #{yearLessThanOrEqual}
+			</if>
+
+			<if test="years != null and years.size() &gt; 0">
+				and E.YEAR_ IN
+				<foreach item="x_year" index="index" collection="years"
+					open="(" separator="," close=")">
+					#{x_year}
+				</foreach>
+			</if>
+
+			<if test="dutyA != null and dutyA != '' ">
+				and E.DUTYA_ = #{dutyA}
+			</if>
+
+			<if test="dutyALike != null and dutyALike != '' ">
+				and E.DUTYA_ like #{dutyALike}
+			</if>
+
+			<if test="dutyAs != null and dutyAs.size() &gt; 0">
+				and E.DUTYA_ IN
+				<foreach item="x_dutyA" index="index" collection="dutyAs"
+					open="(" separator="," close=")">
+					#{x_dutyA}
+				</foreach>
+			</if>
+
+			<if test="dutyB != null and dutyB != '' ">
+				and E.DUTYB_ = #{dutyB}
+			</if>
+
+			<if test="dutyBLike != null and dutyBLike != '' ">
+				and E.DUTYB_ like #{dutyBLike}
+			</if>
+
+			<if test="dutyBs != null and dutyBs.size() &gt; 0">
+				and E.DUTYB_ IN
+				<foreach item="x_dutyB" index="index" collection="dutyBs"
+					open="(" separator="," close=")">
+					#{x_dutyB}
+				</foreach>
+			</if>
+
+			<if test="groupA != null and groupA != '' ">
+				and E.GROUPA_ = #{groupA}
+			</if>
+
+			<if test="groupALike != null and groupALike != '' ">
+				and E.GROUPA_ like #{groupALike}
+			</if>
+
+			<if test="groupAs != null and groupAs.size() &gt; 0">
+				and E.GROUPA_ IN
+				<foreach item="x_groupA" index="index" collection="groupAs"
+					open="(" separator="," close=")">
+					#{x_groupA}
+				</foreach>
+			</if>
+
+			<if test="groupB != null and groupB != '' ">
+				and E.GROUPB_ = #{groupB}
+			</if>
+
+			<if test="groupBLike != null and groupBLike != '' ">
+				and E.GROUPB_ like #{groupBLike}
+			</if>
+
+			<if test="groupBs != null and groupBs.size() &gt; 0">
+				and E.GROUPB_ IN
+				<foreach item="x_groupB" index="index" collection="groupBs"
+					open="(" separator="," close=")">
+					#{x_groupB}
+				</foreach>
+			</if>
+
+			<if test="productionLine != null and productionLine != '' ">
+				and E.PRODUCTIONLINE_ = #{productionLine}
+			</if>
+
+			<if test="productionLineLike != null and productionLineLike != '' ">
+				and E.PRODUCTIONLINE_ like #{productionLineLike}
+			</if>
+
+			<if test="productionLines != null and productionLines.size() &gt; 0">
+				and E.PRODUCTIONLINE_ IN
+				<foreach item="x_productionLine" index="index" collection="productionLines"
+					open="(" separator="," close=")">
+					#{x_productionLine}
+				</foreach>
+			</if>
+
+			<if test="isFreeDay != null">
+				and E.ISFREEDAY_ = #{isFreeDay}
+			</if>
+
+			<if test="workDateGreaterThanOrEqual != null">
+				and E.WORKDATE_ &gt;= #{workDateGreaterThanOrEqual}
+			</if>
+
+			<if test="workDateLessThanOrEqual != null">
+				and E.WORKDATE_ &lt;= #{workDateLessThanOrEqual}
+			</if>
+
+		</where>
+	</sql>
+
+</mapper>
