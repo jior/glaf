@@ -61,7 +61,7 @@
       <tr>
         <td width="20%" class="input-box">用户名*</td>
         <td width="80%">
-		<input name="code" type="text" size="30" class="input" datatype="string" nullable="no" maxsize="10" chname="员工编码">
+		<input name="code" type="text" size="30" class="input" datatype="string" nullable="no" maxsize="20" chname="员工编码">
 		</td>
       </tr>
       <tr>

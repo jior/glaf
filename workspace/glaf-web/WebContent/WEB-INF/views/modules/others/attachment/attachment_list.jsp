@@ -33,7 +33,7 @@ function uploadFile(){
 	//alert(json);
   	jQuery.ajax({
 			type: "POST",
-			url: '<%=request.getContextPath()%>/others/attachment.do?method=save&referId=<%=referId%>&referType=<%=referId%>&json='+json,
+			url: '<%=request.getContextPath()%>/others/attachment.do?method=save&referId=<%=referId%>&referType=<%=referType%>&json='+json,
 			dataType:  'json',
 				error: function(data){
 					alert('服务器处理错误！');

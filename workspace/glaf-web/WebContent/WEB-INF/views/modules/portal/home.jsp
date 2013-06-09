@@ -174,7 +174,7 @@
                 </table>
             </div>
             <div region="south" border="false" style="text-align: right; margin-top:2px; height: 32px; line-height: 32px;">
-                <input type="button" id="btnEp" class="button"  value="确 定"   onclick="javascript:setMyTheme();"/> 
+                <input type="button" id="btnEp" class="button" value="确 定" onclick="javascript:setMyTheme();"/> 
             </div>
         </div>
     </div>
