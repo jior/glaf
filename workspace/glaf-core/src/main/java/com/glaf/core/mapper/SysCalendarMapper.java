@@ -26,11 +26,7 @@ import com.glaf.core.query.*;
 @Component
 public interface SysCalendarMapper {
 
-	void deleteSysCalendars(SysCalendarQuery query);
-
-	void deleteSysCalendarById(String id);
-
-	SysCalendar getSysCalendarById(String id);
+	SysCalendar getSysCalendarById(Long id);
 
 	int getSysCalendarCount(SysCalendarQuery query);
 

@@ -6,8 +6,6 @@
 
 	<resultMap id="sysCalendarResultMap" type="com.glaf.core.domain.SysCalendar">
 		<id property="id" column="ID_" jdbcType="BIGINT" />
-		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR" />
-		<result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP" />
 		<result property="day" column="DAY_" jdbcType="INTEGER" />
 		<result property="week" column="WEEK_" jdbcType="INTEGER" />
 		<result property="month" column="MONTH_" jdbcType="INTEGER" />
@@ -20,19 +18,16 @@
 			jdbcType="VARCHAR" />
 		<result property="isFreeDay" column="ISFREEDAY_" jdbcType="INTEGER" />
 		<result property="workDate" column="WORKDATE_" jdbcType="TIMESTAMP" />
- 	</resultMap>
+		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR" />
+		<result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP" />
+	</resultMap>
 
 
 	<insert id="insertSysCalendar" parameterType="com.glaf.core.domain.SysCalendar">
 		insert into SYS_CALENDAR
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			ID_
-			<if test="createBy != null">
-				,CREATEBY_
-			</if>
-			<if test="createDate != null">
-				,CREATEDATE_
-			</if>
+			
 			<if test="day != null">
 				,DAY_
 			</if>
@@ -66,17 +61,17 @@
 			<if test="workDate != null">
 				,WORKDATE_
 			</if>
+			<if test="createBy != null">
+				,CREATEBY_
+			</if>
+			<if test="createDate != null">
+				,CREATEDATE_
+			</if>
 		</trim>
 
 		<trim prefix=" values (" suffix=")" suffixOverrides=",">
 			#{id, jdbcType=BIGINT}
-
-			<if test="createBy != null">
-				,#{createBy, jdbcType=VARCHAR}
-			</if>
-			<if test="createDate != null">
-				,#{createDate, jdbcType=TIMESTAMP}
-			</if>
+			
 			<if test="day != null">
 				,#{day, jdbcType=INTEGER}
 			</if>
@@ -109,6 +104,12 @@
 			</if>
 			<if test="workDate != null">
 				,#{workDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="createBy != null">
+				,#{createBy, jdbcType=VARCHAR}
+			</if>
+			<if test="createDate != null">
+				,#{createDate, jdbcType=TIMESTAMP}
 			</if>
 		</trim>
 	</insert>
@@ -159,7 +160,8 @@
 
 
 	<delete id="deleteSysCalendarById" parameterType="long">
-		delete from SYS_CALENDAR
+		delete from
+		SYS_CALENDAR
 		where ID_ = #{id}
 	</delete>
 
@@ -208,7 +210,6 @@
 
 		from SYS_CALENDAR E
 
-
 		<where>
 			1 = 1
 
@@ -228,132 +229,16 @@
 				and E.WEEK_ = #{week}
 			</if>
 
-			<if test="weekGreaterThanOrEqual != null">
-				and E.WEEK_ &gt;= #{weekGreaterThanOrEqual}
-			</if>
-
-			<if test="weekLessThanOrEqual != null">
-				and E.WEEK_ &lt;= #{weekLessThanOrEqual}
-			</if>
-
 			<if test="month != null">
 				and E.MONTH_ = #{month}
-			</if>
-
-			<if test="monthGreaterThanOrEqual != null">
-				and E.MONTH_ &gt;= #{monthGreaterThanOrEqual}
-			</if>
-
-			<if test="monthLessThanOrEqual != null">
-				and E.MONTH_ &lt;= #{monthLessThanOrEqual}
-			</if>
-
-			<if test="months != null and months.size() &gt; 0">
-				and E.MONTH_ IN
-				<foreach item="x_month" index="index" collection="months"
-					open="(" separator="," close=")">
-					#{x_month}
-				</foreach>
 			</if>
 
 			<if test="year != null">
 				and E.YEAR_ = #{year}
 			</if>
 
-			<if test="yearGreaterThanOrEqual != null">
-				and E.YEAR_ &gt;= #{yearGreaterThanOrEqual}
-			</if>
-
-			<if test="yearLessThanOrEqual != null">
-				and E.YEAR_ &lt;= #{yearLessThanOrEqual}
-			</if>
-
-			<if test="years != null and years.size() &gt; 0">
-				and E.YEAR_ IN
-				<foreach item="x_year" index="index" collection="years"
-					open="(" separator="," close=")">
-					#{x_year}
-				</foreach>
-			</if>
-
-			<if test="dutyA != null and dutyA != '' ">
-				and E.DUTYA_ = #{dutyA}
-			</if>
-
-			<if test="dutyALike != null and dutyALike != '' ">
-				and E.DUTYA_ like #{dutyALike}
-			</if>
-
-			<if test="dutyAs != null and dutyAs.size() &gt; 0">
-				and E.DUTYA_ IN
-				<foreach item="x_dutyA" index="index" collection="dutyAs"
-					open="(" separator="," close=")">
-					#{x_dutyA}
-				</foreach>
-			</if>
-
-			<if test="dutyB != null and dutyB != '' ">
-				and E.DUTYB_ = #{dutyB}
-			</if>
-
-			<if test="dutyBLike != null and dutyBLike != '' ">
-				and E.DUTYB_ like #{dutyBLike}
-			</if>
-
-			<if test="dutyBs != null and dutyBs.size() &gt; 0">
-				and E.DUTYB_ IN
-				<foreach item="x_dutyB" index="index" collection="dutyBs"
-					open="(" separator="," close=")">
-					#{x_dutyB}
-				</foreach>
-			</if>
-
-			<if test="groupA != null and groupA != '' ">
-				and E.GROUPA_ = #{groupA}
-			</if>
-
-			<if test="groupALike != null and groupALike != '' ">
-				and E.GROUPA_ like #{groupALike}
-			</if>
-
-			<if test="groupAs != null and groupAs.size() &gt; 0">
-				and E.GROUPA_ IN
-				<foreach item="x_groupA" index="index" collection="groupAs"
-					open="(" separator="," close=")">
-					#{x_groupA}
-				</foreach>
-			</if>
-
-			<if test="groupB != null and groupB != '' ">
-				and E.GROUPB_ = #{groupB}
-			</if>
-
-			<if test="groupBLike != null and groupBLike != '' ">
-				and E.GROUPB_ like #{groupBLike}
-			</if>
-
-			<if test="groupBs != null and groupBs.size() &gt; 0">
-				and E.GROUPB_ IN
-				<foreach item="x_groupB" index="index" collection="groupBs"
-					open="(" separator="," close=")">
-					#{x_groupB}
-				</foreach>
-			</if>
-
 			<if test="productionLine != null and productionLine != '' ">
 				and E.PRODUCTIONLINE_ = #{productionLine}
-			</if>
-
-			<if test="productionLineLike != null and productionLineLike != '' ">
-				and E.PRODUCTIONLINE_ like #{productionLineLike}
-			</if>
-
-			<if test="productionLines != null and productionLines.size() &gt; 0">
-				and E.PRODUCTIONLINE_ IN
-				<foreach item="x_productionLine" index="index" collection="productionLines"
-					open="(" separator="," close=")">
-					#{x_productionLine}
-				</foreach>
 			</if>
 
 			<if test="isFreeDay != null">

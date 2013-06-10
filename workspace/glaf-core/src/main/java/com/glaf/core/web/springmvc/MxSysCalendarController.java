@@ -55,9 +55,9 @@ public class MxSysCalendarController {
 				cal.get(Calendar.MONTH) + 1);
 		String productionLine = request.getParameter("productionLine");
 		if (StringUtils.isEmpty(productionLine)){
-			productionLine = SysCalendarUtils.DEFAULT_PRODUCTION_LINE;
+			productionLine = CalendarUtils.DEFAULT_PRODUCTION_LINE;
 		}
-		int daySize = SysCalendarUtils.getYearMonthDays(year, month);
+		int daySize = CalendarUtils.getYearMonthDays(year, month);
 		SysCalendarQuery query = new SysCalendarQuery();
 		query.setYear(year);
 		query.setMonth(month);
@@ -90,7 +90,7 @@ public class MxSysCalendarController {
 		int month = RequestUtils.getInt(request, "month");
 		int groupA = RequestUtils.getInt(request, "groupA");
 		int groupB = RequestUtils.getInt(request, "groupB");
-		int days = SysCalendarUtils.getYearMonthDays(year, month);
+		int days = CalendarUtils.getYearMonthDays(year, month);
 		String productionLine = request.getParameter("productionLine");
 		Calendar cal = Calendar.getInstance();
 		try {
@@ -164,7 +164,7 @@ public class MxSysCalendarController {
 		map.put("mode", mode);
 
 		try {
-			SysCalendarUtils.saveCalendarProperties(map);
+			CalendarUtils.saveCalendarProperties(map);
 			return ResponseUtils.responseJsonResult(true);
 		} catch (Exception e) {
 			e.printStackTrace();

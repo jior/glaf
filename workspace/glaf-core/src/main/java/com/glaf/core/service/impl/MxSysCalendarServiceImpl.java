@@ -57,24 +57,9 @@ public class MxSysCalendarServiceImpl implements ISysCalendarService {
 		query.ensureInitialized();
 		return sysCalendarMapper.getSysCalendarCount(query);
 	}
+ 
 
-	@Transactional
-	public void deleteById(String id) {
-		if (id != null) {
-			sysCalendarMapper.deleteSysCalendarById(id);
-		}
-	}
-
-	@Transactional
-	public void deleteByIds(List<String> ids) {
-		if (ids != null && !ids.isEmpty()) {
-			for (String id : ids) {
-				sysCalendarMapper.deleteSysCalendarById(id);
-			}
-		}
-	}
-
-	public SysCalendar getSysCalendar(String id) {
+	public SysCalendar getSysCalendar(Long id) {
 		if (id == null) {
 			return null;
 		}

@@ -27,27 +27,11 @@ import com.glaf.core.query.*;
 public interface ISysCalendarService {
 
 	/**
-	 * 根据主键删除记录
-	 * 
-	 * @return
-	 */
-	@Transactional
-	void deleteById(String id);
-
-	/**
-	 * 根据主键删除多条记录
-	 * 
-	 * @return
-	 */
-	@Transactional
-	void deleteByIds(List<String> ids);
-
-	/**
 	 * 根据主键获取一条记录
 	 * 
 	 * @return
 	 */
-	SysCalendar getSysCalendar(String id);
+	SysCalendar getSysCalendar(Long id);
 
 	/**
 	 * 获取某条生产线的系统日历
@@ -60,21 +44,6 @@ public interface ISysCalendarService {
 	 */
 	SysCalendar getSysCalendar(String productionLine, int year, int month,
 			int day);
-
-	/**
-	 * 根据查询参数获取记录总数
-	 * 
-	 * @return
-	 */
-	int getSysCalendarCountByQueryCriteria(SysCalendarQuery query);
-
-	/**
-	 * 根据查询参数获取一页的数据
-	 * 
-	 * @return
-	 */
-	List<SysCalendar> getSysCalendarsByQueryCriteria(int start, int pageSize,
-			SysCalendarQuery query);
 
 	/**
 	 * 根据查询参数获取记录列表

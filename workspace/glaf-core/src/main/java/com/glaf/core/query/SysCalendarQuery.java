@@ -25,38 +25,17 @@ public class SysCalendarQuery extends DataQuery {
 	protected Integer day;
 	protected Integer dayGreaterThanOrEqual;
 	protected Integer dayLessThanOrEqual;
-	protected List<Integer> days;
-	protected String dutyA;
-	protected String dutyALike;
-	protected List<String> dutyAs;
-	protected String dutyB;
-	protected String dutyBLike;
-	protected List<String> dutyBs;
-	protected String groupA;
-	protected String groupALike;
-	protected List<String> groupAs;
-	protected String groupB;
-	protected String groupBLike;
-	protected List<String> groupBs;
-	protected List<Long> ids;
+
 	protected Integer isFreeDay;
 	protected Integer month;
-	protected Integer monthGreaterThanOrEqual;
-	protected Integer monthLessThanOrEqual;
-	protected List<Integer> months;
+
 	protected String productionLine;
-	protected String productionLineLike;
-	protected List<String> productionLines;
+
 	protected Integer week;
-	protected Integer weekGreaterThanOrEqual;
-	protected Integer weekLessThanOrEqual;
-	protected List<Integer> weeks;
+
 	protected Date workDateGreaterThanOrEqual;
 	protected Date workDateLessThanOrEqual;
 	protected Integer year;
-	protected Integer yearGreaterThanOrEqual;
-	protected Integer yearLessThanOrEqual;
-	protected List<Integer> years;
 
 	public SysCalendarQuery() {
 
@@ -86,70 +65,6 @@ public class SysCalendarQuery extends DataQuery {
 		return this;
 	}
 
-	public SysCalendarQuery days(List<Integer> days) {
-		if (days == null) {
-			throw new RuntimeException("days is empty ");
-		}
-		this.days = days;
-		return this;
-	}
-
-	public SysCalendarQuery dutyA(String dutyA) {
-		if (dutyA == null) {
-			throw new RuntimeException("dutyA is null");
-		}
-		this.dutyA = dutyA;
-		return this;
-	}
-
-	public SysCalendarQuery dutyALike(String dutyALike) {
-		if (dutyALike == null) {
-			throw new RuntimeException("dutyA is null");
-		}
-		this.dutyALike = dutyALike;
-		return this;
-	}
-
-	public SysCalendarQuery dutyAs(List<String> dutyAs) {
-		if (dutyAs == null) {
-			throw new RuntimeException("dutyAs is empty ");
-		}
-		this.dutyAs = dutyAs;
-		return this;
-	}
-
-	public SysCalendarQuery dutyB(String dutyB) {
-		if (dutyB == null) {
-			throw new RuntimeException("dutyB is null");
-		}
-		this.dutyB = dutyB;
-		return this;
-	}
-
-	public SysCalendarQuery dutyBLike(String dutyBLike) {
-		if (dutyBLike == null) {
-			throw new RuntimeException("dutyB is null");
-		}
-		this.dutyBLike = dutyBLike;
-		return this;
-	}
-
-	public SysCalendarQuery dutyBs(List<String> dutyBs) {
-		if (dutyBs == null) {
-			throw new RuntimeException("dutyBs is empty ");
-		}
-		this.dutyBs = dutyBs;
-		return this;
-	}
-
-	public String getCreateBy() {
-		return createBy;
-	}
-
-	public Date getCreateDate() {
-		return createDate;
-	}
-
 	public Integer getDay() {
 		return day;
 	}
@@ -162,108 +77,12 @@ public class SysCalendarQuery extends DataQuery {
 		return dayLessThanOrEqual;
 	}
 
-	public List<Integer> getDays() {
-		return days;
-	}
-
-	public String getDutyA() {
-		return dutyA;
-	}
-
-	public String getDutyALike() {
-		if (dutyALike != null && dutyALike.trim().length() > 0) {
-			if (!dutyALike.startsWith("%")) {
-				dutyALike = "%" + dutyALike;
-			}
-			if (!dutyALike.endsWith("%")) {
-				dutyALike = dutyALike + "%";
-			}
-		}
-		return dutyALike;
-	}
-
-	public List<String> getDutyAs() {
-		return dutyAs;
-	}
-
-	public String getDutyB() {
-		return dutyB;
-	}
-
-	public String getDutyBLike() {
-		if (dutyBLike != null && dutyBLike.trim().length() > 0) {
-			if (!dutyBLike.startsWith("%")) {
-				dutyBLike = "%" + dutyBLike;
-			}
-			if (!dutyBLike.endsWith("%")) {
-				dutyBLike = dutyBLike + "%";
-			}
-		}
-		return dutyBLike;
-	}
-
-	public List<String> getDutyBs() {
-		return dutyBs;
-	}
-
-	public String getGroupA() {
-		return groupA;
-	}
-
-	public String getGroupALike() {
-		if (groupALike != null && groupALike.trim().length() > 0) {
-			if (!groupALike.startsWith("%")) {
-				groupALike = "%" + groupALike;
-			}
-			if (!groupALike.endsWith("%")) {
-				groupALike = groupALike + "%";
-			}
-		}
-		return groupALike;
-	}
-
-	public List<String> getGroupAs() {
-		return groupAs;
-	}
-
-	public String getGroupB() {
-		return groupB;
-	}
-
-	public String getGroupBLike() {
-		if (groupBLike != null && groupBLike.trim().length() > 0) {
-			if (!groupBLike.startsWith("%")) {
-				groupBLike = "%" + groupBLike;
-			}
-			if (!groupBLike.endsWith("%")) {
-				groupBLike = groupBLike + "%";
-			}
-		}
-		return groupBLike;
-	}
-
-	public List<String> getGroupBs() {
-		return groupBs;
-	}
-
 	public Integer getIsFreeDay() {
 		return isFreeDay;
 	}
 
 	public Integer getMonth() {
 		return month;
-	}
-
-	public Integer getMonthGreaterThanOrEqual() {
-		return monthGreaterThanOrEqual;
-	}
-
-	public Integer getMonthLessThanOrEqual() {
-		return monthLessThanOrEqual;
-	}
-
-	public List<Integer> getMonths() {
-		return months;
 	}
 
 	public String getOrderBy() {
@@ -333,37 +152,8 @@ public class SysCalendarQuery extends DataQuery {
 		return productionLine;
 	}
 
-	public String getProductionLineLike() {
-		if (productionLineLike != null
-				&& productionLineLike.trim().length() > 0) {
-			if (!productionLineLike.startsWith("%")) {
-				productionLineLike = "%" + productionLineLike;
-			}
-			if (!productionLineLike.endsWith("%")) {
-				productionLineLike = productionLineLike + "%";
-			}
-		}
-		return productionLineLike;
-	}
-
-	public List<String> getProductionLines() {
-		return productionLines;
-	}
-
 	public Integer getWeek() {
 		return week;
-	}
-
-	public Integer getWeekGreaterThanOrEqual() {
-		return weekGreaterThanOrEqual;
-	}
-
-	public Integer getWeekLessThanOrEqual() {
-		return weekLessThanOrEqual;
-	}
-
-	public List<Integer> getWeeks() {
-		return weeks;
 	}
 
 	public Date getWorkDateGreaterThanOrEqual() {
@@ -376,66 +166,6 @@ public class SysCalendarQuery extends DataQuery {
 
 	public Integer getYear() {
 		return year;
-	}
-
-	public Integer getYearGreaterThanOrEqual() {
-		return yearGreaterThanOrEqual;
-	}
-
-	public Integer getYearLessThanOrEqual() {
-		return yearLessThanOrEqual;
-	}
-
-	public List<Integer> getYears() {
-		return years;
-	}
-
-	public SysCalendarQuery groupA(String groupA) {
-		if (groupA == null) {
-			throw new RuntimeException("groupA is null");
-		}
-		this.groupA = groupA;
-		return this;
-	}
-
-	public SysCalendarQuery groupALike(String groupALike) {
-		if (groupALike == null) {
-			throw new RuntimeException("groupA is null");
-		}
-		this.groupALike = groupALike;
-		return this;
-	}
-
-	public SysCalendarQuery groupAs(List<String> groupAs) {
-		if (groupAs == null) {
-			throw new RuntimeException("groupAs is empty ");
-		}
-		this.groupAs = groupAs;
-		return this;
-	}
-
-	public SysCalendarQuery groupB(String groupB) {
-		if (groupB == null) {
-			throw new RuntimeException("groupB is null");
-		}
-		this.groupB = groupB;
-		return this;
-	}
-
-	public SysCalendarQuery groupBLike(String groupBLike) {
-		if (groupBLike == null) {
-			throw new RuntimeException("groupB is null");
-		}
-		this.groupBLike = groupBLike;
-		return this;
-	}
-
-	public SysCalendarQuery groupBs(List<String> groupBs) {
-		if (groupBs == null) {
-			throw new RuntimeException("groupBs is empty ");
-		}
-		this.groupBs = groupBs;
-		return this;
 	}
 
 	@Override
@@ -453,7 +183,7 @@ public class SysCalendarQuery extends DataQuery {
 		addColumn("groupA", "GROUPA_");
 		addColumn("groupB", "GROUPB_");
 		addColumn("productionLine", "PRODUCTIONLINE_");
-		addColumn("isWorkDay", "ISWORKDAY_");
+		addColumn("isFreeDay", "ISFREEDAY_");
 		addColumn("workDate", "WORKDATE_");
 	}
 
@@ -473,52 +203,11 @@ public class SysCalendarQuery extends DataQuery {
 		return this;
 	}
 
-	public SysCalendarQuery monthGreaterThanOrEqual(
-			Integer monthGreaterThanOrEqual) {
-		if (monthGreaterThanOrEqual == null) {
-			throw new RuntimeException("month is null");
-		}
-		this.monthGreaterThanOrEqual = monthGreaterThanOrEqual;
-		return this;
-	}
-
-	public SysCalendarQuery monthLessThanOrEqual(Integer monthLessThanOrEqual) {
-		if (monthLessThanOrEqual == null) {
-			throw new RuntimeException("month is null");
-		}
-		this.monthLessThanOrEqual = monthLessThanOrEqual;
-		return this;
-	}
-
-	public SysCalendarQuery months(List<Integer> months) {
-		if (months == null) {
-			throw new RuntimeException("months is empty ");
-		}
-		this.months = months;
-		return this;
-	}
-
 	public SysCalendarQuery productionLine(String productionLine) {
 		if (productionLine == null) {
 			throw new RuntimeException("productionLine is null");
 		}
 		this.productionLine = productionLine;
-		return this;
-	}
-
-	public SysCalendarQuery productionLineLike(String productionLineLike) {
-		if (productionLineLike == null) {
-			throw new RuntimeException("productionLine is null");
-		}
-		this.productionLineLike = productionLineLike;
-		return this;
-	}
-
-	public SysCalendarQuery productionLines(List<String> productionLines) {
-		if (productionLines == null) {
-			throw new RuntimeException("productionLines is empty ");
-		}
-		this.productionLines = productionLines;
 		return this;
 	}
 
@@ -534,58 +223,6 @@ public class SysCalendarQuery extends DataQuery {
 		this.dayLessThanOrEqual = dayLessThanOrEqual;
 	}
 
-	public void setDays(List<Integer> days) {
-		this.days = days;
-	}
-
-	public void setDutyA(String dutyA) {
-		this.dutyA = dutyA;
-	}
-
-	public void setDutyALike(String dutyALike) {
-		this.dutyALike = dutyALike;
-	}
-
-	public void setDutyAs(List<String> dutyAs) {
-		this.dutyAs = dutyAs;
-	}
-
-	public void setDutyB(String dutyB) {
-		this.dutyB = dutyB;
-	}
-
-	public void setDutyBLike(String dutyBLike) {
-		this.dutyBLike = dutyBLike;
-	}
-
-	public void setDutyBs(List<String> dutyBs) {
-		this.dutyBs = dutyBs;
-	}
-
-	public void setGroupA(String groupA) {
-		this.groupA = groupA;
-	}
-
-	public void setGroupALike(String groupALike) {
-		this.groupALike = groupALike;
-	}
-
-	public void setGroupAs(List<String> groupAs) {
-		this.groupAs = groupAs;
-	}
-
-	public void setGroupB(String groupB) {
-		this.groupB = groupB;
-	}
-
-	public void setGroupBLike(String groupBLike) {
-		this.groupBLike = groupBLike;
-	}
-
-	public void setGroupBs(List<String> groupBs) {
-		this.groupBs = groupBs;
-	}
-
 	public void setIsFreeDay(Integer isFreeDay) {
 		this.isFreeDay = isFreeDay;
 	}
@@ -594,44 +231,12 @@ public class SysCalendarQuery extends DataQuery {
 		this.month = month;
 	}
 
-	public void setMonthGreaterThanOrEqual(Integer monthGreaterThanOrEqual) {
-		this.monthGreaterThanOrEqual = monthGreaterThanOrEqual;
-	}
-
-	public void setMonthLessThanOrEqual(Integer monthLessThanOrEqual) {
-		this.monthLessThanOrEqual = monthLessThanOrEqual;
-	}
-
-	public void setMonths(List<Integer> months) {
-		this.months = months;
-	}
-
 	public void setProductionLine(String productionLine) {
 		this.productionLine = productionLine;
 	}
 
-	public void setProductionLineLike(String productionLineLike) {
-		this.productionLineLike = productionLineLike;
-	}
-
-	public void setProductionLines(List<String> productionLines) {
-		this.productionLines = productionLines;
-	}
-
 	public void setWeek(Integer week) {
 		this.week = week;
-	}
-
-	public void setWeekGreaterThanOrEqual(Integer weekGreaterThanOrEqual) {
-		this.weekGreaterThanOrEqual = weekGreaterThanOrEqual;
-	}
-
-	public void setWeekLessThanOrEqual(Integer weekLessThanOrEqual) {
-		this.weekLessThanOrEqual = weekLessThanOrEqual;
-	}
-
-	public void setWeeks(List<Integer> weeks) {
-		this.weeks = weeks;
 	}
 
 	public void setWorkDateGreaterThanOrEqual(Date workDateGreaterThanOrEqual) {
@@ -646,48 +251,11 @@ public class SysCalendarQuery extends DataQuery {
 		this.year = year;
 	}
 
-	public void setYearGreaterThanOrEqual(Integer yearGreaterThanOrEqual) {
-		this.yearGreaterThanOrEqual = yearGreaterThanOrEqual;
-	}
-
-	public void setYearLessThanOrEqual(Integer yearLessThanOrEqual) {
-		this.yearLessThanOrEqual = yearLessThanOrEqual;
-	}
-
-	public void setYears(List<Integer> years) {
-		this.years = years;
-	}
-
 	public SysCalendarQuery week(Integer week) {
 		if (week == null) {
 			throw new RuntimeException("week is null");
 		}
 		this.week = week;
-		return this;
-	}
-
-	public SysCalendarQuery weekGreaterThanOrEqual(
-			Integer weekGreaterThanOrEqual) {
-		if (weekGreaterThanOrEqual == null) {
-			throw new RuntimeException("week is null");
-		}
-		this.weekGreaterThanOrEqual = weekGreaterThanOrEqual;
-		return this;
-	}
-
-	public SysCalendarQuery weekLessThanOrEqual(Integer weekLessThanOrEqual) {
-		if (weekLessThanOrEqual == null) {
-			throw new RuntimeException("week is null");
-		}
-		this.weekLessThanOrEqual = weekLessThanOrEqual;
-		return this;
-	}
-
-	public SysCalendarQuery weeks(List<Integer> weeks) {
-		if (weeks == null) {
-			throw new RuntimeException("weeks is empty ");
-		}
-		this.weeks = weeks;
 		return this;
 	}
 
@@ -713,31 +281,6 @@ public class SysCalendarQuery extends DataQuery {
 			throw new RuntimeException("year is null");
 		}
 		this.year = year;
-		return this;
-	}
-
-	public SysCalendarQuery yearGreaterThanOrEqual(
-			Integer yearGreaterThanOrEqual) {
-		if (yearGreaterThanOrEqual == null) {
-			throw new RuntimeException("year is null");
-		}
-		this.yearGreaterThanOrEqual = yearGreaterThanOrEqual;
-		return this;
-	}
-
-	public SysCalendarQuery yearLessThanOrEqual(Integer yearLessThanOrEqual) {
-		if (yearLessThanOrEqual == null) {
-			throw new RuntimeException("year is null");
-		}
-		this.yearLessThanOrEqual = yearLessThanOrEqual;
-		return this;
-	}
-
-	public SysCalendarQuery years(List<Integer> years) {
-		if (years == null) {
-			throw new RuntimeException("years is empty ");
-		}
-		this.years = years;
 		return this;
 	}
 
