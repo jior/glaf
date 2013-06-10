@@ -15,11 +15,11 @@
 	sDate.setTime(new java.util.Date(year-1900, month-1, 1));
 	int s = sDate.get(java.util.Calendar.DAY_OF_WEEK)-1;
  	
-	Properties p = com.glaf.core.util.SysCalendarUtils.loadCalendarProperties();
-	String morning = (String)p.get("morning");
-	String nooning = (String)p.get("nooning");
-	String evening = (String)p.get("evening");
-	String mode = (String)p.get("WorkMode");
+	Properties props = com.glaf.core.util.CalendarUtils.loadCalendarProperties();
+	String morning = (String)props.get("morning");
+	String nooning = (String)props.get("nooning");
+	String evening = (String)props.get("evening");
+	String mode = (String)props.get("mode");
 	if(morning==null)morning="00:00~00:00";
 	if(nooning==null)nooning="00:00~00:00";
 	if(evening==null)evening="00:00~00:00";
@@ -47,7 +47,7 @@
    var contextPath="<%=request.getContextPath()%>";
 
 	function changeXYTime(obj){
-		alert(obj.value);
+		//alert(obj.value);
 		var m1 = document.getElementById("m1");
 		var m2 = document.getElementById("m2");
 		var mode = document.getElementById("mode");
