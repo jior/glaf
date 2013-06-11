@@ -82,6 +82,42 @@ public class DateUtils {
 	}
 
 	/**
+	 * 根据年月取每月的天数
+	 * 
+	 * @param year
+	 * @param month
+	 * @return
+	 */
+	public static int getYearMonthDays(int year, int month) {
+		int days = 31;
+		switch (month) {
+		case 1:
+		case 3:
+		case 5:
+		case 7:
+		case 8:
+		case 10:
+		case 12:
+			days = 31;
+			break;
+		case 4:
+		case 6:
+		case 9:
+		case 11:
+			days = 30;
+			break;
+		case 2:
+			if (year % 4 == 0 || year % 100 == 0 || year % 400 == 0) {
+				days = 29;
+				break;
+			}
+			days = 28;
+			break;
+		}
+		return days;
+	}
+
+	/**
 	 * 按指定格式将java.util.Date日期转换为字符串 例如:2009-10-01
 	 * 
 	 * @param date

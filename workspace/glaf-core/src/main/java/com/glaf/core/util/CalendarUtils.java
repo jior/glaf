@@ -48,13 +48,13 @@ public class CalendarUtils {
 	protected static final Logger logger = LoggerFactory
 			.getLogger(CalendarUtils.class);
 
+	protected static int mode = 0; // 0表示默认早班时间为当日 1表示默认早班时间为前日
+
 	protected static int startTime = 0;
 
 	protected static ISysCalendarService sysCalendarService;
 
 	protected static ISystemParamService systemParamService;
-
-	protected static int mode = 0; // 0表示默认早班时间为当日 1表示默认早班时间为前日
 
 	/**
 	 * 得到几天后的时间
@@ -246,41 +246,7 @@ public class CalendarUtils {
 		return DateUtils.getDate(workDate);
 	}
 
-	/**
-	 * 根据年月取每月的天数
-	 * 
-	 * @param year
-	 * @param month
-	 * @return
-	 */
-	public static int getYearMonthDays(int year, int month) {
-		int days = 31;
-		switch (month) {
-		case 1:
-		case 3:
-		case 5:
-		case 7:
-		case 8:
-		case 10:
-		case 12:
-			days = 31;
-			break;
-		case 4:
-		case 6:
-		case 9:
-		case 11:
-			days = 30;
-			break;
-		case 2:
-			if (year % 4 == 0 || year % 100 == 0 || year % 400 == 0) {
-				days = 29;
-				break;
-			}
-			days = 28;
-			break;
-		}
-		return days;
-	}
+	
 
 	public static synchronized void initWorkDayEnv() {
 		java.util.Properties p = loadCalendarProperties();

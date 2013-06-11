@@ -54,10 +54,10 @@ public class MxSysCalendarController {
 		int month = RequestUtils.getInt(request, "month",
 				cal.get(Calendar.MONTH) + 1);
 		String productionLine = request.getParameter("productionLine");
-		if (StringUtils.isEmpty(productionLine)){
+		if (StringUtils.isEmpty(productionLine)) {
 			productionLine = CalendarUtils.DEFAULT_PRODUCTION_LINE;
 		}
-		int daySize = CalendarUtils.getYearMonthDays(year, month);
+		int daySize = DateUtils.getYearMonthDays(year, month);
 		SysCalendarQuery query = new SysCalendarQuery();
 		query.setYear(year);
 		query.setMonth(month);
@@ -90,7 +90,7 @@ public class MxSysCalendarController {
 		int month = RequestUtils.getInt(request, "month");
 		int groupA = RequestUtils.getInt(request, "groupA");
 		int groupB = RequestUtils.getInt(request, "groupB");
-		int days = CalendarUtils.getYearMonthDays(year, month);
+		int days = DateUtils.getYearMonthDays(year, month);
 		String productionLine = request.getParameter("productionLine");
 		Calendar cal = Calendar.getInstance();
 		try {
@@ -116,6 +116,9 @@ public class MxSysCalendarController {
 				sysCalendar.setWeek(cal.get(Calendar.WEEK_OF_YEAR));
 
 				if (checkValue == 1) {
+					if (!isExist) {
+						sysCalendar.setIsFreeDay(1);
+					}
 					if (-1 != groupA) {
 						sysCalendar.setIsFreeDay(0);
 						sysCalendar.setGroupA("A");
