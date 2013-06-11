@@ -74,7 +74,7 @@ span {
 		//alert(objectIds);
 		jQuery.ajax({
 				   type: "POST",
-				   url: '<%=request.getContextPath()%>/system/form/application.do?method=saveListColumns&appId=${appId}&objectIds='+objectIds,
+				   url: '<%=request.getContextPath()%>/mx/system/form/application/saveListColumns?appId=${appId}&objectIds='+objectIds,
 				   dataType:  'json',
 				   error: function(data){
 					   alert('服务器处理错误！');

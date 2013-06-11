@@ -470,6 +470,9 @@ public class MxFormDataServiceImpl implements FormDataService {
 
 		dataModelService.insert(dataModelEntity);
 
+		blobService.makeMark(formContext.getActorId(),
+				formApplication.getName(), dataModelEntity.getBusinessKey());
+
 		FormHistoryInstance historyInstance = new FormHistoryInstance();
 		historyInstance.setActorId(formContext.getActorId());
 		historyInstance.setContent(dataModelEntity.toJsonObject()
@@ -674,6 +677,9 @@ public class MxFormDataServiceImpl implements FormDataService {
 		dataModelEntity.setFormName(formDefinition.getName());
 		dataModelEntity.setUpdateBy(formContext.getActorId());
 		dataModelEntity.setUpdateDate(new Date());
+
+		blobService.makeMark(formContext.getActorId(),
+				formApplication.getName(), dataModelEntity.getBusinessKey());
 
 		Set<Entry<String, Object>> entrySet = dataMap.entrySet();
 		for (Entry<String, Object> entry : entrySet) {

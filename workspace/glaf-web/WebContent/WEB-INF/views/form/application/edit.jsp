@@ -35,7 +35,7 @@
 		var params = jQuery("#iForm").formSerialize();
 		jQuery.ajax({
 				   type: "POST",
-				   url: '<%=request.getContextPath()%>/system/form/application.do?method=saveFormApplication',
+				   url: '<%=request.getContextPath()%>/mx/system/form/application/saveFormApplication',
 				   data: params,
 				   dataType:  'json',
 				   error: function(data){
@@ -57,7 +57,7 @@
 		var params = jQuery("#iForm").formSerialize();
 		jQuery.ajax({
 				   type: "POST",
-				   url: '<%=request.getContextPath()%>/system/form/application.do?method=saveFormApplication',
+				   url: '<%=request.getContextPath()%>/mx/system/form/application/saveFormApplication',
 				   data: params,
 				   dataType:  'json',
 				   error: function(data){

@@ -47,7 +47,7 @@
 
     function zTreeOnClick(event, treeId, treeNode, clickFlag) {
 		jQuery("#nodeId").val(treeNode.id);
-		loadData('<%=request.getContextPath()%>/system/form/application.do?method=json&nodeId='+treeNode.id);
+		loadData('<%=request.getContextPath()%>/mx/system/form/application/json?nodeId='+treeNode.id);
 	}
 
 	function loadData(url){
@@ -71,7 +71,7 @@
 				nowrap: false,
 				striped: true,
 				collapsible:true,
-				url:'<%=request.getContextPath()%>/system/form/application.do?method=json',
+				url:'<%=request.getContextPath()%>/mx/system/form/application/json',
 				sortName: 'id',
 				sortOrder: 'desc',
 				remoteSort: false,
@@ -101,15 +101,13 @@
 
 		 
 	function addNew(){
-	    //location.href="<%=request.getContextPath()%>/system/form/application.do?method=edit";
 		var nodeId = jQuery("#nodeId").val();
-		var link="<%=request.getContextPath()%>/system/form/application.do?method=edit&nodeId="+nodeId;
+		var link="<%=request.getContextPath()%>/mx/system/form/application/edit?nodeId="+nodeId;
 	    art.dialog.open(link, { height: 420, width: 680, title: "添加记录", lock: true, scrollbars:"no" }, false);
 	}
 
 	function onRowClick(rowIndex, row){
-            //window.open('<%=request.getContextPath()%>/system/form/application.do?method=edit&appId='+row.id);
-	    var link = '<%=request.getContextPath()%>/system/form/application.do?method=edit&appId='+row.id;
+	    var link = '<%=request.getContextPath()%>/mx/system/form/application/edit?appId='+row.id;
 	    art.dialog.open(link, { height: 420, width: 680, title: "修改记录", lock: true, scrollbars:"no" }, false);
 	}
 
@@ -133,9 +131,8 @@
 	    }
 	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
 	    if (selected ){
-		//location.href="<%=request.getContextPath()%>/system/form/application.do?method=edit&appId="+selected.id;
-		var link = "<%=request.getContextPath()%>/system/form/application.do?method=edit&appId="+selected.id;
-		art.dialog.open(link, { height: 420, width: 680, title: "修改记录", lock: true, scrollbars:"no" }, false);
+		  var link = "<%=request.getContextPath()%>/mx/system/form/application/edit?appId="+selected.id;
+		  art.dialog.open(link, { height: 420, width: 680, title: "修改记录", lock: true, scrollbars:"no" }, false);
 	    }
 	}
 
@@ -147,8 +144,7 @@
 	    }
 	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
 	    if (selected ){
-		//location.href="<%=request.getContextPath()%>/system/form/application.do?method=edit&appId="+selected.id;
-		  var link = "<%=request.getContextPath()%>/system/form/application.do?method=editListColumns&appId="+selected.id;
+		  var link = "<%=request.getContextPath()%>/mx/system/form/application/editListColumns?appId="+selected.id;
 		  art.dialog.open(link, { height: 380, width: 620, title: "设置列表显示字段", lock: true, scrollbars:"no" }, false);
 	    }
 	}
@@ -161,7 +157,7 @@
 		}
 		var selected = jQuery('#mydatagrid').datagrid('getSelected');
 		if (selected ){
-		    location.href="<%=request.getContextPath()%>/system/form/application.do?method=edit&appId="+selected.id;
+		    location.href="<%=request.getContextPath()%>/mx/system/form/application/edit?appId="+selected.id;
 		}
 	}
 
@@ -175,7 +171,7 @@
 		    var appIds = ids.join(',');
 			jQuery.ajax({
 				   type: "POST",
-				   url: '<%=request.getContextPath()%>/system/form/application.do?method=delete&appIds='+appIds,
+				   url: '<%=request.getContextPath()%>/mx/system/form/application/delete?appIds='+appIds,
 				   dataType:  'json',
 				   error: function(data){
 					   alert('服务器处理错误！');
@@ -201,7 +197,7 @@
 	function getSelected(){
 	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
 	    if (selected){
-		alert(selected.code+":"+selected.name+":"+selected.addr+":"+selected.col4);
+		  alert(selected.code+":"+selected.name+":"+selected.addr+":"+selected.col4);
 	    }
 	}
 
@@ -223,6 +219,13 @@
 	    var queryParams = jQuery('#mydatagrid').datagrid('options').queryParams;
 	    jQuery('#mydatagrid').datagrid('reload');	
 	    jQuery('#dlg').dialog('close');
+	}
+
+	function entry(){
+		var selected = jQuery('#mydatagrid').datagrid('getSelected');
+	    if (selected){
+		    window.open('<%=request.getContextPath()%>/mx/form?appId='+selected.id);
+		}
 	}
 		 
 </script>
@@ -252,8 +255,10 @@
 		   onclick="javascript:editSelected();">修改</a>  
 		<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-remove'"
 		   onclick="javascript:deleteSelections();">删除</a> 
+		<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-sys'"
+		   onclick="javascript:listColumns();">列表显示设置</a>  
 		<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-list'"
-		   onclick="javascript:listColumns();">列表设置</a>  
+		   onclick="javascript:entry();">应用入口</a>  
 		<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-search'"
 		   onclick="javascript:searchWin();">查找</a>
 	   </div> 

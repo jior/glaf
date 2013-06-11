@@ -47,7 +47,7 @@
 
     function zTreeOnClick(event, treeId, treeNode, clickFlag) {
 		jQuery("#nodeId").val(treeNode.id);
-		loadData('<%=request.getContextPath()%>/system/form/definition.do?method=json&nodeId='+treeNode.id);
+		loadData('<%=request.getContextPath()%>/mx/system/form/definition/json?nodeId='+treeNode.id);
 	}
 
 	function loadData(url){
@@ -71,7 +71,7 @@
 				nowrap: false,
 				striped: true,
 				collapsible:true,
-				url:'<%=request.getContextPath()%>/system/form/definition.do?method=json',
+				url:'<%=request.getContextPath()%>/mx/system/form/definition/json',
 				sortName: 'id',
 				sortOrder: 'desc',
 				remoteSort: false,
@@ -103,16 +103,12 @@
 
 		 
 	function addNew(){
-	    //location.href="<%=request.getContextPath()%>/system/form/definition.do?method=edit";
 		var nodeId = jQuery("#nodeId").val();
-		var link = "<%=request.getContextPath()%>/system/form/definition.do?method=edit&nodeId="+nodeId;
+		var link = "<%=request.getContextPath()%>/mx/system/form/definition/edit?nodeId="+nodeId;
 	    art.dialog.open(link, { height: 420, width: 680, title: "添加记录", lock: true, scrollbars:"no" }, false);
 	}
 
 	function onRowClick(rowIndex, row){
-        //window.open('<%=request.getContextPath()%>/system/form/definition.do?method=edit&rowId='+row.id);
-	    //var link = '<%=request.getContextPath()%>/system/form/definition.do?method=edit&formDefinitionId='+row.formDefinitionId;
-	    //art.dialog.open(link, { height: 420, width: 680, title: "修改记录", lock: true, scrollbars:"no" }, false);
 		window.open('<%=request.getContextPath()%>/rs/form/definition/download?formDefinitionId='+row.formDefinitionId);
 	}
 
@@ -136,9 +132,8 @@
 	    }
 	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
 	    if (selected ){
-		//location.href="<%=request.getContextPath()%>/system/form/definition.do?method=edit&rowId="+selected.id;
-		var link = "<%=request.getContextPath()%>/system/form/definition.do?method=edit&formDefinitionId="+selected.formDefinitionId;
-		art.dialog.open(link, { height: 420, width: 680, title: "修改记录", lock: true, scrollbars:"no" }, false);
+		  var link = "<%=request.getContextPath()%>/mx/system/form/definition/edit?formDefinitionId="+selected.formDefinitionId;
+		  art.dialog.open(link, { height: 420, width: 680, title: "修改记录", lock: true, scrollbars:"no" }, false);
 	    }
 	}
 
@@ -150,7 +145,7 @@
 		}
 		var selected = jQuery('#mydatagrid').datagrid('getSelected');
 		if (selected ){
-		    location.href="<%=request.getContextPath()%>/system/form/definition.do?method=edit&readonly=true&formDefinitionId="+selected.formDefinitionId;
+		    location.href="<%=request.getContextPath()%>/mx/system/form/definition/edit?readonly=true&formDefinitionId="+selected.formDefinitionId;
 		}
 	}
 
@@ -164,7 +159,7 @@
 		    var rowIds = ids.join(',');
 			jQuery.ajax({
 				   type: "POST",
-				   url: '<%=request.getContextPath()%>/system/form/definition.do?method=delete&rowIds='+rowIds,
+				   url: '<%=request.getContextPath()%>/mx/system/form/definition/delete?rowIds='+rowIds,
 				   dataType:  'json',
 				   error: function(data){
 					   alert('服务器处理错误！');

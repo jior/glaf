@@ -23,7 +23,7 @@
 		var params = jQuery("#iForm").formSerialize();
 		jQuery.ajax({
 				   type: "POST",
-				   url: '<%=request.getContextPath()%>/system/form/definition.do?method=saveFormDefinition',
+				   url: '<%=request.getContextPath()%>/mx/system/form/definition/saveFormDefinition',
 				   data: params,
 				   dataType:  'json',
 				   error: function(data){
@@ -45,7 +45,7 @@
 		var params = jQuery("#iForm").formSerialize();
 		jQuery.ajax({
 				   type: "POST",
-				   url: '<%=request.getContextPath()%>/system/form/definition.do?method=saveFormDefinition',
+				   url: '<%=request.getContextPath()%>/mx/system/form/definition/saveFormDefinition',
 				   data: params,
 				   dataType:  'json',
 				   error: function(data){
@@ -97,7 +97,7 @@
   </div>
 
   <div data-options="region:'center',border:false,cache:true">
-  <form action="<%=request.getContextPath()%>/system/form/deploy.do"
+  <form action="<%=request.getContextPath()%>/mx/system/form/deploy.do"
 	    method="post" enctype="multipart/form-data" id="iForm" name="iForm" class="x-form">
   <input type="hidden" id="nodeId" name="nodeId" value="${nodeId}" >
   <input type="hidden" id="id" name="id" value="${formDefinition.id}"/>

@@ -25,7 +25,7 @@ import com.glaf.form.core.query.*;
 import com.glaf.form.core.service.*;
 
 @Controller("/system/form/definition")
-@RequestMapping("/system/form/definition.do")
+@RequestMapping("/system/form/definition")
 public class FormDefinitionController {
 	private static final Log logger = LogFactory
 			.getLog(FormDefinitionController.class);
@@ -37,7 +37,7 @@ public class FormDefinitionController {
 	}
 
 	@ResponseBody
-	@RequestMapping(params = "method=delete")
+	@RequestMapping("delete")
 	public void delete(HttpServletRequest request, ModelMap modelMap) {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
@@ -69,7 +69,7 @@ public class FormDefinitionController {
 		}
 	}
 
-	@RequestMapping(params = "method=edit")
+	@RequestMapping("edit")
 	public ModelAndView edit(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
@@ -99,7 +99,7 @@ public class FormDefinitionController {
 		return new ModelAndView("/form/definition/edit", modelMap);
 	}
 
-	@RequestMapping(params = "method=json")
+	@RequestMapping("json")
 	@ResponseBody
 	public byte[] json(HttpServletRequest request, ModelMap modelMap)
 			throws IOException {
@@ -167,7 +167,8 @@ public class FormDefinitionController {
 					FormDefinition formDefinition = (FormDefinition) object;
 					JSONObject rowJSON = formDefinition.toJsonObject();
 					rowJSON.put("id", formDefinition.getId());
-					rowJSON.put("formDefinitionId", formDefinition.getFormDefinitionId());
+					rowJSON.put("formDefinitionId",
+							formDefinition.getFormDefinitionId());
 					rowJSON.put("startIndex", ++start);
 					rowsJSON.add(rowJSON);
 				}
@@ -203,7 +204,7 @@ public class FormDefinitionController {
 		return new ModelAndView("/form/definition/list", modelMap);
 	}
 
-	@RequestMapping(params = "method=query")
+	@RequestMapping("query")
 	public ModelAndView query(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		String view = request.getParameter("view");
@@ -217,7 +218,7 @@ public class FormDefinitionController {
 		return new ModelAndView("/form/definition/query", modelMap);
 	}
 
-	@RequestMapping(params = "method=save")
+	@RequestMapping("save")
 	public ModelAndView save(HttpServletRequest request, ModelMap modelMap,
 			FormDefinition formDefinition) {
 		User user = RequestUtils.getUser(request);
@@ -234,7 +235,7 @@ public class FormDefinitionController {
 	}
 
 	@ResponseBody
-	@RequestMapping(params = "method=saveFormDefinition")
+	@RequestMapping("saveFormDefinition")
 	public byte[] saveFormDefinition(HttpServletRequest request) {
 		User user = RequestUtils.getUser(request);
 		String actorId = user.getActorId();
@@ -257,14 +258,14 @@ public class FormDefinitionController {
 		this.formDataService = formDataService;
 	}
 
-	@RequestMapping(params = "method=update")
+	@RequestMapping("update")
 	public ModelAndView update(HttpServletRequest request, ModelMap modelMap,
 			FormDefinition formDefinition) {
 		formDataService.saveFormDefinition(formDefinition);
 		return this.list(request, modelMap);
 	}
 
-	@RequestMapping(params = "method=view")
+	@RequestMapping("view")
 	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);

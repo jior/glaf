@@ -37,7 +37,7 @@ import com.glaf.jbpm.container.ProcessContainer;
 import com.glaf.jbpm.context.Context;
 
 @Controller("/system/form/application")
-@RequestMapping("/system/form/application.do")
+@RequestMapping("/system/form/application")
 public class FormApplicationController {
 
 	private static final Log logger = LogFactory
@@ -54,7 +54,7 @@ public class FormApplicationController {
 	}
 
 	@ResponseBody
-	@RequestMapping(params = "method=delete")
+	@RequestMapping("delete")
 	public void delete(HttpServletRequest request, ModelMap modelMap) {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
@@ -86,7 +86,7 @@ public class FormApplicationController {
 		}
 	}
 
-	@RequestMapping(params = "method=edit")
+	@RequestMapping("edit")
 	public ModelAndView edit(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
@@ -151,7 +151,7 @@ public class FormApplicationController {
 		return new ModelAndView("/form/application/edit", modelMap);
 	}
 
-	@RequestMapping(params = "method=editListColumns")
+	@RequestMapping("editListColumns")
 	public ModelAndView editListColumns(HttpServletRequest request,
 			ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
@@ -167,7 +167,7 @@ public class FormApplicationController {
 			EntityDefinition entityDefinition = entityDefinitionService
 					.getEntityDefinition(targetId);
 			if (entityDefinition != null) {
-				//logger.debug(entityDefinition.toJsonObject().toJSONString());
+				// logger.debug(entityDefinition.toJsonObject().toJSONString());
 				XmlReader reader = new XmlReader();
 				TableDefinition tableDefinition = reader
 						.read(new ByteArrayInputStream(entityDefinition
@@ -182,8 +182,9 @@ public class FormApplicationController {
 						unselectColumns.add(c);
 					}
 				}
-				
-				logger.debug("column size:"+tableDefinition.getColumns().size());
+
+				logger.debug("column size:"
+						+ tableDefinition.getColumns().size());
 
 				request.setAttribute("tableDefinition", tableDefinition);
 				request.setAttribute("unselectColumns", unselectColumns);
@@ -205,7 +206,7 @@ public class FormApplicationController {
 		return new ModelAndView("/form/application/editListColumns", modelMap);
 	}
 
-	@RequestMapping(params = "method=json")
+	@RequestMapping("json")
 	@ResponseBody
 	public byte[] json(HttpServletRequest request, ModelMap modelMap)
 			throws IOException {
@@ -311,7 +312,7 @@ public class FormApplicationController {
 		return new ModelAndView("/form/application/list", modelMap);
 	}
 
-	@RequestMapping(params = "method=query")
+	@RequestMapping("query")
 	public ModelAndView query(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		String view = request.getParameter("view");
@@ -325,7 +326,7 @@ public class FormApplicationController {
 		return new ModelAndView("/form/application/query", modelMap);
 	}
 
-	@RequestMapping(params = "method=save")
+	@RequestMapping("save")
 	public ModelAndView save(HttpServletRequest request, ModelMap modelMap,
 			FormApplication formApplication) {
 		User user = RequestUtils.getUser(request);
@@ -339,7 +340,7 @@ public class FormApplicationController {
 	}
 
 	@ResponseBody
-	@RequestMapping(params = "method=saveFormApplication")
+	@RequestMapping("saveFormApplication")
 	public byte[] saveFormApplication(HttpServletRequest request) {
 		User user = RequestUtils.getUser(request);
 		String actorId = user.getActorId();
@@ -358,7 +359,7 @@ public class FormApplicationController {
 	}
 
 	@ResponseBody
-	@RequestMapping(params = "method=saveListColumns")
+	@RequestMapping("saveListColumns")
 	public byte[] saveListColumns(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
@@ -414,14 +415,14 @@ public class FormApplicationController {
 		this.tableDefinitionService = tableDefinitionService;
 	}
 
-	@RequestMapping(params = "method=update")
+	@RequestMapping("update")
 	public ModelAndView update(HttpServletRequest request, ModelMap modelMap,
 			FormApplication formApplication) {
 		formDataService.saveFormApplication(formApplication);
 		return this.list(request, modelMap);
 	}
 
-	@RequestMapping(params = "method=view")
+	@RequestMapping("view")
 	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
