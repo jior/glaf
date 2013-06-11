@@ -245,6 +245,7 @@
 
 
 <div align="center"><br />
+<%if(processInstance != null && !processInstance.hasEnded()){%>
  <input type="button" value="暂停任务" id="suspend" name="suspend"
 	class="btn" onclick="javascript:suspendX();" />
  <input type="button"
@@ -253,6 +254,7 @@
  <input type="button" value="重新分派任务"
 	id="reassignx" name="reassignx" class="btn"
 	onclick="javascript:chooseUserXY();" />  
+<%}%>
  <input type="button"
 	value="关闭" id="close" name="close" class="btn"
 	onclick="javascript:window.close();" /> 
