@@ -389,6 +389,18 @@ public class MxFormDataServiceImpl implements FormDataService {
 		Paging page = new Paging();
 		List<Object> rows = new ArrayList<Object>();
 
+		int total = dataModelService.getDataModelCount(query);
+		if (total > 0) {
+			page.setTotal(total);
+			List<DataModel> list = dataModelService.list(query.getPageNo(),
+					query.getPageSize(), query);
+			if (list != null && !list.isEmpty()) {
+				for (DataModel m : list) {
+					rows.add(m);
+				}
+			}
+		}
+
 		if (rows != null && rows.size() > 0) {
 			page.setRows(rows);
 		}

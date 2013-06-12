@@ -224,6 +224,8 @@ public class FormController {
 		DataModelQuery query = new DataModelQuery();
 		Tools.populate(query, params);
 		query.deleteFlag(0);
+		query.setActorId(loginContext.getActorId());
+		query.setLoginContext(loginContext);
 
 		if (!loginContext.isSystemAdministrator()) {
 			String actorId = loginContext.getActorId();
@@ -252,7 +254,21 @@ public class FormController {
 		if (limit <= 0) {
 			limit = PageResult.DEFAULT_PAGE_SIZE;
 		}
+
+		query.setPageNo(pageNo);
+		query.setPageSize(limit);
+
 		String appId = ParamUtils.getString(params, "appId");
+
+		FormApplication formApplication = null;
+		List<ColumnDefinition> columns = null;
+		if (StringUtils.isNotEmpty(appId)) {
+			formApplication = formDataService.getFormApplication(appId);
+			request.setAttribute("formApplication", formApplication);
+			String targetId = formApplication.getTableName() + "_FormApp";
+			columns = tableDefinitionService
+					.getColumnDefinitionsByTargetId(targetId);
+		}
 
 		JSONObject result = new JSONObject();
 		Paging page = formDataService.getPageDataModel(appId, query);
@@ -282,9 +298,9 @@ public class FormController {
 
 				for (Object object : list) {
 					DataModel dataModel = (DataModel) object;
+					dataModel.setColumns(columns);
 					JSONObject rowJSON = dataModel.toJsonObject();
 					rowJSON.put("id", dataModel.getId());
-					rowJSON.put("formName", dataModel.getFormName());
 					rowJSON.put("startIndex", ++start);
 					rowsJSON.add(rowJSON);
 				}

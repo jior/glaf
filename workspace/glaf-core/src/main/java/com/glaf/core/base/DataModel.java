@@ -19,10 +19,12 @@
 package com.glaf.core.base;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.glaf.core.domain.ColumnDefinition;
 
 public interface DataModel {
 
@@ -32,7 +34,11 @@ public interface DataModel {
 
 	Date getCreateDate();
 
+	Map<String, Object> getDataMap();
+
 	int getDeleteFlag();
+
+	Map<String, ColumnModel> getFields();
 
 	String getFormName();
 
@@ -60,6 +66,8 @@ public interface DataModel {
 
 	void setBusinessKey(String businessKey);
 
+	void setColumns(List<ColumnDefinition> columns);
+
 	void setCreateBy(String createBy);
 
 	void setCreateDate(Date createDate);
@@ -71,10 +79,6 @@ public interface DataModel {
 	void setId(Long id);
 
 	void setLocked(int locked);
-
-	Map<String, ColumnModel> getFields();
-	
-	Map<String, Object> getDataMap();
 
 	void setParentId(Long parentId);
 

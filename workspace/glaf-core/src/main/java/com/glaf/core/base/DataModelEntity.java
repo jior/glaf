@@ -19,9 +19,11 @@
 package com.glaf.core.base;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
@@ -32,6 +34,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import com.glaf.core.domain.ColumnDefinition;
 import com.glaf.core.util.DateUtils;
 import com.glaf.core.util.StringTools;
 
@@ -67,9 +70,14 @@ public class DataModelEntity implements DataModel, Serializable {
 	protected String updateBy;
 	protected Date updateDate;
 	protected int wfStatus;
+	protected List<ColumnDefinition> columns = new ArrayList<ColumnDefinition>();
 
 	public DataModelEntity() {
 
+	}
+
+	public void setColumns(List<ColumnDefinition> columns) {
+		this.columns = columns;
 	}
 
 	public void addField(ColumnModel field) {
@@ -95,8 +103,6 @@ public class DataModelEntity implements DataModel, Serializable {
 		field.setName(key);
 		field.setValue(value);
 	}
-
-
 
 	public String getActorName() {
 		return actorName;
@@ -238,8 +244,6 @@ public class DataModelEntity implements DataModel, Serializable {
 		return wfStatus;
 	}
 
-	
-
 	public void setActorName(String actorName) {
 		this.actorName = actorName;
 	}
@@ -365,13 +369,38 @@ public class DataModelEntity implements DataModel, Serializable {
 
 		if (dataMap != null && dataMap.size() > 0) {
 			dataMap.remove("dataMap");
-			dataMap.remove(StringTools.lower(this.getFormName()));
+			Map<String, Object> rowMap = new HashMap<String, Object>();
+			rowMap.putAll(dataMap);
+			// dataMap.remove(StringTools.lower(this.getFormName()));
 			Set<Entry<String, Object>> entrySet = dataMap.entrySet();
 			for (Entry<String, Object> entry : entrySet) {
 				String name = entry.getKey();
 				Object value = entry.getValue();
 				if (value != null) {
 					jsonObject.put(name, value);
+					rowMap.put(name.toLowerCase(), value);
+				}
+			}
+			if (columns != null && !columns.isEmpty()) {
+				for (ColumnDefinition col : columns) {
+					Object value = rowMap
+							.get(col.getColumnName().toUpperCase());
+					if (value != null) {
+						if (value instanceof Date) {
+							Date date = (Date) value;
+							jsonObject.put(col.getName(),
+									DateUtils.getDate(date));
+							jsonObject.put(col.getName() + "_datetime",
+									DateUtils.getDateTime(date));
+							jsonObject.put(col.getColumnName(),
+									DateUtils.getDate(date));
+							jsonObject.put(col.getColumnName() + "_datetime",
+									DateUtils.getDateTime(date));
+						} else {
+							jsonObject.put(col.getColumnName(), value);
+							jsonObject.put(col.getName(), value);
+						}
+					}
 				}
 			}
 		}

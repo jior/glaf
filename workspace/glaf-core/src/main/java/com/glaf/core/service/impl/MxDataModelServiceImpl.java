@@ -103,6 +103,17 @@ public class MxDataModelServiceImpl implements DataModelService {
 					tableDataService.deleteTableData(tableModel);
 					break;
 				}
+				if (StringUtils.equalsIgnoreCase(col.getColumnName(), "ID_")) {
+					TableModel tableModel = new TableModel();
+					tableModel.setTableName(tableName);
+					ColumnModel cm = new ColumnModel();
+					cm.setColumnName("ID_");
+					cm.setJavaType(col.getJavaType());
+					cm.setCollectionValues(businessKeys);
+					tableModel.addColumn(cm);
+					tableDataService.deleteTableData(tableModel);
+					break;
+				}
 			}
 		}
 	}
