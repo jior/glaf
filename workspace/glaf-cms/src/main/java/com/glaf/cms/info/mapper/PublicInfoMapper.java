@@ -39,5 +39,7 @@ public interface PublicInfoMapper {
 	void insertPublicInfo(PublicInfo model);
 
 	void updatePublicInfo(PublicInfo model);
+	
+	void updateViewCount(String id);
 
 }

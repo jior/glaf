@@ -79,5 +79,8 @@ public interface PublicInfoService {
 	 */
 	@Transactional
 	void save(PublicInfo publicInfo);
+	
+	@Transactional
+	void updateViewCount(String id);
 
 }

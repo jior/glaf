@@ -316,7 +316,14 @@
 		ID_ = #{id, jdbcType=VARCHAR}
 
 	</update>
-
+	
+	
+	<update id="updateViewCount" parameterType="string">
+		update CMS_PUBLICINFO
+		set VIEWCOUNT_ = VIEWCOUNT_ + 1
+		where ID_ = #{id, jdbcType=VARCHAR}
+    </update>
+    
 
 	<delete id="deletePublicInfoById" parameterType="string">
 		delete from

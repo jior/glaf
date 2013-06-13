@@ -40,7 +40,7 @@ import com.glaf.cms.info.query.*;
 @Transactional(readOnly = true)
 public class PublicInfoServiceImpl implements PublicInfoService {
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
-	
+
 	protected IBlobService blobService;
 
 	protected EntityDAO entityDAO;
@@ -118,6 +118,11 @@ public class PublicInfoServiceImpl implements PublicInfoService {
 		}
 		blobService.makeMark(publicInfo.getCreateBy(),
 				publicInfo.getServiceKey(), publicInfo.getId());
+	}
+
+	@Transactional
+	public void updateViewCount(String id) {
+		publicInfoMapper.updateViewCount(id);
 	}
 
 	@Resource
