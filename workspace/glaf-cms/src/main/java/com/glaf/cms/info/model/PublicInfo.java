@@ -70,6 +70,9 @@ public class PublicInfo implements Serializable, JSONable {
 	@Column(name = "CREATEBY_", length = 50)
 	protected String createBy;
 
+	@javax.persistence.Transient
+	protected String createByName;
+
 	/**
 	 * 创建日期
 	 */
@@ -279,6 +282,10 @@ public class PublicInfo implements Serializable, JSONable {
 		return this.createBy;
 	}
 
+	public String getCreateByName() {
+		return createByName;
+	}
+
 	public Date getCreateDate() {
 		return this.createDate;
 	}
@@ -421,6 +428,10 @@ public class PublicInfo implements Serializable, JSONable {
 
 	public void setCreateBy(String createBy) {
 		this.createBy = createBy;
+	}
+
+	public void setCreateByName(String createByName) {
+		this.createByName = createByName;
 	}
 
 	public void setCreateDate(Date createDate) {

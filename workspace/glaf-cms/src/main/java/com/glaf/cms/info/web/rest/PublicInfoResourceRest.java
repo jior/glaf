@@ -152,6 +152,81 @@ public class PublicInfoResourceRest {
 		return result.toJSONString().getBytes("UTF-8");
 	}
 
+	@GET
+	@POST
+	@Path("/json")
+	@ResponseBody
+	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
+	public byte[] json(@Context HttpServletRequest request) throws IOException {
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		PublicInfoQuery query = new PublicInfoQuery();
+		Tools.populate(query, params);
+		query.setPublishFlag(1);
+		query.serviceKey(request.getParameter("serviceKey"));
+
+		String gridType = ParamUtils.getString(params, "gridType");
+		if (gridType == null) {
+			gridType = "easyui";
+		}
+		int start = 0;
+		int limit = 10;
+		String orderName = null;
+		String order = null;
+
+		int pageNo = ParamUtils.getInt(params, "page");
+		limit = ParamUtils.getInt(params, "rows");
+		start = (pageNo - 1) * limit;
+		orderName = ParamUtils.getString(params, "sortName");
+		order = ParamUtils.getString(params, "sortOrder");
+
+		if (start < 0) {
+			start = 0;
+		}
+
+		if (limit <= 0) {
+			limit = PageResult.DEFAULT_PAGE_SIZE;
+		}
+
+		JSONObject result = new JSONObject();
+		int total = publicInfoService.getPublicInfoCountByQueryCriteria(query);
+		if (total > 0) {
+			result.put("total", total);
+			result.put("totalCount", total);
+			result.put("totalRecords", total);
+			result.put("start", start);
+			result.put("startIndex", start);
+			result.put("limit", limit);
+			result.put("pageSize", limit);
+
+			if (StringUtils.isNotEmpty(orderName)) {
+				query.setSortOrder(orderName);
+				if (StringUtils.equals(order, "desc")) {
+					query.setSortOrder(" desc ");
+				}
+			}
+
+			List<PublicInfo> list = publicInfoService
+					.getPublicInfosByQueryCriteria(start, limit, query);
+
+			if (list != null && !list.isEmpty()) {
+				JSONArray rowsJSON = new JSONArray();
+				result.put("rows", rowsJSON);
+				for (PublicInfo publicInfo : list) {
+					JSONObject rowJSON = publicInfo.toJsonObject();
+					rowJSON.put("id", publicInfo.getId());
+					rowJSON.put("publicInfoId", publicInfo.getId());
+					rowJSON.put("startIndex", ++start);
+					rowsJSON.add(rowJSON);
+				}
+			}
+		} else {
+			JSONArray rowsJSON = new JSONArray();
+			result.put("rows", rowsJSON);
+			result.put("total", total);
+		}
+		return result.toJSONString().getBytes("UTF-8");
+	}
+
 	@POST
 	@Path("/savePublicInfo")
 	@ResponseBody

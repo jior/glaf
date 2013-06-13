@@ -36,7 +36,9 @@ import com.alibaba.fastjson.*;
 import com.glaf.core.base.DataFile;
 import com.glaf.core.base.TreeModel;
 import com.glaf.core.config.ViewProperties;
+import com.glaf.core.identity.User;
 
+import com.glaf.core.security.IdentityFactory;
 import com.glaf.core.service.IBlobService;
 import com.glaf.core.service.ISystemParamService;
 import com.glaf.core.service.ITreeModelService;
@@ -93,6 +95,34 @@ public class PublicInfoController {
 		}
 
 		return rowJSON.toJSONString().getBytes("UTF-8");
+	}
+
+	@RequestMapping("/indexList")
+	public ModelAndView indexList(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+
+		String serviceKey = request.getParameter("serviceKey");
+		if (StringUtils.isNotEmpty(serviceKey)) {
+			TreeModel treeModel = treeModelService
+					.getTreeModelByCode(serviceKey);
+			request.setAttribute("treeModel", treeModel);
+
+			Map<String, Object> params = RequestUtils.getParameterMap(request);
+			PublicInfoQuery query = new PublicInfoQuery();
+			Tools.populate(query, params);
+			query.setPublishFlag(1);
+			query.serviceKey(serviceKey);
+
+			List<PublicInfo> rows = publicInfoService.list(query);
+			request.setAttribute("rows", rows);
+		}
+
+		String view = request.getParameter("view");
+		if (StringUtils.isNotEmpty(view)) {
+			return new ModelAndView(view, modelMap);
+		}
+
+		return new ModelAndView("/cms/info/indexList", modelMap);
 	}
 
 	@RequestMapping("/json")
@@ -225,7 +255,7 @@ public class PublicInfoController {
 			return new ModelAndView(view, modelMap);
 		}
 
-		return new ModelAndView("/public/info/list", modelMap);
+		return new ModelAndView("/cms/info/list", modelMap);
 	}
 
 	@RequestMapping("/query")
@@ -239,7 +269,7 @@ public class PublicInfoController {
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);
 		}
-		return new ModelAndView("/public/info/query", modelMap);
+		return new ModelAndView("/cms/info/query", modelMap);
 	}
 
 	@javax.annotation.Resource
@@ -267,20 +297,26 @@ public class PublicInfoController {
 		RequestUtils.setRequestParameterToAttribute(request);
 		PublicInfo publicInfo = publicInfoService.getPublicInfo(request
 				.getParameter("id"));
-		request.setAttribute("publicInfo", publicInfo);
+		if (publicInfo != null) {
+			request.setAttribute("publicInfo", publicInfo);
+			User user = IdentityFactory.getUser(publicInfo.getCreateBy());
+			if (user != null) {
+				publicInfo.setCreateByName(user.getName());
+			}
+			try {
+				publicInfo.setViewCount(publicInfo.getViewCount() + 1);
+				publicInfoService.save(publicInfo);
+			} catch (Exception ex) {
+				logger.error(ex);
+			}
 
-		try {
-			publicInfo.setViewCount(publicInfo.getViewCount() + 1);
-			publicInfoService.save(publicInfo);
-		} catch (Exception ex) {
-			logger.error(ex);
+			JSONObject rowJSON = publicInfo.toJsonObject();
+			request.setAttribute("x_json", rowJSON.toJSONString());
+
+			List<DataFile> dataFiles = blobService.getBlobList(publicInfo
+					.getId());
+			request.setAttribute("dataFiles", dataFiles);
 		}
-
-		JSONObject rowJSON = publicInfo.toJsonObject();
-		request.setAttribute("x_json", rowJSON.toJSONString());
-
-		List<DataFile> dataFiles = blobService.getBlobList(publicInfo.getId());
-		request.setAttribute("dataFiles", dataFiles);
 
 		String view = request.getParameter("view");
 		if (StringUtils.isNotEmpty(view)) {
@@ -292,7 +328,7 @@ public class PublicInfoController {
 			return new ModelAndView(x_view);
 		}
 
-		return new ModelAndView("/public/info/view");
+		return new ModelAndView("/cms/info/view");
 	}
 
 }
