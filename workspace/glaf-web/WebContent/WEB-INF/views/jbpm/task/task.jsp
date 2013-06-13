@@ -212,12 +212,7 @@
             if(user != null){
             	out.println(user.getName()+" ["+user.getActorId()+"]&nbsp;");
                 if(StringUtils.isNotEmpty(user.getMail())){
-%> <a
-			href="<%=request.getContextPath()%>/mx/message/edit?messageType=jbpm&templateId=task_notice&actorIds=<%=user.getActorId()%>&x_encode_process_subject=<%=RequestUtils.encodeString(processDefinition.getDescription() != null ? processDefinition.getDescription() : processDefinition.getName() )%>&x_encode_task_subject=<%= RequestUtils.encodeString(item.getTaskDescription()  != null ? item.getTaskDescription() : item.getTaskName() )%>">
-		发送消息&nbsp;<img
-			src="<%=request.getContextPath()%>/images/sendmail.gif"
-			style="cursor: pointer;" border="0" title="发送消息给<%=user.getName()%>">
-		</a> <%
+ 
 				}
             }else {
             	out.println(item.getActorId());
