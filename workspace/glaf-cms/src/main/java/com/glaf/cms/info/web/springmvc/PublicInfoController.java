@@ -304,8 +304,7 @@ public class PublicInfoController {
 				publicInfo.setCreateByName(user.getName());
 			}
 			try {
-				publicInfo.setViewCount(publicInfo.getViewCount() + 1);
-				publicInfoService.save(publicInfo);
+				publicInfoService.updateViewCount(publicInfo.getId());
 			} catch (Exception ex) {
 				logger.error(ex);
 			}
