@@ -143,6 +143,7 @@
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/locale/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/jquery.portal.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/glaf-core.js"></script>
 <script type="text/javascript">
 
 		var panels =  <%=arr.toJSONString()%>;
@@ -200,7 +201,7 @@
 			$('#pp').portal('resize');
 		});
 
-		 function savePortal(){
+		function savePortal(){
              var state = getPortalState();
 			 //alert(state);
 			 $.ajax({
@@ -216,9 +217,17 @@
 					return;
 				}
 			 });
-		  }
+		}
 
-	</script>
+        function openMoreMsg() {
+	        openWindow('<%=request.getContextPath()%>/workspace/message.do?method=showReceiveList', 600, 450);
+	    }
+
+	    function openMsg(id) {
+		    openWindow('<%=request.getContextPath()%>/workspace/message.do?method=showMessage&id=' + id, 600, 450);
+	    }
+
+</script>
 </head>
 <body class="easyui-layout">
     <%if("true".equals(request.getParameter("edit"))){%>

@@ -141,6 +141,17 @@ function selectUser(formName, elementId, elementName){
 }
 
 
+function openMMWindow(url, width, height){
+	var x=100;
+    var y=100;
+    if(is_ie) {
+	    x=document.body.scrollLeft+event.clientX-event.offsetX-200;
+	    y=document.body.scrollTop+event.clientY-event.offsetY-200;
+     }
+    openWindow(url, self, x, y, width, height);
+}
+
+
 function selectUser(elementId, elementName){
 	var x_selected =  document.getElementById(elementId);
     var url = contextPath+"/mx/mgt/identity/chooseUser?elementId="+elementId+"&elementName="+elementName;

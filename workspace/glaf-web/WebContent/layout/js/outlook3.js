@@ -10,28 +10,6 @@ $(function(){
 	InitLeftMenu();
 	tabClose();
 	tabCloseEven();
-
-//	$('#nav').accordion({
-//        onSelect: function (title, index) {
-//            alert(title);
-//			$('#nav').accordion('select', title);
-//		}
-//	});	
-
-
-/* 选择TAB时刷新内容
-	$('#tabs').tabs({
-        onSelect: function (title) {
-            var currTab = $('#tabs').tabs('getTab', title);
-            var iframe = $(currTab.panel('options').content);
-
-			var src = iframe.attr('src');
-			if(src)
-				$('#tabs').tabs('update', { tab: currTab, options: { content: createFrame(src)} });
-
-        }
-    });
-*/
 })
 
 //初始化左侧
@@ -44,8 +22,7 @@ function InitLeftMenu() {
         $.each(n.children, function(j, o) {
 			menulist += '<li><div><a ref="'+o.id+'" href="#" rel="' + o.url + '" onclick="javascript:addTab(\''+o.name+'\',\''+o.url+'\',\''+o.icon+'\');"><span class="icon '+o.icon+'" >&nbsp;</span><span class="nav">' + o.name + '</span></a></div> ';
 
-			if(o.children && o.children.length>0)
-			{
+			if(o.children && o.children.length>0) {
 				//li.find('div').addClass('icon-arrow');
 
 				menulist += '<ul class="third_ul">';
@@ -75,52 +52,8 @@ function InitLeftMenu() {
     });
 
 	$('#nav').accordion('select', selectedPanelname);
-	
-/*
-	$('.navlist li a').click(function(){
 
-		var tabTitle = $(this).children('.nav').text();
 
-		//alert(tabTitle);
-
-		var url = $(this).attr("rel");
-		var id = $(this).attr("ref");
-		var icon = $(this).find('.icon').attr('class');
-		 
-		var third = find(id);
-		
-		if(third && third.children && third.children.length>0)
-		{
-			$('.third_ul').slideUp();
-
-			var ul =$(this).parent().next();
-			if(ul.is(":hidden")){
-				ul.slideDown();
-				//alert("slideDown");
-			}
-			else {
-				ul.slideUp();
-				//alert("slideUp");
-			}
-		}
-		else{
-			//alert(tabTitle + " -> "+url);
-			addTab(tabTitle, url, icon);
-			$('.navlist li div').removeClass("selected");
-			$(this).parent().addClass("selected");
-		}
-	}).hover(function(){
-		$(this).parent().addClass("hover");
-	},function(){
-		$(this).parent().removeClass("hover");
-	});
-*/
-   
-	//选中第一个
-	//var panels = $('#nav').accordion('panels');
-	//var t = panels[0].panel('options').title;
-	//alert("title="+);
-   // $('#nav').accordion('select', t);
 }//初始化左侧 End
 
 

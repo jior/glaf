@@ -16,44 +16,17 @@
     int count = 0;
 	int msgPageSize = 5;
 %>
-<!DOCTYPE html >
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta http-equiv="pragma" content="no-cache">
-<meta http-equiv="cache-control" content="no-cache">
-<meta http-equiv="expires" content="0">
-<title>首页</title>
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/site.css">
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/style-custom.css">
-<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/main.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/site.js"></script>
 <script type="text/javascript">
-
-   function openMoreMsg() {
-	    openWindow('<%=request.getContextPath()%>/workspace/message.do?method=showReceiveList', 600, 450);
+    function openMoreMsg() {
+	    openMMWindow('<%=request.getContextPath()%>/workspace/message.do?method=showReceiveList', 600, 450);
 	}
 
 	function openMsg(id) {
-		openWindow('<%=request.getContextPath()%>/workspace/message.do?method=showMessage&id=' + id, 600, 450);
+		openMMWindow('<%=request.getContextPath()%>/workspace/message.do?method=showMessage&id=' + id, 600, 450);
 	}
-
 </script>
-</head>
-<body>
-<table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
-<tr>
-<td valign="top" class="m-right">
-  <table width="100%" border="0" cellpadding="0" cellspacing="0" class="m-box">
-      <tr><td>&nbsp;</td></tr>
-      <tr>
-        <td colspan="2"><table width="620" border="0" cellspacing="1" cellpadding="0" class="list-box">
-          <!-- <tr class="list-title">
-            <td width="120" align="center">发布时间</td>
-            <td align="center">主 题</td>
-            <td width="125" align="center">发布者</td>
-          </tr> -->
-          <%
+    <table width="100%" border="0" cellspacing="1" cellpadding="0" class="list-box">
+      <%
 		 if (messageList != null) {
 			count = 0;
 			Iterator msgIter = messageList.iterator();
@@ -69,9 +42,12 @@
 				}
 			%>
 			<tr class="<%= count % 2 == 0 ? "list-w" : "list-a" %>">
-            <td class="<%= colorClass %>" height="20" align="center"><%= WebUtil.dateToString(msg.getCreateDate(), "yyyy-MM-dd HH:mm:ss") %></td>
-            <td class="<%= colorClass %>"><a href="javascript:openMsg(<%= msg.getId() %>)" title="<%= msg.getTitle() %>"><%= msg.getTitle() %></a></td>
-            <td class="<%= colorClass %>" align="center"><%= senderName %></td>
+			<td class="<%= colorClass %>"  height="22" width="75%">
+			  &nbsp;&nbsp;<a href="#" onclick="javascript:openMsg(<%= msg.getId() %>);" title="<%= msg.getTitle() %>"><%= msg.getTitle() %></a>
+			</td>
+            <td class="<%= colorClass %>" height="20" align="center" width="25%">
+			     [<%= com.glaf.core.util.DateUtils.getDate(msg.getCreateDate()) %>]
+			</td>
           </tr>
 		<%
 			count++;
@@ -80,18 +56,10 @@
 		for(; count < msgPageSize; count++) {
 		%>
 		<tr class="<%= count % 2 == 0 ? "list-w" : "list-a" %>">
-            <td height="20">&nbsp;</td>
-            <td>&nbsp;</td>
+            <td height="22">&nbsp;</td>
             <td>&nbsp;</td>
           </tr>
 		<%
 		}
 		%>
-        </table></td>
-      </tr>
-    </table>
-	</td>
-</tr>
-</table>
-</body>
-</html>
+  </table> 

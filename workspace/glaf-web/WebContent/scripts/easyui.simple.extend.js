@@ -11,7 +11,7 @@ $(function(){
 	tabClose();
 	tabCloseEven();
 
- //选择TAB时刷新内容
+    //选择TAB时刷新内容
 	$('#tabs').tabs({
         onSelect: function (title) {
             var currTab = $('#tabs').tabs('getTab', title);
@@ -54,16 +54,16 @@ function InitLeftMenu() {
 		$('#nav').accordion('add', {
             title: n.menuname,
             content: menulist,
-				border:false,
+			border:false,
             iconCls: 'icon ' + n.icon
         });
 
-		if(i==0)
+		if(i==0){
 			selectedPanelname =n.menuname;
+		}
 
     });
 	$('#nav').accordion('select',selectedPanelname);
-
 
 
 	$('.navlist li a').click(function(){

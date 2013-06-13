@@ -8,15 +8,15 @@
   String context = request.getContextPath();
  
 %>
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/core.css" />
+
 <table width="96%" border="0" cellspacing="1" cellpadding="0">
 	<c:forEach items="${rows}" var="info">
 		<tr>
-			<td width="65%" align="left" height="22" >&nbsp;<a
+			<td width="75%" align="left" height="22" >&nbsp;&nbsp;<a
 				href='<%=request.getContextPath()%>/mx/public/info/view?id=${info.id}'
 				title='${info.subject}' target="_blank">${info.subject}</a>
 			</td>
-			<td width="35%" align="center" height="22" >&nbsp;[<fmt:formatDate
+			<td width="25%" align="center" height="22" align="center">&nbsp;[<fmt:formatDate
 				value="${info.createDate}" pattern="yyyy-MM-dd" />]
 			</td>
 		</tr>
