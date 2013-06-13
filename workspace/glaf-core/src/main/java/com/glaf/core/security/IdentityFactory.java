@@ -173,6 +173,7 @@ public class IdentityFactory {
 						roles.addAll(list);
 					}
 				}
+				loginContext.setAgents(agentIds);
 			}
 
 			logger.debug("user roles:" + roles);
