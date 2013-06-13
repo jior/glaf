@@ -28,13 +28,16 @@
 <link href="<%= request.getContextPath() %>/css/site.css" type="text/css" rel="stylesheet">
 <script type='text/javascript' src='<%= request.getContextPath() %>/scripts/main.js'></script>
 <script type='text/javascript' src="<%= request.getContextPath() %>/scripts/verify.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/kindeditor/kindeditor-min.js"></script>
 <script type="text/javascript" src="<%= request.getContextPath() %>/scripts/glaf-base.js"></script>
 <script type="text/javascript">
-var context = "<%= request.getContextPath() %>";
-var contextPath = "<%= request.getContextPath() %>";
+  var context = "<%= request.getContextPath() %>";
+  var contextPath = "<%= request.getContextPath() %>";
 
-function changeSelect() {
-  var recverType = getRadioValue('recverType');
+  KE.show({  id : 'content' });
+
+  function changeSelect() {
+    var recverType = getRadioValue('recverType');
 	  $('recverName').value = '';
 	  $('recverIds').value = '';
 	  //$('toEmail').value='';
@@ -65,6 +68,7 @@ function saveAndSend(form, type){
         alert("主题不能为空");
         return false;
     }
+	document.getElementById("content").value=KE.html('content');
     form.action= "<%=request.getContextPath()%>/workspace/message.do?method=saveAndSend&messageType="+type;
     form.submit();
 }
@@ -116,11 +120,11 @@ function saveAndSend(form, type){
       </tr> -->
       <tr>
         <td class="input-box">主&nbsp;&nbsp;题 <font color="#FF0000">*</font></td>
-        <td><input name="title" type="text" class="input" size="80" maxlength="250" value="<%= title %>" datatype="string" nullable="no" chname="标题" maxsize="50"></td>
+        <td><input name="title" type="text" class="input" size="105" maxlength="250" value="<%= title %>" datatype="string" nullable="no" chname="标题" maxsize="50"></td>
       </tr>
       <tr>
         <td valign="top" class="input-box2">内&nbsp;&nbsp;容 <font color="#FF0000">*</font></td>
-        <td><textarea name="content" cols="58" rows="10" class="input" datatype="string" nullable="no" chname="内容" maxsize="2000"></textarea></td>
+        <td><textarea name="content" cols="58" rows="10" class="input" datatype="string" nullable="no" chname="内容" maxsize="2000" style="width:565px;height:350px;"></textarea></td>
       </tr>
       <tr>
         <td valign="top">&nbsp;</td>

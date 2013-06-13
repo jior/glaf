@@ -22,17 +22,17 @@ String flag = (String)request.getAttribute("flag");
 <script type='text/javascript' src="<%= request.getContextPath() %>/scripts/verify.js"></script>
 <script type="text/javascript">
 function openMsg(id) {
-  openWindow('message.do?method=showMessage&id=' + id, 600, 350);
+  openWindow('message.do?method=showMessage&id=' + id, 680, 580);
 }
 function sendMsg() {
-  openWindow('message.do?method=prepareSend', 600, 380);
+  openWindow('message.do?method=prepareSend', 680, 580);
 }
 function replyMsg() {
   var id = getCheckboxValue('id');
 	if (id.length == 0) {
 	  return;
 	}
-	openWindow('message.do?method=prepareSend&id=' + id, 600, 380);
+	openWindow('message.do?method=prepareSend&id=' + id, 680, 580);
 }
 function del(form) {
   if(confirmDelete(form)) {
