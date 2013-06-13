@@ -187,8 +187,12 @@
 	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
 	    if (selected){
            if(selected.processInstanceId && selected.processInstanceId != null){
-			   jQuery('#rowId').val(selected.id);
-               jQuery('#dd_audit').dialog('open');
+			   if(selected.wfStatus == 9999){
+                  alert("该记录已经审核完成，不能提交。");
+			   }else{
+			     jQuery('#rowId').val(selected.id);
+                 jQuery('#dd_audit').dialog('open');
+			   }
 		   } else {
               jQuery.ajax({
 				   type: "POST",
@@ -236,6 +240,7 @@
 					alert('操作成功完成！');
 				}
 				switchTasks();
+				jQuery('#dd_audit').dialog('close');
 			}
 		 });
 	}

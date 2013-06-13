@@ -340,6 +340,7 @@ public class MxBlobServiceImpl implements IBlobService {
 		BlobItemQuery query = new BlobItemQuery();
 		query.serviceKey(serviceKey);
 		query.createBy(createBy);
+		query.status(0);
 
 		List<BlobItem> list = this.list(query);
 		if (list != null && list.size() > 0) {
