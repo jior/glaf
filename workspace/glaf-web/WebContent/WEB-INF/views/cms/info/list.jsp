@@ -189,7 +189,7 @@
            if(selected.processInstanceId && selected.processInstanceId != null){
 			   if(selected.wfStatus == 9999){
                   alert("该记录已经审核完成，不能提交。");
-			   }else{
+			   } else {
 			     jQuery('#rowId').val(selected.id);
                  jQuery('#dd_audit').dialog('open');
 			   }
