@@ -1,20 +1,20 @@
 /*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.glaf.jbpm.model;
 
@@ -26,28 +26,19 @@ import org.apache.commons.lang.builder.ToStringStyle;
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 
-public class ActivityInstance implements Serializable, Comparable<ActivityInstance> {
+public class ActivityInstance implements Serializable,
+		Comparable<ActivityInstance> {
 	private static final long serialVersionUID = 1L;
-
-	protected Long id;
 
 	protected String actorId;
 
 	protected String actorName;
 
-	protected Long processInstanceId;
-
-	protected Long taskInstanceId;
-
-	protected String taskName;
-
-	protected String taskDescription;
-
-	protected String rowId;
-
-	protected String title;
-
 	protected String content;
+
+	protected Date date;
+
+	protected Long id;
 
 	protected String isAgree;
 
@@ -55,9 +46,21 @@ public class ActivityInstance implements Serializable, Comparable<ActivityInstan
 
 	protected String objectValue;
 
-	protected String variable;
+	protected String previousActors;
 
-	protected Date date;
+	protected Long processInstanceId;
+
+	protected String rowId;
+
+	protected String taskDescription;
+
+	protected Long taskInstanceId;
+
+	protected String taskName;
+
+	protected String title;
+
+	protected String variable;
 
 	public ActivityInstance() {
 
@@ -131,6 +134,10 @@ public class ActivityInstance implements Serializable, Comparable<ActivityInstan
 		return objectValue;
 	}
 
+	public String getPreviousActors() {
+		return previousActors;
+	}
+
 	public Long getProcessInstanceId() {
 		return processInstanceId;
 	}
@@ -197,6 +204,10 @@ public class ActivityInstance implements Serializable, Comparable<ActivityInstan
 
 	public void setObjectValue(String objectValue) {
 		this.objectValue = objectValue;
+	}
+
+	public void setPreviousActors(String previousActors) {
+		this.previousActors = previousActors;
 	}
 
 	public void setProcessInstanceId(Long processInstanceId) {

@@ -81,10 +81,12 @@
 		</id>
 		<property name="actorId" column="ACTORID_" type="string"
 			length="50" />
+		<property name="previousActors" column="PREVIOUSACTORS_"
+			type="string" length="500" />
 		<property name="processInstanceId" column="PROCESSINSTANCEID_"
 			type="long" />
 		<property name="taskInstanceId" column="TASKINSTANCEID_"
-			type="long"   />
+			type="long" />
 		<property name="taskName" column="TASKNAME_" type="string"
 			length="50" />
 		<property name="taskDescription" column="TASKDESCRIPTION_"

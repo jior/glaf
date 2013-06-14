@@ -331,6 +331,7 @@ public class JbpmProcessManager {
 
 		ActivityInstance ActivityInstance = new ActivityInstance();
 		ActivityInstance.setActorId(actorId);
+		ActivityInstance.setPreviousActors(previousActorId);
 		ActivityInstance.setDate(new Date());
 		ActivityInstance.setProcessInstanceId(processInstanceId);
 		ActivityInstance.setTaskInstanceId(taskInstance.getId());
@@ -356,24 +357,24 @@ public class JbpmProcessManager {
 		}
 
 		if (!StringUtils.equals(previousActorId, actorId)) {
-			ActivityInstance s = new ActivityInstance();
-			s.setActorId(previousActorId);
-			s.setDate(null);
-			s.setProcessInstanceId(processInstanceId);
-			s.setTaskInstanceId(taskInstance.getId());
-			s.setIsAgree(null);
+			ActivityInstance act = new ActivityInstance();
+			act.setActorId(previousActorId);
+			act.setDate(null);
+			act.setProcessInstanceId(processInstanceId);
+			act.setTaskInstanceId(taskInstance.getId());
+			act.setIsAgree(null);
 			if (ctx.getRowId() != null) {
-				s.setRowId(ctx.getRowId().toString());
+				act.setRowId(ctx.getRowId().toString());
 			}
-			s.setTitle("Agent Task");
-			s.setContent("task agent is " + actorId);
-			s.setObjectId("agentId");
-			s.setObjectValue(actorId);
+			act.setTitle("Agent Task");
+			act.setContent("task agent is " + actorId);
+			act.setObjectId("agentId");
+			act.setObjectValue(actorId);
 			if (task != null) {
-				s.setTaskName(task.getName());
-				s.setTaskDescription(task.getDescription());
+				act.setTaskName(task.getName());
+				act.setTaskDescription(task.getDescription());
 			}
-			jbpmEntityDAO.save(jbpmContext, s);
+			jbpmEntityDAO.save(jbpmContext, act);
 		}
 
 		jbpmEntityDAO.save(jbpmContext, ActivityInstance);
