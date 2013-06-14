@@ -19,6 +19,7 @@
 package com.glaf.core.todo.service;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -26,6 +27,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.SqlSession;
@@ -42,13 +44,14 @@ import com.glaf.core.cache.CacheFactory;
 import com.glaf.core.config.SystemProperties;
 import com.glaf.core.dao.EntityDAO;
 
-
 import com.glaf.core.id.IdGenerator;
 
+import com.glaf.core.security.LoginContext;
 import com.glaf.core.todo.mapper.TodoMapper;
 import com.glaf.core.todo.query.TodoQuery;
 
 import com.glaf.core.todo.Todo;
+import com.glaf.core.todo.TodoTotal;
 import com.glaf.core.todo.util.TodoJsonFactory;
 import com.glaf.core.todo.util.TodoUtils;
 import com.glaf.core.todo.util.TodoXmlReader;
@@ -59,13 +62,13 @@ public class SysTodoServiceImpl implements ISysTodoService {
 	protected final static Log logger = LogFactory
 			.getLog(SysTodoServiceImpl.class);
 
-	protected IdGenerator idGenerator;
-
-	protected TodoMapper todoMapper;
-
 	protected EntityDAO entityDAO;
 
+	protected IdGenerator idGenerator;
+
 	protected SqlSession sqlSession;
+
+	protected TodoMapper todoMapper;
 
 	public SysTodoServiceImpl() {
 
@@ -125,6 +128,51 @@ public class SysTodoServiceImpl implements ISysTodoService {
 			todoMap.put(todo.getId(), todo);
 		}
 		return todoMap;
+	}
+
+	public List<TodoTotal> getTodoTotalList(LoginContext loginContext,
+			Map<String, Object> params) {
+		List<TodoTotal> list = new ArrayList<TodoTotal>();
+		List<Todo> todoList = this.getTodoList();
+		for (Todo todo : todoList) {
+			if (!StringUtils.equals(todo.getProvider(), "mybatis3")) {
+				continue;
+			}
+
+			String queryId = todo.getSql();
+			if (StringUtils.isNotEmpty(queryId) && loginContext != null
+					&& params != null) {
+				params.put("actorId", loginContext.getActorId());
+				params.put("deptId", loginContext.getUser().getDeptId());
+				params.put("agentIds", loginContext.getAgents());
+				params.put("roles", loginContext.getRoles());
+				params.put("permissions", loginContext.getPermissions());
+				params.put("user", loginContext.getUser());
+
+				List<?> rows = sqlSession.selectList(queryId, params);
+				if (rows != null && !rows.isEmpty()) {
+					TodoTotal total = new TodoTotal();
+					total.setTodo(todo);
+					for (Object object : rows) {
+						if (object instanceof String) {
+							String rowId = (String) object;
+							total.getRowIds().add(rowId);
+						} else if (object instanceof Integer) {
+							Integer rowId = (Integer) object;
+							total.getRowIds().add(rowId);
+						} else if (object instanceof Long) {
+							Long rowId = (Long) object;
+							total.getRowIds().add(rowId);
+						} else {
+							Object rowId = object;
+							total.getRowIds().add(rowId);
+						}
+					}
+					list.add(total);
+				}
+			}
+		}
+		return list;
 	}
 
 	public List<Todo> list(TodoQuery query) {
