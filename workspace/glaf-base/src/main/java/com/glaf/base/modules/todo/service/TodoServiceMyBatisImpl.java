@@ -63,25 +63,25 @@ public class TodoServiceMyBatisImpl implements TodoService {
 
 	protected SqlSession sqlSession;
 
-	protected TodoMapper todoMapper;
-
-	protected TodoInstanceMapper todoInstanceMapper;
-
 	private SysDepartmentService sysDepartmentService;
 
 	private SysRoleService sysRoleService;
 
 	private ISysTodoService sysTodoService;
 
-	private SysUserService sysUserService;
-
 	private SysTreeService sysTreeService;
 
-	private WorkCalendarService workCalendarService;
+	private SysUserService sysUserService;
 
 	private ITableDataService tableDataService;
 
 	private ITablePageService tablePageService;
+
+	protected TodoInstanceMapper todoInstanceMapper;
+
+	protected TodoMapper todoMapper;
+
+	private WorkCalendarService workCalendarService;
 
 	@Transactional
 	public void create(Todo todo) {
@@ -98,7 +98,7 @@ public class TodoServiceMyBatisImpl implements TodoService {
 		}
 		if (rows.size() > 0) {
 			logger.info("---------->rows size:" + rows.size());
-
+            
 		}
 	}
 
@@ -677,23 +677,13 @@ public class TodoServiceMyBatisImpl implements TodoService {
 	}
 
 	@javax.annotation.Resource
+	public void setSysTreeService(SysTreeService sysTreeService) {
+		this.sysTreeService = sysTreeService;
+	}
+
+	@javax.annotation.Resource
 	public void setSysUserService(SysUserService sysUserService) {
 		this.sysUserService = sysUserService;
-	}
-
-	@javax.annotation.Resource
-	public void setTodoMapper(TodoMapper todoMapper) {
-		this.todoMapper = todoMapper;
-	}
-
-	@javax.annotation.Resource
-	public void setTodoInstanceMapper(TodoInstanceMapper todoInstanceMapper) {
-		this.todoInstanceMapper = todoInstanceMapper;
-	}
-
-	@javax.annotation.Resource
-	public void setWorkCalendarService(WorkCalendarService workCalendarService) {
-		this.workCalendarService = workCalendarService;
 	}
 
 	@javax.annotation.Resource
@@ -707,8 +697,18 @@ public class TodoServiceMyBatisImpl implements TodoService {
 	}
 
 	@javax.annotation.Resource
-	public void setSysTreeService(SysTreeService sysTreeService) {
-		this.sysTreeService = sysTreeService;
+	public void setTodoInstanceMapper(TodoInstanceMapper todoInstanceMapper) {
+		this.todoInstanceMapper = todoInstanceMapper;
+	}
+
+	@javax.annotation.Resource
+	public void setTodoMapper(TodoMapper todoMapper) {
+		this.todoMapper = todoMapper;
+	}
+
+	@javax.annotation.Resource
+	public void setWorkCalendarService(WorkCalendarService workCalendarService) {
+		this.workCalendarService = workCalendarService;
 	}
 
 	public void update(Todo todo) {
