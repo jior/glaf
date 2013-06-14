@@ -479,7 +479,7 @@ public class ProcessContainer {
 		}
 		return agentIds;
 	}
-	
+
 	/**
 	 * 获取委托人编号集合
 	 * 
@@ -510,6 +510,7 @@ public class ProcessContainer {
 	public List<Agent> getAgents(String assignTo) {
 		List<Agent> agents = new ArrayList<Agent>();
 		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("assignTo", assignTo);
 		SqlMapContainer container = SqlMapContainer.getContainer();
 		try {
 			Collection<?> actors = container.getList("getAgents", params);
