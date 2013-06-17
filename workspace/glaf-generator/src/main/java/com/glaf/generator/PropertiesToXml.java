@@ -7,9 +7,6 @@ import java.util.Map.Entry;
 import com.glaf.core.util.FileUtils;
 import com.glaf.core.util.PropertiesUtils;
 
- 
- 
-
 public class PropertiesToXml {
 
 	public final static String sp = System.getProperty("file.separator");
@@ -17,8 +14,8 @@ public class PropertiesToXml {
 	public final static String newline = System.getProperty("line.separator");
 
 	public static void convert(String input, String output) throws Exception {
-		Properties p = PropertiesUtils.loadProperties(new FileInputStream(
-				input));
+		Properties p = PropertiesUtils
+				.loadProperties(new FileInputStream(input));
 		StringBuffer sb = new StringBuffer();
 		sb.append("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
 		sb.append(newline);
@@ -54,7 +51,7 @@ public class PropertiesToXml {
 
 	public static void main(String[] args) throws Exception {
 		convert("messages.properties", "messages-default.xml");
-		//java.util.Random r = new Random();
+		// java.util.Random r = new Random();
 		Map<Integer, Integer> map = new TreeMap<Integer, Integer>();
 		for (int i = 0; i < 10000; i++) {
 			int v = (UUID.randomUUID().toString().hashCode() & Integer.MAX_VALUE) % 20;

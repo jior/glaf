@@ -72,7 +72,7 @@ public class JavaCodeGen {
 			FieldDefinition idField = new ColumnDefinition();
 			idField.setName("id");
 			idField.setColumnName("ID_");
-			idField.setType("String");
+			idField.setType("Long");
 			idField.setClassDefinition(classDefinition);
 			classDefinition.setIdField(idField);
 		}
@@ -99,13 +99,11 @@ public class JavaCodeGen {
 		context.put("blank32", "                                ");
 
 		logger.debug(context);
-		
-		
 
 		if (classDefinition.isJbpmSupport()) {
 			FieldDefinition f0 = new ColumnDefinition();
 			f0.setName("status");
-			f0.setColumnName("status");
+			f0.setColumnName("STATUS_");
 			f0.setEnglishTitle("status");
 			f0.setTitle("业务状态");
 			f0.setType("Integer");
@@ -113,7 +111,7 @@ public class JavaCodeGen {
 
 			FieldDefinition f1 = new ColumnDefinition();
 			f1.setName("processName");
-			f1.setColumnName("processName");
+			f1.setColumnName("PROCESSNAME_");
 			f1.setEnglishTitle("processName");
 			f1.setTitle("流程名称");
 			f1.setLength(100);
@@ -122,7 +120,7 @@ public class JavaCodeGen {
 
 			FieldDefinition f2 = new ColumnDefinition();
 			f2.setName("processInstanceId");
-			f2.setColumnName("processInstanceId");
+			f2.setColumnName("PROCESSINSTANCEID_");
 			f2.setEnglishTitle("processInstanceId");
 			f2.setTitle("流程实例编号");
 			f2.setType("Long");
@@ -130,7 +128,7 @@ public class JavaCodeGen {
 
 			FieldDefinition f3 = new ColumnDefinition();
 			f3.setName("wfStatus");
-			f3.setColumnName("wfStatus");
+			f3.setColumnName("WFSTATUS_");
 			f3.setEnglishTitle("wfStatus");
 			f3.setTitle("工作流状态");
 			f3.setType("Integer");
@@ -138,7 +136,7 @@ public class JavaCodeGen {
 
 			FieldDefinition f4 = new ColumnDefinition();
 			f4.setName("wfStartDate");
-			f4.setColumnName("wfStartDate");
+			f4.setColumnName("WFSTARTDATE_");
 			f4.setEnglishTitle("wfStartDate");
 			f4.setTitle("工作流启动日期");
 			f4.setType("Date");
@@ -146,7 +144,7 @@ public class JavaCodeGen {
 
 			FieldDefinition f5 = new ColumnDefinition();
 			f5.setName("wfEndDate");
-			f5.setColumnName("wfEndDate");
+			f5.setColumnName("WFENDDATE_");
 			f5.setEnglishTitle("wfEndDate");
 			f5.setTitle("工作流结束日期");
 			f5.setType("Date");
@@ -157,7 +155,7 @@ public class JavaCodeGen {
 		if (classDefinition.isTreeSupport()) {
 			FieldDefinition idField = new ColumnDefinition();
 			idField.setName("id");
-			idField.setColumnName("id");
+			idField.setColumnName("ID_");
 			idField.setEnglishTitle("Id");
 			idField.setTitle("主键");
 			idField.setType("Long");
@@ -165,7 +163,7 @@ public class JavaCodeGen {
 
 			FieldDefinition f1 = new ColumnDefinition();
 			f1.setName("parentId");
-			f1.setColumnName("parentId");
+			f1.setColumnName("PARENTID_");
 			f1.setEnglishTitle("parentId");
 			f1.setTitle("父节点编号");
 			f1.setType("Long");
@@ -173,7 +171,7 @@ public class JavaCodeGen {
 
 			FieldDefinition f2 = new ColumnDefinition();
 			f2.setName("code");
-			f2.setColumnName("code");
+			f2.setColumnName("CODE_");
 			f2.setEnglishTitle("Code");
 			f2.setTitle("编码");
 			f2.setType("String");
@@ -181,7 +179,7 @@ public class JavaCodeGen {
 
 			FieldDefinition f7 = new ColumnDefinition();
 			f7.setName("discriminator");
-			f7.setColumnName("discriminator");
+			f7.setColumnName("DISCRIMINATOR_");
 			f7.setEnglishTitle("discriminator");
 			f7.setTitle("标识符");
 			f7.setType("String");
@@ -189,7 +187,7 @@ public class JavaCodeGen {
 
 			FieldDefinition f8 = new ColumnDefinition();
 			f8.setName("description");
-			f8.setColumnName("description");
+			f8.setColumnName("DESCRIPTION_");
 			f8.setEnglishTitle("description");
 			f8.setTitle("描述");
 			f8.setType("String");
@@ -197,7 +195,7 @@ public class JavaCodeGen {
 
 			FieldDefinition f9 = new ColumnDefinition();
 			f9.setName("icon");
-			f9.setColumnName("icon");
+			f9.setColumnName("ICON_");
 			f9.setEnglishTitle("icon");
 			f9.setTitle("图标");
 			f9.setType("String");
@@ -205,7 +203,7 @@ public class JavaCodeGen {
 
 			FieldDefinition f92 = new ColumnDefinition();
 			f92.setName("iconCls");
-			f92.setColumnName("iconCls");
+			f92.setColumnName("ICONCLS_");
 			f92.setEnglishTitle("iconCls");
 			f92.setTitle("图标样式");
 			f92.setType("String");
@@ -213,7 +211,7 @@ public class JavaCodeGen {
 
 			FieldDefinition f10 = new ColumnDefinition();
 			f10.setName("locked");
-			f10.setColumnName("locked");
+			f10.setColumnName("LOCKED_");
 			f10.setEnglishTitle("locked");
 			f10.setTitle("锁定标识");
 			f10.setType("Integer");
@@ -221,7 +219,7 @@ public class JavaCodeGen {
 
 			FieldDefinition f11 = new ColumnDefinition();
 			f11.setName("sortNo");
-			f11.setColumnName("sortNo");
+			f11.setColumnName("SORTNO_");
 			f11.setEnglishTitle("sortNo");
 			f11.setTitle("顺序号");
 			f11.setType("Integer");
@@ -229,7 +227,7 @@ public class JavaCodeGen {
 
 			FieldDefinition f12 = new ColumnDefinition();
 			f12.setName("name");
-			f12.setColumnName("name");
+			f12.setColumnName("NAME_");
 			f12.setEnglishTitle("name");
 			f12.setTitle("名称");
 			f12.setType("String");
@@ -237,7 +235,7 @@ public class JavaCodeGen {
 
 			FieldDefinition f13 = new ColumnDefinition();
 			f13.setName("treeId");
-			f13.setColumnName("treeId");
+			f13.setColumnName("TREEID_");
 			f13.setEnglishTitle("treeId");
 			f13.setTitle("树编号");
 			f13.setType("String");
@@ -245,17 +243,17 @@ public class JavaCodeGen {
 
 			FieldDefinition f14 = new ColumnDefinition();
 			f14.setName("url");
-			f14.setColumnName("url");
+			f14.setColumnName("URL_");
 			f14.setEnglishTitle("url");
 			f14.setTitle("链接地址");
 			f14.setType("String");
 			classDefinition.addField(f14);
 
 		}
-		
+
 		FieldDefinition f3 = new ColumnDefinition();
 		f3.setName("createBy");
-		f3.setColumnName("createBy");
+		f3.setColumnName("CREATEBY_");
 		f3.setEnglishTitle("createBy");
 		f3.setTitle("创建人");
 		f3.setType("String");
@@ -263,7 +261,7 @@ public class JavaCodeGen {
 
 		FieldDefinition f4 = new ColumnDefinition();
 		f4.setName("createDate");
-		f4.setColumnName("createDate");
+		f4.setColumnName("CREATEDATE_");
 		f4.setEnglishTitle("createDate");
 		f4.setTitle("创建日期");
 		f4.setType("Date");
@@ -271,7 +269,7 @@ public class JavaCodeGen {
 
 		FieldDefinition f5 = new ColumnDefinition();
 		f5.setName("updateDate");
-		f5.setColumnName("updateDate");
+		f5.setColumnName("UPDATEDATE_");
 		f5.setEnglishTitle("updateDate");
 		f5.setTitle("修改日期");
 		f5.setType("Date");
@@ -279,7 +277,7 @@ public class JavaCodeGen {
 
 		FieldDefinition f6 = new ColumnDefinition();
 		f6.setName("updateBy");
-		f6.setColumnName("updateBy");
+		f6.setColumnName("UPDATEBY_");
 		f6.setEnglishTitle("updateBy");
 		f6.setTitle("修改人");
 		f6.setType("String");
