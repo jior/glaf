@@ -39,7 +39,7 @@ public class ${entityName}BaseController {
 	}
 
 
-	@RequestMapping(params = "method=save")
+	@RequestMapping("/save")
 	public ModelAndView save(HttpServletRequest request, ModelMap modelMap) {
 		User user = RequestUtils.getUser(request);
 		String actorId =  user.getActorId();
@@ -74,7 +74,7 @@ public class ${entityName}BaseController {
 	}
 
         @ResponseBody
-	@RequestMapping(params = "method=save${entityName}")
+	@RequestMapping("/save${entityName}")
 	public byte[] save${entityName}(HttpServletRequest request) { 
 	        User user = RequestUtils.getUser(request);
 		String actorId =  user.getActorId();
@@ -108,7 +108,7 @@ public class ${entityName}BaseController {
 		return ResponseUtils.responseJsonResult(false);
 	}
 
-        @RequestMapping(params = "method=update")
+        @RequestMapping("/update")
 	public ModelAndView update(HttpServletRequest request, ModelMap modelMap) {
 		User user = RequestUtils.getUser(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
@@ -145,7 +145,7 @@ public class ${entityName}BaseController {
 	}
 
         @ResponseBody
-        @RequestMapping(params = "method=delete")
+        @RequestMapping("/delete")
 	public void delete(HttpServletRequest request, ModelMap modelMap) {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
@@ -183,7 +183,7 @@ public class ${entityName}BaseController {
 
 
         @ResponseBody
-	@RequestMapping(params = "method=detail")
+	@RequestMapping("/detail")
 	public byte[] detail(HttpServletRequest request) throws IOException{
 	    //RequestUtils.setRequestParameterToAttribute(request);
 	    //Map<String, Object> params = RequestUtils.getParameterMap(request);
@@ -200,7 +200,7 @@ public class ${entityName}BaseController {
         }
     
 
-        @RequestMapping(params = "method=edit")
+        @RequestMapping("/edit")
 	public ModelAndView edit(HttpServletRequest request, ModelMap modelMap) {
 		User user = RequestUtils.getUser(request);
 		String actorId =  user.getActorId();
@@ -252,7 +252,7 @@ public class ${entityName}BaseController {
 		return new ModelAndView("/${classDefinition.moduleName}/${modelName}/edit", modelMap);
 	}
 
-        @RequestMapping(params = "method=view")
+        @RequestMapping("/view")
 	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
@@ -281,7 +281,7 @@ public class ${entityName}BaseController {
 		return new ModelAndView("/${classDefinition.moduleName}/${modelName}/view");
 	}
 
-        @RequestMapping(params = "method=query")
+        @RequestMapping("/query")
 	public ModelAndView query(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		String view = request.getParameter("view");
@@ -295,7 +295,7 @@ public class ${entityName}BaseController {
 		return new ModelAndView("/${classDefinition.moduleName}/${modelName}/query", modelMap);
 	}
 
-	@RequestMapping(params = "method=json")
+	@RequestMapping("/json")
 	@ResponseBody
 	public byte[] json(HttpServletRequest request, ModelMap modelMap) throws IOException {
 	        LoginContext loginContext = RequestUtils.getLoginContext(request);
