@@ -55,7 +55,16 @@ public class IdentityFactory {
 			for (Object obj : list) {
 				if (obj instanceof Agent) {
 					Agent agent = (Agent) obj;
-					agentIds.add(agent.getAssignFrom());
+					if (!agent.isValid()) {
+						continue;
+					}
+					switch (agent.getAgentType()) {
+					case 0:// 全局代理
+						agentIds.add(agent.getAssignFrom());
+						break;
+					default:
+						break;
+					}
 				}
 			}
 		}
@@ -76,7 +85,16 @@ public class IdentityFactory {
 			for (Object obj : list) {
 				if (obj instanceof Agent) {
 					Agent agent = (Agent) obj;
-					agents.add(agent);
+					if (!agent.isValid()) {
+						continue;
+					}
+					switch (agent.getAgentType()) {
+					case 0:// 全局代理
+						agents.add(agent);
+						break;
+					default:
+						break;
+					}
 				}
 			}
 		}
