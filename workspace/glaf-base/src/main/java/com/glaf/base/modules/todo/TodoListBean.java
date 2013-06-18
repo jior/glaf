@@ -20,6 +20,9 @@ package com.glaf.base.modules.todo;
 
 import java.util.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.glaf.base.modules.sys.service.WorkCalendarService;
 import com.glaf.core.context.ContextFactory;
 import com.glaf.core.security.IdentityFactory;
@@ -32,6 +35,8 @@ import com.glaf.jbpm.container.ProcessContainer;
 import com.glaf.jbpm.model.TaskItem;
 
 public class TodoListBean {
+	protected final static Log logger = LogFactory
+			.getLog(TodoListBean.class);
 
 	/**
 	 * 获取用户的任务汇总
@@ -41,6 +46,7 @@ public class TodoListBean {
 	 */
 	public List<TodoTotal> getUserTasks(String actorId,
 			Map<String, Object> params) {
+		logger.debug("actorId="+actorId);
 		List<TodoTotal> userTasks = new ArrayList<TodoTotal>();
 		ISysTodoService todoService = ContextFactory.getBean("sysTodoService");
 		WorkCalendarService workCalendarService = ContextFactory
@@ -48,6 +54,7 @@ public class TodoListBean {
 		List<Todo> todoList = todoService.getTodoList();
 		List<TaskItem> taskItems = ProcessContainer.getContainer()
 				.getTaskItems(actorId);
+		logger.debug("taskItems size="+taskItems.size());
 		Map<String, Todo> todoMap = new HashMap<String, Todo>();
 		Map<String, TodoTotal> todoTotalMap = new HashMap<String, TodoTotal>();
 		for (Todo todo : todoList) {

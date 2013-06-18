@@ -96,6 +96,7 @@ public class TodoController {
 	 */
 	@RequestMapping(params = "method=userTasks")
 	public ModelAndView userTasks(ModelMap modelMap, HttpServletRequest request) {
+		logger.debug("-----------------userTasks----------------------------");
 		RequestUtils.setRequestParameterToAttribute(request);
 		List<Todo> rows = todoService.getAllTodoList();
 		request.setAttribute("rows", rows);
