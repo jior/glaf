@@ -31,8 +31,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.glaf.core.todo.Todo;
+import com.glaf.core.todo.TodoTotal;
 import com.glaf.core.util.RequestUtils;
 
+import com.glaf.base.modules.todo.TodoListBean;
 import com.glaf.base.modules.todo.service.TodoService;
 
 @Controller("/user/todo")
@@ -85,6 +87,24 @@ public class TodoController {
 		List<Todo> rows = todoService.getAllTodoList();
 		request.setAttribute("rows", rows);
 		return new ModelAndView("/modules/sys/todo/taskList", modelMap);
+	}
+
+	/**
+	 * œ‘ æTODO¡–±Ì
+	 * 
+	 * @return
+	 */
+	@RequestMapping(params = "method=userTasks")
+	public ModelAndView userTasks(ModelMap modelMap, HttpServletRequest request) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		List<Todo> rows = todoService.getAllTodoList();
+		request.setAttribute("rows", rows);
+		TodoListBean bean = new TodoListBean();
+		List<TodoTotal> userTasks = bean.getUserTasks(
+				RequestUtils.getActorId(request),
+				RequestUtils.getParameterMap(request));
+		request.setAttribute("userTasks", userTasks);
+		return new ModelAndView("/modules/sys/todo/userTasks", modelMap);
 	}
 
 }

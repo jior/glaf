@@ -71,6 +71,7 @@ public class TodoListBean {
 						task.getCreateDate(), (int) limitDay);
 				int status = TodoUtils.getTodoStatus(todo, limitWorkDate);
 				todoTotal.setTotalQty(todoTotal.getTotalQty() + 1);
+				todoTotal.getRowIds().add(task.getRowId());
 				todoTotal.getProcessInstanceIds().add(
 						task.getProcessInstanceId());
 				todoTotal.getAllBuffer().append(task.getRowId()).append(",");

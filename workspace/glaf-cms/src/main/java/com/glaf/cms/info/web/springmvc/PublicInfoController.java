@@ -131,8 +131,10 @@ public class PublicInfoController {
 			throws IOException {
 		RequestUtils.setRequestParameterToAttribute(request);
 
+		String rowIds = request.getParameter("rowIds");
 		String serviceKey = request.getParameter("serviceKey");
 		Long nodeId = RequestUtils.getLong(request, "nodeId");
+		List<String> r_rows = StringTools.split(rowIds);
 
 		Map<Long, TreeModel> treeModelMap = new HashMap<Long, TreeModel>();
 		TreeModel treeModel = null;
@@ -157,6 +159,9 @@ public class PublicInfoController {
 		PublicInfoQuery query = new PublicInfoQuery();
 		Tools.populate(query, params);
 		query.setPublishFlag(1);
+		if(r_rows !=null && !r_rows.isEmpty()){
+			query.rowIds(r_rows);
+		}
 
 		String gridType = ParamUtils.getString(params, "gridType");
 		if (gridType == null) {

@@ -71,7 +71,7 @@
 				nowrap: false,
 				striped: true,
 				collapsible:true,
-				url:'<%=request.getContextPath()%>/mx/cms/info/json?serviceKey=${serviceKey}',
+				url:'<%=request.getContextPath()%>/mx/cms/info/json?serviceKey=${serviceKey}&workedProcessFlag=${workedProcessFlag}',
 				sortName: 'id',
 				sortOrder: 'desc',
 				remoteSort: false,

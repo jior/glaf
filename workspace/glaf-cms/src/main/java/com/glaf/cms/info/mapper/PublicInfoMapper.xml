@@ -316,14 +316,14 @@
 		ID_ = #{id, jdbcType=VARCHAR}
 
 	</update>
-	
-	
+
+
 	<update id="updateViewCount" parameterType="string">
 		update CMS_PUBLICINFO
 		set VIEWCOUNT_ = VIEWCOUNT_ + 1
 		where ID_ = #{id, jdbcType=VARCHAR}
-    </update>
-    
+	</update>
+
 
 	<delete id="deletePublicInfoById" parameterType="string">
 		delete from
@@ -489,6 +489,14 @@
 				<foreach item="x_processName" index="index" collection="processNames"
 					open="(" separator="," close=")">
 					#{x_processName}
+				</foreach>
+			</if>
+
+			<if test="rowIds != null and rowIds.size() &gt; 0">
+				and E.ID_ IN
+				<foreach item="x_rowId" index="index" collection="rowIds"
+					open="(" separator="," close=")">
+					#{x_rowId}
 				</foreach>
 			</if>
 
