@@ -31,6 +31,8 @@ import org.apache.commons.logging.LogFactory;
 import org.json.JSONArray;
 
 import com.glaf.core.context.ContextFactory;
+import com.glaf.core.identity.Agent;
+import com.glaf.core.service.EntityService;
 
 import com.glaf.base.modules.sys.model.SysDepartment;
 import com.glaf.base.modules.sys.model.SysRole;
@@ -47,6 +49,8 @@ import com.glaf.base.utils.ContextUtil;
 public class BaseIdentityFactory {
 	protected static final Log logger = LogFactory
 			.getLog(BaseIdentityFactory.class);
+
+	protected static EntityService entityService;
 
 	protected static SysApplicationService sysApplicationService;
 
@@ -71,6 +75,24 @@ public class BaseIdentityFactory {
 	 */
 	public static List<String> getAgentIds(String assignTo) {
 		List<String> agentIds = new ArrayList<String>();
+		List<Object> rows = getEntityService().getList("getAgents", assignTo);
+		if (rows != null && !rows.isEmpty()) {
+			for (Object object : rows) {
+				if (object instanceof Agent) {
+					Agent agent = (Agent) object;
+					if (!agent.isValid()) {
+						continue;
+					}
+					switch (agent.getAgentType()) {
+					case 0:// 全局代理
+						agentIds.add(agent.getAssignFrom());
+						break;
+					default:
+						break;
+					}
+				}
+			}
+		}
 		return agentIds;
 	}
 
@@ -318,6 +340,13 @@ public class BaseIdentityFactory {
 	public static List<SysRole> getRoles() {
 		List<SysRole> roles = getSysRoleService().getSysRoleList();
 		return roles;
+	}
+
+	public static EntityService getEntityService() {
+		if (entityService == null) {
+			entityService = ContextFactory.getBean("entityService");
+		}
+		return entityService;
 	}
 
 	public static SysApplicationService getSysApplicationService() {
