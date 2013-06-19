@@ -68,7 +68,7 @@ public class MxUserPortalController {
 		UserPanel userPanel = panelService.getUserPanel(loginContext
 				.getActorId());
 		if (userPanel == null) {
-			userPanel = panelService.getUserPanel("system");
+			userPanel = panelService.getUserPanel("root");
 		}
 
 		Map<String, Integer> panelPxMap = new HashMap<String, Integer>();
@@ -109,9 +109,9 @@ public class MxUserPortalController {
 		List<UserPortal> userPortals = userPortalService
 				.getUserPortals(loginContext.getActorId());
 		if (userPortals == null || userPortals.isEmpty()) {
-			userPortals = userPortalService.getUserPortals("system");
+			userPortals = userPortalService.getUserPortals("root");
 			if (userPortals == null || userPortals.isEmpty()) {
-				List<Panel> panels = panelService.getPanels("system");
+				List<Panel> panels = panelService.getPanels("root");
 				if (panels != null && !panels.isEmpty()) {
 					int i = 100;
 					for (Panel panel : panels) {
@@ -139,7 +139,7 @@ public class MxUserPortalController {
 		}
 
 		List<UserPortal> sysPortals = userPortalService
-				.getUserPortals("system");
+				.getUserPortals("root");
 
 		if (userPortals != null && !userPortals.isEmpty()) {
 			if (sysPortals != null && !sysPortals.isEmpty()) {
