@@ -138,17 +138,19 @@ public class MxUserPortalController {
 			}
 		}
 
-		List<UserPortal> sysPortals = userPortalService
-				.getUserPortals("root");
+		List<UserPortal> sysPortals = userPortalService.getUserPortals("root");
 
-		if (userPortals != null && !userPortals.isEmpty()) {
-			if (sysPortals != null && !sysPortals.isEmpty()) {
-				userPortals.addAll(sysPortals);
-			}
-			for (UserPortal p : userPortals) {
-				String panelId = p.getPanelId();
-				p.setPanel(panelService.getPanel(panelId));
-			}
+		if (userPortals == null) {
+			userPortals = new ArrayList<UserPortal>();
+		}
+
+		if (sysPortals != null && !sysPortals.isEmpty()) {
+			userPortals.addAll(sysPortals);
+		}
+		
+		for (UserPortal p : userPortals) {
+			String panelId = p.getPanelId();
+			p.setPanel(panelService.getPanel(panelId));
 		}
 
 		modelMap.put("userPanel", userPanel);
