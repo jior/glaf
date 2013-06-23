@@ -35,7 +35,8 @@ public class MyCheckPassword implements Command<Boolean> {
 	}
 
 	public Boolean execute(CommandContext commandContext) {
-		User user = commandContext.getUserEntityManager().findUserById(userId);
+		User user = commandContext.getUserIdentityManager()
+				.findUserById(userId);
 		if ((user != null) && (password != null)
 				&& (user.getPassword() != null)) {
 			if (password.equals(user.getPassword())) {

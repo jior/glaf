@@ -7,8 +7,21 @@
 		<setting name="lazyLoadingEnabled" value="false" />
 	</settings>
 
+	<typeAliases>
+		<typeAlias
+			type="org.activiti.engine.impl.persistence.ByteArrayRefTypeHandler"
+			alias="ByteArrayRefTypeHandler" />
+	</typeAliases>
+
+	<typeHandlers>
+		<typeHandler handler="ByteArrayRefTypeHandler"
+			javaType="org.activiti.engine.impl.persistence.entity.ByteArrayRef"
+			jdbcType="VARCHAR" />
+	</typeHandlers>
+
 	<mappers>
 		<mapper resource="org/activiti/db/mapping/entity/Attachment.xml" />
+		<mapper resource="org/activiti/db/mapping/entity/ByteArray.xml" />
 		<mapper resource="org/activiti/db/mapping/entity/Comment.xml" />
 		<mapper resource="org/activiti/db/mapping/entity/Deployment.xml" />
 		<mapper resource="org/activiti/db/mapping/entity/Execution.xml" />
@@ -18,6 +31,7 @@
 		<mapper resource="org/activiti/db/mapping/entity/HistoricProcessInstance.xml" />
 		<mapper resource="org/activiti/db/mapping/entity/HistoricVariableInstance.xml" />
 		<mapper resource="org/activiti/db/mapping/entity/HistoricTaskInstance.xml" />
+		<mapper resource="org/activiti/db/mapping/entity/HistoricIdentityLink.xml" />
 		<mapper resource="org/activiti/db/mapping/entity/IdentityInfo.xml" />
 		<mapper resource="org/activiti/db/mapping/entity/IdentityLink.xml" />
 		<mapper resource="org/activiti/db/mapping/entity/Job.xml" />
@@ -34,7 +48,7 @@
 
 		<mapper resource="com/glaf/activiti/persistence/ActivityInstance.xml" />
 		<mapper resource="com/glaf/activiti/persistence/Extension.xml" />
-		
+
 	</mappers>
 </configuration>
 

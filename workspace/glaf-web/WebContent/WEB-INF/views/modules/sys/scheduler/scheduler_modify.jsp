@@ -52,6 +52,7 @@
 		return;
 	 }
 
+
      document.schedulerForm.submit();
  }
 
@@ -152,7 +153,7 @@
 		<td height="24"><input type="text" name="repeatCount" size="18"
 			 class="input span1 x-text" maxlength="255"
 			value="${scheduler.repeatCount}"
-			onKeyPress="return check_integer(this);">
+			onKeyPress="return check_integer(this);" nullable="no" chname="重复次数">
 		&nbsp;(-1代表不限制重复次数)</td>
 	</tr>
 
