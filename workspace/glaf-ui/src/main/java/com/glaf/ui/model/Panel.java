@@ -24,7 +24,7 @@ import java.util.*;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Lob;
+
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -53,8 +53,7 @@ public class Panel implements Serializable {
 	@Column(name = "COLUMNINDEX_")
 	protected int columnIndex;
 
-	@Lob
-	@Column(name = "CONTENT_")
+	@Column(name = "CONTENT_", length = 2000)
 	protected String content = null;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -206,15 +205,15 @@ public class Panel implements Serializable {
 		return width;
 	}
 
-	public boolean isClose() {
+	public boolean canClosable() {
 		return close == 1 ? true : false;
 	}
 
-	public boolean isCollapsible() {
+	public boolean canCollapsible() {
 		return collapsible == 1 ? true : false;
 	}
 
-	public boolean isResize() {
+	public boolean canResizeable() {
 		return resize == 1 ? true : false;
 	}
 

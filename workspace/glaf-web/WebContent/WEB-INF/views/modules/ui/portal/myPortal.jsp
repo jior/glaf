@@ -47,8 +47,8 @@
 			 } else {
 				 jsonObject.put("height", 300);
 			 }
-			 jsonObject.put("closable", p.getPanel().isClose());
-			 jsonObject.put("collapsible", p.getPanel().isCollapsible());
+			 jsonObject.put("closable", p.getPanel().canClosable());
+			 jsonObject.put("collapsible", p.getPanel().canCollapsible());
 			 
              if(p.getPanel().getContent() != null && p.getPanel().getContent().trim().length()>0 ){
                   jsonObject.put("href", request.getContextPath()+"/mx/panel/content?pid="+p.getPanel().getId());
