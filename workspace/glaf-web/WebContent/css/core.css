@@ -1,7 +1,7 @@
 /*-----------------------------glaf---------------------------------------------------*/
 
 body,table,td,th{
-   font-size:15px;  font-weight:normal; font-family: ËÎÌו,Arial,sans-serif; color:#656565
+   font-size:12px;  font-weight:normal; font-family: Arial,ËÎÌו,helvertica,sans-serif; color:#656565
 }
 
 a:link,a:visited,a:active{color:#656565; text-decoration:none}
@@ -144,3 +144,9 @@ a:hover{color:#F3A36E; text-decoration:none}
 	font-weight: bold;
 }
  
+img {
+   border: 0px;color:#fff;
+}
+
+a:link,a:visited,a:active{color:#656565; text-decoration:none}
+a:hover{color:#F3A36E; text-decoration:none}

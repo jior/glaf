@@ -8,7 +8,7 @@
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/yui/build/paginator/assets/skins/sam/paginator.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/yui/build/button/assets/skins/sam/button.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/yui/build/menu/assets/skins/sam/menu.css" />
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/styles.css"/>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/core.css"/>
 <script type="text/javascript"	src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/yui/yui-2.8.1-min.js"></script>
 </head>
