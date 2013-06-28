@@ -52,6 +52,11 @@
 			   includes="com/glaf/shiro/**/*.class,com/glaf/shiro/**/*.xml,com/glaf/shiro/**/*.properties" />
 		</jar>
 
+	    <jar jarfile="glaf-test.jar">
+			<fileset dir="bin" 
+			   includes="com/glaf/test/**/*.class,com/glaf/test/**/*.xml,com/glaf/test/**/*.properties" />
+		</jar>
+
 	</target>
 
 	<target name="copy">
