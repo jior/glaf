@@ -24,6 +24,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -40,6 +41,28 @@ public class IdentityFactory {
 
 	protected final static Log logger = LogFactory
 			.getLog(IdentityFactory.class);
+
+	/**
+	 * 验证用户名密码是否正确
+	 * 
+	 * @param actorId
+	 * @param password
+	 * @return
+	 */
+	public static boolean checkPassword(String actorId, String password) {
+		boolean isAuthenticated = false;
+		User user = (User) getEntityService().getById("getUserById", actorId);
+		if (user != null) {
+			String pwd = DigestUtil.digestString(password, "MD5");
+			if (StringUtils.equals(pwd, user.getPassword())) {
+				return true;
+			}
+			if (StringUtils.equals(password, user.getPassword())) {
+				return true;
+			}
+		}
+		return isAuthenticated;
+	}
 
 	/**
 	 * 获取委托人编号集合

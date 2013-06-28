@@ -121,5 +121,6 @@
 	<classpathentry kind="lib" path="lib/poi-ooxml-schemas-3.9-20121203.jar"/>
 	<classpathentry kind="lib" path="lib/memcached-java-client.jar"/>
 	<classpathentry kind="lib" path="lib/hibernate3.jar"/>
+	<classpathentry kind="lib" path="lib/xstream-1.4.3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

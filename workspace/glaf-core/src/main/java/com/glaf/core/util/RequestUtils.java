@@ -934,6 +934,29 @@ public class RequestUtils {
 		}
 	}
 
+	public static void removeLoginUser(HttpServletRequest request,
+			HttpServletResponse response) {
+		Cookie[] cookies = request.getCookies();
+		if (cookies != null && cookies.length > 0) {
+			for (Cookie cookie : cookies) {
+				if (StringUtils.equals(cookie.getName(),
+						Constants.LOGIN_ACTORID + "_GLAF_COOKIE")) {
+					cookie.setMaxAge(0);
+					cookie.setPath("/");
+					cookie.setValue(UUID32.getUUID());
+					response.addCookie(cookie);
+					logger.debug("remove user from cookie");
+				}
+			}
+		}
+
+		HttpSession session = request.getSession(false);
+		if (session != null) {
+			session.removeAttribute(Constants.LOGIN_ACTORID);
+			session.invalidate();
+		}
+	}
+
 	public static void setTheme(HttpServletRequest request,
 			HttpServletResponse response) {
 		if (StringUtils.isNotEmpty(request.getParameter("theme"))) {
