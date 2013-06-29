@@ -14,9 +14,8 @@
 		<property name="jobExecutorActivate" value="false" />
 		<property name="mapperLocations">
 			<list>
-				<value>classpath:com/**/mapper/*Mapper.xml</value>
 				<value>classpath:com/glaf/**/mapper/*Mapper.xml</value>
-				<value>classpath:/resources/mybatis/mapper/*Mapper.xml</value>
+				<value>classpath:resources/mybatis/mapper/*Mapper.xml</value>
 			</list>
 		</property>
 	</bean>
