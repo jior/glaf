@@ -257,7 +257,7 @@ public class JavaCodeGen {
 		f3.setEnglishTitle("createBy");
 		f3.setTitle("创建人");
 		f3.setType("String");
-		classDefinition.addField(f3);
+		//classDefinition.addField(f3);
 
 		FieldDefinition f4 = new ColumnDefinition();
 		f4.setName("createDate");
@@ -265,7 +265,7 @@ public class JavaCodeGen {
 		f4.setEnglishTitle("createDate");
 		f4.setTitle("创建日期");
 		f4.setType("Date");
-		classDefinition.addField(f4);
+		//classDefinition.addField(f4);
 
 		FieldDefinition f5 = new ColumnDefinition();
 		f5.setName("updateDate");
@@ -273,7 +273,7 @@ public class JavaCodeGen {
 		f5.setEnglishTitle("updateDate");
 		f5.setTitle("修改日期");
 		f5.setType("Date");
-		classDefinition.addField(f5);
+		//classDefinition.addField(f5);
 
 		FieldDefinition f6 = new ColumnDefinition();
 		f6.setName("updateBy");
@@ -281,7 +281,7 @@ public class JavaCodeGen {
 		f6.setEnglishTitle("updateBy");
 		f6.setTitle("修改人");
 		f6.setType("String");
-		classDefinition.addField(f6);
+		//classDefinition.addField(f6);
 
 		Map<String, FieldDefinition> fields = classDefinition.getFields();
 

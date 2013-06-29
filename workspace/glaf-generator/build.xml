@@ -21,12 +21,13 @@
 			<include name="*.jar" />
 		</fileset>
 		<pathelement location="./bin" />
-		<pathelement location="../glaf-bi/bin" />
+		<!-- <pathelement location="../glaf-bi/bin" />
 		<pathelement location="../glaf-base/bin" />
 		<pathelement location="../glaf-core/bin" />
 		<pathelement location="../glaf-form/bin" />
 		<pathelement location="../glaf-jbpm/bin" />
-		<pathelement location="../glaf-ui/bin" />
+		<pathelement location="../glaf-ui/bin" /> -->
+		<pathelement location="../glaf-isdp/bin" />
 		<pathelement location="./conf" />
 	</path>
 
@@ -64,6 +65,17 @@
 			<classpath refid="compile.classpath"/>
 			<arg line=" codegen/jpa/mapping "/>
 		</java> 
+
+	</target>
+
+
+	<target name="GenMore">
+
+		<java classname="com.glaf.generator.GenMore" fork="true">
+			<classpath refid="compile.classpath"/>
+			<arg line="  mapping codegen/gen-more "/>
+			<jvmarg line="-Dcodegen.cfg=templates/codegen/codegen_springmvc.xml"/>
+		</java>
 
 	</target>
 
