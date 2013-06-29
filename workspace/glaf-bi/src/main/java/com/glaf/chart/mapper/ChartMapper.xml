@@ -33,7 +33,7 @@
  
 	<insert id="insertChart" parameterType="com.glaf.chart.domain.Chart">
 		insert into
-		SYS_CHART ( ID_
+		BI_CHART ( ID_
         ,QUERYIDS_ 
         ,QUERYSQL_ 
         ,SUBJECT_ 
@@ -87,7 +87,7 @@
 	 
 	<update id="updateChart" parameterType="com.glaf.chart.domain.Chart">
 		update
-		SYS_CHART
+		BI_CHART
 		set
 		<trim prefix="" suffix="" suffixOverrides=",">		
         QUERYIDS_ = #{queryIds, jdbcType=VARCHAR},
@@ -118,13 +118,13 @@
 
  
 	<delete id="deleteChartById" parameterType="string"> 
-        delete from SYS_CHART
+        delete from BI_CHART
         where ID_ =	#{id}
 	</delete>
 	
 	
 	<delete id="deleteCharts" parameterType="com.glaf.chart.query.ChartQuery">
-		delete from SYS_CHART
+		delete from BI_CHART
 		where ( 
  			  ID_ IN
 		<foreach item="x_rowId" index="index" collection="rowIds" 
@@ -136,7 +136,7 @@
 
 
 	<select id="getChartById" parameterType="string" resultMap="chartResultMap">
-		select * from SYS_CHART where ID_ = #{id}
+		select * from BI_CHART where ID_ = #{id}
 	</select>
 
 
@@ -160,7 +160,7 @@
 
 	<sql id="selectChartsSql">
 
-		from SYS_CHART E
+		from BI_CHART E
 
 		<where>
 		       1 = 1  

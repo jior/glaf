@@ -34,7 +34,7 @@ import com.glaf.core.base.JSONable;
 import com.glaf.core.util.DateUtils;
 
 @Entity
-@Table(name = "SYS_CHART")
+@Table(name = "BI_CHART")
 public class Chart implements Serializable, JSONable {
 	private static final long serialVersionUID = 1L;
 
