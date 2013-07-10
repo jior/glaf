@@ -13,6 +13,7 @@
 		<result property="deptId" column="DEPTID" jdbcType="BIGINT"/>
 		<result property="createDate" column="CREATEDATE" jdbcType="TIMESTAMP"/>
         <result property="createBy" column="CREATEBY" jdbcType="VARCHAR"/>
+		<association property="role" column="SYSROLEID" select="com.glaf.base.modules.sys.mapper.SysRoleMapper.getSysRoleById"/>
 	</resultMap>
 
  

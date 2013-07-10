@@ -29,7 +29,9 @@
 
 	<tx:annotation-driven mode="aspectj" />
 
-	<aop:aspectj-autoproxy proxy-target-class="false" />
+	<aop:config proxy-target-class="true"/>
+
+	<aop:aspectj-autoproxy proxy-target-class="true" />
 
 	<context:annotation-config />
 
