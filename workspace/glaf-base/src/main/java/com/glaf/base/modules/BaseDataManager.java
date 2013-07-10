@@ -696,7 +696,7 @@ public class BaseDataManager {
 							bdi.setParentId((int) parent.getParentId());
 						}
 
-						logger.info("id:" + bean.getId() + ",name:"
+						logger.debug("id:" + bean.getId() + ",name:"
 								+ bean.getName() + "&no:" + bean.getNo());
 						tmp.add(bdi);
 					}
@@ -759,7 +759,7 @@ public class BaseDataManager {
 
 							bdi.setDeep(0);
 
-							logger.info("id:" + bean.getId() + ",name:"
+							logger.debug("id:" + bean.getId() + ",name:"
 									+ bean.getName() + ",code:"
 									+ bean.getCode() + ",value:"
 									+ bean.getValue());
@@ -795,7 +795,7 @@ public class BaseDataManager {
 						bdi.setId(bean.getId());// 模块id
 						bdi.setName(bean.getName());// 模块名称
 						bdi.setCode(bean.getFuncMethod());// 模块方法
-						logger.info("id:" + bean.getId() + ",name:"
+						logger.debug("id:" + bean.getId() + ",name:"
 								+ bean.getName() + ", method:"
 								+ bean.getFuncMethod());
 						tmp.add(bdi);
@@ -833,7 +833,7 @@ public class BaseDataManager {
 						String code = bean.getSubjectCode();
 						code = code.substring(code.indexOf(".") + 1);
 						bdi.setCode(code);// 分类编号
-						logger.info("id:" + bean.getId() + ",SubjectName:"
+						logger.debug("id:" + bean.getId() + ",SubjectName:"
 								+ bean.getSubjectName() + ", SubjectCode:"
 								+ code);
 						tmp.add(bdi);
@@ -866,7 +866,7 @@ public class BaseDataManager {
 						bdi.setCode(bean.getCode());// 用户招聘号
 						bdi.setValue(bean.getAccount());
 						bdi.setExt1(bean.getTelephone());// 用户电话
-						logger.info("id:" + bean.getId() + ",name:"
+						logger.debug("id:" + bean.getId() + ",name:"
 								+ bean.getName() + ",telephone:"
 								+ bean.getTelephone());
 						tmp.add(bdi);
