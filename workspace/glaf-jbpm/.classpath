@@ -60,12 +60,10 @@
 	<classpathentry kind="lib" path="/glaf-core/lib/jaxrs-api-2.3.5.Final.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/jbpm-jpdl.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/jdom-1.0.jar"/>
-	
 	<classpathentry kind="lib" path="/glaf-core/lib/json.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/jsp-api.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/jstl-1.2.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/jtds-1.2.7.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/jtds-1.3.0.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/jxls-core.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/jxls-reader.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/log4j-1.2.17.jar"/>
