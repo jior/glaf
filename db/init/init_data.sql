@@ -1,9 +1,10 @@
 /** Çå¿ÕÊý¾Ý
+
 delete from sys_access;
 delete from sys_function;
-delete from sys_user;
 delete from sys_user_role;
 delete from sys_dept_role;
+delete from sys_user;
 delete from sys_department;
 delete from sys_application;
 delete from sys_tree;
