@@ -39,7 +39,6 @@ import com.glaf.core.dialect.MySQLDialect;
 import com.glaf.core.dialect.OracleDialect;
 import com.glaf.core.dialect.PostgreSQLDialect;
 import com.glaf.core.dialect.SQLiteDialect;
-
 import com.glaf.core.security.LoginContext;
 import com.glaf.core.util.Constants;
 import com.glaf.core.util.PropertiesUtils;
@@ -53,17 +52,13 @@ public final class Environment {
 
 	public static final String CONNECTION_NAME = "jdbc.name";
 
+	public static final String CONNECTION_PROVIDER = "jdbc.provider";
+
 	public static final String CONNECTION_PREFIX = "jdbc";
-
-	public static final String CONNECTION_PROVIDER = "jdbc.provider_class";
-
-	public static final String CONNECTION_TITLE = "jdbc.title";
 
 	public static final String CURRENT_SYSTEM_NAME = "CURRENT_SYSTEM_NAME";
 
 	public static final String CURRENT_USER = "CURRENT_USER";
-
-	protected static Properties databaseTypeMappings = getDatabaseTypeMappings();
 
 	public static final String DATASOURCE = "jdbc.datasource";
 
@@ -209,34 +204,6 @@ public final class Environment {
 		return dbType;
 	}
 
-	public static Properties getDatabaseTypeMappings() {
-		Properties databaseTypeMappings = new Properties();
-		databaseTypeMappings.setProperty("H2", "h2");
-		databaseTypeMappings.setProperty("SQLite", "sqlite");
-		databaseTypeMappings.setProperty("MySQL", "mysql");
-		databaseTypeMappings.setProperty("Oracle", "oracle");
-		databaseTypeMappings.setProperty("PostgreSQL", "postgresql");
-		databaseTypeMappings.setProperty("Microsoft SQL Server", "sqlserver");
-		databaseTypeMappings.setProperty("DB2", "db2");
-		databaseTypeMappings.setProperty("DB2/NT", "db2");
-		databaseTypeMappings.setProperty("DB2/NT64", "db2");
-		databaseTypeMappings.setProperty("DB2 UDP", "db2");
-		databaseTypeMappings.setProperty("DB2/LINUX", "db2");
-		databaseTypeMappings.setProperty("DB2/LINUX390", "db2");
-		databaseTypeMappings.setProperty("DB2/LINUXZ64", "db2");
-		databaseTypeMappings.setProperty("DB2/400 SQL", "db2");
-		databaseTypeMappings.setProperty("DB2/6000", "db2");
-		databaseTypeMappings.setProperty("DB2 UDB iSeries", "db2");
-		databaseTypeMappings.setProperty("DB2/AIX64", "db2");
-		databaseTypeMappings.setProperty("DB2/HPUX", "db2");
-		databaseTypeMappings.setProperty("DB2/HP64", "db2");
-		databaseTypeMappings.setProperty("DB2/SUN", "db2");
-		databaseTypeMappings.setProperty("DB2/SUN64", "db2");
-		databaseTypeMappings.setProperty("DB2/PTX", "db2");
-		databaseTypeMappings.setProperty("DB2/2", "db2");
-		return databaseTypeMappings;
-	}
-
 	public static Map<String, Properties> getDataSourceProperties() {
 		return dataSourceProperties;
 	}
@@ -371,19 +338,21 @@ public final class Environment {
 										.loadProperties(new FileInputStream(
 												file));
 								if (props != null) {
-									String name = props
-											.getProperty(CONNECTION_NAME);
-									if (StringUtils.isNotEmpty(name)) {
-										String dbType = props
-												.getProperty(CONNECTION_DATABASE_TYPE);
-										if (StringUtils.isEmpty(dbType)) {
-											dbType = getDatabaseType(props
-													.getProperty(URL));
-											props.setProperty(
-													CONNECTION_DATABASE_TYPE,
-													dbType);
+									if (DataSourceConfig.getConnection(props) != null) {
+										String name = props
+												.getProperty(CONNECTION_NAME);
+										if (StringUtils.isNotEmpty(name)) {
+											String dbType = props
+													.getProperty(CONNECTION_DATABASE_TYPE);
+											if (StringUtils.isEmpty(dbType)) {
+												dbType = getDatabaseType(props
+														.getProperty(URL));
+												props.setProperty(
+														CONNECTION_DATABASE_TYPE,
+														dbType);
+											}
+											dataSourceMap.put(name, props);
 										}
-										dataSourceMap.put(name, props);
 									}
 								}
 							} catch (Exception ex) {

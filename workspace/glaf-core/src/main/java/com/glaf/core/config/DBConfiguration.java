@@ -18,14 +18,14 @@
 
 package com.glaf.core.config;
 
-import java.util.Properties;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.util.*;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.glaf.core.config.SystemConfig;
-import com.glaf.core.jdbc.datasource.DataSourceFactory;
-import com.glaf.core.jdbc.datasource.IDataSourceFactory;
 import com.glaf.core.util.Constants;
 import com.glaf.core.util.PropertiesUtils;
 
@@ -33,24 +33,55 @@ public class DBConfiguration {
 	protected static final Log logger = LogFactory
 			.getLog(DBConfiguration.class);
 
-	public javax.sql.DataSource buildDataSource() {
-		javax.sql.DataSource dataSource = null;
-		String filename = SystemConfig.getConfigRootPath()
-				+ Constants.DEFAULT_JDBC_CONFIG;
-		logger.info("load jdbc config:" + filename);
-		Properties properties = PropertiesUtils.loadFilePathResource(filename);
-		IDataSourceFactory dataSourceFactory = DataSourceFactory
-				.createDataSource(properties);
-		dataSource = dataSourceFactory.makePooledDataSource(properties);
-		return dataSource;
+	protected static Map<String, Properties> dataMap = new HashMap<String, Properties>();
+
+	public static Properties getProperties(String name) {
+		if (dataMap.isEmpty()) {
+			reload();
+		}
+		return dataMap.get(name);
 	}
 
-	public javax.sql.DataSource buildDataSource(Properties properties) {
-		javax.sql.DataSource dataSource = null;
-		IDataSourceFactory dataSourceFactory = DataSourceFactory
-				.createDataSource(properties);
-		dataSource = dataSourceFactory.makePooledDataSource(properties);
-		return dataSource;
+	public static void reload() {
+		try {
+			String config = SystemConfig.getConfigRootPath()
+					+ "/conf/templates/jdbc";
+			File directory = new File(config);
+			if (directory.exists() && directory.isDirectory()) {
+				String[] filelist = directory.list();
+				for (int i = 0; i < filelist.length; i++) {
+					String filename = config + "/" + filelist[i];
+					File file = new File(filename);
+					if (file.isFile() && file.getName().endsWith(".properties")) {
+						InputStream inputStream = new FileInputStream(file);
+						Properties props = PropertiesUtils
+								.loadProperties(inputStream);
+						if (props != null) {
+							dataMap.put(props.getProperty("jdbc.name"), props);
+						}
+					}
+				}
+			}
+
+			String glabal_config = SystemConfig.getConfigRootPath()
+					+ Constants.DEFAULT_JDBC_CONFIG;
+			File file = new File(glabal_config);
+			if (file.isFile() && file.getName().endsWith(".properties")) {
+				InputStream inputStream = new FileInputStream(file);
+				Properties props = PropertiesUtils.loadProperties(inputStream);
+				if (props != null) {
+					dataMap.put("default", props);
+					dataMap.put(props.getProperty("jdbc.name"), props);
+				}
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			logger.error(ex);
+		}
+	}
+
+	private DBConfiguration() {
+		reload();
 	}
 
 }

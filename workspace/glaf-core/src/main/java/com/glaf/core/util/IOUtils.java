@@ -24,7 +24,10 @@ import java.util.List;
 import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
+
 import org.apache.commons.logging.Log;
+
+import com.glaf.core.config.Configuration;
 
 /**
  * An utility class for I/O related functionality.
@@ -129,7 +132,92 @@ public class IOUtils {
 			}
 		}
 	}
+	
+	/**
+	 * Copies from one stream to another. <strong>closes the input and output
+	 * streams at the end</strong>.
+	 * 
+	 * @param in
+	 *            InputStrem to read from
+	 * @param out
+	 *            OutputStream to write to
+	 * @param conf
+	 *            the Configuration object
+	 */
+	public static void copyBytes(InputStream in, OutputStream out,
+			Configuration conf) throws IOException {
+		copyBytes(in, out, conf.getInt("io.file.buffer.size", 65536), true);
+	}
+	
+	/**
+	 * Copies from one stream to another.
+	 * 
+	 * @param in
+	 *            InputStrem to read from
+	 * @param out
+	 *            OutputStream to write to
+	 * @param conf
+	 *            the Configuration object
+	 * @param close
+	 *            whether or not close the InputStream and OutputStream at the
+	 *            end. The streams are closed in the finally clause.
+	 */
+	public static void copyBytes(InputStream in, OutputStream out,
+			Configuration conf, boolean close) throws IOException {
+		copyBytes(in, out, conf.getInt("io.file.buffer.size", 65536), close);
+	}
 
+	/**
+	 * Copies from one stream to another.
+	 * 
+	 * @param in
+	 *            InputStrem to read from
+	 * @param out
+	 *            OutputStream to write to
+	 * @param buffSize
+	 *            the size of the buffer
+	 */
+	@SuppressWarnings("resource")
+	public static void copyBytes(InputStream in, OutputStream out, int buffSize)
+			throws IOException {
+		PrintStream ps = out instanceof PrintStream ? (PrintStream) out : null;
+		byte buf[] = new byte[buffSize];
+		int bytesRead = in.read(buf);
+		while (bytesRead >= 0) {
+			out.write(buf, 0, bytesRead);
+			if ((ps != null) && ps.checkError()) {
+				throw new IOException("Unable to write to output stream.");
+			}
+			bytesRead = in.read(buf);
+		}
+	}
+
+	/**
+	 * Copies from one stream to another.
+	 * 
+	 * @param in
+	 *            InputStrem to read from
+	 * @param out
+	 *            OutputStream to write to
+	 * @param buffSize
+	 *            the size of the buffer
+	 * @param close
+	 *            whether or not close the InputStream and OutputStream at the
+	 *            end. The streams are closed in the finally clause.
+	 */
+	public static void copyBytes(InputStream in, OutputStream out,
+			int buffSize, boolean close) throws IOException {
+		try {
+			copyBytes(in, out, buffSize);
+		} finally {
+			if (close) {
+				out.close();
+				in.close();
+			}
+		}
+	}
+
+ 
 	/**
 	 * Copies the specified length of bytes from in to out.
 	 * 

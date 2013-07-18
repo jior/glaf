@@ -214,6 +214,30 @@ public class DataSourceConfig {
 		return null;
 	}
 
+	public static Connection getDefaultConnection() {
+		Connection connection = null;
+		DataSource ds = null;
+		try {
+			if (loadJdbcProperties) {
+				if (StringUtils.isNotEmpty(getJndiName())) {
+					InitialContext ctx = new InitialContext();
+					ds = (DataSource) ctx.lookup(getJndiName());
+					connection = ds.getConnection();
+				} else {
+					BasicDataSource bds = new BasicDataSource();
+					bds.setDriverClassName(getJdbcDriverClass());
+					bds.setUrl(getJdbcConnectionURL());
+					bds.setUsername(getJdbcUsername());
+					bds.setPassword(getJdbcPassword());
+					connection = bds.getConnection();
+				}
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return connection;
+	}
+
 	protected static Properties getDefaultDatabaseTypeMappings() {
 		Properties databaseTypeMappings = new Properties();
 		databaseTypeMappings.setProperty("H2", "h2");
@@ -239,6 +263,25 @@ public class DataSourceConfig {
 		databaseTypeMappings.setProperty("DB2/PTX", "db2");
 		databaseTypeMappings.setProperty("DB2/2", "db2");
 		return databaseTypeMappings;
+	}
+
+	public static Properties getDefaultJdbcProperties() {
+		InputStream inputStream = null;
+		try {
+			String filename = SystemProperties.getConfigRootPath()
+					+ Constants.DEFAULT_JDBC_CONFIG;
+			Resource resource = new FileSystemResource(filename);
+
+			inputStream = new FileInputStream(resource.getFile()
+					.getAbsolutePath());
+			Properties props = PropertiesUtils.loadProperties(inputStream);
+			return props;
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			throw new RuntimeException(ex);
+		} finally {
+			IOUtils.closeQuietly(inputStream);
+		}
 	}
 
 	protected static Properties getDialectMappings() {

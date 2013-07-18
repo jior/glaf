@@ -29,6 +29,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.glaf.core.config.DataSourceConfig;
+import com.glaf.core.jdbc.connection.ConnectionProvider;
+import com.glaf.core.jdbc.connection.ConnectionProviderFactory;
 import com.glaf.core.util.JdbcUtils;
 
 public class DBConnectionFactory {
@@ -40,6 +42,23 @@ public class DBConnectionFactory {
 
 	public static Connection getConnection() {
 		return DataSourceConfig.getConnection();
+	}
+
+	public static Connection getConnection(String systemName) {
+		if (systemName == null) {
+			throw new RuntimeException("systemName is required.");
+		}
+		logger.debug("systemName:" + systemName);
+		Connection connection = null;
+		try {
+			ConnectionProvider provider = ConnectionProviderFactory
+					.createProvider(systemName);
+			connection = provider.getConnection();
+			return connection;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			throw new RuntimeException(ex);
+		}
 	}
 
 	public static String getDatabaseType() {
