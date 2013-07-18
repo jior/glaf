@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.h2.util.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -63,7 +63,7 @@ public class MyMenuController {
 		} else {
 			menuId = request.getParameter("id");
 		}
-		if (menuId != null && StringUtils.isNumber(menuId)) {
+		if (menuId != null && StringUtils.isNumeric(menuId)) {
 			TreeModel treeModel = sysApplicationService
 					.getTreeModelByAppId(Long.parseLong(menuId));
 			if (treeModel != null) {
