@@ -18,6 +18,9 @@
 
 package com.glaf.core.context;
 
+import java.util.Enumeration;
+import java.util.Properties;
+
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -29,6 +32,9 @@ import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.glaf.core.config.DataSourceConfig;
+import com.glaf.core.startup.Bootstrap;
+import com.glaf.core.startup.BootstrapProperties;
+import com.glaf.core.util.ClassUtils;
 
 public class StartupListener extends ContextLoaderListener implements
 		ServletContextListener {
@@ -36,7 +42,24 @@ public class StartupListener extends ContextLoaderListener implements
 	private static final Log logger = LogFactory.getLog(StartupListener.class);
 
 	public void beforeContextInitialized(ServletContext context) {
-
+		Properties props = BootstrapProperties.getProperties();
+		if (props != null && props.keys().hasMoreElements()) {
+			Enumeration<?> e = props.keys();
+			while (e.hasMoreElements()) {
+				String className = (String) e.nextElement();
+				String value = props.getProperty(className);
+				try {
+					Object obj = ClassUtils.instantiateObject(className);
+					if (obj instanceof Bootstrap) {
+						Bootstrap bootstrap = (Bootstrap) obj;
+						bootstrap.startup(context, value);
+					}
+				} catch (Exception ex) {
+					ex.printStackTrace();
+					logger.error(ex);
+				}
+			}
+		}
 	}
 
 	public void contextInitialized(ServletContextEvent event) {
@@ -62,13 +85,6 @@ public class StartupListener extends ContextLoaderListener implements
 		if (ctx != null) {
 			logger.info("设置应用环境上下文......");
 			ContextFactory.setContext(ctx);
-		}
-		try {
-			if (ContextFactory.hasBean("sysSchedulerService")) {
-
-			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
 		}
 	}
 }
