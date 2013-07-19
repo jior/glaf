@@ -45,6 +45,10 @@ public final class Environment {
 
 	protected static ThreadLocal<Map<String, String>> threadLocalVaribles = new ThreadLocal<Map<String, String>>();
 
+	public static String getCurrentDatabaseType() {
+		return DBConfiguration.getCurrentDatabaseType();
+	}
+
 	public static String getCurrentSystemName() {
 		if (threadLocalVaribles.get() != null
 				&& threadLocalVaribles.get().get(CURRENT_SYSTEM_NAME) != null) {
@@ -57,7 +61,7 @@ public final class Environment {
 		String dsName = getCurrentSystemName();
 		return systemProperties.get(dsName);
 	}
-
+	
 	public static String getCurrentUser() {
 		if (threadLocalVaribles.get() != null) {
 			return threadLocalVaribles.get().get(CURRENT_USER);
