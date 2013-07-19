@@ -154,18 +154,18 @@ public class DataSourceConfig {
 		try {
 			if (loadJdbcProperties) {
 				if (StringUtils.isNotEmpty(props
-						.getProperty(Environment.DATASOURCE))) {
+						.getProperty(DBConfiguration.JDBC_DATASOURCE))) {
 					InitialContext ctx = new InitialContext();
 					ds = (DataSource) ctx.lookup(props
-							.getProperty(Environment.DATASOURCE));
+							.getProperty(DBConfiguration.JDBC_DATASOURCE));
 					connection = ds.getConnection();
 				} else {
 					BasicDataSource bds = new BasicDataSource();
 					bds.setDriverClassName(props
-							.getProperty(Environment.DRIVER));
-					bds.setUrl(props.getProperty(Environment.URL));
-					bds.setUsername(props.getProperty(Environment.USER));
-					bds.setPassword(props.getProperty(Environment.PASS));
+							.getProperty(DBConfiguration.JDBC_DRIVER));
+					bds.setUrl(props.getProperty(DBConfiguration.JDBC_URL));
+					bds.setUsername(props.getProperty(DBConfiguration.JDBC_USER));
+					bds.setPassword(props.getProperty(DBConfiguration.JDBC_PASSWORD));
 					connection = bds.getConnection();
 				}
 			} else {
@@ -338,23 +338,23 @@ public class DataSourceConfig {
 	}
 
 	public static String getJdbcConnectionURL() {
-		return getString(Environment.URL);
+		return getString(DBConfiguration.JDBC_URL);
 	}
 
 	public static String getJdbcDriverClass() {
-		return getString(Environment.DRIVER);
+		return getString(DBConfiguration.JDBC_DRIVER);
 	}
 
 	public static String getJdbcPassword() {
-		return getString(Environment.PASS);
+		return getString(DBConfiguration.JDBC_PASSWORD);
 	}
 
 	public static String getJdbcUsername() {
-		return getString(Environment.USER);
+		return getString(DBConfiguration.JDBC_USER);
 	}
 
 	public static String getJndiName() {
-		return getString(Environment.DATASOURCE);
+		return getString(DBConfiguration.JDBC_DATASOURCE);
 	}
 
 	public static long getLong(String key) {

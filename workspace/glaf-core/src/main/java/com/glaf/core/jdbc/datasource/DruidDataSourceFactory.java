@@ -22,7 +22,7 @@ import java.sql.*;
 import javax.sql.DataSource;
 import com.alibaba.druid.pool.DruidDataSourceC3P0Adapter;
 
-import com.glaf.core.config.Environment;
+import com.glaf.core.config.DBConfiguration;
 import com.glaf.core.util.ClassUtils;
 import com.glaf.core.util.JdbcUtils;
 import com.glaf.core.util.PropertiesHelper;
@@ -36,10 +36,10 @@ public class DruidDataSourceFactory implements IDataSourceFactory {
 
 	@SuppressWarnings("rawtypes")
 	public DataSource makePooledDataSource(Properties props) {
-		String dbDriver = props.getProperty(Environment.DRIVER);
-		String dbURL = props.getProperty(Environment.URL);
-		String dbUser = props.getProperty(Environment.USER);
-		String dbPassword = props.getProperty(Environment.PASS);
+		String dbDriver = props.getProperty(DBConfiguration.JDBC_DRIVER);
+		String dbURL = props.getProperty(DBConfiguration.JDBC_URL);
+		String dbUser = props.getProperty(DBConfiguration.JDBC_USER);
+		String dbPassword = props.getProperty(DBConfiguration.JDBC_PASSWORD);
 
 		// Load the database driver
 		try {
@@ -70,12 +70,12 @@ public class DruidDataSourceFactory implements IDataSourceFactory {
 		}
 
 		Integer initialPoolSize = PropertiesHelper.getInteger(
-				Environment.POOL_INIT_SIZE, props);
+				DBConfiguration.POOL_INIT_SIZE, props);
 		Integer minPoolSize = PropertiesHelper.getInteger(
-				Environment.POOL_MIN_SIZE, props);
+				DBConfiguration.POOL_MIN_SIZE, props);
 		if (initialPoolSize == null && minPoolSize != null) {
-			c3props.put(Environment.POOL_INIT_SIZE, String.valueOf(minPoolSize)
-					.trim());
+			c3props.put(DBConfiguration.POOL_INIT_SIZE,
+					String.valueOf(minPoolSize).trim());
 		}
 
 		Properties allProps = (Properties) props.clone();
@@ -83,55 +83,55 @@ public class DruidDataSourceFactory implements IDataSourceFactory {
 		ds.setProperties(allProps);
 
 		// Apply any properties
-		if (props.getProperty(Environment.POOL_MAX_STATEMENTS) != null) {
-			int size = PropertiesHelper.getInt(Environment.POOL_MAX_STATEMENTS,
-					props, 0);
+		if (props.getProperty(DBConfiguration.POOL_MAX_STATEMENTS) != null) {
+			int size = PropertiesHelper.getInt(
+					DBConfiguration.POOL_MAX_STATEMENTS, props, 0);
 			if (size >= 0) {
 				ds.setMaxStatements(size);
 			}
 		}
-		if (props.getProperty(Environment.POOL_MAX_SIZE) != null) {
-			int size = PropertiesHelper.getInt(Environment.POOL_MAX_SIZE,
+		if (props.getProperty(DBConfiguration.POOL_MAX_SIZE) != null) {
+			int size = PropertiesHelper.getInt(DBConfiguration.POOL_MAX_SIZE,
 					props, 0);
 			if (size >= 0) {
 				ds.setMaxPoolSize(size);
 			}
 		}
-		if (props.getProperty(Environment.POOL_MIN_SIZE) != null) {
-			int size = PropertiesHelper.getInt(Environment.POOL_MIN_SIZE,
+		if (props.getProperty(DBConfiguration.POOL_MIN_SIZE) != null) {
+			int size = PropertiesHelper.getInt(DBConfiguration.POOL_MIN_SIZE,
 					props, 0);
 			if (size >= 0) {
 				ds.setMinPoolSize(size);
 			}
 		}
 
-		if (props.getProperty(Environment.POOL_INIT_SIZE) != null) {
-			int size = PropertiesHelper.getInt(Environment.POOL_INIT_SIZE,
+		if (props.getProperty(DBConfiguration.POOL_INIT_SIZE) != null) {
+			int size = PropertiesHelper.getInt(DBConfiguration.POOL_INIT_SIZE,
 					props, 0);
 			if (size >= 0) {
 				ds.setInitialPoolSize(size);
 			}
 		}
 
-		if (props.getProperty(Environment.POOL_TIMEOUT) != null) {
-			int maxIdleTime = PropertiesHelper.getInt(Environment.POOL_TIMEOUT,
-					props, 0);
+		if (props.getProperty(DBConfiguration.POOL_TIMEOUT) != null) {
+			int maxIdleTime = PropertiesHelper.getInt(
+					DBConfiguration.POOL_TIMEOUT, props, 0);
 			if (maxIdleTime > 0) {
 				ds.setMaxIdleTime(maxIdleTime);
 			}
 		}
 
-		if (props.getProperty(Environment.POOL_ACQUIRE_INCREMENT) != null) {
+		if (props.getProperty(DBConfiguration.POOL_ACQUIRE_INCREMENT) != null) {
 			int size = PropertiesHelper.getInt(
-					Environment.POOL_ACQUIRE_INCREMENT, props, 0);
+					DBConfiguration.POOL_ACQUIRE_INCREMENT, props, 0);
 			if (size > 0) {
 				ds.setAcquireIncrement(size);
 			}
 		}
 
-		if (props.getProperty(Environment.POOL_IDLE_TEST_PERIOD) != null) {
+		if (props.getProperty(DBConfiguration.POOL_IDLE_TEST_PERIOD) != null) {
 			int size = PropertiesHelper.getInt(
-					Environment.POOL_IDLE_TEST_PERIOD, props, 0);
+					DBConfiguration.POOL_IDLE_TEST_PERIOD, props, 0);
 			if (size > 0) {
 				ds.setIdleConnectionTestPeriod(size);
 			}

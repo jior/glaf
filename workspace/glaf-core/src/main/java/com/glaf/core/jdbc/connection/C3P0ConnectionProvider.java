@@ -1,20 +1,20 @@
 /*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.glaf.core.jdbc.connection;
 
@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
 
 import com.mchange.v2.c3p0.DataSources;
 
-import com.glaf.core.config.Environment;
+import com.glaf.core.config.DBConfiguration;
 import com.glaf.core.util.ClassUtils;
 import com.glaf.core.util.JdbcUtils;
 import com.glaf.core.util.PropertiesHelper;
@@ -61,8 +61,8 @@ public class C3P0ConnectionProvider implements ConnectionProvider {
 	}
 
 	public void configure(Properties props) throws RuntimeException {
-		String jdbcDriverClass = props.getProperty(Environment.DRIVER);
-		String jdbcUrl = props.getProperty(Environment.URL);
+		String jdbcDriverClass = props.getProperty(DBConfiguration.JDBC_DRIVER);
+		String jdbcUrl = props.getProperty(DBConfiguration.JDBC_URL);
 		Properties connectionProps = ConnectionProviderFactory
 				.getConnectionProperties(props);
 
@@ -71,12 +71,13 @@ public class C3P0ConnectionProvider implements ConnectionProvider {
 		log.info("Connection properties: "
 				+ PropertiesHelper.maskOut(connectionProps, "password"));
 
-		autocommit = PropertiesHelper.getBoolean(Environment.AUTOCOMMIT, props);
+		autocommit = PropertiesHelper.getBoolean(DBConfiguration.JDBC_AUTOCOMMIT,
+				props);
 		log.info("autocommit mode: " + autocommit);
 
 		if (jdbcDriverClass == null) {
 			log.warn("No JDBC Driver class was specified by property "
-					+ Environment.DRIVER);
+					+ DBConfiguration.JDBC_DRIVER);
 		} else {
 			try {
 				Class.forName(jdbcDriverClass);
@@ -111,11 +112,11 @@ public class C3P0ConnectionProvider implements ConnectionProvider {
 			}
 
 			Integer initialPoolSize = PropertiesHelper.getInteger(
-					Environment.POOL_INIT_SIZE, props);
+					DBConfiguration.POOL_INIT_SIZE, props);
 			Integer minPoolSize = PropertiesHelper.getInteger(
-					Environment.POOL_MIN_SIZE, props);
+					DBConfiguration.POOL_MIN_SIZE, props);
 			if (initialPoolSize == null && minPoolSize != null) {
-				c3props.put(Environment.POOL_INIT_SIZE,
+				c3props.put(DBConfiguration.POOL_INIT_SIZE,
 						String.valueOf(minPoolSize).trim());
 			}
 
@@ -145,13 +146,14 @@ public class C3P0ConnectionProvider implements ConnectionProvider {
 			JdbcUtils.close(conn);
 		}
 
-		String i = props.getProperty(Environment.ISOLATION);
+		String i = props.getProperty(DBConfiguration.JDBC_ISOLATION);
 		if (i == null) {
 			isolation = null;
 		} else {
 			isolation = new Integer(i);
 			log.info("JDBC isolation level: "
-					+ Environment.isolationLevelToString(isolation.intValue()));
+					+ DBConfiguration.isolationLevelToString(isolation
+							.intValue()));
 		}
 
 	}

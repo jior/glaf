@@ -22,7 +22,7 @@ import java.sql.*;
 import java.util.Properties;
 import javax.sql.DataSource;
 
-import com.glaf.core.config.Environment;
+import com.glaf.core.config.DBConfiguration;
 import com.glaf.core.exceptions.ConnectionPoolException;
 import com.glaf.core.util.ClassUtils;
 import com.glaf.core.util.JdbcUtils;
@@ -33,10 +33,10 @@ public class DBCPDataSourceFactory implements IDataSourceFactory {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public DataSource makePooledDataSource(Properties props) {
-		String dbDriver = props.getProperty(Environment.DRIVER);
-		String dbURL = props.getProperty(Environment.URL);
-		String dbUser = props.getProperty(Environment.USER);
-		String dbPassword = props.getProperty(Environment.PASS);
+		String dbDriver = props.getProperty(DBConfiguration.JDBC_DRIVER);
+		String dbURL = props.getProperty(DBConfiguration.JDBC_URL);
+		String dbUser = props.getProperty(DBConfiguration.JDBC_USER);
+		String dbPassword = props.getProperty(DBConfiguration.JDBC_PASSWORD);
 
 		if (dbUser == null) {
 			dbUser = ""; // Some RDBMS (e.g Postgresql) don't like null
@@ -65,8 +65,8 @@ public class DBCPDataSourceFactory implements IDataSourceFactory {
 				null);
 
 		// Apply any properties
-		if (props.getProperty(Environment.POOL_TIMEOUT) != null) {
-			int value = PropertiesHelper.getInt(Environment.POOL_TIMEOUT,
+		if (props.getProperty(DBConfiguration.POOL_TIMEOUT) != null) {
+			int value = PropertiesHelper.getInt(DBConfiguration.POOL_TIMEOUT,
 					props, 0);
 			if (value > 0) {
 				((org.apache.commons.pool.impl.GenericObjectPool) connectionPool)
@@ -132,9 +132,9 @@ public class DBCPDataSourceFactory implements IDataSourceFactory {
 
 		// Create a factory for caching the PreparedStatements
 		org.apache.commons.pool.KeyedObjectPoolFactory kpf = null;
-		if (props.getProperty(Environment.POOL_MAX_STATEMENTS) != null) {
+		if (props.getProperty(DBConfiguration.POOL_MAX_STATEMENTS) != null) {
 			int value = PropertiesHelper.getInt(
-					Environment.POOL_MAX_STATEMENTS, props, 0);
+					DBConfiguration.POOL_MAX_STATEMENTS, props, 0);
 			if (value > 0) {
 				kpf = new org.apache.commons.pool.impl.StackKeyedObjectPoolFactory(
 						null, value);

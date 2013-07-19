@@ -31,8 +31,8 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 
-import com.glaf.core.config.Environment;
 import com.glaf.core.config.DBConfiguration;
+import com.glaf.core.config.Environment;
 import com.glaf.core.jdbc.connection.ConnectionProvider;
 import com.glaf.core.jdbc.connection.ConnectionProviderFactory;
 
@@ -58,7 +58,7 @@ public class MultiRoutingDataSource extends AbstractRoutingDataSource {
 		if (!LOAD_DATASOURCE_OK) {
 			logger.info("--------------MultiRoutingDataSource reloadDS()------------");
 			Map<Object, Object> dataSourceMap = new HashMap<Object, Object>();
-			Map<String, Properties> dataSourceProperties = Environment
+			Map<String, Properties> dataSourceProperties = DBConfiguration
 					.getDataSourceProperties();
 			Set<Entry<String, Properties>> entrySet = dataSourceProperties
 					.entrySet();
@@ -75,9 +75,9 @@ public class MultiRoutingDataSource extends AbstractRoutingDataSource {
 								Environment.DEFAULT_SYSTEM_NAME)) {
 							defaultTargetDataSource = provider.getDataSource();
 						}
-
 					} catch (Exception ex) {
 						ex.printStackTrace();
+						logger.error(ex);
 					}
 				}
 			}
@@ -97,7 +97,7 @@ public class MultiRoutingDataSource extends AbstractRoutingDataSource {
 			targetDataSources.clear();
 			targetDataSources.putAll(dataSourceMap);
 			LOAD_DATASOURCE_OK = true;
-			Environment.successReloadDataSource();
+			DBConfiguration.successReloadDataSource();
 
 			logger.info("##datasources:" + targetDataSources.keySet());
 
@@ -114,7 +114,7 @@ public class MultiRoutingDataSource extends AbstractRoutingDataSource {
 
 	@Override
 	protected synchronized Object determineCurrentLookupKey() {
-		if (Environment.requireReloadDataSource()) {
+		if (DBConfiguration.requireReloadDataSource()) {
 			reloadDS();
 		}
 		return Environment.getCurrentSystemName();

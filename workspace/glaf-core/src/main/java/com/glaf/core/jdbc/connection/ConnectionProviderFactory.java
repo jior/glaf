@@ -36,7 +36,7 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.glaf.core.config.Environment;
+import com.glaf.core.config.DBConfiguration;
 import com.glaf.core.util.ClassUtils;
 
 public final class ConnectionProviderFactory {
@@ -50,13 +50,13 @@ public final class ConnectionProviderFactory {
 
 	static {
 		SPECIAL_PROPERTIES = new HashSet<String>();
-		SPECIAL_PROPERTIES.add(Environment.DATASOURCE);
-		SPECIAL_PROPERTIES.add(Environment.URL);
-		SPECIAL_PROPERTIES.add(Environment.CONNECTION_PROVIDER);
-		SPECIAL_PROPERTIES.add(Environment.POOL_SIZE);
-		SPECIAL_PROPERTIES.add(Environment.ISOLATION);
-		SPECIAL_PROPERTIES.add(Environment.DRIVER);
-		SPECIAL_PROPERTIES.add(Environment.USER);
+		SPECIAL_PROPERTIES.add(DBConfiguration.JDBC_DATASOURCE);
+		SPECIAL_PROPERTIES.add(DBConfiguration.JDBC_URL);
+		SPECIAL_PROPERTIES.add(DBConfiguration.JDBC_DRIVER);
+		SPECIAL_PROPERTIES.add(DBConfiguration.POOL_SIZE);
+		SPECIAL_PROPERTIES.add(DBConfiguration.JDBC_ISOLATION);
+		SPECIAL_PROPERTIES.add(DBConfiguration.JDBC_DRIVER);
+		SPECIAL_PROPERTIES.add(DBConfiguration.JDBC_USER);
 	}
 
 	private static boolean c3p0ConfigDefined(Properties properties) {
@@ -92,7 +92,7 @@ public final class ConnectionProviderFactory {
 		log.debug("---------------------------ConnectionProvider create----------------");
 		ConnectionProvider provider = null;
 		String providerClass = properties
-				.getProperty(Environment.CONNECTION_PROVIDER);
+				.getProperty(DBConfiguration.JDBC_PROVIDER);
 		if (providerClass != null) {
 			provider = initializeConnectionProviderFromConfig(providerClass);
 		} else if (c3p0ConfigDefined(properties) && c3p0ProviderPresent()) {
@@ -101,7 +101,8 @@ public final class ConnectionProviderFactory {
 
 		if (provider == null) {
 			provider = initializeConnectionProviderFromConfig("com.glaf.core.jdbc.connection.DruidConnectionProvider");
-			if (StringUtils.equals(properties.getProperty(Environment.DRIVER),
+			if (StringUtils.equals(
+					properties.getProperty(DBConfiguration.JDBC_DRIVER),
 					"org.sqlite.JDBC")) {
 				provider = initializeConnectionProviderFromConfig("com.glaf.core.jdbc.connection.C3P0ConnectionProvider");
 			}
@@ -146,7 +147,7 @@ public final class ConnectionProviderFactory {
 		if (providerCache.get(systemName) != null) {
 			return providerCache.get(systemName);
 		}
-		ConnectionProvider model = createProvider(Environment
+		ConnectionProvider model = createProvider(DBConfiguration
 				.getDataSourcePropertiesByName(systemName));
 		providerCache.put(systemName, model);
 		return model;
@@ -163,15 +164,19 @@ public final class ConnectionProviderFactory {
 		Properties result = new Properties();
 		while (iter.hasNext()) {
 			String prop = (String) iter.next();
-			if (prop.startsWith(Environment.CONNECTION_PREFIX)
+			if (prop.startsWith(DBConfiguration.JDBC_DRIVER)
 					&& !SPECIAL_PROPERTIES.contains(prop)) {
-				result.setProperty(prop.substring(Environment.CONNECTION_PREFIX
+				result.setProperty(prop.substring(DBConfiguration.JDBC_PREFIX
 						.length() + 1), properties.getProperty(prop));
 			}
 		}
-		String userName = properties.getProperty(Environment.USER);
+		String userName = properties.getProperty(DBConfiguration.JDBC_USER);
 		if (userName != null) {
 			result.setProperty("user", userName);
+		}
+		String pwd = properties.getProperty(DBConfiguration.JDBC_PASSWORD);
+		if (pwd != null) {
+			result.setProperty("password", pwd);
 		}
 		return result;
 	}

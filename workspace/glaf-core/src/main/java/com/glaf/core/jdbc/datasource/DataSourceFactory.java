@@ -25,7 +25,7 @@ import java.util.concurrent.ConcurrentMap;
 
 import javax.sql.DataSource;
 import org.apache.commons.lang.StringUtils;
-import com.glaf.core.config.Environment;
+import com.glaf.core.config.DBConfiguration;
 import com.glaf.core.util.ClassUtils;
 import com.glaf.core.util.JdbcUtils;
 import com.glaf.core.util.PropertiesHelper;
@@ -39,7 +39,7 @@ public class DataSourceFactory {
 	public static IDataSourceFactory createDataSource(Properties properties) {
 		IDataSourceFactory dataSourceFactory = null;
 		String connectionPoolType = PropertiesHelper.getString(
-				Environment.POOL_TYPE, properties, "Druid");
+				DBConfiguration.JDBC_POOL_TYPE, properties, "druid");
 		String className = null;
 		if (StringUtils.equalsIgnoreCase(connectionPoolType, "C3P0")) {
 			className = "com.glaf.core.jdbc.datasource.C3P0DataSourceFactory";
@@ -64,7 +64,7 @@ public class DataSourceFactory {
 		if (dsCache.get(systemName) != null) {
 			return dsCache.get(systemName);
 		}
-		Properties props = Environment
+		Properties props = DBConfiguration
 				.getDataSourcePropertiesByName(systemName);
 		IDataSourceFactory model = createDataSource(props);
 		DataSource ds = model.makePooledDataSource(props);
@@ -80,7 +80,7 @@ public class DataSourceFactory {
 		}
 
 		if (ds == null) {
-			Properties props = Environment
+			Properties props = DBConfiguration
 					.getDataSourcePropertiesByName(systemName);
 			IDataSourceFactory model = createDataSource(props);
 			ds = model.makePooledDataSource(props);
