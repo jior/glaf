@@ -32,6 +32,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 
 import com.glaf.core.config.Environment;
+import com.glaf.core.config.DBConfiguration;
 import com.glaf.core.jdbc.connection.ConnectionProvider;
 import com.glaf.core.jdbc.connection.ConnectionProviderFactory;
 
@@ -78,6 +79,18 @@ public class MultiRoutingDataSource extends AbstractRoutingDataSource {
 					} catch (Exception ex) {
 						ex.printStackTrace();
 					}
+				}
+			}
+
+			if (defaultTargetDataSource == null) {
+				Properties props = DBConfiguration
+						.getProperties(Environment.DEFAULT_SYSTEM_NAME);
+				if (props != null) {
+					ConnectionProvider provider = ConnectionProviderFactory
+							.createProvider(Environment.DEFAULT_SYSTEM_NAME,
+									props);
+					dataSourceMap.put(Environment.DEFAULT_SYSTEM_NAME,
+							provider.getDataSource());
 				}
 			}
 
