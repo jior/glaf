@@ -88,7 +88,7 @@
 	<classpathentry kind="lib" path="/glaf-core/lib/netty.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/ognl-2.7.3.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/oscache-2.4.1.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/postgresql-9.1-902.jdbc4.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/postgresql-9.2-1003.jdbc4.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/primefaces-all-themes.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/primefaces.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/quartz-all-2.1.6.jar"/>
