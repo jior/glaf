@@ -70,7 +70,7 @@
 	<classpathentry kind="lib" path="/glaf-core/lib/mvel2-2.1.0.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/mybatis-2.3.5.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/mysql-connector-java-5.1.22-bin.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/ognl-2.7.3.jar"/>
+	
 	<classpathentry kind="lib" path="/glaf-core/lib/oscache-2.4.1.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/postgresql-9.2-1003.jdbc4.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/quartz-all-2.1.6.jar"/>
