@@ -24,9 +24,9 @@ import java.util.concurrent.ConcurrentMap;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 
+import com.glaf.core.config.Environment;
 import com.glaf.core.config.SystemProperties;
 import com.glaf.core.jdbc.connection.ConnectionProvider;
 import com.glaf.core.jdbc.connection.ConnectionProviderFactory;
@@ -46,14 +46,16 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
 
 	@Override
 	public void afterPropertiesSet() {
-		String filename = SystemProperties.getAppPath()
-				+ "/WEB-INF/conf/jdbc/dynamic.jdbc.properties";
+		String filename = SystemProperties.getAppPath() + "/WEB-INF/conf/jdbc/"
+				+ Environment.getCurrentSystemName() + ".jdbc.properties";
 		Properties props = PropertiesUtils.loadFilePathResource(filename);
 		if (props != null) {
 			try {
 				ConnectionProvider provider = ConnectionProviderFactory
-						.createProvider("dynamic", props);
-				targetDataSources.put("dynamic", provider.getDataSource());
+						.createProvider(Environment.getCurrentSystemName(),
+								props);
+				targetDataSources.put(Environment.getCurrentSystemName(),
+						provider.getDataSource());
 				defaultTargetDataSource = provider.getDataSource();
 			} catch (Exception ex) {
 				ex.printStackTrace();
@@ -66,7 +68,7 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
 
 	@Override
 	protected synchronized Object determineCurrentLookupKey() {
-		return "dynamic";
+		return Environment.getCurrentSystemName();
 	}
 
 }
