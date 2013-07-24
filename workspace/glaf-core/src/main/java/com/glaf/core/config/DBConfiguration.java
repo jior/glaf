@@ -30,6 +30,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.glaf.core.base.ConnectionDefinition;
 import com.glaf.core.dialect.DB2Dialect;
 import com.glaf.core.dialect.Dialect;
 import com.glaf.core.dialect.H2Dialect;
@@ -93,11 +94,9 @@ public class DBConfiguration {
 
 	protected static Properties properties = new Properties();
 
-	protected static Map<String, Properties> dataMap = new HashMap<String, Properties>();
+	protected static ConcurrentMap<String, Properties> dataMap = new ConcurrentHashMap<String, Properties>();
 
 	protected static ConcurrentMap<Integer, String> ISOLATION_LEVELS = new ConcurrentHashMap<Integer, String>();
-
-	protected static ConcurrentMap<String, Properties> dataSourceProperties = new ConcurrentHashMap<String, Properties>();
 
 	static {
 		ISOLATION_LEVELS.put(new Integer(Connection.TRANSACTION_NONE), "NONE");
@@ -116,6 +115,29 @@ public class DBConfiguration {
 		reloadDS();
 	}
 
+	public static List<ConnectionDefinition> getConnectionDefinitions() {
+		List<ConnectionDefinition> rows = new ArrayList<ConnectionDefinition>();
+		Collection<Properties> list = dataMap.values();
+		if (list != null && !list.isEmpty()) {
+			for (Properties props : list) {
+				ConnectionDefinition model = new ConnectionDefinition();
+				model.setDatasource(props.getProperty(JDBC_DATASOURCE));
+				model.setDriver(props.getProperty(JDBC_DRIVER));
+				model.setUrl(props.getProperty(JDBC_URL));
+				model.setName(props.getProperty(JDBC_NAME));
+				model.setSubject(props.getProperty("subject"));
+				model.setProvider(props.getProperty(JDBC_PROVIDER));
+				model.setType(props.getProperty(JDBC_TYPE));
+				if (StringUtils.equals("true",
+						props.getProperty(JDBC_AUTOCOMMIT))) {
+					model.setAutoCommit(true);
+				}
+				rows.add(model);
+			}
+		}
+		return rows;
+	}
+
 	public static String getCurrentDatabaseType() {
 		Properties props = getCurrentDataSourceProperties();
 		if (props != null) {
@@ -126,10 +148,9 @@ public class DBConfiguration {
 
 	public static Properties getCurrentDataSourceProperties() {
 		String dsName = Environment.getCurrentSystemName();
-		return dataSourceProperties.get(dsName);
+		return dataMap.get(dsName);
 	}
 
-	
 	public static Dialect getCurrentDialect() {
 		Map<String, Dialect> dialects = getDialects();
 		Properties props = getCurrentDataSourceProperties();
@@ -167,15 +188,15 @@ public class DBConfiguration {
 	}
 
 	public static Map<String, Properties> getDataSourceProperties() {
-		return dataSourceProperties;
+		return dataMap;
 	}
 
 	public static Properties getDataSourcePropertiesByName(String name) {
-		return dataSourceProperties.get(name);
+		return dataMap.get(name);
 	}
 
 	public static Properties getDefaultDataSourceProperties() {
-		return dataSourceProperties.get(Environment.DEFAULT_SYSTEM_NAME);
+		return dataMap.get(Environment.DEFAULT_SYSTEM_NAME);
 	}
 
 	public static Properties getDialectMappings() {
@@ -362,8 +383,8 @@ public class DBConfiguration {
 			}
 			dataSourceMap.put(Environment.DEFAULT_SYSTEM_NAME, p);
 			logger.info("#datasources:" + dataSourceMap.keySet());
-			dataSourceProperties.clear();
-			dataSourceProperties.putAll(dataSourceMap);
+			dataMap.clear();
+			dataMap.putAll(dataSourceMap);
 			REQUIRE_RELOAD_JDBC_RESOURCE = true;
 		}
 	}
