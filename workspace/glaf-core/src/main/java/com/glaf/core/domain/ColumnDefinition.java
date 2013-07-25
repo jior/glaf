@@ -99,7 +99,7 @@ public class ColumnDefinition implements
 	protected double doubleValue;
 
 	@Column(name = "EDITABLE_", length = 10)
-	protected String editable;
+	protected String editableField;
 
 	/**
 	 * ENGLISH标题
@@ -123,7 +123,7 @@ public class ColumnDefinition implements
 	 * 是否冻结列
 	 */
 	@Column(name = "FROZEN_", length = 10)
-	protected String frozen;
+	protected String frozenField;
 
 	@Column(name = "HEIGHT_", length = 50)
 	protected String height;
@@ -132,7 +132,7 @@ public class ColumnDefinition implements
 	 * 是否隐藏列
 	 */
 	@Column(name = "HIDDEN_", length = 10)
-	protected String hidden;
+	protected String hiddenField;
 
 	/**
 	 * 主键
@@ -154,7 +154,7 @@ public class ColumnDefinition implements
 	 * 参数是否为集合类型
 	 */
 	@Column(name = "ISCOLLECTION_", length = 10)
-	protected String isCollection;
+	protected String isCollectionField;
 
 	/**
 	 * Java类型
@@ -190,7 +190,7 @@ public class ColumnDefinition implements
 	 * 是否为空
 	 */
 	@Column(name = "NULL_", length = 10)
-	protected String nullable = "1";
+	protected String nullableField = "1";
 
 	/**
 	 * 字段顺序号
@@ -208,7 +208,7 @@ public class ColumnDefinition implements
 	 * 是否主键
 	 */
 	@Column(name = "PRIMARYKEY_", length = 10)
-	protected String primaryKey;
+	protected String primaryKeyField;
 
 	/**
 	 * 查询编号
@@ -233,13 +233,13 @@ public class ColumnDefinition implements
 	 * 是否必填
 	 */
 	@Column(name = "required", length = 10)
-	protected String required = "0";
+	protected String requiredField = "0";
 
 	/**
 	 * 是否可调整列宽
 	 */
 	@Column(name = "RESIZABLE_", length = 10)
-	protected String resizable;
+	protected String resizableField;
 
 	/**
 	 * 小数位数
@@ -248,13 +248,13 @@ public class ColumnDefinition implements
 	protected int scale;
 
 	@Column(name = "SEARCHABLE_", length = 10)
-	protected String searchable;
+	protected String searchableField;
 
 	/**
 	 * 是否可排序
 	 */
 	@Column(name = "SORTABLE_", length = 10)
-	protected String sortable;
+	protected String sortableField;
 
 	/**
 	 * 排序类型 int-整形、number-数值、date-日期时间
@@ -317,10 +317,10 @@ public class ColumnDefinition implements
 	protected String translator;
 
 	@Column(name = "UNIQUE_", length = 10)
-	protected String unique;
+	protected String uniqueField;
 
 	@Column(name = "UPDATEABLE_", length = 10)
-	protected String updatable;
+	protected String updatableField;
 
 	/**
 	 * 下拉列表的取数URL
@@ -398,7 +398,6 @@ public class ColumnDefinition implements
 	}
 
 	public ClassDefinition getClassDefinition() {
-
 		return null;
 	}
 
@@ -438,8 +437,8 @@ public class ColumnDefinition implements
 		return doubleValue;
 	}
 
-	public String getEditable() {
-		return editable;
+	public String getEditableField() {
+		return editableField;
 	}
 
 	public String getEnglishTitle() {
@@ -462,16 +461,16 @@ public class ColumnDefinition implements
 		return formula;
 	}
 
-	public String getFrozen() {
-		return frozen;
+	public String getFrozenField() {
+		return frozenField;
 	}
 
 	public String getHeight() {
 		return height;
 	}
 
-	public String getHidden() {
-		return hidden;
+	public String getHiddenField() {
+		return hiddenField;
 	}
 
 	public String getId() {
@@ -487,7 +486,11 @@ public class ColumnDefinition implements
 	}
 
 	public String getIsCollection() {
-		return isCollection;
+		return isCollectionField;
+	}
+
+	public String getIsCollectionField() {
+		return isCollectionField;
 	}
 
 	public String getJavaType() {
@@ -526,8 +529,8 @@ public class ColumnDefinition implements
 		return name;
 	}
 
-	public String getNullable() {
-		return nullable;
+	public String getNullableField() {
+		return nullableField;
 	}
 
 	public int getOrdinal() {
@@ -538,8 +541,8 @@ public class ColumnDefinition implements
 		return precision;
 	}
 
-	public String getPrimaryKey() {
-		return primaryKey;
+	public String getPrimaryKeyField() {
+		return primaryKeyField;
 	}
 
 	public String getQueryId() {
@@ -558,24 +561,24 @@ public class ColumnDefinition implements
 		return renderType;
 	}
 
-	public String getRequired() {
-		return required;
+	public String getRequiredField() {
+		return requiredField;
 	}
 
-	public String getResizable() {
-		return resizable;
+	public String getResizableField() {
+		return resizableField;
 	}
 
 	public int getScale() {
 		return scale;
 	}
 
-	public String getSearchable() {
-		return searchable;
+	public String getSearchableField() {
+		return searchableField;
 	}
 
-	public String getSortable() {
-		return sortable;
+	public String getSortableField() {
+		return sortableField;
 	}
 
 	public int getSortNo() {
@@ -630,12 +633,12 @@ public class ColumnDefinition implements
 		return javaType;
 	}
 
-	public String getUnique() {
-		return unique;
+	public String getUniqueField() {
+		return uniqueField;
 	}
 
-	public String getUpdatable() {
-		return updatable;
+	public String getUpdatableField() {
+		return updatableField;
 	}
 
 	public String getUrl() {
@@ -672,36 +675,36 @@ public class ColumnDefinition implements
 	}
 
 	public boolean isCollection() {
-		if (StringUtils.equalsIgnoreCase(isCollection, "1")
-				|| StringUtils.equalsIgnoreCase(isCollection, "Y")
-				|| StringUtils.equalsIgnoreCase(isCollection, "true")) {
+		if (StringUtils.equalsIgnoreCase(isCollectionField, "1")
+				|| StringUtils.equalsIgnoreCase(isCollectionField, "Y")
+				|| StringUtils.equalsIgnoreCase(isCollectionField, "true")) {
 			return true;
 		}
 		return false;
 	}
 
 	public boolean isEditable() {
-		if (StringUtils.equalsIgnoreCase(editable, "1")
-				|| StringUtils.equalsIgnoreCase(editable, "Y")
-				|| StringUtils.equalsIgnoreCase(editable, "true")) {
+		if (StringUtils.equalsIgnoreCase(editableField, "1")
+				|| StringUtils.equalsIgnoreCase(editableField, "Y")
+				|| StringUtils.equalsIgnoreCase(editableField, "true")) {
 			return true;
 		}
 		return false;
 	}
 
 	public boolean isFrozen() {
-		if (StringUtils.equalsIgnoreCase(frozen, "1")
-				|| StringUtils.equalsIgnoreCase(frozen, "Y")
-				|| StringUtils.equalsIgnoreCase(frozen, "true")) {
+		if (StringUtils.equalsIgnoreCase(frozenField, "1")
+				|| StringUtils.equalsIgnoreCase(frozenField, "Y")
+				|| StringUtils.equalsIgnoreCase(frozenField, "true")) {
 			return true;
 		}
 		return false;
 	}
 
 	public boolean isHidden() {
-		if (StringUtils.equalsIgnoreCase(hidden, "1")
-				|| StringUtils.equalsIgnoreCase(hidden, "Y")
-				|| StringUtils.equalsIgnoreCase(hidden, "true")) {
+		if (StringUtils.equalsIgnoreCase(hiddenField, "1")
+				|| StringUtils.equalsIgnoreCase(hiddenField, "Y")
+				|| StringUtils.equalsIgnoreCase(hiddenField, "true")) {
 			return true;
 		}
 		return false;
@@ -715,72 +718,72 @@ public class ColumnDefinition implements
 	}
 
 	public boolean isNullable() {
-		if (StringUtils.equalsIgnoreCase(nullable, "1")
-				|| StringUtils.equalsIgnoreCase(nullable, "Y")
-				|| StringUtils.equalsIgnoreCase(nullable, "true")) {
+		if (StringUtils.equalsIgnoreCase(nullableField, "1")
+				|| StringUtils.equalsIgnoreCase(nullableField, "Y")
+				|| StringUtils.equalsIgnoreCase(nullableField, "true")) {
 			return true;
 		}
 		return false;
 	}
 
 	public boolean isPrimaryKey() {
-		if (StringUtils.equalsIgnoreCase(primaryKey, "1")
-				|| StringUtils.equalsIgnoreCase(primaryKey, "Y")
-				|| StringUtils.equalsIgnoreCase(primaryKey, "true")) {
+		if (StringUtils.equalsIgnoreCase(primaryKeyField, "1")
+				|| StringUtils.equalsIgnoreCase(primaryKeyField, "Y")
+				|| StringUtils.equalsIgnoreCase(primaryKeyField, "true")) {
 			return true;
 		}
 		return false;
 	}
 
 	public boolean isRequired() {
-		if (StringUtils.equalsIgnoreCase(required, "1")
-				|| StringUtils.equalsIgnoreCase(required, "Y")
-				|| StringUtils.equalsIgnoreCase(required, "true")) {
+		if (StringUtils.equalsIgnoreCase(requiredField, "1")
+				|| StringUtils.equalsIgnoreCase(requiredField, "Y")
+				|| StringUtils.equalsIgnoreCase(requiredField, "true")) {
 			return true;
 		}
 		return false;
 	}
 
 	public boolean isResizable() {
-		if (StringUtils.equalsIgnoreCase(resizable, "1")
-				|| StringUtils.equalsIgnoreCase(resizable, "Y")
-				|| StringUtils.equalsIgnoreCase(resizable, "true")) {
+		if (StringUtils.equalsIgnoreCase(resizableField, "1")
+				|| StringUtils.equalsIgnoreCase(resizableField, "Y")
+				|| StringUtils.equalsIgnoreCase(resizableField, "true")) {
 			return true;
 		}
 		return false;
 	}
 
 	public boolean isSearchable() {
-		if (StringUtils.equalsIgnoreCase(searchable, "1")
-				|| StringUtils.equalsIgnoreCase(searchable, "Y")
-				|| StringUtils.equalsIgnoreCase(searchable, "true")) {
+		if (StringUtils.equalsIgnoreCase(searchableField, "1")
+				|| StringUtils.equalsIgnoreCase(searchableField, "Y")
+				|| StringUtils.equalsIgnoreCase(searchableField, "true")) {
 			return true;
 		}
 		return false;
 	}
 
 	public boolean isSortable() {
-		if (StringUtils.equalsIgnoreCase(sortable, "1")
-				|| StringUtils.equalsIgnoreCase(sortable, "Y")
-				|| StringUtils.equalsIgnoreCase(sortable, "true")) {
+		if (StringUtils.equalsIgnoreCase(sortableField, "1")
+				|| StringUtils.equalsIgnoreCase(sortableField, "Y")
+				|| StringUtils.equalsIgnoreCase(sortableField, "true")) {
 			return true;
 		}
 		return false;
 	}
 
 	public boolean isUnique() {
-		if (StringUtils.equalsIgnoreCase(unique, "1")
-				|| StringUtils.equalsIgnoreCase(unique, "Y")
-				|| StringUtils.equalsIgnoreCase(unique, "true")) {
+		if (StringUtils.equalsIgnoreCase(uniqueField, "1")
+				|| StringUtils.equalsIgnoreCase(uniqueField, "Y")
+				|| StringUtils.equalsIgnoreCase(uniqueField, "true")) {
 			return true;
 		}
 		return false;
 	}
 
 	public boolean isUpdatable() {
-		if (StringUtils.equalsIgnoreCase(updatable, "1")
-				|| StringUtils.equalsIgnoreCase(updatable, "Y")
-				|| StringUtils.equalsIgnoreCase(updatable, "true")) {
+		if (StringUtils.equalsIgnoreCase(updatableField, "1")
+				|| StringUtils.equalsIgnoreCase(updatableField, "Y")
+				|| StringUtils.equalsIgnoreCase(updatableField, "true")) {
 			return true;
 		}
 		return false;
@@ -804,9 +807,9 @@ public class ColumnDefinition implements
 
 	public void setCollection(boolean isCollection) {
 		if (isCollection) {
-			this.isCollection = "1";
+			this.isCollectionField = "1";
 		} else {
-			this.isCollection = "0";
+			this.isCollectionField = "0";
 		}
 	}
 
@@ -848,14 +851,14 @@ public class ColumnDefinition implements
 
 	public void setEditable(boolean editable) {
 		if (editable) {
-			this.editable = "1";
+			this.editableField = "1";
 		} else {
-			this.editable = "0";
+			this.editableField = "0";
 		}
 	}
 
-	public void setEditable(String editable) {
-		this.editable = editable;
+	public void setEditableField(String editableField) {
+		this.editableField = editableField;
 	}
 
 	public void setEnglishTitle(String englishTitle) {
@@ -872,14 +875,14 @@ public class ColumnDefinition implements
 
 	public void setFrozen(boolean frozen) {
 		if (frozen) {
-			this.frozen = "1";
+			this.frozenField = "1";
 		} else {
-			this.frozen = "0";
+			this.frozenField = "0";
 		}
 	}
 
-	public void setFrozen(String frozen) {
-		this.frozen = frozen;
+	public void setFrozenField(String frozenField) {
+		this.frozenField = frozenField;
 	}
 
 	public void setHeight(String height) {
@@ -888,14 +891,14 @@ public class ColumnDefinition implements
 
 	public void setHidden(boolean hidden) {
 		if (hidden) {
-			this.hidden = "1";
+			this.hiddenField = "1";
 		} else {
-			this.hidden = "0";
+			this.hiddenField = "0";
 		}
 	}
 
-	public void setHidden(String hidden) {
-		this.hidden = hidden;
+	public void setHiddenField(String hiddenField) {
+		this.hiddenField = hiddenField;
 	}
 
 	public void setId(String id) {
@@ -910,8 +913,8 @@ public class ColumnDefinition implements
 		this.intValue = intValue;
 	}
 
-	public void setIsCollection(String isCollection) {
-		this.isCollection = isCollection;
+	public void setIsCollectionField(String isCollectionField) {
+		this.isCollectionField = isCollectionField;
 	}
 
 	public void setJavaType(String javaType) {
@@ -952,14 +955,14 @@ public class ColumnDefinition implements
 
 	public void setNullable(boolean nullable) {
 		if (nullable) {
-			this.nullable = "1";
+			this.nullableField = "1";
 		} else {
-			this.nullable = "0";
+			this.nullableField = "0";
 		}
 	}
 
-	public void setNullable(String nullable) {
-		this.nullable = nullable;
+	public void setNullableField(String nullableField) {
+		this.nullableField = nullableField;
 	}
 
 	public void setOrdinal(int ordinal) {
@@ -972,14 +975,14 @@ public class ColumnDefinition implements
 
 	public void setPrimaryKey(boolean primaryKey) {
 		if (primaryKey) {
-			this.primaryKey = "1";
+			this.primaryKeyField = "1";
 		} else {
-			this.primaryKey = "0";
+			this.primaryKeyField = "0";
 		}
 	}
 
-	public void setPrimaryKey(String primaryKey) {
-		this.primaryKey = primaryKey;
+	public void setPrimaryKeyField(String primaryKeyField) {
+		this.primaryKeyField = primaryKeyField;
 	}
 
 	public void setQueryId(String queryId) {
@@ -1000,26 +1003,26 @@ public class ColumnDefinition implements
 
 	public void setRequired(boolean required) {
 		if (required) {
-			this.required = "1";
+			this.requiredField = "1";
 		} else {
-			this.required = "0";
+			this.requiredField = "0";
 		}
 	}
 
-	public void setRequired(String required) {
-		this.required = required;
+	public void setRequiredField(String requiredField) {
+		this.requiredField = requiredField;
 	}
 
 	public void setResizable(boolean resizable) {
 		if (resizable) {
-			this.resizable = "1";
+			this.resizableField = "1";
 		} else {
-			this.resizable = "0";
+			this.resizableField = "0";
 		}
 	}
 
-	public void setResizable(String resizable) {
-		this.resizable = resizable;
+	public void setResizableField(String resizableField) {
+		this.resizableField = resizableField;
 	}
 
 	public void setScale(int scale) {
@@ -1028,27 +1031,26 @@ public class ColumnDefinition implements
 
 	public void setSearchable(boolean searchable) {
 		if (searchable) {
-			this.searchable = "1";
+			this.searchableField = "1";
 		} else {
-			this.searchable = "0";
+			this.searchableField = "0";
 		}
 	}
 
-	public void setSearchable(String searchable) {
-		this.searchable = searchable;
+	public void setSearchableField(String searchableField) {
+		this.searchableField = searchableField;
 	}
 
 	public void setSortable(boolean sortable) {
-
 		if (sortable) {
-			this.sortable = "1";
+			this.sortableField = "1";
 		} else {
-			this.sortable = "0";
+			this.sortableField = "0";
 		}
 	}
 
-	public void setSortable(String sortable) {
-		this.sortable = sortable;
+	public void setSortableField(String sortableField) {
+		this.sortableField = sortableField;
 	}
 
 	public void setSortNo(int sortNo) {
@@ -1105,26 +1107,26 @@ public class ColumnDefinition implements
 
 	public void setUnique(boolean unique) {
 		if (unique) {
-			this.unique = "1";
+			this.uniqueField = "1";
 		} else {
-			this.unique = "0";
+			this.uniqueField = "0";
 		}
 	}
 
-	public void setUnique(String unique) {
-		this.unique = unique;
+	public void setUniqueField(String uniqueField) {
+		this.uniqueField = uniqueField;
 	}
 
 	public void setUpdatable(boolean updatable) {
 		if (updatable) {
-			this.updatable = "1";
+			this.updatableField = "1";
 		} else {
-			this.updatable = "0";
+			this.updatableField = "0";
 		}
 	}
 
-	public void setUpdatable(String updatable) {
-		this.updatable = updatable;
+	public void setUpdatableField(String updatableField) {
+		this.updatableField = updatableField;
 	}
 
 	public void setUrl(String url) {

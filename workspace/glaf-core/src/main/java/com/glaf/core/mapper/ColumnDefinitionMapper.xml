@@ -18,15 +18,15 @@
 		<result property="length" column="LENGTH_" jdbcType="INTEGER"/>
 		<result property="scale" column="SCALE_" jdbcType="INTEGER"/>
 		<result property="precision" column="PRECISION_" jdbcType="INTEGER"/>
-		<result property="primaryKey" column="PRIMARYKEY_" jdbcType="VARCHAR"/>
-		<result property="nullable" column="NULL_" jdbcType="VARCHAR"/>
-		<result property="frozen" column="FROZEN_" jdbcType="VARCHAR"/>
-		<result property="unique" column="UNIQUE_" jdbcType="VARCHAR"/>
-		<result property="searchable" column="SEARCHABLE_" jdbcType="VARCHAR"/>
-		<result property="editable" column="EDITABLE_" jdbcType="VARCHAR"/>
-		<result property="updatable" column="UPDATEABLE_" jdbcType="VARCHAR"/>
-		<result property="resizable" column="RESIZABLE_" jdbcType="VARCHAR"/>
-		<result property="hidden" column="HIDDEN_" jdbcType="VARCHAR"/>
+		<result property="primaryKeyField" column="PRIMARYKEY_" jdbcType="VARCHAR"/>
+		<result property="nullableField" column="NULL_" jdbcType="VARCHAR"/>
+		<result property="frozenField" column="FROZEN_" jdbcType="VARCHAR"/>
+		<result property="uniqueField" column="UNIQUE_" jdbcType="VARCHAR"/>
+		<result property="searchableField" column="SEARCHABLE_" jdbcType="VARCHAR"/>
+		<result property="editableField" column="EDITABLE_" jdbcType="VARCHAR"/>
+		<result property="updatableField" column="UPDATEABLE_" jdbcType="VARCHAR"/>
+		<result property="resizableField" column="RESIZABLE_" jdbcType="VARCHAR"/>
+		<result property="hiddenField" column="HIDDEN_" jdbcType="VARCHAR"/>
 		<result property="tooltip" column="TOOLTIP_" jdbcType="VARCHAR"/>
 		<result property="ordinal" column="ORDINAL_" jdbcType="INTEGER"/>
 		<result property="javaType" column="JAVATYPE_" jdbcType="VARCHAR"/>
@@ -46,7 +46,7 @@
 		<result property="summaryType" column="SUMMARYTYPE_" jdbcType="VARCHAR"/>
 		<result property="summaryExpr" column="SUMMARYEXPR_" jdbcType="VARCHAR"/>
 		<result property="displayType" column="DISPLAYTYPE_" jdbcType="INTEGER"/>
-		<result property="sortable" column="SORTABLE_" jdbcType="VARCHAR"/>
+		<result property="sortableField" column="SORTABLE_" jdbcType="VARCHAR"/>
 		<result property="sortType" column="SORTTYPE_" jdbcType="VARCHAR"/>
 		<result property="systemFlag" column="SYSTEMFLAG_" jdbcType="VARCHAR"/>
 		<result property="formatter" column="FORMATTER_" jdbcType="VARCHAR"/>
@@ -54,7 +54,7 @@
 		<result property="height" column="HEIGHT_" jdbcType="VARCHAR"/>
 		<result property="width" column="WIDTH_" jdbcType="VARCHAR"/>
 		<result property="link" column="LINK_" jdbcType="VARCHAR"/>
-		<result property="isCollection" column="ISCOLLECTION_" jdbcType="VARCHAR"/>
+		<result property="isCollectionField" column="ISCOLLECTION_" jdbcType="VARCHAR"/>
 		<result property="valueExpression" column="VALUEEXPRESSION_" jdbcType="VARCHAR"/>
 		<result property="renderer" column="RENDERER_" jdbcType="VARCHAR"/>
 	</resultMap>
@@ -74,15 +74,15 @@
 		<result property="length" column="LENGTH_" jdbcType="INTEGER"/>
 		<result property="scale" column="SCALE_" jdbcType="INTEGER"/>
 		<result property="precision" column="PRECISION_" jdbcType="INTEGER"/>
-		<result property="primaryKey" column="PRIMARYKEY_" jdbcType="VARCHAR"/>
-		<result property="nullable" column="NULL_" jdbcType="VARCHAR"/>
-		<result property="frozen" column="FROZEN_" jdbcType="VARCHAR"/>
-		<result property="unique" column="UNIQUE_" jdbcType="VARCHAR"/>
-		<result property="searchable" column="SEARCHABLE_" jdbcType="VARCHAR"/>
-		<result property="editable" column="EDITABLE_" jdbcType="VARCHAR"/>
-		<result property="updatable" column="UPDATEABLE_" jdbcType="VARCHAR"/>
-		<result property="resizable" column="RESIZABLE_" jdbcType="VARCHAR"/>
-		<result property="hidden" column="HIDDEN_" jdbcType="VARCHAR"/>
+		<result property="primaryKeyField" column="PRIMARYKEY_" jdbcType="VARCHAR"/>
+		<result property="nullableField" column="NULL_" jdbcType="VARCHAR"/>
+		<result property="frozenField" column="FROZEN_" jdbcType="VARCHAR"/>
+		<result property="uniqueField" column="UNIQUE_" jdbcType="VARCHAR"/>
+		<result property="searchableField" column="SEARCHABLE_" jdbcType="VARCHAR"/>
+		<result property="editableField" column="EDITABLE_" jdbcType="VARCHAR"/>
+		<result property="updatableField" column="UPDATEABLE_" jdbcType="VARCHAR"/>
+		<result property="resizableField" column="RESIZABLE_" jdbcType="VARCHAR"/>
+		<result property="hiddenField" column="HIDDEN_" jdbcType="VARCHAR"/>
 		<result property="tooltip" column="TOOLTIP_" jdbcType="VARCHAR"/>
 		<result property="ordinal" column="ORDINAL_" jdbcType="INTEGER"/>
 		<result property="javaType" column="JAVATYPE_" jdbcType="VARCHAR"/>
@@ -102,7 +102,7 @@
 		<result property="summaryType" column="SUMMARYTYPE_" jdbcType="VARCHAR"/>
 		<result property="summaryExpr" column="SUMMARYEXPR_" jdbcType="VARCHAR"/>
 		<result property="displayType" column="DISPLAYTYPE_" jdbcType="INTEGER"/>
-		<result property="sortable" column="SORTABLE_" jdbcType="VARCHAR"/>
+		<result property="sortableField" column="SORTABLE_" jdbcType="VARCHAR"/>
 		<result property="sortType" column="SORTTYPE_" jdbcType="VARCHAR"/>
 		<result property="systemFlag" column="SYSTEMFLAG_" jdbcType="VARCHAR"/>
 		<result property="formatter" column="FORMATTER_" jdbcType="VARCHAR"/>
@@ -110,7 +110,7 @@
 		<result property="height" column="HEIGHT_" jdbcType="VARCHAR"/>
 		<result property="width" column="WIDTH_" jdbcType="VARCHAR"/>
 		<result property="link" column="LINK_" jdbcType="VARCHAR"/>
-		<result property="isCollection" column="ISCOLLECTION_" jdbcType="VARCHAR"/>
+		<result property="isCollectionField" column="ISCOLLECTION_" jdbcType="VARCHAR"/>
 		<result property="valueExpression" column="VALUEEXPRESSION_" jdbcType="VARCHAR"/>
 		<result property="renderer" column="RENDERER_" jdbcType="VARCHAR"/>
 	</resultMap>
@@ -155,31 +155,31 @@
 			<if test="precision != null">
 				,PRECISION_ 
 			</if>
-			<if test="primaryKey != null">
+			<if test="primaryKeyField != null">
 				,PRIMARYKEY_ 
 			</if>
-			<if test="nullable != null">
+			<if test="nullableField != null">
 				,NULL_ 
 			</if>
-			<if test="frozen != null">
+			<if test="frozenField != null">
 				,FROZEN_ 
 			</if>
-			<if test="unique != null">
+			<if test="uniqueField != null">
 				,UNIQUE_ 
 			</if>
-			<if test="searchable != null">
+			<if test="searchableField != null">
 				,SEARCHABLE_ 
 			</if>
-			<if test="editable != null">
+			<if test="editableField != null">
 				,EDITABLE_ 
 			</if>
-			<if test="updatable != null">
+			<if test="updatableField != null">
 				,UPDATEABLE_ 
 			</if>
-			<if test="resizable != null">
+			<if test="resizableField != null">
 				,RESIZABLE_ 
 			</if>
-			<if test="hidden != null">
+			<if test="hiddenField != null">
 				,HIDDEN_ 
 			</if>
 			<if test="tooltip != null">
@@ -239,7 +239,7 @@
 			<if test="displayType != null">
 				,DISPLAYTYPE_ 
 			</if>
-			<if test="sortable != null">
+			<if test="sortableField != null">
 				,SORTABLE_ 
 			</if>
 			<if test="sortType != null">
@@ -263,7 +263,7 @@
 			<if test="link != null">
 				,LINK_ 
 			</if>
-			<if test="isCollection != null">
+			<if test="isCollectionField != null">
 				,ISCOLLECTION_ 
 			</if>
 			<if test="valueExpression != null">
@@ -313,32 +313,32 @@
 			<if test="precision != null">
 				,#{precision, jdbcType=INTEGER}
 			</if>
-			<if test="primaryKey != null">
-				,#{primaryKey, jdbcType=VARCHAR}
+			<if test="primaryKeyField != null">
+				,#{primaryKeyField, jdbcType=VARCHAR}
 			</if>
-			<if test="nullable != null">
-				,#{nullable, jdbcType=VARCHAR}
+			<if test="nullableField != null">
+				,#{nullableField, jdbcType=VARCHAR}
 			</if>
-			<if test="frozen != null">
-				,#{frozen, jdbcType=VARCHAR}
+			<if test="frozenField != null">
+				,#{frozenField, jdbcType=VARCHAR}
 			</if>
-			<if test="unique != null">
-				,#{unique, jdbcType=VARCHAR}
+			<if test="uniqueField != null">
+				,#{uniqueField, jdbcType=VARCHAR}
 			</if>
-			<if test="searchable != null">
-				,#{searchable, jdbcType=VARCHAR}
+			<if test="searchableField != null">
+				,#{searchableField, jdbcType=VARCHAR}
 			</if>
-			<if test="editable != null">
-				,#{editable, jdbcType=VARCHAR}
+			<if test="editableField != null">
+				,#{editableField, jdbcType=VARCHAR}
 			</if>
-			<if test="updatable != null">
-				,#{updatable, jdbcType=VARCHAR}
+			<if test="updatableField != null">
+				,#{updatableField, jdbcType=VARCHAR}
 			</if>
-			<if test="resizable != null">
-				,#{resizable, jdbcType=VARCHAR}
+			<if test="resizableField != null">
+				,#{resizableField, jdbcType=VARCHAR}
 			</if>
-			<if test="hidden != null">
-				,#{hidden, jdbcType=VARCHAR}
+			<if test="hiddenField != null">
+				,#{hiddenField, jdbcType=VARCHAR}
 			</if>
 			<if test="tooltip != null">
 				,#{tooltip, jdbcType=VARCHAR}
@@ -397,8 +397,8 @@
 			<if test="displayType != null">
 				,#{displayType, jdbcType=INTEGER}
 			</if>
-			<if test="sortable != null">
-				,#{sortable, jdbcType=VARCHAR}
+			<if test="sortableField != null">
+				,#{sortableField, jdbcType=VARCHAR}
 			</if>
 			<if test="sortType != null">
 				,#{sortType, jdbcType=VARCHAR}
@@ -421,8 +421,8 @@
 			<if test="link != null">
 				,#{link, jdbcType=VARCHAR}
 			</if>
-			<if test="isCollection != null">
-				,#{isCollection, jdbcType=VARCHAR}
+			<if test="isCollectionField != null">
+				,#{isCollectionField, jdbcType=VARCHAR}
 			</if>
 			<if test="valueExpression != null">
 				,#{valueExpression, jdbcType=VARCHAR}
@@ -474,32 +474,32 @@
 			<if test="precision != null">
 				PRECISION_ = #{precision, jdbcType=INTEGER},
 			</if>
-			<if test="primaryKey != null">
-				PRIMARYKEY_ = #{primaryKey, jdbcType=VARCHAR},
+			<if test="primaryKeyField != null">
+				PRIMARYKEY_ = #{primaryKeyField, jdbcType=VARCHAR},
 			</if>
-			<if test="nullable != null">
-				NULL_ = #{nullable, jdbcType=VARCHAR},
+			<if test="nullableField != null">
+				NULL_ = #{nullableField, jdbcType=VARCHAR},
 			</if>
-			<if test="frozen != null">
-				FROZEN_ = #{frozen, jdbcType=VARCHAR},
+			<if test="frozenField != null">
+				FROZEN_ = #{frozenField, jdbcType=VARCHAR},
 			</if>
-			<if test="unique != null">
-				UNIQUE_ = #{unique, jdbcType=VARCHAR},
+			<if test="uniqueField != null">
+				UNIQUE_ = #{uniqueField, jdbcType=VARCHAR},
 			</if>
-			<if test="searchable != null">
-				SEARCHABLE_ = #{searchable, jdbcType=VARCHAR},
+			<if test="searchableField != null">
+				SEARCHABLE_ = #{searchableField, jdbcType=VARCHAR},
 			</if>
-			<if test="editable != null">
-				EDITABLE_ = #{editable, jdbcType=VARCHAR},
+			<if test="editableField != null">
+				EDITABLE_ = #{editableField, jdbcType=VARCHAR},
 			</if>
-			<if test="updatable != null">
-				UPDATEABLE_ = #{updatable, jdbcType=VARCHAR},
+			<if test="updatableField != null">
+				UPDATEABLE_ = #{updatableField, jdbcType=VARCHAR},
 			</if>
-			<if test="resizable != null">
-				RESIZABLE_ = #{resizable, jdbcType=VARCHAR},
+			<if test="resizableField != null">
+				RESIZABLE_ = #{resizableField, jdbcType=VARCHAR},
 			</if>
-			<if test="hidden != null">
-				HIDDEN_ = #{hidden, jdbcType=VARCHAR},
+			<if test="hiddenField != null">
+				HIDDEN_ = #{hiddenField, jdbcType=VARCHAR},
 			</if>
 			<if test="tooltip != null">
 				TOOLTIP_ = #{tooltip, jdbcType=VARCHAR},
@@ -558,8 +558,8 @@
 			<if test="displayType != null">
 				DISPLAYTYPE_ = #{displayType, jdbcType=INTEGER},
 			</if>
-			<if test="sortable != null">
-				SORTABLE_ = #{sortable, jdbcType=VARCHAR},
+			<if test="sortableField != null">
+				SORTABLE_ = #{sortableField, jdbcType=VARCHAR},
 			</if>
 			<if test="sortType != null">
 				SORTTYPE_ = #{sortType, jdbcType=VARCHAR},
@@ -582,8 +582,8 @@
 			<if test="link != null">
 				LINK_ = #{link, jdbcType=VARCHAR},
 			</if>
-			<if test="isCollection != null">
-				ISCOLLECTION_ = #{isCollection, jdbcType=VARCHAR},
+			<if test="isCollectionField != null">
+				ISCOLLECTION_ = #{isCollectionField, jdbcType=VARCHAR},
 			</if>
 			<if test="valueExpression != null">
 				VALUEEXPRESSION_ = #{valueExpression, jdbcType=VARCHAR},

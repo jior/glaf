@@ -77,31 +77,31 @@ public class ColumnDefinitionJsonFactory {
 			model.setPrecision(jsonObject.getInteger("precision"));
 		}
 		if (jsonObject.containsKey("primaryKey")) {
-			model.setPrimaryKey(jsonObject.getString("primaryKey"));
+			model.setPrimaryKeyField(jsonObject.getString("primaryKey"));
 		}
 		if (jsonObject.containsKey("nullable")) {
-			model.setNullable(jsonObject.getString("nullable"));
+			model.setNullableField(jsonObject.getString("nullable"));
 		}
 		if (jsonObject.containsKey("frozen")) {
-			model.setFrozen(jsonObject.getString("frozen"));
+			model.setFrozenField(jsonObject.getString("frozen"));
 		}
 		if (jsonObject.containsKey("unique")) {
-			model.setUnique(jsonObject.getString("unique"));
+			model.setUniqueField(jsonObject.getString("unique"));
 		}
 		if (jsonObject.containsKey("searchable")) {
-			model.setSearchable(jsonObject.getString("searchable"));
+			model.setSearchableField(jsonObject.getString("searchable"));
 		}
 		if (jsonObject.containsKey("editable")) {
-			model.setEditable(jsonObject.getString("editable"));
+			model.setEditableField(jsonObject.getString("editable"));
 		}
 		if (jsonObject.containsKey("updatable")) {
-			model.setUpdatable(jsonObject.getString("updatable"));
+			model.setUpdatableField(jsonObject.getString("updatable"));
 		}
 		if (jsonObject.containsKey("resizable")) {
-			model.setResizable(jsonObject.getString("resizable"));
+			model.setResizableField(jsonObject.getString("resizable"));
 		}
 		if (jsonObject.containsKey("hidden")) {
-			model.setHidden(jsonObject.getString("hidden"));
+			model.setHiddenField(jsonObject.getString("hidden"));
 		}
 		if (jsonObject.containsKey("tooltip")) {
 			model.setTooltip(jsonObject.getString("tooltip"));
@@ -128,7 +128,7 @@ public class ColumnDefinitionJsonFactory {
 			model.setValidType(jsonObject.getString("validType"));
 		}
 		if (jsonObject.containsKey("required")) {
-			model.setRequired(jsonObject.getString("required"));
+			model.setRequiredField(jsonObject.getString("required"));
 		}
 		if (jsonObject.containsKey("regex")) {
 			model.setRegex(jsonObject.getString("regex"));
@@ -164,7 +164,7 @@ public class ColumnDefinitionJsonFactory {
 			model.setDisplayType(jsonObject.getInteger("displayType"));
 		}
 		if (jsonObject.containsKey("sortable")) {
-			model.setSortable(jsonObject.getString("sortable"));
+			model.setSortableField(jsonObject.getString("sortable"));
 		}
 		if (jsonObject.containsKey("sortType")) {
 			model.setSortType(jsonObject.getString("sortType"));
@@ -188,7 +188,7 @@ public class ColumnDefinitionJsonFactory {
 			model.setLink(jsonObject.getString("link"));
 		}
 		if (jsonObject.containsKey("isCollection")) {
-			model.setIsCollection(jsonObject.getString("isCollection"));
+			model.setIsCollectionField(jsonObject.getString("isCollection"));
 		}
 		if (jsonObject.containsKey("valueExpression")) {
 			model.setValueExpression(jsonObject.getString("valueExpression"));
@@ -246,32 +246,32 @@ public class ColumnDefinitionJsonFactory {
 		jsonObject.put("length", model.getLength());
 		jsonObject.put("scale", model.getScale());
 		jsonObject.put("precision", model.getPrecision());
-		if (model.getPrimaryKey() != null) {
-			jsonObject.put("primaryKey", model.getPrimaryKey());
+		if (model.getPrimaryKeyField() != null) {
+			jsonObject.put("primaryKey", model.getPrimaryKeyField());
 		}
-		if (model.getNullable() != null) {
-			jsonObject.put("nullable", model.getNullable());
+		if (model.getNullableField() != null) {
+			jsonObject.put("nullable", model.getNullableField());
 		}
-		if (model.getFrozen() != null) {
-			jsonObject.put("frozen", model.getFrozen());
+		if (model.getFrozenField() != null) {
+			jsonObject.put("frozen", model.getFrozenField());
 		}
-		if (model.getUnique() != null) {
-			jsonObject.put("unique", model.getUnique());
+		if (model.getUniqueField() != null) {
+			jsonObject.put("unique", model.getUniqueField());
 		}
-		if (model.getSearchable() != null) {
-			jsonObject.put("searchable", model.getSearchable());
+		if (model.getSearchableField() != null) {
+			jsonObject.put("searchable", model.getSearchableField());
 		}
-		if (model.getEditable() != null) {
-			jsonObject.put("editable", model.getEditable());
+		if (model.getEditableField() != null) {
+			jsonObject.put("editable", model.getEditableField());
 		}
-		if (model.getUpdatable() != null) {
-			jsonObject.put("updatable", model.getUpdatable());
+		if (model.getUpdatableField() != null) {
+			jsonObject.put("updatable", model.getUpdatableField());
 		}
-		if (model.getResizable() != null) {
-			jsonObject.put("resizable", model.getResizable());
+		if (model.getResizableField() != null) {
+			jsonObject.put("resizable", model.getResizableField());
 		}
-		if (model.getHidden() != null) {
-			jsonObject.put("hidden", model.getHidden());
+		if (model.getHiddenField() != null) {
+			jsonObject.put("hidden", model.getHiddenField());
 		}
 		if (model.getTooltip() != null) {
 			jsonObject.put("tooltip", model.getTooltip());
@@ -295,8 +295,8 @@ public class ColumnDefinitionJsonFactory {
 		if (model.getValidType() != null) {
 			jsonObject.put("validType", model.getValidType());
 		}
-		if (model.getRequired() != null) {
-			jsonObject.put("required", model.getRequired());
+		if (model.getRequiredField() != null) {
+			jsonObject.put("required", model.getRequiredField());
 		}
 		if (model.getRegex() != null) {
 			jsonObject.put("regex", model.getRegex());
@@ -329,8 +329,8 @@ public class ColumnDefinitionJsonFactory {
 			jsonObject.put("summaryExpr", model.getSummaryExpr());
 		}
 		jsonObject.put("displayType", model.getDisplayType());
-		if (model.getSortable() != null) {
-			jsonObject.put("sortable", model.getSortable());
+		if (model.getSortableField() != null) {
+			jsonObject.put("sortable", model.getSortableField());
 		}
 		if (model.getSortType() != null) {
 			jsonObject.put("sortType", model.getSortType());
@@ -400,32 +400,32 @@ public class ColumnDefinitionJsonFactory {
 		jsonObject.put("length", model.getLength());
 		jsonObject.put("scale", model.getScale());
 		jsonObject.put("precision", model.getPrecision());
-		if (model.getPrimaryKey() != null) {
-			jsonObject.put("primaryKey", model.getPrimaryKey());
+		if (model.getPrimaryKeyField() != null) {
+			jsonObject.put("primaryKey", model.getPrimaryKeyField());
 		}
-		if (model.getNullable() != null) {
-			jsonObject.put("nullable", model.getNullable());
+		if (model.getNullableField() != null) {
+			jsonObject.put("nullable", model.getNullableField());
 		}
-		if (model.getFrozen() != null) {
-			jsonObject.put("frozen", model.getFrozen());
+		if (model.getFrozenField() != null) {
+			jsonObject.put("frozen", model.getFrozenField());
 		}
-		if (model.getUnique() != null) {
-			jsonObject.put("unique", model.getUnique());
+		if (model.getUniqueField() != null) {
+			jsonObject.put("unique", model.getUniqueField());
 		}
-		if (model.getSearchable() != null) {
-			jsonObject.put("searchable", model.getSearchable());
+		if (model.getSearchableField() != null) {
+			jsonObject.put("searchable", model.getSearchableField());
 		}
-		if (model.getEditable() != null) {
-			jsonObject.put("editable", model.getEditable());
+		if (model.getEditableField() != null) {
+			jsonObject.put("editable", model.getEditableField());
 		}
-		if (model.getUpdatable() != null) {
-			jsonObject.put("updatable", model.getUpdatable());
+		if (model.getUpdatableField() != null) {
+			jsonObject.put("updatable", model.getUpdatableField());
 		}
-		if (model.getResizable() != null) {
-			jsonObject.put("resizable", model.getResizable());
+		if (model.getResizableField() != null) {
+			jsonObject.put("resizable", model.getResizableField());
 		}
-		if (model.getHidden() != null) {
-			jsonObject.put("hidden", model.getHidden());
+		if (model.getHiddenField() != null) {
+			jsonObject.put("hidden", model.getHiddenField());
 		}
 		if (model.getTooltip() != null) {
 			jsonObject.put("tooltip", model.getTooltip());
@@ -449,8 +449,8 @@ public class ColumnDefinitionJsonFactory {
 		if (model.getValidType() != null) {
 			jsonObject.put("validType", model.getValidType());
 		}
-		if (model.getRequired() != null) {
-			jsonObject.put("required", model.getRequired());
+		if (model.getRequiredField() != null) {
+			jsonObject.put("required", model.getRequiredField());
 		}
 		if (model.getRegex() != null) {
 			jsonObject.put("regex", model.getRegex());
@@ -483,8 +483,8 @@ public class ColumnDefinitionJsonFactory {
 			jsonObject.put("summaryExpr", model.getSummaryExpr());
 		}
 		jsonObject.put("displayType", model.getDisplayType());
-		if (model.getSortable() != null) {
-			jsonObject.put("sortable", model.getSortable());
+		if (model.getSortableField() != null) {
+			jsonObject.put("sortable", model.getSortableField());
 		}
 		if (model.getSortType() != null) {
 			jsonObject.put("sortType", model.getSortType());
