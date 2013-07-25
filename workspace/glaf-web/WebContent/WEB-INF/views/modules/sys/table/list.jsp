@@ -116,7 +116,7 @@
 	}
 
 	function updateHibernateDDL(){
-		if(confirm("确定配置文件/WEB-INF/conf/jdbc/dynamic.jdbc.properties文件已经修改正确？")){
+		if(confirm("确定配置文件已经修改正确？")){
 		  jQuery.ajax({
 				   type: "POST",
 				   url: '<%=request.getContextPath()%>/mx/system/table/updateHibernateDDL',
