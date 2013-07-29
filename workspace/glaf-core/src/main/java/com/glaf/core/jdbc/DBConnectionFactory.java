@@ -23,13 +23,17 @@ import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.util.Properties;
 
+import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.glaf.core.config.DBConfiguration;
 import com.glaf.core.config.DataSourceConfig;
 import com.glaf.core.config.Environment;
+import com.glaf.core.context.ContextFactory;
 import com.glaf.core.jdbc.connection.ConnectionProvider;
 import com.glaf.core.jdbc.connection.ConnectionProviderFactory;
 import com.glaf.core.util.JdbcUtils;
@@ -52,9 +56,24 @@ public class DBConnectionFactory {
 		logger.debug("systemName:" + systemName);
 		Connection connection = null;
 		try {
-			ConnectionProvider provider = ConnectionProviderFactory
-					.createProvider(systemName);
-			connection = provider.getConnection();
+			Properties props = DBConfiguration
+					.getDataSourcePropertiesByName(systemName);
+			if (props != null) {
+				if (StringUtils.isNotEmpty(props
+						.getProperty(DBConfiguration.JDBC_DATASOURCE))) {
+					InitialContext ctx = new InitialContext();
+					DataSource ds = (DataSource) ctx.lookup(props
+							.getProperty(DBConfiguration.JDBC_DATASOURCE));
+					connection = ds.getConnection();
+				} else {
+					ConnectionProvider provider = ConnectionProviderFactory
+							.createProvider(systemName);
+					connection = provider.getConnection();
+				}
+			} else {
+				DataSource ds = ContextFactory.getBean("dataSource");
+				connection = ds.getConnection();
+			}
 			return connection;
 		} catch (Exception ex) {
 			ex.printStackTrace();
