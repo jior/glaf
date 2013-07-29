@@ -22,7 +22,6 @@ import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -30,16 +29,13 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
-import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Projection;
-import org.hibernate.criterion.Projections;
-import org.hibernate.impl.CriteriaImpl;
 import org.hibernate.type.Type;
 
 import org.springframework.orm.hibernate3.HibernateCallback;
@@ -47,7 +43,6 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import com.glaf.core.util.DateUtils;
 import com.glaf.core.util.PageResult;
-import com.glaf.core.util.ReflectUtils;
 
 /**
  * 抽象Dao类，实现CRUD基本方法
@@ -320,69 +315,6 @@ public class HibernatePersistenceDAO extends HibernateDaoSupport implements
 						return criteria.list();
 					}
 				});
-	}
-
-	/**
-	 * 
-	 * @param criteria
-	 * @param pageNo
-	 * @param pageSize
-	 * @return
-	 */
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public PageResult getList(final DetachedCriteria detachedCriteria,
-			final int pageNo, final int pageSize) {
-		PageResult pager = new PageResult();
-
-		Criteria criteria = (Criteria) getHibernateTemplate().execute(
-				new HibernateCallback<Object>() {
-					public Object doInHibernate(Session session)
-							throws HibernateException, SQLException {
-						Criteria criteria = detachedCriteria
-								.getExecutableCriteria(session);
-						return criteria;
-					}
-				});
-		CriteriaImpl impl = (CriteriaImpl) criteria;
-
-		Projection projection = impl.getProjection();
-
-		List<?> orderEntries = null;
-		try {
-			orderEntries = (List<?>) ReflectUtils.getFieldValue(impl,
-					"orderEntries");
-			ReflectUtils.setFieldValue(impl, "orderEntries",
-					new ArrayList<Object>());
-		} catch (Exception ex) {
-			throw new RuntimeException(ex);
-		}
-
-		Long iCount = (Long) criteria.setProjection(Projections.rowCount())
-				.uniqueResult();
-		int totalCount = ((iCount != null) ? iCount.intValue() : 0);
-		pager.setTotalRecordCount(totalCount);// 查询总记录数
-		criteria.setProjection(projection);
-		if (projection == null) {
-			criteria.setResultTransformer(CriteriaSpecification.ROOT_ENTITY);
-		}
-
-		try {
-			List innerOrderEntries = (List) ReflectUtils.getFieldValue(impl,
-					"orderEntries");
-			Iterator it = orderEntries.iterator();
-			while (it.hasNext()) {
-				innerOrderEntries.add(it.next());
-			}
-		} catch (Exception ex) {
-			throw new RuntimeException(ex);
-		}
-
-		criteria.setFirstResult(pageSize * (pageNo - 1));
-		criteria.setMaxResults(pageSize);
-		pager.setPageSize(pageSize);
-		pager.setCurrentPageNo(pageNo);
-		pager.setResults(criteria.list());
-		return pager;
 	}
 
 	public List<?> getList(final String sql, final Map<String, Object> params) {

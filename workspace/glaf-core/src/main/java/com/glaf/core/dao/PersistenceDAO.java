@@ -84,6 +84,7 @@ public interface PersistenceDAO {
 
 	/**
 	 * ÷¥––sql”Ôæ‰
+	 * 
 	 * @param sql
 	 * @param values
 	 * @return
@@ -109,7 +110,6 @@ public interface PersistenceDAO {
 	 */
 	double getCountBySQL(String sql);
 
-	
 	double getDoubleBySQL(String sql);
 
 	/**
@@ -118,16 +118,6 @@ public interface PersistenceDAO {
 	 * @return
 	 */
 	List<?> getList(final DetachedCriteria detachedCriteria);
-
-	/**
-	 * 
-	 * @param criteria
-	 * @param pageNo
-	 * @param pageSize
-	 * @return
-	 */
-	PageResult getList(final DetachedCriteria detachedCriteria,
-			final int pageNo, final int pageSize);
 
 	/**
 	 * 
