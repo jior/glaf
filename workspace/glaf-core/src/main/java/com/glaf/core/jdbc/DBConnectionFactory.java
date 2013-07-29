@@ -29,6 +29,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.glaf.core.config.DataSourceConfig;
+import com.glaf.core.config.Environment;
 import com.glaf.core.jdbc.connection.ConnectionProvider;
 import com.glaf.core.jdbc.connection.ConnectionProviderFactory;
 import com.glaf.core.util.JdbcUtils;
@@ -41,7 +42,7 @@ public class DBConnectionFactory {
 	protected static Properties databaseTypeMappings = getDefaultDatabaseTypeMappings();
 
 	public static Connection getConnection() {
-		return DataSourceConfig.getConnection();
+		return getConnection(Environment.DEFAULT_SYSTEM_NAME);
 	}
 
 	public static Connection getConnection(String systemName) {
