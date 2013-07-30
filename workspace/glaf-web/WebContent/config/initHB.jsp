@@ -4,7 +4,7 @@
 <%@ page import="org.hibernate.SessionFactory"%>
 <%@ page import="com.glaf.core.config.*"%>
 <%@ page import="com.glaf.core.util.*"%>
-<%@ page import="com.glaf.base.entity.hibernate.*"%>
+<%@ page import="com.glaf.core.entity.hibernate.*"%>
 <%
 
         long start = System.currentTimeMillis();

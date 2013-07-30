@@ -1,6 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ page import="java.util.*"%>
-<%@ page import="com.glaf.core.config.admin.*"%>
 <%@ page import="com.glaf.setup.conf.*"%>
 <%
        String contextPath = request.getContextPath();
