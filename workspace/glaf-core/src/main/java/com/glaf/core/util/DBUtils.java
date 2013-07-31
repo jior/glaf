@@ -59,6 +59,54 @@ public class DBUtils {
 
 	public final static String newline = System.getProperty("line.separator");
 
+	public static void alterTable(Connection connection,
+			TableDefinition tableDefinition) {
+		List<String> cloumns = new ArrayList<String>();
+		Statement stmt = null;
+		ResultSet rs = null;
+		try {
+			String dbType = DBConnectionFactory.getDatabaseType(connection);
+			stmt = connection.createStatement();
+			rs = stmt.executeQuery("select * from "
+					+ tableDefinition.getTableName() + " where 1=0 ");
+			ResultSetMetaData rss = rs.getMetaData();
+			int columnCount = rss.getColumnCount();
+			for (int i = 1; i <= columnCount; i++) {
+				String column = rss.getColumnName(i);
+				cloumns.add(column.toUpperCase());
+			}
+
+			logger.debug(tableDefinition.getTableName() + " cloumns:" + cloumns);
+
+			stmt.close();
+			rs.close();
+			stmt = null;
+			rs = null;
+
+			Collection<ColumnDefinition> fields = tableDefinition.getColumns();
+			for (ColumnDefinition field : fields) {
+				if (field.getColumnName() != null
+						&& !cloumns.contains(field.getColumnName()
+								.toUpperCase())) {
+					String sql = getMyAddColumnSql(dbType,
+							tableDefinition.getTableName(), field);
+					if (sql != null && sql.length() > 0) {
+						Statement statement = connection.createStatement();
+						logger.info("alter table "
+								+ tableDefinition.getTableName() + ":\n" + sql);
+						statement.execute(sql);
+						statement.close();
+						statement = null;
+					}
+				}
+			}
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			throw new RuntimeException(ex);
+		}
+	}
+
 	public static void alterTable(String systemName, String tableName,
 			List<ColumnDefinition> columns) {
 		Connection con = null;
@@ -786,7 +834,7 @@ public class DBUtils {
 			JdbcUtils.close(rs);
 		}
 	}
-
+	
 	public static List<ColumnDefinition> getColumnDefinitions(String tableName) {
 		List<ColumnDefinition> columns = new ArrayList<ColumnDefinition>();
 		Connection conn = null;
@@ -855,6 +903,20 @@ public class DBUtils {
 			throw new RuntimeException(ex);
 		} finally {
 			JdbcUtils.close(rs);
+			JdbcUtils.close(conn);
+		}
+	}
+
+	public static List<ColumnDefinition> getColumnDefinitions(
+			String systemName, String tableName) {
+		Connection conn = null;
+		try {
+			conn = DBConnectionFactory.getConnection(systemName);
+			return getColumnDefinitions(conn, tableName);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			throw new RuntimeException(ex);
+		} finally {
 			JdbcUtils.close(conn);
 		}
 	}
@@ -1833,7 +1895,7 @@ public class DBUtils {
 			} else if ("mysql".equals(DBConnectionFactory
 					.getDatabaseType(connection))) {
 				tableName = tableName.toLowerCase();
-			} else if ("postgresql".equals(DBConnectionFactory
+			} else if (POSTGRESQL.equals(DBConnectionFactory
 					.getDatabaseType(connection))) {
 				tableName = tableName.toLowerCase();
 			}
@@ -1864,7 +1926,7 @@ public class DBUtils {
 			} else if ("mysql".equals(DBConnectionFactory
 					.getDatabaseType(connection))) {
 				tableName = tableName.toLowerCase();
-			} else if ("postgresql".equals(DBConnectionFactory
+			} else if (POSTGRESQL.equals(DBConnectionFactory
 					.getDatabaseType(connection))) {
 				tableName = tableName.toLowerCase();
 			}
@@ -1881,6 +1943,58 @@ public class DBUtils {
 			JdbcUtils.close(connection);
 		}
 		return primaryKeys;
+	}
+
+	public static List<String> getPrimaryKeys(String systemName,
+			String tableName) {
+		List<String> primaryKeys = new ArrayList<String>();
+		Connection connection = null;
+		try {
+			connection = DBConnectionFactory.getConnection(systemName);
+			DatabaseMetaData metaData = connection.getMetaData();
+
+			if ("h2".equals(DBConnectionFactory.getDatabaseType(connection))) {
+				tableName = tableName.toUpperCase();
+			} else if ("oracle".equals(DBConnectionFactory
+					.getDatabaseType(connection))) {
+				tableName = tableName.toUpperCase();
+			} else if ("mysql".equals(DBConnectionFactory
+					.getDatabaseType(connection))) {
+				tableName = tableName.toLowerCase();
+			} else if (POSTGRESQL.equals(DBConnectionFactory
+					.getDatabaseType(connection))) {
+				tableName = tableName.toLowerCase();
+			}
+
+			ResultSet rs = metaData.getPrimaryKeys(null, null, tableName);
+			while (rs.next()) {
+				primaryKeys.add(rs.getString("column_name"));
+			}
+
+		} catch (Exception ex) {
+			throw new RuntimeException(ex);
+		} finally {
+			JdbcUtils.close(connection);
+		}
+		return primaryKeys;
+	}
+
+	public static int getTableCount(Connection connection, String tableName) {
+		Statement stmt = null;
+		ResultSet rs = null;
+		try {
+			stmt = connection.createStatement();
+			rs = stmt.executeQuery(" select count(*) from " + tableName);
+			if (rs.next()) {
+				return rs.getInt(1);
+			}
+		} catch (Exception ex) {
+			throw new RuntimeException(ex);
+		} finally {
+			JdbcUtils.close(rs);
+			JdbcUtils.close(stmt);
+		}
+		return -1;
 	}
 
 	public static int getTableCount(String tableName) {
