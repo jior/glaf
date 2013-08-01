@@ -240,7 +240,7 @@ public class DBConfiguration {
 		dialectMappings.setProperty("db2", "org.hibernate.dialect.DB2Dialect");
 		return dialectMappings;
 	}
-	
+
 	public static Properties getProperties(String name) {
 		if (dataMap.isEmpty()) {
 			reloadDS();
@@ -285,9 +285,12 @@ public class DBConfiguration {
 				Properties props = PropertiesUtils.loadProperties(inputStream);
 				if (props != null) {
 					dataMap.put(Environment.DEFAULT_SYSTEM_NAME, props);
-					dataMap.put(props.getProperty(JDBC_NAME), props);
 					templateDataMap.put(Environment.DEFAULT_SYSTEM_NAME, props);
-					templateDataMap.put(props.getProperty(JDBC_NAME), props);
+					if (props.getProperty(JDBC_NAME) != null) {
+						dataMap.put(props.getProperty(JDBC_NAME), props);
+						templateDataMap
+								.put(props.getProperty(JDBC_NAME), props);
+					}
 				}
 			}
 		} catch (Exception ex) {
