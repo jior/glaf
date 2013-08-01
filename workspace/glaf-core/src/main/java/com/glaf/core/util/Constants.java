@@ -22,13 +22,21 @@ public final class Constants {
 
 	public final static String BUSINESS_KEY = "businessKey";
 
+	public static final String LOGIN_USER_CACHE = "cache_login_user_";
+
+	public static final String USER_CACHE = "cache_user_";
+
+	public final static String COOKIE_NAME = "GLAF_COOKIE";
+
+	public final static String LOGIN_INFO = "LOGIN_INFO";
+
+	public static final String LOGIN_ACTORID = "GLAF_LOGIN_ACTORID";
+
+	public static final String LOGIN_IP = "LOGIN_IP";
+
 	public static final String DEFAULT_JDBC_CONFIG = "/conf/jdbc.properties";
 
 	public static final String JDBC_CONFIG = "/conf/jdbc";
-
-	public static final String LOGIN_ACTORID = "LOGIN_ACTORID";
-
-	public static final String LOGIN_IP = "LOGIN_IP";
 
 	public final static String LOOP_COUNTER = "loopCounter";
 
@@ -54,7 +62,7 @@ public final class Constants {
 
 	public static final String SYSTEM_CONFIG = "/glaf.properties";
 
-	public static final String SYSTEM_NAME = "GLAF";
+	public static final String SYSTEM_NAME = "systemName";
 
 	public static final String SYSTEM_PERMISSION_IDS = "SYSTEM_PERMISSION_IDS";
 
@@ -74,9 +82,12 @@ public final class Constants {
 
 	public static final String TS = "TS";
 
+	public static final String THEME_COOKIE = "GLAF_THEME_COOKIE";
+
 	public static final String UPLOAD_PATH = "/upload/files/";
-	
-	public static final String IO_NATIVE_LIB_AVAILABLE_KEY = "mxalloy.native.lib";
+
+	public static final String IO_NATIVE_LIB_AVAILABLE_KEY = "glaf.native.lib";
+
 	/** Default value for IO_NATIVE_LIB_AVAILABLE_KEY */
 	public static final boolean IO_NATIVE_LIB_AVAILABLE_DEFAULT = true;
 

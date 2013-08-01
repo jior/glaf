@@ -78,24 +78,6 @@ public class RequestUtils {
 		return queryString;
 	}
 
-	public static boolean checkTicket(HttpServletRequest request) {
-		boolean isOK = false;
-		String x_ticket = request.getParameter("x_ticket");
-		Cookie[] cookies = request.getCookies();
-		if (cookies != null && StringUtils.isNotEmpty(x_ticket)) {
-			for (Cookie cookie : cookies) {
-				if (StringUtils.equals("glaf_ticket", cookie.getName())) {
-					String x_ticket_2 = cookie.getValue();
-					if (StringUtils.equals(x_ticket, x_ticket_2)) {
-						isOK = true;
-						break;
-					}
-				}
-			}
-		}
-		return isOK;
-	}
-
 	public static StringBuffer createQueryStringFromMap(Map<String, Object> m,
 			String ampersand) {
 		StringBuffer aReturn = new StringBuffer("");
@@ -161,6 +143,9 @@ public class RequestUtils {
 		JSONObject rootJson = new JSONObject();
 		rootJson.put(Constants.LOGIN_IP, ip);
 		rootJson.put(Constants.LOGIN_ACTORID, actorId);
+		if (systemName != null) {
+			rootJson.put(Constants.SYSTEM_NAME, systemName);
+		}
 		rootJson.put(Constants.TS,
 				String.valueOf(Long.MAX_VALUE - System.currentTimeMillis()));
 		String c_x = rootJson.toJSONString();
@@ -191,13 +176,10 @@ public class RequestUtils {
 		String ip = getIPAddress(request);
 		HttpSession session = request.getSession(false);
 		if (session != null) {
-			String value = (String) session
-					.getAttribute(Constants.LOGIN_ACTORID);
-			// logger.debug("session value=" + value);
+			String value = (String) session.getAttribute(Constants.LOGIN_INFO);
 			Map<String, String> cookieMap = decodeCookieValue(value);
 			if (StringUtils.equals(cookieMap.get(Constants.LOGIN_IP), ip)) {
 				actorId = cookieMap.get(Constants.LOGIN_ACTORID);
-				// logger.debug("## session actorId=" + actorId);
 			}
 		}
 
@@ -206,9 +188,8 @@ public class RequestUtils {
 			if (cookies != null && cookies.length > 0) {
 				for (Cookie cookie : cookies) {
 					if (StringUtils.equals(cookie.getName(),
-							Constants.LOGIN_ACTORID + "_GLAF_COOKIE")) {
+							Constants.COOKIE_NAME)) {
 						String value = cookie.getValue();
-						// logger.debug("cookie value=" + value);
 						Map<String, String> cookieMap = decodeCookieValue(value);
 						if (StringUtils.equals(
 								cookieMap.get(Constants.LOGIN_IP), ip)) {
@@ -219,7 +200,6 @@ public class RequestUtils {
 									&& (Long.parseLong(time) - now) < COOKIE_LIVING_SECONDS * 1000) {
 								actorId = cookieMap
 										.get(Constants.LOGIN_ACTORID);
-								// logger.debug("## cookie actorId=" + actorId);
 								break;
 							}
 						}
@@ -279,6 +259,50 @@ public class RequestUtils {
 			}
 		}
 		return value;
+	}
+
+	public static String getCurrentSystem(HttpServletRequest request) {
+		String currentSystem = null;
+		String paramValue = request.getParameter(Constants.SYSTEM_NAME);
+		if (StringUtils.isNotEmpty(paramValue)) {
+			return paramValue;
+		}
+		String ip = getIPAddress(request);
+		HttpSession session = request.getSession(false);
+		if (session != null) {
+			String value = (String) session.getAttribute(Constants.LOGIN_INFO);
+			Map<String, String> cookieMap = decodeCookieValue(value);
+			if (StringUtils.equals(cookieMap.get(Constants.LOGIN_IP), ip)) {
+				currentSystem = cookieMap.get(Constants.SYSTEM_NAME);
+			}
+		}
+
+		if (currentSystem == null) {
+			Cookie[] cookies = request.getCookies();
+			if (cookies != null && cookies.length > 0) {
+				for (Cookie cookie : cookies) {
+					if (StringUtils.equals(cookie.getName(),
+							Constants.COOKIE_NAME)) {
+						String value = cookie.getValue();
+						Map<String, String> cookieMap = decodeCookieValue(value);
+						if (StringUtils.equals(
+								cookieMap.get(Constants.LOGIN_IP), ip)) {
+							String time = cookieMap.get(Constants.TS);
+							long now = Long.MAX_VALUE
+									- System.currentTimeMillis();
+							if (StringUtils.isNumeric(time)
+									&& (Long.parseLong(time) - now) < COOKIE_LIVING_SECONDS * 1000) {
+								currentSystem = cookieMap
+										.get(Constants.SYSTEM_NAME);
+								break;
+							}
+						}
+					}
+				}
+			}
+		}
+
+		return currentSystem;
 	}
 
 	/**
@@ -780,12 +804,10 @@ public class RequestUtils {
 		String ip = getIPAddress(request);
 		HttpSession session = request.getSession(false);
 		if (session != null) {
-			String value = (String) session
-					.getAttribute(Constants.LOGIN_ACTORID);
+			String value = (String) session.getAttribute(Constants.LOGIN_INFO);
 			Map<String, String> cookieMap = decodeCookieValue(value);
 			if (StringUtils.equals(cookieMap.get(Constants.LOGIN_IP), ip)) {
 				actorId = cookieMap.get(Constants.LOGIN_ACTORID);
-				// logger.debug("## session actorId=" + actorId);
 			}
 		}
 
@@ -848,7 +870,8 @@ public class RequestUtils {
 		Cookie[] cookies = request.getCookies();
 		if (cookies != null && cookies.length > 0) {
 			for (Cookie cookie : cookies) {
-				if (StringUtils.equals(cookie.getName(), "GLAF_THEME_COOKIE")) {
+				if (StringUtils
+						.equals(cookie.getName(), Constants.THEME_COOKIE)) {
 					if (cookie.getValue() != null) {
 						theme = cookie.getValue();
 					}
@@ -869,14 +892,25 @@ public class RequestUtils {
 		return null;
 	}
 
-	public static void removeTicket(HttpServletRequest request) {
+	public static void removeLoginUser(HttpServletRequest request,
+			HttpServletResponse response) {
 		Cookie[] cookies = request.getCookies();
-		if (cookies != null) {
+		if (cookies != null && cookies.length > 0) {
 			for (Cookie cookie : cookies) {
-				if (StringUtils.equals("glaf_ticket", cookie.getName())) {
-					cookie.setValue(null);
+				if (StringUtils.equals(cookie.getName(), Constants.COOKIE_NAME)) {
+					cookie.setMaxAge(0);
+					cookie.setPath("/");
+					cookie.setValue(UUID32.getUUID());
+					response.addCookie(cookie);
+					logger.debug("remove user from cookie");
 				}
 			}
+		}
+
+		HttpSession session = request.getSession(false);
+		if (session != null) {
+			session.removeAttribute(Constants.LOGIN_INFO);
+			session.invalidate();
 		}
 	}
 
@@ -886,10 +920,9 @@ public class RequestUtils {
 		String value = encodeCookieValue(ip, systemName, actorId);
 		HttpSession session = request.getSession(false);
 		if (session != null) {
-			session.setAttribute(Constants.LOGIN_ACTORID, value);
+			session.setAttribute(Constants.LOGIN_INFO, value);
 		}
-		Cookie cookie = new Cookie(Constants.LOGIN_ACTORID + "_GLAF_COOKIE",
-				value);
+		Cookie cookie = new Cookie(Constants.COOKIE_NAME, value);
 		cookie.setPath("/");
 		cookie.setMaxAge(-1);
 		response.addCookie(cookie);
@@ -934,34 +967,11 @@ public class RequestUtils {
 		}
 	}
 
-	public static void removeLoginUser(HttpServletRequest request,
-			HttpServletResponse response) {
-		Cookie[] cookies = request.getCookies();
-		if (cookies != null && cookies.length > 0) {
-			for (Cookie cookie : cookies) {
-				if (StringUtils.equals(cookie.getName(),
-						Constants.LOGIN_ACTORID + "_GLAF_COOKIE")) {
-					cookie.setMaxAge(0);
-					cookie.setPath("/");
-					cookie.setValue(UUID32.getUUID());
-					response.addCookie(cookie);
-					logger.debug("remove user from cookie");
-				}
-			}
-		}
-
-		HttpSession session = request.getSession(false);
-		if (session != null) {
-			session.removeAttribute(Constants.LOGIN_ACTORID);
-			session.invalidate();
-		}
-	}
-
 	public static void setTheme(HttpServletRequest request,
 			HttpServletResponse response) {
-		if (StringUtils.isNotEmpty(request.getParameter("theme"))) {
-			String theme = request.getParameter("theme");
-			Cookie cookie = new Cookie("GLAF_THEME_COOKIE", theme);
+		String theme = request.getParameter("theme");
+		if (StringUtils.isNotEmpty(theme)) {
+			Cookie cookie = new Cookie(Constants.THEME_COOKIE, theme);
 			cookie.setPath("/");
 			cookie.setMaxAge(-1);
 			response.addCookie(cookie);
@@ -971,20 +981,11 @@ public class RequestUtils {
 	public static void setTheme(HttpServletRequest request,
 			HttpServletResponse response, String theme) {
 		if (StringUtils.isNotEmpty(theme)) {
-			Cookie cookie = new Cookie("GLAF_THEME_COOKIE", theme);
+			Cookie cookie = new Cookie(Constants.THEME_COOKIE, theme);
 			cookie.setPath("/");
 			cookie.setMaxAge(-1);
 			response.addCookie(cookie);
 		}
-	}
-
-	public static void setTicket(HttpServletRequest request,
-			HttpServletResponse response) {
-		String x_ticket = UUID32.getUUID();
-		Cookie cookie = new Cookie("glaf_ticket", x_ticket);
-		cookie.setMaxAge(COOKIE_LIVING_SECONDS);
-		request.setAttribute("x_ticket", x_ticket);
-		response.addCookie(cookie);
 	}
 
 }

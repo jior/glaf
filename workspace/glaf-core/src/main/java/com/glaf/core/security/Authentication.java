@@ -16,9 +16,19 @@ package com.glaf.core.security;
 public class Authentication {
 
 	static ThreadLocal<String> authenticatedActorThreadLocal = new ThreadLocal<String>();
+	
+	static ThreadLocal<LoginContext> loginContextThreadLocal = new ThreadLocal<LoginContext>();
 
 	private Authentication() {
 
+	}
+	
+	public static LoginContext getLoginContext() {
+		return loginContextThreadLocal.get();
+	}
+
+	public static void setLoginContext(LoginContext loginContext) {
+		loginContextThreadLocal.set(loginContext);
 	}
 
 	public static String getAuthenticatedActorId() {

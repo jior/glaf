@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.glaf.base.servlet;
+package com.glaf.core.web.servlet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,11 +27,9 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
-import com.glaf.core.config.Environment;
+import com.glaf.core.config.*;
+import com.glaf.core.security.*;
 import com.glaf.core.util.RequestUtils;
-import com.glaf.base.modules.sys.model.SysUser;
-import com.glaf.base.utils.Authentication;
-import com.glaf.base.utils.RequestUtil;
 
 public class SpringDispatcherServlet extends DispatcherServlet {
 
@@ -56,20 +54,20 @@ public class SpringDispatcherServlet extends DispatcherServlet {
 			String actorId = RequestUtils.getActorId(request);
 			if (actorId != null) {
 				// logger.debug("actorId:" + actorId);
-				Authentication.setAuthenticatedAccount(actorId);
+				Authentication.setAuthenticatedActorId(actorId);
 			}
 
-			SysUser user = RequestUtil.getLoginUser(request);
+			LoginContext user = RequestUtils.getLoginContext(request);
 			if (user != null) {
-				Authentication.setAuthenticatedUser(user);
+				Authentication.setLoginContext(user);
 				com.glaf.core.security.Authentication
-						.setAuthenticatedActorId(user.getAccount());
+						.setAuthenticatedActorId(user.getActorId());
 			}
 
 			/**
 			 * 未登录或不是系统管理员，不允许访问系统管理地址
 			 */
-			if ((user == null) || (!user.isSystemAdmin())) {
+			if ((user == null) || (!user.isSystemAdministrator())) {
 				String uri = request.getRequestURI();
 				logger.debug("request uri:" + uri);
 

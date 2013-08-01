@@ -92,9 +92,9 @@ public class DBConfiguration {
 
 	private static boolean REQUIRE_RELOAD_JDBC_RESOURCE = false;
 
-	protected static Properties properties = new Properties();
-
 	protected static ConcurrentMap<String, Properties> dataMap = new ConcurrentHashMap<String, Properties>();
+
+	protected static ConcurrentMap<String, Properties> templateDataMap = new ConcurrentHashMap<String, Properties>();
 
 	protected static ConcurrentMap<Integer, String> ISOLATION_LEVELS = new ConcurrentHashMap<Integer, String>();
 
@@ -111,7 +111,6 @@ public class DBConfiguration {
 		ISOLATION_LEVELS.put(new Integer(Connection.TRANSACTION_SERIALIZABLE),
 				"SERIALIZABLE");
 		init();
-		reload();
 		reloadDS();
 	}
 
@@ -241,16 +240,19 @@ public class DBConfiguration {
 		dialectMappings.setProperty("db2", "org.hibernate.dialect.DB2Dialect");
 		return dialectMappings;
 	}
-
-	public static Properties getProperties() {
-		return properties;
-	}
-
+	
 	public static Properties getProperties(String name) {
 		if (dataMap.isEmpty()) {
-			init();
+			reloadDS();
 		}
 		return dataMap.get(name);
+	}
+
+	public static Properties getTemplateProperties(String name) {
+		if (templateDataMap.isEmpty()) {
+			init();
+		}
+		return templateDataMap.get(name);
 	}
 
 	public static void init() {
@@ -268,7 +270,8 @@ public class DBConfiguration {
 						Properties props = PropertiesUtils
 								.loadProperties(inputStream);
 						if (props != null) {
-							dataMap.put(props.getProperty(JDBC_NAME), props);
+							templateDataMap.put(props.getProperty(JDBC_NAME),
+									props);
 						}
 					}
 				}
@@ -283,36 +286,27 @@ public class DBConfiguration {
 				if (props != null) {
 					dataMap.put(Environment.DEFAULT_SYSTEM_NAME, props);
 					dataMap.put(props.getProperty(JDBC_NAME), props);
+					templateDataMap.put(Environment.DEFAULT_SYSTEM_NAME, props);
+					templateDataMap.put(props.getProperty(JDBC_NAME), props);
 				}
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			logger.error(ex);
 		}
+	}
+
+	public static boolean isJndiDataSource(String systemName) {
+		Properties props = getDataSourcePropertiesByName(systemName);
+		if (props != null
+				&& StringUtils.isNotEmpty(props.getProperty(JDBC_DATASOURCE))) {
+			return true;
+		}
+		return false;
 	}
 
 	public static String isolationLevelToString(int isolation) {
 		return (String) ISOLATION_LEVELS.get(new Integer(isolation));
-	}
-
-	public static void reload() {
-		try {
-			String filename = SystemProperties.getConfigRootPath()
-					+ Constants.DEFAULT_JDBC_CONFIG;
-			Properties p = PropertiesUtils.loadFilePathResource(filename);
-			if (p != null) {
-				properties.clear();
-				Enumeration<?> e = p.keys();
-				while (e.hasMoreElements()) {
-					String key = (String) e.nextElement();
-					String value = p.getProperty(key);
-					properties.setProperty(key, value);
-				}
-			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			logger.error(ex);
-		}
 	}
 
 	protected static void reloadDS() {

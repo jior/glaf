@@ -30,7 +30,7 @@ import org.apache.commons.lang.StringUtils;
 
 import com.glaf.core.security.LoginContext;
 
-public final class Environment {
+public class Environment {
 	protected static final Log logger = LogFactory.getLog(Environment.class);
 
 	public static final String CURRENT_SYSTEM_NAME = "CURRENT_SYSTEM_NAME";
@@ -45,14 +45,16 @@ public final class Environment {
 
 	protected static ThreadLocal<Map<String, String>> threadLocalVaribles = new ThreadLocal<Map<String, String>>();
 
+	protected static ThreadLocal<String> systemNameThreadLocal = new ThreadLocal<String>();
+
 	public static String getCurrentDatabaseType() {
 		return DBConfiguration.getCurrentDatabaseType();
 	}
 
 	public static String getCurrentSystemName() {
-		if (threadLocalVaribles.get() != null
-				&& threadLocalVaribles.get().get(CURRENT_SYSTEM_NAME) != null) {
-			return threadLocalVaribles.get().get(CURRENT_SYSTEM_NAME);
+		if (systemNameThreadLocal.get() != null) {
+			logger.debug("threadLocal:" + systemNameThreadLocal.get());
+			return systemNameThreadLocal.get();
 		}
 		return DEFAULT_SYSTEM_NAME;
 	}
@@ -61,7 +63,7 @@ public final class Environment {
 		String dsName = getCurrentSystemName();
 		return systemProperties.get(dsName);
 	}
-	
+
 	public static String getCurrentUser() {
 		if (threadLocalVaribles.get() != null) {
 			return threadLocalVaribles.get().get(CURRENT_USER);
@@ -98,13 +100,13 @@ public final class Environment {
 		return defaultValue;
 	}
 
+	public static void removeCurrentSystemName() {
+		systemNameThreadLocal.remove();
+	}
+
 	public static void setCurrentSystemName(String value) {
-		Map<String, String> dataMap = threadLocalVaribles.get();
-		if (dataMap == null) {
-			dataMap = new HashMap<String, String>();
-			threadLocalVaribles.set(dataMap);
-		}
-		dataMap.put(CURRENT_SYSTEM_NAME, value);
+		systemNameThreadLocal.set(value);
+		logger.debug("->systemName:" + Environment.getCurrentSystemName());
 	}
 
 	public static void setCurrentUser(String actorId) {
