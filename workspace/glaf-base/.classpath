@@ -60,7 +60,6 @@
 	<classpathentry kind="lib" path="/glaf-core/lib/jaxrs-api-2.3.5.Final.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/jbpm-jpdl.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/jdom-1.0.jar"/>
-	
 	<classpathentry kind="lib" path="/glaf-core/lib/json.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/jsp-api.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/jstl-1.2.jar"/>
@@ -71,7 +70,6 @@
 	<classpathentry kind="lib" path="/glaf-core/lib/mvel2-2.1.0.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/mybatis-2.3.5.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/mysql-connector-java-5.1.22-bin.jar"/>
-	
 	<classpathentry kind="lib" path="/glaf-core/lib/oscache-2.4.1.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/postgresql-9.2-1003.jdbc4.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/quartz-all-2.1.6.jar"/>
@@ -106,5 +104,6 @@
 	<classpathentry kind="lib" path="/glaf-core/lib/hamcrest-core.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/poi-3.9-20121203.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/glaf-ui"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/hibernate3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
