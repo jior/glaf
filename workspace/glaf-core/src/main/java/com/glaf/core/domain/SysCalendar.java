@@ -33,7 +33,7 @@ import com.glaf.core.domain.util.SysCalendarJsonFactory;
 public class SysCalendar implements Serializable, JSONable {
 	private static final long serialVersionUID = 1L;
 
-	@Column(name = "CREATEBY_", length = 0)
+	@Column(name = "CREATEBY_", length = 50)
 	protected String createBy;
 
 	@Temporal(TemporalType.TIMESTAMP)

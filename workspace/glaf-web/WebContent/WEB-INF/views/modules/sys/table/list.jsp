@@ -31,7 +31,7 @@
 				nowrap: false,
 				striped: true,
 				collapsible:true,
-				url:'<%=request.getContextPath()%>/mx/sys/table/json',
+				url:'<%=request.getContextPath()%>/mx/system/table/json',
 				sortName: 'tablename',
 				sortOrder: 'asc',
 				remoteSort: false,
@@ -95,7 +95,7 @@
 		    var ids = ids.join(',');
 			var dbType = jQuery('#dbType').val();
 			jQuery("#tables").val(ids);
-			document.iForm.action="<%=request.getContextPath()%>/mx/sys/table/genCreateScripts?dbType="+dbType;
+			document.iForm.action="<%=request.getContextPath()%>/mx/system/table/genCreateScripts?dbType="+dbType;
 			document.iForm.submit();
 		} else {
 			alert("请选择至少一条记录。");
@@ -112,7 +112,7 @@
 		    var ids = ids.join(',');
 			var dbType = jQuery('#dbType').val();
 			jQuery("#tables").val(ids);
-			document.iForm.action="<%=request.getContextPath()%>/mx/sys/table/genMappings?dbType="+dbType;
+			document.iForm.action="<%=request.getContextPath()%>/mx/system/table/genMappings?dbType="+dbType;
 			document.iForm.submit();
 		} else {
 			alert("请选择至少一条记录。");
@@ -123,7 +123,7 @@
 		if(confirm("确定配置文件已经修改完毕？")){
 		  jQuery.ajax({
 				   type: "POST",
-				   url: '<%=request.getContextPath()%>/mx/sys/table/updateHibernateDDL',
+				   url: '<%=request.getContextPath()%>/mx/system/table/updateHibernateDDL',
 				   dataType:  'json',
 				   error: function(data){
 					   alert('服务器处理错误！');
@@ -170,12 +170,12 @@
 		var rows = jQuery('#mydatagrid').datagrid('getSelections');
 		if(rows.length ==1){
 		    var tablename = rows[0].tableName_enc;
-		    window.open('<%=request.getContextPath()%>/mx/sys/table/resultList?q=1&tableName_enc='+tablename);
+		    window.open('<%=request.getContextPath()%>/mx/system/table/resultList?q=1&tableName_enc='+tablename);
 		}
 	 }
 
 	 function onRowClick(rowIndex, row){
-	    var link = '<%=request.getContextPath()%>/mx/sys/table/resultList?q=1&tableName_enc='+row.tableName_enc;
+	    var link = '<%=request.getContextPath()%>/mx/system/table/resultList?q=1&tableName_enc='+row.tableName_enc;
 	    art.dialog.open(link, { height: 425, width: 880, title: row.tablename+"列表信息", lock: true, scrollbars:"no" }, false);
 	}
 	 
