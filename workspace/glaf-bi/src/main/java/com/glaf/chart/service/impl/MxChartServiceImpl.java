@@ -145,6 +145,18 @@ public class MxChartServiceImpl implements IChartService {
 						chart.addCellData(cell);
 					}
 
+					if ("line_sum".equals(chart.getChartType())) {
+						index++;
+						ColumnModel cell = new ColumnModel();
+						cell.setColumnName("col_" + index);
+						cell.setCategory(MapUtils
+								.getString(dataMap, "category"));
+						cell.setSeries(MapUtils.getString(dataMap, "series"));
+						cell.setDoubleValue(MapUtils.getDouble(dataMap,
+								"doublevalue"));
+						chart.addCellData(cell);
+					}
+
 					if ("stackedbar".equals(chart.getChartType())) {
 						index++;
 						ColumnModel cell = new ColumnModel();
@@ -156,6 +168,19 @@ public class MxChartServiceImpl implements IChartService {
 								"doublevalue"));
 						chart.addCellData(cell);
 					}
+
+					if ("stackedbar_line_sum".equals(chart.getChartType())) {
+						index++;
+						ColumnModel cell = new ColumnModel();
+						cell.setColumnName("col_" + index);
+						cell.setCategory(MapUtils
+								.getString(dataMap, "category"));
+						cell.setSeries(MapUtils.getString(dataMap, "series"));
+						cell.setDoubleValue(MapUtils.getDouble(dataMap,
+								"doublevalue"));
+						chart.addCellData(cell);
+					}
+
 				}
 				logger.debug("rows size:" + chart.getColumns().size());
 			}

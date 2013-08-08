@@ -18,6 +18,15 @@
 
 package com.glaf.chart.gen;
 
+import java.util.Enumeration;
+import java.util.Properties;
+
+import org.apache.commons.lang.StringUtils;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.glaf.core.util.ClassUtils;
+
 public class ChartFactory {
 
 	private ChartFactory() {
@@ -30,9 +39,42 @@ public class ChartFactory {
 			chartGen = new PieChartGen();
 		} else if ("line".equals(chartType)) {
 			chartGen = new LineChartGen();
+		} else if ("line_sum".equals(chartType)) {
+			chartGen = new SummationLineChartGen();
 		} else if ("stackedbar".equals(chartType)) {
 			chartGen = new StackedBarChartGen();
+		} else if ("stackedbar_line_sum".equals(chartType)) {
+			chartGen = new StackedBarSummationLineChartGen();
 		}
+
+		try {
+			Properties props = ChartProperties.getProperties();
+			if (props != null && props.keys().hasMoreElements()) {
+				Enumeration<?> e = props.keys();
+				while (e.hasMoreElements()) {
+					String name = (String) e.nextElement();
+					String value = props.getProperty(name);
+					if (StringUtils.equals(name, chartType)
+							&& StringUtils.isNotEmpty(value)
+							&& (value.length() > 0 && value.charAt(0) == '{')
+							&& value.endsWith("}")) {
+						JSONObject jsonObject = JSON.parseObject(value);
+						String className = jsonObject.getString("className");
+						if (StringUtils.isNotEmpty(className)) {
+							Object gen = ClassUtils
+									.instantiateObject(className);
+							if (gen instanceof ChartGen) {
+								chartGen = (ChartGen) gen;
+								break;
+							}
+						}
+					}
+				}
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
 		return chartGen;
 	}
 
