@@ -32,7 +32,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,21 +39,18 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-
 import com.glaf.ui.model.Panel;
 import com.glaf.ui.model.PanelInstance;
-
 import com.glaf.ui.model.UserPanel;
 import com.glaf.ui.model.UserPortal;
 import com.glaf.ui.service.LayoutService;
 import com.glaf.ui.service.PanelService;
-
 import com.glaf.ui.service.UserPortalService;
 import com.glaf.base.modules.sys.service.SysApplicationService;
 import com.glaf.core.base.TreeModel;
+import com.glaf.core.config.Environment;
 import com.glaf.core.config.ViewProperties;
 import com.glaf.core.security.LoginContext;
-
 import com.glaf.core.tree.helper.TreeHelper;
 import com.glaf.core.util.RequestUtils;
 
@@ -103,6 +99,13 @@ public class MyPortalController {
 	public ModelAndView home(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 
+		if (StringUtils.isNotEmpty(request.getParameter("systemName"))) {
+			Environment
+					.setCurrentSystemName(request.getParameter("systemName"));
+		} else {
+			Environment.setCurrentSystemName(Environment.DEFAULT_SYSTEM_NAME);
+		}
+		
 		String userId = RequestUtils.getActorId(request);
 
 		long appId = RequestUtils.getLong(request, "appId", 3);
@@ -126,6 +129,13 @@ public class MyPortalController {
 
 		RequestUtils.setRequestParameterToAttribute(request);
 
+		if (StringUtils.isNotEmpty(request.getParameter("systemName"))) {
+			Environment
+					.setCurrentSystemName(request.getParameter("systemName"));
+		} else {
+			Environment.setCurrentSystemName(Environment.DEFAULT_SYSTEM_NAME);
+		}
+		
 		long appId = RequestUtils.getLong(request, "appId", 3);
 
 		TreeModel root = sysApplicationService.getTreeModelByAppId(appId);

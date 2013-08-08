@@ -146,7 +146,7 @@ public class MxConsoleController {
 	public ModelAndView main(ModelMap modelMap, HttpServletRequest request) {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		if (loginContext == null) {
-			return new ModelAndView("/login/login");
+			return new ModelAndView("/modules/login");
 		}
 		RequestUtils.setRequestParameterToAttribute(request);
 

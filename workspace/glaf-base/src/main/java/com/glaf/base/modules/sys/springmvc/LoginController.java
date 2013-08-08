@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
@@ -39,9 +40,9 @@ import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.sys.service.AuthorizeService;
 import com.glaf.base.modules.sys.service.SysApplicationService;
 import com.glaf.base.modules.sys.service.SysUserService;
-
 import com.glaf.base.utils.ContextUtil;
 import com.glaf.base.utils.ParamUtil;
+import com.glaf.core.config.Environment;
 import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
 import com.glaf.core.res.ViewMessages;
@@ -79,6 +80,14 @@ public class LoginController {
 		if (session == null) {
 			return new ModelAndView("/modules/login", modelMap);
 		}
+		
+		if (StringUtils.isNotEmpty(request.getParameter("systemName"))) {
+			Environment
+					.setCurrentSystemName(request.getParameter("systemName"));
+		} else {
+			Environment.setCurrentSystemName(Environment.DEFAULT_SYSTEM_NAME);
+		}
+		
 		ViewMessages messages = new ViewMessages();
 		// 获取参数
 		String account = ParamUtil.getParameter(request, "x");
