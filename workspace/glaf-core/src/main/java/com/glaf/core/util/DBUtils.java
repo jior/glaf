@@ -54,6 +54,8 @@ import com.glaf.core.jdbc.DBConnectionFactory;
 
 public class DBUtils {
 	public static final String POSTGRESQL = "postgresql";
+	
+	public static final String ORACLE="oracle";
 
 	protected final static Log logger = LogFactory.getLog(DBUtils.class);
 

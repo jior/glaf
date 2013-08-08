@@ -32,13 +32,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.core.id.*;
+import com.glaf.core.jdbc.DBConnectionFactory;
 import com.glaf.core.service.ITableDataService;
 import com.glaf.core.service.MembershipService;
+import com.glaf.core.util.DBUtils;
 import com.glaf.core.util.PageResult;
 import com.glaf.core.util.StringTools;
 import com.glaf.core.base.TableModel;
 import com.glaf.core.domain.Membership;
-
 import com.glaf.base.modules.sys.mapper.*;
 import com.glaf.base.modules.sys.model.*;
 import com.glaf.base.modules.sys.query.*;
@@ -152,20 +153,24 @@ public class SysUserServiceImpl implements SysUserService {
 		}
 	}
 
-	@Override
+ 
 	public SysUser findByAccount(String account) {
-		SysUserQuery query = new SysUserQuery();
-		query.account(account);
-		query.setOrderBy(" E.ID desc ");
-
-		List<SysUser> list = this.list(query);
-		if (list != null && !list.isEmpty()) {
-			SysUser user = list.get(0);
-			user.setDepartment(sysDepartmentService.findById(user.getDeptId()));
-			return user;
+		SysUser user = null;
+		if (StringUtils.equals(DBUtils.ORACLE,
+				DBConnectionFactory.getDatabaseType())) {
+			account = account.toLowerCase();
+			user = sysUserMapper.getSysUserByAccount_oracle(account);
+		} else if (StringUtils.equals(DBUtils.POSTGRESQL,
+				DBConnectionFactory.getDatabaseType())) {
+			account = account.toLowerCase();
+			user = sysUserMapper.getSysUserByAccount_postgresql(account);
+		} else {
+			user = sysUserMapper.getSysUserByAccount(account);
 		}
-
-		return null;
+		if (user != null && user.getDeptId() > 0) {
+			user.setDepartment(sysDepartmentService.findById(user.getDeptId()));
+		}
+		return user;
 	}
 
 	/**
@@ -192,13 +197,19 @@ public class SysUserServiceImpl implements SysUserService {
 	}
 
 	public SysUser findByAccountWithAll(String account) {
-		SysUserQuery query = new SysUserQuery();
-		query.account(account);
-		query.setOrderBy(" E.ID desc ");
-
-		List<SysUser> list = this.list(query);
-		if (list != null && !list.isEmpty()) {
-			SysUser user = list.get(0);
+		SysUser user = null;
+		if (StringUtils.equals(DBUtils.ORACLE,
+				DBConnectionFactory.getDatabaseType())) {
+			account = account.toLowerCase();
+			user = sysUserMapper.getSysUserByAccount_oracle(account);
+		} else if (StringUtils.equals(DBUtils.POSTGRESQL,
+				DBConnectionFactory.getDatabaseType())) {
+			account = account.toLowerCase();
+			user = sysUserMapper.getSysUserByAccount_postgresql(account);
+		} else {
+			user = sysUserMapper.getSysUserByAccount(account);
+		}
+		if (user != null) {
 			user.setDepartment(sysDepartmentService.findById(user.getDeptId()));
 			List<SysUserRole> userRoles = sysUserRoleMapper
 					.getSysUserRolesByUserId(user.getId());

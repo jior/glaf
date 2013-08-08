@@ -310,6 +310,18 @@
 		resultMap="sysUserResultMap">
 		select * from sys_user where ACCOUNT = #{account}
 	</select>
+	
+	
+	<select id="getSysUserByAccount_oracle" parameterType="String"
+		resultMap="sysUserResultMap">
+		select * from sys_user where lower(ACCOUNT) = #{account}
+	</select>
+	
+	
+	<select id="getSysUserByAccount_postgresql" parameterType="String"
+		resultMap="sysUserResultMap">
+		select * from sys_user where lower(ACCOUNT) = #{account}
+	</select>
 
 
 	<select id="getCountAuthorizedUsers" parameterType="com.glaf.base.modules.sys.query.SysUserQuery"
