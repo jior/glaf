@@ -22,6 +22,7 @@
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/ztree/js/jquery.ztree.all.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/artDialog/artDialog.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/artDialog/plugins/iframeTools.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/glaf-base.js"></script>
 <script type="text/javascript">
 
    var setting = {
@@ -51,12 +52,16 @@
 	}
 
 	function loadData(url){
-		  jQuery.get(url,{qq:'xx'},function(data){
+		  jQuery.get(url+'&randnum='+Math.floor(Math.random()*1000000),{qq:'xx'},function(data){
 		      //var text = JSON.stringify(data); 
-              //alert(text);
-			  jQuery('#mydatagrid').datagrid('loadData', data);
+              //alert(url);
+			  //jQuery('#mydatagrid').datagrid('loadData', data);
+			  jQuery('#mydatagrid').datagrid('load',getObjArray(jQuery("#searchForm").serializeArray()));
 		  },'json');
 	  }
+	function reLoadData(nodeId){
+		loadData('<%=request.getContextPath()%>/mx/cms/info/json?serviceKey=${serviceKey}&nodeId='+nodeId);
+	}
 
     jQuery(document).ready(function(){
 			jQuery.fn.zTree.init(jQuery("#myTree"), setting);
@@ -71,7 +76,7 @@
 				nowrap: false,
 				striped: true,
 				collapsible:true,
-				url:'<%=request.getContextPath()%>/mx/cms/info/json?serviceKey=${serviceKey}&workedProcessFlag=${workedProcessFlag}',
+				url:'<%=request.getContextPath()%>/mx/cms/info/json?serviceKey=${serviceKey}',
 				sortName: 'id',
 				sortOrder: 'desc',
 				remoteSort: false,
@@ -84,7 +89,7 @@
 					{title:'发布单位',field:'unitName',width:120,sortable:false},
 					{title:'发布日期',field:'createDate',width:90,sortable:false},
 					{title:'发布状态',field:'publishFlag',width:90,sortable:false, formatter:formatterPublishFlag},
-					{title:'状态',field:'status',width:90,sortable:false, formatter:formatterStatus},
+					//{title:'状态',field:'status',width:90,sortable:false, formatter:formatterStatus},
 					{title:'浏览次数',field:'viewCount',width:90,sortable:false},
 				]],
 				rownumbers:false,
@@ -131,7 +136,8 @@
          jQuery.get(url,{qq:'xx'},function(data){
 		      //var text = JSON.stringify(data); 
               //alert(text);
-			  jQuery('#mydatagrid').datagrid('loadData', data);
+			  //jQuery('#mydatagrid').datagrid('loadData', data);
+			  jQuery('#mydatagrid').datagrid('load',getObjArray(jQuery("#searchForm").serializeArray()));
 		  },'json');
 	}
 
@@ -139,16 +145,21 @@
 	function addNew(){
 	    //location.href="<%=request.getContextPath()%>/mx/cms/info/edit";
 		var nodeId = jQuery("#nodeId").val();
+		if(nodeId=='' || nodeId==null){
+			alert("请在左边选择栏目类型！");
+			return;
+		}
 		var link="<%=request.getContextPath()%>/mx/cms/info/edit?serviceKey=${serviceKey}&nodeId="+nodeId;
-	    //art.dialog.open(link, { height: 420, width: 680, title: "添加记录", lock: true, scrollbars:"no" }, false);
-		location.href=link;
+	    art.dialog.open(link, { height: 480, width: 900, title: "添加记录", lock: true, scrollbars:"no" }, false);
+		//location.href=link;
 	}
 
 	function onRowClick(rowIndex, row){
+		var nodeId = jQuery("#nodeId").val();
         //window.open('<%=request.getContextPath()%>/mx/cms/info/edit?id='+row.id);
-	    var link = '<%=request.getContextPath()%>/mx/cms/info/edit?serviceKey=${serviceKey}&id='+row.id;
-	    //art.dialog.open(link, { height: 420, width: 680, title: "修改记录", lock: true, scrollbars:"no" }, false);
-		location.href=link;
+	    var link = '<%=request.getContextPath()%>/mx/cms/info/edit?serviceKey=${serviceKey}&id='+row.id+"&nodeId="+nodeId;
+		art.dialog.open(link, { height: 480, width: 900, title: "修改记录", lock: true, scrollbars:"no" }, false);
+		//location.href=link;
 	}
 
 	function searchWin(){
@@ -165,6 +176,7 @@
 
 	function editSelected(){
 	    var rows = jQuery('#mydatagrid').datagrid('getSelections');
+	    var nodeId = jQuery("#nodeId").val();
 	    if(rows == null || rows.length !=1){
 		  alert("请选择其中一条记录。");
 		  return;
@@ -172,9 +184,9 @@
 	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
 	    if (selected ){
 		  //location.href="<%=request.getContextPath()%>/mx/cms/info/edit&id="+selected.id;
-		  var link = "<%=request.getContextPath()%>/mx/cms/info/edit?serviceKey=${serviceKey}&id="+selected.id;
-		  //art.dialog.open(link, { height: 420, width: 680, title: "修改记录", lock: true, scrollbars:"no" }, false);
-		  location.href=link;
+		  var link = "<%=request.getContextPath()%>/mx/cms/info/edit?serviceKey=${serviceKey}&id="+selected.id+"&nodeId="+nodeId;
+		  art.dialog.open(link, { height: 480, width: 900, title: "修改记录", lock: true, scrollbars:"no" }, false);
+		  //location.href=link;
 	    }
 	}
 
@@ -187,12 +199,8 @@
 	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
 	    if (selected){
            if(selected.processInstanceId && selected.processInstanceId != null){
-			   if(selected.wfStatus == 9999){
-                  alert("该记录已经审核完成，不能提交。");
-			   } else {
-			     jQuery('#rowId').val(selected.id);
-                 jQuery('#dd_audit').dialog('open');
-			   }
+			   jQuery('#rowId').val(selected.id);
+               jQuery('#dd_audit').dialog('open');
 		   } else {
               jQuery.ajax({
 				   type: "POST",
@@ -341,7 +349,7 @@
 </script>
 </head>
 <body style="margin:1px;">  
-<input type="hidden" id="nodeId" name="nodeId" value="" >
+
 <input type="hidden" id="rowId" name="rowId" value="" >
 <div style="margin:0;"></div>  
 <div class="easyui-layout" data-options="fit:true">  
@@ -357,11 +365,13 @@
    <div data-options="region:'center'">  
      <div class="easyui-layout" data-options="fit:true"> 
 	   <div data-options="region:'north',split:true,border:true" style="height:40px"> 
+	   <form id="searchForm" name="searchForm" method="post">
+	   <input type="hidden" id="nodeId" name="nodeId" value="" >
 		<div class="toolbar-backgroud"  > 
 		<img src="<%=request.getContextPath()%>/images/window.png">
 		&nbsp;<span class="x_content_title">${treeModel.name}信息列表</span>
-		<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-props'" 
-		   onclick="javascript:editCatProps();">栏目属性</a> 
+		<!--<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-props'" 
+		   onclick="javascript:editCatProps();">栏目属性</a> -->
 		<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-add'" 
 		   onclick="javascript:addNew();">新增</a>  
 		<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-edit'"
@@ -372,19 +382,26 @@
 		   onclick="javascript:viewProcess();">流程</a>
 		<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-remove'"
 		   onclick="javascript:deleteSelections();">删除</a> 
-		<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-search'"
-		   onclick="javascript:searchWin();">查找</a>
+		<!--<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-search'"
+		   onclick="javascript:searchWin();">查找</a>-->
 		   <span>
-		      状态&nbsp;
+		      <!--状态&nbsp;
 			  <select id="workedProcessFlag" name="workedProcessFlag" onchange="javascript:switchTasks();">
 				<option value="">--请选择--</option>
 				<option value="DF">未提交</option>
 				<option value="PD">待审</option>
 				<option value="WD">已审</option>
 				<option value="END">已完成</option>
+			  </select>-->
+			  发布状态&nbsp;
+			  <select id="publishFlag" name="publishFlag" onchange="javascript:switchTasks();">
+				<option value="">--请选择--</option>
+				<option value="0">未发布</option>
+				<option value="1">已发布</option>
 			  </select>
 		   </span>
 	   </div> 
+	   </form>
 	  </div> 
 	  <div data-options="region:'center',border:true">
 		 <table id="mydatagrid"></table>
@@ -400,7 +417,7 @@
 </div>
 <div id="dlg" class="easyui-dialog" style="width:400px;height:280px;padding:10px 20px"
 	closed="true" buttons="#dlg-buttons">
-    <form id="searchForm" name="searchForm" method="post">
+    <form id="searchForm2" name="searchForm2" method="post">
 	  <table class="easyui-form" >
         <tbody>
 	    </tbody>

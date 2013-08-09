@@ -12,6 +12,9 @@
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.form.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/kindeditor/kindeditor-min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/glaf-core.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/glaf-base.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/artDialog/artDialog.js"></script>	
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/artDialog/plugins/iframeTools.js"></script>	
 <script type="text/javascript">
 
     KE.show({  id : 'content'
@@ -26,6 +29,7 @@
 	function saveData(){
 			document.getElementById("content").value=KE.html('content');
 			var params = jQuery("#iForm").formSerialize();
+			var nodeId = jQuery('#nodeId').val();
 			jQuery.ajax({
 				   type: "POST",
 				   url: '<%=request.getContextPath()%>/mx/cms/info/savePublicInfo',
@@ -40,7 +44,10 @@
 					   } else {
 						   alert('操作成功完成！');
 					   }
-					   location.href="<%=request.getContextPath()%>/mx/cms/info?serviceKey=${serviceKey}";
+					   art.dialog.open.origin.reLoadData(nodeId);
+					   art.dialog.close();
+					   
+					   //location.href="<%=request.getContextPath()%>/mx/cms/info?serviceKey=${serviceKey}";
 				   }
 		});
 	}
@@ -52,6 +59,7 @@
 		   } else {
                msg="确定取消发布该条信息吗？";
 		   }
+           var nodeId = jQuery('#nodeId').val();
 		   if(confirm(msg)){
                jQuery.ajax({
 				   type: "POST",
@@ -66,7 +74,9 @@
 					   } else {
 						   alert('操作成功完成！');
 					   }
-					   window.location.reload();
+					   art.dialog.open.origin.reLoadData(nodeId);
+					   art.dialog.close();
+					   //window.location.reload();
 				   }
 			});
 		}
@@ -75,6 +85,7 @@
 
 	function startProcess(){
 		var rowId = jQuery('#id').val();
+		var nodeId = jQuery('#nodeId').val();
         jQuery.ajax({
 				   type: "POST",
 				   url: '<%=request.getContextPath()%>/mx/cms/info/startProcess?id='+rowId,
@@ -88,7 +99,9 @@
 					   } else {
 						 alert('操作成功完成！');
 					   }
-					  window.location.reload();
+					   art.dialog.open.origin.reLoadData(nodeId);
+					   art.dialog.close();
+					   //window.location.reload();
 				   }
 			 });
 	}
@@ -104,6 +117,7 @@
 		var rowId = jQuery('#id').val();
         var opinion = jQuery('#opinion').val();
 		var params = jQuery("#iForm").formSerialize();
+		var nodeId = jQuery('#nodeId').val();
         jQuery.ajax({
 			type: "POST",
 			url: '<%=request.getContextPath()%>/mx/cms/info/completeTask?id='+rowId+'&isAgree='+isAgree,
@@ -118,10 +132,18 @@
 				} else {
 					alert('操作成功完成！');
 				}
-				window.location.reload();
+				art.dialog.open.origin.reLoadData(nodeId);
+				art.dialog.close();
+				//window.location.reload();
 			}
 		 });
 	}
+	
+	jQuery(function(){
+		jQuery.get('<%=request.getContextPath()%>/others/attachment.do?method=getCount&referId=${publicInfo.id}&referType=9999',{qq:'xx'},function(data){
+				document.getElementById("numAttachment9999").innerHTML=data.message;
+		  },'json');
+	});
 
 </script>
 </head>
@@ -134,7 +156,7 @@
 	    <input type="hidden" id="id" name="id" value="${publicInfo.id}"/>
 	    <input type="hidden" id="nodeId" name="nodeId" value="${nodeId}"/>
 		<input type="hidden" id="serviceKey" name="serviceKey" value="${serviceKey}"/>
-	    <table class="easyui-form" style="width:920px;" align="center">
+	    <table class="easyui-form" style="width:920px;margin:0px 10px;" align="center">
 		<tbody>
 			 
 			<tr>
@@ -199,36 +221,26 @@
 				 <br>  
 				 </td>
 			</tr>
-
-            <c:if test="${not empty dataFiles}">
+			<c:if test="${empty publicInfo}">
 			<tr>
-			  <td>已上传附件</td>
-			  <td>
-			    <c:forEach items="${dataFiles}" var="a">
-				   <div id="div_${a.fileId}">
-					 <div>
-					 <span>${a.filename}</span>
-					 <span>&nbsp;<a target="_blank" href="<%=request.getContextPath()%>/mx/lob/lob/download?fileId=${a.fileId}"><img src="<%=request.getContextPath()%>/images/download.gif" border="0">下载</a></span>
-					 <c:if test="${(empty publicInfo) || (publicInfo.status <= 0)  }">
-					 &nbsp;<span><a href="#" onclick="javascript:deleteFile('${a.fileId}');"><img src="<%=request.getContextPath()%>/images/delete.gif" border="0">删除</a></span>
-					 </c:if>
-					 </div>
-				   </div>
-				</c:forEach>
-			  </td>
-		    </tr>
-		   </c:if>
-
-           <c:if test="${(empty publicInfo) || (publicInfo.status <= 0)  }">
-			<tr>
-			  <td valign="middle">上传附件</td>
-			  <td valign="middle">
-			    <br>
-			    <iframe src="<%=request.getContextPath()%>/myupload.do?method=showUpload&serviceKey=${serviceKey}&view=operamasksUpload"
-				border="0" frameborder="0" width="680" height="240"></iframe>
-			  </td>
-		    </tr>
+				<td colspan="2">						
+				<a href="javascript:uploadFile(9999, 0, 1)">
+				<img src="<%=request.getContextPath()%>/images/folder3_document.png" border="0" >附件</a>	
+				(共<span id="numAttachment9999" name="numAttachment9999">0</span>个)
+				</td>				
+			</tr>
 			</c:if>
+			<c:if test="${publicInfo.id != null && publicInfo.id >0}">
+			<tr>
+				<td colspan="2">						
+				<a href="javascript:uploadFile(9999, ${publicInfo.id}, 1)">
+				<img src="<%=request.getContextPath()%>/images/folder3_document.png" border="0" >附件</a>
+				(共<span id="numAttachment9999" name="numAttachment9999">0</span>个)
+				</td>				
+			</tr>
+			</c:if>
+
+            
 
             <c:if test="${publicInfo.processInstanceId != null && publicInfo.processInstanceId > 0 && publicInfo.status != -1 && publicInfo.wfStatus != 9999 }">
 			<tr>
@@ -286,15 +298,13 @@
 		  
 		  </c:otherwise>
 		 </c:choose>
-		 <input name="btn_back" type="button" value=" 返 回 " class=" btn" onclick="javascript:history.back(0);">
+		 <input name="btn_back" type="button" value=" 关 闭 " class=" btn" onclick="javascript:art.dialog.close();">
 		</td>
 	 </tr>
 	</tbody>
    </table>
   </form>
   <br> 
-  <br>
-  <br>
  
 </body>
 </html>
