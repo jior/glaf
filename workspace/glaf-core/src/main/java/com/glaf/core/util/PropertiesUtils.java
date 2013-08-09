@@ -131,26 +131,32 @@ public class PropertiesUtils {
 		Resource resource = new ClassPathResource(resourceName);
 		InputStream in = null;
 		try {
-			in = resource.getInputStream();
-			return loadProperties(in);
+			if (resource.exists() && resource.getFile().isFile()) {
+				in = resource.getInputStream();
+				return loadProperties(in);
+			}
 		} catch (Exception ex) {
 			throw new RuntimeException(ex);
 		} finally {
 			IOUtils.closeStream(in);
 		}
+		return null;
 	}
 
 	public static Properties loadFilePathResource(String filename) {
 		Resource resource = new FileSystemResource(filename);
 		InputStream in = null;
 		try {
-			in = resource.getInputStream();
-			return loadProperties(in);
+			if (resource.exists() && resource.getFile().isFile()) {
+				in = resource.getInputStream();
+				return loadProperties(in);
+			}
 		} catch (Exception ex) {
 			throw new RuntimeException(ex);
 		} finally {
 			IOUtils.closeStream(in);
 		}
+		return null;
 	}
 
 	public static Properties loadFilePathResource(File file) {
