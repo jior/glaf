@@ -107,14 +107,22 @@ public class PublicInfoController {
 					.getTreeModelByCode(serviceKey);
 			request.setAttribute("treeModel", treeModel);
 
+            List<TreeModel> subTreeList = treeModelService.getSubTreeModels(treeModel.getId());
 			Map<String, Object> params = RequestUtils.getParameterMap(request);
 			PublicInfoQuery query = new PublicInfoQuery();
 			Tools.populate(query, params);
 			query.setPublishFlag(1);
 			query.serviceKey(serviceKey);
 
-			List<PublicInfo> rows = publicInfoService.list(query);
-			request.setAttribute("rows", rows);
+			Map<String, List<PublicInfo>> dataMapList = new LinkedHashMap<String, List<PublicInfo>>();
+			for (int i = 0; i < subTreeList.size(); i++) {
+				TreeModel tree = subTreeList.get(i);
+				query.setNodeId(tree.getId());
+				List<PublicInfo> rows = publicInfoService.list(query);
+				dataMapList.put(tree.getName(), rows);
+			}
+
+			request.setAttribute("rows", dataMapList);
 		}
 
 		String view = request.getParameter("view");

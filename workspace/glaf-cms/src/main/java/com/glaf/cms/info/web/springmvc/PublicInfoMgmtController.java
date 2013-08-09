@@ -724,25 +724,31 @@ public class PublicInfoMgmtController {
 				}
 			}
 
-			ProcessContext ctx = new ProcessContext();
-			ctx.setRowId(publicInfo.getId());
-			ctx.setActorId(actorId);
-			ctx.setTitle(ViewProperties.getString("res_id")
-					+ publicInfo.getId());
-			ctx.setProcessName(processName);
-			DataField dataField = new DataField();
-			dataField.setName("tableName");
-			dataField.setValue("CMS_PUBLICINFO");
-			ctx.addDataField(dataField);
-			try {
-				Long processInstanceId = ProcessContainer.getContainer()
-						.startProcess(ctx);
-				if (processInstanceId != null && processInstanceId > 0) {
-					return ResponseUtils.responseJsonResult(true);
+           if (StringUtils.isNotEmpty(processName)) {
+				ProcessContext ctx = new ProcessContext();
+				ctx.setRowId(publicInfo.getId());
+				ctx.setActorId(actorId);
+				ctx.setTitle(ViewProperties.getString("res_id")
+						+ publicInfo.getId());
+				ctx.setProcessName(processName);
+				DataField dataField = new DataField();
+				dataField.setName("tableName");
+				dataField.setValue("CMS_PUBLICINFO");
+				ctx.addDataField(dataField);
+				try {
+					Long processInstanceId = ProcessContainer.getContainer()
+							.startProcess(ctx);
+					if (processInstanceId != null && processInstanceId > 0) {
+						return ResponseUtils.responseJsonResult(true);
+					}
+				} catch (Exception ex) {
+					ex.printStackTrace();
+					logger.error(ex);
 				}
-			} catch (Exception ex) {
-				ex.printStackTrace();
-				logger.error(ex);
+			} else {
+				publicInfo.setPublishFlag(1);
+				publicInfoService.save(publicInfo);
+				return ResponseUtils.responseJsonResult(true);
 			}
 		}
 
