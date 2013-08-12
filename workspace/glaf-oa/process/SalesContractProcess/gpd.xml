@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root-container name="SalesContractProcess" width="819" height="540">
+  <node name="启动流程" x="32" y="22" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="财务审核" x="31" y="104" width="132" height="36">
+    <edge>
+      <label x="-10" y="-20"/>
+    </edge>
+  </node>
+  <node name="财务审核通过？" x="282" y="104" width="145" height="37">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="-22" y="-20"/>
+    </edge>
+  </node>
+  <node name="销售经理审核" x="32" y="210" width="132" height="41">
+    <edge>
+      <label x="-3" y="-22"/>
+    </edge>
+  </node>
+  <node name="销售经理审核通过？" x="281" y="210" width="178" height="41">
+    <edge>
+      <label x="-20" y="-21"/>
+    </edge>
+    <edge>
+      <label x="-28" y="-20"/>
+    </edge>
+  </node>
+  <node name="总经理审核" x="28" y="441" width="132" height="36">
+    <edge>
+      <label x="1" y="-22"/>
+    </edge>
+  </node>
+  <node name="总经理审核通过？" x="271" y="440" width="176" height="39">
+    <edge>
+      <label x="24" y="-12"/>
+    </edge>
+    <edge>
+      <label x="-21" y="-24"/>
+    </edge>
+  </node>
+  <node name="销售总监审核" x="32" y="309" width="132" height="39">
+    <edge>
+      <label x="-4" y="-29"/>
+    </edge>
+  </node>
+  <node name="销售总监审核通过？" x="261" y="310" width="184" height="37">
+    <edge>
+      <label x="-33" y="-20"/>
+    </edge>
+    <edge>
+      <label x="-34" y="-21"/>
+    </edge>
+  </node>
+  <node name="审核不通过" x="571" y="211" width="132" height="40">
+    <edge>
+      <label x="8" y="-22"/>
+    </edge>
+  </node>
+  <node name="重新修改" x="398" y="9" width="132" height="36">
+    <edge>
+      <label x="-22" y="-30"/>
+    </edge>
+  </node>
+  <node name="流程结束" x="575" y="442" width="132" height="36"/>
+</root-container>

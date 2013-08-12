@@ -1,0 +1,211 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<process-definition xmlns="urn:jbpm.org:jpdl-3.2"
+	name="LtravelProcess">
+	<description>总经理/总监出差申请审批流程</description>
+	<swimlane name="starter">
+		<assignment class="com.glaf.jbpm.assignment.GeneralAssignment"></assignment>
+	</swimlane>
+	<swimlane name="submiter">
+		<assignment
+			class="com.glaf.jbpm.assignment.ProcessStarterAssignment"></assignment>
+	</swimlane>
+
+	<action name="create_task01"
+		class="com.glaf.jbpm.action.SqlMapTaskInstanceAction">
+		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
+		<taskName>task01</taskName>
+		<queryId>getXYDeptRoleUsers</queryId>
+		<roleId>R003</roleId>
+		<deptId>#P{deptId01}</deptId>
+	</action>
+
+	<action name="create_task02"
+		class="com.glaf.jbpm.action.SqlMapTaskInstanceAction">
+		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
+		<taskName>task02</taskName>
+		<queryId>getXYDeptRoleUsers</queryId>
+		<roleId>R004</roleId>
+		<deptId>#P{deptId02}</deptId>
+	</action>
+	
+	<action name="create_task03"
+		class="com.glaf.jbpm.action.SqlMapTaskInstanceAction">
+		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
+		<taskName>task03</taskName>
+		<queryId>getXYDeptRoleUsers</queryId>
+		<roleId>BMJL</roleId>
+		<deptId>#P{deptId03}</deptId>
+	</action>
+
+	<action name="LTravel_1000" class="com.glaf.jbpm.action.SQLAction">
+		<sql>UPDATE OA_LTravel SET PROCESSNAME = 'LtravelProcess',STATUS = 1,
+			PROCESSINSTANCEID = ?, WFSTATUS = 1000 WHERE travelid = ?</sql>
+		<elements element-type="org.dom4j.Element">
+			<element value-type="java.lang.String">
+				<key>processInstanceId</key>
+				<value>#{processInstanceId}</value>
+			</element>
+			<element value-type="java.lang.String">
+				<key>rowId</key>
+				<value>#{rowId}</value>
+			</element>
+		</elements>
+	</action>	
+
+	<action name="LTravel_1001" class="com.glaf.jbpm.action.SQLAction">
+		<sql>UPDATE OA_LTravel SET WFSTATUS= 1001,STATUS = 1 WHERE travelid = ?</sql>
+		<elements element-type="org.dom4j.Element">
+			<element value-type="java.lang.String">
+				<key>rowId</key>
+				<value>#{rowId}</value>
+			</element>
+		</elements>
+	</action>
+
+	<action name="LTravel_1002" class="com.glaf.jbpm.action.SQLAction">
+		<sql>UPDATE OA_LTravel SET WFSTATUS= 1002 WHERE travelid = ?</sql>
+		<elements element-type="org.dom4j.Element">
+			<element value-type="java.lang.String">
+				<key>rowId</key>
+				<value>#{rowId}</value>
+			</element>
+		</elements>
+	</action>
+	
+	<action name="LTravel_1003" class="com.glaf.jbpm.action.SQLAction">
+		<sql>UPDATE OA_LTravel SET WFSTATUS= 1003 WHERE travelid = ?</sql>
+		<elements element-type="org.dom4j.Element">
+			<element value-type="java.lang.String">
+				<key>rowId</key>
+				<value>#{rowId}</value>
+			</element>
+		</elements>
+	</action>
+	
+	<action name="LTravel_5555" class="com.glaf.jbpm.action.SQLAction"> 
+    <sql>UPDATE OA_LTravel SET WFSTATUS = -5555, STATUS = 3 WHERE travelid = ?</sql>  
+    <elements element-type="org.dom4j.Element"> 
+      <element value-type="java.lang.String"> 
+        <key>rowId</key>  
+        <value>#{rowId}</value> 
+      </element> 
+    </elements> 
+  </action>
+  
+  <action name="LTravel_9999" class="com.glaf.jbpm.action.SQLAction"> 
+    <sql>UPDATE OA_LTravel SET STATUS = 2, WFSTATUS = 9999 WHERE travelid = ?</sql>  
+    <elements element-type="org.dom4j.Element"> 
+      <element value-type="java.lang.String"> 
+        <key>rowId</key>  
+        <value>#{rowId}</value> 
+      </element> 
+    </elements> 
+  </action>
+   
+  <action name="EndCounterSigningAction" class="com.glaf.jbpm.action.EndCounterSigningAction"> 
+    <expression>#{isAgree eq 'false'}</expression> 
+  </action>
+
+
+	<start-state name="启动流程">
+		<task name="task0" description="启动流程" swimlane="starter">
+			<controller>
+				<variable name="isAgree" access="read,write,required"
+					mapped-name="isAgree" />
+			</controller>
+			<event type="task-create">
+				<action ref-name="LTravel_1000" />
+			</event>
+		</task>
+		<transition to="集团副总"></transition>
+	</start-state>
+
+	<task-node name="集团副总"  create-tasks="false" end-tasks="true">
+		<event type="node-enter">
+			<action ref-name="LTravel_1001" />
+			<action ref-name="create_task01" />
+		</event>
+		<event type="node-leave">
+			 
+		</event>
+		<transition to="集团副总审核"></transition>
+		<task name="task01" description="集团副总">
+			<event type="task-end">
+				<action ref-name="EndCounterSigningAction" />
+			</event>
+		</task>
+	</task-node>
+
+	<decision name="集团副总审核">
+		<transition to="审核不通过" name="不通过"></transition>
+		<transition to="执行董事" name="通过">
+			<condition expression="#{isAgree eq 'true'}" />
+		</transition>
+	</decision>
+
+	<task-node name="执行董事"  create-tasks="false" end-tasks="true">
+		<event type="node-enter">
+			<action ref-name="LTravel_1002" />
+			<action ref-name="create_task02" />
+		</event>
+		<event type="node-leave">
+			 
+		</event>
+		<transition to="执行董事审核"></transition>
+		<task name="task02" description="执行董事">
+			<event type="task-end">
+				<action ref-name="EndCounterSigningAction" />
+			</event>
+		</task>
+	</task-node>
+
+	<decision name="执行董事审核">
+		<transition to="审核不通过" name="不通过"></transition>
+		<transition to="集团HR" name="通过">
+			<condition expression="#{isAgree eq 'true'}" />
+		</transition>
+	</decision>
+	
+	<task-node name="集团HR"  create-tasks="false" end-tasks="true">
+		<event type="node-enter">
+			<action ref-name="LTravel_1003" />
+			<action ref-name="create_task03" />
+		</event>
+		<event type="node-leave">
+			 
+		</event>
+		<transition to="集团HR审核"></transition>
+		<task name="task03" description="集团HR">
+			<event type="task-end">
+				<action ref-name="EndCounterSigningAction" />
+			</event>
+		</task>
+	</task-node>
+	
+	<decision name="集团HR审核">
+		<transition to="审核不通过" name="不通过"></transition>
+		<transition to="流程结束" name="通过">
+			<condition expression="#{isAgree eq 'true'}" />
+		</transition>
+	</decision>
+	
+	<node name="审核不通过">
+		<event type="node-enter">
+			<action ref-name="LTravel_5555" />
+		</event>
+		<transition to="重新修改"></transition>
+	</node>
+
+	<task-node name="重新修改" >
+		<task name="task555" description="重新修改" swimlane="submiter"></task>
+		<transition to="集团副总"></transition>
+	</task-node>
+
+	<end-state name="流程结束">
+		<event type="node-enter">
+			<action ref-name="LTravel_9999" />
+		</event>
+	</end-state>
+
+</process-definition>

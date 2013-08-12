@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.oa.reimbursement.mapper.RitemMapper">
+
+ 	<resultMap id="ritemResultMap"	type="com.glaf.oa.reimbursement.model.Ritem">
+        <id property="ritemid" column="ritemid" jdbcType="BIGINT" />
+        <result property="reimbursementid" column="reimbursementid" jdbcType="BIGINT"/>
+        <result property="feetype" column="feetype" jdbcType="INTEGER"/>
+        <result property="feedate" column="feedate" jdbcType="TIMESTAMP"/>
+        <result property="subject" column="subject" jdbcType="VARCHAR"/>
+        <result property="currency" column="currency" jdbcType="VARCHAR"/>
+        <result property="itemsum" column="itemsum" jdbcType="DOUBLE"/>
+        <result property="exrate" column="exrate" jdbcType="DOUBLE"/>
+        <result property="createBy" column="createBy" jdbcType="VARCHAR"/>
+        <result property="createDate" column="createDate" jdbcType="TIMESTAMP"/>
+        <result property="updateDate" column="updateDate" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="updateBy" jdbcType="VARCHAR"/>
+	</resultMap>
+
+ 
+	<insert id="insertRitem" parameterType="com.glaf.oa.reimbursement.model.Ritem">
+		insert into oa_ritem 
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+		    ritemid
+			<if test="reimbursementid != null">
+				,reimbursementid 
+			</if>
+			<if test="feetype != null">
+				,feetype 
+			</if>
+			<if test="feedate != null">
+				,feedate 
+			</if>
+			<if test="subject != null">
+				,subject 
+			</if>
+			<if test="currency != null">
+				,currency 
+			</if>
+			<if test="itemsum != null">
+				,itemsum 
+			</if>
+			<if test="exrate != null">
+				,exrate 
+			</if>
+			<if test="createBy != null">
+				,createBy 
+			</if>
+			<if test="createDate != null">
+				,createDate 
+			</if>
+			<if test="updateDate != null">
+				,updateDate 
+			</if>
+			<if test="updateBy != null">
+				,updateBy 
+			</if>
+        </trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			  #{ritemid, jdbcType=BIGINT}
+	     
+			<if test="reimbursementid != null">
+				,#{reimbursementid, jdbcType=BIGINT}
+			</if>
+			<if test="feetype != null">
+				,#{feetype, jdbcType=INTEGER}
+			</if>
+			<if test="feedate != null">
+				,#{feedate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="subject != null">
+				,#{subject, jdbcType=VARCHAR}
+			</if>
+			<if test="currency != null">
+				,#{currency, jdbcType=VARCHAR}
+			</if>
+			<if test="itemsum != null">
+				,#{itemsum, jdbcType=DOUBLE}
+			</if>
+			<if test="exrate != null">
+				,#{exrate, jdbcType=DOUBLE}
+			</if>
+			<if test="createBy != null">
+				,#{createBy, jdbcType=VARCHAR}
+			</if>
+			<if test="createDate != null">
+				,#{createDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="updateDate != null">
+				,#{updateDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="updateBy != null">
+				,#{updateBy, jdbcType=VARCHAR}
+			</if>
+	    </trim>
+    </insert>
+
+	 
+	<update id="updateRitem" parameterType="com.glaf.oa.reimbursement.model.Ritem">
+		update oa_ritem
+		set
+        <trim prefix="" suffix="" suffixOverrides=",">		
+			<if test="reimbursementid != null">
+				reimbursementid = #{reimbursementid, jdbcType=BIGINT},
+			</if>
+			<if test="feetype != null">
+				feetype = #{feetype, jdbcType=INTEGER},
+			</if>
+			<if test="feedate != null">
+				feedate = #{feedate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="subject != null">
+				subject = #{subject, jdbcType=VARCHAR},
+			</if>
+			<if test="currency != null">
+				currency = #{currency, jdbcType=VARCHAR},
+			</if>
+			<if test="itemsum != null">
+				itemsum = #{itemsum, jdbcType=DOUBLE},
+			</if>
+			<if test="exrate != null">
+				exrate = #{exrate, jdbcType=DOUBLE},
+			</if>
+			<if test="createBy != null">
+				createBy = #{createBy, jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				createDate = #{createDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateDate != null">
+				updateDate = #{updateDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateBy != null">
+				updateBy = #{updateBy, jdbcType=VARCHAR},
+			</if>
+        </trim>
+		where
+          ritemid = #{ritemid, jdbcType=BIGINT}
+		
+    </update>
+
+ 
+	<delete id="deleteRitemById" parameterType="long"> 
+        delete from oa_ritem
+        where ritemid =	#{id}
+	</delete>
+
+	
+	<delete id="deleteRitems" parameterType="com.glaf.oa.reimbursement.model.Ritem">
+		delete from oa_ritem
+		where ( 
+ 			  ritemid IN
+              <foreach item="x_ritemid" index="index" collection="ritemids" 
+                     open="(" separator="," close=")">
+                  #{x_ritemid}
+              </foreach>
+		)
+	</delete>
+
+
+	<select id="getRitemById" parameterType="long" resultMap="ritemResultMap">
+		select * from oa_ritem where ritemid = #{id}
+	</select>
+
+	<select id="getRitemByParentId" parameterType="long" resultMap="ritemResultMap">
+		select * from oa_ritem where reimbursementid = #{reimbursementid}
+	</select>
+
+	<select id="getRitems" 
+	    parameterType="com.glaf.oa.reimbursement.query.RitemQuery"
+		resultMap="ritemResultMap">
+		select E.*
+		<include refid="selectRitemsSql" />
+		<choose>
+		  <when test="orderBy != null">
+		     order by ${orderBy}
+          </when>
+		  <otherwise>
+		      order by E.ritemid desc
+		  </otherwise>
+        </choose>
+	</select>
+
+
+	<select id="getRitemCount" 
+	    parameterType="com.glaf.oa.reimbursement.query.RitemQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectRitemsSql" />
+	</select>
+
+
+	<sql id="selectRitemsSql">
+
+		from oa_ritem E
+		
+		 
+		<where>
+		       1 = 1  
+
+
+			<if test="reimbursementid != null">
+				and E.reimbursementid = #{reimbursementid}
+            </if>
+
+			<if test="reimbursementidGreaterThanOrEqual != null">
+				and E.reimbursementid &gt;= #{reimbursementidGreaterThanOrEqual}
+            </if>
+
+			<if test="reimbursementidLessThanOrEqual != null">
+				and E.reimbursementid &lt;= #{reimbursementidLessThanOrEqual}
+            </if>
+
+			<if test="reimbursementids != null and reimbursementids.size() &gt; 0">
+			    and E.reimbursementid IN
+                <foreach item="x_reimbursementid" index="index" collection="reimbursementids" 
+                     open="(" separator="," close=")">
+                  #{x_reimbursementid}
+                </foreach>
+			</if>
+
+
+			<if test="feetype != null">
+				and E.feetype = #{feetype}
+            </if>
+
+			<if test="feetypeGreaterThanOrEqual != null">
+				and E.feetype &gt;= #{feetypeGreaterThanOrEqual}
+            </if>
+
+			<if test="feetypeLessThanOrEqual != null">
+				and E.feetype &lt;= #{feetypeLessThanOrEqual}
+            </if>
+
+			<if test="feetypes != null and feetypes.size() &gt; 0">
+			    and E.feetype IN
+                <foreach item="x_feetype" index="index" collection="feetypes" 
+                     open="(" separator="," close=")">
+                  #{x_feetype}
+                </foreach>
+			</if>
+
+
+			<if test="feedate != null">
+				and E.feedate = #{feedate}
+            </if>
+
+			<if test="feedateGreaterThanOrEqual != null">
+				and E.feedate &gt;= #{feedateGreaterThanOrEqual}
+            </if>
+
+			<if test="feedateLessThanOrEqual != null">
+				and E.feedate &lt;= #{feedateLessThanOrEqual}
+            </if>
+
+			<if test="feedates != null and feedates.size() &gt; 0">
+			    and E.feedate IN
+                <foreach item="x_feedate" index="index" collection="feedates" 
+                     open="(" separator="," close=")">
+                  #{x_feedate}
+                </foreach>
+			</if>
+
+	        
+			<if test="subject != null and subject != '' ">
+				and E.subject = #{subject}
+            </if>
+
+			<if test="subjectLike != null and subjectLike != '' ">
+				and E.subject like #{subjectLike}
+            </if>
+
+			<if test="subjects != null and subjects.size() &gt; 0">
+			    and E.subject IN
+                <foreach item="x_subject" index="index" collection="subjects" 
+                     open="(" separator="," close=")">
+                  #{x_subject}
+                </foreach>
+			</if>
+	        
+			<if test="currency != null and currency != '' ">
+				and E.currency = #{currency}
+            </if>
+
+			<if test="currencyLike != null and currencyLike != '' ">
+				and E.currency like #{currencyLike}
+            </if>
+
+			<if test="currencys != null and currencys.size() &gt; 0">
+			    and E.currency IN
+                <foreach item="x_currency" index="index" collection="currencys" 
+                     open="(" separator="," close=")">
+                  #{x_currency}
+                </foreach>
+			</if>
+
+			<if test="itemsum != null">
+				and E.itemsum = #{itemsum}
+            </if>
+
+			<if test="itemsumGreaterThanOrEqual != null">
+				and E.itemsum &gt;= #{itemsumGreaterThanOrEqual}
+            </if>
+
+			<if test="itemsumLessThanOrEqual != null">
+				and E.itemsum &lt;= #{itemsumLessThanOrEqual}
+            </if>
+
+			<if test="itemsums != null and itemsums.size() &gt; 0">
+			    and E.itemsum IN
+                <foreach item="x_itemsum" index="index" collection="itemsums" 
+                     open="(" separator="," close=")">
+                  #{x_itemsum}
+                </foreach>
+			</if>
+
+
+			<if test="exrate != null">
+				and E.exrate = #{exrate}
+            </if>
+
+			<if test="exrateGreaterThanOrEqual != null">
+				and E.exrate &gt;= #{exrateGreaterThanOrEqual}
+            </if>
+
+			<if test="exrateLessThanOrEqual != null">
+				and E.exrate &lt;= #{exrateLessThanOrEqual}
+            </if>
+
+			<if test="exrates != null and exrates.size() &gt; 0">
+			    and E.exrate IN
+                <foreach item="x_exrate" index="index" collection="exrates" 
+                     open="(" separator="," close=")">
+                  #{x_exrate}
+                </foreach>
+			</if>
+
+	        
+			<if test="createBy != null and createBy != '' ">
+				and E.createBy = #{createBy}
+            </if>
+
+			<if test="createByLike != null and createByLike != '' ">
+				and E.createBy like #{createByLike}
+            </if>
+
+			<if test="createBys != null and createBys.size() &gt; 0">
+			    and E.createBy IN
+                <foreach item="x_createBy" index="index" collection="createBys" 
+                     open="(" separator="," close=")">
+                  #{x_createBy}
+                </foreach>
+			</if>
+
+			<if test="createDate != null">
+				and E.createDate = #{createDate}
+            </if>
+
+			<if test="createDateGreaterThanOrEqual != null">
+				and E.createDate &gt;= #{createDateGreaterThanOrEqual}
+            </if>
+
+			<if test="createDateLessThanOrEqual != null">
+				and E.createDate &lt;= #{createDateLessThanOrEqual}
+            </if>
+
+			<if test="createDates != null and createDates.size() &gt; 0">
+			    and E.createDate IN
+                <foreach item="x_createDate" index="index" collection="createDates" 
+                     open="(" separator="," close=")">
+                  #{x_createDate}
+                </foreach>
+			</if>
+
+
+			<if test="updateDate != null">
+				and E.updateDate = #{updateDate}
+            </if>
+
+			<if test="updateDateGreaterThanOrEqual != null">
+				and E.updateDate &gt;= #{updateDateGreaterThanOrEqual}
+            </if>
+
+			<if test="updateDateLessThanOrEqual != null">
+				and E.updateDate &lt;= #{updateDateLessThanOrEqual}
+            </if>
+
+			<if test="updateDates != null and updateDates.size() &gt; 0">
+			    and E.updateDate IN
+                <foreach item="x_updateDate" index="index" collection="updateDates" 
+                     open="(" separator="," close=")">
+                  #{x_updateDate}
+                </foreach>
+			</if>
+
+	        
+			<if test="updateBy != null and updateBy != '' ">
+				and E.updateBy = #{updateBy}
+            </if>
+
+			<if test="updateByLike != null and updateByLike != '' ">
+				and E.updateBy like #{updateByLike}
+            </if>
+
+			<if test="updateBys != null and updateBys.size() &gt; 0">
+			    and E.updateBy IN
+                <foreach item="x_updateBy" index="index" collection="updateBys" 
+                     open="(" separator="," close=")">
+                  #{x_updateBy}
+                </foreach>
+			</if>
+			 
+		</where>
+	</sql>
+
+</mapper>

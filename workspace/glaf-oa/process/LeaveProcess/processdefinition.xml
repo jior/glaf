@@ -1,0 +1,260 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<process-definition xmlns="urn:jbpm.org:jpdl-3.2"
+	name="LeaveProcess">
+	<description>请假申请审批流程</description>
+	<swimlane name="starter">
+		<assignment class="com.glaf.jbpm.assignment.GeneralAssignment"></assignment>
+	</swimlane>
+	<swimlane name="submiter">
+		<assignment
+			class="com.glaf.jbpm.assignment.ProcessStarterAssignment"></assignment>
+	</swimlane>
+	
+	<action name="create_task01"
+		class="com.glaf.jbpm.action.SqlMapTaskInstanceAction">
+		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
+		<taskName>task01</taskName>
+		<queryId>getXYDeptRoleUsers</queryId>
+		<roleId>BMJL</roleId>
+		<deptId>#P{deptId01}</deptId>
+	</action>
+
+	<action name="create_task02"
+		class="com.glaf.jbpm.action.SqlMapTaskInstanceAction">
+		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
+		<taskName>task02</taskName>
+		<queryId>getXYDeptRoleUsers</queryId>
+		<roleId>BMJL</roleId>
+		<deptId>#P{deptId02}</deptId>
+	</action>
+
+	<action name="create_task03"
+		class="com.glaf.jbpm.action.SqlMapTaskInstanceAction">
+		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
+		<taskName>task03</taskName>
+		<queryId>getXYDeptRoleUsers</queryId>
+		<roleId>R003</roleId>
+		<deptId>#P{deptId03}</deptId>
+	</action>
+
+	<action name="create_task04"
+		class="com.glaf.jbpm.action.SqlMapTaskInstanceAction">
+		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
+		<taskName>task04</taskName>
+		<queryId>getXYDeptRoleUsers</queryId>
+		<roleId>R018</roleId>
+		<deptId>#P{deptId04}</deptId>
+	</action>
+
+	<action name="Leave_1000" class="com.glaf.jbpm.action.SQLAction">
+		<sql>UPDATE OA_Leave SET PROCESSNAME = 'LeaveProcess',STATUS = 1,
+			PROCESSINSTANCEID = ?, WFSTATUS = 1000 WHERE leaveid = ?</sql>
+		<elements element-type="org.dom4j.Element">
+			<element value-type="java.lang.String">
+				<key>processInstanceId</key>
+				<value>#{processInstanceId}</value>
+			</element>
+			<element value-type="java.lang.String">
+				<key>rowId</key>
+				<value>#{rowId}</value>
+			</element>
+		</elements>
+	</action>	
+
+	<action name="Leave_1001" class="com.glaf.jbpm.action.SQLAction">
+		<sql>UPDATE OA_Leave SET WFSTATUS= 1001,STATUS = 1 WHERE leaveid = ?</sql>
+		<elements element-type="org.dom4j.Element">
+			<element value-type="java.lang.String">
+				<key>rowId</key>
+				<value>#{rowId}</value>
+			</element>
+		</elements>
+	</action>
+
+	<action name="Leave_1002" class="com.glaf.jbpm.action.SQLAction">
+		<sql>UPDATE OA_Leave SET WFSTATUS= 1002 WHERE leaveid = ?</sql>
+		<elements element-type="org.dom4j.Element">
+			<element value-type="java.lang.String">
+				<key>rowId</key>
+				<value>#{rowId}</value>
+			</element>
+		</elements>
+	</action>
+
+	<action name="Leave_1003" class="com.glaf.jbpm.action.SQLAction">
+		<sql>UPDATE OA_Leave SET WFSTATUS= 1003 WHERE leaveid = ?</sql>
+		<elements element-type="org.dom4j.Element">
+			<element value-type="java.lang.String">
+				<key>rowId</key>
+				<value>#{rowId}</value>
+			</element>
+		</elements>
+	</action>
+
+	<action name="Leave_1004" class="com.glaf.jbpm.action.SQLAction">
+		<sql>UPDATE OA_Leave SET WFSTATUS= 1004 WHERE leaveid = ?</sql>
+		<elements element-type="org.dom4j.Element">
+			<element value-type="java.lang.String">
+				<key>rowId</key>
+				<value>#{rowId}</value>
+			</element>
+		</elements>
+	</action>
+	
+	<action name="Leave_5555" class="com.glaf.jbpm.action.SQLAction"> 
+    <sql>UPDATE OA_Leave SET WFSTATUS = -5555, STATUS = 3 WHERE leaveid = ?</sql>  
+    <elements element-type="org.dom4j.Element"> 
+      <element value-type="java.lang.String"> 
+        <key>rowId</key>  
+        <value>#{rowId}</value> 
+      </element> 
+    </elements> 
+  </action>
+  
+  <action name="Leave_9999" class="com.glaf.jbpm.action.SQLAction"> 
+    <sql>UPDATE OA_Leave SET STATUS = 2, WFSTATUS = 9999 WHERE leaveid = ?</sql>  
+    <elements element-type="org.dom4j.Element"> 
+      <element value-type="java.lang.String"> 
+        <key>rowId</key>  
+        <value>#{rowId}</value> 
+      </element> 
+    </elements> 
+  </action>
+   
+  <action name="EndCounterSigningAction" class="com.glaf.jbpm.action.EndCounterSigningAction"> 
+    <expression>#{isAgree eq 'false'}</expression> 
+  </action>
+
+
+	<start-state name="启动流程">
+		<task name="task0" description="启动流程" swimlane="starter">
+			<controller>
+				<variable name="isAgree" access="read,write,required"
+					mapped-name="isAgree" />
+			</controller>
+			<event type="task-create">
+				<action ref-name="Leave_1000" />
+			</event>
+		</task>
+		<transition to="人力资源部审核" name="启动"></transition>
+	</start-state>
+
+	<task-node name="人力资源部审核"  create-tasks="false" end-tasks="true">
+		<event type="node-enter">
+			<action ref-name="Leave_1001" />
+			<action ref-name="create_task01" />
+		</event>
+		<event type="node-leave">
+			 
+		</event>
+		<transition to="人力资源部审核通过？" name="判断"></transition>
+		<task name="task01" description="集团人力资源部">
+			<event type="task-end">
+				<action ref-name="EndCounterSigningAction" />
+			</event>
+		</task>
+	</task-node>
+
+	<decision name="人力资源部审核通过？">
+		<transition to="审核不通过" name="不通过">
+		</transition>
+		<transition to="是否是部门经理以下" name="通过">
+			<condition expression="#{isAgree eq 'true'}" />
+		</transition>		
+	</decision>
+	
+	<decision name="是否是部门经理以下">
+		<transition to="部门经理" name="是">
+		</transition>	
+		<transition to="公司副总审核" name="否">
+			<condition expression="#{heapShipType > 2}" />
+		</transition>
+	</decision>
+
+	<task-node name="部门经理"  create-tasks="false" end-tasks="true">
+		<event type="node-enter">
+			<action ref-name="Leave_1002" />
+			<action ref-name="create_task02" />
+		</event>
+		<event type="node-leave">
+			 
+		</event>
+		<transition to="部门经理审核通过？" name="判断"></transition>
+		<task name="task02" description="部门经理">
+			<event type="task-end">
+				<action ref-name="EndCounterSigningAction" />
+			</event>
+		</task>
+	</task-node>
+
+	<decision name="部门经理审核通过？">
+		<transition to="审核不通过" name="不通过"></transition>
+		<transition to="公司副总审核" name="to 集团副总"></transition>	
+	</decision>
+
+	<task-node name="公司副总审核"  create-tasks="false" end-tasks="true">
+		<event type="node-enter">
+			<action ref-name="Leave_1003" />
+			<action ref-name="create_task03" />
+		</event>
+		<event type="node-leave">
+			 
+		</event>
+		<transition to="公司副总审核通过？" name="判断"></transition>
+		<task name="task03" description="集团副总">
+			<event type="task-end">
+				<action ref-name="EndCounterSigningAction" />
+			</event>
+		</task>
+	</task-node>
+
+	<decision name="公司副总审核通过？">
+		<transition to="审核不通过" name="不通过"></transition>
+		<transition to="行政财务" name="通过">
+			<condition expression="#{isAgree eq 'true'}" />
+		</transition>
+	</decision>
+
+	<task-node name="行政财务"  create-tasks="false" end-tasks="true">
+		<event type="node-enter">
+			<action ref-name="Leave_1004" />
+			<action ref-name="create_task04" />
+		</event>
+		<event type="node-leave">
+			 
+		</event>
+		<transition to="行政财务审核？" name="判断"></transition>
+		<task name="task04" description="行政财务">
+			<event type="task-end">
+				<action ref-name="EndCounterSigningAction" />
+			</event>
+		</task>
+	</task-node>
+
+	<decision name="行政财务审核？">
+		<transition to="审核不通过" name="不通过"></transition>
+		<transition to="流程结束" name="通过">
+			<condition expression="#{isAgree eq 'true'}" />
+			</transition>
+	</decision>
+	
+	<node name="审核不通过">
+		<event type="node-enter">
+			<action ref-name="Leave_5555" />
+		</event>
+		<transition to="重新修改" name="不通过"></transition>
+	</node>
+
+	<task-node name="重新修改" >
+		<transition to="人力资源部审核" name="重新提交"></transition>
+		<task name="task555" description="重新修改" swimlane="submiter"></task>
+	</task-node>
+
+	<end-state name="流程结束">
+		<event type="node-enter">
+			<action ref-name="Leave_9999" />
+		</event>
+	</end-state>
+
+</process-definition>

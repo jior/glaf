@@ -1,0 +1,970 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.oa.payment.mapper.PaymentMapper">
+
+ 	<resultMap id="paymentResultMap"	type="com.glaf.oa.payment.model.Payment">
+        <id property="paymentid" column="paymentid" jdbcType="BIGINT" />
+        <result property="area" column="area" jdbcType="VARCHAR"/>
+        <result property="post" column="post" jdbcType="VARCHAR"/>
+        <result property="company" column="company" jdbcType="VARCHAR"/>
+        <result property="dept" column="dept" jdbcType="VARCHAR"/>
+        <result property="certificateno" column="certificateno" jdbcType="VARCHAR"/>
+        <result property="receiptno" column="receiptno" jdbcType="VARCHAR"/>
+        <result property="appuser" column="appuser" jdbcType="VARCHAR"/>
+        <result property="appdate" column="appdate" jdbcType="TIMESTAMP"/>
+        <result property="maturitydate" column="maturitydate" jdbcType="TIMESTAMP"/>
+        <result property="appsum" column="appsum" jdbcType="DOUBLE"/>
+        <result property="currency" column="currency" jdbcType="VARCHAR"/>
+        <result property="budgetno" column="budgetno" jdbcType="VARCHAR"/>
+        <result property="use" column="use" jdbcType="VARCHAR"/>
+        <result property="supname" column="supname" jdbcType="VARCHAR"/>
+        <result property="supbank" column="supbank" jdbcType="VARCHAR"/>
+        <result property="supaccount" column="supaccount" jdbcType="VARCHAR"/>
+        <result property="supaddress" column="supaddress" jdbcType="VARCHAR"/>
+        <result property="subject" column="subject" jdbcType="VARCHAR"/>
+        <result property="checkno" column="checkno" jdbcType="VARCHAR"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+        <result property="processname" column="processname" jdbcType="VARCHAR"/>
+        <result property="processinstanceid" column="processinstanceid" jdbcType="BIGINT"/>
+        <result property="wfstatus" column="wfstatus" jdbcType="DOUBLE"/>
+        <result property="createBy" column="createBy" jdbcType="VARCHAR"/>
+        <result property="createDate" column="createDate" jdbcType="TIMESTAMP"/>
+        <result property="updateDate" column="updateDate" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="updateBy" jdbcType="VARCHAR"/>
+	</resultMap>
+
+ 
+	<insert id="insertPayment" parameterType="com.glaf.oa.payment.model.Payment">
+		insert into oa_payment 
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+		    paymentid
+			<if test="area != null">
+				,area 
+			</if>
+			<if test="post != null">
+				,post 
+			</if>
+			<if test="company != null">
+				,company 
+			</if>
+			<if test="dept != null">
+				,dept 
+			</if>
+			<if test="certificateno != null">
+				,certificateno 
+			</if>
+			<if test="receiptno != null">
+				,receiptno 
+			</if>
+			<if test="appuser != null">
+				,appuser 
+			</if>
+			<if test="appdate != null">
+				,appdate 
+			</if>
+			<if test="maturitydate != null">
+				,maturitydate 
+			</if>
+			<if test="appsum != null">
+				,appsum 
+			</if>
+			<if test="currency != null">
+				,currency 
+			</if>
+			<if test="budgetno != null">
+				,budgetno 
+			</if>
+			<if test="use != null">
+				,use 
+			</if>
+			<if test="supname != null">
+				,supname 
+			</if>
+			<if test="supbank != null">
+				,supbank 
+			</if>
+			<if test="supaccount != null">
+				,supaccount 
+			</if>
+			<if test="supaddress != null">
+				,supaddress 
+			</if>
+			<if test="subject != null">
+				,subject 
+			</if>
+			<if test="checkno != null">
+				,checkno 
+			</if>
+			<if test="remark != null">
+				,remark 
+			</if>
+			<if test="status != null">
+				,status 
+			</if>
+			<if test="processname != null">
+				,processname 
+			</if>
+			<if test="processinstanceid != null">
+				,processinstanceid 
+			</if>
+			<if test="wfstatus != null">
+				,wfstatus 
+			</if>
+			<if test="createBy != null">
+				,createBy 
+			</if>
+			<if test="createDate != null">
+				,createDate 
+			</if>
+			<if test="updateDate != null">
+				,updateDate 
+			</if>
+			<if test="updateBy != null">
+				,updateBy 
+			</if>
+        </trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			  #{paymentid, jdbcType=BIGINT}
+	     
+			<if test="area != null">
+				,#{area, jdbcType=VARCHAR}
+			</if>
+			<if test="post != null">
+				,#{post, jdbcType=VARCHAR}
+			</if>
+			<if test="company != null">
+				,#{company, jdbcType=VARCHAR}
+			</if>
+			<if test="dept != null">
+				,#{dept, jdbcType=VARCHAR}
+			</if>
+			<if test="certificateno != null">
+				,#{certificateno, jdbcType=VARCHAR}
+			</if>
+			<if test="receiptno != null">
+				,#{receiptno, jdbcType=VARCHAR}
+			</if>
+			<if test="appuser != null">
+				,#{appuser, jdbcType=VARCHAR}
+			</if>
+			<if test="appdate != null">
+				,#{appdate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="maturitydate != null">
+				,#{maturitydate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="appsum != null">
+				,#{appsum, jdbcType=DOUBLE}
+			</if>
+			<if test="currency != null">
+				,#{currency, jdbcType=VARCHAR}
+			</if>
+			<if test="budgetno != null">
+				,#{budgetno, jdbcType=VARCHAR}
+			</if>
+			<if test="use != null">
+				,#{use, jdbcType=VARCHAR}
+			</if>
+			<if test="supname != null">
+				,#{supname, jdbcType=VARCHAR}
+			</if>
+			<if test="supbank != null">
+				,#{supbank, jdbcType=VARCHAR}
+			</if>
+			<if test="supaccount != null">
+				,#{supaccount, jdbcType=VARCHAR}
+			</if>
+			<if test="supaddress != null">
+				,#{supaddress, jdbcType=VARCHAR}
+			</if>
+			<if test="subject != null">
+				,#{subject, jdbcType=VARCHAR}
+			</if>
+			<if test="checkno != null">
+				,#{checkno, jdbcType=VARCHAR}
+			</if>
+			<if test="remark != null">
+				,#{remark, jdbcType=VARCHAR}
+			</if>
+			<if test="status != null">
+				,#{status, jdbcType=INTEGER}
+			</if>
+			<if test="processname != null">
+				,#{processname, jdbcType=VARCHAR}
+			</if>
+			<if test="processinstanceid != null">
+				,#{processinstanceid, jdbcType=BIGINT}
+			</if>
+			<if test="wfstatus != null">
+				,#{wfstatus, jdbcType=DOUBLE}
+			</if>
+			<if test="createBy != null">
+				,#{createBy, jdbcType=VARCHAR}
+			</if>
+			<if test="createDate != null">
+				,#{createDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="updateDate != null">
+				,#{updateDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="updateBy != null">
+				,#{updateBy, jdbcType=VARCHAR}
+			</if>
+	    </trim>
+    </insert>
+
+	 
+	<update id="updatePayment" parameterType="com.glaf.oa.payment.model.Payment">
+		update oa_payment
+		set
+        <trim prefix="" suffix="" suffixOverrides=",">		
+			<if test="area != null">
+				area = #{area, jdbcType=VARCHAR},
+			</if>
+			<if test="post != null">
+				post = #{post, jdbcType=VARCHAR},
+			</if>
+			<if test="company != null">
+				company = #{company, jdbcType=VARCHAR},
+			</if>
+			<if test="dept != null">
+				dept = #{dept, jdbcType=VARCHAR},
+			</if>
+			<if test="certificateno != null">
+				certificateno = #{certificateno, jdbcType=VARCHAR},
+			</if>
+			<if test="receiptno != null">
+				receiptno = #{receiptno, jdbcType=VARCHAR},
+			</if>
+			<if test="appuser != null">
+				appuser = #{appuser, jdbcType=VARCHAR},
+			</if>
+			<if test="appdate != null">
+				appdate = #{appdate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="maturitydate != null">
+				maturitydate = #{maturitydate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="appsum != null">
+				appsum = #{appsum, jdbcType=DOUBLE},
+			</if>
+			<if test="currency != null">
+				currency = #{currency, jdbcType=VARCHAR},
+			</if>
+			<if test="budgetno != null">
+				budgetno = #{budgetno, jdbcType=VARCHAR},
+			</if>
+			<if test="use != null">
+				use = #{use, jdbcType=VARCHAR},
+			</if>
+			<if test="supname != null">
+				supname = #{supname, jdbcType=VARCHAR},
+			</if>
+			<if test="supbank != null">
+				supbank = #{supbank, jdbcType=VARCHAR},
+			</if>
+			<if test="supaccount != null">
+				supaccount = #{supaccount, jdbcType=VARCHAR},
+			</if>
+			<if test="supaddress != null">
+				supaddress = #{supaddress, jdbcType=VARCHAR},
+			</if>
+			<if test="subject != null">
+				subject = #{subject, jdbcType=VARCHAR},
+			</if>
+			<if test="checkno != null">
+				checkno = #{checkno, jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				remark = #{remark, jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				status = #{status, jdbcType=INTEGER},
+			</if>
+			<if test="processname != null">
+				processname = #{processname, jdbcType=VARCHAR},
+			</if>
+			<if test="processinstanceid != null">
+				processinstanceid = #{processinstanceid, jdbcType=BIGINT},
+			</if>
+			<if test="wfstatus != null">
+				wfstatus = #{wfstatus, jdbcType=DOUBLE},
+			</if>
+			<if test="createBy != null">
+				createBy = #{createBy, jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				createDate = #{createDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateDate != null">
+				updateDate = #{updateDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateBy != null">
+				updateBy = #{updateBy, jdbcType=VARCHAR},
+			</if>
+        </trim>
+		where
+          paymentid = #{paymentid, jdbcType=BIGINT}
+		
+    </update>
+
+ 
+	<delete id="deletePaymentById" parameterType="long"> 
+        delete from oa_payment
+        where paymentid =	#{id}
+	</delete>
+
+	
+	<delete id="deletePayments" parameterType="com.glaf.oa.payment.query.PaymentQuery">
+		delete from oa_payment
+		where ( 
+ 			  paymentid IN
+              <foreach item="x_paymentid" index="index" collection="paymentids" 
+                     open="(" separator="," close=")">
+                  #{x_paymentid}
+              </foreach>
+		)
+	</delete>
+
+
+	<select id="getPaymentById" parameterType="long" resultMap="paymentResultMap">
+		select * from oa_payment where paymentid = #{id}
+	</select>
+
+
+	<select id="getPayments" 
+	    parameterType="com.glaf.oa.payment.query.PaymentQuery"
+		resultMap="paymentResultMap">
+		select E.*
+		<include refid="selectPaymentsSql" />
+		<choose>
+		  <when test="orderBy != null">
+		     order by ${orderBy}
+          </when>
+		  <otherwise>
+		      order by E.paymentid desc
+		  </otherwise>
+        </choose>
+	</select>
+
+
+	<select id="getPaymentCount" 
+	    parameterType="com.glaf.oa.payment.query.PaymentQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectPaymentsSql" />
+	</select>
+
+
+	<sql id="selectPaymentsSql">
+
+		from oa_payment E
+		
+		 
+		<where>
+		       1 = 1  
+
+	        
+			<if test="area != null and area != '' ">
+				and E.area = #{area}
+            </if>
+
+			<if test="areaLike != null and areaLike != '' ">
+				and E.area like #{areaLike}
+            </if>
+
+			<if test="areas != null and areas.size() &gt; 0">
+			    and E.area IN
+                <foreach item="x_area" index="index" collection="areas" 
+                     open="(" separator="," close=")">
+                  #{x_area}
+                </foreach>
+			</if>
+	        
+			<if test="post != null and post != '' ">
+				and E.post = #{post}
+            </if>
+
+			<if test="postLike != null and postLike != '' ">
+				and E.post like #{postLike}
+            </if>
+
+			<if test="posts != null and posts.size() &gt; 0">
+			    and E.post IN
+                <foreach item="x_post" index="index" collection="posts" 
+                     open="(" separator="," close=")">
+                  #{x_post}
+                </foreach>
+			</if>
+	        
+			<if test="company != null and company != '' ">
+				and E.company = #{company}
+            </if>
+
+			<if test="companyLike != null and companyLike != '' ">
+				and E.company like #{companyLike}
+            </if>
+
+			<if test="companys != null and companys.size() &gt; 0">
+			    and E.company IN
+                <foreach item="x_company" index="index" collection="companys" 
+                     open="(" separator="," close=")">
+                  #{x_company}
+                </foreach>
+			</if>
+	        
+			<if test="dept != null and dept != '' ">
+				and E.dept = #{dept}
+            </if>
+
+			<if test="deptLike != null and deptLike != '' ">
+				and E.dept like #{deptLike}
+            </if>
+
+			<if test="depts != null and depts.size() &gt; 0">
+			    and E.dept IN
+                <foreach item="x_dept" index="index" collection="depts" 
+                     open="(" separator="," close=")">
+                  #{x_dept}
+                </foreach>
+			</if>
+	        
+			<if test="certificateno != null and certificateno != '' ">
+				and E.certificateno = #{certificateno}
+            </if>
+
+			<if test="certificatenoLike != null and certificatenoLike != '' ">
+				and E.certificateno like #{certificatenoLike}
+            </if>
+
+			<if test="certificatenos != null and certificatenos.size() &gt; 0">
+			    and E.certificateno IN
+                <foreach item="x_certificateno" index="index" collection="certificatenos" 
+                     open="(" separator="," close=")">
+                  #{x_certificateno}
+                </foreach>
+			</if>
+	        
+			<if test="receiptno != null and receiptno != '' ">
+				and E.receiptno = #{receiptno}
+            </if>
+
+			<if test="receiptnoLike != null and receiptnoLike != '' ">
+				and E.receiptno like #{receiptnoLike}
+            </if>
+
+			<if test="receiptnos != null and receiptnos.size() &gt; 0">
+			    and E.receiptno IN
+                <foreach item="x_receiptno" index="index" collection="receiptnos" 
+                     open="(" separator="," close=")">
+                  #{x_receiptno}
+                </foreach>
+			</if>
+	        
+			<if test="appuser != null and appuser != '' ">
+				and E.appuser = #{appuser}
+            </if>
+
+			<if test="appuserLike != null and appuserLike != '' ">
+				and E.appuser like #{appuserLike}
+            </if>
+
+			<if test="appusers != null and appusers.size() &gt; 0">
+			    and E.appuser IN
+                <foreach item="x_appuser" index="index" collection="appusers" 
+                     open="(" separator="," close=")">
+                  #{x_appuser}
+                </foreach>
+			</if>
+
+			<if test="appdate != null">
+				and E.appdate = #{appdate}
+            </if>
+
+			<if test="appdateGreaterThanOrEqual != null">
+				and E.appdate &gt;= #{appdateGreaterThanOrEqual}
+            </if>
+
+			<if test="appdateLessThanOrEqual != null">
+				and E.appdate &lt;= #{appdateLessThanOrEqual}
+            </if>
+
+			<if test="appdates != null and appdates.size() &gt; 0">
+			    and E.appdate IN
+                <foreach item="x_appdate" index="index" collection="appdates" 
+                     open="(" separator="," close=")">
+                  #{x_appdate}
+                </foreach>
+			</if>
+
+
+			<if test="maturitydate != null">
+				and E.maturitydate = #{maturitydate}
+            </if>
+
+			<if test="maturitydateGreaterThanOrEqual != null">
+				and E.maturitydate &gt;= #{maturitydateGreaterThanOrEqual}
+            </if>
+
+			<if test="maturitydateLessThanOrEqual != null">
+				and E.maturitydate &lt;= #{maturitydateLessThanOrEqual}
+            </if>
+
+			<if test="maturitydates != null and maturitydates.size() &gt; 0">
+			    and E.maturitydate IN
+                <foreach item="x_maturitydate" index="index" collection="maturitydates" 
+                     open="(" separator="," close=")">
+                  #{x_maturitydate}
+                </foreach>
+			</if>
+
+
+			<if test="appsum != null">
+				and E.appsum = #{appsum}
+            </if>
+
+			<if test="appsumGreaterThanOrEqual != null">
+				and E.appsum &gt;= #{appsumGreaterThanOrEqual}
+            </if>
+
+			<if test="appsumLessThanOrEqual != null">
+				and E.appsum &lt;= #{appsumLessThanOrEqual}
+            </if>
+
+			<if test="appsums != null and appsums.size() &gt; 0">
+			    and E.appsum IN
+                <foreach item="x_appsum" index="index" collection="appsums" 
+                     open="(" separator="," close=")">
+                  #{x_appsum}
+                </foreach>
+			</if>
+
+	        
+			<if test="currency != null and currency != '' ">
+				and E.currency = #{currency}
+            </if>
+
+			<if test="currencyLike != null and currencyLike != '' ">
+				and E.currency like #{currencyLike}
+            </if>
+
+			<if test="currencys != null and currencys.size() &gt; 0">
+			    and E.currency IN
+                <foreach item="x_currency" index="index" collection="currencys" 
+                     open="(" separator="," close=")">
+                  #{x_currency}
+                </foreach>
+			</if>
+	        
+			<if test="budgetno != null and budgetno != '' ">
+				and E.budgetno = #{budgetno}
+            </if>
+
+			<if test="budgetnoLike != null and budgetnoLike != '' ">
+				and E.budgetno like #{budgetnoLike}
+            </if>
+
+			<if test="budgetnos != null and budgetnos.size() &gt; 0">
+			    and E.budgetno IN
+                <foreach item="x_budgetno" index="index" collection="budgetnos" 
+                     open="(" separator="," close=")">
+                  #{x_budgetno}
+                </foreach>
+			</if>
+	        
+			<if test="use != null and use != '' ">
+				and E.use = #{use}
+            </if>
+
+			<if test="useLike != null and useLike != '' ">
+				and E.use like #{useLike}
+            </if>
+
+			<if test="uses != null and uses.size() &gt; 0">
+			    and E.use IN
+                <foreach item="x_use" index="index" collection="uses" 
+                     open="(" separator="," close=")">
+                  #{x_use}
+                </foreach>
+			</if>
+	        
+			<if test="supname != null and supname != '' ">
+				and E.supname = #{supname}
+            </if>
+
+			<if test="supnameLike != null and supnameLike != '' ">
+				and E.supname like #{supnameLike}
+            </if>
+
+			<if test="supnames != null and supnames.size() &gt; 0">
+			    and E.supname IN
+                <foreach item="x_supname" index="index" collection="supnames" 
+                     open="(" separator="," close=")">
+                  #{x_supname}
+                </foreach>
+			</if>
+	        
+			<if test="supbank != null and supbank != '' ">
+				and E.supbank = #{supbank}
+            </if>
+
+			<if test="supbankLike != null and supbankLike != '' ">
+				and E.supbank like #{supbankLike}
+            </if>
+
+			<if test="supbanks != null and supbanks.size() &gt; 0">
+			    and E.supbank IN
+                <foreach item="x_supbank" index="index" collection="supbanks" 
+                     open="(" separator="," close=")">
+                  #{x_supbank}
+                </foreach>
+			</if>
+	        
+			<if test="supaccount != null and supaccount != '' ">
+				and E.supaccount = #{supaccount}
+            </if>
+
+			<if test="supaccountLike != null and supaccountLike != '' ">
+				and E.supaccount like #{supaccountLike}
+            </if>
+
+			<if test="supaccounts != null and supaccounts.size() &gt; 0">
+			    and E.supaccount IN
+                <foreach item="x_supaccount" index="index" collection="supaccounts" 
+                     open="(" separator="," close=")">
+                  #{x_supaccount}
+                </foreach>
+			</if>
+	        
+			<if test="supaddress != null and supaddress != '' ">
+				and E.supaddress = #{supaddress}
+            </if>
+
+			<if test="supaddressLike != null and supaddressLike != '' ">
+				and E.supaddress like #{supaddressLike}
+            </if>
+
+			<if test="supaddresss != null and supaddresss.size() &gt; 0">
+			    and E.supaddress IN
+                <foreach item="x_supaddress" index="index" collection="supaddresss" 
+                     open="(" separator="," close=")">
+                  #{x_supaddress}
+                </foreach>
+			</if>
+	        
+			<if test="subject != null and subject != '' ">
+				and E.subject = #{subject}
+            </if>
+
+			<if test="subjectLike != null and subjectLike != '' ">
+				and E.subject like #{subjectLike}
+            </if>
+
+			<if test="subjects != null and subjects.size() &gt; 0">
+			    and E.subject IN
+                <foreach item="x_subject" index="index" collection="subjects" 
+                     open="(" separator="," close=")">
+                  #{x_subject}
+                </foreach>
+			</if>
+	        
+			<if test="checkno != null and checkno != '' ">
+				and E.checkno = #{checkno}
+            </if>
+
+			<if test="checknoLike != null and checknoLike != '' ">
+				and E.checkno like #{checknoLike}
+            </if>
+
+			<if test="checknos != null and checknos.size() &gt; 0">
+			    and E.checkno IN
+                <foreach item="x_checkno" index="index" collection="checknos" 
+                     open="(" separator="," close=")">
+                  #{x_checkno}
+                </foreach>
+			</if>
+	        
+			<if test="remark != null and remark != '' ">
+				and E.remark = #{remark}
+            </if>
+
+			<if test="remarkLike != null and remarkLike != '' ">
+				and E.remark like #{remarkLike}
+            </if>
+
+			<if test="remarks != null and remarks.size() &gt; 0">
+			    and E.remark IN
+                <foreach item="x_remark" index="index" collection="remarks" 
+                     open="(" separator="," close=")">
+                  #{x_remark}
+                </foreach>
+			</if>
+
+			<if test="status != null">
+				and E.status = #{status}
+            </if>
+
+			<if test="statusGreaterThanOrEqual != null">
+				and E.status &gt;= #{statusGreaterThanOrEqual}
+            </if>
+
+			<if test="statusLessThanOrEqual != null">
+				and E.status &lt;= #{statusLessThanOrEqual}
+            </if>
+
+			<if test="statuss != null and statuss.size() &gt; 0">
+			    and E.status IN
+                <foreach item="x_status" index="index" collection="statuss" 
+                     open="(" separator="," close=")">
+                  #{x_status}
+                </foreach>
+			</if>
+
+	        
+			<if test="processname != null and processname != '' ">
+				and E.processname = #{processname}
+            </if>
+
+			<if test="processnameLike != null and processnameLike != '' ">
+				and E.processname like #{processnameLike}
+            </if>
+
+			<if test="processnames != null and processnames.size() &gt; 0">
+			    and E.processname IN
+                <foreach item="x_processname" index="index" collection="processnames" 
+                     open="(" separator="," close=")">
+                  #{x_processname}
+                </foreach>
+			</if>
+
+			<if test="processinstanceid != null">
+				and E.processinstanceid = #{processinstanceid}
+            </if>
+
+			<if test="processinstanceidGreaterThanOrEqual != null">
+				and E.processinstanceid &gt;= #{processinstanceidGreaterThanOrEqual}
+            </if>
+
+			<if test="processinstanceidLessThanOrEqual != null">
+				and E.processinstanceid &lt;= #{processinstanceidLessThanOrEqual}
+            </if>
+
+			<if test="processinstanceids != null and processinstanceids.size() &gt; 0">
+			    and E.processinstanceid IN
+                <foreach item="x_processinstanceid" index="index" collection="processinstanceids" 
+                     open="(" separator="," close=")">
+                  #{x_processinstanceid}
+                </foreach>
+			</if>
+
+
+			<if test="wfstatus != null">
+				and E.wfstatus = #{wfstatus}
+            </if>
+
+			<if test="wfstatusGreaterThanOrEqual != null">
+				and E.wfstatus &gt;= #{wfstatusGreaterThanOrEqual}
+            </if>
+
+			<if test="wfstatusLessThanOrEqual != null">
+				and E.wfstatus &lt;= #{wfstatusLessThanOrEqual}
+            </if>
+
+			<if test="wfstatuss != null and wfstatuss.size() &gt; 0">
+			    and E.wfstatus IN
+                <foreach item="x_wfstatus" index="index" collection="wfstatuss" 
+                     open="(" separator="," close=")">
+                  #{x_wfstatus}
+                </foreach>
+			</if>
+
+	        
+			<if test="createBy != null and createBy != '' ">
+				and E.createBy = #{createBy}
+            </if>
+
+			<if test="createByLike != null and createByLike != '' ">
+				and E.createBy like #{createByLike}
+            </if>
+
+			<if test="createBys != null and createBys.size() &gt; 0">
+			    and E.createBy IN
+                <foreach item="x_createBy" index="index" collection="createBys" 
+                     open="(" separator="," close=")">
+                  #{x_createBy}
+                </foreach>
+			</if>
+
+			<if test="createDate != null">
+				and E.createDate = #{createDate}
+            </if>
+
+			<if test="createDateGreaterThanOrEqual != null">
+				and E.createDate &gt;= #{createDateGreaterThanOrEqual}
+            </if>
+
+			<if test="createDateLessThanOrEqual != null">
+				and E.createDate &lt;= #{createDateLessThanOrEqual}
+            </if>
+
+			<if test="createDates != null and createDates.size() &gt; 0">
+			    and E.createDate IN
+                <foreach item="x_createDate" index="index" collection="createDates" 
+                     open="(" separator="," close=")">
+                  #{x_createDate}
+                </foreach>
+			</if>
+
+
+			<if test="updateDate != null">
+				and E.updateDate = #{updateDate}
+            </if>
+
+			<if test="updateDateGreaterThanOrEqual != null">
+				and E.updateDate &gt;= #{updateDateGreaterThanOrEqual}
+            </if>
+
+			<if test="updateDateLessThanOrEqual != null">
+				and E.updateDate &lt;= #{updateDateLessThanOrEqual}
+            </if>
+
+			<if test="updateDates != null and updateDates.size() &gt; 0">
+			    and E.updateDate IN
+                <foreach item="x_updateDate" index="index" collection="updateDates" 
+                     open="(" separator="," close=")">
+                  #{x_updateDate}
+                </foreach>
+			</if>
+
+	        
+			<if test="updateBy != null and updateBy != '' ">
+				and E.updateBy = #{updateBy}
+            </if>
+
+			<if test="updateByLike != null and updateByLike != '' ">
+				and E.updateBy like #{updateByLike}
+            </if>
+
+			<if test="updateBys != null and updateBys.size() &gt; 0">
+			    and E.updateBy IN
+                <foreach item="x_updateBy" index="index" collection="updateBys" 
+                     open="(" separator="," close=")">
+                  #{x_updateBy}
+                </foreach>
+			</if>
+			 
+		</where>
+	</sql>
+	
+	<select id="getReviewPaymentCount" parameterType="com.glaf.oa.payment.query.PaymentQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectReviewPaymentSql" />
+	</select>
+
+	<select id="getReviewPayments" parameterType="com.glaf.oa.payment.query.PaymentQuery"
+		resultMap="paymentResultMap">
+		select D.*
+		<include refid="selectReviewPaymentSql" />
+		<choose>
+			<when test="orderBy != null">
+				order by ${orderBy}
+          </when>
+			<otherwise>
+				order by D.paymentid desc
+		  </otherwise>
+		</choose>
+	</select>
+
+	<sql id="selectReviewPaymentSql">
+
+		from oa_payment D
+
+		<if
+			test=" workedProcessFlag == 'WD' and actorIds != null and actorIds.size() !=  0">
+			inner join JBPM_TASKINSTANCE T on D.PROCESSINSTANCEID
+			= T.PROCINST_
+        	</if>
+
+		<where>
+			1 = 1
+			<if
+				test="workedProcessFlag == 'WD' and actorIds != null and actorIds.size() != 0">
+				and ( T.END_ IS NULL)
+				and ( T.ACTORID_ IN
+				<foreach item="x_actorId" index="index" collection="actorIds"
+					open="(" separator="," close=")">
+					#{x_actorId}
+                </foreach>
+				)
+			</if>
+
+			<if
+				test="workedProcessFlag == 'PD' and actorIds != null and actorIds.size() != 0">
+				and D.PROCESSINSTANCEID in (
+				SELECT a.PROCINST_
+				FROM JBPM_TASKINSTANCE
+				a
+				WHERE (1 = 1)
+				AND (a.END_ IS not NULL)
+				AND (a.ACTORID_ IS NOT NULL)
+				AND (a.ACTORID_ in
+				<foreach item="x_actorId1" index="index" collection="actorIds"
+					open="(" separator="," close=")">
+					#{x_actorId1}
+                </foreach>
+				)
+				union
+				SELECT a.PROCINST_
+				FROM JBPM_POOLEDACTOR p
+				INNER JOIN
+				JBPM_TASKACTORPOOL t
+				ON p.ID_ = t.POOLEDACTOR_
+				INNER JOIN
+				JBPM_TASKINSTANCE a
+				ON t.TASKINSTANCE_ = a.ID_
+				WHERE (1 = 1)
+				AND
+				(a.END_ IS NULL)
+				AND (a.ACTORID_ IS NULL)
+				AND (p.ACTORID_ IN
+				<foreach item="x_actorId2" index="index" collection="actorIds"
+					open="(" separator="," close=")">
+					#{x_actorId2}
+                </foreach>
+				)
+				union
+				select distinct 0 from JBPM_TASKINSTANCE
+				)
+			</if>
+			<if test="appdateGreaterThanOrEqual != null">
+				and D.appdate &gt;= #{appdateGreaterThanOrEqual}
+            </if>
+
+			<if test="appdateLessThanOrEqual != null">
+				and D.appdate &lt;= #{appdateLessThanOrEqual}
+            </if>
+			<if test="dept != null and dept != '' ">
+				and D.dept = #{dept}
+            </if>
+			<if test="area != null and area != '' ">
+				and D.area = #{area}
+            </if>
+			<if test="appuser != null and appuser != '' ">
+				and D.appuser = #{appuser}
+            </if>
+            <if test="budgetnoLike != null and budgetnoLike != '' ">
+				and D.budgetno like #{budgetnoLike}
+            </if>
+            <if test="certificatenoLike != null and certificatenoLike != '' ">
+				and D.certificateno like #{certificatenoLike}
+            </if>
+            
+		</where>
+	</sql>
+
+</mapper>

@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.oa.travelpersonnel.mapper.TravelpersonnelMapper">
+
+ 	<resultMap id="travelpersonnelResultMap"	type="com.glaf.oa.travelpersonnel.model.Travelpersonnel">
+        <id property="personnelid" column="personnelid" jdbcType="BIGINT" />
+        <result property="travelid" column="travelid" jdbcType="BIGINT"/>
+        <result property="dept" column="dept" jdbcType="VARCHAR"/>
+        <result property="personnel" column="personnel" jdbcType="VARCHAR"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+        <result property="createDate" column="createDate" jdbcType="TIMESTAMP"/>
+        <result property="updateDate" column="updateDate" jdbcType="TIMESTAMP"/>
+        <result property="createBy" column="createBy" jdbcType="VARCHAR"/>
+        <result property="updateBy" column="updateBy" jdbcType="VARCHAR"/>
+	</resultMap>
+
+ 
+	<insert id="insertTravelpersonnel" parameterType="com.glaf.oa.travelpersonnel.model.Travelpersonnel">
+		insert into oa_travelpersonnel 
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+		    personnelid
+			<if test="travelid != null">
+				,travelid 
+			</if>
+			<if test="dept != null">
+				,dept 
+			</if>
+			<if test="personnel != null">
+				,personnel 
+			</if>
+			<if test="remark != null">
+				,remark 
+			</if>
+			<if test="createDate != null">
+				,createDate 
+			</if>
+			<if test="updateDate != null">
+				,updateDate 
+			</if>
+			<if test="createBy != null">
+				,createBy 
+			</if>
+			<if test="updateBy != null">
+				,updateBy 
+			</if>
+        </trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			  #{personnelid, jdbcType=BIGINT}
+	     
+			<if test="travelid != null">
+				,#{travelid, jdbcType=BIGINT}
+			</if>
+			<if test="dept != null">
+				,#{dept, jdbcType=VARCHAR}
+			</if>
+			<if test="personnel != null">
+				,#{personnel, jdbcType=VARCHAR}
+			</if>
+			<if test="remark != null">
+				,#{remark, jdbcType=VARCHAR}
+			</if>
+			<if test="createDate != null">
+				,#{createDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="updateDate != null">
+				,#{updateDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="createBy != null">
+				,#{createBy, jdbcType=VARCHAR}
+			</if>
+			<if test="updateBy != null">
+				,#{updateBy, jdbcType=VARCHAR}
+			</if>
+	    </trim>
+    </insert>
+
+	 
+	<update id="updateTravelpersonnel" parameterType="com.glaf.oa.travelpersonnel.model.Travelpersonnel">
+		update oa_travelpersonnel
+		set
+        <trim prefix="" suffix="" suffixOverrides=",">		
+			<if test="travelid != null">
+				travelid = #{travelid, jdbcType=BIGINT},
+			</if>
+			<if test="dept != null">
+				dept = #{dept, jdbcType=VARCHAR},
+			</if>
+			<if test="personnel != null">
+				personnel = #{personnel, jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				remark = #{remark, jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				createDate = #{createDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateDate != null">
+				updateDate = #{updateDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="createBy != null">
+				createBy = #{createBy, jdbcType=VARCHAR},
+			</if>
+			<if test="updateBy != null">
+				updateBy = #{updateBy, jdbcType=VARCHAR},
+			</if>
+        </trim>
+		where
+          personnelid = #{personnelid, jdbcType=BIGINT}
+		
+    </update>
+
+ 
+	<delete id="deleteTravelpersonnelById" parameterType="long"> 
+        delete from oa_travelpersonnel
+        where personnelid =	#{id}
+	</delete>
+	
+	<delete id="deleteTravelpersonnelByTravelid" parameterType="long"> 
+        delete from oa_travelpersonnel
+        where travelid =	#{travelid}
+	</delete>
+
+	
+	<delete id="deleteTravelpersonnels" parameterType="com.glaf.oa.travelpersonnel.query.TravelpersonnelQuery">
+		delete from oa_travelpersonnel
+		where ( 
+ 			  personnelid IN
+              <foreach item="x_personnelid" index="index" collection="personnelids" 
+                     open="(" separator="," close=")">
+                  #{x_personnelid}
+              </foreach>
+		)
+	</delete>
+
+
+	<select id="getTravelpersonnelById" parameterType="long" resultMap="travelpersonnelResultMap">
+		select * from oa_travelpersonnel where personnelid = #{id}
+	</select>
+
+
+	<select id="getTravelpersonnels" 
+	    parameterType="com.glaf.oa.travelpersonnel.query.TravelpersonnelQuery"
+		resultMap="travelpersonnelResultMap">
+		select E.*
+		<include refid="selectTravelpersonnelsSql" />
+		<choose>
+		  <when test="orderBy != null">
+		     order by ${orderBy}
+          </when>
+		  <otherwise>
+		      order by E.personnelid desc
+		  </otherwise>
+        </choose>
+	</select>
+
+
+	<select id="getTravelpersonnelCount" 
+	    parameterType="com.glaf.oa.travelpersonnel.query.TravelpersonnelQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectTravelpersonnelsSql" />
+	</select>
+
+
+	<sql id="selectTravelpersonnelsSql">
+
+		from oa_travelpersonnel E
+		
+		 
+		<where>
+		       1 = 1  
+
+
+			<if test="travelid != null">
+				and E.travelid = #{travelid}
+            </if>
+
+			<if test="travelidGreaterThanOrEqual != null">
+				and E.travelid &gt;= #{travelidGreaterThanOrEqual}
+            </if>
+
+			<if test="travelidLessThanOrEqual != null">
+				and E.travelid &lt;= #{travelidLessThanOrEqual}
+            </if>
+
+			<if test="travelids != null and travelids.size() &gt; 0">
+			    and E.travelid IN
+                <foreach item="x_travelid" index="index" collection="travelids" 
+                     open="(" separator="," close=")">
+                  #{x_travelid}
+                </foreach>
+			</if>
+
+	        
+			<if test="dept != null and dept != '' ">
+				and E.dept = #{dept}
+            </if>
+
+			<if test="deptLike != null and deptLike != '' ">
+				and E.dept like #{deptLike}
+            </if>
+
+			<if test="depts != null and depts.size() &gt; 0">
+			    and E.dept IN
+                <foreach item="x_dept" index="index" collection="depts" 
+                     open="(" separator="," close=")">
+                  #{x_dept}
+                </foreach>
+			</if>
+	        
+			<if test="personnel != null and personnel != '' ">
+				and E.personnel = #{personnel}
+            </if>
+
+			<if test="personnelLike != null and personnelLike != '' ">
+				and E.personnel like #{personnelLike}
+            </if>
+
+			<if test="personnels != null and personnels.size() &gt; 0">
+			    and E.personnel IN
+                <foreach item="x_personnel" index="index" collection="personnels" 
+                     open="(" separator="," close=")">
+                  #{x_personnel}
+                </foreach>
+			</if>
+			
+			<if test="createDate != null">
+				and E.createDate = #{createDate}
+            </if>
+
+			<if test="createDateGreaterThanOrEqual != null">
+				and E.createDate &gt;= #{createDateGreaterThanOrEqual}
+            </if>
+
+			<if test="createDateLessThanOrEqual != null">
+				and E.createDate &lt;= #{createDateLessThanOrEqual}
+            </if>
+
+			<if test="createDates != null and createDates.size() &gt; 0">
+			    and E.createDate IN
+                <foreach item="x_createDate" index="index" collection="createDates" 
+                     open="(" separator="," close=")">
+                  #{x_createDate}
+                </foreach>
+			</if>
+
+
+			<if test="updateDate != null">
+				and E.updateDate = #{updateDate}
+            </if>
+
+			<if test="updateDateGreaterThanOrEqual != null">
+				and E.updateDate &gt;= #{updateDateGreaterThanOrEqual}
+            </if>
+
+			<if test="updateDateLessThanOrEqual != null">
+				and E.updateDate &lt;= #{updateDateLessThanOrEqual}
+            </if>
+
+			<if test="updateDates != null and updateDates.size() &gt; 0">
+			    and E.updateDate IN
+                <foreach item="x_updateDate" index="index" collection="updateDates" 
+                     open="(" separator="," close=")">
+                  #{x_updateDate}
+                </foreach>
+			</if>
+			
+			<if test="createBy != null and createBy != '' ">
+				and E.createBy = #{createBy}
+            </if>
+
+			<if test="createByLike != null and createByLike != '' ">
+				and E.createBy like #{createByLike}
+            </if>
+
+			<if test="createBys != null and createBys.size() &gt; 0">
+			    and E.createBy IN
+                <foreach item="x_createBy" index="index" collection="createBys" 
+                     open="(" separator="," close=")">
+                  #{x_createBy}
+                </foreach>
+			</if>
+			
+			<if test="updateBy != null and updateBy != '' ">
+				and E.updateBy = #{updateBy}
+            </if>
+
+			<if test="updateByLike != null and updateByLike != '' ">
+				and E.updateBy like #{updateByLike}
+            </if>
+
+			<if test="updateBys != null and updateBys.size() &gt; 0">
+			    and E.updateBy IN
+                <foreach item="x_updateBy" index="index" collection="updateBys" 
+                     open="(" separator="," close=")">
+                  #{x_updateBy}
+                </foreach>
+			</if>
+			 
+		</where>
+	</sql>
+
+</mapper>

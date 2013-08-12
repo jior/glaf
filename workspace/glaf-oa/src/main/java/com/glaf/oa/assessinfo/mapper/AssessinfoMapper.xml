@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.oa.assessinfo.mapper.AssessinfoMapper">
+
+ 	<resultMap id="assessinfoResultMap"	type="com.glaf.oa.assessinfo.model.Assessinfo">
+        <id property="indexid" column="indexid" jdbcType="BIGINT" />
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="standard" column="standard" jdbcType="DOUBLE"/>
+        <result property="iseffective" column="iseffective" jdbcType="INTEGER"/>
+        <result property="createBy" column="createBy" jdbcType="VARCHAR"/>
+        <result property="createDate" column="createDate" jdbcType="TIMESTAMP"/>
+        <result property="updateDate" column="updateDate" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="updateBy" jdbcType="VARCHAR"/>
+	</resultMap>
+
+ 
+	<insert id="insertAssessinfo" parameterType="com.glaf.oa.assessinfo.model.Assessinfo">
+		insert into oa_assessinfo 
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+		    indexid
+			<if test="name != null">
+				,name 
+			</if>
+			<if test="basis != null">
+				,basis 
+			</if>
+			<if test="standard != null">
+				,standard 
+			</if>
+			<if test="iseffective != null">
+				,iseffective 
+			</if>
+			<if test="createBy != null">
+				,createBy 
+			</if>
+			<if test="createDate != null">
+				,createDate 
+			</if>
+			<if test="updateDate != null">
+				,updateDate 
+			</if>
+			<if test="updateBy != null">
+				,updateBy 
+			</if>
+        </trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			  #{indexid, jdbcType=BIGINT}
+	     
+			<if test="name != null">
+				,#{name, jdbcType=VARCHAR}
+			</if>
+			<if test="basis != null">
+				,#{basis, jdbcType=VARCHAR}
+			</if>
+			<if test="standard != null">
+				,#{standard, jdbcType=DOUBLE}
+			</if>
+			<if test="iseffective != null">
+				,#{iseffective, jdbcType=INTEGER}
+			</if>
+			<if test="createBy != null">
+				,#{createBy, jdbcType=VARCHAR}
+			</if>
+			<if test="createDate != null">
+				,#{createDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="updateDate != null">
+				,#{updateDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="updateBy != null">
+				,#{updateBy, jdbcType=VARCHAR}
+			</if>
+	    </trim>
+    </insert>
+
+	 
+	<update id="updateAssessinfo" parameterType="com.glaf.oa.assessinfo.model.Assessinfo">
+		update oa_assessinfo
+		set
+        <trim prefix="" suffix="" suffixOverrides=",">		
+			<if test="name != null">
+				name = #{name, jdbcType=VARCHAR},
+			</if>
+			<if test="basis != null">
+				basis = #{basis, jdbcType=VARCHAR},
+			</if>
+			<if test="standard != null">
+				standard = #{standard, jdbcType=DOUBLE},
+			</if>
+			<if test="iseffective != null">
+				iseffective = #{iseffective, jdbcType=INTEGER},
+			</if>
+			<if test="createBy != null">
+				createBy = #{createBy, jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				createDate = #{createDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateDate != null">
+				updateDate = #{updateDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateBy != null">
+				updateBy = #{updateBy, jdbcType=VARCHAR},
+			</if>
+        </trim>
+		where
+          indexid = #{indexid, jdbcType=BIGINT}
+		
+    </update>
+
+ 
+	<delete id="deleteAssessinfoById" parameterType="long"> 
+        delete from oa_assessinfo
+        where indexid =	#{id}
+	</delete>
+
+	
+	<delete id="deleteAssessinfos" parameterType="com.glaf.oa.assessinfo.query.AssessinfoQuery">
+		delete from oa_assessinfo
+		where ( 
+ 			  indexid IN
+              <foreach item="x_indexid" index="index" collection="indexids" 
+                     open="(" separator="," close=")">
+                  #{x_indexid}
+              </foreach>
+		)
+	</delete>
+
+
+	<select id="getAssessinfoById" parameterType="long" resultMap="assessinfoResultMap">
+		select * from oa_assessinfo where indexid = #{id}
+	</select>
+
+
+	<select id="getAssessinfos" 
+	    parameterType="com.glaf.oa.assessinfo.query.AssessinfoQuery"
+		resultMap="assessinfoResultMap">
+		select E.*
+		<include refid="selectAssessinfosSql" />
+		<choose>
+		  <when test="orderBy != null">
+		     order by ${orderBy}
+          </when>
+		  <otherwise>
+		      order by E.indexid desc
+		  </otherwise>
+        </choose>
+	</select>
+
+
+	<select id="getAssessinfoCount" 
+	    parameterType="com.glaf.oa.assessinfo.query.AssessinfoQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectAssessinfosSql" />
+	</select>
+
+
+	<sql id="selectAssessinfosSql">
+
+		from oa_assessinfo E
+		
+		 
+		<where>
+		       1 = 1  
+
+	        
+			<if test="name != null and name != '' ">
+				and E.name = #{name}
+            </if>
+
+			<if test="nameLike != null and nameLike != '' ">
+				and E.name like #{nameLike}
+            </if>
+
+			<if test="names != null and names.size() &gt; 0">
+			    and E.name IN
+                <foreach item="x_name" index="index" collection="names" 
+                     open="(" separator="," close=")">
+                  #{x_name}
+                </foreach>
+			</if>
+
+			<if test="standard != null">
+				and E.standard = #{standard}
+            </if>
+
+			<if test="standardGreaterThanOrEqual != null">
+				and E.standard &gt;= #{standardGreaterThanOrEqual}
+            </if>
+
+			<if test="standardLessThanOrEqual != null">
+				and E.standard &lt;= #{standardLessThanOrEqual}
+            </if>
+
+			<if test="standards != null and standards.size() &gt; 0">
+			    and E.standard IN
+                <foreach item="x_standard" index="index" collection="standards" 
+                     open="(" separator="," close=")">
+                  #{x_standard}
+                </foreach>
+			</if>
+
+
+			<if test="iseffective != null">
+				and E.iseffective = #{iseffective}
+            </if>
+
+			<if test="iseffectiveGreaterThanOrEqual != null">
+				and E.iseffective &gt;= #{iseffectiveGreaterThanOrEqual}
+            </if>
+
+			<if test="iseffectiveLessThanOrEqual != null">
+				and E.iseffective &lt;= #{iseffectiveLessThanOrEqual}
+            </if>
+
+			<if test="iseffectives != null and iseffectives.size() &gt; 0">
+			    and E.iseffective IN
+                <foreach item="x_iseffective" index="index" collection="iseffectives" 
+                     open="(" separator="," close=")">
+                  #{x_iseffective}
+                </foreach>
+			</if>
+
+	        
+			<if test="createBy != null and createBy != '' ">
+				and E.createBy = #{createBy}
+            </if>
+
+			<if test="createByLike != null and createByLike != '' ">
+				and E.createBy like #{createByLike}
+            </if>
+
+			<if test="createBys != null and createBys.size() &gt; 0">
+			    and E.createBy IN
+                <foreach item="x_createBy" index="index" collection="createBys" 
+                     open="(" separator="," close=")">
+                  #{x_createBy}
+                </foreach>
+			</if>
+
+			<if test="createDate != null">
+				and E.createDate = #{createDate}
+            </if>
+
+			<if test="createDateGreaterThanOrEqual != null">
+				and E.createDate &gt;= #{createDateGreaterThanOrEqual}
+            </if>
+
+			<if test="createDateLessThanOrEqual != null">
+				and E.createDate &lt;= #{createDateLessThanOrEqual}
+            </if>
+
+			<if test="createDates != null and createDates.size() &gt; 0">
+			    and E.createDate IN
+                <foreach item="x_createDate" index="index" collection="createDates" 
+                     open="(" separator="," close=")">
+                  #{x_createDate}
+                </foreach>
+			</if>
+
+
+			<if test="updateDate != null">
+				and E.updateDate = #{updateDate}
+            </if>
+
+			<if test="updateDateGreaterThanOrEqual != null">
+				and E.updateDate &gt;= #{updateDateGreaterThanOrEqual}
+            </if>
+
+			<if test="updateDateLessThanOrEqual != null">
+				and E.updateDate &lt;= #{updateDateLessThanOrEqual}
+            </if>
+
+			<if test="updateDates != null and updateDates.size() &gt; 0">
+			    and E.updateDate IN
+                <foreach item="x_updateDate" index="index" collection="updateDates" 
+                     open="(" separator="," close=")">
+                  #{x_updateDate}
+                </foreach>
+			</if>
+
+	        
+			<if test="updateBy != null and updateBy != '' ">
+				and E.updateBy = #{updateBy}
+            </if>
+
+			<if test="updateByLike != null and updateByLike != '' ">
+				and E.updateBy like #{updateByLike}
+            </if>
+
+			<if test="updateBys != null and updateBys.size() &gt; 0">
+			    and E.updateBy IN
+                <foreach item="x_updateBy" index="index" collection="updateBys" 
+                     open="(" separator="," close=")">
+                  #{x_updateBy}
+                </foreach>
+			</if>
+			 
+		</where>
+	</sql>
+
+</mapper>

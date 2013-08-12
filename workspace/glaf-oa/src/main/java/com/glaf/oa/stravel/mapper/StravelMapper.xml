@@ -1,0 +1,810 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.oa.stravel.mapper.StravelMapper">
+
+ 	<resultMap id="stravelResultMap"	type="com.glaf.oa.stravel.model.Stravel">
+        <id property="travelid" column="travelid" jdbcType="BIGINT" />
+        <result property="area" column="area" jdbcType="VARCHAR"/>
+        <result property="company" column="company" jdbcType="VARCHAR"/>
+        <result property="dept" column="dept" jdbcType="VARCHAR"/>
+        <result property="post" column="post" jdbcType="VARCHAR"/>
+        <result property="appuser" column="appuser" jdbcType="VARCHAR"/>
+        <result property="appdate" column="appdate" jdbcType="TIMESTAMP"/>
+        <result property="startdate" column="startdate" jdbcType="TIMESTAMP"/>
+        <result property="enddate" column="enddate" jdbcType="TIMESTAMP"/>
+        <result property="travelsum" column="travelsum" jdbcType="DOUBLE"/>
+        <result property="traveltype" column="traveltype" jdbcType="INTEGER"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+        <result property="processname" column="processname" jdbcType="VARCHAR"/>
+        <result property="processinstanceid" column="processinstanceid" jdbcType="BIGINT"/>
+        <result property="wfstatus" column="wfstatus" jdbcType="BIGINT"/>
+        <result property="content" column="content" jdbcType="VARCHAR"/>
+        <result property="others" column="others" jdbcType="VARCHAR"/>
+        <result property="createDate" column="createDate" jdbcType="TIMESTAMP"/>
+        <result property="updateDate" column="updateDate" jdbcType="TIMESTAMP"/>
+        <result property="createBy" column="createBy" jdbcType="VARCHAR"/>
+        <result property="updateBy" column="updateBy" jdbcType="VARCHAR"/>
+        <result property="feesumAccount" column="feesumAccount" jdbcType="DOUBLE"/>
+	</resultMap>
+
+	<resultMap id="traveladdressResultMap"	type="com.glaf.oa.traveladdress.model.Traveladdress">
+        <id property="addressid" column="addressid" jdbcType="BIGINT" />
+        <result property="travelid" column="travelid" jdbcType="BIGINT"/>
+        <result property="startadd" column="startadd" jdbcType="VARCHAR"/>
+        <result property="endadd" column="endadd" jdbcType="VARCHAR"/>
+        <result property="transportation" column="transportation" jdbcType="VARCHAR"/>
+	</resultMap>
+ 
+ 	<resultMap id="travelpersonnelResultMap"	type="com.glaf.oa.travelpersonnel.model.Travelpersonnel">
+        <id property="personnelid" column="personnelid" jdbcType="BIGINT" />
+        <result property="travelid" column="travelid" jdbcType="BIGINT"/>
+        <result property="dept" column="dept" jdbcType="VARCHAR"/>
+        <result property="personnel" column="personnel" jdbcType="VARCHAR"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+	</resultMap>
+ 
+ 	<resultMap id="travelfeeResultMap"	type="com.glaf.oa.travelfee.model.Travelfee">
+        <id property="feeid" column="feeid" jdbcType="BIGINT" />
+        <result property="travelid" column="travelid" jdbcType="BIGINT"/>
+        <result property="feename" column="feename" jdbcType="VARCHAR"/>
+        <result property="feesum" column="feesum" jdbcType="DOUBLE"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<insert id="insertStravel" parameterType="com.glaf.oa.stravel.model.Stravel">
+		insert into oa_stravel 
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+		    travelid
+			<if test="area != null">
+				,area 
+			</if>
+			<if test="company != null">
+				,company 
+			</if>
+			<if test="dept != null">
+				,dept 
+			</if>
+			<if test="post != null">
+				,post 
+			</if>
+			<if test="appuser != null">
+				,appuser 
+			</if>
+			<if test="appdate != null">
+				,appdate 
+			</if>
+			<if test="startdate != null">
+				,startdate 
+			</if>
+			<if test="enddate != null">
+				,enddate 
+			</if>
+			<if test="travelsum != null">
+				,travelsum 
+			</if>
+			<if test="content != null">
+				,content 
+			</if>
+			<if test="traveltype != null">
+				,traveltype 
+			</if>
+			<if test="others != null">
+				,others 
+			</if>
+			<if test="status != null">
+				,status 
+			</if>
+			<if test="processname != null">
+				,processname 
+			</if>
+			<if test="processinstanceid != null">
+				,processinstanceid 
+			</if>
+			<if test="wfstatus != null">
+				,wfstatus 
+			</if>
+			<if test="createDate != null">
+				,createDate 
+			</if>
+			<if test="updateDate != null">
+				,updateDate 
+			</if>
+			<if test="createBy != null">
+				,createBy 
+			</if>
+			<if test="updateBy != null">
+				,updateBy 
+			</if>
+        </trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			  #{travelid, jdbcType=BIGINT}
+	     
+			<if test="area != null">
+				,#{area, jdbcType=VARCHAR}
+			</if>
+			<if test="company != null">
+				,#{company, jdbcType=VARCHAR}
+			</if>
+			<if test="dept != null">
+				,#{dept, jdbcType=VARCHAR}
+			</if>
+			<if test="post != null">
+				,#{post, jdbcType=VARCHAR}
+			</if>
+			<if test="appuser != null">
+				,#{appuser, jdbcType=VARCHAR}
+			</if>
+			<if test="appdate != null">
+				,#{appdate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="startdate != null">
+				,#{startdate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="enddate != null">
+				,#{enddate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="travelsum != null">
+				,#{travelsum, jdbcType=DOUBLE}
+			</if>
+			<if test="content != null">
+				,#{content, jdbcType=VARCHAR}
+			</if>
+			<if test="traveltype != null">
+				,#{traveltype, jdbcType=INTEGER}
+			</if>
+			<if test="others != null">
+				,#{others, jdbcType=VARCHAR}
+			</if>
+			<if test="status != null">
+				,#{status, jdbcType=INTEGER}
+			</if>
+			<if test="processname != null">
+				,#{processname, jdbcType=VARCHAR}
+			</if>
+			<if test="processinstanceid != null">
+				,#{processinstanceid, jdbcType=BIGINT}
+			</if>
+			<if test="wfstatus != null">
+				,#{wfstatus, jdbcType=BIGINT}
+			</if>
+			<if test="createDate != null">
+				,#{createDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="updateDate != null">
+				,#{updateDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="createBy != null">
+				,#{createBy, jdbcType=VARCHAR}
+			</if>
+			<if test="updateBy != null">
+				,#{updateBy, jdbcType=VARCHAR}
+			</if>
+	    </trim>
+    </insert>
+
+	 
+	<update id="updateStravel" parameterType="com.glaf.oa.stravel.model.Stravel">
+		update oa_stravel
+		set
+        <trim prefix="" suffix="" suffixOverrides=",">		
+			<if test="area != null">
+				area = #{area, jdbcType=VARCHAR},
+			</if>
+			<if test="company != null">
+				company = #{company, jdbcType=VARCHAR},
+			</if>
+			<if test="dept != null">
+				dept = #{dept, jdbcType=VARCHAR},
+			</if>
+			<if test="post != null">
+				post = #{post, jdbcType=VARCHAR},
+			</if>
+			<if test="appuser != null">
+				appuser = #{appuser, jdbcType=VARCHAR},
+			</if>
+			<if test="appdate != null">
+				appdate = #{appdate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="startdate != null">
+				startdate = #{startdate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="enddate != null">
+				enddate = #{enddate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="travelsum != null">
+				travelsum = #{travelsum, jdbcType=DOUBLE},
+			</if>
+			<if test="content != null">
+				content = #{content, jdbcType=VARCHAR},
+			</if>
+			<if test="traveltype != null">
+				traveltype = #{traveltype, jdbcType=INTEGER},
+			</if>
+			<if test="others != null">
+				others = #{others, jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				status = #{status, jdbcType=INTEGER},
+			</if>
+			<if test="processname != null">
+				processname = #{processname, jdbcType=VARCHAR},
+			</if>
+			<if test="processinstanceid != null">
+				processinstanceid = #{processinstanceid, jdbcType=BIGINT},
+			</if>
+			<if test="wfstatus != null">
+				wfstatus = #{wfstatus, jdbcType=BIGINT},
+			</if>
+			<if test="createDate != null">
+				createDate = #{createDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateDate != null">
+				updateDate = #{updateDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="createBy != null">
+				createBy = #{createBy, jdbcType=VARCHAR},
+			</if>
+			<if test="updateBy != null">
+				updateBy = #{updateBy, jdbcType=VARCHAR},
+			</if>
+        </trim>
+		where
+          travelid = #{travelid, jdbcType=BIGINT}
+		
+    </update>
+
+ 
+	<delete id="deleteStravelById" parameterType="long"> 
+        delete from oa_stravel
+        where travelid =	#{id}
+	</delete>
+
+	
+	<delete id="deleteStravels" parameterType="com.glaf.oa.stravel.query.StravelQuery">
+		delete from oa_stravel
+		where ( 
+ 			  travelid IN
+              <foreach item="x_travelid" index="index" collection="travelids" 
+                     open="(" separator="," close=")">
+                  #{x_travelid}
+              </foreach>
+		)
+	</delete>
+
+
+	<select id="getStravelById" parameterType="long" resultMap="stravelResultMap">
+		select * from oa_stravel where travelid = #{id}
+	</select>
+
+
+	<select id="getStravels" 
+	    parameterType="com.glaf.oa.stravel.query.StravelQuery"
+		resultMap="stravelResultMap">
+		select E.*,fee.feesumAccount
+		<include refid="selectStravelsSql" />
+		<choose>
+		  <when test="orderBy != null">
+		     order by ${orderBy}
+          </when>
+		  <otherwise>
+		      order by E.travelid desc
+		  </otherwise>
+        </choose>
+	</select>
+
+
+	<select id="getStravelCount" 
+	    parameterType="com.glaf.oa.stravel.query.StravelQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectStravelsSql" />
+	</select>
+
+	<select id="getTraveladdressList" parameterType="long" resultMap="traveladdressResultMap">
+		select * from oa_traveladdress where travelid = #{travelid}
+	</select>
+	
+	<select id="getTravelpersonnelList" parameterType="long" resultMap="travelpersonnelResultMap">
+		select * from oa_travelpersonnel where travelid = #{travelid}
+	</select>
+	
+	<select id="getTravelfeeList" parameterType="long" resultMap="travelfeeResultMap">
+		select * from oa_travelfee where travelid = #{travelid}
+	</select>
+
+	<sql id="selectStravelsSql">
+
+		from oa_stravel E
+		left join
+		(select travelid,sum(feesum) as feesumAccount from oa_travelfee group by travelid) fee
+		on E.travelid = fee.travelid
+		
+		 
+		<where>
+		       1 = 1  
+
+
+			<if test="area != null">
+				and E.area = #{area}
+            </if>
+
+			<if test="areaLike != null and areaLike != '' ">
+				and E.area like #{areaLike}
+            </if>
+
+			<if test="areas != null and areas.size() &gt; 0">
+			    and E.area IN
+                <foreach item="x_area" index="index" collection="areas" 
+                     open="(" separator="," close=")">
+                  #{x_area}
+                </foreach>
+			</if>
+
+	        
+			<if test="company != null and company != '' ">
+				and E.company = #{company}
+            </if>
+
+			<if test="companyLike != null and companyLike != '' ">
+				and E.company like #{companyLike}
+            </if>
+
+			<if test="companys != null and companys.size() &gt; 0">
+			    and E.company IN
+                <foreach item="x_company" index="index" collection="companys" 
+                     open="(" separator="," close=")">
+                  #{x_company}
+                </foreach>
+			</if>
+	        
+			<if test="dept != null and dept != '' ">
+				and E.dept = #{dept}
+            </if>
+
+			<if test="deptLike != null and deptLike != '' ">
+				and E.dept like #{deptLike}
+            </if>
+
+			<if test="depts != null and depts.size() &gt; 0">
+			    and E.dept IN
+                <foreach item="x_dept" index="index" collection="depts" 
+                     open="(" separator="," close=")">
+                  #{x_dept}
+                </foreach>
+			</if>
+	        
+			<if test="post != null and post != '' ">
+				and E.post = #{post}
+            </if>
+
+			<if test="postLike != null and postLike != '' ">
+				and E.post like #{postLike}
+            </if>
+
+			<if test="posts != null and posts.size() &gt; 0">
+			    and E.post IN
+                <foreach item="x_post" index="index" collection="posts" 
+                     open="(" separator="," close=")">
+                  #{x_post}
+                </foreach>
+			</if>
+	        
+			<if test="appuser != null and appuser != '' ">
+				and E.appuser = #{appuser}
+            </if>
+
+			<if test="appuserLike != null and appuserLike != '' ">
+				and E.appuser like #{appuserLike}
+            </if>
+
+			<if test="appusers != null and appusers.size() &gt; 0">
+			    and E.appuser IN
+                <foreach item="x_appuser" index="index" collection="appusers" 
+                     open="(" separator="," close=")">
+                  #{x_appuser}
+                </foreach>
+			</if>
+
+			<if test="appdate != null">
+				and E.appdate = #{appdate}
+            </if>
+
+			<if test="appdateGreaterThanOrEqual != null">
+				and E.appdate &gt;= #{appdateGreaterThanOrEqual}
+            </if>
+
+			<if test="appdateLessThanOrEqual != null">
+				and E.appdate &lt;= #{appdateLessThanOrEqual}
+            </if>
+
+			<if test="appdates != null and appdates.size() &gt; 0">
+			    and E.appdate IN
+                <foreach item="x_appdate" index="index" collection="appdates" 
+                     open="(" separator="," close=")">
+                  #{x_appdate}
+                </foreach>
+			</if>
+
+
+			<if test="startdate != null">
+				and E.startdate = #{startdate}
+            </if>
+
+			<if test="startdateGreaterThanOrEqual != null">
+				and E.startdate &gt;= #{startdateGreaterThanOrEqual}
+            </if>
+
+			<if test="startdateLessThanOrEqual != null">
+				and E.startdate &lt;= #{startdateLessThanOrEqual}
+            </if>
+
+			<if test="startdates != null and startdates.size() &gt; 0">
+			    and E.startdate IN
+                <foreach item="x_startdate" index="index" collection="startdates" 
+                     open="(" separator="," close=")">
+                  #{x_startdate}
+                </foreach>
+			</if>
+
+
+			<if test="enddate != null">
+				and E.enddate = #{enddate}
+            </if>
+
+			<if test="enddateGreaterThanOrEqual != null">
+				and E.enddate &gt;= #{enddateGreaterThanOrEqual}
+            </if>
+
+			<if test="enddateLessThanOrEqual != null">
+				and E.enddate &lt;= #{enddateLessThanOrEqual}
+            </if>
+
+			<if test="enddates != null and enddates.size() &gt; 0">
+			    and E.enddate IN
+                <foreach item="x_enddate" index="index" collection="enddates" 
+                     open="(" separator="," close=")">
+                  #{x_enddate}
+                </foreach>
+			</if>
+
+
+			<if test="travelsum != null">
+				and E.travelsum = #{travelsum}
+            </if>
+
+			<if test="travelsumGreaterThanOrEqual != null">
+				and E.travelsum &gt;= #{travelsumGreaterThanOrEqual}
+            </if>
+
+			<if test="travelsumLessThanOrEqual != null">
+				and E.travelsum &lt;= #{travelsumLessThanOrEqual}
+            </if>
+
+			<if test="travelsums != null and travelsums.size() &gt; 0">
+			    and E.travelsum IN
+                <foreach item="x_travelsum" index="index" collection="travelsums" 
+                     open="(" separator="," close=")">
+                  #{x_travelsum}
+                </foreach>
+			</if>
+
+
+			<if test="traveltype != null">
+				and E.traveltype = #{traveltype}
+            </if>
+
+			<if test="traveltypeGreaterThanOrEqual != null">
+				and E.traveltype &gt;= #{traveltypeGreaterThanOrEqual}
+            </if>
+
+			<if test="traveltypeLessThanOrEqual != null">
+				and E.traveltype &lt;= #{traveltypeLessThanOrEqual}
+            </if>
+
+			<if test="traveltypes != null and traveltypes.size() &gt; 0">
+			    and E.traveltype IN
+                <foreach item="x_traveltype" index="index" collection="traveltypes" 
+                     open="(" separator="," close=")">
+                  #{x_traveltype}
+                </foreach>
+			</if>
+
+
+			<if test="status != null">
+				and E.status = #{status}
+            </if>
+
+			<if test="statusGreaterThanOrEqual != null">
+				and E.status &gt;= #{statusGreaterThanOrEqual}
+            </if>
+
+			<if test="statusLessThanOrEqual != null">
+				and E.status &lt;= #{statusLessThanOrEqual}
+            </if>
+
+			<if test="statuss != null and statuss.size() &gt; 0">
+			    and E.status IN
+                <foreach item="x_status" index="index" collection="statuss" 
+                     open="(" separator="," close=")">
+                  #{x_status}
+                </foreach>
+			</if>
+
+	        
+			<if test="processname != null and processname != '' ">
+				and E.processname = #{processname}
+            </if>
+
+			<if test="processnameLike != null and processnameLike != '' ">
+				and E.processname like #{processnameLike}
+            </if>
+
+			<if test="processnames != null and processnames.size() &gt; 0">
+			    and E.processname IN
+                <foreach item="x_processname" index="index" collection="processnames" 
+                     open="(" separator="," close=")">
+                  #{x_processname}
+                </foreach>
+			</if>
+
+			<if test="processinstanceid != null">
+				and E.processinstanceid = #{processinstanceid}
+            </if>
+
+			<if test="processinstanceidGreaterThanOrEqual != null">
+				and E.processinstanceid &gt;= #{processinstanceidGreaterThanOrEqual}
+            </if>
+
+			<if test="processinstanceidLessThanOrEqual != null">
+				and E.processinstanceid &lt;= #{processinstanceidLessThanOrEqual}
+            </if>
+
+			<if test="processinstanceids != null and processinstanceids.size() &gt; 0">
+			    and E.processinstanceid IN
+                <foreach item="x_processinstanceid" index="index" collection="processinstanceids" 
+                     open="(" separator="," close=")">
+                  #{x_processinstanceid}
+                </foreach>
+			</if>
+
+
+			<if test="wfstatus != null">
+				and E.wfstatus = #{wfstatus}
+            </if>
+
+			<if test="wfstatusGreaterThanOrEqual != null">
+				and E.wfstatus &gt;= #{wfstatusGreaterThanOrEqual}
+            </if>
+
+			<if test="wfstatusLessThanOrEqual != null">
+				and E.wfstatus &lt;= #{wfstatusLessThanOrEqual}
+            </if>
+
+			<if test="wfstatuss != null and wfstatuss.size() &gt; 0">
+			    and E.wfstatus IN
+                <foreach item="x_wfstatus" index="index" collection="wfstatuss" 
+                     open="(" separator="," close=")">
+                  #{x_wfstatus}
+                </foreach>
+			</if>
+			 <if test="createDate != null">
+				and E.createDate = #{createDate}
+            </if>
+
+			<if test="createDateGreaterThanOrEqual != null">
+				and E.createDate &gt;= #{createDateGreaterThanOrEqual}
+            </if>
+
+			<if test="createDateLessThanOrEqual != null">
+				and E.createDate &lt;= #{createDateLessThanOrEqual}
+            </if>
+
+			<if test="createDates != null and createDates.size() &gt; 0">
+			    and E.createDate IN
+                <foreach item="x_createDate" index="index" collection="createDates" 
+                     open="(" separator="," close=")">
+                  #{x_createDate}
+                </foreach>
+			</if>
+
+
+			<if test="updateDate != null">
+				and E.updateDate = #{updateDate}
+            </if>
+
+			<if test="updateDateGreaterThanOrEqual != null">
+				and E.updateDate &gt;= #{updateDateGreaterThanOrEqual}
+            </if>
+
+			<if test="updateDateLessThanOrEqual != null">
+				and E.updateDate &lt;= #{updateDateLessThanOrEqual}
+            </if>
+
+			<if test="updateDates != null and updateDates.size() &gt; 0">
+			    and E.updateDate IN
+                <foreach item="x_updateDate" index="index" collection="updateDates" 
+                     open="(" separator="," close=")">
+                  #{x_updateDate}
+                </foreach>
+			</if>
+			
+			<if test="createBy != null and createBy != '' ">
+				and E.createBy = #{createBy}
+            </if>
+
+			<if test="createByLike != null and createByLike != '' ">
+				and E.createBy like #{createByLike}
+            </if>
+            
+			<if test="contentLike != null and contentLike != '' ">
+				and E.content like #{contentLike}
+            </if>
+
+			<if test="createBys != null and createBys.size() &gt; 0">
+			    and E.createBy IN
+                <foreach item="x_createBy" index="index" collection="createBys" 
+                     open="(" separator="," close=")">
+                  #{x_createBy}
+                </foreach>
+			</if>
+			
+			<if test="updateBy != null and updateBy != '' ">
+				and E.updateBy = #{updateBy}
+            </if>
+
+			<if test="updateByLike != null and updateByLike != '' ">
+				and E.updateBy like #{updateByLike}
+            </if>
+
+			<if test="updateBys != null and updateBys.size() &gt; 0">
+			    and E.updateBy IN
+                <foreach item="x_updateBy" index="index" collection="updateBys" 
+                     open="(" separator="," close=")">
+                  #{x_updateBy}
+                </foreach>
+			</if>
+			
+			<if test="createByAndApply != null and createByAndApply != '' ">
+				and (E.createBy = #{createByAndApply} or E.appuser = #{createByAndApply})
+            </if>
+		</where>
+	</sql>
+	
+	<select id="getReviewStravelCount" parameterType="com.glaf.oa.stravel.query.StravelQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectReviewStravelsSql" />
+	</select>
+	
+	<select id="getReviewStravels" parameterType="com.glaf.oa.stravel.query.StravelQuery"
+		resultMap="stravelResultMap">
+		select E.*,fee.feesumAccount
+		<include refid="selectReviewStravelsSql" />
+		<choose>
+			<when test="orderBy != null">
+				order by ${orderBy}
+          </when>
+			<otherwise>
+				order by E.travelid desc
+		  </otherwise>
+		</choose>
+	</select>
+	
+	<sql id="selectReviewStravelsSql">
+		from oa_stravel E
+		left join
+		(select travelid,sum(feesum) as feesumAccount from oa_travelfee group by travelid) fee
+		on E.travelid = fee.travelid
+		
+		<if
+			test=" workedProcessFlag == 'WD' and actorIds != null and actorIds.size() !=  0">
+			inner join JBPM_TASKINSTANCE T on cast(E.PROCESSINSTANCEID as
+			integer) = T.PROCINST_
+        	</if>
+        	      
+		<where>
+			1 = 1	
+			<if
+				test="workedProcessFlag == 'WD' and actorIds != null and actorIds.size() != 0">
+				and ( T.END_ IS  NULL)
+				and ( T.ACTORID_ IN
+				<foreach item="x_actorId" index="index" collection="actorIds"
+					open="(" separator="," close=")">
+					#{x_actorId}
+                </foreach>
+				)	
+			</if>
+			
+			<if
+				test="workedProcessFlag == 'PD' and actorIds != null and actorIds.size() != 0" >
+				and cast(E.PROCESSINSTANCEID as integer) in (
+				SELECT a.PROCINST_
+				FROM JBPM_TASKINSTANCE a
+				WHERE (1 = 1)
+				AND (a.END_ IS not NULL)
+				AND (a.ACTORID_ IS NOT NULL)
+				AND (a.ACTORID_ in
+					<foreach item="x_actorId1" index="index" collection="actorIds"
+					open="(" separator="," close=")">
+					#{x_actorId1}
+                </foreach>
+				)
+				union
+				SELECT a.PROCINST_
+				FROM JBPM_POOLEDACTOR p
+				INNER JOIN JBPM_TASKACTORPOOL t
+				ON p.ID_ = t.POOLEDACTOR_
+				INNER JOIN JBPM_TASKINSTANCE a
+				ON t.TASKINSTANCE_ = a.ID_
+				WHERE (1 = 1)
+				AND (a.END_ IS NULL)
+				AND (a.ACTORID_ IS NULL)
+				AND (p.ACTORID_ IN 
+				<foreach item="x_actorId2" index="index" collection="actorIds"
+					open="(" separator="," close=")">
+					#{x_actorId2}
+                </foreach>
+				)
+				union 
+				select distinct 0 from JBPM_TASKINSTANCE 
+				)
+				</if>
+
+
+			<if test="area != null">
+				and E.area = #{area}
+            </if>
+
+	        
+			<if test="company != null and company != '' ">
+				and E.company = #{company}
+            </if>
+	        
+			<if test="dept != null and dept != '' ">
+				and E.dept = #{dept}
+            </if>
+	        
+			<if test="appuser != null and appuser != '' ">
+				and E.appuser = #{appuser}
+            </if>
+
+			<if test="appuserLike != null and appuserLike != '' ">
+				and E.appuser like #{appuserLike}
+            </if>
+
+			<if test="appdateGreaterThanOrEqual != null">
+				and E.appdate &gt;= #{appdateGreaterThanOrEqual}
+            </if>
+
+			<if test="appdateLessThanOrEqual != null">
+				and E.appdate &lt;= #{appdateLessThanOrEqual}
+            </if>
+
+			<if test="status != null">
+				and E.status = #{status}
+            </if>
+
+			<if test="statusGreaterThanOrEqual != null">
+				and E.status &gt;= #{statusGreaterThanOrEqual}
+            </if>
+
+			<if test="statusLessThanOrEqual != null">
+				and E.status &lt;= #{statusLessThanOrEqual}
+            </if>
+
+			<if test="statuss != null and statuss.size() &gt; 0">
+			    and E.status IN
+                <foreach item="x_status" index="index" collection="statuss" 
+                     open="(" separator="," close=")">
+                  #{x_status}
+                </foreach>
+			</if>
+			 
+		</where>
+		
+	</sql>
+
+</mapper>

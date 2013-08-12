@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.oa.traveladdress.mapper.TraveladdressMapper">
+
+ 	<resultMap id="traveladdressResultMap"	type="com.glaf.oa.traveladdress.model.Traveladdress">
+        <id property="addressid" column="addressid" jdbcType="BIGINT" />
+        <result property="travelid" column="travelid" jdbcType="BIGINT"/>
+        <result property="startadd" column="startadd" jdbcType="VARCHAR"/>
+        <result property="endadd" column="endadd" jdbcType="VARCHAR"/>
+        <result property="transportation" column="transportation" jdbcType="VARCHAR"/>
+        <result property="createDate" column="createDate" jdbcType="TIMESTAMP"/>
+        <result property="updateDate" column="updateDate" jdbcType="TIMESTAMP"/>
+        <result property="createBy" column="createBy" jdbcType="VARCHAR"/>
+        <result property="updateBy" column="updateBy" jdbcType="VARCHAR"/>
+	</resultMap>
+
+ 
+	<insert id="insertTraveladdress" parameterType="com.glaf.oa.traveladdress.model.Traveladdress">
+		insert into oa_traveladdress 
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+		    addressid
+			<if test="travelid != null">
+				,travelid 
+			</if>
+			<if test="startadd != null">
+				,startadd 
+			</if>
+			<if test="endadd != null">
+				,endadd 
+			</if>
+			<if test="transportation != null">
+				,transportation 
+			</if>
+			<if test="createDate != null">
+				,createDate 
+			</if>
+			<if test="updateDate != null">
+				,updateDate 
+			</if>
+			<if test="createBy != null">
+				,createBy 
+			</if>
+			<if test="updateBy != null">
+				,updateBy 
+			</if>
+        </trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			  #{addressid, jdbcType=BIGINT}
+	     
+			<if test="travelid != null">
+				,#{travelid, jdbcType=BIGINT}
+			</if>
+			<if test="startadd != null">
+				,#{startadd, jdbcType=VARCHAR}
+			</if>
+			<if test="endadd != null">
+				,#{endadd, jdbcType=VARCHAR}
+			</if>
+			<if test="transportation != null">
+				,#{transportation, jdbcType=VARCHAR}
+			</if>
+			<if test="createDate != null">
+				,#{createDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="updateDate != null">
+				,#{updateDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="createBy != null">
+				,#{createBy, jdbcType=VARCHAR}
+			</if>
+			<if test="updateBy != null">
+				,#{updateBy, jdbcType=VARCHAR}
+			</if>
+	    </trim>
+    </insert>
+
+	 
+	<update id="updateTraveladdress" parameterType="com.glaf.oa.traveladdress.model.Traveladdress">
+		update oa_traveladdress
+		set
+        <trim prefix="" suffix="" suffixOverrides=",">		
+			<if test="travelid != null">
+				travelid = #{travelid, jdbcType=BIGINT},
+			</if>
+			<if test="startadd != null">
+				startadd = #{startadd, jdbcType=VARCHAR},
+			</if>
+			<if test="endadd != null">
+				endadd = #{endadd, jdbcType=VARCHAR},
+			</if>
+			<if test="transportation != null">
+				transportation = #{transportation, jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				createDate = #{createDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateDate != null">
+				updateDate = #{updateDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="createBy != null">
+				createBy = #{createBy, jdbcType=VARCHAR},
+			</if>
+			<if test="updateBy != null">
+				updateBy = #{updateBy, jdbcType=VARCHAR},
+			</if>
+        </trim>
+		where
+          addressid = #{addressid, jdbcType=BIGINT}
+		
+    </update>
+
+ 
+	<delete id="deleteTraveladdressById" parameterType="long"> 
+        delete from oa_traveladdress
+        where addressid =	#{id}
+	</delete>
+	
+	<delete id="deleteTraveladdressByTravelid" parameterType="long"> 
+        delete from oa_traveladdress
+        where travelid =	#{travelid}
+	</delete>
+
+	
+	<delete id="deleteTraveladdresss" parameterType="com.glaf.oa.traveladdress.query.TraveladdressQuery">
+		delete from oa_traveladdress
+		where ( 
+ 			  addressid IN
+              <foreach item="x_addressid" index="index" collection="addressids" 
+                     open="(" separator="," close=")">
+                  #{x_addressid}
+              </foreach>
+		)
+	</delete>
+
+
+	<select id="getTraveladdressById" parameterType="long" resultMap="traveladdressResultMap">
+		select * from oa_traveladdress where addressid = #{id}
+	</select>
+
+	<select id="getTraveladdresssByParentId" parameterType="long" resultMap="traveladdressResultMap">
+		select * from oa_traveladdress where travelid = #{parentId}
+	</select>
+
+	<select id="getTraveladdresss" 
+	    parameterType="com.glaf.oa.traveladdress.query.TraveladdressQuery"
+		resultMap="traveladdressResultMap">
+		select E.*
+		<include refid="selectTraveladdresssSql" />
+		<choose>
+		  <when test="orderBy != null">
+		     order by ${orderBy}
+          </when>
+		  <otherwise>
+		      order by E.addressid desc
+		  </otherwise>
+        </choose>
+	</select>
+	
+
+	<select id="getTraveladdressCount" 
+	    parameterType="com.glaf.oa.traveladdress.query.TraveladdressQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectTraveladdresssSql" />
+	</select>
+
+
+	<sql id="selectTraveladdresssSql">
+
+		from oa_traveladdress E
+		
+		 
+		<where>
+		       1 = 1  
+
+
+			<if test="travelid != null">
+				and E.travelid = #{travelid}
+            </if>
+
+			<if test="travelidGreaterThanOrEqual != null">
+				and E.travelid &gt;= #{travelidGreaterThanOrEqual}
+            </if>
+
+			<if test="travelidLessThanOrEqual != null">
+				and E.travelid &lt;= #{travelidLessThanOrEqual}
+            </if>
+
+			<if test="travelids != null and travelids.size() &gt; 0">
+			    and E.travelid IN
+                <foreach item="x_travelid" index="index" collection="travelids" 
+                     open="(" separator="," close=")">
+                  #{x_travelid}
+                </foreach>
+			</if>
+
+	        
+			<if test="startadd != null and startadd != '' ">
+				and E.startadd = #{startadd}
+            </if>
+
+			<if test="startaddLike != null and startaddLike != '' ">
+				and E.startadd like #{startaddLike}
+            </if>
+
+			<if test="startadds != null and startadds.size() &gt; 0">
+			    and E.startadd IN
+                <foreach item="x_startadd" index="index" collection="startadds" 
+                     open="(" separator="," close=")">
+                  #{x_startadd}
+                </foreach>
+			</if>
+	        
+			<if test="endadd != null and endadd != '' ">
+				and E.endadd = #{endadd}
+            </if>
+
+			<if test="endaddLike != null and endaddLike != '' ">
+				and E.endadd like #{endaddLike}
+            </if>
+
+			<if test="endadds != null and endadds.size() &gt; 0">
+			    and E.endadd IN
+                <foreach item="x_endadd" index="index" collection="endadds" 
+                     open="(" separator="," close=")">
+                  #{x_endadd}
+                </foreach>
+			</if>
+	        
+			<if test="transportation != null and transportation != '' ">
+				and E.transportation = #{transportation}
+            </if>
+
+			<if test="transportationLike != null and transportationLike != '' ">
+				and E.transportation like #{transportationLike}
+            </if>
+
+			<if test="transportations != null and transportations.size() &gt; 0">
+			    and E.transportation IN
+                <foreach item="x_transportation" index="index" collection="transportations" 
+                     open="(" separator="," close=")">
+                  #{x_transportation}
+                </foreach>
+			</if>
+			
+			<if test="createDate != null">
+				and E.createDate = #{createDate}
+            </if>
+
+			<if test="createDateGreaterThanOrEqual != null">
+				and E.createDate &gt;= #{createDateGreaterThanOrEqual}
+            </if>
+
+			<if test="createDateLessThanOrEqual != null">
+				and E.createDate &lt;= #{createDateLessThanOrEqual}
+            </if>
+
+			<if test="createDates != null and createDates.size() &gt; 0">
+			    and E.createDate IN
+                <foreach item="x_createDate" index="index" collection="createDates" 
+                     open="(" separator="," close=")">
+                  #{x_createDate}
+                </foreach>
+			</if>
+
+
+			<if test="updateDate != null">
+				and E.updateDate = #{updateDate}
+            </if>
+
+			<if test="updateDateGreaterThanOrEqual != null">
+				and E.updateDate &gt;= #{updateDateGreaterThanOrEqual}
+            </if>
+
+			<if test="updateDateLessThanOrEqual != null">
+				and E.updateDate &lt;= #{updateDateLessThanOrEqual}
+            </if>
+
+			<if test="updateDates != null and updateDates.size() &gt; 0">
+			    and E.updateDate IN
+                <foreach item="x_updateDate" index="index" collection="updateDates" 
+                     open="(" separator="," close=")">
+                  #{x_updateDate}
+                </foreach>
+			</if>
+			
+			<if test="createBy != null and createBy != '' ">
+				and E.createBy = #{createBy}
+            </if>
+
+			<if test="createByLike != null and createByLike != '' ">
+				and E.createBy like #{createByLike}
+            </if>
+
+			<if test="createBys != null and createBys.size() &gt; 0">
+			    and E.createBy IN
+                <foreach item="x_createBy" index="index" collection="createBys" 
+                     open="(" separator="," close=")">
+                  #{x_createBy}
+                </foreach>
+			</if>
+			
+			<if test="updateBy != null and updateBy != '' ">
+				and E.updateBy = #{updateBy}
+            </if>
+
+			<if test="updateByLike != null and updateByLike != '' ">
+				and E.updateBy like #{updateByLike}
+            </if>
+
+			<if test="updateBys != null and updateBys.size() &gt; 0">
+			    and E.updateBy IN
+                <foreach item="x_updateBy" index="index" collection="updateBys" 
+                     open="(" separator="," close=")">
+                  #{x_updateBy}
+                </foreach>
+			</if>
+			 
+		</where>
+	</sql>
+
+</mapper>

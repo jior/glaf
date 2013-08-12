@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root-container name="Borrowprocess" width="847" height="540">
+  <node name="启动流程" x="40" y="22" width="132" height="38">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="会计审核" x="41" y="99" width="132" height="37">
+    <edge>
+      <label x="-7" y="-19"/>
+    </edge>
+  </node>
+  <node name="会计审核通过？" x="310" y="98" width="147" height="39">
+    <edge>
+      <label x="-87" y="-30"/>
+      <bendpoint w1="226" h1="0" w2="-118" h2="-100"/>
+    </edge>
+    <edge>
+      <label x="-32" y="-16"/>
+    </edge>
+  </node>
+  <node name="部门经理" x="37" y="162" width="132" height="40">
+    <edge>
+      <label x="-1" y="-23"/>
+    </edge>
+  </node>
+  <node name="部门经理审核通过？" x="313" y="162" width="186" height="40">
+    <edge>
+      <label x="-47" y="-26"/>
+      <bendpoint w1="171" h1="-1" w2="-145" h2="-36"/>
+    </edge>
+    <edge>
+      <label x="25" y="-8"/>
+    </edge>
+  </node>
+  <node name="部门总监审核" x="40" y="247" width="132" height="38">
+    <edge>
+      <label x="1" y="-27"/>
+    </edge>
+  </node>
+  <node name="部门总监审核通过？" x="318" y="247" width="173" height="37">
+    <edge>
+      <label x="-64" y="-23"/>
+      <bendpoint w1="170" h1="0" w2="-148" h2="48"/>
+    </edge>
+    <edge>
+      <label x="-41" y="-20"/>
+    </edge>
+  </node>
+  <node name="公司副总审核" x="41" y="321" width="132" height="40">
+    <edge>
+      <label x="6" y="-26"/>
+    </edge>
+  </node>
+  <node name="公司副总审核通过？" x="309" y="321" width="160" height="42">
+    <edge>
+      <label x="-91" y="-25"/>
+      <bendpoint w1="217" h1="0" w2="-121" h2="125"/>
+    </edge>
+    <edge>
+      <label x="-33" y="-19"/>
+    </edge>
+  </node>
+  <node name="总经理审核" x="46" y="427" width="132" height="39">
+    <edge>
+      <label x="3" y="-21"/>
+    </edge>
+  </node>
+  <node name="总经理审核通过？" x="317" y="425" width="160" height="42">
+    <edge>
+      <label x="35" y="-32"/>
+      <bendpoint w1="234" h1="-87" w2="-96" h2="142"/>
+    </edge>
+    <edge>
+      <label x="-15" y="-23"/>
+    </edge>
+  </node>
+  <node name="审核不通过" x="661" y="198" width="122" height="39">
+    <edge>
+      <label x="-69" y="-24"/>
+      <bendpoint w1="-90" h1="-170" w2="261" h2="0"/>
+    </edge>
+  </node>
+  <node name="重新修改" x="310" y="29" width="132" height="36">
+    <edge>
+      <label x="21" y="-24"/>
+      <bendpoint w1="-175" h1="-1" w2="94" h2="-71"/>
+    </edge>
+  </node>
+  <node name="完成" x="582" y="426" width="132" height="40"/>
+</root-container>

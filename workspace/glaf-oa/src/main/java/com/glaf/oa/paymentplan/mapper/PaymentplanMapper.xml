@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.oa.paymentplan.mapper.PaymentplanMapper">
+
+ 	<resultMap id="paymentplanResultMap"	type="com.glaf.oa.paymentplan.model.Paymentplan">
+        <id property="planid" column="planid" jdbcType="BIGINT" />
+        <result property="budgetid" column="budgetid" jdbcType="BIGINT"/>
+        <result property="paymemtsum" column="paymemtsum" jdbcType="DOUBLE"/>
+        <result property="paymentdate" column="paymentdate" jdbcType="TIMESTAMP"/>
+        <result property="sequence" column="sequence" jdbcType="INTEGER"/>
+        <result property="createBy" column="createBy" jdbcType="VARCHAR"/>
+	</resultMap>
+
+ 
+	<insert id="insertPaymentplan" parameterType="com.glaf.oa.paymentplan.model.Paymentplan">
+		insert into oa_paymentplan 
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+		    planid
+			<if test="budgetid != null">
+				,budgetid 
+			</if>
+			<if test="paymemtsum != null">
+				,paymemtsum 
+			</if>
+			<if test="paymentdate != null">
+				,paymentdate 
+			</if>
+			<if test="sequence != null">
+				,sequence 
+			</if>
+			<if test="createBy != null">
+				,createBy 
+			</if>
+        </trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			  #{planid, jdbcType=BIGINT}
+	     
+			<if test="budgetid != null">
+				,#{budgetid, jdbcType=BIGINT}
+			</if>
+			<if test="paymemtsum != null">
+				,#{paymemtsum, jdbcType=DOUBLE}
+			</if>
+			<if test="paymentdate != null">
+				,#{paymentdate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="sequence != null">
+				,#{sequence, jdbcType=INTEGER}
+			</if>
+			<if test="createBy != null">
+				,#{createBy, jdbcType=VARCHAR}
+			</if>
+	    </trim>
+    </insert>
+
+	 
+	<update id="updatePaymentplan" parameterType="com.glaf.oa.paymentplan.model.Paymentplan">
+		update oa_paymentplan
+		set
+        <trim prefix="" suffix="" suffixOverrides=",">		
+			<if test="budgetid != null">
+				budgetid = #{budgetid, jdbcType=BIGINT},
+			</if>
+			<if test="paymemtsum != null">
+				paymemtsum = #{paymemtsum, jdbcType=DOUBLE},
+			</if>
+			<if test="paymentdate != null">
+				paymentdate = #{paymentdate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="sequence != null">
+				sequence = #{sequence, jdbcType=INTEGER},
+			</if>
+			<if test="createBy != null">
+				createBy = #{createBy, jdbcType=VARCHAR},
+			</if>
+        </trim>
+		where
+          planid = #{planid, jdbcType=BIGINT}
+		
+    </update>
+
+ 
+	<delete id="deletePaymentplanById" parameterType="long"> 
+        delete from oa_paymentplan
+        where planid =	#{id}
+	</delete>
+
+	
+	<delete id="deletePaymentplans" parameterType="com.glaf.oa.paymentplan.query.PaymentplanQuery">
+		delete from oa_paymentplan
+		where ( 
+ 			  planid IN
+              <foreach item="x_planid" index="index" collection="planids" 
+                     open="(" separator="," close=")">
+                  #{x_planid}
+              </foreach>
+		)
+	</delete>
+
+
+	<select id="getPaymentplanById" parameterType="long" resultMap="paymentplanResultMap">
+		select * from oa_paymentplan where planid = #{id}
+	</select>
+
+
+	<select id="getPaymentplans" 
+	    parameterType="com.glaf.oa.paymentplan.query.PaymentplanQuery"
+		resultMap="paymentplanResultMap">
+		select E.*
+		<include refid="selectPaymentplansSql" />
+		<choose>
+		  <when test="orderBy != null">
+		     order by ${orderBy}
+          </when>
+		  <otherwise>
+		      order by E.planid desc
+		  </otherwise>
+        </choose>
+	</select>
+
+
+	<select id="getPaymentplanCount" 
+	    parameterType="com.glaf.oa.paymentplan.query.PaymentplanQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectPaymentplansSql" />
+	</select>
+
+
+	<sql id="selectPaymentplansSql">
+
+		from oa_paymentplan E
+		
+		 
+		<where>
+		       1 = 1  
+
+
+			<if test="budgetid != null">
+				and E.budgetid = #{budgetid}
+            </if>
+
+			<if test="budgetidGreaterThanOrEqual != null">
+				and E.budgetid &gt;= #{budgetidGreaterThanOrEqual}
+            </if>
+
+			<if test="budgetidLessThanOrEqual != null">
+				and E.budgetid &lt;= #{budgetidLessThanOrEqual}
+            </if>
+
+			<if test="budgetids != null and budgetids.size() &gt; 0">
+			    and E.budgetid IN
+                <foreach item="x_budgetid" index="index" collection="budgetids" 
+                     open="(" separator="," close=")">
+                  #{x_budgetid}
+                </foreach>
+			</if>
+
+
+			<if test="paymemtsum != null">
+				and E.paymemtsum = #{paymemtsum}
+            </if>
+
+			<if test="paymemtsumGreaterThanOrEqual != null">
+				and E.paymemtsum &gt;= #{paymemtsumGreaterThanOrEqual}
+            </if>
+
+			<if test="paymemtsumLessThanOrEqual != null">
+				and E.paymemtsum &lt;= #{paymemtsumLessThanOrEqual}
+            </if>
+
+			<if test="paymemtsums != null and paymemtsums.size() &gt; 0">
+			    and E.paymemtsum IN
+                <foreach item="x_paymemtsum" index="index" collection="paymemtsums" 
+                     open="(" separator="," close=")">
+                  #{x_paymemtsum}
+                </foreach>
+			</if>
+
+
+			<if test="paymentdate != null">
+				and E.paymentdate = #{paymentdate}
+            </if>
+
+			<if test="paymentdateGreaterThanOrEqual != null">
+				and E.paymentdate &gt;= #{paymentdateGreaterThanOrEqual}
+            </if>
+
+			<if test="paymentdateLessThanOrEqual != null">
+				and E.paymentdate &lt;= #{paymentdateLessThanOrEqual}
+            </if>
+
+			<if test="paymentdates != null and paymentdates.size() &gt; 0">
+			    and E.paymentdate IN
+                <foreach item="x_paymentdate" index="index" collection="paymentdates" 
+                     open="(" separator="," close=")">
+                  #{x_paymentdate}
+                </foreach>
+			</if>
+
+
+			<if test="sequence != null">
+				and E.sequence = #{sequence}
+            </if>
+
+			<if test="sequenceGreaterThanOrEqual != null">
+				and E.sequence &gt;= #{sequenceGreaterThanOrEqual}
+            </if>
+
+			<if test="sequenceLessThanOrEqual != null">
+				and E.sequence &lt;= #{sequenceLessThanOrEqual}
+            </if>
+
+			<if test="sequences != null and sequences.size() &gt; 0">
+			    and E.sequence IN
+                <foreach item="x_sequence" index="index" collection="sequences" 
+                     open="(" separator="," close=")">
+                  #{x_sequence}
+                </foreach>
+			</if>
+
+	        
+			<if test="createBy != null and createBy != '' ">
+				and E.createBy = #{createBy}
+            </if>
+
+			<if test="createByLike != null and createByLike != '' ">
+				and E.createBy like #{createByLike}
+            </if>
+
+			<if test="createBys != null and createBys.size() &gt; 0">
+			    and E.createBy IN
+                <foreach item="x_createBy" index="index" collection="createBys" 
+                     open="(" separator="," close=")">
+                  #{x_createBy}
+                </foreach>
+			</if>
+			 
+		</where>
+	</sql>
+
+</mapper>

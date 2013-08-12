@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.oa.assesscontent.mapper.AssesscontentMapper">
+
+ 	<resultMap id="assesscontentResultMap"	type="com.glaf.oa.assesscontent.model.Assesscontent">
+        <id property="contentid" column="contentid" jdbcType="BIGINT" />
+        <result property="sortid" column="sortid" jdbcType="BIGINT"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="standard" column="standard" jdbcType="DOUBLE"/>
+        <result property="createBy" column="createBy" jdbcType="VARCHAR"/>
+        <result property="createDate" column="createDate" jdbcType="TIMESTAMP"/>
+        <result property="updateDate" column="updateDate" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="updateBy" jdbcType="VARCHAR"/>
+        <result property="assessId" column="assessId" jdbcType="BIGINT"/>
+	</resultMap>
+	
+ 	<resultMap id="assesscontentAndScoreResultMap"	type="com.glaf.oa.assesscontent.model.AssesscontentAndScore">
+        <id property="contentid" column="contentid" jdbcType="BIGINT" />
+        <result property="sortid" column="sortid" jdbcType="BIGINT"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="standard" column="standard" jdbcType="DOUBLE"/>
+        <result property="basis" column="basis" jdbcType="VARCHAR"/>
+        <result property="scoreid" column="scoreid" jdbcType="BIGINT"/>
+        <result property="reason" column="reason" jdbcType="VARCHAR"/>
+        <result property="resultid" column="resultid" jdbcType="BIGINT"/>
+        <result property="score" column="score" jdbcType="BIGINT"/>
+	</resultMap>
+
+ 
+ 
+	<insert id="insertAssesscontent" parameterType="com.glaf.oa.assesscontent.model.Assesscontent">
+		insert into oa_assesscontent 
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+		    contentid
+			<if test="sortid != null">
+				,sortid 
+			</if>
+			<if test="name != null">
+				,name 
+			</if>
+			<if test="basis != null">
+				,basis 
+			</if>
+			<if test="standard != null">
+				,standard 
+			</if>
+			<if test="createBy != null">
+				,createBy 
+			</if>
+			<if test="createDate != null">
+				,createDate 
+			</if>
+			<if test="updateDate != null">
+				,updateDate 
+			</if>
+			<if test="updateBy != null">
+				,updateBy 
+			</if>
+        </trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			  #{contentid, jdbcType=BIGINT}
+	     
+			<if test="sortid != null">
+				,#{sortid, jdbcType=BIGINT}
+			</if>
+			<if test="name != null">
+				,#{name, jdbcType=VARCHAR}
+			</if>
+			<if test="basis != null">
+				,#{basis, jdbcType=VARCHAR}
+			</if>
+			<if test="standard != null">
+				,#{standard, jdbcType=DOUBLE}
+			</if>
+			<if test="createBy != null">
+				,#{createBy, jdbcType=VARCHAR}
+			</if>
+			<if test="createDate != null">
+				,#{createDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="updateDate != null">
+				,#{updateDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="updateBy != null">
+				,#{updateBy, jdbcType=VARCHAR}
+			</if>
+	    </trim>
+    </insert>
+
+	 
+	<update id="updateAssesscontent" parameterType="com.glaf.oa.assesscontent.model.Assesscontent">
+		update oa_assesscontent
+		set
+        <trim prefix="" suffix="" suffixOverrides=",">		
+			<if test="sortid != null">
+				sortid = #{sortid, jdbcType=BIGINT},
+			</if>
+			<if test="name != null">
+				name = #{name, jdbcType=VARCHAR},
+			</if>
+			<if test="basis != null">
+				basis = #{basis, jdbcType=VARCHAR},
+			</if>
+			<if test="standard != null">
+				standard = #{standard, jdbcType=DOUBLE},
+			</if>
+			<if test="createBy != null">
+				createBy = #{createBy, jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				createDate = #{createDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateDate != null">
+				updateDate = #{updateDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateBy != null">
+				updateBy = #{updateBy, jdbcType=VARCHAR},
+			</if>
+        </trim>
+		where
+          contentid = #{contentid, jdbcType=BIGINT}
+		
+    </update>
+
+ 
+	<delete id="deleteAssesscontentById" parameterType="long"> 
+        delete from oa_assesscontent
+        where contentid =	#{id}
+	</delete>
+	<delete id="deleteAssesscontentByParentId" parameterType="long"> 
+        delete from oa_assesscontent
+        where sortid =	#{parentId}
+	</delete>
+	
+	<delete id="deleteAssesscontents" parameterType="com.glaf.oa.assesscontent.query.AssesscontentQuery">
+		delete from oa_assesscontent
+		where ( 
+ 			  contentid IN
+              <foreach item="x_contentid" index="index" collection="contentids" 
+                     open="(" separator="," close=")">
+                  #{x_contentid}
+              </foreach>
+		)
+	</delete>
+
+
+	<select id="getAssesscontentById" parameterType="long" resultMap="assesscontentResultMap">
+		select * from oa_assesscontent where contentid = #{id}
+	</select> 
+	
+	<select id="getAssesscontentAndScoreList" parameterType="com.glaf.oa.assessscore.query.AssessscoreQuery" resultMap="assesscontentAndScoreResultMap">
+		select c.name,c.basis,c.standard,s.score,s.reason,s.scoreid,s.resultid,c.sortid,c.contentid
+		from oa_assesscontent c,oa_assessscore s
+		where c.contentid=s.contentid
+		<if test="sortid != null">
+				 and c.sortid = #{sortid}
+            </if>
+		<if test="resultid != null">
+				and s.resultid = #{resultid}
+            </if>
+		
+	</select>
+
+
+	<select id="getAssesscontents" 
+	    parameterType="com.glaf.oa.assesscontent.query.AssesscontentQuery"
+		resultMap="assesscontentResultMap">
+		select E.*
+		<include refid="selectAssesscontentsSql" />
+		<choose>
+		  <when test="orderBy != null">
+		     order by ${orderBy}
+          </when>
+		  <otherwise>
+		      order by E.contentid desc
+		  </otherwise>
+        </choose>
+	</select>
+
+
+	<select id="getAssesscontentCount" 
+	    parameterType="com.glaf.oa.assesscontent.query.AssesscontentQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectAssesscontentsSql" />
+	</select>
+
+
+	<sql id="selectAssesscontentsSql">
+
+		from oa_assesscontent E
+		
+		 
+		<where>
+		       1 = 1  
+
+
+			<if test="sortid != null">
+				and E.sortid = #{sortid}
+            </if>
+
+			<if test="sortidGreaterThanOrEqual != null">
+				and E.sortid &gt;= #{sortidGreaterThanOrEqual}
+            </if>
+
+			<if test="sortidLessThanOrEqual != null">
+				and E.sortid &lt;= #{sortidLessThanOrEqual}
+            </if>
+
+			<if test="sortids != null and sortids.size() &gt; 0">
+			    and E.sortid IN
+                <foreach item="x_sortid" index="index" collection="sortids" 
+                     open="(" separator="," close=")">
+                  #{x_sortid}
+                </foreach>
+			</if>
+
+	        
+			<if test="name != null and name != '' ">
+				and E.name = #{name}
+            </if>
+
+			<if test="nameLike != null and nameLike != '' ">
+				and E.name like #{nameLike}
+            </if>
+
+			<if test="names != null and names.size() &gt; 0">
+			    and E.name IN
+                <foreach item="x_name" index="index" collection="names" 
+                     open="(" separator="," close=")">
+                  #{x_name}
+                </foreach>
+			</if>
+
+			<if test="standard != null">
+				and E.standard = #{standard}
+            </if>
+
+			<if test="standardGreaterThanOrEqual != null">
+				and E.standard &gt;= #{standardGreaterThanOrEqual}
+            </if>
+
+			<if test="standardLessThanOrEqual != null">
+				and E.standard &lt;= #{standardLessThanOrEqual}
+            </if>
+
+			<if test="standards != null and standards.size() &gt; 0">
+			    and E.standard IN
+                <foreach item="x_standard" index="index" collection="standards" 
+                     open="(" separator="," close=")">
+                  #{x_standard}
+                </foreach>
+			</if>
+
+	        
+			<if test="createBy != null and createBy != '' ">
+				and E.createBy = #{createBy}
+            </if>
+
+			<if test="createByLike != null and createByLike != '' ">
+				and E.createBy like #{createByLike}
+            </if>
+
+			<if test="createBys != null and createBys.size() &gt; 0">
+			    and E.createBy IN
+                <foreach item="x_createBy" index="index" collection="createBys" 
+                     open="(" separator="," close=")">
+                  #{x_createBy}
+                </foreach>
+			</if>
+
+			<if test="createDate != null">
+				and E.createDate = #{createDate}
+            </if>
+
+			<if test="createDateGreaterThanOrEqual != null">
+				and E.createDate &gt;= #{createDateGreaterThanOrEqual}
+            </if>
+
+			<if test="createDateLessThanOrEqual != null">
+				and E.createDate &lt;= #{createDateLessThanOrEqual}
+            </if>
+
+			<if test="createDates != null and createDates.size() &gt; 0">
+			    and E.createDate IN
+                <foreach item="x_createDate" index="index" collection="createDates" 
+                     open="(" separator="," close=")">
+                  #{x_createDate}
+                </foreach>
+			</if>
+
+
+			<if test="updateDate != null">
+				and E.updateDate = #{updateDate}
+            </if>
+
+			<if test="updateDateGreaterThanOrEqual != null">
+				and E.updateDate &gt;= #{updateDateGreaterThanOrEqual}
+            </if>
+
+			<if test="updateDateLessThanOrEqual != null">
+				and E.updateDate &lt;= #{updateDateLessThanOrEqual}
+            </if>
+
+			<if test="updateDates != null and updateDates.size() &gt; 0">
+			    and E.updateDate IN
+                <foreach item="x_updateDate" index="index" collection="updateDates" 
+                     open="(" separator="," close=")">
+                  #{x_updateDate}
+                </foreach>
+			</if>
+
+	        
+			<if test="updateBy != null and updateBy != '' ">
+				and E.updateBy = #{updateBy}
+            </if>
+
+			<if test="updateByLike != null and updateByLike != '' ">
+				and E.updateBy like #{updateByLike}
+            </if>
+
+			<if test="updateBys != null and updateBys.size() &gt; 0">
+			    and E.updateBy IN
+                <foreach item="x_updateBy" index="index" collection="updateBys" 
+                     open="(" separator="," close=")">
+                  #{x_updateBy}
+                </foreach>
+			</if>
+			 
+		</where>
+	</sql>
+
+</mapper>

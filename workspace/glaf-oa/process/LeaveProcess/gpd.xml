@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root-container name="LeaveProcess" width="903" height="540">
+  <node name="启动流程" x="22" y="16" width="144" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="人力资源部审核" x="16" y="119" width="157" height="40">
+    <edge>
+      <label x="0" y="-24"/>
+    </edge>
+  </node>
+  <node name="人力资源部审核通过？" x="360" y="118" width="191" height="39">
+    <edge>
+      <label x="-33" y="-24"/>
+    </edge>
+    <edge>
+      <label x="-26" y="-34"/>
+    </edge>
+  </node>
+  <node name="是否是部门经理以下" x="7" y="240" width="185" height="40">
+    <edge>
+      <label x="2" y="-27"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="部门经理" x="314" y="215" width="132" height="39">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="部门经理审核通过？" x="293" y="297" width="176" height="41">
+    <edge>
+      <label x="-35" y="-30"/>
+    </edge>
+    <edge>
+      <label x="-58" y="-27"/>
+    </edge>
+  </node>
+  <node name="公司副总审核" x="33" y="425" width="132" height="38">
+    <edge>
+      <label x="-4" y="-28"/>
+    </edge>
+  </node>
+  <node name="公司副总审核通过？" x="315" y="423" width="174" height="41">
+    <edge>
+      <label x="-19" y="-41"/>
+    </edge>
+    <edge>
+      <label x="-12" y="-28"/>
+    </edge>
+  </node>
+  <node name="行政财务" x="579" y="355" width="132" height="39">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="行政财务审核？" x="675" y="256" width="144" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="4" y="-32"/>
+    </edge>
+  </node>
+  <node name="审核不通过" x="680" y="120" width="132" height="36">
+    <edge>
+      <label x="5" y="-28"/>
+    </edge>
+  </node>
+  <node name="重新修改" x="403" y="17" width="132" height="41">
+    <edge>
+      <label x="-15" y="-34"/>
+    </edge>
+  </node>
+  <node name="流程结束" x="680" y="432" width="132" height="39"/>
+</root-container>

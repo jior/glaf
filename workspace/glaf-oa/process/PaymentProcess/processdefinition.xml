@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process-definition  xmlns=""  name="PaymentProcess">
+<description>付款审批流程</description>
+	<swimlane name="starter">
+		<assignment class="com.glaf.jbpm.assignment.GeneralAssignment"></assignment>
+	</swimlane>
+	<swimlane name="submiter">
+		<assignment
+			class="com.glaf.jbpm.assignment.ProcessStarterAssignment"></assignment>
+	</swimlane>
+
+	<action name="create_task01"
+		class="com.glaf.jbpm.action.SqlMapTaskInstanceAction">
+	    <leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
+		<taskName>task01</taskName>
+		<queryId>getXYDeptRoleUsers</queryId>
+		<roleId>KJ</roleId>
+		<deptId>#P{deptId01}</deptId>
+	</action>
+
+	<action name="create_task02"
+		class="com.glaf.jbpm.action.SqlMapTaskInstanceAction">
+		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
+		<taskName>task02</taskName>
+		<queryId>getXYDeptRoleUsers</queryId>
+		<roleId>BMJL</roleId>
+		<deptId>#P{deptId02}</deptId>
+	</action>
+
+	<action name="create_task03"
+		class="com.glaf.jbpm.action.SqlMapTaskInstanceAction">
+		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
+		<taskName>task03</taskName>
+		<queryId>getXYDeptRoleUsers</queryId>
+		<roleId>R001</roleId>
+		<deptId>#P{deptId03}</deptId>
+	</action>
+
+	<action name="create_task04"
+		class="com.glaf.jbpm.action.SqlMapTaskInstanceAction">
+		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
+		<taskName>task04</taskName>
+		<queryId>getXYDeptRoleUsers</queryId>
+		<roleId>BMJL</roleId>
+		<deptId>#P{deptId04}</deptId>
+	</action>
+
+	<action name="create_task05"
+		class="com.glaf.jbpm.action.SqlMapTaskInstanceAction">
+		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
+		<taskName>task05</taskName>
+		<queryId>getXYDeptRoleUsers</queryId>
+		<roleId>R003</roleId>
+		<deptId>#P{deptId05}</deptId>
+	</action>
+	
+	<action name="create_task06"
+		class="com.glaf.jbpm.action.SqlMapTaskInstanceAction">
+		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
+		<taskName>task06</taskName>
+		<queryId>getXYDeptRoleUsers</queryId>
+		<roleId>R004</roleId>
+		<deptId>#P{deptId05}</deptId>
+	</action>
+	
+	<action name="create_task07"
+		class="com.glaf.jbpm.action.SqlMapTaskInstanceAction">
+		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
+		<taskName>task07</taskName>
+		<queryId>getXYDeptRoleUsers</queryId>
+		<roleId>R005</roleId>
+		<deptId>#P{deptId05}</deptId>
+	</action>
+	
+	<action name="payment_1000" class="com.glaf.jbpm.action.SQLAction">
+		<sql>UPDATE oa_payment SET PROCESSNAME = 'PaymentProcess',STATUS = 1,
+			PROCESSINSTANCEID = ?, WFSTATUS = 1000 WHERE paymentid = ?</sql>
+		<elements element-type="org.dom4j.Element">
+			<element value-type="java.lang.String">
+				<key>processInstanceId</key>
+				<value>#{processInstanceId}</value>
+			</element>
+			<element value-type="java.lang.String">
+				<key>rowId</key>
+				<value>#{rowId}</value>
+			</element>
+		</elements>
+	</action>	
+
+	<action name="payment_1001" class="com.glaf.jbpm.action.SQLAction">
+		<sql>UPDATE oa_payment SET WFSTATUS= 1001 WHERE paymentid = ?</sql>
+		<elements element-type="org.dom4j.Element">
+			<element value-type="java.lang.String">
+				<key>rowId</key>
+				<value>#{rowId}</value>
+			</element>
+		</elements>
+	</action>
+
+	<action name="payment_1002" class="com.glaf.jbpm.action.SQLAction">
+		<sql>UPDATE oa_payment SET WFSTATUS= 1002 WHERE paymentid = ?</sql>
+		<elements element-type="org.dom4j.Element">
+			<element value-type="java.lang.String">
+				<key>rowId</key>
+				<value>#{rowId}</value>
+			</element>
+		</elements>
+	</action>
+
+	<action name="payment_1003" class="com.glaf.jbpm.action.SQLAction">
+		<sql>UPDATE oa_payment SET WFSTATUS= 1003 WHERE paymentid = ?</sql>
+		<elements element-type="org.dom4j.Element">
+			<element value-type="java.lang.String">
+				<key>rowId</key>
+				<value>#{rowId}</value>
+			</element>
+		</elements>
+	</action>
+
+	<action name="payment_1004" class="com.glaf.jbpm.action.SQLAction">
+		<sql>UPDATE oa_payment SET WFSTATUS= 1004 WHERE paymentid = ?</sql>
+		<elements element-type="org.dom4j.Element">
+			<element value-type="java.lang.String">
+				<key>rowId</key>
+				<value>#{rowId}</value>
+			</element>
+		</elements>
+	</action>
+	
+	<action name="payment_1005" class="com.glaf.jbpm.action.SQLAction">
+		<sql>UPDATE oa_payment SET WFSTATUS= 1005 WHERE paymentid = ?</sql>
+		<elements element-type="org.dom4j.Element">
+			<element value-type="java.lang.String">
+				<key>rowId</key>
+				<value>#{rowId}</value>
+			</element>
+		</elements>
+	</action>
+	
+	<action name="payment_1006" class="com.glaf.jbpm.action.SQLAction">
+		<sql>UPDATE oa_payment SET WFSTATUS= 1006 WHERE paymentid = ?</sql>
+		<elements element-type="org.dom4j.Element">
+			<element value-type="java.lang.String">
+				<key>rowId</key>
+				<value>#{rowId}</value>
+			</element>
+		</elements>
+	</action>
+
+	<action name="payment_1007" class="com.glaf.jbpm.action.SQLAction">
+		<sql>UPDATE oa_payment SET WFSTATUS= 1007 WHERE paymentid = ?</sql>
+		<elements element-type="org.dom4j.Element">
+			<element value-type="java.lang.String">
+				<key>rowId</key>
+				<value>#{rowId}</value>
+			</element>
+		</elements>
+	</action>
+
+	<action name="payment_5555" class="com.glaf.jbpm.action.SQLAction"> 
+    <sql>UPDATE oa_payment SET WFSTATUS = -5555, STATUS = 3 WHERE paymentid = ?</sql>  
+    <elements element-type="org.dom4j.Element"> 
+      <element value-type="java.lang.String"> 
+        <key>rowId</key>  
+        <value>#{rowId}</value> 
+      </element> 
+    </elements> 
+  </action>
+  
+  <action name="payment_9999" class="com.glaf.jbpm.action.SQLAction"> 
+    <sql>UPDATE oa_payment SET STATUS = 2, WFSTATUS = 9999 WHERE paymentid = ?</sql>  
+    <elements element-type="org.dom4j.Element"> 
+      <element value-type="java.lang.String"> 
+        <key>rowId</key>  
+        <value>#{rowId}</value> 
+      </element> 
+    </elements> 
+  </action>
+   
+  <action name="EndCounterSigningAction" class="com.glaf.jbpm.action.EndCounterSigningAction"> 
+    <expression>#{isAgree eq 'false'}</expression> 
+  </action>
+
+
+	<start-state name="启动流程">
+		<task name="task0" description="启动流程" swimlane="starter">
+			<controller>
+				<variable name="isAgree" access="read,write,required" 
+					mapped-name="isAgree" />
+			</controller>
+			<event type="task-create">
+				<action ref-name="payment_1000" />
+			</event>
+		</task>
+		<transition to="会计审核" name="启动"></transition>
+	</start-state>
+
+	<task-node name="会计审核"  create-tasks="false" end-tasks="true" signal="first">
+		<event type="node-enter">
+			<action ref-name="payment_1001" />
+			<action ref-name="create_task01" />
+		</event>
+		<task name="task01" description="会计审核">
+			<event type="task-end">
+				<action ref-name="EndCounterSigningAction" />
+			</event>
+		</task>
+		<transition to="会计审核通过" name="判断"></transition>
+	</task-node>
+
+	<decision name="会计审核通过">
+		<transition to="审核不通过" name="不通过">
+		</transition>
+		<transition to="部门经理" name="通过">
+			<condition expression="#{isAgree eq 'true'}" />
+		</transition>		
+	</decision>
+
+	<task-node name="部门经理"  create-tasks="false" end-tasks="true" signal="first">
+		<event type="node-enter">
+			<action ref-name="payment_1002" />
+			<action ref-name="create_task02" />
+		</event>
+		<task name="task02" description="部门经理">
+			<event type="task-end">
+				<action ref-name="EndCounterSigningAction" />
+			</event>
+		</task>
+		<transition to="部门经理审核通过？" name="判断"></transition>
+	</task-node>
+
+	<decision name="部门经理审核通过？">
+		<transition to="审核不通过" name="不通过"></transition>
+		<transition to="部门总监审核" name="通过">
+		    <condition expression="#{isAgree eq 'true'}" />
+		</transition>	
+	</decision>
+
+	<task-node name="部门总监审核"  create-tasks="false" end-tasks="true" >
+		<event type="node-enter">
+			<action ref-name="payment_1004" />
+			<action ref-name="create_task04" />
+		</event>
+		<task name="task04" description="部门总监审核">
+			<event type="task-end">
+				<action ref-name="EndCounterSigningAction" />
+			</event>
+		</task>
+		<transition to="部门总监审核通过？" name="判断"></transition>
+	</task-node>
+
+	<decision name="部门总监审核通过？">
+		<transition to="审核不通过" name="不通过"></transition>
+		<transition to="公司副总审核" name="通过">
+			<condition expression="#{isAgree eq 'true'}" />
+		</transition>
+	</decision>
+
+	<task-node name="公司副总审核" create-tasks="false" end-tasks="true" signal="first">
+		<event type="node-enter">
+			<action ref-name="payment_1005" />
+			<action ref-name="create_task05" />
+		</event>
+		<task name="task05" description="公司副总审核">
+			<event type="task-end">
+				<action ref-name="EndCounterSigningAction" />
+			</event>
+		</task>
+		<transition to="公司副总审核通过？" name="判断"></transition>
+	</task-node>
+	
+	<decision name="公司副总审核通过？">
+		<transition to="审核不通过" name="不通过"></transition>
+		<transition to="总经理审核" name="通过">
+			<condition expression="#{isAgree eq 'true'}" />
+		</transition>
+	</decision>
+
+	<task-node name="总经理审核" create-tasks="false" end-tasks="true" signal="first">
+		<event type="node-enter">
+			<action ref-name="payment_1006" />
+			<action ref-name="create_task06" />
+		</event>
+		<task name="task06" description="总经理审核">
+			<event type="task-end">
+				<action ref-name="EndCounterSigningAction" />
+			</event>
+		</task>
+		<transition to="总经理审核通过？" name="判断"></transition>
+	</task-node>
+
+	<decision name="总经理审核通过？">
+		<transition to="审核不通过" name="不通过"></transition>
+		<transition to="流程结束" name="完成">
+		    <condition expression="#{isAgree eq 'true'}" />
+		</transition>
+	</decision>
+	
+	<node name="审核不通过">
+		<event type="node-enter">
+			<action ref-name="payment_5555" />
+		</event>
+		<transition to="重新修改" name="不通过"></transition>
+	</node>
+
+	<task-node name="重新修改" >
+		<transition to="会计审核" name="重新提交"></transition>
+		<task name="task555" description="重新修改" swimlane="submiter"></task>
+	</task-node>
+
+
+	<end-state name="流程结束">
+		<event type="node-enter">
+			<action ref-name="payment_9999" />
+		</event>
+	</end-state>
+</process-definition>

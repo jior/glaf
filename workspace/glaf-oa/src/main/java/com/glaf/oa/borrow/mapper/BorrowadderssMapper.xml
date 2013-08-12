@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.oa.borrow.mapper.BorrowadderssMapper">
+
+ 	<resultMap id="borrowadderssResultMap"	type="com.glaf.oa.borrow.model.Borrowadderss">
+        <id property="addressid" column="addressid" jdbcType="BIGINT" />
+        <result property="borrowid" column="borrowid" jdbcType="BIGINT"/>
+        <result property="start" column="start" jdbcType="VARCHAR"/>
+        <result property="reach" column="reach" jdbcType="VARCHAR"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+        <result property="createBy" column="createBy" jdbcType="VARCHAR"/>
+        <result property="createDate" column="createDate" jdbcType="TIMESTAMP"/>
+        <result property="updateDate" column="updateDate" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="updateBy" jdbcType="VARCHAR"/>
+	</resultMap>
+
+ 
+	<insert id="insertBorrowadderss" parameterType="com.glaf.oa.borrow.model.Borrowadderss">
+		insert into oa_borrowadderss 
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+		    addressid
+			<if test="borrowid != null">
+				,borrowid 
+			</if>
+			<if test="start != null">
+				,start 
+			</if>
+			<if test="reach != null">
+				,reach 
+			</if>
+			<if test="remark != null">
+				,remark 
+			</if>
+			<if test="createBy != null">
+				,createBy 
+			</if>
+			<if test="createDate != null">
+				,createDate 
+			</if>
+			<if test="updateDate != null">
+				,updateDate 
+			</if>
+			<if test="updateBy != null">
+				,updateBy 
+			</if>
+        </trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			  #{addressid, jdbcType=BIGINT}
+	     
+			<if test="borrowid != null">
+				,#{borrowid, jdbcType=BIGINT}
+			</if>
+			<if test="start != null">
+				,#{start, jdbcType=VARCHAR}
+			</if>
+			<if test="reach != null">
+				,#{reach, jdbcType=VARCHAR}
+			</if>
+			<if test="remark != null">
+				,#{remark, jdbcType=VARCHAR}
+			</if>
+			<if test="createBy != null">
+				,#{createBy, jdbcType=VARCHAR}
+			</if>
+			<if test="createDate != null">
+				,#{createDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="updateDate != null">
+				,#{updateDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="updateBy != null">
+				,#{updateBy, jdbcType=VARCHAR}
+			</if>
+	    </trim>
+    </insert>
+
+	 
+	<update id="updateBorrowadderss" parameterType="com.glaf.oa.borrow.model.Borrowadderss">
+		update oa_borrowadderss
+		set
+        <trim prefix="" suffix="" suffixOverrides=",">		
+			<if test="borrowid != null">
+				borrowid = #{borrowid, jdbcType=BIGINT},
+			</if>
+			<if test="start != null">
+				start = #{start, jdbcType=VARCHAR},
+			</if>
+			<if test="reach != null">
+				reach = #{reach, jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				remark = #{remark, jdbcType=VARCHAR},
+			</if>
+			<if test="createBy != null">
+				createBy = #{createBy, jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				createDate = #{createDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateDate != null">
+				updateDate = #{updateDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateBy != null">
+				updateBy = #{updateBy, jdbcType=VARCHAR},
+			</if>
+        </trim>
+		where
+          addressid = #{addressid, jdbcType=BIGINT}
+		
+    </update>
+
+ 
+	<delete id="deleteBorrowadderssById" parameterType="long"> 
+        delete from oa_borrowadderss
+        where addressid =	#{id}
+	</delete>
+	
+	<delete id="deleteBorrowadderssByParentId" parameterType="long"> 
+        delete from oa_borrowadderss
+        where borrowid =	#{id}
+	</delete>
+	
+	<delete id="deleteBorrowaddersss" parameterType="com.glaf.oa.borrow.query.BorrowadderssQuery">
+		delete from oa_borrowadderss
+		where ( 
+ 			  addressid IN
+              <foreach item="x_addressid" index="index" collection="addressids" 
+                     open="(" separator="," close=")">
+                  #{x_addressid}
+              </foreach>
+		)
+	</delete>
+
+
+	<select id="getBorrowadderssById" parameterType="long" resultMap="borrowadderssResultMap">
+		select * from oa_borrowadderss where addressid = #{id}
+	</select>
+	
+	<select id="getBorrowadderssByParentId" parameterType="long" resultMap="borrowadderssResultMap">
+		select * from oa_borrowadderss where borrowid = #{id}
+	</select>
+
+
+	<select id="getBorrowaddersss" 
+	    parameterType="com.glaf.oa.borrow.query.BorrowadderssQuery"
+		resultMap="borrowadderssResultMap">
+		select E.*
+		<include refid="selectBorrowaddersssSql" />
+		<choose>
+		  <when test="orderBy != null">
+		     order by ${orderBy}
+          </when>
+		  <otherwise>
+		      order by E.addressid desc
+		  </otherwise>
+        </choose>
+	</select>
+
+
+	<select id="getBorrowadderssCount" 
+	    parameterType="com.glaf.oa.borrow.query.BorrowadderssQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectBorrowaddersssSql" />
+	</select>
+
+
+	<sql id="selectBorrowaddersssSql">
+
+		from oa_borrowadderss E
+		
+		 
+		<where>
+		       1 = 1  
+
+
+			<if test="borrowid != null">
+				and E.borrowid = #{borrowid}
+            </if>
+
+			<if test="borrowidGreaterThanOrEqual != null">
+				and E.borrowid &gt;= #{borrowidGreaterThanOrEqual}
+            </if>
+
+			<if test="borrowidLessThanOrEqual != null">
+				and E.borrowid &lt;= #{borrowidLessThanOrEqual}
+            </if>
+
+			<if test="borrowids != null and borrowids.size() &gt; 0">
+			    and E.borrowid IN
+                <foreach item="x_borrowid" index="index" collection="borrowids" 
+                     open="(" separator="," close=")">
+                  #{x_borrowid}
+                </foreach>
+			</if>
+
+	        
+			<if test="start != null and start != '' ">
+				and E.start = #{start}
+            </if>
+
+			<if test="startLike != null and startLike != '' ">
+				and E.start like #{startLike}
+            </if>
+
+			<if test="starts != null and starts.size() &gt; 0">
+			    and E.start IN
+                <foreach item="x_start" index="index" collection="starts" 
+                     open="(" separator="," close=")">
+                  #{x_start}
+                </foreach>
+			</if>
+	        
+			<if test="reach != null and reach != '' ">
+				and E.reach = #{reach}
+            </if>
+
+			<if test="reachLike != null and reachLike != '' ">
+				and E.reach like #{reachLike}
+            </if>
+
+			<if test="reachs != null and reachs.size() &gt; 0">
+			    and E.reach IN
+                <foreach item="x_reach" index="index" collection="reachs" 
+                     open="(" separator="," close=")">
+                  #{x_reach}
+                </foreach>
+			</if>
+	        
+			<if test="remark != null and remark != '' ">
+				and E.remark = #{remark}
+            </if>
+
+			<if test="remarkLike != null and remarkLike != '' ">
+				and E.remark like #{remarkLike}
+            </if>
+
+			<if test="remarks != null and remarks.size() &gt; 0">
+			    and E.remark IN
+                <foreach item="x_remark" index="index" collection="remarks" 
+                     open="(" separator="," close=")">
+                  #{x_remark}
+                </foreach>
+			</if>
+	        
+			<if test="createBy != null and createBy != '' ">
+				and E.createBy = #{createBy}
+            </if>
+
+			<if test="createByLike != null and createByLike != '' ">
+				and E.createBy like #{createByLike}
+            </if>
+
+			<if test="createBys != null and createBys.size() &gt; 0">
+			    and E.createBy IN
+                <foreach item="x_createBy" index="index" collection="createBys" 
+                     open="(" separator="," close=")">
+                  #{x_createBy}
+                </foreach>
+			</if>
+
+			<if test="createDate != null">
+				and E.createDate = #{createDate}
+            </if>
+
+			<if test="createDateGreaterThanOrEqual != null">
+				and E.createDate &gt;= #{createDateGreaterThanOrEqual}
+            </if>
+
+			<if test="createDateLessThanOrEqual != null">
+				and E.createDate &lt;= #{createDateLessThanOrEqual}
+            </if>
+
+			<if test="createDates != null and createDates.size() &gt; 0">
+			    and E.createDate IN
+                <foreach item="x_createDate" index="index" collection="createDates" 
+                     open="(" separator="," close=")">
+                  #{x_createDate}
+                </foreach>
+			</if>
+
+
+			<if test="updateDate != null">
+				and E.updateDate = #{updateDate}
+            </if>
+
+			<if test="updateDateGreaterThanOrEqual != null">
+				and E.updateDate &gt;= #{updateDateGreaterThanOrEqual}
+            </if>
+
+			<if test="updateDateLessThanOrEqual != null">
+				and E.updateDate &lt;= #{updateDateLessThanOrEqual}
+            </if>
+
+			<if test="updateDates != null and updateDates.size() &gt; 0">
+			    and E.updateDate IN
+                <foreach item="x_updateDate" index="index" collection="updateDates" 
+                     open="(" separator="," close=")">
+                  #{x_updateDate}
+                </foreach>
+			</if>
+
+	        
+			<if test="updateBy != null and updateBy != '' ">
+				and E.updateBy = #{updateBy}
+            </if>
+
+			<if test="updateByLike != null and updateByLike != '' ">
+				and E.updateBy like #{updateByLike}
+            </if>
+
+			<if test="updateBys != null and updateBys.size() &gt; 0">
+			    and E.updateBy IN
+                <foreach item="x_updateBy" index="index" collection="updateBys" 
+                     open="(" separator="," close=")">
+                  #{x_updateBy}
+                </foreach>
+			</if>
+			 
+		</where>
+	</sql>
+
+</mapper>

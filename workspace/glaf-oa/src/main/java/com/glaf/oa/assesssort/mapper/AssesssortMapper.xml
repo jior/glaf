@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.oa.assesssort.mapper.AssesssortMapper">
+
+ 	<resultMap id="assesssortResultMap"	type="com.glaf.oa.assesssort.model.Assesssort">
+        <id property="assesssortid" column="assesssortid" jdbcType="BIGINT" />
+        <result property="qustionid" column="qustionid" jdbcType="BIGINT"/>
+        <result property="sortid" column="sortid" jdbcType="BIGINT"/>
+        <result property="createBy" column="createBy" jdbcType="VARCHAR"/>
+        <result property="createDate" column="createDate" jdbcType="TIMESTAMP"/>
+        <result property="updateDate" column="updateDate" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="updateBy" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<!--add by mac.chen-->
+	<resultMap id="assesssortTypeResultMap"	type="com.glaf.oa.assesssort.model.Assesssort">
+        <id property="assesssortid" column="id" jdbcType="BIGINT" />
+        <result property="typeId" column="typeid" jdbcType="BIGINT"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="dictdesc" column="dictdesc" jdbcType="VARCHAR"/>
+        <result property="code" column="code" jdbcType="VARCHAR"/>
+        <result property="value" column="value_" jdbcType="VARCHAR"/>
+        <result property="createBy" column="createBy" jdbcType="VARCHAR"/>
+        <result property="updateBy" column="updateBy" jdbcType="VARCHAR"/>
+        <result property="createDate" column="createDate" jdbcType="TIMESTAMP"/>
+        <result property="updateDate" column="updateDate" jdbcType="TIMESTAMP"/>
+        <result property="sortid" column="sort" jdbcType="BIGINT"/>
+	</resultMap>
+	<resultMap id="assessortBaseInfoResultMap" type="com.glaf.base.modules.sys.model.BaseDataInfo">
+		<result property="id" column="id" jdbcType="BIGINT" />
+		<result property="code" column="code" jdbcType="VARCHAR" />
+		<result property="name" column="name" jdbcType="VARCHAR" />
+		<result property="deep" column="sort" jdbcType="VARCHAR" />
+		<result property="parentId" column="parentId" jdbcType="VARCHAR" />
+	</resultMap>
+	<resultMap id="assessortTreeResultMap" type="com.glaf.oa.assessquestion.model.AssessortTree">
+		<result property="aid" column="aid" jdbcType="BIGINT" />
+		<result property="aname" column="aname" jdbcType="VARCHAR" />
+		<result property="bid" column="bid" jdbcType="BIGINT" />
+		<result property="bname" column="bname" jdbcType="VARCHAR" />
+		<result property="cid" column="cid" jdbcType="BIGINT" />
+		<result property="cname" column="cname" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<!-- 按CODE获得大类型 -->
+	<select id="getAssessTypeByCode" parameterType="java.lang.String" resultMap="assessortBaseInfoResultMap">
+		select A.id,A.Code,A.name,A.sort,A.parent as parentId from sys_tree A where A.parent in (select B.id from sys_tree B where B.code=#{id});
+	</select>
+	<!-- 按类型获得子类型 -->
+	<select id="getAssessTypeById" parameterType="java.lang.Long" 
+		resultMap="assessortBaseInfoResultMap">
+		select A.id,A.code,A.name,A.sort,A.parent as parentId from sys_tree A where A.parent =#{id}
+	</select>
+	<!-- 按类型获得子类型  by magoo-->
+	<select id="getDictoryById" parameterType="java.lang.Long" 
+		resultMap="assessortBaseInfoResultMap">
+		select A.id,A.code,A.name,A.sort,A.typeid as typeid from sys_dictory A where A.typeid = #{id}
+	</select>
+	
+	<!-- 按类型获得具体标准 -->
+	<select id="getAssessTypeByStandardAndSortIds" parameterType="com.glaf.oa.assesssort.query.AssesssortQuery" 
+		resultMap="assessortBaseInfoResultMap">
+			select A.id,a.name,a.typeid as parentId,a.sort from sys_dictory A
+			where A.typeid = #{qustionid}
+		<if test="sortids != null and sortids.size() &gt; 0">
+			    and A.id IN
+                <foreach item="sortid" index="index" collection="sortids" 
+                     open="(" separator="," close=")">
+                 	 #{sortid}
+                </foreach>
+		</if>
+	</select>
+	
+	  
+	<!-- 按子类型获得具体标准  已通过通用方法，基础数据方法按CODE获得 -->
+	<select id="getAssessTypeByTypdId" parameterType="java.lang.Long" resultMap="assessortBaseInfoResultMap">
+		select  A.* from sys_dictory A where A.typeid = #{id}
+	</select>
+	<!-- 获得指标分类类型 add by mac.chen -->
+	<!-- 已废除 -->
+	<select id="getAssesssortsType" 
+	    parameterType="java.lang.Integer"
+		resultMap="assessortTreeResultMap">
+		select C.id as cid,C.name as cname,c.sort as csort,B.id as bid,B.name as bname,B.sort as bsort, A.* from sys_dictory A 
+		left join sys_tree B on A.typeid = B.id left join sys_tree C on B.parent=C.id
+		where C.parent in (select D.id from sys_tree D where D.code=#{id})
+		order by typeid
+	</select>
+	
+	
+	<select id="getParentsInfoByDictId"
+		parameterType="java.lang.Integer"
+		resultMap="assessortTreeResultMap">
+		select A.id as aid ,A.name as aname,B.id as bid,B.name as bname, C.id as cid,C.name as cname from sys_tree A 
+		left join sys_tree B on A.id = B.parent 
+		left join sys_dictory C on B.id = C.typeid
+		where C.id=#{id}
+	</select>
+	<select id="getAssessTopSortByCode"
+		parameterType="java.lang.String"
+		resultMap="assessortTreeResultMap">
+		select B.id bid,b.name as bname from sys_tree B where B.parent in
+		(select D.id from sys_tree D where D.code='ASSESS_CLASS');
+	</select>	
+	
+ <!-- add end by mac.chen -->
+ 
+ 
+	<insert id="insertAssesssort" parameterType="com.glaf.oa.assesssort.model.Assesssort">
+		insert into oa_assesssort 
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+		    assesssortid
+			<if test="qustionid != null">
+				,qustionid 
+			</if>
+			<if test="sortid != null">
+				,sortid 
+			</if>
+			<if test="createBy != null">
+				,createBy 
+			</if>
+			<if test="createDate != null">
+				,createDate 
+			</if>
+			<if test="updateDate != null">
+				,updateDate 
+			</if>
+			<if test="updateBy != null">
+				,updateBy 
+			</if>
+        </trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			  #{assesssortid, jdbcType=BIGINT}
+	     
+			<if test="qustionid != null">
+				,#{qustionid, jdbcType=BIGINT}
+			</if>
+			<if test="sortid != null">
+				,#{sortid, jdbcType=BIGINT}
+			</if>
+			<if test="createBy != null">
+				,#{createBy, jdbcType=VARCHAR}
+			</if>
+			<if test="createDate != null">
+				,#{createDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="updateDate != null">
+				,#{updateDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="updateBy != null">
+				,#{updateBy, jdbcType=VARCHAR}
+			</if>
+	    </trim>
+    </insert>
+
+	 
+	<update id="updateAssesssort" parameterType="com.glaf.oa.assesssort.model.Assesssort">
+		update oa_assesssort
+		set
+        <trim prefix="" suffix="" suffixOverrides=",">		
+			<if test="qustionid != null">
+				qustionid = #{qustionid, jdbcType=BIGINT},
+			</if>
+			<if test="sortid != null">
+				sortid = #{sortid, jdbcType=BIGINT},
+			</if>
+			<if test="createBy != null">
+				createBy = #{createBy, jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				createDate = #{createDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateDate != null">
+				updateDate = #{updateDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateBy != null">
+				updateBy = #{updateBy, jdbcType=VARCHAR},
+			</if>
+        </trim>
+		where
+          assesssortid = #{assesssortid, jdbcType=BIGINT}
+		
+    </update>
+
+ 
+	<delete id="deleteAssesssortById" parameterType="long"> 
+        delete from oa_assesssort
+        where assesssortid =	#{id}
+	</delete>
+
+	
+	<delete id="deleteAssesssorts" parameterType="com.glaf.oa.assesssort.query.AssesssortQuery">
+		delete from oa_assesssort
+		where ( 
+ 			  assesssortid IN
+              <foreach item="x_assesssortid" index="index" collection="assesssortids" 
+                     open="(" separator="," close=")">
+                  #{x_assesssortid}
+              </foreach>
+		)
+	</delete>
+
+
+	<select id="getAssesssortById" parameterType="long" resultMap="assesssortResultMap">
+		select * from oa_assesssort where assesssortid = #{id}
+	</select>
+
+
+	<select id="getAssesssorts" 
+	    parameterType="com.glaf.oa.assesssort.query.AssesssortQuery"
+		resultMap="assesssortResultMap">
+		select E.*
+		<include refid="selectAssesssortsSql" />
+		<choose>
+		  <when test="orderBy != null">
+		     order by ${orderBy}
+          </when>
+		  <otherwise>
+		      order by E.assesssortid 
+		  </otherwise>
+        </choose>
+	</select>
+
+
+	<select id="getAssesssortCount" 
+	    parameterType="com.glaf.oa.assesssort.query.AssesssortQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectAssesssortsSql" />
+	</select>
+
+
+	<sql id="selectAssesssortsSql">
+
+		from oa_assesssort E
+		
+		 
+		<where>
+		       1 = 1  
+
+
+			<if test="qustionid != null">
+				and E.qustionid = #{qustionid}
+            </if>
+
+			<if test="qustionidGreaterThanOrEqual != null">
+				and E.qustionid &gt;= #{qustionidGreaterThanOrEqual}
+            </if>
+
+			<if test="qustionidLessThanOrEqual != null">
+				and E.qustionid &lt;= #{qustionidLessThanOrEqual}
+            </if>
+
+			<if test="qustionids != null and qustionids.size() &gt; 0">
+			    and E.qustionid IN
+                <foreach item="x_qustionid" index="index" collection="qustionids" 
+                     open="(" separator="," close=")">
+                  #{x_qustionid}
+                </foreach>
+			</if>
+
+
+			<if test="sortid != null">
+				and E.sortid = #{sortid}
+            </if>
+
+			<if test="sortidGreaterThanOrEqual != null">
+				and E.sortid &gt;= #{sortidGreaterThanOrEqual}
+            </if>
+
+			<if test="sortidLessThanOrEqual != null">
+				and E.sortid &lt;= #{sortidLessThanOrEqual}
+            </if>
+
+			<if test="sortids != null and sortids.size() &gt; 0">
+			    and E.sortid IN
+                <foreach item="x_sortid" index="index" collection="sortids" 
+                     open="(" separator="," close=")">
+                  #{x_sortid}
+                </foreach>
+			</if>
+
+	        
+			<if test="createBy != null and createBy != '' ">
+				and E.createBy = #{createBy}
+            </if>
+
+			<if test="createByLike != null and createByLike != '' ">
+				and E.createBy like #{createByLike}
+            </if>
+
+			<if test="createBys != null and createBys.size() &gt; 0">
+			    and E.createBy IN
+                <foreach item="x_createBy" index="index" collection="createBys" 
+                     open="(" separator="," close=")">
+                  #{x_createBy}
+                </foreach>
+			</if>
+
+			<if test="createDate != null">
+				and E.createDate = #{createDate}
+            </if>
+
+			<if test="createDateGreaterThanOrEqual != null">
+				and E.createDate &gt;= #{createDateGreaterThanOrEqual}
+            </if>
+
+			<if test="createDateLessThanOrEqual != null">
+				and E.createDate &lt;= #{createDateLessThanOrEqual}
+            </if>
+
+			<if test="createDates != null and createDates.size() &gt; 0">
+			    and E.createDate IN
+                <foreach item="x_createDate" index="index" collection="createDates" 
+                     open="(" separator="," close=")">
+                  #{x_createDate}
+                </foreach>
+			</if>
+
+
+			<if test="updateDate != null">
+				and E.updateDate = #{updateDate}
+            </if>
+
+			<if test="updateDateGreaterThanOrEqual != null">
+				and E.updateDate &gt;= #{updateDateGreaterThanOrEqual}
+            </if>
+
+			<if test="updateDateLessThanOrEqual != null">
+				and E.updateDate &lt;= #{updateDateLessThanOrEqual}
+            </if>
+
+			<if test="updateDates != null and updateDates.size() &gt; 0">
+			    and E.updateDate IN
+                <foreach item="x_updateDate" index="index" collection="updateDates" 
+                     open="(" separator="," close=")">
+                  #{x_updateDate}
+                </foreach>
+			</if>
+
+	        
+			<if test="updateBy != null and updateBy != '' ">
+				and E.updateBy = #{updateBy}
+            </if>
+
+			<if test="updateByLike != null and updateByLike != '' ">
+				and E.updateBy like #{updateByLike}
+            </if>
+
+			<if test="updateBys != null and updateBys.size() &gt; 0">
+			    and E.updateBy IN
+                <foreach item="x_updateBy" index="index" collection="updateBys" 
+                     open="(" separator="," close=")">
+                  #{x_updateBy}
+                </foreach>
+			</if>
+			 
+		</where>
+	</sql>
+
+</mapper>

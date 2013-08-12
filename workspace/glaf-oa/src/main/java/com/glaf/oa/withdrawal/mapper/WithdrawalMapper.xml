@@ -1,0 +1,835 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.oa.withdrawal.mapper.WithdrawalMapper">
+
+ 	<resultMap id="withdrawalResultMap"	type="com.glaf.oa.withdrawal.model.Withdrawal">
+        <id property="withdrawalid" column="withdrawalid" jdbcType="BIGINT" />
+        <result property="area" column="area" jdbcType="VARCHAR"/>
+        <result property="company" column="company" jdbcType="VARCHAR"/>
+        <result property="dept" column="dept" jdbcType="VARCHAR"/>
+        <result property="post" column="post" jdbcType="VARCHAR"/>
+        <result property="appuser" column="appuser" jdbcType="VARCHAR"/>
+        <result property="appdate" column="appdate" jdbcType="TIMESTAMP"/>
+        <result property="appsum" column="appsum" jdbcType="DOUBLE"/>
+        <result property="content" column="content" jdbcType="VARCHAR"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+        <result property="processname" column="processname" jdbcType="VARCHAR"/>
+        <result property="processinstanceid" column="processinstanceid" jdbcType="BIGINT"/>
+        <result property="wfstatus" column="wfstatus" jdbcType="BIGINT"/>
+        <result property="brands1" column="brands1" jdbcType="VARCHAR"/>
+        <result property="brands1account" column="brands1account" jdbcType="DOUBLE"/>
+        <result property="brands2" column="brands2" jdbcType="VARCHAR"/>
+        <result property="brands2account" column="brands2account" jdbcType="DOUBLE"/>
+        <result property="brands3" column="brands3" jdbcType="VARCHAR"/>
+        <result property="brands3account" column="brands3account" jdbcType="DOUBLE"/>
+        <result property="createBy" column="createBy" jdbcType="VARCHAR"/>
+        <result property="createDate" column="createDate" jdbcType="TIMESTAMP"/>
+        <result property="updateDate" column="updateDate" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="updateBy" jdbcType="VARCHAR"/>
+        <result property="wdStatusFlag" column="wdstatusflag" jdbcType="TIMESTAMP"/>
+	</resultMap>
+
+ 
+	<insert id="insertWithdrawal" parameterType="com.glaf.oa.withdrawal.model.Withdrawal">
+		insert into OA_WITHDRAWAL 
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+		    withdrawalid
+			<if test="area != null">
+				,area 
+			</if>
+			<if test="company != null">
+				,company 
+			</if>
+			<if test="dept != null">
+				,dept 
+			</if>
+			<if test="post != null">
+				,post 
+			</if>
+			<if test="appuser != null">
+				,appuser 
+			</if>
+			<if test="appdate != null">
+				,appdate 
+			</if>
+			<if test="appsum != null">
+				,appsum 
+			</if>
+			<if test="content != null">
+				,content 
+			</if>
+			<if test="remark != null">
+				,remark 
+			</if>
+			<if test="status != null">
+				,status 
+			</if>
+			<if test="processname != null">
+				,processname 
+			</if>
+			<if test="processinstanceid != null">
+				,processinstanceid 
+			</if>
+			<if test="wfstatus != null">
+				,wfstatus 
+			</if>
+			<if test="brands1 != null">
+				,brands1 
+			</if>
+			<if test="brands1account != null">
+				,brands1account 
+			</if>
+			<if test="brands2 != null">
+				,brands2 
+			</if>
+			<if test="brands2account != null">
+				,brands2account 
+			</if>
+			<if test="brands3 != null">
+				,brands3 
+			</if>
+			<if test="brands3account != null">
+				,brands3account 
+			</if>
+			<if test="createBy != null">
+				,createBy 
+			</if>
+			<if test="createDate != null">
+				,createDate 
+			</if>
+			<if test="updateDate != null">
+				,updateDate 
+			</if>
+			<if test="updateBy != null">
+				,updateBy 
+			</if>
+        </trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			  #{withdrawalid, jdbcType=BIGINT}
+	     
+			<if test="area != null">
+				,#{area, jdbcType=VARCHAR}
+			</if>
+			<if test="company != null">
+				,#{company, jdbcType=VARCHAR}
+			</if>
+			<if test="dept != null">
+				,#{dept, jdbcType=VARCHAR}
+			</if>
+			<if test="post != null">
+				,#{post, jdbcType=VARCHAR}
+			</if>
+			<if test="appuser != null">
+				,#{appuser, jdbcType=VARCHAR}
+			</if>
+			<if test="appdate != null">
+				,#{appdate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="appsum != null">
+				,#{appsum, jdbcType=DOUBLE}
+			</if>
+			<if test="content != null">
+				,#{content, jdbcType=VARCHAR}
+			</if>
+			<if test="remark != null">
+				,#{remark, jdbcType=VARCHAR}
+			</if>
+			<if test="status != null">
+				,#{status, jdbcType=INTEGER}
+			</if>
+			<if test="processname != null">
+				,#{processname, jdbcType=VARCHAR}
+			</if>
+			<if test="processinstanceid != null">
+				,#{processinstanceid, jdbcType=BIGINT}
+			</if>
+			<if test="wfstatus != null">
+				,#{wfstatus, jdbcType=BIGINT}
+			</if>
+			<if test="brands1 != null">
+				,#{brands1, jdbcType=VARCHAR}
+			</if>
+			<if test="brands1account != null">
+				,#{brands1account, jdbcType=DOUBLE}
+			</if>
+			<if test="brands2 != null">	
+				,#{brands2, jdbcType=VARCHAR}
+			</if>
+			<if test="brands2account != null">
+				,#{brands2account, jdbcType=DOUBLE}
+			</if>
+			<if test="brands3 != null">
+				,#{brands3, jdbcType=VARCHAR}
+			</if>
+			<if test="brands3account != null">
+				,#{brands3account, jdbcType=DOUBLE}
+			</if>
+			<if test="createBy != null">
+				,#{createBy, jdbcType=VARCHAR}
+			</if>
+			<if test="createDate != null">
+				,#{createDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="updateDate != null">
+				,#{updateDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="updateBy != null">
+				,#{updateBy, jdbcType=VARCHAR}
+			</if>
+	    </trim>
+    </insert>
+
+	 
+	<update id="updateWithdrawal" parameterType="com.glaf.oa.withdrawal.model.Withdrawal">
+		update OA_WITHDRAWAL
+		set
+        <trim prefix="" suffix="" suffixOverrides=",">		
+			<if test="area != null">
+				area = #{area, jdbcType=VARCHAR},
+			</if>
+			<if test="company != null">
+				company = #{company, jdbcType=VARCHAR},
+			</if>
+			<if test="dept != null">
+				dept = #{dept, jdbcType=VARCHAR},
+			</if>
+			<if test="post != null">
+				post = #{post, jdbcType=VARCHAR},
+			</if>
+			<if test="appuser != null">
+				appuser = #{appuser, jdbcType=VARCHAR},
+			</if>
+			<if test="appdate != null">
+				appdate = #{appdate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="appsum != null">
+				appsum = #{appsum, jdbcType=DOUBLE},
+			</if>
+			<if test="content != null">
+				content = #{content, jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				remark = #{remark, jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				status = #{status, jdbcType=INTEGER},
+			</if>
+			<if test="processname != null">
+				processname = #{processname, jdbcType=VARCHAR},
+			</if>
+			<if test="processinstanceid != null">
+				processinstanceid = #{processinstanceid, jdbcType=BIGINT},
+			</if>
+			<if test="wfstatus != null">
+				wfstatus = #{wfstatus, jdbcType=BIGINT},
+			</if>
+				brands1 = #{brands1, jdbcType=VARCHAR},
+				brands1account = #{brands1account, jdbcType=DOUBLE},
+				brands2 = #{brands2, jdbcType=VARCHAR},
+				brands2account = #{brands2account, jdbcType=DOUBLE},
+				brands3 = #{brands3, jdbcType=VARCHAR},
+				brands3account = #{brands3account, jdbcType=DOUBLE},
+			<if test="createBy != null">
+				createBy = #{createBy, jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				createDate = #{createDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateDate != null">
+				updateDate = #{updateDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateBy != null">
+				updateBy = #{updateBy, jdbcType=VARCHAR},
+			</if>
+        </trim>
+		where
+          withdrawalid = #{withdrawalid, jdbcType=BIGINT}
+		
+    </update>
+
+ 
+	<delete id="deleteWithdrawalById" parameterType="long"> 
+        delete from OA_WITHDRAWAL
+        where withdrawalid =	#{id}
+	</delete>
+
+	
+	<delete id="deleteWithdrawals" parameterType="com.glaf.oa.withdrawal.query.WithdrawalQuery">
+		delete from OA_WITHDRAWAL
+		where ( 
+ 			  withdrawalid IN
+              <foreach item="x_withdrawalid" index="index" collection="withdrawalids" 
+                     open="(" separator="," close=")">
+                  #{x_withdrawalid}
+              </foreach>
+		)
+	</delete>
+
+
+	<select id="getWithdrawalById" parameterType="long" resultMap="withdrawalResultMap">
+		select * from OA_WITHDRAWAL where withdrawalid = #{id}
+	</select>
+
+
+	<select id="getWithdrawals" 
+	    parameterType="com.glaf.oa.withdrawal.query.WithdrawalQuery"
+		resultMap="withdrawalResultMap">
+		select E.*
+		<include refid="selectWithdrawalsSql" />
+		<choose>
+		  <when test="orderBy != null">
+		     order by ${orderBy}
+          </when>
+		  <otherwise>
+		      order by E.withdrawalid desc
+		  </otherwise>
+        </choose>
+	</select>
+
+
+	<select id="getWithdrawalCount" 
+	    parameterType="com.glaf.oa.withdrawal.query.WithdrawalQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectWithdrawalsSql" />
+	</select>
+
+
+	<sql id="selectWithdrawalsSql">
+
+		from OA_WITHDRAWAL E
+		
+		 
+		<where>
+		       E.status > -1  
+
+	        
+			<if test="area != null and area != '' ">
+				and E.area = #{area}
+            </if>
+
+			<if test="areaLike != null and areaLike != '' ">
+				and E.area like #{areaLike}
+            </if>
+
+			<if test="areas != null and areas.size() &gt; 0">
+			    and E.area IN
+                <foreach item="x_area" index="index" collection="areas" 
+                     open="(" separator="," close=")">
+                  #{x_area}
+                </foreach>
+			</if>
+	        
+			<if test="company != null and company != '' ">
+				and E.company = #{company}
+            </if>
+
+			<if test="companyLike != null and companyLike != '' ">
+				and E.company like #{companyLike}
+            </if>
+
+			<if test="companys != null and companys.size() &gt; 0">
+			    and E.company IN
+                <foreach item="x_company" index="index" collection="companys" 
+                     open="(" separator="," close=")">
+                  #{x_company}
+                </foreach>
+			</if>
+	        
+			<if test="dept != null and dept != '' ">
+				and E.dept = #{dept}
+            </if>
+
+			<if test="deptLike != null and deptLike != '' ">
+				and E.dept like #{deptLike}
+            </if>
+
+			<if test="depts != null and depts.size() &gt; 0">
+			    and E.dept IN
+                <foreach item="x_dept" index="index" collection="depts" 
+                     open="(" separator="," close=")">
+                  #{x_dept}
+                </foreach>
+			</if>
+	        
+			<if test="post != null and post != '' ">
+				and E.post = #{post}
+            </if>
+
+			<if test="postLike != null and postLike != '' ">
+				and E.post like #{postLike}
+            </if>
+
+			<if test="posts != null and posts.size() &gt; 0">
+			    and E.post IN
+                <foreach item="x_post" index="index" collection="posts" 
+                     open="(" separator="," close=")">
+                  #{x_post}
+                </foreach>
+			</if>
+	        
+			<if test="appuser != null and appuser != '' ">
+				and E.appuser = #{appuser}
+            </if>
+
+			<if test="appuserLike != null and appuserLike != '' ">
+				and E.appuser like #{appuserLike}
+            </if>
+
+			<if test="appusers != null and appusers.size() &gt; 0">
+			    and E.appuser IN
+                <foreach item="x_appuser" index="index" collection="appusers" 
+                     open="(" separator="," close=")">
+                  #{x_appuser}
+                </foreach>
+			</if>
+
+			<if test="appdate != null">
+				and E.appdate = #{appdate}
+            </if>
+
+			<if test="appdateGreaterThanOrEqual != null">
+				and E.appdate &gt;= #{appdateGreaterThanOrEqual}
+            </if>
+
+			<if test="appdateLessThanOrEqual != null">
+				and E.appdate &lt;= #{appdateLessThanOrEqual}
+            </if>
+
+			<if test="appdates != null and appdates.size() &gt; 0">
+			    and E.appdate IN
+                <foreach item="x_appdate" index="index" collection="appdates" 
+                     open="(" separator="," close=")">
+                  #{x_appdate}
+                </foreach>
+			</if>
+
+
+			<if test="appsum != null">
+				and E.appsum = #{appsum}
+            </if>
+
+			<if test="appsumGreaterThanOrEqual != null">
+				and E.appsum &gt;= #{appsumGreaterThanOrEqual}
+            </if>
+
+			<if test="appsumLessThanOrEqual != null">
+				and E.appsum &lt;= #{appsumLessThanOrEqual}
+            </if>
+
+			<if test="appsums != null and appsums.size() &gt; 0">
+			    and E.appsum IN
+                <foreach item="x_appsum" index="index" collection="appsums" 
+                     open="(" separator="," close=")">
+                  #{x_appsum}
+                </foreach>
+			</if>
+
+	        
+			<if test="content != null and content != '' ">
+				and E.content = #{content}
+            </if>
+
+			<if test="contentLike != null and contentLike != '' ">
+				and E.content like #{contentLike}
+            </if>
+
+			<if test="contents != null and contents.size() &gt; 0">
+			    and E.content IN
+                <foreach item="x_content" index="index" collection="contents" 
+                     open="(" separator="," close=")">
+                  #{x_content}
+                </foreach>
+			</if>
+	        
+			<if test="remark != null and remark != '' ">
+				and E.remark = #{remark}
+            </if>
+
+			<if test="remarkLike != null and remarkLike != '' ">
+				and E.remark like #{remarkLike}
+            </if>
+
+			<if test="remarks != null and remarks.size() &gt; 0">
+			    and E.remark IN
+                <foreach item="x_remark" index="index" collection="remarks" 
+                     open="(" separator="," close=")">
+                  #{x_remark}
+                </foreach>
+			</if>
+
+			<if test="status != null">
+				and E.status = #{status}
+            </if>
+
+			<if test="statusGreaterThanOrEqual != null">
+				and E.status &gt;= #{statusGreaterThanOrEqual}
+            </if>
+
+			<if test="statusLessThanOrEqual != null">
+				and E.status &lt;= #{statusLessThanOrEqual}
+            </if>
+
+			<if test="statuss != null and statuss.size() &gt; 0">
+			    and E.status IN
+                <foreach item="x_status" index="index" collection="statuss" 
+                     open="(" separator="," close=")">
+                  #{x_status}
+                </foreach>
+			</if>
+
+	        
+			<if test="processname != null and processname != '' ">
+				and E.processname = #{processname}
+            </if>
+
+			<if test="processnameLike != null and processnameLike != '' ">
+				and E.processname like #{processnameLike}
+            </if>
+
+			<if test="processnames != null and processnames.size() &gt; 0">
+			    and E.processname IN
+                <foreach item="x_processname" index="index" collection="processnames" 
+                     open="(" separator="," close=")">
+                  #{x_processname}
+                </foreach>
+			</if>
+
+			<if test="processinstanceid != null">
+				and E.processinstanceid = #{processinstanceid}
+            </if>
+
+			<if test="processinstanceidGreaterThanOrEqual != null">
+				and E.processinstanceid &gt;= #{processinstanceidGreaterThanOrEqual}
+            </if>
+
+			<if test="processinstanceidLessThanOrEqual != null">
+				and E.processinstanceid &lt;= #{processinstanceidLessThanOrEqual}
+            </if>
+
+			<if test="processinstanceids != null and processinstanceids.size() &gt; 0">
+			    and E.processinstanceid IN
+                <foreach item="x_processinstanceid" index="index" collection="processinstanceids" 
+                     open="(" separator="," close=")">
+                  #{x_processinstanceid}
+                </foreach>
+			</if>
+
+
+			<if test="wfstatus != null">
+				and E.wfstatus = #{wfstatus}
+            </if>
+
+			<if test="wfstatusGreaterThanOrEqual != null">
+				and E.wfstatus &gt;= #{wfstatusGreaterThanOrEqual}
+            </if>
+
+			<if test="wfstatusLessThanOrEqual != null">
+				and E.wfstatus &lt;= #{wfstatusLessThanOrEqual}
+            </if>
+
+			<if test="wfstatuss != null and wfstatuss.size() &gt; 0">
+			    and E.wfstatus IN
+                <foreach item="x_wfstatus" index="index" collection="wfstatuss" 
+                     open="(" separator="," close=")">
+                  #{x_wfstatus}
+                </foreach>
+			</if>
+
+	        
+			<if test="brands1 != null and brands1 != '' ">
+				and E.brands1 = #{brands1}
+            </if>
+
+			<if test="brands1Like != null and brands1Like != '' ">
+				and E.brands1 like #{brands1Like}
+            </if>
+
+			<if test="brands1s != null and brands1s.size() &gt; 0">
+			    and E.brands1 IN
+                <foreach item="x_brands1" index="index" collection="brands1s" 
+                     open="(" separator="," close=")">
+                  #{x_brands1}
+                </foreach>
+			</if>
+
+			<if test="brands1account != null">
+				and E.brands1account = #{brands1account}
+            </if>
+
+			<if test="brands1accountGreaterThanOrEqual != null">
+				and E.brands1account &gt;= #{brands1accountGreaterThanOrEqual}
+            </if>
+
+			<if test="brands1accountLessThanOrEqual != null">
+				and E.brands1account &lt;= #{brands1accountLessThanOrEqual}
+            </if>
+
+			<if test="brands1accounts != null and brands1accounts.size() &gt; 0">
+			    and E.brands1account IN
+                <foreach item="x_brands1account" index="index" collection="brands1accounts" 
+                     open="(" separator="," close=")">
+                  #{x_brands1account}
+                </foreach>
+			</if>
+
+	        
+			<if test="brands2 != null and brands2 != '' ">
+				and E.brands2 = #{brands2}
+            </if>
+
+			<if test="brands2Like != null and brands2Like != '' ">
+				and E.brands2 like #{brands2Like}
+            </if>
+
+			<if test="brands2s != null and brands2s.size() &gt; 0">
+			    and E.brands2 IN
+                <foreach item="x_brands2" index="index" collection="brands2s" 
+                     open="(" separator="," close=")">
+                  #{x_brands2}
+                </foreach>
+			</if>
+
+			<if test="brands2account != null">
+				and E.brands2account = #{brands2account}
+            </if>
+
+			<if test="brands2accountGreaterThanOrEqual != null">
+				and E.brands2account &gt;= #{brands2accountGreaterThanOrEqual}
+            </if>
+
+			<if test="brands2accountLessThanOrEqual != null">
+				and E.brands2account &lt;= #{brands2accountLessThanOrEqual}
+            </if>
+
+			<if test="brands2accounts != null and brands2accounts.size() &gt; 0">
+			    and E.brands2account IN
+                <foreach item="x_brands2account" index="index" collection="brands2accounts" 
+                     open="(" separator="," close=")">
+                  #{x_brands2account}
+                </foreach>
+			</if>
+
+	        
+			<if test="brands3 != null and brands3 != '' ">
+				and E.brands3 = #{brands3}
+            </if>
+
+			<if test="brands3Like != null and brands3Like != '' ">
+				and E.brands3 like #{brands3Like}
+            </if>
+
+			<if test="brands3s != null and brands3s.size() &gt; 0">
+			    and E.brands3 IN
+                <foreach item="x_brands3" index="index" collection="brands3s" 
+                     open="(" separator="," close=")">
+                  #{x_brands3}
+                </foreach>
+			</if>
+
+			<if test="brands3account != null">
+				and E.brands3account = #{brands3account}
+            </if>
+
+			<if test="brands3accountGreaterThanOrEqual != null">
+				and E.brands3account &gt;= #{brands3accountGreaterThanOrEqual}
+            </if>
+
+			<if test="brands3accountLessThanOrEqual != null">
+				and E.brands3account &lt;= #{brands3accountLessThanOrEqual}
+            </if>
+
+			<if test="brands3accounts != null and brands3accounts.size() &gt; 0">
+			    and E.brands3account IN
+                <foreach item="x_brands3account" index="index" collection="brands3accounts" 
+                     open="(" separator="," close=")">
+                  #{x_brands3account}
+                </foreach>
+			</if>
+
+	        
+			<if test="createBy != null and createBy != '' ">
+				and E.createBy = #{createBy}
+            </if>
+
+			<if test="createByLike != null and createByLike != '' ">
+				and E.createBy like #{createByLike}
+            </if>
+
+			<if test="createBys != null and createBys.size() &gt; 0">
+			    and E.createBy IN
+                <foreach item="x_createBy" index="index" collection="createBys" 
+                     open="(" separator="," close=")">
+                  #{x_createBy}
+                </foreach>
+			</if>
+
+			<if test="createDate != null">
+				and E.createDate = #{createDate}
+            </if>
+
+			<if test="createDateGreaterThanOrEqual != null">
+				and E.createDate &gt;= #{createDateGreaterThanOrEqual}
+            </if>
+
+			<if test="createDateLessThanOrEqual != null">
+				and E.createDate &lt;= #{createDateLessThanOrEqual}
+            </if>
+
+			<if test="createDates != null and createDates.size() &gt; 0">
+			    and E.createDate IN
+                <foreach item="x_createDate" index="index" collection="createDates" 
+                     open="(" separator="," close=")">
+                  #{x_createDate}
+                </foreach>
+			</if>
+
+
+			<if test="updateDate != null">
+				and E.updateDate = #{updateDate}
+            </if>
+
+			<if test="updateDateGreaterThanOrEqual != null">
+				and E.updateDate &gt;= #{updateDateGreaterThanOrEqual}
+            </if>
+
+			<if test="updateDateLessThanOrEqual != null">
+				and E.updateDate &lt;= #{updateDateLessThanOrEqual}
+            </if>
+
+			<if test="updateDates != null and updateDates.size() &gt; 0">
+			    and E.updateDate IN
+                <foreach item="x_updateDate" index="index" collection="updateDates" 
+                     open="(" separator="," close=")">
+                  #{x_updateDate}
+                </foreach>
+			</if>
+
+	        
+			<if test="updateBy != null and updateBy != '' ">
+				and E.updateBy = #{updateBy}
+            </if>
+
+			<if test="updateByLike != null and updateByLike != '' ">
+				and E.updateBy like #{updateByLike}
+            </if>
+
+			<if test="updateBys != null and updateBys.size() &gt; 0">
+			    and E.updateBy IN
+                <foreach item="x_updateBy" index="index" collection="updateBys" 
+                     open="(" separator="," close=")">
+                  #{x_updateBy}
+                </foreach>
+			</if>
+			 
+		</where>
+	</sql>
+
+	<!-- 审核列表 -->
+	<select id="getWithdrawalsApprove" 
+	    parameterType="com.glaf.oa.withdrawal.query.WithdrawalQuery"
+		resultMap="withdrawalResultMap">
+		select E.* 
+		<include refid="selectWithdrawalsApproveSql" />
+		<choose>
+		  <when test="orderBy != null">
+		     order by ${orderBy}
+          </when>
+		  <otherwise>
+		      order by E.withdrawalid desc
+		  </otherwise>
+        </choose>
+	</select>
+	
+	<!-- 审核列表条数 -->
+	<select id="getWithdrawalApproveCount" 
+	    parameterType="com.glaf.oa.withdrawal.query.WithdrawalQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectWithdrawalsApproveSql" />
+	</select>
+	
+	<!-- 审核 -->
+	<sql id="selectWithdrawalsApproveSql">
+
+		from OA_WITHDRAWAL E
+		
+		 <if test="status == 1 and actorId != null ">
+				inner join JBPM_TASKINSTANCE T on E.PROCESSINSTANCEID
+				= T.PROCINST_
+        	</if>
+
+		<where>
+			1 = 1
+			<if test="status == 1 and actorId != null ">
+				and ( T.END_ IS NULL)
+				and ( T.ACTORID_ = #{actorId} )
+			</if>
+
+			<if test="status == 2 and actorId != null ">
+				and E.PROCESSINSTANCEID in (
+				SELECT a.PROCINST_
+				FROM JBPM_TASKINSTANCE a
+				WHERE (1 = 1)
+				AND (a.END_ IS not NULL)
+				AND (a.ACTORID_ IS NOT NULL)
+				AND (a.ACTORID_ = #{actorId} )
+				union
+				SELECT a.PROCINST_
+				FROM JBPM_POOLEDACTOR p
+				INNER JOIN
+				JBPM_TASKACTORPOOL t
+				ON p.ID_ = t.POOLEDACTOR_
+				INNER JOIN
+				JBPM_TASKINSTANCE a
+				ON t.TASKINSTANCE_ = a.ID_
+				WHERE (1 = 1)
+				AND
+				(a.END_ IS NULL)
+				AND (a.ACTORID_ IS NULL)
+				AND (p.ACTORID_ = #{actorId} )
+				union
+				select distinct 0 from JBPM_TASKINSTANCE
+				)
+			</if>
+		 
+			<if test="area != null and area != '' ">
+				and E.area = #{area}
+            </if>
+
+	        
+			<if test="company != null and company != '' ">
+				and E.company = #{company}
+            </if>
+
+	        
+			<if test="dept != null and dept != '' ">
+				and E.dept = #{dept}
+            </if>
+
+			<if test="post != null and post != '' ">
+				and E.post = #{post}
+            </if>
+
+	        
+			<if test="appuser != null and appuser != '' ">
+				and E.appuser = #{appuser}
+            </if>
+
+
+			<if test="appdateGreaterThanOrEqual != null">
+				and E.appdate &gt;= #{appdateGreaterThanOrEqual}
+            </if>
+
+			<if test="appdateLessThanOrEqual != null">
+				and E.appdate &lt;= #{appdateLessThanOrEqual}
+            </if>
+
+			 
+		</where>
+	</sql>
+</mapper>

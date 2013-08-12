@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.oa.purchase.mapper.PurchaseitemMapper">
+
+ 	<resultMap id="purchaseitemResultMap"	type="com.glaf.oa.purchase.model.Purchaseitem">
+        <id property="purchaseitemid" column="purchaseitemid" jdbcType="BIGINT" />
+        <result property="purchaseid" column="purchaseid" jdbcType="BIGINT"/>
+        <result property="content" column="content" jdbcType="VARCHAR"/>
+        <result property="specification" column="specification" jdbcType="VARCHAR"/>
+        <result property="quantity" column="quantity" jdbcType="DOUBLE"/>
+        <result property="referenceprice" column="referenceprice" jdbcType="DOUBLE"/>
+        <result property="createBy" column="createBy" jdbcType="VARCHAR"/>
+        <result property="createDate" column="createDate" jdbcType="TIMESTAMP"/>
+        <result property="updateDate" column="updateDate" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="updateBy" jdbcType="VARCHAR"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+	</resultMap>
+
+ 
+	<insert id="insertPurchaseitem" parameterType="com.glaf.oa.purchase.model.Purchaseitem">
+		insert into oa_purchaseitem 
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+		    purchaseitemid
+			<if test="purchaseid != null">
+				,purchaseid 
+			</if>
+			<if test="content != null">
+				,content 
+			</if>
+			<if test="specification != null">
+				,specification 
+			</if>
+			<if test="quantity != null">
+				,quantity 
+			</if>
+			<if test="referenceprice != null">
+				,referenceprice 
+			</if>
+			<if test="remark != null">
+				,remark 
+			</if>
+			<if test="createBy != null">
+				,createBy 
+			</if>
+			<if test="createDate != null">
+				,createDate 
+			</if>
+			<if test="updateDate != null">
+				,updateDate 
+			</if>
+			<if test="updateBy != null">
+				,updateBy 
+			</if>
+        </trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			  #{purchaseitemid, jdbcType=BIGINT}
+	     
+			<if test="purchaseid != null">
+				,#{purchaseid, jdbcType=BIGINT}
+			</if>
+			<if test="content != null">
+				,#{content, jdbcType=VARCHAR}
+			</if>
+			<if test="specification != null">
+				,#{specification, jdbcType=VARCHAR}
+			</if>
+			<if test="quantity != null">
+				,#{quantity, jdbcType=DOUBLE}
+			</if>
+			<if test="referenceprice != null">
+				,#{referenceprice, jdbcType=DOUBLE}
+			</if>
+			<if test="remark != null">
+				,#{remark, jdbcType=VARCHAR}
+			</if>
+			<if test="createBy != null">
+				,#{createBy, jdbcType=VARCHAR}
+			</if>
+			<if test="createDate != null">
+				,#{createDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="updateDate != null">
+				,#{updateDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="updateBy != null">
+				,#{updateBy, jdbcType=VARCHAR}
+			</if>
+	    </trim>
+    </insert>
+
+	 
+	<update id="updatePurchaseitem" parameterType="com.glaf.oa.purchase.model.Purchaseitem">
+		update oa_purchaseitem
+		set
+        <trim prefix="" suffix="" suffixOverrides=",">		
+			<if test="purchaseid != null">
+				purchaseid = #{purchaseid, jdbcType=BIGINT},
+			</if>
+			<if test="content != null">
+				content = #{content, jdbcType=VARCHAR},
+			</if>
+			<if test="specification != null">
+				specification = #{specification, jdbcType=VARCHAR},
+			</if>
+			<if test="quantity != null">
+				quantity = #{quantity, jdbcType=DOUBLE},
+			</if>
+			<if test="referenceprice != null">
+				referenceprice = #{referenceprice, jdbcType=DOUBLE},
+			</if>
+			<if test="remark != null">
+				remark = #{remark, jdbcType=VARCHAR},
+			</if>
+			<if test="createBy != null">
+				createBy = #{createBy, jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				createDate = #{createDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateDate != null">
+				updateDate = #{updateDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateBy != null">
+				updateBy = #{updateBy, jdbcType=VARCHAR},
+			</if>
+        </trim>
+		where
+          purchaseitemid = #{purchaseitemid, jdbcType=BIGINT}
+		
+    </update>
+
+ 
+	<delete id="deletePurchaseitemById" parameterType="long"> 
+        delete from oa_purchaseitem
+        where purchaseitemid =	#{id}
+	</delete>
+
+	
+	<delete id="deletePurchaseitems" parameterType="com.glaf.oa.purchase.query.PurchaseitemQuery">
+		delete from oa_purchaseitem
+		where ( 
+ 			  purchaseitemid IN
+              <foreach item="x_purchaseitemid" index="index" collection="purchaseitemids" 
+                     open="(" separator="," close=")">
+                  #{x_purchaseitemid}
+              </foreach>
+		)
+	</delete>
+	
+	<!-- 根据主表  ID 删除 -->
+	<delete id="deleteByParentId" parameterType="long">
+		 delete from oa_purchaseitem
+        where purchaseid =	#{parentId}
+	</delete>
+	
+	<!-- 根据主表 ID 获取所有明细信息 -->
+	<select id="getPurchaseitemByParentId" 
+	    parameterType="long"
+		resultMap="purchaseitemResultMap">
+		select E.* from oa_purchaseitem E 
+		 where E.purchaseid = #{parentId} 
+		<choose>
+		  <otherwise>
+		      order by E.purchaseitemid desc
+		  </otherwise>
+        </choose>
+	</select>
+
+	<select id="getPurchaseitemById" parameterType="long" resultMap="purchaseitemResultMap">
+		select * from oa_purchaseitem where purchaseitemid = #{id}
+	</select>
+
+
+	<select id="getPurchaseitems" 
+	    parameterType="com.glaf.oa.purchase.query.PurchaseitemQuery"
+		resultMap="purchaseitemResultMap">
+		select E.*
+		<include refid="selectPurchaseitemsSql" />
+		<choose>
+		  <when test="orderBy != null">
+		     order by ${orderBy}
+          </when>
+		  <otherwise>
+		      order by E.purchaseitemid desc
+		  </otherwise>
+        </choose>
+	</select>
+
+
+	<select id="getPurchaseitemCount" 
+	    parameterType="com.glaf.oa.purchase.query.PurchaseitemQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectPurchaseitemsSql" />
+	</select>
+
+
+	<sql id="selectPurchaseitemsSql">
+
+		from oa_purchaseitem E
+		
+		 
+		<where>
+		       1 = 1  
+
+
+			<if test="purchaseid != null">
+				and E.purchaseid = #{purchaseid}
+            </if>
+
+			<if test="purchaseidGreaterThanOrEqual != null">
+				and E.purchaseid &gt;= #{purchaseidGreaterThanOrEqual}
+            </if>
+
+			<if test="purchaseidLessThanOrEqual != null">
+				and E.purchaseid &lt;= #{purchaseidLessThanOrEqual}
+            </if>
+
+			<if test="purchaseids != null and purchaseids.size() &gt; 0">
+			    and E.purchaseid IN
+                <foreach item="x_purchaseid" index="index" collection="purchaseids" 
+                     open="(" separator="," close=")">
+                  #{x_purchaseid}
+                </foreach>
+			</if>
+
+	        
+			<if test="content != null and content != '' ">
+				and E.content = #{content}
+            </if>
+
+			<if test="contentLike != null and contentLike != '' ">
+				and E.content like #{contentLike}
+            </if>
+
+			<if test="contents != null and contents.size() &gt; 0">
+			    and E.content IN
+                <foreach item="x_content" index="index" collection="contents" 
+                     open="(" separator="," close=")">
+                  #{x_content}
+                </foreach>
+			</if>
+	        
+			<if test="specification != null and specification != '' ">
+				and E.specification = #{specification}
+            </if>
+
+			<if test="specificationLike != null and specificationLike != '' ">
+				and E.specification like #{specificationLike}
+            </if>
+
+			<if test="specifications != null and specifications.size() &gt; 0">
+			    and E.specification IN
+                <foreach item="x_specification" index="index" collection="specifications" 
+                     open="(" separator="," close=")">
+                  #{x_specification}
+                </foreach>
+			</if>
+
+			<if test="quantity != null">
+				and E.quantity = #{quantity}
+            </if>
+
+			<if test="quantityGreaterThanOrEqual != null">
+				and E.quantity &gt;= #{quantityGreaterThanOrEqual}
+            </if>
+
+			<if test="quantityLessThanOrEqual != null">
+				and E.quantity &lt;= #{quantityLessThanOrEqual}
+            </if>
+
+			<if test="quantitys != null and quantitys.size() &gt; 0">
+			    and E.quantity IN
+                <foreach item="x_quantity" index="index" collection="quantitys" 
+                     open="(" separator="," close=")">
+                  #{x_quantity}
+                </foreach>
+			</if>
+
+
+			<if test="referenceprice != null">
+				and E.referenceprice = #{referenceprice}
+            </if>
+
+			<if test="referencepriceGreaterThanOrEqual != null">
+				and E.referenceprice &gt;= #{referencepriceGreaterThanOrEqual}
+            </if>
+
+			<if test="referencepriceLessThanOrEqual != null">
+				and E.referenceprice &lt;= #{referencepriceLessThanOrEqual}
+            </if>
+
+			<if test="referenceprices != null and referenceprices.size() &gt; 0">
+			    and E.referenceprice IN
+                <foreach item="x_referenceprice" index="index" collection="referenceprices" 
+                     open="(" separator="," close=")">
+                  #{x_referenceprice}
+                </foreach>
+			</if>
+
+	        
+			<if test="createBy != null and createBy != '' ">
+				and E.createBy = #{createBy}
+            </if>
+
+			<if test="createByLike != null and createByLike != '' ">
+				and E.createBy like #{createByLike}
+            </if>
+
+			<if test="createBys != null and createBys.size() &gt; 0">
+			    and E.createBy IN
+                <foreach item="x_createBy" index="index" collection="createBys" 
+                     open="(" separator="," close=")">
+                  #{x_createBy}
+                </foreach>
+			</if>
+
+			<if test="createDate != null">
+				and E.createDate = #{createDate}
+            </if>
+
+			<if test="createDateGreaterThanOrEqual != null">
+				and E.createDate &gt;= #{createDateGreaterThanOrEqual}
+            </if>
+
+			<if test="createDateLessThanOrEqual != null">
+				and E.createDate &lt;= #{createDateLessThanOrEqual}
+            </if>
+
+			<if test="createDates != null and createDates.size() &gt; 0">
+			    and E.createDate IN
+                <foreach item="x_createDate" index="index" collection="createDates" 
+                     open="(" separator="," close=")">
+                  #{x_createDate}
+                </foreach>
+			</if>
+
+
+			<if test="updateDate != null">
+				and E.updateDate = #{updateDate}
+            </if>
+
+			<if test="updateDateGreaterThanOrEqual != null">
+				and E.updateDate &gt;= #{updateDateGreaterThanOrEqual}
+            </if>
+
+			<if test="updateDateLessThanOrEqual != null">
+				and E.updateDate &lt;= #{updateDateLessThanOrEqual}
+            </if>
+
+			<if test="updateDates != null and updateDates.size() &gt; 0">
+			    and E.updateDate IN
+                <foreach item="x_updateDate" index="index" collection="updateDates" 
+                     open="(" separator="," close=")">
+                  #{x_updateDate}
+                </foreach>
+			</if>
+
+	        
+			<if test="updateBy != null and updateBy != '' ">
+				and E.updateBy = #{updateBy}
+            </if>
+
+			<if test="updateByLike != null and updateByLike != '' ">
+				and E.updateBy like #{updateByLike}
+            </if>
+
+			<if test="updateBys != null and updateBys.size() &gt; 0">
+			    and E.updateBy IN
+                <foreach item="x_updateBy" index="index" collection="updateBys" 
+                     open="(" separator="," close=")">
+                  #{x_updateBy}
+                </foreach>
+			</if>
+			 
+		</where>
+	</sql>
+
+</mapper>

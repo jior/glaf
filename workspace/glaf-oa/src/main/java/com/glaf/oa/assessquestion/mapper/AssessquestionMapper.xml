@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.oa.assessquestion.mapper.AssessquestionMapper">
+
+ 	<resultMap id="assessquestionResultMap"	type="com.glaf.oa.assessquestion.model.Assessquestion">
+        <id property="qustionid" column="qustionid" jdbcType="BIGINT" />
+        <result property="title" column="title" jdbcType="VARCHAR"/>
+        <result property="validdate" column="validdate" jdbcType="TIMESTAMP"/>
+        <result property="rate" column="rate" jdbcType="INTEGER"/>
+        <result property="iseffective" column="iseffective" jdbcType="INTEGER"/>
+        <result property="targetsum" column="targetsum" jdbcType="DOUBLE"/>
+        <result property="createBy" column="createBy" jdbcType="VARCHAR"/>
+        <result property="createDate" column="createDate" jdbcType="TIMESTAMP"/>
+        <result property="updateDate" column="updateDate" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="updateBy" jdbcType="VARCHAR"/>
+	</resultMap>
+
+ 
+	<insert id="insertAssessquestion" parameterType="com.glaf.oa.assessquestion.model.Assessquestion">
+		insert into oa_assessquestion 
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+		    qustionid
+			<if test="title != null">
+				,title 
+			</if>
+			<if test="validdate != null">
+				,validdate 
+			</if>
+			<if test="rate != null">
+				,rate 
+			</if>
+			<if test="iseffective != null">
+				,iseffective 
+			</if>
+			<if test="targetsum != null">
+				,targetsum 
+			</if>
+			<if test="createBy != null">
+				,createBy 
+			</if>
+			<if test="createDate != null">
+				,createDate 
+			</if>
+			<if test="updateDate != null">
+				,updateDate 
+			</if>
+			<if test="updateBy != null">
+				,updateBy 
+			</if>
+        </trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			  #{qustionid, jdbcType=BIGINT}
+	     
+			<if test="title != null">
+				,#{title, jdbcType=VARCHAR}
+			</if>
+			<if test="validdate != null">
+				,#{validdate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="rate != null">
+				,#{rate, jdbcType=INTEGER}
+			</if>
+			<if test="iseffective != null">
+				,#{iseffective, jdbcType=INTEGER}
+			</if>
+			<if test="targetsum != null">
+				,#{targetsum, jdbcType=DOUBLE}
+			</if>
+			<if test="createBy != null">
+				,#{createBy, jdbcType=VARCHAR}
+			</if>
+			<if test="createDate != null">
+				,#{createDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="updateDate != null">
+				,#{updateDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="updateBy != null">
+				,#{updateBy, jdbcType=VARCHAR}
+			</if>
+	    </trim>
+    </insert>
+
+	 
+	<update id="updateAssessquestion" parameterType="com.glaf.oa.assessquestion.model.Assessquestion">
+		update oa_assessquestion
+		set
+        <trim prefix="" suffix="" suffixOverrides=",">		
+			<if test="title != null">
+				title = #{title, jdbcType=VARCHAR},
+			</if>
+			<if test="validdate != null">
+				validdate = #{validdate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="rate != null">
+				rate = #{rate, jdbcType=INTEGER},
+			</if>
+			<if test="iseffective != null">
+				iseffective = #{iseffective, jdbcType=INTEGER},
+			</if>
+			<if test="targetsum != null">
+				targetsum = #{targetsum, jdbcType=DOUBLE},
+			</if>
+			<if test="createBy != null">
+				createBy = #{createBy, jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				createDate = #{createDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateDate != null">
+				updateDate = #{updateDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateBy != null">
+				updateBy = #{updateBy, jdbcType=VARCHAR},
+			</if>
+        </trim>
+		where
+          qustionid = #{qustionid, jdbcType=BIGINT}
+		
+    </update>
+
+ 
+	<delete id="deleteAssessquestionById" parameterType="long"> 
+        delete from oa_assessquestion
+        where qustionid =	#{id}
+	</delete>
+
+	
+	<delete id="deleteAssessquestions" parameterType="com.glaf.oa.assessquestion.query.AssessquestionQuery">
+		delete from oa_assessquestion
+		where ( 
+ 			  qustionid IN
+              <foreach item="x_qustionid" index="index" collection="qustionids" 
+                     open="(" separator="," close=")">
+                  #{x_qustionid}
+              </foreach>
+		)
+	</delete>
+
+
+	<select id="getAssessquestionById" parameterType="long" resultMap="assessquestionResultMap">
+		select * from oa_assessquestion where qustionid = #{id}
+	</select>
+
+
+	<select id="getAssessquestions" 
+	    parameterType="com.glaf.oa.assessquestion.query.AssessquestionQuery"
+		resultMap="assessquestionResultMap">
+		select E.*
+		<include refid="selectAssessquestionsSql" />
+		<choose>
+		  <when test="orderBy != null">
+		     order by ${orderBy}
+          </when>
+		  <otherwise>
+		      order by E.qustionid desc
+		  </otherwise>
+        </choose>
+	</select>
+
+
+	<select id="getAssessquestionCount" 
+	    parameterType="com.glaf.oa.assessquestion.query.AssessquestionQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectAssessquestionsSql" />
+	</select>
+
+
+	<sql id="selectAssessquestionsSql">
+
+		from oa_assessquestion E
+		
+		 
+		<where>
+		       1 = 1  
+
+	        
+			<if test="title != null and title != '' ">
+				and E.title = #{title}
+            </if>
+
+			<if test="titleLike != null and titleLike != '' ">
+				and E.title like #{titleLike}
+            </if>
+
+			<if test="titles != null and titles.size() &gt; 0">
+			    and E.title IN
+                <foreach item="x_title" index="index" collection="titles" 
+                     open="(" separator="," close=")">
+                  #{x_title}
+                </foreach>
+			</if>
+
+			<if test="validdate != null">
+				and E.validdate = #{validdate}
+            </if>
+
+			<if test="validdateGreaterThanOrEqual != null">
+				and E.validdate &gt;= #{validdateGreaterThanOrEqual}
+            </if>
+
+			<if test="validdateLessThanOrEqual != null">
+				and E.validdate &lt;= #{validdateLessThanOrEqual}
+            </if>
+
+			<if test="validdates != null and validdates.size() &gt; 0">
+			    and E.validdate IN
+                <foreach item="x_validdate" index="index" collection="validdates" 
+                     open="(" separator="," close=")">
+                  #{x_validdate}
+                </foreach>
+			</if>
+
+
+			<if test="rate != null">
+				and E.rate = #{rate}
+            </if>
+
+			<if test="rateGreaterThanOrEqual != null">
+				and E.rate &gt;= #{rateGreaterThanOrEqual}
+            </if>
+
+			<if test="rateLessThanOrEqual != null">
+				and E.rate &lt;= #{rateLessThanOrEqual}
+            </if>
+
+			<if test="rates != null and rates.size() &gt; 0">
+			    and E.rate IN
+                <foreach item="x_rate" index="index" collection="rates" 
+                     open="(" separator="," close=")">
+                  #{x_rate}
+                </foreach>
+			</if>
+
+
+			<if test="iseffective != null">
+				and E.iseffective = #{iseffective}
+            </if>
+
+			<if test="iseffectiveGreaterThanOrEqual != null">
+				and E.iseffective &gt;= #{iseffectiveGreaterThanOrEqual}
+            </if>
+
+			<if test="iseffectiveLessThanOrEqual != null">
+				and E.iseffective &lt;= #{iseffectiveLessThanOrEqual}
+            </if>
+
+			<if test="iseffectives != null and iseffectives.size() &gt; 0">
+			    and E.iseffective IN
+                <foreach item="x_iseffective" index="index" collection="iseffectives" 
+                     open="(" separator="," close=")">
+                  #{x_iseffective}
+                </foreach>
+			</if>
+
+
+			<if test="targetsum != null">
+				and E.targetsum = #{targetsum}
+            </if>
+
+			<if test="targetsumGreaterThanOrEqual != null">
+				and E.targetsum &gt;= #{targetsumGreaterThanOrEqual}
+            </if>
+
+			<if test="targetsumLessThanOrEqual != null">
+				and E.targetsum &lt;= #{targetsumLessThanOrEqual}
+            </if>
+
+			<if test="targetsums != null and targetsums.size() &gt; 0">
+			    and E.targetsum IN
+                <foreach item="x_targetsum" index="index" collection="targetsums" 
+                     open="(" separator="," close=")">
+                  #{x_targetsum}
+                </foreach>
+			</if>
+
+	        
+			<if test="createBy != null and createBy != '' ">
+				and E.createBy = #{createBy}
+            </if>
+
+			<if test="createByLike != null and createByLike != '' ">
+				and E.createBy like #{createByLike}
+            </if>
+
+			<if test="createBys != null and createBys.size() &gt; 0">
+			    and E.createBy IN
+                <foreach item="x_createBy" index="index" collection="createBys" 
+                     open="(" separator="," close=")">
+                  #{x_createBy}
+                </foreach>
+			</if>
+
+			<if test="createDate != null">
+				and E.createDate = #{createDate}
+            </if>
+
+			<if test="createDateGreaterThanOrEqual != null">
+				and E.createDate &gt;= #{createDateGreaterThanOrEqual}
+            </if>
+
+			<if test="createDateLessThanOrEqual != null">
+				and E.createDate &lt;= #{createDateLessThanOrEqual}
+            </if>
+
+			<if test="createDates != null and createDates.size() &gt; 0">
+			    and E.createDate IN
+                <foreach item="x_createDate" index="index" collection="createDates" 
+                     open="(" separator="," close=")">
+                  #{x_createDate}
+                </foreach>
+			</if>
+
+
+			<if test="updateDate != null">
+				and E.updateDate = #{updateDate}
+            </if>
+
+			<if test="updateDateGreaterThanOrEqual != null">
+				and E.updateDate &gt;= #{updateDateGreaterThanOrEqual}
+            </if>
+
+			<if test="updateDateLessThanOrEqual != null">
+				and E.updateDate &lt;= #{updateDateLessThanOrEqual}
+            </if>
+
+			<if test="updateDates != null and updateDates.size() &gt; 0">
+			    and E.updateDate IN
+                <foreach item="x_updateDate" index="index" collection="updateDates" 
+                     open="(" separator="," close=")">
+                  #{x_updateDate}
+                </foreach>
+			</if>
+
+	        
+			<if test="updateBy != null and updateBy != '' ">
+				and E.updateBy = #{updateBy}
+            </if>
+
+			<if test="updateByLike != null and updateByLike != '' ">
+				and E.updateBy like #{updateByLike}
+            </if>
+
+			<if test="updateBys != null and updateBys.size() &gt; 0">
+			    and E.updateBy IN
+                <foreach item="x_updateBy" index="index" collection="updateBys" 
+                     open="(" separator="," close=")">
+                  #{x_updateBy}
+                </foreach>
+			</if>
+			 
+		</where>
+	</sql>
+
+</mapper>

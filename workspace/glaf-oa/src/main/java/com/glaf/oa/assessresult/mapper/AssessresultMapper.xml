@@ -1,0 +1,623 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.oa.assessresult.mapper.AssessresultMapper">
+
+ 	<resultMap id="assessresultResultMap"	type="com.glaf.oa.assessresult.model.Assessresult">
+        <id property="resultid" column="resultid" jdbcType="BIGINT" />
+        <result property="qustionid" column="qustionid" jdbcType="BIGINT"/>
+        <result property="area" column="area" jdbcType="VARCHAR"/>
+        <result property="company" column="company" jdbcType="VARCHAR"/>
+        <result property="dept" column="dept" jdbcType="VARCHAR"/>
+        <result property="post" column="post" jdbcType="VARCHAR"/>
+        <result property="year" column="year" jdbcType="INTEGER"/>
+        <result property="season" column="season" jdbcType="INTEGER"/>
+        <result property="month" column="month" jdbcType="INTEGER"/>
+        <result property="beevaluation" column="beevaluation" jdbcType="VARCHAR"/>
+        <result property="evaluation" column="evaluation" jdbcType="VARCHAR"/>
+        <result property="rewardsum" column="rewardsum" jdbcType="DOUBLE"/>
+        <result property="score" column="score" jdbcType="DOUBLE"/>
+        <result property="createBy" column="createBy" jdbcType="VARCHAR"/>
+        <result property="createDate" column="createDate" jdbcType="TIMESTAMP"/>
+        <result property="updateDate" column="updateDate" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="updateBy" jdbcType="VARCHAR"/>
+        <result property="title" column="title" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+ 	<resultMap id="assessresultForJobResultMap"	type="com.glaf.oa.assessresult.model.JobEvaluation">
+        <result property="treeName" column="treename" jdbcType="VARCHAR" />
+        <result property="dictoryName" column="dictoryname" jdbcType="VARCHAR"/>
+        <result property="contentId" column="contentid" jdbcType="BIGINT"/>
+        <result property="contentName" column="contentname" jdbcType="VARCHAR"/>
+        <result property="basis" column="basis" jdbcType="VARCHAR"/>
+        <result property="standard" column="standard" jdbcType="DOUBLE"/>
+        <result property="score" column="score" jdbcType="DOUBLE"/>
+        <result property="reason" column="reason" jdbcType="VARCHAR"/>
+	</resultMap>
+
+ 
+	<insert id="insertAssessresult" parameterType="com.glaf.oa.assessresult.model.Assessresult">
+		insert into oa_assessresult 
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+		    resultid
+			<if test="qustionid != null">
+				,qustionid 
+			</if>
+			<if test="area != null">
+				,area 
+			</if>
+			<if test="company != null">
+				,company 
+			</if>
+			<if test="dept != null">
+				,dept 
+			</if>
+			<if test="post != null">
+				,post 
+			</if>
+			<if test="year != null">
+				,year 
+			</if>
+			<if test="season != null">
+				,season 
+			</if>
+			<if test="month != null">
+				,month 
+			</if>
+			<if test="beevaluation != null">
+				,beevaluation 
+			</if>
+			<if test="evaluation != null">
+				,evaluation 
+			</if>
+			<if test="comment != null">
+				,comment 
+			</if>
+			<if test="rewardsum != null">
+				,rewardsum 
+			</if>
+			<if test="score != null">
+				,score 
+			</if>
+			<if test="createBy != null">
+				,createBy 
+			</if>
+			<if test="createDate != null">
+				,createDate 
+			</if>
+			<if test="updateDate != null">
+				,updateDate 
+			</if>
+			<if test="updateBy != null">
+				,updateBy 
+			</if>
+			<if test="title != null">
+				,title 
+			</if>
+        </trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			  #{resultid, jdbcType=BIGINT}
+	     
+			<if test="qustionid != null">
+				,#{qustionid, jdbcType=BIGINT}
+			</if>
+			<if test="area != null">
+				,#{area, jdbcType=VARCHAR}
+			</if>
+			<if test="company != null">
+				,#{company, jdbcType=VARCHAR}
+			</if>
+			<if test="dept != null">
+				,#{dept, jdbcType=VARCHAR}
+			</if>
+			<if test="post != null">
+				,#{post, jdbcType=VARCHAR}
+			</if>
+			<if test="year != null">
+				,#{year, jdbcType=INTEGER}
+			</if>
+			<if test="season != null">
+				,#{season, jdbcType=INTEGER}
+			</if>
+			<if test="month != null">
+				,#{month, jdbcType=INTEGER}
+			</if>
+			<if test="beevaluation != null">
+				,#{beevaluation, jdbcType=VARCHAR}
+			</if>
+			<if test="evaluation != null">
+				,#{evaluation, jdbcType=VARCHAR}
+			</if>
+			<if test="comment != null">
+				,#{comment, jdbcType=VARCHAR}
+			</if>
+			<if test="rewardsum != null">
+				,#{rewardsum, jdbcType=DOUBLE}
+			</if>
+			<if test="score != null">
+				,#{score, jdbcType=DOUBLE}
+			</if>
+			<if test="createBy != null">
+				,#{createBy, jdbcType=VARCHAR}
+			</if>
+			<if test="createDate != null">
+				,#{createDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="updateDate != null">
+				,#{updateDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="updateBy != null">
+				,#{updateBy, jdbcType=VARCHAR}
+			</if>
+			<if test="title != null">
+				,#{title, jdbcType=VARCHAR}
+			</if>
+	    </trim>
+    </insert>
+
+	 
+	<update id="updateAssessresult" parameterType="com.glaf.oa.assessresult.model.Assessresult">
+		update oa_assessresult
+		set
+        <trim prefix="" suffix="" suffixOverrides=",">		
+			<if test="qustionid != null">
+				qustionid = #{qustionid, jdbcType=BIGINT},
+			</if>
+			<if test="area != null">
+				area = #{area, jdbcType=VARCHAR},
+			</if>
+			<if test="company != null">
+				company = #{company, jdbcType=VARCHAR},
+			</if>
+			<if test="dept != null">
+				dept = #{dept, jdbcType=VARCHAR},
+			</if>
+			<if test="post != null">
+				post = #{post, jdbcType=VARCHAR},
+			</if>
+			<if test="year != null">
+				year = #{year, jdbcType=INTEGER},
+			</if>
+			<if test="season != null">
+				season = #{season, jdbcType=INTEGER},
+			</if>
+			<if test="month != null">
+				month = #{month, jdbcType=INTEGER},
+			</if>
+			<if test="beevaluation != null">
+				beevaluation = #{beevaluation, jdbcType=VARCHAR},
+			</if>
+			<if test="evaluation != null">
+				evaluation = #{evaluation, jdbcType=VARCHAR},
+			</if>
+			<if test="comment != null">
+				comment = #{comment, jdbcType=VARCHAR},
+			</if>
+			<if test="rewardsum != null">
+				rewardsum = #{rewardsum, jdbcType=DOUBLE},
+			</if>
+			<if test="score != null">
+				score = #{score, jdbcType=DOUBLE},
+			</if>
+			<if test="createBy != null">
+				createBy = #{createBy, jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				createDate = #{createDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateDate != null">
+				updateDate = #{updateDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateBy != null">
+				updateBy = #{updateBy, jdbcType=VARCHAR},
+			</if>
+			<if test="title != null">
+				title = #{title, jdbcType=VARCHAR},
+			</if>
+        </trim>
+		where
+          resultid = #{resultid, jdbcType=BIGINT}
+		
+    </update>
+
+ 
+	<delete id="deleteAssessresultById" parameterType="long"> 
+        delete from oa_assessresult
+        where resultid =	#{id}
+	</delete>
+
+	
+	<delete id="deleteAssessresults" parameterType="com.glaf.oa.assessresult.query.AssessresultQuery">
+		delete from oa_assessresult
+		where ( 
+ 			  resultid IN
+              <foreach item="x_resultid" index="index" collection="resultids" 
+                     open="(" separator="," close=")">
+                  #{x_resultid}
+              </foreach>
+		)
+	</delete>
+
+
+	<select id="getAssessresultById" parameterType="long" resultMap="assessresultResultMap">
+		select * from oa_assessresult where resultid = #{id}
+	</select>
+	
+	
+	<select id="getAssessresultsForJob" parameterType="com.glaf.oa.assessresult.query.AssessresultQuery" 
+			resultMap="assessresultForJobResultMap">
+		select D.name as treename,C.name as dictoryname,A.contentid ,A.name as contentname,A.basis,A.standard   
+			from  oa_assesscontent A 
+			join oa_assesssort B        
+			        on A.sortid = B.assesssortid        
+			join oa_assessquestion Q 
+			        on Q.qustionId = B.qustionId
+			join sys_dictory C 
+			        on B.sortid = C.id
+			join sys_tree D 
+			        on C.typeid = D.id
+			 where Q.qustionId = #{qustionid}
+			order by D.name,C.name,A.standard desc   
+	</select>
+	<select id="getAssessresultsForResult" parameterType="com.glaf.oa.assessresult.query.AssessresultQuery" 
+			resultMap="assessresultForJobResultMap">
+		select D.name as treename,C.name as dictoryname,A.score,A.reason,B.contentid ,B.name as contentname,B.basis,B.standard
+			from oa_assessscore A 
+				join oa_assesscontent B
+				        on A.contentid = B.contentid
+				join oa_assesssort E        
+					on B.sortid = E.assesssortid        
+				join oa_assessquestion Q 
+					on Q.qustionId = E.qustionId
+				join sys_dictory C 
+					on E.sortid = C.id
+				join sys_tree D 
+					on C.typeid = D.id
+				where resultid = #{resultid}
+				order by D.name,C.name,B.standard desc   
+	</select>
+	<select id="getAssessresults" 
+	    parameterType="com.glaf.oa.assessresult.query.AssessresultQuery"
+		resultMap="assessresultResultMap">
+		select E.*,F.title 
+		<include refid="selectAssessresultsSql" />
+		<choose>
+		  <when test="orderBy != null">
+		     order by ${orderBy}
+          </when>
+		  <otherwise>
+		      order by E.resultid desc
+		  </otherwise>
+        </choose>
+	</select>
+
+
+	<select id="getAssessresultCount" 
+	    parameterType="com.glaf.oa.assessresult.query.AssessresultQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectAssessresultsSql" />
+	</select>
+
+
+	<sql id="selectAssessresultsSql">
+
+		from oa_assessresult E left join OA_AssessQuestion F on E.qustionid = F.qustionId
+		
+		 
+		<where>
+		       1 = 1  
+ 			<if test="titleLike != null and titleLike != '' ">
+				and E.title like #{titleLike}
+            </if>
+			<if test="resultid != null">
+				and E.resultid = #{resultid}
+            </if>
+
+			<if test="qustionid != null">
+				and E.qustionid = #{qustionid}
+            </if>
+
+			<if test="qustionidGreaterThanOrEqual != null">
+				and E.qustionid &gt;= #{qustionidGreaterThanOrEqual}
+            </if>
+
+			<if test="qustionidLessThanOrEqual != null">
+				and E.qustionid &lt;= #{qustionidLessThanOrEqual}
+            </if>
+
+			<if test="qustionids != null and qustionids.size() &gt; 0">
+			    and E.qustionid IN
+                <foreach item="x_qustionid" index="index" collection="qustionids" 
+                     open="(" separator="," close=")">
+                  #{x_qustionid}
+                </foreach>
+			</if>
+
+
+			<if test="area != null">
+				and E.area = #{area}
+            </if>
+
+			<if test="areaGreaterThanOrEqual != null">
+				and E.area &gt;= #{areaGreaterThanOrEqual}
+            </if>
+
+			<if test="areaLessThanOrEqual != null">
+				and E.area &lt;= #{areaLessThanOrEqual}
+            </if>
+
+			<if test="areas != null and areas.size() &gt; 0">
+			    and E.area IN
+                <foreach item="x_area" index="index" collection="areas" 
+                     open="(" separator="," close=")">
+                  #{x_area}
+                </foreach>
+			</if>
+
+	        
+			<if test="company != null and company != '' ">
+				and E.company = #{company}
+            </if>
+
+			<if test="companyLike != null and companyLike != '' ">
+				and E.company like #{companyLike}
+            </if>
+
+			<if test="companys != null and companys.size() &gt; 0">
+			    and E.company IN
+                <foreach item="x_company" index="index" collection="companys" 
+                     open="(" separator="," close=")">
+                  #{x_company}
+                </foreach>
+			</if>
+	        
+			<if test="dept != null and dept != '' ">
+				and E.dept = #{dept}
+            </if>
+
+			<if test="deptLike != null and deptLike != '' ">
+				and E.dept like #{deptLike}
+            </if>
+
+			<if test="depts != null and depts.size() &gt; 0">
+			    and E.dept IN
+                <foreach item="x_dept" index="index" collection="depts" 
+                     open="(" separator="," close=")">
+                  #{x_dept}
+                </foreach>
+			</if>
+	        
+			<if test="post != null and post != '' ">
+				and E.post = #{post}
+            </if>
+
+			<if test="postLike != null and postLike != '' ">
+				and E.post like #{postLike}
+            </if>
+
+			<if test="posts != null and posts.size() &gt; 0">
+			    and E.post IN
+                <foreach item="x_post" index="index" collection="posts" 
+                     open="(" separator="," close=")">
+                  #{x_post}
+                </foreach>
+			</if>
+
+			<if test="year != null">
+				and E.year = #{year}
+            </if>
+
+			<if test="yearGreaterThanOrEqual != null">
+				and E.year &gt;= #{yearGreaterThanOrEqual}
+            </if>
+
+			<if test="yearLessThanOrEqual != null">
+				and E.year &lt;= #{yearLessThanOrEqual}
+            </if>
+
+			<if test="years != null and years.size() &gt; 0">
+			    and E.year IN
+                <foreach item="x_year" index="index" collection="years" 
+                     open="(" separator="," close=")">
+                  #{x_year}
+                </foreach>
+			</if>
+
+
+			<if test="season != null">
+				and E.season = #{season}
+            </if>
+
+			<if test="seasonGreaterThanOrEqual != null">
+				and E.season &gt;= #{seasonGreaterThanOrEqual}
+            </if>
+
+			<if test="seasonLessThanOrEqual != null">
+				and E.season &lt;= #{seasonLessThanOrEqual}
+            </if>
+
+			<if test="seasons != null and seasons.size() &gt; 0">
+			    and E.season IN
+                <foreach item="x_season" index="index" collection="seasons" 
+                     open="(" separator="," close=")">
+                  #{x_season}
+                </foreach>
+			</if>
+
+
+			<if test="month != null">
+				and E.month = #{month}
+            </if>
+
+			<if test="monthGreaterThanOrEqual != null">
+				and E.month &gt;= #{monthGreaterThanOrEqual}
+            </if>
+
+			<if test="monthLessThanOrEqual != null">
+				and E.month &lt;= #{monthLessThanOrEqual}
+            </if>
+
+			<if test="months != null and months.size() &gt; 0">
+			    and E.month IN
+                <foreach item="x_month" index="index" collection="months" 
+                     open="(" separator="," close=")">
+                  #{x_month}
+                </foreach>
+			</if>
+
+	        
+			<if test="beevaluation != null and beevaluation != '' ">
+				and E.beevaluation = #{beevaluation}
+            </if>
+
+			<if test="beevaluationLike != null and beevaluationLike != '' ">
+				and E.beevaluation like #{beevaluationLike}
+            </if>
+
+			<if test="beevaluations != null and beevaluations.size() &gt; 0">
+			    and E.beevaluation IN
+                <foreach item="x_beevaluation" index="index" collection="beevaluations" 
+                     open="(" separator="," close=")">
+                  #{x_beevaluation}
+                </foreach>
+			</if>
+	        
+			<if test="evaluation != null and evaluation != '' ">
+				and E.evaluation = #{evaluation}
+            </if>
+
+			<if test="evaluationLike != null and evaluationLike != '' ">
+				and E.evaluation like #{evaluationLike}
+            </if>
+
+			<if test="evaluations != null and evaluations.size() &gt; 0">
+			    and E.evaluation IN
+                <foreach item="x_evaluation" index="index" collection="evaluations" 
+                     open="(" separator="," close=")">
+                  #{x_evaluation}
+                </foreach>
+			</if>
+
+			<if test="rewardsum != null">
+				and E.rewardsum = #{rewardsum}
+            </if>
+
+			<if test="rewardsumGreaterThanOrEqual != null">
+				and E.rewardsum &gt;= #{rewardsumGreaterThanOrEqual}
+            </if>
+
+			<if test="rewardsumLessThanOrEqual != null">
+				and E.rewardsum &lt;= #{rewardsumLessThanOrEqual}
+            </if>
+
+			<if test="rewardsums != null and rewardsums.size() &gt; 0">
+			    and E.rewardsum IN
+                <foreach item="x_rewardsum" index="index" collection="rewardsums" 
+                     open="(" separator="," close=")">
+                  #{x_rewardsum}
+                </foreach>
+			</if>
+
+
+			<if test="score != null">
+				and E.score = #{score}
+            </if>
+
+			<if test="scoreGreaterThanOrEqual != null">
+				and E.score &gt;= #{scoreGreaterThanOrEqual}
+            </if>
+
+			<if test="scoreLessThanOrEqual != null">
+				and E.score &lt;= #{scoreLessThanOrEqual}
+            </if>
+
+			<if test="scores != null and scores.size() &gt; 0">
+			    and E.score IN
+                <foreach item="x_score" index="index" collection="scores" 
+                     open="(" separator="," close=")">
+                  #{x_score}
+                </foreach>
+			</if>
+
+	        
+			<if test="createBy != null and createBy != '' ">
+				and E.createBy = #{createBy}
+            </if>
+
+			<if test="createByLike != null and createByLike != '' ">
+				and E.createBy like #{createByLike}
+            </if>
+
+			<if test="createBys != null and createBys.size() &gt; 0">
+			    and E.createBy IN
+                <foreach item="x_createBy" index="index" collection="createBys" 
+                     open="(" separator="," close=")">
+                  #{x_createBy}
+                </foreach>
+			</if>
+
+			<if test="createDate != null">
+				and E.createDate = #{createDate}
+            </if>
+
+			<if test="createDateGreaterThanOrEqual != null">
+				and E.createDate &gt;= #{createDateGreaterThanOrEqual}
+            </if>
+
+			<if test="createDateLessThanOrEqual != null">
+				and E.createDate &lt;= #{createDateLessThanOrEqual}
+            </if>
+
+			<if test="createDates != null and createDates.size() &gt; 0">
+			    and E.createDate IN
+                <foreach item="x_createDate" index="index" collection="createDates" 
+                     open="(" separator="," close=")">
+                  #{x_createDate}
+                </foreach>
+			</if>
+
+
+			<if test="updateDate != null">
+				and E.updateDate = #{updateDate}
+            </if>
+
+			<if test="updateDateGreaterThanOrEqual != null">
+				and E.updateDate &gt;= #{updateDateGreaterThanOrEqual}
+            </if>
+
+			<if test="updateDateLessThanOrEqual != null">
+				and E.updateDate &lt;= #{updateDateLessThanOrEqual}
+            </if>
+
+			<if test="updateDates != null and updateDates.size() &gt; 0">
+			    and E.updateDate IN
+                <foreach item="x_updateDate" index="index" collection="updateDates" 
+                     open="(" separator="," close=")">
+                  #{x_updateDate}
+                </foreach>
+			</if>
+
+	        
+			<if test="updateBy != null and updateBy != '' ">
+				and E.updateBy = #{updateBy}
+            </if>
+
+			<if test="updateByLike != null and updateByLike != '' ">
+				and E.updateBy like #{updateByLike}
+            </if>
+
+			<if test="updateBys != null and updateBys.size() &gt; 0">
+			    and E.updateBy IN
+                <foreach item="x_updateBy" index="index" collection="updateBys" 
+                     open="(" separator="," close=")">
+                  #{x_updateBy}
+                </foreach>
+			</if>
+			 
+		</where>
+	</sql>
+
+</mapper>
