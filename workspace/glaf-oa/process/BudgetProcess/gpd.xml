@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root-container name="Budgetprocess" width="866" height="540">
+  <node name="启动流程" x="46" y="13" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="会计审核" x="46" y="98" width="132" height="38">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="会计审核通过？" x="36" y="193" width="154" height="39">
+    <edge>
+      <label x="-48" y="-28"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="部门经理" x="48" y="297" width="132" height="39">
+    <edge>
+      <label x="-28" y="-24"/>
+    </edge>
+  </node>
+  <node name="部门经理审核通过？" x="264" y="206" width="178" height="39">
+    <edge>
+      <label x="-80" y="-9"/>
+    </edge>
+    <edge>
+      <label x="-30" y="-23"/>
+    </edge>
+  </node>
+  <node name="部门总监审核" x="106" y="414" width="132" height="39">
+    <edge>
+      <label x="-13" y="-29"/>
+    </edge>
+  </node>
+  <node name="部门总监审核通过？" x="343" y="293" width="178" height="38">
+    <edge>
+      <label x="-51" y="-8"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="公司副总审核" x="273" y="452" width="132" height="39">
+    <edge>
+      <label x="-8" y="2"/>
+    </edge>
+  </node>
+  <node name="公司副总审核通过？" x="456" y="374" width="179" height="39">
+    <edge>
+      <label x="-40" y="-26"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="总经理审核" x="504" y="493" width="132" height="37">
+    <edge>
+      <label x="17" y="-10"/>
+    </edge>
+  </node>
+  <node name="总经理审核通过？" x="621" y="301" width="180" height="39">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="审核不通过" x="645" y="85" width="132" height="38">
+    <edge>
+      <label x="5" y="-28"/>
+    </edge>
+  </node>
+  <node name="重新修改" x="355" y="10" width="132" height="37">
+    <edge>
+      <label x="-34" y="-31"/>
+    </edge>
+  </node>
+  <node name="流程结束" x="644" y="446" width="132" height="36"/>
+</root-container>
