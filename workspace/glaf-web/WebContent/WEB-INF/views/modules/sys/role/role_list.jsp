@@ -32,12 +32,15 @@ function checkOperation(form){
     document.all.btn_del.disabled=false;
 	if(num==1){
 	  document.all.btn_modify.disabled=false;
+	  document.all.btn_privilege.disabled=false;
 	}else{
 	  document.all.btn_modify.disabled=true;
+	  document.all.btn_privilege.disabled=true;
 	}
   }else{
     document.all.btn_del.disabled=true;
 	document.all.btn_modify.disabled=true;
+	document.all.btn_privilege.disabled=true;
   }
 }
 function add(){
@@ -89,6 +92,22 @@ function sort(id, operate){
 				 }
 		});
 }
+function privilege(form){
+	var id =0;
+    for (var i=0;i<form.id.length;i++) {
+		var e = form.id[i];
+		if (e.checked){
+			id=e.value;
+		}     
+    }
+    var url="deptRole.do?method=showPrivilegeWhole&roleId="+id;
+    var width=650;
+    var height=460;
+    var scroll="yes";
+    //openWindow(url, width, height, scroll);
+    var link = "<%=request.getContextPath()%>/sys/"+url;
+    art.dialog.open(link, { height: height, width: width, title: "修改角色", scrollbars:"no" , lock: true });
+}
 </script>
 </head>
 
@@ -139,11 +158,13 @@ for(; i<pageSize; i++){
 }
 %>
 </table>
-<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+<table width="100%" border="0" align="center" cellpadding="5" cellspacing="0">
   <tr> 
     <td width="50%"> <input name="btn_add" type="button" value="增加" class="button" onClick="javascript:add();"> 
       <input name="btn_del" type="button" value="删除" class="button" onClick="javascript:del();" disabled>
-      <input name="btn_modify" type="button" value="修改" class="button" onClick="javascript:modify(this.form);" disabled></td>
+      <input name="btn_modify" type="button" value="修改" class="button" onClick="javascript:modify(this.form);" disabled>
+	  <input name="btn_privilege" type="button" value="权限设置" class="button" onClick="javascript:privilege(this.form);" disabled>
+	</td>
     <td width="50%"> 
       <%
         String params = WebUtil.getQueryString(request);

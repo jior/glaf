@@ -141,6 +141,20 @@ function setValue(obj){
 		</td>
       </tr>
 	  <tr>
+        <td class="input-box2" valign="top">班　次</td>
+        <td>
+		    <select id="accountType" name="accountType">
+			  <option value="0">----请选择----</option>
+			  <c:forEach items="${accountTypeDictories}" var="a">
+				<option value="${a.code}">${a.name}</option>
+			  </c:forEach>
+		   </select>
+		   <script type="text/javascript">
+		        document.getElementById("accountType").value="${bean.accountType}";
+		   </script>
+		</td>
+      </tr>
+	  <tr>
         <td class="input-box2" valign="top">直接上级</td>
         <td>
           <input id="superiorIds" name="superiorIds" type="hidden" 

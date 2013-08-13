@@ -24,10 +24,17 @@
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/locale/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript" src='<%=context%>/scripts/main.js'></script>
 <script type="text/javascript" src='<%=context%>/scripts/verify.js'></script> 
+<script>
+function doSubmit(form){
+	if(verifyAll(form)){
+		form.btn_save3.disabled="true";
+		form.submit();
+	}
+}
+</script>
 </head>
 <body style="margin:10px;">
-<html:form  id="editForm"  action="${contextPath}/sys/dictory.do?method=saveAdd" method="post" 
-      onsubmit="return verifyAll(this);">
+<html:form  id="editForm"  action="${contextPath}/sys/dictory.do?method=saveAdd" method="post" >
 <input type="hidden" name="nodeId" value="<%=parent%>">
 <div class="easyui-panel" title="新增数据字典" style="width:450px;padding:10px"> 
 <table width="95%" align="center" border="0" cellspacing="0" cellpadding="5">
@@ -41,7 +48,7 @@
       <tr>
         <td class="input-box2" valign="top">代码</td>
         <td>
-		<input type="text" name="code" datatype="string" nullable="yes" maxsize="20" chname="代码"
+		<input type="text" name="code" datatype="string" nullable="yes" maxsize="50" chname="代码"
 		       class="easyui-validatebox" >
 		</td>
       </tr>
@@ -104,7 +111,7 @@
       </tr>
       <tr>
         <td colspan="2" align="center" valign="bottom" height="30">&nbsp;
-              <input name="btn_save3" type="submit" value="保存" class="button"></td>
+              <input name="btn_save3" id="btn_save3" type="button" value="保存" class="button" onclick="doSubmit(this.form);"></td>
       </tr>
   </table> 
  </div>

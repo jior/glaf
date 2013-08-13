@@ -44,7 +44,7 @@
       <tr>
         <td class="input-box2" valign="top">代码</td>
         <td>
-		<input type="text" name="code" class="easyui-validatebox" datatype="string" nullable="yes" maxsize="20" 
+		<input type="text" name="code" class="easyui-validatebox" datatype="string" nullable="yes" maxsize="50" 
 		       value="<%=bean.getCode() != null ? bean.getCode() : ""%>" 
 		       chname="代码">
 		</td>

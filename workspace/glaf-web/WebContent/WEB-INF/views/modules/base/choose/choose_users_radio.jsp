@@ -30,6 +30,7 @@
 			},
 			check: {
 				enable: true,
+				chkStyle: "radio",radioType: "all",
 				chkboxType: { "Y": "s", "N": "s" } 
 			}
 		};
@@ -49,7 +50,6 @@
 		var code='';
 		var name='';
 		var hs = '';
-		var deptNameV = '';
         for(var i=0; i<selectedNodes.length; i++){ 
             if (sx != ''){ 
 				sx += ','; 
@@ -60,15 +60,11 @@
 			if (hs != ''){ 
 				hs += ','; 
 			}
-			if (deptNameV != ''){ 
-				deptNameV += ','; 
-			}
-			//alert(selectedNodes[i].deptName);
+			//alert(selectedNodes[i].headShip);
 			if(selectedNodes[i].actorId){
 			  sx += selectedNodes[i].actorId; 
               sx_name += selectedNodes[i].name; 
 			  hs += selectedNodes[i].headShip;
-			  deptNameV += selectedNodes[i].deptName;
 			}
         }  
 
@@ -78,14 +74,10 @@
 	    var x_elementId = parent_window.document.getElementById("${elementId}");
         var x_element_name = parent_window.document.getElementById("${elementName}");
 		var x_headShip = parent_window.document.getElementById("${headShip}");
-		var deptNameE = parent_window.document.getElementById("${deptName}");
 		x_elementId.value=sx;
 		x_element_name.value=sx_name;
 		if(null!=x_headShip && x_headShip!=undefined){
 			x_headShip.value=hs;
-		}
-		if(null!=deptNameE && deptNameE!=undefined){
-			deptNameE.value=deptNameV;
 		}
 		window.close(); 
 	}

@@ -9,7 +9,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>部门用户</title>
+<title>部门</title>
 <link href="<%=request.getContextPath()%>/css/site.css" type="text/css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/easyui/themes/${theme}/easyui.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/ztree/css/zTreeStyle/zTreeStyle.css"/>
@@ -26,10 +26,11 @@
     var setting = {
 			async: {
 				enable: true,
-				url: "<%=request.getContextPath()%>/rs/base/identity/choose/userJson?selecteds=${selecteds}"
+				url: "<%=request.getContextPath()%>/rs/base/identity/choose/deptJson?viewType=1&selecteds=${selecteds}"
 			},
 			check: {
 				enable: true,
+				chkStyle: "radio",radioType: "all",
 				chkboxType: { "Y": "s", "N": "s" } 
 			}
 		};
@@ -40,52 +41,42 @@
 	});
 
 
+
 	function chooseMyFormData(){
 		var zTree = $.fn.zTree.getZTreeObj("myTree");
         var selectedNodes  = zTree.getCheckedNodes(true);
 
         var sx = '';
 		var sx_name = '';
-		var code='';
+		var codes='';
 		var name='';
-		var hs = '';
-		var deptNameV = '';
-        for(var i=0; i<selectedNodes.length; i++){ 
+        for(var i=0; i<selectedNodes.length; i++){  
             if (sx != ''){ 
 				sx += ','; 
 			}
 			if (sx_name != ''){ 
 				sx_name += ','; 
 			}
-			if (hs != ''){ 
-				hs += ','; 
+			if (codes != ''){ 
+				codes += ','; 
 			}
-			if (deptNameV != ''){ 
-				deptNameV += ','; 
-			}
-			//alert(selectedNodes[i].deptName);
-			if(selectedNodes[i].actorId){
-			  sx += selectedNodes[i].actorId; 
+			if(selectedNodes[i].deptId){
+			  sx += selectedNodes[i].deptId; 
               sx_name += selectedNodes[i].name; 
-			  hs += selectedNodes[i].headShip;
-			  deptNameV += selectedNodes[i].deptName;
+			  codes += selectedNodes[i].code;
 			}
-        }  
-
-        //alert(sx);
+        } 
 
 		var parent_window = getOpener();
 	    var x_elementId = parent_window.document.getElementById("${elementId}");
         var x_element_name = parent_window.document.getElementById("${elementName}");
-		var x_headShip = parent_window.document.getElementById("${headShip}");
-		var deptNameE = parent_window.document.getElementById("${deptName}");
+		var x_element_code = parent_window.document.getElementById("${elementCode}");
 		x_elementId.value=sx;
-		x_element_name.value=sx_name;
-		if(null!=x_headShip && x_headShip!=undefined){
-			x_headShip.value=hs;
+		if(null!=x_element_name && x_element_name!=undefined){
+			x_element_name.value=sx_name;
 		}
-		if(null!=deptNameE && deptNameE!=undefined){
-			deptNameE.value=deptNameV;
+		if(null!=x_element_code && x_element_code!=undefined){
+			x_element_code.value=codes;
 		}
 		window.close(); 
 	}
@@ -100,7 +91,7 @@
 <div class="easyui-layout" data-options="fit:true">  
   <div data-options="region:'north',split:true,border:true" style="height:40px"> 
     <div style="background:#fafafa;padding:2px;border:1px solid #ddd;font-size:12px"> 
-	<span class="x_content_title">部门用户</span>
+	<span class="x_content_title">部门选择</span>
 	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-ok'" 
 	   onclick="javascript:chooseMyFormData();" >确定</a> 
     </div> 
