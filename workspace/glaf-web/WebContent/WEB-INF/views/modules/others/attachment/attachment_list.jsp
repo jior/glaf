@@ -25,7 +25,7 @@ List list = (List)request.getAttribute("list");
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/artDialog/plugins/iframeTools.js"></script>
 <script language="javascript">
 var contextPath="<%=request.getContextPath()%>";
-
+var dataStr='numAttachment<%=referType%>';
 function uploadFile(){
   var json = openUpload();
   if(json==null || json==""){
@@ -65,16 +65,24 @@ function del(form){
 function refreshCount() {
   if (window.opener) {
 	  try {
-	    window.opener.location.reload();
+	    //window.opener.location.reload();
+		if(window.opener.document.getElementById(dataStr)!=null){
+			window.opener.document.getElementById(dataStr).innerHTML='<%=list != null ? list.size() : 0 %>';
+		}
 	  } catch(e){}
 	}else{
 		var origin = artDialog.open.origin;
-		origin.location.reload();
+		//alert(origin.document.getElementById(dataStr)==undefined);
+		if(origin.document.getElementById(dataStr)!=null){
+			origin.document.getElementById(dataStr).innerHTML='<%=list != null ? list.size() : 0 %>';
+		}
+		//origin.location.reload();
 	}
 }
 function openUpload(obj, type){  
 	return ShowDialog('<%=request.getContextPath()%>/others/attachment.do?method=showUpload' + (type ? '?type=' + type : ''), 450, 230, 'no', false, obj);
 }
+refreshCount();
 </script>
 </head>
 
