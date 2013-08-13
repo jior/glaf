@@ -4,41 +4,62 @@
 
 <mapper namespace="com.glaf.base.modules.sys.mapper.SysAccessMapper">
 
- 
+
 	<insert id="insertSysAccess" parameterType="com.glaf.base.modules.sys.model.SysAccess">
-		
+
 		insert into sys_access ( APPID, ROLEID )
-        values (#{appId, jdbcType=BIGINT}, #{roleId, jdbcType=BIGINT})
+		values (#{appId, jdbcType=BIGINT}, #{roleId, jdbcType=BIGINT})
 
 	</insert>
 
 
-	<delete id="deleteSysAccessByAppId" parameterType="long"  >
-		delete from sys_access where APPID = #{appId}
+	<delete id="deleteSysAccessByAppId" parameterType="long">
+		delete
+		from sys_access where APPID = #{appId}
 	</delete>
-	
-	
-	<delete id="deleteSysAccessByRoleId" parameterType="long"  >
+
+
+	<delete id="deleteSysAccessByRoleId" parameterType="long">
 		delete from sys_access where ROLEID = #{roleId}
 	</delete>
-	
 
-	<select id="getSysAccessByAppId" parameterType="long" resultType="com.glaf.base.modules.sys.model.SysAccess">
-		
-		select E.APPID as appId, E.ROLEID as roleId 
-		from sys_access E 
+
+	<select id="getSysAccessByAppId" parameterType="long"
+		resultType="com.glaf.base.modules.sys.model.SysAccess">
+
+		select E.APPID as appId, E.ROLEID as roleId
+		from sys_access E
 		where E.APPID = #{appId}
-		
-	</select>
-	
 
-	<select id="getSysAccessByRoleId" parameterType="long" resultType="com.glaf.base.modules.sys.model.SysAccess">
-		
-		select E.APPID as appId, E.ROLEID as roleId 
-		from sys_access E 
-		where E.ROLEID = #{roleId}
-		
 	</select>
-	 
+
+
+	<select id="getSysAccessByRoleId" parameterType="long"
+		resultType="com.glaf.base.modules.sys.model.SysAccess">
+
+		select E.APPID as appId, E.ROLEID as roleId
+		from sys_access E
+		where E.ROLEID = #{roleId}
+
+	</select>
+
+
+	<select id="getSysAccessByRoleIdAndAppId" parameterType="com.glaf.base.modules.sys.query.SysDeptRoleQuery"
+		resultType="com.glaf.base.modules.sys.model.SysAccess">
+
+		select E.APPID as appId, E.ROLEID as roleId
+		from sys_access E
+		where E.ROLEID = #{deptRoleId} 
+		and E.APPID = #{deptId}
+
+	</select>
+
+
+	<delete id="deleteSysAccessByRoleIdAndAppId" parameterType="com.glaf.base.modules.sys.query.SysDeptRoleQuery">
+		delete from sys_access 
+		where ROLEID = #{deptRoleId} 
+		and APPID =#{deptId}
+	</delete>
+
 
 </mapper>

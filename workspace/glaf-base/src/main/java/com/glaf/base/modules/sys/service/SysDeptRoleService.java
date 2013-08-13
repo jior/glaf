@@ -146,4 +146,16 @@ public interface SysDeptRoleService {
 	@Transactional
 	boolean saveRoleApplication(long roleId, long[] appIds, long[] funcIds);
 
+	/**
+	 * 全局设置角色对应的模块、功能
+	 * 
+	 * @param roleId
+	 * @param appIds
+	 * @param funcIds
+	 * @return
+	 */
+	@Transactional
+	boolean saveOrCancelRoleApplicationWhole(long roleId, long[] appIds,
+			int saveType);
+
 }

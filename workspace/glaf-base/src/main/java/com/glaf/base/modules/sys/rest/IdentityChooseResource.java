@@ -83,6 +83,7 @@ public class IdentityChooseResource {
 			@Context UriInfo uriInfo) throws IOException {
 		JSONObject result = new JSONObject();
 		String selecteds = request.getParameter("selecteds");
+		int viewType = RequestUtils.getInt(request, "viewType", 0);
 		List<String> deptIds = StringTools.split(selecteds);
 		SysTree root = sysTreeService.getSysTreeByCode(SysConstants.TREE_DEPT);
 		if (root != null) {
@@ -118,7 +119,7 @@ public class IdentityChooseResource {
 			}
 			logger.debug("treeModels:" + treeModels.size());
 			TreeHelper treeHelper = new TreeHelper();
-			JSONArray jsonArray = treeHelper.getTreeJSONArray(treeModels);
+			JSONArray jsonArray = treeHelper.getTreeJSONArray(treeModels,viewType);
 			return jsonArray.toJSONString().getBytes("UTF-8");
 		}
 		return result.toString().getBytes("UTF-8");
@@ -285,6 +286,8 @@ public class IdentityChooseResource {
 								TreeModel treeModel = new BaseTree();
 								Map<String, Object> dataMap = new HashMap<String, Object>();
 								dataMap.put("actorId", user.getAccount());
+								dataMap.put("headShip", user.getHeadship());
+								dataMap.put("deptName", dept.getName());
 								treeModel.setDataMap(dataMap);
 								treeModel.setParentId(t.getId());
 								treeModel.setId(ts++);

@@ -151,6 +151,50 @@ public class TreeHelper {
 		}
 	}
 
+	public void buildTreeModel(JSONObject row, TreeComponent treeComponent,
+			int viewType) {
+		if (treeComponent.getComponents() != null
+				&& treeComponent.getComponents().size() > 0) {
+			JSONArray array = new JSONArray();
+			Iterator<?> iterator = treeComponent.getComponents().iterator();
+			while (iterator.hasNext()) {
+				TreeComponent component = (TreeComponent) iterator.next();
+				JSONObject child = new JSONObject();
+				this.addDataMap(component, child);
+				child.put("id", component.getId());
+				child.put("code", component.getCode());
+				child.put("text", component.getTitle());
+				if (viewType == 1) {
+					child.put("name",
+							component.getTitle() + "(" + component.getCode()
+									+ ")");
+				} else {
+					child.put("name", component.getTitle());
+				}
+				child.put("icon", component.getImage());
+				child.put("img", component.getImage());
+				child.put("image", component.getImage());
+				if (component.isChecked()) {
+					child.put("checked", true);
+				}
+				// child.put("uiProvider", "col");
+				if (component.getComponents() != null
+						&& component.getComponents().size() > 0) {
+					child.put("leaf", Boolean.valueOf(false));
+					this.buildTreeModel(child, component, viewType);
+				} else {
+					child.put("leaf", Boolean.valueOf(true));
+				}
+				if (component.getCls() != null) {
+					child.put("cls", component.getCls());
+					child.put("iconCls", component.getCls());
+				}
+				array.add(child);
+			}
+			row.put("children", array);
+		}
+	}
+
 	public JSONObject getJsonCheckboxNode(TreeModel root,
 			List<TreeModel> treeNodes, List<TreeModel> selectedNodes) {
 		Collection<String> checkedNodes = new HashSet<String>();
@@ -393,6 +437,60 @@ public class TreeHelper {
 							child.put("cls", "folder");
 							child.put("classes", "folder");
 							this.buildTreeModel(child, component);
+						} else {
+							child.put("leaf", Boolean.valueOf(true));
+						}
+						if (component.getCls() != null) {
+							child.put("cls", component.getCls());
+							child.put("iconCls", component.getCls());
+						}
+						result.add(child);
+					}
+				}
+			}
+		}
+
+		return result;
+	}
+
+	public JSONArray getTreeJSONArray(List<TreeModel> treeModels, int viewType) {
+		JSONArray result = new JSONArray();
+		if (treeModels != null && treeModels.size() > 0) {
+			TreeRepositoryBuilder builder = new TreeRepositoryBuilder();
+			TreeRepository menuRepository = builder.build(treeModels);
+			if (menuRepository != null) {
+				List<?> topTrees = menuRepository.getTopTrees();
+				if (topTrees != null && topTrees.size() > 0) {
+					for (int i = 0; i < topTrees.size(); i++) {
+						TreeComponent component = (TreeComponent) topTrees
+								.get(i);
+						JSONObject child = new JSONObject();
+						this.addDataMap(component, child);
+
+						child.put("id", component.getId());
+						child.put("code", component.getCode());
+						child.put("text", component.getTitle());
+						if (viewType == 1) {
+							child.put("name", component.getTitle() + "("
+									+ component.getCode() + ")");
+						} else {
+							child.put("name", component.getTitle());
+						}
+						child.put("icon", component.getImage());
+						child.put("img", component.getImage());
+						child.put("image", component.getImage());
+
+						if (component.isChecked()) {
+							child.put("checked", true);
+						}
+						// row.put("uiProvider", "col");
+
+						if (component.getComponents() != null
+								&& component.getComponents().size() > 0) {
+							child.put("leaf", Boolean.valueOf(false));
+							child.put("cls", "folder");
+							child.put("classes", "folder");
+							this.buildTreeModel(child, component, viewType);
 						} else {
 							child.put("leaf", Boolean.valueOf(true));
 						}

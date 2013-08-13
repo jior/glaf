@@ -21,6 +21,7 @@ package com.glaf.base.modules.others.springmvc;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 import java.util.Date;
 
@@ -34,6 +35,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSON;
@@ -209,6 +211,26 @@ public class AttachmentController {
 		return new ModelAndView("/modules/others/attachment/showCount",
 				modelMap);
 	}
+	
+	/**
+	 * 显示附件列表
+	 * 
+	 * @param mapping
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(params = "method=getCount")
+	@ResponseBody
+	public byte[] getCount(ModelMap modelMap, HttpServletRequest request) {
+		long referId = ParamUtil.getLongParameter(request, "referId", 0);
+		int referType = ParamUtil.getIntParameter(request, "referType", 0);
+		long createId = RequestUtil.getLoginUser(request).getId();
+		long[] longReferId = new long[1];
+		longReferId[0]=referId;
+		int count = attachmentService.getAttachmentCount(longReferId, referType,createId);
+		String countStr = count+"";
+		return ResponseUtils.responseJsonResult(true,countStr);
+	}
 
 	/**
 	 * 显示附件列表
@@ -222,7 +244,14 @@ public class AttachmentController {
 		long referId = ParamUtil.getLongParameter(request, "referId", 0);
 		int referType = ParamUtil.getIntParameter(request, "referType", 0);
 		int viewType = ParamUtil.getIntParameter(request, "viewType", 0);
+		int modifyType = ParamUtil.getIntParameter(request, "modifyType", 0);
 		long createId = RequestUtil.getLoginUser(request).getId();
+		if(viewType==0){
+			createId = 0;
+		}
+		if(viewType==1 && modifyType==1){
+			createId = 0;
+		}
 
 		//request.setAttribute("list",attachmentService.getAttachmentList(referId, referType));
 		request.setAttribute("list",attachmentService.getAttachmentList(referId, referType,createId));

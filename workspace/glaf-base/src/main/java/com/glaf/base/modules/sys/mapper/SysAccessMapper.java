@@ -19,8 +19,11 @@
 package com.glaf.base.modules.sys.mapper;
 
 import java.util.*;
+
 import org.springframework.stereotype.Component;
+
 import com.glaf.base.modules.sys.model.*;
+import com.glaf.base.modules.sys.query.SysDeptRoleQuery;
 
 @Component
 public interface SysAccessMapper {
@@ -32,6 +35,10 @@ public interface SysAccessMapper {
 	List<SysAccess> getSysAccessByAppId(Long appId);
 
 	List<SysAccess> getSysAccessByRoleId(Long roleId);
+	
+	List<SysAccess> getSysAccessByRoleIdAndAppId(SysDeptRoleQuery query);
+	
+	void deleteSysAccessByRoleIdAndAppId(SysDeptRoleQuery query);
 
 	void insertSysAccess(SysAccess model);
 

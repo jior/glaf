@@ -40,7 +40,6 @@ public interface SysTreeService {
 	 */
 	@Transactional
 	boolean create(SysTree bean);
-
 	/**
 	 * 删除
 	 * 
@@ -50,7 +49,6 @@ public interface SysTreeService {
 	 */
 	@Transactional
 	boolean delete(long id);
-
 	/**
 	 * 删除
 	 * 
@@ -104,6 +102,8 @@ public interface SysTreeService {
 	 * @return List
 	 */
 	List<SysTree> getAllSysTreeListForDept(long parent, int status);
+
+	List<SysTree> getAllSysTreeListForDeptNoSort(long parent, int status);
 
 	/**
 	 * 获取应用模块树型结构

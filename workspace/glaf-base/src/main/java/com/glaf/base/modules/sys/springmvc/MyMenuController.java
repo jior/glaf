@@ -42,8 +42,10 @@ public class MyMenuController {
 	protected final static Log logger = LogFactory
 			.getLog(MyMenuController.class);
 
+	 
 	protected SysApplicationService sysApplicationService;
 
+ 
 	protected ITreeModelService treeModelService;
 
 	@RequestMapping(params = "method=jump")

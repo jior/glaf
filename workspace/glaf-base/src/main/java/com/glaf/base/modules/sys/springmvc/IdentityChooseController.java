@@ -87,7 +87,12 @@ public class IdentityChooseController {
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);
 		}
-		return new ModelAndView("/modules/base/choose/choose_depts", modelMap);
+		int selectType = RequestUtils.getInt(request, "selectType", 0);
+		if(selectType==1){//表示弹出单选用户界面
+			return new ModelAndView("/modules/base/choose/choose_depts_radio", modelMap);
+		}else{
+			return new ModelAndView("/modules/base/choose/choose_depts", modelMap);
+		}
 	}
 
 	/**
@@ -150,7 +155,12 @@ public class IdentityChooseController {
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);
 		}
-		return new ModelAndView("/modules/base/choose/choose_users", modelMap);
+		int selectType = RequestUtils.getInt(request, "selectType", 0);
+		if(selectType==1){//表示弹出单选用户界面
+			return new ModelAndView("/modules/base/choose/choose_users_radio", modelMap);
+		}else{
+			return new ModelAndView("/modules/base/choose/choose_users", modelMap);
+		}
 	}
 
 	@RequestMapping(params = "method=deptJson")
@@ -162,7 +172,7 @@ public class IdentityChooseController {
 		List<String> deptIds = StringTools.split(selecteds);
 		SysTree root = sysTreeService.getSysTreeByCode(SysConstants.TREE_DEPT);
 		if (root != null) {
-			// logger.debug(root.toJsonObject().toJSONString());
+			//logger.debug(root.toJsonObject().toJSONString());
 
 			List<TreeModel> treeModels = new ArrayList<TreeModel>();
 			// treeModels.add(root);
@@ -374,7 +384,7 @@ public class IdentityChooseController {
 			logger.debug("treeModels:" + treeModels.size());
 			TreeHelper treeHelper = new TreeHelper();
 			JSONArray jsonArray = treeHelper.getTreeJSONArray(treeModels);
-			// logger.debug(jsonArray.toJSONString());
+			//logger.debug(jsonArray.toJSONString());
 			return jsonArray.toJSONString().getBytes("UTF-8");
 		}
 		return result.toString().getBytes("UTF-8");

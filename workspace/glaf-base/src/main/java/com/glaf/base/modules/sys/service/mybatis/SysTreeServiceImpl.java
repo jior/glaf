@@ -87,7 +87,7 @@ public class SysTreeServiceImpl implements SysTreeService {
 		this.save(bean);
 		return true;
 	}
-
+	
 	@Transactional
 	public boolean delete(long id) {
 		this.deleteById(id);
@@ -153,6 +153,13 @@ public class SysTreeServiceImpl implements SysTreeService {
 		List<SysTree> list = new ArrayList<SysTree>();
 		this.loadChildrenTreeListForDept(list, parentId, status);
 		Collections.sort(list);
+		this.initDepartments(list);
+		return list;
+	}
+
+	public List<SysTree> getAllSysTreeListForDeptNoSort(long parentId, int status) {
+		List<SysTree> list = new ArrayList<SysTree>();
+		this.loadChildrenTreeListForDept(list, parentId, status);
 		this.initDepartments(list);
 		return list;
 	}

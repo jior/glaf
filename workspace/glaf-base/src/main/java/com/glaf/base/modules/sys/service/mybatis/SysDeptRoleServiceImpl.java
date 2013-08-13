@@ -344,6 +344,43 @@ public class SysDeptRoleServiceImpl implements SysDeptRoleService {
 		return true;
 	}
 
+	/**
+	 * 全局设置角色对应的模块
+	 * 
+	 * @param roleId
+	 * @param appId
+	 * @param funcId
+	 * @return
+	 */
+	@Transactional
+	public boolean saveOrCancelRoleApplicationWhole(long deptRoleId,
+			long[] appIds, int saveType) {
+		if (appIds != null) {
+			// 设置角色对应的模块访问权限
+			SysDeptRoleQuery query = new SysDeptRoleQuery();
+			for (int i = 0; i < appIds.length; i++) {
+				if (appIds[i] > 0) {
+					query.setDeptId(appIds[i]);
+					query.setDeptRoleId(deptRoleId);
+					if (saveType == 0) {
+						List<SysAccess> list = sysAccessMapper
+								.getSysAccessByRoleIdAndAppId(query);
+						logger.debug("app id:" + appIds[i]);
+						if (null == list || list.isEmpty()) {
+							SysAccess access = new SysAccess();
+							access.setAppId(appIds[i]);
+							access.setRoleId(deptRoleId);
+							sysAccessMapper.insertSysAccess(access);
+						}
+					} else {
+						sysAccessMapper.deleteSysAccessByRoleIdAndAppId(query);
+					}
+				}
+			}
+		}
+		return true;
+	}
+
 	@Resource
 	@Qualifier("myBatisDbIdGenerator")
 	public void setIdGenerator(IdGenerator idGenerator) {
