@@ -277,12 +277,18 @@ public class MyBatisEntityDAOImpl extends SqlSessionDaoSupport implements
 		Dbid dbid = (Dbid) getSqlSession()
 				.selectOne("getNextDbId", "next.dbid");
 		if (dbid == null) {
-			getSqlSession().insert("inertNextDbId");
+			dbid = new Dbid();
+			dbid.setTitle("系统内置主键");
+			dbid.setName("next.dbid");
+			dbid.setValue("1001");
+			dbid.setVersion(1);
+			getSqlSession().insert("inertNextDbId", dbid);
 			dbid = (Dbid) getSqlSession().selectOne("getNextDbId", "next.dbid");
 		}
 		long oldValue = Long.parseLong(dbid.getValue());
-		long newValue = oldValue + conf.getInt("dbid_step", 100);
+		long newValue = oldValue + conf.getInt("dbid_step", 1);
 		dbid.setName("next.dbid");
+		dbid.setTitle("系统内置主键");
 		dbid.setValue(Long.toString(newValue));
 		dbid.setVersion(dbid.getVersion() + 1);
 		getSqlSession().update("updateNextDbId", dbid);
@@ -298,8 +304,9 @@ public class MyBatisEntityDAOImpl extends SqlSessionDaoSupport implements
 		Dbid dbid = (Dbid) getSqlSession().selectOne("getNextDbId", name);
 		if (dbid == null) {
 			dbid = new Dbid();
+			dbid.setTitle("系统内置主键");
 			dbid.setName(name);
-			dbid.setValue("1");
+			dbid.setValue("1001");
 			dbid.setVersion(1);
 			getSqlSession().insert("inertNextDbId", dbid);
 			dbid = (Dbid) getSqlSession().selectOne("getNextDbId", name);
@@ -307,6 +314,7 @@ public class MyBatisEntityDAOImpl extends SqlSessionDaoSupport implements
 		long oldValue = Long.parseLong(dbid.getValue());
 		long newValue = oldValue + conf.getInt("dbid_step_" + name, 1);
 		dbid.setName(name);
+		dbid.setTitle("系统内置主键");
 		dbid.setValue(Long.toString(newValue));
 		dbid.setVersion(dbid.getVersion() + 1);
 		getSqlSession().update("updateNextDbId", dbid);

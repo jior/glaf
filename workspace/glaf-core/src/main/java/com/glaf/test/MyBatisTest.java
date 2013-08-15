@@ -19,11 +19,14 @@
 package com.glaf.test;
 
 import java.util.List;
+import java.util.Map;
 
+import org.apache.ibatis.jdbc.SqlRunner;
 import org.junit.Test;
 
+import com.glaf.core.jdbc.DBConnectionFactory;
 import com.glaf.core.service.EntityService;
-import com.glaf.core.todo.query.TodoQuery;
+import com.glaf.core.util.JdbcUtils;
 import com.glaf.core.util.ThreadFactory;
 
 public class MyBatisTest extends AbstractTest {
@@ -31,21 +34,45 @@ public class MyBatisTest extends AbstractTest {
 	protected EntityService entityService;
 
 	@Test
-	public void testList() {
+	public void testNextDbidBlock() {
 		entityService = super.getBean("entityService");
-		for (int i = 0; i <= 10; i++) {
-			List<Object> todoList = entityService.getList("getTodoList",
-					new TodoQuery());
-			System.out.println(todoList);
+		Thread thread = new TestThread(entityService);
+		for (int i = 0; i <= 1; i++) {
+			ThreadFactory.run(thread);
 		}
 	}
 
 	@Test
-	public void testNextDbidBlock() {
-		entityService = super.getBean("entityService");
-		Thread thread = new TestThread(entityService);
-		for (int i = 0; i <= 1000000; i++) {
-			ThreadFactory.run(thread);
+	public void testSqlRunnerSelectOne() {
+		SqlRunner runner = null;
+		java.sql.Connection conn = null;
+		try {
+			conn = DBConnectionFactory.getConnection();
+			runner = new SqlRunner(conn);
+			Map<String, Object> row = runner.selectOne(
+					"select * from sys_dbid where NAME_ = ? ", "next.dbid");
+			System.out.println("One#######:" + row);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			JdbcUtils.close(conn);
+		}
+	}
+
+	@Test
+	public void testSqlRunnerSelectAll() {
+		SqlRunner runner = null;
+		java.sql.Connection conn = null;
+		try {
+			conn = DBConnectionFactory.getConnection();
+			runner = new SqlRunner(conn);
+			List<Map<String, Object>> rows = runner
+					.selectAll("select * from sys_dbid");
+			System.out.println("All#######:" + rows);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			JdbcUtils.close(conn);
 		}
 	}
 

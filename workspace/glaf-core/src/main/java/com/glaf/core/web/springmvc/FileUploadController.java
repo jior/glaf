@@ -72,7 +72,7 @@ public class FileUploadController {
 	protected IBlobService blobService;
 
 	@ResponseBody
-	@RequestMapping(params = "method=delete")
+	@RequestMapping("/delete")
 	public void delete(HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
 		String filePath = request.getParameter("filePath");
@@ -97,7 +97,7 @@ public class FileUploadController {
 		this.blobService = blobService;
 	}
 
-	@RequestMapping(params = "method=showUpload")
+	@RequestMapping("/showUpload")
 	public ModelAndView showUpload(HttpServletRequest request, ModelMap modelMap) {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		RequestUtils.setRequestParameterToAttribute(request);
@@ -164,7 +164,7 @@ public class FileUploadController {
 	}
 
 	@ResponseBody
-	@RequestMapping(params = "method=upload")
+	@RequestMapping("/upload")
 	public void upload(HttpServletRequest request, HttpServletResponse response) {
 		response.setContentType("text/plain;charset=UTF-8");
 		LoginContext loginContext = RequestUtils.getLoginContext(request);

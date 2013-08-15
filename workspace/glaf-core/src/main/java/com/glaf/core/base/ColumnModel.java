@@ -132,7 +132,7 @@ public class ColumnModel implements java.io.Serializable,
 	}
 
 	public int compareTo(ColumnModel o) {
-		if (o == null || o.getDoubleValue() == null) {
+		if (doubleValue == null || o == null || o.getDoubleValue() == null) {
 			return -1;
 		}
 

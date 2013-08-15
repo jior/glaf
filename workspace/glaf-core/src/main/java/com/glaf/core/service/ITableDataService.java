@@ -43,8 +43,6 @@ public interface ITableDataService {
 	List<Dbid> getAllDbids();
 	
 	
-	Map<String, Object> getTableDataByPrimaryKey(TableModel model);
-
 	/**
 	 * 获取一页数据
 	 * 
@@ -54,6 +52,8 @@ public interface ITableDataService {
 	 * @return
 	 */
 	Paging getPageData(int pageNo, int pageSize, TableModel model);
+
+	Map<String, Object> getTableDataByPrimaryKey(TableModel model);
 
 	/**
 	 * 批量插入数据
@@ -110,6 +110,17 @@ public interface ITableDataService {
 	void saveOrUpdate(String tableName, boolean updatable,
 			List<Map<String, Object>> rows);
 
+	/**
+	 * 批量新增或修改记录，如果存在，可以选择是否更新
+	 * 
+	 * @param tableDefinition
+	 * @param updatable
+	 * @param rows
+	 */
+	@Transactional
+	void saveOrUpdate(TableDefinition tableDefinition, boolean updatable,
+			List<Map<String, Object>> rows);
+	
 	/**
 	 * 保存JSON数组数据到指定的表
 	 * 

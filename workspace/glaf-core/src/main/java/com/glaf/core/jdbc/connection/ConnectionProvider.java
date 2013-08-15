@@ -35,7 +35,7 @@ public interface ConnectionProvider {
 
 	/**
 	 * Grab a connection, with the autocommit mode specified by
-	 * <tt>connection.autocommit</tt>.
+	 * <tt>jdbc.autocommit</tt>.
 	 * 
 	 * @return a JDBC connection
 	 * @throws SQLException
@@ -54,8 +54,7 @@ public interface ConnectionProvider {
 	public void closeConnection(Connection conn) throws SQLException;
 
 	/**
-	 * Release all resources held by this provider. JavaDoc requires a second
-	 * sentence.
+	 * Release all resources held by this provider 
 	 * 
 	 * @throws RuntimeException
 	 */

@@ -311,10 +311,54 @@ public class MxTableDataServiceImpl implements ITableDataService {
 	}
 
 	@Transactional
+	public void insertTableData(TableDefinition tableDefinition,
+			List<Map<String, Object>> rows) {
+		List<ColumnDefinition> columns = tableDefinition.getColumns();
+		if (columns != null && !columns.isEmpty()) {
+			Iterator<Map<String, Object>> iterator = rows.iterator();
+			while (iterator.hasNext()) {
+				TableModel table = new TableModel();
+				table.setTableName(tableDefinition.getTableName());
+				Map<String, Object> dataMap = iterator.next();
+				for (ColumnDefinition column : columns) {
+					String javaType = column.getJavaType();
+					String name = column.getColumnName();
+					ColumnModel c = new ColumnModel();
+					c.setColumnName(name);
+					c.setJavaType(javaType);
+					Object value = dataMap.get(name);
+					if (value != null) {
+						value = dataMap.get(name.toLowerCase());
+					}
+					if (value != null) {
+						if ("Integer".equals(javaType)) {
+							value = ParamUtils.getInt(dataMap, name);
+						} else if ("Long".equals(javaType)) {
+							value = ParamUtils.getLong(dataMap, name);
+						} else if ("Double".equals(javaType)) {
+							value = ParamUtils.getDouble(dataMap, name);
+						} else if ("Date".equals(javaType)) {
+							value = ParamUtils.getTimestamp(dataMap, name);
+						} else if ("String".equals(javaType)) {
+							value = ParamUtils.getString(dataMap, name);
+						} else if ("Clob".equals(javaType)) {
+							value = ParamUtils.getString(dataMap, name);
+						}
+						c.setValue(value);
+						table.addColumn(c);
+					}
+				}
+				tableDataMapper.insertTableData(table);
+			}
+		}
+	}
+
+	@Transactional
 	public void insertTableData(TableModel model) {
 		tableDataMapper.insertTableData(model);
 	}
-
+	
+	
 	@Transactional
 	public void saveAll(String tableName, String seqNo,
 			Collection<TableModel> rows) {
@@ -325,7 +369,8 @@ public class MxTableDataServiceImpl implements ITableDataService {
 			this.saveAll(tableDefinition, seqNo, rows);
 		}
 	}
-
+	
+	
 	@Transactional
 	public Collection<TableModel> saveAll(TableDefinition tableDefinition,
 			String seqNo, Collection<TableModel> rows) {
@@ -551,7 +596,7 @@ public class MxTableDataServiceImpl implements ITableDataService {
 			throw new RuntimeException("aggregationKeys is required.");
 		}
 	}
-
+	
 	@Transactional
 	public void saveOrUpdate(String tableName, boolean updatable,
 			List<Map<String, Object>> rows) {
@@ -607,6 +652,66 @@ public class MxTableDataServiceImpl implements ITableDataService {
 			if (!updateRows.isEmpty()) {
 				this.updateTableData(tableName, updateRows);
 			}
+		}
+
+	}
+	
+
+	@Transactional
+	public void saveOrUpdate(TableDefinition tableDefinition,
+			boolean updatable, List<Map<String, Object>> rows) {
+		String tableName = tableDefinition.getTableName();
+		String idColumnName = null;
+		List<Map<String, Object>> rowIds = null;
+		List<ColumnDefinition> columns = tableDefinition.getColumns();
+		if (columns != null && !columns.isEmpty()) {
+			for (ColumnDefinition column : columns) {
+				if (column.isPrimaryKey()) {
+					idColumnName = column.getColumnName();
+					idColumnName = idColumnName.toLowerCase();
+					rowIds = this
+							.getTablePrimaryKeyMap(tableName, idColumnName);
+					break;
+				}
+			}
+		}
+
+		Collection<String> keys = new HashSet<String>();
+
+		if (rowIds != null && !rowIds.isEmpty()) {
+			Iterator<Map<String, Object>> iter = rowIds.iterator();
+			while (iter.hasNext()) {
+				Map<String, Object> dataMap = iter.next();
+				if (dataMap.get("id") != null) {
+					keys.add(dataMap.get("id").toString());
+				}
+			}
+		}
+
+		List<Map<String, Object>> inertRows = new ArrayList<Map<String, Object>>();
+		List<Map<String, Object>> updateRows = new ArrayList<Map<String, Object>>();
+		Iterator<Map<String, Object>> iterator = rows.iterator();
+		while (iterator.hasNext()) {
+			Map<String, Object> dataMap = iterator.next();
+			Object id = dataMap.get(idColumnName);
+			if (id == null) {
+				id = dataMap.get(idColumnName.toLowerCase());
+			}
+			if (id != null) {
+				if (keys.contains(id.toString())) {
+					updateRows.add(dataMap);
+				} else {
+					inertRows.add(dataMap);
+				}
+			}
+		}
+
+		if (!inertRows.isEmpty()) {
+			this.insertTableData(tableDefinition, inertRows);
+		}
+
+		if (!updateRows.isEmpty()) {
+			this.updateTableData(tableDefinition, updateRows);
 		}
 
 	}
@@ -911,6 +1016,53 @@ public class MxTableDataServiceImpl implements ITableDataService {
 					}
 					tableDataMapper.updateTableDataByPrimaryKey(table);
 				}
+			}
+		}
+	}
+
+	@Transactional
+	public void updateTableData(TableDefinition tableDefinition,
+			List<Map<String, Object>> rows) {
+		List<ColumnDefinition> columns = tableDefinition.getColumns();
+		if (columns != null && !columns.isEmpty()) {
+			Iterator<Map<String, Object>> iterator = rows.iterator();
+			while (iterator.hasNext()) {
+				TableModel table = new TableModel();
+				table.setTableName(tableDefinition.getTableName());
+				Map<String, Object> dataMap = iterator.next();
+				for (ColumnDefinition column : columns) {
+					String javaType = column.getJavaType();
+					String name = column.getColumnName();
+					ColumnModel c = new ColumnModel();
+					c.setColumnName(name);
+					c.setJavaType(javaType);
+					Object value = dataMap.get(name);
+					if (value != null) {
+						value = dataMap.get(name.toLowerCase());
+					}
+					if (value != null) {
+						if ("Integer".equals(javaType)) {
+							value = ParamUtils.getInt(dataMap, name);
+						} else if ("Long".equals(javaType)) {
+							value = ParamUtils.getLong(dataMap, name);
+						} else if ("Double".equals(javaType)) {
+							value = ParamUtils.getDouble(dataMap, name);
+						} else if ("Date".equals(javaType)) {
+							value = ParamUtils.getTimestamp(dataMap, name);
+						} else if ("String".equals(javaType)) {
+							value = ParamUtils.getString(dataMap, name);
+						} else if ("Clob".equals(javaType)) {
+							value = ParamUtils.getString(dataMap, name);
+						}
+						c.setValue(value);
+						if (column.isPrimaryKey()) {
+							table.setIdColumn(c);
+						} else {
+							table.addColumn(c);
+						}
+					}
+				}
+				tableDataMapper.updateTableDataByPrimaryKey(table);
 			}
 		}
 	}

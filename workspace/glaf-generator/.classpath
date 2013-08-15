@@ -17,35 +17,37 @@
 	<classpathentry kind="lib" path="/glaf-core/lib/spring-tx.RELEASE.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/spring-web.RELEASE.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/spring-webmvc.RELEASE.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/commons-beanutils-1.8.3.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/commons-betwixt-0.8.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/commons-chain-1.2.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/commons-cli-1.2.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/commons-codec-1.7.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/commons-collections-3.2.1.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/commons-configuration-1.3.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/commons-dbcp-1.4.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/commons-digester-2.1.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/commons-discovery-0.4.0.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/cglib.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/commons-beanutils.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/commons-cli.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/commons-codec.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/commons-collections.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/commons-compress.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/commons-configuration.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/commons-dbcp.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/commons-digester.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/commons-discovery.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/commons-el.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/commons-fileupload-1.2.2.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/commons-httpclient-3.1.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/commons-io-2.4.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/commons-fileupload.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/commons-httpclient.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/commons-io.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/commons-jexl-1.1.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/commons-jexl-2.1.1.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/commons-lang-2.6.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/commons-jexl.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/commons-lang2.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/commons-lang3.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/commons-logging.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/commons-math-2.2.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/commons-net-3.2.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/commons-pool-1.6.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/commons-math.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/commons-net.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/commons-pool.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/commons-resources.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/commons-validator-1.4.0.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/dom4j-1.6.1.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/freemarker.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/scannotation-1.0.3.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/javassist.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/commons-validator.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/commons-vfs.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/concurrent.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/dom4j.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/hibernate.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/javax.persistence.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/javassist.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/junit.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/hibernate3.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/freemarker.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

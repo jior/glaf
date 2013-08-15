@@ -28,13 +28,17 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.base.TreeModel;
+import com.glaf.core.cache.CacheFactory;
 import com.glaf.core.context.ContextFactory;
 import com.glaf.core.identity.Agent;
 import com.glaf.core.identity.Role;
 import com.glaf.core.identity.User;
 import com.glaf.core.query.MembershipQuery;
 import com.glaf.core.service.EntityService;
+import com.glaf.core.util.Constants;
 
 public class IdentityFactory {
 	protected static EntityService entityService;
@@ -190,6 +194,12 @@ public class IdentityFactory {
 				return loginHandler.getLoginContext(actorId);
 			}
 		}
+		String cacheKey = Constants.LOGIN_USER_CACHE + actorId;
+		if (CacheFactory.get(cacheKey) != null) {
+			String text = (String) CacheFactory.get(cacheKey);
+			JSONObject jsonObject = JSON.parseObject(text);
+			return LoginContextUtils.jsonToObject(jsonObject);
+		}
 		User user = (User) getEntityService().getById("getUserById", actorId);
 		if (user != null) {
 			LoginContext loginContext = new LoginContext(user);
@@ -220,28 +230,11 @@ public class IdentityFactory {
 			logger.debug("user roles:" + roles);
 
 			loginContext.setRoles(roles);
+			CacheFactory.put(cacheKey, loginContext.toJsonObject()
+					.toJSONString());
 			return loginContext;
 		}
 		return null;
-	}
-
-	/**
-	 * 获取全部用户Map
-	 * 
-	 * @return
-	 */
-	public static Map<Long, User> getLongUserMap() {
-		Map<Long, User> userMap = new LinkedHashMap<Long, User>();
-		List<Object> list = getEntityService().getList("getUsers", null);
-		if (list != null && !list.isEmpty()) {
-			for (Object obj : list) {
-				if (obj instanceof User) {
-					User user = (User) obj;
-					userMap.put(user.getId(), user);
-				}
-			}
-		}
-		return userMap;
 	}
 
 	/**

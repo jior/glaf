@@ -120,7 +120,7 @@ public class DataSourceConfig {
 		return false;
 	}
 
-	public static Connection getConnection() {
+	protected static Connection getConnection() {
 		Connection connection = null;
 		DataSource ds = null;
 		try {

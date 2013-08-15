@@ -39,7 +39,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.core.entity.SqlExecutor;
 import com.glaf.core.id.IdGenerator;
- 
+
 import com.glaf.core.base.TablePage;
 import com.glaf.core.mapper.TablePageMapper;
 import com.glaf.core.query.TablePageQuery;
@@ -71,7 +71,8 @@ public class MxTablePageServiceImpl implements ITablePageService {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public int getQueryCount(String querySql, List<QueryCondition> conditions) {
-		SqlExecutor sqlExecutor = QueryUtils.getMyBatisAndConditionSql(conditions);
+		SqlExecutor sqlExecutor = QueryUtils
+				.getMyBatisAndConditionSql(conditions);
 		StringBuilder buffer = new StringBuilder();
 		buffer.append(querySql);
 		if (querySql.toLowerCase().indexOf(" where ") == -1) {
@@ -96,7 +97,8 @@ public class MxTablePageServiceImpl implements ITablePageService {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public List<Object> getQueryList(String querySql, int begin, int pageSize,
 			List<QueryCondition> conditions) {
-		SqlExecutor sqlExecutor = QueryUtils.getMyBatisAndConditionSql(conditions);
+		SqlExecutor sqlExecutor = QueryUtils
+				.getMyBatisAndConditionSql(conditions);
 
 		StringBuilder buffer = new StringBuilder();
 		buffer.append(querySql);
@@ -122,15 +124,16 @@ public class MxTablePageServiceImpl implements ITablePageService {
 			pageSize = Paging.DEFAULT_PAGE_SIZE;
 		}
 		RowBounds rowBounds = new RowBounds(begin, pageSize);
-		List<Object> rows = (List<Object>) sqlSession.selectList(
-				"getSqlQueryList", params, rowBounds);
+		List<Object> rows = sqlSession.selectList("getSqlQueryList", params,
+				rowBounds);
 		return rows;
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public int getTableCount(String tableName, String idColumn,
 			List<QueryCondition> conditions) {
-		SqlExecutor sqlExecutor = QueryUtils.getMyBatisAndConditionSql(conditions);
+		SqlExecutor sqlExecutor = QueryUtils
+				.getMyBatisAndConditionSql(conditions);
 		StringBuilder buffer = new StringBuilder();
 		buffer.append(" select count(*) ").append(" from ").append(tableName);
 		buffer.append(" where 1=1 ");
@@ -164,15 +167,16 @@ public class MxTablePageServiceImpl implements ITablePageService {
 			pageSize = Paging.DEFAULT_PAGE_SIZE;
 		}
 		RowBounds rowBounds = new RowBounds(begin, pageSize);
-		List<Object> rows = (List<Object>) sqlSession.selectList(
-				"getTableData", query, rowBounds);
+		List<Object> rows = sqlSession.selectList("getTableData", query,
+				rowBounds);
 		return rows;
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public List<Object> getTableList(String tableName, String idColumn,
 			int begin, int pageSize, List<QueryCondition> conditions) {
-		SqlExecutor sqlExecutor = QueryUtils.getMyBatisAndConditionSql(conditions);
+		SqlExecutor sqlExecutor = QueryUtils
+				.getMyBatisAndConditionSql(conditions);
 
 		StringBuilder buffer = new StringBuilder();
 		buffer.append(" select * ").append(" from ").append(tableName);
@@ -196,8 +200,8 @@ public class MxTablePageServiceImpl implements ITablePageService {
 			pageSize = Paging.DEFAULT_PAGE_SIZE;
 		}
 		RowBounds rowBounds = new RowBounds(begin, pageSize);
-		List<Object> rows = (List<Object>) sqlSession.selectList(
-				"getSqlQueryList", params, rowBounds);
+		List<Object> rows = sqlSession.selectList("getSqlQueryList", params,
+				rowBounds);
 		return rows;
 	}
 
@@ -205,7 +209,8 @@ public class MxTablePageServiceImpl implements ITablePageService {
 	public List<Object> getTableList(String tableName, String idColumn,
 			Map<String, String> selectColumns, int begin, int pageSize,
 			List<QueryCondition> conditions) {
-		SqlExecutor sqlExecutor = QueryUtils.getMyBatisAndConditionSql(conditions);
+		SqlExecutor sqlExecutor = QueryUtils
+				.getMyBatisAndConditionSql(conditions);
 		StringBuilder buffer = new StringBuilder();
 		buffer.append(" select ");
 		if (selectColumns != null && !selectColumns.isEmpty()) {
@@ -245,8 +250,8 @@ public class MxTablePageServiceImpl implements ITablePageService {
 			pageSize = Paging.DEFAULT_PAGE_SIZE;
 		}
 		RowBounds rowBounds = new RowBounds(begin, pageSize);
-		List<Object> rows = (List<Object>) sqlSession.selectList(
-				"getSqlQueryList", params, rowBounds);
+		List<Object> rows = sqlSession.selectList("getSqlQueryList", params,
+				rowBounds);
 		return rows;
 	}
 
@@ -255,7 +260,8 @@ public class MxTablePageServiceImpl implements ITablePageService {
 			Map<String, String> selectColumns, int begin, int pageSize,
 			List<QueryCondition> conditions,
 			LinkedHashMap<String, Boolean> orderByColumns) {
-		SqlExecutor sqlExecutor = QueryUtils.getMyBatisAndConditionSql(conditions);
+		SqlExecutor sqlExecutor = QueryUtils
+				.getMyBatisAndConditionSql(conditions);
 		StringBuilder buffer = new StringBuilder();
 		buffer.append(" select ");
 		if (selectColumns != null && !selectColumns.isEmpty()) {
@@ -320,8 +326,8 @@ public class MxTablePageServiceImpl implements ITablePageService {
 			pageSize = Paging.DEFAULT_PAGE_SIZE;
 		}
 		RowBounds rowBounds = new RowBounds(begin, pageSize);
-		List<Object> rows = (List<Object>) sqlSession.selectList(
-				"getSqlQueryList", params, rowBounds);
+		List<Object> rows = sqlSession.selectList("getSqlQueryList", params,
+				rowBounds);
 		return rows;
 	}
 
@@ -393,8 +399,7 @@ public class MxTablePageServiceImpl implements ITablePageService {
 	}
 
 	@Resource
-	public void setTablePageMapper(
-			TablePageMapper tablePageMapper) {
+	public void setTablePageMapper(TablePageMapper tablePageMapper) {
 		this.tablePageMapper = tablePageMapper;
 	}
 

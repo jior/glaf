@@ -11,7 +11,7 @@ public class TestThread extends Thread{
 	}
 
 	public void run() {
-		for (int i = 0; i <= 1000; i++) {
+		for (int i = 0; i <= 10; i++) {
 			entityService.nextDbidBlock("TBL_" + i);
 		}
 	}

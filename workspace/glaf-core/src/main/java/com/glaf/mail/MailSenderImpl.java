@@ -66,8 +66,8 @@ public class MailSenderImpl implements MailSender {
 		Map<String, Object> dataMap = new HashMap<String, Object>();
 		dataMap.put("taskDescription", "邮件系统开发");
 		dataMap.put("processStarterName", "系统管理员");
-		dataMap.put("serviceUrl", "http://127.0.0.1:8080/jbpm");
-		dataMap.put("callback", "http://127.0.0.1:8080/jbpm/task.jsp");
+		dataMap.put("serviceUrl", "http://127.0.0.1:8080/glaf");
+		dataMap.put("callback", "http://127.0.0.1:8080/glaf/task.jsp");
 
 		MailMessage mailMessage = new MailMessage();
 		mailMessage.setFrom("joy@127.0.0.1");

@@ -11,33 +11,35 @@
 	</resultMap>
 
 	<insert id="inertNextDbId" parameterType="com.glaf.core.id.Dbid">
-	
+
 		insert into
 		sys_dbid(NAME_, TITLE_, VALUE_, VERSION_) values (
 		#{name,jdbcType=VARCHAR},
 		#{title, jdbcType=VARCHAR},
 		#{value,jdbcType=VARCHAR},
 		#{version, jdbcType=INTEGER})
-		
+
 	</insert>
 
 	<update id="updateNextDbId" parameterType="com.glaf.core.id.Dbid">
-	
+
 		update sys_dbid set
 		TITLE_ = #{title, jdbcType=VARCHAR},
-		VALUE_ = #{value, jdbcType=VARCHAR},
+		VALUE_ = #{value,
+		jdbcType=VARCHAR},
 		VERSION_ = #{version, jdbcType=INTEGER}
-		where NAME_ = #{name, jdbcType=VARCHAR}
-		
+		where NAME_ =
+		#{name, jdbcType=VARCHAR}
+
 	</update>
 
 	<select id="getNextDbId" parameterType="string" resultMap="dbidResultMap">
-		select * from sys_dbid 
+		select * from sys_dbid
 		where NAME_ = #{name, jdbcType=VARCHAR}
 	</select>
-	
+
 	<select id="getAllDbids" resultMap="dbidResultMap">
-		select * from sys_dbid  
+		select * from sys_dbid
 	</select>
 
 </mapper>

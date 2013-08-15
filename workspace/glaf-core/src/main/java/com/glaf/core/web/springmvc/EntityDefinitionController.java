@@ -48,8 +48,8 @@ import com.glaf.core.domain.*;
 import com.glaf.core.query.*;
 import com.glaf.core.service.*;
 
-@Controller("/system/entity")
-@RequestMapping("/system/entity")
+@Controller("/sys/entity")
+@RequestMapping("/sys/entity")
 public class EntityDefinitionController {
 	protected static final Log logger = LogFactory
 			.getLog(EntityDefinitionController.class);

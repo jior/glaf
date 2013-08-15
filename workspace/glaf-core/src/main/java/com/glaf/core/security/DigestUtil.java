@@ -29,7 +29,12 @@ import java.security.NoSuchAlgorithmException;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeUtility;
 
+import com.glaf.core.config.BaseConfiguration;
+import com.glaf.core.config.Configuration;
+
 public class DigestUtil {
+
+	protected static Configuration conf = BaseConfiguration.create();
 
 	private DigestUtil() {
 	}
@@ -68,22 +73,25 @@ public class DigestUtil {
 		if (password == null || password.trim().length() == 0) {
 			return password;
 		}
-		MessageDigest md = null;
-		ByteArrayOutputStream bos = null;
-		try {
-			md = MessageDigest.getInstance(algorithm);
-			byte[] digest = md.digest(password.getBytes("UTF-8"));
-			bos = new ByteArrayOutputStream();
-			OutputStream encodedStream = MimeUtility.encode(bos, "base64");
-			encodedStream.write(digest);
-			return bos.toString("UTF-8");
-		} catch (IOException ioe) {
-			throw new RuntimeException("Fatal error: " + ioe);
-		} catch (NoSuchAlgorithmException ae) {
-			throw new RuntimeException("Fatal error: " + ae);
-		} catch (MessagingException me) {
-			throw new RuntimeException("Fatal error: " + me);
+		if (conf.getBoolean("password.enc", false)) {
+			MessageDigest md = null;
+			ByteArrayOutputStream bos = null;
+			try {
+				md = MessageDigest.getInstance(algorithm);
+				byte[] digest = md.digest(password.getBytes("UTF-8"));
+				bos = new ByteArrayOutputStream();
+				OutputStream encodedStream = MimeUtility.encode(bos, "base64");
+				encodedStream.write(digest);
+				return bos.toString("UTF-8");
+			} catch (IOException ioe) {
+				throw new RuntimeException("Fatal error: " + ioe);
+			} catch (NoSuchAlgorithmException ae) {
+				throw new RuntimeException("Fatal error: " + ae);
+			} catch (MessagingException me) {
+				throw new RuntimeException("Fatal error: " + me);
+			}
 		}
+		return password;
 	}
 
 	public static void main(String[] args) throws Exception {

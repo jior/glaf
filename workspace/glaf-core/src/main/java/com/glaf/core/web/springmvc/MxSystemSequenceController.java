@@ -38,8 +38,8 @@ import com.glaf.core.service.ITableDataService;
 import com.glaf.core.util.RequestUtils;
 import com.glaf.core.util.ResponseUtils;
 
-@Controller("/system/sequence")
-@RequestMapping("/system/sequence")
+@Controller("/sys/sequence")
+@RequestMapping("/sys/sequence")
 public class MxSystemSequenceController {
 
 	protected static final Log logger = LogFactory

@@ -16,6 +16,7 @@
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<foreach collection="columns" item="column">
+			   <if test="column.value != null">
 				<choose>
 					<when test="column.javaType == 'Boolean'">
 						#{column.value, jdbcType=BOOLEAN},
@@ -36,10 +37,72 @@
 						#{column.value, jdbcType=VARCHAR},
 					</otherwise>
 				</choose>
+			  </if>
 			</foreach>
 		</trim>
 
 	</insert>
+
+
+	<sql id="insertExtendedTableDataSql">
+       
+	    <if test="extendedColumns != null and  extendedColumns.size() &gt; 0">
+	        <foreach collection="extendedColumns" item="column">
+			  <if test="column.value != null">
+                <choose>
+					<when test="column.javaType == 'Boolean'">
+						,#{column.value, jdbcType=BOOLEAN}
+					</when>
+					<when test="column.javaType == 'Integer'">
+						,#{column.value, jdbcType=INTEGER}
+					</when>
+					<when test="column.javaType == 'Long'">
+						,#{column.value, jdbcType=BIGINT}
+					</when>
+					<when test="column.javaType == 'Double'">
+						,#{column.value, jdbcType=DOUBLE}
+					</when>
+					<when test="column.javaType == 'Date'">
+						,#{column.value, jdbcType=TIMESTAMP}
+					</when>
+					<otherwise>
+						,#{column.value, jdbcType=VARCHAR}
+					</otherwise>
+				</choose>
+			  </if>
+            </foreach>
+		</if>
+
+	</sql>
+
+
+	<sql id="updateExtendedTableDataSql">
+	    
+		<if test="extendedColumns != null and  extendedColumns.size() &gt; 0">
+	        <foreach collection="extendedColumns" item="column">
+			  <if test="column.value != null">
+				<choose>
+					<when test="column.javaType == 'Integer'">
+						${column.columnName} = #{column.value, jdbcType=INTEGER},
+					</when>
+					<when test="column.javaType == 'Long'">
+						${column.columnName} = #{column.value, jdbcType=BIGINT},
+					</when>
+					<when test="column.javaType == 'Double'">
+						${column.columnName} = #{column.value, jdbcType=DOUBLE},
+					</when>
+					<when test="column.javaType == 'Date'">
+						${column.columnName} = #{column.value, jdbcType=TIMESTAMP},
+					</when>
+					<otherwise>
+						${column.columnName} = #{column.value, jdbcType=VARCHAR},
+					</otherwise>
+				</choose>
+			  </if>
+			</foreach>
+	    </if>
+
+	</sql>
 
 
 	<update id="updateTableDataByPrimaryKey" parameterType="com.glaf.core.base.TableModel">
@@ -49,6 +112,7 @@
 		<set>
 			<trim prefix="" suffix="" suffixOverrides=",">
 				<foreach collection="columns" item="column">
+				  <if test="column.value != null">
 					<choose>
 						<when test="column.javaType == 'Boolean'">
 							${column.columnName} = #{column.value,
@@ -75,6 +139,7 @@
 							jdbcType=VARCHAR},
 						</otherwise>
 					</choose>
+				  </if>
 				</foreach>
 			</trim>
 		</set>

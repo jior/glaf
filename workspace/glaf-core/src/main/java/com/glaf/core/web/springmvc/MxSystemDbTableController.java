@@ -1,7 +1,6 @@
 package com.glaf.core.web.springmvc;
 
 import java.io.IOException;
-
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
@@ -11,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -51,8 +51,8 @@ import com.glaf.core.util.StringTools;
 import com.glaf.core.util.ZipUtils;
 import com.glaf.core.xml.XmlWriter;
 
-@Controller("/system/table")
-@RequestMapping("/system/table")
+@Controller("/sys/table")
+@RequestMapping("/sys/table")
 public class MxSystemDbTableController {
 
 	protected static Configuration conf = BaseConfiguration.create();
@@ -140,10 +140,9 @@ public class MxSystemDbTableController {
 		return new ModelAndView("/modules/sys/table/edit", modelMap);
 	}
 
-	@ResponseBody
 	@RequestMapping("/genCreateScripts")
-	public byte[] genCreateScripts(HttpServletRequest request)
-			throws IOException {
+	public void genCreateScripts(HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
 		StringBuffer sb = new StringBuffer();
 		String tables = request.getParameter("tables");
 		String dbType = request.getParameter("dbType");
@@ -169,7 +168,12 @@ public class MxSystemDbTableController {
 			}
 		}
 
-		return sb.toString().getBytes("UTF-8");
+		try {
+			ResponseUtils.download(request, response, sb.toString().getBytes(),
+					"export.sql");
+		} catch (ServletException ex) {
+			ex.printStackTrace();
+		}
 	}
 
 	@ResponseBody
@@ -244,6 +248,9 @@ public class MxSystemDbTableController {
 					continue;
 				}
 				if (tableName.startsWith("jbpm_")) {
+					continue;
+				}
+				if (tableName.startsWith("cell_useradd")) {
 					continue;
 				}
 				if (tableName.startsWith("tmp_")) {
@@ -465,6 +472,8 @@ public class MxSystemDbTableController {
 			 */
 			if (StringUtils.isNotEmpty(tableName)
 					&& !rejects.contains(tableName.toUpperCase())
+					&& !StringUtils.startsWithIgnoreCase(tableName, "user")
+					&& !StringUtils.startsWithIgnoreCase(tableName, "net")
 					&& !StringUtils.startsWithIgnoreCase(tableName, "sys")
 					&& !StringUtils.startsWithIgnoreCase(tableName, "jbpm")
 					&& !StringUtils.startsWithIgnoreCase(tableName, "act")) {

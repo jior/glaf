@@ -19,6 +19,7 @@
 package com.glaf.core.query;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -49,6 +50,8 @@ public class BaseQuery extends AbstractQuery<Object> {
 	protected String serviceKey;
 	protected String sortField;
 	protected String sortOrder;
+	protected Date afterCreateDate;
+	protected Date beforeCreateDate;
 
 	public BaseQuery() {
 
@@ -67,6 +70,22 @@ public class BaseQuery extends AbstractQuery<Object> {
 			throw new RuntimeException("actorIds is null");
 		}
 		this.actorIds = actorIds;
+		return this;
+	}
+
+	public BaseQuery afterCreateDate(Date afterCreateDate) {
+		if (afterCreateDate == null) {
+			throw new RuntimeException("createDate is null");
+		}
+		this.afterCreateDate = afterCreateDate;
+		return this;
+	}
+
+	public BaseQuery beforeCreateDate(Date beforeCreateDate) {
+		if (beforeCreateDate == null) {
+			throw new RuntimeException("createDate is null");
+		}
+		this.beforeCreateDate = beforeCreateDate;
 		return this;
 	}
 
@@ -132,6 +151,14 @@ public class BaseQuery extends AbstractQuery<Object> {
 
 	public List<String> getActorIds() {
 		return actorIds;
+	}
+
+	public Date getAfterCreateDate() {
+		return afterCreateDate;
+	}
+
+	public Date getBeforeCreateDate() {
+		return beforeCreateDate;
 	}
 
 	public int getBegin() {
@@ -251,6 +278,14 @@ public class BaseQuery extends AbstractQuery<Object> {
 
 	public void setActorIds(List<String> actorIds) {
 		this.actorIds = actorIds;
+	}
+
+	public void setAfterCreateDate(Date afterCreateDate) {
+		this.afterCreateDate = afterCreateDate;
+	}
+
+	public void setBeforeCreateDate(Date beforeCreateDate) {
+		this.beforeCreateDate = beforeCreateDate;
 	}
 
 	public void setBusinessKeys(List<String> businessKeys) {

@@ -35,8 +35,8 @@ import com.glaf.core.service.*;
 import com.glaf.core.security.*;
 import com.glaf.core.util.*;
 
-@Controller("/system/param")
-@RequestMapping("/system/param")
+@Controller("/sys/param")
+@RequestMapping("/sys/param")
 public class MxSystemParamController {
 	protected static final Log logger = LogFactory
 			.getLog(MxSystemParamController.class);

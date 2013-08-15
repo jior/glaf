@@ -25,8 +25,7 @@ import java.util.List;
 @SuppressWarnings("rawtypes")
 public class DataQuery extends BaseQuery {
 	private static final long serialVersionUID = 1L;
-	protected Date afterCreateDate;
-	protected Date beforeCreateDate;
+
 	protected String businessKey;
 	protected Date createDate;
 	protected Integer deleteFlag;
@@ -59,22 +58,6 @@ public class DataQuery extends BaseQuery {
 
 	}
 
-	public DataQuery afterCreateDate(Date afterCreateDate) {
-		if (afterCreateDate == null) {
-			throw new RuntimeException("createDate is null");
-		}
-		this.afterCreateDate = afterCreateDate;
-		return this;
-	}
-
-	public DataQuery beforeCreateDate(Date beforeCreateDate) {
-		if (beforeCreateDate == null) {
-			throw new RuntimeException("createDate is null");
-		}
-		this.beforeCreateDate = beforeCreateDate;
-		return this;
-	}
-
 	public DataQuery businessKey(String businessKey) {
 		if (businessKey == null) {
 			throw new RuntimeException("businessKey is null");
@@ -103,14 +86,6 @@ public class DataQuery extends BaseQuery {
 			isFilterPermission = false;
 		}
 
-	}
-
-	public Date getAfterCreateDate() {
-		return afterCreateDate;
-	}
-
-	public Date getBeforeCreateDate() {
-		return beforeCreateDate;
 	}
 
 	public String getBusinessKey() {
@@ -295,14 +270,6 @@ public class DataQuery extends BaseQuery {
 		}
 		this.processNames = processNames;
 		return this;
-	}
-
-	public void setAfterCreateDate(Date afterCreateDate) {
-		this.afterCreateDate = afterCreateDate;
-	}
-
-	public void setBeforeCreateDate(Date beforeCreateDate) {
-		this.beforeCreateDate = beforeCreateDate;
 	}
 
 	public void setBusinessKey(String businessKey) {

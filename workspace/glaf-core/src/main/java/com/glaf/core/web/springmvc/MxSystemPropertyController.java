@@ -40,8 +40,8 @@ import com.glaf.core.service.ISystemPropertyService;
 import com.glaf.core.util.RequestUtils;
 import com.glaf.core.util.ResponseUtils;
 
-@Controller("/system/property")
-@RequestMapping("/system/property")
+@Controller("/sys/property")
+@RequestMapping("/sys/property")
 public class MxSystemPropertyController {
 
 	protected static final Log logger = LogFactory

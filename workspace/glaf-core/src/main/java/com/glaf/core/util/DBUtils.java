@@ -53,13 +53,14 @@ import com.glaf.core.entity.SqlExecutor;
 import com.glaf.core.jdbc.DBConnectionFactory;
 
 public class DBUtils {
-	public static final String POSTGRESQL = "postgresql";
-	
-	public static final String ORACLE="oracle";
 
 	protected final static Log logger = LogFactory.getLog(DBUtils.class);
 
 	public final static String newline = System.getProperty("line.separator");
+
+	public static final String POSTGRESQL = "postgresql";
+
+	public static final String ORACLE = "oracle";
 
 	public static void alterTable(Connection connection,
 			TableDefinition tableDefinition) {
@@ -836,7 +837,7 @@ public class DBUtils {
 			JdbcUtils.close(rs);
 		}
 	}
-	
+
 	public static List<ColumnDefinition> getColumnDefinitions(String tableName) {
 		List<ColumnDefinition> columns = new ArrayList<ColumnDefinition>();
 		Connection conn = null;
