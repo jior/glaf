@@ -58,7 +58,7 @@
 	        var screenWidth = screen.availWidth, screenHeight = screen.availHeight;
             var args = "top=0,left=0,toolbar=no,menubar=no,scrollbars=yes, resizable=yes,location=no, status=no,titlebar=no";
 	        //打开全屏的新窗口
-	        var win = window.open(window.location.href+"&login=true","fullscreen", args);
+	        var win = window.open(window.location.href+"?login=true","fullscreen", args);
 	        if(win){
 	            win.resizeTo(screenWidth, screenHeight);
 	            win.outerWidth = screenWidth;

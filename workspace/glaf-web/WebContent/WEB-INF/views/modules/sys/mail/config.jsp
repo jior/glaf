@@ -54,7 +54,7 @@
 <center> 
 
 <form name="dataItemForm" method="post"
-	action="<%=request.getContextPath()%>/mx/system/mailConfig/save"
+	action="<%=request.getContextPath()%>/mx/sys/mailConfig/save"
 	class="x-form"><input type="hidden" id="actionType"
 	name="actionType" value="test"> <input type="hidden" id="auth"
 	name="auth" value="false">

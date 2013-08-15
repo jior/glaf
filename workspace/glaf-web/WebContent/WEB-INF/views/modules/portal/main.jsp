@@ -104,7 +104,7 @@
 
   	 function relogin(){
         if(confirm("您确定要重新登录吗？")){
-			var link = '${contextPath}/login.do?method=logout';
+			var link = '${contextPath}/mx/login/logout';
 			self.location.href = link;
 		}
 	}

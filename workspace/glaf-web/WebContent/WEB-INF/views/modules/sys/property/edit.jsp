@@ -11,7 +11,7 @@
 			 var params = jQuery("#iForm").formSerialize();
 			  jQuery.ajax({
 				   type: "POST",
-				   url: '<%=request.getContextPath()%>/mx/system/property/saveCfg',
+				   url: '<%=request.getContextPath()%>/mx/sys/property/saveCfg',
 				   data: params,
 				   dataType:  'json',
 				   error: function(data){
