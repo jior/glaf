@@ -115,7 +115,7 @@ public class Contract implements Serializable, JSONable {
 	@Column(name = "dept", length = 100)
 	protected String dept;
 
-	@Column(name = "createBy", length = 0)
+	@Column(name = "createBy", length = 50)
 	protected String createBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -126,7 +126,7 @@ public class Contract implements Serializable, JSONable {
 	@Column(name = "updateDate")
 	protected Date updateDate;
 
-	@Column(name = "updateBy", length = 0)
+	@Column(name = "updateBy", length = 50)
 	protected String updateBy;
 
 	public Contract() {

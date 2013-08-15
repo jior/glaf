@@ -5,8 +5,8 @@
 	com.glaf.base.utils.ContextUtil.getInstance().setContextPath(context);
     SysUser user = com.glaf.base.utils.RequestUtil.getLoginUser(request);
 	if (user != null) {
-	    response.sendRedirect(request.getContextPath()+"/my/main.do");
+	    response.sendRedirect(request.getContextPath()+"/mx/my/main");
 	} else {
-        response.sendRedirect(request.getContextPath()+"/login.do?method=prepareLogin");
+        response.sendRedirect(request.getContextPath()+"/mx/login");
 	}
 %>

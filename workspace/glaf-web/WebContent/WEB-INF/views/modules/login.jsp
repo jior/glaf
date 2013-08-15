@@ -98,7 +98,7 @@
 			document.getElementById("y").focus();
             return;
 		}
-        location.href="${contextPath}/login.do?method=login&x="+x+"&y=<%=rand%>"+y;
+        location.href="${contextPath}/mx/login/doLogin?x="+x+"&y=<%=rand%>"+y;
 	}
 
 

@@ -94,7 +94,7 @@ public class Withdrawal implements Serializable, JSONable {
 	@Column(name = "brands3account")
 	protected Double brands3account;
 
-	@Column(name = "createBy", length = 0)
+	@Column(name = "createBy", length = 50)
 	protected String createBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -105,7 +105,7 @@ public class Withdrawal implements Serializable, JSONable {
 	@Column(name = "updateDate")
 	protected Date updateDate;
 
-	@Column(name = "updateBy", length = 0)
+	@Column(name = "updateBy", length = 50)
 	protected String updateBy;
 
 	protected Date wdStatusFlag;

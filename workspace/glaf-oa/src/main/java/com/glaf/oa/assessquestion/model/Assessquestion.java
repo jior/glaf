@@ -83,7 +83,7 @@ public class Assessquestion implements Serializable, JSONable {
 	@Column(name = "updateBy", length = 50)
 	protected String updateBy;
 
-	@Column(name = "assessid", nullable = false)
+	@Column(name = "assessid")
 	protected Long assessid;
 
 	public Assessquestion() {

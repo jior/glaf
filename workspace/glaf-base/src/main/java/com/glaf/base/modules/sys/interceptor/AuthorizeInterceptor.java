@@ -88,7 +88,7 @@ public class AuthorizeInterceptor implements MethodBeforeAdvice {
 			}
 		}
 		methodName = objectName + "." + methodName;
-		logger.debug("methodName:" + methodName);
+		//logger.debug("methodName:" + methodName);
 
 		// 拦截的功能在系统功能列表中
 		if (findSysFunction(methodName)) {

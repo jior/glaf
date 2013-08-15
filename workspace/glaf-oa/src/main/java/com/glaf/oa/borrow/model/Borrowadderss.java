@@ -56,7 +56,7 @@ public class Borrowadderss implements Serializable, JSONable {
 	@Column(name = "remark", length = 2147483647)
 	protected String remark;
 
-	@Column(name = "createBy", length = 0)
+	@Column(name = "createBy", length = 50)
 	protected String createBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -67,7 +67,7 @@ public class Borrowadderss implements Serializable, JSONable {
 	@Column(name = "updateDate")
 	protected Date updateDate;
 
-	@Column(name = "updateBy", length = 0)
+	@Column(name = "updateBy", length = 50)
 	protected String updateBy;
 
 	public Borrowadderss() {

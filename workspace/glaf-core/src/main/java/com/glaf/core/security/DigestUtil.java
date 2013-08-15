@@ -73,7 +73,7 @@ public class DigestUtil {
 		if (password == null || password.trim().length() == 0) {
 			return password;
 		}
-		if (conf.getBoolean("password.enc", false)) {
+		if (conf.getBoolean("password.enc", true)) {
 			MessageDigest md = null;
 			ByteArrayOutputStream bos = null;
 			try {
