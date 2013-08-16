@@ -166,10 +166,9 @@ public class FileUploadBackGroundServlet extends HttpServlet {
 
 		int maxUploadSize = conf.getInt(serviceKey + ".maxUploadSize", 0);
 		if (maxUploadSize == 0) {
-			maxUploadSize = conf.getInt("upload.maxUploadSize", 5);// 5MB
+			maxUploadSize = conf.getInt("upload.maxUploadSize", 10);// 10MB
 		}
 		maxUploadSize = maxUploadSize * FileUtils.MB_SIZE;
-
 		DiskFileItemFactory factory = new DiskFileItemFactory();
 		// 设置内存缓冲区，超过后写入临时文件
 		factory.setSizeThreshold(204800);
