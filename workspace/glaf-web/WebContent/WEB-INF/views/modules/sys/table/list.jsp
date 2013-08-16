@@ -31,7 +31,7 @@
 				nowrap: false,
 				striped: true,
 				collapsible:true,
-				url:'<%=request.getContextPath()%>/mx/system/table/json',
+				url:'<%=request.getContextPath()%>/mx/sys/table/json',
 				sortName: 'tablename',
 				sortOrder: 'asc',
 				remoteSort: false,
@@ -92,11 +92,49 @@
 			ids.push(rows[i].tablename);
 		}
 		if(ids.length > 0 ){
-		    var ids = ids.join(',');
+		    var x_ids = ids.join(',');
 			var dbType = jQuery('#dbType').val();
-			jQuery("#tables").val(ids);
-			document.iForm.action="<%=request.getContextPath()%>/mx/system/table/genCreateScripts?dbType="+dbType;
+			jQuery("#tables").val(x_ids);
+			document.iForm.action="<%=request.getContextPath()%>/mx/sys/table/genCreateScripts?dbType="+dbType;
 			document.iForm.submit();
+		} else {
+			alert("请选择至少一条记录。");
+		}
+	}
+
+
+	function exportData(){
+		var dbType = jQuery('#dbType').val();
+		var list = document.exportForm.selectedTables; 
+		var itemId = "";
+        var len02 = list.length;
+	    for (var i=0;i<len02;i++) {
+           itemId = itemId+list.options[i].value+",";
+	    }
+        alert(itemId);
+	    document.getElementById("exportTables").value = itemId;
+		document.exportForm.action="<%=request.getContextPath()%>/mx/sys/table/exportData?dbType="+dbType;
+		document.exportForm.submit(); 
+	}
+
+
+	function showInsertScripts(){
+        var ids = [];
+		var rows = jQuery('#mydatagrid').datagrid('getSelections');
+		for(var i=0; i<rows.length; i++){
+			ids.push(rows[i].tablename);
+		}
+		if(ids.length > 0 ){
+		    var x_ids = ids.join(',');
+			var dbType = jQuery('#dbType').val();
+			jQuery("#tables").val(x_ids);
+			var list = document.exportForm.selectedTables;     
+			for(var i=0; i<rows.length; i++){
+				//alert(rows[i].tablename);
+                list.options[i].value = rows[i].tablename+"";
+				list.options[i].text = rows[i].tablename+"";
+			}
+			jQuery('#exp_dlg').dialog('open').dialog('setTitle','导出插入语句');
 		} else {
 			alert("请选择至少一条记录。");
 		}
@@ -112,7 +150,7 @@
 		    var ids = ids.join(',');
 			var dbType = jQuery('#dbType').val();
 			jQuery("#tables").val(ids);
-			document.iForm.action="<%=request.getContextPath()%>/mx/system/table/genMappings?dbType="+dbType;
+			document.iForm.action="<%=request.getContextPath()%>/mx/sys/table/genMappings?dbType="+dbType;
 			document.iForm.submit();
 		} else {
 			alert("请选择至少一条记录。");
@@ -123,7 +161,7 @@
 		if(confirm("确定配置文件已经修改完毕？")){
 		  jQuery.ajax({
 				   type: "POST",
-				   url: '<%=request.getContextPath()%>/mx/system/table/updateHibernateDDL',
+				   url: '<%=request.getContextPath()%>/mx/sys/table/updateHibernateDDL',
 				   dataType:  'json',
 				   error: function(data){
 					   alert('服务器处理错误！');
@@ -170,16 +208,48 @@
 		var rows = jQuery('#mydatagrid').datagrid('getSelections');
 		if(rows.length ==1){
 		    var tablename = rows[0].tableName_enc;
-		    window.open('<%=request.getContextPath()%>/mx/system/table/resultList?q=1&tableName_enc='+tablename);
+		    window.open('<%=request.getContextPath()%>/mx/sys/table/resultList?q=1&tableName_enc='+tablename);
 		}
 	 }
 
 	 function onRowClick(rowIndex, row){
-	    var link = '<%=request.getContextPath()%>/mx/system/table/resultList?q=1&tableName_enc='+row.tableName_enc;
+	    var link = '<%=request.getContextPath()%>/mx/sys/table/resultList?q=1&tableName_enc='+row.tableName_enc;
 	    art.dialog.open(link, { height: 425, width: 880, title: row.tablename+"列表信息", lock: true, scrollbars:"no" }, false);
 	}
 	 
-		 
+
+	function moveUp() {
+	    var list = document.exportForm.selectedTables;
+		if (list.length > 0) {
+			var selectedIndex = list.selectedIndex;
+			if( selectedIndex > 0 ) {
+				var tmpValue = list.options[selectedIndex - 1].value;
+				var tmpText = list.options[selectedIndex - 1].text;
+				list.options[selectedIndex - 1].value = list.options[selectedIndex].value;
+				list.options[selectedIndex - 1].text = list.options[selectedIndex].text;
+				list.options[selectedIndex].value = tmpValue;
+				list.options[selectedIndex].text = tmpText;
+				list.options[selectedIndex - 1].selected = true;
+			}
+		}
+	 }
+
+	function moveDown() {
+		var list = document.exportForm.selectedTables;     
+		if ( list.length > 0) {
+			var selectedIndex = list.selectedIndex;
+			if(selectedIndex < (list.length - 1) ) {
+				var tmpValue = list.options[selectedIndex].value;
+				var tmpText = list.options[selectedIndex].text;
+				list.options[selectedIndex].value = list.options[selectedIndex  + 1].value;
+				list.options[selectedIndex].text = list.options[selectedIndex  + 1].text;
+				list.options[selectedIndex + 1].value = tmpValue;
+				list.options[selectedIndex + 1].text = tmpText;
+				list.selectedIndex = selectedIndex + 1;
+			}
+		}
+	}
+
 </script>
 </head>
 <body style="margin:1px;">  
@@ -199,19 +269,22 @@
 		</select>
 
 	   <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-save'"
-	   onclick="javascript:genCreateScripts();">生成数据库建表脚本</a> 
+	      onclick="javascript:genCreateScripts();">生成数据库建表脚本</a> 
 
 	   <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-save'"
-	   onclick="javascript:genMappings();">生成Mapping文件</a> 
+	      onclick="javascript:showInsertScripts();">生成插入数据脚本</a>
 
 	   <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-save'"
-	   onclick="javascript:updateMetaInfo();">更新元数据</a> 
+	      onclick="javascript:genMappings();">生成Mapping文件</a> 
 
 	   <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-save'"
-	   onclick="javascript:updateHibernateDDL();">更新本数据库结构</a> 
+	      onclick="javascript:updateMetaInfo();">更新元数据</a> 
+
+	   <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-save'"
+	      onclick="javascript:updateHibernateDDL();">更新本数据库结构</a> 
 
 	   <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-list'"
-	   onclick="javascript:showData();">查看数据</a> 
+	      onclick="javascript:showData();">查看数据</a> 
    </div> 
   </div> 
   <div data-options="region:'center',border:true">
@@ -221,5 +294,36 @@
 <form id="iForm" name="iForm" method="post" action="">
 	<input type="hidden" id="tables" name="tables">
 </form>
+
+<div id="exp_dlg" class="easyui-dialog" style="width:450px;height:400px;padding:10px 20px" closed="true" >
+    <form id="exportForm" name="exportForm" method="post">
+	     <input type="hidden" id="exportTables" name="exportTables" >
+         <table class="easyui-form" width="95%" align="center" border="0" cellspacing="0" cellpadding="5">
+		  <tr>
+			<td>
+			   <select id="selectedTables" name="selectedTables" style="width: 250px;" size="22">
+			      <%for(int i=0;i<20;i++){%>
+			       <option value=""></option>
+				  <%}%>
+			   </select>
+            </td>
+			<td  align="center" valign="top" height="30">&nbsp;
+			    <a href="#" class="easyui-linkbutton" iconCls="icon-up" 
+				   onclick="javascript:moveUp();">向上</a>
+				<br/><br/>
+				<a href="#" class="easyui-linkbutton" iconCls="icon-down" 
+				   onclick="javascript:moveDown();">向下</a>
+                <br/><br/>
+				<a href="#" class="easyui-linkbutton" iconCls="icon-ok" 
+				   onclick="javascript:exportData();">确定</a>
+				<br/><br/>
+	            <a href="#" class="easyui-linkbutton" iconCls="icon-cancel" 
+				   onclick="javascript:jQuery('#exp_dlg').dialog('close');">取消</a>
+			</td>
+		  </tr>
+		</table>
+    </form>
+</div>
+
 </body>
 </html>

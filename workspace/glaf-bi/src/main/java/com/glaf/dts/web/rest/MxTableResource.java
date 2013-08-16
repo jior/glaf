@@ -42,6 +42,7 @@ import javax.ws.rs.core.UriInfo;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -51,7 +52,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.glaf.core.jdbc.DBConnectionFactory;
 
- 
 import com.glaf.core.business.TransformTable;
 import com.glaf.core.domain.*;
 import com.glaf.core.query.*;
@@ -64,7 +64,6 @@ import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.RequestUtils;
 import com.glaf.core.util.ResponseUtils;
 import com.glaf.core.util.Tools;
- 
 import com.glaf.dts.transform.MxTransformManager;
 import com.glaf.dts.util.Constants;
 
@@ -271,8 +270,6 @@ public class MxTableResource {
 		}
 	}
 
-	 
-
 	@POST
 	@Path("/saveTable")
 	public void saveTable(@Context HttpServletRequest request,
@@ -335,7 +332,6 @@ public class MxTableResource {
 	@Path("/tablePage")
 	@ResponseBody
 	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
-	@SuppressWarnings("unchecked")
 	public byte[] tablePage(@Context HttpServletRequest request,
 			@Context UriInfo uriInfo) {
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
@@ -393,7 +389,7 @@ public class MxTableResource {
 		}
 
 		int total = -1;
-		List<Object> rows = null;
+		List<Map<String, Object>> rows = null;
 
 		try {
 			total = tablePageService.getTableCount(query);
@@ -409,28 +405,22 @@ public class MxTableResource {
 		ArrayNode rowsJSON = new ObjectMapper().createArrayNode();
 		if (rows != null && !rows.isEmpty()) {
 			responseJSON.put("total", total);
-			for (Object rowModel : rows) {
+			for (Map<String, Object> dataMap : rows) {
 				ObjectNode rowJSON = new ObjectMapper().createObjectNode();
-				if (rowModel instanceof Map) {
-					@SuppressWarnings("rawtypes")
-					Map dataMap = (Map) rowModel;
-					if (dataMap != null && dataMap.size() > 0) {
-						Set<Entry<String, Object>> entrySet = dataMap
-								.entrySet();
-						for (Entry<String, Object> entry : entrySet) {
-							String name = entry.getKey();
-							Object value = entry.getValue();
-							if (value != null) {
-								if (value instanceof Date) {
-									Date date = (Date) value;
-									rowJSON.put(name,
-											DateUtils.getDateTime(date));
-								} else {
-									rowJSON.put(name, value.toString());
-								}
+				if (dataMap != null && dataMap.size() > 0) {
+					Set<Entry<String, Object>> entrySet = dataMap.entrySet();
+					for (Entry<String, Object> entry : entrySet) {
+						String name = entry.getKey();
+						Object value = entry.getValue();
+						if (value != null) {
+							if (value instanceof Date) {
+								Date date = (Date) value;
+								rowJSON.put(name, DateUtils.getDateTime(date));
 							} else {
-								rowJSON.put(name, "");
+								rowJSON.put(name, value.toString());
 							}
+						} else {
+							rowJSON.put(name, "");
 						}
 					}
 				}

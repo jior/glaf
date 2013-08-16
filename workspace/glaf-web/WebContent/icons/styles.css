@@ -193,6 +193,14 @@
 } 
 
 
+.icon-up{
+	background:url('icons/up.gif') no-repeat ;
+} 
+
+.icon-down{
+	background:url('icons/down.gif') no-repeat ;
+} 
+
 .icon_lock{
 	background:url('icons/lock.gif') no-repeat ;
 } 

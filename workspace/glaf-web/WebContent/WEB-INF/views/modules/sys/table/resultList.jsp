@@ -37,7 +37,7 @@
 	}
 
 	function onMyRowClick(rowIndex, row){
-	    var link = '<%=request.getContextPath()%>/mx/system/table/edit?tableName_enc=${tableName_enc}&businessKey='+row.${idColumn.columnName};
+	    var link = '<%=request.getContextPath()%>/mx/sys/table/edit?tableName_enc=${tableName_enc}&businessKey='+row.${idColumn.columnName};
 	    var x=50;
         var y=50;
         if(is_ie) {

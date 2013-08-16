@@ -142,15 +142,13 @@ public class DbTableToSqliteExporter {
 					query.firstResult(firstResult);
 					query.maxResults(pageSize);
 					Environment.setCurrentSystemName(systemName);
-					List<Object> list = tablePageService.getTableData(query);
+					List<Map<String, Object>> list = tablePageService
+							.getTableData(query);
 
 					if (list != null && !list.isEmpty()) {
-						for (Object object : list) {
-							if (object instanceof Map) {
-								Map dataMap = (Map) object;
-								dataMap = QueryUtils.lowerKeyMap(dataMap);
-								rows.add(dataMap);
-							}
+						for (Map dataMap : list) {
+							dataMap = QueryUtils.lowerKeyMap(dataMap);
+							rows.add(dataMap);
 						}
 					}
 

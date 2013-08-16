@@ -30,7 +30,6 @@ import javax.annotation.Resource;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -39,7 +38,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.core.entity.SqlExecutor;
 import com.glaf.core.id.IdGenerator;
-
 import com.glaf.core.base.TablePage;
 import com.glaf.core.mapper.TablePageMapper;
 import com.glaf.core.query.TablePageQuery;
@@ -157,7 +155,7 @@ public class MxTablePageServiceImpl implements ITablePageService {
 		return tablePageMapper.getTableCount(query);
 	}
 
-	public List<Object> getTableData(TablePageQuery query) {
+	public List<Map<String, Object>> getTableData(TablePageQuery query) {
 		int begin = query.getFirstResult();
 		int pageSize = query.getMaxResults();
 		if (begin < 0) {
@@ -167,7 +165,7 @@ public class MxTablePageServiceImpl implements ITablePageService {
 			pageSize = Paging.DEFAULT_PAGE_SIZE;
 		}
 		RowBounds rowBounds = new RowBounds(begin, pageSize);
-		List<Object> rows = sqlSession.selectList("getTableData", query,
+		List<Map<String, Object>> rows = sqlSession.selectList("getTableData", query,
 				rowBounds);
 		return rows;
 	}

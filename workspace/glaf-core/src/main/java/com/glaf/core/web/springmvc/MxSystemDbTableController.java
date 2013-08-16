@@ -6,6 +6,7 @@ import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,6 +36,7 @@ import com.glaf.core.domain.ColumnDefinition;
 import com.glaf.core.domain.TableDefinition;
 import com.glaf.core.entity.hibernate.HibernateBeanFactory;
 import com.glaf.core.jdbc.DBConnectionFactory;
+import com.glaf.core.query.TablePageQuery;
 import com.glaf.core.service.ITableDataService;
 import com.glaf.core.service.ITableDefinitionService;
 import com.glaf.core.service.ITablePageService;
@@ -226,6 +228,111 @@ public class MxSystemDbTableController {
 					ex.printStackTrace();
 				}
 			}
+		}
+	}
+
+	@RequestMapping("/exportData")
+	public void exportData(HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+		StringBuffer sb = new StringBuffer();
+		String tables = request.getParameter("exportTables");
+		String dbType = request.getParameter("dbType");
+		if (StringUtils.isNotEmpty(dbType) && StringUtils.isNotEmpty(tables)) {
+			List<String> list = StringTools.split(tables);
+			for (String tablename : list) {
+				if (StringUtils.isNotEmpty(tablename)) {
+					logger.debug("process table:" + tablename);
+					List<ColumnDefinition> columns = DBUtils
+							.getColumnDefinitions(tablename);
+					TablePageQuery query = new TablePageQuery();
+					query.tableName(tablename);
+					query.firstResult(0);
+					query.maxResults(5000);
+					int count = tablePageService.getTableCount(query);
+					if (count <= 5000) {
+						List<Map<String, Object>> rows = tablePageService
+								.getTableData(query);
+						if (rows != null && !rows.isEmpty()) {
+							for (Map<String, Object> dataMap : rows) {
+								Map<String, Object> lowerMap = QueryUtils
+										.lowerKeyMap(dataMap);
+								sb.append(" insert into ").append(tablename)
+										.append(" (");
+								for (int i = 0; i < columns.size(); i++) {
+									ColumnDefinition column = columns.get(i);
+									sb.append(column.getColumnName()
+											.toLowerCase());
+									if (i < columns.size() - 1) {
+										sb.append(", ");
+									}
+								}
+								sb.append(" ) values (");
+								for (int i = 0; i < columns.size(); i++) {
+									ColumnDefinition column = columns.get(i);
+									Object value = lowerMap.get(column
+											.getColumnName().toLowerCase());
+									if (value != null) {
+										if (value instanceof Short) {
+											sb.append(value);
+										} else if (value instanceof Integer) {
+											sb.append(value);
+										} else if (value instanceof Long) {
+											sb.append(value);
+										} else if (value instanceof Double) {
+											sb.append(value);
+										} else if (value instanceof String) {
+											String str = (String) value;
+											sb.append("'").append(str)
+													.append("'");
+										} else if (value instanceof Date) {
+											Date date = (Date) value;
+											if (StringUtils.equalsIgnoreCase(
+													dbType, "oracle")) {
+												sb.append(" to_date('")
+														.append(DateUtils
+																.getDateTime(date))
+														.append("','yyyy-mm-dd hh24:mi:ss')");
+											} else if (StringUtils
+													.equalsIgnoreCase(dbType,
+															"db2")) {
+												sb.append(" TO_DATE('")
+														.append(DateUtils
+																.getDateTime(date))
+														.append("',''YYY-MM-DD HH24:MI:SS')");
+											} else {
+												sb.append("'")
+														.append(DateUtils
+																.getDateTime(date))
+														.append("'");
+											}
+										} else {
+											sb.append("'")
+													.append(value.toString())
+													.append("'");
+										}
+									} else {
+										sb.append("null");
+									}
+									if (i < columns.size() - 1) {
+										sb.append(", ");
+									}
+								}
+								sb.append(");");
+								sb.append(FileUtils.newline);
+							}
+						}
+					}
+					sb.append(FileUtils.newline);
+					sb.append(FileUtils.newline);
+				}
+			}
+		}
+
+		try {
+			ResponseUtils.download(request, response, sb.toString().getBytes(),
+					"export.sql");
+		} catch (ServletException ex) {
+			ex.printStackTrace();
 		}
 	}
 
