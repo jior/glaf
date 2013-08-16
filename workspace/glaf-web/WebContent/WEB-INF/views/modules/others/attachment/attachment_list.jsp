@@ -30,7 +30,6 @@ function uploadFile(){
   var json = openUpload();
   if(json==null || json==""){
   }else{
-	//alert(json);
   	jQuery.ajax({
 			type: "POST",
 			url: '<%=request.getContextPath()%>/others/attachment.do?method=save&referId=<%=referId%>&referType=<%=referType%>&json='+json,
@@ -44,6 +43,23 @@ function uploadFile(){
 				}
 		});
   }
+}
+function reLoadPage(json){
+	if(json==null || json==""){
+	}else{
+  		jQuery.ajax({
+			type: "POST",
+			url: '<%=request.getContextPath()%>/others/attachment.do?method=save&referId=<%=referId%>&referType=<%=referType%>&json='+json,
+			dataType:  'json',
+				error: function(data){
+					alert('服务器处理错误！');
+				},
+				success: function(data){
+					//refreshCount();
+					location.reload();
+				}
+		});
+	}
 }
 var num=0;
 function checkOperation(form){
@@ -80,7 +96,17 @@ function refreshCount() {
 	}
 }
 function openUpload(obj, type){  
-	return ShowDialog('<%=request.getContextPath()%>/others/attachment.do?method=showUpload' + (type ? '?type=' + type : ''), 450, 230, 'no', false, obj);
+	var userAgent = navigator.userAgent.toLowerCase();
+	var isSafari = userAgent.indexOf("Safari")>=0;
+	var is_opera = userAgent.indexOf('opera') != -1 && opera.version();
+	var is_moz = (navigator.product == 'Gecko') && userAgent.substr(userAgent.indexOf('firefox') + 8, 3);
+	var is_ie = (userAgent.indexOf('msie') != -1 && !is_opera) && userAgent.substr(userAgent.indexOf('msie') + 5, 3);
+	var link = '<%=request.getContextPath()%>/others/attachment.do?method=showUpload' + (type ? '?type=' + type : '');
+	if(is_ie){
+		return ShowDialog(link, 450, 230, 'no', false, obj);
+	}else{
+		art.dialog.open(link, { height: 230, width: 450, title: "上传", lock: true, scrollbars:"no" }, false);
+	}
 }
 refreshCount();
 </script>

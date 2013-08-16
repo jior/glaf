@@ -10,10 +10,21 @@
 <link href="<%=request.getContextPath()%>/scripts/upload/css/fileUpload.css" type="text/css" rel="stylesheet"/>
 <link href="<%=request.getContextPath()%>/css/site.css" type="text/css" rel="stylesheet"/>
 <script type='text/javascript' src='<%=request.getContextPath()%>/scripts/main.js'></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.form.js"></script> 
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/artDialog/artDialog.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/artDialog/plugins/iframeTools.js"></script>
 <script type="text/javascript">
  
   function submitUpload() {
-    window.returnValue = getValues('file'); 
+	var type = typeof(window.dialogArguments);
+	//var openerType = typeof(window.opener);
+	if(type != 'undefined'){
+		window.returnValue = getValues('file'); 
+	}else{
+		var origin = artDialog.open.origin;
+		origin.reLoadPage(getValues('file'));
+	}
     window.close();
   }
 

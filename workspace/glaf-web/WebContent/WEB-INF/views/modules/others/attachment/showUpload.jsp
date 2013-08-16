@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%
-    double fileSizeMax = (int)(((double)(5 * 1024 * 1024 / 1024 / 1024.0)) * 100) / 100.0;
-    double sizeMax = (int)(((double)(5 * 1024 * 1024 / 1024 / 1024.0)) * 100) / 100.0;
+    double fileSizeMax = (int)(((double)(10 * 1024 * 1024 / 1024 / 1024.0)) * 100) / 100.0;
+    double sizeMax = (int)(((double)(10 * 1024 * 1024 / 1024 / 1024.0)) * 100) / 100.0;
 	String type = request.getParameter("type");
 	if (type == null) {
 	  type = "";
