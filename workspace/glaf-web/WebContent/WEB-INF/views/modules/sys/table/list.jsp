@@ -94,9 +94,11 @@
 		if(ids.length > 0 ){
 		    var x_ids = ids.join(',');
 			var dbType = jQuery('#dbType').val();
-			jQuery("#tables").val(x_ids);
-			document.iForm.action="<%=request.getContextPath()%>/mx/sys/table/genCreateScripts?dbType="+dbType;
-			document.iForm.submit();
+			if(confirm("确定导出'"+dbType+"'数据库的建表脚本吗？")){
+			    jQuery("#tables").val(x_ids);
+			    document.iForm.action="<%=request.getContextPath()%>/mx/sys/table/genCreateScripts?dbType="+dbType;
+			    document.iForm.submit();
+			}
 		} else {
 			alert("请选择至少一条记录。");
 		}
@@ -111,10 +113,18 @@
 	    for (var i=0;i<len02;i++) {
            itemId = itemId+list.options[i].value+",";
 	    }
-        alert(itemId);
+        //alert(itemId);
 	    document.getElementById("exportTables").value = itemId;
 		document.exportForm.action="<%=request.getContextPath()%>/mx/sys/table/exportData?dbType="+dbType;
 		document.exportForm.submit(); 
+	}
+
+	function exportSysTables(){
+        var dbType = jQuery('#dbType').val();
+		if(confirm("确定导出'"+dbType+"'数据库的初始化脚本吗？")){
+		  document.iForm.action="<%=request.getContextPath()%>/mx/sys/table/exportSysTables?dbType="+dbType;
+		  document.iForm.submit();
+		}
 	}
 
 
@@ -273,6 +283,9 @@
 
 	   <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-save'"
 	      onclick="javascript:showInsertScripts();">生成插入数据脚本</a>
+
+	   <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-save'"
+	      onclick="javascript:exportSysTables();">生成基础表数据脚本</a>
 
 	   <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-save'"
 	      onclick="javascript:genMappings();">生成Mapping文件</a> 
