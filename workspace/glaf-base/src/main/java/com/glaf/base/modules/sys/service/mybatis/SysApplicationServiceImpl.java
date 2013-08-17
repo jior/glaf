@@ -57,6 +57,8 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 
 	protected SysApplicationMapper sysApplicationMapper;
 
+	protected SysAccessMapper sysAccessMapper;
+
 	protected SysTreeService sysTreeService;
 
 	public SysApplicationServiceImpl() {
@@ -110,18 +112,19 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 	}
 
 	@Transactional
-	public void deleteById(Long id) {
-		if (id != null) {
-			sysApplicationMapper.deleteSysApplicationById(id);
+	public void deleteById(Long appId) {
+		if (appId != null && appId > 0) {
+			sysAccessMapper.deleteSysAccessByAppId(appId);
+			sysApplicationMapper.deleteSysApplicationById(appId);
 		}
 	}
 
 	@Transactional
 	public void deleteByIds(List<Long> rowIds) {
 		if (rowIds != null && !rowIds.isEmpty()) {
-			SysApplicationQuery query = new SysApplicationQuery();
-			query.rowIds(rowIds);
-			sysApplicationMapper.deleteSysApplications(query);
+			for (Long appId : rowIds) {
+				this.deleteById(appId);
+			}
 		}
 	}
 
@@ -440,6 +443,11 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 	@Resource
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
 		this.sqlSessionTemplate = sqlSessionTemplate;
+	}
+
+	@Resource
+	public void setSysAccessMapper(SysAccessMapper sysAccessMapper) {
+		this.sysAccessMapper = sysAccessMapper;
 	}
 
 	@Resource

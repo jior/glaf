@@ -489,13 +489,13 @@ public class SalescontractController {
 		if (!StringUtils.isEmpty(status)) {
 			query.setStatus(Integer.parseInt(status));
 		}
-		String earaRole = request.getParameter("earaRole");
-		if (null == earaRole || "".equals(earaRole)) {
+		String areaRole = request.getParameter("areaRole");
+		if (null == areaRole || "".equals(areaRole)) {
 			if (!loginContext.isSystemAdministrator()) {
 				String actorId = loginContext.getActorId();
 				query.setCreateby(actorId);
 			}
-		} else if ("0".equals(earaRole)) {
+		} else if ("0".equals(areaRole)) {
 			query.setArea(curdept.getCode().substring(0, 2));
 		}
 
@@ -1064,17 +1064,17 @@ public class SalescontractController {
 	public ModelAndView init(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		String x_query = request.getParameter("x_query");
-		String earaRole = request.getParameter("earaRole");
-		if ("0".equals(earaRole)) {
+		String areaRole = request.getParameter("areaRole");
+		if ("0".equals(areaRole)) {
 			User user = RequestUtils.getUser(request);
 			long curdeptid = user.getDeptId();
 			SysDepartment curdept = sysDepartmentService.findById(curdeptid);
 			if (null != curdept) {
 				request.setAttribute("area", curdept.getCode().substring(0, 2));
-				request.setAttribute("earaRole", earaRole);
+				request.setAttribute("areaRole", areaRole);
 			}
 		} else {
-			request.setAttribute("earaRole", earaRole);
+			request.setAttribute("areaRole", areaRole);
 		}
 		if (StringUtils.equals(x_query, "true")) {
 			Map<String, Object> paramMap = RequestUtils

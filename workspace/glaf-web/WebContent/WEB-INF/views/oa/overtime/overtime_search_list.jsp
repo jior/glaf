@@ -26,7 +26,7 @@
 							nowrap : false,
 							striped : true,
 							collapsible : true,
-							url : '${contextPath}/mx/oa/overtime/searchJson?earaRole=${earaRole}',
+							url : '${contextPath}/mx/oa/overtime/searchJson?areaRole=${areaRole}',
 							sortName : 'id',
 							sortOrder : 'desc',
 							remoteSort : false,

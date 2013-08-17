@@ -26,7 +26,7 @@
 							nowrap : false,
 							striped : true,
 							collapsible : true,
-							url : '${contextPath}/mx/oa/stravel/searchJson?earaRole=${earaRole}',
+							url : '${contextPath}/mx/oa/stravel/searchJson?areaRole=${areaRole}',
 							sortName : 'travelid',
 							sortOrder : 'desc',
 							remoteSort : false,

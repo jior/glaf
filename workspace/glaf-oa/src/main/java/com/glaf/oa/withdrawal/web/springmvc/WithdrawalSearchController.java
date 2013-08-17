@@ -79,8 +79,8 @@ public class WithdrawalSearchController {
 		RequestUtils.setRequestParameterToAttribute(request);
 
 		Withdrawal withdrawal = new Withdrawal();
-		int earaRole = Integer.parseInt(request.getParameter("earaRole"));
-		if (earaRole == 0) {
+		int areaRole = Integer.parseInt(request.getParameter("areaRole"));
+		if (areaRole == 0) {
 			// 根据用户部门id 获取整个部门的对象（HZ01）
 			SysDepartment curdept = sysDepartmentService.findById(user
 					.getDeptId());
@@ -108,9 +108,9 @@ public class WithdrawalSearchController {
 		query.setActorId(loginContext.getActorId());
 		query.setLoginContext(loginContext);
 
-		int earaRole = Integer.parseInt(request.getParameter("earaRole"));
+		int areaRole = Integer.parseInt(request.getParameter("areaRole"));
 		User user = RequestUtils.getUser(request);
-		if (earaRole == 0) {
+		if (areaRole == 0) {
 			// 根据用户部门id 获取整个部门的对象（HZ01）
 			SysDepartment curdept = sysDepartmentService.findById(user
 					.getDeptId());

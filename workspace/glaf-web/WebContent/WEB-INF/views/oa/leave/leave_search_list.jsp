@@ -26,7 +26,7 @@
 							nowrap : false,
 							striped : true,
 							collapsible : true,
-							url : '${contextPath}/mx/oa/leave/searchJson?earaRole=${earaRole}',
+							url : '${contextPath}/mx/oa/leave/searchJson?areaRole=${areaRole}',
 							sortName : 'leaveid',
 							sortOrder : 'desc',
 							remoteSort : false,

@@ -80,8 +80,8 @@ public class PurchaseSearchController {
 		RequestUtils.setRequestParameterToAttribute(request);
 
 		Purchase purchase = new Purchase();
-		int earaRole = Integer.parseInt(request.getParameter("earaRole"));
-		if (earaRole == 0) {
+		int areaRole = Integer.parseInt(request.getParameter("areaRole"));
+		if (areaRole == 0) {
 			// 根据用户部门id 获取整个部门的对象（HZ01）
 			SysDepartment curdept = sysDepartmentService.findById(user
 					.getDeptId());
@@ -112,8 +112,8 @@ public class PurchaseSearchController {
 		/**
 		 * 查询条件
 		 */
-		int earaRole = Integer.parseInt(request.getParameter("earaRole"));
-		if (earaRole == 0) {
+		int areaRole = Integer.parseInt(request.getParameter("areaRole"));
+		if (areaRole == 0) {
 			// 根据用户部门id 获取整个部门的对象（HZ01）
 			SysDepartment curdept = sysDepartmentService.findById(user
 					.getDeptId());

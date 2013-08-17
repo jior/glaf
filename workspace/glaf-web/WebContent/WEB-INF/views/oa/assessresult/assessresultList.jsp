@@ -15,7 +15,7 @@
 <script type="text/javascript">
 
    var contextPath="${contextPath}";
-   var earaRole = '<%=request.getParameter("earaRole")%>';
+   var areaRole = '<%=request.getParameter("areaRole")%>';
 	jQuery(function() {
 
 		jQuery('#mydatagrid')
@@ -28,8 +28,8 @@
 							nowrap : false,
 							striped : true,
 							collapsible : true,
-							url : '${contextPath}/mx/oa/assessresult/assessresultJson?earaRole='
-									+ earaRole,
+							url : '${contextPath}/mx/oa/assessresult/assessresultJson?areaRole='
+									+ areaRole,
 							sortName : 'id',
 							sortOrder : 'desc',
 							remoteSort : false,

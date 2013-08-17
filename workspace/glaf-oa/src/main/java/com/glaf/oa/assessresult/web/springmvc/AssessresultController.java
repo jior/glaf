@@ -684,8 +684,8 @@ public class AssessresultController {
 			String actorId = loginContext.getActorId();
 			query.createBy(actorId);
 		}
-		int earaRole = Integer.parseInt(request.getParameter("earaRole"));
-		if (earaRole == 0) {
+		int areaRole = Integer.parseInt(request.getParameter("areaRole"));
+		if (areaRole == 0) {
 			query.setEvaluation(loginContext.getActorId());
 		}
 		String gridType = ParamUtils.getString(params, "gridType");

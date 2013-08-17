@@ -1064,7 +1064,7 @@ public class OvertimeController {
 	public ModelAndView searchList(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		String x_query = request.getParameter("x_query");
-		request.setAttribute("earaRole", request.getAttribute("earaRole"));
+		request.setAttribute("areaRole", request.getAttribute("areaRole"));
 		if (StringUtils.equals(x_query, "true")) {
 			Map<String, Object> paramMap = RequestUtils
 					.getParameterMap(request);
@@ -1089,9 +1089,9 @@ public class OvertimeController {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		User user = RequestUtils.getUser(request);
-		String earaRole = "";
-		if (request.getParameter("earaRole") != null) {
-			earaRole = request.getParameter("earaRole");
+		String areaRole = "";
+		if (request.getParameter("areaRole") != null) {
+			areaRole = request.getParameter("areaRole");
 		}
 
 		OvertimeQuery query = new OvertimeQuery();
@@ -1100,7 +1100,7 @@ public class OvertimeController {
 		query.setActorId(loginContext.getActorId());
 		query.setLoginContext(loginContext);
 
-		if (earaRole.equals("1")) {
+		if (areaRole.equals("1")) {
 			// 查询所有，不设置参数
 		} else {
 			SysDepartment sysDepartment = BaseDataManager.getInstance()

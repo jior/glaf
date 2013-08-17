@@ -13,7 +13,7 @@
 <%@ include file="/WEB-INF/views/inc/init_script.jsp"%>
 <script type="text/javascript">
 	var contextPath = "${contextPath}";
-	var earaRole = ${earaRole};
+	var areaRole = ${areaRole};
 	
 	jQuery(function() {
 		jQuery('#mydatagrid').datagrid({
@@ -24,7 +24,7 @@
 			nowrap : true,
 			striped : true,
 			collapsible : true,
-			url : '${contextPath}/mx/oa/payment/json?earaRole=' + earaRole,
+			url : '${contextPath}/mx/oa/payment/json?areaRole=' + areaRole,
 			sortName : 'id',
 			sortOrder : 'desc',
 			remoteSort : false,
@@ -257,7 +257,7 @@
 								</td>
 								<script type="text/javascript">
 									var flag =
-								<%=request.getParameter("earaRole")%>
+								<%=request.getParameter("areaRole")%>
 									;
 									if (flag == 1) {
 										jQuery('#area').removeAttr('disabled');
