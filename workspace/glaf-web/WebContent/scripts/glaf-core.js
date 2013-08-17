@@ -219,7 +219,6 @@ function disableForm(iForm){
 
    function addElement(elementId, targetElementId) {
         var list = document.getElementById(elementId);
-		
         for (i = 0; i < list.length; i++) {
             if (list.options[i].selected) {
                 var value = list.options[i].value;
@@ -268,18 +267,50 @@ function disableForm(iForm){
         }
     }
 
-  function selectElement(elementId) {
-    var list = document.getElementById(elementId);
-    var len= list.length;
-	var result = "";
-	var names = "";
-	for (var i=0;i<len;i++) {
-      result = result + list.options[i].value;
-	  names = names + list.options[i].text;
-	  if(i < (len - 1)){
-		  result = result + ",";
-		  names = names + ",";
-	   }
+    function selectElement(elementId) {
+		var list = document.getElementById(elementId);
+		var len= list.length;
+		var result = "";
+		var names = "";
+		for (var i=0;i<len;i++) {
+		  result = result + list.options[i].value;
+		  names = names + list.options[i].text;
+		  if(i < (len - 1)){
+			  result = result + ",";
+			  names = names + ",";
+		   }
+		}
+		return result;
     }
-    return result;
-  }
+
+    function moveUp(elementId) {
+	    var list = document.getElementById(elementId);
+		if (list.length > 0) {
+			var selectedIndex = list.selectedIndex;
+			if( selectedIndex > 0 ) {
+				var tmpValue = list.options[selectedIndex - 1].value;
+				var tmpText = list.options[selectedIndex - 1].text;
+				list.options[selectedIndex - 1].value = list.options[selectedIndex].value;
+				list.options[selectedIndex - 1].text = list.options[selectedIndex].text;
+				list.options[selectedIndex].value = tmpValue;
+				list.options[selectedIndex].text = tmpText;
+				list.options[selectedIndex - 1].selected = true;
+			}
+		}
+	}
+
+	function moveDown(elementId) {
+		var list = document.getElementById(elementId);     
+		if ( list.length > 0) {
+			var selectedIndex = list.selectedIndex;
+			if(selectedIndex < (list.length - 1) ) {
+				var tmpValue = list.options[selectedIndex].value;
+				var tmpText = list.options[selectedIndex].text;
+				list.options[selectedIndex].value = list.options[selectedIndex  + 1].value;
+				list.options[selectedIndex].text = list.options[selectedIndex  + 1].text;
+				list.options[selectedIndex + 1].value = tmpValue;
+				list.options[selectedIndex + 1].text = tmpText;
+				list.selectedIndex = selectedIndex + 1;
+			}
+		}
+	}
