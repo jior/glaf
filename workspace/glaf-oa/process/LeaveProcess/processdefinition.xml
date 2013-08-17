@@ -16,7 +16,7 @@
 		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
 		<taskName>task01</taskName>
 		<queryId>getXYDeptRoleUsers</queryId>
-		<roleId>BMJL</roleId>
+		<roleId>HRManager</roleId>
 		<deptId>#P{deptId01}</deptId>
 	</action>
 
@@ -25,7 +25,7 @@
 		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
 		<taskName>task02</taskName>
 		<queryId>getXYDeptRoleUsers</queryId>
-		<roleId>BMJL</roleId>
+		<roleId>DepartmentManager</roleId>
 		<deptId>#P{deptId02}</deptId>
 	</action>
 
@@ -34,7 +34,7 @@
 		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
 		<taskName>task03</taskName>
 		<queryId>getXYDeptRoleUsers</queryId>
-		<roleId>R003</roleId>
+		<roleId>DeputyGeneralManager</roleId>
 		<deptId>#P{deptId03}</deptId>
 	</action>
 
@@ -43,7 +43,7 @@
 		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
 		<taskName>task04</taskName>
 		<queryId>getXYDeptRoleUsers</queryId>
-		<roleId>R018</roleId>
+		<roleId>FinancialManager</roleId>
 		<deptId>#P{deptId04}</deptId>
 	</action>
 
@@ -190,6 +190,7 @@
 
 	<decision name="部门经理审核通过？">
 		<transition to="审核不通过" name="不通过"></transition>
+		
 		<transition to="公司副总审核" name="to 集团副总"></transition>	
 	</decision>
 

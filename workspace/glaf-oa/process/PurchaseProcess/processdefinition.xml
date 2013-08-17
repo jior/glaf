@@ -16,7 +16,7 @@
 	    <leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
 		<taskName>task01</taskName>
 		<queryId>getXYDeptRoleUsers</queryId>
-		<roleId>BMJL</roleId>
+		<roleId>DepartmentManager</roleId>
 		<deptId>#P{deptId01}</deptId>
 	</action>
 
@@ -25,17 +25,17 @@
 		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
 		<taskName>task02</taskName>
 		<queryId>getXYDeptRoleUsers</queryId>
-		<roleId>XZJL</roleId>
+		<roleId>AdministrativeManager</roleId>
 		<deptId>#P{deptId02}</deptId>
 	</action>
 
-	<action name="create_task03"
+	<action name="create_task08"
 		class="com.glaf.jbpm.action.SqlMapTaskInstanceAction">
 		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
-		<taskName>task03</taskName>
+		<taskName>task08</taskName>
 		<queryId>getXYDeptRoleUsers</queryId>
-		<roleId>R001</roleId>
-		<deptId>#P{deptId03}</deptId>
+		<roleId>GeneralManager</roleId>
+		<deptId>#P{deptId08}</deptId>
 	</action>
 
 	<action name="create_task04"
@@ -43,7 +43,7 @@
 		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
 		<taskName>task04</taskName>
 		<queryId>getXYDeptRoleUsers</queryId>
-		<roleId>R003</roleId>
+		<roleId>DeputyGeneralManager</roleId>
 		<deptId>#P{deptId04}</deptId>
 	</action>
 
@@ -201,7 +201,6 @@
 
 	<decision name="副总审核通过？">
 		<transition to="审核不通过" name="不通过"></transition>
-		
 		<transition to="总经理审核" name="to 总经理审核">
 		    <condition expression="#{isAgree eq 'true'}" />
 		</transition>
@@ -210,9 +209,9 @@
 	<task-node name="总经理审核"  create-tasks="false" end-tasks="true" signal="first">
 		<event type="node-enter">
 			<action ref-name="purchase_1003" />
-			<action ref-name="create_task03" />
+			<action ref-name="create_task08" />
 		</event>
-		<task name="task03" description="总经理审核">
+		<task name="task08" description="总经理审核">
 			<event type="task-end">
 				<action ref-name="EndCounterSigningAction" />
 			</event>

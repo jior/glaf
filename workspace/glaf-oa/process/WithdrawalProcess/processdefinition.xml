@@ -16,7 +16,7 @@
 	    <leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
 		<taskName>task01</taskName>
 		<queryId>getXYDeptRoleUsers</queryId>
-		<roleId>KJ</roleId>
+		<roleId>Accountant</roleId>
 		<deptId>#P{deptId01}</deptId>
 	</action>
 
@@ -25,7 +25,7 @@
 		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
 		<taskName>task02</taskName>
 		<queryId>getXYDeptRoleUsers</queryId>
-		<roleId>R001</roleId>
+		<roleId>GeneralManager</roleId>
 		<deptId>#P{deptId02}</deptId>
 	</action>
 
@@ -34,7 +34,7 @@
 		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
 		<taskName>task03</taskName>
 		<queryId>getXYDeptRoleUsers</queryId>
-		<roleId>XZJL</roleId>
+		<roleId>AdministrativeManager</roleId>
 		<deptId>#P{deptId03}</deptId>
 	</action>
 
@@ -43,7 +43,7 @@
 		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
 		<taskName>task04</taskName>
 		<queryId>getXYDeptRoleUsers</queryId>
-		<roleId>R003</roleId>
+		<roleId>DeputyGeneralManager</roleId>
 		<deptId>#P{deptId04}</deptId>
 	</action>
 
@@ -52,7 +52,7 @@
 		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
 		<taskName>task05</taskName>
 		<queryId>getXYDeptRoleUsers</queryId>
-		<roleId>R004</roleId>
+		<roleId>GeneralManager</roleId>
 		<deptId>#P{deptId04}</deptId>
 	</action>
 	
@@ -193,9 +193,11 @@
 	</task-node>
 
 	<decision name="财务审核通过">
-		<transition to="审核不通过" name="不通过">
-		</transition>
-		<transition to="行政总监审核" name="通过"></transition>		
+		<transition to="审核不通过" name="不通过"></transition>
+		
+		<transition to="行政总监审核" name="通过">
+		    <condition expression="#{isAgree eq 'true'}" />
+		</transition>		
 	</decision>
 
 	<task-node name="总经理审核"  create-tasks="false" end-tasks="true" signal="first">
@@ -213,7 +215,10 @@
 
 	<decision name="总经理审核通过？">
 		<transition to="审核不通过" name="不通过"></transition>
-		<transition to="流程结束" name="完成"></transition>	
+		
+		<transition to="流程结束" name="完成">
+		    <condition expression="#{isAgree eq 'true'}" />
+		</transition>	
 	</decision>
 
 	<task-node name="行政总监审核"  create-tasks="false" end-tasks="true" signal="first">
@@ -251,7 +256,10 @@
 
 	<decision name="公司副总审核通过？">
 		<transition to="审核不通过" name="不通过"></transition>
-		<transition to="总经理审核" name="通过"></transition>
+		
+		<transition to="总经理审核" name="通过">
+		    <condition expression="#{isAgree eq 'true'}" />
+		</transition>
 	</decision>
 
 	<node name="审核不通过">

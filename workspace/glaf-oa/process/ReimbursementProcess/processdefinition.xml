@@ -16,7 +16,7 @@
 	    <leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
 		<taskName>task01</taskName>
 		<queryId>getXYDeptRoleUsers</queryId>
-		<roleId>KJ</roleId>
+		<roleId>Accountant</roleId>
 		<deptId>#P{deptId01}</deptId>
 	</action>
 
@@ -25,17 +25,8 @@
 		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
 		<taskName>task02</taskName>
 		<queryId>getXYDeptRoleUsers</queryId>
-		<roleId>BMJL</roleId>
+		<roleId>DepartmentManager</roleId>
 		<deptId>#P{deptId02}</deptId>
-	</action>
-
-	<action name="create_task03"
-		class="com.glaf.jbpm.action.SqlMapTaskInstanceAction">
-		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
-		<taskName>task03</taskName>
-		<queryId>getXYDeptRoleUsers</queryId>
-		<roleId>R001</roleId>
-		<deptId>#P{deptId03}</deptId>
 	</action>
 
 	<action name="create_task04"
@@ -43,7 +34,7 @@
 		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
 		<taskName>task04</taskName>
 		<queryId>getXYDeptRoleUsers</queryId>
-		<roleId>BMJL</roleId>
+		<roleId>DepartmentDirector</roleId>
 		<deptId>#P{deptId04}</deptId>
 	</action>
 
@@ -52,7 +43,7 @@
 		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
 		<taskName>task05</taskName>
 		<queryId>getXYDeptRoleUsers</queryId>
-		<roleId>R003</roleId>
+		<roleId>DeputyGeneralManager</roleId>
 		<deptId>#P{deptId05}</deptId>
 	</action>
 	
@@ -61,16 +52,7 @@
 		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
 		<taskName>task06</taskName>
 		<queryId>getXYDeptRoleUsers</queryId>
-		<roleId>R004</roleId>
-		<deptId>#P{deptId05}</deptId>
-	</action>
-	
-	<action name="create_task07"
-		class="com.glaf.jbpm.action.SqlMapTaskInstanceAction">
-		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
-		<taskName>task07</taskName>
-		<queryId>getXYDeptRoleUsers</queryId>
-		<roleId>R005</roleId>
+		<roleId>GeneralManager</roleId>
 		<deptId>#P{deptId05}</deptId>
 	</action>
 	

@@ -16,7 +16,7 @@
 		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
 		<taskName>task01</taskName>
 		<queryId>getXYDeptRoleUsers</queryId>
-		<roleId>R013</roleId>
+		<roleId>FinancialManager</roleId>
 		<deptId>#P{deptId01}</deptId>
 	</action>
 
@@ -25,28 +25,28 @@
 		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
 		<taskName>task02</taskName>
 		<queryId>getXYDeptRoleUsers</queryId>
-		<roleId>R016</roleId>
+		<roleId>SalesManager</roleId>
 		<deptId>#P{deptId02}</deptId>
 	</action>
 
 	
-
-	<action name="create_task03"
-		class="com.glaf.jbpm.action.SqlMapTaskInstanceAction">
-		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
-		<taskName>task03</taskName>
-		<queryId>getXYDeptRoleUsers</queryId>
-		<roleId>R014</roleId>
-		<deptId>#P{deptId03}</deptId>
-	</action>
-
 	<action name="create_task04"
 		class="com.glaf.jbpm.action.SqlMapTaskInstanceAction">
 		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
 		<taskName>task04</taskName>
 		<queryId>getXYDeptRoleUsers</queryId>
-		<roleId>R015</roleId>
+		<roleId>SalesDirector</roleId>
 		<deptId>#P{deptId04}</deptId>
+	</action>
+
+
+	<action name="create_task08"
+		class="com.glaf.jbpm.action.SqlMapTaskInstanceAction">
+		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
+		<taskName>task08</taskName>
+		<queryId>getXYDeptRoleUsers</queryId>
+		<roleId>GeneralManager</roleId>
+		<deptId>#P{deptId08}</deptId>
 	</action>
 
 	<action name="salescontract_1000" class="com.glaf.jbpm.action.SQLAction">
@@ -208,10 +208,10 @@
 	<task-node name="总经理审核"  create-tasks="false" end-tasks="true">
 		<event type="node-enter">
 			<action ref-name="salescontract_1003" />
-			<action ref-name="create_task03" />
+			<action ref-name="create_task08" />
 		</event>
 		<transition to="总经理审核通过？" name="判断"></transition>
-		<task name="task03" description="总经理审核">
+		<task name="task08" description="总经理审核">
 			<event type="task-end">
 				<action ref-name="EndCounterSigningAction" />
 			</event>

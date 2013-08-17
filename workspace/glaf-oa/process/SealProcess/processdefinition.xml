@@ -16,7 +16,7 @@
 		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
 		<taskName>task01</taskName>
 		<queryId>getXYDeptRoleUsers</queryId>
-		<roleId>R018</roleId>
+		<roleId>FinancialManager</roleId>
 		<deptId>#P{deptId01}</deptId>
 	</action>
 
@@ -25,7 +25,7 @@
 		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
 		<taskName>task02</taskName>
 		<queryId>getXYDeptRoleUsers</queryId>
-		<roleId>R001</roleId>
+		<roleId>DepartmentManager</roleId>
 		<deptId>#P{deptId02}</deptId>
 	</action>
 
@@ -36,7 +36,7 @@
 		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
 		<taskName>task03</taskName>
 		<queryId>getXYDeptRoleUsers</queryId>
-		<roleId>R003</roleId>
+		<roleId>DeputyGeneralManager</roleId>
 		<deptId>#P{deptId04}</deptId>
 	</action>
 
@@ -45,7 +45,7 @@
 		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
 		<taskName>task04</taskName>
 		<queryId>getXYDeptRoleUsers</queryId>
-		<roleId>R004</roleId>
+		<roleId>GeneralManager</roleId>
 		<deptId>#P{deptId04}</deptId>
 	</action>
 	
@@ -185,9 +185,6 @@
 		<event type="node-enter">
 			<action ref-name="seal_1003" />
 			<action ref-name="create_task03" />
-		</event>
-		<event type="node-leave">
-			 
 		</event>
 		<transition to="公司副总审核通过？" name="判断"></transition>
 		<task name="task03" description="公司副总审核">

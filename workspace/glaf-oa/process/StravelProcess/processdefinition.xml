@@ -15,7 +15,7 @@
 		class="com.glaf.jbpm.action.DynamicTaskInstances">
 		<taskName>task01</taskName>
 		<dynamicActors>userId</dynamicActors> 
-    <leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
+        <leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
 	</action>
 
 	<action name="create_task02"
@@ -23,25 +23,17 @@
 		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
 		<taskName>task02</taskName>
 		<queryId>getXYDeptRoleUsers</queryId>
-		<roleId>BMJL</roleId>
+		<roleId>DepartmentManager</roleId>
 		<deptId>#P{deptId02}</deptId>
 	</action>
 
-	<action name="create_task03"
-		class="com.glaf.jbpm.action.SqlMapTaskInstanceAction">
-		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
-		<taskName>task03</taskName>
-		<queryId>getXYDeptRoleUsers</queryId>
-		<roleId>R001</roleId>
-		<deptId>#P{deptId03}</deptId>
-	</action>
 
 	<action name="create_task04"
 		class="com.glaf.jbpm.action.SqlMapTaskInstanceAction">
 		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
 		<taskName>task04</taskName>
 		<queryId>getXYDeptRoleUsers</queryId>
-		<roleId>R003</roleId>
+		<roleId>DeputyGeneralManager</roleId>
 		<deptId>#P{deptId04}</deptId>
 	</action>
 	
@@ -50,7 +42,7 @@
 		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
 		<taskName>task05</taskName>
 		<queryId>getXYDeptRoleUsers</queryId>
-		<roleId>BMJL</roleId>
+		<roleId>HRManager</roleId>
 		<deptId>#P{deptId05}</deptId>
 	</action>
 	
@@ -59,8 +51,17 @@
 		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
 		<taskName>task06</taskName>
 		<queryId>getXYDeptRoleUsers</queryId>
-		<roleId>R018</roleId>
+		<roleId>FinancialManager</roleId>
 		<deptId>#P{deptId06}</deptId>
+	</action>
+
+	<action name="create_task08"
+		class="com.glaf.jbpm.action.SqlMapTaskInstanceAction">
+		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
+		<taskName>task08</taskName>
+		<queryId>getXYDeptRoleUsers</queryId>
+		<roleId>GeneralManager</roleId>
+		<deptId>#P{deptId08}</deptId>
 	</action>
 
 	<action name="Stravel_1000" class="com.glaf.jbpm.action.SQLAction">
@@ -242,10 +243,10 @@
 	<task-node name="公司总经理"  create-tasks="false" end-tasks="true">
 		<event type="node-enter">
 			<action ref-name="Stravel_1003" />
-			<action ref-name="create_task03" />
+			<action ref-name="create_task08" />
 		</event>
 		<transition to="公司总经理审核？" name="判断"></transition>
-		<task name="task03" description="公司总经理">
+		<task name="task08" description="公司总经理">
 			<event type="task-end">
 				<action ref-name="EndCounterSigningAction" />
 			</event>

@@ -16,7 +16,7 @@
 		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
 		<taskName>task01</taskName>
 		<queryId>getXYDeptRoleUsers</queryId>
-		<roleId>R003</roleId>
+		<roleId>DeputyGeneralManager</roleId>
 		<deptId>#P{deptId01}</deptId>
 	</action>
 
@@ -25,7 +25,7 @@
 		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
 		<taskName>task02</taskName>
 		<queryId>getXYDeptRoleUsers</queryId>
-		<roleId>R004</roleId>
+		<roleId>GeneralManager</roleId>
 		<deptId>#P{deptId02}</deptId>
 	</action>
 	
@@ -34,7 +34,7 @@
 		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
 		<taskName>task03</taskName>
 		<queryId>getXYDeptRoleUsers</queryId>
-		<roleId>BMJL</roleId>
+		<roleId>DepartmentDirector</roleId>
 		<deptId>#P{deptId03}</deptId>
 	</action>
 
