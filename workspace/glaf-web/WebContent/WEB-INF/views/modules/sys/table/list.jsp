@@ -111,7 +111,9 @@
 		var itemId = "";
         var len02 = list.length;
 	    for (var i=0;i<len02;i++) {
-           itemId = itemId+list.options[i].value+",";
+			if(list.options[i].value.length > 0){
+               itemId = itemId+list.options[i].value+",";
+			}
 	    }
         //alert(itemId);
 	    document.getElementById("exportTables").value = itemId;
@@ -122,8 +124,8 @@
 	function exportSysTables(){
         var dbType = jQuery('#dbType').val();
 		if(confirm("确定导出'"+dbType+"'数据库的初始化脚本吗？")){
-		  document.iForm.action="<%=request.getContextPath()%>/mx/sys/table/exportSysTables?dbType="+dbType;
-		  document.iForm.submit();
+		    document.iForm.action="<%=request.getContextPath()%>/mx/sys/table/exportSysTables?dbType="+dbType;
+		    document.iForm.submit();
 		}
 	}
 
@@ -157,9 +159,9 @@
 			ids.push(rows[i].tablename);
 		}
 		if(ids.length > 0 ){
-		    var ids = ids.join(',');
+		    var x_ids = ids.join(',');
 			var dbType = jQuery('#dbType').val();
-			jQuery("#tables").val(ids);
+			jQuery("#tables").val(x_ids);
 			document.iForm.action="<%=request.getContextPath()%>/mx/sys/table/genMappings?dbType="+dbType;
 			document.iForm.submit();
 		} else {
@@ -315,7 +317,7 @@
 		  <tr>
 			<td>
 			   <select id="selectedTables" name="selectedTables" style="width: 250px;" size="22">
-			      <%for(int i=0;i<20;i++){%>
+			      <%for(int i=0;i<500;i++){%>
 			       <option value=""></option>
 				  <%}%>
 			   </select>
