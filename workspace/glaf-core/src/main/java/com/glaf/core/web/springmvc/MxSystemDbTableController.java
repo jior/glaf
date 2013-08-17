@@ -250,7 +250,8 @@ public class MxSystemDbTableController {
 
 		try {
 			ResponseUtils.download(request, response, sb.toString().getBytes(),
-					"export.sql");
+					"insert_" + DateUtils.getDate(new Date()) + "." + dbType
+							+ ".sql");
 		} catch (ServletException ex) {
 			ex.printStackTrace();
 		}
@@ -364,7 +365,8 @@ public class MxSystemDbTableController {
 
 		try {
 			ResponseUtils.download(request, response, sb.toString().getBytes(),
-					"export.sql");
+					"insert_sys_" + DateUtils.getDate(new Date()) + "."
+							+ dbType + ".sql");
 		} catch (ServletException ex) {
 			ex.printStackTrace();
 		}
@@ -400,7 +402,7 @@ public class MxSystemDbTableController {
 
 		try {
 			ResponseUtils.download(request, response, sb.toString().getBytes(),
-					"export.sql");
+					"createTable_" + DateUtils.getDate(new Date()) + ".sql");
 		} catch (ServletException ex) {
 			ex.printStackTrace();
 		}
