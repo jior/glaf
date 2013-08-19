@@ -364,21 +364,24 @@ public class DBConfiguration {
 
 			String filename = SystemProperties.getConfigRootPath()
 					+ Constants.DEFAULT_JDBC_CONFIG;
-			Properties p = PropertiesUtils.loadFilePathResource(filename);
-			String dbType = p.getProperty(JDBC_TYPE);
-			if (StringUtils.isEmpty(dbType)) {
-				try {
-					dbType = DBConfiguration.getDatabaseType(p
-							.getProperty(JDBC_URL));
-					if (dbType != null) {
-						p.setProperty(JDBC_TYPE, dbType);
+			File file = new File(filename);
+			if (file.exists() && file.isFile()) {
+				Properties p = PropertiesUtils.loadFilePathResource(filename);
+				String dbType = p.getProperty(JDBC_TYPE);
+				if (StringUtils.isEmpty(dbType)) {
+					try {
+						dbType = DBConfiguration.getDatabaseType(p
+								.getProperty(JDBC_URL));
+						if (dbType != null) {
+							p.setProperty(JDBC_TYPE, dbType);
+						}
+					} catch (Exception ex) {
+						ex.printStackTrace();
+						logger.error(ex);
 					}
-				} catch (Exception ex) {
-					ex.printStackTrace();
-					logger.error(ex);
 				}
+				dataSourceMap.put(Environment.DEFAULT_SYSTEM_NAME, p);
 			}
-			dataSourceMap.put(Environment.DEFAULT_SYSTEM_NAME, p);
 			logger.info("#datasources:" + dataSourceMap.keySet());
 			dataMap.clear();
 			dataMap.putAll(dataSourceMap);

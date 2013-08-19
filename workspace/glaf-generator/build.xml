@@ -15,7 +15,7 @@
 			<include name="*.jar" />
 		</fileset>
 		<fileset dir="../glaf-core">
-			<include name="*.jar" />
+			<include name="glaf-core.jar" />
 		</fileset>
 		<fileset dir=".">
 			<include name="*.jar" />
@@ -27,7 +27,6 @@
 		<pathelement location="../glaf-form/bin" />
 		<pathelement location="../glaf-jbpm/bin" />
 		<pathelement location="../glaf-ui/bin" /> -->
-		<pathelement location="../glaf-isdp/bin" />
 		<pathelement location="./conf" />
 	</path>
 
