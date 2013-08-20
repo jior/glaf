@@ -365,6 +365,24 @@ insert into sys_input_def (id, init_value, input_type, java_type, key_name, requ
 insert into sys_input_def (id, init_value, input_type, java_type, key_name, required, service_key, text_field, title, type_cd, type_title, url, valid_type, value_field) values ('8', '/rs/jbpm/definition/json', 'combobox', 'String', 'processName', null, 'bulletin', 'text', '流程名称', 'bulletin', '公告发布', '/rs/jbpm/definition/json', null, 'name');
 
 
+/*UI管理初始化数据*/
+INSERT INTO UI_PANEL (ID_,ACTORID_,CLOSE_,COLLAPSIBLE_,COLUMNINDEX_,HEIGHT_,LINK_,LOCKED_,NAME_,RESIZE_,TITLE_,TYPE_,WIDTH_) VALUES ( '1010','root',0,0,0,250,'/user/todo.do?method=userTasks',0,'todo',0,'待办事项','L',0);
+INSERT INTO UI_PANEL (ID_,ACTORID_,CLOSE_,COLLAPSIBLE_,COLUMNINDEX_,HEIGHT_,LINK_,LOCKED_,NAME_,RESIZE_,TITLE_,TYPE_,WIDTH_) VALUES ( '1016','root',0,0,0,250,'/mx/public/info/indexList?serviceKey=news',0,'news',0,'新闻','L',0);
+INSERT INTO UI_PANEL (ID_,ACTORID_,CLOSE_,COLLAPSIBLE_,COLUMNINDEX_,HEIGHT_,LINK_,LOCKED_,NAME_,RESIZE_,TITLE_,TYPE_,WIDTH_) VALUES ( '1018','root',0,0,0,250,'/mx/public/info/indexList?serviceKey=bulletin',0,'gongGao',0,'公告','L',0);
+INSERT INTO UI_PANEL (ID_,ACTORID_,CLOSE_,COLLAPSIBLE_,COLUMNINDEX_,CONTENT_,HEIGHT_,LOCKED_,NAME_,RESIZE_,TITLE_,TYPE_,WIDTH_) VALUES ( '1020','root',0,0,0,'<p>&nbsp;</p><p>&nbsp;&nbsp;&nbsp;&nbsp;广州高勤基盘1.0准备发布！</p>',250,0,'notice',0,'通知','T',0);
+
+INSERT INTO UI_PANELINSTANCE (ID_,NAME_,PANEL_,USERPANEL_) VALUES ( '1024','2','1020','1023');
+INSERT INTO UI_PANELINSTANCE (ID_,NAME_,PANEL_,USERPANEL_) VALUES ( '1025','1','1010','1023');
+INSERT INTO UI_PANELINSTANCE (ID_,NAME_,PANEL_,USERPANEL_) VALUES ( '1026','4','1018','1023');
+INSERT INTO UI_PANELINSTANCE (ID_,NAME_,PANEL_,USERPANEL_) VALUES ( '1027','3','1016','1023');
+
+INSERT INTO UI_USERPANEL (ID_,ACTORID_,LAYOUTNAME_,REFRESHSECONDS_) VALUES ( '1023','root','P2',0);
+
+INSERT INTO UI_USERPORTAL (ID_,ACTORID_,COLUMNINDEX_,PANELID_,POSITION_) VALUES ( '1028','root',0,'1010',1);
+INSERT INTO UI_USERPORTAL (ID_,ACTORID_,COLUMNINDEX_,PANELID_,POSITION_) VALUES ( '1029','root',0,'1016',3);
+INSERT INTO UI_USERPORTAL (ID_,ACTORID_,COLUMNINDEX_,PANELID_,POSITION_) VALUES ( '1030','root',1,'1018',4);
+INSERT INTO UI_USERPORTAL (ID_,ACTORID_,COLUMNINDEX_,PANELID_,POSITION_) VALUES ( '1031','root',1,'1020',2);
+
 update sys_application set locked = 0 where locked is null;
 
 update sys_tree set locked = 0 where locked is null;
