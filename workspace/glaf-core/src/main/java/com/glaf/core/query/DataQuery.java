@@ -25,7 +25,6 @@ import java.util.List;
 @SuppressWarnings("rawtypes")
 public class DataQuery extends BaseQuery {
 	private static final long serialVersionUID = 1L;
-
 	protected String businessKey;
 	protected Date createDate;
 	protected Integer deleteFlag;
@@ -48,6 +47,7 @@ public class DataQuery extends BaseQuery {
 	protected Integer statusNotEqual;
 	protected List taskInstanceIds = new ArrayList();
 	protected String treeId;
+	protected String treeIdLike;
 	protected Integer wfStatus;
 	protected Integer wfStatusGreaterThanOrEqual;
 	protected Integer wfStatusLessThanOrEqual;
@@ -170,6 +170,13 @@ public class DataQuery extends BaseQuery {
 
 	public String getTreeId() {
 		return treeId;
+	}
+
+	public String getTreeIdLike() {
+		if (treeIdLike != null && !treeIdLike.endsWith("%")) {
+			treeIdLike = treeIdLike + "%";
+		}
+		return treeIdLike;
 	}
 
 	public Integer getWfStatus() {
@@ -364,6 +371,10 @@ public class DataQuery extends BaseQuery {
 		this.treeId = treeId;
 	}
 
+	public void setTreeIdLike(String treeIdLike) {
+		this.treeIdLike = treeIdLike;
+	}
+
 	public void setWfStatus(Integer wfStatus) {
 		this.wfStatus = wfStatus;
 	}
@@ -418,6 +429,14 @@ public class DataQuery extends BaseQuery {
 			throw new RuntimeException("treeId is null");
 		}
 		this.treeId = treeId;
+		return this;
+	}
+
+	public DataQuery treeIdLike(String treeIdLike) {
+		if (treeIdLike == null) {
+			throw new RuntimeException("treeIdLike is null");
+		}
+		this.treeIdLike = treeIdLike;
 		return this;
 	}
 

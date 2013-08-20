@@ -42,15 +42,15 @@ public interface SysTreeMapper {
 
 	List<SysTree> getRoleUserTrees(SysUserQuery query);
 
-	List<SysTree> getTreeList(String treeIdLike);
-
-	List<SysTree> getTreeListByUsers(SysTreeQuery query);
-
 	SysTree getSysTreeById(Long id);
 
 	int getSysTreeCount(SysTreeQuery query);
 
 	List<SysTree> getSysTrees(SysTreeQuery query);
+
+	List<SysTree> getTreeList(SysTreeQuery query);
+
+	List<SysTree> getTreeListByUsers(SysTreeQuery query);
 
 	void insertSysTree(SysTree model);
 

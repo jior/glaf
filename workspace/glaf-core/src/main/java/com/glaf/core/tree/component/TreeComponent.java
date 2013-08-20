@@ -40,7 +40,6 @@ public class TreeComponent extends TreeBase implements Serializable, Component {
 	// ~ Instance fields
 	// ========================================================
 
-	private String breadCrumb;
 	protected Map<String, Object> dataMap;
 	private boolean last;
 	protected List<TreeComponent> menuComponents = Collections
@@ -49,18 +48,11 @@ public class TreeComponent extends TreeBase implements Serializable, Component {
 	protected TreeModel treeModel;
 	protected Object treeObject;
 
-	// ~ Methods
-	// ================================================================
-
-	public void addTreeComponent(TreeComponent menuComponent) {
-		if ((menuComponent.getId() == null)
-				|| (menuComponent.getId().equals(""))) {
-			menuComponent.setId(this.id + menuComponents.size());
-		}
-
-		if (!menuComponents.contains(menuComponent)) {
-			menuComponents.add(menuComponent);
-			menuComponent.setParent(this);
+	public void addTreeComponent(TreeComponent component) {
+		if (component != null && component.getId() != null
+				&& !menuComponents.contains(component)) {
+			menuComponents.add(component);
+			component.setParent(this);
 		}
 	}
 
@@ -99,15 +91,6 @@ public class TreeComponent extends TreeBase implements Serializable, Component {
 				&& StringUtils.equals(m.getModule(), this.module);
 	}
 
-	public String getBreadCrumb() {
-		return breadCrumb;
-	}
-
-	/**
-	 * Convenience method for Velocity templates
-	 * 
-	 * @return menuComponents as a java.util.List
-	 */
 	public List<TreeComponent> getComponents() {
 		return menuComponents;
 	}
@@ -181,32 +164,6 @@ public class TreeComponent extends TreeBase implements Serializable, Component {
 			TreeComponent child = (TreeComponent) iterator.next();
 			child.setParent(null);
 			iterator.remove();
-		}
-	}
-
-	/**
-	 * Build the breadcrumb trail leading to this menuComponent
-	 * 
-	 * @param delimiter
-	 *            type of separator
-	 */
-	protected void setBreadCrumb(String delimiter) {
-		if (getParent() == null) {
-			breadCrumb = id;
-			setChildBreadCrumb(delimiter);
-		} else {
-			TreeComponent parent = getParent();
-			breadCrumb = parent.getBreadCrumb() + delimiter + id;
-			setChildBreadCrumb(delimiter);
-		}
-	}
-
-	private void setChildBreadCrumb(String delimiter) {
-		List<TreeComponent> children = this.getComponents();
-		for (Iterator<TreeComponent> iterator = children.iterator(); iterator
-				.hasNext();) {
-			TreeComponent child = (TreeComponent) iterator.next();
-			child.setBreadCrumb(delimiter);
 		}
 	}
 

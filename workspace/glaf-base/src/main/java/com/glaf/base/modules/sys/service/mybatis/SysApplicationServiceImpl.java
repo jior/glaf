@@ -32,10 +32,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.core.id.*;
+import com.glaf.core.identity.Agent;
+import com.glaf.core.service.EntityService;
 import com.glaf.core.util.PageResult;
 import com.glaf.core.base.BaseTree;
 import com.glaf.core.base.TreeModel;
 import com.glaf.core.context.ApplicationContext;
+import com.glaf.base.business.TreeHelper;
 import com.glaf.base.modules.sys.SysConstants;
 import com.glaf.base.modules.sys.mapper.*;
 import com.glaf.base.modules.sys.model.*;
@@ -58,9 +61,13 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 
 	protected SysAccessMapper sysAccessMapper;
 
+	protected SysTreeMapper sysTreeMapper;
+
 	protected SysTreeService sysTreeService;
 
 	protected SysUserService sysUserService;
+
+	protected EntityService entityService;
 
 	public SysApplicationServiceImpl() {
 
@@ -130,7 +137,12 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 	}
 
 	public SysApplication findById(long id) {
-		return this.getSysApplication(id);
+		SysApplication app = this.getSysApplication(id);
+		if (app.getNodeId() > 0) {
+			SysTree node = sysTreeMapper.getSysTreeById(app.getNodeId());
+			app.setNode(node);
+		}
+		return app;
 	}
 
 	public SysApplication findByName(String name) {
@@ -331,7 +343,58 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 		return treeModels;
 	}
 
-	public JSONArray getUserMenu(long parent, String userId) {
+	public JSONArray getUserMenu(long parent, String actorId) {
+		JSONArray array = new JSONArray();
+		SysUser user = authorizeService.login(actorId);
+		if (user != null) {
+			List<SysTree> treeList = null;
+			SysApplication app = this.findById(parent);
+			SysTreeQuery query = new SysTreeQuery();
+			query.treeId(app.getNode().getTreeId());
+			query.treeIdLike(app.getNode().getTreeId() + "%");
+			if (!user.isSystemAdmin()) {
+				List<String> actorIds = new ArrayList<String>();
+				List<Object> rows = entityService.getList("getAgents", actorId);
+				if (rows != null && !rows.isEmpty()) {
+					for (Object object : rows) {
+						if (object instanceof Agent) {
+							Agent agent = (Agent) object;
+							if (!agent.isValid()) {
+								continue;
+							}
+							switch (agent.getAgentType()) {
+							case 0:// 全局代理
+								actorIds.add(agent.getAssignFrom());
+								break;
+							default:
+								break;
+							}
+						}
+					}
+				}
+				if (!actorIds.isEmpty()) {
+					actorIds.add(actorId);
+					query.setActorIds(actorIds);
+				} else {
+					query.setActorId(actorId);
+				}
+				treeList = sysTreeMapper.getTreeListByUsers(query);
+			} else {
+				treeList = sysTreeMapper.getTreeList(query);
+			}
+
+			List<TreeModel> treeModels = new ArrayList<TreeModel>();
+			for (SysTree tree : treeList) {
+				treeModels.add(tree);
+			}
+			TreeHelper treeHelper = new TreeHelper();
+			array = treeHelper.getTreeJSONArray(treeModels);
+			//logger.debug(array.toString('\n'));
+		}
+		return array;
+	}
+
+	public JSONArray getUserMenu2(long parent, String userId) {
 		JSONArray array = new JSONArray();
 		SysUser user = authorizeService.login(userId);
 		if (user != null) {
@@ -507,8 +570,18 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 	}
 
 	@Resource
+	public void setSysTreeMapper(SysTreeMapper sysTreeMapper) {
+		this.sysTreeMapper = sysTreeMapper;
+	}
+
+	@Resource
 	public void setSysTreeService(SysTreeService sysTreeService) {
 		this.sysTreeService = sysTreeService;
+	}
+
+	@Resource
+	public void setEntityService(EntityService entityService) {
+		this.entityService = entityService;
 	}
 
 	@Resource

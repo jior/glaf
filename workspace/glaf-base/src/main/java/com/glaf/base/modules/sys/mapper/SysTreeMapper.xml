@@ -231,6 +231,7 @@
 
 	</select>
 
+
 	<select id="getDepartmentSysTrees" parameterType="com.glaf.base.modules.sys.query.SysTreeQuery"
 		resultMap="sysTreeResultMap">
 
@@ -309,16 +310,18 @@
 	</select>
 
 
-	<select id="getTreeList" parameterType="string"
+	<select id="getTreeList" parameterType="com.glaf.base.modules.sys.query.SysTreeQuery"
 		resultType="com.glaf.base.modules.sys.model.SysTree">
 
 		select a.name, a.url, t.id, t.parent as parentId, t.sort as
 		sortNo, t.treeid as treeId, t.code, t.locked
 		from sys_tree t
-		inner join sys_application a
+		inner join
+		sys_application a
 		on t.id = a.nodeid
 		where
 		t.treeid like #{treeIdLike}
+		and t.treeid !=  #{treeId}
 		order by t.treeid, t.sort
 
 	</select>
@@ -327,22 +330,27 @@
 	<select id="getTreeListByUsers" parameterType="com.glaf.base.modules.sys.query.SysTreeQuery"
 		resultType="com.glaf.base.modules.sys.model.SysTree">
 
-		select a.name, a.url, t.id, t.parent as parentId, t.sort as sortNo,
-		t.treeid as treeId, t.code, t.locked
+		select a.name as name, a.url as url, t.id as id, t.parent as parentId,
+		t.sort as sortNo,
+		t.treeid as treeId, t.code as code, t.locked as
+		locked
 		from sys_tree t
 		inner join sys_application a
 		on t.id = a.nodeid
 		inner join
 		sys_access c
 		on a.id = c.appId
-		where t.treeid like #{treeIdLike}
+		where t.treeid like
+		#{treeIdLike}
 		and
 		c.roleId in (
 		select dr.id from sys_dept_role dr
-		inner join sys_user_role ur
+		inner
+		join sys_user_role ur
 		on dr.id = ur.roleid
 		inner join sys_user u
-		on u.id = ur.userid
+		on u.id
+		= ur.userid
 		where 1=1
 		<choose>
 			<when test="actorId != null">
@@ -356,7 +364,7 @@
 				</foreach>
 			</when>
 			<otherwise>
-				and 1 = 0
+				and 1=0
 			</otherwise>
 		</choose>
 		and ur.authorized = 0

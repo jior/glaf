@@ -64,6 +64,7 @@ public class TreeRepositoryBuilder {
 			if (treeModel.getLocked() != 0) {
 				continue;
 			}
+
 			TreeComponent component = new TreeComponent();
 			component.setId(String.valueOf(treeModel.getId()));
 			component.setCode(String.valueOf(treeModel.getId()));
@@ -71,8 +72,6 @@ public class TreeRepositoryBuilder {
 			component.setChecked(treeModel.isChecked());
 			component.setTreeObject(treeModel);
 			component.setImage(treeModel.getIcon());
-			component.setId(String.valueOf(treeModel.getId()));
-			component.setCode(treeModel.getCode());
 			component.setTreeModel(treeModel);
 			component.setDescription(treeModel.getDescription());
 			component.setLocation(treeModel.getUrl());
@@ -80,7 +79,6 @@ public class TreeRepositoryBuilder {
 			component.setTreeId(treeModel.getTreeId());
 			component.setCls(treeModel.getIconCls());
 			component.setDataMap(treeModel.getDataMap());
-			repository.addTree(component);
 
 			String parentId = String.valueOf(treeModel.getParentId());
 			if (StringUtils.isNotEmpty(parentId)
@@ -94,11 +92,20 @@ public class TreeRepositoryBuilder {
 					parentTree.setTitle(parent.getName());
 					parentTree.setChecked(parent.isChecked());
 					parentTree.setTreeModel(parent);
+					parentTree.setTreeObject(parent);
+					parentTree.setDescription(parent.getDescription());
+					parentTree.setLocation(parent.getUrl());
+					parentTree.setUrl(parent.getUrl());
+					parentTree.setTreeId(parent.getTreeId());
+					parentTree.setCls(parent.getIconCls());
+					parentTree.setDataMap(parent.getDataMap());
 					repository.addTree(parentTree);
 				}
 				component.setParent(parentTree);
 			}
-
+			if (!repository.getTreeIds().contains(component.getId())) {
+				repository.addTree(component);
+			}
 		}
 		return repository;
 	}
