@@ -123,10 +123,6 @@ public class TreeHelper {
 			Iterator<?> iterator = treeComponent.getComponents().iterator();
 			while (iterator.hasNext()) {
 				TreeComponent component = (TreeComponent) iterator.next();
-				if (component.getComponents() == null
-						|| component.getComponents().isEmpty()) {
-					continue;
-				}
 				JSONObject child = new JSONObject();
 				this.addDataMap(component, child);
 				child.put("id", component.getId());
