@@ -36,7 +36,6 @@ import com.glaf.core.util.PageResult;
 import com.glaf.core.base.BaseTree;
 import com.glaf.core.base.TreeModel;
 import com.glaf.core.context.ApplicationContext;
-
 import com.glaf.base.modules.sys.SysConstants;
 import com.glaf.base.modules.sys.mapper.*;
 import com.glaf.base.modules.sys.model.*;
@@ -60,6 +59,8 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 	protected SysAccessMapper sysAccessMapper;
 
 	protected SysTreeService sysTreeService;
+
+	protected SysUserService sysUserService;
 
 	public SysApplicationServiceImpl() {
 
@@ -191,7 +192,7 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 		logger.info("parent node:" + parentAppId);
 
 		SysApplicationQuery query = new SysApplicationQuery();
-		query.parentId(Long.valueOf(parentAppId));
+		query.parentId(parentAppId);
 		query.setLocked(0);
 		query.setOrderBy(" E.SORT asc ");
 		List<SysApplication> apps = this.list(query);
@@ -368,7 +369,56 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 					}
 					if (childrenNodes != null && childrenNodes.size() > 0) {// 有子菜单
 						JSONArray children = this.getUserMenu(bean.getId(),
-								userId);
+								user);
+						item.put("children", children);
+					}
+
+					array.put(item);
+
+				}
+			}
+		}
+		return array;
+	}
+
+	protected JSONArray getUserMenu(long parent, SysUser user) {
+		JSONArray array = new JSONArray();
+		if (user != null) {
+			List<SysApplication> list = null;
+			if (user.isSystemAdmin()) {
+				logger.debug("#admin user=" + user.getName());
+				list = getApplicationList((int) parent);
+			} else {
+				logger.debug("#user=" + user.getName());
+				list = getAccessAppList(parent, user);
+				logger.debug("#app list=" + list);
+			}
+			if (list != null && list.size() > 0) {
+				Iterator<SysApplication> iter = list.iterator();
+				while (iter.hasNext()) {
+					SysApplication bean = (SysApplication) iter.next();
+					if (bean.getLocked() == 1) {
+						continue;
+					}
+					JSONObject item = new JSONObject();
+					item.put("id", String.valueOf(bean.getId()));
+					item.put("nodeId", bean.getNodeId());
+					item.put("showMenu", bean.getShowMenu());
+					item.put("sort", bean.getSort());
+					item.put("description", bean.getDesc());
+					item.put("name", bean.getName());
+					item.put("icon", "icon-sys");
+					item.put("url", bean.getUrl());
+
+					List<SysApplication> childrenNodes = null;
+					if (user.isSystemAdmin()) {
+						childrenNodes = getApplicationList((int) bean.getId());
+					} else {
+						childrenNodes = getAccessAppList(bean.getId(), user);
+					}
+					if (childrenNodes != null && childrenNodes.size() > 0) {// 有子菜单
+						JSONArray children = this.getUserMenu(bean.getId(),
+								user);
 						item.put("children", children);
 					}
 
@@ -459,6 +509,11 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 	@Resource
 	public void setSysTreeService(SysTreeService sysTreeService) {
 		this.sysTreeService = sysTreeService;
+	}
+
+	@Resource
+	public void setSysUserService(SysUserService sysUserService) {
+		this.sysUserService = sysUserService;
 	}
 
 	@Transactional

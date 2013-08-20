@@ -19,7 +19,9 @@
 package com.glaf.base.modules.sys.mapper;
 
 import java.util.*;
+
 import org.springframework.stereotype.Component;
+
 import com.glaf.base.modules.sys.model.*;
 import com.glaf.base.modules.sys.query.*;
 
@@ -39,6 +41,10 @@ public interface SysTreeMapper {
 	List<SysTree> getRelationSysTrees(SysTreeQuery query);
 
 	List<SysTree> getRoleUserTrees(SysUserQuery query);
+
+	List<SysTree> getTreeList(String treeIdLike);
+
+	List<SysTree> getTreeListByUsers(SysTreeQuery query);
 
 	SysTree getSysTreeById(Long id);
 

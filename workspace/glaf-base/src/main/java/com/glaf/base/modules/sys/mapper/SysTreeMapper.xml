@@ -309,6 +309,63 @@
 	</select>
 
 
+	<select id="getTreeList" parameterType="string"
+		resultType="com.glaf.base.modules.sys.model.SysTree">
+
+		select a.name, a.url, t.id, t.parent as parentId, t.sort as
+		sortNo, t.treeid as treeId, t.code, t.locked
+		from sys_tree t
+		inner join sys_application a
+		on t.id = a.nodeid
+		where
+		t.treeid like #{treeIdLike}
+		order by t.treeid, t.sort
+
+	</select>
+
+
+	<select id="getTreeListByUsers" parameterType="com.glaf.base.modules.sys.query.SysTreeQuery"
+		resultType="com.glaf.base.modules.sys.model.SysTree">
+
+		select a.name, a.url, t.id, t.parent as parentId, t.sort as sortNo,
+		t.treeid as treeId, t.code, t.locked
+		from sys_tree t
+		inner join sys_application a
+		on t.id = a.nodeid
+		inner join
+		sys_access c
+		on a.id = c.appId
+		where t.treeid like #{treeIdLike}
+		and
+		c.roleId in (
+		select dr.id from sys_dept_role dr
+		inner join sys_user_role ur
+		on dr.id = ur.roleid
+		inner join sys_user u
+		on u.id = ur.userid
+		where 1=1
+		<choose>
+			<when test="actorId != null">
+				and u.account = #{actorId}
+			</when>
+			<when test="actorIds != null and actorIds.size !=0">
+				and u.account IN
+				<foreach item="x_actorId" index="index" collection="actorIds"
+					open="(" separator="," close=")">
+					#{x_actorId}
+				</foreach>
+			</when>
+			<otherwise>
+				and 1 = 0
+			</otherwise>
+		</choose>
+		and ur.authorized = 0
+		)
+		order by t.treeid, t.sort
+
+	</select>
+
+
 	<select id="getSysTrees" parameterType="com.glaf.base.modules.sys.query.SysTreeQuery"
 		resultMap="sysTreeResultMap">
 		select E.*
