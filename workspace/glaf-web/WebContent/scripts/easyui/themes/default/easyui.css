@@ -339,11 +339,17 @@
 .combo-arrow-hover {
   background-color: #eaf2ff;
 }
-.combobox-item {
-  padding: 2px;
+.combobox-item,
+.combobox-group {
   font-size: 12px;
   padding: 3px;
   padding-right: 0px;
+}
+.combobox-gitem {
+  padding-left: 10px;
+}
+.combobox-group {
+  font-weight: bold;
 }
 .combobox-item-hover {
   background-color: #eaf2ff;
@@ -466,8 +472,6 @@
   top: auto;
   bottom: 0;
   width: 18px;
-  height: 28px !important;
-  height: 30px;
   font-size: 1px;
   display: none;
   cursor: pointer;
@@ -479,11 +483,6 @@
 }
 .tabs-scroller-right {
   right: 0;
-}
-.tabs-header-plain .tabs-scroller-left,
-.tabs-header-plain .tabs-scroller-right {
-  height: 25px !important;
-  height: 27px;
 }
 .tabs-tool {
   position: absolute;
@@ -1028,7 +1027,6 @@ a:hover.l-btn-plain-selected {
   overflow: hidden;
   height: 18px;
   line-height: 18px;
-  font-weight: normal;
   font-size: 12px;
 }
 .datagrid-header .datagrid-cell {
@@ -1483,14 +1481,14 @@ a:hover.l-btn-plain-selected {
 }
 .datebox-button a {
   font-size: 12px;
-}
-.datebox-current,
-.datebox-close,
-.datebox-ok {
-  text-decoration: none;
   font-weight: bold;
+  text-decoration: none;
   opacity: 0.6;
   filter: alpha(opacity=60);
+}
+.datebox-button a:hover {
+  opacity: 1.0;
+  filter: alpha(opacity=100);
 }
 .datebox-current,
 .datebox-close {
@@ -1499,10 +1497,6 @@ a:hover.l-btn-plain-selected {
 .datebox-close {
   float: right;
 }
-.datebox-button-hover {
-  opacity: 1.0;
-  filter: alpha(opacity=100);
-}
 .datebox .combo-arrow {
   background-image: url('images/datebox_arrow.png');
   background-position: center center;
@@ -1510,9 +1504,7 @@ a:hover.l-btn-plain-selected {
 .datebox-button {
   background-color: #F4F4F4;
 }
-.datebox-current,
-.datebox-close,
-.datebox-ok {
+.datebox-button a {
   color: #444;
 }
 .spinner {
@@ -1581,6 +1573,7 @@ a:hover.l-btn-plain-selected {
   -webkit-border-radius: 5px 5px 5px 5px;
   border-radius: 5px 5px 5px 5px;
   overflow: hidden;
+  position: relative;
 }
 .progressbar-text {
   text-align: center;
@@ -2174,6 +2167,8 @@ a.s-btn-plain-active {
   display: none;
   z-index: 9900000;
   outline: none;
+  opacity: 1;
+  filter: alpha(opacity=100);
   padding: 5px;
   border-width: 1px;
   border-style: solid;
