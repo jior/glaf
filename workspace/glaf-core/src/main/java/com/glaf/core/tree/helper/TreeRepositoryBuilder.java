@@ -19,7 +19,6 @@
 package com.glaf.core.tree.helper;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,7 +32,7 @@ import com.glaf.core.tree.component.TreeRepository;
 public class TreeRepositoryBuilder {
 
 	public TreeRepository build(List<TreeModel> treeModels) {
-		Collections.sort(treeModels);
+		//Collections.sort(treeModels);
 		List<TreeModel> nodes = new ArrayList<TreeModel>();
 		Map<String, TreeModel> treeMap = new HashMap<String, TreeModel>();
 		Map<Long, TreeModel> treeModelMap = new HashMap<Long, TreeModel>();

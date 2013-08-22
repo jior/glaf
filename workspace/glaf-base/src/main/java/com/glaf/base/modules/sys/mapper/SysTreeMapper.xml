@@ -322,7 +322,7 @@
 		where
 		t.treeid like #{treeIdLike}
 		and t.treeid !=  #{treeId}
-		order by t.treeid, t.sort
+		order by t.parent,t.sort,t.treeid
 
 	</select>
 
@@ -369,7 +369,7 @@
 		</choose>
 		and ur.authorized = 0
 		)
-		order by t.treeid, t.sort
+		order by t.parent,t.sort,t.treeid
 
 	</select>
 
