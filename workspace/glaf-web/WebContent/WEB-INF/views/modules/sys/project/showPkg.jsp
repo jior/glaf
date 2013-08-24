@@ -67,9 +67,9 @@
 			   <br>
 			   <input type="checkbox" name="ext" value="ftl">ftl
 			   <input type="checkbox" name="ext" value="xml">xml
-			   <input type="checkbox" name="ext" value="conf">conf
 			   <input type="checkbox" name="ext" value="sql">sql
 			   <input type="checkbox" name="ext" value="jasper">jasper
+			   <input type="checkbox" name="ext" value="jrxml">jrxml
 			   <br>
 			   <input type="checkbox" name="ext" value="properties">properties
 			   <input type="checkbox" name="ext" value="icon">icon
@@ -96,7 +96,7 @@
 			   <input type="checkbox" name="ext" value="dic">dic
 			   <br>
 			   <input type="checkbox" name="ext" value="dll">dll
-			   <input type="checkbox" name="ext" value="dmg">dmg
+			   <input type="checkbox" name="ext" value="conf">conf
 			   <input type="checkbox" name="ext" value="docx">docx
 			   <input type="checkbox" name="ext" value="xlsx">xlsx
 			   <input type="checkbox" name="ext" value="ppt">pptx
