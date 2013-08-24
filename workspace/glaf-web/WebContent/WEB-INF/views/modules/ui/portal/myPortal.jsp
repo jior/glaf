@@ -130,6 +130,7 @@
 <link rel="stylesheet" href="<%=request.getContextPath()%>/scripts/easyui/themes/${theme}/easyui.css" type="text/css"></link>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/scripts/easyui/css/portal.css" type="text/css"></link>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/themes/${theme}/styles.css" type="text/css" />
+<link rel="stylesheet" href="<%=request.getContextPath()%>/icons/styles.css" type="text/css" >
 <style type="text/css">
 	.mx_title{
 			font-size:13px;
@@ -201,6 +202,22 @@
 			addPanels(state);
 			$('#pp').portal('resize');
 		});
+
+		$(function(){
+			for(var i=0; i<panels.length; i++){
+				var panelId = '#'+panels[i].id;
+				addReload(panelId);
+			}
+		});
+		
+		function addReload(panelId){//panel增加刷新按钮
+			$(panelId).panel({   
+				tools: [{   
+				iconCls:'icon-reload',   
+				handler:function(){$(panelId).panel('open').panel('refresh');}   
+			  }]  
+			}); 
+		}
 
 		function savePortal(){
              var state = getPortalState();

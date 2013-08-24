@@ -486,7 +486,7 @@
 								<td align="left">单位</td>
 								<td align="left" colspan="3"><input id="company"
 									class="easyui-combobox" name="company" editable="false"
-									data-options="valueField:'code',textField:'name',required:true,url:'${contextPath}/rs/dictory/jsonArray/${purchase.area}'"
+									data-options="valueField:'code',textField:'name',required:false,url:'${contextPath}/rs/dictory/jsonArray/${purchase.area}'"
 									value="${purchase.company}" size='26' /></td>
 							</tr>
 						</tbody>

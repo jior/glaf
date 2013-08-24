@@ -233,7 +233,7 @@ jQuery.ajax({
 							<td width="20%" align="left">我方签约单位</td>
 							<td align="left"><input id="companyname"
 								class="easyui-combobox" name="companyname" readonly="readonly"
-								data-options="valueField:'code',textField:'name',editable:false,required:true,url:'${contextPath}/rs/dictory/jsonArray/${contract.area}'"
+								data-options="valueField:'code',textField:'name',editable:false,required:false,url:'${contextPath}/rs/dictory/jsonArray/${contract.area}'"
 								value="${contract.companyname}" size='25' /></td>
 
 						</tr>

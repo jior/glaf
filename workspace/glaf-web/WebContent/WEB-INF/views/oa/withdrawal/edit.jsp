@@ -189,7 +189,7 @@
 							<td align="left">单位</td>
 							<td align="left"><input id="company" class="easyui-combobox"
 								name="company" readonly="readonly"
-								data-options="valueField:'code',textField:'name',required:true,url:'${contextPath}/rs/dictory/jsonArray/${withdrawal.area}'"
+								data-options="valueField:'code',textField:'name',required:false,url:'${contextPath}/rs/dictory/jsonArray/${withdrawal.area}'"
 								value="${withdrawal.company}" size='18' /></td>
 							<td align="left">申请日期</td>
 							<td align="left"><input id="appdate" name="appdate"
