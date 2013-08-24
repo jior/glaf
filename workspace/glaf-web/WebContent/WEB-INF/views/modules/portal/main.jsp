@@ -185,7 +185,7 @@
 	<div region="south" split="true" style="height: 30px;" class="south-backgroud">
 		<div class="footer"><%=SystemConfig.getString("res_copyright")%></div>
 	</div>
-	<div region="west" split="true" title="导航菜单" style="width: 180px;"
+	<div region="west" split="true" title="导航菜单" style="width: 215px;"
 		id="west">
 		<ul class="easyui-tree">
 			<%

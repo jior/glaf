@@ -128,7 +128,7 @@
         <div class="footer"><%=SystemConfig.getString("res_copyright")%></div>
 </div>
 
-<div region="west" split="true"  title="导航菜单" style="width:180px;" id="west">
+<div region="west" split="true"  title="导航菜单" style="width:215px;" id="west">
 			<div id="nav">
 		     <!--  导航内容 -->
 				
