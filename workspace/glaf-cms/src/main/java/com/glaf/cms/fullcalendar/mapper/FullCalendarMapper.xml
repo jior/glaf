@@ -292,8 +292,12 @@
 				and E.createBy != #{createByNot}
 			</if>
 
-			<if test="createByLike != null and createByLike != '' ">
-				and E.createBy like #{createByLike}
+			<if test="createBys != null and createBys.size() &gt; 0">
+				and E.createBy IN
+				<foreach item="x_createBy" index="index" collection="createBys"
+					open="(" separator="," close=")">
+					#{x_createBy}
+				</foreach>
 			</if>
 
 			<if test="createDateGreaterThanOrEqual != null">

@@ -16,30 +16,36 @@ public class FullCalendarQuery extends DataQuery {
 
 	protected Integer shareFlag;
 
-	protected Integer status;
-
 	protected Date dateStartGreaterThanOrEqual;
+
 	protected Date dateStartLessThanOrEqual;
+
 	protected Date dateEndGreaterThanOrEqual;
+
 	protected Date dateEndLessThanOrEqual;
+
 	protected String ext1;
+
 	protected String ext1Like;
 
 	protected String ext2;
+
 	protected String ext2Like;
 
-	protected String createBy;
-	protected String createByLike;
 	protected String createByNot;
+
 	protected List<String> createBys;
 
 	protected Date createDateGreaterThanOrEqual;
+
 	protected Date createDateLessThanOrEqual;
 
 	protected Date updateDateGreaterThanOrEqual;
+
 	protected Date updateDateLessThanOrEqual;
 
 	protected String updateBy;
+
 	protected String updateByLike;
 
 	protected List<String> updateBys;
@@ -69,14 +75,6 @@ public class FullCalendarQuery extends DataQuery {
 			throw new RuntimeException("createBy is null");
 		}
 		this.createBy = createBy;
-		return this;
-	}
-
-	public FullCalendarQuery createByLike(String createByLike) {
-		if (createByLike == null) {
-			throw new RuntimeException("createBy is null");
-		}
-		this.createByLike = createByLike;
 		return this;
 	}
 
@@ -207,18 +205,6 @@ public class FullCalendarQuery extends DataQuery {
 
 	public String getCreateBy() {
 		return createBy;
-	}
-
-	public String getCreateByLike() {
-		if (createByLike != null && createByLike.trim().length() > 0) {
-			if (!createByLike.startsWith("%")) {
-				createByLike = "%" + createByLike;
-			}
-			if (!createByLike.endsWith("%")) {
-				createByLike = createByLike + "%";
-			}
-		}
-		return createByLike;
 	}
 
 	public String getCreateByNot() {
@@ -462,10 +448,6 @@ public class FullCalendarQuery extends DataQuery {
 
 	public void setCreateBy(String createBy) {
 		this.createBy = createBy;
-	}
-
-	public void setCreateByLike(String createByLike) {
-		this.createByLike = createByLike;
 	}
 
 	public void setCreateByNot(String createByNot) {
