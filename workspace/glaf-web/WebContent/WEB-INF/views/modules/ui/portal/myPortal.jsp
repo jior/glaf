@@ -129,6 +129,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/scripts/easyui/themes/${theme}/easyui.css" type="text/css"></link>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/scripts/easyui/css/portal.css" type="text/css"></link>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/themes/${theme}/styles.css" type="text/css" />
 <style type="text/css">
 	.mx_title{
 			font-size:13px;

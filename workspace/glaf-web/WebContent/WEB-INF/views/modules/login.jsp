@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ page import="com.glaf.core.config.*"%>
 <%@ taglib uri="http://github.com/jior/glaf/tags" prefix="glaf"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="html"%>
 <%
@@ -22,7 +23,7 @@
 <html>
 <head id="Head1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>GLAF基础应用框架-系统登录</title>
+<title>登录<%=SystemConfig.getString("res_system_name")%></title>
 <link href="${contextPath}/scripts/easyui/themes/gray/easyui.css" rel="stylesheet" type="text/css" />
 <style type="text/css">
 .default {
@@ -72,7 +73,7 @@
 	 
     $(function() {
         $("#loginWindow").window({
-                title: 'GLAF基础应用框架',
+                title: '登录<%=SystemConfig.getString("res_system_name")%>',
                 width: 290,
                 height: 190,
                 modal: true,

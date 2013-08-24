@@ -8,6 +8,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%
+    String theme = com.glaf.core.util.RequestUtils.getTheme(request);
+	request.setAttribute("theme", theme);
 	LoginContext loginContext = RequestUtils.getLoginContext(request);
 	List<UserPortal> userPortals = (List<UserPortal>)request.getAttribute("userPortals");
 	UserPanel userPanel = (UserPanel)request.getAttribute("userPanel");
@@ -131,6 +133,7 @@
 <link rel="stylesheet" href="<%=request.getContextPath()%>/scripts/easyui/themes/default/easyui.css" type="text/css"></link>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/scripts/easyui/themes/icon.css" type="text/css"></link>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/scripts/easyui/themes/portal.css" type="text/css"></link>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/themes/${theme}/styles.css" type="text/css" />
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>		
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/locale/easyui-lang-zh_CN.js"></script>

@@ -33,3 +33,9 @@
 	font-size: 12px;
 	color: #ffffff;
 }
+
+
+.todo_index_td{
+    border:1px solid #D3D3D3;
+    background: #ffffff;
+}

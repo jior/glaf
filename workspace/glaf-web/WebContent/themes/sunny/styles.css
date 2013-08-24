@@ -34,3 +34,9 @@
 	font-size: 12px;
 	color: #ffffff;
 }
+
+
+.todo_index_td{
+    border:1px solid #8E846B;
+    background: #FEEEBD;
+}

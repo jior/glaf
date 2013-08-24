@@ -20,10 +20,11 @@
 		window.parent.addTab(title,url,"");
 	}
 </script>
-<table width="98%" border="1" cellspacing="1" cellpadding="0" style="border:1px solid #B1CDE3;border-collapse:collapse;margin:5px 5px;;padding:0;">
+<table width="98%" border="1" cellspacing="1" cellpadding="0" 
+       style="border:1px solid #B1CDE3;border-collapse:collapse;margin:5px 5px;padding:0;">
 	<tr>
-	<td height="22" align="center" width="75%" style="border:1px solid #B1CDE3;background: #E6EAE9;">事项</td>
-	<td width="25%" align="center" height="22" style="border:1px solid #B1CDE3;background: #E6EAE9;">任务数</td>
+	<td height="22" align="center" width="75%" class="todo_index_td">事项</td>
+	<td width="25%" align="center" height="22" class="todo_index_td">任务数</td>
 	</tr>
   <%if(userTasks != null && userTasks.size()> 0){
 	    int index = 1;
