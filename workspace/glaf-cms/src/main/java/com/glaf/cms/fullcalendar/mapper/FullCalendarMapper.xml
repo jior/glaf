@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.cms.fullcalendar.mapper.FullCalendarMapper">
+
+	<resultMap id="fullCalendarResultMap" type="com.glaf.cms.fullcalendar.model.FullCalendar">
+		<id property="id" column="ID" jdbcType="BIGINT" />
+		<result property="title" column="title" jdbcType="VARCHAR" />
+		<result property="content" column="content" jdbcType="VARCHAR" />
+		<result property="address" column="address" jdbcType="VARCHAR" />
+		<result property="remark" column="remark" jdbcType="VARCHAR" />
+		<result property="shareFlag" column="shareFlag" jdbcType="INTEGER" />
+		<result property="status" column="status" jdbcType="INTEGER" />
+		<result property="dateStart" column="dateStart" jdbcType="TIMESTAMP" />
+		<result property="dateEnd" column="dateEnd" jdbcType="TIMESTAMP" />
+		<result property="ext1" column="ext1" jdbcType="VARCHAR" />
+		<result property="ext2" column="ext2" jdbcType="VARCHAR" />
+		<result property="createBy" column="createBy" jdbcType="VARCHAR" />
+		<result property="createDate" column="createDate" jdbcType="TIMESTAMP" />
+		<result property="updateDate" column="updateDate" jdbcType="TIMESTAMP" />
+		<result property="updateBy" column="updateBy" jdbcType="VARCHAR" />
+		<result property="createByName" column="createByName" jdbcType="VARCHAR" />
+	</resultMap>
+
+
+	<insert id="insertFullCalendar" parameterType="com.glaf.cms.fullcalendar.model.FullCalendar">
+		insert into CMS_FULLCALENDAR
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ID
+			<if test="title != null">
+				,title
+			</if>
+			<if test="content != null">
+				,content
+			</if>
+			<if test="address != null">
+				,address
+			</if>
+			<if test="remark != null">
+				,remark
+			</if>
+			<if test="shareFlag != null">
+				,shareFlag
+			</if>
+			<if test="status != null">
+				,status
+			</if>
+			<if test="dateStart != null">
+				,dateStart
+			</if>
+			<if test="dateEnd != null">
+				,dateEnd
+			</if>
+			<if test="ext1 != null">
+				,ext1
+			</if>
+			<if test="ext2 != null">
+				,ext2
+			</if>
+			<if test="createBy != null">
+				,createBy
+			</if>
+			<if test="createDate != null">
+				,createDate
+			</if>
+			<if test="updateDate != null">
+				,updateDate
+			</if>
+			<if test="updateBy != null">
+				,updateBy
+			</if>
+		</trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			#{id, jdbcType=BIGINT}
+
+			<if test="title != null">
+				,#{title, jdbcType=VARCHAR}
+			</if>
+			<if test="content != null">
+				,#{content, jdbcType=VARCHAR}
+			</if>
+			<if test="address != null">
+				,#{address, jdbcType=VARCHAR}
+			</if>
+			<if test="remark != null">
+				,#{remark, jdbcType=VARCHAR}
+			</if>
+			<if test="shareFlag != null">
+				,#{shareFlag, jdbcType=INTEGER}
+			</if>
+			<if test="status != null">
+				,#{status, jdbcType=INTEGER}
+			</if>
+			<if test="dateStart != null">
+				,#{dateStart, jdbcType=TIMESTAMP}
+			</if>
+			<if test="dateEnd != null">
+				,#{dateEnd, jdbcType=TIMESTAMP}
+			</if>
+			<if test="ext1 != null">
+				,#{ext1, jdbcType=VARCHAR}
+			</if>
+			<if test="ext2 != null">
+				,#{ext2, jdbcType=VARCHAR}
+			</if>
+			<if test="createBy != null">
+				,#{createBy, jdbcType=VARCHAR}
+			</if>
+			<if test="createDate != null">
+				,#{createDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="updateDate != null">
+				,#{updateDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="updateBy != null">
+				,#{updateBy, jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</insert>
+
+
+	<update id="updateFullCalendar" parameterType="com.glaf.cms.fullcalendar.model.FullCalendar">
+		update CMS_FULLCALENDAR
+		set
+		<trim prefix="" suffix="" suffixOverrides=",">
+			<if test="title != null">
+				title = #{title, jdbcType=VARCHAR},
+			</if>
+			<if test="content != null">
+				content = #{content, jdbcType=VARCHAR},
+			</if>
+			<if test="address != null">
+				address = #{address, jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				remark = #{remark, jdbcType=VARCHAR},
+			</if>
+			<if test="shareFlag != null">
+				shareFlag = #{shareFlag, jdbcType=INTEGER},
+			</if>
+			<if test="status != null">
+				status = #{status, jdbcType=INTEGER},
+			</if>
+			<if test="dateStart != null">
+				dateStart = #{dateStart, jdbcType=TIMESTAMP},
+			</if>
+			<if test="dateEnd != null">
+				dateEnd = #{dateEnd, jdbcType=TIMESTAMP},
+			</if>
+			<if test="ext1 != null">
+				ext1 = #{ext1, jdbcType=VARCHAR},
+			</if>
+			<if test="ext2 != null">
+				ext2 = #{ext2, jdbcType=VARCHAR},
+			</if>
+			<if test="createBy != null">
+				createBy = #{createBy, jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				createDate = #{createDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateDate != null">
+				updateDate = #{updateDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateBy != null">
+				updateBy = #{updateBy, jdbcType=VARCHAR},
+			</if>
+		</trim>
+		where
+		ID = #{id, jdbcType=BIGINT}
+
+	</update>
+
+
+	<delete id="deleteFullCalendarById" parameterType="long">
+		delete from
+		CMS_FULLCALENDAR
+		where ID = #{id}
+	</delete>
+
+
+	<delete id="deleteFullCalendars" parameterType="com.glaf.cms.fullcalendar.query.FullCalendarQuery">
+		delete from CMS_FULLCALENDAR
+		where (
+		ID IN
+		<foreach item="x_id" index="index" collection="ids" open="("
+			separator="," close=")">
+			#{x_id}
+		</foreach>
+		)
+	</delete>
+
+
+	<select id="getFullCalendarById" parameterType="long"
+		resultMap="fullCalendarResultMap">
+		select * from CMS_FULLCALENDAR where ID = #{id}
+	</select>
+
+
+	<select id="getFullCalendars" parameterType="com.glaf.cms.fullcalendar.query.FullCalendarQuery"
+		resultMap="fullCalendarResultMap">
+		select E.*
+		<include refid="selectFullCalendarsSql" />
+		<choose>
+			<when test="orderBy != null">
+				order by ${orderBy}
+			</when>
+			<otherwise>
+				order by E.createDate desc
+			</otherwise>
+		</choose>
+	</select>
+
+
+	<select id="getFullCalendarCount" parameterType="com.glaf.cms.fullcalendar.query.FullCalendarQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectFullCalendarsSql" />
+	</select>
+
+
+	<sql id="selectFullCalendarsSql">
+
+		from CMS_FULLCALENDAR E
+
+		<where>
+			1 = 1
+
+			<if test="titleLike != null and titleLike != '' ">
+				and E.title like #{titleLike}
+			</if>
+
+			<if test="contentLike != null and contentLike != '' ">
+				and E.content like #{contentLike}
+			</if>
+
+			<if test="addressLike != null and addressLike != '' ">
+				and E.address like #{addressLike}
+			</if>
+
+			<if test="remarkLike != null and remarkLike != '' ">
+				and E.remark like #{remarkLike}
+			</if>
+
+			<if test="shareFlag != null">
+				and E.shareFlag = #{shareFlag}
+			</if>
+
+			<if test="status != null">
+				and E.status = #{status}
+			</if>
+
+			<if test="dateStartGreaterThanOrEqual != null">
+				and E.dateStart &gt;= #{dateStartGreaterThanOrEqual}
+			</if>
+
+			<if test="dateStartLessThanOrEqual != null">
+				and E.dateStart &lt;= #{dateStartLessThanOrEqual}
+			</if>
+
+			<if test="dateEndGreaterThanOrEqual != null">
+				and E.dateEnd &gt;= #{dateEndGreaterThanOrEqual}
+			</if>
+
+			<if test="dateEndLessThanOrEqual != null">
+				and E.dateEnd &lt;= #{dateEndLessThanOrEqual}
+			</if>
+
+			<if test="ext1 != null and ext1 != '' ">
+				and E.ext1 = #{ext1}
+			</if>
+
+			<if test="ext1Like != null and ext1Like != '' ">
+				and E.ext1 like #{ext1Like}
+			</if>
+
+			<if test="ext2 != null and ext2 != '' ">
+				and E.ext2 = #{ext2}
+			</if>
+
+			<if test="ext2Like != null and ext2Like != '' ">
+				and E.ext2 like #{ext2Like}
+			</if>
+
+			<if test="createBy != null and createBy != '' ">
+				and E.createBy = #{createBy}
+			</if>
+
+			<if test="createByNot != null and createByNot != '' ">
+				and E.createBy != #{createByNot}
+			</if>
+
+			<if test="createByLike != null and createByLike != '' ">
+				and E.createBy like #{createByLike}
+			</if>
+
+			<if test="createDateGreaterThanOrEqual != null">
+				and E.createDate &gt;= #{createDateGreaterThanOrEqual}
+			</if>
+
+			<if test="createDateLessThanOrEqual != null">
+				and E.createDate &lt;= #{createDateLessThanOrEqual}
+			</if>
+
+			<if test="updateDateGreaterThanOrEqual != null">
+				and E.updateDate &gt;= #{updateDateGreaterThanOrEqual}
+			</if>
+
+			<if test="updateDateLessThanOrEqual != null">
+				and E.updateDate &lt;= #{updateDateLessThanOrEqual}
+			</if>
+
+			<if test="updateBy != null and updateBy != '' ">
+				and E.updateBy = #{updateBy}
+			</if>
+
+			<if test="updateByLike != null and updateByLike != '' ">
+				and E.updateBy like #{updateByLike}
+			</if>
+
+		</where>
+	</sql>
+
+</mapper>
