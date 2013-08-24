@@ -33,7 +33,6 @@
 
     var openTabSize = 0;  
 
-
 	$(function() {
         changeTheme();
         $('#editTheme').click(function() {
@@ -223,6 +222,7 @@
 							<option value="default" selected>蓝色</option>
 							<option value="gray">灰色</option>
 							<option value="sunny">橙色</option>
+							<option value="black">黑色</option>
 							<option value="bootstrap">bootstrap</option>
 							<option value="metro">metro</option>
 							<!-- <option value="metro-blue">metro-blue</option> -->
