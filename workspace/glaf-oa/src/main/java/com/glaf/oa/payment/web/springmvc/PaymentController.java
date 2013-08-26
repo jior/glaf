@@ -533,7 +533,7 @@ public class PaymentController {
 					String deptname = payment.getDept();
 					try {
 						String Area_CN = BaseDataManager.getInstance()
-								.getStringValue(payment.getArea(), "eara");
+								.getStringValue(payment.getArea(), "area");
 						String Companyname_CN = BaseDataManager.getInstance()
 								.getStringValue(payment.getCompany(),
 										payment.getArea());
@@ -1055,7 +1055,7 @@ public class PaymentController {
 					String deptname = payment.getDept();
 					try {
 						String Area_CN = BaseDataManager.getInstance()
-								.getStringValue(payment.getArea(), "eara");
+								.getStringValue(payment.getArea(), "area");
 						String Companyname_CN = BaseDataManager.getInstance()
 								.getStringValue(payment.getCompany(),
 										payment.getArea());

@@ -853,7 +853,7 @@ public class LtravelController {
 					rowJSON.put(
 							"area",
 							BaseDataManager.getInstance()
-									.getValue(ltravel.getArea(), "eara")
+									.getValue(ltravel.getArea(), "area")
 									.getName());
 					if (ltravel.getCompany() != null) {
 						rowJSON.put(
@@ -1050,7 +1050,7 @@ public class LtravelController {
 					rowJSON.put(
 							"area",
 							BaseDataManager.getInstance()
-									.getValue(ltravel.getArea(), "eara")
+									.getValue(ltravel.getArea(), "area")
 									.getName());
 					if (ltravel.getCompany() != null) {
 						rowJSON.put(

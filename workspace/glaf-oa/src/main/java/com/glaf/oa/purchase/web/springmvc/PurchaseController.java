@@ -460,7 +460,7 @@ public class PurchaseController {
 					rowJSON.put("startIndex", ++start);
 
 					String areaname = BaseDataManager.getInstance()
-							.getStringValue(purchase.getArea(), "eara");
+							.getStringValue(purchase.getArea(), "area");
 					rowJSON.put("areaname", areaname);
 					String companyname = BaseDataManager.getInstance()
 							.getStringValue(purchase.getCompany(),

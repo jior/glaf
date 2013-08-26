@@ -182,7 +182,7 @@ public class ReimbursementSearchController {
 							reimbursement.getReimbursementid());
 					rowJSON.put("startIndex", ++start);
 					String areaname = BaseDataManager.getInstance()
-							.getStringValue(reimbursement.getArea(), "eara");
+							.getStringValue(reimbursement.getArea(), "area");
 					rowJSON.put("areaname", areaname);
 					String companyname = BaseDataManager.getInstance()
 							.getStringValue(reimbursement.getCompany(),

@@ -170,7 +170,7 @@ public class OAReportController {
 				reimbursement.setAppuser(getConvert(reimbursement.getAppuser(),
 						"SYS_USERS"));
 				reimbursement.setArea(getConvert(reimbursement.getArea(),
-						"eara"));
+						"area"));
 
 				reimbursement.setDept(getConvert(reimbursement.getDept(),
 						"SYS_DEPTS"));
@@ -316,7 +316,7 @@ public class OAReportController {
 				}
 				map.put("payList", payList);
 				budget.setCurrency(getConvert(budget.getCurrency(), "money"));
-				map.put("area", getConvert(budget.getArea(), "eara"));
+				map.put("area", getConvert(budget.getArea(), "area"));
 				map.put("paymentModel",
 						getConvert(budget.getPaymentmodel() + "", "paytype"));
 				map.put("paymentType",
@@ -357,7 +357,7 @@ public class OAReportController {
 						payment.getArea()));
 
 				payment.setDept(getConvert(payment.getDept(), "SYS_DEPTS"));
-				payment.setArea(getConvert(payment.getArea(), "eara"));
+				payment.setArea(getConvert(payment.getArea(), "area"));
 				map.put("appdate", format(payment.getAppdate()));
 				map.put("maturitydate", format(payment.getMaturitydate()));
 				if (payment.getProcessinstanceid() != null) {
@@ -420,7 +420,7 @@ public class OAReportController {
 				}
 				borrow.setCompany(getConvert(borrow.getCompany(),
 						borrow.getArea()));
-				borrow.setArea(getConvert(borrow.getArea(), "eara"));
+				borrow.setArea(getConvert(borrow.getArea(), "area"));
 				borrow.setContent(getConvert(borrow.getContent(), "content"));
 				map.put("sql", sql);
 				map.put("appdate", format(borrow.getAppdate()));
@@ -544,7 +544,7 @@ public class OAReportController {
 				purchase.setAppuser(getConvert(purchase.getAppuser(),
 						"SYS_USERS"));
 				purchase.setDept(getConvert(purchase.getDept(), "SYS_DEPTS"));
-				purchase.setArea(getConvert(purchase.getArea(), "eara"));
+				purchase.setArea(getConvert(purchase.getArea(), "area"));
 				map.put("purchase", purchase);
 				DecimalFormat df = new DecimalFormat("###############0.0");
 				for (Purchaseitem pi : purchaseList) {
@@ -617,7 +617,7 @@ public class OAReportController {
 				map.clear();
 				map.put("overTimeType",
 						getConvert(overTime.getType() + "", "JBLX"));
-				String area = getConvert(overTime.getArea(), "eara");
+				String area = getConvert(overTime.getArea(), "area");
 				map.put("area", area);
 				map.put("appdate", format(overTime.getAppdate()));
 				map.put("startdate", format(overTime.getStartdate()));
@@ -651,7 +651,7 @@ public class OAReportController {
 				leave.setAppuser(getConvert(leave.getAppuser(), "SYS_USERS"));
 				leave.setDept(getConvert(leave.getDept(), "SYS_DEPTS"));
 				map.put("leaveType", getConvert(leave.getType() + "", "QJLX"));
-				map.put("area", getConvert(leave.getArea(), "eara"));
+				map.put("area", getConvert(leave.getArea(), "area"));
 				map.put("appdate", format(leave.getAppdate()));
 				map.put("startdate", format(leave.getStartdate()));
 				map.put("enddate", format(leave.getEnddate()));

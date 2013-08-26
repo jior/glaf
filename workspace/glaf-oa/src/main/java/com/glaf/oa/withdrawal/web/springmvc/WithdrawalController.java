@@ -538,7 +538,7 @@ public class WithdrawalController {
 					rowJSON.put("withdrawalId", withdrawal.getWithdrawalid());
 					rowJSON.put("startIndex", ++start);
 					String areaname = BaseDataManager.getInstance()
-							.getStringValue(withdrawal.getArea(), "eara");
+							.getStringValue(withdrawal.getArea(), "area");
 					rowJSON.put("areaname", areaname);
 					String companyname = BaseDataManager.getInstance()
 							.getStringValue(withdrawal.getCompany(),

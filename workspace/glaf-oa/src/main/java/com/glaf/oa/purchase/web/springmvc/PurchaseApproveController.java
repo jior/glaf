@@ -303,7 +303,7 @@ public class PurchaseApproveController {
 					rowJSON.put("startIndex", ++start);
 					rowJSON.put("wdStatusFlag", purchase.getWdStatusFlag());
 					String areaname = BaseDataManager.getInstance()
-							.getStringValue(purchase.getArea(), "eara");
+							.getStringValue(purchase.getArea(), "area");
 					rowJSON.put("areaname", areaname);
 					String companyname = BaseDataManager.getInstance()
 							.getStringValue(purchase.getCompany(),

@@ -299,7 +299,7 @@ public class BorrowApproveController {
 					rowJSON.put("startIndex", ++start);
 					rowJSON.put("wdStatusFlag", borrow.getWdStatusFlag());
 					String areaname = BaseDataManager.getInstance()
-							.getStringValue(borrow.getArea(), "eara");
+							.getStringValue(borrow.getArea(), "area");
 					rowJSON.put("areaname", areaname);
 					String companyname = BaseDataManager.getInstance()
 							.getStringValue(borrow.getCompany(),

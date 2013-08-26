@@ -187,7 +187,7 @@ public class PurchaseSearchController {
 					rowJSON.put("purchaseId", purchase.getPurchaseid());
 					rowJSON.put("startIndex", ++start);
 					String areaname = BaseDataManager.getInstance()
-							.getStringValue(purchase.getArea(), "eara");
+							.getStringValue(purchase.getArea(), "area");
 					rowJSON.put("areaname", areaname);
 					String companyname = BaseDataManager.getInstance()
 							.getStringValue(purchase.getCompany(),

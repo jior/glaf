@@ -636,7 +636,7 @@ public class ContractController {
 					String appuser = contract.getAppuser();
 					try {
 						String Area_CN = BaseDataManager.getInstance()
-								.getStringValue(contract.getArea(), "eara");
+								.getStringValue(contract.getArea(), "area");
 						String Companyname_CN = BaseDataManager.getInstance()
 								.getStringValue(contract.getCompanyname(),
 										contract.getArea());
@@ -1127,7 +1127,7 @@ public class ContractController {
 					String appuser = contract.getAppuser();
 					try {
 						String Area_CN = BaseDataManager.getInstance()
-								.getStringValue(contract.getArea(), "eara");
+								.getStringValue(contract.getArea(), "area");
 						String Companyname_CN = BaseDataManager.getInstance()
 								.getStringValue(contract.getCompanyname(),
 										contract.getArea());

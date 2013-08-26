@@ -224,7 +224,7 @@ public class ReimbursementApproveController {
 					rowJSON.put("startIndex", ++start);
 					rowJSON.put("wdStatusFlag", reimbursement.getWdStatusFlag());
 					String areaname = BaseDataManager.getInstance()
-							.getStringValue(reimbursement.getArea(), "eara");
+							.getStringValue(reimbursement.getArea(), "area");
 					rowJSON.put("areaname", areaname);
 					String companyname = BaseDataManager.getInstance()
 							.getStringValue(reimbursement.getCompany(),

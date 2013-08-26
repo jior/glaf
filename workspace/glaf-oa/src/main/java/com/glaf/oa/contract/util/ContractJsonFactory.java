@@ -101,8 +101,8 @@ public class ContractJsonFactory {
 		if (jsonObject.containsKey("brands3account")) {
 			model.setBrands3account(jsonObject.getDouble("brands3account"));
 		}
-		if (jsonObject.containsKey("eara")) {
-			model.setArea(jsonObject.getString("eara"));
+		if (jsonObject.containsKey("area")) {
+			model.setArea(jsonObject.getString("area"));
 		}
 		if (jsonObject.containsKey("post")) {
 			model.setPost(jsonObject.getString("post"));
@@ -191,7 +191,7 @@ public class ContractJsonFactory {
 		}
 		jsonObject.put("brands3account", model.getBrands3account());
 		if (model.getArea() != null) {
-			jsonObject.put("eara", model.getArea());
+			jsonObject.put("area", model.getArea());
 		}
 		if (model.getPost() != null) {
 			jsonObject.put("post", model.getPost());
@@ -289,7 +289,7 @@ public class ContractJsonFactory {
 		}
 		jsonObject.put("brands3account", model.getBrands3account());
 		if (model.getArea() != null) {
-			jsonObject.put("eara", model.getArea());
+			jsonObject.put("area", model.getArea());
 		}
 		if (model.getPost() != null) {
 			jsonObject.put("post", model.getPost());

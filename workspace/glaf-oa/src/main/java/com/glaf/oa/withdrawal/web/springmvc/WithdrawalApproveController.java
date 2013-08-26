@@ -236,7 +236,7 @@ public class WithdrawalApproveController {
 					rowJSON.put("startIndex", ++start);
 					rowJSON.put("wdStatusFlag", withdrawal.getWdStatusFlag());
 					String areaname = BaseDataManager.getInstance()
-							.getStringValue(withdrawal.getArea(), "eara");
+							.getStringValue(withdrawal.getArea(), "area");
 					rowJSON.put("areaname", areaname);
 					String companyname = BaseDataManager.getInstance()
 							.getStringValue(withdrawal.getCompany(),

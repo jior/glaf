@@ -599,7 +599,7 @@ public class BudgetController {
 					String deptname = budget.getDept();
 					try {
 						String Area_CN = BaseDataManager.getInstance()
-								.getStringValue(budget.getArea(), "eara");
+								.getStringValue(budget.getArea(), "area");
 						String Companyname_CN = BaseDataManager.getInstance()
 								.getStringValue(budget.getCompany(),
 										budget.getArea());
@@ -704,7 +704,7 @@ public class BudgetController {
 				result.put("rows", rowsJSON);
 				for (Budget budget : list) {
 					String Area_CN = BaseDataManager.getInstance()
-							.getStringValue(budget.getArea(), "eara");
+							.getStringValue(budget.getArea(), "area");
 					budget.setArea(Area_CN);
 					String Companyname_CN = BaseDataManager.getInstance()
 							.getStringValue(budget.getCompany(),
@@ -864,7 +864,7 @@ public class BudgetController {
 					String deptname = budget.getDept();
 					try {
 						String Area_CN = BaseDataManager.getInstance()
-								.getStringValue(budget.getArea(), "eara");
+								.getStringValue(budget.getArea(), "area");
 						String Companyname_CN = BaseDataManager.getInstance()
 								.getStringValue(budget.getCompany(),
 										budget.getArea());

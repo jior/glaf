@@ -743,7 +743,7 @@ public class BorrowController {
 					rowJSON.put("borrowId", borrow.getBorrowid());
 					rowJSON.put("startIndex", ++start);
 					String areaname = BaseDataManager.getInstance()
-							.getStringValue(borrow.getArea(), "eara");
+							.getStringValue(borrow.getArea(), "area");
 					rowJSON.put("areaname", areaname);
 					String companyname = BaseDataManager.getInstance()
 							.getStringValue(borrow.getCompany(),

@@ -353,8 +353,8 @@ public class Contract implements Serializable, JSONable {
 		this.brands3account = brands3account;
 	}
 
-	public void setArea(String eara) {
-		this.area = eara;
+	public void setArea(String area) {
+		this.area = area;
 	}
 
 	public void setPost(String post) {

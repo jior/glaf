@@ -1034,16 +1034,16 @@ public class ContractQuery extends DataQuery {
 		this.strstautss = strstautss;
 	}
 
-	public void setArea(String eara) {
-		this.area = eara;
+	public void setArea(String area) {
+		this.area = area;
 	}
 
-	public void setAreaLike(String earaLike) {
-		this.areaLike = earaLike;
+	public void setAreaLike(String areaLike) {
+		this.areaLike = areaLike;
 	}
 
-	public void setAreas(List<String> earas) {
-		this.areas = earas;
+	public void setAreas(List<String> areas) {
+		this.areas = areas;
 	}
 
 	public void setPost(String post) {
@@ -1780,27 +1780,27 @@ public class ContractQuery extends DataQuery {
 		return this;
 	}
 
-	public ContractQuery eara(String eara) {
-		if (eara == null) {
-			throw new RuntimeException("eara is null");
+	public ContractQuery area(String area) {
+		if (area == null) {
+			throw new RuntimeException("area is null");
 		}
-		this.area = eara;
+		this.area = area;
 		return this;
 	}
 
-	public ContractQuery earaLike(String earaLike) {
-		if (earaLike == null) {
-			throw new RuntimeException("eara is null");
+	public ContractQuery areaLike(String areaLike) {
+		if (areaLike == null) {
+			throw new RuntimeException("area is null");
 		}
-		this.areaLike = earaLike;
+		this.areaLike = areaLike;
 		return this;
 	}
 
-	public ContractQuery earas(List<String> earas) {
-		if (earas == null) {
-			throw new RuntimeException("earas is empty ");
+	public ContractQuery areas(List<String> areas) {
+		if (areas == null) {
+			throw new RuntimeException("areas is empty ");
 		}
-		this.areas = earas;
+		this.areas = areas;
 		return this;
 	}
 
@@ -2071,8 +2071,8 @@ public class ContractQuery extends DataQuery {
 				orderBy = "E.strstauts" + a_x;
 			}
 
-			if ("eara".equals(sortColumn)) {
-				orderBy = "E.eara" + a_x;
+			if ("area".equals(sortColumn)) {
+				orderBy = "E.area" + a_x;
 			}
 
 			if ("post".equals(sortColumn)) {
@@ -2131,7 +2131,7 @@ public class ContractQuery extends DataQuery {
 		addColumn("brands3", "brands3");
 		addColumn("brands3account", "brands3account");
 		addColumn("strstauts", "strstauts");
-		addColumn("eara", "eara");
+		addColumn("area", "area");
 		addColumn("post", "post");
 		addColumn("dept", "dept");
 		addColumn("createBy", "createBy");

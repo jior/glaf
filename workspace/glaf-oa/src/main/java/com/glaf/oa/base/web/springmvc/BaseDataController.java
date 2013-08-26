@@ -56,7 +56,7 @@ public class BaseDataController {
 		result0.put("name", "");
 		rowsJSON.add(result0);
 		List<BaseDataInfo> BaseDataInfoList = BaseDataManager.getInstance()
-				.getBaseData("eara");
+				.getBaseData("area");
 		for (BaseDataInfo baseDataInfo : BaseDataInfoList) {
 
 			List<BaseDataInfo> BaseDataInfoList2 = BaseDataManager

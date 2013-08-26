@@ -396,9 +396,9 @@ public class StravelController {
 						rowJSON.put(
 								"area",
 								BaseDataManager.getInstance().getValue(
-										stravel.getArea(), "eara") != null ? BaseDataManager
+										stravel.getArea(), "area") != null ? BaseDataManager
 										.getInstance()
-										.getValue(stravel.getArea(), "eara")
+										.getValue(stravel.getArea(), "area")
 										.getName()
 										: "");
 					}
@@ -1039,7 +1039,7 @@ public class StravelController {
 					rowJSON.put(
 							"area",
 							BaseDataManager.getInstance()
-									.getValue(stravel.getArea(), "eara")
+									.getValue(stravel.getArea(), "area")
 									.getName());
 					if (stravel.getCompany() != null) {
 						rowJSON.put(
@@ -1236,9 +1236,9 @@ public class StravelController {
 					rowJSON.put(
 							"area",
 							BaseDataManager.getInstance().getValue(
-									stravel.getArea(), "eara") != null ? BaseDataManager
+									stravel.getArea(), "area") != null ? BaseDataManager
 									.getInstance()
-									.getValue(stravel.getArea(), "eara")
+									.getValue(stravel.getArea(), "area")
 									.getName()
 									: "");
 					if (stravel.getCompany() != null
