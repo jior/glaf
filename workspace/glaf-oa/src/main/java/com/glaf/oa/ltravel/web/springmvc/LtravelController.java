@@ -335,7 +335,9 @@ public class LtravelController {
 					rowJSON.put("_travelid_", ltravel.getTravelid());
 					rowJSON.put("_otravelid_", ltravel.getTravelid());
 					rowJSON.put("area", ltravel.getArea());
-					if (ltravel.getCompany() != null) {
+					if (ltravel.getCompany() != null
+							&& BaseDataManager.getInstance().getValue(
+									ltravel.getCompany(), ltravel.getArea()) != null) {
 						rowJSON.put(
 								"company",
 								BaseDataManager

@@ -347,9 +347,11 @@ public class LeaveController {
 					rowJSON.put("leaveid", leave.getLeaveid());
 					rowJSON.put("_leaveid_", leave.getLeaveid());
 					rowJSON.put("_oleaveid_", leave.getLeaveid());
-					if (leave.getArea() != null) {
+					if (leave.getArea() != null
+							&& BaseDataManager.getInstance().getValue(
+									leave.getArea(), "area") != null) {
 						rowJSON.put("area", BaseDataManager.getInstance()
-								.getValue(leave.getArea(), "eara").getName());
+								.getValue(leave.getArea(), "area").getName());
 					}
 					if (leave.getCompany() != null) {
 						rowJSON.put("company", leave.getCompany());

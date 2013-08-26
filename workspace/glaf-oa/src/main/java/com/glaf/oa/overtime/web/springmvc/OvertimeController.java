@@ -373,9 +373,11 @@ public class OvertimeController {
 					rowJSON.put("_id_", overtime.getId());
 					rowJSON.put("_oid_", overtime.getId());
 					rowJSON.put("overtimeid", overtime.getOvertimeid());
-					if (overtime.getArea() != null) {
+					if (overtime.getArea() != null
+							&& BaseDataManager.getInstance().getValue(
+									overtime.getArea(), "area") != null) {
 						rowJSON.put("area", BaseDataManager.getInstance()
-								.getValue(overtime.getArea(), "eara").getName());
+								.getValue(overtime.getArea(), "area").getName());
 					}
 					if (overtime.getCompany() != null) {
 						rowJSON.put("company", overtime.getCompany());

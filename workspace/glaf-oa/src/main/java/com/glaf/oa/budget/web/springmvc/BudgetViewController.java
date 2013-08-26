@@ -46,18 +46,14 @@ import com.glaf.core.util.RequestUtils;
 import com.glaf.core.util.Tools;
 
 @Controller("/oa/budgetView")
-@RequestMapping({ "/oa/budgetView.do" })
+@RequestMapping({ "/oa/budgetView" })
 public class BudgetViewController {
 	protected static final Log logger = LogFactory
 			.getLog(BudgetViewController.class);
+
 	protected BudgetService budgetService;
 
-	@Resource
-	public void setBudgetService(BudgetService budgetService) {
-		this.budgetService = budgetService;
-	}
-
-	@RequestMapping(params = { "method=json" })
+	@RequestMapping("/json")
 	@ResponseBody
 	public byte[] json(HttpServletRequest request, ModelMap modelMap)
 			throws IOException {
@@ -153,5 +149,10 @@ public class BudgetViewController {
 		}
 
 		return new ModelAndView("/oa/common/budget_view", modelMap);
+	}
+
+	@Resource
+	public void setBudgetService(BudgetService budgetService) {
+		this.budgetService = budgetService;
 	}
 }
