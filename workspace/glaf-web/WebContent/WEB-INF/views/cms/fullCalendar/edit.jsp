@@ -115,14 +115,6 @@
   <table class="easyui-form" style="width:600px;" align="center">
     <tbody>
 	    <tr>
-		<td width="20%" class="editTitle">标题:</td>
-		<td align="left" colspan="3">
-			<input id="title" name="title" type="text" 
-				class="easyui-validatebox editInput"  style="width:480px;" data-options="required:true"
-				value="${fullCalendar.title}"/>
-		</td>
-	    </tr>
-	     <tr>
 		<td width="20%" class="editTitle">开始时间:</td>
 		<td align="left">
 			<input id="dateStart" name="dateStart" type="text" 
@@ -137,13 +129,14 @@
 		</td>
 	    </tr>
 		<tr>
-		<td width="20%" class="editTitle">内容:</td>
+		<td width="20%" class="editTitle">标题:</td>
 		<td align="left" colspan="3">
-			<textarea id="content" name="content"
-				class="easyui-validatebox editTextarea" rows="4" style="width:479px;">${fullCalendar.content}</textarea>
+			<input id="title" name="title" type="text" 
+				class="easyui-validatebox editInput"  style="width:480px;" data-options="required:true"
+				value="${fullCalendar.title}"/>
 		</td>
 	    </tr>
-	    <tr>
+		<tr>
 		<td width="20%" class="editTitle">地点:</td>
 		<td align="left" colspan="3">
 			<input id="address" name="address" type="text" 
@@ -151,6 +144,13 @@
 				value="${fullCalendar.address}"/>
 		</td>
 		</tr>
+		<tr>
+		<td width="20%" class="editTitle">内容:</td>
+		<td align="left" colspan="3">
+			<textarea id="content" name="content"
+				class="easyui-validatebox editTextarea" rows="4" style="width:479px;">${fullCalendar.content}</textarea>
+		</td>
+	    </tr>
 		<tr>
 		<td width="20%" class="editTitle">备注:</td>
 		<td align="left" colspan="3">
