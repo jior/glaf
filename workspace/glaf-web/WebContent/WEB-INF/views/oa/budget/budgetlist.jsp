@@ -323,16 +323,13 @@
 	}
 
 	function print(id) {
-		window.location = '${contextPath}/mx/oa/reports/exportBudget?budgetid='
-				+ id;
-
+		window.location = '${contextPath}/mx/oa/reports/exportBudget?budgetid='+ id;
 	}
 
 	function viewProc(processinstanceid) {
-		window.open('${contextPath}/mx/jbpm/task/task?processInstanceId='
-				+ processinstanceid);
-
+		window.open('${contextPath}/mx/jbpm/task/task?processInstanceId='+ processinstanceid);
 	}
+
 	function formatter4(value, row, rowIndex) {
 		return "<div style='width:100%' title=" + value + "><nobr>" + value
 				+ "</nobr></div>";

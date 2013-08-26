@@ -201,7 +201,7 @@
 							<td width="20%" align="left">申请单位：</td>
 							<td align="left"><input id="company" class="easyui-combobox"
 								name="company" value="${leave.company}" editable="false"
-								data-options="required:true,valueField:'code',textField:'name',url:'${contextPath}/rs/dictory/jsonArray/${leave.area}'" />
+								data-options="required:false,valueField:'code',textField:'name',url:'${contextPath}/rs/dictory/jsonArray/${leave.area}'" />
 							</td>
 							<td width="20%" align="left">部门：</td>
 							<td align="left"><input id="dept" class="easyui-combobox"
@@ -284,7 +284,7 @@
 						<tr>
 							<td width="20%" align="left">请假事由：</td>
 							<td align="left" colspan="5"><textarea id="content"
-									name="content" style="width: 91%" data-options="required:true"
+									name="content" style="width: 580px;height:90px;" data-options="required:true"
 									validType="notNullAndLength[200]" class="easyui-validatebox">${leave.content}</textarea>
 							</td>
 						</tr>
@@ -317,7 +317,7 @@
 						<tr>
 							<td width="20%" align="left">备注：</td>
 							<td align="left" colspan="5"><textarea id="remark"
-									name="remark" style="width: 91%" validType="Maxlength[200]"
+									name="remark" style="width: 580px;height:90px;" validType="Maxlength[200]"
 									class="easyui-validatebox">${leave.remark}</textarea></td>
 						</tr>
 						<tr>

@@ -581,7 +581,7 @@
 
 						<tr>
 							<td align="left" width="45px;">事由</td>
-							<td align="left" colspan="7"><textarea rows="2" cols="70"
+							<td align="left" colspan="7"><textarea rows="5" cols="80"
 									id="subject" name="subject" class="easyui-validatebox"
 									validType="notNullAndLength[200]" maxlength="200"
 									data-options="required:true">${reimbursement.subject}</textarea></td>

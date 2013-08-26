@@ -195,7 +195,7 @@
 							<td width="20%" align="left">单位：</td>
 							<td align="left"><input id="company" class="easyui-combobox"
 								name="company" value="${overtime.company}" editable="false"
-								data-options="required:true,valueField:'code',textField:'name',url:'${contextPath}/rs/dictory/jsonArray/${overtime.area}'" />
+								data-options="required:false,valueField:'code',textField:'name',url:'${contextPath}/rs/dictory/jsonArray/${overtime.area}'" />
 							</td>
 							<td width="20%" align="left">部门：</td>
 							<td align="left"><input id="dept" class="easyui-combobox"

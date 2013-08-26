@@ -278,7 +278,7 @@
 							<td align="left"><div style="width: 60px;">申请单位</div></td>
 							<td align="left"><input id="company" class="easyui-combobox"
 								name="company" editable="false"
-								data-options="valueField:'code',textField:'name',required:true,url:'${contextPath}/rs/dictory/jsonArray/${borrow.area}'"
+								data-options="valueField:'code',textField:'name',required:false,url:'${contextPath}/rs/dictory/jsonArray/${borrow.area}'"
 								value="${borrow.company}" size='22' /></td>
 							<td align="left"><div style="width: 60px;">申请日期</div></td>
 							<td align="left"><input id="appdate" name="appdate"
@@ -357,12 +357,12 @@
 							</td>
 						</tr>
 						<tr>
-							<td colspan="6" align="left">
+							<td colspan="6" align="left" valign="middle">
 								<fieldset>
 									<div>
 										明细：
 										<textarea rows="3" cols="60" id="details" name="details"
-											class="easyui-validatebox"
+											class="easyui-validatebox"  style="width: 580px;height:60px;" 
 											data-options="required:true,validType:'Maxlength[200]'">${borrow.details}</textarea>
 									</div>
 								</fieldset>

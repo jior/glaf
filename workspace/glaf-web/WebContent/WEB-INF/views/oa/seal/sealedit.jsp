@@ -102,16 +102,7 @@
 			style="height: 40px">
 			<div class="toolbar-backgroud">
 				<span class="x_content_title">印章申请</span>
-				<!-- <input type="button" name="save" value=" 保存 " class="button btn btn-primary" onclick="javascript:saveData();">
-	<input type="button" name="saveAs" value=" 另存 " class="button btn" onclick="javascript:saveAsData();">
-	<input type="button" name="back" value=" 返回 " class="button btn" onclick="javascript:history.back();"> -->
-
-				<!-- 
-	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-saveas'" onclick="javascript:saveAsData();" >另存</a> 
-        -->
-				<!--
-	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-back'" onclick="javascript:history.back();">返回</a>
-	-->
+				 
 				<a href="#" class="easyui-linkbutton"
 					data-options="plain:true, iconCls:'icon-save'"
 					onclick="javascript:saveData();">保存</a> <a href="#"
@@ -148,7 +139,7 @@
 							<td align="right">申报单位</td>
 							<td align="left" colspan="1"><input id="company"
 								class="easyui-combobox" name="company" readonly="readonly"
-								data-options="valueField:'code',textField:'name',editable:false,required:true,url:'${contextPath}/rs/dictory/jsonArray/${seal.area}'"
+								data-options="valueField:'code',textField:'name',editable:false,required:false,url:'${contextPath}/rs/dictory/jsonArray/${seal.area}'"
 								value="${seal.company}" size='25' /></td>
 
 							<td align="left">部门</td>
@@ -250,13 +241,13 @@ jQuery.ajax({
 							<td align="left" colspan="4"><textarea id="content"
 									name="content"
 									data-options="required:true,validType:'notNullAndLength[200]'"
-									class="easyui-validatebox" rows="3" cols="50">${seal.content}</textarea>
+									class="easyui-validatebox" rows="5" cols="50">${seal.content}</textarea>
 							</td>
 						</tr>
 						<tr>
 							<td align="left" colspan="2">申请盖章文件之份数</td>
 							<td align="left" colspan="4"><input id="num" name="num"
-								type="text" maxlength="8" min="1" max="99999999"
+								type="text" maxlength="3" min="1" max="999" size="5"
 								class="easyui-numberbox" value="${seal.num}"
 								data-options="required:true" /></td>
 						</tr>
@@ -264,7 +255,7 @@ jQuery.ajax({
 						<tr>
 							<td align="left" colspan="2">备注</td>
 							<td align="left" colspan="4"><textarea id="remark"
-									name="remark" class="easyui-validatebox" rows="3" cols="50"
+									name="remark" class="easyui-validatebox" rows="5" cols="50"
 									validType="Maxlength[200]">${seal.remark}</textarea></td>
 						</tr>
 						<tr>

@@ -948,12 +948,12 @@
 							<td width="20%" align="left">申请单位：</td>
 							<td align="left"><input id="company" class="easyui-combobox"
 								name="company" value="${stravel.company}" editable="false"
-								data-options="required:true,valueField:'code',textField:'name',url:'${contextPath}/rs/dictory/jsonArray/${stravel.area}'" />
+								data-options="required:false,valueField:'code',textField:'name',url:'${contextPath}/rs/dictory/jsonArray/${stravel.area}'" />
 							</td>
 							<td width="20%" align="left">地区：</td>
 							<td align="left"><input id="area" class="easyui-combobox"
 								name="area" value="${stravel.area}" disabled="disabled"
-								data-options="required:true,valueField:'code',textField:'name',url:'${contextPath}/rs/dictory/jsonArray/eara'" />
+								data-options="required:false,valueField:'code',textField:'name',url:'${contextPath}/rs/dictory/jsonArray/eara'" />
 							</td>
 							<td width="20%" align="left">部门：</td>
 							<td align="left"><input id="dept" class="easyui-combobox"
@@ -1048,7 +1048,7 @@
 						<tr>
 							<td width="20%" align="left">事由：</td>
 							<td align="left" colspan="5"><textarea id="content"
-									name="content" style="width: 91%" data-options="required:true"
+									name="content"  style="width: 580px;height:90px;"  data-options="required:true"
 									validType="notNullAndLength[200]" class="easyui-validatebox">${stravel.content}</textarea>
 							</td>
 						</tr>

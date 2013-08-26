@@ -14,9 +14,9 @@
 
 <script type="text/javascript">
 
-   var contextPath="${contextPath}";
-   var area = "<%=request.getParameter("area")%>" ;
-   var appuser = "<%=request.getParameter("appuser")%>";
+   var contextPath='${contextPath}';
+   var area = '<%=request.getParameter("area")%>' ;
+   var appuser = '<%=request.getParameter("appuser")%>';
    
 	jQuery(function() {
 		jQuery('#mydatagrid')

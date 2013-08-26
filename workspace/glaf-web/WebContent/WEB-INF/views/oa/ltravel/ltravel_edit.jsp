@@ -194,7 +194,7 @@
 							<td width="20%" align="left">申请单位：</td>
 							<td align="left"><input id="company" class="easyui-combobox"
 								name="company" value="${ltravel.company}" editable="false"
-								data-options="required:true,valueField:'code',textField:'name',url:'${contextPath}/rs/dictory/jsonArray/${ltravel.area}'" />
+								data-options="required:false,valueField:'code',textField:'name',url:'${contextPath}/rs/dictory/jsonArray/${ltravel.area}'" />
 							</td>
 							<td width="20%" align="left">地区：</td>
 							<td align="left"><input id="area" class="easyui-combobox"
@@ -275,7 +275,7 @@
 						<tr>
 							<td width="20%" align="left">出差地点：</td>
 							<td align="left" colspan="5"><textarea id="traveladdress"
-									name="traveladdress" style="width: 91%"
+									name="traveladdress"  style="width: 520px;height:40px;" 
 									data-options="required:true" validType="notNullAndLength[200]"
 									class="easyui-validatebox">${ltravel.traveladdress}</textarea>
 							</td>
@@ -299,7 +299,7 @@
 						<tr>
 							<td width="20%" align="left">事由：</td>
 							<td align="left" colspan="5"><textarea id="content"
-									name="content" style="width: 91%" validType="Maxlength[200]"
+									name="content" style="width: 520px;height:90px;"  validType="Maxlength[200]"
 									class="easyui-validatebox">${ltravel.content}</textarea></td>
 						</tr>
 						<tr>
