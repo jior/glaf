@@ -85,6 +85,7 @@ public class SqlMapContainer {
 				getEntityDAO().delete(statementId, params);
 			}
 		} catch (Exception ex) {
+			logger.error(ex);
 			throw new RuntimeException(ex);
 		} finally {
 			Context.close(jbpmContext);
@@ -112,6 +113,7 @@ public class SqlMapContainer {
 			getEntityDAO().setConnection(jbpmContext.getConnection());
 			return getEntityDAO().getList(statementId, parameterObject);
 		} catch (Exception ex) {
+			logger.error(ex);
 			throw new RuntimeException(ex);
 		} finally {
 			Context.close(jbpmContext);
@@ -146,6 +148,7 @@ public class SqlMapContainer {
 			getEntityDAO().setConnection(jbpmContext.getConnection());
 			return getEntityDAO().getSingleObject(statementId, parameterObject);
 		} catch (Exception ex) {
+			logger.error(ex);
 			throw new RuntimeException(ex);
 		} finally {
 			Context.close(jbpmContext);
