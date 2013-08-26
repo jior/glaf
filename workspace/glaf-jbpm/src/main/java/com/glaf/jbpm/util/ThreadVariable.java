@@ -26,6 +26,16 @@ public class ThreadVariable {
 
 	static ThreadLocal<Map<String, Object>> dataFieldsThreadLocal = new ThreadLocal<Map<String, Object>>();
 
+	static ThreadLocal<Object> approveThreadLocal = new ThreadLocal<Object>();
+
+	public static void setApprove(Object approve) {
+		approveThreadLocal.set(approve);
+	}
+
+	public static Object getApprove() {
+		return approveThreadLocal.get();
+	}
+	
 	public static void setDataFields(Map<String, Object> dataFields) {
 		dataFieldsThreadLocal.set(dataFields);
 	}
