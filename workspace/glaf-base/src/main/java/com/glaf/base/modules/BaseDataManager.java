@@ -491,11 +491,13 @@ public class BaseDataManager {
 	public BaseDataInfo getValue(String code, String key) {
 		BaseDataInfo ret = null;
 		Iterator<BaseDataInfo> iter = getList(key);
-		while (iter.hasNext()) {
-			BaseDataInfo temp = (BaseDataInfo) iter.next();
-			if (StringUtils.equals(temp.getCode(), code)) {
-				ret = temp;
-				break;
+		if (iter != null) {
+			while (iter.hasNext()) {
+				BaseDataInfo temp = (BaseDataInfo) iter.next();
+				if (StringUtils.equals(temp.getCode(), code)) {
+					ret = temp;
+					break;
+				}
 			}
 		}
 		return ret;
