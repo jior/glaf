@@ -47,6 +47,7 @@ import com.glaf.core.security.LoginContext;
 import com.glaf.core.service.IQueryDefinitionService;
 import com.glaf.core.util.FileUtils;
 import com.glaf.core.util.JsonUtils;
+import com.glaf.core.util.LogUtils;
 import com.glaf.core.util.Paging;
 import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.RequestUtils;
@@ -304,6 +305,11 @@ public class MxReportController {
 		ReportQuery query = new ReportQuery();
 		Tools.populate(query, params);
 
+		Long nodeId = RequestUtils.getLong(request, "nodeId");
+		if (nodeId != null && nodeId > 0) {
+			query.nodeId(nodeId);
+		}
+
 		String gridType = ParamUtils.getString(params, "gridType");
 		if (gridType == null) {
 			gridType = "easyui";
@@ -359,7 +365,12 @@ public class MxReportController {
 				}
 
 			}
+		} else {
+			JSONArray rowsJSON = new JSONArray();
+			result.put("rows", rowsJSON);
+			result.put("total", total);
 		}
+		LogUtils.debug(result.toJSONString());
 		return result.toString().getBytes("UTF-8");
 	}
 

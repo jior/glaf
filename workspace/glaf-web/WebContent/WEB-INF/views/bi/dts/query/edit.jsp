@@ -13,6 +13,8 @@
 <%@ page import="com.glaf.dts.util.*"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ include file="/WEB-INF/views/inc/init_import.jsp"%>
+<%@ include file="/WEB-INF/views/inc/init_config.jsp"%>
 <%
          
 		IQueryDefinitionService queryDefinitionService = ContextFactory.getBean("queryDefinitionService");
@@ -44,8 +46,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Table</title>
-<%@ include file="/WEB-INF/views/tm/mx_header.jsp"%>
+<title><%=appTitle%></title>
+<meta name="Keywords" content="<%=appKeywords%>" />
+<meta name="Description" content="<%=appDescription%>" />
+<%@ include file="/WEB-INF/views/inc/init_style.jsp"%>
+<%@ include file="/WEB-INF/views/inc/init_script.jsp"%>
+
 <script type="text/javascript">
 	     function saveForm(actionType){
              if(document.getElementById("title").value==""){
@@ -153,45 +159,41 @@
 </script>
 </head>
 <body>
-<br>
+ 
 <div class="x_content_title" style="width: 90%;">
     <img src="<%=request.getContextPath()%>/images/window.png" alt="编辑查询信息">&nbsp;编辑查询信息
 </div>
 <form id="iForm"  name="iForm" method="post" action="" class="x-form">
 <input type="hidden" id="actionType" name="actionType" />
+<input type="hidden" id="nodeId" name="nodeId" value="${nodeId}"/>
 <input type="hidden" id="queryId" name="queryId" value="${query.id}"/>
 <div class="content-block" style="width: 90%;"><br>
  
 
-<table align="center"   cellspacing="1"
-	cellpadding="1" width="95%">
+<table align="center"  class="easyui-form"   cellspacing="1" cellpadding="1" width="95%">
 	<tr>
-	    <td >标题&nbsp;<span class="required">*</span>&nbsp;</td>
-		<td >
-		    <input type="text" id="title" name="title" class="input-xlarge" value="${query.title}"/> 
+	    <td>标题&nbsp;<span class="required">*</span>&nbsp;</td>
+		<td>
+		    <input type="text" id="title" name="title" size="30" class="input-xlarge easyui-validatebox" value="${query.title}"/> 
 		</td>
-    </tr>
-	<tr>
-		<td >名称</td>
-		<td >
-		    <input type="text" id="name" name="name" class="input-xlarge" value="${query.name}"/>
+		<td>名称</td>
+		<td>
+		    <input type="text" id="name" name="name" size="30" class="input-xlarge" value="${query.name}"/>
 		</td>
 	</tr>
 	<tr>
-		<td >目标表</td>
-		<td >
-		  <input type="text" id="targetTableName" name="targetTableName" class="input-xlarge" value="${query.targetTableName}"/>
+		<td>目标表</td>
+		<td>
+		  <input type="text" id="targetTableName" name="targetTableName" size="30" class="input-xlarge" value="${query.targetTableName}"/>
 		</td>
-    </tr>
-	<tr>
-		<td >描述</td>
-		<td >
-		  <input type="text" id="description" name="description" class="input-xlarge" value="${query.description}"/>
+		<td>描述</td>
+		<td>
+		  <input type="text" id="description" name="description" size="30" class="input-xlarge" value="${query.description}"/>
 		</td>
 	</tr>
 	<tr>
-		<td >父查询</td>
-		<td >
+		<td>父查询</td>
+		<td colspan="3">
 		  
 		   <%
 		     StringBuffer sb = new StringBuffer();
@@ -215,15 +217,16 @@
 		</td>
 	</tr>
 	<tr>
-		<td >SQL语句&nbsp;<span class="required">*</span>&nbsp;</td>
-		<td > 
-		    <textarea id="sql" name="sql" rows="15" cols="86" class="span7 input-xlarge">${query.sql}</textarea>
+		<td>SQL语句&nbsp;<span class="required">*</span>&nbsp;</td>
+		<td colspan="3"> 
+		    <textarea id="sql" name="sql" rows="15" cols="66" 
+			          class="span7 input-xlarge easyui-validatebox">${query.sql}</textarea>
 		</td>
 	</tr>
 
 	<tr>
-	   <td >&nbsp;</td>
-	   <td   align="left">
+	   <td>&nbsp;</td>
+	   <td colspan="3" align="left"><br/>
 	    <input type="button"  name="save" value="保存" class="btn btn-primary" 
 		           onclick="javascript:saveForm('');"/>&nbsp;
 		<input type="button"  name="save" value="另存" class="btn " 

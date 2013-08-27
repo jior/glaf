@@ -20,12 +20,12 @@ package com.glaf.chart.web.springmvc;
 
 import java.io.IOException;
 import java.util.*;
- 
+
 import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
@@ -47,6 +47,7 @@ import com.glaf.core.security.LoginContext;
 import com.glaf.core.service.IQueryDefinitionService;
 import com.glaf.core.util.DBUtils;
 import com.glaf.core.util.JsonUtils;
+import com.glaf.core.util.LogUtils;
 import com.glaf.core.util.Paging;
 import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.RequestUtils;
@@ -216,6 +217,11 @@ public class ChartController {
 		ChartQuery query = new ChartQuery();
 		Tools.populate(query, params);
 
+		Long nodeId = RequestUtils.getLong(request, "nodeId");
+		if (nodeId != null && nodeId > 0) {
+			query.nodeId(nodeId);
+		}
+
 		String gridType = ParamUtils.getString(params, "gridType");
 		if (gridType == null) {
 			gridType = "easyui";
@@ -271,7 +277,12 @@ public class ChartController {
 				}
 
 			}
+		} else {
+			JSONArray rowsJSON = new JSONArray();
+			result.put("rows", rowsJSON);
+			result.put("total", total);
 		}
+		LogUtils.debug(result.toJSONString());
 		return result.toString().getBytes("UTF-8");
 	}
 

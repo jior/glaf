@@ -71,7 +71,7 @@ public class TemplateJsonFactory {
 			model.setLocked(jsonObject.getInteger("locked"));
 		}
 		if (jsonObject.containsKey("nodeId")) {
-			model.setNodeId(jsonObject.getInteger("nodeId"));
+			model.setNodeId(jsonObject.getLong("nodeId"));
 		}
 		if (jsonObject.containsKey("lastModified")) {
 			model.setLastModified(jsonObject.getLong("lastModified"));

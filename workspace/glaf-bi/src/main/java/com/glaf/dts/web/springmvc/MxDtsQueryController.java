@@ -39,7 +39,7 @@ import com.glaf.core.domain.QueryDefinition;
 import com.glaf.core.query.QueryDefinitionQuery;
 import com.glaf.core.security.LoginContext;
 import com.glaf.core.service.IQueryDefinitionService;
-
+import com.glaf.core.util.LogUtils;
 import com.glaf.core.util.Paging;
 import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.RequestUtils;
@@ -114,11 +114,12 @@ public class MxDtsQueryController {
 			throws IOException {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		Long nodeId = RequestUtils.getLong(request, "nodeId");
+		
 		QueryDefinitionQuery query = new QueryDefinitionQuery();
 		Tools.populate(query, params);
 		query.type(com.glaf.dts.util.Constants.DTS_TASK_TYPE);
 
+		Long nodeId = RequestUtils.getLong(request, "nodeId");
 		if (nodeId != null && nodeId > 0) {
 			query.nodeId(nodeId);
 		}
@@ -129,8 +130,8 @@ public class MxDtsQueryController {
 		 * 此处业务逻辑需自行调整
 		 */
 		if (!loginContext.isSystemAdministrator()) {
-			String actorId = loginContext.getActorId();
-			query.createBy(actorId);
+			//String actorId = loginContext.getActorId();
+			//query.createBy(actorId);
 		}
 
 		String gridType = ParamUtils.getString(params, "gridType");
@@ -180,9 +181,7 @@ public class MxDtsQueryController {
 
 			if (list != null && !list.isEmpty()) {
 				JSONArray rowsJSON = new JSONArray();
-
 				result.put("rows", rowsJSON);
-
 				for (QueryDefinition queryDefinition : list) {
 					JSONObject rowJSON = queryDefinition.toJsonObject();
 					rowJSON.put("id", queryDefinition.getId());
@@ -197,6 +196,7 @@ public class MxDtsQueryController {
 			result.put("rows", rowsJSON);
 			result.put("total", total);
 		}
+		LogUtils.debug(result.toJSONString());
 		return result.toJSONString().getBytes("UTF-8");
 	}
 

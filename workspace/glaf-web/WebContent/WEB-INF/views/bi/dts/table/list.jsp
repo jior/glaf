@@ -1,34 +1,233 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ page import="java.sql.*"%>
-<%@ page import="java.util.*"%>
-<%@ page import="com.glaf.core.context.*"%>
-<%@ page import="com.glaf.core.domain.*"%>
-<%@ page import="com.glaf.core.query.*"%>
-<%@ page import="com.glaf.core.service.*"%>
-<%@ page import="com.glaf.core.util.*"%>
-<%@ page import="com.glaf.core.util.*"%>
-<%@ page import="com.glaf.dts.domain.*"%>
-<%@ page import="com.glaf.dts.query.*"%>
-<%@ page import="com.glaf.dts.service.*"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%
-     ITableDefinitionService tableDefinitionService =  ContextFactory.getBean("tableDefinitionService");
-	 IQueryDefinitionService queryDefinitionService =  ContextFactory.getBean("queryDefinitionService");
-
-	 TableDefinitionQuery query = new TableDefinitionQuery();
-	 query.type(com.glaf.dts.util.Constants.DTS_TASK_TYPE);
-	 List<TableDefinition> tables = tableDefinitionService.getTableDefinitionsByQueryCriteria(0,1000,query);
-	 QueryDefinitionQuery q = new QueryDefinitionQuery();
-	 List<QueryDefinition> queries = queryDefinitionService.list(q);
+    String theme = com.glaf.core.util.RequestUtils.getTheme(request);
+    request.setAttribute("theme", theme);
 %>
-<!DOCTYPE html >
+<!DOCTYPE html>
 <html>
 <head>
-<title>表管理 </title>
-<%@ include file="/WEB-INF/views/tm/mx_header.jsp"%>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>${treeModel.name}表管理</title>
+<link href="<%=request.getContextPath()%>/scripts/artDialog/skins/default.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/easyui/themes/${theme}/easyui.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/scripts/ztree/css/zTreeStyle/zTreeStyle.css" type="text/css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/themes/${theme}/styles.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/icons/styles.css">
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.form.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/ztree/js/jquery.ztree.all.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/artDialog/artDialog.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/artDialog/plugins/iframeTools.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/glaf-base.js"></script>
 <script type="text/javascript">
-         
+
+   var setting = {
+			async: {
+				enable: true,
+				url:"<%=request.getContextPath()%>/rs/tree/treeJson?nodeCode=report_category",
+				dataFilter: filter
+			},
+			callback: {
+				onClick: zTreeOnClick
+			}
+		};
+  
+  	function filter(treeId, parentNode, childNodes) {
+		if (!childNodes) return null;
+		for (var i=0, l=childNodes.length; i<l; i++) {
+			childNodes[i].name = childNodes[i].name.replace(/\.n/g, '.');
+			childNodes[i].icon="<%=request.getContextPath()%>/icons/icons/basic.gif";
+		}
+		return childNodes;
+	}
+
+
+    function zTreeOnClick(event, treeId, treeNode, clickFlag) {
+		jQuery("#nodeId").val(treeNode.id);
+		loadMxData('<%=request.getContextPath()%>/mx/dts/table/json?nodeId='+treeNode.id);
+	}
+
+	function loadMxData(url){
+		  jQuery.get(url+'&randnum='+Math.floor(Math.random()*1000000),{qq:'xx'},function(data){
+		      //var text = JSON.stringify(data); 
+              //alert(text);
+			  //jQuery('#mydatagrid').datagrid('loadData', data);
+			  jQuery('#mydatagrid').datagrid('load',getMxObjArray(jQuery("#iForm").serializeArray()));
+		  },'json');
+	}
+
+
+	function reLoadData(nodeId){
+		loadData('<%=request.getContextPath()%>/mx/dts/table/json?nodeId='+nodeId);
+	}
+
+    jQuery(document).ready(function(){
+			jQuery.fn.zTree.init(jQuery("#myTree"), setting);
+	});
+
+    jQuery(function(){
+		jQuery('#mydatagrid').datagrid({
+				width:1000,
+				height:480,
+				fit:true,
+				fitColumns:true,
+				nowrap: false,
+				striped: true,
+				collapsible:true,
+				url:'<%=request.getContextPath()%>/mx/dts/table/json',
+				sortName: 'id',
+				sortOrder: 'desc',
+				remoteSort: false,
+				singleSelect:true,
+				idField:'id',
+				columns:[[
+	                {title:'序号',field:'startIndex',width:80,sortable:false},
+					{title:'表名',field:'tablename',width:150,sortable:false},
+					{title:'标题',field:'title',width:220,sortable:false},
+					{title:'关联查询',field:'query',width:220,sortable:false},
+					{title:'创建日期',field:'createDate',width:90,sortable:false},
+					{title:'功能键',field:'functionKeys',width:120,sortable:false}
+				]],
+				rownumbers:false,
+				pagination:true,
+				pageSize:15,
+				pageList: [10,15,20,25,30,40,50,100],
+				onDblClickRow: onRowClick 
+			});
+
+			var p = jQuery('#mydatagrid').datagrid('getPager');
+			jQuery(p).pagination({
+				onBeforeRefresh:function(){
+					//alert('before refresh');
+				}
+		    });
+
+	});
+
+		 
+	function addNew(){
+	    //location.href="<%=request.getContextPath()%>/mx/dts/table/edit";
+		var nodeId = jQuery("#nodeId").val();
+		if(nodeId=='' || nodeId==null){
+			alert("请在左边选择栏目类型！");
+			return;
+		}
+		var link="<%=request.getContextPath()%>/mx/dts/table/edit?nodeId="+nodeId;
+	    art.dialog.open(link, { height: 480, width: 900, title: "添加记录", lock: true, scrollbars:"no" }, false);
+		//location.href=link;
+	}
+
+	function onRowClick(rowIndex, row){
+		var nodeId = jQuery("#nodeId").val();
+        //window.open('<%=request.getContextPath()%>/mx/dts/table/edit?id='+row.id);
+	    var link = '<%=request.getContextPath()%>/mx/dts/table/edit?id='+row.id+"&nodeId="+nodeId;
+		art.dialog.open(link, { height: 480, width: 900, title: "修改记录", lock: true, scrollbars:"no" }, false);
+		//location.href=link;
+	}
+
+	function searchWin(){
+	    jQuery('#dlg').dialog('open').dialog('setTitle','信息查询');
+	    //jQuery('#iForm').form('clear');
+	}
+
+	function resize(){
+		jQuery('#mydatagrid').datagrid('resize', {
+			width:800,
+			height:400
+		});
+	}
+
+	function editSelected(){
+	    var rows = jQuery('#mydatagrid').datagrid('getSelections');
+	    var nodeId = jQuery("#nodeId").val();
+	    if(rows == null || rows.length !=1){
+		  alert("请选择其中一条记录。");
+		  return;
+	    }
+	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
+	    if (selected ){
+		  var link = "<%=request.getContextPath()%>/mx/dts/table/edit?id="+selected.id+"&nodeId="+nodeId;
+		  art.dialog.open(link, { height: 480, width: 900, title: "修改记录", lock: true, scrollbars:"no" }, false);
+	    }
+	}
+
+	 
+	function viewSelected(){
+		var rows = jQuery('#mydatagrid').datagrid('getSelections');
+		if(rows == null || rows.length !=1){
+			alert("请选择其中一条记录。");
+			return;
+		}
+		var selected = jQuery('#mydatagrid').datagrid('getSelected');
+		if (selected ){
+		    location.href="<%=request.getContextPath()%>/mx/dts/table/edit?id="+selected.id;
+		}
+	}
+
+
+	function deleteSelections(){
+		var ids = [];
+		var rows = jQuery('#mydatagrid').datagrid('getSelections');
+		for(var i=0;i<rows.length;i++){
+			ids.push(rows[i].id);
+		}
+		if(ids.length > 0 && confirm("数据删除后不能恢复，确定删除吗？")){
+		    var str = ids.join(',');
+			jQuery.ajax({
+				   type: "POST",
+				   url: '<%=request.getContextPath()%>/mx/dts/table/delete?ids='+str,
+				   dataType:  'json',
+				   error: function(data){
+					   alert('服务器处理错误！');
+				   },
+				   success: function(data){
+					   if(data != null && data.message != null){
+						   alert(data.message);
+					   } else {
+						   alert('操作成功完成！');
+					   }
+					   jQuery('#mydatagrid').datagrid('reload');
+				   }
+			 });
+		} else {
+			alert("请选择至少一条记录。");
+		}
+	}
+
+	function reloadGrid(){
+	    jQuery('#mydatagrid').datagrid('reload');
+	}
+
+	function getSelected(){
+	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
+	    if (selected){
+		  alert(selected.code+":"+selected.name+":"+selected.addr+":"+selected.col4);
+	    }
+	}
+
+	function getSelections(){
+	    var ids = [];
+	    var rows = jQuery('#mydatagrid').datagrid('getSelections');
+	    for(var i=0;i<rows.length;i++){
+		ids.push(rows[i].code);
+	    }
+	    alert(ids.join(':'));
+	}
+
+	function clearSelections(){
+	    jQuery('#mydatagrid').datagrid('clearSelections');
+	}
+
+	function searchData(){
+	    jQuery('#mydatagrid').datagrid('reload');	
+	    jQuery('#dlg').dialog('close');
+	}
+
+
 		 function transformTable(tableName){
 			 if(confirm("确定重新获取数据吗？")){
 				 var params = jQuery("#iForm").formSerialize();
@@ -126,93 +325,46 @@
 		document.getElementById("iForm").submit();
 	}
 
+
 </script>
 </head>
-<body style="padding-left:20px;padding-right:20px">
-<form id="iForm"  name="iForm" method="post" >
-<input type="hidden" id="tableName" name="tableName" />
-<input type="hidden" id="actionType" name="actionType" />
-<br> 
-<div class="x_content_title">
-    <img src="<%=request.getContextPath()%>/images/window.png" alt="表管理">&nbsp;表管理
+<body style="margin:1px;">  
+
+<input type="hidden" id="rowId" name="rowId" value="" >
+<div style="margin:0;"></div>  
+<div class="easyui-layout" data-options="fit:true">  
+    <div data-options="region:'west',split:true" style="width:180px;">
+	  <div class="easyui-layout" data-options="fit:true">  
+           
+			 <div data-options="region:'center',border:false">
+			    <ul id="myTree" class="ztree"></ul>  
+			 </div> 
+			 
+        </div>  
+	</div> 
+   <div data-options="region:'center'">  
+     <div class="easyui-layout" data-options="fit:true"> 
+	   <div data-options="region:'north',split:true,border:true" style="height:40px"> 
+	   <form id="iForm" name="iForm" method="post">
+	   <input type="hidden" id="nodeId" name="nodeId" value="" >
+	   <input type="hidden" id="tableName" name="tableName" />
+		<div class="toolbar-backgroud"  > 
+		<img src="<%=request.getContextPath()%>/images/window.png">
+		&nbsp;<span class="x_content_title">${treeModel.name}表管理</span>
+		<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-add'" 
+		   onclick="javascript:addNew();">新增</a>  
+		<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-edit'"
+		   onclick="javascript:editSelected();">修改</a> 
+		<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-remove'"
+		   onclick="javascript:deleteSelections();">删除</a> 
+	   </div> 
+	   </form>
+	  </div> 
+	  <div data-options="region:'center',border:true">
+		 <table id="mydatagrid"></table>
+	  </div>  
+    </div>
 </div>
- 
-
-<div style="width:100%;" >
-<table align="center" class="table-border" cellspacing="0"
-	cellpadding="0" width="90%">
-	<tr>
-		<td height="28" align="right">
-		    <!-- <input type="button" value="查询定义" name="edit" class="btn" 
-			           onclick="javascript:location.href='<%=request.getContextPath()%>/mx/dts/query';"> -->
-			<input type="button" value="加载并抽取数据" name="edit" class="btn btn-primary" 
-			       onclick="javascript: loadAndFetchData(); ">
-		</td>
-	</tr>
-</table>
-</div>
-<br>
-
- <table align="center" class="x-table-border table table-striped table-bordered table-condensed" cellspacing="1"
-	cellpadding="4" width="90%" border="0">
-	<tr class="x-title">
-		<td>表名</td>
-		<td>标题</td>
-		<td>关联查询</td>
-		<td>创建日期</td>
-		<td>功能键</td>
-	</tr>
-	
- <%
-        
-	    for(TableDefinition table: tables){
-			pageContext.setAttribute("table", table);
-	%>
-	 <tr   class="x-content">
-	    <td>
-		  <span onclick="javascript:editTable('${table.tableName}');" style="cursor:hand;">
-          ${table.tableName}
-	      </span>
-	     </td>
-		<td>
-           ${table.title}
-		</td>
-		<td>
-		       <%
-		            for(QueryDefinition qd: queries){
-		                if(table.getTableName().equals(qd.getTargetTableName())){
-                %>
-				      <a href="<%=request.getContextPath()%>/mx/dts/query/edit?queryId=<%=qd.getId()%>"><%=qd.getTitle()%></a>
-				<%
-						}
-	                }
-		       %>
-		</td>
-		<td>
-			 <fmt:formatDate value="${table.createTime}" pattern="yyyy-MM-dd HH:mm" />
-		</td>
-		<td align="center">
-		     <a href="#"  
-		       onclick="javascript:showData('<c:out value="${table.tableName}"/>');"/>
-			   <img src="<%=request.getContextPath()%>/images/prop.gif" border="0"> 数据</a>
-		    <a href="#"  
-		       onclick="javascript:transformTable('<c:out value="${table.tableName}"/>');"/>
-			   <img src="<%=request.getContextPath()%>/images/refresh.gif" border="0">重新取数</a>
-			&nbsp;
-			<a href="#" onclick="javascript:editTable('<c:out value="${table.tableName}"/>');" style="cursor:hand;">
-              <img src="<%=request.getContextPath()%>/images/update.gif" border="0"> 修改
-	         </a>
-			 &nbsp;
-		    <a href="#"  
-		       onclick="javascript:deleteTbl('<c:out value="${table.tableName}"/>');"/>
-			   <img src="<%=request.getContextPath()%>/images/delete.gif" border="0">删除</a>
-		</td>
-      </tr>
-	  <%}%>
-		
-</table>
-
-</form>
 
 </body>
 </html>

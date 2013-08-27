@@ -20,6 +20,7 @@ package com.glaf.report.domain;
 
 import java.io.*;
 import java.util.*;
+
 import javax.persistence.*;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -39,6 +40,9 @@ public class Report implements Serializable, JSONable {
 	@Id
 	@Column(name = "ID_", length = 50, nullable = false)
 	protected String id;
+
+	@Column(name = "NODEID_")
+	protected Long nodeId;
 
 	/**
 	 * 查询数据集
@@ -206,6 +210,10 @@ public class Report implements Serializable, JSONable {
 		return this.name;
 	}
 
+	public Long getNodeId() {
+		return nodeId;
+	}
+
 	public String getQueryIds() {
 		return this.queryIds;
 	}
@@ -354,6 +362,10 @@ public class Report implements Serializable, JSONable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public void setNodeId(Long nodeId) {
+		this.nodeId = nodeId;
 	}
 
 	public void setQueryIds(String queryIds) {

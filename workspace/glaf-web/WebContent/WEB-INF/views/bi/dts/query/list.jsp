@@ -9,7 +9,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>${treeModel.name}报表查询管理</title>
+<title>报表查询管理</title>
 <link href="<%=request.getContextPath()%>/scripts/artDialog/skins/default.css" rel="stylesheet" />
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/easyui/themes/${theme}/easyui.css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/scripts/ztree/css/zTreeStyle/zTreeStyle.css" type="text/css">
@@ -48,15 +48,15 @@
 
     function zTreeOnClick(event, treeId, treeNode, clickFlag) {
 		jQuery("#nodeId").val(treeNode.id);
-		loadData('<%=request.getContextPath()%>/mx/dts/query/json?nodeId='+treeNode.id);
+		loadMxData('<%=request.getContextPath()%>/mx/dts/query/json?nodeId='+treeNode.id);
 	}
 
-	function loadData(url){
+	function loadMxData(url){
 		  jQuery.get(url+'&randnum='+Math.floor(Math.random()*1000000),{qq:'xx'},function(data){
 		      //var text = JSON.stringify(data); 
-              //alert(url);
-			  //jQuery('#mydatagrid').datagrid('loadData', data);
-			  jQuery('#mydatagrid').datagrid('load',getObjArray(jQuery("#searchForm").serializeArray()));
+              //alert(text);
+			  jQuery('#mydatagrid').datagrid('loadData', data);
+			  //jQuery('#mydatagrid').datagrid('load',getMxObjArray(jQuery("#iForm").serializeArray()));
 		  },'json');
 	}
 
@@ -67,7 +67,7 @@
 
     jQuery(document).ready(function(){
 			jQuery.fn.zTree.init(jQuery("#myTree"), setting);
-		});
+	});
 
     jQuery(function(){
 		jQuery('#mydatagrid').datagrid({
@@ -78,7 +78,7 @@
 				nowrap: false,
 				striped: true,
 				collapsible:true,
-				url:'<%=request.getContextPath()%>/mx/dts/query/json?serviceKey=${serviceKey}',
+				url:'<%=request.getContextPath()%>/mx/dts/query/json',
 				sortName: 'id',
 				sortOrder: 'desc',
 				remoteSort: false,
@@ -86,9 +86,8 @@
 				idField:'id',
 				columns:[[
 	                {title:'序号',field:'startIndex',width:80,sortable:false},
-					{title:'表名',field:'tablename',width:150,sortable:false},
 					{title:'标题',field:'title',width:220,sortable:false},
-					{title:'关联查询',field:'query',width:220,sortable:false},
+					{title:'目标表',field:'targetTableName',width:220,sortable:false},
 					{title:'创建日期',field:'createDate',width:90,sortable:false},
 					{title:'功能键',field:'functionKeys',width:120,sortable:false}
 				]],
@@ -106,12 +105,10 @@
 				}
 		    });
 
-			jQuery('#dd_audit').dialog('close');
 	});
 
 		 
 	function addNew(){
-	    //location.href="<%=request.getContextPath()%>/mx/dts/query/edit";
 		var nodeId = jQuery("#nodeId").val();
 		if(nodeId=='' || nodeId==null){
 			alert("请在左边选择栏目类型！");
@@ -119,20 +116,16 @@
 		}
 		var link="<%=request.getContextPath()%>/mx/dts/query/edit?nodeId="+nodeId;
 	    art.dialog.open(link, { height: 480, width: 900, title: "添加记录", lock: true, scrollbars:"no" }, false);
-		//location.href=link;
 	}
 
 	function onRowClick(rowIndex, row){
 		var nodeId = jQuery("#nodeId").val();
-        //window.open('<%=request.getContextPath()%>/mx/dts/query/edit?id='+row.id);
 	    var link = '<%=request.getContextPath()%>/mx/dts/query/edit?id='+row.id+"&nodeId="+nodeId;
 		art.dialog.open(link, { height: 480, width: 900, title: "修改记录", lock: true, scrollbars:"no" }, false);
-		//location.href=link;
 	}
 
 	function searchWin(){
 	    jQuery('#dlg').dialog('open').dialog('setTitle','信息查询');
-	    //jQuery('#searchForm').form('clear');
 	}
 
 	function resize(){
@@ -228,7 +221,6 @@
 	    jQuery('#dlg').dialog('close');
 	}
 
-
 </script>
 </head>
 <body style="margin:1px;">  
@@ -248,11 +240,11 @@
    <div data-options="region:'center'">  
      <div class="easyui-layout" data-options="fit:true"> 
 	   <div data-options="region:'north',split:true,border:true" style="height:40px"> 
-	   <form id="searchForm" name="searchForm" method="post">
+	   <form id="iForm" name="iForm" method="post">
 	   <input type="hidden" id="nodeId" name="nodeId" value="" >
 		<div class="toolbar-backgroud"  > 
 		<img src="<%=request.getContextPath()%>/images/window.png">
-		&nbsp;<span class="x_content_title">${treeModel.name}报表查询管理</span>
+		&nbsp;<span class="x_content_title">报表查询管理</span>
 		<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-add'" 
 		   onclick="javascript:addNew();">新增</a>  
 		<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-edit'"
@@ -266,17 +258,6 @@
 		 <table id="mydatagrid"></table>
 	  </div>  
     </div>
-  </div>
-</div>
- 
-<div id="dlg" class="easyui-dialog" style="width:400px;height:280px;padding:10px 20px"
-	closed="true" buttons="#dlg-buttons">
-    <form id="searchForm2" name="searchForm2" method="post">
-	  <table class="easyui-form" >
-        <tbody>
-	    </tbody>
-      </table>
-    </form>
 </div>
 
 </body>

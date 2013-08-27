@@ -181,6 +181,7 @@
  <br/>
 	 <form id="iForm" name="iForm" method="post">
 	    <input type="hidden" id="id" name="id" value="${chart.id}"/>
+		<input type="hidden" id="nodeId" name="nodeId" value="${nodeId}"/>
 	    <input type="hidden" id="chartId" name="chartId" value="${chart.id}"/>
 	    <table class="easyui-form" style="width:800px;height:250px" align="center">
 		<tbody>

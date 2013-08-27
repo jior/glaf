@@ -9,21 +9,61 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>图表定义</title>
-	<%@ include file="/WEB-INF/views/tm/header.jsp"%>
-	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/easyui/themes/${theme}/easyui.css">
-	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/icons/styles.css">
-	<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
-	<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.form.js"></script>
-	<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/jquery.easyui.min.js"></script>
-	<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/locale/easyui-lang-zh_CN.js"></script>
-	<script type="text/javascript">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>图表定义</title>
+<%@ include file="/WEB-INF/views/tm/header.jsp"%>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/easyui/themes/${theme}/easyui.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/scripts/ztree/css/zTreeStyle/zTreeStyle.css" type="text/css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/icons/styles.css">
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.form.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/ztree/js/jquery.ztree.all.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/glaf-base.js"></script>
+<script type="text/javascript">
+
+   var setting = {
+			async: {
+				enable: true,
+				url:"<%=request.getContextPath()%>/rs/tree/treeJson?nodeCode=report_category",
+				dataFilter: filter
+			},
+			callback: {
+				onClick: zTreeOnClick
+			}
+		};
+  
+  	function filter(treeId, parentNode, childNodes) {
+		if (!childNodes) return null;
+		for (var i=0, l=childNodes.length; i<l; i++) {
+			childNodes[i].name = childNodes[i].name.replace(/\.n/g, '.');
+			childNodes[i].icon="<%=request.getContextPath()%>/icons/icons/basic.gif";
+		}
+		return childNodes;
+	}
+
+
+    function zTreeOnClick(event, treeId, treeNode, clickFlag) {
+		jQuery("#nodeId").val(treeNode.id);
+		loadMyData('<%=request.getContextPath()%>/mx/bi/chart/json?nodeId='+treeNode.id);
+	}
+
+	function loadMyData(url){
+		  jQuery.get(url+'&randnum='+Math.floor(Math.random()*1000000),{qq:'xx'},function(data){
+		      //var text = JSON.stringify(data); 
+              //alert(text);
+			  jQuery('#mydatagrid').datagrid('loadData', data);
+			  //jQuery('#mydatagrid').datagrid('load',getMxObjArray(jQuery("#iForm").serializeArray()));
+		  },'json');
+	}
+
+    jQuery(document).ready(function(){
+			jQuery.fn.zTree.init(jQuery("#myTree"), setting);
+	});
+
 		jQuery(function(){
 			jQuery('#easyui_data_grid').datagrid({
-				//title:'图表定义',
-				//iconCls:'icon-save',
-				//width:800,
 				width:1000,
 				height:480,
 				fit:true,
@@ -31,7 +71,7 @@
 				nowrap: false,
 				striped: true,
 				collapsible:true,
-				url:'<%=request.getContextPath()%>/rs/bi/chart/list?gridType=easyui',
+				url:'<%=request.getContextPath()%>/mx/bi/chart/json',
 				sortName: 'id',
 				sortOrder: 'desc',
 				remoteSort: false,
@@ -65,7 +105,7 @@
 		}
 
 		function formatter1(value,row,index){
-			 if(value=='pie'){
+			if(value=='pie'){
 				return "饼图";
 			} else if(value=='line'){
 				return "线型图";
@@ -77,7 +117,7 @@
 
 		function searchWin(){
 			jQuery('#dlg').dialog('open').dialog('setTitle','图表定义查询');
-			//jQuery('#searchForm').form('clear');
+			//jQuery('#iForm').form('clear');
 		}
 
 		function resize(){
@@ -169,21 +209,34 @@
 </head>
 <body style="margin:1px;">  
 <div style="margin:0;"></div>  
+<input type="hidden" id="nodeId" name="nodeId" value="" >
 <div class="easyui-layout" data-options="fit:true">  
-   <div data-options="region:'north',split:true,border:true" style="height:40px"> 
-    <div style="background:#fafafa;padding:2px;border:1px solid #ddd;font-size:12px"> 
-	<span class="x_content_title">图表定义列表</span>
-    <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-add'" 
-	onclick="create();">新增</a>  
-    <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-edit'"
-	onclick="editSelected();">修改</a>  
-	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-remove'">删除</a> 
-	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-search'">查找</a>
-   </div> 
-  </div> 
-  <div data-options="region:'center',border:false">
-	 <table id="easyui_data_grid"></table>
-  </div>  
+    <div data-options="region:'west',split:true" style="width:180px;">
+	  <div class="easyui-layout" data-options="fit:true">  
+           
+			 <div data-options="region:'center',border:false">
+			    <ul id="myTree" class="ztree"></ul>  
+			 </div> 
+			 
+        </div>  
+	</div> 
+   <div data-options="region:'center'"> 
+	<div class="easyui-layout" data-options="fit:true">  
+	   <div data-options="region:'north',split:true,border:true" style="height:40px"> 
+		<div style="background:#fafafa;padding:2px;border:1px solid #ddd;font-size:12px"> 
+		<span class="x_content_title">图表定义列表</span>
+		<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-add'" 
+		   onclick="create();">新增</a>  
+		<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-edit'"
+		   onclick="editSelected();">修改</a>  
+		<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-remove'">删除</a> 
+		<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-search'">查找</a>
+	   </div> 
+	  </div> 
+	  <div data-options="region:'center',border:false">
+		 <table id="easyui_data_grid"></table>
+	  </div>  
+	</div>
 </div>
 </body>
 </html>

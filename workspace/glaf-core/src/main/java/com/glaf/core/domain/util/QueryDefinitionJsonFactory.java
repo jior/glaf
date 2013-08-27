@@ -71,12 +71,7 @@ public class QueryDefinitionJsonFactory {
 		if (jsonObject.containsKey("dsName")) {
 			model.setDsName(jsonObject.getString("dsName"));
 		}
-		if (jsonObject.containsKey("sql")) {
-			model.setSql(jsonObject.getString("sql"));
-		}
-		if (jsonObject.containsKey("countSql")) {
-			model.setCountSql(jsonObject.getString("countSql"));
-		}
+
 		if (jsonObject.containsKey("idField")) {
 			model.setIdField(jsonObject.getString("idField"));
 		}
@@ -163,12 +158,7 @@ public class QueryDefinitionJsonFactory {
 		if (model.getDsName() != null) {
 			jsonObject.put("dsName", model.getDsName());
 		}
-		if (model.getSql() != null) {
-			jsonObject.put("sql", model.getSql());
-		}
-		if (model.getCountSql() != null) {
-			jsonObject.put("countSql", model.getCountSql());
-		}
+
 		if (model.getIdField() != null) {
 			jsonObject.put("idField", model.getIdField());
 		}
@@ -242,12 +232,7 @@ public class QueryDefinitionJsonFactory {
 		if (model.getDsName() != null) {
 			jsonObject.put("dsName", model.getDsName());
 		}
-		if (model.getSql() != null) {
-			jsonObject.put("sql", model.getSql());
-		}
-		if (model.getCountSql() != null) {
-			jsonObject.put("countSql", model.getCountSql());
-		}
+
 		if (model.getIdField() != null) {
 			jsonObject.put("idField", model.getIdField());
 		}

@@ -19,11 +19,13 @@
 package com.glaf.report.query;
 
 import java.util.*;
+
 import com.glaf.core.query.DataQuery;
 
 public class ReportQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;
 	protected List<String> reportIds;
+	protected Long nodeId;
 	protected String name;
 	protected String nameLike;
 	protected List<String> names;
@@ -41,14 +43,6 @@ public class ReportQuery extends DataQuery {
 
 	public ReportQuery() {
 
-	}
-
-	public ReportQuery createBy(String createBy) {
-		if (createBy == null) {
-			throw new RuntimeException("createBy is null");
-		}
-		this.createBy = createBy;
-		return this;
 	}
 
 	public ReportQuery createByLike(String createByLike) {
@@ -134,6 +128,10 @@ public class ReportQuery extends DataQuery {
 
 	public List<String> getNames() {
 		return names;
+	}
+
+	public Long getNodeId() {
+		return nodeId;
 	}
 
 	public String getOrderBy() {
@@ -293,6 +291,14 @@ public class ReportQuery extends DataQuery {
 		return this;
 	}
 
+	public ReportQuery nodeId(Long nodeId) {
+		if (nodeId == null) {
+			throw new RuntimeException("nodeId is null");
+		}
+		this.nodeId = nodeId;
+		return this;
+	}
+
 	public ReportQuery reportIds(List<String> reportIds) {
 		if (reportIds == null) {
 			throw new RuntimeException("reportIds is empty ");
@@ -348,6 +354,10 @@ public class ReportQuery extends DataQuery {
 
 	public void setNames(List<String> names) {
 		this.names = names;
+	}
+
+	public void setNodeId(Long nodeId) {
+		this.nodeId = nodeId;
 	}
 
 	public void setReportIds(List<String> reportIds) {

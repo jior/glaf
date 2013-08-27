@@ -102,7 +102,7 @@ public class Template implements Serializable, JSONable {
 	protected int locked;
 
 	@Column(name = "NODEID_")
-	protected long nodeId;
+	protected Long nodeId;
 
 	@Column(name = "LASTMODIFIED_")
 	protected long lastModified;
@@ -191,7 +191,7 @@ public class Template implements Serializable, JSONable {
 		return name;
 	}
 
-	public long getNodeId() {
+	public Long getNodeId() {
 		return nodeId;
 	}
 
@@ -292,7 +292,7 @@ public class Template implements Serializable, JSONable {
 		this.name = name;
 	}
 
-	public void setNodeId(long nodeId) {
+	public void setNodeId(Long nodeId) {
 		this.nodeId = nodeId;
 	}
 

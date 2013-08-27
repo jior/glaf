@@ -18,32 +18,42 @@
 
 package com.glaf.dts.web.springmvc;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.lang.StringUtils;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.config.ViewProperties;
 import com.glaf.core.jdbc.DBConnectionFactory;
 import com.glaf.core.domain.ColumnDefinition;
 import com.glaf.core.domain.QueryDefinition;
 import com.glaf.core.domain.TableDefinition;
 import com.glaf.core.query.QueryDefinitionQuery;
+import com.glaf.core.query.TableDefinitionQuery;
+import com.glaf.core.security.LoginContext;
 import com.glaf.core.service.IQueryDefinitionService;
 import com.glaf.core.service.ITableDefinitionService;
 import com.glaf.core.util.DBUtils;
 import com.glaf.core.util.JdbcUtils;
+import com.glaf.core.util.LogUtils;
+import com.glaf.core.util.Paging;
+import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.RequestUtils;
 import com.glaf.core.util.StringTools;
+import com.glaf.core.util.Tools;
 
 @Controller("/dts/table")
 @RequestMapping("/dts/table")
@@ -99,6 +109,98 @@ public class MxDtsTableController {
 			return new ModelAndView(x_view, modelMap);
 		}
 		return new ModelAndView("/bi/dts/table/edit", modelMap);
+	}
+
+	@RequestMapping("/json")
+	@ResponseBody
+	public byte[] json(HttpServletRequest request, ModelMap modelMap)
+			throws IOException {
+		LoginContext loginContext = RequestUtils.getLoginContext(request);
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		TableDefinitionQuery query = new TableDefinitionQuery();
+		Tools.populate(query, params);
+
+		query.setActorId(loginContext.getActorId());
+		query.setLoginContext(loginContext);
+
+		query.type(com.glaf.dts.util.Constants.DTS_TASK_TYPE);
+		Long nodeId = RequestUtils.getLong(request, "nodeId");
+		if (nodeId != null && nodeId > 0) {
+			query.nodeId(nodeId);
+		}
+
+		/**
+		 * 此处业务逻辑需自行调整
+		 */
+		if (!loginContext.isSystemAdministrator()) {
+			String actorId = loginContext.getActorId();
+			query.createBy(actorId);
+		}
+
+		String gridType = ParamUtils.getString(params, "gridType");
+		if (gridType == null) {
+			gridType = "easyui";
+		}
+		int start = 0;
+		int limit = 10;
+		String orderName = null;
+		String order = null;
+
+		int pageNo = ParamUtils.getInt(params, "page");
+		limit = ParamUtils.getInt(params, "rows");
+		start = (pageNo - 1) * limit;
+		orderName = ParamUtils.getString(params, "sortName");
+		order = ParamUtils.getString(params, "sortOrder");
+
+		if (start < 0) {
+			start = 0;
+		}
+
+		if (limit <= 0) {
+			limit = Paging.DEFAULT_PAGE_SIZE;
+		}
+
+		JSONObject result = new JSONObject();
+		int total = tableDefinitionService
+				.getTableDefinitionCountByQueryCriteria(query);
+		if (total > 0) {
+			result.put("total", total);
+			result.put("totalCount", total);
+			result.put("totalRecords", total);
+			result.put("start", start);
+			result.put("startIndex", start);
+			result.put("limit", limit);
+			result.put("pageSize", limit);
+
+			if (StringUtils.isNotEmpty(orderName)) {
+				query.setSortOrder(orderName);
+				if (StringUtils.equals(order, "desc")) {
+					query.setSortOrder(" desc ");
+				}
+			}
+
+			List<TableDefinition> list = tableDefinitionService
+					.getTableDefinitionsByQueryCriteria(start, limit, query);
+
+			if (list != null && !list.isEmpty()) {
+				JSONArray rowsJSON = new JSONArray();
+
+				result.put("rows", rowsJSON);
+
+				for (TableDefinition tableDefinition : list) {
+					JSONObject rowJSON = tableDefinition.toJsonObject();
+					rowJSON.put("id", tableDefinition.getTableName());
+					rowJSON.put("startIndex", ++start);
+					rowsJSON.add(rowJSON);
+				}
+			}
+		} else {
+			JSONArray rowsJSON = new JSONArray();
+			result.put("rows", rowsJSON);
+			result.put("total", total);
+		}
+		LogUtils.debug(result.toJSONString());
+		return result.toJSONString().getBytes("UTF-8");
 	}
 
 	@RequestMapping

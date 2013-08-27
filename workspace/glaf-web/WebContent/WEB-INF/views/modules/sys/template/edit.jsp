@@ -72,6 +72,8 @@
 	 }
     
 	form.submit();
+	window.parent.reload();
+	window.close();
 
  }
 
@@ -81,7 +83,7 @@
 <center>
 <form name="iForm" method="post" ENCTYPE="multipart/form-data"
 	class="x-form"
-	action="<%=request.getContextPath()%>/mx/system/template/save"
+	action="<%=request.getContextPath()%>/mx/sys/template/save"
 	onsubmit="return checkForm();"><c:if test="${not empty nodeId}">
 	<input type="hidden" name="nodeId" value="${nodeId}">
 </c:if>

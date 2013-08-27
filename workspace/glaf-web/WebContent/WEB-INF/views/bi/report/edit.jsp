@@ -119,6 +119,7 @@
 	</div>
 	 <form id="iForm" name="iForm" method="post">
 	    <input type="hidden" id="id" name="id" value="${report.id}"/>
+		<input type="hidden" id="nodeId" name="nodeId" value="${nodeId}"/>
 	    <input type="hidden" id="reportId" name="reportId" value="${report.id}"/>
 	    <table class="easyui-form" style="width:920px;" align="center">
 		<tbody>

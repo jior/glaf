@@ -29,7 +29,9 @@ import java.util.Set;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
@@ -64,6 +66,8 @@ public class MxTemplateServiceImpl implements ITemplateService {
 	protected EntityDAO entityDAO;
 
 	protected IdGenerator idGenerator;
+
+	protected SqlSessionTemplate sqlSessionTemplate;
 
 	protected TemplateMapper templateMapper;
 
@@ -149,8 +153,20 @@ public class MxTemplateServiceImpl implements ITemplateService {
 		return template;
 	}
 
+	public int getTemplateCountByQueryCriteria(TemplateQuery query) {
+		return templateMapper.getTemplateCount(query);
+	}
+
 	public List<Template> getTemplates(TemplateQuery query) {
 		return list(query);
+	}
+
+	public List<Template> getTemplatesByQueryCriteria(int start, int pageSize,
+			TemplateQuery query) {
+		RowBounds rowBounds = new RowBounds(start, pageSize);
+		List<Template> rows = sqlSessionTemplate.selectList("getTemplates",
+				query, rowBounds);
+		return rows;
 	}
 
 	@Transactional
@@ -313,6 +329,11 @@ public class MxTemplateServiceImpl implements ITemplateService {
 	@javax.annotation.Resource
 	public void setSqlSession(SqlSession sqlSession) {
 		this.sqlSession = sqlSession;
+	}
+
+	@javax.annotation.Resource
+	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
+		this.sqlSessionTemplate = sqlSessionTemplate;
 	}
 
 	@javax.annotation.Resource

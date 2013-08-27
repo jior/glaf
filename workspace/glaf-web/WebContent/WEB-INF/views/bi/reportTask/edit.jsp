@@ -91,13 +91,12 @@
 <input type="hidden" id="reportTaskId" name="reportTaskId" value="${reportTask.id}"/>
 <table class="easyui-form" style="width:920px;" align="center">
 <tbody>
-	
 	<tr>
 		<td width="20%" align="left">名称</td>
 		<td align="left">
             <input id="name" name="name" type="text" 
-			       class="input-xlarge span7  easyui-validatebox"  
-			       required="true" 
+			       class="x-text input-xlarge span7  easyui-validatebox"  
+			       required="true" size="50"
 				   value="${reportTask.name}"/>
 		</td>
 	</tr>
@@ -105,8 +104,8 @@
 		<td width="20%" align="left">标题</td>
 		<td align="left">
             <input id="subject" name="subject" type="text" 
-			       class="input-xlarge span7  easyui-validatebox"  
-			       required="true" 
+			       class="x-text input-xlarge span7  easyui-validatebox"  
+			       required="true" size="50"
 				   value="${reportTask.subject}"/>
 		</td>
 	</tr>
@@ -117,9 +116,9 @@
             <input id="reportIds" name="reportIds" type="hidden" 
 				   value="${reportTask.reportIds}"/>
 			<input id="reportNames" name="reportNames" type="text" 
-			       class="input-xlarge span7  easyui-validatebox"  
+			       class="x-text input-xlarge span7  easyui-validatebox"  
 			       required="true" onclick="javascript:openReport();"
-				   value="${reportNames}"/>
+				   value="${reportNames}" size="50"/>
 			 &nbsp;
 			<a href="#" onclick="javascript:openReport();">
 				<img src="<%=request.getContextPath()%>/images/report.gif" border="0">
@@ -149,8 +148,8 @@
 		<td width="20%" align="left">发送标题</td>
 		<td align="left">
             <input id="sendTitle" name="sendTitle" type="text" 
-			       class="input-xlarge span7  easyui-validatebox"  
-				   value="${reportTask.sendTitle}"/>
+			       class="x-text input-xlarge span7  easyui-validatebox"  
+				   value="${reportTask.sendTitle}" size="50"/>
 		</td>
 	</tr>
 	<tr>

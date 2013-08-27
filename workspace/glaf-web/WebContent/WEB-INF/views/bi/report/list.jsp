@@ -9,16 +9,59 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>报表定义</title>
-	<%@ include file="/WEB-INF/views/tm/header.jsp"%>
-	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/easyui/themes/${theme}/easyui.css">
-	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/icons/styles.css">
-	<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
-	<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.form.js"></script>
-	<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/jquery.easyui.min.js"></script>
-	<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/locale/easyui-lang-zh_CN.js"></script>
-	<script>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>报表定义</title>
+<%@ include file="/WEB-INF/views/tm/header.jsp"%>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/easyui/themes/${theme}/easyui.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/scripts/ztree/css/zTreeStyle/zTreeStyle.css" type="text/css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/icons/styles.css">
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.form.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/ztree/js/jquery.ztree.all.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/glaf-base.js"></script>
+<script type="text/javascript">
+
+   var setting = {
+			async: {
+				enable: true,
+				url:"<%=request.getContextPath()%>/rs/tree/treeJson?nodeCode=report_category",
+				dataFilter: filter
+			},
+			callback: {
+				onClick: zTreeOnClick
+			}
+		};
+  
+  	function filter(treeId, parentNode, childNodes) {
+		if (!childNodes) return null;
+		for (var i=0, l=childNodes.length; i<l; i++) {
+			childNodes[i].name = childNodes[i].name.replace(/\.n/g, '.');
+			childNodes[i].icon="<%=request.getContextPath()%>/icons/icons/basic.gif";
+		}
+		return childNodes;
+	}
+
+
+    function zTreeOnClick(event, treeId, treeNode, clickFlag) {
+		jQuery("#nodeId").val(treeNode.id);
+		loadData('<%=request.getContextPath()%>/mx/bi/report/json?nodeId='+treeNode.id);
+	}
+
+	function loadData(url){
+		  jQuery.get(url+'&randnum='+Math.floor(Math.random()*1000000),{qq:'xx'},function(data){
+		      //var text = JSON.stringify(data); 
+              //alert(text);
+			  jQuery('#mydatagrid').datagrid('loadData', data);
+			  //jQuery('#mydatagrid').datagrid('load',getMxObjArray(jQuery("#iForm").serializeArray()));
+		  },'json');
+	}
+
+    jQuery(document).ready(function(){
+			jQuery.fn.zTree.init(jQuery("#myTree"), setting);
+	});
+
 		jQuery(function(){
 			jQuery('#easyui_data_grid').datagrid({
 				//title:'报表定义',
@@ -32,7 +75,7 @@
 				striped: true,
 				collapsible:true,
 				singleSelect:true,
-				url:'<%=request.getContextPath()%>/rs/bi/report/list?gridType=easyui',
+				url:'<%=request.getContextPath()%>/mx/bi/report/json',
 				sortName: 'id',
 				sortOrder: 'desc',
 				remoteSort: false,
@@ -62,7 +105,7 @@
 
 		function searchWin(){
 			jQuery('#dlg').dialog('open').dialog('setTitle','报表定义查询');
-			//jQuery('#searchForm').form('clear');
+			//jQuery('#iForm').form('clear');
 		}
 
 		function resize(){
@@ -219,25 +262,38 @@
 </head>
 <body style="margin:1px;">  
 <div style="margin:0;"></div>  
+<input type="hidden" id="nodeId" name="nodeId" value="" >
 <div class="easyui-layout" data-options="fit:true">  
-   <div data-options="region:'north',split:true,border:true" style="height:40px"> 
-    <div style="background:#fafafa;padding:2px;border:1px solid #ddd;font-size:12px"> 
-	<span class="x_content_title">报表定义列表</span>
-    <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-add'" 
-	   onclick="create();">新增</a>  
-    <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-edit'"
-	   onclick="editSelected();">修改</a>  
-	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-remove'">删除</a> 
-	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-search'">查找</a>
-	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-imp'"
-	   onclick="importData();">加载数据</a> 
-	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-mail'"
-	   onclick="sendMail();">发送邮件</a>
-   </div> 
-  </div> 
-  <div data-options="region:'center',border:false">
-	 <table id="easyui_data_grid"></table>
-  </div>  
+    <div data-options="region:'west',split:true" style="width:180px;">
+	  <div class="easyui-layout" data-options="fit:true">  
+           
+			 <div data-options="region:'center',border:false">
+			    <ul id="myTree" class="ztree"></ul>  
+			 </div> 
+			 
+        </div>  
+	</div> 
+   <div data-options="region:'center'"> 
+	<div class="easyui-layout" data-options="fit:true">  
+	   <div data-options="region:'north',split:true,border:true" style="height:40px"> 
+		<div style="background:#fafafa;padding:2px;border:1px solid #ddd;font-size:12px"> 
+		<span class="x_content_title">报表定义列表</span>
+		<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-add'" 
+		   onclick="create();">新增</a>  
+		<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-edit'"
+		   onclick="editSelected();">修改</a>  
+		<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-remove'">删除</a> 
+		<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-search'">查找</a>
+		<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-imp'"
+		   onclick="importData();">加载数据</a> 
+		<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-mail'"
+		   onclick="sendMail();">发送邮件</a>
+	   </div> 
+	  </div> 
+	  <div data-options="region:'center',border:false">
+		 <table id="easyui_data_grid"></table>
+	  </div>  
+	</div>
 </div>
 </body>
 </html>
