@@ -18,29 +18,37 @@
 
 package com.glaf.dts.web.springmvc;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
- 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.config.ViewProperties;
 import com.glaf.core.domain.QueryDefinition;
 import com.glaf.core.query.QueryDefinitionQuery;
+import com.glaf.core.security.LoginContext;
 import com.glaf.core.service.IQueryDefinitionService;
+
+import com.glaf.core.util.Paging;
+import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.RequestUtils;
+import com.glaf.core.util.Tools;
 
 @Controller("/dts/query")
 @RequestMapping("/dts/query")
 public class MxDtsQueryController {
 
- 
 	protected IQueryDefinitionService queryDefinitionService;
 
 	@RequestMapping("/chooseQuery")
@@ -98,6 +106,98 @@ public class MxDtsQueryController {
 			return new ModelAndView(x_view, modelMap);
 		}
 		return new ModelAndView("/bi/dts/query/edit", modelMap);
+	}
+
+	@RequestMapping("/json")
+	@ResponseBody
+	public byte[] json(HttpServletRequest request, ModelMap modelMap)
+			throws IOException {
+		LoginContext loginContext = RequestUtils.getLoginContext(request);
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		Long nodeId = RequestUtils.getLong(request, "nodeId");
+		QueryDefinitionQuery query = new QueryDefinitionQuery();
+		Tools.populate(query, params);
+		query.type(com.glaf.dts.util.Constants.DTS_TASK_TYPE);
+
+		if (nodeId != null && nodeId > 0) {
+			query.nodeId(nodeId);
+		}
+
+		query.setActorId(loginContext.getActorId());
+		query.setLoginContext(loginContext);
+		/**
+		 * 此处业务逻辑需自行调整
+		 */
+		if (!loginContext.isSystemAdministrator()) {
+			String actorId = loginContext.getActorId();
+			query.createBy(actorId);
+		}
+
+		String gridType = ParamUtils.getString(params, "gridType");
+		if (gridType == null) {
+			gridType = "easyui";
+		}
+		int start = 0;
+		int limit = 10;
+		String orderName = null;
+		String order = null;
+
+		int pageNo = ParamUtils.getInt(params, "page");
+		limit = ParamUtils.getInt(params, "rows");
+		start = (pageNo - 1) * limit;
+		orderName = ParamUtils.getString(params, "sortName");
+		order = ParamUtils.getString(params, "sortOrder");
+
+		if (start < 0) {
+			start = 0;
+		}
+
+		if (limit <= 0) {
+			limit = Paging.DEFAULT_PAGE_SIZE;
+		}
+
+		JSONObject result = new JSONObject();
+		int total = queryDefinitionService
+				.getQueryDefinitionCountByQueryCriteria(query);
+		if (total > 0) {
+			result.put("total", total);
+			result.put("totalCount", total);
+			result.put("totalRecords", total);
+			result.put("start", start);
+			result.put("startIndex", start);
+			result.put("limit", limit);
+			result.put("pageSize", limit);
+
+			if (StringUtils.isNotEmpty(orderName)) {
+				query.setSortOrder(orderName);
+				if (StringUtils.equals(order, "desc")) {
+					query.setSortOrder(" desc ");
+				}
+			}
+
+			List<QueryDefinition> list = queryDefinitionService
+					.getQueryDefinitionsByQueryCriteria(start, limit, query);
+
+			if (list != null && !list.isEmpty()) {
+				JSONArray rowsJSON = new JSONArray();
+
+				result.put("rows", rowsJSON);
+
+				for (QueryDefinition queryDefinition : list) {
+					JSONObject rowJSON = queryDefinition.toJsonObject();
+					rowJSON.put("id", queryDefinition.getId());
+					rowJSON.put("queryDefinitionId", queryDefinition.getId());
+					rowJSON.put("startIndex", ++start);
+					rowsJSON.add(rowJSON);
+				}
+
+			}
+		} else {
+			JSONArray rowsJSON = new JSONArray();
+			result.put("rows", rowsJSON);
+			result.put("total", total);
+		}
+		return result.toJSONString().getBytes("UTF-8");
 	}
 
 	@RequestMapping

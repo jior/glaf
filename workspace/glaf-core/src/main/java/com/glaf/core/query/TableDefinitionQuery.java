@@ -19,6 +19,7 @@
 package com.glaf.core.query;
 
 import java.util.*;
+
 import com.glaf.core.query.BaseQuery;
 
 public class TableDefinitionQuery extends BaseQuery {
@@ -34,6 +35,7 @@ public class TableDefinitionQuery extends BaseQuery {
 	protected String systemFlag;
 	protected String titleLike;
 	protected String type;
+	protected Long nodeId;
 
 	public TableDefinitionQuery() {
 
@@ -95,6 +97,10 @@ public class TableDefinitionQuery extends BaseQuery {
 
 	public Integer getLockedLessThanOrEqual() {
 		return lockedLessThanOrEqual;
+	}
+
+	public Long getNodeId() {
+		return nodeId;
 	}
 
 	public String getOrderBy() {
@@ -171,6 +177,7 @@ public class TableDefinitionQuery extends BaseQuery {
 	@Override
 	public void initQueryColumns() {
 		super.initQueryColumns();
+		addColumn("nodeId", "NODEID_");
 		addColumn("tableName", "TABLENAME_");
 		addColumn("title", "TITLE_");
 		addColumn("createTime", "CREATETIME_");
@@ -195,6 +202,14 @@ public class TableDefinitionQuery extends BaseQuery {
 			throw new RuntimeException("locked is null");
 		}
 		this.lockedLessThanOrEqual = lockedLessThanOrEqual;
+		return this;
+	}
+
+	public TableDefinitionQuery nodeId(Long nodeId) {
+		if (nodeId == null) {
+			throw new RuntimeException("nodeId is null");
+		}
+		this.nodeId = nodeId;
 		return this;
 	}
 
@@ -247,6 +262,10 @@ public class TableDefinitionQuery extends BaseQuery {
 
 	public void setLockedLessThanOrEqual(Integer lockedLessThanOrEqual) {
 		this.lockedLessThanOrEqual = lockedLessThanOrEqual;
+	}
+
+	public void setNodeId(Long nodeId) {
+		this.nodeId = nodeId;
 	}
 
 	public void setRevision(Integer revision) {

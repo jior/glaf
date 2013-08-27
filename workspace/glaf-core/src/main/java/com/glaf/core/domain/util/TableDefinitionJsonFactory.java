@@ -44,6 +44,9 @@ public class TableDefinitionJsonFactory {
 		if (jsonObject.containsKey("parentTableName")) {
 			model.setParentTableName(jsonObject.getString("parentTableName"));
 		}
+		if (jsonObject.containsKey("nodeId")) {
+			model.setNodeId(jsonObject.getLong("nodeId"));
+		}
 		if (jsonObject.containsKey("packageName")) {
 			model.setPackageName(jsonObject.getString("packageName"));
 		}
@@ -144,6 +147,9 @@ public class TableDefinitionJsonFactory {
 		if (model.getParentTableName() != null) {
 			jsonObject.put("parentTableName", model.getParentTableName());
 		}
+		if (model.getNodeId() != null) {
+			jsonObject.put("nodeId", model.getNodeId());
+		}
 		if (model.getPackageName() != null) {
 			jsonObject.put("packageName", model.getPackageName());
 		}
@@ -220,6 +226,9 @@ public class TableDefinitionJsonFactory {
 		jsonObject.put("_tableName_", model.getTableName());
 		if (model.getParentTableName() != null) {
 			jsonObject.put("parentTableName", model.getParentTableName());
+		}
+		if (model.getNodeId() != null) {
+			jsonObject.put("nodeId", model.getNodeId());
 		}
 		if (model.getPackageName() != null) {
 			jsonObject.put("packageName", model.getPackageName());

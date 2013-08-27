@@ -7,7 +7,6 @@
 <%@ page import="com.glaf.core.service.*"%>
 <%@ page import="com.glaf.core.util.*"%>
 <%@ page import="com.glaf.dts.domain.*"%>
-<%@ page import="com.glaf.dts.jdbc.*"%>
 <%@ page import="com.glaf.dts.transform.*"%>
 <%@ page import="com.glaf.dts.query.*"%>
 <%@ page import="com.glaf.dts.service.*"%>
@@ -271,9 +270,8 @@
 	</tr>
 
 	 <%if(tableDefinition != null && tableDefinition.getColumns() != null){
-	    QueryRunner queryRunner = new QueryRunner();
 		try {
-		    List rows = queryRunner.search(query, tableDefinition);
+		    List rows = new ArrayList();
 			if(rows != null && !rows.isEmpty()){
 				//System.out.println("rows size:"+rows.size());
 				Iterator iterator = rows.iterator();

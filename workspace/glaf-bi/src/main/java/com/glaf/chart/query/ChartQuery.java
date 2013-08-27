@@ -25,6 +25,7 @@ import com.glaf.core.query.DataQuery;
 public class ChartQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;
 	protected List<String> chartIds;
+	protected Long nodeId;
 	protected String subjectLike;
 	protected String chartName;
 	protected String chartNameLike;
@@ -267,6 +268,10 @@ public class ChartQuery extends DataQuery {
 		return imageTypes;
 	}
 
+	public Long getNodeId() {
+		return nodeId;
+	}
+
 	public String getOrderBy() {
 		if (sortColumn != null) {
 			String a_x = " asc ";
@@ -406,6 +411,14 @@ public class ChartQuery extends DataQuery {
 		addColumn("createBy", "CREATEBY_");
 	}
 
+	public ChartQuery nodeId(Long nodeId) {
+		if (nodeId == null) {
+			throw new RuntimeException("nodeId is null");
+		}
+		this.nodeId = nodeId;
+		return this;
+	}
+
 	public void setChartIds(List<String> chartIds) {
 		this.chartIds = chartIds;
 	}
@@ -473,6 +486,10 @@ public class ChartQuery extends DataQuery {
 
 	public void setImageTypes(List<String> imageTypes) {
 		this.imageTypes = imageTypes;
+	}
+
+	public void setNodeId(Long nodeId) {
+		this.nodeId = nodeId;
 	}
 
 	public void setSubjectLike(String subjectLike) {

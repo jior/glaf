@@ -36,6 +36,7 @@ public class QueryDefinitionQuery extends BaseQuery {
 	protected Integer revisionLessThanOrEqual;
 	protected String titleLike;
 	protected String type;
+	protected Long nodeId;
 
 	public QueryDefinitionQuery() {
 
@@ -113,6 +114,10 @@ public class QueryDefinitionQuery extends BaseQuery {
 
 	public String getName() {
 		return name;
+	}
+
+	public Long getNodeId() {
+		return nodeId;
 	}
 
 	public String getOrderBy() {
@@ -199,6 +204,7 @@ public class QueryDefinitionQuery extends BaseQuery {
 		super.initQueryColumns();
 		addColumn("id", "ID_");
 		addColumn("parentId", "PARENTID_");
+		addColumn("nodeId", "NODEID_");
 		addColumn("targetTableName", "TARGETTABLENAME_");
 		addColumn("serviceKey", "SERVICEKEY_");
 		addColumn("title", "TITLE_");
@@ -244,6 +250,14 @@ public class QueryDefinitionQuery extends BaseQuery {
 			throw new RuntimeException("name is null");
 		}
 		this.name = name;
+		return this;
+	}
+	
+	public QueryDefinitionQuery nodeId(Long nodeId) {
+		if (nodeId == null) {
+			throw new RuntimeException("nodeId is null");
+		}
+		this.nodeId = nodeId;
 		return this;
 	}
 
@@ -324,6 +338,10 @@ public class QueryDefinitionQuery extends BaseQuery {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public void setNodeId(Long nodeId) {
+		this.nodeId = nodeId;
 	}
 
 	public void setParentId(String parentId) {

@@ -44,6 +44,9 @@ public class QueryDefinitionJsonFactory {
 		if (jsonObject.containsKey("parentId")) {
 			model.setParentId(jsonObject.getString("parentId"));
 		}
+		if (jsonObject.containsKey("nodeId")) {
+			model.setNodeId(jsonObject.getLong("nodeId"));
+		}
 		if (jsonObject.containsKey("targetTableName")) {
 			model.setTargetTableName(jsonObject.getString("targetTableName"));
 		}
@@ -133,6 +136,9 @@ public class QueryDefinitionJsonFactory {
 		if (model.getParentId() != null) {
 			jsonObject.put("parentId", model.getParentId());
 		}
+		if (model.getNodeId() != null) {
+			jsonObject.put("nodeId", model.getNodeId());
+		}
 		if (model.getTargetTableName() != null) {
 			jsonObject.put("targetTableName", model.getTargetTableName());
 		}
@@ -208,6 +214,9 @@ public class QueryDefinitionJsonFactory {
 		jsonObject.put("_oid_", model.getId());
 		if (model.getParentId() != null) {
 			jsonObject.put("parentId", model.getParentId());
+		}
+		if (model.getNodeId() != null) {
+			jsonObject.put("nodeId", model.getNodeId());
 		}
 		if (model.getTargetTableName() != null) {
 			jsonObject.put("targetTableName", model.getTargetTableName());

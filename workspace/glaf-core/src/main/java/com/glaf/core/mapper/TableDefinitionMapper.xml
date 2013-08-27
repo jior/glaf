@@ -33,6 +33,7 @@
 		<result property="deleteFlag" column="DELETEFLAG_" jdbcType="INTEGER"/>
 		<result property="systemFlag" column="SYSTEMFLAG_" jdbcType="VARCHAR"/>
 		<result property="revision" column="REVISION_" jdbcType="INTEGER"/>
+		<result property="nodeId" column="NODEID_" jdbcType="BIGINT" />
 	</resultMap>
 
 
@@ -152,6 +153,9 @@
 			<if test="revision != null">
 				,REVISION_ 
 			</if>
+			<if test="nodeId != null">
+				,NODEID_
+			</if>
 		</trim>
 
 		<trim prefix=" values (" suffix=")" suffixOverrides=",">
@@ -237,6 +241,9 @@
 			</if>
 			<if test="revision != null">
 				,#{revision, jdbcType=INTEGER}
+			</if>
+			<if test="nodeId != null">
+				,#{nodeId, jdbcType=BIGINT}
 			</if>
 		</trim>
 	</insert>
@@ -394,6 +401,10 @@
 		<where>
 			1 = 1
 
+			<if test="nodeId != null ">
+				and E.NODEID_ = #{nodeId}
+			</if>
+			
 			<if test="titleLike != null and titleLike != '' ">
 				and E.TITLE_ like #{titleLike}
 			</if>

@@ -40,7 +40,6 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.glaf.core.base.JSONable;
 import com.glaf.core.domain.util.QueryDefinitionJsonFactory;
 
-
 @Entity
 @Table(name = "SYS_QUERY")
 public class QueryDefinition implements java.io.Serializable, JSONable {
@@ -207,6 +206,9 @@ public class QueryDefinition implements java.io.Serializable, JSONable {
 	@Column(name = "TYPE_", length = 50)
 	protected String type;
 
+	@Column(name = "NODEID_")
+	protected Long nodeId;
+
 	public QueryDefinition() {
 
 	}
@@ -320,6 +322,10 @@ public class QueryDefinition implements java.io.Serializable, JSONable {
 
 	public String getName() {
 		return name;
+	}
+
+	public Long getNodeId() {
+		return nodeId;
 	}
 
 	public List<ColumnDefinition> getParameters() {
@@ -452,6 +458,10 @@ public class QueryDefinition implements java.io.Serializable, JSONable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public void setNodeId(Long nodeId) {
+		this.nodeId = nodeId;
 	}
 
 	public void setParameters(List<ColumnDefinition> parameters) {

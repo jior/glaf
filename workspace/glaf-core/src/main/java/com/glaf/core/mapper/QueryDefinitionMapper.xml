@@ -4,114 +4,124 @@
 
 <mapper namespace="com.glaf.core.mapper.QueryDefinitionMapper">
 
-	<resultMap id="queryDefinitionResultMap"	type="com.glaf.core.domain.QueryDefinition">
-		<id property="id" column="ID_" jdbcType="VARCHAR"/>
-		<result property="parentId" column="PARENTID_" jdbcType="VARCHAR"/>
-		<result property="targetTableName" column="TARGETTABLENAME_" jdbcType="VARCHAR"/>
-		<result property="serviceKey" column="SERVICEKEY_" jdbcType="VARCHAR"/>
+	<resultMap id="queryDefinitionResultMap" type="com.glaf.core.domain.QueryDefinition">
+		<id property="id" column="ID_" jdbcType="VARCHAR" />
+		<result property="parentId" column="PARENTID_" jdbcType="VARCHAR" />
+		<result property="nodeId" column="NODEID_" jdbcType="BIGINT" />
+		<result property="targetTableName" column="TARGETTABLENAME_"
+			jdbcType="VARCHAR" />
+		<result property="serviceKey" column="SERVICEKEY_" jdbcType="VARCHAR" />
 		<result property="name" column="NAME_" jdbcType="VARCHAR" />
-		<result property="mapping" column="MAPPING_" jdbcType="VARCHAR"/>
-		<result property="title" column="TITLE_" jdbcType="VARCHAR"/>
-		<result property="type" column="TYPE_" jdbcType="VARCHAR"/>
-		<result property="description" column="DESCRIPTION_" jdbcType="VARCHAR"/>
-		<result property="dsName" column="DSNAME_" jdbcType="VARCHAR"/>
-		<result property="sql" column="SQL_" jdbcType="VARCHAR"/>
-		<result property="countSql" column="COUNTSQL_" jdbcType="VARCHAR"/>
-		<result property="idField" column="IDFIELD_" jdbcType="VARCHAR"/>
-		<result property="statementId" column="STATEMENTID_" jdbcType="VARCHAR"/>
-		<result property="countStatementId" column="COUNTSTATEMENTID_" jdbcType="VARCHAR"/>
-		<result property="parameterType" column="PARAMETERTYPE_" jdbcType="VARCHAR"/>
-		<result property="resultType" column="RESULTTYPE_" jdbcType="VARCHAR"/>
-		<result property="createTime" column="CREATETIME_" jdbcType="TIMESTAMP"/>
-		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR"/>
-		<result property="locked" column="LOCKED_" jdbcType="INTEGER"/>
-		<result property="deleteFlag" column="DELETEFLAG_" jdbcType="INTEGER"/>
-		<result property="revision" column="REVISION_" jdbcType="INTEGER"/>
-		<result property="listUrl" column="LISTURL_" jdbcType="VARCHAR"/>
-		<result property="detailUrl" column="DETAILURL_" jdbcType="VARCHAR"/>
+		<result property="mapping" column="MAPPING_" jdbcType="VARCHAR" />
+		<result property="title" column="TITLE_" jdbcType="VARCHAR" />
+		<result property="type" column="TYPE_" jdbcType="VARCHAR" />
+		<result property="description" column="DESCRIPTION_" jdbcType="VARCHAR" />
+		<result property="dsName" column="DSNAME_" jdbcType="VARCHAR" />
+		<result property="sql" column="SQL_" jdbcType="VARCHAR" />
+		<result property="countSql" column="COUNTSQL_" jdbcType="VARCHAR" />
+		<result property="idField" column="IDFIELD_" jdbcType="VARCHAR" />
+		<result property="statementId" column="STATEMENTID_" jdbcType="VARCHAR" />
+		<result property="countStatementId" column="COUNTSTATEMENTID_"
+			jdbcType="VARCHAR" />
+		<result property="parameterType" column="PARAMETERTYPE_"
+			jdbcType="VARCHAR" />
+		<result property="resultType" column="RESULTTYPE_" jdbcType="VARCHAR" />
+		<result property="createTime" column="CREATETIME_" jdbcType="TIMESTAMP" />
+		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR" />
+		<result property="locked" column="LOCKED_" jdbcType="INTEGER" />
+		<result property="deleteFlag" column="DELETEFLAG_" jdbcType="INTEGER" />
+		<result property="revision" column="REVISION_" jdbcType="INTEGER" />
+		<result property="listUrl" column="LISTURL_" jdbcType="VARCHAR" />
+		<result property="detailUrl" column="DETAILURL_" jdbcType="VARCHAR" />
 	</resultMap>
 
- 
+
 	<insert id="insertQueryDefinition" parameterType="com.glaf.core.domain.QueryDefinition">
-		insert into SYS_QUERY 
+		insert into SYS_QUERY
 		<trim prefix="(" suffix=")" suffixOverrides=",">
-		    ID_
+			ID_
 			<if test="parentId != null">
-				,PARENTID_ 
+				,PARENTID_
+			</if>
+			<if test="nodeId != null">
+				,NODEID_
 			</if>
 			<if test="targetTableName != null">
-				,TARGETTABLENAME_ 
+				,TARGETTABLENAME_
 			</if>
 			<if test="serviceKey != null">
-				,SERVICEKEY_ 
+				,SERVICEKEY_
 			</if>
 			<if test="name != null">
-				,NAME_ 
+				,NAME_
 			</if>
 			<if test="mapping != null">
-				,MAPPING_ 
+				,MAPPING_
 			</if>
 			<if test="title != null">
-				,TITLE_ 
+				,TITLE_
 			</if>
 			<if test="type != null">
-				,TYPE_ 
+				,TYPE_
 			</if>
 			<if test="description != null">
-				,DESCRIPTION_ 
+				,DESCRIPTION_
 			</if>
 			<if test="dsName != null">
-				,DSNAME_ 
+				,DSNAME_
 			</if>
 			<if test="sql != null">
-				,SQL_ 
+				,SQL_
 			</if>
 			<if test="countSql != null">
-				,COUNTSQL_ 
+				,COUNTSQL_
 			</if>
 			<if test="idField != null">
-				,IDFIELD_ 
+				,IDFIELD_
 			</if>
 			<if test="statementId != null">
-				,STATEMENTID_ 
+				,STATEMENTID_
 			</if>
 			<if test="countStatementId != null">
-				,COUNTSTATEMENTID_ 
+				,COUNTSTATEMENTID_
 			</if>
 			<if test="parameterType != null">
-				,PARAMETERTYPE_ 
+				,PARAMETERTYPE_
 			</if>
 			<if test="resultType != null">
-				,RESULTTYPE_ 
+				,RESULTTYPE_
 			</if>
 			<if test="createTime != null">
-				,CREATETIME_ 
+				,CREATETIME_
 			</if>
 			<if test="createBy != null">
-				,CREATEBY_ 
+				,CREATEBY_
 			</if>
 			<if test="locked != null">
-				,LOCKED_ 
+				,LOCKED_
 			</if>
 			<if test="deleteFlag != null">
-				,DELETEFLAG_ 
+				,DELETEFLAG_
 			</if>
 			<if test="revision != null">
-				,REVISION_ 
+				,REVISION_
 			</if>
 			<if test="listUrl != null">
-				,LISTURL_ 
+				,LISTURL_
 			</if>
 			<if test="detailUrl != null">
-				,DETAILURL_ 
+				,DETAILURL_
 			</if>
 		</trim>
 
 		<trim prefix=" values (" suffix=")" suffixOverrides=",">
-			  #{id, jdbcType=VARCHAR}
-	     
+			#{id, jdbcType=VARCHAR}
+
 			<if test="parentId != null">
 				,#{parentId, jdbcType=VARCHAR}
+			</if>
+			<if test="nodeId != null">
+				,#{nodeId, jdbcType=BIGINT}
 			</if>
 			<if test="targetTableName != null">
 				,#{targetTableName, jdbcType=VARCHAR}
@@ -182,12 +192,12 @@
 		</trim>
 	</insert>
 
-	 
+
 	<update id="updateQueryDefinition" parameterType="com.glaf.core.domain.QueryDefinition">
 		update
 		SYS_QUERY
 		set
-		<trim prefix="" suffix="" suffixOverrides=",">		
+		<trim prefix="" suffix="" suffixOverrides=",">
 			<if test="parentId != null">
 				PARENTID_ = #{parentId, jdbcType=VARCHAR},
 			</if>
@@ -228,7 +238,8 @@
 				STATEMENTID_ = #{statementId, jdbcType=VARCHAR},
 			</if>
 			<if test="countStatementId != null">
-				COUNTSTATEMENTID_ = #{countStatementId, jdbcType=VARCHAR},
+				COUNTSTATEMENTID_ = #{countStatementId,
+				jdbcType=VARCHAR},
 			</if>
 			<if test="parameterType != null">
 				PARAMETERTYPE_ = #{parameterType, jdbcType=VARCHAR},
@@ -259,10 +270,10 @@
 			</if>
 		</trim>
 		where
-          ID_ = #{id, jdbcType=VARCHAR}
-		
+		ID_ = #{id, jdbcType=VARCHAR}
+
 	</update>
-    
+
 	<delete id="deleteQueryDefinitionById" parameterType="string">
 		delete from
 		SYS_QUERY
@@ -313,7 +324,7 @@
 
 		<where>
 			1 = 1
-			
+
 			<if test="queryIds != null and queryIds.size() &gt; 0">
 				and E.ID_ IN
 				<foreach item="x_queryId" index="index" collection="queryIds"
@@ -322,8 +333,12 @@
 				</foreach>
 			</if>
 
-			<if test="parentId != null and name != '' ">
+			<if test="parentId != null and parentId != '' ">
 				and E.PARENTID_ = #{parentId}
+			</if>
+
+			<if test="nodeId != null ">
+				and E.NODEID_ = #{nodeId}
 			</if>
 
 			<if test="serviceKey != null and serviceKey != '' ">

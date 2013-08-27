@@ -218,6 +218,9 @@ public class TableDefinition implements java.io.Serializable,
 	@Column(name = "UPDATECASCADE_")
 	protected int updateCascade;
 
+	@Column(name = "NODEID_")
+	protected Long nodeId;
+
 	public TableDefinition() {
 
 	}
@@ -379,6 +382,10 @@ public class TableDefinition implements java.io.Serializable,
 			moduleName = "apps";
 		}
 		return moduleName;
+	}
+
+	public Long getNodeId() {
+		return nodeId;
 	}
 
 	public String getPackageName() {
@@ -551,6 +558,10 @@ public class TableDefinition implements java.io.Serializable,
 
 	public void setModuleName(String moduleName) {
 		this.moduleName = moduleName;
+	}
+
+	public void setNodeId(Long nodeId) {
+		this.nodeId = nodeId;
 	}
 
 	public void setPackageName(String packageName) {

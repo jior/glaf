@@ -42,6 +42,9 @@ public class Chart implements Serializable, JSONable {
 	@Column(name = "ID_", length = 50, nullable = false)
 	protected String id;
 
+	@Column(name = "NODEID_")
+	protected Long nodeId;
+
 	/**
 	 * ≤È—Ø±‡∫≈
 	 */
@@ -278,6 +281,10 @@ public class Chart implements Serializable, JSONable {
 		return mapping;
 	}
 
+	public Long getNodeId() {
+		return nodeId;
+	}
+
 	public String getPlotOrientation() {
 		return this.plotOrientation;
 	}
@@ -439,6 +446,10 @@ public class Chart implements Serializable, JSONable {
 
 	public void setMapping(String mapping) {
 		this.mapping = mapping;
+	}
+
+	public void setNodeId(Long nodeId) {
+		this.nodeId = nodeId;
 	}
 
 	public void setPlotOrientation(String plotOrientation) {
