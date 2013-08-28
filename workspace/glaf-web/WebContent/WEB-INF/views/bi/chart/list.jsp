@@ -11,15 +11,18 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>图表定义</title>
-<%@ include file="/WEB-INF/views/tm/header.jsp"%>
+<link href="<%=request.getContextPath()%>/scripts/artDialog/skins/default.css" rel="stylesheet" />
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/easyui/themes/${theme}/easyui.css">
-<link rel="stylesheet" href="<%=request.getContextPath()%>/scripts/ztree/css/zTreeStyle/zTreeStyle.css" type="text/css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/ztree/css/zTreeStyle/zTreeStyle.css" >
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/themes/${theme}/styles.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/icons/styles.css">
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.form.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/locale/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/ztree/js/jquery.ztree.all.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/artDialog/artDialog.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/artDialog/plugins/iframeTools.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/glaf-base.js"></script>
 <script type="text/javascript">
 
@@ -46,15 +49,15 @@
 
     function zTreeOnClick(event, treeId, treeNode, clickFlag) {
 		jQuery("#nodeId").val(treeNode.id);
-		loadMyData('<%=request.getContextPath()%>/mx/bi/chart/json?nodeId='+treeNode.id);
+		loadMxData('<%=request.getContextPath()%>/mx/bi/chart/json?nodeId='+treeNode.id);
 	}
 
-	function loadMyData(url){
+	function loadMxData(url){
 		  jQuery.get(url+'&randnum='+Math.floor(Math.random()*1000000),{qq:'xx'},function(data){
 		      //var text = JSON.stringify(data); 
               //alert(text);
-			  jQuery('#mydatagrid').datagrid('loadData', data);
-			  //jQuery('#mydatagrid').datagrid('load',getMxObjArray(jQuery("#iForm").serializeArray()));
+			  jQuery('#easyui_data_grid').datagrid('loadData', data);
+			  //jQuery('#easyui_data_grid').datagrid('load',getMxObjArray(jQuery("#iForm").serializeArray()));
 		  },'json');
 	}
 
@@ -237,6 +240,7 @@
 		 <table id="easyui_data_grid"></table>
 	  </div>  
 	</div>
+  </div>
 </div>
 </body>
 </html>

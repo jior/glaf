@@ -9,10 +9,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>${treeModel.name}表管理</title>
+<title>表管理</title>
 <link href="<%=request.getContextPath()%>/scripts/artDialog/skins/default.css" rel="stylesheet" />
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/easyui/themes/${theme}/easyui.css">
-<link rel="stylesheet" href="<%=request.getContextPath()%>/scripts/ztree/css/zTreeStyle/zTreeStyle.css" type="text/css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/ztree/css/zTreeStyle/zTreeStyle.css" >
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/themes/${theme}/styles.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/icons/styles.css">
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
@@ -55,8 +55,8 @@
 		  jQuery.get(url+'&randnum='+Math.floor(Math.random()*1000000),{qq:'xx'},function(data){
 		      //var text = JSON.stringify(data); 
               //alert(text);
-			  //jQuery('#mydatagrid').datagrid('loadData', data);
-			  jQuery('#mydatagrid').datagrid('load',getMxObjArray(jQuery("#iForm").serializeArray()));
+			  jQuery('#easyui_data_grid').datagrid('loadData', data);
+			  //jQuery('#easyui_data_grid').datagrid('load',getMxObjArray(jQuery("#iForm").serializeArray()));
 		  },'json');
 	}
 
@@ -70,7 +70,7 @@
 	});
 
     jQuery(function(){
-		jQuery('#mydatagrid').datagrid({
+		jQuery('#easyui_data_grid').datagrid({
 				width:1000,
 				height:480,
 				fit:true,
@@ -79,16 +79,16 @@
 				striped: true,
 				collapsible:true,
 				url:'<%=request.getContextPath()%>/mx/dts/table/json',
-				sortName: 'id',
-				sortOrder: 'desc',
 				remoteSort: false,
 				singleSelect:true,
-				idField:'id',
+				idField:'tableName',
 				columns:[[
 	                {title:'序号',field:'startIndex',width:80,sortable:false},
-					{title:'表名',field:'tablename',width:150,sortable:false},
+					{title:'表名',field:'tableName',width:150,sortable:false},
 					{title:'标题',field:'title',width:220,sortable:false},
 					{title:'关联查询',field:'query',width:220,sortable:false},
+					{title:'执行次序',field:'sortNo',width:120,sortable:false},
+					{title:'临时表',field:'temporaryFlag',width:120,sortable:false,formatter : formatter4},
 					{title:'创建日期',field:'createDate',width:90,sortable:false},
 					{title:'功能键',field:'functionKeys',width:120,sortable:false}
 				]],
@@ -99,7 +99,7 @@
 				onDblClickRow: onRowClick 
 			});
 
-			var p = jQuery('#mydatagrid').datagrid('getPager');
+			var p = jQuery('#easyui_data_grid').datagrid('getPager');
 			jQuery(p).pagination({
 				onBeforeRefresh:function(){
 					//alert('before refresh');
@@ -108,47 +108,50 @@
 
 	});
 
+
+	function formatter4(value, row, rowIndex) {
+		if(value == "1"){
+           return "<div style='width:100%;color:red;' title='临时表'><nobr>是 </nobr></div>";
+		}
+		return "<div style='width:100%;color:green;' title='非临时表' ><nobr>否</nobr></div>";
+	}
+
 		 
 	function addNew(){
-	    //location.href="<%=request.getContextPath()%>/mx/dts/table/edit";
 		var nodeId = jQuery("#nodeId").val();
 		if(nodeId=='' || nodeId==null){
-			alert("请在左边选择栏目类型！");
+			alert("请在左边选择分类类型！");
 			return;
 		}
 		var link="<%=request.getContextPath()%>/mx/dts/table/edit?nodeId="+nodeId;
 	    art.dialog.open(link, { height: 480, width: 900, title: "添加记录", lock: true, scrollbars:"no" }, false);
-		//location.href=link;
 	}
 
 	function onRowClick(rowIndex, row){
 		var nodeId = jQuery("#nodeId").val();
-        //window.open('<%=request.getContextPath()%>/mx/dts/table/edit?id='+row.id);
 	    var link = '<%=request.getContextPath()%>/mx/dts/table/edit?id='+row.id+"&nodeId="+nodeId;
 		art.dialog.open(link, { height: 480, width: 900, title: "修改记录", lock: true, scrollbars:"no" }, false);
-		//location.href=link;
 	}
 
 	function searchWin(){
 	    jQuery('#dlg').dialog('open').dialog('setTitle','信息查询');
-	    //jQuery('#iForm').form('clear');
 	}
 
 	function resize(){
-		jQuery('#mydatagrid').datagrid('resize', {
+		jQuery('#easyui_data_grid').datagrid('resize', {
 			width:800,
 			height:400
 		});
 	}
 
 	function editSelected(){
-	    var rows = jQuery('#mydatagrid').datagrid('getSelections');
+	    var rows = jQuery('#easyui_data_grid').datagrid('getSelections');
 	    var nodeId = jQuery("#nodeId").val();
 	    if(rows == null || rows.length !=1){
 		  alert("请选择其中一条记录。");
 		  return;
 	    }
-	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
+	    var selected = jQuery('#easyui_data_grid').datagrid('getSelected');
 	    if (selected ){
 		  var link = "<%=request.getContextPath()%>/mx/dts/table/edit?id="+selected.id+"&nodeId="+nodeId;
 		  art.dialog.open(link, { height: 480, width: 900, title: "修改记录", lock: true, scrollbars:"no" }, false);
@@ -157,12 +160,12 @@
 
 	 
 	function viewSelected(){
-		var rows = jQuery('#mydatagrid').datagrid('getSelections');
+		var rows = jQuery('#easyui_data_grid').datagrid('getSelections');
 		if(rows == null || rows.length !=1){
 			alert("请选择其中一条记录。");
 			return;
 		}
-		var selected = jQuery('#mydatagrid').datagrid('getSelected');
+		var selected = jQuery('#easyui_data_grid').datagrid('getSelected');
 		if (selected ){
 		    location.href="<%=request.getContextPath()%>/mx/dts/table/edit?id="+selected.id;
 		}
@@ -171,7 +174,7 @@
 
 	function deleteSelections(){
 		var ids = [];
-		var rows = jQuery('#mydatagrid').datagrid('getSelections');
+		var rows = jQuery('#easyui_data_grid').datagrid('getSelections');
 		for(var i=0;i<rows.length;i++){
 			ids.push(rows[i].id);
 		}
@@ -190,7 +193,7 @@
 					   } else {
 						   alert('操作成功完成！');
 					   }
-					   jQuery('#mydatagrid').datagrid('reload');
+					   jQuery('#easyui_data_grid').datagrid('reload');
 				   }
 			 });
 		} else {
@@ -199,11 +202,11 @@
 	}
 
 	function reloadGrid(){
-	    jQuery('#mydatagrid').datagrid('reload');
+	    jQuery('#easyui_data_grid').datagrid('reload');
 	}
 
 	function getSelected(){
-	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
+	    var selected = jQuery('#easyui_data_grid').datagrid('getSelected');
 	    if (selected){
 		  alert(selected.code+":"+selected.name+":"+selected.addr+":"+selected.col4);
 	    }
@@ -211,19 +214,19 @@
 
 	function getSelections(){
 	    var ids = [];
-	    var rows = jQuery('#mydatagrid').datagrid('getSelections');
+	    var rows = jQuery('#easyui_data_grid').datagrid('getSelections');
 	    for(var i=0;i<rows.length;i++){
-		ids.push(rows[i].code);
+		  ids.push(rows[i].code);
 	    }
 	    alert(ids.join(':'));
 	}
 
 	function clearSelections(){
-	    jQuery('#mydatagrid').datagrid('clearSelections');
+	    jQuery('#easyui_data_grid').datagrid('clearSelections');
 	}
 
 	function searchData(){
-	    jQuery('#mydatagrid').datagrid('reload');	
+	    jQuery('#easyui_data_grid').datagrid('reload');	
 	    jQuery('#dlg').dialog('close');
 	}
 
@@ -311,7 +314,33 @@
 				 });
 		  }
 	 }
+
+	 function fetchData(){
+		var rows = jQuery('#easyui_data_grid').datagrid('getSelections');
+		if(rows == null || rows.length !=1){
+			alert("请选择其中一条记录。");
+			return;
+		}
+		var selected = jQuery('#easyui_data_grid').datagrid('getSelected');
+		if (selected ){
+		    transformTable(selected.tableName);
+		}
+	 }
  
+
+	 function listData(){
+		var rows = jQuery('#easyui_data_grid').datagrid('getSelections');
+		if(rows == null || rows.length !=1){
+			alert("请选择其中一条记录。");
+			return;
+		}
+		var selected = jQuery('#easyui_data_grid').datagrid('getSelected');
+		if (selected ){
+		    showData(selected.tableName);
+		}
+	 }
+
+	 
 	 function showData(tableName){
 		var link= '<%=request.getContextPath()%>/mx/dts/table/resultList?q=1';
 		document.getElementById("tableName").value=tableName;
@@ -325,6 +354,7 @@
 		document.getElementById("iForm").submit();
 	}
 
+ 
 
 </script>
 </head>
@@ -348,22 +378,25 @@
 	   <form id="iForm" name="iForm" method="post">
 	   <input type="hidden" id="nodeId" name="nodeId" value="" >
 	   <input type="hidden" id="tableName" name="tableName" />
-		<div class="toolbar-backgroud"  > 
+		<div class="toolbar-backgroud"  >&nbsp;&nbsp; 
 		<img src="<%=request.getContextPath()%>/images/window.png">
-		&nbsp;<span class="x_content_title">${treeModel.name}表管理</span>
-		<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-add'" 
-		   onclick="javascript:addNew();">新增</a>  
+		<span class="x_content_title"> 表管理</span>
 		<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-edit'"
 		   onclick="javascript:editSelected();">修改</a> 
-		<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-remove'"
-		   onclick="javascript:deleteSelections();">删除</a> 
+		<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-list'"
+		   onclick="javascript:listData();">查看数据</a> 
+		<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-sys'"
+		   onclick="javascript:fetchData();">抓取数据</a> 
+		<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-sys'"
+		   onclick="javascript:loadAndFetchData();">全部重新抓取</a> 
 	   </div> 
 	   </form>
 	  </div> 
 	  <div data-options="region:'center',border:true">
-		 <table id="mydatagrid"></table>
+		 <table id="easyui_data_grid"></table>
 	  </div>  
     </div>
+  </div>
 </div>
 
 </body>

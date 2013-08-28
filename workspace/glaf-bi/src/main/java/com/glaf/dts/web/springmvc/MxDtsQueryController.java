@@ -185,7 +185,7 @@ public class MxDtsQueryController {
 				for (QueryDefinition queryDefinition : list) {
 					JSONObject rowJSON = queryDefinition.toJsonObject();
 					rowJSON.put("id", queryDefinition.getId());
-					rowJSON.put("queryDefinitionId", queryDefinition.getId());
+					rowJSON.put("queryId", queryDefinition.getId());
 					rowJSON.put("startIndex", ++start);
 					rowsJSON.add(rowJSON);
 				}

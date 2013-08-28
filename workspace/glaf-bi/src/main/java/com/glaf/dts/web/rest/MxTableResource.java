@@ -513,6 +513,7 @@ public class MxTableResource {
 				tableDefinition = manager.toTableDefinition(query);
 				tableDefinition.setTableName(tableName);
 				tableDefinition.setType("DTS");
+				tableDefinition.setNodeId(query.getNodeId());
 
 				TransformTable tbl = new TransformTable();
 				tbl.createOrAlterTable(tableDefinition);

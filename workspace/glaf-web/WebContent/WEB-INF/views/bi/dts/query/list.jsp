@@ -9,10 +9,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>报表查询管理</title>
+<title>查询管理</title>
 <link href="<%=request.getContextPath()%>/scripts/artDialog/skins/default.css" rel="stylesheet" />
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/easyui/themes/${theme}/easyui.css">
-<link rel="stylesheet" href="<%=request.getContextPath()%>/scripts/ztree/css/zTreeStyle/zTreeStyle.css" type="text/css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/ztree/css/zTreeStyle/zTreeStyle.css" >
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/themes/${theme}/styles.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/icons/styles.css">
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
@@ -55,22 +55,18 @@
 		  jQuery.get(url+'&randnum='+Math.floor(Math.random()*1000000),{qq:'xx'},function(data){
 		      //var text = JSON.stringify(data); 
               //alert(text);
-			  jQuery('#mydatagrid').datagrid('loadData', data);
-			  //jQuery('#mydatagrid').datagrid('load',getMxObjArray(jQuery("#iForm").serializeArray()));
+			  jQuery('#easyui_data_grid').datagrid('loadData', data);
+			  //jQuery('#easyui_data_grid').datagrid('load',getMxObjArray(jQuery("#iForm").serializeArray()));
 		  },'json');
 	}
 
-
-	function reLoadData(nodeId){
-		loadData('<%=request.getContextPath()%>/mx/dts/query/json?nodeId='+nodeId);
-	}
 
     jQuery(document).ready(function(){
 			jQuery.fn.zTree.init(jQuery("#myTree"), setting);
 	});
 
     jQuery(function(){
-		jQuery('#mydatagrid').datagrid({
+		jQuery('#easyui_data_grid').datagrid({
 				width:1000,
 				height:480,
 				fit:true,
@@ -79,13 +75,12 @@
 				striped: true,
 				collapsible:true,
 				url:'<%=request.getContextPath()%>/mx/dts/query/json',
-				sortName: 'id',
-				sortOrder: 'desc',
 				remoteSort: false,
 				singleSelect:true,
 				idField:'id',
 				columns:[[
 	                {title:'序号',field:'startIndex',width:80,sortable:false},
+					{title:'名称',field:'name',width:220,sortable:false},
 					{title:'标题',field:'title',width:220,sortable:false},
 					{title:'目标表',field:'targetTableName',width:220,sortable:false},
 					{title:'创建日期',field:'createDate',width:90,sortable:false},
@@ -98,7 +93,7 @@
 				onDblClickRow: onRowClick 
 			});
 
-			var p = jQuery('#mydatagrid').datagrid('getPager');
+			var p = jQuery('#easyui_data_grid').datagrid('getPager');
 			jQuery(p).pagination({
 				onBeforeRefresh:function(){
 					//alert('before refresh');
@@ -111,17 +106,17 @@
 	function addNew(){
 		var nodeId = jQuery("#nodeId").val();
 		if(nodeId=='' || nodeId==null){
-			alert("请在左边选择栏目类型！");
+			alert("请在左边选择分类类型！");
 			return;
 		}
 		var link="<%=request.getContextPath()%>/mx/dts/query/edit?nodeId="+nodeId;
-	    art.dialog.open(link, { height: 480, width: 900, title: "添加记录", lock: true, scrollbars:"no" }, false);
+	    art.dialog.open(link, { height: 480, width: 680, title: "添加记录", lock: true, scrollbars:"no" }, false);
 	}
 
 	function onRowClick(rowIndex, row){
 		var nodeId = jQuery("#nodeId").val();
-	    var link = '<%=request.getContextPath()%>/mx/dts/query/edit?id='+row.id+"&nodeId="+nodeId;
-		art.dialog.open(link, { height: 480, width: 900, title: "修改记录", lock: true, scrollbars:"no" }, false);
+	    var link = '<%=request.getContextPath()%>/mx/dts/query/edit?queryId='+row.id+"&nodeId="+nodeId;
+		art.dialog.open(link, { height: 480, width: 680, title: "修改记录", lock: true, scrollbars:"no" }, false);
 	}
 
 	function searchWin(){
@@ -129,43 +124,43 @@
 	}
 
 	function resize(){
-		jQuery('#mydatagrid').datagrid('resize', {
+		jQuery('#easyui_data_grid').datagrid('resize', {
 			width:800,
 			height:400
 		});
 	}
 
 	function editSelected(){
-	    var rows = jQuery('#mydatagrid').datagrid('getSelections');
+	    var rows = jQuery('#easyui_data_grid').datagrid('getSelections');
 	    var nodeId = jQuery("#nodeId").val();
 	    if(rows == null || rows.length !=1){
 		  alert("请选择其中一条记录。");
 		  return;
 	    }
-	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
+	    var selected = jQuery('#easyui_data_grid').datagrid('getSelected');
 	    if (selected ){
-		  var link = "<%=request.getContextPath()%>/mx/dts/query/edit?id="+selected.id+"&nodeId="+nodeId;
-		  art.dialog.open(link, { height: 480, width: 900, title: "修改记录", lock: true, scrollbars:"no" }, false);
+		  var link = "<%=request.getContextPath()%>/mx/dts/query/edit?queryId="+selected.id+"&nodeId="+nodeId;
+		  art.dialog.open(link, { height: 480, width: 680, title: "修改记录", lock: true, scrollbars:"no" }, false);
 	    }
 	}
 
-	 
+ 
 	function viewSelected(){
-		var rows = jQuery('#mydatagrid').datagrid('getSelections');
+		var rows = jQuery('#easyui_data_grid').datagrid('getSelections');
 		if(rows == null || rows.length !=1){
 			alert("请选择其中一条记录。");
 			return;
 		}
-		var selected = jQuery('#mydatagrid').datagrid('getSelected');
+		var selected = jQuery('#easyui_data_grid').datagrid('getSelected');
 		if (selected ){
-		    location.href="<%=request.getContextPath()%>/mx/dts/query/edit?id="+selected.id;
+		    location.href="<%=request.getContextPath()%>/mx/dts/query/edit?queryId="+selected.id;
 		}
 	}
 
 
 	function deleteSelections(){
 		var ids = [];
-		var rows = jQuery('#mydatagrid').datagrid('getSelections');
+		var rows = jQuery('#easyui_data_grid').datagrid('getSelections');
 		for(var i=0;i<rows.length;i++){
 			ids.push(rows[i].id);
 		}
@@ -184,7 +179,7 @@
 					   } else {
 						   alert('操作成功完成！');
 					   }
-					   jQuery('#mydatagrid').datagrid('reload');
+					   jQuery('#easyui_data_grid').datagrid('reload');
 				   }
 			 });
 		} else {
@@ -193,11 +188,11 @@
 	}
 
 	function reloadGrid(){
-	    jQuery('#mydatagrid').datagrid('reload');
+	    jQuery('#easyui_data_grid').datagrid('reload');
 	}
 
 	function getSelected(){
-	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
+	    var selected = jQuery('#easyui_data_grid').datagrid('getSelected');
 	    if (selected){
 		  alert(selected.code+":"+selected.name+":"+selected.addr+":"+selected.col4);
 	    }
@@ -205,7 +200,7 @@
 
 	function getSelections(){
 	    var ids = [];
-	    var rows = jQuery('#mydatagrid').datagrid('getSelections');
+	    var rows = jQuery('#easyui_data_grid').datagrid('getSelections');
 	    for(var i=0;i<rows.length;i++){
 		ids.push(rows[i].code);
 	    }
@@ -213,11 +208,11 @@
 	}
 
 	function clearSelections(){
-	    jQuery('#mydatagrid').datagrid('clearSelections');
+	    jQuery('#easyui_data_grid').datagrid('clearSelections');
 	}
 
 	function searchData(){
-	    jQuery('#mydatagrid').datagrid('reload');	
+	    jQuery('#easyui_data_grid').datagrid('reload');	
 	    jQuery('#dlg').dialog('close');
 	}
 
@@ -225,7 +220,6 @@
 </head>
 <body style="margin:1px;">  
 
-<input type="hidden" id="rowId" name="rowId" value="" >
 <div style="margin:0;"></div>  
 <div class="easyui-layout" data-options="fit:true">  
     <div data-options="region:'west',split:true" style="width:180px;">
@@ -241,10 +235,10 @@
      <div class="easyui-layout" data-options="fit:true"> 
 	   <div data-options="region:'north',split:true,border:true" style="height:40px"> 
 	   <form id="iForm" name="iForm" method="post">
-	   <input type="hidden" id="nodeId" name="nodeId" value="" >
+	    <input type="hidden" id="nodeId" name="nodeId" value="" >
 		<div class="toolbar-backgroud"  > 
 		<img src="<%=request.getContextPath()%>/images/window.png">
-		&nbsp;<span class="x_content_title">报表查询管理</span>
+		&nbsp;<span class="x_content_title">查询管理</span>
 		<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-add'" 
 		   onclick="javascript:addNew();">新增</a>  
 		<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-edit'"
@@ -255,9 +249,10 @@
 	   </form>
 	  </div> 
 	  <div data-options="region:'center',border:true">
-		 <table id="mydatagrid"></table>
+		 <table id="easyui_data_grid"></table>
 	  </div>  
     </div>
+  </div>
 </div>
 
 </body>
