@@ -72,6 +72,11 @@ public class MxDtsTableController {
 		RequestUtils.setRequestParameterToAttribute(request);
 
 		String tableName = request.getParameter("tableName");
+		String tableName_enc = request.getParameter("tableName_enc");
+		if (StringUtils.isNotEmpty(tableName_enc)) {
+			tableName = RequestUtils.decodeString(tableName_enc);
+		}
+
 		if (StringUtils.isNotEmpty(tableName)) {
 			TableDefinition table = tableDefinitionService
 					.getTableDefinition(tableName);
@@ -224,6 +229,10 @@ public class MxDtsTableController {
 		RequestUtils.setRequestParameterToAttribute(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		String tableName = request.getParameter("tableName");
+		String tableName_enc = request.getParameter("tableName_enc");
+		if (StringUtils.isNotEmpty(tableName_enc)) {
+			tableName = RequestUtils.decodeString(tableName_enc);
+		}
 		Connection connection = null;
 		List<ColumnDefinition> columns = null;
 		try {
@@ -271,6 +280,10 @@ public class MxDtsTableController {
 	public ModelAndView tableData(HttpServletRequest request) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		String tableName = request.getParameter("tableName");
+		String tableName_enc = request.getParameter("tableName_enc");
+		if (StringUtils.isNotEmpty(tableName_enc)) {
+			tableName = RequestUtils.decodeString(tableName_enc);
+		}
 		if (StringUtils.isNotEmpty(tableName)) {
 			List<ColumnDefinition> columns = DBUtils
 					.getColumnDefinitions(tableName);

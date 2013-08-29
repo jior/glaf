@@ -124,13 +124,15 @@
 			return;
 		}
 		var link="<%=request.getContextPath()%>/mx/dts/table/edit?nodeId="+nodeId;
-	    art.dialog.open(link, { height: 480, width: 900, title: "添加记录", lock: true, scrollbars:"no" }, false);
+		location.href=link;
+	    //art.dialog.open(link, { height: 480, width: 900, title: "添加记录", lock: true, scrollbars:"no" }, false);
 	}
 
 	function onRowClick(rowIndex, row){
 		var nodeId = jQuery("#nodeId").val();
-	    var link = '<%=request.getContextPath()%>/mx/dts/table/edit?id='+row.id+"&nodeId="+nodeId;
-		art.dialog.open(link, { height: 480, width: 900, title: "修改记录", lock: true, scrollbars:"no" }, false);
+	    var link = '<%=request.getContextPath()%>/mx/dts/table/edit?tableName_enc='+row.tableName_enc+"&nodeId="+nodeId;
+		//art.dialog.open(link, { height: 480, width: 900, title: "修改记录", lock: true, scrollbars:"no" }, false);
+		location.href=link;
 	}
 
 	function searchWin(){
@@ -153,8 +155,9 @@
 	    }
 	    var selected = jQuery('#easyui_data_grid').datagrid('getSelected');
 	    if (selected ){
-		  var link = "<%=request.getContextPath()%>/mx/dts/table/edit?id="+selected.id+"&nodeId="+nodeId;
-		  art.dialog.open(link, { height: 480, width: 900, title: "修改记录", lock: true, scrollbars:"no" }, false);
+		  var link = "<%=request.getContextPath()%>/mx/dts/table/edit?tableName_enc="+selected.tableName_enc+"&nodeId="+nodeId;
+		  //art.dialog.open(link, { height: 480, width: 900, title: "修改记录", lock: true, scrollbars:"no" }, false);
+		  location.href=link;
 	    }
 	}
 
@@ -167,7 +170,7 @@
 		}
 		var selected = jQuery('#easyui_data_grid').datagrid('getSelected');
 		if (selected ){
-		    location.href="<%=request.getContextPath()%>/mx/dts/table/edit?id="+selected.id;
+		    location.href="<%=request.getContextPath()%>/mx/dts/table/edit?tableName_enc="+selected.tableName_enc;
 		}
 	}
 

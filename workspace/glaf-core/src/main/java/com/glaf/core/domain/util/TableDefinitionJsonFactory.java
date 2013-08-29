@@ -22,6 +22,7 @@ import com.alibaba.fastjson.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.glaf.core.util.DateUtils;
+import com.glaf.core.util.RequestUtils;
 import com.glaf.core.domain.*;
 
 public class TableDefinitionJsonFactory {
@@ -144,8 +145,13 @@ public class TableDefinitionJsonFactory {
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("tableName", model.getTableName());
 		jsonObject.put("_tableName_", model.getTableName());
+		jsonObject.put("tableName_enc",
+				RequestUtils.encodeString(model.getTableName()));
+
 		if (model.getParentTableName() != null) {
 			jsonObject.put("parentTableName", model.getParentTableName());
+			jsonObject.put("parentTableName_enc",
+					RequestUtils.encodeString(model.getParentTableName()));
 		}
 		if (model.getNodeId() != null) {
 			jsonObject.put("nodeId", model.getNodeId());
@@ -223,9 +229,13 @@ public class TableDefinitionJsonFactory {
 	public static ObjectNode toObjectNode(TableDefinition model) {
 		ObjectNode jsonObject = new ObjectMapper().createObjectNode();
 		jsonObject.put("tableName", model.getTableName());
-		jsonObject.put("_tableName_", model.getTableName());
+		jsonObject.put("tableName_enc",
+				RequestUtils.encodeString(model.getTableName()));
+
 		if (model.getParentTableName() != null) {
 			jsonObject.put("parentTableName", model.getParentTableName());
+			jsonObject.put("parentTableName_enc",
+					RequestUtils.encodeString(model.getParentTableName()));
 		}
 		if (model.getNodeId() != null) {
 			jsonObject.put("nodeId", model.getNodeId());

@@ -55,7 +55,7 @@
 		<td><c:out value="${p.description}"/></td>
 		<!-- <td><c:out value="${p.initValue}"/></td> -->
 		<td valign="middle">
-		  <input type="text" name="<c:out value="${p.name}"/>" class="span3" 
+		  <input type="text" name="<c:out value="${p.name}"/>" class="span3 x-text" 
 		        value="<c:out value="${p.value}"/>" size="60" maxLength="500"/>
 		</td>
 	</tr>

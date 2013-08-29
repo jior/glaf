@@ -51,7 +51,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.glaf.core.jdbc.DBConnectionFactory;
-
 import com.glaf.core.business.TransformTable;
 import com.glaf.core.domain.*;
 import com.glaf.core.query.*;
@@ -124,6 +123,10 @@ public class MxTableResource {
 			@Context UriInfo uriInfo) {
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		String tableName = ParamUtils.getString(params, "tableName");
+		String tableName_enc = request.getParameter("tableName_enc");
+		if (StringUtils.isNotEmpty(tableName_enc)) {
+			tableName = RequestUtils.decodeString(tableName_enc);
+		}
 		Connection connection = null;
 		List<ColumnDefinition> columns = null;
 		try {
@@ -253,6 +256,10 @@ public class MxTableResource {
 			@Context UriInfo uriInfo) {
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		String tableName = ParamUtils.getString(params, "tableName");
+		String tableName_enc = request.getParameter("tableName_enc");
+		if (StringUtils.isNotEmpty(tableName_enc)) {
+			tableName = RequestUtils.decodeString(tableName_enc);
+		}
 		String actionType = ParamUtils.getString(params, "actionType");
 		if (tableName != null) {
 			TableDefinition tableDefinition = tableDefinitionService
@@ -276,6 +283,10 @@ public class MxTableResource {
 			@Context UriInfo uriInfo) {
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		String tableName = request.getParameter("tableName");
+		String tableName_enc = request.getParameter("tableName_enc");
+		if (StringUtils.isNotEmpty(tableName_enc)) {
+			tableName = RequestUtils.decodeString(tableName_enc);
+		}
 		String actionType = request.getParameter("actionType");
 		TableDefinition tableDefinition = tableDefinitionService
 				.getTableDefinition(tableName);
@@ -337,7 +348,11 @@ public class MxTableResource {
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		logger.debug(params);
 
-		String tableName = ParamUtils.getString(params, "tableName_enc");
+		String tableName = request.getParameter("tableName");
+		String tableName_enc = request.getParameter("tableName_enc");
+		if (StringUtils.isNotEmpty(tableName_enc)) {
+			tableName = RequestUtils.decodeString(tableName_enc);
+		}
 		String gridType = ParamUtils.getString(params, "gridType");
 		if (gridType == null) {
 			gridType = "easyui";
@@ -447,6 +462,10 @@ public class MxTableResource {
 	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
 	public byte[] transformAll(@Context HttpServletRequest request) {
 		String tableName = request.getParameter("tableName");
+		String tableName_enc = request.getParameter("tableName_enc");
+		if (StringUtils.isNotEmpty(tableName_enc)) {
+			tableName = RequestUtils.decodeString(tableName_enc);
+		}
 		if (StringUtils.isNotEmpty(tableName)) {
 			MxTransformManager manager = new MxTransformManager();
 			try {
@@ -483,6 +502,10 @@ public class MxTableResource {
 	public byte[] transformQueryToTable(@Context HttpServletRequest request) {
 		String queryId = request.getParameter("queryId");
 		String tableName = request.getParameter("tableName");
+		String tableName_enc = request.getParameter("tableName_enc");
+		if (StringUtils.isNotEmpty(tableName_enc)) {
+			tableName = RequestUtils.decodeString(tableName_enc);
+		}
 		if (StringUtils.isNotEmpty(tableName)
 				&& StringUtils.isNotEmpty(queryId)) {
 			tableName = tableName.toLowerCase();
@@ -545,6 +568,10 @@ public class MxTableResource {
 	public byte[] transformTable(@Context HttpServletRequest request,
 			@Context UriInfo uriInfo) {
 		String tableName = request.getParameter("tableName");
+		String tableName_enc = request.getParameter("tableName_enc");
+		if (StringUtils.isNotEmpty(tableName_enc)) {
+			tableName = RequestUtils.decodeString(tableName_enc);
+		}
 		if (StringUtils.isNotEmpty(tableName)) {
 			MxTransformManager manager = new MxTransformManager();
 			try {
@@ -560,14 +587,19 @@ public class MxTableResource {
 
 	@GET
 	@POST
-	@Path("/view/{tableName}")
+	@Path("/view")
 	@ResponseBody
 	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
-	public byte[] view(@PathParam("tableName") String tableName,
-			@Context HttpServletRequest request, @Context UriInfo uriInfo) {
+	public byte[] view(@Context HttpServletRequest request,
+			@Context UriInfo uriInfo) {
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		TableDefinitionQuery query = new TableDefinitionQuery();
 		Tools.populate(query, params);
+		String tableName = request.getParameter("tableName");
+		String tableName_enc = request.getParameter("tableName_enc");
+		if (StringUtils.isNotEmpty(tableName_enc)) {
+			tableName = RequestUtils.decodeString(tableName_enc);
+		}
 		TableDefinition tableDefinition = tableDefinitionService
 				.getTableDefinition(tableName);
 		ObjectNode responseJSON = tableDefinition.toObjectNode();
