@@ -66,34 +66,34 @@ function checkForm(form){
       <tr>
         <td class="input-box2" valign="top">标&nbsp;&nbsp;题*</td>
         <td>
-		<input name="title" type="text" size="30"  class="input span5 x-text" 
+		<input name="title" type="text" size="80"  class="input span5 x-text" 
 		       value="${todo.title}" datatype="string" nullable="no" minsize="6" maxsize="50" chname="标  题">
 		</td>
       </tr>
       <tr>
         <td class="input-box2" valign="top">内&nbsp;&nbsp;容*</td>
         <td>
-          <input name="content" type="text" size="30"  class="input span5 x-text" datatype="string" 
+          <input name="content" type="text" size="80"  class="input span5 x-text" datatype="string" 
 		             value="${todo.content}" nullable="no" maxsize="255" chname="内容"> </td>
       </tr>
       <tr>
         <td class="input-box2" valign="top">期&nbsp;&nbsp;限*</td>
         <td>
-          <input name="limitDay" type="text" size="30"  class="input span2 x-text" datatype="int" 
+          <input name="limitDay" type="text" size="5"  class="input span2 x-text" datatype="int" 
 		             value="${todo.limitDay}" nullable="no" maxsize="2" chname="期限"> 天
 		  </td>
       </tr>
 	  <tr>
         <td class="input-box2" valign="top">a*</td>
         <td>
-          <input name="xa" type="text" size="30"  class="input span2 x-text" datatype="int" 
+          <input name="xa" type="text" size="5"  class="input span2 x-text" datatype="int" 
 		             value="${todo.xa}" nullable="no" maxsize="3" chname="a"> 小时
 		  </td>
       </tr>
 	  <tr>
         <td class="input-box2" valign="top">b*</td>
         <td>
-          <input name="xb" type="text" size="30"  class="input span2 x-text" datatype="int" 
+          <input name="xb" type="text" size="5"  class="input span2 x-text" datatype="int" 
 		             value="${todo.xb}" nullable="no" maxsize="3" chname="b"> 小时
 		  </td>
       </tr>

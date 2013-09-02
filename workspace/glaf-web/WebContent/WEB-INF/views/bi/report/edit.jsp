@@ -253,7 +253,7 @@
                  <td >
 				   <input type="hidden" id="queryIds" name="queryIds" value="${report.queryIds}">
 				   <textarea type="textarea" id="queryNames" name="queryNames" value="${queryNames}"
-				          readonly="true"    onclick="javascript:openQx();" style="width:535px;height:90px;">${queryNames}</textarea>
+				          readonly="true"  class="x-textarea"  onclick="javascript:openQx();" style="width:535px;height:90px;">${queryNames}</textarea>
 						  &nbsp;
 						  <a href="#" onclick="javascript:openQx();">
 						  <img src="<%=request.getContextPath()%>/images/search_results.gif" border="0"
@@ -266,7 +266,7 @@
                  <td >
 				   <input type="hidden" id="chartIds" name="chartIds" value="${report.chartIds}">
 				   <textarea type="textarea" id="chartNames" name="chartNames" value="${chartNames}"
-				          readonly="true"  onclick="javascript:openChart();"  
+				          readonly="true" class="x-textarea" onclick="javascript:openChart();"  
 						  style="width:535px;height:90px;">${chartNames}</textarea>
 						  &nbsp;
 						  <a href="#" onclick="javascript:openChart();">

@@ -315,7 +315,7 @@
 				 <td>组合查询</td>
                  <td colspan="3">
 				   <input type="hidden" id="queryIds" name="queryIds" value="${chart.queryIds}">
-				   <textarea id="queryNames" name="queryNames" rows="12" cols="68"   
+				   <textarea id="queryNames" name="queryNames" rows="12" cols="68" class="x-textarea"
 				   style="width:580px;height:80px;" onclick="javascript:openQx();"  
 				   readonly="true" >${queryNames}</textarea>&nbsp;
 			       <a href="#" onclick="javascript:openQx();">

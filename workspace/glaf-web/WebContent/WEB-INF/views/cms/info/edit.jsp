@@ -191,7 +191,7 @@
 				 <td >
                  <input id="tag" name="tag" class="span7 x-text" type="text"
 				        value="${publicInfo.tag}" size="80"
-				 ></input>(多个tag用空格分隔)
+				 ></input>&nbsp;(多个tag用空格分隔)
 				 </td>
 			</tr>
 
@@ -304,7 +304,9 @@
 	</tbody>
    </table>
   </form>
-  <br> 
- 
+  <br/>
+  <br/>
+  <br/>
+  <br/>
 </body>
 </html>

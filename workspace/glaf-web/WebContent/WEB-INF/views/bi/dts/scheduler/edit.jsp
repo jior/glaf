@@ -123,22 +123,25 @@
 <table border="0" cellpadding="0" cellspacing="0" width="95%">
 	<tr>
 		<td align="left" width="25%" height="27">名称&nbsp;*</td>
-		<td align="left" height="27"><input name="taskName" size="50" maxlength="50"
-			type="text" class="input-xlarge span5" value="${scheduler.taskName}">
+		<td align="left" height="27">
+		<input name="taskName" size="50" maxlength="50"
+			type="text" class="input-xlarge span5 x-text" value="${scheduler.taskName}">
 		</td>
 	</tr>
 
 	<tr>
 		<td align="left" width="25%" height="27">主题&nbsp;*</td>
-		<td align="left" height="27"><input name="title" size="50" type="text" class="input-xlarge span5"
+		<td align="left" height="27">
+		<input name="title" size="50" type="text" class="input-xlarge span5 x-text"
 			maxlength="255" value="${scheduler.title}">
 		</td>
 	</tr>
 
 	<tr>
 		<td align="left" width="25%" height="27">内容&nbsp;&nbsp;</td>
-		<td align="left" height="27"><textarea name="content" rows="8" cols="39"
-			class="input-xlarge span5">${scheduler.content}</textarea>
+		<td align="left" height="27">
+		<textarea name="content" rows="8" cols="39"
+			class="input-xlarge span5 x-textarea">${scheduler.content}</textarea>
 		</td>
 	</tr>
 
@@ -177,17 +180,18 @@
     <tr>
 		<td align="left" width="25%" height="27">时间表达式&nbsp;</td>
 		<td align="left" height="27">
-		<input name="expression" size="20" type="text" class="input-xlarge span3" maxlength="50"
+		<input name="expression" size="20" type="text" class="input-xlarge span3 x-text" maxlength="50"
 			value="${scheduler.expression}">
-			<br />示例：每周一到周五凌晨5点执行一次
-			<br />（0 0 5 ? * MON-FRI）
-		    <br />&nbsp;(可不填,可以参考<a href="<%=request.getContextPath()%>/quartz.txt">quartz</a>文件)</td>
+		<br />示例：每周一到周五凌晨5点执行一次
+		<br />（0 0 5 ? * MON-FRI）
+		<br />&nbsp;(可不填,可以参考<a href="<%=request.getContextPath()%>/quartz.txt">quartz</a>文件)</td>
 	</tr>
 
 	<tr>
 		<td align="left" width="25%" height="27">开始日期&nbsp;&nbsp;</td>
-		<td align="left" height="27"><input id="startDate" name="startDate" size="15"
-			type="text"  class="input-medium" required="true"
+		<td align="left" height="27">
+		<input id="startDate" name="startDate" size="15"
+			type="text"  class="input-medium x-text" required="true"
 			value="<fmt:formatDate value="${scheduler.startDate}" pattern="yyyy-MM-dd HH:mm:ss"/>" />&nbsp;
 		<img src="<%=request.getContextPath()%>/images/calendar.png"
 			id="f_trigger_1" style="cursor: pointer; border: 1px solid red;" />
@@ -196,8 +200,9 @@
 
 	<tr>
 		<td align="left" width="25%" height="27">结束日期&nbsp;&nbsp;</td>
-		<td align="left" height="27"><input id="endDate" name="endDate" size="15"
-			type="text"   class="input-medium" required="true"
+		<td align="left" height="27">
+		<input id="endDate" name="endDate" size="15"
+			type="text"   class="input-medium x-text" required="true"
 			value="<fmt:formatDate value="${scheduler.endDate}" pattern="yyyy-MM-dd HH:mm:ss"/>" />&nbsp;
 		<img src="<%=request.getContextPath()%>/images/calendar.png"
 			id="f_trigger_2" style="cursor: pointer; border: 1px solid red;" />
@@ -208,8 +213,9 @@
 
 	<tr>
 		<td align="left" width="25%" height="27">重复次数&nbsp;</td>
-		<td align="left" height="27"><input name="repeatCount" size="15" type="text"
-			class="input-mini" maxlength="255"
+		<td align="left" height="27">
+		<input name="repeatCount" size="5" type="text"
+			class="input-mini x-text" maxlength="255"
 			value="${scheduler.repeatCount}"
 			onKeyPress="return check_integer(this);">
 		&nbsp;(-1代表不限制重复次数)</td>
@@ -217,8 +223,9 @@
 
 	<tr>
 		<td align="left" width="25%" height="27">间隔时间&nbsp;</td>
-		<td align="left" height="27"><input name="repeatInterval" type="text"
-			class="input-mini" maxlength="6"
+		<td align="left" height="27">
+		<input name="repeatInterval" type="text"
+			class="input-mini x-text" maxlength="6" size="5"
 			value="${scheduler.repeatInterval}"
 			onKeyPress="return check_integer(this);">
 			 &nbsp;

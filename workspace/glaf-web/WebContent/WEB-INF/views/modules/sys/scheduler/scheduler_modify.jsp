@@ -93,7 +93,7 @@
 	<tr>
 		<td width="25%" height="24">内容&nbsp;&nbsp;</td>
 		<td height="24"><textarea name="content" rows="8" cols="39"
-			 class="input span3 x-text"  style="width:240px;height:120px;"><c:out value="${scheduler.content}" /></textarea>
+			 class="input span3 x-text"  style="width:295px;height:120px;"><c:out value="${scheduler.content}" /></textarea>
 		</td>
 	</tr>
 
