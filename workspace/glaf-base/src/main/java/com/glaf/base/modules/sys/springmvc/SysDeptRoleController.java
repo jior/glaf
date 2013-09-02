@@ -98,7 +98,7 @@ public class SysDeptRoleController {
 
 		return new ModelAndView("show_msg", modelMap);
 	}
-	
+
 	/**
 	 * 设置权限-全局
 	 * 
@@ -110,25 +110,27 @@ public class SysDeptRoleController {
 	public ModelAndView setPrivilegeWhole(HttpServletRequest request,
 			ModelMap modelMap) {
 		long roleId = ParamUtil.getLongParameter(request, "roleId", 0);
-		int saveType = ParamUtil.getIntParameter(request, "saveType", 0);//0表示保存，1表示取消
-		String deptIdsStr = ParamUtil.getParameter(request, "departmentIds", "");
-		String[] deptIdsStrs = deptIdsStr.split(",");
+		int saveType = ParamUtil.getIntParameter(request, "saveType", 0);// 0表示保存，1表示取消
+		String deptIdsStr = ParamUtil
+				.getParameter(request, "departmentIds", "");
+		String[] deptIds = deptIdsStr.split(",");
 		long[] appId = ParamUtil.getLongParameterValues(request, "appId");
 		for (int i = 0; i < appId.length; i++) {
-			long id = ParamUtil.getLongParameter(request, "access" + appId[i],0);
+			long id = ParamUtil.getLongParameter(request, "access" + appId[i],
+					0);
 			if (id != 1) {
 				appId[i] = 0;
 			}
 		}
-		//long[] funcId = ParamUtil.getLongParameterValues(request, "funcId");
+		// long[] funcId = ParamUtil.getLongParameterValues(request, "funcId");
 		boolean ret = false;
-		for(int i=0;i<deptIdsStrs.length;i++){
+		for (int i = 0; i < deptIds.length; i++) {
 			long deptId = 0;
-			if(null!=deptIdsStrs[i] && !"".equals(deptIdsStrs[i]))
-				deptId = Long.parseLong(deptIdsStrs[i]);
-			if(deptId!=0){
+			if (null != deptIds[i] && !"".equals(deptIds[i]))
+				deptId = Long.parseLong(deptIds[i]);
+			if (deptId != 0) {
 				SysDeptRole deptRole = sysDeptRoleService.find(deptId, roleId);
-				if(saveType==0){
+				if (saveType == 0) {
 					if (deptRole == null) {// 如果没有找到则创建一个
 						deptRole = new SysDeptRole();
 						deptRole.setDept(sysDepartmentService.findById(deptId));
@@ -137,14 +139,17 @@ public class SysDeptRoleController {
 						deptRole.setSysRoleId(roleId);
 						sysDeptRoleService.create(deptRole);
 					}
-					ret = sysDeptRoleService.saveOrCancelRoleApplicationWhole(deptRole.getId(), appId,saveType);
-				}else{
+					ret = sysDeptRoleService.saveOrCancelRoleApplicationWhole(
+							deptRole.getId(), appId, saveType);
+				} else {
 					if (deptRole != null)
-						ret = sysDeptRoleService.saveOrCancelRoleApplicationWhole(deptRole.getId(), appId,saveType);
-					}	
+						ret = sysDeptRoleService
+								.saveOrCancelRoleApplicationWhole(
+										deptRole.getId(), appId, saveType);
 				}
+			}
 		}
-		
+
 		ViewMessages messages = new ViewMessages();
 		if (ret) {// 保存成功
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
@@ -286,27 +291,15 @@ public class SysDeptRoleController {
 		return new ModelAndView("/modules/sys/deptRole/deptRole_privilege",
 				modelMap);
 	}
-	
+
 	@RequestMapping(params = "method=showPrivilegeWhole")
 	public ModelAndView showPrivilegeWhole(HttpServletRequest request,
 			ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
-		//long deptId = ParamUtil.getLongParameter(request, "deptId", 0);
+
 		long roleId = ParamUtil.getLongParameter(request, "roleId", 0);
 		SysRole role = sysRoleService.findById(roleId);
-		/*SysDeptRole deptRole = sysDeptRoleService.find(deptId, roleId);
-		if (deptRole == null) {// 如果没有找到则创建一个
-			deptRole = new SysDeptRole();
-			deptRole.setDept(sysDepartmentService.findById(deptId));
-			deptRole.setDeptId(deptId);
-			deptRole.setRole(sysRoleService.findById(roleId));
-			deptRole.setSysRoleId(roleId);
-			sysDeptRoleService.create(deptRole);
-		}
-		request.setAttribute("role", deptRole);
-		logger.debug("#########################################");
-		logger.debug("apps:" + deptRole.getApps());*/
-		//request.setAttribute("roleId", roleId);
+
 		request.setAttribute("role", role);
 		SysTree parent = sysTreeService.getSysTreeByCode(Constants.TREE_APP);
 		List<SysTree> list = new ArrayList<SysTree>();
@@ -319,8 +312,8 @@ public class SysDeptRoleController {
 			return new ModelAndView(x_view, modelMap);
 		}
 
-		return new ModelAndView("/modules/sys/deptRole/deptRole_privilege_whole",
-				modelMap);
+		return new ModelAndView(
+				"/modules/sys/deptRole/deptRole_privilege_whole", modelMap);
 	}
-	
+
 }
