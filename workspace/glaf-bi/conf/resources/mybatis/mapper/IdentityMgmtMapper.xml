@@ -14,15 +14,16 @@
 		<id property="actorId" column="account" jdbcType="VARCHAR" />
 		<result property="activationCode" column="account" jdbcType="VARCHAR" />
 		<result property="name" column="name" jdbcType="VARCHAR" />
-		<result property="deptId" column="deptId" jdbcType="INTEGER" />
+		<result property="deptId" column="deptId" jdbcType="BIGINT" />
 		<result property="mail" column="email" jdbcType="VARCHAR" />
 		<result property="mobile" column="mobile" jdbcType="VARCHAR" />
+		<result property="adminFlag" column="adminFlag" jdbcType="VARCHAR" />
 	</resultMap>
 
 
-	<resultMap id="baseTreeResultMap"	type="com.glaf.core.base.BaseTree">
+	<resultMap id="baseTreeResultMap" type="com.glaf.core.base.BaseTree">
         <id property="id" column="id" jdbcType="BIGINT" />
-        <result property="parent" column="parent" jdbcType="BIGINT"/>
+        <result property="parentId" column="parent" jdbcType="BIGINT"/>
         <result property="name" column="name" jdbcType="VARCHAR"/>
         <result property="desc" column="nodedesc" jdbcType="VARCHAR"/>
         <result property="sort" column="sort" jdbcType="INTEGER"/>
@@ -32,6 +33,159 @@
         <result property="url" column="url" jdbcType="VARCHAR"/>
         <result property="locked" column="locked" jdbcType="INTEGER"/>
 	</resultMap>
+
+
+	<insert id="insertSysTree" parameterType="com.glaf.core.base.BaseTree">
+		insert into sys_tree
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ID
+			<if test="parentId != null">
+				,PARENT
+			</if>
+			<if test="name != null">
+				,NAME
+			</if>
+			<if test="desc != null">
+				,NODEDESC
+			</if>
+			<if test="discriminator != null">
+				,DISCRIMINATOR
+			</if>
+			<if test="treeId != null">
+				,TREEID
+			</if>
+			<if test="sort != null">
+				,SORT
+			</if>
+			<if test="code != null">
+				,CODE
+			</if>
+			<if test="icon != null">
+				,icon
+			</if>
+			<if test="iconCls != null">
+				,iconCls
+			</if>
+			<if test="url != null">
+				,url
+			</if>
+			<if test="locked != null">
+				,locked
+			</if>
+			<if test="createDate != null">
+				,CREATEDATE 
+			</if>
+			<if test="createBy != null">
+				,CREATEBY 
+			</if>
+			<if test="updateBy != null">
+				,UPDATEBY 
+			</if>
+			<if test="updateDate != null">
+				,UPDATEDATE 
+			</if>
+		</trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			#{id, jdbcType=BIGINT}
+
+			<if test="parentId != null">
+				,#{parentId, jdbcType=BIGINT}
+			</if>
+			<if test="name != null">
+				,#{name, jdbcType=VARCHAR}
+			</if>
+			<if test="desc != null">
+				,#{desc, jdbcType=VARCHAR}
+			</if>
+			<if test="discriminator != null">
+				,#{discriminator, jdbcType=VARCHAR}
+			</if>
+			<if test="treeId != null">
+				,#{treeId, jdbcType=VARCHAR}
+			</if>
+			<if test="sort != null">
+				,#{sort, jdbcType=INTEGER}
+			</if>
+			<if test="code != null">
+				,#{code, jdbcType=VARCHAR}
+			</if>
+			<if test="icon != null">
+				,#{icon, jdbcType=VARCHAR}
+			</if>
+			<if test="iconCls != null">
+				,#{iconCls, jdbcType=VARCHAR}
+			</if>
+			<if test="url != null">
+				,#{url, jdbcType=VARCHAR}
+			</if>
+			<if test="locked != null">
+				,#{locked, jdbcType=INTEGER}
+			</if>
+			<if test="createDate != null">
+				,#{createDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="createBy != null">
+				,#{createBy, jdbcType=VARCHAR}
+			</if>
+			<if test="updateBy != null">
+				,#{updateBy, jdbcType=VARCHAR}
+			</if>
+			<if test="updateDate != null">
+				,#{updateDate, jdbcType=TIMESTAMP}
+			</if>
+		</trim>
+	</insert>
+
+
+	<update id="updateSysTree" parameterType="com.glaf.core.base.BaseTree">
+		update sys_tree
+		set
+		<trim prefix="" suffix="" suffixOverrides=",">
+			<if test="parentId != null">
+				PARENT = #{parentId, jdbcType=BIGINT},
+			</if>
+			<if test="name != null">
+				NAME = #{name, jdbcType=VARCHAR},
+			</if>
+			<if test="desc != null">
+				NODEDESC = #{desc, jdbcType=VARCHAR},
+			</if>
+			<if test="discriminator != null">
+				DISCRIMINATOR = #{discriminator, jdbcType=VARCHAR},
+			</if>
+			<if test="treeId != null">
+				TREEID = #{treeId, jdbcType=VARCHAR},
+			</if>
+			<if test="sort != null">
+				SORT = #{sort, jdbcType=INTEGER},
+			</if>
+			<if test="code != null">
+				CODE = #{code, jdbcType=VARCHAR},
+			</if>
+			<if test="icon != null">
+				icon = #{icon, jdbcType=VARCHAR},
+			</if>
+			<if test="iconCls != null">
+				iconCls = #{iconCls, jdbcType=VARCHAR},
+			</if>
+			<if test="url != null">
+				url = #{url, jdbcType=VARCHAR},
+			</if>
+			<if test="locked != null">
+				locked = #{locked, jdbcType=INTEGER},
+			</if>
+			<if test="updateBy != null">
+				UPDATEBY = #{updateBy, jdbcType=VARCHAR},
+			</if>
+			<if test="updateDate != null">
+				UPDATEDATE = #{updateDate, jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+		where
+		ID = #{id, jdbcType=BIGINT}
+
+	</update>
 
 
 	<select id="getTreeModelById" parameterType="long" resultMap="baseTreeResultMap">
@@ -45,7 +199,100 @@
 
 
 	<select id="getChildrenTreeModels" parameterType="long" resultMap="baseTreeResultMap">
-		select * from sys_tree where parent = #{parent}
+		select * from sys_tree where parent = #{parentId}
+	</select>
+
+
+	<select id="getTreeModels" parameterType="com.glaf.core.query.TreeModelQuery"
+		resultMap="baseTreeResultMap">
+
+		select E.* from sys_tree E
+
+		<where>
+			1 = 1
+
+			<if test="parentId != null">
+				and E.PARENT = #{parentId}
+			</if>
+
+			<if test="parentIds != null and parentIds.size() &gt; 0">
+				and E.PARENT IN
+				<foreach item="x_parentId" index="index" collection="parentIds"
+					open="(" separator="," close=")">
+					#{x_parentId}
+				</foreach>
+			</if>
+
+			<if test="discriminator != null and discriminator != '' ">
+				and E.DISCRIMINATOR = #{discriminator}
+			</if>
+
+			<if test="name != null and name != '' ">
+				and E.NAME = #{name}
+			</if>
+
+			<if test="nameLike != null and nameLike != '' ">
+				and E.NAME like #{nameLike}
+			</if>
+
+			<if test="descLike != null and descLike != '' ">
+				and E.NODEDESC like #{descLike}
+			</if>
+
+			<if test="sortGreaterThanOrEqual != null">
+				and E.SORT &gt;= #{sortGreaterThanOrEqual}
+			</if>
+
+			<if test="sortGreaterThan != null">
+				and E.SORT &gt; #{sortGreaterThan}
+			</if>
+
+			<if test="sortLessThanOrEqual != null">
+				and E.SORT &lt;= #{sortLessThanOrEqual}
+			</if>
+
+			<if test="sortLessThan != null">
+				and E.SORT &lt; #{sortLessThan}
+			</if>
+
+			<if test="code != null and code != '' ">
+				and E.CODE = #{code}
+			</if>
+
+			<if test="codeLike != null and codeLike != '' ">
+				and E.CODE like #{codeLike}
+			</if>
+
+			<if test="codes != null and codes.size() &gt; 0">
+				and E.CODE IN
+				<foreach item="x_code" index="index" collection="codes"
+					open="(" separator="," close=")">
+					#{x_code}
+				</foreach>
+			</if>
+
+			<if test="locked != null">
+				and E.locked = #{locked}
+			</if>
+
+			<if test="lockedGreaterThanOrEqual != null">
+				and E.locked &gt;= #{lockedGreaterThanOrEqual}
+			</if>
+
+			<if test="lockedLessThanOrEqual != null">
+				and E.locked &lt;= #{lockedLessThanOrEqual}
+			</if>
+
+		</where>
+
+		<choose>
+			<when test="orderBy != null">
+				order by ${orderBy}
+			</when>
+			<otherwise>
+				order by E.SORT asc
+			</otherwise>
+		</choose>
 	</select>
 
 
@@ -212,6 +459,129 @@
 
 	</select>
 
+ 
+    <select id="getUserRoleCodes" resultType="string"
+		parameterType="com.glaf.core.query.MembershipQuery">
+
+		select distinct r.CODE from SYS_ROLE r
+		inner join SYS_DEPT_ROLE dr
+		on r.ID = dr.SYSROLEID
+		inner join SYS_USER_ROLE ur
+		on dr.ID = ur.ROLEID
+		inner join SYS_USER u
+		on ur.USERID = u.ID
+		where r.CODE is not null
+
+		<choose>
+			<when test="actorId != null">
+				and u.account = #{actorId} 
+			</when>
+			<when test="actorIds != null and actorIds.size !=0">
+				and u.account IN
+				<foreach item="x_actorId" index="index" collection="actorIds"
+					open="(" separator="," close=")">
+					#{x_actorId}
+                </foreach>
+			</when>
+			<when test="nodeId != null">
+				and ( u.deptid = #{nodeId} ) 
+			</when>
+			<when test="nodeIds != null and nodeIds.size !=0">
+				and u.deptid IN
+				<foreach item="x_nodeId" index="index" collection="nodeIds"
+					open="(" separator="," close=")">
+					#{x_nodeId}
+				</foreach>
+			</when>
+			<otherwise>
+			  and 1=0
+			</otherwise>
+		</choose>
+
+		union 
+
+		select E.code from sys_application E
+		inner join sys_access A
+		on
+		E.id = A.appId
+		where E.code is not null 
+		and A.roleId in (
+			select dr.id from sys_dept_role dr
+			inner join sys_user_role ur
+			on dr.id = ur.roleid
+			inner join sys_user u
+			on ur.userid = u.id
+			where ur.authorized = 0
+
+			 <choose>
+				<when test="actorId != null">
+					and u.account = #{actorId} 
+				</when>
+				<when test="actorIds != null and actorIds.size !=0">
+					and u.account IN
+					<foreach item="x_actorId" index="index" collection="actorIds"
+						open="(" separator="," close=")">
+						#{x_actorId}
+					</foreach>
+				</when>
+				<when test="nodeId != null">
+					and ( u.deptid = #{nodeId} ) 
+				</when>
+				<when test="nodeIds != null and nodeIds.size !=0">
+					and u.deptid IN
+					<foreach item="x_nodeId" index="index" collection="nodeIds"
+						open="(" separator="," close=")">
+						#{x_nodeId}
+					</foreach>
+				</when>
+				<otherwise>
+				  and 1=0
+				</otherwise>
+			</choose>
+		) 
+
+        union 
+
+		select E.CODE from sys_function E
+		inner join sys_permission A
+		on E.id = A.funcId
+		where E.CODE is not null
+		and A.roleId in (
+			select dr.id from sys_dept_role dr
+			inner join sys_user_role ur
+			on dr.id = ur.roleid
+			inner join sys_user u
+			on u.id = ur.userid
+			where ur.authorized = 0
+
+			 <choose>
+				<when test="actorId != null">
+					and u.account = #{actorId} 
+				</when>
+				<when test="actorIds != null and actorIds.size !=0">
+					and u.account IN
+					<foreach item="x_actorId" index="index" collection="actorIds"
+						open="(" separator="," close=")">
+						#{x_actorId}
+					</foreach>
+				</when>
+				<when test="nodeId != null">
+					and ( u.deptid = #{nodeId} ) 
+				</when>
+				<when test="nodeIds != null and nodeIds.size !=0">
+					and u.deptid IN
+					<foreach item="x_nodeId" index="index" collection="nodeIds"
+						open="(" separator="," close=")">
+						#{x_nodeId}
+					</foreach>
+				</when>
+				<otherwise>
+				  and 1=0
+				</otherwise>
+			</choose>
+		)
+ 
+	</select>
 
 
 	<select id="getUsers" resultMap="userResultMap"
@@ -283,6 +653,36 @@
 			<foreach item="x_roleId" index="index" collection="roleIds"
 				open="(" separator="," close=")">
 				#{x_roleId}
+            </foreach>
+		</if>
+
+	</select>
+
+
+	<select id="getDepartments" resultType="com.glaf.core.base.BaseTree"
+		parameterType="com.glaf.core.query.TreeModelQuery">
+
+		select D.ID as id, D.NAME as name, D.CODE as code, D.DEPTDESC as description, D.SORT as sortNo,
+        D.CREATETIME as createDate, D.CREATEBY as createBy, D.DEPTLEVEL as deep, D.STATUS as locked
+		from SYS_DEPARTMENT D
+		inner join SYS_TREE T
+		on D.NODEID = T.ID
+		WHERE 1=1
+
+		 
+		<if test="codeLike != null">
+			and ( D.CODE = #{codeLike} )
+		</if>
+
+		<if test="nameLike != null">
+			and ( D.NAME = #{nameLike} )
+		</if>
+
+		<if test="nodeIds != null and nodeIds.size !=0">
+			and D.NODEID IN
+			<foreach item="x_nodeId" index="index" collection="nodeIds"
+				open="(" separator="," close=")">
+				#{x_nodeId}
             </foreach>
 		</if>
 

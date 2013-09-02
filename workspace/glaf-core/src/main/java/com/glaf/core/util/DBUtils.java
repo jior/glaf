@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -1038,7 +1039,7 @@ public class DBUtils {
 		Collection<ColumnDefinition> columns = tableDefinition.getColumns();
 		buffer.append(" create table ").append(tableDefinition.getTableName());
 		buffer.append(" ( ");
-
+		Collection<String> cols = new HashSet<String>();
 		ColumnDefinition idField = tableDefinition.getIdColumn();
 		if (idField != null) {
 			buffer.append(newline);
@@ -1172,6 +1173,9 @@ public class DBUtils {
 					|| StringUtils.isEmpty(column.getJavaType())
 					|| (idField != null && StringUtils.equalsIgnoreCase(
 							idField.getColumnName(), column.getColumnName()))) {
+				continue;
+			}
+			if (cols.contains(column.getColumnName().toLowerCase())) {
 				continue;
 			}
 			if (idField != null) {
@@ -1336,7 +1340,7 @@ public class DBUtils {
 					buffer.append(" TEXT ");
 				}
 			}
-
+			cols.add(column.getColumnName().toLowerCase());
 		}
 
 		if (idField != null) {
@@ -1357,7 +1361,7 @@ public class DBUtils {
 		Collection<ColumnDefinition> fields = classDefinition.getColumns();
 		buffer.append(" create table ").append(classDefinition.getTableName());
 		buffer.append(" ( ");
-
+		Collection<String> cols = new HashSet<String>();
 		ColumnDefinition idField = classDefinition.getIdColumn();
 		if (idField != null) {
 			buffer.append(newline);
@@ -1468,6 +1472,9 @@ public class DBUtils {
 			if (StringUtils.isEmpty(field.getColumnName())
 					|| (idField != null && StringUtils.equalsIgnoreCase(
 							idField.getColumnName(), field.getColumnName()))) {
+				continue;
+			}
+			if (cols.contains(field.getColumnName().toLowerCase())) {
 				continue;
 			}
 			if (idField != null) {
@@ -1635,7 +1642,7 @@ public class DBUtils {
 					}
 				}
 			}
-
+			cols.add(field.getColumnName().toLowerCase());
 		}
 
 		if (idField != null) {

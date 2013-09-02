@@ -150,5 +150,6 @@
 	<classpathentry kind="lib" path="/glaf-core/lib/xmemcached.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/xml-apis-ext.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/xml-apis.jar"/>
+	<classpathentry kind="lib" path="conf"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

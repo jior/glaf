@@ -11,7 +11,9 @@
 
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<foreach collection="columns" item="column">
-				${column.columnName},
+			    <if test="column.value != null">
+				    ${column.columnName},
+				</if>
 			</foreach>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">

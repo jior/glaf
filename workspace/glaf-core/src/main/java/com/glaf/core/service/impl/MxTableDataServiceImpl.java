@@ -154,6 +154,8 @@ public class MxTableDataServiceImpl implements ITableDataService {
 			idColumn.setColumnName(idCol.getColumnName());
 			idColumn.setJavaType(idCol.getJavaType());
 			idColumn.setValueExpression(idCol.getValueExpression());
+			exprColumns.add(idCol);
+			exprMap.put(idCol.getColumnName().toLowerCase(), idCol.getValueExpression());
 		}
 
 		Iterator<ColumnDefinition> iter = tableDefinition.getColumns()
@@ -161,12 +163,12 @@ public class MxTableDataServiceImpl implements ITableDataService {
 		while (iter.hasNext()) {
 			ColumnDefinition cell = iter.next();
 			if (StringUtils.isNotEmpty(cell.getValueExpression())) {
-				exprMap.put(cell.getColumnName(), cell.getValueExpression());
+				exprMap.put(cell.getColumnName().toLowerCase(), cell.getValueExpression());
 				exprColumns.add(cell);
 			}
 		}
 
-		logger.debug(exprMap);
+		logger.debug("expr map:"+exprMap);
 
 		List<TableModel> inertRows = new ArrayList<TableModel>();
 
@@ -193,7 +195,7 @@ public class MxTableDataServiceImpl implements ITableDataService {
 			}
 
 			for (ColumnModel cell : tableData.getColumns()) {
-				String expr = exprMap.get(cell.getColumnName());
+				String expr = exprMap.get(cell.getColumnName().toLowerCase());
 				if (StringUtils.isNotEmpty(expr)) {
 					if (ExpressionConstants.NOW_EXPRESSION.equals(expr)
 							|| ExpressionConstants.CURRENT_YYYYMMDD_EXPRESSION
