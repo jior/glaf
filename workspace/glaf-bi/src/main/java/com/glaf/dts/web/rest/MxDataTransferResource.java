@@ -110,6 +110,11 @@ public class MxDataTransferResource {
 		json4.put("text", "32Î»UUID");
 		array.add(json4);
 
+		JSONObject json5 = new JSONObject();
+		json5.put("code", "X");
+		json5.put("text", "ÎÞ");
+		array.add(json5);
+
 		return array.toString().getBytes("UTF-8");
 	}
 }

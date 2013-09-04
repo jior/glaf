@@ -86,7 +86,7 @@
 	//明细列表
 	var editcount = 0;
 	jQuery(function() {
-		var transferId = jQuery('#transferId').val();
+		var tableName = jQuery('#tableName').val();
 		jQuery('#mydatagrid').datagrid(
 						{
 							width : 745,
@@ -96,8 +96,8 @@
 							nowrap : false,
 							striped : true,
 							collapsible : true,
-							url : '${contextPath}/mx/dts/dataTransfer/columns?transferId='
-									+ transferId,
+							url : '${contextPath}/mx/dts/dataTransfer/columns?tableName='
+									+ tableName,
 							sortName : 'id',
 							sortOrder : 'desc',
 							remoteSort : false,
@@ -141,7 +141,7 @@
 										editor : {
 											type : 'numberbox',
 											options : {
-												required : true,
+												required : false,
 												min : 1,
 												max : 4000
 											}
@@ -154,7 +154,7 @@
 										editor : {
 											type : 'numberbox',
 											options : {
-												required : true,
+												required : false,
 												min : 1,
 												max : 999,
 												precision : 0
@@ -175,7 +175,7 @@
 									},
 									{
 										title : '类型',
-										field : 'type',
+										field : 'javaType',
 										width : 120,
 										editor : {
 											type : 'combobox',
@@ -189,20 +189,18 @@
 										},
 										formatter : function(value, row, index) {
 											var javaType = "";
-											jQuery
-													.ajax({
+											jQuery.ajax({
 														type : "POST",
 														url : '${contextPath}/rs/dts/dataTransfer/javaType',
 														dataType : 'json',
 														async : false,
 														success : function(data) {
-															if (data != null
-																	&& data.message != null) {
+															if (data != null && data.message != null) {
 																alert(data.message);
 															} else {
 																for ( var i = 0; i < data.length; i++) {
 																	if (data[i].code == value) {
-																		javaType = data[i].name;
+																		javaType = data[i].text;
 																	}
 																}
 															}
@@ -218,8 +216,8 @@
 										editor : {
 											type : 'combobox',
 											options : {
-												required : true,
-												editable : false,
+												required : false,
+												editable : true,
 												url : '${contextPath}/rs/dts/dataTransfer/valueExpression',
 												valueField : 'code',
 												textField : 'text'
@@ -227,20 +225,18 @@
 										},
 										formatter : function(value, row, index) {
 											var valueExpression = "";
-											jQuery
-													.ajax({
+											jQuery.ajax({
 														type : "POST",
 														url : '${contextPath}/rs/dts/dataTransfer/valueExpression',
 														dataType : 'json',
 														async : false,
 														success : function(data) {
-															if (data != null
-																	&& data.message != null) {
+															if (data != null && data.message != null) {
 																alert(data.message);
 															} else {
 																for ( var i = 0; i < data.length; i++) {
 																	if (data[i].code == value) {
-																		valueExpression = data[i].name;
+																		valueExpression = data[i].text;
 																	}
 																}
 															}
@@ -316,7 +312,7 @@
 			alert("当前还有" + editcount + "记录正在编辑，暂不能删除。");
 			return;
 		}
-		var transferId = jQuery('#transferId').val();
+		var tableName = jQuery('#tableName').val();
 		var ids = [];
 		var rows = jQuery('#mydatagrid').datagrid('getSelections');
 		for ( var i = 0; i < rows.length; i++) {
@@ -324,11 +320,10 @@
 		}
 		if (ids.length > 0 && confirm("数据删除后不能恢复，确定删除吗？")) {
 			var columnIds = ids.join(',');
-			jQuery
-					.ajax({
+			jQuery.ajax({
 						type : "POST",
 						url : '${contextPath}/mx/dts/dataTransfer/deleteColumns?columnIds='
-								+ columnIds + '&transferId=' + transferId,
+								+ columnIds + '&tableName=' + tableName,
 						dataType : 'json',
 						async : false,
 						error : function(data) {
@@ -377,7 +372,7 @@
 	
 	//明细保存
 	function saveDetail(indexs) {
-		var transferId = jQuery('#transferId').val();
+		var tableName = jQuery('#tableName').val();
 		$("#mydatagrid").datagrid("endEdit", indexs);
 		$("#mydatagrid").datagrid("selectRow", indexs);
 		var rows = $("#mydatagrid").datagrid("getSelections");
@@ -388,8 +383,8 @@
 		}
 		jQuery.ajax({
 			type : "POST",
-			url : '${contextPath}/mx/dts/dataTransfer/saveColumn?transferId='
-					+ transferId,
+			url : '${contextPath}/mx/dts/dataTransfer/saveColumn?tableName='
+					+ tableName,
 			data : rows[0],
 			dataType : 'json',
 			async : false,
@@ -428,7 +423,7 @@
 		</div>
 		<div data-options="region:'center',border:false,cache:true">
 			<form id="iForm" name="iForm" method="post">
-				<input type="hidden" id="transferId" name="transferId"
+				<input type="hidden" id="id" name="id"
 					value="${dataTransfer.id}" />
 				<div style="width: 100%">
 					<table style="width: 720px;" align="center">

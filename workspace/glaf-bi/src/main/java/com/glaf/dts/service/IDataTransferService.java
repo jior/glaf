@@ -1,13 +1,26 @@
 package com.glaf.dts.service;
 
 import java.util.*;
+
 import org.springframework.transaction.annotation.Transactional;
 
+import com.glaf.core.domain.ColumnDefinition;
 import com.glaf.dts.domain.*;
 import com.glaf.dts.query.*;
 
 @Transactional(readOnly = true)
 public interface IDataTransferService {
+
+	/**
+	 * 根据主键删除记录
+	 * 
+	 * @return
+	 */
+	@Transactional
+	void deleteByColumnId(String id);
+
+	@Transactional
+	void deleteByColumnIds(List<String> columnIds);
 
 	/**
 	 * 根据主键删除记录
@@ -24,6 +37,8 @@ public interface IDataTransferService {
 	 */
 	@Transactional
 	void deleteByIds(List<String> ids);
+
+	List<ColumnDefinition> getColumns(String tableName);
 
 	/**
 	 * 根据主键获取一条记录
@@ -61,5 +76,8 @@ public interface IDataTransferService {
 	 */
 	@Transactional
 	void save(DataTransfer dataTransfer);
+
+	@Transactional
+	void saveColumn(String tableName, ColumnDefinition columnDefinition);
 
 }

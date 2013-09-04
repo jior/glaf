@@ -413,10 +413,6 @@
 				and E.PARSECLASS_ = #{parseClass}
 			</if>
 
-			<if test="aggregationKeys != null and aggregationKeys != '' ">
-				and E.AGGREGATIONKEYS_ = #{aggregationKeys}
-			</if>
-
 			<if test="temporaryFlag != null and temporaryFlag != '' ">
 				and E.TEMPORARYFLAG_ = #{temporaryFlag}
 			</if>

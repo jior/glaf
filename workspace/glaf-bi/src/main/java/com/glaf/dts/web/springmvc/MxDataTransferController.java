@@ -4,21 +4,21 @@ import java.io.IOException;
 import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import com.alibaba.fastjson.*;
 
+import com.alibaba.fastjson.*;
 import com.glaf.core.config.ViewProperties;
+import com.glaf.core.domain.ColumnDefinition;
 import com.glaf.core.identity.*;
 import com.glaf.core.security.*;
 import com.glaf.core.util.*;
-
 import com.glaf.dts.domain.*;
 import com.glaf.dts.query.*;
 import com.glaf.dts.service.*;
@@ -33,6 +33,37 @@ public class MxDataTransferController {
 
 	public MxDataTransferController() {
 
+	}
+
+	@RequestMapping("/columns")
+	@ResponseBody
+	public byte[] columns(HttpServletRequest request, ModelMap modelMap)
+			throws IOException {
+		String tableName = request.getParameter("tableName");
+		JSONObject result = new JSONObject();
+		List<ColumnDefinition> list = dataTransferService.getColumns(tableName);
+
+		if (list != null && !list.isEmpty()) {
+			int start = 0;
+			JSONArray rowsJSON = new JSONArray();
+
+			result.put("rows", rowsJSON);
+			result.put("total", list.size());
+
+			for (ColumnDefinition c : list) {
+				JSONObject rowJSON = c.toJsonObject();
+				rowJSON.put("id", c.getId());
+				rowJSON.put("columnDefinitionId", c.getId());
+				rowJSON.put("startIndex", ++start);
+				rowsJSON.add(rowJSON);
+			}
+
+		} else {
+			JSONArray rowsJSON = new JSONArray();
+			result.put("rows", rowsJSON);
+			result.put("total", 0);
+		}
+		return result.toJSONString().getBytes("UTF-8");
 	}
 
 	@ResponseBody
@@ -76,6 +107,26 @@ public class MxDataTransferController {
 				dataTransferService.save(dataTransfer);
 			}
 		}
+	}
+
+	@ResponseBody
+	@RequestMapping("/deleteColumns")
+	public byte[] deleteColumns(HttpServletRequest request, ModelMap modelMap) {
+		String id = RequestUtils.getString(request, "columnId");
+		String ids = request.getParameter("columnIds");
+		try {
+			if (StringUtils.isNotEmpty(ids)) {
+				List<String> rowIds = StringTools.split(ids);
+				dataTransferService.deleteByColumnIds(rowIds);
+			} else if (id != null) {
+				dataTransferService.deleteByColumnId(id);
+			}
+			return ResponseUtils.responseJsonResult(true);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			logger.error(ex);
+		}
+		return ResponseUtils.responseJsonResult(false);
 	}
 
 	@ResponseBody
@@ -296,6 +347,24 @@ public class MxDataTransferController {
 		dataTransferService.save(dataTransfer);
 
 		return this.list(request, modelMap);
+	}
+
+	@ResponseBody
+	@RequestMapping("/saveColumn")
+	public byte[] saveColumn(HttpServletRequest request) {
+		String tableName = request.getParameter("tableName");
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		ColumnDefinition columnDefinition = new ColumnDefinition();
+		try {
+			Tools.populate(columnDefinition, params);
+			this.dataTransferService.saveColumn(tableName, columnDefinition);
+
+			return ResponseUtils.responseJsonResult(true);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			logger.error(ex);
+		}
+		return ResponseUtils.responseJsonResult(false);
 	}
 
 	@ResponseBody
