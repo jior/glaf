@@ -349,6 +349,9 @@ public class ColumnDefinition implements
 	@Column(name = "WIDTH_", length = 50)
 	protected String width;
 
+	@Column(name = "POSITION_")
+	protected Integer position;
+
 	public ColumnDefinition() {
 
 	}
@@ -535,6 +538,10 @@ public class ColumnDefinition implements
 
 	public int getOrdinal() {
 		return ordinal;
+	}
+
+	public Integer getPosition() {
+		return position;
 	}
 
 	public int getPrecision() {
@@ -967,6 +974,10 @@ public class ColumnDefinition implements
 
 	public void setOrdinal(int ordinal) {
 		this.ordinal = ordinal;
+	}
+
+	public void setPosition(Integer position) {
+		this.position = position;
 	}
 
 	public void setPrecision(int precision) {

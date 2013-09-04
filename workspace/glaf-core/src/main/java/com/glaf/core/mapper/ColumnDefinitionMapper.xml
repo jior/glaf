@@ -4,279 +4,299 @@
 
 <mapper namespace="com.glaf.core.mapper.ColumnDefinitionMapper">
 
-	<resultMap id="columnDefinitionResultMap"	type="com.glaf.core.domain.ColumnDefinition">
-		<id property="id" column="ID_" jdbcType="VARCHAR"/>
-		<result property="queryId" column="QUERYID_" jdbcType="VARCHAR"/>
-		<result property="tableName" column="TABLENAME_" jdbcType="VARCHAR"/>
-		<result property="targetId" column="TARGETID_" jdbcType="VARCHAR"/>
-		<result property="alias" column="ALIAS_" jdbcType="VARCHAR"/>
-		<result property="columnName" column="COLUMNNAME_" jdbcType="VARCHAR"/>
-		<result property="columnLabel" column="COLUMNLABEL_" jdbcType="VARCHAR"/>
-		<result property="name" column="NAME_" jdbcType="VARCHAR"/>
-		<result property="title" column="TITLE_" jdbcType="VARCHAR"/>
-		<result property="englishTitle" column="ENGLISHTITLE_" jdbcType="VARCHAR"/>
-		<result property="length" column="LENGTH_" jdbcType="INTEGER"/>
-		<result property="scale" column="SCALE_" jdbcType="INTEGER"/>
-		<result property="precision" column="PRECISION_" jdbcType="INTEGER"/>
-		<result property="primaryKeyField" column="PRIMARYKEY_" jdbcType="VARCHAR"/>
-		<result property="nullableField" column="NULL_" jdbcType="VARCHAR"/>
-		<result property="frozenField" column="FROZEN_" jdbcType="VARCHAR"/>
-		<result property="uniqueField" column="UNIQUE_" jdbcType="VARCHAR"/>
-		<result property="searchableField" column="SEARCHABLE_" jdbcType="VARCHAR"/>
-		<result property="editableField" column="EDITABLE_" jdbcType="VARCHAR"/>
-		<result property="updatableField" column="UPDATEABLE_" jdbcType="VARCHAR"/>
-		<result property="resizableField" column="RESIZABLE_" jdbcType="VARCHAR"/>
-		<result property="hiddenField" column="HIDDEN_" jdbcType="VARCHAR"/>
-		<result property="tooltip" column="TOOLTIP_" jdbcType="VARCHAR"/>
-		<result property="ordinal" column="ORDINAL_" jdbcType="INTEGER"/>
-		<result property="javaType" column="JAVATYPE_" jdbcType="VARCHAR"/>
-		<result property="inputType" column="INPUTTYPE_" jdbcType="VARCHAR"/>
-		<result property="valueField" column="VALUEFIELD_" jdbcType="VARCHAR"/>
-		<result property="textField" column="TEXTFIELD_" jdbcType="VARCHAR"/>
-		<result property="url" column="URL_" jdbcType="VARCHAR"/>
-		<result property="validType" column="VALIDTYPE_" jdbcType="VARCHAR"/>
-		<result property="regex" column="REGEX_" jdbcType="VARCHAR"/>
-		<result property="defaultValue" column="DEFAULTVALUE_" jdbcType="VARCHAR"/>
-		<result property="discriminator" column="DISCRIMINATOR_" jdbcType="VARCHAR"/>
-		<result property="formula" column="FORMULA_" jdbcType="VARCHAR"/>
-		<result property="mask" column="MASK_" jdbcType="VARCHAR"/>
-		<result property="dataCode" column="DATACODE_" jdbcType="VARCHAR"/>
-		<result property="renderType" column="RENDERTYPE_" jdbcType="VARCHAR"/>
-		<result property="translator" column="TRANSLATOR_" jdbcType="VARCHAR"/>
-		<result property="summaryType" column="SUMMARYTYPE_" jdbcType="VARCHAR"/>
-		<result property="summaryExpr" column="SUMMARYEXPR_" jdbcType="VARCHAR"/>
-		<result property="displayType" column="DISPLAYTYPE_" jdbcType="INTEGER"/>
-		<result property="sortableField" column="SORTABLE_" jdbcType="VARCHAR"/>
-		<result property="sortType" column="SORTTYPE_" jdbcType="VARCHAR"/>
-		<result property="systemFlag" column="SYSTEMFLAG_" jdbcType="VARCHAR"/>
-		<result property="formatter" column="FORMATTER_" jdbcType="VARCHAR"/>
-		<result property="align" column="ALIGN_" jdbcType="VARCHAR"/>
-		<result property="height" column="HEIGHT_" jdbcType="VARCHAR"/>
-		<result property="width" column="WIDTH_" jdbcType="VARCHAR"/>
-		<result property="link" column="LINK_" jdbcType="VARCHAR"/>
-		<result property="isCollectionField" column="ISCOLLECTION_" jdbcType="VARCHAR"/>
-		<result property="valueExpression" column="VALUEEXPRESSION_" jdbcType="VARCHAR"/>
-		<result property="renderer" column="RENDERER_" jdbcType="VARCHAR"/>
+	<resultMap id="columnDefinitionResultMap" type="com.glaf.core.domain.ColumnDefinition">
+		<id property="id" column="ID_" jdbcType="VARCHAR" />
+		<result property="queryId" column="QUERYID_" jdbcType="VARCHAR" />
+		<result property="tableName" column="TABLENAME_" jdbcType="VARCHAR" />
+		<result property="targetId" column="TARGETID_" jdbcType="VARCHAR" />
+		<result property="alias" column="ALIAS_" jdbcType="VARCHAR" />
+		<result property="columnName" column="COLUMNNAME_" jdbcType="VARCHAR" />
+		<result property="columnLabel" column="COLUMNLABEL_" jdbcType="VARCHAR" />
+		<result property="name" column="NAME_" jdbcType="VARCHAR" />
+		<result property="title" column="TITLE_" jdbcType="VARCHAR" />
+		<result property="englishTitle" column="ENGLISHTITLE_"
+			jdbcType="VARCHAR" />
+		<result property="length" column="LENGTH_" jdbcType="INTEGER" />
+		<result property="scale" column="SCALE_" jdbcType="INTEGER" />
+		<result property="precision" column="PRECISION_" jdbcType="INTEGER" />
+		<result property="position" column="POSITION_" jdbcType="INTEGER" />
+		<result property="primaryKeyField" column="PRIMARYKEY_"
+			jdbcType="VARCHAR" />
+		<result property="nullableField" column="NULL_" jdbcType="VARCHAR" />
+		<result property="frozenField" column="FROZEN_" jdbcType="VARCHAR" />
+		<result property="uniqueField" column="UNIQUE_" jdbcType="VARCHAR" />
+		<result property="searchableField" column="SEARCHABLE_"
+			jdbcType="VARCHAR" />
+		<result property="editableField" column="EDITABLE_" jdbcType="VARCHAR" />
+		<result property="updatableField" column="UPDATEABLE_"
+			jdbcType="VARCHAR" />
+		<result property="resizableField" column="RESIZABLE_" jdbcType="VARCHAR" />
+		<result property="hiddenField" column="HIDDEN_" jdbcType="VARCHAR" />
+		<result property="tooltip" column="TOOLTIP_" jdbcType="VARCHAR" />
+		<result property="ordinal" column="ORDINAL_" jdbcType="INTEGER" />
+		<result property="javaType" column="JAVATYPE_" jdbcType="VARCHAR" />
+		<result property="inputType" column="INPUTTYPE_" jdbcType="VARCHAR" />
+		<result property="valueField" column="VALUEFIELD_" jdbcType="VARCHAR" />
+		<result property="textField" column="TEXTFIELD_" jdbcType="VARCHAR" />
+		<result property="url" column="URL_" jdbcType="VARCHAR" />
+		<result property="validType" column="VALIDTYPE_" jdbcType="VARCHAR" />
+		<result property="regex" column="REGEX_" jdbcType="VARCHAR" />
+		<result property="defaultValue" column="DEFAULTVALUE_"
+			jdbcType="VARCHAR" />
+		<result property="discriminator" column="DISCRIMINATOR_"
+			jdbcType="VARCHAR" />
+		<result property="formula" column="FORMULA_" jdbcType="VARCHAR" />
+		<result property="mask" column="MASK_" jdbcType="VARCHAR" />
+		<result property="dataCode" column="DATACODE_" jdbcType="VARCHAR" />
+		<result property="renderType" column="RENDERTYPE_" jdbcType="VARCHAR" />
+		<result property="translator" column="TRANSLATOR_" jdbcType="VARCHAR" />
+		<result property="summaryType" column="SUMMARYTYPE_" jdbcType="VARCHAR" />
+		<result property="summaryExpr" column="SUMMARYEXPR_" jdbcType="VARCHAR" />
+		<result property="displayType" column="DISPLAYTYPE_" jdbcType="INTEGER" />
+		<result property="sortableField" column="SORTABLE_" jdbcType="VARCHAR" />
+		<result property="sortType" column="SORTTYPE_" jdbcType="VARCHAR" />
+		<result property="systemFlag" column="SYSTEMFLAG_" jdbcType="VARCHAR" />
+		<result property="formatter" column="FORMATTER_" jdbcType="VARCHAR" />
+		<result property="align" column="ALIGN_" jdbcType="VARCHAR" />
+		<result property="height" column="HEIGHT_" jdbcType="VARCHAR" />
+		<result property="width" column="WIDTH_" jdbcType="VARCHAR" />
+		<result property="link" column="LINK_" jdbcType="VARCHAR" />
+		<result property="isCollectionField" column="ISCOLLECTION_"
+			jdbcType="VARCHAR" />
+		<result property="valueExpression" column="VALUEEXPRESSION_"
+			jdbcType="VARCHAR" />
+		<result property="renderer" column="RENDERER_" jdbcType="VARCHAR" />
 	</resultMap>
 
 
-	<resultMap id="columnDefinitionHashMap"	type="java.util.HashMap">
-		<id property="id" column="ID_" jdbcType="VARCHAR"/>
-		<result property="queryId" column="QUERYID_" jdbcType="VARCHAR"/>
-		<result property="tableName" column="TABLENAME_" jdbcType="VARCHAR"/>
-		<result property="targetId" column="TARGETID_" jdbcType="VARCHAR"/>
-		<result property="alias" column="ALIAS_" jdbcType="VARCHAR"/>
-		<result property="columnName" column="COLUMNNAME_" jdbcType="VARCHAR"/>
-		<result property="columnLabel" column="COLUMNLABEL_" jdbcType="VARCHAR"/>
-		<result property="name" column="NAME_" jdbcType="VARCHAR"/>
-		<result property="title" column="TITLE_" jdbcType="VARCHAR"/>
-		<result property="englishTitle" column="ENGLISHTITLE_" jdbcType="VARCHAR"/>
-		<result property="length" column="LENGTH_" jdbcType="INTEGER"/>
-		<result property="scale" column="SCALE_" jdbcType="INTEGER"/>
-		<result property="precision" column="PRECISION_" jdbcType="INTEGER"/>
-		<result property="primaryKeyField" column="PRIMARYKEY_" jdbcType="VARCHAR"/>
-		<result property="nullableField" column="NULL_" jdbcType="VARCHAR"/>
-		<result property="frozenField" column="FROZEN_" jdbcType="VARCHAR"/>
-		<result property="uniqueField" column="UNIQUE_" jdbcType="VARCHAR"/>
-		<result property="searchableField" column="SEARCHABLE_" jdbcType="VARCHAR"/>
-		<result property="editableField" column="EDITABLE_" jdbcType="VARCHAR"/>
-		<result property="updatableField" column="UPDATEABLE_" jdbcType="VARCHAR"/>
-		<result property="resizableField" column="RESIZABLE_" jdbcType="VARCHAR"/>
-		<result property="hiddenField" column="HIDDEN_" jdbcType="VARCHAR"/>
-		<result property="tooltip" column="TOOLTIP_" jdbcType="VARCHAR"/>
-		<result property="ordinal" column="ORDINAL_" jdbcType="INTEGER"/>
-		<result property="javaType" column="JAVATYPE_" jdbcType="VARCHAR"/>
-		<result property="inputType" column="INPUTTYPE_" jdbcType="VARCHAR"/>
-		<result property="valueField" column="VALUEFIELD_" jdbcType="VARCHAR"/>
-		<result property="textField" column="TEXTFIELD_" jdbcType="VARCHAR"/>
-		<result property="url" column="URL_" jdbcType="VARCHAR"/>
-		<result property="validType" column="VALIDTYPE_" jdbcType="VARCHAR"/>
-		<result property="regex" column="REGEX_" jdbcType="VARCHAR"/>
-		<result property="defaultValue" column="DEFAULTVALUE_" jdbcType="VARCHAR"/>
-		<result property="discriminator" column="DISCRIMINATOR_" jdbcType="VARCHAR"/>
-		<result property="formula" column="FORMULA_" jdbcType="VARCHAR"/>
-		<result property="mask" column="MASK_" jdbcType="VARCHAR"/>
-		<result property="dataCode" column="DATACODE_" jdbcType="VARCHAR"/>
-		<result property="renderType" column="RENDERTYPE_" jdbcType="VARCHAR"/>
-		<result property="translator" column="TRANSLATOR_" jdbcType="VARCHAR"/>
-		<result property="summaryType" column="SUMMARYTYPE_" jdbcType="VARCHAR"/>
-		<result property="summaryExpr" column="SUMMARYEXPR_" jdbcType="VARCHAR"/>
-		<result property="displayType" column="DISPLAYTYPE_" jdbcType="INTEGER"/>
-		<result property="sortableField" column="SORTABLE_" jdbcType="VARCHAR"/>
-		<result property="sortType" column="SORTTYPE_" jdbcType="VARCHAR"/>
-		<result property="systemFlag" column="SYSTEMFLAG_" jdbcType="VARCHAR"/>
-		<result property="formatter" column="FORMATTER_" jdbcType="VARCHAR"/>
-		<result property="align" column="ALIGN_" jdbcType="VARCHAR"/>
-		<result property="height" column="HEIGHT_" jdbcType="VARCHAR"/>
-		<result property="width" column="WIDTH_" jdbcType="VARCHAR"/>
-		<result property="link" column="LINK_" jdbcType="VARCHAR"/>
-		<result property="isCollectionField" column="ISCOLLECTION_" jdbcType="VARCHAR"/>
-		<result property="valueExpression" column="VALUEEXPRESSION_" jdbcType="VARCHAR"/>
-		<result property="renderer" column="RENDERER_" jdbcType="VARCHAR"/>
+	<resultMap id="columnDefinitionHashMap" type="java.util.HashMap">
+		<id property="id" column="ID_" jdbcType="VARCHAR" />
+		<result property="queryId" column="QUERYID_" jdbcType="VARCHAR" />
+		<result property="tableName" column="TABLENAME_" jdbcType="VARCHAR" />
+		<result property="targetId" column="TARGETID_" jdbcType="VARCHAR" />
+		<result property="alias" column="ALIAS_" jdbcType="VARCHAR" />
+		<result property="columnName" column="COLUMNNAME_" jdbcType="VARCHAR" />
+		<result property="columnLabel" column="COLUMNLABEL_" jdbcType="VARCHAR" />
+		<result property="name" column="NAME_" jdbcType="VARCHAR" />
+		<result property="title" column="TITLE_" jdbcType="VARCHAR" />
+		<result property="englishTitle" column="ENGLISHTITLE_"
+			jdbcType="VARCHAR" />
+		<result property="length" column="LENGTH_" jdbcType="INTEGER" />
+		<result property="scale" column="SCALE_" jdbcType="INTEGER" />
+		<result property="precision" column="PRECISION_" jdbcType="INTEGER" />
+		<result property="primaryKeyField" column="PRIMARYKEY_"
+			jdbcType="VARCHAR" />
+		<result property="nullableField" column="NULL_" jdbcType="VARCHAR" />
+		<result property="frozenField" column="FROZEN_" jdbcType="VARCHAR" />
+		<result property="uniqueField" column="UNIQUE_" jdbcType="VARCHAR" />
+		<result property="searchableField" column="SEARCHABLE_"
+			jdbcType="VARCHAR" />
+		<result property="editableField" column="EDITABLE_" jdbcType="VARCHAR" />
+		<result property="updatableField" column="UPDATEABLE_"
+			jdbcType="VARCHAR" />
+		<result property="resizableField" column="RESIZABLE_" jdbcType="VARCHAR" />
+		<result property="hiddenField" column="HIDDEN_" jdbcType="VARCHAR" />
+		<result property="tooltip" column="TOOLTIP_" jdbcType="VARCHAR" />
+		<result property="ordinal" column="ORDINAL_" jdbcType="INTEGER" />
+		<result property="javaType" column="JAVATYPE_" jdbcType="VARCHAR" />
+		<result property="inputType" column="INPUTTYPE_" jdbcType="VARCHAR" />
+		<result property="valueField" column="VALUEFIELD_" jdbcType="VARCHAR" />
+		<result property="textField" column="TEXTFIELD_" jdbcType="VARCHAR" />
+		<result property="url" column="URL_" jdbcType="VARCHAR" />
+		<result property="validType" column="VALIDTYPE_" jdbcType="VARCHAR" />
+		<result property="regex" column="REGEX_" jdbcType="VARCHAR" />
+		<result property="defaultValue" column="DEFAULTVALUE_"
+			jdbcType="VARCHAR" />
+		<result property="discriminator" column="DISCRIMINATOR_"
+			jdbcType="VARCHAR" />
+		<result property="formula" column="FORMULA_" jdbcType="VARCHAR" />
+		<result property="mask" column="MASK_" jdbcType="VARCHAR" />
+		<result property="dataCode" column="DATACODE_" jdbcType="VARCHAR" />
+		<result property="renderType" column="RENDERTYPE_" jdbcType="VARCHAR" />
+		<result property="translator" column="TRANSLATOR_" jdbcType="VARCHAR" />
+		<result property="summaryType" column="SUMMARYTYPE_" jdbcType="VARCHAR" />
+		<result property="summaryExpr" column="SUMMARYEXPR_" jdbcType="VARCHAR" />
+		<result property="displayType" column="DISPLAYTYPE_" jdbcType="INTEGER" />
+		<result property="sortableField" column="SORTABLE_" jdbcType="VARCHAR" />
+		<result property="sortType" column="SORTTYPE_" jdbcType="VARCHAR" />
+		<result property="systemFlag" column="SYSTEMFLAG_" jdbcType="VARCHAR" />
+		<result property="formatter" column="FORMATTER_" jdbcType="VARCHAR" />
+		<result property="align" column="ALIGN_" jdbcType="VARCHAR" />
+		<result property="height" column="HEIGHT_" jdbcType="VARCHAR" />
+		<result property="width" column="WIDTH_" jdbcType="VARCHAR" />
+		<result property="link" column="LINK_" jdbcType="VARCHAR" />
+		<result property="isCollectionField" column="ISCOLLECTION_"
+			jdbcType="VARCHAR" />
+		<result property="valueExpression" column="VALUEEXPRESSION_"
+			jdbcType="VARCHAR" />
+		<result property="renderer" column="RENDERER_" jdbcType="VARCHAR" />
 	</resultMap>
- 
+
 	<insert id="insertColumnDefinition" parameterType="com.glaf.core.domain.ColumnDefinition">
-		insert into SYS_COLUMN 
+		insert into SYS_COLUMN
 		<trim prefix="(" suffix=")" suffixOverrides=",">
-		    ID_
+			ID_
 			<if test="queryId != null">
-				,QUERYID_ 
+				,QUERYID_
 			</if>
 			<if test="tableName != null">
-				,TABLENAME_ 
+				,TABLENAME_
 			</if>
 			<if test="targetId != null">
-				,TARGETID_ 
+				,TARGETID_
 			</if>
 			<if test="alias != null">
-				,ALIAS_ 
+				,ALIAS_
 			</if>
 			<if test="columnName != null">
-				,COLUMNNAME_ 
+				,COLUMNNAME_
 			</if>
 			<if test="columnLabel != null">
-				,COLUMNLABEL_ 
+				,COLUMNLABEL_
 			</if>
 			<if test="name != null">
-				,NAME_ 
+				,NAME_
 			</if>
 			<if test="title != null">
-				,TITLE_ 
+				,TITLE_
 			</if>
 			<if test="englishTitle != null">
-				,ENGLISHTITLE_ 
+				,ENGLISHTITLE_
 			</if>
 			<if test="length != null">
-				,LENGTH_ 
+				,LENGTH_
 			</if>
 			<if test="scale != null">
-				,SCALE_ 
+				,SCALE_
 			</if>
 			<if test="precision != null">
-				,PRECISION_ 
+				,PRECISION_
+			</if>
+			<if test="position != null">
+				,POSITION_
 			</if>
 			<if test="primaryKeyField != null">
-				,PRIMARYKEY_ 
+				,PRIMARYKEY_
 			</if>
 			<if test="nullableField != null">
-				,NULL_ 
+				,NULL_
 			</if>
 			<if test="frozenField != null">
-				,FROZEN_ 
+				,FROZEN_
 			</if>
 			<if test="uniqueField != null">
-				,UNIQUE_ 
+				,UNIQUE_
 			</if>
 			<if test="searchableField != null">
-				,SEARCHABLE_ 
+				,SEARCHABLE_
 			</if>
 			<if test="editableField != null">
-				,EDITABLE_ 
+				,EDITABLE_
 			</if>
 			<if test="updatableField != null">
-				,UPDATEABLE_ 
+				,UPDATEABLE_
 			</if>
 			<if test="resizableField != null">
-				,RESIZABLE_ 
+				,RESIZABLE_
 			</if>
 			<if test="hiddenField != null">
-				,HIDDEN_ 
+				,HIDDEN_
 			</if>
 			<if test="tooltip != null">
-				,TOOLTIP_ 
+				,TOOLTIP_
 			</if>
 			<if test="ordinal != null">
-				,ORDINAL_ 
+				,ORDINAL_
 			</if>
 			<if test="javaType != null">
-				,JAVATYPE_ 
+				,JAVATYPE_
 			</if>
 			<if test="inputType != null">
-				,INPUTTYPE_ 
+				,INPUTTYPE_
 			</if>
 			<if test="valueField != null">
-				,VALUEFIELD_ 
+				,VALUEFIELD_
 			</if>
 			<if test="textField != null">
-				,TEXTFIELD_ 
+				,TEXTFIELD_
 			</if>
 			<if test="url != null">
-				,URL_ 
+				,URL_
 			</if>
 			<if test="validType != null">
-				,VALIDTYPE_ 
+				,VALIDTYPE_
 			</if>
 			<if test="regex != null">
-				,REGEX_ 
+				,REGEX_
 			</if>
 			<if test="defaultValue != null">
-				,DEFAULTVALUE_ 
+				,DEFAULTVALUE_
 			</if>
 			<if test="discriminator != null">
-				,DISCRIMINATOR_ 
+				,DISCRIMINATOR_
 			</if>
 			<if test="formula != null">
-				,FORMULA_ 
+				,FORMULA_
 			</if>
 			<if test="mask != null">
-				,MASK_ 
+				,MASK_
 			</if>
 			<if test="dataCode != null">
-				,DATACODE_ 
+				,DATACODE_
 			</if>
 			<if test="renderType != null">
-				,RENDERTYPE_ 
+				,RENDERTYPE_
 			</if>
 			<if test="translator != null">
-				,TRANSLATOR_ 
+				,TRANSLATOR_
 			</if>
 			<if test="summaryType != null">
-				,SUMMARYTYPE_ 
+				,SUMMARYTYPE_
 			</if>
 			<if test="summaryExpr != null">
-				,SUMMARYEXPR_ 
+				,SUMMARYEXPR_
 			</if>
 			<if test="displayType != null">
-				,DISPLAYTYPE_ 
+				,DISPLAYTYPE_
 			</if>
 			<if test="sortableField != null">
-				,SORTABLE_ 
+				,SORTABLE_
 			</if>
 			<if test="sortType != null">
-				,SORTTYPE_ 
+				,SORTTYPE_
 			</if>
 			<if test="systemFlag != null">
-				,SYSTEMFLAG_ 
+				,SYSTEMFLAG_
 			</if>
 			<if test="formatter != null">
-				,FORMATTER_ 
+				,FORMATTER_
 			</if>
 			<if test="align != null">
-				,ALIGN_ 
+				,ALIGN_
 			</if>
 			<if test="height != null">
-				,HEIGHT_ 
+				,HEIGHT_
 			</if>
 			<if test="width != null">
-				,WIDTH_ 
+				,WIDTH_
 			</if>
 			<if test="link != null">
-				,LINK_ 
+				,LINK_
 			</if>
 			<if test="isCollectionField != null">
-				,ISCOLLECTION_ 
+				,ISCOLLECTION_
 			</if>
 			<if test="valueExpression != null">
-				,VALUEEXPRESSION_ 
+				,VALUEEXPRESSION_
 			</if>
 			<if test="renderer != null">
-				,RENDERER_ 
+				,RENDERER_
 			</if>
 		</trim>
 
 		<trim prefix=" values (" suffix=")" suffixOverrides=",">
-			  #{id, jdbcType=VARCHAR}
-	     
+			#{id, jdbcType=VARCHAR}
+
 			<if test="queryId != null">
 				,#{queryId, jdbcType=VARCHAR}
 			</if>
@@ -312,6 +332,9 @@
 			</if>
 			<if test="precision != null">
 				,#{precision, jdbcType=INTEGER}
+			</if>
+			<if test="position != null">
+				,#{position, jdbcType=INTEGER}
 			</if>
 			<if test="primaryKeyField != null">
 				,#{primaryKeyField, jdbcType=VARCHAR}
@@ -433,11 +456,11 @@
 		</trim>
 	</insert>
 
-	 
+
 	<update id="updateColumnDefinition" parameterType="com.glaf.core.domain.ColumnDefinition">
 		update SYS_COLUMN
 		set
-		<trim prefix="" suffix="" suffixOverrides=",">		
+		<trim prefix="" suffix="" suffixOverrides=",">
 			<if test="queryId != null">
 				QUERYID_ = #{queryId, jdbcType=VARCHAR},
 			</if>
@@ -473,6 +496,9 @@
 			</if>
 			<if test="precision != null">
 				PRECISION_ = #{precision, jdbcType=INTEGER},
+			</if>
+			<if test="position != null">
+				POSITION_ = #{position, jdbcType=INTEGER},
 			</if>
 			<if test="primaryKeyField != null">
 				PRIMARYKEY_ = #{primaryKeyField, jdbcType=VARCHAR},
@@ -593,8 +619,8 @@
 			</if>
 		</trim>
 		where
-          ID_ = #{id, jdbcType=VARCHAR}
-		
+		ID_ = #{id, jdbcType=VARCHAR}
+
 	</update>
 
 	<delete id="deleteColumnDefinitionById" parameterType="string">
@@ -639,14 +665,16 @@
 		resultMap="columnDefinitionResultMap">
 		select * from SYS_COLUMN
 		where QUERYID_ = #{queryId}
-		order by ORDINAL_ asc
+		order by
+		ORDINAL_ asc
 	</select>
 
 	<select id="getColumnDefinitionsByTargetId" parameterType="string"
 		resultMap="columnDefinitionResultMap">
 		select * from SYS_COLUMN
 		where TARGETID_ = #{targetId}
-		order by ORDINAL_ asc
+		order
+		by ORDINAL_ asc
 	</select>
 
 	<select id="getColumnDefinitionsByTableName" parameterType="string"
@@ -689,7 +717,7 @@
 			<if test="targetId != null and targetId != '' ">
 				and E.TARGETID_ = #{targetId}
 			</if>
-			
+
 			<if test="systemFlag != null and systemFlag != '' ">
 				and E.SYSTEMFLAG_ = #{systemFlag}
 			</if>

@@ -1,0 +1,495 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.dts.mapper.DataTransferMapper">
+
+	<resultMap id="dataTransferResultMap" type="com.glaf.dts.domain.DataTransfer">
+		<id property="id" column="ID_" jdbcType="VARCHAR" />
+		<result property="tableName" column="TABLENAME_" jdbcType="VARCHAR" />
+		<result property="parentTableName" column="PARENTTABLENAME_"
+			jdbcType="VARCHAR" />
+		<result property="packageName" column="PACKAGENAME_" jdbcType="VARCHAR" />
+		<result property="entityName" column="ENTITYNAME_" jdbcType="VARCHAR" />
+		<result property="className" column="CLASSNAME_" jdbcType="VARCHAR" />
+		<result property="title" column="TITLE_" jdbcType="VARCHAR" />
+		<result property="englishTitle" column="ENGLISHTITLE_"
+			jdbcType="VARCHAR" />
+		<result property="primaryKey" column="PRIMARYKEY_" jdbcType="VARCHAR" />
+		<result property="filePrefix" column="FILEPREFIX_" jdbcType="VARCHAR" />
+		<result property="parseType" column="PARSETYPE_" jdbcType="VARCHAR" />
+		<result property="parseClass" column="PARSECLASS_" jdbcType="VARCHAR" />
+		<result property="split" column="SPLIT_" jdbcType="VARCHAR" />
+		<result property="batchSize" column="BATCHSIZE_" jdbcType="INTEGER" />
+		<result property="insertOnly" column="INSERTONLY_" jdbcType="VARCHAR" />
+		<result property="startRow" column="STARTROW_" jdbcType="INTEGER" />
+		<result property="stopWord" column="STOPWORD_" jdbcType="VARCHAR" />
+		<result property="stopSkipRow" column="STOPSKIPROW_" jdbcType="INTEGER" />
+		<result property="aggregationKeys" column="AGGREGATIONKEYS_"
+			jdbcType="VARCHAR" />
+		<result property="queryIds" column="QUERYIDS_" jdbcType="VARCHAR" />
+		<result property="temporaryFlag" column="TEMPORARYFLAG_"
+			jdbcType="VARCHAR" />
+		<result property="deleteFetch" column="DELETEFETCH_" jdbcType="VARCHAR" />
+		<result property="description" column="DESCRIPTION_" jdbcType="VARCHAR" />
+		<result property="type" column="TYPE_" jdbcType="VARCHAR" />
+		<result property="nodeId" column="NODEID_" jdbcType="BIGINT" />
+		<result property="locked" column="LOCKED_" jdbcType="INTEGER" />
+		<result property="deleteFlag" column="DELETEFLAG_" jdbcType="INTEGER" />
+		<result property="systemFlag" column="SYSTEMFLAG_" jdbcType="VARCHAR" />
+		<result property="createTime" column="CREATETIME_" jdbcType="TIMESTAMP" />
+		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR" />
+	</resultMap>
+
+
+	<insert id="insertDataTransfer" parameterType="com.glaf.dts.domain.DataTransfer">
+		insert into SYS_DATA_TRANSFER
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ID_
+			<if test="tableName != null">
+				,TABLENAME_
+			</if>
+			<if test="parentTableName != null">
+				,PARENTTABLENAME_
+			</if>
+			<if test="packageName != null">
+				,PACKAGENAME_
+			</if>
+			<if test="entityName != null">
+				,ENTITYNAME_
+			</if>
+			<if test="className != null">
+				,CLASSNAME_
+			</if>
+			<if test="title != null">
+				,TITLE_
+			</if>
+			<if test="englishTitle != null">
+				,ENGLISHTITLE_
+			</if>
+			<if test="primaryKey != null">
+				,PRIMARYKEY_
+			</if>
+			<if test="filePrefix != null">
+				,FILEPREFIX_
+			</if>
+			<if test="parseType != null">
+				,PARSETYPE_
+			</if>
+			<if test="parseClass != null">
+				,PARSECLASS_
+			</if>
+			<if test="split != null">
+				,SPLIT_
+			</if>
+			<if test="batchSize != null">
+				,BATCHSIZE_
+			</if>
+			<if test="insertOnly != null">
+				,INSERTONLY_
+			</if>
+			<if test="startRow != null">
+				,STARTROW_
+			</if>
+			<if test="stopWord != null">
+				,STOPWORD_
+			</if>
+			<if test="stopSkipRow != null">
+				,STOPSKIPROW_
+			</if>
+			<if test="aggregationKeys != null">
+				,AGGREGATIONKEYS_
+			</if>
+			<if test="queryIds != null">
+				,QUERYIDS_
+			</if>
+			<if test="temporaryFlag != null">
+				,TEMPORARYFLAG_
+			</if>
+			<if test="deleteFetch != null">
+				,DELETEFETCH_
+			</if>
+			<if test="description != null">
+				,DESCRIPTION_
+			</if>
+			<if test="type != null">
+				,TYPE_
+			</if>
+			<if test="nodeId != null">
+				,NODEID_
+			</if>
+			<if test="locked != null">
+				,LOCKED_
+			</if>
+			<if test="deleteFlag != null">
+				,DELETEFLAG_
+			</if>
+			<if test="systemFlag != null">
+				,SYSTEMFLAG_
+			</if>
+			<if test="createTime != null">
+				,CREATETIME_
+			</if>
+			<if test="createBy != null">
+				,CREATEBY_
+			</if>
+		</trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			#{id, jdbcType=VARCHAR}
+
+			<if test="tableName != null">
+				,#{tableName, jdbcType=VARCHAR}
+			</if>
+			<if test="parentTableName != null">
+				,#{parentTableName, jdbcType=VARCHAR}
+			</if>
+			<if test="packageName != null">
+				,#{packageName, jdbcType=VARCHAR}
+			</if>
+			<if test="entityName != null">
+				,#{entityName, jdbcType=VARCHAR}
+			</if>
+			<if test="className != null">
+				,#{className, jdbcType=VARCHAR}
+			</if>
+			<if test="title != null">
+				,#{title, jdbcType=VARCHAR}
+			</if>
+			<if test="englishTitle != null">
+				,#{englishTitle, jdbcType=VARCHAR}
+			</if>
+			<if test="primaryKey != null">
+				,#{primaryKey, jdbcType=VARCHAR}
+			</if>
+			<if test="filePrefix != null">
+				,#{filePrefix, jdbcType=VARCHAR}
+			</if>
+			<if test="parseType != null">
+				,#{parseType, jdbcType=VARCHAR}
+			</if>
+			<if test="parseClass != null">
+				,#{parseClass, jdbcType=VARCHAR}
+			</if>
+			<if test="split != null">
+				,#{split, jdbcType=VARCHAR}
+			</if>
+			<if test="batchSize != null">
+				,#{batchSize, jdbcType=INTEGER}
+			</if>
+			<if test="insertOnly != null">
+				,#{insertOnly, jdbcType=VARCHAR}
+			</if>
+			<if test="startRow != null">
+				,#{startRow, jdbcType=INTEGER}
+			</if>
+			<if test="stopWord != null">
+				,#{stopWord, jdbcType=VARCHAR}
+			</if>
+			<if test="stopSkipRow != null">
+				,#{stopSkipRow, jdbcType=INTEGER}
+			</if>
+			<if test="aggregationKeys != null">
+				,#{aggregationKeys, jdbcType=VARCHAR}
+			</if>
+			<if test="queryIds != null">
+				,#{queryIds, jdbcType=VARCHAR}
+			</if>
+			<if test="temporaryFlag != null">
+				,#{temporaryFlag, jdbcType=VARCHAR}
+			</if>
+			<if test="deleteFetch != null">
+				,#{deleteFetch, jdbcType=VARCHAR}
+			</if>
+			<if test="description != null">
+				,#{description, jdbcType=VARCHAR}
+			</if>
+			<if test="type != null">
+				,#{type, jdbcType=VARCHAR}
+			</if>
+			<if test="nodeId != null">
+				,#{nodeId, jdbcType=BIGINT}
+			</if>
+			<if test="locked != null">
+				,#{locked, jdbcType=INTEGER}
+			</if>
+			<if test="deleteFlag != null">
+				,#{deleteFlag, jdbcType=INTEGER}
+			</if>
+			<if test="systemFlag != null">
+				,#{systemFlag, jdbcType=VARCHAR}
+			</if>
+			<if test="createTime != null">
+				,#{createTime, jdbcType=TIMESTAMP}
+			</if>
+			<if test="createBy != null">
+				,#{createBy, jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</insert>
+
+
+	<update id="updateDataTransfer" parameterType="com.glaf.dts.domain.DataTransfer">
+		update SYS_DATA_TRANSFER
+		set
+		<trim prefix="" suffix="" suffixOverrides=",">
+			<if test="tableName != null">
+				TABLENAME_ = #{tableName, jdbcType=VARCHAR},
+			</if>
+			<if test="parentTableName != null">
+				PARENTTABLENAME_ = #{parentTableName, jdbcType=VARCHAR},
+			</if>
+			<if test="packageName != null">
+				PACKAGENAME_ = #{packageName, jdbcType=VARCHAR},
+			</if>
+			<if test="entityName != null">
+				ENTITYNAME_ = #{entityName, jdbcType=VARCHAR},
+			</if>
+			<if test="className != null">
+				CLASSNAME_ = #{className, jdbcType=VARCHAR},
+			</if>
+			<if test="title != null">
+				TITLE_ = #{title, jdbcType=VARCHAR},
+			</if>
+			<if test="englishTitle != null">
+				ENGLISHTITLE_ = #{englishTitle, jdbcType=VARCHAR},
+			</if>
+			<if test="primaryKey != null">
+				PRIMARYKEY_ = #{primaryKey, jdbcType=VARCHAR},
+			</if>
+			<if test="filePrefix != null">
+				FILEPREFIX_ = #{filePrefix, jdbcType=VARCHAR},
+			</if>
+			<if test="parseType != null">
+				PARSETYPE_ = #{parseType, jdbcType=VARCHAR},
+			</if>
+			<if test="parseClass != null">
+				PARSECLASS_ = #{parseClass, jdbcType=VARCHAR},
+			</if>
+			<if test="split != null">
+				SPLIT_ = #{split, jdbcType=VARCHAR},
+			</if>
+			<if test="batchSize != null">
+				BATCHSIZE_ = #{batchSize, jdbcType=INTEGER},
+			</if>
+			<if test="insertOnly != null">
+				INSERTONLY_ = #{insertOnly, jdbcType=VARCHAR},
+			</if>
+			<if test="startRow != null">
+				STARTROW_ = #{startRow, jdbcType=INTEGER},
+			</if>
+			<if test="stopWord != null">
+				STOPWORD_ = #{stopWord, jdbcType=VARCHAR},
+			</if>
+			<if test="stopSkipRow != null">
+				STOPSKIPROW_ = #{stopSkipRow, jdbcType=INTEGER},
+			</if>
+			<if test="aggregationKeys != null">
+				AGGREGATIONKEYS_ = #{aggregationKeys, jdbcType=VARCHAR},
+			</if>
+			<if test="queryIds != null">
+				QUERYIDS_ = #{queryIds, jdbcType=VARCHAR},
+			</if>
+			<if test="temporaryFlag != null">
+				TEMPORARYFLAG_ = #{temporaryFlag, jdbcType=VARCHAR},
+			</if>
+			<if test="deleteFetch != null">
+				DELETEFETCH_ = #{deleteFetch, jdbcType=VARCHAR},
+			</if>
+			<if test="description != null">
+				DESCRIPTION_ = #{description, jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				TYPE_ = #{type, jdbcType=VARCHAR},
+			</if>
+			<if test="nodeId != null">
+				NODEID_ = #{nodeId, jdbcType=BIGINT},
+			</if>
+			<if test="locked != null">
+				LOCKED_ = #{locked, jdbcType=INTEGER},
+			</if>
+			<if test="deleteFlag != null">
+				DELETEFLAG_ = #{deleteFlag, jdbcType=INTEGER},
+			</if>
+			<if test="systemFlag != null">
+				SYSTEMFLAG_ = #{systemFlag, jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				CREATETIME_ = #{createTime, jdbcType=TIMESTAMP},
+			</if>
+			<if test="createBy != null">
+				CREATEBY_ = #{createBy, jdbcType=VARCHAR},
+			</if>
+		</trim>
+		where
+		ID_ = #{id, jdbcType=VARCHAR}
+
+	</update>
+
+
+	<delete id="deleteDataTransferById" parameterType="string">
+		delete from
+		SYS_DATA_TRANSFER
+		where ID_ = #{id}
+	</delete>
+
+
+	<delete id="deleteDataTransfers" parameterType="com.glaf.dts.query.DataTransferQuery">
+		delete from SYS_DATA_TRANSFER
+		where (
+		ID_ IN
+		<foreach item="x_id" index="index" collection="ids" open="("
+			separator="," close=")">
+			#{x_id}
+		</foreach>
+		)
+	</delete>
+
+
+	<select id="getDataTransferById" parameterType="string"
+		resultMap="dataTransferResultMap">
+		select * from SYS_DATA_TRANSFER where ID_ = #{id}
+	</select>
+
+
+	<select id="getDataTransfers" parameterType="com.glaf.dts.query.DataTransferQuery"
+		resultMap="dataTransferResultMap">
+		select distinct E.*
+		<include refid="selectDataTransfersSql" />
+		<choose>
+			<when test="orderBy != null">
+				order by ${orderBy}
+			</when>
+			<otherwise>
+				order by E.CREATETIME_ desc
+			</otherwise>
+		</choose>
+	</select>
+
+
+	<select id="getDataTransferCount" parameterType="com.glaf.dts.query.DataTransferQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectDataTransfersSql" />
+	</select>
+
+
+	<sql id="selectDataTransfersSql">
+
+		from SYS_DATA_TRANSFER E
+
+		<where>
+			1 = 1
+
+			<if test="tableName != null and tableName != '' ">
+				and E.TABLENAME_ = #{tableName}
+			</if>
+
+			<if test="tableNames != null and tableNames.size() &gt; 0">
+				and E.TABLENAME_ IN
+				<foreach item="x_tableName" index="index" collection="tableNames"
+					open="(" separator="," close=")">
+					#{x_tableName}
+				</foreach>
+			</if>
+
+			<if test="parentTableName != null and parentTableName != '' ">
+				and E.PARENTTABLENAME_ = #{parentTableName}
+			</if>
+
+			<if test="titleLike != null and titleLike != '' ">
+				and E.TITLE_ like #{titleLike}
+			</if>
+
+			<if test="englishTitleLike != null and englishTitleLike != '' ">
+				and E.ENGLISHTITLE_ like #{englishTitleLike}
+			</if>
+
+			<if test="parseType != null and parseType != '' ">
+				and E.PARSETYPE_ = #{parseType}
+			</if>
+
+			<if test="parseClass != null and parseClass != '' ">
+				and E.PARSECLASS_ = #{parseClass}
+			</if>
+
+			<if test="aggregationKeys != null and aggregationKeys != '' ">
+				and E.AGGREGATIONKEYS_ = #{aggregationKeys}
+			</if>
+
+			<if test="temporaryFlag != null and temporaryFlag != '' ">
+				and E.TEMPORARYFLAG_ = #{temporaryFlag}
+			</if>
+
+			<if test="descriptionLike != null and descriptionLike != '' ">
+				and E.DESCRIPTION_ like #{descriptionLike}
+			</if>
+
+			<if test="type != null and type != '' ">
+				and E.TYPE_ = #{type}
+			</if>
+
+			<if test="typeLike != null and typeLike != '' ">
+				and E.TYPE_ like #{typeLike}
+			</if>
+
+			<if test="types != null and types.size() &gt; 0">
+				and E.TYPE_ IN
+				<foreach item="x_type" index="index" collection="types"
+					open="(" separator="," close=")">
+					#{x_type}
+				</foreach>
+			</if>
+
+			<if test="nodeId != null">
+				and E.NODEID_ = #{nodeId}
+			</if>
+
+			<if test="nodeIds != null and nodeIds.size() &gt; 0">
+				and E.NODEID_ IN
+				<foreach item="x_nodeId" index="index" collection="nodeIds"
+					open="(" separator="," close=")">
+					#{x_nodeId}
+				</foreach>
+			</if>
+
+			<if test="locked != null">
+				and E.LOCKED_ = #{locked}
+			</if>
+
+			<if test="deleteFlag != null">
+				and E.DELETEFLAG_ = #{deleteFlag}
+			</if>
+
+			<if test="systemFlag != null and systemFlag != '' ">
+				and E.SYSTEMFLAG_ = #{systemFlag}
+			</if>
+
+			<if test="createTimeGreaterThanOrEqual != null">
+				and E.CREATETIME_ &gt;= #{createTimeGreaterThanOrEqual}
+			</if>
+
+			<if test="createTimeLessThanOrEqual != null">
+				and E.CREATETIME_ &lt;= #{createTimeLessThanOrEqual}
+			</if>
+
+			<if test="createBy != null and createBy != '' ">
+				and E.CREATEBY_ = #{createBy}
+			</if>
+
+			<if test="createByLike != null and createByLike != '' ">
+				and E.CREATEBY_ like #{createByLike}
+			</if>
+
+			<if test="createBys != null and createBys.size() &gt; 0">
+				and E.CREATEBY_ IN
+				<foreach item="x_createBy" index="index" collection="createBys"
+					open="(" separator="," close=")">
+					#{x_createBy}
+				</foreach>
+			</if>
+
+		</where>
+	</sql>
+
+</mapper>
