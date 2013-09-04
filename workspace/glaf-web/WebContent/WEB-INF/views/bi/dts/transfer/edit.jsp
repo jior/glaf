@@ -164,7 +164,7 @@
 									{
 										title : '标题',
 										field : 'title',
-										width : 180,
+										width : 280,
 										editor : {
 											type : 'validatebox',
 											options : {
@@ -543,7 +543,7 @@
 				<div data-options="region:'north',split:true,border:true"
 					style="height: 40px">
 					<div class="toolbar-backgroud">
-						<img src="${contextPath}/images/window.png"> &nbsp; <span
+						 &nbsp; &nbsp;<img src="${contextPath}/images/window.png">&nbsp; <span
 							class="x_content_title">字段列表:</span> <a href="#"
 							class="easyui-linkbutton"
 							data-options="plain:true, iconCls:'icon-add'"
@@ -553,22 +553,13 @@
 							onclick="javascript:deleteSelections();">删除</a>
 					</div>
 					<div data-options="region:'center',border:true"
-						style="width: 759px; height: 200px">
+						style="width: 780px; height: 200px">
 						<table id="mydatagrid">
 						</table>
 					</div>
  
 					<div style="margin: 0; height: 4px"></div>
 					 
-					<div>
-						<table width="100%">
-							<tr align="center">
-								<td>
-					 
-								</td>
-							</tr>
-						</table>
-					</div>
 			</form>
 
 		</div>
