@@ -47,16 +47,17 @@ public class MxDataTransferController {
 			int start = 0;
 			JSONArray rowsJSON = new JSONArray();
 
-			result.put("rows", rowsJSON);
-			result.put("total", list.size());
-
 			for (ColumnDefinition c : list) {
 				JSONObject rowJSON = c.toJsonObject();
 				rowJSON.put("id", c.getId());
+				rowJSON.put("columnId", c.getId());
 				rowJSON.put("columnDefinitionId", c.getId());
 				rowJSON.put("startIndex", ++start);
 				rowsJSON.add(rowJSON);
 			}
+
+			result.put("rows", rowsJSON);
+			result.put("total", list.size());
 
 		} else {
 			JSONArray rowsJSON = new JSONArray();

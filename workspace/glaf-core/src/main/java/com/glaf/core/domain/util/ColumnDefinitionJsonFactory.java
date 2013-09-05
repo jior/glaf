@@ -76,6 +76,9 @@ public class ColumnDefinitionJsonFactory {
 		if (jsonObject.containsKey("precision")) {
 			model.setPrecision(jsonObject.getInteger("precision"));
 		}
+		if (jsonObject.containsKey("position")) {
+			model.setPosition(jsonObject.getInteger("position"));
+		}
 		if (jsonObject.containsKey("primaryKey")) {
 			model.setPrimaryKeyField(jsonObject.getString("primaryKey"));
 		}
@@ -246,6 +249,7 @@ public class ColumnDefinitionJsonFactory {
 		jsonObject.put("length", model.getLength());
 		jsonObject.put("scale", model.getScale());
 		jsonObject.put("precision", model.getPrecision());
+		jsonObject.put("position", model.getPosition());
 		if (model.getPrimaryKeyField() != null) {
 			jsonObject.put("primaryKey", model.getPrimaryKeyField());
 		}
@@ -400,6 +404,7 @@ public class ColumnDefinitionJsonFactory {
 		jsonObject.put("length", model.getLength());
 		jsonObject.put("scale", model.getScale());
 		jsonObject.put("precision", model.getPrecision());
+		jsonObject.put("position", model.getPosition());
 		if (model.getPrimaryKeyField() != null) {
 			jsonObject.put("primaryKey", model.getPrimaryKeyField());
 		}

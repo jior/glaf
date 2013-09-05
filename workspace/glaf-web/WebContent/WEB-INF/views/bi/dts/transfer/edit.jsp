@@ -15,6 +15,7 @@
 	var contextPath = "${contextPath}";
 	//保存
 	function saveData() {
+		jQuery('#aggregationKeys').val(jQuery('#aggregationKeys2').combobox('getValues'));
 		var params = jQuery("#iForm").formSerialize();
 		var bol = jQuery("#iForm").form('validate');
 		if (bol == false) {
@@ -98,8 +99,6 @@
 							collapsible : true,
 							url : '${contextPath}/mx/dts/dataTransfer/columns?tableName='
 									+ tableName,
-							sortName : 'id',
-							sortOrder : 'desc',
 							remoteSort : false,
 							singleSelect : true,
 							idField : 'id',
@@ -138,6 +137,7 @@
 										title : '字段长度',
 										field : 'length',
 										width : 120,
+										align : 'right',
 										editor : {
 											type : 'numberbox',
 											options : {
@@ -151,6 +151,7 @@
 										title : '取数位置',
 										field : 'position',
 										width : 120,
+										align : 'right',
 										editor : {
 											type : 'numberbox',
 											options : {
@@ -409,14 +410,11 @@
 		<div data-options="region:'north',split:true,border:true"
 			style="height: 40px">
 			<div class="toolbar-backgroud">
-				<span class="x_content_title">数据传递</span> <a href="#"
-					class="easyui-linkbutton"
+				<span class="x_content_title">数据传递</span> 
+				<a href="#" class="easyui-linkbutton"
 					data-options="plain:true, iconCls:'icon-save'"
-					onclick="javascript:saveData();">保存</a> <a href="#"
-					class="easyui-linkbutton"
-					data-options="plain:true, iconCls:'icon-submit'"
-					onclick="javascript:saveAsData();">提交</a> <a href="#"
-					class="easyui-linkbutton"
+					onclick="javascript:saveData();">保存</a> 
+				<a href="#" class="easyui-linkbutton"
 					data-options="plain:true, iconCls:'icon-cancel'"
 					onclick="javascript:art.dialog.close();">关闭</a>
 			</div>
@@ -425,6 +423,8 @@
 			<form id="iForm" name="iForm" method="post">
 				<input type="hidden" id="id" name="id"
 					value="${dataTransfer.id}" />
+				<input type="hidden" id="aggregationKeys" name="aggregationKeys"
+					value="${dataTransfer.aggregationKeys}" />
 				<div style="width: 100%">
 					<table style="width: 720px;" align="center">
 						<tbody>
@@ -437,7 +437,7 @@
 								<td align="left">类型</td>
 								<td align="left"><input id="parseType"
 									class="easyui-combobox" name="parseType"
-									value="${dataTransfer.parseType}" size="10"
+									value="${dataTransfer.parseType}" size="15"
 									data-options="required:true,valueField:'code',textField:'text',required:true,url:'${contextPath}/rs/dts/dataTransfer/parseTypeJson',
 							onSelect: function(rec){ 
 							jQuery.ajax({
@@ -478,9 +478,20 @@
 								</td>
 								<td align="left">主键</td>
 								<td align="left">
-								  <input id="primaryKey" name="primaryKey" type="text"
-									class="easyui-validatebox"  
-									data-options="required:true" size="10" value="${dataTransfer.primaryKey}" />
+								  <input class="easyui-combobox" 
+								        id="primaryKey"
+										name="primaryKey"
+										value="${dataTransfer.primaryKey}"
+										size='15'
+										editable="false"
+										data-options="
+												url:'${contextPath}/rs/dts/dataTransfer/columns?tableName=${dataTransfer.tableName}',
+												method:'get',
+												valueField:'columnName',
+												textField:'title',
+												multiple:false,
+												panelHeight:'auto'
+										">
 								</td>
 							</tr>
 							<tr>
@@ -525,10 +536,20 @@
 								</td>
 								<td align="left">聚合主键</td>
 								<td align="left">
-								  <input id="aggregationKeys"
-									class="easyui-validatebox" name="aggregationKeys" editable="true"
-									data-options= " required:false "
-									value="${dataTransfer.aggregationKeys}" size='25' />
+								  <input class="easyui-combobox" 
+								        id="aggregationKeys2"
+										name="aggregationKeys2"
+										value="${dataTransfer.aggregationKeys}"
+										size='25'
+										editable="true"
+										data-options="
+												url:'${contextPath}/rs/dts/dataTransfer/columns?tableName=${dataTransfer.tableName}',
+												method:'get',
+												valueField:'columnName',
+												textField:'title',
+												multiple:true,
+												panelHeight:'auto'
+										">
 								</td>
 							</tr>
 						</tbody>

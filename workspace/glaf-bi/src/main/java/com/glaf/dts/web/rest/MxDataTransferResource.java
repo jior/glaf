@@ -1,6 +1,7 @@
 package com.glaf.dts.web.rest;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
@@ -15,10 +16,40 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.glaf.core.domain.ColumnDefinition;
+import com.glaf.dts.service.IDataTransferService;
 
 @Controller("/rs/dts/dataTransfer")
 @Path("/rs/dts/dataTransfer")
 public class MxDataTransferResource {
+
+	protected IDataTransferService dataTransferService;
+
+	@javax.annotation.Resource
+	public void setDataTransferService(IDataTransferService dataTransferService) {
+		this.dataTransferService = dataTransferService;
+	}
+
+	@GET
+	@POST
+	@Path("/columns")
+	@ResponseBody
+	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
+	public byte[] columns(@Context HttpServletRequest request)
+			throws IOException {
+		JSONArray array = new JSONArray();
+		String tableName = request.getParameter("tableName");
+		List<ColumnDefinition> list = dataTransferService.getColumns(tableName);
+
+		if (list != null && !list.isEmpty()) {
+			for (ColumnDefinition c : list) {
+				JSONObject rowJSON = c.toJsonObject();
+				array.add(rowJSON);
+			}
+		}
+
+		return array.toString().getBytes("UTF-8");
+	}
 
 	@GET
 	@POST
