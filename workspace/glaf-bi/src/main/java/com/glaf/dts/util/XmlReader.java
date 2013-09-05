@@ -108,7 +108,7 @@ public class XmlReader {
 						ColumnDefinition field = new ColumnDefinition();
 						this.readField(elem, field);
 						tableModel.addColumn(field);
-						if (StringUtils.equals(tableModel.getPrimaryKey(),
+						if (StringUtils.equalsIgnoreCase(tableModel.getPrimaryKey(),
 								field.getColumnName())) {
 							tableModel.setIdColumn(field);
 						}

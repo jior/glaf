@@ -2,12 +2,15 @@ package com.glaf.dts.web.springmvc;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
@@ -22,6 +25,7 @@ import com.glaf.core.util.*;
 import com.glaf.dts.domain.*;
 import com.glaf.dts.query.*;
 import com.glaf.dts.service.*;
+import com.glaf.dts.util.XmlReader;
 
 @Controller("/dts/dataTransfer")
 @RequestMapping("/dts/dataTransfer")
@@ -130,6 +134,34 @@ public class MxDataTransferController {
 		return ResponseUtils.responseJsonResult(false);
 	}
 
+	@RequestMapping(value = "/deploy", method = RequestMethod.POST)
+	public ModelAndView deploy(HttpServletRequest request, ModelMap modelMap) {
+		try {
+			MultipartHttpServletRequest req = (MultipartHttpServletRequest) request;
+			Map<String, MultipartFile> fileMap = req.getFileMap();
+			Set<Entry<String, MultipartFile>> entrySet = fileMap.entrySet();
+			for (Entry<String, MultipartFile> entry : entrySet) {
+				MultipartFile mFile = entry.getValue();
+				if (mFile.getOriginalFilename() != null
+						&& mFile.getSize() > 0
+						&& mFile.getOriginalFilename().toLowerCase()
+								.endsWith(".xml")) {
+					XmlReader reader = new XmlReader();
+					DataTransfer dataTransfer = reader.read(mFile
+							.getInputStream());
+					Long nodeId = RequestUtils.getLong(request, "nodeId");
+					dataTransfer.setNodeId(nodeId);
+					dataTransferService.save(dataTransfer);
+					modelMap.put("dataTransfer", dataTransfer);
+				}
+			}
+		} catch (Exception ex) {
+			logger.error(ex);
+			ex.printStackTrace();
+		}
+		return new ModelAndView("/bi/dts/transfer/edit", modelMap);
+	}
+
 	@ResponseBody
 	@RequestMapping("/detail")
 	public byte[] detail(HttpServletRequest request) throws IOException {
@@ -189,6 +221,12 @@ public class MxDataTransferController {
 		query.deleteFlag(0);
 		query.setActorId(loginContext.getActorId());
 		query.setLoginContext(loginContext);
+		
+		Long nodeId = RequestUtils.getLong(request, "nodeId");
+		if (nodeId != null && nodeId > 0) {
+			query.nodeId(nodeId);
+		}
+		
 		/**
 		 * 此处业务逻辑需自行调整
 		 */
@@ -427,6 +465,23 @@ public class MxDataTransferController {
 	@javax.annotation.Resource
 	public void setDataTransferService(IDataTransferService dataTransferService) {
 		this.dataTransferService = dataTransferService;
+	}
+
+	@RequestMapping("/showDeploy")
+	public ModelAndView showDeploy(HttpServletRequest request) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		String view = request.getParameter("view");
+		if (StringUtils.isNotEmpty(view)) {
+			return new ModelAndView(view);
+		}
+
+		String x_view = ViewProperties
+				.getString("dts_transfer_deploy.showDeploy");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view);
+		}
+
+		return new ModelAndView("/bi/dts/transfer/showDeploy");
 	}
 
 	@RequestMapping("/update")

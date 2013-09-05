@@ -44,6 +44,13 @@ public class MxDataTransferResource {
 		if (list != null && !list.isEmpty()) {
 			for (ColumnDefinition c : list) {
 				JSONObject rowJSON = c.toJsonObject();
+				String text = "";
+				if (c.getTitle() != null) {
+					text = c.getTitle() + " [" + c.getColumnName() + "]";
+				} else {
+					text = c.getColumnName();
+				}
+				rowJSON.put("text", text);
 				array.add(rowJSON);
 			}
 		}

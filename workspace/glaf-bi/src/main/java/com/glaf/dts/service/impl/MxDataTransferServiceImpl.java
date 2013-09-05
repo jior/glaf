@@ -116,6 +116,12 @@ public class MxDataTransferServiceImpl implements IDataTransferService {
 		} else {
 			dataTransferMapper.updateDataTransfer(dataTransfer);
 		}
+		if (dataTransfer.getColumns() != null
+				&& !dataTransfer.getColumns().isEmpty()) {
+			for (ColumnDefinition col : dataTransfer.getColumns()) {
+				this.saveColumn(dataTransfer.getTableName(), col);
+			}
+		}
 	}
 
 	@Transactional

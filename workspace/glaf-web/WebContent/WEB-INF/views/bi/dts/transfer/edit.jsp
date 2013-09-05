@@ -22,6 +22,14 @@
 			alert("请检查输入！");
 			return;
 		}
+
+		if(jQuery('#insertOnly').val() == 'false'){
+           if(jQuery('#aggregationKeys').val()==""){
+			   alert("请选择聚合主键！");
+			   document.getElementById('aggregationKeys2').focus();
+			   return;
+		   }
+		}
 		 
 		jQuery.ajax({
 			type : "POST",
@@ -421,10 +429,9 @@
 		</div>
 		<div data-options="region:'center',border:false,cache:true">
 			<form id="iForm" name="iForm" method="post">
-				<input type="hidden" id="id" name="id"
-					value="${dataTransfer.id}" />
-				<input type="hidden" id="aggregationKeys" name="aggregationKeys"
-					value="${dataTransfer.aggregationKeys}" />
+				<input type="hidden" id="id" name="id" value="${dataTransfer.id}" />
+				<input type="hidden" id="nodeId" name="nodeId" value="${nodeId}" >
+				<input type="hidden" id="aggregationKeys" name="aggregationKeys" value="${dataTransfer.aggregationKeys}" />
 				<div style="width: 100%">
 					<table style="width: 720px;" align="center">
 						<tbody>
@@ -479,16 +486,16 @@
 								<td align="left">主键</td>
 								<td align="left">
 								  <input class="easyui-combobox" 
-								        id="primaryKey"
-										name="primaryKey"
-										value="${dataTransfer.primaryKey}"
-										size='15'
-										editable="false"
-										data-options="
+								         id="primaryKey"
+										 name="primaryKey"
+										 value="${dataTransfer.primaryKey}"
+										 size='15'
+										 editable="false"
+										 data-options="
 												url:'${contextPath}/rs/dts/dataTransfer/columns?tableName=${dataTransfer.tableName}',
 												method:'get',
 												valueField:'columnName',
-												textField:'title',
+												textField:'text',
 												multiple:false,
 												panelHeight:'auto'
 										">
@@ -537,16 +544,16 @@
 								<td align="left">聚合主键</td>
 								<td align="left">
 								  <input class="easyui-combobox" 
-								        id="aggregationKeys2"
-										name="aggregationKeys2"
-										value="${dataTransfer.aggregationKeys}"
-										size='25'
-										editable="true"
-										data-options="
+								         id="aggregationKeys2"
+										 name="aggregationKeys2"
+										 value="${dataTransfer.aggregationKeys}"
+										 size='25'
+										 editable="true"
+										 data-options="
 												url:'${contextPath}/rs/dts/dataTransfer/columns?tableName=${dataTransfer.tableName}',
 												method:'get',
 												valueField:'columnName',
-												textField:'title',
+												textField:'text',
 												multiple:true,
 												panelHeight:'auto'
 										">
