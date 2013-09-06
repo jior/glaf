@@ -19,13 +19,17 @@
 package com.glaf.core.domain;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Table;
+
 import org.apache.commons.lang.StringUtils;
+
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.glaf.core.base.ClassDefinition;
@@ -352,8 +356,18 @@ public class ColumnDefinition implements
 	@Column(name = "POSITION_")
 	protected Integer position;
 
+	@javax.persistence.Transient
+	protected Map<String, String> properties = new HashMap<String, String>();
+
 	public ColumnDefinition() {
 
+	}
+
+	public void addProperty(String key, String value) {
+		if (properties == null) {
+			properties = new HashMap<String, String>();
+		}
+		properties.put(key, value);
 	}
 
 	public int compareTo(ColumnDefinition o) {
@@ -550,6 +564,10 @@ public class ColumnDefinition implements
 
 	public String getPrimaryKeyField() {
 		return primaryKeyField;
+	}
+
+	public Map<String, String> getProperties() {
+		return properties;
 	}
 
 	public String getQueryId() {
@@ -994,6 +1012,10 @@ public class ColumnDefinition implements
 
 	public void setPrimaryKeyField(String primaryKeyField) {
 		this.primaryKeyField = primaryKeyField;
+	}
+
+	public void setProperties(Map<String, String> properties) {
+		this.properties = properties;
 	}
 
 	public void setQueryId(String queryId) {
