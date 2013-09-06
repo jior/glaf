@@ -18,12 +18,12 @@
 
 package com.glaf.core.parse;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-
 import java.io.IOException;
 import java.io.InputStream;
-
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -44,6 +44,7 @@ import com.glaf.core.domain.ColumnDefinition;
 import com.glaf.core.domain.TableDefinition;
 import com.glaf.core.service.IBlobService;
 import com.glaf.core.service.ITableDataService;
+import com.glaf.core.service.ITableDefinitionService;
 import com.glaf.core.util.ClassUtils;
 import com.glaf.core.util.DBUtils;
 import com.glaf.core.util.FileUtils;
@@ -52,8 +53,7 @@ import com.glaf.core.xml.XmlReader;
 import com.glaf.core.xml.XmlMappingReader;
 
 public class ParserFacede {
-	protected static final Log logger = LogFactory
-			.getLog(ParserFacede.class);
+	protected static final Log logger = LogFactory.getLog(ParserFacede.class);
 
 	public static void main(String[] args) throws Exception {
 		String mappingDir = "./report/mapping";
@@ -65,6 +65,8 @@ public class ParserFacede {
 	protected IBlobService blobService;
 
 	protected ITableDataService tableDataService;
+	
+	protected ITableDefinitionService tableDefinitionService;
 
 	public IBlobService getBlobService() {
 		if (blobService == null) {
@@ -78,6 +80,13 @@ public class ParserFacede {
 			tableDataService = ContextFactory.getBean("tableDataService");
 		}
 		return tableDataService;
+	}
+	
+	public ITableDefinitionService getTableDefinitionService() {
+		if (tableDefinitionService == null) {
+			tableDefinitionService = ContextFactory.getBean("tableDefinitionService");
+		}
+		return tableDefinitionService;
 	}
 
 	public void parse(File file, Set<String> prefixs,
@@ -119,8 +128,7 @@ public class ParserFacede {
 				String parseClass = tableModel.getParseClass();
 				if (StringUtils.isNotEmpty(parseClass)) {
 					// 加载自定义的解析器
-					parser = (Parser) ClassUtils
-							.instantiateClass(parseClass);
+					parser = (Parser) ClassUtils.instantiateClass(parseClass);
 				} else {
 					String parseType = tableModel.getParseType();
 					if ("csv".equals(parseType)) {
@@ -199,6 +207,82 @@ public class ParserFacede {
 		Parser parser = null;
 		try {
 			tableModel = xmlReader.read(mappingFile);
+			String parseClass = tableModel.getParseClass();
+			if (StringUtils.isNotEmpty(parseClass)) {
+				// 加载自定义的解析器
+				parser = (Parser) ClassUtils.instantiateClass(parseClass);
+			} else {
+				String parseType = tableModel.getParseType();
+				if ("csv".equals(parseType)) {
+					parser = new CsvTextParser();
+				} else if ("text".equals(parseType)) {
+					parser = new PlainTextParser();
+				} else if ("xls".equals(parseType)) {
+					parser = new POIExcelParser();
+				}
+			}
+			if (parser != null) {
+				rows = parser.parse(tableModel, dataFile);
+				logger.debug("saveToDB=" + saveToDB);
+				if (rows != null && !rows.isEmpty()) {
+					if (saveToDB) {
+						logger.info("save data to " + tableModel.getTableName());
+						getTableDataService().saveAll(tableDefinition, seqNo,
+								rows);
+					}
+				}
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			throw new RuntimeException(ex);
+		}
+		return rows;
+	}
+
+	/**
+	 * 解析数据模型
+	 * 
+	 * @param mappingFile
+	 *            元数据配置文件
+	 * @param dataFile
+	 *            解析数据文件
+	 * @param saveToDB
+	 *            是否保存到数据库
+	 * @return
+	 */
+	public List<TableModel> parse(byte[] mappingFile, InputStream dataFile,
+			String seqNo, boolean saveToDB) {
+		List<TableModel> rows = null;
+		XmlReader reader = new XmlReader();
+		XmlMappingReader xmlReader = new XmlMappingReader();
+		TableDefinition tableDefinition = null;
+		TableModel tableModel = null;
+		
+		logger.debug(new String(mappingFile));
+
+		tableDefinition = reader.read(new BufferedInputStream(
+				new ByteArrayInputStream(mappingFile)));
+
+		if (tableDefinition != null) {
+			ColumnDefinition column4 = new ColumnDefinition();
+			column4.setTitle("聚合主键");
+			column4.setName("aggregationKey");
+			column4.setColumnName("AGGREGATIONKEY");
+			column4.setJavaType("String");
+			column4.setLength(500);
+			tableDefinition.addColumn(column4);
+			if (DBUtils.tableExists(tableDefinition.getTableName())) {
+				com.glaf.core.util.DBUtils.alterTable(tableDefinition);
+			} else {
+				com.glaf.core.util.DBUtils.createTable(tableDefinition);
+			}
+			getTableDefinitionService().save(tableDefinition);
+		}
+
+		Parser parser = null;
+		try {
+			tableModel = xmlReader.read(new BufferedInputStream(
+					new ByteArrayInputStream(mappingFile)));
 			String parseClass = tableModel.getParseClass();
 			if (StringUtils.isNotEmpty(parseClass)) {
 				// 加载自定义的解析器

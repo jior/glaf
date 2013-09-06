@@ -99,6 +99,7 @@ public class XmlReader {
 			}
 
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			throw new RuntimeException(ex);
 		}
 

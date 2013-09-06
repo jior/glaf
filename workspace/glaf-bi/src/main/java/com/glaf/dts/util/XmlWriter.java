@@ -35,6 +35,12 @@ import com.glaf.dts.domain.DataTransfer;
 
 public class XmlWriter {
 
+	public byte[] toBytes(DataTransfer dataTransfer) {
+		Document doc = this.write(dataTransfer);
+		byte[] bytes = Dom4jUtils.getBytesFromDocument(doc, "UTF-8");
+		return bytes;
+	}
+
 	public InputStream toInputStream(DataTransfer dataTransfer) {
 		Document doc = this.write(dataTransfer);
 		byte[] bytes = Dom4jUtils.getBytesFromDocument(doc, "UTF-8");
@@ -125,7 +131,7 @@ public class XmlWriter {
 					elem.addAttribute("length",
 							String.valueOf(field.getLength()));
 				}
-				if (field.getPosition() > 0) {
+				if (field.getPosition() != null && field.getPosition() > 0) {
 					elem.addAttribute("position",
 							String.valueOf(field.getPosition()));
 				}

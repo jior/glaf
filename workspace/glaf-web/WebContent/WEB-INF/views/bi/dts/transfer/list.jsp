@@ -249,6 +249,19 @@
         var link = "<%=request.getContextPath()%>/mx/dts/dataTransfer/showDeploy?nodeId="+nodeId;
 		art.dialog.open(link, { height: 420, width: 780, title: "发布定义文件", lock: true, scrollbars:"no" }, false);
 	}
+
+	function importData(){
+        var rows = jQuery('#easyui_data_grid').datagrid('getSelections');
+		if(rows == null || rows.length !=1){
+			alert("请选择其中一条记录。");
+			return;
+		}
+		var selected = jQuery('#easyui_data_grid').datagrid('getSelected');
+		if (selected ){
+		  var link = "<%=request.getContextPath()%>/mx/dts/dataTransfer/showImport?transferId="+selected.id;
+		  art.dialog.open(link, { height: 420, width: 780, title: "导入数据", lock: true, scrollbars:"no" }, false);
+		}
+	}
 		 
 </script>
 </head>
@@ -279,6 +292,8 @@
 		   onclick="javascript:editSelected();">修改</a>  
 		<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-remove'"
 		   onclick="javascript:deleteSelections();">删除</a> 
+		<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-imp'" 
+		   onclick="javascript:importData();">导入</a>
 		<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-search'"
 		   onclick="javascript:searchWin();">查找</a>
 	   </div> 

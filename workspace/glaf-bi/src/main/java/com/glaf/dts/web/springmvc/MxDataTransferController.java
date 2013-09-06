@@ -20,12 +20,13 @@ import com.alibaba.fastjson.*;
 import com.glaf.core.config.ViewProperties;
 import com.glaf.core.domain.ColumnDefinition;
 import com.glaf.core.identity.*;
+import com.glaf.core.parse.ParserFacede;
 import com.glaf.core.security.*;
 import com.glaf.core.util.*;
 import com.glaf.dts.domain.*;
 import com.glaf.dts.query.*;
 import com.glaf.dts.service.*;
-import com.glaf.dts.util.XmlReader;
+import com.glaf.dts.util.*;
 
 @Controller("/dts/dataTransfer")
 @RequestMapping("/dts/dataTransfer")
@@ -174,8 +175,16 @@ public class MxDataTransferController {
 					DataTransfer dataTransfer = dataTransferService
 							.getDataTransfer(request.getParameter("transferId"));
 					if (dataTransfer != null) {
-						
+						XmlWriter writer = new XmlWriter();
+						String table = dataTransfer.getTableName();
+						dataTransfer.setTableName("tmp_" + table);
+						byte[] input = writer.toBytes(dataTransfer);
+						ParserFacede parser = new ParserFacede();
+						String seqNo = request.getParameter("seqNo");
+						parser.parse(input, mFile.getInputStream(), seqNo, true);
 						modelMap.put("dataTransfer", dataTransfer);
+						modelMap.put("tableName_enc", RequestUtils
+								.encodeString(dataTransfer.getTableName()));
 					}
 				}
 			}
