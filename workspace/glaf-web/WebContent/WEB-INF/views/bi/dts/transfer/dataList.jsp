@@ -10,34 +10,58 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>${dataTransfer.tableName} 数据列表</title>
-<%@ include file="/WEB-INF/views/tm/header.jsp"%>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/easyui/themes/${theme}/easyui.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/icons/styles.css">
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.form.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/locale/easyui-lang-zh_CN.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/glaf-core.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/glaf-base.js"></script>
 <script type="text/javascript">
 
-	var x_height = Math.floor(window.screen.height * 0.52);
-	var x_width = Math.floor(window.screen.width * 0.80);
+    jQuery(function(){
+		jQuery('#easyui_data_grid').datagrid({
+				width: ${dataTransfer.columns.size()*190},
+				height:400,
+				fit:false,
+				fitColumns: true,
+				nowrap: false,
+				striped: true,
+				collapsible: true,
+				url: '<%=request.getContextPath()%>/rs/system/table/resultList?tableName_enc=${tableName_enc}&gridType=easyui',
+				remoteSort: false,
+				singleSelect: true,
+				idField: '${dataTransfer.idColumn.columnName}',
+				columns:[[
+				        {title:'序号', field:'startIndex', width:80, sortable:false}
+                        <c:forEach items="${dataTransfer.columns}" var="column">
+						  <c:choose>
+							<c:when test="${!empty column.title }">
+						,{title:'${column.title}', field:'${column.columnName}', width:180, sortable:false}
+							</c:when>
+							<c:otherwise>
+						,{title:'${column.columnName}', field:'${column.columnName}', width:180, sortable:false}
+							</c:otherwise>
+						  </c:choose>
+						</c:forEach>
+				]],
+				rownumbers: false,
+				pagination: true,
+				pageSize: 10,
+				pageList: [10,15,20,25,30,40,50,100,500],
+				onClickRow: onMyRowClick 
+			});
 
-	if(window.screen.height <= 768){
-        x_height = Math.floor(window.screen.height * 0.50);
-	}
-	if(window.screen.width < 1200){
-        x_width = Math.floor(window.screen.width * 0.80);
-	} else if(window.screen.width > 1280){
-        x_width = Math.floor(window.screen.width * 0.70);
-	}  
-    try{
-	    x_width = document.getElementById("menu_line").offsetWidth-90;
-	}catch(exe){
-	}
+			var p = jQuery('#easyui_data_grid').datagrid('getPager');
+			jQuery(p).pagination({
+				onBeforeRefresh:function(){
+					//alert('before refresh');
+				}
+		    });
+	});
 
 	function onMyRowClick(rowIndex, row){
-	    var link = '<%=request.getContextPath()%>/mx/sys/table/edit?tableName_enc=${tableName_enc}&businessKey='+row.${idColumn.columnName};
+	    var link = '<%=request.getContextPath()%>/mx/sys/table/edit?tableName_enc=${tableName_enc}&businessKey='+row.${dataTransfer.idColumn.columnName};
 	    var x=50;
         var y=50;
         if(is_ie) {
@@ -53,22 +77,7 @@
 <div style="margin:0;"></div> 
 <div class="easyui-layout" data-options="fit:true">  
   <div data-options="region:'center',border:false">
-	 <table id="easyui_data_grid" class="easyui-datagrid" style="width:1000px;height:445px"
-			url="<%=request.getContextPath()%>/rs/system/table/resultList?tableName_enc=<c:out value='${tableName_enc}'/>&gridType=easyui"
-			title="${tableName} 数据列表 " iconCls="icon-list" remoteSort="true"  
-			method="post" pageSize="15" pageList="[10,15,20,30,40,50,100,200,500]"
-			rownumbers="true" pagination="true" fit="true" fitColumn="true"
-			data-options="singleSelect:true, onClickRow:onMyRowClick">
-		<thead>
-			<tr>
-			   <c:forEach items="${dataTransfer.columns}" var="column">
-				<th field="${column.columnName}" sortable="true" width="180">
-				${column.columnName}
-				</th>
-				</c:forEach>
-			</tr>
-		</thead>
-	</table>
+	  <table id="easyui_data_grid"></table>
   </div>  
 </div>
 </body>

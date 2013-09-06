@@ -163,38 +163,6 @@ public class MxDataTransferController {
 		return new ModelAndView("/bi/dts/transfer/edit", modelMap);
 	}
 
-	@RequestMapping(value = "/importData", method = RequestMethod.POST)
-	public ModelAndView importData(HttpServletRequest request, ModelMap modelMap) {
-		try {
-			MultipartHttpServletRequest req = (MultipartHttpServletRequest) request;
-			Map<String, MultipartFile> fileMap = req.getFileMap();
-			Set<Entry<String, MultipartFile>> entrySet = fileMap.entrySet();
-			for (Entry<String, MultipartFile> entry : entrySet) {
-				MultipartFile mFile = entry.getValue();
-				if (mFile.getOriginalFilename() != null && mFile.getSize() > 0) {
-					DataTransfer dataTransfer = dataTransferService
-							.getDataTransfer(request.getParameter("transferId"));
-					if (dataTransfer != null) {
-						XmlWriter writer = new XmlWriter();
-						String table = dataTransfer.getTableName();
-						dataTransfer.setTableName("tmp_" + table);
-						byte[] input = writer.toBytes(dataTransfer);
-						ParserFacede parser = new ParserFacede();
-						String seqNo = request.getParameter("seqNo");
-						parser.parse(input, mFile.getInputStream(), seqNo, true);
-						modelMap.put("dataTransfer", dataTransfer);
-						modelMap.put("tableName_enc", RequestUtils
-								.encodeString(dataTransfer.getTableName()));
-					}
-				}
-			}
-		} catch (Exception ex) {
-			logger.error(ex);
-			ex.printStackTrace();
-		}
-		return new ModelAndView("/bi/dts/transfer/dataList", modelMap);
-	}
-
 	@ResponseBody
 	@RequestMapping("/detail")
 	public byte[] detail(HttpServletRequest request) throws IOException {
@@ -241,6 +209,38 @@ public class MxDataTransferController {
 		}
 
 		return new ModelAndView("/bi/dts/transfer/edit", modelMap);
+	}
+
+	@RequestMapping(value = "/importData", method = RequestMethod.POST)
+	public ModelAndView importData(HttpServletRequest request, ModelMap modelMap) {
+		try {
+			MultipartHttpServletRequest req = (MultipartHttpServletRequest) request;
+			Map<String, MultipartFile> fileMap = req.getFileMap();
+			Set<Entry<String, MultipartFile>> entrySet = fileMap.entrySet();
+			for (Entry<String, MultipartFile> entry : entrySet) {
+				MultipartFile mFile = entry.getValue();
+				if (mFile.getOriginalFilename() != null && mFile.getSize() > 0) {
+					DataTransfer dataTransfer = dataTransferService
+							.getDataTransfer(request.getParameter("transferId"));
+					if (dataTransfer != null) {
+						XmlWriter writer = new XmlWriter();
+						String table = dataTransfer.getTableName();
+						dataTransfer.setTableName("tmp_" + table);
+						byte[] input = writer.toBytes(dataTransfer);
+						ParserFacede parser = new ParserFacede();
+						String seqNo = request.getParameter("seqNo");
+						parser.parse(input, mFile.getInputStream(), seqNo, true);
+						modelMap.put("dataTransfer", dataTransfer);
+						modelMap.put("tableName_enc", RequestUtils
+								.encodeString(dataTransfer.getTableName()));
+					}
+				}
+			}
+		} catch (Exception ex) {
+			logger.error(ex);
+			ex.printStackTrace();
+		}
+		return new ModelAndView("/bi/dts/transfer/dataList", modelMap);
 	}
 
 	@RequestMapping("/json")

@@ -85,9 +85,17 @@ public class MxDataTransferServiceImpl implements IDataTransferService {
 			return null;
 		}
 		DataTransfer dataTransfer = dataTransferMapper.getDataTransferById(id);
-		if(dataTransfer != null){
-			List<ColumnDefinition> columns = this.getColumns(dataTransfer.getTableName());
+		if (dataTransfer != null) {
+			List<ColumnDefinition> columns = this.getColumns(dataTransfer
+					.getTableName());
 			dataTransfer.setColumns(columns);
+			for (ColumnDefinition column : columns) {
+				if (StringUtils.equalsIgnoreCase(column.getColumnName(),
+						dataTransfer.getPrimaryKey())) {
+					dataTransfer.setIdColumn(column);
+					break;
+				}
+			}
 		}
 		return dataTransfer;
 	}

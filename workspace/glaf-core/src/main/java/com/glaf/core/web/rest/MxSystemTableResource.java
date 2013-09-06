@@ -349,6 +349,7 @@ public class MxSystemTableResource {
 						}
 					}
 				}
+				rowJSON.put("startIndex", ++start);
 				rowsJSON.add(rowJSON);
 				dataMap.clear();
 			}
