@@ -162,6 +162,30 @@ public class MxDataTransferController {
 		return new ModelAndView("/bi/dts/transfer/edit", modelMap);
 	}
 
+	@RequestMapping(value = "/importData", method = RequestMethod.POST)
+	public ModelAndView importData(HttpServletRequest request, ModelMap modelMap) {
+		try {
+			MultipartHttpServletRequest req = (MultipartHttpServletRequest) request;
+			Map<String, MultipartFile> fileMap = req.getFileMap();
+			Set<Entry<String, MultipartFile>> entrySet = fileMap.entrySet();
+			for (Entry<String, MultipartFile> entry : entrySet) {
+				MultipartFile mFile = entry.getValue();
+				if (mFile.getOriginalFilename() != null && mFile.getSize() > 0) {
+					DataTransfer dataTransfer = dataTransferService
+							.getDataTransfer(request.getParameter("transferId"));
+					if (dataTransfer != null) {
+						
+						modelMap.put("dataTransfer", dataTransfer);
+					}
+				}
+			}
+		} catch (Exception ex) {
+			logger.error(ex);
+			ex.printStackTrace();
+		}
+		return new ModelAndView("/bi/dts/transfer/dataList", modelMap);
+	}
+
 	@ResponseBody
 	@RequestMapping("/detail")
 	public byte[] detail(HttpServletRequest request) throws IOException {
@@ -221,12 +245,12 @@ public class MxDataTransferController {
 		query.deleteFlag(0);
 		query.setActorId(loginContext.getActorId());
 		query.setLoginContext(loginContext);
-		
+
 		Long nodeId = RequestUtils.getLong(request, "nodeId");
 		if (nodeId != null && nodeId > 0) {
 			query.nodeId(nodeId);
 		}
-		
+
 		/**
 		 * 此处业务逻辑需自行调整
 		 */
@@ -475,13 +499,28 @@ public class MxDataTransferController {
 			return new ModelAndView(view);
 		}
 
-		String x_view = ViewProperties
-				.getString("dts_transfer_deploy.showDeploy");
+		String x_view = ViewProperties.getString("dts_transfer.showDeploy");
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view);
 		}
 
 		return new ModelAndView("/bi/dts/transfer/showDeploy");
+	}
+
+	@RequestMapping("/showImport")
+	public ModelAndView showImport(HttpServletRequest request) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		String view = request.getParameter("view");
+		if (StringUtils.isNotEmpty(view)) {
+			return new ModelAndView(view);
+		}
+
+		String x_view = ViewProperties.getString("dts_transfer.showImport");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view);
+		}
+
+		return new ModelAndView("/bi/dts/transfer/showImport");
 	}
 
 	@RequestMapping("/update")

@@ -50,6 +50,8 @@ public class XmlReader {
 					while (iter.hasNext()) {
 						Attribute attr = (Attribute) iter.next();
 						dataMap.put(attr.getName(), attr.getStringValue());
+						tableModel.addProperty(attr.getName(),
+								attr.getStringValue());
 					}
 					Tools.populate(tableModel, dataMap);
 				}
@@ -108,7 +110,8 @@ public class XmlReader {
 						ColumnDefinition field = new ColumnDefinition();
 						this.readField(elem, field);
 						tableModel.addColumn(field);
-						if (StringUtils.equalsIgnoreCase(tableModel.getPrimaryKey(),
+						if (StringUtils.equalsIgnoreCase(
+								tableModel.getPrimaryKey(),
 								field.getColumnName())) {
 							tableModel.setIdColumn(field);
 						}
@@ -131,6 +134,7 @@ public class XmlReader {
 			while (iter.hasNext()) {
 				Attribute attr = (Attribute) iter.next();
 				dataMap.put(attr.getName(), attr.getStringValue());
+				field.addProperty(attr.getName(), attr.getStringValue());
 			}
 			Tools.populate(field, dataMap);
 		}

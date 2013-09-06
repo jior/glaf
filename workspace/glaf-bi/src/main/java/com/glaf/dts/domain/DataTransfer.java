@@ -124,6 +124,9 @@ public class DataTransfer implements Serializable, JSONable {
 	@javax.persistence.Transient
 	protected List<String> excludes = new ArrayList<String>();
 
+	@javax.persistence.Transient
+	protected Map<String, String> properties = new HashMap<String, String>();
+
 	public DataTransfer() {
 
 	}
@@ -163,6 +166,13 @@ public class DataTransfer implements Serializable, JSONable {
 			excludes = new ArrayList<String>();
 		}
 		excludes.add(exclude);
+	}
+
+	public void addProperty(String key, String value) {
+		if (properties == null) {
+			properties = new HashMap<String, String>();
+		}
+		properties.put(key, value);
 	}
 
 	@Override
@@ -272,6 +282,10 @@ public class DataTransfer implements Serializable, JSONable {
 
 	public String getPrimaryKey() {
 		return this.primaryKey;
+	}
+
+	public Map<String, String> getProperties() {
+		return properties;
 	}
 
 	public String getQueryIds() {
@@ -416,6 +430,10 @@ public class DataTransfer implements Serializable, JSONable {
 
 	public void setPrimaryKey(String primaryKey) {
 		this.primaryKey = primaryKey;
+	}
+
+	public void setProperties(Map<String, String> properties) {
+		this.properties = properties;
 	}
 
 	public void setQueryIds(String queryIds) {

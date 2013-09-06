@@ -154,8 +154,7 @@ public class ChartProperties {
 						}
 					}
 
-					if (properties != null
-							&& properties.keys().hasMoreElements()) {
+					if (properties.keys().hasMoreElements()) {
 						Enumeration<?> e = properties.keys();
 						while (e.hasMoreElements()) {
 							String name = (String) e.nextElement();
