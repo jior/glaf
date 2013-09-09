@@ -41,8 +41,8 @@ public class MxFileSystemResource {
 		if (StringUtils.isEmpty(path)) {
 			path = "/WEB-INF";
 		}
-		path = SystemProperties.getAppPath() + "/" + path;
-		File dir = new File(path);
+		String root = SystemProperties.getAppPath() + "/" + path;
+		File dir = new File(root);
 		if (dir.exists() && dir.isDirectory()) {
 			File[] contents = dir.listFiles();
 			if (contents != null) {
@@ -50,20 +50,14 @@ public class MxFileSystemResource {
 					File file = contents[i];
 					if (file.exists() && file.isFile()) {
 						JSONObject json = new JSONObject();
-						json.put(
-								"id",
-								DigestUtils.md5Hex(request.getParameter("path")
-										+ "/" + file.getName()));
-						json.put(
-								"parentId",
-								DigestUtils.md5Hex(request.getParameter("path")
-										+ "/"));
+						json.put("id",
+								DigestUtils.md5Hex(path + "/" + file.getName()));
+						json.put("parentId", DigestUtils.md5Hex(path + "/"));
 						json.put("startIndex", i + 1);
 						json.put("date", DateUtils.getDateTime(new Date(file
 								.lastModified())));
 						json.put("name", file.getName());
-						json.put("path", request.getParameter("path") + "/"
-								+ file.getName());
+						json.put("path", path + "/" + file.getName());
 						json.put("class", "file");
 						json.put("size", file.length());
 						json.put("leaf", true);
