@@ -141,6 +141,25 @@ public class MxReportController {
 		return new ModelAndView("/bi/report/chooseChart", modelMap);
 	}
 
+	@RequestMapping("/chooseFile")
+	public ModelAndView chooseFile(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		String reportId = request.getParameter("reportId");
+		Report report = null;
+		if (StringUtils.isNotEmpty(reportId)) {
+			report = reportService.getReport(reportId);
+			if (report != null) {
+				String path = report.getReportTemplate();
+				if (StringUtils.isNotEmpty(path) && path.indexOf("/") != -1) {
+					path = path.substring(0, path.lastIndexOf("/"));
+					modelMap.put("path", path);
+				}
+				modelMap.put("report", report);
+			}
+		}
+		return new ModelAndView("/bi/report/chooseFile", modelMap);
+	}
+
 	@RequestMapping("/chooseQuery")
 	public ModelAndView chooseQuery(HttpServletRequest request,
 			ModelMap modelMap) {

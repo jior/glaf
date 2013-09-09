@@ -110,6 +110,17 @@
 				openWindow(link,self,x, y, 695, 480);
 			}
 
+		function openFile(){
+                var link = '<%=request.getContextPath()%>/mx/bi/report/chooseFile?reportId=${report.id}&elementId=reportTemplate&elementName=reportTemplate';
+				var x=100;
+				var y=100;
+				if(is_ie) {
+					x=document.body.scrollLeft+event.clientX-event.offsetX-200;
+					y=document.body.scrollTop+event.clientY-event.offsetY-200;
+				 }
+				openWindow(link,self,x, y, 745, 480);
+			}
+
 	 </script>
 </head>
 <body><br>
@@ -153,8 +164,11 @@
 				 <td>模板文件</td>
 				 <td >
                  <input id="reportTemplate" name="reportTemplate" class="span7 x-text" type="text"
-				        value="${report.reportTemplate}" size="80"
-				 ></input>
+				        value="${report.reportTemplate}" size="80" onclick="javascript:openFile();"></input>
+				  &nbsp;
+						  <a href="#" onclick="javascript:openFile();">
+						  <img src="<%=request.getContextPath()%>/images/report.gif" border="0">
+						  </a>
 				 </td>
 			</tr>
 			<tr>

@@ -231,19 +231,18 @@
 	   <td width="12%" align="left">&nbsp;</td>
 	   <td colspan="3" align="left"><br/>
 	    <input type="button"  name="save" value="保存" class="btn btn-primary" 
-		           onclick="javascript:saveForm('');"/>&nbsp;
+		       onclick="javascript:saveForm('');"/>&nbsp;
 		<input type="button"  name="save" value="另存" class="btn " 
-		           onclick="javascript:saveAs('');"/>&nbsp;
+		       onclick="javascript:saveAs('');"/>&nbsp;
 		<input type="button"  name="query" value="查询" class="btn"
-			     onclick="javascript:queryForm('');"/>&nbsp;
+			   onclick="javascript:queryForm('');"/>&nbsp;
 		<input type="button"  name="transform" value="取数到目标表" class="btn"
-			     onclick="javascript:transformToTable();"/>&nbsp;
+			   onclick="javascript:transformToTable();"/>&nbsp;
  	    <input type="button"  name="qtyEditor" value="设计器" class="btn" 
-		           onclick="javascript:openEditor();"/>&nbsp;
+		       onclick="javascript:openEditor();"/>&nbsp;
 	   </td>
 	</tr>
 </table>
- 
 	
 </form>
 
