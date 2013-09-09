@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.util.*;
 import java.util.Map.Entry;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
@@ -45,6 +47,7 @@ public class MxDataTransferController {
 	public byte[] columns(HttpServletRequest request, ModelMap modelMap)
 			throws IOException {
 		String tableName = request.getParameter("tableName");
+		logger.debug("tableName:" + tableName);
 		JSONObject result = new JSONObject();
 		List<ColumnDefinition> list = dataTransferService.getColumns(tableName);
 
@@ -209,6 +212,24 @@ public class MxDataTransferController {
 		}
 
 		return new ModelAndView("/bi/dts/transfer/edit", modelMap);
+	}
+
+	@RequestMapping("/exportXml")
+	@ResponseBody
+	public void exportXml(HttpServletRequest request,
+			HttpServletResponse response, ModelMap modelMap) throws IOException {
+		String transferId = request.getParameter("transferId");
+		logger.debug("transferId:" + transferId);
+		DataTransfer dataTransfer = dataTransferService
+				.getDataTransfer(transferId);
+		XmlWriter writer = new XmlWriter();
+		byte[] bytes = writer.toBytes(dataTransfer);
+		try {
+			ResponseUtils.download(request, response, bytes,
+					dataTransfer.getEntityName() + ".mapping.xml");
+		} catch (ServletException ex) {
+			ex.printStackTrace();
+		}
 	}
 
 	@RequestMapping(value = "/importData", method = RequestMethod.POST)

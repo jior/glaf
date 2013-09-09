@@ -262,6 +262,19 @@
 		  art.dialog.open(link, { height: 420, width: 780, title: "导入数据", lock: true, scrollbars:"no" }, false);
 		}
 	}
+
+	function exportXml(){
+        var rows = jQuery('#easyui_data_grid').datagrid('getSelections');
+		if(rows == null || rows.length !=1){
+			alert("请选择其中一条记录。");
+			return;
+		}
+		var selected = jQuery('#easyui_data_grid').datagrid('getSelected');
+		if (selected ){
+		  var link = "<%=request.getContextPath()%>/mx/dts/dataTransfer/exportXml?transferId="+selected.id;
+		  window.open(link);
+		}
+	}
 		 
 </script>
 </head>
@@ -285,15 +298,17 @@
 		<img src="<%=request.getContextPath()%>/images/window.png">
 		&nbsp;<span class="x_content_title">数据传递列表</span>
 		<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-add'" 
-		   onclick="javascript:deployNew();">发布</a>
-		<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-add'" 
 		   onclick="javascript:addNew();">新增</a>  
 		<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-edit'"
 		   onclick="javascript:editSelected();">修改</a>  
 		<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-remove'"
 		   onclick="javascript:deleteSelections();">删除</a> 
 		<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-imp'" 
-		   onclick="javascript:importData();">导入</a>
+		   onclick="javascript:importData();">导入数据</a>
+		<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-add'" 
+		   onclick="javascript:deployNew();">导入定义</a>
+		<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-exp'" 
+		   onclick="javascript:exportXml();">导出定义</a>
 		<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-search'"
 		   onclick="javascript:searchWin();">查找</a>
 	   </div> 

@@ -37,13 +37,13 @@ public class XmlWriter {
 
 	public byte[] toBytes(DataTransfer dataTransfer) {
 		Document doc = this.write(dataTransfer);
-		byte[] bytes = Dom4jUtils.getBytesFromDocument(doc, "UTF-8");
+		byte[] bytes = Dom4jUtils.getBytesFromPrettyDocument(doc, "UTF-8");
 		return bytes;
 	}
 
 	public InputStream toInputStream(DataTransfer dataTransfer) {
 		Document doc = this.write(dataTransfer);
-		byte[] bytes = Dom4jUtils.getBytesFromDocument(doc, "UTF-8");
+		byte[] bytes = Dom4jUtils.getBytesFromPrettyDocument(doc, "UTF-8");
 		return new BufferedInputStream(new ByteArrayInputStream(bytes));
 	}
 

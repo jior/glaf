@@ -105,8 +105,7 @@
 							nowrap : false,
 							striped : true,
 							collapsible : true,
-							url : '${contextPath}/mx/dts/dataTransfer/columns?tableName='
-									+ tableName,
+							url : '${contextPath}/mx/dts/dataTransfer/columns?tableName='+ tableName,
 							remoteSort : false,
 							singleSelect : true,
 							idField : 'id',
@@ -382,6 +381,11 @@
 	//明细保存
 	function saveDetail(indexs) {
 		var tableName = jQuery('#tableName').val();
+		if(tableName == ""){
+            alert("请填写数据库表名！");
+			document.getElementById("tableName").focus();
+			return;
+		}
 		$("#mydatagrid").datagrid("endEdit", indexs);
 		$("#mydatagrid").datagrid("selectRow", indexs);
 		var rows = $("#mydatagrid").datagrid("getSelections");
@@ -392,8 +396,7 @@
 		}
 		jQuery.ajax({
 			type : "POST",
-			url : '${contextPath}/mx/dts/dataTransfer/saveColumn?tableName='
-					+ tableName,
+			url : '${contextPath}/mx/dts/dataTransfer/saveColumn?tableName='+ tableName,
 			data : rows[0],
 			dataType : 'json',
 			async : false,
@@ -406,7 +409,11 @@
 				} else {
 					alert('操作成功！');
 				}
-				jQuery('#mydatagrid').datagrid('reload');
+				var link = '${contextPath}/mx/dts/dataTransfer/saveColumn?tableName='+ tableName;
+				//jQuery('#mydatagrid').datagrid('reload');
+				jQuery.get(url+'&randnum='+Math.floor(Math.random()*1000000),{qq:'xx'},function(data){
+			         jQuery('#easyui_data_grid').datagrid('loadData', data);
+		         },'json');
 			}
 		});
 	}
@@ -444,37 +451,37 @@
 								<td align="left">类型</td>
 								<td align="left"><input id="parseType"
 									class="easyui-combobox" name="parseType"
-									value="${dataTransfer.parseType}" size="15"
+									value="${dataTransfer.parseType}" size="15" editable="false"
 									data-options="required:true,valueField:'code',textField:'text',required:true,url:'${contextPath}/rs/dts/dataTransfer/parseTypeJson',
-							onSelect: function(rec){ 
-							jQuery.ajax({
-							   type: 'POST',
-							   url: '${contextPath}/rs/dts/dataTransfer/parseTypeJson',
-							   data: {'parseType':rec.code},
-							   dataType:  'json',
-								async:false ,
-							   error: function(data){
-							   alert('服务器处理错误！');
-							   },
-							   success: function(data){
-				 
-							   }
-							 });
-							},onChange: function(rec){ 
-								jQuery.ajax({
-								   type: 'POST',
-								   url: '${contextPath}/rs/dts/dataTransfer/parseTypeJson',
-								   data: {'parseType':rec.code},
-								   dataType:  'json',
-								   async:false,
-								   error: function(data){
-								   alert('服务器处理错误！');
-								   },
-								   success: function(data){
-								   
-								   }
-								 });
-							}" />
+									onSelect: function(rec){ 
+									jQuery.ajax({
+									   type: 'POST',
+									   url: '${contextPath}/rs/dts/dataTransfer/parseTypeJson',
+									   data: {'parseType':rec.code},
+									   dataType:  'json',
+										async:false ,
+									   error: function(data){
+									   alert('服务器处理错误！');
+									   },
+									   success: function(data){
+						 
+									   }
+									 });
+									},onChange: function(rec){ 
+										jQuery.ajax({
+										   type: 'POST',
+										   url: '${contextPath}/rs/dts/dataTransfer/parseTypeJson',
+										   data: {'parseType':rec.code},
+										   dataType:  'json',
+										   async:false,
+										   error: function(data){
+										   alert('服务器处理错误！');
+										   },
+										   success: function(data){
+										   
+										   }
+										 });
+									}" />
 							</td>
 					    </tr>
 					    <tr>
@@ -511,7 +518,7 @@
 								<td align="left">开始行数</td>
 								<td align="left">
 								   <input id="startRow" name="startRow" class="easyui-validatebox easyui-numberbox" 
-                                          data-options= " required:false, min: 0, max: 99999999, precision: 0 "
+                                          data-options= " required:false, min: 0, max: 99999, precision: 0 "
 									      size="10" value="${dataTransfer.startRow}" editable="true"/>
 								</td>
 							</tr>
@@ -526,8 +533,8 @@
 								<td align="left">每次都插入数据</td>
 								<td align="left">
                                     <select id="insertOnly" name="insertOnly">
-										<option value="false" selected>否</option>
-										<option value="true">是</option>
+										<option value="false">否</option>
+										<option value="true" selected>是</option>
                                     </select>
 									<script type="text/javascript">
 									    document.getElementById("insertOnly").value="${dataTransfer.insertOnly}";
@@ -538,7 +545,7 @@
 								<td align="left">结束跳过行数</td>
 								<td align="left">
 								  <input id="stopSkipRow" name="stopSkipRow" class="easyui-numberbox" 
-								         data-options= " required:false, min: 0, max: 99999999, precision: 0 " 
+								         data-options= " required:false, min: 0, max: 99999, precision: 0 " 
 									     size="5" value="${dataTransfer.stopSkipRow}" editable="true"/>
 								</td>
 								<td align="left">聚合主键</td>
