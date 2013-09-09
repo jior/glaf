@@ -74,7 +74,9 @@ public class SystemConfig {
 
 	public static String getCurrentYYYYMM() {
 		String value = getString("curr_yyyymm");
-		if (StringUtils.isEmpty(value)) {
+		if (StringUtils.isEmpty(value)
+				|| StringUtils.equals("curr_yyyymm", value)
+				|| StringUtils.equals(CURR_YYYYMM, value)) {
 			Date now = new Date();
 			value = String.valueOf(DateUtils.getYearMonth(now));
 		}
@@ -83,7 +85,9 @@ public class SystemConfig {
 
 	public static String getCurrentYYYYMMDD() {
 		String value = getString("curr_yyyymmdd");
-		if (StringUtils.isEmpty(value)) {
+		if (StringUtils.isEmpty(value)
+				|| StringUtils.equals("curr_yyyymmdd", value)
+				|| StringUtils.equals(CURR_YYYYMMDD, value)) {
 			Date now = new Date();
 			value = String.valueOf(DateUtils.getYearMonthDay(now));
 		}
@@ -100,7 +104,9 @@ public class SystemConfig {
 
 	public static String getInputYYYYMM() {
 		String value = getString("input_yyyymm");
-		if (StringUtils.isEmpty(value)) {
+		if (StringUtils.isEmpty(value)
+				|| StringUtils.equals("input_yyyymm", value)
+				|| StringUtils.equals(INPUT_YYYYMM, value)) {
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(new Date());
 
@@ -131,7 +137,9 @@ public class SystemConfig {
 
 	public static String getInputYYYYMMDD() {
 		String value = getString("input_yyyymmdd");
-		if (StringUtils.isEmpty(value)) {
+		if (StringUtils.isEmpty(value)
+				|| StringUtils.equals("input_yyyymmdd", value)
+				|| StringUtils.equals(INPUT_YYYYMMDD, value)) {
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(new Date());
 

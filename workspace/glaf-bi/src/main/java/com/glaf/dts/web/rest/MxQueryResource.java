@@ -21,7 +21,7 @@ package com.glaf.dts.web.rest;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
- 
+
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -50,10 +50,10 @@ import com.glaf.core.query.QueryDefinitionQuery;
 import com.glaf.core.query.TableDefinitionQuery;
 import com.glaf.core.service.IQueryDefinitionService;
 import com.glaf.core.service.ITableDefinitionService;
-
 import com.glaf.core.util.RequestUtils;
 import com.glaf.core.util.ResponseUtils;
 import com.glaf.core.util.DBUtils;
+import com.glaf.core.util.StringTools;
 import com.glaf.core.util.Tools;
 import com.glaf.dts.transform.MxTransformManager;
 import com.glaf.dts.util.Constants;
@@ -63,21 +63,23 @@ import com.glaf.dts.util.Constants;
 public class MxQueryResource {
 	private static Log logger = LogFactory.getLog(MxQueryResource.class);
 
- 
 	protected ITableDefinitionService tableDefinitionService;
- 
+
 	protected IQueryDefinitionService queryDefinitionService;
 
 	@POST
 	@Path("/delete")
 	public void delete(@Context HttpServletRequest request,
 			@Context UriInfo uriInfo) {
-		String queryId = request.getParameter("queryId");
-		if (queryDefinitionService.hasChildren(queryId)) {
-			throw new WebApplicationException(
-					Response.Status.INTERNAL_SERVER_ERROR);
+		String queryIds = request.getParameter("queryIds");
+		if (StringUtils.isNotEmpty(queryIds)) {
+			List<String> ids = StringTools.split(queryIds);
+			if (ids != null && !ids.isEmpty()) {
+				for (String queryId : ids) {
+					queryDefinitionService.deleteById(queryId);
+				}
+			}
 		}
-		queryDefinitionService.deleteById(queryId);
 	}
 
 	@POST

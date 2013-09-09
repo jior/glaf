@@ -16,7 +16,6 @@
 <%@ include file="/WEB-INF/views/inc/init_import.jsp"%>
 <%@ include file="/WEB-INF/views/inc/init_config.jsp"%>
 <%
-         
 		IQueryDefinitionService queryDefinitionService = ContextFactory.getBean("queryDefinitionService");
         String queryId = request.getParameter("queryId");
 		String actionType = request.getParameter("actionType");
@@ -46,9 +45,11 @@
 <!DOCTYPE html>
 <html>
 <head>
- 
 <%@ include file="/WEB-INF/views/tm/mx_header.jsp"%>
-
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/easyui/themes/${theme}/easyui.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/themes/${theme}/styles.css">
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/locale/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript">
 	     function saveForm(actionType){
              if(document.getElementById("title").value==""){
@@ -155,7 +156,7 @@
 		}
 </script>
 </head>
-<body>
+<body style="padding-left:60px;padding-right:60px">
 <br/>
 <div class="x_content_title" style="width: 90%;">
     <img src="<%=request.getContextPath()%>/images/window.png" alt="编辑查询信息">&nbsp;编辑查询信息
@@ -217,6 +218,12 @@
 		<td colspan="3"> 
 		    <textarea id="sql" name="sql" rows="15" cols="86" style="width:650px;height:300px;"
 			          class="span7 input-xlarge easyui-validatebox">${query.sql}</textarea>
+			<br>
+				 提示：如果查询条件使用变量，请用 ( 某表字段 = <%out.println("${变量}");%> ) ，如果变量不存在则替换为 ( 1=1 )
+                 <br><%out.println("${curr_yyyymmdd}");%>代表当天的日期，如<%=com.glaf.core.config.SystemConfig.getCurrentYYYYMMDD()%>
+                 <br><%out.println("${curr_yyyymm}");%>代表当天的月份，如<%=com.glaf.core.config.SystemConfig.getCurrentYYYYMM()%>
+				 <br><%out.println("${input_yyyymmdd}");%>代表报表输入的日期，如<%=com.glaf.core.config.SystemConfig.getInputYYYYMMDD()%>
+                 <br><%out.println("${input_yyyymm}");%>代表报表输入的月份，如<%=com.glaf.core.config.SystemConfig.getInputYYYYMM()%>
 		</td>
 	</tr>
 
@@ -242,24 +249,24 @@
 
 <br />
  <%
- if("query".equals(actionType)){
+  if("query".equals(actionType)){
     TableDefinition tableDefinition = null;
-	      if(query.getSql() != null && query.getSql() .trim().length() >0){
-			  MxTransformManager manager = new MxTransformManager();
-			  try{
-			      tableDefinition = manager.toTableDefinition(query);
-			   } catch(Exception ex){
-				  out.println("<div style='color:red;font-size:24px;'>");
-				  out.println("<br />查询语句有错误：<br />");
-				  out.println(ex.getMessage());
-				  out.println("</div>");
-				  return;
-			  }
-		}
+	if(query.getSql() != null && query.getSql().trim().length() >0){
+		MxTransformManager manager = new MxTransformManager();
+		try{
+			 tableDefinition = manager.toTableDefinition(query);
+		} catch(Exception ex){
+			out.println("<div style='color:red;font-size:24px;'>");
+			out.println("<br />查询语句有错误：<br />");
+			out.println(ex.getMessage());
+			out.println("</div>");
+			return;
+		 }
+	}
    if(tableDefinition != null && tableDefinition.getColumns() != null){
 %>
-<table align="center" class="x-table-border" cellspacing="1"
-	cellpadding="1" width="95%">
+<table width="95%" border="0" align="center" cellpadding="0" cellspacing="0" 
+       class="table table-striped table-bordered table-condensed">
 	<tr >
 	   <% for(ColumnDefinition column:tableDefinition.getColumns()){%>
 		<td >
@@ -270,10 +277,17 @@
 
 	 <%if(tableDefinition != null && tableDefinition.getColumns() != null){
 		try {
-		    List rows = new ArrayList();
+			ITablePageService tablePageService = ContextFactory.getBean("tablePageService");
+ 
+            Map<String, Object> parameters = new HashMap<String, Object>();
+			parameters.put(SystemConfig.CURR_YYYYMMDD, SystemConfig.getCurrentYYYYMMDD());
+			parameters.put(SystemConfig.CURR_YYYYMM, SystemConfig.getCurrentYYYYMM());
+			parameters.put(SystemConfig.INPUT_YYYYMMDD, SystemConfig.getInputYYYYMMDD());
+			parameters.put(SystemConfig.INPUT_YYYYMM, SystemConfig.getInputYYYYMM());
+
+		    List rows = tablePageService.getListData(query.getSql(), parameters);
 			if(rows != null && !rows.isEmpty()){
-				//System.out.println("rows size:"+rows.size());
-				Iterator iterator = rows.iterator();
+ 				Iterator iterator = rows.iterator();
 				while(iterator.hasNext()){
 					 Map rowMap = (Map)iterator.next();
 					 out.println("<tr class='x-content'>");

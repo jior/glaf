@@ -171,7 +171,7 @@
 		    var str = ids.join(',');
 			jQuery.ajax({
 				   type: "POST",
-				   url: '<%=request.getContextPath()%>/mx/dts/query/delete?ids='+str,
+				   url: '<%=request.getContextPath()%>/rs/dts/query/delete?queryIds='+str,
 				   dataType:  'json',
 				   error: function(data){
 					   alert('服务器处理错误！');

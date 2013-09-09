@@ -94,7 +94,7 @@
 				pagination: true,
 				pageSize: 15,
 				pageList: [10,15,20,25,30,40,50,100],
-				onClickRow: onRowClick 
+				onDblClickRow: onRowClick 
 			});
 
 			var p = jQuery('#easyui_data_grid').datagrid('getPager');
