@@ -79,8 +79,6 @@
 				striped: true,
 				collapsible:true,
 				url:'<%=request.getContextPath()%>/mx/sys/template/json',
-				sortName: 'id',
-				sortOrder: 'desc',
 				remoteSort: false,
 				singleSelect:true,
 				idField:'id',

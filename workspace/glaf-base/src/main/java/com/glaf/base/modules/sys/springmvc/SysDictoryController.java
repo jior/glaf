@@ -20,9 +20,7 @@ package com.glaf.base.modules.sys.springmvc;
 
 import java.io.IOException;
 import java.util.ArrayList;
-
 import java.util.Collections;
-
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -47,16 +45,14 @@ import com.glaf.core.res.ViewMessage;
 import com.glaf.core.res.ViewMessages;
 import com.glaf.core.util.JsonUtils;
 import com.glaf.core.util.PageResult;
+import com.glaf.core.util.Paging;
 import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.RequestUtils;
 import com.glaf.core.util.Tools;
-
 import com.glaf.base.modules.BaseDataManager;
 import com.glaf.base.modules.Constants;
-
 import com.glaf.base.modules.sys.model.Dictory;
 import com.glaf.base.modules.sys.model.DictoryDefinition;
-
 import com.glaf.base.modules.sys.model.SysTree;
 import com.glaf.base.modules.sys.query.DictoryQuery;
 import com.glaf.base.modules.sys.service.DictoryDefinitionService;
@@ -130,7 +126,7 @@ public class SysDictoryController {
 		}
 
 		if (limit <= 0) {
-			limit = PageResult.DEFAULT_PAGE_SIZE;
+			limit = Paging.DEFAULT_PAGE_SIZE;
 		}
 
 		JSONObject result = new JSONObject();

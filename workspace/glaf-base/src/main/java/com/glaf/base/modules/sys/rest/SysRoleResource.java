@@ -60,7 +60,7 @@ import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
 import com.glaf.core.res.ViewMessages;
 import com.glaf.core.tree.helper.TreeHelper;
-import com.glaf.core.util.PageResult;
+import com.glaf.core.util.Paging;
 import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.RequestUtils;
 import com.glaf.core.util.StringTools;
@@ -176,7 +176,7 @@ public class SysRoleResource {
 		}
 
 		if (limit <= 0) {
-			limit = PageResult.DEFAULT_PAGE_SIZE;
+			limit = Paging.DEFAULT_PAGE_SIZE;
 		}
 
 		JSONObject result = new JSONObject();

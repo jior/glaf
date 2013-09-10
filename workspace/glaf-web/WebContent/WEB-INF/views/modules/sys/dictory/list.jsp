@@ -87,8 +87,6 @@
 				striped: true,
 				collapsible:true,
 				url:'<%=request.getContextPath()%>/sys/dictory.do?method=json',
-				sortName: 'id',
-				sortOrder: 'desc',
 				remoteSort: false,
 				singleSelect:true,
 				idField:'id',

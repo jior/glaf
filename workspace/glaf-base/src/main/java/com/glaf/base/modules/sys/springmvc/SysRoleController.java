@@ -51,7 +51,6 @@ import com.glaf.base.modules.sys.service.SysRoleService;
 import com.glaf.base.modules.sys.service.SysTreeService;
 import com.glaf.base.modules.sys.service.SysUserService;
 import com.glaf.base.utils.ParamUtil;
-
 import com.glaf.core.base.BaseTree;
 import com.glaf.core.base.TreeModel;
 import com.glaf.core.config.ViewProperties;
@@ -61,6 +60,7 @@ import com.glaf.core.res.ViewMessages;
 import com.glaf.core.tree.helper.TreeHelper;
 import com.glaf.core.util.JsonUtils;
 import com.glaf.core.util.PageResult;
+import com.glaf.core.util.Paging;
 import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.RequestUtils;
 import com.glaf.core.util.Tools;
@@ -157,7 +157,7 @@ public class SysRoleController {
 		}
 
 		if (limit <= 0) {
-			limit = PageResult.DEFAULT_PAGE_SIZE;
+			limit = Paging.DEFAULT_PAGE_SIZE;
 		}
 
 		JSONObject result = new JSONObject();

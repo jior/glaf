@@ -40,7 +40,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-
 import com.glaf.core.cache.CacheUtils;
 import com.glaf.core.config.ViewProperties;
 import com.glaf.core.res.MessageUtils;
@@ -50,11 +49,11 @@ import com.glaf.core.security.DigestUtil;
 import com.glaf.core.service.ITableDataService;
 import com.glaf.core.util.JsonUtils;
 import com.glaf.core.util.PageResult;
+import com.glaf.core.util.Paging;
 import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.RequestUtils;
 import com.glaf.core.util.StringTools;
 import com.glaf.core.util.Tools;
-
 import com.glaf.base.modules.Constants;
 import com.glaf.base.modules.sys.SysConstants;
 import com.glaf.base.modules.sys.model.Dictory;
@@ -308,7 +307,7 @@ public class SysUserController {
 		}
 
 		if (limit <= 0) {
-			limit = PageResult.DEFAULT_PAGE_SIZE;
+			limit = Paging.DEFAULT_PAGE_SIZE;
 		}
 
 		JSONObject result = new JSONObject();

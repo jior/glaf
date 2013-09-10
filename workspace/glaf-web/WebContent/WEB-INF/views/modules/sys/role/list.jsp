@@ -30,8 +30,6 @@
 				striped: true,
 				collapsible:true,
 				url:'<%=request.getContextPath()%>/sys/role.do?method=json',
-				sortName: 'id',
-				sortOrder: 'desc',
 				remoteSort: false,
 				singleSelect: true,
 				idField:'id',
