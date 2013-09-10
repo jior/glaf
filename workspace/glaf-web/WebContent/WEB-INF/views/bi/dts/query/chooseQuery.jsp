@@ -128,10 +128,8 @@
 	window.close();
   }
 
- 
-   
 
-      function addToList2(list, value, text) {
+    function addToList2(list, value, text) {
         if (list.length > 0) {
             for (k = 0; k < list.length; k++) {
                 if (list.options[k].value == value) {
@@ -146,7 +144,7 @@
         list.options[len].text = text;
     }
 
-  function closeXY(){
+    function closeXY(){
      if(window.opener != null){
 		 window.close();
 	 } else {

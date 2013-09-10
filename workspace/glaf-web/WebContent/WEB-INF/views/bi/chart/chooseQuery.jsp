@@ -207,7 +207,7 @@
 <div align="center"><br />
  
  <input value=" 查询列表 " class=" btn" name="button" type="button"
-		onclick="javacsript:window.open('<%=request.getContextPath()%>/mx/system/query');">
+		onclick="javacsript:window.open('<%=request.getContextPath()%>/mx/dts/query');">
  <input value=" 确 定 " class=" btn btn-primary" name="button" type="button"
 		onclick="javacsript:doSelect();">
  <input value=" 关 闭 " class=" btn" name="close"

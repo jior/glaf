@@ -132,7 +132,7 @@
 		<td width="20%" class="editTitle">标题:</td>
 		<td align="left" colspan="3">
 			<input id="title" name="title" type="text" 
-				class="easyui-validatebox editInput"  style="width:480px;" data-options="required:true"
+				class="easyui-validatebox editInput"  style="width:460px;" data-options="required:true"
 				value="${fullCalendar.title}"/>
 		</td>
 	    </tr>
@@ -140,7 +140,7 @@
 		<td width="20%" class="editTitle">地点:</td>
 		<td align="left" colspan="3">
 			<input id="address" name="address" type="text" 
-				class="easyui-validatebox editInput"  style="width:480px;"
+				class="easyui-validatebox editInput"  style="width:460px;"
 				value="${fullCalendar.address}"/>
 		</td>
 		</tr>
@@ -148,14 +148,14 @@
 		<td width="20%" class="editTitle">内容:</td>
 		<td align="left" colspan="3">
 			<textarea id="content" name="content"
-				class="easyui-validatebox editTextarea" rows="4" style="width:479px;">${fullCalendar.content}</textarea>
+				class="easyui-validatebox editTextarea" rows="6" style="width:459px;">${fullCalendar.content}</textarea>
 		</td>
 	    </tr>
 		<tr>
 		<td width="20%" class="editTitle">备注:</td>
 		<td align="left" colspan="3">
 			<textarea id="remark" name="remark"
-				class="easyui-validatebox editTextarea" rows="4" style="width:479px;">${fullCalendar.remark}</textarea>
+				class="easyui-validatebox editTextarea" rows="6" style="width:459px;">${fullCalendar.remark}</textarea>
 		</td>
 	    </tr>
  
