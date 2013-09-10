@@ -51,6 +51,18 @@ public class MxDtsQueryController {
 
 	protected IQueryDefinitionService queryDefinitionService;
 
+	@RequestMapping("/queryTree")
+	public ModelAndView queryTree(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+
+		String x_view = ViewProperties.getString("dts.queryTree");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
+		return new ModelAndView("/bi/dts/query/query_tree", modelMap);
+	}
+
 	@RequestMapping("/chooseQuery")
 	public ModelAndView chooseQuery(HttpServletRequest request,
 			ModelMap modelMap) {
@@ -114,7 +126,7 @@ public class MxDtsQueryController {
 			throws IOException {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		
+
 		QueryDefinitionQuery query = new QueryDefinitionQuery();
 		Tools.populate(query, params);
 		query.type(com.glaf.dts.util.Constants.DTS_TASK_TYPE);
@@ -130,8 +142,8 @@ public class MxDtsQueryController {
 		 * 此处业务逻辑需自行调整
 		 */
 		if (!loginContext.isSystemAdministrator()) {
-			//String actorId = loginContext.getActorId();
-			//query.createBy(actorId);
+			// String actorId = loginContext.getActorId();
+			// query.createBy(actorId);
 		}
 
 		String gridType = ParamUtils.getString(params, "gridType");

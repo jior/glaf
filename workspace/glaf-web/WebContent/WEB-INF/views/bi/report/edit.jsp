@@ -11,6 +11,7 @@
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.form.js"></script>
 <script language="javascript" src="<%=request.getContextPath()%>/scripts/kindeditor/kindeditor-min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/glaf-base.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/glaf-core.js"></script>
 <script type="text/javascript">
 
@@ -88,7 +89,20 @@
 			     });
 		}
 
-        function openQx(){
+
+		function openQx(){
+            var selected = jQuery("#queryIds").val();
+            var link = '<%=request.getContextPath()%>/mx/dts/query/queryTree?elementId=queryIds&elementName=queryNames&nodeCode=report_category&selected='+selected;
+			var x=100;
+			var y=100;
+			if(is_ie) {
+				x=document.body.scrollLeft+event.clientX-event.offsetX-200;
+				y=document.body.scrollTop+event.clientY-event.offsetY-200;
+			 }
+			openWindow(link,self,x, y, 495, 480);
+		}
+
+        function openQx2(){
                 var link = '<%=request.getContextPath()%>/mx/bi/report/chooseQuery?reportId=${report.id}&elementId=queryIds&elementName=queryNames';
 				var x=100;
 				var y=100;
@@ -99,7 +113,20 @@
 				openWindow(link,self,x, y, 695, 480);
 			}
 
-        function openChart(){
+
+		function openChart(){
+            var selected = jQuery("#chartIds").val();
+            var link = '<%=request.getContextPath()%>/mx/bi/chart/chartTree?elementId=chartIds&elementName=chartNames&nodeCode=report_category&selected='+selected;
+			var x=100;
+			var y=100;
+			if(is_ie) {
+				x=document.body.scrollLeft+event.clientX-event.offsetX-200;
+				y=document.body.scrollTop+event.clientY-event.offsetY-200;
+			 }
+			openWindow(link,self,x, y, 495, 480);
+		}
+
+        function openChart2(){
                 var link = '<%=request.getContextPath()%>/mx/bi/report/chooseChart?reportId=${report.id}&elementId=chartIds&elementName=chartNames';
 				var x=100;
 				var y=100;

@@ -19,6 +19,7 @@
 package com.glaf.dts.web.rest;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -38,6 +39,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.alibaba.fastjson.JSONArray;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -45,11 +47,15 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.glaf.core.base.BaseTree;
+import com.glaf.core.base.TreeModel;
 import com.glaf.core.domain.*;
 import com.glaf.core.query.QueryDefinitionQuery;
 import com.glaf.core.query.TableDefinitionQuery;
 import com.glaf.core.service.IQueryDefinitionService;
 import com.glaf.core.service.ITableDefinitionService;
+import com.glaf.core.service.ITreeModelService;
+import com.glaf.core.tree.helper.TreeHelper;
 import com.glaf.core.util.RequestUtils;
 import com.glaf.core.util.ResponseUtils;
 import com.glaf.core.util.DBUtils;
@@ -66,6 +72,8 @@ public class MxQueryResource {
 	protected ITableDefinitionService tableDefinitionService;
 
 	protected IQueryDefinitionService queryDefinitionService;
+
+	protected ITreeModelService treeModelService;
 
 	@POST
 	@Path("/delete")
@@ -91,6 +99,62 @@ public class MxQueryResource {
 					Response.Status.INTERNAL_SERVER_ERROR);
 		}
 		queryDefinitionService.deleteById(queryId);
+	}
+
+	@GET
+	@POST
+	@Path("/treeJson")
+	@ResponseBody
+	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
+	public byte[] treeJson(@Context HttpServletRequest request)
+			throws IOException {
+		JSONArray array = new JSONArray();
+		String nodeCode = request.getParameter("nodeCode");
+		String selected = request.getParameter("selected");
+
+		logger.debug(RequestUtils.getParameterMap(request));
+		List<TreeModel> treeModels = new ArrayList<TreeModel>();
+		List<String> chooseList = new ArrayList<String>();
+		if (StringUtils.isNotEmpty(selected)) {
+			chooseList = StringTools.split(selected);
+		}
+
+		if (StringUtils.isNotEmpty(nodeCode)) {
+			TreeModel treeNode = treeModelService.getTreeModelByCode(nodeCode);
+			if (treeNode != null) {
+				QueryDefinitionQuery query = new QueryDefinitionQuery();
+				List<TreeModel> subTrees = treeModelService
+						.getSubTreeModels(treeNode.getId());
+				if (subTrees != null && !subTrees.isEmpty()) {
+					for (TreeModel tree : subTrees) {
+						tree.setIconCls("folder");
+						treeModels.add(tree);
+						query.nodeId(tree.getId());
+						List<QueryDefinition> queries = queryDefinitionService
+								.list(query);
+						for (QueryDefinition q : queries) {
+							if (StringUtils.isNumeric(q.getId())) {
+								TreeModel t = new BaseTree();
+								t.setId(Long.parseLong(q.getId()));
+								t.setParentId(tree.getId());
+								t.setName(q.getTitle());
+								t.setCode(q.getId());
+								t.setTreeId(q.getId());
+								t.setIconCls("leaf");
+								if (chooseList.contains(q.getId())) {
+									t.setChecked(true);
+								}
+								treeModels.add(t);
+							}
+						}
+					}
+				}
+				TreeHelper treeHelper = new TreeHelper();
+				array = treeHelper.getTreeJSONArray(treeModels);
+			}
+		}
+
+		return array.toJSONString().getBytes("UTF-8");
 	}
 
 	@GET
@@ -226,6 +290,11 @@ public class MxQueryResource {
 	public void setTableDefinitionService(
 			ITableDefinitionService tableDefinitionService) {
 		this.tableDefinitionService = tableDefinitionService;
+	}
+
+	@javax.annotation.Resource
+	public void setTreeModelService(ITreeModelService treeModelService) {
+		this.treeModelService = treeModelService;
 	}
 
 	@GET

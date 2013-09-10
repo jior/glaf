@@ -95,6 +95,18 @@ public class ChartController {
 		return null;
 	}
 
+	@RequestMapping("/chartTree")
+	public ModelAndView chartTree(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+
+		String x_view = ViewProperties.getString("chart.chartTree");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
+		return new ModelAndView("/bi/chart/chart_tree", modelMap);
+	}
+
 	@RequestMapping("/chooseQuery")
 	public ModelAndView chooseQuery(HttpServletRequest request,
 			ModelMap modelMap) {

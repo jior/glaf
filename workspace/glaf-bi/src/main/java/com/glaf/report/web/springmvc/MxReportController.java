@@ -271,10 +271,10 @@ public class MxReportController {
 		RequestUtils.setRequestParameterToAttribute(request);
 		request.removeAttribute("canSubmit");
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		String rowId = ParamUtils.getString(params, "reportId");
+		String reportId = ParamUtils.getString(params, "reportId");
 		Report report = null;
-		if (StringUtils.isNotEmpty(rowId)) {
-			report = reportService.getReport(rowId);
+		if (StringUtils.isNotEmpty(reportId)) {
+			report = reportService.getReport(reportId);
 			request.setAttribute("report", report);
 			if (StringUtils.isNotEmpty(report.getChartIds())) {
 				StringBuffer sb01 = new StringBuffer();
@@ -283,8 +283,9 @@ public class MxReportController {
 				ChartQuery query = new ChartQuery();
 				List<Chart> list = chartService.list(query);
 				request.setAttribute("unselecteds", list);
+				List<String> selected = StringTools.split(report.getChartIds());
 				for (Chart c : list) {
-					if (StringUtils.contains(report.getChartIds(), c.getId())) {
+					if (selected.contains(c.getId())) {
 						selecteds.add(c);
 						sb01.append(c.getId()).append(",");
 						sb02.append(c.getSubject()).append(",");
@@ -300,6 +301,29 @@ public class MxReportController {
 				request.setAttribute("chartIds", sb01.toString());
 
 				request.setAttribute("chartNames", sb02.toString());
+			}
+			
+			if (StringUtils.isNotEmpty(report.getQueryIds())) {
+				List<String> queryIds = StringTools.split(report.getQueryIds());
+				StringBuffer sb01 = new StringBuffer();
+				StringBuffer sb02 = new StringBuffer();
+				for (String queryId : queryIds) {
+					QueryDefinition queryDefinition = queryDefinitionService
+							.getQueryDefinition(queryId);
+					if (queryDefinition != null) {
+						sb01.append(queryDefinition.getId()).append(",");
+						sb02.append(queryDefinition.getTitle()).append("[")
+								.append(queryDefinition.getId()).append("],");
+					}
+				}
+				if (sb01.toString().endsWith(",")) {
+					sb01.delete(sb01.length() - 1, sb01.length());
+				}
+				if (sb02.toString().endsWith(",")) {
+					sb02.delete(sb02.length() - 1, sb02.length());
+				}
+				request.setAttribute("queryIds", sb01.toString());
+				request.setAttribute("queryNames", sb02.toString());
 			}
 		}
 

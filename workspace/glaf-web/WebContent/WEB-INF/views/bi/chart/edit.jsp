@@ -160,6 +160,18 @@
 			}
 
 			function openQx(){
+                var selected = jQuery("#queryIds").val();
+                var link = '<%=request.getContextPath()%>/mx/dts/query/queryTree?elementId=queryIds&elementName=queryNames&nodeCode=report_category&selected='+selected;
+				var x=100;
+				var y=100;
+				if(is_ie) {
+					x=document.body.scrollLeft+event.clientX-event.offsetX-200;
+					y=document.body.scrollTop+event.clientY-event.offsetY-200;
+				 }
+				openWindow(link,self,x, y, 495, 480);
+			}
+
+			function openQx2(){
                 var link = '<%=request.getContextPath()%>/mx/bi/chart/chooseQuery?chartId=${chart.id}&elementId=queryIds&elementName=queryNames';
 				var x=100;
 				var y=100;

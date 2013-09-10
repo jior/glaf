@@ -21,7 +21,7 @@ package com.glaf.chart.web.rest;
 import java.io.IOException;
 import java.util.*;
 import java.util.Map.Entry;
- 
+
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -30,6 +30,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
@@ -41,9 +42,14 @@ import com.alibaba.fastjson.JSONObject;
 import com.glaf.chart.domain.Chart;
 import com.glaf.chart.query.ChartQuery;
 import com.glaf.chart.service.IChartService;
+import com.glaf.core.base.BaseTree;
 import com.glaf.core.base.TableModel;
+import com.glaf.core.base.TreeModel;
+
 import com.glaf.core.service.ITableDataService;
 import com.glaf.core.service.ITablePageService;
+import com.glaf.core.service.ITreeModelService;
+import com.glaf.core.tree.helper.TreeHelper;
 import com.glaf.core.util.DBUtils;
 import com.glaf.core.util.DateUtils;
 import com.glaf.core.util.Paging;
@@ -64,6 +70,8 @@ public class ChartResource {
 	protected ITableDataService tableDataService;
 
 	protected ITablePageService tablePageService;
+
+	protected ITreeModelService treeModelService;
 
 	@GET
 	@POST
@@ -303,6 +311,67 @@ public class ChartResource {
 	@javax.annotation.Resource
 	public void setTablePageService(ITablePageService tablePageService) {
 		this.tablePageService = tablePageService;
+	}
+	
+	@javax.annotation.Resource
+	public void setTreeModelService(ITreeModelService treeModelService) {
+		this.treeModelService = treeModelService;
+	}
+
+
+	@GET
+	@POST
+	@Path("/treeJson")
+	@ResponseBody
+	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
+	public byte[] treeJson(@Context HttpServletRequest request)
+			throws IOException {
+		JSONArray array = new JSONArray();
+		String nodeCode = request.getParameter("nodeCode");
+		String selected = request.getParameter("selected");
+
+		logger.debug(RequestUtils.getParameterMap(request));
+		List<TreeModel> treeModels = new ArrayList<TreeModel>();
+		List<String> chooseList = new ArrayList<String>();
+		if (StringUtils.isNotEmpty(selected)) {
+			chooseList = StringTools.split(selected);
+		}
+
+		if (StringUtils.isNotEmpty(nodeCode)) {
+			TreeModel treeNode = treeModelService.getTreeModelByCode(nodeCode);
+			if (treeNode != null) {
+				ChartQuery query = new ChartQuery();
+				List<TreeModel> subTrees = treeModelService
+						.getSubTreeModels(treeNode.getId());
+				if (subTrees != null && !subTrees.isEmpty()) {
+					for (TreeModel tree : subTrees) {
+						tree.setIconCls("folder");
+						treeModels.add(tree);
+						query.nodeId(tree.getId());
+						List<Chart> charts = chartService.list(query);
+						for (Chart chart : charts) {
+							if (StringUtils.isNumeric(chart.getId())) {
+								TreeModel t = new BaseTree();
+								t.setId(Long.parseLong(chart.getId()));
+								t.setParentId(tree.getId());
+								t.setName(chart.getChartTitle());
+								t.setCode(chart.getId());
+								t.setTreeId(chart.getId());
+								t.setIconCls("leaf");
+								if (chooseList.contains(chart.getId())) {
+									t.setChecked(true);
+								}
+								treeModels.add(t);
+							}
+						}
+					}
+				}
+				TreeHelper treeHelper = new TreeHelper();
+				array = treeHelper.getTreeJSONArray(treeModels);
+			}
+		}
+
+		return array.toJSONString().getBytes("UTF-8");
 	}
 
 	@GET
