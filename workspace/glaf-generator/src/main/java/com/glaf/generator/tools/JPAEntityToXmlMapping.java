@@ -18,7 +18,6 @@
 
 package com.glaf.generator.tools;
 
-
 import java.util.*;
 
 import org.dom4j.Document;
@@ -101,15 +100,23 @@ public class JPAEntityToXmlMapping {
 						"java.util.Date")) {
 					fieldDefinition.setType("Date");
 				} else if (StringUtils.equals(field.getType().getName(),
-						"boolean")) {
+						"boolean")
+						|| StringUtils.equals(field.getType().getName(),
+								"java.lang.Boolean")) {
 					fieldDefinition.setType("Boolean");
-				} else if (StringUtils.equals(field.getType().getName(), "int")) {
+				} else if (StringUtils.equals(field.getType().getName(), "int")
+						|| StringUtils.equals(field.getType().getName(),
+								"java.lang.Integer")) {
 					fieldDefinition.setType("Integer");
 				} else if (StringUtils
-						.equals(field.getType().getName(), "long")) {
+						.equals(field.getType().getName(), "long")
+						|| StringUtils.equals(field.getType().getName(),
+								"java.lang.Long")) {
 					fieldDefinition.setType("Long");
 				} else if (StringUtils.equals(field.getType().getName(),
-						"double")) {
+						"double")
+						|| StringUtils.equals(field.getType().getName(),
+								"java.lang.Double")) {
 					fieldDefinition.setType("Double");
 				}
 
@@ -160,6 +167,7 @@ public class JPAEntityToXmlMapping {
 					fieldDefinition.setTitle(StringTools.upper(mm));
 					fieldDefinition.setEnglishTitle(StringTools.upper(mm));
 					fieldDefinition.setName(x_mm);
+					fieldDefinition.setEditable(true);
 					if (StringUtils.equals(method.getReturnType().getName(),
 							"java.lang.String")) {
 						fieldDefinition.setType("String");
@@ -167,16 +175,24 @@ public class JPAEntityToXmlMapping {
 							.getName(), "java.util.Date")) {
 						fieldDefinition.setType("Date");
 					} else if (StringUtils.equals(method.getReturnType()
-							.getName(), "boolean")) {
+							.getName(), "boolean")
+							|| StringUtils.equals(method.getReturnType()
+									.getName(), "java.lang.Boolean")) {
 						fieldDefinition.setType("Boolean");
 					} else if (StringUtils.equals(method.getReturnType()
-							.getName(), "int")) {
+							.getName(), "int")
+							|| StringUtils.equals(method.getReturnType()
+									.getName(), "java.lang.Integer")) {
 						fieldDefinition.setType("Integer");
 					} else if (StringUtils.equals(method.getReturnType()
-							.getName(), "long")) {
+							.getName(), "long")
+							|| StringUtils.equals(method.getReturnType()
+									.getName(), "java.lang.Long")) {
 						fieldDefinition.setType("Long");
 					} else if (StringUtils.equals(method.getReturnType()
-							.getName(), "double")) {
+							.getName(), "double")
+							|| StringUtils.equals(method.getReturnType()
+									.getName(), "java.lang.Double")) {
 						fieldDefinition.setType("Double");
 					}
 
@@ -257,7 +273,7 @@ public class JPAEntityToXmlMapping {
 			String toFile = "./codegen/jpa/mapping/"
 					+ classDefinition.getClassName() + ".mapping.xml";
 			FileUtils.save(toFile, bytes);
-			System.out.println("文件保存到："+toFile);
+			System.out.println("文件保存到：" + toFile);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -275,7 +291,7 @@ public class JPAEntityToXmlMapping {
 		System.out.println("time:" + time);
 
 		if (args != null && args.length > 0) {
-			 
+
 			gen.genAll(args[0]);
 		} else {
 			gen.genAll();
