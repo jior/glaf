@@ -23,7 +23,7 @@
 
 	<insert id="insertTransformTask" parameterType="com.glaf.dts.domain.TransformTask">
 		insert into
-		SYS_DTS_TASK ( ID_
+		DTS_TASK ( ID_
 		,ACTIVITYID_
 		,STEPID_
 		,QUERYID_
@@ -68,7 +68,7 @@
 	<update id="updateTransformTask" parameterType="com.glaf.dts.domain.TransformTask">
 
 		update
-		SYS_DTS_TASK
+		DTS_TASK
 		set
 		STARTTIME_ = #{startTime, jdbcType=TIMESTAMP},
 		ENDTIME_ =
@@ -85,24 +85,24 @@
 
 	<delete id="deleteTransformTaskById" parameterType="string">
 		delete from
-		SYS_DTS_TASK
+		DTS_TASK
 		where ID_ = #{id}
 	</delete>
 
 	<delete id="deleteTransformTaskByQueryId" parameterType="string">
 		delete
-		from SYS_DTS_TASK
+		from DTS_TASK
 		where QUERYID_ = #{queryId}
 	</delete>
 
 	<delete id="deleteTransformTaskByTableName" parameterType="string">
 		delete
-		from SYS_DTS_TASK
+		from DTS_TASK
 		where TABLENAME_ = #{tableName}
 	</delete>
 
 	<delete id="deleteTransformTasks" parameterType="com.glaf.dts.query.TransformTaskQuery">
-		delete from SYS_DTS_TASK
+		delete from DTS_TASK
 		where (
 		ID_ IN
 		<foreach item="x_rowId" index="index" collection="rowIds"
@@ -114,7 +114,7 @@
 
 	<select id="getTransformTaskById" parameterType="string"
 		resultMap="transformTaskResultMap">
-		select * from SYS_DTS_TASK where ID_ = #{id}
+		select * from DTS_TASK where ID_ = #{id}
 	</select>
 
 
@@ -133,7 +133,7 @@
 
 	<sql id="selectTransformTasksSql">
 
-		from SYS_DTS_TASK E
+		from DTS_TASK E
 
 		<where>
 			1 = 1

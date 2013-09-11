@@ -33,7 +33,7 @@ import com.glaf.core.base.*;
 import com.glaf.core.util.DateUtils;
 
 @Entity
-@Table(name = "SYS_REPORT")
+@Table(name = "BI_REPORT")
 public class Report implements Serializable, JSONable {
 	private static final long serialVersionUID = 1L;
 

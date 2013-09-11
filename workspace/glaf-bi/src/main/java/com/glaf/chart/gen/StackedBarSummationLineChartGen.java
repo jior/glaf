@@ -23,15 +23,16 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.geom.Ellipse2D;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.labels.ItemLabelAnchor;
 import org.jfree.chart.labels.ItemLabelPosition;
 import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
@@ -39,25 +40,30 @@ import org.jfree.chart.labels.StandardCategoryToolTipGenerator;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.category.LineAndShapeRenderer;
+import org.jfree.chart.title.LegendTitle;
+import org.jfree.chart.title.TextTitle;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.ui.TextAnchor;
 
- import com.glaf.chart.domain.Chart;
+import com.glaf.chart.domain.Chart;
 import com.glaf.chart.util.ChartUtils;
 import com.glaf.core.base.ColumnModel;
 
 public class StackedBarSummationLineChartGen implements ChartGen {
-	protected static final Log logger = LogFactory.getLog(StackedBarSummationLineChartGen.class);
-	
+	protected static final Log logger = LogFactory
+			.getLog(StackedBarSummationLineChartGen.class);
+
 	public static void main(String[] paramArrayOfString) {
 		StackedBarSummationLineChartGen chartDemo = new StackedBarSummationLineChartGen();
 		Chart chartModel = new Chart();
 		chartModel.setChartFont("宋体");
-		chartModel.setChartFontSize(15);
+		chartModel.setChartFontSize(25);
 		chartModel.setChartHeight(544);
-		chartModel.setChartWidth(1066);
+		chartModel.setChartWidth(1566);
 		chartModel.setChartTitle("堆积条形图");
+		chartModel.setChartTitleFont("宋体");
+		chartModel.setChartTitleFontSize(72);
 		chartModel.setImageType("png");
 		chartModel.setChartName("stackedbar");
 		chartModel.setChartType("stackedbar");
@@ -133,22 +139,15 @@ public class StackedBarSummationLineChartGen implements ChartGen {
 						"{2}", localDecimalFormat2));
 
 		localExtendedStackedBarRenderer.setBaseItemLabelsVisible(true);
-
-		for (int i = 0; i < 5; i++) {
-			if (chartModel.getChartFont() != null
-					&& chartModel.getChartFontSize() > 0) {
-				localExtendedStackedBarRenderer.setSeriesItemLabelFont(i,
-						new Font(chartModel.getChartFont(), Font.PLAIN,
-								chartModel.getChartFontSize()));
-				localExtendedStackedBarRenderer.setSeriesItemLabelsVisible(i,
-						true);
-			} else {
-				localExtendedStackedBarRenderer.setSeriesItemLabelFont(i,
-						new Font("宋体", Font.PLAIN, 13));
-				localExtendedStackedBarRenderer.setSeriesItemLabelsVisible(i,
-						true);
-			}
-		}
+		Color[] color = new Color[8];
+		color[0] = Color.red;
+		color[1] = Color.blue;
+		color[2] = Color.yellow;
+		color[3] = Color.green;
+		color[4] = Color.red;
+		color[5] = Color.blue;
+		color[6] = Color.yellow;
+		color[7] = Color.green;
 
 		// 设置柱子上比例数值的显示，如果按照默认方式显示，数值为方向正常显示
 		// 设置柱子上显示的数据旋转90度,最后一个参数为旋转的角度值/3.14
@@ -166,8 +165,21 @@ public class StackedBarSummationLineChartGen implements ChartGen {
 				.setBasePositiveItemLabelPosition(itemLabelPosition);
 		localExtendedStackedBarRenderer
 				.setBaseNegativeItemLabelPosition(itemLabelPositionFallback);
-
 		for (int i = 0; i < 5; i++) {
+			if (chartModel.getChartFont() != null
+					&& chartModel.getChartFontSize() > 0) {
+				localExtendedStackedBarRenderer.setSeriesItemLabelFont(i,
+						new Font(chartModel.getChartFont(), Font.PLAIN,
+								chartModel.getChartFontSize()));
+				localExtendedStackedBarRenderer.setSeriesItemLabelsVisible(i,
+						true);
+			} else {
+				localExtendedStackedBarRenderer.setSeriesItemLabelFont(i,
+						new Font("宋体", Font.PLAIN, 16));
+				localExtendedStackedBarRenderer.setSeriesItemLabelsVisible(i,
+						true);
+			}
+			localExtendedStackedBarRenderer.setSeriesPaint(i, color[i]);
 			// 设置正常显示的柱子label的position
 			localExtendedStackedBarRenderer.setSeriesPositiveItemLabelPosition(
 					i, itemLabelPosition);
@@ -181,13 +193,12 @@ public class StackedBarSummationLineChartGen implements ChartGen {
 		localExtendedStackedBarRenderer
 				.setNegativeItemLabelPositionFallback(itemLabelPositionFallback);
 
-		localCategoryPlot.setDataset(localDefaultCategoryDataset1);
-		localCategoryPlot.setRenderer(localExtendedStackedBarRenderer);
 		localCategoryPlot.setDomainAxis(new CategoryAxis(chartModel
 				.getCoordinateX()));
 		localCategoryPlot.setRangeAxis(new NumberAxis(chartModel
 				.getCoordinateY()));
 		localCategoryPlot.setOrientation(PlotOrientation.VERTICAL);
+		localCategoryPlot.setBackgroundPaint(Color.lightGray);
 		localCategoryPlot.setRangeGridlinesVisible(true);
 		localCategoryPlot.setDomainGridlinesVisible(true);
 
@@ -199,14 +210,25 @@ public class StackedBarSummationLineChartGen implements ChartGen {
 		localLineAndShapeRenderer.setDrawOutlines(true);
 		localLineAndShapeRenderer.setUseFillPaint(true);
 		localLineAndShapeRenderer.setBaseItemLabelsVisible(true);// 显示数值
-		localLineAndShapeRenderer.setBaseFillPaint(Color.white);
 
 		for (int i = 0; i <= 6; i++) {
-			localLineAndShapeRenderer.setSeriesStroke(i, new BasicStroke(6.0F));
+			localLineAndShapeRenderer.setSeriesPaint(i, color[i]);
+			localLineAndShapeRenderer.setSeriesStroke(i, new BasicStroke(3.0F));
 			localLineAndShapeRenderer.setSeriesOutlineStroke(i,
-					new BasicStroke(4.0F));
+					new BasicStroke(2.0F));
 			localLineAndShapeRenderer.setSeriesShape(i, new Ellipse2D.Double(
-					-5.0D, -5.0D, 10.0D, 10.0D));
+					-2.0D, -2.0D, 4.0D, 4.0D));
+			if (chartModel.getChartFont() != null
+					&& chartModel.getChartFontSize() > 0) {
+				localLineAndShapeRenderer.setSeriesItemLabelFont(i,
+						new Font(chartModel.getChartFont(), Font.PLAIN,
+								chartModel.getChartFontSize()));
+				localLineAndShapeRenderer.setSeriesItemLabelsVisible(i, true);
+			} else {
+				localLineAndShapeRenderer.setSeriesItemLabelFont(i, new Font(
+						"宋体", Font.PLAIN, 16));
+				localLineAndShapeRenderer.setSeriesItemLabelsVisible(i, true);
+			}
 		}
 
 		localLineAndShapeRenderer
@@ -218,18 +240,62 @@ public class StackedBarSummationLineChartGen implements ChartGen {
 		DecimalFormat localDecimalFormat3 = new DecimalFormat("####");
 		localDecimalFormat3.setNegativePrefix("");
 		localDecimalFormat3.setNegativeSuffix("");
-		//localNumberAxis.setAutoRangeIncludesZero(false);
-		//localNumberAxis.setUpperMargin(0.12D);
-		
+
 		localNumberAxis.setNumberFormatOverride(localDecimalFormat3);
 		localCategoryPlot.setRangeAxis(1, localNumberAxis);
-		localCategoryPlot.setDataset(1, localDefaultCategoryDataset2);
-		localCategoryPlot.setRenderer(1, localLineAndShapeRenderer);
+
+		localCategoryPlot.setDataset(1, localDefaultCategoryDataset1);
+		localCategoryPlot.setRenderer(1, localExtendedStackedBarRenderer);
+
+		localCategoryPlot.setDataset(localDefaultCategoryDataset2);
+		localCategoryPlot.setRenderer(localLineAndShapeRenderer);
 		localCategoryPlot.mapDatasetToRangeAxis(1, 1);
 
+		CategoryAxis domainAxis = localCategoryPlot.getDomainAxis();
+		ValueAxis rangeAxis = localCategoryPlot.getRangeAxis();
+		ValueAxis rangeAxis1 = localCategoryPlot.getRangeAxisForDataset(1);
+		if (chartModel.getChartFont() != null
+				&& chartModel.getChartFontSize() > 0) {
+			domainAxis.setLabelFont(new Font(chartModel.getChartFont(),
+					Font.PLAIN, chartModel.getChartFontSize()));
+			domainAxis.setTickLabelFont(new Font(chartModel.getChartFont(),
+					Font.PLAIN, chartModel.getChartFontSize()));
+			rangeAxis.setLabelFont(new Font(chartModel.getChartFont(),
+					Font.PLAIN, chartModel.getChartFontSize()));
+			rangeAxis.setTickLabelFont(new Font(chartModel.getChartFont(),
+					Font.PLAIN, chartModel.getChartFontSize()));
+			if (rangeAxis1 != null) {
+				rangeAxis1.setLabelFont(new Font(chartModel.getChartFont(),
+						Font.PLAIN, chartModel.getChartFontSize()));
+				rangeAxis1.setTickLabelFont(new Font(chartModel.getChartFont(),
+						Font.PLAIN, chartModel.getChartFontSize()));
+			}
+		} else {
+			domainAxis.setLabelFont(new Font("宋体", Font.PLAIN, 16));
+			domainAxis.setTickLabelFont(new Font("宋体", Font.PLAIN, 16));
+			rangeAxis.setLabelFont(new Font("宋体", Font.PLAIN, 16));
+			rangeAxis.setTickLabelFont(new Font("宋体", Font.PLAIN, 16));
+			if (rangeAxis1 != null) {
+				rangeAxis1.setLabelFont(new Font("宋体", Font.PLAIN, 16));
+				rangeAxis1.setTickLabelFont(new Font("宋体", Font.PLAIN, 16));
+			}
+		}
 		JFreeChart localJFreeChart = new JFreeChart(localCategoryPlot);
-		localJFreeChart.setTitle(chartModel.getChartTitle());
-		ChartUtilities.applyCurrentTheme(localJFreeChart);
+		LegendTitle localLegendTitle = localJFreeChart.getLegend();
+		if (chartModel.getChartFont() != null
+				&& chartModel.getChartFontSize() > 0) {
+			localLegendTitle.setItemFont(new Font(chartModel.getChartFont(),
+					Font.PLAIN, chartModel.getChartFontSize()));
+
+		} else
+			localLegendTitle.setItemFont(new Font("宋体", Font.PLAIN, 16));
+
+		TextTitle texttile = new TextTitle(chartModel.getChartTitle(),
+				new Font(chartModel.getChartTitleFont(), Font.PLAIN,
+						chartModel.getChartTitleFontSize()));
+		localJFreeChart.setTitle(texttile);
+
+		// ChartUtilities.applyCurrentTheme(localJFreeChart);
 		return localJFreeChart;
 	}
 
@@ -237,8 +303,15 @@ public class StackedBarSummationLineChartGen implements ChartGen {
 		DefaultCategoryDataset localDefaultCategoryDataset = new DefaultCategoryDataset();
 		for (ColumnModel cell : chartModel.getColumns()) {
 			if (cell.getSeries() != null && cell.getCategory() != null) {
-				localDefaultCategoryDataset.addValue(cell.getDoubleValue(),
-						cell.getSeries(), cell.getCategory());
+				if (cell.getDoubleValue() != null
+						&& cell.getDoubleValue() != 0D){
+					localDefaultCategoryDataset.addValue(cell.getDoubleValue(),
+							cell.getSeries(), cell.getCategory());
+				}
+				else{
+					localDefaultCategoryDataset.addValue(null,
+							cell.getSeries(), cell.getCategory());
+				}
 			}
 		}
 		return localDefaultCategoryDataset;
@@ -247,22 +320,46 @@ public class StackedBarSummationLineChartGen implements ChartGen {
 	public CategoryDataset createSumDataset(Chart chartModel) {
 		DefaultCategoryDataset localDefaultCategoryDataset = new DefaultCategoryDataset();
 		Map<String, Double> total = new HashMap<String, Double>();
+		java.util.List<String> ar = new ArrayList<String>();
 		for (ColumnModel cell : chartModel.getColumns()) {
 			if (cell.getSeries() != null && cell.getCategory() != null) {
+				if (total.get("CAT_" + cell.getCategory()) == null) {
+					total.put("CAT_" + cell.getCategory(), null);
+					ar.add(cell.getCategory());
+				}
 				Double value = total.get(cell.getSeries());
 				if (value == null) {
 					value = 0D;
 				}
+				Double totalcatvalue = total.get("total_" + cell.getCategory());
+				if (totalcatvalue == null) {
+					totalcatvalue = 0D;
+				}
 				if (cell.getDoubleValue() != null) {
 					value += cell.getDoubleValue();
+					totalcatvalue += cell.getDoubleValue();
 					total.put(cell.getSeries(), value);
-					localDefaultCategoryDataset.addValue(value,
-							cell.getSeries(), cell.getCategory());
+					total.put("total_" + cell.getCategory(), totalcatvalue);
+					localDefaultCategoryDataset.addValue(value, cell
+							.getSeries().trim() + " Sum", cell.getCategory());
+					total.put("CAT_" + cell.getCategory(), new Double(0d));
 				} else {
-					localDefaultCategoryDataset.addValue(null,
-							cell.getSeries(), cell.getCategory());
+					localDefaultCategoryDataset.addValue(null, cell.getSeries()
+							.trim() + " Sum", cell.getCategory());
 				}
+
 			}
+		}
+		double totalvalue = 0D;
+		for (int i = 0; i < ar.size(); i++) {
+			String category = (String) ar.get(i);
+			if (total.get("total_" + category) != null)
+				totalvalue += total.get("total_" + category);
+			if (total.get("CAT_" + category) != null)
+				localDefaultCategoryDataset.addValue(totalvalue, "Total",
+						category);
+			else
+				localDefaultCategoryDataset.addValue(null, "Total", category);
 		}
 		return localDefaultCategoryDataset;
 	}

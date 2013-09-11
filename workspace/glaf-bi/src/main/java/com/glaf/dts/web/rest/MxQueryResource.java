@@ -127,7 +127,10 @@ public class MxQueryResource {
 						.getSubTreeModels(treeNode.getId());
 				if (subTrees != null && !subTrees.isEmpty()) {
 					for (TreeModel tree : subTrees) {
+						tree.getDataMap().put("nocheck", "true");
+						tree.getDataMap().put("iconSkin", "tree_folder");
 						tree.setIconCls("folder");
+						tree.setLevel(0);
 						treeModels.add(tree);
 						query.nodeId(tree.getId());
 						List<QueryDefinition> queries = queryDefinitionService
@@ -141,6 +144,7 @@ public class MxQueryResource {
 								t.setCode(q.getId());
 								t.setTreeId(q.getId());
 								t.setIconCls("leaf");
+								t.getDataMap().put("iconSkin", "tree_leaf");
 								if (chooseList.contains(q.getId())) {
 									t.setChecked(true);
 								}

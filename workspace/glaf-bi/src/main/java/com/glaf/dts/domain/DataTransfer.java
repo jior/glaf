@@ -16,7 +16,7 @@ import com.glaf.core.domain.ColumnDefinition;
 import com.glaf.dts.util.*;
 
 @Entity
-@Table(name = "SYS_DATA_TRANSFER")
+@Table(name = "DTS_DATA_TRANSFER")
 public class DataTransfer implements Serializable, JSONable {
 	private static final long serialVersionUID = 1L;
 

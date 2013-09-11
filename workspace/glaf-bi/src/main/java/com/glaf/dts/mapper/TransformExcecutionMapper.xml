@@ -18,7 +18,7 @@
 
 	<insert id="insertTransformExcecution" parameterType="com.glaf.dts.domain.TransformExcecution">
 		insert into
-		SYS_DTS_EXCECUTION ( ID_
+		DTS_EXCECUTION ( ID_
 		,ACTIVITYID_
 		,STEPID_
 		,STARTTIME_
@@ -43,7 +43,7 @@
 
 	<update id="updateTransformExcecution" parameterType="com.glaf.dts.domain.TransformExcecution">
 		update
-		SYS_DTS_EXCECUTION
+		DTS_EXCECUTION
 		set
 		<trim prefix="" suffix="" suffixOverrides=",">
 		</trim>
@@ -55,12 +55,12 @@
 
 	<delete id="deleteTransformExcecutionById" parameterType="string">
 		delete
-		from SYS_DTS_EXCECUTION
+		from DTS_EXCECUTION
 		where ID_ = #{id}
 	</delete>
 
 	<delete id="deleteTransformExcecutions" parameterType="com.glaf.dts.query.TransformExcecutionQuery">
-		delete from SYS_DTS_EXCECUTION
+		delete from DTS_EXCECUTION
 		where (
 		ID_ IN
 		<foreach item="x_rowId" index="index" collection="rowIds"
@@ -72,7 +72,7 @@
 
 	<select id="getTransformExcecutionById" parameterType="string"
 		resultMap="transformExcecutionResultMap">
-		select * from SYS_DTS_EXCECUTION where ID_ = #{id}
+		select * from DTS_EXCECUTION where ID_ = #{id}
 	</select>
 
 
@@ -93,7 +93,7 @@
 
 	<sql id="selectTransformExcecutionsSql">
 
-		from SYS_DTS_EXCECUTION E
+		from DTS_EXCECUTION E
 
 		<where>
 			1 = 1

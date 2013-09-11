@@ -48,7 +48,7 @@
 	
  
 	<insert id="insertReportFile" parameterType="com.glaf.report.domain.ReportFile">
-		insert into SYS_REPORT_FILE 
+		insert into BI_REPORT_FILE 
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 		    ID_
 			<if test="reportId != null">
@@ -97,7 +97,7 @@
     
     
 	<insert id="insertReportFile_postgres" parameterType="com.glaf.report.domain.ReportFile">
-		insert into SYS_REPORT_FILE 
+		insert into BI_REPORT_FILE 
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 		    ID_
 			<if test="reportId != null">
@@ -146,7 +146,7 @@
 
 	 
 	<update id="updateReportFile" parameterType="com.glaf.report.domain.ReportFile">
-		update SYS_REPORT_FILE
+		update BI_REPORT_FILE
 		set
 		<trim prefix="" suffix="" suffixOverrides=",">		
 			<if test="reportId != null">
@@ -175,7 +175,7 @@
     
     
 	<update id="updateReportFile_postgres" parameterType="com.glaf.report.domain.ReportFile">
-		update SYS_REPORT_FILE
+		update BI_REPORT_FILE
 		set
 		<trim prefix="" suffix="" suffixOverrides=",">		
 			<if test="reportId != null">
@@ -204,13 +204,13 @@
 
  
 	<delete id="deleteReportFileById" parameterType="string"> 
-        delete from SYS_REPORT_FILE
+        delete from BI_REPORT_FILE
         where ID_ = #{id}
 	</delete>
 	
 
 	<delete id="deleteReportFiles" parameterType="com.glaf.report.query.ReportFileQuery">
-		delete from SYS_REPORT_FILE
+		delete from BI_REPORT_FILE
 		where ( ID_ IN
 		<foreach item="x_rowId" index="index" collection="rowIds" open="(" separator="," close=")">
               #{x_rowId}
@@ -220,19 +220,19 @@
 
 
 	<select id="getReportFileById" parameterType="string" resultMap="reportFileResultMap_all">
-		select * from SYS_REPORT_FILE where ID_ = #{id}
+		select * from BI_REPORT_FILE where ID_ = #{id}
 	</select>
 	
 	
 	<select id="getReportFileById_postgres" parameterType="string" resultMap="reportFileResultMap_postgres">
-		select * from SYS_REPORT_FILE where ID_ = #{id}
+		select * from BI_REPORT_FILE where ID_ = #{id}
 	</select>
 
 
 	<select id="getReportFileCount" 
 		parameterType="map"
 		resultType="int">
-		select count(*) from SYS_REPORT_FILE E
+		select count(*) from BI_REPORT_FILE E
 		<include refid="selectReportFileSql" />
 	</select>
 
@@ -240,7 +240,7 @@
 	<select id="getReportFileCountByQueryCriteria" 
 		parameterType="com.glaf.report.query.ReportFileQuery"
 		resultType="int">
-		select count(*) from SYS_REPORT_FILE E
+		select count(*) from BI_REPORT_FILE E
 		<include refid="selectReportFileSql" />
 	</select>
 
@@ -249,7 +249,7 @@
 		parameterType="map"
 		resultMap="reportFileResultMap">
 		select E.ID_, E.REPORTID_, E.FILENAME_, E.FILESIZE_, E.REPORTYEARMONTHDAY_, E.CREATEDATE_ 
-		from SYS_REPORT_FILE E
+		from BI_REPORT_FILE E
 		<include refid="selectReportFileSql" />
 		<if test="orderBy != null">
 		   order by ${orderBy}
@@ -259,7 +259,7 @@
 
 	<select id="getReportFileMapList" parameterType="map" resultType="map">
 		select E.ID_, E.REPORTID_, E.FILENAME_, E.FILESIZE_, E.REPORTYEARMONTHDAY_, E.CREATEDATE_  
-		from SYS_REPORT_FILE E 
+		from BI_REPORT_FILE E 
 		<include refid="selectReportFileSql" />
 		<if test="orderBy != null">
 		   order by ${orderBy}
@@ -271,7 +271,7 @@
 		parameterType="com.glaf.report.query.ReportFileQuery"
 		resultMap="reportFileResultMap">
 		select  E.ID_, E.REPORTID_, E.FILENAME_, E.FILESIZE_, E.REPORTYEARMONTHDAY_, E.CREATEDATE_  
-		from SYS_REPORT_FILE E
+		from BI_REPORT_FILE E
 		<include refid="selectReportFileSql" />
 		<if test="orderBy != null">
 		   order by ${orderBy}

@@ -45,7 +45,7 @@ import com.glaf.core.util.DateUtils;
  * 
  */
 @Entity
-@Table(name = "SYS_DTS_ACTIVITY")
+@Table(name = "DTS_ACTIVITY")
 public class TransformActivity implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;

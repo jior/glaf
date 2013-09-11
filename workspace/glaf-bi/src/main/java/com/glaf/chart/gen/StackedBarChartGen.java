@@ -18,6 +18,7 @@
 
 package com.glaf.chart.gen;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.text.DecimalFormat;
 
@@ -45,10 +46,12 @@ public class StackedBarChartGen implements ChartGen {
 		StackedBarChartGen chartDemo = new StackedBarChartGen();
 		Chart chartModel = new Chart();
 		chartModel.setChartFont("宋体");
-		chartModel.setChartFontSize(12);
-		chartModel.setChartHeight(500);
-		chartModel.setChartWidth(1200);
+		chartModel.setChartFontSize(15);
+		chartModel.setChartHeight(544);
+		chartModel.setChartWidth(1066);
 		chartModel.setChartTitle("条形图");
+		chartModel.setChartTitleFont("宋体");
+		chartModel.setChartTitleFontSize(72);
 		chartModel.setImageType("png");
 		chartModel.setChartName("stackedbar");
 		chartModel.setChartType("stackedbar");
@@ -64,7 +67,9 @@ public class StackedBarChartGen implements ChartGen {
 			cell1.setIntValue(i);
 			cell1.setColumnName("col_" + i);
 			cell1.setSeries("Cross");
-			cell1.setDoubleValue(rand.nextInt(50) * 1.0D);
+			if (i <= 20) {
+				cell1.setDoubleValue(Math.abs(rand.nextInt(20)) * 1.0D);
+			}
 			chartModel.addCellData(cell1);
 			System.out.println(cell1.getDoubleValue());
 
@@ -72,7 +77,9 @@ public class StackedBarChartGen implements ChartGen {
 			cell2.setColumnName("col2_" + i);
 			cell2.setCategory(String.valueOf(i));
 			cell2.setSeries("Fit");
-			cell2.setDoubleValue(rand.nextInt(50) * 1.0D);
+			if (i <= 20) {
+				cell2.setDoubleValue(Math.abs(rand.nextInt(20)) * 1.0D);
+			}
 			chartModel.addCellData(cell2);
 			System.out.println(cell2.getDoubleValue());
 
@@ -80,8 +87,12 @@ public class StackedBarChartGen implements ChartGen {
 			cell3.setColumnName("col3_" + i);
 			cell3.setCategory(String.valueOf(i));
 			cell3.setSeries("Accord");
-			cell3.setDoubleValue((94.999999D - cell2.getDoubleValue() - cell1
-					.getDoubleValue()) * 1.0D);
+			if (i > 20) {
+				cell3.setDoubleValue(null);
+			} else {
+				cell3.setDoubleValue((40D - cell2.getDoubleValue() - cell1
+						.getDoubleValue()) * 1.0D);
+			}
 			chartModel.addCellData(cell3);
 			System.out.println(cell3.getDoubleValue());
 		}
@@ -126,19 +137,20 @@ public class StackedBarChartGen implements ChartGen {
 						"{2}", localDecimalFormat2));
 
 		localExtendedStackedBarRenderer.setBaseItemLabelsVisible(true);
-
-		localExtendedStackedBarRenderer.setBaseItemLabelsVisible(true);
-		localExtendedStackedBarRenderer
-				.setBaseItemLabelGenerator(new StandardCategoryItemLabelGenerator());
-		localExtendedStackedBarRenderer
-				.setBaseToolTipGenerator(new StandardCategoryToolTipGenerator());
-		localExtendedStackedBarRenderer.setDrawBarOutline(false);
-		localExtendedStackedBarRenderer.setBaseItemLabelsVisible(true);
-		localCategoryPlot.setRenderer(localExtendedStackedBarRenderer);
+		Color[] color = new Color[7];
+		color[0] = Color.red;
+		color[1] = Color.blue;
+		color[2] = Color.yellow;
+		color[3] = Color.green;
+		color[4] = Color.cyan;
+		color[5] = Color.magenta;
+		color[6] = Color.black;
 
 		for (int i = 0; i < 5; i++) {
+
 			if (chartModel.getChartFont() != null
 					&& chartModel.getChartFontSize() > 0) {
+
 				localExtendedStackedBarRenderer.setSeriesItemLabelFont(i,
 						new Font(chartModel.getChartFont(), Font.PLAIN,
 								chartModel.getChartFontSize()));
@@ -170,12 +182,19 @@ public class StackedBarChartGen implements ChartGen {
 				.setBaseNegativeItemLabelPosition(itemLabelPositionFallback);
 
 		for (int i = 0; i < 5; i++) {
+			localExtendedStackedBarRenderer.setSeriesPaint(i, color[i]);
 			// 设置正常显示的柱子label的position
 			localExtendedStackedBarRenderer.setSeriesPositiveItemLabelPosition(
 					i, itemLabelPosition);
 			localExtendedStackedBarRenderer.setSeriesNegativeItemLabelPosition(
 					i, itemLabelPosition);
 		}
+
+		// 设置不能正常显示的柱子label的position
+		localExtendedStackedBarRenderer
+				.setPositiveItemLabelPositionFallback(itemLabelPositionFallback);
+		localExtendedStackedBarRenderer
+				.setNegativeItemLabelPositionFallback(itemLabelPositionFallback);
 
 		return localJFreeChart;
 	}
@@ -184,10 +203,12 @@ public class StackedBarChartGen implements ChartGen {
 		DefaultCategoryDataset localDefaultCategoryDataset = new DefaultCategoryDataset();
 		for (ColumnModel cell : chartModel.columns) {
 			if (cell.getSeries() != null && cell.getCategory() != null) {
-				// System.out.println(cell.getDoubleValue() + "\t"
-				// + cell.getSeries() + "\t\t" + cell.getCategory());
-				localDefaultCategoryDataset.addValue(cell.getDoubleValue(),
-						cell.getSeries(), cell.getCategory());
+				if (cell.getDoubleValue() != 0D)
+					localDefaultCategoryDataset.addValue(cell.getDoubleValue(),
+							cell.getSeries(), cell.getCategory());
+				else
+					localDefaultCategoryDataset.addValue(null,
+							cell.getSeries(), cell.getCategory());
 			}
 		}
 		return localDefaultCategoryDataset;

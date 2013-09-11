@@ -43,7 +43,7 @@ import com.glaf.core.util.DateUtils;
  * 
  */
 @Entity
-@Table(name = "SYS_DTS_EXCECUTION")
+@Table(name = "DTS_EXCECUTION")
 public class TransformExcecution implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;

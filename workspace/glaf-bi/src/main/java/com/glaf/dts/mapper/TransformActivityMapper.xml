@@ -21,7 +21,7 @@
 
 	<insert id="insertTransformActivity" parameterType="com.glaf.dts.domain.TransformActivity">
 		insert into
-		SYS_DTS_ACTIVITY ( ID_
+		DTS_ACTIVITY ( ID_
 		,TITLE_
 		,CRONEXPRESSION_
 		,EXECUTECYCLE_
@@ -47,7 +47,7 @@
 
 	<update id="updateTransformActivity" parameterType="com.glaf.dts.domain.TransformActivity">
 		update
-		SYS_DTS_ACTIVITY
+		DTS_ACTIVITY
 		set
 		<trim prefix="" suffix="" suffixOverrides=",">
 			TITLE_ = #{title, jdbcType=VARCHAR},
@@ -64,12 +64,12 @@
 
 
 	<delete id="deleteTransformActivityById" parameterType="string">
-		delete from SYS_DTS_ACTIVITY
+		delete from DTS_ACTIVITY
 		where ID_ = #{id}
 	</delete>
 
 	<delete id="deleteTransformActivitys" parameterType="com.glaf.dts.query.TransformActivityQuery">
-		delete from SYS_DTS_ACTIVITY
+		delete from DTS_ACTIVITY
 		where (
 		ID_ IN
 		<foreach item="x_rowId" index="index" collection="rowIds"
@@ -81,7 +81,7 @@
 
 	<select id="getTransformActivityById" parameterType="string"
 		resultMap="transformActivityResultMap">
-		select * from SYS_DTS_ACTIVITY where ID_ = #{id}
+		select * from DTS_ACTIVITY where ID_ = #{id}
 	</select>
 
 
@@ -102,7 +102,7 @@
 
 	<sql id="selectTransformActivitysSql">
 
-		from SYS_DTS_ACTIVITY E
+		from DTS_ACTIVITY E
 
 		<where>
 			1 = 1

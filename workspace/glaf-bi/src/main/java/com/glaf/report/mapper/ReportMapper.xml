@@ -53,7 +53,7 @@
 	</resultMap>
  
 	<insert id="insertReport" parameterType="com.glaf.report.domain.Report">
-		insert into SYS_REPORT 
+		insert into BI_REPORT 
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 		    ID_
 			<if test="queryIds != null">
@@ -186,7 +186,7 @@
 
 	 
 	<update id="updateReport" parameterType="com.glaf.report.domain.Report">
-		update SYS_REPORT
+		update BI_REPORT
 		set
 		<trim prefix="" suffix="" suffixOverrides=",">		
 			<if test="queryIds != null">
@@ -253,12 +253,12 @@
 	</update>
  
 	<delete id="deleteReportById" parameterType="string"> 
-        delete from SYS_REPORT
+        delete from BI_REPORT
         where ID_ =	#{id}
 	</delete>
 	
 	<delete id="deleteReports" parameterType="com.glaf.report.query.ReportQuery">
-		delete from SYS_REPORT
+		delete from BI_REPORT
 		where ( 
  			  ID_ IN
 		<foreach item="x_rowId" index="index" collection="rowIds" 
@@ -269,7 +269,7 @@
 	</delete>
 
 	<select id="getReportById" parameterType="string" resultMap="reportResultMap">
-		select * from SYS_REPORT where ID_ = #{id}
+		select * from BI_REPORT where ID_ = #{id}
 	</select>
 
 
@@ -292,7 +292,7 @@
 
 	<sql id="selectReportsSql">
 
-		from SYS_REPORT E
+		from BI_REPORT E
  
 		 
 		<where>

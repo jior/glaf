@@ -20,7 +20,7 @@
 
 	<insert id="insertTransformStep" parameterType="com.glaf.dts.domain.TransformStep">
 		insert into
-		SYS_DTS_STEP ( ID_
+		DTS_STEP ( ID_
 		,ACTIVITYID_
 		,QUERYID_
 		,TITLE_
@@ -49,7 +49,7 @@
 
 	<update id="updateTransformStep" parameterType="com.glaf.dts.domain.TransformStep">
 		update
-		SYS_DTS_STEP
+		DTS_STEP
 		set
 		<trim prefix="" suffix="" suffixOverrides=",">
 			ACTIVITYID_ = #{activityId, jdbcType=VARCHAR},
@@ -67,12 +67,12 @@
 
 
 	<delete id="deleteTransformStepById" parameterType="string">
-		delete from SYS_DTS_STEP
+		delete from DTS_STEP
 		where ID_ = #{id}
 	</delete>
 
 	<delete id="deleteTransformSteps" parameterType="com.glaf.dts.query.TransformStepQuery">
-		delete from SYS_DTS_STEP
+		delete from DTS_STEP
 		where (
 		ID_ IN
 		<foreach item="x_rowId" index="index" collection="rowIds"
@@ -84,7 +84,7 @@
 
 	<select id="getTransformStepById" parameterType="string"
 		resultMap="transformStepResultMap">
-		select * from SYS_DTS_STEP where ID_ = #{id}
+		select * from DTS_STEP where ID_ = #{id}
 	</select>
 
 
@@ -105,7 +105,7 @@
 
 	<sql id="selectTransformStepsSql">
 
-		from SYS_DTS_STEP E
+		from DTS_STEP E
 
 		<where>
 			1 = 1

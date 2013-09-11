@@ -21,12 +21,12 @@ package com.glaf.core.base;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.alibaba.fastjson.*;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-
 import com.glaf.core.base.JSONable;
 import com.glaf.core.base.TreeModel;
 import com.glaf.core.tree.util.TreeJsonFactory;
@@ -118,6 +118,9 @@ public class BaseTree implements Serializable, TreeModel, JSONable {
 	}
 
 	public Map<String, Object> getDataMap() {
+		if(dataMap == null){
+			dataMap = new HashMap<String, Object>();
+		}
 		return dataMap;
 	}
 

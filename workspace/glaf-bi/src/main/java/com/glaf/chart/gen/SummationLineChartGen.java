@@ -24,9 +24,8 @@ import java.awt.geom.Ellipse2D;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.jfree.chart.ChartFactory;
+
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
@@ -41,16 +40,17 @@ import com.glaf.chart.util.ChartUtils;
 import com.glaf.core.base.ColumnModel;
 
 public class SummationLineChartGen implements ChartGen {
-	protected static final Log logger = LogFactory
-			.getLog(SummationLineChartGen.class);
+	int chartType = 0;
 
 	public static void main(String[] paramArrayOfString) {
 		SummationLineChartGen chartDemo = new SummationLineChartGen();
 		Chart chartModel = new Chart();
 		chartModel.setChartFont("宋体");
-		chartModel.setChartFontSize(18);
+		chartModel.setChartFontSize(25);
 		chartModel.setChartHeight(800);
 		chartModel.setChartWidth(1800);
+		chartModel.setChartTitleFont("宋体");
+		chartModel.setChartTitleFontSize(72);
 		chartModel.setChartTitle("生产下线趋势图");
 		chartModel.setImageType("png");
 		chartModel.setChartName("line");
@@ -69,7 +69,6 @@ public class SummationLineChartGen implements ChartGen {
 			if (i <= 20) {
 				cell1.setDoubleValue(rand.nextInt(50) * 1.0D);
 			}
-
 			chartModel.addCellData(cell1);
 			System.out.println(cell1.getDoubleValue());
 
@@ -91,11 +90,37 @@ public class SummationLineChartGen implements ChartGen {
 				cell3.setDoubleValue((94.999999D - cell2.getDoubleValue() - cell1
 						.getDoubleValue()) * 1.0D);
 			}
-			if (i == 10) {
-				cell3.setDoubleValue(null);
-			}
 			chartModel.addCellData(cell3);
-			System.out.println(cell3.getDoubleValue());
+
+			ColumnModel cell4 = new ColumnModel();
+			cell4.setColumnName("col4_" + i);
+			cell4.setCategory(String.valueOf(i));
+			cell4.setSeries("Accord1");
+			if (i <= 20) {
+				cell4.setDoubleValue(rand.nextInt(50) * 1.0D);
+			}
+			chartModel.addCellData(cell4);
+			System.out.println(cell4.getDoubleValue());
+
+			ColumnModel cell5 = new ColumnModel();
+			cell5.setColumnName("col5_" + i);
+			cell5.setCategory(String.valueOf(i));
+			cell5.setSeries("Accord2");
+			if (i <= 20) {
+				cell5.setDoubleValue(rand.nextInt(50) * 1.0D);
+			}
+			chartModel.addCellData(cell5);
+			System.out.println(cell5.getDoubleValue());
+
+			ColumnModel cell6 = new ColumnModel();
+			cell6.setColumnName("col6_" + i);
+			cell6.setCategory(String.valueOf(i));
+			cell6.setSeries("Accord3");
+			if (i <= 20) {
+				cell6.setDoubleValue(rand.nextInt(50) * 1.0D);
+			}
+			chartModel.addCellData(cell6);
+			System.out.println(cell6.getDoubleValue());
 		}
 
 		JFreeChart chart = chartDemo.createChart(chartModel);
@@ -103,7 +128,6 @@ public class SummationLineChartGen implements ChartGen {
 	}
 
 	public JFreeChart createChart(Chart chartModel) {
-		logger.debug("------------SummationLineChartGen.createChart-----------------");
 		ChartUtils.setChartTheme(chartModel);
 		CategoryDataset categoryDataset = this.createDataset(chartModel);
 		JFreeChart localJFreeChart = ChartFactory.createLineChart(
@@ -126,14 +150,33 @@ public class SummationLineChartGen implements ChartGen {
 		localLineAndShapeRenderer.setBaseItemLabelsVisible(true);// 显示数值
 		localLineAndShapeRenderer.setBaseFillPaint(Color.white);
 
+		Color[] color = new Color[8];
+		color[0] = Color.red;
+		color[1] = Color.red;
+		color[2] = Color.blue;
+		color[3] = Color.blue;
+		color[4] = Color.yellow;
+		color[5] = Color.yellow;
+		color[6] = Color.green;
+		color[7] = Color.green;
+		float dashes[] = { 8.0f };
 		for (int i = 0; i < 8; i++) {
-			localLineAndShapeRenderer.setSeriesStroke(i, new BasicStroke(6.0F));
+			BasicStroke brokenLine = new BasicStroke(6f,
+					BasicStroke.CAP_SQUARE, BasicStroke.JOIN_MITER, 10.f,
+					dashes, 0.0f);
+			if (chartType == 0)
+				brokenLine = new BasicStroke(8.0F);
+			else {
+				if (i % 2 == 0)
+					brokenLine = new BasicStroke(8.0F);
+				localLineAndShapeRenderer.setSeriesPaint(i, color[i]);
+			}
+			localLineAndShapeRenderer.setSeriesStroke(i, brokenLine);
 			localLineAndShapeRenderer.setSeriesOutlineStroke(i,
-					new BasicStroke(4.0F));
+					new BasicStroke(5.0F));
 			localLineAndShapeRenderer.setSeriesShape(i, new Ellipse2D.Double(
 					-5.0D, -5.0D, 10.0D, 10.0D));
 		}
-
 		localLineAndShapeRenderer
 				.setBaseItemLabelGenerator(new StandardCategoryItemLabelGenerator());
 
@@ -150,18 +193,27 @@ public class SummationLineChartGen implements ChartGen {
 		Map<String, Double> total = new HashMap<String, Double>();
 		for (ColumnModel cell : chartModel.getColumns()) {
 			if (cell.getSeries() != null && cell.getCategory() != null) {
-				Double value = total.get(cell.getSeries());
-				if (value == null) {
-					value = 0D;
+				Double d = total.get(cell.getSeries());
+				if (d == null) {
+					d = 0D;
 				}
 				if (cell.getDoubleValue() != null) {
-					value += cell.getDoubleValue();
-					total.put(cell.getSeries(), value);
-					localDefaultCategoryDataset.addValue(value,
-							cell.getSeries(), cell.getCategory());
+					if (chartType == 1) {
+						d += cell.getDoubleValue();
+					} else {
+						d = cell.getDoubleValue();
+					}
+					total.put(cell.getSeries(), d);
+					localDefaultCategoryDataset.addValue(d, cell.getSeries(),
+							cell.getCategory());
 				} else {
-					localDefaultCategoryDataset.addValue(null,
-							cell.getSeries(), cell.getCategory());
+					if (chartType == 1) {
+						localDefaultCategoryDataset.addValue(d,
+								cell.getSeries(), cell.getCategory());
+					} else {
+						localDefaultCategoryDataset.addValue(null,
+								cell.getSeries(), cell.getCategory());
+					}
 				}
 			}
 		}

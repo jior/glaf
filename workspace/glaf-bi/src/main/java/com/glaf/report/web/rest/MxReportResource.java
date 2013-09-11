@@ -20,7 +20,7 @@ package com.glaf.report.web.rest;
 
 import java.io.IOException;
 import java.util.*;
- 
+
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -29,9 +29,9 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.apache.commons.lang.StringUtils;
@@ -39,9 +39,13 @@ import org.apache.commons.lang.StringUtils;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
+import com.glaf.core.base.BaseTree;
+import com.glaf.core.base.TreeModel;
 import com.glaf.core.domain.TableDefinition;
 import com.glaf.core.query.TableDefinitionQuery;
 import com.glaf.core.service.ITableDefinitionService;
+import com.glaf.core.service.ITreeModelService;
+import com.glaf.core.tree.helper.TreeHelper;
 import com.glaf.core.util.Paging;
 import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.QuartzUtils;
@@ -63,10 +67,11 @@ public class MxReportResource {
 	protected static final Log logger = LogFactory
 			.getLog(MxReportResource.class);
 
- 
 	protected IReportService reportService;
- 
+
 	protected ITableDefinitionService tableDefinitionService;
+
+	protected ITreeModelService treeModelService;
 
 	@POST
 	@Path("/deleteAll")
@@ -260,7 +265,7 @@ public class MxReportResource {
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		logger.debug(params);
 		Tools.populate(report, params);
-		
+
 		report.setChartIds(request.getParameter("chartIds"));
 		report.setQueryIds(request.getParameter("queryIds"));
 
@@ -342,6 +347,70 @@ public class MxReportResource {
 	public void setTableDefinitionService(
 			ITableDefinitionService tableDefinitionService) {
 		this.tableDefinitionService = tableDefinitionService;
+	}
+
+	@javax.annotation.Resource
+	public void setTreeModelService(ITreeModelService treeModelService) {
+		this.treeModelService = treeModelService;
+	}
+
+	@GET
+	@POST
+	@Path("/treeJson")
+	@ResponseBody
+	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
+	public byte[] treeJson(@Context HttpServletRequest request)
+			throws IOException {
+		JSONArray array = new JSONArray();
+		String nodeCode = request.getParameter("nodeCode");
+		String selected = request.getParameter("selected");
+
+		logger.debug(RequestUtils.getParameterMap(request));
+		List<TreeModel> treeModels = new ArrayList<TreeModel>();
+		List<String> chooseList = new ArrayList<String>();
+		if (StringUtils.isNotEmpty(selected)) {
+			chooseList = StringTools.split(selected);
+		}
+
+		if (StringUtils.isNotEmpty(nodeCode)) {
+			TreeModel treeNode = treeModelService.getTreeModelByCode(nodeCode);
+			if (treeNode != null) {
+				ReportQuery query = new ReportQuery();
+				List<TreeModel> subTrees = treeModelService
+						.getSubTreeModels(treeNode.getId());
+				if (subTrees != null && !subTrees.isEmpty()) {
+					for (TreeModel tree : subTrees) {
+						tree.getDataMap().put("nocheck", "true");
+						tree.getDataMap().put("iconSkin", "tree_folder");
+						tree.setIconCls("folder");
+						tree.setLevel(0);
+						treeModels.add(tree);
+						query.nodeId(tree.getId());
+						List<Report> reports = reportService.list(query);
+						for (Report report : reports) {
+							if (StringUtils.isNumeric(report.getId())) {
+								TreeModel t = new BaseTree();
+								t.setId(Long.parseLong(report.getId()));
+								t.setParentId(tree.getId());
+								t.setName(report.getSubject());
+								t.setCode(report.getId());
+								t.setTreeId(report.getId());
+								t.setIconCls("leaf");
+								t.getDataMap().put("iconSkin", "tree_leaf");
+								if (chooseList.contains(report.getId())) {
+									t.setChecked(true);
+								}
+								treeModels.add(t);
+							}
+						}
+					}
+				}
+				TreeHelper treeHelper = new TreeHelper();
+				array = treeHelper.getTreeJSONArray(treeModels);
+			}
+		}
+
+		return array.toJSONString().getBytes("UTF-8");
 	}
 
 	@GET

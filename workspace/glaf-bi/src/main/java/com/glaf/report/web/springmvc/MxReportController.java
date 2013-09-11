@@ -302,7 +302,7 @@ public class MxReportController {
 
 				request.setAttribute("chartNames", sb02.toString());
 			}
-			
+
 			if (StringUtils.isNotEmpty(report.getQueryIds())) {
 				List<String> queryIds = StringTools.split(report.getQueryIds());
 				StringBuffer sb01 = new StringBuffer();
@@ -450,6 +450,18 @@ public class MxReportController {
 			return new ModelAndView(x_view, modelMap);
 		}
 		return new ModelAndView("/bi/report/query", modelMap);
+	}
+
+	@RequestMapping("/reportTree")
+	public ModelAndView reportTree(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+
+		String x_view = ViewProperties.getString("report.reportTree");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
+		return new ModelAndView("/bi/report/report_tree", modelMap);
 	}
 
 	@RequestMapping("/save")

@@ -26,13 +26,25 @@
     var setting = {
 			async: {
 				enable: true,
-				url: "<%=request.getContextPath()%>/rs/dts/query/treeJson?nodeCode=${nodeCode}&selected=${selected}"
+				url: "<%=request.getContextPath()%>/rs/dts/query/treeJson?nodeCode=${nodeCode}&selected=${selected}",
+				dataFilter: filter
 			},
 			check: {
-				enable: true
+				enable: true,
+				chkboxType:{ "Y" : "", "N" : "" }
 			}
 		};
 
+  	function filter(treeId, parentNode, childNodes) {
+		if (!childNodes) return null;
+		for (var i=0, l=childNodes.length; i<l; i++) {
+			if(childNodes[i].level==0 || childNodes[i].level==1){
+			  childNodes[i].name = childNodes[i].name.replace(/\.n/g, '.');
+			  childNodes[i].icon="<%=request.getContextPath()%>/images/folder.png";
+			}
+		}
+		return childNodes;
+	}
 
     jQuery(document).ready(function(){
 		  jQuery.fn.zTree.init(jQuery("#myTree"), setting);
@@ -72,6 +84,15 @@
 	}
 
 </script>
+<style type="text/css">
+.ztree li span.button.tree_folder_ico_open{margin-right:2px; background: url(${contextPath}/icons/icons/folder-open.gif) no-repeat scroll 0 0 transparent; vertical-align:top; *vertical-align:middle}
+.ztree li span.button.tree_folder_ico_close{margin-right:2px; background: url(${contextPath}/icons/icons/folder.gif) no-repeat scroll 0 0 transparent; vertical-align:top; *vertical-align:middle}
+.ztree li span.button.tree_folder_ico_docu{margin-right:2px; background: url(${contextPath}/icons/icons/folder.gif) no-repeat scroll 0 0 transparent; vertical-align:top; *vertical-align:middle}
+
+.ztree li span.button.tree_leaf_ico_open{margin-right:2px; background: url(${contextPath}/icons/icons/orm.gif) no-repeat scroll 0 0 transparent; vertical-align:top; *vertical-align:middle}
+.ztree li span.button.tree_leaf_ico_close{margin-right:2px; background: url(${contextPath}/icons/icons/orm.gif) no-repeat scroll 0 0 transparent; vertical-align:top; *vertical-align:middle}
+.ztree li span.button.tree_leaf_ico_docu{margin-right:2px; background: url(${contextPath}/icons/icons/orm.gif) no-repeat scroll 0 0 transparent; vertical-align:top; *vertical-align:middle}
+</style>
 </head>
 
 <body>

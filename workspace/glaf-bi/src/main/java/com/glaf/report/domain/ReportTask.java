@@ -29,7 +29,7 @@ import org.apache.commons.lang.builder.ToStringStyle;
 import com.glaf.core.util.DateUtils;
 
 @Entity
-@Table(name = "SYS_REPORT_TASK")
+@Table(name = "BI_REPORT_TASK")
 public class ReportTask implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -58,25 +58,26 @@ public class ReportTask implements Serializable {
 	/**
 	 * 邮件接收人
 	 */
-	@Column(name = "MAILRECIPIENT_", length = 20)
+	@Column(name = "MAILRECIPIENT_", length = 500)
 	protected String mailRecipient;
 
 	/**
 	 * 手机接收人
 	 */
-	@Column(name = "MOBILERECIPIENT_", length = 20)
+	@Column(name = "MOBILERECIPIENT_", length = 500)
 	protected String mobileRecipient;
 
 	/**
 	 * 发送标题
 	 */
-	@Column(name = "SENDTITLE_", length = 20)
+	@Column(name = "SENDTITLE_", length = 200)
 	protected String sendTitle;
 
 	/**
 	 * 发送内容
 	 */
-	@Column(name = "SENDCONTENT_", length = 20)
+	@Lob
+	@Column(name = "SENDCONTENT_", length = 2000)
 	protected String sendContent;
 
 	/**

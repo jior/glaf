@@ -46,11 +46,24 @@
 <!DOCTYPE html >
 <html>
 <head>
-	<title>表管理</title>
-	<%@ include file="/WEB-INF/views/tm/mx_header.jsp"%>
-	<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/glaf-core.js"></script>		
-	<script type="text/javascript">
-	     function openQx(){
+<title>表管理</title>
+<%@ include file="/WEB-INF/views/tm/mx_header.jsp"%>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/glaf-core.js"></script>		
+<script type="text/javascript">
+
+		function openQx(){
+            var selected = jQuery("#queryIds").val();
+            var link = '<%=request.getContextPath()%>/mx/dts/query/queryTree?elementId=queryIds&elementName=queryNames&nodeCode=report_category&selected='+selected;
+			var x=100;
+			var y=100;
+			if(is_ie) {
+				x=document.body.scrollLeft+event.clientX-event.offsetX-200;
+				y=document.body.scrollTop+event.clientY-event.offsetY-200;
+			}
+			openWindow(link,self,x, y, 495, 480);
+		}
+
+	     function openQx2(){
 			var elementValue = $('#queryIds').val();
 			var link = '<%=request.getContextPath()%>/mx/dts/query/chooseQuery?elementId=queryIds&elementName=queryNames&elementValue='+elementValue;
 			var x=100;

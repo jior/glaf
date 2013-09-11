@@ -36,7 +36,7 @@
 	</resultMap>
  
 	<insert id="insertReportTask" parameterType="com.glaf.report.domain.ReportTask">
-		insert into SYS_REPORT_TASK 
+		insert into BI_REPORT_TASK 
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 		    ID_
 			<if test="reportIds != null">
@@ -115,7 +115,7 @@
 
 	 
 	<update id="updateReportTask" parameterType="com.glaf.report.domain.ReportTask">
-		update SYS_REPORT_TASK
+		update BI_REPORT_TASK
 		set
 		<trim prefix="" suffix="" suffixOverrides=",">		
 			<if test="reportIds != null">
@@ -159,13 +159,13 @@
 
  
 	<delete id="deleteReportTaskById" parameterType="string"> 
-        delete from SYS_REPORT_TASK
+        delete from BI_REPORT_TASK
         where ID_ = #{id}
 	</delete>
 	
 
 	<delete id="deleteReportTasks" parameterType="com.glaf.report.query.ReportTaskQuery">
-		delete from SYS_REPORT_TASK
+		delete from BI_REPORT_TASK
 		where ( ID_ IN
 		<foreach item="x_rowId" index="index" collection="rowIds" open="(" separator="," close=")">
               #{x_rowId}
@@ -175,19 +175,19 @@
 
 
 	<select id="getReportTaskById" parameterType="string" resultMap="reportTaskResultMap">
-		select * from SYS_REPORT_TASK where ID_ = #{id}
+		select * from BI_REPORT_TASK where ID_ = #{id}
 	</select>
 	
 	
 	<select id="getReportTaskByName" parameterType="string" resultMap="reportTaskResultMap">
-		select * from SYS_REPORT_TASK where NAME_ = #{id}
+		select * from BI_REPORT_TASK where NAME_ = #{id}
 	</select>
 
 
 	<select id="getReportTaskCount" 
 		parameterType="map"
 		resultType="int">
-		select count(*) from SYS_REPORT_TASK E
+		select count(*) from BI_REPORT_TASK E
 		<include refid="selectReportTaskSql" />
 	</select>
 
@@ -195,7 +195,7 @@
 	<select id="getReportTaskCountByQueryCriteria" 
 		parameterType="com.glaf.report.query.ReportTaskQuery"
 		resultType="int">
-		select count(*) from SYS_REPORT_TASK E
+		select count(*) from BI_REPORT_TASK E
 		<include refid="selectReportTaskSql" />
 	</select>
 
@@ -203,7 +203,7 @@
 	<select id="getReportTasks" 
 		parameterType="map"
 		resultMap="reportTaskResultMap">
-		select E.* from SYS_REPORT_TASK E
+		select E.* from BI_REPORT_TASK E
 		<include refid="selectReportTaskSql" />
 		<if test="orderBy != null">
 		   order by ${orderBy}
@@ -212,7 +212,7 @@
 
 
 	<select id="getReportTaskMapList" parameterType="map" resultType="map">
-		select E.* from SYS_REPORT_TASK E 
+		select E.* from BI_REPORT_TASK E 
 		<include refid="selectReportTaskSql" />
 		<if test="orderBy != null">
 		   order by ${orderBy}
@@ -223,7 +223,7 @@
 	<select id="getReportTasksByQueryCriteria" 
 		parameterType="com.glaf.report.query.ReportTaskQuery"
 		resultMap="reportTaskResultMap">
-		select E.* from SYS_REPORT_TASK E
+		select E.* from BI_REPORT_TASK E
 		<include refid="selectReportTaskSql" />
 		<if test="orderBy != null">
 		   order by ${orderBy}

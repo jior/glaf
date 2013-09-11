@@ -345,7 +345,10 @@ public class ChartResource {
 						.getSubTreeModels(treeNode.getId());
 				if (subTrees != null && !subTrees.isEmpty()) {
 					for (TreeModel tree : subTrees) {
+						tree.getDataMap().put("nocheck", "true");
+						tree.getDataMap().put("iconSkin", "tree_folder");
 						tree.setIconCls("folder");
+						tree.setLevel(0);
 						treeModels.add(tree);
 						query.nodeId(tree.getId());
 						List<Chart> charts = chartService.list(query);
@@ -358,6 +361,7 @@ public class ChartResource {
 								t.setCode(chart.getId());
 								t.setTreeId(chart.getId());
 								t.setIconCls("leaf");
+								t.getDataMap().put("iconSkin", "tree_leaf");
 								if (chooseList.contains(chart.getId())) {
 									t.setChecked(true);
 								}

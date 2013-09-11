@@ -9,7 +9,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>图表列表</title>
+<title>报表列表</title>
 <link href="<%=request.getContextPath()%>/css/site.css" type="text/css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/easyui/themes/${theme}/easyui.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/ztree/css/zTreeStyle/zTreeStyle.css"/>
@@ -26,13 +26,25 @@
     var setting = {
 			async: {
 				enable: true,
-				url: "<%=request.getContextPath()%>/rs/bi/chart/treeJson?nodeCode=${nodeCode}&selected=${selected}"
+				url: "<%=request.getContextPath()%>/rs/bi/report/treeJson?nodeCode=${nodeCode}&selected=${selected}",
+				dataFilter: filter
 			},
 			check: {
 				enable: true
 			}
 		};
 
+
+  	function filter(treeId, parentNode, childNodes) {
+		if (!childNodes) return null;
+		for (var i=0, l=childNodes.length; i<l; i++) {
+			if(childNodes[i].level==0 || childNodes[i].level==1){
+			  childNodes[i].name = childNodes[i].name.replace(/\.n/g, '.');
+			  childNodes[i].icon="<%=request.getContextPath()%>/images/folder.png";
+			}
+		}
+		return childNodes;
+	}
 
     jQuery(document).ready(function(){
 		  jQuery.fn.zTree.init(jQuery("#myTree"), setting);
@@ -90,7 +102,7 @@
 <div class="easyui-layout" data-options="fit:true">  
   <div data-options="region:'north',split:true,border:true" style="height:40px"> 
     <div style="background:#fafafa;padding:2px;border:1px solid #ddd;font-size:12px"> 
-	<span class="x_content_title">图表列表</span>
+	<span class="x_content_title">报表列表</span>
 	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-save'" 
 	   onclick="javascript:setFormData();" >确定</a> 
     </div> 

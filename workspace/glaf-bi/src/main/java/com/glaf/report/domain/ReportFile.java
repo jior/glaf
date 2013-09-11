@@ -28,7 +28,7 @@ import org.apache.commons.lang.builder.ToStringStyle;
 import com.glaf.core.util.DateUtils;
 
 @Entity
-@Table(name = "SYS_REPORT_FILE")
+@Table(name = "BI_REPORT_FILE")
 public class ReportFile implements Serializable {
 	private static final long serialVersionUID = 1L;
 

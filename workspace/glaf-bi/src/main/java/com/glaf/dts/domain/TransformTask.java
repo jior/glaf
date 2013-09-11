@@ -37,7 +37,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.glaf.core.util.DateUtils;
 
 @Entity
-@Table(name = "SYS_DTS_TASK")
+@Table(name = "DTS_TASK")
 public class TransformTask implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;

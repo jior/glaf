@@ -42,7 +42,7 @@ import com.glaf.core.util.DateUtils;
  * 
  */
 @Entity
-@Table(name = "SYS_DTS_STEP")
+@Table(name = "DTS_STEP")
 public class TransformStep implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
