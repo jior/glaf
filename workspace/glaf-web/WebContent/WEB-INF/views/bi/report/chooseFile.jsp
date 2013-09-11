@@ -26,16 +26,17 @@
 <script type="text/javascript">
 
     var setting = {
-			async: {
-				enable: true,
-				url: getUrl,
-				dataFilter: filter
-			},
-			callback: {
-				onClick: zTreeOnClick
-			}
-		};
+		async: {
+			enable: true,
+			url: getUrl,
+			dataFilter: filter
+		},
+		callback: {
+			onClick: zTreeOnClick
+		}
+	};
   
+
   	function filter(treeId, parentNode, childNodes) {
 		if (!childNodes) return null;
 		for (var i=0, l=childNodes.length; i<l; i++) {
@@ -44,6 +45,7 @@
 		}
 		return childNodes;
 	}
+
 
 	function getUrl(treeId, treeNode) {
 		if(treeNode != null){

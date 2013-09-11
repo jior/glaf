@@ -119,7 +119,7 @@
 		}
 
 		function create(){						 
-			location.href="<%=request.getContextPath()%>/mx/bi/report/edit";
+			location.href="<%=request.getContextPath()%>/mx/bi/report/edit?nodeId="+jQuery("#nodeId").val();
 		}
 
 		function editSelected(){

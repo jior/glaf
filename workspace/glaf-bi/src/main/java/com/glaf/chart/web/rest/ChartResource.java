@@ -312,12 +312,11 @@ public class ChartResource {
 	public void setTablePageService(ITablePageService tablePageService) {
 		this.tablePageService = tablePageService;
 	}
-	
+
 	@javax.annotation.Resource
 	public void setTreeModelService(ITreeModelService treeModelService) {
 		this.treeModelService = treeModelService;
 	}
-
 
 	@GET
 	@POST
@@ -327,6 +326,7 @@ public class ChartResource {
 	public byte[] treeJson(@Context HttpServletRequest request)
 			throws IOException {
 		JSONArray array = new JSONArray();
+		Long nodeId = RequestUtils.getLong(request, "nodeId");
 		String nodeCode = request.getParameter("nodeCode");
 		String selected = request.getParameter("selected");
 
@@ -337,42 +337,48 @@ public class ChartResource {
 			chooseList = StringTools.split(selected);
 		}
 
-		if (StringUtils.isNotEmpty(nodeCode)) {
-			TreeModel treeNode = treeModelService.getTreeModelByCode(nodeCode);
-			if (treeNode != null) {
-				ChartQuery query = new ChartQuery();
-				List<TreeModel> subTrees = treeModelService
-						.getSubTreeModels(treeNode.getId());
-				if (subTrees != null && !subTrees.isEmpty()) {
-					for (TreeModel tree : subTrees) {
-						tree.getDataMap().put("nocheck", "true");
-						tree.getDataMap().put("iconSkin", "tree_folder");
-						tree.setIconCls("folder");
-						tree.setLevel(0);
-						treeModels.add(tree);
-						query.nodeId(tree.getId());
-						List<Chart> charts = chartService.list(query);
-						for (Chart chart : charts) {
-							if (StringUtils.isNumeric(chart.getId())) {
-								TreeModel t = new BaseTree();
-								t.setId(Long.parseLong(chart.getId()));
-								t.setParentId(tree.getId());
-								t.setName(chart.getChartTitle());
-								t.setCode(chart.getId());
-								t.setTreeId(chart.getId());
-								t.setIconCls("leaf");
-								t.getDataMap().put("iconSkin", "tree_leaf");
-								if (chooseList.contains(chart.getId())) {
-									t.setChecked(true);
-								}
-								treeModels.add(t);
+		TreeModel treeNode = null;
+
+		if (nodeId != null && nodeId > 0) {
+			treeNode = treeModelService.getTreeModel(nodeId);
+		} else if (StringUtils.isNotEmpty(nodeCode)) {
+			treeNode = treeModelService.getTreeModelByCode(nodeCode);
+		}
+
+		if (treeNode != null) {
+			ChartQuery query = new ChartQuery();
+			List<TreeModel> subTrees = treeModelService
+					.getSubTreeModels(treeNode.getId());
+			if (subTrees != null && !subTrees.isEmpty()) {
+				for (TreeModel tree : subTrees) {
+					tree.getDataMap().put("nocheck", "true");
+					tree.getDataMap().put("iconSkin", "tree_folder");
+					tree.getDataMap().put("isParent", "true");
+					tree.setIconCls("folder");
+					tree.setLevel(0);
+					treeModels.add(tree);
+					query.nodeId(tree.getId());
+					List<Chart> charts = chartService.list(query);
+					for (Chart chart : charts) {
+						if (StringUtils.isNumeric(chart.getId())) {
+							TreeModel t = new BaseTree();
+							t.setId(Long.parseLong(chart.getId()));
+							t.setParentId(tree.getId());
+							t.setName(chart.getChartTitle());
+							t.setCode(chart.getId());
+							t.setTreeId(chart.getId());
+							t.setIconCls("leaf");
+							t.getDataMap().put("iconSkin", "tree_leaf");
+							if (chooseList.contains(chart.getId())) {
+								t.setChecked(true);
 							}
+							treeModels.add(t);
 						}
 					}
 				}
-				TreeHelper treeHelper = new TreeHelper();
-				array = treeHelper.getTreeJSONArray(treeModels);
 			}
+			TreeHelper treeHelper = new TreeHelper();
+			array = treeHelper.getTreeJSONArray(treeModels);
 		}
 
 		return array.toJSONString().getBytes("UTF-8");

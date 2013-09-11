@@ -10,7 +10,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>报表列表</title>
-<link href="<%=request.getContextPath()%>/css/site.css" type="text/css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/easyui/themes/${theme}/easyui.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/ztree/css/zTreeStyle/zTreeStyle.css"/>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/icons/styles.css">
@@ -24,16 +23,23 @@
 <script type="text/javascript">
 
     var setting = {
-			async: {
-				enable: true,
-				url: "<%=request.getContextPath()%>/rs/bi/report/treeJson?nodeCode=${nodeCode}&selected=${selected}",
-				dataFilter: filter
-			},
-			check: {
-				enable: true
-			}
-		};
+		async: {
+			enable: true,
+			url: getUrl,
+			dataFilter: filter
+		},
+		check: {
+			enable: true
+		}
+	};
 
+	function getUrl(treeId, treeNode) {
+		if(treeNode != null){
+		    var param = "&nodeId="+treeNode.id;
+		    return "<%=request.getContextPath()%>/rs/bi/report/treeJson?selected=${selected}"+param;
+		}
+		return "<%=request.getContextPath()%>/rs/bi/report/treeJson?nodeCode=${nodeCode}&selected=${selected}";
+	}
 
   	function filter(treeId, parentNode, childNodes) {
 		if (!childNodes) return null;

@@ -38,7 +38,6 @@ import org.apache.commons.lang.StringUtils;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-
 import com.glaf.core.base.BaseTree;
 import com.glaf.core.base.TreeModel;
 import com.glaf.core.domain.TableDefinition;
@@ -363,6 +362,7 @@ public class MxReportResource {
 	public byte[] treeJson(@Context HttpServletRequest request)
 			throws IOException {
 		JSONArray array = new JSONArray();
+		Long nodeId = RequestUtils.getLong(request, "nodeId");
 		String nodeCode = request.getParameter("nodeCode");
 		String selected = request.getParameter("selected");
 
@@ -373,42 +373,48 @@ public class MxReportResource {
 			chooseList = StringTools.split(selected);
 		}
 
-		if (StringUtils.isNotEmpty(nodeCode)) {
-			TreeModel treeNode = treeModelService.getTreeModelByCode(nodeCode);
-			if (treeNode != null) {
-				ReportQuery query = new ReportQuery();
-				List<TreeModel> subTrees = treeModelService
-						.getSubTreeModels(treeNode.getId());
-				if (subTrees != null && !subTrees.isEmpty()) {
-					for (TreeModel tree : subTrees) {
-						tree.getDataMap().put("nocheck", "true");
-						tree.getDataMap().put("iconSkin", "tree_folder");
-						tree.setIconCls("folder");
-						tree.setLevel(0);
-						treeModels.add(tree);
-						query.nodeId(tree.getId());
-						List<Report> reports = reportService.list(query);
-						for (Report report : reports) {
-							if (StringUtils.isNumeric(report.getId())) {
-								TreeModel t = new BaseTree();
-								t.setId(Long.parseLong(report.getId()));
-								t.setParentId(tree.getId());
-								t.setName(report.getSubject());
-								t.setCode(report.getId());
-								t.setTreeId(report.getId());
-								t.setIconCls("leaf");
-								t.getDataMap().put("iconSkin", "tree_leaf");
-								if (chooseList.contains(report.getId())) {
-									t.setChecked(true);
-								}
-								treeModels.add(t);
+		TreeModel treeNode = null;
+
+		if (nodeId != null && nodeId > 0) {
+			treeNode = treeModelService.getTreeModel(nodeId);
+		} else if (StringUtils.isNotEmpty(nodeCode)) {
+			treeNode = treeModelService.getTreeModelByCode(nodeCode);
+		}
+
+		if (treeNode != null) {
+			ReportQuery query = new ReportQuery();
+			List<TreeModel> subTrees = treeModelService
+					.getSubTreeModels(treeNode.getId());
+			if (subTrees != null && !subTrees.isEmpty()) {
+				for (TreeModel tree : subTrees) {
+					tree.getDataMap().put("nocheck", "true");
+					tree.getDataMap().put("iconSkin", "tree_folder");
+					tree.getDataMap().put("isParent", "true");
+					tree.setIconCls("folder");
+					tree.setLevel(0);
+					treeModels.add(tree);
+					query.nodeId(tree.getId());
+					List<Report> reports = reportService.list(query);
+					for (Report report : reports) {
+						if (StringUtils.isNumeric(report.getId())) {
+							TreeModel t = new BaseTree();
+							t.setId(Long.parseLong(report.getId()));
+							t.setParentId(tree.getId());
+							t.setName(report.getSubject());
+							t.setCode(report.getId());
+							t.setTreeId(report.getId());
+							t.setIconCls("leaf");
+							t.getDataMap().put("iconSkin", "tree_leaf");
+							if (chooseList.contains(report.getId())) {
+								t.setChecked(true);
 							}
+							treeModels.add(t);
 						}
 					}
 				}
-				TreeHelper treeHelper = new TreeHelper();
-				array = treeHelper.getTreeJSONArray(treeModels);
 			}
+			TreeHelper treeHelper = new TreeHelper();
+			array = treeHelper.getTreeJSONArray(treeModels);
 		}
 
 		return array.toJSONString().getBytes("UTF-8");

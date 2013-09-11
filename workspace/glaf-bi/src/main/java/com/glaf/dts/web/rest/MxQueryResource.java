@@ -109,6 +109,7 @@ public class MxQueryResource {
 	public byte[] treeJson(@Context HttpServletRequest request)
 			throws IOException {
 		JSONArray array = new JSONArray();
+		Long nodeId = RequestUtils.getLong(request, "nodeId");
 		String nodeCode = request.getParameter("nodeCode");
 		String selected = request.getParameter("selected");
 
@@ -119,43 +120,48 @@ public class MxQueryResource {
 			chooseList = StringTools.split(selected);
 		}
 
-		if (StringUtils.isNotEmpty(nodeCode)) {
-			TreeModel treeNode = treeModelService.getTreeModelByCode(nodeCode);
-			if (treeNode != null) {
-				QueryDefinitionQuery query = new QueryDefinitionQuery();
-				List<TreeModel> subTrees = treeModelService
-						.getSubTreeModels(treeNode.getId());
-				if (subTrees != null && !subTrees.isEmpty()) {
-					for (TreeModel tree : subTrees) {
-						tree.getDataMap().put("nocheck", "true");
-						tree.getDataMap().put("iconSkin", "tree_folder");
-						tree.setIconCls("folder");
-						tree.setLevel(0);
-						treeModels.add(tree);
-						query.nodeId(tree.getId());
-						List<QueryDefinition> queries = queryDefinitionService
-								.list(query);
-						for (QueryDefinition q : queries) {
-							if (StringUtils.isNumeric(q.getId())) {
-								TreeModel t = new BaseTree();
-								t.setId(Long.parseLong(q.getId()));
-								t.setParentId(tree.getId());
-								t.setName(q.getTitle());
-								t.setCode(q.getId());
-								t.setTreeId(q.getId());
-								t.setIconCls("leaf");
-								t.getDataMap().put("iconSkin", "tree_leaf");
-								if (chooseList.contains(q.getId())) {
-									t.setChecked(true);
-								}
-								treeModels.add(t);
+		TreeModel treeNode = null;
+
+		if (nodeId != null && nodeId > 0) {
+			treeNode = treeModelService.getTreeModel(nodeId);
+		} else if (StringUtils.isNotEmpty(nodeCode)) {
+			treeNode = treeModelService.getTreeModelByCode(nodeCode);
+		}
+		if (treeNode != null) {
+			QueryDefinitionQuery query = new QueryDefinitionQuery();
+			List<TreeModel> subTrees = treeModelService
+					.getSubTreeModels(treeNode.getId());
+			if (subTrees != null && !subTrees.isEmpty()) {
+				for (TreeModel tree : subTrees) {
+					tree.getDataMap().put("nocheck", "true");
+					tree.getDataMap().put("iconSkin", "tree_folder");
+					tree.getDataMap().put("isParent", "true");
+					tree.setIconCls("folder");
+					tree.setLevel(0);
+					treeModels.add(tree);
+					query.nodeId(tree.getId());
+					List<QueryDefinition> queries = queryDefinitionService
+							.list(query);
+					for (QueryDefinition q : queries) {
+						if (StringUtils.isNumeric(q.getId())) {
+							TreeModel t = new BaseTree();
+							t.setId(Long.parseLong(q.getId()));
+							t.setParentId(tree.getId());
+							t.setName(q.getTitle());
+							t.setCode(q.getId());
+							t.setTreeId(q.getId());
+							t.setIconCls("leaf");
+							t.getDataMap().put("iconSkin", "tree_leaf");
+							if (chooseList.contains(q.getId())) {
+								t.setChecked(true);
 							}
+							treeModels.add(t);
 						}
 					}
 				}
-				TreeHelper treeHelper = new TreeHelper();
-				array = treeHelper.getTreeJSONArray(treeModels);
 			}
+			TreeHelper treeHelper = new TreeHelper();
+			array = treeHelper.getTreeJSONArray(treeModels);
 		}
 
 		return array.toJSONString().getBytes("UTF-8");
