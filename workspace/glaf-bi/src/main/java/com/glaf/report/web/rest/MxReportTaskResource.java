@@ -193,8 +193,6 @@ public class MxReportTaskResource {
 				}
 			}
 
-			// Map<String, UserProfile> userMap =
-			// MxIdentityFactory.getUserProfileMap();
 			List<ReportTask> list = reportTaskService
 					.getReportTasksByQueryCriteria(start, limit, query);
 
@@ -206,14 +204,12 @@ public class MxReportTaskResource {
 					responseJSON.put("rows", rowsJSON);
 				}
 
-				// int sortNo = 0;
 				for (ReportTask reportTask : list) {
-					// sortNo++;
 					ObjectNode node = reportTask.toObjectNode();
 					node.put("sortNo", ++start);
+					node.put("startIndex", start);
 					rowsJSON.add(node);
 				}
-
 			}
 		}
 		try {
@@ -286,8 +282,6 @@ public class MxReportTaskResource {
 		}
 		ObjectNode responseJSON = new ObjectMapper().createObjectNode();
 		if (reportTask != null) {
-			// Map<String, UserProfile> userMap =
-			// MxIdentityFactory.getUserProfileMap();
 			responseJSON = reportTask.toObjectNode();
 		}
 		try {

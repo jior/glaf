@@ -27,10 +27,9 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
 import com.alibaba.fastjson.JSONObject;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.glaf.core.base.*;
-import com.glaf.core.util.DateUtils;
+import com.glaf.report.util.ReportJsonFactory;
 
 @Entity
 @Table(name = "BI_REPORT")
@@ -259,69 +258,7 @@ public class Report implements Serializable, JSONable {
 	}
 
 	public Report jsonToObject(JSONObject jsonObject) {
-		Report model = new Report();
-		if (jsonObject.containsKey("queryIds")) {
-			model.setQueryIds(jsonObject.getString("queryIds"));
-		}
-		if (jsonObject.containsKey("chartIds")) {
-			model.setChartIds(jsonObject.getString("chartIds"));
-		}
-		if (jsonObject.containsKey("name")) {
-			model.setName(jsonObject.getString("name"));
-		}
-		if (jsonObject.containsKey("subject")) {
-			model.setSubject(jsonObject.getString("subject"));
-		}
-		if (jsonObject.containsKey("type")) {
-			model.setType(jsonObject.getString("type"));
-		}
-		if (jsonObject.containsKey("reportName")) {
-			model.setReportName(jsonObject.getString("reportName"));
-		}
-		if (jsonObject.containsKey("reportFormat")) {
-			model.setReportFormat(jsonObject.getString("reportFormat"));
-		}
-		if (jsonObject.containsKey("reportTemplate")) {
-			model.setReportTemplate(jsonObject.getString("reportTemplate"));
-		}
-		if (jsonObject.containsKey("reportTitleDate")) {
-			model.setReportTitleDate(jsonObject.getString("reportTitleDate"));
-		}
-		if (jsonObject.containsKey("reportMonth")) {
-			model.setReportMonth(jsonObject.getString("reportMonth"));
-		}
-		if (jsonObject.containsKey("reportDateYYYYMMDD")) {
-			model.setReportDateYYYYMMDD(jsonObject
-					.getString("reportDateYYYYMMDD"));
-		}
-		if (jsonObject.containsKey("jsonParameter")) {
-			model.setJsonParameter(jsonObject.getString("jsonParameter"));
-		}
-		if (jsonObject.containsKey("textTitle")) {
-			model.setTextTitle(jsonObject.getString("textTitle"));
-		}
-		if (jsonObject.containsKey("textContent")) {
-			model.setTextContent(jsonObject.getString("textContent"));
-		}
-		if (jsonObject.containsKey("mailRecipient")) {
-			model.setMailRecipient(jsonObject.getString("mailRecipient"));
-		}
-		if (jsonObject.containsKey("mobileRecipient")) {
-			model.setMobileRecipient(jsonObject.getString("mobileRecipient"));
-		}
-		if (jsonObject.containsKey("cronExpression")) {
-			model.setCronExpression(jsonObject.getString("cronExpression"));
-		}
-		if (jsonObject.containsKey("enableFlag")) {
-			model.setEnableFlag(jsonObject.getString("enableFlag"));
-		}
-		if (jsonObject.containsKey("createDate")) {
-			model.setCreateDate(jsonObject.getDate("createDate"));
-		}
-		if (jsonObject.containsKey("createBy")) {
-			model.setCreateBy(jsonObject.getString("createBy"));
-		}
-		return model;
+		return ReportJsonFactory.jsonToObject(jsonObject);
 	}
 
 	public void setChartIds(String chartIds) {
@@ -413,141 +350,11 @@ public class Report implements Serializable, JSONable {
 	}
 
 	public JSONObject toJsonObject() {
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("id", id);
-		if (queryIds != null) {
-			jsonObject.put("queryIds", queryIds);
-		}
-		if (chartIds != null) {
-			jsonObject.put("chartIds", chartIds);
-		}
-		if (name != null) {
-			jsonObject.put("name", name);
-		}
-		if (subject != null) {
-			jsonObject.put("subject", subject);
-		}
-		if (type != null) {
-			jsonObject.put("type", type);
-		}
-		if (reportName != null) {
-			jsonObject.put("reportName", reportName);
-		}
-		if (reportFormat != null) {
-			jsonObject.put("reportFormat", reportFormat);
-		}
-		if (reportTemplate != null) {
-			jsonObject.put("reportTemplate", reportTemplate);
-		}
-		if (reportTitleDate != null) {
-			jsonObject.put("reportTitleDate", reportTitleDate);
-		}
-		if (reportMonth != null) {
-			jsonObject.put("reportMonth", reportMonth);
-		}
-		if (reportDateYYYYMMDD != null) {
-			jsonObject.put("reportDateYYYYMMDD", reportDateYYYYMMDD);
-		}
-		if (jsonParameter != null) {
-			jsonObject.put("jsonParameter", jsonParameter);
-		}
-		if (textTitle != null) {
-			jsonObject.put("textTitle", textTitle);
-		}
-		if (textContent != null) {
-			jsonObject.put("textContent", textContent);
-		}
-		if (mailRecipient != null) {
-			jsonObject.put("mailRecipient", mailRecipient);
-		}
-		if (mobileRecipient != null) {
-			jsonObject.put("mobileRecipient", mobileRecipient);
-		}
-		if (cronExpression != null) {
-			jsonObject.put("cronExpression", cronExpression);
-		}
-		if (enableFlag != null) {
-			jsonObject.put("enableFlag", enableFlag);
-		}
-		if (createDate != null) {
-			jsonObject.put("createDate", DateUtils.getDate(createDate));
-			jsonObject.put("createDate_date", DateUtils.getDate(createDate));
-			jsonObject.put("createDate_datetime",
-					DateUtils.getDateTime(createDate));
-		}
-		if (createBy != null) {
-			jsonObject.put("createBy", createBy);
-		}
-		return jsonObject;
+		return ReportJsonFactory.toJsonObject(this);
 	}
 
 	public ObjectNode toObjectNode() {
-		ObjectNode jsonObject = new ObjectMapper().createObjectNode();
-		jsonObject.put("id", id);
-		if (queryIds != null) {
-			jsonObject.put("queryIds", queryIds);
-		}
-		if (chartIds != null) {
-			jsonObject.put("chartIds", chartIds);
-		}
-		if (name != null) {
-			jsonObject.put("name", name);
-		}
-		if (subject != null) {
-			jsonObject.put("subject", subject);
-		}
-		if (type != null) {
-			jsonObject.put("type", type);
-		}
-		if (reportName != null) {
-			jsonObject.put("reportName", reportName);
-		}
-		if (reportFormat != null) {
-			jsonObject.put("reportFormat", reportFormat);
-		}
-		if (reportTemplate != null) {
-			jsonObject.put("reportTemplate", reportTemplate);
-		}
-		if (reportTitleDate != null) {
-			jsonObject.put("reportTitleDate", reportTitleDate);
-		}
-		if (reportMonth != null) {
-			jsonObject.put("reportMonth", reportMonth);
-		}
-		if (reportDateYYYYMMDD != null) {
-			jsonObject.put("reportDateYYYYMMDD", reportDateYYYYMMDD);
-		}
-		if (jsonParameter != null) {
-			jsonObject.put("jsonParameter", jsonParameter);
-		}
-		if (textTitle != null) {
-			jsonObject.put("textTitle", textTitle);
-		}
-		if (textContent != null) {
-			jsonObject.put("textContent", textContent);
-		}
-		if (mailRecipient != null) {
-			jsonObject.put("mailRecipient", mailRecipient);
-		}
-		if (mobileRecipient != null) {
-			jsonObject.put("mobileRecipient", mobileRecipient);
-		}
-		if (cronExpression != null) {
-			jsonObject.put("cronExpression", cronExpression);
-		}
-		if (enableFlag != null) {
-			jsonObject.put("enableFlag", enableFlag);
-		}
-		if (createDate != null) {
-			jsonObject.put("createDate", DateUtils.getDate(createDate));
-			jsonObject.put("createDate_date", DateUtils.getDate(createDate));
-			jsonObject.put("createDate_datetime",
-					DateUtils.getDateTime(createDate));
-		}
-		if (createBy != null) {
-			jsonObject.put("createBy", createBy);
-		}
-		return jsonObject;
+		return ReportJsonFactory.toObjectNode(this);
 	}
 
 	public String toString() {

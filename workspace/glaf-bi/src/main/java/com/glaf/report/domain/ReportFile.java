@@ -19,13 +19,16 @@ package com.glaf.report.domain;
 
 import java.io.*;
 import java.util.*;
+
 import javax.persistence.*;
+
 import com.alibaba.fastjson.*;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
-import com.glaf.core.util.DateUtils;
+
+import com.glaf.report.util.ReportFileJsonFactory;
 
 @Entity
 @Table(name = "BI_REPORT_FILE")
@@ -132,17 +135,7 @@ public class ReportFile implements Serializable {
 	}
 
 	public ReportFile jsonToObject(JSONObject jsonObject) {
-		ReportFile model = new ReportFile();
-		if (jsonObject.containsKey("reportId")) {
-			model.setReportId(jsonObject.getString("reportId"));
-		}
-		if (jsonObject.containsKey("filename")) {
-			model.setFilename(jsonObject.getString("filename"));
-		}
-		if (jsonObject.containsKey("createDate")) {
-			model.setCreateDate(jsonObject.getDate("createDate"));
-		}
-		return model;
+		return ReportFileJsonFactory.jsonToObject(jsonObject);
 	}
 
 	public void setCreateDate(Date createDate) {
@@ -174,39 +167,11 @@ public class ReportFile implements Serializable {
 	}
 
 	public JSONObject toJsonObject() {
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("id", id);
-		if (reportId != null) {
-			jsonObject.put("reportId", reportId);
-		}
-		if (filename != null) {
-			jsonObject.put("filename", filename);
-		}
-		if (createDate != null) {
-			jsonObject.put("createDate", DateUtils.getDate(createDate));
-			jsonObject.put("createDate_date", DateUtils.getDate(createDate));
-			jsonObject.put("createDate_datetime",
-					DateUtils.getDateTime(createDate));
-		}
-		return jsonObject;
+		return ReportFileJsonFactory.toJsonObject(this);
 	}
 
 	public ObjectNode toObjectNode() {
-		ObjectNode jsonObject = new ObjectMapper().createObjectNode();
-		jsonObject.put("id", id);
-		if (reportId != null) {
-			jsonObject.put("reportId", reportId);
-		}
-		if (filename != null) {
-			jsonObject.put("filename", filename);
-		}
-		if (createDate != null) {
-			jsonObject.put("createDate", DateUtils.getDate(createDate));
-			jsonObject.put("createDate_date", DateUtils.getDate(createDate));
-			jsonObject.put("createDate_datetime",
-					DateUtils.getDateTime(createDate));
-		}
-		return jsonObject;
+		return ReportFileJsonFactory.toObjectNode(this);
 	}
 
 	public String toString() {

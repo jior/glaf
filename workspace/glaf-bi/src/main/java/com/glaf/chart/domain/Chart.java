@@ -27,11 +27,10 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
 import com.alibaba.fastjson.JSONObject;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.glaf.chart.util.ChartJsonFactory;
 import com.glaf.core.base.ColumnModel;
 import com.glaf.core.base.JSONable;
-import com.glaf.core.util.DateUtils;
 
 @Entity
 @Table(name = "BI_CHART")
@@ -306,62 +305,7 @@ public class Chart implements Serializable, JSONable {
 	}
 
 	public Chart jsonToObject(JSONObject jsonObject) {
-		Chart model = new Chart();
-		if (jsonObject.containsKey("queryIds")) {
-			model.setQueryIds(jsonObject.getString("queryIds"));
-		}
-		if (jsonObject.containsKey("querySQL")) {
-			model.setQuerySQL(jsonObject.getString("querySQL"));
-		}
-		if (jsonObject.containsKey("subject")) {
-			model.setSubject(jsonObject.getString("subject"));
-		}
-		if (jsonObject.containsKey("chartName")) {
-			model.setChartName(jsonObject.getString("chartName"));
-		}
-		if (jsonObject.containsKey("chartTitle")) {
-			model.setChartTitle(jsonObject.getString("chartTitle"));
-		}
-		if (jsonObject.containsKey("chartType")) {
-			model.setChartType(jsonObject.getString("chartType"));
-		}
-		if (jsonObject.containsKey("chartFont")) {
-			model.setChartFont(jsonObject.getString("chartFont"));
-		}
-		if (jsonObject.containsKey("chartTitleFont")) {
-			model.setChartTitleFont(jsonObject.getString("chartTitleFont"));
-		}
-		if (jsonObject.containsKey("legend")) {
-			model.setLegend(jsonObject.getString("legend"));
-		}
-		if (jsonObject.containsKey("tooltip")) {
-			model.setTooltip(jsonObject.getString("tooltip"));
-		}
-		if (jsonObject.containsKey("mapping")) {
-			model.setMapping(jsonObject.getString("mapping"));
-		}
-		if (jsonObject.containsKey("coordinateX")) {
-			model.setCoordinateX(jsonObject.getString("coordinateX"));
-		}
-		if (jsonObject.containsKey("coordinateY")) {
-			model.setCoordinateY(jsonObject.getString("coordinateY"));
-		}
-		if (jsonObject.containsKey("plotOrientation")) {
-			model.setPlotOrientation(jsonObject.getString("plotOrientation"));
-		}
-		if (jsonObject.containsKey("imageType")) {
-			model.setImageType(jsonObject.getString("imageType"));
-		}
-		if (jsonObject.containsKey("enableFlag")) {
-			model.setEnableFlag(jsonObject.getString("enableFlag"));
-		}
-		if (jsonObject.containsKey("createDate")) {
-			model.setCreateDate(jsonObject.getDate("createDate"));
-		}
-		if (jsonObject.containsKey("createBy")) {
-			model.setCreateBy(jsonObject.getString("createBy"));
-		}
-		return model;
+		return ChartJsonFactory.jsonToObject(jsonObject);
 	}
 
 	public void removeColumn(ColumnModel cell) {
@@ -473,129 +417,11 @@ public class Chart implements Serializable, JSONable {
 	}
 
 	public JSONObject toJsonObject() {
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("id", id);
-		if (queryIds != null) {
-			jsonObject.put("queryIds", queryIds);
-		}
-		if (querySQL != null) {
-			jsonObject.put("querySQL", querySQL);
-		}
-		if (subject != null) {
-			jsonObject.put("subject", subject);
-		}
-		if (chartName != null) {
-			jsonObject.put("chartName", chartName);
-		}
-		if (chartTitle != null) {
-			jsonObject.put("chartTitle", chartTitle);
-		}
-		if (chartType != null) {
-			jsonObject.put("chartType", chartType);
-		}
-		if (chartFont != null) {
-			jsonObject.put("chartFont", chartFont);
-		}
-		if (chartTitleFont != null) {
-			jsonObject.put("chartTitleFont", chartTitleFont);
-		}
-		if (legend != null) {
-			jsonObject.put("legend", legend);
-		}
-		if (tooltip != null) {
-			jsonObject.put("tooltip", tooltip);
-		}
-		if (mapping != null) {
-			jsonObject.put("mapping", mapping);
-		}
-		if (coordinateX != null) {
-			jsonObject.put("coordinateX", coordinateX);
-		}
-		if (coordinateY != null) {
-			jsonObject.put("coordinateY", coordinateY);
-		}
-		if (plotOrientation != null) {
-			jsonObject.put("plotOrientation", plotOrientation);
-		}
-		if (imageType != null) {
-			jsonObject.put("imageType", imageType);
-		}
-		if (enableFlag != null) {
-			jsonObject.put("enableFlag", enableFlag);
-		}
-		if (createDate != null) {
-			jsonObject.put("createDate", DateUtils.getDate(createDate));
-			jsonObject.put("createDate_date", DateUtils.getDate(createDate));
-			jsonObject.put("createDate_datetime",
-					DateUtils.getDateTime(createDate));
-		}
-		if (createBy != null) {
-			jsonObject.put("createBy", createBy);
-		}
-		return jsonObject;
+		return ChartJsonFactory.toJsonObject(this);
 	}
 
 	public ObjectNode toObjectNode() {
-		ObjectNode jsonObject = new ObjectMapper().createObjectNode();
-		jsonObject.put("id", id);
-		if (queryIds != null) {
-			jsonObject.put("queryIds", queryIds);
-		}
-		if (querySQL != null) {
-			jsonObject.put("querySQL", querySQL);
-		}
-		if (subject != null) {
-			jsonObject.put("subject", subject);
-		}
-		if (chartName != null) {
-			jsonObject.put("chartName", chartName);
-		}
-		if (chartTitle != null) {
-			jsonObject.put("chartTitle", chartTitle);
-		}
-		if (chartType != null) {
-			jsonObject.put("chartType", chartType);
-		}
-		if (chartFont != null) {
-			jsonObject.put("chartFont", chartFont);
-		}
-		if (chartTitleFont != null) {
-			jsonObject.put("chartTitleFont", chartTitleFont);
-		}
-		if (legend != null) {
-			jsonObject.put("legend", legend);
-		}
-		if (tooltip != null) {
-			jsonObject.put("tooltip", tooltip);
-		}
-		if (mapping != null) {
-			jsonObject.put("mapping", mapping);
-		}
-		if (coordinateX != null) {
-			jsonObject.put("coordinateX", coordinateX);
-		}
-		if (coordinateY != null) {
-			jsonObject.put("coordinateY", coordinateY);
-		}
-		if (plotOrientation != null) {
-			jsonObject.put("plotOrientation", plotOrientation);
-		}
-		if (imageType != null) {
-			jsonObject.put("imageType", imageType);
-		}
-		if (enableFlag != null) {
-			jsonObject.put("enableFlag", enableFlag);
-		}
-		if (createDate != null) {
-			jsonObject.put("createDate", DateUtils.getDate(createDate));
-			jsonObject.put("createDate_date", DateUtils.getDate(createDate));
-			jsonObject.put("createDate_datetime",
-					DateUtils.getDateTime(createDate));
-		}
-		if (createBy != null) {
-			jsonObject.put("createBy", createBy);
-		}
-		return jsonObject;
+		return ChartJsonFactory.toObjectNode(this);
 	}
 
 	public String toString() {

@@ -236,6 +236,7 @@ public class MxReportResource {
 
 				for (Report report : list) {
 					JSONObject rowJSON = report.toJsonObject();
+					rowJSON.put("startIndex", ++start);
 					rowsJSON.add(rowJSON);
 				}
 

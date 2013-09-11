@@ -19,14 +19,16 @@ package com.glaf.report.domain;
 
 import java.io.*;
 import java.util.*;
+
 import javax.persistence.*;
 
 import com.alibaba.fastjson.*;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
-import com.glaf.core.util.DateUtils;
+
+import com.glaf.report.util.ReportTaskJsonFactory;
 
 @Entity
 @Table(name = "BI_REPORT_TASK")
@@ -183,41 +185,7 @@ public class ReportTask implements Serializable {
 	}
 
 	public ReportTask jsonToObject(JSONObject jsonObject) {
-		ReportTask model = new ReportTask();
-		if (jsonObject.containsKey("reportIds")) {
-			model.setReportIds(jsonObject.getString("reportIds"));
-		}
-		if (jsonObject.containsKey("name")) {
-			model.setName(jsonObject.getString("name"));
-		}
-		if (jsonObject.containsKey("subject")) {
-			model.setSubject(jsonObject.getString("subject"));
-		}
-		if (jsonObject.containsKey("mailRecipient")) {
-			model.setMailRecipient(jsonObject.getString("mailRecipient"));
-		}
-		if (jsonObject.containsKey("mobileRecipient")) {
-			model.setMobileRecipient(jsonObject.getString("mobileRecipient"));
-		}
-		if (jsonObject.containsKey("sendTitle")) {
-			model.setSendTitle(jsonObject.getString("sendTitle"));
-		}
-		if (jsonObject.containsKey("sendContent")) {
-			model.setSendContent(jsonObject.getString("sendContent"));
-		}
-		if (jsonObject.containsKey("cronExpression")) {
-			model.setCronExpression(jsonObject.getString("cronExpression"));
-		}
-		if (jsonObject.containsKey("createDate")) {
-			model.setCreateDate(jsonObject.getDate("createDate"));
-		}
-		if (jsonObject.containsKey("createBy")) {
-			model.setCreateBy(jsonObject.getString("createBy"));
-		}
-		if (jsonObject.containsKey("enableFlag")) {
-			model.setEnableFlag(jsonObject.getString("enableFlag"));
-		}
-		return model;
+		return ReportTaskJsonFactory.jsonToObject(jsonObject);
 	}
 
 	public void setCreateBy(String createBy) {
@@ -269,87 +237,11 @@ public class ReportTask implements Serializable {
 	}
 
 	public JSONObject toJsonObject() {
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("id", id);
-		if (reportIds != null) {
-			jsonObject.put("reportIds", reportIds);
-		}
-		if (name != null) {
-			jsonObject.put("name", name);
-		}
-		if (subject != null) {
-			jsonObject.put("subject", subject);
-		}
-		if (mailRecipient != null) {
-			jsonObject.put("mailRecipient", mailRecipient);
-		}
-		if (mobileRecipient != null) {
-			jsonObject.put("mobileRecipient", mobileRecipient);
-		}
-		if (sendTitle != null) {
-			jsonObject.put("sendTitle", sendTitle);
-		}
-		if (sendContent != null) {
-			jsonObject.put("sendContent", sendContent);
-		}
-		if (cronExpression != null) {
-			jsonObject.put("cronExpression", cronExpression);
-		}
-		if (createDate != null) {
-			jsonObject.put("createDate", DateUtils.getDate(createDate));
-			jsonObject.put("createDate_date", DateUtils.getDate(createDate));
-			jsonObject.put("createDate_datetime",
-					DateUtils.getDateTime(createDate));
-		}
-		if (createBy != null) {
-			jsonObject.put("createBy", createBy);
-		}
-		if (enableFlag != null) {
-			jsonObject.put("enableFlag", enableFlag);
-		}
-		return jsonObject;
+		return ReportTaskJsonFactory.toJsonObject(this);
 	}
 
 	public ObjectNode toObjectNode() {
-		ObjectNode jsonObject = new ObjectMapper().createObjectNode();
-		jsonObject.put("id", id);
-		if (reportIds != null) {
-			jsonObject.put("reportIds", reportIds);
-		}
-		if (name != null) {
-			jsonObject.put("name", name);
-		}
-		if (subject != null) {
-			jsonObject.put("subject", subject);
-		}
-		if (mailRecipient != null) {
-			jsonObject.put("mailRecipient", mailRecipient);
-		}
-		if (mobileRecipient != null) {
-			jsonObject.put("mobileRecipient", mobileRecipient);
-		}
-		if (sendTitle != null) {
-			jsonObject.put("sendTitle", sendTitle);
-		}
-		if (sendContent != null) {
-			jsonObject.put("sendContent", sendContent);
-		}
-		if (cronExpression != null) {
-			jsonObject.put("cronExpression", cronExpression);
-		}
-		if (createDate != null) {
-			jsonObject.put("createDate", DateUtils.getDate(createDate));
-			jsonObject.put("createDate_date", DateUtils.getDate(createDate));
-			jsonObject.put("createDate_datetime",
-					DateUtils.getDateTime(createDate));
-		}
-		if (createBy != null) {
-			jsonObject.put("createBy", createBy);
-		}
-		if (enableFlag != null) {
-			jsonObject.put("enableFlag", enableFlag);
-		}
-		return jsonObject;
+		return ReportTaskJsonFactory.toObjectNode(this);
 	}
 
 	public String toString() {

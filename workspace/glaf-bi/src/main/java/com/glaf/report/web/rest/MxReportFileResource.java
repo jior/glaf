@@ -206,11 +206,10 @@ public class MxReportFileResource {
 					responseJSON.put("rows", rowsJSON);
 				}
 
-				// int sortNo = 0;
 				for (ReportFile reportFile : list) {
-					// sortNo++;
 					ObjectNode node = reportFile.toObjectNode();
 					node.put("sortNo", ++start);
+					node.put("startIndex", start);
 					rowsJSON.add(node);
 				}
 
