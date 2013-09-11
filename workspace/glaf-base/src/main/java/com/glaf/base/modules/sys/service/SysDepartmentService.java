@@ -68,6 +68,10 @@ public interface SysDepartmentService {
 	@Transactional
 	boolean deleteAll(long[] ids);
 
+	void findAllChildrenDepartments(List<SysDepartment> list, long deptId);
+
+	void findAllChildrenDepartments(List<SysDepartment> list, SysDepartment node);
+
 	/**
 	 * 按编码查找对象
 	 * 

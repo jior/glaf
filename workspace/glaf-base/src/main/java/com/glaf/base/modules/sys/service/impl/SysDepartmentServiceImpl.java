@@ -373,40 +373,35 @@ public class SysDepartmentServiceImpl implements SysDepartmentService {
 		return true;
 	}
 
-	 
 	public SysDepartment getSysDepartmentByNodeId(long nodeId) {
-		 
 		return null;
 	}
 
-	 
 	public int getSysDepartmentCountByQueryCriteria(SysDepartmentQuery query) {
-	 
 		return 0;
 	}
 
-	 
 	public List<SysDepartment> getSysDepartmentList(long parent) {
-		 
 		return null;
 	}
 
-	 
 	public PageResult getSysDepartmentList(long parent, int pageNo, int pageSize) {
-		 
 		return null;
 	}
 
-	 
 	public List<SysDepartment> getSysDepartmentsByQueryCriteria(int start,
 			int pageSize, SysDepartmentQuery query) {
-		 
 		return null;
 	}
 
-	 
 	public List<SysDepartment> list(SysDepartmentQuery query) {
-		 
 		return null;
+	}
+
+	public void findAllChildrenDepartments(List<SysDepartment> list, long deptId) {
+	}
+
+	public void findAllChildrenDepartments(List<SysDepartment> list,
+			SysDepartment node) {
 	}
 }

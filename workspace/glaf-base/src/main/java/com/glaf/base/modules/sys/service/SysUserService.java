@@ -74,6 +74,7 @@ public interface SysUserService {
 
 	/**
 	 * 删除部门角色用户
+	 * 
 	 * @param deptRole
 	 * @param userIds
 	 */
@@ -146,13 +147,6 @@ public interface SysUserService {
 	 * @return List
 	 */
 	List<SysUser> getSysUserList(long deptId);
-	
-	/**
-	 * 获取某些用户的角色
-	 * @param actorIds
-	 * @return
-	 */
-	List<SysRole> getUserRoles(List<String> actorIds);
 
 	/**
 	 * 获取特定部门的员工数据集 分页列表
@@ -193,13 +187,10 @@ public interface SysUserService {
 	 * @return
 	 */
 	List<SysUser> getSysUsersByAppId(Long appId);
-	
-	/**
-	 * 获取某个角色代码的用户
-	 * @param roleCode
-	 * @return
-	 */
-	List<SysUser> getSysUsersByRoleCode(String roleCode);
+
+	List<SysUser> getSysUsersByDeptRole(Long deptId, String roleCode);
+
+	List<SysUser> getSysUsersByDeptRoleId(Long deptRoleId);
 
 	/**
 	 * 根据查询参数获取一页的数据
@@ -208,6 +199,14 @@ public interface SysUserService {
 	 */
 	List<SysUser> getSysUsersByQueryCriteria(int start, int pageSize,
 			SysUserQuery query);
+
+	/**
+	 * 获取某个角色代码的用户
+	 * 
+	 * @param roleCode
+	 * @return
+	 */
+	List<SysUser> getSysUsersByRoleCode(String roleCode);
 
 	/**
 	 * 获取列表
@@ -229,6 +228,14 @@ public interface SysUserService {
 	SysUser getUserPrivileges(SysUser user);
 
 	/**
+	 * 获取某些用户的角色
+	 * 
+	 * @param actorIds
+	 * @return
+	 */
+	List<SysRole> getUserRoles(List<String> actorIds);
+
+	/**
 	 * 
 	 * @param user
 	 * @return
@@ -236,7 +243,7 @@ public interface SysUserService {
 	Set<SysDeptRole> getUserRoles(SysUser user);
 
 	boolean isThisPlayer(SysUser user, String code);
-	
+
 	/**
 	 * 更新
 	 * 

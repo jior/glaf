@@ -127,6 +127,14 @@ public class BaseIdentityFactory {
 				role.getId());
 	}
 
+	public static List<SysUser> getChildrenMembershipUsers(String deptCode,
+			String roleCode) {
+		SysDepartment dept = getSysDepartmentService().findByCode(deptCode);
+		SysRole role = getSysRoleService().findByCode(roleCode);
+		return getSysUserRoleService().getChildrenMembershipUsers(dept.getId(),
+				role.getId());
+	}
+
 	/**
 	 * 根据部门代码获取部门(sys_department表的code字段)
 	 * 
@@ -191,6 +199,13 @@ public class BaseIdentityFactory {
 		return depts;
 	}
 
+	public static EntityService getEntityService() {
+		if (entityService == null) {
+			entityService = ContextFactory.getBean("entityService");
+		}
+		return entityService;
+	}
+
 	/**
 	 * 获取全部用户
 	 * 
@@ -205,30 +220,6 @@ public class BaseIdentityFactory {
 			}
 		}
 		return userMap;
-	}
-
-	/**
-	 * 获取某个部门的用户
-	 * 
-	 * @param deptId
-	 *            部门ID
-	 * @return
-	 */
-	public static List<SysUser> getMembershipUsers(Long deptId) {
-		return getSysUserService().getSysUserList(deptId);
-	}
-
-	/**
-	 * 获取某个部门某个角色的用户
-	 * 
-	 * @param deptId
-	 *            部门ID
-	 * @param roleId
-	 *            角色ID
-	 * @return
-	 */
-	public static List<SysUser> getMembershipUsers(Long deptId, Long roleId) {
-		return getSysUserRoleService().getMembershipUsers(deptId, roleId);
 	}
 
 	/**
@@ -259,6 +250,30 @@ public class BaseIdentityFactory {
 		SysRole role = getSysRoleService().findByCode(roleCode);
 		return getSysUserRoleService()
 				.getMembershipUsers(deptIds, role.getId());
+	}
+
+	/**
+	 * 获取某个部门的用户
+	 * 
+	 * @param deptId
+	 *            部门ID
+	 * @return
+	 */
+	public static List<SysUser> getMembershipUsers(Long deptId) {
+		return getSysUserService().getSysUserList(deptId);
+	}
+
+	/**
+	 * 获取某个部门某个角色的用户
+	 * 
+	 * @param deptId
+	 *            部门ID
+	 * @param roleId
+	 *            角色ID
+	 * @return
+	 */
+	public static List<SysUser> getMembershipUsers(Long deptId, Long roleId) {
+		return getSysUserRoleService().getMembershipUsers(deptId, roleId);
 	}
 
 	/**
@@ -340,13 +355,6 @@ public class BaseIdentityFactory {
 	public static List<SysRole> getRoles() {
 		List<SysRole> roles = getSysRoleService().getSysRoleList();
 		return roles;
-	}
-
-	public static EntityService getEntityService() {
-		if (entityService == null) {
-			entityService = ContextFactory.getBean("entityService");
-		}
-		return entityService;
 	}
 
 	public static SysApplicationService getSysApplicationService() {

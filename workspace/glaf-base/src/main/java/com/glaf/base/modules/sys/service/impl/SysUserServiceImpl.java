@@ -38,7 +38,6 @@ import com.glaf.base.modules.sys.query.SysUserQuery;
 import com.glaf.base.modules.sys.service.*;
 import com.glaf.core.util.PageResult;
 import com.glaf.core.util.StringTools;
- 
 
 public class SysUserServiceImpl implements SysUserService {
 	private static final Log logger = LogFactory
@@ -517,69 +516,55 @@ public class SysUserServiceImpl implements SysUserService {
 		return flag;
 	}
 
- 
 	public void deleteRoleUsers(SysDeptRole deptRole, long[] userIds) {
-	 
-		
+
 	}
 
- 
 	public int getSysUserCountByQueryCriteria(SysUserQuery query) {
-		 
 		return 0;
 	}
 
-	 
 	public List<SysUser> getSysUserList(long deptId) {
-		 
 		return null;
 	}
 
- 
 	public List<SysRole> getUserRoles(List<String> actorIds) {
-		 
 		return null;
 	}
 
-	 
 	public PageResult getSysUserList(long deptId, int pageNo, int pageSize) {
-		 
 		return null;
 	}
 
-	 
 	public PageResult getSysUserList(long deptId, String fullName, int pageNo,
 			int pageSize) {
-		 
 		return null;
 	}
 
-	 
 	public PageResult getSysUserList(long deptId, String userName,
 			String account, int pageNo, int pageSize) {
-		 
 		return null;
 	}
 
-	 
 	public List<SysUser> getSysUsersByAppId(Long appId) {
-		 
 		return null;
 	}
 
- 
 	public List<SysUser> getSysUsersByRoleCode(String roleCode) {
-	 
 		return null;
 	}
 
- 
 	public List<SysUser> getSysUsersByQueryCriteria(int start, int pageSize,
 			SysUserQuery query) {
-		 
 		return null;
 	}
 
-	 
+	public List<SysUser> getSysUsersByDeptRole(Long deptId, String roleCode) {
+		return null;
+	}
+
+	public List<SysUser> getSysUsersByDeptRoleId(Long deptRoleId) {
+		return null;
+	}
 
 }

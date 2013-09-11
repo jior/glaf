@@ -153,7 +153,6 @@ public class SysUserServiceImpl implements SysUserService {
 		}
 	}
 
- 
 	public SysUser findByAccount(String account) {
 		SysUser user = null;
 		if (StringUtils.equals(DBUtils.ORACLE,
@@ -171,29 +170,6 @@ public class SysUserServiceImpl implements SysUserService {
 			user.setDepartment(sysDepartmentService.findById(user.getDeptId()));
 		}
 		return user;
-	}
-
-	/**
-	 * 获取某些用户的角色
-	 * 
-	 * @param actorIds
-	 * @return
-	 */
-	public List<SysRole> getUserRoles(List<String> actorIds) {
-		List<SysRole> roles = new ArrayList<SysRole>();
-		if (actorIds != null && !actorIds.isEmpty()) {
-			for (String actorId : actorIds) {
-				List<SysRole> list = sysRoleMapper.getSysRolesOfUser(actorId);
-				if (list != null && !list.isEmpty()) {
-					for (SysRole role : list) {
-						if (!roles.contains(role)) {
-							roles.add(role);
-						}
-					}
-				}
-			}
-		}
-		return roles;
 	}
 
 	public SysUser findByAccountWithAll(String account) {
@@ -385,6 +361,34 @@ public class SysUserServiceImpl implements SysUserService {
 		return sysUserMapper.getSysUsersByAppId(appId);
 	}
 
+	public List<SysUser> getSysUsersByDeptRole(Long deptId, String roleCode) {
+		if (roleCode == null) {
+			return null;
+		}
+		SysDeptRoleQuery query = new SysDeptRoleQuery();
+		query.setRoleCode(roleCode);
+		query.setDeptId(deptId);
+		return sysUserMapper.getSysDeptRoleUsers(query);
+	}
+
+	public List<SysUser> getSysUsersByDeptRoleId(Long deptRoleId) {
+		if (deptRoleId == 0 || null == deptRoleId) {
+			return null;
+		}
+		SysDeptRoleQuery query = new SysDeptRoleQuery();
+		query.setDeptRoleId(deptRoleId);
+		return sysUserMapper.getSysDeptRoleUsers(query);
+	}
+
+	public List<SysUser> getSysUsersByQueryCriteria(int start, int pageSize,
+			SysUserQuery query) {
+		RowBounds rowBounds = new RowBounds(start, pageSize);
+		List<SysUser> rows = sqlSessionTemplate.selectList("getSysUsers",
+				query, rowBounds);
+		this.initUserDepartments(rows);
+		return rows;
+	}
+
 	/**
 	 * 获取某个角色代码的用户
 	 * 
@@ -398,15 +402,6 @@ public class SysUserServiceImpl implements SysUserService {
 		SysDeptRoleQuery query = new SysDeptRoleQuery();
 		query.setRoleCode(roleCode);
 		return sysUserMapper.getSysDeptRoleUsers(query);
-	}
-
-	public List<SysUser> getSysUsersByQueryCriteria(int start, int pageSize,
-			SysUserQuery query) {
-		RowBounds rowBounds = new RowBounds(start, pageSize);
-		List<SysUser> rows = sqlSessionTemplate.selectList("getSysUsers",
-				query, rowBounds);
-		this.initUserDepartments(rows);
-		return rows;
 	}
 
 	public List<SysUser> getSysUserWithDeptList() {
@@ -456,6 +451,29 @@ public class SysUserServiceImpl implements SysUserService {
 			logger.error(e);
 		}
 		return bean;
+	}
+
+	/**
+	 * 获取某些用户的角色
+	 * 
+	 * @param actorIds
+	 * @return
+	 */
+	public List<SysRole> getUserRoles(List<String> actorIds) {
+		List<SysRole> roles = new ArrayList<SysRole>();
+		if (actorIds != null && !actorIds.isEmpty()) {
+			for (String actorId : actorIds) {
+				List<SysRole> list = sysRoleMapper.getSysRolesOfUser(actorId);
+				if (list != null && !list.isEmpty()) {
+					for (SysRole role : list) {
+						if (!roles.contains(role)) {
+							roles.add(role);
+						}
+					}
+				}
+			}
+		}
+		return roles;
 	}
 
 	public Set<SysDeptRole> getUserRoles(SysUser user) {

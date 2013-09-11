@@ -269,7 +269,8 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 		SysDepartment dept = sysDepartmentService.findById(deptId);
 		if (dept != null) {
 			List<SysDepartment> list = new ArrayList<SysDepartment>();
-			sysDepartmentService.findNestingDepartment(list, deptId);
+			// sysDepartmentService.findNestingDepartment(list, deptId);
+			sysDepartmentService.findAllChildrenDepartments(list, deptId);
 			if (!list.isEmpty()) {
 				for (SysDepartment dp : list) {
 					List<SysUser> userlist = getMembershipUsers(
@@ -304,8 +305,10 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 			Set<SysDeptRole> roles = dept.getRoles();
 			for (SysDeptRole role : roles) {
 				if (role.getRole() != null && role.getRole().getId() == roleId) {
-					if (role.getUsers() != null && !role.getUsers().isEmpty()) {
-						users.addAll(role.getUsers());
+					List<SysUser> usersadd = sysUserService
+							.getSysUsersByDeptRoleId(role.getId());
+					if (usersadd != null && !usersadd.isEmpty()) {
+						users.addAll(usersadd);
 					}
 				}
 			}

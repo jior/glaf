@@ -119,23 +119,38 @@ public class SysDepartmentServiceImpl implements SysDepartmentService {
 		}
 	}
 
-	/**
-	 * 通过节点编号获取部门信息
-	 * 
-	 * @param nodeId
-	 * @return
-	 */
-	public SysDepartment getSysDepartmentByNodeId(long nodeId) {
-		SysDepartmentQuery query = new SysDepartmentQuery();
-		query.nodeId(nodeId);
-		query.setOrderBy(" E.ID asc ");
-
-		List<SysDepartment> list = this.list(query);
-		if (list != null && !list.isEmpty()) {
-			return list.get(0);
+	public void findAllChildrenDepartments(List<SysDepartment> list, long deptId) {
+		SysDepartment node = this.findById(deptId);
+		if (node != null) {
+			this.findAllChildrenDepartments(list, node);
 		}
+	}
 
-		return null;
+	/**
+	 * 取所有子部门的集合
+	 * 
+	 * @param list
+	 * @param node
+	 */
+	public void findAllChildrenDepartments(List<SysDepartment> list,
+			SysDepartment node) {
+		if (node == null) {
+			return;
+		}
+		SysTree tree = node.getNode();
+		List<SysTree> trees = sysTreeService.getSysTreeListForDept(
+				tree.getId(), -1);
+		if (trees == null || trees.isEmpty()) {// 无子节点
+			// list.add(node);
+		} else {
+			for (SysTree t : trees) {
+				SysDepartment parent = t.getDepartment();
+				SysTree treeNode = sysTreeService.findById(parent.getNodeId());
+				parent.setNode(treeNode);
+				findAllChildrenDepartments(list, parent);
+			}
+		}
+		list.add(node);
 	}
 
 	public SysDepartment findByCode(String code) {
@@ -230,6 +245,25 @@ public class SysDepartmentServiceImpl implements SysDepartmentService {
 			}
 		}
 		return sysDepartment;
+	}
+
+	/**
+	 * 通过节点编号获取部门信息
+	 * 
+	 * @param nodeId
+	 * @return
+	 */
+	public SysDepartment getSysDepartmentByNodeId(long nodeId) {
+		SysDepartmentQuery query = new SysDepartmentQuery();
+		query.nodeId(nodeId);
+		query.setOrderBy(" E.ID asc ");
+
+		List<SysDepartment> list = this.list(query);
+		if (list != null && !list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
 	}
 
 	public int getSysDepartmentCountByQueryCriteria(SysDepartmentQuery query) {
