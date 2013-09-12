@@ -12,7 +12,7 @@ CREATE TABLE UI_LAYOUT(
         TEMPLATEID_ varchar(50),
         TITLE_ varchar(255),
         PRIMARY KEY (ID_)
- );
+ )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_bin;
 
 
  CREATE TABLE UI_PANEL (
@@ -39,7 +39,7 @@ CREATE TABLE UI_LAYOUT(
         TYPE_ varchar(20),
         WIDTH_ int,
         PRIMARY KEY (ID_)
-);
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_bin;
 
 
 CREATE TABLE UI_PANELINSTANCE (
@@ -48,7 +48,7 @@ CREATE TABLE UI_PANELINSTANCE (
         PANEL_ varchar(50),
         USERPANEL_ varchar(50),
         PRIMARY KEY (ID_)
-);
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_bin;
 
 CREATE TABLE UI_SKIN (
         ID_ varchar(50) NOT NULL,
@@ -60,14 +60,14 @@ CREATE TABLE UI_SKIN (
         STYLECLASS_ varchar(255),
         TITLE_ varchar(255),
         PRIMARY KEY (ID_)
-);
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_bin;
 
 CREATE TABLE UI_SKININSTANCE (
         ID_ varchar(50) NOT NULL,
         ACTORID_ varchar(255),
         SKIN_ varchar(50),
         PRIMARY KEY (ID_)
-);
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_bin;
 
 CREATE TABLE UI_USERPANEL (
         ID_ varchar(50) NOT NULL,
@@ -77,7 +77,7 @@ CREATE TABLE UI_USERPANEL (
         REFRESHSECONDS_ int,
         LAYOUT_ varchar(50),
         PRIMARY KEY (ID_)
-);
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_bin;
 
 CREATE TABLE UI_USERPORTAL (
         ID_ varchar(50) NOT NULL,
@@ -87,5 +87,5 @@ CREATE TABLE UI_USERPORTAL (
         PANELID_ varchar(50),
         POSITION_ int,
         PRIMARY KEY (ID_)
-);
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_bin;
 

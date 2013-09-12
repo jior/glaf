@@ -378,8 +378,8 @@ insert into sys_input_def (id, init_value, input_type, java_type, key_name, requ
 /*UI管理初始化数据*/
 INSERT INTO UI_PANEL (ID_,ACTORID_,CLOSE_,COLLAPSIBLE_,COLUMNINDEX_,HEIGHT_,LINK_,LOCKED_,NAME_,RESIZE_,TITLE_,TYPE_,WIDTH_) VALUES ( '1010','root',0,0,0,250,'/user/todo.do?method=userTasks',0,'todo',0,'待办事项','L',0);
 INSERT INTO UI_PANEL (ID_,ACTORID_,CLOSE_,COLLAPSIBLE_,COLUMNINDEX_,HEIGHT_,LINK_,LOCKED_,NAME_,RESIZE_,TITLE_,TYPE_,WIDTH_) VALUES ( '1016','root',0,0,0,250,'/mx/public/info/indexList?serviceKey=news',0,'news',0,'新闻','L',0);
-INSERT INTO UI_PANEL (ID_,ACTORID_,CLOSE_,COLLAPSIBLE_,COLUMNINDEX_,HEIGHT_,LINK_,LOCKED_,NAME_,RESIZE_,TITLE_,TYPE_,WIDTH_) VALUES ( '1018','root',0,0,0,250,'/mx/public/info/indexList?serviceKey=bulletin',0,'gongGao',0,'公告','L',0);
-INSERT INTO UI_PANEL (ID_,ACTORID_,CLOSE_,COLLAPSIBLE_,COLUMNINDEX_,CONTENT_,HEIGHT_,LOCKED_,NAME_,RESIZE_,TITLE_,TYPE_,WIDTH_) VALUES ( '1020','root',0,0,0,'<p>&nbsp;</p><p>&nbsp;&nbsp;&nbsp;&nbsp;广州高勤基盘1.0准备发布！</p>',250,0,'notice',0,'通知','T',0);
+INSERT INTO UI_PANEL (ID_,ACTORID_,CLOSE_,COLLAPSIBLE_,COLUMNINDEX_,HEIGHT_,LINK_,LOCKED_,NAME_,RESIZE_,TITLE_,TYPE_,WIDTH_) VALUES ( '1018','root',0,0,0,250,'/mx/public/info/indexList?serviceKey=bulletin',0,'bulletin',0,'公告','L',0);
+INSERT INTO UI_PANEL (ID_,ACTORID_,CLOSE_,COLLAPSIBLE_,COLUMNINDEX_,CONTENT_,HEIGHT_,LOCKED_,NAME_,RESIZE_,TITLE_,TYPE_,WIDTH_) VALUES ( '1020','root',0,0,0,'<p>&nbsp;</p><p>&nbsp;&nbsp;&nbsp;&nbsp;GLAF 1.0准备发布！</p>',250,0,'notice',0,'通知','T',0);
 
 INSERT INTO UI_PANELINSTANCE (ID_,NAME_,PANEL_,USERPANEL_) VALUES ( '1024','2','1020','1023');
 INSERT INTO UI_PANELINSTANCE (ID_,NAME_,PANEL_,USERPANEL_) VALUES ( '1025','1','1010','1023');
