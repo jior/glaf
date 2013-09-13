@@ -60,91 +60,6 @@ public class BorrowmoneyController {
 
 	}
 
-	@javax.annotation.Resource
-	public void setBorrowmoneyService(BorrowmoneyService borrowmoneyService) {
-		this.borrowmoneyService = borrowmoneyService;
-	}
-
-	@RequestMapping("/save")
-	public ModelAndView save(HttpServletRequest request, ModelMap modelMap) {
-		User user = RequestUtils.getUser(request);
-		String actorId = user.getActorId();
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		params.remove("status");
-		params.remove("wfStatus");
-
-		Borrowmoney borrowmoney = new Borrowmoney();
-		Tools.populate(borrowmoney, params);
-
-		borrowmoney.setBorrowid(RequestUtils.getLong(request, "borrowid"));
-		borrowmoney.setFeename(request.getParameter("feename"));
-		borrowmoney.setFeesum(RequestUtils.getDouble(request, "feesum"));
-		borrowmoney.setRemark(request.getParameter("remark"));
-		borrowmoney.setCreateBy(request.getParameter("createBy"));
-		borrowmoney.setCreateDate(RequestUtils.getDate(request, "createDate"));
-		borrowmoney.setUpdateDate(RequestUtils.getDate(request, "updateDate"));
-		borrowmoney.setUpdateBy(request.getParameter("updateBy"));
-
-		borrowmoney.setCreateBy(actorId);
-
-		borrowmoneyService.save(borrowmoney);
-
-		return this.list(request, modelMap);
-	}
-
-	@ResponseBody
-	@RequestMapping("/saveBorrowmoney")
-	public byte[] saveBorrowmoney(HttpServletRequest request) {
-		User user = RequestUtils.getUser(request);
-		String actorId = user.getActorId();
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		Borrowmoney borrowmoney = new Borrowmoney();
-		try {
-			Tools.populate(borrowmoney, params);
-			borrowmoney.setBorrowid(RequestUtils.getLong(request, "borrowid"));
-			borrowmoney.setFeename(request.getParameter("feename"));
-			borrowmoney.setFeesum(RequestUtils.getDouble(request, "feesum"));
-			borrowmoney.setRemark(request.getParameter("remark"));
-			borrowmoney.setCreateBy(request.getParameter("createBy"));
-			borrowmoney.setCreateDate(RequestUtils.getDate(request,
-					"createDate"));
-			borrowmoney.setUpdateDate(RequestUtils.getDate(request,
-					"updateDate"));
-			borrowmoney.setUpdateBy(request.getParameter("updateBy"));
-			borrowmoney.setCreateBy(actorId);
-			this.borrowmoneyService.save(borrowmoney);
-
-			return ResponseUtils.responseJsonResult(true);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			logger.error(ex);
-		}
-		return ResponseUtils.responseJsonResult(false);
-	}
-
-	@RequestMapping("/update")
-	public ModelAndView update(HttpServletRequest request, ModelMap modelMap) {
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		params.remove("status");
-		params.remove("wfStatus");
-
-		Borrowmoney borrowmoney = borrowmoneyService
-				.getBorrowmoney(RequestUtils.getLong(request, "borrowmoneyid"));
-
-		borrowmoney.setBorrowid(RequestUtils.getLong(request, "borrowid"));
-		borrowmoney.setFeename(request.getParameter("feename"));
-		borrowmoney.setFeesum(RequestUtils.getDouble(request, "feesum"));
-		borrowmoney.setRemark(request.getParameter("remark"));
-		borrowmoney.setCreateBy(request.getParameter("createBy"));
-		borrowmoney.setCreateDate(RequestUtils.getDate(request, "createDate"));
-		borrowmoney.setUpdateDate(RequestUtils.getDate(request, "updateDate"));
-		borrowmoney.setUpdateBy(request.getParameter("updateBy"));
-
-		borrowmoneyService.save(borrowmoney);
-
-		return this.list(request, modelMap);
-	}
-
 	@ResponseBody
 	@RequestMapping("/delete")
 	public void delete(HttpServletRequest request, ModelMap modelMap) {
@@ -233,43 +148,6 @@ public class BorrowmoneyController {
 		}
 
 		return new ModelAndView("/oa/borrowmoney/edit", modelMap);
-	}
-
-	@RequestMapping("/view")
-	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
-
-		Borrowmoney borrowmoney = borrowmoneyService
-				.getBorrowmoney(RequestUtils.getLong(request, "borrowmoneyid"));
-		request.setAttribute("borrowmoney", borrowmoney);
-		JSONObject rowJSON = borrowmoney.toJsonObject();
-		request.setAttribute("x_json", rowJSON.toJSONString());
-
-		String view = request.getParameter("view");
-		if (StringUtils.isNotEmpty(view)) {
-			return new ModelAndView(view);
-		}
-
-		String x_view = ViewProperties.getString("borrowmoney.view");
-		if (StringUtils.isNotEmpty(x_view)) {
-			return new ModelAndView(x_view);
-		}
-
-		return new ModelAndView("/oa/borrowmoney/view");
-	}
-
-	@RequestMapping("/query")
-	public ModelAndView query(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
-		String view = request.getParameter("view");
-		if (StringUtils.isNotEmpty(view)) {
-			return new ModelAndView(view, modelMap);
-		}
-		String x_view = ViewProperties.getString("borrowmoney.query");
-		if (StringUtils.isNotEmpty(x_view)) {
-			return new ModelAndView(x_view, modelMap);
-		}
-		return new ModelAndView("/oa/borrowmoney/query", modelMap);
 	}
 
 	@RequestMapping("/json")
@@ -377,6 +255,128 @@ public class BorrowmoneyController {
 		}
 
 		return new ModelAndView("/oa/borrowmoney/list", modelMap);
+	}
+
+	@RequestMapping("/query")
+	public ModelAndView query(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		String view = request.getParameter("view");
+		if (StringUtils.isNotEmpty(view)) {
+			return new ModelAndView(view, modelMap);
+		}
+		String x_view = ViewProperties.getString("borrowmoney.query");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+		return new ModelAndView("/oa/borrowmoney/query", modelMap);
+	}
+
+	@RequestMapping("/save")
+	public ModelAndView save(HttpServletRequest request, ModelMap modelMap) {
+		User user = RequestUtils.getUser(request);
+		String actorId = user.getActorId();
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		params.remove("status");
+		params.remove("wfStatus");
+
+		Borrowmoney borrowmoney = new Borrowmoney();
+		Tools.populate(borrowmoney, params);
+
+		borrowmoney.setBorrowid(RequestUtils.getLong(request, "borrowid"));
+		borrowmoney.setFeename(request.getParameter("feename"));
+		borrowmoney.setFeesum(RequestUtils.getDouble(request, "feesum"));
+		borrowmoney.setRemark(request.getParameter("remark"));
+		borrowmoney.setCreateBy(request.getParameter("createBy"));
+		borrowmoney.setCreateDate(RequestUtils.getDate(request, "createDate"));
+		borrowmoney.setUpdateDate(RequestUtils.getDate(request, "updateDate"));
+		borrowmoney.setUpdateBy(request.getParameter("updateBy"));
+
+		borrowmoney.setCreateBy(actorId);
+
+		borrowmoneyService.save(borrowmoney);
+
+		return this.list(request, modelMap);
+	}
+
+	@ResponseBody
+	@RequestMapping("/saveBorrowmoney")
+	public byte[] saveBorrowmoney(HttpServletRequest request) {
+		User user = RequestUtils.getUser(request);
+		String actorId = user.getActorId();
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		Borrowmoney borrowmoney = new Borrowmoney();
+		try {
+			Tools.populate(borrowmoney, params);
+			borrowmoney.setBorrowid(RequestUtils.getLong(request, "borrowid"));
+			borrowmoney.setFeename(request.getParameter("feename"));
+			borrowmoney.setFeesum(RequestUtils.getDouble(request, "feesum"));
+			borrowmoney.setRemark(request.getParameter("remark"));
+			borrowmoney.setCreateBy(request.getParameter("createBy"));
+			borrowmoney.setCreateDate(RequestUtils.getDate(request,
+					"createDate"));
+			borrowmoney.setUpdateDate(RequestUtils.getDate(request,
+					"updateDate"));
+			borrowmoney.setUpdateBy(request.getParameter("updateBy"));
+			borrowmoney.setCreateBy(actorId);
+			this.borrowmoneyService.save(borrowmoney);
+
+			return ResponseUtils.responseJsonResult(true);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			logger.error(ex);
+		}
+		return ResponseUtils.responseJsonResult(false);
+	}
+
+	@javax.annotation.Resource
+	public void setBorrowmoneyService(BorrowmoneyService borrowmoneyService) {
+		this.borrowmoneyService = borrowmoneyService;
+	}
+
+	@RequestMapping("/update")
+	public ModelAndView update(HttpServletRequest request, ModelMap modelMap) {
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		params.remove("status");
+		params.remove("wfStatus");
+
+		Borrowmoney borrowmoney = borrowmoneyService
+				.getBorrowmoney(RequestUtils.getLong(request, "borrowmoneyid"));
+
+		borrowmoney.setBorrowid(RequestUtils.getLong(request, "borrowid"));
+		borrowmoney.setFeename(request.getParameter("feename"));
+		borrowmoney.setFeesum(RequestUtils.getDouble(request, "feesum"));
+		borrowmoney.setRemark(request.getParameter("remark"));
+		borrowmoney.setCreateBy(request.getParameter("createBy"));
+		borrowmoney.setCreateDate(RequestUtils.getDate(request, "createDate"));
+		borrowmoney.setUpdateDate(RequestUtils.getDate(request, "updateDate"));
+		borrowmoney.setUpdateBy(request.getParameter("updateBy"));
+
+		borrowmoneyService.save(borrowmoney);
+
+		return this.list(request, modelMap);
+	}
+
+	@RequestMapping("/view")
+	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+
+		Borrowmoney borrowmoney = borrowmoneyService
+				.getBorrowmoney(RequestUtils.getLong(request, "borrowmoneyid"));
+		request.setAttribute("borrowmoney", borrowmoney);
+		JSONObject rowJSON = borrowmoney.toJsonObject();
+		request.setAttribute("x_json", rowJSON.toJSONString());
+
+		String view = request.getParameter("view");
+		if (StringUtils.isNotEmpty(view)) {
+			return new ModelAndView(view);
+		}
+
+		String x_view = ViewProperties.getString("borrowmoney.view");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view);
+		}
+
+		return new ModelAndView("/oa/borrowmoney/view");
 	}
 
 }

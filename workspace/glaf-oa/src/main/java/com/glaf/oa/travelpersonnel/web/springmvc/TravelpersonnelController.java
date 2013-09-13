@@ -52,86 +52,6 @@ public class TravelpersonnelController {
 
 	}
 
-	@javax.annotation.Resource
-	public void setTravelpersonnelService(
-			TravelpersonnelService travelpersonnelService) {
-		this.travelpersonnelService = travelpersonnelService;
-	}
-
-	@RequestMapping("/save")
-	public ModelAndView save(HttpServletRequest request, ModelMap modelMap) {
-		User user = RequestUtils.getUser(request);
-		String actorId = user.getActorId();
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		params.remove("status");
-		params.remove("wfStatus");
-
-		Travelpersonnel travelpersonnel = new Travelpersonnel();
-		Tools.populate(travelpersonnel, params);
-
-		travelpersonnel.setTravelid(RequestUtils.getLong(request, "travelid"));
-		travelpersonnel.setDept(request.getParameter("dept"));
-		travelpersonnel.setPersonnel(request.getParameter("personnel"));
-		travelpersonnel.setRemark(request.getParameter("remark"));
-		if (RequestUtils.getLong(request, "personnelid") == 0L
-				|| request.getParameter("personnelid") == null) {
-			travelpersonnel.setPersonnelid(0L);
-			travelpersonnel.setCreateDate(new Date());
-			travelpersonnel.setCreateBy(actorId);
-		} else {
-			travelpersonnel.setPersonnelid(RequestUtils.getLong(request,
-					"personnelid"));
-			travelpersonnel.setUpdateDate(new Date());
-			travelpersonnel.setUpdateBy(actorId);
-		}
-
-		travelpersonnelService.save(travelpersonnel);
-
-		return this.list(request, modelMap);
-	}
-
-	@ResponseBody
-	@RequestMapping("/saveTravelpersonnel")
-	public byte[] saveTravelpersonnel(HttpServletRequest request) {
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		Travelpersonnel travelpersonnel = new Travelpersonnel();
-		try {
-			Tools.populate(travelpersonnel, params);
-			travelpersonnel.setTravelid(RequestUtils.getLong(request,
-					"travelid"));
-			travelpersonnel.setDept(request.getParameter("dept"));
-			travelpersonnel.setPersonnel(request.getParameter("personnel"));
-			travelpersonnel.setRemark(request.getParameter("remark"));
-			this.travelpersonnelService.save(travelpersonnel);
-
-			return ResponseUtils.responseJsonResult(true);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			logger.error(ex);
-		}
-		return ResponseUtils.responseJsonResult(false);
-	}
-
-	@RequestMapping("/update")
-	public ModelAndView update(HttpServletRequest request, ModelMap modelMap) {
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		params.remove("status");
-		params.remove("wfStatus");
-
-		Travelpersonnel travelpersonnel = travelpersonnelService
-				.getTravelpersonnel(RequestUtils
-						.getLong(request, "personnelid"));
-
-		travelpersonnel.setTravelid(RequestUtils.getLong(request, "travelid"));
-		travelpersonnel.setDept(request.getParameter("dept"));
-		travelpersonnel.setPersonnel(request.getParameter("personnel"));
-		travelpersonnel.setRemark(request.getParameter("remark"));
-
-		travelpersonnelService.save(travelpersonnel);
-
-		return this.list(request, modelMap);
-	}
-
 	@ResponseBody
 	@RequestMapping("/delete")
 	public void delete(HttpServletRequest request, ModelMap modelMap) {
@@ -201,43 +121,6 @@ public class TravelpersonnelController {
 		}
 
 		return new ModelAndView("/oa/travelpersonnel/edit", modelMap);
-	}
-
-	@RequestMapping("/view")
-	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
-		Travelpersonnel travelpersonnel = travelpersonnelService
-				.getTravelpersonnel(RequestUtils
-						.getLong(request, "personnelid"));
-		request.setAttribute("travelpersonnel", travelpersonnel);
-		JSONObject rowJSON = travelpersonnel.toJsonObject();
-		request.setAttribute("x_json", rowJSON.toJSONString());
-
-		String view = request.getParameter("view");
-		if (StringUtils.isNotEmpty(view)) {
-			return new ModelAndView(view);
-		}
-
-		String x_view = ViewProperties.getString("travelpersonnel.view");
-		if (StringUtils.isNotEmpty(x_view)) {
-			return new ModelAndView(x_view);
-		}
-
-		return new ModelAndView("/oa/travelpersonnel/view");
-	}
-
-	@RequestMapping("/query")
-	public ModelAndView query(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
-		String view = request.getParameter("view");
-		if (StringUtils.isNotEmpty(view)) {
-			return new ModelAndView(view, modelMap);
-		}
-		String x_view = ViewProperties.getString("travelpersonnel.query");
-		if (StringUtils.isNotEmpty(x_view)) {
-			return new ModelAndView(x_view, modelMap);
-		}
-		return new ModelAndView("/oa/travelpersonnel/query", modelMap);
 	}
 
 	@RequestMapping("/json")
@@ -344,6 +227,123 @@ public class TravelpersonnelController {
 		}
 
 		return new ModelAndView("/oa/travelpersonnel/list", modelMap);
+	}
+
+	@RequestMapping("/query")
+	public ModelAndView query(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		String view = request.getParameter("view");
+		if (StringUtils.isNotEmpty(view)) {
+			return new ModelAndView(view, modelMap);
+		}
+		String x_view = ViewProperties.getString("travelpersonnel.query");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+		return new ModelAndView("/oa/travelpersonnel/query", modelMap);
+	}
+
+	@RequestMapping("/save")
+	public ModelAndView save(HttpServletRequest request, ModelMap modelMap) {
+		User user = RequestUtils.getUser(request);
+		String actorId = user.getActorId();
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		params.remove("status");
+		params.remove("wfStatus");
+
+		Travelpersonnel travelpersonnel = new Travelpersonnel();
+		Tools.populate(travelpersonnel, params);
+
+		travelpersonnel.setTravelid(RequestUtils.getLong(request, "travelid"));
+		travelpersonnel.setDept(request.getParameter("dept"));
+		travelpersonnel.setPersonnel(request.getParameter("personnel"));
+		travelpersonnel.setRemark(request.getParameter("remark"));
+		if (RequestUtils.getLong(request, "personnelid") == 0L
+				|| request.getParameter("personnelid") == null) {
+			travelpersonnel.setPersonnelid(0L);
+			travelpersonnel.setCreateDate(new Date());
+			travelpersonnel.setCreateBy(actorId);
+		} else {
+			travelpersonnel.setPersonnelid(RequestUtils.getLong(request,
+					"personnelid"));
+			travelpersonnel.setUpdateDate(new Date());
+			travelpersonnel.setUpdateBy(actorId);
+		}
+
+		travelpersonnelService.save(travelpersonnel);
+
+		return this.list(request, modelMap);
+	}
+
+	@ResponseBody
+	@RequestMapping("/saveTravelpersonnel")
+	public byte[] saveTravelpersonnel(HttpServletRequest request) {
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		Travelpersonnel travelpersonnel = new Travelpersonnel();
+		try {
+			Tools.populate(travelpersonnel, params);
+			travelpersonnel.setTravelid(RequestUtils.getLong(request,
+					"travelid"));
+			travelpersonnel.setDept(request.getParameter("dept"));
+			travelpersonnel.setPersonnel(request.getParameter("personnel"));
+			travelpersonnel.setRemark(request.getParameter("remark"));
+			this.travelpersonnelService.save(travelpersonnel);
+
+			return ResponseUtils.responseJsonResult(true);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			logger.error(ex);
+		}
+		return ResponseUtils.responseJsonResult(false);
+	}
+
+	@javax.annotation.Resource
+	public void setTravelpersonnelService(
+			TravelpersonnelService travelpersonnelService) {
+		this.travelpersonnelService = travelpersonnelService;
+	}
+
+	@RequestMapping("/update")
+	public ModelAndView update(HttpServletRequest request, ModelMap modelMap) {
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		params.remove("status");
+		params.remove("wfStatus");
+
+		Travelpersonnel travelpersonnel = travelpersonnelService
+				.getTravelpersonnel(RequestUtils
+						.getLong(request, "personnelid"));
+
+		travelpersonnel.setTravelid(RequestUtils.getLong(request, "travelid"));
+		travelpersonnel.setDept(request.getParameter("dept"));
+		travelpersonnel.setPersonnel(request.getParameter("personnel"));
+		travelpersonnel.setRemark(request.getParameter("remark"));
+
+		travelpersonnelService.save(travelpersonnel);
+
+		return this.list(request, modelMap);
+	}
+
+	@RequestMapping("/view")
+	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		Travelpersonnel travelpersonnel = travelpersonnelService
+				.getTravelpersonnel(RequestUtils
+						.getLong(request, "personnelid"));
+		request.setAttribute("travelpersonnel", travelpersonnel);
+		JSONObject rowJSON = travelpersonnel.toJsonObject();
+		request.setAttribute("x_json", rowJSON.toJSONString());
+
+		String view = request.getParameter("view");
+		if (StringUtils.isNotEmpty(view)) {
+			return new ModelAndView(view);
+		}
+
+		String x_view = ViewProperties.getString("travelpersonnel.view");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view);
+		}
+
+		return new ModelAndView("/oa/travelpersonnel/view");
 	}
 
 }

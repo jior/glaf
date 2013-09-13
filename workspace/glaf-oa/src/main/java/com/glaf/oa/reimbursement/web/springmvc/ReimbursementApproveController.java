@@ -66,22 +66,10 @@ public class ReimbursementApproveController {
 
 	protected ReimbursementService reimbursementService;
 
-	private SysDepartmentService sysDepartmentService;
+	protected SysDepartmentService sysDepartmentService;
 
 	public ReimbursementApproveController() {
 
-	}
-
-	@javax.annotation.Resource
-	public void setSysDepartmentService(
-			SysDepartmentService sysDepartmentService) {
-		this.sysDepartmentService = sysDepartmentService;
-	}
-
-	@javax.annotation.Resource
-	public void setReimbursementService(
-			ReimbursementService reimbursementService) {
-		this.reimbursementService = reimbursementService;
 	}
 
 	@RequestMapping("/approve")
@@ -95,12 +83,6 @@ public class ReimbursementApproveController {
 		if (reimbursement.getBrands1() != null
 				&& reimbursement.getBrands2() != null) {
 			reimbursement.setBrand("MUL");
-		} else if (reimbursement.getBrands1() != null
-				&& reimbursement.getBrands2() == null) {
-			reimbursement.setBrand("FLL");
-		} else if (reimbursement.getBrands1() == null
-				&& reimbursement.getBrands2() != null) {
-			reimbursement.setBrand("MSLD");
 		}
 
 		request.setAttribute("reimbursement", reimbursement);
@@ -152,6 +134,122 @@ public class ReimbursementApproveController {
 			return mav;
 		}
 		return null;
+	}
+
+	/**
+	 * 工作流审批
+	 * 
+	 * @param purchase
+	 * @param flag
+	 *            0同意 1不同意
+	 * @param request
+	 * @return
+	 */
+	private boolean completeTask(Reimbursement reimbursement, int flag,
+			HttpServletRequest request) {
+		User user = RequestUtils.getUser(request);
+		String actorId = user.getActorId();
+		String processName = "ReimbursementProcess";
+		User appUser = BaseDataManager.getInstance().getSysUserService()
+				.findByAccount(reimbursement.getAppuser());
+		// 根据用户部门id 获取整个部门的对象（GZ01）
+		SysDepartment curdept = sysDepartmentService.findById(appUser
+				.getDeptId());
+
+		// 根据部门CODE(例如GZ01)截取前2位 作为地区
+		String curAreadeptCode = curdept.getCode().substring(0, 2);
+		String endOfCode = "";
+		if (curdept.getCode().length() == 4) {
+			endOfCode = curdept.getCode().substring(2);
+		}
+
+		// 根据code 获取 地区部门对象（GZ06）行政
+		SysDepartment HRdept = sysDepartmentService.findByCode(curAreadeptCode
+				+ "06");
+		// 根据code 获取 地区部门对象（GZ）
+		SysDepartment curAreadept = sysDepartmentService
+				.findByCode(curAreadeptCode);
+
+		// 获取集团部门对象（JT）
+		SysDepartment sysdeptMem = sysDepartmentService.findByCode("JT");
+
+		// 获取集团部门部门对象（JTxx）
+		SysDepartment sysdeptMemDept = sysDepartmentService.findByCode("JT"
+				+ endOfCode);
+
+		ProcessContext ctx = new ProcessContext();
+		ctx.setRowId(reimbursement.getReimbursementid());// 表id
+		ctx.setActorId(actorId);// 用户审批者
+		ctx.setProcessName(processName);// 流程名称
+		String opinion = request.getParameter("approveOpinion");
+		ctx.setOpinion(opinion);// 审批意见
+
+		Collection<DataField> dataFields = new ArrayList<DataField>();// 参数
+
+		DataField dataField = new DataField();
+		dataField.setName("isAgree");// 是否通过审批
+		if (flag == 0) {
+			dataField.setValue("true");
+		} else {
+			dataField.setValue("false");
+		}
+		dataFields.add(dataField);
+
+		// 会计 （XX06）
+		DataField datafield1 = new DataField();
+		datafield1.setName("deptId01");
+		datafield1.setValue(HRdept.getId());
+		dataFields.add(datafield1);
+
+		// 部门主管/经理
+		DataField datafield4 = new DataField();
+		datafield4.setName("deptId02");
+		datafield4.setValue(appUser.getDeptId());
+		dataFields.add(datafield4);
+
+		// 用户地区部门（如GZ）
+		DataField datafield5 = new DataField();
+		datafield5.setName("deptId03");
+		datafield5.setValue(curAreadept.getId());
+		dataFields.add(datafield5);
+
+		// 集团部门(JTxx)
+		DataField datafield2 = new DataField();
+		datafield2.setName("deptId04");
+		datafield2.setValue(sysdeptMemDept.getId());
+		dataFields.add(datafield2);
+
+		// 集团(JT)
+		DataField datafield6 = new DataField();
+		datafield6.setName("deptId05");
+		datafield6.setValue(sysdeptMem.getId());
+		dataFields.add(datafield6);
+
+		DataField datafield3 = new DataField();
+		datafield3.setName("rowId");
+		datafield3.setValue(reimbursement.getReimbursementid());
+		dataFields.add(datafield3);
+
+		ctx.setDataFields(dataFields);
+
+		Long processInstanceId;
+		boolean isOK = false;
+
+		if (reimbursement.getProcessinstanceid() != null
+				&& reimbursement.getWfstatus() != 9999
+				&& reimbursement.getWfstatus() != null) {
+			processInstanceId = reimbursement.getProcessinstanceid();
+			ctx.setProcessInstanceId(processInstanceId);
+			isOK = ProcessContainer.getContainer().completeTask(ctx);
+			logger.info("workflowing .......  ");
+		} else {
+			processInstanceId = ProcessContainer.getContainer().startProcess(
+					ctx);
+			logger.info("processInstanceId=" + processInstanceId);
+			isOK = true;
+			logger.info("workflow start");
+		}
+		return isOK;
 	}
 
 	@RequestMapping("/json")
@@ -274,119 +372,15 @@ public class ReimbursementApproveController {
 		return new ModelAndView("/oa/reimbursement/approve_list", modelMap);
 	}
 
-	/**
-	 * 工作流审批
-	 * 
-	 * @param purchase
-	 * @param flag
-	 *            0同意 1不同意
-	 * @param request
-	 * @return
-	 */
-	private boolean completeTask(Reimbursement reimbursement, int flag,
-			HttpServletRequest request) {
-		User user = RequestUtils.getUser(request);
-		String actorId = user.getActorId();
-		String processName = "ReimbursementProcess";
-		User appUser = BaseDataManager.getInstance().getSysUserService()
-				.findByAccount(reimbursement.getAppuser());
-		// 根据用户部门id 获取整个部门的对象（HZ01）
-		SysDepartment curdept = sysDepartmentService.findById(appUser
-				.getDeptId());
+	@javax.annotation.Resource
+	public void setReimbursementService(
+			ReimbursementService reimbursementService) {
+		this.reimbursementService = reimbursementService;
+	}
 
-		// 根据部门CODE(例如HZ01)截取前2位 作为地区
-		String curAreadeptCode = curdept.getCode().substring(0, 2);
-		String endOfCode = "";
-		if (curdept.getCode().length() == 4) {
-			endOfCode = curdept.getCode().substring(2);
-		}
-
-		// 根据code 获取 地区部门对象（HZ06）行政
-		SysDepartment HRdept = sysDepartmentService.findByCode(curAreadeptCode
-				+ "06");
-		// 根据code 获取 地区部门对象（HZ）
-		SysDepartment curAreadept = sysDepartmentService
-				.findByCode(curAreadeptCode);
-
-		// 获取集团部门对象（JT）
-		SysDepartment sysdeptMem = sysDepartmentService.findByCode("JT");
-
-		// 获取集团部门部门对象（JTxx）
-		SysDepartment sysdeptMemDept = sysDepartmentService.findByCode("JT"
-				+ endOfCode);
-
-		ProcessContext ctx = new ProcessContext();
-		ctx.setRowId(reimbursement.getReimbursementid());// 表id
-		ctx.setActorId(actorId);// 用户审批者
-		ctx.setProcessName(processName);// 流程名称
-		String opinion = request.getParameter("approveOpinion");
-		ctx.setOpinion(opinion);// 审批意见
-
-		Collection<DataField> dataFields = new ArrayList<DataField>();// 参数
-
-		DataField dataField = new DataField();
-		dataField.setName("isAgree");// 是否通过审批
-		if (flag == 0) {
-			dataField.setValue("true");
-		} else {
-			dataField.setValue("false");
-		}
-		dataFields.add(dataField);
-
-		// 会计 （XX06）
-		DataField datafield1 = new DataField();
-		datafield1.setName("deptId01");
-		datafield1.setValue(HRdept.getId());
-		dataFields.add(datafield1);
-
-		// 部门主管/经理
-		DataField datafield4 = new DataField();
-		datafield4.setName("deptId02");
-		datafield4.setValue(appUser.getDeptId());
-		dataFields.add(datafield4);
-
-		// 用户地区部门（如HZ）
-		DataField datafield5 = new DataField();
-		datafield5.setName("deptId03");
-		datafield5.setValue(curAreadept.getId());
-		dataFields.add(datafield5);
-
-		// 集团部门(JTxx)
-		DataField datafield2 = new DataField();
-		datafield2.setName("deptId04");
-		datafield2.setValue(sysdeptMemDept.getId());
-		dataFields.add(datafield2);
-
-		// 集团(JT)
-		DataField datafield6 = new DataField();
-		datafield6.setName("deptId05");
-		datafield6.setValue(sysdeptMem.getId());
-		dataFields.add(datafield6);
-
-		DataField datafield3 = new DataField();
-		datafield3.setName("rowId");
-		datafield3.setValue(reimbursement.getReimbursementid());
-		dataFields.add(datafield3);
-
-		ctx.setDataFields(dataFields);
-
-		Long processInstanceId;
-		boolean isOK = false;
-
-		if (reimbursement.getProcessinstanceid() != null
-				&& reimbursement.getWfstatus() != 9999
-				&& reimbursement.getWfstatus() != null) {
-			processInstanceId = reimbursement.getProcessinstanceid();
-			ctx.setProcessInstanceId(processInstanceId);
-			isOK = ProcessContainer.getContainer().completeTask(ctx);
-			logger.info("workflowing .......  ");
-		} else {
-			processInstanceId = ProcessContainer.getContainer().startProcess(
-					ctx);
-			logger.info("processInstanceId=" + processInstanceId);
-			isOK = true;
-			logger.info("workflow start");
-		}
-		return isOK;
+	@javax.annotation.Resource
+	public void setSysDepartmentService(
+			SysDepartmentService sysDepartmentService) {
+		this.sysDepartmentService = sysDepartmentService;
 	}
 }

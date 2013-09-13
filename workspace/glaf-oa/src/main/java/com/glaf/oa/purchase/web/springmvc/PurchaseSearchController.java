@@ -63,17 +63,6 @@ public class PurchaseSearchController {
 
 	}
 
-	@javax.annotation.Resource
-	public void setPurchaseService(PurchaseService purchaseService) {
-		this.purchaseService = purchaseService;
-	}
-
-	@javax.annotation.Resource
-	public void setSysDepartmentService(
-			SysDepartmentService sysDepartmentService) {
-		this.sysDepartmentService = sysDepartmentService;
-	}
-
 	@RequestMapping("/init")
 	public ModelAndView edit(HttpServletRequest request, ModelMap modelMap) {
 		User user = RequestUtils.getUser(request);
@@ -82,10 +71,10 @@ public class PurchaseSearchController {
 		Purchase purchase = new Purchase();
 		int areaRole = Integer.parseInt(request.getParameter("areaRole"));
 		if (areaRole == 0) {
-			// 根据用户部门id 获取整个部门的对象（HZ01）
+			// 根据用户部门id 获取整个部门的对象（GZ01）
 			SysDepartment curdept = sysDepartmentService.findById(user
 					.getDeptId());
-			// 根据部门CODE(例如HZ01)截取前2位 作为地区
+			// 根据部门CODE(例如GZ01)截取前2位 作为地区
 			String curAreadeptCode = curdept.getCode().substring(0, 2);
 			purchase.setArea(curAreadeptCode);
 		}
@@ -114,10 +103,10 @@ public class PurchaseSearchController {
 		 */
 		int areaRole = Integer.parseInt(request.getParameter("areaRole"));
 		if (areaRole == 0) {
-			// 根据用户部门id 获取整个部门的对象（HZ01）
+			// 根据用户部门id 获取整个部门的对象（GZ01）
 			SysDepartment curdept = sysDepartmentService.findById(user
 					.getDeptId());
-			// 根据部门CODE(例如HZ01)截取前2位 作为地区
+			// 根据部门CODE(例如GZ01)截取前2位 作为地区
 			String curAreadeptCode = curdept.getCode().substring(0, 2);
 			query.setArea(curAreadeptCode);
 		} else {
@@ -230,6 +219,17 @@ public class PurchaseSearchController {
 		}
 
 		return new ModelAndView("/oa/purchase/search_list", modelMap);
+	}
+
+	@javax.annotation.Resource
+	public void setPurchaseService(PurchaseService purchaseService) {
+		this.purchaseService = purchaseService;
+	}
+
+	@javax.annotation.Resource
+	public void setSysDepartmentService(
+			SysDepartmentService sysDepartmentService) {
+		this.sysDepartmentService = sysDepartmentService;
 	}
 
 }

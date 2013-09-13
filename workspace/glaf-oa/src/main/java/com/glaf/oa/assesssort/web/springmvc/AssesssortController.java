@@ -59,86 +59,7 @@ public class AssesssortController {
 	protected AssesssortService assesssortService;
 
 	public AssesssortController() {
-	}
-
-	@javax.annotation.Resource
-	public void setAssesssortService(AssesssortService assesssortService) {
-
-		this.assesssortService = assesssortService;
-	}
-
-	@RequestMapping("/save")
-	public ModelAndView save(HttpServletRequest request, ModelMap modelMap) {
-		User user = RequestUtils.getUser(request);
-		String actorId = user.getActorId();
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		params.remove("status");
-		params.remove("wfStatus");
-
-		Assesssort assesssort = new Assesssort();
-		Tools.populate(assesssort, params);
-
-		assesssort.setQustionid(RequestUtils.getLong(request, "qustionid"));
-		assesssort.setSortid(RequestUtils.getLong(request, "sortid"));
-		assesssort.setCreateBy(request.getParameter("createBy"));
-		assesssort.setCreateDate(RequestUtils.getDate(request, "createDate"));
-		assesssort.setUpdateDate(RequestUtils.getDate(request, "updateDate"));
-		assesssort.setUpdateBy(request.getParameter("updateBy"));
-
-		assesssort.setCreateBy(actorId);
-
-		assesssortService.save(assesssort);
-
-		return this.list(request, modelMap);
-	}
-
-	@ResponseBody
-	@RequestMapping("/saveAssesssort")
-	public byte[] saveAssesssort(HttpServletRequest request) {
-		User user = RequestUtils.getUser(request);
-		String actorId = user.getActorId();
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		Assesssort assesssort = new Assesssort();
-		try {
-			Tools.populate(assesssort, params);
-			assesssort.setQustionid(RequestUtils.getLong(request, "qustionid"));
-			assesssort.setSortid(RequestUtils.getLong(request, "sortid"));
-			assesssort.setCreateBy(request.getParameter("createBy"));
-			assesssort.setCreateDate(RequestUtils
-					.getDate(request, "createDate"));
-			assesssort.setUpdateDate(RequestUtils
-					.getDate(request, "updateDate"));
-			assesssort.setUpdateBy(request.getParameter("updateBy"));
-			assesssort.setCreateBy(actorId);
-			this.assesssortService.save(assesssort);
-
-			return ResponseUtils.responseJsonResult(true);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			logger.error(ex);
-		}
-		return ResponseUtils.responseJsonResult(false);
-	}
-
-	@RequestMapping("/update")
-	public ModelAndView update(HttpServletRequest request, ModelMap modelMap) {
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		params.remove("status");
-		params.remove("wfStatus");
-
-		Assesssort assesssort = assesssortService.getAssesssort(RequestUtils
-				.getLong(request, "assesssortid"));
-
-		assesssort.setQustionid(RequestUtils.getLong(request, "qustionid"));
-		assesssort.setSortid(RequestUtils.getLong(request, "sortid"));
-		assesssort.setCreateBy(request.getParameter("createBy"));
-		assesssort.setCreateDate(RequestUtils.getDate(request, "createDate"));
-		assesssort.setUpdateDate(RequestUtils.getDate(request, "updateDate"));
-		assesssort.setUpdateBy(request.getParameter("updateBy"));
-
-		assesssortService.save(assesssort);
-
-		return this.list(request, modelMap);
+		
 	}
 
 	@ResponseBody
@@ -232,44 +153,6 @@ public class AssesssortController {
 		}
 
 		return new ModelAndView("/oa/assesssort/edit", modelMap);
-	}
-
-	@RequestMapping("/view")
-	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
-
-		Assesssort assesssort = assesssortService.getAssesssort(RequestUtils
-				.getLong(request, "assesssortid"));
-		request.setAttribute("assesssort", assesssort);
-		JSONObject rowJSON = assesssort.toJsonObject();
-		request.setAttribute("x_json", rowJSON.toJSONString());
-
-		String view = request.getParameter("view");
-		if (StringUtils.isNotEmpty(view)) {
-			return new ModelAndView(view);
-		}
-
-		String x_view = ViewProperties.getString("assesssort.view");
-		if (StringUtils.isNotEmpty(x_view)) {
-			return new ModelAndView(x_view);
-		}
-
-		return new ModelAndView("/oa/assesssort/view");
-	}
-
-	@RequestMapping("/query")
-	public ModelAndView query(HttpServletRequest request, ModelMap modelMap) {
-
-		RequestUtils.setRequestParameterToAttribute(request);
-		String view = request.getParameter("view");
-		if (StringUtils.isNotEmpty(view)) {
-			return new ModelAndView(view, modelMap);
-		}
-		String x_view = ViewProperties.getString("assesssort.query");
-		if (StringUtils.isNotEmpty(x_view)) {
-			return new ModelAndView(x_view, modelMap);
-		}
-		return new ModelAndView("/oa/assesssort/query", modelMap);
 	}
 
 	@RequestMapping("/json")
@@ -380,6 +263,74 @@ public class AssesssortController {
 		return new ModelAndView("/oa/assesssort/list", modelMap);
 	}
 
+	@RequestMapping("/query")
+	public ModelAndView query(HttpServletRequest request, ModelMap modelMap) {
+
+		RequestUtils.setRequestParameterToAttribute(request);
+		String view = request.getParameter("view");
+		if (StringUtils.isNotEmpty(view)) {
+			return new ModelAndView(view, modelMap);
+		}
+		String x_view = ViewProperties.getString("assesssort.query");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+		return new ModelAndView("/oa/assesssort/query", modelMap);
+	}
+
+	@RequestMapping("/save")
+	public ModelAndView save(HttpServletRequest request, ModelMap modelMap) {
+		User user = RequestUtils.getUser(request);
+		String actorId = user.getActorId();
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		params.remove("status");
+		params.remove("wfStatus");
+
+		Assesssort assesssort = new Assesssort();
+		Tools.populate(assesssort, params);
+
+		assesssort.setQustionid(RequestUtils.getLong(request, "qustionid"));
+		assesssort.setSortid(RequestUtils.getLong(request, "sortid"));
+		assesssort.setCreateBy(request.getParameter("createBy"));
+		assesssort.setCreateDate(RequestUtils.getDate(request, "createDate"));
+		assesssort.setUpdateDate(RequestUtils.getDate(request, "updateDate"));
+		assesssort.setUpdateBy(request.getParameter("updateBy"));
+
+		assesssort.setCreateBy(actorId);
+
+		assesssortService.save(assesssort);
+
+		return this.list(request, modelMap);
+	}
+
+	@ResponseBody
+	@RequestMapping("/saveAssesssort")
+	public byte[] saveAssesssort(HttpServletRequest request) {
+		User user = RequestUtils.getUser(request);
+		String actorId = user.getActorId();
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		Assesssort assesssort = new Assesssort();
+		try {
+			Tools.populate(assesssort, params);
+			assesssort.setQustionid(RequestUtils.getLong(request, "qustionid"));
+			assesssort.setSortid(RequestUtils.getLong(request, "sortid"));
+			assesssort.setCreateBy(request.getParameter("createBy"));
+			assesssort.setCreateDate(RequestUtils
+					.getDate(request, "createDate"));
+			assesssort.setUpdateDate(RequestUtils
+					.getDate(request, "updateDate"));
+			assesssort.setUpdateBy(request.getParameter("updateBy"));
+			assesssort.setCreateBy(actorId);
+			this.assesssortService.save(assesssort);
+
+			return ResponseUtils.responseJsonResult(true);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			logger.error(ex);
+		}
+		return ResponseUtils.responseJsonResult(false);
+	}
+
 	/**
 	 * 选择指标类型
 	 * 
@@ -397,6 +348,56 @@ public class AssesssortController {
 		modelMap.put("questionId", questionId);
 
 		return new ModelAndView("/oa/assesssort/selectAssessinfo", modelMap);
+	}
+
+	@javax.annotation.Resource
+	public void setAssesssortService(AssesssortService assesssortService) {
+
+		this.assesssortService = assesssortService;
+	}
+
+	@RequestMapping("/update")
+	public ModelAndView update(HttpServletRequest request, ModelMap modelMap) {
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		params.remove("status");
+		params.remove("wfStatus");
+
+		Assesssort assesssort = assesssortService.getAssesssort(RequestUtils
+				.getLong(request, "assesssortid"));
+
+		assesssort.setQustionid(RequestUtils.getLong(request, "qustionid"));
+		assesssort.setSortid(RequestUtils.getLong(request, "sortid"));
+		assesssort.setCreateBy(request.getParameter("createBy"));
+		assesssort.setCreateDate(RequestUtils.getDate(request, "createDate"));
+		assesssort.setUpdateDate(RequestUtils.getDate(request, "updateDate"));
+		assesssort.setUpdateBy(request.getParameter("updateBy"));
+
+		assesssortService.save(assesssort);
+
+		return this.list(request, modelMap);
+	}
+
+	@RequestMapping("/view")
+	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+
+		Assesssort assesssort = assesssortService.getAssesssort(RequestUtils
+				.getLong(request, "assesssortid"));
+		request.setAttribute("assesssort", assesssort);
+		JSONObject rowJSON = assesssort.toJsonObject();
+		request.setAttribute("x_json", rowJSON.toJSONString());
+
+		String view = request.getParameter("view");
+		if (StringUtils.isNotEmpty(view)) {
+			return new ModelAndView(view);
+		}
+
+		String x_view = ViewProperties.getString("assesssort.view");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view);
+		}
+
+		return new ModelAndView("/oa/assesssort/view");
 	}
 
 }

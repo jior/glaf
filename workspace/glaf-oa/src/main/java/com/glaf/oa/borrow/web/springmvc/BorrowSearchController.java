@@ -60,32 +60,10 @@ public class BorrowSearchController {
 	protected BorrowService borrowService;
 	protected BorrowadderssService borrowadderssService;
 	protected BorrowmoneyService borrowmoneyService;
-	private SysDepartmentService sysDepartmentService;
+	protected SysDepartmentService sysDepartmentService;
 
 	public BorrowSearchController() {
 
-	}
-
-	@javax.annotation.Resource
-	public void setBorrowmoneyService(BorrowmoneyService borrowmoneyService) {
-		this.borrowmoneyService = borrowmoneyService;
-	}
-
-	@javax.annotation.Resource
-	public void setSysDepartmentService(
-			SysDepartmentService sysDepartmentService) {
-		this.sysDepartmentService = sysDepartmentService;
-	}
-
-	@javax.annotation.Resource
-	public void setBorrowadderssService(
-			BorrowadderssService borrowadderssService) {
-		this.borrowadderssService = borrowadderssService;
-	}
-
-	@javax.annotation.Resource
-	public void setBorrowService(BorrowService borrowService) {
-		this.borrowService = borrowService;
 	}
 
 	@RequestMapping("/init")
@@ -96,10 +74,10 @@ public class BorrowSearchController {
 		Borrow borrow = new Borrow();
 		int areaRole = Integer.parseInt(request.getParameter("areaRole"));
 		if (areaRole == 0) {
-			// 根据用户部门id 获取整个部门的对象（HZ01）
+			// 根据用户部门id 获取整个部门的对象（GZ01）
 			SysDepartment curdept = sysDepartmentService.findById(user
 					.getDeptId());
-			// 根据部门CODE(例如HZ01)截取前2位 作为地区
+			// 根据部门CODE(例如GZ01)截取前2位 作为地区
 			String curAreadeptCode = curdept.getCode().substring(0, 2);
 			borrow.setArea(curAreadeptCode);
 		}
@@ -126,10 +104,10 @@ public class BorrowSearchController {
 		int areaRole = Integer.parseInt(request.getParameter("areaRole"));
 		User user = RequestUtils.getUser(request);
 		if (areaRole == 0) {
-			// 根据用户部门id 获取整个部门的对象（HZ01）
+			// 根据用户部门id 获取整个部门的对象（GZ01）
 			SysDepartment curdept = sysDepartmentService.findById(user
 					.getDeptId());
-			// 根据部门CODE(例如HZ01)截取前2位 作为地区
+			// 根据部门CODE(例如GZ01)截取前2位 作为地区
 			String curAreadeptCode = curdept.getCode().substring(0, 2);
 			query.setArea(curAreadeptCode);
 		} else {
@@ -239,6 +217,28 @@ public class BorrowSearchController {
 		}
 
 		return new ModelAndView("/oa/borrow/search_list", modelMap);
+	}
+
+	@javax.annotation.Resource
+	public void setBorrowadderssService(
+			BorrowadderssService borrowadderssService) {
+		this.borrowadderssService = borrowadderssService;
+	}
+
+	@javax.annotation.Resource
+	public void setBorrowmoneyService(BorrowmoneyService borrowmoneyService) {
+		this.borrowmoneyService = borrowmoneyService;
+	}
+
+	@javax.annotation.Resource
+	public void setBorrowService(BorrowService borrowService) {
+		this.borrowService = borrowService;
+	}
+
+	@javax.annotation.Resource
+	public void setSysDepartmentService(
+			SysDepartmentService sysDepartmentService) {
+		this.sysDepartmentService = sysDepartmentService;
 	}
 
 }

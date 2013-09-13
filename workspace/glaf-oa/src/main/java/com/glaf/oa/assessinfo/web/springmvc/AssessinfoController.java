@@ -61,78 +61,6 @@ public class AssessinfoController {
 
 	}
 
-	@javax.annotation.Resource
-	public void setAssessinfoService(AssessinfoService assessinfoService) {
-		this.assessinfoService = assessinfoService;
-	}
-
-	@RequestMapping("/save")
-	public ModelAndView save(HttpServletRequest request, ModelMap modelMap) {
-		User user = RequestUtils.getUser(request);
-		String actorId = user.getActorId();
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		params.remove("status");
-		params.remove("wfStatus");
-
-		Assessinfo assessinfo = new Assessinfo();
-		Tools.populate(assessinfo, params);
-
-		assessinfo.setName(request.getParameter("name"));
-		assessinfo.setStandard(RequestUtils.getDouble(request, "standard"));
-		assessinfo.setIseffective(RequestUtils.getInt(request, "iseffective"));
-		assessinfo.setCreateBy(request.getParameter("createBy"));
-		assessinfo.setCreateDate(RequestUtils.getDate(request, "createDate"));
-		assessinfo.setUpdateDate(RequestUtils.getDate(request, "updateDate"));
-		assessinfo.setUpdateBy(request.getParameter("updateBy"));
-
-		assessinfo.setCreateBy(actorId);
-
-		assessinfoService.save(assessinfo);
-
-		return this.list(request, modelMap);
-	}
-
-	@ResponseBody
-	@RequestMapping("/saveAssessinfo")
-	public byte[] saveAssessinfo(HttpServletRequest request) {
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		Assessinfo assessinfo = new Assessinfo();
-		try {
-			Tools.populate(assessinfo, params);
-			assessinfo.setName(request.getParameter("name"));
-			assessinfo.setBasis(RequestUtils.getParameter(request, "basis"));
-			assessinfo.setStandard(RequestUtils.getDouble(request, "standard"));
-			assessinfo.setIseffective(RequestUtils.getInt(request,
-					"iseffective"));
-			assessinfo.setCreateDate(new Date());
-			assessinfo.setUpdateDate(new Date());
-			this.assessinfoService.save(assessinfo);
-			return ResponseUtils.responseJsonResult(true);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			logger.error(ex);
-		}
-		return ResponseUtils.responseJsonResult(false);
-	}
-
-	@RequestMapping("/update")
-	public ModelAndView update(HttpServletRequest request, ModelMap modelMap) {
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		params.remove("status");
-		params.remove("wfStatus");
-		Assessinfo assessinfo = assessinfoService.getAssessinfo(RequestUtils
-				.getLong(request, "indexid"));
-		assessinfo.setName(request.getParameter("name"));
-		assessinfo.setBasis(request.getParameter("basis"));
-		assessinfo.setStandard(RequestUtils.getDouble(request, "standard"));
-		assessinfo.setIseffective(RequestUtils.getInt(request, "iseffective"));
-		// assessinfo.setCreateBy(request.getParameter("createBy"));
-		assessinfo.setUpdateDate(RequestUtils.getDate(request, "updateDate"));
-		assessinfoService.save(assessinfo);
-
-		return this.list(request, modelMap);
-	}
-
 	@ResponseBody
 	@RequestMapping("/delete")
 	public void delete(HttpServletRequest request, ModelMap modelMap) {
@@ -212,124 +140,6 @@ public class AssessinfoController {
 		}
 
 		return new ModelAndView("/oa/assessinfo/assessinfoEdit", modelMap);
-	}
-
-	@RequestMapping("/view")
-	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
-
-		String view = request.getParameter("view");
-		if (StringUtils.isNotEmpty(view)) {
-			return new ModelAndView(view);
-		}
-
-		String x_view = ViewProperties.getString("assessinfo.view");
-		if (StringUtils.isNotEmpty(x_view)) {
-			return new ModelAndView(x_view);
-		}
-
-		return new ModelAndView("/oa/assessinfo/assessinfoList");
-	}
-
-	@RequestMapping("/query")
-	public ModelAndView query(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
-		String view = request.getParameter("view");
-		if (StringUtils.isNotEmpty(view)) {
-			return new ModelAndView(view, modelMap);
-		}
-		String x_view = ViewProperties.getString("assessinfo.query");
-		if (StringUtils.isNotEmpty(x_view)) {
-			return new ModelAndView(x_view, modelMap);
-		}
-		return new ModelAndView("/oa/assessinfo/assessinfoList", modelMap);
-	}
-
-	/**
-	 * 选择指标
-	 * 
-	 * @param request
-	 * @param modelMap
-	 * @return
-	 * @throws IOException
-	 */
-	@RequestMapping("/selectAssesInfo")
-	@ResponseBody
-	public byte[] selectAssesInfo(HttpServletRequest request, ModelMap modelMap)
-			throws IOException {
-		LoginContext loginContext = RequestUtils.getLoginContext(request);
-		if (loginContext == null) {
-			return "请重新登录".getBytes("utf-8");
-		}
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		AssessinfoQuery query = new AssessinfoQuery();
-		Tools.populate(query, params);
-		query.deleteFlag(0);
-		query.setLoginContext(loginContext);
-		query.setNameLike(request.getParameter("nameLike"));
-
-		String gridType = ParamUtils.getString(params, "gridType");
-		if (gridType == null) {
-			gridType = "easyui";
-		}
-		int start = 0;
-		int limit = 10;
-		String orderName = null;
-		String order = null;
-
-		int pageNo = ParamUtils.getInt(params, "page");
-		limit = ParamUtils.getInt(params, "rows");
-		start = (pageNo - 1) * limit;
-		orderName = ParamUtils.getString(params, "sortName");
-		order = ParamUtils.getString(params, "sortOrder");
-
-		if (start < 0) {
-			start = 0;
-		}
-
-		if (limit <= 0) {
-			limit = PageResult.DEFAULT_PAGE_SIZE;
-		}
-
-		JSONObject result = new JSONObject();
-		int total = assessinfoService.getAssessinfoCountByQueryCriteria(query);
-		if (total > 0) {
-			result.put("total", total);
-			result.put("totalCount", total);
-			result.put("totalRecords", total);
-			result.put("start", start);
-			result.put("startIndex", start);
-			result.put("limit", limit);
-			result.put("pageSize", limit);
-
-			if (StringUtils.isNotEmpty(orderName)) {
-				query.setSortOrder(orderName);
-				if (StringUtils.equals(order, "desc")) {
-					query.setSortOrder(" desc ");
-				}
-			}
-
-			List<Assessinfo> list = assessinfoService
-					.getAssessinfosByQueryCriteria(start, limit, query);
-
-			if (list != null && !list.isEmpty()) {
-				JSONArray rowsJSON = new JSONArray();
-
-				result.put("rows", rowsJSON);
-
-				for (Assessinfo assessinfo : list) {
-					JSONObject rowJSON = assessinfo.toJsonObject();
-					rowJSON.put("startIndex", ++start);
-					rowsJSON.add(rowJSON);
-				}
-
-			}
-		} else {
-			JSONArray rowsJSON = new JSONArray();
-			result.put("rows", rowsJSON);
-			result.put("total", total);
-		}
-		return result.toJSONString().getBytes("UTF-8");
 	}
 
 	@RequestMapping("/json")
@@ -436,6 +246,196 @@ public class AssessinfoController {
 		}
 
 		return new ModelAndView("/oa/assessinfo/assessinfoList", modelMap);
+	}
+
+	@RequestMapping("/query")
+	public ModelAndView query(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		String view = request.getParameter("view");
+		if (StringUtils.isNotEmpty(view)) {
+			return new ModelAndView(view, modelMap);
+		}
+		String x_view = ViewProperties.getString("assessinfo.query");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+		return new ModelAndView("/oa/assessinfo/assessinfoList", modelMap);
+	}
+
+	@RequestMapping("/save")
+	public ModelAndView save(HttpServletRequest request, ModelMap modelMap) {
+		User user = RequestUtils.getUser(request);
+		String actorId = user.getActorId();
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		params.remove("status");
+		params.remove("wfStatus");
+
+		Assessinfo assessinfo = new Assessinfo();
+		Tools.populate(assessinfo, params);
+
+		assessinfo.setName(request.getParameter("name"));
+		assessinfo.setStandard(RequestUtils.getDouble(request, "standard"));
+		assessinfo.setIseffective(RequestUtils.getInt(request, "iseffective"));
+		assessinfo.setCreateBy(request.getParameter("createBy"));
+		assessinfo.setCreateDate(RequestUtils.getDate(request, "createDate"));
+		assessinfo.setUpdateDate(RequestUtils.getDate(request, "updateDate"));
+		assessinfo.setUpdateBy(request.getParameter("updateBy"));
+
+		assessinfo.setCreateBy(actorId);
+
+		assessinfoService.save(assessinfo);
+
+		return this.list(request, modelMap);
+	}
+
+	@ResponseBody
+	@RequestMapping("/saveAssessinfo")
+	public byte[] saveAssessinfo(HttpServletRequest request) {
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		Assessinfo assessinfo = new Assessinfo();
+		try {
+			Tools.populate(assessinfo, params);
+			assessinfo.setName(request.getParameter("name"));
+			assessinfo.setBasis(RequestUtils.getParameter(request, "basis"));
+			assessinfo.setStandard(RequestUtils.getDouble(request, "standard"));
+			assessinfo.setIseffective(RequestUtils.getInt(request,
+					"iseffective"));
+			assessinfo.setCreateDate(new Date());
+			assessinfo.setUpdateDate(new Date());
+			this.assessinfoService.save(assessinfo);
+			return ResponseUtils.responseJsonResult(true);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			logger.error(ex);
+		}
+		return ResponseUtils.responseJsonResult(false);
+	}
+
+	/**
+	 * 选择指标
+	 * 
+	 * @param request
+	 * @param modelMap
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping("/selectAssesInfo")
+	@ResponseBody
+	public byte[] selectAssesInfo(HttpServletRequest request, ModelMap modelMap)
+			throws IOException {
+		LoginContext loginContext = RequestUtils.getLoginContext(request);
+		if (loginContext == null) {
+			return "请重新登录".getBytes("utf-8");
+		}
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		AssessinfoQuery query = new AssessinfoQuery();
+		Tools.populate(query, params);
+		query.deleteFlag(0);
+		query.setLoginContext(loginContext);
+		query.setNameLike(request.getParameter("nameLike"));
+
+		String gridType = ParamUtils.getString(params, "gridType");
+		if (gridType == null) {
+			gridType = "easyui";
+		}
+		int start = 0;
+		int limit = 10;
+		String orderName = null;
+		String order = null;
+
+		int pageNo = ParamUtils.getInt(params, "page");
+		limit = ParamUtils.getInt(params, "rows");
+		start = (pageNo - 1) * limit;
+		orderName = ParamUtils.getString(params, "sortName");
+		order = ParamUtils.getString(params, "sortOrder");
+
+		if (start < 0) {
+			start = 0;
+		}
+
+		if (limit <= 0) {
+			limit = PageResult.DEFAULT_PAGE_SIZE;
+		}
+
+		JSONObject result = new JSONObject();
+		int total = assessinfoService.getAssessinfoCountByQueryCriteria(query);
+		if (total > 0) {
+			result.put("total", total);
+			result.put("totalCount", total);
+			result.put("totalRecords", total);
+			result.put("start", start);
+			result.put("startIndex", start);
+			result.put("limit", limit);
+			result.put("pageSize", limit);
+
+			if (StringUtils.isNotEmpty(orderName)) {
+				query.setSortOrder(orderName);
+				if (StringUtils.equals(order, "desc")) {
+					query.setSortOrder(" desc ");
+				}
+			}
+
+			List<Assessinfo> list = assessinfoService
+					.getAssessinfosByQueryCriteria(start, limit, query);
+
+			if (list != null && !list.isEmpty()) {
+				JSONArray rowsJSON = new JSONArray();
+
+				result.put("rows", rowsJSON);
+
+				for (Assessinfo assessinfo : list) {
+					JSONObject rowJSON = assessinfo.toJsonObject();
+					rowJSON.put("startIndex", ++start);
+					rowsJSON.add(rowJSON);
+				}
+
+			}
+		} else {
+			JSONArray rowsJSON = new JSONArray();
+			result.put("rows", rowsJSON);
+			result.put("total", total);
+		}
+		return result.toJSONString().getBytes("UTF-8");
+	}
+
+	@javax.annotation.Resource
+	public void setAssessinfoService(AssessinfoService assessinfoService) {
+		this.assessinfoService = assessinfoService;
+	}
+
+	@RequestMapping("/update")
+	public ModelAndView update(HttpServletRequest request, ModelMap modelMap) {
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		params.remove("status");
+		params.remove("wfStatus");
+		Assessinfo assessinfo = assessinfoService.getAssessinfo(RequestUtils
+				.getLong(request, "indexid"));
+		assessinfo.setName(request.getParameter("name"));
+		assessinfo.setBasis(request.getParameter("basis"));
+		assessinfo.setStandard(RequestUtils.getDouble(request, "standard"));
+		assessinfo.setIseffective(RequestUtils.getInt(request, "iseffective"));
+		// assessinfo.setCreateBy(request.getParameter("createBy"));
+		assessinfo.setUpdateDate(RequestUtils.getDate(request, "updateDate"));
+		assessinfoService.save(assessinfo);
+
+		return this.list(request, modelMap);
+	}
+
+	@RequestMapping("/view")
+	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+
+		String view = request.getParameter("view");
+		if (StringUtils.isNotEmpty(view)) {
+			return new ModelAndView(view);
+		}
+
+		String x_view = ViewProperties.getString("assessinfo.view");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view);
+		}
+
+		return new ModelAndView("/oa/assessinfo/assessinfoList");
 	}
 
 }

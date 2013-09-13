@@ -52,85 +52,6 @@ public class OptionalController {
 
 	}
 
-	@javax.annotation.Resource
-	public void setOptionalService(OptionalService optionalService) {
-		this.optionalService = optionalService;
-	}
-
-	@RequestMapping("/save")
-	public ModelAndView save(HttpServletRequest request, ModelMap modelMap) {
-		User user = RequestUtils.getUser(request);
-		String actorId = user.getActorId();
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		params.remove("status");
-		params.remove("wfStatus");
-
-		Optional optional = new Optional();
-		Tools.populate(optional, params);
-		optional.setId(RequestUtils.getInt(request, "id"));
-		optional.setCode(request.getParameter("code"));
-		optional.setPrice(RequestUtils.getDouble(request, "price"));
-		optional.setRemark(request.getParameter("remark"));
-		optional.setCreateDate(new Date());
-
-		optional.setCreateBy(actorId);
-
-		optionalService.save(optional);
-
-		return this.list(request, modelMap);
-	}
-
-	@ResponseBody
-	@RequestMapping("/saveOptional")
-	public byte[] saveOptional(HttpServletRequest request) {
-		User user = RequestUtils.getUser(request);
-		String actorId = user.getActorId();
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		Optional optional = new Optional();
-		try {
-			Tools.populate(optional, params);
-			optional.setId(RequestUtils.getInt(request, "id"));
-			optional.setCode(request.getParameter("code"));
-			optional.setPrice(RequestUtils.getDouble(request, "price"));
-			optional.setRemark(request.getParameter("remark"));
-			optional.setCreateBy(request.getParameter("createBy"));
-			optional.setCreateDate(RequestUtils.getDate(request, "createDate"));
-			optional.setUpdateDate(RequestUtils.getDate(request, "updateDate"));
-			optional.setUpdateBy(request.getParameter("updateBy"));
-			optional.setCreateBy(actorId);
-			this.optionalService.save(optional);
-
-			return ResponseUtils.responseJsonResult(true);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			logger.error(ex);
-		}
-		return ResponseUtils.responseJsonResult(false);
-	}
-
-	@RequestMapping("/update")
-	public ModelAndView update(HttpServletRequest request, ModelMap modelMap) {
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		params.remove("status");
-		params.remove("wfStatus");
-
-		Optional optional = optionalService.getOptional(RequestUtils.getInt(
-				request, "optionalId"));
-
-		optional.setId(RequestUtils.getInt(request, "id"));
-		optional.setCode(request.getParameter("code"));
-		optional.setPrice(RequestUtils.getDouble(request, "price"));
-		optional.setRemark(request.getParameter("remark"));
-		optional.setCreateBy(request.getParameter("createBy"));
-		optional.setCreateDate(RequestUtils.getDate(request, "createDate"));
-		optional.setUpdateDate(RequestUtils.getDate(request, "updateDate"));
-		optional.setUpdateBy(request.getParameter("updateBy"));
-
-		optionalService.save(optional);
-
-		return this.list(request, modelMap);
-	}
-
 	@ResponseBody
 	@RequestMapping("/delete")
 	public void delete(HttpServletRequest request, ModelMap modelMap) {
@@ -223,42 +144,6 @@ public class OptionalController {
 		}
 
 		return new ModelAndView("/oa/optional/edit", modelMap);
-	}
-
-	@RequestMapping("/view")
-	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
-		Optional optional = optionalService.getOptional(RequestUtils.getInt(
-				request, "optionalId"));
-		request.setAttribute("optional", optional);
-		JSONObject rowJSON = optional.toJsonObject();
-		request.setAttribute("x_json", rowJSON.toJSONString());
-
-		String view = request.getParameter("view");
-		if (StringUtils.isNotEmpty(view)) {
-			return new ModelAndView(view);
-		}
-
-		String x_view = ViewProperties.getString("optional.view");
-		if (StringUtils.isNotEmpty(x_view)) {
-			return new ModelAndView(x_view);
-		}
-
-		return new ModelAndView("/oa/optional/view");
-	}
-
-	@RequestMapping("/query")
-	public ModelAndView query(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
-		String view = request.getParameter("view");
-		if (StringUtils.isNotEmpty(view)) {
-			return new ModelAndView(view, modelMap);
-		}
-		String x_view = ViewProperties.getString("optional.query");
-		if (StringUtils.isNotEmpty(x_view)) {
-			return new ModelAndView(x_view, modelMap);
-		}
-		return new ModelAndView("/oa/optional/query", modelMap);
 	}
 
 	@RequestMapping("/json")
@@ -363,6 +248,121 @@ public class OptionalController {
 			return new ModelAndView(view, modelMap);
 		}
 		return new ModelAndView("/oa/optional/list", modelMap);
+	}
+
+	@RequestMapping("/query")
+	public ModelAndView query(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		String view = request.getParameter("view");
+		if (StringUtils.isNotEmpty(view)) {
+			return new ModelAndView(view, modelMap);
+		}
+		String x_view = ViewProperties.getString("optional.query");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+		return new ModelAndView("/oa/optional/query", modelMap);
+	}
+
+	@RequestMapping("/save")
+	public ModelAndView save(HttpServletRequest request, ModelMap modelMap) {
+		User user = RequestUtils.getUser(request);
+		String actorId = user.getActorId();
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		params.remove("status");
+		params.remove("wfStatus");
+
+		Optional optional = new Optional();
+		Tools.populate(optional, params);
+		optional.setId(RequestUtils.getInt(request, "id"));
+		optional.setCode(request.getParameter("code"));
+		optional.setPrice(RequestUtils.getDouble(request, "price"));
+		optional.setRemark(request.getParameter("remark"));
+		optional.setCreateDate(new Date());
+
+		optional.setCreateBy(actorId);
+
+		optionalService.save(optional);
+
+		return this.list(request, modelMap);
+	}
+
+	@ResponseBody
+	@RequestMapping("/saveOptional")
+	public byte[] saveOptional(HttpServletRequest request) {
+		User user = RequestUtils.getUser(request);
+		String actorId = user.getActorId();
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		Optional optional = new Optional();
+		try {
+			Tools.populate(optional, params);
+			optional.setId(RequestUtils.getInt(request, "id"));
+			optional.setCode(request.getParameter("code"));
+			optional.setPrice(RequestUtils.getDouble(request, "price"));
+			optional.setRemark(request.getParameter("remark"));
+			optional.setCreateBy(request.getParameter("createBy"));
+			optional.setCreateDate(RequestUtils.getDate(request, "createDate"));
+			optional.setUpdateDate(RequestUtils.getDate(request, "updateDate"));
+			optional.setUpdateBy(request.getParameter("updateBy"));
+			optional.setCreateBy(actorId);
+			this.optionalService.save(optional);
+
+			return ResponseUtils.responseJsonResult(true);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			logger.error(ex);
+		}
+		return ResponseUtils.responseJsonResult(false);
+	}
+
+	@javax.annotation.Resource
+	public void setOptionalService(OptionalService optionalService) {
+		this.optionalService = optionalService;
+	}
+
+	@RequestMapping("/update")
+	public ModelAndView update(HttpServletRequest request, ModelMap modelMap) {
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		params.remove("status");
+		params.remove("wfStatus");
+
+		Optional optional = optionalService.getOptional(RequestUtils.getInt(
+				request, "optionalId"));
+
+		optional.setId(RequestUtils.getInt(request, "id"));
+		optional.setCode(request.getParameter("code"));
+		optional.setPrice(RequestUtils.getDouble(request, "price"));
+		optional.setRemark(request.getParameter("remark"));
+		optional.setCreateBy(request.getParameter("createBy"));
+		optional.setCreateDate(RequestUtils.getDate(request, "createDate"));
+		optional.setUpdateDate(RequestUtils.getDate(request, "updateDate"));
+		optional.setUpdateBy(request.getParameter("updateBy"));
+
+		optionalService.save(optional);
+
+		return this.list(request, modelMap);
+	}
+
+	@RequestMapping("/view")
+	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		Optional optional = optionalService.getOptional(RequestUtils.getInt(
+				request, "optionalId"));
+		request.setAttribute("optional", optional);
+		JSONObject rowJSON = optional.toJsonObject();
+		request.setAttribute("x_json", rowJSON.toJSONString());
+
+		String view = request.getParameter("view");
+		if (StringUtils.isNotEmpty(view)) {
+			return new ModelAndView(view);
+		}
+
+		String x_view = ViewProperties.getString("optional.view");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view);
+		}
+
+		return new ModelAndView("/oa/optional/view");
 	}
 
 }

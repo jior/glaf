@@ -56,21 +56,10 @@ public class WithdrawalSearchController {
 
 	protected WithdrawalService withdrawalService;
 
+	protected SysDepartmentService sysDepartmentService;
+
 	public WithdrawalSearchController() {
 
-	}
-
-	private SysDepartmentService sysDepartmentService;
-
-	@javax.annotation.Resource
-	public void setWithdrawalService(WithdrawalService withdrawalService) {
-		this.withdrawalService = withdrawalService;
-	}
-
-	@javax.annotation.Resource
-	public void setSysDepartmentService(
-			SysDepartmentService sysDepartmentService) {
-		this.sysDepartmentService = sysDepartmentService;
 	}
 
 	@RequestMapping("/init")
@@ -81,10 +70,10 @@ public class WithdrawalSearchController {
 		Withdrawal withdrawal = new Withdrawal();
 		int areaRole = Integer.parseInt(request.getParameter("areaRole"));
 		if (areaRole == 0) {
-			// 根据用户部门id 获取整个部门的对象（HZ01）
+			// 根据用户部门id 获取整个部门的对象（GZ01）
 			SysDepartment curdept = sysDepartmentService.findById(user
 					.getDeptId());
-			// 根据部门CODE(例如HZ01)截取前2位 作为地区
+			// 根据部门CODE(例如GZ01)截取前2位 作为地区
 			String curAreadeptCode = curdept.getCode().substring(0, 2);
 			withdrawal.setArea(curAreadeptCode);
 		}
@@ -111,10 +100,10 @@ public class WithdrawalSearchController {
 		int areaRole = Integer.parseInt(request.getParameter("areaRole"));
 		User user = RequestUtils.getUser(request);
 		if (areaRole == 0) {
-			// 根据用户部门id 获取整个部门的对象（HZ01）
+			// 根据用户部门id 获取整个部门的对象（GZ01）
 			SysDepartment curdept = sysDepartmentService.findById(user
 					.getDeptId());
-			// 根据部门CODE(例如HZ01)截取前2位 作为地区
+			// 根据部门CODE(例如GZ01)截取前2位 作为地区
 			String curAreadeptCode = curdept.getCode().substring(0, 2);
 			query.setArea(curAreadeptCode);
 		} else {
@@ -217,6 +206,17 @@ public class WithdrawalSearchController {
 		}
 
 		return new ModelAndView("/oa/withdrawal/list", modelMap);
+	}
+
+	@javax.annotation.Resource
+	public void setSysDepartmentService(
+			SysDepartmentService sysDepartmentService) {
+		this.sysDepartmentService = sysDepartmentService;
+	}
+
+	@javax.annotation.Resource
+	public void setWithdrawalService(WithdrawalService withdrawalService) {
+		this.withdrawalService = withdrawalService;
 	}
 
 }

@@ -60,97 +60,6 @@ public class BorrowadderssController {
 
 	}
 
-	@javax.annotation.Resource
-	public void setBorrowadderssService(
-			BorrowadderssService borrowadderssService) {
-		this.borrowadderssService = borrowadderssService;
-	}
-
-	@RequestMapping("/save")
-	public ModelAndView save(HttpServletRequest request, ModelMap modelMap) {
-		User user = RequestUtils.getUser(request);
-		String actorId = user.getActorId();
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		params.remove("status");
-		params.remove("wfStatus");
-
-		Borrowadderss borrowadderss = new Borrowadderss();
-		Tools.populate(borrowadderss, params);
-
-		borrowadderss.setBorrowid(RequestUtils.getLong(request, "borrowid"));
-		borrowadderss.setStart(request.getParameter("start"));
-		borrowadderss.setReach(request.getParameter("reach"));
-		borrowadderss.setRemark(request.getParameter("remark"));
-		borrowadderss.setCreateBy(request.getParameter("createBy"));
-		borrowadderss
-				.setCreateDate(RequestUtils.getDate(request, "createDate"));
-		borrowadderss
-				.setUpdateDate(RequestUtils.getDate(request, "updateDate"));
-		borrowadderss.setUpdateBy(request.getParameter("updateBy"));
-
-		borrowadderss.setCreateBy(actorId);
-
-		borrowadderssService.save(borrowadderss);
-
-		return this.list(request, modelMap);
-	}
-
-	@ResponseBody
-	@RequestMapping("/saveBorrowadderss")
-	public byte[] saveBorrowadderss(HttpServletRequest request) {
-		User user = RequestUtils.getUser(request);
-		String actorId = user.getActorId();
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		Borrowadderss borrowadderss = new Borrowadderss();
-		try {
-			Tools.populate(borrowadderss, params);
-			borrowadderss
-					.setBorrowid(RequestUtils.getLong(request, "borrowid"));
-			borrowadderss.setStart(request.getParameter("start"));
-			borrowadderss.setReach(request.getParameter("reach"));
-			borrowadderss.setRemark(request.getParameter("remark"));
-			borrowadderss.setCreateBy(request.getParameter("createBy"));
-			borrowadderss.setCreateDate(RequestUtils.getDate(request,
-					"createDate"));
-			borrowadderss.setUpdateDate(RequestUtils.getDate(request,
-					"updateDate"));
-			borrowadderss.setUpdateBy(request.getParameter("updateBy"));
-			borrowadderss.setCreateBy(actorId);
-			this.borrowadderssService.save(borrowadderss);
-
-			return ResponseUtils.responseJsonResult(true);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			logger.error(ex);
-		}
-		return ResponseUtils.responseJsonResult(false);
-	}
-
-	@RequestMapping("/update")
-	public ModelAndView update(HttpServletRequest request, ModelMap modelMap) {
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		params.remove("status");
-		params.remove("wfStatus");
-
-		Borrowadderss borrowadderss = borrowadderssService
-				.getBorrowadderss(RequestUtils.getLong(request, "addressid"));
-
-		borrowadderss.setBorrowid(RequestUtils.getLong(request, "borrowid"));
-		borrowadderss.setStart(request.getParameter("start"));
-		borrowadderss.setReach(request.getParameter("reach"));
-		borrowadderss.setRemark(request.getParameter("remark"));
-		borrowadderss.setCreateBy(request.getParameter("createBy"));
-		borrowadderss
-				.setCreateDate(RequestUtils.getDate(request, "createDate"));
-		borrowadderss
-				.setUpdateDate(RequestUtils.getDate(request, "updateDate"));
-		borrowadderss.setUpdateBy(request.getParameter("updateBy"));
-
-		borrowadderssService.save(borrowadderss);
-
-		return this.list(request, modelMap);
-	}
-
 	@ResponseBody
 	@RequestMapping("/delete")
 	public void delete(HttpServletRequest request, ModelMap modelMap) {
@@ -239,43 +148,6 @@ public class BorrowadderssController {
 		}
 
 		return new ModelAndView("/oa/borrowadderss/edit", modelMap);
-	}
-
-	@RequestMapping("/view")
-	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
-
-		Borrowadderss borrowadderss = borrowadderssService
-				.getBorrowadderss(RequestUtils.getLong(request, "addressid"));
-		request.setAttribute("borrowadderss", borrowadderss);
-		JSONObject rowJSON = borrowadderss.toJsonObject();
-		request.setAttribute("x_json", rowJSON.toJSONString());
-
-		String view = request.getParameter("view");
-		if (StringUtils.isNotEmpty(view)) {
-			return new ModelAndView(view);
-		}
-
-		String x_view = ViewProperties.getString("borrowadderss.view");
-		if (StringUtils.isNotEmpty(x_view)) {
-			return new ModelAndView(x_view);
-		}
-
-		return new ModelAndView("/oa/borrowadderss/view");
-	}
-
-	@RequestMapping("/query")
-	public ModelAndView query(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
-		String view = request.getParameter("view");
-		if (StringUtils.isNotEmpty(view)) {
-			return new ModelAndView(view, modelMap);
-		}
-		String x_view = ViewProperties.getString("borrowadderss.query");
-		if (StringUtils.isNotEmpty(x_view)) {
-			return new ModelAndView(x_view, modelMap);
-		}
-		return new ModelAndView("/oa/borrowadderss/query", modelMap);
 	}
 
 	@RequestMapping("/json")
@@ -383,6 +255,134 @@ public class BorrowadderssController {
 		}
 
 		return new ModelAndView("/oa/borrowadderss/list", modelMap);
+	}
+
+	@RequestMapping("/query")
+	public ModelAndView query(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		String view = request.getParameter("view");
+		if (StringUtils.isNotEmpty(view)) {
+			return new ModelAndView(view, modelMap);
+		}
+		String x_view = ViewProperties.getString("borrowadderss.query");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+		return new ModelAndView("/oa/borrowadderss/query", modelMap);
+	}
+
+	@RequestMapping("/save")
+	public ModelAndView save(HttpServletRequest request, ModelMap modelMap) {
+		User user = RequestUtils.getUser(request);
+		String actorId = user.getActorId();
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		params.remove("status");
+		params.remove("wfStatus");
+
+		Borrowadderss borrowadderss = new Borrowadderss();
+		Tools.populate(borrowadderss, params);
+
+		borrowadderss.setBorrowid(RequestUtils.getLong(request, "borrowid"));
+		borrowadderss.setStart(request.getParameter("start"));
+		borrowadderss.setReach(request.getParameter("reach"));
+		borrowadderss.setRemark(request.getParameter("remark"));
+		borrowadderss.setCreateBy(request.getParameter("createBy"));
+		borrowadderss
+				.setCreateDate(RequestUtils.getDate(request, "createDate"));
+		borrowadderss
+				.setUpdateDate(RequestUtils.getDate(request, "updateDate"));
+		borrowadderss.setUpdateBy(request.getParameter("updateBy"));
+
+		borrowadderss.setCreateBy(actorId);
+
+		borrowadderssService.save(borrowadderss);
+
+		return this.list(request, modelMap);
+	}
+
+	@ResponseBody
+	@RequestMapping("/saveBorrowadderss")
+	public byte[] saveBorrowadderss(HttpServletRequest request) {
+		User user = RequestUtils.getUser(request);
+		String actorId = user.getActorId();
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		Borrowadderss borrowadderss = new Borrowadderss();
+		try {
+			Tools.populate(borrowadderss, params);
+			borrowadderss
+					.setBorrowid(RequestUtils.getLong(request, "borrowid"));
+			borrowadderss.setStart(request.getParameter("start"));
+			borrowadderss.setReach(request.getParameter("reach"));
+			borrowadderss.setRemark(request.getParameter("remark"));
+			borrowadderss.setCreateBy(request.getParameter("createBy"));
+			borrowadderss.setCreateDate(RequestUtils.getDate(request,
+					"createDate"));
+			borrowadderss.setUpdateDate(RequestUtils.getDate(request,
+					"updateDate"));
+			borrowadderss.setUpdateBy(request.getParameter("updateBy"));
+			borrowadderss.setCreateBy(actorId);
+			this.borrowadderssService.save(borrowadderss);
+
+			return ResponseUtils.responseJsonResult(true);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			logger.error(ex);
+		}
+		return ResponseUtils.responseJsonResult(false);
+	}
+
+	@javax.annotation.Resource
+	public void setBorrowadderssService(
+			BorrowadderssService borrowadderssService) {
+		this.borrowadderssService = borrowadderssService;
+	}
+
+	@RequestMapping("/update")
+	public ModelAndView update(HttpServletRequest request, ModelMap modelMap) {
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		params.remove("status");
+		params.remove("wfStatus");
+
+		Borrowadderss borrowadderss = borrowadderssService
+				.getBorrowadderss(RequestUtils.getLong(request, "addressid"));
+
+		borrowadderss.setBorrowid(RequestUtils.getLong(request, "borrowid"));
+		borrowadderss.setStart(request.getParameter("start"));
+		borrowadderss.setReach(request.getParameter("reach"));
+		borrowadderss.setRemark(request.getParameter("remark"));
+		borrowadderss.setCreateBy(request.getParameter("createBy"));
+		borrowadderss
+				.setCreateDate(RequestUtils.getDate(request, "createDate"));
+		borrowadderss
+				.setUpdateDate(RequestUtils.getDate(request, "updateDate"));
+		borrowadderss.setUpdateBy(request.getParameter("updateBy"));
+
+		borrowadderssService.save(borrowadderss);
+
+		return this.list(request, modelMap);
+	}
+
+	@RequestMapping("/view")
+	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+
+		Borrowadderss borrowadderss = borrowadderssService
+				.getBorrowadderss(RequestUtils.getLong(request, "addressid"));
+		request.setAttribute("borrowadderss", borrowadderss);
+		JSONObject rowJSON = borrowadderss.toJsonObject();
+		request.setAttribute("x_json", rowJSON.toJSONString());
+
+		String view = request.getParameter("view");
+		if (StringUtils.isNotEmpty(view)) {
+			return new ModelAndView(view);
+		}
+
+		String x_view = ViewProperties.getString("borrowadderss.view");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view);
+		}
+
+		return new ModelAndView("/oa/borrowadderss/view");
 	}
 
 }

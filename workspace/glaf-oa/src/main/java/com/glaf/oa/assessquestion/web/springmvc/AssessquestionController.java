@@ -85,26 +85,478 @@ public class AssessquestionController {
 
 	}
 
-	@javax.annotation.Resource
-	public void setAssessquestionService(
-			AssessquestionService assessquestionService) {
-		this.assessquestionService = assessquestionService;
+	private void addToList(List<Assesscontent> srcList,
+			List<Assesscontent> destList) {
+		for (Assesscontent obj : srcList) {
+			destList.add(obj);
+		}
 	}
 
-	@javax.annotation.Resource
-	public void setAssessinfoService(AssessinfoService assessinfoService) {
-		this.assessinfoService = assessinfoService;
+	private Map<String, Assesscontent> contentList2MapByContentId(
+			List<Assesscontent> contentList) {
+		Map<String, Assesscontent> contentMap = new HashMap<String, Assesscontent>();
+		for (Assesscontent content : contentList) {
+			contentMap.put(content.getContentid() + "", content);
+		}
+		return contentMap;
 	}
 
-	@javax.annotation.Resource
-	public void setAssesssortService(AssesssortService assesssortService) {
-		this.assesssortService = assesssortService;
+	@ResponseBody
+	@RequestMapping("/delete")
+	public void delete(HttpServletRequest request, ModelMap modelMap) {
+		LoginContext loginContext = RequestUtils.getLoginContext(request);
+		Long qustionid = RequestUtils.getLong(request, "qustionid");
+		String qustionids = request.getParameter("qustionids");
+		if (StringUtils.isNotEmpty(qustionids)) {
+			StringTokenizer token = new StringTokenizer(qustionids, ",");
+			while (token.hasMoreTokens()) {
+				String x = token.nextToken();
+				if (StringUtils.isNotEmpty(x)) {
+					Assessquestion assessquestion = assessquestionService
+							.getAssessquestion(Long.valueOf(x));
+					/**
+					 * 此处业务逻辑需自行调整
+					 */
+					if (assessquestion != null
+							&& (StringUtils.equals(
+									assessquestion.getCreateBy(),
+									loginContext.getActorId()) || loginContext
+									.isSystemAdministrator())) {
+						// assessquestion.setDeleteFlag(1);
+						assessquestionService.save(assessquestion);
+					}
+				}
+			}
+		} else if (qustionid != null) {
+			Assessquestion assessquestion = assessquestionService
+					.getAssessquestion(Long.valueOf(qustionid));
+			/**
+			 * 此处业务逻辑需自行调整
+			 */
+			if (assessquestion != null
+					&& (StringUtils.equals(assessquestion.getCreateBy(),
+							loginContext.getActorId()) || loginContext
+							.isSystemAdministrator())) {
+				// assessquestion.setDeleteFlag(1);
+				assessquestionService.save(assessquestion);
+			}
+		}
 	}
 
-	@javax.annotation.Resource
-	public void setAssesscontentService(
-			AssesscontentService assesscontentService) {
-		this.assesscontentService = assesscontentService;
+	@ResponseBody
+	@RequestMapping("/detail")
+	public byte[] detail(HttpServletRequest request) throws IOException {
+		Assessquestion assessquestion = assessquestionService
+				.getAssessquestion(RequestUtils.getLong(request, "qustionid"));
+
+		JSONObject rowJSON = assessquestion.toJsonObject();
+		return rowJSON.toJSONString().getBytes("UTF-8");
+	}
+
+	@RequestMapping("/edit")
+	public ModelAndView edit(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		request.removeAttribute("canSubmit");
+
+		Assessquestion assessquestion = assessquestionService
+				.getAssessquestion(RequestUtils.getLong(request, "qustionid"));
+
+		List<BaseDataInfo> isValidList = AQUtils
+				.getBaseInfoByCode("ASSESS_ISVALID");
+		Map<String, BaseDataInfo> validMap = AQUtils
+				.baseList2MapByCode(isValidList);
+		if (assessquestion != null) {
+			assessquestion.setIseffectiveText(validMap.get(
+					assessquestion.getIseffective() + "").getName());
+			modelMap.put("isValidList", isValidList);
+			modelMap.put("assessquestion", assessquestion);
+		}
+		boolean canUpdate = false;
+		String x_method = request.getParameter("x_method");
+		if (StringUtils.equals(x_method, "submit")) {
+
+		}
+
+		if (StringUtils.containsIgnoreCase(x_method, "update")) {
+			if (assessquestion != null) {
+				canUpdate = true;
+			}
+		}
+
+		request.setAttribute("canUpdate", canUpdate);
+
+		String view = request.getParameter("view");
+		if (StringUtils.isNotEmpty(view)) {
+			return new ModelAndView(view, modelMap);
+		}
+
+		String x_view = ViewProperties.getString("assessquestion.edit");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
+		return new ModelAndView("/oa/assessquestion/assessquestionEdit",
+				modelMap);
+	}
+
+	private List<Assesscontent> getContentListBySortId(
+			Map<String, Assesscontent> contentMap, String sortId) {
+		List<Assesscontent> contentList = new ArrayList<Assesscontent>();
+		Iterator<Assesscontent> iter = contentMap.values().iterator();
+		while (iter.hasNext()) {
+			Assesscontent content = iter.next();
+			if ((content.getSortid() + "").equals(sortId)) {
+				contentList.add(content);
+			}
+		}
+		return contentList;
+	}
+
+	/**
+	 * 岗位考核指标制作，选择分类后插入到表中
+	 * 
+	 * @param request
+	 * @param modelMap
+	 * @throws UnsupportedEncodingException
+	 */
+	@ResponseBody
+	@RequestMapping("/insertTypeInMakeAssessIndex")
+	public byte[] insertTypeInMakeAssessIndex(HttpServletRequest request,
+			ModelMap modelMap) throws IOException {
+		JSONObject result = new JSONObject();
+		result.put("result", "FAILD");
+		result.put("qid", "");
+		result.put("sid", "");
+
+		// 具体标准ID
+		long sid = RequestUtils.getInt(request, "sid");
+
+		String squestionid = request.getParameter("questionId");
+		long questionid = 0;
+		Assessquestion assessquestion = null;
+		Date now = new Date();
+		if (StringUtils.isNotEmpty(squestionid)) {
+			questionid = Long.valueOf(squestionid);
+			assessquestion = assessquestionService
+					.getAssessquestion(questionid);
+		}
+		if (assessquestion == null) {
+			assessquestion = new Assessquestion();
+			assessquestion.setCreateDate(now);
+			assessquestion.setTitle("");
+		}
+
+		assessquestion.setUpdateDate(now);
+		assessquestionService.save(assessquestion);
+		Assesssort assesssort = new Assesssort();
+		assesssort.setSortid(sid);
+		assesssort.setQustionid(assessquestion.getQustionid());
+		assesssort.setCreateDate(now);
+		assesssort.setUpdateDate(now);
+		assesssortService.save(assesssort);
+		result.put("result", "SUCCESS");
+		result.put("qid", assessquestion.getQustionid());
+		result.put("sid", assesssort.getAssesssortid());
+		return result.toJSONString().getBytes("UTF-8");
+	}
+
+	@RequestMapping("/json")
+	@ResponseBody
+	public byte[] json(HttpServletRequest request, ModelMap modelMap)
+			throws IOException {
+
+		LoginContext loginContext = RequestUtils.getLoginContext(request);
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		AssessquestionQuery query = new AssessquestionQuery();
+		Tools.populate(query, params);
+		query.setLoginContext(loginContext);
+
+		String gridType = ParamUtils.getString(params, "gridType");
+		if (gridType == null) {
+			gridType = "easyui";
+		}
+		int start = 0;
+		int limit = 10;
+		String orderName = null;
+		String order = null;
+
+		int pageNo = ParamUtils.getInt(params, "page");
+		limit = ParamUtils.getInt(params, "rows");
+		start = (pageNo - 1) * limit;
+		orderName = ParamUtils.getString(params, "sortName");
+		order = ParamUtils.getString(params, "sortOrder");
+
+		if (start < 0) {
+			start = 0;
+		}
+
+		if (limit <= 0) {
+			limit = PageResult.DEFAULT_PAGE_SIZE;
+		}
+
+		JSONObject result = new JSONObject();
+		int total = assessquestionService
+				.getAssessquestionCountByQueryCriteria(query);
+		if (total > 0) {
+			result.put("total", total);
+			result.put("totalCount", total);
+			result.put("totalRecords", total);
+			result.put("start", start);
+			result.put("startIndex", start);
+			result.put("limit", limit);
+			result.put("pageSize", limit);
+
+			if (StringUtils.isNotEmpty(orderName)) {
+				query.setSortOrder(orderName);
+				if (StringUtils.equals(order, "desc")) {
+					query.setSortOrder(" desc ");
+				}
+			}
+
+			List<Assessquestion> list = assessquestionService
+					.getAssessquestionsByQueryCriteria(start, limit, query);
+			// 指标分类 ASSESS_CLASS
+			// ENTERPRISE_INDEX
+
+			// quarter 季度
+			// monthly =月度
+			if (list != null && !list.isEmpty()) {
+				JSONArray rowsJSON = new JSONArray();
+
+				result.put("rows", rowsJSON);
+
+				for (Assessquestion assessquestion : list) {
+					JSONObject rowJSON = assessquestion.toJsonObject();
+
+					rowJSON.put("startIndex", ++start);
+					rowsJSON.add(rowJSON);
+				}
+
+			}
+		} else {
+			JSONArray rowsJSON = new JSONArray();
+			result.put("rows", rowsJSON);
+			result.put("total", total);
+		}
+		return result.toJSONString().getBytes("UTF-8");
+	}
+
+	@RequestMapping
+	public ModelAndView list(HttpServletRequest request, ModelMap modelMap) {
+
+		RequestUtils.setRequestParameterToAttribute(request);
+		String x_query = request.getParameter("x_query");
+		if (StringUtils.equals(x_query, "true")) {
+			Map<String, Object> paramMap = RequestUtils
+					.getParameterMap(request);
+			String x_complex_query = JsonUtils.encode(paramMap);
+			x_complex_query = RequestUtils.encodeString(x_complex_query);
+			request.setAttribute("x_complex_query", x_complex_query);
+		} else {
+			request.setAttribute("x_complex_query", "");
+		}
+		String view = request.getParameter("view");
+		if (StringUtils.isNotEmpty(view)) {
+			return new ModelAndView(view, modelMap);
+		}
+
+		return new ModelAndView("/oa/assessquestion/list", modelMap);
+	}
+
+	@RequestMapping("/query")
+	public ModelAndView query(HttpServletRequest request, ModelMap modelMap) {
+
+		RequestUtils.setRequestParameterToAttribute(request);
+
+		String view = request.getParameter("view");
+		if (StringUtils.isNotEmpty(view)) {
+			return new ModelAndView(view, modelMap);
+		}
+		String x_view = ViewProperties.getString("assessquestion.query");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+		return new ModelAndView("/oa/assessquestion/query", modelMap);
+	}
+
+	/**
+	 * 岗位考核指标制作
+	 * 
+	 * @param request
+	 * @param modelMap
+	 * @return
+	 */
+	@RequestMapping("/queryAssessIndex")
+	public ModelAndView queryAssessIndex(HttpServletRequest request,
+			ModelMap modelMap) {
+
+		// LoginContext loginContext = RequestUtils.getLoginContext( request );
+		RequestUtils.setRequestParameterToAttribute(request);
+		// Map<String, Object> params = RequestUtils.getParameterMap( request );
+		// ASSESS_ISVALID 是否有效列表
+		List<BaseDataInfo> isValidList = AQUtils
+				.getBaseInfoByCode("ASSESS_ISVALID");
+		request.setAttribute("isValidList", isValidList);
+		// 频率列表
+		List<BaseDataInfo> frequencyList = AQUtils
+				.getBaseInfoByCode("ASSESS_AUDIT_RATE");
+		request.setAttribute("frequencyList", frequencyList);
+		String squestionId = request.getParameter("questionId");
+		// 查看或修改状态
+		String editType = request.getParameter("editType");
+		modelMap.put("editType", editType);
+		long questionId = 0;
+		// Integer sid = 0; //
+		AssessquestionExt assessquestion = new AssessquestionExt();
+		List<AssessQuestionDetails> questionDetails = new ArrayList<AssessQuestionDetails>();
+		if (StringUtils.isNotBlank(squestionId)) {
+			questionId = Long.valueOf(squestionId);
+			Assessquestion assessquestion1 = assessquestionService
+					.getAssessquestion(questionId);
+			if (assessquestion1 != null) {
+				assessquestion.setQustionid(assessquestion1.getQustionid());
+				assessquestion.setTitle(assessquestion1.getTitle());
+				assessquestion.setValiddate(assessquestion1.getValiddate());
+				assessquestion.setRate(assessquestion1.getRate());
+				assessquestion.setIseffective(assessquestion1.getIseffective());
+				assessquestion.setTargetsum(assessquestion1.getTargetsum());
+
+				AssesssortQuery sortQuery = new AssesssortQuery();
+				sortQuery.setQustionid(assessquestion.getQustionid());
+				// 一张问卷有多个分类类型
+				List<Assesssort> assessSortList = assesssortService
+						.list(sortQuery);
+				if (assessSortList != null && !assessSortList.isEmpty()) {
+					AssessQuestionDetails details = null;
+					int index = 0;
+					for (Assesssort assessSort : assessSortList) {
+						details = new AssessQuestionDetails();
+						details.setIndex(++index + "");
+						// 返回唯一的记录
+						List<AssessortTree> treeList = assesssortService
+								.getParentsInfoByDictId(assessSort.getSortid()
+										.intValue());
+						AssessortTree sortTree = null;
+						if (treeList != null && !treeList.isEmpty()) {
+							sortTree = treeList.get(0);
+						} else {
+							sortTree = new AssessortTree();
+						}
+						details.setSortTree(sortTree);
+						Long assessSortId = assessSort.getAssesssortid();
+						AssesscontentQuery assessContentQuery = new AssesscontentQuery();
+						assessContentQuery.setSortid(assessSortId);
+						// 指标考核分类ID对应 一条内容
+						List<Assesscontent> contentList = assesscontentService
+								.list(assessContentQuery);
+						if (contentList == null) {
+							contentList = new ArrayList<Assesscontent>();
+						}
+						// Assessinfo assessInfo = new Assessinfo();
+						// for( Assesscontent content : contentList ) {
+						// assessInfo = assessinfoService.getAssessinfo(
+						// content.getAssessId() );
+						// content.setAssessInfo( assessInfo );
+						// }
+						details.setContentList(contentList);
+						details.setAssessSort(assessSort);
+						questionDetails.add(details);
+					}
+				}
+			}
+		}
+		assessquestion.setQuestionDetails(questionDetails);
+		modelMap.put("assessquestion", assessquestion);
+		modelMap.put("assessRate", assessquestion.getRate() + "");
+		modelMap.put("assessEffective", assessquestion.getIseffective() + "");
+		return new ModelAndView("/oa/assessquestion/makeAssessIndex");
+	}
+
+	@RequestMapping("/queryPostAssess")
+	@ResponseBody
+	public byte[] queryPostAssess(HttpServletRequest request, ModelMap modelMap)
+			throws IOException {
+
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		AssessquestionQuery query = new AssessquestionQuery();
+		Tools.populate(query, params);
+
+		String gridType = ParamUtils.getString(params, "gridType");
+		if (gridType == null) {
+			gridType = "easyui";
+		}
+		int start = 0;
+		int limit = 10;
+		String orderName = null;
+		String order = null;
+
+		int pageNo = ParamUtils.getInt(params, "page");
+		limit = ParamUtils.getInt(params, "rows");
+		start = (pageNo - 1) * limit;
+		orderName = ParamUtils.getString(params, "sortName");
+		order = ParamUtils.getString(params, "sortOrder");
+
+		if (start < 0) {
+			start = 0;
+		}
+
+		if (limit <= 0) {
+			limit = PageResult.DEFAULT_PAGE_SIZE;
+		}
+
+		String titleLike = request.getParameter("titleLike");
+		query.setTitleLike(titleLike);
+		query.setValiddateGreaterThanOrEqual(new Date());
+
+		query.setIseffective(1);
+		JSONObject result = new JSONObject();
+		int total = assessquestionService
+				.getAssessquestionCountByQueryCriteria(query);
+		if (total > 0) {
+			result.put("total", total);
+			result.put("totalCount", total);
+			result.put("totalRecords", total);
+			result.put("start", start);
+			result.put("startIndex", start);
+			result.put("limit", limit);
+			result.put("pageSize", limit);
+
+			if (StringUtils.isNotEmpty(orderName)) {
+				query.setSortOrder(orderName);
+				if (StringUtils.equals(order, "desc")) {
+					query.setSortOrder(" desc ");
+				}
+			}
+
+			List<Assessquestion> assessList = assessquestionService
+					.getAssessquestionsByQueryCriteria(start, limit, query);
+			// 指标分类 ASSESS_CLASS
+			// ENTERPRISE_INDEX
+
+			// FACTORY_INDEX
+			// 考核频率
+
+			// quarter 季度
+			// monthly =月度
+			if (assessList != null && !assessList.isEmpty()) {
+				JSONArray rowsJSON = new JSONArray();
+
+				result.put("rows", rowsJSON);
+
+				for (Assessquestion assessquestion : assessList) {
+					JSONObject rowJSON = assessquestion.toJsonObject();
+
+					rowJSON.put("startIndex", ++start);
+					rowsJSON.add(rowJSON);
+				}
+
+			}
+		} else {
+			JSONArray rowsJSON = new JSONArray();
+			result.put("rows", rowsJSON);
+			result.put("total", total);
+		}
+		return result.toJSONString().getBytes("UTF-8");
 	}
 
 	@RequestMapping("/save")
@@ -173,6 +625,140 @@ public class AssessquestionController {
 		return ResponseUtils.responseJsonResult(false);
 	}
 
+	/**
+	 * 保存岗位考核列表
+	 * 
+	 * @param request
+	 * @param modelMap
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping("/saveMakeAssessIndex")
+	public ModelAndView saveMakeAssessIndex(HttpServletRequest request,
+			HttpServletResponse response, ModelMap modelMap) throws IOException {
+
+		// LoginContext loginContext = RequestUtils.getLoginContext( request );
+		RequestUtils.setRequestParameterToAttribute(request);
+		// Map<String, Object> params = RequestUtils.getParameterMap( request );
+		Assesscontent content = null;
+		Assessquestion question = new Assessquestion();
+		Long questionid = RequestUtils.getLong(request, "questionId");
+		if (questionid == 0) {
+			questionid = null;
+		}
+		String title = RequestUtils.getString(request, "title");
+		Date validDate = RequestUtils.getDate(request, "validDate");
+		int rate = RequestUtils.getInt(request, "rate");
+		int iseffective = RequestUtils.getInt(request, "iseffective");
+		question.setQustionid(questionid);
+		question.setTitle(title);
+		question.setValiddate(validDate);
+		question.setRate(rate);
+		question.setIseffective(iseffective);
+		question.setUpdateDate(new Date());
+		try {
+			assessquestionService.save(question);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			logger.error(ex);
+			ModelAndView mav = new ModelAndView();
+			mav.addObject("message", "操作失败。");
+			return mav;
+		}
+
+		String[] sortIds = request.getParameterValues("sortIds");
+		if (sortIds != null && sortIds.length > 0) {
+			for (String ssortId : sortIds) {
+				String[] scontentIds = request.getParameterValues("contentIds"
+						+ ssortId);
+				String[] sstandards = request.getParameterValues("standards"
+						+ ssortId);
+				if (scontentIds != null && scontentIds.length > 0) {
+					for (int k = 0; k < scontentIds.length; k++) {
+						String scontent = scontentIds[k];
+						Long contentid = Long.valueOf(scontent);
+						Double standard = Double.valueOf(sstandards[k]);
+						content = new Assesscontent();
+						content.setContentid(contentid);
+						content.setStandard(standard);
+						content.setUpdateDate(new Date());
+						try {
+							assesscontentService.save(content);
+						} catch (Exception ex) {
+							ex.printStackTrace();
+							logger.error(ex);
+							ModelAndView mav = new ModelAndView();
+							mav.addObject("message", "操作失败。");
+							return mav;
+						}
+					}
+				}
+
+			}
+		}
+		modelMap.put("questionid", question.getQustionid());
+		return new ModelAndView("/oa/assessquestion/makeAssessIndex", modelMap);
+	}
+
+	/**
+	 * 点击添加指标类型时保存标题信息
+	 * 
+	 * @param request
+	 * @param modelMap
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping("/saveMakeAssessTitle")
+	public ModelAndView saveMakeAssessTitle(HttpServletRequest request,
+			HttpServletResponse response, ModelMap modelMap) throws IOException {
+		RequestUtils.setRequestParameterToAttribute(request);
+		Assessquestion question = new Assessquestion();
+		Long questionid = RequestUtils.getLong(request, "questionId");
+		String title = RequestUtils.getString(request, "title");
+		Date validDate = RequestUtils.getDate(request, "validDate");
+		int rate = RequestUtils.getInt(request, "rate");
+		int iseffective = RequestUtils.getInt(request, "iseffective");
+		question.setQustionid(questionid == 0 ? null : questionid);
+		question.setTitle(title);
+		question.setValiddate(validDate);
+		question.setRate(rate);
+		question.setIseffective(iseffective);
+		question.setUpdateDate(new Date());
+		try {
+			assessquestionService.save(question);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			logger.error(ex);
+			ModelAndView mav = new ModelAndView();
+			mav.addObject("message", "操作失败。");
+			return mav;
+		}
+		modelMap.put("questionid", question.getQustionid());
+		return new ModelAndView("/oa/assessquestion/makeAssessIndex", modelMap);
+	}
+
+	@javax.annotation.Resource
+	public void setAssesscontentService(
+			AssesscontentService assesscontentService) {
+		this.assesscontentService = assesscontentService;
+	}
+
+	@javax.annotation.Resource
+	public void setAssessinfoService(AssessinfoService assessinfoService) {
+		this.assessinfoService = assessinfoService;
+	}
+
+	@javax.annotation.Resource
+	public void setAssessquestionService(
+			AssessquestionService assessquestionService) {
+		this.assessquestionService = assessquestionService;
+	}
+
+	@javax.annotation.Resource
+	public void setAssesssortService(AssesssortService assesssortService) {
+		this.assesssortService = assesssortService;
+	}
+
 	@RequestMapping("/update")
 	public ModelAndView update(HttpServletRequest request, ModelMap modelMap) {
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
@@ -199,153 +785,6 @@ public class AssessquestionController {
 		assessquestionService.save(assessquestion);
 
 		return this.list(request, modelMap);
-	}
-
-	@ResponseBody
-	@RequestMapping("/delete")
-	public void delete(HttpServletRequest request, ModelMap modelMap) {
-		LoginContext loginContext = RequestUtils.getLoginContext(request);
-		Long qustionid = RequestUtils.getLong(request, "qustionid");
-		String qustionids = request.getParameter("qustionids");
-		if (StringUtils.isNotEmpty(qustionids)) {
-			StringTokenizer token = new StringTokenizer(qustionids, ",");
-			while (token.hasMoreTokens()) {
-				String x = token.nextToken();
-				if (StringUtils.isNotEmpty(x)) {
-					Assessquestion assessquestion = assessquestionService
-							.getAssessquestion(Long.valueOf(x));
-					/**
-					 * 此处业务逻辑需自行调整
-					 */
-					if (assessquestion != null
-							&& (StringUtils.equals(
-									assessquestion.getCreateBy(),
-									loginContext.getActorId()) || loginContext
-									.isSystemAdministrator())) {
-						// assessquestion.setDeleteFlag(1);
-						assessquestionService.save(assessquestion);
-					}
-				}
-			}
-		} else if (qustionid != null) {
-			Assessquestion assessquestion = assessquestionService
-					.getAssessquestion(Long.valueOf(qustionid));
-			/**
-			 * 此处业务逻辑需自行调整
-			 */
-			if (assessquestion != null
-					&& (StringUtils.equals(assessquestion.getCreateBy(),
-							loginContext.getActorId()) || loginContext
-							.isSystemAdministrator())) {
-				// assessquestion.setDeleteFlag(1);
-				assessquestionService.save(assessquestion);
-			}
-		}
-	}
-
-	/**
-	 * 岗位考核指标制作，选择分类后插入到表中
-	 * 
-	 * @param request
-	 * @param modelMap
-	 * @throws UnsupportedEncodingException
-	 */
-	@ResponseBody
-	@RequestMapping("/insertTypeInMakeAssessIndex")
-	public byte[] insertTypeInMakeAssessIndex(HttpServletRequest request,
-			ModelMap modelMap) throws IOException {
-		JSONObject result = new JSONObject();
-		result.put("result", "FAILD");
-		result.put("qid", "");
-		result.put("sid", "");
-
-		// 具体标准ID
-		long sid = RequestUtils.getInt(request, "sid");
-
-		String squestionid = request.getParameter("questionId");
-		long questionid = 0;
-		Assessquestion assessquestion = null;
-		Date now = new Date();
-		if (StringUtils.isNotEmpty(squestionid)) {
-			questionid = Long.valueOf(squestionid);
-			assessquestion = assessquestionService
-					.getAssessquestion(questionid);
-		}
-		if (assessquestion == null) {
-			assessquestion = new Assessquestion();
-			assessquestion.setCreateDate(now);
-			assessquestion.setTitle("");
-		}
-
-		assessquestion.setUpdateDate(now);
-		assessquestionService.save(assessquestion);
-		Assesssort assesssort = new Assesssort();
-		assesssort.setSortid(sid);
-		assesssort.setQustionid(assessquestion.getQustionid());
-		assesssort.setCreateDate(now);
-		assesssort.setUpdateDate(now);
-		assesssortService.save(assesssort);
-		result.put("result", "SUCCESS");
-		result.put("qid", assessquestion.getQustionid());
-		result.put("sid", assesssort.getAssesssortid());
-		return result.toJSONString().getBytes("UTF-8");
-	}
-
-	@ResponseBody
-	@RequestMapping("/detail")
-	public byte[] detail(HttpServletRequest request) throws IOException {
-
-		Assessquestion assessquestion = assessquestionService
-				.getAssessquestion(RequestUtils.getLong(request, "qustionid"));
-
-		JSONObject rowJSON = assessquestion.toJsonObject();
-		return rowJSON.toJSONString().getBytes("UTF-8");
-	}
-
-	@RequestMapping("/edit")
-	public ModelAndView edit(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
-		request.removeAttribute("canSubmit");
-
-		Assessquestion assessquestion = assessquestionService
-				.getAssessquestion(RequestUtils.getLong(request, "qustionid"));
-
-		List<BaseDataInfo> isValidList = AQUtils
-				.getBaseInfoByCode("ASSESS_ISVALID");
-		Map<String, BaseDataInfo> validMap = AQUtils
-				.baseList2MapByCode(isValidList);
-		if (assessquestion != null) {
-			assessquestion.setIseffectiveText(validMap.get(
-					assessquestion.getIseffective() + "").getName());
-			modelMap.put("isValidList", isValidList);
-			modelMap.put("assessquestion", assessquestion);
-		}
-		boolean canUpdate = false;
-		String x_method = request.getParameter("x_method");
-		if (StringUtils.equals(x_method, "submit")) {
-
-		}
-
-		if (StringUtils.containsIgnoreCase(x_method, "update")) {
-			if (assessquestion != null) {
-				canUpdate = true;
-			}
-		}
-
-		request.setAttribute("canUpdate", canUpdate);
-
-		String view = request.getParameter("view");
-		if (StringUtils.isNotEmpty(view)) {
-			return new ModelAndView(view, modelMap);
-		}
-
-		String x_view = ViewProperties.getString("assessquestion.edit");
-		if (StringUtils.isNotEmpty(x_view)) {
-			return new ModelAndView(x_view, modelMap);
-		}
-
-		return new ModelAndView("/oa/assessquestion/assessquestionEdit",
-				modelMap);
 	}
 
 	/**
@@ -533,242 +972,6 @@ public class AssessquestionController {
 		return new ModelAndView("/oa/assessquestion/assessIndexQuery");
 	}
 
-	private void addToList(List<Assesscontent> srcList,
-			List<Assesscontent> destList) {
-		for (Assesscontent obj : srcList) {
-			destList.add(obj);
-		}
-	}
-
-	private List<Assesscontent> getContentListBySortId(
-			Map<String, Assesscontent> contentMap, String sortId) {
-
-		List<Assesscontent> contentList = new ArrayList<Assesscontent>();
-		Iterator<Assesscontent> iter = contentMap.values().iterator();
-		while (iter.hasNext()) {
-			Assesscontent content = iter.next();
-			if ((content.getSortid() + "").equals(sortId)) {
-				contentList.add(content);
-			}
-		}
-		return contentList;
-	}
-
-	private Map<String, Assesscontent> contentList2MapByContentId(
-			List<Assesscontent> contentList) {
-
-		Map<String, Assesscontent> contentMap = new HashMap<String, Assesscontent>();
-		for (Assesscontent content : contentList) {
-			contentMap.put(content.getContentid() + "", content);
-		}
-		return contentMap;
-	}
-
-	/**
-	 * 岗位考核指标制作
-	 * 
-	 * @param request
-	 * @param modelMap
-	 * @return
-	 */
-	@RequestMapping("/queryAssessIndex")
-	public ModelAndView queryAssessIndex(HttpServletRequest request,
-			ModelMap modelMap) {
-
-		// LoginContext loginContext = RequestUtils.getLoginContext( request );
-		RequestUtils.setRequestParameterToAttribute(request);
-		// Map<String, Object> params = RequestUtils.getParameterMap( request );
-		// ASSESS_ISVALID 是否有效列表
-		List<BaseDataInfo> isValidList = AQUtils
-				.getBaseInfoByCode("ASSESS_ISVALID");
-		request.setAttribute("isValidList", isValidList);
-		// 频率列表
-		List<BaseDataInfo> frequencyList = AQUtils
-				.getBaseInfoByCode("ASSESS_AUDIT_RATE");
-		request.setAttribute("frequencyList", frequencyList);
-		String squestionId = request.getParameter("questionId");
-		// 查看或修改状态
-		String editType = request.getParameter("editType");
-		modelMap.put("editType", editType);
-		long questionId = 0;
-		// Integer sid = 0; //
-		AssessquestionExt assessquestion = new AssessquestionExt();
-		List<AssessQuestionDetails> questionDetails = new ArrayList<AssessQuestionDetails>();
-		if (StringUtils.isNotBlank(squestionId)) {
-			questionId = Long.valueOf(squestionId);
-			Assessquestion assessquestion1 = assessquestionService
-					.getAssessquestion(questionId);
-			if (assessquestion1 != null) {
-				assessquestion.setQustionid(assessquestion1.getQustionid());
-				assessquestion.setTitle(assessquestion1.getTitle());
-				assessquestion.setValiddate(assessquestion1.getValiddate());
-				assessquestion.setRate(assessquestion1.getRate());
-				assessquestion.setIseffective(assessquestion1.getIseffective());
-				assessquestion.setTargetsum(assessquestion1.getTargetsum());
-
-				AssesssortQuery sortQuery = new AssesssortQuery();
-				sortQuery.setQustionid(assessquestion.getQustionid());
-				// 一张问卷有多个分类类型
-				List<Assesssort> assessSortList = assesssortService
-						.list(sortQuery);
-				if (assessSortList != null && !assessSortList.isEmpty()) {
-					AssessQuestionDetails details = null;
-					int index = 0;
-					for (Assesssort assessSort : assessSortList) {
-						details = new AssessQuestionDetails();
-						details.setIndex(++index + "");
-						// 返回唯一的记录
-						List<AssessortTree> treeList = assesssortService
-								.getParentsInfoByDictId(assessSort.getSortid()
-										.intValue());
-						AssessortTree sortTree = null;
-						if (treeList != null && !treeList.isEmpty()) {
-							sortTree = treeList.get(0);
-						} else {
-							sortTree = new AssessortTree();
-						}
-						details.setSortTree(sortTree);
-						Long assessSortId = assessSort.getAssesssortid();
-						AssesscontentQuery assessContentQuery = new AssesscontentQuery();
-						assessContentQuery.setSortid(assessSortId);
-						// 指标考核分类ID对应 一条内容
-						List<Assesscontent> contentList = assesscontentService
-								.list(assessContentQuery);
-						if (contentList == null) {
-							contentList = new ArrayList<Assesscontent>();
-						}
-						// Assessinfo assessInfo = new Assessinfo();
-						// for( Assesscontent content : contentList ) {
-						// assessInfo = assessinfoService.getAssessinfo(
-						// content.getAssessId() );
-						// content.setAssessInfo( assessInfo );
-						// }
-						details.setContentList(contentList);
-						details.setAssessSort(assessSort);
-						questionDetails.add(details);
-					}
-				}
-			}
-		}
-		assessquestion.setQuestionDetails(questionDetails);
-		modelMap.put("assessquestion", assessquestion);
-		modelMap.put("assessRate", assessquestion.getRate() + "");
-		modelMap.put("assessEffective", assessquestion.getIseffective() + "");
-		return new ModelAndView("/oa/assessquestion/makeAssessIndex");
-	}
-
-	/**
-	 * 点击添加指标类型时保存标题信息
-	 * 
-	 * @param request
-	 * @param modelMap
-	 * @return
-	 * @throws IOException
-	 */
-	@RequestMapping("/saveMakeAssessTitle")
-	public ModelAndView saveMakeAssessTitle(HttpServletRequest request,
-			HttpServletResponse response, ModelMap modelMap) throws IOException {
-		RequestUtils.setRequestParameterToAttribute(request);
-		Assessquestion question = new Assessquestion();
-		Long questionid = RequestUtils.getLong(request, "questionId");
-		String title = RequestUtils.getString(request, "title");
-		Date validDate = RequestUtils.getDate(request, "validDate");
-		int rate = RequestUtils.getInt(request, "rate");
-		int iseffective = RequestUtils.getInt(request, "iseffective");
-		question.setQustionid(questionid == 0 ? null : questionid);
-		question.setTitle(title);
-		question.setValiddate(validDate);
-		question.setRate(rate);
-		question.setIseffective(iseffective);
-		question.setUpdateDate(new Date());
-		try {
-			assessquestionService.save(question);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			logger.error(ex);
-			ModelAndView mav = new ModelAndView();
-			mav.addObject("message", "操作失败。");
-			return mav;
-		}
-		modelMap.put("questionid", question.getQustionid());
-		return new ModelAndView("/oa/assessquestion/makeAssessIndex", modelMap);
-	}
-
-	/**
-	 * 保存岗位考核列表
-	 * 
-	 * @param request
-	 * @param modelMap
-	 * @return
-	 * @throws IOException
-	 */
-	@RequestMapping("/saveMakeAssessIndex")
-	public ModelAndView saveMakeAssessIndex(HttpServletRequest request,
-			HttpServletResponse response, ModelMap modelMap) throws IOException {
-
-		// LoginContext loginContext = RequestUtils.getLoginContext( request );
-		RequestUtils.setRequestParameterToAttribute(request);
-		// Map<String, Object> params = RequestUtils.getParameterMap( request );
-		Assesscontent content = null;
-		Assessquestion question = new Assessquestion();
-		Long questionid = RequestUtils.getLong(request, "questionId");
-		if (questionid == 0) {
-			questionid = null;
-		}
-		String title = RequestUtils.getString(request, "title");
-		Date validDate = RequestUtils.getDate(request, "validDate");
-		int rate = RequestUtils.getInt(request, "rate");
-		int iseffective = RequestUtils.getInt(request, "iseffective");
-		question.setQustionid(questionid);
-		question.setTitle(title);
-		question.setValiddate(validDate);
-		question.setRate(rate);
-		question.setIseffective(iseffective);
-		question.setUpdateDate(new Date());
-		try {
-			assessquestionService.save(question);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			logger.error(ex);
-			ModelAndView mav = new ModelAndView();
-			mav.addObject("message", "操作失败。");
-			return mav;
-		}
-
-		String[] sortIds = request.getParameterValues("sortIds");
-		if (sortIds != null && sortIds.length > 0) {
-			for (String ssortId : sortIds) {
-				String[] scontentIds = request.getParameterValues("contentIds"
-						+ ssortId);
-				String[] sstandards = request.getParameterValues("standards"
-						+ ssortId);
-				if (scontentIds != null && scontentIds.length > 0) {
-					for (int k = 0; k < scontentIds.length; k++) {
-						String scontent = scontentIds[k];
-						Long contentid = Long.valueOf(scontent);
-						Double standard = Double.valueOf(sstandards[k]);
-						content = new Assesscontent();
-						content.setContentid(contentid);
-						content.setStandard(standard);
-						content.setUpdateDate(new Date());
-						try {
-							assesscontentService.save(content);
-						} catch (Exception ex) {
-							ex.printStackTrace();
-							logger.error(ex);
-							ModelAndView mav = new ModelAndView();
-							mav.addObject("message", "操作失败。");
-							return mav;
-						}
-					}
-				}
-
-			}
-		}
-		modelMap.put("questionid", question.getQustionid());
-		return new ModelAndView("/oa/assessquestion/makeAssessIndex", modelMap);
-	}
-
 	/**
 	 * 查询岗位考核列表
 	 * 
@@ -781,212 +984,6 @@ public class AssessquestionController {
 			ModelMap modelMap) {
 
 		return new ModelAndView("/oa/assessquestion/postAssessList", modelMap);
-	}
-
-	@RequestMapping("/queryPostAssess")
-	@ResponseBody
-	public byte[] queryPostAssess(HttpServletRequest request, ModelMap modelMap)
-			throws IOException {
-
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		AssessquestionQuery query = new AssessquestionQuery();
-		Tools.populate(query, params);
-
-		String gridType = ParamUtils.getString(params, "gridType");
-		if (gridType == null) {
-			gridType = "easyui";
-		}
-		int start = 0;
-		int limit = 10;
-		String orderName = null;
-		String order = null;
-
-		int pageNo = ParamUtils.getInt(params, "page");
-		limit = ParamUtils.getInt(params, "rows");
-		start = (pageNo - 1) * limit;
-		orderName = ParamUtils.getString(params, "sortName");
-		order = ParamUtils.getString(params, "sortOrder");
-
-		if (start < 0) {
-			start = 0;
-		}
-
-		if (limit <= 0) {
-			limit = PageResult.DEFAULT_PAGE_SIZE;
-		}
-
-		String titleLike = request.getParameter("titleLike");
-		query.setTitleLike(titleLike);
-		query.setValiddateGreaterThanOrEqual(new Date());
-
-		query.setIseffective(1);
-		JSONObject result = new JSONObject();
-		int total = assessquestionService
-				.getAssessquestionCountByQueryCriteria(query);
-		if (total > 0) {
-			result.put("total", total);
-			result.put("totalCount", total);
-			result.put("totalRecords", total);
-			result.put("start", start);
-			result.put("startIndex", start);
-			result.put("limit", limit);
-			result.put("pageSize", limit);
-
-			if (StringUtils.isNotEmpty(orderName)) {
-				query.setSortOrder(orderName);
-				if (StringUtils.equals(order, "desc")) {
-					query.setSortOrder(" desc ");
-				}
-			}
-
-			List<Assessquestion> assessList = assessquestionService
-					.getAssessquestionsByQueryCriteria(start, limit, query);
-			// 指标分类 ASSESS_CLASS
-			// ENTERPRISE_INDEX
-
-			// FACTORY_INDEX
-			// 考核频率
-
-			// quarter 季度
-			// monthly =月度
-			if (assessList != null && !assessList.isEmpty()) {
-				JSONArray rowsJSON = new JSONArray();
-
-				result.put("rows", rowsJSON);
-
-				for (Assessquestion assessquestion : assessList) {
-					JSONObject rowJSON = assessquestion.toJsonObject();
-
-					rowJSON.put("startIndex", ++start);
-					rowsJSON.add(rowJSON);
-				}
-
-			}
-		} else {
-			JSONArray rowsJSON = new JSONArray();
-			result.put("rows", rowsJSON);
-			result.put("total", total);
-		}
-		return result.toJSONString().getBytes("UTF-8");
-	}
-
-	@RequestMapping("/query")
-	public ModelAndView query(HttpServletRequest request, ModelMap modelMap) {
-
-		RequestUtils.setRequestParameterToAttribute(request);
-
-		String view = request.getParameter("view");
-		if (StringUtils.isNotEmpty(view)) {
-			return new ModelAndView(view, modelMap);
-		}
-		String x_view = ViewProperties.getString("assessquestion.query");
-		if (StringUtils.isNotEmpty(x_view)) {
-			return new ModelAndView(x_view, modelMap);
-		}
-		return new ModelAndView("/oa/assessquestion/query", modelMap);
-	}
-
-	@RequestMapping("/json")
-	@ResponseBody
-	public byte[] json(HttpServletRequest request, ModelMap modelMap)
-			throws IOException {
-
-		LoginContext loginContext = RequestUtils.getLoginContext(request);
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		AssessquestionQuery query = new AssessquestionQuery();
-		Tools.populate(query, params);
-		query.setLoginContext(loginContext);
-
-		String gridType = ParamUtils.getString(params, "gridType");
-		if (gridType == null) {
-			gridType = "easyui";
-		}
-		int start = 0;
-		int limit = 10;
-		String orderName = null;
-		String order = null;
-
-		int pageNo = ParamUtils.getInt(params, "page");
-		limit = ParamUtils.getInt(params, "rows");
-		start = (pageNo - 1) * limit;
-		orderName = ParamUtils.getString(params, "sortName");
-		order = ParamUtils.getString(params, "sortOrder");
-
-		if (start < 0) {
-			start = 0;
-		}
-
-		if (limit <= 0) {
-			limit = PageResult.DEFAULT_PAGE_SIZE;
-		}
-
-		JSONObject result = new JSONObject();
-		int total = assessquestionService
-				.getAssessquestionCountByQueryCriteria(query);
-		if (total > 0) {
-			result.put("total", total);
-			result.put("totalCount", total);
-			result.put("totalRecords", total);
-			result.put("start", start);
-			result.put("startIndex", start);
-			result.put("limit", limit);
-			result.put("pageSize", limit);
-
-			if (StringUtils.isNotEmpty(orderName)) {
-				query.setSortOrder(orderName);
-				if (StringUtils.equals(order, "desc")) {
-					query.setSortOrder(" desc ");
-				}
-			}
-
-			List<Assessquestion> list = assessquestionService
-					.getAssessquestionsByQueryCriteria(start, limit, query);
-			// 指标分类 ASSESS_CLASS
-			// ENTERPRISE_INDEX
-
-			// quarter 季度
-			// monthly =月度
-			if (list != null && !list.isEmpty()) {
-				JSONArray rowsJSON = new JSONArray();
-
-				result.put("rows", rowsJSON);
-
-				for (Assessquestion assessquestion : list) {
-					JSONObject rowJSON = assessquestion.toJsonObject();
-
-					rowJSON.put("startIndex", ++start);
-					rowsJSON.add(rowJSON);
-				}
-
-			}
-		} else {
-			JSONArray rowsJSON = new JSONArray();
-			result.put("rows", rowsJSON);
-			result.put("total", total);
-		}
-		return result.toJSONString().getBytes("UTF-8");
-	}
-
-	@RequestMapping
-	public ModelAndView list(HttpServletRequest request, ModelMap modelMap) {
-
-		RequestUtils.setRequestParameterToAttribute(request);
-		String x_query = request.getParameter("x_query");
-		if (StringUtils.equals(x_query, "true")) {
-			Map<String, Object> paramMap = RequestUtils
-					.getParameterMap(request);
-			String x_complex_query = JsonUtils.encode(paramMap);
-			x_complex_query = RequestUtils.encodeString(x_complex_query);
-			request.setAttribute("x_complex_query", x_complex_query);
-		} else {
-			request.setAttribute("x_complex_query", "");
-		}
-		String view = request.getParameter("view");
-		if (StringUtils.isNotEmpty(view)) {
-			return new ModelAndView(view, modelMap);
-		}
-
-		return new ModelAndView("/oa/assessquestion/list", modelMap);
 	}
 
 }

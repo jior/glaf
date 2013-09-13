@@ -61,115 +61,6 @@ public class PurchaseitemController {
 
 	}
 
-	@javax.annotation.Resource
-	public void setPurchaseitemService(PurchaseitemService purchaseitemService) {
-		this.purchaseitemService = purchaseitemService;
-	}
-
-	/**
-	 * ±£¥Ê
-	 * 
-	 * @param request
-	 * @param modelMap
-	 * @return
-	 */
-	@RequestMapping("/save")
-	public ModelAndView save(HttpServletRequest request, ModelMap modelMap) {
-		User user = RequestUtils.getUser(request);
-		String actorId = user.getActorId();
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-
-		Purchaseitem purchaseitem = new Purchaseitem();
-		Tools.populate(purchaseitem, params);
-
-		purchaseitem.setPurchaseid(RequestUtils.getLong(request,
-				"purchaseitemid"));
-		purchaseitem.setPurchaseid(RequestUtils.getLong(request, "purchaseId"));
-		purchaseitem.setContent(request.getParameter("content"));
-		purchaseitem.setSpecification(request.getParameter("specification"));
-		purchaseitem.setQuantity(RequestUtils.getDouble(request, "quantity"));
-		purchaseitem.setReferenceprice(RequestUtils.getDouble(request,
-				"referenceprice"));
-		purchaseitem.setCreateBy(request.getParameter("createBy"));
-		purchaseitem.setCreateDate(RequestUtils.getDate(request, "createDate"));
-		purchaseitem.setUpdateDate(RequestUtils.getDate(request, "updateDate"));
-		purchaseitem.setUpdateBy(request.getParameter("updateBy"));
-		purchaseitem.setCreateBy(actorId);
-		try {
-			purchaseitemService.save(purchaseitem);
-
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			logger.error(ex.getMessage());
-			ModelAndView mav = new ModelAndView();
-			mav.addObject("message", "±£¥Ê ß∞‹°£");
-			return mav;
-		}
-
-		return this.list(request, modelMap);
-	}
-
-	@ResponseBody
-	@RequestMapping("/savePurchaseitem")
-	public byte[] savePurchaseitem(HttpServletRequest request) {
-		User user = RequestUtils.getUser(request);
-		String actorId = user.getActorId();
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		Purchaseitem purchaseitem = new Purchaseitem();
-		try {
-			Tools.populate(purchaseitem, params);
-			purchaseitem.setPurchaseid(RequestUtils.getLong(request,
-					"purchaseid"));
-			purchaseitem.setContent(request.getParameter("content"));
-			purchaseitem
-					.setSpecification(request.getParameter("specification"));
-			purchaseitem.setQuantity(RequestUtils
-					.getDouble(request, "quantity"));
-			purchaseitem.setReferenceprice(RequestUtils.getDouble(request,
-					"referenceprice"));
-			purchaseitem.setCreateBy(request.getParameter("createBy"));
-			purchaseitem.setCreateDate(RequestUtils.getDate(request,
-					"createDate"));
-			purchaseitem.setUpdateDate(RequestUtils.getDate(request,
-					"updateDate"));
-			purchaseitem.setUpdateBy(request.getParameter("updateBy"));
-			purchaseitem.setCreateBy(actorId);
-			this.purchaseitemService.save(purchaseitem);
-
-			return ResponseUtils.responseJsonResult(true);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			logger.error(ex);
-		}
-		return ResponseUtils.responseJsonResult(false);
-	}
-
-	@RequestMapping("/update")
-	public ModelAndView update(HttpServletRequest request, ModelMap modelMap) {
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		params.remove("status");
-		params.remove("wfStatus");
-
-		Purchaseitem purchaseitem = purchaseitemService
-				.getPurchaseitem(RequestUtils
-						.getLong(request, "purchaseitemid"));
-
-		purchaseitem.setPurchaseid(RequestUtils.getLong(request, "purchaseid"));
-		purchaseitem.setContent(request.getParameter("content"));
-		purchaseitem.setSpecification(request.getParameter("specification"));
-		purchaseitem.setQuantity(RequestUtils.getDouble(request, "quantity"));
-		purchaseitem.setReferenceprice(RequestUtils.getDouble(request,
-				"referenceprice"));
-		purchaseitem.setCreateBy(request.getParameter("createBy"));
-		purchaseitem.setCreateDate(RequestUtils.getDate(request, "createDate"));
-		purchaseitem.setUpdateDate(RequestUtils.getDate(request, "updateDate"));
-		purchaseitem.setUpdateBy(request.getParameter("updateBy"));
-
-		purchaseitemService.save(purchaseitem);
-
-		return this.list(request, modelMap);
-	}
-
 	@ResponseBody
 	@RequestMapping("/delete")
 	public ModelAndView delete(HttpServletRequest request, ModelMap modelMap) {
@@ -250,43 +141,6 @@ public class PurchaseitemController {
 		return new ModelAndView("/oa/purchaseitem/edit", modelMap);
 	}
 
-	@RequestMapping("/view")
-	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
-		Purchaseitem purchaseitem = purchaseitemService
-				.getPurchaseitem(RequestUtils
-						.getLong(request, "purchaseitemid"));
-		request.setAttribute("purchaseitem", purchaseitem);
-		JSONObject rowJSON = purchaseitem.toJsonObject();
-		request.setAttribute("x_json", rowJSON.toJSONString());
-
-		String view = request.getParameter("view");
-		if (StringUtils.isNotEmpty(view)) {
-			return new ModelAndView(view);
-		}
-
-		String x_view = ViewProperties.getString("purchaseitem.view");
-		if (StringUtils.isNotEmpty(x_view)) {
-			return new ModelAndView(x_view);
-		}
-
-		return new ModelAndView("/oa/purchaseitem/view");
-	}
-
-	@RequestMapping("/query")
-	public ModelAndView query(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
-		String view = request.getParameter("view");
-		if (StringUtils.isNotEmpty(view)) {
-			return new ModelAndView(view, modelMap);
-		}
-		String x_view = ViewProperties.getString("purchaseitem.query");
-		if (StringUtils.isNotEmpty(x_view)) {
-			return new ModelAndView(x_view, modelMap);
-		}
-		return new ModelAndView("/oa/purchaseitem/query", modelMap);
-	}
-
 	@RequestMapping("/json")
 	@ResponseBody
 	public byte[] json(HttpServletRequest request, ModelMap modelMap)
@@ -358,6 +212,152 @@ public class PurchaseitemController {
 		}
 
 		return new ModelAndView("/oa/purchaseitem/list", modelMap);
+	}
+
+	@RequestMapping("/query")
+	public ModelAndView query(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		String view = request.getParameter("view");
+		if (StringUtils.isNotEmpty(view)) {
+			return new ModelAndView(view, modelMap);
+		}
+		String x_view = ViewProperties.getString("purchaseitem.query");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+		return new ModelAndView("/oa/purchaseitem/query", modelMap);
+	}
+
+	/**
+	 * ±£¥Ê
+	 * 
+	 * @param request
+	 * @param modelMap
+	 * @return
+	 */
+	@RequestMapping("/save")
+	public ModelAndView save(HttpServletRequest request, ModelMap modelMap) {
+		User user = RequestUtils.getUser(request);
+		String actorId = user.getActorId();
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+
+		Purchaseitem purchaseitem = new Purchaseitem();
+		Tools.populate(purchaseitem, params);
+
+		purchaseitem.setPurchaseid(RequestUtils.getLong(request,
+				"purchaseitemid"));
+		purchaseitem.setPurchaseid(RequestUtils.getLong(request, "purchaseId"));
+		purchaseitem.setContent(request.getParameter("content"));
+		purchaseitem.setSpecification(request.getParameter("specification"));
+		purchaseitem.setQuantity(RequestUtils.getDouble(request, "quantity"));
+		purchaseitem.setReferenceprice(RequestUtils.getDouble(request,
+				"referenceprice"));
+		purchaseitem.setCreateBy(request.getParameter("createBy"));
+		purchaseitem.setCreateDate(RequestUtils.getDate(request, "createDate"));
+		purchaseitem.setUpdateDate(RequestUtils.getDate(request, "updateDate"));
+		purchaseitem.setUpdateBy(request.getParameter("updateBy"));
+		purchaseitem.setCreateBy(actorId);
+		try {
+			purchaseitemService.save(purchaseitem);
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			logger.error(ex.getMessage());
+			ModelAndView mav = new ModelAndView();
+			mav.addObject("message", "±£¥Ê ß∞‹°£");
+			return mav;
+		}
+
+		return this.list(request, modelMap);
+	}
+
+	@ResponseBody
+	@RequestMapping("/savePurchaseitem")
+	public byte[] savePurchaseitem(HttpServletRequest request) {
+		User user = RequestUtils.getUser(request);
+		String actorId = user.getActorId();
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		Purchaseitem purchaseitem = new Purchaseitem();
+		try {
+			Tools.populate(purchaseitem, params);
+			purchaseitem.setPurchaseid(RequestUtils.getLong(request,
+					"purchaseid"));
+			purchaseitem.setContent(request.getParameter("content"));
+			purchaseitem
+					.setSpecification(request.getParameter("specification"));
+			purchaseitem.setQuantity(RequestUtils
+					.getDouble(request, "quantity"));
+			purchaseitem.setReferenceprice(RequestUtils.getDouble(request,
+					"referenceprice"));
+			purchaseitem.setCreateBy(request.getParameter("createBy"));
+			purchaseitem.setCreateDate(RequestUtils.getDate(request,
+					"createDate"));
+			purchaseitem.setUpdateDate(RequestUtils.getDate(request,
+					"updateDate"));
+			purchaseitem.setUpdateBy(request.getParameter("updateBy"));
+			purchaseitem.setCreateBy(actorId);
+			this.purchaseitemService.save(purchaseitem);
+
+			return ResponseUtils.responseJsonResult(true);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			logger.error(ex);
+		}
+		return ResponseUtils.responseJsonResult(false);
+	}
+
+	@javax.annotation.Resource
+	public void setPurchaseitemService(PurchaseitemService purchaseitemService) {
+		this.purchaseitemService = purchaseitemService;
+	}
+
+	@RequestMapping("/update")
+	public ModelAndView update(HttpServletRequest request, ModelMap modelMap) {
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		params.remove("status");
+		params.remove("wfStatus");
+
+		Purchaseitem purchaseitem = purchaseitemService
+				.getPurchaseitem(RequestUtils
+						.getLong(request, "purchaseitemid"));
+
+		purchaseitem.setPurchaseid(RequestUtils.getLong(request, "purchaseid"));
+		purchaseitem.setContent(request.getParameter("content"));
+		purchaseitem.setSpecification(request.getParameter("specification"));
+		purchaseitem.setQuantity(RequestUtils.getDouble(request, "quantity"));
+		purchaseitem.setReferenceprice(RequestUtils.getDouble(request,
+				"referenceprice"));
+		purchaseitem.setCreateBy(request.getParameter("createBy"));
+		purchaseitem.setCreateDate(RequestUtils.getDate(request, "createDate"));
+		purchaseitem.setUpdateDate(RequestUtils.getDate(request, "updateDate"));
+		purchaseitem.setUpdateBy(request.getParameter("updateBy"));
+
+		purchaseitemService.save(purchaseitem);
+
+		return this.list(request, modelMap);
+	}
+
+	@RequestMapping("/view")
+	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		Purchaseitem purchaseitem = purchaseitemService
+				.getPurchaseitem(RequestUtils
+						.getLong(request, "purchaseitemid"));
+		request.setAttribute("purchaseitem", purchaseitem);
+		JSONObject rowJSON = purchaseitem.toJsonObject();
+		request.setAttribute("x_json", rowJSON.toJSONString());
+
+		String view = request.getParameter("view");
+		if (StringUtils.isNotEmpty(view)) {
+			return new ModelAndView(view);
+		}
+
+		String x_view = ViewProperties.getString("purchaseitem.view");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view);
+		}
+
+		return new ModelAndView("/oa/purchaseitem/view");
 	}
 
 }

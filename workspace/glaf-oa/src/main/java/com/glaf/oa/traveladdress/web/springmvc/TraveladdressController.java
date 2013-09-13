@@ -52,87 +52,6 @@ public class TraveladdressController {
 
 	}
 
-	@javax.annotation.Resource
-	public void setTraveladdressService(
-			TraveladdressService traveladdressService) {
-		this.traveladdressService = traveladdressService;
-	}
-
-	@RequestMapping("/save")
-	public ModelAndView save(HttpServletRequest request, ModelMap modelMap) {
-		User user = RequestUtils.getUser(request);
-		String actorId = user.getActorId();
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		params.remove("status");
-		params.remove("wfStatus");
-
-		Traveladdress traveladdress = new Traveladdress();
-		Tools.populate(traveladdress, params);
-
-		traveladdress.setTravelid(RequestUtils.getLong(request, "travelid"));
-		traveladdress.setStartadd(request.getParameter("startadd"));
-		traveladdress.setEndadd(request.getParameter("endadd"));
-		traveladdress.setTransportation(request.getParameter("transportation"));
-		if (RequestUtils.getLong(request, "addressid") == 0L
-				|| request.getParameter("addressid") == null) {
-			traveladdress.setAddressid(0L);
-			traveladdress.setCreateDate(new Date());
-			traveladdress.setCreateBy(actorId);
-		} else {
-			traveladdress.setAddressid(RequestUtils.getLong(request,
-					"addressid"));
-			traveladdress.setUpdateDate(new Date());
-			traveladdress.setUpdateBy(actorId);
-		}
-
-		traveladdressService.save(traveladdress);
-
-		return this.list(request, modelMap);
-	}
-
-	@ResponseBody
-	@RequestMapping("/saveTraveladdress")
-	public byte[] saveTraveladdress(HttpServletRequest request) {
-
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		Traveladdress traveladdress = new Traveladdress();
-		try {
-			Tools.populate(traveladdress, params);
-			traveladdress
-					.setTravelid(RequestUtils.getLong(request, "travelid"));
-			traveladdress.setStartadd(request.getParameter("startadd"));
-			traveladdress.setEndadd(request.getParameter("endadd"));
-			traveladdress.setTransportation(request
-					.getParameter("transportation"));
-			this.traveladdressService.save(traveladdress);
-
-			return ResponseUtils.responseJsonResult(true);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			logger.error(ex);
-		}
-		return ResponseUtils.responseJsonResult(false);
-	}
-
-	@RequestMapping("/update")
-	public ModelAndView update(HttpServletRequest request, ModelMap modelMap) {
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		params.remove("status");
-		params.remove("wfStatus");
-
-		Traveladdress traveladdress = traveladdressService
-				.getTraveladdress(RequestUtils.getLong(request, "addressid"));
-
-		traveladdress.setTravelid(RequestUtils.getLong(request, "travelid"));
-		traveladdress.setStartadd(request.getParameter("startadd"));
-		traveladdress.setEndadd(request.getParameter("endadd"));
-		traveladdress.setTransportation(request.getParameter("transportation"));
-
-		traveladdressService.save(traveladdress);
-
-		return this.list(request, modelMap);
-	}
-
 	@ResponseBody
 	@RequestMapping("/delete")
 	public void delete(HttpServletRequest request, ModelMap modelMap) {
@@ -170,8 +89,6 @@ public class TraveladdressController {
 	@ResponseBody
 	@RequestMapping("/detail")
 	public byte[] detail(HttpServletRequest request) throws IOException {
-		// RequestUtils.setRequestParameterToAttribute(request);
-		// Map<String, Object> params = RequestUtils.getParameterMap(request);
 		Traveladdress traveladdress = traveladdressService
 				.getTraveladdress(RequestUtils.getLong(request, "addressid"));
 
@@ -202,42 +119,6 @@ public class TraveladdressController {
 		}
 
 		return new ModelAndView("/oa/traveladdress/edit", modelMap);
-	}
-
-	@RequestMapping("/view")
-	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
-		Traveladdress traveladdress = traveladdressService
-				.getTraveladdress(RequestUtils.getLong(request, "addressid"));
-		request.setAttribute("traveladdress", traveladdress);
-		JSONObject rowJSON = traveladdress.toJsonObject();
-		request.setAttribute("x_json", rowJSON.toJSONString());
-
-		String view = request.getParameter("view");
-		if (StringUtils.isNotEmpty(view)) {
-			return new ModelAndView(view);
-		}
-
-		String x_view = ViewProperties.getString("traveladdress.view");
-		if (StringUtils.isNotEmpty(x_view)) {
-			return new ModelAndView(x_view);
-		}
-
-		return new ModelAndView("/oa/traveladdress/view");
-	}
-
-	@RequestMapping("/query")
-	public ModelAndView query(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
-		String view = request.getParameter("view");
-		if (StringUtils.isNotEmpty(view)) {
-			return new ModelAndView(view, modelMap);
-		}
-		String x_view = ViewProperties.getString("traveladdress.query");
-		if (StringUtils.isNotEmpty(x_view)) {
-			return new ModelAndView(x_view, modelMap);
-		}
-		return new ModelAndView("/oa/traveladdress/query", modelMap);
 	}
 
 	@RequestMapping("/json")
@@ -343,6 +224,122 @@ public class TraveladdressController {
 		}
 
 		return new ModelAndView("/oa/traveladdress/list", modelMap);
+	}
+
+	@RequestMapping("/query")
+	public ModelAndView query(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		String view = request.getParameter("view");
+		if (StringUtils.isNotEmpty(view)) {
+			return new ModelAndView(view, modelMap);
+		}
+		String x_view = ViewProperties.getString("traveladdress.query");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+		return new ModelAndView("/oa/traveladdress/query", modelMap);
+	}
+
+	@RequestMapping("/save")
+	public ModelAndView save(HttpServletRequest request, ModelMap modelMap) {
+		User user = RequestUtils.getUser(request);
+		String actorId = user.getActorId();
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		params.remove("status");
+		params.remove("wfStatus");
+
+		Traveladdress traveladdress = new Traveladdress();
+		Tools.populate(traveladdress, params);
+
+		traveladdress.setTravelid(RequestUtils.getLong(request, "travelid"));
+		traveladdress.setStartadd(request.getParameter("startadd"));
+		traveladdress.setEndadd(request.getParameter("endadd"));
+		traveladdress.setTransportation(request.getParameter("transportation"));
+		if (RequestUtils.getLong(request, "addressid") == 0L
+				|| request.getParameter("addressid") == null) {
+			traveladdress.setAddressid(0L);
+			traveladdress.setCreateDate(new Date());
+			traveladdress.setCreateBy(actorId);
+		} else {
+			traveladdress.setAddressid(RequestUtils.getLong(request,
+					"addressid"));
+			traveladdress.setUpdateDate(new Date());
+			traveladdress.setUpdateBy(actorId);
+		}
+
+		traveladdressService.save(traveladdress);
+
+		return this.list(request, modelMap);
+	}
+
+	@ResponseBody
+	@RequestMapping("/saveTraveladdress")
+	public byte[] saveTraveladdress(HttpServletRequest request) {
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		Traveladdress traveladdress = new Traveladdress();
+		try {
+			Tools.populate(traveladdress, params);
+			traveladdress
+					.setTravelid(RequestUtils.getLong(request, "travelid"));
+			traveladdress.setStartadd(request.getParameter("startadd"));
+			traveladdress.setEndadd(request.getParameter("endadd"));
+			traveladdress.setTransportation(request
+					.getParameter("transportation"));
+			this.traveladdressService.save(traveladdress);
+
+			return ResponseUtils.responseJsonResult(true);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			logger.error(ex);
+		}
+		return ResponseUtils.responseJsonResult(false);
+	}
+
+	@javax.annotation.Resource
+	public void setTraveladdressService(
+			TraveladdressService traveladdressService) {
+		this.traveladdressService = traveladdressService;
+	}
+
+	@RequestMapping("/update")
+	public ModelAndView update(HttpServletRequest request, ModelMap modelMap) {
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		params.remove("status");
+		params.remove("wfStatus");
+
+		Traveladdress traveladdress = traveladdressService
+				.getTraveladdress(RequestUtils.getLong(request, "addressid"));
+
+		traveladdress.setTravelid(RequestUtils.getLong(request, "travelid"));
+		traveladdress.setStartadd(request.getParameter("startadd"));
+		traveladdress.setEndadd(request.getParameter("endadd"));
+		traveladdress.setTransportation(request.getParameter("transportation"));
+
+		traveladdressService.save(traveladdress);
+
+		return this.list(request, modelMap);
+	}
+
+	@RequestMapping("/view")
+	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		Traveladdress traveladdress = traveladdressService
+				.getTraveladdress(RequestUtils.getLong(request, "addressid"));
+		request.setAttribute("traveladdress", traveladdress);
+		JSONObject rowJSON = traveladdress.toJsonObject();
+		request.setAttribute("x_json", rowJSON.toJSONString());
+
+		String view = request.getParameter("view");
+		if (StringUtils.isNotEmpty(view)) {
+			return new ModelAndView(view);
+		}
+
+		String x_view = ViewProperties.getString("traveladdress.view");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view);
+		}
+
+		return new ModelAndView("/oa/traveladdress/view");
 	}
 
 }

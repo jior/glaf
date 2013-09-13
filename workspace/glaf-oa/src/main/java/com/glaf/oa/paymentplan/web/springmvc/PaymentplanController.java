@@ -51,73 +51,6 @@ public class PaymentplanController {
 
 	}
 
-	@javax.annotation.Resource
-	public void setPaymentplanService(PaymentplanService paymentplanService) {
-		this.paymentplanService = paymentplanService;
-	}
-
-	@RequestMapping("/save")
-	public ModelAndView save(HttpServletRequest request, ModelMap modelMap) {
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		Paymentplan paymentplan = new Paymentplan();
-		Tools.populate(paymentplan, params);
-
-		paymentplan.setBudgetid(RequestUtils.getLong(request, "budgetid"));
-		paymentplan
-				.setPaymemtsum(RequestUtils.getDouble(request, "paymemtsum"));
-		paymentplan
-				.setPaymentdate(RequestUtils.getDate(request, "paymentdate"));
-		paymentplan.setSequence(RequestUtils.getInt(request, "sequence"));
-
-		paymentplanService.save(paymentplan);
-
-		return this.list(request, modelMap);
-	}
-
-	@ResponseBody
-	@RequestMapping("/savePaymentplan")
-	public byte[] savePaymentplan(HttpServletRequest request) {
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		Paymentplan paymentplan = new Paymentplan();
-		try {
-			Tools.populate(paymentplan, params);
-			paymentplan.setBudgetid(RequestUtils.getLong(request, "budgetid"));
-			paymentplan.setPaymemtsum(RequestUtils.getDouble(request,
-					"paymemtsum"));
-			paymentplan.setPaymentdate(RequestUtils.getDate(request,
-					"paymentdate"));
-			paymentplan.setSequence(RequestUtils.getInt(request, "sequence"));
-			this.paymentplanService.save(paymentplan);
-
-			return ResponseUtils.responseJsonResult(true);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			logger.error(ex);
-		}
-		return ResponseUtils.responseJsonResult(false);
-	}
-
-	@RequestMapping("/update")
-	public ModelAndView update(HttpServletRequest request, ModelMap modelMap) {
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		params.remove("status");
-		params.remove("wfStatus");
-
-		Paymentplan paymentplan = paymentplanService
-				.getPaymentplan(RequestUtils.getLong(request, "planid"));
-
-		paymentplan.setBudgetid(RequestUtils.getLong(request, "budgetid"));
-		paymentplan
-				.setPaymemtsum(RequestUtils.getDouble(request, "paymemtsum"));
-		paymentplan
-				.setPaymentdate(RequestUtils.getDate(request, "paymentdate"));
-		paymentplan.setSequence(RequestUtils.getInt(request, "sequence"));
-
-		paymentplanService.save(paymentplan);
-
-		return this.list(request, modelMap);
-	}
-
 	@ResponseBody
 	@RequestMapping("/delete")
 	public void delete(HttpServletRequest request, ModelMap modelMap) {
@@ -200,42 +133,6 @@ public class PaymentplanController {
 		}
 
 		return new ModelAndView("/oa/paymentplan/edit", modelMap);
-	}
-
-	@RequestMapping("/view")
-	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
-		Paymentplan paymentplan = paymentplanService
-				.getPaymentplan(RequestUtils.getLong(request, "planid"));
-		request.setAttribute("paymentplan", paymentplan);
-		JSONObject rowJSON = paymentplan.toJsonObject();
-		request.setAttribute("x_json", rowJSON.toJSONString());
-
-		String view = request.getParameter("view");
-		if (StringUtils.isNotEmpty(view)) {
-			return new ModelAndView(view);
-		}
-
-		String x_view = ViewProperties.getString("paymentplan.view");
-		if (StringUtils.isNotEmpty(x_view)) {
-			return new ModelAndView(x_view);
-		}
-
-		return new ModelAndView("/oa/paymentplan/view");
-	}
-
-	@RequestMapping("/query")
-	public ModelAndView query(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
-		String view = request.getParameter("view");
-		if (StringUtils.isNotEmpty(view)) {
-			return new ModelAndView(view, modelMap);
-		}
-		String x_view = ViewProperties.getString("paymentplan.query");
-		if (StringUtils.isNotEmpty(x_view)) {
-			return new ModelAndView(x_view, modelMap);
-		}
-		return new ModelAndView("/oa/paymentplan/query", modelMap);
 	}
 
 	@RequestMapping("/json")
@@ -340,6 +237,109 @@ public class PaymentplanController {
 		}
 
 		return new ModelAndView("/oa/paymentplan/list", modelMap);
+	}
+
+	@RequestMapping("/query")
+	public ModelAndView query(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		String view = request.getParameter("view");
+		if (StringUtils.isNotEmpty(view)) {
+			return new ModelAndView(view, modelMap);
+		}
+		String x_view = ViewProperties.getString("paymentplan.query");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+		return new ModelAndView("/oa/paymentplan/query", modelMap);
+	}
+
+	@RequestMapping("/save")
+	public ModelAndView save(HttpServletRequest request, ModelMap modelMap) {
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		Paymentplan paymentplan = new Paymentplan();
+		Tools.populate(paymentplan, params);
+
+		paymentplan.setBudgetid(RequestUtils.getLong(request, "budgetid"));
+		paymentplan
+				.setPaymemtsum(RequestUtils.getDouble(request, "paymemtsum"));
+		paymentplan
+				.setPaymentdate(RequestUtils.getDate(request, "paymentdate"));
+		paymentplan.setSequence(RequestUtils.getInt(request, "sequence"));
+
+		paymentplanService.save(paymentplan);
+
+		return this.list(request, modelMap);
+	}
+
+	@ResponseBody
+	@RequestMapping("/savePaymentplan")
+	public byte[] savePaymentplan(HttpServletRequest request) {
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		Paymentplan paymentplan = new Paymentplan();
+		try {
+			Tools.populate(paymentplan, params);
+			paymentplan.setBudgetid(RequestUtils.getLong(request, "budgetid"));
+			paymentplan.setPaymemtsum(RequestUtils.getDouble(request,
+					"paymemtsum"));
+			paymentplan.setPaymentdate(RequestUtils.getDate(request,
+					"paymentdate"));
+			paymentplan.setSequence(RequestUtils.getInt(request, "sequence"));
+			this.paymentplanService.save(paymentplan);
+
+			return ResponseUtils.responseJsonResult(true);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			logger.error(ex);
+		}
+		return ResponseUtils.responseJsonResult(false);
+	}
+
+	@javax.annotation.Resource
+	public void setPaymentplanService(PaymentplanService paymentplanService) {
+		this.paymentplanService = paymentplanService;
+	}
+
+	@RequestMapping("/update")
+	public ModelAndView update(HttpServletRequest request, ModelMap modelMap) {
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		params.remove("status");
+		params.remove("wfStatus");
+
+		Paymentplan paymentplan = paymentplanService
+				.getPaymentplan(RequestUtils.getLong(request, "planid"));
+
+		paymentplan.setBudgetid(RequestUtils.getLong(request, "budgetid"));
+		paymentplan
+				.setPaymemtsum(RequestUtils.getDouble(request, "paymemtsum"));
+		paymentplan
+				.setPaymentdate(RequestUtils.getDate(request, "paymentdate"));
+		paymentplan.setSequence(RequestUtils.getInt(request, "sequence"));
+
+		paymentplanService.save(paymentplan);
+
+		return this.list(request, modelMap);
+	}
+
+	@RequestMapping("/view")
+	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		Paymentplan paymentplan = paymentplanService
+				.getPaymentplan(RequestUtils.getLong(request, "planid"));
+		request.setAttribute("paymentplan", paymentplan);
+		JSONObject rowJSON = paymentplan.toJsonObject();
+		request.setAttribute("x_json", rowJSON.toJSONString());
+
+		String view = request.getParameter("view");
+		if (StringUtils.isNotEmpty(view)) {
+			return new ModelAndView(view);
+		}
+
+		String x_view = ViewProperties.getString("paymentplan.view");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view);
+		}
+
+		return new ModelAndView("/oa/paymentplan/view");
 	}
 
 }

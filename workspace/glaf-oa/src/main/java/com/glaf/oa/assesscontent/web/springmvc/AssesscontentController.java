@@ -71,109 +71,6 @@ public class AssesscontentController {
 
 	}
 
-	@javax.annotation.Resource
-	public void setAssesssortService(AssesssortService assesssortService) {
-		this.assesssortService = assesssortService;
-	}
-
-	@javax.annotation.Resource
-	public void setAssesscontentService(
-			AssesscontentService assesscontentService) {
-
-		this.assesscontentService = assesscontentService;
-	}
-
-	@javax.annotation.Resource
-	public void setAssessinfoService(AssessinfoService assessinfoService) {
-
-		this.assessinfoService = assessinfoService;
-	}
-
-	@RequestMapping("/save")
-	public ModelAndView save(HttpServletRequest request, ModelMap modelMap) {
-
-		User user = RequestUtils.getUser(request);
-		String actorId = user.getActorId();
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		params.remove("status");
-		params.remove("wfStatus");
-
-		Assesscontent assesscontent = new Assesscontent();
-		Tools.populate(assesscontent, params);
-
-		assesscontent.setSortid(RequestUtils.getLong(request, "sortid"));
-		assesscontent.setName(request.getParameter("name"));
-		assesscontent.setStandard(RequestUtils.getDouble(request, "standard"));
-		assesscontent.setCreateBy(request.getParameter("createBy"));
-		assesscontent
-				.setCreateDate(RequestUtils.getDate(request, "createDate"));
-		assesscontent
-				.setUpdateDate(RequestUtils.getDate(request, "updateDate"));
-		assesscontent.setUpdateBy(request.getParameter("updateBy"));
-
-		assesscontent.setCreateBy(actorId);
-
-		assesscontentService.save(assesscontent);
-
-		return this.list(request, modelMap);
-	}
-
-	@ResponseBody
-	@RequestMapping("/saveAssesscontent")
-	public byte[] saveAssesscontent(HttpServletRequest request) {
-
-		User user = RequestUtils.getUser(request);
-		String actorId = user.getActorId();
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		Assesscontent assesscontent = new Assesscontent();
-		try {
-			Tools.populate(assesscontent, params);
-			assesscontent.setSortid(RequestUtils.getLong(request, "sortid"));
-			assesscontent.setName(request.getParameter("name"));
-			assesscontent.setStandard(RequestUtils.getDouble(request,
-					"standard"));
-			assesscontent.setCreateBy(request.getParameter("createBy"));
-			assesscontent.setCreateDate(RequestUtils.getDate(request,
-					"createDate"));
-			assesscontent.setUpdateDate(RequestUtils.getDate(request,
-					"updateDate"));
-			assesscontent.setUpdateBy(request.getParameter("updateBy"));
-			assesscontent.setCreateBy(actorId);
-			this.assesscontentService.save(assesscontent);
-
-			return ResponseUtils.responseJsonResult(true);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			logger.error(ex);
-		}
-		return ResponseUtils.responseJsonResult(false);
-	}
-
-	@RequestMapping("/update")
-	public ModelAndView update(HttpServletRequest request, ModelMap modelMap) {
-
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		params.remove("status");
-		params.remove("wfStatus");
-
-		Assesscontent assesscontent = assesscontentService
-				.getAssesscontent(RequestUtils.getLong(request, "contentid"));
-
-		assesscontent.setSortid(RequestUtils.getLong(request, "sortid"));
-		assesscontent.setName(request.getParameter("name"));
-		assesscontent.setStandard(RequestUtils.getDouble(request, "standard"));
-		assesscontent.setCreateBy(request.getParameter("createBy"));
-		assesscontent
-				.setCreateDate(RequestUtils.getDate(request, "createDate"));
-		assesscontent
-				.setUpdateDate(RequestUtils.getDate(request, "updateDate"));
-		assesscontent.setUpdateBy(request.getParameter("updateBy"));
-
-		assesscontentService.save(assesscontent);
-
-		return this.list(request, modelMap);
-	}
-
 	/**
 	 * 删除指标
 	 * 
@@ -315,102 +212,6 @@ public class AssesscontentController {
 		return new ModelAndView("/oa/assesscontent/edit", modelMap);
 	}
 
-	@RequestMapping("/view")
-	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
-		Assesscontent assesscontent = assesscontentService
-				.getAssesscontent(RequestUtils.getLong(request, "contentid"));
-		request.setAttribute("assesscontent", assesscontent);
-		JSONObject rowJSON = assesscontent.toJsonObject();
-		request.setAttribute("x_json", rowJSON.toJSONString());
-
-		String view = request.getParameter("view");
-		if (StringUtils.isNotEmpty(view)) {
-			return new ModelAndView(view);
-		}
-
-		String x_view = ViewProperties.getString("assesscontent.view");
-		if (StringUtils.isNotEmpty(x_view)) {
-			return new ModelAndView(x_view);
-		}
-
-		return new ModelAndView("/oa/assesscontent/view");
-	}
-
-	@RequestMapping("/query")
-	public ModelAndView query(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
-		String view = request.getParameter("view");
-		if (StringUtils.isNotEmpty(view)) {
-			return new ModelAndView(view, modelMap);
-		}
-		String x_view = ViewProperties.getString("assesscontent.query");
-		if (StringUtils.isNotEmpty(x_view)) {
-			return new ModelAndView(x_view, modelMap);
-		}
-		return new ModelAndView("/oa/assesscontent/query", modelMap);
-	}
-
-	/**
-	 * 选择指标查询页面
-	 * 
-	 * @param request
-	 * @param modelMap
-	 * @return
-	 */
-	@RequestMapping("/selectAssessContent")
-	public ModelAndView selectAssessContent(HttpServletRequest request,
-			ModelMap modelMap) {
-
-		// LoginContext loginContext = RequestUtils.getLoginContext( request );
-
-		// AssessinfoQuery assessinfoQuery = new AssessinfoQuery();
-		// assessinfoQuery.setActorId( loginContext.getActorId() );
-
-		// List<Assessinfo> assessInfoList = assessinfoService.list(
-		// assessinfoQuery );
-		// modelMap.addAttribute( "assessInfoList", assessInfoList );
-		String assessSortId = request.getParameter("assessSortId");
-		modelMap.addAttribute("assessSortId", assessSortId);
-		return new ModelAndView("/oa/assessinfo/selectAssessContent", modelMap);
-	}
-
-	// 保存指标
-	@RequestMapping("/saveAssessContent")
-	@ResponseBody
-	public byte[] saveAssessContent(HttpServletRequest request,
-			ModelMap modelMap) throws IOException {
-		String indexIds = RequestUtils.getString(request, "indexIds");
-		boolean rstFlag = false;
-		int assessSortId = RequestUtils.getInt(request, "assessSortId");
-		if (StringUtils.isNotEmpty(indexIds)) {
-			StringTokenizer token = new StringTokenizer(indexIds, ",");
-			while (token.hasMoreTokens()) {
-				String x = token.nextToken();
-				if (StringUtils.isNotEmpty(x)) {
-					Assessinfo assessinfo = assessinfoService
-							.getAssessinfo(Long.valueOf(x));
-					rstFlag = false;
-					if (assessinfo != null) {
-						Assesscontent assesscontent = new Assesscontent();
-						assesscontent.setSortid((long) assessSortId);
-						assesscontent.setName(assessinfo.getName());
-						assesscontent.setBasis(assessinfo.getBasis());
-						assesscontent.setStandard(assessinfo.getStandard());
-						assesscontent.setCreateDate(new Date());
-						// 指标ID
-						assesscontent.setAssessId(assessinfo.getIndexid());
-						assesscontent.setAssessInfo(assessinfo);
-						assesscontentService.save(assesscontent);
-						rstFlag = true;
-					}
-				}
-			}
-		}
-
-		return ResponseUtils.responseJsonResult(rstFlag);
-	}
-
 	@RequestMapping("/json")
 	@ResponseBody
 	public byte[] json(HttpServletRequest request, ModelMap modelMap)
@@ -518,6 +319,205 @@ public class AssesscontentController {
 		}
 
 		return new ModelAndView("/oa/assesscontent/list", modelMap);
+	}
+
+	@RequestMapping("/query")
+	public ModelAndView query(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		String view = request.getParameter("view");
+		if (StringUtils.isNotEmpty(view)) {
+			return new ModelAndView(view, modelMap);
+		}
+		String x_view = ViewProperties.getString("assesscontent.query");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+		return new ModelAndView("/oa/assesscontent/query", modelMap);
+	}
+
+	@RequestMapping("/save")
+	public ModelAndView save(HttpServletRequest request, ModelMap modelMap) {
+
+		User user = RequestUtils.getUser(request);
+		String actorId = user.getActorId();
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		params.remove("status");
+		params.remove("wfStatus");
+
+		Assesscontent assesscontent = new Assesscontent();
+		Tools.populate(assesscontent, params);
+
+		assesscontent.setSortid(RequestUtils.getLong(request, "sortid"));
+		assesscontent.setName(request.getParameter("name"));
+		assesscontent.setStandard(RequestUtils.getDouble(request, "standard"));
+		assesscontent.setCreateBy(request.getParameter("createBy"));
+		assesscontent
+				.setCreateDate(RequestUtils.getDate(request, "createDate"));
+		assesscontent
+				.setUpdateDate(RequestUtils.getDate(request, "updateDate"));
+		assesscontent.setUpdateBy(request.getParameter("updateBy"));
+
+		assesscontent.setCreateBy(actorId);
+
+		assesscontentService.save(assesscontent);
+
+		return this.list(request, modelMap);
+	}
+
+	@ResponseBody
+	@RequestMapping("/saveAssesscontent")
+	public byte[] saveAssesscontent(HttpServletRequest request) {
+
+		User user = RequestUtils.getUser(request);
+		String actorId = user.getActorId();
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		Assesscontent assesscontent = new Assesscontent();
+		try {
+			Tools.populate(assesscontent, params);
+			assesscontent.setSortid(RequestUtils.getLong(request, "sortid"));
+			assesscontent.setName(request.getParameter("name"));
+			assesscontent.setStandard(RequestUtils.getDouble(request,
+					"standard"));
+			assesscontent.setCreateBy(request.getParameter("createBy"));
+			assesscontent.setCreateDate(RequestUtils.getDate(request,
+					"createDate"));
+			assesscontent.setUpdateDate(RequestUtils.getDate(request,
+					"updateDate"));
+			assesscontent.setUpdateBy(request.getParameter("updateBy"));
+			assesscontent.setCreateBy(actorId);
+			this.assesscontentService.save(assesscontent);
+
+			return ResponseUtils.responseJsonResult(true);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			logger.error(ex);
+		}
+		return ResponseUtils.responseJsonResult(false);
+	}
+
+	// 保存指标
+	@RequestMapping("/saveAssessContent")
+	@ResponseBody
+	public byte[] saveAssessContent(HttpServletRequest request,
+			ModelMap modelMap) throws IOException {
+		String indexIds = RequestUtils.getString(request, "indexIds");
+		boolean rstFlag = false;
+		int assessSortId = RequestUtils.getInt(request, "assessSortId");
+		if (StringUtils.isNotEmpty(indexIds)) {
+			StringTokenizer token = new StringTokenizer(indexIds, ",");
+			while (token.hasMoreTokens()) {
+				String x = token.nextToken();
+				if (StringUtils.isNotEmpty(x)) {
+					Assessinfo assessinfo = assessinfoService
+							.getAssessinfo(Long.valueOf(x));
+					rstFlag = false;
+					if (assessinfo != null) {
+						Assesscontent assesscontent = new Assesscontent();
+						assesscontent.setSortid((long) assessSortId);
+						assesscontent.setName(assessinfo.getName());
+						assesscontent.setBasis(assessinfo.getBasis());
+						assesscontent.setStandard(assessinfo.getStandard());
+						assesscontent.setCreateDate(new Date());
+						// 指标ID
+						assesscontent.setAssessId(assessinfo.getIndexid());
+						assesscontent.setAssessInfo(assessinfo);
+						assesscontentService.save(assesscontent);
+						rstFlag = true;
+					}
+				}
+			}
+		}
+
+		return ResponseUtils.responseJsonResult(rstFlag);
+	}
+
+	/**
+	 * 选择指标查询页面
+	 * 
+	 * @param request
+	 * @param modelMap
+	 * @return
+	 */
+	@RequestMapping("/selectAssessContent")
+	public ModelAndView selectAssessContent(HttpServletRequest request,
+			ModelMap modelMap) {
+
+		// LoginContext loginContext = RequestUtils.getLoginContext( request );
+
+		// AssessinfoQuery assessinfoQuery = new AssessinfoQuery();
+		// assessinfoQuery.setActorId( loginContext.getActorId() );
+
+		// List<Assessinfo> assessInfoList = assessinfoService.list(
+		// assessinfoQuery );
+		// modelMap.addAttribute( "assessInfoList", assessInfoList );
+		String assessSortId = request.getParameter("assessSortId");
+		modelMap.addAttribute("assessSortId", assessSortId);
+		return new ModelAndView("/oa/assessinfo/selectAssessContent", modelMap);
+	}
+
+	@javax.annotation.Resource
+	public void setAssesscontentService(
+			AssesscontentService assesscontentService) {
+
+		this.assesscontentService = assesscontentService;
+	}
+
+	@javax.annotation.Resource
+	public void setAssessinfoService(AssessinfoService assessinfoService) {
+
+		this.assessinfoService = assessinfoService;
+	}
+
+	@javax.annotation.Resource
+	public void setAssesssortService(AssesssortService assesssortService) {
+		this.assesssortService = assesssortService;
+	}
+
+	@RequestMapping("/update")
+	public ModelAndView update(HttpServletRequest request, ModelMap modelMap) {
+
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		params.remove("status");
+		params.remove("wfStatus");
+
+		Assesscontent assesscontent = assesscontentService
+				.getAssesscontent(RequestUtils.getLong(request, "contentid"));
+
+		assesscontent.setSortid(RequestUtils.getLong(request, "sortid"));
+		assesscontent.setName(request.getParameter("name"));
+		assesscontent.setStandard(RequestUtils.getDouble(request, "standard"));
+		assesscontent.setCreateBy(request.getParameter("createBy"));
+		assesscontent
+				.setCreateDate(RequestUtils.getDate(request, "createDate"));
+		assesscontent
+				.setUpdateDate(RequestUtils.getDate(request, "updateDate"));
+		assesscontent.setUpdateBy(request.getParameter("updateBy"));
+
+		assesscontentService.save(assesscontent);
+
+		return this.list(request, modelMap);
+	}
+
+	@RequestMapping("/view")
+	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		Assesscontent assesscontent = assesscontentService
+				.getAssesscontent(RequestUtils.getLong(request, "contentid"));
+		request.setAttribute("assesscontent", assesscontent);
+		JSONObject rowJSON = assesscontent.toJsonObject();
+		request.setAttribute("x_json", rowJSON.toJSONString());
+
+		String view = request.getParameter("view");
+		if (StringUtils.isNotEmpty(view)) {
+			return new ModelAndView(view);
+		}
+
+		String x_view = ViewProperties.getString("assesscontent.view");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view);
+		}
+
+		return new ModelAndView("/oa/assesscontent/view");
 	}
 
 }

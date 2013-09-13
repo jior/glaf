@@ -52,85 +52,6 @@ public class TravelfeeController {
 
 	}
 
-	@javax.annotation.Resource
-	public void setTravelfeeService(TravelfeeService travelfeeService) {
-		this.travelfeeService = travelfeeService;
-	}
-
-	@RequestMapping("/save")
-	public ModelAndView save(HttpServletRequest request, ModelMap modelMap) {
-		User user = RequestUtils.getUser(request);
-		String actorId = user.getActorId();
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		params.remove("status");
-		params.remove("wfStatus");
-
-		Travelfee travelfee = new Travelfee();
-		Tools.populate(travelfee, params);
-
-		travelfee.setTravelid(RequestUtils.getLong(request, "travelid"));
-		travelfee.setFeename(request.getParameter("feename"));
-		travelfee.setFeesum(RequestUtils.getDouble(request, "feesum"));
-		travelfee.setRemark(request.getParameter("remark"));
-
-		if (RequestUtils.getLong(request, "feeid") == 0L
-				|| request.getParameter("feeid") == null) {
-			travelfee.setFeeid(0L);
-			travelfee.setCreateDate(new Date());
-			travelfee.setCreateBy(actorId);
-		} else {
-			travelfee.setFeeid(RequestUtils.getLong(request, "feeid"));
-			travelfee.setUpdateDate(new Date());
-			travelfee.setUpdateBy(actorId);
-		}
-
-		travelfeeService.save(travelfee);
-
-		return this.list(request, modelMap);
-	}
-
-	@ResponseBody
-	@RequestMapping("/saveTravelfee")
-	public byte[] saveTravelfee(HttpServletRequest request) {
-
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		Travelfee travelfee = new Travelfee();
-		try {
-			Tools.populate(travelfee, params);
-			travelfee.setTravelid(RequestUtils.getLong(request, "travelid"));
-			travelfee.setFeename(request.getParameter("feename"));
-			travelfee.setFeesum(RequestUtils.getDouble(request, "feesum"));
-			travelfee.setRemark(request.getParameter("remark"));
-			this.travelfeeService.save(travelfee);
-
-			return ResponseUtils.responseJsonResult(true);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			logger.error(ex);
-		}
-		return ResponseUtils.responseJsonResult(false);
-	}
-
-	@RequestMapping("/update")
-	public ModelAndView update(HttpServletRequest request, ModelMap modelMap) {
-
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		params.remove("status");
-		params.remove("wfStatus");
-
-		Travelfee travelfee = travelfeeService.getTravelfee(RequestUtils
-				.getLong(request, "feeid"));
-
-		travelfee.setTravelid(RequestUtils.getLong(request, "travelid"));
-		travelfee.setFeename(request.getParameter("feename"));
-		travelfee.setFeesum(RequestUtils.getDouble(request, "feesum"));
-		travelfee.setRemark(request.getParameter("remark"));
-
-		travelfeeService.save(travelfee);
-
-		return this.list(request, modelMap);
-	}
-
 	@ResponseBody
 	@RequestMapping("/delete")
 	public void delete(HttpServletRequest request, ModelMap modelMap) {
@@ -202,42 +123,6 @@ public class TravelfeeController {
 		}
 
 		return new ModelAndView("/oa/travelfee/edit", modelMap);
-	}
-
-	@RequestMapping("/view")
-	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
-		Travelfee travelfee = travelfeeService.getTravelfee(RequestUtils
-				.getLong(request, "feeid"));
-		request.setAttribute("travelfee", travelfee);
-		JSONObject rowJSON = travelfee.toJsonObject();
-		request.setAttribute("x_json", rowJSON.toJSONString());
-
-		String view = request.getParameter("view");
-		if (StringUtils.isNotEmpty(view)) {
-			return new ModelAndView(view);
-		}
-
-		String x_view = ViewProperties.getString("travelfee.view");
-		if (StringUtils.isNotEmpty(x_view)) {
-			return new ModelAndView(x_view);
-		}
-
-		return new ModelAndView("/oa/travelfee/view");
-	}
-
-	@RequestMapping("/query")
-	public ModelAndView query(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
-		String view = request.getParameter("view");
-		if (StringUtils.isNotEmpty(view)) {
-			return new ModelAndView(view, modelMap);
-		}
-		String x_view = ViewProperties.getString("travelfee.query");
-		if (StringUtils.isNotEmpty(x_view)) {
-			return new ModelAndView(x_view, modelMap);
-		}
-		return new ModelAndView("/oa/travelfee/query", modelMap);
 	}
 
 	@RequestMapping("/json")
@@ -347,6 +232,121 @@ public class TravelfeeController {
 		}
 
 		return new ModelAndView("/oa/travelfee/list", modelMap);
+	}
+
+	@RequestMapping("/query")
+	public ModelAndView query(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		String view = request.getParameter("view");
+		if (StringUtils.isNotEmpty(view)) {
+			return new ModelAndView(view, modelMap);
+		}
+		String x_view = ViewProperties.getString("travelfee.query");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+		return new ModelAndView("/oa/travelfee/query", modelMap);
+	}
+
+	@RequestMapping("/save")
+	public ModelAndView save(HttpServletRequest request, ModelMap modelMap) {
+		User user = RequestUtils.getUser(request);
+		String actorId = user.getActorId();
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		params.remove("status");
+		params.remove("wfStatus");
+
+		Travelfee travelfee = new Travelfee();
+		Tools.populate(travelfee, params);
+
+		travelfee.setTravelid(RequestUtils.getLong(request, "travelid"));
+		travelfee.setFeename(request.getParameter("feename"));
+		travelfee.setFeesum(RequestUtils.getDouble(request, "feesum"));
+		travelfee.setRemark(request.getParameter("remark"));
+
+		if (RequestUtils.getLong(request, "feeid") == 0L
+				|| request.getParameter("feeid") == null) {
+			travelfee.setFeeid(0L);
+			travelfee.setCreateDate(new Date());
+			travelfee.setCreateBy(actorId);
+		} else {
+			travelfee.setFeeid(RequestUtils.getLong(request, "feeid"));
+			travelfee.setUpdateDate(new Date());
+			travelfee.setUpdateBy(actorId);
+		}
+
+		travelfeeService.save(travelfee);
+
+		return this.list(request, modelMap);
+	}
+
+	@ResponseBody
+	@RequestMapping("/saveTravelfee")
+	public byte[] saveTravelfee(HttpServletRequest request) {
+
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		Travelfee travelfee = new Travelfee();
+		try {
+			Tools.populate(travelfee, params);
+			travelfee.setTravelid(RequestUtils.getLong(request, "travelid"));
+			travelfee.setFeename(request.getParameter("feename"));
+			travelfee.setFeesum(RequestUtils.getDouble(request, "feesum"));
+			travelfee.setRemark(request.getParameter("remark"));
+			this.travelfeeService.save(travelfee);
+
+			return ResponseUtils.responseJsonResult(true);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			logger.error(ex);
+		}
+		return ResponseUtils.responseJsonResult(false);
+	}
+
+	@javax.annotation.Resource
+	public void setTravelfeeService(TravelfeeService travelfeeService) {
+		this.travelfeeService = travelfeeService;
+	}
+
+	@RequestMapping("/update")
+	public ModelAndView update(HttpServletRequest request, ModelMap modelMap) {
+
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		params.remove("status");
+		params.remove("wfStatus");
+
+		Travelfee travelfee = travelfeeService.getTravelfee(RequestUtils
+				.getLong(request, "feeid"));
+
+		travelfee.setTravelid(RequestUtils.getLong(request, "travelid"));
+		travelfee.setFeename(request.getParameter("feename"));
+		travelfee.setFeesum(RequestUtils.getDouble(request, "feesum"));
+		travelfee.setRemark(request.getParameter("remark"));
+
+		travelfeeService.save(travelfee);
+
+		return this.list(request, modelMap);
+	}
+
+	@RequestMapping("/view")
+	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		Travelfee travelfee = travelfeeService.getTravelfee(RequestUtils
+				.getLong(request, "feeid"));
+		request.setAttribute("travelfee", travelfee);
+		JSONObject rowJSON = travelfee.toJsonObject();
+		request.setAttribute("x_json", rowJSON.toJSONString());
+
+		String view = request.getParameter("view");
+		if (StringUtils.isNotEmpty(view)) {
+			return new ModelAndView(view);
+		}
+
+		String x_view = ViewProperties.getString("travelfee.view");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view);
+		}
+
+		return new ModelAndView("/oa/travelfee/view");
 	}
 
 }

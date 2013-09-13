@@ -66,252 +66,127 @@ public class ReimbursementController {
 
 	protected ReimbursementService reimbursementService;
 
-	private SysDepartmentService sysDepartmentService;
+	protected SysDepartmentService sysDepartmentService;
 
 	public ReimbursementController() {
 
 	}
 
-	@javax.annotation.Resource
-	public void setSysDepartmentService(
-			SysDepartmentService sysDepartmentService) {
-		this.sysDepartmentService = sysDepartmentService;
-	}
+	/**
+	 * 工作流审批
+	 * 
+	 * @param purchase
+	 * @param flag
+	 *            0同意 1不同意
+	 * @param request
+	 * @return
+	 */
+	private boolean completeTask(Reimbursement reimbursement, int flag,
+			HttpServletRequest request) {
+		String processName = "ReimbursementProcess";
+		User appUser = BaseDataManager.getInstance().getSysUserService()
+				.findByAccount(reimbursement.getAppuser());
 
-	@javax.annotation.Resource
-	public void setReimbursementService(
-			ReimbursementService reimbursementService) {
-		this.reimbursementService = reimbursementService;
-	}
+		// 根据用户部门id 获取整个部门的对象（GZ01）
+		SysDepartment curdept = sysDepartmentService.findById(appUser
+				.getDeptId());
 
-	@RequestMapping("/save")
-	public ModelAndView save(HttpServletRequest request, ModelMap modelMap) {
-		User user = RequestUtils.getUser(request);
-		String actorId = user.getActorId();
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		params.remove("status");
-		params.remove("wfStatus");
-
-		Reimbursement reimbursement = new Reimbursement();
-		Tools.populate(reimbursement, params);
-
-		reimbursement.setReimbursementno(request
-				.getParameter("reimbursementno"));
-		reimbursement.setArea(request.getParameter("area"));
-		reimbursement.setDept(request.getParameter("dept"));
-		reimbursement.setPost(request.getParameter("post"));
-		reimbursement.setAppuser(request.getParameter("appuser"));
-		reimbursement.setSubject(request.getParameter("subject"));
-		reimbursement.setBudgetno(request.getParameter("budgetno"));
-		reimbursement.setAppdate(RequestUtils.getDate(request, "appdate"));
-		reimbursement.setAppsum(RequestUtils.getDouble(request, "appsum"));
-		reimbursement.setStatus(0);// 0为保存
-		if ("MUL".equals(request.getParameter("brands"))) {// 选择为多品牌时
-			reimbursement.setBrands1("FLL");
-			reimbursement.setBrands1account(RequestUtils.getDouble(request,
-					"brands1account"));
-			reimbursement.setBrands2("MSLD");
-			reimbursement.setBrands2account(RequestUtils.getDouble(request,
-					"brands2account"));
-		} else if ("FLL".equals(request.getParameter("brands"))) {
-			reimbursement.setBrands1("FLL");
-			reimbursement.setBrands1account(100D);
-			reimbursement.setBrands2(null);
-			reimbursement.setBrands2account(null);
-		} else if ("MSLD".equals(request.getParameter("brands"))) {
-			reimbursement.setBrands1(null);
-			reimbursement.setBrands1account(null);
-			reimbursement.setBrands2("MSLD");
-			reimbursement.setBrands2account(100D);
+		// 根据部门CODE(例如GZ01)截取前2位 作为地区
+		String curAreadeptCode = curdept.getCode().substring(0, 2);
+		String endOfCode = "";
+		if (curdept.getCode().length() == 4) {
+			endOfCode = curdept.getCode().substring(2);
 		}
-		reimbursement.setCompany(request.getParameter("company"));
-		reimbursement
-				.setBudgetsum(RequestUtils.getDouble(request, "budgetsum"));
-		reimbursement
-				.setBudgetDate(RequestUtils.getDate(request, "budgetDate"));
-		reimbursement
-				.setUpdateDate(RequestUtils.getDate(request, "updateDate"));
-		reimbursement.setUpdateBy(actorId);
 
-		reimbursementService.save(reimbursement);
+		// 根据code 获取 地区部门对象（GZ06）行政
+		SysDepartment HRdept = sysDepartmentService.findByCode(curAreadeptCode
+				+ "06");
+		// 根据code 获取 地区部门对象（GZ）
+		SysDepartment curAreadept = sysDepartmentService
+				.findByCode(curAreadeptCode);
 
-		return this.list(request, modelMap);
-	}
+		// 获取集团部门对象（JT）
+		SysDepartment sysdeptMem = sysDepartmentService.findByCode("JT");
 
-	@ResponseBody
-	@RequestMapping("/saveReimbursement")
-	public byte[] saveReimbursement(HttpServletRequest request) {
-		User user = RequestUtils.getUser(request);
-		String actorId = user.getActorId();
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		Reimbursement reimbursement = new Reimbursement();
-		try {
-			Tools.populate(reimbursement, params);
-			reimbursement.setReimbursementno(request
-					.getParameter("reimbursementno"));
-			reimbursement.setArea(request.getParameter("area"));
-			reimbursement.setDept(request.getParameter("dept"));
-			reimbursement.setPost(request.getParameter("post"));
-			reimbursement.setAppuser(request.getParameter("appuser"));
-			reimbursement.setSubject(request.getParameter("subject"));
-			reimbursement.setBudgetno(request.getParameter("budgetno"));
-			reimbursement.setAppdate(RequestUtils.getDate(request, "appdate"));
-			reimbursement.setAppsum(RequestUtils.getDouble(request, "appsum"));
-			reimbursement.setStatus(RequestUtils.getInt(request, "status"));
-			reimbursement.setProcessname(request.getParameter("processname"));
-			reimbursement.setProcessinstanceid(RequestUtils.getLong(request,
-					"processinstanceid"));
-			reimbursement
-					.setWfstatus(RequestUtils.getLong(request, "wfstatus"));
-			reimbursement.setBrands1(request.getParameter("brands1"));
-			reimbursement.setBrands1account(RequestUtils.getDouble(request,
-					"brands1account"));
-			reimbursement.setBrands2(request.getParameter("brands2"));
-			reimbursement.setBrands2account(RequestUtils.getDouble(request,
-					"brands2account"));
-			reimbursement.setBrands3(request.getParameter("brands3"));
-			reimbursement.setBrands3account(RequestUtils.getDouble(request,
-					"brands3account"));
-			reimbursement.setCompany(request.getParameter("company"));
-			reimbursement.setBudgetsum(RequestUtils.getDouble(request,
-					"budgetsum"));
-			reimbursement.setBudgetDate(RequestUtils.getDate(request,
-					"budgetDate"));
-			reimbursement.setCreateBy(request.getParameter("createBy"));
-			reimbursement.setCreateDate(RequestUtils.getDate(request,
-					"createDate"));
-			reimbursement.setUpdateDate(RequestUtils.getDate(request,
-					"updateDate"));
-			reimbursement.setUpdateBy(request.getParameter("updateBy"));
-			reimbursement.setCreateBy(actorId);
-			this.reimbursementService.save(reimbursement);
+		// 获取集团部门部门对象（JTxx）
+		SysDepartment sysdeptMemDept = sysDepartmentService.findByCode("JT"
+				+ endOfCode);
 
-			return ResponseUtils.responseJsonResult(true);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			logger.error(ex);
+		ProcessContext ctx = new ProcessContext();
+		ctx.setRowId(reimbursement.getReimbursementid());// 表id
+		ctx.setActorId(appUser.getActorId());// 用户审批者
+		ctx.setProcessName(processName);// 流程名称
+		String opinion = request.getParameter("approveOpinion");
+		ctx.setOpinion(opinion);// 审批意见
+
+		Collection<DataField> dataFields = new ArrayList<DataField>();// 参数
+
+		DataField dataField = new DataField();
+		dataField.setName("isAgree");// 是否通过审批
+		if (flag == 0) {
+			dataField.setValue("true");
+		} else {
+			dataField.setValue("false");
 		}
-		return ResponseUtils.responseJsonResult(false);
-	}
+		dataFields.add(dataField);
 
-	@RequestMapping("/submit")
-	public ModelAndView submit(HttpServletRequest request, ModelMap modelMap) {
-		User user = RequestUtils.getUser(request);
-		String actorId = user.getActorId();
+		// 会计 （XX06）
+		DataField datafield1 = new DataField();
+		datafield1.setName("deptId01");
+		datafield1.setValue(HRdept.getId());
+		dataFields.add(datafield1);
 
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		Reimbursement reimbursement = new Reimbursement();
-		try {
-			Tools.populate(reimbursement, params);
-			reimbursement.setReimbursementno(request
-					.getParameter("reimbursementno"));
-			reimbursement.setArea(request.getParameter("area"));
-			reimbursement.setDept(request.getParameter("dept"));
-			reimbursement.setPost(request.getParameter("post"));
-			reimbursement.setAppuser(request.getParameter("appuser"));
-			reimbursement.setSubject(request.getParameter("subject"));
-			reimbursement.setBudgetno(request.getParameter("budgetno"));
-			reimbursement.setAppdate(RequestUtils.getDate(request, "appdate"));
-			reimbursement.setAppsum(RequestUtils.getDouble(request, "appsum"));
-			reimbursement.setStatus(1);
-			if ("MUL".equals(request.getParameter("brands"))) {// 选择为多品牌时
-				reimbursement.setBrands1("FLL");
-				reimbursement.setBrands1account(RequestUtils.getDouble(request,
-						"brands1account"));
-				reimbursement.setBrands2("MSLD");
-				reimbursement.setBrands2account(RequestUtils.getDouble(request,
-						"brands2account"));
-			} else if ("FLL".equals(request.getParameter("brands"))) {
-				reimbursement.setBrands1("FLL");
-				reimbursement.setBrands1account(100D);
-				reimbursement.setBrands2(null);
-				reimbursement.setBrands2account(null);
-			} else if ("MSLD".equals(request.getParameter("brands"))) {
-				reimbursement.setBrands1(null);
-				reimbursement.setBrands1account(null);
-				reimbursement.setBrands2("MSLD");
-				reimbursement.setBrands2account(100D);
-			}
-			reimbursement.setCompany(request.getParameter("company"));
-			reimbursement.setBudgetsum(RequestUtils.getDouble(request,
-					"budgetsum"));
-			reimbursement.setBudgetDate(RequestUtils.getDate(request,
-					"budgetDate"));
-			reimbursement.setUpdateDate(RequestUtils.getDate(request,
-					"updateDate"));
-			reimbursement.setUpdateBy(actorId);
+		// 部门主管/经理
+		DataField datafield4 = new DataField();
+		datafield4.setName("deptId02");
+		datafield4.setValue(appUser.getDeptId());
+		dataFields.add(datafield4);
 
-			reimbursementService.save(reimbursement);
-			// 状态为 提交 进入工作流程
-			if (reimbursement.getStatus() == 1) {
-				if (reimbursement.getProcessinstanceid() != null
-						&& reimbursement.getProcessinstanceid() > 0) {
-					completeTask(reimbursement, 0, request);
-				} else {
-					startProcess(reimbursement, request);
-				}
-			}
+		// 用户地区部门（如GZ）
+		DataField datafield5 = new DataField();
+		datafield5.setName("deptId03");
+		datafield5.setValue(curAreadept.getId());
+		dataFields.add(datafield5);
 
-			return this.list(request, modelMap);
+		// 集团部门(JTxx)
+		DataField datafield2 = new DataField();
+		datafield2.setName("deptId04");
+		datafield2.setValue(sysdeptMemDept.getId());
+		dataFields.add(datafield2);
 
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			logger.error(ex);
-			ModelAndView mav = new ModelAndView();
-			mav.addObject("message", "提交失败。");
-			return mav;
+		// 集团(JT)
+		DataField datafield6 = new DataField();
+		datafield6.setName("deptId05");
+		datafield6.setValue(sysdeptMem.getId());
+		dataFields.add(datafield6);
+
+		DataField datafield3 = new DataField();
+		datafield3.setName("rowId");
+		datafield3.setValue(reimbursement.getReimbursementid());
+		dataFields.add(datafield3);
+
+		ctx.setDataFields(dataFields);
+
+		Long processInstanceId;
+		boolean isOK = false;
+
+		if (reimbursement.getProcessinstanceid() != null
+				&& reimbursement.getWfstatus() != 9999
+				&& reimbursement.getWfstatus() != null) {
+			processInstanceId = reimbursement.getProcessinstanceid();
+			ctx.setProcessInstanceId(processInstanceId);
+			isOK = ProcessContainer.getContainer().completeTask(ctx);
+			logger.info("workflowing .......  ");
+		} else {
+			processInstanceId = ProcessContainer.getContainer().startProcess(
+					ctx);
+			logger.info("processInstanceId=" + processInstanceId);
+
+			isOK = true;
+			logger.info("workflow start");
+
 		}
-	}
-
-	@RequestMapping("/update")
-	public ModelAndView update(HttpServletRequest request, ModelMap modelMap) {
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		params.remove("status");
-		params.remove("wfStatus");
-
-		Reimbursement reimbursement = reimbursementService
-				.getReimbursement(RequestUtils.getLong(request,
-						"reimbursementid"));
-
-		reimbursement.setReimbursementno(request
-				.getParameter("reimbursementno"));
-		reimbursement.setArea(request.getParameter("area"));
-		reimbursement.setDept(request.getParameter("dept"));
-		reimbursement.setPost(request.getParameter("post"));
-		reimbursement.setAppuser(request.getParameter("appuser"));
-		reimbursement.setSubject(request.getParameter("subject"));
-		reimbursement.setBudgetno(request.getParameter("budgetno"));
-		reimbursement.setAppdate(RequestUtils.getDate(request, "appdate"));
-		reimbursement.setAppsum(RequestUtils.getDouble(request, "appsum"));
-		reimbursement.setStatus(RequestUtils.getInt(request, "status"));
-		reimbursement.setProcessname(request.getParameter("processname"));
-		reimbursement.setProcessinstanceid(RequestUtils.getLong(request,
-				"processinstanceid"));
-		reimbursement.setWfstatus(RequestUtils.getLong(request, "wfstatus"));
-		reimbursement.setBrands1(request.getParameter("brands1"));
-		reimbursement.setBrands1account(RequestUtils.getDouble(request,
-				"brands1account"));
-		reimbursement.setBrands2(request.getParameter("brands2"));
-		reimbursement.setBrands2account(RequestUtils.getDouble(request,
-				"brands2account"));
-		reimbursement.setBrands3(request.getParameter("brands3"));
-		reimbursement.setBrands3account(RequestUtils.getDouble(request,
-				"brands3account"));
-		reimbursement.setCompany(request.getParameter("company"));
-		reimbursement
-				.setBudgetsum(RequestUtils.getDouble(request, "budgetsum"));
-		reimbursement
-				.setBudgetDate(RequestUtils.getDate(request, "budgetDate"));
-		reimbursement.setCreateBy(request.getParameter("createBy"));
-		reimbursement
-				.setCreateDate(RequestUtils.getDate(request, "createDate"));
-		reimbursement
-				.setUpdateDate(RequestUtils.getDate(request, "updateDate"));
-		reimbursement.setUpdateBy(request.getParameter("updateBy"));
-
-		reimbursementService.save(reimbursement);
-
-		return this.list(request, modelMap);
+		return isOK;
 	}
 
 	@ResponseBody
@@ -383,12 +258,6 @@ public class ReimbursementController {
 		if (reimbursement.getBrands1() != null
 				&& reimbursement.getBrands2() != null) {
 			reimbursement.setBrand("MUL");
-		} else if (reimbursement.getBrands1() != null
-				&& reimbursement.getBrands2() == null) {
-			reimbursement.setBrand("FLL");
-		} else if (reimbursement.getBrands1() == null
-				&& reimbursement.getBrands2() != null) {
-			reimbursement.setBrand("MSLD");
 		}
 
 		request.setAttribute("reimbursement", reimbursement);
@@ -423,55 +292,6 @@ public class ReimbursementController {
 		}
 
 		return new ModelAndView("/oa/reimbursement/edit", modelMap);
-	}
-
-	@RequestMapping("/view")
-	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
-		Reimbursement reimbursement = reimbursementService
-				.getReimbursement(RequestUtils.getLong(request,
-						"reimbursementid"));
-
-		if (reimbursement.getBrands1() != null
-				&& reimbursement.getBrands2() != null) {
-			reimbursement.setBrand("MUL");
-		} else if (reimbursement.getBrands1() != null
-				&& reimbursement.getBrands2() == null) {
-			reimbursement.setBrand("FLL");
-		} else if (reimbursement.getBrands1() == null
-				&& reimbursement.getBrands2() != null) {
-			reimbursement.setBrand("MSLD");
-		}
-
-		request.setAttribute("reimbursement", reimbursement);
-		JSONObject rowJSON = reimbursement.toJsonObject();
-		request.setAttribute("x_json", rowJSON.toJSONString());
-
-		String view = request.getParameter("view");
-		if (StringUtils.isNotEmpty(view)) {
-			return new ModelAndView(view);
-		}
-
-		String x_view = ViewProperties.getString("reimbursement.view");
-		if (StringUtils.isNotEmpty(x_view)) {
-			return new ModelAndView(x_view);
-		}
-
-		return new ModelAndView("/oa/reimbursement/view");
-	}
-
-	@RequestMapping("/query")
-	public ModelAndView query(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
-		String view = request.getParameter("view");
-		if (StringUtils.isNotEmpty(view)) {
-			return new ModelAndView(view, modelMap);
-		}
-		String x_view = ViewProperties.getString("reimbursement.query");
-		if (StringUtils.isNotEmpty(x_view)) {
-			return new ModelAndView(x_view, modelMap);
-		}
-		return new ModelAndView("/oa/reimbursement/query", modelMap);
 	}
 
 	@RequestMapping("/json")
@@ -606,121 +426,123 @@ public class ReimbursementController {
 		return new ModelAndView("/oa/reimbursement/list", modelMap);
 	}
 
-	/**
-	 * 工作流审批
-	 * 
-	 * @param purchase
-	 * @param flag
-	 *            0同意 1不同意
-	 * @param request
-	 * @return
-	 */
-	private boolean completeTask(Reimbursement reimbursement, int flag,
-			HttpServletRequest request) {
-		String processName = "ReimbursementProcess";
-		User appUser = BaseDataManager.getInstance().getSysUserService()
-				.findByAccount(reimbursement.getAppuser());
-
-		// 根据用户部门id 获取整个部门的对象（HZ01）
-		SysDepartment curdept = sysDepartmentService.findById(appUser
-				.getDeptId());
-
-		// 根据部门CODE(例如HZ01)截取前2位 作为地区
-		String curAreadeptCode = curdept.getCode().substring(0, 2);
-		String endOfCode = "";
-		if (curdept.getCode().length() == 4) {
-			endOfCode = curdept.getCode().substring(2);
+	@RequestMapping("/query")
+	public ModelAndView query(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		String view = request.getParameter("view");
+		if (StringUtils.isNotEmpty(view)) {
+			return new ModelAndView(view, modelMap);
 		}
-
-		// 根据code 获取 地区部门对象（HZ06）行政
-		SysDepartment HRdept = sysDepartmentService.findByCode(curAreadeptCode
-				+ "06");
-		// 根据code 获取 地区部门对象（HZ）
-		SysDepartment curAreadept = sysDepartmentService
-				.findByCode(curAreadeptCode);
-
-		// 获取集团部门对象（JT）
-		SysDepartment sysdeptMem = sysDepartmentService.findByCode("JT");
-
-		// 获取集团部门部门对象（JTxx）
-		SysDepartment sysdeptMemDept = sysDepartmentService.findByCode("JT"
-				+ endOfCode);
-
-		ProcessContext ctx = new ProcessContext();
-		ctx.setRowId(reimbursement.getReimbursementid());// 表id
-		ctx.setActorId(appUser.getActorId());// 用户审批者
-		ctx.setProcessName(processName);// 流程名称
-		String opinion = request.getParameter("approveOpinion");
-		ctx.setOpinion(opinion);// 审批意见
-
-		Collection<DataField> dataFields = new ArrayList<DataField>();// 参数
-
-		DataField dataField = new DataField();
-		dataField.setName("isAgree");// 是否通过审批
-		if (flag == 0) {
-			dataField.setValue("true");
-		} else {
-			dataField.setValue("false");
+		String x_view = ViewProperties.getString("reimbursement.query");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
 		}
-		dataFields.add(dataField);
+		return new ModelAndView("/oa/reimbursement/query", modelMap);
+	}
 
-		// 会计 （XX06）
-		DataField datafield1 = new DataField();
-		datafield1.setName("deptId01");
-		datafield1.setValue(HRdept.getId());
-		dataFields.add(datafield1);
+	@RequestMapping("/save")
+	public ModelAndView save(HttpServletRequest request, ModelMap modelMap) {
+		User user = RequestUtils.getUser(request);
+		String actorId = user.getActorId();
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		params.remove("status");
+		params.remove("wfStatus");
 
-		// 部门主管/经理
-		DataField datafield4 = new DataField();
-		datafield4.setName("deptId02");
-		datafield4.setValue(appUser.getDeptId());
-		dataFields.add(datafield4);
+		Reimbursement reimbursement = new Reimbursement();
+		Tools.populate(reimbursement, params);
 
-		// 用户地区部门（如HZ）
-		DataField datafield5 = new DataField();
-		datafield5.setName("deptId03");
-		datafield5.setValue(curAreadept.getId());
-		dataFields.add(datafield5);
+		reimbursement.setReimbursementno(request
+				.getParameter("reimbursementno"));
+		reimbursement.setArea(request.getParameter("area"));
+		reimbursement.setDept(request.getParameter("dept"));
+		reimbursement.setPost(request.getParameter("post"));
+		reimbursement.setAppuser(request.getParameter("appuser"));
+		reimbursement.setSubject(request.getParameter("subject"));
+		reimbursement.setBudgetno(request.getParameter("budgetno"));
+		reimbursement.setAppdate(RequestUtils.getDate(request, "appdate"));
+		reimbursement.setAppsum(RequestUtils.getDouble(request, "appsum"));
+		reimbursement.setStatus(0);// 0为保存
 
-		// 集团部门(JTxx)
-		DataField datafield2 = new DataField();
-		datafield2.setName("deptId04");
-		datafield2.setValue(sysdeptMemDept.getId());
-		dataFields.add(datafield2);
+		reimbursement.setCompany(request.getParameter("company"));
+		reimbursement
+				.setBudgetsum(RequestUtils.getDouble(request, "budgetsum"));
+		reimbursement
+				.setBudgetDate(RequestUtils.getDate(request, "budgetDate"));
+		reimbursement
+				.setUpdateDate(RequestUtils.getDate(request, "updateDate"));
+		reimbursement.setUpdateBy(actorId);
 
-		// 集团(JT)
-		DataField datafield6 = new DataField();
-		datafield6.setName("deptId05");
-		datafield6.setValue(sysdeptMem.getId());
-		dataFields.add(datafield6);
+		reimbursementService.save(reimbursement);
 
-		DataField datafield3 = new DataField();
-		datafield3.setName("rowId");
-		datafield3.setValue(reimbursement.getReimbursementid());
-		dataFields.add(datafield3);
+		return this.list(request, modelMap);
+	}
 
-		ctx.setDataFields(dataFields);
+	@ResponseBody
+	@RequestMapping("/saveReimbursement")
+	public byte[] saveReimbursement(HttpServletRequest request) {
+		User user = RequestUtils.getUser(request);
+		String actorId = user.getActorId();
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		Reimbursement reimbursement = new Reimbursement();
+		try {
+			Tools.populate(reimbursement, params);
+			reimbursement.setReimbursementno(request
+					.getParameter("reimbursementno"));
+			reimbursement.setArea(request.getParameter("area"));
+			reimbursement.setDept(request.getParameter("dept"));
+			reimbursement.setPost(request.getParameter("post"));
+			reimbursement.setAppuser(request.getParameter("appuser"));
+			reimbursement.setSubject(request.getParameter("subject"));
+			reimbursement.setBudgetno(request.getParameter("budgetno"));
+			reimbursement.setAppdate(RequestUtils.getDate(request, "appdate"));
+			reimbursement.setAppsum(RequestUtils.getDouble(request, "appsum"));
+			reimbursement.setStatus(RequestUtils.getInt(request, "status"));
+			reimbursement.setProcessname(request.getParameter("processname"));
+			reimbursement.setProcessinstanceid(RequestUtils.getLong(request,
+					"processinstanceid"));
+			reimbursement
+					.setWfstatus(RequestUtils.getLong(request, "wfstatus"));
+			reimbursement.setBrands1(request.getParameter("brands1"));
+			reimbursement.setBrands1account(RequestUtils.getDouble(request,
+					"brands1account"));
+			reimbursement.setBrands2(request.getParameter("brands2"));
+			reimbursement.setBrands2account(RequestUtils.getDouble(request,
+					"brands2account"));
+			reimbursement.setBrands3(request.getParameter("brands3"));
+			reimbursement.setBrands3account(RequestUtils.getDouble(request,
+					"brands3account"));
+			reimbursement.setCompany(request.getParameter("company"));
+			reimbursement.setBudgetsum(RequestUtils.getDouble(request,
+					"budgetsum"));
+			reimbursement.setBudgetDate(RequestUtils.getDate(request,
+					"budgetDate"));
+			reimbursement.setCreateBy(request.getParameter("createBy"));
+			reimbursement.setCreateDate(RequestUtils.getDate(request,
+					"createDate"));
+			reimbursement.setUpdateDate(RequestUtils.getDate(request,
+					"updateDate"));
+			reimbursement.setUpdateBy(request.getParameter("updateBy"));
+			reimbursement.setCreateBy(actorId);
+			this.reimbursementService.save(reimbursement);
 
-		Long processInstanceId;
-		boolean isOK = false;
-
-		if (reimbursement.getProcessinstanceid() != null
-				&& reimbursement.getWfstatus() != 9999
-				&& reimbursement.getWfstatus() != null) {
-			processInstanceId = reimbursement.getProcessinstanceid();
-			ctx.setProcessInstanceId(processInstanceId);
-			isOK = ProcessContainer.getContainer().completeTask(ctx);
-			logger.info("workflowing .......  ");
-		} else {
-			processInstanceId = ProcessContainer.getContainer().startProcess(
-					ctx);
-			logger.info("processInstanceId=" + processInstanceId);
-
-			isOK = true;
-			logger.info("workflow start");
-
+			return ResponseUtils.responseJsonResult(true);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			logger.error(ex);
 		}
-		return isOK;
+		return ResponseUtils.responseJsonResult(false);
+	}
+
+	@javax.annotation.Resource
+	public void setReimbursementService(
+			ReimbursementService reimbursementService) {
+		this.reimbursementService = reimbursementService;
+	}
+
+	@javax.annotation.Resource
+	public void setSysDepartmentService(
+			SysDepartmentService sysDepartmentService) {
+		this.sysDepartmentService = sysDepartmentService;
 	}
 
 	/**
@@ -738,11 +560,11 @@ public class ReimbursementController {
 		User appUser = BaseDataManager.getInstance().getSysUserService()
 				.findByAccount(reimbursement.getAppuser());
 
-		// 根据用户部门id 获取整个部门的对象（HZ01）
+		// 根据用户部门id 获取整个部门的对象（GZ01）
 		SysDepartment curdept = sysDepartmentService.findById(appUser
 				.getDeptId());
 
-		// 根据部门CODE(例如HZ01)截取前2位 作为地区
+		// 根据部门CODE(例如GZ01)截取前2位 作为地区
 		String curAreadeptCode = curdept.getCode().substring(0, 2);
 
 		String endOfCode = "";
@@ -750,10 +572,10 @@ public class ReimbursementController {
 			endOfCode = curdept.getCode().substring(2);
 		}
 
-		// 根据code 获取 地区部门对象（HZ06）行政
+		// 根据code 获取 地区部门对象（GZ06）行政
 		SysDepartment HRdept = sysDepartmentService.findByCode(curAreadeptCode
 				+ "06");
-		// 根据code 获取 地区部门对象（HZ）
+		// 根据code 获取 地区部门对象（GZ）
 		SysDepartment curAreadept = sysDepartmentService
 				.findByCode(curAreadeptCode);
 
@@ -783,7 +605,7 @@ public class ReimbursementController {
 		datafield4.setValue(appUser.getDeptId());
 		dataFields.add(datafield4);
 
-		// 用户地区部门（如HZ）
+		// 用户地区部门（如GZ）
 		DataField datafield5 = new DataField();
 		datafield5.setName("deptId03");
 		datafield5.setValue(curAreadept.getId());
@@ -833,5 +655,137 @@ public class ReimbursementController {
 
 		}
 		return isOK;
+	}
+
+	@RequestMapping("/submit")
+	public ModelAndView submit(HttpServletRequest request, ModelMap modelMap) {
+		User user = RequestUtils.getUser(request);
+		String actorId = user.getActorId();
+
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		Reimbursement reimbursement = new Reimbursement();
+		try {
+			Tools.populate(reimbursement, params);
+			reimbursement.setReimbursementno(request
+					.getParameter("reimbursementno"));
+			reimbursement.setArea(request.getParameter("area"));
+			reimbursement.setDept(request.getParameter("dept"));
+			reimbursement.setPost(request.getParameter("post"));
+			reimbursement.setAppuser(request.getParameter("appuser"));
+			reimbursement.setSubject(request.getParameter("subject"));
+			reimbursement.setBudgetno(request.getParameter("budgetno"));
+			reimbursement.setAppdate(RequestUtils.getDate(request, "appdate"));
+			reimbursement.setAppsum(RequestUtils.getDouble(request, "appsum"));
+			reimbursement.setStatus(1);
+
+			reimbursement.setCompany(request.getParameter("company"));
+			reimbursement.setBudgetsum(RequestUtils.getDouble(request,
+					"budgetsum"));
+			reimbursement.setBudgetDate(RequestUtils.getDate(request,
+					"budgetDate"));
+			reimbursement.setUpdateDate(RequestUtils.getDate(request,
+					"updateDate"));
+			reimbursement.setUpdateBy(actorId);
+
+			reimbursementService.save(reimbursement);
+			// 状态为 提交 进入工作流程
+			if (reimbursement.getStatus() == 1) {
+				if (reimbursement.getProcessinstanceid() != null
+						&& reimbursement.getProcessinstanceid() > 0) {
+					completeTask(reimbursement, 0, request);
+				} else {
+					startProcess(reimbursement, request);
+				}
+			}
+
+			return this.list(request, modelMap);
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			logger.error(ex);
+			ModelAndView mav = new ModelAndView();
+			mav.addObject("message", "提交失败。");
+			return mav;
+		}
+	}
+
+	@RequestMapping("/update")
+	public ModelAndView update(HttpServletRequest request, ModelMap modelMap) {
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		params.remove("status");
+		params.remove("wfStatus");
+
+		Reimbursement reimbursement = reimbursementService
+				.getReimbursement(RequestUtils.getLong(request,
+						"reimbursementid"));
+
+		reimbursement.setReimbursementno(request
+				.getParameter("reimbursementno"));
+		reimbursement.setArea(request.getParameter("area"));
+		reimbursement.setDept(request.getParameter("dept"));
+		reimbursement.setPost(request.getParameter("post"));
+		reimbursement.setAppuser(request.getParameter("appuser"));
+		reimbursement.setSubject(request.getParameter("subject"));
+		reimbursement.setBudgetno(request.getParameter("budgetno"));
+		reimbursement.setAppdate(RequestUtils.getDate(request, "appdate"));
+		reimbursement.setAppsum(RequestUtils.getDouble(request, "appsum"));
+		reimbursement.setStatus(RequestUtils.getInt(request, "status"));
+		reimbursement.setProcessname(request.getParameter("processname"));
+		reimbursement.setProcessinstanceid(RequestUtils.getLong(request,
+				"processinstanceid"));
+		reimbursement.setWfstatus(RequestUtils.getLong(request, "wfstatus"));
+		reimbursement.setBrands1(request.getParameter("brands1"));
+		reimbursement.setBrands1account(RequestUtils.getDouble(request,
+				"brands1account"));
+		reimbursement.setBrands2(request.getParameter("brands2"));
+		reimbursement.setBrands2account(RequestUtils.getDouble(request,
+				"brands2account"));
+		reimbursement.setBrands3(request.getParameter("brands3"));
+		reimbursement.setBrands3account(RequestUtils.getDouble(request,
+				"brands3account"));
+		reimbursement.setCompany(request.getParameter("company"));
+		reimbursement
+				.setBudgetsum(RequestUtils.getDouble(request, "budgetsum"));
+		reimbursement
+				.setBudgetDate(RequestUtils.getDate(request, "budgetDate"));
+		reimbursement.setCreateBy(request.getParameter("createBy"));
+		reimbursement
+				.setCreateDate(RequestUtils.getDate(request, "createDate"));
+		reimbursement
+				.setUpdateDate(RequestUtils.getDate(request, "updateDate"));
+		reimbursement.setUpdateBy(request.getParameter("updateBy"));
+
+		reimbursementService.save(reimbursement);
+
+		return this.list(request, modelMap);
+	}
+
+	@RequestMapping("/view")
+	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		Reimbursement reimbursement = reimbursementService
+				.getReimbursement(RequestUtils.getLong(request,
+						"reimbursementid"));
+
+		if (reimbursement.getBrands1() != null
+				&& reimbursement.getBrands2() != null) {
+			reimbursement.setBrand("MUL");
+		}
+
+		request.setAttribute("reimbursement", reimbursement);
+		JSONObject rowJSON = reimbursement.toJsonObject();
+		request.setAttribute("x_json", rowJSON.toJSONString());
+
+		String view = request.getParameter("view");
+		if (StringUtils.isNotEmpty(view)) {
+			return new ModelAndView(view);
+		}
+
+		String x_view = ViewProperties.getString("reimbursement.view");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view);
+		}
+
+		return new ModelAndView("/oa/reimbursement/view");
 	}
 }

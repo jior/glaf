@@ -78,131 +78,105 @@ public class PurchaseController {
 
 	}
 
-	@javax.annotation.Resource
-	public void setSysDepartmentService(
-			SysDepartmentService sysDepartmentService) {
-		this.sysDepartmentService = sysDepartmentService;
-	}
+	/**
+	 * 工作流审批
+	 * 
+	 * @param purchase
+	 * @param flag
+	 *            0同意 1不同意
+	 * @param request
+	 * @return
+	 */
+	private boolean completeTask(Purchase purchase, int flag,
+			HttpServletRequest request) {
 
-	@javax.annotation.Resource
-	public void setSysUserService(SysUserService sysUserService) {
-		this.sysUserService = sysUserService;
-	}
+		String processName = "PurchaseProcess";
+		User appUser = BaseDataManager.getInstance().getSysUserService()
+				.findByAccount(purchase.getAppuser());
 
-	@javax.annotation.Resource
-	public void setAttachmentService(AttachmentService attachmentService) {
-		this.attachmentService = attachmentService;
-	}
+		// 根据用户部门id 获取整个部门的对象（GZ01）
+		SysDepartment curdept = sysDepartmentService.findById(appUser
+				.getDeptId());
 
-	@javax.annotation.Resource
-	public void setPurchaseService(PurchaseService purchaseService) {
-		this.purchaseService = purchaseService;
-	}
+		// 根据部门CODE(例如GZ01)截取前2位 作为地区
+		String curAreadeptCode = curdept.getCode().substring(0, 2);
+		// 根据code 获取 地区部门对象（GZ06）行政
+		SysDepartment HRdept = sysDepartmentService.findByCode(curAreadeptCode
+				+ "06");
+		// 根据code 获取 地区部门对象（GZ）
+		SysDepartment curAreadept = sysDepartmentService
+				.findByCode(curAreadeptCode);
 
-	@RequestMapping("/save")
-	public ModelAndView save(HttpServletRequest request, ModelMap modelMap) {
-		User user = RequestUtils.getUser(request);
-		String actorId = user.getActorId();
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		// 获取集团部门对象（JT）
+		SysDepartment sysdeptMem = sysDepartmentService.findByCode("JT");
 
-		Purchase purchase = new Purchase();
-		Tools.populate(purchase, params);
-		purchase.setPurchaseid(RequestUtils.getLong(request, "purchaseid"));
-		purchase.setPurchaseno(request.getParameter("purchaseno"));
-		purchase.setArea(request.getParameter("area"));
-		purchase.setCompany(request.getParameter("company"));
-		purchase.setDept(request.getParameter("dept"));
-		purchase.setPost(request.getParameter("post"));
-		purchase.setAppuser(request.getParameter("appuser"));
-		purchase.setAppdate(RequestUtils.getDate(request, "appdate"));
-		purchase.setPurchasesum(RequestUtils.getDouble(request, "purchasesum"));
-		purchase.setStatus(0);
-		purchase.setCreateBy(request.getParameter("createBy") == null ? actorId
-				: request.getParameter("createBy"));
-		purchase.setCreateDate(RequestUtils.getDate(request, "createDate") == null ? new Date()
-				: RequestUtils.getDate(request, "createDate"));
-		purchase.setUpdateDate(new Date());
-		purchase.setUpdateBy(actorId);
-		try {
-			purchaseService.save(purchase);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			logger.error(ex.getMessage());
-			ModelAndView mav = new ModelAndView();
-			mav.addObject("message", "保存错误。");
-			return mav;
+		ProcessContext ctx = new ProcessContext();
+		ctx.setRowId(purchase.getPurchaseid());// 表id
+		ctx.setActorId(appUser.getActorId());// 用户审批者
+		ctx.setProcessName(processName);// 流程名称
+		String opinion = request.getParameter("approveOpinion");
+		ctx.setOpinion(opinion);// 审批意见
+
+		Collection<DataField> dataFields = new ArrayList<DataField>();// 参数
+
+		DataField dataField = new DataField();
+		dataField.setName("isAgree");// 是否通过审批
+		if (flag == 0) {
+			dataField.setValue("true");
+		} else {
+			dataField.setValue("false");
 		}
-		return this.list(request, modelMap);
-	}
+		dataFields.add(dataField);
 
-	@ResponseBody
-	@RequestMapping("/savePurchase")
-	public byte[] savePurchase(HttpServletRequest request) {
-		User user = RequestUtils.getUser(request);
-		String actorId = user.getActorId();
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		Purchase purchase = new Purchase();
-		try {
-			Tools.populate(purchase, params);
-			purchase.setPurchaseno(request.getParameter("purchaseno"));
-			purchase.setArea(request.getParameter("area"));
-			purchase.setCompany(request.getParameter("company"));
-			purchase.setDept(request.getParameter("dept"));
-			purchase.setPost(request.getParameter("post"));
-			purchase.setAppuser(request.getParameter("appuser"));
-			purchase.setAppdate(RequestUtils.getDate(request, "appdate"));
-			purchase.setPurchasesum(RequestUtils.getDouble(request,
-					"purchasesum"));
-			purchase.setStatus(RequestUtils.getInt(request, "status"));
-			purchase.setProcessname(request.getParameter("processname"));
-			purchase.setProcessinstanceid(RequestUtils.getLong(request,
-					"processinstanceid"));
-			purchase.setWfstatus(RequestUtils.getLong(request, "wfstatus"));
-			purchase.setCreateBy(request.getParameter("createBy"));
-			purchase.setCreateDate(RequestUtils.getDate(request, "createDate"));
-			purchase.setUpdateDate(RequestUtils.getDate(request, "updateDate"));
-			purchase.setUpdateBy(request.getParameter("updateBy"));
-			purchase.setCreateBy(actorId);
-			this.purchaseService.save(purchase);
+		// 用户销售部门（如GZ01）部门经理审核
+		DataField datafield1 = new DataField();
+		datafield1.setName("deptId01");
+		datafield1.setValue(appUser.getDeptId());
+		dataFields.add(datafield1);
 
-			return ResponseUtils.responseJsonResult(true);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			logger.error(ex);
+		// 用户地区部门（如GZ06）行政部门
+		DataField datafield4 = new DataField();
+		datafield4.setName("deptId02");
+		datafield4.setValue(HRdept.getId());
+		dataFields.add(datafield4);
+
+		// 用户地区部门（如GZ）
+		DataField datafield5 = new DataField();
+		datafield5.setName("deptId03");
+		datafield5.setValue(curAreadept.getId());
+		dataFields.add(datafield5);
+
+		// 集团(JT)
+		DataField datafield2 = new DataField();
+		datafield2.setName("deptId04");
+		datafield2.setValue(sysdeptMem.getId());
+		dataFields.add(datafield2);
+
+		DataField datafield3 = new DataField();
+		datafield3.setName("rowId");
+		datafield3.setValue(purchase.getPurchaseid());
+		dataFields.add(datafield3);
+
+		ctx.setDataFields(dataFields);
+
+		Long processInstanceId;
+		boolean isOK = false;
+
+		if (purchase.getProcessinstanceid() != null
+				&& purchase.getWfstatus() != 9999
+				&& purchase.getWfstatus() != null) {
+			processInstanceId = purchase.getProcessinstanceid();
+			ctx.setProcessInstanceId(processInstanceId);
+			isOK = ProcessContainer.getContainer().completeTask(ctx);
+			logger.info("workflowing .......  ");
+		} else {
+			processInstanceId = ProcessContainer.getContainer().startProcess(
+					ctx);
+			logger.info("processInstanceId=" + processInstanceId);
+			isOK = true;
+			logger.info("workflow start");
 		}
-		return ResponseUtils.responseJsonResult(false);
-	}
-
-	@RequestMapping("/update")
-	public ModelAndView update(HttpServletRequest request, ModelMap modelMap) {
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		params.remove("status");
-		params.remove("wfStatus");
-
-		Purchase purchase = purchaseService.getPurchase(RequestUtils.getLong(
-				request, "purchaseid"));
-
-		purchase.setPurchaseno(request.getParameter("purchaseno"));
-		purchase.setArea(request.getParameter("area"));
-		purchase.setCompany(request.getParameter("company"));
-		purchase.setDept(request.getParameter("dept"));
-		purchase.setPost(request.getParameter("post"));
-		purchase.setAppuser(request.getParameter("appuser"));
-		purchase.setAppdate(RequestUtils.getDate(request, "appdate"));
-		purchase.setPurchasesum(RequestUtils.getDouble(request, "purchasesum"));
-		purchase.setStatus(RequestUtils.getInt(request, "status"));
-		purchase.setProcessname(request.getParameter("processname"));
-		purchase.setProcessinstanceid(RequestUtils.getLong(request,
-				"processinstanceid"));
-		purchase.setWfstatus(RequestUtils.getLong(request, "wfstatus"));
-		purchase.setCreateBy(request.getParameter("createby"));
-		purchase.setCreateDate(RequestUtils.getDate(request, "createdate"));
-		purchase.setUpdateDate(RequestUtils.getDate(request, "updatedate"));
-		purchase.setUpdateBy(request.getParameter("updateby"));
-
-		purchaseService.save(purchase);
-
-		return this.list(request, modelMap);
+		return isOK;
 	}
 
 	@ResponseBody
@@ -229,53 +203,6 @@ public class PurchaseController {
 			}
 		}
 		return this.list(request, modelMap);
-	}
-
-	@RequestMapping("/submit")
-	public ModelAndView submit(HttpServletRequest request, ModelMap modelMap) {
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		Purchase purchase = new Purchase();
-		try {
-			Tools.populate(purchase, params);
-			purchase.setPurchaseid(RequestUtils.getLong(request, "purchaseid"));
-			purchase.setPurchaseno(request.getParameter("purchaseno"));// 采购编号
-			purchase.setArea(request.getParameter("area"));// 地区
-			purchase.setCompany(request.getParameter("company"));// 单位
-			purchase.setDept(request.getParameter("dept"));// 部门
-			purchase.setPost(request.getParameter("post"));// 职位
-			purchase.setAppuser(request.getParameter("appuser"));// 申请人
-			purchase.setAppdate(RequestUtils.getDate(request, "appdate"));// 申请日期
-			purchase.setPurchasesum(RequestUtils.getDouble(request,
-					"purchasesum"));// 总金额
-			purchase.setStatus(1);// 状态 已提交
-			purchase.setCreateBy(request.getParameter("createby") == null ? null
-					: request.getParameter("createby"));
-			purchase.setCreateDate(RequestUtils.getDate(request, "createdate") == null ? null
-					: RequestUtils.getDate(request, "createdate"));
-			purchase.setUpdateBy(request.getParameter("updateby"));
-			purchase.setUpdateDate(RequestUtils.getDate(request, "updatedate"));
-
-			purchaseService.save(purchase);
-
-			// 状态为 提交 进入工作流程
-			if (purchase.getStatus() == 1) {
-				if (purchase.getProcessinstanceid() != null
-						&& purchase.getProcessinstanceid() > 0) {
-					completeTask(purchase, 0, request);
-				} else {
-					startProcess(purchase, request);
-				}
-			}
-
-			return this.list(request, modelMap);
-
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			logger.error(ex);
-			ModelAndView mav = new ModelAndView();
-			mav.addObject("message", "提交失败。");
-			return mav;
-		}
 	}
 
 	@ResponseBody
@@ -346,32 +273,6 @@ public class PurchaseController {
 		}
 
 		return new ModelAndView("/oa/purchase/edit", modelMap);
-	}
-
-	@RequestMapping("/view")
-	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
-		Purchase purchase = purchaseService.getPurchase(RequestUtils.getLong(
-				request, "purchaseId"));
-		request.setAttribute("purchase", purchase);
-		JSONObject rowJSON = purchase.toJsonObject();
-		request.setAttribute("x_json", rowJSON.toJSONString());
-
-		return new ModelAndView("/oa/purchase/view");
-	}
-
-	@RequestMapping("/query")
-	public ModelAndView query(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
-		String view = request.getParameter("view");
-		if (StringUtils.isNotEmpty(view)) {
-			return new ModelAndView(view, modelMap);
-		}
-		String x_view = ViewProperties.getString("purchase.query");
-		if (StringUtils.isNotEmpty(x_view)) {
-			return new ModelAndView(x_view, modelMap);
-		}
-		return new ModelAndView("/oa/purchase/query", modelMap);
 	}
 
 	@RequestMapping("/json")
@@ -506,105 +407,113 @@ public class PurchaseController {
 		return new ModelAndView("/oa/purchase/list", modelMap);
 	}
 
-	/**
-	 * 工作流审批
-	 * 
-	 * @param purchase
-	 * @param flag
-	 *            0同意 1不同意
-	 * @param request
-	 * @return
-	 */
-	private boolean completeTask(Purchase purchase, int flag,
-			HttpServletRequest request) {
-
-		String processName = "PurchaseProcess";
-		User appUser = BaseDataManager.getInstance().getSysUserService()
-				.findByAccount(purchase.getAppuser());
-
-		// 根据用户部门id 获取整个部门的对象（HZ01）
-		SysDepartment curdept = sysDepartmentService.findById(appUser
-				.getDeptId());
-
-		// 根据部门CODE(例如HZ01)截取前2位 作为地区
-		String curAreadeptCode = curdept.getCode().substring(0, 2);
-		// 根据code 获取 地区部门对象（HZ06）行政
-		SysDepartment HRdept = sysDepartmentService.findByCode(curAreadeptCode
-				+ "06");
-		// 根据code 获取 地区部门对象（HZ）
-		SysDepartment curAreadept = sysDepartmentService
-				.findByCode(curAreadeptCode);
-
-		// 获取集团部门对象（JT）
-		SysDepartment sysdeptMem = sysDepartmentService.findByCode("JT");
-
-		ProcessContext ctx = new ProcessContext();
-		ctx.setRowId(purchase.getPurchaseid());// 表id
-		ctx.setActorId(appUser.getActorId());// 用户审批者
-		ctx.setProcessName(processName);// 流程名称
-		String opinion = request.getParameter("approveOpinion");
-		ctx.setOpinion(opinion);// 审批意见
-
-		Collection<DataField> dataFields = new ArrayList<DataField>();// 参数
-
-		DataField dataField = new DataField();
-		dataField.setName("isAgree");// 是否通过审批
-		if (flag == 0) {
-			dataField.setValue("true");
-		} else {
-			dataField.setValue("false");
+	@RequestMapping("/query")
+	public ModelAndView query(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		String view = request.getParameter("view");
+		if (StringUtils.isNotEmpty(view)) {
+			return new ModelAndView(view, modelMap);
 		}
-		dataFields.add(dataField);
-
-		// 用户销售部门（如HZ01）部门经理审核
-		DataField datafield1 = new DataField();
-		datafield1.setName("deptId01");
-		datafield1.setValue(appUser.getDeptId());
-		dataFields.add(datafield1);
-
-		// 用户地区部门（如HZ06）行政部门
-		DataField datafield4 = new DataField();
-		datafield4.setName("deptId02");
-		datafield4.setValue(HRdept.getId());
-		dataFields.add(datafield4);
-
-		// 用户地区部门（如HZ）
-		DataField datafield5 = new DataField();
-		datafield5.setName("deptId03");
-		datafield5.setValue(curAreadept.getId());
-		dataFields.add(datafield5);
-
-		// 集团(JT)
-		DataField datafield2 = new DataField();
-		datafield2.setName("deptId04");
-		datafield2.setValue(sysdeptMem.getId());
-		dataFields.add(datafield2);
-
-		DataField datafield3 = new DataField();
-		datafield3.setName("rowId");
-		datafield3.setValue(purchase.getPurchaseid());
-		dataFields.add(datafield3);
-
-		ctx.setDataFields(dataFields);
-
-		Long processInstanceId;
-		boolean isOK = false;
-
-		if (purchase.getProcessinstanceid() != null
-				&& purchase.getWfstatus() != 9999
-				&& purchase.getWfstatus() != null) {
-			processInstanceId = purchase.getProcessinstanceid();
-			ctx.setProcessInstanceId(processInstanceId);
-			isOK = ProcessContainer.getContainer().completeTask(ctx);
-			logger.info("workflowing .......  ");
-		} else {
-			processInstanceId = ProcessContainer.getContainer().startProcess(
-					ctx);
-			logger.info("processInstanceId=" + processInstanceId);
-			isOK = true;
-			logger.info("workflow start");
+		String x_view = ViewProperties.getString("purchase.query");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
 		}
-		return isOK;
+		return new ModelAndView("/oa/purchase/query", modelMap);
+	}
+
+	@RequestMapping("/save")
+	public ModelAndView save(HttpServletRequest request, ModelMap modelMap) {
+		User user = RequestUtils.getUser(request);
+		String actorId = user.getActorId();
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+
+		Purchase purchase = new Purchase();
+		Tools.populate(purchase, params);
+		purchase.setPurchaseid(RequestUtils.getLong(request, "purchaseid"));
+		purchase.setPurchaseno(request.getParameter("purchaseno"));
+		purchase.setArea(request.getParameter("area"));
+		purchase.setCompany(request.getParameter("company"));
+		purchase.setDept(request.getParameter("dept"));
+		purchase.setPost(request.getParameter("post"));
+		purchase.setAppuser(request.getParameter("appuser"));
+		purchase.setAppdate(RequestUtils.getDate(request, "appdate"));
+		purchase.setPurchasesum(RequestUtils.getDouble(request, "purchasesum"));
+		purchase.setStatus(0);
+		purchase.setCreateBy(request.getParameter("createBy") == null ? actorId
+				: request.getParameter("createBy"));
+		purchase.setCreateDate(RequestUtils.getDate(request, "createDate") == null ? new Date()
+				: RequestUtils.getDate(request, "createDate"));
+		purchase.setUpdateDate(new Date());
+		purchase.setUpdateBy(actorId);
+		try {
+			purchaseService.save(purchase);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			logger.error(ex.getMessage());
+			ModelAndView mav = new ModelAndView();
+			mav.addObject("message", "保存错误。");
+			return mav;
+		}
+		return this.list(request, modelMap);
+	}
+
+	@ResponseBody
+	@RequestMapping("/savePurchase")
+	public byte[] savePurchase(HttpServletRequest request) {
+		User user = RequestUtils.getUser(request);
+		String actorId = user.getActorId();
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		Purchase purchase = new Purchase();
+		try {
+			Tools.populate(purchase, params);
+			purchase.setPurchaseno(request.getParameter("purchaseno"));
+			purchase.setArea(request.getParameter("area"));
+			purchase.setCompany(request.getParameter("company"));
+			purchase.setDept(request.getParameter("dept"));
+			purchase.setPost(request.getParameter("post"));
+			purchase.setAppuser(request.getParameter("appuser"));
+			purchase.setAppdate(RequestUtils.getDate(request, "appdate"));
+			purchase.setPurchasesum(RequestUtils.getDouble(request,
+					"purchasesum"));
+			purchase.setStatus(RequestUtils.getInt(request, "status"));
+			purchase.setProcessname(request.getParameter("processname"));
+			purchase.setProcessinstanceid(RequestUtils.getLong(request,
+					"processinstanceid"));
+			purchase.setWfstatus(RequestUtils.getLong(request, "wfstatus"));
+			purchase.setCreateBy(request.getParameter("createBy"));
+			purchase.setCreateDate(RequestUtils.getDate(request, "createDate"));
+			purchase.setUpdateDate(RequestUtils.getDate(request, "updateDate"));
+			purchase.setUpdateBy(request.getParameter("updateBy"));
+			purchase.setCreateBy(actorId);
+			this.purchaseService.save(purchase);
+
+			return ResponseUtils.responseJsonResult(true);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			logger.error(ex);
+		}
+		return ResponseUtils.responseJsonResult(false);
+	}
+
+	@javax.annotation.Resource
+	public void setAttachmentService(AttachmentService attachmentService) {
+		this.attachmentService = attachmentService;
+	}
+
+	@javax.annotation.Resource
+	public void setPurchaseService(PurchaseService purchaseService) {
+		this.purchaseService = purchaseService;
+	}
+
+	@javax.annotation.Resource
+	public void setSysDepartmentService(
+			SysDepartmentService sysDepartmentService) {
+		this.sysDepartmentService = sysDepartmentService;
+	}
+
+	@javax.annotation.Resource
+	public void setSysUserService(SysUserService sysUserService) {
+		this.sysUserService = sysUserService;
 	}
 
 	/**
@@ -621,16 +530,16 @@ public class PurchaseController {
 		User appUser = BaseDataManager.getInstance().getSysUserService()
 				.findByAccount(purchase.getAppuser());
 
-		// 根据用户部门id 获取整个部门的对象（HZ01）
+		// 根据用户部门id 获取整个部门的对象（GZ01）
 		SysDepartment curdept = sysDepartmentService.findById(appUser
 				.getDeptId());
 
-		// 根据部门CODE(例如HZ01)截取前2位 作为地区
+		// 根据部门CODE(例如GZ01)截取前2位 作为地区
 		String curAreadeptCode = curdept.getCode().substring(0, 2);
-		// 根据code 获取 地区部门对象（HZ06）行政
+		// 根据code 获取 地区部门对象（GZ06）行政
 		SysDepartment HRdept = sysDepartmentService.findByCode(curAreadeptCode
 				+ "06");
-		// 根据code 获取 地区部门对象（HZ）
+		// 根据code 获取 地区部门对象（GZ）
 		SysDepartment curAreadept = sysDepartmentService
 				.findByCode(curAreadeptCode);
 
@@ -644,19 +553,19 @@ public class PurchaseController {
 
 		Collection<DataField> dataFields = new ArrayList<DataField>();// 参数
 
-		// 用户销售部门（如HZ01）
+		// 用户销售部门（如GZ01）
 		DataField datafield1 = new DataField();
 		datafield1.setName("deptId01");
 		datafield1.setValue(appUser.getDeptId());
 		dataFields.add(datafield1);
 
-		// 用户地区部门（如HZ06）行政部门
+		// 用户地区部门（如GZ06）行政部门
 		DataField datafield4 = new DataField();
 		datafield4.setName("deptId02");
 		datafield4.setValue(HRdept.getId());
 		dataFields.add(datafield4);
 
-		// 用户地区部门（如HZ）
+		// 用户地区部门（如GZ）
 		DataField datafield5 = new DataField();
 		datafield5.setName("deptId03");
 		datafield5.setValue(curAreadept.getId());
@@ -693,5 +602,96 @@ public class PurchaseController {
 			logger.info("workflow start");
 		}
 		return isOK;
+	}
+
+	@RequestMapping("/submit")
+	public ModelAndView submit(HttpServletRequest request, ModelMap modelMap) {
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		Purchase purchase = new Purchase();
+		try {
+			Tools.populate(purchase, params);
+			purchase.setPurchaseid(RequestUtils.getLong(request, "purchaseid"));
+			purchase.setPurchaseno(request.getParameter("purchaseno"));// 采购编号
+			purchase.setArea(request.getParameter("area"));// 地区
+			purchase.setCompany(request.getParameter("company"));// 单位
+			purchase.setDept(request.getParameter("dept"));// 部门
+			purchase.setPost(request.getParameter("post"));// 职位
+			purchase.setAppuser(request.getParameter("appuser"));// 申请人
+			purchase.setAppdate(RequestUtils.getDate(request, "appdate"));// 申请日期
+			purchase.setPurchasesum(RequestUtils.getDouble(request,
+					"purchasesum"));// 总金额
+			purchase.setStatus(1);// 状态 已提交
+			purchase.setCreateBy(request.getParameter("createby") == null ? null
+					: request.getParameter("createby"));
+			purchase.setCreateDate(RequestUtils.getDate(request, "createdate") == null ? null
+					: RequestUtils.getDate(request, "createdate"));
+			purchase.setUpdateBy(request.getParameter("updateby"));
+			purchase.setUpdateDate(RequestUtils.getDate(request, "updatedate"));
+
+			purchaseService.save(purchase);
+
+			// 状态为 提交 进入工作流程
+			if (purchase.getStatus() == 1) {
+				if (purchase.getProcessinstanceid() != null
+						&& purchase.getProcessinstanceid() > 0) {
+					completeTask(purchase, 0, request);
+				} else {
+					startProcess(purchase, request);
+				}
+			}
+
+			return this.list(request, modelMap);
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			logger.error(ex);
+			ModelAndView mav = new ModelAndView();
+			mav.addObject("message", "提交失败。");
+			return mav;
+		}
+	}
+
+	@RequestMapping("/update")
+	public ModelAndView update(HttpServletRequest request, ModelMap modelMap) {
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		params.remove("status");
+		params.remove("wfStatus");
+
+		Purchase purchase = purchaseService.getPurchase(RequestUtils.getLong(
+				request, "purchaseid"));
+
+		purchase.setPurchaseno(request.getParameter("purchaseno"));
+		purchase.setArea(request.getParameter("area"));
+		purchase.setCompany(request.getParameter("company"));
+		purchase.setDept(request.getParameter("dept"));
+		purchase.setPost(request.getParameter("post"));
+		purchase.setAppuser(request.getParameter("appuser"));
+		purchase.setAppdate(RequestUtils.getDate(request, "appdate"));
+		purchase.setPurchasesum(RequestUtils.getDouble(request, "purchasesum"));
+		purchase.setStatus(RequestUtils.getInt(request, "status"));
+		purchase.setProcessname(request.getParameter("processname"));
+		purchase.setProcessinstanceid(RequestUtils.getLong(request,
+				"processinstanceid"));
+		purchase.setWfstatus(RequestUtils.getLong(request, "wfstatus"));
+		purchase.setCreateBy(request.getParameter("createby"));
+		purchase.setCreateDate(RequestUtils.getDate(request, "createdate"));
+		purchase.setUpdateDate(RequestUtils.getDate(request, "updatedate"));
+		purchase.setUpdateBy(request.getParameter("updateby"));
+
+		purchaseService.save(purchase);
+
+		return this.list(request, modelMap);
+	}
+
+	@RequestMapping("/view")
+	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		Purchase purchase = purchaseService.getPurchase(RequestUtils.getLong(
+				request, "purchaseId"));
+		request.setAttribute("purchase", purchase);
+		JSONObject rowJSON = purchase.toJsonObject();
+		request.setAttribute("x_json", rowJSON.toJSONString());
+
+		return new ModelAndView("/oa/purchase/view");
 	}
 }

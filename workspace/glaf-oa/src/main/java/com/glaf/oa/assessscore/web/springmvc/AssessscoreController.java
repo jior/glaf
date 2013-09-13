@@ -61,89 +61,6 @@ public class AssessscoreController {
 
 	}
 
-	@javax.annotation.Resource
-	public void setAssessscoreService(AssessscoreService assessscoreService) {
-		this.assessscoreService = assessscoreService;
-	}
-
-	@RequestMapping("/save")
-	public ModelAndView save(HttpServletRequest request, ModelMap modelMap) {
-		User user = RequestUtils.getUser(request);
-		String actorId = user.getActorId();
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		params.remove("status");
-		params.remove("wfStatus");
-
-		Assessscore assessscore = new Assessscore();
-		Tools.populate(assessscore, params);
-
-		assessscore.setContentid(RequestUtils.getLong(request, "contentid"));
-		assessscore.setResultid(RequestUtils.getLong(request, "resultid"));
-		assessscore.setScore(RequestUtils.getLong(request, "score"));
-		assessscore.setCreateBy(request.getParameter("createBy"));
-		assessscore.setCreateDate(RequestUtils.getDate(request, "createDate"));
-		assessscore.setUpdateDate(RequestUtils.getDate(request, "updateDate"));
-		assessscore.setUpdateBy(request.getParameter("updateBy"));
-
-		assessscore.setCreateBy(actorId);
-
-		assessscoreService.save(assessscore);
-
-		return this.list(request, modelMap);
-	}
-
-	@ResponseBody
-	@RequestMapping("/saveAssessscore")
-	public byte[] saveAssessscore(HttpServletRequest request) {
-		User user = RequestUtils.getUser(request);
-		String actorId = user.getActorId();
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		Assessscore assessscore = new Assessscore();
-		try {
-			Tools.populate(assessscore, params);
-			assessscore
-					.setContentid(RequestUtils.getLong(request, "contentid"));
-			assessscore.setResultid(RequestUtils.getLong(request, "resultid"));
-			assessscore.setScore(RequestUtils.getLong(request, "score"));
-			assessscore.setCreateBy(request.getParameter("createBy"));
-			assessscore.setCreateDate(RequestUtils.getDate(request,
-					"createDate"));
-			assessscore.setUpdateDate(RequestUtils.getDate(request,
-					"updateDate"));
-			assessscore.setUpdateBy(request.getParameter("updateBy"));
-			assessscore.setCreateBy(actorId);
-			this.assessscoreService.save(assessscore);
-
-			return ResponseUtils.responseJsonResult(true);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			logger.error(ex);
-		}
-		return ResponseUtils.responseJsonResult(false);
-	}
-
-	@RequestMapping("/update")
-	public ModelAndView update(HttpServletRequest request, ModelMap modelMap) {
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		params.remove("status");
-		params.remove("wfStatus");
-
-		Assessscore assessscore = assessscoreService
-				.getAssessscore(RequestUtils.getLong(request, "scoreid"));
-
-		assessscore.setContentid(RequestUtils.getLong(request, "contentid"));
-		assessscore.setResultid(RequestUtils.getLong(request, "resultid"));
-		assessscore.setScore(RequestUtils.getLong(request, "score"));
-		assessscore.setCreateBy(request.getParameter("createBy"));
-		assessscore.setCreateDate(RequestUtils.getDate(request, "createDate"));
-		assessscore.setUpdateDate(RequestUtils.getDate(request, "updateDate"));
-		assessscore.setUpdateBy(request.getParameter("updateBy"));
-
-		assessscoreService.save(assessscore);
-
-		return this.list(request, modelMap);
-	}
-
 	@ResponseBody
 	@RequestMapping("/delete")
 	public void delete(HttpServletRequest request, ModelMap modelMap) {
@@ -233,43 +150,6 @@ public class AssessscoreController {
 		}
 
 		return new ModelAndView("/oa/assessscore/edit", modelMap);
-	}
-
-	@RequestMapping("/view")
-	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
-
-		Assessscore assessscore = assessscoreService
-				.getAssessscore(RequestUtils.getLong(request, "scoreid"));
-		request.setAttribute("assessscore", assessscore);
-		JSONObject rowJSON = assessscore.toJsonObject();
-		request.setAttribute("x_json", rowJSON.toJSONString());
-
-		String view = request.getParameter("view");
-		if (StringUtils.isNotEmpty(view)) {
-			return new ModelAndView(view);
-		}
-
-		String x_view = ViewProperties.getString("assessscore.view");
-		if (StringUtils.isNotEmpty(x_view)) {
-			return new ModelAndView(x_view);
-		}
-
-		return new ModelAndView("/oa/assessscore/view");
-	}
-
-	@RequestMapping("/query")
-	public ModelAndView query(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
-		String view = request.getParameter("view");
-		if (StringUtils.isNotEmpty(view)) {
-			return new ModelAndView(view, modelMap);
-		}
-		String x_view = ViewProperties.getString("assessscore.query");
-		if (StringUtils.isNotEmpty(x_view)) {
-			return new ModelAndView(x_view, modelMap);
-		}
-		return new ModelAndView("/oa/assessscore/query", modelMap);
 	}
 
 	@RequestMapping("/json")
@@ -378,6 +258,126 @@ public class AssessscoreController {
 		}
 
 		return new ModelAndView("/oa/assessscore/list", modelMap);
+	}
+
+	@RequestMapping("/query")
+	public ModelAndView query(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		String view = request.getParameter("view");
+		if (StringUtils.isNotEmpty(view)) {
+			return new ModelAndView(view, modelMap);
+		}
+		String x_view = ViewProperties.getString("assessscore.query");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+		return new ModelAndView("/oa/assessscore/query", modelMap);
+	}
+
+	@RequestMapping("/save")
+	public ModelAndView save(HttpServletRequest request, ModelMap modelMap) {
+		User user = RequestUtils.getUser(request);
+		String actorId = user.getActorId();
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		params.remove("status");
+		params.remove("wfStatus");
+
+		Assessscore assessscore = new Assessscore();
+		Tools.populate(assessscore, params);
+
+		assessscore.setContentid(RequestUtils.getLong(request, "contentid"));
+		assessscore.setResultid(RequestUtils.getLong(request, "resultid"));
+		assessscore.setScore(RequestUtils.getLong(request, "score"));
+		assessscore.setCreateBy(request.getParameter("createBy"));
+		assessscore.setCreateDate(RequestUtils.getDate(request, "createDate"));
+		assessscore.setUpdateDate(RequestUtils.getDate(request, "updateDate"));
+		assessscore.setUpdateBy(request.getParameter("updateBy"));
+
+		assessscore.setCreateBy(actorId);
+
+		assessscoreService.save(assessscore);
+
+		return this.list(request, modelMap);
+	}
+
+	@ResponseBody
+	@RequestMapping("/saveAssessscore")
+	public byte[] saveAssessscore(HttpServletRequest request) {
+		User user = RequestUtils.getUser(request);
+		String actorId = user.getActorId();
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		Assessscore assessscore = new Assessscore();
+		try {
+			Tools.populate(assessscore, params);
+			assessscore
+					.setContentid(RequestUtils.getLong(request, "contentid"));
+			assessscore.setResultid(RequestUtils.getLong(request, "resultid"));
+			assessscore.setScore(RequestUtils.getLong(request, "score"));
+			assessscore.setCreateBy(request.getParameter("createBy"));
+			assessscore.setCreateDate(RequestUtils.getDate(request,
+					"createDate"));
+			assessscore.setUpdateDate(RequestUtils.getDate(request,
+					"updateDate"));
+			assessscore.setUpdateBy(request.getParameter("updateBy"));
+			assessscore.setCreateBy(actorId);
+			this.assessscoreService.save(assessscore);
+
+			return ResponseUtils.responseJsonResult(true);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			logger.error(ex);
+		}
+		return ResponseUtils.responseJsonResult(false);
+	}
+
+	@javax.annotation.Resource
+	public void setAssessscoreService(AssessscoreService assessscoreService) {
+		this.assessscoreService = assessscoreService;
+	}
+
+	@RequestMapping("/update")
+	public ModelAndView update(HttpServletRequest request, ModelMap modelMap) {
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		params.remove("status");
+		params.remove("wfStatus");
+
+		Assessscore assessscore = assessscoreService
+				.getAssessscore(RequestUtils.getLong(request, "scoreid"));
+
+		assessscore.setContentid(RequestUtils.getLong(request, "contentid"));
+		assessscore.setResultid(RequestUtils.getLong(request, "resultid"));
+		assessscore.setScore(RequestUtils.getLong(request, "score"));
+		assessscore.setCreateBy(request.getParameter("createBy"));
+		assessscore.setCreateDate(RequestUtils.getDate(request, "createDate"));
+		assessscore.setUpdateDate(RequestUtils.getDate(request, "updateDate"));
+		assessscore.setUpdateBy(request.getParameter("updateBy"));
+
+		assessscoreService.save(assessscore);
+
+		return this.list(request, modelMap);
+	}
+
+	@RequestMapping("/view")
+	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+
+		Assessscore assessscore = assessscoreService
+				.getAssessscore(RequestUtils.getLong(request, "scoreid"));
+		request.setAttribute("assessscore", assessscore);
+		JSONObject rowJSON = assessscore.toJsonObject();
+		request.setAttribute("x_json", rowJSON.toJSONString());
+
+		String view = request.getParameter("view");
+		if (StringUtils.isNotEmpty(view)) {
+			return new ModelAndView(view);
+		}
+
+		String x_view = ViewProperties.getString("assessscore.view");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view);
+		}
+
+		return new ModelAndView("/oa/assessscore/view");
 	}
 
 }

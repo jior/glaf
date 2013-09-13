@@ -76,498 +76,119 @@ public class BorrowController {
 
 	protected SysDepartmentService sysDepartmentService;
 
-	@javax.annotation.Resource
-	public void setSysDepartmentService(
-			SysDepartmentService sysDepartmentService) {
-		this.sysDepartmentService = sysDepartmentService;
-	}
+	/**
+	 * 工作流审批
+	 * 
+	 * @param purchase
+	 * @param flag
+	 *            0同意 1不同意
+	 * @param request
+	 * @return
+	 */
+	private boolean completeTask(Borrow borrow, int flag,
+			HttpServletRequest request) {
+		String processName = "Borrowprocess";
 
-	@javax.annotation.Resource
-	public void setBorrowmoneyService(BorrowmoneyService borrowmoneyService) {
-		this.borrowmoneyService = borrowmoneyService;
-	}
+		User appUser = BaseDataManager.getInstance().getSysUserService()
+				.findByAccount(borrow.getAppuser());
 
-	@javax.annotation.Resource
-	public void setBorrowadderssService(
-			BorrowadderssService borrowadderssService) {
-		this.borrowadderssService = borrowadderssService;
-	}
+		// 根据用户部门id 获取整个部门的对象（GZ01）
+		SysDepartment curdept = sysDepartmentService.findById(appUser
+				.getDeptId());
 
-	@javax.annotation.Resource
-	public void setBorrowService(BorrowService borrowService) {
-		this.borrowService = borrowService;
-	}
-
-	@RequestMapping("/init")
-	public ModelAndView init(HttpServletRequest request, ModelMap modelMap) {
-		User user = RequestUtils.getUser(request);
-		String actorId = user.getActorId();
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		params.remove("status");
-		params.remove("wfStatus");
-
-		Long borrowid = RequestUtils.getLong(request, "borrowid");
-
-		// borrow
-		Borrow borrow = borrowService.getBorrow(borrowid);
-		if (borrow == null) {
-			borrow = new Borrow();
-			borrow.setStatus(-1);// 无效
-			SysDepartment sysDepartment = BaseDataManager.getInstance()
-					.getSysDepartmentService().findById(user.getDeptId());
-			String areaCode = "";
-			if (sysDepartment.getCode() != null
-					&& sysDepartment.getCode().length() >= 2) {
-				areaCode = sysDepartment.getCode().substring(0, 2);
-			}
-			borrow.setAppuser(actorId);
-			borrow.setArea(areaCode);// 地区
-			borrow.setDept(sysDepartment.getCode());// 部门
-			borrow.setPost(RequestUtil.getLoginUser(request).getHeadship());// 职位
-			borrow.setAppdate(new Date());
-			borrow.setCreateBy(actorId);
-			borrow.setCreateDate(new Date());
-			borrowService.save(borrow);
-		}
-		Tools.populate(borrow, params);
-
-		// address
-		List<Borrowadderss> addresslist = borrowadderssService
-				.getBorrowadderssByParentId(borrowid);
-		if (addresslist == null || addresslist.size() == 0) {
-			addresslist = new ArrayList<Borrowadderss>();
-			Borrowadderss borrowadderss = new Borrowadderss();
-			addresslist.add(borrowadderss);
+		// 根据部门CODE(例如GZ01)截取前2位 作为地区
+		String curAreadeptCode = curdept.getCode().substring(0, 2);
+		String endOfCode = "";
+		if (curdept.getCode().length() == 4) {
+			endOfCode = curdept.getCode().substring(2);
 		}
 
-		// money
-		Double totelPrice = 0D;
-		List<Borrowmoney> moneylist = borrowmoneyService
-				.getBorrowmoneyByParentId(borrowid);
-		if (moneylist == null || moneylist.size() == 0) {
-			Borrowmoney borrowmoney1 = new Borrowmoney();
-			borrowmoney1.setFeename("1");
-			Borrowmoney borrowmoney2 = new Borrowmoney();
-			borrowmoney2.setFeename("2");
-			Borrowmoney borrowmoney3 = new Borrowmoney();
-			borrowmoney3.setFeename("3");
-			Borrowmoney borrowmoney4 = new Borrowmoney();
-			borrowmoney4.setFeename("0");
-			moneylist = new ArrayList<Borrowmoney>();
-			moneylist.add(borrowmoney1);
-			moneylist.add(borrowmoney2);
-			moneylist.add(borrowmoney3);
-			moneylist.add(borrowmoney4);
+		// 根据code 获取 地区部门对象（GZ06）行政
+		SysDepartment HRdept = sysDepartmentService.findByCode(curAreadeptCode
+				+ "06");
+		// 根据code 获取 地区部门对象（GZ）
+		SysDepartment curAreadept = sysDepartmentService
+				.findByCode(curAreadeptCode);
+
+		// 获取集团部门对象（JT）
+		SysDepartment sysdeptMem = sysDepartmentService.findByCode("JT");
+
+		// 获取集团部门部门对象（JTxx）
+		SysDepartment sysdeptMemDept = sysDepartmentService.findByCode("JT"
+				+ endOfCode);
+
+		ProcessContext ctx = new ProcessContext();
+		ctx.setRowId(borrow.getBorrowid());// 表id
+		ctx.setActorId(appUser.getActorId());// 用户审批者
+		ctx.setProcessName(processName);// 流程名称
+		String opinion = request.getParameter("approveOpinion");
+		ctx.setOpinion(opinion);// 审批意见
+
+		Collection<DataField> dataFields = new ArrayList<DataField>();// 参数
+
+		DataField dataField = new DataField();
+		dataField.setName("isAgree");// 是否通过审批
+		if (flag == 0) {
+			dataField.setValue("true");
 		} else {
-			for (Borrowmoney borrowmoney : moneylist) {
-				totelPrice += borrowmoney.getFeesum();
-			}
+			dataField.setValue("false");
 		}
+		dataFields.add(dataField);
 
-		request.setAttribute("borrow", borrow);
-		request.setAttribute("addresslist", addresslist);
-		request.setAttribute("moneylist", moneylist);
-		request.setAttribute("totelPrice", totelPrice);
+		// 会计 （XX06）
+		DataField datafield1 = new DataField();
+		datafield1.setName("deptId01");
+		datafield1.setValue(HRdept.getId());
+		dataFields.add(datafield1);
 
-		return new ModelAndView("/oa/borrow/edit", modelMap);
-	}
+		// 部门主管/经理
+		DataField datafield4 = new DataField();
+		datafield4.setName("deptId02");
+		datafield4.setValue(appUser.getDeptId());
+		dataFields.add(datafield4);
 
-	@RequestMapping("/view")
-	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
-		User user = RequestUtils.getUser(request);
-		String actorId = user.getActorId();
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		params.remove("status");
-		params.remove("wfStatus");
+		// 用户地区部门（如GZ）
+		DataField datafield5 = new DataField();
+		datafield5.setName("deptId03");
+		datafield5.setValue(curAreadept.getId());
+		dataFields.add(datafield5);
 
-		Long borrowid = RequestUtils.getLong(request, "borrowid");
+		// 集团部门(JTxx)
+		DataField datafield2 = new DataField();
+		datafield2.setName("deptId04");
+		datafield2.setValue(sysdeptMemDept.getId());
+		dataFields.add(datafield2);
 
-		// borrow
-		Borrow borrow = borrowService.getBorrow(borrowid);
-		if (borrow == null) {
-			borrow = new Borrow();
-			borrow.setStatus(-1);// 无效
-			borrow.setAppdate(new Date());
-			borrow.setCreateBy(actorId);
-			borrow.setCreateDate(new Date());
-			borrowService.save(borrow);
-		}
-		Tools.populate(borrow, params);
+		// 集团(JT)
+		DataField datafield6 = new DataField();
+		datafield6.setName("deptId05");
+		datafield6.setValue(sysdeptMem.getId());
+		dataFields.add(datafield6);
 
-		// address
-		List<Borrowadderss> addresslist = borrowadderssService
-				.getBorrowadderssByParentId(borrowid);
-		if (addresslist == null || addresslist.size() == 0) {
-			addresslist = new ArrayList<Borrowadderss>();
-			Borrowadderss borrowadderss = new Borrowadderss();
-			addresslist.add(borrowadderss);
-		}
+		DataField datafield3 = new DataField();
+		datafield3.setName("rowId");
+		datafield3.setValue(borrow.getBorrowid());
+		dataFields.add(datafield3);
 
-		// money
-		Double totelPrice = 0D;
-		List<Borrowmoney> moneylist = borrowmoneyService
-				.getBorrowmoneyByParentId(borrowid);
-		if (moneylist == null || moneylist.size() == 0) {
-			Borrowmoney borrowmoney1 = new Borrowmoney();
-			borrowmoney1.setFeename("1");
-			Borrowmoney borrowmoney2 = new Borrowmoney();
-			borrowmoney2.setFeename("2");
-			Borrowmoney borrowmoney3 = new Borrowmoney();
-			borrowmoney3.setFeename("3");
-			Borrowmoney borrowmoney4 = new Borrowmoney();
-			borrowmoney4.setFeename("0");
-			moneylist = new ArrayList<Borrowmoney>();
-			moneylist.add(borrowmoney1);
-			moneylist.add(borrowmoney2);
-			moneylist.add(borrowmoney3);
-			moneylist.add(borrowmoney4);
+		ctx.setDataFields(dataFields);
+
+		Long processInstanceId;
+		boolean isOK = false;
+
+		if (borrow.getProcessinstanceid() != null
+				&& borrow.getWfstatus() != 9999 && borrow.getWfstatus() != null) {
+			processInstanceId = borrow.getProcessinstanceid();
+			ctx.setProcessInstanceId(processInstanceId);
+			isOK = ProcessContainer.getContainer().completeTask(ctx);
+			logger.info("workflowing .......  ");
 		} else {
-			for (Borrowmoney borrowmoney : moneylist) {
-				totelPrice += borrowmoney.getFeesum();
-			}
+			processInstanceId = ProcessContainer.getContainer().startProcess(
+					ctx);
+			logger.info("processInstanceId=" + processInstanceId);
+			isOK = true;
+			logger.info("workflow start");
 		}
-
-		request.setAttribute("borrow", borrow);
-		request.setAttribute("addresslist", addresslist);
-		request.setAttribute("moneylist", moneylist);
-		request.setAttribute("totelPrice", totelPrice);
-
-		return new ModelAndView("/oa/borrow/view", modelMap);
-	}
-
-	@RequestMapping("/save")
-	public ModelAndView save(HttpServletRequest request, ModelMap modelMap) {
-		User user = RequestUtils.getUser(request);
-		String actorId = user.getActorId();
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		Long borrowid = RequestUtils.getLong(request, "borrowid");
-		// borrow
-		Borrow borrow = new Borrow();
-		Tools.populate(borrow, params);
-		borrow.setArea(request.getParameter("area"));
-		borrow.setCompany(request.getParameter("company"));
-		borrow.setDept(request.getParameter("dept"));
-		borrow.setAppuser(request.getParameter("appuser"));
-		borrow.setAppdate(RequestUtils.getDate(request, "appdate"));
-		borrow.setPost(request.getParameter("post"));
-		borrow.setBorrowNo(request.getParameter("borrowNo"));
-		borrow.setContent(request.getParameter("content"));
-		if (!"0".equals(request.getParameter("content"))) {
-			borrow.setStartdate(RequestUtils.getDate(request, "startdate"));
-			borrow.setEnddate(RequestUtils.getDate(request, "enddate"));
-			borrow.setDaynum(RequestUtils.getInt(request, "daynum"));
-		} else {
-			borrow.setStartdate(null);
-			borrow.setEnddate(null);
-			borrow.setDaynum(null);
-		}
-		borrow.setDetails(request.getParameter("details"));
-		borrow.setAppsum(RequestUtils.getDouble(request, "appsum"));
-		borrow.setStatus(0);
-		borrow.setUpdateDate(new Date());
-		borrow.setUpdateBy(actorId);
-
-		borrowService.save(borrow);
-		// address
-		List<Borrowadderss> addresss = borrowadderssService
-				.getBorrowadderssByParentId(borrowid);
-		List<Long> addressIds = new ArrayList<Long>();
-		addressIds.add(0L);
-		for (Borrowadderss borrowadderss : addresss) {
-			addressIds.add(borrowadderss.getAddressid());
-		}
-		if (!"0".equals(request.getParameter("content"))) {
-			for (int i = 0; i < 10; i++) {
-				if (request.getParameter("start_" + i) != null
-						&& !"".equals(request.getParameter("start_" + i))) {
-					Long addressid = RequestUtils.getLong(request, "addressid_"
-							+ i);
-					if (addressIds.contains(addressid)) {
-						addressIds.remove(addressid);
-					}
-					Borrowadderss borrowadderss = new Borrowadderss();
-					borrowadderss.setAddressid(addressid == 0 ? null
-							: addressid);
-					borrowadderss.setStart(request.getParameter("start_" + i));
-					borrowadderss.setReach(request.getParameter("reach_" + i));
-					borrowadderss.setBorrowid(borrowid);
-					borrowadderssService.save(borrowadderss);
-				}
-			}
-			for (Long addressId : addressIds) {
-				borrowadderssService.deleteById(addressId);
-			}
-		} else {
-			// 根据主表id删除所有记录
-			borrowadderssService.deleteByParentId(borrowid);
-		}
-
-		// money
-		List<Borrowmoney> moneys = borrowmoneyService
-				.getBorrowmoneyByParentId(borrowid);
-		List<Long> moneyIds = new ArrayList<Long>();
-		for (Borrowmoney borrowmoney : moneys) {
-			moneyIds.add(borrowmoney.getBorrowmoneyid());
-		}
-		for (int i = 0; i < 10; i++) {
-			if (request.getParameter("feesum_" + i) != null
-					&& !"".equals(request.getParameter("feesum_" + i))) {
-				Long borrowmoneyid = RequestUtils.getLong(request,
-						"borrowmoneyid_" + i);
-				if (moneyIds.contains(borrowmoneyid)) {
-					moneyIds.remove(borrowmoneyid);
-				}
-				Borrowmoney borrowmoney = new Borrowmoney();
-				borrowmoney.setBorrowmoneyid(borrowmoneyid == 0 ? null
-						: borrowmoneyid);
-				borrowmoney.setFeename(request.getParameter("feename_" + i));
-				borrowmoney.setFeesum(RequestUtils.getDouble(request, "feesum_"
-						+ i));
-				borrowmoney.setBorrowid(borrowid);
-				borrowmoneyService.save(borrowmoney);
-			}
-		}
-		for (Long moneyId : moneyIds) {
-			borrowmoneyService.deleteById(moneyId);
-		}
-
-		return new ModelAndView("/oa/borrow/edit", modelMap);
-	}
-
-	@RequestMapping("/submit2")
-	public ModelAndView submit2(HttpServletRequest request, ModelMap modelMap) {
-		User user = RequestUtils.getUser(request);
-		String actorId = user.getActorId();
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		Long borrowid = RequestUtils.getLong(request, "borrowid");
-		// borrow
-		Borrow borrow = new Borrow();
-		try {
-			Tools.populate(borrow, params);
-			borrow.setBorrowid(borrowid);
-			borrow.setStatus(1);
-			borrow.setUpdateDate(new Date());
-			borrow.setUpdateBy(actorId);
-
-			borrowService.save(borrow);
-
-			// 状态为 提交 进入工作流程
-			if (borrow.getStatus() == 1) {
-				if (borrow.getProcessinstanceid() != null
-						&& borrow.getProcessinstanceid() > 0) {
-					completeTask(borrow, 0, request);
-				} else {
-					startProcess(borrow, request);
-				}
-			}
-
-			return this.list(request, modelMap);
-
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			logger.error(ex);
-			ModelAndView mav = new ModelAndView();
-			mav.addObject("message", "提交失败。");
-			return mav;
-		}
-	}
-
-	@RequestMapping("/submit")
-	public ModelAndView submit(HttpServletRequest request, ModelMap modelMap) {
-		User user = RequestUtils.getUser(request);
-		String actorId = user.getActorId();
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		Long borrowid = RequestUtils.getLong(request, "borrowid");
-		// borrow
-		Borrow borrow = new Borrow();
-		try {
-			Tools.populate(borrow, params);
-			borrow.setArea(request.getParameter("area"));
-			borrow.setCompany(request.getParameter("company"));
-			borrow.setDept(request.getParameter("dept"));
-			borrow.setAppuser(request.getParameter("appuser"));
-			borrow.setAppdate(RequestUtils.getDate(request, "appdate"));
-			borrow.setPost(request.getParameter("post"));
-			borrow.setBorrowNo(request.getParameter("borrowNo"));
-			borrow.setContent(request.getParameter("content"));
-			if (!"0".equals(request.getParameter("content"))) {
-				borrow.setStartdate(RequestUtils.getDate(request, "startdate"));
-				borrow.setEnddate(RequestUtils.getDate(request, "enddate"));
-				borrow.setDaynum(RequestUtils.getInt(request, "daynum"));
-			} else {
-				borrow.setStartdate(null);
-				borrow.setEnddate(null);
-				borrow.setDaynum(null);
-			}
-			borrow.setDetails(request.getParameter("details"));
-			borrow.setAppsum(RequestUtils.getDouble(request, "appsum"));
-			borrow.setStatus(1);
-			borrow.setUpdateDate(new Date());
-			borrow.setUpdateBy(actorId);
-
-			borrowService.save(borrow);
-			// address
-			List<Borrowadderss> addresss = borrowadderssService
-					.getBorrowadderssByParentId(borrowid);
-			List<Long> addressIds = new ArrayList<Long>();
-			addressIds.add(0L);
-			for (Borrowadderss borrowadderss : addresss) {
-				addressIds.add(borrowadderss.getAddressid());
-			}
-			if (!"0".equals(request.getParameter("content"))) {
-				for (int i = 0; i < 10; i++) {
-					if (request.getParameter("start_" + i) != null
-							&& !"".equals(request.getParameter("start_" + i))) {
-						Long addressid = RequestUtils.getLong(request,
-								"addressid_" + i);
-						if (addressIds.contains(addressid)) {
-							addressIds.remove(addressid);
-						}
-						Borrowadderss borrowadderss = new Borrowadderss();
-						borrowadderss.setAddressid(addressid == 0 ? null
-								: addressid);
-						borrowadderss.setStart(request.getParameter("start_"
-								+ i));
-						borrowadderss.setReach(request.getParameter("reach_"
-								+ i));
-						borrowadderss.setBorrowid(borrowid);
-						borrowadderssService.save(borrowadderss);
-					}
-				}
-				for (Long addressId : addressIds) {
-					borrowadderssService.deleteById(addressId);
-				}
-			} else {
-				// 根据主表id删除所有记录
-				borrowadderssService.deleteByParentId(borrowid);
-			}
-
-			// money
-			List<Borrowmoney> moneys = borrowmoneyService
-					.getBorrowmoneyByParentId(borrowid);
-			List<Long> moneyIds = new ArrayList<Long>();
-			for (Borrowmoney borrowmoney : moneys) {
-				moneyIds.add(borrowmoney.getBorrowmoneyid());
-			}
-			for (int i = 0; i < 10; i++) {
-				if (request.getParameter("feesum_" + i) != null
-						&& !"".equals(request.getParameter("feesum_" + i))) {
-					Long borrowmoneyid = RequestUtils.getLong(request,
-							"borrowmoneyid_" + i);
-					if (moneyIds.contains(borrowmoneyid)) {
-						moneyIds.remove(borrowmoneyid);
-					}
-					Borrowmoney borrowmoney = new Borrowmoney();
-					borrowmoney.setBorrowmoneyid(borrowmoneyid == 0 ? null
-							: borrowmoneyid);
-					borrowmoney
-							.setFeename(request.getParameter("feename_" + i));
-					borrowmoney.setFeesum(RequestUtils.getDouble(request,
-							"feesum_" + i));
-					borrowmoney.setBorrowid(borrowid);
-					borrowmoneyService.save(borrowmoney);
-				}
-			}
-			for (Long moneyId : moneyIds) {
-				borrowmoneyService.deleteById(moneyId);
-			}
-
-			// 状态为 提交 进入工作流程
-			if (borrow.getStatus() == 1) {
-				if (borrow.getProcessinstanceid() != null
-						&& borrow.getProcessinstanceid() > 0) {
-					completeTask(borrow, 0, request);
-				} else {
-					startProcess(borrow, request);
-				}
-			}
-
-			return this.list(request, modelMap);
-
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			logger.error(ex);
-			ModelAndView mav = new ModelAndView();
-			mav.addObject("message", "提交失败。");
-			return mav;
-		}
-	}
-
-	@ResponseBody
-	@RequestMapping("/saveBorrow")
-	public byte[] saveBorrow(HttpServletRequest request) {
-		User user = RequestUtils.getUser(request);
-		String actorId = user.getActorId();
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		Borrow borrow = new Borrow();
-		try {
-			Tools.populate(borrow, params);
-			borrow.setArea(request.getParameter("area"));
-			borrow.setCompany(request.getParameter("company"));
-			borrow.setDept(request.getParameter("dept"));
-			borrow.setAppuser(request.getParameter("appuser"));
-			borrow.setAppdate(RequestUtils.getDate(request, "appdate"));
-			borrow.setPost(request.getParameter("post"));
-			borrow.setContent(request.getParameter("content"));
-			borrow.setStartdate(RequestUtils.getDate(request, "startdate"));
-			borrow.setEnddate(RequestUtils.getDate(request, "enddate"));
-			borrow.setDaynum(RequestUtils.getInt(request, "daynum"));
-			borrow.setDetails(request.getParameter("details"));
-			borrow.setAppsum(RequestUtils.getDouble(request, "appsum"));
-			borrow.setStatus(RequestUtils.getInt(request, "status"));
-			borrow.setProcessname(request.getParameter("processname"));
-			borrow.setProcessinstanceid(RequestUtils.getLong(request,
-					"processinstanceid"));
-			borrow.setWfstatus(RequestUtils.getLong(request, "wfstatus"));
-			borrow.setCreateBy(request.getParameter("createBy"));
-			borrow.setCreateDate(RequestUtils.getDate(request, "createDate"));
-			borrow.setUpdateDate(RequestUtils.getDate(request, "updateDate"));
-			borrow.setUpdateBy(request.getParameter("updateBy"));
-			borrow.setCreateBy(actorId);
-			this.borrowService.save(borrow);
-
-			return ResponseUtils.responseJsonResult(true);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			logger.error(ex);
-		}
-		return ResponseUtils.responseJsonResult(false);
-	}
-
-	@RequestMapping("/update")
-	public ModelAndView update(HttpServletRequest request, ModelMap modelMap) {
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		params.remove("status");
-		params.remove("wfStatus");
-
-		Borrow borrow = borrowService.getBorrow(RequestUtils.getLong(request,
-				"borrowid"));
-
-		borrow.setArea(request.getParameter("area"));
-		borrow.setCompany(request.getParameter("company"));
-		borrow.setDept(request.getParameter("dept"));
-		borrow.setAppuser(request.getParameter("appuser"));
-		borrow.setAppdate(RequestUtils.getDate(request, "appdate"));
-		borrow.setPost(request.getParameter("post"));
-		borrow.setContent(request.getParameter("content"));
-		borrow.setStartdate(RequestUtils.getDate(request, "startdate"));
-		borrow.setEnddate(RequestUtils.getDate(request, "enddate"));
-		borrow.setDaynum(RequestUtils.getInt(request, "daynum"));
-		borrow.setDetails(request.getParameter("details"));
-		borrow.setAppsum(RequestUtils.getDouble(request, "appsum"));
-		borrow.setStatus(RequestUtils.getInt(request, "status"));
-		borrow.setProcessname(request.getParameter("processname"));
-		borrow.setProcessinstanceid(RequestUtils.getLong(request,
-				"processinstanceid"));
-		borrow.setWfstatus(RequestUtils.getLong(request, "wfstatus"));
-		borrow.setCreateBy(request.getParameter("createBy"));
-		borrow.setCreateDate(RequestUtils.getDate(request, "createDate"));
-		borrow.setUpdateDate(RequestUtils.getDate(request, "updateDate"));
-		borrow.setUpdateBy(request.getParameter("updateBy"));
-
-		borrowService.save(borrow);
-
-		return this.list(request, modelMap);
+		return isOK;
 	}
 
 	@ResponseBody
@@ -645,18 +266,78 @@ public class BorrowController {
 		return new ModelAndView("/oa/borrow/edit", modelMap);
 	}
 
-	@RequestMapping("/query")
-	public ModelAndView query(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
-		String view = request.getParameter("view");
-		if (StringUtils.isNotEmpty(view)) {
-			return new ModelAndView(view, modelMap);
+	@RequestMapping("/init")
+	public ModelAndView init(HttpServletRequest request, ModelMap modelMap) {
+		User user = RequestUtils.getUser(request);
+		String actorId = user.getActorId();
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		params.remove("status");
+		params.remove("wfStatus");
+
+		Long borrowid = RequestUtils.getLong(request, "borrowid");
+
+		// borrow
+		Borrow borrow = borrowService.getBorrow(borrowid);
+		if (borrow == null) {
+			borrow = new Borrow();
+			borrow.setStatus(-1);// 无效
+			SysDepartment sysDepartment = BaseDataManager.getInstance()
+					.getSysDepartmentService().findById(user.getDeptId());
+			String areaCode = "";
+			if (sysDepartment.getCode() != null
+					&& sysDepartment.getCode().length() >= 2) {
+				areaCode = sysDepartment.getCode().substring(0, 2);
+			}
+			borrow.setAppuser(actorId);
+			borrow.setArea(areaCode);// 地区
+			borrow.setDept(sysDepartment.getCode());// 部门
+			borrow.setPost(RequestUtil.getLoginUser(request).getHeadship());// 职位
+			borrow.setAppdate(new Date());
+			borrow.setCreateBy(actorId);
+			borrow.setCreateDate(new Date());
+			borrowService.save(borrow);
 		}
-		String x_view = ViewProperties.getString("borrow.query");
-		if (StringUtils.isNotEmpty(x_view)) {
-			return new ModelAndView(x_view, modelMap);
+		Tools.populate(borrow, params);
+
+		// address
+		List<Borrowadderss> addresslist = borrowadderssService
+				.getBorrowadderssByParentId(borrowid);
+		if (addresslist == null || addresslist.size() == 0) {
+			addresslist = new ArrayList<Borrowadderss>();
+			Borrowadderss borrowadderss = new Borrowadderss();
+			addresslist.add(borrowadderss);
 		}
-		return new ModelAndView("/oa/borrow/query", modelMap);
+
+		// money
+		Double totelPrice = 0D;
+		List<Borrowmoney> moneylist = borrowmoneyService
+				.getBorrowmoneyByParentId(borrowid);
+		if (moneylist == null || moneylist.size() == 0) {
+			Borrowmoney borrowmoney1 = new Borrowmoney();
+			borrowmoney1.setFeename("1");
+			Borrowmoney borrowmoney2 = new Borrowmoney();
+			borrowmoney2.setFeename("2");
+			Borrowmoney borrowmoney3 = new Borrowmoney();
+			borrowmoney3.setFeename("3");
+			Borrowmoney borrowmoney4 = new Borrowmoney();
+			borrowmoney4.setFeename("0");
+			moneylist = new ArrayList<Borrowmoney>();
+			moneylist.add(borrowmoney1);
+			moneylist.add(borrowmoney2);
+			moneylist.add(borrowmoney3);
+			moneylist.add(borrowmoney4);
+		} else {
+			for (Borrowmoney borrowmoney : moneylist) {
+				totelPrice += borrowmoney.getFeesum();
+			}
+		}
+
+		request.setAttribute("borrow", borrow);
+		request.setAttribute("addresslist", addresslist);
+		request.setAttribute("moneylist", moneylist);
+		request.setAttribute("totelPrice", totelPrice);
+
+		return new ModelAndView("/oa/borrow/edit", modelMap);
 	}
 
 	@RequestMapping("/json")
@@ -791,119 +472,180 @@ public class BorrowController {
 		return new ModelAndView("/oa/borrow/list", modelMap);
 	}
 
-	/**
-	 * 工作流审批
-	 * 
-	 * @param purchase
-	 * @param flag
-	 *            0同意 1不同意
-	 * @param request
-	 * @return
-	 */
-	private boolean completeTask(Borrow borrow, int flag,
-			HttpServletRequest request) {
-		String processName = "Borrowprocess";
-
-		User appUser = BaseDataManager.getInstance().getSysUserService()
-				.findByAccount(borrow.getAppuser());
-
-		// 根据用户部门id 获取整个部门的对象（HZ01）
-		SysDepartment curdept = sysDepartmentService.findById(appUser
-				.getDeptId());
-
-		// 根据部门CODE(例如HZ01)截取前2位 作为地区
-		String curAreadeptCode = curdept.getCode().substring(0, 2);
-		String endOfCode = "";
-		if (curdept.getCode().length() == 4) {
-			endOfCode = curdept.getCode().substring(2);
+	@RequestMapping("/query")
+	public ModelAndView query(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		String view = request.getParameter("view");
+		if (StringUtils.isNotEmpty(view)) {
+			return new ModelAndView(view, modelMap);
 		}
+		String x_view = ViewProperties.getString("borrow.query");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+		return new ModelAndView("/oa/borrow/query", modelMap);
+	}
 
-		// 根据code 获取 地区部门对象（HZ06）行政
-		SysDepartment HRdept = sysDepartmentService.findByCode(curAreadeptCode
-				+ "06");
-		// 根据code 获取 地区部门对象（HZ）
-		SysDepartment curAreadept = sysDepartmentService
-				.findByCode(curAreadeptCode);
-
-		// 获取集团部门对象（JT）
-		SysDepartment sysdeptMem = sysDepartmentService.findByCode("JT");
-
-		// 获取集团部门部门对象（JTxx）
-		SysDepartment sysdeptMemDept = sysDepartmentService.findByCode("JT"
-				+ endOfCode);
-
-		ProcessContext ctx = new ProcessContext();
-		ctx.setRowId(borrow.getBorrowid());// 表id
-		ctx.setActorId(appUser.getActorId());// 用户审批者
-		ctx.setProcessName(processName);// 流程名称
-		String opinion = request.getParameter("approveOpinion");
-		ctx.setOpinion(opinion);// 审批意见
-
-		Collection<DataField> dataFields = new ArrayList<DataField>();// 参数
-
-		DataField dataField = new DataField();
-		dataField.setName("isAgree");// 是否通过审批
-		if (flag == 0) {
-			dataField.setValue("true");
+	@RequestMapping("/save")
+	public ModelAndView save(HttpServletRequest request, ModelMap modelMap) {
+		User user = RequestUtils.getUser(request);
+		String actorId = user.getActorId();
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		Long borrowid = RequestUtils.getLong(request, "borrowid");
+		// borrow
+		Borrow borrow = new Borrow();
+		Tools.populate(borrow, params);
+		borrow.setArea(request.getParameter("area"));
+		borrow.setCompany(request.getParameter("company"));
+		borrow.setDept(request.getParameter("dept"));
+		borrow.setAppuser(request.getParameter("appuser"));
+		borrow.setAppdate(RequestUtils.getDate(request, "appdate"));
+		borrow.setPost(request.getParameter("post"));
+		borrow.setBorrowNo(request.getParameter("borrowNo"));
+		borrow.setContent(request.getParameter("content"));
+		if (!"0".equals(request.getParameter("content"))) {
+			borrow.setStartdate(RequestUtils.getDate(request, "startdate"));
+			borrow.setEnddate(RequestUtils.getDate(request, "enddate"));
+			borrow.setDaynum(RequestUtils.getInt(request, "daynum"));
 		} else {
-			dataField.setValue("false");
+			borrow.setStartdate(null);
+			borrow.setEnddate(null);
+			borrow.setDaynum(null);
 		}
-		dataFields.add(dataField);
+		borrow.setDetails(request.getParameter("details"));
+		borrow.setAppsum(RequestUtils.getDouble(request, "appsum"));
+		borrow.setStatus(0);
+		borrow.setUpdateDate(new Date());
+		borrow.setUpdateBy(actorId);
 
-		// 会计 （XX06）
-		DataField datafield1 = new DataField();
-		datafield1.setName("deptId01");
-		datafield1.setValue(HRdept.getId());
-		dataFields.add(datafield1);
-
-		// 部门主管/经理
-		DataField datafield4 = new DataField();
-		datafield4.setName("deptId02");
-		datafield4.setValue(appUser.getDeptId());
-		dataFields.add(datafield4);
-
-		// 用户地区部门（如HZ）
-		DataField datafield5 = new DataField();
-		datafield5.setName("deptId03");
-		datafield5.setValue(curAreadept.getId());
-		dataFields.add(datafield5);
-
-		// 集团部门(JTxx)
-		DataField datafield2 = new DataField();
-		datafield2.setName("deptId04");
-		datafield2.setValue(sysdeptMemDept.getId());
-		dataFields.add(datafield2);
-
-		// 集团(JT)
-		DataField datafield6 = new DataField();
-		datafield6.setName("deptId05");
-		datafield6.setValue(sysdeptMem.getId());
-		dataFields.add(datafield6);
-
-		DataField datafield3 = new DataField();
-		datafield3.setName("rowId");
-		datafield3.setValue(borrow.getBorrowid());
-		dataFields.add(datafield3);
-
-		ctx.setDataFields(dataFields);
-
-		Long processInstanceId;
-		boolean isOK = false;
-
-		if (borrow.getProcessinstanceid() != null
-				&& borrow.getWfstatus() != 9999 && borrow.getWfstatus() != null) {
-			processInstanceId = borrow.getProcessinstanceid();
-			ctx.setProcessInstanceId(processInstanceId);
-			isOK = ProcessContainer.getContainer().completeTask(ctx);
-			logger.info("workflowing .......  ");
+		borrowService.save(borrow);
+		// address
+		List<Borrowadderss> addresss = borrowadderssService
+				.getBorrowadderssByParentId(borrowid);
+		List<Long> addressIds = new ArrayList<Long>();
+		addressIds.add(0L);
+		for (Borrowadderss borrowadderss : addresss) {
+			addressIds.add(borrowadderss.getAddressid());
+		}
+		if (!"0".equals(request.getParameter("content"))) {
+			for (int i = 0; i < 10; i++) {
+				if (request.getParameter("start_" + i) != null
+						&& !"".equals(request.getParameter("start_" + i))) {
+					Long addressid = RequestUtils.getLong(request, "addressid_"
+							+ i);
+					if (addressIds.contains(addressid)) {
+						addressIds.remove(addressid);
+					}
+					Borrowadderss borrowadderss = new Borrowadderss();
+					borrowadderss.setAddressid(addressid == 0 ? null
+							: addressid);
+					borrowadderss.setStart(request.getParameter("start_" + i));
+					borrowadderss.setReach(request.getParameter("reach_" + i));
+					borrowadderss.setBorrowid(borrowid);
+					borrowadderssService.save(borrowadderss);
+				}
+			}
+			for (Long addressId : addressIds) {
+				borrowadderssService.deleteById(addressId);
+			}
 		} else {
-			processInstanceId = ProcessContainer.getContainer().startProcess(
-					ctx);
-			logger.info("processInstanceId=" + processInstanceId);
-			isOK = true;
-			logger.info("workflow start");
+			// 根据主表id删除所有记录
+			borrowadderssService.deleteByParentId(borrowid);
 		}
-		return isOK;
+
+		// money
+		List<Borrowmoney> moneys = borrowmoneyService
+				.getBorrowmoneyByParentId(borrowid);
+		List<Long> moneyIds = new ArrayList<Long>();
+		for (Borrowmoney borrowmoney : moneys) {
+			moneyIds.add(borrowmoney.getBorrowmoneyid());
+		}
+		for (int i = 0; i < 10; i++) {
+			if (request.getParameter("feesum_" + i) != null
+					&& !"".equals(request.getParameter("feesum_" + i))) {
+				Long borrowmoneyid = RequestUtils.getLong(request,
+						"borrowmoneyid_" + i);
+				if (moneyIds.contains(borrowmoneyid)) {
+					moneyIds.remove(borrowmoneyid);
+				}
+				Borrowmoney borrowmoney = new Borrowmoney();
+				borrowmoney.setBorrowmoneyid(borrowmoneyid == 0 ? null
+						: borrowmoneyid);
+				borrowmoney.setFeename(request.getParameter("feename_" + i));
+				borrowmoney.setFeesum(RequestUtils.getDouble(request, "feesum_"
+						+ i));
+				borrowmoney.setBorrowid(borrowid);
+				borrowmoneyService.save(borrowmoney);
+			}
+		}
+		for (Long moneyId : moneyIds) {
+			borrowmoneyService.deleteById(moneyId);
+		}
+
+		return new ModelAndView("/oa/borrow/edit", modelMap);
+	}
+
+	@ResponseBody
+	@RequestMapping("/saveBorrow")
+	public byte[] saveBorrow(HttpServletRequest request) {
+		User user = RequestUtils.getUser(request);
+		String actorId = user.getActorId();
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		Borrow borrow = new Borrow();
+		try {
+			Tools.populate(borrow, params);
+			borrow.setArea(request.getParameter("area"));
+			borrow.setCompany(request.getParameter("company"));
+			borrow.setDept(request.getParameter("dept"));
+			borrow.setAppuser(request.getParameter("appuser"));
+			borrow.setAppdate(RequestUtils.getDate(request, "appdate"));
+			borrow.setPost(request.getParameter("post"));
+			borrow.setContent(request.getParameter("content"));
+			borrow.setStartdate(RequestUtils.getDate(request, "startdate"));
+			borrow.setEnddate(RequestUtils.getDate(request, "enddate"));
+			borrow.setDaynum(RequestUtils.getInt(request, "daynum"));
+			borrow.setDetails(request.getParameter("details"));
+			borrow.setAppsum(RequestUtils.getDouble(request, "appsum"));
+			borrow.setStatus(RequestUtils.getInt(request, "status"));
+			borrow.setProcessname(request.getParameter("processname"));
+			borrow.setProcessinstanceid(RequestUtils.getLong(request,
+					"processinstanceid"));
+			borrow.setWfstatus(RequestUtils.getLong(request, "wfstatus"));
+			borrow.setCreateBy(request.getParameter("createBy"));
+			borrow.setCreateDate(RequestUtils.getDate(request, "createDate"));
+			borrow.setUpdateDate(RequestUtils.getDate(request, "updateDate"));
+			borrow.setUpdateBy(request.getParameter("updateBy"));
+			borrow.setCreateBy(actorId);
+			this.borrowService.save(borrow);
+
+			return ResponseUtils.responseJsonResult(true);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			logger.error(ex);
+		}
+		return ResponseUtils.responseJsonResult(false);
+	}
+
+	@javax.annotation.Resource
+	public void setBorrowadderssService(
+			BorrowadderssService borrowadderssService) {
+		this.borrowadderssService = borrowadderssService;
+	}
+
+	@javax.annotation.Resource
+	public void setBorrowmoneyService(BorrowmoneyService borrowmoneyService) {
+		this.borrowmoneyService = borrowmoneyService;
+	}
+
+	@javax.annotation.Resource
+	public void setBorrowService(BorrowService borrowService) {
+		this.borrowService = borrowService;
+	}
+
+	@javax.annotation.Resource
+	public void setSysDepartmentService(
+			SysDepartmentService sysDepartmentService) {
+		this.sysDepartmentService = sysDepartmentService;
 	}
 
 	/**
@@ -920,11 +662,11 @@ public class BorrowController {
 		User appUser = BaseDataManager.getInstance().getSysUserService()
 				.findByAccount(borrow.getAppuser());
 
-		// 根据用户部门id 获取整个部门的对象（HZ01）
+		// 根据用户部门id 获取整个部门的对象（GZ01）
 		SysDepartment curdept = sysDepartmentService.findById(appUser
 				.getDeptId());
 
-		// 根据部门CODE(例如HZ01)截取前2位 作为地区
+		// 根据部门CODE(例如GZ01)截取前2位 作为地区
 		String curAreadeptCode = curdept.getCode().substring(0, 2);
 
 		String endOfCode = "";
@@ -932,10 +674,10 @@ public class BorrowController {
 			endOfCode = curdept.getCode().substring(2);
 		}
 
-		// 根据code 获取 地区部门对象（HZ06）行政
+		// 根据code 获取 地区部门对象（GZ06）行政
 		SysDepartment HRdept = sysDepartmentService.findByCode(curAreadeptCode
 				+ "06");
-		// 根据code 获取 地区部门对象（HZ）
+		// 根据code 获取 地区部门对象（GZ）
 		SysDepartment curAreadept = sysDepartmentService
 				.findByCode(curAreadeptCode);
 
@@ -965,7 +707,7 @@ public class BorrowController {
 		datafield4.setValue(appUser.getDeptId());
 		dataFields.add(datafield4);
 
-		// 用户地区部门（如HZ）
+		// 用户地区部门（如GZ）
 		DataField datafield5 = new DataField();
 		datafield5.setName("deptId03");
 		datafield5.setValue(curAreadept.getId());
@@ -1012,5 +754,263 @@ public class BorrowController {
 			logger.info("workflow start");
 		}
 		return isOK;
+	}
+
+	@RequestMapping("/submit")
+	public ModelAndView submit(HttpServletRequest request, ModelMap modelMap) {
+		User user = RequestUtils.getUser(request);
+		String actorId = user.getActorId();
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		Long borrowid = RequestUtils.getLong(request, "borrowid");
+		// borrow
+		Borrow borrow = new Borrow();
+		try {
+			Tools.populate(borrow, params);
+			borrow.setArea(request.getParameter("area"));
+			borrow.setCompany(request.getParameter("company"));
+			borrow.setDept(request.getParameter("dept"));
+			borrow.setAppuser(request.getParameter("appuser"));
+			borrow.setAppdate(RequestUtils.getDate(request, "appdate"));
+			borrow.setPost(request.getParameter("post"));
+			borrow.setBorrowNo(request.getParameter("borrowNo"));
+			borrow.setContent(request.getParameter("content"));
+			if (!"0".equals(request.getParameter("content"))) {
+				borrow.setStartdate(RequestUtils.getDate(request, "startdate"));
+				borrow.setEnddate(RequestUtils.getDate(request, "enddate"));
+				borrow.setDaynum(RequestUtils.getInt(request, "daynum"));
+			} else {
+				borrow.setStartdate(null);
+				borrow.setEnddate(null);
+				borrow.setDaynum(null);
+			}
+			borrow.setDetails(request.getParameter("details"));
+			borrow.setAppsum(RequestUtils.getDouble(request, "appsum"));
+			borrow.setStatus(1);
+			borrow.setUpdateDate(new Date());
+			borrow.setUpdateBy(actorId);
+
+			borrowService.save(borrow);
+			// address
+			List<Borrowadderss> addresss = borrowadderssService
+					.getBorrowadderssByParentId(borrowid);
+			List<Long> addressIds = new ArrayList<Long>();
+			addressIds.add(0L);
+			for (Borrowadderss borrowadderss : addresss) {
+				addressIds.add(borrowadderss.getAddressid());
+			}
+			if (!"0".equals(request.getParameter("content"))) {
+				for (int i = 0; i < 10; i++) {
+					if (request.getParameter("start_" + i) != null
+							&& !"".equals(request.getParameter("start_" + i))) {
+						Long addressid = RequestUtils.getLong(request,
+								"addressid_" + i);
+						if (addressIds.contains(addressid)) {
+							addressIds.remove(addressid);
+						}
+						Borrowadderss borrowadderss = new Borrowadderss();
+						borrowadderss.setAddressid(addressid == 0 ? null
+								: addressid);
+						borrowadderss.setStart(request.getParameter("start_"
+								+ i));
+						borrowadderss.setReach(request.getParameter("reach_"
+								+ i));
+						borrowadderss.setBorrowid(borrowid);
+						borrowadderssService.save(borrowadderss);
+					}
+				}
+				for (Long addressId : addressIds) {
+					borrowadderssService.deleteById(addressId);
+				}
+			} else {
+				// 根据主表id删除所有记录
+				borrowadderssService.deleteByParentId(borrowid);
+			}
+
+			// money
+			List<Borrowmoney> moneys = borrowmoneyService
+					.getBorrowmoneyByParentId(borrowid);
+			List<Long> moneyIds = new ArrayList<Long>();
+			for (Borrowmoney borrowmoney : moneys) {
+				moneyIds.add(borrowmoney.getBorrowmoneyid());
+			}
+			for (int i = 0; i < 10; i++) {
+				if (request.getParameter("feesum_" + i) != null
+						&& !"".equals(request.getParameter("feesum_" + i))) {
+					Long borrowmoneyid = RequestUtils.getLong(request,
+							"borrowmoneyid_" + i);
+					if (moneyIds.contains(borrowmoneyid)) {
+						moneyIds.remove(borrowmoneyid);
+					}
+					Borrowmoney borrowmoney = new Borrowmoney();
+					borrowmoney.setBorrowmoneyid(borrowmoneyid == 0 ? null
+							: borrowmoneyid);
+					borrowmoney
+							.setFeename(request.getParameter("feename_" + i));
+					borrowmoney.setFeesum(RequestUtils.getDouble(request,
+							"feesum_" + i));
+					borrowmoney.setBorrowid(borrowid);
+					borrowmoneyService.save(borrowmoney);
+				}
+			}
+			for (Long moneyId : moneyIds) {
+				borrowmoneyService.deleteById(moneyId);
+			}
+
+			// 状态为 提交 进入工作流程
+			if (borrow.getStatus() == 1) {
+				if (borrow.getProcessinstanceid() != null
+						&& borrow.getProcessinstanceid() > 0) {
+					completeTask(borrow, 0, request);
+				} else {
+					startProcess(borrow, request);
+				}
+			}
+
+			return this.list(request, modelMap);
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			logger.error(ex);
+			ModelAndView mav = new ModelAndView();
+			mav.addObject("message", "提交失败。");
+			return mav;
+		}
+	}
+
+	@RequestMapping("/submit2")
+	public ModelAndView submit2(HttpServletRequest request, ModelMap modelMap) {
+		User user = RequestUtils.getUser(request);
+		String actorId = user.getActorId();
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		Long borrowid = RequestUtils.getLong(request, "borrowid");
+		// borrow
+		Borrow borrow = new Borrow();
+		try {
+			Tools.populate(borrow, params);
+			borrow.setBorrowid(borrowid);
+			borrow.setStatus(1);
+			borrow.setUpdateDate(new Date());
+			borrow.setUpdateBy(actorId);
+
+			borrowService.save(borrow);
+
+			// 状态为 提交 进入工作流程
+			if (borrow.getStatus() == 1) {
+				if (borrow.getProcessinstanceid() != null
+						&& borrow.getProcessinstanceid() > 0) {
+					completeTask(borrow, 0, request);
+				} else {
+					startProcess(borrow, request);
+				}
+			}
+
+			return this.list(request, modelMap);
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			logger.error(ex);
+			ModelAndView mav = new ModelAndView();
+			mav.addObject("message", "提交失败。");
+			return mav;
+		}
+	}
+
+	@RequestMapping("/update")
+	public ModelAndView update(HttpServletRequest request, ModelMap modelMap) {
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		params.remove("status");
+		params.remove("wfStatus");
+
+		Borrow borrow = borrowService.getBorrow(RequestUtils.getLong(request,
+				"borrowid"));
+
+		borrow.setArea(request.getParameter("area"));
+		borrow.setCompany(request.getParameter("company"));
+		borrow.setDept(request.getParameter("dept"));
+		borrow.setAppuser(request.getParameter("appuser"));
+		borrow.setAppdate(RequestUtils.getDate(request, "appdate"));
+		borrow.setPost(request.getParameter("post"));
+		borrow.setContent(request.getParameter("content"));
+		borrow.setStartdate(RequestUtils.getDate(request, "startdate"));
+		borrow.setEnddate(RequestUtils.getDate(request, "enddate"));
+		borrow.setDaynum(RequestUtils.getInt(request, "daynum"));
+		borrow.setDetails(request.getParameter("details"));
+		borrow.setAppsum(RequestUtils.getDouble(request, "appsum"));
+		borrow.setStatus(RequestUtils.getInt(request, "status"));
+		borrow.setProcessname(request.getParameter("processname"));
+		borrow.setProcessinstanceid(RequestUtils.getLong(request,
+				"processinstanceid"));
+		borrow.setWfstatus(RequestUtils.getLong(request, "wfstatus"));
+		borrow.setCreateBy(request.getParameter("createBy"));
+		borrow.setCreateDate(RequestUtils.getDate(request, "createDate"));
+		borrow.setUpdateDate(RequestUtils.getDate(request, "updateDate"));
+		borrow.setUpdateBy(request.getParameter("updateBy"));
+
+		borrowService.save(borrow);
+
+		return this.list(request, modelMap);
+	}
+
+	@RequestMapping("/view")
+	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
+		User user = RequestUtils.getUser(request);
+		String actorId = user.getActorId();
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		params.remove("status");
+		params.remove("wfStatus");
+
+		Long borrowid = RequestUtils.getLong(request, "borrowid");
+
+		// borrow
+		Borrow borrow = borrowService.getBorrow(borrowid);
+		if (borrow == null) {
+			borrow = new Borrow();
+			borrow.setStatus(-1);// 无效
+			borrow.setAppdate(new Date());
+			borrow.setCreateBy(actorId);
+			borrow.setCreateDate(new Date());
+			borrowService.save(borrow);
+		}
+		Tools.populate(borrow, params);
+
+		// address
+		List<Borrowadderss> addresslist = borrowadderssService
+				.getBorrowadderssByParentId(borrowid);
+		if (addresslist == null || addresslist.size() == 0) {
+			addresslist = new ArrayList<Borrowadderss>();
+			Borrowadderss borrowadderss = new Borrowadderss();
+			addresslist.add(borrowadderss);
+		}
+
+		// money
+		Double totelPrice = 0D;
+		List<Borrowmoney> moneylist = borrowmoneyService
+				.getBorrowmoneyByParentId(borrowid);
+		if (moneylist == null || moneylist.size() == 0) {
+			Borrowmoney borrowmoney1 = new Borrowmoney();
+			borrowmoney1.setFeename("1");
+			Borrowmoney borrowmoney2 = new Borrowmoney();
+			borrowmoney2.setFeename("2");
+			Borrowmoney borrowmoney3 = new Borrowmoney();
+			borrowmoney3.setFeename("3");
+			Borrowmoney borrowmoney4 = new Borrowmoney();
+			borrowmoney4.setFeename("0");
+			moneylist = new ArrayList<Borrowmoney>();
+			moneylist.add(borrowmoney1);
+			moneylist.add(borrowmoney2);
+			moneylist.add(borrowmoney3);
+			moneylist.add(borrowmoney4);
+		} else {
+			for (Borrowmoney borrowmoney : moneylist) {
+				totelPrice += borrowmoney.getFeesum();
+			}
+		}
+
+		request.setAttribute("borrow", borrow);
+		request.setAttribute("addresslist", addresslist);
+		request.setAttribute("moneylist", moneylist);
+		request.setAttribute("totelPrice", totelPrice);
+
+		return new ModelAndView("/oa/borrow/view", modelMap);
 	}
 }

@@ -58,22 +58,10 @@ public class ReimbursementSearchController {
 
 	protected ReimbursementService reimbursementService;
 
-	private SysDepartmentService sysDepartmentService;
+	protected SysDepartmentService sysDepartmentService;
 
 	public ReimbursementSearchController() {
 
-	}
-
-	@javax.annotation.Resource
-	public void setSysDepartmentService(
-			SysDepartmentService sysDepartmentService) {
-		this.sysDepartmentService = sysDepartmentService;
-	}
-
-	@javax.annotation.Resource
-	public void setReimbursementService(
-			ReimbursementService reimbursementService) {
-		this.reimbursementService = reimbursementService;
 	}
 
 	@RequestMapping("/init")
@@ -84,10 +72,10 @@ public class ReimbursementSearchController {
 		Reimbursement reimbursement = new Reimbursement();
 		int areaRole = Integer.parseInt(request.getParameter("areaRole"));
 		if (areaRole == 0) {
-			// 根据用户部门id 获取整个部门的对象（HZ01）
+			// 根据用户部门id 获取整个部门的对象（GZ01）
 			SysDepartment curdept = sysDepartmentService.findById(user
 					.getDeptId());
-			// 根据部门CODE(例如HZ01)截取前2位 作为地区
+			// 根据部门CODE(例如GZ01)截取前2位 作为地区
 			String curAreadeptCode = curdept.getCode().substring(0, 2);
 			reimbursement.setArea(curAreadeptCode);
 		}
@@ -113,10 +101,10 @@ public class ReimbursementSearchController {
 		int areaRole = Integer.parseInt(request.getParameter("areaRole"));
 		User user = RequestUtils.getUser(request);
 		if (areaRole == 0) {
-			// 根据用户部门id 获取整个部门的对象（HZ01）
+			// 根据用户部门id 获取整个部门的对象（GZ01）
 			SysDepartment curdept = sysDepartmentService.findById(user
 					.getDeptId());
-			// 根据部门CODE(例如HZ01)截取前2位 作为地区
+			// 根据部门CODE(例如GZ01)截取前2位 作为地区
 			String curAreadeptCode = curdept.getCode().substring(0, 2);
 			query.setArea(curAreadeptCode);
 		} else {
@@ -227,5 +215,17 @@ public class ReimbursementSearchController {
 		}
 
 		return new ModelAndView("/oa/reimbursement/search_list", modelMap);
+	}
+
+	@javax.annotation.Resource
+	public void setReimbursementService(
+			ReimbursementService reimbursementService) {
+		this.reimbursementService = reimbursementService;
+	}
+
+	@javax.annotation.Resource
+	public void setSysDepartmentService(
+			SysDepartmentService sysDepartmentService) {
+		this.sysDepartmentService = sysDepartmentService;
 	}
 }

@@ -54,73 +54,109 @@ public class LeaveController {
 
 	protected LeaveService leaveService;
 
-	private AttachmentService attachmentService;
+	protected AttachmentService attachmentService;
 
 	public LeaveController() {
 
 	}
 
-	@javax.annotation.Resource
-	public void setLeaveService(LeaveService leaveService) {
-		this.leaveService = leaveService;
-	}
-
-	@javax.annotation.Resource
-	public void setAttachmentService(AttachmentService attachmentService) {
-		this.attachmentService = attachmentService;
-	}
-
-	@ResponseBody
-	@RequestMapping("/saveLeave")
-	public byte[] saveLeave(HttpServletRequest request) {
+	private boolean completeTask(Leave leave, int flag,
+			HttpServletRequest request) {
 		User user = RequestUtils.getUser(request);
 		String actorId = user.getActorId();
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		Leave leave = new Leave();
-		try {
-			Tools.populate(leave, params);
-			leave.setLeaveid(RequestUtils.getLong(request, "leaveid"));
-			leave.setArea(request.getParameter("area"));
-			leave.setCompany(request.getParameter("company"));
-			leave.setDept(request.getParameter("dept"));
-			leave.setAppuser(request.getParameter("appuser"));
-			leave.setPost(request.getParameter("post"));
-			leave.setAppdate(RequestUtils.getDate(request, "appdate"));
-			leave.setType(RequestUtils.getInt(request, "type"));
-			leave.setStartdate(RequestUtils.getDate(request, "startdate"));
-			leave.setStarttime(RequestUtils.getInt(request, "starttime"));
-			leave.setEnddate(RequestUtils.getDate(request, "enddate"));
-			leave.setEndtime(RequestUtils.getInt(request, "endtime"));
-			leave.setLeavesum(RequestUtils.getDouble(request, "leavesum"));
-			leave.setContent(request.getParameter("content"));
-			leave.setRemark(request.getParameter("remark"));
-			if (RequestUtils.getLong(request, "leaveid") == 0L) {
-				leave.setLeaveid(0L);
-				leave.setStatus(0);
-				leave.setCreateDate(new Date());
-				leave.setCreateBy(actorId);
-			} else {
-				leave.setLeaveid(RequestUtils.getLong(request, "leaveid"));
-				leave.setUpdateDate(new Date());
-				leave.setUpdateBy(actorId);
-			}
-			this.leaveService.save(leave);
+		String processName = "LeaveProcess";
 
-			attachmentService.updateByReferTypeAndCreateId(leave.getLeaveid(),
-					13, user.getId());
+		ProcessContext ctx = new ProcessContext();
+		ctx.setRowId(leave.getLeaveid());
+		ctx.setActorId(actorId);
+		ctx.setProcessName(processName);
+		String opinion = request.getParameter("approveOpinion");
+		ctx.setOpinion(opinion);// 审批意见
 
-			Map<String, Object> jsonMap = new HashMap<String, Object>();
-			jsonMap.put("statusCode", Integer.valueOf(200));
-			jsonMap.put("message", ViewProperties.getString("res_op_ok"));
-			jsonMap.put("id", leave.getLeaveid());
-			JSONObject object = new JSONObject(jsonMap);
-			return object.toString().getBytes("UTF-8");
+		/**
+		 * 工作流控制参数
+		 */
+		Collection<DataField> datafields = new ArrayList<DataField>();
 
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			logger.error(ex);
+		DataField datafield1 = new DataField();
+		datafield1.setName("rowId");
+		datafield1.setValue(leave.getLeaveid());
+
+		// 集团人力资源部
+		SysDepartment sysDepartment1 = BaseDataManager.getInstance()
+				.getSysDepartmentService().findByCode("JT03");
+		DataField datafield2 = new DataField();
+		datafield2.setName("deptId01");
+		datafield2.setValue(sysDepartment1.getId());
+
+		// 用户职位属性，是否是部门经理以下
+		SysUser syuser = BaseDataManager.getInstance().getSysUserService()
+				.findByAccount(leave.getAppuser());
+		int heapShipType = Integer.parseInt(BaseDataManager.getInstance()
+				.getValue(syuser.getHeadship(), "UserHeadship").getValue());
+		DataField datafield3 = new DataField();
+		datafield3.setName("heapShipType");
+		datafield3.setValue(heapShipType);
+
+		// 部门经理
+		DataField datafield4 = new DataField();
+		datafield4.setName("deptId02");
+		datafield4.setValue(syuser.getDeptId());
+
+		// 集团领导（集团副总）
+		SysDepartment sysdepartMem2 = BaseDataManager.getInstance()
+				.getSysDepartmentService().findByCode("JT");
+		DataField datafield5 = new DataField();
+		datafield5.setName("deptId03");
+		datafield5.setValue(sysdepartMem2.getId());
+
+		// 行政财务
+		SysDepartment sysdepartMemTemp = BaseDataManager.getInstance()
+				.getSysDepartmentService().findById(syuser.getDeptId());
+		SysDepartment sysdepartMem3 = BaseDataManager.getInstance()
+				.getSysDepartmentService()
+				.findByCode(sysdepartMemTemp.getCode().substring(0, 2) + "06");
+		DataField datafield6 = new DataField();
+		datafield6.setName("deptId04");
+		datafield6.setValue(sysdepartMem3.getId());
+
+		DataField datafield7 = new DataField();
+		datafield7.setName("isAgree");
+		if (flag == 0) {
+			datafield7.setValue("true");
+		} else {
+			datafield7.setValue("false");
 		}
-		return ResponseUtils.responseJsonResult(false);
+
+		datafields.add(datafield1);
+		datafields.add(datafield2);
+		datafields.add(datafield3);
+		datafields.add(datafield4);
+		datafields.add(datafield5);
+		datafields.add(datafield6);
+		datafields.add(datafield7);
+		ctx.setDataFields(datafields);
+
+		Long processInstanceId = null;
+		boolean isOK = false;
+
+		if (leave.getProcessinstanceid() != null && leave.getWfstatus() != 9999
+				&& leave.getWfstatus() != null) {
+			processInstanceId = leave.getProcessinstanceid();
+			ctx.setProcessInstanceId(processInstanceId);
+			isOK = ProcessContainer.getContainer().completeTask(ctx);
+			logger.info("workflow 中");
+		} else {
+			processInstanceId = ProcessContainer.getContainer().startProcess(
+					ctx);
+			logger.info("processInstanceId=" + processInstanceId);
+
+			isOK = true;
+			logger.info("workflow start");
+
+		}
+		return isOK;
+
 	}
 
 	@ResponseBody
@@ -235,458 +271,6 @@ public class LeaveController {
 		Leave leave = leaveService.getLeave(leaveid);
 		JSONObject rowJSON = leave.toJsonObject();
 		return rowJSON.toJSONString().getBytes("UTF-8");
-	}
-
-	@RequestMapping("/view")
-	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
-		Leave leave = leaveService.getLeave(RequestUtils.getLong(request,
-				"leaveid"));
-		request.setAttribute("leave", leave);
-		JSONObject rowJSON = leave.toJsonObject();
-		request.setAttribute("x_json", rowJSON.toJSONString());
-
-		String view = request.getParameter("view");
-		if (StringUtils.isNotEmpty(view)) {
-			return new ModelAndView(view);
-		}
-
-		String x_view = ViewProperties.getString("leave.view");
-		if (StringUtils.isNotEmpty(x_view)) {
-			return new ModelAndView(x_view);
-		}
-
-		return new ModelAndView("/oa/leave/view");
-	}
-
-	@RequestMapping("/query")
-	public ModelAndView query(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
-		String view = request.getParameter("view");
-		if (StringUtils.isNotEmpty(view)) {
-			return new ModelAndView(view, modelMap);
-		}
-		String x_view = ViewProperties.getString("leave.query");
-		if (StringUtils.isNotEmpty(x_view)) {
-			return new ModelAndView(x_view, modelMap);
-		}
-		return new ModelAndView("/oa/leave/query", modelMap);
-	}
-
-	@RequestMapping("/json")
-	@ResponseBody
-	public byte[] json(HttpServletRequest request, ModelMap modelMap)
-			throws IOException {
-		LoginContext loginContext = RequestUtils.getLoginContext(request);
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		LeaveQuery query = new LeaveQuery();
-		Tools.populate(query, params);
-		query.deleteFlag(0);
-		query.setActorId(loginContext.getActorId());
-		query.setLoginContext(loginContext);
-		query.setCreateByAndApply(loginContext.getActorId());
-
-		if (request.getParameter("rstatus") != null
-				&& !request.getParameter("rstatus").equals("")) {
-			query.setStatus(RequestUtils.getInteger(request, "rstatus"));
-			query.setAppuser(loginContext.getActorId());
-		}
-
-		String gridType = ParamUtils.getString(params, "gridType");
-		if (gridType == null) {
-			gridType = "easyui";
-		}
-		int start = 0;
-		int limit = 10;
-		String orderName = null;
-		String order = null;
-
-		int pageNo = ParamUtils.getInt(params, "page");
-		limit = ParamUtils.getInt(params, "rows");
-		start = (pageNo - 1) * limit;
-		orderName = ParamUtils.getString(params, "sortName");
-		order = ParamUtils.getString(params, "sortOrder");
-
-		if (start < 0) {
-			start = 0;
-		}
-
-		if (limit <= 0) {
-			limit = PageResult.DEFAULT_PAGE_SIZE;
-		}
-
-		JSONObject result = new JSONObject();
-		int total = leaveService.getLeaveCountByQueryCriteria(query);
-		if (total > 0) {
-			result.put("total", total);
-			result.put("totalCount", total);
-			result.put("totalRecords", total);
-			result.put("start", start);
-			result.put("startIndex", start);
-			result.put("limit", limit);
-			result.put("pageSize", limit);
-
-			if (StringUtils.isNotEmpty(orderName)) {
-				query.setSortOrder(orderName);
-				if (StringUtils.equals(order, "desc")) {
-					query.setSortOrder(" desc ");
-				}
-			}
-
-			List<Leave> list = leaveService.getLeavesByQueryCriteria(start,
-					limit, query);
-
-			if (list != null && !list.isEmpty()) {
-				JSONArray rowsJSON = new JSONArray();
-
-				result.put("rows", rowsJSON);
-
-				for (Leave leave : list) {
-					JSONObject rowJSON = new JSONObject();
-
-					rowJSON.put("leaveid", leave.getLeaveid());
-					rowJSON.put("_leaveid_", leave.getLeaveid());
-					rowJSON.put("_oleaveid_", leave.getLeaveid());
-					if (leave.getArea() != null
-							&& BaseDataManager.getInstance().getValue(
-									leave.getArea(), "area") != null) {
-						rowJSON.put("area", BaseDataManager.getInstance()
-								.getValue(leave.getArea(), "area").getName());
-					}
-					if (leave.getCompany() != null) {
-						rowJSON.put("company", leave.getCompany());
-					}
-					if (leave.getDept() != null) {
-						rowJSON.put("dept", BaseDataManager.getInstance()
-								.getStringValue(leave.getDept(), "SYS_DEPTS"));
-					}
-					if (leave.getAppuser() != null) {
-						rowJSON.put(
-								"appuser",
-								BaseDataManager.getInstance().getStringValue(
-										leave.getAppuser(), "SYS_USERS"));
-					}
-					if (leave.getPost() != null) {
-						rowJSON.put("post", leave.getPost());
-					}
-					if (leave.getAppdate() != null) {
-						rowJSON.put("appdate",
-								DateUtils.getDate(leave.getAppdate()));
-						rowJSON.put("appdate_date",
-								DateUtils.getDate(leave.getAppdate()));
-						rowJSON.put("appdate_datetime",
-								DateUtils.getDateTime(leave.getAppdate()));
-					}
-					rowJSON.put(
-							"type",
-							BaseDataManager.getInstance()
-									.getValue(leave.getType() + "", "QJLX")
-									.getName());
-					if (leave.getContent() != null) {
-						rowJSON.put("content", leave.getContent());
-					}
-					if (leave.getStartdate() != null) {
-						rowJSON.put("startdate",
-								DateUtils.getDate(leave.getStartdate()));
-						rowJSON.put("startdate_date",
-								DateUtils.getDate(leave.getStartdate()));
-						rowJSON.put("startdate_datetime",
-								DateUtils.getDateTime(leave.getStartdate()));
-					}
-					rowJSON.put("starttime", leave.getStarttime());
-					if (leave.getEnddate() != null) {
-						rowJSON.put("enddate",
-								DateUtils.getDate(leave.getEnddate()));
-						rowJSON.put("enddate_date",
-								DateUtils.getDate(leave.getEnddate()));
-						rowJSON.put("enddate_datetime",
-								DateUtils.getDateTime(leave.getEnddate()));
-					}
-					rowJSON.put("endtime", leave.getEndtime());
-					rowJSON.put("leavesum", leave.getLeavesum() * 8);
-					if (leave.getRemark() != null) {
-						rowJSON.put("remark", leave.getRemark());
-					}
-					rowJSON.put("status", BaseDataManager.getInstance()
-							.getValue(leave.getStatus() + "", "followStatus")
-							.getName());
-					if (leave.getProcessname() != null) {
-						rowJSON.put("processname", leave.getProcessname());
-					}
-					rowJSON.put("processinstanceid",
-							leave.getProcessinstanceid());
-					rowJSON.put("wfstatus", leave.getWfstatus());
-
-					rowJSON.put("leaveid", leave.getLeaveid());
-					rowJSON.put("startIndex", ++start);
-					rowsJSON.add(rowJSON);
-				}
-
-			}
-		} else {
-			JSONArray rowsJSON = new JSONArray();
-			result.put("rows", rowsJSON);
-			result.put("total", total);
-		}
-		return result.toJSONString().getBytes("UTF-8");
-	}
-
-	@RequestMapping
-	public ModelAndView list(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
-
-		if (request.getParameter("status") != null
-				&& !request.getParameter("status").equals("")) {
-			request.setAttribute("status", request.getParameter("status"));
-		}
-
-		String x_query = request.getParameter("x_query");
-		if (StringUtils.equals(x_query, "true")) {
-			Map<String, Object> paramMap = RequestUtils
-					.getParameterMap(request);
-			String x_complex_query = JsonUtils.encode(paramMap);
-			x_complex_query = RequestUtils.encodeString(x_complex_query);
-			request.setAttribute("x_complex_query", x_complex_query);
-		} else {
-			request.setAttribute("x_complex_query", "");
-		}
-		String view = request.getParameter("view");
-		if (StringUtils.isNotEmpty(view)) {
-			return new ModelAndView(view, modelMap);
-		}
-
-		return new ModelAndView("/oa/leave/leave_list", modelMap);
-	}
-
-	@ResponseBody
-	@RequestMapping("/submit")
-	public byte[] submit(HttpServletRequest request, ModelMap modelMap) {
-		boolean returnFlag = false;
-		Long leaveid = RequestUtils.getLong(request, "leaveid");
-		if (leaveid != 0L) {
-			Leave leave = leaveService.getLeave(leaveid);
-			if (leave.getStatus() == 0 || leave.getStatus() == 3) {
-				returnFlag = startProcess(leave, request);
-			}
-		}
-		if (returnFlag) {
-			return ResponseUtils.responseJsonResult(true);
-		} else {
-			return ResponseUtils.responseJsonResult(false);
-		}
-
-	}
-
-	private boolean completeTask(Leave leave, int flag,
-			HttpServletRequest request) {
-		User user = RequestUtils.getUser(request);
-		String actorId = user.getActorId();
-		String processName = "LeaveProcess";
-
-		ProcessContext ctx = new ProcessContext();
-		ctx.setRowId(leave.getLeaveid());
-		ctx.setActorId(actorId);
-		ctx.setProcessName(processName);
-		String opinion = request.getParameter("approveOpinion");
-		ctx.setOpinion(opinion);// 审批意见
-
-		/**
-		 * 工作流控制参数
-		 */
-		Collection<DataField> datafields = new ArrayList<DataField>();
-
-		DataField datafield1 = new DataField();
-		datafield1.setName("rowId");
-		datafield1.setValue(leave.getLeaveid());
-
-		// 集团人力资源部
-		SysDepartment sysDepartment1 = BaseDataManager.getInstance()
-				.getSysDepartmentService().findByCode("JT03");
-		DataField datafield2 = new DataField();
-		datafield2.setName("deptId01");
-		datafield2.setValue(sysDepartment1.getId());
-
-		// 用户职位属性，是否是部门经理以下
-		SysUser syuser = BaseDataManager.getInstance().getSysUserService()
-				.findByAccount(leave.getAppuser());
-		int heapShipType = Integer.parseInt(BaseDataManager.getInstance()
-				.getValue(syuser.getHeadship(), "UserHeadship").getValue());
-		DataField datafield3 = new DataField();
-		datafield3.setName("heapShipType");
-		datafield3.setValue(heapShipType);
-
-		// 部门经理
-		DataField datafield4 = new DataField();
-		datafield4.setName("deptId02");
-		datafield4.setValue(syuser.getDeptId());
-
-		// 集团领导（集团副总）
-		SysDepartment sysdepartMem2 = BaseDataManager.getInstance()
-				.getSysDepartmentService().findByCode("JT");
-		DataField datafield5 = new DataField();
-		datafield5.setName("deptId03");
-		datafield5.setValue(sysdepartMem2.getId());
-
-		// 行政财务
-		SysDepartment sysdepartMemTemp = BaseDataManager.getInstance()
-				.getSysDepartmentService().findById(syuser.getDeptId());
-		SysDepartment sysdepartMem3 = BaseDataManager.getInstance()
-				.getSysDepartmentService()
-				.findByCode(sysdepartMemTemp.getCode().substring(0, 2) + "06");
-		DataField datafield6 = new DataField();
-		datafield6.setName("deptId04");
-		datafield6.setValue(sysdepartMem3.getId());
-
-		DataField datafield7 = new DataField();
-		datafield7.setName("isAgree");
-		if (flag == 0) {
-			datafield7.setValue("true");
-		} else {
-			datafield7.setValue("false");
-		}
-
-		datafields.add(datafield1);
-		datafields.add(datafield2);
-		datafields.add(datafield3);
-		datafields.add(datafield4);
-		datafields.add(datafield5);
-		datafields.add(datafield6);
-		datafields.add(datafield7);
-		ctx.setDataFields(datafields);
-
-		Long processInstanceId = null;
-		boolean isOK = false;
-
-		if (leave.getProcessinstanceid() != null && leave.getWfstatus() != 9999
-				&& leave.getWfstatus() != null) {
-			processInstanceId = leave.getProcessinstanceid();
-			ctx.setProcessInstanceId(processInstanceId);
-			isOK = ProcessContainer.getContainer().completeTask(ctx);
-			logger.info("workflow 中");
-		} else {
-			processInstanceId = ProcessContainer.getContainer().startProcess(
-					ctx);
-			logger.info("processInstanceId=" + processInstanceId);
-
-			isOK = true;
-			logger.info("workflow start");
-
-		}
-		return isOK;
-
-	}
-
-	private boolean startProcess(Leave leave, HttpServletRequest request) {
-		String processName = "LeaveProcess";
-
-		ProcessContext ctx = new ProcessContext();
-		ctx.setRowId(leave.getLeaveid());
-		ctx.setActorId(leave.getAppuser());
-		ctx.setProcessName(processName);
-		/**
-		 * 工作流控制参数
-		 */
-		Collection<DataField> datafields = new ArrayList<DataField>();
-
-		DataField datafield1 = new DataField();
-		datafield1.setName("rowId");
-		datafield1.setValue(leave.getLeaveid());
-
-		// 集团人力资源部
-		SysDepartment sysDepartment1 = BaseDataManager.getInstance()
-				.getSysDepartmentService().findByCode("JT03");
-		DataField datafield2 = new DataField();
-		datafield2.setName("deptId01");
-		datafield2.setValue(sysDepartment1.getId());
-
-		// 用户职位属性，是否是部门经理以下
-		SysUser syuser = BaseDataManager.getInstance().getSysUserService()
-				.findByAccount(leave.getAppuser());
-		int heapShipType = Integer.parseInt(BaseDataManager.getInstance()
-				.getValue(syuser.getHeadship(), "UserHeadship").getValue());
-		DataField datafield3 = new DataField();
-		datafield3.setName("heapShipType");
-		datafield3.setValue(heapShipType);
-
-		// 部门经理
-		DataField datafield4 = new DataField();
-		datafield4.setName("deptId02");
-		datafield4.setValue(syuser.getDeptId());
-
-		// 集团领导（集团副总）
-		SysDepartment sysdepartMem2 = BaseDataManager.getInstance()
-				.getSysDepartmentService().findByCode("JT");
-		DataField datafield5 = new DataField();
-		datafield5.setName("deptId03");
-		datafield5.setValue(sysdepartMem2.getId());
-
-		// 行政财务
-		SysDepartment sysdepartMemTemp = BaseDataManager.getInstance()
-				.getSysDepartmentService().findById(syuser.getDeptId());
-		SysDepartment sysdepartMem3 = BaseDataManager.getInstance()
-				.getSysDepartmentService()
-				.findByCode(sysdepartMemTemp.getCode().substring(0, 2) + "06");
-		DataField datafield6 = new DataField();
-		datafield6.setName("deptId04");
-		datafield6.setValue(sysdepartMem3.getId());
-
-		DataField datafield7 = new DataField();
-		datafield7.setName("isAgree");
-		datafield7.setValue("true");
-
-		datafields.add(datafield1);
-		datafields.add(datafield2);
-		datafields.add(datafield3);
-		datafields.add(datafield4);
-		datafields.add(datafield5);
-		datafields.add(datafield6);
-		datafields.add(datafield7);
-		ctx.setDataFields(datafields);
-
-		Long processInstanceId = null;
-		boolean isOK = false;
-
-		if (leave.getProcessinstanceid() != null && leave.getWfstatus() != 9999
-				&& leave.getWfstatus() != null) {
-			processInstanceId = leave.getProcessinstanceid();
-			ctx.setProcessInstanceId(processInstanceId);
-			isOK = ProcessContainer.getContainer().completeTask(ctx);
-			logger.info("workflow 中");
-		} else {
-			processInstanceId = ProcessContainer.getContainer().startProcess(
-					ctx);
-			logger.info("processInstanceId=" + processInstanceId);
-
-			isOK = true;
-			logger.info("workflow start");
-
-		}
-		return isOK;
-	}
-
-	@ResponseBody
-	@RequestMapping("/rollbackData")
-	public byte[] rollbackData(HttpServletRequest request, ModelMap modelMap) {
-		boolean returnFlag = false;
-		Long leaveid = RequestUtils.getLong(request, "leaveid");
-		if (leaveid != 0L) {
-			Leave leave = leaveService.getLeave(leaveid);
-			// 添加提交业务逻辑
-			if (leave.getStatus() == 1) {
-				if (leave.getProcessinstanceid() != null) {
-					returnFlag = completeTask(leave, 1, request);
-				} else {
-					returnFlag = startProcess(leave, request);
-				}
-			}
-		}
-
-		if (returnFlag) {
-			return ResponseUtils.responseJsonResult(true);
-		} else {
-			return ResponseUtils.responseJsonResult(false);
-		}
-
 	}
 
 	@RequestMapping("/getReviewLeave")
@@ -858,54 +442,162 @@ public class LeaveController {
 		return result.toJSONString().getBytes("UTF-8");
 	}
 
+	@RequestMapping("/json")
 	@ResponseBody
-	@RequestMapping("/submitData")
-	public byte[] submitData(HttpServletRequest request, ModelMap modelMap) {
-		Long leaveid = RequestUtils.getLong(request, "leaveid");
-		String leaveids = request.getParameter("leaveids");
-		boolean returnFlag = true;
+	public byte[] json(HttpServletRequest request, ModelMap modelMap)
+			throws IOException {
+		LoginContext loginContext = RequestUtils.getLoginContext(request);
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		LeaveQuery query = new LeaveQuery();
+		Tools.populate(query, params);
+		query.deleteFlag(0);
+		query.setActorId(loginContext.getActorId());
+		query.setLoginContext(loginContext);
+		query.setCreateByAndApply(loginContext.getActorId());
 
-		int passFlag = 0;
-		if (request.getParameter("passFlag") != null
-				&& request.getParameter("passFlag").equals("1")) {
-			passFlag = 1;
+		if (request.getParameter("rstatus") != null
+				&& !request.getParameter("rstatus").equals("")) {
+			query.setStatus(RequestUtils.getInteger(request, "rstatus"));
+			query.setAppuser(loginContext.getActorId());
 		}
-		if (StringUtils.isNotEmpty(leaveids)) {
-			StringTokenizer token = new StringTokenizer(leaveids, ",");
-			while (token.hasMoreTokens()) {
-				String x = token.nextToken();
-				if (StringUtils.isNotEmpty(x)) {
-					Leave leave = leaveService.getLeave(Long.valueOf(x));
-					// 添加提交业务逻辑
-					if (leave.getStatus() == 1) {
-						if (leave.getProcessinstanceid() != null
-								&& leave.getProcessinstanceid() != 0L) {
-							returnFlag = returnFlag
-									&& completeTask(leave, passFlag, request);
-						} else {
-							returnFlag = returnFlag
-									&& startProcess(leave, request);
-						}
+
+		String gridType = ParamUtils.getString(params, "gridType");
+		if (gridType == null) {
+			gridType = "easyui";
+		}
+		int start = 0;
+		int limit = 10;
+		String orderName = null;
+		String order = null;
+
+		int pageNo = ParamUtils.getInt(params, "page");
+		limit = ParamUtils.getInt(params, "rows");
+		start = (pageNo - 1) * limit;
+		orderName = ParamUtils.getString(params, "sortName");
+		order = ParamUtils.getString(params, "sortOrder");
+
+		if (start < 0) {
+			start = 0;
+		}
+
+		if (limit <= 0) {
+			limit = PageResult.DEFAULT_PAGE_SIZE;
+		}
+
+		JSONObject result = new JSONObject();
+		int total = leaveService.getLeaveCountByQueryCriteria(query);
+		if (total > 0) {
+			result.put("total", total);
+			result.put("totalCount", total);
+			result.put("totalRecords", total);
+			result.put("start", start);
+			result.put("startIndex", start);
+			result.put("limit", limit);
+			result.put("pageSize", limit);
+
+			if (StringUtils.isNotEmpty(orderName)) {
+				query.setSortOrder(orderName);
+				if (StringUtils.equals(order, "desc")) {
+					query.setSortOrder(" desc ");
+				}
+			}
+
+			List<Leave> list = leaveService.getLeavesByQueryCriteria(start,
+					limit, query);
+
+			if (list != null && !list.isEmpty()) {
+				JSONArray rowsJSON = new JSONArray();
+
+				result.put("rows", rowsJSON);
+
+				for (Leave leave : list) {
+					JSONObject rowJSON = new JSONObject();
+
+					rowJSON.put("leaveid", leave.getLeaveid());
+					rowJSON.put("_leaveid_", leave.getLeaveid());
+					rowJSON.put("_oleaveid_", leave.getLeaveid());
+					if (leave.getArea() != null
+							&& BaseDataManager.getInstance().getValue(
+									leave.getArea(), "area") != null) {
+						rowJSON.put("area", BaseDataManager.getInstance()
+								.getValue(leave.getArea(), "area").getName());
 					}
+					if (leave.getCompany() != null) {
+						rowJSON.put("company", leave.getCompany());
+					}
+					if (leave.getDept() != null) {
+						rowJSON.put("dept", BaseDataManager.getInstance()
+								.getStringValue(leave.getDept(), "SYS_DEPTS"));
+					}
+					if (leave.getAppuser() != null) {
+						rowJSON.put(
+								"appuser",
+								BaseDataManager.getInstance().getStringValue(
+										leave.getAppuser(), "SYS_USERS"));
+					}
+					if (leave.getPost() != null) {
+						rowJSON.put("post", leave.getPost());
+					}
+					if (leave.getAppdate() != null) {
+						rowJSON.put("appdate",
+								DateUtils.getDate(leave.getAppdate()));
+						rowJSON.put("appdate_date",
+								DateUtils.getDate(leave.getAppdate()));
+						rowJSON.put("appdate_datetime",
+								DateUtils.getDateTime(leave.getAppdate()));
+					}
+					rowJSON.put(
+							"type",
+							BaseDataManager.getInstance()
+									.getValue(leave.getType() + "", "QJLX")
+									.getName());
+					if (leave.getContent() != null) {
+						rowJSON.put("content", leave.getContent());
+					}
+					if (leave.getStartdate() != null) {
+						rowJSON.put("startdate",
+								DateUtils.getDate(leave.getStartdate()));
+						rowJSON.put("startdate_date",
+								DateUtils.getDate(leave.getStartdate()));
+						rowJSON.put("startdate_datetime",
+								DateUtils.getDateTime(leave.getStartdate()));
+					}
+					rowJSON.put("starttime", leave.getStarttime());
+					if (leave.getEnddate() != null) {
+						rowJSON.put("enddate",
+								DateUtils.getDate(leave.getEnddate()));
+						rowJSON.put("enddate_date",
+								DateUtils.getDate(leave.getEnddate()));
+						rowJSON.put("enddate_datetime",
+								DateUtils.getDateTime(leave.getEnddate()));
+					}
+					rowJSON.put("endtime", leave.getEndtime());
+					rowJSON.put("leavesum", leave.getLeavesum() * 8);
+					if (leave.getRemark() != null) {
+						rowJSON.put("remark", leave.getRemark());
+					}
+					rowJSON.put("status", BaseDataManager.getInstance()
+							.getValue(leave.getStatus() + "", "followStatus")
+							.getName());
+					if (leave.getProcessname() != null) {
+						rowJSON.put("processname", leave.getProcessname());
+					}
+					rowJSON.put("processinstanceid",
+							leave.getProcessinstanceid());
+					rowJSON.put("wfstatus", leave.getWfstatus());
+
+					rowJSON.put("leaveid", leave.getLeaveid());
+					rowJSON.put("startIndex", ++start);
+					rowsJSON.add(rowJSON);
 				}
+
 			}
-		} else if (leaveid != null) {
-			Leave leave = leaveService.getLeave(Long.valueOf(leaveid));
-			// 添加提交业务逻辑
-			if (leave.getStatus() == 1) {
-				if (leave.getProcessinstanceid() != null
-						&& leave.getProcessinstanceid() != 0) {
-					returnFlag = completeTask(leave, 0, request);
-				} else {
-					returnFlag = startProcess(leave, request);
-				}
-			}
-		}
-		if (returnFlag) {
-			return ResponseUtils.responseJsonResult(true);
 		} else {
-			return ResponseUtils.responseJsonResult(false);
+			JSONArray rowsJSON = new JSONArray();
+			result.put("rows", rowsJSON);
+			result.put("total", total);
 		}
+		return result.toJSONString().getBytes("UTF-8");
 	}
 
 	@ResponseBody
@@ -928,6 +620,47 @@ public class LeaveController {
 			return new ModelAndView(view, modelMap);
 		}
 		return new ModelAndView("/oa/leave/leave_review_list", modelMap);
+	}
+
+	@RequestMapping
+	public ModelAndView list(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+
+		if (request.getParameter("status") != null
+				&& !request.getParameter("status").equals("")) {
+			request.setAttribute("status", request.getParameter("status"));
+		}
+
+		String x_query = request.getParameter("x_query");
+		if (StringUtils.equals(x_query, "true")) {
+			Map<String, Object> paramMap = RequestUtils
+					.getParameterMap(request);
+			String x_complex_query = JsonUtils.encode(paramMap);
+			x_complex_query = RequestUtils.encodeString(x_complex_query);
+			request.setAttribute("x_complex_query", x_complex_query);
+		} else {
+			request.setAttribute("x_complex_query", "");
+		}
+		String view = request.getParameter("view");
+		if (StringUtils.isNotEmpty(view)) {
+			return new ModelAndView(view, modelMap);
+		}
+
+		return new ModelAndView("/oa/leave/leave_list", modelMap);
+	}
+
+	@RequestMapping("/query")
+	public ModelAndView query(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		String view = request.getParameter("view");
+		if (StringUtils.isNotEmpty(view)) {
+			return new ModelAndView(view, modelMap);
+		}
+		String x_view = ViewProperties.getString("leave.query");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+		return new ModelAndView("/oa/leave/query", modelMap);
 	}
 
 	@RequestMapping("/review")
@@ -956,26 +689,82 @@ public class LeaveController {
 		return new ModelAndView("/oa/leave/leave_review", modelMap);
 	}
 
-	@RequestMapping("/searchList")
-	public ModelAndView searchList(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
-		String x_query = request.getParameter("x_query");
-		request.setAttribute("areaRole", request.getAttribute("areaRole"));
-		if (StringUtils.equals(x_query, "true")) {
-			Map<String, Object> paramMap = RequestUtils
-					.getParameterMap(request);
-			String x_complex_query = JsonUtils.encode(paramMap);
-			x_complex_query = RequestUtils.encodeString(x_complex_query);
-			request.setAttribute("x_complex_query", x_complex_query);
-		} else {
-			request.setAttribute("x_complex_query", "");
-		}
-		String view = request.getParameter("view");
-		if (StringUtils.isNotEmpty(view)) {
-			return new ModelAndView(view, modelMap);
+	@ResponseBody
+	@RequestMapping("/rollbackData")
+	public byte[] rollbackData(HttpServletRequest request, ModelMap modelMap) {
+		boolean returnFlag = false;
+		Long leaveid = RequestUtils.getLong(request, "leaveid");
+		if (leaveid != 0L) {
+			Leave leave = leaveService.getLeave(leaveid);
+			// 添加提交业务逻辑
+			if (leave.getStatus() == 1) {
+				if (leave.getProcessinstanceid() != null) {
+					returnFlag = completeTask(leave, 1, request);
+				} else {
+					returnFlag = startProcess(leave, request);
+				}
+			}
 		}
 
-		return new ModelAndView("/oa/leave/leave_search_list", modelMap);
+		if (returnFlag) {
+			return ResponseUtils.responseJsonResult(true);
+		} else {
+			return ResponseUtils.responseJsonResult(false);
+		}
+
+	}
+
+	@ResponseBody
+	@RequestMapping("/saveLeave")
+	public byte[] saveLeave(HttpServletRequest request) {
+		User user = RequestUtils.getUser(request);
+		String actorId = user.getActorId();
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		Leave leave = new Leave();
+		try {
+			Tools.populate(leave, params);
+			leave.setLeaveid(RequestUtils.getLong(request, "leaveid"));
+			leave.setArea(request.getParameter("area"));
+			leave.setCompany(request.getParameter("company"));
+			leave.setDept(request.getParameter("dept"));
+			leave.setAppuser(request.getParameter("appuser"));
+			leave.setPost(request.getParameter("post"));
+			leave.setAppdate(RequestUtils.getDate(request, "appdate"));
+			leave.setType(RequestUtils.getInt(request, "type"));
+			leave.setStartdate(RequestUtils.getDate(request, "startdate"));
+			leave.setStarttime(RequestUtils.getInt(request, "starttime"));
+			leave.setEnddate(RequestUtils.getDate(request, "enddate"));
+			leave.setEndtime(RequestUtils.getInt(request, "endtime"));
+			leave.setLeavesum(RequestUtils.getDouble(request, "leavesum"));
+			leave.setContent(request.getParameter("content"));
+			leave.setRemark(request.getParameter("remark"));
+			if (RequestUtils.getLong(request, "leaveid") == 0L) {
+				leave.setLeaveid(0L);
+				leave.setStatus(0);
+				leave.setCreateDate(new Date());
+				leave.setCreateBy(actorId);
+			} else {
+				leave.setLeaveid(RequestUtils.getLong(request, "leaveid"));
+				leave.setUpdateDate(new Date());
+				leave.setUpdateBy(actorId);
+			}
+			this.leaveService.save(leave);
+
+			attachmentService.updateByReferTypeAndCreateId(leave.getLeaveid(),
+					13, user.getId());
+
+			Map<String, Object> jsonMap = new HashMap<String, Object>();
+			jsonMap.put("statusCode", Integer.valueOf(200));
+			jsonMap.put("message", ViewProperties.getString("res_op_ok"));
+			jsonMap.put("id", leave.getLeaveid());
+			JSONObject object = new JSONObject(jsonMap);
+			return object.toString().getBytes("UTF-8");
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			logger.error(ex);
+		}
+		return ResponseUtils.responseJsonResult(false);
 	}
 
 	@RequestMapping("/searchJson")
@@ -1150,6 +939,217 @@ public class LeaveController {
 		}
 		return result.toJSONString().getBytes("UTF-8");
 
+	}
+
+	@RequestMapping("/searchList")
+	public ModelAndView searchList(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		String x_query = request.getParameter("x_query");
+		request.setAttribute("areaRole", request.getAttribute("areaRole"));
+		if (StringUtils.equals(x_query, "true")) {
+			Map<String, Object> paramMap = RequestUtils
+					.getParameterMap(request);
+			String x_complex_query = JsonUtils.encode(paramMap);
+			x_complex_query = RequestUtils.encodeString(x_complex_query);
+			request.setAttribute("x_complex_query", x_complex_query);
+		} else {
+			request.setAttribute("x_complex_query", "");
+		}
+		String view = request.getParameter("view");
+		if (StringUtils.isNotEmpty(view)) {
+			return new ModelAndView(view, modelMap);
+		}
+
+		return new ModelAndView("/oa/leave/leave_search_list", modelMap);
+	}
+
+	@javax.annotation.Resource
+	public void setAttachmentService(AttachmentService attachmentService) {
+		this.attachmentService = attachmentService;
+	}
+
+	@javax.annotation.Resource
+	public void setLeaveService(LeaveService leaveService) {
+		this.leaveService = leaveService;
+	}
+
+	private boolean startProcess(Leave leave, HttpServletRequest request) {
+		String processName = "LeaveProcess";
+
+		ProcessContext ctx = new ProcessContext();
+		ctx.setRowId(leave.getLeaveid());
+		ctx.setActorId(leave.getAppuser());
+		ctx.setProcessName(processName);
+		/**
+		 * 工作流控制参数
+		 */
+		Collection<DataField> datafields = new ArrayList<DataField>();
+
+		DataField datafield1 = new DataField();
+		datafield1.setName("rowId");
+		datafield1.setValue(leave.getLeaveid());
+
+		// 集团人力资源部
+		SysDepartment sysDepartment1 = BaseDataManager.getInstance()
+				.getSysDepartmentService().findByCode("JT03");
+		DataField datafield2 = new DataField();
+		datafield2.setName("deptId01");
+		datafield2.setValue(sysDepartment1.getId());
+
+		// 用户职位属性，是否是部门经理以下
+		SysUser syuser = BaseDataManager.getInstance().getSysUserService()
+				.findByAccount(leave.getAppuser());
+		int heapShipType = Integer.parseInt(BaseDataManager.getInstance()
+				.getValue(syuser.getHeadship(), "UserHeadship").getValue());
+		DataField datafield3 = new DataField();
+		datafield3.setName("heapShipType");
+		datafield3.setValue(heapShipType);
+
+		// 部门经理
+		DataField datafield4 = new DataField();
+		datafield4.setName("deptId02");
+		datafield4.setValue(syuser.getDeptId());
+
+		// 集团领导（集团副总）
+		SysDepartment sysdepartMem2 = BaseDataManager.getInstance()
+				.getSysDepartmentService().findByCode("JT");
+		DataField datafield5 = new DataField();
+		datafield5.setName("deptId03");
+		datafield5.setValue(sysdepartMem2.getId());
+
+		// 行政财务
+		SysDepartment sysdepartMemTemp = BaseDataManager.getInstance()
+				.getSysDepartmentService().findById(syuser.getDeptId());
+		SysDepartment sysdepartMem3 = BaseDataManager.getInstance()
+				.getSysDepartmentService()
+				.findByCode(sysdepartMemTemp.getCode().substring(0, 2) + "06");
+		DataField datafield6 = new DataField();
+		datafield6.setName("deptId04");
+		datafield6.setValue(sysdepartMem3.getId());
+
+		DataField datafield7 = new DataField();
+		datafield7.setName("isAgree");
+		datafield7.setValue("true");
+
+		datafields.add(datafield1);
+		datafields.add(datafield2);
+		datafields.add(datafield3);
+		datafields.add(datafield4);
+		datafields.add(datafield5);
+		datafields.add(datafield6);
+		datafields.add(datafield7);
+		ctx.setDataFields(datafields);
+
+		Long processInstanceId = null;
+		boolean isOK = false;
+
+		if (leave.getProcessinstanceid() != null && leave.getWfstatus() != 9999
+				&& leave.getWfstatus() != null) {
+			processInstanceId = leave.getProcessinstanceid();
+			ctx.setProcessInstanceId(processInstanceId);
+			isOK = ProcessContainer.getContainer().completeTask(ctx);
+			logger.info("workflow 中");
+		} else {
+			processInstanceId = ProcessContainer.getContainer().startProcess(
+					ctx);
+			logger.info("processInstanceId=" + processInstanceId);
+
+			isOK = true;
+			logger.info("workflow start");
+
+		}
+		return isOK;
+	}
+
+	@ResponseBody
+	@RequestMapping("/submit")
+	public byte[] submit(HttpServletRequest request, ModelMap modelMap) {
+		boolean returnFlag = false;
+		Long leaveid = RequestUtils.getLong(request, "leaveid");
+		if (leaveid != 0L) {
+			Leave leave = leaveService.getLeave(leaveid);
+			if (leave.getStatus() == 0 || leave.getStatus() == 3) {
+				returnFlag = startProcess(leave, request);
+			}
+		}
+		if (returnFlag) {
+			return ResponseUtils.responseJsonResult(true);
+		} else {
+			return ResponseUtils.responseJsonResult(false);
+		}
+
+	}
+
+	@ResponseBody
+	@RequestMapping("/submitData")
+	public byte[] submitData(HttpServletRequest request, ModelMap modelMap) {
+		Long leaveid = RequestUtils.getLong(request, "leaveid");
+		String leaveids = request.getParameter("leaveids");
+		boolean returnFlag = true;
+
+		int passFlag = 0;
+		if (request.getParameter("passFlag") != null
+				&& request.getParameter("passFlag").equals("1")) {
+			passFlag = 1;
+		}
+		if (StringUtils.isNotEmpty(leaveids)) {
+			StringTokenizer token = new StringTokenizer(leaveids, ",");
+			while (token.hasMoreTokens()) {
+				String x = token.nextToken();
+				if (StringUtils.isNotEmpty(x)) {
+					Leave leave = leaveService.getLeave(Long.valueOf(x));
+					// 添加提交业务逻辑
+					if (leave.getStatus() == 1) {
+						if (leave.getProcessinstanceid() != null
+								&& leave.getProcessinstanceid() != 0L) {
+							returnFlag = returnFlag
+									&& completeTask(leave, passFlag, request);
+						} else {
+							returnFlag = returnFlag
+									&& startProcess(leave, request);
+						}
+					}
+				}
+			}
+		} else if (leaveid != null) {
+			Leave leave = leaveService.getLeave(Long.valueOf(leaveid));
+			// 添加提交业务逻辑
+			if (leave.getStatus() == 1) {
+				if (leave.getProcessinstanceid() != null
+						&& leave.getProcessinstanceid() != 0) {
+					returnFlag = completeTask(leave, 0, request);
+				} else {
+					returnFlag = startProcess(leave, request);
+				}
+			}
+		}
+		if (returnFlag) {
+			return ResponseUtils.responseJsonResult(true);
+		} else {
+			return ResponseUtils.responseJsonResult(false);
+		}
+	}
+
+	@RequestMapping("/view")
+	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		Leave leave = leaveService.getLeave(RequestUtils.getLong(request,
+				"leaveid"));
+		request.setAttribute("leave", leave);
+		JSONObject rowJSON = leave.toJsonObject();
+		request.setAttribute("x_json", rowJSON.toJSONString());
+
+		String view = request.getParameter("view");
+		if (StringUtils.isNotEmpty(view)) {
+			return new ModelAndView(view);
+		}
+
+		String x_view = ViewProperties.getString("leave.view");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view);
+		}
+
+		return new ModelAndView("/oa/leave/view");
 	}
 
 }

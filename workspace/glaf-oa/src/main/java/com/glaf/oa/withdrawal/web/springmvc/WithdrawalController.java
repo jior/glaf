@@ -68,238 +68,124 @@ public class WithdrawalController {
 
 	protected WithdrawalService withdrawalService;
 
-	public WithdrawalController() {
-
-	}
-
 	protected SysDepartmentService sysDepartmentService;
 
 	protected SysUserService sysUserService;
 
 	protected AttachmentService attachmentService;
 
-	@javax.annotation.Resource
-	public void setWithdrawalService(WithdrawalService withdrawalService) {
-		this.withdrawalService = withdrawalService;
+	public WithdrawalController() {
+
 	}
 
-	@javax.annotation.Resource
-	public void setSysDepartmentService(
-			SysDepartmentService sysDepartmentService) {
-		this.sysDepartmentService = sysDepartmentService;
-	}
+	/**
+	 * 工作流审批
+	 * 
+	 * @param purchase
+	 * @param flag
+	 *            0同意 1不同意
+	 * @param request
+	 * @return
+	 */
+	private boolean completeTask(Withdrawal withdrawal, int flag,
+			HttpServletRequest request) {
 
-	@javax.annotation.Resource
-	public void setSysUserService(SysUserService sysUserService) {
-		this.sysUserService = sysUserService;
-	}
+		String processName = "Withdrawalprocess";
 
-	@javax.annotation.Resource
-	public void setAttachmentService(AttachmentService attachmentService) {
-		this.attachmentService = attachmentService;
-	}
+		// 获取登录用户部门
+		User appUser = BaseDataManager.getInstance().getSysUserService()
+				.findByAccount(withdrawal.getAppuser());
 
-	@RequestMapping("/save")
-	public ModelAndView save(HttpServletRequest request, ModelMap modelMap) {
-		User user = RequestUtils.getUser(request);
-		String actorId = user.getActorId();
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		params.remove("status");
-		params.remove("wfStatus");
+		// 根据用户部门id 获取整个部门的对象（GZ01）
+		SysDepartment curdept = sysDepartmentService.findById(appUser
+				.getDeptId());
 
-		Withdrawal withdrawal = new Withdrawal();
-		Tools.populate(withdrawal, params);
-		withdrawal.setWithdrawalid(RequestUtils
-				.getLong(request, "withdrawalid"));
-		withdrawal.setArea(request.getParameter("area"));
-		withdrawal.setCompany(request.getParameter("company"));
-		withdrawal.setDept(request.getParameter("dept"));
-		withdrawal.setPost(request.getParameter("post"));
-		withdrawal.setAppuser(request.getParameter("appuser"));
-		withdrawal.setAppdate(RequestUtils.getDate(request, "appdate"));
-		withdrawal.setAppsum(RequestUtils.getDouble(request, "appsum"));
-		withdrawal.setContent(request.getParameter("content"));
-		withdrawal.setRemark(request.getParameter("remark"));
-		withdrawal.setStatus(0);// 0为保存
-		if ("MUL".equals(request.getParameter("brands"))) {// 选择为多品牌时
-			withdrawal.setBrands1("FLL");
-			withdrawal.setBrands1account(RequestUtils.getDouble(request,
-					"brands1account"));
-			withdrawal.setBrands2("MSLD");
-			withdrawal.setBrands2account(RequestUtils.getDouble(request,
-					"brands2account"));
-		} else if ("FLL".equals(request.getParameter("brands"))) {
-			withdrawal.setBrands1("FLL");
-			withdrawal.setBrands1account(100D);
-			withdrawal.setBrands2(null);
-			withdrawal.setBrands2account(null);
-		} else if ("MSLD".equals(request.getParameter("brands"))) {
-			withdrawal.setBrands1(null);
-			withdrawal.setBrands1account(null);
-			withdrawal.setBrands2("MSLD");
-			withdrawal.setBrands2account(100D);
+		// 根据部门CODE(例如GZ01)截取前2位 作为地区
+		String curAreadeptCode = curdept.getCode().substring(0, 2);
+
+		// 根据code 获取 地区部门对象（GZ06）行政财务部
+		SysDepartment HRdept = sysDepartmentService.findByCode(curAreadeptCode
+				+ "06");
+
+		// 根据code 获取 地区部门对象（GZ）
+		SysDepartment curAreadept = sysDepartmentService
+				.findByCode(curAreadeptCode);
+
+		// 获取集团部门对象（JT）
+		SysDepartment sysdeptMem = sysDepartmentService.findByCode("JT");
+
+		// 行政总监部门
+		SysDepartment sysJtdept = sysDepartmentService.findByCode("JT06");
+
+		ProcessContext ctx = new ProcessContext();
+		ctx.setRowId(withdrawal.getWithdrawalid());// 表id
+		ctx.setActorId(appUser.getActorId());// 用户审批者
+		ctx.setProcessName(processName);// 流程名称
+		String opinion = request.getParameter("approveOpinion");
+		ctx.setOpinion(opinion);// 审批意见
+
+		Collection<DataField> dataFields = new ArrayList<DataField>();// 参数
+
+		DataField dataField = new DataField();
+		dataField.setName("isAgree");// 是否通过审批
+		if (flag == 0) {
+			dataField.setValue("true");
+		} else {
+			dataField.setValue("false");
 		}
-		withdrawal.setUpdateDate(RequestUtils.getDate(request, "updateDate"));
-		withdrawal.setUpdateBy(actorId);
+		dataFields.add(dataField);
 
-		withdrawalService.save(withdrawal);
+		// 财务担当
+		DataField datafield1 = new DataField();
+		datafield1.setName("deptId01");
+		datafield1.setValue(HRdept.getId());
+		dataFields.add(datafield1);
 
-		return this.list(request, modelMap);
-	}
+		// 当地总经理
+		DataField datafield4 = new DataField();
+		datafield4.setName("deptId02");
+		datafield4.setValue(curAreadept.getId());
+		dataFields.add(datafield4);
 
-	@RequestMapping("/submit")
-	public ModelAndView submit(HttpServletRequest request, ModelMap modelMap) {
-		User user = RequestUtils.getUser(request);
-		String actorId = user.getActorId();
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		Withdrawal withdrawal = new Withdrawal();
-		try {
-			Tools.populate(withdrawal, params);
-			withdrawal.setWithdrawalid(RequestUtils.getLong(request,
-					"withdrawalid"));
-			withdrawal.setArea(request.getParameter("area"));
-			withdrawal.setCompany(request.getParameter("company"));
-			withdrawal.setDept(request.getParameter("dept"));
-			withdrawal.setPost(request.getParameter("post"));
-			withdrawal.setAppuser(request.getParameter("appuser"));
-			withdrawal.setAppdate(RequestUtils.getDate(request, "appdate"));
-			withdrawal.setAppsum(RequestUtils.getDouble(request, "appsum"));
-			withdrawal.setContent(request.getParameter("content"));
-			withdrawal.setRemark(request.getParameter("remark"));
-			withdrawal.setStatus(1);// 0为保存
-			if ("MUL".equals(request.getParameter("brands"))) {// 选择为多品牌时
-				withdrawal.setBrands1("FLL");
-				withdrawal.setBrands1account(RequestUtils.getDouble(request,
-						"brands1account"));
-				withdrawal.setBrands2("MSLD");
-				withdrawal.setBrands2account(RequestUtils.getDouble(request,
-						"brands2account"));
-			} else if ("FLL".equals(request.getParameter("brands"))) {
-				withdrawal.setBrands1("FLL");
-				withdrawal.setBrands1account(100D);
-				withdrawal.setBrands2(" ");
-				withdrawal.setBrands2account(0D);
-			} else if ("MSLD".equals(request.getParameter("brands"))) {
-				withdrawal.setBrands1(" ");
-				withdrawal.setBrands1account(0D);
-				withdrawal.setBrands2("MSLD");
-				withdrawal.setBrands2account(100D);
-			}
-			withdrawal.setUpdateDate(new Date());
-			withdrawal.setUpdateBy(actorId);
+		// 行政总监
+		DataField datafield5 = new DataField();
+		datafield5.setName("deptId03");
+		datafield5.setValue(sysJtdept.getId());
+		dataFields.add(datafield5);
 
-			withdrawalService.save(withdrawal);
+		// 集团(JT)
+		DataField datafield2 = new DataField();
+		datafield2.setName("deptId04");
+		datafield2.setValue(sysdeptMem.getId());
+		dataFields.add(datafield2);
 
-			// 状态为 提交 进入工作流程
-			if (withdrawal.getStatus() == 1) {
-				if (withdrawal.getProcessinstanceid() != null
-						&& withdrawal.getProcessinstanceid() > 0) {
-					completeTask(withdrawal, 0, request);
-				} else {
-					startProcess(withdrawal, request);
-				}
-			}
+		DataField datafield3 = new DataField();
+		datafield3.setName("rowId");
+		datafield3.setValue(withdrawal.getWithdrawalid());
+		dataFields.add(datafield3);
 
-			return this.list(request, modelMap);
+		ctx.setDataFields(dataFields);
 
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			logger.error(ex);
-			ModelAndView mav = new ModelAndView();
-			mav.addObject("message", "提交失败。");
-			return mav;
+		Long processInstanceId;
+		boolean isOK = false;
+
+		if (withdrawal.getProcessinstanceid() != null
+				&& withdrawal.getWfstatus() != 9999
+				&& withdrawal.getWfstatus() != null) {
+			processInstanceId = withdrawal.getProcessinstanceid();
+			ctx.setProcessInstanceId(processInstanceId);
+			isOK = ProcessContainer.getContainer().completeTask(ctx);
+			logger.info("workflowing .......  ");
+		} else {
+			processInstanceId = ProcessContainer.getContainer().startProcess(
+					ctx);
+			logger.info("processInstanceId=" + processInstanceId);
+
+			isOK = true;
+			logger.info("workflow start");
+
 		}
-	}
-
-	@ResponseBody
-	@RequestMapping("/saveWithdrawal")
-	public byte[] saveWithdrawal(HttpServletRequest request) {
-		User user = RequestUtils.getUser(request);
-		String actorId = user.getActorId();
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		Withdrawal withdrawal = new Withdrawal();
-		try {
-			Tools.populate(withdrawal, params);
-			withdrawal.setArea(request.getParameter("area"));
-			withdrawal.setCompany(request.getParameter("company"));
-			withdrawal.setDept(request.getParameter("dept"));
-			withdrawal.setPost(request.getParameter("post"));
-			withdrawal.setAppuser(request.getParameter("appuser"));
-			withdrawal.setAppdate(RequestUtils.getDate(request, "appdate"));
-			withdrawal.setAppsum(RequestUtils.getDouble(request, "appsum"));
-			withdrawal.setContent(request.getParameter("content"));
-			withdrawal.setRemark(request.getParameter("remark"));
-			withdrawal.setStatus(RequestUtils.getInt(request, "status"));
-			withdrawal.setProcessname(request.getParameter("processname"));
-			withdrawal.setProcessinstanceid(RequestUtils.getLong(request,
-					"processinstanceid"));
-			withdrawal.setWfstatus(RequestUtils.getLong(request, "wfstatus"));
-			withdrawal.setBrands1(request.getParameter("brands1"));
-			withdrawal.setBrands1account(RequestUtils.getDouble(request,
-					"brands1account"));
-			withdrawal.setBrands2(request.getParameter("brands2"));
-			withdrawal.setBrands2account(RequestUtils.getDouble(request,
-					"brands2account"));
-			withdrawal.setBrands3(request.getParameter("brands3"));
-			withdrawal.setBrands3account(RequestUtils.getDouble(request,
-					"brands3account"));
-			withdrawal.setCreateBy(request.getParameter("createBy"));
-			withdrawal.setCreateDate(RequestUtils
-					.getDate(request, "createDate"));
-			withdrawal.setUpdateDate(RequestUtils
-					.getDate(request, "updateDate"));
-			withdrawal.setUpdateBy(request.getParameter("updateBy"));
-			withdrawal.setCreateBy(actorId);
-			this.withdrawalService.save(withdrawal);
-
-			return ResponseUtils.responseJsonResult(true);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			logger.error(ex);
-		}
-		return ResponseUtils.responseJsonResult(false);
-	}
-
-	@RequestMapping("/update")
-	public ModelAndView update(HttpServletRequest request, ModelMap modelMap) {
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		params.remove("status");
-		params.remove("wfStatus");
-
-		Withdrawal withdrawal = withdrawalService.getWithdrawal(RequestUtils
-				.getLong(request, "withdrawalid"));
-
-		withdrawal.setArea(request.getParameter("area"));
-		withdrawal.setCompany(request.getParameter("company"));
-		withdrawal.setDept(request.getParameter("dept"));
-		withdrawal.setPost(request.getParameter("post"));
-		withdrawal.setAppuser(request.getParameter("appuser"));
-		withdrawal.setAppdate(RequestUtils.getDate(request, "appdate"));
-		withdrawal.setAppsum(RequestUtils.getDouble(request, "appsum"));
-		withdrawal.setContent(request.getParameter("content"));
-		withdrawal.setRemark(request.getParameter("remark"));
-		withdrawal.setStatus(RequestUtils.getInt(request, "status"));
-		withdrawal.setProcessname(request.getParameter("processname"));
-		withdrawal.setProcessinstanceid(RequestUtils.getLong(request,
-				"processinstanceid"));
-		withdrawal.setWfstatus(RequestUtils.getLong(request, "wfstatus"));
-		withdrawal.setBrands1(request.getParameter("brands1"));
-		withdrawal.setBrands1account(RequestUtils.getDouble(request,
-				"brands1account"));
-		withdrawal.setBrands2(request.getParameter("brands2"));
-		withdrawal.setBrands2account(RequestUtils.getDouble(request,
-				"brands2account"));
-		withdrawal.setBrands3(request.getParameter("brands3"));
-		withdrawal.setBrands3account(RequestUtils.getDouble(request,
-				"brands3account"));
-		withdrawal.setCreateBy(request.getParameter("createBy"));
-		withdrawal.setCreateDate(RequestUtils.getDate(request, "createDate"));
-		withdrawal.setUpdateDate(RequestUtils.getDate(request, "updateDate"));
-		withdrawal.setUpdateBy(request.getParameter("updateBy"));
-
-		withdrawalService.save(withdrawal);
-
-		return this.list(request, modelMap);
+		return isOK;
 	}
 
 	@ResponseBody
@@ -416,45 +302,6 @@ public class WithdrawalController {
 		}
 
 		return new ModelAndView("/oa/withdrawal/edit", modelMap);
-	}
-
-	@RequestMapping("/view")
-	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
-		request.removeAttribute("canSubmit");
-		Withdrawal withdrawal = withdrawalService.getWithdrawal(RequestUtils
-				.getLong(request, "withdrawalid"));
-		if (withdrawal != null) {
-			if (withdrawal.getBrands1() != null
-					&& withdrawal.getBrands2() != null) {
-				withdrawal.setBrand("MUL");
-			} else if (withdrawal.getBrands1() != null
-					&& withdrawal.getBrands2() == null) {
-				withdrawal.setBrand("FLL");
-			} else if (withdrawal.getBrands1() == null
-					&& withdrawal.getBrands2() != null) {
-				withdrawal.setBrand("MSLD");
-			}
-			request.setAttribute("withdrawal", withdrawal);
-			JSONObject rowJSON = withdrawal.toJsonObject();
-			request.setAttribute("x_json", rowJSON.toJSONString());
-		}
-
-		return new ModelAndView("/oa/withdrawal/view", modelMap);
-	}
-
-	@RequestMapping("/query")
-	public ModelAndView query(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
-		String view = request.getParameter("view");
-		if (StringUtils.isNotEmpty(view)) {
-			return new ModelAndView(view, modelMap);
-		}
-		String x_view = ViewProperties.getString("withdrawal.query");
-		if (StringUtils.isNotEmpty(x_view)) {
-			return new ModelAndView(x_view, modelMap);
-		}
-		return new ModelAndView("/oa/withdrawal/query", modelMap);
 	}
 
 	@RequestMapping("/json")
@@ -584,114 +431,136 @@ public class WithdrawalController {
 		return new ModelAndView("/oa/withdrawal/list", modelMap);
 	}
 
-	/**
-	 * 工作流审批
-	 * 
-	 * @param purchase
-	 * @param flag
-	 *            0同意 1不同意
-	 * @param request
-	 * @return
-	 */
-	private boolean completeTask(Withdrawal withdrawal, int flag,
-			HttpServletRequest request) {
-
-		String processName = "Withdrawalprocess";
-
-		// 获取登录用户部门
-		User appUser = BaseDataManager.getInstance().getSysUserService()
-				.findByAccount(withdrawal.getAppuser());
-
-		// 根据用户部门id 获取整个部门的对象（GZ01）
-		SysDepartment curdept = sysDepartmentService.findById(appUser
-				.getDeptId());
-
-		// 根据部门CODE(例如GZ01)截取前2位 作为地区
-		String curAreadeptCode = curdept.getCode().substring(0, 2);
-
-		// 根据code 获取 地区部门对象（GZ06）行政财务部
-		SysDepartment HRdept = sysDepartmentService.findByCode(curAreadeptCode
-				+ "06");
-
-		// 根据code 获取 地区部门对象（GZ）
-		SysDepartment curAreadept = sysDepartmentService
-				.findByCode(curAreadeptCode);
-
-		// 获取集团部门对象（JT）
-		SysDepartment sysdeptMem = sysDepartmentService.findByCode("JT");
-
-		// 行政总监部门
-		SysDepartment sysJtdept = sysDepartmentService.findByCode("JT06");
-
-		ProcessContext ctx = new ProcessContext();
-		ctx.setRowId(withdrawal.getWithdrawalid());// 表id
-		ctx.setActorId(appUser.getActorId());// 用户审批者
-		ctx.setProcessName(processName);// 流程名称
-		String opinion = request.getParameter("approveOpinion");
-		ctx.setOpinion(opinion);// 审批意见
-
-		Collection<DataField> dataFields = new ArrayList<DataField>();// 参数
-
-		DataField dataField = new DataField();
-		dataField.setName("isAgree");// 是否通过审批
-		if (flag == 0) {
-			dataField.setValue("true");
-		} else {
-			dataField.setValue("false");
+	@RequestMapping("/query")
+	public ModelAndView query(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		String view = request.getParameter("view");
+		if (StringUtils.isNotEmpty(view)) {
+			return new ModelAndView(view, modelMap);
 		}
-		dataFields.add(dataField);
-
-		// 财务担当
-		DataField datafield1 = new DataField();
-		datafield1.setName("deptId01");
-		datafield1.setValue(HRdept.getId());
-		dataFields.add(datafield1);
-
-		// 当地总经理
-		DataField datafield4 = new DataField();
-		datafield4.setName("deptId02");
-		datafield4.setValue(curAreadept.getId());
-		dataFields.add(datafield4);
-
-		// 行政总监
-		DataField datafield5 = new DataField();
-		datafield5.setName("deptId03");
-		datafield5.setValue(sysJtdept.getId());
-		dataFields.add(datafield5);
-
-		// 集团(JT)
-		DataField datafield2 = new DataField();
-		datafield2.setName("deptId04");
-		datafield2.setValue(sysdeptMem.getId());
-		dataFields.add(datafield2);
-
-		DataField datafield3 = new DataField();
-		datafield3.setName("rowId");
-		datafield3.setValue(withdrawal.getWithdrawalid());
-		dataFields.add(datafield3);
-
-		ctx.setDataFields(dataFields);
-
-		Long processInstanceId;
-		boolean isOK = false;
-
-		if (withdrawal.getProcessinstanceid() != null
-				&& withdrawal.getWfstatus() != 9999
-				&& withdrawal.getWfstatus() != null) {
-			processInstanceId = withdrawal.getProcessinstanceid();
-			ctx.setProcessInstanceId(processInstanceId);
-			isOK = ProcessContainer.getContainer().completeTask(ctx);
-			logger.info("workflowing .......  ");
-		} else {
-			processInstanceId = ProcessContainer.getContainer().startProcess(
-					ctx);
-			logger.info("processInstanceId=" + processInstanceId);
-
-			isOK = true;
-			logger.info("workflow start");
-
+		String x_view = ViewProperties.getString("withdrawal.query");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
 		}
-		return isOK;
+		return new ModelAndView("/oa/withdrawal/query", modelMap);
+	}
+
+	@RequestMapping("/save")
+	public ModelAndView save(HttpServletRequest request, ModelMap modelMap) {
+		User user = RequestUtils.getUser(request);
+		String actorId = user.getActorId();
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		params.remove("status");
+		params.remove("wfStatus");
+
+		Withdrawal withdrawal = new Withdrawal();
+		Tools.populate(withdrawal, params);
+		withdrawal.setWithdrawalid(RequestUtils
+				.getLong(request, "withdrawalid"));
+		withdrawal.setArea(request.getParameter("area"));
+		withdrawal.setCompany(request.getParameter("company"));
+		withdrawal.setDept(request.getParameter("dept"));
+		withdrawal.setPost(request.getParameter("post"));
+		withdrawal.setAppuser(request.getParameter("appuser"));
+		withdrawal.setAppdate(RequestUtils.getDate(request, "appdate"));
+		withdrawal.setAppsum(RequestUtils.getDouble(request, "appsum"));
+		withdrawal.setContent(request.getParameter("content"));
+		withdrawal.setRemark(request.getParameter("remark"));
+		withdrawal.setStatus(0);// 0为保存
+		if ("MUL".equals(request.getParameter("brands"))) {// 选择为多品牌时
+			withdrawal.setBrands1("FLL");
+			withdrawal.setBrands1account(RequestUtils.getDouble(request,
+					"brands1account"));
+			withdrawal.setBrands2("MSLD");
+			withdrawal.setBrands2account(RequestUtils.getDouble(request,
+					"brands2account"));
+		} else if ("FLL".equals(request.getParameter("brands"))) {
+			withdrawal.setBrands1("FLL");
+			withdrawal.setBrands1account(100D);
+			withdrawal.setBrands2(null);
+			withdrawal.setBrands2account(null);
+		} else if ("MSLD".equals(request.getParameter("brands"))) {
+			withdrawal.setBrands1(null);
+			withdrawal.setBrands1account(null);
+			withdrawal.setBrands2("MSLD");
+			withdrawal.setBrands2account(100D);
+		}
+		withdrawal.setUpdateDate(RequestUtils.getDate(request, "updateDate"));
+		withdrawal.setUpdateBy(actorId);
+
+		withdrawalService.save(withdrawal);
+
+		return this.list(request, modelMap);
+	}
+
+	@ResponseBody
+	@RequestMapping("/saveWithdrawal")
+	public byte[] saveWithdrawal(HttpServletRequest request) {
+		User user = RequestUtils.getUser(request);
+		String actorId = user.getActorId();
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		Withdrawal withdrawal = new Withdrawal();
+		try {
+			Tools.populate(withdrawal, params);
+			withdrawal.setArea(request.getParameter("area"));
+			withdrawal.setCompany(request.getParameter("company"));
+			withdrawal.setDept(request.getParameter("dept"));
+			withdrawal.setPost(request.getParameter("post"));
+			withdrawal.setAppuser(request.getParameter("appuser"));
+			withdrawal.setAppdate(RequestUtils.getDate(request, "appdate"));
+			withdrawal.setAppsum(RequestUtils.getDouble(request, "appsum"));
+			withdrawal.setContent(request.getParameter("content"));
+			withdrawal.setRemark(request.getParameter("remark"));
+			withdrawal.setStatus(RequestUtils.getInt(request, "status"));
+			withdrawal.setProcessname(request.getParameter("processname"));
+			withdrawal.setProcessinstanceid(RequestUtils.getLong(request,
+					"processinstanceid"));
+			withdrawal.setWfstatus(RequestUtils.getLong(request, "wfstatus"));
+			withdrawal.setBrands1(request.getParameter("brands1"));
+			withdrawal.setBrands1account(RequestUtils.getDouble(request,
+					"brands1account"));
+			withdrawal.setBrands2(request.getParameter("brands2"));
+			withdrawal.setBrands2account(RequestUtils.getDouble(request,
+					"brands2account"));
+			withdrawal.setBrands3(request.getParameter("brands3"));
+			withdrawal.setBrands3account(RequestUtils.getDouble(request,
+					"brands3account"));
+			withdrawal.setCreateBy(request.getParameter("createBy"));
+			withdrawal.setCreateDate(RequestUtils
+					.getDate(request, "createDate"));
+			withdrawal.setUpdateDate(RequestUtils
+					.getDate(request, "updateDate"));
+			withdrawal.setUpdateBy(request.getParameter("updateBy"));
+			withdrawal.setCreateBy(actorId);
+			this.withdrawalService.save(withdrawal);
+
+			return ResponseUtils.responseJsonResult(true);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			logger.error(ex);
+		}
+		return ResponseUtils.responseJsonResult(false);
+	}
+
+	@javax.annotation.Resource
+	public void setAttachmentService(AttachmentService attachmentService) {
+		this.attachmentService = attachmentService;
+	}
+
+	@javax.annotation.Resource
+	public void setSysDepartmentService(
+			SysDepartmentService sysDepartmentService) {
+		this.sysDepartmentService = sysDepartmentService;
+	}
+
+	@javax.annotation.Resource
+	public void setSysUserService(SysUserService sysUserService) {
+		this.sysUserService = sysUserService;
+	}
+
+	@javax.annotation.Resource
+	public void setWithdrawalService(WithdrawalService withdrawalService) {
+		this.withdrawalService = withdrawalService;
 	}
 
 	/**
@@ -797,5 +666,136 @@ public class WithdrawalController {
 
 		}
 		return isOK;
+	}
+
+	@RequestMapping("/submit")
+	public ModelAndView submit(HttpServletRequest request, ModelMap modelMap) {
+		User user = RequestUtils.getUser(request);
+		String actorId = user.getActorId();
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		Withdrawal withdrawal = new Withdrawal();
+		try {
+			Tools.populate(withdrawal, params);
+			withdrawal.setWithdrawalid(RequestUtils.getLong(request,
+					"withdrawalid"));
+			withdrawal.setArea(request.getParameter("area"));
+			withdrawal.setCompany(request.getParameter("company"));
+			withdrawal.setDept(request.getParameter("dept"));
+			withdrawal.setPost(request.getParameter("post"));
+			withdrawal.setAppuser(request.getParameter("appuser"));
+			withdrawal.setAppdate(RequestUtils.getDate(request, "appdate"));
+			withdrawal.setAppsum(RequestUtils.getDouble(request, "appsum"));
+			withdrawal.setContent(request.getParameter("content"));
+			withdrawal.setRemark(request.getParameter("remark"));
+			withdrawal.setStatus(1);// 0为保存
+			if ("MUL".equals(request.getParameter("brands"))) {// 选择为多品牌时
+				withdrawal.setBrands1("FLL");
+				withdrawal.setBrands1account(RequestUtils.getDouble(request,
+						"brands1account"));
+				withdrawal.setBrands2("MSLD");
+				withdrawal.setBrands2account(RequestUtils.getDouble(request,
+						"brands2account"));
+			} else if ("FLL".equals(request.getParameter("brands"))) {
+				withdrawal.setBrands1("FLL");
+				withdrawal.setBrands1account(100D);
+				withdrawal.setBrands2(" ");
+				withdrawal.setBrands2account(0D);
+			} else if ("MSLD".equals(request.getParameter("brands"))) {
+				withdrawal.setBrands1(" ");
+				withdrawal.setBrands1account(0D);
+				withdrawal.setBrands2("MSLD");
+				withdrawal.setBrands2account(100D);
+			}
+			withdrawal.setUpdateDate(new Date());
+			withdrawal.setUpdateBy(actorId);
+
+			withdrawalService.save(withdrawal);
+
+			// 状态为 提交 进入工作流程
+			if (withdrawal.getStatus() == 1) {
+				if (withdrawal.getProcessinstanceid() != null
+						&& withdrawal.getProcessinstanceid() > 0) {
+					completeTask(withdrawal, 0, request);
+				} else {
+					startProcess(withdrawal, request);
+				}
+			}
+
+			return this.list(request, modelMap);
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			logger.error(ex);
+			ModelAndView mav = new ModelAndView();
+			mav.addObject("message", "提交失败。");
+			return mav;
+		}
+	}
+
+	@RequestMapping("/update")
+	public ModelAndView update(HttpServletRequest request, ModelMap modelMap) {
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		params.remove("status");
+		params.remove("wfStatus");
+
+		Withdrawal withdrawal = withdrawalService.getWithdrawal(RequestUtils
+				.getLong(request, "withdrawalid"));
+
+		withdrawal.setArea(request.getParameter("area"));
+		withdrawal.setCompany(request.getParameter("company"));
+		withdrawal.setDept(request.getParameter("dept"));
+		withdrawal.setPost(request.getParameter("post"));
+		withdrawal.setAppuser(request.getParameter("appuser"));
+		withdrawal.setAppdate(RequestUtils.getDate(request, "appdate"));
+		withdrawal.setAppsum(RequestUtils.getDouble(request, "appsum"));
+		withdrawal.setContent(request.getParameter("content"));
+		withdrawal.setRemark(request.getParameter("remark"));
+		withdrawal.setStatus(RequestUtils.getInt(request, "status"));
+		withdrawal.setProcessname(request.getParameter("processname"));
+		withdrawal.setProcessinstanceid(RequestUtils.getLong(request,
+				"processinstanceid"));
+		withdrawal.setWfstatus(RequestUtils.getLong(request, "wfstatus"));
+		withdrawal.setBrands1(request.getParameter("brands1"));
+		withdrawal.setBrands1account(RequestUtils.getDouble(request,
+				"brands1account"));
+		withdrawal.setBrands2(request.getParameter("brands2"));
+		withdrawal.setBrands2account(RequestUtils.getDouble(request,
+				"brands2account"));
+		withdrawal.setBrands3(request.getParameter("brands3"));
+		withdrawal.setBrands3account(RequestUtils.getDouble(request,
+				"brands3account"));
+		withdrawal.setCreateBy(request.getParameter("createBy"));
+		withdrawal.setCreateDate(RequestUtils.getDate(request, "createDate"));
+		withdrawal.setUpdateDate(RequestUtils.getDate(request, "updateDate"));
+		withdrawal.setUpdateBy(request.getParameter("updateBy"));
+
+		withdrawalService.save(withdrawal);
+
+		return this.list(request, modelMap);
+	}
+
+	@RequestMapping("/view")
+	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		request.removeAttribute("canSubmit");
+		Withdrawal withdrawal = withdrawalService.getWithdrawal(RequestUtils
+				.getLong(request, "withdrawalid"));
+		if (withdrawal != null) {
+			if (withdrawal.getBrands1() != null
+					&& withdrawal.getBrands2() != null) {
+				withdrawal.setBrand("MUL");
+			} else if (withdrawal.getBrands1() != null
+					&& withdrawal.getBrands2() == null) {
+				withdrawal.setBrand("FLL");
+			} else if (withdrawal.getBrands1() == null
+					&& withdrawal.getBrands2() != null) {
+				withdrawal.setBrand("MSLD");
+			}
+			request.setAttribute("withdrawal", withdrawal);
+			JSONObject rowJSON = withdrawal.toJsonObject();
+			request.setAttribute("x_json", rowJSON.toJSONString());
+		}
+
+		return new ModelAndView("/oa/withdrawal/view", modelMap);
 	}
 }

@@ -69,21 +69,10 @@ public class WithdrawalApproveController {
 
 	protected WithdrawalService withdrawalService;
 
-	public WithdrawalApproveController() {
-
-	}
-
 	private SysDepartmentService sysDepartmentService;
 
-	@javax.annotation.Resource
-	public void setWithdrawalService(WithdrawalService withdrawalService) {
-		this.withdrawalService = withdrawalService;
-	}
+	public WithdrawalApproveController() {
 
-	@javax.annotation.Resource
-	public void setSysDepartmentService(
-			SysDepartmentService sysDepartmentService) {
-		this.sysDepartmentService = sysDepartmentService;
 	}
 
 	@RequestMapping("/approve")
@@ -97,10 +86,10 @@ public class WithdrawalApproveController {
 			withdrawal.setBrand("MUL");
 		} else if (withdrawal.getBrands1() != null
 				&& withdrawal.getBrands2() == null) {
-			withdrawal.setBrand("FLL");
+
 		} else if (withdrawal.getBrands1() == null
 				&& withdrawal.getBrands2() != null) {
-			withdrawal.setBrand("MSLD");
+
 		}
 
 		request.setAttribute("withdrawal", withdrawal);
@@ -153,18 +142,114 @@ public class WithdrawalApproveController {
 		return null;
 	}
 
-	@RequestMapping("/query")
-	public ModelAndView query(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
-		String view = request.getParameter("view");
-		if (StringUtils.isNotEmpty(view)) {
-			return new ModelAndView(view, modelMap);
+	/**
+	 * 工作流审批
+	 * 
+	 * @param purchase
+	 * @param flag
+	 *            0同意 1不同意
+	 * @param request
+	 * @return
+	 */
+	private boolean completeTask(Withdrawal withdrawal, int flag,
+			HttpServletRequest request) {
+
+		String processName = "Withdrawalprocess";
+
+		User user = RequestUtils.getUser(request);
+		String actorId = user.getActorId();
+
+		// 获取登录用户部门
+		User appUser = BaseDataManager.getInstance().getSysUserService()
+				.findByAccount(withdrawal.getAppuser());
+
+		// 根据用户部门id 获取整个部门的对象（GZ01）
+		SysDepartment curdept = sysDepartmentService.findById(appUser
+				.getDeptId());
+
+		// 根据部门CODE(例如GZ01)截取前2位 作为地区
+		String curAreadeptCode = curdept.getCode().substring(0, 2);
+
+		// 根据code 获取 地区部门对象（GZ06）行政财务部
+		SysDepartment HRdept = sysDepartmentService.findByCode(curAreadeptCode
+				+ "06");
+
+		// 根据code 获取 地区部门对象（GZ）
+		SysDepartment curAreadept = sysDepartmentService
+				.findByCode(curAreadeptCode);
+
+		// 获取集团部门对象（JT）
+		SysDepartment sysdeptMem = sysDepartmentService.findByCode("JT");
+
+		// 行政总监部门
+		SysDepartment sysJtdept = sysDepartmentService.findByCode("JT06");
+
+		ProcessContext ctx = new ProcessContext();
+		ctx.setRowId(withdrawal.getWithdrawalid());// 表id
+		ctx.setActorId(actorId);// 用户审批者
+		ctx.setProcessName(processName);// 流程名称
+		String opinion = request.getParameter("approveOpinion");
+		ctx.setOpinion(opinion);// 审批意见
+		Collection<DataField> dataFields = new ArrayList<DataField>();// 参数
+
+		DataField dataField = new DataField();
+		dataField.setName("isAgree");// 是否通过审批
+		if (flag == 0) {
+			dataField.setValue("true");
+		} else {
+			dataField.setValue("false");
 		}
-		String x_view = ViewProperties.getString("withdrawal.query");
-		if (StringUtils.isNotEmpty(x_view)) {
-			return new ModelAndView(x_view, modelMap);
+		dataFields.add(dataField);
+
+		// 财务担当
+		DataField datafield1 = new DataField();
+		datafield1.setName("deptId01");
+		datafield1.setValue(HRdept.getId());
+		dataFields.add(datafield1);
+
+		// 当地总经理
+		DataField datafield4 = new DataField();
+		datafield4.setName("deptId02");
+		datafield4.setValue(curAreadept.getId());
+		dataFields.add(datafield4);
+
+		// 行政总监
+		DataField datafield5 = new DataField();
+		datafield5.setName("deptId03");
+		datafield5.setValue(sysJtdept.getId());
+		dataFields.add(datafield5);
+
+		// 集团(JT)
+		DataField datafield2 = new DataField();
+		datafield2.setName("deptId04");
+		datafield2.setValue(sysdeptMem.getId());
+		dataFields.add(datafield2);
+
+		DataField datafield3 = new DataField();
+		datafield3.setName("rowId");
+		datafield3.setValue(withdrawal.getWithdrawalid());
+		dataFields.add(datafield3);
+
+		ctx.setDataFields(dataFields);
+
+		Long processInstanceId;
+		boolean isOK = false;
+
+		if (withdrawal.getProcessinstanceid() != null
+				&& withdrawal.getWfstatus() != 9999
+				&& withdrawal.getWfstatus() != null) {
+			processInstanceId = withdrawal.getProcessinstanceid();
+			ctx.setProcessInstanceId(processInstanceId);
+			isOK = ProcessContainer.getContainer().completeTask(ctx);
+			logger.info("workflowing .......  ");
+		} else {
+			processInstanceId = ProcessContainer.getContainer().startProcess(
+					ctx);
+			logger.info("processInstanceId=" + processInstanceId);
+			isOK = true;
+			logger.info("workflow start");
 		}
-		return new ModelAndView("/oa/withdrawal/query", modelMap);
+		return isOK;
 	}
 
 	@RequestMapping("/json")
@@ -285,113 +370,28 @@ public class WithdrawalApproveController {
 		return new ModelAndView("/oa/withdrawal/approve_list", modelMap);
 	}
 
-	/**
-	 * 工作流审批
-	 * 
-	 * @param purchase
-	 * @param flag
-	 *            0同意 1不同意
-	 * @param request
-	 * @return
-	 */
-	private boolean completeTask(Withdrawal withdrawal, int flag,
-			HttpServletRequest request) {
-
-		String processName = "Withdrawalprocess";
-
-		User user = RequestUtils.getUser(request);
-		String actorId = user.getActorId();
-
-		// 获取登录用户部门
-		User appUser = BaseDataManager.getInstance().getSysUserService()
-				.findByAccount(withdrawal.getAppuser());
-
-		// 根据用户部门id 获取整个部门的对象（HZ01）
-		SysDepartment curdept = sysDepartmentService.findById(appUser
-				.getDeptId());
-
-		// 根据部门CODE(例如HZ01)截取前2位 作为地区
-		String curAreadeptCode = curdept.getCode().substring(0, 2);
-
-		// 根据code 获取 地区部门对象（HZ06）行政财务部
-		SysDepartment HRdept = sysDepartmentService.findByCode(curAreadeptCode
-				+ "06");
-
-		// 根据code 获取 地区部门对象（HZ）
-		SysDepartment curAreadept = sysDepartmentService
-				.findByCode(curAreadeptCode);
-
-		// 获取集团部门对象（JT）
-		SysDepartment sysdeptMem = sysDepartmentService.findByCode("JT");
-
-		// 行政总监部门
-		SysDepartment sysJtdept = sysDepartmentService.findByCode("JT06");
-
-		ProcessContext ctx = new ProcessContext();
-		ctx.setRowId(withdrawal.getWithdrawalid());// 表id
-		ctx.setActorId(actorId);// 用户审批者
-		ctx.setProcessName(processName);// 流程名称
-		String opinion = request.getParameter("approveOpinion");
-		ctx.setOpinion(opinion);// 审批意见
-		Collection<DataField> dataFields = new ArrayList<DataField>();// 参数
-
-		DataField dataField = new DataField();
-		dataField.setName("isAgree");// 是否通过审批
-		if (flag == 0) {
-			dataField.setValue("true");
-		} else {
-			dataField.setValue("false");
+	@RequestMapping("/query")
+	public ModelAndView query(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		String view = request.getParameter("view");
+		if (StringUtils.isNotEmpty(view)) {
+			return new ModelAndView(view, modelMap);
 		}
-		dataFields.add(dataField);
-
-		// 财务担当
-		DataField datafield1 = new DataField();
-		datafield1.setName("deptId01");
-		datafield1.setValue(HRdept.getId());
-		dataFields.add(datafield1);
-
-		// 当地总经理
-		DataField datafield4 = new DataField();
-		datafield4.setName("deptId02");
-		datafield4.setValue(curAreadept.getId());
-		dataFields.add(datafield4);
-
-		// 行政总监
-		DataField datafield5 = new DataField();
-		datafield5.setName("deptId03");
-		datafield5.setValue(sysJtdept.getId());
-		dataFields.add(datafield5);
-
-		// 集团(JT)
-		DataField datafield2 = new DataField();
-		datafield2.setName("deptId04");
-		datafield2.setValue(sysdeptMem.getId());
-		dataFields.add(datafield2);
-
-		DataField datafield3 = new DataField();
-		datafield3.setName("rowId");
-		datafield3.setValue(withdrawal.getWithdrawalid());
-		dataFields.add(datafield3);
-
-		ctx.setDataFields(dataFields);
-
-		Long processInstanceId;
-		boolean isOK = false;
-
-		if (withdrawal.getProcessinstanceid() != null
-				&& withdrawal.getWfstatus() != 9999
-				&& withdrawal.getWfstatus() != null) {
-			processInstanceId = withdrawal.getProcessinstanceid();
-			ctx.setProcessInstanceId(processInstanceId);
-			isOK = ProcessContainer.getContainer().completeTask(ctx);
-			logger.info("workflowing .......  ");
-		} else {
-			processInstanceId = ProcessContainer.getContainer().startProcess(
-					ctx);
-			logger.info("processInstanceId=" + processInstanceId);
-			isOK = true;
-			logger.info("workflow start");
+		String x_view = ViewProperties.getString("withdrawal.query");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
 		}
-		return isOK;
+		return new ModelAndView("/oa/withdrawal/query", modelMap);
+	}
+
+	@javax.annotation.Resource
+	public void setSysDepartmentService(
+			SysDepartmentService sysDepartmentService) {
+		this.sysDepartmentService = sysDepartmentService;
+	}
+
+	@javax.annotation.Resource
+	public void setWithdrawalService(WithdrawalService withdrawalService) {
+		this.withdrawalService = withdrawalService;
 	}
 }

@@ -60,99 +60,6 @@ public class RitemController {
 
 	}
 
-	@javax.annotation.Resource
-	public void setRitemService(RitemService ritemService) {
-		this.ritemService = ritemService;
-	}
-
-	@RequestMapping("/save")
-	public ModelAndView save(HttpServletRequest request, ModelMap modelMap) {
-		User user = RequestUtils.getUser(request);
-		String actorId = user.getActorId();
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		params.remove("status");
-		params.remove("wfStatus");
-
-		Ritem ritem = new Ritem();
-		Tools.populate(ritem, params);
-
-		ritem.setReimbursementid(RequestUtils.getLong(request,
-				"reimbursementid"));
-		ritem.setFeetype(RequestUtils.getInt(request, "feetype"));
-		ritem.setFeedate(RequestUtils.getDate(request, "feedate"));
-		ritem.setSubject(request.getParameter("subject"));
-		ritem.setCurrency(request.getParameter("currency"));
-		ritem.setItemsum(RequestUtils.getDouble(request, "itemsum"));
-		ritem.setExrate(RequestUtils.getDouble(request, "exrate"));
-		ritem.setUpdateDate(RequestUtils.getDate(request, "updateDate"));
-		ritem.setUpdateBy(request.getParameter("updateBy"));
-
-		ritem.setCreateBy(actorId);
-
-		ritemService.save(ritem);
-
-		return this.list(request, modelMap);
-	}
-
-	@ResponseBody
-	@RequestMapping("/saveRitem")
-	public byte[] saveRitem(HttpServletRequest request) {
-		User user = RequestUtils.getUser(request);
-		String actorId = user.getActorId();
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		Ritem ritem = new Ritem();
-		try {
-			Tools.populate(ritem, params);
-			ritem.setReimbursementid(RequestUtils.getLong(request,
-					"reimbursementid"));
-			ritem.setFeetype(RequestUtils.getInt(request, "feetype"));
-			ritem.setFeedate(RequestUtils.getDate(request, "feedate"));
-			ritem.setSubject(request.getParameter("subject"));
-			ritem.setCurrency(request.getParameter("currency"));
-			ritem.setItemsum(RequestUtils.getDouble(request, "itemsum"));
-			ritem.setExrate(RequestUtils.getDouble(request, "exrate"));
-			ritem.setCreateBy(request.getParameter("createBy"));
-			ritem.setCreateDate(RequestUtils.getDate(request, "createDate"));
-			ritem.setUpdateDate(RequestUtils.getDate(request, "updateDate"));
-			ritem.setUpdateBy(request.getParameter("updateBy"));
-			ritem.setCreateBy(actorId);
-			this.ritemService.save(ritem);
-
-			return ResponseUtils.responseJsonResult(true);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			logger.error(ex);
-		}
-		return ResponseUtils.responseJsonResult(false);
-	}
-
-	@RequestMapping("/update")
-	public ModelAndView update(HttpServletRequest request, ModelMap modelMap) {
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		params.remove("status");
-		params.remove("wfStatus");
-
-		Ritem ritem = ritemService.getRitem(RequestUtils.getLong(request,
-				"ritemid"));
-
-		ritem.setReimbursementid(RequestUtils.getLong(request,
-				"reimbursementid"));
-		ritem.setFeetype(RequestUtils.getInt(request, "feetype"));
-		ritem.setFeedate(RequestUtils.getDate(request, "feedate"));
-		ritem.setSubject(request.getParameter("subject"));
-		ritem.setCurrency(request.getParameter("currency"));
-		ritem.setItemsum(RequestUtils.getDouble(request, "itemsum"));
-		ritem.setExrate(RequestUtils.getDouble(request, "exrate"));
-		ritem.setCreateBy(request.getParameter("createBy"));
-		ritem.setCreateDate(RequestUtils.getDate(request, "createDate"));
-		ritem.setUpdateDate(RequestUtils.getDate(request, "updateDate"));
-		ritem.setUpdateBy(request.getParameter("updateBy"));
-
-		ritemService.save(ritem);
-
-		return this.list(request, modelMap);
-	}
-
 	@ResponseBody
 	@RequestMapping("/delete")
 	public void delete(HttpServletRequest request, ModelMap modelMap) {
@@ -218,42 +125,6 @@ public class RitemController {
 		}
 
 		return new ModelAndView("/oa/ritem/edit", modelMap);
-	}
-
-	@RequestMapping("/view")
-	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
-		Ritem ritem = ritemService.getRitem(RequestUtils.getLong(request,
-				"ritemid"));
-		request.setAttribute("ritem", ritem);
-		JSONObject rowJSON = ritem.toJsonObject();
-		request.setAttribute("x_json", rowJSON.toJSONString());
-
-		String view = request.getParameter("view");
-		if (StringUtils.isNotEmpty(view)) {
-			return new ModelAndView(view);
-		}
-
-		String x_view = ViewProperties.getString("ritem.view");
-		if (StringUtils.isNotEmpty(x_view)) {
-			return new ModelAndView(x_view);
-		}
-
-		return new ModelAndView("/oa/ritem/view");
-	}
-
-	@RequestMapping("/query")
-	public ModelAndView query(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
-		String view = request.getParameter("view");
-		if (StringUtils.isNotEmpty(view)) {
-			return new ModelAndView(view, modelMap);
-		}
-		String x_view = ViewProperties.getString("ritem.query");
-		if (StringUtils.isNotEmpty(x_view)) {
-			return new ModelAndView(x_view, modelMap);
-		}
-		return new ModelAndView("/oa/ritem/query", modelMap);
 	}
 
 	@RequestMapping("/json")
@@ -356,6 +227,135 @@ public class RitemController {
 		}
 
 		return new ModelAndView("/oa/ritem/list", modelMap);
+	}
+
+	@RequestMapping("/query")
+	public ModelAndView query(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		String view = request.getParameter("view");
+		if (StringUtils.isNotEmpty(view)) {
+			return new ModelAndView(view, modelMap);
+		}
+		String x_view = ViewProperties.getString("ritem.query");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+		return new ModelAndView("/oa/ritem/query", modelMap);
+	}
+
+	@RequestMapping("/save")
+	public ModelAndView save(HttpServletRequest request, ModelMap modelMap) {
+		User user = RequestUtils.getUser(request);
+		String actorId = user.getActorId();
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		params.remove("status");
+		params.remove("wfStatus");
+
+		Ritem ritem = new Ritem();
+		Tools.populate(ritem, params);
+
+		ritem.setReimbursementid(RequestUtils.getLong(request,
+				"reimbursementid"));
+		ritem.setFeetype(RequestUtils.getInt(request, "feetype"));
+		ritem.setFeedate(RequestUtils.getDate(request, "feedate"));
+		ritem.setSubject(request.getParameter("subject"));
+		ritem.setCurrency(request.getParameter("currency"));
+		ritem.setItemsum(RequestUtils.getDouble(request, "itemsum"));
+		ritem.setExrate(RequestUtils.getDouble(request, "exrate"));
+		ritem.setUpdateDate(RequestUtils.getDate(request, "updateDate"));
+		ritem.setUpdateBy(request.getParameter("updateBy"));
+
+		ritem.setCreateBy(actorId);
+
+		ritemService.save(ritem);
+
+		return this.list(request, modelMap);
+	}
+
+	@ResponseBody
+	@RequestMapping("/saveRitem")
+	public byte[] saveRitem(HttpServletRequest request) {
+		User user = RequestUtils.getUser(request);
+		String actorId = user.getActorId();
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		Ritem ritem = new Ritem();
+		try {
+			Tools.populate(ritem, params);
+			ritem.setReimbursementid(RequestUtils.getLong(request,
+					"reimbursementid"));
+			ritem.setFeetype(RequestUtils.getInt(request, "feetype"));
+			ritem.setFeedate(RequestUtils.getDate(request, "feedate"));
+			ritem.setSubject(request.getParameter("subject"));
+			ritem.setCurrency(request.getParameter("currency"));
+			ritem.setItemsum(RequestUtils.getDouble(request, "itemsum"));
+			ritem.setExrate(RequestUtils.getDouble(request, "exrate"));
+			ritem.setCreateBy(request.getParameter("createBy"));
+			ritem.setCreateDate(RequestUtils.getDate(request, "createDate"));
+			ritem.setUpdateDate(RequestUtils.getDate(request, "updateDate"));
+			ritem.setUpdateBy(request.getParameter("updateBy"));
+			ritem.setCreateBy(actorId);
+			this.ritemService.save(ritem);
+
+			return ResponseUtils.responseJsonResult(true);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			logger.error(ex);
+		}
+		return ResponseUtils.responseJsonResult(false);
+	}
+
+	@javax.annotation.Resource
+	public void setRitemService(RitemService ritemService) {
+		this.ritemService = ritemService;
+	}
+
+	@RequestMapping("/update")
+	public ModelAndView update(HttpServletRequest request, ModelMap modelMap) {
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		params.remove("status");
+		params.remove("wfStatus");
+
+		Ritem ritem = ritemService.getRitem(RequestUtils.getLong(request,
+				"ritemid"));
+
+		ritem.setReimbursementid(RequestUtils.getLong(request,
+				"reimbursementid"));
+		ritem.setFeetype(RequestUtils.getInt(request, "feetype"));
+		ritem.setFeedate(RequestUtils.getDate(request, "feedate"));
+		ritem.setSubject(request.getParameter("subject"));
+		ritem.setCurrency(request.getParameter("currency"));
+		ritem.setItemsum(RequestUtils.getDouble(request, "itemsum"));
+		ritem.setExrate(RequestUtils.getDouble(request, "exrate"));
+		ritem.setCreateBy(request.getParameter("createBy"));
+		ritem.setCreateDate(RequestUtils.getDate(request, "createDate"));
+		ritem.setUpdateDate(RequestUtils.getDate(request, "updateDate"));
+		ritem.setUpdateBy(request.getParameter("updateBy"));
+
+		ritemService.save(ritem);
+
+		return this.list(request, modelMap);
+	}
+
+	@RequestMapping("/view")
+	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		Ritem ritem = ritemService.getRitem(RequestUtils.getLong(request,
+				"ritemid"));
+		request.setAttribute("ritem", ritem);
+		JSONObject rowJSON = ritem.toJsonObject();
+		request.setAttribute("x_json", rowJSON.toJSONString());
+
+		String view = request.getParameter("view");
+		if (StringUtils.isNotEmpty(view)) {
+			return new ModelAndView(view);
+		}
+
+		String x_view = ViewProperties.getString("ritem.view");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view);
+		}
+
+		return new ModelAndView("/oa/ritem/view");
 	}
 
 }
