@@ -209,6 +209,16 @@ public class SysUser implements Serializable, User, JSONable {
 	@Column(name = "USERTYPE")
 	protected int userType;
 
+	@Column(name = "LOGINCOUNT")
+	protected Integer loginCount;
+
+	@Column(name = "ISCHANGEPASSWORD")
+	protected Integer isChangePassword;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "LASTCHANGEPASSWORDDATE")
+	protected Date lastChangePasswordDate;
+
 	public SysUser() {
 
 	}
@@ -298,6 +308,14 @@ public class SysUser implements Serializable, User, JSONable {
 		return id;
 	}
 
+	public Integer getIsChangePassword() {
+		return isChangePassword;
+	}
+
+	public Date getLastChangePasswordDate() {
+		return lastChangePasswordDate;
+	}
+
 	public Date getLastLoginDate() {
 		return lastLoginTime;
 	}
@@ -312,6 +330,10 @@ public class SysUser implements Serializable, User, JSONable {
 
 	public int getLocked() {
 		return blocked;
+	}
+
+	public Integer getLoginCount() {
+		return loginCount;
 	}
 
 	public String getLoginIP() {
@@ -535,6 +557,14 @@ public class SysUser implements Serializable, User, JSONable {
 		this.id = id;
 	}
 
+	public void setIsChangePassword(Integer isChangePassword) {
+		this.isChangePassword = isChangePassword;
+	}
+
+	public void setLastChangePasswordDate(Date lastChangePasswordDate) {
+		this.lastChangePasswordDate = lastChangePasswordDate;
+	}
+
 	public void setLastLoginDate(Date lastLoginDate) {
 		this.lastLoginTime = lastLoginDate;
 	}
@@ -549,6 +579,10 @@ public class SysUser implements Serializable, User, JSONable {
 
 	public void setLocked(int locked) {
 		this.blocked = locked;
+	}
+
+	public void setLoginCount(Integer loginCount) {
+		this.loginCount = loginCount;
 	}
 
 	public void setLoginIP(String loginIP) {

@@ -80,6 +80,61 @@ public class DateUtils {
 		returnStr = f.format(date);
 		return new BigDecimal(returnStr);
 	}
+	
+	/**
+	 * 取两日期差异天数
+	 * @param fromDate
+	 * @param toDate
+	 * @return
+	 */
+	public static long dateDiff(Date fromDate, Date toDate){
+		return dateDiff(getDateTime(DATE_PATTERN, fromDate),getDateTime(DATE_PATTERN, toDate));
+	}
+	
+	public static long dateDiff(String beginDateStr, String endDateStr) {
+        long day = 0;
+        java.text.SimpleDateFormat format = new java.text.SimpleDateFormat("yyyy-MM-dd");
+        java.util.Date beginDate;
+        java.util.Date endDate;
+        try {
+            beginDate = format.parse(beginDateStr);
+            endDate = format.parse(endDateStr);
+            day = (endDate.getTime() - beginDate.getTime())/ (24 * 60 * 60 * 1000);
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        return day;
+    }
+
+	
+	/**
+	 * 得到几天前的时间
+	 * 
+	 * @param date
+	 * @param day
+	 * @return
+	 */
+	public static Date getDateBefore(Date date, int day) {
+		Calendar now = Calendar.getInstance();
+		now.setTime(date);
+		now.set(Calendar.DATE, now.get(Calendar.DATE) - day);
+		return now.getTime();
+	}
+
+	/**
+	 * 得到几天后的时间
+	 * 
+	 * @param date
+	 * @param day
+	 * @return
+	 */
+	public static Date getDateAfter(Date date, int day) {
+		Calendar now = Calendar.getInstance();
+		now.setTime(date);
+		now.set(Calendar.DATE, now.get(Calendar.DATE) + day);
+		return now.getTime();
+	}
+
 
 	/**
 	 * 根据年月取每月的天数
@@ -351,6 +406,13 @@ public class DateUtils {
 		System.out.println(DateUtils.toDate("2009-12-25 13"));
 		System.out.println(DateUtils.toDate("2009-12-25 10:45"));
 		System.out.println(DateUtils.toDate("2009-12-25 22:45:50"));
+		
+		
+		System.out.println(dateDiff(DateUtils.toDate("2013-10-25"),DateUtils.toDate("2013-10-29")));
+		Date toDate = DateUtils.getDateAfter(DateUtils.toDate("2013-03-21"), 60);
+		System.out.println(getDateTime(toDate));
+		long daysDiff = DateUtils.dateDiff(new Date(), toDate);
+		System.out.println(daysDiff);
 
 	}
 

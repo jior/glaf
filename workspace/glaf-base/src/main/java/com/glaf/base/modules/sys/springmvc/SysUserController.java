@@ -588,6 +588,8 @@ public class SysUserController {
 						ex.printStackTrace();
 					}
 					bean.setUpdateBy(bean.getAccount());
+					bean.setLastChangePasswordDate(new Date());
+					bean.setIsChangePassword(2);
 					ret = sysUserService.update(bean);
 				}
 			}
@@ -650,6 +652,8 @@ public class SysUserController {
 		bean.setLastLoginTime(new Date());
 		bean.setCreateBy(RequestUtils.getActorId(request));
 		bean.setUpdateBy(RequestUtils.getActorId(request));
+		bean.setLastChangePasswordDate(new Date());
+		bean.setIsChangePassword(0);
 
 		int ret = 0;
 		if (sysUserService.findByAccount(bean.getAccount()) == null) {
@@ -774,6 +778,8 @@ public class SysUserController {
 				if (StringUtils.equals(encPwd, user.getPassword())) {
 					user.setPassword(DigestUtil.digestString(newPwd, "MD5"));
 					user.setUpdateBy(RequestUtils.getActorId(request));
+					user.setLastChangePasswordDate(new Date());
+					user.setIsChangePassword(2);
 					ret = sysUserService.update(user);
 				}
 			} catch (Exception ex) {

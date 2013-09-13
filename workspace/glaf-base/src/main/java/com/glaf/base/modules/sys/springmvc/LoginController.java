@@ -80,14 +80,14 @@ public class LoginController {
 		if (session == null) {
 			return new ModelAndView("/modules/login", modelMap);
 		}
-		
+
 		if (StringUtils.isNotEmpty(request.getParameter("systemName"))) {
 			Environment
 					.setCurrentSystemName(request.getParameter("systemName"));
 		} else {
 			Environment.setCurrentSystemName(Environment.DEFAULT_SYSTEM_NAME);
 		}
-		
+
 		ViewMessages messages = new ViewMessages();
 		// 获取参数
 		String account = ParamUtil.getParameter(request, "x");
@@ -128,6 +128,9 @@ public class LoginController {
 				Enumeration<?> e = props.keys();
 				while (e.hasMoreElements()) {
 					String className = (String) e.nextElement();
+					if (className.indexOf("parameter") >= 0) {
+						continue;
+					}
 					try {
 						Object obj = ClassUtils.instantiateObject(className);
 						if (obj instanceof LoginCallback) {
@@ -143,6 +146,11 @@ public class LoginController {
 			}
 
 			// 登录成功，修改最近一次登录时间
+			if (bean.getLoginCount() != null) {
+				bean.setLoginCount(bean.getLoginCount() + 1);
+			} else {
+				bean.setLoginCount(1);
+			}
 			bean.setLastLoginDate(new Date());
 			sysUserService.updateUser(bean);
 

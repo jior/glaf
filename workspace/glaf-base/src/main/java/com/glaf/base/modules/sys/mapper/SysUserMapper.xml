@@ -31,6 +31,11 @@
 		<result property="createBy" column="CREATEBY" jdbcType="VARCHAR" />
 		<result property="updateBy" column="UPDATEBY" jdbcType="VARCHAR" />
 		<result property="updateDate" column="UPDATEDATE" jdbcType="TIMESTAMP" />
+		<result property="loginCount" column="LOGINCOUNT" jdbcType="INTEGER" />
+		<result property="isChangePassword" column="ISCHANGEPASSWORD"
+			jdbcType="INTEGER" />
+		<result property="lastChangePasswordDate" column="LASTCHANGEPASSWORDDATE"
+			jdbcType="TIMESTAMP" />
 	</resultMap>
 
 
@@ -264,6 +269,15 @@
 			<if test="updateDate != null">
 				UPDATEDATE = #{updateDate, jdbcType=TIMESTAMP},
 			</if>
+			<if test="loginCount != null">
+				LOGINCOUNT = #{loginCount, jdbcType=INTEGER},
+			</if>
+			<if test="isChangePassword != null">
+				ISCHANGEPASSWORD = #{isChangePassword, jdbcType=INTEGER},
+			</if>
+			<if test="lastChangePasswordDate != null">
+				LASTCHANGEPASSWORDDATE = #{lastChangePasswordDate, jdbcType=TIMESTAMP},
+			</if>
 		</trim>
 		where
 		ID = #{id, jdbcType=BIGINT}
@@ -272,8 +286,7 @@
 
 
 	<delete id="deleteSysUserById" parameterType="long">
-		delete from
-		sys_user
+		delete from sys_user
 		where ID = #{id}
 	</delete>
 
@@ -310,14 +323,14 @@
 		resultMap="sysUserResultMap">
 		select * from sys_user where ACCOUNT = #{account}
 	</select>
-	
-	
+
+
 	<select id="getSysUserByAccount_oracle" parameterType="String"
 		resultMap="sysUserResultMap">
 		select * from sys_user where lower(ACCOUNT) = #{account}
 	</select>
-	
-	
+
+
 	<select id="getSysUserByAccount_postgresql" parameterType="String"
 		resultMap="sysUserResultMap">
 		select * from sys_user where lower(ACCOUNT) = #{account}
@@ -365,8 +378,7 @@
 
 		select distinct E.* from sys_user E
 		inner join sys_user_role R
-		on E.ID =
-		R.USERID
+		on E.ID = R.USERID
 		where E.ACCOUNTTYPE = 0
 
 		<if test=" deptId != null  ">
@@ -404,12 +416,10 @@
 		resultMap="sysUserResultMap">
 
 		select distinct E.* from sys_user E
-		inner join sys_user_role
-		R
+		inner join sys_user_role R
 		on E.ID = R.USERID
 		where E.ACCOUNTTYPE = 0
-		and R.AUTHORIZEFROM =
-		#{authorizeFrom}
+		and R.AUTHORIZEFROM = #{authorizeFrom}
 
 	</select>
 
@@ -435,7 +445,8 @@
 		WHERE r.authorized = 0 AND r.roleId IN (
 		SELECT a.id FROM sys_dept_role a
 		INNER JOIN sys_role b
-		ON a.sysRoleId = b.id
+		ON a.sysRoleId =
+		b.id
 		WHERE 1=1
 
 		<if test="deptRoleId != null">
@@ -488,7 +499,6 @@
 		)
 		)
 	</select>
-
 
 
 	<select id="getSysUsers" parameterType="com.glaf.base.modules.sys.query.SysUserQuery"
