@@ -20,6 +20,7 @@
 	<import resource="spring-mybatis.xml" />
 	<import resource="spring-ehcache.xml" />
 	<import resource="spring-scheduler.xml" />
+	<import resource="spring-batch.xml" />
 
 	<import resource="classpath*:com/glaf/**/*-spring-context.xml" />
 
