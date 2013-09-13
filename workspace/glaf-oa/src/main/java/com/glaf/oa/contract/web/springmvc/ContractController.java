@@ -316,10 +316,6 @@ public class ContractController {
 		return new ModelAndView("/oa/contract/edit", modelMap);
 	}
 
-	public ContractService getContractService() {
-		return contractService;
-	}
-
 	@RequestMapping("/getReviewContract")
 	@ResponseBody
 	public byte[] getReviewContract(HttpServletRequest request,
