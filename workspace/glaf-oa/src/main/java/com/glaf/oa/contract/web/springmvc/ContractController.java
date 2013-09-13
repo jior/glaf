@@ -284,34 +284,9 @@ public class ContractController {
 		}
 
 		request.setAttribute("canUpdate", canUpdate);
-		// Ôö¼ÓÆ·ÅÆ¼ìË÷
-		List<BaseDataInfo> brandlist = BaseDataManager.getInstance()
-				.getDataList("Brand");
-		BaseDataInfo brand1 = null;
-		BaseDataInfo brand2 = null;
-		for (BaseDataInfo info : brandlist) {
-			if ("1".equals(info.getValue())) {
-				request.setAttribute("brand1", info.getName());
-				brand1 = info;
-			} else if ("2".equals(info.getValue())) {
-				request.setAttribute("brand2", info.getName());
-				brand2 = info;
-			}
-		}
+
 		if (contract != null) {
-			if ("".equals(contract.getBrands1().trim())
-					&& "".equals(contract.getBrands2().trim())) {
-				request.setAttribute("Brands", "MUL");
-			} else if (!"".equals(contract.getBrands1().trim())
-					&& "".equals(contract.getBrands2().trim())) {
-				request.setAttribute("Brands", brand1.getCode());
-			} else if (!"".equals(contract.getBrands2().trim())
-					&& "".equals(contract.getBrands1().trim())) {
-				request.setAttribute("Brands", brand2.getCode());
-			} else if (!"".equals(contract.getBrands2().trim())
-					&& !"".equals(contract.getBrands1().trim())) {
-				request.setAttribute("Brands", "MUL");
-			}
+
 		} else {
 			contract = new Contract();
 			long deptId01 = user.getDeptId();
