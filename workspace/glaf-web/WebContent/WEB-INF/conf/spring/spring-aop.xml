@@ -25,6 +25,17 @@
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="serviceOperation" />
 	</aop:config>
 
+
+	<aop:config>
+		<aop:advisor advice-ref="txAdviceRepository" pointcut="execution(* org.springframework.batch.core..*Repository+.*(..))"/>
+	</aop:config>
+
+	<tx:advice id="txAdviceRepository" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="*" />
+		</tx:attributes>
+	</tx:advice>
+
 	<tx:annotation-driven transaction-manager="transactionManager" />
 
 	<tx:annotation-driven mode="aspectj" />
