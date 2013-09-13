@@ -376,22 +376,22 @@ insert into sys_input_def (id, init_value, input_type, java_type, key_name, requ
 
 
 /*UI管理初始化数据*/
-INSERT INTO UI_PANEL (ID_,ACTORID_,CLOSE_,COLLAPSIBLE_,COLUMNINDEX_,HEIGHT_,LINK_,LOCKED_,NAME_,RESIZE_,TITLE_,TYPE_,WIDTH_) VALUES ( '1010','root',0,0,0,250,'/user/todo.do?method=userTasks',0,'todo',0,'待办事项','L',0);
-INSERT INTO UI_PANEL (ID_,ACTORID_,CLOSE_,COLLAPSIBLE_,COLUMNINDEX_,HEIGHT_,LINK_,LOCKED_,NAME_,RESIZE_,TITLE_,TYPE_,WIDTH_) VALUES ( '1016','root',0,0,0,250,'/mx/public/info/indexList?serviceKey=news',0,'news',0,'新闻','L',0);
-INSERT INTO UI_PANEL (ID_,ACTORID_,CLOSE_,COLLAPSIBLE_,COLUMNINDEX_,HEIGHT_,LINK_,LOCKED_,NAME_,RESIZE_,TITLE_,TYPE_,WIDTH_) VALUES ( '1018','root',0,0,0,250,'/mx/public/info/indexList?serviceKey=bulletin',0,'bulletin',0,'公告','L',0);
-INSERT INTO UI_PANEL (ID_,ACTORID_,CLOSE_,COLLAPSIBLE_,COLUMNINDEX_,CONTENT_,HEIGHT_,LOCKED_,NAME_,RESIZE_,TITLE_,TYPE_,WIDTH_) VALUES ( '1020','root',0,0,0,'<p>&nbsp;</p><p>&nbsp;&nbsp;&nbsp;&nbsp;GLAF 1.0准备发布！</p>',250,0,'notice',0,'通知','T',0);
+insert into ui_panel (id_,actorid_,close_,collapsible_,columnindex_,height_,link_,locked_,name_,resize_,title_,type_,width_) values ( '1010','root',0,0,0,250,'/user/todo.do?method=userTasks',0,'todo',0,'待办事项','L',0);
+insert into ui_panel (id_,actorid_,close_,collapsible_,columnindex_,height_,link_,locked_,name_,resize_,title_,type_,width_) values ( '1016','root',0,0,0,250,'/mx/public/info/indexList?serviceKey=news',0,'news',0,'新闻','L',0);
+insert into ui_panel (id_,actorid_,close_,collapsible_,columnindex_,height_,link_,locked_,name_,resize_,title_,type_,width_) values ( '1018','root',0,0,0,250,'/mx/public/info/indexList?serviceKey=bulletin',0,'bulletin',0,'公告','L',0);
+insert into ui_panel (id_,actorid_,close_,collapsible_,columnindex_,content_,height_,locked_,name_,resize_,title_,type_,width_) values ( '1020','root',0,0,0,'<p>&nbsp;</p><p>&nbsp;&nbsp;&nbsp;&nbsp;GLAF 1.0准备发布！</p>',250,0,'notice',0,'通知','T',0);
 
-INSERT INTO UI_PANELINSTANCE (ID_,NAME_,PANEL_,USERPANEL_) VALUES ( '1024','2','1020','1023');
-INSERT INTO UI_PANELINSTANCE (ID_,NAME_,PANEL_,USERPANEL_) VALUES ( '1025','1','1010','1023');
-INSERT INTO UI_PANELINSTANCE (ID_,NAME_,PANEL_,USERPANEL_) VALUES ( '1026','4','1018','1023');
-INSERT INTO UI_PANELINSTANCE (ID_,NAME_,PANEL_,USERPANEL_) VALUES ( '1027','3','1016','1023');
+insert into ui_panelinstance (id_,name_,panel_,userpanel_) values ( '1024','2','1020','1023');
+insert into ui_panelinstance (id_,name_,panel_,userpanel_) values ( '1025','1','1010','1023');
+insert into ui_panelinstance (id_,name_,panel_,userpanel_) values ( '1026','4','1018','1023');
+insert into ui_panelinstance (id_,name_,panel_,userpanel_) values ( '1027','3','1016','1023');
 
-INSERT INTO UI_USERPANEL (ID_,ACTORID_,LAYOUTNAME_,REFRESHSECONDS_) VALUES ( '1023','root','P2',0);
+insert into ui_userpanel (id_,actorid_,layoutname_,refreshseconds_) values ( '1023','root','P2',0);
 
-INSERT INTO UI_USERPORTAL (ID_,ACTORID_,COLUMNINDEX_,PANELID_,POSITION_) VALUES ( '1028','root',0,'1010',1);
-INSERT INTO UI_USERPORTAL (ID_,ACTORID_,COLUMNINDEX_,PANELID_,POSITION_) VALUES ( '1029','root',0,'1016',3);
-INSERT INTO UI_USERPORTAL (ID_,ACTORID_,COLUMNINDEX_,PANELID_,POSITION_) VALUES ( '1030','root',1,'1018',4);
-INSERT INTO UI_USERPORTAL (ID_,ACTORID_,COLUMNINDEX_,PANELID_,POSITION_) VALUES ( '1031','root',1,'1020',2);
+insert into ui_userportal (id_,actorid_,columnindex_,panelid_,position_) values ( '1028','root',0,'1010',1);
+insert into ui_userportal (id_,actorid_,columnindex_,panelid_,position_) values ( '1029','root',0,'1016',3);
+insert into ui_userportal (id_,actorid_,columnindex_,panelid_,position_) values ( '1030','root',1,'1018',4);
+insert into ui_userportal (id_,actorid_,columnindex_,panelid_,position_) values ( '1031','root',1,'1020',2);
 
 update sys_application set locked = 0 where locked is null;
 
