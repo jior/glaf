@@ -27,8 +27,6 @@
 							striped : true,
 							collapsible : true,
 							url : '${contextPath}/mx/oa/leave/getReviewLeave',
-							sortName : 'leaveid',
-							sortOrder : 'desc',
 							remoteSort : false,
 							singleSelect : false,
 							idField : 'leaveid',

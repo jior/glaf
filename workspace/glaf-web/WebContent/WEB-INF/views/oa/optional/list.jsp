@@ -25,8 +25,6 @@
 			striped : true,
 			collapsible : true,
 			url : '${contextPath}/mx/oa/optional/json',
-			sortName : 'id',
-			sortOrder : 'desc',
 			remoteSort : false,
 			singleSelect : true,
 			idField : 'optionalid',

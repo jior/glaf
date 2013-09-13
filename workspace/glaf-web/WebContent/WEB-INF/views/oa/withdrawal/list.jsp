@@ -29,8 +29,6 @@
 							collapsible : true,
 							url : '${contextPath}/mx/oa/withdrawal/json?rstatus='
 									+ rstatus,
-							sortName : 'id',
-							sortOrder : 'desc',
 							remoteSort : false,
 							singleSelect : true,
 							idField : 'withdrawalid',

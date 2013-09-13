@@ -16,8 +16,7 @@
 
 	jQuery(function() {
 		jQuery('#mydatagrid')
-				.datagrid(
-						{
+				.datagrid({
 							width : 1000,
 							height : 480,
 							fit : true,
@@ -26,8 +25,6 @@
 							striped : true,
 							collapsible : true,
 							url : '${contextPath}/mx/oa/withdrawalApprove/json',
-							sortName : 'id',
-							sortOrder : 'desc',
 							remoteSort : false,
 							singleSelect : false,
 							idField : 'withdrawalid',

@@ -28,8 +28,6 @@
 							striped : true,
 							collapsible : true,
 							url : '${contextPath}/mx/oa/ltravel/getReviewLtravel',
-							sortName : 'travelid',
-							sortOrder : 'desc',
 							remoteSort : false,
 							singleSelect : false,
 							idField : 'travelid',

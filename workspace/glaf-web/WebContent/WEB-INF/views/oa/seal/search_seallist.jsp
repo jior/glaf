@@ -23,8 +23,6 @@
 			striped : true,
 			collapsible : true,
 			url : '${contextPath}/mx/oa/seal/json?areaRole=' + areaRole,
-			sortName : 'id',
-			sortOrder : 'desc',
 			remoteSort : false,
 			singleSelect : true,
 			idField : 'sealid',

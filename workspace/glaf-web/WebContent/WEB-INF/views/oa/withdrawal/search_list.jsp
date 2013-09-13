@@ -28,8 +28,6 @@
 							collapsible : true,
 							url : '${contextPath}/mx/oa/withdrawalSearch/json?areaRole='
 									+ areaRole,
-							sortName : 'id',
-							sortOrder : 'desc',
 							remoteSort : false,
 							singleSelect : true,
 							idField : 'withdrawalid',

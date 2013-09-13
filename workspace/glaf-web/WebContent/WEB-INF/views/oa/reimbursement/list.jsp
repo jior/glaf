@@ -30,8 +30,6 @@
 							collapsible : true,
 							url : '${contextPath}/mx/oa/reimbursement/json?rstatus='
 									+ rstatus,
-							sortName : 'id',
-							sortOrder : 'desc',
 							remoteSort : false,
 							singleSelect : true,
 							idField : 'reimbursementid',

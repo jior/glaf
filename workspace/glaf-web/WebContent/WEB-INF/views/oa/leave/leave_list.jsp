@@ -32,8 +32,6 @@
 	!= null ?
 <%=request.getParameter("status")%>
 	: ''),
-							sortName : 'leaveid',
-							sortOrder : 'desc',
 							remoteSort : false,
 							singleSelect : true,
 							idField : 'leaveid',

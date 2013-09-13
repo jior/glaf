@@ -25,8 +25,6 @@
 			striped : true,
 			collapsible : true,
 			url : '${contextPath}/mx/oa/payment/getReviewList',
-			sortName : 'id',
-			sortOrder : 'desc',
 			remoteSort : false,
 			singleSelect : false,
 			idField : 'paymentid',

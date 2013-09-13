@@ -27,8 +27,6 @@
 							striped : true,
 							collapsible : true,
 							url : '${contextPath}/mx/oa/stravel/getReviewStravel',
-							sortName : 'travelid',
-							sortOrder : 'desc',
 							remoteSort : false,
 							singleSelect : false,
 							idField : 'travelid',

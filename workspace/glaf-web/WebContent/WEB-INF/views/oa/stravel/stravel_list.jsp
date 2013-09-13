@@ -1,7 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ include file="/WEB-INF/views/inc/init_import.jsp"%>
 <%@ include file="/WEB-INF/views/inc/init_config.jsp"%>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,13 +26,7 @@
 							striped : true,
 							collapsible : true,
 							url : '${contextPath}/mx/oa/stravel/json?rstatus='
-									+ (
-<%=request.getParameter("status")%>
-	!= null ?
-<%=request.getParameter("status")%>
-	: ''),
-							sortName : 'travelid',
-							sortOrder : 'desc',
+									+ (<%=request.getParameter("status")%> != null ? <%=request.getParameter("status")%> : ''),
 							remoteSort : false,
 							singleSelect : true,
 							idField : 'travelid',

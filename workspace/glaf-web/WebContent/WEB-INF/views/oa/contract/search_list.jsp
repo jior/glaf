@@ -26,8 +26,6 @@
 			striped : true,
 			collapsible : true,
 			url : '${contextPath}/mx/oa/contract/json?areaRole=' + areaRole,
-			sortName : 'id',
-			sortOrder : 'desc',
 			remoteSort : false,
 			singleSelect : true,
 			idField : 'id',

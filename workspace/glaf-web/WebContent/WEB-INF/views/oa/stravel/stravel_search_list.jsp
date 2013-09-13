@@ -27,8 +27,6 @@
 							striped : true,
 							collapsible : true,
 							url : '${contextPath}/mx/oa/stravel/searchJson?areaRole=${areaRole}',
-							sortName : 'travelid',
-							sortOrder : 'desc',
 							remoteSort : false,
 							singleSelect : true,
 							idField : 'travelid',
@@ -130,13 +128,11 @@
 	});
 
 	function print(id) {
-		window.location = "${contextPath}/mx/oa/reports/exportSTravel?travelid="
-				+ id;
+		window.location = "${contextPath}/mx/oa/reports/exportSTravel?travelid=" + id;
 	}
 
 	function view(id) {
-		var link = "${contextPath}/mx/oa/stravel/review?lookover=true&travelid="
-				+ id;
+		var link = "${contextPath}/mx/oa/stravel/review?lookover=true&travelid=" + id;
 		art.dialog.open(link, {
 			height : 420,
 			width : 950,
@@ -147,8 +143,7 @@
 	}
 
 	function viewProc(processinstanceid) {
-		window.open("${contextPath}/mx/jbpm/task/task?processInstanceId="
-				+ processinstanceid);
+		window.open("${contextPath}/mx/jbpm/task/task?processInstanceId="+ processinstanceid);
 	}
 
 	function resize() {

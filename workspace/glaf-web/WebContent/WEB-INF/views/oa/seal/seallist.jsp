@@ -24,8 +24,6 @@
 			striped : true,
 			collapsible : true,
 			url : '${contextPath}/mx/oa/seal/json?rstatus=' + rstatus,
-			sortName : 'id',
-			sortOrder : 'desc',
 			remoteSort : false,
 			singleSelect : true,
 			idField : 'sealid',

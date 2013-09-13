@@ -32,8 +32,6 @@
 	!= null ?
 <%=request.getParameter("status")%>
 	: ''),
-							sortName : 'travelid',
-							sortOrder : 'desc',
 							remoteSort : false,
 							singleSelect : true,
 							idField : 'travelid',

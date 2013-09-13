@@ -29,8 +29,6 @@
 							collapsible : true,
 							url : '${contextPath}/mx/oa/reimbursementSearch/json?areaRole='
 									+ areaRole,
-							sortName : 'id',
-							sortOrder : 'desc',
 							remoteSort : false,
 							singleSelect : true,
 							idField : 'reimbursementid',

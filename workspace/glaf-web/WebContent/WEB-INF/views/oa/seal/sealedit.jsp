@@ -105,11 +105,11 @@
 				 
 				<a href="#" class="easyui-linkbutton"
 					data-options="plain:true, iconCls:'icon-save'"
-					onclick="javascript:saveData();">保存</a> <a href="#"
-					class="easyui-linkbutton"
+					onclick="javascript:saveData();">保存</a> 
+				<a href="#" class="easyui-linkbutton"
 					data-options="plain:true, iconCls:'icon-submit'"
-					onclick="javascript:saveAsData();">提交</a> <a href="#"
-					class="easyui-linkbutton"
+					onclick="javascript:saveAsData();">提交</a> 
+				<a href="#" class="easyui-linkbutton"
 					data-options="plain:true, iconCls:'icon-cancel'"
 					onclick="javascript:closeDialog();">关闭</a>
 			</div>
@@ -224,10 +224,10 @@ jQuery.ajax({
 						<tr>
 
 							<td align="left" colspan="2">申请印章类型</td>
-							<td align="left" colspan="4"><input id="sealtype"
-								class="easyui-combobox" name="sealtype" readonly
-								data-options="valueField:'code',textField:'name',required:true,editable:false,multiple:true,url:'${contextPath}/rs/dictory/jsonArray/seal'"
-								size='25' /></td>
+							<td align="left" colspan="4">
+							<input id="sealtype" class="easyui-combobox" name="sealtype" readonly size='25'
+								data-options="valueField:'code',textField:'name',required:true,editable:false,multiple:true,url:'${contextPath}/rs/dictory/jsonArray/seal'"/>
+							</td>
 						</tr>
 						<tr>
 							<td align="left" colspan="2">申请盖章文件之主送单位</td>
@@ -238,8 +238,8 @@ jQuery.ajax({
 						</tr>
 						<tr>
 							<td align="left" colspan="2">申请盖章文件之内容</td>
-							<td align="left" colspan="4"><textarea id="content"
-									name="content"
+							<td align="left" colspan="4">
+							<textarea id="content" name="content"
 									data-options="required:true,validType:'notNullAndLength[200]'"
 									class="easyui-validatebox" rows="5" cols="50">${seal.content}</textarea>
 							</td>

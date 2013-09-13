@@ -24,8 +24,6 @@
 			striped : true,
 			collapsible : true,
 			url : '${contextPath}/mx/oa/budget/getReviewBudget',
-			sortName : 'id',
-			sortOrder : 'desc',
 			remoteSort : false,
 			singleSelect : false,
 			idField : 'budgetid',

@@ -29,8 +29,6 @@
 							collapsible : true,
 							url : '${contextPath}/mx/oa/purchaseSearch/json?areaRole='
 									+ areaRole,
-							sortName : 'id',
-							sortOrder : 'desc',
 							remoteSort : false,
 							singleSelect : true,
 							idField : 'purchaseId',

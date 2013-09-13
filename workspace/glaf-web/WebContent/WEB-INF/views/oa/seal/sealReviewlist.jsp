@@ -23,8 +23,6 @@
 			striped : true,
 			collapsible : true,
 			url : '${contextPath}/mx/oa/seal/getReviewSeal',
-			sortName : 'id',
-			sortOrder : 'desc',
 			remoteSort : false,
 			singleSelect : false,
 			idField : 'sealid',

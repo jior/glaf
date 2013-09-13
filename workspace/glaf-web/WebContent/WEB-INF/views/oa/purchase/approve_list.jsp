@@ -27,8 +27,6 @@
 							striped : true,
 							collapsible : true,
 							url : '${contextPath}/mx/oa/purchaseApprove/json',
-							sortName : 'id',
-							sortOrder : 'desc',
 							remoteSort : false,
 							singleSelect : false,
 							idField : 'purchaseId',

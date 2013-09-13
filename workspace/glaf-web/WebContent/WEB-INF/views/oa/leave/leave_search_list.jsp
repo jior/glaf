@@ -27,8 +27,6 @@
 							striped : true,
 							collapsible : true,
 							url : '${contextPath}/mx/oa/leave/searchJson?areaRole=${areaRole}',
-							sortName : 'leaveid',
-							sortOrder : 'desc',
 							remoteSort : false,
 							singleSelect : true,
 							idField : 'leaveid',
