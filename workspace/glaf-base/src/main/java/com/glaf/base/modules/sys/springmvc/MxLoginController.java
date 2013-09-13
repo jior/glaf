@@ -57,7 +57,8 @@ import com.glaf.shiro.ShiroSecurity;
 @Controller("/mx/login")
 @RequestMapping("/login")
 public class MxLoginController {
-	private static final Log logger = LogFactory.getLog(MxLoginController.class);
+	private static final Log logger = LogFactory
+			.getLog(MxLoginController.class);
 
 	private SysApplicationService sysApplicationService;
 
@@ -80,14 +81,14 @@ public class MxLoginController {
 		if (session == null) {
 			return new ModelAndView("/modules/login", modelMap);
 		}
-		
+
 		if (StringUtils.isNotEmpty(request.getParameter("systemName"))) {
 			Environment
 					.setCurrentSystemName(request.getParameter("systemName"));
 		} else {
 			Environment.setCurrentSystemName(Environment.DEFAULT_SYSTEM_NAME);
 		}
-		
+
 		ViewMessages messages = new ViewMessages();
 		// 获取参数
 		String account = ParamUtil.getParameter(request, "x");
@@ -142,6 +143,12 @@ public class MxLoginController {
 				}
 			}
 
+			if (bean.getLoginCount() != null) {
+				bean.setLoginCount(bean.getLoginCount() + 1);
+			} else {
+				bean.setLoginCount(1);
+			}
+
 			// 登录成功，修改最近一次登录时间
 			bean.setLastLoginDate(new Date());
 			sysUserService.updateUser(bean);
@@ -151,7 +158,7 @@ public class MxLoginController {
 
 			ContextUtil.put(bean.getAccount(), bean);// 传入全局变量
 
-			RequestUtils.setLoginUser(request, response, "GLAF",
+			RequestUtils.setLoginUser(request, response, "default",
 					bean.getAccount());
 
 			request.setAttribute(SysConstants.MENU, menus);

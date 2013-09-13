@@ -145,12 +145,12 @@ public class LoginController {
 				}
 			}
 
-			// 登录成功，修改最近一次登录时间
 			if (bean.getLoginCount() != null) {
 				bean.setLoginCount(bean.getLoginCount() + 1);
 			} else {
 				bean.setLoginCount(1);
 			}
+			// 登录成功，修改最近一次登录时间
 			bean.setLastLoginDate(new Date());
 			sysUserService.updateUser(bean);
 
@@ -159,7 +159,7 @@ public class LoginController {
 
 			ContextUtil.put(bean.getAccount(), bean);// 传入全局变量
 
-			RequestUtils.setLoginUser(request, response, "GLAF",
+			RequestUtils.setLoginUser(request, response, "default",
 					bean.getAccount());
 
 			request.setAttribute(SysConstants.MENU, menus);
