@@ -13,13 +13,19 @@
 	var sealstype = "${seal.sealtype}";
 	var sealid = "${seal.sealid}";
 
+
+	jQuery(function() {
+		//jQuery('#sealtype').combobox('reload', '${contextPath}/rs/dictory/jsonArray/seal');
+	});
+
+
 	jQuery(function() {
 		if (sealid == "" || sealid == null) {
 		} else {
 			jQuery('#sealtype').combobox('setValues', sealstype.split(','));
 		}
 	});
-	
+
 	
 	function saveData() {
 		var bol = jQuery("#iForm").form('validate');
@@ -60,7 +66,6 @@
 			return;
 		}
 		var sealtypes = jQuery('#sealtype').combobox('getValues');
-
 		var params = jQuery("#iForm").formSerialize();
 		jQuery.ajax({
 			type : "POST",
@@ -225,8 +230,8 @@ jQuery.ajax({
 
 							<td align="left" colspan="2">申请印章类型</td>
 							<td align="left" colspan="4">
-							<input id="sealtype" class="easyui-combobox" name="sealtype" readonly size='25'
-								data-options="valueField:'code',textField:'name',required:true,editable:false,multiple:true,url:'${contextPath}/rs/dictory/jsonArray/seal'"/>
+							<input id="sealtype" name="sealtype" class="easyui-combobox" size='25'
+								data-options="valueField:'code',textField:'name', required:true,editable:false,multiple:true,url:'${contextPath}/rs/dictory/jsonArray/seal'"/> 
 							</td>
 						</tr>
 						<tr>
@@ -234,7 +239,8 @@ jQuery.ajax({
 							<td align="left" colspan="4"><input id="supplier"
 								name="supplier" type="text" size='40' maxlength="50"
 								data-options="required:true" class="easyui-validatebox"
-								value="${seal.supplier}" /></td>
+								value="${seal.supplier}" />
+							</td>
 						</tr>
 						<tr>
 							<td align="left" colspan="2">申请盖章文件之内容</td>
@@ -249,17 +255,20 @@ jQuery.ajax({
 							<td align="left" colspan="4"><input id="num" name="num"
 								type="text" maxlength="3" min="1" max="999" size="5"
 								class="easyui-numberbox" value="${seal.num}"
-								data-options="required:true" /></td>
+								data-options="required:true" />
+							</td>
 						</tr>
 
 						<tr>
 							<td align="left" colspan="2">备注</td>
 							<td align="left" colspan="4"><textarea id="remark"
 									name="remark" class="easyui-validatebox" rows="5" cols="50"
-									validType="Maxlength[200]">${seal.remark}</textarea></td>
+									validType="Maxlength[200]">${seal.remark}</textarea>
+							</td>
 						</tr>
 						<tr>
-							<td colspan="2"><c:if test="${seal.sealid==null}">
+							<td colspan="2">
+							<c:if test="${seal.sealid==null}">
 									<a href="javascript:uploadFile(4, 0, 1)">附件上传</a>
 										(共<span id="numAttachment4" name="numAttachment4">0</span>个)
 								<script type="text/javascript">
@@ -296,6 +305,7 @@ jQuery.ajax({
 								</script>
 
 								</c:if>
+							</td>
 						</tr>
 					</tbody>
 				</table>
