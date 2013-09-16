@@ -140,6 +140,19 @@ public class SysUserJsonFactory {
 			model.setAdminFlag(jsonObject.getString("adminFlag"));
 		}
 
+		if (jsonObject.containsKey("loginCount")) {
+			model.setLoginCount(jsonObject.getInteger("loginCount"));
+		}
+
+		if (jsonObject.containsKey("isChangePassword")) {
+			model.setIsChangePassword(jsonObject.getInteger("isChangePassword"));
+		}
+
+		if (jsonObject.containsKey("lastChangePasswordDate")) {
+			model.setLastChangePasswordDate(jsonObject
+					.getDate("lastChangePasswordDate"));
+		}
+
 		if (jsonObject.containsKey("userRoles")) {
 			JSONArray array = jsonObject.getJSONArray("userRoles");
 			if (array != null && !array.isEmpty()) {
@@ -210,7 +223,7 @@ public class SysUserJsonFactory {
 		jsonObject.put("name", user.getName());
 		jsonObject.put("locked", user.getBlocked());
 		jsonObject.put("blocked", user.getBlocked());
-		
+
 		if (user.getDepartment() != null) {
 			jsonObject.put("deptId", user.getDepartment().getId());
 			jsonObject.put("deptName", user.getDepartment().getName());
@@ -244,6 +257,23 @@ public class SysUserJsonFactory {
 		}
 		if (user.getLastLoginIP() != null) {
 			jsonObject.put("loginIP", user.getLastLoginIP());
+		}
+
+		if (user.getLoginCount() != null) {
+			jsonObject.put("loginCount", user.getLoginCount());
+		}
+
+		if (user.getIsChangePassword() != null) {
+			jsonObject.put("isChangePassword", user.getIsChangePassword());
+		}
+
+		if (user.getLastChangePasswordDate() != null) {
+			jsonObject.put("lastChangePasswordDate",
+					DateUtils.getDate(user.getLastChangePasswordDate()));
+			jsonObject.put("lastChangePasswordDate_date",
+					DateUtils.getDate(user.getLastChangePasswordDate()));
+			jsonObject.put("lastChangePasswordDate_datetime",
+					DateUtils.getDateTime(user.getLastChangePasswordDate()));
 		}
 
 		if (user.getCreateBy() != null) {
@@ -339,6 +369,23 @@ public class SysUserJsonFactory {
 		}
 		if (user.getLastLoginIP() != null) {
 			jsonObject.put("loginIP", user.getLastLoginIP());
+		}
+
+		if (user.getLoginCount() != null) {
+			jsonObject.put("loginCount", user.getLoginCount());
+		}
+
+		if (user.getIsChangePassword() != null) {
+			jsonObject.put("isChangePassword", user.getIsChangePassword());
+		}
+
+		if (user.getLastChangePasswordDate() != null) {
+			jsonObject.put("lastChangePasswordDate",
+					DateUtils.getDate(user.getLastChangePasswordDate()));
+			jsonObject.put("lastChangePasswordDate_date",
+					DateUtils.getDate(user.getLastChangePasswordDate()));
+			jsonObject.put("lastChangePasswordDate_datetime",
+					DateUtils.getDateTime(user.getLastChangePasswordDate()));
 		}
 
 		if (user.getCreateBy() != null) {
