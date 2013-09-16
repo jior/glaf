@@ -75,14 +75,17 @@ public class SqlMapContainer {
 		JbpmContext jbpmContext = null;
 		try {
 			jbpmContext = ProcessContainer.getContainer().createJbpmContext();
-			getEntityDAO().setConnection(jbpmContext.getConnection());
+			if (jbpmContext.getSession() != null
+					&& jbpmContext.getConnection() != null) {
+				getEntityDAO().setConnection(jbpmContext.getConnection());
 
-			if (StringUtils.equalsIgnoreCase("insert", operation)) {
-				getEntityDAO().insert(statementId, params);
-			} else if (StringUtils.equalsIgnoreCase("update", operation)) {
-				getEntityDAO().update(statementId, params);
-			} else if (StringUtils.equalsIgnoreCase("delete", operation)) {
-				getEntityDAO().delete(statementId, params);
+				if (StringUtils.equalsIgnoreCase("insert", operation)) {
+					getEntityDAO().insert(statementId, params);
+				} else if (StringUtils.equalsIgnoreCase("update", operation)) {
+					getEntityDAO().update(statementId, params);
+				} else if (StringUtils.equalsIgnoreCase("delete", operation)) {
+					getEntityDAO().delete(statementId, params);
+				}
 			}
 		} catch (Exception ex) {
 			logger.error(ex);
@@ -110,8 +113,12 @@ public class SqlMapContainer {
 		JbpmContext jbpmContext = null;
 		try {
 			jbpmContext = ProcessContainer.getContainer().createJbpmContext();
-			getEntityDAO().setConnection(jbpmContext.getConnection());
-			return getEntityDAO().getList(statementId, parameterObject);
+			if (jbpmContext.getSession() != null
+					&& jbpmContext.getConnection() != null) {
+				getEntityDAO().setConnection(jbpmContext.getConnection());
+				return getEntityDAO().getList(statementId, parameterObject);
+			}
+			return null;
 		} catch (Exception ex) {
 			logger.error(ex);
 			throw new RuntimeException(ex);
@@ -145,8 +152,13 @@ public class SqlMapContainer {
 		JbpmContext jbpmContext = null;
 		try {
 			jbpmContext = ProcessContainer.getContainer().createJbpmContext();
-			getEntityDAO().setConnection(jbpmContext.getConnection());
-			return getEntityDAO().getSingleObject(statementId, parameterObject);
+			if (jbpmContext.getSession() != null
+					&& jbpmContext.getConnection() != null) {
+				getEntityDAO().setConnection(jbpmContext.getConnection());
+				return getEntityDAO().getSingleObject(statementId,
+						parameterObject);
+			}
+			return null;
 		} catch (Exception ex) {
 			logger.error(ex);
 			throw new RuntimeException(ex);
