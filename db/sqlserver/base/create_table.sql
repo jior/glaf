@@ -125,6 +125,9 @@ CREATE TABLE sys_user (
         deptid bigint,
 	adminFlag nvarchar(1),
 	superiorIds nvarchar(200),
+	loginCount int,
+	isChangePassword int,
+	lastChangePasswordDate datetime,
         PRIMARY KEY (id)
 );
 

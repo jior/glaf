@@ -124,6 +124,9 @@ CREATE TABLE sys_user (
         deptid bigint,
 	adminFlag varchar(1),
 	superiorIds varchar(200),
+	loginCount int,
+	isChangePassword int,
+	lastChangePasswordDate timestamp,
         PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_bin;
 
