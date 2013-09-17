@@ -144,7 +144,7 @@ public class DruidConnectionProvider implements ConnectionProvider {
 				maxPoolSize = 50;
 			}
 			if (maxIdleTime == null) {
-				maxIdleTime = 250;
+				maxIdleTime = 25;
 			}
 			if (maxStatements == null) {
 				maxStatements = 1000;
