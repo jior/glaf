@@ -13,6 +13,11 @@
 
 <script type="text/javascript">
 	var contextPath = "${contextPath}";
+
+    jQuery(document).ready(function(){
+	    jQuery('#aggregationKeys2').combogrid('setValues', ${dataTransfer.listStringAggregationKeys});
+	});
+
 	//保存
 	function saveData() {
 		jQuery('#aggregationKeys').val(jQuery('#aggregationKeys2').combobox('getValues'));
@@ -550,20 +555,26 @@
 								</td>
 								<td align="left">聚合主键</td>
 								<td align="left">
-								  <input class="easyui-combobox" 
-								         id="aggregationKeys2"
-										 name="aggregationKeys2"
-										 value="${dataTransfer.aggregationKeys}"
-										 size='25'
-										 editable="true"
-										 data-options="
-												url:'${contextPath}/rs/dts/dataTransfer/columns?tableName=${dataTransfer.tableName}',
-												method:'get',
-												valueField:'columnName',
-												textField:'text',
-												multiple:true,
-												panelHeight:'auto'
+								  <select id="aggregationKeys2"
+										  name="aggregationKeys2"
+										  multiple
+										  class="easyui-combogrid" style="width:250px" 
+										  data-options="
+											panelWidth: 500,
+											multiple: true,
+											idField: 'columnName',
+											textField: 'text',
+											url: '${contextPath}/rs/dts/dataTransfer/columns?tableName=${dataTransfer.tableName}',
+											columns: [[
+												{field:'ck',checkbox:true},
+												{field:'columnName',title:'列名',width:120},
+												{field:'title',title:'标题',width:120},
+												{field:'javaType',title:'类型',width:120,align:'center'},
+												{field:'length',title:'字段长度',width:90,align:'right'}
+											]],
+											fitColumns: true
 										">
+									</select>					
 								</td>
 							</tr>
 						</tbody>
@@ -593,6 +604,7 @@
 			</form>
 
 		</div>
+
 </body>
 </html>
 <%@ include file="/WEB-INF/views/inc/init_end.jsp"%>
