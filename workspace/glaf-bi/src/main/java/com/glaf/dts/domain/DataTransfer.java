@@ -196,26 +196,6 @@ public class DataTransfer implements Serializable, JSONable {
 		return this.aggregationKeys;
 	}
 
-	public List<String> getListStringAggregationKeys() {
-		List<String> list = new ArrayList<String>();
-		if (aggregationKeys != null && aggregationKeys.trim().length() > 0) {
-			int start = 0;
-			int end = aggregationKeys.indexOf(",");
-			while (end != -1) {
-				list.add("'" + aggregationKeys.substring(start, end) + "'");
-				start = end + ",".length();
-				end = aggregationKeys.indexOf(",", start);
-			}
-			if (start < aggregationKeys.length()) {
-				String temp = aggregationKeys.substring(start);
-				if (temp != null && temp.trim().length() > 0) {
-					list.add("'" + temp + "'");
-				}
-			}
-		}
-		return list;
-	}
-
 	public Integer getBatchSize() {
 		return this.batchSize;
 	}
@@ -274,6 +254,26 @@ public class DataTransfer implements Serializable, JSONable {
 
 	public String getInsertOnly() {
 		return this.insertOnly;
+	}
+
+	public List<String> getListStringAggregationKeys() {
+		List<String> list = new ArrayList<String>();
+		if (aggregationKeys != null && aggregationKeys.trim().length() > 0) {
+			int start = 0;
+			int end = aggregationKeys.indexOf(",");
+			while (end != -1) {
+				list.add("'" + aggregationKeys.substring(start, end) + "'");
+				start = end + ",".length();
+				end = aggregationKeys.indexOf(",", start);
+			}
+			if (start < aggregationKeys.length()) {
+				String temp = aggregationKeys.substring(start);
+				if (temp != null && temp.trim().length() > 0) {
+					list.add("'" + temp + "'");
+				}
+			}
+		}
+		return list;
 	}
 
 	public Integer getLocked() {
