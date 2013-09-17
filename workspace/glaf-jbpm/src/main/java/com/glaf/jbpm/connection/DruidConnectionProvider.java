@@ -109,25 +109,6 @@ public class DruidConnectionProvider implements ConnectionProvider {
 			Integer idleTestPeriod = PropertiesHelper.getInteger(
 					IDLE_CONNECTION_TEST_PERIOD, props);
 
-			if (minPoolSize == null) {
-				minPoolSize = 5;
-			}
-			if (maxPoolSize == null) {
-				maxPoolSize = 50;
-			}
-			if (maxIdleTime == null) {
-				maxIdleTime = 25000;
-			}
-			if (maxStatements == null) {
-				maxStatements = 1000;
-			}
-			if (acquireIncrement == null) {
-				acquireIncrement = 1;
-			}
-			if (idleTestPeriod == null) {
-				idleTestPeriod = 18000;
-			}
-
 			Properties properties = new Properties();
 
 			for (Iterator<Object> ii = props.keySet().iterator(); ii.hasNext();) {
@@ -155,6 +136,24 @@ public class DruidConnectionProvider implements ConnectionProvider {
 
 			if (initialPoolSize == null) {
 				initialPoolSize = 5;
+			}
+			if (minPoolSize == null) {
+				minPoolSize = 5;
+			}
+			if (maxPoolSize == null) {
+				maxPoolSize = 50;
+			}
+			if (maxIdleTime == null) {
+				maxIdleTime = 250;
+			}
+			if (maxStatements == null) {
+				maxStatements = 1000;
+			}
+			if (acquireIncrement == null) {
+				acquireIncrement = 1;
+			}
+			if (idleTestPeriod == null) {
+				idleTestPeriod = 120;
 			}
 
 			Properties allProps = (Properties) props.clone();
