@@ -263,14 +263,14 @@
 						<tr>
 							<td align="left">事由</td>
 							<td align="left" colspan="5"><textarea rows="3" cols="60"
-									id="content" name="content" class="easyui-validatebox"
+									id="content" name="content" style="width:520px; height:60px;" class="easyui-validatebox"
 									data-options="required:true,validType:'notNullAndLength[100]'">${withdrawal.content}</textarea>
 							</td>
 						</tr>
 						<tr>
 							<td align="left">备注</td>
 							<td align="left" colspan="5"><textarea rows="3" cols="60"
-									id="remark" name="remark" class="easyui-validatebox"
+									id="remark" name="remark" style="width:520px; height:60px;" class="easyui-validatebox"
 									validType='Maxlength[200]'>${withdrawal.remark}</textarea></td>
 						</tr>
 						<tr>

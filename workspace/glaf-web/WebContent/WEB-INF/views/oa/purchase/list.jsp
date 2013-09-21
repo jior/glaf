@@ -146,8 +146,7 @@
 		});
 	});
 	function print(id) {
-		window.location = '${contextPath}/mx/oa/reports/exportPurchase?purchaseId='
-				+ id;
+		window.location = '${contextPath}/mx/oa/reports/exportPurchase?purchaseId='+ id;
 	}
 
 	function showProcess(id) {
@@ -159,7 +158,7 @@
 		var link = "${contextPath}/mx/oa/purchase/edit";
 		art.dialog.open(link, {
 			height : 420,
-			width : 760,
+			width : 780,
 			title : "添加记录",
 			lock : true,
 			scrollbars : "no"
@@ -173,7 +172,7 @@
 	function resize() {
 		jQuery('#mydatagrid').datagrid('resize', {
 			width : 800,
-			height : 400
+			height : 450
 		});
 	}
 	
@@ -196,7 +195,7 @@
 					+ selected.id;
 			art.dialog.open(link, {
 				height : 420,
-				width : 760,
+				width : 780,
 				title : "修改记录",
 				lock : true,
 				scrollbars : "no"
@@ -209,7 +208,7 @@
 		var link = "${contextPath}/mx/oa/purchase/view?purchaseId=" + id;
 		art.dialog.open(link, {
 			height : 420,
-			width : 760,
+			width : 780,
 			title : "查看记录",
 			lock : true,
 			scrollbars : "no"

@@ -23,7 +23,7 @@
 		var params = jQuery("#iForm").formSerialize();
 		jQuery.ajax({
 				   type: "POST",
-				   url: '<%=request.getContextPath()%>/mx/system/entity/saveFormDefinition?type=${type}&nodeId=${nodeId}',
+				   url: '<%=request.getContextPath()%>/mx/sys/entity/saveFormDefinition?type=${type}&nodeId=${nodeId}',
 				   data: params,
 				   dataType:  'json',
 				   error: function(data){
@@ -45,7 +45,7 @@
 		var params = jQuery("#iForm").formSerialize();
 		jQuery.ajax({
 				   type: "POST",
-				   url: '<%=request.getContextPath()%>/mx/system/entity/saveFormDefinition?type=${type}&nodeId=${nodeId}',
+				   url: '<%=request.getContextPath()%>/mx/sys/entity/saveFormDefinition?type=${type}&nodeId=${nodeId}',
 				   data: params,
 				   dataType:  'json',
 				   error: function(data){
@@ -97,7 +97,7 @@
   </div>
 
   <div data-options="region:'center',border:false,cache:true">
-  <form action="<%=request.getContextPath()%>/mx/system/entity/deploy?type=${type}&nodeId=${nodeId}"
+  <form action="<%=request.getContextPath()%>/mx/sys/entity/deploy?type=${type}&nodeId=${nodeId}"
 	    method="post" enctype="multipart/form-data" id="iForm" name="iForm" class="x-form">
   <input type="hidden" id="nodeId" name="nodeId" value="${nodeId}" >
   <input type="hidden" id="id" name="id" value="${entityDefinition.id}"/>

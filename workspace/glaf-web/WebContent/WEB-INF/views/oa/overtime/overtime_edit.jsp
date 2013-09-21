@@ -278,7 +278,7 @@
 						<tr>
 							<td width="20%" align="left">加班实施内容：</td>
 							<td align="left" colspan="5"><textarea id="content"
-									name="content" style="width: 91%" data-options="required:true"
+									name="content" style="width:550px; height:90px;" data-options="required:true"
 									validType="notNullAndLength[200]" class="easyui-validatebox">${overtime.content}</textarea>
 							</td>
 						</tr>
@@ -311,7 +311,7 @@
 						<tr>
 							<td width="20%" align="left">备注：</td>
 							<td align="left" colspan="5"><textarea id="remark"
-									name="remark" style="width: 91%" validType="Maxlength[200]"
+									name="remark" style="width:550px; height:90px;" validType="Maxlength[200]"
 									class="easyui-validatebox">${overtime.remark}</textarea></td>
 						</tr>
 						<tr>

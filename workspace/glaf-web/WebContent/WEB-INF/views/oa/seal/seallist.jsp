@@ -90,7 +90,7 @@
 	function addNew() {
 		var link = "${contextPath}/mx/oa/seal/edit";
 		art.dialog.open(link, {
-			height : 450,
+			height : 420,
 			width : 800,
 			title : "添加记录",
 			lock : true,
@@ -102,7 +102,7 @@
 		var link = '${contextPath}/mx/oa/seal/edit?sealid=' + row.sealid;
 		art.dialog.open(link, {
 			height : 420,
-			width : 680,
+			width : 780,
 			title : "修改记录",
 			lock : true,
 			scrollbars : "no"
@@ -116,7 +116,7 @@
 	function resize() {
 		jQuery('#mydatagrid').datagrid('resize', {
 			width : 800,
-			height : 400
+			height : 420
 		});
 	}
 
@@ -135,7 +135,7 @@
 			var link = "${contextPath}/mx/oa/seal/edit?sealid="
 					+ selected.sealid;
 			art.dialog.open(link, {
-				height : 450,
+				height : 420,
 				width : 800,
 				title : "修改记录",
 				lock : true,

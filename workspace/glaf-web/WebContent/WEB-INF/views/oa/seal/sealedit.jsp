@@ -37,7 +37,7 @@
 		var params = jQuery("#iForm").formSerialize();
 		jQuery.ajax({
 			type : "POST",
-			url : '${contextPath}/mx/oa/seal/saveseal?sealtypes=' + sealtypes,
+			url : '${contextPath}/mx/oa/seal/saveSeal?sealtypes=' + sealtypes,
 			data : params,
 			dataType : 'json',
 			async : false,
@@ -124,8 +124,7 @@
 			<form id="iForm" name="iForm" method="post">
 				<input type="hidden" id="sealid" name="sealid"
 					value="${seal.sealid}" />
-				<table class="easyui-form" align="center" cellspacing="3"
-					cellpadding="0" width="660" height="400">
+				<table class="easyui-form" align="center" cellspacing="3" cellpadding="0" width="90%" >
 					<tbody>
 						<tr>
 							<td align="left">地区</td>
@@ -220,18 +219,23 @@ jQuery.ajax({
 							<td align="left"><input id="post" name="post" type="text"
 								size="15" class="easyui-validatebox" value="${seal.post}"
 								readonly /></td>
-							<td>金额</td>
+							<td align="left">金额</td>
 
-							<td><input id="money" name="money" type="text"
+							<td align="left"><input id="money" name="money" type="text"
 								class="easyui-numberbox" precision="2" min="0.01" max="99999999"
 								value="${seal.money}" maxlength="11" /></td>
 						</tr>
 						<tr>
-
 							<td align="left" colspan="2">申请印章类型</td>
-							<td align="left" colspan="4">
+							<td align="left" colspan="2">
 							<input id="sealtype" name="sealtype" class="easyui-combobox" size='25'
 								data-options="valueField:'code',textField:'name', required:true,editable:false,multiple:true,url:'${contextPath}/rs/dictory/jsonArray/seal'"/> 
+							</td>
+							<td align="left">申请盖章文件之份数</td>
+							<td align="left"><input id="num" name="num"
+								type="text" maxlength="3" min="1" max="999" size="5"
+								class="easyui-numberbox" value="${seal.num}"
+								data-options="required:true" />
 							</td>
 						</tr>
 						<tr>
@@ -243,26 +247,18 @@ jQuery.ajax({
 							</td>
 						</tr>
 						<tr>
-							<td align="left" colspan="2">申请盖章文件之内容</td>
-							<td align="left" colspan="4">
+							<td align="left" colspan="2" valign="middle">申请盖章文件之内容</td>
+							<td align="left" colspan="4" valign="middle">
 							<textarea id="content" name="content"
 									data-options="required:true,validType:'notNullAndLength[200]'"
-									class="easyui-validatebox" rows="5" cols="50">${seal.content}</textarea>
+									class="easyui-validatebox" style="width:420px; height:60px;">${seal.content}</textarea>
 							</td>
 						</tr>
 						<tr>
-							<td align="left" colspan="2">申请盖章文件之份数</td>
-							<td align="left" colspan="4"><input id="num" name="num"
-								type="text" maxlength="3" min="1" max="999" size="5"
-								class="easyui-numberbox" value="${seal.num}"
-								data-options="required:true" />
-							</td>
-						</tr>
-
-						<tr>
-							<td align="left" colspan="2">备注</td>
-							<td align="left" colspan="4"><textarea id="remark"
-									name="remark" class="easyui-validatebox" rows="5" cols="50"
+							<td align="left" colspan="2" valign="middle">备注</td>
+							<td align="left" colspan="4" valign="middle">
+							<textarea id="remark"
+									name="remark" class="easyui-validatebox" style="width:420px; height:60px;"
 									validType="Maxlength[200]">${seal.remark}</textarea>
 							</td>
 						</tr>
@@ -271,10 +267,9 @@ jQuery.ajax({
 							<c:if test="${seal.sealid==null}">
 									<a href="javascript:uploadFile(4, 0, 1)">附件上传</a>
 										(共<span id="numAttachment4" name="numAttachment4">0</span>个)
-								<script type="text/javascript">
+								  <script type="text/javascript">
 									jQuery(function() {
-										jQuery
-												.get(
+										jQuery.get(
 														'${contextPath}/others/attachment.do?method=getCount&referId=0&referType=4',
 														{
 															qq : 'xx'
@@ -286,13 +281,13 @@ jQuery.ajax({
 									});
 								</script>
 
-								</c:if> <c:if test="${seal.sealid!=null}">
+								</c:if> 
+								<c:if test="${seal.sealid!=null}">
 									<a href="javascript:uploadFile(4, ${seal.sealid}, 1)">附件上传</a>
 										(共<span id="numAttachment4" name="numAttachment4">0</span>个)
-								<script type="text/javascript">
-									jQuery(function() {
-										jQuery
-												.get(
+								    <script type="text/javascript">
+									  jQuery(function() {
+										jQuery.get(
 														'${contextPath}/others/attachment.do?method=getCount&referId=${seal.sealid}&referType=4',
 														{
 															qq : 'xx'
