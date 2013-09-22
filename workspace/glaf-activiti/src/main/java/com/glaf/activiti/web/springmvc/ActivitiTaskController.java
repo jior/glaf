@@ -260,7 +260,7 @@ public class ActivitiTaskController {
 			for (Task task : rows) {
 				Map<String, Object> rowMap = new HashMap<String, Object>();
 				rowMap.put("id", task.getId());
-				rowMap.put("processInstanceId", task.getExecutionId());
+				rowMap.put("processInstanceId", task.getProcessInstanceId());
 				rowMap.put("executionId", task.getExecutionId());
 				rowMap.put("taskDefinitionKey", task.getTaskDefinitionKey());
 				rowMap.put("name", task.getName());
