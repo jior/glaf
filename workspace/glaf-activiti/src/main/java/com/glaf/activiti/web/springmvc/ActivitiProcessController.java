@@ -34,7 +34,7 @@ import org.activiti.engine.runtime.ProcessInstance;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
- 
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -58,19 +58,14 @@ public class ActivitiProcessController {
 	protected final static Log logger = LogFactory
 			.getLog(ActivitiProcessController.class);
 
-	 
 	protected ActivitiDeployService activitiDeployService;
 
-	 
 	protected ActivitiDeployQueryService activitiDeployQueryService;
 
-	 
 	protected ActivitiProcessService activitiProcessService;
 
-	 
 	protected ActivitiProcessQueryService activitiProcessQueryService;
 
-	 
 	protected ActivitiTaskQueryService activitiTaskQueryService;
 
 	@RequestMapping("/definition")

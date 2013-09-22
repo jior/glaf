@@ -31,7 +31,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.apache.commons.lang.StringUtils;
- 
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -53,16 +53,12 @@ import com.glaf.core.util.RequestUtils;
 @RequestMapping("/activiti/history")
 public class ActivitiProcessHistoryController {
 
-	 
 	protected ActivitiDeployService activitiDeployService;
 
- 
 	protected ActivitiProcessService activitiProcessService;
 
-	 
 	protected ActivitiProcessQueryService activitiProcessQueryService;
 
-	 
 	protected ActivitiTaskQueryService activitiTaskQueryService;
 
 	@RequestMapping("/historyProcessInstanceJson")
