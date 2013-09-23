@@ -188,8 +188,8 @@
 		{label: '流程实例编号', key: 'processInstanceId', width: 180, resizeable: true, formatter: formatRow},
         {label: '业务编号', key: 'businessKey', resizeable: true, width: 120},
 	    {label: '发起者', key: 'startUserId', resizeable: true, width: 120},
-	    {label: '开始时间', key: 'startDate', resizeable: true, width: 150},
-	    {label: '结束时间', key: 'endDate', resizeable: true, width: 150 , formatter: formatEndDate},
+	    {label: '开始时间', key: 'startDate', resizeable: true, width: 120},
+	    {label: '结束时间', key: 'endDate', resizeable: true, width: 120 , formatter: formatEndDate},
 		{label: '结束活动', key: 'endActivityId', resizeable: true, width: 120},
         {label: '<%=MessageProperties.getString("res_functionKey")%>', key: 'functionKey', resizeable: true, width: 150, align: 'center', formatter: formatFunKey}
        ];

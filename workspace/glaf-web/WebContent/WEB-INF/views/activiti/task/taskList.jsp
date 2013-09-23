@@ -185,8 +185,8 @@
 	    {label: '流程实例编号', key: 'processInstanceId', resizeable: true, width: 90},
 		{label: '参与者', key: 'actorName', resizeable: true, width: 120},
 	    {label: '任务定义编号', key: 'taskDefinitionKey', resizeable: true, width: 90},
-	    {label: '任务名称', key: 'name', resizeable: true, width: 180},
-		{label: '任务描述', key: 'description', resizeable: true, width: 240},
+	    {label: '任务名称', key: 'name', resizeable: true, width: 120},
+		{label: '任务描述', key: 'description', resizeable: true, width: 180},
 		{label: '创建日期', key: 'createDate', resizeable: true, width: 90},
         {label: '<%=MessageProperties.getString("res_functionKey")%>', key: 'functionKey', resizeable: true, width: 135, align: 'center', formatter: formatFunKey}
        ];
