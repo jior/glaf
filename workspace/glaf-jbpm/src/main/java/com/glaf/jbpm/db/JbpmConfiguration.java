@@ -31,52 +31,6 @@ public class JbpmConfiguration {
 			Document doc = xmlReader.read(resource.getInputStream());
 			Element root = doc.getRootElement();
 			Element element = root.element("session-factory");
-			String datasource = properties
-					.getProperty(DBConfiguration.JDBC_DATASOURCE);
-			List<?> props = element.elements("property");
-			if (props != null && !props.isEmpty()) {
-				Iterator<?> iter = props.iterator();
-				while (iter.hasNext()) {
-					Element elem = (Element) iter.next();
-					if (StringUtils.equals("hibernate.connection.datasource",
-							elem.attributeValue("name"))) {
-						element.remove(elem);
-					}
-
-					if (StringUtils.equals("hibernate.dialect",
-							elem.attributeValue("name"))) {
-						element.remove(elem);
-					}
-
-					if (StringUtils.equals(
-							"hibernate.connection.provider_class",
-							elem.attributeValue("name"))) {
-						element.remove(elem);
-					}
-
-					if (StringUtils.equals("hibernate.connection.driver_class",
-							elem.attributeValue("name"))) {
-						element.remove(elem);
-					}
-
-					if (StringUtils.equals("hibernate.connection.url",
-							elem.attributeValue("name"))) {
-						element.remove(elem);
-					}
-
-					if (StringUtils.equals("hibernate.connection.username",
-							elem.attributeValue("name"))) {
-						element.remove(elem);
-					}
-
-					if (StringUtils.equals("hibernate.connection.password",
-							elem.attributeValue("name"))) {
-						element.remove(elem);
-					}
-				}
-			}
-
-			
 
 			Document newDoc = DocumentHelper.createDocument();
 			newDoc.addDocType("hibernate-configuration",
@@ -84,16 +38,52 @@ public class JbpmConfiguration {
 					"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd");
 			Element newRoot = newDoc.addElement("hibernate-configuration");
 			Element newElement = newRoot.addElement("session-factory");
+			List<?> props = element.elements("property");
 			if (props != null && !props.isEmpty()) {
 				Iterator<?> iter = props.iterator();
 				while (iter.hasNext()) {
 					Element elem = (Element) iter.next();
+					if (StringUtils.equals("hibernate.connection.datasource",
+							elem.attributeValue("name"))) {
+						continue;
+					}
+					if (StringUtils.equals("hibernate.dialect",
+							elem.attributeValue("name"))) {
+						continue;
+					}
+					if (StringUtils.equals(
+							"hibernate.connection.provider_class",
+							elem.attributeValue("name"))) {
+						continue;
+					}
+					if (StringUtils.equals("hibernate.connection.driver_class",
+							elem.attributeValue("name"))) {
+						continue;
+					}
+					if (StringUtils.equals("hibernate.connection.url",
+							elem.attributeValue("name"))) {
+						continue;
+					}
+
+					if (StringUtils.equals("hibernate.connection.username",
+							elem.attributeValue("name"))) {
+						continue;
+					}
+
+					if (StringUtils.equals("hibernate.connection.password",
+							elem.attributeValue("name"))) {
+						continue;
+					}
+
 					Element newElem = newElement.addElement("property");
 					newElem.addAttribute("name", elem.attributeValue("name"));
 					newElem.setText(elem.getStringValue());
 				}
 			}
-			
+
+			String datasource = properties
+					.getProperty(DBConfiguration.JDBC_DATASOURCE);
+
 			if (StringUtils.isNotEmpty(datasource)) {
 				Element em = newElement.addElement("property");
 				em.addAttribute("name", "hibernate.connection.datasource");
@@ -125,9 +115,9 @@ public class JbpmConfiguration {
 				em6.setText("com.glaf.jbpm.connection.DruidConnectionProvider");
 			}
 
-			props = element.elements("mapping");
-			if (props != null && !props.isEmpty()) {
-				Iterator<?> iter = props.iterator();
+			List<?> props2 = element.elements("mapping");
+			if (props2 != null && !props2.isEmpty()) {
+				Iterator<?> iter = props2.iterator();
 				while (iter.hasNext()) {
 					Element elem = (Element) iter.next();
 					Element newElem = newElement.addElement("mapping");
@@ -136,9 +126,9 @@ public class JbpmConfiguration {
 				}
 			}
 
-			props = element.elements("class-cache");
-			if (props != null && !props.isEmpty()) {
-				Iterator<?> iter = props.iterator();
+			List<?> props3 = element.elements("class-cache");
+			if (props3 != null && !props3.isEmpty()) {
+				Iterator<?> iter = props3.iterator();
 				while (iter.hasNext()) {
 					Element elem = (Element) iter.next();
 					Element newElem = newElement.addElement("class-cache");
@@ -147,9 +137,9 @@ public class JbpmConfiguration {
 				}
 			}
 
-			props = element.elements("collection-cache");
-			if (props != null && !props.isEmpty()) {
-				Iterator<?> iter = props.iterator();
+			List<?> props4 = element.elements("collection-cache");
+			if (props4 != null && !props4.isEmpty()) {
+				Iterator<?> iter = props4.iterator();
 				while (iter.hasNext()) {
 					Element elem = (Element) iter.next();
 					Element newElem = newElement.addElement("collection-cache");
