@@ -198,6 +198,20 @@ public class DBConfiguration {
 		return dataMap.get(Environment.DEFAULT_SYSTEM_NAME);
 	}
 
+	public static String getDefaultHibernateDialect() {
+		Properties dialects = getHibernateDialectMappings();
+		Properties props = getDefaultDataSourceProperties();
+		if (props != null) {
+			String dbType = props.getProperty(JDBC_TYPE);
+			if (dbType == null) {
+				dbType = DataSourceConfig.getDatabaseType();
+			}
+			logger.debug("databaseType:" + dbType);
+			return dialects.getProperty(dbType);
+		}
+		return null;
+	}
+
 	public static Properties getDialectMappings() {
 		Properties dialectMappings = new Properties();
 		dialectMappings.setProperty("h2", "com.glaf.core.dialect.H2Dialect");
