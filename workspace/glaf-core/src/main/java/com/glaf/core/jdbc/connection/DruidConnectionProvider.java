@@ -28,25 +28,28 @@ import javax.sql.DataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.alibaba.druid.pool.DruidDataSourceC3P0Adapter;
-
+import com.alibaba.druid.pool.DruidDataSource;
+import com.alibaba.druid.pool.DruidDataSourceFactory;
 import com.glaf.core.config.DBConfiguration;
-import com.glaf.core.util.ClassUtils;
-import com.glaf.core.util.JdbcUtils;
 import com.glaf.core.util.PropertiesHelper;
+import com.glaf.core.util.ReflectUtils;
 
 public class DruidConnectionProvider implements ConnectionProvider {
 
 	private static final Logger log = LoggerFactory
 			.getLogger(DruidConnectionProvider.class);
 
-	private DruidDataSourceC3P0Adapter ds;
+	private final static String MIN_POOL_SIZE = "minPoolSize";
+	private final static String MAX_POOL_SIZE = "maxPoolSize";
+	private final static String INITIAL_POOL_SIZE = "initialPoolSize";
+	private final static String MAX_IDLE_TIME = "maxIdleTime";
+	private final static String MAX_STATEMENTS = "maxStatements";
+	private final static String ACQUIRE_INCREMENT = "acquireIncrement";
+	private final static String IDLE_CONNECTION_TEST_PERIOD = "idleConnectionTestPeriod";
+
+	private DruidDataSource ds;
 	private Integer isolation;
 	private boolean autocommit;
-
-	public DruidConnectionProvider() {
-		log.info("----------------------------DruidConnectionProvider-----------------");
-	}
 
 	public void close() {
 		try {
@@ -60,7 +63,6 @@ public class DruidConnectionProvider implements ConnectionProvider {
 		conn.close();
 	}
 
-	@SuppressWarnings("rawtypes")
 	public void configure(Properties props) {
 		String jdbcDriverClass = props.getProperty(DBConfiguration.JDBC_DRIVER);
 		String jdbcUrl = props.getProperty(DBConfiguration.JDBC_URL);
@@ -72,8 +74,8 @@ public class DruidConnectionProvider implements ConnectionProvider {
 		log.info("Connection properties: "
 				+ PropertiesHelper.maskOut(connectionProps, "password"));
 
-		autocommit = PropertiesHelper.getBoolean(DBConfiguration.JDBC_AUTOCOMMIT,
-				props);
+		autocommit = PropertiesHelper.getBoolean(
+				DBConfiguration.JDBC_AUTOCOMMIT, props);
 		log.info("autocommit mode: " + autocommit);
 
 		if (jdbcDriverClass == null) {
@@ -84,7 +86,7 @@ public class DruidConnectionProvider implements ConnectionProvider {
 				Class.forName(jdbcDriverClass);
 			} catch (ClassNotFoundException cnfe) {
 				try {
-					ClassUtils.classForName(jdbcDriverClass);
+					ReflectUtils.instantiate(jdbcDriverClass);
 				} catch (Exception e) {
 					String msg = "JDBC Driver class not found: "
 							+ jdbcDriverClass;
@@ -95,57 +97,110 @@ public class DruidConnectionProvider implements ConnectionProvider {
 		}
 
 		try {
+			Integer minPoolSize = PropertiesHelper.getInteger(MIN_POOL_SIZE,
+					props);
+			Integer maxPoolSize = PropertiesHelper.getInteger(MAX_POOL_SIZE,
+					props);
+			Integer maxIdleTime = PropertiesHelper.getInteger(MAX_IDLE_TIME,
+					props);
+			Integer maxStatements = PropertiesHelper.getInteger(MAX_STATEMENTS,
+					props);
+			Integer acquireIncrement = PropertiesHelper.getInteger(
+					ACQUIRE_INCREMENT, props);
+			Integer idleTestPeriod = PropertiesHelper.getInteger(
+					IDLE_CONNECTION_TEST_PERIOD, props);
 
-			Properties c3props = new Properties();
+			Properties properties = new Properties();
 
-			for (Iterator ii = props.keySet().iterator(); ii.hasNext();) {
+			for (Iterator<Object> ii = props.keySet().iterator(); ii.hasNext();) {
 				String key = (String) ii.next();
-				if (key.startsWith("hibernate.c3p0.")) {
-					String newKey = key.substring(10);
-					c3props.put(newKey, props.get(key));
-				} else if (key.startsWith("connection.c3p0.")) {
-					String newKey = key.substring(11);
-					c3props.put(newKey, props.get(key));
+				if (key.startsWith("c3p0.")) {
+					String newKey = key;
+					properties.put(newKey, props.get(key));
 				}
 			}
 
-			Integer minPoolSize = PropertiesHelper.getInteger(
-					DBConfiguration.POOL_MIN_SIZE, props);
-			Integer initialPoolSize = PropertiesHelper.getInteger(
-					DBConfiguration.POOL_INIT_SIZE, props);
-			if (initialPoolSize == null && minPoolSize != null) {
-				c3props.put(DBConfiguration.POOL_INIT_SIZE,
-						String.valueOf(minPoolSize).trim());
+			for (Iterator<Object> ii = props.keySet().iterator(); ii.hasNext();) {
+				String key = (String) ii.next();
+				if (key.startsWith("druid.")) {
+					String newKey = key.substring(6);
+					properties.put(newKey, props.get(key));
+				}
 			}
 
-			ds = new DruidDataSourceC3P0Adapter();
-			ds.setInitialPoolSize(5);
-			ds.setMinPoolSize(5);
-			ds.setMaxPoolSize(50);
+			Integer initialPoolSize = PropertiesHelper.getInteger(
+					INITIAL_POOL_SIZE, props);
+			if (initialPoolSize == null && minPoolSize != null) {
+				properties.put(INITIAL_POOL_SIZE, String.valueOf(minPoolSize)
+						.trim());
+			}
 
-			ds.setProperties(c3props);
-			ds.setJdbcUrl(jdbcUrl);
-			ds.setDriverClass(jdbcDriverClass);
-			ds.setUser(connectionProps.getProperty("user"));
-			ds.setPassword(connectionProps.getProperty("password"));
+			if (initialPoolSize == null) {
+				initialPoolSize = 5;
+			}
+			if (minPoolSize == null) {
+				minPoolSize = 5;
+			}
+			if (maxPoolSize == null) {
+				maxPoolSize = 50;
+			}
+			if (maxIdleTime == null) {
+				maxIdleTime = 25;
+			}
+			if (maxStatements == null) {
+				maxStatements = 200;
+			}
+			if (acquireIncrement == null) {
+				acquireIncrement = 1;
+			}
+			if (idleTestPeriod == null) {
+				idleTestPeriod = 120;
+			}
 
+			Properties allProps = (Properties) props.clone();
+			allProps.putAll(properties);
+
+			ds = new DruidDataSource();
+
+			DruidDataSourceFactory.config(ds, allProps);
+
+			ds.setInitialSize(initialPoolSize);
+			ds.setMinIdle(minPoolSize);
+			ds.setMaxActive(maxPoolSize);
+
+			ds.setDefaultAutoCommit(true);
+			ds.setLogAbandoned(false);
+			ds.setTestOnReturn(false);
+			ds.setTestOnBorrow(false);
+
+			ds.setTimeBetweenEvictionRunsMillis(((long) idleTestPeriod) * 1000L);
+			ds.setMaxOpenPreparedStatements(maxStatements);
+			ds.setMinEvictableIdleTimeMillis(((long) maxIdleTime) * 1000L);
+
+			ds.setConnectProperties(allProps);
+			ds.setUrl(jdbcUrl);
+			ds.setDriverClassName(jdbcDriverClass);
+
+			String dbUser = props.getProperty(DBConfiguration.JDBC_USER);
+			String dbPassword = props
+					.getProperty(DBConfiguration.JDBC_PASSWORD);
+
+			if (dbUser == null) {
+				dbUser = ""; // Some RDBMS (e.g Postgresql) don't like null
+								// usernames
+			}
+
+			if (dbPassword == null) {
+				dbPassword = ""; // Some RDBMS (e.g Postgresql) don't like null
+									// passwords
+			}
+
+			ds.setUsername(dbUser);
+			ds.setPassword(dbPassword);
 		} catch (Exception e) {
 			log.error("could not instantiate Druid connection pool", e);
 			throw new RuntimeException(
 					"Could not instantiate Druid connection pool", e);
-		}
-
-		Connection conn = null;
-		try {
-			conn = ds.getConnection();
-			if (conn == null) {
-				throw new RuntimeException(
-						"Druid connection pool can't get jdbc connection");
-			}
-		} catch (SQLException ex) {
-			throw new RuntimeException(ex);
-		} finally {
-			JdbcUtils.close(conn);
 		}
 
 		String i = props.getProperty(DBConfiguration.JDBC_ISOLATION);
@@ -153,21 +208,19 @@ public class DruidConnectionProvider implements ConnectionProvider {
 			isolation = null;
 		} else {
 			isolation = new Integer(i);
-			log.info("JDBC isolation level: "
-					+ DBConfiguration.isolationLevelToString(isolation
-							.intValue()));
 		}
+
 	}
 
 	public Connection getConnection() throws SQLException {
-		final Connection c = ds.getConnection();
+		final Connection connection = ds.getConnection();
 		if (isolation != null) {
-			c.setTransactionIsolation(isolation.intValue());
+			connection.setTransactionIsolation(isolation.intValue());
 		}
-		if (c.getAutoCommit() != autocommit) {
-			c.setAutoCommit(autocommit);
+		if (connection.getAutoCommit() != autocommit) {
+			connection.setAutoCommit(autocommit);
 		}
-		return c;
+		return connection;
 	}
 
 	public DataSource getDataSource() {
