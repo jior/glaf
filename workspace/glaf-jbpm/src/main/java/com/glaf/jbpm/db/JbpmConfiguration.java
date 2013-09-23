@@ -76,36 +76,7 @@ public class JbpmConfiguration {
 				}
 			}
 
-			if (StringUtils.isNotEmpty(datasource)) {
-				Element em = element.addElement("property");
-				em.addAttribute("name", "hibernate.connection.datasource");
-				em.setText(datasource);
-			} else {
-				Element em1 = element.addElement("property");
-				em1.addAttribute("name", "hibernate.dialect");
-				em1.setText(DBConfiguration.getDefaultHibernateDialect());
-
-				Element em2 = element.addElement("property");
-				em2.addAttribute("name", "hibernate.connection.driver_class");
-				em2.setText(properties.getProperty(DBConfiguration.JDBC_DRIVER));
-
-				Element em3 = element.addElement("property");
-				em3.addAttribute("name", "hibernate.connection.url");
-				em3.setText(properties.getProperty(DBConfiguration.JDBC_URL));
-
-				Element em4 = element.addElement("property");
-				em4.addAttribute("name", "hibernate.connection.username");
-				em4.setText(properties.getProperty(DBConfiguration.JDBC_USER));
-
-				Element em5 = element.addElement("property");
-				em5.addAttribute("name", "hibernate.connection.password");
-				em5.setText(properties
-						.getProperty(DBConfiguration.JDBC_PASSWORD));
-
-				Element em6 = element.addElement("property");
-				em6.addAttribute("name", "hibernate.connection.provider_class");
-				em6.setText("com.glaf.jbpm.connection.DruidConnectionProvider");
-			}
+			
 
 			Document newDoc = DocumentHelper.createDocument();
 			newDoc.addDocType("hibernate-configuration",
@@ -121,6 +92,37 @@ public class JbpmConfiguration {
 					newElem.addAttribute("name", elem.attributeValue("name"));
 					newElem.setText(elem.getStringValue());
 				}
+			}
+			
+			if (StringUtils.isNotEmpty(datasource)) {
+				Element em = newElement.addElement("property");
+				em.addAttribute("name", "hibernate.connection.datasource");
+				em.setText(datasource);
+			} else {
+				Element em1 = newElement.addElement("property");
+				em1.addAttribute("name", "hibernate.dialect");
+				em1.setText(DBConfiguration.getDefaultHibernateDialect());
+
+				Element em2 = newElement.addElement("property");
+				em2.addAttribute("name", "hibernate.connection.driver_class");
+				em2.setText(properties.getProperty(DBConfiguration.JDBC_DRIVER));
+
+				Element em3 = newElement.addElement("property");
+				em3.addAttribute("name", "hibernate.connection.url");
+				em3.setText(properties.getProperty(DBConfiguration.JDBC_URL));
+
+				Element em4 = newElement.addElement("property");
+				em4.addAttribute("name", "hibernate.connection.username");
+				em4.setText(properties.getProperty(DBConfiguration.JDBC_USER));
+
+				Element em5 = newElement.addElement("property");
+				em5.addAttribute("name", "hibernate.connection.password");
+				em5.setText(properties
+						.getProperty(DBConfiguration.JDBC_PASSWORD));
+
+				Element em6 = newElement.addElement("property");
+				em6.addAttribute("name", "hibernate.connection.provider_class");
+				em6.setText("com.glaf.jbpm.connection.DruidConnectionProvider");
 			}
 
 			props = element.elements("mapping");
