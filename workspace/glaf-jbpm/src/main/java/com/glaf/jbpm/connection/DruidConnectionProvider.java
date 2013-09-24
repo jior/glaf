@@ -135,16 +135,16 @@ public class DruidConnectionProvider implements ConnectionProvider {
 			}
 
 			if (initialPoolSize == null) {
-				initialPoolSize = 5;
+				initialPoolSize = 10;
 			}
 			if (minPoolSize == null) {
-				minPoolSize = 5;
+				minPoolSize = 10;
 			}
 			if (maxPoolSize == null) {
-				maxPoolSize = 50;
+				maxPoolSize = 100;
 			}
 			if (maxIdleTime == null) {
-				maxIdleTime = 25;
+				maxIdleTime = 60;
 			}
 			if (maxStatements == null) {
 				maxStatements = 200;
