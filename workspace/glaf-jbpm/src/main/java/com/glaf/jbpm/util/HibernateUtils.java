@@ -31,6 +31,7 @@ import org.hibernate.Query;
 import org.hibernate.cfg.Configuration;
 
 import com.glaf.core.config.SystemConfig;
+import com.glaf.core.config.SystemProperties;
 import com.glaf.core.entity.SqlExecutor;
 import com.glaf.core.util.DateUtils;
 import com.glaf.jbpm.db.JbpmConfiguration;
@@ -38,11 +39,13 @@ import com.glaf.jbpm.db.JbpmConfiguration;
 public class HibernateUtils {
 
 	public static Configuration createHibernateConfiguration() {
-		try {
-			JbpmConfiguration cfg = new JbpmConfiguration();
-			cfg.config();
-		} catch (Exception ex) {
-			ex.printStackTrace();
+		if (SystemProperties.getBoolean("jbpm.config.update", true)) {
+			try {
+				JbpmConfiguration cfg = new JbpmConfiguration();
+				cfg.config();
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
 		}
 		Configuration configuration = new Configuration();
 		String filename = SystemConfig.getConfigRootPath()
