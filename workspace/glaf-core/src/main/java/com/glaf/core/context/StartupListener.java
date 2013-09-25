@@ -27,7 +27,7 @@ import javax.servlet.ServletContextListener;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
- 
+
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.WebApplicationContextUtils;
@@ -88,13 +88,21 @@ public class StartupListener extends ContextLoaderListener implements
 			logger.info("设置应用环境上下文......");
 			ContextFactory.setContext(ctx);
 			if (ContextFactory.hasBean("scheduler")) {
-				try {
-					QuartzUtils.startup();
-					logger.info("系统调度已经成功启动。");
-				} catch (Exception ex) {
-					ex.printStackTrace();
-					logger.error(ex);
-				}
+				SchedulerRunner runner = new SchedulerRunner();
+				runner.start();
+			}
+		}
+	}
+
+	private static class SchedulerRunner extends Thread {
+		public void run() {
+			try {
+				Thread.sleep(60000);// 60秒后执行
+				QuartzUtils.startup();
+				logger.info("系统调度已经成功启动。");
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				logger.error(ex);
 			}
 		}
 	}
