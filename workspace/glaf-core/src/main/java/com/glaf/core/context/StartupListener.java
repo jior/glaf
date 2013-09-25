@@ -27,6 +27,7 @@ import javax.servlet.ServletContextListener;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+ 
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.WebApplicationContextUtils;
@@ -35,6 +36,7 @@ import com.glaf.core.config.DataSourceConfig;
 import com.glaf.core.startup.Bootstrap;
 import com.glaf.core.startup.BootstrapProperties;
 import com.glaf.core.util.ClassUtils;
+import com.glaf.core.util.QuartzUtils;
 
 public class StartupListener extends ContextLoaderListener implements
 		ServletContextListener {
@@ -85,6 +87,15 @@ public class StartupListener extends ContextLoaderListener implements
 		if (ctx != null) {
 			logger.info("设置应用环境上下文......");
 			ContextFactory.setContext(ctx);
+			if (ContextFactory.hasBean("scheduler")) {
+				try {
+					QuartzUtils.startup();
+					logger.info("系统调度已经成功启动。");
+				} catch (Exception ex) {
+					ex.printStackTrace();
+					logger.error(ex);
+				}
+			}
 		}
 	}
 }
