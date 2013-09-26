@@ -43,6 +43,7 @@ public class HibernateUtils {
 			try {
 				JbpmConfiguration cfg = new JbpmConfiguration();
 				cfg.config();
+				Thread.sleep(1000);
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
