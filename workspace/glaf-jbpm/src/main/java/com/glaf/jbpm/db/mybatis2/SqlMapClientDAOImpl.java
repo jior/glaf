@@ -1,20 +1,20 @@
 /*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.glaf.jbpm.db.mybatis2;
 
@@ -128,7 +128,7 @@ public class SqlMapClientDAOImpl implements EntityDAO {
 
 	public Paging getPage(int pageNo, int pageSize, SqlExecutor countExecutor,
 			SqlExecutor queryExecutor) {
-		 
+
 		Paging page = new Paging();
 
 		if (pageSize <= 0) {
@@ -175,8 +175,7 @@ public class SqlMapClientDAOImpl implements EntityDAO {
 
 		page.setTotal(totalCount);
 
-		int maxPageNo = (page.getTotal() + (pageSize - 1))
-				/ pageSize;
+		int maxPageNo = (page.getTotal() + (pageSize - 1)) / pageSize;
 		if (pageNo > maxPageNo) {
 			pageNo = maxPageNo;
 		}
@@ -199,8 +198,6 @@ public class SqlMapClientDAOImpl implements EntityDAO {
 		page.setRows(rows);
 		page.setPageSize(pageSize);
 		page.setCurrentPage(pageNo);
-
-	
 
 		return page;
 	}
@@ -256,19 +253,19 @@ public class SqlMapClientDAOImpl implements EntityDAO {
 		}
 	}
 
-	 
-
 	public void setConnection(Connection connection) {
-		try {
-			this.sqlMapClient.setUserConnection(connection);
-			this.sqlMapClientTemplate.setConnection(connection);
-		} catch (java.sql.SQLException ex) {
-			throw new RuntimeException(ex);
+		if (connection != null) {
+			try {
+				this.sqlMapClient.setUserConnection(connection);
+				this.sqlMapClientTemplate.setConnection(connection);
+			} catch (java.sql.SQLException ex) {
+				throw new RuntimeException(ex);
+			}
 		}
 	}
 
 	public void setEnableLimit(boolean enableLimit) {
-		
+
 	}
 
 	public void setSqlExecutor(
@@ -316,7 +313,6 @@ public class SqlMapClientDAOImpl implements EntityDAO {
 		return null;
 	}
 
- 
 	public IdBlock nextDbidBlock(String name) {
 		return null;
 	}

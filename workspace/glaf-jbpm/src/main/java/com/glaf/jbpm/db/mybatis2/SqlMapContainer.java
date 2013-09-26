@@ -120,6 +120,7 @@ public class SqlMapContainer {
 			}
 			return null;
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			logger.error(ex);
 			throw new RuntimeException(ex);
 		} finally {

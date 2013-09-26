@@ -44,10 +44,12 @@ public class JbpmBeanFactory {
 	}
 
 	protected static ApplicationContext reload() {
-		if (null != ctx) {
-			ctx = null;
+		synchronized (JbpmBeanFactory.class) {
+			if (null != ctx) {
+				ctx = null;
+			}
+			ctx = new ClassPathXmlApplicationContext(DEFAULT_CONFIG);
 		}
-		ctx = new ClassPathXmlApplicationContext(DEFAULT_CONFIG);
 		return ctx;
 	}
 
