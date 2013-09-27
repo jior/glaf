@@ -167,11 +167,14 @@ public class DruidConnectionProvider implements ConnectionProvider {
 			ds.setInitialSize(initialPoolSize);
 			ds.setMinIdle(minPoolSize);
 			ds.setMaxActive(maxPoolSize);
+			ds.setMaxWait(60*1000L);//60秒
 
 			ds.setDefaultAutoCommit(true);
-			ds.setLogAbandoned(false);
 			ds.setTestOnReturn(false);
 			ds.setTestOnBorrow(false);
+			ds.setLogAbandoned(true);//将当前关闭动作记录到日志 
+			ds.setRemoveAbandoned(true);//对于长时间不使用的连接强制关闭  
+			ds.setRemoveAbandonedTimeout(1800);//超过30分钟开始关闭空闲连接  
 
 			ds.setTimeBetweenEvictionRunsMillis(((long) idleTestPeriod) * 1000L);
 			ds.setMaxOpenPreparedStatements(maxStatements);
