@@ -68,7 +68,7 @@
 		jQuery(function(){
 			jQuery('#easyui_data_grid').datagrid({
 				//title:'报表定义',
-				//iconCls:'icon-save',
+				//iconCls:'icon-grid',
 				//width:800,
 				width:980,
 				height:480,
@@ -76,7 +76,7 @@
 				fitColumns:true,
 				nowrap: false,
 				striped: true,
-				collapsible:true,
+				collapsible:false,
 				singleSelect:true,
 				url:'<%=request.getContextPath()%>/mx/bi/report/json',
 				sortName: 'id',
@@ -263,7 +263,7 @@
 		 
 	</script>
 </head>
-<body style="margin:1px;">  
+<body style="margin:0px;">  
 <div style="margin:0;"></div>  
 <input type="hidden" id="nodeId" name="nodeId" value="" >
 <div class="easyui-layout" data-options="fit:true">  

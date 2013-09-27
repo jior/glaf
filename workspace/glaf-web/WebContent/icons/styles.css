@@ -30,6 +30,10 @@
 	background:url('icons/exp.gif') no-repeat ;
 }
 
+.icon-grid{
+	background:url('icons/list.gif') no-repeat ;
+}
+
 .icon-submit{
 	background:url('icons/submit.gif') no-repeat ;
 }
