@@ -127,10 +127,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" href="<%=request.getContextPath()%>/scripts/easyui/themes/${theme}/easyui.css" type="text/css"></link>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/scripts/easyui/css/portal.css" type="text/css"></link>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/themes/${theme}/styles.css" type="text/css" />
-<link rel="stylesheet" href="<%=request.getContextPath()%>/icons/styles.css" type="text/css" >
+<link rel="stylesheet" href="<%=request.getContextPath()%>/scripts/easyui/themes/${theme}/easyui.css" type="text/css"/>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/scripts/easyui/css/portal.css" type="text/css"/>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/themes/${theme}/styles.css" type="text/css"/>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/icons/styles.css" type="text/css"/>
 <style type="text/css">
 	.mx_title{
 			font-size:13px;
@@ -249,7 +249,7 @@
 </head>
 <body class="easyui-layout">
     <%if("true".equals(request.getParameter("edit"))){%>
-	<div id="mx_toolbar" region="north" class="mx_title" border="false" > 
+	<div id="mx_toolbar" region="north" class="toolbar-backgroud" border="false" > 
 	  <div  style="text-align:right;padding-right:10px;" >
 		 <a href="#" onClick="javascript:location.reload();" target="_self"><span><img src="<%=request.getContextPath()%>/images/refresh.gif" border="0"/>&nbsp;刷新</span></a>
 		&nbsp;<a href="#" id="subButton" onclick="javascript:savePortal();"><span><img src="<%=request.getContextPath()%>/images/save.gif" border="0"/>保存</span></a>

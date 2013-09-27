@@ -90,7 +90,7 @@
 	<tr height="27">
 		<td align="left" width="30%" valign="top">版块名称 *</td>
 		<td align="left" width="70%"><input id="title" name="title" type="text" size="50"
-			maxlength="50" class="input-xlarge"
+			maxlength="50" class="input-xlarge x-text"
 			value="${panel.title}" datatype="string"></td>
 	</tr>
 
@@ -98,20 +98,20 @@
 	<tr height="27">
 		<td align="left" width="30%" valign="top">版块编码 *</td>
 		<td align="left" width="70%"><input name="name" type="text" size="50"
-			maxlength="20" class="input-xlarge" value="${panel.name}"
+			maxlength="20" class="input-xlarge x-text" value="${panel.name}"
 			datatype="string"></td>
 	</tr>
 
 	<tr height="27">
 		<td align="left" width="30%" valign="top">模块名称</td>
 		<td align="left" width="70%"><input name="moduleName" type="text" size="50"
-			maxlength="50" class="input-xlarge"
+			maxlength="50" class="input-xlarge x-text"
 			value="${panel.moduleName}" datatype="string"></td>
 	</tr>
 	<tr height="27">
 		<td align="left" width="30%" valign="top">模块编码</td>
 		<td align="left" width="70%"><input name="moduleId" type="text" size="50"
-			maxlength="20" class="input-xlarge"
+			maxlength="20" class="input-xlarge x-text"
 			value="${panel.moduleId}" datatype="string"></td>
 	</tr>
 
@@ -140,9 +140,11 @@
 
 	<tr height="27" id="urlDir" style="display:block;">
 		<td align="left" width="30%" valign="top">&nbsp;</td>
-		<td align="left" width="70%" valign="middle"><textarea id="link" name="link" rows="5" cols="39"
-			class="input-xlarge"><c:out
-			value="${panel.link}" escapeXml="false" /></textarea></td>
+		<td align="left" width="70%" valign="middle">
+		<textarea id="link" name="link" rows="5" cols="39"
+			class="input-xlarge x-textarea" style="width: 300px; height: 90px; text-align: left;"><c:out
+			value="${panel.link}" escapeXml="false" /></textarea>
+		</td>
 	</tr>
 
 	<tr height="27" id="divDir" style="display:none;">
@@ -157,14 +159,14 @@
 	<tr>
 		<td align="left" width="30%"   valign="top">高度</td>
 		<td align="left" align="left" valign="middle" >
-			<input type="text" name="height" value="${panel.height}" maxLength="3" class="input-mini" /> (例如: 300, 显示一个高度为300像素的模块)
+			<input type="text" name="height" value="${panel.height}" maxLength="3" class="input-mini x-text" /> (例如: 300, 显示一个高度为300像素的模块)
 		</td>
 	</tr>
 
 	<!-- <tr>
 		<td align="left" width="30%"   valign="top">样式</td>
 		<td align="left" align="left" valign="middle" >
-			<input type="text" name="style" class="input-xlarge" />
+			<input type="text" name="style" class="input-xlarge x-text" />
 			<br> (例如 height:320px; 显示一个高度为320像素的模块)
 		</td>
 	</tr> -->
@@ -202,7 +204,7 @@
 <div style="width: 645px;" align="center"><br />
 <input name="btn_save2" type="button" value="保存" class="btn btn-primary" onclick="javascript:submitXY();">
 <input name="btn_back" type="button" value="返回" class="btn"
-	onclick="javascript:history.back();"> <br />
+	   onclick="javascript:history.back();"> <br />
 <br />
 </div>
 </div>
