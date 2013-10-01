@@ -31,13 +31,11 @@ a:hover{color:#F3A36E; text-decoration:none}
 } 
 
 .x-text {
-	height: 20px; border-bottom: #b5b8c8 1px solid; border-left: #b5b8c8 1px solid; padding-top: 1px;padding-bottom: 1px; padding-left: 1px; padding-right: 1px; background: url(../images/text-bg.gif) #fff repeat-x 0px 0px; border-top: #b5b8c8 1px solid; border-right: #b5b8c8 1px solid; padding-top: 1px
+	background-color:#fff;border:1px solid #d3d3d3;color:#666; padding:2px 2px; line-height:24px ; height:24px;font-size: 14px;
 } 
 
 .x-textarea {
-	padding: 1px 3px;
-	background: #fff url(../images/text-bg.gif) repeat-x 0 0;
-	border: 1px solid #B5B8C8;
+	background-color:#fff;border:1px solid #d3d3d3;color:#666; padding:2px 2px; font-size: 14px;
 }
 
  .x_content_title {
@@ -150,3 +148,56 @@ img {
 
 a:link,a:visited,a:active{color:#656565; text-decoration:none}
 a:hover{color:#F3A36E; text-decoration:none}
+
+
+.btnGreen {
+	padding: 5px 20px; border-radius: 3px; border: 1px solid rgb(61, 129, 12); text-align: center; color: rgb(255, 255, 255); overflow: visible; display: inline-block; cursor: pointer; background-color: rgb(90, 170, 75); -moz-border-radius: 3px; -webkit-border-radius: 3px;
+}
+.btnGreen:hover {
+	color: rgb(255, 255, 255); box-shadow: 0px 1px 1px #aaa; background-color: rgb(83, 160, 70); -moz-box-shadow: 0 1px 1px #aaa; -webkit-box-shadow: 0 1px 1px #aaa;
+}
+.btnGreenS {
+	margin: 0px; padding: 3px 5px; border-radius: 3px; border: 1px solid rgb(61, 129, 12); text-align: center; color: rgb(255, 255, 255); overflow: visible; display: inline-block; cursor: pointer; background-color: rgb(90, 170, 75); -moz-border-radius: 3px; -webkit-border-radius: 3px;
+}
+.btnGreenS:hover {
+	color: rgb(255, 255, 255); box-shadow: 0px 1px 1px #aaa; background-color: rgb(83, 160, 70); -moz-box-shadow: 0 1px 1px #aaa; -webkit-box-shadow: 0 1px 1px #aaa;
+}
+.btnGreenS:hover {
+	color: rgb(255, 255, 255); box-shadow: 0px 1px 1px #aaa; background-color: rgb(83, 160, 70); -moz-box-shadow: 0 1px 1px #aaa; -webkit-box-shadow: 0 1px 1px #aaa;
+}
+.btnGreenS#saveSetting {
+	margin-left: 105px;
+}
+.btnGray {
+	padding: 5px 20px; border-radius: 3px; border: 1px solid rgb(170, 170, 170); text-align: center; color: rgb(0, 0, 0); overflow: visible; display: inline-block; cursor: pointer; background-color: rgb(244, 244, 244); -moz-border-radius: 3px; -webkit-border-radius: 3px;
+}
+.btnGray:hover {
+	box-shadow: 0px 1px 1px #ccc; background-color: rgb(248, 248, 248); -moz-box-shadow: 0 1px 1px #ccc; -webkit-box-shadow: 0 1px 1px #ccc;
+}
+.btnGrayS {
+	margin: 0px; padding: 3px 5px; border-radius: 3px; border: 1px solid rgb(170, 170, 170); text-align: center; color: rgb(0, 0, 0); overflow: visible; display: inline-block; cursor: pointer; background-color: rgb(244, 244, 244); -moz-border-radius: 3px; -webkit-border-radius: 3px;
+}
+.btnGrayS:hover {
+	box-shadow: 0px 1px 1px #ccc; background-color: rgb(248, 248, 248); -moz-box-shadow: 0 1px 1px #ccc; -webkit-box-shadow: 0 1px 1px #ccc;
+}
+.btnGrayS:hover {
+	box-shadow: 0px 1px 1px #ccc; background-color: rgb(248, 248, 248); -moz-box-shadow: 0 1px 1px #ccc; -webkit-box-shadow: 0 1px 1px #ccc;
+}
+.btnDisable {
+	padding: 5px 20px; outline: 0px; border-radius: 3px 3px 4px 4px; border: 1px solid rgb(189, 189, 189); text-align: center; color: rgb(123, 123, 123); overflow: visible; display: inline-block; cursor: not-allowed; box-shadow: 0px 0px 0px transparent; background-color: rgb(243, 243, 243); -moz-border-radius: 3px; -webkit-border-radius: 3px; -moz-box-shadow: 0 0 0 transparent; -webkit-box-shadow: 0 0 0 transparent; -moz-border-radius-topleft: 3px; -webkit-border-top-left-radius: 3px; -moz-border-radius-topright: 3px; -webkit-border-top-right-radius: 3px; -moz-border-radius-bottomleft: 4px; -webkit-border-bottom-left-radius: 4px; -moz-border-radius-bottomright: 4px; -webkit-border-bottom-right-radius: 4px;
+}
+.btnDisable:hover {
+	color: rgb(123, 123, 123); text-decoration: none; box-shadow: 0px 0px 0px transparent; background-color: rgb(243, 243, 243); -moz-box-shadow: 0 0 0 transparent; -webkit-box-shadow: 0 0 0 transparent;
+}
+.btnDisableS {
+	margin: 0px; padding: 3px 5px; outline: 0px; border-radius: 3px 3px 4px 4px; border: 1px solid rgb(189, 189, 189); text-align: center; color: rgb(123, 123, 123); overflow: visible; vertical-align: middle; display: inline-block; cursor: not-allowed; box-shadow: 0px 0px 0px transparent; background-color: rgb(243, 243, 243); -moz-border-radius: 3px; -webkit-border-radius: 3px; -moz-box-shadow: 0 0 0 transparent; -webkit-box-shadow: 0 0 0 transparent; -moz-border-radius-topleft: 3px; -webkit-border-top-left-radius: 3px; -moz-border-radius-topright: 3px; -webkit-border-top-right-radius: 3px; -moz-border-radius-bottomleft: 4px; -webkit-border-bottom-left-radius: 4px; -moz-border-radius-bottomright: 4px; -webkit-border-bottom-right-radius: 4px;
+}
+.btnDisableS:hover {
+	color: rgb(123, 123, 123); text-decoration: none; box-shadow: 0px 0px 0px transparent; background-color: rgb(243, 243, 243); -moz-box-shadow: 0 0 0 transparent; -webkit-box-shadow: 0 0 0 transparent;
+}
+.btnDisableS:hover {
+	color: rgb(123, 123, 123); text-decoration: none; box-shadow: 0px 0px 0px transparent; background-color: rgb(243, 243, 243); -moz-box-shadow: 0 0 0 transparent; -webkit-box-shadow: 0 0 0 transparent;
+}
+.textDisable {
+	color: rgb(170, 170, 170); display: none; cursor: not-allowed; text-shadow: 0 1px 1px #fff;
+}
