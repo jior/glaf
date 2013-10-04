@@ -29,6 +29,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -48,7 +49,141 @@ public class ZipUtils {
 
 	private static String sp = System.getProperty("file.separator");
 
-	private ZipUtils() {
+	public static String convertEncoding(String s) {
+		String s1 = s;
+		try {
+			s1 = new String(s.getBytes("UTF-8"), "GBK");
+		} catch (Exception exception) {
+		}
+		return s1;
+	}
+
+	public static byte[] getBytes(byte[] bytes, String name) {
+		InputStream inputStream = null;
+		try {
+			inputStream = new ByteArrayInputStream(bytes);
+			return getBytes(inputStream, name);
+		} catch (Exception ex) {
+			throw new RuntimeException(ex);
+		} finally {
+			try {
+				if (inputStream != null) {
+					inputStream.close();
+				}
+			} catch (java.io.IOException ex) {
+			}
+		}
+	}
+
+	public static byte[] getBytes(InputStream inputStream, String name) {
+		byte[] bytes = null;
+		try {
+			ZipInputStream zipInputStream = new ZipInputStream(inputStream);
+			ZipEntry zipEntry = zipInputStream.getNextEntry();
+			while (zipEntry != null) {
+				String entryName = zipEntry.getName();
+				if (entryName.equalsIgnoreCase(name)) {
+					bytes = FileUtils.getBytes(zipInputStream);
+					if (bytes != null) {
+						break;
+					}
+				}
+				zipEntry = zipInputStream.getNextEntry();
+			}
+			zipInputStream.close();
+			zipInputStream = null;
+			return bytes;
+		} catch (Exception ex) {
+			throw new RuntimeException(ex);
+		}
+	}
+
+	public static byte[] getBytes(ZipInputStream zipInputStream, String name) {
+		byte[] bytes = null;
+		try {
+			ZipEntry zipEntry = zipInputStream.getNextEntry();
+			while (zipEntry != null) {
+				String entryName = zipEntry.getName();
+				if (entryName.equalsIgnoreCase(name)) {
+					bytes = FileUtils.getBytes(zipInputStream);
+					if (bytes != null) {
+						break;
+					}
+				}
+				zipEntry = zipInputStream.getNextEntry();
+			}
+			return bytes;
+		} catch (Exception ex) {
+			throw new RuntimeException(ex);
+		}
+	}
+
+	public static byte[] getZipBytes(Map<String, InputStream> dataMap) {
+		byte[] bytes = null;
+		try {
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			BufferedOutputStream bos = new BufferedOutputStream(baos);
+			jos = new JarOutputStream(bos);
+			if (dataMap != null) {
+				Set<Entry<String, InputStream>> entrySet = dataMap.entrySet();
+				for (Entry<String, InputStream> entry : entrySet) {
+					String name = entry.getKey();
+					InputStream inputStream = entry.getValue();
+					if (name != null && inputStream != null) {
+						BufferedInputStream bis = new BufferedInputStream(
+								inputStream);
+						JarEntry jarEntry = new JarEntry(name);
+						jos.putNextEntry(jarEntry);
+
+						while ((len = bis.read(buf)) >= 0) {
+							jos.write(buf, 0, len);
+						}
+
+						bis.close();
+						jos.closeEntry();
+					}
+				}
+			}
+			jos.flush();
+			jos.close();
+			bos.flush();
+			bos.close();
+			bytes = baos.toByteArray();
+			baos.close();
+			return bytes;
+		} catch (Exception ex) {
+			throw new RuntimeException(ex);
+		}
+	}
+
+	public static Map<String, byte[]> getZipBytesMap(
+			ZipInputStream zipInputStream) {
+		Map<String, byte[]> zipMap = new HashMap<String, byte[]>();
+		java.util.zip.ZipEntry zipEntry = null;
+		try {
+			while ((zipEntry = zipInputStream.getNextEntry()) != null) {
+				byte abyte0[] = new byte[BUFFER];
+				ByteArrayOutputStream baos = new ByteArrayOutputStream();
+				BufferedOutputStream bos = new BufferedOutputStream(baos,
+						BUFFER);
+				int i = 0;
+				while ((i = zipInputStream.read(abyte0, 0, BUFFER)) != -1) {
+					bos.write(abyte0, 0, i);
+				}
+				bos.flush();
+				byte[] bytes = baos.toByteArray();
+				bos.close();
+				baos.close();
+				bos = null;
+				baos = null;
+				zipMap.put(zipEntry.getName(), bytes);
+			}
+			zipInputStream.close();
+			zipInputStream = null;
+		} catch (Exception ex) {
+			throw new RuntimeException(ex);
+		}
+		return zipMap;
 	}
 
 	public static void makeZip(File dir, File zipFile) throws IOException,
@@ -87,74 +222,6 @@ public class ZipUtils {
 			}
 			bufferedinputstream.close();
 			jos.closeEntry();
-		}
-	}
-
-	public static Map<String, byte[]> getZipBytesMap(
-			ZipInputStream zipInputStream) {
-		Map<String, byte[]> zipMap = new HashMap<String, byte[]>();
-		java.util.zip.ZipEntry zipEntry = null;
-		try {
-			while ((zipEntry = zipInputStream.getNextEntry()) != null) {
-				byte abyte0[] = new byte[BUFFER];
-				ByteArrayOutputStream baos = new ByteArrayOutputStream();
-				BufferedOutputStream bos = new BufferedOutputStream(baos,
-						BUFFER);
-				int i = 0;
-				while ((i = zipInputStream.read(abyte0, 0, BUFFER)) != -1) {
-					bos.write(abyte0, 0, i);
-				}
-				bos.flush();
-				byte[] bytes = baos.toByteArray();
-				bos.close();
-				baos.close();
-				bos = null;
-				baos = null;
-				zipMap.put(zipEntry.getName(), bytes);
-			}
-			zipInputStream.close();
-			zipInputStream = null;
-		} catch (Exception ex) {
-			throw new RuntimeException(ex);
-		}
-		return zipMap;
-	}
-
-	public static byte[] getZipBytes(Map<String, InputStream> dataMap) {
-		byte[] bytes = null;
-		try {
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			BufferedOutputStream bos = new BufferedOutputStream(baos);
-			jos = new JarOutputStream(bos);
-			if (dataMap != null) {
-				Set<Entry<String, InputStream>> entrySet = dataMap.entrySet();
-				for (Entry<String, InputStream> entry : entrySet) {
-					String name = entry.getKey();
-					InputStream inputStream = entry.getValue();
-					if (name != null && inputStream != null) {
-						BufferedInputStream bis = new BufferedInputStream(
-								inputStream);
-						JarEntry jarEntry = new JarEntry(name);
-						jos.putNextEntry(jarEntry);
-
-						while ((len = bis.read(buf)) >= 0) {
-							jos.write(buf, 0, len);
-						}
-
-						bis.close();
-						jos.closeEntry();
-					}
-				}
-			}
-			jos.flush();
-			jos.close();
-			bos.flush();
-			bos.close();
-			bytes = baos.toByteArray();
-			baos.close();
-			return bytes;
-		} catch (Exception ex) {
-			throw new RuntimeException(ex);
 		}
 	}
 
@@ -301,73 +368,50 @@ public class ZipUtils {
 		zipInputStream = null;
 	}
 
-	public static byte[] getBytes(byte[] bytes, String name) {
-		InputStream inputStream = null;
-		try {
-			inputStream = new ByteArrayInputStream(bytes);
-			return getBytes(inputStream, name);
-		} catch (Exception ex) {
-			throw new RuntimeException(ex);
-		} finally {
-			try {
-				if (inputStream != null) {
-					inputStream.close();
-				}
-			} catch (java.io.IOException ex) {
+	public static void unzip(java.io.InputStream inputStream, String path,
+			List<String> excludes) throws Exception {
+		File file = new File(path);
+		FileUtils.mkdirsWithExistsCheck(file);
+		ZipInputStream zipInputStream = new ZipInputStream(inputStream);
+		java.util.zip.ZipEntry zipEntry;
+		while ((zipEntry = zipInputStream.getNextEntry()) != null) {
+			boolean isDirectory = zipEntry.isDirectory();
+			byte abyte0[] = new byte[BUFFER];
+			String s1 = zipEntry.getName();
+			String ext = FileUtils.getFileExt(s1);
+			if (excludes.contains(ext) || excludes.contains(ext.toLowerCase())) {
+				continue;
 			}
+
+			s1 = convertEncoding(s1);
+
+			String s2 = path + sp + s1;
+			s2 = FileUtils.getJavaFileSystemPath(s2);
+
+			if (s2.indexOf('/') != -1 || isDirectory) {
+				String s4 = s2.substring(0, s2.lastIndexOf('/'));
+				File file2 = new File(s4);
+				FileUtils.mkdirsWithExistsCheck(file2);
+			}
+			if (isDirectory) {
+				continue;
+			}
+			FileOutputStream fileoutputstream = new FileOutputStream(s2);
+			BufferedOutputStream bufferedoutputstream = new BufferedOutputStream(
+					fileoutputstream, BUFFER);
+			int i = 0;
+			while ((i = zipInputStream.read(abyte0, 0, BUFFER)) != -1) {
+				bufferedoutputstream.write(abyte0, 0, i);
+			}
+			bufferedoutputstream.flush();
+			bufferedoutputstream.close();
 		}
+
+		zipInputStream.close();
+		zipInputStream = null;
 	}
 
-	public static byte[] getBytes(InputStream inputStream, String name) {
-		byte[] bytes = null;
-		try {
-			ZipInputStream zipInputStream = new ZipInputStream(inputStream);
-			ZipEntry zipEntry = zipInputStream.getNextEntry();
-			while (zipEntry != null) {
-				String entryName = zipEntry.getName();
-				if (entryName.equalsIgnoreCase(name)) {
-					bytes = FileUtils.getBytes(zipInputStream);
-					if (bytes != null) {
-						break;
-					}
-				}
-				zipEntry = zipInputStream.getNextEntry();
-			}
-			zipInputStream.close();
-			zipInputStream = null;
-			return bytes;
-		} catch (Exception ex) {
-			throw new RuntimeException(ex);
-		}
-	}
-
-	public static byte[] getBytes(ZipInputStream zipInputStream, String name) {
-		byte[] bytes = null;
-		try {
-			ZipEntry zipEntry = zipInputStream.getNextEntry();
-			while (zipEntry != null) {
-				String entryName = zipEntry.getName();
-				if (entryName.equalsIgnoreCase(name)) {
-					bytes = FileUtils.getBytes(zipInputStream);
-					if (bytes != null) {
-						break;
-					}
-				}
-				zipEntry = zipInputStream.getNextEntry();
-			}
-			return bytes;
-		} catch (Exception ex) {
-			throw new RuntimeException(ex);
-		}
-	}
-
-	public static String convertEncoding(String s) {
-		String s1 = s;
-		try {
-			s1 = new String(s.getBytes("UTF-8"), "GBK");
-		} catch (Exception exception) {
-		}
-		return s1;
+	private ZipUtils() {
 	}
 
 }
