@@ -1,15 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src/main/java"/>
-	<classpathentry kind="src" path="src/main/process"/>
-	<classpathentry kind="src" path="src/main/config"/>
 	<classpathentry kind="src" path="src/test/java"/>
-	<classpathentry kind="src" path="src/test/config"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/glaf-core"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/glaf-jbpm"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/glaf-ui"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/ant-tools.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/glaf-core"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/antlr.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/aopalliance.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/asm.jar"/>
@@ -156,6 +151,5 @@
 	<classpathentry kind="lib" path="/glaf-core/lib/xmemcached.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/xml-apis-ext.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/xml-apis.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/glaf-security"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
