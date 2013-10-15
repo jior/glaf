@@ -22,6 +22,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.*;
+
 import com.alibaba.fastjson.*;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.glaf.base.modules.sys.util.SysRoleJsonFactory;
@@ -92,6 +93,20 @@ public class SysRole implements Serializable, JSONable {
 
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		SysRole other = (SysRole) obj;
+		if (id != other.id)
+			return false;
+		return true;
+	}
+
 	public String getCode() {
 		return this.code;
 	}
@@ -130,6 +145,14 @@ public class SysRole implements Serializable, JSONable {
 
 	public Date getUpdateDate() {
 		return this.updateDate;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (id ^ (id >>> 32));
+		return result;
 	}
 
 	public SysRole jsonToObject(JSONObject jsonObject) {

@@ -478,7 +478,7 @@ public class BaseIdentityFactory {
 				}
 			}
 		}
-		return null;
+		return codes;
 	}
 
 	public static List<SysRole> getUserRoles(List<String> actorIds) {

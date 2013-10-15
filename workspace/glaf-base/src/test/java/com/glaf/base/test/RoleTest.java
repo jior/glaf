@@ -15,7 +15,7 @@ public class RoleTest extends AbstractTest {
 	public void testUserRoles(){
 		sysRoleService = getBean("sysRoleService");
 		List<String> codes = BaseIdentityFactory.getUserRoles("root");
-		logger.debug(codes);
+		logger.debug("codes:"+codes);
 	}
 
 	public SysRoleService getSysRoleService() {
