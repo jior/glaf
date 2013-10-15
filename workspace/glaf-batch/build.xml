@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project basedir="." default="run">
+	<property name="build.home" location="." />
+	<property name="build.dest" location="bin" />
+	<property name="build.src" location="src" />
+
+	<path id="classpath">
+		<fileset dir="../glaf-core" includes="*.jar" />
+		<fileset dir="../glaf-core/lib" includes="*.jar" />
+		<fileset dir="../glaf-jbpm" includes="*.jar" />
+		<pathelement location="${build.home}/bin" />
+	</path>
+
+	<target name="build">
+		<echo message="编译应用程序......" />
+		<javac srcdir="${build.home}/src" destdir="${build.dest}" 
+			source="1.6" target="1.6" nowarn="false"
+			debug="true" debuglevel="lines,vars,source">
+			<include name="main/java/com/**/*.java" />
+			<include name="test/java/com/**/*.java" />
+			<classpath refid="classpath" />
+		</javac>
+		<copy todir="bin">
+			<fileset dir="src/main/java" includes="com/**/*.conf,com/**/*.sql,com/**/*.properties,com/**/*.xml" />
+		</copy>
+	</target>
+
+	<target name="jar"  >
+		<jar jarfile="glaf-batch-src.zip">
+			<fileset dir="." excludes="**/*.cvs,**/*.bak,**/*.tmp,**/*.scc,**/*.svn"
+			    includes=".classpath, .project, .settings/**, *.bat, *.xml, *.txt, config/**/*.*, mapping/**/*.*, sql/**/*.*, src/**/*.*"  />
+		</jar>
+		 
+		<jar jarfile="glaf-batch.jar">
+			<fileset dir="bin" includes="com/glaf/batch/**/*.*" 
+			             excludes="**/*.cvs,**/*.bak,**/*.tmp,**/*.scc,**/*.svn" />
+		</jar>
+
+	</target>
+
+	<target name="copy">
+		<copy todir="../glaf-web/WebContent/WEB-INF/classes">
+			<fileset dir="bin" includes="com/**/*.class,com/**/*.properties,com/**/*.xml" />
+		</copy>
+	</target>
+
+
+	<target name="run" depends="build">
+		<echo message="运行应用程序......" />
+
+		<copy todir="bin">
+			<fileset dir="src" includes="**/*.properties,**/*.xsd, **/*.xml" />
+		</copy>
+
+	</target>
+</project>

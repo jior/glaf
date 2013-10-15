@@ -37,16 +37,6 @@
 			<fileset dir="jar-conf" includes="**/*.xml,**/*.properties"  />
 		</jar>
 
-		<jar jarfile="glaf-batch.jar">
-			<fileset dir="bin" 
-			   includes="com/glaf/batch/**/*.class,com/glaf/batch/**/*.xml,com/glaf/batch/**/*.properties" />
-		</jar>
-
-		<jar jarfile="glaf-mail.jar">
-			<fileset dir="bin" 
-			   includes="com/glaf/mail/**/*.class,com/glaf/mail/**/*.xml,com/glaf/mail/**/*.properties" />
-		</jar>
-
 	    <jar jarfile="glaf-test.jar">
 			<fileset dir="bin" 
 			   includes="com/glaf/test/**/*.class,com/glaf/test/**/*.xml,com/glaf/test/**/*.properties" />
@@ -57,13 +47,12 @@
 	<target name="copy">
 		<copy todir="../glaf-web/WebContent/WEB-INF/classes">
 			<fileset dir="bin" includes="com/glaf/core/**/*.class,com/glaf/core/**/*.properties,com/glaf/core/**/*.xml" />
-			<fileset dir="bin" includes="com/glaf/mail/**/*.class,com/glaf/mail/**/*.properties,com/glaf/mail/**/*.xml" />
 		</copy>
 	</target>
 
 	<target name="copy-jar">
 		<copy todir="../glaf-web/WebContent/WEB-INF/lib">
-			<fileset dir="." includes="glaf-core.jar,glaf-mail.jar"/>
+			<fileset dir="." includes="glaf-core.jar"/>
 		</copy>
 	</target>
 
