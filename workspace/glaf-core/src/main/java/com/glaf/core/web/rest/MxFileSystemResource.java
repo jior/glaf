@@ -49,6 +49,10 @@ public class MxFileSystemResource {
 				for (int i = 0; i < contents.length; i++) {
 					File file = contents[i];
 					if (file.exists() && file.isFile()) {
+						if (StringUtils.contains(file.getName(),
+								"jdbc.properties")) {
+							continue;
+						}
 						JSONObject json = new JSONObject();
 						json.put("id",
 								DigestUtils.md5Hex(path + "/" + file.getName()));
@@ -91,6 +95,10 @@ public class MxFileSystemResource {
 				for (int i = 0; i < contents.length; i++) {
 					File file = contents[i];
 					if (file.exists() && file.isDirectory()) {
+						if (StringUtils.contains(file.getName(),
+								"jdbc.properties")) {
+							continue;
+						}
 						JSONObject json = new JSONObject();
 						json.put("id",
 								DigestUtils.md5Hex(path + "/" + file.getName()));

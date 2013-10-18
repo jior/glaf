@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -59,6 +60,9 @@ public class WebProjectController {
 						byte[] bytes = FileUtils.getBytes(contents[i]);
 						if (bytes.length < FileUtils.MB_SIZE * 5) {
 							String name = contents[i].getAbsolutePath();
+							if (StringUtils.contains(name, "jdbc.properties")) {
+								continue;
+							}
 							name = StringTools.replace(name, root, "");
 							bytesMap.put(name, bytes);
 						}
