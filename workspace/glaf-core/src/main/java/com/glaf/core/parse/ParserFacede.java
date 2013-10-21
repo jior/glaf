@@ -65,7 +65,7 @@ public class ParserFacede {
 	protected IBlobService blobService;
 
 	protected ITableDataService tableDataService;
-	
+
 	protected ITableDefinitionService tableDefinitionService;
 
 	public IBlobService getBlobService() {
@@ -81,10 +81,11 @@ public class ParserFacede {
 		}
 		return tableDataService;
 	}
-	
+
 	public ITableDefinitionService getTableDefinitionService() {
 		if (tableDefinitionService == null) {
-			tableDefinitionService = ContextFactory.getBean("tableDefinitionService");
+			tableDefinitionService = ContextFactory
+					.getBean("tableDefinitionService");
 		}
 		return tableDefinitionService;
 	}
@@ -102,7 +103,7 @@ public class ParserFacede {
 			dataFile.setFileId(UUID32.getUUID());
 			dataFile.setFilename(file.getAbsolutePath());
 			dataFile.setData(FileUtils.getBytes(file));
-			dataFile.setCreateDate(new Date(file.lastModified()));
+			dataFile.setCreateDate(new Date());
 			dataFile.setLastModified(file.lastModified());
 			dataFile.setServiceKey("DTS");
 			dataFile.setId(UUID32.getUUID());
@@ -115,7 +116,7 @@ public class ParserFacede {
 			}
 			insert = false;
 			dataFile.setData(FileUtils.getBytes(file));
-			dataFile.setCreateDate(new Date(file.lastModified()));
+			dataFile.setCreateDate(new Date());
 			dataFile.setLastModified(file.lastModified());
 			dataFile.setSize(file.length());
 		}
@@ -257,7 +258,7 @@ public class ParserFacede {
 		XmlMappingReader xmlReader = new XmlMappingReader();
 		TableDefinition tableDefinition = null;
 		TableModel tableModel = null;
-		
+
 		logger.debug(new String(mappingFile));
 
 		tableDefinition = reader.read(new BufferedInputStream(
