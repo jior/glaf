@@ -18,6 +18,15 @@
 				<value>classpath:resources/mybatis/mapper/*Mapper.xml</value>
 			</list>
 		</property>
+		<property name="customFormTypes">
+			<list>
+				<bean class="org.activiti.explorer.form.UserFormType" />
+				<bean class="org.activiti.explorer.form.ProcessDefinitionFormType" />
+				<bean class="org.activiti.explorer.form.MonthFormType" />
+			</list>
+		</property>
+		<property name="activityFontName" value="宋体" />
+		<property name="labelFontName" value="宋体" />
 	</bean>
 
 	<bean id="processEngine" class="org.activiti.spring.ProcessEngineFactoryBean">
