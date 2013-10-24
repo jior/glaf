@@ -23,6 +23,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 import org.activiti.engine.repository.ProcessDefinition;
+
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.core.io.FileSystemResource;
@@ -31,9 +33,7 @@ import com.glaf.activiti.service.ActivitiDeployQueryService;
 import com.glaf.activiti.service.ActivitiProcessQueryService;
 import com.glaf.core.context.ApplicationContext;
 import com.glaf.core.context.ContextFactory;
-import com.glaf.core.security.DigestUtil;
 import com.glaf.core.util.FileUtils;
-import com.glaf.core.util.StringTools;
 
 public class ProcessUtils {
 	protected final static Log logger = LogFactory.getLog(ProcessUtils.class);
@@ -65,8 +65,7 @@ public class ProcessUtils {
 		String resourceName = processDefinition.getDiagramResourceName();
 		if (resourceName != null) {
 			String ext = getFileExt(resourceName);
-			String md5_hex = DigestUtil.digestString(resourceName, "MD5");
-			md5_hex = StringTools.encodeHex(md5_hex.getBytes());
+			String md5_hex = DigestUtils.md5Hex(resourceName);
 			String imagePath = processDefinition.getDeploymentId() + "_"
 					+ md5_hex + "." + ext;
 			return imagePath;
