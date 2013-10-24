@@ -4,7 +4,7 @@
 
 <mapper namespace="${packageName}.mapper.${entityName}Mapper">
 
- 	<resultMap id="${modelName}ResultMap"	type="${packageName}.model.${entityName}">
+ 	<resultMap id="${modelName}ResultMap"	type="${packageName}.domain.${entityName}">
 <#if idField.type?exists && ( idField.type== 'Integer' )>
         <id property="${idField.name}" column="${idField.columnName}" jdbcType="INTEGER" />
 <#elseif idField.type?exists && ( idField.type== 'Long' )>
@@ -34,7 +34,7 @@
 	</resultMap>
 
  
-	<insert id="insert${entityName}" parameterType="${packageName}.model.${entityName}">
+	<insert id="insert${entityName}" parameterType="${packageName}.domain.${entityName}">
 		insert into ${tableName} 
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 		    ${idField.columnName}
@@ -103,7 +103,7 @@
     </insert>
 
 	 
-	<update id="update${entityName}" parameterType="${packageName}.model.${entityName}">
+	<update id="update${entityName}" parameterType="${packageName}.domain.${entityName}">
 		update ${tableName}
 		set
         <trim prefix="" suffix="" suffixOverrides=",">		

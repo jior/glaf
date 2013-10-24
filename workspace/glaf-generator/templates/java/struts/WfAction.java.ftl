@@ -29,7 +29,7 @@ import com.glaf.core.identity.*;
 import com.glaf.core.security.*;
 import com.glaf.core.util.*;
 
-import ${packageName}.model.*;
+import ${packageName}.domain.*;
 import ${packageName}.query.*;
 
 public class ${entityName}WfAction extends ${entityName}BaseAction {

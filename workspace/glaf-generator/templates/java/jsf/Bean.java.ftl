@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import com.glaf.base.context.*;
 import com.glaf.base.utils.FacesUtil;
-import ${packageName}.model.${entityName};
+import ${packageName}.domain.${entityName};
 import ${packageName}.query.${entityName}Query;
 import ${packageName}.service.*;
 

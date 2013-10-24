@@ -14,7 +14,7 @@ import com.glaf.base.entity.*;
 import com.glaf.base.id.*;
 import com.glaf.base.utils.*;
 
-import ${packageName}.model.*;
+import ${packageName}.domain.*;
 
 
 @Service

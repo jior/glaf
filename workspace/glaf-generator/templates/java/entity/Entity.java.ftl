@@ -1,4 +1,4 @@
-package ${packageName}.model;
+package ${packageName}.domain;
 
 import java.io.*;
 import java.util.*;

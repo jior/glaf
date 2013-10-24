@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode; 
 import com.glaf.core.base.*;
 import com.glaf.core.util.DateUtils;
-import ${packageName}.model.*;
+import ${packageName}.domain.*;
 
 public class ${entityName}JsonFactory {
 

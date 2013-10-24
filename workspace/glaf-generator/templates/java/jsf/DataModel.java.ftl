@@ -10,7 +10,7 @@ import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 import com.glaf.base.context.*;
 import com.glaf.base.utils.*;
-import ${packageName}.model.${entityName};
+import ${packageName}.domain.${entityName};
 import ${packageName}.query.${entityName}Query;
 import ${packageName}.service.*;
 

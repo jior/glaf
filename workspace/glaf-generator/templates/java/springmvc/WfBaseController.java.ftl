@@ -23,10 +23,10 @@ import com.glaf.jbpm.model.*;
 import com.glaf.jbpm.container.*;
 
 
-import ${packageName}.model.*;
+import ${packageName}.domain.*;
 import ${packageName}.query.*;
 
-public class ${entityName}WfController extends ${entityName}BaseController {
+public class ${entityName}WfController extends ${entityName}Controller {
 	private static final Log logger = LogFactory.getLog(${entityName}WfController.class);
 
 	public ${entityName}WfController() {

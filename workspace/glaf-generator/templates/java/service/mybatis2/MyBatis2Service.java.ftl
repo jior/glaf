@@ -14,7 +14,7 @@ import com.glaf.base.id.*;
 import com.glaf.base.entity.*;
 
  
-import ${packageName}.model.*;
+import ${packageName}.domain.*;
 
 @Service
 @Transactional(readOnly = true)

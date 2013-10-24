@@ -2,7 +2,7 @@ package ${packageName}.mapper;
 
 import java.util.*;
 import org.springframework.stereotype.Component;
-import ${packageName}.model.*;
+import ${packageName}.domain.*;
 import ${packageName}.query.*;
 
 @Component

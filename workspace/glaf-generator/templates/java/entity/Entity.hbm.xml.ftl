@@ -3,7 +3,7 @@
 	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-	<class name="${packageName}.model.${entityName}" table="${tableName}"
+	<class name="${packageName}.domain.${entityName}" table="${tableName}"
 		dynamic-update="true" dynamic-insert="true">
 <#if idField?exists >
     <#if idField.type?exists >

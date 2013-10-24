@@ -18,7 +18,7 @@ import com.glaf.base.context.*;
 import com.glaf.base.modules.sys.model.*;
 import com.glaf.base.service.*;
  
-import ${packageName}.model.${entityName};
+import ${packageName}.domain.${entityName};
 import ${packageName}.service.*;
 
 @Component("${modelName}ViewBean")

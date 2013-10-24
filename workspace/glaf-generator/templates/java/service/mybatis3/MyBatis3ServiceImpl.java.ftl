@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.glaf.core.id.*;
 import com.glaf.core.dao.*;
 import ${packageName}.mapper.*;
-import ${packageName}.model.*;
+import ${packageName}.domain.*;
 import ${packageName}.query.*;
 
 @Service("${modelName}Service")

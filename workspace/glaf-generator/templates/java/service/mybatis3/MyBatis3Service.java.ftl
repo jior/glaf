@@ -3,7 +3,7 @@ package ${packageName}.service;
 import java.util.*;
 import org.springframework.transaction.annotation.Transactional;
  
-import ${packageName}.model.*;
+import ${packageName}.domain.*;
 import ${packageName}.query.*;
 
  

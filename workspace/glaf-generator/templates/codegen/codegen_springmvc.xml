@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <mapping>
 	<definition name="Entity">
-		<savePath>/java/model</savePath>
+		<savePath>/java/domain</savePath>
 		<saveName>${entityName}.java</saveName>
 		<template>/templates/java/entity/Entity.java.ftl</template>
 	</definition>
@@ -56,16 +56,16 @@
 		<saveName>${entityName}Controller.java</saveName>
 		<template>/templates/java/springmvc/Controller.java.ftl</template>
 	</definition>
-	<definition name="BaseController">
+	<!-- <definition name="BaseController">
 		<savePath>/java/web/springmvc</savePath>
 		<saveName>${entityName}BaseController.java</saveName>
 		<template>/templates/java/springmvc/BaseController.java.ftl</template>
-	</definition>
-	<definition name="WfBaseController">
+	</definition> -->
+	<!-- <definition name="WfBaseController">
 		<savePath>/java/web/springmvc</savePath>
 		<saveName>${entityName}WfController.java</saveName>
 		<template>/templates/java/springmvc/WfBaseController.java.ftl</template>
-	</definition>
+	</definition> -->
 	<!-- <definition name="WfBaseController">
 		<savePath>/java/web/springmvc</savePath>
 		<saveName>${entityName}WfController.java</saveName>

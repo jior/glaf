@@ -4,7 +4,7 @@ import java.util.*;
 
 import org.junit.Test;
 
-import ${packageName}.model.${entityName};
+import ${packageName}.domain.${entityName};
 import ${packageName}.query.${entityName}Query;
 import ${packageName}.service.${entityName}Service;
 import com.glaf.test.AbstractTest;
