@@ -12,8 +12,7 @@
 <div class="content-block"  style=" width: 60%; height:150px;" >
 <br>
 <div class="x_content_title">
-<img
-	src="<%=request.getContextPath()%>/images/window.png" alt="流程定义信息">
+<img src="<%=request.getContextPath()%>/images/window.png" alt="流程定义信息">
 流程定义信息
 </div>
 <div align="left" style="padding-left: 60px;">

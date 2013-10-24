@@ -25,7 +25,6 @@ import org.activiti.engine.repository.ProcessDefinition;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,7 +35,9 @@ import org.springframework.web.multipart.MultipartFile;
 import com.glaf.activiti.service.ActivitiDeployQueryService;
 import com.glaf.activiti.service.ActivitiDeployService;
 import com.glaf.activiti.service.ActivitiProcessQueryService;
+import com.glaf.activiti.util.ProcessUtils;
 import com.glaf.core.util.FileUtils;
+import com.glaf.core.util.IOUtils;
 import com.glaf.core.config.ViewProperties;
 
 @Controller("/activiti/deploy")
@@ -73,12 +74,7 @@ public class ActivitiDeployController {
 					deploymentId = activitiDeployService.addZipInputStream(
 							zipInputStream).getId();
 				} finally {
-					try {
-						if (zipInputStream != null) {
-							zipInputStream.close();
-						}
-					} catch (IOException ex) {
-					}
+					IOUtils.closeStream(zipInputStream);
 				}
 			} else {
 				String resourceName = FileUtils.getFilename(mFile
@@ -97,15 +93,11 @@ public class ActivitiDeployController {
 					String resourceName = processDefinition
 							.getDiagramResourceName();
 					if (resourceName != null) {
-
-						String view = ViewProperties
-								.getString("activiti.deploy.showImage");
-						if (StringUtils.isNotEmpty(view)) {
-							return view;
-						}
+						ProcessUtils.saveProcessImageToFileSystem(processDefinition);
+						String path = "/deploy/bpmn/"+ProcessUtils.getImagePath(processDefinition);
+						model.addAttribute("path", path);
 						return "/activiti/deploy/showImage";
 					}
-
 				}
 			}
 		}

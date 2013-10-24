@@ -4,16 +4,16 @@
 <head>
 <title>流程发布</title>
 <%@ include file="/WEB-INF/views/tm/header.jsp"%>
-<script language="JavaScript">
+<script language="javascript">
 
 	function submitRequest(form){
-		 if(document.getElementById("file").value==""){
-             alert("请选择您要发布的格式为zip、jar、par的流程包！");
-			 return;
-		 }
-          if(confirm("您准备发布新的流程版本，确认吗？")){
-             document.iForm.submit();
-		  }
+		if(document.getElementById("file").value==""){
+            alert("请选择您要发布的格式为zip、jar、par的流程包！");
+			return;
+		}
+        if(confirm("您准备发布新的流程版本，确认吗？")){
+            document.iForm.submit();
+		}
 	}
 
 </script>
@@ -24,7 +24,7 @@
 <br>
 <center>
 <form action="<%=request.getContextPath()%>/mx/activiti/deploy" method="post"
-	enctype="multipart/form-data" name="iForm" class="x-form">
+	  enctype="multipart/form-data" name="iForm" class="x-form">
 <div class="content-block"  style=" width: 80%;" >
 <br>
 <div class="x_content_title"><img
