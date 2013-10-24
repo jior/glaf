@@ -109,6 +109,7 @@ $(document).ready(function(){
   var baseUrl = window.document.location.protocol + "//" + window.document.location.host + "/";
   var shortenedUrl = window.document.location.href.replace(baseUrl, "");
   baseUrl = baseUrl + shortenedUrl.substring(0, shortenedUrl.indexOf("/"));
+  //http://127.0.0.1:8080/glaf/diagram-viewer/index.html?processInstanceId=3201&processDefinitionId=ApplicationProcess:1:4
 
   ActivitiRest.options = {
     //processInstanceHighLightsUrl: baseUrl + "/service/process-instance/{processInstanceId}/highlights?callback=?",
@@ -121,7 +122,6 @@ $(document).ready(function(){
 
   if (processDefinitionId) {
     ProcessDiagramGenerator.drawDiagram(processDefinitionId);
-
   } else {
     alert("processDefinitionId parameter is required");
   }
