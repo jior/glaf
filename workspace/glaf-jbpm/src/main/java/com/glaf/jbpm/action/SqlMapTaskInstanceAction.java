@@ -32,7 +32,6 @@ import java.util.StringTokenizer;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import org.jbpm.JbpmException;
 import org.jbpm.context.exe.ContextInstance;
 import org.jbpm.graph.def.ActionHandler;
@@ -338,6 +337,10 @@ public class SqlMapTaskInstanceAction implements ActionHandler {
 				}
 			}
 		}
+		
+		String startActorId = (String) contextInstance
+				.getVariable(Constant.PROCESS_STARTERID);
+		actorIds.remove(startActorId);
 
 		if (actorIds.size() > 0) {
 

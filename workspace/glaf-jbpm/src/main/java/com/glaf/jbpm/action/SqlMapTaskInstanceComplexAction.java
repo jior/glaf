@@ -482,6 +482,10 @@ public class SqlMapTaskInstanceComplexAction implements ActionHandler {
 					}
 				}
 			}
+			
+			String startActorId = (String) contextInstance
+					.getVariable(Constant.PROCESS_STARTERID);
+			actorIds.remove(startActorId);
 
 			logger.debug("actorIds:" + actorIds);
 

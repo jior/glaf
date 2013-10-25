@@ -170,6 +170,11 @@ public class MultiPooledTaskInstanceAction implements ActionHandler {
 									actorIds.add(elem4);
 								}
 							}
+							
+							String startActorId = (String) contextInstance
+									.getVariable(Constant.PROCESS_STARTERID);
+							actorIds.remove(startActorId);
+							
 							if (actorIds.size() > 0) {
 								TaskInstance taskInstance = tmi
 										.createTaskInstance(task, token);

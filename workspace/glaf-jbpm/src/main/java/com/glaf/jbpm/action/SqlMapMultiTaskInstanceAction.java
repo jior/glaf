@@ -234,7 +234,11 @@ public class SqlMapMultiTaskInstanceAction implements ActionHandler {
 							}
 						}
 					}
-
+					
+					String startActorId = (String) contextInstance
+							.getVariable(Constant.PROCESS_STARTERID);
+					actorIds.remove(startActorId);
+					
 					if (LogUtils.isDebug()) {
 						logger.debug("actorIds:" + actorIds);
 					}
