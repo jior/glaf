@@ -634,6 +634,15 @@
 	</select>
 
 
+	<select id="getUserByUserId" resultMap="userResultMap" parameterType="long">
+
+		SELECT u.*
+		FROM sys_user u 
+		WHERE u.id = #{userId}
+
+	</select>
+
+
 	<select id="getRoles" resultMap="roleResultMap"
 		parameterType="com.glaf.core.query.RoleQuery">
 

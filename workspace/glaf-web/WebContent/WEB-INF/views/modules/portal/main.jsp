@@ -34,9 +34,9 @@
     var openTabSize = 0;  
 
 	$(function() {
-        changeTheme();
+        //changeTheme();
         $('#editTheme').click(function() {
-            $('#w').window('open');
+            $('#themeWin').window('open');
         });  
 	});	
 
@@ -249,9 +249,16 @@
 		<div id="closeright">当前页右侧全部关闭</div>
 		<div id="closeleft">当前页左侧全部关闭</div>
 	</div>
-
+<script type="text/javascript">
+	var waitTime=1000; //1 秒 
+	timer=setInterval("OnTimer()",1000); 
+	function OnTimer(){ 
+		waitTime=waitTime-1000; 
+		if(waitTime==0){ 
+			jQuery('#themeWin').window('close'); 
+		}
+	}
+</script>
 </body>
 </html>
-<script type="text/javascript">
-   
-</script>
+ 
