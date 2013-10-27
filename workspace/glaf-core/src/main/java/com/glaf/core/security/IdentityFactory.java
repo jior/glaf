@@ -274,6 +274,16 @@ public class IdentityFactory {
 	public static User getUser(String actorId) {
 		return (User) getEntityService().getById("getUserById", actorId);
 	}
+	
+	/**
+	 * 根据用户ID获取用户对象
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	public static User getUserByUserId(Long userId) {
+		return (User) getEntityService().getById("getUserByUserId", userId);
+	}
 
 	/**
 	 * 获取全部用户Map
