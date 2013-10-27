@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
+
 package com.glaf.core.web.rest;
 
 import java.io.File;
@@ -71,6 +71,10 @@ public class MxFileSystemResource {
 								"jdbc.properties")) {
 							continue;
 						}
+						if (StringUtils.contains(file.getName(),
+								"hibernate.cfg.xml")) {
+							continue;
+						}
 						JSONObject json = new JSONObject();
 						json.put("id",
 								DigestUtils.md5Hex(path + "/" + file.getName()));
@@ -115,6 +119,10 @@ public class MxFileSystemResource {
 					if (file.exists() && file.isDirectory()) {
 						if (StringUtils.contains(file.getName(),
 								"jdbc.properties")) {
+							continue;
+						}
+						if (StringUtils.contains(file.getName(),
+								"hibernate.cfg.xml")) {
 							continue;
 						}
 						JSONObject json = new JSONObject();

@@ -63,6 +63,9 @@ public class WebProjectController {
 							if (StringUtils.contains(name, "jdbc.properties")) {
 								continue;
 							}
+							if (StringUtils.contains(name, "hibernate.cfg.xml")) {
+								continue;
+							}
 							name = StringTools.replace(name, root, "");
 							bytesMap.put(name, bytes);
 						}
