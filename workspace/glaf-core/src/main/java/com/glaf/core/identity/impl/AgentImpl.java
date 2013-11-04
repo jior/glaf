@@ -24,11 +24,10 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
 import com.alibaba.fastjson.JSONObject;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.glaf.core.identity.Agent;
-import com.glaf.core.util.DateUtils;
+import com.glaf.core.identity.util.AgentJsonFactory;
 
 public class AgentImpl implements Agent {
 
@@ -268,69 +267,11 @@ public class AgentImpl implements Agent {
 	}
 
 	public JSONObject toJsonObject() {
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("id", id);
-		jsonObject.put("assignFrom", assignFrom);
-		jsonObject.put("assignTo", assignTo);
-		jsonObject.put("agentType", agentType);
-		jsonObject.put("createDate", createDate);
-		jsonObject.put("serviceKey", serviceKey);
-		if (processName != null) {
-			jsonObject.put("processName", processName);
-		}
-		if (taskName != null) {
-			jsonObject.put("taskName", taskName);
-		}
-		if (startDate != null) {
-			jsonObject.put("startDate", startDate);
-		}
-		if (endDate != null) {
-			jsonObject.put("endDate", endDate);
-		}
-		if (objectId != null) {
-			jsonObject.put("objectId", objectId);
-		}
-		if (objectValue != null) {
-			jsonObject.put("objectValue", objectValue);
-		}
-		return jsonObject;
+		return AgentJsonFactory.toJsonObject(this);
 	}
 
 	public ObjectNode toObjectNode() {
-		ObjectNode jsonObject = new ObjectMapper().createObjectNode();
-		jsonObject.put("id", id);
-		jsonObject.put("assignFrom", assignFrom);
-		jsonObject.put("assignTo", assignTo);
-		jsonObject.put("agentType", agentType);
-		jsonObject.put("serviceKey", serviceKey);
-		jsonObject.put("createDate", DateUtils.getDate(createDate));
-		jsonObject.put("createDate_date", DateUtils.getDate(createDate));
-		jsonObject
-				.put("createDate_datetime", DateUtils.getDateTime(createDate));
-		if (processName != null) {
-			jsonObject.put("processName", processName);
-		}
-		if (taskName != null) {
-			jsonObject.put("taskName", taskName);
-		}
-		if (startDate != null) {
-			jsonObject.put("startDate", DateUtils.getDate(startDate));
-			jsonObject.put("startDate_date", DateUtils.getDate(startDate));
-			jsonObject.put("startDate_datetime",
-					DateUtils.getDateTime(startDate));
-		}
-		if (endDate != null) {
-			jsonObject.put("endDate", DateUtils.getDate(endDate));
-			jsonObject.put("endDate_date", DateUtils.getDate(endDate));
-			jsonObject.put("endDate_datetime", DateUtils.getDateTime(endDate));
-		}
-		if (objectId != null) {
-			jsonObject.put("objectId", objectId);
-		}
-		if (objectValue != null) {
-			jsonObject.put("objectValue", objectValue);
-		}
-		return jsonObject;
+		return AgentJsonFactory.toObjectNode(this);
 	}
 
 	public String toString() {

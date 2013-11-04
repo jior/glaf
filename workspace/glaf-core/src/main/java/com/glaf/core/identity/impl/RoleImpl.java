@@ -20,11 +20,11 @@ package com.glaf.core.identity.impl;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
-import com.alibaba.fastjson.JSONObject;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.glaf.core.identity.Role;
+import com.glaf.core.identity.util.RoleJsonFactory;
 
 public class RoleImpl implements Role {
 
@@ -127,18 +127,7 @@ public class RoleImpl implements Role {
 	}
 
 	public Role jsonToObject(JSONObject jsonObject) {
-		Role model = new RoleImpl();
-		if (jsonObject.containsKey("id")) {
-			model.setId(jsonObject.getInteger("id"));
-		}
-		if (jsonObject.containsKey("name")) {
-			model.setName(jsonObject.getString("name"));
-		}
-		if (jsonObject.containsKey("type")) {
-			model.setType(jsonObject.getInteger("type"));
-		}
-		 
-		return model;
+		return RoleJsonFactory.jsonToObject(jsonObject);
 	}
 
 	public void setAccessLevel(int accessLevel) {
@@ -190,38 +179,11 @@ public class RoleImpl implements Role {
 	}
 
 	public JSONObject toJsonObject() {
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("id", id);
-		jsonObject.put("_id_", id);
-		jsonObject.put("_oid_", id);
-		jsonObject.put("roleId", id);
-		jsonObject.put("name", name);
-		jsonObject.put("locked", locked);
-		jsonObject.put("type", type);
-		jsonObject.put("roleuse", roleuse);
-		jsonObject.put("listno", listno);
-		if (busiessId != null) {
-			jsonObject.put("busiessId", busiessId);
-		}
-		jsonObject.put("domainIndex", domainIndex);
-		return jsonObject;
+		return RoleJsonFactory.toJsonObject(this);
 	}
 
 	public ObjectNode toObjectNode() {
-		ObjectNode jsonObject = new ObjectMapper().createObjectNode();
-		jsonObject.put("id", id);
-		jsonObject.put("_id_", id);
-		jsonObject.put("_oid_", id);
-		jsonObject.put("listno", listno);
-		jsonObject.put("locked", locked);
-		jsonObject.put("name", name);
-		jsonObject.put("roleuse", roleuse);
-		jsonObject.put("type", type);
-		if (busiessId != null) {
-			jsonObject.put("busiessId", busiessId);
-		}
-		jsonObject.put("domainIndex", domainIndex);
-		return jsonObject;
+		return RoleJsonFactory.toObjectNode(this);
 	}
 
 	public String toString() {

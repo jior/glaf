@@ -24,11 +24,9 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
 import com.alibaba.fastjson.JSONObject;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import com.glaf.core.identity.User;
-import com.glaf.core.util.DateUtils;
+import com.glaf.core.identity.util.UserJsonFactory;
 
 public class UserImpl implements User {
 
@@ -244,70 +242,6 @@ public class UserImpl implements User {
 		return false;
 	}
 
-	public User jsonToObject(JSONObject jsonObject) {
-		UserImpl model = new UserImpl();
-		if (jsonObject.containsKey("id")) {
-			model.setId(jsonObject.getIntValue("id"));
-		}
-		if (jsonObject.containsKey("actorId")) {
-			model.setActorId(jsonObject.getString("actorId"));
-		}
-
-		if (jsonObject.containsKey("account")) {
-			model.setActorId(jsonObject.getString("account"));
-		}
-		if (jsonObject.containsKey("name")) {
-			model.setName(jsonObject.getString("name"));
-		}
-
-		if (jsonObject.containsKey("userType")) {
-			model.setUserType(jsonObject.getIntValue("userType"));
-		}
-
-		if (jsonObject.containsKey("accountType")) {
-			model.setAccountType(jsonObject.getIntValue("accountType"));
-		}
-
-		if (jsonObject.containsKey("createDate")) {
-			model.setCreateDate(jsonObject.getDate("createDate"));
-		}
-
-		if (jsonObject.containsKey("status")) {
-			model.setStatus(jsonObject.getString("status"));
-		}
-
-		if (jsonObject.containsKey("adminFlag")) {
-			model.setAdminFlag(jsonObject.getString("adminFlag"));
-		}
-
-		if (jsonObject.containsKey("remark")) {
-			model.setRemark(jsonObject.getString("remark"));
-		}
-
-		if (jsonObject.containsKey("deptId")) {
-			model.setDeptId(jsonObject.getInteger("deptId"));
-		}
-		if (jsonObject.containsKey("isBind")) {
-			model.setIsBind(jsonObject.getString("isBind"));
-		}
-		if (jsonObject.containsKey("computerId")) {
-			model.setComputerId(jsonObject.getString("computerId"));
-		}
-		if (jsonObject.containsKey("mail")) {
-			model.setMail(jsonObject.getString("mail"));
-		}
-
-		if (jsonObject.containsKey("mobile")) {
-			model.setMobile(jsonObject.getString("mobile"));
-		}
-
-		if (jsonObject.containsKey("domainIndex")) {
-			model.setDomainIndex(jsonObject.getInteger("domainIndex"));
-		}
-
-		return model;
-	}
-
 	public void setAccountType(int accountType) {
 		this.accountType = accountType;
 	}
@@ -424,88 +358,17 @@ public class UserImpl implements User {
 		this.userType = userType;
 	}
 
-	public JSONObject toJsonObject() {
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("id", id);
-		jsonObject.put("actorId", actorId);
-		jsonObject.put("name", name);
-		jsonObject.put("locked", locked);
-		jsonObject.put("deptId", deptId);
-		jsonObject.put("adminFlag", adminFlag);
-
-		jsonObject.put("accountType", accountType);
-		jsonObject.put("userType", userType);
-		jsonObject.put("loginRetry", loginRetry);
-		jsonObject.put("fax", fax);
-		jsonObject.put("dumpflag", dumpflag);
-		jsonObject.put("isBind", isBind);
-		jsonObject.put("computerId", computerId);
-		jsonObject.put("remoteAttr", remoteAttr);
-		jsonObject.put("status", status);
-		jsonObject.put("phoneNumber", phoneNumber);
-		jsonObject.put("superiorId", superiorId);
-		jsonObject.put("principalshipCode", principalshipCode);
-		jsonObject.put("remark", remark);
-		jsonObject.put("domainIndex", domainIndex);
-
-		if (mail != null) {
-			jsonObject.put("mail", mail);
-		}
-		if (mobile != null) {
-			jsonObject.put("mobile", mobile);
-		}
-		if (lastLoginDate != null) {
-			jsonObject.put("lastLoginDate", lastLoginDate);
-		}
-		if (loginIP != null) {
-			jsonObject.put("loginIP", loginIP);
-		}
-
-		return jsonObject;
-	}
-
-	public ObjectNode toObjectNode() {
-		ObjectNode jsonObject = new ObjectMapper().createObjectNode();
-		jsonObject.put("id", id);
-		jsonObject.put("actorId", actorId);
-		jsonObject.put("name", name);
-		jsonObject.put("locked", locked);
-		jsonObject.put("deptId", deptId);
-		jsonObject.put("adminFlag", adminFlag);
-		jsonObject.put("accountType", accountType);
-		jsonObject.put("userType", userType);
-		jsonObject.put("loginRetry", loginRetry);
-		jsonObject.put("fax", fax);
-		jsonObject.put("dumpflag", dumpflag);
-		jsonObject.put("isBind", isBind);
-		jsonObject.put("computerId", computerId);
-		jsonObject.put("remoteAttr", remoteAttr);
-		jsonObject.put("status", status);
-		jsonObject.put("phoneNumber", phoneNumber);
-		jsonObject.put("superiorId", superiorId);
-		jsonObject.put("remark", remark);
-		jsonObject.put("domainIndex", domainIndex);
-
-		if (mail != null) {
-			jsonObject.put("mail", mail);
-		}
-		if (mobile != null) {
-			jsonObject.put("mobile", mobile);
-		}
-		if (lastLoginDate != null) {
-			jsonObject.put("lastLoginDate",
-					DateUtils.getDateTime(lastLoginDate));
-		}
-		if (loginIP != null) {
-			jsonObject.put("loginIP", loginIP);
-		}
-
-		return jsonObject;
-	}
-
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this,
 				ToStringStyle.MULTI_LINE_STYLE);
+	}
+
+	public User jsonToObject(JSONObject json) {
+		return UserJsonFactory.jsonToObject(json);
+	}
+
+	public JSONObject toJsonObject() {
+		return UserJsonFactory.toJsonObject(this);
 	}
 
 }

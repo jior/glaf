@@ -36,6 +36,7 @@ import com.glaf.core.context.ContextFactory;
 import com.glaf.core.identity.Agent;
 import com.glaf.core.identity.Role;
 import com.glaf.core.identity.User;
+import com.glaf.core.identity.util.UserJsonFactory;
 import com.glaf.core.query.MembershipQuery;
 import com.glaf.core.service.EntityService;
 import com.glaf.core.util.Constants;
@@ -238,6 +239,25 @@ public class IdentityFactory {
 	}
 
 	/**
+	 * 获取全部用户Map
+	 * 
+	 * @return
+	 */
+	public static Map<Long, User> getLongUserMap() {
+		Map<Long, User> userMap = new LinkedHashMap<Long, User>();
+		List<Object> list = getEntityService().getList("getUsers", null);
+		if (list != null && !list.isEmpty()) {
+			for (Object obj : list) {
+				if (obj instanceof User) {
+					User user = (User) obj;
+					userMap.put(user.getId(), user);
+				}
+			}
+		}
+		return userMap;
+	}
+
+	/**
 	 * 获取全部角色Map
 	 * 
 	 * @return
@@ -272,9 +292,20 @@ public class IdentityFactory {
 	 * @return
 	 */
 	public static User getUser(String actorId) {
-		return (User) getEntityService().getById("getUserById", actorId);
+		String cacheKey = "mx_user_" + actorId;
+		if (CacheFactory.getString(cacheKey) != null) {
+			String txt = CacheFactory.getString(cacheKey);
+			JSONObject json = JSON.parseObject(txt);
+			return UserJsonFactory.jsonToObject(json);
+		}
+		User user = (User) getEntityService().getById("getUserById", actorId);
+		if (user != null) {
+			JSONObject json = UserJsonFactory.toJsonObject(user);
+			CacheFactory.put(cacheKey, json.toJSONString());
+		}
+		return user;
 	}
-	
+
 	/**
 	 * 根据用户ID获取用户对象
 	 * 
@@ -282,7 +313,19 @@ public class IdentityFactory {
 	 * @return
 	 */
 	public static User getUserByUserId(Long userId) {
-		return (User) getEntityService().getById("getUserByUserId", userId);
+		String cacheKey = "mx_user2_" + userId;
+		if (CacheFactory.getString(cacheKey) != null) {
+			String txt = CacheFactory.getString(cacheKey);
+			JSONObject json = JSON.parseObject(txt);
+			return UserJsonFactory.jsonToObject(json);
+		}
+		User user = (User) getEntityService()
+				.getById("getUserByUserId", userId);
+		if (user != null) {
+			JSONObject json = UserJsonFactory.toJsonObject(user);
+			CacheFactory.put(cacheKey, json.toJSONString());
+		}
+		return user;
 	}
 
 	/**
@@ -298,25 +341,6 @@ public class IdentityFactory {
 				if (obj instanceof User) {
 					User user = (User) obj;
 					userMap.put(user.getActorId(), user);
-				}
-			}
-		}
-		return userMap;
-	}
-	
-	/**
-	 * 获取全部用户Map
-	 * 
-	 * @return
-	 */
-	public static Map<Long, User> getLongUserMap() {
-		Map<Long, User> userMap = new LinkedHashMap<Long, User>();
-		List<Object> list = getEntityService().getList("getUsers", null);
-		if (list != null && !list.isEmpty()) {
-			for (Object obj : list) {
-				if (obj instanceof User) {
-					User user = (User) obj;
-					userMap.put(user.getId(), user);
 				}
 			}
 		}
