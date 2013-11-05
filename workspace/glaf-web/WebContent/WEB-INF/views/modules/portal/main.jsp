@@ -139,7 +139,7 @@
 				<td width="5%" align="center" valign="middle"><img
 					src="<%=request.getContextPath()%>/layout/images/logo.gif"
 					border="0"></td>
-				<td width="25%" align="left" valign="middle"><span
+				<td width="35%" align="left" valign="middle"><span
 					class="sys_name" style="padding-left:10px; font-size: 24px; "><%=SystemConfig.getString("res_system_name")%></span>
 					&nbsp;<span class="sys_version"><%=SystemConfig.getString("res_version")%></span></td>
 				<td>&nbsp;</td>

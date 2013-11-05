@@ -142,7 +142,7 @@
 		<td align="left" width="30%" valign="top">&nbsp;</td>
 		<td align="left" width="70%" valign="middle">
 		<textarea id="link" name="link" rows="5" cols="39"
-			class="input-xlarge x-textarea" style="width: 300px; height: 90px; text-align: left;"><c:out
+			class="input-xlarge x-textarea" style="width: 350px; height: 90px; text-align: left;"><c:out
 			value="${panel.link}" escapeXml="false" /></textarea>
 		</td>
 	</tr>
@@ -159,7 +159,7 @@
 	<tr>
 		<td align="left" width="30%"   valign="top">高度</td>
 		<td align="left" align="left" valign="middle" >
-			<input type="text" name="height" value="${panel.height}" maxLength="3" class="input-mini x-text" /> (例如: 300, 显示一个高度为300像素的模块)
+			<input type="text" name="height" value="${panel.height}" size="3" maxLength="3" class="input-mini x-text" /> (例如: 300, 显示一个高度为300像素的模块)
 		</td>
 	</tr>
 
