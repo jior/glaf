@@ -196,8 +196,8 @@ public class IdentityFactory {
 			}
 		}
 		String cacheKey = Constants.LOGIN_USER_CACHE + actorId;
-		if (CacheFactory.get(cacheKey) != null) {
-			String text = (String) CacheFactory.get(cacheKey);
+		if (CacheFactory.getString(cacheKey) != null) {
+			String text = CacheFactory.getString(cacheKey);
 			JSONObject jsonObject = JSON.parseObject(text);
 			return LoginContextUtils.jsonToObject(jsonObject);
 		}

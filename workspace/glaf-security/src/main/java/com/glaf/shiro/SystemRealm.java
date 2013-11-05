@@ -55,7 +55,7 @@ public class SystemRealm extends AuthorizingRealm {
 		User user = IdentityFactory.getUser(actorId);
 		String password = user.getPassword();
 		if (password == null) {
-			throw new RuntimeException("No password for user [" + actorId + "]");
+			password = user.getActorId();
 		}
 		AuthenticationInfo info = new SimpleAuthenticationInfo(actorId,
 				password.toCharArray(), getName());

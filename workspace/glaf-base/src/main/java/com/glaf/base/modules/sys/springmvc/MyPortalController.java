@@ -146,6 +146,7 @@ public class MyPortalController {
 		Collections.sort(treeNodes);
 
 		Collection<String> roles = loginContext.getRoles();
+		logger.debug("user roles:" + roles);
 		List<String> list = new ArrayList<String>();
 		if (roles != null && !roles.isEmpty()) {
 			for (String r : roles) {

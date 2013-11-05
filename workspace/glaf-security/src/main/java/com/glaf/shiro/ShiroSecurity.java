@@ -32,7 +32,7 @@ public class ShiroSecurity {
 		Subject currentUser = SecurityUtils.getSubject();
 		UsernamePasswordToken token = new UsernamePasswordToken();
 		token.setUsername(actorId);
-		token.setPassword(password.toCharArray());
+		token.setPassword(actorId.toCharArray());
 		token.setRememberMe(true);
 		try {
 			Session session = currentUser.getSession();
