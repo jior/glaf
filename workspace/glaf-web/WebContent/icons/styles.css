@@ -10,6 +10,9 @@
 .icon-remove{
 	background:url('icons/remove.png') no-repeat ;
 }
+.icon-upload{
+	background:url('icons/upload.gif') no-repeat ;
+}
 .icon-clear{
 	background:url('icons/clear.png') no-repeat ;
 }
@@ -28,10 +31,6 @@
 
 .icon-exp{
 	background:url('icons/exp.gif') no-repeat ;
-}
-
-.icon-grid{
-	background:url('icons/list.gif') no-repeat ;
 }
 
 .icon-submit{
@@ -113,6 +112,9 @@
 
 .user{
 	background:url('icons/user.gif') no-repeat ;
+}
+.preview{
+	background:url('icons/preview.gif') no-repeat ;
 }
 
 .icon-accounts{
