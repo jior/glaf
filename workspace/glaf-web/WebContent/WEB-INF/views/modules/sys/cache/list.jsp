@@ -28,7 +28,7 @@
 				nowrap: false,
 				striped: true,
 				collapsible:true,
-				url:'<%=request.getContextPath()%>/mx/system/cacheMgr/json',
+				url:'<%=request.getContextPath()%>/mx/sys/cacheMgr/json',
 				sortName: 'id',
 				sortOrder: 'desc',
 				remoteSort: false,
@@ -69,7 +69,7 @@
 		}
 		var selected = jQuery('#mydatagrid').datagrid('getSelected');
 		if (selected ){
-			location.href="<%=request.getContextPath()%>/mx/system/cacheMgr/view?key="+selected.key;
+			location.href="<%=request.getContextPath()%>/mx/sys/cacheMgr/view?key="+selected.key;
 		}
 	}
 
@@ -83,7 +83,7 @@
 		    var rowIds = ids.join(',');
 			jQuery.ajax({
 				   type: "POST",
-				   url: '<%=request.getContextPath()%>/mx/system/cacheMgr/delete?keys='+rowIds,
+				   url: '<%=request.getContextPath()%>/mx/sys/cacheMgr/delete?keys='+rowIds,
 				   dataType:  'json',
 				   error: function(data){
 					   alert('服务器处理错误！');
@@ -120,7 +120,7 @@
 
 	function clearCache(){
 		if(confirm("确定清空缓存吗？")){
-            location.href="<%=request.getContextPath()%>/mx/system/cacheMgr/clearAll";
+            location.href="<%=request.getContextPath()%>/mx/sys/cacheMgr/clearAll";
 		}
 	}
 

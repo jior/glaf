@@ -3,7 +3,7 @@
 <%@ page import="com.glaf.base.modules.sys.model.*"%>
 <%@ page import="com.glaf.base.utils.*"%>
 <%
-String url = request.getContextPath()+"/mx/system/template?nodeId=";
+String url = request.getContextPath()+"/mx/sys/template?nodeId=";
 url=java.net.URLEncoder.encode(url);
 int parent=ParamUtil.getIntAttribute(request, "parent", 0);
 %>
@@ -30,7 +30,7 @@ function del(){
         
         <frame style="border-top: #003366 1px solid; border-left: #99ccff 2px groove;" border="0"
             frameborder="no" scrolling="auto" id="mainFrame" name="mainFrame" bordercolor="#DEE3E7"
-            src="<%=request.getContextPath()%>/mx/system/template?nodeId=<%=parent%>">
+            src="<%=request.getContextPath()%>/mx/sys/template?nodeId=<%=parent%>">
     </frameset>
 <noframes>
 </noframes>

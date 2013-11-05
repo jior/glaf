@@ -1,0 +1,103 @@
+<html>
+<head>
+<title>mail</title>
+<META http-equiv="Content-Type" content="text/html; charset=GBK">
+
+<style type="text/css"> 
+
+.list-box {
+  background:#CDCBCC;
+  table-layout:fixed;
+}
+.list-box td {
+  background:#FCF9E8;
+	overflow:hidden;
+	text-overflow:ellipsis;
+	white-space:nowrap;
+	padding:0 3px;
+}
+.disp {
+  table-layout:auto;
+}
+.list-title td, .list-box .td-title {
+  background:url(${serviceUrl}/images/s_20.jpg) repeat-x;
+	line-height:22px;
+	color:#FFF;
+	white-space:nowrap;
+}
+.list-title .title {
+  background:url(${serviceUrl}/images/s_21.jpg) repeat-x bottom #629DE1;
+	line-height:22px;
+	color:#FFF;
+	white-space:nowrap;
+}
+.list-back td {
+  background:#EAE7D8;
+}
+.list-a td {
+  background:#F5F5F5;
+}
+.list-w td {
+  background:#FFF;
+}
+.list-box .red {
+  background:#E56061;
+}
+.list-box .yellow {
+  background:#F6C841;
+}
+.list-box .green {
+  background:#33FF00;
+}
+.list-over td {
+  background:#D8D7A7;
+}
+.list-del td, .list-del input {
+  color:#999;
+}
+.input-change {
+  border:1px solid #F00;
+}
+.list-new td {
+  color:#999900;
+}
+</style>
+</head>
+
+<body id="document">
+<table align="center" width="95%" border="0" cellspacing="1" cellpadding="0" >
+    <tr>
+	  <td colspan="10">
+           这是${res_system_name?if_exists}自动发出的提示邮件 ，请不要直接回复。以下信息请您知悉：
+		   <br>${res_system_name?if_exists}中您有以下未处理事宜。
+	  </td>
+	</tr>
+</table>
+<br>
+<table align="center" width="95%" border="0" cellspacing="1" cellpadding="0" class="list-box">
+          <tr class="list-title">
+            <td align="center">事&nbsp;&nbsp;项</td>
+			<td align="center">内&nbsp;&nbsp;容</td>
+            <td width="125" align="center">PastDue</td>
+            <td width="125" align="center">Caution</td>
+			<td width="125" align="center">OK</td>
+          </tr>
+		  <#if tasks?exists>
+		   <#list  tasks as x>
+		   <tr class="list-a">
+            <td height="20" align="left">
+			    <#if user.activationCode?exists>
+			    <ax href="${serviceUrl}/${x.todo.listLink}&xyz_activationCode=${user.activationCode}">${x.todo.title}</ax>
+				<#else>
+				<ax href="${serviceUrl}/${x.todo.listLink}">${x.todo.title}</ax>
+				</#if>
+			</td>
+			<td height="20" align="left">${x.todo.content}</td>
+			<td align="center" class="red">${x.pastDueQty}</td>
+            <td align="center" class="yellow">${x.cautionQty}</td>
+			<td align="center" class="green">${x.okQty}</td>
+		  </#list>
+		 </#if>
+</table>
+</body>
+</html>

@@ -35,7 +35,7 @@ String context = request.getContextPath();
 			 var params = jQuery("#iForm").formSerialize();
 			  jQuery.ajax({
 				   type: "POST",
-				   url: '<%=request.getContextPath()%>/mx/system/sequence/save',
+				   url: '<%=request.getContextPath()%>/mx/sys/sequence/save',
 				   data: params,
 				   dataType:  'json',
 				   error: function(data){

@@ -28,7 +28,7 @@
    var setting = {
 			async: {
 				enable: true,
-				url:"<%=request.getContextPath()%>/rs/tree/treeJson?nodeCode=report_category",
+				url:"<%=request.getContextPath()%>/rs/tree/treeJson?nodeCode=template_category",
 				dataFilter: filter
 			},
 			callback: {
@@ -155,7 +155,7 @@
 
 
 	function modifyTemplate(templateId){
-		location.href="<%=request.getContextPath()%>/mx/system/template/edit?templateId="+templateId+"&nodeId=${nodeId}";
+		location.href="<%=request.getContextPath()%>/mx/sys/template/edit?templateId="+templateId+"&nodeId=${nodeId}";
 	}
 
 	function viewSelected(){

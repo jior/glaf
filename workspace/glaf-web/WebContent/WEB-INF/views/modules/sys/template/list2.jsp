@@ -10,11 +10,11 @@
  <script language="javascript">
 
 function createTemplateId(){
-    location.href="<%=request.getContextPath()%>/mx/system/template/edit?nodeId=${nodeId}";
+    location.href="<%=request.getContextPath()%>/mx/sys/template/edit?nodeId=${nodeId}";
 }
 
 function modifyTemplate(templateId){
-    location.href="<%=request.getContextPath()%>/mx/system/template/edit?templateId="+templateId+"&nodeId=${nodeId}";
+    location.href="<%=request.getContextPath()%>/mx/sys/template/edit?templateId="+templateId+"&nodeId=${nodeId}";
 }
  
 </script>
@@ -57,7 +57,7 @@ function modifyTemplate(templateId){
 		<tr onmouseover="this.className='x-row-over';"
 			onmouseout="this.className='x-row-out';" class="x-content">
 			<td align="left" noWrap>&nbsp; <a
-				href="<%=request.getContextPath()%>/mx/system/template/view?templateId=${template.templateId}"> ${template.name}</a></td>
+				href="<%=request.getContextPath()%>/mx/sys/template/view?templateId=${template.templateId}"> ${template.name}</a></td>
 			 
 			<td align="left" noWrap><a
 				href="<%=request.getContextPath()%>/mx/lob/lob/download?fileId=${template.templateId}"

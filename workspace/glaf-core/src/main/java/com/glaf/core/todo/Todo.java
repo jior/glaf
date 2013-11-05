@@ -197,6 +197,9 @@ public class Todo implements java.io.Serializable, Comparable<Todo>, JSONable {
 	protected String sql;
 
 	@javax.persistence.Transient
+	protected int totalQty;
+
+	@javax.persistence.Transient
 	protected Collection<Object> ok = new HashSet<Object>();
 
 	@javax.persistence.Transient
@@ -359,6 +362,10 @@ public class Todo implements java.io.Serializable, Comparable<Todo>, JSONable {
 
 	public String getTitle() {
 		return title;
+	}
+
+	public int getTotalQty() {
+		return totalQty;
 	}
 
 	public String getType() {
@@ -573,6 +580,10 @@ public class Todo implements java.io.Serializable, Comparable<Todo>, JSONable {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public void setTotalQty(int totalQty) {
+		this.totalQty = totalQty;
 	}
 
 	public void setType(String type) {

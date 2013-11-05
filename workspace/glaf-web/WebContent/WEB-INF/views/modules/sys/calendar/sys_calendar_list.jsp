@@ -59,7 +59,7 @@
 			var v1 = changeStr1(m1);
 			var v2 = changeStr1(m2);
 			var modeValue = mode.value;
-			jQuery.post("<%=request.getContextPath()%>/mx/system/calendar/saveCalendarTime", 
+			jQuery.post("<%=request.getContextPath()%>/mx/sys/calendar/saveCalendarTime", 
 				{Action:"post",v1:v1,v2:v2,mode:modeValue}, 
 				function (data,textStatus){
 					if(textStatus=='success'){
@@ -119,7 +119,7 @@
 		var params = jQuery("#iForm").formSerialize();
 		jQuery.ajax({
 				   type: "POST",
-				   url: '<%=request.getContextPath()%>/mx/system/calendar/save',
+				   url: '<%=request.getContextPath()%>/mx/sys/calendar/save',
 				   data: params,
 				   dataType:  'json',
 				   error: function(data){
