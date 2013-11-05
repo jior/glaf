@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="GBK"?>
+
+<configuration>
+
+	<property>
+		<name>RunningTasks_subject</name>
+		<value>${res_system_name} ${now}待办任务提醒</value>
+	</property>
+
+	<property>
+		<name>RunningTasks_template</name>
+		<value>/conf/templates/mail/simpletasklist.html</value>
+	</property>
+ 
+
+</configuration>

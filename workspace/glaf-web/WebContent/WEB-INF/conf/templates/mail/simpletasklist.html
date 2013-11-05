@@ -83,13 +83,7 @@
 		  <#if tasks?exists>
 		   <#list  tasks as x>
 		   <tr class="list-a">
-            <td height="20" align="left">
-			    <#if user.activationCode?exists>
-			    <ax href="${serviceUrl}/${x.todo.listLink}&xyz_activationCode=${user.activationCode}">${x.todo.title}</ax>
-				<#else>
-				<ax href="${serviceUrl}/${x.todo.listLink}">${x.todo.title}</ax>
-				</#if>
-			</td>
+            <td height="20" align="left">${x.todo.title}</td>
 			<td height="20" align="left">${x.todo.content}</td>
 			<td align="center" class="green">${x.totalQty}</td>
 		  </#list>

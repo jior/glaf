@@ -23,6 +23,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+
 import javax.annotation.Resource;
 
 import org.apache.commons.lang.StringUtils;
@@ -81,12 +82,6 @@ public class MxSystemPropertyServiceImpl implements ISystemPropertyService {
 		return this.list(query);
 	}
 
-	public List<SystemProperty> getSystemProperties(String category) {
-		SystemPropertyQuery query = new SystemPropertyQuery();
-		query.category(category);
-		return this.list(query);
-	}
-
 	public Map<String, SystemProperty> getProperyMap() {
 		List<SystemProperty> list = this.getAllSystemProperties();
 		Map<String, SystemProperty> dataMap = new HashMap<String, SystemProperty>();
@@ -98,14 +93,30 @@ public class MxSystemPropertyServiceImpl implements ISystemPropertyService {
 		return dataMap;
 	}
 
+	public List<SystemProperty> getSystemProperties(String category) {
+		SystemPropertyQuery query = new SystemPropertyQuery();
+		query.category(category);
+		return this.list(query);
+	}
+
 	public SystemProperty getSystemProperty(String id) {
 		SystemProperty systemProperty = systemPropertyMapper
 				.getSystemPropertyById(id);
 		return systemProperty;
 	}
 
+	public SystemProperty getSystemProperty(String category, String name) {
+		SystemPropertyQuery query = new SystemPropertyQuery();
+		query.category(category);
+		query.name(name);
+		List<SystemProperty> list = this.list(query);
+		if (list != null && !list.isEmpty()) {
+			return list.get(0);
+		}
+		return null;
+	}
+
 	public List<SystemProperty> list(SystemPropertyQuery query) {
-		query.ensureInitialized();
 		List<SystemProperty> list = systemPropertyMapper
 				.getSystemProperties(query);
 		return list;
@@ -125,8 +136,8 @@ public class MxSystemPropertyServiceImpl implements ISystemPropertyService {
 							p.getValue());
 				} else {
 					if (StringUtils.isNotEmpty(p.getInitValue())) {
-						ViewProperties.getProperties().setProperty(
-								p.getName(), p.getInitValue());
+						ViewProperties.getProperties().setProperty(p.getName(),
+								p.getInitValue());
 					}
 				}
 				if (propertyMap.get(p.getName()) != null) {

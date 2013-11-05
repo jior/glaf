@@ -20,12 +20,10 @@ package com.glaf.core.util;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
-
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -41,7 +39,6 @@ import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.alibaba.fastjson.JSON;
@@ -797,6 +794,17 @@ public class RequestUtils {
 		m.remove("y");
 		m.remove("redirectUrl");
 		return createQueryStringFromMap(m, "&").toString();
+	}
+
+	public static String getServiceUrl(HttpServletRequest request) {
+		String serviceUrl = "http://" + request.getServerName();
+		if (request.getServerPort() != 80) {
+			serviceUrl += ":" + request.getServerPort();
+		}
+		if (!"/".equals(request.getContextPath())) {
+			serviceUrl += request.getContextPath();
+		}
+		return serviceUrl;
 	}
 
 	public static LoginContext getSessionLoginContext(HttpServletRequest request) {

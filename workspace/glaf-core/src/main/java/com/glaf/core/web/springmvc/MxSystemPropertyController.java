@@ -19,7 +19,7 @@
 package com.glaf.core.web.springmvc;
 
 import java.util.List;
- 
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
@@ -47,7 +47,6 @@ public class MxSystemPropertyController {
 	protected static final Log logger = LogFactory
 			.getLog(MxSystemPropertyController.class);
 
-	 
 	protected ISystemPropertyService systemPropertyService;
 
 	@RequestMapping("/edit")
@@ -86,6 +85,15 @@ public class MxSystemPropertyController {
 					p.setValue(value);
 				}
 			}
+
+			SystemProperty prop = new SystemProperty();
+			prop.setName("serviceUrl");
+			prop.setTitle("服务地址");
+			prop.setValue(RequestUtils.getServiceUrl(request));
+			prop.setCategory("SYS");
+			prop.setLocked(0);
+			rows.add(prop);
+
 			systemPropertyService.saveAll(rows);
 		}
 
@@ -117,8 +125,17 @@ public class MxSystemPropertyController {
 					p.setValue(value);
 				}
 			}
+
+			SystemProperty prop = new SystemProperty();
+			prop.setName("serviceUrl");
+			prop.setTitle("服务地址");
+			prop.setValue(RequestUtils.getServiceUrl(request));
+			prop.setCategory("SYS");
+			prop.setLocked(0);
+			rows.add(prop);
+
 			systemPropertyService.saveAll(rows);
-			
+
 			SystemProperties.reload();
 			SystemConfig.reload();
 			MessageProperties.reload();

@@ -55,7 +55,7 @@
 	  if(!$('#tabs').tabs('exists',subtitle)){
 		//alert(menuId);
 		openTabSize = openTabSize + 1;
-		if(openTabSize > 10){
+		if(openTabSize > 1){
 			$('#tabs').tabs('close', 1);//关闭第二个,第一个为我的桌面，不能关闭
 		}
 		var url = "${contextPath}/my/menu.do?method=jump&id="+menuId;

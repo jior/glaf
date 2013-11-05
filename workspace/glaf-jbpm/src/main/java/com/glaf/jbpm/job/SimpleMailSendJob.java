@@ -16,27 +16,31 @@
  * limitations under the License.
  */
 
-package com.glaf.core.service;
+package com.glaf.jbpm.job;
 
-import java.util.List;
-import java.util.Map;
+import java.util.Date;
 
-import org.springframework.transaction.annotation.Transactional;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.quartz.Job;
+import org.quartz.JobExecutionContext;
+import org.quartz.JobExecutionException;
 
-import com.glaf.core.domain.SystemProperty;
+import com.glaf.core.util.DateUtils;
+import com.glaf.jbpm.business.SendMailTaskBean;
 
-@Transactional(readOnly = true)
-public interface ISystemPropertyService {
+public class SimpleMailSendJob implements Job {
 
-	List<SystemProperty> getAllSystemProperties();
+	protected final static Log logger = LogFactory
+			.getLog(SimpleMailSendJob.class);
 
-	Map<String, SystemProperty> getProperyMap();
-
-	List<SystemProperty> getSystemProperties(String category);
-
-	SystemProperty getSystemProperty(String category, String name);
-
-	@Transactional
-	void saveAll(List<SystemProperty> props);
+	public void execute(JobExecutionContext context)
+			throws JobExecutionException {
+		String jobName = context.getJobDetail().getKey().getName();
+		logger.info("Executing job: " + jobName + " executing at "
+				+ DateUtils.getDateTime(new Date()));
+		SendMailTaskBean bean = new SendMailTaskBean();
+		bean.sendAllRunningTasks();
+	}
 
 }
