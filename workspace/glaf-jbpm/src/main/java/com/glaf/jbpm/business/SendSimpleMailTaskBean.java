@@ -40,50 +40,43 @@ import com.glaf.core.security.IdentityFactory;
 import com.glaf.core.service.ISystemPropertyService;
 import com.glaf.core.todo.Todo;
 import com.glaf.core.todo.TodoTotal;
-import com.glaf.core.todo.service.ISysTodoService;
 import com.glaf.core.util.DateUtils;
 import com.glaf.core.util.FileUtils;
-import com.glaf.jbpm.config.JbpmBaseConfiguration;
-import com.glaf.jbpm.container.ProcessContainer;
-import com.glaf.jbpm.model.TaskItem;
+
 import com.glaf.mail.MailMessage;
 import com.glaf.mail.MailSender;
 
-public class SendMailTaskBean {
+import com.glaf.jbpm.config.JbpmBaseConfiguration;
+import com.glaf.jbpm.container.ProcessContainer;
+import com.glaf.jbpm.model.TaskItem;
+
+public class SendSimpleMailTaskBean {
 	protected final static Log logger = LogFactory
-			.getLog(SendMailTaskBean.class);
+			.getLog(SendSimpleMailTaskBean.class);
 
 	private static Configuration conf = JbpmBaseConfiguration.create();
 
 	public void sendAllRunningTasks() {
-		ISysTodoService todoService = ContextFactory.getBean("sysTodoService");
-		List<Todo> todoList = todoService.getTodoList();
-		if (todoList != null && !todoList.isEmpty()) {
-			Map<String, User> userMap = IdentityFactory.getUserMap();
-			Iterator<User> iterator = userMap.values().iterator();
-			while (iterator.hasNext()) {
-				User user = iterator.next();
-				if (StringUtils.isNotEmpty(user.getMail())
-						&& StringUtils.containsOnly(user.getMail(), "@")) {
-					this.sendRunningTasks(user, todoList);
-				}
+		Map<String, User> userMap = IdentityFactory.getUserMap();
+		Iterator<User> iterator = userMap.values().iterator();
+		while (iterator.hasNext()) {
+			User user = iterator.next();
+			if (StringUtils.isNotEmpty(user.getMail())
+					&& StringUtils.containsOnly(user.getMail(), "@")) {
+				this.sendRunningTasks(user);
 			}
 		}
 	}
 
 	public void sendRunningTasks(String actorId) {
 		User user = IdentityFactory.getUser(actorId);
-		ISysTodoService todoService = ContextFactory.getBean("sysTodoService");
-		List<Todo> todoList = todoService.getTodoList();
-		if (todoList != null && !todoList.isEmpty()) {
-			if (StringUtils.isNotEmpty(user.getMail())
-					&& StringUtils.containsOnly(user.getMail(), "@")) {
-				this.sendRunningTasks(user, todoList);
-			}
+		if (StringUtils.isNotEmpty(user.getMail())
+				&& StringUtils.containsOnly(user.getMail(), "@")) {
+			this.sendRunningTasks(user);
 		}
 	}
 
-	public void sendRunningTasks(User user, List<Todo> todoList) {
+	public void sendRunningTasks(User user) {
 		String tpl_path = "/conf/templates/mail/simpletasklist.html";
 		if (conf.get("RunningTasks_template") != null) {
 			tpl_path = conf.get("RunningTasks_template");
@@ -131,16 +124,20 @@ public class SendMailTaskBean {
 
 					Map<String, Todo> todoMap = new HashMap<String, Todo>();
 					Map<String, TodoTotal> todoTotalMap = new HashMap<String, TodoTotal>();
-					for (Todo todo : todoList) {
-						if (todo.getEnableFlag() == 1) {
-							String key = todo.getProcessName() + "_"
-									+ todo.getTaskName();
-							todoMap.put(key, todo);
-							TodoTotal total = new TodoTotal();
-							total.setTodo(todo);
-							total.setTotalQty(0);
-							todoTotalMap.put(key, total);
-						}
+					for (TaskItem task : taskItems) {
+						String key = task.getProcessName() + "_"
+								+ task.getTaskName();
+						Todo todo = new Todo();
+						String bt = task.getProcessDescription()
+								+ task.getTaskDescription();
+						todo.setProcessName(task.getProcessName());
+						todo.setTaskName(task.getTaskName());
+						todo.setTitle(bt);
+						todoMap.put(key, todo);
+						TodoTotal total = new TodoTotal();
+						total.setTodo(todo);
+						total.setTotalQty(0);
+						todoTotalMap.put(key, total);
 					}
 
 					for (TaskItem task : taskItems) {

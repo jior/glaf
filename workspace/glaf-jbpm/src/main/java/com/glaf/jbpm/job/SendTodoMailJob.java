@@ -27,19 +27,19 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
 import com.glaf.core.util.DateUtils;
-import com.glaf.jbpm.business.SendMailTaskBean;
+import com.glaf.jbpm.business.SendTodoMailTaskBean;
 
-public class SimpleMailSendJob implements Job {
+public class SendTodoMailJob implements Job {
 
 	protected final static Log logger = LogFactory
-			.getLog(SimpleMailSendJob.class);
+			.getLog(SendTodoMailJob.class);
 
 	public void execute(JobExecutionContext context)
 			throws JobExecutionException {
 		String jobName = context.getJobDetail().getKey().getName();
 		logger.info("Executing job: " + jobName + " executing at "
 				+ DateUtils.getDateTime(new Date()));
-		SendMailTaskBean bean = new SendMailTaskBean();
+		SendTodoMailTaskBean bean = new SendTodoMailTaskBean();
 		bean.sendAllRunningTasks();
 	}
 
