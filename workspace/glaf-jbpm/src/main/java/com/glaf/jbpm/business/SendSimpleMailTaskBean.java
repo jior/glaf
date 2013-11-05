@@ -61,8 +61,9 @@ public class SendSimpleMailTaskBean {
 		Iterator<User> iterator = userMap.values().iterator();
 		while (iterator.hasNext()) {
 			User user = iterator.next();
+			logger.debug(user.getActorId() + " " + user.getMail());
 			if (StringUtils.isNotEmpty(user.getMail())
-					&& StringUtils.containsOnly(user.getMail(), "@")) {
+					&& StringUtils.contains(user.getMail(), "@")) {
 				this.sendRunningTasks(user);
 			}
 		}
@@ -71,7 +72,7 @@ public class SendSimpleMailTaskBean {
 	public void sendRunningTasks(String actorId) {
 		User user = IdentityFactory.getUser(actorId);
 		if (StringUtils.isNotEmpty(user.getMail())
-				&& StringUtils.containsOnly(user.getMail(), "@")) {
+				&& StringUtils.contains(user.getMail(), "@")) {
 			this.sendRunningTasks(user);
 		}
 	}
@@ -89,6 +90,8 @@ public class SendSimpleMailTaskBean {
 		String content = null;
 		try {
 			content = new String(FileUtils.getBytes(filename), "UTF-8");
+			logger.debug("subject=" + subject);
+			// logger.debug("content=" + content);
 			if (StringUtils.isNotEmpty(subject)
 					&& StringUtils.isNotEmpty(content)) {
 				List<TaskItem> taskItems = ProcessContainer.getContainer()
@@ -124,19 +127,23 @@ public class SendSimpleMailTaskBean {
 
 					Map<String, Todo> todoMap = new HashMap<String, Todo>();
 					Map<String, TodoTotal> todoTotalMap = new HashMap<String, TodoTotal>();
+					long index = 1;
 					for (TaskItem task : taskItems) {
 						String key = task.getProcessName() + "_"
 								+ task.getTaskName();
 						Todo todo = new Todo();
-						String bt = task.getProcessDescription()
+						String bt = task.getProcessDescription() + ""
 								+ task.getTaskDescription();
 						todo.setProcessName(task.getProcessName());
 						todo.setTaskName(task.getTaskName());
 						todo.setTitle(bt);
-						todoMap.put(key, todo);
+						todo.setContent(bt);
+						todo.setId(index++);
+						
 						TodoTotal total = new TodoTotal();
 						total.setTodo(todo);
 						total.setTotalQty(0);
+						todoMap.put(key, todo);
 						todoTotalMap.put(key, total);
 					}
 

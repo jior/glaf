@@ -1522,7 +1522,7 @@ public class ProcessContainer {
 			taskItems.add(item);
 		}
 
-		logger.debug("@@@@@@@@@@@@@@@@@@@@@@@taskItems size:"+taskItems.size());
+		logger.debug("taskItems size:"+taskItems.size());
 		
 		taskItems = this.filter(actorId, taskItems);
 

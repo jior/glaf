@@ -64,7 +64,7 @@ public class SendTodoMailTaskBean {
 			while (iterator.hasNext()) {
 				User user = iterator.next();
 				if (StringUtils.isNotEmpty(user.getMail())
-						&& StringUtils.containsOnly(user.getMail(), "@")) {
+						&& StringUtils.contains(user.getMail(), "@")) {
 					this.sendRunningTasks(user, todoList);
 				}
 			}
@@ -77,7 +77,7 @@ public class SendTodoMailTaskBean {
 		List<Todo> todoList = todoService.getTodoList();
 		if (todoList != null && !todoList.isEmpty()) {
 			if (StringUtils.isNotEmpty(user.getMail())
-					&& StringUtils.containsOnly(user.getMail(), "@")) {
+					&& StringUtils.contains(user.getMail(), "@")) {
 				this.sendRunningTasks(user, todoList);
 			}
 		}
