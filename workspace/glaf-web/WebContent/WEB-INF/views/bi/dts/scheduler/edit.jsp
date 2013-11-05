@@ -140,7 +140,7 @@
 	<tr>
 		<td align="left" width="25%" height="27">内容&nbsp;&nbsp;</td>
 		<td align="left" height="27">
-		<textarea name="content" rows="8" cols="39"
+		<textarea name="content" rows="8" cols="52"
 			class="input-xlarge span5 x-textarea">${scheduler.content}</textarea>
 		</td>
 	</tr>
