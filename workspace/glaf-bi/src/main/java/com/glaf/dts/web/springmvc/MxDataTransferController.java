@@ -369,6 +369,13 @@ public class MxDataTransferController {
 		} else {
 			request.setAttribute("x_complex_query", "");
 		}
+
+		String nodeCode = request.getParameter("nodeCode");
+		if (StringUtils.isEmpty(nodeCode)) {
+			nodeCode = "report_category";
+		}
+		modelMap.put("nodeCode", nodeCode);
+
 		String view = request.getParameter("view");
 		if (StringUtils.isNotEmpty(view)) {
 			return new ModelAndView(view, modelMap);
