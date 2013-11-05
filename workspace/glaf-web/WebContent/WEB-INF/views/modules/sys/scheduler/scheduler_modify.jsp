@@ -15,6 +15,7 @@
 <link type="text/css" rel="stylesheet" href="<%=request.getContextPath()%>/scripts/calendar/skins/aqua/theme.css"/>
 <script language="javascript" src='<%=contextPath%>/scripts/main.js'></script>
 <script language="javascript" src='<%=contextPath%>/scripts/verify.js'></script>
+<script language="javascript" src='<%=contextPath%>/scripts/glaf-core.js'></script>
 <script language="javascript" src="<%=request.getContextPath()%>/scripts/calendar/calendar.js" ></script>
 <script language="javascript" src="<%=request.getContextPath()%>/scripts/calendar/lang/calendar-en.js"></script>
 <script language="javascript" src="<%=request.getContextPath()%>/scripts/calendar/calendar-setup.js"></script>
@@ -54,6 +55,22 @@
 
 
      document.schedulerForm.submit();
+ }
+
+ function openQtz(){
+	var url= '<%=request.getContextPath()%>/quartz.txt';
+    var x=100;
+    var y=100;
+    if(is_ie) {
+	    x=document.body.scrollLeft+event.clientX-event.offsetX-100;
+	    y=document.body.scrollTop+event.clientY-event.offsetY-50;
+     }
+	 var f = "height=500,width=600,status=0,toolbar=no,menubar=no,location=no,scrollbars=yes,top="+y+",left="+x+",resizable=no,dialog=yes,minimizable=no";
+	 if(is_ie){
+         window.open(url, "Quartz参考", f);
+	 } else {
+		 window.open(url, parent, f, true);
+	 }
  }
 
 </script>
@@ -122,7 +139,7 @@
 		<td height="60" ><input type="text" name="expression" size="50"
 			 class="input span3 x-text" maxlength="255"
 			value="${scheduler.expression}">
-			<br />&nbsp;(可不填,可以参考<a href="<%=request.getContextPath()%>/quartz.txt">quartz</a>文件)
+			<br />&nbsp;(可不填,可以参考<a href="#" onclick="javascript:openQtz();">quartz</a>文件)
 			<br>示例：每周一到周五凌晨5点执行一次（ 0 0 5 ? * MON-FRI  ）
 			<br>  每天早上6点、中午1点和下午5点各执行一次（ 0 0 6,13,17 * * ?  ）
 		    </td>

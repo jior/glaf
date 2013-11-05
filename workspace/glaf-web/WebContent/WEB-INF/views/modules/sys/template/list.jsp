@@ -28,7 +28,7 @@
    var setting = {
 			async: {
 				enable: true,
-				url:"<%=request.getContextPath()%>/rs/tree/treeJson?nodeCode=template_category",
+				url:"<%=request.getContextPath()%>/rs/tree/treeJson?nodeCode=${nodeCode}",
 				dataFilter: filter
 			},
 			callback: {

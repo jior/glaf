@@ -101,8 +101,9 @@ public class MxSystemTemplateController {
 
 	@RequestMapping("/json")
 	@ResponseBody
-	public byte[] json(HttpServletRequest request, ModelMap modelMap) throws IOException {
-	        LoginContext loginContext = RequestUtils.getLoginContext(request);
+	public byte[] json(HttpServletRequest request, ModelMap modelMap)
+			throws IOException {
+		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		TemplateQuery query = new TemplateQuery();
 		Tools.populate(query, params);
@@ -111,13 +112,13 @@ public class MxSystemTemplateController {
 		query.setLoginContext(loginContext);
 		/**
 		 * 此处业务逻辑需自行调整
-		*/
-		if(!loginContext.isSystemAdministrator()){
-		  String actorId = loginContext.getActorId();
-		  query.createBy(actorId);
+		 */
+		if (!loginContext.isSystemAdministrator()) {
+			String actorId = loginContext.getActorId();
+			query.createBy(actorId);
 		}
 
-        String gridType = ParamUtils.getString(params, "gridType");
+		String gridType = ParamUtils.getString(params, "gridType");
 		if (gridType == null) {
 			gridType = "easyui";
 		}
@@ -125,13 +126,12 @@ public class MxSystemTemplateController {
 		int limit = 10;
 		String orderName = null;
 		String order = null;
-	 
+
 		int pageNo = ParamUtils.getInt(params, "page");
 		limit = ParamUtils.getInt(params, "rows");
 		start = (pageNo - 1) * limit;
 		orderName = ParamUtils.getString(params, "sortName");
 		order = ParamUtils.getString(params, "sortOrder");
-		 
 
 		if (start < 0) {
 			start = 0;
@@ -152,28 +152,27 @@ public class MxSystemTemplateController {
 			result.put("limit", limit);
 			result.put("pageSize", limit);
 
-                        if (StringUtils.isNotEmpty(orderName)) {
+			if (StringUtils.isNotEmpty(orderName)) {
 				query.setSortOrder(orderName);
 				if (StringUtils.equals(order, "desc")) {
 					query.setSortOrder(" desc ");
 				}
 			}
 
-		 
-			List<Template> list = templateService.getTemplatesByQueryCriteria(start, limit,
-					query);
+			List<Template> list = templateService.getTemplatesByQueryCriteria(
+					start, limit, query);
 
 			if (list != null && !list.isEmpty()) {
 				JSONArray rowsJSON = new JSONArray();
-				 
+
 				result.put("rows", rowsJSON);
-				 
+
 				for (Template template : list) {
 					JSONObject rowJSON = template.toJsonObject();
 					rowJSON.put("id", template.getTemplateId());
 					rowJSON.put("templateId", template.getTemplateId());
-                                        rowJSON.put("startIndex", ++start);
- 					rowsJSON.add(rowJSON);
+					rowJSON.put("startIndex", ++start);
+					rowsJSON.add(rowJSON);
 				}
 
 			}
@@ -201,6 +200,12 @@ public class MxSystemTemplateController {
 			}
 		}
 
+		String nodeCode = request.getParameter("nodeCode");
+		if (StringUtils.isEmpty(nodeCode)) {
+			nodeCode = "template_category";
+		}
+		modelMap.put("nodeCode", nodeCode);
+
 		TemplateQuery query = new TemplateQuery();
 		Tools.populate(query, paramMap);
 
@@ -220,9 +225,9 @@ public class MxSystemTemplateController {
 			return new ModelAndView(x_view, modelMap);
 		}
 
-		return new ModelAndView("/modules/sys/template/list");
+		return new ModelAndView("/modules/sys/template/list", modelMap);
 	}
-	
+
 	@RequestMapping("/main")
 	public ModelAndView main(HttpServletRequest request, ModelMap modelMap) {
 		// RequestUtils.setRequestParameterToAttribute(request);
