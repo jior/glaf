@@ -175,9 +175,9 @@
 		<td align="left" width="30%" valign="top">是否可收缩</td>
 		<td align="left" align="left" valign="middle" >
 			<input type="radio" name="collapsible" value="true"
-						<c:if test="${panel.collapsible}">checked</c:if>>是&nbsp;&nbsp;
+						<c:if test="${panel.collapsible == 1}">checked</c:if>>是&nbsp;&nbsp;
 			<input type="radio" name="collapsible" value="false"
-						<c:if test="${!panel.collapsible}">checked</c:if>>否
+						<c:if test="${panel.collapsible == 0}">checked</c:if>>否
 		</td>
 	</tr>
 
@@ -185,9 +185,9 @@
 		<td align="left" width="30%" valign="top">是否可关闭</td>
 		<td align="left" align="left" valign="middle" >
 			<input type="radio" name="close" value="true"
-						<c:if test="${panel.close}">checked</c:if>>是&nbsp;&nbsp;
+						<c:if test="${panel.close == 1}">checked</c:if>>是&nbsp;&nbsp;
 			<input type="radio" name="close" value="false"
-						<c:if test="${!panel.close}">checked</c:if>>否
+						<c:if test="${panel.close == 0}">checked</c:if>>否
 		</td>
 	</tr>
 
