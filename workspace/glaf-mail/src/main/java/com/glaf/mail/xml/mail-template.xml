@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+
+	<template id="jbpm_sendsimplemail">
+		<title>您有待办任务</title>
+		<templatePath>/conf/templates/mail/simpletasklist.html</templatePath>
+		<dataset datasourceName="datasource">
+			<rowset mapping="rows" dataMgr="mybatis">
+				<query>getTaskItems</query>
+			</rowset>
+		</dataset>
+	</template>
+
+</templates>

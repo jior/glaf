@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+
+	<property>
+		<name>register_subject</name>
+		<value>${res_system_name}感谢您的注册！</value>
+	</property>
+
+	<property>
+		<name>register_template</name>
+		<value>/conf/templates/mail/register.html</value>
+	</property>
+ 
+
+</configuration>

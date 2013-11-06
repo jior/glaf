@@ -45,10 +45,8 @@ public class Message implements Serializable, JSONable {
 	 */
 	@Column(name = "TYPE")
 	protected int type;
-
-	/**
-	        *
-	        */
+ 
+	
 	@Column(name = "SYSTYPE")
 	protected int sysType;
 
