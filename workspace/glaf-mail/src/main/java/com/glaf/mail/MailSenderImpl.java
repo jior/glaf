@@ -24,6 +24,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import javax.activation.DataSource;
@@ -33,10 +34,8 @@ import javax.mail.internet.MimeUtility;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.InputStreamSource;
-
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
@@ -45,11 +44,12 @@ import com.glaf.core.base.DataFile;
 import com.glaf.core.config.TemplateProperties;
 import com.glaf.core.config.ViewProperties;
 import com.glaf.core.context.ContextFactory;
+import com.glaf.core.domain.SystemProperty;
 import com.glaf.core.freemarker.TemplateUtils;
+import com.glaf.core.service.ISystemPropertyService;
 import com.glaf.core.template.Template;
 import com.glaf.mail.config.JavaMailSenderConfiguration;
 import com.glaf.mail.util.MailTools;
-
 import com.glaf.core.util.LogUtils;
 import com.glaf.core.util.UUID32;
 
@@ -75,7 +75,7 @@ public class MailSenderImpl implements MailSender {
 		mailMessage.setSubject("” º˛≤‚ ‘");
 		mailMessage.setDataMap(dataMap);
 		mailMessage.setContent("≤‚ ‘≤‚ ‘");
-		//mailMessage.setTemplateId(args[0]);
+		// mailMessage.setTemplateId(args[0]);
 		mailMessage.setSupportExpression(false);
 
 		Collection<Object> files = new HashSet<Object>();
@@ -175,13 +175,36 @@ public class MailSenderImpl implements MailSender {
 			dataMap = new HashMap<String, Object>();
 		}
 
-		String serviceUrl = ViewProperties.getString("serviceUrl");
-		logger.debug("serviceUrl:" + serviceUrl);
-		dataMap.put("serviceUrl", serviceUrl);
+		ISystemPropertyService systemPropertyService = ContextFactory
+				.getBean("systemPropertyService");
+		SystemProperty property = systemPropertyService.getSystemProperty(
+				"SYS", "serviceUrl");
+		String serviceUrl = null;
+		if (property != null && property.getValue() != null) {
+			dataMap.put("property", property);
+			dataMap.put("serviceUrl", property.getValue());
+			serviceUrl = property.getValue();
+		}
 
-		String loginUrl = ViewProperties.getString("loginUrl");
-		logger.debug("loginUrl:" + loginUrl);
-		dataMap.put("loginUrl", loginUrl);
+		logger.debug("serviceUrl:" + serviceUrl);
+
+		List<SystemProperty> props = systemPropertyService
+				.getSystemProperties("SYS");
+		if (props != null && !props.isEmpty()) {
+			for (SystemProperty p : props) {
+				if (!dataMap.containsKey(p.getName())) {
+					dataMap.put(p.getName(), p.getValue());
+				}
+			}
+		}
+
+		if (serviceUrl != null) {
+			String loginUrl = serviceUrl + "/mx/login";
+			String mainUrl = serviceUrl + "/mx/main";
+			logger.debug("loginUrl:" + loginUrl);
+			dataMap.put("loginUrl", loginUrl);
+			dataMap.put("mainUrl", mainUrl);
+		}
 
 		mailMessage.setDataMap(dataMap);
 

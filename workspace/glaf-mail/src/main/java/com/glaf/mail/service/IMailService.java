@@ -68,6 +68,10 @@ public interface IMailService {
 	@Transactional
 	boolean send(Mail mail, Map<String, Object> dataMap);
 
+	/**
+	 * ¸üĞÂÓÊ¼ş×´Ì¬
+	 * @param mail
+	 */
 	@Transactional
 	void updateMail(Mail mail);
 
