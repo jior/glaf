@@ -205,6 +205,23 @@ public class SystemConfig {
 		return value;
 	}
 
+	/**
+	 * 获取服务地址
+	 * 
+	 * @return
+	 */
+	public static String getServiceUrl() {
+		ISystemPropertyService systemPropertyService = ContextFactory
+				.getBean("systemPropertyService");
+		SystemProperty property = systemPropertyService.getSystemProperty(
+				"SYS", "serviceUrl");
+		String serviceUrl = null;
+		if (property != null && property.getValue() != null) {
+			serviceUrl = property.getValue();
+		}
+		return serviceUrl;
+	}
+
 	public static String getString(String key) {
 		String ret = null;
 		if (properties.isEmpty()) {
