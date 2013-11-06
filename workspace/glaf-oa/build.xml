@@ -63,9 +63,10 @@
 			<fileset dir="." includes="*.bat,*.xml, src/**/*.*,mapping/**/*.xml,conf/**,process/**" excludes="**/*.cvs,**/*.bak,**/*.tmp,**/*.scc,**/*.svn" />
 		</jar>
 
-		<jar jarfile="${jarfile}" basedir="${classes.dir}"
-		     includes="com/**/*.class,com/**/*.properties,com/**/*.xml" 
-			 excludes="**/test/**" />
+		<jar jarfile="${jarfile}">
+			<fileset dir="bin" includes="com/**/*.class,com/**/*.properties,com/**/*.xml" excludes="**/test/**" />
+			<fileset dir="jar-conf" includes="**/*.xml,**/*.properties"/>
+		</jar>
 
 	</target>
 

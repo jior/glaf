@@ -20,6 +20,9 @@
 		<fileset dir="../glaf-base">
 			<include name="*.jar" />
 		</fileset>
+		<fileset dir="../glaf-mail">
+			<include name="*.jar" />
+		</fileset>
 	</path>
 
 	<!-- 准备任务 -->
@@ -57,9 +60,10 @@
 			<fileset dir="." includes="*.bat,*.xml, src/**/*.*,mapping/**/*.xml,conf/**,report/**" excludes="**/*.cvs,**/*.bak,**/*.tmp,**/*.scc,**/*.svn" />
 		</jar>
 
-		<jar jarfile="${jarfile}" basedir="${classes.dir}"
-		     includes="com/**/*.class,com/**/*.properties,com/**/*.xml" 
-			 excludes="**/test/**" />
+		<jar jarfile="${jarfile}">
+			<fileset dir="bin" includes="com/**/*.class,com/**/*.properties,com/**/*.xml" excludes="**/test/**" />
+			<fileset dir="jar-conf" includes="**/*.xml,**/*.properties"/>
+		</jar>
 
 		<jar jarfile="glaf-chart.jar">
 			<fileset dir="bin" 

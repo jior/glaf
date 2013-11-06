@@ -31,10 +31,10 @@
 			<fileset dir="." excludes="**/*.cvs,**/*.bak,**/*.tmp,**/*.scc,**/*.svn"
 			    includes=".classpath, .project, .settings/**, *.bat, *.xml, *.txt, config/**/*.*, mapping/**/*.*, sql/**/*.*, src/**/*.*"  />
 		</jar>
-		 
+
 		<jar jarfile="glaf-shiro.jar">
-			<fileset dir="bin" includes="com/glaf/shiro/**/*.*" 
-			             excludes="**/*.cvs,**/*.bak,**/*.tmp,**/*.scc,**/*.svn" />
+			<fileset dir="bin" includes="com/**/*.class,com/**/*.properties,com/**/*.xml" excludes="**/test/**" />
+			<fileset dir="jar-conf" includes="**/*.xml,**/*.properties"/>
 		</jar>
 
 	</target>
