@@ -286,7 +286,7 @@ public class MyBatisEntityDAOImpl extends SqlSessionDaoSupport implements
 			dbid = (Dbid) getSqlSession().selectOne("getNextDbId", "next.dbid");
 		}
 		long oldValue = Long.parseLong(dbid.getValue());
-		long newValue = oldValue + conf.getInt("dbid_step", 1);
+		long newValue = oldValue + conf.getInt("dbid_step", 100);
 		dbid.setName("next.dbid");
 		dbid.setTitle("系统内置主键");
 		dbid.setValue(Long.toString(newValue));
@@ -312,7 +312,7 @@ public class MyBatisEntityDAOImpl extends SqlSessionDaoSupport implements
 			dbid = (Dbid) getSqlSession().selectOne("getNextDbId", name);
 		}
 		long oldValue = Long.parseLong(dbid.getValue());
-		long newValue = oldValue + conf.getInt("dbid_step_" + name, 1);
+		long newValue = oldValue + conf.getInt("dbid_step_" + name, 100);
 		dbid.setName(name);
 		dbid.setTitle("系统内置主键");
 		dbid.setValue(Long.toString(newValue));

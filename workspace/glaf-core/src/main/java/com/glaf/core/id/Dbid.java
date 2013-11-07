@@ -25,7 +25,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "SYS_DBID")
-public class Dbid {
+public class Dbid implements java.io.Serializable {
+ 
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@Column(name = "NAME_", length = 50, nullable = false)
