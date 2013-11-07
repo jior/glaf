@@ -10,9 +10,10 @@
 
     <select id="getAgents" resultClass="com.glaf.core.identity.impl.AgentImpl" parameterClass="java.util.HashMap">
 
-	    select  AGENTTYPE_ as agentType, ASSIGNFROM_ as assignFrom,ASSIGNTO_ as assignTo,
+	    select  AGENTTYPE_ as agentType, ASSIGNFROM_ as assignFrom, ASSIGNTO_ as assignTo,
 		        OBJECTID_ as objectId, OBJECTVALUE_ as objectValue,
-                PROCESSNAME_ as processName, TASKNAME_ as taskName
+                PROCESSNAME_ as processName, TASKNAME_ as taskName,
+				STARTDATE_ as startDate, ENDDATE_ as endDate
 		from sys_agent where ASSIGNTO_ = #assignTo#
 
 	</select>

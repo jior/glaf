@@ -301,7 +301,8 @@
 		select  ASSIGNFROM_ as assignFrom, ASSIGNTO_ as assignTo,
 		        OBJECTID_ as objectId, OBJECTVALUE_ as objectValue,
                 PROCESSNAME_ as processName, TASKNAME_ as taskName,
-				AGENTTYPE_ as agentType
+				AGENTTYPE_ as agentType, STARTDATE_ as startDate, 
+				ENDDATE_ as endDate
 		from sys_agent
 		where ASSIGNTO_ = #{assignTo}
 
@@ -629,6 +630,15 @@
 		SELECT u.*
 		FROM sys_user u 
 		WHERE u.account = #{actorId}
+
+	</select>
+
+
+	<select id="getUserByUserId" resultMap="userResultMap" parameterType="long">
+
+		SELECT u.*
+		FROM sys_user u 
+		WHERE u.id = #{userId}
 
 	</select>
 
