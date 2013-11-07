@@ -21,17 +21,21 @@ package com.glaf.mail.config;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
+
 import javax.mail.*;
 import javax.mail.Message.RecipientType;
 import javax.mail.internet.*;
+
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 
-import com.glaf.mail.MxMimeMessage;
-import com.glaf.mail.MxMailAuthenticator;
-import com.glaf.core.config.SystemConfig;
+import com.glaf.core.config.MailProperties;
+import com.glaf.core.config.SystemProperties;
 import com.glaf.core.util.Constants;
 import com.glaf.core.util.PropertiesUtils;
+
+import com.glaf.mail.MxMimeMessage;
+import com.glaf.mail.MxMailAuthenticator;
 
 public class MailConfig implements java.io.Serializable {
 
@@ -207,7 +211,7 @@ public class MailConfig implements java.io.Serializable {
 	}
 
 	public void writeMailProperties() {
-		String cfgFile = SystemConfig.getConfigRootPath()
+		String cfgFile = SystemProperties.getConfigRootPath()
 				+ Constants.MAIL_CONFIG;
 		Resource resource = new FileSystemResource(cfgFile);
 		Properties properties = new Properties();
@@ -243,9 +247,11 @@ public class MailConfig implements java.io.Serializable {
 
 		try {
 			PropertiesUtils.save(resource, dataMap);
+			MailProperties.reload();
 		} catch (IOException ex) {
 			throw new RuntimeException("不能保存配置文件", ex);
 		}
+
 	}
 
 	public void config() {

@@ -41,6 +41,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 
 import com.glaf.core.base.DataFile;
+import com.glaf.core.config.MailProperties;
 import com.glaf.core.config.TemplateProperties;
 import com.glaf.core.config.ViewProperties;
 import com.glaf.core.context.ContextFactory;
@@ -117,7 +118,8 @@ public class MailSenderImpl implements MailSender {
 			mailFrom = mailMessage.getFrom();
 		} else {
 			if (StringUtils.isEmpty(mailFrom)) {
-				mailFrom = ViewProperties.getString("res_mail_from");
+				// mailFrom = ViewProperties.getString("res_mail_from");
+				mailFrom = MailProperties.getString("mail.mailFrom");
 			}
 			messageHelper.setFrom(mailFrom);
 		}
