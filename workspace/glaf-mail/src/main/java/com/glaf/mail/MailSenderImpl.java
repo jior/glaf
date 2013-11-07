@@ -118,7 +118,6 @@ public class MailSenderImpl implements MailSender {
 			mailFrom = mailMessage.getFrom();
 		} else {
 			if (StringUtils.isEmpty(mailFrom)) {
-				// mailFrom = ViewProperties.getString("res_mail_from");
 				mailFrom = MailProperties.getString("mail.mailFrom");
 			}
 			messageHelper.setFrom(mailFrom);

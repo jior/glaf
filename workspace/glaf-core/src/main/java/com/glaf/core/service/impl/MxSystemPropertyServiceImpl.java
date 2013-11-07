@@ -26,7 +26,6 @@ import java.util.TreeMap;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.SqlSession;
@@ -34,7 +33,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.glaf.core.config.ViewProperties;
 import com.glaf.core.dao.EntityDAO;
 import com.glaf.core.domain.SystemProperty;
 import com.glaf.core.id.IdGenerator;
@@ -131,15 +129,7 @@ public class MxSystemPropertyServiceImpl implements ISystemPropertyService {
 			while (iterator.hasNext()) {
 				SystemProperty p = iterator.next();
 				dataMap.put(p.getName(), p.getValue());
-				if (StringUtils.isNotEmpty(p.getValue())) {
-					ViewProperties.getProperties().setProperty(p.getName(),
-							p.getValue());
-				} else {
-					if (StringUtils.isNotEmpty(p.getInitValue())) {
-						ViewProperties.getProperties().setProperty(p.getName(),
-								p.getInitValue());
-					}
-				}
+
 				if (propertyMap.get(p.getName()) != null) {
 					SystemProperty model = propertyMap.get(p.getName());
 					model.setDescription(p.getDescription());

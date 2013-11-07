@@ -2,6 +2,11 @@
 
 <configuration>
 
+    <property>
+		<name>jbpm.processImageUrl</name>
+		<value>/mx/jbpm/image</value>
+	</property>
+
 	<property>
 		<name>RunningTasks_subject</name>
 		<value>${res_system_name} ${now}待办任务提醒</value>
@@ -12,5 +17,4 @@
 		<value>/conf/templates/mail/simpletasklist.html</value>
 	</property>
  
-
 </configuration>

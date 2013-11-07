@@ -37,12 +37,12 @@ import org.dom4j.Element;
 import org.dom4j.XPath;
 import org.dom4j.xpath.DefaultXPath;
 import org.jbpm.JbpmContext;
-
 import org.jbpm.graph.def.ProcessDefinition;
 import org.jbpm.graph.exe.ProcessInstance;
 import org.jbpm.graph.exe.Token;
 
-import com.glaf.core.config.ViewProperties;
+import com.glaf.core.config.Configuration;
+import com.glaf.jbpm.config.JbpmBaseConfiguration;
 import com.glaf.jbpm.config.JbpmProcessConfig;
 import com.glaf.jbpm.container.ProcessContainer;
 import com.glaf.jbpm.context.Context;
@@ -50,6 +50,8 @@ import com.glaf.jbpm.context.Context;
 public class JbpmProcessImageTag extends TagSupport {
 
 	private static final long serialVersionUID = 1L;
+
+	private static Configuration conf = JbpmBaseConfiguration.create();
 
 	private long processInstanceId = -1;
 
@@ -120,9 +122,8 @@ public class JbpmProcessImageTag extends TagSupport {
 		int[] boxConstraint;
 		int[] imageDimension = extractImageDimension(rootDiagramElement);
 		String imagePath = contextPath + "/mx/jbpm/image";
-		if (ViewProperties.getString("jbpm.processImageUrl") != null) {
-			imagePath = contextPath
-					+ ViewProperties.getString("jbpm.processImageUrl");
+		if (conf.get("jbpm.processImageUrl") != null) {
+			imagePath = contextPath + conf.get("jbpm.processImageUrl");
 		}
 		String imageLink = imagePath + "?processDefinitionId="
 				+ processDefinition.getId();
