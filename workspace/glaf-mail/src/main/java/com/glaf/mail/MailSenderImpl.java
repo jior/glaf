@@ -43,16 +43,16 @@ import org.springframework.stereotype.Component;
 import com.glaf.core.base.DataFile;
 import com.glaf.core.config.MailProperties;
 import com.glaf.core.config.TemplateProperties;
-import com.glaf.core.config.ViewProperties;
 import com.glaf.core.context.ContextFactory;
 import com.glaf.core.domain.SystemProperty;
 import com.glaf.core.freemarker.TemplateUtils;
 import com.glaf.core.service.ISystemPropertyService;
 import com.glaf.core.template.Template;
-import com.glaf.mail.config.JavaMailSenderConfiguration;
-import com.glaf.mail.util.MailTools;
 import com.glaf.core.util.LogUtils;
 import com.glaf.core.util.UUID32;
+
+import com.glaf.mail.config.JavaMailSenderConfiguration;
+import com.glaf.mail.util.MailTools;
 
 @Component("mailSender")
 public class MailSenderImpl implements MailSender {
@@ -270,11 +270,6 @@ public class MailSenderImpl implements MailSender {
 					} catch (Exception ex) {
 						throw new RuntimeException(ex);
 					}
-				}
-
-				if (StringUtils.isEmpty(callbackUrl)) {
-					callbackUrl = ViewProperties.getString("serviceUrl")
-							+ ViewProperties.getString("mail_callback");
 				}
 
 				String href = callbackUrl + "?messageId="
