@@ -18,12 +18,10 @@
 
 package com.glaf.core.config;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Properties;
-
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 
 import com.glaf.core.util.Constants;
 import com.glaf.core.util.PropertiesUtils;
@@ -101,11 +99,11 @@ public class MailProperties {
 
 	public synchronized static void reload() {
 		try {
-			Resource resource = new ClassPathResource(Constants.MAIL_CONFIG);
-			System.out.println("load mail config:"
-					+ resource.getFile().getAbsolutePath());
-			Properties p = PropertiesUtils.loadProperties(resource
-					.getInputStream());
+			String filename = SystemProperties.getConfigRootPath()
+					+ Constants.MAIL_CONFIG;
+			java.io.FileInputStream fis = new FileInputStream(filename);
+			System.out.println("load mail config:" + filename);
+			Properties p = PropertiesUtils.loadProperties(fis);
 			if (p != null) {
 				Enumeration<?> e = p.keys();
 				while (e.hasMoreElements()) {
