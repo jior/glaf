@@ -18,9 +18,6 @@
 
 package com.glaf.core.web.springmvc;
 
-import java.io.IOException;
-import java.util.Collection;
-import java.util.Date;
 import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,16 +31,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.cache.CacheFactory;
-import com.glaf.core.cache.CacheItem;
 import com.glaf.core.cache.ClearCacheJob;
 import com.glaf.core.config.ViewProperties;
-import com.glaf.core.security.LoginContext;
-import com.glaf.core.util.Constants;
-import com.glaf.core.util.DateUtils;
-import com.glaf.core.util.RequestUtils;
 import com.glaf.core.util.ResponseUtils;
 
 @Controller("/sys/cacheMgr")
@@ -91,47 +81,6 @@ public class MxSystemCacheMgrController {
 			}
 		}
 		return ResponseUtils.responseJsonResult(true);
-	}
-
-	@RequestMapping("/json")
-	@ResponseBody
-	public byte[] json(HttpServletRequest request, ModelMap modelMap)
-			throws IOException {
-		LoginContext loginContext = RequestUtils.getLoginContext(request);
-		String actorId = loginContext.getActorId();
-		JSONObject result = new JSONObject();
-		Collection<CacheItem> rows = CacheFactory.getItems();
-		if (rows != null && !rows.isEmpty()) {
-			JSONArray rowsJSON = new JSONArray();
-			Date date = null;
-			int index = 0;
-			String cacheKey = Constants.LOGIN_USER_CACHE + actorId;
-			for (CacheItem item : rows) {
-				if (StringUtils.equals(Constants.USER_CACHE + actorId, item.getKey())) {
-					continue;
-				}
-				if (StringUtils.equals(cacheKey, item.getKey())) {
-					continue;
-				}
-				index++;
-				JSONObject json = new JSONObject();
-				json.put("index", index);
-				json.put("key", item.getKey());
-				json.put("size", item.getSize());
-				date = new Date(item.getLastModified());
-				json.put("date", DateUtils.getDateTime(date));
-				rowsJSON.add(json);
-			}
-			result.put("total", rows.size());
-			result.put("totalCount", rows.size());
-			result.put("totalRecords", rows.size());
-			result.put("start", 0);
-			result.put("startIndex", 0);
-			result.put("limit", rows.size());
-			result.put("pageSize", rows.size());
-			result.put("rows", rowsJSON);
-		}
-		return result.toString().getBytes("UTF-8");
 	}
 
 	@RequestMapping

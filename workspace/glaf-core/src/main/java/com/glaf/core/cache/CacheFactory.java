@@ -18,11 +18,9 @@
 
 package com.glaf.core.cache;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.context.ApplicationContext;
@@ -37,7 +35,7 @@ public class CacheFactory {
 	protected static final Log logger = LogFactory.getLog(CacheFactory.class);
 	protected static final String DEFAULT_CONFIG = "com/glaf/core/cache/cache-context.xml";
 	protected static final Map<String, Cache> cacheMap = new HashMap<String, Cache>();
-	protected static final Map<String, CacheItem> items = new LinkedHashMap<String, CacheItem>();
+	protected static final List<String> items = new ArrayList<String>();
 	protected static Configuration conf = BaseConfiguration.create();
 
 	private static ApplicationContext ctx;
@@ -48,12 +46,13 @@ public class CacheFactory {
 		try {
 			Cache cache = getCache();
 			if (cache != null) {
-				for (String cacheKey : items.keySet()) {
+				for (String cacheKey : items) {
 					cache.remove(cacheKey);
 				}
 				items.clear();
 				cache.clear();
 			}
+			logger.info("cache clear ok.");
 		} catch (Exception ex) {
 			if (logger.isDebugEnabled()) {
 				ex.printStackTrace();
@@ -68,7 +67,7 @@ public class CacheFactory {
 			if (cache != null) {
 				String cacheKey = Environment.getCurrentSystemName() + "_"
 						+ CACHE_PREFIX + key;
-				// cacheKey = DigestUtils.md5Hex(cacheKey.getBytes());
+				cacheKey = DigestUtils.md5Hex(cacheKey.getBytes());
 				Object value = cache.get(cacheKey);
 				if (value != null) {
 					logger.debug("get object'" + key + "' from cache");
@@ -104,17 +103,13 @@ public class CacheFactory {
 		return cache;
 	}
 
-	public static Collection<CacheItem> getItems() {
-		return items.values();
-	}
-
 	public static String getString(String key) {
 		try {
 			Cache cache = getCache();
 			if (cache != null) {
 				String cacheKey = Environment.getCurrentSystemName() + "_"
 						+ CACHE_PREFIX + key;
-				// cacheKey = DigestUtils.md5Hex(cacheKey.getBytes());
+				cacheKey = DigestUtils.md5Hex(cacheKey.getBytes());
 				Object value = cache.get(cacheKey);
 				if (value != null) {
 					logger.debug("get object'" + key + "' from cache");
@@ -136,15 +131,11 @@ public class CacheFactory {
 			if (cache != null && key != null && value != null) {
 				String cacheKey = Environment.getCurrentSystemName() + "_"
 						+ CACHE_PREFIX + key;
-				// cacheKey = DigestUtils.md5Hex(cacheKey.getBytes());
+				cacheKey = DigestUtils.md5Hex(cacheKey.getBytes());
 				int limitSize = conf.getInt("cache.limitSize", 1024000);// 1024KB
 				if (value.length() < limitSize) {
 					cache.put(cacheKey, value);
-					CacheItem item = new CacheItem();
-					item.setKey(key);
-					item.setLastModified(System.currentTimeMillis());
-					item.setSize(value.length());
-					items.put(cacheKey, item);
+					items.add(cacheKey);
 				}
 			}
 		} catch (Exception ex) {
@@ -191,7 +182,7 @@ public class CacheFactory {
 			if (cache != null) {
 				String cacheKey = Environment.getCurrentSystemName() + "_"
 						+ CACHE_PREFIX + key;
-				// cacheKey = DigestUtils.md5Hex(cacheKey.getBytes());
+				cacheKey = DigestUtils.md5Hex(cacheKey.getBytes());
 				cache.remove(cacheKey);
 				items.remove(cacheKey);
 			}
