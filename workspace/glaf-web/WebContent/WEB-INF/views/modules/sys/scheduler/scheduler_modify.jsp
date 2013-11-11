@@ -119,6 +119,7 @@
 		<td height="24">
 			<select id="jobClass" name="jobClass" nullable="no" chname="任务类名">
 			<%
+			  JobProperties.reload();
 			  Properties props =  JobProperties.getProperties();
 			  Enumeration<?> e = props.keys();
 			  while (e.hasMoreElements()) {
