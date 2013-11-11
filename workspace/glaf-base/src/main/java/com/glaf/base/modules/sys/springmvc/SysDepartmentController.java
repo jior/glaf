@@ -68,6 +68,7 @@ import com.glaf.core.util.PageResult;
 import com.glaf.core.util.Paging;
 import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.RequestUtils;
+import com.glaf.core.util.ResponseUtils;
 import com.glaf.core.util.Tools;
 
 @Controller("/sys/department")
@@ -386,6 +387,67 @@ public class SysDepartmentController {
 
 		// 显示列表页面
 		return new ModelAndView("/modules/sys/dept/dept_modify", modelMap);
+	}
+
+	@ResponseBody
+	@RequestMapping(params = "method=save")
+	public byte[] save(HttpServletRequest request, ModelMap modelMap) {
+		long id = ParamUtil.getIntParameter(request, "id", 0);
+		SysDepartment bean = sysDepartmentService.findById(id);
+		boolean ret = false;
+		if (bean != null) {
+			bean.setUpdateBy(RequestUtils.getActorId(request));
+			bean.setName(ParamUtil.getParameter(request, "name"));
+			bean.setDesc(ParamUtil.getParameter(request, "desc"));
+			bean.setCode(ParamUtil.getParameter(request, "code"));
+			bean.setCode2(ParamUtil.getParameter(request, "code2"));
+			bean.setNo(ParamUtil.getParameter(request, "no"));
+			bean.setStatus(ParamUtil.getIntParameter(request, "status", 0));
+			bean.setLevel(RequestUtils.getInt(request, "level"));
+			SysTree node = bean.getNode();
+			node.setUpdateBy(RequestUtils.getActorId(request));
+			node.setName(bean.getName());
+			node.setParentId((long) ParamUtil.getIntParameter(request,
+					"parent", 0));
+			bean.setNode(node);
+			try {
+				ret = sysDepartmentService.update(bean);
+			} catch (Exception ex) {
+				ret = false;
+				logger.error(ex);
+			}
+		} else {
+			bean = new SysDepartment();
+			bean.setName(ParamUtil.getParameter(request, "name"));
+			bean.setDesc(ParamUtil.getParameter(request, "desc"));
+			bean.setCode(ParamUtil.getParameter(request, "code"));
+			bean.setCode2(ParamUtil.getParameter(request, "code2"));
+			bean.setNo(ParamUtil.getParameter(request, "no"));
+			bean.setLevel(RequestUtils.getInt(request, "level"));
+			bean.setCreateTime(new Date());
+
+			SysTree node = new SysTree();
+			node.setCreateBy(RequestUtils.getActorId(request));
+			node.setName(bean.getName());
+			node.setDesc(bean.getName());
+			node.setCode(bean.getCode());
+			node.setParentId((long) ParamUtil.getIntParameter(request,
+					"parent", 0));
+			bean.setNode(node);
+			bean.setCreateBy(RequestUtils.getActorId(request));
+			try {
+				ret = sysDepartmentService.create(bean);
+			} catch (Exception ex) {
+				ret = false;
+				logger.error(ex);
+			}
+		}
+
+		if (ret) {
+			ResponseUtils.responseResult(true);
+		}
+
+		return ResponseUtils.responseResult(false);
 	}
 
 	/**

@@ -53,6 +53,7 @@ import com.glaf.core.util.PageResult;
 import com.glaf.core.util.Paging;
 import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.RequestUtils;
+import com.glaf.core.util.ResponseUtils;
 import com.glaf.core.util.Tools;
 
 @Controller("/sys/application")
@@ -270,6 +271,64 @@ public class SysApplicationController {
 		}
 
 		return new ModelAndView("/modules/sys/app/app_modify", modelMap);
+	}
+
+	@ResponseBody
+	@RequestMapping(params = "method=save")
+	public byte[] save(HttpServletRequest request, ModelMap modelMap) {
+		boolean ret = false;
+		long id = ParamUtil.getIntParameter(request, "id", 0);
+		SysApplication bean = sysApplicationService.findById(id);
+		if (bean != null) {
+			bean.setName(ParamUtil.getParameter(request, "name"));
+			bean.setCode(ParamUtil.getParameter(request, "code"));
+			bean.setDesc(ParamUtil.getParameter(request, "desc"));
+			bean.setUrl(ParamUtil.getParameter(request, "url"));
+			bean.setShowMenu(ParamUtil.getIntParameter(request, "showMenu", 0));
+			bean.setUpdateBy(RequestUtils.getActorId(request));
+			bean.setLocked(ParamUtil.getIntParameter(request, "locked", 0));
+
+			SysTree node = bean.getNode();
+			node.setName(bean.getName());
+			node.setCode(bean.getCode());
+			node.setDesc(bean.getName());
+			node.setParentId(ParamUtil.getLongParameter(request, "parent", 0));
+			bean.setNode(node);
+			try {
+				ret = sysApplicationService.update(bean);
+			} catch (Exception ex) {
+				ret = false;
+				logger.error(ex);
+			}
+		} else {
+			bean = new SysApplication();
+			bean.setName(ParamUtil.getParameter(request, "name"));
+			bean.setCode(ParamUtil.getParameter(request, "code"));
+			bean.setDesc(ParamUtil.getParameter(request, "desc"));
+			bean.setUrl(ParamUtil.getParameter(request, "url"));
+			bean.setShowMenu(ParamUtil.getIntParameter(request, "showMenu", 0));
+			bean.setCreateBy(RequestUtils.getActorId(request));
+			SysTree node = new SysTree();
+			node.setName(bean.getName());
+			node.setDesc(bean.getName());
+			node.setCode(bean.getCode());
+			node.setCreateBy(RequestUtils.getActorId(request));
+			node.setParentId((long) ParamUtil.getIntParameter(request,
+					"parent", 0));
+			bean.setNode(node);
+			try {
+				ret = sysApplicationService.create(bean);
+			} catch (Exception ex) {
+				ret = false;
+				logger.error(ex);
+			}
+		}
+
+		if (ret) {
+			ResponseUtils.responseResult(true);
+		}
+
+		return ResponseUtils.responseResult(false);
 	}
 
 	/**
