@@ -93,6 +93,19 @@ public class SysApplicationController {
 		return new ModelAndView("show_msg2", modelMap);
 	}
 
+	@ResponseBody
+	@RequestMapping(params = "method=delete")
+	public byte[] delete(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		boolean ret = true;
+		long[] rowIds = ParamUtil.getLongParameterValues(request, "rowIds");
+		ret = sysApplicationService.deleteAll(rowIds);
+		if (ret) {// 操作成功
+			return ResponseUtils.responseResult(true);
+		}
+		return ResponseUtils.responseResult(false);
+	}
+
 	/**
 	 * 显示修改页面
 	 * 

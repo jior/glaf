@@ -124,6 +124,10 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 		if (appId != null && appId > 0) {
 			sysAccessMapper.deleteSysAccessByAppId(appId);
 			sysApplicationMapper.deleteSysApplicationById(appId);
+			SysApplication app = this.getSysApplication(appId);
+			if (app != null) {
+				sysTreeMapper.deleteSysTreeById(app.getNodeId());
+			}
 		}
 	}
 
@@ -138,7 +142,7 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 
 	public SysApplication findById(long id) {
 		SysApplication app = this.getSysApplication(id);
-		if (app.getNodeId() > 0) {
+		if (app != null && app.getNodeId() > 0) {
 			SysTree node = sysTreeMapper.getSysTreeById(app.getNodeId());
 			app.setNode(node);
 		}
@@ -389,7 +393,7 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 			}
 			TreeHelper treeHelper = new TreeHelper();
 			array = treeHelper.getTreeJSONArray(treeModels);
-			//logger.debug(array.toString('\n'));
+			// logger.debug(array.toString('\n'));
 		}
 		return array;
 	}
