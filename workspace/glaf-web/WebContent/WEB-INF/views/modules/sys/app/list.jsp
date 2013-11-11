@@ -114,13 +114,13 @@
 	function addNew(){
 	    //location.href="<%=request.getContextPath()%>/sys/application.do?method=edit";
 		var nodeId = jQuery("#nodeId").val();
-		var link = "<%=request.getContextPath()%>/sys/application.do?method=prepareAdd&parent="+nodeId;
+		var link = "<%=request.getContextPath()%>/sys/application.do?method=edit&parent="+nodeId;
 	    art.dialog.open(link, { height: 420, width: 600, title: "添加记录", lock: true, scrollbars:"yes" }, false);
 	}
 
 	function onRowClick(rowIndex, row){
         //window.open('<%=request.getContextPath()%>/sys/application.do?method=edit&rowId='+row.id);
-	    var link = '<%=request.getContextPath()%>/sys/application.do?method=prepareModify&id='+row.id;
+	    var link = '<%=request.getContextPath()%>/sys/application.do?method=edit&id='+row.id;
 	    art.dialog.open(link, { height: 480, width: 600, title: "修改记录", lock: true, scrollbars:"yes" }, false);
 	}
 
@@ -145,7 +145,7 @@
 	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
 	    if (selected ){
 		//location.href="<%=request.getContextPath()%>/sys/application.do?method=edit&rowId="+selected.id;
-		var link = "<%=request.getContextPath()%>/sys/application.do?method=prepareModify&id="+selected.id;
+		var link = "<%=request.getContextPath()%>/sys/application.do?method=edit&id="+selected.id;
 		art.dialog.open(link, { height: 480, width: 600, title: "修改记录", lock: true, scrollbars:"yes" }, false);
 	    }
 	}
@@ -172,7 +172,7 @@
 		}
 		var selected = jQuery('#mydatagrid').datagrid('getSelected');
 		if (selected ){
-		    location.href="<%=request.getContextPath()%>/sys/application.do?method=prepareModify&id="+selected.id;
+		    location.href="<%=request.getContextPath()%>/sys/application.do?method=edit&id="+selected.id;
 		}
 	}
 
@@ -197,7 +197,7 @@
 					   } else {
 						 alert('操作成功完成！');
 					   }
-					   jQuery('#mydatagrid').datagrid('reload');
+					   reloadGrid();
 				   }
 			 });
 		} else {
@@ -206,6 +206,8 @@
 	}
 
 	function reloadGrid(){
+		var queryParams = $('#mydatagrid').datagrid('options').queryParams; 
+		queryParams.parentId=jQuery("#nodeId").val();
 	    jQuery('#mydatagrid').datagrid('reload');
 	}
 

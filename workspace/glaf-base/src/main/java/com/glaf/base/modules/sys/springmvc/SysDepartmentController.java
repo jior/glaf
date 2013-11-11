@@ -404,11 +404,17 @@ public class SysDepartmentController {
 			bean.setNo(ParamUtil.getParameter(request, "no"));
 			bean.setStatus(ParamUtil.getIntParameter(request, "status", 0));
 			bean.setLevel(RequestUtils.getInt(request, "level"));
+
+			long parentId = ParamUtil.getLongParameter(request, "parent", 0);
+			if (parentId == 0) {
+				SysTree root = sysTreeService
+						.getSysTreeByCode(Constants.TREE_DEPT);
+				parentId = root.getId();
+			}
 			SysTree node = bean.getNode();
 			node.setUpdateBy(RequestUtils.getActorId(request));
 			node.setName(bean.getName());
-			node.setParentId((long) ParamUtil.getIntParameter(request,
-					"parent", 0));
+			node.setParentId(parentId);
 			bean.setNode(node);
 			try {
 				ret = sysDepartmentService.update(bean);
@@ -426,13 +432,18 @@ public class SysDepartmentController {
 			bean.setLevel(RequestUtils.getInt(request, "level"));
 			bean.setCreateTime(new Date());
 
+			long parentId = ParamUtil.getLongParameter(request, "parent", 0);
+			if (parentId == 0) {
+				SysTree root = sysTreeService
+						.getSysTreeByCode(Constants.TREE_DEPT);
+				parentId = root.getId();
+			}
 			SysTree node = new SysTree();
 			node.setCreateBy(RequestUtils.getActorId(request));
 			node.setName(bean.getName());
 			node.setDesc(bean.getName());
 			node.setCode(bean.getCode());
-			node.setParentId((long) ParamUtil.getIntParameter(request,
-					"parent", 0));
+			node.setParentId(parentId);
 			bean.setNode(node);
 			bean.setCreateBy(RequestUtils.getActorId(request));
 			try {
@@ -444,7 +455,7 @@ public class SysDepartmentController {
 		}
 
 		if (ret) {
-			ResponseUtils.responseResult(true);
+			return ResponseUtils.responseResult(true);
 		}
 
 		return ResponseUtils.responseResult(false);
@@ -469,12 +480,18 @@ public class SysDepartmentController {
 		bean.setLevel(RequestUtils.getInt(request, "level"));
 		bean.setCreateTime(new Date());
 
+		long parentId = ParamUtil.getLongParameter(request, "parent", 0);
+		if (parentId == 0) {
+			SysTree root = sysTreeService.getSysTreeByCode(Constants.TREE_DEPT);
+			parentId = root.getId();
+		}
+
 		SysTree node = new SysTree();
 		node.setCreateBy(RequestUtils.getActorId(request));
 		node.setName(bean.getName());
 		node.setDesc(bean.getName());
 		node.setCode(bean.getCode());
-		node.setParentId((long) ParamUtil.getIntParameter(request, "parent", 0));
+		node.setParentId(parentId);
 		bean.setNode(node);
 		bean.setCreateBy(RequestUtils.getActorId(request));
 		boolean ret = sysDepartmentService.create(bean);
@@ -515,11 +532,18 @@ public class SysDepartmentController {
 			bean.setNo(ParamUtil.getParameter(request, "no"));
 			bean.setStatus(ParamUtil.getIntParameter(request, "status", 0));
 			bean.setLevel(RequestUtils.getInt(request, "level"));
+
+			long parentId = ParamUtil.getLongParameter(request, "parent", 0);
+			if (parentId == 0) {
+				SysTree root = sysTreeService
+						.getSysTreeByCode(Constants.TREE_DEPT);
+				parentId = root.getId();
+			}
+
 			SysTree node = bean.getNode();
 			node.setUpdateBy(RequestUtils.getActorId(request));
 			node.setName(bean.getName());
-			node.setParentId((long) ParamUtil.getIntParameter(request,
-					"parent", 0));
+			node.setParentId(parentId);
 			bean.setNode(node);
 			try {
 				ret = sysDepartmentService.update(bean);

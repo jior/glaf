@@ -398,9 +398,8 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 		return array;
 	}
 
-	public JSONArray getUserMenu2(long parent, String userId) {
+	protected JSONArray getUserMenu(long parent, SysUser user) {
 		JSONArray array = new JSONArray();
-		SysUser user = authorizeService.login(userId);
 		if (user != null) {
 			List<SysApplication> list = null;
 			if (user.isSystemAdmin()) {
@@ -448,8 +447,9 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 		return array;
 	}
 
-	protected JSONArray getUserMenu(long parent, SysUser user) {
+	public JSONArray getUserMenu2(long parent, String userId) {
 		JSONArray array = new JSONArray();
+		SysUser user = authorizeService.login(userId);
 		if (user != null) {
 			List<SysApplication> list = null;
 			if (user.isSystemAdmin()) {
@@ -552,6 +552,11 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 	}
 
 	@Resource
+	public void setEntityService(EntityService entityService) {
+		this.entityService = entityService;
+	}
+
+	@Resource
 	@Qualifier("myBatisDbIdGenerator")
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
@@ -581,11 +586,6 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 	@Resource
 	public void setSysTreeService(SysTreeService sysTreeService) {
 		this.sysTreeService = sysTreeService;
-	}
-
-	@Resource
-	public void setEntityService(EntityService entityService) {
-		this.entityService = entityService;
 	}
 
 	@Resource

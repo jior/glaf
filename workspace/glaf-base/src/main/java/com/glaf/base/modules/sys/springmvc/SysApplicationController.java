@@ -301,11 +301,20 @@ public class SysApplicationController {
 			bean.setUpdateBy(RequestUtils.getActorId(request));
 			bean.setLocked(ParamUtil.getIntParameter(request, "locked", 0));
 
+			long parentId = ParamUtil.getLongParameter(request, "parent", 0);
+			if (parentId == 0) {
+				SysTree root = sysTreeService
+						.getSysTreeByCode(Constants.TREE_APP);
+				if (root != null) {
+					parentId = root.getId();
+				}
+			}
+
 			SysTree node = bean.getNode();
 			node.setName(bean.getName());
 			node.setCode(bean.getCode());
 			node.setDesc(bean.getName());
-			node.setParentId(ParamUtil.getLongParameter(request, "parent", 0));
+			node.setParentId(parentId);
 			bean.setNode(node);
 			try {
 				ret = sysApplicationService.update(bean);
@@ -321,13 +330,22 @@ public class SysApplicationController {
 			bean.setUrl(ParamUtil.getParameter(request, "url"));
 			bean.setShowMenu(ParamUtil.getIntParameter(request, "showMenu", 0));
 			bean.setCreateBy(RequestUtils.getActorId(request));
+
+			long parentId = ParamUtil.getLongParameter(request, "parent", 0);
+			if (parentId == 0) {
+				SysTree root = sysTreeService
+						.getSysTreeByCode(Constants.TREE_APP);
+				if (root != null) {
+					parentId = root.getId();
+				}
+			}
+
 			SysTree node = new SysTree();
 			node.setName(bean.getName());
 			node.setDesc(bean.getName());
 			node.setCode(bean.getCode());
 			node.setCreateBy(RequestUtils.getActorId(request));
-			node.setParentId((long) ParamUtil.getIntParameter(request,
-					"parent", 0));
+			node.setParentId(parentId);
 			bean.setNode(node);
 			try {
 				ret = sysApplicationService.create(bean);
@@ -338,7 +356,7 @@ public class SysApplicationController {
 		}
 
 		if (ret) {
-			ResponseUtils.responseResult(true);
+			return ResponseUtils.responseResult(true);
 		}
 
 		return ResponseUtils.responseResult(false);
@@ -360,12 +378,21 @@ public class SysApplicationController {
 		bean.setUrl(ParamUtil.getParameter(request, "url"));
 		bean.setShowMenu(ParamUtil.getIntParameter(request, "showMenu", 0));
 		bean.setCreateBy(RequestUtils.getActorId(request));
+
+		long parentId = ParamUtil.getLongParameter(request, "parent", 0);
+		if (parentId == 0) {
+			SysTree root = sysTreeService.getSysTreeByCode(Constants.TREE_APP);
+			if (root != null) {
+				parentId = root.getId();
+			}
+		}
+
 		SysTree node = new SysTree();
 		node.setName(bean.getName());
 		node.setDesc(bean.getName());
 		node.setCode(bean.getCode());
 		node.setCreateBy(RequestUtils.getActorId(request));
-		node.setParentId((long) ParamUtil.getIntParameter(request, "parent", 0));
+		node.setParentId(parentId);
 		bean.setNode(node);
 
 		boolean ret = sysApplicationService.create(bean);
@@ -401,11 +428,20 @@ public class SysApplicationController {
 			bean.setUpdateBy(RequestUtils.getActorId(request));
 			bean.setLocked(ParamUtil.getIntParameter(request, "locked", 0));
 
+			long parentId = ParamUtil.getLongParameter(request, "parent", 0);
+			if (parentId == 0) {
+				SysTree root = sysTreeService
+						.getSysTreeByCode(Constants.TREE_APP);
+				if (root != null) {
+					parentId = root.getId();
+				}
+			}
+
 			SysTree node = bean.getNode();
 			node.setName(bean.getName());
 			node.setCode(bean.getCode());
 			node.setDesc(bean.getName());
-			node.setParentId(ParamUtil.getLongParameter(request, "parent", 0));
+			node.setParentId(parentId);
 			bean.setNode(node);
 		}
 		boolean ret = false;
