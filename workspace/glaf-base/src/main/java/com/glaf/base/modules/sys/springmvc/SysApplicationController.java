@@ -92,6 +92,37 @@ public class SysApplicationController {
 		return new ModelAndView("show_msg2", modelMap);
 	}
 
+	/**
+	 * ÏÔÊ¾ÐÞ¸ÄÒ³Ãæ
+	 * 
+	 * @param request
+	 * @param modelMap
+	 * @return
+	 */
+	@RequestMapping(params = "method=edit")
+	public ModelAndView edit(HttpServletRequest request, ModelMap modelMap) {
+		// RequestUtils.setRequestParameterToAttribute(request);
+		long id = ParamUtil.getIntParameter(request, "id", 0);
+		if (id > 0) {
+			SysApplication bean = sysApplicationService.findById(id);
+			request.setAttribute("bean", bean);
+		}
+
+		SysTree parent = sysTreeService.getSysTreeByCode(Constants.TREE_APP);
+		List<SysTree> list = new ArrayList<SysTree>();
+		parent.setDeep(0);
+		list.add(parent);
+		sysTreeService.getSysTree(list, (int) parent.getId(), 1);
+		request.setAttribute("parent", list);
+
+		String x_view = ViewProperties.getString("application.edit");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
+		return new ModelAndView("/modules/sys/app/edit", modelMap);
+	}
+
 	@RequestMapping(params = "method=json")
 	@ResponseBody
 	public byte[] json(HttpServletRequest request) throws IOException {

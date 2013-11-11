@@ -143,6 +143,40 @@ public class SysDepartmentController {
 	}
 
 	/**
+	 * 显示编辑页面
+	 * 
+	 * @param request
+	 * @param modelMap
+	 * @return
+	 */
+	@RequestMapping(params = "method=edit")
+	public ModelAndView edit(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		long id = ParamUtil.getIntParameter(request, "id", 0);
+		SysDepartment bean = sysDepartmentService.findById(id);
+		request.setAttribute("bean", bean);
+
+		SysTree parent = sysTreeService.getSysTreeByCode(Constants.TREE_DEPT);
+		List<SysTree> list = new ArrayList<SysTree>();
+		parent.setDeep(0);
+		list.add(parent);
+		sysTreeService.getSysTree(list, (int) parent.getId(), 1);
+		request.setAttribute("parent", list);
+
+		List<Dictory> dictories = dictoryService
+				.getDictoryList(SysConstants.DEPT_LEVEL);
+		modelMap.put("dictories", dictories);
+
+		String x_view = ViewProperties.getString("department.edit");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
+		// 显示列表页面
+		return new ModelAndView("/modules/sys/dept/edit", modelMap);
+	}
+
+	/**
 	 * 显示下级部门节点
 	 * 
 	 * 
