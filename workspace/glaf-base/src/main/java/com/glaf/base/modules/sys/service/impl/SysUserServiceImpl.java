@@ -159,6 +159,44 @@ public class SysUserServiceImpl implements SysUserService {
 	}
 
 	/**
+	 * 按名称查找对象
+	 * 
+	 * @param name
+	 *            String
+	 * @return SysUser
+	 */
+	public SysUser findByMail(String email) {
+		SysUser bean = null;
+		Object[] values = new Object[] { email };
+		String query = " from SysUser a where a.email=? order by a.id desc";
+		List list = abstractDao.getList(query, values, null);
+		if (list != null && list.size() > 0) {// 有记录
+			bean = (SysUser) list.get(0);
+		}
+
+		return bean;
+	}
+
+	/**
+	 * 按名称查找对象
+	 * 
+	 * @param name
+	 *            String
+	 * @return SysUser
+	 */
+	public SysUser findByMobile(String mobile) {
+		SysUser bean = null;
+		Object[] values = new Object[] { mobile };
+		String query = " from SysUser a where a.mobile=? order by a.id desc";
+		List list = abstractDao.getList(query, values, null);
+		if (list != null && list.size() > 0) {// 有记录
+			bean = (SysUser) list.get(0);
+		}
+
+		return bean;
+	}
+
+	/**
 	 * 获取某个用户的上级
 	 * 
 	 * @param account

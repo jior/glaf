@@ -280,6 +280,10 @@
 					#{x_name}
 				</foreach>
 			</if>
+			
+			<if test="code != null and code != '' ">
+				and E.CODE = #{code}
+			</if>
 
 			<if test="codeLike != null and codeLike != '' ">
 				and E.CODE like #{codeLike}

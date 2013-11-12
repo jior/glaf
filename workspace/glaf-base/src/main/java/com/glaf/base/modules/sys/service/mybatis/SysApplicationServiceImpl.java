@@ -148,6 +148,28 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 		}
 		return app;
 	}
+	
+	/**
+	 * 按编码查找对象
+	 * 
+	 * @param code
+	 *            String
+	 * @return SysApplication
+	 */
+	public SysApplication findByCode(String code){
+		SysApplicationQuery query = new SysApplicationQuery();
+		query.code(code);
+
+		List<SysApplication> list = this.list(query);
+		if (list != null && !list.isEmpty()) {
+			SysApplication sysApplication = list.get(0);
+			SysTree node = sysTreeService.findById(sysApplication.getNodeId());
+			sysApplication.setNode(node);
+			return sysApplication;
+		}
+
+		return null;
+	}
 
 	public SysApplication findByName(String name) {
 		SysApplicationQuery query = new SysApplicationQuery();

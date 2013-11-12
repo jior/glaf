@@ -301,8 +301,19 @@
 		)
 	</delete>
 
+
 	<select id="getSysUserById" parameterType="long" resultMap="sysUserResultMap">
 		select * from sys_user where ID = #{id}
+	</select>
+	
+	
+	<select id="getSysUserByMail" parameterType="string" resultMap="sysUserResultMap">
+		select * from sys_user where EMAIL = #{mail}
+	</select>
+	
+	
+	<select id="getSysUserByMobile" parameterType="string" resultMap="sysUserResultMap">
+		select * from sys_user where MOBILE = #{mobile}
 	</select>
 
 

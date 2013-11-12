@@ -75,6 +75,15 @@ public interface SysApplicationService {
 	 * @return
 	 */
 	SysApplication findById(long id);
+	
+	/**
+	 * 按编码查找对象
+	 * 
+	 * @param code
+	 *            String
+	 * @return SysApplication
+	 */
+	SysApplication findByCode(String code);
 
 	/**
 	 * 按名称查找对象

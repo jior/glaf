@@ -23,6 +23,7 @@ import com.glaf.core.query.DataQuery;
 
 public class SysApplicationQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;
+	protected String code;
 	protected String codeLike;
 	protected String descLike;
 	protected String name;
@@ -43,12 +44,24 @@ public class SysApplicationQuery extends DataQuery {
 
 	}
 
+	public SysApplicationQuery code(String code) {
+		if (code == null) {
+			throw new RuntimeException("code is null");
+		}
+		this.code = code;
+		return this;
+	}
+
 	public SysApplicationQuery descLike(String descLike) {
 		if (descLike == null) {
 			throw new RuntimeException("desc is null");
 		}
 		this.descLike = descLike;
 		return this;
+	}
+
+	public String getCode() {
+		return code;
 	}
 
 	public String getCodeLike() {
@@ -237,6 +250,10 @@ public class SysApplicationQuery extends DataQuery {
 		}
 		this.nodeIds = nodeIds;
 		return this;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 	public void setCodeLike(String codeLike) {

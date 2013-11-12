@@ -172,6 +172,16 @@ public class SysUserServiceImpl implements SysUserService {
 		return user;
 	}
 
+	public SysUser findByMail(String mail) {
+		SysUser user = sysUserMapper.getSysUserByMail(mail);
+		return user;
+	}
+
+	public SysUser findByMobile(String mobile) {
+		SysUser user = sysUserMapper.getSysUserByMobile(mobile);
+		return user;
+	}
+
 	public SysUser findByAccountWithAll(String account) {
 		SysUser user = null;
 		if (StringUtils.equals(DBUtils.ORACLE,

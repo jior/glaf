@@ -145,6 +145,24 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 	/**
 	 * 按名称查找对象
 	 * 
+	 * @param code
+	 *            String
+	 * @return SysApplication
+	 */
+	public SysApplication findByCode(String code) {
+		SysApplication bean = null;
+		Object[] values = new Object[] { code };
+		String query = "from SysApplication a where a.code=? order by a.id asc";
+		List list = abstractDao.getList(query, values, null);
+		if (list != null && list.size() > 0) {// 有记录
+			bean = (SysApplication) list.get(0);
+		}
+		return bean;
+	}
+
+	/**
+	 * 按名称查找对象
+	 * 
 	 * @param name
 	 *            String
 	 * @return SysApplication
@@ -152,7 +170,7 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 	public SysApplication findByName(String name) {
 		SysApplication bean = null;
 		Object[] values = new Object[] { name };
-		String query = "from SysApplication a where a.name=? order by a.id desc";
+		String query = "from SysApplication a where a.name=? order by a.id asc";
 		List list = abstractDao.getList(query, values, null);
 		if (list != null && list.size() > 0) {// 有记录
 			bean = (SysApplication) list.get(0);
@@ -413,46 +431,39 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 		return array;
 	}
 
- 
 	public List<SysApplication> getApplicationList(long parent) {
-		 
+
 		return null;
 	}
 
- 
 	public PageResult getApplicationList(long parent, int pageNo, int pageSize) {
-		 
+
 		return null;
 	}
 
- 
 	public List<RealmInfo> getRealmInfos() {
-	 
+
 		return null;
 	}
 
-	 
 	public int getSysApplicationCountByQueryCriteria(SysApplicationQuery query) {
-		 
+
 		return 0;
 	}
 
-	 
 	public List<SysApplication> getSysApplicationsByQueryCriteria(int start,
 			int pageSize, SysApplicationQuery query) {
-		 
+
 		return null;
 	}
 
- 
 	public TreeModel getTreeModelByAppId(long appId) {
-		 
+
 		return null;
 	}
 
-	 
 	public List<TreeModel> getTreeModels(long parentId, String userId) {
-	 
+
 		return null;
 	}
 }

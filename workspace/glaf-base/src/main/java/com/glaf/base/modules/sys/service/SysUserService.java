@@ -89,6 +89,25 @@ public interface SysUserService {
 	 * @return SysUser
 	 */
 	SysUser findByAccount(String account);
+	
+	/**
+	 * 按邮箱查找对象
+	 * 
+	 * @param mail
+	 *            String
+	 * @return SysUser
+	 */
+	SysUser findByMail(String mail);
+	
+	
+	/**
+	 * 按手机查找对象
+	 * 
+	 * @param mobile
+	 *            String
+	 * @return SysUser
+	 */
+	SysUser findByMobile(String mobile);
 
 	/**
 	 * 按名称查找对象
