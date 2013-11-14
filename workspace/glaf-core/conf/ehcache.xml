@@ -33,7 +33,7 @@
 		diskExpiryThreadIntervalSeconds="120"/> -->
 
 
-	<defaultCache
+	<!-- <defaultCache
 		maxElementsInMemory="10000"
 		eternal="false"
 		timeToIdleSeconds="120"
@@ -44,34 +44,36 @@
 		diskPersistent="false"
 		diskExpiryThreadIntervalSeconds="120"
 		memoryStoreEvictionPolicy="LRU"
-		/>
+		/> -->
+
+    <defaultCache
+            maxElementsInMemory="10000"
+            eternal="false"
+            timeToIdleSeconds="120"
+            timeToLiveSeconds="120"
+            overflowToDisk="false"
+            diskPersistent="false"
+            diskExpiryThreadIntervalSeconds="120"
+            />
 
     <cache name="DEFAULT_CACHE"
-		maxElementsInMemory="10000"
+		maxElementsInMemory="100000"
 		eternal="false"
-		timeToIdleSeconds="300000"
-		timeToLiveSeconds="600000"
-		overflowToDisk="true"
-		/>
- 
-	<cache name="GLAF_CACHE"
-		maxElementsInMemory="10000"
-		eternal="false"
-		timeToIdleSeconds="300000"
-		timeToLiveSeconds="600000"
-		overflowToDisk="true"
+		timeToIdleSeconds="300"
+		timeToLiveSeconds="600"
+		overflowToDisk="false"
 		/>
 
-	<!-- user cache-->
-	<cache name="userCache"
-		maxElementsInMemory="10000"
-		eternal="true"
-		overflowToDisk="true"/>
-
-	<!-- tree cache-->
-	<cache name="treeCache"
-		maxElementsInMemory="10000"
-		eternal="true"
-		overflowToDisk="true"/>
+    <cache name="SHIRO_CACHE"
+           maxEntriesLocalHeap="50000"
+           maxEntriesLocalDisk="100000"
+           eternal="false"
+           diskSpoolBufferSizeMB="20"
+           timeToIdleSeconds="3000"
+           timeToLiveSeconds="6000"
+           memoryStoreEvictionPolicy="LFU"
+           transactionalMode="off">
+        <persistence strategy="localTempSwap"/>
+    </cache>
 		
 </ehcache>

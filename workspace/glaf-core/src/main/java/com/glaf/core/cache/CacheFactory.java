@@ -30,10 +30,11 @@ import com.glaf.core.config.BaseConfiguration;
 import com.glaf.core.config.Configuration;
 import com.glaf.core.config.CustomProperties;
 import com.glaf.core.config.Environment;
+import com.glaf.core.context.ContextFactory;
 
 public class CacheFactory {
 	protected static final Log logger = LogFactory.getLog(CacheFactory.class);
-	protected static final String DEFAULT_CONFIG = "com/glaf/core/cache/cache-context.xml";
+	protected static final String DEFAULT_CONFIG = "com/glaf/core/cache/guava/guavacache-context.xml";
 	protected static final Map<String, Cache> cacheMap = new HashMap<String, Cache>();
 	protected static final List<String> items = new ArrayList<String>();
 	protected static Configuration conf = BaseConfiguration.create();
@@ -96,7 +97,12 @@ public class CacheFactory {
 
 	protected static Cache getCache() {
 		String beanId = "cache";
-		Cache cache = (Cache) getBean(beanId);
+		Cache cache = null;
+		if (conf.getBoolean("glaf.cache.useEhCache", false)) {
+			cache = ContextFactory.getBean(beanId);
+		} else {
+			cache = (Cache) getBean(beanId);
+		}
 		if (cache != null) {
 			cacheMap.put(beanId, cache);
 		}

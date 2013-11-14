@@ -47,37 +47,26 @@
 		/> -->
 
     <defaultCache
-            maxEntriesLocalHeap="10000"
+            maxElementsInMemory="10000"
             eternal="false"
             timeToIdleSeconds="120"
             timeToLiveSeconds="120"
-            diskSpoolBufferSizeMB="30"
-            maxEntriesLocalDisk="10000000"
+            overflowToDisk="false"
+            diskPersistent="false"
             diskExpiryThreadIntervalSeconds="120"
-            memoryStoreEvictionPolicy="LRU"
-            statistics="false">
-        <persistence strategy="localTempSwap"/>
-    </defaultCache>
+            />
 
     <cache name="DEFAULT_CACHE"
-		maxElementsInMemory="10000"
+		maxElementsInMemory="100000"
 		eternal="false"
-		timeToIdleSeconds="1800"
-		timeToLiveSeconds="3600"
-		overflowToDisk="true"
-		/>
-
-	<cache name="GLAF_CACHE"
-		maxElementsInMemory="10000"
-		eternal="false"
-		timeToIdleSeconds="300000"
-		timeToLiveSeconds="600000"
-		overflowToDisk="true"
+		timeToIdleSeconds="300"
+		timeToLiveSeconds="600"
+		overflowToDisk="false"
 		/>
 
     <cache name="SHIRO_CACHE"
-           maxEntriesLocalHeap="10000"
-           maxEntriesLocalDisk="1000"
+           maxEntriesLocalHeap="50000"
+           maxEntriesLocalDisk="100000"
            eternal="false"
            diskSpoolBufferSizeMB="20"
            timeToIdleSeconds="3000"
@@ -86,17 +75,5 @@
            transactionalMode="off">
         <persistence strategy="localTempSwap"/>
     </cache>
-
-	<!-- user cache-->
-	<cache name="userCache"
-		maxElementsInMemory="10000"
-		eternal="true"
-		overflowToDisk="true"/>
-
-	<!-- tree cache-->
-	<cache name="treeCache"
-		maxElementsInMemory="10000"
-		eternal="true"
-		overflowToDisk="true"/>
 		
 </ehcache>
