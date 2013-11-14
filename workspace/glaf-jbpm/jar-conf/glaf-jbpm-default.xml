@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="GBK"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <configuration>
 
@@ -9,7 +9,7 @@
 
 	<property>
 		<name>RunningTasks_subject</name>
-		<value>${res_system_name} ${now}待办任务提醒</value>
+		<value>${res_system_name} ${now}寰呭姙浠诲姟鎻愰啋</value>
 	</property>
 
 	<property>
