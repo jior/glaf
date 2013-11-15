@@ -46,7 +46,7 @@
 	<classpathentry kind="lib" path="lib/dom4j.jar"/>
 	<classpathentry kind="lib" path="lib/druid.jar"/>
 	<classpathentry kind="lib" path="lib/dubbo.jar"/>
-	<classpathentry kind="lib" path="lib/ehcache-core.jar"/>
+	<classpathentry kind="lib" path="lib/ehcache.jar"/>
 	<classpathentry kind="lib" path="lib/esapi-2.0GA.jar"/>
 	<classpathentry kind="lib" path="lib/fastjson.jar"/>
 	<classpathentry kind="lib" path="lib/filterbuilder.jar"/>

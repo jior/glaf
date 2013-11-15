@@ -58,7 +58,7 @@
 	<classpathentry kind="lib" path="/glaf-core/lib/dom4j.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/druid.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/dubbo.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/ehcache-core.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/ehcache.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/esapi-2.0GA.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/fastjson.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/filterbuilder.jar"/>
