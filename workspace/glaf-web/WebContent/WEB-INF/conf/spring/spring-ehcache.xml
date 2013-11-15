@@ -22,4 +22,8 @@
 		</property>
 	</bean>
 
+	<bean id="cache" class="com.glaf.core.cache.ehcache.EHCacheImpl">
+		<property name="cache" ref="ehCache" />
+	</bean>
+
 </beans>
