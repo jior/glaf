@@ -164,5 +164,6 @@
 	<classpathentry kind="lib" path="/glaf-core/lib/xml-apis-ext.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/xml-apis.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/zookeeper.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/glaf-mail"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

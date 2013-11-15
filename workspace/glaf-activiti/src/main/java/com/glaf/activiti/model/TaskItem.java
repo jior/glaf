@@ -25,11 +25,13 @@ public class TaskItem implements java.io.Serializable {
 	protected String id;
 	protected String actorId;
 	protected String actorName;
+	protected String businessKey;
 	protected String owner;
 	protected String groupId;
 	protected String groupName;
 	protected String executionId;
 	protected String processName;
+	protected String processDescription;
 	protected String processDefinitionId;
 	protected String processInstanceId;
 	protected String parentTaskId;
@@ -69,6 +71,10 @@ public class TaskItem implements java.io.Serializable {
 
 	public String getActorName() {
 		return actorName;
+	}
+
+	public String getBusinessKey() {
+		return businessKey;
 	}
 
 	public Date getCreateTime() {
@@ -131,6 +137,10 @@ public class TaskItem implements java.io.Serializable {
 		return processDefinitionId;
 	}
 
+	public String getProcessDescription() {
+		return processDescription;
+	}
+
 	public String getProcessInstanceId() {
 		return processInstanceId;
 	}
@@ -181,6 +191,10 @@ public class TaskItem implements java.io.Serializable {
 
 	public void setActorName(String actorName) {
 		this.actorName = actorName;
+	}
+
+	public void setBusinessKey(String businessKey) {
+		this.businessKey = businessKey;
 	}
 
 	public void setCreateTime(Date createTime) {
@@ -241,6 +255,10 @@ public class TaskItem implements java.io.Serializable {
 
 	public void setProcessDefinitionId(String processDefinitionId) {
 		this.processDefinitionId = processDefinitionId;
+	}
+
+	public void setProcessDescription(String processDescription) {
+		this.processDescription = processDescription;
 	}
 
 	public void setProcessInstanceId(String processInstanceId) {
