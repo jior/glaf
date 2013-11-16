@@ -462,6 +462,20 @@ public class BaseIdentityFactory {
 		return userMap;
 	}
 
+
+	/**
+	 * 获取用户菜单
+	 * 
+	 * @param parentId
+	 *            父应用编号
+	 * @param actorId
+	 *            用户登录账号
+	 * @return
+	 */
+	public static JSONArray getUserMenu(Long parentId, String actorId) {
+		return getSysApplicationService().getUserMenu(parentId, actorId);
+	}
+
 	/**
 	 * 获取某些用户的角色代码
 	 * 
@@ -507,6 +521,7 @@ public class BaseIdentityFactory {
 		return getSysUserService().getSysUserList();
 	}
 
+
 	public static void setSysApplicationService(
 			SysApplicationService sysApplicationService) {
 		BaseIdentityFactory.sysApplicationService = sysApplicationService;
@@ -539,17 +554,6 @@ public class BaseIdentityFactory {
 		BaseIdentityFactory.sysUserService = sysUserService;
 	}
 
-	/**
-	 * 获取用户菜单
-	 * 
-	 * @param parentId
-	 *            父应用编号
-	 * @param actorId
-	 *            用户登录账号
-	 * @return
-	 */
-	public JSONArray getUserMenu(Long parentId, String actorId) {
-		return getSysApplicationService().getUserMenu(parentId, actorId);
-	}
+
 
 }
