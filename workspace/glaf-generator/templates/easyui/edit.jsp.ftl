@@ -108,27 +108,27 @@
 		<td align="left">
 		<#if field.type?exists && field.type== 'Date'>
 			<input id="${field.name}" name="${field.name}" type="text" 
-			       class="easyui-datebox"
+			       class="easyui-datebox x-text"
 			<#if field.nullable == false> required="true" data-options="required:true" </#if>
 				  value="<fmt:formatDate value="#F{${modelName}.${field.name}}" pattern="yyyy-MM-dd"/>"/>
             <#elseif field.type?exists && field.type== 'Integer'>
 			<input id="${field.name}" name="${field.name}" type="text" 
-			       class="easyui-numberspinner" value="0" 
+			       class="easyui-numberbox x-text" 
 				   increment="10"  <#if field.nullable == false> required="true" data-options="required:true" </#if>
 				   value="#F{${modelName}.${field.name}}"/>
 			<#elseif field.type?exists && field.type== 'Long'>
 			<input id="${field.name}" name="${field.name}" type="text"
-			       class="easyui-numberspinner" value="0" 
+			       class="easyui-numberbox x-text"
 				   increment="100"  <#if field.nullable == false> required="true" data-options="required:true" </#if>
 				   value="#F{${modelName}.${field.name}}"/>
 			<#elseif field.type?exists && field.type== 'Double'>
 			<input id="${field.name}" name="${field.name}" type="text"
-			       class="easyui-numberbox"  precision="2" 
+			       class="easyui-numberbox  x-text"  precision="2" 
 			<#if field.nullable == false> required="true" data-options="required:true" </#if>
 				  value="#F{${modelName}.${field.name}}"/>
 			<#else>
             <input id="${field.name}" name="${field.name}" type="text" 
-			       class="easyui-validatebox"  
+			       class="easyui-validatebox  x-text"  
 			<#if field.nullable == false> required="true" data-options="required:true" </#if>
 				   value="#F{${modelName}.${field.name}}"/>
 			</#if>
