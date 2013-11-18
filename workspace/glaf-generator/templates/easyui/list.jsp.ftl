@@ -1,4 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page import="java.util.*"%>
+<%@ page import="com.glaf.core.util.*"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%
@@ -32,9 +34,7 @@
 				nowrap: false,
 				striped: true,
 				collapsible: true,
-				url: '<%=request.getContextPath()%>/${classDefinition.moduleName}/${modelName}/json',
-				sortName: 'id',
-				sortOrder: 'desc',
+				url: '<%=request.getContextPath()%>/mx/${classDefinition.moduleName}/${modelName}/json',
 				remoteSort: false,
 				singleSelect: true,
 				idField: '${idField.name}',
@@ -66,15 +66,15 @@
 
 		 
 	function addNew(){
-	    //location.href="<%=request.getContextPath()%>/${classDefinition.moduleName}/${modelName}/edit";
-	    var link="<%=request.getContextPath()%>/${classDefinition.moduleName}/${modelName}/edit";
-	    art.dialog.open(link, { height: 420, width: 680, title: "添加记录", lock: true, scrollbars:"no" }, false);
+	    var link="<%=request.getContextPath()%>/mx/${classDefinition.moduleName}/${modelName}/edit?fromUrl=${fromUrl}";
+	    //art.dialog.open(link, { height: 420, width: 680, title: "添加记录", lock: true, scrollbars:"no" }, false);
+		location.href=link;
 	}
 
 	function onRowClick(rowIndex, row){
-            //window.open('<%=request.getContextPath()%>/${classDefinition.moduleName}/${modelName}/edit?${idField.name}='+row.id);
-	    var link = '<%=request.getContextPath()%>/${classDefinition.moduleName}/${modelName}/edit?${idField.name}='+row.id;
-	    art.dialog.open(link, { height: 420, width: 680, title: "修改记录", lock: true, scrollbars:"no" }, false);
+	    var link = '<%=request.getContextPath()%>/mx/${classDefinition.moduleName}/${modelName}/edit?${idField.name}='+row.id+'&fromUrl=${fromUrl}';
+	    //art.dialog.open(link, { height: 420, width: 680, title: "修改记录", lock: true, scrollbars:"no" }, false);
+		location.href=link;
 	}
 
 	function searchWin(){
@@ -92,14 +92,14 @@
 	function editSelected(){
 	    var rows = jQuery('#mydatagrid').datagrid('getSelections');
 	    if(rows == null || rows.length !=1){
-		alert("请选择其中一条记录。");
-		return;
+		  alert("请选择其中一条记录。");
+		  return;
 	    }
 	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
 	    if (selected ){
-		//location.href="<%=request.getContextPath()%>/${classDefinition.moduleName}/${modelName}/edit?${idField.name}="+selected.id;
-		var link = "<%=request.getContextPath()%>/${classDefinition.moduleName}/${modelName}/edit?${idField.name}="+selected.id;
-		art.dialog.open(link, { height: 420, width: 680, title: "修改记录", lock: true, scrollbars:"no" }, false);
+		  var link = '<%=request.getContextPath()%>/mx/${classDefinition.moduleName}/${modelName}/edit?${idField.name}='+selected.id+'&fromUrl=${fromUrl}';
+		  //art.dialog.open(link, { height: 420, width: 680, title: "修改记录", lock: true, scrollbars:"no" }, false);
+		  location.href=link;
 	    }
 	}
 
@@ -111,7 +111,7 @@
 		}
 		var selected = jQuery('#mydatagrid').datagrid('getSelected');
 		if (selected ){
-		    location.href="<%=request.getContextPath()%>/${classDefinition.moduleName}/${modelName}/edit?readonly=true&${idField.name}="+selected.id;
+		    location.href='<%=request.getContextPath()%>/mx/${classDefinition.moduleName}/${modelName}/edit?readonly=true&${idField.name}='+selected.id+'&fromUrl=${fromUrl}';
 		}
 	}
 
@@ -125,7 +125,7 @@
 		    var str = ids.join(',');
 			jQuery.ajax({
 				   type: "POST",
-				   url: '<%=request.getContextPath()%>/${classDefinition.moduleName}/${modelName}/delete?${idField.name}s='+str,
+				   url: '<%=request.getContextPath()%>/mx/${classDefinition.moduleName}/${modelName}/delete?${idField.name}s='+str,
 				   dataType:  'json',
 				   error: function(data){
 					   alert('服务器处理错误！');
@@ -134,7 +134,7 @@
 					   if(data != null && data.message != null){
 						   alert(data.message);
 					   } else {
-						 alert('操作成功完成！');
+						   alert('操作成功完成！');
 					   }
 					   jQuery('#mydatagrid').datagrid('reload');
 				   }
@@ -151,7 +151,7 @@
 	function getSelected(){
 	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
 	    if (selected){
-		alert(selected.code+":"+selected.name+":"+selected.addr+":"+selected.col4);
+		    alert(selected.code+":"+selected.name+":"+selected.addr+":"+selected.col4);
 	    }
 	}
 
@@ -159,7 +159,7 @@
 	    var ids = [];
 	    var rows = jQuery('#mydatagrid').datagrid('getSelections');
 	    for(var i=0;i<rows.length;i++){
-		ids.push(rows[i].code);
+		    ids.push(rows[i].code);
 	    }
 	    alert(ids.join(':'));
 	}
@@ -169,27 +169,27 @@
 	}
 
 	function loadGridData(url){
-            jQuery.post(url,{qq:'xx'},function(data){
+        jQuery.post(url,{qq:'xx'},function(data){
             //var text = JSON.stringify(data); 
             //alert(text);
             jQuery('#mydatagrid').datagrid('loadData', data);
-            },'json');
-	  }
+        },'json');
+	}
 
 	function searchData(){
-            var params = jQuery("#searchForm").formSerialize();
-            jQuery.ajax({
-                        type: "POST",
-                        url: '<%=request.getContextPath()%>/${classDefinition.moduleName}/${modelName}/json',
-                        dataType:  'json',
-                        data: params,
-                        error: function(data){
-                                  alert('服务器处理错误！');
-                        },
-                        success: function(data){
-                                  jQuery('#mydatagrid').datagrid('loadData', data);
-                        }
-                        });
+        var params = jQuery("#searchForm").formSerialize();
+        jQuery.ajax({
+                    type: "POST",
+                    url: '<%=request.getContextPath()%>/mx/${classDefinition.moduleName}/${modelName}/json',
+                    dataType:  'json',
+                    data: params,
+                    error: function(data){
+                              alert('服务器处理错误！');
+                    },
+                    success: function(data){
+                              jQuery('#mydatagrid').datagrid('loadData', data);
+                    }
+                  });
 
 	    jQuery('#dlg').dialog('close');
 	}
@@ -217,12 +217,7 @@
 	 <table id="mydatagrid"></table>
   </div>  
 </div>
-<div id="edit_dlg" class="easyui-dialog" style="width:400px;height:280px;padding:10px 20px"
-	closed="true" buttons="#dlg-buttons">
-    <form id="editForm" name="editForm" method="post">
-         
-    </form>
-</div>
+ 
 <div id="dlg" class="easyui-dialog" style="width:400px;height:280px;padding:10px 20px"
 	closed="true" buttons="#dlg-buttons">
   <form id="searchForm" name="searchForm" method="post">

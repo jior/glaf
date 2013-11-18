@@ -1,4 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page import="java.util.*"%>
+<%@ page import="com.glaf.core.util.*"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%
@@ -18,13 +20,13 @@
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/locale/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript">
-        var contextPath="<%=request.getContextPath()%>";
+    var contextPath="<%=request.getContextPath()%>";
 
 	function saveData(){
 		var params = jQuery("#iForm").formSerialize();
 		jQuery.ajax({
 				   type: "POST",
-				   url: '<%=request.getContextPath()%>/${classDefinition.moduleName}/${modelName}/save${entityName}',
+				   url: '<%=request.getContextPath()%>/mx/${classDefinition.moduleName}/${modelName}/save${entityName}',
 				   data: params,
 				   dataType:  'json',
 				   error: function(data){
@@ -32,15 +34,17 @@
 				   },
 				   success: function(data){
 					   if(data != null && data.message != null){
-						 alert(data.message);
+						   alert(data.message);
 					   } else {
-						 alert('操作成功完成！');
+						   alert('操作成功完成！');
 					   }
+					   /**
 					   if (window.opener) {
 						window.opener.location.reload();
 					   } else if (window.parent) {
 						window.parent.location.reload();
-					   }
+					   }**/
+					   location.href='<%=com.glaf.core.util.RequestUtils.decodeURL(request.getParameter("fromUrl"))%>';
 				   }
 			 });
 	}
@@ -51,7 +55,7 @@
 		var params = jQuery("#iForm").formSerialize();
 		jQuery.ajax({
 				   type: "POST",
-				   url: '<%=request.getContextPath()%>/${classDefinition.moduleName}/${modelName}/save${entityName}',
+				   url: '<%=request.getContextPath()%>/mx/${classDefinition.moduleName}/${modelName}/save${entityName}',
 				   data: params,
 				   dataType:  'json',
 				   error: function(data){
@@ -61,8 +65,9 @@
 					   if(data != null && data.message != null){
 						   alert(data.message);
 					   } else {
-						 alert('操作成功完成！');
+						   alert('操作成功完成！');
 					   }
+					   location.href='<%=com.glaf.core.util.RequestUtils.decodeURL(request.getParameter("fromUrl"))%>';
 				   }
 			 });
 	}

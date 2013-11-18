@@ -394,6 +394,17 @@ public class ${entityName}Controller {
 		} else {
 			request.setAttribute("x_complex_query", "");
 		}
+
+        String requestURI = request.getRequestURI();
+		if (request.getQueryString() != null) {
+			request.setAttribute(
+					"fromUrl",
+					RequestUtils.encodeURL(requestURI + "?"
+							+ request.getQueryString()));
+		} else {
+			request.setAttribute("fromUrl", RequestUtils.encodeURL(requestURI));
+		}
+
 		String view = request.getParameter("view");
 		if (StringUtils.isNotEmpty(view)) {
 			return new ModelAndView(view, modelMap);
