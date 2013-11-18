@@ -983,6 +983,11 @@ public class RequestUtils {
 			cookie.setPath("/");
 			cookie.setMaxAge(-1);
 			response.addCookie(cookie);
+
+			Cookie cookie2 = new Cookie("data-theme", "theme-" + theme);
+			cookie2.setPath("/");
+			cookie2.setMaxAge(-1);
+			response.addCookie(cookie2);
 		}
 	}
 
@@ -993,6 +998,11 @@ public class RequestUtils {
 			cookie.setPath("/");
 			cookie.setMaxAge(-1);
 			response.addCookie(cookie);
+
+			Cookie cookie2 = new Cookie("data-theme", "theme-" + theme);
+			cookie2.setPath("/");
+			cookie2.setMaxAge(-1);
+			response.addCookie(cookie2);
 		}
 	}
 
