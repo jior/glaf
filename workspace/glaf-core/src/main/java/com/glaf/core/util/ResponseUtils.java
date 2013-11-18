@@ -191,6 +191,7 @@ public class ResponseUtils {
 		if (success) {
 			Map<String, Object> jsonMap = new HashMap<String, Object>();
 			jsonMap.put("statusCode", 200);
+			jsonMap.put("msg", ViewProperties.getString("res_op_ok"));
 			jsonMap.put("message", ViewProperties.getString("res_op_ok"));
 			JSONObject object = new JSONObject(jsonMap);
 			try {
@@ -200,6 +201,7 @@ public class ResponseUtils {
 		} else {
 			Map<String, Object> jsonMap = new HashMap<String, Object>();
 			jsonMap.put("statusCode", 500);
+			jsonMap.put("msg", ViewProperties.getString("res_op_error"));
 			jsonMap.put("message", ViewProperties.getString("res_op_error"));
 			JSONObject object = new JSONObject(jsonMap);
 			try {
