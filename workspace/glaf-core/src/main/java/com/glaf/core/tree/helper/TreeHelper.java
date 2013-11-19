@@ -85,6 +85,9 @@ public class TreeHelper {
 				child.put("icon", component.getImage());
 				child.put("img", component.getImage());
 				child.put("image", component.getImage());
+				if(StringUtils.isNotEmpty(component.getUrl())){
+					child.put("url", component.getUrl());
+				}
 				if (component.isChecked()) {
 					child.put("checked", true);
 				}
@@ -134,6 +137,9 @@ public class TreeHelper {
 					child.put("name", component.getTitle()+"("+component.getCode()+")");
 				}else{
 					child.put("name", component.getTitle());
+				}
+				if(StringUtils.isNotEmpty(component.getUrl())){
+					child.put("url", component.getUrl());
 				}
 				child.put("icon", component.getImage());
 				child.put("img", component.getImage());
@@ -186,6 +192,9 @@ public class TreeHelper {
 		object.put("icon", root.getIcon());
 		object.put("img", root.getIcon());
 		object.put("image", root.getIcon());
+		if(StringUtils.isNotEmpty(root.getUrl())){
+			object.put("url", root.getUrl());
+		}
 
 		if (checkedNodes.contains(String.valueOf(root.getId()))) {
 			object.put("checked", Boolean.valueOf(true));
@@ -217,6 +226,9 @@ public class TreeHelper {
 							child.put("icon", component.getImage());
 							child.put("img", component.getImage());
 							child.put("image", component.getImage());
+							if(StringUtils.isNotEmpty(component.getUrl())){
+								child.put("url", component.getUrl());
+							}
 
 							if (checkedNodes.contains(component.getId())) {
 								child.put("checked", Boolean.valueOf(true));
@@ -247,6 +259,9 @@ public class TreeHelper {
 							child.put("icon", component.getImage());
 							child.put("img", component.getImage());
 							child.put("image", component.getImage());
+							if(StringUtils.isNotEmpty(component.getUrl())){
+								child.put("url", component.getUrl());
+							}
 
 							if (component.getCls() != null) {
 								child.put("cls", component.getCls());
@@ -319,6 +334,9 @@ public class TreeHelper {
 							object.put("icon", component.getImage());
 							object.put("img", component.getImage());
 							object.put("image", component.getImage());
+							if(StringUtils.isNotEmpty(component.getUrl())){
+								object.put("url", component.getUrl());
+							}
 
 							if (component.isChecked()) {
 								object.put("checked", true);
@@ -341,6 +359,9 @@ public class TreeHelper {
 							child.put("icon", component.getImage());
 							child.put("img", component.getImage());
 							child.put("image", component.getImage());
+							if(StringUtils.isNotEmpty(component.getUrl())){
+								child.put("url", component.getUrl());
+							}
 
 							if (component.isChecked()) {
 								child.put("checked", true);
@@ -397,6 +418,9 @@ public class TreeHelper {
 						child.put("icon", component.getImage());
 						child.put("img", component.getImage());
 						child.put("image", component.getImage());
+						if(StringUtils.isNotEmpty(component.getUrl())){
+							child.put("url", component.getUrl());
+						}
 
 						if (component.isChecked()) {
 							child.put("checked", true);
