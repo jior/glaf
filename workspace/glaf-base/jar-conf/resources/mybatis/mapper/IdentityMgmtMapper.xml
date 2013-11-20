@@ -18,6 +18,8 @@
 		<result property="mail" column="email" jdbcType="VARCHAR" />
 		<result property="mobile" column="mobile" jdbcType="VARCHAR" />
 		<result property="adminFlag" column="adminFlag" jdbcType="VARCHAR" />
+		<result property="accountType" column="accountType" jdbcType="INTEGER" />
+		<result property="userType" column="userType" jdbcType="INTEGER" />
 	</resultMap>
 
 
