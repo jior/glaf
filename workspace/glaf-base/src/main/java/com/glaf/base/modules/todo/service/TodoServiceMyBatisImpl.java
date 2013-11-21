@@ -92,13 +92,13 @@ public class TodoServiceMyBatisImpl implements TodoService {
 		if (processInstanceIds != null && processInstanceIds.size() > 0) {
 			TableModel table = new TableModel();
 			table.setTableName("sys_todo_instance");
-			table.addColumn("provider", "String", "jbpm");
+			table.addStringColumn("provider", "jbpm");
 			table.addCollectionColumn("processInstanceId", processInstanceIds);
 			tableDataService.deleteTableData(table);
 		}
 		if (rows.size() > 0) {
 			logger.info("---------->rows size:" + rows.size());
-            
+
 		}
 	}
 
@@ -107,7 +107,7 @@ public class TodoServiceMyBatisImpl implements TodoService {
 		processInstanceIds.add(processInstanceId);
 		TableModel table = new TableModel();
 		table.setTableName("sys_todo_instance");
-		table.addColumn("provider", "String", "jbpm");
+		table.addStringColumn("provider", "jbpm");
 		table.addCollectionColumn("processInstanceId", processInstanceIds);
 		tableDataService.deleteTableData(table);
 
@@ -120,7 +120,7 @@ public class TodoServiceMyBatisImpl implements TodoService {
 	public void createTasksOfSQL(List rows) {
 		TableModel table = new TableModel();
 		table.setTableName("sys_todo_instance");
-		table.addColumn("provider", "String", "sql");
+		table.addStringColumn("provider", "sql");
 		tableDataService.deleteTableData(table);
 
 		if (rows.size() > 0) {
@@ -131,7 +131,7 @@ public class TodoServiceMyBatisImpl implements TodoService {
 	public void createTasksOfWorkflow(List rows) {
 		TableModel table = new TableModel();
 		table.setTableName("sys_todo_instance");
-		table.addColumn("provider", "String", "jbpm");
+		table.addStringColumn("provider", "jbpm");
 		tableDataService.deleteTableData(table);
 		if (rows.size() > 0) {
 			logger.info("---------->rows size:" + rows.size());
@@ -142,8 +142,8 @@ public class TodoServiceMyBatisImpl implements TodoService {
 	public void createTasksOfWorkflow(String actorId, List rows) {
 		TableModel table = new TableModel();
 		table.setTableName("sys_todo_instance");
-		table.addColumn("actorId", "String", actorId);
-		table.addColumn("provider", "String", "sql");
+		table.addStringColumn("actorId", actorId);
+		table.addStringColumn("provider", "sql");
 		tableDataService.deleteTableData(table);
 
 		if (rows.size() > 0) {
@@ -155,8 +155,8 @@ public class TodoServiceMyBatisImpl implements TodoService {
 	public void createTodoInstances(long todoId, List rows) {
 		TableModel table = new TableModel();
 		table.setTableName("sys_todo_instance");
-		table.addColumn("todoId", "Long", todoId);
-		table.addColumn("provider", "String", "sql");
+		table.addLongColumn("todoId", todoId);
+		table.addStringColumn("provider", "sql");
 		tableDataService.deleteTableData(table);
 
 		if (rows.size() > 0) {

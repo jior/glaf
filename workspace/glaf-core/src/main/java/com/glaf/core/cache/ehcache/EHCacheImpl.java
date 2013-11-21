@@ -66,16 +66,11 @@ public class EHCacheImpl implements Cache {
 		}
 	}
 
-	public long getElementCountInMemory() {
-		try {
-			return getCache().getMemoryStoreSize();
-		} catch (net.sf.ehcache.CacheException ce) {
-			throw new CacheException(ce);
+	public Ehcache getCache() {
+		if (cache == null) {
+			cache = ContextFactory.getBean("ehCache");
 		}
-	}
-
-	public long getElementCountOnDisk() {
-		return getCache().getDiskStoreSize();
+		return cache;
 	}
 
 	public Properties getProperties() {
@@ -84,10 +79,6 @@ public class EHCacheImpl implements Cache {
 
 	public String getRegionName() {
 		return getCache().getName();
-	}
-
-	public long getSizeInMemory() {
-		return getCache().calculateInMemorySize();
 	}
 
 	public int getTimeToLive() {
@@ -131,13 +122,6 @@ public class EHCacheImpl implements Cache {
 
 	public void setCache(Ehcache cache) {
 		this.cache = cache;
-	}
-
-	public Ehcache getCache() {
-		if (cache == null) {
-			cache = ContextFactory.getBean("ehCache");
-		}
-		return cache;
 	}
 
 	public void setProperties(Properties properties) {

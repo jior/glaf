@@ -537,8 +537,8 @@ public class SysDeptRoleServiceImpl implements SysDeptRoleService {
 		this.save(bean);
 		TableModel table = new TableModel();
 		table.setTableName("sys_user_role");
-		table.addColumn("AUTHORIZED", "Integer", 0);
-		table.addColumn("ROLEID", "Long", bean.getId());
+		table.addIntegerColumn("AUTHORIZED", 0);
+		table.addLongColumn("ROLEID", bean.getId());
 		tableDataService.deleteTableData(table);
 
 		List<Membership> memberships = new ArrayList<Membership>();

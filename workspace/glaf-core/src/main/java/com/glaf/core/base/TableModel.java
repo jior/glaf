@@ -164,11 +164,31 @@ public class TableModel implements java.io.Serializable {
 		columns.add(column);
 	}
 
+	public void addDateColumn(String columnName, Date value) {
+		this.addColumn(columnName, "Date", value);
+	}
+
+	public void addDoubleColumn(String columnName, Double value) {
+		this.addColumn(columnName, "Double", value);
+	}
+
 	public void addExclude(String exclude) {
 		if (excludes == null) {
 			excludes = new ArrayList<String>();
 		}
 		excludes.add(exclude);
+	}
+
+	public void addIntegerColumn(String columnName, Integer value) {
+		this.addColumn(columnName, "Integer", value);
+	}
+
+	public void addLongColumn(String columnName, Long value) {
+		this.addColumn(columnName, "Long", value);
+	}
+
+	public void addStringColumn(String columnName, String value) {
+		this.addColumn(columnName, "String", value);
 	}
 
 	@Override

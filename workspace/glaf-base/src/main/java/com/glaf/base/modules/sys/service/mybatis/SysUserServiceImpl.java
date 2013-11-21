@@ -138,16 +138,16 @@ public class SysUserServiceImpl implements SysUserService {
 				logger.info(user.getName());
 				TableModel table = new TableModel();
 				table.setTableName("sys_user_role");
-				table.addColumn("AUTHORIZED", "Integer", 0);
-				table.addColumn("ROLEID", "Long", deptRole.getId());
-				table.addColumn("USERID", "Long", user.getId());
+				table.addIntegerColumn("AUTHORIZED", 0);
+				table.addLongColumn("ROLEID", deptRole.getId());
+				table.addLongColumn("USERID", user.getId());
 				tableDataService.deleteTableData(table);
 
 				TableModel table2 = new TableModel();
 				table2.setTableName("SYS_MEMBERSHIP");
-				table2.addColumn("ACTORID_", "String", user.getAccount());
-				table2.addColumn("ROLEID_", "Long", deptRole.getSysRoleId());
-				table2.addColumn("NODEID_", "Long", deptRole.getDeptId());
+				table2.addStringColumn("ACTORID_",  user.getAccount());
+				table2.addLongColumn("ROLEID_",  deptRole.getSysRoleId());
+				table2.addLongColumn("NODEID_", deptRole.getDeptId());
 				tableDataService.deleteTableData(table2);
 			}
 		}
@@ -557,8 +557,8 @@ public class SysUserServiceImpl implements SysUserService {
 
 		TableModel table = new TableModel();
 		table.setTableName("SYS_MEMBERSHIP");
-		table.addColumn("ACTORID_", "String", sysUser.getAccount());
-		table.addColumn("TYPE_", "String", "Superior");
+		table.addStringColumn("ACTORID_",  sysUser.getAccount());
+		table.addStringColumn("TYPE_", "Superior");
 		tableDataService.deleteTableData(table);
 
 		if (StringUtils.isNotEmpty(sysUser.getSuperiorIds())) {
@@ -656,8 +656,8 @@ public class SysUserServiceImpl implements SysUserService {
 		sysUserMapper.updateSysUser(sysUser);
 		TableModel table = new TableModel();
 		table.setTableName("SYS_MEMBERSHIP");
-		table.addColumn("ACTORID_", "String", sysUser.getAccount());
-		table.addColumn("TYPE_", "String", "Superior");
+		table.addStringColumn("ACTORID_", sysUser.getAccount());
+		table.addStringColumn("TYPE_",  "Superior");
 		tableDataService.deleteTableData(table);
 
 		if (StringUtils.isNotEmpty(sysUser.getSuperiorIds())) {
@@ -692,8 +692,8 @@ public class SysUserServiceImpl implements SysUserService {
 			for (SysUserRole userRole : userRoles) {
 				TableModel table = new TableModel();
 				table.setTableName("sys_user_role");
-				table.addColumn("userId", "Long", user.getId());
-				table.addColumn("roleId", "Long", userRole.getDeptRoleId());
+				table.addLongColumn("userId", user.getId());
+				table.addLongColumn("roleId", userRole.getDeptRoleId());
 				tableDataService.deleteTableData(table);
 			}
 		}
