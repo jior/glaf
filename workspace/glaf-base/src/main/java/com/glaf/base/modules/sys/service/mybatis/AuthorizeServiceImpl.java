@@ -81,9 +81,8 @@ public class AuthorizeServiceImpl implements AuthorizeService {
 	 * @return
 	 */
 	public SysUser login(String account, String pwd) {
-		SysUser bean = sysUserService.findByAccountWithAll(account);
+		SysUser bean = sysUserService.findByAccount(account);
 		if (bean != null) {
-
 			if (bean.isDepartmentAdmin()) {
 				logger.debug(account + " is department admin");
 			}
@@ -93,15 +92,6 @@ public class AuthorizeServiceImpl implements AuthorizeService {
 			if (!bean.getPassword().equals(pwd) || // 密码不匹配
 					bean.getBlocked() == 1) {// 帐号禁止
 				bean = null;
-			} else if (bean.getAccountType() != 1) {
-				// 取出用户对应的模块权限
-				bean = sysUserService.getUserPrivileges(bean);
-
-				// 取出用户的部门列表
-				List<SysDepartment> list = new ArrayList<SysDepartment>();
-				sysDepartmentService.findNestingDepartment(list,
-						bean.getDepartment());
-				bean.setNestingDepartment(list);
 			}
 		}
 		return bean;

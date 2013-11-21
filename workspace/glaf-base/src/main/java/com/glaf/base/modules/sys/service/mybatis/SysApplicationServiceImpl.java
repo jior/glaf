@@ -140,15 +140,6 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 		}
 	}
 
-	public SysApplication findById(long id) {
-		SysApplication app = this.getSysApplication(id);
-		if (app != null && app.getNodeId() > 0) {
-			SysTree node = sysTreeMapper.getSysTreeById(app.getNodeId());
-			app.setNode(node);
-		}
-		return app;
-	}
-	
 	/**
 	 * 按编码查找对象
 	 * 
@@ -156,7 +147,7 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 	 *            String
 	 * @return SysApplication
 	 */
-	public SysApplication findByCode(String code){
+	public SysApplication findByCode(String code) {
 		SysApplicationQuery query = new SysApplicationQuery();
 		query.code(code);
 
@@ -169,6 +160,15 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 		}
 
 		return null;
+	}
+
+	public SysApplication findById(long id) {
+		SysApplication app = this.getSysApplication(id);
+		if (app != null && app.getNodeId() > 0) {
+			SysTree node = sysTreeMapper.getSysTreeById(app.getNodeId());
+			app.setNode(node);
+		}
+		return app;
 	}
 
 	public SysApplication findByName(String name) {
@@ -193,7 +193,7 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 			parentAppId = parentApp.getNode().getId();
 		}
 
-		logger.info("parent node:" + parentAppId);
+		logger.debug("parent node:" + parentAppId);
 
 		SysApplicationQuery query = new SysApplicationQuery();
 		query.parentId(parentAppId);
