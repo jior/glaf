@@ -19,6 +19,7 @@
 package com.glaf.ui.web.springmvc;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -37,8 +38,8 @@ import com.glaf.ui.service.PanelService;
 import com.glaf.ui.service.SkinService;
 import com.glaf.core.config.ViewProperties;
 import com.glaf.core.security.LoginContext;
-
 import com.glaf.core.util.RequestUtils;
+import com.glaf.core.util.Tools;
 import com.glaf.core.util.UUID32;
 
 @Controller("/panel")
@@ -130,9 +131,10 @@ public class MxPanelController {
 	}
 
 	@RequestMapping("/save")
-	public ModelAndView save(Panel model, ModelMap modelMap,
+	public ModelAndView save(  ModelMap modelMap,
 			HttpServletRequest request) {
-		logger.debug(RequestUtils.getParameterMap(request));
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		logger.debug(params);
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		String actorId = loginContext.getActorId();
 
@@ -142,30 +144,31 @@ public class MxPanelController {
 			actorId = "system";
 		}
 
-		Panel panel = null;
-
-		if (model.getId() != null) {
-			panel = panelService.getPanel(model.getId());
+		Panel panel = new Panel();
+		Tools.populate(panel, params);
+		Panel model = null;
+		if (panel.getId() != null) {
+			model = panelService.getPanel(panel.getId());
 		}
-		if (panel == null) {
+		if (model == null) {
 			if ((loginContext.isSystemAdministrator() && StringUtils.equals(
 					isSystem, "true"))) {
-				if (StringUtils.isEmpty(model.getName())) {
-					model.setName("sys_panel_" + UUID32.getUUID());
+				if (StringUtils.isEmpty(panel.getName())) {
+					panel.setName("sys_panel_" + UUID32.getUUID());
 				}
 			} else {
-				model.setName("user_panel_" + UUID32.getUUID());
+				panel.setName("user_panel_" + UUID32.getUUID());
 			}
-			model.setActorId(actorId);
-			panelService.savePanel(model);
+			panel.setActorId(actorId);
+			panelService.savePanel(panel);
 		} else {
-			if (StringUtils.equals(model.getActorId(), actorId)) {
-				logger.debug(model);
-				panelService.updatePanel(model);
+			if (StringUtils.equals(panel.getActorId(), actorId)) {
+				logger.debug(panel);
+				panelService.updatePanel(panel);
 			} else if ((loginContext.isSystemAdministrator() && StringUtils
 					.equals(isSystem, "true"))) {
-				logger.debug(model);
-				panelService.updatePanel(model);
+				logger.debug(panel);
+				panelService.updatePanel(panel);
 			}
 		}
 		return this.list(modelMap, request);
