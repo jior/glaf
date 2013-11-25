@@ -214,7 +214,7 @@
 				and E.reimbursementid &lt;= #{reimbursementidLessThanOrEqual}
             </if>
 
-			<if test="reimbursementids != null and reimbursementids.size() &gt; 0">
+			<if test="reimbursementids != null and reimbursementids.size != 0">
 			    and E.reimbursementid IN
                 <foreach item="x_reimbursementid" index="index" collection="reimbursementids" 
                      open="(" separator="," close=")">
@@ -235,7 +235,7 @@
 				and E.feetype &lt;= #{feetypeLessThanOrEqual}
             </if>
 
-			<if test="feetypes != null and feetypes.size() &gt; 0">
+			<if test="feetypes != null and feetypes.size != 0">
 			    and E.feetype IN
                 <foreach item="x_feetype" index="index" collection="feetypes" 
                      open="(" separator="," close=")">
@@ -256,7 +256,7 @@
 				and E.feedate &lt;= #{feedateLessThanOrEqual}
             </if>
 
-			<if test="feedates != null and feedates.size() &gt; 0">
+			<if test="feedates != null and feedates.size != 0">
 			    and E.feedate IN
                 <foreach item="x_feedate" index="index" collection="feedates" 
                      open="(" separator="," close=")">
@@ -273,7 +273,7 @@
 				and E.subject like #{subjectLike}
             </if>
 
-			<if test="subjects != null and subjects.size() &gt; 0">
+			<if test="subjects != null and subjects.size != 0">
 			    and E.subject IN
                 <foreach item="x_subject" index="index" collection="subjects" 
                      open="(" separator="," close=")">
@@ -289,7 +289,7 @@
 				and E.currency like #{currencyLike}
             </if>
 
-			<if test="currencys != null and currencys.size() &gt; 0">
+			<if test="currencys != null and currencys.size != 0">
 			    and E.currency IN
                 <foreach item="x_currency" index="index" collection="currencys" 
                      open="(" separator="," close=")">
@@ -309,7 +309,7 @@
 				and E.itemsum &lt;= #{itemsumLessThanOrEqual}
             </if>
 
-			<if test="itemsums != null and itemsums.size() &gt; 0">
+			<if test="itemsums != null and itemsums.size != 0">
 			    and E.itemsum IN
                 <foreach item="x_itemsum" index="index" collection="itemsums" 
                      open="(" separator="," close=")">
@@ -330,7 +330,7 @@
 				and E.exrate &lt;= #{exrateLessThanOrEqual}
             </if>
 
-			<if test="exrates != null and exrates.size() &gt; 0">
+			<if test="exrates != null and exrates.size != 0">
 			    and E.exrate IN
                 <foreach item="x_exrate" index="index" collection="exrates" 
                      open="(" separator="," close=")">
@@ -347,7 +347,7 @@
 				and E.createBy like #{createByLike}
             </if>
 
-			<if test="createBys != null and createBys.size() &gt; 0">
+			<if test="createBys != null and createBys.size != 0">
 			    and E.createBy IN
                 <foreach item="x_createBy" index="index" collection="createBys" 
                      open="(" separator="," close=")">
@@ -367,7 +367,7 @@
 				and E.createDate &lt;= #{createDateLessThanOrEqual}
             </if>
 
-			<if test="createDates != null and createDates.size() &gt; 0">
+			<if test="createDates != null and createDates.size != 0">
 			    and E.createDate IN
                 <foreach item="x_createDate" index="index" collection="createDates" 
                      open="(" separator="," close=")">
@@ -388,7 +388,7 @@
 				and E.updateDate &lt;= #{updateDateLessThanOrEqual}
             </if>
 
-			<if test="updateDates != null and updateDates.size() &gt; 0">
+			<if test="updateDates != null and updateDates.size != 0">
 			    and E.updateDate IN
                 <foreach item="x_updateDate" index="index" collection="updateDates" 
                      open="(" separator="," close=")">
@@ -405,7 +405,7 @@
 				and E.updateBy like #{updateByLike}
             </if>
 
-			<if test="updateBys != null and updateBys.size() &gt; 0">
+			<if test="updateBys != null and updateBys.size != 0">
 			    and E.updateBy IN
                 <foreach item="x_updateBy" index="index" collection="updateBys" 
                      open="(" separator="," close=")">

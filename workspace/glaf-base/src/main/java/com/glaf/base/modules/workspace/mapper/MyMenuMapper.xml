@@ -139,7 +139,7 @@
 				and E.USERID &lt;= #{userIdLessThanOrEqual}
 			</if>
 
-			<if test="userIds != null and userIds.size() &gt; 0">
+			<if test="userIds != null and userIds.size != 0">
 			    and E.USERID IN
 				<foreach item="x_userId" index="index" collection="userIds" 
 					open="(" separator="," close=")">

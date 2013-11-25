@@ -149,7 +149,7 @@
 				and E.NODEID_ = #{nodeId}
 			</if>
 
-			<if test="nodeIds != null and nodeIds.size() &gt; 0">
+			<if test="nodeIds != null and nodeIds.size != 0">
 				and E.NODEID_ IN
 				<foreach item="x_nodeId" index="index" collection="nodeIds"
 					open="(" separator="," close=")">
@@ -161,7 +161,7 @@
 				and E.ENTITYID_ = #{entityId}
 			</if>
 
-			<if test="entityIds != null and entityIds.size() &gt; 0">
+			<if test="entityIds != null and entityIds.size != 0">
 				and E.ENTITYID_ IN
 				<foreach item="x_entityId" index="index" collection="entityIds"
 					open="(" separator="," close=")">
@@ -173,7 +173,7 @@
 				and E.ENTRYKEY_ = #{entryKey}
 			</if>
 
-			<if test="entryKeys != null and entryKeys.size() &gt; 0">
+			<if test="entryKeys != null and entryKeys.size != 0">
 				and E.ENTRYKEY_ IN
 				<foreach item="x_entryKey" index="index" collection="entryKeys"
 					open="(" separator="," close=")">
@@ -193,7 +193,7 @@
 				and E.ENTRYTYPE_ &lt;= #{entryTypeLessThanOrEqual}
 			</if>
 
-			<if test="entryTypes != null and entryTypes.size() &gt; 0">
+			<if test="entryTypes != null and entryTypes.size != 0">
 				and E.ENTRYTYPE_ IN
 				<foreach item="x_entryType" index="index" collection="entryTypes"
 					open="(" separator="," close=")">
@@ -205,7 +205,7 @@
 				and E.MODULEID_ = #{moduleId}
 			</if>
 
-			<if test="moduleIds != null and moduleIds.size() &gt; 0">
+			<if test="moduleIds != null and moduleIds.size != 0">
 				and E.MODULEID_ IN
 				<foreach item="x_moduleId" index="index" collection="moduleIds"
 					open="(" separator="," close=")">
@@ -217,7 +217,7 @@
 				and E.DATACODE_ = #{dataCode}
 			</if>
 
-			<if test="dataCodes != null and dataCodes.size() &gt; 0">
+			<if test="dataCodes != null and dataCodes.size != 0">
 				and E.DATACODE_ IN
 				<foreach item="x_dataCode" index="index" collection="dataCodes"
 					open="(" separator="," close=")">
@@ -245,7 +245,7 @@
 				and E.OBJECTID_ = #{objectId}
 			</if>
 
-			<if test="objectIds != null and objectIds.size() &gt; 0">
+			<if test="objectIds != null and objectIds.size != 0">
 				and E.OBJECTID_ IN
 				<foreach item="x_objectId" index="index" collection="objectIds"
 					open="(" separator="," close=")">
@@ -257,7 +257,7 @@
 				and E.OBJECTVALUE_ = #{objectValue}
 			</if>
 
-			<if test="objectValues != null and objectValues.size() &gt; 0">
+			<if test="objectValues != null and objectValues.size != 0">
 				and E.OBJECTVALUE_ IN
 				<foreach item="x_objectValue" index="index" collection="objectValues"
 					open="(" separator="," close=")">
@@ -305,7 +305,7 @@
 				and P.NODEID_ = #{nodeId}
 			</if>
 
-			<if test="nodeIds != null and nodeIds.size() &gt; 0">
+			<if test="nodeIds != null and nodeIds.size != 0">
 				and P.NODEID_ IN
 				<foreach item="x_nodeId" index="index" collection="nodeIds"
 					open="(" separator="," close=")">
@@ -321,7 +321,7 @@
 				and P.ENTITYID_ = #{entityId}
 			</if>
 
-			<if test="entityIds != null and entityIds.size() &gt; 0">
+			<if test="entityIds != null and entityIds.size != 0">
 				and P.ENTITYID_ IN
 				<foreach item="x_entityId" index="index" collection="entityIds"
 					open="(" separator="," close=")">
@@ -333,7 +333,7 @@
 				and P.ENTRYKEY_ = #{entryKey}
 			</if>
 
-			<if test="entryKeys != null and entryKeys.size() &gt; 0">
+			<if test="entryKeys != null and entryKeys.size != 0">
 				and P.ENTRYKEY_ IN
 				<foreach item="x_entryKey" index="index" collection="entryKeys"
 					open="(" separator="," close=")">
@@ -345,7 +345,7 @@
 				and P.NAME_ = #{name}
 			</if>
 
-			<if test="names != null and names.size() &gt; 0">
+			<if test="names != null and names.size != 0">
 				and P.NAME_ IN
 				<foreach item="x_name" index="index" collection="names"
 					open="(" separator="," close=")">
@@ -357,7 +357,7 @@
 				and P.VALUE_ = #{value}
 			</if>
 
-			<if test="values != null and values.size() &gt; 0">
+			<if test="values != null and values.size != 0">
 				and P.VALUE_ IN
 				<foreach item="x_value" index="index" collection="values"
 					open="(" separator="," close=")">

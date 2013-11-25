@@ -289,7 +289,7 @@
 				and E.BUSINESSKEY_ = #{businessKey}
 			</if>
 
-			<if test="businessKeys != null and businessKeys.size() &gt; 0">
+			<if test="businessKeys != null and businessKeys.size != 0">
 				and E.BUSINESSKEY_ IN
 				<foreach item="x_businessKey" index="index" collection="businessKeys"
 					open="(" separator="," close=")">
@@ -313,7 +313,7 @@
 				and E.NAME_ like #{nameLike}
 			</if>
 
-			<if test="names != null and names.size() &gt; 0">
+			<if test="names != null and names.size != 0">
 				and E.NAME_ IN
 				<foreach item="x_name" index="index" collection="names"
 					open="(" separator="," close=")">
@@ -341,7 +341,7 @@
 				and E.OBJECTID_ = #{objectId}
 			</if>
 
-			<if test="objectIds != null and objectIds.size() &gt; 0">
+			<if test="objectIds != null and objectIds.size != 0">
 				and E.OBJECTID_ IN
 				<foreach item="x_objectId" index="index" collection="objectIds"
 					open="(" separator="," close=")">
@@ -353,7 +353,7 @@
 				and E.OBJECTVALUE_ = #{objectValue}
 			</if>
 
-			<if test="objectValues != null and objectValues.size() &gt; 0">
+			<if test="objectValues != null and objectValues.size != 0">
 				and E.OBJECTVALUE_ IN
 				<foreach item="x_objectValue" index="index" collection="objectValues"
 					open="(" separator="," close=")">

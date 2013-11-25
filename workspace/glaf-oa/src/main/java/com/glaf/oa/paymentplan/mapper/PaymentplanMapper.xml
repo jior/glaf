@@ -151,7 +151,7 @@
 				and E.budgetid &lt;= #{budgetidLessThanOrEqual}
             </if>
 
-			<if test="budgetids != null and budgetids.size() &gt; 0">
+			<if test="budgetids != null and budgetids.size != 0">
 			    and E.budgetid IN
                 <foreach item="x_budgetid" index="index" collection="budgetids" 
                      open="(" separator="," close=")">
@@ -172,7 +172,7 @@
 				and E.paymemtsum &lt;= #{paymemtsumLessThanOrEqual}
             </if>
 
-			<if test="paymemtsums != null and paymemtsums.size() &gt; 0">
+			<if test="paymemtsums != null and paymemtsums.size != 0">
 			    and E.paymemtsum IN
                 <foreach item="x_paymemtsum" index="index" collection="paymemtsums" 
                      open="(" separator="," close=")">
@@ -193,7 +193,7 @@
 				and E.paymentdate &lt;= #{paymentdateLessThanOrEqual}
             </if>
 
-			<if test="paymentdates != null and paymentdates.size() &gt; 0">
+			<if test="paymentdates != null and paymentdates.size != 0">
 			    and E.paymentdate IN
                 <foreach item="x_paymentdate" index="index" collection="paymentdates" 
                      open="(" separator="," close=")">
@@ -214,7 +214,7 @@
 				and E.sequence &lt;= #{sequenceLessThanOrEqual}
             </if>
 
-			<if test="sequences != null and sequences.size() &gt; 0">
+			<if test="sequences != null and sequences.size != 0">
 			    and E.sequence IN
                 <foreach item="x_sequence" index="index" collection="sequences" 
                      open="(" separator="," close=")">
@@ -231,7 +231,7 @@
 				and E.createBy like #{createByLike}
             </if>
 
-			<if test="createBys != null and createBys.size() &gt; 0">
+			<if test="createBys != null and createBys.size != 0">
 			    and E.createBy IN
                 <foreach item="x_createBy" index="index" collection="createBys" 
                      open="(" separator="," close=")">

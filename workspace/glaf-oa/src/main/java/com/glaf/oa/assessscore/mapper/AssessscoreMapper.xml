@@ -180,7 +180,7 @@
 				and E.contentid &lt;= #{contentidLessThanOrEqual}
             </if>
 
-			<if test="contentids != null and contentids.size() &gt; 0">
+			<if test="contentids != null and contentids.size != 0">
 			    and E.contentid IN
                 <foreach item="x_contentid" index="index" collection="contentids" 
                      open="(" separator="," close=")">
@@ -201,7 +201,7 @@
 				and E.resultid &lt;= #{resultidLessThanOrEqual}
             </if>
 
-			<if test="resultids != null and resultids.size() &gt; 0">
+			<if test="resultids != null and resultids.size != 0">
 			    and E.resultid IN
                 <foreach item="x_resultid" index="index" collection="resultids" 
                      open="(" separator="," close=")">
@@ -222,7 +222,7 @@
 				and E.score &lt;= #{scoreLessThanOrEqual}
             </if>
 
-			<if test="scores != null and scores.size() &gt; 0">
+			<if test="scores != null and scores.size != 0">
 			    and E.score IN
                 <foreach item="x_score" index="index" collection="scores" 
                      open="(" separator="," close=")">
@@ -239,7 +239,7 @@
 				and E.createBy like #{createByLike}
             </if>
 
-			<if test="createBys != null and createBys.size() &gt; 0">
+			<if test="createBys != null and createBys.size != 0">
 			    and E.createBy IN
                 <foreach item="x_createBy" index="index" collection="createBys" 
                      open="(" separator="," close=")">
@@ -259,7 +259,7 @@
 				and E.createDate &lt;= #{createDateLessThanOrEqual}
             </if>
 
-			<if test="createDates != null and createDates.size() &gt; 0">
+			<if test="createDates != null and createDates.size != 0">
 			    and E.createDate IN
                 <foreach item="x_createDate" index="index" collection="createDates" 
                      open="(" separator="," close=")">
@@ -280,7 +280,7 @@
 				and E.updateDate &lt;= #{updateDateLessThanOrEqual}
             </if>
 
-			<if test="updateDates != null and updateDates.size() &gt; 0">
+			<if test="updateDates != null and updateDates.size != 0">
 			    and E.updateDate IN
                 <foreach item="x_updateDate" index="index" collection="updateDates" 
                      open="(" separator="," close=")">
@@ -297,7 +297,7 @@
 				and E.updateBy like #{updateByLike}
             </if>
 
-			<if test="updateBys != null and updateBys.size() &gt; 0">
+			<if test="updateBys != null and updateBys.size != 0">
 			    and E.updateBy IN
                 <foreach item="x_updateBy" index="index" collection="updateBys" 
                      open="(" separator="," close=")">

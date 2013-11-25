@@ -65,7 +65,7 @@
 				and E.NAME_ = #{name}
             </if>
 
-			<if test="names != null and names.size() &gt; 0">
+			<if test="names != null and names.size != 0">
 				and E.NAME_ IN
 				<foreach item="x_name" index="index" collection="names"
 					open="(" separator="," close=")">
@@ -85,7 +85,7 @@
 				and E.ACCESSLEVEL_ &lt;= #{accessLevelLessThanOrEqual}
 			</if>
 
-			<if test="accessLevels != null and accessLevels.size() &gt; 0">
+			<if test="accessLevels != null and accessLevels.size != 0">
 				and E.ACCESSLEVEL_ IN
 				<foreach item="x_accessLevel" index="index" collection="accessLevels"
 					open="(" separator="," close=")">
@@ -97,7 +97,7 @@
 				and E.ACCESSENTRY_ = #{accessEntryId}
             </if>
 
-			<if test="accessEntryIds != null and accessEntryIds.size() &gt; 0">
+			<if test="accessEntryIds != null and accessEntryIds.size != 0">
 				and E.ACCESSENTRY_ IN
 				<foreach item="x_accessEntryId" index="index" collection="accessEntryIds"
 					open="(" separator="," close=")">

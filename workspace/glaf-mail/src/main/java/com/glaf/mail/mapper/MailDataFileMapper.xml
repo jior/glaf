@@ -219,7 +219,7 @@
 				and E.topId = #{topId}
 			</if>
 
-			<if test="topIds != null and topIds.size() &gt; 0">
+			<if test="topIds != null and topIds.size != 0">
 			    and E.topId IN
 				<foreach item="x_topId" index="index" collection="topIds" 
 					open="(" separator="," close=")">

@@ -89,7 +89,7 @@
 				and E.NAME_ like #{nameLike}
             </if>
 
-			<if test="names != null &amp;&amp; names.size() &gt; 0">
+			<if test="names != null and names.size != 0">
 			    and E.NAME_ IN
                 <foreach item="x_name" index="index" collection="names" 
                      open="(" separator="," close=")">
@@ -105,7 +105,7 @@
 				and E.TEMPLATEID_ = #{templateId}
             </if>
 
-			<if test="templateIds != null &amp;&amp; templateIds.size() &gt; 0">
+			<if test="templateIds != null and templateIds.size != 0">
 			    and E.TEMPLATEID_ IN
                 <foreach item="x_templateId" index="index" collection="templateIds" 
                      open="(" separator="," close=")">

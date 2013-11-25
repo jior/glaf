@@ -135,7 +135,7 @@
 				and E.moduleNo like #{moduleNoLike}
             </if>
 
-			<if test="moduleNos != null and moduleNos.size() &gt; 0">
+			<if test="moduleNos != null and moduleNos.size != 0">
 			    and E.moduleNo IN
                 <foreach item="x_moduleNo" index="index" collection="moduleNos" 
                      open="(" separator="," close=")">

@@ -328,7 +328,7 @@
 				and E.qustionid &lt;= #{qustionidLessThanOrEqual}
             </if>
 
-			<if test="qustionids != null and qustionids.size() &gt; 0">
+			<if test="qustionids != null and qustionids.size != 0">
 			    and E.qustionid IN
                 <foreach item="x_qustionid" index="index" collection="qustionids" 
                      open="(" separator="," close=")">
@@ -349,7 +349,7 @@
 				and E.area &lt;= #{areaLessThanOrEqual}
             </if>
 
-			<if test="areas != null and areas.size() &gt; 0">
+			<if test="areas != null and areas.size != 0">
 			    and E.area IN
                 <foreach item="x_area" index="index" collection="areas" 
                      open="(" separator="," close=")">
@@ -366,7 +366,7 @@
 				and E.company like #{companyLike}
             </if>
 
-			<if test="companys != null and companys.size() &gt; 0">
+			<if test="companys != null and companys.size != 0">
 			    and E.company IN
                 <foreach item="x_company" index="index" collection="companys" 
                      open="(" separator="," close=")">
@@ -382,7 +382,7 @@
 				and E.dept like #{deptLike}
             </if>
 
-			<if test="depts != null and depts.size() &gt; 0">
+			<if test="depts != null and depts.size != 0">
 			    and E.dept IN
                 <foreach item="x_dept" index="index" collection="depts" 
                      open="(" separator="," close=")">
@@ -398,7 +398,7 @@
 				and E.post like #{postLike}
             </if>
 
-			<if test="posts != null and posts.size() &gt; 0">
+			<if test="posts != null and posts.size != 0">
 			    and E.post IN
                 <foreach item="x_post" index="index" collection="posts" 
                      open="(" separator="," close=")">
@@ -418,7 +418,7 @@
 				and E.year &lt;= #{yearLessThanOrEqual}
             </if>
 
-			<if test="years != null and years.size() &gt; 0">
+			<if test="years != null and years.size != 0">
 			    and E.year IN
                 <foreach item="x_year" index="index" collection="years" 
                      open="(" separator="," close=")">
@@ -439,7 +439,7 @@
 				and E.season &lt;= #{seasonLessThanOrEqual}
             </if>
 
-			<if test="seasons != null and seasons.size() &gt; 0">
+			<if test="seasons != null and seasons.size != 0">
 			    and E.season IN
                 <foreach item="x_season" index="index" collection="seasons" 
                      open="(" separator="," close=")">
@@ -460,7 +460,7 @@
 				and E.month &lt;= #{monthLessThanOrEqual}
             </if>
 
-			<if test="months != null and months.size() &gt; 0">
+			<if test="months != null and months.size != 0">
 			    and E.month IN
                 <foreach item="x_month" index="index" collection="months" 
                      open="(" separator="," close=")">
@@ -477,7 +477,7 @@
 				and E.beevaluation like #{beevaluationLike}
             </if>
 
-			<if test="beevaluations != null and beevaluations.size() &gt; 0">
+			<if test="beevaluations != null and beevaluations.size != 0">
 			    and E.beevaluation IN
                 <foreach item="x_beevaluation" index="index" collection="beevaluations" 
                      open="(" separator="," close=")">
@@ -493,7 +493,7 @@
 				and E.evaluation like #{evaluationLike}
             </if>
 
-			<if test="evaluations != null and evaluations.size() &gt; 0">
+			<if test="evaluations != null and evaluations.size != 0">
 			    and E.evaluation IN
                 <foreach item="x_evaluation" index="index" collection="evaluations" 
                      open="(" separator="," close=")">
@@ -513,7 +513,7 @@
 				and E.rewardsum &lt;= #{rewardsumLessThanOrEqual}
             </if>
 
-			<if test="rewardsums != null and rewardsums.size() &gt; 0">
+			<if test="rewardsums != null and rewardsums.size != 0">
 			    and E.rewardsum IN
                 <foreach item="x_rewardsum" index="index" collection="rewardsums" 
                      open="(" separator="," close=")">
@@ -534,7 +534,7 @@
 				and E.score &lt;= #{scoreLessThanOrEqual}
             </if>
 
-			<if test="scores != null and scores.size() &gt; 0">
+			<if test="scores != null and scores.size != 0">
 			    and E.score IN
                 <foreach item="x_score" index="index" collection="scores" 
                      open="(" separator="," close=")">
@@ -551,7 +551,7 @@
 				and E.createBy like #{createByLike}
             </if>
 
-			<if test="createBys != null and createBys.size() &gt; 0">
+			<if test="createBys != null and createBys.size != 0">
 			    and E.createBy IN
                 <foreach item="x_createBy" index="index" collection="createBys" 
                      open="(" separator="," close=")">
@@ -571,7 +571,7 @@
 				and E.createDate &lt;= #{createDateLessThanOrEqual}
             </if>
 
-			<if test="createDates != null and createDates.size() &gt; 0">
+			<if test="createDates != null and createDates.size != 0">
 			    and E.createDate IN
                 <foreach item="x_createDate" index="index" collection="createDates" 
                      open="(" separator="," close=")">
@@ -592,7 +592,7 @@
 				and E.updateDate &lt;= #{updateDateLessThanOrEqual}
             </if>
 
-			<if test="updateDates != null and updateDates.size() &gt; 0">
+			<if test="updateDates != null and updateDates.size != 0">
 			    and E.updateDate IN
                 <foreach item="x_updateDate" index="index" collection="updateDates" 
                      open="(" separator="," close=")">
@@ -609,7 +609,7 @@
 				and E.updateBy like #{updateByLike}
             </if>
 
-			<if test="updateBys != null and updateBys.size() &gt; 0">
+			<if test="updateBys != null and updateBys.size != 0">
 			    and E.updateBy IN
                 <foreach item="x_updateBy" index="index" collection="updateBys" 
                      open="(" separator="," close=")">

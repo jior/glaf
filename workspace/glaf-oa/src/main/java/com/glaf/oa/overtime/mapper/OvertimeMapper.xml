@@ -331,7 +331,7 @@
 				and E.overtimeid &lt;= #{overtimeidLessThanOrEqual}
             </if>
 
-			<if test="overtimeids != null and overtimeids.size() &gt; 0">
+			<if test="overtimeids != null and overtimeids.size != 0">
 			    and E.overtimeid IN
                 <foreach item="x_overtimeid" index="index" collection="overtimeids" 
                      open="(" separator="," close=")">
@@ -348,7 +348,7 @@
 				and E.area like #{areaLike}
             </if>
 
-			<if test="areas != null and areas.size() &gt; 0">
+			<if test="areas != null and areas.size != 0">
 			    and E.area IN
                 <foreach item="x_area" index="index" collection="areas" 
                      open="(" separator="," close=")">
@@ -365,7 +365,7 @@
 				and E.company like #{companyLike}
             </if>
 
-			<if test="companys != null and companys.size() &gt; 0">
+			<if test="companys != null and companys.size != 0">
 			    and E.company IN
                 <foreach item="x_company" index="index" collection="companys" 
                      open="(" separator="," close=")">
@@ -381,7 +381,7 @@
 				and E.dept like #{deptLike}
             </if>
 
-			<if test="depts != null and depts.size() &gt; 0">
+			<if test="depts != null and depts.size != 0">
 			    and E.dept IN
                 <foreach item="x_dept" index="index" collection="depts" 
                      open="(" separator="," close=")">
@@ -397,7 +397,7 @@
 				and E.appuser like #{appuserLike}
             </if>
 
-			<if test="appusers != null and appusers.size() &gt; 0">
+			<if test="appusers != null and appusers.size != 0">
 			    and E.appuser IN
                 <foreach item="x_appuser" index="index" collection="appusers" 
                      open="(" separator="," close=")">
@@ -413,7 +413,7 @@
 				and E.post like #{postLike}
             </if>
 
-			<if test="posts != null and posts.size() &gt; 0">
+			<if test="posts != null and posts.size != 0">
 			    and E.post IN
                 <foreach item="x_post" index="index" collection="posts" 
                      open="(" separator="," close=")">
@@ -433,7 +433,7 @@
 				and E.appdate &lt;= #{appdateLessThanOrEqual}
             </if>
 
-			<if test="appdates != null and appdates.size() &gt; 0">
+			<if test="appdates != null and appdates.size != 0">
 			    and E.appdate IN
                 <foreach item="x_appdate" index="index" collection="appdates" 
                      open="(" separator="," close=")">
@@ -454,7 +454,7 @@
 				and E.type &lt;= #{typeLessThanOrEqual}
             </if>
 
-			<if test="types != null and types.size() &gt; 0">
+			<if test="types != null and types.size != 0">
 			    and E.type IN
                 <foreach item="x_type" index="index" collection="types" 
                      open="(" separator="," close=")">
@@ -475,7 +475,7 @@
 				and E.startdate &lt;= #{startdateLessThanOrEqual}
             </if>
 
-			<if test="startdates != null and startdates.size() &gt; 0">
+			<if test="startdates != null and startdates.size != 0">
 			    and E.startdate IN
                 <foreach item="x_startdate" index="index" collection="startdates" 
                      open="(" separator="," close=")">
@@ -496,7 +496,7 @@
 				and E.starttime &lt;= #{starttimeLessThanOrEqual}
             </if>
 
-			<if test="starttimes != null and starttimes.size() &gt; 0">
+			<if test="starttimes != null and starttimes.size != 0">
 			    and E.starttime IN
                 <foreach item="x_starttime" index="index" collection="starttimes" 
                      open="(" separator="," close=")">
@@ -517,7 +517,7 @@
 				and E.enddate &lt;= #{enddateLessThanOrEqual}
             </if>
 
-			<if test="enddates != null and enddates.size() &gt; 0">
+			<if test="enddates != null and enddates.size != 0">
 			    and E.enddate IN
                 <foreach item="x_enddate" index="index" collection="enddates" 
                      open="(" separator="," close=")">
@@ -538,7 +538,7 @@
 				and E.endtime &lt;= #{endtimeLessThanOrEqual}
             </if>
 
-			<if test="endtimes != null and endtimes.size() &gt; 0">
+			<if test="endtimes != null and endtimes.size != 0">
 			    and E.endtime IN
                 <foreach item="x_endtime" index="index" collection="endtimes" 
                      open="(" separator="," close=")">
@@ -559,7 +559,7 @@
 				and E.overtimesum &lt;= #{overtimesumLessThanOrEqual}
             </if>
 
-			<if test="overtimesums != null and overtimesums.size() &gt; 0">
+			<if test="overtimesums != null and overtimesums.size != 0">
 			    and E.overtimesum IN
                 <foreach item="x_overtimesum" index="index" collection="overtimesums" 
                      open="(" separator="," close=")">
@@ -580,7 +580,7 @@
 				and E.status &lt;= #{statusLessThanOrEqual}
             </if>
 
-			<if test="statuss != null and statuss.size() &gt; 0">
+			<if test="statuss != null and statuss.size != 0">
 			    and E.status IN
                 <foreach item="x_status" index="index" collection="statuss" 
                      open="(" separator="," close=")">
@@ -597,7 +597,7 @@
 				and E.processname like #{processnameLike}
             </if>
 
-			<if test="processnames != null and processnames.size() &gt; 0">
+			<if test="processnames != null and processnames.size != 0">
 			    and E.processname IN
                 <foreach item="x_processname" index="index" collection="processnames" 
                      open="(" separator="," close=")">
@@ -609,7 +609,7 @@
 				and E.processinstanceid = #{processinstanceid}
             </if>
 
-			<if test="processinstanceids != null and processinstanceids.size() &gt; 0">
+			<if test="processinstanceids != null and processinstanceids.size != 0">
 			    and E.processinstanceid IN
                 <foreach item="x_processinstanceid" index="index" collection="processinstanceids" 
                      open="(" separator="," close=")">
@@ -630,7 +630,7 @@
 				and E.wfstatus &lt;= #{wfstatusLessThanOrEqual}
             </if>
 
-			<if test="wfstatuss != null and wfstatuss.size() &gt; 0">
+			<if test="wfstatuss != null and wfstatuss.size != 0">
 			    and E.wfstatus IN
                 <foreach item="x_wfstatus" index="index" collection="wfstatuss" 
                      open="(" separator="," close=")">
@@ -650,7 +650,7 @@
 				and E.createDate &lt;= #{createDateLessThanOrEqual}
             </if>
 
-			<if test="createDates != null and createDates.size() &gt; 0">
+			<if test="createDates != null and createDates.size != 0">
 			    and E.createDate IN
                 <foreach item="x_createDate" index="index" collection="createDates" 
                      open="(" separator="," close=")">
@@ -671,7 +671,7 @@
 				and E.updateDate &lt;= #{updateDateLessThanOrEqual}
             </if>
 
-			<if test="updateDates != null and updateDates.size() &gt; 0">
+			<if test="updateDates != null and updateDates.size != 0">
 			    and E.updateDate IN
                 <foreach item="x_updateDate" index="index" collection="updateDates" 
                      open="(" separator="," close=")">
@@ -687,7 +687,7 @@
 				and E.createBy like #{createByLike}
             </if>
 
-			<if test="createBys != null and createBys.size() &gt; 0">
+			<if test="createBys != null and createBys.size != 0">
 			    and E.createBy IN
                 <foreach item="x_createBy" index="index" collection="createBys" 
                      open="(" separator="," close=")">
@@ -703,7 +703,7 @@
 				and E.updateBy like #{updateByLike}
             </if>
 
-			<if test="updateBys != null and updateBys.size() &gt; 0">
+			<if test="updateBys != null and updateBys.size != 0">
 			    and E.updateBy IN
                 <foreach item="x_updateBy" index="index" collection="updateBys" 
                      open="(" separator="," close=")">
@@ -851,7 +851,7 @@
 				and E.status &lt;= #{statusLessThanOrEqual}
             </if>
 
-			<if test="statuss != null and statuss.size() &gt; 0">
+			<if test="statuss != null and statuss.size != 0">
 			    and E.status IN
                 <foreach item="x_status" index="index" collection="statuss" 
                      open="(" separator="," close=")">

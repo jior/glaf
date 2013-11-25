@@ -547,7 +547,7 @@
 				and E.ACCOUNT like #{accountLike}
 			</if>
 
-			<if test="accounts != null and accounts.size() &gt; 0">
+			<if test="accounts != null and accounts.size != 0">
 				and E.ACCOUNT IN
 				<foreach item="x_account" index="index" collection="accounts"
 					open="(" separator="," close=")">
@@ -563,7 +563,7 @@
 				and E.CODE like #{codeLike}
 			</if>
 
-			<if test="codes != null and codes.size() &gt; 0">
+			<if test="codes != null and codes.size != 0">
 				and E.CODE IN
 				<foreach item="x_code" index="index" collection="codes"
 					open="(" separator="," close=")">
@@ -579,7 +579,7 @@
 				and E.NAME like #{nameLike}
 			</if>
 
-			<if test="names != null and names.size() &gt; 0">
+			<if test="names != null and names.size != 0">
 				and E.NAME IN
 				<foreach item="x_name" index="index" collection="names"
 					open="(" separator="," close=")">
@@ -692,7 +692,7 @@
 				and E.USERTYPE &lt;= #{userTypeLessThanOrEqual}
 			</if>
 
-			<if test="userTypes != null and userTypes.size() &gt; 0">
+			<if test="userTypes != null and userTypes.size != 0">
 				and E.USERTYPE IN
 				<foreach item="x_userType" index="index" collection="userTypes"
 					open="(" separator="," close=")">
@@ -736,7 +736,7 @@
 				and E.DEPTID = #{deptId}
 			</if>
 
-			<if test="deptIds != null and deptIds.size() &gt; 0">
+			<if test="deptIds != null and deptIds.size != 0">
 				and E.DEPTID IN
 				<foreach item="x_deptId" index="index" collection="deptIds"
 					open="(" separator="," close=")">

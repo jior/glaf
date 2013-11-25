@@ -189,7 +189,7 @@
 				and E.travelid &lt;= #{travelidLessThanOrEqual}
             </if>
 
-			<if test="travelids != null and travelids.size() &gt; 0">
+			<if test="travelids != null and travelids.size != 0">
 			    and E.travelid IN
                 <foreach item="x_travelid" index="index" collection="travelids" 
                      open="(" separator="," close=")">
@@ -206,7 +206,7 @@
 				and E.startadd like #{startaddLike}
             </if>
 
-			<if test="startadds != null and startadds.size() &gt; 0">
+			<if test="startadds != null and startadds.size != 0">
 			    and E.startadd IN
                 <foreach item="x_startadd" index="index" collection="startadds" 
                      open="(" separator="," close=")">
@@ -222,7 +222,7 @@
 				and E.endadd like #{endaddLike}
             </if>
 
-			<if test="endadds != null and endadds.size() &gt; 0">
+			<if test="endadds != null and endadds.size != 0">
 			    and E.endadd IN
                 <foreach item="x_endadd" index="index" collection="endadds" 
                      open="(" separator="," close=")">
@@ -238,7 +238,7 @@
 				and E.transportation like #{transportationLike}
             </if>
 
-			<if test="transportations != null and transportations.size() &gt; 0">
+			<if test="transportations != null and transportations.size != 0">
 			    and E.transportation IN
                 <foreach item="x_transportation" index="index" collection="transportations" 
                      open="(" separator="," close=")">
@@ -258,7 +258,7 @@
 				and E.createDate &lt;= #{createDateLessThanOrEqual}
             </if>
 
-			<if test="createDates != null and createDates.size() &gt; 0">
+			<if test="createDates != null and createDates.size != 0">
 			    and E.createDate IN
                 <foreach item="x_createDate" index="index" collection="createDates" 
                      open="(" separator="," close=")">
@@ -279,7 +279,7 @@
 				and E.updateDate &lt;= #{updateDateLessThanOrEqual}
             </if>
 
-			<if test="updateDates != null and updateDates.size() &gt; 0">
+			<if test="updateDates != null and updateDates.size != 0">
 			    and E.updateDate IN
                 <foreach item="x_updateDate" index="index" collection="updateDates" 
                      open="(" separator="," close=")">
@@ -295,7 +295,7 @@
 				and E.createBy like #{createByLike}
             </if>
 
-			<if test="createBys != null and createBys.size() &gt; 0">
+			<if test="createBys != null and createBys.size != 0">
 			    and E.createBy IN
                 <foreach item="x_createBy" index="index" collection="createBys" 
                      open="(" separator="," close=")">
@@ -311,7 +311,7 @@
 				and E.updateBy like #{updateByLike}
             </if>
 
-			<if test="updateBys != null and updateBys.size() &gt; 0">
+			<if test="updateBys != null and updateBys.size != 0">
 			    and E.updateBy IN
                 <foreach item="x_updateBy" index="index" collection="updateBys" 
                      open="(" separator="," close=")">

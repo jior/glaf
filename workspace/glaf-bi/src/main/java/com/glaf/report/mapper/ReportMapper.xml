@@ -298,7 +298,7 @@
 		<where>
 		       1 = 1  
 		       
-			<if test="reportIds != null and reportIds.size() &gt; 0">
+			<if test="reportIds != null and reportIds.size != 0">
 			    and E.ID_ IN
 				<foreach item="x_reportId" index="index" collection="reportIds" 
 					open="(" separator="," close=")">
@@ -338,7 +338,7 @@
 				and E.TYPE_ like #{typeLike}
 			</if>
 
-			<if test="types != null and types.size() &gt; 0">
+			<if test="types != null and types.size != 0">
 			    and E.TYPE_ IN
 				<foreach item="x_type" index="index" collection="types" 
 					open="(" separator="," close=")">

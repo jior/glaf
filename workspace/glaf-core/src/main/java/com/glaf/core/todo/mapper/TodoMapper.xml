@@ -179,7 +179,7 @@
 				and E.code = #{code}
 			</if>
 
-			<if test="codes != null and codes.size() &gt; 0">
+			<if test="codes != null and codes.size != 0">
 			    and E.code IN
 				<foreach item="x_code" index="index" collection="codes" 
 					open="(" separator="," close=")">
@@ -191,7 +191,7 @@
 				and E.moduleId = #{moduleId}
 			</if>
 
-			<if test="moduleIds != null and moduleIds.size() &gt; 0">
+			<if test="moduleIds != null and moduleIds.size != 0">
 			    and E.moduleId IN
 				<foreach item="x_moduleId" index="index" collection="moduleIds" 
 					open="(" separator="," close=")">
@@ -207,7 +207,7 @@
 				and E.appId = #{appId}
 			</if>
 
-			<if test="appIds != null and appIds.size() &gt; 0">
+			<if test="appIds != null and appIds.size != 0">
 			    and E.appId IN
 				<foreach item="x_appId" index="index" collection="appIds" 
 					open="(" separator="," close=")">
@@ -219,7 +219,7 @@
 				and E.deptId = #{deptId}
 			</if>
 
-			<if test="deptIds != null and deptIds.size() &gt; 0">
+			<if test="deptIds != null and deptIds.size != 0">
 			    and E.deptId IN
 				<foreach item="x_deptId" index="index" collection="deptIds" 
 					open="(" separator="," close=")">
@@ -231,7 +231,7 @@
 				and E.roleId = #{roleId}
 			</if>
 
-			<if test="roleIds != null and roleIds.size() &gt; 0">
+			<if test="roleIds != null and roleIds.size != 0">
 			    and E.roleId IN
 				<foreach item="x_roleId" index="index" collection="roleIds" 
 					open="(" separator="," close=")">
@@ -275,7 +275,7 @@
 				and E.processName like #{processNameLike}
 			</if>
 
-			<if test="processNames != null and processNames.size() &gt; 0">
+			<if test="processNames != null and processNames.size != 0">
 			    and E.processName IN
 				<foreach item="x_processName" index="index" collection="processNames" 
 					open="(" separator="," close=")">
@@ -291,7 +291,7 @@
 				and E.taskName like #{taskNameLike}
 			</if>
 
-			<if test="taskNames != null and taskNames.size() &gt; 0">
+			<if test="taskNames != null and taskNames.size != 0">
 			    and E.taskName IN
 				<foreach item="x_taskName" index="index" collection="taskNames" 
 					open="(" separator="," close=")">
@@ -311,7 +311,7 @@
 				and E.objectId = #{objectId}
 			</if>
 
-			<if test="objectIds != null and objectIds.size() &gt; 0">
+			<if test="objectIds != null and objectIds.size != 0">
 			    and E.objectId IN
 				<foreach item="x_objectId" index="index" collection="objectIds" 
 					open="(" separator="," close=")">
@@ -323,7 +323,7 @@
 				and E.objectValue = #{objectValue}
 			</if>
 
-			<if test="objectValues != null and objectValues.size() &gt; 0">
+			<if test="objectValues != null and objectValues.size != 0">
 			    and E.objectValue IN
 				<foreach item="x_objectValue" index="index" collection="objectValues" 
 					open="(" separator="," close=")">

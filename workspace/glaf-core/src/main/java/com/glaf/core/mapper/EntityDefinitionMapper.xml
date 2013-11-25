@@ -315,7 +315,7 @@
 				and E.CREATEBY_ = #{createBy}
 			</if>
 
-			<if test="createBys != null and createBys.size() &gt; 0">
+			<if test="createBys != null and createBys.size != 0">
 				and E.CREATEBY_ IN
 				<foreach item="x_createBy" index="index" collection="createBys"
 					open="(" separator="," close=")">
@@ -327,7 +327,7 @@
 				and E.UPDATEBY_ = #{updateBy}
 			</if>
 
-			<if test="updateBys != null and updateBys.size() &gt; 0">
+			<if test="updateBys != null and updateBys.size != 0">
 				and E.UPDATEBY_ IN
 				<foreach item="x_updateBy" index="index" collection="updateBys"
 					open="(" separator="," close=")">

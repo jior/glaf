@@ -292,7 +292,7 @@
 				and E.createBy != #{createByNot}
 			</if>
 
-			<if test="createBys != null and createBys.size() &gt; 0">
+			<if test="createBys != null and createBys.size != 0">
 				and E.createBy IN
 				<foreach item="x_createBy" index="index" collection="createBys"
 					open="(" separator="," close=")">

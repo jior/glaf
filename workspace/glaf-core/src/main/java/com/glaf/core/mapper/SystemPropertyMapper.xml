@@ -116,7 +116,7 @@
 				and E.NAME_ like #{nameLike}
 			</if>
 
-			<if test="names != null and names.size() &gt; 0">
+			<if test="names != null and names.size != 0">
 				and E.NAME_ IN
 				<foreach item="x_name" index="index" collection="names"
 					open="(" separator="," close=")">

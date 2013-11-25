@@ -114,7 +114,7 @@
 				and E.ACTIVITYID_ = #{activityId}
 			</if>
 
-			<if test="activityIds != null and activityIds.size() &gt; 0">
+			<if test="activityIds != null and activityIds.size != 0">
 				and E.ACTIVITYID_ IN
 				<foreach item="x_activityId" index="index" collection="activityIds"
 					open="(" separator="," close=")">

@@ -186,7 +186,7 @@
 				and E.NAME like #{nameLike}
 			</if>
 
-			<if test="names != null and names.size() &gt; 0">
+			<if test="names != null and names.size != 0">
 				and E.NAME IN
 				<foreach item="x_name" index="index" collection="names"
 					open="(" separator="," close=")">
@@ -206,7 +206,7 @@
 				and E.TYPE like #{typeLike}
 			</if>
 
-			<if test="types != null and types.size() &gt; 0">
+			<if test="types != null and types.size != 0">
 				and E.TYPE IN
 				<foreach item="x_type" index="index" collection="types"
 					open="(" separator="," close=")">

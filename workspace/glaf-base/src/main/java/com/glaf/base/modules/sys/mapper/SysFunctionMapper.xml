@@ -180,7 +180,7 @@
 				and E.NAME like #{nameLike}
 			</if>
 
-			<if test="names != null and names.size() &gt; 0">
+			<if test="names != null and names.size != 0">
 				and E.NAME IN
 				<foreach item="x_name" index="index" collection="names"
 					open="(" separator="," close=")">
@@ -224,7 +224,7 @@
 				and E.APPID = #{appId}
 			</if>
 
-			<if test="appIds != null and appIds.size() &gt; 0">
+			<if test="appIds != null and appIds.size != 0">
 				and E.APPID IN
 				<foreach item="x_appId" index="index" collection="appIds"
 					open="(" separator="," close=")">

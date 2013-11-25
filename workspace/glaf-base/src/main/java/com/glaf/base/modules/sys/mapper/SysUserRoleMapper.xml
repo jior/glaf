@@ -212,7 +212,7 @@
 				and E.USERID &lt;= #{userIdLessThanOrEqual}
 			</if>
 
-			<if test="userIds != null and userIds.size() &gt; 0">
+			<if test="userIds != null and userIds.size != 0">
 				and E.USERID IN
 				<foreach item="x_userId" index="index" collection="userIds"
 					open="(" separator="," close=")">
@@ -232,7 +232,7 @@
 				and E.ROLEID &lt;= #{deptRoleIdLessThanOrEqual}
 			</if>
 
-			<if test="deptRoleIds != null and deptRoleIds.size() &gt; 0">
+			<if test="deptRoleIds != null and deptRoleIds.size != 0">
 				and E.ROLEID IN
 				<foreach item="x_deptRoleId" index="index" collection="deptRoleIds"
 					open="(" separator="," close=")">
@@ -248,7 +248,7 @@
 				and E.AUTHORIZEFROM = #{authorizeFrom}
 			</if>
 
-			<if test="authorizeFroms != null and authorizeFroms.size() &gt; 0">
+			<if test="authorizeFroms != null and authorizeFroms.size != 0">
 				and E.AUTHORIZEFROM IN
 				<foreach item="x_authorizeFrom" index="index" collection="authorizeFroms"
 					open="(" separator="," close=")">

@@ -322,7 +322,7 @@
 				and E.id = #{taskId}
 			</if>
 
-			<if test="taskIds != null and taskIds.size() &gt; 0">
+			<if test="taskIds != null and taskIds.size != 0">
 				and E.id IN
 				<foreach item="x_taskId" index="index" collection="taskIds"
 					open="(" separator="," close=")">

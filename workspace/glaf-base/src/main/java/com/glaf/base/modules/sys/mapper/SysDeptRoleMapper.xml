@@ -186,7 +186,7 @@
 				and E.CODE like #{codeLike}
 			</if>
 
-			<if test="codes != null and codes.size() &gt; 0">
+			<if test="codes != null and codes.size != 0">
 			    and E.CODE IN
 				<foreach item="x_code" index="index" collection="codes" 
 					open="(" separator="," close=")">
@@ -214,7 +214,7 @@
 				and E.SYSROLEID &lt;= #{sysRoleIdLessThanOrEqual}
 			</if>
 
-			<if test="sysRoleIds != null and sysRoleIds.size() &gt; 0">
+			<if test="sysRoleIds != null and sysRoleIds.size != 0">
 			    and E.SYSROLEID IN
 				<foreach item="x_sysRoleId" index="index" collection="sysRoleIds" 
 					open="(" separator="," close=")">
@@ -234,7 +234,7 @@
 				and E.DEPTID &lt;= #{deptIdLessThanOrEqual}
 			</if>
 
-			<if test="deptIds != null and deptIds.size() &gt; 0">
+			<if test="deptIds != null and deptIds.size != 0">
 			    and E.DEPTID IN
 				<foreach item="x_deptId" index="index" collection="deptIds" 
 					open="(" separator="," close=")">

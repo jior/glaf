@@ -289,7 +289,7 @@
 				and E.REPORTID_ = #{reportId}
 			</if>
 
-			<if test="reportIds != null and reportIds.size() &gt; 0">
+			<if test="reportIds != null and reportIds.size != 0">
 			    and E.REPORTID_ IN
 				<foreach item="x_reportId" index="index" collection="reportIds" 
 					open="(" separator="," close=")">

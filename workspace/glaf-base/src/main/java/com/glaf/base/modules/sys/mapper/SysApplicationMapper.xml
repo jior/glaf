@@ -273,7 +273,7 @@
 				and E.NAME like #{nameLike}
 			</if>
 
-			<if test="names != null and names.size() &gt; 0">
+			<if test="names != null and names.size != 0">
 				and E.NAME IN
 				<foreach item="x_name" index="index" collection="names"
 					open="(" separator="," close=")">
@@ -329,7 +329,7 @@
 				and E.NODEID &lt;= #{nodeIdLessThanOrEqual}
 			</if>
 
-			<if test="nodeIds != null and nodeIds.size() &gt; 0">
+			<if test="nodeIds != null and nodeIds.size != 0">
 				and E.NODEID IN
 				<foreach item="x_nodeId" index="index" collection="nodeIds"
 					open="(" separator="," close=")">

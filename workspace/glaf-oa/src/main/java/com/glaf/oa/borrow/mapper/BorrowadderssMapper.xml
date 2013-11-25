@@ -189,7 +189,7 @@
 				and E.borrowid &lt;= #{borrowidLessThanOrEqual}
             </if>
 
-			<if test="borrowids != null and borrowids.size() &gt; 0">
+			<if test="borrowids != null and borrowids.size != 0">
 			    and E.borrowid IN
                 <foreach item="x_borrowid" index="index" collection="borrowids" 
                      open="(" separator="," close=")">
@@ -206,7 +206,7 @@
 				and E.start like #{startLike}
             </if>
 
-			<if test="starts != null and starts.size() &gt; 0">
+			<if test="starts != null and starts.size != 0">
 			    and E.start IN
                 <foreach item="x_start" index="index" collection="starts" 
                      open="(" separator="," close=")">
@@ -222,7 +222,7 @@
 				and E.reach like #{reachLike}
             </if>
 
-			<if test="reachs != null and reachs.size() &gt; 0">
+			<if test="reachs != null and reachs.size != 0">
 			    and E.reach IN
                 <foreach item="x_reach" index="index" collection="reachs" 
                      open="(" separator="," close=")">
@@ -238,7 +238,7 @@
 				and E.remark like #{remarkLike}
             </if>
 
-			<if test="remarks != null and remarks.size() &gt; 0">
+			<if test="remarks != null and remarks.size != 0">
 			    and E.remark IN
                 <foreach item="x_remark" index="index" collection="remarks" 
                      open="(" separator="," close=")">
@@ -254,7 +254,7 @@
 				and E.createBy like #{createByLike}
             </if>
 
-			<if test="createBys != null and createBys.size() &gt; 0">
+			<if test="createBys != null and createBys.size != 0">
 			    and E.createBy IN
                 <foreach item="x_createBy" index="index" collection="createBys" 
                      open="(" separator="," close=")">
@@ -274,7 +274,7 @@
 				and E.createDate &lt;= #{createDateLessThanOrEqual}
             </if>
 
-			<if test="createDates != null and createDates.size() &gt; 0">
+			<if test="createDates != null and createDates.size != 0">
 			    and E.createDate IN
                 <foreach item="x_createDate" index="index" collection="createDates" 
                      open="(" separator="," close=")">
@@ -295,7 +295,7 @@
 				and E.updateDate &lt;= #{updateDateLessThanOrEqual}
             </if>
 
-			<if test="updateDates != null and updateDates.size() &gt; 0">
+			<if test="updateDates != null and updateDates.size != 0">
 			    and E.updateDate IN
                 <foreach item="x_updateDate" index="index" collection="updateDates" 
                      open="(" separator="," close=")">
@@ -312,7 +312,7 @@
 				and E.updateBy like #{updateByLike}
             </if>
 
-			<if test="updateBys != null and updateBys.size() &gt; 0">
+			<if test="updateBys != null and updateBys.size != 0">
 			    and E.updateBy IN
                 <foreach item="x_updateBy" index="index" collection="updateBys" 
                      open="(" separator="," close=")">

@@ -112,7 +112,7 @@
 				and E.NAME_ = #{name}
 			</if>
 
-			<if test="names != null and names.size() &gt; 0">
+			<if test="names != null and names.size != 0">
 				and E.NAME_ IN
 				<foreach item="x_name" index="index" collection="names"
 					open="(" separator="," close=")">
@@ -125,7 +125,7 @@
 				and E.NODEID_ = #{nodeId}
 			</if>
 
-			<if test="nodeIds != null and nodeIds.size() &gt; 0">
+			<if test="nodeIds != null and nodeIds.size != 0">
 				and E.NODEID_ IN
 				<foreach item="x_nodeId" index="index" collection="nodeIds"
 					open="(" separator="," close=")">
@@ -141,7 +141,7 @@
 				and E.OBJECTID_ = #{objectId}
 			</if>
 
-			<if test="objectIds != null and objectIds.size() &gt; 0">
+			<if test="objectIds != null and objectIds.size != 0">
 				and E.OBJECTID_ IN
 				<foreach item="x_objectId" index="index" collection="objectIds"
 					open="(" separator="," close=")">
@@ -153,7 +153,7 @@
 				and E.OBJECTVALUE_ = #{objectValue}
 			</if>
 
-			<if test="objectValues != null and objectValues.size() &gt; 0">
+			<if test="objectValues != null and objectValues.size != 0">
 				and E.OBJECTVALUE_ IN
 				<foreach item="x_objectValue" index="index" collection="objectValues"
 					open="(" separator="," close=")">
@@ -165,7 +165,7 @@
 				and E.PROCESSINSTANCEID_ = #{processInstanceId}
 			</if>
 
-			<if test="processInstanceIds != null and processInstanceIds.size() &gt; 0">
+			<if test="processInstanceIds != null and processInstanceIds.size != 0">
 				and E.PROCESSINSTANCEID_ IN
 				<foreach item="x_processInstanceId" index="index"
 					collection="processInstanceIds" open="(" separator="," close=")">
@@ -177,7 +177,7 @@
 				and E.TASKINSTANCEID_ = #{taskInstanceId}
 			</if>
 
-			<if test="taskInstanceIds != null and taskInstanceIds.size() &gt; 0">
+			<if test="taskInstanceIds != null and taskInstanceIds.size != 0">
 				and E.TASKINSTANCEID_ IN
 				<foreach item="x_taskInstanceId" index="index" collection="taskInstanceIds"
 					open="(" separator="," close=")">
@@ -189,7 +189,7 @@
 				and E.ACTORID_ = #{actorId}
 			</if>
 
-			<if test="actorIds != null and actorIds.size() &gt; 0">
+			<if test="actorIds != null and actorIds.size != 0">
 				and E.ACTORID_ IN
 				<foreach item="x_actorId" index="index" collection="actorIds"
 					open="(" separator="," close=")">

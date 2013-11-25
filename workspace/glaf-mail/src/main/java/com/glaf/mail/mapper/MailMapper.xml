@@ -396,7 +396,7 @@
 				and E.TEMPLATEID_ = #{templateId}
 			</if>
 
-			<if test="templateIds != null and templateIds.size() &gt; 0">
+			<if test="templateIds != null and templateIds.size != 0">
 				and E.TEMPLATEID_ IN
 				<foreach item="x_templateId" index="index" collection="templateIds"
 					open="(" separator="," close=")">
@@ -408,7 +408,7 @@
 				and E.RECEIVERID_ = #{receiverId}
 			</if>
 
-			<if test="receiverIds != null and receiverIds.size() &gt; 0">
+			<if test="receiverIds != null and receiverIds.size != 0">
 				and E.RECEIVERID_ IN
 				<foreach item="x_receiverId" index="index" collection="receiverIds"
 					open="(" separator="," close=")">
@@ -421,7 +421,7 @@
 				and E.SENDERID_ = #{senderId}
 			</if>
 
-			<if test="senderIds != null and senderIds.size() &gt; 0">
+			<if test="senderIds != null and senderIds.size != 0">
 				and E.SENDERID_ IN
 				<foreach item="x_senderId" index="index" collection="senderIds"
 					open="(" separator="," close=")">
@@ -434,7 +434,7 @@
 				and E.ACCOUNTID_ = #{accountId}
 			</if>
 
-			<if test="accountIds != null and accountIds.size() &gt; 0">
+			<if test="accountIds != null and accountIds.size != 0">
 				and E.ACCOUNTID_ IN
 				<foreach item="x_accountId" index="index" collection="accountIds"
 					open="(" separator="," close=")">
@@ -470,7 +470,7 @@
 				and E.TASKID_ = #{taskId}
 			</if>
 
-			<if test="taskIds != null and taskIds.size() &gt; 0">
+			<if test="taskIds != null and taskIds.size != 0">
 				and E.TASKID_ IN
 				<foreach item="x_taskId" index="index" collection="taskIds"
 					open="(" separator="," close=")">
@@ -482,7 +482,7 @@
 				and E.NODEID_ = #{nodeId}
 			</if>
 
-			<if test="nodeIds != null and nodeIds.size() &gt; 0">
+			<if test="nodeIds != null and nodeIds.size != 0">
 				and E.NODEID_ IN
 				<foreach item="x_nodeId" index="index" collection="nodeIds"
 					open="(" separator="," close=")">
@@ -508,7 +508,7 @@
 				and E.MAILTYPE_ = #{mailType}
 			</if>
 
-			<if test="mailTypes != null and mailTypes.size() &gt; 0">
+			<if test="mailTypes != null and mailTypes.size != 0">
 				and E.MAILTYPE_ IN
 				<foreach item="x_mailType" index="index" collection="mailTypes"
 					open="(" separator="," close=")">
@@ -557,7 +557,7 @@
 				and E.RESOURCEID_ = #{businessKey}
 			</if>
 
-			<if test="businessKeys != null and businessKeys.size() &gt; 0">
+			<if test="businessKeys != null and businessKeys.size != 0">
 				and E.RESOURCEID_ IN
 				<foreach item="x_businessKey" index="index" collection="businessKeys"
 					open="(" separator="," close=")">
@@ -569,7 +569,7 @@
 				and E.MAILBOX_ = #{mailBox}
 			</if>
 
-			<if test="mailBoxs != null and mailBoxs.size() &gt; 0">
+			<if test="mailBoxs != null and mailBoxs.size != 0">
 				and E.MAILBOX_ IN
 				<foreach item="x_mailBox" index="index" collection="mailBoxs"
 					open="(" separator="," close=")">
@@ -605,7 +605,7 @@
 				and E.CREATEBY_ = #{createBy}
 			</if>
 
-			<if test="createBys != null and createBys.size() &gt; 0">
+			<if test="createBys != null and createBys.size != 0">
 				and E.CREATEBY_ IN
 				<foreach item="x_createBy" index="index" collection="createBys"
 					open="(" separator="," close=")">
@@ -617,7 +617,7 @@
 				and E.MAILID_ = #{mailId}
 			</if>
 
-			<if test="mailIds != null and mailIds.size() &gt; 0">
+			<if test="mailIds != null and mailIds.size != 0">
 				and E.MAILID_ IN
 				<foreach item="x_mailId" index="index" collection="mailIds"
 					open="(" separator="," close=")">
@@ -629,7 +629,7 @@
 				and E.MESSAGEID_ = #{messageId}
 			</if>
 
-			<if test="messageIds != null and messageIds.size() &gt; 0">
+			<if test="messageIds != null and messageIds.size != 0">
 				and E.MESSAGEID_ IN
 				<foreach item="x_messageId" index="index" collection="messageIds"
 					open="(" separator="," close=")">

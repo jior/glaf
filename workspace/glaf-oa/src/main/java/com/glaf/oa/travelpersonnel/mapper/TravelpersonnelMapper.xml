@@ -186,7 +186,7 @@
 				and E.travelid &lt;= #{travelidLessThanOrEqual}
             </if>
 
-			<if test="travelids != null and travelids.size() &gt; 0">
+			<if test="travelids != null and travelids.size != 0">
 			    and E.travelid IN
                 <foreach item="x_travelid" index="index" collection="travelids" 
                      open="(" separator="," close=")">
@@ -203,7 +203,7 @@
 				and E.dept like #{deptLike}
             </if>
 
-			<if test="depts != null and depts.size() &gt; 0">
+			<if test="depts != null and depts.size != 0">
 			    and E.dept IN
                 <foreach item="x_dept" index="index" collection="depts" 
                      open="(" separator="," close=")">
@@ -219,7 +219,7 @@
 				and E.personnel like #{personnelLike}
             </if>
 
-			<if test="personnels != null and personnels.size() &gt; 0">
+			<if test="personnels != null and personnels.size != 0">
 			    and E.personnel IN
                 <foreach item="x_personnel" index="index" collection="personnels" 
                      open="(" separator="," close=")">
@@ -239,7 +239,7 @@
 				and E.createDate &lt;= #{createDateLessThanOrEqual}
             </if>
 
-			<if test="createDates != null and createDates.size() &gt; 0">
+			<if test="createDates != null and createDates.size != 0">
 			    and E.createDate IN
                 <foreach item="x_createDate" index="index" collection="createDates" 
                      open="(" separator="," close=")">
@@ -260,7 +260,7 @@
 				and E.updateDate &lt;= #{updateDateLessThanOrEqual}
             </if>
 
-			<if test="updateDates != null and updateDates.size() &gt; 0">
+			<if test="updateDates != null and updateDates.size != 0">
 			    and E.updateDate IN
                 <foreach item="x_updateDate" index="index" collection="updateDates" 
                      open="(" separator="," close=")">
@@ -276,7 +276,7 @@
 				and E.createBy like #{createByLike}
             </if>
 
-			<if test="createBys != null and createBys.size() &gt; 0">
+			<if test="createBys != null and createBys.size != 0">
 			    and E.createBy IN
                 <foreach item="x_createBy" index="index" collection="createBys" 
                      open="(" separator="," close=")">
@@ -292,7 +292,7 @@
 				and E.updateBy like #{updateByLike}
             </if>
 
-			<if test="updateBys != null and updateBys.size() &gt; 0">
+			<if test="updateBys != null and updateBys.size != 0">
 			    and E.updateBy IN
                 <foreach item="x_updateBy" index="index" collection="updateBys" 
                      open="(" separator="," close=")">

@@ -222,7 +222,7 @@
 				and E.NAME like #{nameLike}
 			</if>
 
-			<if test="names != null and names.size() &gt; 0">
+			<if test="names != null and names.size != 0">
 				and E.NAME IN
 				<foreach item="x_name" index="index" collection="names"
 					open="(" separator="," close=")">
@@ -242,7 +242,7 @@
 				and E.CODE like #{codeLike}
 			</if>
 
-			<if test="codes != null and codes.size() &gt; 0">
+			<if test="codes != null and codes.size != 0">
 				and E.CODE IN
 				<foreach item="x_code" index="index" collection="codes"
 					open="(" separator="," close=")">

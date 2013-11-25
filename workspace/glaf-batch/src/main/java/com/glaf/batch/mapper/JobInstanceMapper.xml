@@ -142,7 +142,7 @@
 				and E.job_key = #{jobKey}
 			</if>
 
-			<if test="jobKeys != null and jobKeys.size() &gt; 0">
+			<if test="jobKeys != null and jobKeys.size != 0">
 			    and E.job_key IN
 				<foreach item="x_jobKey" index="index" collection="jobKeys" 
 					open="(" separator="," close=")">

@@ -168,7 +168,7 @@
 		<where>
 		       1 = 1  
 		       
-		    <if test="chartIds != null and chartIds.size() &gt; 0">
+		    <if test="chartIds != null and chartIds.size != 0">
 			    and E.ID_ IN
 				<foreach item="x_chart" index="index" collection="chartIds" 
 					open="(" separator="," close=")">
@@ -218,7 +218,7 @@
 				and E.IMAGETYPE_ like #{imageTypeLike}
 			</if>
 
-			<if test="imageTypes != null and imageTypes.size() &gt; 0">
+			<if test="imageTypes != null and imageTypes.size != 0">
 			    and E.IMAGETYPE_ IN
 				<foreach item="x_imageType" index="index" collection="imageTypes" 
 					open="(" separator="," close=")">

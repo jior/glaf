@@ -110,7 +110,7 @@
 				and E.APPLICATIONNAME_ = #{applicationName}
 			</if>
 
-			<if test="applicationNames != null and applicationNames.size() &gt; 0">
+			<if test="applicationNames != null and applicationNames.size != 0">
 				and E.APPLICATIONNAME_ IN
 				<foreach item="x_applicationName" index="index" collection="applicationNames"
 					open="(" separator="," close=")">
@@ -123,7 +123,7 @@
 			</if>
 
 			<if
-				test="processDefinitionIds != null and processDefinitionIds.size() &gt; 0">
+				test="processDefinitionIds != null and processDefinitionIds.size != 0">
 				and E.PROCESSDEFINITIONID_ IN
 				<foreach item="x_processDefinitionId" index="index"
 					collection="processDefinitionIds" open="(" separator="," close=")">
@@ -135,7 +135,7 @@
 				and E.PROCESSNAME_ = #{processName}
 			</if>
 
-			<if test="processNames != null and processNames.size() &gt; 0">
+			<if test="processNames != null and processNames.size != 0">
 				and E.PROCESSNAME_ IN
 				<foreach item="x_processName" index="index" collection="processNames"
 					open="(" separator="," close=")">
@@ -147,7 +147,7 @@
 				and E.TASKNAME_ = #{taskName}
 			</if>
 
-			<if test="taskNames != null and taskNames.size() &gt; 0">
+			<if test="taskNames != null and taskNames.size != 0">
 				and E.TASKNAME_ IN
 				<foreach item="x_taskName" index="index" collection="taskNames"
 					open="(" separator="," close=")">
@@ -159,7 +159,7 @@
 				and E.FORMNAME_ = #{formName}
 			</if>
 
-			<if test="formNames != null and formNames.size() &gt; 0">
+			<if test="formNames != null and formNames.size != 0">
 				and E.FORMNAME_ IN
 				<foreach item="x_formName" index="index" collection="formNames"
 					open="(" separator="," close=")">
@@ -171,7 +171,7 @@
 				and E.ROLEID_ = #{roleId}
 			</if>
 
-			<if test="roleIds != null and roleIds.size() &gt; 0">
+			<if test="roleIds != null and roleIds.size != 0">
 				and E.ROLEID_ IN
 				<foreach item="x_roleId" index="index" collection="roleIds"
 					open="(" separator="," close=")">
@@ -191,7 +191,7 @@
 				and E.ENTRYTYPE_ &lt;= #{entryTypeLessThanOrEqual}
 			</if>
 
-			<if test="entryTypes != null and entryTypes.size() &gt; 0">
+			<if test="entryTypes != null and entryTypes.size != 0">
 				and E.ENTRYTYPE_ IN
 				<foreach item="x_entryType" index="index" collection="entryTypes"
 					open="(" separator="," close=")">
@@ -203,7 +203,7 @@
 				and E.OBJECTID_ = #{objectId}
 			</if>
 
-			<if test="objectIds != null and objectIds.size() &gt; 0">
+			<if test="objectIds != null and objectIds.size != 0">
 				and E.OBJECTID_ IN
 				<foreach item="x_objectId" index="index" collection="objectIds"
 					open="(" separator="," close=")">
@@ -215,7 +215,7 @@
 				and E.OBJECTVALUE_ = #{objectValue}
 			</if>
 
-			<if test="objectValues != null and objectValues.size() &gt; 0">
+			<if test="objectValues != null and objectValues.size != 0">
 				and E.OBJECTVALUE_ IN
 				<foreach item="x_objectValue" index="index" collection="objectValues"
 					open="(" separator="," close=")">
@@ -227,7 +227,7 @@
 				and E.CREATEBY_ = #{createBy}
 			</if>
 
-			<if test="createBys != null and createBys.size() &gt; 0">
+			<if test="createBys != null and createBys.size != 0">
 				and E.CREATEBY_ IN
 				<foreach item="x_createBy" index="index" collection="createBys"
 					open="(" separator="," close=")">

@@ -199,7 +199,7 @@
 				and E.TYPE &lt;= #{typeLessThanOrEqual}
 			</if>
 
-			<if test="types != null and types.size() &gt; 0">
+			<if test="types != null and types.size != 0">
 			    and E.TYPE IN
 				<foreach item="x_type" index="index" collection="types" 
 					open="(" separator="," close=")">
@@ -220,7 +220,7 @@
 				and E.SYSTYPE &lt;= #{sysTypeLessThanOrEqual}
 			</if>
 
-			<if test="sysTypes != null and sysTypes.size() &gt; 0">
+			<if test="sysTypes != null and sysTypes.size != 0">
 			    and E.SYSTYPE IN
 				<foreach item="x_sysType" index="index" collection="sysTypes" 
 					open="(" separator="," close=")">
@@ -272,7 +272,7 @@
 				and E.CATEGORY &lt;= #{categoryLessThanOrEqual}
 			</if>
 
-			<if test="categorys != null and categorys.size() &gt; 0">
+			<if test="categorys != null and categorys.size != 0">
 			    and E.CATEGORY IN
 				<foreach item="x_category" index="index" collection="categorys" 
 					open="(" separator="," close=")">
@@ -293,7 +293,7 @@
 				and E.SENDER &lt;= #{senderIdLessThanOrEqual}
 			</if>
 
-			<if test="senderIds != null and senderIds.size() &gt; 0">
+			<if test="senderIds != null and senderIds.size != 0">
 			    and E.SENDER IN
 				<foreach item="x_senderId" index="index" collection="senderIds" 
 					open="(" separator="," close=")">
@@ -313,7 +313,7 @@
 				and E.RECVER &lt;= #{recverIdLessThanOrEqual}
 			</if>
 
-			<if test="recverIds != null and recverIds.size() &gt; 0">
+			<if test="recverIds != null and recverIds.size != 0">
 			    and E.RECVER IN
 				<foreach item="x_recverId" index="index" collection="recverIds" 
 					open="(" separator="," close=")">

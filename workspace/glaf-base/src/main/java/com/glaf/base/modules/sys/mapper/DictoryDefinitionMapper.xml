@@ -184,7 +184,7 @@
 				and E.NODEID = #{nodeId}
 			</if>
 
-			<if test="nodeIds != null and nodeIds.size() &gt; 0">
+			<if test="nodeIds != null and nodeIds.size != 0">
 				and E.NODEID IN
 				<foreach item="x_nodeId" index="index" collection="nodeIds"
 					open="(" separator="," close=")">
@@ -200,7 +200,7 @@
 				and E.NAME like #{nameLike}
 			</if>
 
-			<if test="names != null and names.size() &gt; 0">
+			<if test="names != null and names.size != 0">
 				and E.NAME IN
 				<foreach item="x_name" index="index" collection="names"
 					open="(" separator="," close=")">
@@ -216,7 +216,7 @@
 				and E.COLUMNNAME like #{columnNameLike}
 			</if>
 
-			<if test="columnNames != null and columnNames.size() &gt; 0">
+			<if test="columnNames != null and columnNames.size != 0">
 				and E.COLUMNNAME IN
 				<foreach item="x_columnName" index="index" collection="columnNames"
 					open="(" separator="," close=")">
@@ -232,7 +232,7 @@
 				and E.TYPE = #{type}
 			</if>
 
-			<if test="types != null and types.size() &gt; 0">
+			<if test="types != null and types.size != 0">
 				and E.TYPE IN
 				<foreach item="x_type" index="index" collection="types"
 					open="(" separator="," close=")">
@@ -256,7 +256,7 @@
 				and E.TARGET like #{targetLike}
 			</if>
 
-			<if test="targets != null and targets.size() &gt; 0">
+			<if test="targets != null and targets.size != 0">
 				and E.TARGET IN
 				<foreach item="x_target" index="index" collection="targets"
 					open="(" separator="," close=")">

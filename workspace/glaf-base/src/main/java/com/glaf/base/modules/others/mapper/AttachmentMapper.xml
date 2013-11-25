@@ -160,7 +160,7 @@
 				and E.REFERID &lt;= #{referIdLessThanOrEqual}
 			</if>
 
-			<if test="referIds != null and referIds.size() &gt; 0">
+			<if test="referIds != null and referIds.size != 0">
 			    and E.REFERID IN
 				<foreach item="x_referId" index="index" collection="referIds" 
 					open="(" separator="," close=")">
@@ -181,7 +181,7 @@
 				and E.REFERTYPE &lt;= #{referTypeLessThanOrEqual}
 			</if>
 
-			<if test="referTypes != null and referTypes.size() &gt; 0">
+			<if test="referTypes != null and referTypes.size != 0">
 			    and E.REFERTYPE IN
 				<foreach item="x_referType" index="index" collection="referTypes" 
 					open="(" separator="," close=")">
@@ -226,7 +226,7 @@
 				and E.CREATEID &lt;= #{createIdLessThanOrEqual}
 			</if>
 
-			<if test="createIds != null and createIds.size() &gt; 0">
+			<if test="createIds != null and createIds.size != 0">
 			    and E.CREATEID IN
 				<foreach item="x_createId" index="index" collection="createIds" 
 					open="(" separator="," close=")">

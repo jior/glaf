@@ -131,7 +131,7 @@
 				and E.PARENT = #{parentId}
 			</if>
 
-			<if test="parentIds != null and parentIds.size() &gt; 0">
+			<if test="parentIds != null and parentIds.size != 0">
 			    and E.PARENT IN
 				<foreach item="x_parentId" index="index" collection="parentIds" 
 					open="(" separator="," close=")">
@@ -143,7 +143,7 @@
 				and E.SUBJECTCODE like #{subjectCodeLike}
 			</if>
 
-			<if test="subjectCodes != null and subjectCodes.size() &gt; 0">
+			<if test="subjectCodes != null and subjectCodes.size != 0">
 			    and E.SUBJECTCODE IN
 				<foreach item="x_subjectCode" index="index" collection="subjectCodes" 
 					open="(" separator="," close=")">

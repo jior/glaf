@@ -219,7 +219,7 @@
 				and E.purchaseid &lt;= #{purchaseidLessThanOrEqual}
             </if>
 
-			<if test="purchaseids != null and purchaseids.size() &gt; 0">
+			<if test="purchaseids != null and purchaseids.size != 0">
 			    and E.purchaseid IN
                 <foreach item="x_purchaseid" index="index" collection="purchaseids" 
                      open="(" separator="," close=")">
@@ -236,7 +236,7 @@
 				and E.content like #{contentLike}
             </if>
 
-			<if test="contents != null and contents.size() &gt; 0">
+			<if test="contents != null and contents.size != 0">
 			    and E.content IN
                 <foreach item="x_content" index="index" collection="contents" 
                      open="(" separator="," close=")">
@@ -252,7 +252,7 @@
 				and E.specification like #{specificationLike}
             </if>
 
-			<if test="specifications != null and specifications.size() &gt; 0">
+			<if test="specifications != null and specifications.size != 0">
 			    and E.specification IN
                 <foreach item="x_specification" index="index" collection="specifications" 
                      open="(" separator="," close=")">
@@ -272,7 +272,7 @@
 				and E.quantity &lt;= #{quantityLessThanOrEqual}
             </if>
 
-			<if test="quantitys != null and quantitys.size() &gt; 0">
+			<if test="quantitys != null and quantitys.size != 0">
 			    and E.quantity IN
                 <foreach item="x_quantity" index="index" collection="quantitys" 
                      open="(" separator="," close=")">
@@ -293,7 +293,7 @@
 				and E.referenceprice &lt;= #{referencepriceLessThanOrEqual}
             </if>
 
-			<if test="referenceprices != null and referenceprices.size() &gt; 0">
+			<if test="referenceprices != null and referenceprices.size != 0">
 			    and E.referenceprice IN
                 <foreach item="x_referenceprice" index="index" collection="referenceprices" 
                      open="(" separator="," close=")">
@@ -310,7 +310,7 @@
 				and E.createBy like #{createByLike}
             </if>
 
-			<if test="createBys != null and createBys.size() &gt; 0">
+			<if test="createBys != null and createBys.size != 0">
 			    and E.createBy IN
                 <foreach item="x_createBy" index="index" collection="createBys" 
                      open="(" separator="," close=")">
@@ -330,7 +330,7 @@
 				and E.createDate &lt;= #{createDateLessThanOrEqual}
             </if>
 
-			<if test="createDates != null and createDates.size() &gt; 0">
+			<if test="createDates != null and createDates.size != 0">
 			    and E.createDate IN
                 <foreach item="x_createDate" index="index" collection="createDates" 
                      open="(" separator="," close=")">
@@ -351,7 +351,7 @@
 				and E.updateDate &lt;= #{updateDateLessThanOrEqual}
             </if>
 
-			<if test="updateDates != null and updateDates.size() &gt; 0">
+			<if test="updateDates != null and updateDates.size != 0">
 			    and E.updateDate IN
                 <foreach item="x_updateDate" index="index" collection="updateDates" 
                      open="(" separator="," close=")">
@@ -368,7 +368,7 @@
 				and E.updateBy like #{updateByLike}
             </if>
 
-			<if test="updateBys != null and updateBys.size() &gt; 0">
+			<if test="updateBys != null and updateBys.size != 0">
 			    and E.updateBy IN
                 <foreach item="x_updateBy" index="index" collection="updateBys" 
                      open="(" separator="," close=")">

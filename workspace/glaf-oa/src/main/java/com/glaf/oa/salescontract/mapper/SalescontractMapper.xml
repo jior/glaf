@@ -437,7 +437,7 @@
 				and E.contactname like #{contactnameLike}
             </if>
 
-			<if test="contactnames != null and contactnames.size() &gt; 0">
+			<if test="contactnames != null and contactnames.size != 0">
 			    and E.contactname IN
                 <foreach item="x_contactname" index="index" collection="contactnames" 
                      open="(" separator="," close=")">
@@ -453,7 +453,7 @@
 				and E.projrctname like #{projrctnameLike}
             </if>
 
-			<if test="projrctnames != null and projrctnames.size() &gt; 0">
+			<if test="projrctnames != null and projrctnames.size != 0">
 			    and E.projrctname IN
                 <foreach item="x_projrctname" index="index" collection="projrctnames" 
                      open="(" separator="," close=")">
@@ -469,7 +469,7 @@
 				and E.companyname like #{companynameLike}
             </if>
 
-			<if test="companynames != null and companynames.size() &gt; 0">
+			<if test="companynames != null and companynames.size != 0">
 			    and E.companyname IN
                 <foreach item="x_companyname" index="index" collection="companynames" 
                      open="(" separator="," close=")">
@@ -485,7 +485,7 @@
 				and E.supplisername like #{supplisernameLike}
             </if>
 
-			<if test="supplisernames != null and supplisernames.size() &gt; 0">
+			<if test="supplisernames != null and supplisernames.size != 0">
 			    and E.supplisername IN
                 <foreach item="x_supplisername" index="index" collection="supplisernames" 
                      open="(" separator="," close=")">
@@ -501,7 +501,7 @@
 				and E.currency like #{currencyLike}
             </if>
 
-			<if test="currencys != null and currencys.size() &gt; 0">
+			<if test="currencys != null and currencys.size != 0">
 			    and E.currency IN
                 <foreach item="x_currency" index="index" collection="currencys" 
                      open="(" separator="," close=")">
@@ -521,7 +521,7 @@
 				and E.contractsum &lt;= #{contractsumLessThanOrEqual}
             </if>
 
-			<if test="contractsums != null and contractsums.size() &gt; 0">
+			<if test="contractsums != null and contractsums.size != 0">
 			    and E.contractsum IN
                 <foreach item="x_contractsum" index="index" collection="contractsums" 
                      open="(" separator="," close=")">
@@ -542,7 +542,7 @@
 				and E.paytype &lt;= #{paytypeLessThanOrEqual}
             </if>
 
-			<if test="paytypes != null and paytypes.size() &gt; 0">
+			<if test="paytypes != null and paytypes.size != 0">
 			    and E.paytype IN
                 <foreach item="x_paytype" index="index" collection="paytypes" 
                      open="(" separator="," close=")">
@@ -559,7 +559,7 @@
 				and E.remarks like #{remarksLike}
             </if>
 
-			<if test="remarkss != null and remarkss.size() &gt; 0">
+			<if test="remarkss != null and remarkss.size != 0">
 			    and E.remarks IN
                 <foreach item="x_remarks" index="index" collection="remarkss" 
                      open="(" separator="," close=")">
@@ -575,7 +575,7 @@
 				and E.attachment like #{attachmentLike}
             </if>
 
-			<if test="attachments != null and attachments.size() &gt; 0">
+			<if test="attachments != null and attachments.size != 0">
 			    and E.attachment IN
                 <foreach item="x_attachment" index="index" collection="attachments" 
                      open="(" separator="," close=")">
@@ -595,7 +595,7 @@
 				and E.status &lt;= #{statusLessThanOrEqual}
             </if>
 
-			<if test="statuss != null and statuss.size() &gt; 0">
+			<if test="statuss != null and statuss.size != 0">
 			    and E.status IN
                 <foreach item="x_status" index="index" collection="statuss" 
                      open="(" separator="," close=")">
@@ -612,7 +612,7 @@
 				and E.appuser like #{appuserLike}
             </if>
 
-			<if test="appusers != null and appusers.size() &gt; 0">
+			<if test="appusers != null and appusers.size != 0">
 			    and E.appuser IN
                 <foreach item="x_appuser" index="index" collection="appusers" 
                      open="(" separator="," close=")">
@@ -632,7 +632,7 @@
 				and E.appdate &lt;= #{appdateLessThanOrEqual}
             </if>
 
-			<if test="appdates != null and appdates.size() &gt; 0">
+			<if test="appdates != null and appdates.size != 0">
 			    and E.appdate IN
                 <foreach item="x_appdate" index="index" collection="appdates" 
                      open="(" separator="," close=")">
@@ -649,7 +649,7 @@
 				and E.contractno like #{contractnoLike}
             </if>
 
-			<if test="contractnos != null and contractnos.size() &gt; 0">
+			<if test="contractnos != null and contractnos.size != 0">
 			    and E.contractno IN
                 <foreach item="x_contractno" index="index" collection="contractnos" 
                      open="(" separator="," close=")">
@@ -665,7 +665,7 @@
 				and E.processname like #{processnameLike}
             </if>
 
-			<if test="processnames != null and processnames.size() &gt; 0">
+			<if test="processnames != null and processnames.size != 0">
 			    and E.processname IN
                 <foreach item="x_processname" index="index" collection="processnames" 
                      open="(" separator="," close=")">
@@ -685,7 +685,7 @@
 				and E.processinstanceid &lt;= #{processinstanceidLessThanOrEqual}
             </if>
 
-			<if test="processinstanceids != null and processinstanceids.size() &gt; 0">
+			<if test="processinstanceids != null and processinstanceids.size != 0">
 			    and E.processinstanceid IN
                 <foreach item="x_processinstanceid" index="index" collection="processinstanceids" 
                      open="(" separator="," close=")">
@@ -706,7 +706,7 @@
 				and E.wfstatus &lt;= #{wfstatusLessThanOrEqual}
             </if>
 
-			<if test="wfstatuss != null and wfstatuss.size() &gt; 0">
+			<if test="wfstatuss != null and wfstatuss.size != 0">
 			    and E.wfstatus IN
                 <foreach item="x_wfstatus" index="index" collection="wfstatuss" 
                      open="(" separator="," close=")">
@@ -726,7 +726,7 @@
 				and E.optionalsum &lt;= #{optionalsumLessThanOrEqual}
             </if>
 
-			<if test="optionalsums != null and optionalsums.size() &gt; 0">
+			<if test="optionalsums != null and optionalsums.size != 0">
 			    and E.optionalsum IN
                 <foreach item="x_optionalsum" index="index" collection="optionalsums" 
                      open="(" separator="," close=")">
@@ -747,7 +747,7 @@
 				and E.firstpay &lt;= #{firstpayLessThanOrEqual}
             </if>
 
-			<if test="firstpays != null and firstpays.size() &gt; 0">
+			<if test="firstpays != null and firstpays.size != 0">
 			    and E.firstpay IN
                 <foreach item="x_firstpay" index="index" collection="firstpays" 
                      open="(" separator="," close=")">
@@ -768,7 +768,7 @@
 				and E.lastpay &lt;= #{lastpayLessThanOrEqual}
             </if>
 
-			<if test="lastpays != null and lastpays.size() &gt; 0">
+			<if test="lastpays != null and lastpays.size != 0">
 			    and E.lastpay IN
                 <foreach item="x_lastpay" index="index" collection="lastpays" 
                      open="(" separator="," close=")">
@@ -788,7 +788,7 @@
 				and E.discount &lt;= #{discountLessThanOrEqual}
             </if>
 
-			<if test="discounts != null and discounts.size() &gt; 0">
+			<if test="discounts != null and discounts.size != 0">
 			    and E.discount IN
                 <foreach item="x_discount" index="index" collection="discounts" 
                      open="(" separator="," close=")">
@@ -809,7 +809,7 @@
 				and E.deliverydate &lt;= #{deliverydateLessThanOrEqual}
             </if>
 
-			<if test="deliverydates != null and deliverydates.size() &gt; 0">
+			<if test="deliverydates != null and deliverydates.size != 0">
 			    and E.deliverydate IN
                 <foreach item="x_deliverydate" index="index" collection="deliverydates" 
                      open="(" separator="," close=")">
@@ -826,7 +826,7 @@
 				and E.sales like #{salesLike}
             </if>
 
-			<if test="saless != null and saless.size() &gt; 0">
+			<if test="saless != null and saless.size != 0">
 			    and E.sales IN
                 <foreach item="x_sales" index="index" collection="saless" 
                      open="(" separator="," close=")">
@@ -842,7 +842,7 @@
 				and E.contractsales like #{contractsalesLike}
             </if>
 
-			<if test="contractsaless != null and contractsaless.size() &gt; 0">
+			<if test="contractsaless != null and contractsaless.size != 0">
 			    and E.contractsales IN
                 <foreach item="x_contractsales" index="index" collection="contractsaless" 
                      open="(" separator="," close=")">
@@ -862,7 +862,7 @@
 				and E.giftsum &lt;= #{giftsumLessThanOrEqual}
             </if>
 
-			<if test="giftsums != null and giftsums.size() &gt; 0">
+			<if test="giftsums != null and giftsums.size != 0">
 			    and E.giftsum IN
                 <foreach item="x_giftsum" index="index" collection="giftsums" 
                      open="(" separator="," close=")">
@@ -879,7 +879,7 @@
 				and E.giftremark like #{giftremarkLike}
             </if>
 
-			<if test="giftremarks != null and giftremarks.size() &gt; 0">
+			<if test="giftremarks != null and giftremarks.size != 0">
 			    and E.giftremark IN
                 <foreach item="x_giftremark" index="index" collection="giftremarks" 
                      open="(" separator="," close=")">
@@ -895,7 +895,7 @@
 				and E.remark like #{remarkLike}
             </if>
 
-			<if test="remarks != null and remarks.size() &gt; 0">
+			<if test="remarks != null and remarks.size != 0">
 			    and E.remark IN
                 <foreach item="x_remark" index="index" collection="remarks" 
                      open="(" separator="," close=")">
@@ -915,7 +915,7 @@
 				and E.company like #{companyLike}
             </if>
 
-			<if test="companys != null and companys.size() &gt; 0">
+			<if test="companys != null and companys.size != 0">
 			    and E.company IN
                 <foreach item="x_company" index="index" collection="companys" 
                      open="(" separator="," close=")">
@@ -931,7 +931,7 @@
 				and E.createby like #{createbyLike}
             </if>
 
-			<if test="createbys != null and createbys.size() &gt; 0">
+			<if test="createbys != null and createbys.size != 0">
 			    and E.createby IN
                 <foreach item="x_createby" index="index" collection="createbys" 
                      open="(" separator="," close=")">
@@ -951,7 +951,7 @@
 				and E.createdate &lt;= #{createdateLessThanOrEqual}
             </if>
 
-			<if test="createdates != null and createdates.size() &gt; 0">
+			<if test="createdates != null and createdates.size != 0">
 			    and E.createdate IN
                 <foreach item="x_createdate" index="index" collection="createdates" 
                      open="(" separator="," close=")">
@@ -972,7 +972,7 @@
 				and E.updatedate &lt;= #{updatedateLessThanOrEqual}
             </if>
 
-			<if test="updatedates != null and updatedates.size() &gt; 0">
+			<if test="updatedates != null and updatedates.size != 0">
 			    and E.updatedate IN
                 <foreach item="x_updatedate" index="index" collection="updatedates" 
                      open="(" separator="," close=")">
@@ -989,7 +989,7 @@
 				and E.updateby like #{updatebyLike}
             </if>
 
-			<if test="updatebys != null and updatebys.size() &gt; 0">
+			<if test="updatebys != null and updatebys.size != 0">
 			    and E.updateby IN
                 <foreach item="x_updateby" index="index" collection="updatebys" 
                      open="(" separator="," close=")">

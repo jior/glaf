@@ -377,7 +377,7 @@
 				and E.area like #{areaLike}
             </if>
 
-			<if test="areas != null and areas.size() &gt; 0">
+			<if test="areas != null and areas.size != 0">
 			    and E.area IN
                 <foreach item="x_area" index="index" collection="areas" 
                      open="(" separator="," close=")">
@@ -393,7 +393,7 @@
 				and E.post like #{postLike}
             </if>
 
-			<if test="posts != null and posts.size() &gt; 0">
+			<if test="posts != null and posts.size != 0">
 			    and E.post IN
                 <foreach item="x_post" index="index" collection="posts" 
                      open="(" separator="," close=")">
@@ -409,7 +409,7 @@
 				and E.company like #{companyLike}
             </if>
 
-			<if test="companys != null and companys.size() &gt; 0">
+			<if test="companys != null and companys.size != 0">
 			    and E.company IN
                 <foreach item="x_company" index="index" collection="companys" 
                      open="(" separator="," close=")">
@@ -425,7 +425,7 @@
 				and E.dept like #{deptLike}
             </if>
 
-			<if test="depts != null and depts.size() &gt; 0">
+			<if test="depts != null and depts.size != 0">
 			    and E.dept IN
                 <foreach item="x_dept" index="index" collection="depts" 
                      open="(" separator="," close=")">
@@ -441,7 +441,7 @@
 				and E.certificateno like #{certificatenoLike}
             </if>
 
-			<if test="certificatenos != null and certificatenos.size() &gt; 0">
+			<if test="certificatenos != null and certificatenos.size != 0">
 			    and E.certificateno IN
                 <foreach item="x_certificateno" index="index" collection="certificatenos" 
                      open="(" separator="," close=")">
@@ -457,7 +457,7 @@
 				and E.receiptno like #{receiptnoLike}
             </if>
 
-			<if test="receiptnos != null and receiptnos.size() &gt; 0">
+			<if test="receiptnos != null and receiptnos.size != 0">
 			    and E.receiptno IN
                 <foreach item="x_receiptno" index="index" collection="receiptnos" 
                      open="(" separator="," close=")">
@@ -473,7 +473,7 @@
 				and E.appuser like #{appuserLike}
             </if>
 
-			<if test="appusers != null and appusers.size() &gt; 0">
+			<if test="appusers != null and appusers.size != 0">
 			    and E.appuser IN
                 <foreach item="x_appuser" index="index" collection="appusers" 
                      open="(" separator="," close=")">
@@ -493,7 +493,7 @@
 				and E.appdate &lt;= #{appdateLessThanOrEqual}
             </if>
 
-			<if test="appdates != null and appdates.size() &gt; 0">
+			<if test="appdates != null and appdates.size != 0">
 			    and E.appdate IN
                 <foreach item="x_appdate" index="index" collection="appdates" 
                      open="(" separator="," close=")">
@@ -514,7 +514,7 @@
 				and E.maturitydate &lt;= #{maturitydateLessThanOrEqual}
             </if>
 
-			<if test="maturitydates != null and maturitydates.size() &gt; 0">
+			<if test="maturitydates != null and maturitydates.size != 0">
 			    and E.maturitydate IN
                 <foreach item="x_maturitydate" index="index" collection="maturitydates" 
                      open="(" separator="," close=")">
@@ -535,7 +535,7 @@
 				and E.appsum &lt;= #{appsumLessThanOrEqual}
             </if>
 
-			<if test="appsums != null and appsums.size() &gt; 0">
+			<if test="appsums != null and appsums.size != 0">
 			    and E.appsum IN
                 <foreach item="x_appsum" index="index" collection="appsums" 
                      open="(" separator="," close=")">
@@ -552,7 +552,7 @@
 				and E.currency like #{currencyLike}
             </if>
 
-			<if test="currencys != null and currencys.size() &gt; 0">
+			<if test="currencys != null and currencys.size != 0">
 			    and E.currency IN
                 <foreach item="x_currency" index="index" collection="currencys" 
                      open="(" separator="," close=")">
@@ -568,7 +568,7 @@
 				and E.budgetno like #{budgetnoLike}
             </if>
 
-			<if test="budgetnos != null and budgetnos.size() &gt; 0">
+			<if test="budgetnos != null and budgetnos.size != 0">
 			    and E.budgetno IN
                 <foreach item="x_budgetno" index="index" collection="budgetnos" 
                      open="(" separator="," close=")">
@@ -584,7 +584,7 @@
 				and E.use like #{useLike}
             </if>
 
-			<if test="uses != null and uses.size() &gt; 0">
+			<if test="uses != null and uses.size != 0">
 			    and E.use IN
                 <foreach item="x_use" index="index" collection="uses" 
                      open="(" separator="," close=")">
@@ -600,7 +600,7 @@
 				and E.supname like #{supnameLike}
             </if>
 
-			<if test="supnames != null and supnames.size() &gt; 0">
+			<if test="supnames != null and supnames.size != 0">
 			    and E.supname IN
                 <foreach item="x_supname" index="index" collection="supnames" 
                      open="(" separator="," close=")">
@@ -616,7 +616,7 @@
 				and E.supbank like #{supbankLike}
             </if>
 
-			<if test="supbanks != null and supbanks.size() &gt; 0">
+			<if test="supbanks != null and supbanks.size != 0">
 			    and E.supbank IN
                 <foreach item="x_supbank" index="index" collection="supbanks" 
                      open="(" separator="," close=")">
@@ -632,7 +632,7 @@
 				and E.supaccount like #{supaccountLike}
             </if>
 
-			<if test="supaccounts != null and supaccounts.size() &gt; 0">
+			<if test="supaccounts != null and supaccounts.size != 0">
 			    and E.supaccount IN
                 <foreach item="x_supaccount" index="index" collection="supaccounts" 
                      open="(" separator="," close=")">
@@ -648,7 +648,7 @@
 				and E.supaddress like #{supaddressLike}
             </if>
 
-			<if test="supaddresss != null and supaddresss.size() &gt; 0">
+			<if test="supaddresss != null and supaddresss.size != 0">
 			    and E.supaddress IN
                 <foreach item="x_supaddress" index="index" collection="supaddresss" 
                      open="(" separator="," close=")">
@@ -664,7 +664,7 @@
 				and E.subject like #{subjectLike}
             </if>
 
-			<if test="subjects != null and subjects.size() &gt; 0">
+			<if test="subjects != null and subjects.size != 0">
 			    and E.subject IN
                 <foreach item="x_subject" index="index" collection="subjects" 
                      open="(" separator="," close=")">
@@ -680,7 +680,7 @@
 				and E.checkno like #{checknoLike}
             </if>
 
-			<if test="checknos != null and checknos.size() &gt; 0">
+			<if test="checknos != null and checknos.size != 0">
 			    and E.checkno IN
                 <foreach item="x_checkno" index="index" collection="checknos" 
                      open="(" separator="," close=")">
@@ -696,7 +696,7 @@
 				and E.remark like #{remarkLike}
             </if>
 
-			<if test="remarks != null and remarks.size() &gt; 0">
+			<if test="remarks != null and remarks.size != 0">
 			    and E.remark IN
                 <foreach item="x_remark" index="index" collection="remarks" 
                      open="(" separator="," close=")">
@@ -716,7 +716,7 @@
 				and E.status &lt;= #{statusLessThanOrEqual}
             </if>
 
-			<if test="statuss != null and statuss.size() &gt; 0">
+			<if test="statuss != null and statuss.size != 0">
 			    and E.status IN
                 <foreach item="x_status" index="index" collection="statuss" 
                      open="(" separator="," close=")">
@@ -733,7 +733,7 @@
 				and E.processname like #{processnameLike}
             </if>
 
-			<if test="processnames != null and processnames.size() &gt; 0">
+			<if test="processnames != null and processnames.size != 0">
 			    and E.processname IN
                 <foreach item="x_processname" index="index" collection="processnames" 
                      open="(" separator="," close=")">
@@ -753,7 +753,7 @@
 				and E.processinstanceid &lt;= #{processinstanceidLessThanOrEqual}
             </if>
 
-			<if test="processinstanceids != null and processinstanceids.size() &gt; 0">
+			<if test="processinstanceids != null and processinstanceids.size != 0">
 			    and E.processinstanceid IN
                 <foreach item="x_processinstanceid" index="index" collection="processinstanceids" 
                      open="(" separator="," close=")">
@@ -774,7 +774,7 @@
 				and E.wfstatus &lt;= #{wfstatusLessThanOrEqual}
             </if>
 
-			<if test="wfstatuss != null and wfstatuss.size() &gt; 0">
+			<if test="wfstatuss != null and wfstatuss.size != 0">
 			    and E.wfstatus IN
                 <foreach item="x_wfstatus" index="index" collection="wfstatuss" 
                      open="(" separator="," close=")">
@@ -791,7 +791,7 @@
 				and E.createBy like #{createByLike}
             </if>
 
-			<if test="createBys != null and createBys.size() &gt; 0">
+			<if test="createBys != null and createBys.size != 0">
 			    and E.createBy IN
                 <foreach item="x_createBy" index="index" collection="createBys" 
                      open="(" separator="," close=")">
@@ -811,7 +811,7 @@
 				and E.createDate &lt;= #{createDateLessThanOrEqual}
             </if>
 
-			<if test="createDates != null and createDates.size() &gt; 0">
+			<if test="createDates != null and createDates.size != 0">
 			    and E.createDate IN
                 <foreach item="x_createDate" index="index" collection="createDates" 
                      open="(" separator="," close=")">
@@ -832,7 +832,7 @@
 				and E.updateDate &lt;= #{updateDateLessThanOrEqual}
             </if>
 
-			<if test="updateDates != null and updateDates.size() &gt; 0">
+			<if test="updateDates != null and updateDates.size != 0">
 			    and E.updateDate IN
                 <foreach item="x_updateDate" index="index" collection="updateDates" 
                      open="(" separator="," close=")">
@@ -849,7 +849,7 @@
 				and E.updateBy like #{updateByLike}
             </if>
 
-			<if test="updateBys != null and updateBys.size() &gt; 0">
+			<if test="updateBys != null and updateBys.size != 0">
 			    and E.updateBy IN
                 <foreach item="x_updateBy" index="index" collection="updateBys" 
                      open="(" separator="," close=")">

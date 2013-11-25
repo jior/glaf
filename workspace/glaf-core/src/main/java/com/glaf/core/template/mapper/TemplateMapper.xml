@@ -150,7 +150,7 @@
 				and E.TEMPLATEID_ = #{templateId}
 			</if>
 
-			<if test="templateIds != null and templateIds.size() &gt; 0">
+			<if test="templateIds != null and templateIds.size != 0">
 			    and E.TEMPLATEID_ IN
 				<foreach item="x_templateId" index="index" collection="templateIds" 
 					open="(" separator="," close=")">
@@ -186,7 +186,7 @@
 				and E.NODEID_ = #{nodeId}
 			</if>
 
-			<if test="nodeIds != null and nodeIds.size() &gt; 0">
+			<if test="nodeIds != null and nodeIds.size != 0">
 			    and E.NODEID_ IN
 				<foreach item="x_nodeId" index="index" collection="nodeIds" 
 					open="(" separator="," close=")">
@@ -210,7 +210,7 @@
 				and E.MODULEID_ = #{moduleId}
 			</if>
 
-			<if test="moduleIds != null and moduleIds.size() &gt; 0">
+			<if test="moduleIds != null and moduleIds.size != 0">
 			    and E.MODULEID_ IN
 				<foreach item="x_moduleId" index="index" collection="moduleIds" 
 					open="(" separator="," close=")">
@@ -230,7 +230,7 @@
 				and E.OBJECTVALUE_ = #{objectValue}
 			</if>
 
-			<if test="objectValues != null and objectValues.size() &gt; 0">
+			<if test="objectValues != null and objectValues.size != 0">
 			    and E.OBJECTVALUE_ IN
 				<foreach item="x_objectValue" index="index" collection="objectValues" 
 					open="(" separator="," close=")">
@@ -242,7 +242,7 @@
 				and E.OBJECTID_ = #{objectId}
 			</if>
 
-			<if test="objectIds != null and objectIds.size() &gt; 0">
+			<if test="objectIds != null and objectIds.size != 0">
 			    and E.OBJECTID_ IN
 				<foreach item="x_objectId" index="index" collection="objectIds" 
 					open="(" separator="," close=")">

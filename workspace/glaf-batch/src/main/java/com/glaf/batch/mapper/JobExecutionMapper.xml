@@ -184,7 +184,7 @@
 				and E.job_instance_id = #{jobInstanceId}
 			</if>
 
-			<if test="jobInstanceIds != null and jobInstanceIds.size() &gt; 0">
+			<if test="jobInstanceIds != null and jobInstanceIds.size != 0">
 			    and E.job_instance_id IN
 				<foreach item="x_jobInstanceId" index="index" collection="jobInstanceIds" 
 					open="(" separator="," close=")">

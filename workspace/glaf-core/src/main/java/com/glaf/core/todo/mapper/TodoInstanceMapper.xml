@@ -340,7 +340,7 @@
 		<where>
 			1 = 1
 
-			<if test="processInstanceIds != null and processInstanceIds.size() &gt; 0">
+			<if test="processInstanceIds != null and processInstanceIds.size != 0">
 				and E.PROCESSINSTANCEID_ IN
 				<foreach item="x_processInstanceId" index="index"
 					collection="processInstanceIds" open="(" separator="," close=")">
@@ -353,7 +353,7 @@
 				and E.actorId = #{actorId}
 			</if>
 
-			<if test="actorIds != null and actorIds.size() &gt; 0">
+			<if test="actorIds != null and actorIds.size != 0">
 				and E.actorId IN
 				<foreach item="x_actorId" index="index" collection="actorIds"
 					open="(" separator="," close=")">
@@ -377,7 +377,7 @@
 				and E.provider = #{provider}
 			</if>
 
-			<if test="providers != null and providers.size() &gt; 0">
+			<if test="providers != null and providers.size != 0">
 				and E.provider IN
 				<foreach item="x_provider" index="index" collection="providers"
 					open="(" separator="," close=")">
@@ -391,7 +391,7 @@
 				and E.linkType = #{linkType}
 			</if>
 
-			<if test="linkTypes != null and linkTypes.size() &gt; 0">
+			<if test="linkTypes != null and linkTypes.size != 0">
 				and E.linkType IN
 				<foreach item="x_linkType" index="index" collection="linkTypes"
 					open="(" separator="," close=")">
@@ -443,7 +443,7 @@
 				and E.taskInstanceId = #{taskInstanceId}
 			</if>
 
-			<if test="taskInstanceIds != null and taskInstanceIds.size() &gt; 0">
+			<if test="taskInstanceIds != null and taskInstanceIds.size != 0">
 				and E.taskInstanceId IN
 				<foreach item="x_taskInstanceId" index="index" collection="taskInstanceIds"
 					open="(" separator="," close=")">
@@ -455,7 +455,7 @@
 				and E.deptId = #{deptId}
 			</if>
 
-			<if test="deptIds != null and deptIds.size() &gt; 0">
+			<if test="deptIds != null and deptIds.size != 0">
 				and E.deptId IN
 				<foreach item="x_deptId" index="index" collection="deptIds"
 					open="(" separator="," close=")">
@@ -471,7 +471,7 @@
 				and E.roleId = #{roleId}
 			</if>
 
-			<if test="roleIds != null and roleIds.size() &gt; 0">
+			<if test="roleIds != null and roleIds.size != 0">
 				and E.roleId IN
 				<foreach item="x_roleId" index="index" collection="roleIds"
 					open="(" separator="," close=")">
@@ -487,7 +487,7 @@
 				and E.roleCode like #{roleCodeLike}
 			</if>
 
-			<if test="roleCodes != null and roleCodes.size() &gt; 0">
+			<if test="roleCodes != null and roleCodes.size != 0">
 				and E.roleCode IN
 				<foreach item="x_roleCode" index="index" collection="roleCodes"
 					open="(" separator="," close=")">
@@ -499,7 +499,7 @@
 				and E.todoId = #{todoId}
 			</if>
 
-			<if test="todoIds != null and todoIds.size() &gt; 0">
+			<if test="todoIds != null and todoIds.size != 0">
 				and E.todoId IN
 				<foreach item="x_todoId" index="index" collection="todoIds"
 					open="(" separator="," close=")">
@@ -511,7 +511,7 @@
 				and E.appId = #{appId}
 			</if>
 
-			<if test="appIds != null and appIds.size() &gt; 0">
+			<if test="appIds != null and appIds.size != 0">
 				and E.appId IN
 				<foreach item="x_appId" index="index" collection="appIds"
 					open="(" separator="," close=")">
@@ -523,7 +523,7 @@
 				and E.moduleId = #{moduleId}
 			</if>
 
-			<if test="moduleIds != null and moduleIds.size() &gt; 0">
+			<if test="moduleIds != null and moduleIds.size != 0">
 				and E.moduleId IN
 				<foreach item="x_moduleId" index="index" collection="moduleIds"
 					open="(" separator="," close=")">
@@ -535,7 +535,7 @@
 				and E.objectId = #{objectId}
 			</if>
 
-			<if test="objectIds != null and objectIds.size() &gt; 0">
+			<if test="objectIds != null and objectIds.size != 0">
 				and E.objectId IN
 				<foreach item="x_objectId" index="index" collection="objectIds"
 					open="(" separator="," close=")">
@@ -547,7 +547,7 @@
 				and E.objectValue = #{objectValue}
 			</if>
 
-			<if test="objectValues != null and objectValues.size() &gt; 0">
+			<if test="objectValues != null and objectValues.size != 0">
 				and E.objectValue IN
 				<foreach item="x_objectValue" index="index" collection="objectValues"
 					open="(" separator="," close=")">

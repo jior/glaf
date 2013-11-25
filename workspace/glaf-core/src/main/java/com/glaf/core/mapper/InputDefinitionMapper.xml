@@ -46,7 +46,7 @@
 			
 			id, service_key, type_cd, key_name, type_title, title, java_type, input_type,value_field,text_field,url, valid_type, required, init_value 
 
-			<if test="extendedColumns != null and  extendedColumns.size() &gt; 0">
+			<if test="extendedColumns != null and  extendedColumns.size != 0">
 	          <foreach collection="extendedColumns" item="column">
 			    <if test="column.value != null">
 				,${column.columnName}
@@ -205,7 +205,7 @@
 				and E.type_cd = #{typeCd}
 			</if>
 
-			<if test="typeCds != null and typeCds.size() &gt; 0">
+			<if test="typeCds != null and typeCds.size != 0">
 			    and E.type_cd IN
 				<foreach item="x_typeCd" index="index" collection="typeCds" 
 					open="(" separator="," close=")">
@@ -217,7 +217,7 @@
 				and E.key_name = #{keyName}
 			</if>
 
-			<if test="keyNames != null and keyNames.size() &gt; 0">
+			<if test="keyNames != null and keyNames.size != 0">
 			    and E.key_name IN
 				<foreach item="x_keyName" index="index" collection="keyNames" 
 					open="(" separator="," close=")">

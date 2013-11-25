@@ -11,35 +11,35 @@
 
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<foreach collection="columns" item="column">
-			    <if test="column.value != null">
-				    ${column.columnName},
+				<if test="column.value != null">
+					${column.columnName},
 				</if>
 			</foreach>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<foreach collection="columns" item="column">
-			   <if test="column.value != null">
-				<choose>
-					<when test="column.javaType == 'Boolean'">
-						#{column.value, jdbcType=BOOLEAN},
-					</when>
-					<when test="column.javaType == 'Integer'">
-						#{column.value, jdbcType=INTEGER},
-					</when>
-					<when test="column.javaType == 'Long'">
-						#{column.value, jdbcType=BIGINT},
-					</when>
-					<when test="column.javaType == 'Double'">
-						#{column.value, jdbcType=DOUBLE},
-					</when>
-					<when test="column.javaType == 'Date'">
-						#{column.value, jdbcType=TIMESTAMP},
-					</when>
-					<otherwise>
-						#{column.value, jdbcType=VARCHAR},
-					</otherwise>
-				</choose>
-			  </if>
+				<if test="column.value != null">
+					<choose>
+						<when test="column.javaType == 'Boolean'">
+							#{column.value, jdbcType=BOOLEAN},
+						</when>
+						<when test="column.javaType == 'Integer'">
+							#{column.value, jdbcType=INTEGER},
+						</when>
+						<when test="column.javaType == 'Long'">
+							#{column.value, jdbcType=BIGINT},
+						</when>
+						<when test="column.javaType == 'Double'">
+							#{column.value, jdbcType=DOUBLE},
+						</when>
+						<when test="column.javaType == 'Date'">
+							#{column.value, jdbcType=TIMESTAMP},
+						</when>
+						<otherwise>
+							#{column.value, jdbcType=VARCHAR},
+						</otherwise>
+					</choose>
+				</if>
 			</foreach>
 		</trim>
 
@@ -47,62 +47,62 @@
 
 
 	<sql id="insertExtendedTableDataSql">
-       
-	    <if test="extendedColumns != null and  extendedColumns.size() &gt; 0">
-	        <foreach collection="extendedColumns" item="column">
-			  <if test="column.value != null">
-                <choose>
-					<when test="column.javaType == 'Boolean'">
-						,#{column.value, jdbcType=BOOLEAN}
-					</when>
-					<when test="column.javaType == 'Integer'">
-						,#{column.value, jdbcType=INTEGER}
-					</when>
-					<when test="column.javaType == 'Long'">
-						,#{column.value, jdbcType=BIGINT}
-					</when>
-					<when test="column.javaType == 'Double'">
-						,#{column.value, jdbcType=DOUBLE}
-					</when>
-					<when test="column.javaType == 'Date'">
-						,#{column.value, jdbcType=TIMESTAMP}
-					</when>
-					<otherwise>
-						,#{column.value, jdbcType=VARCHAR}
-					</otherwise>
-				</choose>
-			  </if>
-            </foreach>
+
+		<if test="extendedColumns != null and  extendedColumns.size != 0">
+			<foreach collection="extendedColumns" item="column">
+				<if test="column.value != null">
+					<choose>
+						<when test="column.javaType == 'Boolean'">
+							,#{column.value, jdbcType=BOOLEAN}
+						</when>
+						<when test="column.javaType == 'Integer'">
+							,#{column.value, jdbcType=INTEGER}
+						</when>
+						<when test="column.javaType == 'Long'">
+							,#{column.value, jdbcType=BIGINT}
+						</when>
+						<when test="column.javaType == 'Double'">
+							,#{column.value, jdbcType=DOUBLE}
+						</when>
+						<when test="column.javaType == 'Date'">
+							,#{column.value, jdbcType=TIMESTAMP}
+						</when>
+						<otherwise>
+							,#{column.value, jdbcType=VARCHAR}
+						</otherwise>
+					</choose>
+				</if>
+			</foreach>
 		</if>
 
 	</sql>
 
 
 	<sql id="updateExtendedTableDataSql">
-	    
-		<if test="extendedColumns != null and  extendedColumns.size() &gt; 0">
-	        <foreach collection="extendedColumns" item="column">
-			  <if test="column.value != null">
-				<choose>
-					<when test="column.javaType == 'Integer'">
-						${column.columnName} = #{column.value, jdbcType=INTEGER},
-					</when>
-					<when test="column.javaType == 'Long'">
-						${column.columnName} = #{column.value, jdbcType=BIGINT},
-					</when>
-					<when test="column.javaType == 'Double'">
-						${column.columnName} = #{column.value, jdbcType=DOUBLE},
-					</when>
-					<when test="column.javaType == 'Date'">
-						${column.columnName} = #{column.value, jdbcType=TIMESTAMP},
-					</when>
-					<otherwise>
-						${column.columnName} = #{column.value, jdbcType=VARCHAR},
-					</otherwise>
-				</choose>
-			  </if>
+
+		<if test="extendedColumns != null and  extendedColumns.size != 0">
+			<foreach collection="extendedColumns" item="column">
+				<if test="column.value != null">
+					<choose>
+						<when test="column.javaType == 'Integer'">
+							${column.columnName} = #{column.value, jdbcType=INTEGER},
+						</when>
+						<when test="column.javaType == 'Long'">
+							${column.columnName} = #{column.value, jdbcType=BIGINT},
+						</when>
+						<when test="column.javaType == 'Double'">
+							${column.columnName} = #{column.value, jdbcType=DOUBLE},
+						</when>
+						<when test="column.javaType == 'Date'">
+							${column.columnName} = #{column.value, jdbcType=TIMESTAMP},
+						</when>
+						<otherwise>
+							${column.columnName} = #{column.value, jdbcType=VARCHAR},
+						</otherwise>
+					</choose>
+				</if>
 			</foreach>
-	    </if>
+		</if>
 
 	</sql>
 
@@ -114,34 +114,34 @@
 		<set>
 			<trim prefix="" suffix="" suffixOverrides=",">
 				<foreach collection="columns" item="column">
-				  <if test="column.value != null">
-					<choose>
-						<when test="column.javaType == 'Boolean'">
-							${column.columnName} = #{column.value,
-							jdbcType=BOOLEAN},
-						</when>
-						<when test="column.javaType == 'Integer'">
-							${column.columnName} = #{column.value,
-							jdbcType=INTEGER},
-						</when>
-						<when test="column.javaType == 'Long'">
-							${column.columnName} = #{column.value,
-							jdbcType=BIGINT},
-						</when>
-						<when test="column.javaType == 'Double'">
-							${column.columnName} = #{column.value,
-							jdbcType=DOUBLE},
-						</when>
-						<when test="column.javaType == 'Date'">
-							${column.columnName} = #{column.value,
-							jdbcType=TIMESTAMP},
-						</when>
-						<otherwise>
-							${column.columnName} = #{column.value,
-							jdbcType=VARCHAR},
-						</otherwise>
-					</choose>
-				  </if>
+					<if test="column.value != null">
+						<choose>
+							<when test="column.javaType == 'Boolean'">
+								${column.columnName} = #{column.value,
+								jdbcType=BOOLEAN},
+							</when>
+							<when test="column.javaType == 'Integer'">
+								${column.columnName} = #{column.value,
+								jdbcType=INTEGER},
+							</when>
+							<when test="column.javaType == 'Long'">
+								${column.columnName} = #{column.value,
+								jdbcType=BIGINT},
+							</when>
+							<when test="column.javaType == 'Double'">
+								${column.columnName} = #{column.value,
+								jdbcType=DOUBLE},
+							</when>
+							<when test="column.javaType == 'Date'">
+								${column.columnName} = #{column.value,
+								jdbcType=TIMESTAMP},
+							</when>
+							<otherwise>
+								${column.columnName} = #{column.value,
+								jdbcType=VARCHAR},
+							</otherwise>
+						</choose>
+					</if>
 				</foreach>
 			</trim>
 		</set>
@@ -193,7 +193,7 @@
 						</when>
 						<when test="column.javaType == 'Collection'">
 							<if
-								test="column.collectionValues != null and column.collectionValues.size() &gt; 0">
+								test="column.collectionValues != null and column.collectionValues.size != 0">
 								and ${column.columnName} IN
 								<foreach item="x_rowId" index="index" collection="column.collectionValues"
 									open="(" separator="," close=")">
@@ -238,7 +238,8 @@
 		</choose>
 	</select>
 
-   <select id="getTableDataByConditions" parameterType="com.glaf.core.base.TableModel" resultType="map">
+	<select id="getTableDataByConditions" parameterType="com.glaf.core.base.TableModel"
+		resultType="map">
 
 		select * from ${tableName}
 		where 1=1
@@ -265,7 +266,7 @@
 						</when>
 						<when test="column.javaType == 'Collection'">
 							<if
-								test="column.collectionValues != null and column.collectionValues.size() &gt; 0">
+								test="column.collectionValues != null and column.collectionValues.size != 0">
 								and ${column.columnName} IN
 								<foreach item="x_rowId" index="index" collection="column.collectionValues"
 									open="(" separator="," close=")">
@@ -286,8 +287,9 @@
 		</choose>
 
 	</select>
-	
-	<select id="getTableCountByConditions" parameterType="com.glaf.core.base.TableModel" resultType="int">
+
+	<select id="getTableCountByConditions" parameterType="com.glaf.core.base.TableModel"
+		resultType="int">
 
 		select count(*) from ${tableName}
 		where 1=1
@@ -314,7 +316,7 @@
 						</when>
 						<when test="column.javaType == 'Collection'">
 							<if
-								test="column.collectionValues != null and column.collectionValues.size() &gt; 0">
+								test="column.collectionValues != null and column.collectionValues.size() !=0">
 								and ${column.columnName} IN
 								<foreach item="x_rowId" index="index" collection="column.collectionValues"
 									open="(" separator="," close=")">

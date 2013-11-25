@@ -236,7 +236,7 @@
 				and E.NAME_ like #{nameLike}
 			</if>
 
-			<if test="names != null &amp;&amp; names.size() &gt; 0">
+			<if test="names != null and names.size != 0">
 				and E.NAME_ IN
 				<foreach item="x_name" index="index" collection="names"
 					open="(" separator="," close=")">
@@ -256,7 +256,7 @@
 				and E.MODULEID_ = #{moduleId}
 			</if>
 
-			<if test="moduleIds != null &amp;&amp; moduleIds.size() &gt; 0">
+			<if test="moduleIds != null and moduleIds.size != 0">
 				and E.MODULEID_ IN
 				<foreach item="x_moduleId" index="index" collection="moduleIds"
 					open="(" separator="," close=")">
@@ -284,7 +284,7 @@
 				and E.ACTORID_ = #{actorId}
 			</if>
 
-			<if test="actorIds != null &amp;&amp; actorIds.size() &gt; 0">
+			<if test="actorIds != null and actorIds.size != 0">
 				and E.ACTORID_ IN
 				<foreach item="x_actorId" index="index" collection="actorIds"
 					open="(" separator="," close=")">
