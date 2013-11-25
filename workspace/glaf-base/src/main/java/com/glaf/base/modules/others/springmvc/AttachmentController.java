@@ -21,7 +21,6 @@ package com.glaf.base.modules.others.springmvc;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 
 import java.util.Date;
 
@@ -81,7 +80,7 @@ public class AttachmentController {
 					try {
 						String filePath = SystemProperties.getAppPath()
 								+ Constants.UPLOAD_DIR + attachment.getUrl();
-						logger.debug("prepare delete file:"+filePath);
+						logger.debug("prepare delete file:" + filePath);
 						File file = new File(filePath);
 						if (file.exists() && file.isFile()) {
 							file.delete();
@@ -198,8 +197,8 @@ public class AttachmentController {
 		for (int i = 0; i < referIdArray.length; i++) {
 			longReferId[i] = Long.parseLong(referIdArray[i]);
 		}
-		int count = attachmentService
-				.getAttachmentCount(longReferId, referType,createId);
+		int count = attachmentService.getAttachmentCount(longReferId,
+				referType, createId);
 		String Strcount = count + "";
 		request.setAttribute("count", Strcount);
 
@@ -211,7 +210,7 @@ public class AttachmentController {
 		return new ModelAndView("/modules/others/attachment/showCount",
 				modelMap);
 	}
-	
+
 	/**
 	 * 显示附件列表
 	 * 
@@ -226,10 +225,11 @@ public class AttachmentController {
 		int referType = ParamUtil.getIntParameter(request, "referType", 0);
 		long createId = RequestUtil.getLoginUser(request).getId();
 		long[] longReferId = new long[1];
-		longReferId[0]=referId;
-		int count = attachmentService.getAttachmentCount(longReferId, referType,createId);
-		String countStr = count+"";
-		return ResponseUtils.responseJsonResult(true,countStr);
+		longReferId[0] = referId;
+		int count = attachmentService.getAttachmentCount(longReferId,
+				referType, createId);
+		String countStr = count + "";
+		return ResponseUtils.responseJsonResult(true, countStr);
 	}
 
 	/**
@@ -246,15 +246,17 @@ public class AttachmentController {
 		int viewType = ParamUtil.getIntParameter(request, "viewType", 0);
 		int modifyType = ParamUtil.getIntParameter(request, "modifyType", 0);
 		long createId = RequestUtil.getLoginUser(request).getId();
-		if(viewType==0){
+		if (viewType == 0) {
 			createId = 0;
 		}
-		if(viewType==1 && modifyType==1){
+		if (viewType == 1 && modifyType == 1) {
 			createId = 0;
 		}
 
-		//request.setAttribute("list",attachmentService.getAttachmentList(referId, referType));
-		request.setAttribute("list",attachmentService.getAttachmentList(referId, referType,createId));
+		// request.setAttribute("list",attachmentService.getAttachmentList(referId,
+		// referType));
+		request.setAttribute("list", attachmentService.getAttachmentList(
+				referId, referType, createId));
 
 		String x_view = ViewProperties
 				.getString("attachment.showList.referType");
