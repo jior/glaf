@@ -7,12 +7,16 @@ import org.dom4j.*;
 import org.dom4j.io.SAXReader;
 import org.springframework.core.io.*;
 
+import com.glaf.core.config.Configuration;
 import com.glaf.core.config.DBConfiguration;
 import com.glaf.core.config.SystemConfig;
 import com.glaf.core.util.Dom4jUtils;
 import com.glaf.core.util.FileUtils;
+import com.glaf.jbpm.config.JbpmBaseConfiguration;
 
 public class JbpmConfiguration {
+
+	private static Configuration conf = JbpmBaseConfiguration.create();
 
 	public static void main(String[] args) {
 		JbpmConfiguration cfg = new JbpmConfiguration();
@@ -20,6 +24,12 @@ public class JbpmConfiguration {
 	}
 
 	public void config() {
+		/**
+		 * 判断是否自动同步Hibernate配置文件
+		 */
+		if (!conf.getBoolean("jbpm.hibernate.jdbc.sync", true)) {
+			return;
+		}
 		Properties properties = DBConfiguration
 				.getDefaultDataSourceProperties();
 		String filename = SystemConfig.getConfigRootPath()

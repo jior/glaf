@@ -3,6 +3,12 @@
 <configuration>
 
     <property>
+		<name>jbpm.hibernate.jdbc.sync</name>
+		<value>true</value>
+		<description>自动同步Hibernate配置文件</description>
+	</property>
+
+	<property>
 		<name>jbpm.processImageUrl</name>
 		<value>/mx/jbpm/image</value>
 	</property>
