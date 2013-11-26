@@ -18,7 +18,6 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
 
@@ -127,8 +126,6 @@ public class WebFile {
 	private HttpServletResponse m_response = null;
 
 	private String m_rootPath = null;
-
-	private HttpSession m_session = null;
 
 	private boolean m_showFolderSize = false;
 
@@ -463,9 +460,7 @@ public class WebFile {
 			mySmartUpload.initialize(m_config, m_request, m_response);
 		if (m_initialize == 3)
 			mySmartUpload.initialize(m_pageContext);
-		if (m_initialize == 4)
-			mySmartUpload.initialize(m_application, m_session, m_request,
-					m_response, m_outNew);
+		
 		try {
 			mySmartUpload.downloadFile(path, contentType);
 		} catch (Exception ex) {
@@ -1228,9 +1223,7 @@ public class WebFile {
 					myUpload.initialize(m_config, m_request, m_response);
 				if (m_initialize == 3)
 					myUpload.initialize(m_pageContext);
-				if (m_initialize == 4)
-					myUpload.initialize(m_application, m_session, m_request,
-							m_response, m_outNew);
+				
 
 				myUpload.setDeniedFilesList(m_strDeniedFilesList);
 				myUpload.setAllowedFilesList(m_strAllowedFilesList);
@@ -3268,7 +3261,6 @@ public class WebFile {
 			throws ServletException, IOException {
 		m_pageContext = pageContext;
 		m_application = pageContext.getServletContext();
-		m_session = pageContext.getSession();
 		m_request = (HttpServletRequest) pageContext.getRequest();
 		m_response = (HttpServletResponse) pageContext.getResponse();
 		m_outNew = pageContext.getOut();
@@ -3285,17 +3277,7 @@ public class WebFile {
 		m_initialize = 2;
 	}
 
-	public final void initialize(ServletContext application,
-			HttpSession session, HttpServletRequest request,
-			HttpServletResponse response, JspWriter out)
-			throws ServletException, IOException {
-		m_application = application;
-		m_session = session;
-		m_request = request;
-		m_response = response;
-		m_outNew = out;
-		m_initialize = 4;
-	}
+
 
 	private boolean isHidden(File file) throws IOException,
 			NoSuchMethodException {

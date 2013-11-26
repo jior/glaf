@@ -9,8 +9,6 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
 
 import org.apache.commons.lang.StringUtils;
@@ -326,15 +324,6 @@ public class FileUpload {
 			HttpServletRequest request, HttpServletResponse response)
 			throws ServletException {
 		m_application = config.getServletContext();
-		m_request = request;
-		m_response = response;
-	}
-
-	public final void initialize(ServletContext application,
-			HttpSession session, HttpServletRequest request,
-			HttpServletResponse response, JspWriter out)
-			throws ServletException {
-		m_application = application;
 		m_request = request;
 		m_response = response;
 	}

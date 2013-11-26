@@ -24,7 +24,6 @@ import java.util.Map.Entry;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
@@ -145,16 +144,6 @@ public class HttpQueryUtils {
 				if (StringUtils.equals(cookie.getName(), cookieKey)) {
 					content = cookie.getValue();
 				}
-			}
-		}
-
-		if (content == null) {
-			/**
-			 * 若Cookie中找不到，尝试从Session中找
-			 */
-			HttpSession session = request.getSession(false);
-			if (session != null) {
-				content = (String) session.getAttribute(cookieKey);
 			}
 		}
 
@@ -444,11 +433,6 @@ public class HttpQueryUtils {
 		if (response != null) {
 			Cookie cookie = new Cookie(cookieKey, jsonText);
 			response.addCookie(cookie);
-		} else {
-			HttpSession session = request.getSession(true);
-			if (session != null) {
-				session.setAttribute(cookieKey, jsonText);
-			}
 		}
 
 		query.setParameter(params);
