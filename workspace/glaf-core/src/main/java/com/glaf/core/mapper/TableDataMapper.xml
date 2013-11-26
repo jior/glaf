@@ -85,19 +85,24 @@
 				<if test="column.value != null">
 					<choose>
 						<when test="column.javaType == 'Integer'">
-							${column.columnName} = #{column.value, jdbcType=INTEGER},
+							${column.columnName} = #{column.value,
+							jdbcType=INTEGER},
 						</when>
 						<when test="column.javaType == 'Long'">
-							${column.columnName} = #{column.value, jdbcType=BIGINT},
+							${column.columnName} = #{column.value,
+							jdbcType=BIGINT},
 						</when>
 						<when test="column.javaType == 'Double'">
-							${column.columnName} = #{column.value, jdbcType=DOUBLE},
+							${column.columnName} = #{column.value,
+							jdbcType=DOUBLE},
 						</when>
 						<when test="column.javaType == 'Date'">
-							${column.columnName} = #{column.value, jdbcType=TIMESTAMP},
+							${column.columnName} = #{column.value,
+							jdbcType=TIMESTAMP},
 						</when>
 						<otherwise>
-							${column.columnName} = #{column.value, jdbcType=VARCHAR},
+							${column.columnName} = #{column.value,
+							jdbcType=VARCHAR},
 						</otherwise>
 					</choose>
 				</if>
@@ -316,7 +321,7 @@
 						</when>
 						<when test="column.javaType == 'Collection'">
 							<if
-								test="column.collectionValues != null and column.collectionValues.size() !=0">
+								test="column.collectionValues != null and column.collectionValues.size !=0">
 								and ${column.columnName} IN
 								<foreach item="x_rowId" index="index" collection="column.collectionValues"
 									open="(" separator="," close=")">

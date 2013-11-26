@@ -4,87 +4,96 @@
 
 <mapper namespace="com.glaf.core.mapper.InputDefinitionMapper">
 
-	<resultMap id="systemParamResultMap" type="com.glaf.core.domain.InputDefinition">
+	<resultMap id="inputDefinitionResultMap" type="com.glaf.core.domain.InputDefinition">
 		<id property="id" column="id" jdbcType="VARCHAR" />
-		<result property="serviceKey" column="service_key" jdbcType="VARCHAR"/>
-		<result property="typeCd" column="type_cd" jdbcType="VARCHAR"/>
-		<result property="typeTitle" column="type_title" jdbcType="VARCHAR"/>
-		<result property="keyName" column="key_name" jdbcType="VARCHAR"/>
+		<result property="serviceKey" column="service_key" jdbcType="VARCHAR" />
+		<result property="typeCd" column="type_cd" jdbcType="VARCHAR" />
+		<result property="typeTitle" column="type_title" jdbcType="VARCHAR" />
+		<result property="keyName" column="key_name" jdbcType="VARCHAR" />
 		<result property="title" column="title" jdbcType="VARCHAR" />
-		<result property="javaType" column="java_type" jdbcType="VARCHAR"/>
-		<result property="inputType" column="input_type" jdbcType="VARCHAR"/>
-		<result property="valueField" column="value_field" jdbcType="VARCHAR"/>
-		<result property="textField" column="text_field" jdbcType="VARCHAR"/>
-		<result property="url" column="url" jdbcType="VARCHAR"/>
-		<result property="validType" column="valid_type" jdbcType="VARCHAR"/>
-		<result property="required" column="required" jdbcType="VARCHAR"/>
-		<result property="initValue" column="init_value" jdbcType="VARCHAR"/>
-	</resultMap>
-	
-	
-	<resultMap id="systemParamHashMap"	type="java.util.HashMap">
-		<id property="id" column="id" jdbcType="VARCHAR"/>
-		<result property="serviceKey" column="service_key" jdbcType="VARCHAR"/>
-		<result property="typeCd" column="type_cd" jdbcType="VARCHAR"/>
-		<result property="typeTitle" column="type_title" jdbcType="VARCHAR"/>
-		<result property="keyName" column="key_name" jdbcType="VARCHAR"/>
-		<result property="title" column="title" jdbcType="VARCHAR"/>
-		<result property="javaType" column="java_type" jdbcType="VARCHAR"/>
-		<result property="inputType" column="input_type" jdbcType="VARCHAR"/>
-		<result property="valueField" column="value_field" jdbcType="VARCHAR"/>
-		<result property="textField" column="text_field" jdbcType="VARCHAR"/>
-		<result property="url" column="url" jdbcType="VARCHAR"/>
-		<result property="validType" column="valid_type" jdbcType="VARCHAR"/>
-		<result property="required" column="required" jdbcType="VARCHAR"/>
-		<result property="initValue" column="init_value" jdbcType="VARCHAR"/>
+		<result property="javaType" column="java_type" jdbcType="VARCHAR" />
+		<result property="inputType" column="input_type" jdbcType="VARCHAR" />
+		<result property="valueField" column="value_field" jdbcType="VARCHAR" />
+		<result property="textField" column="text_field" jdbcType="VARCHAR" />
+		<result property="url" column="url" jdbcType="VARCHAR" />
+		<result property="validType" column="valid_type" jdbcType="VARCHAR" />
+		<result property="required" column="required" jdbcType="VARCHAR" />
+		<result property="initValue" column="init_value" jdbcType="VARCHAR" />
 	</resultMap>
 
- 
+
+	<resultMap id="inputDefinitionHashMap" type="java.util.HashMap">
+		<id property="id" column="id" jdbcType="VARCHAR" />
+		<result property="serviceKey" column="service_key" jdbcType="VARCHAR" />
+		<result property="typeCd" column="type_cd" jdbcType="VARCHAR" />
+		<result property="typeTitle" column="type_title" jdbcType="VARCHAR" />
+		<result property="keyName" column="key_name" jdbcType="VARCHAR" />
+		<result property="title" column="title" jdbcType="VARCHAR" />
+		<result property="javaType" column="java_type" jdbcType="VARCHAR" />
+		<result property="inputType" column="input_type" jdbcType="VARCHAR" />
+		<result property="valueField" column="value_field" jdbcType="VARCHAR" />
+		<result property="textField" column="text_field" jdbcType="VARCHAR" />
+		<result property="url" column="url" jdbcType="VARCHAR" />
+		<result property="validType" column="valid_type" jdbcType="VARCHAR" />
+		<result property="required" column="required" jdbcType="VARCHAR" />
+		<result property="initValue" column="init_value" jdbcType="VARCHAR" />
+	</resultMap>
+
+
 	<insert id="insertInputDefinition" parameterType="com.glaf.core.domain.InputDefinition">
-		insert into SYS_INPUT_DEF 
+		insert into SYS_INPUT_DEF
 		<trim prefix="(" suffix=")" suffixOverrides=",">
-			
-			id, service_key, type_cd, key_name, type_title, title, java_type, input_type,value_field,text_field,url, valid_type, required, init_value 
+
+			id, service_key, type_cd, key_name, type_title, title, java_type,
+			input_type,value_field,text_field,url, valid_type, required,
+			init_value
 
 			<if test="extendedColumns != null and  extendedColumns.size != 0">
-	          <foreach collection="extendedColumns" item="column">
-			    <if test="column.value != null">
-				,${column.columnName}
-				</if>
-			  </foreach>
+				<foreach collection="extendedColumns" item="column">
+					<if test="column.value != null">
+						,${column.columnName}
+					</if>
+				</foreach>
 			</if>
-			 
+
 		</trim>
 
 		<trim prefix=" values (" suffix=")" suffixOverrides=",">
-			    #{id, jdbcType=VARCHAR},
-				#{serviceKey, jdbcType=VARCHAR},
-				#{typeCd, jdbcType=VARCHAR},
-				#{typeTitle, jdbcType=VARCHAR},
-				#{keyName, jdbcType=VARCHAR},
-				#{title, jdbcType=VARCHAR},
-				#{javaType, jdbcType=VARCHAR},
-				#{inputType, jdbcType=VARCHAR},
-				#{valueField, jdbcType=VARCHAR},
-				#{textField, jdbcType=VARCHAR},
-				#{url, jdbcType=VARCHAR},
-				#{validType, jdbcType=VARCHAR},
-				#{required, jdbcType=VARCHAR},
-				#{initValue, jdbcType=VARCHAR}
+			#{id, jdbcType=VARCHAR},
+			#{serviceKey, jdbcType=VARCHAR},
+			#{typeCd,
+			jdbcType=VARCHAR},
+			#{typeTitle, jdbcType=VARCHAR},
+			#{keyName,
+			jdbcType=VARCHAR},
+			#{title, jdbcType=VARCHAR},
+			#{javaType,
+			jdbcType=VARCHAR},
+			#{inputType, jdbcType=VARCHAR},
+			#{valueField,
+			jdbcType=VARCHAR},
+			#{textField, jdbcType=VARCHAR},
+			#{url,
+			jdbcType=VARCHAR},
+			#{validType, jdbcType=VARCHAR},
+			#{required,
+			jdbcType=VARCHAR},
+			#{initValue, jdbcType=VARCHAR}
 
-			    <include refid="com.glaf.core.mapper.TableDataMapper.insertExtendedTableDataSql" />
+			<include
+				refid="com.glaf.core.mapper.TableDataMapper.insertExtendedTableDataSql" />
 
 		</trim>
 	</insert>
-	
-	
+
+
 	<update id="updateInputDefinition" parameterType="com.glaf.core.domain.InputDefinition">
 		update SYS_INPUT_DEF
 		set
-		<trim prefix="" suffix="" suffixOverrides=",">	
+		<trim prefix="" suffix="" suffixOverrides=",">
 			<if test="typeTitle != null">
 				type_title = #{typeTitle, jdbcType=VARCHAR},
-			</if>	
+			</if>
 			<if test="title != null">
 				title = #{title, jdbcType=VARCHAR},
 			</if>
@@ -113,115 +122,116 @@
 				init_value = #{initValue, jdbcType=VARCHAR},
 			</if>
 
-			<include refid="com.glaf.core.mapper.TableDataMapper.updateExtendedTableDataSql" />
+			<include
+				refid="com.glaf.core.mapper.TableDataMapper.updateExtendedTableDataSql" />
 
 		</trim>
 		where
-          id = #{id, jdbcType=VARCHAR}
-		
+		id = #{id, jdbcType=VARCHAR}
+
 	</update>
-	
-	
-	<delete id="deleteInputDefinitionById" parameterType="string"> 
-        delete from SYS_INPUT_DEF
-        where id = #{id}
-	</delete>
 
- 
-	<delete id="deleteInputDefinitionsByServiceKey" parameterType="string"> 
-        delete from SYS_INPUT_DEF
-        where service_key = #{serviceKey}
+
+	<delete id="deleteInputDefinitionById" parameterType="string">
+		delete from
+		SYS_INPUT_DEF
+		where id = #{id}
 	</delete>
 
 
-	<select id="getInputDefinitionsByServiceKey" parameterType="string" resultMap="systemParamResultMap">
-		select * from SYS_INPUT_DEF 
+	<delete id="deleteInputDefinitionsByServiceKey" parameterType="string">
+		delete from SYS_INPUT_DEF
+		where service_key = #{serviceKey}
+	</delete>
+
+
+	<select id="getInputDefinitionsByServiceKey" parameterType="string"
+		resultMap="inputDefinitionResultMap">
+		select * from SYS_INPUT_DEF
 		where service_key = #{serviceKey}
 	</select>
-	
-	<select id="getInputDefinitionById" parameterType="string" resultMap="systemParamResultMap">
+
+	<select id="getInputDefinitionById" parameterType="string"
+		resultMap="inputDefinitionResultMap">
 		select * from SYS_INPUT_DEF where id = #{id}
 	</select>
 
 
-	<select id="getInputDefinitionCount" 
-		parameterType="map"
+	<select id="getInputDefinitionCount" parameterType="map"
 		resultType="int">
 		select count(*) from SYS_INPUT_DEF E
 		<include refid="selectInputDefinitionSql" />
 	</select>
 
 
-	<select id="getInputDefinitionCountByQueryCriteria" 
-		parameterType="com.glaf.core.query.InputDefinitionQuery"
-		resultType="int">
+	<select id="getInputDefinitionCountByQueryCriteria"
+		parameterType="com.glaf.core.query.InputDefinitionQuery" resultType="int">
 		select count(*) from SYS_INPUT_DEF E
 		<include refid="selectInputDefinitionSql" />
 	</select>
 
 
-	<select id="getInputDefinitions" 
-		parameterType="map"
-		resultMap="systemParamResultMap">
+	<select id="getInputDefinitions" parameterType="map"
+		resultMap="inputDefinitionResultMap">
 		select E.* from SYS_INPUT_DEF E
 		<include refid="selectInputDefinitionSql" />
 		<if test="orderBy != null">
-		   order by ${orderBy}
+			order by ${orderBy}
 		</if>
 	</select>
 
 
-	<select id="getInputDefinitionMapList" parameterType="map" resultType="map">
-		select E.* from SYS_INPUT_DEF E 
+	<select id="getInputDefinitionMapList" parameterType="map"
+		resultType="map">
+		select E.* from SYS_INPUT_DEF E
 		<include refid="selectInputDefinitionSql" />
 		<if test="orderBy != null">
-		   order by ${orderBy}
+			order by ${orderBy}
 		</if>
 	</select>
 
 
-	<select id="getInputDefinitionsByQueryCriteria" 
-		parameterType="com.glaf.core.query.InputDefinitionQuery"
-		resultMap="systemParamResultMap">
+	<select id="getInputDefinitionsByQueryCriteria" parameterType="com.glaf.core.query.InputDefinitionQuery"
+		resultMap="inputDefinitionResultMap">
 		select E.* from SYS_INPUT_DEF E
 		<include refid="selectInputDefinitionSql" />
 		<if test="orderBy != null">
-		   order by ${orderBy}
+			order by ${orderBy}
 		</if>
 	</select>
 
 
 	<sql id="selectInputDefinitionSql">
-		 
+
 		<where>
 
-		   1 = 1  
-	        
+			1 = 1
+
 			<if test="serviceKey != null and serviceKey != '' ">
 				and E.service_key = #{serviceKey}
 			</if>
-	        
+
 			<if test="typeCd != null and typeCd != '' ">
 				and E.type_cd = #{typeCd}
 			</if>
 
 			<if test="typeCds != null and typeCds.size != 0">
-			    and E.type_cd IN
-				<foreach item="x_typeCd" index="index" collection="typeCds" 
+				and E.type_cd IN
+				<foreach item="x_typeCd" index="index" collection="typeCds"
 					open="(" separator="," close=")">
-                  #{x_typeCd}
+					#{x_typeCd}
 				</foreach>
 			</if>
-	        
+
 			<if test="keyName != null and keyName != '' ">
 				and E.key_name = #{keyName}
 			</if>
 
 			<if test="keyNames != null and keyNames.size != 0">
-			    and E.key_name IN
-				<foreach item="x_keyName" index="index" collection="keyNames" 
+				and E.key_name IN
+				<foreach item="x_keyName" index="index" collection="keyNames"
 					open="(" separator="," close=")">
-                  #{x_keyName}
+					#{x_keyName}
 				</foreach>
 			</if>
 

@@ -27,7 +27,7 @@
 		insert into SYS_CALENDAR
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			ID_
-			
+
 			<if test="day != null">
 				,DAY_
 			</if>
@@ -71,7 +71,7 @@
 
 		<trim prefix=" values (" suffix=")" suffixOverrides=",">
 			#{id, jdbcType=BIGINT}
-			
+
 			<if test="day != null">
 				,#{day, jdbcType=INTEGER}
 			</if>

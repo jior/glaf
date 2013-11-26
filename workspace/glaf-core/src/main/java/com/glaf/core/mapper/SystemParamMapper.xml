@@ -6,70 +6,70 @@
 
 	<resultMap id="systemParamResultMap" type="com.glaf.core.domain.SystemParam">
 		<id property="id" column="id" jdbcType="VARCHAR" />
-		<result property="serviceKey" column="service_key" jdbcType="VARCHAR"/>
-		<result property="businessKey" column="business_key" jdbcType="VARCHAR"/>
-		<result property="typeCd" column="type_cd" jdbcType="VARCHAR"/>
-		<result property="keyName" column="key_name" jdbcType="VARCHAR"/>
+		<result property="serviceKey" column="service_key" jdbcType="VARCHAR" />
+		<result property="businessKey" column="business_key" jdbcType="VARCHAR" />
+		<result property="typeCd" column="type_cd" jdbcType="VARCHAR" />
+		<result property="keyName" column="key_name" jdbcType="VARCHAR" />
 		<result property="title" column="title" jdbcType="VARCHAR" />
-		<result property="javaType" column="java_type" jdbcType="VARCHAR"/>
-		<result property="stringVal" column="string_val" jdbcType="VARCHAR"/>
-		<result property="textVal" column="text_val" jdbcType="VARCHAR"/>
-		<result property="dateVal" column="date_val" jdbcType="TIMESTAMP"/>
-		<result property="intVal" column="int_val" jdbcType="INTEGER"/>
-		<result property="longVal" column="long_val" jdbcType="BIGINT"/>
-		<result property="doubleVal" column="double_val" jdbcType="DOUBLE"/>
-	</resultMap>
-	
-	
-	<resultMap id="systemParamHashMap"	type="java.util.HashMap">
-		<id property="id" column="id" jdbcType="VARCHAR"/>
-		<result property="serviceKey" column="service_key" jdbcType="VARCHAR"/>
-		<result property="businessKey" column="business_key" jdbcType="VARCHAR"/>
-		<result property="typeCd" column="type_cd" jdbcType="VARCHAR"/>
-		<result property="keyName" column="key_name" jdbcType="VARCHAR"/>
-		<result property="title" column="title" jdbcType="VARCHAR"/>
-		<result property="javaType" column="java_type" jdbcType="VARCHAR"/>
-		<result property="stringVal" column="string_val" jdbcType="VARCHAR"/>
-		<result property="textVal" column="text_val" jdbcType="VARCHAR"/>
-		<result property="dateVal" column="date_val" jdbcType="TIMESTAMP"/>
-		<result property="intVal" column="int_val" jdbcType="INTEGER"/>
-		<result property="longVal" column="long_val" jdbcType="BIGINT"/>
-		<result property="doubleVal" column="double_val" jdbcType="DOUBLE"/>
+		<result property="javaType" column="java_type" jdbcType="VARCHAR" />
+		<result property="stringVal" column="string_val" jdbcType="VARCHAR" />
+		<result property="textVal" column="text_val" jdbcType="VARCHAR" />
+		<result property="dateVal" column="date_val" jdbcType="TIMESTAMP" />
+		<result property="intVal" column="int_val" jdbcType="INTEGER" />
+		<result property="longVal" column="long_val" jdbcType="BIGINT" />
+		<result property="doubleVal" column="double_val" jdbcType="DOUBLE" />
 	</resultMap>
 
- 
+
+	<resultMap id="systemParamHashMap" type="java.util.HashMap">
+		<id property="id" column="id" jdbcType="VARCHAR" />
+		<result property="serviceKey" column="service_key" jdbcType="VARCHAR" />
+		<result property="businessKey" column="business_key" jdbcType="VARCHAR" />
+		<result property="typeCd" column="type_cd" jdbcType="VARCHAR" />
+		<result property="keyName" column="key_name" jdbcType="VARCHAR" />
+		<result property="title" column="title" jdbcType="VARCHAR" />
+		<result property="javaType" column="java_type" jdbcType="VARCHAR" />
+		<result property="stringVal" column="string_val" jdbcType="VARCHAR" />
+		<result property="textVal" column="text_val" jdbcType="VARCHAR" />
+		<result property="dateVal" column="date_val" jdbcType="TIMESTAMP" />
+		<result property="intVal" column="int_val" jdbcType="INTEGER" />
+		<result property="longVal" column="long_val" jdbcType="BIGINT" />
+		<result property="doubleVal" column="double_val" jdbcType="DOUBLE" />
+	</resultMap>
+
+
 	<insert id="insertSystemParam" parameterType="com.glaf.core.domain.SystemParam">
-		insert into SYS_PARAMS 
+		insert into SYS_PARAMS
 		<trim prefix="(" suffix=")" suffixOverrides=",">
-			id, service_key, business_key, type_cd, key_name, java_type, title 
+			id, service_key, business_key, type_cd, key_name, java_type, title
 			<if test="stringVal != null">
-				,string_val 
+				,string_val
 			</if>
 			<if test="textVal != null">
-				,text_val 
+				,text_val
 			</if>
 			<if test="dateVal != null">
-				,date_val 
+				,date_val
 			</if>
 			<if test="intVal != null">
-				,int_val 
+				,int_val
 			</if>
 			<if test="longVal != null">
-				,long_val 
+				,long_val
 			</if>
 			<if test="doubleVal != null">
-				,double_val 
+				,double_val
 			</if>
 		</trim>
 
 		<trim prefix=" values (" suffix=")" suffixOverrides=",">
-			    #{id, jdbcType=VARCHAR},
-				#{serviceKey, jdbcType=VARCHAR},
-				#{businessKey, jdbcType=VARCHAR},
-				#{typeCd, jdbcType=VARCHAR},
-				#{keyName, jdbcType=VARCHAR},
-				#{javaType, jdbcType=VARCHAR},
-				#{title, jdbcType=VARCHAR}
+			#{id, jdbcType=VARCHAR},
+			#{serviceKey, jdbcType=VARCHAR},
+			#{businessKey, jdbcType=VARCHAR},
+			#{typeCd, jdbcType=VARCHAR},
+			#{keyName, jdbcType=VARCHAR},
+			#{javaType, jdbcType=VARCHAR},
+			#{title, jdbcType=VARCHAR}
 			<if test="stringVal != null">
 				,#{stringVal, jdbcType=VARCHAR}
 			</if>
@@ -90,12 +90,12 @@
 			</if>
 		</trim>
 	</insert>
-	
-	
+
+
 	<update id="updateSystemParam" parameterType="com.glaf.core.domain.SystemParam">
 		update SYS_PARAMS
 		set
-		<trim prefix="" suffix="" suffixOverrides=",">		
+		<trim prefix="" suffix="" suffixOverrides=",">
 			<if test="title != null">
 				title = #{title, jdbcType=VARCHAR},
 			</if>
@@ -120,118 +120,116 @@
 			<if test="textVal != null">
 				text_val = #{textVal, jdbcType=VARCHAR},
 			</if>
-			
+
 		</trim>
 		where
-          id = #{id, jdbcType=VARCHAR}
-		
+		id = #{id, jdbcType=VARCHAR}
+
 	</update>
-	
-	
-	<delete id="deleteSystemParamById" parameterType="string"> 
-        delete from SYS_PARAMS
-        where id = #{id}
-	</delete>
 
- 
-	<delete id="deleteSystemParamsByServiceKey" parameterType="string"> 
-        delete from SYS_PARAMS
-        where service_key = #{serviceKey}
+
+	<delete id="deleteSystemParamById" parameterType="string">
+		delete from SYS_PARAMS
+		where id = #{id}
 	</delete>
 
 
-	<select id="getSystemParamsByServiceKey" parameterType="string" resultMap="systemParamResultMap">
-		select * from SYS_PARAMS 
+	<delete id="deleteSystemParamsByServiceKey" parameterType="string">
+		delete from SYS_PARAMS
+		where service_key = #{serviceKey}
+	</delete>
+
+
+	<select id="getSystemParamsByServiceKey" parameterType="string"
+		resultMap="systemParamResultMap">
+		select * from SYS_PARAMS
 		where service_key = #{serviceKey}
 	</select>
-	
-	<select id="getSystemParamById" parameterType="string" resultMap="systemParamResultMap">
+
+	<select id="getSystemParamById" parameterType="string"
+		resultMap="systemParamResultMap">
 		select * from SYS_PARAMS where id = #{id}
 	</select>
 
 
-	<select id="getSystemParamCount" 
-		parameterType="map"
+	<select id="getSystemParamCount" parameterType="map" resultType="int">
+		select count(*) from SYS_PARAMS E
+		<include refid="selectSystemParamSql" />
+	</select>
+
+
+	<select id="getSystemParamCountByQueryCriteria" parameterType="com.glaf.core.query.SystemParamQuery"
 		resultType="int">
 		select count(*) from SYS_PARAMS E
 		<include refid="selectSystemParamSql" />
 	</select>
 
 
-	<select id="getSystemParamCountByQueryCriteria" 
-		parameterType="com.glaf.core.query.SystemParamQuery"
-		resultType="int">
-		select count(*) from SYS_PARAMS E
-		<include refid="selectSystemParamSql" />
-	</select>
-
-
-	<select id="getSystemParams" 
-		parameterType="map"
+	<select id="getSystemParams" parameterType="map"
 		resultMap="systemParamResultMap">
 		select E.* from SYS_PARAMS E
 		<include refid="selectSystemParamSql" />
 		<if test="orderBy != null">
-		   order by ${orderBy}
+			order by ${orderBy}
 		</if>
 	</select>
 
 
-	<select id="getSystemParamMapList" parameterType="map" resultType="map">
-		select E.* from SYS_PARAMS E 
+	<select id="getSystemParamMapList" parameterType="map"
+		resultType="map">
+		select E.* from SYS_PARAMS E
 		<include refid="selectSystemParamSql" />
 		<if test="orderBy != null">
-		   order by ${orderBy}
+			order by ${orderBy}
 		</if>
 	</select>
 
 
-	<select id="getSystemParamsByQueryCriteria" 
-		parameterType="com.glaf.core.query.SystemParamQuery"
+	<select id="getSystemParamsByQueryCriteria" parameterType="com.glaf.core.query.SystemParamQuery"
 		resultMap="systemParamResultMap">
 		select E.* from SYS_PARAMS E
 		<include refid="selectSystemParamSql" />
 		<if test="orderBy != null">
-		   order by ${orderBy}
+			order by ${orderBy}
 		</if>
 	</select>
 
 
 	<sql id="selectSystemParamSql">
-		 
+
 		<where>
 
-		   1 = 1  
-	        
+			1 = 1
+
 			<if test="serviceKey != null and serviceKey != '' ">
 				and E.service_key = #{serviceKey}
 			</if>
-			
+
 			<if test="businessKey != null and businessKey != '' ">
 				and E.business_key = #{businessKey}
 			</if>
-	        
+
 			<if test="typeCd != null and typeCd != '' ">
 				and E.type_cd = #{typeCd}
 			</if>
 
 			<if test="typeCds != null and typeCds.size != 0">
-			    and E.type_cd IN
-				<foreach item="x_typeCd" index="index" collection="typeCds" 
+				and E.type_cd IN
+				<foreach item="x_typeCd" index="index" collection="typeCds"
 					open="(" separator="," close=")">
-                  #{x_typeCd}
+					#{x_typeCd}
 				</foreach>
 			</if>
-	        
+
 			<if test="keyName != null and keyName != '' ">
 				and E.key_name = #{keyName}
 			</if>
 
 			<if test="keyNames != null and keyNames.size != 0">
-			    and E.key_name IN
-				<foreach item="x_keyName" index="index" collection="keyNames" 
+				and E.key_name IN
+				<foreach item="x_keyName" index="index" collection="keyNames"
 					open="(" separator="," close=")">
-                  #{x_keyName}
+					#{x_keyName}
 				</foreach>
 			</if>
 

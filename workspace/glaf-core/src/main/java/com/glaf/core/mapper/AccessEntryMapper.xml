@@ -122,8 +122,7 @@
 				and E.PROCESSDEFINITIONID_ = #{processDefinitionId}
 			</if>
 
-			<if
-				test="processDefinitionIds != null and processDefinitionIds.size != 0">
+			<if test="processDefinitionIds != null and processDefinitionIds.size != 0">
 				and E.PROCESSDEFINITIONID_ IN
 				<foreach item="x_processDefinitionId" index="index"
 					collection="processDefinitionIds" open="(" separator="," close=")">

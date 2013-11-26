@@ -6,49 +6,49 @@
 
 	<resultMap id="schedulerParamResultMap" type="com.glaf.core.domain.SchedulerParam">
 		<id property="id" column="id" jdbcType="VARCHAR" />
-		<result property="taskId" column="taskId" jdbcType="VARCHAR"/>
-		<result property="typeCd" column="type_cd" jdbcType="VARCHAR"/>
-		<result property="keyName" column="key_name" jdbcType="VARCHAR"/>
+		<result property="taskId" column="taskId" jdbcType="VARCHAR" />
+		<result property="typeCd" column="type_cd" jdbcType="VARCHAR" />
+		<result property="keyName" column="key_name" jdbcType="VARCHAR" />
 		<result property="title" column="title" jdbcType="VARCHAR" />
-		<result property="stringVal" column="string_val" jdbcType="VARCHAR"/>
-		<result property="textVal" column="text_val" jdbcType="VARCHAR"/>
-		<result property="dateVal" column="date_val" jdbcType="TIMESTAMP"/>
-		<result property="intVal" column="int_val" jdbcType="INTEGER"/>
-		<result property="longVal" column="long_val" jdbcType="BIGINT"/>
-		<result property="doubleVal" column="double_val" jdbcType="DOUBLE"/>
+		<result property="stringVal" column="string_val" jdbcType="VARCHAR" />
+		<result property="textVal" column="text_val" jdbcType="VARCHAR" />
+		<result property="dateVal" column="date_val" jdbcType="TIMESTAMP" />
+		<result property="intVal" column="int_val" jdbcType="INTEGER" />
+		<result property="longVal" column="long_val" jdbcType="BIGINT" />
+		<result property="doubleVal" column="double_val" jdbcType="DOUBLE" />
 	</resultMap>
 
- 
+
 	<insert id="insertSchedulerParam" parameterType="com.glaf.core.domain.SchedulerParam">
-		insert into SYS_SCHEDULER_PARAMS 
+		insert into SYS_SCHEDULER_PARAMS
 		<trim prefix="(" suffix=")" suffixOverrides=",">
-			id, taskId, type_cd, key_name, title 
+			id, taskId, type_cd, key_name, title
 			<if test="stringVal != null">
-				,string_val 
+				,string_val
 			</if>
 			<if test="textVal != null">
-				,text_val 
+				,text_val
 			</if>
 			<if test="dateVal != null">
-				,date_val 
+				,date_val
 			</if>
 			<if test="intVal != null">
-				,int_val 
+				,int_val
 			</if>
 			<if test="longVal != null">
-				,long_val 
+				,long_val
 			</if>
 			<if test="doubleVal != null">
-				,double_val 
+				,double_val
 			</if>
 		</trim>
 
 		<trim prefix=" values (" suffix=")" suffixOverrides=",">
-			    #{id, jdbcType=VARCHAR},
-				#{taskId, jdbcType=VARCHAR},
-				#{typeCd, jdbcType=VARCHAR},
-				#{keyName, jdbcType=VARCHAR},
-				#{title, jdbcType=VARCHAR}
+			#{id, jdbcType=VARCHAR},
+			#{taskId, jdbcType=VARCHAR},
+			#{typeCd, jdbcType=VARCHAR},
+			#{keyName, jdbcType=VARCHAR},
+			#{title, jdbcType=VARCHAR}
 			<if test="stringVal != null">
 				,#{stringVal, jdbcType=VARCHAR}
 			</if>
@@ -70,15 +70,16 @@
 		</trim>
 	</insert>
 
- 
-	<delete id="deleteSchedulerParamsByTaskId" parameterType="string"> 
-        delete from SYS_SCHEDULER_PARAMS
-        where taskId = #{taskId}
+
+	<delete id="deleteSchedulerParamsByTaskId" parameterType="string">
+		delete from SYS_SCHEDULER_PARAMS
+		where taskId = #{taskId}
 	</delete>
 
 
-	<select id="getSchedulerParamsByTaskId" parameterType="string" resultMap="schedulerParamResultMap">
-		select * from SYS_SCHEDULER_PARAMS 
+	<select id="getSchedulerParamsByTaskId" parameterType="string"
+		resultMap="schedulerParamResultMap">
+		select * from SYS_SCHEDULER_PARAMS
 		where taskId = #{taskId}
 	</select>
 

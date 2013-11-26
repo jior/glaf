@@ -20,7 +20,7 @@
 		<result property="startRow" column="STARTROW_" jdbcType="INTEGER" />
 		<result property="insertOnly" column="INSERTONLY_" jdbcType="VARCHAR" />
 		<result property="nodeId" column="NODEID_" jdbcType="BIGINT" />
-		<result property="filename" column="FILENAME_" jdbcType="VARCHAR"/>
+		<result property="filename" column="FILENAME_" jdbcType="VARCHAR" />
 		<result property="fileContent" column="FILECONTENT_" jdbcType="VARCHAR" />
 		<result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP" />
 		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR" />
@@ -73,7 +73,7 @@
 				,INSERTONLY_
 			</if>
 			<if test="filename != null">
-				,FILENAME_ 
+				,FILENAME_
 			</if>
 			<if test="fileContent != null">
 				,FILECONTENT_
@@ -274,10 +274,10 @@
 
 		<where>
 			1 = 1
-			
+
 			<if test="nodeId != null ">
-			    and E.NODEID_ = #{nodeId}
-		    </if>
+				and E.NODEID_ = #{nodeId}
+			</if>
 
 			<if test="name != null and name != '' ">
 				and E.NAME_ = #{name}

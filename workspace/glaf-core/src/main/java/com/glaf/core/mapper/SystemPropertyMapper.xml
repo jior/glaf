@@ -31,35 +31,38 @@
 		)
 		values (
 		#{id, jdbcType=VARCHAR}
-		,#{name, jdbcType=VARCHAR}
+		,#{name,
+		jdbcType=VARCHAR}
 		,#{title, jdbcType=VARCHAR}
 		,#{type, jdbcType=VARCHAR}
 		,#{description, jdbcType=VARCHAR}
 		,#{category, jdbcType=VARCHAR}
 		,#{initValue, jdbcType=VARCHAR}
 		,#{value, jdbcType=VARCHAR}
-		,#{locked, jdbcType=INTEGER}
+		,#{locked,
+		jdbcType=INTEGER}
 		)
 	</insert>
 
 
 	<update id="updateSystemProperty" parameterType="com.glaf.core.domain.SystemProperty">
-		
+
 		update SYS_PROPERTY
 		set
 		TITLE_ = #{title, jdbcType=VARCHAR},
-		DESCRIPTION_ = #{description, jdbcType=VARCHAR},
+		DESCRIPTION_ =
+		#{description, jdbcType=VARCHAR},
 		VALUE_ = #{value, jdbcType=VARCHAR}
 		where ID_ = #{id, jdbcType=VARCHAR}
-		
+
 	</update>
 
 
 	<delete id="deleteSystemPropertyById" parameterType="string">
-		
+
 		delete from SYS_PROPERTY
 		where ID_ = #{id}
-		
+
 	</delete>
 
 
@@ -73,7 +76,7 @@
 		</foreach>
 		)
 	</delete>
-	
+
 
 	<select id="getSystemPropertyById" parameterType="string"
 		resultMap="systemPropertyResultMap">
@@ -107,7 +110,7 @@
 			<if test="category != null">
 				and E.CATEGORY_ = #{category}
 			</if>
-			
+
 			<if test="name != null">
 				and E.NAME_ = #{name}
 			</if>

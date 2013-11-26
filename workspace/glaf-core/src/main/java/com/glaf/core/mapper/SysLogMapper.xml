@@ -4,40 +4,40 @@
 
 <mapper namespace="com.glaf.core.mapper.SysLogMapper">
 
-	<resultMap id="sysLogResultMap"	type="com.glaf.core.domain.SysLog">
+	<resultMap id="sysLogResultMap" type="com.glaf.core.domain.SysLog">
 		<id property="id" column="ID" jdbcType="BIGINT" />
-		<result property="account" column="ACCOUNT" jdbcType="VARCHAR"/>
-		<result property="ip" column="IP" jdbcType="VARCHAR"/>
-		<result property="createTime" column="CREATETIME" jdbcType="TIMESTAMP"/>
-		<result property="operate" column="OPERATE" jdbcType="VARCHAR"/>
-		<result property="flag" column="FLAG" jdbcType="INTEGER"/>
+		<result property="account" column="ACCOUNT" jdbcType="VARCHAR" />
+		<result property="ip" column="IP" jdbcType="VARCHAR" />
+		<result property="createTime" column="CREATETIME" jdbcType="TIMESTAMP" />
+		<result property="operate" column="OPERATE" jdbcType="VARCHAR" />
+		<result property="flag" column="FLAG" jdbcType="INTEGER" />
 	</resultMap>
 
- 
+
 	<insert id="insertSysLog" parameterType="com.glaf.core.domain.SysLog">
-		insert into sys_log 
+		insert into sys_log
 		<trim prefix="(" suffix=")" suffixOverrides=",">
-		    ID
+			ID
 			<if test="account != null">
-				,ACCOUNT 
+				,ACCOUNT
 			</if>
 			<if test="ip != null">
-				,IP 
+				,IP
 			</if>
 			<if test="createTime != null">
-				,CREATETIME 
+				,CREATETIME
 			</if>
 			<if test="operate != null">
-				,OPERATE 
+				,OPERATE
 			</if>
 			<if test="flag != null">
-				,FLAG 
+				,FLAG
 			</if>
 		</trim>
 
 		<trim prefix=" values (" suffix=")" suffixOverrides=",">
-			  #{id, jdbcType=BIGINT}
-	     
+			#{id, jdbcType=BIGINT}
+
 			<if test="account != null">
 				,#{account, jdbcType=VARCHAR}
 			</if>
@@ -56,11 +56,11 @@
 		</trim>
 	</insert>
 
-	 
+
 	<update id="updateSysLog" parameterType="com.glaf.core.domain.SysLog">
 		update sys_log
 		set
-		<trim prefix="" suffix="" suffixOverrides=",">		
+		<trim prefix="" suffix="" suffixOverrides=",">
 			<if test="account != null">
 				ACCOUNT = #{account, jdbcType=VARCHAR},
 			</if>
@@ -78,23 +78,23 @@
 			</if>
 		</trim>
 		where
-          ID = #{id, jdbcType=BIGINT}
-		
+		ID = #{id, jdbcType=BIGINT}
+
 	</update>
 
- 
-	<delete id="deleteSysLogById" parameterType="long"> 
-        delete from sys_log
-        where ID =	#{id}
+
+	<delete id="deleteSysLogById" parameterType="long">
+		delete from sys_log
+		where ID = #{id}
 	</delete>
-	
+
 	<delete id="deleteSysLogs" parameterType="com.glaf.core.query.SysLogQuery">
 		delete from sys_log
-		where ( 
- 			  ID IN
-		<foreach item="x_rowId" index="index" collection="rowIds" 
+		where (
+		ID IN
+		<foreach item="x_rowId" index="index" collection="rowIds"
 			open="(" separator="," close=")">
-                  #{x_rowId}
+			#{x_rowId}
 		</foreach>
 		)
 	</delete>
@@ -104,23 +104,21 @@
 	</select>
 
 
-	<select id="getSysLogs" 
-		parameterType="com.glaf.core.query.SysLogQuery"
+	<select id="getSysLogs" parameterType="com.glaf.core.query.SysLogQuery"
 		resultMap="sysLogResultMap">
 		select E.*
 		<include refid="selectSysLogsSql" />
 		<choose>
 			<when test="orderBy != null">
-		     order by ${orderBy}
+				order by ${orderBy}
 			</when>
 			<otherwise>
-		      order by E.CREATETIME desc
+				order by E.CREATETIME desc
 			</otherwise>
 		</choose>
 	</select>
 
-	<select id="getSysLogCount" 
-		parameterType="com.glaf.core.query.SysLogQuery"
+	<select id="getSysLogCount" parameterType="com.glaf.core.query.SysLogQuery"
 		resultType="int">
 		select count(*)
 		<include refid="selectSysLogsSql" />
@@ -129,32 +127,24 @@
 	<sql id="selectSysLogsSql">
 
 		from sys_log E
-		 
+
 		<where>
-		       1 = 1  
-	        
+			1 = 1
+
 			<if test="account != null and account != '' ">
 				and E.ACCOUNT = #{account}
 			</if>
 
-			<if test="accountLike != null and accountLike != '' ">
-				and E.ACCOUNT like #{accountLike}
-			</if>
-
 			<if test="accounts != null and accounts.size != 0">
-			    and E.ACCOUNT IN
-				<foreach item="x_account" index="index" collection="accounts" 
+				and E.ACCOUNT IN
+				<foreach item="x_account" index="index" collection="accounts"
 					open="(" separator="," close=")">
-                  #{x_account}
+					#{x_account}
 				</foreach>
 			</if>
-	        
+
 			<if test="ip != null and ip != '' ">
 				and E.IP = #{ip}
-			</if>
-
-			<if test="ipLike != null and ipLike != '' ">
-				and E.IP like #{ipLike}
 			</if>
 
 			<if test="createTimeGreaterThanOrEqual != null">
@@ -164,7 +154,7 @@
 			<if test="createTimeLessThanOrEqual != null">
 				and E.CREATETIME &lt;= #{createTimeLessThanOrEqual}
 			</if>
-   
+
 			<if test="operate != null and operate != '' ">
 				and E.OPERATE = #{operate}
 			</if>
@@ -180,7 +170,7 @@
 			<if test="flagLessThanOrEqual != null">
 				and E.FLAG &lt;= #{flagLessThanOrEqual}
 			</if>
-			 
+
 		</where>
 	</sql>
 

@@ -106,7 +106,7 @@
 						and E.CREATEBY_ =
 						#{actorId}
 					</when>
-					<when test="actorIds != null &amp;&amp; actorIds.size !=0">
+					<when test="actorIds != null and actorIds.size !=0">
 						and E.CREATEBY_ is not null
 						and (
 						<foreach item="actorId" collection="actorIds" index="xa">

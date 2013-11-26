@@ -185,14 +185,6 @@
 				and E.ENTRYTYPE_ = #{entryType}
 			</if>
 
-			<if test="entryTypeGreaterThanOrEqual != null">
-				and E.ENTRYTYPE_ &gt;= #{entryTypeGreaterThanOrEqual}
-			</if>
-
-			<if test="entryTypeLessThanOrEqual != null">
-				and E.ENTRYTYPE_ &lt;= #{entryTypeLessThanOrEqual}
-			</if>
-
 			<if test="entryTypes != null and entryTypes.size != 0">
 				and E.ENTRYTYPE_ IN
 				<foreach item="x_entryType" index="index" collection="entryTypes"
@@ -294,7 +286,7 @@
 		</if>
 
 		<where>
-		
+
 			1 = 1
 
 			<if test="moduleId != null">
@@ -312,7 +304,7 @@
 					#{x_nodeId}
 				</foreach>
 			</if>
-			
+
 			<if test="entityEntryId != null">
 				and P.ENTITYENTRY_ = #{entityEntryId}
 			</if>

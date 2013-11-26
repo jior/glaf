@@ -29,7 +29,7 @@
 		jdbcType=INTEGER}
 		,#{accessEntryId, jdbcType=VARCHAR}
 		)
-    </insert>
+	</insert>
 
 
 	<delete id="deleteAccessPointById" parameterType="string">
@@ -63,19 +63,19 @@
 
 			<if test="name != null">
 				and E.NAME_ = #{name}
-            </if>
+			</if>
 
 			<if test="names != null and names.size != 0">
 				and E.NAME_ IN
 				<foreach item="x_name" index="index" collection="names"
 					open="(" separator="," close=")">
 					#{x_name}
-                </foreach>
+				</foreach>
 			</if>
 
 			<if test="accessLevel != null">
 				and E.ACCESSLEVEL_ = #{accessLevel}
-            </if>
+			</if>
 
 			<if test="accessLevelGreaterThanOrEqual != null">
 				and E.ACCESSLEVEL_ &gt;= #{accessLevelGreaterThanOrEqual}
@@ -90,19 +90,19 @@
 				<foreach item="x_accessLevel" index="index" collection="accessLevels"
 					open="(" separator="," close=")">
 					#{x_accessLevel}
-                </foreach>
+				</foreach>
 			</if>
 
 			<if test="accessEntryId != null">
 				and E.ACCESSENTRY_ = #{accessEntryId}
-            </if>
+			</if>
 
 			<if test="accessEntryIds != null and accessEntryIds.size != 0">
 				and E.ACCESSENTRY_ IN
 				<foreach item="x_accessEntryId" index="index" collection="accessEntryIds"
 					open="(" separator="," close=")">
 					#{x_accessEntryId}
-                </foreach>
+				</foreach>
 			</if>
 
 		</where>
