@@ -118,6 +118,7 @@ public class JSONSQLAction implements ActionHandler {
 		if (StringUtils.isNotEmpty(json)) {
 			JSONObject jsonObject = JSON.parseObject(json);
 			if (jsonObject != null) {
+				String sql = null;
 				StringBuffer buffer = new StringBuffer();
 				String tableName = jsonObject.getString("table");
 				JSONArray columnsArray = jsonObject.getJSONArray("columns");
@@ -144,6 +145,7 @@ public class JSONSQLAction implements ActionHandler {
 						}
 					}
 					buffer.append(" ) ");
+					sql = buffer.toString();
 				} else if (StringUtils.equals(
 						jsonObject.getString("operation"), "update")) {
 					buffer.append(" update ").append(tableName);
@@ -158,34 +160,46 @@ public class JSONSQLAction implements ActionHandler {
 						}
 					}
 					buffer.append(" where 1=1 ");
+					boolean exec = false;
 					for (int i = 0; i < whereArray.size(); i++) {
 						JSONObject item = whereArray.getJSONObject(i);
 						String column = item.getString("column");
 						String field = item.getString("field");
 						buffer.append(" and ").append(column).append(" = :")
 								.append(field);
+						exec = true;
+					}
+					if (exec) {
+						sql = buffer.toString();
 					}
 				} else if (StringUtils.equals(
 						jsonObject.getString("operation"), "delete")) {
 					buffer.append(" delete from ").append(tableName);
 					buffer.append(" where 1=1 ");
+					boolean exec = false;
 					for (int i = 0; i < whereArray.size(); i++) {
 						JSONObject item = whereArray.getJSONObject(i);
 						String column = item.getString("column");
 						String field = item.getString("field");
 						buffer.append(" and ").append(column).append(" = :")
 								.append(field);
+						exec = true;
+					}
+					if (exec) {
+						sql = buffer.toString();
 					}
 				}
-				String sql = buffer.toString();
-				Query query = ctx.getJbpmContext().getSession()
-						.createSQLQuery(sql);
-				HibernateUtils.fillParameters(query, params);
-				int count = query.executeUpdate();
-				if (count < 1) {
-					logger.error("sql:" + sql);
-					logger.error("params:" + params);
-					throw new JbpmException("update count is " + count);
+
+				if (sql != null) {
+					Query query = ctx.getJbpmContext().getSession()
+							.createSQLQuery(sql);
+					HibernateUtils.fillParameters(query, params);
+					int count = query.executeUpdate();
+					if (count < 1) {
+						logger.error("sql:" + sql);
+						logger.error("params:" + params);
+						throw new JbpmException("update count is " + count);
+					}
 				}
 			}
 		}
