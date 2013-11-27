@@ -23,7 +23,6 @@ import java.util.concurrent.ConcurrentMap;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
- 
 
 public class ContextUtils {
 	protected static final Log logger = LogFactory.getLog(ContextUtils.class);
@@ -44,6 +43,10 @@ public class ContextUtils {
 		return null;
 	}
 
+	public static String getContextPath() {
+		return (String) dataMap.get("__contextPath__");
+	}
+
 	public static void put(Object key, Object value) {
 		String sys_name = Constants.SYSTEM_NAME;
 		if (sys_name != null) {
@@ -51,6 +54,10 @@ public class ContextUtils {
 			dataMap.put(cacheKey, value);
 		}
 		dataMap.put(key, value);
+	}
+
+	public static void setContextPath(String contextPath) {
+		dataMap.put("__contextPath__", contextPath);
 	}
 
 	private ContextUtils() {
