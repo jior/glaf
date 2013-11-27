@@ -230,7 +230,7 @@
 				</td>				
 			</tr>
 			</c:if>
-			<c:if test="${publicInfo.id != null && publicInfo.id >0}">
+			<c:if test="${publicInfo.id != null }">
 			<tr>
 				<td colspan="2">						
 				<a href="javascript:uploadFile(9999, ${publicInfo.id}, 1)">
