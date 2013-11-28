@@ -198,8 +198,8 @@ public class WebFile {
 		m_folderVirtualPath = "";
 		currentLocale = new Locale(Locale.getDefault().getLanguage(), Locale
 				.getDefault().getCountry());
-		//System.out.println(Locale.getDefault().getLanguage());
-		//System.out.println(Locale.getDefault().getCountry());
+		// System.out.println(Locale.getDefault().getLanguage());
+		// System.out.println(Locale.getDefault().getCountry());
 		labels = ResourceBundle.getBundle("com.glaf.cms.webfile.WebFileLabels",
 				currentLocale);
 		mimes = ResourceBundle.getBundle(
@@ -460,7 +460,7 @@ public class WebFile {
 			mySmartUpload.initialize(m_config, m_request, m_response);
 		if (m_initialize == 3)
 			mySmartUpload.initialize(m_pageContext);
-		
+
 		try {
 			mySmartUpload.downloadFile(path, contentType);
 		} catch (Exception ex) {
@@ -1223,7 +1223,6 @@ public class WebFile {
 					myUpload.initialize(m_config, m_request, m_response);
 				if (m_initialize == 3)
 					myUpload.initialize(m_pageContext);
-				
 
 				myUpload.setDeniedFilesList(m_strDeniedFilesList);
 				myUpload.setAllowedFilesList(m_strAllowedFilesList);
@@ -2244,7 +2243,7 @@ public class WebFile {
 		responseWriteLn("</SCRIPT>");
 		responseWriteLn("</HEAD>");
 		if (!m_showProperties) {
-			if (!m_jsEventHandler.equals(null))
+			if (m_jsEventHandler != null)
 				responseWriteLn(String.valueOf((new StringBuffer(
 						"<body bgcolor="))
 						.append(colors.getString("FRAME_BORDER"))
@@ -2257,22 +2256,23 @@ public class WebFile {
 			responseWriteLn("</BODY>");
 			responseWriteLn("</HTML>");
 		} else {
-			if (relativePath.equals(null)) {
+			if (relativePath == null || relativePath == "") {
 				responseWriteLn(String.valueOf((new StringBuffer(
 						"<body bgcolor=")).append(colors.getString("PROP_BG"))
 						.append(">")));
 				responseWriteLn("&nbsp;");
 				responseWriteLn("</BODY>");
 				responseWriteLn("</HTML>");
-			} else if (!m_jsEventHandler.equals(null))
+			} else if (m_jsEventHandler != null) {
 				responseWriteLn(String.valueOf((new StringBuffer(
 						"<body bgcolor=")).append(colors.getString("PROP_BG"))
 						.append(" onload=\"").append(m_jsEventHandler)
 						.append("(selectedFile);\">")));
-			else
+			} else {
 				responseWriteLn(String.valueOf((new StringBuffer(
 						"<body bgcolor=")).append(colors.getString("PROP_BG"))
 						.append(">")));
+			}
 			responseWriteLn(String.valueOf((new StringBuffer(
 					"<table width='100%' bgcolor=")).append(
 					colors.getString("PROP_BG")).append(
@@ -3276,8 +3276,6 @@ public class WebFile {
 		m_response = response;
 		m_initialize = 2;
 	}
-
-
 
 	private boolean isHidden(File file) throws IOException,
 			NoSuchMethodException {
