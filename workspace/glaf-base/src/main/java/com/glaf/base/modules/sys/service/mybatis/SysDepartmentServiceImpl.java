@@ -18,25 +18,32 @@
 
 package com.glaf.base.modules.sys.service.mybatis;
 
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import javax.annotation.Resource;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
-import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.glaf.core.id.*;
-import com.glaf.core.util.PageResult;
-
 import com.glaf.base.modules.sys.SysConstants;
-import com.glaf.base.modules.sys.mapper.*;
-import com.glaf.base.modules.sys.model.*;
-import com.glaf.base.modules.sys.query.*;
-import com.glaf.base.modules.sys.service.*;
+import com.glaf.base.modules.sys.mapper.SysDepartmentMapper;
+import com.glaf.base.modules.sys.mapper.SysDeptRoleMapper;
+import com.glaf.base.modules.sys.model.SysDepartment;
+import com.glaf.base.modules.sys.model.SysDeptRole;
+import com.glaf.base.modules.sys.model.SysRole;
+import com.glaf.base.modules.sys.model.SysTree;
+import com.glaf.base.modules.sys.query.SysDepartmentQuery;
+import com.glaf.base.modules.sys.query.SysDeptRoleQuery;
+import com.glaf.base.modules.sys.service.SysDepartmentService;
+import com.glaf.base.modules.sys.service.SysRoleService;
+import com.glaf.base.modules.sys.service.SysTreeService;
+import com.glaf.core.id.IdGenerator;
+import com.glaf.core.util.PageResult;
 
 @Service("sysDepartmentService")
 @Transactional(readOnly = true)
@@ -352,33 +359,32 @@ public class SysDepartmentServiceImpl implements SysDepartmentService {
 		return list;
 	}
 
-	@Resource
-	@Qualifier("myBatisDbIdGenerator")
+	@javax.annotation.Resource
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSysDepartmentMapper(SysDepartmentMapper sysDepartmentMapper) {
 		this.sysDepartmentMapper = sysDepartmentMapper;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSysDeptRoleMapper(SysDeptRoleMapper sysDeptRoleMapper) {
 		this.sysDeptRoleMapper = sysDeptRoleMapper;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSysRoleService(SysRoleService sysRoleService) {
 		this.sysRoleService = sysRoleService;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSysTreeService(SysTreeService sysTreeService) {
 		this.sysTreeService = sysTreeService;
 	}

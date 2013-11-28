@@ -35,8 +35,7 @@ public class MyBatisMailDataManager implements IMailDataManager {
 	}
 
 	public List<Object> getResultList(String query, Map<String, Object> paramMap) {
-		EntityService entityService = ContextFactory
-				.getBean("myBatisEntityService");
+		EntityService entityService = ContextFactory.getBean("entityService");
 		return entityService.getList(query, paramMap);
 	}
 

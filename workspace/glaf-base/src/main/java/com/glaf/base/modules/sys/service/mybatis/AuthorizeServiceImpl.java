@@ -21,8 +21,6 @@ package com.glaf.base.modules.sys.service.mybatis;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.Resource;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
@@ -30,7 +28,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.base.modules.sys.model.SysDepartment;
 import com.glaf.base.modules.sys.model.SysUser;
-import com.glaf.base.modules.sys.service.*;
+import com.glaf.base.modules.sys.service.AuthorizeService;
+import com.glaf.base.modules.sys.service.SysDepartmentService;
+import com.glaf.base.modules.sys.service.SysUserService;
 
 @Service("authorizeService")
 @Transactional(readOnly = true)
@@ -97,13 +97,13 @@ public class AuthorizeServiceImpl implements AuthorizeService {
 		return bean;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSysDepartmentService(
 			SysDepartmentService sysDepartmentService) {
 		this.sysDepartmentService = sysDepartmentService;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSysUserService(SysUserService sysUserService) {
 		this.sysUserService = sysUserService;
 		logger.info("setSysUserService");

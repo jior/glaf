@@ -24,18 +24,16 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.annotation.Resource;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.SqlSession;
-import org.springframework.beans.factory.annotation.Qualifier;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.core.dao.EntityDAO;
 import com.glaf.core.id.IdGenerator;
- 
+
 import com.glaf.ui.mapper.LayoutMapper;
 import com.glaf.ui.model.Layout;
 import com.glaf.ui.query.LayoutQuery;
@@ -47,18 +45,12 @@ public class MxLayoutServiceImpl implements LayoutService {
 	protected final static Log logger = LogFactory
 			.getLog(MxLayoutServiceImpl.class);
 
-	@Resource
-	@Qualifier("myBatisEntityDAO")
 	protected EntityDAO entityDAO;
 
-	@Resource
-	@Qualifier("myBatisDbIdGenerator")
 	protected IdGenerator idGenerator;
 
-	@Resource
 	protected SqlSession sqlSession;
 
-	@Resource
 	protected LayoutMapper layoutMapper;
 
 	public MxLayoutServiceImpl() {
@@ -101,7 +93,7 @@ public class MxLayoutServiceImpl implements LayoutService {
 				names.add(layout.getName());
 			}
 		}
- 
+
 		if (layouts != null && layouts.size() > 0) {
 			Iterator<Layout> iter = layouts.iterator();
 			while (iter.hasNext()) {
@@ -122,18 +114,22 @@ public class MxLayoutServiceImpl implements LayoutService {
 		return list;
 	}
 
+	@javax.annotation.Resource
 	public void setEntityDAO(EntityDAO entityDAO) {
 		this.entityDAO = entityDAO;
 	}
 
+	@javax.annotation.Resource
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 
+	@javax.annotation.Resource
 	public void setLayoutMapper(LayoutMapper layoutMapper) {
 		this.layoutMapper = layoutMapper;
 	}
 
+	@javax.annotation.Resource
 	public void setSqlSession(SqlSession sqlSession) {
 		this.sqlSession = sqlSession;
 	}

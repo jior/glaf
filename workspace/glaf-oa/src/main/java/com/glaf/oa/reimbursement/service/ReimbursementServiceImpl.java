@@ -19,7 +19,7 @@ package com.glaf.oa.reimbursement.service;
 
 import java.util.*;
 
-import javax.annotation.Resource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.ibatis.session.RowBounds;
@@ -112,22 +112,22 @@ public class ReimbursementServiceImpl implements ReimbursementService {
 		}
 	}
 
-	@Resource(name = "myBatisEntityDAO")
+	@javax.annotation.Resource
 	public void setEntityDAO(EntityDAO entityDAO) {
 		this.entityDAO = entityDAO;
 	}
 
-	@Resource(name = "myBatisDbIdGenerator")
+	@javax.annotation.Resource
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setReimbursementMapper(ReimbursementMapper reimbursementMapper) {
 		this.reimbursementMapper = reimbursementMapper;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}

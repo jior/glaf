@@ -18,25 +18,21 @@
 
 package com.glaf.base.modules.sys.service.mybatis;
 
-import java.util.*;
+import java.util.List;
 
-import javax.annotation.Resource;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
-import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.glaf.core.id.*;
- 
-
 import com.glaf.base.modules.sys.SysConstants;
-import com.glaf.base.modules.sys.mapper.*;
-import com.glaf.base.modules.sys.model.*;
-import com.glaf.base.modules.sys.query.*;
-import com.glaf.base.modules.sys.service.*;
+import com.glaf.base.modules.sys.mapper.SysFunctionMapper;
+import com.glaf.base.modules.sys.model.SysFunction;
+import com.glaf.base.modules.sys.query.SysFunctionQuery;
+import com.glaf.base.modules.sys.service.SysFunctionService;
+import com.glaf.core.id.IdGenerator;
 
 @Service("sysFunctionService")
 @Transactional(readOnly = true)
@@ -161,18 +157,17 @@ public class SysFunctionServiceImpl implements SysFunctionService {
 		}
 	}
 
-	@Resource
-	@Qualifier("myBatisDbIdGenerator")
+	@javax.annotation.Resource
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSysFunctionMapper(SysFunctionMapper sysFunctionMapper) {
 		this.sysFunctionMapper = sysFunctionMapper;
 	}

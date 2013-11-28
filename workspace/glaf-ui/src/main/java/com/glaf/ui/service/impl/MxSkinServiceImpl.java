@@ -21,18 +21,16 @@ package com.glaf.ui.service.impl;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.annotation.Resource;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.SqlSession;
-import org.springframework.beans.factory.annotation.Qualifier;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.core.dao.EntityDAO;
 import com.glaf.core.id.IdGenerator;
- 
+
 import com.glaf.ui.mapper.SkinMapper;
 import com.glaf.ui.model.Skin;
 import com.glaf.ui.model.SkinInstance;
@@ -44,18 +42,12 @@ import com.glaf.ui.service.SkinService;
 public class MxSkinServiceImpl implements SkinService {
 	protected final static Log logger = LogFactory.getLog(SkinService.class);
 
-	@Resource
-	@Qualifier("myBatisEntityDAO")
 	protected EntityDAO entityDAO;
 
-	@Resource
-	@Qualifier("myBatisDbIdGenerator")
 	protected IdGenerator idGenerator;
 
-	@Resource
 	protected SqlSession sqlSession;
 
-	@Resource
 	protected SkinMapper skinMapper;
 
 	public MxSkinServiceImpl() {
@@ -128,18 +120,22 @@ public class MxSkinServiceImpl implements SkinService {
 		}
 	}
 
+	@javax.annotation.Resource
 	public void setEntityDAO(EntityDAO entityDAO) {
 		this.entityDAO = entityDAO;
 	}
 
+	@javax.annotation.Resource
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 
+	@javax.annotation.Resource
 	public void setSkinMapper(SkinMapper skinMapper) {
 		this.skinMapper = skinMapper;
 	}
 
+	@javax.annotation.Resource
 	public void setSqlSession(SqlSession sqlSession) {
 		this.sqlSession = sqlSession;
 	}

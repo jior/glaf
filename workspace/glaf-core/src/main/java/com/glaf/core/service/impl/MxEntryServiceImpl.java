@@ -26,8 +26,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -772,27 +770,27 @@ public class MxEntryServiceImpl implements IEntryService {
 		}
 	}
 
-	@Resource(name = "myBatisEntityDAO")
+	@javax.annotation.Resource
 	public void setEntityDAO(EntityDAO entityDAO) {
 		this.entityDAO = entityDAO;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setEntityEntryMapper(EntityEntryMapper entityEntryMapper) {
 		this.entityEntryMapper = entityEntryMapper;
 	}
 
-	@Resource(name = "myBatisDbIdGenerator")
+	@javax.annotation.Resource
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSqlSession(SqlSession sqlSession) {
 		this.sqlSession = sqlSession;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setTreeModelService(ITreeModelService treeModelService) {
 		this.treeModelService = treeModelService;
 	}

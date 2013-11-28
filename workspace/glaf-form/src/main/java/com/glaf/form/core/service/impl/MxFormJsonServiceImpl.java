@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.alibaba.fastjson.JSONObject;
-import javax.annotation.Resource;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -138,7 +138,7 @@ public class MxFormJsonServiceImpl implements FormJsonService {
 		return object;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setFormDataService(FormDataService formDataService) {
 		this.formDataService = formDataService;
 	}

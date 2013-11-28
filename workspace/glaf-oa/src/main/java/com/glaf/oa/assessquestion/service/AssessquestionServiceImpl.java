@@ -19,7 +19,7 @@ package com.glaf.oa.assessquestion.service;
 
 import java.util.List;
 
-import javax.annotation.Resource;
+
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -113,23 +113,23 @@ public class AssessquestionServiceImpl implements AssessquestionService {
 		}
 	}
 
-	@Resource(name = "myBatisEntityDAO")
+	@javax.annotation.Resource
 	public void setEntityDAO(EntityDAO entityDAO) {
 		this.entityDAO = entityDAO;
 	}
 
-	@Resource(name = "myBatisDbIdGenerator")
+	@javax.annotation.Resource
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setAssessquestionMapper(
 			AssessquestionMapper assessquestionMapper) {
 		this.assessquestionMapper = assessquestionMapper;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}

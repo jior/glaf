@@ -24,12 +24,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import javax.annotation.Resource;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.SqlSession;
-import org.springframework.beans.factory.annotation.Qualifier;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -144,24 +142,22 @@ public class MxSystemPropertyServiceImpl implements ISystemPropertyService {
 		}
 	}
 
-	@Resource
-	@Qualifier("myBatisEntityDAO")
+	@javax.annotation.Resource
 	public void setEntityDAO(EntityDAO entityDAO) {
 		this.entityDAO = entityDAO;
 	}
 
-	@Resource
-	@Qualifier("myBatisDbIdGenerator")
+	@javax.annotation.Resource
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSqlSession(SqlSession sqlSession) {
 		this.sqlSession = sqlSession;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSystemPropertyMapper(
 			SystemPropertyMapper systemPropertyMapper) {
 		this.systemPropertyMapper = systemPropertyMapper;

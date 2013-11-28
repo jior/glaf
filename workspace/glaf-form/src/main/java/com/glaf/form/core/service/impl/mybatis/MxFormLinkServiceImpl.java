@@ -24,7 +24,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.SqlSession;
-import org.springframework.beans.factory.annotation.Qualifier;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -188,7 +188,7 @@ public class MxFormLinkServiceImpl implements FormLinkService {
 	}
 
 	@javax.annotation.Resource
-	@Qualifier("myBatisEntityDAO")
+	
 	public void setEntityDAO(EntityDAO entityDAO) {
 		this.entityDAO = entityDAO;
 	}
@@ -204,7 +204,7 @@ public class MxFormLinkServiceImpl implements FormLinkService {
 	}
 
 	@javax.annotation.Resource
-	@Qualifier("myBatisDbIdGenerator")
+	
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}

@@ -19,14 +19,13 @@
 package com.glaf.ui.service.impl;
 
 import java.util.*;
-import javax.annotation.Resource;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import org.apache.ibatis.session.SqlSession;
-import org.springframework.beans.factory.annotation.*;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -93,20 +92,19 @@ public class MxUserPortalServiceImpl implements UserPortalService {
 		}
 	}
 
-	@Resource
-	@Qualifier("myBatisDbIdGenerator")
+	@javax.annotation.Resource
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 
-	@Resource
-	public void setUserPortalMapper(UserPortalMapper userPortalMapper) {
-		this.userPortalMapper = userPortalMapper;
-	}
-
-	@Resource
+	@javax.annotation.Resource
 	public void setSqlSession(SqlSession sqlSession) {
 		this.sqlSession = sqlSession;
+	}
+
+	@javax.annotation.Resource
+	public void setUserPortalMapper(UserPortalMapper userPortalMapper) {
+		this.userPortalMapper = userPortalMapper;
 	}
 
 }

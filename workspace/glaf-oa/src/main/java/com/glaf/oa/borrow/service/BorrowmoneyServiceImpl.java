@@ -19,7 +19,7 @@ package com.glaf.oa.borrow.service;
 
 import java.util.List;
 
-import javax.annotation.Resource;
+
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -110,22 +110,22 @@ public class BorrowmoneyServiceImpl implements BorrowmoneyService {
 		}
 	}
 
-	@Resource(name = "myBatisEntityDAO")
+	@javax.annotation.Resource
 	public void setEntityDAO(EntityDAO entityDAO) {
 		this.entityDAO = entityDAO;
 	}
 
-	@Resource(name = "myBatisDbIdGenerator")
+	@javax.annotation.Resource
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setBorrowmoneyMapper(BorrowmoneyMapper borrowmoneyMapper) {
 		this.borrowmoneyMapper = borrowmoneyMapper;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}

@@ -19,7 +19,7 @@ package com.glaf.oa.seal.service;
 
 import java.util.*;
 
-import javax.annotation.Resource;
+
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -111,22 +111,22 @@ public class SealServiceImpl implements SealService {
 		}
 	}
 
-	@Resource(name = "myBatisEntityDAO")
+	@javax.annotation.Resource
 	public void setEntityDAO(EntityDAO entityDAO) {
 		this.entityDAO = entityDAO;
 	}
 
-	@Resource(name = "myBatisDbIdGenerator")
+	@javax.annotation.Resource
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSealMapper(SealMapper sealMapper) {
 		this.sealMapper = sealMapper;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}

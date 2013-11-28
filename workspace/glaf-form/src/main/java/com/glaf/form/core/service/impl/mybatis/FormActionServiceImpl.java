@@ -18,7 +18,7 @@
 package com.glaf.form.core.service.impl.mybatis;
 
 import java.util.*;
-import javax.annotation.Resource;
+
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -110,22 +110,22 @@ public class FormActionServiceImpl implements FormActionService {
 		}
 	}
 
-	@Resource(name = "myBatisEntityDAO")
+	@javax.annotation.Resource
 	public void setEntityDAO(EntityDAO entityDAO) {
 		this.entityDAO = entityDAO;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setFormActionMapper(FormActionMapper formActionMapper) {
 		this.formActionMapper = formActionMapper;
 	}
 
-	@Resource(name = "myBatisDbIdGenerator")
+	@javax.annotation.Resource
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}

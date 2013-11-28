@@ -229,7 +229,7 @@ public class HttpQueryUtils {
 		 */
 		if (StringUtils.isNotEmpty(qid)) {
 			EntityService entityService = ContextFactory
-					.getBean("myBatisEntityService");
+					.getBean("entityService");
 			/**
 			 * 根据查询参数定义编号获取查询参数列表
 			 */

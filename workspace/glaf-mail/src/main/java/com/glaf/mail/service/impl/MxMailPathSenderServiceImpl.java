@@ -18,27 +18,26 @@
 
 package com.glaf.mail.service.impl;
 
-import java.util.*;
-import javax.annotation.Resource;
+import java.util.Date;
+import java.util.List;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
-import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.core.base.Scheduler;
 import com.glaf.core.domain.SchedulerEntity;
-import com.glaf.core.id.*;
+import com.glaf.core.id.IdGenerator;
 import com.glaf.core.service.ISysSchedulerService;
 import com.glaf.core.util.DateUtils;
-
-import com.glaf.mail.domain.*;
-import com.glaf.mail.mapper.*;
-import com.glaf.mail.query.*;
-import com.glaf.mail.service.*;
+import com.glaf.mail.domain.MailPathSender;
+import com.glaf.mail.mapper.MailPathSenderMapper;
+import com.glaf.mail.query.MailPathSenderQuery;
+import com.glaf.mail.service.IMailPathSenderService;
 
 @Service("mailPathSenderService")
 @Transactional(readOnly = true)
@@ -169,24 +168,23 @@ public class MxMailPathSenderServiceImpl implements IMailPathSenderService {
 		}
 	}
 
-	@Resource
-	@Qualifier("myBatisDbIdGenerator")
+	@javax.annotation.Resource
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setMailPathSenderMapper(
 			MailPathSenderMapper mailPathSenderMapper) {
 		this.mailPathSenderMapper = mailPathSenderMapper;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSysSchedulerService(ISysSchedulerService sysSchedulerService) {
 		this.sysSchedulerService = sysSchedulerService;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}

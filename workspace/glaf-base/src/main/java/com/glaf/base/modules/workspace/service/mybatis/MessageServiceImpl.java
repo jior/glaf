@@ -17,28 +17,29 @@
  */
 package com.glaf.base.modules.workspace.service.mybatis;
 
-import java.util.*;
-
-import javax.annotation.Resource;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.beanutils.PropertyUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
-import org.springframework.beans.factory.annotation.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.glaf.core.id.*;
-import com.glaf.core.util.PageResult;
-
 import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.sys.service.SysUserService;
-import com.glaf.base.modules.workspace.mapper.*;
-import com.glaf.base.modules.workspace.model.*;
-import com.glaf.base.modules.workspace.query.*;
-import com.glaf.base.modules.workspace.service.*;
+import com.glaf.base.modules.workspace.mapper.MessageMapper;
+import com.glaf.base.modules.workspace.model.Message;
+import com.glaf.base.modules.workspace.query.MessageQuery;
+import com.glaf.base.modules.workspace.service.MessageService;
+import com.glaf.core.id.IdGenerator;
+import com.glaf.core.util.PageResult;
 
 @Service("messageService")
 @Transactional(readOnly = true)
@@ -449,23 +450,22 @@ public class MessageServiceImpl implements MessageService {
 		return saveOrUpdate(newMessage);
 	}
 
-	@Resource
-	@Qualifier("myBatisDbIdGenerator")
+	@javax.annotation.Resource
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setMessageMapper(MessageMapper messageMapper) {
 		this.messageMapper = messageMapper;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSysUserService(SysUserService sysUserService) {
 		this.sysUserService = sysUserService;
 	}

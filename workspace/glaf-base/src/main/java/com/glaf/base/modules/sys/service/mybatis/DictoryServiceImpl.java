@@ -18,26 +18,28 @@
 
 package com.glaf.base.modules.sys.service.mybatis;
 
-import java.util.*;
-
-import javax.annotation.Resource;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
-import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.glaf.core.id.*;
-import com.glaf.core.util.PageResult;
-
 import com.glaf.base.modules.sys.SysConstants;
-import com.glaf.base.modules.sys.mapper.*;
-import com.glaf.base.modules.sys.model.*;
-import com.glaf.base.modules.sys.query.*;
-import com.glaf.base.modules.sys.service.*;
+import com.glaf.base.modules.sys.mapper.DictoryMapper;
+import com.glaf.base.modules.sys.mapper.SysTreeMapper;
+import com.glaf.base.modules.sys.model.Dictory;
+import com.glaf.base.modules.sys.model.SysTree;
+import com.glaf.base.modules.sys.query.DictoryQuery;
+import com.glaf.base.modules.sys.query.SysTreeQuery;
+import com.glaf.base.modules.sys.service.DictoryService;
+import com.glaf.core.id.IdGenerator;
+import com.glaf.core.util.PageResult;
 
 @Service("dictoryService")
 @Transactional(readOnly = true)
@@ -129,7 +131,7 @@ public class DictoryServiceImpl implements DictoryService {
 		query.setOrderBy(" E.SORT desc");
 		return this.list(query);
 	}
-	
+
 	public String getCodeById(long id) {
 		Dictory dic = find(id);
 		return dic.getCode();
@@ -205,12 +207,12 @@ public class DictoryServiceImpl implements DictoryService {
 	 * @param nodeCode
 	 * @return
 	 */
-	public List<Dictory> getDictoryList(String nodeCode){
+	public List<Dictory> getDictoryList(String nodeCode) {
 		SysTreeQuery query = new SysTreeQuery();
 		query.code(nodeCode);
 		List<SysTree> trees = sysTreeMapper.getSysTrees(query);
-		if(trees != null && !trees.isEmpty()){
-		   return getAvailableDictoryList(trees.get(0).getId());	
+		if (trees != null && !trees.isEmpty()) {
+			return getAvailableDictoryList(trees.get(0).getId());
 		}
 		return null;
 	}
@@ -247,23 +249,22 @@ public class DictoryServiceImpl implements DictoryService {
 		}
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setDictoryMapper(DictoryMapper dictoryMapper) {
 		this.dictoryMapper = dictoryMapper;
 	}
 
-	@Resource
-	@Qualifier("myBatisDbIdGenerator")
+	@javax.annotation.Resource
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSysTreeMapper(SysTreeMapper sysTreeMapper) {
 		this.sysTreeMapper = sysTreeMapper;
 	}
@@ -287,7 +288,7 @@ public class DictoryServiceImpl implements DictoryService {
 	private void sortByForward(long nodeId, Dictory bean) {
 		DictoryQuery query = new DictoryQuery();
 		query.nodeId(nodeId);
-		//query.setSortLessThan(bean.getSort());
+		// query.setSortLessThan(bean.getSort());
 		query.setSortLessThanOrEqual(bean.getSort());
 		query.setIdNotEqual(bean.getId());
 		query.setOrderBy(" E.SORT desc");
@@ -296,8 +297,8 @@ public class DictoryServiceImpl implements DictoryService {
 		if (list != null && list.size() > 0) {// 有记录
 			Dictory temp = (Dictory) list.get(0);
 			int i = bean.getSort();
-			bean.setSort(temp.getSort()-1);
-			if(i!=temp.getSort()){
+			bean.setSort(temp.getSort() - 1);
+			if (i != temp.getSort()) {
 				bean.setSort(temp.getSort());
 			}
 			this.update(bean);// 更新bean
@@ -315,7 +316,7 @@ public class DictoryServiceImpl implements DictoryService {
 	private void sortByPrevious(long nodeId, Dictory bean) {
 		DictoryQuery query = new DictoryQuery();
 		query.nodeId(nodeId);
-		//query.setSortGreaterThan(bean.getSort());
+		// query.setSortGreaterThan(bean.getSort());
 		query.setSortGreaterThanOrEqual(bean.getSort());
 		query.setIdNotEqual(bean.getId());
 		query.setOrderBy(" E.SORT asc");
@@ -324,8 +325,8 @@ public class DictoryServiceImpl implements DictoryService {
 		if (list != null && list.size() > 0) {// 有记录
 			Dictory temp = (Dictory) list.get(0);
 			int i = bean.getSort();
-			bean.setSort(temp.getSort()+1);
-			if(i!=temp.getSort()){
+			bean.setSort(temp.getSort() + 1);
+			if (i != temp.getSort()) {
 				bean.setSort(temp.getSort());
 			}
 			this.update(bean);// 更新bean

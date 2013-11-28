@@ -31,7 +31,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.SqlSession;
-import org.springframework.beans.factory.annotation.Qualifier;
+
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
@@ -266,13 +266,13 @@ public class SysTodoServiceImpl implements ISysTodoService {
 	}
 
 	@javax.annotation.Resource
-	@Qualifier("myBatisEntityDAO")
+	
 	public void setEntityDAO(EntityDAO entityDAO) {
 		this.entityDAO = entityDAO;
 	}
 
 	@javax.annotation.Resource
-	@Qualifier("myBatisDbIdGenerator")
+	
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}

@@ -26,7 +26,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.util.Assert;
 
-import com.glaf.core.dao.EntityDAO;
+ 
 import com.glaf.core.entity.SqlExecutor;
 import com.glaf.core.id.Dbid;
 import com.glaf.core.id.IdBlock;
@@ -36,7 +36,7 @@ import com.glaf.core.util.ReflectUtils;
 import com.ibatis.sqlmap.client.SqlMapClient;
 import com.ibatis.sqlmap.engine.impl.SqlMapClientImpl;
 
-public class SqlMapClientDAOImpl implements EntityDAO {
+public class SqlMapClientDAOImpl implements SqlMapClientDAO {
 
 	private static final Log logger = LogFactory
 			.getLog(SqlMapClientDAOImpl.class);

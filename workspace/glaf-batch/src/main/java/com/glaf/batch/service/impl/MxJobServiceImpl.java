@@ -1,41 +1,50 @@
 /*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.glaf.batch.service.impl;
 
-import java.util.*;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
-import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.glaf.batch.domain.JobExecution;
+import com.glaf.batch.domain.JobExecutionContext;
+import com.glaf.batch.domain.JobInstance;
+import com.glaf.batch.domain.JobParam;
+import com.glaf.batch.domain.StepExecution;
+import com.glaf.batch.mapper.JobExecutionContextMapper;
+import com.glaf.batch.mapper.JobExecutionMapper;
+import com.glaf.batch.mapper.JobInstanceMapper;
+import com.glaf.batch.mapper.JobParamMapper;
+import com.glaf.batch.mapper.StepExecutionContextMapper;
+import com.glaf.batch.mapper.StepExecutionMapper;
+import com.glaf.batch.query.JobInstanceQuery;
+import com.glaf.batch.service.IJobService;
+import com.glaf.batch.util.BatchStatus;
 import com.glaf.core.dao.EntityDAO;
 import com.glaf.core.id.IdGenerator;
- 
-import com.glaf.batch.domain.*;
-import com.glaf.batch.query.*;
-import com.glaf.batch.mapper.*;
-import com.glaf.batch.service.*;
-import com.glaf.batch.util.BatchStatus;
 
 @Service("jobService")
 @Transactional(readOnly = true)
@@ -83,10 +92,8 @@ public class MxJobServiceImpl implements IJobService {
 
 	@Transactional
 	public void deleteJobInstanceById(int jobInstanceId) {
-		stepExecutionMapper
-				.deleteStepExecutionByJobInstanceId(jobInstanceId);
-		jobExecutionMapper
-				.deleteJobExecutionByJobInstanceId(jobInstanceId);
+		stepExecutionMapper.deleteStepExecutionByJobInstanceId(jobInstanceId);
+		jobExecutionMapper.deleteJobExecutionByJobInstanceId(jobInstanceId);
 		jobParamMapper.deleteJobParamsByJobInstanceId(jobInstanceId);
 		jobInstanceMapper.deleteJobInstanceById(jobInstanceId);
 	}
@@ -113,8 +120,7 @@ public class MxJobServiceImpl implements IJobService {
 	}
 
 	public List<JobExecution> getJobExecutions(int jobInstanceId) {
-		return jobExecutionMapper
-				.getJobExecutionByJobInstanceId(jobInstanceId);
+		return jobExecutionMapper.getJobExecutionByJobInstanceId(jobInstanceId);
 	}
 
 	public JobInstance getJobInstanceById(int jobInstanceId) {
@@ -403,13 +409,11 @@ public class MxJobServiceImpl implements IJobService {
 	}
 
 	@javax.annotation.Resource
-	@Qualifier("myBatisEntityDAO")
 	public void setEntityDAO(EntityDAO entityDAO) {
 		this.entityDAO = entityDAO;
 	}
 
 	@javax.annotation.Resource
-	@Qualifier("myBatisDbIdGenerator")
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
@@ -421,14 +425,12 @@ public class MxJobServiceImpl implements IJobService {
 	}
 
 	@javax.annotation.Resource
-	public void setJobExecutionMapper(
-			JobExecutionMapper jobExecutionMapper) {
+	public void setJobExecutionMapper(JobExecutionMapper jobExecutionMapper) {
 		this.jobExecutionMapper = jobExecutionMapper;
 	}
 
 	@javax.annotation.Resource
-	public void setJobInstanceMapper(
-			JobInstanceMapper jobInstanceMapper) {
+	public void setJobInstanceMapper(JobInstanceMapper jobInstanceMapper) {
 		this.jobInstanceMapper = jobInstanceMapper;
 	}
 
@@ -449,8 +451,7 @@ public class MxJobServiceImpl implements IJobService {
 	}
 
 	@javax.annotation.Resource
-	public void setStepExecutionMapper(
-			StepExecutionMapper stepExecutionMapper) {
+	public void setStepExecutionMapper(StepExecutionMapper stepExecutionMapper) {
 		this.stepExecutionMapper = stepExecutionMapper;
 	}
 

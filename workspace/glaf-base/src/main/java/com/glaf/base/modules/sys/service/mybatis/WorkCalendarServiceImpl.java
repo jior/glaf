@@ -18,22 +18,24 @@
 
 package com.glaf.base.modules.sys.service.mybatis;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 
-import javax.annotation.Resource;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
-import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.glaf.core.id.*;
 import com.glaf.base.modules.sys.mapper.WorkCalendarMapper;
 import com.glaf.base.modules.sys.model.WorkCalendar;
 import com.glaf.base.modules.sys.query.WorkCalendarQuery;
 import com.glaf.base.modules.sys.service.WorkCalendarService;
+import com.glaf.core.id.IdGenerator;
 
 @Service("workCalendarService")
 @Transactional(readOnly = true)
@@ -273,18 +275,17 @@ public class WorkCalendarServiceImpl implements WorkCalendarService {
 		}
 	}
 
-	@Resource
-	@Qualifier("myBatisDbIdGenerator")
+	@javax.annotation.Resource
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setWorkCalendarMapper(WorkCalendarMapper workCalendarMapper) {
 		this.workCalendarMapper = workCalendarMapper;
 	}

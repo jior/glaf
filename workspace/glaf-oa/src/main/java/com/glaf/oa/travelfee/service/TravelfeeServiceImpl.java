@@ -18,7 +18,7 @@
 package com.glaf.oa.travelfee.service;
 
 import java.util.*;
-import javax.annotation.Resource;
+
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -117,22 +117,22 @@ public class TravelfeeServiceImpl implements TravelfeeService {
 		}
 	}
 
-	@Resource(name = "myBatisEntityDAO")
+	@javax.annotation.Resource
 	public void setEntityDAO(EntityDAO entityDAO) {
 		this.entityDAO = entityDAO;
 	}
 
-	@Resource(name = "myBatisDbIdGenerator")
+	@javax.annotation.Resource
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setTravelfeeMapper(TravelfeeMapper travelfeeMapper) {
 		this.travelfeeMapper = travelfeeMapper;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}

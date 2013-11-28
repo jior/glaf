@@ -24,8 +24,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
-
 import org.apache.commons.lang.StringUtils;
 
 import org.springframework.stereotype.Service;
@@ -48,10 +46,10 @@ import com.glaf.core.service.ITreeModelService;
 @Transactional(readOnly = true)
 public class MxTreeModelServiceImpl implements ITreeModelService {
 
-	@Resource(name = "myBatisEntityDAO")
+	
 	protected EntityDAO entityDAO;
 
-	@Resource(name = "myBatisDbIdGenerator")
+	 
 	protected IdGenerator idGenerator;
 
 	public MxTreeModelServiceImpl() {
@@ -424,10 +422,12 @@ public class MxTreeModelServiceImpl implements ITreeModelService {
 		}
 	}
 
+	@javax.annotation.Resource
 	public void setEntityDAO(EntityDAO entityDAO) {
 		this.entityDAO = entityDAO;
 	}
 
+	@javax.annotation.Resource
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}

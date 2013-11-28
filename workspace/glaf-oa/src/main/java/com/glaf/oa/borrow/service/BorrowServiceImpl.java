@@ -19,7 +19,7 @@ package com.glaf.oa.borrow.service;
 
 import java.util.*;
 
-import javax.annotation.Resource;
+
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -117,32 +117,32 @@ public class BorrowServiceImpl implements BorrowService {
 		}
 	}
 
-	@Resource(name = "myBatisEntityDAO")
+	@javax.annotation.Resource
 	public void setEntityDAO(EntityDAO entityDAO) {
 		this.entityDAO = entityDAO;
 	}
 
-	@Resource(name = "myBatisDbIdGenerator")
+	@javax.annotation.Resource
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setBorrowadderssMapper(BorrowadderssMapper borrowadderssMapper) {
 		this.borrowadderssMapper = borrowadderssMapper;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setBorrowmoneyMapper(BorrowmoneyMapper borrowmoneyMapper) {
 		this.borrowmoneyMapper = borrowmoneyMapper;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setBorrowMapper(BorrowMapper borrowMapper) {
 		this.borrowMapper = borrowMapper;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}

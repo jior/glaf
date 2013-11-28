@@ -18,7 +18,7 @@
 package com.glaf.cms.info.service;
 
 import java.util.*;
-import javax.annotation.Resource;
+
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -125,27 +125,27 @@ public class PublicInfoServiceImpl implements PublicInfoService {
 		publicInfoMapper.updateViewCount(id);
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setBlobService(IBlobService blobService) {
 		this.blobService = blobService;
 	}
 
-	@Resource(name = "myBatisEntityDAO")
+	@javax.annotation.Resource
 	public void setEntityDAO(EntityDAO entityDAO) {
 		this.entityDAO = entityDAO;
 	}
 
-	@Resource(name = "myBatisDbIdGenerator")
+	@javax.annotation.Resource 
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setPublicInfoMapper(PublicInfoMapper publicInfoMapper) {
 		this.publicInfoMapper = publicInfoMapper;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}

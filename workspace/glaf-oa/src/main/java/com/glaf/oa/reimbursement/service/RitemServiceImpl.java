@@ -19,7 +19,7 @@ package com.glaf.oa.reimbursement.service;
 
 import java.util.List;
 
-import javax.annotation.Resource;
+
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -121,27 +121,27 @@ public class RitemServiceImpl implements RitemService {
 		this.updateSumPrice(ritem.getReimbursementid());
 	}
 
-	@Resource(name = "myBatisEntityDAO")
+	@javax.annotation.Resource
 	public void setEntityDAO(EntityDAO entityDAO) {
 		this.entityDAO = entityDAO;
 	}
 
-	@Resource(name = "myBatisDbIdGenerator")
+	@javax.annotation.Resource
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setReimbursementMapper(ReimbursementMapper reimbursementMapper) {
 		this.reimbursementMapper = reimbursementMapper;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setRitemMapper(RitemMapper ritemMapper) {
 		this.ritemMapper = ritemMapper;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}

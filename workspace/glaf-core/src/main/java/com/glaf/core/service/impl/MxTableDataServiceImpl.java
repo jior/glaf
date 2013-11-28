@@ -20,14 +20,12 @@ package com.glaf.core.service.impl;
 
 import java.util.*;
 
-import javax.annotation.Resource;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import org.apache.ibatis.session.SqlSession;
-import org.springframework.beans.factory.annotation.*;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -75,7 +73,7 @@ public class MxTableDataServiceImpl implements ITableDataService {
 	public MxTableDataServiceImpl() {
 
 	}
-	
+
 	/**
 	 * É¾³ýÊý¾Ý
 	 * 
@@ -121,7 +119,7 @@ public class MxTableDataServiceImpl implements ITableDataService {
 		return page;
 	}
 
-	public Map<String, Object> getTableDataByPrimaryKey(TableModel model){
+	public Map<String, Object> getTableDataByPrimaryKey(TableModel model) {
 		return tableDataMapper.getTableDataByPrimaryKey(model);
 	}
 
@@ -155,7 +153,8 @@ public class MxTableDataServiceImpl implements ITableDataService {
 			idColumn.setJavaType(idCol.getJavaType());
 			idColumn.setValueExpression(idCol.getValueExpression());
 			exprColumns.add(idCol);
-			exprMap.put(idCol.getColumnName().toLowerCase(), idCol.getValueExpression());
+			exprMap.put(idCol.getColumnName().toLowerCase(),
+					idCol.getValueExpression());
 		}
 
 		Iterator<ColumnDefinition> iter = tableDefinition.getColumns()
@@ -163,12 +162,13 @@ public class MxTableDataServiceImpl implements ITableDataService {
 		while (iter.hasNext()) {
 			ColumnDefinition cell = iter.next();
 			if (StringUtils.isNotEmpty(cell.getValueExpression())) {
-				exprMap.put(cell.getColumnName().toLowerCase(), cell.getValueExpression());
+				exprMap.put(cell.getColumnName().toLowerCase(),
+						cell.getValueExpression());
 				exprColumns.add(cell);
 			}
 		}
 
-		logger.debug("expr map:"+exprMap);
+		logger.debug("expr map:" + exprMap);
 
 		List<TableModel> inertRows = new ArrayList<TableModel>();
 
@@ -359,8 +359,7 @@ public class MxTableDataServiceImpl implements ITableDataService {
 	public void insertTableData(TableModel model) {
 		tableDataMapper.insertTableData(model);
 	}
-	
-	
+
 	@Transactional
 	public void saveAll(String tableName, String seqNo,
 			Collection<TableModel> rows) {
@@ -371,8 +370,7 @@ public class MxTableDataServiceImpl implements ITableDataService {
 			this.saveAll(tableDefinition, seqNo, rows);
 		}
 	}
-	
-	
+
 	@Transactional
 	public Collection<TableModel> saveAll(TableDefinition tableDefinition,
 			String seqNo, Collection<TableModel> rows) {
@@ -598,7 +596,7 @@ public class MxTableDataServiceImpl implements ITableDataService {
 			throw new RuntimeException("aggregationKeys is required.");
 		}
 	}
-	
+
 	@Transactional
 	public void saveOrUpdate(String tableName, boolean updatable,
 			List<Map<String, Object>> rows) {
@@ -657,7 +655,6 @@ public class MxTableDataServiceImpl implements ITableDataService {
 		}
 
 	}
-	
 
 	@Transactional
 	public void saveOrUpdate(TableDefinition tableDefinition,
@@ -895,46 +892,44 @@ public class MxTableDataServiceImpl implements ITableDataService {
 		}
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setColumnDefinitionMapper(
 			ColumnDefinitionMapper columnDefinitionMapper) {
 		this.columnDefinitionMapper = columnDefinitionMapper;
 	}
 
-	@Resource
-	@Qualifier("myBatisEntityDAO")
+	@javax.annotation.Resource
 	public void setEntityDAO(EntityDAO entityDAO) {
 		this.entityDAO = entityDAO;
 	}
 
-	@Resource
-	@Qualifier("myBatisDbIdGenerator")
+	@javax.annotation.Resource
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setIdMapper(IdMapper idMapper) {
 		this.idMapper = idMapper;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSqlSession(SqlSession sqlSession) {
 		this.sqlSession = sqlSession;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setTableDataMapper(TableDataMapper tableDataMapper) {
 		this.tableDataMapper = tableDataMapper;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setTableDefinitionService(
 			ITableDefinitionService tableDefinitionService) {
 		this.tableDefinitionService = tableDefinitionService;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setTablePageMapper(TablePageMapper tablePageMapper) {
 		this.tablePageMapper = tablePageMapper;
 	}

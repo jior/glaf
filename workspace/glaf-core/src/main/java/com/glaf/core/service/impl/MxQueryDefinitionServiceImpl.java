@@ -20,13 +20,11 @@ package com.glaf.core.service.impl;
 
 import java.util.*;
 
-import javax.annotation.Resource;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
-import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -299,25 +297,24 @@ public class MxQueryDefinitionServiceImpl implements IQueryDefinitionService {
 
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setColumnDefinitionMapper(
 			ColumnDefinitionMapper columnDefinitionMapper) {
 		this.columnDefinitionMapper = columnDefinitionMapper;
 	}
 
-	@Resource
-	@Qualifier("myBatisDbIdGenerator")
+	@javax.annotation.Resource
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setQueryDefinitionMapper(
 			QueryDefinitionMapper queryDefinitionMapper) {
 		this.queryDefinitionMapper = queryDefinitionMapper;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSqlSession(SqlSession sqlSession) {
 		this.sqlSession = sqlSession;
 	}

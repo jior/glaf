@@ -18,23 +18,23 @@
 
 package com.glaf.base.modules.others.service.mybatis;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import javax.annotation.Resource;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
-import org.springframework.beans.factory.annotation.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.glaf.core.id.*;
-
-import com.glaf.base.modules.others.mapper.*;
-import com.glaf.base.modules.others.model.*;
-import com.glaf.base.modules.others.query.*;
-import com.glaf.base.modules.others.service.*;
+import com.glaf.base.modules.others.mapper.AttachmentMapper;
+import com.glaf.base.modules.others.model.Attachment;
+import com.glaf.base.modules.others.query.AttachmentQuery;
+import com.glaf.base.modules.others.service.AttachmentService;
+import com.glaf.core.id.IdGenerator;
 
 @Service("attachmentService")
 @Transactional(readOnly = true)
@@ -109,18 +109,17 @@ public class AttachmentServiceImpl implements AttachmentService {
 		}
 	}
 
-	@Resource
-	@Qualifier("myBatisDbIdGenerator")
+	@javax.annotation.Resource
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setAttachmentMapper(AttachmentMapper attachmentMapper) {
 		this.attachmentMapper = attachmentMapper;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}
@@ -259,8 +258,9 @@ public class AttachmentServiceImpl implements AttachmentService {
 		query.setOrderBy(" E.ID desc ");
 		return this.list(query);
 	}
-	
-	public List<Attachment> getAttachmentList(long referId, int referType,long createId) {
+
+	public List<Attachment> getAttachmentList(long referId, int referType,
+			long createId) {
 		AttachmentQuery query = new AttachmentQuery();
 		query.referId(referId);
 		query.referType(referType);
@@ -268,8 +268,8 @@ public class AttachmentServiceImpl implements AttachmentService {
 		query.setOrderBy(" E.ID desc ");
 		return this.list(query);
 	}
-	
-	public int getAttachmentCount(long[] referIds, int referType,long createId) {
+
+	public int getAttachmentCount(long[] referIds, int referType, long createId) {
 		List<Long> rows = new ArrayList<Long>();
 		for (int i = 0; i < referIds.length; i++) {
 			rows.add(referIds[i]);
@@ -280,9 +280,10 @@ public class AttachmentServiceImpl implements AttachmentService {
 		query.setOrderBy(" E.ID desc ");
 		return this.count(query);
 	}
-	
+
 	@Transactional
-	public void updateByReferTypeAndCreateId(long referId,int referType,long createId) {
+	public void updateByReferTypeAndCreateId(long referId, int referType,
+			long createId) {
 		Attachment model = new Attachment();
 		model.setReferId(referId);
 		model.setReferType(referType);

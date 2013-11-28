@@ -17,9 +17,12 @@
  */
 package com.glaf.base.modules.sys.service.mybatis;
 
-import java.util.*;
-
-import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -27,23 +30,31 @@ import org.apache.ibatis.session.RowBounds;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.mybatis.spring.SqlSessionTemplate;
-import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.glaf.core.id.*;
-import com.glaf.core.identity.Agent;
-import com.glaf.core.service.EntityService;
-import com.glaf.core.util.PageResult;
+import com.glaf.base.business.TreeHelper;
+import com.glaf.base.modules.sys.SysConstants;
+import com.glaf.base.modules.sys.mapper.SysAccessMapper;
+import com.glaf.base.modules.sys.mapper.SysApplicationMapper;
+import com.glaf.base.modules.sys.mapper.SysTreeMapper;
+import com.glaf.base.modules.sys.model.RealmInfo;
+import com.glaf.base.modules.sys.model.SysApplication;
+import com.glaf.base.modules.sys.model.SysTree;
+import com.glaf.base.modules.sys.model.SysUser;
+import com.glaf.base.modules.sys.query.SysApplicationQuery;
+import com.glaf.base.modules.sys.query.SysTreeQuery;
+import com.glaf.base.modules.sys.service.AuthorizeService;
+import com.glaf.base.modules.sys.service.SysApplicationService;
+import com.glaf.base.modules.sys.service.SysTreeService;
+import com.glaf.base.modules.sys.service.SysUserService;
 import com.glaf.core.base.BaseTree;
 import com.glaf.core.base.TreeModel;
 import com.glaf.core.context.ApplicationContext;
-import com.glaf.base.business.TreeHelper;
-import com.glaf.base.modules.sys.SysConstants;
-import com.glaf.base.modules.sys.mapper.*;
-import com.glaf.base.modules.sys.model.*;
-import com.glaf.base.modules.sys.query.*;
-import com.glaf.base.modules.sys.service.*;
+import com.glaf.core.id.IdGenerator;
+import com.glaf.core.identity.Agent;
+import com.glaf.core.service.EntityService;
+import com.glaf.core.util.PageResult;
 
 @Service("sysApplicationService")
 @Transactional(readOnly = true)
@@ -568,49 +579,48 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 		}
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setAuthorizeService(AuthorizeService authorizeService) {
 		this.authorizeService = authorizeService;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setEntityService(EntityService entityService) {
 		this.entityService = entityService;
 	}
 
-	@Resource
-	@Qualifier("myBatisDbIdGenerator")
+	@javax.annotation.Resource
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSysAccessMapper(SysAccessMapper sysAccessMapper) {
 		this.sysAccessMapper = sysAccessMapper;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSysApplicationMapper(
 			SysApplicationMapper sysApplicationMapper) {
 		this.sysApplicationMapper = sysApplicationMapper;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSysTreeMapper(SysTreeMapper sysTreeMapper) {
 		this.sysTreeMapper = sysTreeMapper;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSysTreeService(SysTreeService sysTreeService) {
 		this.sysTreeService = sysTreeService;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSysUserService(SysUserService sysUserService) {
 		this.sysUserService = sysUserService;
 	}

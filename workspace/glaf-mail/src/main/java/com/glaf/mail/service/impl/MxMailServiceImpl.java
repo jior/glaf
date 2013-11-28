@@ -23,13 +23,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.SqlSession;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,20 +35,20 @@ import com.glaf.core.dao.EntityDAO;
 import com.glaf.core.entity.SqlExecutor;
 import com.glaf.core.id.IdGenerator;
 import com.glaf.core.jdbc.DBConnectionFactory;
-import com.glaf.mail.Mail;
-import com.glaf.mail.MailMessage;
-import com.glaf.mail.MailSender;
-import com.glaf.mail.service.IMailService;
-import com.glaf.mail.util.MailStatus;
-import com.glaf.mail.domain.MailDataFile;
-import com.glaf.mail.mapper.MailDataFileMapper;
-import com.glaf.mail.mapper.MailMapper;
-import com.glaf.mail.query.MailQuery;
 import com.glaf.core.service.IBlobService;
 import com.glaf.core.util.DBUtils;
 import com.glaf.core.util.LogUtils;
 import com.glaf.core.util.Paging;
 import com.glaf.core.util.UUID32;
+import com.glaf.mail.Mail;
+import com.glaf.mail.MailMessage;
+import com.glaf.mail.MailSender;
+import com.glaf.mail.domain.MailDataFile;
+import com.glaf.mail.mapper.MailDataFileMapper;
+import com.glaf.mail.mapper.MailMapper;
+import com.glaf.mail.query.MailQuery;
+import com.glaf.mail.service.IMailService;
+import com.glaf.mail.util.MailStatus;
 
 @Service("mailService")
 @Transactional(readOnly = true)
@@ -265,39 +262,37 @@ public class MxMailServiceImpl implements IMailService {
 		return sendOK;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setBlobService(IBlobService blobService) {
 		this.blobService = blobService;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setMailMapper(MailMapper mailMapper) {
 		this.mailMapper = mailMapper;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setMailSender(MailSender mailSender) {
 		this.mailSender = mailSender;
 	}
 
-	@Resource
-	@Qualifier("myBatisEntityDAO")
+	@javax.annotation.Resource
 	public void setEntityDAO(EntityDAO entityDAO) {
 		this.entityDAO = entityDAO;
 	}
 
-	@Resource
-	@Qualifier("myBatisDbIdGenerator")
+	@javax.annotation.Resource
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSqlSession(SqlSession sqlSession) {
 		this.sqlSession = sqlSession;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setMailDataFileMapper(MailDataFileMapper mailDataFileMapper) {
 		this.mailDataFileMapper = mailDataFileMapper;
 	}

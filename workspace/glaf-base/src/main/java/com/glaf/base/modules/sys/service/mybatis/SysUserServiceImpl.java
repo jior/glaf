@@ -18,32 +18,52 @@
 
 package com.glaf.base.modules.sys.service.mybatis;
 
-import java.util.*;
-
-import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
-import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.glaf.core.id.*;
+import com.glaf.base.modules.sys.mapper.SysAccessMapper;
+import com.glaf.base.modules.sys.mapper.SysApplicationMapper;
+import com.glaf.base.modules.sys.mapper.SysDeptRoleMapper;
+import com.glaf.base.modules.sys.mapper.SysFunctionMapper;
+import com.glaf.base.modules.sys.mapper.SysPermissionMapper;
+import com.glaf.base.modules.sys.mapper.SysRoleMapper;
+import com.glaf.base.modules.sys.mapper.SysUserMapper;
+import com.glaf.base.modules.sys.mapper.SysUserRoleMapper;
+import com.glaf.base.modules.sys.model.SysApplication;
+import com.glaf.base.modules.sys.model.SysDepartment;
+import com.glaf.base.modules.sys.model.SysDeptRole;
+import com.glaf.base.modules.sys.model.SysFunction;
+import com.glaf.base.modules.sys.model.SysRole;
+import com.glaf.base.modules.sys.model.SysUser;
+import com.glaf.base.modules.sys.model.SysUserRole;
+import com.glaf.base.modules.sys.query.SysDeptRoleQuery;
+import com.glaf.base.modules.sys.query.SysUserQuery;
+import com.glaf.base.modules.sys.query.SysUserRoleQuery;
+import com.glaf.base.modules.sys.service.SysDepartmentService;
+import com.glaf.base.modules.sys.service.SysUserService;
+import com.glaf.core.base.TableModel;
+import com.glaf.core.domain.Membership;
+import com.glaf.core.id.IdGenerator;
 import com.glaf.core.jdbc.DBConnectionFactory;
 import com.glaf.core.service.ITableDataService;
 import com.glaf.core.service.MembershipService;
 import com.glaf.core.util.DBUtils;
 import com.glaf.core.util.PageResult;
 import com.glaf.core.util.StringTools;
-import com.glaf.core.base.TableModel;
-import com.glaf.core.domain.Membership;
-import com.glaf.base.modules.sys.mapper.*;
-import com.glaf.base.modules.sys.model.*;
-import com.glaf.base.modules.sys.query.*;
-import com.glaf.base.modules.sys.service.*;
 
 @Service("sysUserService")
 @Transactional(readOnly = true)
@@ -582,70 +602,69 @@ public class SysUserServiceImpl implements SysUserService {
 		}
 	}
 
-	@Resource
-	@Qualifier("myBatisDbIdGenerator")
+	@javax.annotation.Resource
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setMembershipService(MembershipService membershipService) {
 		this.membershipService = membershipService;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSysAccessMapper(SysAccessMapper sysAccessMapper) {
 		this.sysAccessMapper = sysAccessMapper;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSysApplicationMapper(
 			SysApplicationMapper sysApplicationMapper) {
 		this.sysApplicationMapper = sysApplicationMapper;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSysDepartmentService(
 			SysDepartmentService sysDepartmentService) {
 		this.sysDepartmentService = sysDepartmentService;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSysDeptRoleMapper(SysDeptRoleMapper sysDeptRoleMapper) {
 		this.sysDeptRoleMapper = sysDeptRoleMapper;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSysFunctionMapper(SysFunctionMapper sysFunctionMapper) {
 		this.sysFunctionMapper = sysFunctionMapper;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSysPermissionMapper(SysPermissionMapper sysPermissionMapper) {
 		this.sysPermissionMapper = sysPermissionMapper;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSysRoleMapper(SysRoleMapper sysRoleMapper) {
 		this.sysRoleMapper = sysRoleMapper;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSysUserMapper(SysUserMapper sysUserMapper) {
 		this.sysUserMapper = sysUserMapper;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSysUserRoleMapper(SysUserRoleMapper sysUserRoleMapper) {
 		this.sysUserRoleMapper = sysUserRoleMapper;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setTableDataService(ITableDataService tableDataService) {
 		this.tableDataService = tableDataService;
 	}

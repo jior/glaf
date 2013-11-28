@@ -27,7 +27,7 @@ import java.util.Set;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
-import javax.annotation.Resource;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -145,7 +145,7 @@ public class MxFormXmlServiceImpl implements FormXmlService {
 		return doc;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setFormDataService(FormDataService formDataService) {
 		this.formDataService = formDataService;
 	}

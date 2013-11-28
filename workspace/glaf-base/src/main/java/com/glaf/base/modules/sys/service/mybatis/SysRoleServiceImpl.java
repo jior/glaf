@@ -18,25 +18,25 @@
 
 package com.glaf.base.modules.sys.service.mybatis;
 
-import java.util.*;
+import java.util.Date;
+import java.util.List;
 
-import javax.annotation.Resource;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
-import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.glaf.core.id.*;
-import com.glaf.core.util.PageResult;
-
 import com.glaf.base.modules.sys.SysConstants;
-import com.glaf.base.modules.sys.mapper.*;
-import com.glaf.base.modules.sys.model.*;
-import com.glaf.base.modules.sys.query.*;
-import com.glaf.base.modules.sys.service.*;
+import com.glaf.base.modules.sys.mapper.SysDeptRoleMapper;
+import com.glaf.base.modules.sys.mapper.SysRoleMapper;
+import com.glaf.base.modules.sys.model.SysRole;
+import com.glaf.base.modules.sys.query.SysDepartmentQuery;
+import com.glaf.base.modules.sys.query.SysRoleQuery;
+import com.glaf.base.modules.sys.service.SysRoleService;
+import com.glaf.core.id.IdGenerator;
+import com.glaf.core.util.PageResult;
 
 @Service("sysRoleService")
 @Transactional(readOnly = true)
@@ -67,7 +67,7 @@ public class SysRoleServiceImpl implements SysRoleService {
 			bean.setId(idGenerator.nextId());
 		}
 		bean.setCreateDate(new Date());
-		bean.setSort( (int) bean.getId() );
+		bean.setSort((int) bean.getId());
 		sysRoleMapper.insertSysRole(bean);
 		return true;
 	}
@@ -164,8 +164,8 @@ public class SysRoleServiceImpl implements SysRoleService {
 		List<SysRole> list = this.list(query);
 		return list;
 	}
-	
-	public List<SysRole> getSysRolesOfDepts(SysDepartmentQuery query){
+
+	public List<SysRole> getSysRolesOfDepts(SysDepartmentQuery query) {
 		return sysRoleMapper.getSysRolesOfDepts(query);
 	}
 
@@ -218,23 +218,22 @@ public class SysRoleServiceImpl implements SysRoleService {
 		}
 	}
 
-	@Resource
-	@Qualifier("myBatisDbIdGenerator")
+	@javax.annotation.Resource
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSysDeptRoleMapper(SysDeptRoleMapper sysDeptRoleMapper) {
 		this.sysDeptRoleMapper = sysDeptRoleMapper;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSysRoleMapper(SysRoleMapper sysRoleMapper) {
 		this.sysRoleMapper = sysRoleMapper;
 	}

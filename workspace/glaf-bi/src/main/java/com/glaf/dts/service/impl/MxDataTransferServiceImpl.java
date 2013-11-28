@@ -2,8 +2,6 @@ package com.glaf.dts.service.impl;
 
 import java.util.*;
 
-import javax.annotation.Resource;
-
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -151,28 +149,28 @@ public class MxDataTransferServiceImpl implements IDataTransferService {
 		}
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setColumnDefinitionMapper(
 			ColumnDefinitionMapper columnDefinitionMapper) {
 		this.columnDefinitionMapper = columnDefinitionMapper;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setDataTransferMapper(DataTransferMapper dataTransferMapper) {
 		this.dataTransferMapper = dataTransferMapper;
 	}
 
-	@Resource(name = "myBatisEntityDAO")
+	@javax.annotation.Resource
 	public void setEntityDAO(EntityDAO entityDAO) {
 		this.entityDAO = entityDAO;
 	}
 
-	@Resource(name = "myBatisDbIdGenerator")
+	@javax.annotation.Resource
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}

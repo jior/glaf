@@ -18,22 +18,27 @@
 
 package com.glaf.mail.service.impl;
 
-import java.util.*;
+import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
-import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.core.dao.EntityDAO;
-import com.glaf.core.id.*;
-import com.glaf.mail.domain.*;
-import com.glaf.mail.mapper.*;
-import com.glaf.mail.query.*;
-import com.glaf.mail.service.*;
+import com.glaf.core.id.IdGenerator;
+import com.glaf.mail.domain.MailCount;
+import com.glaf.mail.domain.MailItem;
+import com.glaf.mail.domain.MailStorage;
+import com.glaf.mail.domain.MailTask;
+import com.glaf.mail.mapper.MailItemMapper;
+import com.glaf.mail.mapper.MailStorageMapper;
+import com.glaf.mail.mapper.MailTaskAccountMapper;
+import com.glaf.mail.mapper.MailTaskMapper;
+import com.glaf.mail.query.MailItemQuery;
+import com.glaf.mail.service.IMailDataService;
 
 @Service("mailDataService")
 @Transactional(readOnly = true)
@@ -147,13 +152,11 @@ public class MxMailDataServiceImpl implements IMailDataService {
 	}
 
 	@javax.annotation.Resource
-	@Qualifier("myBatisEntityDAO")
 	public void setEntityDAO(EntityDAO entityDAO) {
 		this.entityDAO = entityDAO;
 	}
 
 	@javax.annotation.Resource
-	@Qualifier("myBatisDbIdGenerator")
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}

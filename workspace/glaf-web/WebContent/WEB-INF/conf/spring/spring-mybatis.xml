@@ -15,7 +15,7 @@
 		</property>
 	</bean>
 
-	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg index="0" ref="sqlSessionFactory" />
 	</bean>
 
@@ -29,12 +29,16 @@
 		<property name="basePackage" value="com.glaf.**.mapper" />
 	</bean>
 
-	<bean id="myBatisEntityDAO" class="com.glaf.core.entity.mybatis.MyBatisEntityDAOImpl">
-		<property name="sqlSessionTemplate" ref="sqlSession" />
+	<bean id="entityDAO" class="com.glaf.core.entity.mybatis.MyBatisEntityDAOImpl">
+		<property name="sqlSessionTemplate" ref="sqlSessionTemplate" />
 	</bean>
 
 	<bean id="idGenerator" class="com.glaf.core.id.MyBatisDbIdGenerator">
 		<property name="entityDAO" ref="myBatisEntityDAO" />
+	</bean>
+
+	<bean id="myBatisEntityDAO" class="com.glaf.core.entity.mybatis.MyBatisEntityDAOImpl">
+		<property name="sqlSessionTemplate" ref="sqlSessionTemplate" />
 	</bean>
 
 	<bean id="myBatisDbIdGenerator" class="com.glaf.core.id.MyBatisDbIdGenerator">

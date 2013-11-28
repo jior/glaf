@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
@@ -151,7 +151,7 @@ public class BudgetViewController {
 		return new ModelAndView("/oa/common/budget_view", modelMap);
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setBudgetService(BudgetService budgetService) {
 		this.budgetService = budgetService;
 	}

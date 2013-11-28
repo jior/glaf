@@ -19,7 +19,7 @@ package com.glaf.oa.withdrawal.service;
 
 import java.util.*;
 
-import javax.annotation.Resource;
+
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -111,22 +111,22 @@ public class WithdrawalServiceImpl implements WithdrawalService {
 		}
 	}
 
-	@Resource(name = "myBatisEntityDAO")
+	@javax.annotation.Resource
 	public void setEntityDAO(EntityDAO entityDAO) {
 		this.entityDAO = entityDAO;
 	}
 
-	@Resource(name = "myBatisDbIdGenerator")
+	@javax.annotation.Resource
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setWithdrawalMapper(WithdrawalMapper withdrawalMapper) {
 		this.withdrawalMapper = withdrawalMapper;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}

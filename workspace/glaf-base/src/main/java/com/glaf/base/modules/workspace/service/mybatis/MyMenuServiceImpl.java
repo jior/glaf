@@ -17,26 +17,23 @@
  */
 package com.glaf.base.modules.workspace.service.mybatis;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
 
-import javax.annotation.Resource;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
-import org.springframework.beans.factory.annotation.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.glaf.core.id.*;
-import com.glaf.core.util.PageResult;
-
 import com.glaf.base.modules.sys.SysConstants;
-import com.glaf.base.modules.workspace.mapper.*;
-import com.glaf.base.modules.workspace.model.*;
-import com.glaf.base.modules.workspace.query.*;
-import com.glaf.base.modules.workspace.service.*;
+import com.glaf.base.modules.workspace.mapper.MyMenuMapper;
+import com.glaf.base.modules.workspace.model.MyMenu;
+import com.glaf.base.modules.workspace.query.MyMenuQuery;
+import com.glaf.base.modules.workspace.service.MyMenuService;
+import com.glaf.core.id.IdGenerator;
+import com.glaf.core.util.PageResult;
 
 @Service("myMenuService")
 @Transactional(readOnly = true)
@@ -111,18 +108,17 @@ public class MyMenuServiceImpl implements MyMenuService {
 		}
 	}
 
-	@Resource
-	@Qualifier("myBatisDbIdGenerator")
+	@javax.annotation.Resource
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setMyMenuMapper(MyMenuMapper myMenuMapper) {
 		this.myMenuMapper = myMenuMapper;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}

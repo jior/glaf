@@ -26,13 +26,11 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import javax.annotation.Resource;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
-import org.springframework.beans.factory.annotation.Qualifier;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -165,8 +163,8 @@ public class MxTablePageServiceImpl implements ITablePageService {
 			pageSize = Paging.DEFAULT_PAGE_SIZE;
 		}
 		RowBounds rowBounds = new RowBounds(begin, pageSize);
-		List<Map<String, Object>> rows = sqlSession.selectList("getTableData", query,
-				rowBounds);
+		List<Map<String, Object>> rows = sqlSession.selectList("getTableData",
+				query, rowBounds);
 		return rows;
 	}
 
@@ -385,18 +383,17 @@ public class MxTablePageServiceImpl implements ITablePageService {
 		return paging;
 	}
 
-	@Resource
-	@Qualifier("myBatisDbIdGenerator")
+	@javax.annotation.Resource
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSqlSession(SqlSession sqlSession) {
 		this.sqlSession = sqlSession;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setTablePageMapper(TablePageMapper tablePageMapper) {
 		this.tablePageMapper = tablePageMapper;
 	}

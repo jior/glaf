@@ -187,21 +187,23 @@ public class MxSystemParamServiceImpl implements ISystemParamService {
 		query.setBusinessKey(businessKey);
 		return this.list(query);
 	}
-	
+
 	/**
 	 * 获取系统参数
+	 * 
 	 * @param serviceKey
 	 * @param businessKey
 	 * @param keyName
 	 * @return
 	 */
-	public SystemParam getSystemParam(String serviceKey, String businessKey, String keyName){
+	public SystemParam getSystemParam(String serviceKey, String businessKey,
+			String keyName) {
 		SystemParamQuery query = new SystemParamQuery();
 		query.serviceKey(serviceKey);
 		query.setBusinessKey(businessKey);
 		query.setKeyName(keyName);
 		List<SystemParam> list = this.list(query);
-		if(list != null && !list.isEmpty()){
+		if (list != null && !list.isEmpty()) {
 			return list.get(0);
 		}
 		return null;
@@ -283,12 +285,12 @@ public class MxSystemParamServiceImpl implements ISystemParamService {
 		}
 	}
 
-	@javax.annotation.Resource(name = "myBatisEntityDAO")
+	@javax.annotation.Resource
 	public void setEntityDAO(EntityDAO entityDAO) {
 		this.entityDAO = entityDAO;
 	}
 
-	@javax.annotation.Resource(name = "myBatisDbIdGenerator")
+	@javax.annotation.Resource
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
@@ -305,8 +307,7 @@ public class MxSystemParamServiceImpl implements ISystemParamService {
 	}
 
 	@javax.annotation.Resource
-	public void setSystemParamMapper(
-			SystemParamMapper systemParamMapper) {
+	public void setSystemParamMapper(SystemParamMapper systemParamMapper) {
 		this.systemParamMapper = systemParamMapper;
 	}
 

@@ -21,15 +21,13 @@ package com.glaf.chart.service.impl;
 import java.util.*;
 import java.util.Map.Entry;
 
-import javax.annotation.Resource;
-
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
-import org.springframework.beans.factory.annotation.*;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -295,46 +293,45 @@ public class MxChartServiceImpl implements IChartService {
 		}
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setChartMapper(ChartMapper chartMapper) {
 		this.chartMapper = chartMapper;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setColumnDefinitionMapper(
 			ColumnDefinitionMapper columnDefinitionMapper) {
 		this.columnDefinitionMapper = columnDefinitionMapper;
 	}
 
-	@Resource
-	@Qualifier("myBatisDbIdGenerator")
+	@javax.annotation.Resource
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setQueryDefinitionMapper(
 			QueryDefinitionMapper queryDefinitionMapper) {
 		this.queryDefinitionMapper = queryDefinitionMapper;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setQueryDefinitionService(
 			IQueryDefinitionService queryDefinitionService) {
 		this.queryDefinitionService = queryDefinitionService;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setTableDataService(ITableDataService tableDataService) {
 		this.tableDataService = tableDataService;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setTablePageService(ITablePageService tablePageService) {
 		this.tablePageService = tablePageService;
 	}

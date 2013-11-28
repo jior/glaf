@@ -25,14 +25,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
-import org.springframework.beans.factory.annotation.Qualifier;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -328,56 +326,54 @@ public class MxDataModelServiceImpl implements DataModelService {
 		return dataModel;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setColumnDefinitionMapper(
 			ColumnDefinitionMapper columnDefinitionMapper) {
 		this.columnDefinitionMapper = columnDefinitionMapper;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setDataModelMapper(DataModelMapper dataModelMapper) {
 		this.dataModelMapper = dataModelMapper;
 	}
 
-	@Resource
-	@Qualifier("myBatisEntityDAO")
+	@javax.annotation.Resource
 	public void setEntityDAO(EntityDAO entityDAO) {
 		this.entityDAO = entityDAO;
 	}
 
-	@Resource
-	@Qualifier("myBatisDbIdGenerator")
+	@javax.annotation.Resource
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setIdMapper(IdMapper idMapper) {
 		this.idMapper = idMapper;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSqlSession(SqlSession sqlSession) {
 		this.sqlSession = sqlSession;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setTableDataMapper(TableDataMapper tableDataMapper) {
 		this.tableDataMapper = tableDataMapper;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setTableDataService(ITableDataService tableDataService) {
 		this.tableDataService = tableDataService;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setTableDefinitionService(
 			ITableDefinitionService tableDefinitionService) {
 		this.tableDefinitionService = tableDefinitionService;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setTablePageMapper(TablePageMapper tablePageMapper) {
 		this.tablePageMapper = tablePageMapper;
 	}

@@ -17,27 +17,29 @@
  */
 package com.glaf.base.modules.sys.service.mybatis;
 
-import java.util.*;
+import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
-import javax.annotation.Resource;
 import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.glaf.core.id.*;
+import com.glaf.base.modules.sys.SysConstants;
+import com.glaf.base.modules.sys.mapper.GroupMapper;
+import com.glaf.base.modules.sys.mapper.GroupUserMapper;
+import com.glaf.base.modules.sys.model.Group;
+import com.glaf.base.modules.sys.model.GroupUser;
+import com.glaf.base.modules.sys.query.GroupQuery;
+import com.glaf.base.modules.sys.service.GroupService;
+import com.glaf.core.dao.EntityDAO;
+import com.glaf.core.id.IdGenerator;
 import com.glaf.core.util.PageResult;
 import com.glaf.core.util.UUID32;
-import com.glaf.core.dao.*;
-import com.glaf.base.modules.sys.SysConstants;
-import com.glaf.base.modules.sys.mapper.*;
-import com.glaf.base.modules.sys.model.*;
-import com.glaf.base.modules.sys.query.*;
-import com.glaf.base.modules.sys.service.GroupService;
 
 @Service("groupService")
 @Transactional(readOnly = true)
@@ -215,27 +217,27 @@ public class GroupServiceImpl implements GroupService {
 		}
 	}
 
-	@Resource(name = "myBatisEntityDAO")
+	@javax.annotation.Resource
 	public void setEntityDAO(EntityDAO entityDAO) {
 		this.entityDAO = entityDAO;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setGroupMapper(GroupMapper groupMapper) {
 		this.groupMapper = groupMapper;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setGroupUserMapper(GroupUserMapper groupUserMapper) {
 		this.groupUserMapper = groupUserMapper;
 	}
 
-	@Resource(name = "myBatisDbIdGenerator")
+	@javax.annotation.Resource
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}

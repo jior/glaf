@@ -1,34 +1,31 @@
 package com.glaf.base.modules.sys.service.mybatis;
 
-import java.util.*;
+import java.util.List;
 
-import javax.annotation.Resource;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.glaf.core.id.*;
-import com.glaf.core.dao.*;
-import com.glaf.base.modules.sys.mapper.*;
-import com.glaf.base.modules.sys.model.*;
-import com.glaf.base.modules.sys.query.*;
+import com.glaf.base.modules.sys.mapper.DictoryDefinitionMapper;
+import com.glaf.base.modules.sys.model.DictoryDefinition;
+import com.glaf.base.modules.sys.query.DictoryDefinitionQuery;
 import com.glaf.base.modules.sys.service.DictoryDefinitionService;
+import com.glaf.core.dao.EntityDAO;
+import com.glaf.core.id.IdGenerator;
 
 @Service("dictoryDefinitionService")
 @Transactional(readOnly = true)
 public class DictoryDefinitionServiceImpl implements DictoryDefinitionService {
+	protected final Logger logger = LoggerFactory.getLogger(getClass());
+
 	protected DictoryDefinitionMapper dictoryDefinitionMapper;
 
 	protected EntityDAO entityDAO;
 
 	protected IdGenerator idGenerator;
-
-	protected final Logger logger = LoggerFactory.getLogger(getClass());
 
 	protected SqlSessionTemplate sqlSessionTemplate;
 
@@ -105,23 +102,23 @@ public class DictoryDefinitionServiceImpl implements DictoryDefinitionService {
 		}
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setDictoryDefinitionMapper(
 			DictoryDefinitionMapper dictoryDefinitionMapper) {
 		this.dictoryDefinitionMapper = dictoryDefinitionMapper;
 	}
 
-	@Resource(name = "myBatisEntityDAO")
+	@javax.annotation.Resource
 	public void setEntityDAO(EntityDAO entityDAO) {
 		this.entityDAO = entityDAO;
 	}
 
-	@Resource(name = "myBatisDbIdGenerator")
+	@javax.annotation.Resource
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}

@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
+
 
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.RepositoryService;
@@ -61,16 +61,12 @@ public class ActivitiProcessQueryServiceImpl implements
 	protected static final Log logger = LogFactory
 			.getLog(ActivitiProcessQueryService.class);
 
-	@Resource
 	protected RepositoryService repositoryService;
 
-	@Resource
 	protected RuntimeService runtimeService;
 
-	@Resource
 	protected TaskService taskService;
 
-	@Resource
 	protected HistoryService historyService;
 
 	public List<ProcessDefinition> getAllLatestProcessDefinitions() {
@@ -1000,18 +996,22 @@ public class ActivitiProcessQueryServiceImpl implements
 		return query.list();
 	}
 
+	@javax.annotation.Resource
 	public void setHistoryService(HistoryService historyService) {
 		this.historyService = historyService;
 	}
 
+	@javax.annotation.Resource
 	public void setRepositoryService(RepositoryService repositoryService) {
 		this.repositoryService = repositoryService;
 	}
 
+	@javax.annotation.Resource
 	public void setRuntimeService(RuntimeService runtimeService) {
 		this.runtimeService = runtimeService;
 	}
 
+	@javax.annotation.Resource
 	public void setTaskService(TaskService taskService) {
 		this.taskService = taskService;
 	}

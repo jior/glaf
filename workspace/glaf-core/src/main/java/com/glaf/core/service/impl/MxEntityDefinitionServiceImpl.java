@@ -18,7 +18,7 @@
 package com.glaf.core.service.impl;
 
 import java.util.*;
-import javax.annotation.Resource;
+
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -157,28 +157,28 @@ public class MxEntityDefinitionServiceImpl implements EntityDefinitionService {
 		}
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setBlobService(IBlobService blobService) {
 		this.blobService = blobService;
 	}
 
-	@Resource(name = "myBatisEntityDAO")
+	@javax.annotation.Resource
 	public void setEntityDAO(EntityDAO entityDAO) {
 		this.entityDAO = entityDAO;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setEntityDefinitionMapper(
 			EntityDefinitionMapper entityDefinitionMapper) {
 		this.entityDefinitionMapper = entityDefinitionMapper;
 	}
 
-	@Resource(name = "myBatisDbIdGenerator")
+	@javax.annotation.Resource
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}

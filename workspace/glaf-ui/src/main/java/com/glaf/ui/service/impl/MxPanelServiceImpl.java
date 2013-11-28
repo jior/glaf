@@ -26,18 +26,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.annotation.Resource;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.SqlSession;
-import org.springframework.beans.factory.annotation.Qualifier;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.core.dao.EntityDAO;
 import com.glaf.core.id.IdGenerator;
- 
+
 import com.glaf.ui.mapper.PanelMapper;
 import com.glaf.ui.mapper.UserPortalMapper;
 import com.glaf.ui.model.Layout;
@@ -56,24 +54,16 @@ public class MxPanelServiceImpl implements PanelService {
 	protected final static Log logger = LogFactory
 			.getLog(MxPanelServiceImpl.class);
 
-	@Resource
-	@Qualifier("myBatisEntityDAO")
 	protected EntityDAO entityDAO;
 
-	@Resource
-	@Qualifier("myBatisDbIdGenerator")
 	protected IdGenerator idGenerator;
 
-	@Resource
 	protected SqlSession sqlSession;
 
-	@Resource
 	protected LayoutService layoutService;
 
-	@Resource
 	protected PanelMapper panelMapper;
 
-	@Resource
 	protected UserPortalMapper userPortalMapper;
 
 	public MxPanelServiceImpl() {
@@ -184,7 +174,7 @@ public class MxPanelServiceImpl implements PanelService {
 				panelMap.put(panel.getName(), panel);
 			}
 		}
-	 
+
 		if (panels != null && panels.size() > 0) {
 			Iterator<Panel> iter = panels.iterator();
 			while (iter.hasNext()) {
@@ -265,26 +255,32 @@ public class MxPanelServiceImpl implements PanelService {
 		userPortalMapper.deleteUserPortalByActorId(userPanel.getActorId());
 	}
 
+	@javax.annotation.Resource
 	public void setEntityDAO(EntityDAO entityDAO) {
 		this.entityDAO = entityDAO;
 	}
 
+	@javax.annotation.Resource
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 
+	@javax.annotation.Resource
 	public void setLayoutService(LayoutService layoutService) {
 		this.layoutService = layoutService;
 	}
 
+	@javax.annotation.Resource
 	public void setPanelMapper(PanelMapper panelMapper) {
 		this.panelMapper = panelMapper;
 	}
 
+	@javax.annotation.Resource
 	public void setSqlSession(SqlSession sqlSession) {
 		this.sqlSession = sqlSession;
 	}
 
+	@javax.annotation.Resource
 	public void setUserPortalMapper(UserPortalMapper userPortalMapper) {
 		this.userPortalMapper = userPortalMapper;
 	}

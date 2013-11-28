@@ -18,31 +18,40 @@
 
 package com.glaf.base.modules.sys.service.mybatis;
 
-import java.util.*;
-
-import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
-import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.glaf.base.modules.sys.SysConstants;
+import com.glaf.base.modules.sys.mapper.SysApplicationMapper;
+import com.glaf.base.modules.sys.mapper.SysDepartmentMapper;
+import com.glaf.base.modules.sys.mapper.SysTreeMapper;
+import com.glaf.base.modules.sys.model.SysApplication;
+import com.glaf.base.modules.sys.model.SysDepartment;
+import com.glaf.base.modules.sys.model.SysTree;
+import com.glaf.base.modules.sys.query.SysApplicationQuery;
+import com.glaf.base.modules.sys.query.SysDepartmentQuery;
+import com.glaf.base.modules.sys.query.SysTreeQuery;
+import com.glaf.base.modules.sys.query.SysUserQuery;
+import com.glaf.base.modules.sys.service.SysTreeService;
 import com.glaf.core.base.ColumnModel;
 import com.glaf.core.base.TableModel;
-import com.glaf.core.id.*;
+import com.glaf.core.id.IdGenerator;
 import com.glaf.core.service.ITableDataService;
 import com.glaf.core.util.PageResult;
 import com.glaf.core.util.StringTools;
-
-import com.glaf.base.modules.sys.SysConstants;
-import com.glaf.base.modules.sys.mapper.*;
-import com.glaf.base.modules.sys.model.*;
-import com.glaf.base.modules.sys.query.*;
-import com.glaf.base.modules.sys.service.*;
 
 @Service("sysTreeService")
 @Transactional(readOnly = true)
@@ -87,7 +96,7 @@ public class SysTreeServiceImpl implements SysTreeService {
 		this.save(bean);
 		return true;
 	}
-	
+
 	@Transactional
 	public boolean delete(long id) {
 		this.deleteById(id);
@@ -157,7 +166,8 @@ public class SysTreeServiceImpl implements SysTreeService {
 		return list;
 	}
 
-	public List<SysTree> getAllSysTreeListForDeptNoSort(long parentId, int status) {
+	public List<SysTree> getAllSysTreeListForDeptNoSort(long parentId,
+			int status) {
 		List<SysTree> list = new ArrayList<SysTree>();
 		this.loadChildrenTreeListForDept(list, parentId, status);
 		this.initDepartments(list);
@@ -434,34 +444,33 @@ public class SysTreeServiceImpl implements SysTreeService {
 		}
 	}
 
-	@Resource
-	@Qualifier("myBatisDbIdGenerator")
+	@javax.annotation.Resource
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSysApplicationMapper(
 			SysApplicationMapper sysApplicationMapper) {
 		this.sysApplicationMapper = sysApplicationMapper;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSysDepartmentMapper(SysDepartmentMapper sysDepartmentMapper) {
 		this.sysDepartmentMapper = sysDepartmentMapper;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setSysTreeMapper(SysTreeMapper sysTreeMapper) {
 		this.sysTreeMapper = sysTreeMapper;
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setTableDataService(ITableDataService tableDataService) {
 		this.tableDataService = tableDataService;
 	}

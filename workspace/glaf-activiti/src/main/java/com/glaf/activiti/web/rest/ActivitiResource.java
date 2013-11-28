@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
@@ -751,7 +751,7 @@ public class ActivitiResource {
 				.isGraphicalNotationDefined();
 	}
 
-	@Resource
+	@javax.annotation.Resource
 	public void setProcessEngine(ProcessEngine processEngine) {
 		this.processEngine = processEngine;
 	}
