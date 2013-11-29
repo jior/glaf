@@ -158,8 +158,9 @@ public class FormController {
 									.getContainer();
 							Collection<Long> processInstanceIds = container
 									.getRunningProcessInstanceIds(actorId);
-							if (processInstanceIds.contains(dataModel
-									.getProcessInstanceId())) {
+							if (processInstanceIds
+									.contains(Long.parseLong(dataModel
+											.getProcessInstanceId()))) {
 								canSubmit = true;
 							}
 							if (dataModel.getStatus() == 0
