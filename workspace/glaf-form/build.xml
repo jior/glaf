@@ -6,6 +6,7 @@
 	<property name="build.src" location="src" />
 
 	<path id="classpath">
+	    <fileset dir="lib" includes="*.jar" />
 		<fileset dir="../glaf-core" includes="*.jar" />
 		<fileset dir="../glaf-core/lib" includes="*.jar" />
 		<fileset dir="../glaf-jbpm" includes="*.jar" />

@@ -151,5 +151,16 @@
 	<classpathentry kind="lib" path="/glaf-core/lib/xmemcached.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/xml-apis-ext.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/xml-apis.jar"/>
+	<classpathentry kind="lib" path="lib/flashchart.jar"/>
+	<classpathentry kind="lib" path="lib/sapphire.jar"/>
+	<classpathentry kind="lib" path="lib/silvertail.jar"/>
+	<classpathentry kind="lib" path="lib/zcommon.jar"/>
+	<classpathentry kind="lib" path="lib/zel.jar"/>
+	<classpathentry kind="lib" path="lib/zhtml.jar"/>
+	<classpathentry kind="lib" path="lib/zk.jar"/>
+	<classpathentry kind="lib" path="lib/zkbind.jar"/>
+	<classpathentry kind="lib" path="lib/zkplus.jar"/>
+	<classpathentry kind="lib" path="lib/zul.jar"/>
+	<classpathentry kind="lib" path="lib/zweb.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
