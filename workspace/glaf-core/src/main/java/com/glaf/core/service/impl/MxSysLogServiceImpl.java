@@ -28,6 +28,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.core.id.*;
+import com.glaf.core.config.BaseConfiguration;
+import com.glaf.core.config.Configuration;
 import com.glaf.core.domain.*;
 import com.glaf.core.mapper.*;
 import com.glaf.core.query.*;
@@ -38,6 +40,11 @@ import com.glaf.core.service.*;
 public class MxSysLogServiceImpl implements ISysLogService {
 	protected final static Log logger = LogFactory
 			.getLog(MxSysLogServiceImpl.class);
+	protected static Configuration conf = BaseConfiguration.create();
+
+	protected static Stack<SysLog> sysLogs = new Stack<SysLog>();
+
+	protected static long lastUpdate = System.currentTimeMillis();
 
 	protected IdGenerator idGenerator;
 
@@ -120,12 +127,19 @@ public class MxSysLogServiceImpl implements ISysLogService {
 
 	@Transactional
 	public void save(SysLog sysLog) {
-		if (sysLog.getId() == 0L) {
-			sysLog.setId(idGenerator.nextId());
-			// sysLog.setCreateDate(new Date());
-			sysLogMapper.insertSysLog(sysLog);
-		} else {
-			sysLogMapper.updateSysLog(sysLog);
+		sysLog.setId(idGenerator.nextId());
+		sysLog.setCreateTime(new Date());
+		sysLogs.push(sysLog);
+		/**
+		 * 当记录数达到写数据库的条数或时间超过1分钟，写日志到数据库
+		 */
+		if (sysLogs.size() >= conf.getInt("sys_log_step", 100)
+				|| ((System.currentTimeMillis() - lastUpdate) / 60000 > 0)) {
+			while (!sysLogs.isEmpty()) {
+				SysLog bean = sysLogs.pop();
+				sysLogMapper.insertSysLog(bean);
+			}
+			lastUpdate = System.currentTimeMillis();
 		}
 	}
 
