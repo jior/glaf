@@ -20,10 +20,10 @@ package com.glaf.core.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+
 import com.alibaba.fastjson.*;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
- 
 import com.glaf.core.base.JSONable;
 import com.glaf.core.domain.util.*;
 
@@ -35,6 +35,19 @@ public class SysLog implements Serializable, JSONable {
 	private Date createTime;
 	private String operate;
 	private int flag;
+
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		SysLog other = (SysLog) obj;
+		if (id != other.id)
+			return false;
+		return true;
+	}
 
 	public String getAccount() {
 		return account;
@@ -60,6 +73,17 @@ public class SysLog implements Serializable, JSONable {
 		return operate;
 	}
 
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (id ^ (id >>> 32));
+		return result;
+	}
+
+	public SysLog jsonToObject(JSONObject jsonObject) {
+		return SysLogJsonFactory.jsonToObject(jsonObject);
+	}
+
 	public void setAccount(String account) {
 		this.account = account;
 	}
@@ -82,10 +106,6 @@ public class SysLog implements Serializable, JSONable {
 
 	public void setOperate(String operate) {
 		this.operate = operate;
-	}
-
-	public SysLog jsonToObject(JSONObject jsonObject) {
-		return SysLogJsonFactory.jsonToObject(jsonObject);
 	}
 
 	public JSONObject toJsonObject() {
