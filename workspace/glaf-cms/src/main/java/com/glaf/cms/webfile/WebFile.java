@@ -2256,7 +2256,7 @@ public class WebFile {
 			responseWriteLn("</BODY>");
 			responseWriteLn("</HTML>");
 		} else {
-			if (relativePath == null || relativePath == "") {
+			if (relativePath == null || "".equals(relativePath)) {
 				responseWriteLn(String.valueOf((new StringBuffer(
 						"<body bgcolor=")).append(colors.getString("PROP_BG"))
 						.append(">")));
