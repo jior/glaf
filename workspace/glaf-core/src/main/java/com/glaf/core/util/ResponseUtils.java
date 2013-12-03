@@ -237,7 +237,7 @@ public class ResponseUtils {
 
 	public static byte[] responseXmlResult(boolean success) {
 		if (success) {
-			StringBuffer buffer = new StringBuffer();
+			StringBuffer buffer = new StringBuffer(500);
 			buffer.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 			buffer.append("<response>");
 			buffer.append("\n    <statusCode>200</statusCode>");
@@ -250,7 +250,7 @@ public class ResponseUtils {
 			} catch (UnsupportedEncodingException e) {
 			}
 		} else {
-			StringBuffer buffer = new StringBuffer();
+			StringBuffer buffer = new StringBuffer(500);
 			buffer.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 			buffer.append("<response>");
 			buffer.append("\n    <statusCode>500</statusCode>");

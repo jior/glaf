@@ -113,7 +113,7 @@ public final class JdbcUtils {
 		SqlExecutor sqlExecutor = new SqlExecutor();
 		List<Object> values = new ArrayList<Object>();
 		Map<String, Object> dataMap = lowerKeyMap(params);
-		StringBuffer sb = new StringBuffer();
+		StringBuffer sb = new StringBuffer(sql.length()+1000);
 		int begin = 0;
 		int end = 0;
 		boolean flag = false;

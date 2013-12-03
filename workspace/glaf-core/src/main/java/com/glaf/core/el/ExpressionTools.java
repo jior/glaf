@@ -31,7 +31,7 @@ public class ExpressionTools {
 			return expression;
 		}
 		expression = StringTools.replaceIgnoreCase(expression, "${", "#{");
-		StringBuffer sb = new StringBuffer();
+		StringBuffer sb = new StringBuffer(expression.length()+1000);
 		int begin = 0;
 		int end = 0;
 		boolean flag = false;

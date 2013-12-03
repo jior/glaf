@@ -39,7 +39,7 @@ public class ApplicationContext {
 
 	public static String getAppClasspath() {
 		if (classPath == null) {
-			StringBuffer buffer = new StringBuffer();
+			StringBuffer buffer = new StringBuffer(5000);
 			String root = getAppPath();
 			String path = root + sp + "WEB-INF" + sp + "lib";
 			java.io.File file = new java.io.File(path);

@@ -120,7 +120,7 @@ public class SystemConfig {
 			month = month + 1;
 			logger.debug(year + ":" + month);
 
-			StringBuffer sb = new StringBuffer();
+			StringBuffer sb = new StringBuffer(50);
 			sb.append(year);
 
 			if (month <= 9) {
@@ -155,7 +155,7 @@ public class SystemConfig {
 
 			logger.debug(year + ":" + month + ":" + day);
 
-			StringBuffer sb = new StringBuffer();
+			StringBuffer sb = new StringBuffer(50);
 			sb.append(year);
 
 			if (month <= 9) {

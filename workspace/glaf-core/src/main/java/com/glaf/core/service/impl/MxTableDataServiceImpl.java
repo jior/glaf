@@ -413,7 +413,7 @@ public class MxTableDataServiceImpl implements ITableDataService {
 		if (StringUtils.isNotEmpty(keyCloumns)) {
 			List<String> cols = StringTools.split(keyCloumns);
 			if (cols != null && !cols.isEmpty()) {
-				StringBuffer buffer = new StringBuffer();
+				StringBuffer buffer = new StringBuffer(1000);
 				Iterator<TableModel> iterator = rows.iterator();
 				while (iterator.hasNext()) {
 					TableModel tableData = iterator.next();

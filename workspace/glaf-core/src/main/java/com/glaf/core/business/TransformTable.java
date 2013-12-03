@@ -172,7 +172,7 @@ public class TransformTable {
 				aggregationKeys.add(key);
 			}
 			logger.debug("aggregationKeys=" + aggregationKeys);
-			StringBuffer sb = new StringBuffer();
+			StringBuffer sb = new StringBuffer(1000);
 
 			List<ColumnModel> cellModelList = new ArrayList<ColumnModel>();
 			Map<String, TableModel> resultMap = new HashMap<String, TableModel>();
@@ -353,7 +353,7 @@ public class TransformTable {
 
 			List<String> keys = StringTools.split(tableDefinition
 					.getAggregationKeys());
-			StringBuffer sb = new StringBuffer();
+			StringBuffer sb = new StringBuffer(1000);
 
 			List<ColumnModel> cellModelList = new ArrayList<ColumnModel>();
 			Map<String, TableModel> resultMap = new HashMap<String, TableModel>();

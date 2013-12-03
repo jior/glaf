@@ -129,7 +129,7 @@ public class MxUploadController {
 			response.getWriter().write(object.toString());
 			return null;
 		} else if (StringUtils.equals(responseDataType, "xml")) {
-			StringBuffer buffer = new StringBuffer();
+			StringBuffer buffer = new StringBuffer(500);
 			buffer.append("<response>");
 			buffer.append("\n    <message>").append(message)
 					.append("</message>");
@@ -175,7 +175,7 @@ public class MxUploadController {
 			response.getWriter().write(object.toString());
 			return null;
 		} else if (StringUtils.equals(responseDataType, "xml")) {
-			StringBuffer buffer = new StringBuffer();
+			StringBuffer buffer = new StringBuffer(500);
 			buffer.append("<response>");
 			buffer.append("\n    <message>").append(message)
 					.append("</message>");

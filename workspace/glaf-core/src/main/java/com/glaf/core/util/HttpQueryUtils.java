@@ -67,7 +67,7 @@ public class HttpQueryUtils {
 		if (StringUtils.isEmpty(value)) {
 			String[] values = request.getParameterValues(name);
 			if (values != null && values.length > 0) {
-				StringBuffer buff = new StringBuffer();
+				StringBuffer buff = new StringBuffer(1000);
 				for (int i = 0; i < values.length; i++) {
 					if (i < values.length - 1) {
 						if (StringUtils.isNotEmpty(values[i])) {

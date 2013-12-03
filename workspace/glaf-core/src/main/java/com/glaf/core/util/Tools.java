@@ -173,7 +173,8 @@ public class Tools {
 	}
 
 	public static String javaColorToCSSColor(Color paramColor) {
-		StringBuffer localStringBuffer = new StringBuffer("rgb(");
+		StringBuffer localStringBuffer = new StringBuffer(30);
+		localStringBuffer.append("rgb(");
 		localStringBuffer.append(paramColor.getRed());
 		localStringBuffer.append(',');
 		localStringBuffer.append(paramColor.getGreen());

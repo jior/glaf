@@ -41,7 +41,7 @@ public class QueryUtils {
 			List<QueryCondition> conditions) {
 		SqlExecutor se = new SqlExecutor();
 		Map<String, Object> params = new LinkedHashMap<String, Object>();
-		StringBuffer buffer = new StringBuffer();
+		StringBuffer buffer = new StringBuffer(1000);
 		if (conditions != null && !conditions.isEmpty()) {
 			int index = 0;
 			Iterator<QueryCondition> iter = conditions.iterator();

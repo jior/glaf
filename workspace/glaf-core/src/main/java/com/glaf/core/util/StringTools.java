@@ -63,7 +63,7 @@ public final class StringTools {
 		if (str == null || str.indexOf("_") == -1) {
 			return str;
 		}
-		StringBuffer buffer = new StringBuffer();
+		StringBuffer buffer = new StringBuffer(str.length()+100);
 		int index = 0;
 		StringTokenizer tokenizer = new StringTokenizer(str, "_");
 		while (tokenizer.hasMoreTokens()) {
@@ -359,7 +359,7 @@ public final class StringTools {
 			return "";
 		}
 		if (sourceString.length() <= length) {
-			StringBuffer buffer = new StringBuffer();
+			StringBuffer buffer = new StringBuffer(sourceString.length()+10);
 			int k = length - sourceString.length();
 			for (int j = 0; j < k; j++) {
 				buffer.append(sourceString).append("&nbsp;");
