@@ -105,6 +105,12 @@ public class FileUpload {
 		if (!isVirtual(sourceFilePathName) && m_denyPhysicalPath) {
 			throw new SecurityException("Physical path is denied (1035).");
 		}
+		if (StringUtils.endsWith(sourceFilePathName, "mail.properties")
+				|| StringUtils.endsWith(sourceFilePathName, "jdbc.properties")
+				|| StringUtils
+						.endsWith(sourceFilePathName, "hibernate.cfg.xml")) {
+			throw new SecurityException("file is access denied (1036).");
+		}
 		if (isVirtual(sourceFilePathName)) {
 			sourceFilePathName = m_application.getRealPath(sourceFilePathName);
 		}
