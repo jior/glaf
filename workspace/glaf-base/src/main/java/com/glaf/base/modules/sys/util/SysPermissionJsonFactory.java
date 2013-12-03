@@ -28,7 +28,7 @@ public class SysPermissionJsonFactory {
 
 	public static java.util.List<SysPermission> arrayToList(JSONArray array) {
 		java.util.List<SysPermission> list = new java.util.ArrayList<SysPermission>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			SysPermission model = jsonToObject(jsonObject);
 			list.add(model);

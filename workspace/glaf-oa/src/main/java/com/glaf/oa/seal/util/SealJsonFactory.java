@@ -259,7 +259,7 @@ public class SealJsonFactory {
 
 	public static java.util.List<Seal> arrayToList(JSONArray array) {
 		java.util.List<Seal> list = new java.util.ArrayList<Seal>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			Seal model = jsonToObject(jsonObject);
 			list.add(model);

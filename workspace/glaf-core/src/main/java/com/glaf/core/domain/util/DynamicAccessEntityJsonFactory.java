@@ -123,7 +123,7 @@ public class DynamicAccessEntityJsonFactory {
 	public static java.util.List<DynamicAccessEntity> arrayToList(
 			JSONArray array) {
 		java.util.List<DynamicAccessEntity> list = new java.util.ArrayList<DynamicAccessEntity>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			DynamicAccessEntity model = jsonToObject(jsonObject);
 			list.add(model);

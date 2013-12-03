@@ -104,7 +104,7 @@ public class JsonUtils {
 						} else if (value instanceof JSONArray) {
 							JSONArray array = (JSONArray) value;
 							Collection<Object> collection = new ArrayList<Object>();
-							for (int i = 0; i < array.size(); i++) {
+							for (int i = 0, len = array.size(); i < len; i++) {
 								collection.add(array.get(i));
 							}
 							dataMap.put(key, collection);
@@ -163,7 +163,7 @@ public class JsonUtils {
 						} else if (value instanceof JSONArray) {
 							JSONArray array = (JSONArray) value;
 							Collection<Object> collection = new ArrayList<Object>();
-							for (int i = 0; i < array.size(); i++) {
+							for (int i = 0, len = array.size(); i < len; i++) {
 								collection.add(array.get(i));
 							}
 

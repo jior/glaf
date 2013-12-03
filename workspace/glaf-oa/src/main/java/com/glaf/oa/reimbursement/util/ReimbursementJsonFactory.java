@@ -301,7 +301,7 @@ public class ReimbursementJsonFactory {
 
 	public static java.util.List<Reimbursement> arrayToList(JSONArray array) {
 		java.util.List<Reimbursement> list = new java.util.ArrayList<Reimbursement>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			Reimbursement model = jsonToObject(jsonObject);
 			list.add(model);

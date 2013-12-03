@@ -264,7 +264,7 @@ public class StravelJsonFactory {
 
 	public static java.util.List<Stravel> arrayToList(JSONArray array) {
 		java.util.List<Stravel> list = new java.util.ArrayList<Stravel>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			Stravel model = jsonToObject(jsonObject);
 			list.add(model);

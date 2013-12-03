@@ -172,7 +172,7 @@ public class ReportTaskJsonFactory {
 
 	public static java.util.List<ReportTask> arrayToList(JSONArray array) {
 		java.util.List<ReportTask> list = new java.util.ArrayList<ReportTask>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			ReportTask model = jsonToObject(jsonObject);
 			list.add(model);

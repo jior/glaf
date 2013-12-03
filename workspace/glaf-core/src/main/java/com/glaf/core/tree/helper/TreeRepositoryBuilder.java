@@ -32,12 +32,12 @@ import com.glaf.core.tree.component.TreeRepository;
 public class TreeRepositoryBuilder {
 
 	public TreeRepository build(List<TreeModel> treeModels) {
-		//Collections.sort(treeModels);
+		// Collections.sort(treeModels);
 		List<TreeModel> nodes = new ArrayList<TreeModel>();
 		Map<String, TreeModel> treeMap = new HashMap<String, TreeModel>();
 		Map<Long, TreeModel> treeModelMap = new HashMap<Long, TreeModel>();
 
-		for (int i = 0; i < treeModels.size(); i++) {
+		for (int i = 0, len = treeModels.size(); i < len; i++) {
 			TreeModel treeModel = (TreeModel) treeModels.get(i);
 			if (treeModel.getId() == treeModel.getParentId()) {
 				treeModel.setParentId(-1);
@@ -50,15 +50,15 @@ public class TreeRepositoryBuilder {
 			}
 		}
 
-		for (int j = 0; j < nodes.size(); j++) {
-			TreeModel treeModel = nodes.get(j);
+		for (int i = 0, len = nodes.size(); i < len; i++) {
+			TreeModel treeModel = nodes.get(i);
 			if (treeModelMap.get(treeModel.getParentId()) != null) {
 				treeModel.setLocked(1);
 			}
 		}
 
 		TreeRepository repository = new TreeRepository();
-		for (int i = 0; i < nodes.size(); i++) {
+		for (int i = 0, len = nodes.size(); i < len; i++) {
 			TreeModel treeModel = nodes.get(i);
 			if (treeModel.getLocked() != 0) {
 				continue;

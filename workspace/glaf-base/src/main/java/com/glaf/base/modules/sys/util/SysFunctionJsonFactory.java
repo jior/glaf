@@ -28,7 +28,7 @@ public class SysFunctionJsonFactory {
 
 	public static java.util.List<SysFunction> arrayToList(JSONArray array) {
 		java.util.List<SysFunction> list = new java.util.ArrayList<SysFunction>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			SysFunction model = jsonToObject(jsonObject);
 			list.add(model);

@@ -9,7 +9,7 @@ public class WorkCalendarJsonFactory {
 
 	public static java.util.List<WorkCalendar> arrayToList(JSONArray array) {
 		java.util.List<WorkCalendar> list = new java.util.ArrayList<WorkCalendar>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			WorkCalendar model = jsonToObject(jsonObject);
 			list.add(model);

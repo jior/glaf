@@ -28,7 +28,7 @@ public class SysAccessJsonFactory {
 
 	public static java.util.List<SysAccess> arrayToList(JSONArray array) {
 		java.util.List<SysAccess> list = new java.util.ArrayList<SysAccess>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			SysAccess model = jsonToObject(jsonObject);
 			list.add(model);

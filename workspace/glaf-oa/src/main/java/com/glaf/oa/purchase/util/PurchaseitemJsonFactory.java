@@ -160,7 +160,7 @@ public class PurchaseitemJsonFactory {
 
 	public static java.util.List<Purchaseitem> arrayToList(JSONArray array) {
 		java.util.List<Purchaseitem> list = new java.util.ArrayList<Purchaseitem>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			Purchaseitem model = jsonToObject(jsonObject);
 			list.add(model);

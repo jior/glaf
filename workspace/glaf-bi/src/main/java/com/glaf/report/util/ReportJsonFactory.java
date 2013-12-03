@@ -254,7 +254,7 @@ public class ReportJsonFactory {
 
 	public static java.util.List<Report> arrayToList(JSONArray array) {
 		java.util.List<Report> list = new java.util.ArrayList<Report>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			Report model = jsonToObject(jsonObject);
 			list.add(model);

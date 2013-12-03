@@ -29,7 +29,7 @@ public class SysCalendarJsonFactory {
 
 	public static java.util.List<SysCalendar> arrayToList(JSONArray array) {
 		java.util.List<SysCalendar> list = new java.util.ArrayList<SysCalendar>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			SysCalendar model = jsonToObject(jsonObject);
 			list.add(model);

@@ -217,7 +217,7 @@ public class AssessresultJsonFactory {
 
 	public static java.util.List<Assessresult> arrayToList(JSONArray array) {
 		java.util.List<Assessresult> list = new java.util.ArrayList<Assessresult>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			Assessresult model = jsonToObject(jsonObject);
 			list.add(model);

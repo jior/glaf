@@ -45,7 +45,7 @@ public class DataFieldTest {
 
 		array = JSON.parseArray(str);
 		if (array != null && !array.isEmpty()) {
-			for (int i = 0; i < array.size(); i++) {
+			for (int i = 0, len = array.size(); i < len; i++) {
 				JSONObject jsonObject = array.getJSONObject(i);
 				Map<String, Object> dataMap = new HashMap<String, Object>();
 

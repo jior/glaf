@@ -10,7 +10,7 @@ public class DictoryJsonFactory {
 
 	public static java.util.List<Dictory> arrayToList(JSONArray array) {
 		java.util.List<Dictory> list = new java.util.ArrayList<Dictory>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			Dictory model = jsonToObject(jsonObject);
 			list.add(model);

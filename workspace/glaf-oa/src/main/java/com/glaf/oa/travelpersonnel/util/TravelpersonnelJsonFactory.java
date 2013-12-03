@@ -150,7 +150,7 @@ public class TravelpersonnelJsonFactory {
 
 	public static java.util.List<Travelpersonnel> arrayToList(JSONArray array) {
 		java.util.List<Travelpersonnel> list = new java.util.ArrayList<Travelpersonnel>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			Travelpersonnel model = jsonToObject(jsonObject);
 			list.add(model);

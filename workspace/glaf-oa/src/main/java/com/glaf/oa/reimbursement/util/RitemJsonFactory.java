@@ -173,7 +173,7 @@ public class RitemJsonFactory {
 
 	public static java.util.List<Ritem> arrayToList(JSONArray array) {
 		java.util.List<Ritem> list = new java.util.ArrayList<Ritem>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			Ritem model = jsonToObject(jsonObject);
 			list.add(model);

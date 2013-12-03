@@ -34,7 +34,7 @@ public class SysUserJsonFactory {
 
 	public static java.util.List<SysUser> arrayToList(JSONArray array) {
 		java.util.List<SysUser> list = new java.util.ArrayList<SysUser>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			SysUser model = jsonToObject(jsonObject);
 			list.add(model);
@@ -156,7 +156,7 @@ public class SysUserJsonFactory {
 		if (jsonObject.containsKey("userRoles")) {
 			JSONArray array = jsonObject.getJSONArray("userRoles");
 			if (array != null && !array.isEmpty()) {
-				for (int i = 0; i < array.size(); i++) {
+				for (int i = 0, len = array.size(); i < len; i++) {
 					JSONObject json = array.getJSONObject(i);
 					SysUserRole m = new SysUserRole();
 					SysUserRole r = m.jsonToObject(json);
@@ -168,7 +168,7 @@ public class SysUserJsonFactory {
 		if (jsonObject.containsKey("roles")) {
 			JSONArray array = jsonObject.getJSONArray("roles");
 			if (array != null && !array.isEmpty()) {
-				for (int i = 0; i < array.size(); i++) {
+				for (int i = 0, len = array.size(); i < len; i++) {
 					JSONObject json = array.getJSONObject(i);
 					SysDeptRole m = new SysDeptRole();
 					SysDeptRole r = m.jsonToObject(json);
@@ -180,7 +180,7 @@ public class SysUserJsonFactory {
 		if (jsonObject.containsKey("functions")) {
 			JSONArray array = jsonObject.getJSONArray("functions");
 			if (array != null && !array.isEmpty()) {
-				for (int i = 0; i < array.size(); i++) {
+				for (int i = 0, len = array.size(); i < len; i++) {
 					JSONObject json = array.getJSONObject(i);
 					SysFunction m = new SysFunction();
 					SysFunction r = m.jsonToObject(json);
@@ -192,7 +192,7 @@ public class SysUserJsonFactory {
 		if (jsonObject.containsKey("apps")) {
 			JSONArray array = jsonObject.getJSONArray("apps");
 			if (array != null && !array.isEmpty()) {
-				for (int i = 0; i < array.size(); i++) {
+				for (int i = 0, len = array.size(); i < len; i++) {
 					JSONObject json = array.getJSONObject(i);
 					SysApplication m = new SysApplication();
 					SysApplication r = m.jsonToObject(json);

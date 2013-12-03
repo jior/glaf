@@ -132,7 +132,7 @@ public class AntUtils {
 			ZipOutputStream zipOutputStream = new ZipOutputStream(
 					new BufferedOutputStream(cos));
 			InputStream in = null;
-			for (int i = 0; i < fileList.size(); i++) {
+			for (int i = 0, len = fileList.size(); i < len; i++) {
 				try {
 					in = new FileInputStream(fileList.get(i));
 					String filename = ((fileList.get(i)));

@@ -29,7 +29,7 @@ public class SysApplicationJsonFactory {
 
 	public static java.util.List<SysApplication> arrayToList(JSONArray array) {
 		java.util.List<SysApplication> list = new java.util.ArrayList<SysApplication>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			SysApplication model = jsonToObject(jsonObject);
 			list.add(model);

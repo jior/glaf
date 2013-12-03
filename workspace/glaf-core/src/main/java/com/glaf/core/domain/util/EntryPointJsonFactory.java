@@ -105,7 +105,7 @@ public class EntryPointJsonFactory {
 
 	public static java.util.List<EntryPoint> arrayToList(JSONArray array) {
 		java.util.List<EntryPoint> list = new java.util.ArrayList<EntryPoint>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			EntryPoint model = jsonToObject(jsonObject);
 			list.add(model);

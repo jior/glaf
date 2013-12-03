@@ -336,7 +336,7 @@ public class PaymentJsonFactory {
 
 	public static java.util.List<Payment> arrayToList(JSONArray array) {
 		java.util.List<Payment> list = new java.util.ArrayList<Payment>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			Payment model = jsonToObject(jsonObject);
 			list.add(model);

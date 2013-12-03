@@ -29,7 +29,7 @@ public class TableDefinitionJsonFactory {
 
 	public static java.util.List<TableDefinition> arrayToList(JSONArray array) {
 		java.util.List<TableDefinition> list = new java.util.ArrayList<TableDefinition>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			TableDefinition model = jsonToObject(jsonObject);
 			list.add(model);

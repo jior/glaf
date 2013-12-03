@@ -10,7 +10,7 @@ public class MessageJsonFactory {
 
 	public static java.util.List<Message> arrayToList(JSONArray array) {
 		java.util.List<Message> list = new java.util.ArrayList<Message>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			Message model = jsonToObject(jsonObject);
 			list.add(model);

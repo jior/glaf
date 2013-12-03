@@ -335,7 +335,7 @@ public class ContractJsonFactory {
 
 	public static java.util.List<Contract> arrayToList(JSONArray array) {
 		java.util.List<Contract> list = new java.util.ArrayList<Contract>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			Contract model = jsonToObject(jsonObject);
 			list.add(model);

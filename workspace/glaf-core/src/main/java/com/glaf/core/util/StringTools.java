@@ -552,7 +552,7 @@ public final class StringTools {
 		List<String> rows = StringTools.split(text, ",");
 		System.out.println(rows.get(2));
 		System.out.println(rows);
-		for (int i = 0; i < rows.size(); i++) {
+		for (int i = 0, len = rows.size(); i < len; i++) {
 			System.out.println(rows.get(i));
 		}
 

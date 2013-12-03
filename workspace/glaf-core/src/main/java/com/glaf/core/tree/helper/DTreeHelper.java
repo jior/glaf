@@ -58,7 +58,7 @@ public class DTreeHelper {
 		TreeRepository repository = builder.build(treeModels);
 		StringBuffer buffer = new StringBuffer();
 		List<?> topComponents = repository.getTopTrees();
-		for (int i = 0; i < topComponents.size(); i++) {
+		for (int i = 0, len = topComponents.size(); i < len; i++) {
 			TreeComponent component = (TreeComponent) topComponents.get(i);
 			buffer.append(newline);
 			buffer.append("	    ").append(iTree).append(".add('")

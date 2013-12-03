@@ -150,7 +150,7 @@ public class BorrowadderssJsonFactory {
 
 	public static java.util.List<Borrowadderss> arrayToList(JSONArray array) {
 		java.util.List<Borrowadderss> list = new java.util.ArrayList<Borrowadderss>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			Borrowadderss model = jsonToObject(jsonObject);
 			list.add(model);

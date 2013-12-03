@@ -174,7 +174,7 @@ public class MxSystemDbTableController {
 										.lowerKeyMap(dataMap);
 								sb.append(" insert into ").append(tablename)
 										.append(" (");
-								for (int i = 0; i < columns.size(); i++) {
+								for (int i = 0, len = columns.size(); i < len; i++) {
 									ColumnDefinition column = columns.get(i);
 									sb.append(column.getColumnName()
 											.toLowerCase());
@@ -183,7 +183,7 @@ public class MxSystemDbTableController {
 									}
 								}
 								sb.append(" ) values (");
-								for (int i = 0; i < columns.size(); i++) {
+								for (int i = 0, len = columns.size(); i < len; i++) {
 									ColumnDefinition column = columns.get(i);
 									Object value = lowerMap.get(column
 											.getColumnName().toLowerCase());
@@ -268,7 +268,7 @@ public class MxSystemDbTableController {
 		}
 		String dbType = request.getParameter("dbType");
 		if (StringUtils.isNotEmpty(dbType) && result != null) {
-			for (int index = 0; index < result.size(); index++) {
+			for (int index = 0, len = result.size(); index < len; index++) {
 				JSONObject json = result.getJSONObject(index);
 				String tablename = json.getString("tablename");
 				if (StringUtils.isNotEmpty(tablename)) {
@@ -289,7 +289,7 @@ public class MxSystemDbTableController {
 										.lowerKeyMap(dataMap);
 								sb.append(" insert into ").append(tablename)
 										.append(" (");
-								for (int i = 0; i < columns.size(); i++) {
+								for (int i = 0, len2 = columns.size(); i < len2; i++) {
 									ColumnDefinition column = columns.get(i);
 									sb.append(column.getColumnName()
 											.toLowerCase());
@@ -298,7 +298,7 @@ public class MxSystemDbTableController {
 									}
 								}
 								sb.append(" ) values (");
-								for (int i = 0; i < columns.size(); i++) {
+								for (int i = 0, len2 = columns.size(); i < len2; i++) {
 									ColumnDefinition column = columns.get(i);
 									Object value = lowerMap.get(column
 											.getColumnName().toLowerCase());

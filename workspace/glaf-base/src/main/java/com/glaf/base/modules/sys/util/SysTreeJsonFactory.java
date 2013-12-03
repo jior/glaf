@@ -29,7 +29,7 @@ public class SysTreeJsonFactory {
 
 	public static java.util.List<SysTree> arrayToList(JSONArray array) {
 		java.util.List<SysTree> list = new java.util.ArrayList<SysTree>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			SysTree model = jsonToObject(jsonObject);
 			list.add(model);

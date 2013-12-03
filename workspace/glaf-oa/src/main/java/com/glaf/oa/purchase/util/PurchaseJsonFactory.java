@@ -214,7 +214,7 @@ public class PurchaseJsonFactory {
 
 	public static java.util.List<Purchase> arrayToList(JSONArray array) {
 		java.util.List<Purchase> list = new java.util.ArrayList<Purchase>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			Purchase model = jsonToObject(jsonObject);
 			list.add(model);

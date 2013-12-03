@@ -86,7 +86,7 @@ public class AccessPointEntityJsonFactory {
 
 	public static java.util.List<AccessPointEntity> arrayToList(JSONArray array) {
 		java.util.List<AccessPointEntity> list = new java.util.ArrayList<AccessPointEntity>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			AccessPointEntity model = jsonToObject(jsonObject);
 			list.add(model);

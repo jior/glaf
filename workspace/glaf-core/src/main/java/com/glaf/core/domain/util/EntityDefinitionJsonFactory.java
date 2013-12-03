@@ -241,7 +241,7 @@ public class EntityDefinitionJsonFactory {
 
 	public static java.util.List<EntityDefinition> arrayToList(JSONArray array) {
 		java.util.List<EntityDefinition> list = new java.util.ArrayList<EntityDefinition>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			EntityDefinition model = jsonToObject(jsonObject);
 			list.add(model);

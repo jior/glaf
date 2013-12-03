@@ -146,7 +146,7 @@ public class BorrowmoneyJsonFactory {
 
 	public static java.util.List<Borrowmoney> arrayToList(JSONArray array) {
 		java.util.List<Borrowmoney> list = new java.util.ArrayList<Borrowmoney>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			Borrowmoney model = jsonToObject(jsonObject);
 			list.add(model);

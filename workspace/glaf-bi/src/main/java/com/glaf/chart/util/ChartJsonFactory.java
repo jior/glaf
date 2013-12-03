@@ -27,7 +27,7 @@ public class ChartJsonFactory {
 
 	public static java.util.List<Chart> arrayToList(JSONArray array) {
 		java.util.List<Chart> list = new java.util.ArrayList<Chart>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			Chart model = jsonToObject(jsonObject);
 			list.add(model);

@@ -11,7 +11,7 @@ public class FullCalendarJsonFactory {
 
 	public static java.util.List<FullCalendar> arrayToList(JSONArray array) {
 		java.util.List<FullCalendar> list = new java.util.ArrayList<FullCalendar>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			FullCalendar model = jsonToObject(jsonObject);
 			list.add(model);

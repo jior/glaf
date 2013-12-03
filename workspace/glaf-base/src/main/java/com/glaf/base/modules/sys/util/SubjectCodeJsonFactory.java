@@ -9,7 +9,7 @@ public class SubjectCodeJsonFactory {
 
 	public static java.util.List<SubjectCode> arrayToList(JSONArray array) {
 		java.util.List<SubjectCode> list = new java.util.ArrayList<SubjectCode>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			SubjectCode model = jsonToObject(jsonObject);
 			list.add(model);

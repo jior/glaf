@@ -29,7 +29,7 @@ public class SysLogJsonFactory {
 
 	public static java.util.List<SysLog> arrayToList(JSONArray array) {
 		java.util.List<SysLog> list = new java.util.ArrayList<SysLog>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			SysLog model = jsonToObject(jsonObject);
 			list.add(model);

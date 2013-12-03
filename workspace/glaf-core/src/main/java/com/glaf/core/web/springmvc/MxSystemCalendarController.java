@@ -69,7 +69,7 @@ public class MxSystemCalendarController {
 		request.setAttribute("daySize", daySize);
 
 		Map<String, SysCalendar> map = new HashMap<String, SysCalendar>();
-		for (int i = 0; i < list.size(); i++) {
+		for (int i = 0, len = list.size(); i < len; i++) {
 			SysCalendar sysCalendar = list.get(i);
 			String key = sysCalendar.getProductionLine() + ""
 					+ sysCalendar.getYear() + "" + sysCalendar.getMonth() + ""

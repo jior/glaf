@@ -371,7 +371,7 @@ public class BudgetJsonFactory {
 
 	public static java.util.List<Budget> arrayToList(JSONArray array) {
 		java.util.List<Budget> list = new java.util.ArrayList<Budget>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			Budget model = jsonToObject(jsonObject);
 			list.add(model);

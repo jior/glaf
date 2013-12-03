@@ -105,7 +105,7 @@ public class JacksonTreeHelper {
 	public TreeRepository build(List<TreeModel> treeModels) {
 		Map<Long, TreeModel> treeModelMap = new HashMap<Long, TreeModel>();
 
-		for (int i = 0; i < treeModels.size(); i++) {
+		for (int i = 0, len = treeModels.size(); i < len; i++) {
 			TreeModel treeModel = (TreeModel) treeModels.get(i);
 			if (treeModel.getId() == treeModel.getParentId()) {
 				treeModel.setParentId(-1);
@@ -114,7 +114,7 @@ public class JacksonTreeHelper {
 		}
 
 		TreeRepository repository = new TreeRepository();
-		for (int i = 0; i < treeModels.size(); i++) {
+		for (int i = 0, len = treeModels.size(); i < len; i++) {
 			TreeModel treeModel = treeModels.get(i);
 			TreeComponent component = new TreeComponent();
 			component.setId(String.valueOf(treeModel.getId()));
@@ -237,7 +237,7 @@ public class JacksonTreeHelper {
 			List<TreeModel> trees, List<TreeModel> selectedNodes) {
 		Collection<String> checkedNodes = new HashSet<String>();
 		if (selectedNodes != null && selectedNodes.size() > 0) {
-			for (int i = 0; i < selectedNodes.size(); i++) {
+			for (int i = 0, len = selectedNodes.size(); i < len; i++) {
 				TreeModel treeNode = (TreeModel) selectedNodes.get(i);
 				checkedNodes.add(String.valueOf(treeNode.getId()));
 			}
@@ -245,7 +245,7 @@ public class JacksonTreeHelper {
 
 		Map<String, TreeModel> nodeMap = new HashMap<String, TreeModel>();
 		if (trees != null && trees.size() > 0) {
-			for (int i = 0; i < trees.size(); i++) {
+			for (int i = 0, len = trees.size(); i < len; i++) {
 				TreeModel treeNode = (TreeModel) trees.get(i);
 				nodeMap.put(String.valueOf(treeNode.getId()), treeNode);
 			}
@@ -311,7 +311,7 @@ public class JacksonTreeHelper {
 									nodeMap);
 						}
 					} else {
-						for (int i = 0; i < topTrees.size(); i++) {
+						for (int i = 0, len = topTrees.size(); i < len; i++) {
 							TreeComponent component = (TreeComponent) topTrees
 									.get(i);
 							TreeModel node = (TreeModel) nodeMap.get(component
@@ -369,7 +369,7 @@ public class JacksonTreeHelper {
 			List<?> topTrees = repository.getTopTrees();
 			logger.debug("topTrees:" + (topTrees != null ? topTrees.size() : 0));
 			if (topTrees != null && topTrees.size() > 0) {
-				for (int i = 0; i < topTrees.size(); i++) {
+				for (int i = 0, len = topTrees.size(); i < len; i++) {
 					TreeComponent component = (TreeComponent) topTrees.get(i);
 					ObjectNode child = new ObjectMapper().createObjectNode();
 					this.addDataMap(component, child);
@@ -463,7 +463,7 @@ public class JacksonTreeHelper {
 							this.buildTreeModel(object, component);
 						}
 					} else {
-						for (int i = 0; i < topTrees.size(); i++) {
+						for (int i = 0, len = topTrees.size(); i < len; i++) {
 							TreeComponent component = (TreeComponent) topTrees
 									.get(i);
 							ObjectNode child = new ObjectMapper()

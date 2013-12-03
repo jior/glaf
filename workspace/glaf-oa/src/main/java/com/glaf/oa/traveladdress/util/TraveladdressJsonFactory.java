@@ -150,7 +150,7 @@ public class TraveladdressJsonFactory {
 
 	public static java.util.List<Traveladdress> arrayToList(JSONArray array) {
 		java.util.List<Traveladdress> list = new java.util.ArrayList<Traveladdress>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			Traveladdress model = jsonToObject(jsonObject);
 			list.add(model);

@@ -128,7 +128,7 @@ public class AssesssortJsonFactory {
 
 	public static java.util.List<Assesssort> arrayToList(JSONArray array) {
 		java.util.List<Assesssort> list = new java.util.ArrayList<Assesssort>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			Assesssort model = jsonToObject(jsonObject);
 			list.add(model);

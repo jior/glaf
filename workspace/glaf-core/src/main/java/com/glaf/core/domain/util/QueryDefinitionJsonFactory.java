@@ -28,7 +28,7 @@ public class QueryDefinitionJsonFactory {
 
 	public static java.util.List<QueryDefinition> arrayToList(JSONArray array) {
 		java.util.List<QueryDefinition> list = new java.util.ArrayList<QueryDefinition>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			QueryDefinition model = jsonToObject(jsonObject);
 			list.add(model);

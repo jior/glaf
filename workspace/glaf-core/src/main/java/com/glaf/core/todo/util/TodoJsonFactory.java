@@ -27,7 +27,7 @@ public class TodoJsonFactory {
 
 	public static java.util.List<Todo> arrayToList(JSONArray array) {
 		java.util.List<Todo> list = new java.util.ArrayList<Todo>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			Todo model = jsonToObject(jsonObject);
 			list.add(model);

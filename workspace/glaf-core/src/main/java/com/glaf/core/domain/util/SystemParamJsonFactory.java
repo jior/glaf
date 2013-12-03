@@ -28,7 +28,7 @@ public class SystemParamJsonFactory {
 
 	public static java.util.List<SystemParam> arrayToList(JSONArray array) {
 		java.util.List<SystemParam> list = new java.util.ArrayList<SystemParam>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			SystemParam model = jsonToObject(jsonObject);
 			list.add(model);

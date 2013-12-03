@@ -195,7 +195,7 @@ public class HibernatePersistenceDAO extends HibernateDaoSupport implements
 				logger.debug("execute SQL: " + sql);
 				SQLQuery query = session.createSQLQuery(sql);
 				if (values != null && values.size() > 0) {
-					for (int i = 0; i < values.size(); i++) {
+					for (int i = 0, len = values.size(); i < len; i++) {
 						Object object = values.get(i);
 						query.setParameter(i, object);
 					}
@@ -212,7 +212,7 @@ public class HibernatePersistenceDAO extends HibernateDaoSupport implements
 		if (params == null || params.size() == 0) {
 			return;
 		}
-		for (int i = 0; i < params.size(); i++) {
+		for (int i = 0, len = params.size(); i < len; i++) {
 			Object obj = params.get(i);
 			if (obj != null) {
 				if (obj instanceof java.sql.Date) {

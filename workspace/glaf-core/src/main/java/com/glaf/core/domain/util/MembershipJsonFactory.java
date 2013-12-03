@@ -29,7 +29,7 @@ public class MembershipJsonFactory {
 
 	public static java.util.List<Membership> arrayToList(JSONArray array) {
 		java.util.List<Membership> list = new java.util.ArrayList<Membership>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			Membership model = jsonToObject(jsonObject);
 			list.add(model);

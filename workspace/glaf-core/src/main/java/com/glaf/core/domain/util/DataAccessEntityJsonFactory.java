@@ -113,7 +113,7 @@ public class DataAccessEntityJsonFactory {
 
 	public static java.util.List<DataAccessEntity> arrayToList(JSONArray array) {
 		java.util.List<DataAccessEntity> list = new java.util.ArrayList<DataAccessEntity>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			DataAccessEntity model = jsonToObject(jsonObject);
 			list.add(model);

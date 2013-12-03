@@ -27,7 +27,7 @@ public class SystemPropertyJsonFactory {
 
 	public static java.util.List<SystemProperty> arrayToList(JSONArray array) {
 		java.util.List<SystemProperty> list = new java.util.ArrayList<SystemProperty>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			SystemProperty model = jsonToObject(jsonObject);
 			list.add(model);

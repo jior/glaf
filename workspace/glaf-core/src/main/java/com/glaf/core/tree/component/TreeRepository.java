@@ -85,8 +85,8 @@ public class TreeRepository implements Serializable {
 	public TreeComponent[] getTopTreesAsArray() {
 		List<TreeComponent> menuList = this.getTopTrees();
 		TreeComponent[] menus = new TreeComponent[menuList.size()];
-		for (int a = 0; a < menuList.size(); a++) {
-			menus[a] = (TreeComponent) menuList.get(a);
+		for (int i = 0, len = menuList.size(); i < len; i++) {
+			menus[i] = (TreeComponent) menuList.get(i);
 		}
 
 		return menus;

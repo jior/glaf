@@ -73,7 +73,7 @@ public class TreeJsonFactory {
 		if (jsonObject.containsKey("children")) {
 			JSONArray jsonArray = jsonObject.getJSONArray("children");
 			if (jsonArray != null && !jsonArray.isEmpty()) {
-				for (int i = 0; i < jsonArray.size(); i++) {
+				for (int i = 0, len = jsonArray.size(); i < len; i++) {
 					JSONObject json = jsonArray.getJSONObject(i);
 					TreeModel child = jsonToObject(json);
 					model.addChild(child);

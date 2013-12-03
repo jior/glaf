@@ -276,7 +276,7 @@ public class LeaveJsonFactory {
 
 	public static java.util.List<Leave> arrayToList(JSONArray array) {
 		java.util.List<Leave> list = new java.util.ArrayList<Leave>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			Leave model = jsonToObject(jsonObject);
 			list.add(model);

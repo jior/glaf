@@ -110,7 +110,7 @@ public class JobEvaluationJsonFactory {
 
 	public static java.util.List<JobEvaluation> arrayToList(JSONArray array) {
 		java.util.List<JobEvaluation> list = new java.util.ArrayList<JobEvaluation>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			JobEvaluation model = jsonToObject(jsonObject);
 			list.add(model);

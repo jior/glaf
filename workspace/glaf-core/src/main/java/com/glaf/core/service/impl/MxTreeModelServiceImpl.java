@@ -322,7 +322,7 @@ public class MxTreeModelServiceImpl implements ITreeModelService {
 		if (treeModel != null && treeModels != null) {
 			List<TreeModel> rows = this.getSubTreeModels(treeModel.getId());
 			if (rows != null && rows.size() > 0) {
-				for (int i = 0; i < rows.size(); i++) {
+				for (int i = 0, len = rows.size(); i < len; i++) {
 					TreeModel model = rows.get(i);
 					model.setParent(treeModel);
 					treeModels.add(model);
@@ -415,7 +415,7 @@ public class MxTreeModelServiceImpl implements ITreeModelService {
 	@Transactional
 	public void saveAll(List<TreeModel> treeModels) {
 		if (treeModels != null && treeModels.size() > 0) {
-			for (int i = 0; i < treeModels.size(); i++) {
+			for (int i = 0, len = treeModels.size(); i < len; i++) {
 				TreeModel treeNode = treeModels.get(i);
 				this.save(treeNode);
 			}

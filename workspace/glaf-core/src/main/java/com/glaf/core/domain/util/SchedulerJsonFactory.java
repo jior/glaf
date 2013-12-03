@@ -29,7 +29,7 @@ public class SchedulerJsonFactory {
 
 	public static java.util.List<Scheduler> arrayToList(JSONArray array) {
 		java.util.List<Scheduler> list = new java.util.ArrayList<Scheduler>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			Scheduler model = jsonToObject(jsonObject);
 			list.add(model);

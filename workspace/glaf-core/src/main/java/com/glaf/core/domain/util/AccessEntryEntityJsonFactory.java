@@ -183,7 +183,7 @@ public class AccessEntryEntityJsonFactory {
 
 	public static java.util.List<AccessEntryEntity> arrayToList(JSONArray array) {
 		java.util.List<AccessEntryEntity> list = new java.util.ArrayList<AccessEntryEntity>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			AccessEntryEntity model = jsonToObject(jsonObject);
 			list.add(model);

@@ -277,7 +277,7 @@ public class BorrowJsonFactory {
 
 	public static java.util.List<Borrow> arrayToList(JSONArray array) {
 		java.util.List<Borrow> list = new java.util.ArrayList<Borrow>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			Borrow model = jsonToObject(jsonObject);
 			list.add(model);

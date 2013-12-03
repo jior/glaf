@@ -134,7 +134,7 @@ public class ${entityName}JsonFactory {
 
 	public static java.util.List<${entityName}> arrayToList(JSONArray array) {
 		java.util.List<${entityName}> list = new java.util.ArrayList<${entityName}>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			${entityName} model = jsonToObject(jsonObject);
 			list.add(model);

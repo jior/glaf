@@ -270,7 +270,7 @@ public class LtravelJsonFactory {
 
 	public static java.util.List<Ltravel> arrayToList(JSONArray array) {
 		java.util.List<Ltravel> list = new java.util.ArrayList<Ltravel>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			Ltravel model = jsonToObject(jsonObject);
 			list.add(model);

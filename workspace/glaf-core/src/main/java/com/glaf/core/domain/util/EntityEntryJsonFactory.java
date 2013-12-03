@@ -295,7 +295,7 @@ public class EntityEntryJsonFactory {
 
 	public static java.util.List<EntityEntry> arrayToList(JSONArray array) {
 		java.util.List<EntityEntry> list = new java.util.ArrayList<EntityEntry>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			EntityEntry model = jsonToObject(jsonObject);
 			list.add(model);

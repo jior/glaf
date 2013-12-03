@@ -281,7 +281,7 @@ public class OvertimeJsonFactory {
 
 	public static java.util.List<Overtime> arrayToList(JSONArray array) {
 		java.util.List<Overtime> list = new java.util.ArrayList<Overtime>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			Overtime model = jsonToObject(jsonObject);
 			list.add(model);

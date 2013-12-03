@@ -29,7 +29,7 @@ public class SysUserRoleJsonFactory {
 
 	public static java.util.List<SysUserRole> arrayToList(JSONArray array) {
 		java.util.List<SysUserRole> list = new java.util.ArrayList<SysUserRole>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			SysUserRole model = jsonToObject(jsonObject);
 			list.add(model);

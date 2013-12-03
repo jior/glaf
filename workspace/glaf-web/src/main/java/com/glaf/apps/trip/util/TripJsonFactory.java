@@ -220,7 +220,7 @@ public class TripJsonFactory {
 
 	public static java.util.List<Trip> arrayToList(JSONArray array) {
 		java.util.List<Trip> list = new java.util.ArrayList<Trip>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			Trip model = jsonToObject(jsonObject);
 			list.add(model);

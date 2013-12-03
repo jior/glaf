@@ -101,7 +101,7 @@ public class PlainTextParser implements Parser {
 		}
 
 		ColumnModel[] array = new ColumnModel[columns.size()];
-		for (int i = 0; i < columns.size(); i++) {
+		for (int i = 0, len = columns.size(); i < len; i++) {
 			array[i] = columns.get(i);
 		}
 

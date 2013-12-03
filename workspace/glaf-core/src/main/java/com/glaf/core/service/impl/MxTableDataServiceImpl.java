@@ -729,7 +729,7 @@ public class MxTableDataServiceImpl implements ITableDataService {
 		TableDefinition tableDefinition = tableDefinitionService
 				.getTableDefinition(tableName);
 		if (tableDefinition != null && tableDefinition.getIdColumn() != null) {
-			for (int i = 0; i < rows.size(); i++) {
+			for (int i = 0, len = rows.size(); i < len; i++) {
 				JSONObject jsonObject = rows.getJSONObject(i);
 				this.saveTableData(tableName, jsonObject);
 			}

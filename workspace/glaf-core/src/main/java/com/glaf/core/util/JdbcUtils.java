@@ -69,7 +69,7 @@ public final class JdbcUtils {
 		if (params == null || params.size() == 0) {
 			return;
 		}
-		for (int i = 0; i < params.size(); i++) {
+		for (int i = 0, len = params.size(); i < len; i++) {
 			Object object = params.get(i);
 			if (object != null) {
 				if (object instanceof java.sql.Date) {

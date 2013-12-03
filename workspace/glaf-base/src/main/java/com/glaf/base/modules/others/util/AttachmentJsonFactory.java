@@ -10,7 +10,7 @@ public class AttachmentJsonFactory {
 
 	public static java.util.List<Attachment> arrayToList(JSONArray array) {
 		java.util.List<Attachment> list = new java.util.ArrayList<Attachment>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			Attachment model = jsonToObject(jsonObject);
 			list.add(model);

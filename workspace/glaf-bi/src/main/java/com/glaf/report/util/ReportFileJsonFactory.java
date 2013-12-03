@@ -100,7 +100,7 @@ public class ReportFileJsonFactory {
 
 	public static java.util.List<ReportFile> arrayToList(JSONArray array) {
 		java.util.List<ReportFile> list = new java.util.ArrayList<ReportFile>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			ReportFile model = jsonToObject(jsonObject);
 			list.add(model);

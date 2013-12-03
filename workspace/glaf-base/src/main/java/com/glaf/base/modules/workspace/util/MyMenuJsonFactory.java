@@ -9,7 +9,7 @@ public class MyMenuJsonFactory {
 
 	public static java.util.List<MyMenu> arrayToList(JSONArray array) {
 		java.util.List<MyMenu> list = new java.util.ArrayList<MyMenu>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			MyMenu model = jsonToObject(jsonObject);
 			list.add(model);

@@ -46,11 +46,11 @@ public class Hex {
 	}
 
 	public static byte[] hexToBytes(String str) {
-		if (str.length() % 2 == 1) {
+		if (Math.abs(str.length()) % 2 == 1) {
 			str = "0" + str;
 		}
 		byte[] bytes = new byte[str.length() / 2];
-		for (int i = 0; i < bytes.length; i++) {
+		for (int i = 0, len = bytes.length; i < len; i++) {
 			byte halfByte1 = charToByte[str.charAt(i * 2)];
 			byte halfByte2 = charToByte[str.charAt(i * 2 + 1)];
 			if (halfByte1 == -1 || halfByte2 == -1)
@@ -62,7 +62,7 @@ public class Hex {
 
 	public static String bytesToHex(byte... bytes) {
 		char[] c = new char[bytes.length * 2];
-		for (int i = 0; i < bytes.length; i++) {
+		for (int i = 0, len = bytes.length; i < len; i++) {
 			int bint = bytes[i];
 			c[i * 2] = byteToChar[(bint & 0xf0) >> 4];
 			c[1 + i * 2] = byteToChar[bint & 0x0f];

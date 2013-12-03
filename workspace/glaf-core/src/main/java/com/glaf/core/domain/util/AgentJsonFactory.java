@@ -28,7 +28,7 @@ public class AgentJsonFactory {
 
 	public static java.util.List<AgentEntity> arrayToList(JSONArray array) {
 		java.util.List<AgentEntity> list = new java.util.ArrayList<AgentEntity>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			AgentEntity model = jsonToObject(jsonObject);
 			list.add(model);

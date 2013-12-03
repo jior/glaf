@@ -85,7 +85,7 @@ public class TreeHelper {
 				child.put("icon", component.getImage());
 				child.put("img", component.getImage());
 				child.put("image", component.getImage());
-				if(StringUtils.isNotEmpty(component.getUrl())){
+				if (StringUtils.isNotEmpty(component.getUrl())) {
 					child.put("url", component.getUrl());
 				}
 				if (component.isChecked()) {
@@ -116,12 +116,13 @@ public class TreeHelper {
 		}
 
 	}
-	
+
 	public void buildTreeModel(JSONObject row, TreeComponent treeComponent) {
-		buildTreeModel(row,treeComponent,0);
+		buildTreeModel(row, treeComponent, 0);
 	}
 
-	public void buildTreeModel(JSONObject row, TreeComponent treeComponent,int viewType) {
+	public void buildTreeModel(JSONObject row, TreeComponent treeComponent,
+			int viewType) {
 		if (treeComponent.getComponents() != null
 				&& treeComponent.getComponents().size() > 0) {
 			JSONArray array = new JSONArray();
@@ -133,12 +134,14 @@ public class TreeHelper {
 				child.put("id", component.getId());
 				child.put("code", component.getCode());
 				child.put("text", component.getTitle());
-				if(viewType==1){
-					child.put("name", component.getTitle()+"("+component.getCode()+")");
-				}else{
+				if (viewType == 1) {
+					child.put("name",
+							component.getTitle() + "(" + component.getCode()
+									+ ")");
+				} else {
 					child.put("name", component.getTitle());
 				}
-				if(StringUtils.isNotEmpty(component.getUrl())){
+				if (StringUtils.isNotEmpty(component.getUrl())) {
 					child.put("url", component.getUrl());
 				}
 				child.put("icon", component.getImage());
@@ -151,7 +154,7 @@ public class TreeHelper {
 				if (component.getComponents() != null
 						&& component.getComponents().size() > 0) {
 					child.put("leaf", Boolean.valueOf(false));
-					this.buildTreeModel(child, component,viewType);
+					this.buildTreeModel(child, component, viewType);
 				} else {
 					child.put("leaf", Boolean.valueOf(true));
 				}
@@ -169,7 +172,7 @@ public class TreeHelper {
 			List<TreeModel> treeNodes, List<TreeModel> selectedNodes) {
 		Collection<String> checkedNodes = new HashSet<String>();
 		if (selectedNodes != null && selectedNodes.size() > 0) {
-			for (int i = 0; i < selectedNodes.size(); i++) {
+			for (int i = 0, len = selectedNodes.size(); i < len; i++) {
 				TreeModel treeNode = (TreeModel) selectedNodes.get(i);
 				checkedNodes.add(String.valueOf(treeNode.getId()));
 			}
@@ -177,7 +180,7 @@ public class TreeHelper {
 
 		Map<String, TreeModel> nodeMap = new HashMap<String, TreeModel>();
 		if (treeNodes != null && treeNodes.size() > 0) {
-			for (int i = 0; i < treeNodes.size(); i++) {
+			for (int i = 0, len = treeNodes.size(); i < len; i++) {
 				TreeModel treeNode = (TreeModel) treeNodes.get(i);
 				nodeMap.put(String.valueOf(treeNode.getId()), treeNode);
 			}
@@ -192,7 +195,7 @@ public class TreeHelper {
 		object.put("icon", root.getIcon());
 		object.put("img", root.getIcon());
 		object.put("image", root.getIcon());
-		if(StringUtils.isNotEmpty(root.getUrl())){
+		if (StringUtils.isNotEmpty(root.getUrl())) {
 			object.put("url", root.getUrl());
 		}
 
@@ -226,7 +229,7 @@ public class TreeHelper {
 							child.put("icon", component.getImage());
 							child.put("img", component.getImage());
 							child.put("image", component.getImage());
-							if(StringUtils.isNotEmpty(component.getUrl())){
+							if (StringUtils.isNotEmpty(component.getUrl())) {
 								child.put("url", component.getUrl());
 							}
 
@@ -246,7 +249,7 @@ public class TreeHelper {
 									nodeMap);
 						}
 					} else {
-						for (int i = 0; i < topTrees.size(); i++) {
+						for (int i = 0, len = topTrees.size(); i < len; i++) {
 							TreeComponent component = (TreeComponent) topTrees
 									.get(i);
 							TreeModel node = (TreeModel) nodeMap.get(component
@@ -259,7 +262,7 @@ public class TreeHelper {
 							child.put("icon", component.getImage());
 							child.put("img", component.getImage());
 							child.put("image", component.getImage());
-							if(StringUtils.isNotEmpty(component.getUrl())){
+							if (StringUtils.isNotEmpty(component.getUrl())) {
 								child.put("url", component.getUrl());
 							}
 
@@ -334,7 +337,7 @@ public class TreeHelper {
 							object.put("icon", component.getImage());
 							object.put("img", component.getImage());
 							object.put("image", component.getImage());
-							if(StringUtils.isNotEmpty(component.getUrl())){
+							if (StringUtils.isNotEmpty(component.getUrl())) {
 								object.put("url", component.getUrl());
 							}
 
@@ -348,7 +351,7 @@ public class TreeHelper {
 							this.buildTreeModel(object, component);
 						}
 					} else {
-						for (int i = 0; i < topTrees.size(); i++) {
+						for (int i = 0, len = topTrees.size(); i < len; i++) {
 							TreeComponent component = (TreeComponent) topTrees
 									.get(i);
 							JSONObject child = new JSONObject();
@@ -359,7 +362,7 @@ public class TreeHelper {
 							child.put("icon", component.getImage());
 							child.put("img", component.getImage());
 							child.put("image", component.getImage());
-							if(StringUtils.isNotEmpty(component.getUrl())){
+							if (StringUtils.isNotEmpty(component.getUrl())) {
 								child.put("url", component.getUrl());
 							}
 
@@ -388,12 +391,12 @@ public class TreeHelper {
 
 		return object;
 	}
-	
-	public JSONArray getTreeJSONArray(List<TreeModel> treeModels){
-		return getTreeJSONArray(treeModels,0);
+
+	public JSONArray getTreeJSONArray(List<TreeModel> treeModels) {
+		return getTreeJSONArray(treeModels, 0);
 	}
 
-	public JSONArray getTreeJSONArray(List<TreeModel> treeModels,int viewType) {
+	public JSONArray getTreeJSONArray(List<TreeModel> treeModels, int viewType) {
 		JSONArray result = new JSONArray();
 		if (treeModels != null && treeModels.size() > 0) {
 			TreeRepositoryBuilder builder = new TreeRepositoryBuilder();
@@ -401,7 +404,7 @@ public class TreeHelper {
 			if (menuRepository != null) {
 				List<?> topTrees = menuRepository.getTopTrees();
 				if (topTrees != null && topTrees.size() > 0) {
-					for (int i = 0; i < topTrees.size(); i++) {
+					for (int i = 0, len = topTrees.size(); i < len; i++) {
 						TreeComponent component = (TreeComponent) topTrees
 								.get(i);
 						JSONObject child = new JSONObject();
@@ -410,15 +413,16 @@ public class TreeHelper {
 						child.put("id", component.getId());
 						child.put("code", component.getCode());
 						child.put("text", component.getTitle());
-						if(viewType==1){
-							child.put("name", component.getTitle()+"("+component.getCode()+")");
-						}else{
+						if (viewType == 1) {
+							child.put("name", component.getTitle() + "("
+									+ component.getCode() + ")");
+						} else {
 							child.put("name", component.getTitle());
 						}
 						child.put("icon", component.getImage());
 						child.put("img", component.getImage());
 						child.put("image", component.getImage());
-						if(StringUtils.isNotEmpty(component.getUrl())){
+						if (StringUtils.isNotEmpty(component.getUrl())) {
 							child.put("url", component.getUrl());
 						}
 
@@ -432,7 +436,7 @@ public class TreeHelper {
 							child.put("leaf", Boolean.valueOf(false));
 							child.put("cls", "folder");
 							child.put("classes", "folder");
-							this.buildTreeModel(child, component,viewType);
+							this.buildTreeModel(child, component, viewType);
 						} else {
 							child.put("leaf", Boolean.valueOf(true));
 						}

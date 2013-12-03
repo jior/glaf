@@ -206,7 +206,7 @@ public class DbToDbTransfer {
 
 		sb.append(" ) values ( ");
 
-		for (int i = 0; i < columns.size(); i++) {
+		for (int i = 0, len = columns.size(); i < len; i++) {
 			sb.append(" ? ");
 			if (i < columns.size() - 1) {
 				sb.append(", ");

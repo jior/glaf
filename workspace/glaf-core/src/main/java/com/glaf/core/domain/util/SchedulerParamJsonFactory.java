@@ -28,7 +28,7 @@ public class SchedulerParamJsonFactory {
 
 	public static java.util.List<SchedulerParam> arrayToList(JSONArray array) {
 		java.util.List<SchedulerParam> list = new java.util.ArrayList<SchedulerParam>();
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
 			SchedulerParam model = jsonToObject(jsonObject);
 			list.add(model);
