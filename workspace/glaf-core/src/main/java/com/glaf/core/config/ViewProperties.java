@@ -107,7 +107,7 @@ public class ViewProperties {
 		return false;
 	}
 
-	public synchronized static void reload() {
+	public static void reload() {
 		try {
 			String config = SystemConfig.getConfigRootPath() + "/conf/props/views";
 			File directory = new File(config);

@@ -248,7 +248,7 @@ public class CalendarUtils {
 
 	
 
-	public static synchronized void initWorkDayEnv() {
+	public static void initWorkDayEnv() {
 		java.util.Properties p = loadCalendarProperties();
 		String morning = "00:00~00:00";
 

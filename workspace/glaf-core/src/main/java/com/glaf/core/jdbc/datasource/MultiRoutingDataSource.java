@@ -54,7 +54,7 @@ public class MultiRoutingDataSource extends AbstractRoutingDataSource {
 
 	}
 
-	private static synchronized void reloadDS() {
+	private static void reloadDS() {
 		if (!LOAD_DATASOURCE_OK) {
 			logger.info("--------------MultiRoutingDataSource reloadDS()------------");
 			Map<Object, Object> dataSourceMap = new HashMap<Object, Object>();

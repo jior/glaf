@@ -111,7 +111,7 @@ public class MessageProperties {
 		return false;
 	}
 
-	public synchronized static void reload() {
+	public static void reload() {
 		try {
 			String config = SystemConfig.getConfigRootPath()
 					+ "/conf/props/messages";

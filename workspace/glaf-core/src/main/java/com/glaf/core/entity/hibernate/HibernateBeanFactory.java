@@ -46,7 +46,7 @@ public class HibernateBeanFactory {
 		return sessionFactory;
 	}
 
-	public static synchronized ClassPathXmlApplicationContext reload() {
+	public static ClassPathXmlApplicationContext reload() {
 		if (ctx != null) {
 			ctx.close();
 			ctx = null;

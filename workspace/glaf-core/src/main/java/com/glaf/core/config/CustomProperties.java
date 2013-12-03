@@ -30,9 +30,10 @@ import org.apache.commons.logging.LogFactory;
 
 import com.glaf.core.util.PropertiesUtils;
 
-public  class CustomProperties {
-	
-	protected static final Log logger = LogFactory.getLog(CustomProperties.class);
+public class CustomProperties {
+
+	protected static final Log logger = LogFactory
+			.getLog(CustomProperties.class);
 
 	private static Properties properties = new Properties();
 
@@ -112,19 +113,20 @@ public  class CustomProperties {
 		return false;
 	}
 
-	public synchronized static void reload() {
+	public static void reload() {
 		try {
-			String config =  SystemProperties.getConfigRootPath() + "/conf/props";
+			String config = SystemProperties.getConfigRootPath()
+					+ "/conf/props";
 			logger.debug(config);
 			File directory = new File(config);
 			if (directory.exists()) {
 				String[] filelist = directory.list();
 				for (int i = 0; i < filelist.length; i++) {
-					String filename = config +"/"+ filelist[i];
+					String filename = config + "/" + filelist[i];
 					logger.debug(filename);
 					File file = new File(filename);
 					if (file.isFile() && file.getName().endsWith(".properties")) {
-						logger.info("load properties:"+file.getAbsolutePath());
+						logger.info("load properties:" + file.getAbsolutePath());
 						InputStream inputStream = new FileInputStream(file);
 						Properties p = PropertiesUtils
 								.loadProperties(inputStream);
@@ -148,6 +150,7 @@ public  class CustomProperties {
 		} catch (Exception ex) {
 			throw new RuntimeException(ex);
 		}
+
 	}
 
 	private CustomProperties() {

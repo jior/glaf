@@ -48,7 +48,7 @@ public class TemplateProperties {
 		return value;
 	}
 
-	public synchronized static void reload() {
+	public static void reload() {
 		try {
 			String config = SystemProperties.getConfigRootPath()
 					+ "/conf/templates";

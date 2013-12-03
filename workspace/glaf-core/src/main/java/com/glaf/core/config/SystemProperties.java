@@ -114,7 +114,7 @@ public class SystemProperties {
 		return false;
 	}
 
-	public synchronized static void reload() {
+	public static void reload() {
 		try {
 			Resource resource = new ClassPathResource(Constants.SYSTEM_CONFIG);
 			ROOT_CONF_PATH = resource.getFile().getParentFile().getParentFile()

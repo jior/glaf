@@ -97,7 +97,7 @@ public class MailProperties {
 		return false;
 	}
 
-	public synchronized static void reload() {
+	public static void reload() {
 		try {
 			String filename = SystemProperties.getConfigRootPath()
 					+ Constants.MAIL_CONFIG;

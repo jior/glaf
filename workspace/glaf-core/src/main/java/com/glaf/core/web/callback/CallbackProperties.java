@@ -90,7 +90,7 @@ public class CallbackProperties {
 		return false;
 	}
 
-	public synchronized static void reload() {
+	public static void reload() {
 		try {
 			String config = SystemConfig.getConfigRootPath()
 					+ "/conf/props/callback";
