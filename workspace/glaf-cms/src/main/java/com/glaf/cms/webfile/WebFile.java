@@ -1685,9 +1685,9 @@ public class WebFile {
 
 			responseWriteLn(String
 					.valueOf((new StringBuffer(
-							"ftarget.write('<form method=POST  NAME=NEW_FILE action=\""))
+							"ftarget.write('<form method=\"POST\"  NAME=\"NEW_FILE\" action=\""))
 							.append(scriptPath)
-							.append("?QUERY=FILEADM_NEWFILE&RELATIVEPATH=\"")
+							.append("?QUERY=FILEADM_NEWFILE&RELATIVEPATH=")
 							.append(relativePath).append("\" TARGET=FPROP>');")));
 			responseWriteLn(String
 					.valueOf((new StringBuffer(
