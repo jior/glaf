@@ -101,6 +101,7 @@ public class Environment {
 	}
 
 	public static void removeCurrentSystemName() {
+		systemNameThreadLocal.set(null);
 		systemNameThreadLocal.remove();
 	}
 
