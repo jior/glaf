@@ -25,10 +25,11 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Hashtable;
 import java.util.List;
- 
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -42,9 +43,6 @@ import com.glaf.core.util.RequestUtils;
 @Controller("/fileManagerJson")
 @RequestMapping("/fileManagerJson")
 public class MxDBFileManagerJsonController {
-
-	 
-	protected IBlobService blobService;
 
 	private static class NameComparator implements Comparator<Object>,
 			java.io.Serializable {
@@ -114,8 +112,15 @@ public class MxDBFileManagerJsonController {
 		}
 	}
 
+	protected IBlobService blobService;
+
+	@javax.annotation.Resource
+	public void setBlobService(IBlobService blobService) {
+		this.blobService = blobService;
+	}
+
 	@RequestMapping
-	public void upload(HttpServletRequest request, HttpServletResponse response)
+	public void show(HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		response.setContentType("text/html; charset=UTF-8");
 
@@ -129,9 +134,20 @@ public class MxDBFileManagerJsonController {
 		String order = request.getParameter("order") != null ? request
 				.getParameter("order").toLowerCase() : "filename";
 
+		String businessKey = request.getParameter("businessKey");
+		String serviceKey = request.getParameter("serviceKey");
+
 		BlobItemQuery query = new BlobItemQuery();
 		query.createBy(loginContext.getActorId());
-		query.serviceKey("IMG_" + loginContext.getActorId());
+		if (StringUtils.isNotEmpty(businessKey)) {
+			query.businessKey(businessKey);
+		}
+		if (StringUtils.isNotEmpty(serviceKey)) {
+			query.serviceKey(serviceKey);
+		} else {
+			query.serviceKey("IMG_" + loginContext.getActorId());
+		}
+
 		if ("size".equals(order)) {
 			query.setSortField("size");
 		} else if ("type".equals(order)) {
@@ -173,6 +189,7 @@ public class MxDBFileManagerJsonController {
 		} else {
 			Collections.sort(fileList, new NameComparator());
 		}
+
 		JSONObject result = new JSONObject();
 
 		result.put("moveup_dir_path", request.getContextPath()
@@ -185,11 +202,6 @@ public class MxDBFileManagerJsonController {
 
 		response.setContentType("application/json; charset=UTF-8");
 		response.getWriter().write(result.toString());
-	}
-
-	@javax.annotation.Resource
-	public void setBlobService(IBlobService blobService) {
-		this.blobService = blobService;
 	}
 
 }

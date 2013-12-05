@@ -36,9 +36,12 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.alibaba.fastjson.JSONObject;
+import com.glaf.core.base.DataFile;
 import com.glaf.core.config.CustomProperties;
 import com.glaf.core.config.SystemProperties;
+import com.glaf.core.domain.BlobItemEntity;
 import com.glaf.core.security.LoginContext;
+import com.glaf.core.service.IBlobService;
 import com.glaf.core.util.FileUtils;
 import com.glaf.core.util.RequestUtils;
 
@@ -48,6 +51,8 @@ public class MxDiskFileUploadJsonController {
 
 	public final static String sp = System.getProperty("file.separator");
 
+	protected IBlobService blobService;
+
 	private String getError(String message) throws Exception {
 		JSONObject object = new JSONObject();
 		object.put("error", 1);
@@ -55,20 +60,30 @@ public class MxDiskFileUploadJsonController {
 		return object.toString();
 	}
 
+	@javax.annotation.Resource
+	public void setBlobService(IBlobService blobService) {
+		this.blobService = blobService;
+	}
+
 	@RequestMapping
 	public void upload(HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		response.setContentType("text/html; charset=UTF-8");
+		String businessKey = request.getParameter("businessKey");
+		String serviceKey = request.getParameter("serviceKey");
 		// 文件保存目录路径
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
-		String savePath = request.getSession().getServletContext()
-				.getRealPath("/")
-				+ "upload/" + loginContext.getActorId().hashCode() + "/";
+		String savePath = SystemProperties.getAppPath() + "/upload/"
+				+ loginContext.getUser().getId() + "/";
 		// 文件保存目录URL
 		String saveUrl = request.getContextPath() + "/upload/"
-				+ loginContext.getActorId().hashCode() + "/";
+				+ loginContext.getUser().getId() + "/";
+		if(StringUtils.isNotEmpty(serviceKey)){
+			saveUrl = saveUrl + serviceKey+ "/";
+		}
 		// 定义允许上传的文件扩展名
-		String[] fileTypes = new String[] { "gif", "jpg", "jpeg", "png", "bmp" };
+		String[] fileTypes = new String[] { "gif", "jpg", "jpeg", "png", "bmp",
+				"swf" };
 		// 最大文件大小
 		long maxSize = 10240000;
 
@@ -102,7 +117,6 @@ public class MxDiskFileUploadJsonController {
 		}
 
 		MultipartHttpServletRequest req = (MultipartHttpServletRequest) request;
-
 		Map<String, MultipartFile> fileMap = req.getFileMap();
 		Set<Entry<String, MultipartFile>> entrySet = fileMap.entrySet();
 		for (Entry<String, MultipartFile> entry : entrySet) {
@@ -125,13 +139,31 @@ public class MxDiskFileUploadJsonController {
 				String newFileName = df.format(new Date()) + "_"
 						+ new Random().nextInt(10000) + "." + fileExt;
 				try {
+					DataFile dataFile = new BlobItemEntity();
+					dataFile.setBusinessKey(businessKey);
+					dataFile.setCreateBy(loginContext.getActorId());
+					dataFile.setCreateDate(new Date());
+					dataFile.setFileId(newFileName);
+					dataFile.setLastModified(System.currentTimeMillis());
+					dataFile.setName(fileName);
+					if (StringUtils.isNotEmpty(serviceKey)) {
+						dataFile.setServiceKey(serviceKey);
+					} else {
+						dataFile.setServiceKey("IMG_"
+								+ loginContext.getActorId());
+					}
+					dataFile.setFilename(fileName);
+					dataFile.setType(fileExt);
+					dataFile.setSize(mFile.getSize());
+					dataFile.setStatus(1);
+					blobService.insertBlob(dataFile);
 
 					FileUtils.save(savePath + sp + newFileName,
 							mFile.getInputStream());
 
 				} catch (Exception ex) {
 					ex.printStackTrace();
-					response.getWriter().write(getError("上传文件失败。"));
+					response.getWriter().write(getError("保存文件失败。"));
 					return;
 				}
 

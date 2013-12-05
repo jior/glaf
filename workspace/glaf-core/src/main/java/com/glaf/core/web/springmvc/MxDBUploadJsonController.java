@@ -44,7 +44,6 @@ import com.glaf.core.security.LoginContext;
 import com.glaf.core.service.IBlobService;
 import com.glaf.core.util.FileUtils;
 import com.glaf.core.util.RequestUtils;
- 
 
 @Controller("/uploadJson")
 @RequestMapping("/uploadJson")
@@ -70,7 +69,6 @@ public class MxDBUploadJsonController {
 	public void upload(HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		response.setContentType("text/html; charset=UTF-8");
-		// 文件保存目录路径
 
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 
@@ -91,7 +89,8 @@ public class MxDBUploadJsonController {
 		}
 
 		MultipartHttpServletRequest req = (MultipartHttpServletRequest) request;
-
+		String businessKey = request.getParameter("businessKey");
+		String serviceKey = request.getParameter("serviceKey");
 		Map<String, MultipartFile> fileMap = req.getFileMap();
 		Set<Entry<String, MultipartFile>> entrySet = fileMap.entrySet();
 		for (Entry<String, MultipartFile> entry : entrySet) {
@@ -114,21 +113,25 @@ public class MxDBUploadJsonController {
 				String newFileName = df.format(new Date()) + "_"
 						+ new Random().nextInt(10000) + "." + fileExt;
 				try {
-
-					DataFile blobData = new BlobItemEntity();
-					blobData.setCreateBy(loginContext.getActorId());
-					blobData.setCreateDate(new Date());
-					blobData.setFileId(newFileName);
-					blobData.setLastModified(System.currentTimeMillis());
-					blobData.setName(fileName);
-					blobData.setServiceKey("IMG_" + loginContext.getActorId());
-					blobData.setData(mFile.getBytes());
-					blobData.setFilename(fileName);
-					blobData.setType(fileExt);
-					blobData.setSize(mFile.getSize());
-					blobData.setStatus(1);
-					blobService.insertBlob(blobData);
-
+					DataFile dataFile = new BlobItemEntity();
+					dataFile.setBusinessKey(businessKey);
+					dataFile.setCreateBy(loginContext.getActorId());
+					dataFile.setCreateDate(new Date());
+					dataFile.setFileId(newFileName);
+					dataFile.setLastModified(System.currentTimeMillis());
+					dataFile.setName(fileName);
+					if (StringUtils.isNotEmpty(serviceKey)) {
+						dataFile.setServiceKey(serviceKey);
+					} else {
+						dataFile.setServiceKey("IMG_"
+								+ loginContext.getActorId());
+					}
+					dataFile.setData(mFile.getBytes());
+					dataFile.setFilename(fileName);
+					dataFile.setType(fileExt);
+					dataFile.setSize(mFile.getSize());
+					dataFile.setStatus(1);
+					blobService.insertBlob(dataFile);
 				} catch (Exception ex) {
 					ex.printStackTrace();
 					response.getWriter().write(getError("上传文件失败。"));

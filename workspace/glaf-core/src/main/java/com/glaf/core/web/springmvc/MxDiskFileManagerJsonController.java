@@ -29,10 +29,12 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.alibaba.fastjson.JSONObject;
+import com.glaf.core.config.SystemProperties;
 import com.glaf.core.security.LoginContext;
 import com.glaf.core.util.RequestUtils;
 
@@ -116,19 +118,24 @@ public class MxDiskFileManagerJsonController {
 	}
 
 	@RequestMapping
-	public void upload(HttpServletRequest request, HttpServletResponse response)
+	public void show(HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		response.setContentType("text/html; charset=UTF-8");
+		String serviceKey = request.getParameter("serviceKey");
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		// 根目录路径，可以指定绝对路径，比如 /var/www/upload/
-		String rootPath = request.getSession().getServletContext()
-				.getRealPath("/")
-				+ "upload/" + loginContext.getActorId().hashCode() + "/";
+		String rootPath = SystemProperties.getAppPath() + "/upload/"
+				+ loginContext.getUser().getId() + "/";
 		// 根目录URL，可以指定绝对路径，比如 http://www.yoursite.com/upload/
 		String rootUrl = request.getContextPath() + "/upload/"
-				+ loginContext.getActorId().hashCode() + "/";
+				+ loginContext.getUser().getId() + "/";
+		if (StringUtils.isNotEmpty(serviceKey)) {
+			rootPath = rootPath + serviceKey + "/";
+			rootUrl = rootUrl + serviceKey + "/";
+		}
 		// 图片扩展名
-		String[] fileTypes = new String[] { "gif", "jpg", "jpeg", "png", "bmp" };
+		String[] fileTypes = new String[] { "gif", "jpg", "jpeg", "png", "bmp",
+				"swf" };
 
 		// 根据path参数，设置各路径和URL
 		String path = request.getParameter("path") != null ? request
@@ -153,11 +160,13 @@ public class MxDiskFileManagerJsonController {
 			response.getWriter().write(getError("Access is not allowed."));
 			return;
 		}
+
 		// 最后一个字符不是/
 		if (!"".equals(path) && !path.endsWith("/")) {
 			response.getWriter().write(getError("Parameter is not valid."));
 			return;
 		}
+
 		// 目录不存在或不是目录
 		File currentPathFile = new File(currentPath);
 		if (!currentPathFile.isDirectory()) {
@@ -166,7 +175,7 @@ public class MxDiskFileManagerJsonController {
 		}
 
 		// 遍历目录取的文件信息
-		List<Hashtable<?, ?>> fileList = new ArrayList<Hashtable<?, ?>>();
+		List<Hashtable<String, Object>> fileList = new ArrayList<Hashtable<String, Object>>();
 		if (currentPathFile.listFiles() != null) {
 			for (File file : currentPathFile.listFiles()) {
 				Hashtable<String, Object> hash = new Hashtable<String, Object>();
@@ -202,6 +211,7 @@ public class MxDiskFileManagerJsonController {
 		} else {
 			Collections.sort(fileList, new NameComparator());
 		}
+
 		JSONObject result = new JSONObject();
 		result.put("moveup_dir_path", moveupDirPath);
 		result.put("current_dir_path", currentDirPath);
