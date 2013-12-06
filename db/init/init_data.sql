@@ -51,6 +51,7 @@ insert into sys_tree (id, parent, name, nodedesc, sort, code) values (12, 10, '²
 insert into sys_tree (id, parent, name, nodedesc, sort, code) values (14, 10, '½ÇÉ«¹ÜÀí', '½ÇÉ«¹ÜÀí', 15, '');
 insert into sys_tree (id, parent, name, nodedesc, sort, code) values (15, 10, 'Ä£¿é¹ÜÀí', 'Ä£¿é¹ÜÀí', 12, '');
 insert into sys_tree (id, parent, name, nodedesc, sort, code) values (16, 8, '×Öµä¹ÜÀí', '×Öµä¹ÜÀí', 20, '');
+insert into sys_tree (id, parent, name, nodedesc, sort, code) values (17, 8, 'ÇøÓò¹ÜÀí', 'ÇøÓò¹ÜÀí', 20, '');
 insert into sys_tree (id, parent, name, nodedesc, sort, code) values (20, 3, '¸öÈËÉèÖÃ', '¸öÈËÉèÖÃ', 30, '');
 insert into sys_tree (id, parent, name, nodedesc, sort, code) values (21, 20, 'ĞŞ¸ÄÃÜÂë', 'ĞŞ¸ÄÃÜÂë', 30, '');
 insert into sys_tree (id, parent, name, nodedesc, sort, code) values (22, 20, 'ĞŞ¸Ä¸öÈËĞÅÏ¢', 'ĞŞ¸Ä¸öÈËĞÅÏ¢', 30, '');
@@ -133,6 +134,7 @@ insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) val
 insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (14, '½ÇÉ«¹ÜÀí', '', '/sys/role.do?method=showList', 15, 2, 14);
 insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (15, 'Ä£¿é¹ÜÀí', '', '/sys/application.do?method=showFrame', 12, 2, 15);
 insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (16, '×Öµä¹ÜÀí', '', '/sys/dictory.do?method=showFrame', 15, 2, 16);
+insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (17, 'ÇøÓò¹ÜÀí', '', '/mx/sys/district', 16, 2, 17);
 insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (20, '¸öÈËÉèÖÃ', '', '', 15, 2, 20);
 insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (21, 'ĞŞ¸ÄÃÜÂë', '', '/identity/user.do?method=prepareModifyPwd', 15, 2, 21);
 insert into sys_application (id, name, appdesc, url, sort, showmenu, nodeid) values (22, 'ĞŞ¸Ä¸öÈËĞÅÏ¢', '', '/identity/user.do?method=prepareModifyInfo', 15, 2, 22);
