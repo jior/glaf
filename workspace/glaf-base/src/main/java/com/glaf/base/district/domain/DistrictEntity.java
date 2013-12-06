@@ -49,6 +49,9 @@ public class DistrictEntity implements java.io.Serializable, JSONable {
 	@Column(name = "NAME_", length = 200, nullable = false)
 	protected String name;
 
+	@Column(name = "TREEID_", length = 500)
+	protected String treeId;
+
 	@Column(name = "LEVEL_")
 	protected int level;
 
@@ -103,6 +106,10 @@ public class DistrictEntity implements java.io.Serializable, JSONable {
 		return sortNo;
 	}
 
+	public String getTreeId() {
+		return treeId;
+	}
+
 	public String getUseType() {
 		return useType;
 	}
@@ -141,6 +148,10 @@ public class DistrictEntity implements java.io.Serializable, JSONable {
 
 	public void setSortNo(int sortNo) {
 		this.sortNo = sortNo;
+	}
+
+	public void setTreeId(String treeId) {
+		this.treeId = treeId;
 	}
 
 	public void setUseType(String useType) {

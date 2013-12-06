@@ -20,6 +20,7 @@ package com.glaf.base.district.service;
 
 import java.util.*;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.RowBounds;
@@ -29,6 +30,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.core.id.*;
 import com.glaf.core.query.TreeModelQuery;
+import com.glaf.core.service.ITableDataService;
+import com.glaf.core.util.StringTools;
+import com.glaf.core.base.ColumnModel;
+import com.glaf.core.base.TableModel;
 import com.glaf.core.base.TreeModel;
 import com.glaf.core.dao.EntityDAO;
 import com.glaf.base.district.domain.*;
@@ -48,6 +53,8 @@ public class DistrictServiceImpl implements DistrictService {
 	protected SqlSession sqlSession;
 
 	protected DistrictMapper districtMapper;
+
+	protected ITableDataService tableDataService;
 
 	public DistrictServiceImpl() {
 
@@ -93,6 +100,23 @@ public class DistrictServiceImpl implements DistrictService {
 		return rows;
 	}
 
+	protected String getTreeId(Map<Long, DistrictEntity> dataMap,
+			DistrictEntity tree) {
+		long parentId = tree.getParentId();
+		long id = tree.getId();
+		DistrictEntity parent = dataMap.get(parentId);
+		if (parent != null && parent.getId() != 0) {
+			if (StringUtils.isEmpty(parent.getTreeId())) {
+				return getTreeId(dataMap, parent) + id + "|";
+			}
+			if (!parent.getTreeId().endsWith("|")) {
+				parent.setTreeId(parent.getTreeId() + "|");
+			}
+			return parent.getTreeId() + id + "|";
+		}
+		return tree.getTreeId();
+	}
+
 	public int getDistrictTreeModelCount(TreeModelQuery query) {
 		return districtMapper.getDistrictTreeModelCount(query);
 	}
@@ -122,28 +146,119 @@ public class DistrictServiceImpl implements DistrictService {
 						.getDistrict(district.getParentId());
 				if (parent != null) {
 					district.setLevel(parent.getLevel() + 1);
+					if (parent.getTreeId() != null) {
+						district.setTreeId(parent.getTreeId()
+								+ district.getId() + "|");
+					}
 				}
+			} else {
+				district.setTreeId(district.getId() + "|");
 			}
 			districtMapper.insertDistrict(district);
 		} else {
 			DistrictEntity model = this.getDistrict(district.getId());
 			if (model != null) {
-				if (district.getParentId() != 0) {
-					model.setParentId(district.getParentId());
-				}
-				if (district.getName() != null) {
-					model.setName(district.getName());
-				}
-				if (district.getUseType() != null) {
-					model.setUseType(district.getUseType());
-				}
-				model.setLevel(district.getLevel());
-				model.setSortNo(district.getSortNo());
-				districtMapper.updateDistrict(model);
+				this.update(district);
 			} else {
+				district.setLevel(1);
+				district.setId(idGenerator.nextId());
+				if (district.getParentId() != 0) {
+					DistrictEntity parent = this.getDistrict(district
+							.getParentId());
+					if (parent != null) {
+						district.setLevel(parent.getLevel() + 1);
+						if (parent.getTreeId() != null) {
+							district.setTreeId(parent.getTreeId()
+									+ district.getId() + "|");
+						}
+					}
+				} else {
+					district.setTreeId(district.getId() + "|");
+				}
 				districtMapper.insertDistrict(district);
 			}
 		}
+	}
+
+	public void loadChildren(List<DistrictEntity> list, long parentId) {
+		DistrictQuery query = new DistrictQuery();
+		query.setParentId(Long.valueOf(parentId));
+		List<DistrictEntity> nodes = this.list(query);
+		if (nodes != null && !nodes.isEmpty()) {
+			for (DistrictEntity node : nodes) {
+				list.add(node);
+				this.loadChildren(list, node.getId());
+			}
+		}
+	}
+
+	@Transactional
+	public boolean update(DistrictEntity bean) {
+		DistrictEntity model = this.getDistrict(bean.getId());
+		/**
+		 * 如果节点移动了位置，即移动到别的节点下面去了
+		 */
+		if (model.getParentId() != bean.getParentId()) {
+			List<DistrictEntity> list = new ArrayList<DistrictEntity>();
+			this.loadChildren(list, bean.getId());
+			if (!list.isEmpty()) {
+				for (DistrictEntity node : list) {
+					/**
+					 * 不能移动到ta自己的子节点下面去
+					 */
+					if (bean.getParentId() == node.getId()) {
+						throw new RuntimeException(
+								"Can't change node into children");
+					}
+				}
+				/**
+				 * 修正所有子节点的treeId
+				 */
+				DistrictEntity oldParent = this
+						.getDistrict(model.getParentId());
+				DistrictEntity newParent = this.getDistrict(bean.getParentId());
+				if (oldParent != null && newParent != null
+						&& StringUtils.isNotEmpty(oldParent.getTreeId())
+						&& StringUtils.isNotEmpty(newParent.getTreeId())) {
+					TableModel tableModel = new TableModel();
+					tableModel.setTableName("SYS_DISTRICT");
+					ColumnModel idColumn = new ColumnModel();
+					idColumn.setColumnName("ID_");
+					idColumn.setJavaType("Long");
+					tableModel.setIdColumn(idColumn);
+
+					ColumnModel treeColumn = new ColumnModel();
+					treeColumn.setColumnName("TREEID_");
+					treeColumn.setJavaType("String");
+					tableModel.addColumn(treeColumn);
+
+					for (DistrictEntity node : list) {
+						String treeId = node.getTreeId();
+						if (StringUtils.isNotEmpty(treeId)) {
+							treeId = StringTools.replace(treeId,
+									oldParent.getTreeId(),
+									newParent.getTreeId());
+							idColumn.setValue(node.getId());
+							treeColumn.setValue(treeId);
+							tableDataService.updateTableData(tableModel);
+						}
+					}
+				}
+			}
+		}
+
+		if (bean.getParentId() != 0) {
+			DistrictEntity parent = this.getDistrict(bean.getParentId());
+			if (parent != null) {
+				if (StringUtils.isNotEmpty(parent.getTreeId())) {
+					bean.setTreeId(parent.getTreeId() + bean.getId() + "|");
+				}
+			}
+		}
+
+		districtMapper.updateDistrict(bean);
+
+		return true;
 	}
 
 	@javax.annotation.Resource
@@ -159,6 +274,11 @@ public class DistrictServiceImpl implements DistrictService {
 	@javax.annotation.Resource
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
+	}
+
+	@javax.annotation.Resource
+	public void setTableDataService(ITableDataService tableDataService) {
+		this.tableDataService = tableDataService;
 	}
 
 	@javax.annotation.Resource

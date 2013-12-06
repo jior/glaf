@@ -18,6 +18,9 @@ public class DistrictJsonFactory {
 		if (bean.getCode() != null) {
 			jsonObject.put("code", bean.getCode());
 		}
+		if (bean.getTreeId() != null) {
+			jsonObject.put("treeId", bean.getTreeId());
+		}
 		jsonObject.put("level", bean.getLevel());
 		if (bean.getUseType() != null) {
 			jsonObject.put("useType", bean.getUseType());
@@ -38,6 +41,9 @@ public class DistrictJsonFactory {
 		}
 		if (bean.getCode() != null) {
 			jsonObject.put("code", bean.getCode());
+		}
+		if (bean.getTreeId() != null) {
+			jsonObject.put("treeId", bean.getTreeId());
 		}
 		jsonObject.put("level", bean.getLevel());
 		if (bean.getUseType() != null) {
@@ -62,6 +68,9 @@ public class DistrictJsonFactory {
 		}
 		if (jsonObject.containsKey("code")) {
 			model.setCode(jsonObject.getString("code"));
+		}
+		if (jsonObject.containsKey("treeId")) {
+			model.setTreeId(jsonObject.getString("treeId"));
 		}
 		if (jsonObject.containsKey("level")) {
 			model.setLevel(jsonObject.getInteger("level"));

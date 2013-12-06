@@ -9,6 +9,7 @@
 		<result property="parentId" column="PARENTID_" jdbcType="BIGINT" />
 		<result property="name" column="NAME_" jdbcType="VARCHAR" />
 		<result property="code" column="CODE_" jdbcType="VARCHAR" />
+		<result property="treeId" column="TREEID_" jdbcType="VARCHAR" />
 		<result property="level" column="LEVEL_" jdbcType="INTEGER" />
 		<result property="useType" column="USETYPE_" jdbcType="VARCHAR" />
 		<result property="sortNo" column="SORTNO_" jdbcType="INTEGER" />
@@ -21,6 +22,7 @@
 		<result property="parentId" column="PARENTID_" jdbcType="BIGINT" />
 		<result property="name" column="NAME_" jdbcType="VARCHAR" />
 		<result property="code" column="CODE_" jdbcType="VARCHAR" />
+		<result property="treeId" column="TREEID_" jdbcType="VARCHAR" />
 		<result property="level" column="LEVEL_" jdbcType="INTEGER" />
 		<result property="sortNo" column="SORTNO_" jdbcType="INTEGER" />
 		<result property="locked" column="LOCKED_" jdbcType="INTEGER" />
@@ -39,6 +41,9 @@
 			</if>
 			<if test="code != null">
 				,CODE_
+			</if>
+			<if test="treeId != null">
+				,TREEID_
 			</if>
 			<if test="level != null">
 				,LEVEL_
@@ -68,6 +73,9 @@
 			</if>
 			<if test="code != null">
 				,#{code, jdbcType=VARCHAR}
+			</if>
+			<if test="treeId != null">
+				,#{treeId, jdbcType=VARCHAR}
 			</if>
 			<if test="level != null">
 				,#{level, jdbcType=INTEGER}
@@ -107,6 +115,9 @@
 			</if>
 			<if test="locked != null">
 				LOCKED_ = #{locked, jdbcType=INTEGER},
+			</if>
+			<if test="treeId != null">
+				TREEID = #{treeId, jdbcType=VARCHAR},
 			</if>
 		</trim>
 		where
