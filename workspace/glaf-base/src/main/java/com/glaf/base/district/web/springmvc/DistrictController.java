@@ -137,6 +137,7 @@ public class DistrictController {
 			throws IOException {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		logger.debug("params:"+params);
 		DistrictQuery query = new DistrictQuery();
 		Tools.populate(query, params);
 		query.deleteFlag(0);
@@ -153,7 +154,7 @@ public class DistrictController {
 			gridType = "easyui";
 		}
 		int start = 0;
-		int limit = 10;
+		int limit = 15;
 		String orderName = null;
 		String order = null;
 

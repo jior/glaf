@@ -89,7 +89,24 @@ limitations under the License.
 			jQuery.fn.zTree.init(jQuery("#myTree"), setting);
 	});
 
-   jQuery(function(){
+	function getDataUrl(){
+		var nodeId = jQuery("#nodeId").val();
+        var link = '<%=request.getContextPath()%>/mx/sys/district/json?parentId='+nodeId;
+		alert(link);
+		return link;
+	}
+
+
+	function loadMyData(url){
+		  //alert(url);
+		  jQuery.get(url,{qq:'xx'},function(data){
+		      //var text = JSON.stringify(data); 
+              //alert(text);
+			  $('#mydatagrid').datagrid('loadData',data);
+		  },'json');
+	  }
+
+    jQuery(function(){
 		jQuery('#mydatagrid').datagrid({
 				width:1000,
 				height:480,
@@ -98,7 +115,7 @@ limitations under the License.
 				nowrap: false,
 				striped: true,
 				collapsible:true,
-				url:'<%=request.getContextPath()%>/mx/sys/district/json',
+				url: '<%=request.getContextPath()%>/mx/sys/district/json?parentId=${parentId}',
 				remoteSort: false,
 				singleSelect:true,
 				idField:'id',
@@ -113,17 +130,24 @@ limitations under the License.
 				rownumbers:false,
 				pagination:true,
 				pageSize:15,
-				pageList: [10,15,20,25,30,40,50,100],
+				pageList: [15,20,25,30,40,50,100],
 				onDblClickRow: onRowClick 
 			});
-
+         
+		    
 			var p = jQuery('#mydatagrid').datagrid('getPager');
 			jQuery(p).pagination({
-				onBeforeRefresh:function(){
-					//alert('before refresh');
+				onSelectPage:function(pageNumber, pageSize){
+					 var nodeId = jQuery("#nodeId").val();
+                     var link = '<%=request.getContextPath()%>/mx/sys/district/json?parentId='+nodeId+'&page='+pageNumber+'&rows='+pageSize;
+                     //alert(link);
+					 loadMyData(link);
 				}
 		    });
+			
 	});
+
+
 
 		 
 	function formatterStatus(val, row){
@@ -221,7 +245,7 @@ limitations under the License.
 					   if(data != null && data.message != null){
 						   alert(data.message);
 					   } else {
-						 alert('操作成功完成！');
+						   alert('操作成功完成！');
 					   }
 					   jQuery('#mydatagrid').datagrid('reload');
 				   }
