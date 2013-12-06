@@ -12,6 +12,8 @@
 		<result property="level" column="LEVEL_" jdbcType="INTEGER" />
 		<result property="useType" column="USETYPE_" jdbcType="VARCHAR" />
 		<result property="sortNo" column="SORTNO_" jdbcType="INTEGER" />
+		<result property="locked" column="LOCKED_" jdbcType="INTEGER" />
+		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR" />
 	</resultMap>
 
 	<resultMap id="districtTreeResultMap" type="com.glaf.core.base.BaseTree">
@@ -21,6 +23,7 @@
 		<result property="code" column="CODE_" jdbcType="VARCHAR" />
 		<result property="level" column="LEVEL_" jdbcType="INTEGER" />
 		<result property="sortNo" column="SORTNO_" jdbcType="INTEGER" />
+		<result property="locked" column="LOCKED_" jdbcType="INTEGER" />
 	</resultMap>
 
 
@@ -46,6 +49,12 @@
 			<if test="sortNo != null">
 				,SORTNO_
 			</if>
+			<if test="locked != null">
+				,LOCKED_
+			</if>
+			<if test="createBy != null">
+				,CREATEBY_
+			</if>
 		</trim>
 
 		<trim prefix=" values (" suffix=")" suffixOverrides=",">
@@ -69,6 +78,12 @@
 			<if test="sortNo != null">
 				,#{sortNo, jdbcType=INTEGER}
 			</if>
+			<if test="locked != null">
+				,#{locked, jdbcType=INTEGER}
+			</if>
+			<if test="createBy != null">
+				,#{createBy, jdbcType=VARCHAR}
+			</if>
 		</trim>
 	</insert>
 
@@ -89,6 +104,9 @@
 			</if>
 			<if test="sortNo != null">
 				SORTNO_ = #{sortNo, jdbcType=INTEGER},
+			</if>
+			<if test="locked != null">
+				LOCKED_ = #{locked, jdbcType=INTEGER},
 			</if>
 		</trim>
 		where
@@ -135,7 +153,7 @@
 		<include refid="selectDistrictsSql" />
 	</select>
 
-	<select id="getDistrictTreeModels" parameterType="com.glaf.base.district.query.TreeModelQuery"
+	<select id="getDistrictTreeModels" parameterType="com.glaf.core.query.TreeModelQuery"
 		resultMap="districtTreeResultMap">
 		select E.*
 		<include refid="selectDistrictTreesSql" />
@@ -144,7 +162,7 @@
 		</if>
 	</select>
 
-	<select id="getDistrictTreeModelCount" parameterType="com.glaf.base.district.query.TreeModelQuery"
+	<select id="getDistrictTreeModelCount" parameterType="com.glaf.core.query.TreeModelQuery"
 		resultType="int">
 		select count(*)
 		<include refid="selectDistrictTreesSql" />
@@ -160,6 +178,10 @@
 
 			<if test="parentId != null ">
 				and E.PARENTID_ = #{parentId}
+			</if>
+
+			<if test="locked != null">
+				and E.LOCKED_ = #{locked}
 			</if>
 
 			<if test="nameLike != null and nameLike != '' ">

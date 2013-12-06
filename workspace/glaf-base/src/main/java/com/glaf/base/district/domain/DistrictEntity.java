@@ -58,6 +58,15 @@ public class DistrictEntity implements java.io.Serializable, JSONable {
 	@Column(name = "SORTNO_")
 	protected int sortNo;
 
+	/**
+	 *  «∑Ò∆Ù”√
+	 */
+	@Column(name = "LOCKED_")
+	protected int locked;
+
+	@Column(name = "CREATEBY_", length = 50)
+	protected String createBy;
+
 	public DistrictEntity() {
 
 	}
@@ -66,12 +75,20 @@ public class DistrictEntity implements java.io.Serializable, JSONable {
 		return code;
 	}
 
+	public String getCreateBy() {
+		return createBy;
+	}
+
 	public long getId() {
 		return id;
 	}
 
 	public int getLevel() {
 		return level;
+	}
+
+	public int getLocked() {
+		return locked;
 	}
 
 	public String getName() {
@@ -98,12 +115,20 @@ public class DistrictEntity implements java.io.Serializable, JSONable {
 		this.code = code;
 	}
 
+	public void setCreateBy(String createBy) {
+		this.createBy = createBy;
+	}
+
 	public void setId(long id) {
 		this.id = id;
 	}
 
 	public void setLevel(int level) {
 		this.level = level;
+	}
+
+	public void setLocked(int locked) {
+		this.locked = locked;
 	}
 
 	public void setName(String name) {

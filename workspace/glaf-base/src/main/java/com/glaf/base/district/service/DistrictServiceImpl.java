@@ -20,12 +20,10 @@ package com.glaf.base.district.service;
 
 import java.util.*;
 
- 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -55,8 +53,16 @@ public class DistrictServiceImpl implements DistrictService {
 
 	}
 
+	public void deleteById(long id) {
+		DistrictQuery query = new DistrictQuery();
+		query.parentId(id);
+		List<DistrictEntity> children = this.list(query);
+		if (children == null || children.isEmpty()) {
+			districtMapper.deleteDistrictById(id);
+		}
+	}
+
 	public int count(DistrictQuery query) {
-		query.ensureInitialized();
 		return districtMapper.getDistrictCount(query);
 	}
 
@@ -96,16 +102,28 @@ public class DistrictServiceImpl implements DistrictService {
 	}
 
 	public List<DistrictEntity> list(DistrictQuery query) {
-		query.ensureInitialized();
 		List<DistrictEntity> list = districtMapper.getDistricts(query);
 		return list;
 	}
 
+	public List<DistrictEntity> getDistrictList(long parentId) {
+		DistrictQuery query = new DistrictQuery();
+		query.parentId(parentId);
+		return list(query);
+	}
+
 	@Transactional
 	public void save(DistrictEntity district) {
-		if (district.getId()==0) {
+		if (district.getId() == 0) {
+			district.setLevel(1);
 			district.setId(idGenerator.nextId());
-			
+			if (district.getParentId() != 0) {
+				DistrictEntity parent = this
+						.getDistrict(district.getParentId());
+				if (parent != null) {
+					district.setLevel(parent.getLevel() + 1);
+				}
+			}
 			districtMapper.insertDistrict(district);
 		} else {
 			DistrictEntity model = this.getDistrict(district.getId());

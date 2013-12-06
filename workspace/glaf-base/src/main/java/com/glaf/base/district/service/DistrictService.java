@@ -29,6 +29,9 @@ import com.glaf.base.district.query.*;
 
 @Transactional(readOnly = true)
 public interface DistrictService {
+	
+	
+	void deleteById(long id);
 
 	/**
 	 * 根据主键获取一条记录
@@ -62,6 +65,8 @@ public interface DistrictService {
 	 * @return
 	 */
 	List<DistrictEntity> list(DistrictQuery query);
+	
+	List<DistrictEntity>  getDistrictList(long parentId);
 
 	/**
 	 * 保存一条记录
