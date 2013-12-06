@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.base.district.mapper.DistrictMapper">
+
+	<resultMap id="districtResultMap" type="com.glaf.base.district.domain.DistrictEntity">
+		<id property="id" column="ID_" jdbcType="BIGINT" />
+		<result property="parentId" column="PARENTID_" jdbcType="BIGINT" />
+		<result property="name" column="NAME_" jdbcType="VARCHAR" />
+		<result property="code" column="CODE_" jdbcType="VARCHAR" />
+		<result property="level" column="LEVEL_" jdbcType="INTEGER" />
+		<result property="useType" column="USETYPE_" jdbcType="VARCHAR" />
+		<result property="sortNo" column="SORTNO_" jdbcType="INTEGER" />
+	</resultMap>
+
+	<resultMap id="districtTreeResultMap" type="com.glaf.core.base.BaseTree">
+		<id property="id" column="ID_" jdbcType="BIGINT" />
+		<result property="parentId" column="PARENTID_" jdbcType="BIGINT" />
+		<result property="name" column="NAME_" jdbcType="VARCHAR" />
+		<result property="code" column="CODE_" jdbcType="VARCHAR" />
+		<result property="level" column="LEVEL_" jdbcType="INTEGER" />
+		<result property="sortNo" column="SORTNO_" jdbcType="INTEGER" />
+	</resultMap>
+
+
+	<insert id="insertDistrict" parameterType="com.glaf.base.district.domain.DistrictEntity">
+		insert into SYS_DISTRICT
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ID_
+			<if test="parentId != null">
+				,PARENTID_
+			</if>
+			<if test="name != null">
+				,NAME_
+			</if>
+			<if test="code != null">
+				,CODE_
+			</if>
+			<if test="level != null">
+				,LEVEL_
+			</if>
+			<if test="useType != null">
+				,USETYPE_
+			</if>
+			<if test="sortNo != null">
+				,SORTNO_
+			</if>
+		</trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			#{id, jdbcType=BIGINT}
+
+			<if test="parentId != null">
+				,#{parentId, jdbcType=BIGINT}
+			</if>
+			<if test="name != null">
+				,#{name, jdbcType=VARCHAR}
+			</if>
+			<if test="code != null">
+				,#{code, jdbcType=VARCHAR}
+			</if>
+			<if test="level != null">
+				,#{level, jdbcType=INTEGER}
+			</if>
+			<if test="useType != null">
+				,#{useType, jdbcType=VARCHAR}
+			</if>
+			<if test="sortNo != null">
+				,#{sortNo, jdbcType=INTEGER}
+			</if>
+		</trim>
+	</insert>
+
+
+	<update id="updateDistrict" parameterType="com.glaf.base.district.domain.DistrictEntity">
+		update
+		SYS_DISTRICT
+		set
+		<trim prefix="" suffix="" suffixOverrides=",">
+			<if test="name != null">
+				NAME_ = #{name, jdbcType=VARCHAR},
+			</if>
+			<if test="code != null">
+				CODE_ = #{code, jdbcType=VARCHAR},
+			</if>
+			<if test="useType != null">
+				USETYPE_ = #{useType, jdbcType=VARCHAR},
+			</if>
+			<if test="sortNo != null">
+				SORTNO_ = #{sortNo, jdbcType=INTEGER},
+			</if>
+		</trim>
+		where
+		ID_ = #{id, jdbcType=BIGINT}
+
+	</update>
+
+
+	<delete id="deleteDistrictById" parameterType="long">
+		delete from
+		SYS_DISTRICT
+		where ID_ = #{id}
+	</delete>
+
+
+	<delete id="deleteDistricts" parameterType="com.glaf.base.district.query.DistrictQuery">
+		delete from SYS_DISTRICT
+		where ( ID_ IN
+		<foreach item="x_rowId" index="index" collection="rowIds"
+			open="(" separator="," close=")">
+			#{x_rowId}
+		</foreach>
+		)
+	</delete>
+
+
+	<select id="getDistrictById" parameterType="long" resultMap="districtResultMap">
+		select * from SYS_DISTRICT where ID_ = #{id}
+	</select>
+
+
+	<select id="getDistricts" parameterType="com.glaf.base.district.query.DistrictQuery"
+		resultMap="districtResultMap">
+		select E.*
+		<include refid="selectDistrictsSql" />
+		<if test="orderBy != null">
+			order by ${orderBy}
+		</if>
+	</select>
+
+	<select id="getDistrictCount" parameterType="com.glaf.base.district.query.DistrictQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectDistrictsSql" />
+	</select>
+
+	<select id="getDistrictTreeModels" parameterType="com.glaf.base.district.query.TreeModelQuery"
+		resultMap="districtTreeResultMap">
+		select E.*
+		<include refid="selectDistrictTreesSql" />
+		<if test="orderBy != null">
+			order by ${orderBy}
+		</if>
+	</select>
+
+	<select id="getDistrictTreeModelCount" parameterType="com.glaf.base.district.query.TreeModelQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectDistrictTreesSql" />
+	</select>
+
+	<sql id="selectDistrictsSql">
+
+		from SYS_DISTRICT E
+
+		<where>
+
+			1 = 1
+
+			<if test="parentId != null ">
+				and E.PARENTID_ = #{parentId}
+			</if>
+
+			<if test="nameLike != null and nameLike != '' ">
+				and E.NAME_ like #{nameLike}
+			</if>
+
+			<if test="useType != null and useType != '' ">
+				and E.USETYPE_ = #{useType}
+			</if>
+
+		</where>
+	</sql>
+
+	<sql id="selectDistrictTreesSql">
+
+		from SYS_DISTRICT E
+
+		<where>
+
+			1 = 1
+
+			<if test="parentId != null ">
+				and E.PARENTID_ = #{parentId}
+			</if>
+
+			<if test="nameLike != null and nameLike != '' ">
+				and E.NAME_ like #{nameLike}
+			</if>
+
+		</where>
+	</sql>
+
+
+</mapper>
