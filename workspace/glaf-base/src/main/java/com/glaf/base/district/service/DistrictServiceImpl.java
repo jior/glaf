@@ -79,6 +79,15 @@ public class DistrictServiceImpl implements DistrictService {
 	}
 
 	/**
+	 * 根据编码获取一条记录
+	 * 
+	 * @return
+	 */
+	public DistrictEntity getDistrictByCode(String code) {
+		return districtMapper.getDistrictByCode(code);
+	}
+
+	/**
 	 * 根据查询参数获取记录总数
 	 * 
 	 * @return

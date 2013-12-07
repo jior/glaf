@@ -39,6 +39,13 @@ public interface DistrictService {
 	 * @return
 	 */
 	DistrictEntity getDistrict(Long id);
+	
+	/**
+	 * 根据编码获取一条记录
+	 * 
+	 * @return
+	 */
+	DistrictEntity getDistrictByCode(String code);
 
 	/**
 	 * 根据查询参数获取记录总数

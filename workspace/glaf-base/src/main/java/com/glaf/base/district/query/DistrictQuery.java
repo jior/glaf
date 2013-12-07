@@ -18,14 +18,22 @@
 
 package com.glaf.base.district.query;
 
+import java.util.List;
+
 import com.glaf.core.query.DataQuery;
 
 public class DistrictQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;
 
+	protected List<String> treeIds;
+
 	protected String nameLike;
 
 	protected String useType;
+
+	protected Integer sortGreaterThanOrEqual;
+
+	protected Integer sortLessThanOrEqual;
 
 	public DistrictQuery() {
 
@@ -57,6 +65,22 @@ public class DistrictQuery extends DataQuery {
 		return orderBy;
 	}
 
+	public Integer getSortGreaterThanOrEqual() {
+		return sortGreaterThanOrEqual;
+	}
+
+	public Integer getSortLessThanOrEqual() {
+		return sortLessThanOrEqual;
+	}
+
+	public String getSortOrder() {
+		return sortOrder;
+	}
+
+	public List<String> getTreeIds() {
+		return treeIds;
+	}
+
 	public String getUseType() {
 		return useType;
 	}
@@ -73,10 +97,6 @@ public class DistrictQuery extends DataQuery {
 		addColumn("sortNo", "SORTNO_");
 	}
 
-	public String getSortOrder() {
-		return sortOrder;
-	}
-
 	public DistrictQuery nameLike(String nameLike) {
 		if (nameLike == null) {
 			throw new RuntimeException("name is null");
@@ -89,8 +109,20 @@ public class DistrictQuery extends DataQuery {
 		this.nameLike = nameLike;
 	}
 
+	public void setSortGreaterThanOrEqual(Integer sortGreaterThanOrEqual) {
+		this.sortGreaterThanOrEqual = sortGreaterThanOrEqual;
+	}
+
+	public void setSortLessThanOrEqual(Integer sortLessThanOrEqual) {
+		this.sortLessThanOrEqual = sortLessThanOrEqual;
+	}
+
 	public void setSortOrder(String sortOrder) {
 		this.sortOrder = sortOrder;
+	}
+
+	public void setTreeIds(List<String> treeIds) {
+		this.treeIds = treeIds;
 	}
 
 	public void setUseType(String useType) {

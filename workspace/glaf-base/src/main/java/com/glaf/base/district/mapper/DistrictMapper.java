@@ -35,6 +35,8 @@ public interface DistrictMapper {
 	void deleteDistrictById(Long id);
 
 	DistrictEntity getDistrictById(Long id);
+	
+	DistrictEntity getDistrictByCode(String code);
 
 	int getDistrictCount(DistrictQuery query);
 

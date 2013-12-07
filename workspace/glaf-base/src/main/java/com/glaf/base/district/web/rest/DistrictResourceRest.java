@@ -28,7 +28,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -43,8 +42,6 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.base.BaseTree;
 import com.glaf.core.base.TreeModel;
-import com.glaf.core.identity.User;
-import com.glaf.core.security.IdentityFactory;
 import com.glaf.core.tree.helper.TreeHelper;
 import com.glaf.core.util.PageResult;
 import com.glaf.core.util.ParamUtils;
@@ -71,11 +68,9 @@ public class DistrictResourceRest {
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		DistrictQuery query = new DistrictQuery();
 		Tools.populate(query, params);
-		String uri = request.getRequestURI();
-		String id = uri.substring(uri.lastIndexOf("/") + 1);
-		Long userId = Long.parseLong(id);
-		User user = IdentityFactory.getUserByUserId(userId);
-		query.createBy(user.getActorId());
+
+		Long parentId = RequestUtils.getLong(request, "parentId", 0);
+		query.parentId(parentId);
 
 		String gridType = ParamUtils.getString(params, "gridType");
 		if (gridType == null) {
@@ -150,11 +145,11 @@ public class DistrictResourceRest {
 
 	@GET
 	@POST
-	@Path("/treeJson/{accountId}")
+	@Path("/treeJson")
 	@ResponseBody
 	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
-	public byte[] treeJson(@PathParam("accountId") Long accountId,
-			@Context HttpServletRequest request) throws IOException {
+	public byte[] treeJson(@Context HttpServletRequest request)
+			throws IOException {
 		JSONArray array = new JSONArray();
 
 		Long parentId = RequestUtils.getLong(request, "parentId", 0);

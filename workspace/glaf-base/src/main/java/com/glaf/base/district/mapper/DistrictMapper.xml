@@ -117,7 +117,7 @@
 				LOCKED_ = #{locked, jdbcType=INTEGER},
 			</if>
 			<if test="treeId != null">
-				TREEID = #{treeId, jdbcType=VARCHAR},
+				TREEID_ = #{treeId, jdbcType=VARCHAR},
 			</if>
 		</trim>
 		where
@@ -147,15 +147,25 @@
 	<select id="getDistrictById" parameterType="long" resultMap="districtResultMap">
 		select * from SYS_DISTRICT where ID_ = #{id}
 	</select>
+	
+	
+	<select id="getDistrictByCode" parameterType="string" resultMap="districtResultMap">
+		select * from SYS_DISTRICT where CODE_ = #{code}
+	</select>
 
 
 	<select id="getDistricts" parameterType="com.glaf.base.district.query.DistrictQuery"
 		resultMap="districtResultMap">
 		select E.*
 		<include refid="selectDistrictsSql" />
-		<if test="orderBy != null">
-			order by ${orderBy}
-		</if>
+		<choose>
+			<when test="orderBy != null">
+				order by ${orderBy}
+			</when>
+			<otherwise>
+				order by E.SORTNO_ desc
+			</otherwise>
+		</choose>
 	</select>
 
 	<select id="getDistrictCount" parameterType="com.glaf.base.district.query.DistrictQuery"
@@ -168,9 +178,14 @@
 		resultMap="districtTreeResultMap">
 		select E.*
 		<include refid="selectDistrictTreesSql" />
-		<if test="orderBy != null">
-			order by ${orderBy}
-		</if>
+		<choose>
+			<when test="orderBy != null">
+				order by ${orderBy}
+			</when>
+			<otherwise>
+				order by E.SORTNO_ desc
+			</otherwise>
+		</choose>
 	</select>
 
 	<select id="getDistrictTreeModelCount" parameterType="com.glaf.core.query.TreeModelQuery"
@@ -191,6 +206,14 @@
 				and E.PARENTID_ = #{parentId}
 			</if>
 
+			<if test="parentIds != null and parentIds.size !=0">
+				and E.PARENTID_ IN
+				<foreach item="x_parentId" index="index" collection="parentIds"
+					open="(" separator="," close=")">
+					#{x_parentId}
+				</foreach>
+			</if>
+			
 			<if test="locked != null">
 				and E.LOCKED_ = #{locked}
 			</if>
@@ -199,8 +222,36 @@
 				and E.NAME_ like #{nameLike}
 			</if>
 
+			<if test="treeId != null and treeId != '' ">
+				and E.TREEID_ = #{treeId}
+			</if>
+
+			<if test="treeIdLike != null and treeIdLike != '' ">
+				and E.TREEID_ like #{treeIdLike}
+			</if>
+
+			<if test="treeIds != null and treeIds.size !=0">
+				and E.TREEID_ IN
+				<foreach item="x_treeId" index="index" collection="treeIds"
+					open="(" separator="," close=")">
+					#{x_treeId}
+				</foreach>
+			</if>
+
+			<if test="sortGreaterThanOrEqual != null">
+				and E.SORTNO_ &gt;= #{sortGreaterThanOrEqual}
+			</if>
+
+			<if test="sortLessThanOrEqual != null">
+				and E.SORTNO_ &lt;= #{sortLessThanOrEqual}
+			</if>
+
 			<if test="useType != null and useType != '' ">
 				and E.USETYPE_ = #{useType}
+			</if>
+
+			<if test="createBy != null and createBy != '' ">
+				and E.CREATEBY_ = #{createBy}
 			</if>
 
 		</where>
@@ -218,8 +269,40 @@
 				and E.PARENTID_ = #{parentId}
 			</if>
 
+			<if test="parentIds != null and parentIds.size !=0">
+				and E.PARENTID_ IN
+				<foreach item="x_parentId" index="index" collection="parentIds"
+					open="(" separator="," close=")">
+					#{x_parentId}
+				</foreach>
+			</if>
+			
+			<if test="locked != null">
+				and E.LOCKED_ = #{locked}
+			</if>
+
+			<if test="treeId != null and treeId != '' ">
+				and E.TREEID_ = #{treeId}
+			</if>
+
+			<if test="treeIdLike != null and treeIdLike != '' ">
+				and E.TREEID_ like #{treeIdLike}
+			</if>
+
+			<if test="treeIds != null and treeIds.size !=0">
+				and E.TREEID_ IN
+				<foreach item="x_treeId" index="index" collection="treeIds"
+					open="(" separator="," close=")">
+					#{x_treeId}
+				</foreach>
+			</if>
+
 			<if test="nameLike != null and nameLike != '' ">
 				and E.NAME_ like #{nameLike}
+			</if>
+
+			<if test="createBy != null and createBy != '' ">
+				and E.CREATEBY_ = #{createBy}
 			</if>
 
 		</where>

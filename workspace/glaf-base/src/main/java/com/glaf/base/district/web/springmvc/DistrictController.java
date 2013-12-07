@@ -115,6 +115,13 @@ public class DistrictController {
 				districts.remove(district);
 			}
 		}
+		if (parentId > 0) {
+			DistrictEntity parent = districtService.getDistrict(parentId);
+			if (districts == null) {
+				districts = new ArrayList<DistrictEntity>();
+			}
+			districts.add(parent);
+		}
 
 		request.setAttribute("districts", districts);
 
@@ -137,7 +144,7 @@ public class DistrictController {
 			throws IOException {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		logger.debug("params:"+params);
+		logger.debug("params:" + params);
 		DistrictQuery query = new DistrictQuery();
 		Tools.populate(query, params);
 		query.deleteFlag(0);
@@ -324,7 +331,7 @@ public class DistrictController {
 			logger.debug("treeModels:" + treeModels.size());
 			TreeHelper treeHelper = new TreeHelper();
 			JSONArray jsonArray = treeHelper.getTreeJSONArray(treeModels);
-			for(int i=0,len = jsonArray.size();i<len;i++){
+			for (int i = 0, len = jsonArray.size(); i < len; i++) {
 				JSONObject json = jsonArray.getJSONObject(i);
 				json.put("isParent", true);
 			}

@@ -88,7 +88,7 @@ limitations under the License.
 					   if(data != null && data.message != null){
 						   alert(data.message);
 					   } else {
-						 alert('操作成功完成！');
+						   alert('操作成功完成！');
 					   }
 				   }
 			 });
@@ -121,7 +121,6 @@ limitations under the License.
   <div data-options="region:'center',border:false,cache:true">
   <form id="iForm" name="iForm" method="post">
   <input type="hidden" id="id" name="id" value="${district.id}"/>
-  <input type="hidden" id="accountId" name="accountId" value="${accountId}"/>
   <c:choose>
 	<c:when test="${!empty district }">
        <input type="hidden" id="parentId" name="parentId" value="${district.parentId}"/>
@@ -158,7 +157,14 @@ limitations under the License.
 			%>
 			</select>
 			<script language="javascript">
-			  document.all.parent.value="${district.parentId}";	
+			  <c:choose>
+				<c:when test="${!empty district }">
+				    document.all.parent.value="${district.parentId}";	
+				</c:when>
+				<c:otherwise>
+				   document.all.parent.value="${parentId}";	
+				</c:otherwise>
+			  </c:choose>
 			</script>
 		</td>
 	</tr>
