@@ -163,6 +163,9 @@ public class DistrictResourceRest {
 			List<TreeModel> treeModels = new ArrayList<TreeModel>();
 			List<Long> districtIds = new ArrayList<Long>();
 			for (DistrictEntity district : districts) {
+				if(district.getLocked()!=0){
+					continue;
+				}
 				TreeModel tree = new BaseTree();
 				tree.setId(district.getId());
 				tree.setParentId(district.getParentId());
