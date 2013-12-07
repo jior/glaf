@@ -42,6 +42,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.base.BaseTree;
 import com.glaf.core.base.TreeModel;
+import com.glaf.core.security.LoginContext;
 import com.glaf.core.tree.helper.TreeHelper;
 import com.glaf.core.util.PageResult;
 import com.glaf.core.util.ParamUtils;
@@ -68,6 +69,10 @@ public class DistrictResourceRest {
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		DistrictQuery query = new DistrictQuery();
 		Tools.populate(query, params);
+		LoginContext loginContext = RequestUtils.getLoginContext(request);
+		if (!loginContext.isSystemAdministrator()) {
+			query.createBy(loginContext.getActorId());
+		}
 
 		Long parentId = RequestUtils.getLong(request, "parentId", 0);
 		query.parentId(parentId);
@@ -163,7 +168,7 @@ public class DistrictResourceRest {
 			List<TreeModel> treeModels = new ArrayList<TreeModel>();
 			List<Long> districtIds = new ArrayList<Long>();
 			for (DistrictEntity district : districts) {
-				if(district.getLocked()!=0){
+				if (district.getLocked() != 0) {
 					continue;
 				}
 				TreeModel tree = new BaseTree();

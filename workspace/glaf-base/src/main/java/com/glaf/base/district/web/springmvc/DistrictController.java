@@ -151,7 +151,9 @@ public class DistrictController {
 		query.setActorId(loginContext.getActorId());
 		query.setLoginContext(loginContext);
 		String actorId = loginContext.getActorId();
-		query.createBy(actorId);
+		if (!loginContext.isSystemAdministrator()) {
+			query.createBy(actorId);
+		}
 
 		Long parentId = RequestUtils.getLong(request, "parentId", 0);
 		query.parentId(parentId);
@@ -317,7 +319,7 @@ public class DistrictController {
 			List<TreeModel> treeModels = new ArrayList<TreeModel>();
 			List<Long> districtIds = new ArrayList<Long>();
 			for (DistrictEntity district : districts) {
-				if(district.getLocked()!=0){
+				if (district.getLocked() != 0) {
 					continue;
 				}
 				TreeModel tree = new BaseTree();
