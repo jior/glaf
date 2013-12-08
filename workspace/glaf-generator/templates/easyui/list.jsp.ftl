@@ -66,13 +66,13 @@
 
 		 
 	function addNew(){
-	    var link="<%=request.getContextPath()%>/mx/${classDefinition.moduleName}/${modelName}/edit?fromUrl=${fromUrl}";
+	    var link="<%=request.getContextPath()%>/mx/${classDefinition.moduleName}/${modelName}/edit?fromUrl=#F{fromUrl}";
 	    //art.dialog.open(link, { height: 420, width: 680, title: "添加记录", lock: true, scrollbars:"no" }, false);
 		location.href=link;
 	}
 
 	function onRowClick(rowIndex, row){
-	    var link = '<%=request.getContextPath()%>/mx/${classDefinition.moduleName}/${modelName}/edit?${idField.name}='+row.id+'&fromUrl=${fromUrl}';
+	    var link = '<%=request.getContextPath()%>/mx/${classDefinition.moduleName}/${modelName}/edit?${idField.name}='+row.id+'&fromUrl=#F{fromUrl}';
 	    //art.dialog.open(link, { height: 420, width: 680, title: "修改记录", lock: true, scrollbars:"no" }, false);
 		location.href=link;
 	}
@@ -97,7 +97,7 @@
 	    }
 	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
 	    if (selected ){
-		  var link = '<%=request.getContextPath()%>/mx/${classDefinition.moduleName}/${modelName}/edit?${idField.name}='+selected.id+'&fromUrl=${fromUrl}';
+		  var link = '<%=request.getContextPath()%>/mx/${classDefinition.moduleName}/${modelName}/edit?${idField.name}='+selected.id+'&fromUrl=#F{fromUrl}';
 		  //art.dialog.open(link, { height: 420, width: 680, title: "修改记录", lock: true, scrollbars:"no" }, false);
 		  location.href=link;
 	    }
@@ -111,7 +111,7 @@
 		}
 		var selected = jQuery('#mydatagrid').datagrid('getSelected');
 		if (selected ){
-		    location.href='<%=request.getContextPath()%>/mx/${classDefinition.moduleName}/${modelName}/edit?readonly=true&${idField.name}='+selected.id+'&fromUrl=${fromUrl}';
+		    location.href='<%=request.getContextPath()%>/mx/${classDefinition.moduleName}/${modelName}/edit?readonly=true&${idField.name}='+selected.id+'&fromUrl=#F{fromUrl}';
 		}
 	}
 
