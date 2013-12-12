@@ -42,20 +42,17 @@
 	  $('recverIds').value = '';
 	  //$('toEmail').value='';
 	if (recverType == 0) {
-	 
 	  $('add_user').disabled = false;
-	  $('add_supplier').disabled = true;
+	  //$('add_supplier').disabled = true;
 	  $('add_dept').disabled = true;
 	} else if(recverType ==1){
-	
 	  $('add_user').disabled = true;
 	  $('add_dept').disabled = false;
-	  $('add_supplier').disabled = true;
+	  //$('add_supplier').disabled = true;
 	} else if(recverType == 2){
-	
 	  $('add_user').disabled = true;
 	  $('add_dept').disabled = true;
-	  $('add_supplier').disabled = false;
+	  //$('add_supplier').disabled = false;
 	}
 }
 
@@ -104,11 +101,11 @@ function saveAndSend(form, type){
 		    <input id="recverName" name="recverName" type="text" class="input" size="45" value="<%= recverName %>" readonly="readonly" datatype="string" nullable="no" chname="接收人">
             <input id="recverIds" name="recverIds" type="hidden" value="<%= recverIds %>">
             
-            <input name="recverType" type="radio" value="0" checked onClick="changeSelect()">
+            <input name="recverType" type="radio" value="0" checked onClick="javascript:changeSelect()">
             <input name="add_user" type="button" class="button" value="选择用户"
 			       onclick="javascript:selectUser('iForm', 'recverIds','recverName');">
-            <input type="radio" name="recverType" value="1" onClick="changeSelect()">
-            <input name="add_dept" type="button" class="button" value="选择部门"  disabled="disabled"
+            <input type="radio" name="recverType" value="1" onClick="javascript:changeSelect()">
+            <input name="add_dept" type="button" class="button" value="选择部门"  
 			       onclick="javascript:selectDept('iForm', 'recverIds','recverName');">
      
          </td>
@@ -120,7 +117,7 @@ function saveAndSend(form, type){
       </tr> -->
       <tr>
         <td class="input-box">主&nbsp;&nbsp;题 <font color="#FF0000">*</font></td>
-        <td><input name="title" type="text" class="input" size="105" maxlength="250" value="<%= title %>" datatype="string" nullable="no" chname="标题" maxsize="50"></td>
+        <td><input name="title" type="text" class="input" size="85" maxlength="250" value="<%= title %>" datatype="string" nullable="no" chname="标题" maxsize="50"></td>
       </tr>
       <tr>
         <td valign="top" class="input-box2">内&nbsp;&nbsp;容 <font color="#FF0000">*</font></td>

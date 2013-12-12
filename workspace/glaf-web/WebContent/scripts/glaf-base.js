@@ -62,6 +62,7 @@ function selectDept(formName, elementId, elementName){
     if(x_selected != null && x_selected.value != ""){
 	    url = url + "&selecteds="+x_selected.value;
     }
+	alert(url);
     var x=150;
     var y=50;
     if(is_ie) {
