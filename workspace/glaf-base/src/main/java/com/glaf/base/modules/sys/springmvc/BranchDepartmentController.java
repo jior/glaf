@@ -105,7 +105,9 @@ public class BranchDepartmentController {
 				}
 			}
 		}
-		query.nodeIds(nodeIds);
+		if (!RequestUtils.getLoginContext(request).isSystemAdministrator()) {
+			query.nodeIds(nodeIds);
+		}
 
 		String gridType = ParamUtils.getString(params, "gridType");
 		if (gridType == null) {
