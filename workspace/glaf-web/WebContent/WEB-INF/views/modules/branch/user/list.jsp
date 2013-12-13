@@ -32,8 +32,6 @@
 				striped: true,
 				collapsible:true,
 				url:'<%=request.getContextPath()%>/branch/user.do?method=json&parent=${parent}&deptId=${deptId}',
-				sortName: 'id',
-				sortOrder: 'desc',
 				remoteSort: false,
 				singleSelect:true,
 				idField:'id',

@@ -86,8 +86,6 @@
 				striped: true,
 				collapsible:true,
 				url:'<%=request.getContextPath()%>/branch/department.do?method=json',
-				sortName: 'id',
-				sortOrder: 'desc',
 				remoteSort: false,
 				singleSelect:true,
 				idField:'id',
