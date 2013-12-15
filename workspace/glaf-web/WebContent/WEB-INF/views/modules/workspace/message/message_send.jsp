@@ -56,18 +56,18 @@
 	}
 }
 
-function saveAndSend(form, type){
-    if($('recverName').value==''){
+function saveAndSend(type){
+    if(document.getElementById('recverName').value==''){
         alert("请选择收件人");
         return false;
     }
-    if($('title').value==''){
+    if(document.getElementById('title').value==''){
         alert("主题不能为空");
         return false;
     }
 	document.getElementById("content").value=KE.html('content');
-    form.action= "<%=request.getContextPath()%>/workspace/message.do?method=saveAndSend&messageType="+type;
-    form.submit();
+    document.getElementById("iForm").action= "<%=request.getContextPath()%>/workspace/message.do?method=saveAndSend&messageType="+type;
+    document.getElementById("iForm").submit();
 }
 
 </script>
@@ -126,9 +126,12 @@ function saveAndSend(form, type){
       <tr>
         <td valign="top">&nbsp;</td>
         <td>
-		    <input name="btn_save" type="button" class="button" value="发送系统消息"  onClick="saveAndSend(this.form, 'msg')">
-            <input name="btn_email" type="button" class="button" value="发送Email"  onClick="saveAndSend(this.form, 'email')">
-            <input name="btn_both" type="button" class="button" value="双发送"  onClick="saveAndSend(this.form, 'both')">
+		    <input name="btn_save" type="button" class="button" value="发送系统消息"  
+			       onClick="javascript:saveAndSend('msg')">
+            <input name="btn_email" type="button" class="button" value="发送Email"  
+			       onClick="javascript:saveAndSend('email')">
+            <input name="btn_both" type="button" class="button" value="双发送"  
+			       onClick="javascript:saveAndSend('both')">
         </td>
       </tr>
     </table>
