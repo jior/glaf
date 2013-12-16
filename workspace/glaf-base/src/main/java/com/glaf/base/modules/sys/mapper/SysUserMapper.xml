@@ -49,6 +49,9 @@
 			<if test="password != null">
 				,PASSWORD
 			</if>
+			<if test="lastChangePasswordDate != null">
+				,LASTCHANGEPASSWORDDATE
+			</if>
 			<if test="code != null">
 				,CODE
 			</if>
@@ -125,6 +128,9 @@
 			</if>
 			<if test="password != null">
 				,#{password, jdbcType=VARCHAR}
+			</if>
+			<if test="lastChangePasswordDate != null">
+				,#{lastChangePasswordDate, jdbcType=VARCHAR}
 			</if>
 			<if test="code != null">
 				,#{code, jdbcType=VARCHAR}
