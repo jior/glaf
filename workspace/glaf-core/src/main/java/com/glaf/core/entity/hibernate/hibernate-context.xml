@@ -7,7 +7,7 @@
 
 	<bean id="dataSource" class="com.glaf.core.jdbc.datasource.MultiRoutingDataSource" />
 
-	<bean id="hibernateSessionFactory"
+	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
 		<property name="dataSource">
 			<ref bean="dataSource" />
