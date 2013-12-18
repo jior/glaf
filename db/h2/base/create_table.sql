@@ -1,14 +1,14 @@
  
 
 
-CREATE TABLE sys_access(
+CREATE TABLE SYS_ACCESS(
         roleid bigint NOT NULL,
         appid bigint NOT NULL,
         PRIMARY KEY (roleid, appid)
 );
 
 
-CREATE TABLE sys_application(
+CREATE TABLE SYS_APPLICATION(
         id bigint   NOT NULL,
         name varchar(255),
 	code varchar(255),
@@ -22,7 +22,7 @@ CREATE TABLE sys_application(
 );
 
 
-CREATE TABLE sys_department(
+CREATE TABLE SYS_DEPARTMENT(
         id bigint   NOT NULL,
         name varchar(255),
         deptdesc varchar(255),
@@ -37,7 +37,7 @@ CREATE TABLE sys_department(
         PRIMARY KEY (id)
 );
 
-CREATE TABLE sys_dept_role(
+CREATE TABLE SYS_DEPT_ROLE(
         id bigint   NOT NULL,
         grade int,
         code varchar(255),
@@ -47,7 +47,7 @@ CREATE TABLE sys_dept_role(
         PRIMARY KEY (id)
 );
 
-CREATE TABLE sys_function(
+CREATE TABLE SYS_FUNCTION(
         id bigint   NOT NULL,
         name varchar(255),
 	code varchar(50),
@@ -58,7 +58,7 @@ CREATE TABLE sys_function(
         PRIMARY KEY (id)
 );
 
-CREATE TABLE sys_log(
+CREATE TABLE SYS_LOG(
         id bigint   NOT NULL,
         account varchar(255),
         ip varchar(255),
@@ -68,13 +68,13 @@ CREATE TABLE sys_log(
         PRIMARY KEY (id)
 );
 
-CREATE TABLE sys_permission (
+CREATE TABLE SYS_PERMISSION (
         roleid bigint NOT NULL,
         funcid bigint NOT NULL,
         PRIMARY KEY (roleid, funcid)
  );
 
-CREATE TABLE sys_role(
+CREATE TABLE SYS_ROLE(
         id bigint   NOT NULL,
         name varchar(255),
         roledesc varchar(255),
@@ -84,7 +84,7 @@ CREATE TABLE sys_role(
 );
 
 
-CREATE TABLE sys_tree (
+CREATE TABLE SYS_TREE (
         id bigint   NOT NULL,
         parent bigint,
         name varchar(255),
@@ -102,7 +102,7 @@ CREATE TABLE sys_tree (
         PRIMARY KEY (id)
 );
 
-CREATE TABLE sys_user (
+CREATE TABLE SYS_USER (
         id bigint   NOT NULL,
         account varchar(255),
         password varchar(255),
@@ -131,7 +131,7 @@ CREATE TABLE sys_user (
         PRIMARY KEY (id)
 );
 
-CREATE TABLE sys_user_role (
+CREATE TABLE SYS_USER_ROLE (
         id bigint   not null,
         userid bigint default 0,
         roleid bigint default 0,
@@ -143,7 +143,7 @@ CREATE TABLE sys_user_role (
         PRIMARY KEY (id)
 );
 
-CREATE TABLE sys_dictory (
+CREATE TABLE SYS_DICTORY (
         id bigint    not null,
         typeId bigint,
         name varchar(50),
@@ -177,7 +177,7 @@ CREATE TABLE sys_dictory (
 );
 
 
-create table sys_dictory_def (
+create table SYS_DICTORY_DEF (
         id bigint NOT NULL,
         nodeId bigint,
         name varchar(50),
@@ -191,7 +191,7 @@ create table sys_dictory_def (
         PRIMARY KEY (id)
 );
 
-CREATE TABLE sys_workcalendar (
+CREATE TABLE SYS_WORKCALENDAR (
         id bigint   NOT NULL,
         freeday int,
         freemonth int,
@@ -200,7 +200,7 @@ CREATE TABLE sys_workcalendar (
 );
 
 
-CREATE TABLE sys_todo(
+CREATE TABLE SYS_TODO(
         id bigint NOT NULL,
         code varchar(255),
         content varchar(255),
@@ -232,7 +232,7 @@ CREATE TABLE sys_todo(
         PRIMARY KEY (id)
     );
 
-CREATE TABLE sys_todo_instance(
+CREATE TABLE SYS_TODO_INSTANCE(
         id bigint   NOT NULL,
         actorid varchar(255),
         actorname varchar(255),
@@ -262,7 +262,7 @@ CREATE TABLE sys_todo_instance(
         PRIMARY KEY (id)
     );
 
-  CREATE TABLE sys_scheduler (
+  CREATE TABLE SYS_SCHEDULER (
         id varchar(50)  NOT NULL,
 	autoStartup int,
         createBy varchar(255),
@@ -286,7 +286,7 @@ CREATE TABLE sys_todo_instance(
         PRIMARY KEY (id)
     );
 
-CREATE TABLE message(
+CREATE TABLE MESSAGE(
         id bigint   NOT NULL,
         type int,
         sysType int,
@@ -305,7 +305,7 @@ CREATE TABLE message(
         PRIMARY KEY (id)
   );
 
-CREATE TABLE mymenu(
+CREATE TABLE MYMENU(
         id bigint   not null,
         userId bigint,
         title varchar(100),
@@ -318,7 +318,7 @@ CREATE TABLE mymenu(
         PRIMARY KEY (id)
 );
 
-CREATE TABLE subjectcode(
+CREATE TABLE SUBJECTCODE(
         id bigint   not null ,
         parent bigint,
         subjectCode varchar(20),
@@ -342,7 +342,7 @@ CREATE TABLE subjectcode(
     );
 
 
-CREATE TABLE  Attachment (
+CREATE TABLE ATTACHMENT (
 	id bigint    not null ,
 	referId bigint  ,
 	referType int  ,
@@ -358,7 +358,7 @@ CREATE TABLE  Attachment (
 );
 
 
-  CREATE TABLE  MyAudit (
+  CREATE TABLE MYAUDIT (
 	id bigint   not null ,
 	referId bigint ,
 	referType int ,
@@ -377,14 +377,14 @@ CREATE TABLE  Attachment (
 	PRIMARY KEY (id)
 );
 
-create table sys_dbid(
+create table SYS_DBID(
         name_ varchar(50)  not null,
         value_ varchar(255) not null,
         version_ int not null,
         primary key (name_)
 );
 
-create table sys_agent (
+create table SYS_AGENT (
         ID_ varchar(50)  not null,
         AGENTTYPE_ int,
         ASSIGNFROM_ varchar(255) ,
@@ -402,7 +402,7 @@ create table sys_agent (
  );
 
  
-CREATE TABLE sys_property (
+CREATE TABLE SYS_PROPERTY (
         id_ varchar(50) NOT NULL,
         category_ varchar(200),
         description_ varchar(500),
@@ -416,7 +416,7 @@ CREATE TABLE sys_property (
 );
 
 
-create table sys_params(
+create table SYS_PARAMS(
         id varchar(50) not null,
         business_key varchar(200) not null,
         date_val timestamp,
@@ -434,7 +434,7 @@ create table sys_params(
 );
 
 
-create table sys_input_def (
+create table SYS_INPUT_DEF (
         id varchar(50) not null,
         init_value varchar(500),
         input_type varchar(50),
@@ -453,7 +453,7 @@ create table sys_input_def (
 );
 
 
-create table sys_table (
+create table SYS_TABLE (
         tablename_ varchar(50) not null,
         parenttablename_ varchar(50),
         packagename_ varchar(200),
@@ -487,7 +487,7 @@ create table sys_table (
     );
 
 
-    create table sys_column (
+    create table SYS_COLUMN (
         id_ varchar(100) not null,
         queryid_ varchar(50),
         tablename_ varchar(50),
@@ -577,58 +577,58 @@ create table sys_table (
 
     create index SYS_USERROLE_USER on SYS_USER_ROLE (USERID);
 
-    alter table sys_access 
+    alter table SYS_ACCESS 
         add constraint FK_ACCESS_APP 
         foreign key (appId) 
-        references sys_application;
+        references SYS_APPLICATION;
 
-    alter table sys_access 
+    alter table SYS_ACCESS 
         add constraint FK_ACCESS_DEPTROLE 
         foreign key (roleId) 
-        references sys_dept_role;
+        references SYS_DEPT_ROLE;
 
-    alter table sys_application 
+    alter table SYS_APPLICATION 
         add constraint FK_APP_TREE 
         foreign key (nodeId) 
-        references sys_tree;
+        references SYS_TREE;
 
-    alter table sys_department 
+    alter table SYS_DEPARTMENT 
         add constraint FK_DEPT_TREE 
         foreign key (nodeId) 
-        references sys_tree;
+        references SYS_TREE;
 
-    alter table sys_dept_role 
+    alter table SYS_DEPT_ROLE 
         add constraint FK_DEPTROLE_DEPT 
         foreign key (deptId) 
-        references sys_department;
+        references SYS_DEPARTMENT;
 
-    alter table sys_dept_role 
+    alter table SYS_DEPT_ROLE 
         add constraint FK_DEPTROLE_ROLE 
         foreign key (sysRoleId) 
-        references sys_role;
+        references SYS_ROLE;
 
-    alter table sys_function 
+    alter table SYS_FUNCTION 
         add constraint FK_FUN_APP 
         foreign key (appId) 
-        references sys_application;
+        references SYS_APPLICATION;
 
-    alter table sys_permission 
+    alter table SYS_PERMISSION 
         add constraint FK_PERM_DEPTROLE 
         foreign key (roleId) 
-        references sys_dept_role;
+        references SYS_DEPT_ROLE;
 
-    alter table sys_permission 
+    alter table SYS_PERMISSION 
         add constraint FK_PERM_FUN
         foreign key (funcId) 
-        references sys_function;
+        references SYS_FUNCTION;
 
-    alter table sys_user_role 
+    alter table SYS_USER_ROLE 
         add constraint FK_USERROLE_ROLE 
         foreign key (roleId) 
-        references sys_dept_role;
+        references SYS_DEPT_ROLE;
 
-    alter table sys_user_role 
+    alter table SYS_USER_ROLE 
         add constraint FK_USERROLE_USER 
         foreign key (userId) 
-        references sys_user;
+        references SYS_USER;
  
