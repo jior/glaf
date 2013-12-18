@@ -27,7 +27,7 @@ import com.glaf.base.modules.sys.util.SysUserRoleJsonFactory;
 import com.glaf.core.base.JSONable;
 
 @Entity
-@Table(name = "sys_user_role")
+@Table(name = "SYS_USER_ROLE")
 public class SysUserRole implements Serializable, JSONable {
 	private static final long serialVersionUID = 4335486314285694158L;
 

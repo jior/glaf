@@ -33,7 +33,7 @@ import com.glaf.base.modules.sys.util.SysDepartmentJsonFactory;
 import com.glaf.core.base.JSONable;
 
 @Entity
-@Table(name = "sys_department")
+@Table(name = "SYS_DEPARTMENT")
 public class SysDepartment implements Serializable, JSONable {
 	private static final long serialVersionUID = -1700125499848402378L;
 	@javax.persistence.Transient

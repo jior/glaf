@@ -5,7 +5,7 @@
 
 <hibernate-mapping package="com.glaf.base.modules.others.model">
     <class name="Attachment"
-           table="Attachment"
+           table="ATTACHMENT"
            dynamic-update="true"
            dynamic-insert="true">
         <id name="id" type="long" unsaved-value="0">

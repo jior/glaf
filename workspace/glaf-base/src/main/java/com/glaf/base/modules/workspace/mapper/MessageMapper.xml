@@ -20,7 +20,7 @@
 
  
 	<insert id="insertMessage" parameterType="com.glaf.base.modules.workspace.model.Message">
-		insert into Message 
+		insert into MESSAGE 
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 		    ID
 			<if test="type != null">
@@ -93,7 +93,7 @@
 
 	 
 	<update id="updateMessage" parameterType="com.glaf.base.modules.workspace.model.Message">
-		update Message
+		update MESSAGE
 		set
 		<trim prefix="" suffix="" suffixOverrides=",">		
 			<if test="type != null">
@@ -134,13 +134,13 @@
 
  
 	<delete id="deleteMessageById" parameterType="long"> 
-        delete from Message
+        delete from MESSAGE
         where ID =	#{id}
 	</delete>
 
 	
 	<delete id="deleteMessages" parameterType="com.glaf.base.modules.workspace.query.MessageQuery">
-		delete from Message
+		delete from MESSAGE
 		where ( 
  			  ID IN
 		<foreach item="x_rowId" index="index" collection="rowIds" 
@@ -152,7 +152,7 @@
 
 
 	<select id="getMessageById" parameterType="long" resultMap="messageResultMap">
-		select * from Message where ID = #{id}
+		select * from MESSAGE where ID = #{id}
 	</select>
 
 
@@ -182,7 +182,7 @@
 
 	<sql id="selectMessagesSql">
 
-		from Message E
+		from MESSAGE E
 
 		<where>
 		       1 = 1  

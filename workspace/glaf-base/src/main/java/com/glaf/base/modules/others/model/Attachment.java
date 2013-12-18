@@ -30,7 +30,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
 @Entity
-@Table(name = "Attachment")
+@Table(name = "ATTACHMENT")
 public class Attachment implements Serializable, JSONable {
 	private static final long serialVersionUID = 3825200508464771531L;
 	@Id

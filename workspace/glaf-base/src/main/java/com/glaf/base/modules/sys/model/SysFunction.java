@@ -28,7 +28,7 @@ import com.glaf.base.modules.sys.util.SysFunctionJsonFactory;
 import com.glaf.core.base.JSONable;
 
 @Entity
-@Table(name = "sys_function")
+@Table(name = "SYS_FUNCTION")
 public class SysFunction implements Serializable, JSONable {
 	private static final long serialVersionUID = -4669036487930746301L;
 

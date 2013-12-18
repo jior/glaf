@@ -28,7 +28,7 @@
 
 
 	<insert id="insertSysTree" parameterType="com.glaf.base.modules.sys.model.SysTree">
-		insert into sys_tree
+		insert into SYS_TREE
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			ID
 			<if test="parentId != null">
@@ -143,7 +143,7 @@
 
 
 	<update id="updateSysTree" parameterType="com.glaf.base.modules.sys.model.SysTree">
-		update sys_tree
+		update SYS_TREE
 		set
 		<trim prefix="" suffix="" suffixOverrides=",">
 			<if test="parentId != null">
@@ -197,12 +197,12 @@
 
 	<delete id="deleteSysTreeById" parameterType="long">
 		delete from
-		sys_tree where ID = #{id}
+		SYS_TREE where ID = #{id}
 	</delete>
 
 
 	<delete id="deleteSysTrees" parameterType="com.glaf.base.modules.sys.query.SysTreeQuery">
-		delete from sys_tree
+		delete from SYS_TREE
 		where (
 		ID IN
 		<foreach item="x_rowId" index="index" collection="rowIds"
@@ -214,15 +214,15 @@
 
 
 	<select id="getSysTreeById" parameterType="long" resultMap="sysTreeResultMap">
-		select * from sys_tree where ID = #{id}
+		select * from SYS_TREE where ID = #{id}
 	</select>
 
 
 	<select id="getDictorySysTrees" parameterType="com.glaf.base.modules.sys.query.SysTreeQuery"
 		resultMap="sysTreeResultMap">
 
-		select distinct E.* from sys_tree E
-		inner join sys_dictory D
+		select distinct E.* from SYS_TREE E
+		inner join SYS_DICTORY D
 		on E.ID =
 		D.TYPEID
 		where 1=1
@@ -235,8 +235,8 @@
 	<select id="getDepartmentSysTrees" parameterType="com.glaf.base.modules.sys.query.SysTreeQuery"
 		resultMap="sysTreeResultMap">
 
-		select distinct E.* from sys_tree E
-		inner join sys_department D
+		select distinct E.* from SYS_TREE E
+		inner join SYS_DEPARTMENT D
 		on E.ID
 		= D.NODEID
 		where 1=1
@@ -251,8 +251,8 @@
 	<select id="getApplicationSysTrees" parameterType="com.glaf.base.modules.sys.query.SysTreeQuery"
 		resultMap="sysTreeResultMap">
 
-		select distinct E.* from sys_tree E
-		inner join sys_application D
+		select distinct E.* from SYS_TREE E
+		inner join SYS_APPLICATION D
 		on E.ID
 		= D.NODEID
 		where 1=1
@@ -267,7 +267,7 @@
 	<select id="getRelationSysTrees" parameterType="com.glaf.base.modules.sys.query.SysTreeQuery"
 		resultMap="sysTreeResultMap">
 
-		select distinct E.* from sys_tree E
+		select distinct E.* from SYS_TREE E
 		inner join ${relationTable} R
 		on
 		E.ID = R.${relationColumn}
@@ -284,8 +284,8 @@
 	<select id="getRoleUserTrees" parameterType="com.glaf.base.modules.sys.query.SysUserQuery"
 		resultMap="sysTreeResultMap">
 
-		select distinct E.* from sys_tree E
-		inner join sys_department
+		select distinct E.* from SYS_TREE E
+		inner join SYS_DEPARTMENT
 		D
 		on E.ID =
 		D.NODEID
@@ -315,9 +315,9 @@
 
 		select a.name, a.url, t.id, t.parent as parentId, t.sort as
 		sortNo, t.treeid as treeId, t.code, t.locked
-		from sys_tree t
+		from SYS_TREE t
 		inner join
-		sys_application a
+		SYS_APPLICATION a
 		on t.id = a.nodeid
 		where
 		t.treeid like #{treeIdLike}
@@ -334,21 +334,21 @@
 		t.sort as sortNo,
 		t.treeid as treeId, t.code as code, t.locked as
 		locked
-		from sys_tree t
-		inner join sys_application a
+		from SYS_TREE t
+		inner join SYS_APPLICATION a
 		on t.id = a.nodeid
 		inner join
-		sys_access c
+		SYS_ACCESS c
 		on a.id = c.appId
 		where t.treeid like
 		#{treeIdLike}
 		and
 		c.roleId in (
-		select dr.id from sys_dept_role dr
+		select dr.id from SYS_DEPT_ROLE dr
 		inner
-		join sys_user_role ur
+		join SYS_USER_ROLE ur
 		on dr.id = ur.roleid
-		inner join sys_user u
+		inner join SYS_USER u
 		on u.id
 		= ur.userid
 		where 1=1
@@ -396,10 +396,10 @@
 
 	<sql id="selectSysTreesSql">
 
-		from sys_tree E
+		from SYS_TREE E
 
 		<if test=" departmentStatus != null  ">
-			inner join sys_department D
+			inner join SYS_DEPARTMENT D
 			on D.NODEID = E.ID
 		</if>
 

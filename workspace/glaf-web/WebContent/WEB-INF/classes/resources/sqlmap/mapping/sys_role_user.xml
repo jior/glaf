@@ -14,7 +14,7 @@
 		        OBJECTID_ as objectId, OBJECTVALUE_ as objectValue,
                 PROCESSNAME_ as processName, TASKNAME_ as taskName,
 				STARTDATE_ as startDate, ENDDATE_ as endDate
-		from sys_agent where ASSIGNTO_ = #assignTo#
+		from SYS_AGENT where ASSIGNTO_ = #assignTo#
 
 	</select>
 
@@ -22,7 +22,7 @@
 	<select id="getUsers" resultClass="com.glaf.core.identity.impl.UserImpl" parameterClass="java.util.HashMap">
 
 	    SELECT u.account as actorId, u.name as name, u.deptId as deptId, u.email as mail, u.mobile as mobile
-		FROM sys_user u
+		FROM SYS_USER u
 		where  u.blocked = 0
 
 	</select>
@@ -31,12 +31,12 @@
  	<select id="getMembershipUsers" resultClass="com.glaf.core.identity.impl.UserImpl" parameterClass="java.util.HashMap">
 		 
 		  SELECT u.account as actorId, u.name as name, u.deptId as deptId, u.email as mail, u.mobile as mobile
-		   FROM sys_user u
+		   FROM SYS_USER u
 		   WHERE u.blocked = 0 AND u.id IN
-				 ( SELECT r.userId  FROM sys_user_role r
+				 ( SELECT r.userId  FROM SYS_USER_ROLE r
 			       WHERE r.authorized = 0 AND r.roleId IN
 						 ( SELECT a.id
-					       FROM sys_dept_role a, sys_role b
+					       FROM SYS_DEPT_ROLE a, SYS_ROLE b
 					       WHERE 1=1
 						   AND  a.sysRoleId = b.id
 
@@ -78,12 +78,12 @@
 	<select id="getXYDeptRoleUsers" resultClass="com.glaf.core.identity.impl.UserImpl" parameterClass="java.util.HashMap">
 		 
 		  SELECT u.account as actorId, u.name as name, u.deptId as deptId, u.email as mail, u.mobile as mobile
-		   FROM sys_user u
+		   FROM SYS_USER u
 		   WHERE u.blocked = 0 AND u.id IN
-				 ( SELECT r.userId  FROM sys_user_role r
+				 ( SELECT r.userId  FROM SYS_USER_ROLE r
 			       WHERE r.authorized = 0 AND r.roleId IN
 						 ( SELECT a.id
-					       FROM sys_dept_role a, sys_role b
+					       FROM SYS_DEPT_ROLE a, SYS_ROLE b
 					       WHERE 1=1
 						   AND  a.sysRoleId = b.id
 

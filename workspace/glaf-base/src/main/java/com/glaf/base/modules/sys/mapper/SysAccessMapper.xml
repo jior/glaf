@@ -7,7 +7,7 @@
 
 	<insert id="insertSysAccess" parameterType="com.glaf.base.modules.sys.model.SysAccess">
 
-		insert into sys_access ( APPID, ROLEID )
+		insert into SYS_ACCESS ( APPID, ROLEID )
 		values (#{appId, jdbcType=BIGINT}, #{roleId, jdbcType=BIGINT})
 
 	</insert>
@@ -15,12 +15,12 @@
 
 	<delete id="deleteSysAccessByAppId" parameterType="long">
 		delete
-		from sys_access where APPID = #{appId}
+		from SYS_ACCESS where APPID = #{appId}
 	</delete>
 
 
 	<delete id="deleteSysAccessByRoleId" parameterType="long">
-		delete from sys_access where ROLEID = #{roleId}
+		delete from SYS_ACCESS where ROLEID = #{roleId}
 	</delete>
 
 
@@ -28,7 +28,7 @@
 		resultType="com.glaf.base.modules.sys.model.SysAccess">
 
 		select E.APPID as appId, E.ROLEID as roleId
-		from sys_access E
+		from SYS_ACCESS E
 		where E.APPID = #{appId}
 
 	</select>
@@ -38,7 +38,7 @@
 		resultType="com.glaf.base.modules.sys.model.SysAccess">
 
 		select E.APPID as appId, E.ROLEID as roleId
-		from sys_access E
+		from SYS_ACCESS E
 		where E.ROLEID = #{roleId}
 
 	</select>
@@ -48,7 +48,7 @@
 		resultType="com.glaf.base.modules.sys.model.SysAccess">
 
 		select E.APPID as appId, E.ROLEID as roleId
-		from sys_access E
+		from SYS_ACCESS E
 		where E.ROLEID = #{deptRoleId} 
 		and E.APPID = #{deptId}
 
@@ -56,7 +56,7 @@
 
 
 	<delete id="deleteSysAccessByRoleIdAndAppId" parameterType="com.glaf.base.modules.sys.query.SysDeptRoleQuery">
-		delete from sys_access 
+		delete from SYS_ACCESS 
 		where ROLEID = #{deptRoleId} 
 		and APPID =#{deptId}
 	</delete>

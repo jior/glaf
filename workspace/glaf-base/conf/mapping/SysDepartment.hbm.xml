@@ -4,7 +4,7 @@
 	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping package="com.glaf.base.modules.sys.model">
-	<class name="SysDepartment" table="sys_department"
+	<class name="SysDepartment" table="SYS_DEPARTMENT"
 		dynamic-update="true" dynamic-insert="true">
 
 		<id name="id" type="long" unsaved-value="0">
@@ -26,7 +26,7 @@
 		<many-to-one name="node" class="SysTree" column="nodeId"
 			cascade="all" unique="true" not-null="true" not-found="ignore" foreign-key="FK_DEPT_TREE"/>
 
-		<set name="roles" table="sys_dept_role" inverse="false">
+		<set name="roles" table="SYS_DEPT_ROLE" inverse="false">
 			<key column="deptId" />
 			<one-to-many class="SysDeptRole" />
 		</set>

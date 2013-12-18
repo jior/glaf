@@ -27,7 +27,7 @@ import com.glaf.base.modules.sys.util.SubjectCodeJsonFactory;
 import com.glaf.core.base.JSONable;
 
 @Entity
-@Table(name = "SubjectCode")
+@Table(name = "SUBJECTCODE")
 public class SubjectCode implements Serializable, JSONable {
 	private static final long serialVersionUID = -1L;
 	@Id

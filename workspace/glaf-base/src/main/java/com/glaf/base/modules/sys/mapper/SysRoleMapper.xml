@@ -18,7 +18,7 @@
 
 
 	<insert id="insertSysRole" parameterType="com.glaf.base.modules.sys.model.SysRole">
-		insert into sys_role
+		insert into SYS_ROLE
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			ID
 			<if test="name != null">
@@ -79,7 +79,7 @@
 
 
 	<update id="updateSysRole" parameterType="com.glaf.base.modules.sys.model.SysRole">
-		update sys_role
+		update SYS_ROLE
 		set
 		<trim prefix="" suffix="" suffixOverrides=",">
 			<if test="name != null">
@@ -109,13 +109,13 @@
 
 	<delete id="deleteSysRoleById" parameterType="long">
 		delete from
-		sys_role
+		SYS_ROLE
 		where ID = #{id}
 	</delete>
 
 
 	<delete id="deleteSysRoles" parameterType="com.glaf.base.modules.sys.query.SysRoleQuery">
-		delete from sys_role
+		delete from SYS_ROLE
 		where (
 		ID IN
 		<foreach item="x_rowId" index="index" collection="rowIds"
@@ -127,7 +127,7 @@
 
 
 	<select id="getSysRoleById" parameterType="long" resultMap="sysRoleResultMap">
-		select * from sys_role where ID = #{id}
+		select * from SYS_ROLE where ID = #{id}
 	</select>
 
 
@@ -138,7 +138,7 @@
 		inner join SYS_DEPT_ROLE DR
 		on DR.SYSROLEID =
 		R.ID
-		inner join sys_department D
+		inner join SYS_DEPARTMENT D
 		on DR.DEPTID = D.ID
 		where 1=1
 
@@ -161,8 +161,8 @@
 	<select id="getSysRolesOfDeptRole" parameterType="long"
 		resultMap="sysRoleResultMap">
 
-		select * from sys_role E
-		inner join sys_dept_role R
+		select * from SYS_ROLE E
+		inner join SYS_DEPT_ROLE R
 		on E.ID =
 		R.SYSROLEID
 		where E.ID = #{id}
@@ -171,8 +171,8 @@
 
 	<select id="getSysRolesOfUser" parameterType="string" resultMap="sysRoleResultMap">
 
-		select E.* from sys_role E
-		inner join sys_dept_role R
+		select E.* from SYS_ROLE E
+		inner join SYS_DEPT_ROLE R
 		on E.ID =
 		R.SYSROLEID
 		inner join SYS_USER_ROLE UR
@@ -209,7 +209,7 @@
 
 	<sql id="selectSysRolesSql">
 
-		from sys_role E
+		from SYS_ROLE E
 
 		<where>
 			1 = 1

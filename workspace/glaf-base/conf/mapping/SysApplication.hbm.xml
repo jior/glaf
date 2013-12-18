@@ -4,7 +4,7 @@
 	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping package="com.glaf.base.modules.sys.model">
-	<class name="SysApplication" table="sys_application"
+	<class name="SysApplication" table="SYS_APPLICATION"
 		dynamic-update="true" dynamic-insert="true">
 
 		<id name="id" type="long" unsaved-value="0">
@@ -22,7 +22,7 @@
 		<many-to-one name="node" class="SysTree" column="nodeId" foreign-key="FK_APP_TREE"
 			cascade="all" unique="true" not-null="true" not-found="ignore" />
 
-		<set name="functions" table="sys_function" inverse="false"
+		<set name="functions" table="SYS_FUNCTION" inverse="false"
 			cascade="all" order-by="sort desc">
 			<key column="appId" />
 			<one-to-many class="SysFunction" />

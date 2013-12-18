@@ -30,7 +30,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
 @Entity
-@Table(name = "SerialNumber")
+@Table(name = "SERIALNUMBER")
 public class SerialNumber implements Serializable, JSONable {
 	private static final long serialVersionUID = 7285967860734876783L;
 	@Id

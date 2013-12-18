@@ -33,7 +33,7 @@ import com.glaf.core.base.JSONable;
 import com.glaf.core.base.TreeModel;
 
 @Entity
-@Table(name = "sys_tree")
+@Table(name = "SYS_TREE")
 public class SysTree implements Serializable, TreeModel, JSONable {
 	private static final long serialVersionUID = 2666681837822864771L;
 

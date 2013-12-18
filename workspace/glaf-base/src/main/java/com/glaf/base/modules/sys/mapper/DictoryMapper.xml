@@ -41,7 +41,7 @@
 
 
 	<insert id="insertDictory" parameterType="com.glaf.base.modules.sys.model.Dictory">
-		insert into sys_dictory
+		insert into SYS_DICTORY
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			ID
 			<if test="nodeId != null">
@@ -240,7 +240,7 @@
 
 
 	<update id="updateDictory" parameterType="com.glaf.base.modules.sys.model.Dictory">
-		update sys_dictory
+		update SYS_DICTORY
 		set
 		<trim prefix="" suffix="" suffixOverrides=",">
 			<if test="nodeId != null">
@@ -339,13 +339,13 @@
 
 	<delete id="deleteDictoryById" parameterType="long">
 		delete from
-		sys_dictory
+		SYS_DICTORY
 		where ID = #{id}
 	</delete>
 
 
 	<delete id="deleteDictorys" parameterType="com.glaf.base.modules.sys.query.DictoryQuery">
-		delete from sys_dictory
+		delete from SYS_DICTORY
 		where (
 		ID IN
 		<foreach item="x_rowId" index="index" collection="rowIds"
@@ -357,7 +357,7 @@
 
 
 	<select id="getDictoryById" parameterType="long" resultMap="dictoryResultMap">
-		select * from sys_dictory where ID = #{id}
+		select * from SYS_DICTORY where ID = #{id}
 	</select>
 
 
@@ -385,7 +385,7 @@
 
 	<sql id="selectDictorysSql">
 
-		from sys_dictory E
+		from SYS_DICTORY E
 
 		<where>
 			1 = 1

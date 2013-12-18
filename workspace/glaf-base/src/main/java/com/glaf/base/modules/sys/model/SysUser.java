@@ -33,7 +33,7 @@ import com.glaf.core.base.JSONable;
 import com.glaf.core.identity.User;
 
 @Entity
-@Table(name = "sys_user")
+@Table(name = "SYS_USER")
 public class SysUser implements Serializable, User, JSONable {
 	private static final long serialVersionUID = -7677600372139823989L;
 

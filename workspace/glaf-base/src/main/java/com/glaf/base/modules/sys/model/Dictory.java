@@ -13,7 +13,7 @@ import com.glaf.base.modules.sys.util.*;
 import com.glaf.core.base.JSONable;
 
 @Entity
-@Table(name = "sys_dictory")
+@Table(name = "SYS_DICTORY")
 public class Dictory implements Serializable, JSONable {
 
 	private static final long serialVersionUID = 1L;

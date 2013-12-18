@@ -40,7 +40,7 @@
 
 
 	<insert id="insertSysUser" parameterType="com.glaf.base.modules.sys.model.SysUser">
-		insert into sys_user
+		insert into SYS_USER
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			ID
 			<if test="account != null">
@@ -203,7 +203,7 @@
 
 
 	<update id="updateSysUser" parameterType="com.glaf.base.modules.sys.model.SysUser">
-		update sys_user
+		update SYS_USER
 		set
 		<trim prefix="" suffix="" suffixOverrides=",">
 			<if test="account != null">
@@ -292,12 +292,12 @@
 
 
 	<delete id="deleteSysUserById" parameterType="long">
-		delete from sys_user
+		delete from SYS_USER
 		where ID = #{id}
 	</delete>
 
 	<delete id="deleteSysUsers" parameterType="com.glaf.base.modules.sys.query.SysUserQuery">
-		delete from sys_user
+		delete from SYS_USER
 		where (
 		ID IN
 		<foreach item="x_rowId" index="index" collection="rowIds"
@@ -309,27 +309,27 @@
 
 
 	<select id="getSysUserById" parameterType="long" resultMap="sysUserResultMap">
-		select * from sys_user where ID = #{id}
+		select * from SYS_USER where ID = #{id}
 	</select>
 	
 	
 	<select id="getSysUserByMail" parameterType="string" resultMap="sysUserResultMap">
-		select * from sys_user where EMAIL = #{mail}
+		select * from SYS_USER where EMAIL = #{mail}
 	</select>
 	
 	
 	<select id="getSysUserByMobile" parameterType="string" resultMap="sysUserResultMap">
-		select * from sys_user where MOBILE = #{mobile}
+		select * from SYS_USER where MOBILE = #{mobile}
 	</select>
 
 
 	<select id="getSysUsersByAppId" parameterType="long" resultMap="sysUserResultMap">
 
 		select distinct a.*
-		from sys_user a
-		inner join sys_user_role b
+		from SYS_USER a
+		inner join SYS_USER_ROLE b
 		on a.id = b.userId
-		inner join sys_access c
+		inner join SYS_ACCESS c
 		on b.roleId = c.roleId
 		where c.appId = #{appId}
 
@@ -338,27 +338,27 @@
 
 	<select id="getSysUserByAccount" parameterType="String"
 		resultMap="sysUserResultMap">
-		select * from sys_user where ACCOUNT = #{account}
+		select * from SYS_USER where ACCOUNT = #{account}
 	</select>
 
 
 	<select id="getSysUserByAccount_oracle" parameterType="String"
 		resultMap="sysUserResultMap">
-		select * from sys_user where lower(ACCOUNT) = #{account}
+		select * from SYS_USER where lower(ACCOUNT) = #{account}
 	</select>
 
 
 	<select id="getSysUserByAccount_postgresql" parameterType="String"
 		resultMap="sysUserResultMap">
-		select * from sys_user where lower(ACCOUNT) = #{account}
+		select * from SYS_USER where lower(ACCOUNT) = #{account}
 	</select>
 
 
 	<select id="getCountAuthorizedUsers" parameterType="com.glaf.base.modules.sys.query.SysUserQuery"
 		resultType="int">
 
-		select count(distinct E.id) from sys_user E
-		inner join sys_user_role R
+		select count(distinct E.id) from SYS_USER E
+		inner join SYS_USER_ROLE R
 		on E.ID = R.USERID
 		where E.ACCOUNTTYPE = 0
 
@@ -393,8 +393,8 @@
 	<select id="getAuthorizedUsers" parameterType="com.glaf.base.modules.sys.query.SysUserQuery"
 		resultMap="sysUserResultMap">
 
-		select distinct E.* from sys_user E
-		inner join sys_user_role R
+		select distinct E.* from SYS_USER E
+		inner join SYS_USER_ROLE R
 		on E.ID = R.USERID
 		where E.ACCOUNTTYPE = 0
 
@@ -432,8 +432,8 @@
 	<select id="getAuthorizedUsersByUserId" parameterType="long"
 		resultMap="sysUserResultMap">
 
-		select distinct E.* from sys_user E
-		inner join sys_user_role R
+		select distinct E.* from SYS_USER E
+		inner join SYS_USER_ROLE R
 		on E.ID = R.USERID
 		where E.ACCOUNTTYPE = 0
 		and R.AUTHORIZEFROM = #{authorizeFrom}
@@ -443,8 +443,8 @@
 
 	<select id="getSysRoleUsers" parameterType="long" resultMap="sysUserResultMap">
 
-		select distinct E.* from sys_user E
-		inner join sys_user_role R
+		select distinct E.* from SYS_USER E
+		inner join SYS_USER_ROLE R
 		on E.ID = R.USERID
 		where R.ROLEID = #{roleId}
 
@@ -455,13 +455,13 @@
 		parameterType="com.glaf.base.modules.sys.query.SysDeptRoleQuery">
 
 		SELECT E.*
-		FROM sys_user E
+		FROM SYS_USER E
 		WHERE E.blocked = 0 AND E.id IN
 		( SELECT
-		r.userId FROM sys_user_role r
+		r.userId FROM SYS_USER_ROLE r
 		WHERE r.authorized = 0 AND r.roleId IN (
-		SELECT a.id FROM sys_dept_role a
-		INNER JOIN sys_role b
+		SELECT a.id FROM SYS_DEPT_ROLE a
+		INNER JOIN SYS_ROLE b
 		ON a.sysRoleId =
 		b.id
 		WHERE 1=1
@@ -540,7 +540,7 @@
 
 	<sql id="selectSysUsersSql">
 
-		from sys_user E
+		from SYS_USER E
 
 		<where>
 			1 = 1

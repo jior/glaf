@@ -5,7 +5,7 @@
 	
 <hibernate-mapping package="com.glaf.base.modules.sys.model">
     <class name="Dictory" 
-           table="sys_dictory"
+           table="SYS_DICTORY"
            dynamic-update="true"
            dynamic-insert="true">
         <id name="id" type="long" unsaved-value="0">

@@ -29,7 +29,7 @@
 
 
 	<insert id="insertSysApplication" parameterType="com.glaf.base.modules.sys.model.SysApplication">
-		insert into sys_application
+		insert into SYS_APPLICATION
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			ID
 			<if test="name != null">
@@ -114,7 +114,7 @@
 
 
 	<update id="updateSysApplication" parameterType="com.glaf.base.modules.sys.model.SysApplication">
-		update sys_application
+		update SYS_APPLICATION
 		set
 		<trim prefix="" suffix="" suffixOverrides=",">
 			<if test="name != null">
@@ -156,13 +156,13 @@
 
 	<delete id="deleteSysApplicationById" parameterType="long">
 		delete from
-		sys_application
+		SYS_APPLICATION
 		where ID = #{id}
 	</delete>
 
 
 	<delete id="deleteSysApplications" parameterType="com.glaf.base.modules.sys.query.SysApplicationQuery">
-		delete from sys_application
+		delete from SYS_APPLICATION
 		where (
 		ID IN
 		<foreach item="x_rowId" index="index" collection="rowIds"
@@ -175,15 +175,15 @@
 
 	<select id="getSysApplicationById" parameterType="long"
 		resultMap="sysApplicationResultMap">
-		select * from sys_application where ID = #{id}
+		select * from SYS_APPLICATION where ID = #{id}
 	</select>
 
 
 	<select id="getSysApplicationByRoleId" parameterType="long"
 		resultMap="sysApplicationResultMap">
 
-		select E.* from sys_application E
-		inner join sys_access A
+		select E.* from SYS_APPLICATION E
+		inner join SYS_ACCESS A
 		on
 		E.ID = A.APPID
 		where A.ROLEID = #{roleId}
@@ -194,13 +194,13 @@
 	<select id="getSysApplicationByUserId" parameterType="long"
 		resultMap="sysApplicationResultMap">
 
-		select E.* from sys_application E
-		inner join sys_access A
+		select E.* from SYS_APPLICATION E
+		inner join SYS_ACCESS A
 		on
 		E.id = A.appId
 		where A.roleId in (
-		select dr.id from sys_dept_role dr
-		inner join sys_user_role ur
+		select dr.id from SYS_DEPT_ROLE dr
+		inner join SYS_USER_ROLE ur
 		on dr.id = ur.roleid
 		where ur.userid =
 		#{userId}
@@ -213,14 +213,14 @@
 	<select id="getRealmInfos" parameterType="map" resultMap="realmInfoResultMap">
 
 		select
-		E.url, r.code from sys_application E
-		inner join sys_access A
+		E.url, r.code from SYS_APPLICATION E
+		inner join SYS_ACCESS A
 		on E.id =
 		A.appId
-		inner join sys_dept_role dr
+		inner join SYS_DEPT_ROLE dr
 		on A.roleid = dr.id
 		inner join
-		sys_role r
+		SYS_ROLE r
 		on dr.sysroleid = r.id
 		where E.url is not null
 		and E.url != ''
@@ -251,10 +251,10 @@
 
 	<sql id="selectSysApplicationsSql">
 
-		from sys_application E
+		from SYS_APPLICATION E
 
 		<if test=" parentId != null  ">
-			inner join sys_tree T
+			inner join SYS_TREE T
 			on E.NODEID = T.ID
 		</if>
 

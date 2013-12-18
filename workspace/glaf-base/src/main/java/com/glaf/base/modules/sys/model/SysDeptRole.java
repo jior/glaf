@@ -30,7 +30,7 @@ import com.glaf.base.modules.sys.util.SysDeptRoleJsonFactory;
 import com.glaf.core.base.JSONable;
 
 @Entity
-@Table(name = "sys_dept_role")
+@Table(name = "SYS_DEPT_ROLE")
 public class SysDeptRole implements Serializable, JSONable {
 	private static final long serialVersionUID = 273479478656626289L;
 

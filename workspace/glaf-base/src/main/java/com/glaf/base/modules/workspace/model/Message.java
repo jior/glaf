@@ -31,7 +31,7 @@ import com.glaf.base.modules.workspace.util.MessageJsonFactory;
 import com.glaf.core.base.JSONable;
 
 @Entity
-@Table(name = "Message")
+@Table(name = "MESSAGE")
 public class Message implements Serializable, JSONable {
 
 	private static final long serialVersionUID = -3111749338365950889L;

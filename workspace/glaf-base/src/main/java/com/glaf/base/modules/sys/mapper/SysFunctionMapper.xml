@@ -16,7 +16,7 @@
 
 
 	<insert id="insertSysFunction" parameterType="com.glaf.base.modules.sys.model.SysFunction">
-		insert into sys_function
+		insert into SYS_FUNCTION
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			ID
 			<if test="name != null">
@@ -65,7 +65,7 @@
 
 
 	<update id="updateSysFunction" parameterType="com.glaf.base.modules.sys.model.SysFunction">
-		update sys_function
+		update SYS_FUNCTION
 		set
 		<trim prefix="" suffix="" suffixOverrides=",">
 			<if test="name != null">
@@ -94,13 +94,13 @@
 
 
 	<delete id="deleteSysFunctionById" parameterType="long">
-		delete from sys_function
+		delete from SYS_FUNCTION
 		where ID = #{id}
 	</delete>
 
 
 	<delete id="deleteSysFunctions" parameterType="com.glaf.base.modules.sys.query.SysFunctionQuery">
-		delete from sys_function
+		delete from SYS_FUNCTION
 		where (
 		ID IN
 		<foreach item="x_rowId" index="index" collection="rowIds"
@@ -113,15 +113,15 @@
 
 	<select id="getSysFunctionById" parameterType="long"
 		resultMap="sysFunctionResultMap">
-		select * from sys_function where ID = #{id}
+		select * from SYS_FUNCTION where ID = #{id}
 	</select>
 
 
 	<select id="getSysFunctionByRoleId" parameterType="long"
 		resultMap="sysFunctionResultMap">
 
-		select E.* from sys_function E
-		inner join sys_permission P
+		select E.* from SYS_FUNCTION E
+		inner join SYS_PERMISSION P
 		on E.ID = P.FUNCID
 		where P.ROLEID = #{roleId}
 
@@ -131,12 +131,12 @@
 	<select id="getSysFunctionByUserId" parameterType="long"
 		resultMap="sysFunctionResultMap">
 
-		select E.* from sys_function E
-		inner join sys_permission A
+		select E.* from SYS_FUNCTION E
+		inner join SYS_PERMISSION A
 		on E.id = A.funcId
 		where A.roleId in (
-		select dr.id from sys_dept_role dr
-		inner join sys_user_role ur
+		select dr.id from SYS_DEPT_ROLE dr
+		inner join SYS_USER_ROLE ur
 		on dr.id = ur.roleid
 		where ur.userid = #{userId}
 		and ur.authorized = 0
@@ -167,7 +167,7 @@
 
 	<sql id="selectSysFunctionsSql">
 
-		from sys_function E
+		from SYS_FUNCTION E
 
 		<where>
 			1 = 1

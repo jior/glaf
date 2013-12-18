@@ -24,7 +24,7 @@
 
 
 	<insert id="insertSysDepartment" parameterType="com.glaf.base.modules.sys.model.SysDepartment">
-		insert into sys_department
+		insert into SYS_DEPARTMENT
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			ID
 			<if test="name != null">
@@ -121,7 +121,7 @@
 
 
 	<update id="updateSysDepartment" parameterType="com.glaf.base.modules.sys.model.SysDepartment">
-		update sys_department
+		update SYS_DEPARTMENT
 		set
 		<trim prefix="" suffix="" suffixOverrides=",">
 			<if test="name != null">
@@ -172,12 +172,12 @@
 
 	<delete id="deleteSysDepartmentById" parameterType="long">
 		delete from
-		sys_department
+		SYS_DEPARTMENT
 		where ID = #{id}
 	</delete>
 
 	<delete id="deleteSysDepartments" parameterType="com.glaf.base.modules.sys.query.SysDepartmentQuery">
-		delete from sys_department
+		delete from SYS_DEPARTMENT
 		where (
 		ID IN
 		<foreach item="x_rowId" index="index" collection="rowIds"
@@ -189,7 +189,7 @@
 
 	<select id="getSysDepartmentById" parameterType="long"
 		resultMap="sysDepartmentResultMap">
-		select * from sys_department where ID = #{id}
+		select * from SYS_DEPARTMENT where ID = #{id}
 	</select>
 
 
@@ -215,10 +215,10 @@
 
 	<sql id="selectSysDepartmentsSql">
 
-		from sys_department E
+		from SYS_DEPARTMENT E
 
 		<if test=" parentId != null  ">
-			inner join sys_tree T
+			inner join SYS_TREE T
 			on E.NODEID = T.ID
 		</if>
 

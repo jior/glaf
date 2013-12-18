@@ -4,7 +4,7 @@
 	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping package="com.glaf.base.modules.sys.model">
-	<class name="SysTree" table="sys_tree" dynamic-update="true"
+	<class name="SysTree" table="SYS_TREE" dynamic-update="true"
 		dynamic-insert="true">
 
 		<id name="id" type="long" unsaved-value="0">

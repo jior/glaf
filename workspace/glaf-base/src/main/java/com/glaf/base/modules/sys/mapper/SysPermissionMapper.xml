@@ -6,7 +6,7 @@
 
 
 	<insert id="insertSysPermission" parameterType="com.glaf.base.modules.sys.model.SysPermission">
-		insert into sys_permission (
+		insert into SYS_PERMISSION (
 		    FUNCID, ROLEID 
 		  ) values ( 
 			   #{funcId, jdbcType=BIGINT}		 
@@ -16,13 +16,13 @@
 
 
 	<delete id="deleteSysPermissionByFunctionId" parameterType="long"> 
-        delete from sys_permission
+        delete from SYS_PERMISSION
         where FUNCID =	#{functionId}
 	</delete>
 	
 	
 	<delete id="deleteSysPermissionByRoleId" parameterType="long"> 
-        delete from sys_permission
+        delete from SYS_PERMISSION
         where ROLEID =	#{roleId}
 	</delete>
 	 
@@ -30,7 +30,7 @@
 	<select id="getSysPermissionByFunctionId" parameterType="long" resultType="com.glaf.base.modules.sys.model.SysPermission">
 		 
 		  select E.FUNCID as funcId, E.ROLEID as roleId  
-		  from sys_permission E
+		  from SYS_PERMISSION E
 		  where FUNCID = #{functionId}
 		  
 	</select>
@@ -39,7 +39,7 @@
 	<select id="getSysPermissionByRoleId" parameterType="long" resultType="com.glaf.base.modules.sys.model.SysPermission">
 		 
 		  select E.FUNCID as funcId, E.ROLEID as roleId  
-		  from sys_permission E
+		  from SYS_PERMISSION E
 		  where E.ROLEID = #{roleId}
 		  
 	</select>

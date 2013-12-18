@@ -16,7 +16,7 @@
 
  
 	<insert id="insertAttachment" parameterType="com.glaf.base.modules.others.model.Attachment">
-		insert into Attachment 
+		insert into ATTACHMENT 
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 		    ID
 			<if test="referId != null">
@@ -65,7 +65,7 @@
 
 	 
 	<update id="updateAttachment" parameterType="com.glaf.base.modules.others.model.Attachment">
-		update Attachment
+		update ATTACHMENT
 		set
 		<trim prefix="" suffix="" suffixOverrides=",">		
 			<if test="referId != null">
@@ -94,13 +94,13 @@
 
  
 	<delete id="deleteAttachmentById" parameterType="long"> 
-        delete from Attachment
+        delete from ATTACHMENT
         where ID =	#{id}
 	</delete>
 
 	
 	<delete id="deleteAttachments" parameterType="com.glaf.base.modules.others.query.AttachmentQuery">
-		delete from Attachment
+		delete from ATTACHMENT
 		where ( 
  			  ID IN
 		<foreach item="x_rowId" index="index" collection="rowIds" 
@@ -112,7 +112,7 @@
 
 
 	<select id="getAttachmentById" parameterType="long" resultMap="attachmentResultMap">
-		select * from Attachment where ID = #{id}
+		select * from ATTACHMENT where ID = #{id}
 	</select>
 
 
@@ -142,7 +142,7 @@
 
 	<sql id="selectAttachmentsSql">
 
-		from Attachment E
+		from ATTACHMENT E
 
 
 		<where>
@@ -238,7 +238,7 @@
 	</sql>
 	
 	<update id="updateAttachmentByReferTypeAndCreateId" parameterType="com.glaf.base.modules.others.model.Attachment">
-		update Attachment
+		update ATTACHMENT
 		set
 		<trim prefix="" suffix="" suffixOverrides=",">		
 			<if test="referId != null">

@@ -8,7 +8,7 @@ import com.glaf.base.modules.sys.util.*;
 import com.glaf.core.base.JSONable;
 
 @Entity
-@Table(name = "sys_permission")
+@Table(name = "SYS_PERMISSION")
 public class SysPermission implements Serializable, JSONable {
 	private static final long serialVersionUID = 1L;
 

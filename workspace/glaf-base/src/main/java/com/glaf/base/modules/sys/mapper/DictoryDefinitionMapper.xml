@@ -20,7 +20,7 @@
 
 
 	<insert id="insertDictoryDefinition" parameterType="com.glaf.base.modules.sys.model.DictoryDefinition">
-		insert into sys_dictory_def
+		insert into SYS_DICTORY_DEF
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			ID
 			<if test="nodeId != null">
@@ -87,7 +87,7 @@
 
 
 	<update id="updateDictoryDefinition" parameterType="com.glaf.base.modules.sys.model.DictoryDefinition">
-		update sys_dictory_def
+		update SYS_DICTORY_DEF
 		set
 		<trim prefix="" suffix="" suffixOverrides=",">
 			<if test="nodeId != null">
@@ -125,14 +125,14 @@
 
 
 	<delete id="deleteDictoryDefinitionById" parameterType="long">
-		delete from sys_dictory_def
+		delete from SYS_DICTORY_DEF
 		where ID = #{id}
 	</delete>
 
 
 	<delete id="deleteDictoryDefinitions"
 		parameterType="com.glaf.base.modules.sys.query.DictoryDefinitionQuery">
-		delete from sys_dictory_def
+		delete from SYS_DICTORY_DEF
 		where (
 		ID IN
 		<foreach item="x_rowId" index="index" collection="rowIds"
@@ -145,7 +145,7 @@
 
 	<select id="getDictoryDefinitionById" parameterType="long"
 		resultMap="dictoryDefinitionResultMap">
-		select * from sys_dictory_def where ID = #{id}
+		select * from SYS_DICTORY_DEF where ID = #{id}
 	</select>
 
 
@@ -175,7 +175,7 @@
 
 	<sql id="selectDictoryDefinitionsSql">
 
-		from sys_dictory_def E
+		from SYS_DICTORY_DEF E
 
 		<where>
 			1 = 1

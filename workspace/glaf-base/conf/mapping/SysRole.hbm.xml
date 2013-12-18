@@ -4,7 +4,7 @@
 	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping package="com.glaf.base.modules.sys.model">
-	<class name="SysRole" table="sys_role" dynamic-update="true"
+	<class name="SysRole" table="SYS_ROLE" dynamic-update="true"
 		dynamic-insert="true" lazy="true">
 
 		<id name="id" type="long" unsaved-value="0">

@@ -29,7 +29,7 @@ import com.glaf.base.modules.workspace.util.MyMenuJsonFactory;
 import com.glaf.core.base.JSONable;
 
 @Entity
-@Table(name = "MyMenu")
+@Table(name = "MYMENU")
 public class MyMenu implements Serializable, JSONable {
 
 	private static final long serialVersionUID = 3488265849082732239L;

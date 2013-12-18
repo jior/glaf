@@ -5,7 +5,7 @@
 
 <hibernate-mapping package="com.glaf.base.modules.sys.model">
     <class name="SubjectCode" 
-           table="SubjectCode" 
+           table="SUBJECTCODE" 
            dynamic-update="true"
            dynamic-insert="true">
            

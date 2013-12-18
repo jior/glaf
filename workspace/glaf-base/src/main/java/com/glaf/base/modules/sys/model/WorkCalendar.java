@@ -27,7 +27,7 @@ import com.glaf.base.modules.sys.util.WorkCalendarJsonFactory;
 import com.glaf.core.base.JSONable;
 
 @Entity
-@Table(name = "sys_workcalendar")
+@Table(name = "SYS_WORKCALENDAR")
 public class WorkCalendar implements Serializable, JSONable {
 	private static final long serialVersionUID = -5396045849722935648L;
 	@Id

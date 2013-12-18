@@ -13,7 +13,7 @@
 
  
 	<insert id="insertWorkCalendar" parameterType="com.glaf.base.modules.sys.model.WorkCalendar">
-		insert into sys_workcalendar 
+		insert into SYS_WORKCALENDAR 
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 		    ID
 			<if test="freeDay != null">
@@ -44,7 +44,7 @@
 
 	 
 	<update id="updateWorkCalendar" parameterType="com.glaf.base.modules.sys.model.WorkCalendar">
-		update sys_workcalendar
+		update SYS_WORKCALENDAR
 		set
 		<trim prefix="" suffix="" suffixOverrides=",">		
 			<if test="freeDay != null">
@@ -64,12 +64,12 @@
 
  
 	<delete id="deleteWorkCalendarById" parameterType="string"> 
-        delete from sys_workcalendar
+        delete from SYS_WORKCALENDAR
         where ID =	#{id}
 	</delete>
 	
 	<delete id="deleteWorkCalendars" parameterType="com.glaf.base.modules.sys.query.WorkCalendarQuery">
-		delete from sys_workcalendar
+		delete from SYS_WORKCALENDAR
 		where ( 
  			  ID IN
 		<foreach item="x_rowId" index="index" collection="rowIds" 
@@ -80,7 +80,7 @@
 	</delete>
 
 	<select id="getWorkCalendarById" parameterType="string" resultMap="workCalendarResultMap">
-		select * from sys_workcalendar where ID = #{id}
+		select * from SYS_WORKCALENDAR where ID = #{id}
 	</select>
 
 
@@ -100,7 +100,7 @@
 
 	<sql id="selectWorkCalendarsSql">
 
-		from sys_workcalendar E
+		from SYS_WORKCALENDAR E
 	 
 		<where>
 		       1 = 1  

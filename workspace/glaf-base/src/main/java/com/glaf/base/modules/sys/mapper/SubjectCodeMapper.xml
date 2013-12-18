@@ -14,7 +14,7 @@
 
  
 	<insert id="insertSubjectCode" parameterType="com.glaf.base.modules.sys.model.SubjectCode">
-		insert into SubjectCode 
+		insert into SUBJECTCODE 
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 		    ID
 			<if test="parent != null">
@@ -51,7 +51,7 @@
 
 	 
 	<update id="updateSubjectCode" parameterType="com.glaf.base.modules.sys.model.SubjectCode">
-		update SubjectCode
+		update SUBJECTCODE
 		set
 		<trim prefix="" suffix="" suffixOverrides=",">		
 			<if test="parent != null">
@@ -74,13 +74,13 @@
 
  
 	<delete id="deleteSubjectCodeById" parameterType="long"> 
-        delete from SubjectCode
+        delete from SUBJECTCODE
         where ID =	#{id}
 	</delete>
 
 	
 	<delete id="deleteSubjectCodes" parameterType="com.glaf.base.modules.sys.query.SubjectCodeQuery">
-		delete from SubjectCode
+		delete from SUBJECTCODE
 		where ( 
  			  ID IN
 		<foreach item="x_rowId" index="index" collection="rowIds" 
@@ -92,7 +92,7 @@
 
 
 	<select id="getSubjectCodeById" parameterType="long" resultMap="subjectCodeResultMap">
-		select * from SubjectCode where ID = #{id}
+		select * from SUBJECTCODE where ID = #{id}
 	</select>
 
 
@@ -122,7 +122,7 @@
 
 	<sql id="selectSubjectCodesSql">
 
-		from SubjectCode E
+		from SUBJECTCODE E
 		 
 		<where>
 		       1 = 1  

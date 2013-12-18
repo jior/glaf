@@ -4,7 +4,7 @@
 	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping package="com.glaf.base.modules.sys.model">
-	<class name="SysUser" table="sys_user" dynamic-update="true"
+	<class name="SysUser" table="SYS_USER" dynamic-update="true"
 		dynamic-insert="true">
 
 		<id name="id" type="long" unsaved-value="0">
@@ -36,12 +36,12 @@
 		<many-to-one name="department" class="SysDepartment" foreign-key="FK_USER_DEPT"
 			column="deptId" cascade="none" not-found="ignore" />
 
-		<set name="userRoles" table="sys_user_role" inverse="true" cascade="all" order-by="id desc">
+		<set name="userRoles" table="SYS_USER_ROLE" inverse="true" cascade="all" order-by="id desc">
 			<key column="userId" not-null="true" />
 			<one-to-many class="SysUserRole" />
 		</set>
 
-		<set name="roles" table="sys_user_role" inverse="false" order-by="roleId asc">
+		<set name="roles" table="SYS_USER_ROLE" inverse="false" order-by="roleId asc">
 			<key column="userId" not-null="true" />
 			<many-to-many class="SysDeptRole" column="roleId" not-found="ignore" />
 		</set>

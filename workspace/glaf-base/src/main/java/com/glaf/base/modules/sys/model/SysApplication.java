@@ -30,7 +30,7 @@ import com.glaf.base.modules.sys.util.SysApplicationJsonFactory;
 import com.glaf.core.base.JSONable;
 
 @Entity
-@Table(name = "sys_application")
+@Table(name = "SYS_APPLICATION")
 public class SysApplication implements Serializable, JSONable {
 	private static final long serialVersionUID = 1L;
 
