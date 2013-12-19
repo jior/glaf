@@ -33,7 +33,7 @@
 
 
 	<insert id="insertScheduler" parameterType="com.glaf.core.domain.SchedulerEntity">
-		insert into sys_scheduler
+		insert into SYS_SCHEDULER
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			ID
 			<if test="taskName != null">
@@ -178,7 +178,7 @@
 
 
 	<update id="updateScheduler" parameterType="com.glaf.core.domain.SchedulerEntity">
-		update sys_scheduler
+		update SYS_SCHEDULER
 		set
 		<trim prefix="" suffix="" suffixOverrides=",">
 			<if test="taskName != null">

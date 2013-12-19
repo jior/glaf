@@ -15,7 +15,7 @@
 
 
 	<insert id="insertSysLog" parameterType="com.glaf.core.domain.SysLog">
-		insert into sys_log
+		insert into SYS_LOG
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			ID
 			<if test="account != null">
@@ -58,7 +58,7 @@
 
 
 	<update id="updateSysLog" parameterType="com.glaf.core.domain.SysLog">
-		update sys_log
+		update SYS_LOG
 		set
 		<trim prefix="" suffix="" suffixOverrides=",">
 			<if test="account != null">
@@ -84,12 +84,12 @@
 
 
 	<delete id="deleteSysLogById" parameterType="long">
-		delete from sys_log
+		delete from SYS_LOG
 		where ID = #{id}
 	</delete>
 
 	<delete id="deleteSysLogs" parameterType="com.glaf.core.query.SysLogQuery">
-		delete from sys_log
+		delete from SYS_LOG
 		where (
 		ID IN
 		<foreach item="x_rowId" index="index" collection="rowIds"
@@ -100,7 +100,7 @@
 	</delete>
 
 	<select id="getSysLogById" parameterType="long" resultMap="sysLogResultMap">
-		select * from sys_log where ID = #{id}
+		select * from SYS_LOG where ID = #{id}
 	</select>
 
 
@@ -126,7 +126,7 @@
 
 	<sql id="selectSysLogsSql">
 
-		from sys_log E
+		from SYS_LOG E
 
 		<where>
 			1 = 1
