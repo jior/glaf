@@ -34,7 +34,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import com.alibaba.fastjson.JSONObject;
-import com.glaf.core.config.ViewProperties;
+import com.glaf.core.config.MessageProperties;
 
 public class ResponseUtils {
 	private static Log logger = LogFactory.getLog(ResponseUtils.class);
@@ -165,7 +165,8 @@ public class ResponseUtils {
 	 * @return
 	 */
 	public static byte[] responseResult(boolean success) {
-		String responseDataType = ViewProperties.getString("responseDataType");
+		String responseDataType = MessageProperties
+				.getString("responseDataType");
 		if ("xml".equalsIgnoreCase(responseDataType)) {
 			responseXmlResult(success);
 		}
@@ -191,8 +192,8 @@ public class ResponseUtils {
 		if (success) {
 			Map<String, Object> jsonMap = new HashMap<String, Object>();
 			jsonMap.put("statusCode", 200);
-			jsonMap.put("msg", ViewProperties.getString("res_op_ok"));
-			jsonMap.put("message", ViewProperties.getString("res_op_ok"));
+			jsonMap.put("msg", MessageProperties.getString("res_op_ok"));
+			jsonMap.put("message", MessageProperties.getString("res_op_ok"));
 			JSONObject object = new JSONObject(jsonMap);
 			try {
 				return object.toString().getBytes("UTF-8");
@@ -201,8 +202,8 @@ public class ResponseUtils {
 		} else {
 			Map<String, Object> jsonMap = new HashMap<String, Object>();
 			jsonMap.put("statusCode", 500);
-			jsonMap.put("msg", ViewProperties.getString("res_op_error"));
-			jsonMap.put("message", ViewProperties.getString("res_op_error"));
+			jsonMap.put("msg", MessageProperties.getString("res_op_error"));
+			jsonMap.put("message", MessageProperties.getString("res_op_error"));
 			JSONObject object = new JSONObject(jsonMap);
 			try {
 				return object.toString().getBytes("UTF-8");
@@ -242,7 +243,7 @@ public class ResponseUtils {
 			buffer.append("<response>");
 			buffer.append("\n    <statusCode>200</statusCode>");
 			buffer.append("\n    <message>")
-					.append(ViewProperties.getString("res_op_ok"))
+					.append(MessageProperties.getString("res_op_ok"))
 					.append("</message>");
 			buffer.append("\n</response>");
 			try {
@@ -255,7 +256,7 @@ public class ResponseUtils {
 			buffer.append("<response>");
 			buffer.append("\n    <statusCode>500</statusCode>");
 			buffer.append("\n    <message>")
-					.append(ViewProperties.getString("res_op_error"))
+					.append(MessageProperties.getString("res_op_error"))
 					.append("</message>");
 			buffer.append("\n</response>");
 			try {
