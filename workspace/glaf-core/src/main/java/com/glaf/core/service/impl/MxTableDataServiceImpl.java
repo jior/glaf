@@ -83,6 +83,9 @@ public class MxTableDataServiceImpl implements ITableDataService {
 	public void deleteTableData(TableModel model) {
 		if (StringUtils.isNotEmpty(model.getTableName())
 				&& model.getColumns() != null && !model.getColumns().isEmpty()) {
+			if (model.getTableName() != null) {
+				model.setTableName(model.getTableName().toUpperCase());
+			}
 			tableDataMapper.deleteTableData(model);
 		}
 	}
@@ -100,6 +103,9 @@ public class MxTableDataServiceImpl implements ITableDataService {
 	 * @return
 	 */
 	public Paging getPageData(int pageNo, int pageSize, TableModel model) {
+		if (model.getTableName() != null) {
+			model.setTableName(model.getTableName().toUpperCase());
+		}
 		Paging page = new Paging();
 		TablePageQuery query = new TablePageQuery();
 		query.tableName(model.getTableName());
@@ -120,6 +126,9 @@ public class MxTableDataServiceImpl implements ITableDataService {
 	}
 
 	public Map<String, Object> getTableDataByPrimaryKey(TableModel model) {
+		if (model.getTableName() != null) {
+			model.setTableName(model.getTableName().toUpperCase());
+		}
 		return tableDataMapper.getTableDataByPrimaryKey(model);
 	}
 
@@ -129,7 +138,7 @@ public class MxTableDataServiceImpl implements ITableDataService {
 		TableModel tableModel = new TableModel();
 		ColumnModel idColumn = new ColumnModel();
 		idColumn.setColumnName(columnName);
-		tableModel.setTableName(tableName);
+		tableModel.setTableName(tableName.toUpperCase());
 		tableModel.setIdColumn(idColumn);
 		return tableDataMapper.getTablePrimaryKeyMap(tableModel);
 	}
@@ -139,7 +148,10 @@ public class MxTableDataServiceImpl implements ITableDataService {
 			String seqNo, Collection<TableModel> rows) {
 		logger.debug("tableDefinition=" + tableDefinition);
 		logger.debug("idColumn=" + tableDefinition.getIdColumn().toString());
-
+		if (tableDefinition.getTableName() != null) {
+			tableDefinition.setTableName(tableDefinition.getTableName()
+					.toUpperCase());
+		}
 		Map<String, Object> colMap = new HashMap<String, Object>();
 
 		Map<String, String> exprMap = new HashMap<String, String>();
@@ -263,6 +275,9 @@ public class MxTableDataServiceImpl implements ITableDataService {
 	public void insertTableData(List<TableModel> rows) {
 		if (rows != null && !rows.isEmpty()) {
 			for (TableModel t : rows) {
+				if (t.getTableName() != null) {
+					t.setTableName(t.getTableName().toUpperCase());
+				}
 				tableDataMapper.insertTableData(t);
 			}
 		}
@@ -273,6 +288,10 @@ public class MxTableDataServiceImpl implements ITableDataService {
 		TableDefinition tableDefinition = tableDefinitionService
 				.getTableDefinition(tableName);
 		if (tableDefinition != null) {
+			if (tableDefinition.getTableName() != null) {
+				tableDefinition.setTableName(tableDefinition.getTableName()
+						.toUpperCase());
+			}
 			List<ColumnDefinition> columns = tableDefinitionService
 					.getColumnDefinitionsByTableName(tableName);
 			if (columns != null && !columns.isEmpty()) {
@@ -315,6 +334,10 @@ public class MxTableDataServiceImpl implements ITableDataService {
 	@Transactional
 	public void insertTableData(TableDefinition tableDefinition,
 			List<Map<String, Object>> rows) {
+		if (tableDefinition.getTableName() != null) {
+			tableDefinition.setTableName(tableDefinition.getTableName()
+					.toUpperCase());
+		}
 		List<ColumnDefinition> columns = tableDefinition.getColumns();
 		if (columns != null && !columns.isEmpty()) {
 			Iterator<Map<String, Object>> iterator = rows.iterator();
@@ -357,6 +380,9 @@ public class MxTableDataServiceImpl implements ITableDataService {
 
 	@Transactional
 	public void insertTableData(TableModel model) {
+		if (model.getTableName() != null) {
+			model.setTableName(model.getTableName().toUpperCase());
+		}
 		tableDataMapper.insertTableData(model);
 	}
 
@@ -376,7 +402,10 @@ public class MxTableDataServiceImpl implements ITableDataService {
 			String seqNo, Collection<TableModel> rows) {
 		logger.debug("tableDefinition=" + tableDefinition);
 		logger.debug("idColumn=" + tableDefinition.getIdColumn().toString());
-
+		if (tableDefinition.getTableName() != null) {
+			tableDefinition.setTableName(tableDefinition.getTableName()
+					.toUpperCase());
+		}
 		if (tableDefinition.isInsertOnly()) {
 			return this.insertAll(tableDefinition, seqNo, rows);
 		}
@@ -603,6 +632,10 @@ public class MxTableDataServiceImpl implements ITableDataService {
 		TableDefinition tableDefinition = tableDefinitionService
 				.getTableDefinition(tableName);
 		if (tableDefinition != null) {
+			if (tableDefinition.getTableName() != null) {
+				tableDefinition.setTableName(tableDefinition.getTableName()
+						.toUpperCase());
+			}
 			String idColumnName = null;
 			List<Map<String, Object>> rowIds = null;
 			List<ColumnDefinition> columns = tableDefinitionService
@@ -659,6 +692,10 @@ public class MxTableDataServiceImpl implements ITableDataService {
 	@Transactional
 	public void saveOrUpdate(TableDefinition tableDefinition,
 			boolean updatable, List<Map<String, Object>> rows) {
+		if (tableDefinition.getTableName() != null) {
+			tableDefinition.setTableName(tableDefinition.getTableName()
+					.toUpperCase());
+		}
 		String tableName = tableDefinition.getTableName();
 		String idColumnName = null;
 		List<Map<String, Object>> rowIds = null;
@@ -729,6 +766,10 @@ public class MxTableDataServiceImpl implements ITableDataService {
 		TableDefinition tableDefinition = tableDefinitionService
 				.getTableDefinition(tableName);
 		if (tableDefinition != null && tableDefinition.getIdColumn() != null) {
+			if (tableDefinition.getTableName() != null) {
+				tableDefinition.setTableName(tableDefinition.getTableName()
+						.toUpperCase());
+			}
 			for (int i = 0, len = rows.size(); i < len; i++) {
 				JSONObject jsonObject = rows.getJSONObject(i);
 				this.saveTableData(tableName, jsonObject);
@@ -747,6 +788,10 @@ public class MxTableDataServiceImpl implements ITableDataService {
 		TableDefinition tableDefinition = tableDefinitionService
 				.getTableDefinition(tableName);
 		if (tableDefinition != null && tableDefinition.getIdColumn() != null) {
+			if (tableDefinition.getTableName() != null) {
+				tableDefinition.setTableName(tableDefinition.getTableName()
+						.toUpperCase());
+			}
 			ColumnDefinition idColumn = tableDefinition.getIdColumn();
 
 			boolean insertData = true;
@@ -964,6 +1009,9 @@ public class MxTableDataServiceImpl implements ITableDataService {
 	public void updateTableData(List<TableModel> rows) {
 		if (rows != null && !rows.isEmpty()) {
 			for (TableModel t : rows) {
+				if (t.getTableName() != null) {
+					t.setTableName(t.getTableName().toUpperCase());
+				}
 				tableDataMapper.updateTableDataByPrimaryKey(t);
 			}
 		}
@@ -974,6 +1022,10 @@ public class MxTableDataServiceImpl implements ITableDataService {
 		TableDefinition tableDefinition = tableDefinitionService
 				.getTableDefinition(tableName);
 		if (tableDefinition != null) {
+			if (tableDefinition.getTableName() != null) {
+				tableDefinition.setTableName(tableDefinition.getTableName()
+						.toUpperCase());
+			}
 			List<ColumnDefinition> columns = tableDefinitionService
 					.getColumnDefinitionsByTableName(tableName);
 			if (columns != null && !columns.isEmpty()) {
@@ -1020,6 +1072,10 @@ public class MxTableDataServiceImpl implements ITableDataService {
 	@Transactional
 	public void updateTableData(TableDefinition tableDefinition,
 			List<Map<String, Object>> rows) {
+		if (tableDefinition.getTableName() != null) {
+			tableDefinition.setTableName(tableDefinition.getTableName()
+					.toUpperCase());
+		}
 		List<ColumnDefinition> columns = tableDefinition.getColumns();
 		if (columns != null && !columns.isEmpty()) {
 			Iterator<Map<String, Object>> iterator = rows.iterator();
@@ -1066,6 +1122,9 @@ public class MxTableDataServiceImpl implements ITableDataService {
 
 	@Transactional
 	public void updateTableData(TableModel model) {
+		if (model.getTableName() != null) {
+			model.setTableName(model.getTableName().toUpperCase());
+		}
 		tableDataMapper.updateTableDataByPrimaryKey(model);
 	}
 
