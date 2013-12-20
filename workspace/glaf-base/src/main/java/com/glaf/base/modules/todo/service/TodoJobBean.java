@@ -33,8 +33,8 @@ import com.glaf.base.modules.sys.model.SysDepartment;
 import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.sys.service.SysUserService;
 import com.glaf.base.modules.sys.service.WorkCalendarService;
+
 import com.glaf.core.jdbc.DBConnectionFactory;
-import com.glaf.core.service.ITableDataService;
 import com.glaf.core.todo.Todo;
 import com.glaf.core.todo.TodoInstance;
 import com.glaf.core.todo.query.TodoQuery;
@@ -48,8 +48,6 @@ public class TodoJobBean {
 	private final static Log logger = LogFactory.getLog(TodoJobBean.class);
 
 	protected SysUserService sysUserService;
-
-	protected ITableDataService tableDataService;
 
 	protected TodoService todoService;
 
@@ -547,11 +545,6 @@ public class TodoJobBean {
 	@javax.annotation.Resource
 	public void setSysUserService(SysUserService sysUserService) {
 		this.sysUserService = sysUserService;
-	}
-
-	@javax.annotation.Resource
-	public void setTableDataService(ITableDataService tableDataService) {
-		this.tableDataService = tableDataService;
 	}
 
 	@javax.annotation.Resource

@@ -349,9 +349,8 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 	public TreeModel getTreeModelByAppId(long appId) {
 		SysApplication bean = this.findById(appId);
 		if (bean != null) {
-			TreeModel treeModel = new BaseTree();
+			TreeModel treeModel = sysTreeService.findById(bean.getNodeId());
 			treeModel.setCode(bean.getCode());
-			treeModel.setId(bean.getId());
 			treeModel.setName(bean.getName());
 			treeModel.setLocked(bean.getLocked());
 			treeModel.setDescription(bean.getDesc());
@@ -363,19 +362,64 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 	}
 
 	/**
+	 * 获取某个分类下的全部分类节点
+	 * 
+	 * @param parentId
+	 *            父节点编号
+	 * @return
+	 */
+	public List<TreeModel> getTreeModels(long parentId) {
+		List<TreeModel> treeModels = new ArrayList<TreeModel>();
+		TreeModel root = sysTreeService.findById(parentId);
+		SysTreeQuery query = new SysTreeQuery();
+		query.treeIdLike(root.getTreeId() + "%");
+		List<SysTree> trees = sysTreeMapper.getSysTrees(query);
+		if (trees != null && !trees.isEmpty()) {
+			for (SysTree tree : trees) {
+				treeModels.add(tree);
+			}
+		}
+		treeModels.remove(root);
+		return treeModels;
+	}
+
+	/**
 	 * 获取用户某个分类下的全部分类节点
 	 * 
-	 * @param parent
+	 * @param parentId
 	 *            父节点编号
 	 * @param userId
 	 *            用户登录账号
 	 * @return
 	 */
-	public List<TreeModel> getTreeModels(long parentId, String userId) {
+	public List<TreeModel> getTreeModels(long parentId, String actorId) {
 		List<TreeModel> treeModels = new ArrayList<TreeModel>();
-		SysUser user = authorizeService.login(userId);
+		SysUser user = sysUserService.findByAccount(actorId);
 		if (user != null) {
-			this.loadChildrenTreeModels(treeModels, parentId, user);
+			user = sysUserService.getUserPrivileges(user);
+			TreeModel root = sysTreeService.findById(parentId);
+			if (user.isSystemAdministrator()) {
+				SysTreeQuery query = new SysTreeQuery();
+				query.treeIdLike(root.getTreeId() + "%");
+				List<SysTree> trees = sysTreeMapper.getSysTrees(query);
+				if (trees != null && !trees.isEmpty()) {
+					for (SysTree tree : trees) {
+						treeModels.add(tree);
+					}
+				}
+			} else {
+				// this.loadChildrenTreeModels(treeModels, parentId, user);
+				SysTreeQuery query = new SysTreeQuery();
+				query.treeIdLike(root.getTreeId() + "%");
+				query.setActorId(actorId);
+				List<SysTree> trees = sysTreeMapper.getTreeListByUsers(query);
+				if (trees != null && !trees.isEmpty()) {
+					for (SysTree tree : trees) {
+						treeModels.add(tree);
+					}
+				}
+			}
+			treeModels.remove(root);
 		}
 		return treeModels;
 	}

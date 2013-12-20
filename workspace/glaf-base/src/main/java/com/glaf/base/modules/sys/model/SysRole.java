@@ -32,6 +32,11 @@ import com.glaf.core.base.JSONable;
 @Table(name = "SYS_ROLE")
 public class SysRole implements Serializable, JSONable {
 	private static final long serialVersionUID = 7738558740111388611L;
+
+	@Id
+	@Column(name = "ID", nullable = false)
+	protected long id;
+
 	/**
 	 * ±àÂë
 	 */
@@ -56,10 +61,6 @@ public class SysRole implements Serializable, JSONable {
 	 */
 	@Column(name = "ROLEDESC", length = 500)
 	protected String desc;
-
-	@Id
-	@Column(name = "ID", nullable = false)
-	protected long id;
 
 	/**
 	 * Ãû³Æ

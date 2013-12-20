@@ -109,6 +109,7 @@ public class SysUserServiceImpl implements SysUserService {
 	@Transactional
 	public boolean create(SysUser bean) {
 		bean.setCreateTime(new Date());
+		bean.setLastChangePasswordDate(new Date());
 		this.save(bean);
 		return true;
 	}
@@ -157,7 +158,7 @@ public class SysUserServiceImpl implements SysUserService {
 			if (user != null) {
 				logger.info(user.getName());
 				TableModel table = new TableModel();
-				table.setTableName("sys_user_role");
+				table.setTableName("SYS_USER_ROLE");
 				table.addIntegerColumn("AUTHORIZED", 0);
 				table.addLongColumn("ROLEID", deptRole.getId());
 				table.addLongColumn("USERID", user.getId());
@@ -307,7 +308,7 @@ public class SysUserServiceImpl implements SysUserService {
 		PageResult pager = new PageResult();
 		SysUserQuery query = new SysUserQuery();
 		query.deptId(Long.valueOf(deptId));
-		query.accountType(0);
+
 		int count = this.count(query);
 		if (count == 0) {// 结果集为空
 			pager.setPageSize(pageSize);
@@ -333,7 +334,6 @@ public class SysUserServiceImpl implements SysUserService {
 		PageResult pager = new PageResult();
 		SysUserQuery query = new SysUserQuery();
 		query.deptId(Long.valueOf(deptId));
-		query.accountType(0);
 		if (fullName != null && fullName.trim().length() > 0) {
 			query.nameLike(fullName);
 		}
@@ -443,26 +443,6 @@ public class SysUserServiceImpl implements SysUserService {
 		return users;
 	}
 
-	public SysUser getUserAndPrivileges(SysUser user) {
-		SysUser bean = user;
-		try {
-			bean.setRoles(getUserRoles(bean));
-			Iterator<SysDeptRole> roles = bean.getRoles().iterator();
-			while (roles.hasNext()) {
-				SysDeptRole role = (SysDeptRole) roles.next();
-				List<SysApplication> apps = sysApplicationMapper
-						.getSysApplicationByRoleId(role.getId());
-				List<SysFunction> functions = sysFunctionMapper
-						.getSysFunctionByRoleId(role.getId());
-				bean.getFunctions().addAll(functions);
-				bean.getApps().addAll(apps);
-			}
-		} catch (Exception e) {
-			logger.error(e);
-		}
-		return bean;
-	}
-
 	public SysUser getUserPrivileges(SysUser user) {
 		SysUser bean = user;
 		try {
@@ -537,24 +517,6 @@ public class SysUserServiceImpl implements SysUserService {
 				user.setDepartment(deptMap.get(Long.valueOf(user.getDeptId())));
 			}
 		}
-	}
-
-	public boolean isThisPlayer(SysUser user, String code) {
-		boolean flag = false;
-		Set<SysDeptRole> set = this.getUserRoles(user);
-		Iterator<SysDeptRole> it = set.iterator();
-		while (it.hasNext()) {
-			SysDeptRole deptRole = (SysDeptRole) it.next();
-			SysRole role = sysRoleMapper
-					.getSysRoleById(deptRole.getSysRoleId());
-			if (role != null && StringUtils.equals(role.getCode(), code)) {
-				// 代判断用户是否拥有此角色
-				flag = true;
-				break;
-			}
-		}
-
-		return flag;
 	}
 
 	public List<SysUser> list(SysUserQuery query) {
@@ -710,7 +672,7 @@ public class SysUserServiceImpl implements SysUserService {
 		if (userRoles != null && !userRoles.isEmpty()) {
 			for (SysUserRole userRole : userRoles) {
 				TableModel table = new TableModel();
-				table.setTableName("sys_user_role");
+				table.setTableName("SYS_USER_ROLE");
 				table.addLongColumn("userId", user.getId());
 				table.addLongColumn("roleId", userRole.getDeptRoleId());
 				tableDataService.deleteTableData(table);

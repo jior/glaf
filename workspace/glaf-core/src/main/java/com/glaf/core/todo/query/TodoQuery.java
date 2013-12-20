@@ -329,6 +329,14 @@ public class TodoQuery extends DataQuery {
 		this.roleIds = roleIds;
 		return this;
 	}
+	
+	public TodoQuery deptIds(List<Long> deptIds) {
+		if (deptIds == null) {
+			throw new RuntimeException("deptIds is empty ");
+		}
+		this.deptIds = deptIds;
+		return this;
+	}
 
 	public TodoQuery roleName(String roleName) {
 		if (roleName == null) {

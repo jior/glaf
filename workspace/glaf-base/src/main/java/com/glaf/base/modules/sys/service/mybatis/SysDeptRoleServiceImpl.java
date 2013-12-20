@@ -555,7 +555,7 @@ public class SysDeptRoleServiceImpl implements SysDeptRoleService {
 	public boolean update(SysDeptRole bean) {
 		this.save(bean);
 		TableModel table = new TableModel();
-		table.setTableName("sys_user_role");
+		table.setTableName("SYS_USER_ROLE");
 		table.addIntegerColumn("AUTHORIZED", 0);
 		table.addLongColumn("ROLEID", bean.getId());
 		tableDataService.deleteTableData(table);

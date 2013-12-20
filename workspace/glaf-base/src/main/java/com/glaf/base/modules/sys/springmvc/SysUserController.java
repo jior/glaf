@@ -46,7 +46,6 @@ import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
 import com.glaf.core.res.ViewMessages;
 import com.glaf.core.security.DigestUtil;
-import com.glaf.core.service.ITableDataService;
 import com.glaf.core.util.JsonUtils;
 import com.glaf.core.util.PageResult;
 import com.glaf.core.util.Paging;
@@ -54,6 +53,7 @@ import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.RequestUtils;
 import com.glaf.core.util.StringTools;
 import com.glaf.core.util.Tools;
+
 import com.glaf.base.modules.Constants;
 import com.glaf.base.modules.sys.SysConstants;
 import com.glaf.base.modules.sys.model.Dictory;
@@ -89,8 +89,6 @@ public class SysUserController {
 	protected SysTreeService sysTreeService;
 
 	protected SysUserService sysUserService;
-
-	protected ITableDataService tableDataService;
 
 	/**
 	 * 增加角色用户
@@ -436,9 +434,9 @@ public class SysUserController {
 		List<Dictory> dictories = dictoryService
 				.getDictoryList(SysConstants.USER_HEADSHIP);
 		modelMap.put("dictories", dictories);
-		
+
 		List<Dictory> accountTypeDictories = dictoryService
-			.getDictoryList(SysConstants.USER_ACCOUNTTYPE);
+				.getDictoryList(SysConstants.USER_ACCOUNTTYPE);
 		modelMap.put("accountTypeDictories", accountTypeDictories);
 
 		SysTree parent = sysTreeService.getSysTreeByCode(Constants.TREE_DEPT);
@@ -706,7 +704,8 @@ public class SysUserController {
 			bean.setBlocked(ParamUtil.getIntParameter(request, "blocked", 0));
 			bean.setHeadship(ParamUtil.getParameter(request, "headship"));
 			bean.setUserType(ParamUtil.getIntParameter(request, "userType", 0));
-			bean.setAccountType(ParamUtil.getIntParameter(request, "accountType", 0));
+			bean.setAccountType(ParamUtil.getIntParameter(request,
+					"accountType", 0));
 			bean.setUpdateBy(RequestUtils.getActorId(request));
 			ret = sysUserService.update(bean);
 		}
@@ -945,11 +944,6 @@ public class SysUserController {
 		logger.info("setSysUserService");
 	}
 
-	@javax.annotation.Resource
-	public void setTableDataService(ITableDataService tableDataService) {
-		this.tableDataService = tableDataService;
-	}
-
 	/**
 	 * 显示部门下所有人
 	 * 
@@ -1168,7 +1162,7 @@ public class SysUserController {
 		long userId = ParamUtil.getLongParameter(request, "userId", 0);
 		SysUser user = sysUserService.findById(userId);
 		request.setAttribute("user", user);
-		
+
 		SysTree parent = sysTreeService.getSysTreeByCode(Constants.TREE_DEPT);
 		List<SysTree> list = new ArrayList<SysTree>();
 		parent.setDeep(0);

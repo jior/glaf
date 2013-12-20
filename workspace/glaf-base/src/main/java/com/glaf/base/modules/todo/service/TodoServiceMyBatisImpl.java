@@ -91,7 +91,7 @@ public class TodoServiceMyBatisImpl implements TodoService {
 	public void createTasks(Collection processInstanceIds, List rows) {
 		if (processInstanceIds != null && processInstanceIds.size() > 0) {
 			TableModel table = new TableModel();
-			table.setTableName("sys_todo_instance");
+			table.setTableName("SYS_TODO_INSTANCE");
 			table.addStringColumn("provider", "jbpm");
 			table.addCollectionColumn("processInstanceId", processInstanceIds);
 			tableDataService.deleteTableData(table);
@@ -106,7 +106,7 @@ public class TodoServiceMyBatisImpl implements TodoService {
 		List processInstanceIds = new ArrayList();
 		processInstanceIds.add(processInstanceId);
 		TableModel table = new TableModel();
-		table.setTableName("sys_todo_instance");
+		table.setTableName("SYS_TODO_INSTANCE");
 		table.addStringColumn("provider", "jbpm");
 		table.addCollectionColumn("processInstanceId", processInstanceIds);
 		tableDataService.deleteTableData(table);
@@ -119,7 +119,7 @@ public class TodoServiceMyBatisImpl implements TodoService {
 
 	public void createTasksOfSQL(List rows) {
 		TableModel table = new TableModel();
-		table.setTableName("sys_todo_instance");
+		table.setTableName("SYS_TODO_INSTANCE");
 		table.addStringColumn("provider", "sql");
 		tableDataService.deleteTableData(table);
 
@@ -130,7 +130,7 @@ public class TodoServiceMyBatisImpl implements TodoService {
 
 	public void createTasksOfWorkflow(List rows) {
 		TableModel table = new TableModel();
-		table.setTableName("sys_todo_instance");
+		table.setTableName("SYS_TODO_INSTANCE");
 		table.addStringColumn("provider", "jbpm");
 		tableDataService.deleteTableData(table);
 		if (rows.size() > 0) {
@@ -141,7 +141,7 @@ public class TodoServiceMyBatisImpl implements TodoService {
 
 	public void createTasksOfWorkflow(String actorId, List rows) {
 		TableModel table = new TableModel();
-		table.setTableName("sys_todo_instance");
+		table.setTableName("SYS_TODO_INSTANCE");
 		table.addStringColumn("actorId", actorId);
 		table.addStringColumn("provider", "sql");
 		tableDataService.deleteTableData(table);
@@ -154,7 +154,7 @@ public class TodoServiceMyBatisImpl implements TodoService {
 
 	public void createTodoInstances(long todoId, List rows) {
 		TableModel table = new TableModel();
-		table.setTableName("sys_todo_instance");
+		table.setTableName("SYS_TODO_INSTANCE");
 		table.addLongColumn("todoId", todoId);
 		table.addStringColumn("provider", "sql");
 		tableDataService.deleteTableData(table);
@@ -248,15 +248,6 @@ public class TodoServiceMyBatisImpl implements TodoService {
 	}
 
 	public List getTodoInstanceList(TodoQuery query) {
-		Map params = new LinkedHashMap();
-		StringBuffer buffer = new StringBuffer();
-		buffer.append(" from com.glaf.core.todo.TodoInstance as a where 1=1 ");
-
-		if (query.getActorId() != null) {
-			params.put("actorId", query.getActorId());
-			buffer.append(" and a.actorId = :actorId ");
-		}
-
 		String actorIdx = query.getActorIdx();
 		List rows = getUserEntityList(actorIdx);
 		if (rows != null && rows.size() > 0) {
@@ -264,9 +255,9 @@ public class TodoServiceMyBatisImpl implements TodoService {
 			boolean isDeptAdmin = false;
 			boolean isStockTopManager = false;
 
-			Set roleIds = new HashSet();
-			Set deptIds = new HashSet();
-			Set actorxIds = new HashSet();
+			List roleIds = new ArrayList();
+			List deptIds = new ArrayList();
+			List actorxIds = new ArrayList();
 
 			actorxIds.add(actorIdx);
 
@@ -313,143 +304,18 @@ public class TodoServiceMyBatisImpl implements TodoService {
 			}
 
 			if (!isDeptAdmin) {
-				params.put("roleIds", roleIds);
-				buffer.append(" and a.roleId in ( :roleIds ) ");
+				query.roleIds(roleIds);
 			}
 
 			if (!isStockTopManager) {
-				params.put("deptIds", deptIds);
-				buffer.append(" and a.deptId in ( :deptIds ) ");
+				query.deptIds(deptIds);
 			}
 
 			if (!(isDeptAdmin || isStockTopManager)) {
-				params.put("actorxIds", actorxIds);
-				buffer.append(" and a.actorId in ( :actorxIds ) ");
+				query.actorIds(actorxIds);
 			}
 
 		}
-
-		if (query.getActorIds() != null && !query.getActorIds().isEmpty()) {
-			params.put("actorIds", query.getActorIds());
-			buffer.append(" and a.actorId in ( :actorIds ) ");
-		}
-
-		if (query.getObjectId() != null) {
-			params.put("objectId", query.getObjectId());
-			buffer.append(" and a.objectId = :objectId ");
-		}
-
-		if (query.getObjectIds() != null && !query.getObjectIds().isEmpty()) {
-			params.put("objectIds", query.getObjectIds());
-			buffer.append(" and a.objectId in ( :objectIds ) ");
-		}
-
-		if (query.getObjectValue() != null) {
-			params.put("objectValue", query.getObjectValue());
-			buffer.append(" and a.objectValue = :objectValue ");
-		}
-
-		if (query.getObjectValues() != null
-				&& !query.getObjectValues().isEmpty()) {
-			params.put("objectValues", query.getObjectValues());
-			buffer.append(" and a.objectValue in ( :objectValues ) ");
-		}
-
-		if (query.getProcessInstanceId() != null) {
-			params.put("processInstanceId", query.getProcessInstanceId());
-			buffer.append(" and a.processInstanceId = :processInstanceId ");
-		}
-
-		if (query.getProcessInstanceIds() != null
-				&& !query.getProcessInstanceIds().isEmpty()) {
-			params.put("processInstanceIds", query.getProcessInstanceIds());
-			buffer.append(" and a.processInstanceId in ( :processInstanceIds ) ");
-		}
-
-		if (query.getProvider() != null) {
-			params.put("provider", query.getProvider());
-			buffer.append(" and a.provider = :provider ");
-		}
-
-		if (query.getRoleId() != null) {
-			params.put("roleId", query.getRoleId());
-			buffer.append(" and ( a.roleId = :roleId )");
-		}
-
-		if (query.getRoleIds() != null && !query.getRoleIds().isEmpty()) {
-			params.put("roleIds", query.getRoleIds());
-			buffer.append(" and a.roleId in ( :roleIds ) ");
-		}
-
-		if (query.getDeptId() != null) {
-
-			params.put("deptId", query.getDeptId());
-
-			buffer.append(" and ( a.deptId = :deptId )");
-		}
-
-		if (query.getDeptIds() != null && !query.getDeptIds().isEmpty()) {
-			params.put("deptIds", query.getDeptIds());
-			buffer.append(" and a.deptId in ( :deptIds ) ");
-		}
-
-		if (query.getTodoId() != null) {
-
-			params.put("todoId", query.getTodoId());
-
-			buffer.append(" and ( a.todoId = :todoId )");
-		}
-
-		if (query.getTodoIds() != null && !query.getTodoIds().isEmpty()) {
-			params.put("todoIds", query.getTodoIds());
-			buffer.append(" and a.todoId in ( :todoIds ) ");
-		}
-
-		if (query.getAppId() != null) {
-
-			params.put("appId", query.getAppId());
-
-			buffer.append(" and ( a.appId = :appId )");
-		}
-
-		if (query.getAppIds() != null && !query.getAppIds().isEmpty()) {
-			params.put("appIds", query.getAppIds());
-			buffer.append(" and a.appId in ( :appIds ) ");
-		}
-
-		if (query.getModuleId() != null) {
-
-			params.put("moduleId", query.getModuleId());
-
-			buffer.append(" and ( a.moduleId = :moduleId )");
-		}
-
-		if (query.getModuleIds() != null && !query.getModuleIds().isEmpty()) {
-			params.put("moduleIds", query.getModuleIds());
-			buffer.append(" and a.moduleId in ( :moduleIds ) ");
-		}
-
-		if (query.getAfterCreateDate() != null) {
-			params.put("createDate_start", query.getAfterCreateDate());
-			buffer.append(" and ( a.createDate >= :createDate_start )");
-		}
-
-		if (query.getBeforeCreateDate() != null) {
-
-			params.put("createDate_end", query.getBeforeCreateDate());
-
-			buffer.append(" and ( a.createDate <= :createDate_end )");
-		}
-
-		String orderBy = query.getOrderBy();
-		if (orderBy != null) {
-			buffer.append(" order by a.").append(orderBy).append(" asc ");
-		} else {
-			buffer.append(" order by a.moduleId asc ");
-		}
-
-		logger.debug(buffer.toString());
-		logger.debug(params);
 
 		return null;
 	}
@@ -499,10 +365,10 @@ public class TodoServiceMyBatisImpl implements TodoService {
 		StringBuffer sb = new StringBuffer();
 		sb.append(
 				" SELECT distinct d.account actorId, b.deptId deptId, b.sysRoleId roleId ")
-				.append(" FROM sys_user_role a  ")
-				.append(" INNER JOIN sys_dept_role b ON a.roleId = b.id  ")
-				.append(" INNER JOIN sys_role c ON b.sysRoleId = c.id ")
-				.append(" INNER JOIN sys_user d ON a.userId = d.id ")
+				.append(" FROM SYS_USER_ROLE a  ")
+				.append(" INNER JOIN SYS_DEPT_ROLE b ON a.roleId = b.id  ")
+				.append(" INNER JOIN SYS_ROLE c ON b.sysRoleId = c.id ")
+				.append(" INNER JOIN SYS_USER d ON a.userId = d.id ")
 				.append(" WHERE ( d.account = '").append(actorId)
 				.append("' ) ");
 		Map<String, Object> params = new HashMap<String, Object>();

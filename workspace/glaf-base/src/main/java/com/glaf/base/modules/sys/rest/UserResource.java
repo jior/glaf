@@ -46,7 +46,6 @@ import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
 import com.glaf.core.res.ViewMessages;
 import com.glaf.core.security.DigestUtil;
-import com.glaf.core.service.ITableDataService;
 import com.glaf.core.util.RequestUtils;
 
 @Controller("/rs/identity/user")
@@ -63,8 +62,6 @@ public class UserResource {
 	protected SysTreeService sysTreeService;
 
 	protected SysUserService sysUserService;
-
-	protected ITableDataService tableDataService;
 
 	/**
 	 * 提交修改信息
@@ -219,11 +216,6 @@ public class UserResource {
 	@javax.annotation.Resource
 	public void setSysUserService(SysUserService sysUserService) {
 		this.sysUserService = sysUserService;
-	}
-
-	@javax.annotation.Resource
-	public void setTableDataService(ITableDataService tableDataService) {
-		this.tableDataService = tableDataService;
 	}
 
 }

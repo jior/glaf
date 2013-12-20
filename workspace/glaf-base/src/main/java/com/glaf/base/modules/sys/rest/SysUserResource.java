@@ -60,7 +60,6 @@ import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
 import com.glaf.core.res.ViewMessages;
 import com.glaf.core.security.DigestUtil;
-import com.glaf.core.service.ITableDataService;
 import com.glaf.core.util.Paging;
 import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.RequestUtils;
@@ -80,8 +79,6 @@ public class SysUserResource {
 	protected SysTreeService sysTreeService;
 
 	protected SysUserService sysUserService;
-
-	protected ITableDataService tableDataService;
 
 	/**
 	 * 增加角色用户
@@ -635,11 +632,6 @@ public class SysUserResource {
 	@javax.annotation.Resource
 	public void setSysUserService(SysUserService sysUserService) {
 		this.sysUserService = sysUserService;
-	}
-
-	@javax.annotation.Resource
-	public void setTableDataService(ITableDataService tableDataService) {
-		this.tableDataService = tableDataService;
 	}
 
 }

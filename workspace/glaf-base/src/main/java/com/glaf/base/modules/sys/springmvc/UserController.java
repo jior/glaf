@@ -50,7 +50,6 @@ import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
 import com.glaf.core.res.ViewMessages;
 import com.glaf.core.security.DigestUtil;
-import com.glaf.core.service.ITableDataService;
 import com.glaf.core.util.RequestUtils;
 import com.glaf.core.util.ResponseUtils;
 import com.glaf.core.util.StringTools;
@@ -69,8 +68,6 @@ public class UserController {
 	protected SysTreeService sysTreeService;
 
 	protected SysUserService sysUserService;
-
-	protected ITableDataService tableDataService;
 
 	/**
 	 * œ‘ æ–ﬁ∏ƒ“≥√Ê
@@ -320,11 +317,6 @@ public class UserController {
 	public void setSysUserService(SysUserService sysUserService) {
 		this.sysUserService = sysUserService;
 
-	}
-
-	@javax.annotation.Resource
-	public void setTableDataService(ITableDataService tableDataService) {
-		this.tableDataService = tableDataService;
 	}
 
 }

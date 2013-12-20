@@ -89,7 +89,7 @@ public interface SysUserService {
 	 * @return SysUser
 	 */
 	SysUser findByAccount(String account);
-	
+
 	/**
 	 * 按邮箱查找对象
 	 * 
@@ -98,8 +98,7 @@ public interface SysUserService {
 	 * @return SysUser
 	 */
 	SysUser findByMail(String mail);
-	
-	
+
 	/**
 	 * 按手机查找对象
 	 * 
@@ -236,8 +235,6 @@ public interface SysUserService {
 	 */
 	List<SysUser> getSysUserWithDeptList();
 
-	SysUser getUserAndPrivileges(SysUser user);
-
 	/**
 	 * 其用户权限
 	 * 
@@ -260,8 +257,6 @@ public interface SysUserService {
 	 * @return
 	 */
 	Set<SysDeptRole> getUserRoles(SysUser user);
-
-	boolean isThisPlayer(SysUser user, String code);
 
 	/**
 	 * 更新

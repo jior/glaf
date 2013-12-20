@@ -75,7 +75,7 @@ public interface SysApplicationService {
 	 * @return
 	 */
 	SysApplication findById(long id);
-	
+
 	/**
 	 * 按编码查找对象
 	 * 
@@ -170,16 +170,28 @@ public interface SysApplicationService {
 	 * @return
 	 */
 	JSONArray getUserMenu(long parentId, String userId);
-	
+
 	TreeModel getTreeModelByAppId(long appId);
-	
+
 	/**
-	 * 获取用户某个分类下的全部分类节点
-	 * @param parent 父节点编号
-	 * @param userId 用户登录账号
+	 * 获取某个分类下的全部分类节点
+	 * 
+	 * @param parentId
+	 *            (sys_tree表的id) 父节点编号
 	 * @return
 	 */
-	List<TreeModel> getTreeModels(long parentId, String userId);
+	List<TreeModel> getTreeModels(long parentId);
+
+	/**
+	 * 获取用户某个分类下的全部分类节点
+	 * 
+	 * @param parentId
+	 *            父节点编号(sys_tree表的id)
+	 * @param actorId
+	 *            用户登录账号
+	 * @return
+	 */
+	List<TreeModel> getTreeModels(long parentId, String actorId);
 
 	/**
 	 * 排序

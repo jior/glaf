@@ -135,6 +135,7 @@ public class MyPortalController {
 
 		TreeModel root = sysApplicationService.getTreeModelByAppId(appId);
 
+		logger.debug("####root tree id="+root.getId());
 		List<TreeModel> treeNodes = sysApplicationService.getTreeModels(
 				root.getId(), loginContext.getActorId());
 

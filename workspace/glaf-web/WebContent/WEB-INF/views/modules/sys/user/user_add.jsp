@@ -121,6 +121,19 @@
 		</td>
       </tr>
 	  <tr>
+        <td class="input-box2" valign="top">帐户类型</td>
+        <td>
+		    <select id="accountType" name="accountType">
+			  <option value="0">系统用户</option>
+			  <option value="1">供应商</option>
+			  <option value="2">微信用户</option>
+		   </select>
+		   <script type="text/javascript">
+		        document.getElementById("accountType").value="${bean.accountType}";
+		   </script>
+		</td>
+      </tr>
+	  <tr>
         <td class="input-box2" valign="top">直接上级</td>
         <td>
 		  <input type="hidden" id="superiorIds" name="superiorIds" value="">

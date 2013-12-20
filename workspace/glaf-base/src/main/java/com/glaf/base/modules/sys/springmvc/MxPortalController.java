@@ -92,6 +92,7 @@ public class MxPortalController {
 
 	@RequestMapping("/my/home")
 	public ModelAndView home(HttpServletRequest request, ModelMap modelMap) {
+		logger.debug("----------------------@/my/home@--------------------------");
 		RequestUtils.setRequestParameterToAttribute(request);
 
 		if (StringUtils.isNotEmpty(request.getParameter("systemName"))) {
@@ -114,12 +115,13 @@ public class MxPortalController {
 			ex.printStackTrace();
 			logger.error(ex);
 		}
-
+		logger.debug("----------------------#/my/home#--------------------------");
 		return new ModelAndView("/modules/portal/home", modelMap);
 	}
 
 	@RequestMapping("/my/main")
 	public ModelAndView main(HttpServletRequest request, ModelMap modelMap) {
+		logger.debug("----------------------@/my/main@--------------------------");
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 
 		RequestUtils.setRequestParameterToAttribute(request);
@@ -185,6 +187,8 @@ public class MxPortalController {
 
 		logger.debug("#######################################");
 		logger.debug(loginContext.getRoles());
+		
+		logger.debug("----------------------#/my/main#--------------------------");
 
 		String jx_view = request.getParameter("jx_view");
 
