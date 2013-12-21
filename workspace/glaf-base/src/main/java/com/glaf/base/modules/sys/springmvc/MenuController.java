@@ -43,6 +43,10 @@ public class MenuController {
 		if (menuId != null && StringUtils.isNumeric(menuId)) {
 			SysApplication app = sysApplicationService.findById(Long
 					.parseLong(menuId));
+			if (app == null) {
+				app = sysApplicationService
+						.findByNodeId(Long.parseLong(menuId));
+			}
 			if (app != null) {
 				boolean accessable = false;
 				if (loginContext.isSystemAdministrator()) {

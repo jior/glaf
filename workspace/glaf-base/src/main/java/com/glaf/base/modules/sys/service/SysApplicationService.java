@@ -86,6 +86,14 @@ public interface SysApplicationService {
 	SysApplication findByCode(String code);
 
 	/**
+	 * 根据节点编号查找对象
+	 * 
+	 * @param nodeId
+	 * @return
+	 */
+	SysApplication findByNodeId(long nodeId);
+
+	/**
 	 * 按名称查找对象
 	 * 
 	 * @param name

@@ -197,6 +197,27 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 		return null;
 	}
 
+	/**
+	 * 根据节点编号查找对象
+	 * 
+	 * @param nodeId
+	 * @return
+	 */
+	public SysApplication findByNodeId(long nodeId) {
+		SysApplicationQuery query = new SysApplicationQuery();
+		query.nodeId(nodeId);
+
+		List<SysApplication> list = this.list(query);
+		if (list != null && !list.isEmpty()) {
+			SysApplication sysApplication = list.get(0);
+			SysTree node = sysTreeService.findById(sysApplication.getNodeId());
+			sysApplication.setNode(node);
+			return sysApplication;
+		}
+
+		return null;
+	}
+
 	public List<SysApplication> getAccessAppList(long parentId, SysUser user) {
 		long parentAppId = parentId;
 		SysApplication parentApp = findById(parentId);
@@ -399,25 +420,27 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 			user = sysUserService.getUserPrivileges(user);
 			TreeModel root = sysTreeService.findById(parentId);
 			if (user.isSystemAdministrator()) {
-				SysTreeQuery query = new SysTreeQuery();
-				query.treeIdLike(root.getTreeId() + "%");
-				List<SysTree> trees = sysTreeMapper.getSysTrees(query);
-				if (trees != null && !trees.isEmpty()) {
-					for (SysTree tree : trees) {
-						treeModels.add(tree);
-					}
-				}
+				this.loadChildrenTreeModels(treeModels, parentId, user);
+				// SysTreeQuery query = new SysTreeQuery();
+				// query.treeIdLike(root.getTreeId() + "%");
+				// List<SysTree> trees = sysTreeMapper.getSysTrees(query);
+				// if (trees != null && !trees.isEmpty()) {
+				// for (SysTree tree : trees) {
+				// treeModels.add(tree);
+				// }
+				// }
 			} else {
-				// this.loadChildrenTreeModels(treeModels, parentId, user);
-				SysTreeQuery query = new SysTreeQuery();
-				query.treeIdLike(root.getTreeId() + "%");
-				query.setActorId(actorId);
-				List<SysTree> trees = sysTreeMapper.getTreeListByUsers(query);
-				if (trees != null && !trees.isEmpty()) {
-					for (SysTree tree : trees) {
-						treeModels.add(tree);
-					}
-				}
+				this.loadChildrenTreeModels(treeModels, parentId, user);
+				// SysTreeQuery query = new SysTreeQuery();
+				// query.treeIdLike(root.getTreeId() + "%");
+				// query.setActorId(actorId);
+				// List<SysTree> trees =
+				// sysTreeMapper.getTreeListByUsers(query);
+				// if (trees != null && !trees.isEmpty()) {
+				// for (SysTree tree : trees) {
+				// treeModels.add(tree);
+				// }
+				// }
 			}
 			treeModels.remove(root);
 		}
