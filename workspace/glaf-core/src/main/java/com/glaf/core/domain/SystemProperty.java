@@ -75,6 +75,12 @@ public class SystemProperty implements Serializable, JSONable {
 	@Column(name = "INITVALUE_", length = 1000)
 	protected String initValue;
 
+	@Column(name = "MAXVALUE_")
+	protected Double maxValue;
+
+	@Column(name = "MINVALUE_")
+	protected Double minValue;
+
 	@Column(name = "LOCKED_")
 	protected int locked;
 
@@ -131,6 +137,14 @@ public class SystemProperty implements Serializable, JSONable {
 
 	public int getLocked() {
 		return locked;
+	}
+
+	public Double getMaxValue() {
+		return maxValue;
+	}
+
+	public Double getMinValue() {
+		return minValue;
 	}
 
 	public String getName() {
@@ -191,6 +205,14 @@ public class SystemProperty implements Serializable, JSONable {
 
 	public void setLocked(int locked) {
 		this.locked = locked;
+	}
+
+	public void setMaxValue(Double maxValue) {
+		this.maxValue = maxValue;
+	}
+
+	public void setMinValue(Double minValue) {
+		this.minValue = minValue;
 	}
 
 	public void setName(String name) {

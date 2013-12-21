@@ -13,6 +13,8 @@
 		<result property="description" column="DESCRIPTION_" jdbcType="VARCHAR" />
 		<result property="category" column="CATEGORY_" jdbcType="VARCHAR" />
 		<result property="initValue" column="INITVALUE_" jdbcType="VARCHAR" />
+		<result property="maxValue" column="MAXVALUE_" jdbcType="DOUBLE" />
+		<result property="minValue" column="MINVALUE_" jdbcType="DOUBLE" />
 		<result property="value" column="VALUE_" jdbcType="VARCHAR" />
 		<result property="locked" column="LOCKED_" jdbcType="INTEGER" />
 	</resultMap>
@@ -28,19 +30,28 @@
 		,DESCRIPTION_
 		,CATEGORY_
 		,INITVALUE_
+		,MAXVALUE_
+		,MINVALUE_
 		,VALUE_
 		,LOCKED_
 		)
 		values (
 		#{id, jdbcType=VARCHAR}
 		,#{name,jdbcType=VARCHAR}
-		,#{title, jdbcType=VARCHAR}
+		,#{title,
+		jdbcType=VARCHAR}
 		,#{inputType, jdbcType=VARCHAR}
-		,#{type, jdbcType=VARCHAR}
+		,#{type,
+		jdbcType=VARCHAR}
 		,#{description, jdbcType=VARCHAR}
-		,#{category, jdbcType=VARCHAR}
+		,#{category,
+		jdbcType=VARCHAR}
 		,#{initValue, jdbcType=VARCHAR}
-		,#{value, jdbcType=VARCHAR}
+		,#{maxValue,
+		jdbcType=DOUBLE}
+		,#{minValue, jdbcType=DOUBLE}
+		,#{value,
+		jdbcType=VARCHAR}
 		,#{locked,
 		jdbcType=INTEGER}
 		)
@@ -49,10 +60,12 @@
 
 	<update id="updateSystemProperty" parameterType="com.glaf.core.domain.SystemProperty">
 
-		update SYS_PROPERTY
+		update
+		SYS_PROPERTY
 		set
 		TITLE_ = #{title, jdbcType=VARCHAR},
-		DESCRIPTION_ = #{description, jdbcType=VARCHAR},
+		DESCRIPTION_ =
+		#{description, jdbcType=VARCHAR},
 		VALUE_ = #{value, jdbcType=VARCHAR}
 		where ID_ = #{id, jdbcType=VARCHAR}
 
@@ -61,7 +74,8 @@
 
 	<delete id="deleteSystemPropertyById" parameterType="string">
 
-		delete from SYS_PROPERTY
+		delete from
+		SYS_PROPERTY
 		where ID_ = #{id}
 
 	</delete>
