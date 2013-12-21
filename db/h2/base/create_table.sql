@@ -411,6 +411,7 @@ CREATE TABLE SYS_PROPERTY (
         name_ varchar(50),
         title_ varchar(200),
         type_ varchar(50),
+	inputtype_ varchar(50),
         value_ varchar(1000),
         PRIMARY KEY (id_)
 );

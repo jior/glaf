@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.base.online.mapper.UserOnlineMapper">
+
+	<resultMap id="userOnlineResultMap" type="com.glaf.base.online.domain.UserOnline">
+		<id property="id" column="ID_" jdbcType="BIGINT" />
+		<result property="actorId" column="ACTORID_" jdbcType="VARCHAR" />
+		<result property="name" column="NAME_" jdbcType="VARCHAR" />
+		<result property="loginDate" column="LOGINDATE_" jdbcType="TIMESTAMP" />
+		<result property="loginIP" column="LOGINIP_" jdbcType="VARCHAR" />
+		<result property="checkDate" column="CHECKDATE_" jdbcType="TIMESTAMP" />
+		<result property="sessionId" column="SESSIONID_" jdbcType="VARCHAR" />
+	</resultMap>
+
+
+	<insert id="insertUserOnline" parameterType="com.glaf.base.online.domain.UserOnline">
+		insert into SYS_USER_ONLINE
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ID_
+			<if test="actorId != null">
+				,ACTORID_
+			</if>
+			<if test="name != null">
+				,NAME_
+			</if>
+			<if test="loginDate != null">
+				,LOGINDATE_
+			</if>
+			<if test="loginIP != null">
+				,LOGINIP_
+			</if>
+			<if test="checkDate != null">
+				,CHECKDATE_
+			</if>
+			<if test="sessionId != null">
+				,SESSIONID_
+			</if>
+		</trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			#{id, jdbcType=BIGINT}
+
+			<if test="actorId != null">
+				,#{actorId, jdbcType=VARCHAR}
+			</if>
+			<if test="name != null">
+				,#{name, jdbcType=VARCHAR}
+			</if>
+			<if test="loginDate != null">
+				,#{loginDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="loginIP != null">
+				,#{loginIP, jdbcType=VARCHAR}
+			</if>
+			<if test="checkDate != null">
+				,#{checkDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="sessionId != null">
+				,#{sessionId, jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</insert>
+
+
+	<update id="updateUserOnline" parameterType="com.glaf.base.online.domain.UserOnline">
+		update SYS_USER_ONLINE
+		set
+		<trim prefix="" suffix="" suffixOverrides=",">
+			<if test="loginDate != null">
+				LOGINDATE_ = #{loginDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="loginIP != null">
+				LOGINIP_ = #{loginIP, jdbcType=VARCHAR},
+			</if>
+			<if test="checkDate != null">
+				CHECKDATE_ = #{checkDate, jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+		where
+		ID_ = #{id, jdbcType=BIGINT}
+
+	</update>
+
+
+	<delete id="deleteUserOnlineById" parameterType="long">
+		delete from
+		SYS_USER_ONLINE
+		where ID_ = #{id}
+	</delete>
+
+
+	<delete id="deleteUserOnlines" parameterType="com.glaf.base.online.query.UserOnlineQuery">
+		delete from SYS_USER_ONLINE
+		where (
+		ID_ IN
+		<foreach item="x_id" index="index" collection="ids" open="("
+			separator="," close=")">
+			#{x_id}
+		</foreach>
+		)
+	</delete>
+
+
+	<select id="getUserOnlineById" parameterType="long"
+		resultMap="userOnlineResultMap">
+		select * from SYS_USER_ONLINE where ID_ = #{id}
+	</select>
+
+
+	<select id="getUserOnlines" parameterType="com.glaf.base.online.query.UserOnlineQuery"
+		resultMap="userOnlineResultMap">
+		select distinct E.*
+		<include refid="selectUserOnlinesSql" />
+		<choose>
+			<when test="orderBy != null">
+				order by ${orderBy}
+			</when>
+			<otherwise>
+				order by E.LOGINDATE_ desc
+			</otherwise>
+		</choose>
+	</select>
+
+
+	<select id="getUserOnlineCount" parameterType="com.glaf.base.online.query.UserOnlineQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectUserOnlinesSql" />
+	</select>
+
+
+	<sql id="selectUserOnlinesSql">
+
+		from SYS_USER_ONLINE E
+
+		<where>
+			1 = 1
+
+			<if test="actorId != null and actorId != '' ">
+				and E.ACTORID_ = #{actorId}
+			</if>
+
+			<if test="actorIds != null and actorIds.size !=0">
+				and E.ACTORID_ IN
+				<foreach item="x_actorId" index="index" collection="actorIds"
+					open="(" separator="," close=")">
+					#{x_actorId}
+				</foreach>
+			</if>
+
+			<if test="name != null and name != '' ">
+				and E.NAME_ = #{name}
+			</if>
+
+			<if test="loginDateGreaterThanOrEqual != null">
+				and E.LOGINDATE_ &gt;= #{loginDateGreaterThanOrEqual}
+			</if>
+
+			<if test="loginDateLessThanOrEqual != null">
+				and E.LOGINDATE_ &lt;= #{loginDateLessThanOrEqual}
+			</if>
+
+			<if test="loginIP != null and loginIP != '' ">
+				and E.LOGINIP_ = #{loginIP}
+			</if>
+
+		</where>
+	</sql>
+
+</mapper>

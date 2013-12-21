@@ -259,6 +259,7 @@
 		}
 	}
 </script>
+<iframe id="newFrame" name="newFrame" width="0" height="0" src="<%=request.getContextPath()%>/mx/sys/online/remain"></iframe>
 </body>
 </html>
  

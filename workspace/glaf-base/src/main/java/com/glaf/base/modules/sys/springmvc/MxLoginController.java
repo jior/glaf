@@ -34,20 +34,26 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.glaf.base.listener.UserOnlineListener;
 import com.glaf.base.modules.sys.SysConstants;
 import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.sys.service.AuthorizeService;
 import com.glaf.base.modules.sys.service.SysApplicationService;
 import com.glaf.base.modules.sys.service.SysUserService;
+import com.glaf.base.online.domain.UserOnline;
+import com.glaf.base.online.service.UserOnlineService;
 import com.glaf.base.utils.ContextUtil;
 import com.glaf.base.utils.ParamUtil;
+import com.glaf.core.cache.CacheFactory;
 import com.glaf.core.config.Environment;
+import com.glaf.core.context.ContextFactory;
+import com.glaf.core.domain.SystemProperty;
 import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
 import com.glaf.core.res.ViewMessages;
 import com.glaf.core.security.DigestUtil;
+import com.glaf.core.service.ISystemPropertyService;
 import com.glaf.core.util.ClassUtils;
+import com.glaf.core.util.Constants;
 import com.glaf.core.util.RequestUtils;
 import com.glaf.core.util.StringTools;
 import com.glaf.core.web.callback.CallbackProperties;
@@ -65,6 +71,8 @@ public class MxLoginController {
 	private AuthorizeService authorizeService;
 
 	private SysUserService sysUserService;
+
+	private UserOnlineService userOnlineService;
 
 	/**
 	 * 登录
@@ -115,61 +123,92 @@ public class MxLoginController {
 			MessageUtils.addMessages(request, messages);
 			return new ModelAndView("/modules/login", modelMap);
 		} else {
-			String loginIp = UserOnlineListener.findUser(bean.getId());
-			logger.info("login ip:" + loginIp);
-			if (loginIp != null && !loginIp.equals(request.getRemoteAddr())) {// 用户已在其他机器登陆
-				messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
-						"authorize.login_failure2"));
-				MessageUtils.addMessages(request, messages);
-				return new ModelAndView("/modules/login", modelMap);
-			}
-
-			Properties props = CallbackProperties.getProperties();
-			if (props != null && props.keys().hasMoreElements()) {
-				Enumeration<?> e = props.keys();
-				while (e.hasMoreElements()) {
-					String className = (String) e.nextElement();
-					try {
-						Object obj = ClassUtils.instantiateObject(className);
-						if (obj instanceof LoginCallback) {
-							LoginCallback callback = (LoginCallback) obj;
-							callback.afterLogin(bean.getAccount(), request,
-									response);
-						}
-					} catch (Exception ex) {
-						ex.printStackTrace();
-						logger.error(ex);
-					}
+			ISystemPropertyService systemPropertyService = ContextFactory
+					.getBean("systemPropertyService");
+			SystemProperty p = systemPropertyService.getSystemProperty("SYS",
+					"login_limit");
+			/**
+			 * 检测是否限制一个用户只能在一个地方登录
+			 */
+			if (p != null && StringUtils.equals(p.getValue(), "true")) {
+				String loginIP = null;
+				UserOnline userOnline = userOnlineService
+						.getUserOnline(account);
+				if (userOnline != null) {
+					loginIP = userOnline.getLoginIP();
+				}
+				logger.info("login IP:" + loginIP);
+				if (loginIP != null
+						&& !StringUtils.equals(
+								RequestUtils.getIPAddress(request), loginIP)) {// 用户已在其他机器登陆
+					messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
+							"authorize.login_failure2"));
+					MessageUtils.addMessages(request, messages);
+					logger.debug("用户已经在其他地方登录。");
+					return new ModelAndView("/modules/login", modelMap);
 				}
 			}
+		}
 
-			if (bean.getLoginCount() != null) {
-				bean.setLoginCount(bean.getLoginCount() + 1);
-			} else {
-				bean.setLoginCount(1);
+		Properties props = CallbackProperties.getProperties();
+		if (props != null && props.keys().hasMoreElements()) {
+			Enumeration<?> e = props.keys();
+			while (e.hasMoreElements()) {
+				String className = (String) e.nextElement();
+				try {
+					Object obj = ClassUtils.instantiateObject(className);
+					if (obj instanceof LoginCallback) {
+						LoginCallback callback = (LoginCallback) obj;
+						callback.afterLogin(bean.getAccount(), request,
+								response);
+					}
+				} catch (Exception ex) {
+					ex.printStackTrace();
+					logger.error(ex);
+				}
 			}
+		}
 
-			// 登录成功，修改最近一次登录时间
-			bean.setLastLoginDate(new Date());
-			sysUserService.updateUser(bean);
+		if (bean.getLoginCount() != null) {
+			bean.setLoginCount(bean.getLoginCount() + 1);
+		} else {
+			bean.setLoginCount(1);
+		}
 
-			String menus = sysApplicationService.getMenu(3, bean);
-			bean.setMenus(menus);
+		// 登录成功，修改最近一次登录时间
+		bean.setLastLoginDate(new Date());
+		sysUserService.updateUser(bean);
 
-			ContextUtil.put(bean.getAccount(), bean);// 传入全局变量
+		String menus = sysApplicationService.getMenu(3, bean);
+		bean.setMenus(menus);
 
-			RequestUtils.setLoginUser(request, response, "default",
-					bean.getAccount());
+		ContextUtil.put(bean.getAccount(), bean);// 传入全局变量
 
-			request.setAttribute(SysConstants.MENU, menus);
+		RequestUtils.setLoginUser(request, response, "default",
+				bean.getAccount());
 
-			if (bean.getAccountType() == 1) {// 供应商用户
-				return new ModelAndView("/modules/sp_main", modelMap);
-			} else if (bean.getAccountType() == 2) {// 微信用户
-				return new ModelAndView("/modules/wx_main", modelMap);
-			} else {
-				return new ModelAndView("/modules/main", modelMap);
-			}
+		request.setAttribute(SysConstants.MENU, menus);
+
+		try {
+			UserOnline online = new UserOnline();
+			online.setActorId(bean.getActorId());
+			online.setName(bean.getName());
+			online.setCheckDate(new Date());
+			online.setLoginDate(new Date());
+			online.setLoginIP(RequestUtils.getIPAddress(request));
+			online.setSessionId(session.getId());
+			userOnlineService.login(online);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			logger.error(ex);
+		}
+
+		if (bean.getAccountType() == 1) {// 供应商用户
+			return new ModelAndView("/modules/sp_main", modelMap);
+		} else if (bean.getAccountType() == 2) {// 微信用户
+			return new ModelAndView("/modules/wx_main", modelMap);
+		} else {
+			return new ModelAndView("/modules/main", modelMap);
 		}
 	}
 
@@ -183,10 +222,20 @@ public class MxLoginController {
 	@RequestMapping("/logout")
 	public ModelAndView logout(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
+		String actorId = RequestUtils.getActorId(request);
 		// 登出系统，清除session对象
 		request.getSession().removeAttribute(SysConstants.LOGIN);
 		request.getSession().removeAttribute(SysConstants.MENU);
-		ShiroSecurity.logout();
+		try {
+			userOnlineService.logout(actorId);
+			String cacheKey = Constants.LOGIN_USER_CACHE + actorId;
+			CacheFactory.remove(cacheKey);
+			cacheKey = Constants.USER_CACHE + actorId;
+			CacheFactory.remove(cacheKey);
+			ShiroSecurity.logout();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 		return new ModelAndView("/modules/login", modelMap);
 	}
 
@@ -221,6 +270,11 @@ public class MxLoginController {
 	@javax.annotation.Resource
 	public void setSysUserService(SysUserService sysUserService) {
 		this.sysUserService = sysUserService;
+	}
+
+	@javax.annotation.Resource
+	public void setUserOnlineService(UserOnlineService userOnlineService) {
+		this.userOnlineService = userOnlineService;
 	}
 
 }
