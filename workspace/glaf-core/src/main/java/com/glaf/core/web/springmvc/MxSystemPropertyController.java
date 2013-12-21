@@ -31,12 +31,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.config.MessageProperties;
 import com.glaf.core.config.SystemConfig;
 import com.glaf.core.config.SystemProperties;
 import com.glaf.core.config.ViewProperties;
 import com.glaf.core.domain.SystemProperty;
 import com.glaf.core.service.ISystemPropertyService;
+import com.glaf.core.util.FileUtils;
 import com.glaf.core.util.RequestUtils;
 import com.glaf.core.util.ResponseUtils;
 
@@ -56,6 +60,30 @@ public class MxSystemPropertyController {
 		if (StringUtils.isNotEmpty(category)) {
 			List<SystemProperty> rows = systemPropertyService
 					.getSystemProperties(category);
+			if (rows != null && !rows.isEmpty()) {
+				for (SystemProperty p : rows) {
+					if (StringUtils.equals(p.getInputType(), "combobox")) {
+						if (StringUtils.isNotEmpty(p.getInitValue())
+								&& StringUtils
+										.startsWith(p.getInitValue(), "[")
+								&& StringUtils.endsWith(p.getInitValue(), "]")) {
+							JSONArray array = JSON.parseArray(p.getInitValue());
+							p.setArray(array);
+							StringBuffer buffer = new StringBuffer();
+							for (int i = 0, len = array.size(); i < len; i++) {
+								JSONObject json = array.getJSONObject(i);
+								buffer.append("<option value=\"")
+										.append(json.getString("value"))
+										.append("\">")
+										.append(json.getString("name"))
+										.append("</option>")
+										.append(FileUtils.newline);
+							}
+							p.setSelectedScript(buffer.toString());
+						}
+					}
+				}
+			}
 			request.setAttribute("rows", rows);
 		}
 		String jx_view = request.getParameter("jx_view");

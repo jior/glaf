@@ -22,6 +22,7 @@ import com.alibaba.fastjson.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.glaf.core.domain.*;
+import com.glaf.core.util.FileUtils;
 
 public class SystemPropertyJsonFactory {
 
@@ -141,6 +142,20 @@ public class SystemPropertyJsonFactory {
 
 	private SystemPropertyJsonFactory() {
 
+	}
+
+	public static void main(String[] args) {
+		String str = "[{\"name\":\"限制\",\"value\":\"true\"},{\"name\":\"不限制\",\"value\":\"false\"}]";
+		System.out.println(str);
+		JSONArray array = JSON.parseArray(str);
+		StringBuffer buffer = new StringBuffer();
+		for (int i = 0, len = array.size(); i < len; i++) {
+			JSONObject json = array.getJSONObject(i);
+			buffer.append("<option value=\"").append(json.getString("value"))
+					.append("\">").append(json.getString("name"))
+					.append("</option>").append(FileUtils.newline);
+		}
+		System.out.println(buffer.toString());
 	}
 
 }

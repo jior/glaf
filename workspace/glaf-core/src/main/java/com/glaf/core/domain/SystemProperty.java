@@ -28,9 +28,9 @@ import javax.persistence.Table;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-
 import com.glaf.core.base.JSONable;
 import com.glaf.core.domain.util.SystemPropertyJsonFactory;
 
@@ -52,6 +52,17 @@ public class SystemProperty implements Serializable, JSONable {
 	@Column(name = "CATEGORY_", length = 200)
 	protected String category;
 
+	/**
+	 * 输入类型，easyui对应的输入组件 <br>
+	 * text（文本输入）<br>
+	 * datebox（日期输入）<br>
+	 * numberbox（数值输入）<br>
+	 * combobox（下拉列表输入）<br>
+	 * checkbox（复选框输入）<br>
+	 */
+	@Column(name = "INPUTTYPE_", length = 50)
+	protected String inputType;
+
 	@Column(name = "TYPE_", length = 50)
 	protected String type;
 
@@ -66,6 +77,12 @@ public class SystemProperty implements Serializable, JSONable {
 
 	@Column(name = "LOCKED_")
 	protected int locked;
+
+	@javax.persistence.Transient
+	protected JSONArray array = null;
+
+	@javax.persistence.Transient
+	protected String selectedScript = null;
 
 	public SystemProperty() {
 
@@ -88,6 +105,10 @@ public class SystemProperty implements Serializable, JSONable {
 		return true;
 	}
 
+	public JSONArray getArray() {
+		return array;
+	}
+
 	public String getCategory() {
 		return category;
 	}
@@ -104,12 +125,20 @@ public class SystemProperty implements Serializable, JSONable {
 		return initValue;
 	}
 
+	public String getInputType() {
+		return inputType;
+	}
+
 	public int getLocked() {
 		return locked;
 	}
 
 	public String getName() {
 		return name;
+	}
+
+	public String getSelectedScript() {
+		return selectedScript;
 	}
 
 	public String getTitle() {
@@ -136,6 +165,10 @@ public class SystemProperty implements Serializable, JSONable {
 		return SystemPropertyJsonFactory.jsonToObject(jsonObject);
 	}
 
+	public void setArray(JSONArray array) {
+		this.array = array;
+	}
+
 	public void setCategory(String category) {
 		this.category = category;
 	}
@@ -152,12 +185,20 @@ public class SystemProperty implements Serializable, JSONable {
 		this.initValue = initValue;
 	}
 
+	public void setInputType(String inputType) {
+		this.inputType = inputType;
+	}
+
 	public void setLocked(int locked) {
 		this.locked = locked;
 	}
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public void setSelectedScript(String selectedScript) {
+		this.selectedScript = selectedScript;
 	}
 
 	public void setTitle(String title) {

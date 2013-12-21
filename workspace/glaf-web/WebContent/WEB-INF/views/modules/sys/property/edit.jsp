@@ -55,8 +55,20 @@
 		<td><c:out value="${p.description}"/></td>
 		<!-- <td><c:out value="${p.initValue}"/></td> -->
 		<td valign="middle">
-		  <input type="text" name="<c:out value="${p.name}"/>" class="span3 x-text" 
-		        value="<c:out value="${p.value}"/>" size="60" maxLength="500"/>
+		  <c:choose>
+		     <c:when test="${p.inputType == 'combobox'}">
+			    <select id="<c:out value="${p.name}"/>" name="<c:out value="${p.name}"/>">
+					 <c:out value="${p.selectedScript}" escapeXml="false"/>
+			    </select>
+                <script type="text/javascript">
+                    document.getElementById("<c:out value="${p.name}"/>").value="<c:out value="${p.value}"/>";
+                </script>
+			 </c:when>
+			 <c:otherwise>
+			    <input type="text" name="<c:out value="${p.name}"/>" class="span3 x-text" 
+		               value="<c:out value="${p.value}"/>" size="60" maxLength="500"/>
+			 </c:otherwise>
+		  </c:choose>
 		</td>
 	</tr>
 	</c:forEach>

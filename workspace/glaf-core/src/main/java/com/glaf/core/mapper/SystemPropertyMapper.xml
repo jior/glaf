@@ -8,6 +8,7 @@
 		<id property="id" column="ID_" jdbcType="VARCHAR" />
 		<result property="name" column="NAME_" jdbcType="VARCHAR" />
 		<result property="title" column="TITLE_" jdbcType="VARCHAR" />
+		<result property="inputType" column="INPUTTYPE_" jdbcType="VARCHAR" />
 		<result property="type" column="TYPE_" jdbcType="VARCHAR" />
 		<result property="description" column="DESCRIPTION_" jdbcType="VARCHAR" />
 		<result property="category" column="CATEGORY_" jdbcType="VARCHAR" />
@@ -22,6 +23,7 @@
 		SYS_PROPERTY ( ID_
 		,NAME_
 		,TITLE_
+		,INPUTTYPE_
 		,TYPE_
 		,DESCRIPTION_
 		,CATEGORY_
@@ -31,9 +33,9 @@
 		)
 		values (
 		#{id, jdbcType=VARCHAR}
-		,#{name,
-		jdbcType=VARCHAR}
+		,#{name,jdbcType=VARCHAR}
 		,#{title, jdbcType=VARCHAR}
+		,#{inputType, jdbcType=VARCHAR}
 		,#{type, jdbcType=VARCHAR}
 		,#{description, jdbcType=VARCHAR}
 		,#{category, jdbcType=VARCHAR}
@@ -50,8 +52,7 @@
 		update SYS_PROPERTY
 		set
 		TITLE_ = #{title, jdbcType=VARCHAR},
-		DESCRIPTION_ =
-		#{description, jdbcType=VARCHAR},
+		DESCRIPTION_ = #{description, jdbcType=VARCHAR},
 		VALUE_ = #{value, jdbcType=VARCHAR}
 		where ID_ = #{id, jdbcType=VARCHAR}
 
