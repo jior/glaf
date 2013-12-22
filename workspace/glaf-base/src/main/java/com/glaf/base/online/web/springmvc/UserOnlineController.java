@@ -22,17 +22,19 @@ import java.io.IOException;
 import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import com.alibaba.fastjson.*;
 
+import com.alibaba.fastjson.*;
+import com.glaf.core.domain.SystemProperty;
 import com.glaf.core.security.*;
+import com.glaf.core.service.ISystemPropertyService;
 import com.glaf.core.util.*;
 
 import com.glaf.base.online.domain.*;
@@ -46,6 +48,8 @@ public class UserOnlineController {
 			.getLog(UserOnlineController.class);
 
 	protected UserOnlineService userOnlineService;
+
+	protected ISystemPropertyService systemPropertyService;
 
 	public UserOnlineController() {
 
@@ -181,6 +185,23 @@ public class UserOnlineController {
 	@RequestMapping("/remain")
 	public ModelAndView remain(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
+		int timeoutSeconds = 300;
+
+		SystemProperty p = systemPropertyService.getSystemProperty("SYS",
+				"login_time_check");
+		if (p != null && p.getValue() != null
+				&& StringUtils.isNumeric(p.getValue())) {
+			timeoutSeconds = Integer.parseInt(p.getValue());
+		}
+		if (timeoutSeconds < 300) {
+			timeoutSeconds = 300;
+		}
+		if (timeoutSeconds > 3600) {
+			timeoutSeconds = 3600;
+		}
+		
+		timeoutSeconds = timeoutSeconds - 60;
+		request.setAttribute("timeoutSeconds", timeoutSeconds);
 
 		String view = request.getParameter("view");
 		if (StringUtils.isNotEmpty(view)) {
@@ -193,6 +214,11 @@ public class UserOnlineController {
 	@javax.annotation.Resource
 	public void setUserOnlineService(UserOnlineService userOnlineService) {
 		this.userOnlineService = userOnlineService;
+	}
+
+	public void setSystemPropertyService(
+			ISystemPropertyService systemPropertyService) {
+		this.systemPropertyService = systemPropertyService;
 	}
 
 }

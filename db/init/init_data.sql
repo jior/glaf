@@ -250,7 +250,7 @@ insert into SYS_PROPERTY (id_, description_, locked_, name_, title_, type_, valu
 insert into SYS_PROPERTY (id_, description_, locked_, name_, title_, type_, value_, category_, initvalue_) values ('3', '版权信息', 0, 'res_copyright', '版权信息', null, 'GLAF 版权所有', 'SYS', null);
 insert into SYS_PROPERTY (id_, description_, locked_, name_, title_, type_, value_, category_, initvalue_) values ('4', null, 0, 'res_mail_from', '邮件发送者', null, 'jior2008@gmail.com', 'SYS', null);
 insert into SYS_PROPERTY (id_, category_, description_, initvalue_, locked_, name_, title_, type_, value_, inputtype_) values ('5', 'SYS', '限定每个账号只能在一处登录', '[{"name":"限制","value":"true"},{"name":"不限制","value":"false"}]', 0, 'login_limit', '系统登录账号限制', null, 'true', 'combobox');
-insert into SYS_PROPERTY (id_, description_, locked_, name_, title_, type_, value_, category_, initvalue_) values ('6', '在线用户检测时间（秒）', 0, 'login_time_check', '在线用户检测时间（秒）', null, '120', 'SYS', null);
+insert into SYS_PROPERTY (id_, description_, locked_, name_, title_, type_, value_, category_, initvalue_) values ('6', '在线用户检测时间（秒）', 0, 'login_time_check', '在线用户检测时间（秒）', null, '600', 'SYS', null);
 
 insert into SYS_PROPERTY (id_, description_, locked_, name_, title_, type_, value_, category_, initvalue_) values ('101', '当天的6位年月格式（YYYYMM），如201312', 0, 'curr_yyyymm', '当前年月', null, '', 'RPT', '${curr_yyyymm}');
 insert into SYS_PROPERTY (id_, description_, locked_, name_, title_, type_, value_, category_, initvalue_) values ('102', '当天的8位日期格式（YYYYMMDD），如20130630', 0, 'curr_yyyymmdd', '当前日期', null, '', 'RPT', '${curr_yyyymmdd}');

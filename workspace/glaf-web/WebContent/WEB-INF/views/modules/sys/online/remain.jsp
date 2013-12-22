@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-<meta http-equiv="refresh" content="60"/>
+<meta http-equiv="refresh" content="${timeoutSeconds}"/>
 <title>用户在线</title>
 <%@ include file="/WEB-INF/views/inc/init_script.jsp"%>
 <script type="text/javascript">

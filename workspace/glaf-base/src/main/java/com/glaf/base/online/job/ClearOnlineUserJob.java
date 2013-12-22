@@ -47,7 +47,7 @@ public class ClearOnlineUserJob implements Job {
 		String jobName = context.getJobDetail().getKey().getName();
 		logger.info("Executing job: " + jobName + " executing at "
 				+ DateUtils.getDateTime(new Date()));
-		int timeoutSeconds = 120;
+		int timeoutSeconds = 300;
 		UserOnlineService userOnlineService = ContextFactory
 				.getBean("userOnlineService");
 		ISystemPropertyService systemPropertyService = ContextFactory
@@ -58,8 +58,8 @@ public class ClearOnlineUserJob implements Job {
 				&& StringUtils.isNumeric(p.getValue())) {
 			timeoutSeconds = Integer.parseInt(p.getValue());
 		}
-		if (timeoutSeconds < 60) {
-			timeoutSeconds = 60;
+		if (timeoutSeconds < 300) {
+			timeoutSeconds = 300;
 		}
 		if (timeoutSeconds > 3600) {
 			timeoutSeconds = 3600;
