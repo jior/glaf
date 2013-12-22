@@ -216,6 +216,7 @@ public class UserOnlineController {
 		this.userOnlineService = userOnlineService;
 	}
 
+	@javax.annotation.Resource
 	public void setSystemPropertyService(
 			ISystemPropertyService systemPropertyService) {
 		this.systemPropertyService = systemPropertyService;
