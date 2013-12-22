@@ -9,7 +9,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <meta http-equiv="refresh" content="${timeoutSeconds}"/>
 <title>用户在线</title>
-<%@ include file="/WEB-INF/views/inc/init_script.jsp"%>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
 <script type="text/javascript">
 	function remainOnline(){
 		jQuery.ajax({
