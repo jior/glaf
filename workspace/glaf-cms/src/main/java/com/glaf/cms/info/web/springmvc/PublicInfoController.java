@@ -40,7 +40,6 @@ import com.glaf.core.identity.User;
 
 import com.glaf.core.security.IdentityFactory;
 import com.glaf.core.service.IBlobService;
-import com.glaf.core.service.ISystemParamService;
 import com.glaf.core.service.ITreeModelService;
 import com.glaf.core.util.*;
 
@@ -57,8 +56,6 @@ public class PublicInfoController {
 	protected IBlobService blobService;
 
 	protected PublicInfoService publicInfoService;
-
-	protected ISystemParamService systemParamService;
 
 	protected ITreeModelService treeModelService;
 
@@ -293,11 +290,6 @@ public class PublicInfoController {
 	@javax.annotation.Resource
 	public void setPublicInfoService(PublicInfoService publicInfoService) {
 		this.publicInfoService = publicInfoService;
-	}
-
-	@javax.annotation.Resource
-	public void setSystemParamService(ISystemParamService systemParamService) {
-		this.systemParamService = systemParamService;
 	}
 
 	@javax.annotation.Resource
