@@ -3,7 +3,7 @@
 ######################################################
 
 根据服务器信息自行调整JVM参数：
-jvm_args    : -Xms1024m -Xmx1024m -XX:NewSize=64m -XX:MaxNewSize=64m -XX:PermSize=256m -XX:MaxPermSize=512m
+jvm_args    : -Xms1024m -Xmx1024m -XX:NewSize=64m -XX:MaxNewSize=64m -XX:PermSize=256m -XX:MaxPermSize=512m -XX:+UseParNewGC -XX:+UseConcMarkSweepGC -XX:CMSInitiatingOccupancyFraction=7 -XX:+UseCMSInitiatingOccupancyOnly
 
 
 1、点击start-db.bat启动演示数据库
