@@ -48,7 +48,6 @@
 	<classpathentry kind="lib" path="/glaf-core/lib/druid.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/dubbo.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/ehcache.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/esapi-2.0GA.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/fastjson.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/filterbuilder.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/freemarker.jar"/>
@@ -104,14 +103,12 @@
 	<classpathentry kind="lib" path="/glaf-core/lib/mybatis-2.3.5.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/mybatis-spring.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/mybatis.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/mysql-connector-java-5.1.22-bin.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/mysql-connector-java-bin.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/netty.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/poi-ooxml-schemas.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/poi-ooxml.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/poi.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/postgresql-9.2-1003.jdbc4.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/primefaces-all-themes.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/primefaces.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/postgresql.jdbc4.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/quartz-all.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/resteasy-cache-core.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/resteasy-crypto.jar"/>

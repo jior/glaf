@@ -47,7 +47,6 @@
 	<classpathentry kind="lib" path="lib/druid.jar"/>
 	<classpathentry kind="lib" path="lib/dubbo.jar"/>
 	<classpathentry kind="lib" path="lib/ehcache.jar"/>
-	<classpathentry kind="lib" path="lib/esapi-2.0GA.jar"/>
 	<classpathentry kind="lib" path="lib/fastjson.jar"/>
 	<classpathentry kind="lib" path="lib/filterbuilder.jar"/>
 	<classpathentry kind="lib" path="lib/freemarker.jar"/>
@@ -103,12 +102,12 @@
 	<classpathentry kind="lib" path="lib/mybatis-2.3.5.jar"/>
 	<classpathentry kind="lib" path="lib/mybatis-spring.jar"/>
 	<classpathentry kind="lib" path="lib/mybatis.jar"/>
-	<classpathentry kind="lib" path="lib/mysql-connector-java-5.1.22-bin.jar"/>
+	<classpathentry kind="lib" path="lib/mysql-connector-java-bin.jar"/>
 	<classpathentry kind="lib" path="lib/netty.jar"/>
 	<classpathentry kind="lib" path="lib/poi-ooxml-schemas.jar"/>
 	<classpathentry kind="lib" path="lib/poi-ooxml.jar"/>
 	<classpathentry kind="lib" path="lib/poi.jar"/>
-	<classpathentry kind="lib" path="lib/postgresql-9.2-1003.jdbc4.jar"/>
+	<classpathentry kind="lib" path="lib/postgresql.jdbc4.jar"/>
 	<classpathentry kind="lib" path="lib/primefaces-all-themes.jar"/>
 	<classpathentry kind="lib" path="lib/primefaces.jar"/>
 	<classpathentry kind="lib" path="lib/quartz-all.jar"/>
