@@ -114,7 +114,7 @@
 	<classpathentry kind="lib" path="/glaf-core/lib/mybatis-2.3.5.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/mybatis-spring.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/mybatis.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/mysql-connector-java-bin.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/mysql-connector-java.bin.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/netty.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/poi-ooxml-schemas.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/poi-ooxml.jar"/>
