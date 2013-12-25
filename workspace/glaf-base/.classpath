@@ -4,7 +4,6 @@
 	<classpathentry kind="src" path="src/main/process"/>
 	<classpathentry kind="src" path="src/main/config"/>
 	<classpathentry kind="src" path="src/test/java"/>
-	<classpathentry kind="src" path="src/test/config"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/glaf-core"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/glaf-jbpm"/>
