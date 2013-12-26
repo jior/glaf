@@ -194,7 +194,7 @@ public class DBUtils {
 						} else if ("Double".equals(javaType)) {
 							sql += " double ";
 						} else if ("Date".equals(javaType)) {
-							sql += " timestamp ";
+							sql += " datetime ";
 						} else if ("Clob".equals(javaType)) {
 							sql += " longtext ";
 						} else if ("Blob".equals(javaType)) {
@@ -1088,7 +1088,7 @@ public class DBUtils {
 				} else if ("Double".equals(idField.getJavaType())) {
 					buffer.append(" double ");
 				} else if ("Date".equals(idField.getJavaType())) {
-					buffer.append(" timestamp ");
+					buffer.append(" datetime ");
 				} else if ("String".equals(idField.getJavaType())) {
 					buffer.append(" varchar ");
 					if (idField.getLength() > 0) {
