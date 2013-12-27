@@ -21,7 +21,7 @@ package com.glaf.core.base;
 import java.util.Collection;
 import java.util.Date;
 
-public class ColumnModel implements java.io.Serializable, 
+public class ColumnModel implements java.io.Serializable,
 		java.lang.Comparable<ColumnModel> {
 
 	private static final long serialVersionUID = 1L;
@@ -124,9 +124,9 @@ public class ColumnModel implements java.io.Serializable,
 	public ColumnModel() {
 
 	}
-	
+
 	public ColumnModel(String columnName, String name, Object value) {
-		this.columnName=columnName;
+		this.columnName = columnName;
 		this.name = name;
 		this.value = value;
 	}
@@ -178,6 +178,9 @@ public class ColumnModel implements java.io.Serializable,
 	}
 
 	public String getColumnName() {
+		if (columnName != null) {
+			columnName = columnName.trim().toUpperCase();
+		}
 		return columnName;
 	}
 
@@ -398,7 +401,6 @@ public class ColumnModel implements java.io.Serializable,
 		this.value = value;
 	}
 
-	 
 	public void setValueExpression(String valueExpression) {
 		this.valueExpression = valueExpression;
 	}

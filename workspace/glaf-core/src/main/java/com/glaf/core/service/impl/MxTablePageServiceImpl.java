@@ -30,7 +30,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -151,6 +150,24 @@ public class MxTablePageServiceImpl implements ITablePageService {
 
 	public int getTableCount(TablePageQuery query) {
 		return tablePageMapper.getTableCount(query);
+	}
+
+	public List<Map<String, Object>> getTableData(String tableName,
+			int firstResult, int maxResults) {
+		TablePageQuery query = new TablePageQuery();
+		query.tableName(tableName);
+		int begin = query.getFirstResult();
+		int pageSize = query.getMaxResults();
+		if (begin < 0) {
+			begin = 0;
+		}
+		if (pageSize <= 0) {
+			pageSize = Paging.DEFAULT_PAGE_SIZE;
+		}
+		RowBounds rowBounds = new RowBounds(begin, pageSize);
+		List<Map<String, Object>> rows = sqlSession.selectList("getTableData",
+				query, rowBounds);
+		return rows;
 	}
 
 	public List<Map<String, Object>> getTableData(TablePageQuery query) {

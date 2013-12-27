@@ -44,6 +44,9 @@ public interface ITablePageService {
 
 	int getTableCount(TablePageQuery query);
 
+	List<Map<String, Object>> getTableData(String tableName, int firstResult,
+			int maxResults);
+
 	List<Map<String, Object>> getTableData(TablePageQuery query);
 
 	List<Object> getTableList(String tableName, String idColumn,

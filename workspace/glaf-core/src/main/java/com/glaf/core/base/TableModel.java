@@ -288,6 +288,9 @@ public class TableModel implements java.io.Serializable {
 	}
 
 	public String getTableName() {
+		if (tableName != null) {
+			tableName = tableName.trim().toUpperCase();
+		}
 		return tableName;
 	}
 
