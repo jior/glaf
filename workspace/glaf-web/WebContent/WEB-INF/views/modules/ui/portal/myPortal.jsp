@@ -127,6 +127,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="refresh" content="300"/>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/scripts/easyui/themes/${theme}/easyui.css" type="text/css"/>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/scripts/easyui/css/portal.css" type="text/css"/>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/themes/${theme}/styles.css" type="text/css"/>
