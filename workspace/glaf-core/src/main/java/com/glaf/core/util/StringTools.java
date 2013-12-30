@@ -59,11 +59,30 @@ public final class StringTools {
 		return sbuf.toString();
 	}
 
+	/**
+	 * 字节数组转化成16进制形式
+	 */
+	public static String bytes2string(byte[] src) {
+		StringBuilder sb = new StringBuilder();
+		if (src == null || src.length <= 0) {
+			return null;
+		}
+		for (int i = 0; i < src.length; i++) {
+			int v = src[i] & 0xFF;
+			String hv = Integer.toHexString(v);
+			if (hv.length() < 2) {
+				sb.append(0);
+			}
+			sb.append(hv.toUpperCase());
+		}
+		return sb.toString();
+	}
+
 	public static String camelStyle(String str) {
 		if (str == null || str.indexOf("_") == -1) {
 			return str;
 		}
-		StringBuffer buffer = new StringBuffer(str.length()+100);
+		StringBuffer buffer = new StringBuffer(str.length() + 100);
 		int index = 0;
 		StringTokenizer tokenizer = new StringTokenizer(str, "_");
 		while (tokenizer.hasMoreTokens()) {
@@ -79,6 +98,10 @@ public final class StringTools {
 			index++;
 		}
 		return buffer.toString();
+	}
+
+	private static byte charToByte(char c) {
+		return (byte) "0123456789ABCDEF".indexOf(c);
 	}
 
 	public static String chopAtWord(String string, int length) {
@@ -359,7 +382,7 @@ public final class StringTools {
 			return "";
 		}
 		if (sourceString.length() <= length) {
-			StringBuffer buffer = new StringBuffer(sourceString.length()+10);
+			StringBuffer buffer = new StringBuffer(sourceString.length() + 10);
 			int k = length - sourceString.length();
 			for (int j = 0; j < k; j++) {
 				buffer.append(sourceString).append("&nbsp;");
@@ -812,7 +835,7 @@ public final class StringTools {
 		}
 		return pieces;
 	}
-	
+
 	public static List<Long> splitToLong(String text) {
 		return splitToLong(text, ",");
 	}
@@ -845,6 +868,24 @@ public final class StringTools {
 			}
 		}
 		return pieces;
+	}
+
+	/**
+	 * 16进制字符串转化成字节数组
+	 */
+	public static byte[] string2bytes(String hexString) {
+		if (hexString == null || hexString.equals("")) {
+			return null;
+		}
+		hexString = hexString.toUpperCase();
+		int length = hexString.length() / 2;
+		char[] hexChars = hexString.toCharArray();
+		byte[] d = new byte[length];
+		for (int i = 0; i < length; i++) {
+			int pos = i * 2;
+			d[i] = (byte) (charToByte(hexChars[pos]) << 4 | charToByte(hexChars[pos + 1]));
+		}
+		return d;
 	}
 
 	public static Collection<String> stringToCollection(String string) {

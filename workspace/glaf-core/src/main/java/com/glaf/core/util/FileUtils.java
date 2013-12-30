@@ -213,6 +213,34 @@ public class FileUtils {
 		return getBytes(file);
 	}
 
+	/**
+	 * 获取磁盘分区空间使用率
+	 */
+	public static double getDiskPartitionSpaceUsedPercent(final String path) {
+		if (null == path || path.isEmpty())
+			return -1;
+
+		try {
+			File file = new File(path);
+			if (!file.exists()) {
+				boolean result = file.mkdirs();
+				if (!result) {
+				}
+			}
+
+			long totalSpace = file.getTotalSpace();
+			long freeSpace = file.getFreeSpace();
+			long usedSpace = totalSpace - freeSpace;
+			if (totalSpace > 0) {
+				return usedSpace / (double) totalSpace;
+			}
+		} catch (Exception e) {
+			return -1;
+		}
+
+		return -1;
+	}
+
 	public static String getFileExt(String fileName) {
 		String value = "";
 		int start = 0;
