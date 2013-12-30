@@ -248,7 +248,6 @@
    <div data-options="region:'center'">  
      <div class="easyui-layout" data-options="fit:true"> 
 	   <div data-options="region:'north',split:true,border:true" style="height:40px"> 
-	   <form id="iForm" name="iForm" method="post">
 	    <input type="hidden" id="nodeId" name="nodeId" value="" >
 		<div class="toolbar-backgroud"  > 
 		<img src="<%=request.getContextPath()%>/images/window.png">
@@ -260,7 +259,6 @@
 		<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-remove'"
 		   onclick="javascript:deleteSelections();">删除</a> 
 	   </div> 
-	   </form>
 	  </div> 
 	  <div data-options="region:'center',border:true">
 		 <table id="easyui_data_grid"></table>
