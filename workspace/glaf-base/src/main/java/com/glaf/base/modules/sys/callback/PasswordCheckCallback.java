@@ -78,7 +78,7 @@ public class PasswordCheckCallback implements LoginCallback {
 							bean.getLastLoginDate(), disabledMonths);
 					long daysDiff = DateUtils.dateDiff(new Date(), toDate);
 					if (daysDiff < 0) {
-						logger.info("不活跃用户帐号锁定：N个月未登录过系统则锁定用户帐号，不能登录系统；");
+						logger.info("不活跃用户帐号锁定：N个月未登录过系统则锁定用户帐号，不能登录系统");
 						bean.setBlocked(1);
 						bean.setUpdateDate(new Date());
 						sysUserService.updateUser(bean);
@@ -86,8 +86,7 @@ public class PasswordCheckCallback implements LoginCallback {
 					}
 				}
 			}
-			request.getSession().setAttribute("changePassWordFlag",
-					changePassWordFlag);
+			request.setAttribute("changePassWordFlag", changePassWordFlag);
 		}
 
 	}

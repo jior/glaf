@@ -39,14 +39,12 @@ import com.glaf.core.util.RequestUtils;
 import com.glaf.core.web.callback.CallbackProperties;
 import com.glaf.core.web.callback.LoginCallback;
 
-import com.glaf.base.modules.sys.SysConstants;
 import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.sys.service.AuthorizeService;
 import com.glaf.base.modules.sys.service.SysApplicationService;
 import com.glaf.base.modules.sys.service.SysUserService;
 import com.glaf.base.modules.sys.util.SysUserJsonFactory;
 import com.glaf.base.utils.ContextUtil;
- 
 
 public class AuthorizeBean {
 	private static final Log logger = LogFactory.getLog(AuthorizeBean.class);
@@ -151,14 +149,9 @@ public class AuthorizeBean {
 				}
 			}
 
-			String menus = getSysApplicationService().getMenu(3, bean);
-			bean.setMenus(menus);
-
 			ContextUtil.put(bean.getAccount(), bean);// 传入全局变量
-			RequestUtils.setLoginUser(request, response, "GLAF",
+			RequestUtils.setLoginUser(request, response, "default",
 					bean.getAccount());
-			// 保存session对象，跳转到后台主页面
-			request.getSession().setAttribute(SysConstants.MENU, menus);
 
 		}
 		return bean;
