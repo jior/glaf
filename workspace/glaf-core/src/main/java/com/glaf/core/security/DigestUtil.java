@@ -29,6 +29,8 @@ import java.security.NoSuchAlgorithmException;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeUtility;
 
+import org.apache.commons.io.IOUtils;
+
 import com.glaf.core.config.BaseConfiguration;
 import com.glaf.core.config.Configuration;
 
@@ -44,6 +46,7 @@ public class DigestUtil {
 		int read = 0;
 		FileInputStream fis = null;
 		FileOutputStream fos = null;
+		OutputStream encodedStream = null;
 		try {
 			MessageDigest md = MessageDigest.getInstance(algorithm);
 			fis = new FileInputStream(filename);
@@ -55,17 +58,15 @@ public class DigestUtil {
 			StringBuffer fileNameBuffer = new StringBuffer(256)
 					.append(filename).append('.').append(algorithm);
 			fos = new FileOutputStream(fileNameBuffer.toString());
-			OutputStream encodedStream = MimeUtility.encode(fos, "base64");
+			encodedStream = MimeUtility.encode(fos, "base64");
 			encodedStream.write(digest);
 			fos.flush();
 		} catch (Exception ex) {
-			System.out.println("Error computing Digest: " + ex);
+			throw new RuntimeException("Error computing Digest: " + ex);
 		} finally {
-			try {
-				fis.close();
-				fos.close();
-			} catch (Exception ignored) {
-			}
+			IOUtils.closeQuietly(fis);
+			IOUtils.closeQuietly(fos);
+			IOUtils.closeQuietly(encodedStream);
 		}
 	}
 
@@ -76,11 +77,12 @@ public class DigestUtil {
 		if (conf.getBoolean("password.enc", true)) {
 			MessageDigest md = null;
 			ByteArrayOutputStream bos = null;
+			OutputStream encodedStream = null;
 			try {
 				md = MessageDigest.getInstance(algorithm);
 				byte[] digest = md.digest(password.getBytes("UTF-8"));
 				bos = new ByteArrayOutputStream();
-				OutputStream encodedStream = MimeUtility.encode(bos, "base64");
+				encodedStream = MimeUtility.encode(bos, "base64");
 				encodedStream.write(digest);
 				return bos.toString("UTF-8");
 			} catch (IOException ioe) {
@@ -89,6 +91,9 @@ public class DigestUtil {
 				throw new RuntimeException("Fatal error: " + ae);
 			} catch (MessagingException me) {
 				throw new RuntimeException("Fatal error: " + me);
+			} finally {
+				IOUtils.closeQuietly(bos);
+				IOUtils.closeQuietly(encodedStream);
 			}
 		}
 		return password;
