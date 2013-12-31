@@ -18,6 +18,7 @@
 
 package com.glaf.base.modules.sys.springmvc;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.Properties;
@@ -34,15 +35,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.glaf.base.modules.sys.SysConstants;
-import com.glaf.base.modules.sys.model.SysUser;
-import com.glaf.base.modules.sys.service.AuthorizeService;
-import com.glaf.base.modules.sys.service.SysUserService;
-import com.glaf.base.online.domain.UserOnline;
-import com.glaf.base.online.service.UserOnlineService;
-import com.glaf.base.utils.ContextUtil;
-import com.glaf.base.utils.ParamUtil;
 import com.glaf.core.cache.CacheFactory;
+import com.glaf.core.config.Configuration;
 import com.glaf.core.config.Environment;
 import com.glaf.core.context.ContextFactory;
 import com.glaf.core.domain.SystemProperty;
@@ -57,6 +51,17 @@ import com.glaf.core.util.RequestUtils;
 import com.glaf.core.util.StringTools;
 import com.glaf.core.web.callback.CallbackProperties;
 import com.glaf.core.web.callback.LoginCallback;
+
+import com.glaf.base.config.BaseConfiguration;
+import com.glaf.base.modules.sys.SysConstants;
+import com.glaf.base.modules.sys.model.SysUser;
+import com.glaf.base.modules.sys.service.AuthorizeService;
+import com.glaf.base.modules.sys.service.SysUserService;
+import com.glaf.base.online.domain.UserOnline;
+import com.glaf.base.online.service.UserOnlineService;
+import com.glaf.base.utils.ContextUtil;
+import com.glaf.base.utils.ParamUtil;
+
 import com.glaf.shiro.ShiroSecurity;
 
 @Controller("/mx/login")
@@ -64,6 +69,8 @@ import com.glaf.shiro.ShiroSecurity;
 public class MxLoginController {
 	private static final Log logger = LogFactory
 			.getLog(MxLoginController.class);
+
+	private static Configuration conf = BaseConfiguration.create();
 
 	private AuthorizeService authorizeService;
 
@@ -202,6 +209,44 @@ public class MxLoginController {
 		} else {
 			return new ModelAndView("/modules/main", modelMap);
 		}
+	}
+
+	/**
+	 * 登录
+	 * 
+	 * @param request
+	 * @param modelMap
+	 * @return
+	 */
+	@RequestMapping("/login")
+	public ModelAndView login(HttpServletRequest request,
+			HttpServletResponse response) {
+		String ip = RequestUtils.getIPAddress(request);
+		/**
+		 * 允许从指定的机器上通过用户名密码登录
+		 */
+		if (StringUtils.contains(conf.get("login.allow.ip", "127.0.0.1"), ip)) {
+			String actorId = request.getParameter("x");
+			String password = request.getParameter("y");
+			HttpSession session = request.getSession(true);
+			java.util.Random random = new java.util.Random();
+			String rand = Math.abs(random.nextInt(999999))
+					+ com.glaf.core.util.UUID32.getUUID()
+					+ Math.abs(random.nextInt(999999));
+			session = request.getSession(true);
+			if (session != null) {
+				session.setAttribute("x_y", rand);
+			}
+			String url = request.getContextPath() + "/mx/login/doLogin?x="
+					+ actorId + "&y=" + rand + password;
+			try {
+				response.sendRedirect(url);
+				return null;
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+		}
+		return new ModelAndView("/modules/login");
 	}
 
 	/**
