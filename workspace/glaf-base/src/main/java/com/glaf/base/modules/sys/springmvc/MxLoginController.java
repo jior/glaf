@@ -37,7 +37,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.glaf.base.modules.sys.SysConstants;
 import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.sys.service.AuthorizeService;
-import com.glaf.base.modules.sys.service.SysApplicationService;
 import com.glaf.base.modules.sys.service.SysUserService;
 import com.glaf.base.online.domain.UserOnline;
 import com.glaf.base.online.service.UserOnlineService;
@@ -65,8 +64,6 @@ import com.glaf.shiro.ShiroSecurity;
 public class MxLoginController {
 	private static final Log logger = LogFactory
 			.getLog(MxLoginController.class);
-
-	private SysApplicationService sysApplicationService;
 
 	private AuthorizeService authorizeService;
 
@@ -179,15 +176,10 @@ public class MxLoginController {
 		bean.setLastLoginDate(new Date());
 		sysUserService.updateUser(bean);
 
-		String menus = sysApplicationService.getMenu(3, bean);
-		bean.setMenus(menus);
-
 		ContextUtil.put(bean.getAccount(), bean);// 传入全局变量
 
 		RequestUtils.setLoginUser(request, response, "default",
 				bean.getAccount());
-
-		request.setAttribute(SysConstants.MENU, menus);
 
 		try {
 			UserOnline online = new UserOnline();
@@ -257,13 +249,6 @@ public class MxLoginController {
 	@javax.annotation.Resource
 	public void setAuthorizeService(AuthorizeService authorizeService) {
 		this.authorizeService = authorizeService;
-
-	}
-
-	@javax.annotation.Resource
-	public void setSysApplicationService(
-			SysApplicationService sysApplicationService) {
-		this.sysApplicationService = sysApplicationService;
 
 	}
 
