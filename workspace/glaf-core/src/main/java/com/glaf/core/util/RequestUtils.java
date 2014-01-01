@@ -36,6 +36,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -135,7 +136,7 @@ public class RequestUtils {
 		}
 	}
 
-	public static String encodeCookieValue(String ip, String systemName,
+	private static String encodeCookieValue(String ip, String systemName,
 			String actorId) {
 		JSONObject rootJson = new JSONObject();
 		rootJson.put(Constants.LOGIN_IP, ip);
@@ -171,6 +172,7 @@ public class RequestUtils {
 	public static String getActorId(HttpServletRequest request) {
 		String actorId = null;
 		String ip = getIPAddress(request);
+		ip = DigestUtils.md5Hex(ip);
 		HttpSession session = request.getSession(false);
 		if (session != null) {
 			String value = (String) session.getAttribute(Constants.LOGIN_INFO);
@@ -265,6 +267,7 @@ public class RequestUtils {
 			return paramValue;
 		}
 		String ip = getIPAddress(request);
+		ip = DigestUtils.md5Hex(ip);
 		HttpSession session = request.getSession(false);
 		if (session != null) {
 			String value = (String) session.getAttribute(Constants.LOGIN_INFO);
@@ -810,6 +813,7 @@ public class RequestUtils {
 	public static LoginContext getSessionLoginContext(HttpServletRequest request) {
 		String actorId = null;
 		String ip = getIPAddress(request);
+		ip = DigestUtils.md5Hex(ip);
 		HttpSession session = request.getSession(false);
 		if (session != null) {
 			String value = (String) session.getAttribute(Constants.LOGIN_INFO);
@@ -925,6 +929,7 @@ public class RequestUtils {
 	public static void setLoginUser(HttpServletRequest request,
 			HttpServletResponse response, String systemName, String actorId) {
 		String ip = getIPAddress(request);
+		ip = DigestUtils.md5Hex(ip);
 		String value = encodeCookieValue(ip, systemName, actorId);
 		HttpSession session = request.getSession(false);
 		if (session != null) {
