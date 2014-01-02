@@ -18,16 +18,17 @@
 
 package com.glaf.core.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.SqlSession;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -57,7 +58,6 @@ public class MxSystemPropertyServiceImpl implements ISystemPropertyService {
 	}
 
 	public int count(SystemPropertyQuery query) {
-		query.ensureInitialized();
 		return systemPropertyMapper.getSystemPropertyCount(query);
 	}
 
@@ -75,7 +75,16 @@ public class MxSystemPropertyServiceImpl implements ISystemPropertyService {
 
 	public List<SystemProperty> getAllSystemProperties() {
 		SystemPropertyQuery query = new SystemPropertyQuery();
-		return this.list(query);
+		List<SystemProperty> list = this.list(query);
+		List<SystemProperty> rows = new ArrayList<SystemProperty>();
+		if (list != null && !list.isEmpty()) {
+			for (SystemProperty p : list) {
+				if (!StringUtils.equals("TOKEN", p.getId())) {
+					rows.add(p);
+				}
+			}
+		}
+		return rows;
 	}
 
 	public Map<String, SystemProperty> getProperyMap() {
@@ -92,13 +101,16 @@ public class MxSystemPropertyServiceImpl implements ISystemPropertyService {
 	public List<SystemProperty> getSystemProperties(String category) {
 		SystemPropertyQuery query = new SystemPropertyQuery();
 		query.category(category);
-		return this.list(query);
-	}
-
-	public SystemProperty getSystemProperty(String id) {
-		SystemProperty systemProperty = systemPropertyMapper
-				.getSystemPropertyById(id);
-		return systemProperty;
+		List<SystemProperty> list = this.list(query);
+		List<SystemProperty> rows = new ArrayList<SystemProperty>();
+		if (list != null && !list.isEmpty()) {
+			for (SystemProperty p : list) {
+				if (!StringUtils.equals("TOKEN", p.getId())) {
+					rows.add(p);
+				}
+			}
+		}
+		return rows;
 	}
 
 	public SystemProperty getSystemProperty(String category, String name) {
@@ -112,10 +124,64 @@ public class MxSystemPropertyServiceImpl implements ISystemPropertyService {
 		return null;
 	}
 
+	public SystemProperty getSystemPropertyById(String id) {
+		SystemProperty systemProperty = systemPropertyMapper
+				.getSystemPropertyById(id);
+		return systemProperty;
+	}
+
 	public List<SystemProperty> list(SystemPropertyQuery query) {
 		List<SystemProperty> list = systemPropertyMapper
 				.getSystemProperties(query);
-		return list;
+		List<SystemProperty> rows = new ArrayList<SystemProperty>();
+		if (list != null && !list.isEmpty()) {
+			for (SystemProperty p : list) {
+				if (!StringUtils.equals("TOKEN", p.getId())) {
+					rows.add(p);
+				}
+			}
+		}
+		return rows;
+	}
+
+	@Transactional
+	public void save(SystemProperty property) {
+		if (StringUtils.isNotEmpty(property.getId())) {
+			SystemProperty bean = this.getSystemPropertyById(property.getId());
+			if (bean != null) {
+				bean.setDescription(property.getDescription());
+				bean.setValue(property.getValue());
+				bean.setInitValue(property.getInitValue());
+				bean.setInputType(property.getInputType());
+				bean.setLocked(property.getLocked());
+				bean.setTitle(property.getTitle());
+				bean.setType(property.getType());
+				systemPropertyMapper.updateSystemProperty(bean);
+			} else {
+				systemPropertyMapper.insertSystemProperty(property);
+			}
+		} else {
+			SystemPropertyQuery query = new SystemPropertyQuery();
+			query.category(property.getCategory());
+			query.name(property.getName());
+			List<SystemProperty> list = this.list(query);
+			if (list != null && !list.isEmpty()) {
+				SystemProperty bean = list.get(0);
+				bean.setDescription(property.getDescription());
+				bean.setValue(property.getValue());
+				bean.setInitValue(property.getInitValue());
+				bean.setInputType(property.getInputType());
+				bean.setLocked(property.getLocked());
+				bean.setTitle(property.getTitle());
+				bean.setType(property.getType());
+				systemPropertyMapper.updateSystemProperty(bean);
+			} else {
+				if (property.getId() == null) {
+					property.setId(idGenerator.getNextId());
+				}
+				systemPropertyMapper.insertSystemProperty(property);
+			}
+		}
 	}
 
 	@Transactional

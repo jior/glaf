@@ -47,6 +47,8 @@ public class SystemConfig {
 
 	public final static String NOW = "${now}";
 
+	private static String TOKEN = null;
+
 	/**
 	 * 返回web应用的WEB-INF目录的全路径
 	 * 
@@ -236,6 +238,34 @@ public class SystemConfig {
 			ret = value;
 		}
 		return ret;
+	}
+
+	public static String getToken() {
+		if (TOKEN != null) {
+			return TOKEN;
+		}
+		ISystemPropertyService systemPropertyService = ContextFactory
+				.getBean("systemPropertyService");
+		SystemProperty property = systemPropertyService
+				.getSystemPropertyById("TOKEN");
+		if (property != null && property.getValue() != null) {
+			TOKEN = property.getValue();
+		} else {
+			java.util.Random random = new java.util.Random();
+			TOKEN = Math.abs(random.nextInt(9999))
+					+ com.glaf.core.util.UUID32.getUUID()
+					+ Math.abs(random.nextInt(9999));
+			property = new SystemProperty();
+			property.setId("TOKEN");
+			property.setCategory("SYS");
+			property.setName("TOKEN");
+			property.setLocked(0);
+			property.setValue(TOKEN);
+			property.setTitle("TOKEN");
+			property.setType("String");
+			systemPropertyService.save(property);
+		}
+		return TOKEN;
 	}
 
 	public static void main(String[] args) {

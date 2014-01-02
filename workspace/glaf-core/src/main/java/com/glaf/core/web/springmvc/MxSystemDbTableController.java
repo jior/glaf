@@ -685,6 +685,7 @@ public class MxSystemDbTableController {
 		rejects.add("SYS_LOB");
 		rejects.add("SYS_MAIL_FILE");
 		rejects.add("SYS_DBID");
+		rejects.add("SYS_PROPERTY");
 
 		if (conf.get("table.rejects") != null) {
 			String str = conf.get("table.rejects");

@@ -108,6 +108,9 @@ public class MxSystemPropertyController {
 					.getSystemProperties(category);
 			for (SystemProperty p : rows) {
 				String key = p.getName();
+				if (StringUtils.equals(key, "token")) {
+					continue;
+				}
 				String value = request.getParameter(key);
 				if (value != null) {
 					p.setValue(value);

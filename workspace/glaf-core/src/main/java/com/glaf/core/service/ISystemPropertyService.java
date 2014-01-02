@@ -36,6 +36,11 @@ public interface ISystemPropertyService {
 
 	SystemProperty getSystemProperty(String category, String name);
 
+	SystemProperty getSystemPropertyById(String id);
+
+	@Transactional
+	void save(SystemProperty property);
+
 	@Transactional
 	void saveAll(List<SystemProperty> props);
 
