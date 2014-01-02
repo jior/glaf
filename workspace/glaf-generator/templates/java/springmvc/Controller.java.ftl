@@ -34,7 +34,7 @@ public class ${entityName}Controller {
 
 	}
 
-        @javax.annotation.Resource
+    @javax.annotation.Resource
 	public void set${entityName}Service(${entityName}Service ${modelName}Service) {
 		this.${modelName}Service = ${modelName}Service;
 	}
@@ -45,7 +45,7 @@ public class ${entityName}Controller {
 		User user = RequestUtils.getUser(request);
 		String actorId =  user.getActorId();
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
-                params.remove("status");
+        params.remove("status");
 		params.remove("wfStatus");
 
 		${entityName} ${modelName} = new ${entityName}();
@@ -67,7 +67,7 @@ public class ${entityName}Controller {
     </#list>
 </#if>
 		
-		${modelName}.setCreateBy(actorId);
+		//${modelName}.setCreateBy(actorId);
          
 		${modelName}Service.save(${modelName});   
 
@@ -98,7 +98,7 @@ public class ${entityName}Controller {
       </#if>
     </#list>
 </#if>
-		    ${modelName}.setCreateBy(actorId);
+		    //${modelName}.setCreateBy(actorId);
 		    this.${modelName}Service.save(${modelName});
 
 		    return ResponseUtils.responseJsonResult(true);
@@ -109,11 +109,12 @@ public class ${entityName}Controller {
 		return ResponseUtils.responseJsonResult(false);
 	}
 
-        @RequestMapping("/update")
+
+    @RequestMapping("/update")
 	public ModelAndView update(HttpServletRequest request, ModelMap modelMap) {
 		User user = RequestUtils.getUser(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
-                params.remove("status");
+        params.remove("status");
 		params.remove("wfStatus");
 
 		<#if idField.type=='Integer' >
@@ -145,8 +146,8 @@ public class ${entityName}Controller {
 		return this.list(request, modelMap);
 	}
 
-        @ResponseBody
-        @RequestMapping("/delete")
+    @ResponseBody
+    @RequestMapping("/delete")
 	public void delete(HttpServletRequest request, ModelMap modelMap) {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
@@ -159,8 +160,8 @@ public class ${entityName}Controller {
 				if (StringUtils.isNotEmpty(x)) {
 					${entityName} ${modelName} = ${modelName}Service.get${entityName}(${idField.type}.valueOf(x));
 					/**
-		                         * 此处业务逻辑需自行调整
-		                         */
+		              * 此处业务逻辑需自行调整
+		              */
 					 //TODO
 					if (${modelName} != null && (StringUtils.equals(${modelName}.getCreateBy(), loginContext.getActorId()) || loginContext.isSystemAdministrator())) {
 						${modelName}.setDeleteFlag(1);
@@ -172,9 +173,9 @@ public class ${entityName}Controller {
 			${entityName} ${modelName} = ${modelName}Service
 					.get${entityName}(${idField.type}.valueOf(${idField.name}));
 			/**
-		         * 此处业务逻辑需自行调整
-		         */
-		        //TODO
+		     * 此处业务逻辑需自行调整
+		     */
+		    //TODO
 			if (${modelName} != null && ( StringUtils.equals(${modelName}.getCreateBy(), loginContext.getActorId()) || loginContext.isSystemAdministrator())) {
 				${modelName}.setDeleteFlag(1);
 				${modelName}Service.save(${modelName});
@@ -182,26 +183,8 @@ public class ${entityName}Controller {
 		}
 	}
 
-
-        @ResponseBody
-	@RequestMapping("/detail")
-	public byte[] detail(HttpServletRequest request) throws IOException{
-	    //RequestUtils.setRequestParameterToAttribute(request);
-	    //Map<String, Object> params = RequestUtils.getParameterMap(request);
-	    <#if idField.type=='Integer' >
-            ${entityName} ${modelName} = ${modelName}Service.get${entityName}(RequestUtils.getInt(request, "${idField.name}"));
-	    <#elseif idField.type== 'Long' >
-            ${entityName} ${modelName} = ${modelName}Service.get${entityName}(RequestUtils.getLong(request, "${idField.name}"));
-	    <#else>
-            ${entityName} ${modelName} = ${modelName}Service.get${entityName}(request.getParameter("${idField.name}"));
-	    </#if>
-		 
-	    JSONObject rowJSON =  ${modelName}.toJsonObject();
-	    return rowJSON.toJSONString().getBytes("UTF-8");
-        }
     
-
-        @RequestMapping("/edit")
+    @RequestMapping("/edit")
 	public ModelAndView edit(HttpServletRequest request, ModelMap modelMap) {
 		User user = RequestUtils.getUser(request);
 		String actorId =  user.getActorId();
@@ -217,12 +200,10 @@ public class ${entityName}Controller {
 		</#if>
 		if(${modelName} != null) {
 		    request.setAttribute("${modelName}", ${modelName});
-		    JSONObject rowJSON =  ${modelName}.toJsonObject();
-		    request.setAttribute("x_json", rowJSON.toJSONString());
 		}
 	
 
-                boolean canUpdate = false;
+        boolean canUpdate = false;
 		String x_method = request.getParameter("x_method");
 		if (StringUtils.equals(x_method, "submit")) {
 			 
@@ -253,7 +234,8 @@ public class ${entityName}Controller {
 		return new ModelAndView("/${classDefinition.moduleName}/${modelName}/edit", modelMap);
 	}
 
-        @RequestMapping("/view")
+
+    @RequestMapping("/view")
 	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
@@ -265,9 +247,6 @@ public class ${entityName}Controller {
                 ${entityName} ${modelName} = ${modelName}Service.get${entityName}(request.getParameter("${idField.name}"));
 		</#if>
 		request.setAttribute("${modelName}", ${modelName});
-		JSONObject rowJSON =  ${modelName}.toJsonObject();
-		request.setAttribute("x_json", rowJSON.toJSONString());
-
 
 		String view = request.getParameter("view");
 		if (StringUtils.isNotEmpty(view)) {
@@ -282,7 +261,7 @@ public class ${entityName}Controller {
 		return new ModelAndView("/${classDefinition.moduleName}/${modelName}/view");
 	}
 
-        @RequestMapping("/query")
+    @RequestMapping("/query")
 	public ModelAndView query(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		String view = request.getParameter("view");
@@ -314,7 +293,7 @@ public class ${entityName}Controller {
 		  query.createBy(actorId);
 		}
 
-                String gridType = ParamUtils.getString(params, "gridType");
+        String gridType = ParamUtils.getString(params, "gridType");
 		if (gridType == null) {
 			gridType = "easyui";
 		}
@@ -349,7 +328,7 @@ public class ${entityName}Controller {
 			result.put("limit", limit);
 			result.put("pageSize", limit);
 
-                        if (StringUtils.isNotEmpty(orderName)) {
+            if (StringUtils.isNotEmpty(orderName)) {
 				query.setSortOrder(orderName);
 				if (StringUtils.equals(order, "desc")) {
 					query.setSortOrder(" desc ");
@@ -368,8 +347,9 @@ public class ${entityName}Controller {
 				for (${entityName} ${modelName} : list) {
 					JSONObject rowJSON = ${modelName}.toJsonObject();
 					rowJSON.put("id", ${modelName}.getId());
+					rowJSON.put("rowId", ${modelName}.getId());
 					rowJSON.put("${modelName}Id", ${modelName}.getId());
-                                        rowJSON.put("startIndex", ++start);
+                    rowJSON.put("startIndex", ++start);
  					rowsJSON.add(rowJSON);
 				}
 
@@ -382,7 +362,8 @@ public class ${entityName}Controller {
 		return result.toJSONString().getBytes("UTF-8");
 	}
 
-        @RequestMapping 
+
+    @RequestMapping 
 	public ModelAndView list(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		String x_query = request.getParameter("x_query");
