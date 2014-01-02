@@ -99,6 +99,7 @@ public class CacheFactory {
 		String beanId = "cache";
 		Cache cache = null;
 		if (conf.getBoolean("glaf.cache.useEhCache", false)) {
+			logger.debug("use ehcache...");
 			cache = ContextFactory.getBean(beanId);
 		} else {
 			cache = (Cache) getBean(beanId);
@@ -157,7 +158,8 @@ public class CacheFactory {
 			if (null != ctx) {
 				Cache cache = getCache();
 				if (cache != null) {
-					shutdown();
+					items.clear();
+					cache.clear();
 				}
 				ctx = null;
 			}
@@ -171,7 +173,7 @@ public class CacheFactory {
 
 			ctx = new ClassPathXmlApplicationContext(configLocation);
 			logger.info("################# CacheFactory ##############");
-			logger.info("start spring ioc from: " + configLocation);
+			logger.info("cache config: " + configLocation);
 			return ctx;
 		} catch (Exception ex) {
 			if (logger.isDebugEnabled()) {
@@ -200,13 +202,12 @@ public class CacheFactory {
 		}
 	}
 
-	private static void shutdown() {
+	protected static void shutdown() {
 		try {
 			Cache cache = getCache();
 			if (cache != null) {
 				items.clear();
 				cache.clear();
-				cache.shutdown();
 			}
 		} catch (Exception ex) {
 			if (logger.isDebugEnabled()) {
