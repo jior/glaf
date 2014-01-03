@@ -239,6 +239,22 @@ public class SystemConfig {
 		}
 		return ret;
 	}
+	
+	public static String getString(String key,String defaultValue) {
+		String ret = defaultValue;
+		if (properties.isEmpty()) {
+			reload();
+		}
+		SystemProperty prop = properties.get(key);
+		if (prop != null) {
+			String value = prop.getValue();
+			if (StringUtils.isEmpty(value)) {
+				value = prop.getInitValue();
+			}
+			ret = value;
+		}
+		return ret;
+	}
 
 	public static String getToken() {
 		if (TOKEN != null) {

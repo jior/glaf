@@ -38,6 +38,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.glaf.core.cache.CacheFactory;
 import com.glaf.core.config.Configuration;
 import com.glaf.core.config.Environment;
+import com.glaf.core.config.SystemConfig;
 import com.glaf.core.context.ContextFactory;
 import com.glaf.core.domain.SystemProperty;
 import com.glaf.core.res.MessageUtils;
@@ -51,7 +52,6 @@ import com.glaf.core.util.RequestUtils;
 import com.glaf.core.util.StringTools;
 import com.glaf.core.web.callback.CallbackProperties;
 import com.glaf.core.web.callback.LoginCallback;
-
 import com.glaf.base.config.BaseConfiguration;
 import com.glaf.base.modules.sys.SysConstants;
 import com.glaf.base.modules.sys.model.SysUser;
@@ -61,7 +61,6 @@ import com.glaf.base.online.domain.UserOnline;
 import com.glaf.base.online.service.UserOnlineService;
 import com.glaf.base.utils.ContextUtil;
 import com.glaf.base.utils.ParamUtil;
-
 import com.glaf.shiro.ShiroSecurity;
 
 @Controller("/mx/login")
@@ -225,7 +224,10 @@ public class MxLoginController {
 		/**
 		 * 允许从指定的机器上通过用户名密码登录
 		 */
-		if (StringUtils.contains(conf.get("login.allow.ip", "127.0.0.1"), ip)) {
+		if (StringUtils.contains(conf.get("login.allow.ip", "127.0.0.1"), ip)
+				|| StringUtils.contains(
+						SystemConfig.getString("login.allow.ip", "127.0.0.1"),
+						ip)) {
 			String actorId = request.getParameter("x");
 			String password = request.getParameter("y");
 			HttpSession session = request.getSession(true);
