@@ -46,11 +46,11 @@
 		</jar>
 
 		<jar jarfile="tomcat-redis-session-manager.jar">
-			<fileset dir="bin" includes="com/radiadesign/**/*.class" />
+			<fileset dir="bin" includes="com/radiadesign/**/*.class,log4j.xml" />
 		</jar>
 
 		<jar jarfile="tomcat-zookeeper-session-manager.jar">
-			<fileset dir="bin" includes="com/glaf/cluster/catalina/**/*.class" />
+			<fileset dir="bin" includes="com/glaf/cluster/catalina/**/*.class,log4j.xml" />
 		</jar>
 
 	</target>
