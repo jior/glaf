@@ -1,0 +1,55 @@
+<project name="glaf-cluster" basedir="." default="build">
+	<!-- Project settings -->
+	<property name="project.title" value="GLAF Cluster System" />
+	<property name="project.distname" value="glaf-cluster" />
+
+	<!-- 路径设置 -->
+	<property name="src.dir" value="./src" />
+	<property name="lib.dir" value="./lib" />
+	<property name="classes.dir" value="./bin" />
+	<property name="jarfile" value="${project.distname}.jar" />
+
+	<!-- 类路径 -->
+	<path id="compile.classpath">
+		<fileset dir="${lib.dir}">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<!-- 准备任务 -->
+	<target name="prepare">
+		<tstamp />
+	</target>
+
+	<!-- 清理任务 -->
+	<target name="clean" description="Prepare for clean build">
+		<delete file="${jarfile}" />
+	</target>
+
+	<target name="build" depends="clean">
+		<echo message="编译应用程序......" />
+		<mkdir dir="bin" />
+		<javac srcdir="src" destdir="bin" debug="on" fork="${javac.fork}" deprecation="on">
+			<include name="main/java/**/*.java" />
+			<include name="test/java/**/*.java" />
+			<classpath refid="compile.classpath" />
+		</javac>
+		<copy todir="bin">
+			<fileset dir="src/main/java" includes="com/**/*.conf,com/**/*.sql,com/**/*.properties,com/**/*.xml" />
+		</copy>
+	</target>
+
+	<!-- 编译任务 -->
+	<target name="jar" description="Create java jar file">
+		<jar jarfile="${project.distname}-src.zip">
+			<fileset dir="." includes="*.bat,*.xml, src/**/*.*,mapping/**/*.xml,conf/**,report/**" excludes="**/*.cvs,**/*.bak,**/*.tmp,**/*.scc,**/*.svn" />
+		</jar>
+
+		<jar jarfile="tomcat-redis-session-manager.jar">
+			<fileset dir="bin" includes="com/radiadesign/**/*.class" />
+		</jar>
+
+	</target>
+
+
+</project>

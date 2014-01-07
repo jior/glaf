@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry kind="src" path="src/test/java"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/glaf-core"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/glaf-batch"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/glaf-mail"/>
+	<classpathentry kind="lib" path="lib/catalina-ant.jar"/>
+	<classpathentry kind="lib" path="lib/catalina-ha.jar"/>
+	<classpathentry kind="lib" path="lib/catalina-tribes.jar"/>
+	<classpathentry kind="lib" path="lib/catalina.jar"/>
+	<classpathentry kind="lib" path="lib/commons-pool2.jar"/>
+	<classpathentry kind="lib" path="lib/jedis.jar"/>
+	<classpathentry kind="lib" path="lib/servlet-api.jar"/>
+	<classpathentry kind="lib" path="lib/tomcat-juli.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
