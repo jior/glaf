@@ -49,6 +49,10 @@
 			<fileset dir="bin" includes="com/radiadesign/**/*.class" />
 		</jar>
 
+		<jar jarfile="tomcat-zookeeper-session-manager.jar">
+			<fileset dir="bin" includes="com/glaf/cluster/catalina/**/*.class" />
+		</jar>
+
 	</target>
 
 
