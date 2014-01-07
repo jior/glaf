@@ -14,5 +14,9 @@
 	<classpathentry kind="lib" path="lib/netty.jar"/>
 	<classpathentry kind="lib" path="lib/zookeeper.jar"/>
 	<classpathentry kind="lib" path="lib/commons-lang3.jar"/>
+	<classpathentry kind="lib" path="lib/jline.jar"/>
+	<classpathentry kind="lib" path="lib/log4j.jar"/>
+	<classpathentry kind="lib" path="lib/slf4j-api.jar"/>
+	<classpathentry kind="lib" path="lib/slf4j-log4j.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
