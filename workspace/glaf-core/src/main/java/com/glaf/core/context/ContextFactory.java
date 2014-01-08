@@ -29,11 +29,11 @@ import com.glaf.core.util.Constants;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 public final class ContextFactory {
-	private static final Configuration conf = BaseConfiguration.create();
+	private static Configuration conf = BaseConfiguration.create();
 
 	private static org.springframework.context.ApplicationContext ctx;
 
-	protected static final Log logger = LogFactory.getLog(ContextFactory.class);
+	private static Log logger = LogFactory.getLog(ContextFactory.class);
 
 	public static org.springframework.context.ApplicationContext getApplicationContext() {
 		return ctx;
@@ -84,6 +84,22 @@ public final class ContextFactory {
 				if (StringUtils.isNotEmpty(conf.get("spring-config"))) {
 					String filename = SystemProperties.getConfigRootPath()
 							+ conf.get("spring-config");
+					logger.info("load custom spring config:" + filename);
+					if (filename.startsWith("/")) {
+						filename = "/" + filename;// For linux
+					}
+					ctx = new FileSystemXmlApplicationContext(filename);
+				} else if (StringUtils.isNotEmpty(conf
+						.get("spring-config-file"))) {
+					String filename = conf.get("spring-config-file");
+					logger.info("load custom spring config:" + filename);
+					if (filename.startsWith("/")) {
+						filename = "/" + filename;// For linux
+					}
+					ctx = new FileSystemXmlApplicationContext(filename);
+				} else if (StringUtils.isNotEmpty(System
+						.getProperty("spring-config-file"))) {
+					String filename = System.getProperty("spring-config-file");
 					logger.info("load custom spring config:" + filename);
 					if (filename.startsWith("/")) {
 						filename = "/" + filename;// For linux
