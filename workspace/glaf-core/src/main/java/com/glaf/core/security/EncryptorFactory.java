@@ -34,8 +34,8 @@ public class EncryptorFactory {
 
 	public static Encryptor getEncryptor() {
 		if (cncryptor == null) {
-			if (conf.get("sys.cncryptor") != null) {
-				String cncryptorClass = conf.get("sys.cncryptor");
+			if (conf.get("sys.encryptor") != null) {
+				String cncryptorClass = conf.get("sys.encryptor");
 				try {
 					cncryptor = (Encryptor) ReflectUtils
 							.instantiate(cncryptorClass);
