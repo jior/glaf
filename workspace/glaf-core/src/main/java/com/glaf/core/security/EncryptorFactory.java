@@ -56,15 +56,21 @@ public class EncryptorFactory {
 	}
 
 	public static void main(String[] args) throws Exception {
-		for (int i = 0; i < 10000; i++) {
+		Encryptor cryptor = EncryptorFactory.getEncryptor();
+		System.out
+				.println("EnCrypted text [" + cryptor.encrypt("111111") + "]");
+		System.out.println("EnCrypted text ["
+				+ cryptor.decrypt("37306959717a76687534733d") + "]");
+
+		for (int i = 0; i < 10; i++) {
 			long start = System.currentTimeMillis();
-			Encryptor cryptor = EncryptorFactory.getEncryptor();
+
 			String encryptedText = cryptor.encrypt(UUID32.getUUID());
 			System.out.println("EnCrypted text [" + encryptedText + "]");
 
 			String decryptedText = cryptor.decrypt(encryptedText);
 			System.out.println("DeCrypted text " + decryptedText);
-			long ms = System.currentTimeMillis()-start;
+			long ms = System.currentTimeMillis() - start;
 			System.out.println("总共用时:" + (ms) + " 毫秒.");
 		}
 	}

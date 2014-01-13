@@ -18,7 +18,7 @@
 
 package com.glaf.core.util;
 
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.net.URLEncoder;
 import java.util.Date;
 import java.util.Enumeration;
@@ -35,7 +35,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
@@ -46,6 +45,8 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.config.SystemConfig;
 import com.glaf.core.identity.User;
+import com.glaf.core.security.Encryptor;
+import com.glaf.core.security.EncryptorFactory;
 import com.glaf.core.security.IdentityFactory;
 import com.glaf.core.security.LoginContext;
 
@@ -100,10 +101,35 @@ public class RequestUtils {
 		return aReturn;
 	}
 
-	public static Map<String, String> decodeCookieValue(String value) {
+	public static String decodeString(String str) {
+		try {
+			// Base64 base64 = new Base64();
+			// byte[] bytes = base64.decode(StringTools.decodeHex(str));
+			// String tmp = new String(bytes);
+			String tmp = str;
+			Encryptor cryptor = EncryptorFactory.getEncryptor();
+			tmp = cryptor.decrypt(tmp);
+			String salt = DigestUtils.md5Hex(SystemConfig.getToken());
+			tmp = StringUtils.replace(tmp, salt, "");
+			return tmp;
+		} catch (Exception ex) {
+			return str;
+		}
+	}
+
+	public static String decodeURL(String str) {
+		try {
+			return decodeString(str);
+		} catch (Exception ex) {
+			return str;
+		}
+	}
+
+	private static Map<String, String> decodeValues(String ip, String value) {
 		Map<String, String> cookieMap = new HashMap<String, String>();
 		if (StringUtils.isNotEmpty(value)) {
 			String c_x = decodeString(value);
+			c_x = StringUtils.replace(c_x, DigestUtils.md5Hex(ip), "");
 			JSONObject jsonObject = (JSONObject) JSON.parse(c_x);
 			Iterator<Entry<String, Object>> iterator = jsonObject.entrySet()
 					.iterator();
@@ -119,47 +145,16 @@ public class RequestUtils {
 		return cookieMap;
 	}
 
-	public static String decodeString(String str) {
-		try {
-			Base64 base64 = new Base64();
-			byte[] bytes = base64.decode(StringTools.decodeHex(str));
-			String tmp = new String(bytes);
-			tmp = StringTools.replace(tmp, SystemConfig.getToken(), "");
-			return tmp;
-		} catch (Exception ex) {
-			return str;
-		}
-	}
-
-	public static String decodeURL(String str) {
-		try {
-			return decodeString(str);
-		} catch (Exception ex) {
-			return str;
-		}
-	}
-
-	private static String encodeCookieValue(String ip, String systemName,
-			String actorId) {
-		JSONObject rootJson = new JSONObject();
-		rootJson.put(Constants.LOGIN_IP, ip);
-		rootJson.put(Constants.LOGIN_ACTORID, actorId);
-		if (systemName != null) {
-			rootJson.put(Constants.SYSTEM_NAME, systemName);
-		}
-		rootJson.put(Constants.TS,
-				String.valueOf(Long.MAX_VALUE - System.currentTimeMillis()));
-		String c_x = rootJson.toJSONString();
-		c_x = encodeString(c_x);
-		return c_x;
-	}
-
 	public static String encodeString(String str) {
 		try {
-			str = str + SystemConfig.getToken();
-			Base64 base64 = new Base64();
-			byte[] bytes = base64.encode(str.getBytes());
-			return StringTools.encodeHex(bytes);
+			String salt = DigestUtils.md5Hex(SystemConfig.getToken());
+			str = str + salt;
+			Encryptor cryptor = EncryptorFactory.getEncryptor();
+			str = cryptor.encrypt(str);
+			// Base64 base64 = new Base64();
+			// byte[] bytes = base64.encode(str.getBytes());
+			// return StringTools.encodeHex(bytes);
+			return str;
 		} catch (Exception ex) {
 			return str;
 		}
@@ -173,6 +168,22 @@ public class RequestUtils {
 		}
 	}
 
+	private static String encodeValues(String ip, String systemName,
+			String actorId) {
+		JSONObject rootJson = new JSONObject();
+		rootJson.put(Constants.LOGIN_IP, ip);
+		rootJson.put(Constants.LOGIN_ACTORID, actorId);
+		if (systemName != null) {
+			rootJson.put(Constants.SYSTEM_NAME, systemName);
+		}
+		rootJson.put(Constants.TS,
+				String.valueOf(Long.MAX_VALUE - System.currentTimeMillis()));
+		String c_x = rootJson.toJSONString();
+		c_x = DigestUtils.md5Hex(ip) + c_x;
+		c_x = encodeString(c_x);
+		return c_x;
+	}
+
 	public static String getActorId(HttpServletRequest request) {
 		String actorId = null;
 		String ip = getIPAddress(request);
@@ -180,9 +191,10 @@ public class RequestUtils {
 		HttpSession session = request.getSession(false);
 		if (session != null) {
 			String value = (String) session.getAttribute(Constants.LOGIN_INFO);
-			Map<String, String> cookieMap = decodeCookieValue(value);
+			Map<String, String> cookieMap = decodeValues(ip, value);
 			if (StringUtils.equals(cookieMap.get(Constants.LOGIN_IP), ip)) {
 				actorId = cookieMap.get(Constants.LOGIN_ACTORID);
+				logger.debug("#actorId=" + actorId);
 			}
 		}
 
@@ -193,7 +205,8 @@ public class RequestUtils {
 					if (StringUtils.equals(cookie.getName(),
 							Constants.COOKIE_NAME)) {
 						String value = cookie.getValue();
-						Map<String, String> cookieMap = decodeCookieValue(value);
+						Map<String, String> cookieMap = decodeValues(ip, value);
+						// logger.debug("#cookieMap=" + cookieMap);
 						if (StringUtils.equals(
 								cookieMap.get(Constants.LOGIN_IP), ip)) {
 							String time = cookieMap.get(Constants.TS);
@@ -275,7 +288,7 @@ public class RequestUtils {
 		HttpSession session = request.getSession(false);
 		if (session != null) {
 			String value = (String) session.getAttribute(Constants.LOGIN_INFO);
-			Map<String, String> cookieMap = decodeCookieValue(value);
+			Map<String, String> cookieMap = decodeValues(ip, value);
 			if (StringUtils.equals(cookieMap.get(Constants.LOGIN_IP), ip)) {
 				currentSystem = cookieMap.get(Constants.SYSTEM_NAME);
 			}
@@ -288,7 +301,7 @@ public class RequestUtils {
 					if (StringUtils.equals(cookie.getName(),
 							Constants.COOKIE_NAME)) {
 						String value = cookie.getValue();
-						Map<String, String> cookieMap = decodeCookieValue(value);
+						Map<String, String> cookieMap = decodeValues(ip, value);
 						if (StringUtils.equals(
 								cookieMap.get(Constants.LOGIN_IP), ip)) {
 							String time = cookieMap.get(Constants.TS);
@@ -821,7 +834,7 @@ public class RequestUtils {
 		HttpSession session = request.getSession(false);
 		if (session != null) {
 			String value = (String) session.getAttribute(Constants.LOGIN_INFO);
-			Map<String, String> cookieMap = decodeCookieValue(value);
+			Map<String, String> cookieMap = decodeValues(ip, value);
 			if (StringUtils.equals(cookieMap.get(Constants.LOGIN_IP), ip)) {
 				actorId = cookieMap.get(Constants.LOGIN_ACTORID);
 			}
@@ -934,7 +947,7 @@ public class RequestUtils {
 			HttpServletResponse response, String systemName, String actorId) {
 		String ip = getIPAddress(request);
 		ip = DigestUtils.md5Hex(ip);
-		String value = encodeCookieValue(ip, systemName, actorId);
+		String value = encodeValues(ip, systemName, actorId);
 		HttpSession session = request.getSession(false);
 		if (session != null) {
 			session.setAttribute(Constants.LOGIN_INFO, value);
