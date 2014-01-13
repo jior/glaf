@@ -66,7 +66,11 @@ public class TreeRepositoryBuilder {
 
 			TreeComponent component = new TreeComponent();
 			component.setId(String.valueOf(treeModel.getId()));
-			component.setCode(String.valueOf(treeModel.getId()));
+			if(treeModel.getCode() != null){
+				component.setCode(treeModel.getCode());
+			}else{
+			    component.setCode(String.valueOf(treeModel.getId()));
+			}
 			component.setTitle(treeModel.getName());
 			component.setChecked(treeModel.isChecked());
 			component.setTreeObject(treeModel);
