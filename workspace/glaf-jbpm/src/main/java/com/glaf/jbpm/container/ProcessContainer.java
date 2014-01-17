@@ -69,18 +69,20 @@ import com.glaf.jbpm.query.ProcessQuery;
 
 public class ProcessContainer {
 
+	private static class ProcessContainerHolder {
+		public static ProcessContainer instance = new ProcessContainer();
+	}
+
 	protected final static Log logger = LogFactory
 			.getLog(ProcessContainer.class);
 
 	private static ConcurrentMap<String, Object> cache = new ConcurrentHashMap<String, Object>();
 
-	public final static ProcessContainer getContainer() {
-		return container;
+	public static ProcessContainer getContainer() {
+		return ProcessContainerHolder.instance;
 	}
 
 	private JbpmConfiguration jbpmConfiguration = null;
-
-	private static ProcessContainer container = new ProcessContainer();
 
 	private JbpmExtensionManager jbpmExtensionManager;
 
@@ -92,7 +94,6 @@ public class ProcessContainer {
 		jbpmTaskManager = new JbpmTaskManager();
 		jbpmProcessManager = new JbpmProcessManager();
 		jbpmExtensionManager = new JbpmExtensionManager();
-
 	}
 
 	/**
@@ -1522,8 +1523,8 @@ public class ProcessContainer {
 			taskItems.add(item);
 		}
 
-		logger.debug("taskItems size:"+taskItems.size());
-		
+		logger.debug("taskItems size:" + taskItems.size());
+
 		taskItems = this.filter(actorId, taskItems);
 
 		return taskItems;
