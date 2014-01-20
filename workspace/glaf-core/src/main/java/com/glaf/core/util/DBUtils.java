@@ -1037,13 +1037,13 @@ public class DBUtils {
 			TableDefinition tableDefinition) {
 		StringBuffer buffer = new StringBuffer();
 		Collection<ColumnDefinition> columns = tableDefinition.getColumns();
-		buffer.append(" create table ").append(tableDefinition.getTableName());
+		buffer.append(" create table ").append(tableDefinition.getTableName().toUpperCase());
 		buffer.append(" ( ");
 		Collection<String> cols = new HashSet<String>();
 		ColumnDefinition idField = tableDefinition.getIdColumn();
 		if (idField != null) {
 			buffer.append(newline);
-			buffer.append("    ").append(idField.getColumnName());
+			buffer.append("    ").append(idField.getColumnName().toUpperCase());
 			if ("db2".equalsIgnoreCase(dbType)) {
 				if ("Integer".equals(idField.getJavaType())) {
 					buffer.append(" integer ");
@@ -1188,7 +1188,7 @@ public class DBUtils {
 
 			index++;
 			buffer.append(newline);
-			buffer.append("    ").append(column.getColumnName());
+			buffer.append("    ").append(column.getColumnName().toUpperCase());
 			if ("db2".equalsIgnoreCase(dbType)) {
 				if ("Integer".equals(column.getJavaType())) {
 					buffer.append(" integer ");
@@ -1346,7 +1346,7 @@ public class DBUtils {
 		if (idField != null) {
 			buffer.append(",");
 			buffer.append(newline);
-			buffer.append("    primary key (").append(idField.getColumnName())
+			buffer.append("    primary key (").append(idField.getColumnName().toUpperCase())
 					.append(") ");
 		}
 		buffer.append(newline);
@@ -1359,13 +1359,13 @@ public class DBUtils {
 			TableDefinition classDefinition) {
 		StringBuffer buffer = new StringBuffer();
 		Collection<ColumnDefinition> fields = classDefinition.getColumns();
-		buffer.append(" create table ").append(classDefinition.getTableName());
+		buffer.append(" create table ").append(classDefinition.getTableName().toUpperCase());
 		buffer.append(" ( ");
 		Collection<String> cols = new HashSet<String>();
 		ColumnDefinition idField = classDefinition.getIdColumn();
 		if (idField != null) {
 			buffer.append(newline);
-			buffer.append("    ").append(idField.getColumnName());
+			buffer.append("    ").append(idField.getColumnName().toUpperCase());
 			if ("h2".equalsIgnoreCase(dbType)) {
 				if ("Integer".equals(idField.getJavaType())) {
 					buffer.append(" integer ");

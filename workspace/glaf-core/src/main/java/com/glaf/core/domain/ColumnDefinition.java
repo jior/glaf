@@ -423,6 +423,9 @@ public class ColumnDefinition implements
 	}
 
 	public String getColumnName() {
+		if (columnName != null) {
+			columnName = columnName.trim().toUpperCase();
+		}
 		return columnName;
 	}
 
