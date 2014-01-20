@@ -30,6 +30,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.ByteBuffer;
 import java.nio.channels.Channels;
+import java.nio.channels.FileChannel;
 import java.nio.channels.ReadableByteChannel;
 import java.nio.channels.WritableByteChannel;
 
@@ -44,7 +45,7 @@ public class FileUtils {
 	public final static String sp = System.getProperty("file.separator");
 
 	public final static String newline = System.getProperty("line.separator");
-
+	
 	/**
 	 * 拷贝文件
 	 * 
@@ -68,6 +69,39 @@ public class FileUtils {
 		dest = getJavaFileSystemPath(dest);
 		org.apache.commons.io.FileUtils.copyFile(new File(src), new File(dest));
 	}
+
+	/**
+	 * 拷贝文件
+	 * @param sourceFile
+	 * @param destinationFile
+	 * @throws IOException
+	 */
+	public static void copyFile(File sourceFile, File destinationFile) throws IOException {
+        FileInputStream sourceIs = null;
+        FileChannel source = null;
+        FileOutputStream destinationOs = null;
+        FileChannel destination = null;
+        try {
+            sourceIs = new FileInputStream(sourceFile);
+            source = sourceIs.getChannel();
+            destinationOs = new FileOutputStream(destinationFile);
+            destination = destinationOs.getChannel();
+            destination.transferFrom(source, 0, source.size());
+        } finally {
+            if (source != null) {
+                source.close();
+            }
+            if (sourceIs != null) {
+                sourceIs.close();
+            }
+            if (destination != null) {
+                destination.close();
+            }
+            if (destinationOs != null) {
+                destinationOs.close();
+            }
+        }
+    }
 
 	/**
 	 * 删除文件
