@@ -20,5 +20,6 @@
 	<classpathentry kind="lib" path="lib/slf4j-log4j.jar"/>
 	<classpathentry kind="lib" path="lib/kryo-serializers.jar"/>
 	<classpathentry kind="lib" path="lib/kryo.jar"/>
+	<classpathentry kind="lib" path="lib/commons-pool.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
