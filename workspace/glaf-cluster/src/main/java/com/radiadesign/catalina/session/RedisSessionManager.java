@@ -13,6 +13,7 @@ import org.apache.catalina.session.ManagerBase;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisShardInfo;
 import redis.clients.jedis.Protocol;
 
 import java.io.IOException;
@@ -29,8 +30,8 @@ public class RedisSessionManager extends ManagerBase implements Lifecycle {
 
 	private final Log log = LogFactory.getLog(RedisSessionManager.class);
 
-	protected String host = "localhost";
-	protected int port = 6379;
+	protected String servers = "127.0.0.1:6379";
+	protected String socketTO = "6000";
 	protected int database = 0;
 	protected String password = null;
 	protected int timeout = Protocol.DEFAULT_TIMEOUT;
@@ -45,6 +46,10 @@ public class RedisSessionManager extends ManagerBase implements Lifecycle {
 	protected static String name = "RedisSessionManager";
 
 	protected String serializationStrategyClass = "com.radiadesign.catalina.session.JavaSerializer";
+
+	protected String minConn = "5";
+
+	protected String maxConn = "100";
 
 	/**
 	 * The lifecycle event support for this component.
@@ -213,16 +218,8 @@ public class RedisSessionManager extends ManagerBase implements Lifecycle {
 		return database;
 	}
 
-	public String getHost() {
-		return host;
-	}
-
 	public String getPassword() {
 		return password;
-	}
-
-	public int getPort() {
-		return port;
 	}
 
 	@Override
@@ -249,11 +246,68 @@ public class RedisSessionManager extends ManagerBase implements Lifecycle {
 		return timeout;
 	}
 
-	private void initializeDatabaseConnection() throws LifecycleException {
+	public String getMinConn() {
+		return minConn;
+	}
+
+	public void setMinConn(String minConn) {
+		this.minConn = minConn;
+	}
+
+	public String getMaxConn() {
+		return maxConn;
+	}
+
+	public void setMaxConn(String maxConn) {
+		this.maxConn = maxConn;
+	}
+
+	public String getServers() {
+		return servers;
+	}
+
+	public void setServers(String servers) {
+		this.servers = servers;
+	}
+
+	private void initializeConnection() throws LifecycleException {
 		try {
-			// Allow configuration of pool (such as size...)
-			connectionPool = new JedisPool(new JedisPoolConfig(), getHost(),
-					getPort(), getTimeout(), getPassword());
+			JedisPoolConfig poolConfig = new JedisPoolConfig();
+			poolConfig.setMaxIdle(Integer.valueOf(maxConn));
+			poolConfig.setMinIdle(Integer.valueOf(minConn));
+			poolConfig.setMaxWaitMillis(1000L * 10L);
+
+			poolConfig.setTestOnBorrow(false);
+			poolConfig.setTestOnReturn(false);
+			poolConfig.setTestWhileIdle(true);
+			poolConfig.setMinEvictableIdleTimeMillis(1000L * 60L * 10L); // 空闲对象,空闲多长时间会被驱逐出池里
+			poolConfig.setTimeBetweenEvictionRunsMillis(1000L * 30L); // 驱逐线程30秒执行一次
+			poolConfig.setNumTestsPerEvictionRun(-1); // -1,表示在驱逐线程执行时,测试所有的空闲对象
+
+			String[] serverlists = servers.split(",");
+			java.util.List<JedisShardInfo> shards = new java.util.ArrayList<JedisShardInfo>(
+					serverlists.length);
+			for (int i = 0; i < serverlists.length; i++) {
+				String[] hostAndPort = serverlists[i].split(":");
+				JedisShardInfo shardInfo = new JedisShardInfo(hostAndPort[0],
+						Integer.parseInt(hostAndPort[1]),
+						Integer.valueOf(socketTO));
+				if (hostAndPort.length == 3) {
+					shardInfo.setPassword(hostAndPort[2]);
+				}
+				shards.add(shardInfo);
+			}
+
+			if (shards.size() == 1) {
+				connectionPool = new JedisPool(poolConfig, shards.get(0)
+						.getHost(), shards.get(0).getPort(), shards.get(0)
+						.getTimeout(), shards.get(0).getPassword());
+				log.info("使用:JedisPool");
+			}
+
+			log.info("RedisShards:" + shards.toString());
+			log.info("初始化RedisManager:" + this.toString());
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new LifecycleException("Error Connecting to Redis", e);
@@ -459,16 +513,8 @@ public class RedisSessionManager extends ManagerBase implements Lifecycle {
 		this.database = database;
 	}
 
-	public void setHost(String host) {
-		this.host = host;
-	}
-
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public void setPort(int port) {
-		this.port = port;
 	}
 
 	public void setRejectedSessions(int i) {
@@ -530,7 +576,7 @@ public class RedisSessionManager extends ManagerBase implements Lifecycle {
 		log.info("Will expire sessions after " + getMaxInactiveInterval()
 				+ " seconds");
 
-		initializeDatabaseConnection();
+		initializeConnection();
 
 		setDistributable(true);
 	}
