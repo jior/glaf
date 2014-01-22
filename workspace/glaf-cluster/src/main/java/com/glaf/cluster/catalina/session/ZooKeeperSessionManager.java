@@ -174,7 +174,6 @@ public class ZooKeeperSessionManager extends ManagerBase implements Lifecycle {
 
 	@Override
 	public int getRejectedSessions() {
-		// Essentially do nothing.
 		return 0;
 	}
 
@@ -185,7 +184,6 @@ public class ZooKeeperSessionManager extends ManagerBase implements Lifecycle {
 	public int getTimeout() {
 		return timeout;
 	}
-
 
 	private void initializeSerializer() throws ClassNotFoundException,
 			IllegalAccessException, InstantiationException {
@@ -247,7 +245,7 @@ public class ZooKeeperSessionManager extends ManagerBase implements Lifecycle {
 		} catch (IOException e) {
 			log.fatal(e.getMessage());
 			throw e;
-		} catch (ClassNotFoundException ex) {
+		} catch (Exception ex) {
 			log.fatal("Unable to deserialize into session", ex);
 			throw new IOException("Unable to deserialize into session", ex);
 		} finally {
@@ -318,7 +316,7 @@ public class ZooKeeperSessionManager extends ManagerBase implements Lifecycle {
 	}
 
 	public void setRejectedSessions(int i) {
-		// Do nothing.
+		
 	}
 
 	public void setSerializationStrategyClass(String strategy) {

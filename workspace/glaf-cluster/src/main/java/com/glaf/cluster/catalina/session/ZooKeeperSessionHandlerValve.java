@@ -70,7 +70,6 @@ public class ZooKeeperSessionHandlerValve extends ValveBase {
 				}
 			}
 		} catch (Exception e) {
-			// Do nothing.
 		}
 	}
 }

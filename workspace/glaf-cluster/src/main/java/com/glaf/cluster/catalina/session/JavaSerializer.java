@@ -21,36 +21,61 @@ package com.glaf.cluster.catalina.session;
 import org.apache.catalina.util.CustomObjectInputStream;
 
 import javax.servlet.http.HttpSession;
+
 import java.io.*;
 
 public class JavaSerializer implements Serializer {
 	private ClassLoader loader;
 
-	@Override
 	public HttpSession deserializeInto(byte[] data, HttpSession session)
-			throws IOException, ClassNotFoundException {
+			throws IOException {
 		ZooKeeperSession zooKeeperSession = (ZooKeeperSession) session;
-		BufferedInputStream bis = new BufferedInputStream(
-				new ByteArrayInputStream(data));
-		ObjectInputStream ois = new CustomObjectInputStream(bis, loader);
-		zooKeeperSession.setCreationTime(ois.readLong());
-		zooKeeperSession.readObjectData(ois);
+		BufferedInputStream bis = null;
+		ObjectInputStream ois = null;
+		try {
+			bis = new BufferedInputStream(new ByteArrayInputStream(data));
+			ois = new CustomObjectInputStream(bis, loader);
+			zooKeeperSession.setCreationTime(ois.readLong());
+			zooKeeperSession.readObjectData(ois);
+		} catch (IOException ex) {
+			throw ex;
+		} catch (Exception ex) {
+			throw new RuntimeException(ex);
+		} finally {
+			if (bis != null) {
+				bis.close();
+			}
+			if (ois != null) {
+				ois.close();
+			}
+		}
 		return session;
 	}
 
-	@Override
 	public byte[] serializeFrom(HttpSession session) throws IOException {
 		ZooKeeperSession zooKeeperSession = (ZooKeeperSession) session;
-		ByteArrayOutputStream bos = new ByteArrayOutputStream();
-		ObjectOutputStream oos = new ObjectOutputStream(
-				new BufferedOutputStream(bos));
-		oos.writeLong(zooKeeperSession.getCreationTime());
-		zooKeeperSession.writeObjectData(oos);
-		oos.close();
+		ByteArrayOutputStream bos = null;
+		ObjectOutputStream oos = null;
+		try {
+			bos = new ByteArrayOutputStream();
+			oos = new ObjectOutputStream(new BufferedOutputStream(bos));
+			oos.writeLong(zooKeeperSession.getCreationTime());
+			zooKeeperSession.writeObjectData(oos);
+		} catch (IOException ex) {
+			throw ex;
+		} catch (Exception ex) {
+			throw new RuntimeException(ex);
+		} finally {
+			if (bos != null) {
+				bos.close();
+			}
+			if (oos != null) {
+				oos.close();
+			}
+		}
 		return bos.toByteArray();
 	}
 
-	@Override
 	public void setClassLoader(ClassLoader loader) {
 		this.loader = loader;
 	}

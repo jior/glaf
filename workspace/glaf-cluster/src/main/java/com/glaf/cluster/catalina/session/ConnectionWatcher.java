@@ -11,25 +11,20 @@ import org.apache.zookeeper.Watcher.Event.KeeperState;
 import org.apache.zookeeper.ZooKeeper;
 
 public class ConnectionWatcher implements Watcher {
-	private static final int SESSION_TIMEOUT = 5000;
+	private static final int SESSION_TIMEOUT = 3600;
 	private CountDownLatch signal = new CountDownLatch(1);
 	private Log log = LogFactory.getLog(getClass());
 
-	/**
-	 * 
-	 * @throws IOException
-	 * @throws InterruptedException
-	 */
 	public ZooKeeper connection(String servers) {
 		ZooKeeper zk;
 		try {
 			zk = new ZooKeeper(servers, SESSION_TIMEOUT, this);
 			signal.await();
 			return zk;
-		} catch (IOException e) {
-			log.error(e);
-		} catch (InterruptedException e) {
-			log.error(e);
+		} catch (IOException ex) {
+			log.error(ex);
+		} catch (InterruptedException ex) {
+			log.error(ex);
 		}
 		return null;
 	}

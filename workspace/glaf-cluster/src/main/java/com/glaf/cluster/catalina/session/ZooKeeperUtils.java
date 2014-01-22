@@ -19,11 +19,11 @@ public class ZooKeeperUtils {
 	/** 日志 */
 	private static Log log = LogFactory.getLog(ZooKeeperUtils.class);
 
-	private static String hosts;
-
 	private static ExecutorService pool = Executors.newCachedThreadPool();
 
 	private static final String GROUP_NAME = "/SESSIONS";
+
+	private static String hosts;
 
 	/**
 	 * 
@@ -49,7 +49,6 @@ public class ZooKeeperUtils {
 		try {
 			Future<String> result = pool.submit(task);
 			// 如果需要等待执行结果
-
 			if (waitFor) {
 				while (true) {
 					if (result.isDone()) {
@@ -90,7 +89,6 @@ public class ZooKeeperUtils {
 			Future<Boolean> result = pool.submit(task);
 
 			// 如果需要等待执行结果
-
 			if (waitFor) {
 				while (true) {
 					if (result.isDone()) {
@@ -167,8 +165,8 @@ public class ZooKeeperUtils {
 	 * @return
 	 */
 	public static ZooKeeper connect() {
-		ConnectionWatcher cw = new ConnectionWatcher();
-		ZooKeeper zk = cw.connection(hosts);
+		ConnectionWatcher watcher = new ConnectionWatcher();
+		ZooKeeper zk = watcher.connection(hosts);
 		return zk;
 	}
 
@@ -176,7 +174,6 @@ public class ZooKeeperUtils {
 	 * 
 	 * 创建一个组节点
 	 */
-
 	public static void createGroupNode() {
 		ZooKeeper zk = connect();
 		if (zk != null) {
@@ -186,9 +183,9 @@ public class ZooKeeperUtils {
 				// stat为null表示无此节点，需要创建
 				if (stat == null) {
 					// 创建组件点
-					String createPath = zk.create(GROUP_NAME, null,
+					String path = zk.create(GROUP_NAME, null,
 							Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
-					log.debug("创建节点完成:[" + createPath + "]");
+					log.debug("创建节点完成:[" + path + "]");
 				} else {
 					log.debug("组节点已存在，无需创建[" + GROUP_NAME + "]");
 				}
@@ -205,9 +202,6 @@ public class ZooKeeperUtils {
 	/**
 	 * 
 	 * 创建指定Session ID的节点
-	 * 
-	 * @param sid
-	 *            Session ID
 	 * 
 	 * @return
 	 */
@@ -246,8 +240,8 @@ public class ZooKeeperUtils {
 	 * 
 	 * 创建指定Session ID的节点
 	 * 
-	 * @param sid
-	 *            Session ID
+	 * @param metadata
+	 *            Session 数据
 	 * 
 	 * @return
 	 */
@@ -255,7 +249,6 @@ public class ZooKeeperUtils {
 		if (metadata == null) {
 			return null;
 		}
-
 		ZooKeeper zk = connect(); // 连接服务期
 		if (zk != null) {
 			String path = GROUP_NAME + "/" + metadata.getId();
@@ -333,7 +326,6 @@ public class ZooKeeperUtils {
 	 * 
 	 * 销毁
 	 */
-
 	public static void destroy() {
 		if (pool != null) {
 			// 关闭
@@ -348,9 +340,8 @@ public class ZooKeeperUtils {
 	 * @param sid
 	 *            Session ID
 	 * 
-	 * @param name数据节点的名称
-	 * 
-	 * @param value数据
+	 * @param name
+	 *            数据节点的名称
 	 * 
 	 * @return
 	 */
@@ -395,9 +386,8 @@ public class ZooKeeperUtils {
 	 * @param sid
 	 *            Session ID
 	 * 
-	 * @param name数据节点的名称
-	 * 
-	 * @param value数据
+	 * @param name
+	 *            数据节点的名称
 	 * 
 	 * @return
 	 */
@@ -414,17 +404,17 @@ public class ZooKeeperUtils {
 					// 查找数据节点是否存在
 					String dataPath = path + "/" + name;
 					stat = zk.exists(dataPath, false);
-					Object obj = null;
+					Object value = null;
 					if (stat != null) {
 						// 获取节点数据
 						byte[] data = zk.getData(dataPath, false, null);
 						if (data != null) {
 							// 反序列化
-							obj = SerializationUtils.deserialize(data);
+							value = SerializationUtils.deserialize(data);
 						}
 					}
 
-					return obj;
+					return value;
 				}
 			} catch (KeeperException e) {
 				log.error(e);
@@ -513,10 +503,10 @@ public class ZooKeeperUtils {
 				byte[] data = zk.getData(path, false, null);
 				if (data != null) {
 					// 反序列化
-					Object obj = SerializationUtils.deserialize(data);
+					Object value = SerializationUtils.deserialize(data);
 					// 转换类型
-					if (obj instanceof SessionMetaData) {
-						SessionMetaData metadata = (SessionMetaData) obj;
+					if (value instanceof SessionMetaData) {
+						SessionMetaData metadata = (SessionMetaData) value;
 						// 设置当前版本号
 						metadata.setVersion(stat.getVersion());
 						return metadata;
@@ -596,9 +586,8 @@ public class ZooKeeperUtils {
 	 * @param sid
 	 *            Session ID
 	 * 
-	 * @param name数据节点的名称
-	 * 
-	 * @param value数据
+	 * @param name
+	 *            数据节点的名称
 	 * 
 	 * @return
 	 */
@@ -635,9 +624,11 @@ public class ZooKeeperUtils {
 	 * @param sid
 	 *            Session ID
 	 * 
-	 * @param name数据节点的名称
+	 * @param name
+	 *            数据节点的名称
 	 * 
-	 * @param value数据
+	 * @param data
+	 *            数据
 	 * 
 	 * @return
 	 */
@@ -663,7 +654,6 @@ public class ZooKeeperUtils {
 					}
 
 					// 在节点上设置数据，所有数据必须可序列化
-
 					int dataNodeVer = -1;
 
 					if (stat != null) {
@@ -693,9 +683,11 @@ public class ZooKeeperUtils {
 	 * @param sid
 	 *            Session ID
 	 * 
-	 * @param name数据节点的名称
+	 * @param name
+	 *            数据节点的名称
 	 * 
-	 * @param value数据
+	 * @param value
+	 *            数据
 	 * 
 	 * @return
 	 */
@@ -723,7 +715,6 @@ public class ZooKeeperUtils {
 					}
 
 					// 在节点上设置数据，所有数据必须可序列化
-
 					if (value instanceof Serializable) {
 
 						int dataNodeVer = -1;
@@ -756,10 +747,8 @@ public class ZooKeeperUtils {
 	 * 
 	 * 更新Session节点的元数据
 	 * 
-	 * @param id
-	 *            Session ID
-	 * 
-	 * @param version更新版本号
+	 * @param metadata
+	 *            Session 数据
 	 * 
 	 * @param zk
 	 */
@@ -782,7 +771,6 @@ public class ZooKeeperUtils {
 				metadata.setLastAccessTime(now);
 
 				// 更新节点数据
-
 				String path = GROUP_NAME + "/" + id;
 				byte[] data = SerializationUtils.serialize(metadata);
 				zk.setData(path, data, metadata.getVersion());
@@ -803,9 +791,6 @@ public class ZooKeeperUtils {
 	 * @param id
 	 *            Session ID
 	 * 
-	 * @param version更新版本号
-	 * 
-	 * @param zk
 	 */
 	public static void updateSessionMetaData(String id) {
 		ZooKeeper zk = connect();
