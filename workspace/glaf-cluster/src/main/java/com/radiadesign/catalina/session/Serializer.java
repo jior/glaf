@@ -4,10 +4,11 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public interface Serializer {
-	void setClassLoader(ClassLoader loader);
+	
+	HttpSession deserializeInto(byte[] data, HttpSession session)
+			throws IOException;
 
 	byte[] serializeFrom(HttpSession session) throws IOException;
 
-	HttpSession deserializeInto(byte[] data, HttpSession session)
-			throws IOException, ClassNotFoundException;
+	void setClassLoader(ClassLoader loader);
 }

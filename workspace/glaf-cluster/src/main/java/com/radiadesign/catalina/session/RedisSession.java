@@ -68,10 +68,6 @@ public class RedisSession extends StandardSession {
 
 	@Override
 	public void setId(String id) {
-		// Specifically do not call super(): it's implementation does unexpected
-		// things
-		// like calling manager.remove(session.id) and manager.add(session).
-
 		this.id = id;
 	}
 

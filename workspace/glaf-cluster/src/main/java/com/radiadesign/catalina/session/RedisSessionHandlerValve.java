@@ -52,7 +52,7 @@ public class RedisSessionHandlerValve extends ValveBase {
 				}
 			}
 		} catch (Exception e) {
-			// Do nothing.
+		 
 		}
 	}
 }
