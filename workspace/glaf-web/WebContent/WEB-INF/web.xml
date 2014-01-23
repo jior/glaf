@@ -158,5 +158,7 @@
 		<exception-type>com.glaf.base.modules.sys.interceptor.AuthorizeException</exception-type> 
 		<location>/unauthorized.jsp</location>
 	</error-page> 
+
+	<distributable/>
   
 </web-app>

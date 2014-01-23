@@ -53,7 +53,7 @@
 	<classpathentry kind="lib" path="/glaf-core/lib/guava.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/h2.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/hamcrest-core.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/hessian-4.0.7.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/hessian.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/hibernate-commons-annotations.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/hibernate-validator-4.0.2.GA.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/hibernate-validator.jar"/>
