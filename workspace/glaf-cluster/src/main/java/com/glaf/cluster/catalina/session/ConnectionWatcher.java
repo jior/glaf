@@ -29,9 +29,11 @@ import org.apache.zookeeper.Watcher.Event.KeeperState;
 import org.apache.zookeeper.ZooKeeper;
 
 public class ConnectionWatcher implements Watcher {
-	private static final int SESSION_TIMEOUT = 3600;
+	private static Log log = LogFactory.getLog(ConnectionWatcher.class);
+
 	private CountDownLatch signal = new CountDownLatch(1);
-	private Log log = LogFactory.getLog(getClass());
+
+	private static final int SESSION_TIMEOUT = 20000;
 
 	public ZooKeeper connection(String servers) {
 		ZooKeeper zk;
