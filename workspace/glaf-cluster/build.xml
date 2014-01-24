@@ -53,6 +53,14 @@
 			<fileset dir="bin" includes="com/glaf/cluster/catalina/**/*.class,log4j.xml" />
 		</jar>
 
+		<copy todir="E:/cluster/tomcat1/lib">
+			<fileset dir="." includes="*.jar" />
+		</copy>
+
+		<copy todir="E:/cluster/tomcat2/lib">
+			<fileset dir="." includes="*.jar" />
+		</copy>
+
 	</target>
 
 
