@@ -18,25 +18,30 @@
 
 package com.glaf.cluster.catalina.session;
 
-import org.apache.catalina.util.CustomObjectInputStream;
-
 import javax.servlet.http.HttpSession;
+
+import com.caucho.hessian.io.Hessian2Input;
+import com.caucho.hessian.io.Hessian2Output;
 
 import java.io.*;
 
-public class JavaSerializer implements Serializer {
+public class HessianSerializer implements Serializer {
 	private ClassLoader loader;
 
 	public HttpSession deserializeInto(byte[] data, HttpSession session)
 			throws IOException {
 		ZooKeeperSession zooKeeperSession = (ZooKeeperSession) session;
 		BufferedInputStream bis = null;
-		ObjectInputStream ois = null;
+		Hessian2Input ois = null;
 		try {
 			bis = new BufferedInputStream(new ByteArrayInputStream(data));
-			ois = new CustomObjectInputStream(bis, loader);
-			zooKeeperSession.setCreationTime(ois.readLong());
-			zooKeeperSession.readObjectData(ois);
+			ois = new Hessian2Input(bis);
+			ois.startMessage();
+			zooKeeperSession = (ZooKeeperSession) ois.readObject();
+			if (zooKeeperSession != null) {
+				zooKeeperSession.setCreationTime(ois.readLong());
+			}
+			ois.completeMessage();
 		} catch (IOException ex) {
 			throw ex;
 		} catch (Exception ex) {
@@ -61,12 +66,14 @@ public class JavaSerializer implements Serializer {
 	public byte[] serializeFrom(HttpSession session) throws IOException {
 		ZooKeeperSession zooKeeperSession = (ZooKeeperSession) session;
 		ByteArrayOutputStream bos = null;
-		ObjectOutputStream oos = null;
+		Hessian2Output oos = null;
 		try {
 			bos = new ByteArrayOutputStream();
-			oos = new ObjectOutputStream(new BufferedOutputStream(bos));
+			oos = new Hessian2Output(new BufferedOutputStream(bos));
+			oos.startMessage();
+			oos.writeObject(zooKeeperSession);
 			oos.writeLong(zooKeeperSession.getCreationTime());
-			zooKeeperSession.writeObjectData(oos);
+			oos.completeMessage();
 		} catch (IOException ex) {
 			throw ex;
 		} catch (Exception ex) {
@@ -86,6 +93,14 @@ public class JavaSerializer implements Serializer {
 			}
 		}
 		return bos.toByteArray();
+	}
+
+	public ClassLoader getLoader() {
+		return loader;
+	}
+
+	public void setLoader(ClassLoader loader) {
+		this.loader = loader;
 	}
 
 	public void setClassLoader(ClassLoader loader) {
