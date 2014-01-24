@@ -20,8 +20,8 @@ package com.glaf.cluster.catalina.session;
 
 import javax.servlet.http.HttpSession;
 
-import com.caucho.hessian.io.Hessian2Input;
-import com.caucho.hessian.io.Hessian2Output;
+import com.caucho.hessian.io.HessianInput;
+import com.caucho.hessian.io.HessianOutput;
 
 import java.io.*;
 
@@ -32,16 +32,14 @@ public class HessianSerializer implements Serializer {
 			throws IOException {
 		ZooKeeperSession zooKeeperSession = (ZooKeeperSession) session;
 		BufferedInputStream bis = null;
-		Hessian2Input ois = null;
+		HessianInput ois = null;
 		try {
 			bis = new BufferedInputStream(new ByteArrayInputStream(data));
-			ois = new Hessian2Input(bis);
-			ois.startMessage();
+			ois = new HessianInput(bis);
 			zooKeeperSession = (ZooKeeperSession) ois.readObject();
 			if (zooKeeperSession != null) {
 				zooKeeperSession.setCreationTime(ois.readLong());
 			}
-			ois.completeMessage();
 		} catch (IOException ex) {
 			throw ex;
 		} catch (Exception ex) {
@@ -56,7 +54,7 @@ public class HessianSerializer implements Serializer {
 			if (ois != null) {
 				try {
 					ois.close();
-				} catch (IOException ex) {
+				} catch (Exception ex) {
 				}
 			}
 		}
@@ -66,14 +64,12 @@ public class HessianSerializer implements Serializer {
 	public byte[] serializeFrom(HttpSession session) throws IOException {
 		ZooKeeperSession zooKeeperSession = (ZooKeeperSession) session;
 		ByteArrayOutputStream bos = null;
-		Hessian2Output oos = null;
+		HessianOutput oos = null;
 		try {
 			bos = new ByteArrayOutputStream();
-			oos = new Hessian2Output(new BufferedOutputStream(bos));
-			oos.startMessage();
+			oos = new HessianOutput(new BufferedOutputStream(bos));
 			oos.writeObject(zooKeeperSession);
 			oos.writeLong(zooKeeperSession.getCreationTime());
-			oos.completeMessage();
 		} catch (IOException ex) {
 			throw ex;
 		} catch (Exception ex) {
