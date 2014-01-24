@@ -86,11 +86,11 @@ public class ZooKeeperClientImpl implements ZooKeeperClient {
 										ZooDefs.Ids.OPEN_ACL_UNSAFE,
 										CreateMode.PERSISTENT);
 								zooKeeper.setData(pathPrefix, data, -1);
-								logger.info("Created node: " + pathPrefix);
+								logger.trace("Created node: " + pathPrefix);
 								return createPath;
 							} else {
 								zooKeeper.setData(pathPrefix, data, -1);
-								logger.info("Update node: " + pathPrefix);
+								logger.trace("Update node: " + pathPrefix);
 							}
 							return pathPrefix;
 						}
