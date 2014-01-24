@@ -316,7 +316,7 @@ public class ZooKeeperSessionManager extends ManagerBase implements Lifecycle {
 	}
 
 	public void setRejectedSessions(int i) {
-		
+
 	}
 
 	public void setSerializationStrategyClass(String strategy) {

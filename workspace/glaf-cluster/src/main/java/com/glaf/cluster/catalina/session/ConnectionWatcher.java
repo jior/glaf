@@ -33,7 +33,7 @@ public class ConnectionWatcher implements Watcher {
 
 	private CountDownLatch signal = new CountDownLatch(1);
 
-	private static final int SESSION_TIMEOUT = 20000;
+	private static final int SESSION_TIMEOUT = 60000;
 
 	public ZooKeeper connection(String servers) {
 		ZooKeeper zk;
