@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.glaf.base.modules.sys.springmvc;
+package com.glaf.base.modules.branch.springmvc;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -101,7 +101,7 @@ public class BranchUserController {
 	@RequestMapping(params = "method=addRoleUser")
 	public ModelAndView addRoleUser(HttpServletRequest request,
 			ModelMap modelMap) {
-		logger.debug("---------addRoleUser---------------------------");
+		logger.debug("--------------------addRoleUser----------------");
 		RequestUtils.setRequestParameterToAttribute(request);
 		int deptId = ParamUtil.getIntParameter(request, "deptId", 0);
 		int roleId = ParamUtil.getIntParameter(request, "roleId", 0);
@@ -147,7 +147,7 @@ public class BranchUserController {
 					for (int i = 0; i < userIds.length; i++) {
 						SysUser user = sysUserService.findById(userIds[i]);
 						if (user != null) {
-							logger.info(user.getName());
+							logger.debug(user.getName());
 							users.add(user);
 						}
 					}
@@ -212,23 +212,6 @@ public class BranchUserController {
 				getAllSysDepartmentList(list, (int) element.getId());
 			}
 			list.addAll(temp);
-		}
-	}
-
-	/**
-	 * 得到本部门下所属角色的人 如果没有角色，则得到本部门里所有人
-	 * 
-	 * @param set
-	 * @param deptId
-	 * @param code
-	 */
-	public void getRoleUser(Set<SysUser> set, long deptId, String code) {
-		if (!"".equals(code)) {
-			Set<SysUser> temp = sysDeptRoleService.findRoleUser(deptId, "R011");
-			set.addAll(temp);
-		} else {
-			List<SysUser> list = sysUserService.getSysUserList((int) deptId);
-			set.addAll(list);
 		}
 	}
 
@@ -344,6 +327,23 @@ public class BranchUserController {
 		}
 
 		return new ModelAndView("/modules/branch/user/list", modelMap);
+	}
+
+	/**
+	 * 得到本部门下所属角色的人 如果没有角色，则得到本部门里所有人
+	 * 
+	 * @param set
+	 * @param deptId
+	 * @param code
+	 */
+	public void loadRoleUsers(Set<SysUser> set, long deptId, String code) {
+		if (StringUtils.isNotEmpty(code)) {
+			Set<SysUser> temp = sysDeptRoleService.findRoleUser(deptId, "R011");
+			set.addAll(temp);
+		} else {
+			List<SysUser> list = sysUserService.getSysUserList((int) deptId);
+			set.addAll(list);
+		}
 	}
 
 	/**
@@ -590,8 +590,9 @@ public class BranchUserController {
 				bean.setUpdateBy(RequestUtils.getActorId(request));
 
 				if (sysUserService.findByAccount(bean.getAccount()) == null) {
-					if (sysUserService.create(bean))
+					if (sysUserService.create(bean)){
 						ret = 2;
+					}
 				} else {// 帐号存在
 					ret = 1;
 				}
@@ -741,7 +742,7 @@ public class BranchUserController {
 		SysDepartment sysDepartment = sysDepartmentService.findById(deptId);
 		request.setAttribute("sysDepartment", sysDepartment);
 		PageResult pager = null;
-		if (name != null && !"".equals(name)) {
+		if (StringUtils.isNotEmpty(name)) {
 			pager = sysUserService.getSysUserList(deptId, name, pageNo,
 					pageSize);
 		} else {
@@ -891,7 +892,7 @@ public class BranchUserController {
 		RequestUtils.setRequestParameterToAttribute(request);
 		List<SysDepartment> list = new ArrayList<SysDepartment>();
 		Set<SysUser> set = new HashSet<SysUser>();
-		// 6:
+ 
 		long deptId = ParamUtil.getLongParameter(request, "dept", 5);
 		String roleCode = ParamUtil.getParameter(request, "code", "");
 		SysDepartment node = this.sysDepartmentService.findById(deptId);
@@ -903,7 +904,7 @@ public class BranchUserController {
 		}
 		for (Iterator<SysDepartment> iter = list.iterator(); iter.hasNext();) {
 			SysDepartment element = (SysDepartment) iter.next();
-			this.getRoleUser(set, element.getId(), roleCode);
+			this.loadRoleUsers(set, element.getId(), roleCode);
 		}
 		request.setAttribute("user", set);
 

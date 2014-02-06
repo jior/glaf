@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.glaf.base.modules.sys.springmvc;
+package com.glaf.base.modules.branch.springmvc;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -162,7 +162,7 @@ public class BranchDepartmentController {
 				for (SysDepartment sysDepartment : list) {
 					JSONObject rowJSON = sysDepartment.toJsonObject();
 					rowJSON.put("id", sysDepartment.getId());
-					rowJSON.put("sysDepartmentId", sysDepartment.getId());
+					rowJSON.put("departmentId", sysDepartment.getId());
 					rowJSON.put("startIndex", ++start);
 					rowsJSON.add(rowJSON);
 				}
@@ -471,7 +471,7 @@ public class BranchDepartmentController {
 	public void sort(@RequestParam(value = "parent") int parent,
 			@RequestParam(value = "id") int id,
 			@RequestParam(value = "operate") int operate) {
-		logger.info("parent:" + parent + "; id:" + id + "; operate:" + operate);
+		logger.debug("parent:" + parent + "; id:" + id + "; operate:" + operate);
 		SysDepartment bean = sysDepartmentService.findById(id);
 		sysDepartmentService.sort(parent, bean, operate);
 	}

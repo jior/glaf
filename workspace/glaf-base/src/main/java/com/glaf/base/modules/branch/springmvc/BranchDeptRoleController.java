@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.glaf.base.modules.sys.springmvc;
+package com.glaf.base.modules.branch.springmvc;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,25 +71,21 @@ public class BranchDeptRoleController {
 	@javax.annotation.Resource
 	public void setSysDeptRoleService(SysDeptRoleService sysDeptRoleService) {
 		this.sysDeptRoleService = sysDeptRoleService;
-
 	}
 
 	@javax.annotation.Resource
 	public void setSysRoleService(SysRoleService sysRoleService) {
 		this.sysRoleService = sysRoleService;
-
 	}
 
 	@javax.annotation.Resource
 	public void setSysTreeService(SysTreeService sysTreeService) {
 		this.sysTreeService = sysTreeService;
-
 	}
 
 	@javax.annotation.Resource
 	public void setTreeModelService(ITreeModelService treeModelService) {
 		this.treeModelService = treeModelService;
-
 	}
 
 	/**
@@ -105,7 +101,6 @@ public class BranchDeptRoleController {
 		long deptId = (long) ParamUtil.getIntParameter(request, "parent", 0);
 		SysDepartment department = sysDepartmentService.findById(deptId);
 		request.setAttribute("department", department);
-		// request.setAttribute("list", sysRoleService.getSysRoleList());
 
 		long nodeId = department.getNodeId();
 		List<Long> nodeIds = new ArrayList<Long>();
