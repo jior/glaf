@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.survey.mapper.SurveyResultMapper">
+
+	<resultMap id="wxSurveyResultResultMap" type="com.glaf.survey.domain.SurveyResult">
+		<id property="id" column="ID_" jdbcType="BIGINT" />
+		<result property="surveyId" column="SURVEYID_" jdbcType="BIGINT" />
+		<result property="result" column="RESULT_" jdbcType="VARCHAR" />
+		<result property="ip" column="IP_" jdbcType="VARCHAR" />
+		<result property="surveyDate" column="SURVEYDATE_" jdbcType="TIMESTAMP" />
+		<result property="actorId" column="ACTORID_" jdbcType="VARCHAR" />
+	</resultMap>
+
+
+	<insert id="insertSurveyResult" parameterType="com.glaf.survey.domain.SurveyResult">
+		insert into BASE_SURVEY_RESULT
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ID_
+			<if test="surveyId != null">
+				,SURVEYID_
+			</if>
+			<if test="result != null">
+				,RESULT_
+			</if>
+			<if test="ip != null">
+				,IP_
+			</if>
+			<if test="surveyDate != null">
+				,SURVEYDATE_
+			</if>
+			<if test="actorId != null">
+				,ACTORID_
+			</if>
+		</trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			#{id, jdbcType=BIGINT}
+
+			<if test="surveyId != null">
+				,#{surveyId, jdbcType=BIGINT}
+			</if>
+			<if test="result != null">
+				,#{result, jdbcType=VARCHAR}
+			</if>
+			<if test="ip != null">
+				,#{ip, jdbcType=VARCHAR}
+			</if>
+			<if test="surveyDate != null">
+				,#{surveyDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="actorId != null">
+				,#{actorId, jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</insert>
+
+
+	<update id="updateSurveyResult" parameterType="com.glaf.survey.domain.SurveyResult">
+		update BASE_SURVEY_RESULT
+		set
+		<trim prefix="" suffix="" suffixOverrides=",">
+			<if test="result != null">
+				RESULT_ = #{result, jdbcType=VARCHAR},
+			</if>
+			<if test="ip != null">
+				IP_ = #{ip, jdbcType=VARCHAR},
+			</if>
+			<if test="surveyDate != null">
+				SURVEYDATE_ = #{surveyDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="actorId != null">
+				ACTORID_ = #{actorId, jdbcType=VARCHAR},
+			</if>
+		</trim>
+		where
+		ID_ = #{id, jdbcType=BIGINT}
+
+	</update>
+
+
+	<delete id="deleteSurveyResultById" parameterType="long">
+		delete from
+		BASE_SURVEY_RESULT
+		where ID_ = #{id}
+	</delete>
+
+
+	<delete id="deleteSurveyResultBySurveyId" parameterType="long">
+		delete
+		from BASE_SURVEY_RESULT
+		where SURVEYID_ = #{surveyId}
+	</delete>
+
+
+	<delete id="deleteSurveyResults" parameterType="com.glaf.survey.query.SurveyResultQuery">
+		delete from BASE_SURVEY_RESULT
+		where (
+		ID_ IN
+		<foreach item="x_id" index="index" collection="ids" open="("
+			separator="," close=")">
+			#{x_id}
+		</foreach>
+		)
+	</delete>
+
+
+	<select id="getSurveyResultById" parameterType="long"
+		resultMap="wxSurveyResultResultMap">
+		select * from BASE_SURVEY_RESULT where ID_ = #{id}
+	</select>
+
+
+	<select id="getSurveyResultsBySurveyId" parameterType="long"
+		resultMap="wxSurveyResultResultMap">
+		select * from BASE_SURVEY_RESULT where SURVEYID_ =
+		#{surveyId}
+	</select>
+
+
+	<select id="getLatestSurveyResult" parameterType="com.glaf.survey.query.SurveyResultQuery"
+		resultMap="wxSurveyResultResultMap">
+		select *
+		from BASE_SURVEY_RESULT
+		where IP_ = #{ip} and
+		ID_ =
+		(select max(ID_) from BASE_SURVEY_RESULT where IP_ = #{ip} and
+		SURVEYID_ = #{surveyId} )
+	</select>
+
+
+	<select id="getSurveyResults" parameterType="com.glaf.survey.query.SurveyResultQuery"
+		resultMap="wxSurveyResultResultMap">
+		select distinct E.*
+		<include refid="selectSurveyResultsSql" />
+		<choose>
+			<when test="orderBy != null">
+				order by ${orderBy}
+			</when>
+			<otherwise>
+				order by E.ID_ desc
+			</otherwise>
+		</choose>
+	</select>
+
+
+	<select id="getSurveyResultCount" parameterType="com.glaf.survey.query.SurveyResultQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectSurveyResultsSql" />
+	</select>
+
+
+	<sql id="selectSurveyResultsSql">
+
+		from BASE_SURVEY_RESULT E
+
+		<where>
+			1 = 1
+
+			<if test="surveyId != null">
+				and E.SURVEYID_ = #{surveyId}
+			</if>
+
+			<if test="surveyIds != null and surveyIds.size !=0">
+				and E.SURVEYID_ IN
+				<foreach item="x_surveyId" index="index" collection="surveyIds"
+					open="(" separator="," close=")">
+					#{x_surveyId}
+				</foreach>
+			</if>
+
+			<if test="ip != null and ip != '' ">
+				and E.IP_ = #{ip}
+			</if>
+
+			<if test="surveyDateGreaterThanOrEqual != null">
+				and E.SURVEYDATE_ &gt;= #{surveyDateGreaterThanOrEqual}
+			</if>
+
+			<if test="surveyDateLessThanOrEqual != null">
+				and E.SURVEYDATE_ &lt;= #{surveyDateLessThanOrEqual}
+			</if>
+
+			<if test="actorId != null and actorId != '' ">
+				and E.ACTORID_ = #{actorId}
+			</if>
+
+			<if test="actorIds != null and actorIds.size !=0">
+				and E.ACTORID_ IN
+				<foreach item="x_actorId" index="index" collection="actorIds"
+					open="(" separator="," close=")">
+					#{x_actorId}
+				</foreach>
+			</if>
+
+		</where>
+	</sql>
+
+</mapper>

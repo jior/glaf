@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.survey.mapper.SurveyItemMapper">
+
+	<resultMap id="wxSurveyItemResultMap" type="com.glaf.survey.domain.SurveyItem">
+		<id property="id" column="ID_" jdbcType="BIGINT" />
+		<result property="surveyId" column="SURVEYID_" jdbcType="BIGINT" />
+		<result property="name" column="NAME_" jdbcType="VARCHAR" />
+		<result property="value" column="VALUE_" jdbcType="VARCHAR" />
+		<result property="sort" column="SORT_" jdbcType="INTEGER" />
+		<result property="icon" column="ICON_" jdbcType="VARCHAR" />
+		<result property="url" column="URL_" jdbcType="VARCHAR" />
+	</resultMap>
+
+
+	<insert id="insertSurveyItem" parameterType="com.glaf.survey.domain.SurveyItem">
+		insert into BASE_SURVEY_ITEM
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ID_
+			<if test="surveyId != null">
+				,SURVEYID_
+			</if>
+			<if test="name != null">
+				,NAME_
+			</if>
+			<if test="value != null">
+				,VALUE_
+			</if>
+			<if test="sort != null">
+				,SORT_
+			</if>
+			<if test="icon != null">
+				,ICON_
+			</if>
+			<if test="url != null">
+				,URL_
+			</if>
+		</trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			#{id, jdbcType=BIGINT}
+
+			<if test="surveyId != null">
+				,#{surveyId, jdbcType=BIGINT}
+			</if>
+			<if test="name != null">
+				,#{name, jdbcType=VARCHAR}
+			</if>
+			<if test="value != null">
+				,#{value, jdbcType=VARCHAR}
+			</if>
+			<if test="sort != null">
+				,#{sort, jdbcType=INTEGER}
+			</if>
+			<if test="icon != null">
+				,#{icon, jdbcType=VARCHAR}
+			</if>
+			<if test="url != null">
+				,#{url, jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</insert>
+
+
+	<update id="updateSurveyItem" parameterType="com.glaf.survey.domain.SurveyItem">
+		update BASE_SURVEY_ITEM
+		set
+		<trim prefix="" suffix="" suffixOverrides=",">
+			 
+			<if test="name != null">
+				NAME_ = #{name, jdbcType=VARCHAR},
+			</if>
+			<if test="value != null">
+				VALUE_ = #{value, jdbcType=VARCHAR},
+			</if>
+			<if test="sort != null">
+				SORT_ = #{sort, jdbcType=INTEGER},
+			</if>
+			<if test="icon != null">
+				ICON_ = #{icon, jdbcType=VARCHAR},
+			</if>
+			<if test="url != null">
+				URL_ = #{url, jdbcType=VARCHAR},
+			</if>
+			
+		</trim>
+		where
+		ID_ = #{id, jdbcType=BIGINT}
+
+	</update>
+
+
+	<delete id="deleteSurveyItemById" parameterType="long">
+		delete from
+		BASE_SURVEY_ITEM
+		where ID_ = #{id}
+	</delete>
+
+
+	<delete id="deleteSurveyItemBySurveyId" parameterType="long">
+		delete from BASE_SURVEY_ITEM
+		where SURVEYID_ = #{surveyId}
+	</delete>
+
+
+	<delete id="deleteSurveyItems" parameterType="com.glaf.survey.query.SurveyItemQuery">
+		delete from BASE_SURVEY_ITEM
+		where (
+		ID_ IN
+		<foreach item="x_id" index="index" collection="ids" open="("
+			separator="," close=")">
+			#{x_id}
+		</foreach>
+		)
+	</delete>
+
+
+	<select id="getSurveyItemById" parameterType="long"
+		resultMap="wxSurveyItemResultMap">
+		select * from BASE_SURVEY_ITEM where ID_ = #{id}
+	</select>
+
+
+	<select id="getSurveyItemsBySurveyId" parameterType="long"
+		resultMap="wxSurveyItemResultMap">
+		select distinct E.*
+		from BASE_SURVEY_ITEM E
+		where E.SURVEYID_ = #{surveyId}
+		order by E.SORT_ desc
+	</select>
+	
+
+	<select id="getSurveyItems" parameterType="com.glaf.survey.query.SurveyItemQuery"
+		resultMap="wxSurveyItemResultMap">
+		select distinct E.*
+		<include refid="selectSurveyItemsSql" />
+		<choose>
+			<when test="orderBy != null">
+				order by ${orderBy}
+			</when>
+			<otherwise>
+				order by E.SORT_ desc
+			</otherwise>
+		</choose>
+	</select>
+
+
+	<select id="getSurveyItemCount" parameterType="com.glaf.survey.query.SurveyItemQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectSurveyItemsSql" />
+	</select>
+
+
+	<sql id="selectSurveyItemsSql">
+
+		from BASE_SURVEY_ITEM E
+
+		<where>
+			1 = 1
+
+			<if test="surveyId != null">
+				and E.SURVEYID_ = #{surveyId}
+			</if>
+
+			<if test="surveyIds != null and surveyIds.size !=0">
+				and E.SURVEYID_ IN
+				<foreach item="x_surveyId" index="index" collection="surveyIds"
+					open="(" separator="," close=")">
+					#{x_surveyId}
+				</foreach>
+			</if>
+
+		</where>
+	</sql>
+
+</mapper>

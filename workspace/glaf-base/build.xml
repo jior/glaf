@@ -70,6 +70,11 @@
 			   includes="com/glaf/base/**/*.class,com/glaf/base/**/*.xml,com/glaf/base/**/*.properties"  />
 			<fileset dir="jar-conf" includes="**/*.xml,**/*.properties"  />
 		</jar>
+		<jar jarfile="glaf-survey.jar">
+			<fileset dir="bin" 
+			   includes="com/glaf/survey/**/*.class,com/glaf/survey/**/*.xml,com/glaf/survey/**/*.properties"  />
+			<fileset dir="jar-conf" includes="**/*.xml,**/*.properties"  />
+		</jar>
     </target>
 
 	<!-- 制作 Javadoc 任务 -->

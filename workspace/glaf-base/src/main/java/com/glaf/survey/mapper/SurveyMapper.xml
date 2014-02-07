@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.survey.mapper.SurveyMapper">
+
+	<resultMap id="wxSurveyResultMap" type="com.glaf.survey.domain.Survey">
+		<id property="id" column="ID_" jdbcType="BIGINT" />
+		<result property="title" column="TITLE_" jdbcType="VARCHAR" />
+		<result property="content" column="CONTENT_" jdbcType="VARCHAR" />
+		<result property="desc" column="DESC_" jdbcType="VARCHAR" />
+		<result property="keywords" column="KEYWORDS_" jdbcType="VARCHAR" />
+		<result property="icon" column="ICON_" jdbcType="VARCHAR" />
+		<result property="sort" column="SORT_" jdbcType="INTEGER" />
+		<result property="status" column="STATUS_" jdbcType="INTEGER" />
+		<result property="showIconFlag" column="SHOWICONFLAG_"
+			jdbcType="INTEGER" />
+		<result property="signFlag" column="SIGNFLAG_" jdbcType="INTEGER" />
+		<result property="multiFlag" column="MULTIFLAG_" jdbcType="INTEGER" />
+		<result property="limitFlag" column="LIMITFLAG_" jdbcType="INTEGER" />
+		<result property="limitTimeInterval" column="LIMITTIMEINTERVAL_"
+			jdbcType="INTEGER" />
+		<result property="startDate" column="STARTDATE_" jdbcType="TIMESTAMP" />
+		<result property="endDate" column="ENDDATE_" jdbcType="TIMESTAMP" />
+		<result property="relationIds" column="RELATIONIDS_" jdbcType="VARCHAR" />
+		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR" />
+		<result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+
+	<insert id="insertSurvey" parameterType="com.glaf.survey.domain.Survey">
+		insert into BASE_SURVEY
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ID_
+			<if test="title != null">
+				,TITLE_
+			</if>
+			<if test="content != null">
+				,CONTENT_
+			</if>
+			<if test="desc != null">
+				,DESC_
+			</if>
+			<if test="keywords != null">
+				,KEYWORDS_
+			</if>
+			<if test="icon != null">
+				,ICON_
+			</if>
+			<if test="sort != null">
+				,SORT_
+			</if>
+			<if test="status != null">
+				,STATUS_
+			</if>
+			<if test="showIconFlag != null">
+				,SHOWICONFLAG_
+			</if>
+			<if test="signFlag != null">
+				,SIGNFLAG_
+			</if>
+			<if test="multiFlag != null">
+				,MULTIFLAG_
+			</if>
+			<if test="limitFlag != null">
+				,LIMITFLAG_
+			</if>
+			<if test="limitTimeInterval != null">
+				,LIMITTIMEINTERVAL_
+			</if>
+			<if test="startDate != null">
+				,STARTDATE_
+			</if>
+			<if test="endDate != null">
+				,ENDDATE_
+			</if>
+			<if test="relationIds != null">
+				,RELATIONIDS_
+			</if>
+			<if test="createBy != null">
+				,CREATEBY_
+			</if>
+			<if test="createDate != null">
+				,CREATEDATE_
+			</if>
+		</trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			#{id, jdbcType=BIGINT}
+			<if test="title != null">
+				,#{title, jdbcType=VARCHAR}
+			</if>
+			<if test="content != null">
+				,#{content, jdbcType=VARCHAR}
+			</if>
+			<if test="desc != null">
+				,#{desc, jdbcType=VARCHAR}
+			</if>
+			<if test="keywords != null">
+				,#{keywords, jdbcType=VARCHAR}
+			</if>
+			<if test="icon != null">
+				,#{icon, jdbcType=VARCHAR}
+			</if>
+			<if test="sort != null">
+				,#{sort, jdbcType=INTEGER}
+			</if>
+			<if test="status != null">
+				,#{status, jdbcType=INTEGER}
+			</if>
+			<if test="showIconFlag != null">
+				,#{showIconFlag, jdbcType=INTEGER}
+			</if>
+			<if test="signFlag != null">
+				,#{signFlag, jdbcType=INTEGER}
+			</if>
+			<if test="multiFlag != null">
+				,#{multiFlag, jdbcType=INTEGER}
+			</if>
+			<if test="limitFlag != null">
+				,#{limitFlag, jdbcType=INTEGER}
+			</if>
+			<if test="limitTimeInterval != null">
+				,#{limitTimeInterval, jdbcType=INTEGER}
+			</if>
+			<if test="startDate != null">
+				,#{startDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="endDate != null">
+				,#{endDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="relationIds != null">
+				,#{relationIds, jdbcType=VARCHAR}
+			</if>
+			<if test="createBy != null">
+				,#{createBy, jdbcType=VARCHAR}
+			</if>
+			<if test="createDate != null">
+				,#{createDate, jdbcType=TIMESTAMP}
+			</if>
+		</trim>
+	</insert>
+
+
+	<update id="updateSurvey" parameterType="com.glaf.survey.domain.Survey">
+		update BASE_SURVEY
+		set
+		<trim prefix="" suffix="" suffixOverrides=",">
+			<if test="title != null">
+				TITLE_ = #{title, jdbcType=VARCHAR},
+			</if>
+			<if test="content != null">
+				CONTENT_ = #{content, jdbcType=VARCHAR},
+			</if>
+			<if test="desc != null">
+				DESC_ = #{desc, jdbcType=VARCHAR},
+			</if>
+			<if test="keywords != null">
+				KEYWORDS_ = #{keywords, jdbcType=VARCHAR},
+			</if>
+			<if test="icon != null">
+				ICON_ = #{icon, jdbcType=VARCHAR},
+			</if>
+			<if test="sort != null">
+				SORT_ = #{sort, jdbcType=INTEGER},
+			</if>
+			<if test="status != null">
+				STATUS_ = #{status, jdbcType=INTEGER},
+			</if>
+			<if test="showIconFlag != null">
+				SHOWICONFLAG_ = #{showIconFlag, jdbcType=INTEGER},
+			</if>
+			<if test="signFlag != null">
+				SIGNFLAG_ = #{signFlag, jdbcType=INTEGER},
+			</if>
+			<if test="multiFlag != null">
+				MULTIFLAG_ = #{multiFlag, jdbcType=INTEGER},
+			</if>
+			<if test="limitFlag != null">
+				LIMITFLAG_ = #{limitFlag, jdbcType=INTEGER},
+			</if>
+			<if test="limitTimeInterval != null">
+				LIMITTIMEINTERVAL_ = #{limitTimeInterval,
+				jdbcType=INTEGER},
+			</if>
+			<if test="startDate != null">
+				STARTDATE_ = #{startDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="endDate != null">
+				ENDDATE_ = #{endDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="relationIds != null">
+				RELATIONIDS_ = #{relationIds, jdbcType=VARCHAR},
+			</if>
+			<if test="createBy != null">
+				CREATEBY_ = #{createBy, jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				CREATEDATE_ = #{createDate, jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+		where
+		ID_ = #{id, jdbcType=BIGINT}
+
+	</update>
+
+
+	<delete id="deleteSurveyById" parameterType="long">
+		delete from BASE_SURVEY
+		where ID_ = #{id}
+	</delete>
+
+
+	<delete id="deleteSurveys" parameterType="com.glaf.survey.query.SurveyQuery">
+		delete from BASE_SURVEY
+		where (
+		ID_ IN
+		<foreach item="x_id" index="index" collection="ids" open="("
+			separator="," close=")">
+			#{x_id}
+		</foreach>
+		)
+	</delete>
+
+
+	<select id="getSurveyById" parameterType="long" resultMap="wxSurveyResultMap">
+		select * from BASE_SURVEY where ID_ = #{id}
+	</select>
+
+
+	<select id="getSurveys" parameterType="com.glaf.survey.query.SurveyQuery"
+		resultMap="wxSurveyResultMap">
+		select distinct E.*
+		<include refid="selectSurveysSql" />
+		<choose>
+			<when test="orderBy != null">
+				order by ${orderBy}
+			</when>
+			<otherwise>
+				order by E.SORT_ desc
+			</otherwise>
+		</choose>
+	</select>
+
+
+	<select id="getSurveyCount" parameterType="com.glaf.survey.query.SurveyQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectSurveysSql" />
+	</select>
+
+
+	<sql id="selectSurveysSql">
+
+		from BASE_SURVEY E
+
+		<where>
+			1 = 1
+
+			<if test="surveyIds != null and surveyIds.size !=0">
+				and E.ID_ IN
+				<foreach item="x_surveyId" index="index" collection="surveyIds"
+					open="(" separator="," close=")">
+					#{x_surveyId}
+				</foreach>
+			</if>
+
+			<if test="titleLike != null and titleLike != '' ">
+				and E.TITLE_ like #{titleLike}
+			</if>
+
+			<if test="contentLike != null and contentLike != '' ">
+				and E.CONTENT_ like #{contentLike}
+			</if>
+
+			<if test="status != null">
+				and E.STATUS_ = #{status}
+			</if>
+
+			<if test="signFlag != null">
+				and E.SIGNFLAG_ = #{signFlag}
+			</if>
+
+			<if test="multiFlag != null">
+				and E.MULTIFLAG_ = #{multiFlag}
+			</if>
+
+			<if test="limitFlag != null">
+				and E.LIMITFLAG_ = #{limitFlag}
+			</if>
+
+			<if test="startDateGreaterThanOrEqual != null">
+				and E.STARTDATE_ &gt;= #{startDateGreaterThanOrEqual}
+			</if>
+
+			<if test="startDateLessThanOrEqual != null">
+				and E.STARTDATE_ &lt;= #{startDateLessThanOrEqual}
+			</if>
+
+			<if test="endDateGreaterThanOrEqual != null">
+				and E.ENDDATE_ &gt;= #{endDateGreaterThanOrEqual}
+			</if>
+
+			<if test="endDateLessThanOrEqual != null">
+				and E.ENDDATE_ &lt;= #{endDateLessThanOrEqual}
+			</if>
+
+			<if test="createBy != null and createBy != '' ">
+				and E.CREATEBY_ = #{createBy}
+			</if>
+
+			<if test="createDateGreaterThanOrEqual != null">
+				and E.CREATEDATE_ &gt;= #{createDateGreaterThanOrEqual}
+			</if>
+
+			<if test="createDateLessThanOrEqual != null">
+				and E.CREATEDATE_ &lt;= #{createDateLessThanOrEqual}
+			</if>
+
+		</where>
+	</sql>
+
+</mapper>
