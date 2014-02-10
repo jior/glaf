@@ -399,7 +399,7 @@ public class CuratorSessionManager extends ManagerBase implements Lifecycle {
 		log.info("Will expire sessions after " + getMaxInactiveInterval()
 				+ " seconds");
 
-		RetryPolicy retryPolicy = new ExponentialBackoffRetry(10000, 3);
+		RetryPolicy retryPolicy = new ExponentialBackoffRetry(5000, Integer.MAX_VALUE);
 		zkClient = CuratorFrameworkFactory.newClient(servers, retryPolicy);
 		zkClient.start();
 
