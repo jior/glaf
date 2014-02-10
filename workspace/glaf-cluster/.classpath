@@ -23,5 +23,10 @@
 	<classpathentry kind="lib" path="lib/commons-pool.jar"/>
 	<classpathentry kind="lib" path="lib/zkclient.jar"/>
 	<classpathentry kind="lib" path="lib/hessian.jar"/>
+	<classpathentry kind="lib" path="lib/curator-client.jar"/>
+	<classpathentry kind="lib" path="lib/curator-framework.jar"/>
+	<classpathentry kind="lib" path="lib/curator-recipes.jar"/>
+	<classpathentry kind="lib" path="lib/curator-x-discovery-server.jar"/>
+	<classpathentry kind="lib" path="lib/curator-x-discovery.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
