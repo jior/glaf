@@ -220,8 +220,7 @@ public class CuratorSessionManager extends ManagerBase implements Lifecycle {
 
 				String path = GROUP_NAME + "/" + id;
 
-				byte[] data = zkClient.getData().watched().inBackground()
-						.forPath(path);
+				byte[] data = zkClient.getData().forPath(path);
 
 				if (data == null) {
 					log.trace("Session " + id + " not found in ZooKeeper");
@@ -317,6 +316,11 @@ public class CuratorSessionManager extends ManagerBase implements Lifecycle {
 
 			if (sessionIsDirty || currentSessionIsPersisted.get() != true) {
 				String path = GROUP_NAME + "/" + zooKeeperSession.getId();
+				try {
+					zkClient.delete().inBackground().forPath(path);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 				zkClient.create()
 						.withMode(CreateMode.PERSISTENT)
 						.forPath(path,
