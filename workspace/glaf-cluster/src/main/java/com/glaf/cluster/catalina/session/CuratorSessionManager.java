@@ -27,7 +27,6 @@ import org.apache.catalina.Loader;
 import org.apache.catalina.Valve;
 import org.apache.catalina.Session;
 import org.apache.catalina.session.ManagerBase;
-
 import org.apache.curator.RetryPolicy;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
@@ -401,6 +400,17 @@ public class CuratorSessionManager extends ManagerBase implements Lifecycle {
 
 		RetryPolicy retryPolicy = new ExponentialBackoffRetry(5000, Integer.MAX_VALUE);
 		zkClient = CuratorFrameworkFactory.newClient(servers, retryPolicy);
+		// CuratorFrameworkFactory.Builder builder = CuratorFrameworkFactory
+		// .builder();
+		// zkClient = builder
+		// .connectString(servers)
+		// .sessionTimeoutMs(30000)
+		// .connectionTimeoutMs(30000)
+		// .canBeReadOnly(false)
+		// .retryPolicy(
+		// new ExponentialBackoffRetry(5000, Integer.MAX_VALUE))
+		// .namespace("TOMCAT").defaultData(null).build();
+
 		zkClient.start();
 
 		setDistributable(true);
