@@ -161,7 +161,7 @@ public class MailAccount implements Serializable {
 		return username;
 	}
 
-	public boolean isAuthFlag() {
+	public boolean authFlag() {
 		if (StringUtils.equalsIgnoreCase(authFlag, "1")
 				|| StringUtils.equalsIgnoreCase(authFlag, "Y")
 				|| StringUtils.equalsIgnoreCase(authFlag, "true")) {
@@ -170,7 +170,7 @@ public class MailAccount implements Serializable {
 		return false;
 	}
 
-	public boolean isAutoReceive() {
+	public boolean autoReceive() {
 		if (StringUtils.equalsIgnoreCase(autoReceive, "1")
 				|| StringUtils.equalsIgnoreCase(autoReceive, "Y")
 				|| StringUtils.equalsIgnoreCase(autoReceive, "true")) {
@@ -179,7 +179,7 @@ public class MailAccount implements Serializable {
 		return false;
 	}
 
-	public boolean isRememberPassword() {
+	public boolean rememberPassword() {
 		if (StringUtils.equalsIgnoreCase(rememberPassword, "1")
 				|| StringUtils.equalsIgnoreCase(rememberPassword, "Y")
 				|| StringUtils.equalsIgnoreCase(rememberPassword, "true")) {

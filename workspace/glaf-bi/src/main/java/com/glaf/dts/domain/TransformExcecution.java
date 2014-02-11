@@ -135,7 +135,7 @@ public class TransformExcecution implements java.io.Serializable {
 		return success;
 	}
 
-	public boolean isExecute() {
+	public boolean isExecutable() {
 		if (StringUtils.equalsIgnoreCase(execute, "1")
 				|| StringUtils.equalsIgnoreCase(execute, "Y")
 				|| StringUtils.equalsIgnoreCase(execute, "true")) {
@@ -144,7 +144,7 @@ public class TransformExcecution implements java.io.Serializable {
 		return false;
 	}
 
-	public boolean isSuccess() {
+	public boolean isSuccessful() {
 		if (StringUtils.equalsIgnoreCase(success, "1")
 				|| StringUtils.equalsIgnoreCase(success, "Y")
 				|| StringUtils.equalsIgnoreCase(success, "true")) {
@@ -187,8 +187,8 @@ public class TransformExcecution implements java.io.Serializable {
 		this.endTime = endTime;
 	}
 
-	public void setExecute(boolean execute) {
-		if (execute) {
+	public void setExecutable(boolean executable) {
+		if (executable) {
 			this.execute = "1";
 		} else {
 			this.execute = "0";
@@ -215,8 +215,8 @@ public class TransformExcecution implements java.io.Serializable {
 		this.stepId = stepId;
 	}
 
-	public void setSuccess(boolean success) {
-		if (success) {
+	public void setSuccessful(boolean successful) {
+		if (successful) {
 			this.success = "1";
 		} else {
 			this.success = "0";

@@ -1,20 +1,20 @@
 /*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.glaf.mail.web.rest;
 
@@ -46,21 +46,18 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.glaf.mail.domain.MailAccount;
 import com.glaf.mail.query.MailAccountQuery;
 import com.glaf.mail.service.IMailAccountService;
- 
+
 import com.glaf.core.util.DateUtils;
 import com.glaf.core.util.Paging;
 import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.RequestUtils;
 import com.glaf.core.util.Tools;
 
- 
-
 @Controller("/rs/mail/mailAccount")
 @Path("/rs/mail/mailAccount")
 public class MailAccountResource {
 	protected static Log logger = LogFactory.getLog(MailAccountResource.class);
 
-	 
 	protected IMailAccountService mailAccountService;
 
 	@POST
@@ -213,10 +210,10 @@ public class MailAccountResource {
 
 					rowJSON.put("sendPort", mailAccount.getSendPort());
 
-					rowJSON.put("autoReceive", mailAccount.isAutoReceive());
+					rowJSON.put("autoReceive", mailAccount.autoReceive());
 
 					rowJSON.put("rememberPassword",
-							mailAccount.isRememberPassword());
+							mailAccount.rememberPassword());
 
 					rowJSON.put("locked", mailAccount.getLocked());
 
@@ -225,7 +222,7 @@ public class MailAccountResource {
 								.getDateTime(mailAccount.getCreateDate()));
 					}
 
-					rowJSON.put("authFlag", mailAccount.isAuthFlag());
+					rowJSON.put("authFlag", mailAccount.authFlag());
 
 					rowsJSON.add(rowJSON);
 				}
@@ -259,7 +256,6 @@ public class MailAccountResource {
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		Tools.populate(mailAccount, params);
 
-	 
 		mailAccount.setCreateBy(RequestUtils.getActorId(request));
 		mailAccount.setAuthFlag(RequestUtils.getBoolean(request, "authFlag"));
 		mailAccount.setAutoReceive(RequestUtils.getBoolean(request,
@@ -293,7 +289,7 @@ public class MailAccountResource {
 			mailAccount = mailAccountService.getMailAccount(accountId);
 		}
 		ObjectNode responseJSON = new ObjectMapper().createObjectNode();
-	 
+
 		if (mailAccount != null
 				&& StringUtils.equals(RequestUtils.getActorId(request),
 						mailAccount.getCreateBy())) {
@@ -330,10 +326,10 @@ public class MailAccountResource {
 			responseJSON.put("sendPort", mailAccount.getSendPort());
 
 			responseJSON.put("autoReceive",
-					String.valueOf(mailAccount.isAutoReceive()));
+					String.valueOf(mailAccount.autoReceive()));
 
 			responseJSON.put("rememberPassword",
-					String.valueOf(mailAccount.isRememberPassword()));
+					String.valueOf(mailAccount.rememberPassword()));
 
 			responseJSON.put("locked", String.valueOf(mailAccount.getLocked()));
 
@@ -342,8 +338,8 @@ public class MailAccountResource {
 						DateUtils.getDateTime(mailAccount.getCreateDate()));
 			}
 
-			responseJSON.put("authFlag",
-					String.valueOf(mailAccount.isAuthFlag()));
+			responseJSON
+					.put("authFlag", String.valueOf(mailAccount.authFlag()));
 
 		}
 		try {
