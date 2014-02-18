@@ -23,6 +23,8 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
+import org.apache.shiro.util.ThreadContext;
+
 import com.glaf.core.util.Constants;
 
 public class ShiroSecurity {
@@ -49,6 +51,7 @@ public class ShiroSecurity {
 		try {
 			Subject currentUser = SecurityUtils.getSubject();
 			currentUser.logout();
+			ThreadContext.unbindSubject();
 			logger.debug(" shior logout.");
 		} catch (Exception ex) {
 			ex.printStackTrace();

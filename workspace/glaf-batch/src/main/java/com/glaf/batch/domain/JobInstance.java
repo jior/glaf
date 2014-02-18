@@ -63,7 +63,7 @@ public class JobInstance implements Serializable {
 	protected Collection<JobParam> params = new HashSet<JobParam>();
 
 	@javax.persistence.Transient
-	protected Collection<JobExecution> executions = new HashSet<JobExecution>();
+	protected Collection<JobExecution> executions = new CopyOnWriteArraySet<JobExecution>();
 
 	@javax.persistence.Transient
 	protected Collection<StepExecution> steps = new CopyOnWriteArraySet<StepExecution>();
@@ -74,7 +74,7 @@ public class JobInstance implements Serializable {
 
 	public void addJobExecution(JobExecution execution) {
 		if (executions == null) {
-			executions = new HashSet<JobExecution>();
+			executions = new CopyOnWriteArraySet<JobExecution>();
 		}
 		executions.add(execution);
 	}

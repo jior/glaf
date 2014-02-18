@@ -148,5 +148,13 @@
 	<classpathentry kind="lib" path="/glaf-core/lib/xmemcached.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/xml-apis-ext.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/xml-apis.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/commons-pool2.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/curator-client.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/curator-framework.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/curator-recipes.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/curator-x-discovery-server.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/curator-x-discovery.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/httpcore-nio.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/zookeeper.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
