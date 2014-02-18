@@ -19,6 +19,12 @@
 package com.glaf.core.cache;
 
 import java.util.*;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.logging.Log;
@@ -35,9 +41,10 @@ import com.glaf.core.context.ContextFactory;
 public class CacheFactory {
 	protected static final Log logger = LogFactory.getLog(CacheFactory.class);
 	protected static final String DEFAULT_CONFIG = "com/glaf/core/cache/guava/guavacache-context.xml";
-	protected static final Map<String, Cache> cacheMap = new HashMap<String, Cache>();
-	protected static final List<String> items = new ArrayList<String>();
+	protected static final Map<String, Cache> cacheMap = new ConcurrentHashMap<String, Cache>();
+	protected static final List<String> items = new CopyOnWriteArrayList<String>();
 	protected static Configuration conf = BaseConfiguration.create();
+	protected static ExecutorService pool = Executors.newCachedThreadPool();
 
 	private static ApplicationContext ctx;
 
@@ -62,25 +69,48 @@ public class CacheFactory {
 		}
 	}
 
-	public static Object get(String key) {
+	public static Object get(final String key) {
+		boolean waitFor = true;
+		Callable<Object> task = new Callable<Object>() {
+			@Override
+			public Object call() throws Exception {
+				try {
+					Cache cache = getCache();
+					if (cache != null) {
+						String cacheKey = Environment.getCurrentSystemName()
+								+ "_" + CACHE_PREFIX + key;
+						cacheKey = DigestUtils.md5Hex(cacheKey.getBytes());
+						Object value = cache.get(cacheKey);
+						if (value != null) {
+							logger.debug("get object'" + key + "' from cache.");
+							return value;
+						}
+					}
+				} catch (Exception ex) {
+					if (logger.isDebugEnabled()) {
+						ex.printStackTrace();
+						logger.debug(ex);
+					}
+				}
+				return null;
+			}
+		};
+
 		try {
-			Cache cache = getCache();
-			if (cache != null) {
-				String cacheKey = Environment.getCurrentSystemName() + "_"
-						+ CACHE_PREFIX + key;
-				cacheKey = DigestUtils.md5Hex(cacheKey.getBytes());
-				Object value = cache.get(cacheKey);
-				if (value != null) {
-					logger.debug("get object'" + key + "' from cache");
-					return value;
+			Future<Object> result = pool.submit(task);
+
+			// 如果需要等待执行结果
+			if (waitFor) {
+				while (true) {
+					if (result.isDone()) {
+						return result.get();
+					}
 				}
 			}
-		} catch (Exception ex) {
-			if (logger.isDebugEnabled()) {
-				ex.printStackTrace();
-				logger.debug(ex);
-			}
+		} catch (Exception e) {
+			logger.error(e);
 		}
+
 		return null;
 	}
 
@@ -110,25 +140,48 @@ public class CacheFactory {
 		return cache;
 	}
 
-	public static String getString(String key) {
+	public static String getString(final String key) {
+		boolean waitFor = true;
+		Callable<String> task = new Callable<String>() {
+			@Override
+			public String call() throws Exception {
+				try {
+					Cache cache = getCache();
+					if (cache != null) {
+						String cacheKey = Environment.getCurrentSystemName()
+								+ "_" + CACHE_PREFIX + key;
+						cacheKey = DigestUtils.md5Hex(cacheKey.getBytes());
+						Object value = cache.get(cacheKey);
+						if (value != null) {
+							logger.debug("get object'" + key + "' from cache.");
+							return value.toString();
+						}
+					}
+				} catch (Exception ex) {
+					if (logger.isDebugEnabled()) {
+						ex.printStackTrace();
+						logger.debug(ex);
+					}
+				}
+				return null;
+			}
+		};
+
 		try {
-			Cache cache = getCache();
-			if (cache != null) {
-				String cacheKey = Environment.getCurrentSystemName() + "_"
-						+ CACHE_PREFIX + key;
-				cacheKey = DigestUtils.md5Hex(cacheKey.getBytes());
-				Object value = cache.get(cacheKey);
-				if (value != null) {
-					logger.debug("get object'" + key + "' from cache");
-					return value.toString();
+			Future<String> result = pool.submit(task);
+
+			// 如果需要等待执行结果
+			if (waitFor) {
+				while (true) {
+					if (result.isDone()) {
+						return result.get();
+					}
 				}
 			}
-		} catch (Exception ex) {
-			if (logger.isDebugEnabled()) {
-				ex.printStackTrace();
-				logger.debug(ex);
-			}
+		} catch (Exception e) {
+			logger.error(e);
 		}
+
 		return null;
 	}
 
