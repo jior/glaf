@@ -98,10 +98,14 @@ public class CacheFactory {
 
 		try {
 			Future<Object> result = pool.submit(task);
+			long start = System.currentTimeMillis();
 
 			// 如果需要等待执行结果
 			if (waitFor) {
 				while (true) {
+					if (System.currentTimeMillis() - start > 2000) {
+						break;
+					}
 					if (result.isDone()) {
 						return result.get();
 					}
@@ -169,10 +173,13 @@ public class CacheFactory {
 
 		try {
 			Future<String> result = pool.submit(task);
-
+			long start = System.currentTimeMillis();
 			// 如果需要等待执行结果
 			if (waitFor) {
 				while (true) {
+					if (System.currentTimeMillis() - start > 2000) {
+						break;
+					}
 					if (result.isDone()) {
 						return result.get();
 					}
