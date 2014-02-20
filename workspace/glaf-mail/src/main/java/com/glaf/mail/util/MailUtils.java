@@ -18,7 +18,6 @@
 package com.glaf.mail.util;
 
 import java.text.SimpleDateFormat;
-
 import java.util.Locale;
 import java.util.StringTokenizer;
 
@@ -30,13 +29,12 @@ import javax.mail.internet.MimeUtility;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
-import com.glaf.core.context.ContextFactory;
 import com.glaf.mail.MailMessage;
 import com.glaf.mail.MailThread;
 import com.glaf.core.util.LogUtils;
 import com.glaf.core.util.StringTools;
+import com.glaf.core.util.ThreadFactory;
 
 public class MailUtils {
 
@@ -54,14 +52,8 @@ public class MailUtils {
 		if (LogUtils.isDebug()) {
 			logger.debug(content);
 		}
-		try {
-			MailThread thread = new MailThread(mailMessage);
-			ThreadPoolTaskExecutor executor = ContextFactory
-					.getBean("threadPoolTaskExecutor");
-			executor.execute(thread);
-		} catch (Exception ex) {
-			logger.error("Send mail error! \n" + ex.getMessage());
-		}
+		MailThread thread = new MailThread(mailMessage);
+		ThreadFactory.run(thread);
 	}
 
 	public static String chineseStringToAscii(String str) {
