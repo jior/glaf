@@ -4,61 +4,62 @@
 
 <mapper namespace="com.glaf.batch.mapper.JobExecutionMapper">
 
-	<resultMap id="jobExecutionResultMap"	type="com.glaf.batch.domain.JobExecution">
-		<id property="jobExecutionId" column="job_execution_id" jdbcType="INTEGER" />
-		<result property="version" column="version" jdbcType="INTEGER"/>
-		<result property="jobInstanceId" column="job_instance_id" jdbcType="INTEGER"/>
-		<result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
-		<result property="startTime" column="start_time" jdbcType="TIMESTAMP"/>
-		<result property="endTime" column="end_time" jdbcType="TIMESTAMP"/>
-		<result property="status" column="status" jdbcType="VARCHAR"/>
-		<result property="exitCode" column="exit_code" jdbcType="VARCHAR"/>
-		<result property="exitMessage" column="exit_message" jdbcType="VARCHAR"/>
-		<result property="lastUpdated" column="last_updated" jdbcType="TIMESTAMP"/>
+	<resultMap id="jobExecutionResultMap" type="com.glaf.batch.domain.JobExecution">
+		<id property="jobExecutionId" column="job_execution_id" jdbcType="BIGINT" />
+		<result property="version" column="version" jdbcType="INTEGER" />
+		<result property="jobInstanceId" column="job_instance_id"
+			jdbcType="BIGINT" />
+		<result property="createTime" column="create_time" jdbcType="TIMESTAMP" />
+		<result property="startTime" column="start_time" jdbcType="TIMESTAMP" />
+		<result property="endTime" column="end_time" jdbcType="TIMESTAMP" />
+		<result property="status" column="status" jdbcType="VARCHAR" />
+		<result property="exitCode" column="exit_code" jdbcType="VARCHAR" />
+		<result property="exitMessage" column="exit_message" jdbcType="VARCHAR" />
+		<result property="lastUpdated" column="last_updated" jdbcType="TIMESTAMP" />
 	</resultMap>
 
- 
+
 	<insert id="insertJobExecution" parameterType="com.glaf.batch.domain.JobExecution">
-		insert into SYS_JOB_EXECUTION 
+		insert into SYS_JOB_EXECUTION
 		<trim prefix="(" suffix=")" suffixOverrides=",">
-		    job_execution_id
+			job_execution_id
 			<if test="version != null">
-				,version 
+				,version
 			</if>
 			<if test="jobInstanceId != null">
-				,job_instance_id 
+				,job_instance_id
 			</if>
 			<if test="createTime != null">
-				,create_time 
+				,create_time
 			</if>
 			<if test="startTime != null">
-				,start_time 
+				,start_time
 			</if>
 			<if test="endTime != null">
-				,end_time 
+				,end_time
 			</if>
 			<if test="status != null">
-				,status 
+				,status
 			</if>
 			<if test="exitCode != null">
-				,exit_code 
+				,exit_code
 			</if>
 			<if test="exitMessage != null">
-				,exit_message 
+				,exit_message
 			</if>
 			<if test="lastUpdated != null">
-				,last_updated 
+				,last_updated
 			</if>
 		</trim>
 
 		<trim prefix=" values (" suffix=")" suffixOverrides=",">
-			  #{jobExecutionId, jdbcType=INTEGER}
-	     
+			#{jobExecutionId, jdbcType=BIGINT}
+
 			<if test="version != null">
 				,#{version, jdbcType=INTEGER}
 			</if>
 			<if test="jobInstanceId != null">
-				,#{jobInstanceId, jdbcType=INTEGER}
+				,#{jobInstanceId, jdbcType=BIGINT}
 			</if>
 			<if test="createTime != null">
 				,#{createTime, jdbcType=TIMESTAMP}
@@ -84,12 +85,12 @@
 		</trim>
 	</insert>
 
-	 
+
 	<update id="updateJobExecution" parameterType="com.glaf.batch.domain.JobExecution">
 		update
 		SYS_JOB_EXECUTION
 		set
-		<trim prefix="" suffix="" suffixOverrides=",">		
+		<trim prefix="" suffix="" suffixOverrides=",">
 			<if test="startTime != null">
 				start_time = #{startTime, jdbcType=TIMESTAMP},
 			</if>
@@ -110,64 +111,65 @@
 			</if>
 		</trim>
 		where
-          job_execution_id = #{jobExecutionId, jdbcType=INTEGER}
-		
+		job_execution_id = #{jobExecutionId, jdbcType=BIGINT}
+
 	</update>
 
- 
-	<delete id="deleteJobExecutionById" parameterType="string"> 
-        delete from SYS_JOB_EXECUTION
-        where job_execution_id = #{id}
-	</delete>
-	
 
-	<delete id="deleteJobExecutionByJobInstanceId" parameterType="string" >
+	<delete id="deleteJobExecutionById" parameterType="long">
+		delete from
+		SYS_JOB_EXECUTION
+		where job_execution_id = #{id}
+	</delete>
+
+
+	<delete id="deleteJobExecutionByJobInstanceId" parameterType="long">
 		delete from SYS_JOB_EXECUTION where job_instance_id = #{jobInstanceId}
 	</delete>
 
 
-	<select id="getJobExecutionById" parameterType="string" resultMap="jobExecutionResultMap">
-		select * from SYS_JOB_EXECUTION where job_execution_id = #{id}
+	<select id="getJobExecutionById" parameterType="long"
+		resultMap="jobExecutionResultMap">
+		select * from SYS_JOB_EXECUTION where job_execution_id =
+		#{id}
 	</select>
-	
-	<select id="getJobExecutionByJobInstanceId" parameterType="string" resultMap="jobExecutionResultMap">
-		select * from SYS_JOB_EXECUTION where job_instance_id = #{jobInstanceId}
+
+	<select id="getJobExecutionByJobInstanceId" parameterType="long"
+		resultMap="jobExecutionResultMap">
+		select * from SYS_JOB_EXECUTION where job_instance_id =
+		#{jobInstanceId}
 	</select>
 
 
-	<select id="getJobExecutionCountBy" 
-		parameterType="java.util.HashMap"
+	<select id="getJobExecutionCountBy" parameterType="java.util.HashMap"
 		resultType="int">
 		select count(*)
 		<include refid="selectJobExecutionsSql" />
 	</select>
 
 
-	<select id="getJobExecutionCountByQueryCriteria" 
-		parameterType="com.glaf.batch.query.JobExecutionQuery"
+	<select id="getJobExecutionCountByQueryCriteria" parameterType="com.glaf.batch.query.JobExecutionQuery"
 		resultType="int">
 		select count(*)
 		<include refid="selectJobExecutionsSql" />
 	</select>
 
 
-	<select id="getJobExecutions" 
-		parameterType="java.util.HashMap"
+	<select id="getJobExecutions" parameterType="java.util.HashMap"
 		resultMap="jobExecutionResultMap">
 		select E.*
 		<include refid="selectJobExecutionsSql" />
 		<if test="orderBy != null">
-		   order by ${orderBy}
+			order by ${orderBy}
 		</if>
 	</select>
 
-	<select id="getJobExecutionsByQueryCriteria" 
-		parameterType="com.glaf.batch.query.JobExecutionQuery"
+	<select id="getJobExecutionsByQueryCriteria" parameterType="com.glaf.batch.query.JobExecutionQuery"
 		resultMap="jobExecutionResultMap">
 		select E.*
 		<include refid="selectJobExecutionsSql" />
 		<if test="orderBy != null">
-		   order by ${orderBy}
+			order by ${orderBy}
 		</if>
 	</select>
 
@@ -175,20 +177,20 @@
 	<sql id="selectJobExecutionsSql">
 
 		from SYS_JOB_EXECUTION E
-		 
+
 		<where>
 
-		       1 = 1  
+			1 = 1
 
 			<if test="jobInstanceId != null">
 				and E.job_instance_id = #{jobInstanceId}
 			</if>
 
 			<if test="jobInstanceIds != null and jobInstanceIds.size != 0">
-			    and E.job_instance_id IN
-				<foreach item="x_jobInstanceId" index="index" collection="jobInstanceIds" 
+				and E.job_instance_id IN
+				<foreach item="x_jobInstanceId" index="index" collection="jobInstanceIds"
 					open="(" separator="," close=")">
-                  #{x_jobInstanceId}
+					#{x_jobInstanceId}
 				</foreach>
 			</if>
 
@@ -215,7 +217,7 @@
 			<if test="endTimeLessThanOrEqual != null">
 				and E.end_time &lt;= #{endTimeLessThanOrEqual}
 			</if>
-	        
+
 			<if test="status != null and status != '' ">
 				and E.status = #{status}
 			</if>

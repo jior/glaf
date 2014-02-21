@@ -4,19 +4,21 @@
 
 <mapper namespace="com.glaf.batch.mapper.StepExecutionContextMapper">
 
-	<resultMap id="stepExecutionContextResultMap"	type="com.glaf.batch.domain.StepExecutionContext">
-		<id property="stepExecutionId" column="step_execution_id" jdbcType="INTEGER" />
-		<result property="shortContext" column="short_context" jdbcType="VARCHAR"/>
-		<result property="serializedContext" column="serialized_context" jdbcType="VARCHAR"/>
+	<resultMap id="stepExecutionContextResultMap" type="com.glaf.batch.domain.StepExecutionContext">
+		<id property="stepExecutionId" column="step_execution_id" jdbcType="BIGINT" />
+		<result property="shortContext" column="short_context"
+			jdbcType="VARCHAR" />
+		<result property="serializedContext" column="serialized_context"
+			jdbcType="VARCHAR" />
 	</resultMap>
 
- 
+
 	<insert id="insertStepExecutionContext" parameterType="com.glaf.batch.domain.StepExecutionContext">
-		insert into SYS_STEP_EXECUTION_CONTEXT 
+		insert into SYS_STEP_EXECUTION_CONTEXT
 		<trim prefix="(" suffix=")" suffixOverrides=",">
-		    step_execution_id
+			step_execution_id
 			<if test="shortContext != null">
-				,short_context 
+				,short_context
 			</if>
 			<if test="serializedContext != null">
 				,serialized_context
@@ -24,8 +26,8 @@
 		</trim>
 
 		<trim prefix=" values (" suffix=")" suffixOverrides=",">
-			  #{stepExecutionId, jdbcType=INTEGER}
-	     
+			#{stepExecutionId, jdbcType=BIGINT}
+
 			<if test="shortContext != null">
 				,#{shortContext, jdbcType=VARCHAR}
 			</if>
@@ -35,33 +37,35 @@
 		</trim>
 	</insert>
 
-	 
+
 	<update id="updateStepExecutionContext" parameterType="com.glaf.batch.domain.StepExecutionContext">
 		update
 		SYS_STEP_EXECUTION_CONTEXT
 		set
-		<trim prefix="" suffix="" suffixOverrides=",">		
+		<trim prefix="" suffix="" suffixOverrides=",">
 			<if test="shortContext != null">
 				short_context = #{shortContext, jdbcType=VARCHAR},
 			</if>
 			<if test="serializedContext != null">
-				serialized_context = #{serializedContext, jdbcType=VARCHAR},
+				serialized_context = #{serializedContext,
+				jdbcType=VARCHAR},
 			</if>
 		</trim>
 		where
-          step_execution_id = #{stepExecutionId, jdbcType=INTEGER}
-		
+		step_execution_id = #{stepExecutionId, jdbcType=BIGINT}
+
 	</update>
 
- 
-	<delete id="deleteStepExecutionContextById" parameterType="string"> 
-        delete from SYS_STEP_EXECUTION_CONTEXT
-        where step_execution_id = #{id}
-	</delete>
-	
 
-	<select id="getStepExecutionContextById" parameterType="string" resultMap="stepExecutionContextResultMap">
-		select * from SYS_STEP_EXECUTION_CONTEXT 
+	<delete id="deleteStepExecutionContextById" parameterType="long">
+		delete from SYS_STEP_EXECUTION_CONTEXT
+		where step_execution_id = #{id}
+	</delete>
+
+
+	<select id="getStepExecutionContextById" parameterType="long"
+		resultMap="stepExecutionContextResultMap">
+		select * from SYS_STEP_EXECUTION_CONTEXT
 		where step_execution_id = #{id}
 	</select>
 

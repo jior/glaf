@@ -41,7 +41,7 @@ public interface IJobService {
 	 * @return
 	 */
 	@Transactional
-	void deleteJobInstanceById(int jobInstanceId);
+	void deleteJobInstanceById(long jobInstanceId);
 
 	/**
 	 * 根据Key删除记录
@@ -57,7 +57,7 @@ public interface IJobService {
 	 * @param jobExecutionId
 	 * @return
 	 */
-	JobExecution getJobExecutionById(int jobExecutionId);
+	JobExecution getJobExecutionById(long jobExecutionId);
 
 	/**
 	 * 根据Job实例编号获取执行信息
@@ -65,21 +65,21 @@ public interface IJobService {
 	 * @param jobInstanceId
 	 * @return
 	 */
-	List<JobExecution> getJobExecutions(int jobInstanceId);
+	List<JobExecution> getJobExecutions(long jobInstanceId);
 
 	/**
 	 * 根据主键获取Job实例
 	 * 
 	 * @return
 	 */
-	JobInstance getJobInstanceById(int jobInstanceId);
+	JobInstance getJobInstanceById(long jobInstanceId);
 
 	/**
 	 * 根据主键获取Job实例
 	 * 
 	 * @return
 	 */
-	JobInstance getJobInstanceByIdWithAll(int jobInstanceId);
+	JobInstance getJobInstanceByIdWithAll(long jobInstanceId);
 
 	/**
 	 * 根据Job Key获取Job实例
@@ -124,7 +124,7 @@ public interface IJobService {
 	 * @param stepExecutionId
 	 * @return
 	 */
-	StepExecution getStepExecutionById(int stepExecutionId);
+	StepExecution getStepExecutionById(long stepExecutionId);
 
 	/**
 	 * 
@@ -138,7 +138,7 @@ public interface IJobService {
 	 * @param jobInstanceId
 	 * @return
 	 */
-	List<StepExecution> getStepExecutions(int jobInstanceId);
+	List<StepExecution> getStepExecutions(long jobInstanceId);
 
 	/**
 	 * 根据查询参数获取记录列表

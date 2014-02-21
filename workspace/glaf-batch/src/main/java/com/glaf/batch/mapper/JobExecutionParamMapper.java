@@ -25,15 +25,15 @@ import com.glaf.batch.domain.*;
 @Component
 public interface JobExecutionParamMapper {
 
-	void deleteJobExecutionParamsByJobExecutionId(int jobExecutionId);
+	void deleteJobExecutionParamsByJobExecutionId(long jobExecutionId);
 
-	void deleteJobExecutionParamsByJobInstanceId(int jobInstanceId);
+	void deleteJobExecutionParamsByJobInstanceId(long jobInstanceId);
 
 	List<JobExecutionParam> getJobExecutionParamsByJobExecutionId(
-			int jobExecutionId);
+			long jobExecutionId);
 
 	List<JobExecutionParam> getJobExecutionParamsByJobInstanceId(
-			int jobInstanceId);
+			long jobInstanceId);
 
 	void insertJobExecutionParam(JobExecutionParam model);
 

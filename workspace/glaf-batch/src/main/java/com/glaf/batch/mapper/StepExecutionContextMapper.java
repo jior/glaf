@@ -24,9 +24,9 @@ import com.glaf.batch.domain.*;
 @Component
 public interface StepExecutionContextMapper {
 
-	void deleteStepExecutionContextById(int id);
+	void deleteStepExecutionContextById(long id);
 
-	StepExecutionContext getStepExecutionContextById(int id);
+	StepExecutionContext getStepExecutionContextById(long id);
 
 	void insertStepExecutionContext(StepExecutionContext model);
 

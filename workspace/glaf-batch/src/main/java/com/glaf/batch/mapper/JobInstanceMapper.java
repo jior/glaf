@@ -26,11 +26,11 @@ import com.glaf.batch.query.*;
 @Component
 public interface JobInstanceMapper {
 
-	void deleteJobInstanceById(int id);
+	void deleteJobInstanceById(long id);
 
 	void deleteJobInstances(JobInstanceQuery query);
 
-	JobInstance getJobInstanceById(int id);
+	JobInstance getJobInstanceById(long id);
 	
 	JobInstance getJobInstanceByJobKey(String jobKey);
 

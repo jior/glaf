@@ -39,7 +39,7 @@ public class JobExecution implements Serializable {
 
 	@Id
 	@Column(name = "job_execution_id", nullable = false)
-	protected int jobExecutionId;
+	protected long jobExecutionId;
 
 	/**
 	 * version
@@ -51,7 +51,7 @@ public class JobExecution implements Serializable {
 	 * job_instance_id
 	 */
 	@Column(name = "job_instance_id")
-	protected int jobInstanceId;
+	protected long jobInstanceId;
 
 	/**
 	 * create_time
@@ -139,11 +139,11 @@ public class JobExecution implements Serializable {
 		return this.exitMessage;
 	}
 
-	public int getJobExecutionId() {
+	public long getJobExecutionId() {
 		return this.jobExecutionId;
 	}
 
-	public int getJobInstanceId() {
+	public long getJobInstanceId() {
 		return this.jobInstanceId;
 	}
 
@@ -219,11 +219,11 @@ public class JobExecution implements Serializable {
 		this.exitMessage = exitMessage;
 	}
 
-	public void setJobExecutionId(int jobExecutionId) {
+	public void setJobExecutionId(long jobExecutionId) {
 		this.jobExecutionId = jobExecutionId;
 	}
 
-	public void setJobInstanceId(int jobInstanceId) {
+	public void setJobInstanceId(long jobInstanceId) {
 		this.jobInstanceId = jobInstanceId;
 	}
 

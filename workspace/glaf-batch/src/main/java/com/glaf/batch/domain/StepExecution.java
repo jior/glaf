@@ -20,11 +20,13 @@ package com.glaf.batch.domain;
 
 import java.io.*;
 import java.util.*;
+
 import javax.persistence.*;
 
 import com.alibaba.fastjson.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
@@ -38,7 +40,7 @@ public class StepExecution implements Serializable,
 
 	@Id
 	@Column(name = "step_execution_id", nullable = false)
-	protected int stepExecutionId;
+	protected long stepExecutionId;
 
 	/**
 	 * version
@@ -68,13 +70,13 @@ public class StepExecution implements Serializable,
 	 * job_instance_id
 	 */
 	@Column(name = "job_instance_id")
-	protected int jobInstanceId;
+	protected long jobInstanceId;
 
 	/**
 	 * job_execution_id
 	 */
 	@Column(name = "job_execution_id")
-	protected int jobExecutionId;
+	protected long jobExecutionId;
 
 	@Column(name = "listno")
 	protected int listno;
@@ -198,7 +200,7 @@ public class StepExecution implements Serializable,
 		if (getClass() != obj.getClass())
 			return false;
 		StepExecution other = (StepExecution) obj;
-		if (jobExecutionId != other.jobExecutionId)
+		if (stepExecutionId != other.stepExecutionId)
 			return false;
 		return true;
 	}
@@ -227,11 +229,11 @@ public class StepExecution implements Serializable,
 		return jobClass;
 	}
 
-	public int getJobExecutionId() {
+	public long getJobExecutionId() {
 		return this.jobExecutionId;
 	}
 
-	public int getJobInstanceId() {
+	public long getJobInstanceId() {
 		return jobInstanceId;
 	}
 
@@ -271,7 +273,7 @@ public class StepExecution implements Serializable,
 		return this.status;
 	}
 
-	public int getStepExecutionId() {
+	public long getStepExecutionId() {
 		return this.stepExecutionId;
 	}
 
@@ -299,7 +301,8 @@ public class StepExecution implements Serializable,
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + jobExecutionId;
+		result = prime * result
+				+ (int) (stepExecutionId ^ (stepExecutionId >>> 32));
 		return result;
 	}
 
@@ -398,11 +401,11 @@ public class StepExecution implements Serializable,
 		this.jobClass = jobClass;
 	}
 
-	public void setJobExecutionId(int jobExecutionId) {
+	public void setJobExecutionId(long jobExecutionId) {
 		this.jobExecutionId = jobExecutionId;
 	}
 
-	public void setJobInstanceId(int jobInstanceId) {
+	public void setJobInstanceId(long jobInstanceId) {
 		this.jobInstanceId = jobInstanceId;
 	}
 
@@ -442,7 +445,7 @@ public class StepExecution implements Serializable,
 		this.status = status;
 	}
 
-	public void setStepExecutionId(int stepExecutionId) {
+	public void setStepExecutionId(long stepExecutionId) {
 		this.stepExecutionId = stepExecutionId;
 	}
 

@@ -95,7 +95,7 @@ public class MxJobServiceImpl implements IJobService {
 	}
 
 	@Transactional
-	public void deleteJobInstanceById(int jobInstanceId) {
+	public void deleteJobInstanceById(long jobInstanceId) {
 		stepExecutionMapper.deleteStepExecutionByJobInstanceId(jobInstanceId);
 		jobExecutionMapper.deleteJobExecutionByJobInstanceId(jobInstanceId);
 		jobParamMapper.deleteJobParamsByJobInstanceId(jobInstanceId);
@@ -111,23 +111,23 @@ public class MxJobServiceImpl implements IJobService {
 		}
 	}
 
-	public JobExecution getJobExecutionById(int jobExecutionId) {
+	public JobExecution getJobExecutionById(long jobExecutionId) {
 		JobExecution jobExecution = jobExecutionMapper
 				.getJobExecutionById(jobExecutionId);
 		return jobExecution;
 	}
 
-	public JobExecutionContext getJobExecutionContextById(int id) {
+	public JobExecutionContext getJobExecutionContextById(long id) {
 		JobExecutionContext jobExecutionContext = jobExecutionContextMapper
 				.getJobExecutionContextById(id);
 		return jobExecutionContext;
 	}
 
-	public List<JobExecution> getJobExecutions(int jobInstanceId) {
+	public List<JobExecution> getJobExecutions(long jobInstanceId) {
 		return jobExecutionMapper.getJobExecutionByJobInstanceId(jobInstanceId);
 	}
 
-	public JobInstance getJobInstanceById(int jobInstanceId) {
+	public JobInstance getJobInstanceById(long jobInstanceId) {
 		JobInstance jobInstance = jobInstanceMapper
 				.getJobInstanceById(jobInstanceId);
 		if (jobInstance != null) {
@@ -138,7 +138,7 @@ public class MxJobServiceImpl implements IJobService {
 		return jobInstance;
 	}
 
-	public JobInstance getJobInstanceByIdWithAll(int jobInstanceId) {
+	public JobInstance getJobInstanceByIdWithAll(long jobInstanceId) {
 		JobInstance jobInstance = jobInstanceMapper
 				.getJobInstanceById(jobInstanceId);
 		if (jobInstance != null) {
@@ -208,7 +208,7 @@ public class MxJobServiceImpl implements IJobService {
 		return rows;
 	}
 
-	public StepExecution getStepExecutionById(int stepExecutionId) {
+	public StepExecution getStepExecutionById(long stepExecutionId) {
 		StepExecution stepExecution = stepExecutionMapper
 				.getStepExecutionById(stepExecutionId);
 		return stepExecution;
@@ -220,7 +220,7 @@ public class MxJobServiceImpl implements IJobService {
 		return stepExecution;
 	}
 
-	public List<StepExecution> getStepExecutions(int jobInstanceId) {
+	public List<StepExecution> getStepExecutions(long jobInstanceId) {
 		return stepExecutionMapper
 				.getStepExecutionsByJobInstanceId(jobInstanceId);
 	}
@@ -281,7 +281,7 @@ public class MxJobServiceImpl implements IJobService {
 	@Transactional
 	public void saveJobExecution(JobExecution jobExecution) {
 		if (jobExecution.getJobExecutionId() == 0) {
-			jobExecution.setJobExecutionId(idGenerator.nextId().intValue());
+			jobExecution.setJobExecutionId(idGenerator.nextId());
 			jobExecutionMapper.insertJobExecution(jobExecution);
 			if (jobExecution.getSteps() != null
 					&& !jobExecution.getSteps().isEmpty()) {
@@ -338,12 +338,12 @@ public class MxJobServiceImpl implements IJobService {
 	@Transactional
 	public void saveJobInstance(JobInstance jobInstance) {
 		if (jobInstance.getJobInstanceId() == 0) {
-			jobInstance.setJobInstanceId(idGenerator.nextId().intValue());
+			jobInstance.setJobInstanceId(idGenerator.nextId());
 			jobInstanceMapper.insertJobInstance(jobInstance);
 			if (jobInstance.getParams() != null
 					&& !jobInstance.getParams().isEmpty()) {
 				for (JobParam param : jobInstance.getParams()) {
-					param.setId(idGenerator.nextId().intValue());
+					param.setId(idGenerator.nextId());
 					param.setJobInstanceId(jobInstance.getJobInstanceId());
 					jobParamMapper.insertJobParam(param);
 				}
@@ -370,7 +370,7 @@ public class MxJobServiceImpl implements IJobService {
 				if (jobInstance.getParams() != null
 						&& !jobInstance.getParams().isEmpty()) {
 					for (JobParam param : jobInstance.getParams()) {
-						param.setId(idGenerator.nextId().intValue());
+						param.setId(idGenerator.nextId());
 						param.setJobInstanceId(model.getJobInstanceId());
 						jobParamMapper.insertJobParam(param);
 					}
@@ -382,7 +382,7 @@ public class MxJobServiceImpl implements IJobService {
 	@Transactional
 	public void saveStepExecution(StepExecution stepExecution) {
 		if (stepExecution.getStepExecutionId() == 0) {
-			stepExecution.setStepExecutionId(idGenerator.nextId().intValue());
+			stepExecution.setStepExecutionId(idGenerator.nextId());
 			stepExecutionMapper.insertStepExecution(stepExecution);
 		} else {
 			StepExecution model = this.getStepExecutionById(stepExecution

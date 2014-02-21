@@ -7,9 +7,9 @@
 	<resultMap id="jobExecutionParamResultMap" type="com.glaf.batch.domain.JobExecutionParam">
 		<id property="id" column="ID" jdbcType="BIGINT" />
 		<result property="jobExecutionId" column="JOB_EXECUTION_ID"
-			jdbcType="INTEGER" />
+			jdbcType="BIGINT" />
 		<result property="jobInstanceId" column="JOB_INSTANCE_ID"
-			jdbcType="INTEGER" />
+			jdbcType="BIGINT" />
 		<result property="typeCd" column="TYPE_CD" jdbcType="VARCHAR" />
 		<result property="keyName" column="KEY_NAME" jdbcType="VARCHAR" />
 		<result property="stringVal" column="STRING_VAL" jdbcType="VARCHAR" />
@@ -57,10 +57,10 @@
 			#{id, jdbcType=BIGINT}
 
 			<if test="jobExecutionId != null">
-				,#{jobExecutionId, jdbcType=INTEGER}
+				,#{jobExecutionId, jdbcType=BIGINT}
 			</if>
 			<if test="jobInstanceId != null">
-				,#{jobInstanceId, jdbcType=INTEGER}
+				,#{jobInstanceId, jdbcType=BIGINT}
 			</if>
 			<if test="typeCd != null">
 				,#{typeCd, jdbcType=VARCHAR}

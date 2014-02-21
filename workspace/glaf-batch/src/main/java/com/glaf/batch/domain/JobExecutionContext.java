@@ -33,7 +33,7 @@ public class JobExecutionContext implements Serializable {
 
 	@Id
 	@Column(name = "job_execution_id", nullable = false)
-	protected int jobExecutionId;
+	protected long jobExecutionId;
 
 	/**
 	 * short_context
@@ -52,7 +52,7 @@ public class JobExecutionContext implements Serializable {
 
 	}
 
-	public int getJobExecutionId() {
+	public long getJobExecutionId() {
 		return this.jobExecutionId;
 	}
 
@@ -76,7 +76,7 @@ public class JobExecutionContext implements Serializable {
 		return model;
 	}
 
-	public void setJobExecutionId(int jobExecutionId) {
+	public void setJobExecutionId(long jobExecutionId) {
 		this.jobExecutionId = jobExecutionId;
 	}
 

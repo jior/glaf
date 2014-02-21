@@ -24,9 +24,9 @@ import com.glaf.batch.domain.*;
 @Component
 public interface JobExecutionContextMapper {
 
-	void deleteJobExecutionContextById(int jobExecutionId);
+	void deleteJobExecutionContextById(long jobExecutionId);
 
-	JobExecutionContext getJobExecutionContextById(int jobExecutionId);
+	JobExecutionContext getJobExecutionContextById(long jobExecutionId);
 
 	void insertJobExecutionContext(JobExecutionContext model);
 

@@ -25,9 +25,9 @@ import com.glaf.batch.domain.*;
 @Component
 public interface JobParamMapper {
 
-	void deleteJobParamsByJobInstanceId(int jobInstanceId);
+	void deleteJobParamsByJobInstanceId(long jobInstanceId);
 
-	List<JobParam> getJobParamsByJobInstanceId(int jobInstanceId);
+	List<JobParam> getJobParamsByJobInstanceId(long jobInstanceId);
 
 	void insertJobParam(JobParam model);
 

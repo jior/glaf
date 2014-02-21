@@ -20,6 +20,7 @@ package com.glaf.batch.domain;
 
 import java.io.*;
 import java.util.*;
+
 import javax.persistence.*;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -32,13 +33,13 @@ public class JobExecutionParam implements Serializable {
 
 	@Id
 	@Column(name = "ID", nullable = false)
-	protected Long id;
+	protected long id;
 
 	@Column(name = "JOB_EXECUTION_ID")
-	protected Integer jobExecutionId;
+	protected long jobExecutionId;
 
 	@Column(name = "JOB_INSTANCE_ID")
-	protected Integer jobInstanceId;
+	protected long jobInstanceId;
 
 	@Column(name = "TYPE_CD", length = 6)
 	protected String typeCd;
@@ -66,86 +67,6 @@ public class JobExecutionParam implements Serializable {
 
 	}
 
-	public Long getId() {
-		return this.id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public Integer getJobExecutionId() {
-		return this.jobExecutionId;
-	}
-
-	public Integer getJobInstanceId() {
-		return this.jobInstanceId;
-	}
-
-	public String getTypeCd() {
-		return this.typeCd;
-	}
-
-	public String getKeyName() {
-		return this.keyName;
-	}
-
-	public String getStringVal() {
-		return this.stringVal;
-	}
-
-	public Date getDateVal() {
-		return this.dateVal;
-	}
-
-	public Integer getIntVal() {
-		return this.intVal;
-	}
-
-	public Long getLongVal() {
-		return this.longVal;
-	}
-
-	public Double getDoubleVal() {
-		return this.doubleVal;
-	}
-
-	public void setJobExecutionId(Integer jobExecutionId) {
-		this.jobExecutionId = jobExecutionId;
-	}
-
-	public void setJobInstanceId(Integer jobInstanceId) {
-		this.jobInstanceId = jobInstanceId;
-	}
-
-	public void setTypeCd(String typeCd) {
-		this.typeCd = typeCd;
-	}
-
-	public void setKeyName(String keyName) {
-		this.keyName = keyName;
-	}
-
-	public void setStringVal(String stringVal) {
-		this.stringVal = stringVal;
-	}
-
-	public void setDateVal(Date dateVal) {
-		this.dateVal = dateVal;
-	}
-
-	public void setIntVal(Integer intVal) {
-		this.intVal = intVal;
-	}
-
-	public void setLongVal(Long longVal) {
-		this.longVal = longVal;
-	}
-
-	public void setDoubleVal(Double doubleVal) {
-		this.doubleVal = doubleVal;
-	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -155,20 +76,97 @@ public class JobExecutionParam implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		JobExecutionParam other = (JobExecutionParam) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
+		if (id != other.id)
 			return false;
 		return true;
+	}
+
+	public Date getDateVal() {
+		return this.dateVal;
+	}
+
+	public Double getDoubleVal() {
+		return this.doubleVal;
+	}
+
+	public Long getId() {
+		return this.id;
+	}
+
+	public Integer getIntVal() {
+		return this.intVal;
+	}
+
+	public long getJobExecutionId() {
+		return this.jobExecutionId;
+	}
+
+	public long getJobInstanceId() {
+		return this.jobInstanceId;
+	}
+
+	public String getKeyName() {
+		return this.keyName;
+	}
+
+	public Long getLongVal() {
+		return this.longVal;
+	}
+
+	public String getStringVal() {
+		return this.stringVal;
+	}
+
+	public String getTypeCd() {
+		return this.typeCd;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + (int) (id ^ (id >>> 32));
 		return result;
+	}
+
+	public void setDateVal(Date dateVal) {
+		this.dateVal = dateVal;
+	}
+
+	public void setDoubleVal(Double doubleVal) {
+		this.doubleVal = doubleVal;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public void setIntVal(Integer intVal) {
+		this.intVal = intVal;
+	}
+
+	public void setJobExecutionId(long jobExecutionId) {
+		this.jobExecutionId = jobExecutionId;
+	}
+
+	public void setJobInstanceId(long jobInstanceId) {
+		this.jobInstanceId = jobInstanceId;
+	}
+
+	public void setKeyName(String keyName) {
+		this.keyName = keyName;
+	}
+
+	public void setLongVal(Long longVal) {
+		this.longVal = longVal;
+	}
+
+	public void setStringVal(String stringVal) {
+		this.stringVal = stringVal;
+	}
+
+	public void setTypeCd(String typeCd) {
+		this.typeCd = typeCd;
 	}
 
 	@Override

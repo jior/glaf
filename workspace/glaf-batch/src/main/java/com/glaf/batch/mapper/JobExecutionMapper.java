@@ -26,13 +26,13 @@ import com.glaf.batch.query.*;
 @Component
 public interface JobExecutionMapper {
 
-	void deleteJobExecutionById(int id);
+	void deleteJobExecutionById(long id);
 
-	void deleteJobExecutionByJobInstanceId(int jobInstanceId);
+	void deleteJobExecutionByJobInstanceId(long jobInstanceId);
 
-	JobExecution getJobExecutionById(int id);
+	JobExecution getJobExecutionById(long id);
 
-	List<JobExecution> getJobExecutionByJobInstanceId(int jobInstanceId);
+	List<JobExecution> getJobExecutionByJobInstanceId(long jobInstanceId);
 
 	int getJobExecutionCount(Map<String, Object> parameter);
 

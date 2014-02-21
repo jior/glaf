@@ -26,11 +26,11 @@ import com.glaf.batch.query.*;
 @Component
 public interface StepExecutionMapper {
 
-	void deleteStepExecutionById(int id);
+	void deleteStepExecutionById(long id);
 
-	void deleteStepExecutionByJobInstanceId(int jobInstanceId);
+	void deleteStepExecutionByJobInstanceId(long jobInstanceId);
 
-	StepExecution getStepExecutionById(int id);
+	StepExecution getStepExecutionById(long id);
 	
 	StepExecution getStepExecutionByKey(String jobStepKey);
 
@@ -40,7 +40,7 @@ public interface StepExecutionMapper {
 
 	List<StepExecution> getStepExecutions(Map<String, Object> parameter);
 
-	List<StepExecution> getStepExecutionsByJobInstanceId(int jobInstanceId);
+	List<StepExecution> getStepExecutionsByJobInstanceId(long jobInstanceId);
 
 	List<StepExecution> getStepExecutionsByQueryCriteria(
 			StepExecutionQuery query);
