@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.batch.mapper.JobExecutionParamMapper">
+
+	<resultMap id="jobExecutionParamResultMap" type="com.glaf.batch.domain.JobExecutionParam">
+		<id property="id" column="ID" jdbcType="BIGINT" />
+		<result property="jobExecutionId" column="JOB_EXECUTION_ID"
+			jdbcType="INTEGER" />
+		<result property="jobInstanceId" column="JOB_INSTANCE_ID"
+			jdbcType="INTEGER" />
+		<result property="typeCd" column="TYPE_CD" jdbcType="VARCHAR" />
+		<result property="keyName" column="KEY_NAME" jdbcType="VARCHAR" />
+		<result property="stringVal" column="STRING_VAL" jdbcType="VARCHAR" />
+		<result property="dateVal" column="DATE_VAL" jdbcType="TIMESTAMP" />
+		<result property="intVal" column="INT_VAL" jdbcType="INTEGER" />
+		<result property="longVal" column="LONG_VAL" jdbcType="BIGINT" />
+		<result property="doubleVal" column="DOUBLE_VAL" jdbcType="DOUBLE" />
+	</resultMap>
+
+
+	<insert id="insertJobExecutionParam" parameterType="com.glaf.batch.domain.JobExecutionParam">
+		insert into SYS_JOB_EXECUTION_PARAMS
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ID
+			<if test="jobExecutionId != null">
+				,JOB_EXECUTION_ID
+			</if>
+			<if test="jobInstanceId != null">
+				,JOB_INSTANCE_ID
+			</if>
+			<if test="typeCd != null">
+				,TYPE_CD
+			</if>
+			<if test="keyName != null">
+				,KEY_NAME
+			</if>
+			<if test="stringVal != null">
+				,STRING_VAL
+			</if>
+			<if test="dateVal != null">
+				,DATE_VAL
+			</if>
+			<if test="intVal != null">
+				,INT_VAL
+			</if>
+			<if test="longVal != null">
+				,LONG_VAL
+			</if>
+			<if test="doubleVal != null">
+				,DOUBLE_VAL
+			</if>
+		</trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			#{id, jdbcType=BIGINT}
+
+			<if test="jobExecutionId != null">
+				,#{jobExecutionId, jdbcType=INTEGER}
+			</if>
+			<if test="jobInstanceId != null">
+				,#{jobInstanceId, jdbcType=INTEGER}
+			</if>
+			<if test="typeCd != null">
+				,#{typeCd, jdbcType=VARCHAR}
+			</if>
+			<if test="keyName != null">
+				,#{keyName, jdbcType=VARCHAR}
+			</if>
+			<if test="stringVal != null">
+				,#{stringVal, jdbcType=VARCHAR}
+			</if>
+			<if test="dateVal != null">
+				,#{dateVal, jdbcType=TIMESTAMP}
+			</if>
+			<if test="intVal != null">
+				,#{intVal, jdbcType=INTEGER}
+			</if>
+			<if test="longVal != null">
+				,#{longVal, jdbcType=BIGINT}
+			</if>
+			<if test="doubleVal != null">
+				,#{doubleVal, jdbcType=DOUBLE}
+			</if>
+		</trim>
+	</insert>
+
+
+	<delete id="deleteJobExecutionParamsByJobInstanceId"
+		parameterType="long">
+		delete from SYS_JOB_EXECUTION_PARAMS
+		where
+		JOB_INSTANCE_ID = #{jobInstanceId}
+	</delete>
+
+
+	<delete id="deleteJobExecutionParamsByJobExecutionId"
+		parameterType="long">
+		delete from SYS_JOB_EXECUTION_PARAMS
+		where
+		JOB_EXECUTION_ID = #{jobExecutionId}
+	</delete>
+
+
+	<select id="getJobExecutionParamsByJobInstanceId" parameterType="long"
+		resultMap="jobExecutionParamResultMap">
+		select * from SYS_JOB_EXECUTION_PARAMS where JOB_INSTANCE_ID
+		= #{jobInstanceId}
+	</select>
+
+
+	<select id="getJobExecutionParamsByJobExecutionId"
+		parameterType="long" resultMap="jobExecutionParamResultMap">
+		select * from SYS_JOB_EXECUTION_PARAMS
+		JOB_EXECUTION_ID = #{jobExecutionId}
+	</select>
+
+</mapper>

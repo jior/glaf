@@ -31,11 +31,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.batch.domain.JobExecution;
 import com.glaf.batch.domain.JobExecutionContext;
+import com.glaf.batch.domain.JobExecutionParam;
 import com.glaf.batch.domain.JobInstance;
 import com.glaf.batch.domain.JobParam;
 import com.glaf.batch.domain.StepExecution;
 import com.glaf.batch.mapper.JobExecutionContextMapper;
 import com.glaf.batch.mapper.JobExecutionMapper;
+import com.glaf.batch.mapper.JobExecutionParamMapper;
 import com.glaf.batch.mapper.JobInstanceMapper;
 import com.glaf.batch.mapper.JobParamMapper;
 import com.glaf.batch.mapper.StepExecutionContextMapper;
@@ -63,6 +65,8 @@ public class MxJobServiceImpl implements IJobService {
 	protected JobParamMapper jobParamMapper;
 
 	protected JobExecutionMapper jobExecutionMapper;
+
+	protected JobExecutionParamMapper jobExecutionParamMapper;
 
 	protected JobExecutionContextMapper jobExecutionContextMapper;
 
@@ -315,6 +319,20 @@ public class MxJobServiceImpl implements IJobService {
 				jobExecutionMapper.updateJobExecution(model);
 			}
 		}
+		if (jobExecution.getJobExecutionId() != 0) {
+			jobExecutionParamMapper
+					.deleteJobExecutionParamsByJobExecutionId(jobExecution
+							.getJobExecutionId());
+			if (jobExecution.getParams() != null
+					&& !jobExecution.getParams().isEmpty()) {
+				for (JobExecutionParam param : jobExecution.getParams()) {
+					param.setId(idGenerator.nextId());
+					param.setJobExecutionId(jobExecution.getJobExecutionId());
+					param.setJobInstanceId(jobExecution.getJobInstanceId());
+					jobExecutionParamMapper.insertJobExecutionParam(param);
+				}
+			}
+		}
 	}
 
 	@Transactional
@@ -427,6 +445,12 @@ public class MxJobServiceImpl implements IJobService {
 	@javax.annotation.Resource
 	public void setJobExecutionMapper(JobExecutionMapper jobExecutionMapper) {
 		this.jobExecutionMapper = jobExecutionMapper;
+	}
+
+	@javax.annotation.Resource
+	public void setJobExecutionParamMapper(
+			JobExecutionParamMapper jobExecutionParamMapper) {
+		this.jobExecutionParamMapper = jobExecutionParamMapper;
 	}
 
 	@javax.annotation.Resource

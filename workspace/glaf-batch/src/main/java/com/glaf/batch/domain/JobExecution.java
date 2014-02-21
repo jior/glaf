@@ -22,11 +22,14 @@ import java.io.*;
 import java.util.*;
 
 import javax.persistence.*;
+
 import com.alibaba.fastjson.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
+
 import com.glaf.core.util.DateUtils;
 
 @Entity
@@ -97,10 +100,20 @@ public class JobExecution implements Serializable {
 	protected Date lastUpdated;
 
 	@javax.persistence.Transient
+	protected Collection<JobExecutionParam> params = new HashSet<JobExecutionParam>();
+
+	@javax.persistence.Transient
 	protected List<StepExecution> steps = new ArrayList<StepExecution>();
 
 	public JobExecution() {
 
+	}
+
+	public void addParam(JobExecutionParam param) {
+		if (params == null) {
+			params = new HashSet<JobExecutionParam>();
+		}
+		params.add(param);
 	}
 
 	public void addStep(StepExecution step) {
@@ -136,6 +149,10 @@ public class JobExecution implements Serializable {
 
 	public Date getLastUpdated() {
 		return this.lastUpdated;
+	}
+
+	public Collection<JobExecutionParam> getParams() {
+		return params;
 	}
 
 	public Date getStartTime() {
@@ -212,6 +229,10 @@ public class JobExecution implements Serializable {
 
 	public void setLastUpdated(Date lastUpdated) {
 		this.lastUpdated = lastUpdated;
+	}
+
+	public void setParams(Collection<JobExecutionParam> params) {
+		this.params = params;
 	}
 
 	public void setStartTime(Date startTime) {
