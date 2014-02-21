@@ -9,8 +9,8 @@
 
 	<bean id="shiroFilter" class="com.glaf.shiro.MyShiroFilterFactoryBean">
 		<property name="securityManager" ref="securityManager" />
-		<property name="loginUrl" value="/mx/login" />
-		<property name="successUrl" value="/mx/main" />
+		<property name="loginUrl" value="/login.jsp" />
+		<property name="successUrl" value="/main.jsp" />
 		<property name="unauthorizedUrl" value="/unauthorized.jsp" />
 		<property name="filters">
 			<util:map>
