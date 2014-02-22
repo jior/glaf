@@ -24,7 +24,6 @@ import java.util.*;
 import javax.persistence.*;
 
 import com.alibaba.fastjson.*;
-
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -200,7 +199,10 @@ public class StepExecution implements Serializable,
 		if (getClass() != obj.getClass())
 			return false;
 		StepExecution other = (StepExecution) obj;
-		if (stepExecutionId != other.stepExecutionId)
+		if (stepExecutionId == null) {
+			if (other.stepExecutionId != null)
+				return false;
+		} else if (!stepExecutionId.equals(other.stepExecutionId))
 			return false;
 		return true;
 	}
@@ -302,7 +304,7 @@ public class StepExecution implements Serializable,
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
-				+ (int) (stepExecutionId ^ (stepExecutionId >>> 32));
+				+ ((stepExecutionId == null) ? 0 : stepExecutionId.hashCode());
 		return result;
 	}
 

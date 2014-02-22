@@ -19,6 +19,8 @@
 package com.glaf.core.service.impl;
 
 import java.util.*;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -42,7 +44,8 @@ public class MxSysLogServiceImpl implements ISysLogService {
 			.getLog(MxSysLogServiceImpl.class);
 	protected static Configuration conf = BaseConfiguration.create();
 
-	protected static Stack<SysLog> sysLogs = new Stack<SysLog>();
+	protected static BlockingQueue<SysLog> sysLogs = new ArrayBlockingQueue<SysLog>(
+			1000);
 
 	protected static long lastUpdate = System.currentTimeMillis();
 
@@ -129,14 +132,17 @@ public class MxSysLogServiceImpl implements ISysLogService {
 	public void save(SysLog sysLog) {
 		sysLog.setId(idGenerator.nextId());
 		sysLog.setCreateTime(new Date());
-		sysLogs.push(sysLog);
+		try {
+			sysLogs.put(sysLog);
+		} catch (InterruptedException ex) {
+		}
 		/**
 		 * 当记录数达到写数据库的条数或时间超过1分钟，写日志到数据库
 		 */
 		if (sysLogs.size() >= conf.getInt("sys_log_step", 100)
 				|| ((System.currentTimeMillis() - lastUpdate) / 60000 > 0)) {
 			while (!sysLogs.isEmpty()) {
-				SysLog bean = sysLogs.pop();
+				SysLog bean = sysLogs.poll();
 				sysLogMapper.insertSysLog(bean);
 			}
 			lastUpdate = System.currentTimeMillis();
