@@ -37,7 +37,7 @@ public class StepExecutionContext implements Serializable {
 
 	@Id
 	@Column(name = "step_execution_id", nullable = false)
-	protected long stepExecutionId;
+	protected Long stepExecutionId;
 
 	/**
 	 * short_context
@@ -64,7 +64,7 @@ public class StepExecutionContext implements Serializable {
 		return this.shortContext;
 	}
 
-	public long getStepExecutionId() {
+	public Long getStepExecutionId() {
 		return this.stepExecutionId;
 	}
 
@@ -80,7 +80,7 @@ public class StepExecutionContext implements Serializable {
 		this.shortContext = shortContext;
 	}
 
-	public void setStepExecutionId(long stepExecutionId) {
+	public void setStepExecutionId(Long stepExecutionId) {
 		this.stepExecutionId = stepExecutionId;
 	}
 

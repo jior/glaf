@@ -40,7 +40,7 @@ public class StepExecution implements Serializable,
 
 	@Id
 	@Column(name = "step_execution_id", nullable = false)
-	protected long stepExecutionId;
+	protected Long stepExecutionId;
 
 	/**
 	 * version
@@ -70,13 +70,13 @@ public class StepExecution implements Serializable,
 	 * job_instance_id
 	 */
 	@Column(name = "job_instance_id")
-	protected long jobInstanceId;
+	protected Long jobInstanceId;
 
 	/**
 	 * job_execution_id
 	 */
 	@Column(name = "job_execution_id")
-	protected long jobExecutionId;
+	protected Long jobExecutionId;
 
 	@Column(name = "listno")
 	protected int listno;
@@ -229,11 +229,11 @@ public class StepExecution implements Serializable,
 		return jobClass;
 	}
 
-	public long getJobExecutionId() {
+	public Long getJobExecutionId() {
 		return this.jobExecutionId;
 	}
 
-	public long getJobInstanceId() {
+	public Long getJobInstanceId() {
 		return jobInstanceId;
 	}
 
@@ -273,7 +273,7 @@ public class StepExecution implements Serializable,
 		return this.status;
 	}
 
-	public long getStepExecutionId() {
+	public Long getStepExecutionId() {
 		return this.stepExecutionId;
 	}
 
@@ -334,11 +334,11 @@ public class StepExecution implements Serializable,
 		this.jobClass = jobClass;
 	}
 
-	public void setJobExecutionId(long jobExecutionId) {
+	public void setJobExecutionId(Long jobExecutionId) {
 		this.jobExecutionId = jobExecutionId;
 	}
 
-	public void setJobInstanceId(long jobInstanceId) {
+	public void setJobInstanceId(Long jobInstanceId) {
 		this.jobInstanceId = jobInstanceId;
 	}
 
@@ -378,7 +378,7 @@ public class StepExecution implements Serializable,
 		this.status = status;
 	}
 
-	public void setStepExecutionId(long stepExecutionId) {
+	public void setStepExecutionId(Long stepExecutionId) {
 		this.stepExecutionId = stepExecutionId;
 	}
 

@@ -41,10 +41,10 @@ public class JobExecutionParamJsonFactory {
 			model.setId(jsonObject.getLong("id"));
 		}
 		if (jsonObject.containsKey("jobExecutionId")) {
-			model.setJobExecutionId(jsonObject.getInteger("jobExecutionId"));
+			model.setJobExecutionId(jsonObject.getLong("jobExecutionId"));
 		}
 		if (jsonObject.containsKey("jobInstanceId")) {
-			model.setJobInstanceId(jsonObject.getInteger("jobInstanceId"));
+			model.setJobInstanceId(jsonObject.getLong("jobInstanceId"));
 		}
 		if (jsonObject.containsKey("typeCd")) {
 			model.setTypeCd(jsonObject.getString("typeCd"));

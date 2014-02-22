@@ -38,7 +38,7 @@ public class StepExecutionJsonFactory {
 	public static StepExecution jsonToObject(JSONObject jsonObject) {
 		StepExecution model = new StepExecution();
 		if (jsonObject.containsKey("stepExecutionId")) {
-			model.setStepExecutionId(jsonObject.getInteger("stepExecutionId"));
+			model.setStepExecutionId(jsonObject.getLong("stepExecutionId"));
 		}
 		if (jsonObject.containsKey("version")) {
 			model.setVersion(jsonObject.getInteger("version"));
@@ -56,10 +56,10 @@ public class StepExecutionJsonFactory {
 			model.setJobClass(jsonObject.getString("jobClass"));
 		}
 		if (jsonObject.containsKey("jobInstanceId")) {
-			model.setJobInstanceId(jsonObject.getInteger("jobInstanceId"));
+			model.setJobInstanceId(jsonObject.getLong("jobInstanceId"));
 		}
 		if (jsonObject.containsKey("jobExecutionId")) {
-			model.setJobExecutionId(jsonObject.getInteger("jobExecutionId"));
+			model.setJobExecutionId(jsonObject.getLong("jobExecutionId"));
 		}
 		if (jsonObject.containsKey("listno")) {
 			model.setListno(jsonObject.getInteger("listno"));

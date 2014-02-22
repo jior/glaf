@@ -38,10 +38,10 @@ public class JobParamJsonFactory {
 	public static JobParam jsonToObject(JSONObject jsonObject) {
 		JobParam model = new JobParam();
 		if (jsonObject.containsKey("id")) {
-			model.setId(jsonObject.getInteger("id"));
+			model.setId(jsonObject.getLong("id"));
 		}
 		if (jsonObject.containsKey("jobInstanceId")) {
-			model.setJobInstanceId(jsonObject.getInteger("jobInstanceId"));
+			model.setJobInstanceId(jsonObject.getLong("jobInstanceId"));
 		}
 		if (jsonObject.containsKey("typeCd")) {
 			model.setTypeCd(jsonObject.getString("typeCd"));

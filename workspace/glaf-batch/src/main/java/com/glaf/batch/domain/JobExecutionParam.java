@@ -37,13 +37,13 @@ public class JobExecutionParam implements Serializable {
 
 	@Id
 	@Column(name = "ID", nullable = false)
-	protected long id;
+	protected Long id;
 
 	@Column(name = "JOB_EXECUTION_ID")
-	protected long jobExecutionId;
+	protected Long jobExecutionId;
 
 	@Column(name = "JOB_INSTANCE_ID")
-	protected long jobInstanceId;
+	protected Long jobInstanceId;
 
 	@Column(name = "TYPE_CD", length = 6)
 	protected String typeCd;
@@ -101,11 +101,11 @@ public class JobExecutionParam implements Serializable {
 		return this.intVal;
 	}
 
-	public long getJobExecutionId() {
+	public Long getJobExecutionId() {
 		return this.jobExecutionId;
 	}
 
-	public long getJobInstanceId() {
+	public Long getJobInstanceId() {
 		return this.jobInstanceId;
 	}
 
@@ -145,7 +145,7 @@ public class JobExecutionParam implements Serializable {
 		this.doubleVal = doubleVal;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -153,11 +153,11 @@ public class JobExecutionParam implements Serializable {
 		this.intVal = intVal;
 	}
 
-	public void setJobExecutionId(long jobExecutionId) {
+	public void setJobExecutionId(Long jobExecutionId) {
 		this.jobExecutionId = jobExecutionId;
 	}
 
-	public void setJobInstanceId(long jobInstanceId) {
+	public void setJobInstanceId(Long jobInstanceId) {
 		this.jobInstanceId = jobInstanceId;
 	}
 

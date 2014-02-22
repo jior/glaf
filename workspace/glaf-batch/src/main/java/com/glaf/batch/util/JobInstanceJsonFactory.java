@@ -37,7 +37,7 @@ public class JobInstanceJsonFactory {
 	public static JobInstance jsonToObject(JSONObject jsonObject) {
 		JobInstance model = new JobInstance();
 		if (jsonObject.containsKey("jobInstanceId")) {
-			model.setJobInstanceId(jsonObject.getInteger("jobInstanceId"));
+			model.setJobInstanceId(jsonObject.getLong("jobInstanceId"));
 		}
 		if (jsonObject.containsKey("version")) {
 			model.setVersion(jsonObject.getInteger("version"));

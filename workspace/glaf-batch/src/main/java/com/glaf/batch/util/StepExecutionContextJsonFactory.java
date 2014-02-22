@@ -38,7 +38,7 @@ public class StepExecutionContextJsonFactory {
 	public static StepExecutionContext jsonToObject(JSONObject jsonObject) {
 		StepExecutionContext model = new StepExecutionContext();
 		if (jsonObject.containsKey("stepExecutionId")) {
-			model.setStepExecutionId(jsonObject.getInteger("stepExecutionId"));
+			model.setStepExecutionId(jsonObject.getLong("stepExecutionId"));
 		}
 		if (jsonObject.containsKey("shortContext")) {
 			model.setShortContext(jsonObject.getString("shortContext"));

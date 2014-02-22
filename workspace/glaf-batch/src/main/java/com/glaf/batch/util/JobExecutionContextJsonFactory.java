@@ -38,7 +38,7 @@ public class JobExecutionContextJsonFactory {
 	public static JobExecutionContext jsonToObject(JSONObject jsonObject) {
 		JobExecutionContext model = new JobExecutionContext();
 		if (jsonObject.containsKey("jobExecutionId")) {
-			model.setJobExecutionId(jsonObject.getInteger("jobExecutionId"));
+			model.setJobExecutionId(jsonObject.getLong("jobExecutionId"));
 		}
 		if (jsonObject.containsKey("shortContext")) {
 			model.setShortContext(jsonObject.getString("shortContext"));

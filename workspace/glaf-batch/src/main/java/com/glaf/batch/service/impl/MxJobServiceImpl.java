@@ -259,8 +259,7 @@ public class MxJobServiceImpl implements IJobService {
 	@Transactional
 	public void saveJobContext(JobExecutionContext jobExecutionContext) {
 		if (jobExecutionContext.getJobExecutionId() == 0) {
-			jobExecutionContext.setJobExecutionId(idGenerator.nextId()
-					.intValue());
+			jobExecutionContext.setJobExecutionId(idGenerator.nextId());
 			jobExecutionContextMapper
 					.insertJobExecutionContext(jobExecutionContext);
 		} else {

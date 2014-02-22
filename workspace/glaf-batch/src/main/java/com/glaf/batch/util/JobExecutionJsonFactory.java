@@ -38,13 +38,13 @@ public class JobExecutionJsonFactory {
 	public static JobExecution jsonToObject(JSONObject jsonObject) {
 		JobExecution model = new JobExecution();
 		if (jsonObject.containsKey("jobExecutionId")) {
-			model.setJobExecutionId(jsonObject.getInteger("jobExecutionId"));
+			model.setJobExecutionId(jsonObject.getLong("jobExecutionId"));
 		}
 		if (jsonObject.containsKey("version")) {
 			model.setVersion(jsonObject.getInteger("version"));
 		}
 		if (jsonObject.containsKey("jobInstanceId")) {
-			model.setJobInstanceId(jsonObject.getInteger("jobInstanceId"));
+			model.setJobInstanceId(jsonObject.getLong("jobInstanceId"));
 		}
 		if (jsonObject.containsKey("createTime")) {
 			model.setCreateTime(jsonObject.getDate("createTime"));

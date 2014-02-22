@@ -40,7 +40,7 @@ public class JobInstance implements Serializable {
 
 	@Id
 	@Column(name = "job_instance_id", nullable = false)
-	protected long jobInstanceId;
+	protected Long jobInstanceId;
 
 	/**
 	 * version
@@ -131,7 +131,7 @@ public class JobInstance implements Serializable {
 		return null;
 	}
 
-	public long getJobInstanceId() {
+	public Long getJobInstanceId() {
 		return this.jobInstanceId;
 	}
 
@@ -185,7 +185,7 @@ public class JobInstance implements Serializable {
 		this.executions = executions;
 	}
 
-	public void setJobInstanceId(long jobInstanceId) {
+	public void setJobInstanceId(Long jobInstanceId) {
 		this.jobInstanceId = jobInstanceId;
 	}
 

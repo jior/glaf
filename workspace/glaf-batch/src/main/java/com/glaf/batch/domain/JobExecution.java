@@ -20,11 +20,12 @@ package com.glaf.batch.domain;
 
 import java.io.*;
 import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 import javax.persistence.*;
 
 import com.alibaba.fastjson.*;
-
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -39,7 +40,7 @@ public class JobExecution implements Serializable {
 
 	@Id
 	@Column(name = "job_execution_id", nullable = false)
-	protected long jobExecutionId;
+	protected Long jobExecutionId;
 
 	/**
 	 * version
@@ -51,7 +52,7 @@ public class JobExecution implements Serializable {
 	 * job_instance_id
 	 */
 	@Column(name = "job_instance_id")
-	protected long jobInstanceId;
+	protected Long jobInstanceId;
 
 	/**
 	 * create_time
@@ -100,10 +101,10 @@ public class JobExecution implements Serializable {
 	protected Date lastUpdated;
 
 	@javax.persistence.Transient
-	protected Collection<JobExecutionParam> params = new HashSet<JobExecutionParam>();
+	protected Collection<JobExecutionParam> params = new CopyOnWriteArraySet<JobExecutionParam>();
 
 	@javax.persistence.Transient
-	protected List<StepExecution> steps = new ArrayList<StepExecution>();
+	protected List<StepExecution> steps = new CopyOnWriteArrayList<StepExecution>();
 
 	public JobExecution() {
 
@@ -139,11 +140,11 @@ public class JobExecution implements Serializable {
 		return this.exitMessage;
 	}
 
-	public long getJobExecutionId() {
+	public Long getJobExecutionId() {
 		return this.jobExecutionId;
 	}
 
-	public long getJobInstanceId() {
+	public Long getJobInstanceId() {
 		return this.jobInstanceId;
 	}
 
@@ -191,11 +192,11 @@ public class JobExecution implements Serializable {
 		this.exitMessage = exitMessage;
 	}
 
-	public void setJobExecutionId(long jobExecutionId) {
+	public void setJobExecutionId(Long jobExecutionId) {
 		this.jobExecutionId = jobExecutionId;
 	}
 
-	public void setJobInstanceId(long jobInstanceId) {
+	public void setJobInstanceId(Long jobInstanceId) {
 		this.jobInstanceId = jobInstanceId;
 	}
 
