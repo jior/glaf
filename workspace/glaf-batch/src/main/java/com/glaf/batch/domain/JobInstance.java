@@ -24,9 +24,10 @@ import java.util.HashSet;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 import javax.persistence.*;
+
 import com.alibaba.fastjson.*;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.glaf.batch.util.JobInstanceJsonFactory;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -177,17 +178,7 @@ public class JobInstance implements Serializable {
 	}
 
 	public JobInstance jsonToObject(JSONObject jsonObject) {
-		JobInstance model = new JobInstance();
-		if (jsonObject.containsKey("version")) {
-			model.setVersion(jsonObject.getInteger("version"));
-		}
-		if (jsonObject.containsKey("jobName")) {
-			model.setJobName(jsonObject.getString("jobName"));
-		}
-		if (jsonObject.containsKey("jobKey")) {
-			model.setJobKey(jsonObject.getString("jobKey"));
-		}
-		return model;
+		return JobInstanceJsonFactory.jsonToObject(jsonObject);
 	}
 
 	public void setExecutions(Collection<JobExecution> executions) {
@@ -219,29 +210,11 @@ public class JobInstance implements Serializable {
 	}
 
 	public JSONObject toJsonObject() {
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("jobInstanceId", jobInstanceId);
-		jsonObject.put("version", version);
-		if (jobName != null) {
-			jsonObject.put("jobName", jobName);
-		}
-		if (jobKey != null) {
-			jsonObject.put("jobKey", jobKey);
-		}
-		return jsonObject;
+		return JobInstanceJsonFactory.toJsonObject(this);
 	}
 
 	public ObjectNode toObjectNode() {
-		ObjectNode jsonObject = new ObjectMapper().createObjectNode();
-		jsonObject.put("jobInstanceId", jobInstanceId);
-		jsonObject.put("version", version);
-		if (jobName != null) {
-			jsonObject.put("jobName", jobName);
-		}
-		if (jobKey != null) {
-			jsonObject.put("jobKey", jobKey);
-		}
-		return jsonObject;
+		return JobInstanceJsonFactory.toObjectNode(this);
 	}
 
 	public String toString() {

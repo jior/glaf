@@ -24,13 +24,13 @@ import java.util.*;
 import javax.persistence.*;
 
 import com.alibaba.fastjson.*;
-import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
-import com.glaf.core.util.DateUtils;
+import com.glaf.batch.util.StepExecutionJsonFactory;
 
 @Entity
 @Table(name = "SYS_STEP_EXECUTION")
@@ -307,74 +307,7 @@ public class StepExecution implements Serializable,
 	}
 
 	public StepExecution jsonToObject(JSONObject jsonObject) {
-		StepExecution model = new StepExecution();
-		if (jsonObject.containsKey("version")) {
-			model.setVersion(jsonObject.getInteger("version"));
-		}
-		if (jsonObject.containsKey("stepKey")) {
-			model.setStepKey(jsonObject.getString("stepKey"));
-		}
-		if (jsonObject.containsKey("stepName")) {
-			model.setStepName(jsonObject.getString("stepName"));
-		}
-		if (jsonObject.containsKey("jobStepKey")) {
-			model.setJobStepKey(jsonObject.getString("jobStepKey"));
-		}
-		if (jsonObject.containsKey("jobClass")) {
-			model.setJobClass(jsonObject.getString("jobClass"));
-		}
-		if (jsonObject.containsKey("jobInstanceId")) {
-			model.setJobInstanceId(jsonObject.getInteger("jobInstanceId"));
-		}
-		if (jsonObject.containsKey("jobExecutionId")) {
-			model.setJobExecutionId(jsonObject.getInteger("jobExecutionId"));
-		}
-		if (jsonObject.containsKey("listno")) {
-			model.setListno(jsonObject.getInteger("listno"));
-		}
-		if (jsonObject.containsKey("startTime")) {
-			model.setStartTime(jsonObject.getDate("startTime"));
-		}
-		if (jsonObject.containsKey("endTime")) {
-			model.setEndTime(jsonObject.getDate("endTime"));
-		}
-		if (jsonObject.containsKey("status")) {
-			model.setStatus(jsonObject.getString("status"));
-		}
-		if (jsonObject.containsKey("commitCount")) {
-			model.setCommitCount(jsonObject.getInteger("commitCount"));
-		}
-		if (jsonObject.containsKey("readCount")) {
-			model.setReadCount(jsonObject.getInteger("readCount"));
-		}
-		if (jsonObject.containsKey("filterCount")) {
-			model.setFilterCount(jsonObject.getInteger("filterCount"));
-		}
-		if (jsonObject.containsKey("writeCount")) {
-			model.setWriteCount(jsonObject.getInteger("writeCount"));
-		}
-		if (jsonObject.containsKey("readSkipCount")) {
-			model.setReadSkipCount(jsonObject.getInteger("readSkipCount"));
-		}
-		if (jsonObject.containsKey("writeSkipCount")) {
-			model.setWriteSkipCount(jsonObject.getInteger("writeSkipCount"));
-		}
-		if (jsonObject.containsKey("processSkipCount")) {
-			model.setProcessSkipCount(jsonObject.getInteger("processSkipCount"));
-		}
-		if (jsonObject.containsKey("rollbackCount")) {
-			model.setRollbackCount(jsonObject.getInteger("rollbackCount"));
-		}
-		if (jsonObject.containsKey("exitCode")) {
-			model.setExitCode(jsonObject.getString("exitCode"));
-		}
-		if (jsonObject.containsKey("exitMessage")) {
-			model.setExitMessage(jsonObject.getString("exitMessage"));
-		}
-		if (jsonObject.containsKey("lastUpdated")) {
-			model.setLastUpdated(jsonObject.getDate("lastUpdated"));
-		}
-		return model;
+		return StepExecutionJsonFactory.jsonToObject(jsonObject);
 	}
 
 	public void setCommitCount(int commitCount) {
@@ -470,115 +403,11 @@ public class StepExecution implements Serializable,
 	}
 
 	public JSONObject toJsonObject() {
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("stepExecutionId", stepExecutionId);
-		jsonObject.put("version", version);
-		if (stepKey != null) {
-			jsonObject.put("stepKey", stepKey);
-		}
-		if (stepName != null) {
-			jsonObject.put("stepName", stepName);
-		}
-		if (jobStepKey != null) {
-			jsonObject.put("jobStepKey", jobStepKey);
-		}
-		if (jobClass != null) {
-			jsonObject.put("jobClass", jobClass);
-		}
-		jsonObject.put("jobInstanceId", jobInstanceId);
-		jsonObject.put("jobExecutionId", jobExecutionId);
-		jsonObject.put("listno", listno);
-		if (startTime != null) {
-			jsonObject.put("startTime", DateUtils.getDate(startTime));
-			jsonObject.put("startTime_date", DateUtils.getDate(startTime));
-			jsonObject.put("startTime_datetime",
-					DateUtils.getDateTime(startTime));
-		}
-		if (endTime != null) {
-			jsonObject.put("endTime", DateUtils.getDate(endTime));
-			jsonObject.put("endTime_date", DateUtils.getDate(endTime));
-			jsonObject.put("endTime_datetime", DateUtils.getDateTime(endTime));
-		}
-		if (status != null) {
-			jsonObject.put("status", status);
-		}
-		jsonObject.put("commitCount", commitCount);
-		jsonObject.put("readCount", readCount);
-		jsonObject.put("filterCount", filterCount);
-		jsonObject.put("writeCount", writeCount);
-		jsonObject.put("readSkipCount", readSkipCount);
-		jsonObject.put("writeSkipCount", writeSkipCount);
-		jsonObject.put("processSkipCount", processSkipCount);
-		jsonObject.put("rollbackCount", rollbackCount);
-		if (exitCode != null) {
-			jsonObject.put("exitCode", exitCode);
-		}
-		if (exitMessage != null) {
-			jsonObject.put("exitMessage", exitMessage);
-		}
-		if (lastUpdated != null) {
-			jsonObject.put("lastUpdated", DateUtils.getDate(lastUpdated));
-			jsonObject.put("lastUpdated_date", DateUtils.getDate(lastUpdated));
-			jsonObject.put("lastUpdated_datetime",
-					DateUtils.getDateTime(lastUpdated));
-		}
-		return jsonObject;
+		return StepExecutionJsonFactory.toJsonObject(this);
 	}
 
 	public ObjectNode toObjectNode() {
-		ObjectNode jsonObject = new ObjectMapper().createObjectNode();
-		jsonObject.put("stepExecutionId", stepExecutionId);
-		jsonObject.put("version", version);
-		if (stepKey != null) {
-			jsonObject.put("stepKey", stepKey);
-		}
-		if (stepName != null) {
-			jsonObject.put("stepName", stepName);
-		}
-		if (jobStepKey != null) {
-			jsonObject.put("jobStepKey", jobStepKey);
-		}
-		if (jobClass != null) {
-			jsonObject.put("jobClass", jobClass);
-		}
-		jsonObject.put("jobInstanceId", jobInstanceId);
-		jsonObject.put("jobExecutionId", jobExecutionId);
-		jsonObject.put("listno", listno);
-		if (startTime != null) {
-			jsonObject.put("startTime", DateUtils.getDate(startTime));
-			jsonObject.put("startTime_date", DateUtils.getDate(startTime));
-			jsonObject.put("startTime_datetime",
-					DateUtils.getDateTime(startTime));
-		}
-		if (endTime != null) {
-			jsonObject.put("endTime", DateUtils.getDate(endTime));
-			jsonObject.put("endTime_date", DateUtils.getDate(endTime));
-			jsonObject.put("endTime_datetime", DateUtils.getDateTime(endTime));
-		}
-		if (status != null) {
-			jsonObject.put("status", status);
-		}
-		jsonObject.put("commitCount", commitCount);
-		jsonObject.put("readCount", readCount);
-		jsonObject.put("filterCount", filterCount);
-		jsonObject.put("writeCount", writeCount);
-		jsonObject.put("readSkipCount", readSkipCount);
-		jsonObject.put("writeSkipCount", writeSkipCount);
-		jsonObject.put("processSkipCount", processSkipCount);
-		jsonObject.put("rollbackCount", rollbackCount);
-		if (exitCode != null) {
-			jsonObject.put("exitCode", exitCode);
-		}
-		if (exitMessage != null) {
-			jsonObject.put("exitMessage", exitMessage);
-		}
-		if (lastUpdated != null) {
-			jsonObject.put("lastUpdated", DateUtils.getDate(lastUpdated));
-			jsonObject.put("lastUpdated_date", DateUtils.getDate(lastUpdated));
-			jsonObject.put("lastUpdated_datetime",
-					DateUtils.getDateTime(lastUpdated));
-		}
-		return jsonObject;
+		return StepExecutionJsonFactory.toObjectNode(this);
 	}
 
 	public String toString() {

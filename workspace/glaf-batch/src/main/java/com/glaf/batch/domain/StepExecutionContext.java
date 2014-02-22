@@ -19,11 +19,14 @@
 package com.glaf.batch.domain;
 
 import java.io.*;
+
 import javax.persistence.*;
 
 import com.alibaba.fastjson.*;
-import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.glaf.batch.util.StepExecutionContextJsonFactory;
+
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
@@ -66,15 +69,7 @@ public class StepExecutionContext implements Serializable {
 	}
 
 	public StepExecutionContext jsonToObject(JSONObject jsonObject) {
-		StepExecutionContext model = new StepExecutionContext();
-		if (jsonObject.containsKey("shortContext")) {
-			model.setShortContext(jsonObject.getString("shortContext"));
-		}
-		if (jsonObject.containsKey("serializedContext")) {
-			model.setSerializedContext(jsonObject
-					.getString("serializedContext"));
-		}
-		return model;
+		return StepExecutionContextJsonFactory.jsonToObject(jsonObject);
 	}
 
 	public void setSerializedContext(String serializedContext) {
@@ -90,27 +85,11 @@ public class StepExecutionContext implements Serializable {
 	}
 
 	public JSONObject toJsonObject() {
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("stepExecutionId", stepExecutionId);
-		if (shortContext != null) {
-			jsonObject.put("shortContext", shortContext);
-		}
-		if (serializedContext != null) {
-			jsonObject.put("serializedContext", serializedContext);
-		}
-		return jsonObject;
+		return StepExecutionContextJsonFactory.toJsonObject(this);
 	}
 
 	public ObjectNode toObjectNode() {
-		ObjectNode jsonObject = new ObjectMapper().createObjectNode();
-		jsonObject.put("stepExecutionId", stepExecutionId);
-		if (shortContext != null) {
-			jsonObject.put("shortContext", shortContext);
-		}
-		if (serializedContext != null) {
-			jsonObject.put("serializedContext", serializedContext);
-		}
-		return jsonObject;
+		return StepExecutionContextJsonFactory.toObjectNode(this);
 	}
 
 	public String toString() {

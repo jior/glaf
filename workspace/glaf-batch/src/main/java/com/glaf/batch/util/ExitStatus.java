@@ -22,8 +22,8 @@ import java.io.StringWriter;
 import org.springframework.util.StringUtils;
 
 /**
- * Value object used to carry information about the status of a
- * job or step execution.
+ * Value object used to carry information about the status of a job or step
+ * execution.
  * 
  * ExitStatus is immutable and therefore thread-safe.
  * 
@@ -31,7 +31,7 @@ import org.springframework.util.StringUtils;
  * 
  */
 public class ExitStatus implements Serializable, Comparable<ExitStatus> {
- 
+
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -86,19 +86,43 @@ public class ExitStatus implements Serializable, Comparable<ExitStatus> {
 	}
 
 	/**
-	 * Getter for the exit code (defaults to blank).
+	 * Add an exit description to an existing {@link ExitStatus}. If there is
+	 * already a description present the two will be concatenated with a
+	 * semicolon.
 	 * 
-	 * @return the exit code.
+	 * @param description
+	 *            the description to add
+	 * @return a new {@link ExitStatus} with the same properties but a new exit
+	 *         description
 	 */
-	public String getExitCode() {
-		return exitCode;
+	public ExitStatus addExitDescription(String description) {
+		StringBuffer buffer = new StringBuffer();
+		boolean changed = StringUtils.hasText(description)
+				&& !exitDescription.equals(description);
+		if (StringUtils.hasText(exitDescription)) {
+			buffer.append(exitDescription);
+			if (changed) {
+				buffer.append("; ");
+			}
+		}
+		if (changed) {
+			buffer.append(description);
+		}
+		return new ExitStatus(exitCode, buffer.toString());
 	}
 
 	/**
-	 * Getter for the exit description (defaults to blank)
+	 * Extract the stack trace from the throwable provided and append it to the
+	 * exist description.
+	 * 
+	 * @param throwable
+	 * @return a new ExitStatus with the stack trace appended
 	 */
-	public String getExitDescription() {
-		return exitDescription;
+	public ExitStatus addExitDescription(Throwable throwable) {
+		StringWriter writer = new StringWriter();
+		throwable.printStackTrace(new PrintWriter(writer));
+		String message = writer.toString();
+		return addExitDescription(message);
 	}
 
 	/**
@@ -122,9 +146,10 @@ public class ExitStatus implements Serializable, Comparable<ExitStatus> {
 	 * 
 	 * If the input is null just return this.
 	 * 
-	 * @param status an {@link ExitStatus} to combine with this one.
+	 * @param status
+	 *            an {@link ExitStatus} to combine with this one.
 	 * @return a new {@link ExitStatus} combining the current value and the
-	 * argument provided.
+	 *         argument provided.
 	 */
 	public ExitStatus and(ExitStatus status) {
 		if (status == null) {
@@ -136,9 +161,10 @@ public class ExitStatus implements Serializable, Comparable<ExitStatus> {
 		}
 		return result;
 	}
-	
+
 	/**
-	 * @param status an {@link ExitStatus} to compare
+	 * @param status
+	 *            an {@link ExitStatus} to compare
 	 * @return 1,0,-1 according to the severity and exit code
 	 */
 	public int compareTo(ExitStatus status) {
@@ -149,6 +175,66 @@ public class ExitStatus implements Serializable, Comparable<ExitStatus> {
 			return 1;
 		}
 		return this.getExitCode().compareTo(status.getExitCode());
+	}
+
+	/**
+	 * Compare the fields one by one.
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	public boolean equals(Object obj) {
+		if (obj == null) {
+			return false;
+		}
+		return toString().equals(obj.toString());
+	}
+
+	/**
+	 * Getter for the exit code (defaults to blank).
+	 * 
+	 * @return the exit code.
+	 */
+	public String getExitCode() {
+		return exitCode;
+	}
+
+	/**
+	 * Getter for the exit description (defaults to blank)
+	 */
+	public String getExitDescription() {
+		return exitDescription;
+	}
+
+	/**
+	 * Compatible with the equals implementation.
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
+	public int hashCode() {
+		return toString().hashCode();
+	}
+
+	/**
+	 * Check if this status represents a running process.
+	 * 
+	 * @return true if the exit code is "RUNNING" or "UNKNOWN"
+	 */
+	public boolean isRunning() {
+		return "RUNNING".equals(this.exitCode)
+				|| "UNKNOWN".equals(this.exitCode);
+	}
+
+	/**
+	 * Add an exit code to an existing {@link ExitStatus}. If there is already a
+	 * code present tit will be replaced.
+	 * 
+	 * @param code
+	 *            the code to add
+	 * @return a new {@link ExitStatus} with the same properties but a new exit
+	 *         code.
+	 */
+	public ExitStatus replaceExitCode(String code) {
+		return new ExitStatus(code, exitDescription);
 	}
 
 	/**
@@ -183,87 +269,8 @@ public class ExitStatus implements Serializable, Comparable<ExitStatus> {
 	 * @see java.lang.Object#toString()
 	 */
 	public String toString() {
-		return String.format("exitCode=%s;exitDescription=%s", exitCode, exitDescription);
-	}
-
-	/**
-	 * Compare the fields one by one.
-	 * 
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	public boolean equals(Object obj) {
-		if (obj == null) {
-			return false;
-		}
-		return toString().equals(obj.toString());
-	}
-
-	/**
-	 * Compatible with the equals implementation.
-	 * 
-	 * @see java.lang.Object#hashCode()
-	 */
-	public int hashCode() {
-		return toString().hashCode();
-	}
-
-	/**
-	 * Add an exit code to an existing {@link ExitStatus}. If there is already a
-	 * code present tit will be replaced.
-	 * 
-	 * @param code the code to add
-	 * @return a new {@link ExitStatus} with the same properties but a new exit
-	 * code.
-	 */
-	public ExitStatus replaceExitCode(String code) {
-		return new ExitStatus(code, exitDescription);
-	}
-
-	/**
-	 * Check if this status represents a running process.
-	 * 
-	 * @return true if the exit code is "RUNNING" or "UNKNOWN"
-	 */
-	public boolean isRunning() {
-		return "RUNNING".equals(this.exitCode) || "UNKNOWN".equals(this.exitCode);
-	}
-
-	/**
-	 * Add an exit description to an existing {@link ExitStatus}. If there is
-	 * already a description present the two will be concatenated with a
-	 * semicolon.
-	 * 
-	 * @param description the description to add
-	 * @return a new {@link ExitStatus} with the same properties but a new exit
-	 * description
-	 */
-	public ExitStatus addExitDescription(String description) {
-		StringBuffer buffer = new StringBuffer();
-		boolean changed = StringUtils.hasText(description) && !exitDescription.equals(description);
-		if (StringUtils.hasText(exitDescription)) {
-			buffer.append(exitDescription);
-			if (changed) {
-				buffer.append("; ");
-			}
-		}
-		if (changed) {
-			buffer.append(description);
-		}
-		return new ExitStatus(exitCode, buffer.toString());
-	}
-
-	/**
-	 * Extract the stack trace from the throwable provided and append it to
-	 * the exist description.
-	 * 
-	 * @param throwable
-	 * @return a new ExitStatus with the stack trace appended
-	 */
-	public ExitStatus addExitDescription(Throwable throwable) {
-		StringWriter writer = new StringWriter();
-		throwable.printStackTrace(new PrintWriter(writer));
-		String message = writer.toString();
-		return addExitDescription(message);
+		return String.format("exitCode=%s;exitDescription=%s", exitCode,
+				exitDescription);
 	}
 
 }

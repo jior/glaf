@@ -26,6 +26,10 @@ import javax.persistence.*;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
+import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.glaf.batch.util.JobExecutionParamJsonFactory;
+
 @Entity
 @Table(name = "SYS_JOB_EXECUTION_PARAMS")
 public class JobExecutionParam implements Serializable {
@@ -129,6 +133,10 @@ public class JobExecutionParam implements Serializable {
 		return result;
 	}
 
+	public JobExecutionParam jsonToObject(JSONObject jsonObject) {
+		return JobExecutionParamJsonFactory.jsonToObject(jsonObject);
+	}
+
 	public void setDateVal(Date dateVal) {
 		this.dateVal = dateVal;
 	}
@@ -167,6 +175,14 @@ public class JobExecutionParam implements Serializable {
 
 	public void setTypeCd(String typeCd) {
 		this.typeCd = typeCd;
+	}
+
+	public JSONObject toJsonObject() {
+		return JobExecutionParamJsonFactory.toJsonObject(this);
+	}
+
+	public ObjectNode toObjectNode() {
+		return JobExecutionParamJsonFactory.toObjectNode(this);
 	}
 
 	@Override

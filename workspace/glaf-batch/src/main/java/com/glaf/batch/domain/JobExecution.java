@@ -24,13 +24,13 @@ import java.util.*;
 import javax.persistence.*;
 
 import com.alibaba.fastjson.*;
-import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
-import com.glaf.core.util.DateUtils;
+import com.glaf.batch.util.JobExecutionJsonFactory;
 
 @Entity
 @Table(name = "SYS_JOB_EXECUTION")
@@ -172,35 +172,7 @@ public class JobExecution implements Serializable {
 	}
 
 	public JobExecution jsonToObject(JSONObject jsonObject) {
-		JobExecution model = new JobExecution();
-		if (jsonObject.containsKey("version")) {
-			model.setVersion(jsonObject.getInteger("version"));
-		}
-		if (jsonObject.containsKey("jobInstanceId")) {
-			model.setJobInstanceId(jsonObject.getInteger("jobInstanceId"));
-		}
-		if (jsonObject.containsKey("createTime")) {
-			model.setCreateTime(jsonObject.getDate("createTime"));
-		}
-		if (jsonObject.containsKey("startTime")) {
-			model.setStartTime(jsonObject.getDate("startTime"));
-		}
-		if (jsonObject.containsKey("endTime")) {
-			model.setEndTime(jsonObject.getDate("endTime"));
-		}
-		if (jsonObject.containsKey("status")) {
-			model.setStatus(jsonObject.getString("status"));
-		}
-		if (jsonObject.containsKey("exitCode")) {
-			model.setExitCode(jsonObject.getString("exitCode"));
-		}
-		if (jsonObject.containsKey("exitMessage")) {
-			model.setExitMessage(jsonObject.getString("exitMessage"));
-		}
-		if (jsonObject.containsKey("lastUpdated")) {
-			model.setLastUpdated(jsonObject.getDate("lastUpdated"));
-		}
-		return model;
+		return JobExecutionJsonFactory.jsonToObject(jsonObject);
 	}
 
 	public void setCreateTime(Date createTime) {
@@ -252,83 +224,11 @@ public class JobExecution implements Serializable {
 	}
 
 	public JSONObject toJsonObject() {
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("jobExecutionId", jobExecutionId);
-		jsonObject.put("version", version);
-		jsonObject.put("jobInstanceId", jobInstanceId);
-		if (createTime != null) {
-			jsonObject.put("createTime", DateUtils.getDate(createTime));
-			jsonObject.put("createTime_date", DateUtils.getDate(createTime));
-			jsonObject.put("createTime_datetime",
-					DateUtils.getDateTime(createTime));
-		}
-		if (startTime != null) {
-			jsonObject.put("startTime", DateUtils.getDate(startTime));
-			jsonObject.put("startTime_date", DateUtils.getDate(startTime));
-			jsonObject.put("startTime_datetime",
-					DateUtils.getDateTime(startTime));
-		}
-		if (endTime != null) {
-			jsonObject.put("endTime", DateUtils.getDate(endTime));
-			jsonObject.put("endTime_date", DateUtils.getDate(endTime));
-			jsonObject.put("endTime_datetime", DateUtils.getDateTime(endTime));
-		}
-		if (status != null) {
-			jsonObject.put("status", status);
-		}
-		if (exitCode != null) {
-			jsonObject.put("exitCode", exitCode);
-		}
-		if (exitMessage != null) {
-			jsonObject.put("exitMessage", exitMessage);
-		}
-		if (lastUpdated != null) {
-			jsonObject.put("lastUpdated", DateUtils.getDate(lastUpdated));
-			jsonObject.put("lastUpdated_date", DateUtils.getDate(lastUpdated));
-			jsonObject.put("lastUpdated_datetime",
-					DateUtils.getDateTime(lastUpdated));
-		}
-		return jsonObject;
+		return JobExecutionJsonFactory.toJsonObject(this);
 	}
 
 	public ObjectNode toObjectNode() {
-		ObjectNode jsonObject = new ObjectMapper().createObjectNode();
-		jsonObject.put("jobExecutionId", jobExecutionId);
-		jsonObject.put("version", version);
-		jsonObject.put("jobInstanceId", jobInstanceId);
-		if (createTime != null) {
-			jsonObject.put("createTime", DateUtils.getDate(createTime));
-			jsonObject.put("createTime_date", DateUtils.getDate(createTime));
-			jsonObject.put("createTime_datetime",
-					DateUtils.getDateTime(createTime));
-		}
-		if (startTime != null) {
-			jsonObject.put("startTime", DateUtils.getDate(startTime));
-			jsonObject.put("startTime_date", DateUtils.getDate(startTime));
-			jsonObject.put("startTime_datetime",
-					DateUtils.getDateTime(startTime));
-		}
-		if (endTime != null) {
-			jsonObject.put("endTime", DateUtils.getDate(endTime));
-			jsonObject.put("endTime_date", DateUtils.getDate(endTime));
-			jsonObject.put("endTime_datetime", DateUtils.getDateTime(endTime));
-		}
-		if (status != null) {
-			jsonObject.put("status", status);
-		}
-		if (exitCode != null) {
-			jsonObject.put("exitCode", exitCode);
-		}
-		if (exitMessage != null) {
-			jsonObject.put("exitMessage", exitMessage);
-		}
-		if (lastUpdated != null) {
-			jsonObject.put("lastUpdated", DateUtils.getDate(lastUpdated));
-			jsonObject.put("lastUpdated_date", DateUtils.getDate(lastUpdated));
-			jsonObject.put("lastUpdated_datetime",
-					DateUtils.getDateTime(lastUpdated));
-		}
-		return jsonObject;
+		return JobExecutionJsonFactory.toObjectNode(this);
 	}
 
 	public String toString() {

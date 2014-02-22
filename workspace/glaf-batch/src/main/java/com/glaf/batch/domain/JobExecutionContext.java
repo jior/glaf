@@ -19,10 +19,14 @@
 package com.glaf.batch.domain;
 
 import java.io.*;
+
 import javax.persistence.*;
+
 import com.alibaba.fastjson.*;
-import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.glaf.batch.util.JobExecutionContextJsonFactory;
+
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
@@ -65,15 +69,7 @@ public class JobExecutionContext implements Serializable {
 	}
 
 	public JobExecutionContext jsonToObject(JSONObject jsonObject) {
-		JobExecutionContext model = new JobExecutionContext();
-		if (jsonObject.containsKey("shortContext")) {
-			model.setShortContext(jsonObject.getString("shortContext"));
-		}
-		if (jsonObject.containsKey("serializedContext")) {
-			model.setSerializedContext(jsonObject
-					.getString("serializedContext"));
-		}
-		return model;
+		return JobExecutionContextJsonFactory.jsonToObject(jsonObject);
 	}
 
 	public void setJobExecutionId(long jobExecutionId) {
@@ -89,27 +85,11 @@ public class JobExecutionContext implements Serializable {
 	}
 
 	public JSONObject toJsonObject() {
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("jobExecutionId", jobExecutionId);
-		if (shortContext != null) {
-			jsonObject.put("shortContext", shortContext);
-		}
-		if (serializedContext != null) {
-			jsonObject.put("serializedContext", serializedContext);
-		}
-		return jsonObject;
+		return JobExecutionContextJsonFactory.toJsonObject(this);
 	}
 
 	public ObjectNode toObjectNode() {
-		ObjectNode jsonObject = new ObjectMapper().createObjectNode();
-		jsonObject.put("jobExecutionId", jobExecutionId);
-		if (shortContext != null) {
-			jsonObject.put("shortContext", shortContext);
-		}
-		if (serializedContext != null) {
-			jsonObject.put("serializedContext", serializedContext);
-		}
-		return jsonObject;
+		return JobExecutionContextJsonFactory.toObjectNode(this);
 	}
 
 	public String toString() {
