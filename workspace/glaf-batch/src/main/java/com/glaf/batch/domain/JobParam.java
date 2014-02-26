@@ -24,17 +24,17 @@ import java.util.*;
 import javax.persistence.*;
 
 import com.alibaba.fastjson.*;
-
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
 import com.glaf.batch.util.JobParamJsonFactory;
+import com.glaf.core.base.JSONable;
 
 @Entity
 @Table(name = "SYS_JOB_PARAMS")
-public class JobParam implements Serializable {
+public class JobParam implements Serializable, JSONable {
 	private static final long serialVersionUID = 1L;
 
 	@Id

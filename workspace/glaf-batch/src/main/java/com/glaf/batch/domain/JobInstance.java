@@ -28,6 +28,7 @@ import javax.persistence.*;
 import com.alibaba.fastjson.*;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.glaf.batch.util.JobInstanceJsonFactory;
+import com.glaf.core.base.JSONable;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -35,7 +36,7 @@ import org.apache.commons.lang.builder.ToStringStyle;
 
 @Entity
 @Table(name = "SYS_JOB_INSTANCE")
-public class JobInstance implements Serializable {
+public class JobInstance implements Serializable, JSONable {
 	private static final long serialVersionUID = 1L;
 
 	@Id

@@ -265,6 +265,7 @@
 		#{id}
 	</select>
 
+
 	<select id="getStepExecutionByKey" parameterType="string"
 		resultMap="stepExecutionResultMap">
 		select * from SYS_STEP_EXECUTION where job_step_key =
@@ -368,126 +369,6 @@
 
 			<if test="status != null and status != '' ">
 				and E.status = #{status}
-			</if>
-
-			<if test="commitCount != null">
-				and E.commit_count = #{commitCount}
-			</if>
-
-			<if test="commitCountGreaterThanOrEqual != null">
-				and E.commit_count &gt;= #{commitCountGreaterThanOrEqual}
-			</if>
-
-			<if test="commitCountLessThanOrEqual != null">
-				and E.commit_count &lt;= #{commitCountLessThanOrEqual}
-			</if>
-
-			<if test="readCount != null">
-				and E.read_count = #{readCount}
-			</if>
-
-			<if test="readCountGreaterThanOrEqual != null">
-				and E.read_count &gt;= #{readCountGreaterThanOrEqual}
-			</if>
-
-			<if test="readCountLessThanOrEqual != null">
-				and E.read_count &lt;= #{readCountLessThanOrEqual}
-			</if>
-
-			<if test="filterCount != null">
-				and E.filter_count = #{filterCount}
-			</if>
-
-			<if test="filterCountGreaterThanOrEqual != null">
-				and E.filter_count &gt;= #{filterCountGreaterThanOrEqual}
-			</if>
-
-			<if test="filterCountLessThanOrEqual != null">
-				and E.filter_count &lt;= #{filterCountLessThanOrEqual}
-			</if>
-
-			<if test="writeCount != null">
-				and E.write_count = #{writeCount}
-			</if>
-
-			<if test="writeCountGreaterThanOrEqual != null">
-				and E.write_count &gt;= #{writeCountGreaterThanOrEqual}
-			</if>
-
-			<if test="writeCountLessThanOrEqual != null">
-				and E.write_count &lt;= #{writeCountLessThanOrEqual}
-			</if>
-
-			<if test="readSkipCount != null">
-				and E.read_skip_count = #{readSkipCount}
-			</if>
-
-			<if test="readSkipCountGreaterThanOrEqual != null">
-				and E.read_skip_count &gt;=
-				#{readSkipCountGreaterThanOrEqual}
-			</if>
-
-			<if test="readSkipCountLessThanOrEqual != null">
-				and E.read_skip_count &lt;=
-				#{readSkipCountLessThanOrEqual}
-			</if>
-
-			<if test="writeSkipCount != null">
-				and E.write_skip_count = #{writeSkipCount}
-			</if>
-
-			<if test="writeSkipCountGreaterThanOrEqual != null">
-				and E.write_skip_count &gt;=
-				#{writeSkipCountGreaterThanOrEqual}
-			</if>
-
-			<if test="writeSkipCountLessThanOrEqual != null">
-				and E.write_skip_count &lt;=
-				#{writeSkipCountLessThanOrEqual}
-			</if>
-
-			<if test="processSkipCount != null">
-				and E.process_skip_count = #{processSkipCount}
-			</if>
-
-			<if test="processSkipCountGreaterThanOrEqual != null">
-				and E.process_skip_count &gt;=
-				#{processSkipCountGreaterThanOrEqual}
-			</if>
-
-			<if test="processSkipCountLessThanOrEqual != null">
-				and E.process_skip_count &lt;=
-				#{processSkipCountLessThanOrEqual}
-			</if>
-
-			<if test="rollbackCount != null">
-				and E.rollback_count = #{rollbackCount}
-			</if>
-
-			<if test="rollbackCountGreaterThanOrEqual != null">
-				and E.rollback_count &gt;=
-				#{rollbackCountGreaterThanOrEqual}
-			</if>
-
-			<if test="rollbackCountLessThanOrEqual != null">
-				and E.rollback_count &lt;=
-				#{rollbackCountLessThanOrEqual}
-			</if>
-
-			<if test="exitCode != null and exitCode != '' ">
-				and E.exit_code = #{exitCode}
-			</if>
-
-			<if test="exitCodeLike != null and exitCodeLike != '' ">
-				and E.exit_code like #{exitCodeLike}
-			</if>
-
-			<if test="exitMessageLike != null and exitMessageLike != '' ">
-				and E.exit_message like #{exitMessageLike}
-			</if>
-
-			<if test="lastUpdated != null">
-				and E.last_updated = #{lastUpdated}
 			</if>
 
 			<if test="lastUpdatedGreaterThanOrEqual != null">

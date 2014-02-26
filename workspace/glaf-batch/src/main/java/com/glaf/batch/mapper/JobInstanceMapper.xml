@@ -71,21 +71,11 @@
 	</delete>
 
 
-	<delete id="deleteJobInstances" parameterType="com.glaf.batch.query.JobInstanceQuery">
-		delete from SYS_JOB_INSTANCE
-		where ( job_instance_id IN
-		<foreach item="x_rowId" index="index" collection="rowIds"
-			open="(" separator="," close=")">
-			#{x_rowId}
-		</foreach>
-		)
-	</delete>
-
-
 	<select id="getJobInstanceById" parameterType="long"
 		resultMap="jobInstanceResultMap">
 		select * from SYS_JOB_INSTANCE where job_instance_id = #{id}
 	</select>
+
 
 	<select id="getJobInstanceByJobKey" parameterType="string"
 		resultMap="jobInstanceResultMap">

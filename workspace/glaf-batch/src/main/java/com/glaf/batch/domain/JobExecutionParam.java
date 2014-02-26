@@ -29,10 +29,11 @@ import org.apache.commons.lang.builder.ToStringStyle;
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.glaf.batch.util.JobExecutionParamJsonFactory;
+import com.glaf.core.base.JSONable;
 
 @Entity
 @Table(name = "SYS_JOB_EXECUTION_PARAMS")
-public class JobExecutionParam implements Serializable {
+public class JobExecutionParam implements Serializable, JSONable {
 	private static final long serialVersionUID = 1L;
 
 	@Id

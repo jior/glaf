@@ -23,16 +23,16 @@ import java.io.*;
 import javax.persistence.*;
 
 import com.alibaba.fastjson.*;
-
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.glaf.batch.util.JobExecutionContextJsonFactory;
+import com.glaf.core.base.JSONable;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
 @Entity
 @Table(name = "SYS_JOB_EXECUTION_CONTEXT")
-public class JobExecutionContext implements Serializable {
+public class JobExecutionContext implements Serializable, JSONable {
 	private static final long serialVersionUID = 1L;
 
 	@Id

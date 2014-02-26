@@ -32,10 +32,11 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
 import com.glaf.batch.util.JobExecutionJsonFactory;
+import com.glaf.core.base.JSONable;
 
 @Entity
 @Table(name = "SYS_JOB_EXECUTION")
-public class JobExecution implements Serializable {
+public class JobExecution implements Serializable, JSONable {
 	private static final long serialVersionUID = 1L;
 
 	@Id

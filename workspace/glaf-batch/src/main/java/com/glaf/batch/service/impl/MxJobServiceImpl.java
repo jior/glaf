@@ -90,7 +90,6 @@ public class MxJobServiceImpl implements IJobService {
 	}
 
 	public int count(JobInstanceQuery query) {
-		query.ensureInitialized();
 		return jobInstanceMapper.getJobInstanceCountByQueryCriteria(query);
 	}
 
@@ -250,7 +249,6 @@ public class MxJobServiceImpl implements IJobService {
 	}
 
 	public List<JobInstance> list(JobInstanceQuery query) {
-		query.ensureInitialized();
 		List<JobInstance> list = jobInstanceMapper
 				.getJobInstancesByQueryCriteria(query);
 		return list;
@@ -258,7 +256,7 @@ public class MxJobServiceImpl implements IJobService {
 
 	@Transactional
 	public void saveJobContext(JobExecutionContext jobExecutionContext) {
-		if (jobExecutionContext.getJobExecutionId() == 0) {
+		if (jobExecutionContext.getJobExecutionId() == null) {
 			jobExecutionContext.setJobExecutionId(idGenerator.nextId());
 			jobExecutionContextMapper
 					.insertJobExecutionContext(jobExecutionContext);
@@ -279,7 +277,7 @@ public class MxJobServiceImpl implements IJobService {
 
 	@Transactional
 	public void saveJobExecution(JobExecution jobExecution) {
-		if (jobExecution.getJobExecutionId() == 0) {
+		if (jobExecution.getJobExecutionId() == null) {
 			jobExecution.setJobExecutionId(idGenerator.nextId());
 			jobExecutionMapper.insertJobExecution(jobExecution);
 			if (jobExecution.getSteps() != null
@@ -318,7 +316,7 @@ public class MxJobServiceImpl implements IJobService {
 				jobExecutionMapper.updateJobExecution(model);
 			}
 		}
-		if (jobExecution.getJobExecutionId() != 0) {
+		if (jobExecution.getJobExecutionId() != null) {
 			jobExecutionParamMapper
 					.deleteJobExecutionParamsByJobExecutionId(jobExecution
 							.getJobExecutionId());
@@ -336,7 +334,7 @@ public class MxJobServiceImpl implements IJobService {
 
 	@Transactional
 	public void saveJobInstance(JobInstance jobInstance) {
-		if (jobInstance.getJobInstanceId() == 0) {
+		if (jobInstance.getJobInstanceId() == null) {
 			jobInstance.setJobInstanceId(idGenerator.nextId());
 			jobInstanceMapper.insertJobInstance(jobInstance);
 			if (jobInstance.getParams() != null
@@ -380,7 +378,7 @@ public class MxJobServiceImpl implements IJobService {
 
 	@Transactional
 	public void saveStepExecution(StepExecution stepExecution) {
-		if (stepExecution.getStepExecutionId() == 0) {
+		if (stepExecution.getStepExecutionId() == null) {
 			stepExecution.setStepExecutionId(idGenerator.nextId());
 			stepExecutionMapper.insertStepExecution(stepExecution);
 		} else {
