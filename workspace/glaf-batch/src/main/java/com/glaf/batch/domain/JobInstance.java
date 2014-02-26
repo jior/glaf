@@ -67,9 +67,6 @@ public class JobInstance implements Serializable, JSONable {
 	@javax.persistence.Transient
 	protected Collection<JobExecution> executions = new CopyOnWriteArraySet<JobExecution>();
 
-	@javax.persistence.Transient
-	protected Collection<StepExecution> steps = new CopyOnWriteArraySet<StepExecution>();
-
 	public JobInstance() {
 
 	}
@@ -86,13 +83,6 @@ public class JobInstance implements Serializable, JSONable {
 			params = new HashSet<JobParam>();
 		}
 		params.add(param);
-	}
-
-	public void addStep(StepExecution step) {
-		if (steps == null) {
-			steps = new CopyOnWriteArraySet<StepExecution>();
-		}
-		steps.add(step);
 	}
 
 	public java.util.Date getDateValue(String keyName) {
@@ -159,10 +149,6 @@ public class JobInstance implements Serializable, JSONable {
 		return params;
 	}
 
-	public Collection<StepExecution> getSteps() {
-		return steps;
-	}
-
 	public String getStringValue(String keyName) {
 		if (params != null && !params.isEmpty()) {
 			for (JobParam param : params) {
@@ -200,10 +186,6 @@ public class JobInstance implements Serializable, JSONable {
 
 	public void setParams(Collection<JobParam> params) {
 		this.params = params;
-	}
-
-	public void setSteps(Collection<StepExecution> steps) {
-		this.steps = steps;
 	}
 
 	public void setVersion(int version) {

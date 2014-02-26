@@ -149,9 +149,6 @@ public class MxJobServiceImpl implements IJobService {
 					.getJobExecutionByJobInstanceId(jobInstanceId);
 			jobInstance.setExecutions(executions);
 
-			List<StepExecution> steps = stepExecutionMapper
-					.getStepExecutionsByJobInstanceId(jobInstanceId);
-			jobInstance.setSteps(steps);
 		}
 		return jobInstance;
 	}
