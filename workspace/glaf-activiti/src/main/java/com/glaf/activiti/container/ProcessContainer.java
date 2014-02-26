@@ -47,6 +47,10 @@ import com.glaf.activiti.service.ActivitiTaskQueryService;
 
 public class ProcessContainer {
 
+	private static class ProcessContainerHolder {
+		public static ProcessContainer instance = new ProcessContainer();
+	}
+
 	protected static final Log logger = LogFactory
 			.getLog(ProcessContainer.class);
 
@@ -55,8 +59,6 @@ public class ProcessContainer {
 	protected static final int MAX_PROCESS_INSTANCE_QTY = 1000;
 
 	protected static final int MAX_TASK_INSTANCE_QTY = 1000;
-
-	private static final ProcessContainer container = new ProcessContainer();
 
 	protected static ActivitiProcessQueryService activitiProcessQueryService;
 
@@ -76,9 +78,8 @@ public class ProcessContainer {
 		return activitiTaskQueryService;
 	}
 
-	public final static ProcessContainer getContainer() {
-
-		return container;
+	public static ProcessContainer getContainer() {
+		return ProcessContainerHolder.instance;
 	}
 
 	private ProcessContainer() {
