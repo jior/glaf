@@ -23,6 +23,7 @@ import com.glaf.core.query.BaseQuery;
 
 public class JobInstanceQuery extends BaseQuery {
 	private static final long serialVersionUID = 1L;
+	protected String jobName;
 	protected String jobNameLike;
 	protected String jobKey;
 	protected List<String> jobKeys;
@@ -37,6 +38,10 @@ public class JobInstanceQuery extends BaseQuery {
 
 	public List<String> getJobKeys() {
 		return jobKeys;
+	}
+
+	public String getJobName() {
+		return jobName;
 	}
 
 	public String getJobNameLike() {
@@ -65,6 +70,10 @@ public class JobInstanceQuery extends BaseQuery {
 		return orderBy;
 	}
 
+	public String getSortOrder() {
+		return sortOrder;
+	}
+
 	@Override
 	public void initQueryColumns() {
 		super.initQueryColumns();
@@ -72,10 +81,6 @@ public class JobInstanceQuery extends BaseQuery {
 		addColumn("version", "version");
 		addColumn("jobName", "job_name");
 		addColumn("jobKey", "job_key");
-	}
-
-	public String getSortOrder() {
-		return sortOrder;
 	}
 
 	public JobInstanceQuery jobKey(String jobKey) {
@@ -94,6 +99,14 @@ public class JobInstanceQuery extends BaseQuery {
 		return this;
 	}
 
+	public JobInstanceQuery jobName(String jobName) {
+		if (jobName == null) {
+			throw new RuntimeException("jobName is null");
+		}
+		this.jobName = jobName;
+		return this;
+	}
+
 	public JobInstanceQuery jobNameLike(String jobNameLike) {
 		if (jobNameLike == null) {
 			throw new RuntimeException("jobName is null");
@@ -108,6 +121,10 @@ public class JobInstanceQuery extends BaseQuery {
 
 	public void setJobKeys(List<String> jobKeys) {
 		this.jobKeys = jobKeys;
+	}
+
+	public void setJobName(String jobName) {
+		this.jobName = jobName;
 	}
 
 	public void setJobNameLike(String jobNameLike) {

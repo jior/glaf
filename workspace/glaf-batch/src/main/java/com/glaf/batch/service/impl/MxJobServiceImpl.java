@@ -191,6 +191,16 @@ public class MxJobServiceImpl implements IJobService {
 		return jobInstanceMapper.getJobInstances(parameter);
 	}
 
+	public List<JobInstance> getJobInstances(String jobName, int start,
+			int limit) {
+		JobInstanceQuery query = new JobInstanceQuery();
+		query.jobName(jobName);
+		RowBounds rowBounds = new RowBounds(start, limit);
+		List<JobInstance> rows = sqlSession.selectList("getJobInstances",
+				query, rowBounds);
+		return rows;
+	}
+
 	/**
 	 * 根据查询参数获取一页的数据
 	 * 
