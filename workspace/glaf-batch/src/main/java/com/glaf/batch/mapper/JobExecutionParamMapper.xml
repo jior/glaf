@@ -13,6 +13,7 @@
 		<result property="typeCd" column="TYPE_CD" jdbcType="VARCHAR" />
 		<result property="keyName" column="KEY_NAME" jdbcType="VARCHAR" />
 		<result property="stringVal" column="STRING_VAL" jdbcType="VARCHAR" />
+		<result property="textVal" column="TEXT_VAL" jdbcType="VARCHAR" />
 		<result property="dateVal" column="DATE_VAL" jdbcType="TIMESTAMP" />
 		<result property="intVal" column="INT_VAL" jdbcType="INTEGER" />
 		<result property="longVal" column="LONG_VAL" jdbcType="BIGINT" />
@@ -38,6 +39,9 @@
 			</if>
 			<if test="stringVal != null">
 				,STRING_VAL
+			</if>
+			<if test="textVal != null">
+				,TEXT_VAL
 			</if>
 			<if test="dateVal != null">
 				,DATE_VAL
@@ -70,6 +74,9 @@
 			</if>
 			<if test="stringVal != null">
 				,#{stringVal, jdbcType=VARCHAR}
+			</if>
+			<if test="textVal != null">
+				,#{textVal, jdbcType=VARCHAR}
 			</if>
 			<if test="dateVal != null">
 				,#{dateVal, jdbcType=TIMESTAMP}

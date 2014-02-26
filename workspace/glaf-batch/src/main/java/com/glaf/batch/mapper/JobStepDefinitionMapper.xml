@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.batch.mapper.JobStepDefinitionMapper">
+
+	<resultMap id="jobStepDefinitionResultMap" type="com.glaf.batch.domain.JobStepDefinition">
+		<id property="stepDefinitionId" column="STEP_DEFINITION_ID"
+			jdbcType="BIGINT" />
+		<result property="jobDefinitionId" column="JOB_DEFINITION_ID"
+			jdbcType="BIGINT" />
+		<result property="stepKey" column="STEP_KEY" jdbcType="VARCHAR" />
+		<result property="stepName" column="STEP_NAME" jdbcType="VARCHAR" />
+		<result property="jobStepKey" column="JOB_STEP_KEY" jdbcType="VARCHAR" />
+		<result property="jobClass" column="JOB_CLASS" jdbcType="VARCHAR" />
+		<result property="listno" column="LISTNO" jdbcType="INTEGER" />
+	</resultMap>
+
+
+	<insert id="insertJobStepDefinition" parameterType="com.glaf.batch.domain.JobStepDefinition">
+		insert into SYS_JOB_STEP_DEF
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			STEP_DEFINITION_ID
+			<if test="jobDefinitionId != null">
+				,JOB_DEFINITION_ID
+			</if>
+			<if test="stepKey != null">
+				,STEP_KEY
+			</if>
+			<if test="stepName != null">
+				,STEP_NAME
+			</if>
+			<if test="jobStepKey != null">
+				,JOB_STEP_KEY
+			</if>
+			<if test="jobClass != null">
+				,JOB_CLASS
+			</if>
+			<if test="listno != null">
+				,LISTNO
+			</if>
+		</trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			#{stepDefinitionId, jdbcType=BIGINT}
+
+			<if test="jobDefinitionId != null">
+				,#{jobDefinitionId, jdbcType=BIGINT}
+			</if>
+			<if test="stepKey != null">
+				,#{stepKey, jdbcType=VARCHAR}
+			</if>
+			<if test="stepName != null">
+				,#{stepName, jdbcType=VARCHAR}
+			</if>
+			<if test="jobStepKey != null">
+				,#{jobStepKey, jdbcType=VARCHAR}
+			</if>
+			<if test="jobClass != null">
+				,#{jobClass, jdbcType=VARCHAR}
+			</if>
+			<if test="listno != null">
+				,#{listno, jdbcType=INTEGER}
+			</if>
+		</trim>
+	</insert>
+
+
+	<update id="updateJobStepDefinition" parameterType="com.glaf.batch.domain.JobStepDefinition">
+		update SYS_JOB_STEP_DEF
+		set
+		<trim prefix="" suffix="" suffixOverrides=",">
+			<if test="jobDefinitionId != null">
+				JOB_DEFINITION_ID = #{jobDefinitionId, jdbcType=BIGINT},
+			</if>
+			<if test="stepKey != null">
+				STEP_KEY = #{stepKey, jdbcType=VARCHAR},
+			</if>
+			<if test="stepName != null">
+				STEP_NAME = #{stepName, jdbcType=VARCHAR},
+			</if>
+			<if test="jobStepKey != null">
+				JOB_STEP_KEY = #{jobStepKey, jdbcType=VARCHAR},
+			</if>
+			<if test="jobClass != null">
+				JOB_CLASS = #{jobClass, jdbcType=VARCHAR},
+			</if>
+			<if test="listno != null">
+				LISTNO = #{listno, jdbcType=INTEGER},
+			</if>
+		</trim>
+		where
+		STEP_DEFINITION_ID = #{stepDefinitionId, jdbcType=BIGINT}
+
+	</update>
+
+
+	<delete id="deleteJobStepDefinitionById" parameterType="long">
+		delete
+		from SYS_JOB_STEP_DEF
+		where STEP_DEFINITION_ID = #{id}
+	</delete>
+
+
+	<select id="getJobStepDefinitionById" parameterType="long"
+		resultMap="jobStepDefinitionResultMap">
+		select * from SYS_JOB_STEP_DEF where STEP_DEFINITION_ID =
+		#{id}
+	</select>
+
+
+	<select id="getJobStepDefinitionsByJobDefinitionId"
+		parameterType="long" resultMap="jobStepDefinitionResultMap">
+		select * from SYS_JOB_STEP_DEF where
+		JOB_DEFINITION_ID =
+		#{jobDefinitionId}
+	</select>
+
+
+	<select id="getJobStepDefinitions" parameterType="com.glaf.batch.query.JobStepDefinitionQuery"
+		resultMap="jobStepDefinitionResultMap">
+		select distinct E.*
+		<include refid="selectJobStepDefinitionsSql" />
+		<choose>
+			<when test="orderBy != null">
+				order by ${orderBy}
+			</when>
+			<otherwise>
+				order by E.LISTNO desc
+			</otherwise>
+		</choose>
+	</select>
+
+
+	<select id="getJobStepDefinitionCount" parameterType="com.glaf.batch.query.JobStepDefinitionQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectJobStepDefinitionsSql" />
+	</select>
+
+
+	<sql id="selectJobStepDefinitionsSql">
+
+		from SYS_JOB_STEP_DEF E
+
+		<where>
+			1 = 1
+
+			<if test="jobDefinitionId != null">
+				and E.JOB_DEFINITION_ID = #{jobDefinitionId}
+			</if>
+
+			<if test="jobDefinitionIds != null and jobDefinitionIds.size != 0">
+				and E.JOB_DEFINITION_ID IN
+				<foreach item="x_jobDefinitionId" index="index" collection="jobDefinitionIds"
+					open="(" separator="," close=")">
+					#{x_jobDefinitionId}
+				</foreach>
+			</if>
+
+			<if test="stepKey != null and stepKey != '' ">
+				and E.STEP_KEY = #{stepKey}
+			</if>
+
+			<if test="stepKeys != null and stepKeys.size != 0">
+				and E.STEP_KEY IN
+				<foreach item="x_stepKey" index="index" collection="stepKeys"
+					open="(" separator="," close=")">
+					#{x_stepKey}
+				</foreach>
+			</if>
+
+			<if test="stepName != null and stepName != '' ">
+				and E.STEP_NAME = #{stepName}
+			</if>
+
+			<if test="stepNames != null and stepNames.size != 0">
+				and E.STEP_NAME IN
+				<foreach item="x_stepName" index="index" collection="stepNames"
+					open="(" separator="," close=")">
+					#{x_stepName}
+				</foreach>
+			</if>
+
+			<if test="jobStepKey != null and jobStepKey != '' ">
+				and E.JOB_STEP_KEY = #{jobStepKey}
+			</if>
+
+			<if test="jobStepKeys != null and jobStepKeys.size != 0">
+				and E.JOB_STEP_KEY IN
+				<foreach item="x_jobStepKey" index="index" collection="jobStepKeys"
+					open="(" separator="," close=")">
+					#{x_jobStepKey}
+				</foreach>
+			</if>
+
+		</where>
+	</sql>
+
+</mapper>

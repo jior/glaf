@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.batch.mapper.JobStepDefinitionParamMapper">
+
+	<resultMap id="jobStepDefinitionParamResultMap" type="com.glaf.batch.domain.JobStepDefinitionParam">
+		<id property="id" column="ID" jdbcType="BIGINT" />
+		<result property="jobDefinitionId" column="JOB_DEFINITION_ID"
+			jdbcType="BIGINT" />
+		<result property="stepDefinitionId" column="STEP_DEFINITION_ID"
+			jdbcType="BIGINT" />
+		<result property="typeCd" column="TYPE_CD" jdbcType="VARCHAR" />
+		<result property="keyName" column="KEY_NAME" jdbcType="VARCHAR" />
+		<result property="stringVal" column="STRING_VAL" jdbcType="VARCHAR" />
+		<result property="textVal" column="TEXT_VAL" jdbcType="VARCHAR" />
+		<result property="dateVal" column="DATE_VAL" jdbcType="TIMESTAMP" />
+		<result property="intVal" column="INT_VAL" jdbcType="INTEGER" />
+		<result property="longVal" column="LONG_VAL" jdbcType="BIGINT" />
+		<result property="doubleVal" column="DOUBLE_VAL" jdbcType="DOUBLE" />
+	</resultMap>
+
+
+	<insert id="insertJobStepDefinitionParam" parameterType="com.glaf.batch.domain.JobStepDefinitionParam">
+		insert into SYS_JOB_STEP_DEF_PARAMS
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ID
+			<if test="jobDefinitionId != null">
+				,JOB_DEFINITION_ID
+			</if>
+			<if test="stepDefinitionId != null">
+				,STEP_DEFINITION_ID
+			</if>
+			<if test="typeCd != null">
+				,TYPE_CD
+			</if>
+			<if test="keyName != null">
+				,KEY_NAME
+			</if>
+			<if test="stringVal != null">
+				,STRING_VAL
+			</if>
+			<if test="textVal != null">
+				,TEXT_VAL
+			</if>
+			<if test="dateVal != null">
+				,DATE_VAL
+			</if>
+			<if test="intVal != null">
+				,INT_VAL
+			</if>
+			<if test="longVal != null">
+				,LONG_VAL
+			</if>
+			<if test="doubleVal != null">
+				,DOUBLE_VAL
+			</if>
+		</trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			#{id, jdbcType=BIGINT}
+
+			<if test="jobDefinitionId != null">
+				,#{jobDefinitionId, jdbcType=BIGINT}
+			</if>
+			<if test="stepDefinitionId != null">
+				,#{stepDefinitionId, jdbcType=BIGINT}
+			</if>
+			<if test="typeCd != null">
+				,#{typeCd, jdbcType=VARCHAR}
+			</if>
+			<if test="keyName != null">
+				,#{keyName, jdbcType=VARCHAR}
+			</if>
+			<if test="stringVal != null">
+				,#{stringVal, jdbcType=VARCHAR}
+			</if>
+			<if test="textVal != null">
+				,#{textVal, jdbcType=VARCHAR}
+			</if>
+			<if test="dateVal != null">
+				,#{dateVal, jdbcType=TIMESTAMP}
+			</if>
+			<if test="intVal != null">
+				,#{intVal, jdbcType=INTEGER}
+			</if>
+			<if test="longVal != null">
+				,#{longVal, jdbcType=BIGINT}
+			</if>
+			<if test="doubleVal != null">
+				,#{doubleVal, jdbcType=DOUBLE}
+			</if>
+		</trim>
+	</insert>
+
+
+	<update id="updateJobStepDefinitionParam" parameterType="com.glaf.batch.domain.JobStepDefinitionParam">
+		update SYS_JOB_STEP_DEF_PARAMS
+		set
+		<trim prefix="" suffix="" suffixOverrides=",">
+			<if test="jobDefinitionId != null">
+				JOB_DEFINITION_ID = #{jobDefinitionId, jdbcType=BIGINT},
+			</if>
+			<if test="stepDefinitionId != null">
+				STEP_DEFINITION_ID = #{stepDefinitionId,
+				jdbcType=BIGINT},
+			</if>
+			<if test="typeCd != null">
+				TYPE_CD = #{typeCd, jdbcType=VARCHAR},
+			</if>
+			<if test="keyName != null">
+				KEY_NAME = #{keyName, jdbcType=VARCHAR},
+			</if>
+			<if test="stringVal != null">
+				STRING_VAL = #{stringVal, jdbcType=VARCHAR},
+			</if>
+			<if test="textVal != null">
+				TEXT_VAL = #{textVal, jdbcType=VARCHAR},
+			</if>
+			<if test="dateVal != null">
+				DATE_VAL = #{dateVal, jdbcType=TIMESTAMP},
+			</if>
+			<if test="intVal != null">
+				INT_VAL = #{intVal, jdbcType=INTEGER},
+			</if>
+			<if test="longVal != null">
+				LONG_VAL = #{longVal, jdbcType=BIGINT},
+			</if>
+			<if test="doubleVal != null">
+				DOUBLE_VAL = #{doubleVal, jdbcType=DOUBLE},
+			</if>
+		</trim>
+		where
+		ID = #{id, jdbcType=BIGINT}
+
+	</update>
+
+
+	<delete id="deleteJobStepDefinitionParamById" parameterType="long">
+		delete from SYS_JOB_STEP_DEF_PARAMS
+		where ID = #{id}
+	</delete>
+
+
+	<delete id="deleteParamsByStepDefinitionId" parameterType="long">
+		delete from SYS_JOB_STEP_DEF_PARAMS
+		where STEP_DEFINITION_ID =
+		#{jobDefinitionId}
+	</delete>
+
+
+	<select id="getJobStepDefinitionParamById" parameterType="long"
+		resultMap="jobStepDefinitionParamResultMap">
+		select * from SYS_JOB_STEP_DEF_PARAMS where ID = #{id}
+	</select>
+
+
+	<select id="getParamsByStepDefinitionId" parameterType="long"
+		resultMap="jobStepDefinitionParamResultMap">
+		select * from SYS_JOB_STEP_DEF_PARAMS where
+		STEP_DEFINITION_ID = #{stepDefinitionId}
+	</select>
+
+
+	<select id="getParamsByJobDefinitionId" parameterType="long"
+		resultMap="jobStepDefinitionParamResultMap">
+		select * from SYS_JOB_STEP_DEF_PARAMS where
+		JOB_DEFINITION_ID = #{jobDefinitionId}
+	</select>
+
+
+	<select id="getJobStepDefinitionParams" parameterType="com.glaf.batch.query.JobStepDefinitionParamQuery"
+		resultMap="jobStepDefinitionParamResultMap">
+		select distinct E.*
+		<include refid="selectJobStepDefinitionParamsSql" />
+		<choose>
+			<when test="orderBy != null">
+				order by ${orderBy}
+			</when>
+			<otherwise>
+				order by E.ID desc
+			</otherwise>
+		</choose>
+	</select>
+
+
+	<select id="getJobStepDefinitionParamCount" parameterType="com.glaf.batch.query.JobStepDefinitionParamQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectJobStepDefinitionParamsSql" />
+	</select>
+
+
+	<sql id="selectJobStepDefinitionParamsSql">
+
+		from SYS_JOB_STEP_DEF_PARAMS E
+
+		<where>
+			1 = 1
+
+			<if test="jobDefinitionId != null">
+				and E.JOB_DEFINITION_ID = #{jobDefinitionId}
+			</if>
+
+			<if test="jobDefinitionIds != null and jobDefinitionIds.size != 0">
+				and E.JOB_DEFINITION_ID IN
+				<foreach item="x_jobDefinitionId" index="index" collection="jobDefinitionIds"
+					open="(" separator="," close=")">
+					#{x_jobDefinitionId}
+				</foreach>
+			</if>
+
+			<if test="stepDefinitionIds != null and stepDefinitionIds.size != 0">
+				and E.STEP_DEFINITION_ID IN
+				<foreach item="x_stepDefinitionId" index="index" collection="stepDefinitionIds"
+					open="(" separator="," close=")">
+					#{x_stepDefinitionId}
+				</foreach>
+			</if>
+
+			<if test="typeCd != null and typeCd != '' ">
+				and E.TYPE_CD = #{typeCd}
+			</if>
+
+			<if test="typeCds != null and typeCds.size != 0">
+				and E.TYPE_CD IN
+				<foreach item="x_typeCd" index="index" collection="typeCds"
+					open="(" separator="," close=")">
+					#{x_typeCd}
+				</foreach>
+			</if>
+
+			<if test="keyName != null and keyName != '' ">
+				and E.KEY_NAME = #{keyName}
+			</if>
+
+			<if test="keyNames != null and keyNames.size != 0">
+				and E.KEY_NAME IN
+				<foreach item="x_keyName" index="index" collection="keyNames"
+					open="(" separator="," close=")">
+					#{x_keyName}
+				</foreach>
+			</if>
+
+		</where>
+	</sql>
+
+</mapper>

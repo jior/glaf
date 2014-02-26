@@ -20,31 +20,28 @@ package com.glaf.batch.domain;
 
 import java.io.*;
 import java.util.*;
-
 import javax.persistence.*;
-
+import com.alibaba.fastjson.*;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
-
-import com.alibaba.fastjson.JSONObject;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.glaf.batch.util.JobExecutionParamJsonFactory;
-import com.glaf.core.base.JSONable;
+import com.glaf.core.base.*;
+import com.glaf.batch.util.*;
 
 @Entity
-@Table(name = "SYS_JOB_EXECUTION_PARAMS")
-public class JobExecutionParam implements Serializable, JSONable {
+@Table(name = "SYS_JOB_STEP_DEF_PARAMS")
+public class JobStepDefinitionParam implements Serializable, JSONable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@Column(name = "ID", nullable = false)
 	protected Long id;
 
-	@Column(name = "JOB_EXECUTION_ID")
-	protected Long jobExecutionId;
+	@Column(name = "JOB_DEFINITION_ID")
+	protected Long jobDefinitionId;
 
-	@Column(name = "JOB_INSTANCE_ID")
-	protected Long jobInstanceId;
+	@Column(name = "STEP_DEFINITION_ID")
+	protected Long stepDefinitionId;
 
 	@Column(name = "TYPE_CD", length = 6)
 	protected String typeCd;
@@ -72,7 +69,7 @@ public class JobExecutionParam implements Serializable, JSONable {
 	@Column(name = "DOUBLE_VAL")
 	protected Double doubleVal;
 
-	public JobExecutionParam() {
+	public JobStepDefinitionParam() {
 
 	}
 
@@ -84,7 +81,7 @@ public class JobExecutionParam implements Serializable, JSONable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		JobExecutionParam other = (JobExecutionParam) obj;
+		JobStepDefinitionParam other = (JobStepDefinitionParam) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -109,12 +106,8 @@ public class JobExecutionParam implements Serializable, JSONable {
 		return this.intVal;
 	}
 
-	public Long getJobExecutionId() {
-		return this.jobExecutionId;
-	}
-
-	public Long getJobInstanceId() {
-		return this.jobInstanceId;
+	public Long getJobDefinitionId() {
+		return this.jobDefinitionId;
 	}
 
 	public String getKeyName() {
@@ -125,12 +118,16 @@ public class JobExecutionParam implements Serializable, JSONable {
 		return this.longVal;
 	}
 
+	public Long getStepDefinitionId() {
+		return this.stepDefinitionId;
+	}
+
 	public String getStringVal() {
 		return this.stringVal;
 	}
 
 	public String getTextVal() {
-		return textVal;
+		return this.textVal;
 	}
 
 	public String getTypeCd() {
@@ -145,8 +142,8 @@ public class JobExecutionParam implements Serializable, JSONable {
 		return result;
 	}
 
-	public JobExecutionParam jsonToObject(JSONObject jsonObject) {
-		return JobExecutionParamJsonFactory.jsonToObject(jsonObject);
+	public JobStepDefinitionParam jsonToObject(JSONObject jsonObject) {
+		return JobStepDefinitionParamJsonFactory.jsonToObject(jsonObject);
 	}
 
 	public void setDateVal(Date dateVal) {
@@ -165,12 +162,8 @@ public class JobExecutionParam implements Serializable, JSONable {
 		this.intVal = intVal;
 	}
 
-	public void setJobExecutionId(Long jobExecutionId) {
-		this.jobExecutionId = jobExecutionId;
-	}
-
-	public void setJobInstanceId(Long jobInstanceId) {
-		this.jobInstanceId = jobInstanceId;
+	public void setJobDefinitionId(Long jobDefinitionId) {
+		this.jobDefinitionId = jobDefinitionId;
 	}
 
 	public void setKeyName(String keyName) {
@@ -179,6 +172,10 @@ public class JobExecutionParam implements Serializable, JSONable {
 
 	public void setLongVal(Long longVal) {
 		this.longVal = longVal;
+	}
+
+	public void setStepDefinitionId(Long stepDefinitionId) {
+		this.stepDefinitionId = stepDefinitionId;
 	}
 
 	public void setStringVal(String stringVal) {
@@ -194,11 +191,11 @@ public class JobExecutionParam implements Serializable, JSONable {
 	}
 
 	public JSONObject toJsonObject() {
-		return JobExecutionParamJsonFactory.toJsonObject(this);
+		return JobStepDefinitionParamJsonFactory.toJsonObject(this);
 	}
 
 	public ObjectNode toObjectNode() {
-		return JobExecutionParamJsonFactory.toObjectNode(this);
+		return JobStepDefinitionParamJsonFactory.toObjectNode(this);
 	}
 
 	@Override
