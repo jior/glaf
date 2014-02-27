@@ -103,7 +103,7 @@ public interface GroupService {
 	
 	
 	/**
-	 * 获取某个群组的用户
+	 * 获取某个群组的领导
 	 * 
 	 * @param groupId
 	 * @return
@@ -143,7 +143,7 @@ public interface GroupService {
 	void saveGroupUsers(String groupId, Set<String> userIds);
 	
 	/**
-	 * 保存群组用户
+	 * 保存群组领导
 	 * 
 	 * @param groupId
 	 * @param userIds
