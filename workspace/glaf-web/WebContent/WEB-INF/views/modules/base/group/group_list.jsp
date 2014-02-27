@@ -32,14 +32,17 @@ function checkOperation(form){
 	if(num==1){
 	  document.all.btn_modify.disabled=false;
 	  document.all.btn_users.disabled=false;
+	  document.all.btn_leader_users.disabled=false;
 	}else{
 	  document.all.btn_modify.disabled=true;
 	  document.all.btn_users.disabled=true;
+	  document.all.btn_leader_users.disabled=true;
 	}
   }else{
     document.all.btn_del.disabled=true;
 	document.all.btn_modify.disabled=true;
 	document.all.btn_users.disabled=true;
+	document.all.btn_leader_users.disabled=true;
   }
 }
 
@@ -84,6 +87,23 @@ function users(form){
   var scroll="yes";
   //openWindow(url, width, height, scroll);
   art.dialog.open(link, { height: height, width: width, title: "群组用户", lock: false, scrollbars:"no" }, false);
+}
+
+function userLeaders(form){
+  var id =0;
+  for (var i=0;i<form.id.length;i++) {
+    var e = form.id[i];
+    if (e.checked){
+	  id=e.value;
+	}     
+  }
+  var url="group.do?method=groupLeaders&groupId="+id;
+  var link = "<%=request.getContextPath()%>/base/"+url;
+  var width=450;
+  var height=480;
+  var scroll="yes";
+  //openWindow(url, width, height, scroll);
+  art.dialog.open(link, { height: height, width: width, title: "群组领导", lock: false, scrollbars:"no" }, false);
 }
 
 function del(){
@@ -171,6 +191,7 @@ for(; i<pageSize; i++){
       <input name="btn_del" type="button" value="删除" class="button" onClick="javascript:del();" disabled>
       <input name="btn_modify" type="button" value="修改" class="button" onClick="javascript:modify(this.form);" disabled>
 	  <input name="btn_users" type="button" value="用户" class="button" onClick="javascript:users(this.form);" disabled>
+	  <input name="btn_leader_users" type="button" value="领导" class="button" onClick="javascript:userLeaders(this.form);" disabled>
 	</td>
     <td width="50%"> 
       <%

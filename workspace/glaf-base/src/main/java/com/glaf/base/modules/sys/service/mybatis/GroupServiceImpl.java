@@ -30,9 +30,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.base.modules.sys.SysConstants;
+import com.glaf.base.modules.sys.mapper.GroupLeaderMapper;
 import com.glaf.base.modules.sys.mapper.GroupMapper;
 import com.glaf.base.modules.sys.mapper.GroupUserMapper;
 import com.glaf.base.modules.sys.model.Group;
+import com.glaf.base.modules.sys.model.GroupLeader;
 import com.glaf.base.modules.sys.model.GroupUser;
 import com.glaf.base.modules.sys.query.GroupQuery;
 import com.glaf.base.modules.sys.service.GroupService;
@@ -49,6 +51,8 @@ public class GroupServiceImpl implements GroupService {
 	protected GroupMapper groupMapper;
 
 	protected GroupUserMapper groupUserMapper;
+	
+	protected GroupLeaderMapper groupLeaderMapper;
 
 	protected IdGenerator idGenerator;
 
@@ -154,6 +158,11 @@ public class GroupServiceImpl implements GroupService {
 	public List<String> getUserIdsByGroupId(String groupId) {
 		return groupUserMapper.getUserIdsByGroupId(groupId);
 	}
+	
+	
+	public List<String> getLeaderUserIdsByGroupId(String groupId) {
+		return groupLeaderMapper.getUserIdsByGroupId(groupId);
+	}
 
 	/**
 	 * 根据群组名称及类型获取群组用户
@@ -216,6 +225,25 @@ public class GroupServiceImpl implements GroupService {
 			}
 		}
 	}
+	
+	/**
+	 * 保存群组用户
+	 * 
+	 * @param groupId
+	 * @param userIds
+	 */
+	@Transactional
+	public void saveGroupLeaders(String groupId, Set<String> userIds) {
+		groupLeaderMapper.deleteGroupLeadersByGroupId(groupId);
+		if (userIds != null && !userIds.isEmpty()) {
+			for (String userId : userIds) {
+				GroupLeader g = new GroupLeader();
+				g.setGroupId(groupId);
+				g.setUserId(userId);
+				groupLeaderMapper.insertGroupLeader(g);
+			}
+		}
+	}
 
 	@javax.annotation.Resource
 	public void setEntityDAO(EntityDAO entityDAO) {
@@ -223,10 +251,16 @@ public class GroupServiceImpl implements GroupService {
 	}
 
 	@javax.annotation.Resource
+	public void setGroupLeaderMapper(GroupLeaderMapper groupLeaderMapper) {
+		this.groupLeaderMapper = groupLeaderMapper;
+	}
+
+	@javax.annotation.Resource
 	public void setGroupMapper(GroupMapper groupMapper) {
 		this.groupMapper = groupMapper;
 	}
-
+	
+	
 	@javax.annotation.Resource
 	public void setGroupUserMapper(GroupUserMapper groupUserMapper) {
 		this.groupUserMapper = groupUserMapper;

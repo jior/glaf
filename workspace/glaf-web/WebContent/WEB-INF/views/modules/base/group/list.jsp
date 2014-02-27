@@ -32,8 +32,6 @@
 				striped: true,
 				collapsible:true,
 				url:'<%=request.getContextPath()%>/base/group.do?method=listJson&type=${type}',
-				sortName: 'groupId',
-				sortOrder: 'desc',
 				remoteSort: false,
 				singleSelect:true,
 				idField:'groupId',
@@ -117,6 +115,25 @@
 		  //openWindow(link, width, height, scroll);
 		  //alert(link);
 		  art.dialog.open(link, { height: height, width: width, title: "群组用户", lock: true, scrollbars:"no" }, false);
+		}
+	}
+
+	function groupLeader(){
+        var rows = jQuery('#mydatagrid').datagrid('getSelections');
+		if(rows == null || rows.length !=1){
+			//alert("请选择其中一条记录。");
+			jQuery.messager.alert('Info', '请选择其中一条记录。', 'info');
+			return;
+		}
+		var selected = jQuery('#mydatagrid').datagrid('getSelected');
+		if (selected ){
+		  var link = "<%=request.getContextPath()%>/base/group.do?method=groupLeaders&groupId="+selected.groupId;
+		  var width=450;
+		  var height=480;
+		  var scroll="yes";
+		  //openWindow(link, width, height, scroll);
+		  //alert(link);
+		  art.dialog.open(link, { height: height, width: width, title: "群组领导", lock: true, scrollbars:"no" }, false);
 		}
 	}
 
@@ -293,6 +310,8 @@
 	   onclick="javascript:deleteSelections();">删除</a> 
 	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-user'"
 	   onclick="javascript:groupUser();">群组用户</a> 
+	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-actor'"
+	   onclick="javascript:groupLeader();">群组领导</a> 
 	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-search'"
 	   onclick="javascript:searchWin();">查找</a>
    </div> 

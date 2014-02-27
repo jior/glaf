@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.base.modules.sys.mapper.GroupLeaderMapper">
+
+	<insert id="insertGroupLeader" parameterType="com.glaf.base.modules.sys.model.GroupLeader">
+		insert into
+		SYS_GROUP_LEADER (USERID, GROUPID)
+		values (
+		#{userId ,jdbcType=VARCHAR},
+		#{groupId ,jdbcType=VARCHAR}
+		)
+	</insert>
+
+
+	<delete id="deleteGroupLeadersByUserId" parameterType="string">
+		delete
+		from
+		SYS_GROUP_LEADER
+		where USERID = #{userId}
+	</delete>
+
+
+	<delete id="deleteGroupLeadersByGroupId" parameterType="string">
+		delete
+		from
+		SYS_GROUP_LEADER
+		where GROUPID = #{groupId}
+	</delete>
+
+
+	<select id="getUserIdsByGroupId" parameterType="string"
+		resultType="string">
+
+		select USERID from SYS_GROUP_LEADER
+		where GROUPID =
+		#{groupId}
+
+	</select>
+
+</mapper>

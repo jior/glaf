@@ -194,6 +194,66 @@ public class GroupResource {
 
 	@GET
 	@POST
+	@Path("jsonLeader")
+	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
+	@ResponseBody
+	public byte[] jsonLeader(@Context HttpServletRequest request,
+			@Context UriInfo uriInfo) throws IOException {
+		JSONObject result = new JSONObject();
+		String groupId = request.getParameter("groupId");
+		List<String> userIds = groupService.getLeaderUserIdsByGroupId(groupId);
+		List<SysUser> users = sysUserService.getSysUserWithDeptList();
+		SysTree root = sysTreeService.getSysTreeByCode(SysConstants.TREE_DEPT);
+		if (root != null && users != null) {
+			logger.debug(root.toJsonObject().toJSONString());
+			logger.debug("users size:" + users.size());
+			List<TreeModel> treeModels = new ArrayList<TreeModel>();
+			// treeModels.add(root);
+			List<SysTree> trees = sysTreeService.getAllSysTreeListForDept(
+					(int) root.getId(), 0);
+			if (trees != null && !trees.isEmpty()) {
+				logger.debug("dept tree size:" + trees.size());
+				Map<Long, SysTree> treeMap = new HashMap<Long, SysTree>();
+				for (SysTree tree : trees) {
+					SysDepartment dept = tree.getDepartment();
+					treeMap.put(dept.getId(), tree);
+				}
+				long ts = System.currentTimeMillis();
+				for (SysTree tree : trees) {
+					treeModels.add(tree);
+					SysDepartment dept = tree.getDepartment();
+					if (dept != null && dept.getId() > 0) {
+						for (SysUser user : users) {
+							SysTree t = treeMap.get(Long.valueOf(user
+									.getDeptId()));
+							if (dept.getId() == user.getDeptId() && t != null) {
+								TreeModel treeModel = new BaseTree();
+								treeModel.setParentId(t.getId());
+								treeModel.setId(ts++);
+								treeModel.setCode(user.getAccount());
+								treeModel.setName(user.getAccount() + " "
+										+ user.getName());
+								treeModel.setIconCls("user");
+								if (userIds != null
+										&& userIds.contains(user.getAccount())) {
+									treeModel.setChecked(true);
+								}
+								treeModels.add(treeModel);
+							}
+						}
+					}
+				}
+			}
+			logger.debug("treeModels:" + treeModels.size());
+			TreeHelper treeHelper = new TreeHelper();
+			JSONArray jsonArray = treeHelper.getTreeJSONArray(treeModels);
+			return jsonArray.toJSONString().getBytes("UTF-8");
+		}
+		return result.toJSONString().getBytes("UTF-8");
+	}
+	
+	@GET
+	@POST
 	@Path("listJson")
 	@ResponseBody
 	public byte[] listJson(@Context HttpServletRequest request,

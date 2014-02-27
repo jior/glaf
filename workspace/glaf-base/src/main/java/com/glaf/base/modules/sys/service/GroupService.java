@@ -101,6 +101,15 @@ public interface GroupService {
 	 */
 	List<String> getUserIdsByGroupId(String groupId);
 	
+	
+	/**
+	 * 获取某个群组的用户
+	 * 
+	 * @param groupId
+	 * @return
+	 */
+	List<String> getLeaderUserIdsByGroupId(String groupId);
+	
 	/**
 	 * 根据群组名称及类型获取群组用户
 	 * @param groupName
@@ -132,6 +141,15 @@ public interface GroupService {
 	 */
 	@Transactional
 	void saveGroupUsers(String groupId, Set<String> userIds);
+	
+	/**
+	 * 保存群组用户
+	 * 
+	 * @param groupId
+	 * @param userIds
+	 */
+	@Transactional
+	void saveGroupLeaders(String groupId, Set<String> userIds);
 
 	/**
 	 * 排序

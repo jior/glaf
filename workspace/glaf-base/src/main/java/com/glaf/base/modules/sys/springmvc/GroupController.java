@@ -131,6 +131,25 @@ public class GroupController {
 		// 显示群组用户页面
 		return new ModelAndView("/modules/base/group/group_users", modelMap);
 	}
+	
+	/**
+	 * 显示群组用户页面
+	 * 
+	 * @param request
+	 * @param modelMap
+	 * @return
+	 */
+	@RequestMapping(params = "method=groupLeaders")
+	public ModelAndView groupLeaders(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+
+		String x_view = ViewProperties.getString("group.groupLeaders");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+		// 显示群组用户页面
+		return new ModelAndView("/modules/base/group/groupLeaders", modelMap);
+	}
 
 	@RequestMapping(params = "method=json")
 	@ResponseBody
@@ -290,6 +309,7 @@ public class GroupController {
 
 			}
 		}
+		logger.debug( result.toString());
 		return result.toString().getBytes("UTF-8");
 	}
 
@@ -390,6 +410,29 @@ public class GroupController {
 			}
 			try {
 				groupService.saveGroupUsers(groupId, userIds);
+				return ResponseUtils.responseJsonResult(true);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
+
+		return ResponseUtils.responseJsonResult(false);
+	}
+	
+	@RequestMapping(params = "method=saveGroupLeaders")
+	@ResponseBody
+	public byte[] saveGroupLeaders(HttpServletRequest request) {
+		String groupId = request.getParameter("groupId");
+		String objectId = request.getParameter("userIds");
+		if (StringUtils.isNotEmpty(groupId) && StringUtils.isNotEmpty(objectId)) {
+			Set<String> userIds = new HashSet<String>();
+			StringTokenizer token = new StringTokenizer(objectId, ",");
+			while (token.hasMoreTokens()) {
+				String userId = token.nextToken();
+				userIds.add(userId);
+			}
+			try {
+				groupService.saveGroupLeaders(groupId, userIds);
 				return ResponseUtils.responseJsonResult(true);
 			} catch (Exception ex) {
 				ex.printStackTrace();
