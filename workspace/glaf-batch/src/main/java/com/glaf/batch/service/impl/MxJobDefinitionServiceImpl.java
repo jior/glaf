@@ -39,17 +39,17 @@ import com.glaf.batch.service.IJobDefinitionService;
 public class MxJobDefinitionServiceImpl implements IJobDefinitionService {
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
 
-	protected EntityDAO entityDAO;
+	protected volatile EntityDAO entityDAO;
 
-	protected IdGenerator idGenerator;
+	protected volatile IdGenerator idGenerator;
 
-	protected SqlSessionTemplate sqlSessionTemplate;
+	protected volatile SqlSessionTemplate sqlSessionTemplate;
 
-	protected JobDefinitionMapper jobDefinitionMapper;
+	protected volatile JobDefinitionMapper jobDefinitionMapper;
 
-	protected JobStepDefinitionMapper jobStepDefinitionMapper;
+	protected volatile JobStepDefinitionMapper jobStepDefinitionMapper;
 
-	protected JobStepDefinitionParamMapper jobStepDefinitionParamMapper;
+	protected volatile JobStepDefinitionParamMapper jobStepDefinitionParamMapper;
 
 	public MxJobDefinitionServiceImpl() {
 

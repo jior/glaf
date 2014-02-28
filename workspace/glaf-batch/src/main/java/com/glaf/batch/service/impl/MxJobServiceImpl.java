@@ -54,19 +54,19 @@ public class MxJobServiceImpl implements IJobService {
 	protected static final Log logger = LogFactory
 			.getLog(MxJobServiceImpl.class);
 
-	protected EntityDAO entityDAO;
+	protected volatile EntityDAO entityDAO;
 
-	protected IdGenerator idGenerator;
+	protected volatile IdGenerator idGenerator;
 
-	protected SqlSession sqlSession;
+	protected volatile SqlSession sqlSession;
 
-	protected JobInstanceMapper jobInstanceMapper;
+	protected volatile JobInstanceMapper jobInstanceMapper;
 
-	protected JobParamMapper jobParamMapper;
+	protected volatile JobParamMapper jobParamMapper;
 
-	protected JobExecutionMapper jobExecutionMapper;
+	protected volatile JobExecutionMapper jobExecutionMapper;
 
-	protected JobExecutionParamMapper jobExecutionParamMapper;
+	protected volatile JobExecutionParamMapper jobExecutionParamMapper;
 
 	protected JobExecutionContextMapper jobExecutionContextMapper;
 
