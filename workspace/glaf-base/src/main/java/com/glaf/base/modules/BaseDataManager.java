@@ -18,16 +18,22 @@
 
 package com.glaf.base.modules;
 
+import java.io.File;
 import java.util.ArrayList;
-import java.util.Hashtable;
+import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.glaf.base.config.BaseConfiguration;
 import com.glaf.base.modules.sys.SysConstants;
 import com.glaf.base.modules.sys.business.UpdateTreeBean;
@@ -51,27 +57,34 @@ import com.glaf.base.modules.sys.service.SysUserService;
 import com.glaf.core.config.*;
 import com.glaf.core.business.DbTableChecker;
 import com.glaf.core.context.ContextFactory;
+import com.glaf.core.service.EntityService;
 import com.glaf.core.service.ITableDefinitionService;
+import com.glaf.core.util.Tools;
 
 public class BaseDataManager {
-	private static Map<String, List<BaseDataInfo>> baseDataMap = new Hashtable<String, List<BaseDataInfo>>();
+	private static class BaseDataManagerHolder {
+		public static BaseDataManager instance = new BaseDataManager();
+	}
+
+	protected static Map<String, List<BaseDataInfo>> baseDataMap = new java.util.concurrent.ConcurrentHashMap<String, List<BaseDataInfo>>();
 
 	protected static Configuration conf = BaseConfiguration.create();
 
-	protected static BaseDataManager instance = new BaseDataManager();
+	protected static Log logger = LogFactory.getLog(BaseDataManager.class);
 
-	private final static Log logger = LogFactory.getLog(BaseDataManager.class);
+	protected static AtomicBoolean loading = new AtomicBoolean(false);
 
-	/**
-	 * 单例模式
-	 * 
-	 * @return
-	 */
+	protected static final String CUSTOM_CONFIG = "/conf/props/base_data.properties";
+
+	protected static final String CUSTOM_HANDLER = "/conf/props/data_handler.properties";
+
 	public static BaseDataManager getInstance() {
-		return instance;
+		return BaseDataManagerHolder.instance;
 	}
 
 	protected DictoryService dictoryService;
+
+	protected EntityService entityService;
 
 	protected SubjectCodeService subjectCodeService;
 
@@ -179,6 +192,13 @@ public class BaseDataManager {
 			dictoryService = ContextFactory.getBean("dictoryService");
 		}
 		return dictoryService;
+	}
+
+	public EntityService getEntityService() {
+		if (entityService == null) {
+			entityService = ContextFactory.getBean("entityService");
+		}
+		return entityService;
 	}
 
 	/**
@@ -626,6 +646,10 @@ public class BaseDataManager {
 			ex.printStackTrace();
 		}
 
+		// 用户自定义数据
+		loadCustomInfo();
+		// 用户自定义数据处理程序
+		loadCustomHandler();
 		// 用户信息
 		loadUsers();
 		// 部门结构
@@ -636,29 +660,75 @@ public class BaseDataManager {
 		loadDictInfo();
 		// 科目代码
 		loadSubjectCode();
+		// 数据表定义信息
+		loadTableMeta();
 
-		// 需要在glaf-base-site.xml中配置load.table.meta=true
-		/**
-		 * 
-		 * <property> <name>load.table.meta</name>
-		 * <value>true</value></property>
-		 * 
-		 */
-		if (conf.getBoolean("load.table.meta", false)) {
-			logger.debug("load table meta...");
-			ITableDefinitionService tableDefinitionService = null;
-			try {
-				tableDefinitionService = ContextFactory
-						.getBean("tableDefinitionService");
-				if (tableDefinitionService != null) {
-					DbTableChecker checker = new DbTableChecker();
-					checker.setTableDefinitionService(tableDefinitionService);
-					checker.checkTables();
+	}
+
+	private void loadCustomInfo() {
+		try {
+			File file = new File(SystemProperties.getConfigRootPath()
+					+ CUSTOM_CONFIG);
+			if (file.exists() && file.isFile()) {
+				Properties props = com.glaf.core.util.PropertiesUtils
+						.loadFilePathResource(file);
+				Enumeration<?> e = props.keys();
+				while (e.hasMoreElements()) {
+					String key = (String) e.nextElement();
+					String value = props.getProperty(key);
+					JSONObject json = JSON.parseObject(value);
+					String statementId = json.getString("statementId");
+					Map<String, Object> parameterObject = new HashMap<String, Object>();
+
+					List<Object> list = this.getEntityService().getList(
+							statementId, parameterObject);
+					if (list != null && !list.isEmpty()) {
+						List<BaseDataInfo> dataList = new ArrayList<BaseDataInfo>();
+						for (Object object : list) {
+							if (object instanceof BaseDataInfo) {
+								BaseDataInfo bdf = (BaseDataInfo) object;
+								dataList.add(bdf);
+							} else {
+								Map<String, Object> dataMap = Tools
+										.getDataMap(object);
+								BaseDataInfo bdf = new BaseDataInfo();
+								Tools.populate(bdf, dataMap);
+								dataList.add(bdf);
+							}
+						}
+						baseDataMap.put(key, dataList);
+					}
 				}
-			} catch (Exception ex) {
-				ex.printStackTrace();
 			}
-			logger.debug("load table meta finish.");
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			logger.error("提取用户自定义数据失败！");
+		}
+	}
+
+	private void loadCustomHandler() {
+		try {
+			File file = new File(SystemProperties.getConfigRootPath()
+					+ CUSTOM_HANDLER);
+			if (file.exists() && file.isFile()) {
+				Properties props = com.glaf.core.util.PropertiesUtils
+						.loadFilePathResource(file);
+				Enumeration<?> e = props.keys();
+				while (e.hasMoreElements()) {
+					String key = (String) e.nextElement();
+					String value = props.getProperty(key);
+					Object object = com.glaf.core.util.ReflectUtils
+							.instantiate(value);
+					if (object instanceof BaseDataHandler) {
+						BaseDataHandler handler = (BaseDataHandler) object;
+						List<BaseDataInfo> list = handler.loadData();
+						baseDataMap.put(key, list);
+					}
+				}
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			logger.error("用户自定义数据处理程序出错！");
 		}
 	}
 
@@ -850,6 +920,32 @@ public class BaseDataManager {
 		}
 	}
 
+	private void loadTableMeta() {
+		// 需要在glaf-base-site.xml中配置load.table.meta=true
+		/**
+		 * 
+		 * <property> <name>load.table.meta</name>
+		 * <value>true</value></property>
+		 * 
+		 */
+		if (conf.getBoolean("load.table.meta", false)) {
+			logger.debug("load table meta...");
+			ITableDefinitionService tableDefinitionService = null;
+			try {
+				tableDefinitionService = ContextFactory
+						.getBean("tableDefinitionService");
+				if (tableDefinitionService != null) {
+					DbTableChecker checker = new DbTableChecker();
+					checker.setTableDefinitionService(tableDefinitionService);
+					checker.checkTables();
+				}
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+			logger.debug("load table meta finish.");
+		}
+	}
+
 	/**
 	 * 装载用户信息
 	 */
@@ -888,11 +984,25 @@ public class BaseDataManager {
 	 * 
 	 */
 	public void refreshBaseData() {
-		initBaseData();
+		/**
+		 * 确保只有一个线程能装载基础数据
+		 */
+		if (!loading.get()) {
+			try {
+				loading.set(true);
+				initBaseData();
+			} finally {
+				loading.set(false);
+			}
+		}
 	}
 
 	public void setDictoryService(DictoryService dictoryService) {
 		this.dictoryService = dictoryService;
+	}
+
+	public void setEntityService(EntityService entityService) {
+		this.entityService = entityService;
 	}
 
 	public void setSubjectCodeService(SubjectCodeService subjectCodeService) {
