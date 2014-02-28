@@ -398,7 +398,8 @@ public class CuratorSessionManager extends ManagerBase implements Lifecycle {
 		log.info("Will expire sessions after " + getMaxInactiveInterval()
 				+ " seconds");
 
-		RetryPolicy retryPolicy = new ExponentialBackoffRetry(5000, Integer.MAX_VALUE);
+		RetryPolicy retryPolicy = new ExponentialBackoffRetry(5000,
+				Integer.MAX_VALUE);
 		zkClient = CuratorFrameworkFactory.newClient(servers, retryPolicy);
 		// CuratorFrameworkFactory.Builder builder = CuratorFrameworkFactory
 		// .builder();
@@ -412,6 +413,12 @@ public class CuratorSessionManager extends ManagerBase implements Lifecycle {
 		// .namespace("TOMCAT").defaultData(null).build();
 
 		zkClient.start();
+
+		try {
+			zkClient.create().forPath(GROUP_NAME);
+		} catch (Exception ex) {
+
+		}
 
 		setDistributable(true);
 	}
