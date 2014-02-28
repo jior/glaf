@@ -22,12 +22,15 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Properties;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import com.glaf.core.util.Constants;
 import com.glaf.core.util.PropertiesUtils;
 
 public class MailProperties {
 	private static Properties conf = new Properties();
+
+	protected static AtomicBoolean loading = new AtomicBoolean(false);
 
 	static {
 		reload();
@@ -98,25 +101,30 @@ public class MailProperties {
 	}
 
 	public static void reload() {
-		try {
-			String filename = SystemProperties.getConfigRootPath()
-					+ Constants.MAIL_CONFIG;
-			java.io.FileInputStream fis = new FileInputStream(filename);
-			System.out.println("load mail config:" + filename);
-			Properties p = PropertiesUtils.loadProperties(fis);
-			if (p != null) {
-				Enumeration<?> e = p.keys();
-				while (e.hasMoreElements()) {
-					String key = (String) e.nextElement();
-					String value = p.getProperty(key);
-					conf.setProperty(key, value);
-					conf.setProperty(key.toLowerCase(), value);
-					conf.setProperty(key.toUpperCase(), value);
+		if (!loading.get()) {
+			try {
+				loading.set(true);
+				String filename = SystemProperties.getConfigRootPath()
+						+ Constants.MAIL_CONFIG;
+				java.io.FileInputStream fis = new FileInputStream(filename);
+				System.out.println("load mail config:" + filename);
+				Properties p = PropertiesUtils.loadProperties(fis);
+				if (p != null) {
+					Enumeration<?> e = p.keys();
+					while (e.hasMoreElements()) {
+						String key = (String) e.nextElement();
+						String value = p.getProperty(key);
+						conf.setProperty(key, value);
+						conf.setProperty(key.toLowerCase(), value);
+						conf.setProperty(key.toUpperCase(), value);
+					}
 				}
+			} catch (IOException ex) {
+				ex.printStackTrace();
+				throw new RuntimeException(ex);
+			} finally {
+				loading.set(false);
 			}
-		} catch (IOException ex) {
-			ex.printStackTrace();
-			throw new RuntimeException(ex);
 		}
 	}
 

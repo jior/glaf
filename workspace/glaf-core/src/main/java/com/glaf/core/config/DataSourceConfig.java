@@ -25,6 +25,7 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
@@ -53,6 +54,8 @@ public class DataSourceConfig {
 	protected static Properties hibernateDialetTypeMappings = getHibernateDialectMappings();
 
 	protected static Properties properties = new Properties();
+
+	protected static AtomicBoolean loading = new AtomicBoolean(false);
 
 	protected static boolean loadJdbcProperties = false;
 
@@ -164,8 +167,10 @@ public class DataSourceConfig {
 					bds.setDriverClassName(props
 							.getProperty(DBConfiguration.JDBC_DRIVER));
 					bds.setUrl(props.getProperty(DBConfiguration.JDBC_URL));
-					bds.setUsername(props.getProperty(DBConfiguration.JDBC_USER));
-					bds.setPassword(props.getProperty(DBConfiguration.JDBC_PASSWORD));
+					bds.setUsername(props
+							.getProperty(DBConfiguration.JDBC_USER));
+					bds.setPassword(props
+							.getProperty(DBConfiguration.JDBC_PASSWORD));
 					connection = bds.getConnection();
 				}
 			} else {
@@ -526,9 +531,13 @@ public class DataSourceConfig {
 	}
 
 	public static void reload() {
-		synchronized (DataSourceConfig.class) {
+		/**
+		 * 确保只有一个线程能装载基础数据
+		 */
+		if (!loading.get()) {
 			InputStream inputStream = null;
 			try {
+				loading.set(true);
 				String filename = SystemProperties.getConfigRootPath()
 						+ Constants.DEFAULT_JDBC_CONFIG;
 				Resource resource = new FileSystemResource(filename);
@@ -577,6 +586,7 @@ public class DataSourceConfig {
 			} catch (IOException ex) {
 				loadJdbcProperties = false;
 			} finally {
+				loading.set(true);
 				IOUtils.closeQuietly(inputStream);
 			}
 		}

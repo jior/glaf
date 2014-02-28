@@ -24,6 +24,7 @@ import java.io.InputStream;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Properties;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -35,6 +36,8 @@ import com.glaf.core.util.PropertiesUtils;
 public class MessageProperties {
 
 	private static Properties properties = new Properties();
+
+	protected static AtomicBoolean loading = new AtomicBoolean(false);
 
 	static {
 		try {
@@ -112,49 +115,55 @@ public class MessageProperties {
 	}
 
 	public static void reload() {
-		try {
-			String config = SystemConfig.getConfigRootPath()
-					+ "/conf/props/messages";
-			File directory = new File(config);
-			if (directory.exists() && directory.isDirectory()) {
-				String[] filelist = directory.list();
-				for (int i = 0; i < filelist.length; i++) {
-					String filename = config + "/" + filelist[i];
-					File file = new File(filename);
-					if (file.isFile() && file.getName().endsWith(".properties")) {
-						InputStream inputStream = new FileInputStream(file);
-						Properties p = PropertiesUtils
-								.loadProperties(inputStream);
-						if (p != null) {
-							Enumeration<?> e = p.keys();
-							while (e.hasMoreElements()) {
-								String key = (String) e.nextElement();
-								String value = p.getProperty(key);
-								properties.setProperty(key, value);
-								properties
-										.setProperty(key.toLowerCase(), value);
-								properties
-										.setProperty(key.toUpperCase(), value);
+		if (!loading.get()) {
+			try {
+				loading.set(true);
+				String config = SystemConfig.getConfigRootPath()
+						+ "/conf/props/messages";
+				File directory = new File(config);
+				if (directory.exists() && directory.isDirectory()) {
+					String[] filelist = directory.list();
+					for (int i = 0; i < filelist.length; i++) {
+						String filename = config + "/" + filelist[i];
+						File file = new File(filename);
+						if (file.isFile()
+								&& file.getName().endsWith(".properties")) {
+							InputStream inputStream = new FileInputStream(file);
+							Properties p = PropertiesUtils
+									.loadProperties(inputStream);
+							if (p != null) {
+								Enumeration<?> e = p.keys();
+								while (e.hasMoreElements()) {
+									String key = (String) e.nextElement();
+									String value = p.getProperty(key);
+									properties.setProperty(key, value);
+									properties.setProperty(key.toLowerCase(),
+											value);
+									properties.setProperty(key.toUpperCase(),
+											value);
+								}
 							}
+							inputStream.close();
+							inputStream = null;
 						}
-						inputStream.close();
-						inputStream = null;
 					}
 				}
-			}
 
-			ISystemPropertyService systemPropertyService = ContextFactory
-					.getBean("systemPropertyService");
-			List<SystemProperty> list = systemPropertyService
-					.getAllSystemProperties();
-			if (list != null && !list.isEmpty()) {
-				for (SystemProperty p : list) {
-					properties.put(p.getName(), p);
+				ISystemPropertyService systemPropertyService = ContextFactory
+						.getBean("systemPropertyService");
+				List<SystemProperty> list = systemPropertyService
+						.getAllSystemProperties();
+				if (list != null && !list.isEmpty()) {
+					for (SystemProperty p : list) {
+						properties.put(p.getName(), p);
+					}
 				}
-			}
 
-		} catch (Exception ex) {
-			throw new RuntimeException(ex);
+			} catch (Exception ex) {
+				throw new RuntimeException(ex);
+			} finally {
+				loading.set(false);
+			}
 		}
 	}
 

@@ -23,6 +23,7 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.Enumeration;
 import java.util.Properties;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
@@ -36,6 +37,8 @@ public class CustomProperties {
 			.getLog(CustomProperties.class);
 
 	private static Properties properties = new Properties();
+
+	protected static AtomicBoolean loading = new AtomicBoolean(false);
 
 	static {
 		try {
@@ -114,43 +117,49 @@ public class CustomProperties {
 	}
 
 	public static void reload() {
-		try {
-			String config = SystemProperties.getConfigRootPath()
-					+ "/conf/props";
-			logger.debug(config);
-			File directory = new File(config);
-			if (directory.exists()) {
-				String[] filelist = directory.list();
-				for (int i = 0; i < filelist.length; i++) {
-					String filename = config + "/" + filelist[i];
-					logger.debug(filename);
-					File file = new File(filename);
-					if (file.isFile() && file.getName().endsWith(".properties")) {
-						logger.info("load properties:" + file.getAbsolutePath());
-						InputStream inputStream = new FileInputStream(file);
-						Properties p = PropertiesUtils
-								.loadProperties(inputStream);
-						if (p != null) {
-							Enumeration<?> e = p.keys();
-							while (e.hasMoreElements()) {
-								String key = (String) e.nextElement();
-								String value = p.getProperty(key);
-								properties.setProperty(key, value);
-								properties
-										.setProperty(key.toLowerCase(), value);
-								properties
-										.setProperty(key.toUpperCase(), value);
+		if (!loading.get()) {
+			try {
+				loading.set(true);
+				String config = SystemProperties.getConfigRootPath()
+						+ "/conf/props";
+				logger.debug(config);
+				File directory = new File(config);
+				if (directory.exists()) {
+					String[] filelist = directory.list();
+					for (int i = 0; i < filelist.length; i++) {
+						String filename = config + "/" + filelist[i];
+						logger.debug(filename);
+						File file = new File(filename);
+						if (file.isFile()
+								&& file.getName().endsWith(".properties")) {
+							logger.info("load properties:"
+									+ file.getAbsolutePath());
+							InputStream inputStream = new FileInputStream(file);
+							Properties p = PropertiesUtils
+									.loadProperties(inputStream);
+							if (p != null) {
+								Enumeration<?> e = p.keys();
+								while (e.hasMoreElements()) {
+									String key = (String) e.nextElement();
+									String value = p.getProperty(key);
+									properties.setProperty(key, value);
+									properties.setProperty(key.toLowerCase(),
+											value);
+									properties.setProperty(key.toUpperCase(),
+											value);
+								}
 							}
+							inputStream.close();
+							inputStream = null;
 						}
-						inputStream.close();
-						inputStream = null;
 					}
 				}
+			} catch (Exception ex) {
+				throw new RuntimeException(ex);
+			} finally {
+				loading.set(false);
 			}
-		} catch (Exception ex) {
-			throw new RuntimeException(ex);
 		}
-
 	}
 
 	private CustomProperties() {

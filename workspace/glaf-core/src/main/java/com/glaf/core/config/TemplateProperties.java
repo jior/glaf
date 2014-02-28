@@ -21,17 +21,18 @@ package com.glaf.core.config;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
-
 import java.util.List;
-
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import com.glaf.core.template.Template;
 import com.glaf.core.xml.TemplateReader;
 
 public class TemplateProperties {
 	private static ConcurrentMap<String, Template> cache = new ConcurrentHashMap<String, Template>();
+
+	protected static AtomicBoolean loading = new AtomicBoolean(false);
 
 	static {
 		try {
@@ -49,35 +50,41 @@ public class TemplateProperties {
 	}
 
 	public static void reload() {
-		try {
-			String config = SystemProperties.getConfigRootPath()
-					+ "/conf/templates";
-			File directory = new File(config);
-			if (directory.exists() && directory.isDirectory()) {
-				TemplateReader reader = new TemplateReader();
-				String[] filelist = directory.list();
-				for (int i = 0; i < filelist.length; i++) {
-					String filename = config + filelist[i];
-					File file = new File(filename);
-					if (file.isFile() && file.getName().endsWith(".xml")) {
-						InputStream inputStream = new FileInputStream(file);
-						List<Template> templates = reader
-								.readTemplates(inputStream);
-						if (templates != null) {
-							for (Template tpl : templates) {
-								if (tpl != null && tpl.getName() != null) {
-									cache.put(tpl.getName(), tpl);
-									cache.put(tpl.getName().toLowerCase(), tpl);
+		if (!loading.get()) {
+			try {
+				loading.set(true);
+				String config = SystemProperties.getConfigRootPath()
+						+ "/conf/templates";
+				File directory = new File(config);
+				if (directory.exists() && directory.isDirectory()) {
+					TemplateReader reader = new TemplateReader();
+					String[] filelist = directory.list();
+					for (int i = 0; i < filelist.length; i++) {
+						String filename = config + filelist[i];
+						File file = new File(filename);
+						if (file.isFile() && file.getName().endsWith(".xml")) {
+							InputStream inputStream = new FileInputStream(file);
+							List<Template> templates = reader
+									.readTemplates(inputStream);
+							if (templates != null) {
+								for (Template tpl : templates) {
+									if (tpl != null && tpl.getName() != null) {
+										cache.put(tpl.getName(), tpl);
+										cache.put(tpl.getName().toLowerCase(),
+												tpl);
+									}
 								}
 							}
+							inputStream.close();
+							inputStream = null;
 						}
-						inputStream.close();
-						inputStream = null;
 					}
 				}
+			} catch (Exception ex) {
+				throw new RuntimeException(ex);
+			} finally {
+				loading.set(false);
 			}
-		} catch (Exception ex) {
-			throw new RuntimeException(ex);
 		}
 	}
 

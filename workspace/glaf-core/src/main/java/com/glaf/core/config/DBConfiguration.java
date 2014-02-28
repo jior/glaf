@@ -25,6 +25,7 @@ import java.sql.Connection;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
@@ -91,6 +92,8 @@ public class DBConfiguration {
 	public static final String JDBC_POOL_TYPE = "jdbc.pool_type";
 
 	private static boolean REQUIRE_RELOAD_JDBC_RESOURCE = false;
+
+	protected static AtomicBoolean loading = new AtomicBoolean(false);
 
 	protected static ConcurrentMap<String, Properties> dataMap = new ConcurrentHashMap<String, Properties>();
 
@@ -328,8 +331,9 @@ public class DBConfiguration {
 
 	protected static void reloadDS() {
 		Map<String, Properties> dataSourceMap = new HashMap<String, Properties>();
-		synchronized (DBConfiguration.class) {
+		if (!loading.get()) {
 			try {
+				loading.set(true);
 				String path = SystemProperties.getConfigRootPath()
 						+ Constants.JDBC_CONFIG;
 				logger.info("path:" + path);
@@ -374,6 +378,8 @@ public class DBConfiguration {
 			} catch (Exception ex) {
 				ex.printStackTrace();
 				logger.error(ex);
+			} finally {
+				loading.set(false);
 			}
 
 			String filename = SystemProperties.getConfigRootPath()

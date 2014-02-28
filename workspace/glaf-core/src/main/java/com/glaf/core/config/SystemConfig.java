@@ -19,6 +19,8 @@
 package com.glaf.core.config;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
@@ -33,7 +35,9 @@ import com.glaf.core.util.DateUtils;
 public class SystemConfig {
 	protected static final Log logger = LogFactory.getLog(SystemConfig.class);
 
-	public final static Map<String, SystemProperty> properties = new HashMap<String, SystemProperty>();
+	public final static Map<String, SystemProperty> properties = new ConcurrentHashMap<String, SystemProperty>();
+
+	protected static AtomicBoolean loading = new AtomicBoolean(false);
 
 	public final static String CURR_YYYYMMDD = "${curr_yyyymmdd}";
 
@@ -239,8 +243,8 @@ public class SystemConfig {
 		}
 		return ret;
 	}
-	
-	public static String getString(String key,String defaultValue) {
+
+	public static String getString(String key, String defaultValue) {
 		String ret = defaultValue;
 		if (properties.isEmpty()) {
 			reload();
@@ -294,13 +298,23 @@ public class SystemConfig {
 	}
 
 	public static void reload() {
-		ISystemPropertyService systemPropertyService = ContextFactory
-				.getBean("systemPropertyService");
-		List<SystemProperty> list = systemPropertyService
-				.getAllSystemProperties();
-		if (list != null && !list.isEmpty()) {
-			for (SystemProperty p : list) {
-				properties.put(p.getName(), p);
+		if (!loading.get()) {
+			try {
+				loading.set(true);
+				ISystemPropertyService systemPropertyService = ContextFactory
+						.getBean("systemPropertyService");
+				List<SystemProperty> list = systemPropertyService
+						.getAllSystemProperties();
+				if (list != null && !list.isEmpty()) {
+					for (SystemProperty p : list) {
+						properties.put(p.getName(), p);
+					}
+				}
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				throw new RuntimeException(ex);
+			} finally {
+				loading.set(false);
 			}
 		}
 	}

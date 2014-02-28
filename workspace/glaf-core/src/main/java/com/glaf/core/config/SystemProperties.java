@@ -19,13 +19,18 @@
 package com.glaf.core.config;
 
 import java.io.IOException;
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+
 import com.glaf.core.util.Constants;
 
 public class SystemProperties {
 
 	private static final Configuration conf = BaseConfiguration.create();
+
+	protected static AtomicBoolean loading = new AtomicBoolean(false);
 
 	private static String ROOT_CONF_PATH = null;
 
@@ -115,17 +120,23 @@ public class SystemProperties {
 	}
 
 	public static void reload() {
-		try {
-			Resource resource = new ClassPathResource(Constants.SYSTEM_CONFIG);
-			ROOT_CONF_PATH = resource.getFile().getParentFile().getParentFile()
-					.getAbsolutePath();
-			ROOT_APP_PATH = resource.getFile().getParentFile().getParentFile()
-					.getParentFile().getAbsolutePath();
-			System.out.println("load system config:"
-					+ resource.getFile().getAbsolutePath());
-		} catch (IOException ex) {
-			ex.printStackTrace();
-			throw new RuntimeException(ex);
+		if (!loading.get()) {
+			try {
+				loading.set(true);
+				Resource resource = new ClassPathResource(
+						Constants.SYSTEM_CONFIG);
+				ROOT_CONF_PATH = resource.getFile().getParentFile()
+						.getParentFile().getAbsolutePath();
+				ROOT_APP_PATH = resource.getFile().getParentFile()
+						.getParentFile().getParentFile().getAbsolutePath();
+				System.out.println("load system config:"
+						+ resource.getFile().getAbsolutePath());
+			} catch (IOException ex) {
+				ex.printStackTrace();
+				throw new RuntimeException(ex);
+			} finally {
+				loading.set(false);
+			}
 		}
 	}
 
