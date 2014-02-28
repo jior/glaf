@@ -35,7 +35,7 @@ import com.glaf.core.util.DateUtils;
 public class SystemConfig {
 	protected static final Log logger = LogFactory.getLog(SystemConfig.class);
 
-	public final static Map<String, SystemProperty> properties = new ConcurrentHashMap<String, SystemProperty>();
+	protected final static Map<String, SystemProperty> properties = new ConcurrentHashMap<String, SystemProperty>();
 
 	protected static AtomicBoolean loading = new AtomicBoolean(false);
 
@@ -51,7 +51,7 @@ public class SystemConfig {
 
 	public final static String NOW = "${now}";
 
-	private static String TOKEN = null;
+	private static volatile String TOKEN = null;
 
 	/**
 	 * 返回web应用的WEB-INF目录的全路径

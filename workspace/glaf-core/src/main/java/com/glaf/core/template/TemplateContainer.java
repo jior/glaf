@@ -34,7 +34,7 @@ public class TemplateContainer {
 		return container;
 	}
 
-	private ITemplateService templateService;
+	private volatile ITemplateService templateService;
 
 	private TemplateContainer() {
 		templateService = (ITemplateService) ContextFactory

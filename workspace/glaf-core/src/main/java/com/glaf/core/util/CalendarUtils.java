@@ -49,9 +49,9 @@ public class CalendarUtils {
 
 	protected static int startTime = 0;
 
-	protected static ISysCalendarService sysCalendarService;
+	protected static volatile ISysCalendarService sysCalendarService;
 
-	protected static ISystemParamService systemParamService;
+	protected static volatile ISystemParamService systemParamService;
 
 	/**
 	 * 得到几天后的时间

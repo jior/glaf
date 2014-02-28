@@ -32,9 +32,9 @@ public class SystemProperties {
 
 	protected static AtomicBoolean loading = new AtomicBoolean(false);
 
-	private static String ROOT_CONF_PATH = null;
+	private static volatile String ROOT_CONF_PATH = null;
 
-	private static String ROOT_APP_PATH = null;
+	private static volatile String ROOT_APP_PATH = null;
 
 	public static String getAppPath() {
 		if (ROOT_APP_PATH == null) {

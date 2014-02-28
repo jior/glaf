@@ -85,9 +85,9 @@ public class TomcatJdbcConnectionProvider implements ConnectionProvider {
 
 	public static final int UNKNOWN_TRANSACTIONISOLATION = -1;
 
-	private DataSource ds;
-	private Integer isolation;
-	private boolean autocommit;
+	private volatile DataSource ds;
+	private volatile Integer isolation;
+	private volatile boolean autocommit;
 
 	public TomcatJdbcConnectionProvider() {
 		log.info("----------------------------TomcatJdbcConnectionProvider-----------------");

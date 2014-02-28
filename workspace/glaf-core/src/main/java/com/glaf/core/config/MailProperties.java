@@ -28,7 +28,7 @@ import com.glaf.core.util.Constants;
 import com.glaf.core.util.PropertiesUtils;
 
 public class MailProperties {
-	private static Properties conf = new Properties();
+	private static volatile Properties conf = new Properties();
 
 	protected static AtomicBoolean loading = new AtomicBoolean(false);
 

@@ -31,7 +31,7 @@ import com.glaf.core.util.PropertiesUtils;
 
 public class ViewProperties {
 
-	private static Properties properties = new Properties();
+	private static volatile Properties properties = new Properties();
 
 	protected static AtomicBoolean loading = new AtomicBoolean(false);
 

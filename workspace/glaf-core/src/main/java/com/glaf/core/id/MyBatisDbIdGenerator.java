@@ -22,11 +22,11 @@ public class MyBatisDbIdGenerator implements IdGenerator {
 	protected final static Log logger = LogFactory
 			.getLog(MyBatisDbIdGenerator.class);
 
-	protected EntityDAO entityDAO;
+	protected volatile EntityDAO entityDAO;
 
-	protected long lastId = -1;
+	protected volatile long lastId = -1;
 
-	protected long nextId = 0;
+	protected volatile long nextId = 0;
 
 	public MyBatisDbIdGenerator() {
 		logger.info("----------------MyBatis3DbIdGenerator--------------");

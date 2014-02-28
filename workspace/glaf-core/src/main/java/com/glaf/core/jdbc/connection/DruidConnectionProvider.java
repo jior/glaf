@@ -47,9 +47,9 @@ public class DruidConnectionProvider implements ConnectionProvider {
 	private final static String ACQUIRE_INCREMENT = "acquireIncrement";
 	private final static String IDLE_CONNECTION_TEST_PERIOD = "idleConnectionTestPeriod";
 
-	private DruidDataSource ds;
-	private Integer isolation;
-	private boolean autocommit;
+	private volatile DruidDataSource ds;
+	private volatile Integer isolation;
+	private volatile boolean autocommit;
 
 	public void close() {
 		try {

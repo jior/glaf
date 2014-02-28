@@ -36,7 +36,7 @@ public class CustomProperties {
 	protected static final Log logger = LogFactory
 			.getLog(CustomProperties.class);
 
-	private static Properties properties = new Properties();
+	private static volatile Properties properties = new Properties();
 
 	protected static AtomicBoolean loading = new AtomicBoolean(false);
 

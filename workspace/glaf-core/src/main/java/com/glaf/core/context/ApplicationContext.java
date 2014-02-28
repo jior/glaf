@@ -31,11 +31,11 @@ public class ApplicationContext {
 
 	public final static String sp = System.getProperty("file.separator");
 
-	private static String appPath;
+	private static volatile String appPath;
 
-	private static String classPath;
+	private static volatile String classPath;
 
-	private static String contextPath;
+	private static volatile String contextPath;
 
 	public static String getAppClasspath() {
 		if (classPath == null) {

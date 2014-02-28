@@ -53,11 +53,11 @@ public class DataSourceConfig {
 
 	protected static Properties hibernateDialetTypeMappings = getHibernateDialectMappings();
 
-	protected static Properties properties = new Properties();
+	protected static volatile Properties properties = new Properties();
 
 	protected static AtomicBoolean loading = new AtomicBoolean(false);
 
-	protected static boolean loadJdbcProperties = false;
+	protected static volatile boolean loadJdbcProperties = false;
 
 	static {
 		try {

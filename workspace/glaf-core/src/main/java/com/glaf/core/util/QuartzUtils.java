@@ -40,9 +40,9 @@ import com.glaf.core.service.ISysSchedulerService;
 public class QuartzUtils {
 	protected final static Log logger = LogFactory.getLog(QuartzUtils.class);
 
-	protected static org.quartz.Scheduler scheduler;
+	protected static volatile org.quartz.Scheduler scheduler;
 
-	protected static ISysSchedulerService sysSchedulerService;
+	protected static volatile ISysSchedulerService sysSchedulerService;
 
 	public static org.quartz.Scheduler getQuartzScheduler() {
 		if (scheduler == null) {

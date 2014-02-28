@@ -40,9 +40,9 @@ public class C3P0ConnectionProvider implements ConnectionProvider {
 	private static final Logger log = LoggerFactory
 			.getLogger(C3P0ConnectionProvider.class);
 
-	private DataSource ds;
-	private Integer isolation;
-	private boolean autocommit;
+	private volatile DataSource ds;
+	private volatile Integer isolation;
+	private volatile boolean autocommit;
 
 	public C3P0ConnectionProvider() {
 		log.info("----------------------------C3P0ConnectionProvider-----------------");

@@ -51,13 +51,13 @@ import com.glaf.core.util.StringTools;
 public class TransformTable {
 	protected static final Log logger = LogFactory.getLog(TransformTable.class);
 
-	protected IQueryDefinitionService queryDefinitionService;
+	protected volatile IQueryDefinitionService queryDefinitionService;
 
-	protected ITableDataService tableDataService;
+	protected volatile ITableDataService tableDataService;
 
-	protected ITableDefinitionService tableDefinitionService;
+	protected volatile ITableDefinitionService tableDefinitionService;
 
-	protected ITablePageService tablePageService;
+	protected volatile ITablePageService tablePageService;
 
 	public TransformTable() {
 

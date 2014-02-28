@@ -61,11 +61,11 @@ public class ParserFacede {
 		facede.process(mappingDir, dataDir);
 	}
 
-	protected IBlobService blobService;
+	protected volatile IBlobService blobService;
 
-	protected ITableDataService tableDataService;
+	protected volatile ITableDataService tableDataService;
 
-	protected ITableDefinitionService tableDefinitionService;
+	protected volatile ITableDefinitionService tableDefinitionService;
 
 	public IBlobService getBlobService() {
 		if (blobService == null) {

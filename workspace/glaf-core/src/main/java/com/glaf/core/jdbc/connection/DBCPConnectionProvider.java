@@ -46,9 +46,9 @@ public class DBCPConnectionProvider implements ConnectionProvider {
 	private static final Logger log = LoggerFactory
 			.getLogger(DBCPConnectionProvider.class);
 
-	private DataSource ds;
-	private Integer isolation;
-	private boolean autocommit;
+	private volatile DataSource ds;
+	private volatile Integer isolation;
+	private volatile boolean autocommit;
 
 	public DBCPConnectionProvider() {
 		log.info("----------------------------DBCPConnectionProvider-----------------");

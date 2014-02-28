@@ -27,7 +27,7 @@ public class NativeCodeLoader {
 
 	private static final Log LOG = LogFactory.getLog(NativeCodeLoader.class);
 
-	private static boolean nativeCodeLoaded = false;
+	private static volatile boolean nativeCodeLoaded = false;
 
 	static {
 		// Try to load native hadoop library and set fallback flag appropriately

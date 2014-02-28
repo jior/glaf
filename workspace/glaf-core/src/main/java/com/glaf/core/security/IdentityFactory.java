@@ -41,7 +41,7 @@ import com.glaf.core.service.EntityService;
 import com.glaf.core.util.Constants;
 
 public class IdentityFactory {
-	protected static EntityService entityService;
+	protected static volatile EntityService entityService;
 
 	protected final static Log logger = LogFactory
 			.getLog(IdentityFactory.class);
