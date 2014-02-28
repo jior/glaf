@@ -18,7 +18,6 @@
 
 package com.glaf.core.query;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -33,8 +32,8 @@ import com.glaf.core.util.Paging;
 public class BaseQuery extends AbstractQuery<Object> {
 	private static final long serialVersionUID = 1L;
 	protected String actorId;
-	protected List<String> actorIds = new ArrayList<String>();
-	protected List<String> businessKeys = new ArrayList<String>();
+	protected List<String> actorIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
+	protected List<String> businessKeys = new java.util.concurrent.CopyOnWriteArrayList<String>();
 	protected String createBy;
 	protected QueryCondition currentQueryCondition;
 	protected boolean isFilterPermission = true;
@@ -46,7 +45,7 @@ public class BaseQuery extends AbstractQuery<Object> {
 	protected int pageNo;
 	protected int pageSize;
 	protected Object parameter;
-	protected List rowIds = new ArrayList();
+	protected List rowIds = new java.util.concurrent.CopyOnWriteArrayList();
 	protected String serviceKey;
 	protected String sortField;
 	protected String sortOrder;

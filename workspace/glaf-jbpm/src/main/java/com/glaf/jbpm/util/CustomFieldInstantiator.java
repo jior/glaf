@@ -19,7 +19,6 @@
 package com.glaf.jbpm.util;
 
 import java.lang.reflect.Constructor;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -65,12 +64,12 @@ public class CustomFieldInstantiator extends FieldInstantiator implements
 		} else if (type.isAssignableFrom(java.util.Date.class)) {
 			value = DateUtils.toDate(propertyElement.getTextTrim());
 		} else if (type.isAssignableFrom(List.class)) {
-			value = getCollectionValue(propertyElement, new ArrayList<Object>());
+			value = getCollectionValue(propertyElement, new java.util.concurrent.CopyOnWriteArrayList<Object>());
 		} else if (type.isAssignableFrom(Set.class)) {
 			value = getCollectionValue(propertyElement,
 					new LinkedHashSet<Object>());
 		} else if (type.isAssignableFrom(Collection.class)) {
-			value = getCollectionValue(propertyElement, new ArrayList<Object>());
+			value = getCollectionValue(propertyElement, new java.util.concurrent.CopyOnWriteArrayList<Object>());
 		} else if (type.isAssignableFrom(Map.class)) {
 			value = getMapValue(propertyElement,
 					new LinkedHashMap<Object, Object>());

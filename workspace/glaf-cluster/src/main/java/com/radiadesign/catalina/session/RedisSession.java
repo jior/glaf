@@ -1,9 +1,11 @@
 package com.radiadesign.catalina.session;
 
 import java.security.Principal;
+
 import org.apache.catalina.Manager;
 import org.apache.catalina.session.StandardSession;
-import java.util.HashMap;
+ 
+import java.util.Map;
 
 public class RedisSession extends StandardSession {
 
@@ -20,7 +22,7 @@ public class RedisSession extends StandardSession {
 		manualDirtyTrackingAttributeKey = key;
 	}
 
-	protected HashMap<String, Object> changedAttributes;
+	protected  Map<String, Object> changedAttributes;
 	protected Boolean dirty;
 
 	public RedisSession(Manager manager) {
@@ -32,12 +34,12 @@ public class RedisSession extends StandardSession {
 		return dirty || !changedAttributes.isEmpty();
 	}
 
-	public HashMap<String, Object> getChangedAttributes() {
+	public  Map<String, Object> getChangedAttributes() {
 		return changedAttributes;
 	}
 
 	public void resetDirtyTracking() {
-		changedAttributes = new HashMap<String, Object>();
+		changedAttributes = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		dirty = false;
 	}
 

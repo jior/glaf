@@ -21,7 +21,6 @@ package com.glaf.activiti.executionlistener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -41,11 +40,10 @@ import com.glaf.activiti.extension.factory.ExtensionFactory;
 import com.glaf.activiti.extension.model.ExtensionEntity;
 import com.glaf.activiti.extension.service.ActivitiExtensionService;
 import com.glaf.activiti.util.ExtensionUtils;
-import com.glaf.core.util.LogUtils;
-import com.glaf.core.util.JdbcUtils;
-
-import com.glaf.core.util.StringTools;
 import com.glaf.core.el.Mvel2ExpressionEvaluator;
+import com.glaf.core.util.JdbcUtils;
+import com.glaf.core.util.LogUtils;
+import com.glaf.core.util.StringTools;
 
 public class ExtensionSqlExecutionListener implements ExecutionListener {
 	private static final long serialVersionUID = 1L;
@@ -108,7 +106,7 @@ public class ExtensionSqlExecutionListener implements ExecutionListener {
 			logger.debug("extension:" + extension.toJsonObject());
 		}
 
-		Map<String, Object> params = new HashMap<String, Object>();
+		Map<String, Object> params = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 
 		Map<String, Object> variables = execution.getVariables();
 		if (variables != null && variables.size() > 0) {

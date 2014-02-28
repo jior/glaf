@@ -19,8 +19,6 @@
 package com.glaf.base.modules.sys.springmvc;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -41,6 +39,18 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.glaf.base.modules.Constants;
+import com.glaf.base.modules.sys.SysConstants;
+import com.glaf.base.modules.sys.model.Group;
+import com.glaf.base.modules.sys.model.SysDepartment;
+import com.glaf.base.modules.sys.model.SysTree;
+import com.glaf.base.modules.sys.model.SysUser;
+import com.glaf.base.modules.sys.query.GroupQuery;
+import com.glaf.base.modules.sys.service.GroupService;
+import com.glaf.base.modules.sys.service.SysTreeService;
+import com.glaf.base.modules.sys.service.SysUserService;
+import com.glaf.base.utils.ParamUtil;
+import com.glaf.base.utils.RequestUtil;
 import com.glaf.core.base.BaseTree;
 import com.glaf.core.base.TreeModel;
 import com.glaf.core.config.ViewProperties;
@@ -55,18 +65,6 @@ import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.RequestUtils;
 import com.glaf.core.util.ResponseUtils;
 import com.glaf.core.util.Tools;
-import com.glaf.base.modules.Constants;
-import com.glaf.base.modules.sys.SysConstants;
-import com.glaf.base.modules.sys.model.Group;
-import com.glaf.base.modules.sys.model.SysDepartment;
-import com.glaf.base.modules.sys.model.SysTree;
-import com.glaf.base.modules.sys.model.SysUser;
-import com.glaf.base.modules.sys.query.GroupQuery;
-import com.glaf.base.modules.sys.service.GroupService;
-import com.glaf.base.modules.sys.service.SysTreeService;
-import com.glaf.base.modules.sys.service.SysUserService;
-import com.glaf.base.utils.ParamUtil;
-import com.glaf.base.utils.RequestUtil;
 
 @Controller("/base/group")
 @RequestMapping("/base/group.do")
@@ -163,13 +161,13 @@ public class GroupController {
 		if (root != null && users != null) {
 			logger.debug(root.toJsonObject().toJSONString());
 			logger.debug("users size:" + users.size());
-			List<TreeModel> treeModels = new ArrayList<TreeModel>();
+			List<TreeModel> treeModels = new java.util.concurrent.CopyOnWriteArrayList<TreeModel>();
 			// treeModels.add(root);
 			List<SysTree> trees = sysTreeService.getAllSysTreeListForDept(
 					(int) root.getId(), 0);
 			if (trees != null && !trees.isEmpty()) {
 				logger.debug("dept tree size:" + trees.size());
-				Map<Long, SysTree> treeMap = new HashMap<Long, SysTree>();
+				Map<Long, SysTree> treeMap = new java.util.concurrent.ConcurrentHashMap<Long, SysTree>();
 				for (SysTree tree : trees) {
 					SysDepartment dept = tree.getDepartment();
 					treeMap.put(dept.getId(), tree);

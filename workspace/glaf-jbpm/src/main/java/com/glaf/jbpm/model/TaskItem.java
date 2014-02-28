@@ -20,11 +20,11 @@ package com.glaf.jbpm.model;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
+
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 
@@ -133,7 +133,7 @@ public class TaskItem implements Serializable, Comparable<TaskItem> {
 	 */
 	protected int wfStatus;
 
-	protected Map<String, Object> variables = new HashMap<String, Object>();
+	protected Map<String, Object> variables = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 
 	public TaskItem() {
 

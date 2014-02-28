@@ -164,7 +164,8 @@ public class SqlMapClientFactoryBean implements FactoryBean<SqlMapClient>,
 			SqlMapExecutorDelegate delegate = client.getDelegate();
 			try {
 				logger.debug("start inject sqlExecutor ...");
-				ReflectUtils.setFieldValue(delegate, "sqlExecutor", sqlExecutor);
+				ReflectUtils
+						.setFieldValue(delegate, "sqlExecutor", sqlExecutor);
 				logger.debug("sqlExecutor injected.");
 				logger.info("[iBATIS] success set ibatis SqlMapClient.sqlExecutor = "
 						+ sqlExecutor.getClass().getName());

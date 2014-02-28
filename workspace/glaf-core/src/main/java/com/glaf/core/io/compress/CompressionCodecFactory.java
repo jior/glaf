@@ -83,7 +83,7 @@ public class CompressionCodecFactory {
 			Configuration conf) {
 		String codecsString = conf.get("io.compression.codecs");
 		if (codecsString != null) {
-			List<Class<? extends CompressionCodec>> result = new ArrayList<Class<? extends CompressionCodec>>();
+			List<Class<? extends CompressionCodec>> result = new java.util.concurrent.CopyOnWriteArrayList<Class<? extends CompressionCodec>>();
 			StringTokenizer codecSplit = new StringTokenizer(codecsString, ",");
 			while (codecSplit.hasMoreElements()) {
 				String codecSubstring = codecSplit.nextToken();

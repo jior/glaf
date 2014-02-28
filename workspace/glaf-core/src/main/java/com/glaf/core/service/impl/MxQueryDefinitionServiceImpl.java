@@ -18,7 +18,9 @@
 
 package com.glaf.core.service.impl;
 
-import java.util.*;
+import java.util.Date;
+import java.util.List;
+import java.util.Stack;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
@@ -28,11 +30,13 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.glaf.core.id.*;
-
-import com.glaf.core.domain.*;
-import com.glaf.core.query.*;
-import com.glaf.core.mapper.*;
+import com.glaf.core.domain.ColumnDefinition;
+import com.glaf.core.domain.QueryDefinition;
+import com.glaf.core.id.IdGenerator;
+import com.glaf.core.mapper.ColumnDefinitionMapper;
+import com.glaf.core.mapper.QueryDefinitionMapper;
+import com.glaf.core.query.ColumnDefinitionQuery;
+import com.glaf.core.query.QueryDefinitionQuery;
 import com.glaf.core.service.IQueryDefinitionService;
 
 @Service("queryDefinitionService")
@@ -253,8 +257,8 @@ public class MxQueryDefinitionServiceImpl implements IQueryDefinitionService {
 		if (queryDefinition.getColumns() != null
 				&& !queryDefinition.getColumns().isEmpty()) {
 
-			List<ColumnDefinition> columns = new ArrayList<ColumnDefinition>();
-			List<ColumnDefinition> parameters = new ArrayList<ColumnDefinition>();
+			List<ColumnDefinition> columns = new java.util.concurrent.CopyOnWriteArrayList<ColumnDefinition>();
+			List<ColumnDefinition> parameters = new java.util.concurrent.CopyOnWriteArrayList<ColumnDefinition>();
 
 			for (ColumnDefinition column : queryDefinition.getColumns()) {
 				if ("C".equals(column.getDiscriminator())) {

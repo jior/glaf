@@ -17,14 +17,12 @@
  */
 package com.glaf.form.core.service.impl.mybatis;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.SqlSession;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,7 +30,6 @@ import com.glaf.core.dao.EntityDAO;
 import com.glaf.core.id.IdGenerator;
 import com.glaf.core.query.DataModelQuery;
 import com.glaf.core.util.Paging;
-
 import com.glaf.form.core.context.FormContext;
 import com.glaf.form.core.domain.FormApplication;
 import com.glaf.form.core.domain.FormDefinition;
@@ -69,7 +66,7 @@ public class MxFormLinkServiceImpl implements FormLinkService {
 
 	public List<FormApplication> getChildrenApplications(String app_name) {
 		List<FormLink> list = this.getFormLinks(app_name);
-		List<FormApplication> rows = new ArrayList<FormApplication>();
+		List<FormApplication> rows = new java.util.concurrent.CopyOnWriteArrayList<FormApplication>();
 		if (list != null && !list.isEmpty()) {
 			for (FormLink model : list) {
 				FormApplication childApplication = formDataService
@@ -85,7 +82,7 @@ public class MxFormLinkServiceImpl implements FormLinkService {
 		FormLinkQuery query = new FormLinkQuery();
 		query.applicationName(app_name);
 		List<FormLink> list = this.list(query);
-		List<FormDefinition> rows = new ArrayList<FormDefinition>();
+		List<FormDefinition> rows = new java.util.concurrent.CopyOnWriteArrayList<FormDefinition>();
 		if (list != null && !list.isEmpty()) {
 			for (FormLink model : list) {
 				FormApplication childApplication = formDataService
@@ -105,7 +102,7 @@ public class MxFormLinkServiceImpl implements FormLinkService {
 		FormLinkQuery query = new FormLinkQuery();
 		query.applicationName(app_name);
 		List<FormLink> list = this.list(query);
-		List<FormDefinition> rows = new ArrayList<FormDefinition>();
+		List<FormDefinition> rows = new java.util.concurrent.CopyOnWriteArrayList<FormDefinition>();
 		if (list != null && !list.isEmpty()) {
 			for (FormLink model : list) {
 				FormApplication childApplication = formDataService

@@ -18,10 +18,10 @@
 
 package com.glaf.activiti.delegate.vote;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.activiti.engine.delegate.DelegateExecution;
 import org.activiti.engine.delegate.JavaDelegate;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 public class PublishVotePoll implements JavaDelegate {
 

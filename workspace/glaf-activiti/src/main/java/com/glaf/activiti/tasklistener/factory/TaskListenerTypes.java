@@ -19,7 +19,6 @@
 package com.glaf.activiti.tasklistener.factory;
 
 import java.io.InputStream;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -29,9 +28,10 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Element;
 
-import com.glaf.core.config.*;
-import com.glaf.core.util.XmlUtils;
+import com.glaf.core.config.CustomProperties;
+import com.glaf.core.config.SystemProperties;
 import com.glaf.core.util.PropertiesUtils;
+import com.glaf.core.util.XmlUtils;
 
 public class TaskListenerTypes {
 
@@ -70,7 +70,7 @@ public class TaskListenerTypes {
 	}
 
 	static Map<String, Class<?>> initializeTaskListenerTypes() {
-		Map<String, Class<?>> types = new HashMap<String, Class<?>>();
+		Map<String, Class<?>> types = new java.util.concurrent.ConcurrentHashMap<String, Class<?>>();
 		String resource = SystemProperties.getString("activiti.taskListeners");
 		if (StringUtils.isEmpty(resource)) {
 			resource = DEFAULT_CONFIG;

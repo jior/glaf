@@ -18,12 +18,11 @@
 
 package com.glaf.base.utils;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class ContextUtil {
 	private static ContextUtil instance = new ContextUtil();
-	private static Map<Object, Object> dataMap = new HashMap<Object, Object>();
+	private static Map<Object, Object> dataMap = new java.util.concurrent.ConcurrentHashMap<Object, Object>();
 
 	private ContextUtil() {
 

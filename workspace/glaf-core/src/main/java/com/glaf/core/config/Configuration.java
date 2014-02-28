@@ -28,12 +28,10 @@ import java.io.Reader;
 import java.io.Writer;
 import java.lang.ref.WeakReference;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -186,7 +184,7 @@ public class Configuration implements Iterable<Map.Entry<String, String>> {
 	/**
 	 * List of configuration resources.
 	 */
-	private ArrayList<Resource> resources = new ArrayList<Resource>();
+	private CopyOnWriteArrayList<Resource> resources = new java.util.concurrent.CopyOnWriteArrayList<Resource>();
 
 	/**
 	 * The value reported as the setting resource when a key is set by code
@@ -218,7 +216,7 @@ public class Configuration implements Iterable<Map.Entry<String, String>> {
 	 * Stores the mapping of key to the resource which modifies or loads the key
 	 * most recently
 	 */
-	private HashMap<String, String[]> updatingResource;
+	private java.util.Map<String, String[]> updatingResource;
 
 	static {
 		addDefaultResource("glaf-core-default.xml");
@@ -252,7 +250,7 @@ public class Configuration implements Iterable<Map.Entry<String, String>> {
 	 */
 	public Configuration(boolean loadDefaults) {
 		this.loadDefaults = loadDefaults;
-		updatingResource = new HashMap<String, String[]>();
+		updatingResource = new java.util.concurrent.ConcurrentHashMap<String, String[]>();
 		synchronized (Configuration.class) {
 			REGISTRY.put(this, null);
 		}
@@ -266,7 +264,7 @@ public class Configuration implements Iterable<Map.Entry<String, String>> {
 	 */
 	@SuppressWarnings("unchecked")
 	public Configuration(Configuration other) {
-		this.resources = (ArrayList<Resource>) other.resources.clone();
+		this.resources = ( CopyOnWriteArrayList<Resource>) other.resources.clone();
 		synchronized (other) {
 			if (other.properties != null) {
 				this.properties = (Properties) other.properties.clone();
@@ -276,7 +274,7 @@ public class Configuration implements Iterable<Map.Entry<String, String>> {
 				this.overlay = (Properties) other.overlay.clone();
 			}
 
-			this.updatingResource = new HashMap<String, String[]>(
+			this.updatingResource = new java.util.concurrent.ConcurrentHashMap<String, String[]>(
 					other.updatingResource);
 		}
 
@@ -1128,7 +1126,7 @@ public class Configuration implements Iterable<Map.Entry<String, String>> {
 			}
 		};
 
-		List<Range> ranges = new ArrayList<Range>();
+		List<Range> ranges = new java.util.concurrent.CopyOnWriteArrayList<Range>();
 
 		public IntegerRanges() {
 		}
@@ -1301,7 +1299,7 @@ public class Configuration implements Iterable<Map.Entry<String, String>> {
 	public Collection<String> getTrimmedStringCollection(String name) {
 		String valueString = get(name);
 		if (null == valueString) {
-			Collection<String> empty = new ArrayList<String>();
+			Collection<String> empty = new java.util.concurrent.CopyOnWriteArrayList<String>();
 			return empty;
 		}
 		return StringTools.getTrimmedStringCollection(valueString);
@@ -1519,7 +1517,7 @@ public class Configuration implements Iterable<Map.Entry<String, String>> {
 	 */
 	@SuppressWarnings("unchecked")
 	public <U> List<U> getInstances(String name, Class<U> xface) {
-		List<U> ret = new ArrayList<U>();
+		List<U> ret = new java.util.concurrent.CopyOnWriteArrayList<U>();
 		Class<?>[] classes = getClasses(name);
 		for (Class<?> cl : classes) {
 			if (!xface.isAssignableFrom(cl)) {
@@ -1642,7 +1640,7 @@ public class Configuration implements Iterable<Map.Entry<String, String>> {
 	protected synchronized Properties getProps() {
 		if (properties == null) {
 			properties = new Properties();
-			HashMap<String, String[]> backup = new HashMap<String, String[]>(
+			java.util.Map<String, String[]> backup = new java.util.concurrent.ConcurrentHashMap<String, String[]>(
 					updatingResource);
 			loadResources(properties, resources, quietmode);
 			if (overlay != null) {
@@ -1687,7 +1685,7 @@ public class Configuration implements Iterable<Map.Entry<String, String>> {
 		// we could replace properties with a Map<String,String> and get rid of
 		// this
 		// code.
-		Map<String, String> result = new HashMap<String, String>();
+		Map<String, String> result = new java.util.concurrent.ConcurrentHashMap<String, String>();
 		for (Map.Entry<Object, Object> item : getProps().entrySet()) {
 			if (item.getKey() instanceof String
 					&& item.getValue() instanceof String) {
@@ -1725,7 +1723,7 @@ public class Configuration implements Iterable<Map.Entry<String, String>> {
 	}
 
 	private void loadResources(Properties properties,
-			ArrayList<Resource> resources, boolean quiet) {
+			 List<Resource> resources, boolean quiet) {
 		if (loadDefaults) {
 			for (String resource : defaultResources) {
 				loadResource(properties, new Resource(resource), quiet);
@@ -2084,7 +2082,7 @@ public class Configuration implements Iterable<Map.Entry<String, String>> {
 	public Map<String, String> getValByRegex(String regex) {
 		Pattern p = Pattern.compile(regex);
 
-		Map<String, String> result = new HashMap<String, String>();
+		Map<String, String> result = new java.util.concurrent.ConcurrentHashMap<String, String>();
 		Matcher m;
 
 		for (Map.Entry<Object, Object> item : getProps().entrySet()) {

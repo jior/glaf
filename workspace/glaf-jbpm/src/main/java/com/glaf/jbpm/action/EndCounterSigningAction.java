@@ -19,7 +19,6 @@
 package com.glaf.jbpm.action;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -69,7 +68,7 @@ public class EndCounterSigningAction implements ActionHandler {
 
 		boolean executable = true;
 
-		Map<String, Object> params = new HashMap<String, Object>();
+		Map<String, Object> params = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 
 		ContextInstance contextInstance = ctx.getContextInstance();
 		Map<String, Object> variables = contextInstance.getVariables();

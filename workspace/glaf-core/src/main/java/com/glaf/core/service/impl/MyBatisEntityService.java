@@ -18,7 +18,7 @@
 
 package com.glaf.core.service.impl;
 
-import java.util.*;
+import java.util.List;
 
 import com.glaf.core.dao.EntityDAO;
 import com.glaf.core.entity.SqlExecutor;

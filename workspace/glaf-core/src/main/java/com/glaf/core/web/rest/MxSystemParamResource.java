@@ -18,7 +18,8 @@
 package com.glaf.core.web.rest;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
@@ -26,23 +27,25 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
-import javax.ws.rs.WebApplicationException;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.apache.commons.lang.StringUtils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-
+import com.glaf.core.domain.InputDefinition;
+import com.glaf.core.domain.SystemParam;
+import com.glaf.core.query.SystemParamQuery;
+import com.glaf.core.service.ISystemParamService;
 import com.glaf.core.util.DateUtils;
 import com.glaf.core.util.Paging;
 import com.glaf.core.util.ParamUtils;
@@ -50,11 +53,6 @@ import com.glaf.core.util.RequestUtils;
 import com.glaf.core.util.ResponseUtils;
 import com.glaf.core.util.StringTools;
 import com.glaf.core.util.Tools;
-
-import com.glaf.core.domain.SystemParam;
-import com.glaf.core.domain.InputDefinition;
-import com.glaf.core.query.SystemParamQuery;
-import com.glaf.core.service.ISystemParamService;
 
 @Controller("/rs/system/param")
 @Path("/rs/system/param")
@@ -143,7 +141,7 @@ public class MxSystemParamResource {
 		String serviceKey = request.getParameter("serviceKey");
 		String businessKey = request.getParameter("businessKey");
 		try {
-			Map<String, InputDefinition> paramMap = new HashMap<String, InputDefinition>();
+			Map<String, InputDefinition> paramMap = new java.util.concurrent.ConcurrentHashMap<String, InputDefinition>();
 			List<InputDefinition> params = systemParamService
 					.getInputDefinitions(serviceKey);
 			if (params != null && !params.isEmpty()) {
@@ -348,7 +346,7 @@ public class MxSystemParamResource {
 			List<InputDefinition> params = systemParamService
 					.getInputDefinitions(serviceKey);
 			if (params != null && !params.isEmpty()) {
-				List<SystemParam> rows = new ArrayList<SystemParam>();
+				List<SystemParam> rows = new java.util.concurrent.CopyOnWriteArrayList<SystemParam>();
 				for (InputDefinition def : params) {
 					String paramName = def.getKeyName();
 					String value = request.getParameter(paramName);

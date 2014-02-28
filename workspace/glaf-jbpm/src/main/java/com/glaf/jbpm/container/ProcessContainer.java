@@ -19,11 +19,9 @@
 package com.glaf.jbpm.container;
 
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -51,7 +49,6 @@ import com.glaf.core.config.CustomProperties;
 import com.glaf.core.config.SystemConfig;
 import com.glaf.core.identity.Agent;
 import com.glaf.core.identity.User;
-
 import com.glaf.core.util.FileUtils;
 import com.glaf.core.util.IOUtils;
 import com.glaf.core.util.LogUtils;
@@ -62,8 +59,8 @@ import com.glaf.jbpm.db.mybatis2.SqlMapContainer;
 import com.glaf.jbpm.manager.JbpmExtensionManager;
 import com.glaf.jbpm.manager.JbpmProcessManager;
 import com.glaf.jbpm.manager.JbpmTaskManager;
-import com.glaf.jbpm.model.Extension;
 import com.glaf.jbpm.model.ActivityInstance;
+import com.glaf.jbpm.model.Extension;
 import com.glaf.jbpm.model.TaskItem;
 import com.glaf.jbpm.query.ProcessQuery;
 
@@ -215,7 +212,7 @@ public class ProcessContainer {
 	public List<TaskItem> filter(String actorId, List<TaskItem> rows) {
 		List<Agent> agents = this.getAgents(actorId);
 		logger.debug(agents);
-		List<TaskItem> taskItems = new ArrayList<TaskItem>();
+		List<TaskItem> taskItems = new java.util.concurrent.CopyOnWriteArrayList<TaskItem>();
 		if (rows != null && rows.size() > 0) {
 			Iterator<TaskItem> iter = rows.iterator();
 			while (iter.hasNext()) {
@@ -357,7 +354,7 @@ public class ProcessContainer {
 	public List<TaskInstance> filterTaskInstance(String actorId,
 			List<TaskInstance> rows) {
 		List<Agent> agents = this.getAgents(actorId);
-		List<TaskInstance> taskItems = new ArrayList<TaskInstance>();
+		List<TaskInstance> taskItems = new java.util.concurrent.CopyOnWriteArrayList<TaskInstance>();
 		if (rows != null && rows.size() > 0) {
 			Iterator<TaskInstance> iter = rows.iterator();
 			while (iter.hasNext()) {
@@ -438,7 +435,7 @@ public class ProcessContainer {
 		try {
 			Map<String, User> userMap = this.getUserMap();
 			jbpmContext = this.createJbpmContext();
-			List<ActivityInstance> rows = new ArrayList<ActivityInstance>();
+			List<ActivityInstance> rows = new java.util.concurrent.CopyOnWriteArrayList<ActivityInstance>();
 			List<ActivityInstance> list = jbpmTaskManager.getActivityInstances(
 					jbpmContext, processInstanceId);
 			if (list != null && list.size() > 0) {
@@ -469,7 +466,7 @@ public class ProcessContainer {
 	 * @return
 	 */
 	public List<String> getAgentIds(String assignTo) {
-		List<String> agentIds = new ArrayList<String>();
+		List<String> agentIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		List<Agent> agents = getAgents(assignTo);
 		if (agents != null && agents.size() > 0) {
 			Iterator<Agent> iterator = agents.iterator();
@@ -489,7 +486,7 @@ public class ProcessContainer {
 	 * @return
 	 */
 	public List<String> getAgentIds(String assignTo, String processName) {
-		List<String> agentIds = new ArrayList<String>();
+		List<String> agentIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		List<Agent> agents = getAgents(assignTo);
 		if (agents != null && agents.size() > 0) {
 			Iterator<Agent> iterator = agents.iterator();
@@ -509,8 +506,8 @@ public class ProcessContainer {
 	 * @return
 	 */
 	public List<Agent> getAgents(String assignTo) {
-		List<Agent> agents = new ArrayList<Agent>();
-		Map<String, Object> params = new HashMap<String, Object>();
+		List<Agent> agents = new java.util.concurrent.CopyOnWriteArrayList<Agent>();
+		Map<String, Object> params = new java.util.HashMap<String, Object>();
 		params.put("assignTo", assignTo);
 		SqlMapContainer container = SqlMapContainer.getContainer();
 		try {
@@ -542,7 +539,7 @@ public class ProcessContainer {
 	 */
 	public List<TaskItem> getAllTaskItems() {
 		List<TaskItem> rows = null;
-		List<TaskItem> taskItems = new ArrayList<TaskItem>();
+		List<TaskItem> taskItems = new java.util.concurrent.CopyOnWriteArrayList<TaskItem>();
 		JbpmContext jbpmContext = null;
 		try {
 			jbpmContext = this.createJbpmContext();
@@ -576,7 +573,7 @@ public class ProcessContainer {
 	 * @return
 	 */
 	public List<TaskItem> getAllTaskItems(Long processInstanceId) {
-		List<TaskItem> taskItems = new ArrayList<TaskItem>();
+		List<TaskItem> taskItems = new java.util.concurrent.CopyOnWriteArrayList<TaskItem>();
 		JbpmContext jbpmContext = null;
 		try {
 			jbpmContext = this.createJbpmContext();
@@ -666,7 +663,7 @@ public class ProcessContainer {
 	 * @return
 	 */
 	public List<Long> getFinishedProcessInstanceIds(ProcessQuery query) {
-		List<Long> processInstanceIds = new ArrayList<Long>();
+		List<Long> processInstanceIds = new java.util.concurrent.CopyOnWriteArrayList<Long>();
 		String statementId = CustomProperties
 				.getString("jbpm.getFinishedProcessInstanceId");
 		if (StringUtils.isEmpty(statementId)) {
@@ -695,7 +692,7 @@ public class ProcessContainer {
 	 * @return
 	 */
 	public List<Long> getFinishedProcessInstanceIds(String actorId) {
-		List<Long> processInstanceIds = new ArrayList<Long>();
+		List<Long> processInstanceIds = new java.util.concurrent.CopyOnWriteArrayList<Long>();
 		ProcessQuery query = new ProcessQuery();
 		query.setActorId(actorId);
 		String statementId = CustomProperties
@@ -739,7 +736,7 @@ public class ProcessContainer {
 		}
 		List<Object> rows = SqlMapContainer.getContainer().getList(statementId,
 				query);
-		List<Long> processInstanceIds = new ArrayList<Long>();
+		List<Long> processInstanceIds = new java.util.concurrent.CopyOnWriteArrayList<Long>();
 		if (rows != null && rows.size() > 0) {
 			Iterator<Object> iterator = rows.iterator();
 			while (iterator.hasNext()) {
@@ -806,7 +803,7 @@ public class ProcessContainer {
 	}
 
 	public List<String> getMembershipActorIds(Map<String, Object> params) {
-		List<String> actorIds = new ArrayList<String>();
+		List<String> actorIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		SqlMapContainer container = SqlMapContainer.getContainer();
 		try {
 			Collection<?> actors = container.getList("getXYDeptRoleUsers",
@@ -864,7 +861,7 @@ public class ProcessContainer {
 	}
 
 	public List<String> getNodeNames(Long processInstanceId) {
-		List<String> names = new ArrayList<String>();
+		List<String> names = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		JbpmContext jbpmContext = null;
 		try {
 			jbpmContext = this.createJbpmContext();
@@ -891,7 +888,7 @@ public class ProcessContainer {
 	}
 
 	public Collection<Node> getNodes(Long processInstanceId) {
-		Collection<Node> nodes = new ArrayList<Node>();
+		Collection<Node> nodes = new java.util.concurrent.CopyOnWriteArrayList<Node>();
 		JbpmContext jbpmContext = null;
 		try {
 			jbpmContext = this.createJbpmContext();
@@ -972,7 +969,7 @@ public class ProcessContainer {
 	 * @return
 	 */
 	public List<Long> getRunningProcessInstanceIds(List<String> actorIds) {
-		List<Long> processInstanceIds = new ArrayList<Long>();
+		List<Long> processInstanceIds = new java.util.concurrent.CopyOnWriteArrayList<Long>();
 		List<TaskItem> taskItems = this.getTaskItems(actorIds);
 		if (taskItems != null && taskItems.size() > 0) {
 			Iterator<TaskItem> iterator = taskItems.iterator();
@@ -999,7 +996,7 @@ public class ProcessContainer {
 	public List<Long> getRunningProcessInstanceIds(String actorId) {
 		logger.debug("----------------------------------------------------");
 		logger.debug("-----------getRunningProcessInstanceIds-------------");
-		List<Long> processInstanceIds = new ArrayList<Long>();
+		List<Long> processInstanceIds = new java.util.concurrent.CopyOnWriteArrayList<Long>();
 		List<TaskItem> taskItems = this.getTaskItems(actorId);
 		if (taskItems != null && taskItems.size() > 0) {
 			Iterator<TaskItem> iterator = taskItems.iterator();
@@ -1023,7 +1020,7 @@ public class ProcessContainer {
 			String actorId) {
 		logger.debug("----------------------------------------------------");
 		logger.debug("-----------getRunningProcessInstanceIds-------------");
-		List<Long> processInstanceIds = new ArrayList<Long>();
+		List<Long> processInstanceIds = new java.util.concurrent.CopyOnWriteArrayList<Long>();
 		List<TaskItem> taskItems = this.getTaskItemsByProcessName(processName,
 				actorId);
 		if (taskItems != null && taskItems.size() > 0) {
@@ -1046,7 +1043,7 @@ public class ProcessContainer {
 	 * @return
 	 */
 	public List<Long> getRunningProcessInstanceIdsByName(String processName) {
-		List<Long> processInstanceIds = new ArrayList<Long>();
+		List<Long> processInstanceIds = new java.util.concurrent.CopyOnWriteArrayList<Long>();
 		List<TaskItem> taskItems = this.getTaskItemsByProcessName(processName);
 		if (taskItems != null && taskItems.size() > 0) {
 			Iterator<TaskItem> iterator = taskItems.iterator();
@@ -1075,7 +1072,7 @@ public class ProcessContainer {
 			String actorId) {
 		logger.debug("----------------------------------------------------");
 		logger.debug("-----------getRunningProcessInstanceIdsByName-------");
-		List<Long> processInstanceIds = new ArrayList<Long>();
+		List<Long> processInstanceIds = new java.util.concurrent.CopyOnWriteArrayList<Long>();
 		List<TaskItem> taskItems = this.getTaskItemsByProcessName(processName,
 				actorId);
 		if (taskItems != null && taskItems.size() > 0) {
@@ -1097,7 +1094,7 @@ public class ProcessContainer {
 	 * @return
 	 */
 	public List<Long> getRunningTaskInstanceIds(List<String> actorIds) {
-		List<Long> taskInstanceIds = new ArrayList<Long>();
+		List<Long> taskInstanceIds = new java.util.concurrent.CopyOnWriteArrayList<Long>();
 		List<TaskItem> taskItems = this.getTaskItems(actorIds);
 		if (taskItems != null && taskItems.size() > 0) {
 			Iterator<TaskItem> iterator = taskItems.iterator();
@@ -1122,7 +1119,7 @@ public class ProcessContainer {
 	 * @return
 	 */
 	public List<Long> getRunningTaskInstanceIds(String actorId) {
-		List<Long> taskInstanceIds = new ArrayList<Long>();
+		List<Long> taskInstanceIds = new java.util.concurrent.CopyOnWriteArrayList<Long>();
 		List<TaskItem> taskItems = this.getTaskItems(actorId);
 		if (taskItems != null && taskItems.size() > 0) {
 			Iterator<TaskItem> iterator = taskItems.iterator();
@@ -1147,7 +1144,7 @@ public class ProcessContainer {
 	 * @return
 	 */
 	public List<Long> getRunningTaskInstanceIdsByName(String processName) {
-		List<Long> taskInstanceIds = new ArrayList<Long>();
+		List<Long> taskInstanceIds = new java.util.concurrent.CopyOnWriteArrayList<Long>();
 		List<TaskItem> taskItems = this.getTaskItemsByProcessName(processName);
 		if (taskItems != null && taskItems.size() > 0) {
 			Iterator<TaskItem> iterator = taskItems.iterator();
@@ -1176,7 +1173,7 @@ public class ProcessContainer {
 			String actorId) {
 		logger.debug("----------------------------------------------------");
 		logger.debug("-----------getRunningTaskInstanceIdsByName----------");
-		List<Long> taskInstanceIds = new ArrayList<Long>();
+		List<Long> taskInstanceIds = new java.util.concurrent.CopyOnWriteArrayList<Long>();
 		List<TaskItem> taskItems = this.getTaskItemsByProcessName(processName,
 				actorId);
 		if (taskItems != null && taskItems.size() > 0) {
@@ -1219,7 +1216,7 @@ public class ProcessContainer {
 	 * @return 待处理的任务实例编号的集合
 	 */
 	public List<Long> getTaskInstanceIds(String actorId) {
-		List<Long> taskInstanceIds = new ArrayList<Long>();
+		List<Long> taskInstanceIds = new java.util.concurrent.CopyOnWriteArrayList<Long>();
 		JbpmContext jbpmContext = null;
 		try {
 			// 获取代理人的任务实例
@@ -1235,7 +1232,7 @@ public class ProcessContainer {
 					}
 				}
 
-				List<String> actorIds = new ArrayList<String>();
+				List<String> actorIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
 				actorIds.add(actorId);
 
 				List<TaskInstance> rows02 = jbpmContext
@@ -1298,7 +1295,7 @@ public class ProcessContainer {
 	 * @return org.jbpm.taskmgmt.exe.TaskInstance 的集合
 	 */
 	public List<TaskInstance> getTaskInstances(String actorId) {
-		List<TaskInstance> rows = new ArrayList<TaskInstance>();
+		List<TaskInstance> rows = new java.util.concurrent.CopyOnWriteArrayList<TaskInstance>();
 		JbpmContext jbpmContext = null;
 		try {
 			// 获取代理人的任务实例
@@ -1314,7 +1311,7 @@ public class ProcessContainer {
 					}
 				}
 
-				List<String> actorIds = new ArrayList<String>();
+				List<String> actorIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
 				actorIds.add(actorId);
 
 				List<TaskInstance> rows02 = jbpmContext
@@ -1403,7 +1400,7 @@ public class ProcessContainer {
 	 * @return
 	 */
 	public List<TaskItem> getTaskItems(List<String> actorIds) {
-		List<TaskItem> taskItems = new ArrayList<TaskItem>();
+		List<TaskItem> taskItems = new java.util.concurrent.CopyOnWriteArrayList<TaskItem>();
 
 		ProcessQuery query = new ProcessQuery();
 		query.setActorIds(actorIds);
@@ -1419,7 +1416,7 @@ public class ProcessContainer {
 			statementId2 = "getPooledTaskItems";
 		}
 
-		List<Object> rows = new ArrayList<Object>();
+		List<Object> rows = new java.util.concurrent.CopyOnWriteArrayList<Object>();
 		List<Object> rows01 = SqlMapContainer.getContainer().getList(
 				statementId, query);
 		List<Object> rows02 = SqlMapContainer.getContainer().getList(
@@ -1449,7 +1446,7 @@ public class ProcessContainer {
 	public List<TaskItem> getTaskItems(ProcessQuery query) {
 		logger.debug("----------------------------------------------------");
 		logger.debug("-----------------getTaskItems-----------------------");
-		List<TaskItem> taskItems = new ArrayList<TaskItem>();
+		List<TaskItem> taskItems = new java.util.concurrent.CopyOnWriteArrayList<TaskItem>();
 		JbpmContext jbpmContext = null;
 		try {
 			jbpmContext = this.createJbpmContext();
@@ -1480,10 +1477,10 @@ public class ProcessContainer {
 	 * @return
 	 */
 	public List<TaskItem> getTaskItems(String actorId) {
-		List<TaskItem> taskItems = new ArrayList<TaskItem>();
+		List<TaskItem> taskItems = new java.util.concurrent.CopyOnWriteArrayList<TaskItem>();
 		List<String> agentIds = this.getAgentIds(actorId);
 
-		List<String> actorIds = new ArrayList<String>();
+		List<String> actorIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		actorIds.add(actorId);
 		if (agentIds != null && agentIds.size() > 0) {
 			actorIds.addAll(agentIds);
@@ -1505,7 +1502,7 @@ public class ProcessContainer {
 
 		this.limitStartDate(query);
 
-		List<Object> rows = new ArrayList<Object>();
+		List<Object> rows = new java.util.concurrent.CopyOnWriteArrayList<Object>();
 		List<Object> rows01 = SqlMapContainer.getContainer().getList(
 				statementId, query);
 		List<Object> rows02 = SqlMapContainer.getContainer().getList(
@@ -1538,9 +1535,9 @@ public class ProcessContainer {
 	 * @return
 	 */
 	public List<TaskItem> getTaskItems(String actorId, Long processInstanceId) {
-		List<TaskItem> taskItems = new ArrayList<TaskItem>();
+		List<TaskItem> taskItems = new java.util.concurrent.CopyOnWriteArrayList<TaskItem>();
 		List<String> agentIds = this.getAgentIds(actorId);
-		List<String> actorIds = new ArrayList<String>();
+		List<String> actorIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		actorIds.add(actorId);
 		if (agentIds != null && agentIds.size() > 0) {
 			actorIds.addAll(agentIds);
@@ -1562,7 +1559,7 @@ public class ProcessContainer {
 
 		this.limitStartDate(query);
 
-		List<Object> rows = new ArrayList<Object>();
+		List<Object> rows = new java.util.concurrent.CopyOnWriteArrayList<Object>();
 		List<Object> rows01 = SqlMapContainer.getContainer().getList(
 				statementId, query);
 		List<Object> rows02 = SqlMapContainer.getContainer().getList(
@@ -1595,10 +1592,10 @@ public class ProcessContainer {
 	 * @return
 	 */
 	public List<TaskItem> getTaskItems(String actorId, ProcessQuery query) {
-		List<TaskItem> taskItems = new ArrayList<TaskItem>();
+		List<TaskItem> taskItems = new java.util.concurrent.CopyOnWriteArrayList<TaskItem>();
 		List<String> agentIds = this.getAgentIds(actorId);
 
-		List<String> actorIds = new ArrayList<String>();
+		List<String> actorIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		actorIds.add(actorId);
 		if (agentIds != null && agentIds.size() > 0) {
 			actorIds.addAll(agentIds);
@@ -1619,7 +1616,7 @@ public class ProcessContainer {
 
 		this.limitStartDate(query);
 
-		List<Object> rows = new ArrayList<Object>();
+		List<Object> rows = new java.util.concurrent.CopyOnWriteArrayList<Object>();
 		List<Object> rows01 = SqlMapContainer.getContainer().getList(
 				statementId, query);
 		List<Object> rows02 = SqlMapContainer.getContainer().getList(
@@ -1649,7 +1646,7 @@ public class ProcessContainer {
 	 * @return
 	 */
 	public List<TaskItem> getTaskItemsByProcessInstanceId(Long processInstanceId) {
-		List<TaskItem> taskItems = new ArrayList<TaskItem>();
+		List<TaskItem> taskItems = new java.util.concurrent.CopyOnWriteArrayList<TaskItem>();
 		ProcessQuery query = new ProcessQuery();
 		query.setProcessInstanceId(processInstanceId);
 
@@ -1664,7 +1661,7 @@ public class ProcessContainer {
 			statementId2 = "getPooledTaskItems";
 		}
 
-		List<Object> rows = new ArrayList<Object>();
+		List<Object> rows = new java.util.concurrent.CopyOnWriteArrayList<Object>();
 		List<Object> rows01 = SqlMapContainer.getContainer().getList(
 				statementId, query);
 		List<Object> rows02 = SqlMapContainer.getContainer().getList(
@@ -1693,7 +1690,7 @@ public class ProcessContainer {
 	 */
 	public List<TaskItem> getTaskItemsByProcessInstanceIds(
 			List<Long> processInstanceIds) {
-		List<TaskItem> taskItems = new ArrayList<TaskItem>();
+		List<TaskItem> taskItems = new java.util.concurrent.CopyOnWriteArrayList<TaskItem>();
 		ProcessQuery query = new ProcessQuery();
 		query.setProcessInstanceIds(processInstanceIds);
 
@@ -1708,7 +1705,7 @@ public class ProcessContainer {
 			statementId2 = "getPooledTaskItems";
 		}
 
-		List<Object> rows = new ArrayList<Object>();
+		List<Object> rows = new java.util.concurrent.CopyOnWriteArrayList<Object>();
 		List<Object> rows01 = SqlMapContainer.getContainer().getList(
 				statementId, query);
 		List<Object> rows02 = SqlMapContainer.getContainer().getList(
@@ -1738,9 +1735,9 @@ public class ProcessContainer {
 	 */
 	public List<TaskItem> getTaskItemsByProcessName(List<String> processNames,
 			String actorId) {
-		List<TaskItem> taskItems = new ArrayList<TaskItem>();
+		List<TaskItem> taskItems = new java.util.concurrent.CopyOnWriteArrayList<TaskItem>();
 		List<String> agentIds = this.getAgentIds(actorId);
-		List<String> actorIds = new ArrayList<String>();
+		List<String> actorIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		actorIds.add(actorId);
 		if (agentIds != null && agentIds.size() > 0) {
 			actorIds.addAll(agentIds);
@@ -1762,7 +1759,7 @@ public class ProcessContainer {
 
 		this.limitStartDate(query);
 
-		List<Object> rows = new ArrayList<Object>();
+		List<Object> rows = new java.util.concurrent.CopyOnWriteArrayList<Object>();
 		List<Object> rows01 = SqlMapContainer.getContainer().getList(
 				statementId, query);
 		List<Object> rows02 = SqlMapContainer.getContainer().getList(
@@ -1793,7 +1790,7 @@ public class ProcessContainer {
 	 * @return
 	 */
 	public List<TaskItem> getTaskItemsByProcessName(String processName) {
-		List<TaskItem> taskItems = new ArrayList<TaskItem>();
+		List<TaskItem> taskItems = new java.util.concurrent.CopyOnWriteArrayList<TaskItem>();
 		ProcessQuery query = new ProcessQuery();
 		query.setProcessName(processName);
 
@@ -1810,7 +1807,7 @@ public class ProcessContainer {
 
 		this.limitStartDate(query);
 
-		List<Object> rows = new ArrayList<Object>();
+		List<Object> rows = new java.util.concurrent.CopyOnWriteArrayList<Object>();
 		List<Object> rows01 = SqlMapContainer.getContainer().getList(
 				statementId, query);
 		List<Object> rows02 = SqlMapContainer.getContainer().getList(
@@ -1840,9 +1837,9 @@ public class ProcessContainer {
 	 */
 	public List<TaskItem> getTaskItemsByProcessName(String processName,
 			String actorId) {
-		List<TaskItem> taskItems = new ArrayList<TaskItem>();
+		List<TaskItem> taskItems = new java.util.concurrent.CopyOnWriteArrayList<TaskItem>();
 		List<String> agentIds = this.getAgentIds(actorId);
-		List<String> actorIds = new ArrayList<String>();
+		List<String> actorIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		actorIds.add(actorId);
 		if (agentIds != null && agentIds.size() > 0) {
 			actorIds.addAll(agentIds);
@@ -1864,7 +1861,7 @@ public class ProcessContainer {
 
 		this.limitStartDate(query);
 
-		List<Object> rows = new ArrayList<Object>();
+		List<Object> rows = new java.util.concurrent.CopyOnWriteArrayList<Object>();
 		List<Object> rows01 = SqlMapContainer.getContainer().getList(
 				statementId, query);
 		List<Object> rows02 = SqlMapContainer.getContainer().getList(
@@ -1888,7 +1885,7 @@ public class ProcessContainer {
 	}
 
 	public List<String> getTransitionNames(Long taskInstanceId) {
-		List<String> transitions = new ArrayList<String>();
+		List<String> transitions = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		JbpmContext jbpmContext = null;
 		try {
 			jbpmContext = this.createJbpmContext();
@@ -1918,7 +1915,7 @@ public class ProcessContainer {
 	}
 
 	public Collection<Transition> getTransitions(Long taskInstanceId) {
-		Collection<Transition> transitions = new ArrayList<Transition>();
+		Collection<Transition> transitions = new java.util.concurrent.CopyOnWriteArrayList<Transition>();
 		JbpmContext jbpmContext = null;
 		try {
 			jbpmContext = this.createJbpmContext();
@@ -1948,7 +1945,7 @@ public class ProcessContainer {
 	}
 
 	public Map<String, User> getUserMap() {
-		Map<String, User> userMap = new HashMap<String, User>();
+		Map<String, User> userMap = new java.util.concurrent.ConcurrentHashMap<String, User>();
 		List<User> users = this.getUsers();
 		for (User user : users) {
 			userMap.put(user.getActorId(), user);
@@ -1957,8 +1954,8 @@ public class ProcessContainer {
 	}
 
 	public List<User> getUsers() {
-		List<User> users = new ArrayList<User>();
-		Map<String, Object> params = new HashMap<String, Object>();
+		List<User> users = new java.util.concurrent.CopyOnWriteArrayList<User>();
+		Map<String, Object> params = new java.util.HashMap<String, Object>();
 		SqlMapContainer container = SqlMapContainer.getContainer();
 		try {
 			Collection<?> actors = container.getList("getUsers", params);
@@ -1996,7 +1993,7 @@ public class ProcessContainer {
 
 		List<Object> rows = SqlMapContainer.getContainer().getList(statementId,
 				query);
-		List<Long> processInstanceIds = new ArrayList<Long>();
+		List<Long> processInstanceIds = new java.util.concurrent.CopyOnWriteArrayList<Long>();
 		if (rows != null && rows.size() > 0) {
 			Iterator<Object> iterator = rows.iterator();
 			while (iterator.hasNext()) {
@@ -2030,7 +2027,7 @@ public class ProcessContainer {
 
 		List<Object> rows = SqlMapContainer.getContainer().getList(statementId,
 				query);
-		List<Long> processInstanceIds = new ArrayList<Long>();
+		List<Long> processInstanceIds = new java.util.concurrent.CopyOnWriteArrayList<Long>();
 		if (rows != null && rows.size() > 0) {
 			Iterator<Object> iterator = rows.iterator();
 			while (iterator.hasNext()) {
@@ -2068,7 +2065,7 @@ public class ProcessContainer {
 
 		List<Object> rows = SqlMapContainer.getContainer().getList(statementId,
 				query);
-		List<Long> processInstanceIds = new ArrayList<Long>();
+		List<Long> processInstanceIds = new java.util.concurrent.CopyOnWriteArrayList<Long>();
 		if (rows != null && rows.size() > 0) {
 			Iterator<Object> iterator = rows.iterator();
 			while (iterator.hasNext()) {
@@ -2107,7 +2104,7 @@ public class ProcessContainer {
 
 		List<Object> rows = SqlMapContainer.getContainer().getList(statementId,
 				query);
-		List<Long> processInstanceIds = new ArrayList<Long>();
+		List<Long> processInstanceIds = new java.util.concurrent.CopyOnWriteArrayList<Long>();
 		if (rows != null && rows.size() > 0) {
 			Iterator<Object> iterator = rows.iterator();
 			while (iterator.hasNext()) {
@@ -2139,7 +2136,7 @@ public class ProcessContainer {
 
 		List<Object> rows = SqlMapContainer.getContainer().getList(statementId,
 				query);
-		List<TaskItem> taskItems = new ArrayList<TaskItem>();
+		List<TaskItem> taskItems = new java.util.concurrent.CopyOnWriteArrayList<TaskItem>();
 		if (rows != null && rows.size() > 0) {
 			logger.debug("finished task size:" + rows.size());
 			Iterator<Object> iter01 = rows.iterator();
@@ -2159,7 +2156,7 @@ public class ProcessContainer {
 	 */
 	public List<TaskItem> getWorkedTaskItems(String actorId) {
 		List<String> agentIds = this.getAgentIds(actorId);
-		List<String> actorIds = new ArrayList<String>();
+		List<String> actorIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		actorIds.add(actorId);
 		if (agentIds != null && agentIds.size() > 0) {
 			actorIds.addAll(agentIds);
@@ -2178,7 +2175,7 @@ public class ProcessContainer {
 		List<Object> rows = SqlMapContainer.getContainer().getList(statementId,
 				query);
 
-		List<TaskItem> taskItems = new ArrayList<TaskItem>();
+		List<TaskItem> taskItems = new java.util.concurrent.CopyOnWriteArrayList<TaskItem>();
 
 		if (rows != null && rows.size() > 0) {
 			logger.debug("query parameter:" + query);
@@ -2201,7 +2198,7 @@ public class ProcessContainer {
 	 */
 	public List<TaskItem> getWorkedTaskItems(String processName, String actorId) {
 		List<String> agentIds = this.getAgentIds(actorId);
-		List<String> actorIds = new ArrayList<String>();
+		List<String> actorIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		actorIds.add(actorId);
 		if (agentIds != null && agentIds.size() > 0) {
 			actorIds.addAll(agentIds);
@@ -2221,7 +2218,7 @@ public class ProcessContainer {
 		List<Object> rows = SqlMapContainer.getContainer().getList(statementId,
 				query);
 
-		List<TaskItem> taskItems = new ArrayList<TaskItem>();
+		List<TaskItem> taskItems = new java.util.concurrent.CopyOnWriteArrayList<TaskItem>();
 
 		if (rows != null && rows.size() > 0) {
 			logger.debug("query params:" + query);
@@ -2250,7 +2247,7 @@ public class ProcessContainer {
 	public List<TaskItem> getWorkedTaskItems(String processName,
 			String actorId, ProcessQuery query) {
 		List<String> agentIds = this.getAgentIds(actorId);
-		List<String> actorIds = new ArrayList<String>();
+		List<String> actorIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		actorIds.add(actorId);
 		if (agentIds != null && agentIds.size() > 0) {
 			actorIds.addAll(agentIds);
@@ -2269,7 +2266,7 @@ public class ProcessContainer {
 		List<Object> rows = SqlMapContainer.getContainer().getList(statementId,
 				query);
 
-		List<TaskItem> taskItems = new ArrayList<TaskItem>();
+		List<TaskItem> taskItems = new java.util.concurrent.CopyOnWriteArrayList<TaskItem>();
 
 		if (rows != null && rows.size() > 0) {
 			logger.debug("query params:" + query);
@@ -2291,7 +2288,7 @@ public class ProcessContainer {
 	 * @return
 	 */
 	public List<TaskItem> getXYTaskItems(ProcessQuery query) {
-		List<TaskItem> taskItems = new ArrayList<TaskItem>();
+		List<TaskItem> taskItems = new java.util.concurrent.CopyOnWriteArrayList<TaskItem>();
 
 		String statementId = CustomProperties.getString("jbpm.getTaskItems");
 		if (StringUtils.isEmpty(statementId)) {
@@ -2311,7 +2308,7 @@ public class ProcessContainer {
 		List<Object> rows02 = SqlMapContainer.getContainer().getList(
 				statementId2, query);
 
-		List<Object> rows = new ArrayList<Object>();
+		List<Object> rows = new java.util.concurrent.CopyOnWriteArrayList<Object>();
 
 		if (rows01 != null && rows01.size() > 0) {
 			rows.addAll(rows01);

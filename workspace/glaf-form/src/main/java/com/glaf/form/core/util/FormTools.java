@@ -18,7 +18,6 @@
 package com.glaf.form.core.util;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +28,11 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.glaf.core.base.ColumnModel;
+import com.glaf.core.base.DataModel;
+import com.glaf.core.util.DateUtils;
+import com.glaf.core.util.FieldType;
+import com.glaf.core.util.StringTools;
 import com.glaf.form.core.domain.FormDefinition;
 import com.glaf.form.core.graph.def.FormNode;
 import com.glaf.form.core.graph.node.CheckboxNode;
@@ -42,16 +46,13 @@ import com.glaf.form.core.graph.node.SelectNode;
 import com.glaf.form.core.graph.node.TextAreaNode;
 import com.glaf.form.core.graph.node.TextFieldNode;
 import com.glaf.form.core.graph.node.TimestampFieldNode;
-import com.glaf.core.base.DataModel;
-import com.glaf.core.base.ColumnModel;
-import com.glaf.core.util.*;
 
 public final class FormTools {
 	protected final static Log logger = LogFactory.getLog(FormTools.class);
 
 	public static Map<String, Object> distill(FormDefinition formDefinition,
 			DataModel formModel) {
-		Map<String, Object> dataMap = new HashMap<String, Object>();
+		Map<String, Object> dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		List<FormNode> nodes = formDefinition.getNodes();
 		if (nodes != null && nodes.size() > 0) {
 			Iterator<FormNode> iterator = nodes.iterator();
@@ -201,7 +202,7 @@ public final class FormTools {
 
 	public static Map<String, Object> distill(Map<String, String> params,
 			FormDefinition formDefinition, DataModel formModel) {
-		Map<String, Object> dataMap = new HashMap<String, Object>();
+		Map<String, Object> dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		List<FormNode> nodes = formDefinition.getNodes();
 		if (nodes != null && nodes.size() > 0) {
 			Iterator<FormNode> iterator = nodes.iterator();
@@ -352,7 +353,7 @@ public final class FormTools {
 
 	public static Map<String, Object> distill(HttpServletRequest request,
 			FormDefinition formDefinition, DataModel formModel) {
-		Map<String, Object> dataMap = new HashMap<String, Object>();
+		Map<String, Object> dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		List<FormNode> nodes = formDefinition.getNodes();
 		if (nodes != null && nodes.size() > 0) {
 			Iterator<FormNode> iterator = nodes.iterator();

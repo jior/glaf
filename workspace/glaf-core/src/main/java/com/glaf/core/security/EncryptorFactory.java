@@ -16,7 +16,8 @@ package com.glaf.core.security;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.glaf.core.config.*;
+import com.glaf.core.config.BaseConfiguration;
+import com.glaf.core.config.Configuration;
 import com.glaf.core.util.ReflectUtils;
 import com.glaf.core.util.UUID32;
 

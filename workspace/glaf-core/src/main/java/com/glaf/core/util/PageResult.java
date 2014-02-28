@@ -19,7 +19,6 @@
 package com.glaf.core.util;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -115,7 +114,7 @@ public class PageResult implements Serializable {
 	 */
 	public List getResults() {
 		if (results == null) {
-			results = new ArrayList();
+			results = new java.util.concurrent.CopyOnWriteArrayList();
 		}
 		return results;
 	}

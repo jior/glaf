@@ -18,8 +18,6 @@
 
 package com.glaf.mail.xml;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -30,13 +28,13 @@ import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
 import com.glaf.mail.def.MailDataSet;
-import com.glaf.mail.def.MailTemplate;
 import com.glaf.mail.def.MailRowSet;
+import com.glaf.mail.def.MailTemplate;
 
 public class MailXmlReader {
 
 	public List<MailTemplate> read(java.io.InputStream inputStream) {
-		List<MailTemplate> mailTemplates = new ArrayList<MailTemplate>();
+		List<MailTemplate> mailTemplates = new java.util.concurrent.CopyOnWriteArrayList<MailTemplate>();
 		SAXReader xmlReader = new SAXReader();
 		Document doc = null;
 		try {
@@ -102,7 +100,7 @@ public class MailXmlReader {
 	}
 
 	protected Map<String, Object> readProperties(Element element) {
-		Map<String, Object> properties = new HashMap<String, Object>();
+		Map<String, Object> properties = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		Element propsElement = element.element("properties");
 		if (propsElement != null) {
 			List<?> rows = propsElement.elements("property");

@@ -19,7 +19,6 @@
 package com.glaf.base.modules.branch.springmvc;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -86,7 +85,7 @@ public class BranchDepartmentController {
 		SysDepartmentQuery query = new SysDepartmentQuery();
 		Tools.populate(query, params);
 
-		List<Long> nodeIds = new ArrayList<Long>();
+		List<Long> nodeIds = new java.util.concurrent.CopyOnWriteArrayList<Long>();
 		nodeIds.add(-1L);
 		SysUserQuery qx = new SysUserQuery();
 		qx.setAccount(actorId);
@@ -244,7 +243,7 @@ public class BranchDepartmentController {
 		request.setAttribute("bean", bean);
 
 		SysTree parent = sysTreeService.getSysTreeByCode(Constants.TREE_DEPT);
-		List<SysTree> list = new ArrayList<SysTree>();
+		List<SysTree> list = new java.util.concurrent.CopyOnWriteArrayList<SysTree>();
 		parent.setDeep(0);
 		list.add(parent);
 		sysTreeService.getSysTree(list, (int) parent.getId(), 1);
@@ -276,7 +275,7 @@ public class BranchDepartmentController {
 		long parentId = ParamUtil.getLongParameter(request, "parent", 0);
 		boolean ret = false;
 		String actorId = RequestUtils.getActorId(request);
-		List<Long> nodeIds = new ArrayList<Long>();
+		List<Long> nodeIds = new java.util.concurrent.CopyOnWriteArrayList<Long>();
 		nodeIds.add(-1L);
 		SysUserQuery qx = new SysUserQuery();
 		qx.setAccount(actorId);
@@ -350,7 +349,7 @@ public class BranchDepartmentController {
 		boolean ret = false;
 		if (bean != null) {
 			String actorId = RequestUtils.getActorId(request);
-			List<Long> nodeIds = new ArrayList<Long>();
+			List<Long> nodeIds = new java.util.concurrent.CopyOnWriteArrayList<Long>();
 			nodeIds.add(-1L);
 			SysUserQuery qx = new SysUserQuery();
 			qx.setAccount(actorId);
@@ -454,7 +453,7 @@ public class BranchDepartmentController {
 
 		SysTree treeNode = sysTreeService.findById(parent);
 		SysDepartment dept = treeNode.getDepartment();
-		List<SysDepartment> list = new ArrayList<SysDepartment>();
+		List<SysDepartment> list = new java.util.concurrent.CopyOnWriteArrayList<SysDepartment>();
 		sysDepartmentService.findNestingDepartment(list, dept);
 		request.setAttribute("nav", list);
 
@@ -481,7 +480,7 @@ public class BranchDepartmentController {
 	public byte[] treeJson(HttpServletRequest request) {
 		String actorId = RequestUtils.getActorId(request);
 
-		List<TreeModel> treeModels = new ArrayList<TreeModel>();
+		List<TreeModel> treeModels = new java.util.concurrent.CopyOnWriteArrayList<TreeModel>();
 
 		SysUserQuery qx = new SysUserQuery();
 		qx.setAccount(actorId);

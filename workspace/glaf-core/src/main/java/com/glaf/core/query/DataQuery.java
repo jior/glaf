@@ -18,7 +18,6 @@
 
 package com.glaf.core.query;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -32,9 +31,9 @@ public class DataQuery extends BaseQuery {
 	protected String objectId;
 	protected String objectValue;
 	protected Long parentId;
-	protected List<Long> parentIds = new ArrayList<Long>();
+	protected List<Long> parentIds = new java.util.concurrent.CopyOnWriteArrayList<Long>();
 	protected Object processInstanceId;
-	protected List processInstanceIds = new ArrayList();
+	protected List processInstanceIds = new java.util.concurrent.CopyOnWriteArrayList();
 	protected boolean processInstanceIsNotNull;
 	protected boolean processInstanceIsNull;
 	protected String processName;
@@ -45,7 +44,7 @@ public class DataQuery extends BaseQuery {
 	protected Integer statusGreaterThanOrEqual;
 	protected Integer statusLessThanOrEqual;
 	protected Integer statusNotEqual;
-	protected List taskInstanceIds = new ArrayList();
+	protected List taskInstanceIds = new java.util.concurrent.CopyOnWriteArrayList();
 	protected String treeId;
 	protected String treeIdLike;
 	protected Integer wfStatus;

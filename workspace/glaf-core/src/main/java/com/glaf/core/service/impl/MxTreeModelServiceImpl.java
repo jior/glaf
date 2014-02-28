@@ -18,28 +18,21 @@
 
 package com.glaf.core.service.impl;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.core.base.BaseTree;
 import com.glaf.core.base.TreeModel;
-
 import com.glaf.core.config.CustomProperties;
 import com.glaf.core.config.SystemProperties;
-
 import com.glaf.core.dao.EntityDAO;
 import com.glaf.core.id.IdGenerator;
-
 import com.glaf.core.query.TreeModelQuery;
-
 import com.glaf.core.service.ITreeModelService;
 
 @Service("treeModelService")
@@ -57,7 +50,7 @@ public class MxTreeModelServiceImpl implements ITreeModelService {
 	}
 
 	protected List<TreeModel> cloneProperties(List<TreeModel> rows) {
-		List<TreeModel> list = new ArrayList<TreeModel>();
+		List<TreeModel> list = new java.util.ArrayList<TreeModel>();
 		if (rows != null && !rows.isEmpty()) {
 			for (TreeModel model : rows) {
 				TreeModel m = new BaseTree();
@@ -106,7 +99,7 @@ public class MxTreeModelServiceImpl implements ITreeModelService {
 	 * @return
 	 */
 	public List<TreeModel> getAncestorTreeModels(long treeId) {
-		List<TreeModel> treeModels = new ArrayList<TreeModel>();
+		List<TreeModel> treeModels = new java.util.ArrayList<TreeModel>();
 		TreeModel treeModel = this.getTreeModel(treeId);
 
 		if (treeModel != null && treeModel.getParentId() > 0) {
@@ -126,7 +119,7 @@ public class MxTreeModelServiceImpl implements ITreeModelService {
 	 * @return
 	 */
 	public List<TreeModel> getChildrenTreeModels(long treeId) {
-		List<TreeModel> treeModels = new ArrayList<TreeModel>();
+		List<TreeModel> treeModels = new java.util.ArrayList<TreeModel>();
 		TreeModel treeModel = this.getTreeModel(treeId);
 		if (treeModel != null) {
 			this.loadChildrenTreeModels(treeModel, treeModels);
@@ -135,7 +128,7 @@ public class MxTreeModelServiceImpl implements ITreeModelService {
 	}
 
 	public List<TreeModel> getSubTreeModels(long treeId) {
-		List<TreeModel> treeModels = new ArrayList<TreeModel>();
+		List<TreeModel> treeModels = new java.util.ArrayList<TreeModel>();
 		TreeModel treeModel = this.getTreeModel(treeId);
 		if (treeModel != null) {
 
@@ -162,7 +155,7 @@ public class MxTreeModelServiceImpl implements ITreeModelService {
 	}
 
 	public Map<String, TreeModel> getTreeMap() {
-		Map<String, TreeModel> codeMap = new HashMap<String, TreeModel>();
+		Map<String, TreeModel> codeMap = new java.util.HashMap<String, TreeModel>();
 		TreeModelQuery query = new TreeModelQuery();
 		List<TreeModel> treeModels = this.getTreeModels(query);
 		if (treeModels != null && treeModels.size() > 0) {
@@ -176,7 +169,7 @@ public class MxTreeModelServiceImpl implements ITreeModelService {
 	}
 
 	public Map<String, TreeModel> getTreeMap(List<String> codes) {
-		Map<String, TreeModel> codeMap = new HashMap<String, TreeModel>();
+		Map<String, TreeModel> codeMap = new java.util.HashMap<String, TreeModel>();
 		TreeModelQuery query = new TreeModelQuery();
 		query.setCodes(codes);
 		List<TreeModel> treeModels = this.getTreeModels(query);
@@ -238,7 +231,7 @@ public class MxTreeModelServiceImpl implements ITreeModelService {
 	}
 
 	public Map<String, TreeModel> getTreeModelMap(List<String> codes) {
-		Map<String, TreeModel> codeMap = new HashMap<String, TreeModel>();
+		Map<String, TreeModel> codeMap = new java.util.HashMap<String, TreeModel>();
 		TreeModelQuery query = new TreeModelQuery();
 		query.codes(codes);
 		List<TreeModel> treeModels = this.getTreeModels(query);
@@ -260,7 +253,7 @@ public class MxTreeModelServiceImpl implements ITreeModelService {
 	}
 
 	public List<TreeModel> getTreeModels(TreeModelQuery query) {
-		List<TreeModel> treeModels = new ArrayList<TreeModel>();
+		List<TreeModel> treeModels = new java.util.ArrayList<TreeModel>();
 
 		String statementId = CustomProperties.getString("sys.getTreeModels");
 		if (StringUtils.isEmpty(statementId)) {

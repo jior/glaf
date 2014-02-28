@@ -21,13 +21,12 @@
 package com.glaf.core.res;
 
 import java.io.Serializable;
-
-import java.util.ArrayList;
+ 
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -51,7 +50,7 @@ import java.util.List;
  * @version $Rev: 471754 $ $Date: 2005-08-26 21:58:39 -0400 (Fri, 26 Aug 2005) $
  * @since Struts 1.1
  */
-@SuppressWarnings({"rawtypes", "unchecked"})
+@SuppressWarnings({ "rawtypes", "unchecked" })
 public class ViewMessages implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -100,7 +99,7 @@ public class ViewMessages implements Serializable {
 	 * an ArrayList) for each property, keyed by property name.
 	 * </p>
 	 */
-	protected HashMap<String, ViewMessageItem> messages = new HashMap<String, ViewMessageItem>();
+	protected Map<String, ViewMessageItem> messages = new java.util.concurrent.ConcurrentHashMap<String, ViewMessageItem>();
 
 	/**
 	 * <p>
@@ -154,7 +153,7 @@ public class ViewMessages implements Serializable {
 		List<Object> list;
 
 		if (item == null) {
-			list = new ArrayList<Object>();
+			list = new java.util.concurrent.CopyOnWriteArrayList<Object>();
 			item = new ViewMessageItem(list, iCount++, property);
 
 			messages.put(property, item);
@@ -234,8 +233,7 @@ public class ViewMessages implements Serializable {
 	 * 
 	 * @return An iterator over the messages for all properties.
 	 */
-	
- 
+
 	public Iterator get() {
 		this.accessed = true;
 
@@ -243,8 +241,8 @@ public class ViewMessages implements Serializable {
 			return Collections.EMPTY_LIST.iterator();
 		}
 
-		ArrayList results = new ArrayList();
-		ArrayList actionItems = new ArrayList();
+		List results = new java.util.ArrayList();
+		List actionItems = new java.util.ArrayList();
 
 		for (Iterator i = messages.values().iterator(); i.hasNext();) {
 			actionItems.add(i.next());
@@ -318,8 +316,8 @@ public class ViewMessages implements Serializable {
 			return Collections.EMPTY_LIST.iterator();
 		}
 
-		ArrayList results = new ArrayList();
-		ArrayList actionItems = new ArrayList();
+		List results = new java.util.ArrayList();
+		List actionItems = new java.util.ArrayList();
 
 		for (Iterator i = messages.values().iterator(); i.hasNext();) {
 			actionItems.add(i.next());
@@ -395,7 +393,7 @@ public class ViewMessages implements Serializable {
 	 * </p>
 	 */
 	protected class ViewMessageItem implements Serializable {
-		 
+
 		private static final long serialVersionUID = 1L;
 
 		/**

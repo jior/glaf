@@ -22,26 +22,23 @@ import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.session.SqlSession;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.core.base.BlobItem;
 import com.glaf.core.base.DataFile;
 import com.glaf.core.config.SystemProperties;
-import com.glaf.core.jdbc.DBConnectionFactory;
 import com.glaf.core.dao.EntityDAO;
 import com.glaf.core.domain.BlobItemEntity;
 import com.glaf.core.id.IdGenerator;
+import com.glaf.core.jdbc.DBConnectionFactory;
 import com.glaf.core.mapper.BlobItemMapper;
 import com.glaf.core.query.BlobItemQuery;
 import com.glaf.core.service.IBlobService;
@@ -135,7 +132,7 @@ public class MxBlobServiceImpl implements IBlobService {
 
 	public List<DataFile> getBlobList(BlobItemQuery query) {
 		List<BlobItem> list = list(query);
-		List<DataFile> rows = new ArrayList<DataFile>();
+		List<DataFile> rows = new java.util.concurrent.CopyOnWriteArrayList<DataFile>();
 		for (BlobItem b : list) {
 			rows.add(b);
 		}
@@ -146,7 +143,7 @@ public class MxBlobServiceImpl implements IBlobService {
 		BlobItemQuery query = new BlobItemQuery();
 		query.businessKey(businessKey);
 		List<BlobItem> list = list(query);
-		List<DataFile> rows = new ArrayList<DataFile>();
+		List<DataFile> rows = new java.util.concurrent.CopyOnWriteArrayList<DataFile>();
 		for (BlobItem b : list) {
 			rows.add(b);
 		}
@@ -371,13 +368,13 @@ public class MxBlobServiceImpl implements IBlobService {
 	@Transactional
 	public void saveAll(Map<String, DataFile> dataMap) {
 		BlobItemQuery query = new BlobItemQuery();
-		List<String> names = new ArrayList<String>();
+		List<String> names = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		for (String str : dataMap.keySet()) {
 			names.add(str);
 		}
 		query.names(names);
 		List<BlobItem> dataList = this.list(query);
-		Map<String, Object> exists = new HashMap<String, Object>();
+		Map<String, Object> exists = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		if (dataList != null && dataList.size() > 0) {
 			Iterator<BlobItem> iterator = dataList.iterator();
 			while (iterator.hasNext()) {

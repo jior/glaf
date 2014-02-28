@@ -18,8 +18,6 @@
 package com.glaf.form.core.graph.def;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -46,7 +44,7 @@ public class FormEvent implements Serializable {
 				&& StringUtils.isNotEmpty(formProperty.getValue())) {
 			formProperty.setGraphElement(graphElement);
 			if (properties == null) {
-				properties = new HashMap<String, FormProperty>();
+				properties = new java.util.concurrent.ConcurrentHashMap<String, FormProperty>();
 			}
 			FormProperty p = properties.get(formProperty.getName());
 			if (p == null) {
@@ -62,7 +60,7 @@ public class FormEvent implements Serializable {
 	public void addProperty(String name, String value) {
 		if (StringUtils.isNotEmpty(name) && StringUtils.isNotEmpty(value)) {
 			if (properties == null) {
-				properties = new HashMap<String, FormProperty>();
+				properties = new java.util.concurrent.ConcurrentHashMap<String, FormProperty>();
 			}
 			FormProperty p = properties.get(name);
 			if (p == null) {
@@ -81,7 +79,7 @@ public class FormEvent implements Serializable {
 					"can't add a null script to an event");
 		}
 		if (scripts == null) {
-			scripts = new ArrayList<FormScript>();
+			scripts = new java.util.concurrent.CopyOnWriteArrayList<FormScript>();
 		}
 		scripts.add(script);
 		script.setFormEvent(this);
@@ -94,7 +92,7 @@ public class FormEvent implements Serializable {
 
 	public Map<String, FormProperty> getProperties() {
 		if (properties == null) {
-			properties = new HashMap<String, FormProperty>();
+			properties = new java.util.concurrent.ConcurrentHashMap<String, FormProperty>();
 		}
 		return properties;
 	}

@@ -208,7 +208,7 @@ public class DistrictServiceImpl implements DistrictService {
 		 * 如果节点移动了位置，即移动到别的节点下面去了
 		 */
 		if (model.getParentId() != bean.getParentId()) {
-			List<DistrictEntity> list = new ArrayList<DistrictEntity>();
+			List<DistrictEntity> list = new java.util.concurrent.CopyOnWriteArrayList<DistrictEntity>();
 			this.loadChildren(list, bean.getId());
 			if (!list.isEmpty()) {
 				for (DistrictEntity node : list) {

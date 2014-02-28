@@ -18,9 +18,7 @@
 
 package com.glaf.core.service.impl;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +28,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -273,7 +270,7 @@ public class MxDataModelServiceImpl implements DataModelService {
 		RowBounds rowBounds = new RowBounds(begin, pageSize);
 		List<Map<String, Object>> rows = sqlSession.selectList(
 				"getTableDataByDataModelQuery", query, rowBounds);
-		List<DataModel> dataModels = new ArrayList<DataModel>();
+		List<DataModel> dataModels = new java.util.concurrent.CopyOnWriteArrayList<DataModel>();
 		if (rows != null && !rows.isEmpty()) {
 			for (Map<String, Object> dataMap : rows) {
 				DataModelEntity model = this.populate(dataMap);
@@ -284,7 +281,7 @@ public class MxDataModelServiceImpl implements DataModelService {
 	}
 
 	public DataModelEntity populate(Map<String, Object> rowMap) {
-		Map<String, Object> dataMap = new HashMap<String, Object>();
+		Map<String, Object> dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		if (rowMap != null && rowMap.size() > 0) {
 			Iterator<?> iterator = rowMap.keySet().iterator();
 			while (iterator.hasNext()) {

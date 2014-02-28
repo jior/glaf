@@ -23,7 +23,6 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -168,7 +167,7 @@ public class MxMailHelper {
 	}
 
 	public Map<String, String> getAttributes(String attribute) {
-		Map<String, String> dataMap = new HashMap<String, String>();
+		Map<String, String> dataMap = new java.util.concurrent.ConcurrentHashMap<String, String>();
 		StringReader stringReader = new StringReader(attribute);
 		SAXReader xmlReader = new SAXReader();
 		try {

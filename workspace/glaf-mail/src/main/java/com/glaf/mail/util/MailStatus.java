@@ -34,7 +34,7 @@ public class MailStatus {
 
 	public final static int RUBBISH = 5; // ·ÏÆúÓÊ¼ş
 
-	protected static Map<Integer, String> names = new HashMap<Integer, String>();
+	protected static Map<Integer, String> names = new java.util.concurrent.ConcurrentHashMap<Integer, String>();
 
 	static {
 		names.put(NEW, "ĞÂÓÊ¼ş");

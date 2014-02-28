@@ -18,8 +18,6 @@
 
 package com.glaf.core.tree.helper;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,9 +31,9 @@ public class TreeRepositoryBuilder {
 
 	public TreeRepository build(List<TreeModel> treeModels) {
 		// Collections.sort(treeModels);
-		List<TreeModel> nodes = new ArrayList<TreeModel>();
-		Map<String, TreeModel> treeMap = new HashMap<String, TreeModel>();
-		Map<Long, TreeModel> treeModelMap = new HashMap<Long, TreeModel>();
+		List<TreeModel> nodes = new java.util.concurrent.CopyOnWriteArrayList<TreeModel>();
+		Map<String, TreeModel> treeMap = new java.util.concurrent.ConcurrentHashMap<String, TreeModel>();
+		Map<Long, TreeModel> treeModelMap = new java.util.concurrent.ConcurrentHashMap<Long, TreeModel>();
 
 		for (int i = 0, len = treeModels.size(); i < len; i++) {
 			TreeModel treeModel = (TreeModel) treeModels.get(i);

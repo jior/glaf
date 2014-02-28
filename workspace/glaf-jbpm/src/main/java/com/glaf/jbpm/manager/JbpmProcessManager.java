@@ -21,7 +21,6 @@ package com.glaf.jbpm.manager;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -232,7 +231,7 @@ public class JbpmProcessManager {
 					+ processInstance.getId() + "' has ended");
 		}
 
-		Map<String, Object> dataMap = new HashMap<String, Object>();
+		Map<String, Object> dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 
 		String previousActorId = null;
 
@@ -394,7 +393,7 @@ public class JbpmProcessManager {
 	 */
 	public Paging getPageProcessInstances(JbpmContext jbpmContext, int pageNo,
 			int pageSize, ProcessQuery query) {
-		Map<String, Object> params = new HashMap<String, Object>();
+		Map<String, Object> params = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 
 		SqlExecutor countExecutor = new SqlExecutor();
 		SqlExecutor queryExecutor = new SqlExecutor();
@@ -482,7 +481,7 @@ public class JbpmProcessManager {
 	public Map<String, VariableInstance> getVariableMap(
 			JbpmContext jbpmContext, Collection<Long> processInstanceIds) {
 		SqlExecutor queryExecutor = new SqlExecutor();
-		Map<String, Object> params = new HashMap<String, Object>();
+		Map<String, Object> params = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		params.put("name", Constant.JSON_VARIABLE_MAP);
 		StringBuffer buffer = new StringBuffer();
 		buffer.append(" select vi from org.jbpm.context.exe.VariableInstance vi where vi.name = :name  ");
@@ -513,7 +512,7 @@ public class JbpmProcessManager {
 		List<?> variableInstances = jbpmEntityDAO.getList(jbpmContext,
 				queryExecutor);
 
-		Map<String, VariableInstance> variableMap = new HashMap<String, VariableInstance>();
+		Map<String, VariableInstance> variableMap = new java.util.concurrent.ConcurrentHashMap<String, VariableInstance>();
 		if (variableInstances != null && variableInstances.size() > 0) {
 			Iterator<?> iterator = variableInstances.iterator();
 			while (iterator.hasNext()) {
@@ -614,7 +613,7 @@ public class JbpmProcessManager {
 
 		ctx.setProcessInstanceId(processInstanceId);
 
-		final Map<String, Object> dataMap = new HashMap<String, Object>();
+		final Map<String, Object> dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 
 		final Collection<DataField> dataFields = ctx.getDataFields();
 		if (dataFields != null && dataFields.size() > 0) {

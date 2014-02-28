@@ -20,7 +20,6 @@ package com.glaf.core.util;
 
 import java.text.BreakIterator;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -491,11 +490,11 @@ public final class StringTools {
 	}
 
 	public static Collection<String> getStringCollection(String str) {
-		List<String> values = new ArrayList<String>();
+		List<String> values = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		if (str == null)
 			return values;
 		StringTokenizer tokenizer = new StringTokenizer(str, ",");
-		values = new ArrayList<String>();
+		values = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		while (tokenizer.hasMoreTokens()) {
 			values.add(tokenizer.nextToken());
 		}
@@ -781,7 +780,7 @@ public final class StringTools {
 		if (text == null) {
 			return Collections.EMPTY_LIST;
 		}
-		List<String> pieces = new ArrayList<String>();
+		List<String> pieces = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		int start = 0;
 		int end = text.indexOf(delimiter);
 		while (end != -1) {
@@ -840,7 +839,7 @@ public final class StringTools {
 		if (text == null) {
 			return Collections.EMPTY_LIST;
 		}
-		List<Integer> pieces = new ArrayList<Integer>();
+		List<Integer> pieces = new java.util.concurrent.CopyOnWriteArrayList<Integer>();
 		int start = 0;
 		int end = text.indexOf(delimiter);
 		while (end != -1) {
@@ -874,7 +873,7 @@ public final class StringTools {
 		if (text == null) {
 			return Collections.EMPTY_LIST;
 		}
-		List<Long> pieces = new ArrayList<Long>();
+		List<Long> pieces = new java.util.concurrent.CopyOnWriteArrayList<Long>();
 		int start = 0;
 		int end = text.indexOf(delimiter);
 		while (end != -1) {
@@ -918,7 +917,7 @@ public final class StringTools {
 		if (string == null || string.trim().length() == 0) {
 			return Collections.emptyList();
 		}
-		Collection<String> collection = new ArrayList<String>();
+		Collection<String> collection = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		StringTokenizer tokens = new StringTokenizer(string, ",");
 		while (tokens.hasMoreTokens()) {
 			collection.add(tokens.nextToken().trim());
@@ -963,7 +962,7 @@ public final class StringTools {
 			return new String[0];
 		}
 
-		List<String> wordList = new ArrayList<String>();
+		List<String> wordList = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		BreakIterator boundary = BreakIterator.getWordInstance();
 		boundary.setText(text);
 		int start = 0;

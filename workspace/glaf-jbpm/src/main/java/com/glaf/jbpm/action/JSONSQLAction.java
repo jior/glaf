@@ -18,7 +18,6 @@
 
 package com.glaf.jbpm.action;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -68,7 +67,7 @@ public class JSONSQLAction implements ActionHandler {
 
 		ContextInstance contextInstance = ctx.getContextInstance();
 
-		Map<String, Object> params = new HashMap<String, Object>();
+		Map<String, Object> params = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 
 		Map<String, Object> variables = contextInstance.getVariables();
 		if (variables != null && variables.size() > 0) {

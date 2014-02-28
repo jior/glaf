@@ -21,11 +21,9 @@ package com.glaf.chart.gen;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.geom.Ellipse2D;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.jfree.chart.ChartFactory;
-
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
@@ -190,7 +188,7 @@ public class SummationLineChartGen implements ChartGen {
 
 	public CategoryDataset createDataset(Chart chartModel) {
 		DefaultCategoryDataset localDefaultCategoryDataset = new DefaultCategoryDataset();
-		Map<String, Double> total = new HashMap<String, Double>();
+		Map<String, Double> total = new java.util.concurrent.ConcurrentHashMap<String, Double>();
 		for (ColumnModel cell : chartModel.getColumns()) {
 			if (cell.getSeries() != null && cell.getCategory() != null) {
 				Double d = total.get(cell.getSeries());

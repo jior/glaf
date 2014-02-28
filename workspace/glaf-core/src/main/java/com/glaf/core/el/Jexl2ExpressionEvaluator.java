@@ -17,8 +17,7 @@
 */
 
 package com.glaf.core.el;
-
-import java.util.HashMap;
+ 
 import java.util.Map;
 
 import org.apache.commons.jexl2.Expression;
@@ -59,7 +58,7 @@ public class Jexl2ExpressionEvaluator {
 	public static void main(String[] args) throws Exception {
 		String expression = null;
 		Object obj = null;
-		Map<String, Object> context = new HashMap<String, Object>();
+		Map<String, Object> context = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		context.put("roleId", "admin");
 		context.put("roleType", "-5");
 

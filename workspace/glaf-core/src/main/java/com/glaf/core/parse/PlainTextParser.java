@@ -23,7 +23,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -37,8 +36,8 @@ import com.glaf.core.service.ITableDataService;
 import com.glaf.core.service.ITableDefinitionService;
 import com.glaf.core.util.DBUtils;
 import com.glaf.core.util.IOUtils;
-import com.glaf.core.xml.XmlReader;
 import com.glaf.core.xml.XmlMappingReader;
+import com.glaf.core.xml.XmlReader;
 
 public class PlainTextParser implements Parser {
 
@@ -93,7 +92,7 @@ public class PlainTextParser implements Parser {
 		row.setTableName(tableModel.getTableName());
 		row.setAggregationKeys(tableModel.getAggregationKeys());
 
-		List<ColumnModel> columns = new ArrayList<ColumnModel>();
+		List<ColumnModel> columns = new java.util.concurrent.CopyOnWriteArrayList<ColumnModel>();
 		for (ColumnModel cell : tableModel.getColumns()) {
 			if (cell.getPosition() > 0) {
 				columns.add(cell);
@@ -167,7 +166,7 @@ public class PlainTextParser implements Parser {
 
 	public List<TableModel> parse(TableModel tableModel,
 			java.io.InputStream data) {
-		List<TableModel> rows = new ArrayList<TableModel>();
+		List<TableModel> rows = new java.util.concurrent.CopyOnWriteArrayList<TableModel>();
 		InputStreamReader isr = null;
 		BufferedReader reader = null;
 		int startRow = tableModel.getStartRow();

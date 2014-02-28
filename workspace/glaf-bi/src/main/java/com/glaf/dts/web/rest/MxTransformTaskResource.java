@@ -18,9 +18,8 @@
 
 package com.glaf.dts.web.rest;
 
-import java.util.ArrayList;
 import java.util.List;
- 
+
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -31,17 +30,16 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
 
 import org.apache.commons.lang.StringUtils;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.glaf.core.service.*;
-
+import com.glaf.core.service.IQueryDefinitionService;
+import com.glaf.core.service.ITableDefinitionService;
 import com.glaf.dts.business.MxTransformScheduler;
-import com.glaf.dts.transform.MxTransformThread;
 import com.glaf.dts.domain.TransformTask;
 import com.glaf.dts.query.TransformTaskQuery;
 import com.glaf.dts.service.ITransformTaskService;
+import com.glaf.dts.transform.MxTransformThread;
 
 @Controller("/rs/dts/transform/task")
 @Path("/rs/dts/transform/task")
@@ -84,7 +82,7 @@ public class MxTransformTaskResource {
 			query.statusNotEqual(9);
 			List<TransformTask> tasks = transformTaskService.list(query);
 			if (tasks != null && !tasks.isEmpty()) {
-				List<String> taskIds = new ArrayList<String>();
+				List<String> taskIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
 				for (TransformTask task : tasks) {
 					if (task.getStatus() != 9) {
 						if (!taskIds.contains(task.getId())) {

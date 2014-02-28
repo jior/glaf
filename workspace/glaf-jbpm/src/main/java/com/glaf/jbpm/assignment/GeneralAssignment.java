@@ -18,8 +18,7 @@
 
 package com.glaf.jbpm.assignment;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+ 
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -116,9 +115,9 @@ public class GeneralAssignment implements AssignmentHandler {
 			roleId = processName + "_" + taskName;
 		}
 
-		List<String> actorIds = new ArrayList<String>();
+		List<String> actorIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
 
-		Map<String, Object> paramMap = new HashMap<String, Object>();
+		Map<String, Object> paramMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 
 		paramMap.put("roleId", roleId);
 

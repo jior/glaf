@@ -18,16 +18,17 @@
 
 package com.glaf.activiti.executionlistener;
 
-import java.util.*;
+import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.activiti.engine.delegate.DelegateExecution;
 import org.activiti.engine.delegate.ExecutionListener;
+import org.activiti.engine.impl.context.Context;
+import org.activiti.engine.impl.interceptor.CommandContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import org.activiti.engine.impl.context.Context;
-import org.activiti.engine.impl.interceptor.CommandContext;
 import com.glaf.core.dao.MyBatisEntityDAO;
 import com.glaf.core.entity.SqlExecutor;
 import com.glaf.core.util.ClassUtils;
@@ -46,7 +47,7 @@ public class MyBatisUpdateListener implements ExecutionListener {
 	protected String statementId;
 
 	public void notify(DelegateExecution execution) throws Exception {
-		Map<String, Object> params = new HashMap<String, Object>();
+		Map<String, Object> params = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		CommandContext commandContext = Context.getCommandContext();
 
 		Map<String, Object> variables = execution.getVariables();

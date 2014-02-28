@@ -18,10 +18,8 @@
 
 package com.glaf.activiti.extension.model;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -98,10 +96,10 @@ public class ExtensionEntity implements java.io.Serializable {
 	protected String updateBy = null;
 
 	@Transient
-	protected List<ExtensionParamEntity> params = new ArrayList<ExtensionParamEntity>();
+	protected List<ExtensionParamEntity> params = new java.util.concurrent.CopyOnWriteArrayList<ExtensionParamEntity>();
 
 	@Transient
-	protected Map<String, ExtensionFieldEntity> fields = new HashMap<String, ExtensionFieldEntity>();
+	protected Map<String, ExtensionFieldEntity> fields = new java.util.concurrent.ConcurrentHashMap<String, ExtensionFieldEntity>();
 
 	public ExtensionEntity() {
 
@@ -109,7 +107,7 @@ public class ExtensionEntity implements java.io.Serializable {
 
 	public void addField(ExtensionFieldEntity extensionField) {
 		if (fields == null) {
-			fields = new HashMap<String, ExtensionFieldEntity>();
+			fields = new java.util.concurrent.ConcurrentHashMap<String, ExtensionFieldEntity>();
 		}
 		extensionField.setExtension(this);
 		fields.put(extensionField.getName(), extensionField);
@@ -117,7 +115,7 @@ public class ExtensionEntity implements java.io.Serializable {
 
 	public void addParam(ExtensionParamEntity extensionParam) {
 		if (params == null) {
-			params = new ArrayList<ExtensionParamEntity>();
+			params = new java.util.concurrent.CopyOnWriteArrayList<ExtensionParamEntity>();
 		}
 		extensionParam.setExtension(this);
 		params.add(extensionParam);
@@ -385,7 +383,7 @@ public class ExtensionEntity implements java.io.Serializable {
 		}
 
 		if (params != null && params.size() > 0) {
-			Collection<JSONObject> rows = new ArrayList<JSONObject>();
+			Collection<JSONObject> rows = new java.util.concurrent.CopyOnWriteArrayList<JSONObject>();
 			for (ExtensionParamEntity param : params) {
 				JSONObject json = new JSONObject();
 				json.put("id", param.getId());
@@ -402,7 +400,7 @@ public class ExtensionEntity implements java.io.Serializable {
 		}
 
 		if (fields != null && fields.size() > 0) {
-			Collection<JSONObject> rows = new ArrayList<JSONObject>();
+			Collection<JSONObject> rows = new java.util.concurrent.CopyOnWriteArrayList<JSONObject>();
 			Set<Entry<String, ExtensionFieldEntity>> entrySet = fields
 					.entrySet();
 			for (Entry<String, ExtensionFieldEntity> entry : entrySet) {

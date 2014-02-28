@@ -18,7 +18,9 @@
 
 package com.glaf.core.base;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
@@ -29,14 +31,14 @@ public class TableModel implements java.io.Serializable {
 
 	protected String aggregationKey;
 
-	protected Collection<String> aggregationKeys = new ArrayList<String>();
+	protected Collection<String> aggregationKeys = new java.util.concurrent.CopyOnWriteArrayList<String>();
 
 	/**
 	 * 批处理的大小
 	 */
 	protected int batchSize;
 
-	protected List<ColumnModel> columns = new ArrayList<ColumnModel>();
+	protected List<ColumnModel> columns = new java.util.concurrent.CopyOnWriteArrayList<ColumnModel>();
 
 	/**
 	 * 英文标题
@@ -51,7 +53,7 @@ public class TableModel implements java.io.Serializable {
 	/**
 	 * 需要排除的行列表
 	 */
-	protected List<String> excludes = new ArrayList<String>();
+	protected List<String> excludes = new java.util.concurrent.CopyOnWriteArrayList<String>();
 
 	/**
 	 * 文件前缀
@@ -129,7 +131,7 @@ public class TableModel implements java.io.Serializable {
 	public void addCollectionColumn(String columnName,
 			Collection<Object> collection) {
 		if (columns == null) {
-			columns = new ArrayList<ColumnModel>();
+			columns = new java.util.concurrent.CopyOnWriteArrayList<ColumnModel>();
 		}
 		ColumnModel column = new ColumnModel();
 		column.setColumnName(columnName);
@@ -142,7 +144,7 @@ public class TableModel implements java.io.Serializable {
 
 	public void addColumn(ColumnModel column) {
 		if (columns == null) {
-			columns = new ArrayList<ColumnModel>();
+			columns = new java.util.concurrent.CopyOnWriteArrayList<ColumnModel>();
 		}
 		column.setTable(this);
 		columns.add(column);
@@ -151,7 +153,7 @@ public class TableModel implements java.io.Serializable {
 	@SuppressWarnings({ "rawtypes" })
 	public void addColumn(String columnName, String javaType, Object value) {
 		if (columns == null) {
-			columns = new ArrayList<ColumnModel>();
+			columns = new java.util.concurrent.CopyOnWriteArrayList<ColumnModel>();
 		}
 		ColumnModel column = new ColumnModel();
 		column.setColumnName(columnName);
@@ -174,7 +176,7 @@ public class TableModel implements java.io.Serializable {
 
 	public void addExclude(String exclude) {
 		if (excludes == null) {
-			excludes = new ArrayList<String>();
+			excludes = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		}
 		excludes.add(exclude);
 	}
@@ -234,7 +236,7 @@ public class TableModel implements java.io.Serializable {
 
 	public List<String> getExcludes() {
 		if (excludes == null) {
-			excludes = new ArrayList<String>();
+			excludes = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		}
 		return excludes;
 	}

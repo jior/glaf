@@ -20,7 +20,6 @@ package com.glaf.jbpm.dao;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -274,7 +273,7 @@ public class JbpmEntityDAO {
 		}
 
 		if (totalCount == 0) {
-			page.setRows(new ArrayList<Object>());
+			page.setRows(new java.util.concurrent.CopyOnWriteArrayList<Object>());
 			page.setCurrentPage(0);
 			page.setPageSize(0);
 			page.setTotal(0);

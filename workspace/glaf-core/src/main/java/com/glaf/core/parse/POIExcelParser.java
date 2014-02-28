@@ -2,7 +2,6 @@ package com.glaf.core.parse;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -13,7 +12,9 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.json.*;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import com.glaf.core.base.ColumnModel;
 import com.glaf.core.base.TableModel;
 import com.glaf.core.context.ContextFactory;
@@ -63,7 +64,7 @@ public class POIExcelParser implements Parser {
 	}
 
 	public List<TableModel> parse(TableModel metadata, java.io.InputStream data) {
-		List<TableModel> rows = new ArrayList<TableModel>();
+		List<TableModel> rows = new java.util.concurrent.CopyOnWriteArrayList<TableModel>();
 		HSSFWorkbook wb = null;
 		try {
 			wb = new HSSFWorkbook(data);

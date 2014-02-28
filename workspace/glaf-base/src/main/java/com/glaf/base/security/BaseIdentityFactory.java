@@ -18,10 +18,6 @@
 
 package com.glaf.base.security;
 
-import java.util.ArrayList;
-
-import java.util.HashMap;
-
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,21 +26,20 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.json.JSONArray;
 
-import com.glaf.core.context.ContextFactory;
-import com.glaf.core.identity.Agent;
-import com.glaf.core.service.EntityService;
-
 import com.glaf.base.modules.sys.model.SysDepartment;
 import com.glaf.base.modules.sys.model.SysRole;
 import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.sys.service.SysApplicationService;
+import com.glaf.base.modules.sys.service.SysDepartmentService;
 import com.glaf.base.modules.sys.service.SysDeptRoleService;
 import com.glaf.base.modules.sys.service.SysRoleService;
 import com.glaf.base.modules.sys.service.SysTreeService;
 import com.glaf.base.modules.sys.service.SysUserRoleService;
 import com.glaf.base.modules.sys.service.SysUserService;
-import com.glaf.base.modules.sys.service.SysDepartmentService;
 import com.glaf.base.utils.ContextUtil;
+import com.glaf.core.context.ContextFactory;
+import com.glaf.core.identity.Agent;
+import com.glaf.core.service.EntityService;
 
 public class BaseIdentityFactory {
 	protected static final Log logger = LogFactory
@@ -74,7 +69,7 @@ public class BaseIdentityFactory {
 	 * @return
 	 */
 	public static List<String> getAgentIds(String assignTo) {
-		List<String> agentIds = new ArrayList<String>();
+		List<String> agentIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		List<Object> rows = getEntityService().getList("getAgents", assignTo);
 		if (rows != null && !rows.isEmpty()) {
 			for (Object object : rows) {
@@ -177,7 +172,7 @@ public class BaseIdentityFactory {
 	 * @return
 	 */
 	public static Map<String, SysDepartment> getDepartmentMap() {
-		Map<String, SysDepartment> deptMap = new HashMap<String, SysDepartment>();
+		Map<String, SysDepartment> deptMap = new java.util.concurrent.ConcurrentHashMap<String, SysDepartment>();
 		List<SysDepartment> depts = getSysDepartmentService()
 				.getSysDepartmentList();
 		if (depts != null && !depts.isEmpty()) {
@@ -301,7 +296,7 @@ public class BaseIdentityFactory {
 	 */
 	public static List<SysDepartment> getParentAndChildrenDepartments(
 			Long deptId, Integer deptLevel) {
-		List<SysDepartment> list = new ArrayList<SysDepartment>();
+		List<SysDepartment> list = new java.util.concurrent.CopyOnWriteArrayList<SysDepartment>();
 		SysDepartment dept = getSysDepartmentService().findById(deptId);
 		if (dept != null) {
 			getSysDepartmentService().findNestingDepartment(list, dept.getId());
@@ -337,7 +332,7 @@ public class BaseIdentityFactory {
 	 * @return
 	 */
 	public static Map<String, SysRole> getRoleMap() {
-		Map<String, SysRole> roleMap = new HashMap<String, SysRole>();
+		Map<String, SysRole> roleMap = new java.util.concurrent.ConcurrentHashMap<String, SysRole>();
 		List<SysRole> roles = getSysRoleService().getSysRoleList();
 		if (roles != null && !roles.isEmpty()) {
 			for (SysRole role : roles) {
@@ -462,7 +457,6 @@ public class BaseIdentityFactory {
 		return userMap;
 	}
 
-
 	/**
 	 * 获取用户菜单
 	 * 
@@ -483,7 +477,7 @@ public class BaseIdentityFactory {
 	 * @return
 	 */
 	public static List<String> getUserRoleCodes(List<String> actorIds) {
-		List<String> codes = new ArrayList<String>();
+		List<String> codes = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		List<SysRole> list = getUserRoles(actorIds);
 		if (list != null && !list.isEmpty()) {
 			for (SysRole role : list) {
@@ -507,7 +501,7 @@ public class BaseIdentityFactory {
 	 * @return
 	 */
 	public static List<String> getUserRoles(String actorId) {
-		List<String> actorIds = new ArrayList<String>();
+		List<String> actorIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		actorIds.add(actorId);
 		return getUserRoleCodes(actorIds);
 	}
@@ -520,7 +514,6 @@ public class BaseIdentityFactory {
 	public static List<SysUser> getUsers() {
 		return getSysUserService().getSysUserList();
 	}
-
 
 	public static void setSysApplicationService(
 			SysApplicationService sysApplicationService) {
@@ -553,7 +546,5 @@ public class BaseIdentityFactory {
 	public static void setSysUserService(SysUserService sysUserService) {
 		BaseIdentityFactory.sysUserService = sysUserService;
 	}
-
-
 
 }

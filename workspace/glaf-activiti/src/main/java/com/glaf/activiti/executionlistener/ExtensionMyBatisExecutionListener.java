@@ -18,7 +18,6 @@
 
 package com.glaf.activiti.executionlistener;
 
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -34,18 +33,17 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.glaf.core.dao.MyBatisEntityDAO;
 import com.glaf.activiti.extension.factory.ExtensionFactory;
 import com.glaf.activiti.extension.model.ExtensionEntity;
 import com.glaf.activiti.extension.model.ExtensionParamEntity;
 import com.glaf.activiti.extension.service.ActivitiExtensionService;
+import com.glaf.activiti.util.ThreadHolder;
+import com.glaf.core.dao.MyBatisEntityDAO;
+import com.glaf.core.el.Mvel2ExpressionEvaluator;
+import com.glaf.core.entity.SqlExecutor;
 import com.glaf.core.util.Constants;
 import com.glaf.core.util.LogUtils;
-import com.glaf.activiti.util.ThreadHolder;
-import com.glaf.core.entity.SqlExecutor;
-
 import com.glaf.core.util.StringTools;
-import com.glaf.core.el.Mvel2ExpressionEvaluator;
 
 public class ExtensionMyBatisExecutionListener implements ExecutionListener {
  
@@ -115,7 +113,7 @@ public class ExtensionMyBatisExecutionListener implements ExecutionListener {
 			logger.debug("extension:" + extension.toJsonObject());
 		}
 
-		Map<String, Object> params = new HashMap<String, Object>();
+		Map<String, Object> params = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 
 		Map<String, Object> variables = execution.getVariables();
 		if (variables != null && variables.size() > 0) {

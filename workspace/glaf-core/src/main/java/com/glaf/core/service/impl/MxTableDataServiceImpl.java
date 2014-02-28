@@ -18,26 +18,34 @@
 
 package com.glaf.core.service.impl;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import org.apache.ibatis.session.SqlSession;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.glaf.core.id.*;
 import com.glaf.core.base.ColumnModel;
 import com.glaf.core.base.TableModel;
 import com.glaf.core.dao.EntityDAO;
-import com.glaf.core.domain.*;
+import com.glaf.core.domain.ColumnDefinition;
+import com.glaf.core.domain.TableDefinition;
 import com.glaf.core.entity.SqlExecutor;
-import com.glaf.core.mapper.*;
+import com.glaf.core.id.Dbid;
+import com.glaf.core.id.IdGenerator;
+import com.glaf.core.mapper.ColumnDefinitionMapper;
+import com.glaf.core.mapper.IdMapper;
+import com.glaf.core.mapper.TableDataMapper;
+import com.glaf.core.mapper.TablePageMapper;
 import com.glaf.core.query.TablePageQuery;
 import com.glaf.core.service.ITableDataService;
 import com.glaf.core.service.ITableDefinitionService;
@@ -152,10 +160,10 @@ public class MxTableDataServiceImpl implements ITableDataService {
 			tableDefinition.setTableName(tableDefinition.getTableName()
 					.toUpperCase());
 		}
-		Map<String, Object> colMap = new HashMap<String, Object>();
+		Map<String, Object> colMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 
-		Map<String, String> exprMap = new HashMap<String, String>();
-		List<ColumnDefinition> exprColumns = new ArrayList<ColumnDefinition>();
+		Map<String, String> exprMap = new java.util.concurrent.ConcurrentHashMap<String, String>();
+		List<ColumnDefinition> exprColumns = new java.util.concurrent.CopyOnWriteArrayList<ColumnDefinition>();
 
 		ColumnModel idColumn = new ColumnModel();
 
@@ -182,7 +190,7 @@ public class MxTableDataServiceImpl implements ITableDataService {
 
 		logger.debug("expr map:" + exprMap);
 
-		List<TableModel> inertRows = new ArrayList<TableModel>();
+		List<TableModel> inertRows = new java.util.concurrent.CopyOnWriteArrayList<TableModel>();
 
 		logger.debug(" rows size = " + rows.size());
 		// logger.debug(" key map: " + keyMap);
@@ -412,10 +420,10 @@ public class MxTableDataServiceImpl implements ITableDataService {
 
 		Collection<String> aggregationKeys = new HashSet<String>();
 
-		Map<String, Object> colMap = new HashMap<String, Object>();
-		Map<String, Object> keyMap = new HashMap<String, Object>();
-		Map<String, String> exprMap = new HashMap<String, String>();
-		List<ColumnDefinition> exprColumns = new ArrayList<ColumnDefinition>();
+		Map<String, Object> colMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		Map<String, Object> keyMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		Map<String, String> exprMap = new java.util.concurrent.ConcurrentHashMap<String, String>();
+		List<ColumnDefinition> exprColumns = new java.util.concurrent.CopyOnWriteArrayList<ColumnDefinition>();
 
 		ColumnModel idColumn = new ColumnModel();
 
@@ -508,8 +516,8 @@ public class MxTableDataServiceImpl implements ITableDataService {
 				}
 			}
 
-			List<TableModel> inertRows = new ArrayList<TableModel>();
-			List<TableModel> updateRows = new ArrayList<TableModel>();
+			List<TableModel> inertRows = new java.util.concurrent.CopyOnWriteArrayList<TableModel>();
+			List<TableModel> updateRows = new java.util.concurrent.CopyOnWriteArrayList<TableModel>();
 			logger.debug(" rows size = " + rows.size());
 			Iterator<TableModel> iterator = rows.iterator();
 			while (iterator.hasNext()) {
@@ -663,8 +671,8 @@ public class MxTableDataServiceImpl implements ITableDataService {
 				}
 			}
 
-			List<Map<String, Object>> inertRows = new ArrayList<Map<String, Object>>();
-			List<Map<String, Object>> updateRows = new ArrayList<Map<String, Object>>();
+			List<Map<String, Object>> inertRows = new java.util.concurrent.CopyOnWriteArrayList<Map<String, Object>>();
+			List<Map<String, Object>> updateRows = new java.util.concurrent.CopyOnWriteArrayList<Map<String, Object>>();
 			Iterator<Map<String, Object>> iterator = rows.iterator();
 			while (iterator.hasNext()) {
 				Map<String, Object> dataMap = iterator.next();
@@ -724,8 +732,8 @@ public class MxTableDataServiceImpl implements ITableDataService {
 			}
 		}
 
-		List<Map<String, Object>> inertRows = new ArrayList<Map<String, Object>>();
-		List<Map<String, Object>> updateRows = new ArrayList<Map<String, Object>>();
+		List<Map<String, Object>> inertRows = new java.util.concurrent.CopyOnWriteArrayList<Map<String, Object>>();
+		List<Map<String, Object>> updateRows = new java.util.concurrent.CopyOnWriteArrayList<Map<String, Object>>();
 		Iterator<Map<String, Object>> iterator = rows.iterator();
 		while (iterator.hasNext()) {
 			Map<String, Object> dataMap = iterator.next();
@@ -982,7 +990,7 @@ public class MxTableDataServiceImpl implements ITableDataService {
 	@Transactional
 	public void updateAllDbids(List<Dbid> rows) {
 		if (rows != null && !rows.isEmpty()) {
-			Map<String, Long> idMap = new HashMap<String, Long>();
+			Map<String, Long> idMap = new java.util.concurrent.ConcurrentHashMap<String, Long>();
 			List<Dbid> list = this.getAllDbids();
 			for (Dbid id : rows) {
 				if (StringUtils.isNumeric(id.getValue())) {

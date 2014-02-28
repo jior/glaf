@@ -18,10 +18,8 @@
 
 package com.glaf.jbpm.model;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +29,7 @@ import java.util.Set;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
+
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 
@@ -52,8 +51,8 @@ public class Extension implements java.io.Serializable {
 	protected String createActorId = null;
 	protected Date updateDate = null;
 	protected String updateActorId = null;
-	protected List<ExtensionParam> params = new ArrayList<ExtensionParam>();
-	protected Map<String, ExtensionField> fields = new HashMap<String, ExtensionField>();
+	protected List<ExtensionParam> params = new java.util.concurrent.CopyOnWriteArrayList<ExtensionParam>();
+	protected Map<String, ExtensionField> fields = new java.util.concurrent.ConcurrentHashMap<String, ExtensionField>();
 
 	public Extension() {
 
@@ -61,7 +60,7 @@ public class Extension implements java.io.Serializable {
 
 	public void addField(ExtensionField extensionField) {
 		if (fields == null) {
-			fields = new HashMap<String, ExtensionField>();
+			fields = new java.util.concurrent.ConcurrentHashMap<String, ExtensionField>();
 		}
 		extensionField.setExtension(this);
 		fields.put(extensionField.getName(), extensionField);
@@ -69,7 +68,7 @@ public class Extension implements java.io.Serializable {
 
 	public void addParam(ExtensionParam extensionParam) {
 		if (params == null) {
-			params = new ArrayList<ExtensionParam>();
+			params = new java.util.concurrent.CopyOnWriteArrayList<ExtensionParam>();
 		}
 		extensionParam.setExtension(this);
 		params.add(extensionParam);
@@ -332,7 +331,7 @@ public class Extension implements java.io.Serializable {
 		}
 
 		if (params != null && params.size() > 0) {
-			Collection<JSONObject> rows = new ArrayList<JSONObject>();
+			Collection<JSONObject> rows = new java.util.concurrent.CopyOnWriteArrayList<JSONObject>();
 			for (ExtensionParam param : params) {
 				JSONObject json = new JSONObject();
 				json.put("id", param.getId());
@@ -349,7 +348,7 @@ public class Extension implements java.io.Serializable {
 		}
 
 		if (fields != null && fields.size() > 0) {
-			Collection<JSONObject> rows = new ArrayList<JSONObject>();
+			Collection<JSONObject> rows = new java.util.concurrent.CopyOnWriteArrayList<JSONObject>();
 			Set<Entry<String, ExtensionField>> entrySet = fields.entrySet();
 			for (Entry<String, ExtensionField> entry : entrySet) {
 				ExtensionField field = entry.getValue();

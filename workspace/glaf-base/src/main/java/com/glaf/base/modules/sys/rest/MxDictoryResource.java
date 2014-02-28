@@ -18,7 +18,6 @@
 
 package com.glaf.base.modules.sys.rest;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.GET;
@@ -62,7 +61,7 @@ public class MxDictoryResource {
 	@ResponseBody
 	public byte[] json(@PathParam("category") String category) {
 		try {
-			List<JSONObject> rows = new ArrayList<JSONObject>();
+			List<JSONObject> rows = new java.util.concurrent.CopyOnWriteArrayList<JSONObject>();
 			SysTree tree = sysTreeService.getSysTreeByCode(category);
 			if (tree != null) {
 				List<Dictory> list = dictoryService

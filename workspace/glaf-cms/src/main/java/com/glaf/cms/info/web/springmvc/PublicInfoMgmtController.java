@@ -94,7 +94,7 @@ public class PublicInfoMgmtController {
 				String isAgree = request.getParameter("isAgree");
 				String opinion = request.getParameter("opinion");
 				ProcessContext ctx = new ProcessContext();
-				Collection<DataField> datafields = new ArrayList<DataField>();
+				Collection<DataField> datafields = new java.util.concurrent.CopyOnWriteArrayList<DataField>();
 				if (StringUtils.isNotEmpty(isAgree)) {
 					DataField datafield = new DataField();
 					datafield.setName("isAgree");
@@ -281,7 +281,7 @@ public class PublicInfoMgmtController {
 		String serviceKey = request.getParameter("serviceKey");
 		Long nodeId = RequestUtils.getLong(request, "nodeId");
 
-		Map<Long, TreeModel> treeModelMap = new HashMap<Long, TreeModel>();
+		Map<Long, TreeModel> treeModelMap = new java.util.concurrent.ConcurrentHashMap<Long, TreeModel>();
 		TreeModel treeModel = null;
 		if (StringUtils.isNotEmpty(serviceKey)) {
 			treeModel = treeModelService.getTreeModelByCode(serviceKey);
@@ -317,7 +317,7 @@ public class PublicInfoMgmtController {
 		PublicInfoQuery query = new PublicInfoQuery();
 		Tools.populate(query, params);
 		query.setWorkedProcessFlag(workedProcessFlag);
-		List<String> appActorIds = new ArrayList<String>();
+		List<String> appActorIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		appActorIds.addAll(loginContext.getAgents());
 		appActorIds.add(loginContext.getActorId());
 		query.setAppActorIds(appActorIds);
@@ -330,7 +330,7 @@ public class PublicInfoMgmtController {
 			if (processInstanceIds != null && processInstanceIds.size() > 0) {
 				query.processInstanceIds(processInstanceIds);
 			} else {
-				processInstanceIds = new ArrayList<Long>();
+				processInstanceIds = new java.util.concurrent.CopyOnWriteArrayList<Long>();
 				processInstanceIds.add(0L);
 				query.processInstanceIds(processInstanceIds);
 			}
@@ -343,7 +343,7 @@ public class PublicInfoMgmtController {
 			if (processInstanceIds != null && processInstanceIds.size() > 0) {
 				// query.processInstanceIds(processInstanceIds);
 			} else {
-				processInstanceIds = new ArrayList<Long>();
+				processInstanceIds = new java.util.concurrent.CopyOnWriteArrayList<Long>();
 				processInstanceIds.add(0L);
 				query.processInstanceIds(processInstanceIds);
 			}
@@ -355,7 +355,7 @@ public class PublicInfoMgmtController {
 			if (processInstanceIds != null && processInstanceIds.size() > 0) {
 				// query.processInstanceIds(processInstanceIds);
 			} else {
-				processInstanceIds = new ArrayList<Long>();
+				processInstanceIds = new java.util.concurrent.CopyOnWriteArrayList<Long>();
 				processInstanceIds.add(0L);
 				query.processInstanceIds(processInstanceIds);
 			}
@@ -366,7 +366,7 @@ public class PublicInfoMgmtController {
 			if (processInstanceIds != null && processInstanceIds.size() > 0) {
 				// query.processInstanceIds(processInstanceIds);
 			} else {
-				processInstanceIds = new ArrayList<Long>();
+				processInstanceIds = new java.util.concurrent.CopyOnWriteArrayList<Long>();
 				processInstanceIds.add(0L);
 				query.processInstanceIds(processInstanceIds);
 			}

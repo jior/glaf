@@ -20,7 +20,6 @@ package com.glaf.base.business;
 
 import java.util.Collection;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -170,7 +169,7 @@ public class TreeHelper {
 			}
 		}
 
-		Map<String, TreeModel> nodeMap = new HashMap<String, TreeModel>();
+		Map<String, TreeModel> nodeMap = new java.util.concurrent.ConcurrentHashMap<String, TreeModel>();
 		if (treeNodes != null && treeNodes.size() > 0) {
 			for (int i = 0; i < treeNodes.size(); i++) {
 				TreeModel treeNode = (TreeModel) treeNodes.get(i);

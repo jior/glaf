@@ -35,6 +35,15 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.glaf.base.config.BaseConfiguration;
+import com.glaf.base.modules.sys.SysConstants;
+import com.glaf.base.modules.sys.model.SysUser;
+import com.glaf.base.modules.sys.service.AuthorizeService;
+import com.glaf.base.modules.sys.service.SysUserService;
+import com.glaf.base.online.domain.UserOnline;
+import com.glaf.base.online.service.UserOnlineService;
+import com.glaf.base.utils.ContextUtil;
+import com.glaf.base.utils.ParamUtil;
 import com.glaf.core.cache.CacheFactory;
 import com.glaf.core.config.Configuration;
 import com.glaf.core.config.Environment;
@@ -52,15 +61,6 @@ import com.glaf.core.util.RequestUtils;
 import com.glaf.core.util.StringTools;
 import com.glaf.core.web.callback.CallbackProperties;
 import com.glaf.core.web.callback.LoginCallback;
-import com.glaf.base.config.BaseConfiguration;
-import com.glaf.base.modules.sys.SysConstants;
-import com.glaf.base.modules.sys.model.SysUser;
-import com.glaf.base.modules.sys.service.AuthorizeService;
-import com.glaf.base.modules.sys.service.SysUserService;
-import com.glaf.base.online.domain.UserOnline;
-import com.glaf.base.online.service.UserOnlineService;
-import com.glaf.base.utils.ContextUtil;
-import com.glaf.base.utils.ParamUtil;
 import com.glaf.shiro.ShiroSecurity;
 
 @Controller("/mx/login")

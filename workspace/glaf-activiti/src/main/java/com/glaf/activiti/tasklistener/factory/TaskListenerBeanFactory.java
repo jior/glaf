@@ -22,7 +22,9 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import com.glaf.core.config.*;
+
+import com.glaf.core.config.CustomProperties;
+import com.glaf.core.config.SystemProperties;
  
 
 public class TaskListenerBeanFactory {

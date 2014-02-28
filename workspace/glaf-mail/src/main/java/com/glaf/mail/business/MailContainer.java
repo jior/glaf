@@ -22,7 +22,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,7 +32,6 @@ import org.apache.commons.logging.LogFactory;
 import com.glaf.core.config.CustomProperties;
 import com.glaf.core.config.SystemProperties;
 import com.glaf.core.util.FileUtils;
-
 import com.glaf.mail.def.MailTemplate;
 import com.glaf.mail.xml.MailXmlReader;
 
@@ -55,7 +53,7 @@ public class MailContainer {
 	}
 
 	public Map<String, MailTemplate> reload() {
-		Map<String, MailTemplate> mailMap = new HashMap<String, MailTemplate>();
+		Map<String, MailTemplate> mailMap = new java.util.concurrent.ConcurrentHashMap<String, MailTemplate>();
 		String configLocation = SystemProperties.getString("mail.config.path");
 		if (StringUtils.isEmpty(configLocation)) {
 			configLocation = CustomProperties.getString("mail.config.path");

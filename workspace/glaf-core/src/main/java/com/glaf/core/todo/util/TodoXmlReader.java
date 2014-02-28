@@ -18,7 +18,9 @@
 
 package com.glaf.core.todo.util;
 
-import java.util.*;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.dom4j.Document;
@@ -26,12 +28,12 @@ import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
 import com.glaf.core.todo.Todo;
-import com.glaf.core.util.*;
+import com.glaf.core.util.Tools;
 
 public class TodoXmlReader {
 
 	public List<Todo> read(java.io.InputStream inputStream) {
-		List<Todo> todos = new ArrayList<Todo>();
+		List<Todo> todos = new java.util.concurrent.CopyOnWriteArrayList<Todo>();
 		SAXReader xmlReader = new SAXReader();
 		int sortNo = 1;
 		try {
@@ -42,7 +44,7 @@ public class TodoXmlReader {
 			while (iterator.hasNext()) {
 				Element element = (Element) iterator.next();
 				String id = element.attributeValue("id");
-				Map<String, Object> rowMap = new HashMap<String, Object>();
+				Map<String, Object> rowMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 				rowMap.put("id", id);
 				List<?> properties = element.elements("property");
 				Iterator<?> iter = properties.iterator();

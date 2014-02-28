@@ -18,10 +18,8 @@
 
 package com.glaf.core.util;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -35,7 +33,6 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
-import com.glaf.core.util.DateUtils;
 
 public class JsonUtils {
 
@@ -52,7 +49,7 @@ public class JsonUtils {
 					if (value != null) {
 						if (value instanceof Object[]) {
 							Object[] array = (Object[]) value;
-							Collection<Object> collection = new ArrayList<Object>();
+							Collection<Object> collection = new java.util.concurrent.CopyOnWriteArrayList<Object>();
 							for (int i = 0; i < array.length; i++) {
 								collection.add(array[i]);
 							}
@@ -96,14 +93,14 @@ public class JsonUtils {
 					if (value != null) {
 						if (value instanceof Object[]) {
 							Object[] array = (Object[]) value;
-							Collection<Object> collection = new ArrayList<Object>();
+							Collection<Object> collection = new java.util.concurrent.CopyOnWriteArrayList<Object>();
 							for (int i = 0; i < array.length; i++) {
 								collection.add(array[i]);
 							}
 							dataMap.put(key, collection);
 						} else if (value instanceof JSONArray) {
 							JSONArray array = (JSONArray) value;
-							Collection<Object> collection = new ArrayList<Object>();
+							Collection<Object> collection = new java.util.concurrent.CopyOnWriteArrayList<Object>();
 							for (int i = 0, len = array.size(); i < len; i++) {
 								collection.add(array.get(i));
 							}
@@ -155,14 +152,14 @@ public class JsonUtils {
 					if (value != null) {
 						if (value instanceof Object[]) {
 							Object[] array = (Object[]) value;
-							Collection<Object> collection = new ArrayList<Object>();
+							Collection<Object> collection = new java.util.concurrent.CopyOnWriteArrayList<Object>();
 							for (int i = 0; i < array.length; i++) {
 								collection.add(array[i]);
 							}
 
 						} else if (value instanceof JSONArray) {
 							JSONArray array = (JSONArray) value;
-							Collection<Object> collection = new ArrayList<Object>();
+							Collection<Object> collection = new java.util.concurrent.CopyOnWriteArrayList<Object>();
 							for (int i = 0, len = array.size(); i < len; i++) {
 								collection.add(array.get(i));
 							}
@@ -197,7 +194,7 @@ public class JsonUtils {
 					if (value != null) {
 						if (value instanceof Object[]) {
 							Object[] array = (Object[]) value;
-							Collection<Object> collection = new ArrayList<Object>();
+							Collection<Object> collection = new java.util.concurrent.CopyOnWriteArrayList<Object>();
 							for (int i = 0; i < array.length; i++) {
 								collection.add(array[i]);
 							}
@@ -225,7 +222,7 @@ public class JsonUtils {
 	}
 
 	public static void main(String[] args) throws Exception {
-		Map<String, Object> dataMap = new HashMap<String, Object>();
+		Map<String, Object> dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		dataMap.put("key01", "广州");
 		dataMap.put("key02", 12345);
 		dataMap.put("key03", 789.85D);
@@ -239,7 +236,7 @@ public class JsonUtils {
 		dataMap.put("actorIds", actorIds.toArray());
 		dataMap.put("x_sale_actor_actorIds", actorIds);
 
-		Map<String, Object> xxxMap = new HashMap<String, Object>();
+		Map<String, Object> xxxMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		xxxMap.put("0", "----请选择----");
 		xxxMap.put("1", "火车");
 		xxxMap.put("2", "飞机");

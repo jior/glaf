@@ -21,7 +21,6 @@ package com.glaf.jbpm.util;
 import java.io.File;
 import java.sql.Timestamp;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -108,7 +107,7 @@ public class HibernateUtils {
 			return null;
 		}
 		SqlExecutor sqlExecutor = new SqlExecutor();
-		Map<String, Object> paramMap = new HashMap<String, Object>();
+		Map<String, Object> paramMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 
 		StringBuffer sb = new StringBuffer();
 		int begin = 0;

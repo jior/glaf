@@ -25,9 +25,9 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,10 +37,10 @@ import org.springframework.web.servlet.ModelAndView;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.config.ViewProperties;
-import com.glaf.core.jdbc.DBConnectionFactory;
 import com.glaf.core.domain.ColumnDefinition;
 import com.glaf.core.domain.QueryDefinition;
 import com.glaf.core.domain.TableDefinition;
+import com.glaf.core.jdbc.DBConnectionFactory;
 import com.glaf.core.query.QueryDefinitionQuery;
 import com.glaf.core.query.TableDefinitionQuery;
 import com.glaf.core.security.LoginContext;

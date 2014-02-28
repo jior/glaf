@@ -18,7 +18,6 @@
 package com.glaf.form.core.graph.node;
 
 import java.io.InputStream;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -30,9 +29,9 @@ import org.w3c.dom.Element;
 
 import com.glaf.core.config.CustomProperties;
 import com.glaf.core.config.SystemProperties;
-import com.glaf.form.core.graph.def.FormNode;
 import com.glaf.core.util.PropertiesUtils;
 import com.glaf.core.util.XmlUtils;
+import com.glaf.form.core.graph.def.FormNode;
 
 public class NodeTypes {
 
@@ -78,7 +77,7 @@ public class NodeTypes {
 
 	static Map<String, Class<?>> nodeTypes = initialiseNodeTypes();
 
-	static Map<String, Integer> nodeTypeMap = new HashMap<String, Integer>();
+	static Map<String, Integer> nodeTypeMap = new java.util.concurrent.ConcurrentHashMap<String, Integer>();
 
 	static {
 		nodeTypeMap.put(BoxNode.NODE_TYPE, Integer.valueOf(BOX_NODE_TYPE));
@@ -141,7 +140,7 @@ public class NodeTypes {
 	}
 
 	static Map<String, Class<?>> initialiseNodeTypes() {
-		Map<String, Class<?>> types = new HashMap<String, Class<?>>();
+		Map<String, Class<?>> types = new java.util.concurrent.ConcurrentHashMap<String, Class<?>>();
 		String resource = SystemProperties
 				.getString("resource.form.node.types");
 		if (StringUtils.isNotEmpty(resource)) {

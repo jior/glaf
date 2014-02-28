@@ -20,9 +20,12 @@ package com.glaf.base.modules.sys.model;
 
 import java.io.Serializable;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-import com.alibaba.fastjson.*;
+import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.glaf.base.modules.sys.util.SysFunctionJsonFactory;
 import com.glaf.core.base.JSONable;

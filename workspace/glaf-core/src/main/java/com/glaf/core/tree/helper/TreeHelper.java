@@ -20,14 +20,12 @@ package com.glaf.core.tree.helper;
 
 import java.util.Collection;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
@@ -36,10 +34,8 @@ import org.apache.commons.logging.LogFactory;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.base.TreeModel;
-
 import com.glaf.core.tree.component.TreeComponent;
 import com.glaf.core.tree.component.TreeRepository;
-
 import com.glaf.core.util.DateUtils;
 
 public class TreeHelper {
@@ -178,7 +174,7 @@ public class TreeHelper {
 			}
 		}
 
-		Map<String, TreeModel> nodeMap = new HashMap<String, TreeModel>();
+		Map<String, TreeModel> nodeMap = new java.util.concurrent.ConcurrentHashMap<String, TreeModel>();
 		if (treeNodes != null && treeNodes.size() > 0) {
 			for (int i = 0, len = treeNodes.size(); i < len; i++) {
 				TreeModel treeNode = (TreeModel) treeNodes.get(i);

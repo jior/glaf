@@ -19,7 +19,6 @@
 package com.glaf.activiti.executionlistener.factory;
 
 import java.io.InputStream;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -75,7 +74,7 @@ public class ExecutionListenerTypes {
 	}
 
 	static Map<String, Class<?>> initializeExecutionListenerTypes() {
-		Map<String, Class<?>> types = new HashMap<String, Class<?>>();
+		Map<String, Class<?>> types = new java.util.concurrent.ConcurrentHashMap<String, Class<?>>();
 		String resource = SystemProperties.getString("activiti.executionListeners");
 		if (StringUtils.isEmpty(resource)) {
 			resource = DEFAULT_CONFIG;

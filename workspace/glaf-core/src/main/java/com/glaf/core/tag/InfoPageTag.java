@@ -19,7 +19,6 @@
 package com.glaf.core.tag;
 
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -307,7 +306,7 @@ public class InfoPageTag extends TagSupport {
 
 		imagePath = request.getContextPath() + "/images";
 
-		Map<String, Object> paramMap = new HashMap<String, Object>();
+		Map<String, Object> paramMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		StringBuffer buffer = new StringBuffer();
 
 		Enumeration<?> enumeration = request.getParameterNames();

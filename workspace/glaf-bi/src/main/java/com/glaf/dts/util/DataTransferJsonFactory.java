@@ -17,12 +17,12 @@
  */
 package com.glaf.dts.util;
 
-import com.alibaba.fastjson.*;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-
 import com.glaf.core.util.DateUtils;
-import com.glaf.dts.domain.*;
+import com.glaf.dts.domain.DataTransfer;
 
 public class DataTransferJsonFactory {
 

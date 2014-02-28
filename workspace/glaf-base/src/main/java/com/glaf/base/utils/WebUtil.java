@@ -24,7 +24,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -70,7 +69,7 @@ public class WebUtil {
 	 * @return
 	 */
 	public static String getQueryString(String url) {
-		Map<String, String> map = new HashMap<String, String>();
+		Map<String, String> map = new java.util.concurrent.ConcurrentHashMap<String, String>();
 		String[] param = url.split("&");
 		for (int i = 0; i < param.length; i++) {
 			String[] entry = param[i].split("=");

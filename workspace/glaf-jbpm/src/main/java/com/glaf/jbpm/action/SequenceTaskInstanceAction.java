@@ -19,7 +19,6 @@
 package com.glaf.jbpm.action;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -86,7 +85,7 @@ public class SequenceTaskInstanceAction implements ActionHandler {
 	public void execute(ExecutionContext ctx) throws Exception {
 		boolean isAgree = true;
 
-		Map<String, Object> params = new HashMap<String, Object>();
+		Map<String, Object> params = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 
 		ContextInstance contextInstance = ctx.getContextInstance();
 		Map<String, Object> variables = contextInstance.getVariables();

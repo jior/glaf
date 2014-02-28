@@ -19,7 +19,6 @@
 package com.glaf.core.web.rest;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -38,8 +37,8 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.alibaba.fastjson.*;
-
+import com.alibaba.fastjson.JSONException;
+import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.glaf.core.base.TreeModel;
 import com.glaf.core.service.ITreeModelService;
@@ -76,7 +75,7 @@ public class MxTreeModelResource {
 		}
 		List<TreeModel> children = treeNode.getChildren();
 		if (children != null && children.size() > 0) {
-			Collection<JSONObject> rows = new ArrayList<JSONObject>();
+			Collection<JSONObject> rows = new java.util.concurrent.CopyOnWriteArrayList<JSONObject>();
 			for (TreeModel node : children) {
 				JSONObject o = this.fillTreeDataChildren(node);
 				rows.add(o);
@@ -124,7 +123,7 @@ public class MxTreeModelResource {
 		String nodeCode = request.getParameter("nodeCode");
 		Long nodeId = RequestUtils.getLong(request, "id");
 		logger.debug(RequestUtils.getParameterMap(request));
-		List<TreeModel> treeModels = new ArrayList<TreeModel>();
+		List<TreeModel> treeModels = new java.util.concurrent.CopyOnWriteArrayList<TreeModel>();
 
 		if (nodeId > 0) {
 			TreeModel treeNode = treeModelService.getTreeModel(nodeId);
@@ -157,7 +156,7 @@ public class MxTreeModelResource {
 	public byte[] treeJson(@Context HttpServletRequest request) {
 		String nodeCode = request.getParameter("nodeCode");
 
-		List<TreeModel> treeModels = new ArrayList<TreeModel>();
+		List<TreeModel> treeModels = new java.util.concurrent.CopyOnWriteArrayList<TreeModel>();
 		if (StringUtils.isNotEmpty(nodeCode)) {
 			TreeModel treeNode = treeModelService.getTreeModelByCode(nodeCode);
 			if (treeNode != null) {

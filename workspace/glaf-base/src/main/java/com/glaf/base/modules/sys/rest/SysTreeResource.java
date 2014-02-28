@@ -19,7 +19,6 @@
 package com.glaf.base.modules.sys.rest;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -70,7 +69,7 @@ public class SysTreeResource {
 	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
 	public byte[] allTreeJson(@Context HttpServletRequest request) {
 		logger.debug("params:" + RequestUtils.getParameterMap(request));
-		List<TreeModel> treeModels = new ArrayList<TreeModel>();
+		List<TreeModel> treeModels = new java.util.concurrent.CopyOnWriteArrayList<TreeModel>();
 		List<SysTree> trees = sysTreeService.getAllSysTreeList();
 		if (trees != null && !trees.isEmpty()) {
 			for (SysTree tree : trees) {
@@ -291,7 +290,7 @@ public class SysTreeResource {
 			parent_id = request.getParameter("parent_id");
 		}
 		TreeModel treeModel = null;
-		List<TreeModel> treeModels = new ArrayList<TreeModel>();
+		List<TreeModel> treeModels = new java.util.concurrent.CopyOnWriteArrayList<TreeModel>();
 		if (StringUtils.isNotEmpty(parent_id)
 				&& StringUtils.isNumeric(parent_id)) {
 			treeModel = sysTreeService.findById(Long.parseLong(parent_id));

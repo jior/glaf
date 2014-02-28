@@ -15,7 +15,10 @@
 
 package com.glaf.core.util;
 
-import static com.glaf.core.util.Assert.ExceptionType.*;
+import static com.glaf.core.util.Assert.ExceptionType.ILLEGAL_ARGUMENT;
+import static com.glaf.core.util.Assert.ExceptionType.UNEXPECTED_FAILURE;
+import static com.glaf.core.util.Assert.ExceptionType.UNREACHABLE_CODE;
+import static com.glaf.core.util.Assert.ExceptionType.UNSUPPORTED_OPERATION;
 
 /**
  * 断言工具，用来实现<a

@@ -18,7 +18,6 @@
 
 package com.glaf.jbpm.web.springmvc;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -37,6 +36,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
 import com.glaf.core.config.ViewProperties;
 import com.glaf.core.util.RequestUtils;
 import com.glaf.jbpm.container.ProcessContainer;
@@ -98,7 +98,7 @@ public class MxJbpmProcessTreeController {
 					Map<String, Task> tasks = pd.getTaskMgmtDefinition()
 							.getTasks();
 					if (tasks != null) {
-						List<Task> rows = new ArrayList<Task>();
+						List<Task> rows = new java.util.concurrent.CopyOnWriteArrayList<Task>();
 						Iterator<Task> iterator = tasks.values().iterator();
 						while (iterator.hasNext()) {
 							Task task = iterator.next();
@@ -143,7 +143,7 @@ public class MxJbpmProcessTreeController {
 			graphSession = jbpmContext.getGraphSession();
 			if (StringUtils.isNotEmpty(processDefinitionId)
 					&& StringUtils.isNumeric(processDefinitionId)) {
-				Collection<Long> processDefinitionIds = new ArrayList<Long>();
+				Collection<Long> processDefinitionIds = new java.util.concurrent.CopyOnWriteArrayList<Long>();
 				processDefinitionIds.add(Long.parseLong(processDefinitionId));
 				result = graphSession
 						.findProcessDefinitions(processDefinitionIds);

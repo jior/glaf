@@ -18,7 +18,6 @@
 
 package com.glaf.jbpm.util;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -36,7 +35,7 @@ public class ExtensionUtils {
 	public static List<Object> getValues(Map<String, Object> paramMap,
 			Extension extension) {
 		java.util.Date now = new java.util.Date();
-		List<Object> values = new ArrayList<Object>();
+		List<Object> values = new java.util.concurrent.CopyOnWriteArrayList<Object>();
 		List<ExtensionParam> x_params = extension.getParams();
 		Iterator<ExtensionParam> iterator = x_params.iterator();
 		while (iterator.hasNext()) {

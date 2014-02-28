@@ -26,7 +26,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -39,7 +38,7 @@ import org.apache.tools.zip.ZipOutputStream;
 
 public class AntUtils {
 
-	private static List<String> list = new ArrayList<String>();
+	private static List<String> list = new java.util.concurrent.CopyOnWriteArrayList<String>();
 
 	private static byte buff[] = new byte[4096];
 

@@ -19,16 +19,20 @@
 package com.glaf.base.modules.sys.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import javax.persistence.*;
-import com.alibaba.fastjson.*;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-
 import com.glaf.base.modules.sys.util.SysDepartmentJsonFactory;
 import com.glaf.core.base.JSONable;
 
@@ -37,7 +41,7 @@ import com.glaf.core.base.JSONable;
 public class SysDepartment implements Serializable, JSONable {
 	private static final long serialVersionUID = -1700125499848402378L;
 	@javax.persistence.Transient
-	private List<SysDepartment> children = new ArrayList<SysDepartment>();
+	private List<SysDepartment> children = new java.util.concurrent.CopyOnWriteArrayList<SysDepartment>();
 
 	/**
 	 * ±àÂë
@@ -145,7 +149,7 @@ public class SysDepartment implements Serializable, JSONable {
 
 	public void addChild(SysDepartment dept) {
 		if (children == null) {
-			children = new ArrayList<SysDepartment>();
+			children = new java.util.concurrent.CopyOnWriteArrayList<SysDepartment>();
 		}
 		dept.setParent(this);
 		children.add(dept);

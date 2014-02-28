@@ -28,11 +28,9 @@ import com.glaf.core.config.BaseConfiguration;
 import com.glaf.core.config.Configuration;
 
 import java.io.Serializable;
-
 import java.text.MessageFormat;
-
-import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * General purpose abstract class that describes an API for retrieving
@@ -95,7 +93,7 @@ public abstract class MessageResources implements Serializable {
 	 * The set of previously created MessageFormat objects, keyed by the key
 	 * computed in <code>messageKey()</code>.
 	 */
-	protected HashMap<String, MessageFormat> formats = new HashMap<String, MessageFormat>();
+	protected Map<String, MessageFormat> formats = new java.util.concurrent.ConcurrentHashMap<String, MessageFormat>();
 
 	/**
 	 * Indicate is a <code>null</code> is returned instead of an error message

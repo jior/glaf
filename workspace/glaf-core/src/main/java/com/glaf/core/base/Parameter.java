@@ -18,7 +18,7 @@
 
 package com.glaf.core.base;
 
-import java.util.*;
+import java.util.Date;
 
 public interface Parameter {
 

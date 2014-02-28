@@ -18,9 +18,7 @@
 
 package com.glaf.mail;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -45,9 +43,9 @@ public class MailMessage extends BaseMessage {
 
 	private boolean supportExpression = true;
 
-	private Map<String, Object> dataMap = new HashMap<String, Object>();
+	private Map<String, Object> dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 
-	private Collection<Object> files = new ArrayList<Object>();
+	private Collection<Object> files = new java.util.concurrent.CopyOnWriteArrayList<Object>();
 
 	public MailMessage() {
 
@@ -55,7 +53,7 @@ public class MailMessage extends BaseMessage {
 
 	public void addFile(Object file) {
 		if (files == null) {
-			files = new ArrayList<Object>();
+			files = new java.util.concurrent.CopyOnWriteArrayList<Object>();
 		}
 		files.add(file);
 	}

@@ -25,8 +25,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Stack;
@@ -46,7 +44,6 @@ import com.glaf.core.entity.SqlExecutor;
 import com.glaf.core.jdbc.DBConnectionFactory;
 import com.glaf.core.service.IQueryDefinitionService;
 import com.glaf.core.service.ITableDefinitionService;
-
 import com.glaf.core.util.FieldType;
 import com.glaf.core.util.JdbcUtils;
 import com.glaf.core.util.JsonUtils;
@@ -125,7 +122,7 @@ public class MxTransformManager {
 
 	protected List<Map<String, Object>> prepare(QueryDefinition query) {
 		logger.debug("-------------------------1 start------------------------");
-		List<Map<String, Object>> resultList = new ArrayList<Map<String, Object>>();
+		List<Map<String, Object>> resultList = new java.util.concurrent.CopyOnWriteArrayList<Map<String, Object>>();
 
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -144,7 +141,7 @@ public class MxTransformManager {
 			logger.debug("-------------------------1 executeQuery------------------------");
 			int count = rsmd.getColumnCount();
 			while (rs.next()) {
-				Map<String, Object> rowMap = new HashMap<String, Object>();
+				Map<String, Object> rowMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 				for (int i = 1; i <= count; i++) {
 					String columnName = rsmd.getColumnName(i);
 					try {
@@ -176,8 +173,8 @@ public class MxTransformManager {
 	protected List<Map<String, Object>> prepare(QueryDefinition query,
 			List<Map<String, Object>> paramList) {
 		logger.debug("-------------------------3 start------------------------");
-		List<Map<String, Object>> resultList = new ArrayList<Map<String, Object>>();
-		List<Map<String, Object>> tmpResultList = new ArrayList<Map<String, Object>>();
+		List<Map<String, Object>> resultList = new java.util.concurrent.CopyOnWriteArrayList<Map<String, Object>>();
+		List<Map<String, Object>> tmpResultList = new java.util.concurrent.CopyOnWriteArrayList<Map<String, Object>>();
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
@@ -203,7 +200,7 @@ public class MxTransformManager {
 				rsmd = rs.getMetaData();
 				int count = rsmd.getColumnCount();
 				while (rs.next()) {
-					Map<String, Object> rowMap = new HashMap<String, Object>();
+					Map<String, Object> rowMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 					for (int i = 1; i <= count; i++) {
 						String columnName = rsmd.getColumnName(i);
 						try {
@@ -242,7 +239,7 @@ public class MxTransformManager {
 	protected List<Map<String, Object>> prepare(QueryDefinition query,
 			Map<String, Object> paramMap) {
 		logger.debug("-------------------------2 start------------------------");
-		List<Map<String, Object>> resultList = new ArrayList<Map<String, Object>>();
+		List<Map<String, Object>> resultList = new java.util.concurrent.CopyOnWriteArrayList<Map<String, Object>>();
 
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -265,7 +262,7 @@ public class MxTransformManager {
 			rsmd = rs.getMetaData();
 			int count = rsmd.getColumnCount();
 			while (rs.next()) {
-				Map<String, Object> rowMap = new HashMap<String, Object>();
+				Map<String, Object> rowMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 				for (int i = 1; i <= count; i++) {
 					String columnName = rsmd.getColumnName(i);
 					try {
@@ -337,7 +334,7 @@ public class MxTransformManager {
 			if (sql != null && sql.indexOf("${") != -1) {
 				sql = QueryUtils.replaceSQLVars(sql);
 				SqlExecutor sqlExecutor = JdbcUtils.rebuildSQL(sql,
-						new HashMap<String, Object>());
+						new java.util.concurrent.ConcurrentHashMap<String, Object>());
 				if (sqlExecutor != null) {
 					sql = sqlExecutor.getSql();
 					sql = QueryUtils.replaceSQLVars(sql);
@@ -446,7 +443,7 @@ public class MxTransformManager {
 				this.transformMany(query, target);
 			}
 		} else {
-			this.transformSingle(query, target, new HashMap<String, Object>());
+			this.transformSingle(query, target, new java.util.concurrent.ConcurrentHashMap<String, Object>());
 		}
 	}
 
@@ -464,8 +461,8 @@ public class MxTransformManager {
 			logger.debug("execution count:"
 					+ query.getParent().getResultList().size());
 
-			List<TransformTask> tasks = new ArrayList<TransformTask>();
-			List<String> taskIds = new ArrayList<String>();
+			List<TransformTask> tasks = new java.util.concurrent.CopyOnWriteArrayList<TransformTask>();
+			List<String> taskIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
 			for (Map<String, Object> paramMap : query.getParent()
 					.getResultList()) {
 				execution++;

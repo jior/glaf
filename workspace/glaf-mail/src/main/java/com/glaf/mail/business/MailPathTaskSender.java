@@ -19,15 +19,12 @@
 package com.glaf.mail.business;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Collection;
-
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
@@ -45,7 +42,6 @@ import com.glaf.core.util.JsonUtils;
 import com.glaf.core.util.StringTools;
 import com.glaf.core.util.UUID32;
 import com.glaf.core.util.ZipUtils;
-
 import com.glaf.mail.MailMessage;
 import com.glaf.mail.MailSender;
 import com.glaf.mail.domain.MailPathSender;
@@ -101,7 +97,7 @@ public class MailPathTaskSender {
 			mailMessage.setSaveMessage(true);
 			mailMessage.setSubject(subject);
 			mailMessage.setContent(content);
-			Collection<Object> dataFiles = new ArrayList<Object>();
+			Collection<Object> dataFiles = new java.util.concurrent.CopyOnWriteArrayList<Object>();
 			try {
 				if (mailTask.getMailFilePath() != null) {
 					logger.debug("mail send path:" + mailTask.getMailFilePath());
@@ -222,9 +218,9 @@ public class MailPathTaskSender {
 		try {
 			MailMessage mailMessage = this.getMailTaskMailMessage(mailTask);
 			Collection<Object> dataFiles = mailMessage.getFiles();
-			List<DataFile> files = new ArrayList<DataFile>();
+			List<DataFile> files = new java.util.concurrent.CopyOnWriteArrayList<DataFile>();
 			if (StringUtils.equalsIgnoreCase(mailTask.getCompressFlag(), "1")) {
-				Map<String, byte[]> bytesMap = new HashMap<String, byte[]>();
+				Map<String, byte[]> bytesMap = new java.util.concurrent.ConcurrentHashMap<String, byte[]>();
 				if (dataFiles != null && !dataFiles.isEmpty()) {
 					for (Object obj : dataFiles) {
 						if (obj instanceof DataFile) {
@@ -236,7 +232,7 @@ public class MailPathTaskSender {
 				}
 				if (!bytesMap.isEmpty()) {
 					byte[] bytes = ZipUtils.toZipBytes(bytesMap);
-					dataFiles = new ArrayList<Object>();
+					dataFiles = new java.util.concurrent.CopyOnWriteArrayList<Object>();
 					DataFile blobData = new BlobItemEntity();
 					blobData.setFilename(DateUtils.getDateTime(new Date())
 							+ ".zip");

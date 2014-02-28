@@ -17,9 +17,7 @@
  */
 package com.glaf.base.modules.sys.service.mybatis;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -231,7 +229,7 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 		query.parentId(parentAppId);
 		query.setOrderBy(" E.SORT asc ");
 		query.setLocked(0);
-		List<Long> nodeIds = new ArrayList<Long>();
+		List<Long> nodeIds = new java.util.concurrent.CopyOnWriteArrayList<Long>();
 		nodeIds.add(-1L);
 
 		List<SysApplication> apps = sysApplicationMapper
@@ -338,7 +336,7 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 	}
 
 	public List<RealmInfo> getRealmInfos() {
-		Map<String, Object> params = new HashMap<String, Object>();
+		Map<String, Object> params = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		return sysApplicationMapper.getRealmInfos(params);
 	}
 
@@ -390,7 +388,7 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 	 * @return
 	 */
 	public List<TreeModel> getTreeModels(long parentId) {
-		List<TreeModel> treeModels = new ArrayList<TreeModel>();
+		List<TreeModel> treeModels = new java.util.ArrayList<TreeModel>();
 		TreeModel root = sysTreeService.findById(parentId);
 		SysTreeQuery query = new SysTreeQuery();
 		query.treeIdLike(root.getTreeId() + "%");
@@ -414,7 +412,7 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 	 * @return
 	 */
 	public List<TreeModel> getTreeModels(long parentId, String actorId) {
-		List<TreeModel> treeModels = new ArrayList<TreeModel>();
+		List<TreeModel> treeModels = new java.util.ArrayList<TreeModel>();
 		SysUser user = sysUserService.findByAccount(actorId);
 		if (user != null) {
 			user = sysUserService.getUserPrivileges(user);
@@ -457,7 +455,7 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 			query.treeId(app.getNode().getTreeId());
 			query.treeIdLike(app.getNode().getTreeId() + "%");
 			if (!user.isSystemAdmin()) {
-				List<String> actorIds = new ArrayList<String>();
+				List<String> actorIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
 				List<Object> rows = entityService.getList("getAgents", actorId);
 				if (rows != null && !rows.isEmpty()) {
 					for (Object object : rows) {
@@ -487,7 +485,7 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 				treeList = sysTreeMapper.getTreeList(query);
 			}
 
-			List<TreeModel> treeModels = new ArrayList<TreeModel>();
+			List<TreeModel> treeModels = new java.util.concurrent.CopyOnWriteArrayList<TreeModel>();
 			for (SysTree tree : treeList) {
 				treeModels.add(tree);
 			}

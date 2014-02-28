@@ -18,17 +18,23 @@
 
 package com.glaf.core.db.dataimport;
 
-import java.sql.*;
-import java.util.ArrayList;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.sql.Types;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.glaf.core.jdbc.DBConnectionFactory;
 import com.glaf.core.domain.ColumnDefinition;
 import com.glaf.core.domain.TableDefinition;
+import com.glaf.core.jdbc.DBConnectionFactory;
 import com.glaf.core.util.DBUtils;
 import com.glaf.core.util.DateUtils;
 import com.glaf.core.util.FieldType;
@@ -41,8 +47,8 @@ public class DbToDbTransfer {
 		String srcSystemName = "src";
 		String destSystemName = "dest";
 		DbToDbTransfer transfer = new DbToDbTransfer();
-		List<String> tables = new ArrayList<String>();
-		List<String> error_tables = new ArrayList<String>();
+		List<String> tables = new java.util.concurrent.CopyOnWriteArrayList<String>();
+		List<String> error_tables = new java.util.concurrent.CopyOnWriteArrayList<String>();
 
 		Connection conn = null;
 
@@ -125,7 +131,7 @@ public class DbToDbTransfer {
 		logger.debug("sqlx:" + sqlx);
 		TableDefinition tableDefinition = new TableDefinition();
 		tableDefinition.setTableName(tableName);
-		List<ColumnDefinition> columns = new ArrayList<ColumnDefinition>();
+		List<ColumnDefinition> columns = new java.util.concurrent.CopyOnWriteArrayList<ColumnDefinition>();
 		PreparedStatement psmt = null;
 		PreparedStatement psmt2 = null;
 		ResultSetMetaData rsmd = null;

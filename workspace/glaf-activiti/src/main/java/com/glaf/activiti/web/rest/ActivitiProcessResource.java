@@ -19,8 +19,9 @@
 package com.glaf.activiti.web.rest;
 
 import java.io.IOException;
-
-import java.util.*;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -31,22 +32,17 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+
 import org.activiti.engine.history.HistoricActivityInstance;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.glaf.core.config.CustomProperties;
-import com.glaf.core.util.DateUtils;
-import com.glaf.core.util.FileUtils;
-import com.glaf.core.util.QueryUtils;
 
 import com.glaf.activiti.model.ActivityCoordinates;
 import com.glaf.activiti.model.ActivityInfo;
@@ -56,6 +52,10 @@ import com.glaf.activiti.service.ActivitiProcessQueryService;
 import com.glaf.activiti.service.ActivitiProcessService;
 import com.glaf.activiti.service.ActivitiTaskQueryService;
 import com.glaf.activiti.util.ProcessUtils;
+import com.glaf.core.config.CustomProperties;
+import com.glaf.core.util.DateUtils;
+import com.glaf.core.util.FileUtils;
+import com.glaf.core.util.QueryUtils;
 
 @Controller("/rs/activiti/process")
 @Path("/rs/activiti/process")
@@ -255,7 +255,7 @@ public class ActivitiProcessResource {
 			}
 		}
 
-		Map<String, Object> context = new HashMap<String, Object>();
+		Map<String, Object> context = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		context.put("contextPath", contextPath);
 		context.put("x_script", buffer.toString());
 		context.put("processInstanceId", processInstanceId);

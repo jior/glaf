@@ -13,7 +13,6 @@
 
 package com.glaf.core.xml;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -30,7 +29,7 @@ import com.glaf.core.base.FieldDefinition;
 public class XmlWriter {
 
 	public Document write(ClassDefinition classDefinition) {
-		List<ClassDefinition> rows = new ArrayList<ClassDefinition>();
+		List<ClassDefinition> rows = new java.util.concurrent.CopyOnWriteArrayList<ClassDefinition>();
 		rows.add(classDefinition);
 		return this.write(rows);
 	}

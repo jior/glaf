@@ -19,13 +19,10 @@
 package com.glaf.base.modules.sys.rest;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -41,23 +38,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-
-import com.glaf.core.base.BaseTree;
-import com.glaf.core.base.TreeModel;
-
-import com.glaf.core.tree.helper.TreeHelper;
-import com.glaf.core.util.RequestUtils;
-import com.glaf.core.util.StringTools;
-
 import com.glaf.base.modules.sys.SysConstants;
-
 import com.glaf.base.modules.sys.model.SysDepartment;
 import com.glaf.base.modules.sys.model.SysTree;
 import com.glaf.base.modules.sys.model.SysUser;
-
 import com.glaf.base.modules.sys.service.SysDepartmentService;
 import com.glaf.base.modules.sys.service.SysTreeService;
 import com.glaf.base.modules.sys.service.SysUserService;
+import com.glaf.core.base.BaseTree;
+import com.glaf.core.base.TreeModel;
+import com.glaf.core.tree.helper.TreeHelper;
+import com.glaf.core.util.RequestUtils;
+import com.glaf.core.util.StringTools;
 
 @Controller("/rs/base/identity")
 @Path("/rs/base/identity")
@@ -84,13 +76,13 @@ public class BaseIdentityResource {
 		SysTree root = sysTreeService.getSysTreeByCode(SysConstants.TREE_DEPT);
 		if (root != null) {
 			logger.debug(root.toJsonObject().toJSONString());
-			List<TreeModel> treeModels = new ArrayList<TreeModel>();
+			List<TreeModel> treeModels = new java.util.concurrent.CopyOnWriteArrayList<TreeModel>();
 			// treeModels.add(root);
 			List<SysTree> trees = sysTreeService.getSysTreeListForDept(
 					(int) root.getId(), 0);
 			if (trees != null && !trees.isEmpty()) {
 				logger.debug("dept tree size:" + trees.size());
-				Map<Long, SysTree> treeMap = new HashMap<Long, SysTree>();
+				Map<Long, SysTree> treeMap = new java.util.concurrent.ConcurrentHashMap<Long, SysTree>();
 				for (SysTree tree : trees) {
 					SysDepartment dept = tree.getDepartment();
 					treeMap.put(dept.getId(), tree);
@@ -126,13 +118,13 @@ public class BaseIdentityResource {
 		if (root != null && users != null) {
 			logger.debug(root.toJsonObject().toJSONString());
 			logger.debug("users size:" + users.size());
-			List<TreeModel> treeModels = new ArrayList<TreeModel>();
+			List<TreeModel> treeModels = new java.util.concurrent.CopyOnWriteArrayList<TreeModel>();
 			// treeModels.add(root);
 			List<SysTree> trees = sysTreeService.getSysTreeListForDept(
 					(int) root.getId(), 0);
 			if (trees != null && !trees.isEmpty()) {
 				logger.debug("dept tree size:" + trees.size());
-				Map<Long, SysTree> treeMap = new HashMap<Long, SysTree>();
+				Map<Long, SysTree> treeMap = new java.util.concurrent.ConcurrentHashMap<Long, SysTree>();
 				for (SysTree tree : trees) {
 					SysDepartment dept = tree.getDepartment();
 					treeMap.put(dept.getId(), tree);
@@ -201,13 +193,13 @@ public class BaseIdentityResource {
 		SysTree root = sysTreeService.findById(parentId);
 		if (root != null) {
 			logger.debug(root.toJsonObject().toJSONString());
-			List<TreeModel> treeModels = new ArrayList<TreeModel>();
+			List<TreeModel> treeModels = new java.util.concurrent.CopyOnWriteArrayList<TreeModel>();
 			// treeModels.add(root);
 			List<SysTree> trees = sysTreeService.getSysTreeListForDept(
 					(int) root.getId(), 0);
 			if (trees != null && !trees.isEmpty()) {
 				logger.debug("dept tree size:" + trees.size());
-				Map<Long, SysTree> treeMap = new HashMap<Long, SysTree>();
+				Map<Long, SysTree> treeMap = new java.util.concurrent.ConcurrentHashMap<Long, SysTree>();
 				for (SysTree tree : trees) {
 					SysDepartment dept = tree.getDepartment();
 					treeMap.put(dept.getId(), tree);
@@ -242,13 +234,13 @@ public class BaseIdentityResource {
 		if (root != null && users != null) {
 			logger.debug(root.toJsonObject().toJSONString());
 			logger.debug("users size:" + users.size());
-			List<TreeModel> treeModels = new ArrayList<TreeModel>();
+			List<TreeModel> treeModels = new java.util.concurrent.CopyOnWriteArrayList<TreeModel>();
 			// treeModels.add(root);
 			List<SysTree> trees = sysTreeService.getSysTreeListForDept(
 					(int) root.getId(), 0);
 			if (trees != null && !trees.isEmpty()) {
 				logger.debug("dept tree size:" + trees.size());
-				Map<Long, SysTree> treeMap = new HashMap<Long, SysTree>();
+				Map<Long, SysTree> treeMap = new java.util.concurrent.ConcurrentHashMap<Long, SysTree>();
 				for (SysTree tree : trees) {
 					SysDepartment dept = tree.getDepartment();
 					treeMap.put(dept.getId(), tree);

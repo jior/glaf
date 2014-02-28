@@ -18,22 +18,30 @@
 
 package com.glaf.core.web.springmvc;
 
-import java.util.*;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.glaf.core.domain.SysCalendar;
-import com.glaf.core.identity.*;
+import com.glaf.core.identity.User;
 import com.glaf.core.query.SysCalendarQuery;
 import com.glaf.core.service.ISysCalendarService;
-import com.glaf.core.util.*;
+import com.glaf.core.util.CalendarUtils;
+import com.glaf.core.util.DateUtils;
+import com.glaf.core.util.RequestUtils;
+import com.glaf.core.util.ResponseUtils;
 
 @Controller("/sys/calendar")
 @RequestMapping("/sys/calendar")
@@ -68,7 +76,7 @@ public class MxSystemCalendarController {
 		request.setAttribute("productionLine", productionLine);
 		request.setAttribute("daySize", daySize);
 
-		Map<String, SysCalendar> map = new HashMap<String, SysCalendar>();
+		Map<String, SysCalendar> map = new java.util.concurrent.ConcurrentHashMap<String, SysCalendar>();
 		for (int i = 0, len = list.size(); i < len; i++) {
 			SysCalendar sysCalendar = list.get(i);
 			String key = sysCalendar.getProductionLine() + ""
@@ -161,7 +169,7 @@ public class MxSystemCalendarController {
 		String v2 = request.getParameter("v2");
 		String mode = request.getParameter("mode");
 
-		Map<String, String> map = new HashMap<String, String>();
+		Map<String, String> map = new java.util.concurrent.ConcurrentHashMap<String, String>();
 		map.put("morning", v1);
 		map.put("evening", v2);
 		map.put("mode", mode);

@@ -19,14 +19,12 @@ package com.glaf.core.db.mybatis2;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Connection;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.util.Assert;
 
- 
 import com.glaf.core.entity.SqlExecutor;
 import com.glaf.core.id.Dbid;
 import com.glaf.core.id.IdBlock;
@@ -169,7 +167,7 @@ public class SqlMapClientDAOImpl implements SqlMapClientDAO {
 		}
 
 		if (totalCount == 0) {
-			page.setRows(new ArrayList<Object>());
+			page.setRows(new java.util.concurrent.CopyOnWriteArrayList<Object>());
 			page.setCurrentPage(0);
 			page.setPageSize(0);
 			page.setTotal(0);

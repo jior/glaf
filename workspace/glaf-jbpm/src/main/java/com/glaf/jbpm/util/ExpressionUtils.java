@@ -18,8 +18,6 @@
 
 package com.glaf.jbpm.util;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -45,7 +43,7 @@ public class ExpressionUtils {
 	}
 
 	public static List<Object> getValues(ExecutionContext ctx, Element elements) {
-		List<Object> values = new ArrayList<Object>();
+		List<Object> values = new java.util.concurrent.CopyOnWriteArrayList<Object>();
 		ContextInstance contextInstance = ctx.getContextInstance();
 		Object rowId = contextInstance.getVariable(Constant.PROCESS_ROWID);
 		if (elements != null) {
@@ -103,7 +101,7 @@ public class ExpressionUtils {
 						tmp = StringTools.replaceIgnoreCase(tmp, "}", "");
 						value = contextInstance.getVariable(tmp);
 					} else if (tmp.startsWith("#{") && tmp.endsWith("}")) {
-						Map<String, Object> params = new HashMap<String, Object>();
+						Map<String, Object> params = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 						Map<String, Object> vars = contextInstance
 								.getVariables();
 						if (vars != null && vars.size() > 0) {
@@ -129,7 +127,7 @@ public class ExpressionUtils {
 
 	public static Map<String, Object> getParameters(ExecutionContext ctx,
 			Element elements) {
-		Map<String, Object> values = new HashMap<String, Object>();
+		Map<String, Object> values = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		ContextInstance contextInstance = ctx.getContextInstance();
 		Object rowId = contextInstance.getVariable(Constant.PROCESS_ROWID);
 		if (elements != null) {
@@ -185,7 +183,7 @@ public class ExpressionUtils {
 						tmp = StringTools.replaceIgnoreCase(tmp, "}", "");
 						value = contextInstance.getVariable(tmp);
 					} else if (tmp.startsWith("#{") && tmp.endsWith("}")) {
-						Map<String, Object> params = new HashMap<String, Object>();
+						Map<String, Object> params = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 						Map<String, Object> vars = contextInstance
 								.getVariables();
 						if (vars != null && vars.size() > 0) {

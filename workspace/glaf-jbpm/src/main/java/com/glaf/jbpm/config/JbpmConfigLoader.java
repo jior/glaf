@@ -21,7 +21,6 @@ package com.glaf.jbpm.config;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -34,8 +33,8 @@ import com.glaf.core.config.SystemProperties;
 import com.glaf.core.util.LogUtils;
 import com.glaf.jbpm.container.ProcessContainer;
 import com.glaf.jbpm.context.Context;
-import com.glaf.jbpm.model.Extension;
 import com.glaf.jbpm.manager.JbpmExtensionManager;
+import com.glaf.jbpm.model.Extension;
 
 public class JbpmConfigLoader {
 	protected final static Log logger = LogFactory
@@ -91,7 +90,7 @@ public class JbpmConfigLoader {
 
 	public List<Extension> getActions(java.io.File directory) {
 		JbpmExtensionReader reader = new JbpmExtensionReader();
-		List<Extension> extensions = new ArrayList<Extension>();
+		List<Extension> extensions = new java.util.concurrent.CopyOnWriteArrayList<Extension>();
 		InputStream inputStream = null;
 		String[] filelist = directory.list();
 		for (int i = 0; i < filelist.length; i++) {

@@ -17,10 +17,11 @@
  */
 package com.glaf.form.core.util;
 
-import java.util.*;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.glaf.core.util.FieldType;
 import com.glaf.form.core.graph.node.CheckboxNode;
 import com.glaf.form.core.graph.node.DateFieldNode;
 import com.glaf.form.core.graph.node.NumberFieldNode;
@@ -29,15 +30,14 @@ import com.glaf.form.core.graph.node.RadioNode;
 import com.glaf.form.core.graph.node.SelectNode;
 import com.glaf.form.core.graph.node.TextAreaNode;
 import com.glaf.form.core.graph.node.TextFieldNode;
-import com.glaf.core.util.FieldType;
 
 public class SearchFilterTools {
 
-	protected final static Map<String, String> searchFilters = new HashMap<String, String>();
+	protected final static Map<String, String> searchFilters = new java.util.concurrent.ConcurrentHashMap<String, String>();
 
-	protected final static Map<String, String> searchNodeFilters = new HashMap<String, String>();
+	protected final static Map<String, String> searchNodeFilters = new java.util.concurrent.ConcurrentHashMap<String, String>();
 
-	protected final static Map<Integer, String> searchTypeFilters = new HashMap<Integer, String>();
+	protected final static Map<Integer, String> searchTypeFilters = new java.util.concurrent.ConcurrentHashMap<Integer, String>();
 
 	static {
 		searchFilters.put("=", "eq");

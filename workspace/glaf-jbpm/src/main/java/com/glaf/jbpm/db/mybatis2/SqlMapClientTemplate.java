@@ -27,7 +27,6 @@ import org.springframework.jdbc.support.JdbcAccessor;
 import org.springframework.util.Assert;
 
 import com.glaf.core.entity.SqlExecutor;
-
 import com.ibatis.sqlmap.client.SqlMapClient;
 import com.ibatis.sqlmap.client.SqlMapException;
 import com.ibatis.sqlmap.client.SqlMapExecutor;

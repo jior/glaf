@@ -22,8 +22,6 @@ import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -45,14 +43,12 @@ import org.jbpm.JbpmContext;
 import org.jbpm.JbpmException;
 import org.jbpm.file.def.FileDefinition;
 import org.jbpm.graph.def.ProcessDefinition;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.alibaba.fastjson.JSONObject;
-
 import com.glaf.core.util.AntUtils;
 import com.glaf.core.util.Dom4jUtils;
 import com.glaf.core.util.LogUtils;
@@ -60,10 +56,9 @@ import com.glaf.core.util.RequestUtils;
 import com.glaf.core.util.StringTools;
 import com.glaf.jbpm.config.JbpmExtensionWriter;
 import com.glaf.jbpm.container.ProcessContainer;
-
 import com.glaf.jbpm.deploy.MxJbpmProcessDeployer;
-import com.glaf.jbpm.model.Extension;
 import com.glaf.jbpm.manager.JbpmExtensionManager;
+import com.glaf.jbpm.model.Extension;
 
 @Controller("/rs/jbpm/deploy")
 @Path("/rs/jbpm/deploy")
@@ -114,7 +109,7 @@ public class MxJbpmDeployResource {
 			}
 		}
 
-		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		Map<String, Object> jsonMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		if (status_code == 200) {
 			jsonMap.put("statusCode", 200);
 			jsonMap.put("message", "发布成功！");
@@ -154,7 +149,7 @@ public class MxJbpmDeployResource {
 		byte[] bytes = null;
 		Document doc = null;
 		if (StringUtils.isNotEmpty(process_name)) {
-			Map<String, InputStream> zipMap = new HashMap<String, InputStream>();
+			Map<String, InputStream> zipMap = new java.util.concurrent.ConcurrentHashMap<String, InputStream>();
 			JbpmContext jbpmContext = null;
 			try {
 				JbpmExtensionManager jbpmExtensionManager = ProcessContainer

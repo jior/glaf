@@ -19,7 +19,6 @@
 package com.glaf.base.modules.sys.springmvc;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -40,20 +39,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.glaf.core.cache.CacheUtils;
-import com.glaf.core.config.ViewProperties;
-import com.glaf.core.res.MessageUtils;
-import com.glaf.core.res.ViewMessage;
-import com.glaf.core.res.ViewMessages;
-import com.glaf.core.security.DigestUtil;
-import com.glaf.core.util.JsonUtils;
-import com.glaf.core.util.PageResult;
-import com.glaf.core.util.Paging;
-import com.glaf.core.util.ParamUtils;
-import com.glaf.core.util.RequestUtils;
-import com.glaf.core.util.StringTools;
-import com.glaf.core.util.Tools;
-
 import com.glaf.base.modules.Constants;
 import com.glaf.base.modules.sys.SysConstants;
 import com.glaf.base.modules.sys.model.Dictory;
@@ -71,6 +56,19 @@ import com.glaf.base.modules.sys.service.SysTreeService;
 import com.glaf.base.modules.sys.service.SysUserService;
 import com.glaf.base.utils.ParamUtil;
 import com.glaf.base.utils.RequestUtil;
+import com.glaf.core.cache.CacheUtils;
+import com.glaf.core.config.ViewProperties;
+import com.glaf.core.res.MessageUtils;
+import com.glaf.core.res.ViewMessage;
+import com.glaf.core.res.ViewMessages;
+import com.glaf.core.security.DigestUtil;
+import com.glaf.core.util.JsonUtils;
+import com.glaf.core.util.PageResult;
+import com.glaf.core.util.Paging;
+import com.glaf.core.util.ParamUtils;
+import com.glaf.core.util.RequestUtils;
+import com.glaf.core.util.StringTools;
+import com.glaf.core.util.Tools;
 
 @Controller("/sys/user")
 @RequestMapping("/sys/user.do")
@@ -239,7 +237,7 @@ public class SysUserController {
 	 * @param parentId
 	 */
 	public void getAllSysDepartmentList(List<SysDepartment> list, int parentId) {
-		List<SysDepartment> temp = new ArrayList<SysDepartment>();
+		List<SysDepartment> temp = new java.util.concurrent.CopyOnWriteArrayList<SysDepartment>();
 		temp = this.sysDepartmentService.getSysDepartmentList(parentId);
 		if (temp != null && temp.size() != 0) {
 			for (int i = 0; i < temp.size(); i++) {
@@ -440,7 +438,7 @@ public class SysUserController {
 		modelMap.put("accountTypeDictories", accountTypeDictories);
 
 		SysTree parent = sysTreeService.getSysTreeByCode(Constants.TREE_DEPT);
-		List<SysTree> list = new ArrayList<SysTree>();
+		List<SysTree> list = new java.util.concurrent.CopyOnWriteArrayList<SysTree>();
 		parent.setDeep(0);
 		list.add(parent);
 		sysTreeService.getSysTree(list, (int) parent.getId(), 1);
@@ -511,7 +509,7 @@ public class SysUserController {
 		request.setAttribute("bean", bean);
 
 		SysTree parent = sysTreeService.getSysTreeByCode(Constants.TREE_DEPT);
-		List<SysTree> list = new ArrayList<SysTree>();
+		List<SysTree> list = new java.util.concurrent.CopyOnWriteArrayList<SysTree>();
 		parent.setDeep(0);
 		list.add(parent);
 		sysTreeService.getSysTree(list, (int) parent.getId(), 1);
@@ -955,7 +953,7 @@ public class SysUserController {
 	public ModelAndView showDeptUsers(HttpServletRequest request,
 			ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
-		List<SysDepartment> list = new ArrayList<SysDepartment>();
+		List<SysDepartment> list = new java.util.concurrent.CopyOnWriteArrayList<SysDepartment>();
 		Set<SysUser> set = new HashSet<SysUser>();
 		// 6:
 		long deptId = ParamUtil.getLongParameter(request, "dept", 5);
@@ -1022,7 +1020,7 @@ public class SysUserController {
 		request.setAttribute("pager", pager);
 
 		SysDepartment dept = sysDepartmentService.findById(deptId);
-		List<SysDepartment> list = new ArrayList<SysDepartment>();
+		List<SysDepartment> list = new java.util.concurrent.CopyOnWriteArrayList<SysDepartment>();
 		sysDepartmentService.findNestingDepartment(list, dept);
 		request.setAttribute("nav", list);
 
@@ -1106,7 +1104,7 @@ public class SysUserController {
 
 		// 部门信息
 		SysDepartment dept = sysDepartmentService.findById(deptId);
-		List<SysDepartment> list = new ArrayList<SysDepartment>();
+		List<SysDepartment> list = new java.util.concurrent.CopyOnWriteArrayList<SysDepartment>();
 		sysDepartmentService.findNestingDepartment(list, dept);
 		request.setAttribute("nav", list);
 
@@ -1164,7 +1162,7 @@ public class SysUserController {
 		request.setAttribute("user", user);
 
 		SysTree parent = sysTreeService.getSysTreeByCode(Constants.TREE_DEPT);
-		List<SysTree> list = new ArrayList<SysTree>();
+		List<SysTree> list = new java.util.concurrent.CopyOnWriteArrayList<SysTree>();
 		parent.setDeep(0);
 		list.add(parent);
 		sysTreeService.getSysTree(list, (int) parent.getId(), 1);

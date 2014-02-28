@@ -20,7 +20,6 @@ package com.glaf.core.template;
 
 import java.io.File;
 import java.io.InputStream;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -47,7 +46,7 @@ public class TemplateXmlReader {
 
 	@SuppressWarnings("unchecked")
 	public Map<String, Template> getTemplates(InputStream inputStream) {
-		Map<String, Template> dataMap = new HashMap<String, Template>();
+		Map<String, Template> dataMap = new java.util.concurrent.ConcurrentHashMap<String, Template>();
 		SAXReader xmlReader = new SAXReader();
 		Document doc = null;
 		try {
@@ -65,7 +64,7 @@ public class TemplateXmlReader {
 
 				List<Element> elems = element.elements();
 				if (elems != null && !elems.isEmpty()) {
-					Map<String, Object> rowMap = new HashMap<String, Object>();
+					Map<String, Object> rowMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 					for (Element em : elems) {
 						rowMap.put(em.getName(), em.getTextTrim());
 					}

@@ -19,8 +19,6 @@
 package com.glaf.activiti.web.springmvc;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -31,19 +29,16 @@ import javax.servlet.http.HttpServletRequest;
 import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.apache.commons.lang.StringUtils;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
-
 import com.glaf.activiti.service.ActivitiDeployService;
 import com.glaf.activiti.service.ActivitiProcessQueryService;
 import com.glaf.activiti.service.ActivitiProcessService;
 import com.glaf.activiti.service.ActivitiTaskQueryService;
-
 import com.glaf.core.config.ViewProperties;
 import com.glaf.core.util.DateUtils;
 import com.glaf.core.util.Paging;
@@ -92,10 +87,10 @@ public class ActivitiProcessHistoryController {
 		List<HistoricProcessInstance> rows = activitiProcessQueryService
 				.getHistoricProcessInstances(start, limit, paramMap);
 
-		List<Object> list = new ArrayList<Object>();
+		List<Object> list = new java.util.concurrent.CopyOnWriteArrayList<Object>();
 
 		for (HistoricProcessInstance processInstance : rows) {
-			Map<String, Object> rowMap = new HashMap<String, Object>();
+			Map<String, Object> rowMap = new java.util.HashMap<String, Object>();
 			rowMap.put("id", processInstance.getId());
 			rowMap.put("processInstanceId", processInstance.getId());
 			rowMap.put("processDefinitionId",
@@ -119,7 +114,7 @@ public class ActivitiProcessHistoryController {
 			list.add(rowMap);
 		}
 
-		Map<String, Object> pageInfo = new HashMap<String, Object>();
+		Map<String, Object> pageInfo = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		// 当前页数设置
 		pageInfo.put("startIndex", start);
 

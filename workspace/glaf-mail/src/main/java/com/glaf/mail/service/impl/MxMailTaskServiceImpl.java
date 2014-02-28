@@ -18,7 +18,6 @@
 
 package com.glaf.mail.service.impl;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -95,7 +94,7 @@ public class MxMailTaskServiceImpl implements IMailTaskService {
 	}
 
 	public List<String> getAccountIds(String taskId) {
-		List<String> list = new ArrayList<String>();
+		List<String> list = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		List<MailTaskAccount> accounts = mailTaskAccountMapper
 				.getMailTaskAccountsByTaskId(taskId);
 		for (MailTaskAccount a : accounts) {

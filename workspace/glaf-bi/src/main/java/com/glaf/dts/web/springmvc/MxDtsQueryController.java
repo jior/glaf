@@ -19,7 +19,6 @@
 package com.glaf.dts.web.springmvc;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -76,7 +75,7 @@ public class MxDtsQueryController {
 		if (StringUtils.isNotEmpty(elementValue)) {
 			StringBuffer sb01 = new StringBuffer();
 			StringBuffer sb02 = new StringBuffer();
-			List<String> selecteds = new ArrayList<String>();
+			List<String> selecteds = new java.util.concurrent.CopyOnWriteArrayList<String>();
 			for (QueryDefinition q : list) {
 				if (StringUtils.contains(elementValue, q.getId())) {
 					selecteds.add(q.getId());

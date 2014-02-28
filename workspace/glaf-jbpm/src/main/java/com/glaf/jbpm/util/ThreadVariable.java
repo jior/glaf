@@ -18,7 +18,7 @@
 
 package com.glaf.jbpm.util;
 
-import java.util.*;
+import java.util.Map;
 
 import com.glaf.jbpm.datafield.DataField;
 

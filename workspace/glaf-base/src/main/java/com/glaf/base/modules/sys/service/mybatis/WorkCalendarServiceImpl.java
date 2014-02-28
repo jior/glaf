@@ -18,7 +18,7 @@
 
 package com.glaf.base.modules.sys.service.mybatis;
 
-import java.util.ArrayList;
+ 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
@@ -49,7 +49,7 @@ public class WorkCalendarServiceImpl implements WorkCalendarService {
 
 	protected WorkCalendarMapper workCalendarMapper;
 
-	private static ArrayList<Integer> workDateList = new ArrayList<Integer>();
+	private static List<Integer> workDateList = new java.util.concurrent.CopyOnWriteArrayList<Integer>();
 
 	public WorkCalendarServiceImpl() {
 
@@ -158,7 +158,7 @@ public class WorkCalendarServiceImpl implements WorkCalendarService {
 		int year = cal.get(Calendar.YEAR);
 		int month = cal.get(Calendar.MONTH);
 
-		ArrayList<Date> noneWorkDays = new ArrayList<Date>();
+		List<Date> noneWorkDays = new java.util.concurrent.CopyOnWriteArrayList<Date>();
 		if (workDateList.size() == 0)
 			initWorkDate();
 		if (!workDateList.isEmpty()) {
@@ -200,7 +200,7 @@ public class WorkCalendarServiceImpl implements WorkCalendarService {
 		int year = cal.get(Calendar.YEAR);
 		int month = cal.get(Calendar.MONTH);
 
-		ArrayList<Date> noneWorkDays = new ArrayList<Date>();
+		List<Date> noneWorkDays = new java.util.concurrent.CopyOnWriteArrayList<Date>();
 
 		// 取连续2个月的非工作日
 		List<Integer> list = getWorkDateList(year, month + 1);
@@ -236,7 +236,7 @@ public class WorkCalendarServiceImpl implements WorkCalendarService {
 		query.freeMonth(freeMonth);
 
 		List<WorkCalendar> list = this.list(query);
-		List<Integer> days = new ArrayList<Integer>();
+		List<Integer> days = new java.util.concurrent.CopyOnWriteArrayList<Integer>();
 		if (list != null && !list.isEmpty()) {
 			for (WorkCalendar cal : list) {
 				days.add(cal.getFreeDay());

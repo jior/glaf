@@ -19,7 +19,6 @@
 package com.glaf.base.modules.sys.springmvc;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -39,16 +38,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.glaf.core.config.ViewProperties;
-import com.glaf.core.res.MessageUtils;
-import com.glaf.core.res.ViewMessage;
-import com.glaf.core.res.ViewMessages;
-import com.glaf.core.util.JsonUtils;
-import com.glaf.core.util.PageResult;
-import com.glaf.core.util.Paging;
-import com.glaf.core.util.ParamUtils;
-import com.glaf.core.util.RequestUtils;
-import com.glaf.core.util.Tools;
 import com.glaf.base.modules.BaseDataManager;
 import com.glaf.base.modules.Constants;
 import com.glaf.base.modules.sys.model.Dictory;
@@ -59,6 +48,16 @@ import com.glaf.base.modules.sys.service.DictoryDefinitionService;
 import com.glaf.base.modules.sys.service.DictoryService;
 import com.glaf.base.modules.sys.service.SysTreeService;
 import com.glaf.base.utils.ParamUtil;
+import com.glaf.core.config.ViewProperties;
+import com.glaf.core.res.MessageUtils;
+import com.glaf.core.res.ViewMessage;
+import com.glaf.core.res.ViewMessages;
+import com.glaf.core.util.JsonUtils;
+import com.glaf.core.util.PageResult;
+import com.glaf.core.util.Paging;
+import com.glaf.core.util.ParamUtils;
+import com.glaf.core.util.RequestUtils;
+import com.glaf.core.util.Tools;
 
 @Controller("/sys/dictory")
 @RequestMapping("/sys/dictory.do")
@@ -286,7 +285,7 @@ public class SysDictoryController {
 
 		SysTree parent = sysTreeService
 				.getSysTreeByCode(Constants.TREE_DICTORY);
-		List<SysTree> list = new ArrayList<SysTree>();
+		List<SysTree> list = new java.util.concurrent.CopyOnWriteArrayList<SysTree>();
 		parent.setDeep(0);
 		list.add(parent);
 		sysTreeService.getSysTree(list, (int) parent.getId(), 1);

@@ -18,13 +18,13 @@
 
 package com.glaf.core.base;
 
-import java.util.*;
+import java.util.List;
 
 import com.glaf.core.domain.ColumnDefinition;
 
 public class RowModel {
 
-	protected List<ColumnDefinition> columns = new ArrayList<ColumnDefinition>();
+	protected List<ColumnDefinition> columns = new java.util.concurrent.CopyOnWriteArrayList<ColumnDefinition>();
 
 	public RowModel() {
 
@@ -32,7 +32,7 @@ public class RowModel {
 
 	public void addColumn(ColumnDefinition column) {
 		if (columns == null) {
-			columns = new ArrayList<ColumnDefinition>();
+			columns = new java.util.concurrent.CopyOnWriteArrayList<ColumnDefinition>();
 		}
 		columns.add(column);
 	}

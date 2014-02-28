@@ -18,7 +18,9 @@
 
 package com.glaf.core.util;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 页对象。用来表示数据的翻页显示时的页信息，包括页数据和分页信息。
@@ -66,7 +68,7 @@ public class Paging implements java.io.Serializable {
 	/**
 	 * 本页的数据
 	 */
-	private List<Object> rows = new ArrayList<Object>();
+	private List<Object> rows = new java.util.concurrent.CopyOnWriteArrayList<Object>();
 
 	/**
 	 * 是否需要缓存结果集
@@ -83,15 +85,15 @@ public class Paging implements java.io.Serializable {
 	/**
 	 * 环境变量
 	 */
-	private Map<String, Object> contextMap = new HashMap<String, Object>();
+	private Map<String, Object> contextMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 
 	/**
 	 * 显示页的参数
 	 */
-	private Map<String, Object> paramMap = new HashMap<String, Object>();
+	private Map<String, Object> paramMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 
 	public Paging() {
-		rows = new ArrayList<Object>();
+		rows = new java.util.concurrent.CopyOnWriteArrayList<Object>();
 		this.currentPage = 0;
 		this.pageSize = 0;
 		this.total = 0;
@@ -106,14 +108,14 @@ public class Paging implements java.io.Serializable {
 
 	public void addRow(Object row) {
 		if (rows == null) {
-			rows = new ArrayList<Object>();
+			rows = new java.util.concurrent.CopyOnWriteArrayList<Object>();
 		}
 		rows.add(row);
 	}
 
 	public void addRows(List<?> list) {
 		if (rows == null) {
-			rows = new ArrayList<Object>();
+			rows = new java.util.concurrent.CopyOnWriteArrayList<Object>();
 		}
 		if (list != null && !list.isEmpty()) {
 			for (Object row : list) {
@@ -161,7 +163,7 @@ public class Paging implements java.io.Serializable {
 
 	public List<Object> getRows() {
 		if (rows == null) {
-			rows = new ArrayList<Object>();
+			rows = new java.util.concurrent.CopyOnWriteArrayList<Object>();
 		}
 		return rows;
 	}

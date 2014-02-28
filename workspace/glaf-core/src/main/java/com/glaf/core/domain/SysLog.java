@@ -21,11 +21,10 @@ package com.glaf.core.domain;
 import java.io.Serializable;
 import java.util.Date;
 
-import com.alibaba.fastjson.*;
+import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-
 import com.glaf.core.base.JSONable;
-import com.glaf.core.domain.util.*;
+import com.glaf.core.domain.util.SysLogJsonFactory;
 
 public class SysLog implements Serializable, JSONable {
 	private static final long serialVersionUID = 3489584842305336744L;

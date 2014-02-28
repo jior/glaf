@@ -1,10 +1,15 @@
 package com.glaf.base.modules.sys.model;
 
-import java.io.*;
-import javax.persistence.*;
-import com.alibaba.fastjson.*;
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.glaf.base.modules.sys.util.*;
+import com.glaf.base.modules.sys.util.SysAccessJsonFactory;
 import com.glaf.core.base.JSONable;
 
 @Entity

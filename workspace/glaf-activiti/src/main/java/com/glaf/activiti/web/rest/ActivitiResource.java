@@ -19,20 +19,12 @@
 package com.glaf.activiti.web.rest;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.fasterxml.jackson.databind.util.JSONPObject;
 
 import org.activiti.engine.ActivitiException;
 import org.activiti.engine.HistoryService;
@@ -60,6 +52,12 @@ import org.activiti.engine.runtime.Execution;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.databind.util.JSONPObject;
 
 @Controller("/rs/activiti")
 @Path("/rs/activiti")
@@ -640,13 +638,13 @@ public class ActivitiResource {
 	}
 
 	private List<String> getHighLightedFlows() {
-		List<String> highLightedFlows = new ArrayList<String>();
+		List<String> highLightedFlows = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		List<HistoricActivityInstance> historicActivityInstances = historyService
 				.createHistoricActivityInstanceQuery()
 				.processInstanceId(processInstanceId)
 				.orderByHistoricActivityInstanceStartTime().asc().list();
 
-		List<String> historicActivityInstanceList = new ArrayList<String>();
+		List<String> historicActivityInstanceList = new java.util.concurrent.CopyOnWriteArrayList<String>();
 
 		for (HistoricActivityInstance hai : historicActivityInstances) {
 			historicActivityInstanceList.add(hai.getActivityId());
@@ -738,10 +736,10 @@ public class ActivitiResource {
 				.getRepositoryService();
 		processInstance = null;
 		processDefinition = null;
-		highLightedFlows = new ArrayList<String>();
-		highLightedActivities = new ArrayList<String>();
-		subProcessInstanceMap = new HashMap<String, ObjectNode>();
-		historicActivityInstanceList = new ArrayList<String>();
+		highLightedFlows = new java.util.concurrent.CopyOnWriteArrayList<String>();
+		highLightedActivities = new java.util.concurrent.CopyOnWriteArrayList<String>();
+		subProcessInstanceMap = new java.util.concurrent.ConcurrentHashMap<String, ObjectNode>();
+		historicActivityInstanceList = new java.util.concurrent.CopyOnWriteArrayList<String>();
 	}
 
 	private boolean isGraphicNotationDefined(

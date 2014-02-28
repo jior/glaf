@@ -19,15 +19,22 @@
 package com.glaf.core.domain;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
-import com.alibaba.fastjson.*;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.glaf.core.base.JSONable;
 import com.glaf.core.base.Parameter;
 import com.glaf.core.base.Scheduler;
@@ -81,13 +88,13 @@ public class SchedulerEntity implements Serializable, Scheduler, JSONable {
 	protected String jobClass;
 
 	@javax.persistence.Transient
-	protected Map<String, Parameter> jobDataMap = new HashMap<String, Parameter>();
+	protected Map<String, Parameter> jobDataMap = new java.util.concurrent.ConcurrentHashMap<String, Parameter>();
 
 	@Column(name = "locked_")
 	protected int locked;
 
 	@javax.persistence.Transient
-	protected List<SchedulerParam> params = new ArrayList<SchedulerParam>();
+	protected List<SchedulerParam> params = new java.util.concurrent.CopyOnWriteArrayList<SchedulerParam>();
 
 	@Column(name = "priority_")
 	protected int priority;
@@ -126,7 +133,7 @@ public class SchedulerEntity implements Serializable, Scheduler, JSONable {
 
 	public void addParam(SchedulerParam param) {
 		if (params == null) {
-			params = new ArrayList<SchedulerParam>();
+			params = new java.util.concurrent.CopyOnWriteArrayList<SchedulerParam>();
 		}
 		params.add(param);
 	}

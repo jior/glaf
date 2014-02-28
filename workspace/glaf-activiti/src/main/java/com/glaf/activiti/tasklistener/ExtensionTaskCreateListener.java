@@ -18,8 +18,6 @@
 
 package com.glaf.activiti.tasklistener;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -29,12 +27,10 @@ import org.activiti.engine.delegate.DelegateExecution;
 import org.activiti.engine.delegate.DelegateTask;
 import org.activiti.engine.delegate.TaskListener;
 import org.activiti.engine.impl.context.Context;
-
 import org.activiti.engine.impl.interceptor.CommandContext;
 import org.activiti.engine.impl.persistence.entity.ExecutionEntity;
 import org.activiti.engine.impl.persistence.entity.HistoricProcessInstanceEntity;
 import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -44,12 +40,12 @@ import com.glaf.activiti.extension.factory.ExtensionFactory;
 import com.glaf.activiti.extension.model.ExtensionEntity;
 import com.glaf.activiti.extension.model.ExtensionFieldEntity;
 import com.glaf.activiti.extension.service.ActivitiExtensionService;
+import com.glaf.activiti.util.ThreadHolder;
+import com.glaf.core.el.Mvel2ExpressionEvaluator;
 import com.glaf.core.util.Constants;
 import com.glaf.core.util.IdentityUtils;
 import com.glaf.core.util.LogUtils;
-import com.glaf.activiti.util.ThreadHolder;
 import com.glaf.core.util.StringTools;
-import com.glaf.core.el.Mvel2ExpressionEvaluator;
 
 public class ExtensionTaskCreateListener implements TaskListener {
  
@@ -59,7 +55,7 @@ public class ExtensionTaskCreateListener implements TaskListener {
 
 	protected List<String> getDeptRoleUsers(DelegateExecution execution,
 			SqlSession sqlSession, ExtensionEntity extension) {
-		Map<String, Object> params = new HashMap<String, Object>();
+		Map<String, Object> params = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		Map<String, Object> variables = execution.getVariables();
 		if (variables != null && variables.size() > 0) {
 			Iterator<String> iterator = variables.keySet().iterator();
@@ -72,7 +68,7 @@ public class ExtensionTaskCreateListener implements TaskListener {
 			}
 		}
 
-		Map<String, Object> paramMap = new HashMap<String, Object>();
+		Map<String, Object> paramMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 
 		Map<String, ExtensionFieldEntity> fields = extension.getFields();
 
@@ -114,7 +110,7 @@ public class ExtensionTaskCreateListener implements TaskListener {
 
 	protected List<String> getMemberships(DelegateExecution execution,
 			SqlSession sqlSession, String processName, String taskDefinitionKey) {
-		Map<String, Object> paramMap = new HashMap<String, Object>();
+		Map<String, Object> paramMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		Map<String, Object> variables = execution.getVariables();
 		if (variables != null && variables.size() > 0) {
 			Iterator<String> iterator = variables.keySet().iterator();
@@ -127,7 +123,7 @@ public class ExtensionTaskCreateListener implements TaskListener {
 			}
 		}
 
-		List<String> actorIds = new ArrayList<String>();
+		List<String> actorIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		String roleId = processName + "_" + taskDefinitionKey;
 
 		paramMap.put("roleId", roleId);
@@ -144,7 +140,7 @@ public class ExtensionTaskCreateListener implements TaskListener {
 
 	protected List<String> getRuntimeAssign(DelegateExecution execution,
 			String processName, String taskDefinitionKey) {
-		List<String> actorIds = new ArrayList<String>();
+		List<String> actorIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		String dynamicActors = processName + "_" + taskDefinitionKey;
 		String actors = (String) execution.getVariable(dynamicActors);
 		if (StringUtils.isEmpty(actors)) {
@@ -234,7 +230,7 @@ public class ExtensionTaskCreateListener implements TaskListener {
 			break;
 		// 流程启动者
 		case Constants.TM_PROCESS_STARTER_TYPE:
-			actorIds = new ArrayList<String>();
+			actorIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
 			actorIds.add(startUserId);
 			break;
 		// 流程启动者的直接上级

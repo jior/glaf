@@ -18,7 +18,6 @@
 
 package com.glaf.base.modules.sys.springmvc;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
@@ -36,18 +35,16 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-
+import com.glaf.base.modules.sys.service.SysApplicationService;
 import com.glaf.core.base.TreeModel;
 import com.glaf.core.config.Environment;
 import com.glaf.core.config.ViewProperties;
 import com.glaf.core.security.LoginContext;
 import com.glaf.core.tree.helper.TreeHelper;
 import com.glaf.core.util.RequestUtils;
-
 import com.glaf.ui.service.LayoutService;
 import com.glaf.ui.service.PanelService;
 import com.glaf.ui.service.UserPortalService;
-import com.glaf.base.modules.sys.service.SysApplicationService;
 
 @Controller("/mx/portal")
 public class MxPortalController {
@@ -143,7 +140,7 @@ public class MxPortalController {
 		Collections.sort(treeNodes);
 
 		Collection<String> roles = loginContext.getRoles();
-		List<String> list = new ArrayList<String>();
+		List<String> list = new java.util.ArrayList<String>();
 		if (roles != null && !roles.isEmpty()) {
 			for (String r : roles) {
 				list.add(r);

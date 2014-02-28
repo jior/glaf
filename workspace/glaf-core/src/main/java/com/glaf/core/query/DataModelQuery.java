@@ -1,13 +1,12 @@
 package com.glaf.core.query;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class DataModelQuery extends DataQuery {
 
 	private static final long serialVersionUID = 1L;
 
-	protected List<String> appActorIds = new ArrayList<String>();
+	protected List<String> appActorIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
 
 	protected Boolean processInstanceIsNotNull;
 

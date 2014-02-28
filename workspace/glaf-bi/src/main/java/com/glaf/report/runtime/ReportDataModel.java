@@ -18,7 +18,6 @@
 
 package com.glaf.report.runtime;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -122,7 +121,7 @@ public class ReportDataModel implements java.io.Serializable {
 
 	protected ReportDataModel parent;
 
-	protected List<ReportDataModel> children = new ArrayList<ReportDataModel>();
+	protected List<ReportDataModel> children = new java.util.concurrent.CopyOnWriteArrayList<ReportDataModel>();
 
 	public ReportDataModel() {
 
@@ -130,7 +129,7 @@ public class ReportDataModel implements java.io.Serializable {
 
 	public void addChild(ReportDataModel child) {
 		if (children == null) {
-			children = new ArrayList<ReportDataModel>();
+			children = new java.util.concurrent.CopyOnWriteArrayList<ReportDataModel>();
 		}
 		child.setParent(this);
 		child.setParentId(this.getId());

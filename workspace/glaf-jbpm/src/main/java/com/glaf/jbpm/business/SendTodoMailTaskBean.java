@@ -18,10 +18,8 @@
 
 package com.glaf.jbpm.business;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -103,7 +101,7 @@ public class SendTodoMailTaskBean {
 				if (taskItems != null && !taskItems.isEmpty()) {
 					logger.debug("taskItems size=" + taskItems.size());
 
-					Map<String, Object> context = new HashMap<String, Object>();
+					Map<String, Object> context = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 					context.put("actorId", user.getActorId());
 					context.put("user", user);
 					context.put("taskItems", taskItems);
@@ -127,10 +125,10 @@ public class SendTodoMailTaskBean {
 						}
 					}
 
-					List<Todo> userTasks = new ArrayList<Todo>();
+					List<Todo> userTasks = new java.util.concurrent.CopyOnWriteArrayList<Todo>();
 
-					Map<String, Todo> todoMap = new HashMap<String, Todo>();
-					Map<String, TodoTotal> todoTotalMap = new HashMap<String, TodoTotal>();
+					Map<String, Todo> todoMap = new java.util.concurrent.ConcurrentHashMap<String, Todo>();
+					Map<String, TodoTotal> todoTotalMap = new java.util.concurrent.ConcurrentHashMap<String, TodoTotal>();
 					for (Todo todo : todoList) {
 						if (todo.getEnableFlag() == 1) {
 							String key = todo.getProcessName() + "_"

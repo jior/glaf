@@ -19,16 +19,20 @@
 package com.glaf.base.modules.sys.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import javax.persistence.*;
-import com.alibaba.fastjson.*;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-
 import com.glaf.base.modules.sys.util.SysTreeJsonFactory;
-
 import com.glaf.core.base.JSONable;
 import com.glaf.core.base.TreeModel;
 
@@ -47,7 +51,7 @@ public class SysTree implements Serializable, TreeModel, JSONable {
 	protected boolean checked;
 
 	@javax.persistence.Transient
-	protected List<TreeModel> children = new ArrayList<TreeModel>();
+	protected List<TreeModel> children = new java.util.concurrent.CopyOnWriteArrayList<TreeModel>();
 
 	/**
 	 * ±àÂë
@@ -160,7 +164,7 @@ public class SysTree implements Serializable, TreeModel, JSONable {
 
 	public void addChild(TreeModel treeModel) {
 		if (children == null) {
-			children = new ArrayList<TreeModel>();
+			children = new java.util.concurrent.CopyOnWriteArrayList<TreeModel>();
 		}
 		children.add(treeModel);
 	}

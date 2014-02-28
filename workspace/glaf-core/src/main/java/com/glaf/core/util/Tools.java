@@ -21,7 +21,6 @@ package com.glaf.core.util;
 import java.awt.Color;
 import java.beans.PropertyDescriptor;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -71,7 +70,7 @@ public class Tools {
 	}
 
 	public static Map<String, Class<?>> getPropertyMap(Class<?> clazz) {
-		Map<String, Class<?>> dataMap = new HashMap<String, Class<?>>();
+		Map<String, Class<?>> dataMap = new java.util.concurrent.ConcurrentHashMap<String, Class<?>>();
 		PropertyDescriptor[] propertyDescriptor = BeanUtils
 				.getPropertyDescriptors(clazz);
 		for (int i = 0; i < propertyDescriptor.length; i++) {

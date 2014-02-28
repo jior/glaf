@@ -47,7 +47,7 @@ public class TodoListBean {
 	public List<TodoTotal> getUserTasks(String actorId,
 			Map<String, Object> params) {
 		logger.debug("actorId="+actorId);
-		List<TodoTotal> userTasks = new ArrayList<TodoTotal>();
+		List<TodoTotal> userTasks = new java.util.concurrent.CopyOnWriteArrayList<TodoTotal>();
 		ISysTodoService todoService = ContextFactory.getBean("sysTodoService");
 		WorkCalendarService workCalendarService = ContextFactory
 				.getBean("workCalendarService");
@@ -55,8 +55,8 @@ public class TodoListBean {
 		List<TaskItem> taskItems = ProcessContainer.getContainer()
 				.getTaskItems(actorId);
 		logger.debug("taskItems size="+taskItems.size());
-		Map<String, Todo> todoMap = new HashMap<String, Todo>();
-		Map<String, TodoTotal> todoTotalMap = new HashMap<String, TodoTotal>();
+		Map<String, Todo> todoMap = new java.util.concurrent.ConcurrentHashMap<String, Todo>();
+		Map<String, TodoTotal> todoTotalMap = new java.util.concurrent.ConcurrentHashMap<String, TodoTotal>();
 		for (Todo todo : todoList) {
 			if (todo.getEnableFlag() == 1) {
 				String key = todo.getProcessName() + "_" + todo.getTaskName();

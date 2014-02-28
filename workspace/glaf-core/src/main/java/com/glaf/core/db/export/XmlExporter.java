@@ -18,9 +18,13 @@
 
 package com.glaf.core.db.export;
 
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.Timestamp;
+import java.sql.Types;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -31,15 +35,16 @@ import org.apache.commons.logging.LogFactory;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
+
+import com.glaf.core.domain.ColumnDefinition;
 import com.glaf.core.entity.SqlExecutor;
 import com.glaf.core.jdbc.DBConnectionFactory;
-import com.glaf.core.domain.ColumnDefinition;
+import com.glaf.core.util.DBUtils;
 import com.glaf.core.util.DateUtils;
 import com.glaf.core.util.Dom4jUtils;
 import com.glaf.core.util.FieldType;
 import com.glaf.core.util.FileUtils;
 import com.glaf.core.util.JdbcUtils;
-import com.glaf.core.util.DBUtils;
 
 public class XmlExporter {
 	protected final static Log logger = LogFactory.getLog(XmlExporter.class);
@@ -105,7 +110,7 @@ public class XmlExporter {
 			rsmd = rs.getMetaData();
 			int count = rsmd.getColumnCount();
 
-			List<ColumnDefinition> columns = new ArrayList<ColumnDefinition>();
+			List<ColumnDefinition> columns = new java.util.concurrent.CopyOnWriteArrayList<ColumnDefinition>();
 
 			Element meta = root.addElement("MetaData");
 			for (int i = 1; i <= count; i++) {
@@ -263,7 +268,7 @@ public class XmlExporter {
 	public void exportXml(String rootDir, String systemName, String tableName,
 			String prefix, int perFileSize) {
 		String sql = " select * from " + tableName;
-		this.exportXml(rootDir, systemName, sql, new HashMap<String, Object>(),
+		this.exportXml(rootDir, systemName, sql, new java.util.concurrent.ConcurrentHashMap<String, Object>(),
 				prefix, perFileSize);
 	}
 

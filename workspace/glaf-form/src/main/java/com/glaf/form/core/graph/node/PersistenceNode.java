@@ -19,8 +19,8 @@ package com.glaf.form.core.graph.node;
 
 import org.apache.commons.lang.StringUtils;
 
-import com.glaf.form.core.graph.def.FormNode;
 import com.glaf.core.util.FieldType;
+import com.glaf.form.core.graph.def.FormNode;
 
 public class PersistenceNode extends FormNode {
 

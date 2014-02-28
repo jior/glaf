@@ -18,10 +18,8 @@
 
 package com.glaf.base.modules.sys.service.mybatis;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -159,7 +157,7 @@ public class SysTreeServiceImpl implements SysTreeService {
 	}
 
 	public List<SysTree> getAllSysTreeListForDept(long parentId, int status) {
-		List<SysTree> list = new ArrayList<SysTree>();
+		List<SysTree> list = new java.util.ArrayList<SysTree>();
 		this.loadChildrenTreeListForDept(list, parentId, status);
 		Collections.sort(list);
 		this.initDepartments(list);
@@ -168,7 +166,7 @@ public class SysTreeServiceImpl implements SysTreeService {
 
 	public List<SysTree> getAllSysTreeListForDeptNoSort(long parentId,
 			int status) {
-		List<SysTree> list = new ArrayList<SysTree>();
+		List<SysTree> list = new java.util.ArrayList<SysTree>();
 		this.loadChildrenTreeListForDept(list, parentId, status);
 		this.initDepartments(list);
 		return list;
@@ -348,7 +346,7 @@ public class SysTreeServiceImpl implements SysTreeService {
 			SysApplicationQuery query = new SysApplicationQuery();
 			List<SysApplication> apps = sysApplicationMapper
 					.getSysApplications(query);
-			Map<Long, SysApplication> appMap = new HashMap<Long, SysApplication>();
+			Map<Long, SysApplication> appMap = new java.util.concurrent.ConcurrentHashMap<Long, SysApplication>();
 			if (apps != null && !apps.isEmpty()) {
 				for (SysApplication m : apps) {
 					appMap.put(m.getNodeId(), m);
@@ -366,7 +364,7 @@ public class SysTreeServiceImpl implements SysTreeService {
 			query.status(0);
 			List<SysDepartment> depts = sysDepartmentMapper
 					.getSysDepartments(query);
-			Map<Long, SysDepartment> deptMap = new HashMap<Long, SysDepartment>();
+			Map<Long, SysDepartment> deptMap = new java.util.concurrent.ConcurrentHashMap<Long, SysDepartment>();
 			if (depts != null && !depts.isEmpty()) {
 				for (SysDepartment dept : depts) {
 					deptMap.put(dept.getNodeId(), dept);
@@ -539,7 +537,7 @@ public class SysTreeServiceImpl implements SysTreeService {
 		 * 如果节点移动了位置，即移动到别的节点下面去了
 		 */
 		if (model.getParentId() != bean.getParentId()) {
-			List<SysTree> list = new ArrayList<SysTree>();
+			List<SysTree> list = new java.util.concurrent.CopyOnWriteArrayList<SysTree>();
 			this.loadChildren(list, bean.getId());
 			if (!list.isEmpty()) {
 				for (SysTree node : list) {
@@ -615,11 +613,11 @@ public class SysTreeServiceImpl implements SysTreeService {
 			}
 			List<SysTree> trees = this.getAllSysTreeList();
 			if (trees != null && !trees.isEmpty()) {
-				Map<Long, SysTree> dataMap = new HashMap<Long, SysTree>();
+				Map<Long, SysTree> dataMap = new java.util.concurrent.ConcurrentHashMap<Long, SysTree>();
 				for (SysTree tree : trees) {
 					dataMap.put(tree.getId(), tree);
 				}
-				Map<Long, String> treeIdMap = new HashMap<Long, String>();
+				Map<Long, String> treeIdMap = new java.util.concurrent.ConcurrentHashMap<Long, String>();
 				for (SysTree tree : trees) {
 					if (StringUtils.isEmpty(tree.getTreeId())) {
 						String treeId = this.getTreeId(dataMap, tree);

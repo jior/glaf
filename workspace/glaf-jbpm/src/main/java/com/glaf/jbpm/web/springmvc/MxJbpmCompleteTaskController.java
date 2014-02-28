@@ -20,7 +20,6 @@ package com.glaf.jbpm.web.springmvc;
 
 import java.io.StringWriter;
 import java.io.Writer;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -31,7 +30,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -40,7 +38,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.config.CustomProperties;
 import com.glaf.core.config.ViewProperties;
 import com.glaf.core.freemarker.TemplateUtils;
- 
 import com.glaf.core.util.JsonUtils;
 import com.glaf.core.util.LogUtils;
 import com.glaf.core.util.ParamUtils;
@@ -192,7 +189,7 @@ public class MxJbpmCompleteTaskController {
 			request.setCharacterEncoding(encoding);
 			response.setCharacterEncoding(encoding);
 			response.setContentType("text/plain;charset=" + encoding);
-			Map<String, Object> jsonMap = new HashMap<String, Object>();
+			Map<String, Object> jsonMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 			if (isOK) {
 				jsonMap.put("statusCode", 200);
 				jsonMap.put("success", "true");
@@ -262,7 +259,7 @@ public class MxJbpmCompleteTaskController {
 		}
 		if (StringUtils.isNotEmpty(templateId)) {
 			 
-			Map<String, Object> context = new HashMap<String, Object>();
+			Map<String, Object> context = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 			context.putAll(paramMap);
 			context.put("actorId", actorId);
 			context.put("canSubmit", canSubmit);

@@ -21,8 +21,6 @@ package com.glaf.core.query;
 import java.util.Date;
 import java.util.List;
 
-import com.glaf.core.query.BaseQuery;
-
 public class MessageQuery extends BaseQuery {
 	private static final long serialVersionUID = 1L;
 	protected String businessKey;

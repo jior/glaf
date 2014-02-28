@@ -36,9 +36,9 @@ import com.glaf.activiti.service.ActivitiDeployQueryService;
 import com.glaf.activiti.service.ActivitiDeployService;
 import com.glaf.activiti.service.ActivitiProcessQueryService;
 import com.glaf.activiti.util.ProcessUtils;
+import com.glaf.core.config.ViewProperties;
 import com.glaf.core.util.FileUtils;
 import com.glaf.core.util.IOUtils;
-import com.glaf.core.config.ViewProperties;
 
 @Controller("/activiti/deploy")
 @RequestMapping("/activiti/deploy")

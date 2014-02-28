@@ -19,8 +19,6 @@
 package com.glaf.base.modules.sys.springmvc;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,25 +35,21 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-
+import com.glaf.base.modules.sys.SysConstants;
+import com.glaf.base.modules.sys.model.SysDepartment;
+import com.glaf.base.modules.sys.model.SysRole;
+import com.glaf.base.modules.sys.model.SysTree;
+import com.glaf.base.modules.sys.model.SysUser;
+import com.glaf.base.modules.sys.service.SysDepartmentService;
+import com.glaf.base.modules.sys.service.SysRoleService;
+import com.glaf.base.modules.sys.service.SysTreeService;
+import com.glaf.base.modules.sys.service.SysUserService;
 import com.glaf.core.base.BaseTree;
 import com.glaf.core.base.TreeModel;
 import com.glaf.core.config.ViewProperties;
 import com.glaf.core.tree.helper.TreeHelper;
 import com.glaf.core.util.RequestUtils;
 import com.glaf.core.util.StringTools;
-
-import com.glaf.base.modules.sys.SysConstants;
-
-import com.glaf.base.modules.sys.model.SysDepartment;
-import com.glaf.base.modules.sys.model.SysRole;
-import com.glaf.base.modules.sys.model.SysTree;
-import com.glaf.base.modules.sys.model.SysUser;
-
-import com.glaf.base.modules.sys.service.SysDepartmentService;
-import com.glaf.base.modules.sys.service.SysRoleService;
-import com.glaf.base.modules.sys.service.SysTreeService;
-import com.glaf.base.modules.sys.service.SysUserService;
 
 @Controller("/base/identityChoose")
 @RequestMapping("/base/identityChoose.do")
@@ -174,13 +168,13 @@ public class IdentityChooseController {
 		if (root != null) {
 			//logger.debug(root.toJsonObject().toJSONString());
 
-			List<TreeModel> treeModels = new ArrayList<TreeModel>();
+			List<TreeModel> treeModels = new java.util.concurrent.CopyOnWriteArrayList<TreeModel>();
 			// treeModels.add(root);
 			List<SysTree> trees = sysTreeService.getAllSysTreeListForDept(
 					(int) root.getId(), 0);
 			if (trees != null && !trees.isEmpty()) {
 				logger.debug("dept tree size:" + trees.size());
-				Map<Long, SysDepartment> deptMap = new HashMap<Long, SysDepartment>();
+				Map<Long, SysDepartment> deptMap = new java.util.concurrent.ConcurrentHashMap<Long, SysDepartment>();
 				for (SysTree tree : trees) {
 					SysDepartment dept = tree.getDepartment();
 					deptMap.put(dept.getNodeId(), dept);
@@ -194,7 +188,7 @@ public class IdentityChooseController {
 						}
 						Map<String, Object> dataMap = tree.getDataMap();
 						if (dataMap == null) {
-							dataMap = new HashMap<String, Object>();
+							dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 						}
 						dataMap.put("deptId", dept.getId());
 						tree.setDataMap(dataMap);
@@ -222,13 +216,13 @@ public class IdentityChooseController {
 		if (root != null && users != null) {
 			logger.debug(root.toJsonObject().toJSONString());
 			logger.debug("users size:" + users.size());
-			List<TreeModel> treeModels = new ArrayList<TreeModel>();
+			List<TreeModel> treeModels = new java.util.concurrent.CopyOnWriteArrayList<TreeModel>();
 			// treeModels.add(root);
 			List<SysTree> trees = sysTreeService.getAllSysTreeListForDept(
 					(int) root.getId(), 0);
 			if (trees != null && !trees.isEmpty()) {
 				logger.debug("dept tree size:" + trees.size());
-				Map<Long, SysTree> treeMap = new HashMap<Long, SysTree>();
+				Map<Long, SysTree> treeMap = new java.util.concurrent.ConcurrentHashMap<Long, SysTree>();
 				for (SysTree tree : trees) {
 					SysDepartment dept = tree.getDepartment();
 					treeMap.put(dept.getId(), tree);
@@ -300,13 +294,13 @@ public class IdentityChooseController {
 		if (root != null) {
 			logger.debug(root.toJsonObject().toJSONString());
 
-			List<TreeModel> treeModels = new ArrayList<TreeModel>();
+			List<TreeModel> treeModels = new java.util.concurrent.CopyOnWriteArrayList<TreeModel>();
 			// treeModels.add(root);
 			List<SysTree> trees = sysTreeService.getAllSysTreeListForDept(
 					(int) root.getId(), 0);
 			if (trees != null && !trees.isEmpty()) {
 				logger.debug("dept tree size:" + trees.size());
-				Map<Long, SysTree> treeMap = new HashMap<Long, SysTree>();
+				Map<Long, SysTree> treeMap = new java.util.concurrent.ConcurrentHashMap<Long, SysTree>();
 				for (SysTree tree : trees) {
 					SysDepartment dept = tree.getDepartment();
 					treeMap.put(dept.getId(), tree);
@@ -339,13 +333,13 @@ public class IdentityChooseController {
 		if (root != null && users != null) {
 			logger.debug(root.toJsonObject().toJSONString());
 			logger.debug("users size:" + users.size());
-			List<TreeModel> treeModels = new ArrayList<TreeModel>();
+			List<TreeModel> treeModels = new java.util.concurrent.CopyOnWriteArrayList<TreeModel>();
 			// treeModels.add(root);
 			List<SysTree> trees = sysTreeService.getAllSysTreeListForDept(
 					(int) root.getId(), 0);
 			if (trees != null && !trees.isEmpty()) {
 				logger.debug("dept tree size:" + trees.size());
-				Map<Long, SysTree> treeMap = new HashMap<Long, SysTree>();
+				Map<Long, SysTree> treeMap = new java.util.concurrent.ConcurrentHashMap<Long, SysTree>();
 				for (SysTree tree : trees) {
 					SysDepartment dept = tree.getDepartment();
 					treeMap.put(dept.getId(), tree);
@@ -360,7 +354,7 @@ public class IdentityChooseController {
 									.getDeptId()));
 							if (dept.getId() == user.getDeptId() && t != null) {
 								TreeModel treeModel = new BaseTree();
-								Map<String, Object> dataMap = new HashMap<String, Object>();
+								Map<String, Object> dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 								dataMap.put("actorId", user.getAccount());
 								treeModel.setDataMap(dataMap);
 								treeModel.setParentId(t.getId());

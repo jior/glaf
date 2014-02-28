@@ -27,13 +27,11 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.SqlSession;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.core.dao.EntityDAO;
 import com.glaf.core.id.IdGenerator;
-
 import com.glaf.ui.mapper.LayoutMapper;
 import com.glaf.ui.model.Layout;
 import com.glaf.ui.query.LayoutQuery;

@@ -22,7 +22,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,12 +32,12 @@ import org.apache.commons.logging.LogFactory;
 import com.glaf.core.config.CustomProperties;
 import com.glaf.core.config.SystemProperties;
 import com.glaf.core.context.ContextFactory;
+import com.glaf.core.util.FileUtils;
 import com.glaf.report.def.ReportDefinition;
 import com.glaf.report.domain.Report;
 import com.glaf.report.query.ReportQuery;
 import com.glaf.report.service.IReportService;
 import com.glaf.report.xml.ReportDefinitionReader;
-import com.glaf.core.util.FileUtils;
 
 public class ReportContainer {
 	protected final static Log logger = LogFactory
@@ -59,7 +58,7 @@ public class ReportContainer {
 	}
 
 	public Map<String, ReportDefinition> reload() {
-		Map<String, ReportDefinition> reportMap = new HashMap<String, ReportDefinition>();
+		Map<String, ReportDefinition> reportMap = new java.util.concurrent.ConcurrentHashMap<String, ReportDefinition>();
 		String configLocation = SystemProperties
 				.getString("report.config.path");
 		if (StringUtils.isEmpty(configLocation)) {

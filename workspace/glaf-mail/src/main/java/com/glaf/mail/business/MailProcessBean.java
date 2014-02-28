@@ -19,7 +19,6 @@
 package com.glaf.mail.business;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -40,8 +39,8 @@ import com.glaf.mail.MailMessage;
 import com.glaf.mail.MailSender;
 import com.glaf.mail.MyBatisMailDataManager;
 import com.glaf.mail.def.MailDataSet;
-import com.glaf.mail.def.MailTemplate;
 import com.glaf.mail.def.MailRowSet;
+import com.glaf.mail.def.MailTemplate;
 
 public class MailProcessBean {
 
@@ -108,7 +107,7 @@ public class MailProcessBean {
 
 	public Map<String, Object> populate(String mailDefId, String actorId,
 			Map<String, Object> context) {
-		Map<String, Object> dataMap = new HashMap<String, Object>();
+		Map<String, Object> dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		dataMap.putAll(context);
 		MailTemplate mail = MailContainer.getContainer().getMailDefinition(
 				mailDefId);

@@ -18,9 +18,7 @@
 
 package com.glaf.core.query;
 
-import java.util.*;
-
-import com.glaf.core.query.BaseQuery;
+import java.util.Date;
 
 public class TableDefinitionQuery extends BaseQuery {
 	private static final long serialVersionUID = 1L;

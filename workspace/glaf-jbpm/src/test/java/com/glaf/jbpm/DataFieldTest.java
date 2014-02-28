@@ -1,13 +1,15 @@
 package com.glaf.jbpm;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import org.junit.Test;
-import com.alibaba.fastjson.*;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.util.DateUtils;
 
 public class DataFieldTest {
@@ -47,7 +49,7 @@ public class DataFieldTest {
 		if (array != null && !array.isEmpty()) {
 			for (int i = 0, len = array.size(); i < len; i++) {
 				JSONObject jsonObject = array.getJSONObject(i);
-				Map<String, Object> dataMap = new HashMap<String, Object>();
+				Map<String, Object> dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 
 				Iterator<Entry<String, Object>> iterator = jsonObject
 						.entrySet().iterator();

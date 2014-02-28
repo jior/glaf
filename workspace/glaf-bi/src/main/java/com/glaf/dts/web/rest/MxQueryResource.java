@@ -19,7 +19,6 @@
 package com.glaf.dts.web.rest;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -38,27 +37,27 @@ import javax.ws.rs.core.UriInfo;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONArray;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.glaf.core.base.BaseTree;
 import com.glaf.core.base.TreeModel;
-import com.glaf.core.domain.*;
+import com.glaf.core.domain.ColumnDefinition;
+import com.glaf.core.domain.QueryDefinition;
+import com.glaf.core.domain.TableDefinition;
 import com.glaf.core.query.QueryDefinitionQuery;
 import com.glaf.core.query.TableDefinitionQuery;
 import com.glaf.core.service.IQueryDefinitionService;
 import com.glaf.core.service.ITableDefinitionService;
 import com.glaf.core.service.ITreeModelService;
 import com.glaf.core.tree.helper.TreeHelper;
+import com.glaf.core.util.DBUtils;
 import com.glaf.core.util.RequestUtils;
 import com.glaf.core.util.ResponseUtils;
-import com.glaf.core.util.DBUtils;
 import com.glaf.core.util.StringTools;
 import com.glaf.core.util.Tools;
 import com.glaf.dts.transform.MxTransformManager;
@@ -114,8 +113,8 @@ public class MxQueryResource {
 		String selected = request.getParameter("selected");
 
 		logger.debug(RequestUtils.getParameterMap(request));
-		List<TreeModel> treeModels = new ArrayList<TreeModel>();
-		List<String> chooseList = new ArrayList<String>();
+		List<TreeModel> treeModels = new java.util.concurrent.CopyOnWriteArrayList<TreeModel>();
+		List<String> chooseList = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		if (StringUtils.isNotEmpty(selected)) {
 			chooseList = StringTools.split(selected);
 		}

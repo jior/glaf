@@ -19,27 +19,36 @@
 package com.glaf.core.web.springmvc;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import com.alibaba.fastjson.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.config.ViewProperties;
-import com.glaf.core.identity.*;
-import com.glaf.core.security.*;
-import com.glaf.core.util.*;
-
-import com.glaf.core.domain.*;
-import com.glaf.core.query.*;
-import com.glaf.core.service.*;
+import com.glaf.core.domain.Membership;
+import com.glaf.core.identity.User;
+import com.glaf.core.query.MembershipQuery;
+import com.glaf.core.security.LoginContext;
+import com.glaf.core.service.MembershipService;
+import com.glaf.core.util.JsonUtils;
+import com.glaf.core.util.PageResult;
+import com.glaf.core.util.ParamUtils;
+import com.glaf.core.util.RequestUtils;
+import com.glaf.core.util.ResponseUtils;
+import com.glaf.core.util.Tools;
 
 @Controller("/membership")
 @RequestMapping("/membership")

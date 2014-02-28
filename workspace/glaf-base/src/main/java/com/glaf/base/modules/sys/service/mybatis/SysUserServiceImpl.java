@@ -18,9 +18,7 @@
 
 package com.glaf.base.modules.sys.service.mybatis;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -245,7 +243,7 @@ public class SysUserServiceImpl implements SysUserService {
 	}
 
 	protected Map<Long, SysDepartment> getDepartmentMap() {
-		Map<Long, SysDepartment> deptMap = new HashMap<Long, SysDepartment>();
+		Map<Long, SysDepartment> deptMap = new java.util.concurrent.ConcurrentHashMap<Long, SysDepartment>();
 		List<SysDepartment> depts = sysDepartmentService.getSysDepartmentList();
 		if (depts != null && !depts.isEmpty()) {
 			for (SysDepartment dept : depts) {
@@ -256,7 +254,7 @@ public class SysUserServiceImpl implements SysUserService {
 	}
 
 	public List<SysUser> getSuperiors(String account) {
-		List<SysUser> superiors = new ArrayList<SysUser>();
+		List<SysUser> superiors = new java.util.concurrent.CopyOnWriteArrayList<SysUser>();
 		SysUser bean = this.findByAccount(account);
 		if (bean != null && bean.getSuperiorIds() != null) {
 			List<String> superiorIds = StringTools.split(bean.getSuperiorIds());
@@ -470,7 +468,7 @@ public class SysUserServiceImpl implements SysUserService {
 	 * @return
 	 */
 	public List<SysRole> getUserRoles(List<String> actorIds) {
-		List<SysRole> roles = new ArrayList<SysRole>();
+		List<SysRole> roles = new java.util.concurrent.CopyOnWriteArrayList<SysRole>();
 		if (actorIds != null && !actorIds.isEmpty()) {
 			for (String actorId : actorIds) {
 				List<SysRole> list = sysRoleMapper.getSysRolesOfUser(actorId);
@@ -507,7 +505,7 @@ public class SysUserServiceImpl implements SysUserService {
 		if (users != null && !users.isEmpty()) {
 			List<SysDepartment> depts = sysDepartmentService
 					.getSysDepartmentList();
-			Map<Long, SysDepartment> deptMap = new HashMap<Long, SysDepartment>();
+			Map<Long, SysDepartment> deptMap = new java.util.concurrent.ConcurrentHashMap<Long, SysDepartment>();
 			if (depts != null && !depts.isEmpty()) {
 				for (SysDepartment dept : depts) {
 					deptMap.put(dept.getId(), dept);
@@ -679,7 +677,7 @@ public class SysUserServiceImpl implements SysUserService {
 			}
 		}
 
-		List<Membership> memberships = new ArrayList<Membership>();
+		List<Membership> memberships = new java.util.concurrent.CopyOnWriteArrayList<Membership>();
 
 		// 增加新权限
 		if (newRoles != null && !newRoles.isEmpty()) {

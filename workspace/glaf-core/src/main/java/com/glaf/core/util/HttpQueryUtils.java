@@ -18,8 +18,12 @@
 
 package com.glaf.core.util;
 
-import java.util.*;
+import java.util.Enumeration;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -100,8 +104,8 @@ public class HttpQueryUtils {
 			HttpServletResponse response, String serviceKey,
 			Map<String, Object> paramMap) {
 		BaseQuery query = new BaseQuery();
-		Map<String, Object> params = new HashMap<String, Object>();
-		List<QueryCondition> conditions = new ArrayList<QueryCondition>();
+		Map<String, Object> params = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		List<QueryCondition> conditions = new java.util.concurrent.CopyOnWriteArrayList<QueryCondition>();
 		JSONObject rootJson = new JSONObject();
 		JSONObject paramJson = new JSONObject();
 		JSONObject queryJson = new JSONObject();

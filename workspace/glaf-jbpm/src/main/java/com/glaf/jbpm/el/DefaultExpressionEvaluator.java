@@ -18,7 +18,7 @@
 
 package com.glaf.jbpm.el;
 
-import java.util.HashMap;
+ 
 import java.util.Map;
 
 import org.jbpm.jpdl.el.ELException;
@@ -62,7 +62,7 @@ public class DefaultExpressionEvaluator {
 
 	public static void main(String[] args) throws Exception {
 		String expression = "#{ not empty roleId}";
-		Map<String, Object> context = new HashMap<String, Object>();
+		Map<String, Object> context = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		context.put("roleId", "admin");
 		context.put("roleType", "-5");
 		context.put("isAgree02", "true");

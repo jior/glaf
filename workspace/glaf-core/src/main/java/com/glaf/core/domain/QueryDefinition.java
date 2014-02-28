@@ -18,7 +18,6 @@
 
 package com.glaf.core.domain;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -50,7 +49,7 @@ public class QueryDefinition implements java.io.Serializable, JSONable {
 	protected QueryDefinition child = null;
 
 	@Transient
-	protected List<ColumnDefinition> columns = new ArrayList<ColumnDefinition>();
+	protected List<ColumnDefinition> columns = new java.util.concurrent.CopyOnWriteArrayList<ColumnDefinition>();
 
 	/**
 	 * 查询SQL语句
@@ -134,7 +133,7 @@ public class QueryDefinition implements java.io.Serializable, JSONable {
 	protected String name;
 
 	@Transient
-	protected List<ColumnDefinition> parameters = new ArrayList<ColumnDefinition>();
+	protected List<ColumnDefinition> parameters = new java.util.concurrent.CopyOnWriteArrayList<ColumnDefinition>();
 
 	/**
 	 * 参数类型
@@ -143,7 +142,7 @@ public class QueryDefinition implements java.io.Serializable, JSONable {
 	protected String parameterType;
 
 	@Transient
-	protected List<Object> paramList = new ArrayList<Object>();
+	protected List<Object> paramList = new java.util.concurrent.CopyOnWriteArrayList<Object>();
 
 	@Transient
 	protected QueryDefinition parent = null;
@@ -155,7 +154,7 @@ public class QueryDefinition implements java.io.Serializable, JSONable {
 	protected String parentId;
 
 	@Transient
-	protected List<Map<String, Object>> resultList = new ArrayList<Map<String, Object>>();
+	protected List<Map<String, Object>> resultList = new java.util.concurrent.CopyOnWriteArrayList<Map<String, Object>>();
 
 	/**
 	 * 返回值类型
@@ -215,7 +214,7 @@ public class QueryDefinition implements java.io.Serializable, JSONable {
 
 	public void addColumn(ColumnDefinition column) {
 		if (columns == null) {
-			columns = new ArrayList<ColumnDefinition>();
+			columns = new java.util.concurrent.CopyOnWriteArrayList<ColumnDefinition>();
 		}
 		column.setDiscriminator("C");
 		columns.add(column);
@@ -223,7 +222,7 @@ public class QueryDefinition implements java.io.Serializable, JSONable {
 
 	public void addParameter(ColumnDefinition parameter) {
 		if (parameters == null) {
-			parameters = new ArrayList<ColumnDefinition>();
+			parameters = new java.util.concurrent.CopyOnWriteArrayList<ColumnDefinition>();
 		}
 		parameter.setDiscriminator("P");
 		parameters.add(parameter);
@@ -231,14 +230,14 @@ public class QueryDefinition implements java.io.Serializable, JSONable {
 
 	public void addResult(Map<String, Object> row) {
 		if (resultList == null) {
-			resultList = new ArrayList<Map<String, Object>>();
+			resultList = new java.util.concurrent.CopyOnWriteArrayList<Map<String, Object>>();
 		}
 		resultList.add(row);
 	}
 
 	public void addResult(Object parameter) {
 		if (paramList == null) {
-			paramList = new ArrayList<Object>();
+			paramList = new java.util.concurrent.CopyOnWriteArrayList<Object>();
 		}
 		paramList.add(parameter);
 	}

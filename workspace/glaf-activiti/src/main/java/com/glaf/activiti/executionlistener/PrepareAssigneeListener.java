@@ -18,8 +18,6 @@
 
 package com.glaf.activiti.executionlistener;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -65,7 +63,7 @@ public class PrepareAssigneeListener implements ExecutionListener {
 				+ commandContext.getDbSqlSession().getSqlSession());
 
 		if (execution != null) {
-			Map<String, Object> paramMap = new HashMap<String, Object>();
+			Map<String, Object> paramMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 
 			String statement = null;
 			if (statementId != null) {
@@ -83,8 +81,8 @@ public class PrepareAssigneeListener implements ExecutionListener {
 						commandContext.getDbSqlSession().getSqlSession());
 				List<?> list = entityDAO.getList(statement, paramMap);
 				if (list != null && !list.isEmpty()) {
-					List<String> users = new ArrayList<String>();
-					List<String> groups = new ArrayList<String>();
+					List<String> users = new java.util.concurrent.CopyOnWriteArrayList<String>();
+					List<String> groups = new java.util.concurrent.CopyOnWriteArrayList<String>();
 					for (Object object : list) {
 						if (object instanceof org.activiti.engine.identity.User) {
 							String actorId = ((org.activiti.engine.identity.User) object)

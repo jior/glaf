@@ -19,7 +19,6 @@
 package com.glaf.jbpm.web.springmvc;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -41,7 +40,6 @@ import org.jbpm.graph.def.ProcessDefinition;
 import org.jbpm.graph.exe.ProcessInstance;
 import org.jbpm.graph.node.TaskNode;
 import org.jbpm.taskmgmt.def.Task;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -58,9 +56,9 @@ import com.glaf.core.util.RequestUtils;
 import com.glaf.core.util.Tools;
 import com.glaf.jbpm.container.ProcessContainer;
 import com.glaf.jbpm.context.Context;
-import com.glaf.jbpm.model.TaskItem;
 import com.glaf.jbpm.manager.JbpmProcessManager;
 import com.glaf.jbpm.manager.JbpmTaskManager;
+import com.glaf.jbpm.model.TaskItem;
 import com.glaf.jbpm.query.ProcessQuery;
 
 @Controller("/jbpm/monitor")
@@ -141,7 +139,7 @@ public class MxJbpmMonitorController {
 			jpage = jbpmProcessManager.getPageProcessInstances(jbpmContext,
 					currPageNo, limit, query);
 			if (jpage.getRows() != null && jpage.getRows().size() > 0) {
-				Map<String, Object> variables = new HashMap<String, Object>();
+				Map<String, Object> variables = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 				Collection<Long> processInstanceIds = new HashSet<Long>();
 				Iterator<Object> iterator = jpage.getRows().iterator();
 				while (iterator.hasNext()) {

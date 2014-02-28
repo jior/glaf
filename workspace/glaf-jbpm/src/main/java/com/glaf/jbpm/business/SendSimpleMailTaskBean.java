@@ -18,10 +18,8 @@
 
 package com.glaf.jbpm.business;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -42,13 +40,11 @@ import com.glaf.core.todo.Todo;
 import com.glaf.core.todo.TodoTotal;
 import com.glaf.core.util.DateUtils;
 import com.glaf.core.util.FileUtils;
-
-import com.glaf.mail.MailMessage;
-import com.glaf.mail.MailSender;
-
 import com.glaf.jbpm.config.JbpmBaseConfiguration;
 import com.glaf.jbpm.container.ProcessContainer;
 import com.glaf.jbpm.model.TaskItem;
+import com.glaf.mail.MailMessage;
+import com.glaf.mail.MailSender;
 
 public class SendSimpleMailTaskBean {
 	protected final static Log logger = LogFactory
@@ -99,7 +95,7 @@ public class SendSimpleMailTaskBean {
 				if (taskItems != null && !taskItems.isEmpty()) {
 					logger.debug("taskItems size=" + taskItems.size());
 
-					Map<String, Object> context = new HashMap<String, Object>();
+					Map<String, Object> context = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 					context.put("actorId", user.getActorId());
 					context.put("user", user);
 					context.put("taskItems", taskItems);
@@ -123,10 +119,10 @@ public class SendSimpleMailTaskBean {
 						}
 					}
 
-					List<Todo> userTasks = new ArrayList<Todo>();
+					List<Todo> userTasks = new java.util.concurrent.CopyOnWriteArrayList<Todo>();
 
-					Map<String, Todo> todoMap = new HashMap<String, Todo>();
-					Map<String, TodoTotal> todoTotalMap = new HashMap<String, TodoTotal>();
+					Map<String, Todo> todoMap = new java.util.concurrent.ConcurrentHashMap<String, Todo>();
+					Map<String, TodoTotal> todoTotalMap = new java.util.concurrent.ConcurrentHashMap<String, TodoTotal>();
 					long index = 1;
 					for (TaskItem task : taskItems) {
 						String key = task.getProcessName() + "_"

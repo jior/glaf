@@ -19,7 +19,6 @@
 package com.glaf.report.runtime;
 
 import java.sql.Connection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -29,13 +28,13 @@ import org.apache.commons.logging.LogFactory;
 
 import com.glaf.core.context.ContextFactory;
 import com.glaf.core.jdbc.DBConnectionFactory;
+import com.glaf.core.util.ClassUtils;
+import com.glaf.core.util.JdbcUtils;
 import com.glaf.report.data.DataManager;
 import com.glaf.report.data.MyBatisDataServiceImpl;
 import com.glaf.report.def.ReportDataSet;
 import com.glaf.report.def.ReportDefinition;
 import com.glaf.report.def.ReportRowSet;
-import com.glaf.core.util.ClassUtils;
-import com.glaf.core.util.JdbcUtils;
 
 public class ReportBean {
 
@@ -47,7 +46,7 @@ public class ReportBean {
 
 	public synchronized Map<String, Object> populate(String reportId,
 			String actorId, Map<String, Object> context) {
-		Map<String, Object> dataMap = new HashMap<String, Object>();
+		Map<String, Object> dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		ReportDefinition reportDefinition = ReportContainer.getContainer()
 				.getReportDefinition(reportId);
 		logger.debug(reportDefinition.getReportId() + " -> "

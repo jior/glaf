@@ -18,9 +18,7 @@
 
 package com.glaf.jbpm.action;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -40,7 +38,6 @@ import org.jbpm.taskmgmt.def.Task;
 import org.jbpm.taskmgmt.exe.TaskInstance;
 import org.jbpm.taskmgmt.exe.TaskMgmtInstance;
 
- 
 import com.glaf.jbpm.config.JbpmObjectFactory;
 import com.glaf.jbpm.container.ProcessContainer;
 import com.glaf.jbpm.util.Constant;
@@ -148,7 +145,7 @@ public class GeneralTaskInstanceAction implements ActionHandler {
 
 		ContextInstance contextInstance = ctx.getContextInstance();
 
-		List<String> actorIds = new ArrayList<String>();
+		List<String> actorIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
 
 		/**
 		 * 1、直接从外部获取的动态参与者ID
@@ -178,7 +175,7 @@ public class GeneralTaskInstanceAction implements ActionHandler {
 			roleId = processName + "_" + taskName;
 		}
 
-		Map<String, Object> paramMap = new HashMap<String, Object>();
+		Map<String, Object> paramMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 
 		paramMap.put("roleId", roleId);
 

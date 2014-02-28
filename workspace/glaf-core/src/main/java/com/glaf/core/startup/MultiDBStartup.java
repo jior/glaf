@@ -2,7 +2,6 @@ package com.glaf.core.startup;
 
 import java.sql.*;
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
@@ -52,7 +51,7 @@ public class MultiDBStartup implements Bootstrap {
 							stmt = conn.prepareStatement(sql);
 							rs = stmt.executeQuery();
 							while (rs.next()) {
-								Map<String, Object> dataMap = new HashMap<String, Object>();
+								Map<String, Object> dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 								Enumeration<?> e = props.keys();
 								while (e.hasMoreElements()) {
 									String key = (String) e.nextElement();

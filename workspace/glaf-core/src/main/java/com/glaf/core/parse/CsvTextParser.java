@@ -23,7 +23,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -38,8 +37,8 @@ import com.glaf.core.service.ITableDataService;
 import com.glaf.core.service.ITableDefinitionService;
 import com.glaf.core.util.DBUtils;
 import com.glaf.core.util.IOUtils;
-import com.glaf.core.xml.XmlReader;
 import com.glaf.core.xml.XmlMappingReader;
+import com.glaf.core.xml.XmlReader;
 
 public class CsvTextParser implements Parser {
 
@@ -141,7 +140,7 @@ public class CsvTextParser implements Parser {
 
 	public List<TableModel> parse(TableModel tableModel,
 			java.io.InputStream data) {
-		List<TableModel> rows = new ArrayList<TableModel>();
+		List<TableModel> rows = new java.util.concurrent.CopyOnWriteArrayList<TableModel>();
 		InputStreamReader isr = null;
 		BufferedReader reader = null;
 		int startRow = tableModel.getStartRow();
@@ -208,7 +207,7 @@ public class CsvTextParser implements Parser {
 		if (text == null) {
 			return Collections.EMPTY_LIST;
 		}
-		List<String> pieces = new ArrayList<String>();
+		List<String> pieces = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		int start = 0;
 		int end = text.indexOf(delimiter);
 		while (end != -1) {

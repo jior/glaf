@@ -22,9 +22,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
-
 import java.text.NumberFormat;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -43,7 +48,6 @@ import com.glaf.core.jdbc.DBConnectionFactory;
 import com.glaf.core.service.IQueryDefinitionService;
 import com.glaf.core.service.ITableDataService;
 import com.glaf.core.service.ITableDefinitionService;
-
 import com.glaf.core.util.DBUtils;
 import com.glaf.core.util.DateUtils;
 import com.glaf.core.util.FieldType;
@@ -99,7 +103,7 @@ public class MxTransformThread implements java.lang.Runnable {
 			JsonFactory f = new JsonFactory();
 			ObjectMapper mapper = new ObjectMapper(f);
 			try {
-				paramMap = new HashMap<String, Object>();
+				paramMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 				paramMap = (Map<String, Object>) mapper.readValue(parameter,
 						HashMap.class);
 				logger.debug("paramMap:" + paramMap);
@@ -123,7 +127,7 @@ public class MxTransformThread implements java.lang.Runnable {
 			transformTaskService.save(task);
 		}
 
-		List<TableModel> resultList = new ArrayList<TableModel>();
+		List<TableModel> resultList = new java.util.concurrent.CopyOnWriteArrayList<TableModel>();
 
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -159,7 +163,7 @@ public class MxTransformThread implements java.lang.Runnable {
 
 			logger.debug("--------------------------------");
 
-			List<ColumnDefinition> columns = new ArrayList<ColumnDefinition>();
+			List<ColumnDefinition> columns = new java.util.concurrent.CopyOnWriteArrayList<ColumnDefinition>();
 
 			rs = psmt.executeQuery();
 			rsmd = rs.getMetaData();

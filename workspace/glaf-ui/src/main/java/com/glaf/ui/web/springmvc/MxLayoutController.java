@@ -18,11 +18,10 @@
 
 package com.glaf.ui.web.springmvc;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.List;
- 
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
@@ -33,6 +32,9 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.glaf.core.config.ViewProperties;
+import com.glaf.core.security.LoginContext;
+import com.glaf.core.util.RequestUtils;
 import com.glaf.ui.model.Layout;
 import com.glaf.ui.model.Panel;
 import com.glaf.ui.model.PanelInstance;
@@ -40,9 +42,6 @@ import com.glaf.ui.model.UserPanel;
 import com.glaf.ui.service.LayoutService;
 import com.glaf.ui.service.PanelService;
 import com.glaf.ui.service.SkinService;
-import com.glaf.core.config.ViewProperties;
-import com.glaf.core.security.LoginContext;
-import com.glaf.core.util.RequestUtils;
 
 @Controller("/layout")
 @RequestMapping("/layout")
@@ -149,7 +148,7 @@ public class MxLayoutController {
 		List<Layout> layouts = layoutService.getAllLayouts();
 		modelMap.put("layouts", layouts);
 
-		List<Panel> panels = new ArrayList<Panel>();
+		List<Panel> panels = new java.util.concurrent.CopyOnWriteArrayList<Panel>();
 
 		List<Panel> panels01 = panelService.getPanels("system");
 		if (panels01 != null && panels01.size() > 0) {

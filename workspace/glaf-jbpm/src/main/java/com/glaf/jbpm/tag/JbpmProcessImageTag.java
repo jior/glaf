@@ -19,7 +19,6 @@
 package com.glaf.jbpm.tag;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -130,7 +129,7 @@ public class JbpmProcessImageTag extends TagSupport {
 		JspWriter jspOut = pageContext.getOut();
 
 		if (tokenInstanceId > 0) {
-			List<Token> allTokens = new ArrayList<Token>();
+			List<Token> allTokens = new java.util.concurrent.CopyOnWriteArrayList<Token>();
 			walkTokens(currentToken, allTokens);
 			jspOut.println("<div style='position:relative; background-image:url("
 					+ imageLink

@@ -18,22 +18,22 @@
 
 package com.glaf.activiti.tasklistener;
 
-import java.util.*;
+import java.util.Iterator;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
-
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 import org.activiti.engine.delegate.DelegateTask;
 import org.activiti.engine.delegate.Expression;
 import org.activiti.engine.delegate.TaskListener;
-import org.activiti.engine.task.Task;
 import org.activiti.engine.impl.TaskQueryImpl;
 import org.activiti.engine.impl.context.Context;
 import org.activiti.engine.impl.interceptor.CommandContext;
 import org.activiti.engine.impl.persistence.entity.TaskEntity;
+import org.activiti.engine.task.Task;
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import com.glaf.core.util.StringTools;
 
@@ -88,7 +88,7 @@ public class CancelAllTaskListener implements TaskListener {
 			if (includesExpression != null) {
 				includes = (String) includesExpression.getValue(delegateTask);
 			}
-			List<String> list = new ArrayList<String>();
+			List<String> list = new java.util.concurrent.CopyOnWriteArrayList<String>();
 			if (includes != null && includes.trim().length() > 0) {
 				list = StringTools.split(includes);
 			}

@@ -18,7 +18,6 @@
 
 package com.glaf.base.modules.sys.springmvc;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -137,7 +136,7 @@ public class WorkCalendarController {
 		List<Integer> list = workCalendarService.getWorkDateList(year,
 				month + 1);
 		if (list == null) {
-			list = new ArrayList<Integer>();
+			list = new java.util.concurrent.CopyOnWriteArrayList<Integer>();
 		}
 
 		request.setAttribute("list", list);

@@ -18,10 +18,10 @@
 
 package com.glaf.activiti.tasklistener.factory;
 
-import org.activiti.engine.delegate.*;
+import org.activiti.engine.delegate.TaskListener;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.commons.pool.*;
+import org.apache.commons.pool.BaseKeyedPoolableObjectFactory;
 
 @SuppressWarnings({ "rawtypes" })
 public class PooledObjectFactory extends BaseKeyedPoolableObjectFactory {

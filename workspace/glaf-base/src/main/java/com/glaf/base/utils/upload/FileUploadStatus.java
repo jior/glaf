@@ -36,7 +36,7 @@ public class FileUploadStatus {
 	// 上传用户地址
 	private String uploadAddr;
 	// 上传文件URL列表
-	private List<FileInfo> uploadFileUrlList = new ArrayList<FileInfo>();
+	private List<FileInfo> uploadFileUrlList = new java.util.concurrent.CopyOnWriteArrayList<FileInfo>();
 	// 上传总量
 	private long uploadTotalSize = 0;
 

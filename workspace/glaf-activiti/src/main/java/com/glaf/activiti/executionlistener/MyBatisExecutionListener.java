@@ -18,7 +18,6 @@
 
 package com.glaf.activiti.executionlistener;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.activiti.engine.delegate.DelegateExecution;
@@ -58,7 +57,7 @@ public class MyBatisExecutionListener implements ExecutionListener {
 		logger.debug("sqlsession:"
 				+ commandContext.getDbSqlSession().getSqlSession());
 		if (execution != null) {
-			Map<String, Object> paramMap = new HashMap<String, Object>();
+			Map<String, Object> paramMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 			paramMap.putAll(execution.getVariables());
 			String statement = null;
 			String op = null;

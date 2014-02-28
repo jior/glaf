@@ -19,7 +19,6 @@ package com.glaf.form.core.dataimport;
 
 import java.awt.Color;
 import java.io.InputStream;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
@@ -35,12 +34,12 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.util.CellRangeAddress;
 
-import com.glaf.form.core.model.FormDefinitionType;
-import com.glaf.form.core.model.NodeType;
 import com.glaf.core.util.FieldType;
 import com.glaf.core.util.JsonUtils;
 import com.glaf.core.util.StringTools;
 import com.glaf.core.util.Tools;
+import com.glaf.form.core.model.FormDefinitionType;
+import com.glaf.form.core.model.NodeType;
 
 public class MxPOIExcelDataImport implements FormDataImport {
 	protected final static Log logger = LogFactory
@@ -139,7 +138,7 @@ public class MxPOIExcelDataImport implements FormDataImport {
 
 					NodeType node = null;
 
-					Map<String, Object> propertyMap = new HashMap<String, Object>();
+					Map<String, Object> propertyMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 
 					String cellValue = null;
 

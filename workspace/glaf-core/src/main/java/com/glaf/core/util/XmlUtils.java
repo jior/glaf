@@ -22,7 +22,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -79,7 +78,7 @@ public class XmlUtils {
 	}
 
 	public static List<Element> elements(Element element) {
-		List<Element> elements = new ArrayList<Element>();
+		List<Element> elements = new java.util.concurrent.CopyOnWriteArrayList<Element>();
 		NodeList nodeList = element.getChildNodes();
 		for (int i = 0; i < nodeList.getLength(); i++) {
 			Node node = nodeList.item(i);
@@ -92,7 +91,7 @@ public class XmlUtils {
 
 	public static List<Element> elements(Element element, String tagName) {
 		NodeList nodeList = element.getElementsByTagName(tagName);
-		List<Element> elements = new ArrayList<Element>(nodeList.getLength());
+		List<Element> elements = new java.util.ArrayList<Element>(nodeList.getLength());
 		for (int i = 0; i < nodeList.getLength(); i++) {
 			Node child = nodeList.item(i);
 			if (child.getParentNode() == element) {

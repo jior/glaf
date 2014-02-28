@@ -503,7 +503,7 @@ public class ReflectUtils {
 	}
 
 	public static Object getEmptyObject(Class<?> returnType) {
-		return getEmptyObject(returnType, new HashMap<Class<?>, Object>(), 0);
+		return getEmptyObject(returnType, new java.util.concurrent.ConcurrentHashMap<Class<?>, Object>(), 0);
 	}
 
 	private static Object getEmptyObject(Class<?> returnType,
@@ -531,11 +531,11 @@ public class ReflectUtils {
 		} else if (returnType.isArray()) {
 			return Array.newInstance(returnType.getComponentType(), 0);
 		} else if (returnType.isAssignableFrom(ArrayList.class)) {
-			return new ArrayList<Object>(0);
+			return new java.util.ArrayList<Object>(0);
 		} else if (returnType.isAssignableFrom(HashSet.class)) {
 			return new HashSet<Object>(0);
 		} else if (returnType.isAssignableFrom(HashMap.class)) {
-			return new HashMap<Object, Object>(0);
+			return new java.util.concurrent.ConcurrentHashMap<Object, Object>(0);
 		} else if (String.class.equals(returnType)) {
 			return "";
 		} else if (!returnType.isInterface()) {

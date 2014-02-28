@@ -18,9 +18,17 @@
 
 package com.glaf.core.domain;
 
-import java.util.*;
+import java.util.Date;
+import java.util.Map;
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -88,7 +96,7 @@ public class AccessEntryEntity implements java.io.Serializable, AccessEntry,
 	protected String createBy;
 
 	@javax.persistence.Transient
-	protected Map<String, AccessPoint> accessPoints = new HashMap<String, AccessPoint>();
+	protected Map<String, AccessPoint> accessPoints = new java.util.concurrent.ConcurrentHashMap<String, AccessPoint>();
 
 	public AccessEntryEntity() {
 
@@ -97,7 +105,7 @@ public class AccessEntryEntity implements java.io.Serializable, AccessEntry,
 	@Transient
 	public void addAccessPoint(AccessPoint accessPoint) {
 		if (accessPoints == null) {
-			accessPoints = new HashMap<String, AccessPoint>();
+			accessPoints = new java.util.concurrent.ConcurrentHashMap<String, AccessPoint>();
 		}
 		accessPoints.put(accessPoint.getName(), accessPoint);
 	}
@@ -121,7 +129,7 @@ public class AccessEntryEntity implements java.io.Serializable, AccessEntry,
 
 	public Map<String, AccessPoint> getAccessPoints() {
 		if (accessPoints == null) {
-			accessPoints = new HashMap<String, AccessPoint>();
+			accessPoints = new java.util.concurrent.ConcurrentHashMap<String, AccessPoint>();
 		}
 		return accessPoints;
 	}

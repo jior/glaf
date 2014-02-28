@@ -25,7 +25,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -38,17 +37,16 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.poi.ss.usermodel.Workbook;
 
 import com.glaf.core.jdbc.DBConnectionFactory;
+import com.glaf.core.security.IdentityFactory;
+import com.glaf.core.security.LoginContext;
+import com.glaf.core.util.ClassUtils;
+import com.glaf.core.util.JdbcUtils;
+import com.glaf.core.util.ReflectUtils;
 import com.glaf.report.def.ReportDataSet;
 import com.glaf.report.def.ReportDefinition;
 import com.glaf.report.def.ReportRowSet;
 import com.glaf.report.runtime.ReportBean;
 import com.glaf.report.runtime.ReportContainer;
-import com.glaf.core.security.IdentityFactory;
-import com.glaf.core.security.LoginContext;
-
-import com.glaf.core.util.ClassUtils;
-import com.glaf.core.util.JdbcUtils;
-import com.glaf.core.util.ReflectUtils;
 
 public class JxlsReportContainer {
 	protected final static Log logger = LogFactory
@@ -67,7 +65,7 @@ public class JxlsReportContainer {
 	public Workbook execute(String reportId, String actorId,
 			Map<String, Object> context) {
 		if (context == null) {
-			context = new HashMap<String, Object>();
+			context = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		}
 
 		Workbook workbook = null;

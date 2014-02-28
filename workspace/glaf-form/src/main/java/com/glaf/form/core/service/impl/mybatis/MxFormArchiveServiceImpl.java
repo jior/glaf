@@ -20,9 +20,7 @@ package com.glaf.form.core.service.impl.mybatis;
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -30,21 +28,12 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.ibatis.session.SqlSession;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
-import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.glaf.form.core.container.MxFormContainer;
-import com.glaf.form.core.context.FormContext;
-import com.glaf.form.core.domain.FormApplication;
-import com.glaf.form.core.domain.FormDefinition;
-import com.glaf.form.core.export.xml.FormXmlExporter;
-import com.glaf.form.core.mapper.FormDefinitionMapper;
-import com.glaf.form.core.service.FormArchiveService;
-import com.glaf.form.core.service.FormDataService;
 
 import com.glaf.core.base.DataFile;
 import com.glaf.core.base.DataModel;
@@ -53,7 +42,14 @@ import com.glaf.core.service.IBlobService;
 import com.glaf.core.service.ISysLogService;
 import com.glaf.core.util.DateUtils;
 import com.glaf.core.util.Dom4jUtils;
-
+import com.glaf.form.core.container.MxFormContainer;
+import com.glaf.form.core.context.FormContext;
+import com.glaf.form.core.domain.FormApplication;
+import com.glaf.form.core.domain.FormDefinition;
+import com.glaf.form.core.export.xml.FormXmlExporter;
+import com.glaf.form.core.mapper.FormDefinitionMapper;
+import com.glaf.form.core.service.FormArchiveService;
+import com.glaf.form.core.service.FormDataService;
 import com.glaf.jbpm.container.ProcessContainer;
 import com.glaf.jbpm.model.ActivityInstance;
 
@@ -84,8 +80,8 @@ public class MxFormArchiveServiceImpl implements FormArchiveService {
 		if (loginContext != null) {
 			formContext.setLoginContext(loginContext);
 		}
-		Collection<DataFile> dataFiles = new ArrayList<DataFile>();
-		Map<String, InputStream> zipMap = new HashMap<String, InputStream>();
+		Collection<DataFile> dataFiles = new java.util.concurrent.CopyOnWriteArrayList<DataFile>();
+		Map<String, InputStream> zipMap = new java.util.concurrent.ConcurrentHashMap<String, InputStream>();
 
 		formContext.setFormApplication(formApplication);
 		formDefinition = formDataService
@@ -182,7 +178,7 @@ public class MxFormArchiveServiceImpl implements FormArchiveService {
 			zipMap.clear();
 			zipMap = null;
 
-			Map<String, Object> parameter = new HashMap<String, Object>();
+			Map<String, Object> parameter = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 
 			parameter.put("archivesFlag", "Y");
 			parameter.put("id", businessKey);

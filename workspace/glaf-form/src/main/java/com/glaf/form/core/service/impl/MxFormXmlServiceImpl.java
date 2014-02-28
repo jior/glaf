@@ -18,7 +18,6 @@
 package com.glaf.form.core.service.impl;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -27,13 +26,11 @@ import java.util.Set;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.core.base.DataModel;
 import com.glaf.core.identity.User;
-
 import com.glaf.core.query.DataModelQuery;
 import com.glaf.core.security.IdentityFactory;
 import com.glaf.core.security.LoginContext;
@@ -46,7 +43,8 @@ import com.glaf.form.core.context.FormContext;
 import com.glaf.form.core.domain.FormApplication;
 import com.glaf.form.core.domain.FormDefinition;
 import com.glaf.form.core.graph.def.FormNode;
-import com.glaf.form.core.service.*;
+import com.glaf.form.core.service.FormDataService;
+import com.glaf.form.core.service.FormXmlService;
 
 @Service("formXmlService")
 @Transactional(readOnly = true)
@@ -76,7 +74,7 @@ public class MxFormXmlServiceImpl implements FormXmlService {
 		Map<String, User> userMap = IdentityFactory.getUserMap();
 		Paging page = MxFormContainer.getContainer().getPageDataModel(
 				formApplication.getId(), query);
-		Map<String, Object> rowMap = new HashMap<String, Object>();
+		Map<String, Object> rowMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		Document doc = DocumentHelper.createDocument();
 		Element root = doc.addElement("List");
 		root.addAttribute("app_name", formApplication.getName());

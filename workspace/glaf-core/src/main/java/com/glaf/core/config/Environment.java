@@ -18,7 +18,7 @@
 
 package com.glaf.core.config;
 
-import java.util.HashMap;
+ 
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
@@ -113,7 +113,7 @@ public class Environment {
 	public static void setCurrentUser(String actorId) {
 		Map<String, String> dataMap = threadLocalVaribles.get();
 		if (dataMap == null) {
-			dataMap = new HashMap<String, String>();
+			dataMap = new java.util.concurrent.ConcurrentHashMap<String, String>();
 			threadLocalVaribles.set(dataMap);
 		}
 		dataMap.put(CURRENT_USER, actorId);
@@ -128,7 +128,7 @@ public class Environment {
 	public static void setThreadLocalProperty(String key, String value) {
 		Map<String, String> dataMap = threadLocalVaribles.get();
 		if (dataMap == null) {
-			dataMap = new HashMap<String, String>();
+			dataMap = new java.util.concurrent.ConcurrentHashMap<String, String>();
 			threadLocalVaribles.set(dataMap);
 		}
 		if (!(StringUtils.equals(key, CURRENT_SYSTEM_NAME) || StringUtils

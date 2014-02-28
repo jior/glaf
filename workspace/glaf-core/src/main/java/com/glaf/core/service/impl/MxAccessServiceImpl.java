@@ -18,9 +18,7 @@
 
 package com.glaf.core.service.impl;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -31,7 +29,6 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.SqlSession;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -95,7 +92,7 @@ public class MxAccessServiceImpl implements IAccessService {
 			throw new RuntimeException("serviceKey is null");
 		}
 
-		List<Accessable> rows = new ArrayList<Accessable>();
+		List<Accessable> rows = new java.util.concurrent.CopyOnWriteArrayList<Accessable>();
 		List<DataAccess> list01 = this.getDataAccesses(serviceKey,
 				dataInstanceId);
 		for (DataAccess da : list01) {
@@ -146,12 +143,12 @@ public class MxAccessServiceImpl implements IAccessService {
 		if (StringUtils.isEmpty(serviceKey)) {
 			throw new RuntimeException("serviceKey is null");
 		}
-		Map<String, Object> parameter = new HashMap<String, Object>();
+		Map<String, Object> parameter = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		parameter.put("serviceKey", serviceKey);
 		parameter.put("businessKey", businessKey);
 		List<Object> rows = this.entityDAO.getList(
 				"getDataAccessByBusinessKey", parameter);
-		List<DataAccess> list = new ArrayList<DataAccess>();
+		List<DataAccess> list = new java.util.concurrent.CopyOnWriteArrayList<DataAccess>();
 		for (Object object : rows) {
 			list.add((DataAccess) object);
 		}
@@ -190,11 +187,11 @@ public class MxAccessServiceImpl implements IAccessService {
 		if (StringUtils.isEmpty(serviceKey)) {
 			throw new RuntimeException("serviceKey is null");
 		}
-		Map<String, Object> parameter = new HashMap<String, Object>();
+		Map<String, Object> parameter = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		parameter.put("serviceKey", serviceKey);
 		List<Object> rows = this.entityDAO.getList(
 				"getModuleAccessByServiceKey", parameter);
-		List<ModuleAccess> list = new ArrayList<ModuleAccess>();
+		List<ModuleAccess> list = new java.util.concurrent.CopyOnWriteArrayList<ModuleAccess>();
 		for (Object object : rows) {
 			list.add((ModuleAccess) object);
 		}

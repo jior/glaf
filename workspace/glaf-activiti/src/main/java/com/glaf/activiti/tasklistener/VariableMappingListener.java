@@ -18,11 +18,11 @@
 
 package com.glaf.activiti.tasklistener;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.activiti.engine.delegate.DelegateTask;
 import org.activiti.engine.delegate.Expression;
 import org.activiti.engine.delegate.TaskListener;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 public class VariableMappingListener implements TaskListener {
 	private static final long serialVersionUID = 1L;

@@ -19,7 +19,6 @@
 package com.glaf.base.modules.sys.service.mybatis;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -218,7 +217,7 @@ public class DictoryServiceImpl implements DictoryService {
 	}
 
 	public Map<String, String> getDictoryMap(List<Dictory> list, long purchaseId) {
-		Map<String, String> dictoryMap = new HashMap<String, String>();
+		Map<String, String> dictoryMap = new java.util.concurrent.ConcurrentHashMap<String, String>();
 		return dictoryMap;
 	}
 

@@ -31,10 +31,9 @@ import com.glaf.core.util.PropertiesUtils;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -158,13 +157,13 @@ public class PropertyMessageResources extends MessageResources {
 	 * The set of locale keys for which we have already loaded messages, keyed
 	 * by the value calculated in <code>localeKey()</code>.
 	 */
-	protected static HashMap<String, String> locales = new HashMap<String, String>();
+	protected static  Map<String, String> locales = new java.util.concurrent.ConcurrentHashMap<String, String>();
 
 	/**
 	 * The cache of messages we have accumulated over time, keyed by the value
 	 * calculated in <code>messageKey()</code>.
 	 */
-	protected static HashMap<String, String> messages = new HashMap<String, String>();
+	protected static Map<String, String> messages = new java.util.concurrent.ConcurrentHashMap<String, String>();
 
 	/**
 	 * Compatibility mode that PropertyMessageResources is operating in.

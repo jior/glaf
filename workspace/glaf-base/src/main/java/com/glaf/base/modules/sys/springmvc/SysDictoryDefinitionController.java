@@ -1,25 +1,29 @@
 package com.glaf.base.modules.sys.springmvc;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.glaf.base.modules.sys.model.DictoryDefinition;
+import com.glaf.base.modules.sys.service.DictoryDefinitionService;
 import com.glaf.core.config.ViewProperties;
-import com.glaf.core.util.*;
-
-import com.glaf.base.modules.sys.model.*;
-import com.glaf.base.modules.sys.service.*;
+import com.glaf.core.util.ParamUtils;
+import com.glaf.core.util.RequestUtils;
+import com.glaf.core.util.ResponseUtils;
 
 @Controller("/sys/dictoryDefinition")
 @RequestMapping("/sys/dictoryDefinition.do")
@@ -40,7 +44,7 @@ public class SysDictoryDefinitionController {
 		Long nodeId = ParamUtils.getLong(params, "nodeId");
 		String target = request.getParameter("target");
 		if (StringUtils.isNotEmpty(target)) {
-			Map<String, DictoryDefinition> defMap = new HashMap<String, DictoryDefinition>();
+			Map<String, DictoryDefinition> defMap = new java.util.concurrent.ConcurrentHashMap<String, DictoryDefinition>();
 			List<DictoryDefinition> list = dictoryDefinitionService
 					.getDictoryDefinitions(0L, target);
 			if (nodeId > 0) {
@@ -88,7 +92,7 @@ public class SysDictoryDefinitionController {
 		Long nodeId = ParamUtils.getLong(params, "nodeId");
 		String target = request.getParameter("target");
 		if (StringUtils.isNotEmpty(target)) {
-			Map<String, DictoryDefinition> defMap = new HashMap<String, DictoryDefinition>();
+			Map<String, DictoryDefinition> defMap = new java.util.concurrent.ConcurrentHashMap<String, DictoryDefinition>();
 			List<DictoryDefinition> list = dictoryDefinitionService
 					.getDictoryDefinitions(0L, target);
 			if (nodeId > 0) {
@@ -136,7 +140,7 @@ public class SysDictoryDefinitionController {
 			List<DictoryDefinition> list = dictoryDefinitionService
 					.getDictoryDefinitions(0L, target);
 			if (list != null && !list.isEmpty()) {
-				List<DictoryDefinition> rows = new ArrayList<DictoryDefinition>();
+				List<DictoryDefinition> rows = new java.util.concurrent.CopyOnWriteArrayList<DictoryDefinition>();
 				for (DictoryDefinition m : list) {
 					String title = request.getParameter(m.getName() + "_title");
 					String required = request.getParameter(m.getName()
@@ -176,7 +180,7 @@ public class SysDictoryDefinitionController {
 				List<DictoryDefinition> list = dictoryDefinitionService
 						.getDictoryDefinitions(0L, target);
 				if (list != null && !list.isEmpty()) {
-					List<DictoryDefinition> rows = new ArrayList<DictoryDefinition>();
+					List<DictoryDefinition> rows = new java.util.concurrent.CopyOnWriteArrayList<DictoryDefinition>();
 					for (DictoryDefinition m : list) {
 						String title = request.getParameter(m.getName()
 								+ "_title");

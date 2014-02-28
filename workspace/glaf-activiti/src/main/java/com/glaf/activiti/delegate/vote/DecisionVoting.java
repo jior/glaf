@@ -19,14 +19,13 @@
 package com.glaf.activiti.delegate.vote;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 public class DecisionVoting implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private List<Vote> voteList = new ArrayList<Vote>();
+	private List<Vote> voteList = new java.util.concurrent.CopyOnWriteArrayList<Vote>();
 	
 	private boolean decisionVotingOutcome;
 

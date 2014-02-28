@@ -19,7 +19,6 @@
 package com.glaf.base.modules.sys.rest;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -208,7 +207,7 @@ public class SysUserResource {
 	 * @param parentId
 	 */
 	public void getAllSysDepartmentList(List<SysDepartment> list, int parentId) {
-		List<SysDepartment> temp = new ArrayList<SysDepartment>();
+		List<SysDepartment> temp = new java.util.concurrent.CopyOnWriteArrayList<SysDepartment>();
 		temp = this.sysDepartmentService.getSysDepartmentList(parentId);
 		if (temp != null && temp.size() != 0) {
 			for (int i = 0; i < temp.size(); i++) {

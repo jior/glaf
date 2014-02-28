@@ -18,7 +18,7 @@
 
 package com.glaf.base.test;
 
-import java.util.HashMap;
+ 
 import java.util.List;
 
 import org.junit.Test;
@@ -35,7 +35,7 @@ public class MyBatisTest extends AbstractTest {
 		entityService = super.getBean("entityService");
 		for (int i = 0; i <= 1000; i++) {
 			List<Object> todoList = entityService.getList("getTodoList",
-					new HashMap());
+					new java.util.concurrent.ConcurrentHashMap());
 			System.out.println(todoList);
 		}
 	}

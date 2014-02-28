@@ -18,16 +18,17 @@
 
 package com.glaf.core.domain.util;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import com.alibaba.fastjson.*;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.glaf.core.domain.EntityEntry;
+import com.glaf.core.domain.EntryPoint;
 import com.glaf.core.util.DateUtils;
-import com.glaf.core.domain.*;
 
 public class EntityEntryJsonFactory {
 
@@ -185,7 +186,7 @@ public class EntityEntryJsonFactory {
 		
 		List<EntryPoint> entryPoints= model.getEntryPoints();
 		if (entryPoints != null && entryPoints.size() > 0) {
-			Collection<JSONObject> rows = new ArrayList<JSONObject>();
+			Collection<JSONObject> rows = new java.util.concurrent.CopyOnWriteArrayList<JSONObject>();
 			for (EntryPoint p : entryPoints) {
 				JSONObject json = new JSONObject();
 				json.put("name", p.getName());

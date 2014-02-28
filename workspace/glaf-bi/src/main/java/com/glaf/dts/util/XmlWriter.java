@@ -21,7 +21,6 @@ package com.glaf.dts.util;
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -48,7 +47,7 @@ public class XmlWriter {
 	}
 
 	public Document write(DataTransfer dataTransfer) {
-		List<DataTransfer> rows = new ArrayList<DataTransfer>();
+		List<DataTransfer> rows = new java.util.concurrent.CopyOnWriteArrayList<DataTransfer>();
 		rows.add(dataTransfer);
 		return this.write(rows);
 	}

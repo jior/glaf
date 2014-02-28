@@ -21,14 +21,15 @@ package com.glaf.mail.business;
 import java.sql.Connection;
 import java.sql.Statement;
 
-import org.springframework.core.io.*;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 
 import com.glaf.core.jdbc.DBConnectionFactory;
-import com.glaf.mail.domain.MailStorage;
 import com.glaf.core.util.DBUtils;
 import com.glaf.core.util.FileUtils;
 import com.glaf.core.util.JdbcUtils;
 import com.glaf.core.util.StringTools;
+import com.glaf.mail.domain.MailStorage;
 
 public class RdbmsCreator implements StorageCreator {
 

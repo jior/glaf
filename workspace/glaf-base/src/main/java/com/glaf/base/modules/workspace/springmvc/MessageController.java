@@ -19,7 +19,6 @@
 package com.glaf.base.modules.workspace.springmvc;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -121,7 +120,7 @@ public class MessageController {
 
 		int msgPageSize = 5;
 		com.glaf.core.util.PageResult messagePager = messageService
-				.getNoReadList(user.getId(), new HashMap<String, Object>(), 1,
+				.getNoReadList(user.getId(), new java.util.concurrent.ConcurrentHashMap<String, Object>(), 1,
 						msgPageSize);
 		List<?> messageList = messagePager.getResults();
 		request.setAttribute("messageList", messageList);

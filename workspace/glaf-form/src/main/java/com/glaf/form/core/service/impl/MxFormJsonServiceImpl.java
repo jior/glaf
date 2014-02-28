@@ -17,32 +17,28 @@
  */
 package com.glaf.form.core.service.impl;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.alibaba.fastjson.JSONObject;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.base.DataModel;
 import com.glaf.core.identity.User;
-
 import com.glaf.core.query.DataModelQuery;
 import com.glaf.core.security.IdentityFactory;
 import com.glaf.core.security.LoginContext;
 import com.glaf.core.util.Paging;
 import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.Tools;
-
 import com.glaf.form.core.container.MxFormContainer;
 import com.glaf.form.core.context.FormContext;
 import com.glaf.form.core.domain.FormApplication;
 import com.glaf.form.core.domain.FormDefinition;
 import com.glaf.form.core.graph.def.FormNode;
-import com.glaf.form.core.service.*;
+import com.glaf.form.core.service.FormDataService;
+import com.glaf.form.core.service.FormJsonService;
 
 @Service("formJsonService")
 @Transactional(readOnly = true)
@@ -78,7 +74,7 @@ public class MxFormJsonServiceImpl implements FormJsonService {
 		Paging page = MxFormContainer.getContainer().getPageDataModel(
 				formApplication.getId(), query);
 
-		List<Object> list = new ArrayList<Object>();
+		List<Object> list = new java.util.concurrent.CopyOnWriteArrayList<Object>();
 		List<Object> rows = page.getRows();
 		for (Object object : rows) {
 			if (object instanceof DataModel) {
@@ -102,7 +98,7 @@ public class MxFormJsonServiceImpl implements FormJsonService {
 			}
 		}
 
-		Map<String, Object> pageInfo = new HashMap<String, Object>();
+		Map<String, Object> pageInfo = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		// 当前页数设置
 		pageInfo.put(
 				"start",
@@ -120,9 +116,9 @@ public class MxFormJsonServiceImpl implements FormJsonService {
 
 		List<FormNode> nodes = formDefinition.getNodes();
 		if (nodes != null && nodes.size() > 0) {
-			List<Object> list2 = new ArrayList<Object>();
+			List<Object> list2 = new java.util.concurrent.CopyOnWriteArrayList<Object>();
 			for (FormNode node : nodes) {
-				Map<String, Object> rowMap = new HashMap<String, Object>();
+				Map<String, Object> rowMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 				rowMap.put("name", node.getName());
 				rowMap.put("title", node.getTitle());
 				rowMap.put("nodeType", node.getNodeType());

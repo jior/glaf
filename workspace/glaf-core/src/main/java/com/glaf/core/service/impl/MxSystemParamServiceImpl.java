@@ -17,22 +17,25 @@
  */
 package com.glaf.core.service.impl;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.glaf.core.id.*;
 import com.glaf.core.dao.EntityDAO;
-import com.glaf.core.domain.*;
-import com.glaf.core.query.*;
-import com.glaf.core.mapper.*;
-import com.glaf.core.service.*;
+import com.glaf.core.domain.InputDefinition;
+import com.glaf.core.domain.SystemParam;
+import com.glaf.core.id.IdGenerator;
+import com.glaf.core.mapper.InputDefinitionMapper;
+import com.glaf.core.mapper.SystemParamMapper;
+import com.glaf.core.query.InputDefinitionQuery;
+import com.glaf.core.query.SystemParamQuery;
+import com.glaf.core.service.ISystemParamService;
 import com.glaf.core.util.DateUtils;
 
 @Service("systemParamService")
@@ -319,7 +322,7 @@ public class MxSystemParamServiceImpl implements ISystemParamService {
 	 */
 	@Transactional
 	public void updateAll(String serviceKey, List<InputDefinition> rows) {
-		Map<String, InputDefinition> rowMap = new HashMap<String, InputDefinition>();
+		Map<String, InputDefinition> rowMap = new java.util.concurrent.ConcurrentHashMap<String, InputDefinition>();
 		for (InputDefinition def : rows) {
 			rowMap.put(def.getKeyName(), def);
 		}

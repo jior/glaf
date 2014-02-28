@@ -17,7 +17,8 @@
  */
 package com.glaf.core.query;
 
-import java.util.*;
+import java.util.Date;
+import java.util.List;
 
 public class SysLogQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;

@@ -21,20 +21,17 @@ package com.glaf.chart.gen;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.Set;
-import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
-
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 
@@ -49,7 +46,7 @@ public class ChartProperties {
 
 	private static Properties properties = new Properties();
 
-	protected static List<ChartType> types = new ArrayList<ChartType>();
+	protected static List<ChartType> types = new java.util.concurrent.CopyOnWriteArrayList<ChartType>();
 
 	protected static ConcurrentMap<String, ChartType> chartTypes = new ConcurrentHashMap<String, ChartType>();
 
@@ -170,7 +167,7 @@ public class ChartProperties {
 									m.setClassName(className);
 									m.setType(name);
 									m.setTitle(jsonObject.getString("title"));
-									Map<String, String> dataMap = new HashMap<String, String>();
+									Map<String, String> dataMap = new java.util.concurrent.ConcurrentHashMap<String, String>();
 									Set<Entry<String, Object>> entrySet = jsonObject
 											.entrySet();
 									for (Entry<String, Object> entry : entrySet) {

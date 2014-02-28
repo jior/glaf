@@ -17,12 +17,11 @@
  */
 
 package com.glaf.core.util;
-
-import java.util.HashMap;
+ 
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
 import java.util.StringTokenizer;
-import java.util.Iterator;
 
 public final class PropertiesHelper {
 
@@ -181,7 +180,7 @@ public final class PropertiesHelper {
 	 */
 	public static Map<String, String> toMap(String propertyName, String delim,
 			Properties properties) {
-		Map<String, String> map = new HashMap<String, String>();
+		Map<String, String> map = new java.util.concurrent.ConcurrentHashMap<String, String>();
 		String value = extractPropertyValue(propertyName, properties);
 		if (value != null) {
 			StringTokenizer tokens = new StringTokenizer(value, delim);

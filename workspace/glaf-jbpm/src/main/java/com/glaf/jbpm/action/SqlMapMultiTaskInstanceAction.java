@@ -18,10 +18,8 @@
 
 package com.glaf.jbpm.action;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -126,7 +124,7 @@ public class SqlMapMultiTaskInstanceAction implements ActionHandler {
 
 		boolean executable = true;
 
-		Map<String, Object> params = new HashMap<String, Object>();
+		Map<String, Object> params = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 
 		ProcessInstance processInstance = ctx.getProcessInstance();
 		params.put("processInstanceId", processInstance.getId());
@@ -211,7 +209,7 @@ public class SqlMapMultiTaskInstanceAction implements ActionHandler {
 
 					params.put("roleId", roleId);
 
-					List<String> actorIds = new ArrayList<String>();
+					List<String> actorIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
 
 					SqlMapContainer container = SqlMapContainer.getContainer();
 

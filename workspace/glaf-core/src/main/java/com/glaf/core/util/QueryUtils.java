@@ -19,7 +19,6 @@
 package com.glaf.core.util;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -175,7 +174,7 @@ public class QueryUtils {
 	}
 
 	public static Map<String, Object> lowerKeyMap(Map<String, Object> paramMap) {
-		Map<String, Object> dataMap = new HashMap<String, Object>();
+		Map<String, Object> dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		Set<Entry<String, Object>> entrySet = paramMap.entrySet();
 		for (Entry<String, Object> entry : entrySet) {
 			String key = entry.getKey();

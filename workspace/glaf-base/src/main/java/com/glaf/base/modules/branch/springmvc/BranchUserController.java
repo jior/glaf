@@ -19,7 +19,6 @@
 package com.glaf.base.modules.branch.springmvc;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -40,20 +39,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.glaf.core.base.TreeModel;
-import com.glaf.core.config.ViewProperties;
-import com.glaf.core.res.MessageUtils;
-import com.glaf.core.res.ViewMessage;
-import com.glaf.core.res.ViewMessages;
-import com.glaf.core.security.DigestUtil;
-import com.glaf.core.service.ITreeModelService;
-import com.glaf.core.util.JsonUtils;
-import com.glaf.core.util.PageResult;
-import com.glaf.core.util.Paging;
-import com.glaf.core.util.ParamUtils;
-import com.glaf.core.util.RequestUtils;
-import com.glaf.core.util.StringTools;
-import com.glaf.core.util.Tools;
 import com.glaf.base.modules.Constants;
 import com.glaf.base.modules.sys.SysConstants;
 import com.glaf.base.modules.sys.model.Dictory;
@@ -70,6 +55,20 @@ import com.glaf.base.modules.sys.service.SysRoleService;
 import com.glaf.base.modules.sys.service.SysTreeService;
 import com.glaf.base.modules.sys.service.SysUserService;
 import com.glaf.base.utils.ParamUtil;
+import com.glaf.core.base.TreeModel;
+import com.glaf.core.config.ViewProperties;
+import com.glaf.core.res.MessageUtils;
+import com.glaf.core.res.ViewMessage;
+import com.glaf.core.res.ViewMessages;
+import com.glaf.core.security.DigestUtil;
+import com.glaf.core.service.ITreeModelService;
+import com.glaf.core.util.JsonUtils;
+import com.glaf.core.util.PageResult;
+import com.glaf.core.util.Paging;
+import com.glaf.core.util.ParamUtils;
+import com.glaf.core.util.RequestUtils;
+import com.glaf.core.util.StringTools;
+import com.glaf.core.util.Tools;
 
 @Controller("/branch/user")
 @RequestMapping("/branch/user.do")
@@ -107,7 +106,7 @@ public class BranchUserController {
 		int roleId = ParamUtil.getIntParameter(request, "roleId", 0);
 		boolean success = false;
 		String actorId = RequestUtils.getActorId(request);
-		List<Long> nodeIds = new ArrayList<Long>();
+		List<Long> nodeIds = new java.util.concurrent.CopyOnWriteArrayList<Long>();
 		nodeIds.add(-1L);
 		SysUserQuery qx = new SysUserQuery();
 		qx.setAccount(actorId);
@@ -204,7 +203,7 @@ public class BranchUserController {
 	 * @param parentId
 	 */
 	public void getAllSysDepartmentList(List<SysDepartment> list, int parentId) {
-		List<SysDepartment> temp = new ArrayList<SysDepartment>();
+		List<SysDepartment> temp = new java.util.concurrent.CopyOnWriteArrayList<SysDepartment>();
 		temp = this.sysDepartmentService.getSysDepartmentList(parentId);
 		if (temp != null && temp.size() != 0) {
 			for (int i = 0; i < temp.size(); i++) {
@@ -403,7 +402,7 @@ public class BranchUserController {
 		modelMap.put("dictories", dictories);
 
 		SysTree parent = sysTreeService.getSysTreeByCode(Constants.TREE_DEPT);
-		List<SysTree> list = new ArrayList<SysTree>();
+		List<SysTree> list = new java.util.concurrent.CopyOnWriteArrayList<SysTree>();
 		parent.setDeep(0);
 		list.add(parent);
 		sysTreeService.getSysTree(list, (int) parent.getId(), 1);
@@ -451,7 +450,7 @@ public class BranchUserController {
 	public ModelAndView resetPwd(HttpServletRequest request, ModelMap modelMap) {
 		boolean ret = false;
 		String actorId = RequestUtils.getActorId(request);
-		List<Long> nodeIds = new ArrayList<Long>();
+		List<Long> nodeIds = new java.util.concurrent.CopyOnWriteArrayList<Long>();
 		nodeIds.add(-1L);
 		SysUserQuery qx = new SysUserQuery();
 		qx.setAccount(actorId);
@@ -524,7 +523,7 @@ public class BranchUserController {
 	public ModelAndView saveAdd(HttpServletRequest request, ModelMap modelMap) {
 		SysUser bean = new SysUser();
 		String actorId = RequestUtils.getActorId(request);
-		List<Long> nodeIds = new ArrayList<Long>();
+		List<Long> nodeIds = new java.util.concurrent.CopyOnWriteArrayList<Long>();
 		nodeIds.add(-1L);
 		SysUserQuery qx = new SysUserQuery();
 		qx.setAccount(actorId);
@@ -632,7 +631,7 @@ public class BranchUserController {
 			SysDepartment department = sysDepartmentService.findById(ParamUtil
 					.getIntParameter(request, "parent", 0));
 			String actorId = RequestUtils.getActorId(request);
-			List<Long> nodeIds = new ArrayList<Long>();
+			List<Long> nodeIds = new java.util.concurrent.CopyOnWriteArrayList<Long>();
 			nodeIds.add(-1L);
 			SysUserQuery qx = new SysUserQuery();
 			qx.setAccount(actorId);
@@ -780,7 +779,7 @@ public class BranchUserController {
 		SysUser user = sysUserService.findById(userId);// 查找用户对象
 		if (user != null && user.getDeptId() > 0) {// 用户存在
 			String actorId = RequestUtils.getActorId(request);
-			List<Long> nodeIds = new ArrayList<Long>();
+			List<Long> nodeIds = new java.util.concurrent.CopyOnWriteArrayList<Long>();
 			nodeIds.add(-1L);
 			SysUserQuery qx = new SysUserQuery();
 			qx.setAccount(actorId);
@@ -890,7 +889,7 @@ public class BranchUserController {
 	public ModelAndView showDeptUsers(HttpServletRequest request,
 			ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
-		List<SysDepartment> list = new ArrayList<SysDepartment>();
+		List<SysDepartment> list = new java.util.concurrent.CopyOnWriteArrayList<SysDepartment>();
 		Set<SysUser> set = new HashSet<SysUser>();
  
 		long deptId = ParamUtil.getLongParameter(request, "dept", 5);
@@ -936,7 +935,7 @@ public class BranchUserController {
 		request.setAttribute("pager", pager);
 
 		SysDepartment dept = sysDepartmentService.findById(deptId);
-		List<SysDepartment> list = new ArrayList<SysDepartment>();
+		List<SysDepartment> list = new java.util.concurrent.CopyOnWriteArrayList<SysDepartment>();
 		sysDepartmentService.findNestingDepartment(list, dept);
 		request.setAttribute("nav", list);
 
@@ -990,7 +989,7 @@ public class BranchUserController {
 
 		// 部门信息
 		SysDepartment dept = sysDepartmentService.findById(deptId);
-		List<SysDepartment> list = new ArrayList<SysDepartment>();
+		List<SysDepartment> list = new java.util.concurrent.CopyOnWriteArrayList<SysDepartment>();
 		sysDepartmentService.findNestingDepartment(list, dept);
 		request.setAttribute("nav", list);
 

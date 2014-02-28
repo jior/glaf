@@ -18,7 +18,7 @@
 
 package com.glaf.base.utils;
 
-import java.util.HashMap;
+ 
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -51,7 +51,7 @@ public class HibernateUtil {
 		Set<String> params = map.keySet();
 		// boolean createAliased = false;
 		if (params != null) {
-			Map<String, String> aliasMap = new HashMap<String, String>();// 储存别名
+			Map<String, String> aliasMap = new java.util.concurrent.ConcurrentHashMap<String, String>();// 储存别名
 			int aliasNum = 0;// 别名数量
 			Iterator<String> it = params.iterator();
 			while (it.hasNext()) {

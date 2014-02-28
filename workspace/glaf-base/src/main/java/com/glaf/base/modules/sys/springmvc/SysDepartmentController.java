@@ -19,9 +19,7 @@
 package com.glaf.base.modules.sys.springmvc;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -158,7 +156,7 @@ public class SysDepartmentController {
 		request.setAttribute("bean", bean);
 
 		SysTree parent = sysTreeService.getSysTreeByCode(Constants.TREE_DEPT);
-		List<SysTree> list = new ArrayList<SysTree>();
+		List<SysTree> list = new java.util.concurrent.CopyOnWriteArrayList<SysTree>();
 		parent.setDeep(0);
 		list.add(parent);
 		sysTreeService.getSysTree(list, (int) parent.getId(), 1);
@@ -370,7 +368,7 @@ public class SysDepartmentController {
 		request.setAttribute("bean", bean);
 
 		SysTree parent = sysTreeService.getSysTreeByCode(Constants.TREE_DEPT);
-		List<SysTree> list = new ArrayList<SysTree>();
+		List<SysTree> list = new java.util.concurrent.CopyOnWriteArrayList<SysTree>();
 		parent.setDeep(0);
 		list.add(parent);
 		sysTreeService.getSysTree(list, (int) parent.getId(), 1);
@@ -739,7 +737,7 @@ public class SysDepartmentController {
 
 		SysTree treeNode = sysTreeService.findById(parent);
 		SysDepartment dept = treeNode.getDepartment();
-		List<SysDepartment> list = new ArrayList<SysDepartment>();
+		List<SysDepartment> list = new java.util.concurrent.CopyOnWriteArrayList<SysDepartment>();
 		sysDepartmentService.findNestingDepartment(list, dept);
 		request.setAttribute("nav", list);
 
@@ -792,11 +790,11 @@ public class SysDepartmentController {
 
 		ArrayNode responseJSON = new ObjectMapper().createArrayNode();
 
-		List<TreeModel> treeModels = new ArrayList<TreeModel>();
+		List<TreeModel> treeModels = new java.util.concurrent.CopyOnWriteArrayList<TreeModel>();
 
 		if (trees != null && !trees.isEmpty() && depts != null
 				&& !depts.isEmpty()) {
-			Map<Long, SysDepartment> deptMap = new HashMap<Long, SysDepartment>();
+			Map<Long, SysDepartment> deptMap = new java.util.concurrent.ConcurrentHashMap<Long, SysDepartment>();
 			for (SysDepartment dept : depts) {
 				deptMap.put(dept.getNodeId(), dept);
 			}
@@ -805,7 +803,7 @@ public class SysDepartmentController {
 				if (dept != null) {
 					Map<String, Object> dataMap = tree.getDataMap();
 					if (dataMap == null) {
-						dataMap = new HashMap<String, Object>();
+						dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 					}
 					dataMap.put("deptId", dept.getId());
 					dataMap.put("deptName", dept.getName());

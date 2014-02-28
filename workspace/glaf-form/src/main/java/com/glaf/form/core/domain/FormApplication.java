@@ -17,16 +17,24 @@
  */
 package com.glaf.form.core.domain;
 
-import java.io.*;
-import java.util.*;
-import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Date;
+
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
-import com.alibaba.fastjson.*;
+
+import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.glaf.core.base.JSONable;
-import com.glaf.form.core.util.*;
+import com.glaf.form.core.util.FormApplicationJsonFactory;
 
 @Entity
 @Table(name = "FORM_APPLICATION")

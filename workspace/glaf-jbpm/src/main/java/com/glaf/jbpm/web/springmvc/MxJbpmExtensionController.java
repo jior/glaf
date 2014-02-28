@@ -18,7 +18,6 @@
 
 package com.glaf.jbpm.web.springmvc;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -31,21 +30,19 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jbpm.JbpmContext;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
- 
 import com.glaf.core.config.ViewProperties;
 import com.glaf.core.util.RequestUtils;
 import com.glaf.core.util.Tools;
 import com.glaf.jbpm.container.ProcessContainer;
 import com.glaf.jbpm.context.Context;
+import com.glaf.jbpm.manager.JbpmExtensionManager;
 import com.glaf.jbpm.model.Extension;
 import com.glaf.jbpm.model.ExtensionField;
-import com.glaf.jbpm.manager.JbpmExtensionManager;
 
 @Controller("/jbpm/extension")
 @RequestMapping("/jbpm/extension")
@@ -139,7 +136,7 @@ public class MxJbpmExtensionController {
 				&& StringUtils.isNotEmpty(taskName)) {
 			Extension model = new Extension();
 			Tools.populate(model, params);
-			List<Extension> extensions = new ArrayList<Extension>();
+			List<Extension> extensions = new java.util.concurrent.CopyOnWriteArrayList<Extension>();
 			extensions.add(model);
 			Map<String, Object> paramMap = RequestUtils.getParameterMap(
 					request, "x_property_");

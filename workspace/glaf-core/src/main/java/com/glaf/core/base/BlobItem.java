@@ -19,8 +19,8 @@
 package com.glaf.core.base;
 
 import java.io.InputStream;
-
 import java.util.Date;
+
 import com.alibaba.fastjson.JSONObject;
 
 public interface BlobItem extends DataFile {

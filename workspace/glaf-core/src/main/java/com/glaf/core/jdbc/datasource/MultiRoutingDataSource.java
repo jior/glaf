@@ -18,7 +18,7 @@
 
 package com.glaf.core.jdbc.datasource;
 
-import java.util.HashMap;
+ 
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
@@ -57,7 +57,7 @@ public class MultiRoutingDataSource extends AbstractRoutingDataSource {
 	private static void reloadDS() {
 		if (!LOAD_DATASOURCE_OK) {
 			logger.info("--------------MultiRoutingDataSource reloadDS()------------");
-			Map<Object, Object> dataSourceMap = new HashMap<Object, Object>();
+			Map<Object, Object> dataSourceMap = new java.util.concurrent.ConcurrentHashMap<Object, Object>();
 			Map<String, Properties> dataSourceProperties = DBConfiguration
 					.getDataSourceProperties();
 			Set<Entry<String, Properties>> entrySet = dataSourceProperties

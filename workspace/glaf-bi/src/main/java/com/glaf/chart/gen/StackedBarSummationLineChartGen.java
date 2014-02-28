@@ -23,8 +23,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.geom.Ellipse2D;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
@@ -319,8 +317,8 @@ public class StackedBarSummationLineChartGen implements ChartGen {
 
 	public CategoryDataset createSumDataset(Chart chartModel) {
 		DefaultCategoryDataset localDefaultCategoryDataset = new DefaultCategoryDataset();
-		Map<String, Double> total = new HashMap<String, Double>();
-		java.util.List<String> ar = new ArrayList<String>();
+		Map<String, Double> total = new java.util.concurrent.ConcurrentHashMap<String, Double>();
+		java.util.List<String> ar = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		for (ColumnModel cell : chartModel.getColumns()) {
 			if (cell.getSeries() != null && cell.getCategory() != null) {
 				if (total.get("CAT_" + cell.getCategory()) == null) {

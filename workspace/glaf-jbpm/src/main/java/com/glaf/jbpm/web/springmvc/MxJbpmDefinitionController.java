@@ -18,7 +18,6 @@
 
 package com.glaf.jbpm.web.springmvc;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -139,7 +138,7 @@ public class MxJbpmDefinitionController {
 			@RequestParam(value = "processDefinitionId", required = false) String processDefinitionId,
 			@RequestParam(value = "processName", required = false) String processName,
 			ModelMap modelMap) {
-		List<Task> rows = new ArrayList<Task>();
+		List<Task> rows = new java.util.concurrent.CopyOnWriteArrayList<Task>();
 		ProcessDefinition processDefinition = null;
 		GraphSession graphSession = null;
 		JbpmContext jbpmContext = null;

@@ -17,8 +17,10 @@
  */
 package com.glaf.form.core.util;
 
-import java.io.*;
-import java.util.*;
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
+import java.util.Collection;
+import java.util.List;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
@@ -35,7 +37,12 @@ import com.glaf.form.core.graph.def.FormNode;
 import com.glaf.form.core.graph.def.FormProperty;
 import com.glaf.form.core.graph.def.FormScript;
 import com.glaf.form.core.graph.node.NodeTypes;
-import com.glaf.form.core.model.*;
+import com.glaf.form.core.model.EventType;
+import com.glaf.form.core.model.FormDefinitionType;
+import com.glaf.form.core.model.NodeType;
+import com.glaf.form.core.model.ObjectFactory;
+import com.glaf.form.core.model.PropertyType;
+import com.glaf.form.core.model.ScriptType;
 
 public class FdlConverter {
 	private static final Log logger = LogFactory.getLog(FdlConverter.class);

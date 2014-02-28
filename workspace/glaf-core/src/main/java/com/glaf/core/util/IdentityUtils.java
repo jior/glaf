@@ -18,8 +18,6 @@
 
 package com.glaf.core.util;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,6 +25,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.SqlSession;
+
 import com.glaf.core.config.CustomProperties;
 import com.glaf.core.dao.MyBatisEntityDAO;
 
@@ -42,7 +41,7 @@ public class IdentityUtils {
 	 */
 	public static List<String> getActorIds(SqlSession sqlSession,
 			Map<String, Object> paramMap) {
-		List<String> actorIds = new ArrayList<String>();
+		List<String> actorIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		String statementId = CustomProperties.getString("sys.getActorIds");
 		if (StringUtils.isEmpty(statementId)) {
 			statementId = "getActorIds";
@@ -78,7 +77,7 @@ public class IdentityUtils {
 	 */
 	public static List<String> getActorIds(SqlSession sqlSession,
 			String statement, Map<String, Object> paramMap) {
-		List<String> actorIds = new ArrayList<String>();
+		List<String> actorIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		MyBatisEntityDAO entityDAO = new MyBatisEntityDAO(sqlSession);
 		List<Object> rows = entityDAO.getList(statement, paramMap);
 		if (rows != null && !rows.isEmpty()) {
@@ -108,7 +107,7 @@ public class IdentityUtils {
 	 */
 
 	public static List<String> getLeaderIds(SqlSession sqlSession, String userId) {
-		Map<String, Object> paramMap = new HashMap<String, Object>();
+		Map<String, Object> paramMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		paramMap.put("actorId", userId);
 
 		String statementId = CustomProperties.getString("sys.getLeaders");
@@ -116,7 +115,7 @@ public class IdentityUtils {
 			statementId = "getLeaders";
 		}
 
-		List<String> actorIds = new ArrayList<String>();
+		List<String> actorIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		MyBatisEntityDAO entityDAO = new MyBatisEntityDAO(sqlSession);
 		List<Object> rows = entityDAO.getList(statementId, paramMap);
 		if (rows != null && rows.size() > 0) {

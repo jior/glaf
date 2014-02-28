@@ -18,7 +18,6 @@
 
 package com.glaf.base.modules.sys.springmvc;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -124,7 +123,7 @@ public class UserController {
 		request.setAttribute("bean", bean);
 
 		SysTree parent = sysTreeService.getSysTreeByCode(Constants.TREE_DEPT);
-		List<SysTree> list = new ArrayList<SysTree>();
+		List<SysTree> list = new java.util.concurrent.CopyOnWriteArrayList<SysTree>();
 		parent.setDeep(0);
 		list.add(parent);
 		sysTreeService.getSysTree(list, (int) parent.getId(), 1);

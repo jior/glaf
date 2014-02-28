@@ -18,7 +18,10 @@
 
 package com.glaf.core.domain;
 
-import java.util.*;
+import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -64,7 +67,7 @@ public class TableDefinition implements java.io.Serializable,
 	protected int columnQty;
 
 	@Transient
-	protected List<ColumnDefinition> columns = new ArrayList<ColumnDefinition>();
+	protected List<ColumnDefinition> columns = new java.util.concurrent.CopyOnWriteArrayList<ColumnDefinition>();
 
 	/**
 	 * 创建人
@@ -155,7 +158,7 @@ public class TableDefinition implements java.io.Serializable,
 	protected String parentTableName;
 
 	@Transient
-	protected List<QueryDefinition> queries = new ArrayList<QueryDefinition>();
+	protected List<QueryDefinition> queries = new java.util.concurrent.CopyOnWriteArrayList<QueryDefinition>();
 
 	/**
 	 * 组合查询的查询编号
@@ -227,14 +230,14 @@ public class TableDefinition implements java.io.Serializable,
 
 	public void addColumn(ColumnDefinition column) {
 		if (columns == null) {
-			columns = new ArrayList<ColumnDefinition>();
+			columns = new java.util.concurrent.CopyOnWriteArrayList<ColumnDefinition>();
 		}
 		columns.add(column);
 	}
 
 	public void addField(FieldDefinition field) {
 		if (columns == null) {
-			columns = new ArrayList<ColumnDefinition>();
+			columns = new java.util.concurrent.CopyOnWriteArrayList<ColumnDefinition>();
 		}
 		JSONObject jsonObject = field.toJsonObject();
 		ColumnDefinition column = ColumnDefinitionJsonFactory
@@ -244,7 +247,7 @@ public class TableDefinition implements java.io.Serializable,
 
 	public void addQuery(QueryDefinition query) {
 		if (queries == null) {
-			queries = new ArrayList<QueryDefinition>();
+			queries = new java.util.concurrent.CopyOnWriteArrayList<QueryDefinition>();
 		}
 		queries.add(query);
 	}

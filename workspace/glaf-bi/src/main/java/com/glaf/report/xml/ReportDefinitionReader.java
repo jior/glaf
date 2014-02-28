@@ -18,8 +18,6 @@
 
 package com.glaf.report.xml;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -36,7 +34,7 @@ import com.glaf.report.def.ReportRowSet;
 public class ReportDefinitionReader {
 
 	public List<ReportDefinition> read(java.io.InputStream inputStream) {
-		List<ReportDefinition> reports = new ArrayList<ReportDefinition>();
+		List<ReportDefinition> reports = new java.util.concurrent.CopyOnWriteArrayList<ReportDefinition>();
 		SAXReader xmlReader = new SAXReader();
 		Document doc = null;
 		try {
@@ -98,7 +96,7 @@ public class ReportDefinitionReader {
 	}
 
 	protected Map<String, Object> readProperties(Element element) {
-		Map<String, Object> properties = new HashMap<String, Object>();
+		Map<String, Object> properties = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		Element propsElement = element.element("properties");
 		if (propsElement != null) {
 			List<?> rows = propsElement.elements("property");

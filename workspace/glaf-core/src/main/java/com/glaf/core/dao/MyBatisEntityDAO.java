@@ -20,7 +20,6 @@ package com.glaf.core.dao;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -30,10 +29,9 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
-import com.glaf.core.util.Paging;
 import com.glaf.core.entity.SqlExecutor;
-
 import com.glaf.core.util.ClassUtils;
+import com.glaf.core.util.Paging;
 import com.glaf.core.util.Tools;
 
 public class MyBatisEntityDAO {
@@ -209,7 +207,7 @@ public class MyBatisEntityDAO {
 		}
 
 		if (totalCount == 0) {
-			page.setRows(new ArrayList<Object>());
+			page.setRows(new java.util.concurrent.CopyOnWriteArrayList<Object>());
 			page.setCurrentPage(0);
 			page.setPageSize(0);
 			page.setTotal(0);

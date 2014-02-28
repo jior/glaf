@@ -19,7 +19,6 @@
 package com.glaf.base.modules.sys.service.mybatis;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -323,7 +322,7 @@ public class SysDepartmentServiceImpl implements SysDepartmentService {
 	protected void initRoles(List<SysDeptRole> list) {
 		if (list != null && !list.isEmpty()) {
 			List<SysRole> rows = sysRoleService.getSysRoleList();
-			Map<Long, SysRole> dataMap = new HashMap<Long, SysRole>();
+			Map<Long, SysRole> dataMap = new java.util.concurrent.ConcurrentHashMap<Long, SysRole>();
 			if (rows != null && !rows.isEmpty()) {
 				for (SysRole m : rows) {
 					dataMap.put(m.getId(), m);
@@ -338,7 +337,7 @@ public class SysDepartmentServiceImpl implements SysDepartmentService {
 	protected void initTrees(List<SysDepartment> list) {
 		if (list != null && !list.isEmpty()) {
 			List<SysTree> trees = sysTreeService.getAllSysTreeList();
-			Map<Long, SysTree> treeMap = new HashMap<Long, SysTree>();
+			Map<Long, SysTree> treeMap = new java.util.concurrent.ConcurrentHashMap<Long, SysTree>();
 			if (trees != null && !trees.isEmpty()) {
 				for (SysTree tree : trees) {
 					treeMap.put(tree.getId(), tree);

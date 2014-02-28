@@ -1,10 +1,8 @@
 package com.glaf.core.web.rest;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +20,6 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
-
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONArray;
@@ -70,7 +67,7 @@ public class MxSystemTableResource {
 
 			List<TableDefinition> list = tableDefinitionService
 					.getTableColumnsCount(query);
-			Map<String, TableDefinition> tableMap = new HashMap<String, TableDefinition>();
+			Map<String, TableDefinition> tableMap = new java.util.concurrent.ConcurrentHashMap<String, TableDefinition>();
 			if (list != null && !list.isEmpty()) {
 				for (TableDefinition t : list) {
 					tableMap.put(t.getTableName().toLowerCase(), t);
@@ -272,7 +269,7 @@ public class MxSystemTableResource {
 
 		tableName = tableName.toUpperCase();
 
-		Collection<String> rejects = new ArrayList<String>();
+		Collection<String> rejects = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		rejects.add("FILEATT");
 		rejects.add("SYS_LOB");
 		rejects.add("SYS_MAIL_FILE");

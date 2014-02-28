@@ -18,8 +18,6 @@
 
 package com.glaf.mail.def;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -32,12 +30,12 @@ public class MailDataSet implements java.io.Serializable {
 	/**
 	 * 邮件结果集
 	 */
-	protected List<MailRowSet> rowSetList = new ArrayList<MailRowSet>();
+	protected List<MailRowSet> rowSetList = new java.util.concurrent.CopyOnWriteArrayList<MailRowSet>();
 
 	/**
 	 * 邮件属性定义，主要用于自定义处理程序
 	 */
-	protected Map<String, Object> properties = new HashMap<String, Object>();
+	protected Map<String, Object> properties = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 
 	public MailDataSet() {
 
@@ -45,7 +43,7 @@ public class MailDataSet implements java.io.Serializable {
 
 	public void addRowSet(MailRowSet rowset) {
 		if (rowSetList == null) {
-			rowSetList = new ArrayList<MailRowSet>();
+			rowSetList = new java.util.concurrent.CopyOnWriteArrayList<MailRowSet>();
 		}
 		rowset.setMailDataSet(this);
 		rowSetList.add(rowset);
@@ -61,7 +59,7 @@ public class MailDataSet implements java.io.Serializable {
 
 	public List<MailRowSet> getRowSetList() {
 		if (rowSetList == null) {
-			rowSetList = new ArrayList<MailRowSet>();
+			rowSetList = new java.util.concurrent.CopyOnWriteArrayList<MailRowSet>();
 		}
 		return rowSetList;
 	}

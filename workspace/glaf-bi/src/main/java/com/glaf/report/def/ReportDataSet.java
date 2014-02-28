@@ -18,8 +18,6 @@
 
 package com.glaf.report.def;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,12 +35,12 @@ public class ReportDataSet implements java.io.Serializable {
 	/**
 	 * 报表结果集
 	 */
-	protected List<ReportRowSet> rowSetList = new ArrayList<ReportRowSet>();
+	protected List<ReportRowSet> rowSetList = new java.util.concurrent.CopyOnWriteArrayList<ReportRowSet>();
 
 	/**
 	 * 报表属性定义，主要用于自定义处理程序
 	 */
-	protected Map<String, Object> properties = new HashMap<String, Object>();
+	protected Map<String, Object> properties = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 
 	public ReportDataSet() {
 
@@ -50,7 +48,7 @@ public class ReportDataSet implements java.io.Serializable {
 
 	public void addRowSet(ReportRowSet rowset) {
 		if (rowSetList == null) {
-			rowSetList = new ArrayList<ReportRowSet>();
+			rowSetList = new java.util.concurrent.CopyOnWriteArrayList<ReportRowSet>();
 		}
 		rowset.setReportDataSet(this);
 		rowSetList.add(rowset);
@@ -70,7 +68,7 @@ public class ReportDataSet implements java.io.Serializable {
 
 	public List<ReportRowSet> getRowSetList() {
 		if (rowSetList == null) {
-			rowSetList = new ArrayList<ReportRowSet>();
+			rowSetList = new java.util.concurrent.CopyOnWriteArrayList<ReportRowSet>();
 		}
 		return rowSetList;
 	}

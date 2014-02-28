@@ -37,7 +37,6 @@ import com.glaf.base.modules.sys.model.SysFunction;
 import com.glaf.base.modules.sys.service.SysApplicationService;
 import com.glaf.base.modules.sys.service.SysFunctionService;
 import com.glaf.base.utils.ParamUtil;
-
 import com.glaf.core.config.ViewProperties;
 import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;

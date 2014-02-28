@@ -16,9 +16,7 @@
  * limitations under the License.
  */
 package com.glaf.core.io.compress;
-
-import java.util.ArrayList;
-import java.util.HashMap;
+ 
 import java.util.List;
 import java.util.Map;
 
@@ -38,13 +36,13 @@ public class CodecPool {
 	 * A global compressor pool used to save the expensive
 	 * construction/destruction of (possibly native) decompression codecs.
 	 */
-	private static final Map<Class<Compressor>, List<Compressor>> compressorPool = new HashMap<Class<Compressor>, List<Compressor>>();
+	private static final Map<Class<Compressor>, List<Compressor>> compressorPool = new java.util.concurrent.ConcurrentHashMap<Class<Compressor>, List<Compressor>>();
 
 	/**
 	 * A global decompressor pool used to save the expensive
 	 * construction/destruction of (possibly native) decompression codecs.
 	 */
-	private static final Map<Class<Decompressor>, List<Decompressor>> decompressorPool = new HashMap<Class<Decompressor>, List<Decompressor>>();
+	private static final Map<Class<Decompressor>, List<Decompressor>> decompressorPool = new java.util.concurrent.ConcurrentHashMap<Class<Decompressor>, List<Decompressor>>();
 
 	private static <T> T borrow(Map<Class<T>, List<T>> pool,
 			Class<? extends T> codecClass) {
@@ -73,7 +71,7 @@ public class CodecPool {
 			Class<T> codecClass = ClassUtils.getClass(codec);
 			synchronized (pool) {
 				if (!pool.containsKey(codecClass)) {
-					pool.put(codecClass, new ArrayList<T>());
+					pool.put(codecClass, new java.util.concurrent.CopyOnWriteArrayList<T>());
 				}
 
 				List<T> codecList = pool.get(codecClass);

@@ -119,7 +119,7 @@ public class LeaveNode implements ActivityBehavior {
 
 		// Removing all active child executions (ie because
 		// completionCondition is true)
-		List<ExecutionEntity> executionsToRemove = new ArrayList<ExecutionEntity>();
+		List<ExecutionEntity> executionsToRemove = new java.util.concurrent.CopyOnWriteArrayList<ExecutionEntity>();
 		if (executionEntity.getParent() != null) {
 			for (ActivityExecution childExecution : executionEntity.getParent()
 					.getExecutions()) {

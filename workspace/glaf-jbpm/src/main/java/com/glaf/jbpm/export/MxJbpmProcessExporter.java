@@ -23,7 +23,6 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -123,7 +122,7 @@ public class MxJbpmProcessExporter   {
 		Document doc = null;
 		String process_name = null;
 		JbpmContext jbpmContext = null;
-		Map<String, InputStream> zipMap = new HashMap<String, InputStream>();
+		Map<String, InputStream> zipMap = new java.util.concurrent.ConcurrentHashMap<String, InputStream>();
 		try {
 
 			jbpmContext = ProcessContainer.getContainer().createJbpmContext();

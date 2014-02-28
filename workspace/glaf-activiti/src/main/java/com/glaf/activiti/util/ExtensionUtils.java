@@ -18,7 +18,6 @@
 
 package com.glaf.activiti.util;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -27,16 +26,16 @@ import org.apache.commons.lang.StringUtils;
 
 import com.glaf.activiti.extension.model.ExtensionEntity;
 import com.glaf.activiti.extension.model.ExtensionParamEntity;
+import com.glaf.core.el.Mvel2ExpressionEvaluator;
 import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.StringTools;
-import com.glaf.core.el.Mvel2ExpressionEvaluator;
 
 public class ExtensionUtils {
 
 	public static List<Object> getValues(Map<String, Object> paramMap,
 			ExtensionEntity extension) {
 		java.util.Date now = new java.util.Date();
-		List<Object> values = new ArrayList<Object>();
+		List<Object> values = new java.util.concurrent.CopyOnWriteArrayList<Object>();
 		List<ExtensionParamEntity> x_params = extension.getParams();
 		Iterator<ExtensionParamEntity> iterator = x_params.iterator();
 		while (iterator.hasNext()) {

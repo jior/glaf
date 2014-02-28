@@ -27,17 +27,15 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.StringTokenizer;
-import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -65,7 +63,7 @@ public class DBUtils {
 
 	public static void alterTable(Connection connection,
 			TableDefinition tableDefinition) {
-		List<String> cloumns = new ArrayList<String>();
+		List<String> cloumns = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		Statement stmt = null;
 		ResultSet rs = null;
 		try {
@@ -118,7 +116,7 @@ public class DBUtils {
 		ResultSetMetaData rsmd = null;
 		Statement stmt = null;
 		ResultSet rs = null;
-		List<String> columnNames = new ArrayList<String>();
+		List<String> columnNames = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		try {
 			con = DBConnectionFactory.getConnection();
 			pstmt = con.prepareStatement(" select * from " + tableName
@@ -322,7 +320,7 @@ public class DBUtils {
 	}
 
 	public static void alterTable(TableDefinition tableDefinition) {
-		List<String> cloumns = new ArrayList<String>();
+		List<String> cloumns = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		Connection connection = null;
 		Statement stmt = null;
 		ResultSet rs = null;
@@ -725,7 +723,7 @@ public class DBUtils {
 
 	public static String getAlterTable(TableDefinition classDefinition) {
 		StringBuffer buffer = new StringBuffer();
-		List<String> cloumns = new ArrayList<String>();
+		List<String> cloumns = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		Connection connection = null;
 		Statement stmt = null;
 		ResultSet rs = null;
@@ -770,7 +768,7 @@ public class DBUtils {
 
 	public static List<ColumnDefinition> getColumnDefinitions(Connection conn,
 			String tableName) {
-		List<ColumnDefinition> columns = new ArrayList<ColumnDefinition>();
+		List<ColumnDefinition> columns = new java.util.concurrent.CopyOnWriteArrayList<ColumnDefinition>();
 		ResultSet rs = null;
 		try {
 			List<String> primaryKeys = getPrimaryKeys(conn, tableName);
@@ -840,7 +838,7 @@ public class DBUtils {
 	}
 
 	public static List<ColumnDefinition> getColumnDefinitions(String tableName) {
-		List<ColumnDefinition> columns = new ArrayList<ColumnDefinition>();
+		List<ColumnDefinition> columns = new java.util.concurrent.CopyOnWriteArrayList<ColumnDefinition>();
 		Connection conn = null;
 		ResultSet rs = null;
 		try {
@@ -928,7 +926,7 @@ public class DBUtils {
 	@SuppressWarnings("unchecked")
 	public static List<ColumnDefinition> getColumns(Connection conn,
 			String sql, Map<String, Object> paramMap) {
-		List<ColumnDefinition> columns = new ArrayList<ColumnDefinition>();
+		List<ColumnDefinition> columns = new java.util.concurrent.CopyOnWriteArrayList<ColumnDefinition>();
 		PreparedStatement psmt = null;
 		ResultSetMetaData rsmd = null;
 		ResultSet rs = null;
@@ -1663,7 +1661,7 @@ public class DBUtils {
 	}
 
 	public static List<FieldDefinition> getFieldDefinitions(String tableName) {
-		List<FieldDefinition> columns = new ArrayList<FieldDefinition>();
+		List<FieldDefinition> columns = new java.util.concurrent.CopyOnWriteArrayList<FieldDefinition>();
 		Connection conn = null;
 		ResultSet rs = null;
 		try {
@@ -1893,7 +1891,7 @@ public class DBUtils {
 
 	public static List<String> getPrimaryKeys(Connection connection,
 			String tableName) {
-		List<String> primaryKeys = new ArrayList<String>();
+		List<String> primaryKeys = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		try {
 			DatabaseMetaData metaData = connection.getMetaData();
 
@@ -1922,7 +1920,7 @@ public class DBUtils {
 	}
 
 	public static List<String> getPrimaryKeys(String tableName) {
-		List<String> primaryKeys = new ArrayList<String>();
+		List<String> primaryKeys = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		Connection connection = null;
 		try {
 			connection = DBConnectionFactory.getConnection();
@@ -1957,7 +1955,7 @@ public class DBUtils {
 
 	public static List<String> getPrimaryKeys(String systemName,
 			String tableName) {
-		List<String> primaryKeys = new ArrayList<String>();
+		List<String> primaryKeys = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		Connection connection = null;
 		try {
 			connection = DBConnectionFactory.getConnection(systemName);
@@ -2030,7 +2028,7 @@ public class DBUtils {
 	}
 
 	public static List<String> getTables() {
-		List<String> tables = new ArrayList<String>();
+		List<String> tables = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		String[] types = { "TABLE" };
 		Connection connection = null;
 		try {
@@ -2049,7 +2047,7 @@ public class DBUtils {
 	}
 
 	public static List<String> getTables(Connection connection) {
-		List<String> tables = new ArrayList<String>();
+		List<String> tables = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		String[] types = { "TABLE" };
 		try {
 			DatabaseMetaData metaData = connection.getMetaData();
@@ -2114,7 +2112,7 @@ public class DBUtils {
 	}
 
 	private static Map<String, Object> lowerKeyMap(Map<String, Object> params) {
-		Map<String, Object> dataMap = new HashMap<String, Object>();
+		Map<String, Object> dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		Set<Entry<String, Object>> entrySet = params.entrySet();
 		for (Entry<String, Object> entry : entrySet) {
 			String key = entry.getKey();
@@ -2126,7 +2124,7 @@ public class DBUtils {
 	}
 
 	public static void main(String[] args) {
-		List<ColumnDefinition> columns = new ArrayList<ColumnDefinition>();
+		List<ColumnDefinition> columns = new java.util.concurrent.CopyOnWriteArrayList<ColumnDefinition>();
 		ColumnDefinition c1 = new ColumnDefinition();
 		c1.setColumnName("choosepublishflag");
 		c1.setLength(1);
@@ -2169,7 +2167,7 @@ public class DBUtils {
 			return sqlExecutor;
 		}
 
-		List<Object> values = new ArrayList<Object>();
+		List<Object> values = new java.util.concurrent.CopyOnWriteArrayList<Object>();
 		Map<String, Object> dataMap = lowerKeyMap(params);
 		StringBuffer sb = new StringBuffer();
 		int begin = 0;

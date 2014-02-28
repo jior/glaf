@@ -19,8 +19,7 @@
 package com.glaf.base.district.web.rest;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
+ 
 import java.util.List;
 import java.util.Map;
 
@@ -164,9 +163,9 @@ public class DistrictResourceRest {
 		}
 
 		if (districts != null && !districts.isEmpty()) {
-			Map<Long, TreeModel> treeMap = new HashMap<Long, TreeModel>();
-			List<TreeModel> treeModels = new ArrayList<TreeModel>();
-			List<Long> districtIds = new ArrayList<Long>();
+			Map<Long, TreeModel> treeMap = new java.util.concurrent.ConcurrentHashMap<Long, TreeModel>();
+			List<TreeModel> treeModels = new java.util.concurrent.CopyOnWriteArrayList<TreeModel>();
+			List<Long> districtIds = new java.util.concurrent.CopyOnWriteArrayList<Long>();
 			for (DistrictEntity district : districts) {
 				if (district.getLocked() != 0) {
 					continue;

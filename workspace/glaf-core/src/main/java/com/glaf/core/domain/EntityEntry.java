@@ -18,8 +18,6 @@
 
 package com.glaf.core.domain;
 
-import java.util.ArrayList;
-
 import java.util.Date;
 import java.util.List;
 
@@ -34,14 +32,12 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
-import com.alibaba.fastjson.*;
-
-import com.fasterxml.jackson.databind.node.ObjectNode;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
+import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.glaf.core.base.JSONable;
 import com.glaf.core.domain.util.EntityEntryJsonFactory;
 
@@ -151,7 +147,7 @@ public class EntityEntry implements java.io.Serializable, JSONable {
 	 * ∑√Œ µ„
 	 */
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "entityEntry")
-	protected List<EntryPoint> entryPoints = new ArrayList<EntryPoint>();
+	protected List<EntryPoint> entryPoints = new java.util.concurrent.CopyOnWriteArrayList<EntryPoint>();
 
 	public EntityEntry() {
 
@@ -163,7 +159,7 @@ public class EntityEntry implements java.io.Serializable, JSONable {
 
 	public void addEntryPoint(EntryPoint entryPoint) {
 		if (entryPoints == null) {
-			entryPoints = new ArrayList<EntryPoint>();
+			entryPoints = new java.util.concurrent.CopyOnWriteArrayList<EntryPoint>();
 		}
 		entryPoint.setEntityEntry(this);
 		entryPoints.add(entryPoint);

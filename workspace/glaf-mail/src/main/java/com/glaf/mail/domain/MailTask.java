@@ -19,7 +19,6 @@
 package com.glaf.mail.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -105,7 +104,7 @@ public class MailTask implements Serializable {
 	protected MailStorage storage;
 
 	@javax.persistence.Transient
-	protected List<MailAccount> accounts = new ArrayList<MailAccount>();
+	protected List<MailAccount> accounts = new java.util.concurrent.CopyOnWriteArrayList<MailAccount>();
 
 	public MailTask() {
 

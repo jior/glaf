@@ -32,9 +32,9 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
+
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
-
 import com.glaf.core.base.DataFile;
 import com.glaf.core.message.MessageProvider;
 

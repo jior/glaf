@@ -24,26 +24,22 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
 import org.quartz.JobKey;
 import org.quartz.SchedulerException;
 import org.quartz.SimpleScheduleBuilder;
-
 import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
 import org.quartz.TriggerKey;
-
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
-import com.glaf.core.config.Configuration;
 import com.glaf.core.config.BaseConfiguration;
+import com.glaf.core.config.Configuration;
 import com.glaf.core.context.ContextFactory;
 import com.glaf.core.util.ClassUtils;
 import com.glaf.core.util.ThreadFactory;
-
 import com.glaf.mail.MailSender;
 import com.glaf.mail.domain.MailCount;
 import com.glaf.mail.domain.MailItem;

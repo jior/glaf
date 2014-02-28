@@ -19,7 +19,6 @@
 package com.glaf.jbpm.factory;
 
 import java.io.InputStream;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -72,7 +71,7 @@ public class JbpmActionHandlerTypes {
 	}
 
 	static Map<String, Class<?>> initializeHandlerTypes() {
-		Map<String, Class<?>> types = new HashMap<String, Class<?>>();
+		Map<String, Class<?>> types = new java.util.concurrent.ConcurrentHashMap<String, Class<?>>();
 		String resource = SystemProperties.getString("jbpm.actions");
 		if (StringUtils.isEmpty(resource)) {
 			resource = DEFAULT_CONFIG;

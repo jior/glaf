@@ -18,7 +18,6 @@
 
 package com.glaf.base.modules.sys.service.mybatis;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -64,7 +63,7 @@ public class AuthorizeServiceImpl implements AuthorizeService {
 				bean = sysUserService.getUserPrivileges(bean);
 
 				// 取出用户的部门列表
-				List<SysDepartment> list = new ArrayList<SysDepartment>();
+				List<SysDepartment> list = new java.util.concurrent.CopyOnWriteArrayList<SysDepartment>();
 				sysDepartmentService.findNestingDepartment(list,
 						bean.getDepartment());
 				bean.setNestingDepartment(list);

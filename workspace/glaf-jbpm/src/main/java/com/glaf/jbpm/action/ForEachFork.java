@@ -18,7 +18,7 @@
 
 package com.glaf.jbpm.action;
 
-import java.util.ArrayList;
+ 
 import java.util.Collection;
 import java.util.List;
 
@@ -85,7 +85,7 @@ public class ForEachFork implements ActionHandler {
 				// expression evaluates to string
 				if (eval instanceof String) {
 					String[] forEachStrs = ((String) eval).trim().split(",");
-					forEachColl = new ArrayList<String>(forEachStrs.length);
+					forEachColl = new java.util.concurrent.CopyOnWriteArrayList<String>();
 					for (String forEachStr : forEachStrs) {
 						forEachColl.add(forEachStr);
 					}
@@ -111,7 +111,7 @@ public class ForEachFork implements ActionHandler {
 
 		Token rootToken = executionContext.getToken();
 		Node node = executionContext.getNode();
-		List<ForkedTransition> forkTransitions = new ArrayList<ForkedTransition>();
+		List<ForkedTransition> forkTransitions = new java.util.concurrent.CopyOnWriteArrayList<ForkedTransition>();
 
 		// first, create a new token and execution context for each item in list
 		for (int i = 0; i < node.getLeavingTransitions().size(); i++) {

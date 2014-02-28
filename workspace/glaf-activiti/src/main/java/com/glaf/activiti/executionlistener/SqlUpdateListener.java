@@ -21,9 +21,9 @@ package com.glaf.activiti.executionlistener;
 import org.activiti.engine.delegate.DelegateExecution;
 import org.activiti.engine.delegate.ExecutionListener;
 import org.activiti.engine.delegate.Expression;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
 import com.glaf.activiti.util.ExecutionUtils;
 
 public class SqlUpdateListener implements ExecutionListener {

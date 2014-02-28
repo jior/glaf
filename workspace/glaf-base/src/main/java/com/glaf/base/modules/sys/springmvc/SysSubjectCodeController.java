@@ -37,7 +37,6 @@ import com.glaf.base.modules.sys.model.SubjectCode;
 import com.glaf.base.modules.sys.service.SubjectCodeService;
 import com.glaf.base.utils.ParamUtil;
 import com.glaf.base.utils.WebUtil;
-
 import com.glaf.core.config.ViewProperties;
 import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;

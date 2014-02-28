@@ -13,7 +13,7 @@
 
 package com.glaf.core.base;
 
-import org.dom4j.*;
+import org.dom4j.Document;
 
 public interface Generation {
 

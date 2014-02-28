@@ -18,15 +18,22 @@
 
 package com.glaf.core.domain;
 
-import java.io.*;
-import java.util.*;
-import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Date;
 
-import com.alibaba.fastjson.*;
-import com.fasterxml.jackson.databind.node.ObjectNode;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
+import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.glaf.core.base.JSONable;
 import com.glaf.core.base.Parameter;
 import com.glaf.core.domain.util.SchedulerParamJsonFactory;

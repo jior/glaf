@@ -22,7 +22,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -35,9 +34,9 @@ import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
-import com.glaf.core.todo.Todo;
 import com.glaf.core.config.BaseConfiguration;
 import com.glaf.core.config.Configuration;
+import com.glaf.core.todo.Todo;
 import com.glaf.core.util.Dom4jUtils;
 import com.glaf.core.util.Tools;
 
@@ -49,7 +48,7 @@ public class JpdlXmlReader {
 	private static int index = 1001;
 
 	public List<Todo> read(InputStream inputStream) {
-		List<Todo> todoList = new ArrayList<Todo>();
+		List<Todo> todoList = new java.util.concurrent.CopyOnWriteArrayList<Todo>();
 		SAXReader xmlReader = new SAXReader();
 		int sortNo = 1;
 		try {

@@ -388,7 +388,7 @@ public class MxFormArchiveImporter {
 	}
 
 	public void deployTodo(FormApplication formApplication) {
-		Map<String, Todo> todoMap = new HashMap<String, Todo>();
+		Map<String, Todo> todoMap = new java.util.concurrent.ConcurrentHashMap<String, Todo>();
 		ProcessDefinition processDefinition = null;
 		JbpmContext jbpmContext = null;
 		try {
@@ -495,7 +495,7 @@ public class MxFormArchiveImporter {
 								continue;
 							}
 							DataModel dataModel = new DataModelEntity();
-							Map<String, String> params = new HashMap<String, String>();
+							Map<String, String> params = new java.util.concurrent.ConcurrentHashMap<String, String>();
 							List<?> fields = element.elements();
 							if (fields != null && fields.size() > 0) {
 								Iterator<?> iter = fields.iterator();

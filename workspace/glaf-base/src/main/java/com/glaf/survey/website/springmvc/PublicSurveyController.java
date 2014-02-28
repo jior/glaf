@@ -18,7 +18,6 @@
 package com.glaf.survey.website.springmvc;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -85,7 +84,7 @@ public class PublicSurveyController {
 				}
 				if (survey.getRelations() != null
 						&& !survey.getRelations().isEmpty()) {
-					List<SurveyResult> wxSurveyResults = new ArrayList<SurveyResult>();
+					List<SurveyResult> wxSurveyResults = new java.util.concurrent.CopyOnWriteArrayList<SurveyResult>();
 					for (Survey relation : survey.getRelations()) {
 						SurveyResult result = new SurveyResult();
 						result.setIp(ip);

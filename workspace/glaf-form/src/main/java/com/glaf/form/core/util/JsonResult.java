@@ -17,14 +17,14 @@
  */
 package com.glaf.form.core.util;
 
-import java.util.HashMap;
 import java.util.Map;
+
 import com.alibaba.fastjson.JSONObject;
 
 public class JsonResult {
 
 	public static byte[] success(String message) {
-		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		Map<String, Object> jsonMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		jsonMap.put("statusCode", 200);
 		jsonMap.put("message", message);
 		JSONObject object = new JSONObject(jsonMap);
@@ -32,7 +32,7 @@ public class JsonResult {
 	}
 
 	public static byte[] fault(String errorCode, String message) {
-		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		Map<String, Object> jsonMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		jsonMap.put("statusCode", 500);
 		jsonMap.put("errorCode", errorCode);
 		jsonMap.put("message", message);

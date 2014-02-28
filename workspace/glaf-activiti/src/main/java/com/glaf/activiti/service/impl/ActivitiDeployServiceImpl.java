@@ -26,7 +26,8 @@ import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.DeploymentBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.glaf.activiti.service.*;
+
+import com.glaf.activiti.service.ActivitiDeployService;
 
 @Service("activitiDeployService")
 @Transactional

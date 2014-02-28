@@ -1,9 +1,6 @@
 package com.glaf.core.xml;
 
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import java.util.List;
 import java.util.Map;
 
@@ -11,6 +8,7 @@ import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
+
 import com.glaf.core.template.Template;
 import com.glaf.core.util.Tools;
 
@@ -30,7 +28,7 @@ public class TemplateReader {
 
 	@SuppressWarnings("unchecked")
 	public List<Template> readTemplates(InputStream inputStream) {
-		List<Template> templates = new ArrayList<Template>();
+		List<Template> templates = new java.util.concurrent.CopyOnWriteArrayList<Template>();
 		Element root = this.getRootElement(inputStream);
 		List<Element> elements = root.elements("template");
 		if (elements != null && !elements.isEmpty()) {
@@ -40,7 +38,7 @@ public class TemplateReader {
 				tpl.setDescription(element.attributeValue("description"));
 				List<Element> elems = element.elements();
 				if (elems != null && !elems.isEmpty()) {
-					Map<String, Object> dataMap = new HashMap<String, Object>();
+					Map<String, Object> dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 					for (Element em : elems) {
 						dataMap.put(em.getName(), em.getTextTrim());
 					}

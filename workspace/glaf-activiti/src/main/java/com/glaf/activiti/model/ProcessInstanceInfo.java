@@ -18,7 +18,6 @@
 
 package com.glaf.activiti.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.activiti.engine.history.HistoricProcessInstance;
@@ -38,14 +37,14 @@ public class ProcessInstanceInfo {
 
 	public void addActiveActivityInfo(ActivityInfo activityInfo) {
 		if (activeActivityInfos == null) {
-			activeActivityInfos = new ArrayList<ActivityInfo>();
+			activeActivityInfos = new java.util.concurrent.CopyOnWriteArrayList<ActivityInfo>();
 		}
 		activeActivityInfos.add(activityInfo);
 	}
 
 	public void addProcessedActivityInfo(ActivityInfo activityInfo) {
 		if (processedActivityInfos == null) {
-			processedActivityInfos = new ArrayList<ActivityInfo>();
+			processedActivityInfos = new java.util.concurrent.CopyOnWriteArrayList<ActivityInfo>();
 		}
 		processedActivityInfos.add(activityInfo);
 	}

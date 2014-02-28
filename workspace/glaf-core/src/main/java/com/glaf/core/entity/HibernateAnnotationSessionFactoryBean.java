@@ -19,7 +19,6 @@
 package com.glaf.core.entity;
 
 import org.hibernate.SessionFactory;
-
 import org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean;
 
 import com.glaf.core.config.DataSourceConfig;

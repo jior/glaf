@@ -18,8 +18,6 @@
 
 package com.glaf.activiti.tasklistener;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -35,9 +33,8 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.glaf.core.dao.MyBatisEntityDAO;
-
 import com.glaf.activiti.util.ExecutionUtils;
+import com.glaf.core.dao.MyBatisEntityDAO;
 import com.glaf.core.util.StringTools;
 
 public class UserTaskListener implements TaskListener {
@@ -68,7 +65,7 @@ public class UserTaskListener implements TaskListener {
 				+ commandContext.getDbSqlSession().getSqlSession());
 
 		if (execution != null) {
-			Map<String, Object> paramMap = new HashMap<String, Object>();
+			Map<String, Object> paramMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 			paramMap.putAll(execution.getVariables());
 
 			ExecutionEntity executionEntity = commandContext
@@ -100,8 +97,8 @@ public class UserTaskListener implements TaskListener {
 						commandContext.getDbSqlSession().getSqlSession());
 				List<?> list = entityDAO.getList(statement, paramMap);
 				if (list != null && !list.isEmpty()) {
-					List<String> users = new ArrayList<String>();
-					List<String> groups = new ArrayList<String>();
+					List<String> users = new java.util.concurrent.CopyOnWriteArrayList<String>();
+					List<String> groups = new java.util.concurrent.CopyOnWriteArrayList<String>();
 					for (Object object : list) {
 						if (object instanceof org.activiti.engine.identity.User) {
 							String actorId = ((org.activiti.engine.identity.User) object)

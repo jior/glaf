@@ -18,10 +18,8 @@
 
 package com.glaf.jbpm.web.springmvc;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -35,14 +33,12 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import org.jbpm.JbpmContext;
 import org.jbpm.graph.def.ProcessDefinition;
 import org.jbpm.graph.exe.ProcessInstance;
 import org.jbpm.taskmgmt.exe.PooledActor;
 import org.jbpm.taskmgmt.exe.TaskInstance;
 import org.jbpm.taskmgmt.exe.TaskMgmtInstance;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,17 +47,16 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.glaf.core.config.ViewProperties;
 import com.glaf.core.identity.User;
-
 import com.glaf.core.util.LogUtils;
 import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.RequestUtils;
 import com.glaf.core.util.Tools;
 import com.glaf.jbpm.container.ProcessContainer;
 import com.glaf.jbpm.context.Context;
+import com.glaf.jbpm.manager.JbpmTaskManager;
 import com.glaf.jbpm.model.ActivityInstance;
 import com.glaf.jbpm.model.TaskItem;
 import com.glaf.jbpm.query.ProcessQuery;
-import com.glaf.jbpm.manager.JbpmTaskManager;
 import com.glaf.jbpm.util.Constant;
 
 @Controller("/jbpm/task")
@@ -362,7 +357,7 @@ public class MxJbpmTaskController {
 				processInstance = jbpmContext.getProcessInstance(Long
 						.valueOf(processInstanceId));
 				if (processInstance != null) {
-					Map<String, Object> variables = new HashMap<String, Object>();
+					Map<String, Object> variables = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 					variables.putAll(processInstance.getContextInstance()
 							.getVariables());
 					modelMap.put("processInstance", processInstance);
@@ -424,7 +419,7 @@ public class MxJbpmTaskController {
 				jbpmContext = ProcessContainer.getContainer()
 						.createJbpmContext();
 
-				Map<String, Object> params = new HashMap<String, Object>();
+				Map<String, Object> params = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 				params.put("processInstanceId", processInstanceId);
 
 				processInstance = jbpmContext.getProcessInstance(Long
@@ -435,7 +430,7 @@ public class MxJbpmTaskController {
 					logger.debug(processDefinition.getName() + "-"
 							+ processDefinition.getDescription());
 
-					Map<String, Object> variables = new HashMap<String, Object>();
+					Map<String, Object> variables = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 					String json = (String) processInstance.getContextInstance()
 							.getVariable(Constant.JSON_VARIABLE_MAP);
 					logger.debug(json);
@@ -449,7 +444,7 @@ public class MxJbpmTaskController {
 
 					TaskMgmtInstance tmi = processInstance
 							.getTaskMgmtInstance();
-					List<TaskItem> finishedTaskItems = new ArrayList<TaskItem>();
+					List<TaskItem> finishedTaskItems = new java.util.concurrent.CopyOnWriteArrayList<TaskItem>();
 					Collection<?> taskInstances = tmi.getTaskInstances();
 					if (taskInstances != null && taskInstances.size() > 0) {
 						JbpmTaskManager jbpmTaskManager = ProcessContainer

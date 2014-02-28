@@ -18,16 +18,15 @@
 
 package com.glaf.core.tree.component;
 
-import org.apache.commons.lang.StringUtils;
-
-import com.glaf.core.base.TreeModel;
-
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.commons.lang.StringUtils;
+
+import com.glaf.core.base.TreeModel;
 
 public class TreeComponent extends TreeBase implements Serializable, Component {
 
@@ -43,7 +42,7 @@ public class TreeComponent extends TreeBase implements Serializable, Component {
 	protected Map<String, Object> dataMap;
 	private boolean last;
 	protected List<TreeComponent> menuComponents = Collections
-			.synchronizedList(new ArrayList<TreeComponent>());
+			.synchronizedList(new java.util.concurrent.CopyOnWriteArrayList<TreeComponent>());
 	protected TreeComponent parentTree;
 	protected TreeModel treeModel;
 	protected Object treeObject;

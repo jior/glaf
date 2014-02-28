@@ -23,7 +23,7 @@ import com.glaf.core.query.DataQuery;
 
 public class PublicInfoQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;
-	protected List<String> appActorIds = new ArrayList<String>();
+	protected List<String> appActorIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
 	protected String authorLike;
 	protected Integer commentFlag;
 	protected String contentLike;

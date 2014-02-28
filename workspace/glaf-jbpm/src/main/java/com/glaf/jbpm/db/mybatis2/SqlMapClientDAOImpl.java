@@ -21,17 +21,16 @@ package com.glaf.jbpm.db.mybatis2;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Connection;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.util.Assert;
 
-import com.glaf.core.util.Paging;
 import com.glaf.core.dao.EntityDAO;
 import com.glaf.core.entity.SqlExecutor;
 import com.glaf.core.id.IdBlock;
+import com.glaf.core.util.Paging;
 import com.glaf.core.util.ReflectUtils;
 import com.ibatis.sqlmap.client.SqlMapClient;
 import com.ibatis.sqlmap.engine.impl.SqlMapClientImpl;
@@ -166,7 +165,7 @@ public class SqlMapClientDAOImpl implements EntityDAO {
 		}
 
 		if (totalCount == 0) {
-			page.setRows(new ArrayList<Object>());
+			page.setRows(new java.util.concurrent.CopyOnWriteArrayList<Object>());
 			page.setCurrentPage(0);
 			page.setPageSize(0);
 			page.setTotal(0);

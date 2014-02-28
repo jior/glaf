@@ -13,13 +13,14 @@
 
 package com.glaf.core.xml;
 
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
-import org.dom4j.*;
+import org.dom4j.Attribute;
+import org.dom4j.Document;
+import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
 import com.glaf.core.domain.ColumnDefinition;
@@ -39,7 +40,7 @@ public class XmlReader {
 			if (element != null) {
 				List<?> attrs = element.attributes();
 				if (attrs != null && !attrs.isEmpty()) {
-					Map<String, Object> dataMap = new HashMap<String, Object>();
+					Map<String, Object> dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 					Iterator<?> iter = attrs.iterator();
 					while (iter.hasNext()) {
 						Attribute attr = (Attribute) iter.next();
@@ -109,7 +110,7 @@ public class XmlReader {
 	protected void read(Element elem, ColumnDefinition field) {
 		List<?> attrs = elem.attributes();
 		if (attrs != null && !attrs.isEmpty()) {
-			Map<String, Object> dataMap = new HashMap<String, Object>();
+			Map<String, Object> dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 			Iterator<?> iter = attrs.iterator();
 			while (iter.hasNext()) {
 				Attribute attr = (Attribute) iter.next();

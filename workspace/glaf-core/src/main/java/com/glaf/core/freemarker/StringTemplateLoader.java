@@ -24,7 +24,6 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
-import java.util.HashMap;
 import java.util.Map;
 
 import freemarker.cache.TemplateLoader;
@@ -66,7 +65,7 @@ public class StringTemplateLoader implements TemplateLoader {
 
 		Template template = cfg.getTemplate("");
 
-		Map<String,Object> root = new HashMap<String,Object>();
+		Map<String,Object> root = new java.util.concurrent.ConcurrentHashMap<String,Object>();
 		root.put("user", "jior huang");
 
 		StringWriter writer = new StringWriter();

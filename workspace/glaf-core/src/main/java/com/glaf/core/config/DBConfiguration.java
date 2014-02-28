@@ -118,7 +118,7 @@ public class DBConfiguration {
 	}
 
 	public static List<ConnectionDefinition> getConnectionDefinitions() {
-		List<ConnectionDefinition> rows = new ArrayList<ConnectionDefinition>();
+		List<ConnectionDefinition> rows = new java.util.concurrent.CopyOnWriteArrayList<ConnectionDefinition>();
 		Collection<Properties> list = dataMap.values();
 		if (list != null && !list.isEmpty()) {
 			for (Properties props : list) {
@@ -233,7 +233,7 @@ public class DBConfiguration {
 	}
 
 	public static Map<String, Dialect> getDialects() {
-		Map<String, Dialect> dialects = new HashMap<String, Dialect>();
+		Map<String, Dialect> dialects = new java.util.concurrent.ConcurrentHashMap<String, Dialect>();
 		dialects.put("h2", new H2Dialect());
 		dialects.put("mysql", new MySQLDialect());
 		dialects.put("sqlite", new SQLiteDialect());
@@ -330,7 +330,7 @@ public class DBConfiguration {
 	}
 
 	protected static void reloadDS() {
-		Map<String, Properties> dataSourceMap = new HashMap<String, Properties>();
+		Map<String, Properties> dataSourceMap = new java.util.concurrent.ConcurrentHashMap<String, Properties>();
 		if (!loading.get()) {
 			try {
 				loading.set(true);

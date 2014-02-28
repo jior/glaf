@@ -18,7 +18,6 @@
 
 package com.glaf.jbpm.query;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -175,7 +174,7 @@ public class ProcessQuery implements java.io.Serializable {
 
 	public void setActorIds(Collection<String> userIds) {
 		if (this.actorIds == null) {
-			this.actorIds = new ArrayList<String>();
+			this.actorIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		}
 		for (String actorId : userIds) {
 			this.actorIds.add(actorId);
@@ -244,7 +243,7 @@ public class ProcessQuery implements java.io.Serializable {
 
 	public void setProcessInstanceIds(Collection<Long> pIds) {
 		if (this.processInstanceIds == null) {
-			this.processInstanceIds = new ArrayList<Long>();
+			this.processInstanceIds = new java.util.concurrent.CopyOnWriteArrayList<Long>();
 		}
 		for (Long id : pIds) {
 			this.processInstanceIds.add(id);
@@ -261,7 +260,7 @@ public class ProcessQuery implements java.io.Serializable {
 
 	public void setProcessNames(Collection<String> names) {
 		if (this.processNames == null) {
-			this.processNames = new ArrayList<String>();
+			this.processNames = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		}
 		for (String name : names) {
 			this.processNames.add(name);

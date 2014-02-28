@@ -19,11 +19,8 @@
 package com.glaf.activiti.service.impl;
 
 import java.io.InputStream;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-
 
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.RepositoryService;
@@ -43,7 +40,6 @@ import org.activiti.engine.runtime.ProcessInstanceQuery;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dom4j.Element;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -51,7 +47,7 @@ import com.glaf.activiti.model.ActivityInfo;
 import com.glaf.activiti.model.ProcessDefinitionInfo;
 import com.glaf.activiti.model.ProcessInstanceInfo;
 import com.glaf.activiti.model.UserTask;
-import com.glaf.activiti.service.*;
+import com.glaf.activiti.service.ActivitiProcessQueryService;
 import com.glaf.activiti.xml.BpmnXmlReader;
 
 @Service("activitiProcessQueryService")
@@ -891,7 +887,7 @@ public class ActivitiProcessQueryServiceImpl implements
 
 			if (activities != null && !activities.isEmpty()) {
 				logger.debug("activities:" + activities.size());
-				Map<String, ActivityInfo> actMap = new HashMap<String, ActivityInfo>();
+				Map<String, ActivityInfo> actMap = new java.util.concurrent.ConcurrentHashMap<String, ActivityInfo>();
 				for (ActivityInfo act : activities) {
 					actMap.put(act.getActivityId(), act);
 				}

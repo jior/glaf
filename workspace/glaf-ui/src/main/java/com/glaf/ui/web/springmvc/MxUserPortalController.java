@@ -18,8 +18,6 @@
 
 package com.glaf.ui.web.springmvc;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -27,25 +25,25 @@ import java.util.Set;
 import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.commons.lang.StringUtils;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.glaf.core.security.LoginContext;
+import com.glaf.core.util.RequestUtils;
+import com.glaf.core.util.StringTools;
 import com.glaf.ui.model.Panel;
 import com.glaf.ui.model.PanelInstance;
 import com.glaf.ui.model.UserPanel;
 import com.glaf.ui.model.UserPortal;
 import com.glaf.ui.service.PanelService;
 import com.glaf.ui.service.UserPortalService;
-import com.glaf.core.security.LoginContext;
-import com.glaf.core.util.RequestUtils;
-import com.glaf.core.util.StringTools;
 
 @Controller("/user/portal")
 @RequestMapping("/user/portal")
@@ -71,8 +69,8 @@ public class MxUserPortalController {
 			userPanel = panelService.getUserPanel("root");
 		}
 
-		Map<String, Integer> panelPxMap = new HashMap<String, Integer>();
-		Map<String, Integer> panelMap = new HashMap<String, Integer>();
+		Map<String, Integer> panelPxMap = new java.util.concurrent.ConcurrentHashMap<String, Integer>();
+		Map<String, Integer> panelMap = new java.util.concurrent.ConcurrentHashMap<String, Integer>();
 		if (userPanel != null && userPanel.getPanelInstances() != null) {
 			String layoutName = userPanel.getLayoutName();
 			Set<PanelInstance> set = userPanel.getPanelInstances();
@@ -141,7 +139,7 @@ public class MxUserPortalController {
 		List<UserPortal> sysPortals = userPortalService.getUserPortals("root");
 
 		if (userPortals == null) {
-			userPortals = new ArrayList<UserPortal>();
+			userPortals = new java.util.concurrent.CopyOnWriteArrayList<UserPortal>();
 		}
 
 		if (sysPortals != null && !sysPortals.isEmpty()) {
@@ -167,7 +165,7 @@ public class MxUserPortalController {
 		String poss = request.getParameter("poss");
 
 		if (titles.length() > 0) {
-			List<UserPortal> rows = new ArrayList<UserPortal>();
+			List<UserPortal> rows = new java.util.concurrent.CopyOnWriteArrayList<UserPortal>();
 			String title[] = titles.split("[,]");
 			String pos[] = poss.split("[,]");
 			for (int i = 0; i < title.length; i++) {
@@ -209,7 +207,7 @@ public class MxUserPortalController {
 		String actorId = RequestUtils.getActorId(request);
 		String portals = request.getParameter("portalState");
 		logger.debug(portals);
-		List<UserPortal> rows = new ArrayList<UserPortal>();
+		List<UserPortal> rows = new java.util.concurrent.CopyOnWriteArrayList<UserPortal>();
 		if (portals != null && portals.length() > 0) {
 			int position = 0;
 			StringTokenizer st01 = new StringTokenizer(portals, ":");

@@ -21,12 +21,12 @@
 
 package com.glaf.core.tag;
 
+import java.util.Locale;
+
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
 import com.glaf.core.res.MessageResources;
-
-import java.util.Locale;
 
 /**
  * Custom tag that retrieves an internationalized messages string (with optional

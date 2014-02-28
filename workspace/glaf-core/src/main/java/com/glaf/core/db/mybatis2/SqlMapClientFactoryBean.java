@@ -23,6 +23,12 @@ import java.util.Properties;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.FactoryBean;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.core.NestedIOException;
+import org.springframework.core.io.Resource;
+import org.springframework.jdbc.support.lob.LobHandler;
+import org.springframework.util.ObjectUtils;
 
 import com.glaf.core.util.ReflectUtils;
 import com.ibatis.common.xml.NodeletException;
@@ -34,13 +40,6 @@ import com.ibatis.sqlmap.engine.builder.xml.XmlParserState;
 import com.ibatis.sqlmap.engine.execution.SqlExecutor;
 import com.ibatis.sqlmap.engine.impl.SqlMapClientImpl;
 import com.ibatis.sqlmap.engine.impl.SqlMapExecutorDelegate;
-
-import org.springframework.beans.factory.FactoryBean;
-import org.springframework.beans.factory.InitializingBean;
-import org.springframework.core.NestedIOException;
-import org.springframework.core.io.Resource;
-import org.springframework.jdbc.support.lob.LobHandler;
-import org.springframework.util.ObjectUtils;
 
 /**
  * {@link org.springframework.beans.factory.FactoryBean} that creates an iBATIS

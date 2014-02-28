@@ -19,7 +19,6 @@
 package com.glaf.base.modules.sys.service.mybatis;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -91,7 +90,7 @@ public class ComplexUserServiceImpl implements ComplexUserService {
 						sysDeptRoleService.create(deptRole);
 					}
 					if (deptRole != null) {
-						Map<String, Object> dataMap = new HashMap<String, Object>();
+						Map<String, Object> dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 						dataMap.put("authorizeFrom", "0");
 						dataMap.put("userId", bean.getId());
 						dataMap.put("deptRoleId", deptRole.getId());

@@ -18,11 +18,12 @@
 
 package com.glaf.activiti.tasklistener;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.activiti.engine.delegate.DelegateTask;
 import org.activiti.engine.delegate.Expression;
 import org.activiti.engine.delegate.TaskListener;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.glaf.core.util.Constants;
 
 public class CancelLoopTaskListener implements TaskListener {

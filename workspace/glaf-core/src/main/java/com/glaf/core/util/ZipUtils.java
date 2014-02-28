@@ -28,7 +28,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -159,7 +158,7 @@ public class ZipUtils {
 
 	public static Map<String, byte[]> getZipBytesMap(
 			ZipInputStream zipInputStream) {
-		Map<String, byte[]> zipMap = new HashMap<String, byte[]>();
+		Map<String, byte[]> zipMap = new java.util.concurrent.ConcurrentHashMap<String, byte[]>();
 		java.util.zip.ZipEntry zipEntry = null;
 		ByteArrayOutputStream baos = null;
 		BufferedOutputStream bos = null;
@@ -190,7 +189,7 @@ public class ZipUtils {
 
 	public static Map<String, byte[]> getZipBytesMap(
 			ZipInputStream zipInputStream, List<String> includes) {
-		Map<String, byte[]> zipMap = new HashMap<String, byte[]>();
+		Map<String, byte[]> zipMap = new java.util.concurrent.ConcurrentHashMap<String, byte[]>();
 		java.util.zip.ZipEntry zipEntry = null;
 		ByteArrayOutputStream baos = null;
 		BufferedOutputStream bos = null;

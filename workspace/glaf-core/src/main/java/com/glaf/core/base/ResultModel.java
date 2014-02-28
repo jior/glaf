@@ -18,7 +18,7 @@
 
 package com.glaf.core.base;
 
-import java.util.*;
+import java.util.List;
 
 import com.glaf.core.domain.ColumnDefinition;
 
@@ -30,9 +30,9 @@ public class ResultModel {
 
 	protected int total;
 
-	protected List<ColumnDefinition> headers = new ArrayList<ColumnDefinition>();
+	protected List<ColumnDefinition> headers = new java.util.concurrent.CopyOnWriteArrayList<ColumnDefinition>();
 
-	protected List<RowModel> rows = new ArrayList<RowModel>();
+	protected List<RowModel> rows = new java.util.concurrent.CopyOnWriteArrayList<RowModel>();
 
 	public ResultModel() {
 
@@ -40,14 +40,14 @@ public class ResultModel {
 
 	public void addHeader(ColumnDefinition column) {
 		if (headers == null) {
-			headers = new ArrayList<ColumnDefinition>();
+			headers = new java.util.concurrent.CopyOnWriteArrayList<ColumnDefinition>();
 		}
 		headers.add(column);
 	}
 
 	public void addRow(RowModel row) {
 		if (rows == null) {
-			rows = new ArrayList<RowModel>();
+			rows = new java.util.concurrent.CopyOnWriteArrayList<RowModel>();
 		}
 		rows.add(row);
 	}

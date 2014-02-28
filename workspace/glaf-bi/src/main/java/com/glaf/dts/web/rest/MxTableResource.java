@@ -42,19 +42,22 @@ import javax.ws.rs.core.UriInfo;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.glaf.core.jdbc.DBConnectionFactory;
 import com.glaf.core.business.TransformTable;
-import com.glaf.core.domain.*;
-import com.glaf.core.query.*;
-import com.glaf.core.service.*;
+import com.glaf.core.domain.ColumnDefinition;
+import com.glaf.core.domain.QueryDefinition;
+import com.glaf.core.domain.TableDefinition;
+import com.glaf.core.jdbc.DBConnectionFactory;
+import com.glaf.core.query.TableDefinitionQuery;
+import com.glaf.core.query.TablePageQuery;
+import com.glaf.core.service.IQueryDefinitionService;
+import com.glaf.core.service.ITableDefinitionService;
+import com.glaf.core.service.ITablePageService;
 import com.glaf.core.util.DBUtils;
 import com.glaf.core.util.DateUtils;
 import com.glaf.core.util.JdbcUtils;

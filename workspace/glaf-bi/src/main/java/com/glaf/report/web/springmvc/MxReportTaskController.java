@@ -18,24 +18,31 @@
 
 package com.glaf.report.web.springmvc;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
-import com.glaf.core.config.*;
-import com.glaf.core.security.*;
-import com.glaf.core.util.*;
-
-import com.glaf.report.domain.*;
+import com.glaf.core.config.ViewProperties;
+import com.glaf.core.security.LoginContext;
+import com.glaf.core.util.JsonUtils;
+import com.glaf.core.util.ParamUtils;
+import com.glaf.core.util.RequestUtils;
+import com.glaf.core.util.Tools;
+import com.glaf.report.domain.Report;
+import com.glaf.report.domain.ReportTask;
 import com.glaf.report.query.ReportQuery;
-import com.glaf.report.service.*;
+import com.glaf.report.service.IReportService;
+import com.glaf.report.service.IReportTaskService;
 
 @Controller("/bi/reportTask")
 @RequestMapping("/bi/reportTask")
@@ -68,7 +75,7 @@ public class MxReportTaskController {
 			if (StringUtils.isNotEmpty(reportTask.getReportIds())) {
 				StringBuffer sb01 = new StringBuffer();
 				StringBuffer sb02 = new StringBuffer();
-				List<String> selecteds = new ArrayList<String>();
+				List<String> selecteds = new java.util.concurrent.CopyOnWriteArrayList<String>();
 				for (Report r : list) {
 					if (StringUtils.contains(reportTask.getReportIds(),
 							r.getId())) {
@@ -144,7 +151,7 @@ public class MxReportTaskController {
 			if (StringUtils.isNotEmpty(reportTask.getReportIds())) {
 				StringBuffer sb01 = new StringBuffer();
 				StringBuffer sb02 = new StringBuffer();
-				List<String> selecteds = new ArrayList<String>();
+				List<String> selecteds = new java.util.concurrent.CopyOnWriteArrayList<String>();
 				ReportQuery query = new ReportQuery();
 				List<Report> list = reportService.list(query);
 				for (Report r : list) {

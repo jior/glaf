@@ -18,7 +18,6 @@
 
 package com.glaf.core.security;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -77,7 +76,7 @@ public class IdentityFactory {
 	 * @return
 	 */
 	public static List<String> getAgentIds(String assignTo) {
-		List<String> agentIds = new ArrayList<String>();
+		List<String> agentIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		List<Object> list = getEntityService().getList("getAgents", assignTo);
 		if (list != null && !list.isEmpty()) {
 			for (Object obj : list) {
@@ -107,7 +106,7 @@ public class IdentityFactory {
 	 * @return
 	 */
 	public static List<Agent> getAgents(String assignTo) {
-		List<Agent> agents = new ArrayList<Agent>();
+		List<Agent> agents = new java.util.concurrent.CopyOnWriteArrayList<Agent>();
 		List<Object> list = getEntityService().getList("getAgents", assignTo);
 		if (list != null && !list.isEmpty()) {
 			for (Object obj : list) {
@@ -132,7 +131,7 @@ public class IdentityFactory {
 	public static List<TreeModel> getChildrenTreeModels(Long id) {
 		List<Object> list = getEntityService().getList("getChildrenTreeModels",
 				id);
-		List<TreeModel> treeModels = new ArrayList<TreeModel>();
+		List<TreeModel> treeModels = new java.util.concurrent.CopyOnWriteArrayList<TreeModel>();
 		if (list != null && !list.isEmpty()) {
 			Iterator<Object> iter = list.iterator();
 			while (iter.hasNext()) {
@@ -204,7 +203,7 @@ public class IdentityFactory {
 		User user = (User) getEntityService().getById("getUserById", actorId);
 		if (user != null) {
 			LoginContext loginContext = new LoginContext(user);
-			List<String> roles = new ArrayList<String>();
+			List<String> roles = new java.util.concurrent.CopyOnWriteArrayList<String>();
 
 			/**
 			 * 获取本人的角色权限
@@ -352,7 +351,7 @@ public class IdentityFactory {
 		query.actorId(actorId);
 		List<Object> list = getEntityService().getList("getUserRoleCodes",
 				query);
-		List<String> roles = new ArrayList<String>();
+		List<String> roles = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		if (list != null && !list.isEmpty()) {
 			for (Object object : list) {
 				roles.add(object.toString());

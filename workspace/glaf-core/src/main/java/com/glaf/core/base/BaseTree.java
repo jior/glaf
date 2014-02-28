@@ -19,22 +19,18 @@
 package com.glaf.core.base;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.alibaba.fastjson.*;
+import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.glaf.core.base.JSONable;
-import com.glaf.core.base.TreeModel;
 import com.glaf.core.tree.util.TreeJsonFactory;
 
 public class BaseTree implements Serializable, TreeModel, JSONable {
 	private static final long serialVersionUID = 2666681837822864771L;
 	protected boolean checked;
-	protected List<TreeModel> children = new ArrayList<TreeModel>();
+	protected List<TreeModel> children = new java.util.concurrent.CopyOnWriteArrayList<TreeModel>();
 	protected String code;
 	protected String createBy;
 	protected Date createDate;
@@ -63,7 +59,7 @@ public class BaseTree implements Serializable, TreeModel, JSONable {
 
 	public void addChild(TreeModel treeModel) {
 		if (children == null) {
-			children = new ArrayList<TreeModel>();
+			children = new java.util.concurrent.CopyOnWriteArrayList<TreeModel>();
 		}
 		children.add(treeModel);
 	}
@@ -119,7 +115,7 @@ public class BaseTree implements Serializable, TreeModel, JSONable {
 
 	public Map<String, Object> getDataMap() {
 		if(dataMap == null){
-			dataMap = new HashMap<String, Object>();
+			dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		}
 		return dataMap;
 	}

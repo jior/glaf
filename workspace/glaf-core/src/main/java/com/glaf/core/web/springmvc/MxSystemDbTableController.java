@@ -4,10 +4,8 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -416,7 +414,7 @@ public class MxSystemDbTableController {
 		String dbType = request.getParameter("dbType");
 		if (StringUtils.isNotEmpty(dbType) && StringUtils.isNotEmpty(tables)) {
 			XmlWriter xmlWriter = new XmlWriter();
-			Map<String, byte[]> bytesMap = new HashMap<String, byte[]>();
+			Map<String, byte[]> bytesMap = new java.util.concurrent.ConcurrentHashMap<String, byte[]>();
 			List<String> list = StringTools.split(tables);
 			for (String table : list) {
 				List<ColumnDefinition> columns = DBUtils
@@ -678,7 +676,7 @@ public class MxSystemDbTableController {
 			tableName = request.getParameter("tableName");
 		}
 
-		Collection<String> rejects = new ArrayList<String>();
+		Collection<String> rejects = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		rejects.add("FILEATT");
 		rejects.add("ATTACHMENT");
 		rejects.add("CMS_PUBLICINFO");

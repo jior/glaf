@@ -17,7 +17,6 @@
  */
 package com.glaf.form.core.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -38,14 +37,14 @@ public class EventType {
 
 	public List<PropertyType> getProperty() {
 		if (property == null) {
-			property = new ArrayList<PropertyType>();
+			property = new java.util.concurrent.CopyOnWriteArrayList<PropertyType>();
 		}
 		return this.property;
 	}
 
 	public List<ScriptType> getScript() {
 		if (script == null) {
-			script = new ArrayList<ScriptType>();
+			script = new java.util.concurrent.CopyOnWriteArrayList<ScriptType>();
 		}
 		return this.script;
 	}

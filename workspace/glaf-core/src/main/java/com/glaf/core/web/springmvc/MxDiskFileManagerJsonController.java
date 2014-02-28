@@ -19,7 +19,6 @@ package com.glaf.core.web.springmvc;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
@@ -175,7 +174,7 @@ public class MxDiskFileManagerJsonController {
 		}
 
 		// 遍历目录取的文件信息
-		List<Hashtable<String, Object>> fileList = new ArrayList<Hashtable<String, Object>>();
+		List<Hashtable<String, Object>> fileList = new java.util.concurrent.CopyOnWriteArrayList<Hashtable<String, Object>>();
 		if (currentPathFile.listFiles() != null) {
 			for (File file : currentPathFile.listFiles()) {
 				Hashtable<String, Object> hash = new Hashtable<String, Object>();

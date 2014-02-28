@@ -18,21 +18,20 @@
 
 package com.glaf.ui.service.impl;
 
-import java.util.*;
+import java.util.Date;
+import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import org.apache.ibatis.session.SqlSession;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.glaf.core.id.*;
-import com.glaf.ui.model.*;
+import com.glaf.core.id.IdGenerator;
+import com.glaf.ui.mapper.UserPortalMapper;
+import com.glaf.ui.model.UserPortal;
 import com.glaf.ui.service.UserPortalService;
-import com.glaf.ui.mapper.*;
 
 @Service("userPortalService")
 @Transactional(readOnly = true)

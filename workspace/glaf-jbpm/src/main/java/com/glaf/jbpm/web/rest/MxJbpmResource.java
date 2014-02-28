@@ -19,7 +19,6 @@
 package com.glaf.jbpm.web.rest;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -35,14 +34,11 @@ import javax.ws.rs.core.MediaType;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
-
 import com.glaf.core.config.ViewProperties;
- 
 import com.glaf.core.util.JsonUtils;
 import com.glaf.core.util.LogUtils;
 import com.glaf.core.util.ParamUtils;
@@ -64,7 +60,7 @@ public class MxJbpmResource {
 	@ResponseBody
 	public byte[] startProcess(@Context HttpServletRequest request) {
 		Map<String, Object> paramMap = RequestUtils.getParameterMap(request);
-		Map<String, Object> jsonResultMap = new HashMap<String, Object>();
+		Map<String, Object> jsonResultMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		logger.debug(paramMap);
 		String json = RequestUtils.getStringValue(request, "json");
 		String rowId = RequestUtils.getStringValue(request, "rowId");
@@ -147,7 +143,7 @@ public class MxJbpmResource {
 	@ResponseBody
 	public byte[] completeTask(@Context HttpServletRequest request) {
 		Map<String, Object> paramMap = RequestUtils.getParameterMap(request);
-		Map<String, Object> jsonResultMap = new HashMap<String, Object>();
+		Map<String, Object> jsonResultMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		logger.debug(paramMap);
 		String json = RequestUtils.getStringValue(request, "json");
 		Long processInstanceId = ParamUtils.getLong(paramMap,

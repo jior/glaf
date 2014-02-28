@@ -18,7 +18,6 @@
 package com.glaf.base.modules.website.springmvc;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -36,10 +35,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.glaf.core.config.Configuration;
-import com.glaf.core.config.SystemConfig;
-import com.glaf.core.security.DigestUtil;
-import com.glaf.core.util.RequestUtils;
 import com.glaf.base.config.BaseConfiguration;
 import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.sys.service.ComplexUserService;
@@ -47,6 +42,10 @@ import com.glaf.base.modules.sys.service.SysUserService;
 import com.glaf.base.online.domain.UserOnline;
 import com.glaf.base.online.service.UserOnlineService;
 import com.glaf.base.utils.ContextUtil;
+import com.glaf.core.config.Configuration;
+import com.glaf.core.config.SystemConfig;
+import com.glaf.core.security.DigestUtil;
+import com.glaf.core.util.RequestUtils;
 
 @Controller("/public/auth")
 @RequestMapping("/public/auth")
@@ -132,7 +131,7 @@ public class UserAuthController {
 			user.setIsChangePassword(0);
 			user.setCreateBy("website");
 			user.setUpdateBy("website");
-			List<String> roleCodes = new ArrayList<String>();
+			List<String> roleCodes = new java.util.concurrent.CopyOnWriteArrayList<String>();
 			roleCodes.add("website");
 			try {
 				if (complexUserService.createUser(user, roleCodes)) {
@@ -288,7 +287,7 @@ public class UserAuthController {
 			user.setIsChangePassword(0);
 			user.setCreateBy("website");
 			user.setUpdateBy("website");
-			List<String> roleCodes = new ArrayList<String>();
+			List<String> roleCodes = new java.util.concurrent.CopyOnWriteArrayList<String>();
 			roleCodes.add("website");
 			try {
 				if (complexUserService.createUser(user, roleCodes)) {

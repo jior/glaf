@@ -18,14 +18,16 @@
 
 package com.glaf.core.web.springmvc;
 
-import java.io.*;
-import java.util.ArrayList;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -34,7 +36,6 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -113,7 +114,7 @@ public class FileUploadController {
 		int status = ParamUtils.getInt(paramMap, "status");
 		try {
 			if (request.getAttribute("dataFiles") == null) {
-				List<DataFile> dataFiles = new ArrayList<DataFile>();
+				List<DataFile> dataFiles = new java.util.concurrent.CopyOnWriteArrayList<DataFile>();
 				if (StringUtils.isNotEmpty(businessKey)) {
 					List<DataFile> rows = blobService.getBlobList(businessKey);
 					if (rows != null && rows.size() > 0) {

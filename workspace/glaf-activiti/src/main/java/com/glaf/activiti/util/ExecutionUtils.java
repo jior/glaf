@@ -21,8 +21,6 @@ package com.glaf.activiti.util;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -59,7 +57,7 @@ public class ExecutionUtils {
 						processDefinitionId);
 		String processName = processDefinitionEntity.getKey();
 
-		Map<String, Object> params = new HashMap<String, Object>();
+		Map<String, Object> params = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 
 		Map<String, Object> variables = execution.getVariables();
 		if (variables != null && variables.size() > 0) {
@@ -96,7 +94,7 @@ public class ExecutionUtils {
 
 			sqlx = StringTools.replaceIgnoreCase(sqlx, "${", "#{");
 
-			List<Object> values = new ArrayList<Object>();
+			List<Object> values = new java.util.concurrent.CopyOnWriteArrayList<Object>();
 			SqlExecutor sqlExecutor = JdbcUtils.rebuildSQL(sqlx, params);
 			sqlx = sqlExecutor.getSql();
 			if (sqlExecutor.getParameter() != null) {
@@ -138,7 +136,7 @@ public class ExecutionUtils {
 						processDefinitionId);
 		String processName = processDefinitionEntity.getKey();
 
-		Map<String, Object> params = new HashMap<String, Object>();
+		Map<String, Object> params = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 
 		Map<String, Object> variables = execution.getVariables();
 		if (variables != null && variables.size() > 0) {

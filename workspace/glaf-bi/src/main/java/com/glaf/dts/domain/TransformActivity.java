@@ -18,7 +18,6 @@
 
 package com.glaf.dts.domain;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -107,7 +106,7 @@ public class TransformActivity implements java.io.Serializable {
 	protected int revision;
 
 	@Transient
-	protected List<TransformStep> steps = new ArrayList<TransformStep>();
+	protected List<TransformStep> steps = new java.util.concurrent.CopyOnWriteArrayList<TransformStep>();
 
 	public TransformActivity() {
 
@@ -115,7 +114,7 @@ public class TransformActivity implements java.io.Serializable {
 
 	public void addStep(TransformStep step) {
 		if (steps == null) {
-			steps = new ArrayList<TransformStep>();
+			steps = new java.util.concurrent.CopyOnWriteArrayList<TransformStep>();
 		}
 		steps.add(step);
 	}

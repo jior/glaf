@@ -18,9 +18,12 @@
 
 package com.glaf.core.db.dataexport;
 
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.Timestamp;
+import java.sql.Types;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -32,14 +35,14 @@ import org.apache.commons.logging.LogFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.glaf.core.domain.ColumnDefinition;
 import com.glaf.core.entity.SqlExecutor;
 import com.glaf.core.jdbc.DBConnectionFactory;
-import com.glaf.core.domain.ColumnDefinition;
+import com.glaf.core.util.DBUtils;
 import com.glaf.core.util.DateUtils;
 import com.glaf.core.util.FieldType;
 import com.glaf.core.util.FileUtils;
 import com.glaf.core.util.JdbcUtils;
-import com.glaf.core.util.DBUtils;
 
 public class JacksonExporter {
 	protected final static Log logger = LogFactory
@@ -81,7 +84,7 @@ public class JacksonExporter {
 			rsmd = rs.getMetaData();
 			int count = rsmd.getColumnCount();
 
-			List<ColumnDefinition> columns = new ArrayList<ColumnDefinition>();
+			List<ColumnDefinition> columns = new java.util.concurrent.CopyOnWriteArrayList<ColumnDefinition>();
 
 			ArrayNode columnsJSON = new ObjectMapper().createArrayNode();
 
@@ -245,7 +248,7 @@ public class JacksonExporter {
 			String prefix, int perFileSize) {
 		String sql = " select * from " + tableName;
 		this.exportJson(systemName, rootDir, sql,
-				new HashMap<String, Object>(), prefix, perFileSize);
+				new java.util.concurrent.ConcurrentHashMap<String, Object>(), prefix, perFileSize);
 	}
 
 	public static void main(String[] args) throws Exception {

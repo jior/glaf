@@ -18,23 +18,19 @@
 
 package com.glaf.ui.web.rest;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
-
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-
 import javax.ws.rs.core.Context;
-
 import javax.ws.rs.core.UriInfo;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
- 
 import org.springframework.stereotype.Controller;
+
 import com.glaf.core.util.RequestUtils;
 import com.glaf.core.util.StringTools;
 import com.glaf.ui.model.Panel;
@@ -64,7 +60,7 @@ public class MxUserPortalResource {
 		logger.debug(titles);
 		logger.debug(poss);
 		if (titles.length() > 0) {
-			List<UserPortal> rows = new ArrayList<UserPortal>();
+			List<UserPortal> rows = new java.util.concurrent.CopyOnWriteArrayList<UserPortal>();
 			String title[] = titles.split("[,]");
 			String pos[] = poss.split("[,]");
 			for (int i = 0; i < title.length; i++) {
@@ -107,7 +103,7 @@ public class MxUserPortalResource {
 		String actorId = RequestUtils.getActorId(request);
 		String portals = request.getParameter("portalState");
 		logger.debug(portals);
-		List<UserPortal> rows = new ArrayList<UserPortal>();
+		List<UserPortal> rows = new java.util.concurrent.CopyOnWriteArrayList<UserPortal>();
 		if (portals != null && portals.length() > 0) {
 			int position = 0;
 			StringTokenizer st01 = new StringTokenizer(portals, ":");

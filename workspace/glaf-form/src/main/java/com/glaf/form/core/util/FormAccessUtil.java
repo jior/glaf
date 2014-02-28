@@ -19,7 +19,6 @@ package com.glaf.form.core.util;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -27,10 +26,14 @@ import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.glaf.core.base.DataModel;
+import com.glaf.core.util.DateUtils;
+import com.glaf.core.util.ReflectUtils;
+import com.glaf.core.util.StringTools;
+import com.glaf.core.util.Tools;
 import com.glaf.form.core.context.FormContext;
 import com.glaf.form.core.domain.FormDefinition;
 import com.glaf.form.core.graph.def.FormNode;
-
 import com.glaf.form.core.graph.node.CheckboxNode;
 import com.glaf.form.core.graph.node.DateFieldNode;
 import com.glaf.form.core.graph.node.HiddenNode;
@@ -42,19 +45,13 @@ import com.glaf.form.core.graph.node.SelectNode;
 import com.glaf.form.core.graph.node.TextAreaNode;
 import com.glaf.form.core.graph.node.TextFieldNode;
 import com.glaf.form.core.graph.node.TimestampFieldNode;
-import com.glaf.core.base.DataModel;
-
-import com.glaf.core.util.DateUtils;
-import com.glaf.core.util.ReflectUtils;
-import com.glaf.core.util.StringTools;
-import com.glaf.core.util.Tools;
 
 public class FormAccessUtil {
 
 	public static Map<String, Object> process(FormContext formContext,
 			Object entity, boolean isCreate) {
 		FormDefinition formDefinition = formContext.getFormDefinition();
-		Map<String, Object> persistMap = new HashMap<String, Object>();
+		Map<String, Object> persistMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		Map<String, Object> dataMap = formContext.getDataMap();
 		DataModel dataModel = formContext.getDataModel();
 		if (isCreate) {

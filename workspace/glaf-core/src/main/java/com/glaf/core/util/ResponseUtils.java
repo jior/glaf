@@ -24,7 +24,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -33,6 +32,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
 import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.config.MessageProperties;
 
@@ -190,7 +190,7 @@ public class ResponseUtils {
 
 	public static byte[] responseJsonResult(boolean success) {
 		if (success) {
-			Map<String, Object> jsonMap = new HashMap<String, Object>();
+			Map<String, Object> jsonMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 			jsonMap.put("statusCode", 200);
 			jsonMap.put("msg", MessageProperties.getString("res_op_ok"));
 			jsonMap.put("message", MessageProperties.getString("res_op_ok"));
@@ -200,7 +200,7 @@ public class ResponseUtils {
 			} catch (UnsupportedEncodingException e) {
 			}
 		} else {
-			Map<String, Object> jsonMap = new HashMap<String, Object>();
+			Map<String, Object> jsonMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 			jsonMap.put("statusCode", 500);
 			jsonMap.put("msg", MessageProperties.getString("res_op_error"));
 			jsonMap.put("message", MessageProperties.getString("res_op_error"));
@@ -215,7 +215,7 @@ public class ResponseUtils {
 
 	public static byte[] responseJsonResult(boolean success, String message) {
 		if (success) {
-			Map<String, Object> jsonMap = new HashMap<String, Object>();
+			Map<String, Object> jsonMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 			jsonMap.put("statusCode", 200);
 			jsonMap.put("message", message);
 			JSONObject object = new JSONObject(jsonMap);
@@ -224,7 +224,7 @@ public class ResponseUtils {
 			} catch (UnsupportedEncodingException e) {
 			}
 		} else {
-			Map<String, Object> jsonMap = new HashMap<String, Object>();
+			Map<String, Object> jsonMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 			jsonMap.put("statusCode", 500);
 			jsonMap.put("message", message);
 			JSONObject object = new JSONObject(jsonMap);

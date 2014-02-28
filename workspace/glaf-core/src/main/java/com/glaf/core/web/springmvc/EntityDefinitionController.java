@@ -19,34 +19,42 @@
 package com.glaf.core.web.springmvc;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import com.alibaba.fastjson.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.base.TableModel;
 import com.glaf.core.config.ViewProperties;
-import com.glaf.core.identity.*;
+import com.glaf.core.domain.EntityDefinition;
+import com.glaf.core.identity.User;
+import com.glaf.core.query.EntityDefinitionQuery;
 import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
 import com.glaf.core.res.ViewMessages;
-import com.glaf.core.security.*;
-import com.glaf.core.util.*;
+import com.glaf.core.security.LoginContext;
+import com.glaf.core.service.EntityDefinitionService;
+import com.glaf.core.util.JsonUtils;
+import com.glaf.core.util.PageResult;
+import com.glaf.core.util.ParamUtils;
+import com.glaf.core.util.RequestUtils;
+import com.glaf.core.util.ResponseUtils;
+import com.glaf.core.util.Tools;
 import com.glaf.core.xml.XmlMappingReader;
-
-import com.glaf.core.domain.*;
-import com.glaf.core.query.*;
-import com.glaf.core.service.*;
 
 @Controller("/sys/entity")
 @RequestMapping("/sys/entity")

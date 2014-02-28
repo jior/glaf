@@ -19,7 +19,7 @@
 package com.glaf.ui.web.springmvc;
 
 import java.util.List;
- 
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
@@ -32,13 +32,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.glaf.core.config.ViewProperties;
+import com.glaf.core.security.LoginContext;
+import com.glaf.core.util.RequestUtils;
 import com.glaf.ui.model.Skin;
 import com.glaf.ui.service.LayoutService;
 import com.glaf.ui.service.PanelService;
 import com.glaf.ui.service.SkinService;
-import com.glaf.core.config.ViewProperties;
-import com.glaf.core.security.LoginContext;
-import com.glaf.core.util.RequestUtils;
 
 @Controller("/skin")
 @RequestMapping("/skin")

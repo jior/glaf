@@ -18,14 +18,16 @@
 
 package com.glaf.core.security;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.StringTokenizer;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.base.JSONable;
-import com.glaf.core.identity.*;
+import com.glaf.core.identity.User;
 
 /**
  * 安全上下文 <br/>

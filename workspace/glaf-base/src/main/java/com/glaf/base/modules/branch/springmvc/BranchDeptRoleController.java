@@ -18,7 +18,6 @@
 
 package com.glaf.base.modules.branch.springmvc;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -38,10 +37,8 @@ import com.glaf.base.modules.sys.service.SysDeptRoleService;
 import com.glaf.base.modules.sys.service.SysRoleService;
 import com.glaf.base.modules.sys.service.SysTreeService;
 import com.glaf.base.utils.ParamUtil;
-
 import com.glaf.core.base.TreeModel;
 import com.glaf.core.config.ViewProperties;
-
 import com.glaf.core.service.ITreeModelService;
 import com.glaf.core.util.RequestUtils;
 
@@ -103,7 +100,7 @@ public class BranchDeptRoleController {
 		request.setAttribute("department", department);
 
 		long nodeId = department.getNodeId();
-		List<Long> nodeIds = new ArrayList<Long>();
+		List<Long> nodeIds = new java.util.concurrent.CopyOnWriteArrayList<Long>();
 		nodeIds.add(nodeId);
 
 		List<TreeModel> treeModels = treeModelService

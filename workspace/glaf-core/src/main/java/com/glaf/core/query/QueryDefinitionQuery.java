@@ -18,7 +18,8 @@
 
 package com.glaf.core.query;
 
-import java.util.*;
+import java.util.Date;
+import java.util.List;
 
 public class QueryDefinitionQuery extends BaseQuery {
 	private static final long serialVersionUID = 1L;

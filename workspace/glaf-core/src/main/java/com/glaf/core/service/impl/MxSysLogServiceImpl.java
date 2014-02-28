@@ -18,7 +18,8 @@
 
 package com.glaf.core.service.impl;
 
-import java.util.*;
+import java.util.Date;
+import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
@@ -29,13 +30,13 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.glaf.core.id.*;
 import com.glaf.core.config.BaseConfiguration;
 import com.glaf.core.config.Configuration;
-import com.glaf.core.domain.*;
-import com.glaf.core.mapper.*;
-import com.glaf.core.query.*;
-import com.glaf.core.service.*;
+import com.glaf.core.domain.SysLog;
+import com.glaf.core.id.IdGenerator;
+import com.glaf.core.mapper.SysLogMapper;
+import com.glaf.core.query.SysLogQuery;
+import com.glaf.core.service.ISysLogService;
 
 @Service("sysLogService")
 @Transactional(readOnly = true)

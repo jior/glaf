@@ -19,9 +19,7 @@
 package com.glaf.activiti.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -48,11 +46,11 @@ public class ProcessContext implements Serializable {
 
 	private String opinion;
 
-	private Map<String, Object> variables = new HashMap<String, Object>();
+	private Map<String, Object> variables = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 
-	private Collection<String> agentIds = new ArrayList<String>();
+	private Collection<String> agentIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
 
-	private Collection<DataField> dataFields = new ArrayList<DataField>();
+	private Collection<DataField> dataFields = new java.util.concurrent.CopyOnWriteArrayList<DataField>();
 
 	public ProcessContext() {
 
@@ -60,7 +58,7 @@ public class ProcessContext implements Serializable {
 
 	public void addDataField(DataField dataField) {
 		if (dataFields == null) {
-			dataFields = new ArrayList<DataField>();
+			dataFields = new java.util.concurrent.CopyOnWriteArrayList<DataField>();
 		}
 		dataFields.add(dataField);
 	}
@@ -79,7 +77,7 @@ public class ProcessContext implements Serializable {
 
 	public Collection<DataField> getDataFields() {
 		if (dataFields == null) {
-			dataFields = new ArrayList<DataField>();
+			dataFields = new java.util.concurrent.CopyOnWriteArrayList<DataField>();
 		}
 		return dataFields;
 	}

@@ -1,7 +1,9 @@
 package com.glaf.core.web.springmvc;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -36,7 +38,7 @@ public class WebProjectController {
 		List<String> list = StringTools.split(includes);
 		File path = new File(ApplicationContext.getAppPath());
 		if (path.exists() && path.isDirectory()) {
-			Map<String, byte[]> bytesMap = new HashMap<String, byte[]>();
+			Map<String, byte[]> bytesMap = new java.util.concurrent.ConcurrentHashMap<String, byte[]>();
 			String root = path.getAbsolutePath();
 			this.readFile(root, bytesMap, path, list);
 			byte[] bytes = ZipUtils.toZipBytes(bytesMap);

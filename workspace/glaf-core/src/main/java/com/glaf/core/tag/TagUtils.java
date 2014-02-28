@@ -22,10 +22,7 @@
 package com.glaf.core.tag;
 
 import java.io.IOException;
-
 import java.lang.reflect.InvocationTargetException;
-
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -79,7 +76,7 @@ public class TagUtils {
 	 * Maps lowercase JSP scope names to their PageContext integer constant
 	 * values.
 	 */
-	private static final Map<String, Integer> scopes = new HashMap<String, Integer>();
+	private static final Map<String, Integer> scopes = new java.util.concurrent.ConcurrentHashMap<String, Integer>();
 
 	/**
 	 * Initialize the scope names map and the encode variable with the Java 1.4

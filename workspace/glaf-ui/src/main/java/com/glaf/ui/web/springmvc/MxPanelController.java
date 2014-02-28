@@ -32,15 +32,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.glaf.ui.model.Panel;
-import com.glaf.ui.service.LayoutService;
-import com.glaf.ui.service.PanelService;
-import com.glaf.ui.service.SkinService;
 import com.glaf.core.config.ViewProperties;
 import com.glaf.core.security.LoginContext;
 import com.glaf.core.util.RequestUtils;
 import com.glaf.core.util.Tools;
 import com.glaf.core.util.UUID32;
+import com.glaf.ui.model.Panel;
+import com.glaf.ui.service.LayoutService;
+import com.glaf.ui.service.PanelService;
+import com.glaf.ui.service.SkinService;
 
 @Controller("/panel")
 @RequestMapping("/panel")

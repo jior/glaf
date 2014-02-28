@@ -18,7 +18,8 @@
 package com.glaf.form.core.graph.def;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.Map;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -48,7 +49,7 @@ public abstract class GraphElement implements Serializable {
 					"can't add an event without an eventType to a graph element");
 		}
 		if (events == null) {
-			events = new HashMap<String, FormEvent>();
+			events = new java.util.concurrent.ConcurrentHashMap<String, FormEvent>();
 		}
 		events.put(event.getType(), event);
 		event.graphElement = this;
@@ -61,7 +62,7 @@ public abstract class GraphElement implements Serializable {
 				&& StringUtils.isNotEmpty(formProperty.getValue())) {
 			formProperty.setGraphElement(this);
 			if (properties == null) {
-				properties = new HashMap<String, FormProperty>();
+				properties = new java.util.concurrent.ConcurrentHashMap<String, FormProperty>();
 			}
 			FormProperty p = properties.get(formProperty.getName());
 			if (p == null) {
@@ -77,7 +78,7 @@ public abstract class GraphElement implements Serializable {
 	public void addProperty(String name, String value) {
 		if (StringUtils.isNotEmpty(name) && StringUtils.isNotEmpty(value)) {
 			if (properties == null) {
-				properties = new HashMap<String, FormProperty>();
+				properties = new java.util.concurrent.ConcurrentHashMap<String, FormProperty>();
 			}
 			FormProperty p = properties.get(name);
 			if (p == null) {
@@ -92,7 +93,7 @@ public abstract class GraphElement implements Serializable {
 
 	public Map<String, Object> getDataMap() {
 		if (dataMap == null) {
-			dataMap = new HashMap<String, Object>();
+			dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		}
 		return dataMap;
 	}
@@ -107,7 +108,7 @@ public abstract class GraphElement implements Serializable {
 
 	public Map<String, FormEvent> getEvents() {
 		if (events == null) {
-			events = new HashMap<String, FormEvent>();
+			events = new java.util.concurrent.ConcurrentHashMap<String, FormEvent>();
 		}
 		return events;
 	}
@@ -118,7 +119,7 @@ public abstract class GraphElement implements Serializable {
 
 	public Map<String, FormProperty> getProperties() {
 		if (properties == null) {
-			properties = new HashMap<String, FormProperty>();
+			properties = new java.util.concurrent.ConcurrentHashMap<String, FormProperty>();
 		}
 		return properties;
 	}

@@ -18,7 +18,6 @@
 
 package com.glaf.base.tag;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Set;
 import java.util.StringTokenizer;
@@ -32,7 +31,6 @@ import org.apache.commons.logging.LogFactory;
 import com.glaf.base.business.AuthorizeBean;
 import com.glaf.base.modules.sys.model.SysDeptRole;
 import com.glaf.base.modules.sys.model.SysUser;
- 
 import com.glaf.core.util.RequestUtils;
 
 public class PermissionTag extends BodyTagSupport {
@@ -72,8 +70,8 @@ public class PermissionTag extends BodyTagSupport {
 		SysUser user = bean.getUser(userId);
 		boolean hasPermission = false;
 		StringTokenizer token = new StringTokenizer(key, ",");
-		Collection<String> roleIds = new ArrayList<String>();
-		Collection<String> permissions = new ArrayList<String>();
+		Collection<String> roleIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
+		Collection<String> permissions = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		if (user != null) {
 			if (user.isSystemAdmin()) {
 				return 1;

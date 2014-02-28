@@ -18,7 +18,10 @@
 
 package com.glaf.core.service.impl;
 
-import java.util.*;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
@@ -28,11 +31,15 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.glaf.core.id.*;
-
-import com.glaf.core.domain.*;
-import com.glaf.core.query.*;
-import com.glaf.core.mapper.*;
+import com.glaf.core.domain.ColumnDefinition;
+import com.glaf.core.domain.QueryDefinition;
+import com.glaf.core.domain.TableDefinition;
+import com.glaf.core.id.IdGenerator;
+import com.glaf.core.mapper.ColumnDefinitionMapper;
+import com.glaf.core.mapper.QueryDefinitionMapper;
+import com.glaf.core.mapper.TableDefinitionMapper;
+import com.glaf.core.query.QueryDefinitionQuery;
+import com.glaf.core.query.TableDefinitionQuery;
 import com.glaf.core.service.ITableDefinitionService;
 import com.glaf.core.util.StringTools;
 

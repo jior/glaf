@@ -120,7 +120,7 @@ public class JobExecution implements Serializable, JSONable {
 
 	public void addStep(StepExecution step) {
 		if (steps == null) {
-			steps = new ArrayList<StepExecution>();
+			steps = new java.util.concurrent.CopyOnWriteArrayList<StepExecution>();
 		}
 		steps.add(step);
 	}

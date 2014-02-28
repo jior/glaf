@@ -18,18 +18,19 @@
 
 package com.glaf.core.domain;
 
-import java.io.*;
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.*;
-
-import com.alibaba.fastjson.*;
-import com.fasterxml.jackson.databind.node.ObjectNode;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
+import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.glaf.core.base.ColumnModel;
 import com.glaf.core.base.JSONable;
 import com.glaf.core.domain.util.InputDefinitionJsonFactory;
@@ -127,7 +128,7 @@ public class InputDefinition implements Serializable, JSONable {
 	protected String initValue;
 
 	@javax.persistence.Transient
-	protected List<ColumnModel> extendedColumns = new ArrayList<ColumnModel>();
+	protected List<ColumnModel> extendedColumns = new java.util.concurrent.CopyOnWriteArrayList<ColumnModel>();
 
 	public InputDefinition() {
 
@@ -141,7 +142,7 @@ public class InputDefinition implements Serializable, JSONable {
 
 	public List<ColumnModel> getExtendedColumns() {
 		if (extendedColumns == null) {
-			extendedColumns = new ArrayList<ColumnModel>();
+			extendedColumns = new java.util.concurrent.CopyOnWriteArrayList<ColumnModel>();
 		}
 		return extendedColumns;
 	}

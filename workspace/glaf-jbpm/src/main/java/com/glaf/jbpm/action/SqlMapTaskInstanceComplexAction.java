@@ -18,10 +18,8 @@
 
 package com.glaf.jbpm.action;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -168,7 +166,7 @@ public class SqlMapTaskInstanceComplexAction implements ActionHandler {
 
 		boolean executable = true;
 
-		Map<String, Object> params = new HashMap<String, Object>();
+		Map<String, Object> params = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		Set<String> existsActorIds = new HashSet<String>();
 
 		ContextInstance contextInstance = ctx.getContextInstance();
@@ -230,7 +228,7 @@ public class SqlMapTaskInstanceComplexAction implements ActionHandler {
 		Token token = ctx.getToken();
 		TaskMgmtInstance tmi = ctx.getTaskMgmtInstance();
 
-		List<String> actorIds = new ArrayList<String>();
+		List<String> actorIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
 
 		/**
 		 * 如果动态指定多个部门

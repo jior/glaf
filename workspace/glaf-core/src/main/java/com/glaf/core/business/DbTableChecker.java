@@ -18,7 +18,8 @@
 
 package com.glaf.core.business;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -61,7 +62,7 @@ public class DbTableChecker {
 
 		List<TableDefinition> list = tableDefinitionService
 				.getTableColumnsCount(query);
-		Map<String, TableDefinition> tableMap = new HashMap<String, TableDefinition>();
+		Map<String, TableDefinition> tableMap = new java.util.concurrent.ConcurrentHashMap<String, TableDefinition>();
 		if (list != null && !list.isEmpty()) {
 			for (TableDefinition t : list) {
 				tableMap.put(t.getTableName().toLowerCase(), t);

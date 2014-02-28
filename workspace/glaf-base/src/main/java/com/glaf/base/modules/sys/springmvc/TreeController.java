@@ -19,7 +19,6 @@
 package com.glaf.base.modules.sys.springmvc;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -241,7 +240,7 @@ public class TreeController {
 			bean.setParent(parent);
 		}
 		request.setAttribute("bean", bean);
-		List<SysTree> list = new ArrayList<SysTree>();
+		List<SysTree> list = new java.util.concurrent.CopyOnWriteArrayList<SysTree>();
 		sysTreeService.getSysTree(list, 0, 0);
 		request.setAttribute("parent", list);
 

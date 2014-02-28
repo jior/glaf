@@ -18,21 +18,18 @@
 
 package com.glaf.ui.web.springmvc;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
- 
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,7 +37,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-
+import com.glaf.core.base.TreeModel;
+import com.glaf.core.config.ViewProperties;
+import com.glaf.core.security.IdentityFactory;
+import com.glaf.core.security.LoginContext;
+import com.glaf.core.tree.helper.TreeHelper;
+import com.glaf.core.util.RequestUtils;
 import com.glaf.ui.model.Panel;
 import com.glaf.ui.model.PanelInstance;
 import com.glaf.ui.model.Skin;
@@ -50,14 +52,6 @@ import com.glaf.ui.service.LayoutService;
 import com.glaf.ui.service.PanelService;
 import com.glaf.ui.service.SkinService;
 import com.glaf.ui.service.UserPortalService;
-import com.glaf.core.base.TreeModel;
-import com.glaf.core.config.ViewProperties;
-import com.glaf.core.security.IdentityFactory;
-import com.glaf.core.security.LoginContext;
-
-import com.glaf.core.tree.helper.TreeHelper;
-
-import com.glaf.core.util.RequestUtils;
 
 @Controller("/console")
 @RequestMapping("/console")
@@ -171,7 +165,7 @@ public class MxConsoleController {
 				.getId());
 
 		Collection<Long> roles = loginContext.getRoleIds();
-		List<Long> list = new ArrayList<Long>();
+		List<Long> list = new java.util.concurrent.CopyOnWriteArrayList<Long>();
 		if (roles != null && !roles.isEmpty()) {
 			for (Long r : roles) {
 				list.add(r);
@@ -184,8 +178,8 @@ public class MxConsoleController {
 			userPanel = panelService.getUserPanel("system");
 		}
 
-		Map<String, Integer> panelPxMap = new HashMap<String, Integer>();
-		Map<String, Integer> panelMap = new HashMap<String, Integer>();
+		Map<String, Integer> panelPxMap = new java.util.concurrent.ConcurrentHashMap<String, Integer>();
+		Map<String, Integer> panelMap = new java.util.concurrent.ConcurrentHashMap<String, Integer>();
 		if (userPanel != null && userPanel.getPanelInstances() != null) {
 			String layoutName = userPanel.getLayoutName();
 			Set<PanelInstance> set = userPanel.getPanelInstances();

@@ -18,26 +18,30 @@
 
 package com.glaf.core.db.export;
 
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.Timestamp;
+import java.sql.Types;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.commons.lang.StringUtils;
 
-import com.alibaba.fastjson.*;
-
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.glaf.core.domain.ColumnDefinition;
 import com.glaf.core.entity.SqlExecutor;
 import com.glaf.core.jdbc.DBConnectionFactory;
-import com.glaf.core.domain.ColumnDefinition;
+import com.glaf.core.util.DBUtils;
 import com.glaf.core.util.DateUtils;
 import com.glaf.core.util.FieldType;
 import com.glaf.core.util.FileUtils;
 import com.glaf.core.util.JdbcUtils;
-import com.glaf.core.util.DBUtils;
 
 public class FastJsonExporter {
 	protected final static Log logger = LogFactory
@@ -82,7 +86,7 @@ public class FastJsonExporter {
 			rsmd = rs.getMetaData();
 			int count = rsmd.getColumnCount();
 
-			List<ColumnDefinition> columns = new ArrayList<ColumnDefinition>();
+			List<ColumnDefinition> columns = new java.util.concurrent.CopyOnWriteArrayList<ColumnDefinition>();
 
 			JSONArray columnsJSON = new JSONArray();
 
@@ -246,7 +250,7 @@ public class FastJsonExporter {
 			String prefix, int perFileSize) {
 		String sql = " select * from " + tableName;
 		this.exportJson(systemName, rootDir, sql,
-				new HashMap<String, Object>(), prefix, perFileSize);
+				new java.util.concurrent.ConcurrentHashMap<String, Object>(), prefix, perFileSize);
 	}
 
 }

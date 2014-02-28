@@ -19,9 +19,7 @@
 package com.glaf.core.todo.service;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -31,7 +29,6 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.SqlSession;
-
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
@@ -39,19 +36,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-
 import com.glaf.core.cache.CacheFactory;
 import com.glaf.core.config.SystemProperties;
 import com.glaf.core.dao.EntityDAO;
-
 import com.glaf.core.id.IdGenerator;
-
 import com.glaf.core.security.LoginContext;
-import com.glaf.core.todo.mapper.TodoMapper;
-import com.glaf.core.todo.query.TodoQuery;
-
 import com.glaf.core.todo.Todo;
 import com.glaf.core.todo.TodoTotal;
+import com.glaf.core.todo.mapper.TodoMapper;
+import com.glaf.core.todo.query.TodoQuery;
 import com.glaf.core.todo.util.TodoJsonFactory;
 import com.glaf.core.todo.util.TodoUtils;
 import com.glaf.core.todo.util.TodoXmlReader;
@@ -123,7 +116,7 @@ public class SysTodoServiceImpl implements ISysTodoService {
 
 	public Map<Long, Todo> getTodoMap() {
 		List<Todo> todos = this.getTodoList();
-		Map<Long, Todo> todoMap = new HashMap<Long, Todo>();
+		Map<Long, Todo> todoMap = new java.util.concurrent.ConcurrentHashMap<Long, Todo>();
 		for (Todo todo : todos) {
 			todoMap.put(todo.getId(), todo);
 		}
@@ -132,7 +125,7 @@ public class SysTodoServiceImpl implements ISysTodoService {
 
 	public List<TodoTotal> getTodoTotalList(LoginContext loginContext,
 			Map<String, Object> params) {
-		List<TodoTotal> list = new ArrayList<TodoTotal>();
+		List<TodoTotal> list = new java.util.concurrent.CopyOnWriteArrayList<TodoTotal>();
 		List<Todo> todoList = this.getTodoList();
 		for (Todo todo : todoList) {
 			if (!StringUtils.equals(todo.getProvider(), "mybatis3")) {

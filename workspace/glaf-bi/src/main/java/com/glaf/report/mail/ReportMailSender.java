@@ -18,20 +18,21 @@
 
 package com.glaf.report.mail;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.glaf.core.base.DataFile;
-import com.glaf.core.config.*;
+import com.glaf.core.config.BaseConfiguration;
+import com.glaf.core.config.Configuration;
+import com.glaf.core.config.SystemConfig;
 import com.glaf.core.context.ContextFactory;
 import com.glaf.core.domain.BlobItemEntity;
 import com.glaf.core.el.ExpressionTools;
@@ -41,11 +42,9 @@ import com.glaf.core.util.DateUtils;
 import com.glaf.core.util.JsonUtils;
 import com.glaf.core.util.StringTools;
 import com.glaf.core.util.UUID32;
-
 import com.glaf.mail.MailMessage;
 import com.glaf.mail.MailSender;
 import com.glaf.mail.util.MailTools;
-
 import com.glaf.report.domain.Report;
 import com.glaf.report.domain.ReportFile;
 import com.glaf.report.domain.ReportTask;
@@ -128,7 +127,7 @@ public class ReportMailSender {
 		mailMessage.setSubject(subject);
 		mailMessage.setContent(content);
 
-		Collection<Object> dataFiles = new ArrayList<Object>();
+		Collection<Object> dataFiles = new java.util.concurrent.CopyOnWriteArrayList<Object>();
 
 		if (reports != null && !reports.isEmpty()) {
 			for (Report report : reports) {
@@ -153,7 +152,7 @@ public class ReportMailSender {
 			}
 		}
 
-		List<String> recipients = new ArrayList<String>();
+		List<String> recipients = new java.util.concurrent.CopyOnWriteArrayList<String>();
 
 		if (StringUtils.isNotEmpty(reportTask.getMailRecipient())) {
 			recipients.addAll(StringTools.split(reportTask.getMailRecipient()));
@@ -249,7 +248,7 @@ public class ReportMailSender {
 			mailMessage.setSaveMessage(true);
 			mailMessage.setSubject(subject);
 			mailMessage.setContent(content);
-			Collection<Object> dataFiles = new ArrayList<Object>();
+			Collection<Object> dataFiles = new java.util.concurrent.CopyOnWriteArrayList<Object>();
 
 			byte[] bytes = null;
 			try {

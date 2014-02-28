@@ -19,7 +19,6 @@
 package com.glaf.base.modules.sys.rest;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -289,7 +288,7 @@ public class SysApplicationResource {
 	public byte[] treeJson(@Context HttpServletRequest request) {
 		String nodeCode = request.getParameter("nodeCode");
 
-		List<TreeModel> treeModels = new ArrayList<TreeModel>();
+		List<TreeModel> treeModels = new java.util.concurrent.CopyOnWriteArrayList<TreeModel>();
 		if (StringUtils.isNotEmpty(nodeCode)) {
 			TreeModel treeModel = sysTreeService.getSysTreeByCode(nodeCode);
 			if (treeModel != null) {

@@ -19,9 +19,9 @@ package com.glaf.core.db.mybatis2;
 import java.util.List;
 import java.util.Map;
 
-import com.ibatis.sqlmap.client.event.RowHandler;
-
 import org.springframework.dao.DataAccessException;
+
+import com.ibatis.sqlmap.client.event.RowHandler;
 
 /**
  * Interface that specifies a basic set of iBATIS SqlMapClient operations,

@@ -18,8 +18,10 @@
 
 package com.glaf.core.query;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import com.glaf.core.util.SearchFilter;
 
@@ -27,11 +29,11 @@ public abstract class AbstractQuery<T> implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	protected Map<String, String> columns = new HashMap<String, String>();
+	protected Map<String, String> columns = new java.util.concurrent.ConcurrentHashMap<String, String>();
 
-	protected List<QueryCondition> conditions = new ArrayList<QueryCondition>();
+	protected List<QueryCondition> conditions = new java.util.concurrent.CopyOnWriteArrayList<QueryCondition>();
 
-	protected Map<String, Object> parameters = new HashMap<String, Object>();
+	protected Map<String, Object> parameters = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 
 	public AbstractQuery() {
 
@@ -39,7 +41,7 @@ public abstract class AbstractQuery<T> implements java.io.Serializable {
 
 	public void addColumn(String property, String columnName) {
 		if (columns == null) {
-			columns = new HashMap<String, String>();
+			columns = new java.util.concurrent.ConcurrentHashMap<String, String>();
 		}
 	}
 
@@ -83,21 +85,21 @@ public abstract class AbstractQuery<T> implements java.io.Serializable {
 
 	public Map<String, String> getColumns() {
 		if (columns == null) {
-			columns = new HashMap<String, String>();
+			columns = new java.util.concurrent.ConcurrentHashMap<String, String>();
 		}
 		return columns;
 	}
 
 	public List<QueryCondition> getConditions() {
 		if (conditions == null) {
-			conditions = new ArrayList<QueryCondition>();
+			conditions = new java.util.concurrent.CopyOnWriteArrayList<QueryCondition>();
 		}
 		return conditions;
 	}
 
 	public Map<String, Object> getParameters() {
 		if (parameters == null) {
-			parameters = new HashMap<String, Object>();
+			parameters = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		}
 		return parameters;
 	}

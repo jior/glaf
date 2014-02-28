@@ -20,8 +20,6 @@ package com.glaf.jbpm.action;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -78,7 +76,7 @@ public class SQLAction implements ActionHandler {
 
 		ContextInstance contextInstance = ctx.getContextInstance();
 
-		Map<String, Object> params = new HashMap<String, Object>();
+		Map<String, Object> params = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 
 		Map<String, Object> variables = contextInstance.getVariables();
 		if (variables != null && variables.size() > 0) {
@@ -123,7 +121,7 @@ public class SQLAction implements ActionHandler {
 			return;
 		}
 
-		List<Object> values = new ArrayList<Object>();
+		List<Object> values = new java.util.concurrent.CopyOnWriteArrayList<Object>();
 
 		if (elements != null) {
 			values = ExpressionUtils.getValues(ctx, elements);

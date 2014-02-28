@@ -19,7 +19,6 @@
 package com.glaf.core.tag;
 
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -233,7 +232,7 @@ public class SystemPageTag extends TagSupport {
 		String x_complex_query = request.getParameter("x_complex_query");
 		String xyz_complex_query = request.getParameter("xyz_complex_query");
 		imagePath = request.getContextPath() + "/images/go.gif";
-		Map<String, Object> paramMap = new HashMap<String, Object>();
+		Map<String, Object> paramMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		StringBuffer buffer = new StringBuffer();
 
 		Enumeration<?> enumeration = request.getParameterNames();

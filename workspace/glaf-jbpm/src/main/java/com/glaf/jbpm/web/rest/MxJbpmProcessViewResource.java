@@ -21,14 +21,12 @@ package com.glaf.jbpm.web.rest;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -43,7 +41,6 @@ import org.dom4j.Element;
 import org.dom4j.XPath;
 import org.dom4j.xpath.DefaultXPath;
 import org.jbpm.JbpmContext;
-
 import org.jbpm.graph.def.ProcessDefinition;
 import org.jbpm.graph.exe.ProcessInstance;
 import org.jbpm.graph.exe.Token;
@@ -53,7 +50,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.glaf.jbpm.config.JbpmProcessConfig;
 import com.glaf.jbpm.container.ProcessContainer;
 import com.glaf.jbpm.context.Context;
-
 import com.glaf.jbpm.manager.JbpmTaskManager;
 
 @Controller("/rs/jbpm/view")
@@ -243,7 +239,7 @@ public class MxJbpmProcessViewResource {
 		Writer writer = new StringWriter();
 
 		if (tokenInstanceId > 0) {
-			List<Token> allTokens = new ArrayList<Token>();
+			List<Token> allTokens = new java.util.concurrent.CopyOnWriteArrayList<Token>();
 			walkTokens(currentToken, allTokens);
 			writer.write("<div style='position:relative; background-image:url("
 					+ imageLink + ");background-repeat:no-repeat; width: "

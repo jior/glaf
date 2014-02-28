@@ -39,7 +39,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.glaf.core.base.BlobItem;
 import com.glaf.core.base.DataFile;
 import com.glaf.core.base.JSONable;
-import com.glaf.core.domain.util.*;
+import com.glaf.core.domain.util.BlobItemJsonFactory;
 
 @Entity
 @Table(name = "SYS_LOB")

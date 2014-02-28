@@ -19,7 +19,6 @@
 package com.glaf.base.modules.sys.springmvc;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -123,7 +122,7 @@ public class SysApplicationController {
 		}
 
 		SysTree parent = sysTreeService.getSysTreeByCode(Constants.TREE_APP);
-		List<SysTree> list = new ArrayList<SysTree>();
+		List<SysTree> list = new java.util.concurrent.CopyOnWriteArrayList<SysTree>();
 		parent.setDeep(0);
 		list.add(parent);
 		sysTreeService.getSysTree(list, (int) parent.getId(), 1);
@@ -272,7 +271,7 @@ public class SysApplicationController {
 		request.setAttribute("bean", bean);
 
 		SysTree parent = sysTreeService.getSysTreeByCode(Constants.TREE_APP);
-		List<SysTree> list = new ArrayList<SysTree>();
+		List<SysTree> list = new java.util.concurrent.CopyOnWriteArrayList<SysTree>();
 		parent.setDeep(0);
 		list.add(parent);
 		sysTreeService.getSysTree(list, (int) parent.getId(), 1);
@@ -550,7 +549,7 @@ public class SysApplicationController {
 			ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		int parent = ParamUtil.getIntParameter(request, "parent", 0);
-		List<SysTree> list = new ArrayList<SysTree>();
+		List<SysTree> list = new java.util.concurrent.CopyOnWriteArrayList<SysTree>();
 		sysTreeService.getSysTree(list, parent, 0);
 		request.setAttribute("list", list);
 

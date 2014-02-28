@@ -42,11 +42,11 @@
  */
 package com.glaf.core.util;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 import java.util.StringTokenizer;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public final class StringHelper {
 
@@ -429,7 +429,7 @@ public final class StringHelper {
 			return new int[0];
 		}
 
-		ArrayList locations = new ArrayList(20);
+		List locations = new java.util.ArrayList(20);
 
 		// Impl note: takes advantage of the fact that an escpaed single quote
 		// embedded within a quote-block can really be handled as two seperate

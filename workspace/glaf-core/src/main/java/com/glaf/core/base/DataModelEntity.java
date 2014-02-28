@@ -19,21 +19,18 @@
 package com.glaf.core.base;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-
 import com.glaf.core.domain.ColumnDefinition;
 import com.glaf.core.util.DateUtils;
 import com.glaf.core.util.StringTools;
@@ -44,10 +41,10 @@ public class DataModelEntity implements DataModel, Serializable {
 	protected String businessKey;
 	protected String createBy;
 	protected Date createDate;
-	protected Map<String, Object> dataMap = new HashMap<String, Object>();
+	protected Map<String, Object> dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 	protected int deleteFlag;
 	protected String fallbackFlag;
-	protected Map<String, ColumnModel> fields = new HashMap<String, ColumnModel>();
+	protected Map<String, ColumnModel> fields = new java.util.concurrent.ConcurrentHashMap<String, ColumnModel>();
 	protected String formName;
 	protected Long id;
 	protected int level;
@@ -70,7 +67,7 @@ public class DataModelEntity implements DataModel, Serializable {
 	protected String updateBy;
 	protected Date updateDate;
 	protected int wfStatus;
-	protected List<ColumnDefinition> columns = new ArrayList<ColumnDefinition>();
+	protected List<ColumnDefinition> columns = new java.util.concurrent.CopyOnWriteArrayList<ColumnDefinition>();
 
 	public DataModelEntity() {
 
@@ -82,12 +79,12 @@ public class DataModelEntity implements DataModel, Serializable {
 
 	public void addField(ColumnModel field) {
 		if (fields == null) {
-			fields = new HashMap<String, ColumnModel>();
+			fields = new java.util.concurrent.ConcurrentHashMap<String, ColumnModel>();
 		}
 		fields.put(field.getName(), field);
 
 		if (dataMap == null) {
-			dataMap = new HashMap<String, Object>();
+			dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		}
 		dataMap.put(field.getName(), field.getValue());
 
@@ -95,7 +92,7 @@ public class DataModelEntity implements DataModel, Serializable {
 
 	public void addField(String columnName, String key, Object value) {
 		if (dataMap == null) {
-			dataMap = new HashMap<String, Object>();
+			dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		}
 		dataMap.put(key, value);
 		ColumnModel field = new ColumnModel();
@@ -126,7 +123,7 @@ public class DataModelEntity implements DataModel, Serializable {
 
 	public Map<String, Object> getDataMap() {
 		if (dataMap == null) {
-			dataMap = new HashMap<String, Object>();
+			dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		}
 		return dataMap;
 	}
@@ -369,7 +366,7 @@ public class DataModelEntity implements DataModel, Serializable {
 
 		if (dataMap != null && dataMap.size() > 0) {
 			dataMap.remove("dataMap");
-			Map<String, Object> rowMap = new HashMap<String, Object>();
+			Map<String, Object> rowMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 			rowMap.putAll(dataMap);
 			// dataMap.remove(StringTools.lower(this.getFormName()));
 			Set<Entry<String, Object>> entrySet = dataMap.entrySet();

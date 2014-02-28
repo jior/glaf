@@ -86,7 +86,7 @@ public class ChartResource {
 			if (!DBUtils.isLegalQuerySql(querySQL)) {
 				return ResponseUtils.responseJsonResult(false, "SQL查询不合法！");
 			}
-			Map<String, Object> paramMap = new HashMap<String, Object>();
+			Map<String, Object> paramMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 
 			querySQL = QueryUtils.replaceSQLVars(querySQL);
 			querySQL = QueryUtils.replaceSQLParas(querySQL, paramMap);
@@ -331,8 +331,8 @@ public class ChartResource {
 		String selected = request.getParameter("selected");
 
 		logger.debug(RequestUtils.getParameterMap(request));
-		List<TreeModel> treeModels = new ArrayList<TreeModel>();
-		List<String> chooseList = new ArrayList<String>();
+		List<TreeModel> treeModels = new java.util.concurrent.CopyOnWriteArrayList<TreeModel>();
+		List<String> chooseList = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		if (StringUtils.isNotEmpty(selected)) {
 			chooseList = StringTools.split(selected);
 		}

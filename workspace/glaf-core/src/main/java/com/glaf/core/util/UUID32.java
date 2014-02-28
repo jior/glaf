@@ -18,7 +18,6 @@
 
 package com.glaf.core.util;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -31,7 +30,7 @@ public class UUID32 {
 	}
 
 	public static void main(String[] args) {
-		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> map = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		for (int i = 0; i < 10000; i++) {
 			String id = UUID32.getUUID();
 			System.out.println(id);

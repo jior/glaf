@@ -19,7 +19,6 @@
 package com.glaf.core.web.springmvc;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
@@ -159,7 +158,7 @@ public class MxDBFileManagerJsonController {
 		List<DataFile> dataFiles = blobService.getBlobList(query);
 
 		// 遍历目录取的文件信息
-		List<Hashtable<?, ?>> fileList = new ArrayList<Hashtable<?, ?>>();
+		List<Hashtable<?, ?>> fileList = new java.util.concurrent.CopyOnWriteArrayList<Hashtable<?, ?>>();
 		if (dataFiles != null && !dataFiles.isEmpty()) {
 			for (DataFile file : dataFiles) {
 				Hashtable<String, Object> hash = new Hashtable<String, Object>();

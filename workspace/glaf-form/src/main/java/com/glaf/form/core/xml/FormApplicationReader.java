@@ -31,7 +31,7 @@ import com.glaf.core.util.*;
 public class FormApplicationReader {
 
 	public List<FormApplication> read(InputStream inputStream) {
-		List<FormApplication> formApplications = new ArrayList<FormApplication>();
+		List<FormApplication> formApplications = new java.util.concurrent.CopyOnWriteArrayList<FormApplication>();
 		SAXReader xmlReader = new SAXReader();
 		try {
 			Document doc = xmlReader.read(inputStream);
@@ -55,7 +55,7 @@ public class FormApplicationReader {
 		FormApplication formApplication = new FormApplication();
 		String name = element.attributeValue("name");
 		String title = element.attributeValue("title");
-		Map<String, Object> dataMap = new HashMap<String, Object>();
+		Map<String, Object> dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		dataMap.put("name", name);
 		dataMap.put("title", title);
 		List<?> list = element.elements();

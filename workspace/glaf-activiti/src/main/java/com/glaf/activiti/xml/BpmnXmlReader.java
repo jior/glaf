@@ -19,7 +19,6 @@
 package com.glaf.activiti.xml;
 
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -48,7 +47,7 @@ public class BpmnXmlReader {
 	}
 
 	public List<ActivityInfo> read(Element root, String processDefinitionKey) {
-		List<ActivityInfo> activities = new ArrayList<ActivityInfo>();
+		List<ActivityInfo> activities = new java.util.concurrent.CopyOnWriteArrayList<ActivityInfo>();
 		Element element = root.element("BPMNDiagram");
 		if (element != null) {
 			List<?> elements = element.elements("BPMNPlane");
@@ -92,7 +91,7 @@ public class BpmnXmlReader {
 
 	public List<UserTask> readUserTasks(Element root,
 			String processDefinitionKey) {
-		List<UserTask> tasks = new ArrayList<UserTask>();
+		List<UserTask> tasks = new java.util.concurrent.CopyOnWriteArrayList<UserTask>();
 		List<?> elements = root.elements("process");
 		if (elements != null && !elements.isEmpty()) {
 			Iterator<?> iterator = elements.iterator();

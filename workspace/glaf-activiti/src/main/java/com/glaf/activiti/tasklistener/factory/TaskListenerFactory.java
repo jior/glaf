@@ -18,7 +18,8 @@
 
 package com.glaf.activiti.tasklistener.factory;
 
-import org.activiti.engine.delegate.*;
+import org.activiti.engine.delegate.DelegateTask;
+import org.activiti.engine.delegate.TaskListener;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.pool.KeyedObjectPool;
 import org.apache.commons.pool.KeyedObjectPoolFactory;

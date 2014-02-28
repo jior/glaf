@@ -18,7 +18,7 @@
 
 package com.glaf.activiti.identity;
 
-import java.util.HashMap;
+ 
 import java.util.Map;
 
 import org.activiti.engine.ActivitiException;
@@ -44,7 +44,7 @@ public class MyCreateMembershipCmd implements Command<Object> {
 		if (groupId == null) {
 			throw new ActivitiException("groupId is null");
 		}
-		Map<String, Object> parameters = new HashMap<String, Object>();
+		Map<String, Object> parameters = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		parameters.put("id", UUID32.getUUID());
 		parameters.put("userId", userId);
 		parameters.put("groupId", groupId);

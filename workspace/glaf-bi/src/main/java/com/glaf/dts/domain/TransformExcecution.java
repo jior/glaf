@@ -18,7 +18,7 @@
 
 package com.glaf.dts.domain;
 
-import java.util.*;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

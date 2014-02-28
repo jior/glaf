@@ -63,7 +63,7 @@ public class SystemConfig {
 	}
 
 	public static Map<String, Object> getContextMap() {
-		Map<String, Object> dataMap = new HashMap<String, Object>();
+		Map<String, Object> dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		dataMap.put(CURR_YYYYMMDD, getCurrentYYYYMMDD());
 		dataMap.put(CURR_YYYYMM, getCurrentYYYYMM());
 		dataMap.put(INPUT_YYYYMMDD, getInputYYYYMMDD());
@@ -290,7 +290,7 @@ public class SystemConfig {
 
 	public static void main(String[] args) {
 		Date now = new Date();
-		Map<String, Object> sysMap = new HashMap<String, Object>();
+		Map<String, Object> sysMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		sysMap.put("curr_yyyymmdd", DateUtils.getYearMonthDay(now));
 		sysMap.put("curr_yyyymm", DateUtils.getYearMonth(now));
 		System.out.println(Mvel2ExpressionEvaluator.evaluate(

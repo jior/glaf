@@ -23,7 +23,6 @@ import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -134,7 +133,7 @@ public class DbTableToDbTableExporter {
 						.getBean("tablePageService");
 				TablePageQuery query = new TablePageQuery();
 				query.tableName(tableName);
-				List<Map<String, Object>> rows = new ArrayList<Map<String, Object>>();
+				List<Map<String, Object>> rows = new java.util.concurrent.CopyOnWriteArrayList<Map<String, Object>>();
 				for (int index = 0; index < (total / pageSize + 1); index++) {
 					int firstResult = index * pageSize;
 					rows.clear();
@@ -232,7 +231,7 @@ public class DbTableToDbTableExporter {
 			String rootDir) {
 		String excludes = conf.get("db.export.excludes");
 		List<String> list = StringTools.split(excludes);
-		List<String> tables = new ArrayList<String>();
+		List<String> tables = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		Connection conn = null;
 		DatabaseMetaData dbmd = null;
 		ResultSet rs = null;

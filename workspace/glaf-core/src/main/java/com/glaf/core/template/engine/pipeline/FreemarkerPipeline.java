@@ -20,7 +20,6 @@ package com.glaf.core.template.engine.pipeline;
 
 import java.io.StringWriter;
 import java.io.Writer;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
@@ -59,7 +58,7 @@ public class FreemarkerPipeline implements Pipeline {
 	public Writer pipeline(String pipeTemplates[], Object rootMap, Writer writer)
 			throws PipeException {
 		try {
-			Map<String, String> globalContext = new HashMap<String, String>();
+			Map<String, String> globalContext = new java.util.concurrent.ConcurrentHashMap<String, String>();
 			for (int i = 0; i < pipeTemplates.length; i++) {
 				String templateName = pipeTemplates[i];
 				Template template = conf.getTemplate(templateName);

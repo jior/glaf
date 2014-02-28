@@ -18,7 +18,6 @@
 
 package com.glaf.jbpm.action;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -69,7 +68,7 @@ public class InvokerAction implements ActionHandler {
 			MethodInvoker methodInvoker = new MethodInvoker();
 			Object target = ClassUtils.instantiateObject(className);
 
-			Map<String, Object> params = new HashMap<String, Object>();
+			Map<String, Object> params = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 
 			ContextInstance contextInstance = ctx.getContextInstance();
 			Map<String, Object> variables = contextInstance.getVariables();

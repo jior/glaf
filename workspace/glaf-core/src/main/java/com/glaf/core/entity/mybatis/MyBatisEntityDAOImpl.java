@@ -21,12 +21,12 @@ package com.glaf.core.entity.mybatis;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Connection;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
@@ -209,7 +209,7 @@ public class MyBatisEntityDAOImpl extends SqlSessionDaoSupport implements
 		}
 
 		if (totalCount == 0) {
-			page.setRows(new ArrayList<Object>());
+			page.setRows(new java.util.concurrent.CopyOnWriteArrayList<Object>());
 			page.setCurrentPage(0);
 			page.setPageSize(0);
 			page.setTotal(0);

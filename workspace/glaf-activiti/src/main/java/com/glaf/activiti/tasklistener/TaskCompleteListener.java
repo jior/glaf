@@ -31,9 +31,9 @@ import org.activiti.engine.impl.interceptor.CommandContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.glaf.core.dao.MyBatisEntityDAO;
 import com.glaf.activiti.model.ActivityInstance;
 import com.glaf.activiti.util.ExecutionUtils;
+import com.glaf.core.dao.MyBatisEntityDAO;
 import com.glaf.core.util.UUID32;
 
 public class TaskCompleteListener implements TaskListener {

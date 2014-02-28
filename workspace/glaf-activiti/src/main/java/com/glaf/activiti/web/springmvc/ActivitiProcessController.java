@@ -19,8 +19,6 @@
 package com.glaf.activiti.web.springmvc;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -34,7 +32,6 @@ import org.activiti.engine.runtime.ProcessInstance;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,7 +44,6 @@ import com.glaf.activiti.service.ActivitiDeployService;
 import com.glaf.activiti.service.ActivitiProcessQueryService;
 import com.glaf.activiti.service.ActivitiProcessService;
 import com.glaf.activiti.service.ActivitiTaskQueryService;
-
 import com.glaf.core.config.ViewProperties;
 import com.glaf.core.util.Paging;
 import com.glaf.core.util.RequestUtils;
@@ -98,10 +94,10 @@ public class ActivitiProcessController {
 		List<ProcessDefinition> rows = activitiProcessQueryService
 				.getProcessDefinitions(start, limit, paramMap);
 
-		List<Object> list = new ArrayList<Object>();
+		List<Object> list = new java.util.concurrent.CopyOnWriteArrayList<Object>();
 
 		for (ProcessDefinition processDefinition : rows) {
-			Map<String, Object> rowMap = new HashMap<String, Object>();
+			Map<String, Object> rowMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 			rowMap.put("id", processDefinition.getId());
 			rowMap.put("processDefinitionId", processDefinition.getId());
 			rowMap.put("deploymentId", processDefinition.getDeploymentId());
@@ -117,7 +113,7 @@ public class ActivitiProcessController {
 			list.add(rowMap);
 		}
 
-		Map<String, Object> pageInfo = new HashMap<String, Object>();
+		Map<String, Object> pageInfo = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		// 当前页数设置
 		pageInfo.put("startIndex", start);
 
@@ -197,10 +193,10 @@ public class ActivitiProcessController {
 		List<ProcessInstance> rows = activitiProcessQueryService
 				.getProcessInstances(start, limit, paramMap);
 
-		List<Object> list = new ArrayList<Object>();
+		List<Object> list = new java.util.concurrent.CopyOnWriteArrayList<Object>();
 
 		for (ProcessInstance processInstance : rows) {
-			Map<String, Object> rowMap = new HashMap<String, Object>();
+			Map<String, Object> rowMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 			rowMap.put("id", processInstance.getId());
 			rowMap.put("processInstanceId", processInstance.getId());
 			rowMap.put("businessKey", processInstance.getBusinessKey());
@@ -210,7 +206,7 @@ public class ActivitiProcessController {
 			list.add(rowMap);
 		}
 
-		Map<String, Object> pageInfo = new HashMap<String, Object>();
+		Map<String, Object> pageInfo = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		// 当前页数设置
 		pageInfo.put("startIndex", start);
 

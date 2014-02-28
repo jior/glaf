@@ -18,7 +18,6 @@
 
 package com.glaf.mail.def;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -79,7 +78,7 @@ public class MailRowSet implements java.io.Serializable {
 	/**
 	 * 邮件属性定义，主要用于自定义处理程序
 	 */
-	protected Map<String, Object> properties = new HashMap<String, Object>();
+	protected Map<String, Object> properties = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 
 	protected MailDataSet mailDataSet;
 

@@ -19,15 +19,13 @@
 package com.glaf.core.web.springmvc;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.Semaphore;
- 
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -123,7 +121,7 @@ public class MxUploadController {
 
 		String responseDataType = request.getParameter("responseDataType");
 		if (StringUtils.equals(responseDataType, "json")) {
-			Map<String, Object> jsonMap = new HashMap<String, Object>();
+			Map<String, Object> jsonMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 			jsonMap.put("message", message);
 			JSONObject object = new JSONObject(jsonMap);
 			response.getWriter().write(object.toString());
@@ -169,7 +167,7 @@ public class MxUploadController {
 
 		String responseDataType = request.getParameter("responseDataType");
 		if (StringUtils.equals(responseDataType, "json")) {
-			Map<String, Object> jsonMap = new HashMap<String, Object>();
+			Map<String, Object> jsonMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 			jsonMap.put("message", message);
 			JSONObject object = new JSONObject(jsonMap);
 			response.getWriter().write(object.toString());
@@ -207,7 +205,7 @@ public class MxUploadController {
 		int status = ParamUtils.getInt(paramMap, "status");
 		try {
 			if (request.getAttribute("dataFiles") == null) {
-				List<DataFile> dataFiles = new ArrayList<DataFile>();
+				List<DataFile> dataFiles = new java.util.concurrent.CopyOnWriteArrayList<DataFile>();
 				if (StringUtils.isNotEmpty(businessKey)) {
 					List<DataFile> rows = blobService.getBlobList(businessKey);
 					if (rows != null && rows.size() > 0) {
@@ -277,7 +275,7 @@ public class MxUploadController {
 		String objectId = req.getParameter("objectId");
 		String objectValue = req.getParameter("objectValue");
 		int status = ParamUtils.getInt(paramMap, "status");
-		List<DataFile> dataFiles = new ArrayList<DataFile>();
+		List<DataFile> dataFiles = new java.util.concurrent.CopyOnWriteArrayList<DataFile>();
 		try {
 			semaphore.acquire();
 

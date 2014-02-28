@@ -20,7 +20,6 @@ package com.glaf.core.template.renderer.freemarker;
 
 import java.io.StringWriter;
 import java.io.Writer;
-import java.util.HashMap;
 import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -54,7 +53,7 @@ public class FreemarkerRenderer implements Renderer {
 	public void render(Map<String, Object> model, Writer out) {
 		try {
 			if (parseException != null) {
-				Map<String, Object> context = new HashMap<String, Object>();
+				Map<String, Object> context = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 				context.put("exception", parseException);
 				context.put("exceptionSource", renderTemplate.getTemplateId());
 				t.process(context, out);

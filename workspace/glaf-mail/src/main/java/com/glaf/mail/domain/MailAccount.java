@@ -35,7 +35,6 @@ import org.apache.commons.lang.builder.ToStringStyle;
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-
 import com.glaf.core.util.DateUtils;
 
 @Entity

@@ -19,9 +19,11 @@
 package com.glaf.cluster.catalina.session;
 
 import java.security.Principal;
+
 import org.apache.catalina.Manager;
 import org.apache.catalina.session.StandardSession;
-import java.util.HashMap;
+ 
+import java.util.Map;
 
 public class ZooKeeperSession extends StandardSession {
 
@@ -38,7 +40,7 @@ public class ZooKeeperSession extends StandardSession {
 		manualDirtyTrackingSupportEnabled = enabled;
 	}
 
-	protected HashMap<String, Object> changedAttributes;
+	protected Map<String, Object> changedAttributes;
 	protected Boolean dirty;
 
 	public ZooKeeperSession(Manager manager) {
@@ -46,7 +48,7 @@ public class ZooKeeperSession extends StandardSession {
 		resetDirtyTracking();
 	}
 
-	public HashMap<String, Object> getChangedAttributes() {
+	public Map<String, Object> getChangedAttributes() {
 		return changedAttributes;
 	}
 
@@ -61,7 +63,7 @@ public class ZooKeeperSession extends StandardSession {
 	}
 
 	public void resetDirtyTracking() {
-		changedAttributes = new HashMap<String, Object>();
+		changedAttributes = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		dirty = false;
 	}
 

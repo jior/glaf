@@ -7,6 +7,7 @@ import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Properties;
+
 import javax.mail.BodyPart;
 import javax.mail.Flags;
 import javax.mail.Folder;
@@ -30,7 +31,6 @@ import com.glaf.core.context.ContextFactory;
 import com.glaf.core.security.DigestUtil;
 import com.glaf.core.util.FileUtils;
 import com.glaf.core.util.UUID32;
-
 import com.glaf.mail.Mail;
 import com.glaf.mail.domain.MailDataFile;
 import com.glaf.mail.service.IMailService;

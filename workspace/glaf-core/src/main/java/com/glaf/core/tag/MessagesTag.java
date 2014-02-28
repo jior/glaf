@@ -20,14 +20,14 @@
  */
 package com.glaf.core.tag;
 
+import java.util.Iterator;
+
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 
 import com.glaf.core.res.MessageResources;
 import com.glaf.core.res.ViewMessage;
 import com.glaf.core.res.ViewMessages;
-
-import java.util.Iterator;
 
 /**
  * Custom tag that iterates the elements of a message collection. It defaults to

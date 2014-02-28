@@ -23,8 +23,8 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Paint;
 import java.awt.geom.Rectangle2D;
-
 import java.text.NumberFormat;
+
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.entity.CategoryItemEntity;
@@ -36,7 +36,6 @@ import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.category.CategoryItemRendererState;
 import org.jfree.chart.renderer.category.StackedBarRenderer;
-
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.text.TextUtilities;
 import org.jfree.ui.RectangleEdge;

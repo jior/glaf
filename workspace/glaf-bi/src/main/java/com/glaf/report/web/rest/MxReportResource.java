@@ -367,8 +367,8 @@ public class MxReportResource {
 		String selected = request.getParameter("selected");
 
 		logger.debug(RequestUtils.getParameterMap(request));
-		List<TreeModel> treeModels = new ArrayList<TreeModel>();
-		List<String> chooseList = new ArrayList<String>();
+		List<TreeModel> treeModels = new java.util.concurrent.CopyOnWriteArrayList<TreeModel>();
+		List<String> chooseList = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		if (StringUtils.isNotEmpty(selected)) {
 			chooseList = StringTools.split(selected);
 		}

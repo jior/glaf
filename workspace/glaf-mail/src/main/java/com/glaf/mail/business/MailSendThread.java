@@ -27,16 +27,16 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 import com.glaf.core.context.ContextFactory;
-import com.glaf.mail.MxMailHelper;
+import com.glaf.core.util.DateUtils;
+import com.glaf.core.util.LogUtils;
+import com.glaf.core.util.RequestUtils;
 import com.glaf.mail.MailMessage;
 import com.glaf.mail.MailSender;
+import com.glaf.mail.MxMailHelper;
 import com.glaf.mail.domain.MailAccount;
 import com.glaf.mail.domain.MailItem;
 import com.glaf.mail.domain.MailTask;
 import com.glaf.mail.util.MailTools;
-import com.glaf.core.util.DateUtils;
-import com.glaf.core.util.LogUtils;
-import com.glaf.core.util.RequestUtils;
 
 public class MailSendThread implements Runnable {
 

@@ -25,7 +25,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -49,8 +48,8 @@ import com.glaf.core.util.ClassUtils;
 import com.glaf.core.util.DBUtils;
 import com.glaf.core.util.FileUtils;
 import com.glaf.core.util.UUID32;
-import com.glaf.core.xml.XmlReader;
 import com.glaf.core.xml.XmlMappingReader;
+import com.glaf.core.xml.XmlReader;
 
 public class ParserFacede {
 	protected static final Log logger = LogFactory.getLog(ParserFacede.class);
@@ -396,7 +395,7 @@ public class ParserFacede {
 	public void process(String mappingDir, String dataDir) {
 		XmlMappingReader reader = new XmlMappingReader();
 		Set<String> prefixs = new HashSet<String>();
-		Map<String, TableModel> tplMap = new HashMap<String, TableModel>();
+		Map<String, TableModel> tplMap = new java.util.concurrent.ConcurrentHashMap<String, TableModel>();
 		java.io.File directory = new java.io.File(mappingDir);
 		if (directory.exists()) {
 			File[] entries = directory.listFiles();

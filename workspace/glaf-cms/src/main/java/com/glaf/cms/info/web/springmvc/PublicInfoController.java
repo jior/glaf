@@ -141,7 +141,7 @@ public class PublicInfoController {
 		Long nodeId = RequestUtils.getLong(request, "nodeId");
 		List<String> r_rows = StringTools.split(rowIds);
 
-		Map<Long, TreeModel> treeModelMap = new HashMap<Long, TreeModel>();
+		Map<Long, TreeModel> treeModelMap = new java.util.concurrent.ConcurrentHashMap<Long, TreeModel>();
 		TreeModel treeModel = null;
 		if (StringUtils.isNotEmpty(serviceKey)) {
 			treeModel = treeModelService.getTreeModelByCode(serviceKey);

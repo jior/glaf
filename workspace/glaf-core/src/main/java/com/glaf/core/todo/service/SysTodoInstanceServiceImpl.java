@@ -18,19 +18,19 @@
 
 package com.glaf.core.todo.service;
 
-import java.util.*;
+import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.glaf.core.id.*;
-import com.glaf.core.todo.*;
-import com.glaf.core.todo.mapper.*;
-import com.glaf.core.todo.query.*;
+import com.glaf.core.id.IdGenerator;
+import com.glaf.core.todo.TodoInstance;
+import com.glaf.core.todo.mapper.TodoInstanceMapper;
+import com.glaf.core.todo.query.TodoInstanceQuery;
 
 @Service("sysTodoInstanceService")
 @Transactional(readOnly = true)

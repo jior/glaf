@@ -17,26 +17,32 @@
  */
 package com.glaf.form.core.domain;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import javax.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
-import com.alibaba.fastjson.*;
+
+import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.glaf.core.base.JSONable;
-import com.glaf.form.core.util.*;
-
 import com.glaf.form.core.context.FormContext;
 import com.glaf.form.core.graph.def.FormEvent;
 import com.glaf.form.core.graph.def.FormNode;
 import com.glaf.form.core.graph.def.FormScript;
 import com.glaf.form.core.graph.def.GraphElement;
+import com.glaf.form.core.util.FormDefinitionJsonFactory;
 
 @Entity
 @Table(name = "FORM_DEFINITION")
@@ -122,7 +128,7 @@ public class FormDefinition extends GraphElement implements JSONable {
 					"can't add a null node to a form definition");
 		}
 		if (nodes == null) {
-			nodes = new ArrayList<FormNode>();
+			nodes = new java.util.concurrent.CopyOnWriteArrayList<FormNode>();
 		}
 		node.setFormDefinition(this);
 		nodes.add(node);
@@ -137,7 +143,7 @@ public class FormDefinition extends GraphElement implements JSONable {
 					"can't add a null script to a form definition");
 		}
 		if (scripts == null) {
-			scripts = new ArrayList<FormScript>();
+			scripts = new java.util.concurrent.CopyOnWriteArrayList<FormScript>();
 		}
 		scripts.add(script);
 		return script;
@@ -194,7 +200,7 @@ public class FormDefinition extends GraphElement implements JSONable {
 	@Transient
 	public List<FormNode> getNodes() {
 		if (nodes == null) {
-			nodes = new ArrayList<FormNode>();
+			nodes = new java.util.concurrent.CopyOnWriteArrayList<FormNode>();
 		}
 		return nodes;
 	}
@@ -229,7 +235,7 @@ public class FormDefinition extends GraphElement implements JSONable {
 	@Transient
 	public List<FormScript> getScripts() {
 		if (scripts == null) {
-			scripts = new ArrayList<FormScript>();
+			scripts = new java.util.concurrent.CopyOnWriteArrayList<FormScript>();
 		}
 		return scripts;
 	}

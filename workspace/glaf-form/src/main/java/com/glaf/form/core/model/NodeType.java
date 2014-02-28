@@ -17,7 +17,6 @@
  */
 package com.glaf.form.core.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -208,7 +207,7 @@ public class NodeType {
 
 	public List<EventType> getEvent() {
 		if (event == null) {
-			event = new ArrayList<EventType>();
+			event = new java.util.concurrent.CopyOnWriteArrayList<EventType>();
 		}
 		return this.event;
 	}
@@ -287,7 +286,7 @@ public class NodeType {
 
 	public List<PropertyType> getProperty() {
 		if (property == null) {
-			property = new ArrayList<PropertyType>();
+			property = new java.util.concurrent.CopyOnWriteArrayList<PropertyType>();
 		}
 		return this.property;
 	}

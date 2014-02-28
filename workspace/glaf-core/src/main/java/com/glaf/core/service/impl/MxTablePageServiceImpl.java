@@ -19,7 +19,6 @@
 package com.glaf.core.service.impl;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,13 +32,13 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.glaf.core.base.TablePage;
 import com.glaf.core.entity.SqlExecutor;
 import com.glaf.core.id.IdGenerator;
-import com.glaf.core.base.TablePage;
 import com.glaf.core.mapper.TablePageMapper;
+import com.glaf.core.query.QueryCondition;
 import com.glaf.core.query.TablePageQuery;
 import com.glaf.core.service.ITablePageService;
-import com.glaf.core.query.QueryCondition;
 import com.glaf.core.util.Paging;
 import com.glaf.core.util.QueryUtils;
 
@@ -75,7 +74,7 @@ public class MxTablePageServiceImpl implements ITablePageService {
 		}
 		String sql = buffer.toString() + sqlExecutor.getSql();
 
-		Map<String, Object> params = new HashMap<String, Object>();
+		Map<String, Object> params = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		if (sqlExecutor.getParameter() instanceof Map) {
 			params.putAll((Map) sqlExecutor.getParameter());
 		}
@@ -102,7 +101,7 @@ public class MxTablePageServiceImpl implements ITablePageService {
 		}
 		String sql = buffer.toString() + sqlExecutor.getSql();
 
-		Map<String, Object> params = new HashMap<String, Object>();
+		Map<String, Object> params = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		if (sqlExecutor.getParameter() instanceof Map) {
 			params.putAll((Map) sqlExecutor.getParameter());
 		}
@@ -134,7 +133,7 @@ public class MxTablePageServiceImpl implements ITablePageService {
 		buffer.append(" where 1=1 ");
 		String sql = buffer.toString() + sqlExecutor.getSql();
 
-		Map<String, Object> params = new HashMap<String, Object>();
+		Map<String, Object> params = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		if (sqlExecutor.getParameter() instanceof Map) {
 			params.putAll((Map) sqlExecutor.getParameter());
 		}
@@ -196,7 +195,7 @@ public class MxTablePageServiceImpl implements ITablePageService {
 		buffer.append(" where 1=1 ");
 		String sql = buffer.toString() + sqlExecutor.getSql();
 
-		Map<String, Object> params = new HashMap<String, Object>();
+		Map<String, Object> params = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		if (sqlExecutor.getParameter() instanceof Map) {
 			params.putAll((Map) sqlExecutor.getParameter());
 		}
@@ -246,7 +245,7 @@ public class MxTablePageServiceImpl implements ITablePageService {
 		buffer.append(" where 1=1 ");
 
 		String sql = buffer.toString() + sqlExecutor.getSql();
-		Map<String, Object> params = new HashMap<String, Object>();
+		Map<String, Object> params = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		if (sqlExecutor.getParameter() instanceof Map) {
 			params.putAll((Map) sqlExecutor.getParameter());
 		}
@@ -322,7 +321,7 @@ public class MxTablePageServiceImpl implements ITablePageService {
 
 		sql = sql + buffer.toString();
 
-		Map<String, Object> params = new HashMap<String, Object>();
+		Map<String, Object> params = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		if (sqlExecutor.getParameter() instanceof Map) {
 			params.putAll((Map) sqlExecutor.getParameter());
 		}

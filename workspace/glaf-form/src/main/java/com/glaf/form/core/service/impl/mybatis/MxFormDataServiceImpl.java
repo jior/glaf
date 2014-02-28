@@ -18,10 +18,8 @@
 package com.glaf.form.core.service.impl.mybatis;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -33,16 +31,15 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.SqlSession;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.glaf.core.base.ColumnModel;
 import com.glaf.core.base.DataFile;
 import com.glaf.core.base.DataModel;
 import com.glaf.core.base.DataModelEntity;
-import com.glaf.core.base.ColumnModel;
 import com.glaf.core.cache.CacheFactory;
 import com.glaf.core.dao.EntityDAO;
 import com.glaf.core.domain.BlobItemEntity;
@@ -54,14 +51,12 @@ import com.glaf.core.security.LoginContext;
 import com.glaf.core.service.DataModelService;
 import com.glaf.core.service.IBlobService;
 import com.glaf.core.service.ITableDefinitionService;
-
 import com.glaf.core.util.Paging;
 import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.SearchFilter;
 import com.glaf.core.util.StringTools;
 import com.glaf.core.util.Tools;
 import com.glaf.core.util.UUID32;
-
 import com.glaf.form.core.context.FormContext;
 import com.glaf.form.core.domain.FormApplication;
 import com.glaf.form.core.domain.FormDefinition;
@@ -212,7 +207,7 @@ public class MxFormDataServiceImpl implements FormDataService {
 	}
 
 	public Map<String, FormApplication> getFormApplicationMap() {
-		Map<String, FormApplication> appMap = new HashMap<String, FormApplication>();
+		Map<String, FormApplication> appMap = new java.util.concurrent.ConcurrentHashMap<String, FormApplication>();
 		FormApplicationQuery query = new FormApplicationQuery();
 		List<FormApplication> list = this.formApplicationList(query);
 		if (list != null && !list.isEmpty()) {
@@ -293,7 +288,7 @@ public class MxFormDataServiceImpl implements FormDataService {
 		FormApplication formApplication = this.getFormApplication(appId);
 		query.setTableName(formApplication.getTableName());
 
-		Map<String, Object> paramMap = new HashMap<String, Object>();
+		Map<String, Object> paramMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		if (query.getParameter() != null) {
 			if (Map.class.isAssignableFrom(query.getParameter().getClass())) {
 				paramMap.putAll((Map<String, Object>) query.getParameter());
@@ -305,7 +300,7 @@ public class MxFormDataServiceImpl implements FormDataService {
 			Object object = ParamUtils.get(paramMap, "processInstanceIds");
 			if (object instanceof java.util.Collection<?>) {
 				Collection<?> rows = (Collection<?>) object;
-				List<String> processInstanceIds = new ArrayList<String>();
+				List<String> processInstanceIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
 				Iterator<?> iterator = rows.iterator();
 				while (iterator.hasNext()) {
 					Object value = iterator.next();
@@ -387,7 +382,7 @@ public class MxFormDataServiceImpl implements FormDataService {
 		}
 
 		Paging page = new Paging();
-		List<Object> rows = new ArrayList<Object>();
+		List<Object> rows = new java.util.concurrent.CopyOnWriteArrayList<Object>();
 
 		int total = dataModelService.getDataModelCount(query);
 		if (total > 0) {
@@ -436,7 +431,7 @@ public class MxFormDataServiceImpl implements FormDataService {
 		String tableName = formApplication.getTableName();
 		List<ColumnDefinition> columns = tableDefinitionService
 				.getColumnDefinitionsByTableName(tableName);
-		Map<String, ColumnDefinition> columnMap = new HashMap<String, ColumnDefinition>();
+		Map<String, ColumnDefinition> columnMap = new java.util.concurrent.ConcurrentHashMap<String, ColumnDefinition>();
 		for (ColumnDefinition column : columns) {
 			columnMap.put(column.getColumnName(), column);
 			columnMap.put(column.getColumnName().toLowerCase(), column);
@@ -666,7 +661,7 @@ public class MxFormDataServiceImpl implements FormDataService {
 		String tableName = formApplication.getTableName();
 		List<ColumnDefinition> columns = tableDefinitionService
 				.getColumnDefinitionsByTableName(tableName);
-		Map<String, ColumnDefinition> columnMap = new HashMap<String, ColumnDefinition>();
+		Map<String, ColumnDefinition> columnMap = new java.util.concurrent.ConcurrentHashMap<String, ColumnDefinition>();
 		for (ColumnDefinition column : columns) {
 			columnMap.put(column.getColumnName(), column);
 			columnMap.put(column.getColumnName().toLowerCase(), column);

@@ -17,7 +17,7 @@
  */
 package com.glaf.activiti.test;
 
-import java.util.ArrayList;
+ 
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -42,7 +42,7 @@ public class StartAndCompleteTest extends AbstractActivitiTest {
 			ctx.setTitle("单据编号：" + ctx.getBusinessKey());// 流程标题
 			ctx.setProcessName("SimpleProcess");// 流程名称（英文的名称）
 
-			Collection<DataField> datafields = new ArrayList<DataField>();
+			Collection<DataField> datafields = new java.util.concurrent.CopyOnWriteArrayList<DataField>();
 
 			DataField datafield = new DataField();
 			datafield.setName("isAgree");// 控制参数名称
@@ -94,7 +94,7 @@ public class StartAndCompleteTest extends AbstractActivitiTest {
 				DataField datafield = new DataField();
 				datafield.setName("approve");
 				datafield.setValue(true);
-				List<DataField> dataFields = new ArrayList<DataField>();
+				List<DataField> dataFields = new java.util.concurrent.CopyOnWriteArrayList<DataField>();
 				dataFields.add(datafield);
 				ProcessContext ctx = new ProcessContext();
 				// ctx.setRowId(Integer.valueOf(rowId));//审核表的记录ID,类型要匹配

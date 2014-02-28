@@ -18,7 +18,6 @@
 
 package com.glaf.activiti.delegate.vote;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.activiti.engine.delegate.DelegateExecution;
@@ -29,7 +28,7 @@ public class CreateAssigneeList implements JavaDelegate {
 	public void execute(DelegateExecution execution) {
 		String participants = (String) execution.getVariable("participants");
 		String[] participantsArray = participants.split(",");
-		List<String> assigneeList = new ArrayList<String>();
+		List<String> assigneeList = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		for (String assignee : participantsArray) {
 			assigneeList.add(assignee);
 		}

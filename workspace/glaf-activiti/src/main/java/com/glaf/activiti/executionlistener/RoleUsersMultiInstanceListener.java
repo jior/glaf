@@ -18,21 +18,19 @@
 
 package com.glaf.activiti.executionlistener;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.activiti.engine.delegate.DelegateExecution;
-import org.activiti.engine.delegate.Expression;
 import org.activiti.engine.delegate.ExecutionListener;
+import org.activiti.engine.delegate.Expression;
 import org.activiti.engine.impl.context.Context;
 import org.activiti.engine.impl.interceptor.CommandContext;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
 import com.glaf.core.dao.MyBatisEntityDAO;
 import com.glaf.core.util.StringTools;
 
@@ -62,7 +60,7 @@ public class RoleUsersMultiInstanceListener implements ExecutionListener {
 		CommandContext commandContext = Context.getCommandContext();
 
 		if (execution != null) {
-			Map<String, Object> paramMap = new HashMap<String, Object>();
+			Map<String, Object> paramMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 
 			String statement = null;
 			if (statementId != null) {
@@ -85,7 +83,7 @@ public class RoleUsersMultiInstanceListener implements ExecutionListener {
 				statement = "getMembershipUsers";
 			}
 
-			Collection<String> assigneeList = new ArrayList<String>();
+			Collection<String> assigneeList = new java.util.concurrent.CopyOnWriteArrayList<String>();
 
 			if (!paramMap.isEmpty()) {
 				paramMap.putAll(execution.getVariables());

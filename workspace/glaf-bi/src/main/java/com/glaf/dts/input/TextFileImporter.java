@@ -18,7 +18,7 @@
 
 package com.glaf.dts.input;
 
-import java.util.HashMap;
+ 
 import java.util.List;
 import java.util.Map;
 
@@ -38,7 +38,7 @@ public class TextFileImporter {
 		List<SystemProperty> props = systemPropertyService
 				.getAllSystemProperties();
 		if (props != null && !props.isEmpty()) {
-			Map<String, String> dataMap = new HashMap<String, String>();
+			Map<String, String> dataMap = new java.util.concurrent.ConcurrentHashMap<String, String>();
 			for (SystemProperty p : props) {
 				dataMap.put(p.getName(), p.getValue());
 			}

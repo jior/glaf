@@ -18,9 +18,8 @@
 
 package com.glaf.activiti.container;
 
-import java.util.ArrayList;
+ 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -155,7 +154,7 @@ public class ProcessContainer {
 	public List<TaskItem> filter(String actorId, List<TaskItem> rows) {
 		List<Agent> agents = this.getAgents(actorId);
 		logger.debug(agents);
-		List<TaskItem> taskItems = new ArrayList<TaskItem>();
+		List<TaskItem> taskItems = new java.util.concurrent.CopyOnWriteArrayList<TaskItem>();
 		if (rows != null && rows.size() > 0) {
 			Iterator<TaskItem> iter = rows.iterator();
 			while (iter.hasNext()) {
@@ -288,7 +287,7 @@ public class ProcessContainer {
 	}
 
 	public Collection<String> getActivityNames(String processInstanceId) {
-		Collection<String> names = new ArrayList<String>();
+		Collection<String> names = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		try {
 
 		} catch (Exception ex) {
@@ -328,7 +327,7 @@ public class ProcessContainer {
 	 * @return
 	 */
 	public List<TaskItem> getAllTaskItems() {
-		List<TaskItem> taskItems = new ArrayList<TaskItem>();
+		List<TaskItem> taskItems = new java.util.concurrent.CopyOnWriteArrayList<TaskItem>();
 		try {
 			List<Task> tasks = activitiTaskQueryService.getAllTasks();
 			if (tasks != null && !tasks.isEmpty()) {
@@ -353,7 +352,7 @@ public class ProcessContainer {
 	 * @return
 	 */
 	public List<TaskItem> getAllTaskItems(String processInstanceId) {
-		List<TaskItem> taskItems = new ArrayList<TaskItem>();
+		List<TaskItem> taskItems = new java.util.concurrent.CopyOnWriteArrayList<TaskItem>();
 		try {
 			List<Task> tasks = activitiTaskQueryService
 					.getAllTasks(processInstanceId);
@@ -422,7 +421,7 @@ public class ProcessContainer {
 	 */
 	public List<ProcessInstance> getProcessInstances(
 			String processDefinitionKey, int start, int pageSize) {
-		Map<String, Object> paramMap = new HashMap<String, Object>();
+		Map<String, Object> paramMap = new java.util.HashMap<String, Object>();
 		paramMap.put("processDefinitionKey", processDefinitionKey);
 		try {
 			return activitiProcessQueryService.getProcessInstances(start,
@@ -439,7 +438,7 @@ public class ProcessContainer {
 	 * @return
 	 */
 	public List<String> getRunningProcessInstanceIds(Collection<String> actorIds) {
-		List<String> processInstanceIds = new ArrayList<String>();
+		List<String> processInstanceIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		List<TaskItem> taskItems = this.getTaskItems(actorIds);
 		if (taskItems != null && taskItems.size() > 0) {
 			Iterator<TaskItem> iterator = taskItems.iterator();
@@ -465,7 +464,7 @@ public class ProcessContainer {
 	 * @return
 	 */
 	public List<String> getRunningProcessInstanceIds(String actorId) {
-		List<String> processInstanceIds = new ArrayList<String>();
+		List<String> processInstanceIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		List<TaskItem> taskItems = this.getTaskItems(actorId);
 		if (taskItems != null && taskItems.size() > 0) {
 			Iterator<TaskItem> iterator = taskItems.iterator();
@@ -489,7 +488,7 @@ public class ProcessContainer {
 	 */
 	public List<String> getRunningProcessInstanceIds(
 			String processDefinitionKey, String actorId) {
-		List<String> processInstanceIds = new ArrayList<String>();
+		List<String> processInstanceIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		List<TaskItem> taskItems = this.getRunningTaskItems(
 				processDefinitionKey, actorId);
 		if (taskItems != null && taskItems.size() > 0) {
@@ -514,8 +513,8 @@ public class ProcessContainer {
 	 */
 	public List<String> getRunningProcessInstanceIdsByName(
 			String processDefinitionKey) {
-		List<String> processInstanceIds = new ArrayList<String>();
-		Map<String, Object> paramMap = new HashMap<String, Object>();
+		List<String> processInstanceIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
+		Map<String, Object> paramMap = new java.util.HashMap<String, Object>();
 		paramMap.put("processDefinitionKey", processDefinitionKey);
 		try {
 			List<ProcessInstance> rows = activitiProcessQueryService
@@ -538,7 +537,7 @@ public class ProcessContainer {
 	 * @return
 	 */
 	public List<String> getRunningTaskInstanceIds(Collection<String> actorIds) {
-		List<String> taskIds = new ArrayList<String>();
+		List<String> taskIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		List<TaskItem> taskItems = this.getTaskItems(actorIds);
 		if (taskItems != null && taskItems.size() > 0) {
 			Iterator<TaskItem> iterator = taskItems.iterator();
@@ -562,7 +561,7 @@ public class ProcessContainer {
 	 * @return
 	 */
 	public List<String> getRunningTaskInstanceIds(String actorId) {
-		List<String> taskIds = new ArrayList<String>();
+		List<String> taskIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		List<TaskItem> taskItems = this.getTaskItems(actorId);
 		if (taskItems != null && taskItems.size() > 0) {
 			Iterator<TaskItem> iterator = taskItems.iterator();
@@ -586,8 +585,8 @@ public class ProcessContainer {
 	 * @return
 	 */
 	public List<String> getRunningTaskInstanceIdsByName(String processName) {
-		List<String> taskIds = new ArrayList<String>();
-		Map<String, Object> paramMap = new HashMap<String, Object>();
+		List<String> taskIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
+		Map<String, Object> paramMap = new java.util.HashMap<String, Object>();
 		paramMap.put("processDefinitionKey", processName);
 		try {
 			List<ProcessInstance> rows = activitiProcessQueryService
@@ -617,8 +616,8 @@ public class ProcessContainer {
 	 */
 	public List<String> getRunningTaskInstanceIdsByName(String processName,
 			String actorId) {
-		List<String> taskIds = new ArrayList<String>();
-		Map<String, Object> paramMap = new HashMap<String, Object>();
+		List<String> taskIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
+		Map<String, Object> paramMap = new java.util.HashMap<String, Object>();
 		paramMap.put("processDefinitionKey", processName);
 		try {
 			List<ProcessInstance> rows = activitiProcessQueryService
@@ -660,16 +659,16 @@ public class ProcessContainer {
 	 */
 	public List<TaskItem> getRunningTaskItems(String processDefinitionKey,
 			String actorId) {
-		List<TaskItem> taskItems = new ArrayList<TaskItem>();
+		List<TaskItem> taskItems = new java.util.concurrent.CopyOnWriteArrayList<TaskItem>();
 		Collection<String> agentIds = this.getAgentIds(actorId);
-		Collection<String> actorIds = new ArrayList<String>();
+		Collection<String> actorIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		actorIds.add(actorId);
 		if (agentIds != null && agentIds.size() > 0) {
 			actorIds.addAll(agentIds);
 		}
 
 		for (String userId : actorIds) {
-			Map<String, Object> paramMap = new HashMap<String, Object>();
+			Map<String, Object> paramMap = new java.util.HashMap<String, Object>();
 			paramMap.put("assignee", userId);
 			paramMap.put("processDefinitionKey", processDefinitionKey);
 			List<Task> tasks = activitiTaskQueryService.getTasks(0,
@@ -682,7 +681,7 @@ public class ProcessContainer {
 		}
 
 		for (String userId : actorIds) {
-			Map<String, Object> paramMap = new HashMap<String, Object>();
+			Map<String, Object> paramMap = new java.util.HashMap<String, Object>();
 			paramMap.put("candidateUser", userId);
 			paramMap.put("processDefinitionKey", processDefinitionKey);
 			List<Task> tasks = activitiTaskQueryService.getTasks(0,
@@ -706,19 +705,19 @@ public class ProcessContainer {
 	 * @return 待处理的任务实例编号的集合
 	 */
 	public List<String> getTaskInstanceIds(String actorId) {
-		List<String> taskIds = new ArrayList<String>();
+		List<String> taskIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		try {
 			// 获取代理人的任务实例
 			List<String> agentIds = this.getAgentIds(actorId);
 
-			List<String> actorIds = new ArrayList<String>();
+			List<String> actorIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
 			actorIds.add(actorId);
 
 			if (agentIds.size() > 0) {
 				actorIds.addAll(agentIds);
 			}
 
-			Map<String, Object> paramMap = new HashMap<String, Object>();
+			Map<String, Object> paramMap = new java.util.HashMap<String, Object>();
 
 			for (String userId : actorIds) {
 				paramMap.put("assignee", userId);
@@ -764,7 +763,7 @@ public class ProcessContainer {
 	public TaskItem getTaskItem(String taskId, String actorId) {
 		TaskItem taskItem = null;
 		try {
-			Map<String, Object> paramMap = new HashMap<String, Object>();
+			Map<String, Object> paramMap = new java.util.HashMap<String, Object>();
 			paramMap.put("taskId", taskId);
 			paramMap.put("assignee", actorId);
 			Task task = null;
@@ -805,7 +804,7 @@ public class ProcessContainer {
 			String actorId) {
 		TaskItem taskItem = null;
 		try {
-			Map<String, Object> paramMap = new HashMap<String, Object>();
+			Map<String, Object> paramMap = new java.util.HashMap<String, Object>();
 			paramMap.put("processInstanceId", processInstanceId);
 			paramMap.put("assignee", actorId);
 			logger.debug("->paramMap:" + paramMap);
@@ -844,7 +843,7 @@ public class ProcessContainer {
 	 * @return
 	 */
 	public List<TaskItem> getTaskItems(Collection<String> actorIds) {
-		List<TaskItem> taskItems = new ArrayList<TaskItem>();
+		List<TaskItem> taskItems = new java.util.concurrent.CopyOnWriteArrayList<TaskItem>();
 		for (String actorId : actorIds) {
 			List<Task> tasks = activitiTaskQueryService.getUserTasks(actorId);
 			if (tasks != null && !tasks.isEmpty()) {
@@ -863,10 +862,10 @@ public class ProcessContainer {
 	 * @return
 	 */
 	public List<TaskItem> getTaskItems(String actorId) {
-		List<TaskItem> taskItems = new ArrayList<TaskItem>();
+		List<TaskItem> taskItems = new java.util.concurrent.CopyOnWriteArrayList<TaskItem>();
 		Collection<String> agentIds = this.getAgentIds(actorId);
 
-		Collection<String> actorIds = new ArrayList<String>();
+		Collection<String> actorIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		actorIds.add(actorId);
 		if (agentIds != null && agentIds.size() > 0) {
 			actorIds.addAll(agentIds);
@@ -894,16 +893,16 @@ public class ProcessContainer {
 	 * @return
 	 */
 	public List<TaskItem> getTaskItems(String actorId, String processInstanceId) {
-		List<TaskItem> taskItems = new ArrayList<TaskItem>();
+		List<TaskItem> taskItems = new java.util.concurrent.CopyOnWriteArrayList<TaskItem>();
 		Collection<String> agentIds = this.getAgentIds(actorId);
-		Collection<String> actorIds = new ArrayList<String>();
+		Collection<String> actorIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		actorIds.add(actorId);
 		if (agentIds != null && agentIds.size() > 0) {
 			actorIds.addAll(agentIds);
 		}
 
 		for (String userId : actorIds) {
-			Map<String, Object> paramMap = new HashMap<String, Object>();
+			Map<String, Object> paramMap = new java.util.HashMap<String, Object>();
 			paramMap.put("assignee", userId);
 			paramMap.put("processInstanceId", processInstanceId);
 			List<Task> tasks = activitiTaskQueryService.getTasks(0,
@@ -916,7 +915,7 @@ public class ProcessContainer {
 		}
 
 		for (String userId : actorIds) {
-			Map<String, Object> paramMap = new HashMap<String, Object>();
+			Map<String, Object> paramMap = new java.util.HashMap<String, Object>();
 			paramMap.put("candidateUser", userId);
 			paramMap.put("processInstanceId", processInstanceId);
 			List<Task> tasks = activitiTaskQueryService.getTasks(0,
@@ -941,9 +940,9 @@ public class ProcessContainer {
 	 */
 	public List<TaskItem> getTaskItemsByProcessInstanceId(
 			String processInstanceId) {
-		List<TaskItem> taskItems = new ArrayList<TaskItem>();
+		List<TaskItem> taskItems = new java.util.concurrent.CopyOnWriteArrayList<TaskItem>();
 
-		Map<String, Object> paramMap = new HashMap<String, Object>();
+		Map<String, Object> paramMap = new java.util.HashMap<String, Object>();
 
 		paramMap.put("processInstanceId", processInstanceId);
 		List<Task> tasks = activitiTaskQueryService.getTasks(0,
@@ -965,10 +964,10 @@ public class ProcessContainer {
 	 */
 	public List<TaskItem> getTaskItemsByProcessInstanceIds(
 			Collection<String> processInstanceIds) {
-		List<TaskItem> taskItems = new ArrayList<TaskItem>();
+		List<TaskItem> taskItems = new java.util.concurrent.CopyOnWriteArrayList<TaskItem>();
 
 		for (String pid : processInstanceIds) {
-			Map<String, Object> paramMap = new HashMap<String, Object>();
+			Map<String, Object> paramMap = new java.util.HashMap<String, Object>();
 			paramMap.put("processInstanceId", pid);
 			List<Task> tasks = activitiTaskQueryService.getTasks(0,
 					MAX_TASK_INSTANCE_QTY, paramMap);
@@ -983,7 +982,7 @@ public class ProcessContainer {
 	}
 
 	public Collection<String> getTransitionNames(String taskId) {
-		Collection<String> transitions = new ArrayList<String>();
+		Collection<String> transitions = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		try {
 
 		} catch (Exception ex) {

@@ -18,22 +18,27 @@
 
 package com.glaf.report.web.springmvc;
 
-import java.util.*;
+import java.util.Map;
+import java.util.StringTokenizer;
+
 import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
-import com.glaf.core.config.*;
-import com.glaf.core.security.*;
-import com.glaf.core.util.*;
-
-import com.glaf.report.domain.*;
-import com.glaf.report.service.*;
+import com.glaf.core.config.ViewProperties;
+import com.glaf.core.security.LoginContext;
+import com.glaf.core.util.JsonUtils;
+import com.glaf.core.util.ParamUtils;
+import com.glaf.core.util.RequestUtils;
+import com.glaf.core.util.Tools;
+import com.glaf.report.domain.ReportFile;
+import com.glaf.report.service.IReportFileService;
 
 @Controller("/bi/reportFile")
 @RequestMapping("/bi/reportFile")

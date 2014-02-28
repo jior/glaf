@@ -18,11 +18,10 @@
 
 package com.glaf.core.util;
 
-import java.io.*;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Date;
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -55,7 +54,7 @@ public class RequestUtils {
 
 	protected final static Log logger = LogFactory.getLog(RequestUtils.class);
 
-	private static final Map<String, Object> paramMap = new HashMap<String, Object>();
+	private static final Map<String, Object> paramMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 
 	static {
 		paramMap.put("submit", "submit");
@@ -126,7 +125,7 @@ public class RequestUtils {
 	}
 
 	private static Map<String, String> decodeValues(String ip, String value) {
-		Map<String, String> cookieMap = new HashMap<String, String>();
+		Map<String, String> cookieMap = new java.util.concurrent.ConcurrentHashMap<String, String>();
 		if (StringUtils.isNotEmpty(value)) {
 			String c_x = decodeString(value);
 			c_x = StringUtils.replace(c_x, DigestUtils.md5Hex(ip), "");
@@ -505,7 +504,7 @@ public class RequestUtils {
 	 */
 	public static Object getParameter(HttpServletRequest request, Object object)
 			throws ServletException {
-		Map<String, Object> dataMap = new HashMap<String, Object>();
+		Map<String, Object> dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		Enumeration<?> enumeration = request.getParameterNames();
 		while (enumeration.hasMoreElements()) {
 			String paramName = (String) enumeration.nextElement();
@@ -572,7 +571,7 @@ public class RequestUtils {
 	 * @return
 	 */
 	public static Map<String, Object> getParameterMap(HttpServletRequest request) {
-		Map<String, Object> dataMap = new HashMap<String, Object>();
+		Map<String, Object> dataMap = new java.util.HashMap<String, Object>();
 		Enumeration<?> enumeration = request.getParameterNames();
 		while (enumeration.hasMoreElements()) {
 			String paramName = (String) enumeration.nextElement();
@@ -612,7 +611,7 @@ public class RequestUtils {
 	 */
 	public static Map<String, Object> getParameterMap(
 			HttpServletRequest request, String prefix) {
-		Map<String, Object> dataMap = new HashMap<String, Object>();
+		Map<String, Object> dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		Enumeration<?> enumeration = request.getParameterNames();
 		while (enumeration.hasMoreElements()) {
 			String paramName = (String) enumeration.nextElement();
@@ -639,7 +638,7 @@ public class RequestUtils {
 	 */
 	public static Map<String, Object> getParameterMap(
 			MultipartHttpServletRequest request) {
-		Map<String, Object> dataMap = new HashMap<String, Object>();
+		Map<String, Object> dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		dataMap.put("contextPath", request.getContextPath());
 		Enumeration<?> enumeration = request.getParameterNames();
 		while (enumeration.hasMoreElements()) {
@@ -675,7 +674,7 @@ public class RequestUtils {
 	 * @return
 	 */
 	public static Map<String, Object> getQueryParams(HttpServletRequest request) {
-		Map<String, Object> params = new HashMap<String, Object>();
+		Map<String, Object> params = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 
 		String complex_query = request.getParameter("xyz_complex_query");
 		if (StringUtils.isNotEmpty(complex_query)) {
@@ -750,7 +749,7 @@ public class RequestUtils {
 	 */
 	public static Map<String, Object> getQueryParams(
 			HttpServletRequest request, String prefix) {
-		Map<String, Object> params = new HashMap<String, Object>();
+		Map<String, Object> params = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 
 		String complex_query = request.getParameter("xyz_complex_query");
 		if (StringUtils.isNotEmpty(complex_query)) {

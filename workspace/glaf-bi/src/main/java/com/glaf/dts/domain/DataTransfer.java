@@ -1,19 +1,26 @@
 package com.glaf.dts.domain;
 
-import java.io.*;
-import java.util.*;
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
-import javax.persistence.*;
-
-import com.alibaba.fastjson.*;
-import com.fasterxml.jackson.databind.node.ObjectNode;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
-import com.glaf.core.base.*;
+import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.glaf.core.base.JSONable;
 import com.glaf.core.domain.ColumnDefinition;
-import com.glaf.dts.util.*;
+import com.glaf.dts.util.DataTransferJsonFactory;
 
 @Entity
 @Table(name = "DTS_DATA_TRANSFER")
@@ -116,16 +123,16 @@ public class DataTransfer implements Serializable, JSONable {
 	protected ColumnDefinition idColumn;
 
 	@javax.persistence.Transient
-	protected List<ColumnDefinition> columns = new ArrayList<ColumnDefinition>();
+	protected List<ColumnDefinition> columns = new java.util.concurrent.CopyOnWriteArrayList<ColumnDefinition>();
 
 	/**
 	 * 需要排除的行列表
 	 */
 	@javax.persistence.Transient
-	protected List<String> excludes = new ArrayList<String>();
+	protected List<String> excludes = new java.util.concurrent.CopyOnWriteArrayList<String>();
 
 	@javax.persistence.Transient
-	protected Map<String, String> properties = new HashMap<String, String>();
+	protected Map<String, String> properties = new java.util.concurrent.ConcurrentHashMap<String, String>();
 
 	public DataTransfer() {
 
@@ -134,7 +141,7 @@ public class DataTransfer implements Serializable, JSONable {
 	public void addCollectionColumn(String columnName,
 			Collection<Object> collection) {
 		if (columns == null) {
-			columns = new ArrayList<ColumnDefinition>();
+			columns = new java.util.concurrent.CopyOnWriteArrayList<ColumnDefinition>();
 		}
 		ColumnDefinition column = new ColumnDefinition();
 		column.setColumnName(columnName);
@@ -145,14 +152,14 @@ public class DataTransfer implements Serializable, JSONable {
 
 	public void addColumn(ColumnDefinition column) {
 		if (columns == null) {
-			columns = new ArrayList<ColumnDefinition>();
+			columns = new java.util.concurrent.CopyOnWriteArrayList<ColumnDefinition>();
 		}
 		columns.add(column);
 	}
 
 	public void addColumn(String columnName, String javaType, Object value) {
 		if (columns == null) {
-			columns = new ArrayList<ColumnDefinition>();
+			columns = new java.util.concurrent.CopyOnWriteArrayList<ColumnDefinition>();
 		}
 		ColumnDefinition column = new ColumnDefinition();
 		column.setColumnName(columnName);
@@ -163,14 +170,14 @@ public class DataTransfer implements Serializable, JSONable {
 
 	public void addExclude(String exclude) {
 		if (excludes == null) {
-			excludes = new ArrayList<String>();
+			excludes = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		}
 		excludes.add(exclude);
 	}
 
 	public void addProperty(String key, String value) {
 		if (properties == null) {
-			properties = new HashMap<String, String>();
+			properties = new java.util.concurrent.ConcurrentHashMap<String, String>();
 		}
 		properties.put(key, value);
 	}
@@ -257,7 +264,7 @@ public class DataTransfer implements Serializable, JSONable {
 	}
 
 	public List<String> getListStringAggregationKeys() {
-		List<String> list = new ArrayList<String>();
+		List<String> list = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		if (aggregationKeys != null && aggregationKeys.trim().length() > 0) {
 			int start = 0;
 			int end = aggregationKeys.indexOf(",");

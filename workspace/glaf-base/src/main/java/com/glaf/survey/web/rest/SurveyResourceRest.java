@@ -19,7 +19,6 @@
 package com.glaf.survey.web.rest;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -31,13 +30,14 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.apache.commons.lang.StringUtils;
 
-import com.glaf.core.util.*;
+import com.glaf.core.util.RequestUtils;
+import com.glaf.core.util.ResponseUtils;
 import com.glaf.survey.domain.Survey;
 import com.glaf.survey.domain.SurveyResult;
 import com.glaf.survey.service.SurveyResultService;
@@ -89,7 +89,7 @@ public class SurveyResourceRest {
 				}
 				if (survey.getRelations() != null
 						&& !survey.getRelations().isEmpty()) {
-					List<SurveyResult> wxSurveyResults = new ArrayList<SurveyResult>();
+					List<SurveyResult> wxSurveyResults = new java.util.concurrent.CopyOnWriteArrayList<SurveyResult>();
 					for (Survey relation : survey.getRelations()) {
 						SurveyResult result = new SurveyResult();
 						result.setIp(ip);

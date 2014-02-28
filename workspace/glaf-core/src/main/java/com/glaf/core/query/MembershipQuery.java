@@ -18,9 +18,7 @@
 
 package com.glaf.core.query;
 
-import java.util.*;
-
-import com.glaf.core.query.DataQuery;
+import java.util.List;
 
 public class MembershipQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;

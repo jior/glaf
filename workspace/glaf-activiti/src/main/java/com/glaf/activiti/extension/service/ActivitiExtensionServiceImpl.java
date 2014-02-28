@@ -18,18 +18,16 @@
 
 package com.glaf.activiti.extension.service;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
-import com.glaf.core.dao.MyBatisEntityDAO;
 import com.glaf.activiti.extension.model.ExtensionEntity;
 import com.glaf.activiti.extension.model.ExtensionFieldEntity;
 import com.glaf.activiti.extension.model.ExtensionParamEntity;
+import com.glaf.core.dao.MyBatisEntityDAO;
 import com.glaf.core.util.UUID32;
 
 public class ActivitiExtensionServiceImpl implements ActivitiExtensionService {
@@ -60,7 +58,7 @@ public class ActivitiExtensionServiceImpl implements ActivitiExtensionService {
 	public List<ExtensionFieldEntity> getExtensionFields(String extendId) {
 		List<?> list = myBatis3EntityDAO
 				.getList("getExtensionFields", extendId);
-		List<ExtensionFieldEntity> rows = new ArrayList<ExtensionFieldEntity>();
+		List<ExtensionFieldEntity> rows = new java.util.concurrent.CopyOnWriteArrayList<ExtensionFieldEntity>();
 		if (list != null && !list.isEmpty()) {
 			for (Object model : list) {
 				rows.add((ExtensionFieldEntity) model);
@@ -70,7 +68,7 @@ public class ActivitiExtensionServiceImpl implements ActivitiExtensionService {
 	}
 
 	public ExtensionEntity getExtensionListener(String name) {
-		Map<String, Object> params = new HashMap<String, Object>();
+		Map<String, Object> params = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		params.put("name", name);
 		List<?> list = myBatis3EntityDAO
 				.getList("getExtensionEntities", params);
@@ -83,7 +81,7 @@ public class ActivitiExtensionServiceImpl implements ActivitiExtensionService {
 	}
 
 	public ExtensionEntity getExtensionListener(String processName, String name) {
-		Map<String, Object> params = new HashMap<String, Object>();
+		Map<String, Object> params = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		params.put("processName", processName);
 		params.put("name", name);
 		List<?> list = myBatis3EntityDAO
@@ -99,7 +97,7 @@ public class ActivitiExtensionServiceImpl implements ActivitiExtensionService {
 	public List<ExtensionParamEntity> getExtensionParams(String extendId) {
 		List<?> list = myBatis3EntityDAO
 				.getList("getExtensionParams", extendId);
-		List<ExtensionParamEntity> rows = new ArrayList<ExtensionParamEntity>();
+		List<ExtensionParamEntity> rows = new java.util.concurrent.CopyOnWriteArrayList<ExtensionParamEntity>();
 		if (list != null && !list.isEmpty()) {
 			for (Object model : list) {
 				rows.add((ExtensionParamEntity) model);
@@ -109,11 +107,11 @@ public class ActivitiExtensionServiceImpl implements ActivitiExtensionService {
 	}
 
 	public List<ExtensionEntity> getExtensions(String processName) {
-		Map<String, Object> params = new HashMap<String, Object>();
+		Map<String, Object> params = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		params.put("processName", processName);
 		List<?> list = myBatis3EntityDAO
 				.getList("getExtensionEntities", params);
-		List<ExtensionEntity> rows = new ArrayList<ExtensionEntity>();
+		List<ExtensionEntity> rows = new java.util.concurrent.CopyOnWriteArrayList<ExtensionEntity>();
 		if (list != null && !list.isEmpty()) {
 			for (Object model : list) {
 				ExtensionEntity extension = (ExtensionEntity) model;
@@ -125,7 +123,7 @@ public class ActivitiExtensionServiceImpl implements ActivitiExtensionService {
 	}
 
 	public ExtensionEntity getExtensionTask(String processName, String taskName) {
-		Map<String, Object> params = new HashMap<String, Object>();
+		Map<String, Object> params = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		params.put("processName", processName);
 		params.put("taskName", taskName);
 		List<?> list = myBatis3EntityDAO

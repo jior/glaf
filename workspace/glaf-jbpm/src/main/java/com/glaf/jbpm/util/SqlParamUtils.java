@@ -18,7 +18,6 @@
 
 package com.glaf.jbpm.util;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -41,7 +40,7 @@ public class SqlParamUtils {
 	public static List<Object> getValues(Map<String, Object> paramMap,
 			SqlExecutor executor) {
 		java.util.Date now = new java.util.Date();
-		List<Object> values = new ArrayList<Object>();
+		List<Object> values = new java.util.concurrent.CopyOnWriteArrayList<Object>();
 		Object parameter = executor.getParameter();
 		if (parameter instanceof Map) {
 			Map<String, Object> params = (Map<String, Object>) parameter;

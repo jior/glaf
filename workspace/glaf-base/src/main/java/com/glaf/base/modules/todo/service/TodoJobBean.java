@@ -93,7 +93,7 @@ public class TodoJobBean {
 
 	public void createTodoInstances(long todoId) {
 		Todo todo = todoService.getTodo(todoId);
-		Map<String, TodoInstance> rowsMap = new HashMap<String, TodoInstance>();
+		Map<String, TodoInstance> rowsMap = new java.util.concurrent.ConcurrentHashMap<String, TodoInstance>();
 		java.sql.Connection con = null;
 		java.sql.PreparedStatement psmt = null;
 		java.sql.ResultSet rs = null;
@@ -140,7 +140,7 @@ public class TodoJobBean {
 			JdbcUtils.close(con);
 		}
 
-		List<TodoInstance> rows = new ArrayList<TodoInstance>();
+		List<TodoInstance> rows = new java.util.concurrent.CopyOnWriteArrayList<TodoInstance>();
 
 		if (rowsMap.size() > 0) {
 			Iterator<String> iter = rowsMap.keySet().iterator();
@@ -189,7 +189,7 @@ public class TodoJobBean {
 	}
 
 	public List getAllJbpmTasks() {
-		List rows = new ArrayList();
+		List rows = new java.util.concurrent.CopyOnWriteArrayList();
 		List taskItems = ProcessContainer.getContainer().getAllTaskItems();
 		if (taskItems != null && taskItems.size() > 0) {
 			logger.info("---------->taskItems size:" + taskItems.size());
@@ -228,7 +228,7 @@ public class TodoJobBean {
 	}
 
 	public List getJbpmTasks(String actorId) {
-		List rows = new ArrayList();
+		List rows = new java.util.concurrent.CopyOnWriteArrayList();
 		List taskItems = ProcessContainer.getContainer().getTaskItems(actorId);
 		if (taskItems != null && taskItems.size() > 0) {
 			rows = this.getTodoInstances(taskItems);
@@ -237,7 +237,7 @@ public class TodoJobBean {
 	}
 
 	public List getJbpmTasksByProcessInstanceId(Long processInstanceId) {
-		List rows = new ArrayList();
+		List rows = new java.util.concurrent.CopyOnWriteArrayList();
 		List taskItems = ProcessContainer.getContainer()
 				.getTaskItemsByProcessInstanceId(processInstanceId);
 		if (taskItems != null && taskItems.size() > 0) {
@@ -247,7 +247,7 @@ public class TodoJobBean {
 	}
 
 	public List getJbpmTasksByProcessInstanceIds(List processInstanceIds) {
-		List rows = new ArrayList();
+		List rows = new java.util.concurrent.CopyOnWriteArrayList();
 		List taskItems = ProcessContainer.getContainer()
 				.getTaskItemsByProcessInstanceIds(processInstanceIds);
 		if (taskItems != null && taskItems.size() > 0) {
@@ -267,14 +267,14 @@ public class TodoJobBean {
 	 
 	public List getTasks() {
 		List todos = todoService.getSQLTodos();
-		List rows = new ArrayList();
+		List rows = new java.util.concurrent.CopyOnWriteArrayList();
 		if (todos != null && todos.size() > 0) {
 			Iterator iterator = todos.iterator();
 			while (iterator.hasNext()) {
 				Todo todo = (Todo) iterator.next();
 				if (StringUtils.isNotEmpty(todo.getSql())) {
 					logger.info(todo.getId() + ":" + todo.getSql());
-					Map rowsMap = new HashMap();
+					Map rowsMap = new java.util.concurrent.ConcurrentHashMap();
 					java.sql.Connection con = null;
 					java.sql.PreparedStatement psmt = null;
 					java.sql.ResultSet rs = null;
@@ -380,7 +380,7 @@ public class TodoJobBean {
 	}
 
 	public List getTodoInstances(List taskItems) {
-		List rows = new ArrayList();
+		List rows = new java.util.concurrent.CopyOnWriteArrayList();
 		if (taskItems != null && taskItems.size() > 0) {
 			logger.info("---------->taskItems size:" + taskItems.size());
 			Map userMap = this.getUserMap();

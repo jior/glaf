@@ -18,8 +18,8 @@
 
 package com.glaf.core.query;
 
-import java.util.*;
-import com.glaf.core.query.DataQuery;
+import java.util.Date;
+import java.util.List;
 
 public class EntityDefinitionQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;

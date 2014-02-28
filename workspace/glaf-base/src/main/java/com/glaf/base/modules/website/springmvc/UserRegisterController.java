@@ -17,7 +17,6 @@
  */
 package com.glaf.base.modules.website.springmvc;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -31,9 +30,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.glaf.core.config.Configuration;
-import com.glaf.core.config.ViewProperties;
-import com.glaf.core.util.RequestUtils;
 import com.glaf.base.config.BaseConfiguration;
 import com.glaf.base.modules.Constants;
 import com.glaf.base.modules.sys.model.SysDepartment;
@@ -43,6 +39,9 @@ import com.glaf.base.modules.sys.service.SysRoleService;
 import com.glaf.base.modules.sys.service.SysTreeService;
 import com.glaf.base.modules.sys.service.SysUserService;
 import com.glaf.base.utils.ParamUtil;
+import com.glaf.core.config.Configuration;
+import com.glaf.core.config.ViewProperties;
+import com.glaf.core.util.RequestUtils;
 
 @Controller("/public/register")
 @RequestMapping("/public/register")
@@ -114,7 +113,7 @@ public class UserRegisterController {
 				logger.error(ex);
 			}
 
-			List<SysDepartment> depts = new ArrayList<SysDepartment>();
+			List<SysDepartment> depts = new java.util.concurrent.CopyOnWriteArrayList<SysDepartment>();
 			depts.add(department);
 			modelMap.put("depts", depts);
 			request.setAttribute("depts", depts);

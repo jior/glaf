@@ -21,6 +21,11 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.support.JdbcAccessor;
+import org.springframework.util.Assert;
+
 import com.glaf.core.entity.SqlExecutor;
 import com.glaf.core.util.LogUtils;
 import com.ibatis.sqlmap.client.SqlMapClient;
@@ -28,11 +33,6 @@ import com.ibatis.sqlmap.client.SqlMapException;
 import com.ibatis.sqlmap.client.SqlMapExecutor;
 import com.ibatis.sqlmap.client.SqlMapSession;
 import com.ibatis.sqlmap.client.event.RowHandler;
-
-import org.apache.commons.lang.StringUtils;
-import org.springframework.dao.DataAccessException;
-import org.springframework.jdbc.support.JdbcAccessor;
-import org.springframework.util.Assert;
 
 /**
  * Helper class that simplifies data access via the iBATIS

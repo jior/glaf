@@ -30,7 +30,7 @@ public class MailStorageType {
 
 	public final static String HBASE_TYPE = "3";
 
-	protected static Map<String, String> names = new HashMap<String, String>();
+	protected static Map<String, String> names = new java.util.concurrent.ConcurrentHashMap<String, String>();
 	
 	static {
 		names.put(RDBMS_TYPE, "rdbms");

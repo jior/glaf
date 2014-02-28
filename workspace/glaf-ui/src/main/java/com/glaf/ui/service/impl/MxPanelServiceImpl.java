@@ -18,9 +18,7 @@
 
 package com.glaf.ui.service.impl;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -29,13 +27,11 @@ import java.util.Set;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.SqlSession;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.core.dao.EntityDAO;
 import com.glaf.core.id.IdGenerator;
-
 import com.glaf.ui.mapper.PanelMapper;
 import com.glaf.ui.mapper.UserPortalMapper;
 import com.glaf.ui.model.Layout;
@@ -105,7 +101,7 @@ public class MxPanelServiceImpl implements PanelService {
 		PanelQuery query = new PanelQuery();
 		query.actorId(actorId);
 		List<Panel> rows = this.list(query);
-		List<Panel> panels = new ArrayList<Panel>();
+		List<Panel> panels = new java.util.concurrent.CopyOnWriteArrayList<Panel>();
 		if (rows != null && rows.size() > 0) {
 			Iterator<Panel> iterator = rows.iterator();
 			while (iterator.hasNext()) {
@@ -124,7 +120,7 @@ public class MxPanelServiceImpl implements PanelService {
 		PanelQuery query = new PanelQuery();
 		query.actorId("system");
 		List<Panel> rows = this.list(query);
-		List<Panel> panels = new ArrayList<Panel>();
+		List<Panel> panels = new java.util.concurrent.CopyOnWriteArrayList<Panel>();
 		if (rows != null && rows.size() > 0) {
 			Iterator<Panel> iterator = rows.iterator();
 			while (iterator.hasNext()) {
@@ -166,7 +162,7 @@ public class MxPanelServiceImpl implements PanelService {
 
 	@Transactional
 	public void installPanels(List<Panel> panels) {
-		Map<String, Panel> panelMap = new HashMap<String, Panel>();
+		Map<String, Panel> panelMap = new java.util.concurrent.ConcurrentHashMap<String, Panel>();
 		if (panels != null && panels.size() > 0) {
 			Iterator<Panel> iter = panels.iterator();
 			while (iter.hasNext()) {

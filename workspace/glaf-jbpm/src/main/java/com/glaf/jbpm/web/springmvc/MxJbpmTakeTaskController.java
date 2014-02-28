@@ -21,7 +21,6 @@ package com.glaf.jbpm.web.springmvc;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -39,7 +38,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.glaf.core.config.CustomProperties;
 import com.glaf.core.config.ViewProperties;
 import com.glaf.core.freemarker.TemplateUtils;
- 
 import com.glaf.core.util.LogUtils;
 import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.RequestUtils;
@@ -147,7 +145,7 @@ public class MxJbpmTakeTaskController {
 		logger.info("templateId=" + templateId);
 		if (StringUtils.isNotEmpty(templateId)) {
 			 
-			Map<String, Object> context = new HashMap<String, Object>();
+			Map<String, Object> context = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 			context.putAll(paramMap);
 			context.put("actorId", actorId);
 			context.put("contextPath", request.getContextPath());

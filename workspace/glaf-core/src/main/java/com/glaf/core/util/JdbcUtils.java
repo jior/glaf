@@ -24,8 +24,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -95,7 +93,7 @@ public final class JdbcUtils {
 	}
 
 	private static Map<String, Object> lowerKeyMap(Map<String, Object> params) {
-		Map<String, Object> dataMap = new HashMap<String, Object>();
+		Map<String, Object> dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		Set<Entry<String, Object>> entrySet = params.entrySet();
 		for (Entry<String, Object> entry : entrySet) {
 			String key = entry.getKey();
@@ -111,7 +109,7 @@ public final class JdbcUtils {
 			return null;
 		}
 		SqlExecutor sqlExecutor = new SqlExecutor();
-		List<Object> values = new ArrayList<Object>();
+		List<Object> values = new java.util.concurrent.CopyOnWriteArrayList<Object>();
 		Map<String, Object> dataMap = lowerKeyMap(params);
 		StringBuffer sb = new StringBuffer(sql.length()+1000);
 		int begin = 0;

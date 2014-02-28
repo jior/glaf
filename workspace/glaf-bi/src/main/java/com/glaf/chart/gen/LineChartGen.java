@@ -23,7 +23,6 @@ import java.awt.Color;
 import java.awt.geom.Ellipse2D;
 
 import org.jfree.chart.ChartFactory;
-
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;

@@ -19,7 +19,6 @@
 package com.glaf.core.domain;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.persistence.Column;
@@ -357,7 +356,7 @@ public class ColumnDefinition implements
 	protected Integer position;
 
 	@javax.persistence.Transient
-	protected Map<String, String> properties = new HashMap<String, String>();
+	protected Map<String, String> properties = new java.util.concurrent.ConcurrentHashMap<String, String>();
 
 	public ColumnDefinition() {
 
@@ -365,7 +364,7 @@ public class ColumnDefinition implements
 
 	public void addProperty(String key, String value) {
 		if (properties == null) {
-			properties = new HashMap<String, String>();
+			properties = new java.util.concurrent.ConcurrentHashMap<String, String>();
 		}
 		properties.put(key, value);
 	}

@@ -18,10 +18,8 @@
 
 package com.glaf.core.business;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -43,7 +41,6 @@ import com.glaf.core.service.IQueryDefinitionService;
 import com.glaf.core.service.ITableDataService;
 import com.glaf.core.service.ITableDefinitionService;
 import com.glaf.core.service.ITablePageService;
-
 import com.glaf.core.util.DBUtils;
 import com.glaf.core.util.DateUtils;
 import com.glaf.core.util.ExpressionConstants;
@@ -158,13 +155,13 @@ public class TransformTable {
 			Map<String, Object> params = SystemConfig.getContextMap();
 			List<ColumnDefinition> columns = DBUtils
 					.getColumnDefinitions(tableName);
-			Map<String, ColumnDefinition> columnMap = new HashMap<String, ColumnDefinition>();
+			Map<String, ColumnDefinition> columnMap = new java.util.concurrent.ConcurrentHashMap<String, ColumnDefinition>();
 
 			for (ColumnDefinition column : columns) {
 				columnMap.put(column.getColumnName(), column);
 				columnMap.put(column.getColumnName().toLowerCase(), column);
 			}
-			List<String> aggregationKeys = new ArrayList<String>();
+			List<String> aggregationKeys = new java.util.concurrent.CopyOnWriteArrayList<String>();
 			List<String> keys = StringTools.split(tableDefinition
 					.getAggregationKeys());
 			for (String key : keys) {
@@ -174,8 +171,8 @@ public class TransformTable {
 			logger.debug("aggregationKeys=" + aggregationKeys);
 			StringBuffer sb = new StringBuffer(1000);
 
-			List<ColumnModel> cellModelList = new ArrayList<ColumnModel>();
-			Map<String, TableModel> resultMap = new HashMap<String, TableModel>();
+			List<ColumnModel> cellModelList = new java.util.concurrent.CopyOnWriteArrayList<ColumnModel>();
+			Map<String, TableModel> resultMap = new java.util.concurrent.ConcurrentHashMap<String, TableModel>();
 
 			for (QueryDefinition q : tableDefinition.getQueries()) {
 				String sql = q.getSql();
@@ -344,7 +341,7 @@ public class TransformTable {
 			Map<String, Object> params = SystemConfig.getContextMap();
 			List<ColumnDefinition> columns = DBUtils
 					.getColumnDefinitions(tableName);
-			Map<String, ColumnDefinition> columnMap = new HashMap<String, ColumnDefinition>();
+			Map<String, ColumnDefinition> columnMap = new java.util.concurrent.ConcurrentHashMap<String, ColumnDefinition>();
 
 			for (ColumnDefinition column : columns) {
 				columnMap.put(column.getColumnName(), column);
@@ -355,8 +352,8 @@ public class TransformTable {
 					.getAggregationKeys());
 			StringBuffer sb = new StringBuffer(1000);
 
-			List<ColumnModel> cellModelList = new ArrayList<ColumnModel>();
-			Map<String, TableModel> resultMap = new HashMap<String, TableModel>();
+			List<ColumnModel> cellModelList = new java.util.concurrent.CopyOnWriteArrayList<ColumnModel>();
+			Map<String, TableModel> resultMap = new java.util.concurrent.ConcurrentHashMap<String, TableModel>();
 
 			if (queryDefinition.getSql() != null) {
 				String sql = queryDefinition.getSql();

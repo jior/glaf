@@ -22,7 +22,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -40,7 +39,7 @@ public class ReportManagerImpl implements ReportManager {
 	protected final Log log = LogFactory.getLog(getClass());
 	protected Connection connection;
 	protected Map<String, Object> beans;
-	protected Map<String, Object> properties = new HashMap<String, Object>();
+	protected Map<String, Object> properties = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 
 	public ReportManagerImpl(Connection connection) {
 		this.connection = connection;

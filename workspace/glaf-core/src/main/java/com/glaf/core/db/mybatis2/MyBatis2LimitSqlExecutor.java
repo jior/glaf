@@ -16,16 +16,19 @@
 
 package com.glaf.core.db.mybatis2;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.SQLException;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import com.ibatis.sqlmap.engine.execution.*;
-import com.ibatis.sqlmap.engine.mapping.statement.RowHandlerCallback;
-import com.ibatis.sqlmap.engine.scope.StatementScope;
+
 import com.glaf.core.config.DataSourceConfig;
 import com.glaf.core.dialect.Dialect;
 import com.glaf.core.util.ClassUtils;
 import com.glaf.core.util.LogUtils;
+import com.ibatis.sqlmap.engine.execution.DefaultSqlExecutor;
+import com.ibatis.sqlmap.engine.mapping.statement.RowHandlerCallback;
+import com.ibatis.sqlmap.engine.scope.StatementScope;
 
 public class MyBatis2LimitSqlExecutor extends DefaultSqlExecutor {
 

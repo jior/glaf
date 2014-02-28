@@ -18,9 +18,7 @@
 
 package com.glaf.jbpm.manager;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -53,7 +51,7 @@ public class JbpmExtensionManager {
 		final String hql = " select a from "
 				+ Extension.class.getSimpleName()
 				+ " as a where a.locked = 0 and a.name = :name and a.processName is null order by a.id desc ";
-		final Map<String, Object> paramMap = new HashMap<String, Object>();
+		final Map<String, Object> paramMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		paramMap.put("name", name);
 		queryExecutor.setSql(hql);
 		queryExecutor.setParameter(paramMap);
@@ -75,7 +73,7 @@ public class JbpmExtensionManager {
 		final String hql = " select a from "
 				+ Extension.class.getSimpleName()
 				+ " as a where a.locked = 0 and a.processName = :processName and a.name = :name order by a.id desc ";
-		final Map<String, Object> paramMap = new HashMap<String, Object>();
+		final Map<String, Object> paramMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		paramMap.put("processName", processName);
 		paramMap.put("name", name);
 		queryExecutor.setSql(hql);
@@ -91,11 +89,11 @@ public class JbpmExtensionManager {
 
 	public List<Extension> getExtensions(JbpmContext jbpmContext,
 			String processName) {
-		final List<Extension> extensions = new ArrayList<Extension>();
+		final List<Extension> extensions = new java.util.concurrent.CopyOnWriteArrayList<Extension>();
 		final SqlExecutor queryExecutor = new SqlExecutor();
 		final String hql = " select a from " + Extension.class.getSimpleName()
 				+ " as a where a.processName = :processName and a.locked = 0 ";
-		final Map<String, Object> paramMap = new HashMap<String, Object>();
+		final Map<String, Object> paramMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		paramMap.put("processName", processName);
 		queryExecutor.setSql(hql);
 		queryExecutor.setParameter(paramMap);
@@ -118,7 +116,7 @@ public class JbpmExtensionManager {
 		final SqlExecutor queryExecutor = new SqlExecutor();
 		final String hql = " select a from " + Extension.class.getSimpleName()
 				+ " as a where a.locked = 0 and a.extendId = :extendId  ";
-		final Map<String, Object> paramMap = new HashMap<String, Object>();
+		final Map<String, Object> paramMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		paramMap.put("extendId", extendId);
 
 		queryExecutor.setSql(hql);
@@ -141,7 +139,7 @@ public class JbpmExtensionManager {
 		final String hql = " select a from "
 				+ Extension.class.getSimpleName()
 				+ " as a where a.locked = 0 and a.processName = :processName and a.taskName = :taskName order by a.id desc ";
-		final Map<String, Object> paramMap = new HashMap<String, Object>();
+		final Map<String, Object> paramMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		paramMap.put("processName", processName);
 		paramMap.put("taskName", taskName);
 		queryExecutor.setSql(hql);
@@ -156,12 +154,12 @@ public class JbpmExtensionManager {
 
 	public List<Extension> getExtensionTasks(JbpmContext jbpmContext,
 			String processName) {
-		List<Extension> extensions = new ArrayList<Extension>();
+		List<Extension> extensions = new java.util.concurrent.CopyOnWriteArrayList<Extension>();
 		SqlExecutor queryExecutor = new SqlExecutor();
 		String hql = " select a from "
 				+ Extension.class.getSimpleName()
 				+ " as a where a.processName = :processName and a.taskName is not null and a.locked = 0 ";
-		Map<String, Object> paramMap = new HashMap<String, Object>();
+		Map<String, Object> paramMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		paramMap.put("processName", processName);
 		queryExecutor.setSql(hql);
 		queryExecutor.setParameter(paramMap);

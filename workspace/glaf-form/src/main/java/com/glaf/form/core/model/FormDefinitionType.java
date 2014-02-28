@@ -17,7 +17,6 @@
  */
 package com.glaf.form.core.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -80,7 +79,7 @@ public class FormDefinitionType {
 
 	public List<EventType> getEvent() {
 		if (event == null) {
-			event = new ArrayList<EventType>();
+			event = new java.util.concurrent.CopyOnWriteArrayList<EventType>();
 		}
 		return this.event;
 	}
@@ -95,7 +94,7 @@ public class FormDefinitionType {
 
 	public List<NodeType> getNode() {
 		if (node == null) {
-			node = new ArrayList<NodeType>();
+			node = new java.util.concurrent.CopyOnWriteArrayList<NodeType>();
 		}
 		return this.node;
 	}
@@ -106,7 +105,7 @@ public class FormDefinitionType {
 
 	public List<PropertyType> getProperty() {
 		if (property == null) {
-			property = new ArrayList<PropertyType>();
+			property = new java.util.concurrent.CopyOnWriteArrayList<PropertyType>();
 		}
 		return this.property;
 	}
@@ -117,7 +116,7 @@ public class FormDefinitionType {
 
 	public List<ScriptType> getScript() {
 		if (script == null) {
-			script = new ArrayList<ScriptType>();
+			script = new java.util.concurrent.CopyOnWriteArrayList<ScriptType>();
 		}
 		return this.script;
 	}

@@ -18,11 +18,12 @@
 
 package com.glaf.core.todo.service;
 
-import java.util.*;
+import java.util.List;
+
 import org.springframework.transaction.annotation.Transactional;
 
-import com.glaf.core.todo.*;
-import com.glaf.core.todo.query.*;
+import com.glaf.core.todo.TodoInstance;
+import com.glaf.core.todo.query.TodoInstanceQuery;
 
 @Transactional(readOnly = true)
 public interface ISysTodoInstanceService {

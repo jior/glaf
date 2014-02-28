@@ -318,7 +318,7 @@ public class SurveyController {
 			survey.setRelationIds(request.getParameter("relationIds"));
 			survey.setCreateBy(actorId);
 
-			Map<Integer, SurveyItem> dataMap = new HashMap<Integer, SurveyItem>();
+			Map<Integer, SurveyItem> dataMap = new java.util.concurrent.ConcurrentHashMap<Integer, SurveyItem>();
 			String[] titleArray = request.getParameterValues("item_title");
 			if (titleArray != null && titleArray.length > 0) {
 				int index = 0;

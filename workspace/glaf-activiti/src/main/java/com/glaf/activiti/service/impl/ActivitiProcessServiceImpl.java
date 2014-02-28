@@ -18,9 +18,7 @@
 
 package com.glaf.activiti.service.impl;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,13 +31,12 @@ import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
 import org.activiti.engine.task.TaskQuery;
 import org.apache.commons.lang.StringUtils;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.activiti.model.DataField;
 import com.glaf.activiti.model.ProcessContext;
-import com.glaf.activiti.service.*;
+import com.glaf.activiti.service.ActivitiProcessService;
 import com.glaf.core.util.Constants;
 import com.glaf.core.util.UUID32;
 
@@ -118,7 +115,7 @@ public class ActivitiProcessServiceImpl implements ActivitiProcessService {
 	}
 
 	protected List<Task> getUserTasks(String processInstanceId, String actorId) {
-		List<Task> tasks = new ArrayList<Task>();
+		List<Task> tasks = new java.util.concurrent.CopyOnWriteArrayList<Task>();
 		TaskQuery query01 = taskService.createTaskQuery();
 		query01.processInstanceId(processInstanceId);
 		query01.taskAssignee(actorId);
@@ -142,7 +139,7 @@ public class ActivitiProcessServiceImpl implements ActivitiProcessService {
 		String taskId = ctx.getTaskId();
 		Map<String, Object> variables = ctx.getVariables();
 		if (variables == null) {
-			variables = new HashMap<String, Object>();
+			variables = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		}
 
 		if (ctx.getOutcome() != null) {
@@ -342,7 +339,7 @@ public class ActivitiProcessServiceImpl implements ActivitiProcessService {
 		String businessKey = ctx.getBusinessKey();
 		Map<String, Object> variables = ctx.getVariables();
 		if (variables == null) {
-			variables = new HashMap<String, Object>();
+			variables = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		}
 		variables.put(Constants.PROCESS_STARTER, actorId);
 		variables.remove(Constants.BUSINESS_KEY);
@@ -378,7 +375,7 @@ public class ActivitiProcessServiceImpl implements ActivitiProcessService {
 	 */
 	public ProcessInstance startProcessInstanceByKey(String actorId,
 			String processDefinitionKey) {
-		Map<String, Object> variables = new HashMap<String, Object>();
+		Map<String, Object> variables = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		variables.put(Constants.PROCESS_STARTER, actorId);
 
 		try {
@@ -405,7 +402,7 @@ public class ActivitiProcessServiceImpl implements ActivitiProcessService {
 	public ProcessInstance startProcessInstanceByKey(String actorId,
 			String processDefinitionKey, Map<String, Object> variables) {
 		if (variables == null) {
-			variables = new HashMap<String, Object>();
+			variables = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		}
 		variables.put(Constants.PROCESS_STARTER, actorId);
 
@@ -432,7 +429,7 @@ public class ActivitiProcessServiceImpl implements ActivitiProcessService {
 	 */
 	public ProcessInstance startProcessInstanceByKey(String actorId,
 			String processDefinitionKey, String businessKey) {
-		Map<String, Object> variables = new HashMap<String, Object>();
+		Map<String, Object> variables = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		variables.put(Constants.PROCESS_STARTER, actorId);
 
 		try {
@@ -464,7 +461,7 @@ public class ActivitiProcessServiceImpl implements ActivitiProcessService {
 			String processDefinitionKey, String businessKey,
 			Map<String, Object> variables) {
 		if (variables == null) {
-			variables = new HashMap<String, Object>();
+			variables = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		}
 		variables.put(Constants.PROCESS_STARTER, actorId);
 

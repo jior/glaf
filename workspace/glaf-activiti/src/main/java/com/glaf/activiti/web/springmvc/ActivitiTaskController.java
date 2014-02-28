@@ -19,8 +19,6 @@
 package com.glaf.activiti.web.springmvc;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,7 +31,6 @@ import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.task.IdentityLink;
 import org.activiti.engine.task.Task;
 import org.apache.commons.lang.StringUtils;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -41,20 +38,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
-
-import com.glaf.core.identity.User;
-import com.glaf.core.security.IdentityFactory;
-import com.glaf.core.config.ViewProperties;
-import com.glaf.core.util.DateUtils;
-import com.glaf.core.util.Paging;
-import com.glaf.core.util.RequestUtils;
-
 import com.glaf.activiti.model.ProcessInstanceInfo;
 import com.glaf.activiti.model.TaskItem;
-
 import com.glaf.activiti.service.ActivitiProcessQueryService;
 import com.glaf.activiti.service.ActivitiProcessService;
 import com.glaf.activiti.service.ActivitiTaskQueryService;
+import com.glaf.core.config.ViewProperties;
+import com.glaf.core.identity.User;
+import com.glaf.core.security.IdentityFactory;
+import com.glaf.core.util.DateUtils;
+import com.glaf.core.util.Paging;
+import com.glaf.core.util.RequestUtils;
 
 @Controller("/activiti/task")
 @RequestMapping("/activiti/task")
@@ -141,7 +135,7 @@ public class ActivitiTaskController {
 			List<Task> allTasks = activitiTaskQueryService
 					.getAllTasks(processInstanceId);
 
-			List<Object> historyTaskItems = new ArrayList<Object>();
+			List<Object> historyTaskItems = new java.util.concurrent.CopyOnWriteArrayList<Object>();
 
 			List<?> row01 = activitiTaskQueryService
 					.getHistoryTasks(processInstanceId);
@@ -151,7 +145,7 @@ public class ActivitiTaskController {
 
 			model.addAttribute("historyTaskItems", historyTaskItems);
 
-			List<TaskItem> taskItems = new ArrayList<TaskItem>();
+			List<TaskItem> taskItems = new java.util.concurrent.CopyOnWriteArrayList<TaskItem>();
 			if (allTasks != null && !allTasks.isEmpty()) {
 				for (Task task : allTasks) {
 					if (task.getAssignee() != null) {
@@ -254,11 +248,11 @@ public class ActivitiTaskController {
 		List<Task> rows = activitiTaskQueryService.getTasks(start, limit,
 				paramMap);
 
-		List<Object> list = new ArrayList<Object>();
+		List<Object> list = new java.util.ArrayList<Object>();
 
 		if (rows != null && rows.size() > 0) {
 			for (Task task : rows) {
-				Map<String, Object> rowMap = new HashMap<String, Object>();
+				Map<String, Object> rowMap = new java.util.HashMap<String, Object>();
 				rowMap.put("id", task.getId());
 				rowMap.put("processInstanceId", task.getProcessInstanceId());
 				rowMap.put("executionId", task.getExecutionId());
@@ -313,7 +307,7 @@ public class ActivitiTaskController {
 			}
 		}
 
-		Map<String, Object> pageInfo = new HashMap<String, Object>();
+		Map<String, Object> pageInfo = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		// 当前页数设置
 		pageInfo.put("startIndex", start);
 

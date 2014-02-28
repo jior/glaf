@@ -25,10 +25,10 @@ import java.util.Map;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.DeploymentQuery;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.glaf.activiti.service.*;
+
+import com.glaf.activiti.service.ActivitiDeployQueryService;
 
 @Service("activitiDeployQueryService")
 @Transactional(readOnly = true)

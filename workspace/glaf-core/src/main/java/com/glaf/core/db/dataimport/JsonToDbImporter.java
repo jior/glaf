@@ -18,22 +18,28 @@
 
 package com.glaf.core.db.dataimport;
 
-import java.io.*;
-import java.sql.*;
-import java.util.ArrayList;
+import java.io.File;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Timestamp;
+import java.sql.Types;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import com.alibaba.fastjson.*;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.glaf.core.jdbc.DBConnectionFactory;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.domain.ColumnDefinition;
 import com.glaf.core.domain.TableDefinition;
+import com.glaf.core.jdbc.DBConnectionFactory;
 import com.glaf.core.util.DBUtils;
 import com.glaf.core.util.DateUtils;
 import com.glaf.core.util.FileUtils;
@@ -93,7 +99,7 @@ public class JsonToDbImporter {
 		sqlBuffer.append(" select ");
 		String primaryKeyColumn = null;
 		ColumnDefinition idColumn = null;
-		List<ColumnDefinition> columns = new ArrayList<ColumnDefinition>();
+		List<ColumnDefinition> columns = new java.util.concurrent.CopyOnWriteArrayList<ColumnDefinition>();
 		int length = meta.size();
 		for (int i = 0; i < length; i++) {
 			JSONObject obj = meta.getJSONObject(i);

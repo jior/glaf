@@ -18,7 +18,6 @@
 
 package com.glaf.base.modules.sys.springmvc;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -42,7 +41,6 @@ import com.glaf.base.modules.sys.service.SysDeptRoleService;
 import com.glaf.base.modules.sys.service.SysRoleService;
 import com.glaf.base.modules.sys.service.SysTreeService;
 import com.glaf.base.utils.ParamUtil;
-
 import com.glaf.core.config.ViewProperties;
 import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
@@ -278,7 +276,7 @@ public class SysDeptRoleController {
 		logger.debug("#########################################");
 		logger.debug("apps:" + deptRole.getApps());
 		SysTree parent = sysTreeService.getSysTreeByCode(Constants.TREE_APP);
-		List<SysTree> list = new ArrayList<SysTree>();
+		List<SysTree> list = new java.util.concurrent.CopyOnWriteArrayList<SysTree>();
 		sysTreeService.getSysTree(list, (int) parent.getId(), 0);
 		request.setAttribute("list", list);
 		logger.debug("------------list size:" + list.size());
@@ -302,7 +300,7 @@ public class SysDeptRoleController {
 
 		request.setAttribute("role", role);
 		SysTree parent = sysTreeService.getSysTreeByCode(Constants.TREE_APP);
-		List<SysTree> list = new ArrayList<SysTree>();
+		List<SysTree> list = new java.util.concurrent.CopyOnWriteArrayList<SysTree>();
 		sysTreeService.getSysTree(list, (int) parent.getId(), 0);
 		request.setAttribute("list", list);
 		logger.debug("------------list size:" + list.size());

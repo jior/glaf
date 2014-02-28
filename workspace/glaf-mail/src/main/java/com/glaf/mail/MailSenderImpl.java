@@ -21,7 +21,6 @@ package com.glaf.mail;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -50,7 +49,6 @@ import com.glaf.core.service.ISystemPropertyService;
 import com.glaf.core.template.Template;
 import com.glaf.core.util.LogUtils;
 import com.glaf.core.util.UUID32;
-
 import com.glaf.mail.config.JavaMailSenderConfiguration;
 import com.glaf.mail.util.MailTools;
 
@@ -64,7 +62,7 @@ public class MailSenderImpl implements MailSender {
 	protected String mailFrom;
 
 	public static void main(String[] args) throws Exception {
-		Map<String, Object> dataMap = new HashMap<String, Object>();
+		Map<String, Object> dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		dataMap.put("taskDescription", "邮件系统开发");
 		dataMap.put("processStarterName", "系统管理员");
 		dataMap.put("serviceUrl", "http://127.0.0.1:8080/glaf");
@@ -173,7 +171,7 @@ public class MailSenderImpl implements MailSender {
 
 		Map<String, Object> dataMap = mailMessage.getDataMap();
 		if (dataMap == null) {
-			dataMap = new HashMap<String, Object>();
+			dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		}
 
 		ISystemPropertyService systemPropertyService = ContextFactory

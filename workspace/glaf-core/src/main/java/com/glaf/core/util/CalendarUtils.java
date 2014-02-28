@@ -18,7 +18,6 @@
 
 package com.glaf.core.util;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -36,8 +35,6 @@ import com.glaf.core.domain.SystemParam;
 import com.glaf.core.query.SysCalendarQuery;
 import com.glaf.core.service.ISysCalendarService;
 import com.glaf.core.service.ISystemParamService;
-import com.glaf.core.util.DateUtils;
-import com.glaf.core.util.PropertiesUtils;
 
 public class CalendarUtils {
 
@@ -358,7 +355,7 @@ public class CalendarUtils {
 
 	public static boolean saveCalendarProperties(Properties props) {
 		try {
-			List<SystemParam> rows = new ArrayList<SystemParam>();
+			List<SystemParam> rows = new java.util.concurrent.CopyOnWriteArrayList<SystemParam>();
 			java.util.Set<Object> set = props.keySet();
 			java.util.Iterator<Object> iter = set.iterator();
 			while (iter.hasNext()) {

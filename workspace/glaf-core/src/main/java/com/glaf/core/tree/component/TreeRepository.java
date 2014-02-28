@@ -18,11 +18,15 @@
 
 package com.glaf.core.tree.component;
 
+import java.io.Serializable;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
-import java.io.Serializable;
-import java.util.*;
 
 public class TreeRepository implements Serializable {
 
@@ -61,7 +65,7 @@ public class TreeRepository implements Serializable {
 	 * Convenience method for dynamic trees - returns the top-level trees only.
 	 */
 	public List<TreeComponent> getTopTrees() {
-		List<TreeComponent> topTrees = new ArrayList<TreeComponent>();
+		List<TreeComponent> topTrees = new java.util.concurrent.CopyOnWriteArrayList<TreeComponent>();
 		if (trees == null) {
 			log.warn("No trees found in repository!");
 			return topTrees;

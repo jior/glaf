@@ -22,12 +22,10 @@ package com.glaf.core.tag;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-
 import java.text.DecimalFormat;
 import java.text.Format;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
-
 import java.util.Locale;
 
 import javax.servlet.jsp.JspException;
