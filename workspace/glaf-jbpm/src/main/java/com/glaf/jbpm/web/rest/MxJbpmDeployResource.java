@@ -109,7 +109,7 @@ public class MxJbpmDeployResource {
 			}
 		}
 
-		Map<String, Object> jsonMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		Map<String, Object> jsonMap = new java.util.HashMap<String, Object>();
 		if (status_code == 200) {
 			jsonMap.put("statusCode", 200);
 			jsonMap.put("message", "发布成功！");

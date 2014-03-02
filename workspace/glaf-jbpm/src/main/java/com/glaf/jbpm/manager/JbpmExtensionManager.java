@@ -93,7 +93,7 @@ public class JbpmExtensionManager {
 		final SqlExecutor queryExecutor = new SqlExecutor();
 		final String hql = " select a from " + Extension.class.getSimpleName()
 				+ " as a where a.processName = :processName and a.locked = 0 ";
-		final Map<String, Object> paramMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		final Map<String, Object> paramMap = new java.util.HashMap<String, Object>();
 		paramMap.put("processName", processName);
 		queryExecutor.setSql(hql);
 		queryExecutor.setParameter(paramMap);

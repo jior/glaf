@@ -45,21 +45,21 @@ public class BaseIdentityFactory {
 	protected static final Log logger = LogFactory
 			.getLog(BaseIdentityFactory.class);
 
-	protected static EntityService entityService;
+	protected static volatile EntityService entityService;
 
-	protected static SysApplicationService sysApplicationService;
+	protected static volatile SysApplicationService sysApplicationService;
 
-	protected static SysDepartmentService sysDepartmentService;
+	protected static volatile SysDepartmentService sysDepartmentService;
 
-	protected static SysDeptRoleService sysDeptRoleService;
+	protected static volatile SysDeptRoleService sysDeptRoleService;
 
-	protected static SysRoleService sysRoleService;
+	protected static volatile SysRoleService sysRoleService;
 
-	protected static SysTreeService sysTreeService;
+	protected static volatile SysTreeService sysTreeService;
 
-	protected static SysUserRoleService sysUserRoleService;
+	protected static volatile SysUserRoleService sysUserRoleService;
 
-	protected static SysUserService sysUserService;
+	protected static volatile SysUserService sysUserService;
 
 	/**
 	 * 获取委托人编号集合（用户登录账号的集合）

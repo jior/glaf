@@ -166,7 +166,7 @@ public class SqlMapTaskInstanceComplexAction implements ActionHandler {
 
 		boolean executable = true;
 
-		Map<String, Object> params = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		Map<String, Object> params = new java.util.HashMap<String, Object>();
 		Set<String> existsActorIds = new HashSet<String>();
 
 		ContextInstance contextInstance = ctx.getContextInstance();

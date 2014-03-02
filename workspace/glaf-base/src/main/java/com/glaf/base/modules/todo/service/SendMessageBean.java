@@ -276,7 +276,7 @@ public class SendMessageBean {
 				TodoInstance tdi = (TodoInstance) iterator.next();
 				int status = TodoConstants.getTodoStatus(tdi);
 				tdi.setStatus(status);
-				Todo todo = (Todo) todoMap.get(new Long(tdi.getTodoId()));
+				Todo todo = (Todo) todoMap.get(tdi.getTodoId());
 				if (todo == null) {
 					continue;
 				}
@@ -534,7 +534,7 @@ public class SendMessageBean {
 				TodoInstance tdi = (TodoInstance) iterator.next();
 				int status = TodoConstants.getTodoStatus(tdi);
 				tdi.setStatus(status);
-				Todo todo = (Todo) todoMap.get(new Long(tdi.getTodoId()));
+				Todo todo = (Todo) todoMap.get(tdi.getTodoId());
 				if (todo == null) {
 					continue;
 				}
@@ -835,7 +835,7 @@ public class SendMessageBean {
 				TodoInstance tdi = (TodoInstance) iterator.next();
 				int status = TodoConstants.getTodoStatus(tdi);
 				tdi.setStatus(status);
-				Todo todo = (Todo) todoMap.get(new Long(tdi.getTodoId()));
+				Todo todo = (Todo) todoMap.get(tdi.getTodoId());
 				if (todo == null) {
 					continue;
 				}
@@ -909,8 +909,10 @@ public class SendMessageBean {
 				if (rowsXY.size() > 0) {
 					Map mailMap = new java.util.concurrent.ConcurrentHashMap();
 					mailMap.put("user", user);
-					mailMap.put("dept", dept);
 					mailMap.put("rows", rowsXY);
+					if(dept != null){
+						mailMap.put("dept", dept);
+					}
 
 					String subject = (dept != null ? dept.getName() : "") + " "
 							+ user.getName() + " "
@@ -949,9 +951,11 @@ public class SendMessageBean {
 								}
 								Map mailMap = new java.util.concurrent.ConcurrentHashMap();
 								mailMap.put("user", user);
-								mailMap.put("dept", dept);
 								mailMap.put("leader", leader);
 								mailMap.put("rows", redWarnXY);
+								if(dept != null){
+									mailMap.put("dept", dept);
+								}
 
 								String subject = (dept != null ? dept.getName()
 										: "")

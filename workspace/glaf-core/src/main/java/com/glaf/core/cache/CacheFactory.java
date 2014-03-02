@@ -46,7 +46,7 @@ public class CacheFactory {
 	protected static Configuration conf = BaseConfiguration.create();
 	protected static ExecutorService pool = Executors.newCachedThreadPool();
 
-	private static ApplicationContext ctx;
+	private static volatile ApplicationContext ctx;
 
 	private static String CACHE_PREFIX = "GLAF_";
 

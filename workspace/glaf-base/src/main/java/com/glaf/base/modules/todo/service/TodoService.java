@@ -160,7 +160,8 @@ public interface TodoService {
 	 * 
 	 * @return
 	 */
-	Map<String, Todo> getTodoMap();
+	@SuppressWarnings("rawtypes")
+	Map getTodoMap();
 
 	/**
 	 * 获取可用的Todo信息

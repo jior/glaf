@@ -26,7 +26,7 @@ public class JbpmBeanFactory {
 			.getLog(JbpmBeanFactory.class);
 	private final static String DEFAULT_CONFIG = "com/glaf/jbpm/context/jbpm-context.xml";
 
-	private static ApplicationContext ctx;
+	private static volatile ApplicationContext ctx;
 
 	private JbpmBeanFactory() {
 
