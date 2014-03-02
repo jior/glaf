@@ -31,7 +31,7 @@ import org.springframework.context.support.FileSystemXmlApplicationContext;
 public final class ContextFactory {
 	private static Configuration conf = BaseConfiguration.create();
 
-	private static org.springframework.context.ApplicationContext ctx;
+	private static volatile org.springframework.context.ApplicationContext ctx;
 
 	private static Log logger = LogFactory.getLog(ContextFactory.class);
 
