@@ -1,5 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
-
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="html"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.glaf.base.modules.sys.*"%>
@@ -13,7 +12,7 @@ Set roleId=new HashSet();
 Iterator roles = user.getRoles().iterator();
 while(roles.hasNext()){  
   SysDeptRole role=(SysDeptRole)roles.next();
-  roleId.add(new Long(role.getId()));
+  roleId.add(role.getId());
 }
 %>
 
