@@ -451,7 +451,7 @@ public class ZooKeeperUtils {
 				// 获取所有子节点
 				List<String> nodes = zk.getChildren(path, false);
 				// 存放数据
-				Map<String, Object> sessionMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+				Map<String, Object> sessionMap = new java.util.HashMap<String, Object>();
 				for (String node : nodes) {
 					String dataPath = path + "/" + node;
 					Stat stat = zk.exists(dataPath, false);

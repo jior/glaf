@@ -2137,7 +2137,7 @@ public class WebFile {
 			contextPath = contextPath + m_rootPath;
 		responseWriteLn("<SCRIPT LANGUAGE='JavaScript'>");
 		responseWriteLn("function fdownload() {document.FDOWNLOAD.submit();}");
-		if (!m_jsEventHandler.equals(null)) {
+		if (null != m_jsEventHandler) {
 			responseWriteLn("function selFile(isFolder,isFile,Name,Location,VirtualPath,Url,Size,DateLastModified,canWrite,isHidden){");
 			responseWriteLn("   this.isFolder=isFolder");
 			responseWriteLn("   this.isFile=isFile");

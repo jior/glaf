@@ -63,7 +63,7 @@ public class ZooKeeperSession extends StandardSession {
 	}
 
 	public void resetDirtyTracking() {
-		changedAttributes = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		changedAttributes = new java.util.HashMap<String, Object>();
 		dirty = false;
 	}
 
