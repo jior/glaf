@@ -103,7 +103,7 @@ public class Membership implements Serializable, JSONable {
 	/**
 	 * ¿‡–Õ
 	 */
-	@Column(name = "TYPE_")
+	@Column(name = "TYPE_", nullable = false)
 	protected String type;
 
 	public Membership() {

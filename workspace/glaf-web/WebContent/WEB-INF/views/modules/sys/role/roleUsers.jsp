@@ -56,7 +56,7 @@
 </head>
 
 <body style="margin:0;"> 
-<div style="background:#fafafa;padding:2px;border:1px solid #ddd;font-size:12px"> 
+<div class="toolbar-backgroud"> 
 <span class="x_content_title">查看角色【${sysRole.name}】的用户</span>
 </div> 
 <div>

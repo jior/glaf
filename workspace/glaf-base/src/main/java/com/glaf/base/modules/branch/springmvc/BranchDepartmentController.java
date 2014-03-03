@@ -19,6 +19,7 @@
 package com.glaf.base.modules.branch.springmvc;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -44,17 +45,18 @@ import com.glaf.base.modules.sys.model.Dictory;
 import com.glaf.base.modules.sys.model.SysDepartment;
 import com.glaf.base.modules.sys.model.SysTree;
 import com.glaf.base.modules.sys.query.SysDepartmentQuery;
-import com.glaf.base.modules.sys.query.SysUserQuery;
+import com.glaf.base.modules.sys.service.ComplexUserService;
 import com.glaf.base.modules.sys.service.DictoryService;
 import com.glaf.base.modules.sys.service.SysDepartmentService;
 import com.glaf.base.modules.sys.service.SysTreeService;
 import com.glaf.base.utils.ParamUtil;
 import com.glaf.core.base.TreeModel;
 import com.glaf.core.config.ViewProperties;
+
 import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
 import com.glaf.core.res.ViewMessages;
-import com.glaf.core.service.ITreeModelService;
+import com.glaf.core.security.LoginContext;
 import com.glaf.core.tree.helper.JacksonTreeHelper;
 import com.glaf.core.util.JsonUtils;
 import com.glaf.core.util.PageResult;
@@ -75,7 +77,36 @@ public class BranchDepartmentController {
 
 	protected SysTreeService sysTreeService;
 
-	protected ITreeModelService treeModelService;
+	protected ComplexUserService complexUserService;
+
+	@RequestMapping(params = "method=branchAdmin")
+	public ModelAndView branchAdmin(HttpServletRequest request,
+			ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		String x_query = request.getParameter("x_query");
+		if (StringUtils.equals(x_query, "true")) {
+			Map<String, Object> paramMap = RequestUtils
+					.getParameterMap(request);
+			String x_complex_query = JsonUtils.encode(paramMap);
+			x_complex_query = RequestUtils.encodeString(x_complex_query);
+			request.setAttribute("x_complex_query", x_complex_query);
+		} else {
+			request.setAttribute("x_complex_query", "");
+		}
+
+		String x_view = ViewProperties
+				.getString("branch.department.branchAdmin");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
+		String view = request.getParameter("view");
+		if (StringUtils.isNotEmpty(view)) {
+			return new ModelAndView(view, modelMap);
+		}
+
+		return new ModelAndView("/modules/branch/dept/branchAdmin", modelMap);
+	}
 
 	@RequestMapping(params = "method=json")
 	@ResponseBody
@@ -85,26 +116,9 @@ public class BranchDepartmentController {
 		SysDepartmentQuery query = new SysDepartmentQuery();
 		Tools.populate(query, params);
 
-		List<Long> nodeIds = new java.util.concurrent.CopyOnWriteArrayList<Long>();
-		nodeIds.add(-1L);
-		SysUserQuery qx = new SysUserQuery();
-		qx.setAccount(actorId);
-		qx.setRoleCode(SysConstants.BRANCH_ADMIN);
-		List<SysTree> subTrees = sysTreeService.getRoleUserTrees(qx);
-		if (subTrees != null && !subTrees.isEmpty()) {
-			for (SysTree tree : subTrees) {
-				List<TreeModel> children = treeModelService
-						.getChildrenTreeModels(tree.getId());
-				if (children != null && !children.isEmpty()) {
-					for (TreeModel child : children) {
-						if (!nodeIds.contains(child.getId())) {
-							nodeIds.add(child.getId());
-						}
-					}
-				}
-			}
-		}
 		if (!RequestUtils.getLoginContext(request).isSystemAdministrator()) {
+			List<Long> nodeIds = complexUserService
+					.getUserManageBranchNodeIds(actorId);
 			query.nodeIds(nodeIds);
 		}
 
@@ -274,31 +288,19 @@ public class BranchDepartmentController {
 	public ModelAndView saveAdd(HttpServletRequest request, ModelMap modelMap) {
 		long parentId = ParamUtil.getLongParameter(request, "parent", 0);
 		boolean ret = false;
-		String actorId = RequestUtils.getActorId(request);
-		List<Long> nodeIds = new java.util.concurrent.CopyOnWriteArrayList<Long>();
-		nodeIds.add(-1L);
-		SysUserQuery qx = new SysUserQuery();
-		qx.setAccount(actorId);
-		qx.setRoleCode(SysConstants.BRANCH_ADMIN);
-		List<SysTree> subTrees = sysTreeService.getRoleUserTrees(qx);
-		if (subTrees != null && !subTrees.isEmpty()) {
-			for (SysTree tree : subTrees) {
-				List<TreeModel> children = treeModelService
-						.getChildrenTreeModels(tree.getId());
-				if (children != null && !children.isEmpty()) {
-					for (TreeModel child : children) {
-						if (!nodeIds.contains(child.getId())) {
-							nodeIds.add(child.getId());
-						}
-					}
-				}
-			}
+		LoginContext loginContext = RequestUtils.getLoginContext(request);
+
+		List<Long> nodeIds = new ArrayList<Long>();
+
+		if (!loginContext.isSystemAdministrator()) {
+			nodeIds = complexUserService
+					.getUserManageBranchNodeIds(loginContext.getActorId());
 		}
 
 		/**
 		 * 保证添加的部门是分级管理员管辖的部门
 		 */
-		if (nodeIds.contains(parentId)) {
+		if (loginContext.isSystemAdministrator() || nodeIds.contains(parentId)) {
 			// 增加部门时，同时要增加对应节点
 			SysDepartment bean = new SysDepartment();
 			bean.setName(ParamUtil.getParameter(request, "name"));
@@ -348,31 +350,20 @@ public class BranchDepartmentController {
 		SysDepartment bean = sysDepartmentService.findById(id);
 		boolean ret = false;
 		if (bean != null) {
-			String actorId = RequestUtils.getActorId(request);
-			List<Long> nodeIds = new java.util.concurrent.CopyOnWriteArrayList<Long>();
-			nodeIds.add(-1L);
-			SysUserQuery qx = new SysUserQuery();
-			qx.setAccount(actorId);
-			qx.setRoleCode(SysConstants.BRANCH_ADMIN);
-			List<SysTree> subTrees = sysTreeService.getRoleUserTrees(qx);
-			if (subTrees != null && !subTrees.isEmpty()) {
-				for (SysTree tree : subTrees) {
-					List<TreeModel> children = treeModelService
-							.getChildrenTreeModels(tree.getId());
-					if (children != null && !children.isEmpty()) {
-						for (TreeModel child : children) {
-							if (!nodeIds.contains(child.getId())) {
-								nodeIds.add(child.getId());
-							}
-						}
-					}
-				}
+			LoginContext loginContext = RequestUtils.getLoginContext(request);
+
+			List<Long> nodeIds = new ArrayList<Long>();
+
+			if (!loginContext.isSystemAdministrator()) {
+				nodeIds = complexUserService
+						.getUserManageBranchNodeIds(loginContext.getActorId());
 			}
 
 			/**
-			 * 保证修改的部门是分级管理员管辖的部门
+			 * 保证添加的部门是分级管理员管辖的部门
 			 */
-			if (nodeIds.contains(parentId)) {
+			if (loginContext.isSystemAdministrator()
+					|| nodeIds.contains(parentId)) {
 				bean.setUpdateBy(RequestUtils.getActorId(request));
 				bean.setName(ParamUtil.getParameter(request, "name"));
 				bean.setDesc(ParamUtil.getParameter(request, "desc"));
@@ -410,6 +401,11 @@ public class BranchDepartmentController {
 	}
 
 	@javax.annotation.Resource
+	public void setComplexUserService(ComplexUserService complexUserService) {
+		this.complexUserService = complexUserService;
+	}
+
+	@javax.annotation.Resource
 	public void setDictoryService(DictoryService dictoryService) {
 		this.dictoryService = dictoryService;
 	}
@@ -418,19 +414,11 @@ public class BranchDepartmentController {
 	public void setSysDepartmentService(
 			SysDepartmentService sysDepartmentService) {
 		this.sysDepartmentService = sysDepartmentService;
-
 	}
 
 	@javax.annotation.Resource
 	public void setSysTreeService(SysTreeService sysTreeService) {
 		this.sysTreeService = sysTreeService;
-
-	}
-
-	@javax.annotation.Resource
-	public void setTreeModelService(ITreeModelService treeModelService) {
-		this.treeModelService = treeModelService;
-
 	}
 
 	/**
@@ -480,26 +468,8 @@ public class BranchDepartmentController {
 	public byte[] treeJson(HttpServletRequest request) {
 		String actorId = RequestUtils.getActorId(request);
 
-		List<TreeModel> treeModels = new java.util.concurrent.CopyOnWriteArrayList<TreeModel>();
-
-		SysUserQuery qx = new SysUserQuery();
-		qx.setAccount(actorId);
-		qx.setRoleCode(SysConstants.BRANCH_ADMIN);
-		List<SysTree> subTrees = sysTreeService.getRoleUserTrees(qx);
-		if (subTrees != null && !subTrees.isEmpty()) {
-			for (SysTree tree : subTrees) {
-				List<TreeModel> children = treeModelService
-						.getChildrenTreeModels(tree.getId());
-				if (children != null && !children.isEmpty()) {
-					for (TreeModel child : children) {
-						if (!treeModels.contains(child)) {
-							treeModels.add(child);
-						}
-					}
-				}
-			}
-		}
-
+		List<TreeModel> treeModels = complexUserService
+				.getUserManageBranch(actorId);
 		JacksonTreeHelper treeHelper = new JacksonTreeHelper();
 		ArrayNode responseJSON = treeHelper.getTreeArrayNode(treeModels);
 		try {

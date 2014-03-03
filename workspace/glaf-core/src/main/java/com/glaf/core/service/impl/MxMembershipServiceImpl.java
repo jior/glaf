@@ -111,6 +111,40 @@ public class MxMembershipServiceImpl implements MembershipService {
 		}
 	}
 
+	/**
+	 * 保存成员关系
+	 * 
+	 * @param actorId
+	 *            用户编号
+	 * @param type
+	 *            类型
+	 * @param nodeIds
+	 *            节点集合
+	 */
+	@Transactional
+	public void saveMemberships(String actorId, String type, List<Long> nodeIds) {
+		MembershipQuery query = new MembershipQuery();
+		query.actorId(actorId);
+		query.type(type);
+		List<Membership> list = membershipMapper.getMemberships(query);
+		if (list != null && !list.isEmpty()) {
+			for (Membership m : list) {
+				membershipMapper.deleteMembershipById(m.getId());
+			}
+		}
+		if (nodeIds != null && !nodeIds.isEmpty()) {
+			for (Long nodeId : nodeIds) {
+				Membership m = new Membership();
+				m.setActorId(actorId);
+				m.setId(idGenerator.nextId());
+				m.setModifyDate(new Date());
+				m.setNodeId(nodeId);
+				m.setType(type);
+				membershipMapper.insertMembership(m);
+			}
+		}
+	}
+
 	@Transactional
 	public void saveMemberships(Long nodeId, Long roleId, String type,
 			List<Membership> memberships) {

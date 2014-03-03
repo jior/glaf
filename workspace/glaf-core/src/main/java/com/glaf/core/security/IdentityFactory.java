@@ -203,7 +203,7 @@ public class IdentityFactory {
 		User user = (User) getEntityService().getById("getUserById", actorId);
 		if (user != null) {
 			LoginContext loginContext = new LoginContext(user);
-			List<String> roles = new java.util.concurrent.CopyOnWriteArrayList<String>();
+			List<String> roles = new java.util.ArrayList<String>();
 
 			/**
 			 * 获取本人的角色权限

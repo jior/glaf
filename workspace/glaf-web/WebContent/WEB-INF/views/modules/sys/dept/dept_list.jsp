@@ -33,15 +33,18 @@ function checkOperation(form){
 	  document.all.btn_modify.disabled=false;
 	  document.all.btn_user.disabled=false;
 	  document.all.btn_role.disabled=false;
+	  document.all.btn_admin.disabled=false;
 	}else{
 	  document.all.btn_modify.disabled=true;
 	  document.all.btn_user.disabled=true;
 	  document.all.btn_role.disabled=true;
+	  document.all.btn_admin.disabled=true;
 	}
   }else{
 	  document.all.btn_modify.disabled=true;
 	  document.all.btn_user.disabled=true;
 	  document.all.btn_role.disabled=true;
+	  document.all.btn_admin.disabled=true;
   }
 }
 function add(){
@@ -116,6 +119,22 @@ function roles(form){
   //openWindow(url, width, height, scroll);
   art.dialog.open(link, { height: height, width: width, title: "部门角色", scrollbars:"no" , lock: false });
 }
+
+function branchAdmin(form){
+  var id =0;
+  for (var i=0;i<form.id.length;i++) {
+    var e = form.id[i];
+    if (e.checked){
+	  id=e.value;
+	}     
+  }
+  var url="<%=request.getContextPath()%>/branch/department.do?method=branchAdmin&type=BranchAdmin&deptId="+id;
+  var width=680;
+  var height=400;
+  var scroll="no";
+  art.dialog.open(url, { height: height, width: width, title: "分级管理员", scrollbars:"no" , lock: false });
+}
+
 </script>
 </head>
 
@@ -197,6 +216,7 @@ for(; i<pageSize; i++){
       <input name="btn_modify" type="button" value="修改" class="button" onClick="javascript:modify(this.form);" disabled>
       <input name="btn_user" type="button" value="用户管理" class="button" onClick="javascript:users(this.form);" disabled>
       <input name="btn_role" type="button" value="角色设置" class="button" onClick="javascript:roles(this.form);" disabled>
+	  <input name="btn_admin" type="button" value="分级管理员" class="button" onClick="javascript:branchAdmin(this.form);" disabled>
 	  </td>
     <td width="50%"> 
       <%
@@ -208,7 +228,9 @@ String params = WebUtil.getQueryString(request);
               <jsp:param name="page_size" value="<%=pageSize%>"/>
               <jsp:param name="page_no" value="<%=pager.getCurrentPageNo()%>"/>
               <jsp:param name="url" value="department.do"/>
-	    <jsp:param name="params" value="<%=java.net.URLEncoder.encode(params)%>"/>        </jsp:include> </td>
+	    <jsp:param name="params" value="<%=java.net.URLEncoder.encode(params)%>"/>        
+	 </jsp:include>
+	</td>
   </tr>
 </table>
 </html:form> 

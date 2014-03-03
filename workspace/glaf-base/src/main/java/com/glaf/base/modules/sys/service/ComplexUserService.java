@@ -22,12 +22,45 @@ import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import com.glaf.base.modules.sys.model.SysDepartment;
 import com.glaf.base.modules.sys.model.SysUser;
+import com.glaf.core.base.TreeModel;
 
 @Transactional(readOnly = true)
 public interface ComplexUserService {
 
+	/**
+	 * 创建用户
+	 * 
+	 * @param user
+	 * @param roleCodes
+	 * @return
+	 */
 	@Transactional
 	boolean createUser(SysUser user, List<String> roleCodes);
+
+	/**
+	 * 获取用户管理的分支机构(sys_tree的封装)
+	 * 
+	 * @param actorId
+	 * @return
+	 */
+	List<TreeModel> getUserManageBranch(String actorId);
+	
+	/**
+	 * 获取用户管理的分支机构(SYS_DEPARTMENT的封装)
+	 * 
+	 * @param actorId
+	 * @return
+	 */
+	List<SysDepartment> getUserManageDeptments(String actorId);
+
+	/**
+	 * 获取用户管理的分支机构的编号集合(sys_tree的id封装)
+	 * 
+	 * @param actorId
+	 * @return
+	 */
+	List<Long> getUserManageBranchNodeIds(String actorId);
 
 }

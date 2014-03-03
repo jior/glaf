@@ -84,6 +84,19 @@ public interface MembershipService {
 	/**
 	 * 保存成员关系
 	 * 
+	 * @param actorId
+	 *            用户编号
+	 * @param type
+	 *            类型
+	 * @param nodeIds
+	 *            节点集合
+	 */
+	@Transactional
+	void saveMemberships(String actorId, String type, List<Long> nodeIds);
+
+	/**
+	 * 保存成员关系
+	 * 
 	 * @param nodeId
 	 *            节点编号
 	 * @param type

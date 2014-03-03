@@ -18,6 +18,7 @@
 
 package com.glaf.base.modules.sys.service.mybatis;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -28,10 +29,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.glaf.base.modules.sys.SysConstants;
+import com.glaf.base.modules.sys.model.SysDepartment;
 import com.glaf.base.modules.sys.model.SysDeptRole;
 import com.glaf.base.modules.sys.model.SysRole;
+import com.glaf.base.modules.sys.model.SysTree;
 import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.sys.model.SysUserRole;
+import com.glaf.base.modules.sys.query.SysDepartmentQuery;
+import com.glaf.base.modules.sys.query.SysUserQuery;
 import com.glaf.base.modules.sys.service.ComplexUserService;
 import com.glaf.base.modules.sys.service.SysDepartmentService;
 import com.glaf.base.modules.sys.service.SysDeptRoleService;
@@ -39,8 +45,13 @@ import com.glaf.base.modules.sys.service.SysRoleService;
 import com.glaf.base.modules.sys.service.SysTreeService;
 import com.glaf.base.modules.sys.service.SysUserRoleService;
 import com.glaf.base.modules.sys.service.SysUserService;
+import com.glaf.core.base.TreeModel;
 import com.glaf.core.dao.EntityDAO;
+import com.glaf.core.domain.Membership;
 import com.glaf.core.id.IdGenerator;
+import com.glaf.core.query.MembershipQuery;
+import com.glaf.core.service.ITreeModelService;
+import com.glaf.core.service.MembershipService;
 import com.glaf.core.util.DateUtils;
 import com.glaf.core.util.Tools;
 
@@ -55,6 +66,10 @@ public class ComplexUserServiceImpl implements ComplexUserService {
 	protected IdGenerator idGenerator;
 
 	protected SqlSessionTemplate sqlSessionTemplate;
+
+	protected MembershipService membershipService;
+
+	protected ITreeModelService treeModelService;
 
 	protected SysUserService sysUserService;
 
@@ -90,7 +105,7 @@ public class ComplexUserServiceImpl implements ComplexUserService {
 						sysDeptRoleService.create(deptRole);
 					}
 					if (deptRole != null) {
-						Map<String, Object> dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+						Map<String, Object> dataMap = new java.util.HashMap<String, Object>();
 						dataMap.put("authorizeFrom", "0");
 						dataMap.put("userId", bean.getId());
 						dataMap.put("deptRoleId", deptRole.getId());
@@ -112,6 +127,138 @@ public class ComplexUserServiceImpl implements ComplexUserService {
 		return ret;
 	}
 
+	/**
+	 * 获取用户管理的分支机构
+	 * 
+	 * @param actorId
+	 * @return
+	 */
+	public List<TreeModel> getUserManageBranch(String actorId) {
+		List<TreeModel> treeModels = new java.util.ArrayList<TreeModel>();
+
+		SysUserQuery qx = new SysUserQuery();
+		qx.setAccount(actorId);
+		qx.setRoleCode(SysConstants.BRANCH_ADMIN);
+		List<SysTree> subTrees = sysTreeService.getRoleUserTrees(qx);
+		if (subTrees != null && !subTrees.isEmpty()) {
+			for (SysTree tree : subTrees) {
+				List<TreeModel> children = treeModelService
+						.getChildrenTreeModels(tree.getId());
+				if (children != null && !children.isEmpty()) {
+					for (TreeModel child : children) {
+						if (!treeModels.contains(child)) {
+							treeModels.add(child);
+						}
+					}
+				}
+			}
+		}
+
+		MembershipQuery query = new MembershipQuery();
+		query.type(SysConstants.BRANCH_ADMIN);
+		query.actorId(actorId);
+		List<Membership> list = membershipService.list(query);
+		List<Long> deptIds = new ArrayList<Long>();
+		if (list != null && !list.isEmpty()) {
+			for (Membership m : list) {
+				deptIds.add(m.getNodeId());
+			}
+		}
+
+		logger.debug("分级管理部门编号:" + deptIds);
+
+		if (!deptIds.isEmpty()) {
+			for (Long deptId : deptIds) {
+				SysDepartment dept = sysDepartmentService.findById(deptId);
+				if (dept != null && dept.getNodeId() > 0) {
+					treeModels.add(dept.getNode());
+					List<TreeModel> children = treeModelService
+							.getChildrenTreeModels(dept.getNodeId());
+					if (children != null && !children.isEmpty()) {
+						for (TreeModel child : children) {
+							if (!treeModels.contains(child)) {
+								treeModels.add(child);
+							}
+						}
+					}
+				}
+			}
+		}
+		return treeModels;
+	}
+
+	/**
+	 * 获取用户管理的分支机构的编号集合
+	 * 
+	 * @param actorId
+	 * @return
+	 */
+	public List<Long> getUserManageBranchNodeIds(String actorId) {
+		List<Long> nodeIds = new java.util.ArrayList<Long>();
+		nodeIds.add(-1L);
+		SysUserQuery qx = new SysUserQuery();
+		qx.setAccount(actorId);
+		qx.setRoleCode(SysConstants.BRANCH_ADMIN);
+		List<SysTree> subTrees = sysTreeService.getRoleUserTrees(qx);
+		if (subTrees != null && !subTrees.isEmpty()) {
+			for (SysTree tree : subTrees) {
+				List<TreeModel> children = treeModelService
+						.getChildrenTreeModels(tree.getId());
+				if (children != null && !children.isEmpty()) {
+					for (TreeModel child : children) {
+						if (!nodeIds.contains(child.getId())) {
+							nodeIds.add(child.getId());
+						}
+					}
+				}
+			}
+		}
+
+		MembershipQuery query2 = new MembershipQuery();
+		query2.type(SysConstants.BRANCH_ADMIN);
+		query2.actorId(actorId);
+		List<Membership> listx = membershipService.list(query2);
+		List<Long> deptIds = new ArrayList<Long>();
+		if (listx != null && !listx.isEmpty()) {
+			for (Membership m : listx) {
+				deptIds.add(m.getNodeId());
+			}
+		}
+
+		if (!deptIds.isEmpty()) {
+			for (Long deptId : deptIds) {
+				SysDepartment dept = sysDepartmentService.findById(deptId);
+				if (dept != null && dept.getNodeId() > 0) {
+					nodeIds.add(dept.getNodeId());
+					List<TreeModel> children = treeModelService
+							.getChildrenTreeModels(dept.getNodeId());
+					if (children != null && !children.isEmpty()) {
+						for (TreeModel child : children) {
+							if (!nodeIds.contains(child.getId())) {
+								nodeIds.add(child.getId());
+							}
+						}
+					}
+				}
+			}
+		}
+		return nodeIds;
+	}
+
+	/**
+	 * 获取用户管理的分支机构(SYS_DEPARTMENT的封装)
+	 * 
+	 * @param actorId
+	 * @return
+	 */
+	public List<SysDepartment> getUserManageDeptments(String actorId) {
+		List<Long> nodeIds = this.getUserManageBranchNodeIds(actorId);
+		nodeIds.add(-1L);
+		SysDepartmentQuery query = new SysDepartmentQuery();
+		query.nodeIds(nodeIds);
+		return sysDepartmentService.list(query);
+	}
+
 	@javax.annotation.Resource
 	public void setEntityDAO(EntityDAO entityDAO) {
 		this.entityDAO = entityDAO;
@@ -120,6 +267,11 @@ public class ComplexUserServiceImpl implements ComplexUserService {
 	@javax.annotation.Resource
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
+	}
+
+	@javax.annotation.Resource
+	public void setMembershipService(MembershipService membershipService) {
+		this.membershipService = membershipService;
 	}
 
 	@javax.annotation.Resource
@@ -156,7 +308,11 @@ public class ComplexUserServiceImpl implements ComplexUserService {
 	@javax.annotation.Resource
 	public void setSysUserService(SysUserService sysUserService) {
 		this.sysUserService = sysUserService;
-		logger.info("setSysUserService");
+	}
+
+	@javax.annotation.Resource
+	public void setTreeModelService(ITreeModelService treeModelService) {
+		this.treeModelService = treeModelService;
 	}
 
 }

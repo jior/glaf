@@ -203,6 +203,22 @@
 		}
 	}
 
+	function branchAdmin(form){
+	    var rows = jQuery('#mydatagrid').datagrid('getSelections');
+		if(rows == null || rows.length !=1){
+			alert("请选择其中一条记录。");
+			return;
+		}
+		var selected = jQuery('#mydatagrid').datagrid('getSelected');
+		if (selected ){
+		  var url="<%=request.getContextPath()%>/branch/department.do?method=branchAdmin&type=BranchAdmin&deptId="+selected.id;
+		  var width=680;
+		  var height=400;
+		  var scroll="no";
+		  art.dialog.open(url, { height: height, width: width, title: "分级管理员", scrollbars:"no" , lock: false });
+		}
+	}
+
 	function deleteSelections(){
 		var ids = [];
 		var rows = jQuery('#mydatagrid').datagrid('getSelections');
@@ -222,7 +238,7 @@
 					   if(data != null && data.message != null){
 						   alert(data.message);
 					   } else {
-						 alert('操作成功完成！');
+						   alert('操作成功完成！');
 					   }
 					   jQuery('#mydatagrid').datagrid('reload');
 				   }
@@ -290,7 +306,9 @@
 			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-user'"
 			   onclick="javascript:deptUsers();">部门用户</a> 
 			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-actor'"
-			   onclick="javascript:deptRoles();">部门角色</a> 
+			   onclick="javascript:deptRoles();">部门角色</a>
+			<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-user'"
+			   onclick="javascript:branchAdmin();">分级管理员</a> 
 			<!-- <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-search'"
 			   onclick="javascript:searchWin();">查找</a> -->
 		   </div> 
