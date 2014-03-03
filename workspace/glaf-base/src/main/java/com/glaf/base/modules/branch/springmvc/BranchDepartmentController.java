@@ -71,13 +71,13 @@ public class BranchDepartmentController {
 	private static final Log logger = LogFactory
 			.getLog(BranchDepartmentController.class);
 
+	protected ComplexUserService complexUserService;
+
 	protected DictoryService dictoryService;
 
 	protected SysDepartmentService sysDepartmentService;
 
 	protected SysTreeService sysTreeService;
-
-	protected ComplexUserService complexUserService;
 
 	@RequestMapping(params = "method=branchAdmin")
 	public ModelAndView branchAdmin(HttpServletRequest request,

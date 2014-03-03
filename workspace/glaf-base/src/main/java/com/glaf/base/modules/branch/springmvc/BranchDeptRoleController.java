@@ -32,14 +32,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.glaf.base.modules.sys.model.SysDepartment;
 import com.glaf.base.modules.sys.query.SysDepartmentQuery;
+import com.glaf.base.modules.sys.service.ComplexUserService;
 import com.glaf.base.modules.sys.service.SysDepartmentService;
 import com.glaf.base.modules.sys.service.SysDeptRoleService;
 import com.glaf.base.modules.sys.service.SysRoleService;
 import com.glaf.base.modules.sys.service.SysTreeService;
 import com.glaf.base.utils.ParamUtil;
-import com.glaf.core.base.TreeModel;
+
 import com.glaf.core.config.ViewProperties;
-import com.glaf.core.service.ITreeModelService;
 import com.glaf.core.util.RequestUtils;
 
 @Controller("/branch/deptRole")
@@ -47,6 +47,8 @@ import com.glaf.core.util.RequestUtils;
 public class BranchDeptRoleController {
 	protected static final Log logger = LogFactory
 			.getLog(BranchDeptRoleController.class);
+
+	protected ComplexUserService complexUserService;
 
 	protected SysDepartmentService sysDepartmentService;
 
@@ -56,13 +58,15 @@ public class BranchDeptRoleController {
 
 	protected SysTreeService sysTreeService;
 
-	protected ITreeModelService treeModelService;
+	@javax.annotation.Resource
+	public void setComplexUserService(ComplexUserService complexUserService) {
+		this.complexUserService = complexUserService;
+	}
 
 	@javax.annotation.Resource
 	public void setSysDepartmentService(
 			SysDepartmentService sysDepartmentService) {
 		this.sysDepartmentService = sysDepartmentService;
-
 	}
 
 	@javax.annotation.Resource
@@ -80,11 +84,6 @@ public class BranchDeptRoleController {
 		this.sysTreeService = sysTreeService;
 	}
 
-	@javax.annotation.Resource
-	public void setTreeModelService(ITreeModelService treeModelService) {
-		this.treeModelService = treeModelService;
-	}
-
 	/**
 	 * 显示所有列表
 	 * 
@@ -99,19 +98,10 @@ public class BranchDeptRoleController {
 		SysDepartment department = sysDepartmentService.findById(deptId);
 		request.setAttribute("department", department);
 
-		long nodeId = department.getNodeId();
-		List<Long> nodeIds = new java.util.concurrent.CopyOnWriteArrayList<Long>();
-		nodeIds.add(nodeId);
+		String actorId = RequestUtils.getActorId(request);
 
-		List<TreeModel> treeModels = treeModelService
-				.getChildrenTreeModels(nodeId);
-		if (treeModels != null && !treeModels.isEmpty()) {
-			for (TreeModel t : treeModels) {
-				if (!nodeIds.contains(t.getId())) {
-					nodeIds.add(t.getId());
-				}
-			}
-		}
+		List<Long> nodeIds = complexUserService
+				.getUserManageBranchNodeIds(actorId);
 
 		SysDepartmentQuery query = new SysDepartmentQuery();
 		query.nodeIds(nodeIds);

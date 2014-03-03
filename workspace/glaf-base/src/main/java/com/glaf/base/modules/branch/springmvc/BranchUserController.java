@@ -48,6 +48,7 @@ import com.glaf.base.modules.sys.model.SysRole;
 import com.glaf.base.modules.sys.model.SysTree;
 import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.sys.query.SysUserQuery;
+import com.glaf.base.modules.sys.service.ComplexUserService;
 import com.glaf.base.modules.sys.service.DictoryService;
 import com.glaf.base.modules.sys.service.SysDepartmentService;
 import com.glaf.base.modules.sys.service.SysDeptRoleService;
@@ -55,13 +56,11 @@ import com.glaf.base.modules.sys.service.SysRoleService;
 import com.glaf.base.modules.sys.service.SysTreeService;
 import com.glaf.base.modules.sys.service.SysUserService;
 import com.glaf.base.utils.ParamUtil;
-import com.glaf.core.base.TreeModel;
 import com.glaf.core.config.ViewProperties;
 import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
 import com.glaf.core.res.ViewMessages;
 import com.glaf.core.security.DigestUtil;
-import com.glaf.core.service.ITreeModelService;
 import com.glaf.core.util.JsonUtils;
 import com.glaf.core.util.PageResult;
 import com.glaf.core.util.Paging;
@@ -76,6 +75,8 @@ public class BranchUserController {
 	private static final Log logger = LogFactory
 			.getLog(BranchUserController.class);
 
+	protected ComplexUserService complexUserService;
+
 	protected DictoryService dictoryService;
 
 	protected SysDepartmentService sysDepartmentService;
@@ -87,8 +88,6 @@ public class BranchUserController {
 	protected SysTreeService sysTreeService;
 
 	protected SysUserService sysUserService;
-
-	protected ITreeModelService treeModelService;
 
 	/**
 	 * 增加角色用户
@@ -106,25 +105,8 @@ public class BranchUserController {
 		int roleId = ParamUtil.getIntParameter(request, "roleId", 0);
 		boolean success = false;
 		String actorId = RequestUtils.getActorId(request);
-		List<Long> nodeIds = new java.util.concurrent.CopyOnWriteArrayList<Long>();
-		nodeIds.add(-1L);
-		SysUserQuery qx = new SysUserQuery();
-		qx.setAccount(actorId);
-		qx.setRoleCode(SysConstants.BRANCH_ADMIN);
-		List<SysTree> subTrees = sysTreeService.getRoleUserTrees(qx);
-		if (subTrees != null && !subTrees.isEmpty()) {
-			for (SysTree tree : subTrees) {
-				List<TreeModel> children = treeModelService
-						.getChildrenTreeModels(tree.getId());
-				if (children != null && !children.isEmpty()) {
-					for (TreeModel child : children) {
-						if (!nodeIds.contains(child.getId())) {
-							nodeIds.add(child.getId());
-						}
-					}
-				}
-			}
-		}
+		List<Long> nodeIds = complexUserService
+				.getUserManageBranchNodeIds(actorId);
 
 		SysDepartment department = sysDepartmentService.findById(deptId);
 		if (department != null) {
@@ -354,7 +336,6 @@ public class BranchUserController {
 	 */
 	@RequestMapping(params = "method=prepareAdd")
 	public ModelAndView prepareAdd(HttpServletRequest request, ModelMap modelMap) {
-
 		List<Dictory> dictories = dictoryService
 				.getDictoryList(SysConstants.USER_HEADSHIP);
 		modelMap.put("dictories", dictories);
@@ -402,7 +383,7 @@ public class BranchUserController {
 		modelMap.put("dictories", dictories);
 
 		SysTree parent = sysTreeService.getSysTreeByCode(Constants.TREE_DEPT);
-		List<SysTree> list = new java.util.concurrent.CopyOnWriteArrayList<SysTree>();
+		List<SysTree> list = new java.util.ArrayList<SysTree>();
 		parent.setDeep(0);
 		list.add(parent);
 		sysTreeService.getSysTree(list, (int) parent.getId(), 1);
@@ -450,25 +431,8 @@ public class BranchUserController {
 	public ModelAndView resetPwd(HttpServletRequest request, ModelMap modelMap) {
 		boolean ret = false;
 		String actorId = RequestUtils.getActorId(request);
-		List<Long> nodeIds = new java.util.concurrent.CopyOnWriteArrayList<Long>();
-		nodeIds.add(-1L);
-		SysUserQuery qx = new SysUserQuery();
-		qx.setAccount(actorId);
-		qx.setRoleCode(SysConstants.BRANCH_ADMIN);
-		List<SysTree> subTrees = sysTreeService.getRoleUserTrees(qx);
-		if (subTrees != null && !subTrees.isEmpty()) {
-			for (SysTree tree : subTrees) {
-				List<TreeModel> children = treeModelService
-						.getChildrenTreeModels(tree.getId());
-				if (children != null && !children.isEmpty()) {
-					for (TreeModel child : children) {
-						if (!nodeIds.contains(child.getId())) {
-							nodeIds.add(child.getId());
-						}
-					}
-				}
-			}
-		}
+		List<Long> nodeIds = complexUserService
+				.getUserManageBranchNodeIds(actorId);
 
 		long id = ParamUtil.getIntParameter(request, "id", 0);
 		SysUser bean = sysUserService.findById(id);
@@ -523,25 +487,8 @@ public class BranchUserController {
 	public ModelAndView saveAdd(HttpServletRequest request, ModelMap modelMap) {
 		SysUser bean = new SysUser();
 		String actorId = RequestUtils.getActorId(request);
-		List<Long> nodeIds = new java.util.concurrent.CopyOnWriteArrayList<Long>();
-		nodeIds.add(-1L);
-		SysUserQuery qx = new SysUserQuery();
-		qx.setAccount(actorId);
-		qx.setRoleCode(SysConstants.BRANCH_ADMIN);
-		List<SysTree> subTrees = sysTreeService.getRoleUserTrees(qx);
-		if (subTrees != null && !subTrees.isEmpty()) {
-			for (SysTree tree : subTrees) {
-				List<TreeModel> children = treeModelService
-						.getChildrenTreeModels(tree.getId());
-				if (children != null && !children.isEmpty()) {
-					for (TreeModel child : children) {
-						if (!nodeIds.contains(child.getId())) {
-							nodeIds.add(child.getId());
-						}
-					}
-				}
-			}
-		}
+		List<Long> nodeIds = complexUserService
+				.getUserManageBranchNodeIds(actorId);
 
 		int ret = 0;
 		SysDepartment department = null;
@@ -589,7 +536,7 @@ public class BranchUserController {
 				bean.setUpdateBy(RequestUtils.getActorId(request));
 
 				if (sysUserService.findByAccount(bean.getAccount()) == null) {
-					if (sysUserService.create(bean)){
+					if (sysUserService.create(bean)) {
 						ret = 2;
 					}
 				} else {// 帐号存在
@@ -631,25 +578,8 @@ public class BranchUserController {
 			SysDepartment department = sysDepartmentService.findById(ParamUtil
 					.getIntParameter(request, "parent", 0));
 			String actorId = RequestUtils.getActorId(request);
-			List<Long> nodeIds = new java.util.concurrent.CopyOnWriteArrayList<Long>();
-			nodeIds.add(-1L);
-			SysUserQuery qx = new SysUserQuery();
-			qx.setAccount(actorId);
-			qx.setRoleCode(SysConstants.BRANCH_ADMIN);
-			List<SysTree> subTrees = sysTreeService.getRoleUserTrees(qx);
-			if (subTrees != null && !subTrees.isEmpty()) {
-				for (SysTree tree : subTrees) {
-					List<TreeModel> children = treeModelService
-							.getChildrenTreeModels(tree.getId());
-					if (children != null && !children.isEmpty()) {
-						for (TreeModel child : children) {
-							if (!nodeIds.contains(child.getId())) {
-								nodeIds.add(child.getId());
-							}
-						}
-					}
-				}
-			}
+			List<Long> nodeIds = complexUserService
+					.getUserManageBranchNodeIds(actorId);
 
 			/**
 			 * 保证添加的用户所属部门是分级管理员管辖的部门
@@ -779,25 +709,8 @@ public class BranchUserController {
 		SysUser user = sysUserService.findById(userId);// 查找用户对象
 		if (user != null && user.getDeptId() > 0) {// 用户存在
 			String actorId = RequestUtils.getActorId(request);
-			List<Long> nodeIds = new java.util.concurrent.CopyOnWriteArrayList<Long>();
-			nodeIds.add(-1L);
-			SysUserQuery qx = new SysUserQuery();
-			qx.setAccount(actorId);
-			qx.setRoleCode(SysConstants.BRANCH_ADMIN);
-			List<SysTree> subTrees = sysTreeService.getRoleUserTrees(qx);
-			if (subTrees != null && !subTrees.isEmpty()) {
-				for (SysTree tree : subTrees) {
-					List<TreeModel> children = treeModelService
-							.getChildrenTreeModels(tree.getId());
-					if (children != null && !children.isEmpty()) {
-						for (TreeModel child : children) {
-							if (!nodeIds.contains(child.getId())) {
-								nodeIds.add(child.getId());
-							}
-						}
-					}
-				}
-			}
+			List<Long> nodeIds = complexUserService
+					.getUserManageBranchNodeIds(actorId);
 
 			SysDepartment department = sysDepartmentService.findById(user
 					.getDeptId());
@@ -842,40 +755,34 @@ public class BranchUserController {
 	}
 
 	@javax.annotation.Resource
+	public void setComplexUserService(ComplexUserService complexUserService) {
+		this.complexUserService = complexUserService;
+	}
+
+	@javax.annotation.Resource
 	public void setSysDepartmentService(
 			SysDepartmentService sysDepartmentService) {
 		this.sysDepartmentService = sysDepartmentService;
-
 	}
 
 	@javax.annotation.Resource
 	public void setSysDeptRoleService(SysDeptRoleService sysDeptRoleService) {
 		this.sysDeptRoleService = sysDeptRoleService;
-
 	}
 
 	@javax.annotation.Resource
 	public void setSysRoleService(SysRoleService sysRoleService) {
 		this.sysRoleService = sysRoleService;
-
 	}
 
 	@javax.annotation.Resource
 	public void setSysTreeService(SysTreeService sysTreeService) {
 		this.sysTreeService = sysTreeService;
-
 	}
 
 	@javax.annotation.Resource
 	public void setSysUserService(SysUserService sysUserService) {
 		this.sysUserService = sysUserService;
-
-	}
-
-	@javax.annotation.Resource
-	public void setTreeModelService(ITreeModelService treeModelService) {
-		this.treeModelService = treeModelService;
-
 	}
 
 	/**
@@ -889,9 +796,9 @@ public class BranchUserController {
 	public ModelAndView showDeptUsers(HttpServletRequest request,
 			ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
-		List<SysDepartment> list = new java.util.concurrent.CopyOnWriteArrayList<SysDepartment>();
+		List<SysDepartment> list = new java.util.ArrayList<SysDepartment>();
 		Set<SysUser> set = new HashSet<SysUser>();
- 
+
 		long deptId = ParamUtil.getLongParameter(request, "dept", 5);
 		String roleCode = ParamUtil.getParameter(request, "code", "");
 		SysDepartment node = this.sysDepartmentService.findById(deptId);
@@ -935,7 +842,7 @@ public class BranchUserController {
 		request.setAttribute("pager", pager);
 
 		SysDepartment dept = sysDepartmentService.findById(deptId);
-		List<SysDepartment> list = new java.util.concurrent.CopyOnWriteArrayList<SysDepartment>();
+		List<SysDepartment> list = new java.util.ArrayList<SysDepartment>();
 		sysDepartmentService.findNestingDepartment(list, dept);
 		request.setAttribute("nav", list);
 
@@ -989,7 +896,7 @@ public class BranchUserController {
 
 		// 部门信息
 		SysDepartment dept = sysDepartmentService.findById(deptId);
-		List<SysDepartment> list = new java.util.concurrent.CopyOnWriteArrayList<SysDepartment>();
+		List<SysDepartment> list = new java.util.ArrayList<SysDepartment>();
 		sysDepartmentService.findNestingDepartment(list, dept);
 		request.setAttribute("nav", list);
 
