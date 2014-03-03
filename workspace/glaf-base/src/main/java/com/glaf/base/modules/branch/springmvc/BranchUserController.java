@@ -867,9 +867,31 @@ public class BranchUserController {
 		long id = ParamUtil.getIntParameter(request, "user_id", 0);
 		SysUser bean = sysUserService.findById(id);
 		SysUser user = sysUserService.findByAccountWithAll(bean.getAccount());
+		List<SysDeptRole> deptRoles = sysDeptRoleService.getRoleList(user
+				.getDepartment().getId());
+
+		List<SysRole> roles = sysRoleService.getSysRoleList();
+		if (roles != null && !roles.isEmpty()) {
+			for (SysRole role : roles) {
+				if (StringUtils.isNotEmpty(role.getCode())
+						&& StringUtils.startsWithIgnoreCase(role.getCode(),
+								"branch_")) {
+					if (sysDeptRoleService.find(user.getDepartment().getId(),
+							role.getId()) == null) {
+						SysDeptRole dr = new SysDeptRole();
+						dr.setDeptId(user.getDepartment().getId());
+						dr.setRole(role);
+						dr.setSysRoleId(role.getId());
+						dr.setCreateBy(RequestUtils.getActorId(request));
+						sysDeptRoleService.create(dr);
+						deptRoles.add(dr);
+					}
+				}
+			}
+		}
+
 		request.setAttribute("user", user);
-		request.setAttribute("list",
-				sysDeptRoleService.getRoleList(user.getDepartment().getId()));
+		request.setAttribute("list", deptRoles);
 
 		String x_view = ViewProperties.getString("branch.user.showRole");
 		if (StringUtils.isNotEmpty(x_view)) {
