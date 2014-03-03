@@ -7,20 +7,32 @@
 
 	<insert id="insertSysAccess" parameterType="com.glaf.base.modules.sys.model.SysAccess">
 
-		insert into SYS_ACCESS ( APPID, ROLEID )
-		values (#{appId, jdbcType=BIGINT}, #{roleId, jdbcType=BIGINT})
+		insert into
+		SYS_ACCESS ( APPID, ROLEID )
+		values (#{appId, jdbcType=BIGINT},
+		#{roleId, jdbcType=BIGINT})
 
 	</insert>
 
 
 	<delete id="deleteSysAccessByAppId" parameterType="long">
 		delete
-		from SYS_ACCESS where APPID = #{appId}
+		from
+		SYS_ACCESS where APPID = #{appId}
 	</delete>
 
 
 	<delete id="deleteSysAccessByRoleId" parameterType="long">
-		delete from SYS_ACCESS where ROLEID = #{roleId}
+		delete from
+		SYS_ACCESS where ROLEID = #{roleId}
+	</delete>
+
+
+	<delete id="deleteSysAccessByQuery" parameterType="com.glaf.base.modules.sys.query.SysAccessQuery">
+		delete from
+		SYS_ACCESS
+		where ROLEID = #{roleId}
+		and APPID =#{appId}
 	</delete>
 
 
@@ -28,7 +40,8 @@
 		resultType="com.glaf.base.modules.sys.model.SysAccess">
 
 		select E.APPID as appId, E.ROLEID as roleId
-		from SYS_ACCESS E
+		from SYS_ACCESS
+		E
 		where E.APPID = #{appId}
 
 	</select>
@@ -38,28 +51,23 @@
 		resultType="com.glaf.base.modules.sys.model.SysAccess">
 
 		select E.APPID as appId, E.ROLEID as roleId
-		from SYS_ACCESS E
+		from SYS_ACCESS
+		E
 		where E.ROLEID = #{roleId}
 
 	</select>
 
 
-	<select id="getSysAccessByRoleIdAndAppId" parameterType="com.glaf.base.modules.sys.query.SysDeptRoleQuery"
+	<select id="getSysAccessByQuery" parameterType="com.glaf.base.modules.sys.query.SysAccessQuery"
 		resultType="com.glaf.base.modules.sys.model.SysAccess">
 
 		select E.APPID as appId, E.ROLEID as roleId
-		from SYS_ACCESS E
-		where E.ROLEID = #{deptRoleId} 
-		and E.APPID = #{deptId}
+		from SYS_ACCESS
+		E
+		where E.ROLEID = #{roleId}
+		and E.APPID = #{appId}
 
 	</select>
-
-
-	<delete id="deleteSysAccessByRoleIdAndAppId" parameterType="com.glaf.base.modules.sys.query.SysDeptRoleQuery">
-		delete from SYS_ACCESS 
-		where ROLEID = #{deptRoleId} 
-		and APPID =#{deptId}
-	</delete>
 
 
 </mapper>

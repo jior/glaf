@@ -27,6 +27,14 @@
 	</delete>
 
 
+	<delete id="deleteRolePrivileges" parameterType="com.glaf.base.modules.sys.query.RolePrivilegeQuery">
+		delete from
+		SYS_ROLE_PRIVILEGE
+		where ROLEID = #{roleId}
+		and APPID =#{appId}
+	</delete>
+
+
 	<select id="getRolePrivilegeByAppId" parameterType="long"
 		resultType="com.glaf.base.modules.sys.model.RolePrivilege">
 
@@ -49,23 +57,15 @@
 	</select>
 
 
-	<select id="getRolePrivilegeByRoleIdAndAppId" parameterType="com.glaf.base.modules.sys.query.SysDeptRoleQuery"
+	<select id="getRolePrivileges" parameterType="com.glaf.base.modules.sys.query.RolePrivilegeQuery"
 		resultType="com.glaf.base.modules.sys.model.RolePrivilege">
 
 		select E.APPID as appId, E.ROLEID as roleId
 		from
 		SYS_ROLE_PRIVILEGE E
-		where E.ROLEID = #{deptRoleId}
-		and E.APPID = #{deptId}
+		where E.ROLEID = #{roleId}
+		and E.APPID = #{appId}
 
 	</select>
-
-
-	<delete id="deleteRolePrivilegeByRoleIdAndAppId" parameterType="com.glaf.base.modules.sys.query.SysDeptRoleQuery">
-		delete from SYS_ROLE_PRIVILEGE
-		where ROLEID = #{deptRoleId}
-		and APPID =#{deptId}
-	</delete>
-
 
 </mapper>

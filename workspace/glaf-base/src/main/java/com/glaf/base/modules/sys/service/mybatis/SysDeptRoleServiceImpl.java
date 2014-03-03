@@ -46,6 +46,7 @@ import com.glaf.base.modules.sys.model.SysPermission;
 import com.glaf.base.modules.sys.model.SysRole;
 import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.sys.model.SysUserRole;
+import com.glaf.base.modules.sys.query.SysAccessQuery;
 import com.glaf.base.modules.sys.query.SysDeptRoleQuery;
 import com.glaf.base.modules.sys.service.SysApplicationService;
 import com.glaf.base.modules.sys.service.SysDepartmentService;
@@ -375,14 +376,14 @@ public class SysDeptRoleServiceImpl implements SysDeptRoleService {
 			long[] appIds, int saveType) {
 		if (appIds != null) {
 			// 设置角色对应的模块访问权限
-			SysDeptRoleQuery query = new SysDeptRoleQuery();
+			SysAccessQuery query = new SysAccessQuery();
 			for (int i = 0; i < appIds.length; i++) {
 				if (appIds[i] > 0) {
-					query.setDeptId(appIds[i]);
-					query.setDeptRoleId(deptRoleId);
+					query.setAppId(appIds[i]);
+					query.setRoleId(deptRoleId);
 					if (saveType == 0) {
 						List<SysAccess> list = sysAccessMapper
-								.getSysAccessByRoleIdAndAppId(query);
+								.getSysAccessByQuery(query);
 						logger.debug("app id:" + appIds[i]);
 						if (null == list || list.isEmpty()) {
 							SysAccess access = new SysAccess();
@@ -391,7 +392,7 @@ public class SysDeptRoleServiceImpl implements SysDeptRoleService {
 							sysAccessMapper.insertSysAccess(access);
 						}
 					} else {
-						sysAccessMapper.deleteSysAccessByRoleIdAndAppId(query);
+						sysAccessMapper.deleteSysAccessByQuery(query);
 					}
 				}
 			}

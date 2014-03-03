@@ -23,7 +23,7 @@ import java.util.*;
 import org.springframework.stereotype.Component;
 
 import com.glaf.base.modules.sys.model.*;
-import com.glaf.base.modules.sys.query.SysDeptRoleQuery;
+import com.glaf.base.modules.sys.query.RolePrivilegeQuery;
 
 @Component
 public interface RolePrivilegeMapper {
@@ -32,13 +32,13 @@ public interface RolePrivilegeMapper {
 
 	void deleteRolePrivilegeByRoleId(Long roleId);
 
+	void deleteRolePrivileges(RolePrivilegeQuery query);
+
 	List<RolePrivilege> getRolePrivilegeByAppId(Long appId);
 
 	List<RolePrivilege> getRolePrivilegeByRoleId(Long roleId);
 
-	List<RolePrivilege> getRolePrivilegeByRoleIdAndAppId(SysDeptRoleQuery query);
-
-	void deleteRolePrivilegeByRoleIdAndAppId(SysDeptRoleQuery query);
+	List<RolePrivilege> getRolePrivileges(RolePrivilegeQuery query);
 
 	void insertRolePrivilege(RolePrivilege model);
 
