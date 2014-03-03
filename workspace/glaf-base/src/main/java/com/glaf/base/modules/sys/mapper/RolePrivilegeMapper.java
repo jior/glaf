@@ -16,34 +16,30 @@
  * limitations under the License.
  */
 
-package com.glaf.base.modules.sys.model;
+package com.glaf.base.modules.sys.mapper;
 
-public class RealmInfo implements java.io.Serializable {
+import java.util.*;
 
-	private static final long serialVersionUID = 1L;
+import org.springframework.stereotype.Component;
 
-	protected String item;
+import com.glaf.base.modules.sys.model.*;
+import com.glaf.base.modules.sys.query.SysDeptRoleQuery;
 
-	protected String url;
+@Component
+public interface RolePrivilegeMapper {
 
-	public RealmInfo() {
+	void deleteRolePrivilegeByAppId(Long appId);
 
-	}
+	void deleteRolePrivilegeByRoleId(Long roleId);
 
-	public String getItem() {
-		return item;
-	}
+	List<RolePrivilege> getRolePrivilegeByAppId(Long appId);
 
-	public void setItem(String item) {
-		this.item = item;
-	}
+	List<RolePrivilege> getRolePrivilegeByRoleId(Long roleId);
 
-	public String getUrl() {
-		return url;
-	}
+	List<RolePrivilege> getRolePrivilegeByRoleIdAndAppId(SysDeptRoleQuery query);
 
-	public void setUrl(String url) {
-		this.url = url;
-	}
+	void deleteRolePrivilegeByRoleIdAndAppId(SysDeptRoleQuery query);
+
+	void insertRolePrivilege(RolePrivilege model);
 
 }

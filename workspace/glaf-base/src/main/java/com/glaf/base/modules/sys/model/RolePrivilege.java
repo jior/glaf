@@ -27,71 +27,46 @@ import javax.persistence.Table;
 
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.glaf.base.modules.sys.util.SysPermissionJsonFactory;
+import com.glaf.base.modules.sys.util.RolePrivilegeJsonFactory;
 import com.glaf.core.base.JSONable;
 
 @Entity
-@Table(name = "SYS_PERMISSION")
-public class SysPermission implements Serializable, JSONable {
+@Table(name = "SYS_ROLE_PRIVILEGE")
+public class RolePrivilege implements Serializable, JSONable {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * 功能编号
+	 * 应用编号
 	 */
 	@Id
-	@Column(name = "FUNCID", nullable = false)
-	protected long funcId;
+	@Column(name = "APPID", nullable = false)
+	protected long appId;
 
 	/**
-	 * 部门角色编号(对应SYS_DEPT_ROLE的ID字段)
+	 * 角色编号(对应SYS_ROLE的ID字段)
 	 */
 	@Id
 	@Column(name = "ROLEID", nullable = false)
 	protected long roleId;
 
-	public SysPermission() {
+	public RolePrivilege() {
 
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		SysPermission other = (SysPermission) obj;
-		if (funcId != other.funcId)
-			return false;
-		if (roleId != other.roleId)
-			return false;
-		return true;
-	}
-
-	public long getFuncId() {
-		return this.funcId;
+	public long getAppId() {
+		return appId;
 	}
 
 	public long getRoleId() {
-		return this.roleId;
+		return roleId;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + (int) (funcId ^ (funcId >>> 32));
-		result = prime * result + (int) (roleId ^ (roleId >>> 32));
-		return result;
+	public RolePrivilege jsonToObject(JSONObject jsonObject) {
+		return RolePrivilegeJsonFactory.jsonToObject(jsonObject);
 	}
 
-	public SysPermission jsonToObject(JSONObject jsonObject) {
-		return SysPermissionJsonFactory.jsonToObject(jsonObject);
-	}
-
-	public void setFuncId(long funcId) {
-		this.funcId = funcId;
+	public void setAppId(long appId) {
+		this.appId = appId;
 	}
 
 	public void setRoleId(long roleId) {
@@ -99,11 +74,11 @@ public class SysPermission implements Serializable, JSONable {
 	}
 
 	public JSONObject toJsonObject() {
-		return SysPermissionJsonFactory.toJsonObject(this);
+		return RolePrivilegeJsonFactory.toJsonObject(this);
 	}
 
 	public ObjectNode toObjectNode() {
-		return SysPermissionJsonFactory.toObjectNode(this);
+		return RolePrivilegeJsonFactory.toObjectNode(this);
 	}
 
 	public String toString() {
