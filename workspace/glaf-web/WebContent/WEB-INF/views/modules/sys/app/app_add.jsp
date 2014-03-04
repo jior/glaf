@@ -55,6 +55,13 @@
           <input type="radio" name="showMenu" value="1" checked>否</span>
 		</td>
       </tr>
+	  <tr>
+        <td class="input-box2" valign="top">是否下放给分级管理员</td>
+        <td><span class="fontlist">
+          <input type="radio" name="openFlag" value="1">是
+          <input type="radio" name="openFlag" value="0" checked>否</span>
+		</td>
+      </tr>
       <tr>
         <td colspan="2" align="center" valign="bottom" height="30">&nbsp;
               <input name="btn_save" type="submit" value="保存" class="button"></td>

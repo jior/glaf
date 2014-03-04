@@ -19,6 +19,7 @@
 package com.glaf.base.modules.sys.query;
 
 import java.util.*;
+
 import com.glaf.core.query.DataQuery;
 
 public class SysApplicationQuery extends DataQuery {
@@ -30,9 +31,8 @@ public class SysApplicationQuery extends DataQuery {
 	protected String nameLike;
 	protected List<String> names;
 	protected Long nodeId;
-	protected Long nodeIdGreaterThanOrEqual;
-	protected Long nodeIdLessThanOrEqual;
 	protected List<Long> nodeIds;
+	protected String openFlag;
 	protected Integer showMenu;
 	protected Integer sortGreaterThan;
 	protected Integer sortGreaterThanOrEqual;
@@ -104,16 +104,12 @@ public class SysApplicationQuery extends DataQuery {
 		return nodeId;
 	}
 
-	public Long getNodeIdGreaterThanOrEqual() {
-		return nodeIdGreaterThanOrEqual;
-	}
-
-	public Long getNodeIdLessThanOrEqual() {
-		return nodeIdLessThanOrEqual;
-	}
-
 	public List<Long> getNodeIds() {
 		return nodeIds;
+	}
+
+	public String getOpenFlag() {
+		return openFlag;
 	}
 
 	public String getOrderBy() {
@@ -227,28 +223,19 @@ public class SysApplicationQuery extends DataQuery {
 		return this;
 	}
 
-	public SysApplicationQuery nodeIdGreaterThanOrEqual(
-			Long nodeIdGreaterThanOrEqual) {
-		if (nodeIdGreaterThanOrEqual == null) {
-			throw new RuntimeException("nodeId is null");
-		}
-		this.nodeIdGreaterThanOrEqual = nodeIdGreaterThanOrEqual;
-		return this;
-	}
-
-	public SysApplicationQuery nodeIdLessThanOrEqual(Long nodeIdLessThanOrEqual) {
-		if (nodeIdLessThanOrEqual == null) {
-			throw new RuntimeException("nodeId is null");
-		}
-		this.nodeIdLessThanOrEqual = nodeIdLessThanOrEqual;
-		return this;
-	}
-
 	public SysApplicationQuery nodeIds(List<Long> nodeIds) {
 		if (nodeIds == null) {
 			throw new RuntimeException("nodeIds is empty ");
 		}
 		this.nodeIds = nodeIds;
+		return this;
+	}
+
+	public SysApplicationQuery openFlag(String openFlag) {
+		if (openFlag == null) {
+			throw new RuntimeException("openFlag is null");
+		}
+		this.openFlag = openFlag;
 		return this;
 	}
 
@@ -280,16 +267,12 @@ public class SysApplicationQuery extends DataQuery {
 		this.nodeId = nodeId;
 	}
 
-	public void setNodeIdGreaterThanOrEqual(Long nodeIdGreaterThanOrEqual) {
-		this.nodeIdGreaterThanOrEqual = nodeIdGreaterThanOrEqual;
-	}
-
-	public void setNodeIdLessThanOrEqual(Long nodeIdLessThanOrEqual) {
-		this.nodeIdLessThanOrEqual = nodeIdLessThanOrEqual;
-	}
-
 	public void setNodeIds(List<Long> nodeIds) {
 		this.nodeIds = nodeIds;
+	}
+
+	public void setOpenFlag(String openFlag) {
+		this.openFlag = openFlag;
 	}
 
 	public void setShowMenu(Integer showMenu) {

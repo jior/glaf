@@ -299,6 +299,7 @@ public class SysApplicationController {
 			bean.setShowMenu(ParamUtil.getIntParameter(request, "showMenu", 0));
 			bean.setUpdateBy(RequestUtils.getActorId(request));
 			bean.setLocked(ParamUtil.getIntParameter(request, "locked", 0));
+			bean.setOpenFlag(request.getParameter("openFlag"));
 
 			long parentId = ParamUtil.getLongParameter(request, "parent", 0);
 			if (parentId == 0) {
@@ -329,6 +330,7 @@ public class SysApplicationController {
 			bean.setUrl(ParamUtil.getParameter(request, "url"));
 			bean.setShowMenu(ParamUtil.getIntParameter(request, "showMenu", 0));
 			bean.setCreateBy(RequestUtils.getActorId(request));
+			bean.setOpenFlag(request.getParameter("openFlag"));
 
 			long parentId = ParamUtil.getLongParameter(request, "parent", 0);
 			if (parentId == 0) {
@@ -377,6 +379,7 @@ public class SysApplicationController {
 		bean.setUrl(ParamUtil.getParameter(request, "url"));
 		bean.setShowMenu(ParamUtil.getIntParameter(request, "showMenu", 0));
 		bean.setCreateBy(RequestUtils.getActorId(request));
+		bean.setOpenFlag(request.getParameter("openFlag"));
 
 		long parentId = ParamUtil.getLongParameter(request, "parent", 0);
 		if (parentId == 0) {
@@ -426,6 +429,7 @@ public class SysApplicationController {
 			bean.setShowMenu(ParamUtil.getIntParameter(request, "showMenu", 0));
 			bean.setUpdateBy(RequestUtils.getActorId(request));
 			bean.setLocked(ParamUtil.getIntParameter(request, "locked", 0));
+			bean.setOpenFlag(request.getParameter("openFlag"));
 
 			long parentId = ParamUtil.getLongParameter(request, "parent", 0);
 			if (parentId == 0) {

@@ -124,6 +124,12 @@ public class SysApplication implements Serializable, JSONable {
 	@Column(name = "URL", length = 500)
 	protected String url;
 
+	/**
+	 * 开放标记
+	 */
+	@Column(name = "OPENFLAG", length = 50)
+	protected String openFlag;
+
 	public SysApplication() {
 
 	}
@@ -166,6 +172,10 @@ public class SysApplication implements Serializable, JSONable {
 
 	public long getNodeId() {
 		return nodeId;
+	}
+
+	public String getOpenFlag() {
+		return openFlag;
 	}
 
 	public int getShowMenu() {
@@ -230,6 +240,10 @@ public class SysApplication implements Serializable, JSONable {
 
 	public void setNodeId(long nodeId) {
 		this.nodeId = nodeId;
+	}
+
+	public void setOpenFlag(String openFlag) {
+		this.openFlag = openFlag;
 	}
 
 	public void setShowMenu(int showMenu) {

@@ -99,6 +99,13 @@ function setValue(obj){
 		  </td>
       </tr>
 	  <tr>
+        <td class="input-box2" valign="top">是否下放给分级管理员</td>
+        <td>
+		  <input type="radio" name="openFlag" value="1" <%=("1".equals(bean.getOpenFlag()))?"checked":""%>>是
+		  <input type="radio" name="openFlag" value="0" <%=("0".equals(bean.getOpenFlag()))?"checked":""%>>否
+        </td>
+      </tr>
+	  <tr>
         <td class="input-box2" valign="top">是否有效</td>
         <td>
 		  <input type="radio" name="locked" value="0" <%=bean.getLocked()==0?"checked":""%>>是

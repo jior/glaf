@@ -55,6 +55,10 @@ public class SysApplicationJsonFactory {
 			model.setCode(jsonObject.getString("code"));
 		}
 
+		if (jsonObject.containsKey("openFlag")) {
+			model.setOpenFlag(jsonObject.getString("openFlag"));
+		}
+
 		if (jsonObject.containsKey("locked")) {
 			model.setLocked(jsonObject.getInteger("locked"));
 		}
@@ -112,6 +116,9 @@ public class SysApplicationJsonFactory {
 		if (model.getCode() != null) {
 			jsonObject.put("code", model.getCode());
 		}
+		if (model.getOpenFlag() != null) {
+			jsonObject.put("openFlag", model.getOpenFlag());
+		}
 		jsonObject.put("sort", model.getSort());
 		jsonObject.put("showMenu", model.getShowMenu());
 		jsonObject.put("nodeId", model.getNodeId());
@@ -159,6 +166,9 @@ public class SysApplicationJsonFactory {
 		}
 		if (model.getCode() != null) {
 			jsonObject.put("code", model.getCode());
+		}
+		if (model.getOpenFlag() != null) {
+			jsonObject.put("openFlag", model.getOpenFlag());
 		}
 		jsonObject.put("sort", model.getSort());
 		jsonObject.put("showMenu", model.getShowMenu());

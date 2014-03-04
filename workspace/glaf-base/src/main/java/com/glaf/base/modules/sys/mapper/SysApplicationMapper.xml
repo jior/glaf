@@ -15,6 +15,7 @@
 		<result property="showMenu" column="SHOWMENU" jdbcType="INTEGER" />
 		<result property="nodeId" column="NODEID" jdbcType="BIGINT" />
 		<result property="locked" column="LOCKED" jdbcType="INTEGER" />
+		<result property="openFlag" column="OPENFLAG" jdbcType="VARCHAR" />
 		<result property="createDate" column="CREATEDATE" jdbcType="TIMESTAMP" />
 		<result property="createBy" column="CREATEBY" jdbcType="VARCHAR" />
 		<result property="updateBy" column="UPDATEBY" jdbcType="VARCHAR" />
@@ -56,6 +57,9 @@
 			<if test="locked != null">
 				,LOCKED
 			</if>
+			<if test="openFlag != null">
+				,OPENFLAG
+			</if>
 			<if test="createDate != null">
 				,CREATEDATE
 			</if>
@@ -96,6 +100,9 @@
 			</if>
 			<if test="locked != null">
 				,#{locked, jdbcType=INTEGER}
+			</if>
+			<if test="openFlag != null">
+				,#{openFlag, jdbcType=VARCHAR}
 			</if>
 			<if test="createDate != null">
 				,#{createDate, jdbcType=TIMESTAMP}
@@ -140,6 +147,9 @@
 			</if>
 			<if test="locked != null">
 				LOCKED = #{locked, jdbcType=INTEGER},
+			</if>
+			<if test="openFlag != null">
+				OPENFLAG = #{openFlag, jdbcType=VARCHAR},
 			</if>
 			<if test="updateBy != null">
 				UPDATEBY = #{updateBy, jdbcType=VARCHAR},
@@ -280,7 +290,7 @@
 					#{x_name}
 				</foreach>
 			</if>
-			
+
 			<if test="code != null and code != '' ">
 				and E.CODE = #{code}
 			</if>
@@ -317,16 +327,12 @@
 				and E.SHOWMENU = #{showMenu}
 			</if>
 
+			<if test="openFlag != null">
+				and E.OPENFLAG = #{openFlag}
+			</if>
+
 			<if test="nodeId != null">
 				and E.NODEID = #{nodeId}
-			</if>
-
-			<if test="nodeIdGreaterThanOrEqual != null">
-				and E.NODEID &gt;= #{nodeIdGreaterThanOrEqual}
-			</if>
-
-			<if test="nodeIdLessThanOrEqual != null">
-				and E.NODEID &lt;= #{nodeIdLessThanOrEqual}
 			</if>
 
 			<if test="nodeIds != null and nodeIds.size != 0">
@@ -336,9 +342,9 @@
 					#{x_nodeId}
 				</foreach>
 			</if>
-			
+
 			<if test="locked != null">
-				and E.LOCKED is not null 
+				and E.LOCKED is not null
 				and E.LOCKED = #{locked}
 			</if>
 
