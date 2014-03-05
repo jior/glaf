@@ -163,16 +163,16 @@
 		<tbody>
 			 
 			<tr>
-				 <td width="180">名称</td>
-				 <td >
+				 <td width="180" height="28">名称</td>
+				 <td  height="28">
                  <input id="name" name="name" class="span7 x-text" type="text"
 				        value="${report.name}" size="80"
 				 ></input>
 				 </td>
 			</tr>
 			<tr>
-				 <td>标题</td>
-				 <td >
+				 <td height="28">标题</td>
+				 <td height="28">
                  <input id="subject" name="subject" class="span7 x-text" type="text"
 				        value="${report.subject}" size="80"
 				 ></input>
@@ -180,16 +180,16 @@
 			</tr>
 			
 			<tr>
-				 <td>报表名称</td>
-				 <td >
+				 <td height="28">报表名称</td>
+				 <td height="28" >
                  <input id="reportName" name="reportName" class="span7 x-text" type="text"
 				        value="${report.reportName}" size="80"
 				 ></input>
 				 </td>
 			</tr>
 			<tr>
-				 <td>模板文件</td>
-				 <td >
+				 <td height="28">模板文件</td>
+				 <td height="28" >
                  <input id="reportTemplate" name="reportTemplate" class="span7 x-text" type="text"
 				        value="${report.reportTemplate}" size="80" onclick="javascript:openFile();"></input>
 				  &nbsp;
@@ -199,33 +199,33 @@
 				 </td>
 			</tr>
 			<tr>
-				 <td>报表标题日期</td>
-				 <td >
+				 <td height="28">报表标题日期</td>
+				 <td height="28" >
                  <input id="reportTitleDate" name="reportTitleDate" class="span7 x-text" type="text"
 				        value="${report.reportTitleDate}" size="80"
 				 ></input>
 				 </td>
 			</tr>
 			<tr>
-				 <td>报表年月</td>
-				 <td >
+				 <td height="28">报表年月</td>
+				 <td height="28" >
                  <input id="reportMonth" name="reportMonth" class="span7 x-text" type="text"
 				        value="${report.reportMonth}" size="80"
 				 ></input>
 				 </td>
 			</tr>
 			<tr>
-				 <td>报表年月日参数</td>
-				 <td >
+				 <td height="28">报表年月日参数</td>
+				 <td height="28" >
                  <input id="reportDateYYYYMMDD" name="reportDateYYYYMMDD" class="span7 x-text" type="text"
 				        value="${report.reportDateYYYYMMDD}" size="80"
 				 ></input>
 				 </td>
 			</tr>
 			<tr>
-				 <td>报表类型</td>
-				 <td >
-				 <select id="type" name="type" class="span2">
+				 <td height="28">报表类型</td>
+				 <td height="28" >
+				 <select id="type" name="type" class="span2" style="height:20px">
 					<option value="jasper">JasperReport</option>
 					<option value="jxls">JXLS</option>
 				 </select>
@@ -233,7 +233,7 @@
 				    $('#type').val('${report.type}');
 				 </script>
 				  &nbsp;&nbsp;&nbsp;&nbsp;生成格式&nbsp; 
-				 <select id="reportFormat" name="reportFormat" class="span2">
+				 <select id="reportFormat" name="reportFormat" class="span2" style="height:20px">
 					<option value="pdf">PDF</option>
 					<option value="xls">EXCEL</option>
 				 </select>
@@ -243,9 +243,9 @@
 			</tr>
 
 			<tr>
-				 <td>是否启用</td>
-				 <td >
-				 <select id="enableFlag" name="enableFlag" class="span2">
+				 <td height="28">是否启用</td>
+				 <td height="28" >
+				 <select id="enableFlag" name="enableFlag" class="span2" style="height:20px">
 					<option value="1">启用</option>
 					<option value="0">不启用</option>
 				 </select>
@@ -262,36 +262,36 @@
 			</tr>
 
 			<tr>
-				 <td>邮件标题</td>
-				 <td >
+				 <td height="28">邮件标题</td>
+				 <td height="28" >
                  <input id="textTitle" name="textTitle" class="span7 x-text" type="text"
 				        value="${report.textTitle}" size="80"
 				 ></input>
 				 </td>
 			</tr>
 			<tr>
-				 <td>邮件模板</td>
-				 <td >
+				 <td height="28">邮件模板</td>
+				 <td height="28" >
 				 <textarea  id="textContent" name="textContent" class="x-textarea"  rows="5" cols="58" style="width:715px;height:480px;">${report.textContent}</textarea> 
 				 <br> （支持Freemarker模板语言）
 				 </td>
 			</tr>
 			<tr>
-				 <td>邮件接收人</td>
-				 <td >
+				 <td height="98">邮件接收人</td>
+				 <td height="98" >
 				 <textarea  id="mailRecipient" name="mailRecipient" class="x-textarea" rows="5" cols="58" style="width:535px;height:90px;">${report.mailRecipient}</textarea>
 				 <br>（多个邮件接收人以,分隔）
 				 </td>
 			</tr>
 			<tr>
-				 <td>JSON格式参数</td>
-				 <td >
+				 <td height="98">JSON格式参数</td>
+				 <td height="98" >
 				 <textarea  id="jsonParameter" name="jsonParameter" class="x-textarea" rows="5" cols="58" style="width:535px;height:90px;">${report.jsonParameter}</textarea>
 				 </td>
 			</tr>
 			<tr>
-				 <td>组合查询</td>
-                 <td >
+				 <td height="98">组合查询</td>
+                 <td height="98" >
 				   <input type="hidden" id="queryIds" name="queryIds" value="${report.queryIds}">
 				   <textarea type="textarea" id="queryNames" name="queryNames" value="${queryNames}"
 				          readonly="true"  class="x-textarea"  onclick="javascript:openQx();" style="width:535px;height:90px;">${queryNames}</textarea>
@@ -303,8 +303,8 @@
 				 </td>
 			</tr>
 			<tr>
-				 <td>相关图表</td>
-                 <td >
+				 <td height="98">相关图表</td>
+                 <td height="98" >
 				   <input type="hidden" id="chartIds" name="chartIds" value="${report.chartIds}">
 				   <textarea type="textarea" id="chartNames" name="chartNames" value="${chartNames}"
 				          readonly="true" class="x-textarea" onclick="javascript:openChart();"  

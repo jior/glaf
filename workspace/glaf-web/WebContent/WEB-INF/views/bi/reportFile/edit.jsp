@@ -74,8 +74,8 @@
 <table class="easyui-form" style="width:800px;" align="center">
 <tbody>
 	<tr>
-		<td width="20%" align="left">报表编号</td>
-		<td align="left">
+		<td width="20%" align="left" height="28">报表编号</td>
+		<td align="left" height="28">
             <input id="reportId" name="reportId" type="text" 
 			       class="input-xlarge span3  easyui-validatebox"  
 			 required="true" 
@@ -83,8 +83,8 @@
 		</td>
 	</tr>
 	<tr>
-		<td width="20%" align="left">文件名称</td>
-		<td align="left">
+		<td width="20%" align="left" height="28">文件名称</td>
+		<td align="left" height="28">
             <input id="filename" name="filename" type="text" 
 			       class="input-xlarge span3  easyui-validatebox"  
 			 required="true" 
@@ -92,8 +92,8 @@
 		</td>
 	</tr>
 	<tr>
-		<td width="20%" align="left">文件大小</td>
-		<td align="left">
+		<td width="20%" align="left" height="28">文件大小</td>
+		<td align="left" height="28">
 			<input id="fileSize" name="fileSize" type="text" 
 			       class="input-xlarge span3  easyui-numberspinner" value="0" 
 				   increment="10"   required="true" 
@@ -102,8 +102,8 @@
 	</tr>
 
 	<tr>
-		<td width="20%" align="left">文件年月日</td>
-		<td align="left">
+		<td width="20%" align="left" height="28">文件年月日</td>
+		<td align="left" height="28">
 			<input id="reportYearMonthDay" name="reportYearMonthDay" type="text" 
 			       class="input-xlarge span3  easyui-numberspinner" value="0" 
 				   increment="10"   required="true" 

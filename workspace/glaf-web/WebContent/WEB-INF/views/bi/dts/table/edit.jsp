@@ -134,24 +134,24 @@
 <table align="center" class="x-table-border" cellspacing="1"
 	cellpadding="1" width="95%" border="0">
 	<tr>
-		<td >表名</td>
-		<td class="x-content" colspan="3"> ${table.tableName}</td>
+		<td height="28">表名</td>
+		<td class="x-content" colspan="3" height="28"> ${table.tableName}</td>
 	</tr>
 	<tr> 
-		<td >标题</td>
-		<td class="x-content" colspan="3">
+		<td height="28">标题</td>
+		<td class="x-content" colspan="3" height="28">
 		<input type="text" id="title" name="title" class="x-text" size= "50" value="${table.title}"/>
 		</td>
 	</tr>
 	<tr> 
-		<td >聚合主键</td>
-		<td class="x-content" colspan="3">
+		<td height="28">聚合主键</td>
+		<td class="x-content" colspan="3" height="28">
 		<input type="text" id="aggregationKeys" name="aggregationKeys" class="x-text" size= "50" value="${table.aggregationKeys}"/> （构成每条记录唯一性的字段列表，多个字段以半角的逗号隔开“,”）
 		</td>
 	</tr>
 	<tr>
-		<td >查询数据集</td>
-        <td class="x-content" colspan="3">
+		<td height="28">查询数据集</td>
+        <td class="x-content" colspan="3" height="28">
 			<input type="hidden" id="queryIds" name="queryIds" value="${table.queryIds}">
 			<input type="text" id="queryNames" name="queryNames" value="${queryNames}"
 				   readonly="true" size="50" onclick="javascript:openQx();" class="x-text">
@@ -164,9 +164,9 @@
 		</td>
 	</tr>
     <tr>
-		<td >执行次序</td>
-		<td class="x-content" colspan="3">
-		    <select id="sortNo" name="sortNo" class="span2">
+		<td height="28">执行次序</td>
+		<td class="x-content" colspan="3" height="28">
+		    <select id="sortNo" name="sortNo" class="span2" style="height:20px">
 			    <option value="0">0</option>
 				<option value="1">1</option>
 				<option value="2">2</option>
@@ -184,9 +184,9 @@
 		</td>
 	</tr>
 	<tr> 
-	    <td >是否临时表</td>
-		<td class="x-content" colspan="3">
-            <select id="temporaryFlag" name="temporaryFlag" class="span2">
+	    <td height="28">是否临时表</td>
+		<td class="x-content" colspan="3" height="28">
+            <select id="temporaryFlag" name="temporaryFlag" class="span2" style="height:20px">
 			    <option value="0">否</option>
 				<option value="1">是</option>
 		    </select>&nbsp;&nbsp;（提示：临时表在每次抓取数据都将清空该表数据，并且表命名必须包含"_tmp_"）
@@ -196,9 +196,9 @@
 		</td>
 	</tr>
 	<tr> 
-	    <td >每次抓取前删除</td>
-		<td class="x-content" colspan="3">
-            <select id="deleteFetch" name="deleteFetch" class="span2">
+	    <td height="28">每次抓取前删除</td>
+		<td class="x-content" colspan="3" height="28">
+            <select id="deleteFetch" name="deleteFetch" class="span2" style="height:20px">
 			    <option value="0">否</option>
 				<option value="1">是</option>
 		    </select>&nbsp;&nbsp;（提示：如果选择每次抓取前删除，将删除当天及${input_yyyymmdd}中指定的记录）
@@ -211,7 +211,7 @@
 	
 	<tr>
 		<td >描述</td>
-		<td class="x-content" colspan="3">
+		<td class="x-content" colspan="3" >
 		    <textarea id="description" name="description" rows="8" cols="66" class="x-textarea span5" style="align:left;"><c:out value="${table.description}" /></textarea>
 		</td>
 	</tr>
@@ -235,8 +235,8 @@
 			pageContext.setAttribute("column", column);
 	%>
       <tr >
-		<td>${column.columnName}</td>
-		<td>
+		<td height="28">${column.columnName}</td>
+		<td height="28">
 		    <c:choose>
 				<c:when test="${column.javaType == 'Integer' }">
 					 整型

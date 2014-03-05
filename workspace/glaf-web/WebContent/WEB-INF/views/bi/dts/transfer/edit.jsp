@@ -8,6 +8,7 @@
 <title><%=appTitle%></title>
 <meta name="Keywords" content="<%=appKeywords%>" />
 <meta name="Description" content="<%=appDescription%>" />
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/core.css">
 <%@ include file="/WEB-INF/views/inc/init_style.jsp"%>
 <%@ include file="/WEB-INF/views/inc/init_script.jsp"%>
 
@@ -450,7 +451,7 @@
 							<tr>
 								<td align="left">表名</td>
 								<td align="left"><input id="tableName" name="tableName"
-									type="text" class="easyui-validatebox"
+									type="text" class="easyui-validatebox x-text"
 									data-options="required:true" maxlength="25" size="25"
 									value="${dataTransfer.tableName}" /></td>
 								<td align="left">类型</td>
@@ -493,7 +494,7 @@
 								<td align="left">标题</td>
 								<td align="left">
 								  <input id="title" name="title" type="text"
-									class="easyui-validatebox" editable="true" size="25" value="${dataTransfer.title}" />
+									class="easyui-validatebox  x-text" editable="true" size="25" value="${dataTransfer.title}" />
 								</td>
 								<td align="left">主键</td>
 								<td align="left">
@@ -517,12 +518,12 @@
 								<td align="left">文件前缀</td>
 								<td align="left">
 								  <input id="filePrefix" name="filePrefix"
-									type="text"  class="easyui-validatebox"
+									type="text"  class="easyui-validatebox  x-text"
 									data-options="required:false" size="25" />
 								</td>
 								<td align="left">开始行数</td>
 								<td align="left">
-								   <input id="startRow" name="startRow" class="easyui-validatebox easyui-numberbox" 
+								   <input id="startRow" name="startRow" class="easyui-validatebox easyui-numberbox  x-text" 
                                           data-options= " required:false, min: 0, max: 99999, precision: 0 "
 									      size="10" value="${dataTransfer.startRow}" editable="true"/>
 								</td>
@@ -531,7 +532,7 @@
 								<td align="left">结束词</td>
 								<td align="left">
 								  <input id="stopWord" 
-									class="easyui-validatebox" name="stopWord" editable="true"
+									class="easyui-validatebox  x-text" name="stopWord" editable="true"
 									data-options= " required:false "
 									value="${dataTransfer.stopWord}" size='25' />
 								</td>
@@ -549,7 +550,7 @@
 							<tr>
 								<td align="left">结束跳过行数</td>
 								<td align="left">
-								  <input id="stopSkipRow" name="stopSkipRow" class="easyui-numberbox" 
+								  <input id="stopSkipRow" name="stopSkipRow" class="easyui-numberbox  x-text" 
 								         data-options= " required:false, min: 0, max: 99999, precision: 0 " 
 									     size="5" value="${dataTransfer.stopSkipRow}" editable="true"/>
 								</td>

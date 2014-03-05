@@ -104,8 +104,8 @@
 <table class="easyui-form" style="width:920px;" align="center">
 <tbody>
 	<tr>
-		<td width="20%" align="left">名称</td>
-		<td align="left">
+		<td width="20%" align="left" height="28">名称</td>
+		<td align="left" height="28">
             <input id="name" name="name" type="text" 
 			       class="x-text input-xlarge span7  easyui-validatebox"  
 			       required="true" size="50"
@@ -113,8 +113,8 @@
 		</td>
 	</tr>
 	<tr>
-		<td width="20%" align="left">标题</td>
-		<td align="left">
+		<td width="20%" align="left" height="28">标题</td>
+		<td align="left" height="28">
             <input id="subject" name="subject" type="text" 
 			       class="x-text input-xlarge span7  easyui-validatebox"  
 			       required="true" size="50"
@@ -123,8 +123,8 @@
 	</tr>
 	
 	<tr>
-		<td width="20%" align="left">报表集编号</td>
-		<td align="left">
+		<td width="20%" align="left" height="28">报表集编号</td>
+		<td align="left" height="28">
             <input id="reportIds" name="reportIds" type="hidden" 
 				   value="${reportTask.reportIds}"/>
 			<input id="reportNames" name="reportNames" type="text" 
@@ -138,9 +138,9 @@
 		</td>
 	</tr>
 	<tr>
-		<td>是否启用</td>
-		<td colspan="3">
-		  <select id="enableFlag" name="enableFlag" class="span2">
+		<td height="28">是否启用</td>
+		<td colspan="3" height="28">
+		  <select id="enableFlag" name="enableFlag" class="span2" style="height:20px">
 			<option value="1">启用</option>
 			<option value="0">不启用</option>
 		  </select>
@@ -157,8 +157,8 @@
 		 </td>
 	</tr>
 	<tr>
-		<td width="20%" align="left">发送标题</td>
-		<td align="left">
+		<td width="20%" align="left" height="28">发送标题</td>
+		<td align="left" height="28">
             <input id="sendTitle" name="sendTitle" type="text" 
 			       class="x-text input-xlarge span7  easyui-validatebox"  
 				   value="${reportTask.sendTitle}" size="50"/>

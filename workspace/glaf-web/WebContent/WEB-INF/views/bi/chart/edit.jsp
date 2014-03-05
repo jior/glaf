@@ -199,52 +199,52 @@
 		<tbody>
 			
 			<tr>
-				 <td>标题</td>
-				 <td colspan="3">
+				 <td height="28">标题</td>
+				 <td colspan="3" height="28">
                  <input id="subject" name="subject" class="span8 x-text" type="text"
 				        value="${chart.subject}" size="30"
 				 ></input>
 				 </td>
 			 </tr>
 			 <tr>
-				 <td>图表名称</td>
-				 <td>
+				 <td height="28">图表名称</td>
+				 <td height="28">
                  <input id="chartName" name="chartName" class="span3 x-text" type="text"
 				        value="${chart.chartName}" size="30"
 				 ></input>
-				 <td>别名</td>
-				 <td>
+				 <td height="28">别名</td>
+				 <td height="28">
 				 <input id="mapping" name="mapping" class="span3 x-text" type="text"
 				        value="${chart.mapping}" size="30"
 				 ></input>
 				 </td>
 			</tr>
 			<tr>
-				 <td>X坐标标签</td>
-				 <td>
+				 <td height="28">X坐标标签</td>
+				 <td height="28">
                  <input id="coordinateX" name="coordinateX" class="span3 x-text" type="text"
 				        value="${chart.coordinateX}" size="30"
 				 ></input>
 				 </td>
 	 
-				 <td>Y坐标标签</td>
-				 <td>
+				 <td height="28">Y坐标标签</td>
+				 <td height="28">
                  <input id="coordinateY" name="coordinateY" class="span3 x-text" type="text"
 				        value="${chart.coordinateY}" size="30"
 				 ></input>
 				 </td>
 			</tr>
 			<tr>
-				 <td>图表主题</td>
-				 <td>
+				 <td height="28">图表主题</td>
+				 <td height="28">
                  <input id="chartTitle" name="chartTitle" class="span3 x-text" type="text"
 				        value="${chart.chartTitle}" size="30"
 				 ></input>
 				 </td>
 			 
-				 <td>图表类型</td>
-				 <td>
-				 <select  id="chartType"  name="chartType" value="${chart.chartType}" class="span2">
+				 <td height="28">图表类型</td>
+				 <td height="28">
+				 <select  id="chartType"  name="chartType" value="${chart.chartType}" class="span2" style="height:20px">
 					<option value="pie">饼图</option>
 					<option value="line">线型图</option>
 					<option value="stackedbar">堆叠条形图</option>
@@ -255,45 +255,45 @@
 				 </td>
 			</tr>
 			<tr>
-				 <td>图表标题栏字体</td>
-				 <td>
+				 <td height="28">图表标题栏字体</td>
+				 <td height="28">
                  <input id="chartTitleFont" name="chartTitleFont" class="span3 x-text" type="text"
 				        value="${chart.chartTitleFont}"  size="30"
 				 ></input>
 				 </td>
 			 
-				 <td>图表标题栏字体大小</td>
-				 <td>
+				 <td height="28">图表标题栏字体大小</td>
+				 <td height="28">
 				 <input id="chartTitleFontSize" name="chartTitleFontSize" class="easyui-numberspinner x-text" 
                         value="${chart.chartTitleFontSize}" 
 				            increment="1" style="width:120px;"  type="text"></input>
 				 </td>
 			</tr>
 			<tr>
-				 <td>图表字体</td>
-				 <td>
+				 <td height="28">图表字体</td>
+				 <td height="28">
                  <input id="chartFont" name="chartFont" class="span3 x-text" type="text"
 				        value="${chart.chartFont}"  size="30"
 				 ></input>
 				 </td>
 			 
-				 <td>图表字体大小</td>
-				 <td>
+				 <td height="28">图表字体大小</td>
+				 <td height="28">
 				 <input id="chartFontSize" name="chartFontSize" class="easyui-numberspinner x-text" 
                         value="${chart.chartFontSize}" 
 				            increment="1" style="width:120px;"  type="text"></input>
 				 </td>
 			</tr>
 			<tr>
-				 <td>图表宽度</td>
-				 <td>
+				 <td height="28">图表宽度</td>
+				 <td height="28">
 				 <input id="chartWidth" name="chartWidth" class="easyui-numberspinner x-text" 
                         value="${chart.chartWidth}" 
 				            increment="100" style="width:120px;"  type="text"></input>
 				 </td>
 			 
-				 <td>图表高度</td>
-				 <td>
+				 <td height="28">图表高度</td>
+				 <td height="28">
 				 <input id="chartHeight" name="chartHeight" class="easyui-numberspinner x-text" 
                         value="${chart.chartHeight}" 
 				            increment="50" style="width:120px;"  type="text"></input>
@@ -301,9 +301,9 @@
 			</tr>
 			
 			<tr>
-				 <td>图像类型</td>
-				 <td>
-				 <select id="imageType" name="imageType" value="${chart.imageType}" class="span2">
+				 <td height="28">图像类型</td>
+				 <td height="28">
+				 <select id="imageType" name="imageType" value="${chart.imageType}" class="span2" style="height:20px">
 					<option value="png">PNG</option>
 					<option value="jpeg">JPEG</option>
 				 </select>
@@ -312,9 +312,9 @@
 				 </script>
 				 </td>
 			 
-				 <td>显示图例</td>
-				 <td>
-				 <select id="legend" name="legend" class="span2">
+				 <td height="28">显示图例</td>
+				 <td height="28">
+				 <select id="legend" name="legend" class="span2" style="height:20px">
 					<option value="Y">是</option>
 					<option value="N">否</option>
 				 </select>
@@ -324,8 +324,8 @@
 				 </td>
 			</tr>
 			<tr>
-				 <td>组合查询</td>
-                 <td colspan="3">
+				 <td height="98">组合查询</td>
+                 <td colspan="3" height="98">
 				   <input type="hidden" id="queryIds" name="queryIds" value="${chart.queryIds}">
 				   <textarea id="queryNames" name="queryNames" rows="12" cols="68" class="x-textarea"
 				   style="width:580px;height:80px;" onclick="javascript:openQx();"  
@@ -337,8 +337,8 @@
 				 </td>
 			</tr>
 			<tr>
-				 <td>查询语句</td>
-				 <td colspan="3">
+				 <td  height="98">查询语句</td>
+				 <td colspan="3"  height="98">
 				 <textarea id="querySQL" name="querySQL" rows="12" cols="68"  class="x-textarea" style="width:580px;height:250px;">${chart.querySQL}</textarea>
 				 <br><br>
 				 提示：如果查询条件使用变量，请用 ( 某表字段 = <%out.println("${变量}");%> ) ，如果变量不存在则替换为 ( 1=1 )

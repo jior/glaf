@@ -169,28 +169,28 @@
  
 <table align="center"  class="easyui-form"   cellspacing="1" cellpadding="1" width="95%">
 	<tr>
-	    <td width="12%" align="left">标题&nbsp;<span class="required">*</span>&nbsp;</td>
-		<td width="38%" align="left">
+	    <td width="12%" height="28" align="left">标题&nbsp;<span class="required">*</span>&nbsp;</td>
+		<td width="38%" height="28" align="left">
 		    <input type="text" id="title" name="title" size="30" class="x-text input-xlarge easyui-validatebox" value="${query.title}"/> 
 		</td>
-		<td width="12%" align="left">名称</td>
-		<td width="38%" align="left">
+		<td width="12%" height="28" align="left">名称</td>
+		<td width="38%" height="28" align="left">
 		    <input type="text" id="name" name="name" size="30" class="x-text input-xlarge" value="${query.name}"/>
 		</td>
 	</tr>
 	<tr>
-		<td width="12%" align="left">目标表</td>
-		<td width="38%" align="left">
+		<td width="12%" height="28" align="left">目标表</td>
+		<td width="38%" height="28" align="left">
 		  <input type="text" id="targetTableName" name="targetTableName" size="30" class="x-text input-xlarge" value="${query.targetTableName}"/>
 		</td>
-		<td width="12%" align="left">描述</td>
-		<td width="38%" align="left">
+		<td width="12%" align="left" height="28">描述</td>
+		<td width="38%" align="left" height="28">
 		  <input type="text" id="description" name="description" size="30" class="x-text input-xlarge" value="${query.description}"/>
 		</td>
 	</tr>
 	<tr>
-		<td width="12%" align="left">父查询</td>
-		<td colspan="3" align="left">
+		<td width="12%" align="left" height="28">父查询</td>
+		<td colspan="3" align="left" height="28">
 		  
 		   <%
 		     StringBuffer sb = new StringBuffer();
@@ -206,7 +206,7 @@
 	         }
 	       %>
 
-		    <select id="parentId"  name="parentId">
+		    <select id="parentId"  name="parentId" style="height:20px">
 			    <option value="">----请选择----</option>
 				<%=sb.toString()%>
 		   </select>
