@@ -67,40 +67,40 @@
 <table border=0 cellspacing=0 cellpadding=2 >
 	<tbody>
 		<tr class="x-content-hight" >
-			<td style="width: 140px; padding-right: 10px" align="left"><span
+			<td style="height:30px; width: 140px; padding-right: 10px" align="left"><span
 				class="field-name-required">邮件服务器地址 *</span></td>
-			<td align="left"><input id="host" name="host" type="text" size="40" class="input-xlarge span3 x-text"
+			<td align="left"><input id="host" name="host" type="text" size="40" class="input-xlarge x-text span3"
 				maxlength="255" value=""></td>
 		</tr>
 
 		<tr class="x-content-hight">
-			<td style="width: 140px; padding-right: 10px" align="left"><span
+			<td style="height:30px; width: 140px; padding-right: 10px" align="left"><span
 				class="field-name-required">发送端口 *</span></td>
-			<td align="left"><input id="port" name="port" type="text" size="40" class="input-xlarge span3 x-text"
+			<td align="left"><input id="port" name="port" type="text" size="40" class="input-xlarge x-text span3"
 				maxlength="5" value="25"></td>
 		</tr>
 
 		<tr class="x-content-hight">
-			<td style="width: 140px; padding-right: 10px" align="left"><span
+			<td style="height:30px; width: 140px; padding-right: 10px" align="left"><span
 				class="field-name-required">发送者名称 *</span></td>
 			<td align="left"><input id="mailFrom" name="mailFrom" type="text" size="40"
-				class="input-xlarge span3 x-text" maxlength="255" value=""></td>
+				class="input-xlarge x-text span3" maxlength="255" value=""></td>
 		</tr>
 
 		<tr class="x-content-hight">
-			<td style="width: 140px; padding-right: 10px" align="left">用户名</td>
+			<td style="height:30px; width: 140px; padding-right: 10px" align="left">用户名</td>
 			<td align="left"><input id="username" name="username" type="text" size="40"
-				class="input-xlarge span3 x-text" maxlength="255" value=""></td>
+				class="input-xlarge x-text span3" maxlength="255" value=""></td>
 		</tr>
 
 		<tr class="x-content-hight">
-			<td style="width: 140px; padding-right: 10px" align="left">密码</td>
+			<td style="height:30px; width: 140px; padding-right: 10px" align="left">密码</td>
 			<td align="left"><input id="password" name="password" type="password"
-				size="40" class="input-xlarge span3 x-text" maxlength="255" value=""></td>
+				size="40" class="input-xlarge x-text span3" maxlength="255" value=""></td>
 		</tr>
 
 		<tr class="x-content-hight">
-			<td style="width: 140px; padding-right: 10px" align="left">是否需要认证</td>
+			<td style="height:30px; width: 140px; padding-right: 10px" align="left">是否需要认证</td>
 			<td align="left"><input type="radio" name="x_auth"
 				onclick="javascript:document.getElementById('auth').value=true;">
 			需要 <input type="radio" name="x_auth"
@@ -109,7 +109,7 @@
 		</tr>
 
 		<tr class="x-content-hight">
-			<td style="width: 140px; padding-right: 10px" align="left">邮件编码</td>
+			<td style="height:30px; width: 140px; padding-right: 10px" align="left">邮件编码</td>
 			<td align="left"><select name="encoding" class="span2">
 				<option value="GBK">GBK</option>
 				<option value="GB2312">GB2312</option>
@@ -122,9 +122,9 @@
 		</tr>
 
 		<tr class="x-content-hight">
-			<td style="width: 180px; padding-right: 10px" align="left">请填写测试文本 *</td>
-			<td align="left"><textarea id="text" name="text" rows="8" cols="42"
-				class="input-xlarge span4 x-textarea"></textarea></td>
+			<td style="height:30px; width: 140px; padding-right: 10px" align="left">请填写测试文本 *</td>
+			<td align="left"><textarea id="text" name="text" rows="8" cols="32" style="width:270px;height:120px;"
+				class="input-xlarge x-textarea span4"></textarea></td>
 		</tr>
 </table>
  
