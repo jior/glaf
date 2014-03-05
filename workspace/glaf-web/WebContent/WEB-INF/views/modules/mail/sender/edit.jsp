@@ -104,7 +104,7 @@
 		<tbody>
 			 
 			<tr>
-				 <td>名称</td>
+				 <td height="28">名称</td>
 				 <td colspan="3">
                  <input id="name" name="name" class="span7 x-text" type="text"
 				        value="${mailPathSender.name}" size="80"
@@ -112,7 +112,7 @@
 				 </td>
 			</tr>
 			<tr>
-				 <td>标题</td>
+				 <td height="28">标题</td>
 				 <td colspan="3">
                  <input id="subject" name="subject" class="span7 x-text" type="text"
 				        value="${mailPathSender.subject}" size="80"
@@ -121,7 +121,7 @@
 			</tr>
 			
 			<tr>
-				 <td>是否启用</td>
+				 <td height="28">是否启用</td>
 				 <td colspan="3">
 				 <select id="enableFlag" name="enableFlag" class="span2">
 					<option value="1">启用</option>
@@ -140,7 +140,7 @@
 			</tr>
 
 			<tr>
-				 <td>是否压缩</td>
+				 <td height="28">是否压缩</td>
 				 <td colspan="3">
 				 <select id="compressFlag" name="compressFlag" class="span2">
 					<option value="1">压缩</option>
@@ -167,7 +167,7 @@
 			</tr>
 			 
 			<tr>
-				 <td>附件路径</td>
+				 <td height="28">附件路径</td>
 				 <td colspan="3">
 				 <textarea  id="mailFilePath" name="mailFilePath" class="x-textarea" rows="5" cols="58" style="width:535px;height:80px;">${mailPathSender.mailFilePath}</textarea>
 				 <br>（多个路径以,分隔）
@@ -175,7 +175,7 @@
 			</tr>
 		    
 			<tr>
-				 <td>包含文件</td>
+				 <td height="28">包含文件</td>
 				 <td colspan="3">
                  <input id="includes" name="includes" class="span5 x-text" type="text"
 				        value="${mailPathSender.includes}" size="80"
@@ -183,7 +183,7 @@
 				 </td>
 			</tr>
 			<tr>
-				 <td>排除文件</td>
+				 <td height="28">排除文件</td>
 				 <td colspan="3">
                  <input id="excludes" name="excludes" class="span5 x-text" type="text"
 				        value="${mailPathSender.excludes}" size="80"
@@ -191,7 +191,7 @@
 				 </td>
 			</tr>
 			<tr>
-				 <td>邮件标题</td>
+				 <td height="28">邮件标题</td>
 				 <td colspan="3">
                  <input id="textTitle" name="textTitle" class="span7 x-text" type="text"
 				        value="${mailPathSender.textTitle}" size="80"
@@ -199,14 +199,14 @@
 				 </td>
 			</tr>
 			<tr>
-				 <td>邮件内容</td>
+				 <td height="28">邮件内容</td>
 				 <td colspan="3">
 				 <textarea  id="textContent" name="textContent" class="x-textarea" rows="5" cols="58" style="width:758px;height:380px;">${mailPathSender.textContent}</textarea> 
 				 <br> （支持Freemarker模板语言）
 				 </td>
 			</tr>
 			<tr>
-				 <td>邮件接收人</td>
+				 <td height="28">邮件接收人</td>
 				 <td colspan="3">
 				 <textarea  id="mailRecipient" name="mailRecipient" class="x-textarea" rows="5" cols="58" style="width:715px;height:120px;">${mailPathSender.mailRecipient}</textarea>
 				 <br>（多个邮件接收人以,分隔）

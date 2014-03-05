@@ -160,8 +160,8 @@
 		<tbody>
 			 
 			<tr>
-				 <td>主题</td>
-				 <td >
+				 <td height="28">主题</td>
+				 <td height="28" >
                  <input id="subject" name="subject" class="span7 x-text" type="text"
 				        value="${publicInfo.subject}" size="80"
 				 ></input>
@@ -169,8 +169,8 @@
 			</tr>
 
 			<tr>
-				 <td>关键字</td>
-				 <td >
+				 <td height="28">关键字</td>
+				 <td height="28" >
                  <input id="keywords" name="keywords" class="span7 x-text" type="text"
 				        value="${publicInfo.keywords}" size="80"
 				 ></input>
@@ -178,8 +178,8 @@
 			</tr>
 
 			<tr>
-				 <td>摘要</td>
-				 <td >
+				 <td height="28">摘要</td>
+				 <td height="28" >
                  <input id="summary" name="summary" class="span7 x-text" type="text"
 				        value="${publicInfo.summary}" size="80"
 				 ></input>
@@ -187,8 +187,8 @@
 			</tr>
 
 			<tr>
-				 <td>Tag</td>
-				 <td >
+				 <td height="28">Tag</td>
+				 <td height="28" >
                  <input id="tag" name="tag" class="span7 x-text" type="text"
 				        value="${publicInfo.tag}" size="80"
 				 ></input>&nbsp;(多个tag用空格分隔)
@@ -196,8 +196,8 @@
 			</tr>
 
 			<tr>
-				 <td>作者</td>
-				 <td >
+				 <td height="28">作者</td>
+				 <td height="28" >
                  <input id="author" name="author" class="span7 x-text" type="text"
 				        value="${publicInfo.author}" size="80"
 				 ></input>
@@ -205,8 +205,8 @@
 			</tr>
 
 			<tr>
-				 <td>发布单位</td>
-				 <td >
+				 <td height="28">发布单位</td>
+				 <td height="28" >
                  <input id="unitName" name="unitName" class="span7 x-text" type="text"
 				        value="${publicInfo.unitName}" size="80"
 				 ></input>
@@ -215,8 +215,8 @@
 
  
 			<tr>
-				 <td>内容</td>
-				 <td >
+				 <td height="28">内容</td>
+				 <td height="28" >
 				 <textarea  id="content" name="content" class="x-textarea"  rows="5" cols="58" style="width:715px;height:580px;">${publicInfo.content}</textarea> 
 				 <br>  
 				 </td>
@@ -239,8 +239,6 @@
 				</td>				
 			</tr>
 			</c:if>
-
-            
 
             <c:if test="${publicInfo.processInstanceId != null && publicInfo.processInstanceId > 0 && publicInfo.status != -1 && publicInfo.wfStatus != 9999 }">
 			<tr>
