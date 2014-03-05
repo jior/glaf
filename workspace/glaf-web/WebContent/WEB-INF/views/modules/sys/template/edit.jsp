@@ -151,7 +151,7 @@
 
 		<tr>
 			<td align="left" width="18%" height="32">启用/锁定</td>
-			<td align="left" width="82%" height="27">
+			<td align="left" width="82%" height="32">
 			    <input type="hidden" id="locked"
 				name="locked" value="${template.locked}">
 			启用 <input type="radio" id="lockedx" name="lockedx" value="0"

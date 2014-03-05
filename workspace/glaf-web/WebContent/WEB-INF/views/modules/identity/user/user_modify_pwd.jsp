@@ -38,46 +38,24 @@ function setValue(obj){
 <html:form action="${contextPath}/identity/user.do?method=savePwd" method="post"  onsubmit="return checkForm(this);"> 
  
 <table width="500" border="0" align="center" cellpadding="0" cellspacing="0" class="box">
-  <tr>
-    <td>
-	<table width="100%" border="0" cellspacing="0" cellpadding="0">
-      <tr class="box">
-        <td class="box-lt">&nbsp;</td>
-        <td class="box-mt">&nbsp;</td>
-        <td class="box-rt">&nbsp;</td>
-      </tr>
-    </table></td>
-  </tr>
-  <tr>
-    <td class="box-mm"><table width="95%" align="center" border="0" cellspacing="0" cellpadding="5">
 	  <tr>
-        <td class="input-box2" valign="top">原密码*</td>
+        <td class="input-box2" valign="top" height="28">原密码*</td>
         <td><input name="oldPwd" type="password" size="30"  class="input span3 x-text" value="" datatype="string" nullable="no" minsize="6" maxsize="20" chname="密码"></td>
       </tr>
       <tr>
-        <td class="input-box2" valign="top">新密码*</td>
+        <td class="input-box2" valign="top" height="28">新密码*</td>
         <td><input name="newPwd" type="password" size="30"  class="input span3 x-text" value="" datatype="string" nullable="no" minsize="6" maxsize="20" chname="密码"></td>
       </tr>
       <tr>
-        <td class="input-box2" valign="top">确认密码*</td>
+        <td class="input-box2" valign="top" height="28">确认密码*</td>
         <td><input name="password2" type="password" size="30"  class="input span3 x-text" value=""  datatype="string" nullable="no" minsize="6" maxsize="20" chname="确认密码"></td>
       </tr>
       <tr>
-        <td colspan="2" align="center" valign="bottom" height="30">&nbsp;
-           <input name="btn_save2" type="submit" value="修改密码" class="btn btn-primary">
+        <td >&nbsp;</td>
+		<td align="left" valign="bottom" height="30">&nbsp;
+           <br><input name="btn_save2" type="submit" value="修改密码" class="btn btn-primary">
 		</td>
       </tr>
-    </table></td>
-  </tr>
-  <tr>
-    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
-      <tr class="box">
-        <td class="box-lb">&nbsp;</td>
-        <td class="box-mb">&nbsp;</td>
-        <td class="box-rb">&nbsp;</td>
-      </tr>
-    </table></td>
-  </tr>
 </table>
 </html:form>
 </body>

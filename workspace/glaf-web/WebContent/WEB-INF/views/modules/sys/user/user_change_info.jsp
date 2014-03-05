@@ -49,39 +49,41 @@ function setValue(obj){
   <tr>
     <td class="box-mm"><table width="95%" align="center" border="0" cellspacing="0" cellpadding="5">
       <tr>
-        <td width="20%" class="input-box">员工编码</td>
-        <td width="80%"><%=bean.getCode()%></td>
+        <td width="20%" class="input-box"  height="30">员工编码</td>
+        <td width="80%"  height="30"><%=bean.getCode()%></td>
       </tr>
       <tr>
-        <td class="input-box2" valign="top">姓　　名</td>
-        <td><%=bean.getName()%></td>
+        <td class="input-box2" valign="top"  height="30">姓　　名</td>
+        <td  height="30"><%=bean.getName()%></td>
       </tr>
       <tr>
-        <td class="input-box2" valign="top">手　　机*</td>
-        <td>
+        <td class="input-box2" valign="top"  height="30">手　　机*</td>
+        <td  height="30">
           <input name="mobile" type="text" size="30" class="input" datatype="string" 
 		  value="<%=bean.getMobile() != null ? bean.getMobile() : ""%>" 
 		  nullable="no" maxsize="12" chname="手机">        
 		</td>
       </tr>
       <tr>
-        <td class="input-box2" valign="top">邮　　件*</td>
-        <td>
+        <td  height="30" class="input-box2" valign="top">邮　　件*</td>
+        <td  height="30"> 
           <input name="email" type="text" size="30" class="input" datatype="email" 
 		  value="<%=bean.getEmail() != null ? bean.getEmail():""%>" 
 		  nullable="no" maxsize="50" chname="邮件">        
 		</td>
       </tr>
       <tr>
-        <td class="input-box2" valign="top">办公电话*</td>
-        <td>
+        <td  height="30" class="input-box2" valign="top">办公电话*</td>
+        <td  height="30">
           <input name="telephone" type="text" size="30" class="input" datatype="string" 
 		  value="<%=bean.getTelephone() != null ? bean.getTelephone() :""%>" nullable="no" maxsize="20" chname="办公电话">       
 		</td>
       </tr>
       <tr>
-        <td colspan="2" align="center" valign="bottom" height="30">&nbsp;
-              <input name="btn_save2" type="submit" value="保存" class="button"></td>
+        <td  height="30">&nbsp;</td>
+		<td  align="left" valign="bottom" height="30">&nbsp;
+           <br><input name="btn_save2" type="submit" value="修改密码" class="btn btn-primary">
+		</td> 
       </tr>
     </table></td>
   </tr>
