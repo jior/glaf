@@ -38,14 +38,14 @@ import org.apache.commons.logging.LogFactory;
  * @author fhanik
  * 
  */
-public class ThreadPoolExecutor extends java.util.concurrent.ThreadPoolExecutor {
+public class MxThreadPoolExecutor extends java.util.concurrent.ThreadPoolExecutor {
 	/**
 	 * The string manager for this package.
 	 */
 	protected static final StringManager sm = StringManager
 			.getManager("com.glaf.core.util.threads.res");
 
-	private static final Log log = LogFactory.getLog(ThreadPoolExecutor.class);
+	private static final Log log = LogFactory.getLog(MxThreadPoolExecutor.class);
 
 	/**
 	 * The number of tasks submitted but not yet finished. This includes tasks
@@ -69,14 +69,14 @@ public class ThreadPoolExecutor extends java.util.concurrent.ThreadPoolExecutor 
 	 */
 	private long threadRenewalDelay = Constants.DEFAULT_THREAD_RENEWAL_DELAY;
 
-	public ThreadPoolExecutor(int corePoolSize, int maximumPoolSize,
+	public MxThreadPoolExecutor(int corePoolSize, int maximumPoolSize,
 			long keepAliveTime, TimeUnit unit,
 			BlockingQueue<Runnable> workQueue, RejectedExecutionHandler handler) {
 		super(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue,
 				handler);
 	}
 
-	public ThreadPoolExecutor(int corePoolSize, int maximumPoolSize,
+	public MxThreadPoolExecutor(int corePoolSize, int maximumPoolSize,
 			long keepAliveTime, TimeUnit unit,
 			BlockingQueue<Runnable> workQueue, ThreadFactory threadFactory,
 			RejectedExecutionHandler handler) {
@@ -84,14 +84,14 @@ public class ThreadPoolExecutor extends java.util.concurrent.ThreadPoolExecutor 
 				threadFactory, handler);
 	}
 
-	public ThreadPoolExecutor(int corePoolSize, int maximumPoolSize,
+	public MxThreadPoolExecutor(int corePoolSize, int maximumPoolSize,
 			long keepAliveTime, TimeUnit unit,
 			BlockingQueue<Runnable> workQueue, ThreadFactory threadFactory) {
 		super(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue,
 				threadFactory, new RejectHandler());
 	}
 
-	public ThreadPoolExecutor(int corePoolSize, int maximumPoolSize,
+	public MxThreadPoolExecutor(int corePoolSize, int maximumPoolSize,
 			long keepAliveTime, TimeUnit unit, BlockingQueue<Runnable> workQueue) {
 		super(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue,
 				new RejectHandler());

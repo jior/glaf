@@ -35,7 +35,7 @@ public class TaskQueue extends LinkedBlockingQueue<Runnable> {
 
 	private static final long serialVersionUID = 1L;
 
-	private ThreadPoolExecutor parent = null;
+	private MxThreadPoolExecutor parent = null;
 
 	// no need to be volatile, the one times when we change and read it occur in
 	// a single thread (the one that did stop a context and fired listeners)
@@ -53,7 +53,7 @@ public class TaskQueue extends LinkedBlockingQueue<Runnable> {
 		super(c);
 	}
 
-	public void setParent(ThreadPoolExecutor tp) {
+	public void setParent(MxThreadPoolExecutor tp) {
 		parent = tp;
 	}
 

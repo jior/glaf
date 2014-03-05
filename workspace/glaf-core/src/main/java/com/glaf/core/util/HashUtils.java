@@ -148,21 +148,7 @@ public class HashUtils {
 	// 32位FNV算法
 	static int M_SHIFT = 0;
 
-	/**
-	 * 32位的FNV算法
-	 * 
-	 * @param data
-	 *            数组
-	 * @return int值
-	 */
-	public static int FNVHash(byte[] data) {
-		int hash = (int) 2166136261L;
-		for (byte b : data)
-			hash = (hash * 16777619) ^ b;
-		if (M_SHIFT == 0)
-			return hash;
-		return (hash ^ (hash >> M_SHIFT)) & M_MASK;
-	}
+	 
 
 	/**
 	 * 改进的32位FNV算法1

@@ -38,10 +38,10 @@ public class ThreadFactory {
 		TaskQueue taskqueue = new TaskQueue();
 		TaskThreadFactory tf = new TaskThreadFactory("thread-exec-", true,
 				Thread.NORM_PRIORITY);
-		executor = new ThreadPoolExecutor(conf.getInt("ThreadPool.minThreads",
+		executor = new MxThreadPoolExecutor(conf.getInt("ThreadPool.minThreads",
 				5), conf.getInt("ThreadPool.maxThreads", 10), 60,
 				TimeUnit.SECONDS, taskqueue, tf);
-		taskqueue.setParent((ThreadPoolExecutor) executor);
+		taskqueue.setParent((MxThreadPoolExecutor) executor);
 	}
 
 	public static void run(java.lang.Runnable r) {
