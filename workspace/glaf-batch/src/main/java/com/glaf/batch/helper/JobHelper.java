@@ -36,9 +36,9 @@ import com.glaf.core.context.ContextFactory;
 
 public class JobHelper {
 
-	protected IJobService jobService;
+	protected volatile IJobService jobService;
 
-	protected IJobDefinitionService jobDefinitionService;
+	protected volatile IJobDefinitionService jobDefinitionService;
 
 	public void createJobInstance(String jobKey) {
 		JobDefinition jobDefinition = getJobDefinitionService()
@@ -95,9 +95,6 @@ public class JobHelper {
 					}
 				}
 				getJobService().saveJobInstance(job);
-				/**
-				 * 接下来通知调度中心进行任务调度
-				 */
 			}
 		}
 	}
