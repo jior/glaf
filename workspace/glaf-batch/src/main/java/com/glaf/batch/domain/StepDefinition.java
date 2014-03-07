@@ -34,8 +34,8 @@ import com.glaf.batch.util.*;
 
 @Entity
 @Table(name = "SYS_JOB_STEP_DEF")
-public class JobStepDefinition implements Serializable, JSONable,
-		java.lang.Comparable<JobStepDefinition> {
+public class StepDefinition implements Serializable, JSONable,
+		java.lang.Comparable<StepDefinition> {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -61,26 +61,26 @@ public class JobStepDefinition implements Serializable, JSONable,
 	protected Integer listno;
 
 	@javax.persistence.Transient
-	protected Collection<JobStepDefinitionParam> params = new java.util.concurrent.CopyOnWriteArraySet<JobStepDefinitionParam>();
+	protected Collection<StepDefinitionParam> params = new java.util.concurrent.CopyOnWriteArraySet<StepDefinitionParam>();
 
-	public JobStepDefinition() {
+	public StepDefinition() {
 
 	}
 
-	public void addParam(JobStepDefinitionParam param) {
+	public void addParam(StepDefinitionParam param) {
 		if (params == null) {
-			params = new java.util.concurrent.CopyOnWriteArraySet<JobStepDefinitionParam>();
+			params = new java.util.concurrent.CopyOnWriteArraySet<StepDefinitionParam>();
 		}
 		params.add(param);
 	}
 
 	@Override
-	public int compareTo(JobStepDefinition o) {
+	public int compareTo(StepDefinition o) {
 		if (o == null) {
 			return -1;
 		}
 
-		JobStepDefinition field = o;
+		StepDefinition field = o;
 
 		int l = this.listno - field.getListno();
 
@@ -102,7 +102,7 @@ public class JobStepDefinition implements Serializable, JSONable,
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		JobStepDefinition other = (JobStepDefinition) obj;
+		StepDefinition other = (StepDefinition) obj;
 		if (stepDefinitionId == null) {
 			if (other.stepDefinitionId != null)
 				return false;
@@ -127,7 +127,7 @@ public class JobStepDefinition implements Serializable, JSONable,
 		return this.listno;
 	}
 
-	public Collection<JobStepDefinitionParam> getParams() {
+	public Collection<StepDefinitionParam> getParams() {
 		return params;
 	}
 
@@ -153,8 +153,8 @@ public class JobStepDefinition implements Serializable, JSONable,
 		return result;
 	}
 
-	public JobStepDefinition jsonToObject(JSONObject jsonObject) {
-		return JobStepDefinitionJsonFactory.jsonToObject(jsonObject);
+	public StepDefinition jsonToObject(JSONObject jsonObject) {
+		return StepDefinitionJsonFactory.jsonToObject(jsonObject);
 	}
 
 	public void setJobClass(String jobClass) {
@@ -173,7 +173,7 @@ public class JobStepDefinition implements Serializable, JSONable,
 		this.listno = listno;
 	}
 
-	public void setParams(Collection<JobStepDefinitionParam> params) {
+	public void setParams(Collection<StepDefinitionParam> params) {
 		this.params = params;
 	}
 
@@ -190,11 +190,11 @@ public class JobStepDefinition implements Serializable, JSONable,
 	}
 
 	public JSONObject toJsonObject() {
-		return JobStepDefinitionJsonFactory.toJsonObject(this);
+		return StepDefinitionJsonFactory.toJsonObject(this);
 	}
 
 	public ObjectNode toObjectNode() {
-		return JobStepDefinitionJsonFactory.toObjectNode(this);
+		return StepDefinitionJsonFactory.toObjectNode(this);
 	}
 
 	@Override

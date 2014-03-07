@@ -24,26 +24,21 @@ import com.glaf.batch.domain.*;
 import com.glaf.batch.query.*;
 
 @Component
-public interface JobStepDefinitionParamMapper {
+public interface StepDefinitionMapper {
 
-	void deleteJobStepDefinitionParamById(Long id);
+	void deleteStepDefinitionById(Long id);
 
-	void deleteParamsByStepDefinitionId(Long stepDefinitionId);
+	StepDefinition getStepDefinitionById(Long id);
 
-	JobStepDefinitionParam getJobStepDefinitionParamById(Long id);
+	int getStepDefinitionCount(StepDefinitionQuery query);
 
-	int getJobStepDefinitionParamCount(JobStepDefinitionParamQuery query);
+	List<StepDefinition> getStepDefinitionsByJobDefinitionId(
+			Long jobDefinitionId);
 
-	List<JobStepDefinitionParam> getJobStepDefinitionParams(
-			JobStepDefinitionParamQuery query);
+	List<StepDefinition> getStepDefinitions(StepDefinitionQuery query);
 
-	List<JobStepDefinitionParam> getParamsByJobDefinitionId(Long jobDefinitionId);
+	void insertStepDefinition(StepDefinition model);
 
-	List<JobStepDefinitionParam> getParamsByStepDefinitionId(
-			Long stepDefinitionId);
-
-	void insertJobStepDefinitionParam(JobStepDefinitionParam model);
-
-	void updateJobStepDefinitionParam(JobStepDefinitionParam model);
+	void updateStepDefinition(StepDefinition model);
 
 }

@@ -47,9 +47,9 @@ public class MxJobDefinitionServiceImpl implements IJobDefinitionService {
 
 	protected volatile JobDefinitionMapper jobDefinitionMapper;
 
-	protected volatile JobStepDefinitionMapper jobStepDefinitionMapper;
+	protected volatile StepDefinitionMapper stepDefinitionMapper;
 
-	protected volatile JobStepDefinitionParamMapper jobStepDefinitionParamMapper;
+	protected volatile StepDefinitionParamMapper stepDefinitionParamMapper;
 
 	public MxJobDefinitionServiceImpl() {
 
@@ -82,14 +82,14 @@ public class MxJobDefinitionServiceImpl implements IJobDefinitionService {
 		JobDefinition jobDefinition = jobDefinitionMapper
 				.getJobDefinitionById(jobDefinitionId);
 		if (jobDefinition != null) {
-			List<JobStepDefinition> steps = jobStepDefinitionMapper
-					.getJobStepDefinitionsByJobDefinitionId(jobDefinitionId);
-			List<JobStepDefinitionParam> params = jobStepDefinitionParamMapper
+			List<StepDefinition> steps = stepDefinitionMapper
+					.getStepDefinitionsByJobDefinitionId(jobDefinitionId);
+			List<StepDefinitionParam> params = stepDefinitionParamMapper
 					.getParamsByJobDefinitionId(jobDefinitionId);
 			if (steps != null && !steps.isEmpty()) {
 				if (params != null && !params.isEmpty()) {
-					for (JobStepDefinition step : steps) {
-						for (JobStepDefinitionParam param : params) {
+					for (StepDefinition step : steps) {
+						for (StepDefinitionParam param : params) {
 							if (step.getStepDefinitionId().longValue() == param
 									.getStepDefinitionId().longValue()) {
 								step.addParam(param);
@@ -109,16 +109,16 @@ public class MxJobDefinitionServiceImpl implements IJobDefinitionService {
 		List<JobDefinition> list = jobDefinitionMapper.getJobDefinitions(query);
 		if (list != null && !list.isEmpty()) {
 			JobDefinition jobDefinition = list.get(0);
-			List<JobStepDefinition> steps = jobStepDefinitionMapper
-					.getJobStepDefinitionsByJobDefinitionId(jobDefinition
+			List<StepDefinition> steps = stepDefinitionMapper
+					.getStepDefinitionsByJobDefinitionId(jobDefinition
 							.getJobDefinitionId());
-			List<JobStepDefinitionParam> params = jobStepDefinitionParamMapper
+			List<StepDefinitionParam> params = stepDefinitionParamMapper
 					.getParamsByJobDefinitionId(jobDefinition
 							.getJobDefinitionId());
 			if (steps != null && !steps.isEmpty()) {
 				if (params != null && !params.isEmpty()) {
-					for (JobStepDefinition step : steps) {
-						for (JobStepDefinitionParam param : params) {
+					for (StepDefinition step : steps) {
+						for (StepDefinitionParam param : params) {
 							if (step.getStepDefinitionId().longValue() == param
 									.getStepDefinitionId().longValue()) {
 								step.addParam(param);
@@ -160,13 +160,13 @@ public class MxJobDefinitionServiceImpl implements IJobDefinitionService {
 	}
 
 	@Transactional
-	public void saveStepDefinition(JobStepDefinition stepDefinition) {
+	public void saveStepDefinition(StepDefinition stepDefinition) {
 		if (stepDefinition.getStepDefinitionId() == null) {
 			stepDefinition.setStepDefinitionId(idGenerator.nextId());
-			jobStepDefinitionMapper.insertJobStepDefinition(stepDefinition);
+			stepDefinitionMapper.insertStepDefinition(stepDefinition);
 		} else {
-			JobStepDefinition model = jobStepDefinitionMapper
-					.getJobStepDefinitionById(stepDefinition
+			StepDefinition model = stepDefinitionMapper
+					.getStepDefinitionById(stepDefinition
 							.getStepDefinitionId());
 			if (model != null) {
 				if (stepDefinition.getStepName() != null) {
@@ -175,23 +175,23 @@ public class MxJobDefinitionServiceImpl implements IJobDefinitionService {
 				if (stepDefinition.getStepKey() != null) {
 					model.setStepKey(stepDefinition.getStepKey());
 				}
-				jobStepDefinitionMapper.updateJobStepDefinition(model);
+				stepDefinitionMapper.updateStepDefinition(model);
 			}
 		}
 		if (stepDefinition.getStepDefinitionId() != null) {
-			jobStepDefinitionParamMapper
+			stepDefinitionParamMapper
 					.deleteParamsByStepDefinitionId(stepDefinition
 							.getStepDefinitionId());
 			if (stepDefinition.getParams() != null
 					&& !stepDefinition.getParams().isEmpty()) {
-				for (JobStepDefinitionParam param : stepDefinition.getParams()) {
+				for (StepDefinitionParam param : stepDefinition.getParams()) {
 					param.setId(idGenerator.nextId());
 					param.setStepDefinitionId(stepDefinition
 							.getStepDefinitionId());
 					param.setJobDefinitionId(stepDefinition
 							.getJobDefinitionId());
-					jobStepDefinitionParamMapper
-							.insertJobStepDefinitionParam(param);
+					stepDefinitionParamMapper
+							.insertStepDefinitionParam(param);
 				}
 			}
 		}
@@ -213,14 +213,14 @@ public class MxJobDefinitionServiceImpl implements IJobDefinitionService {
 	}
 
 	@javax.annotation.Resource
-	public void setJobStepDefinitionMapper(
-			JobStepDefinitionMapper jobStepDefinitionMapper) {
-		this.jobStepDefinitionMapper = jobStepDefinitionMapper;
+	public void setStepDefinitionMapper(
+			StepDefinitionMapper stepDefinitionMapper) {
+		this.stepDefinitionMapper = stepDefinitionMapper;
 	}
 
-	public void setJobStepDefinitionParamMapper(
-			JobStepDefinitionParamMapper jobStepDefinitionParamMapper) {
-		this.jobStepDefinitionParamMapper = jobStepDefinitionParamMapper;
+	public void setStepDefinitionParamMapper(
+			StepDefinitionParamMapper stepDefinitionParamMapper) {
+		this.stepDefinitionParamMapper = stepDefinitionParamMapper;
 	}
 
 	@javax.annotation.Resource

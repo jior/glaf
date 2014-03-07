@@ -27,8 +27,8 @@ import com.glaf.batch.domain.JobDefinition;
 import com.glaf.batch.domain.JobExecution;
 import com.glaf.batch.domain.JobExecutionParam;
 import com.glaf.batch.domain.JobInstance;
-import com.glaf.batch.domain.JobStepDefinition;
-import com.glaf.batch.domain.JobStepDefinitionParam;
+import com.glaf.batch.domain.StepDefinition;
+import com.glaf.batch.domain.StepDefinitionParam;
 import com.glaf.batch.domain.StepExecution;
 import com.glaf.batch.service.IJobDefinitionService;
 import com.glaf.batch.service.IJobService;
@@ -44,7 +44,7 @@ public class JobHelper {
 		JobDefinition jobDefinition = getJobDefinitionService()
 				.getJobDefinitionByKey(jobKey);
 		if (jobDefinition != null) {
-			List<JobStepDefinition> steps = jobDefinition.getSteps();
+			List<StepDefinition> steps = jobDefinition.getSteps();
 			Collections.sort(steps);
 			JobInstance job = getJobService().getJobInstanceByJobKey(jobKey);
 			if (job != null && getJobService().jobCompleted(jobKey)) {
@@ -65,7 +65,7 @@ public class JobHelper {
 				jobExecution.setStatus("0");
 				jobExecution.setVersion(1);
 				job.addJobExecution(jobExecution);
-				for (JobStepDefinition step : steps) {
+				for (StepDefinition step : steps) {
 					StepExecution stepExecution = new StepExecution();
 					stepExecution.setJobClass(step.getJobClass());
 					stepExecution.setJobStepKey(step.getJobStepKey());
@@ -77,10 +77,10 @@ public class JobHelper {
 					stepExecution.setStepKey(step.getStepKey());
 					stepExecution.setStepName(step.getStepName());
 					jobExecution.addStep(stepExecution);
-					Collection<JobStepDefinitionParam> params = step
+					Collection<StepDefinitionParam> params = step
 							.getParams();
 					if (params != null && !params.isEmpty()) {
-						for (JobStepDefinitionParam param : params) {
+						for (StepDefinitionParam param : params) {
 							JobExecutionParam p = new JobExecutionParam();
 							p.setDateVal(param.getDateVal());
 							p.setDoubleVal(param.getDoubleVal());

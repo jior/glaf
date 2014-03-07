@@ -2,9 +2,9 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.glaf.batch.mapper.JobStepDefinitionMapper">
+<mapper namespace="com.glaf.batch.mapper.StepDefinitionMapper">
 
-	<resultMap id="jobStepDefinitionResultMap" type="com.glaf.batch.domain.JobStepDefinition">
+	<resultMap id="jobStepDefinitionResultMap" type="com.glaf.batch.domain.StepDefinition">
 		<id property="stepDefinitionId" column="STEP_DEFINITION_ID"
 			jdbcType="BIGINT" />
 		<result property="jobDefinitionId" column="JOB_DEFINITION_ID"
@@ -17,7 +17,7 @@
 	</resultMap>
 
 
-	<insert id="insertJobStepDefinition" parameterType="com.glaf.batch.domain.JobStepDefinition">
+	<insert id="insertStepDefinition" parameterType="com.glaf.batch.domain.StepDefinition">
 		insert into SYS_JOB_STEP_DEF
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			STEP_DEFINITION_ID
@@ -66,7 +66,7 @@
 	</insert>
 
 
-	<update id="updateJobStepDefinition" parameterType="com.glaf.batch.domain.JobStepDefinition">
+	<update id="updateStepDefinition" parameterType="com.glaf.batch.domain.StepDefinition">
 		update SYS_JOB_STEP_DEF
 		set
 		<trim prefix="" suffix="" suffixOverrides=",">
@@ -95,21 +95,21 @@
 	</update>
 
 
-	<delete id="deleteJobStepDefinitionById" parameterType="long">
+	<delete id="deleteStepDefinitionById" parameterType="long">
 		delete
 		from SYS_JOB_STEP_DEF
 		where STEP_DEFINITION_ID = #{id}
 	</delete>
 
 
-	<select id="getJobStepDefinitionById" parameterType="long"
+	<select id="getStepDefinitionById" parameterType="long"
 		resultMap="jobStepDefinitionResultMap">
 		select * from SYS_JOB_STEP_DEF where STEP_DEFINITION_ID =
 		#{id}
 	</select>
 
 
-	<select id="getJobStepDefinitionsByJobDefinitionId"
+	<select id="getStepDefinitionsByJobDefinitionId"
 		parameterType="long" resultMap="jobStepDefinitionResultMap">
 		select * from SYS_JOB_STEP_DEF where
 		JOB_DEFINITION_ID =
@@ -117,10 +117,10 @@
 	</select>
 
 
-	<select id="getJobStepDefinitions" parameterType="com.glaf.batch.query.JobStepDefinitionQuery"
+	<select id="getStepDefinitions" parameterType="com.glaf.batch.query.StepDefinitionQuery"
 		resultMap="jobStepDefinitionResultMap">
 		select distinct E.*
-		<include refid="selectJobStepDefinitionsSql" />
+		<include refid="selectStepDefinitionsSql" />
 		<choose>
 			<when test="orderBy != null">
 				order by ${orderBy}
@@ -132,14 +132,14 @@
 	</select>
 
 
-	<select id="getJobStepDefinitionCount" parameterType="com.glaf.batch.query.JobStepDefinitionQuery"
+	<select id="getStepDefinitionCount" parameterType="com.glaf.batch.query.StepDefinitionQuery"
 		resultType="int">
 		select count(*)
-		<include refid="selectJobStepDefinitionsSql" />
+		<include refid="selectStepDefinitionsSql" />
 	</select>
 
 
-	<sql id="selectJobStepDefinitionsSql">
+	<sql id="selectStepDefinitionsSql">
 
 		from SYS_JOB_STEP_DEF E
 

@@ -30,7 +30,7 @@ import com.glaf.batch.util.*;
 
 @Entity
 @Table(name = "SYS_JOB_STEP_DEF_PARAMS")
-public class JobStepDefinitionParam implements Serializable, JSONable {
+public class StepDefinitionParam implements Serializable, JSONable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -69,7 +69,7 @@ public class JobStepDefinitionParam implements Serializable, JSONable {
 	@Column(name = "DOUBLE_VAL")
 	protected Double doubleVal;
 
-	public JobStepDefinitionParam() {
+	public StepDefinitionParam() {
 
 	}
 
@@ -81,7 +81,7 @@ public class JobStepDefinitionParam implements Serializable, JSONable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		JobStepDefinitionParam other = (JobStepDefinitionParam) obj;
+		StepDefinitionParam other = (StepDefinitionParam) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -142,8 +142,8 @@ public class JobStepDefinitionParam implements Serializable, JSONable {
 		return result;
 	}
 
-	public JobStepDefinitionParam jsonToObject(JSONObject jsonObject) {
-		return JobStepDefinitionParamJsonFactory.jsonToObject(jsonObject);
+	public StepDefinitionParam jsonToObject(JSONObject jsonObject) {
+		return StepDefinitionParamJsonFactory.jsonToObject(jsonObject);
 	}
 
 	public void setDateVal(Date dateVal) {
@@ -191,11 +191,11 @@ public class JobStepDefinitionParam implements Serializable, JSONable {
 	}
 
 	public JSONObject toJsonObject() {
-		return JobStepDefinitionParamJsonFactory.toJsonObject(this);
+		return StepDefinitionParamJsonFactory.toJsonObject(this);
 	}
 
 	public ObjectNode toObjectNode() {
-		return JobStepDefinitionParamJsonFactory.toObjectNode(this);
+		return StepDefinitionParamJsonFactory.toObjectNode(this);
 	}
 
 	@Override

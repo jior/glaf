@@ -21,7 +21,7 @@ package com.glaf.batch.query;
 import java.util.*;
 import com.glaf.core.query.DataQuery;
 
-public class JobStepDefinitionQuery extends DataQuery {
+public class StepDefinitionQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;
 	protected List<Long> stepDefinitionIds;
 	protected Long jobDefinitionId;
@@ -33,7 +33,7 @@ public class JobStepDefinitionQuery extends DataQuery {
 	protected String jobStepKey;
 	protected List<String> jobStepKeys;
 
-	public JobStepDefinitionQuery() {
+	public StepDefinitionQuery() {
 
 	}
 
@@ -116,7 +116,7 @@ public class JobStepDefinitionQuery extends DataQuery {
 		addColumn("listno", "LISTNO");
 	}
 
-	public JobStepDefinitionQuery jobDefinitionId(Long jobDefinitionId) {
+	public StepDefinitionQuery jobDefinitionId(Long jobDefinitionId) {
 		if (jobDefinitionId == null) {
 			throw new RuntimeException("jobDefinitionId is null");
 		}
@@ -124,7 +124,7 @@ public class JobStepDefinitionQuery extends DataQuery {
 		return this;
 	}
 
-	public JobStepDefinitionQuery jobDefinitionIds(List<Long> jobDefinitionIds) {
+	public StepDefinitionQuery jobDefinitionIds(List<Long> jobDefinitionIds) {
 		if (jobDefinitionIds == null) {
 			throw new RuntimeException("jobDefinitionIds is empty ");
 		}
@@ -132,7 +132,7 @@ public class JobStepDefinitionQuery extends DataQuery {
 		return this;
 	}
 
-	public JobStepDefinitionQuery jobStepKey(String jobStepKey) {
+	public StepDefinitionQuery jobStepKey(String jobStepKey) {
 		if (jobStepKey == null) {
 			throw new RuntimeException("jobStepKey is null");
 		}
@@ -140,7 +140,7 @@ public class JobStepDefinitionQuery extends DataQuery {
 		return this;
 	}
 
-	public JobStepDefinitionQuery jobStepKeys(List<String> jobStepKeys) {
+	public StepDefinitionQuery jobStepKeys(List<String> jobStepKeys) {
 		if (jobStepKeys == null) {
 			throw new RuntimeException("jobStepKeys is empty ");
 		}
@@ -180,7 +180,7 @@ public class JobStepDefinitionQuery extends DataQuery {
 		this.stepNames = stepNames;
 	}
 
-	public JobStepDefinitionQuery stepKey(String stepKey) {
+	public StepDefinitionQuery stepKey(String stepKey) {
 		if (stepKey == null) {
 			throw new RuntimeException("stepKey is null");
 		}
@@ -188,7 +188,7 @@ public class JobStepDefinitionQuery extends DataQuery {
 		return this;
 	}
 
-	public JobStepDefinitionQuery stepKeys(List<String> stepKeys) {
+	public StepDefinitionQuery stepKeys(List<String> stepKeys) {
 		if (stepKeys == null) {
 			throw new RuntimeException("stepKeys is empty ");
 		}
@@ -196,7 +196,7 @@ public class JobStepDefinitionQuery extends DataQuery {
 		return this;
 	}
 
-	public JobStepDefinitionQuery stepName(String stepName) {
+	public StepDefinitionQuery stepName(String stepName) {
 		if (stepName == null) {
 			throw new RuntimeException("stepName is null");
 		}
@@ -204,7 +204,7 @@ public class JobStepDefinitionQuery extends DataQuery {
 		return this;
 	}
 
-	public JobStepDefinitionQuery stepNames(List<String> stepNames) {
+	public StepDefinitionQuery stepNames(List<String> stepNames) {
 		if (stepNames == null) {
 			throw new RuntimeException("stepNames is empty ");
 		}

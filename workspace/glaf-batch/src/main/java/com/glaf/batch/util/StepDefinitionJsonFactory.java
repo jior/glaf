@@ -24,10 +24,10 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import com.glaf.batch.domain.*;
 
-public class JobStepDefinitionJsonFactory {
+public class StepDefinitionJsonFactory {
 
-	public static JobStepDefinition jsonToObject(JSONObject jsonObject) {
-		JobStepDefinition model = new JobStepDefinition();
+	public static StepDefinition jsonToObject(JSONObject jsonObject) {
+		StepDefinition model = new StepDefinition();
 		if (jsonObject.containsKey("stepDefinitionId")) {
 			model.setStepDefinitionId(jsonObject.getLong("stepDefinitionId"));
 		}
@@ -53,7 +53,7 @@ public class JobStepDefinitionJsonFactory {
 		return model;
 	}
 
-	public static JSONObject toJsonObject(JobStepDefinition model) {
+	public static JSONObject toJsonObject(StepDefinition model) {
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("stepDefinitionId", model.getStepDefinitionId());
 		jsonObject.put("_stepDefinitionId_", model.getStepDefinitionId());
@@ -74,7 +74,7 @@ public class JobStepDefinitionJsonFactory {
 		return jsonObject;
 	}
 
-	public static ObjectNode toObjectNode(JobStepDefinition model) {
+	public static ObjectNode toObjectNode(StepDefinition model) {
 		ObjectNode jsonObject = new ObjectMapper().createObjectNode();
 		jsonObject.put("stepDefinitionId", model.getStepDefinitionId());
 		jsonObject.put("_stepDefinitionId_", model.getStepDefinitionId());
@@ -95,10 +95,10 @@ public class JobStepDefinitionJsonFactory {
 		return jsonObject;
 	}
 
-	public static JSONArray listToArray(java.util.List<JobStepDefinition> list) {
+	public static JSONArray listToArray(java.util.List<StepDefinition> list) {
 		JSONArray array = new JSONArray();
 		if (list != null && !list.isEmpty()) {
-			for (JobStepDefinition model : list) {
+			for (StepDefinition model : list) {
 				JSONObject jsonObject = model.toJsonObject();
 				array.add(jsonObject);
 			}
@@ -106,17 +106,17 @@ public class JobStepDefinitionJsonFactory {
 		return array;
 	}
 
-	public static java.util.List<JobStepDefinition> arrayToList(JSONArray array) {
-		java.util.List<JobStepDefinition> list = new java.util.ArrayList<JobStepDefinition>();
+	public static java.util.List<StepDefinition> arrayToList(JSONArray array) {
+		java.util.List<StepDefinition> list = new java.util.ArrayList<StepDefinition>();
 		for (int i = 0, len = array.size(); i < len; i++) {
 			JSONObject jsonObject = array.getJSONObject(i);
-			JobStepDefinition model = jsonToObject(jsonObject);
+			StepDefinition model = jsonToObject(jsonObject);
 			list.add(model);
 		}
 		return list;
 	}
 
-	private JobStepDefinitionJsonFactory() {
+	private StepDefinitionJsonFactory() {
 
 	}
 

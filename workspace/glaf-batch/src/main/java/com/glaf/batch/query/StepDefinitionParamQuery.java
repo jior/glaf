@@ -21,7 +21,7 @@ package com.glaf.batch.query;
 import java.util.*;
 import com.glaf.core.query.DataQuery;
 
-public class JobStepDefinitionParamQuery extends DataQuery {
+public class StepDefinitionParamQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;
 	protected List<Long> ids;
 	protected Long jobDefinitionId;
@@ -32,7 +32,7 @@ public class JobStepDefinitionParamQuery extends DataQuery {
 	protected String keyName;
 	protected List<String> keyNames;
 
-	public JobStepDefinitionParamQuery() {
+	public StepDefinitionParamQuery() {
 
 	}
 
@@ -131,7 +131,7 @@ public class JobStepDefinitionParamQuery extends DataQuery {
 		addColumn("doubleVal", "DOUBLE_VAL");
 	}
 
-	public JobStepDefinitionParamQuery jobDefinitionId(Long jobDefinitionId) {
+	public StepDefinitionParamQuery jobDefinitionId(Long jobDefinitionId) {
 		if (jobDefinitionId == null) {
 			throw new RuntimeException("jobDefinitionId is null");
 		}
@@ -139,7 +139,7 @@ public class JobStepDefinitionParamQuery extends DataQuery {
 		return this;
 	}
 
-	public JobStepDefinitionParamQuery jobDefinitionIds(
+	public StepDefinitionParamQuery jobDefinitionIds(
 			List<Long> jobDefinitionIds) {
 		if (jobDefinitionIds == null) {
 			throw new RuntimeException("jobDefinitionIds is empty ");
@@ -148,7 +148,7 @@ public class JobStepDefinitionParamQuery extends DataQuery {
 		return this;
 	}
 
-	public JobStepDefinitionParamQuery keyName(String keyName) {
+	public StepDefinitionParamQuery keyName(String keyName) {
 		if (keyName == null) {
 			throw new RuntimeException("keyName is null");
 		}
@@ -156,7 +156,7 @@ public class JobStepDefinitionParamQuery extends DataQuery {
 		return this;
 	}
 
-	public JobStepDefinitionParamQuery keyNames(List<String> keyNames) {
+	public StepDefinitionParamQuery keyNames(List<String> keyNames) {
 		if (keyNames == null) {
 			throw new RuntimeException("keyNames is empty ");
 		}
@@ -192,7 +192,7 @@ public class JobStepDefinitionParamQuery extends DataQuery {
 		this.typeCds = typeCds;
 	}
 
-	public JobStepDefinitionParamQuery stepDefinitionIds(
+	public StepDefinitionParamQuery stepDefinitionIds(
 			List<Long> stepDefinitionIds) {
 		if (stepDefinitionIds == null) {
 			throw new RuntimeException("stepDefinitionIds is empty ");
@@ -201,7 +201,7 @@ public class JobStepDefinitionParamQuery extends DataQuery {
 		return this;
 	}
 
-	public JobStepDefinitionParamQuery typeCd(String typeCd) {
+	public StepDefinitionParamQuery typeCd(String typeCd) {
 		if (typeCd == null) {
 			throw new RuntimeException("typeCd is null");
 		}
@@ -209,7 +209,7 @@ public class JobStepDefinitionParamQuery extends DataQuery {
 		return this;
 	}
 
-	public JobStepDefinitionParamQuery typeCds(List<String> typeCds) {
+	public StepDefinitionParamQuery typeCds(List<String> typeCds) {
 		if (typeCds == null) {
 			throw new RuntimeException("typeCds is empty ");
 		}

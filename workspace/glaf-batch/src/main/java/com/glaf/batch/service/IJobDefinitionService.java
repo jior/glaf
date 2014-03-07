@@ -71,6 +71,6 @@ public interface IJobDefinitionService {
 	 * @param stepDefinition
 	 */
 	@Transactional
-	void saveStepDefinition(JobStepDefinition stepDefinition);
+	void saveStepDefinition(StepDefinition stepDefinition);
 
 }
