@@ -26,7 +26,7 @@
 	</aop:config>
 
 
-	<aop:config proxy-target-class="true">
+	<!-- <aop:config proxy-target-class="true">
 		<aop:advisor advice-ref="txAdviceRepository" pointcut="execution(* org.springframework.batch.core..*Repository+.*(..))"/>
 	</aop:config>
 
@@ -34,7 +34,7 @@
 		<tx:attributes>
 			<tx:method name="*" />
 		</tx:attributes>
-	</tx:advice>
+	</tx:advice> -->
 
 	<tx:annotation-driven transaction-manager="transactionManager" mode="aspectj" proxy-target-class="true"/>
 
