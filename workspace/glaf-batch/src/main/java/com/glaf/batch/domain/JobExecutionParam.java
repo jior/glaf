@@ -46,6 +46,9 @@ public class JobExecutionParam implements Serializable, JSONable {
 	@Column(name = "JOB_INSTANCE_ID")
 	protected Long jobInstanceId;
 
+	/**
+	 * type_cd(数据类型，取值：STRING, DATE, LONG, DOUBLE)
+	 */
 	@Column(name = "TYPE_CD", length = 6)
 	protected String typeCd;
 

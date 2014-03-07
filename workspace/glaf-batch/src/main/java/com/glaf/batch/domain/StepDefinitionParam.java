@@ -43,6 +43,9 @@ public class StepDefinitionParam implements Serializable, JSONable {
 	@Column(name = "STEP_DEFINITION_ID")
 	protected Long stepDefinitionId;
 
+	/**
+	 * type_cd(数据类型，取值：STRING, DATE, LONG, DOUBLE)
+	 */
 	@Column(name = "TYPE_CD", length = 6)
 	protected String typeCd;
 
