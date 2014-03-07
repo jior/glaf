@@ -79,7 +79,10 @@
 
 	<select id="getJobInstanceByJobKey" parameterType="string"
 		resultMap="jobInstanceResultMap">
-		select * from SYS_JOB_INSTANCE where job_key = #{jobKey}
+		select * from SYS_JOB_INSTANCE where
+		job_instance_id = (
+		select max(job_instance_id) from SYS_JOB_INSTANCE where job_key = #{jobKey}
+		)
 	</select>
 
 
@@ -123,7 +126,7 @@
 		<where>
 
 			1 = 1
-			
+
 			<if test="jobName != null and jobName != '' ">
 				and E.job_name = #{jobName}
 			</if>

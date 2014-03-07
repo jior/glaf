@@ -46,11 +46,15 @@ public class JobHelper {
 		if (jobDefinition != null) {
 			List<StepDefinition> steps = jobDefinition.getSteps();
 			Collections.sort(steps);
+			int version = 0;
 			JobInstance job = getJobService().getJobInstanceByJobKey(jobKey);
-			if (job != null) {
+			if (job != null && !getJobService().jobCompleted(jobKey)) {
+				version = job.getVersion();
+				// 如果Job已经存在并且还没有完成，不创建新任务实例
 				return;
 			}
 			if (job == null) {
+				version = version + 1;
 				job = new JobInstance();
 				job.setJobKey(jobKey);
 				job.setJobName(jobDefinition.getJobName());
@@ -60,7 +64,7 @@ public class JobHelper {
 				jobExecution.setLastUpdated(new Date());
 				jobExecution.setStartTime(new Date());
 				jobExecution.setStatus("0");
-				jobExecution.setVersion(1);
+				jobExecution.setVersion(version);
 				job.addJobExecution(jobExecution);
 				for (StepDefinition step : steps) {
 					StepExecution stepExecution = new StepExecution();
