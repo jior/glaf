@@ -47,11 +47,8 @@ public class JobHelper {
 			List<StepDefinition> steps = jobDefinition.getSteps();
 			Collections.sort(steps);
 			JobInstance job = getJobService().getJobInstanceByJobKey(jobKey);
-			if (job != null && getJobService().jobCompleted(jobKey)) {
-				/*
-				 * 如果任务实例已经成功完成，就删除已经完成的任务实例。
-				 */
-				getJobService().deleteJobInstanceByJobKey(jobKey);
+			if (job != null) {
+				return;
 			}
 			if (job == null) {
 				job = new JobInstance();
@@ -77,8 +74,7 @@ public class JobHelper {
 					stepExecution.setStepKey(step.getStepKey());
 					stepExecution.setStepName(step.getStepName());
 					jobExecution.addStep(stepExecution);
-					Collection<StepDefinitionParam> params = step
-							.getParams();
+					Collection<StepDefinitionParam> params = step.getParams();
 					if (params != null && !params.isEmpty()) {
 						for (StepDefinitionParam param : params) {
 							JobExecutionParam p = new JobExecutionParam();
