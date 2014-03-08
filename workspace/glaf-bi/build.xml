@@ -1,6 +1,6 @@
-<project name="glaf-base" basedir="." default="build">
+<project name="glaf-bi" basedir="." default="build">
 	<!-- Project settings -->
-	<property name="project.title" value="GLAF Web System" />
+	<property name="project.title" value="GLAF BI System" />
 	<property name="project.distname" value="glaf-bi" />
 
 	<!-- 路径设置 -->

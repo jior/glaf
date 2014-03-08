@@ -1,4 +1,4 @@
-<project name="glaf-oa" basedir="." default="jar">
+<project name="glaf-oa" basedir="." default="build">
 	<!-- Project settings -->
 	<property name="project.title" value="GLAF OA System" />
 	<property name="project.distname" value="glaf-oa" />

@@ -1,6 +1,6 @@
-<project name="glaf-base" basedir="." default="jar">
+<project name="glaf-activiti" basedir="." default="jar">
 	<!-- Project settings -->
-	<property name="project.title" value="GLAF Web System" />
+	<property name="project.title" value="GLAF Activiti System" />
 	<property name="project.distname" value="glaf-activiti" />
 
 	<!-- 路径设置 -->

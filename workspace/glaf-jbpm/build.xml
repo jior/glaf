@@ -1,6 +1,6 @@
-<project name="glaf-base" basedir="." default="jar">
+<project name="glaf-jbpm" basedir="." default="jar">
 	<!-- Project settings -->
-	<property name="project.title" value="GLAF Web System" />
+	<property name="project.title" value="GLAF JBPM System" />
 	<property name="project.distname" value="glaf-jbpm" />
 
 	<!-- 路径设置 -->
@@ -15,6 +15,9 @@
 			<include name="*.jar" />
 		</fileset>
 		<fileset dir="../glaf-core">
+			<include name="*.jar" />
+		</fileset>
+		<fileset dir="../glaf-mail">
 			<include name="*.jar" />
 		</fileset>
 	</path>
