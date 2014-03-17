@@ -30,6 +30,7 @@ import org.springframework.web.servlet.DispatcherServlet;
 import com.glaf.core.config.*;
 import com.glaf.core.security.*;
 import com.glaf.core.util.RequestUtils;
+import com.glaf.core.util.ThreadContextHolder;
 
 public class SpringDispatcherServlet extends DispatcherServlet {
 
@@ -75,6 +76,9 @@ public class SpringDispatcherServlet extends DispatcherServlet {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
+		
+		ThreadContextHolder.setHttpRequest(request);
+		ThreadContextHolder.setHttpResponse(response);
 
 		try {
 			super.doService(request, response);
