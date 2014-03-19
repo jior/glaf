@@ -60,6 +60,10 @@ public class DBConfiguration {
 
 	public static final String JDBC_DATASOURCE = "jdbc.datasource";
 
+	public static final String HOST = "host";
+
+	public static final String DATABASE_NAME = "databaseName";
+
 	public static final String JDBC_URL = "jdbc.url";
 
 	public static final String JDBC_USER = "jdbc.user";

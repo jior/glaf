@@ -49,6 +49,55 @@ public class DBConnectionFactory {
 		return getConnection(Environment.DEFAULT_SYSTEM_NAME);
 	}
 
+	public static Connection getConnection(java.util.Properties props) {
+		Connection connection = null;
+		try {
+			if (props != null) {
+				if (StringUtils.isNotEmpty(props
+						.getProperty(DBConfiguration.JDBC_DATASOURCE))) {
+					InitialContext ctx = new InitialContext();
+					DataSource ds = (DataSource) ctx.lookup(props
+							.getProperty(DBConfiguration.JDBC_DATASOURCE));
+					connection = ds.getConnection();
+				} else {
+					ConnectionProvider provider = ConnectionProviderFactory
+							.createProvider(props);
+					connection = provider.getConnection();
+				}
+			}
+			return connection;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			throw new RuntimeException(ex);
+		}
+	}
+
+	public static boolean checkConnection(java.util.Properties props) {
+		Connection connection = null;
+		try {
+			if (StringUtils.isNotEmpty(props
+					.getProperty(DBConfiguration.JDBC_DATASOURCE))) {
+				InitialContext ctx = new InitialContext();
+				DataSource ds = (DataSource) ctx.lookup(props
+						.getProperty(DBConfiguration.JDBC_DATASOURCE));
+				connection = ds.getConnection();
+			} else {
+				ConnectionProvider provider = ConnectionProviderFactory
+						.createProvider(props);
+				connection = provider.getConnection();
+			}
+			if (connection != null) {
+				return true;
+			}
+			return false;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			throw new RuntimeException(ex);
+		} finally {
+			JdbcUtils.close(connection);
+		}
+	}
+
 	public static Connection getConnection(String systemName) {
 		if (systemName == null) {
 			throw new RuntimeException("systemName is required.");

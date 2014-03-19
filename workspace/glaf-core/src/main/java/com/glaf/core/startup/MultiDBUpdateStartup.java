@@ -35,18 +35,17 @@ import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.config.DBConfiguration;
 import com.glaf.core.config.DataSourceConfig;
 import com.glaf.core.config.Environment;
-import com.glaf.core.config.SystemConfig;
 import com.glaf.core.el.ExpressionTools;
 import com.glaf.core.jdbc.DBConnectionFactory;
-import com.glaf.core.util.PropertiesUtils;
 import com.glaf.core.util.StringTools;
 
-public class MultiDBStartup implements Bootstrap {
+public class MultiDBUpdateStartup implements Bootstrap {
 
-	protected final static Log logger = LogFactory.getLog(MultiDBStartup.class);
+	protected final static Log logger = LogFactory
+			.getLog(MultiDBUpdateStartup.class);
 
 	public void startup(ServletContext context, String text) {
-		logger.debug("-----------------MultiDBStartup.startup----------------");
+		logger.debug("-----------------MultiDBUpdateStartup.startup----------------");
 		if (StringUtils.isNotEmpty(text)) {
 			JSONObject json = JSON.parseObject(text);
 			logger.debug(json.toJSONString());
@@ -127,15 +126,6 @@ public class MultiDBStartup implements Bootstrap {
 								 * 检查连接信息，如果正确，保存配置
 								 */
 								if (DBConnectionFactory.checkConnection(props)) {
-									String filename = SystemConfig
-											.getConfigRootPath()
-											+ "/conf/jdbc/"
-											+ host
-											+ "_"
-											+ name
-											+ ".properties";
-									PropertiesUtils.save(filename, props);
-									logger.info("成功保存数据库配置文件:" + filename);
 									logger.debug("准备执行更新SQL......");
 									DBUpdateThread thread = new DBUpdateThread(
 											props);
