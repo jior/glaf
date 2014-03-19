@@ -10,11 +10,10 @@
     </layout>
   </appender>
   
-  <appender name="ROLLING_FILE" class="org.apache.log4j.RollingFileAppender">
-  	  <param name="File" value="/logs/log.log"/>
+  <appender name="ROLLING_FILE" class="org.apache.log4j.DailyRollingFileAppender">
+	  <param name="File" value="/logs/log.log"/>
 	  <param name="Append" value="true" />
-	  <param name="MaxFileSize" value="500KB"/>
-	  <param name="MaxBackupIndex" value="10"/>
+	  <param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
       <layout class="org.apache.log4j.PatternLayout">
         <param name="ConversionPattern" 
         value="%-d{yyyy-MM-dd HH:mm:ss} %p [%t] %c - %m%n"/>
@@ -24,7 +23,7 @@
   <appender name="INFO" class="org.apache.log4j.RollingFileAppender">
   	  <param name="File" value="/logs/info.log"/>
 	  <param name="Append" value="true" />
-	  <param name="MaxFileSize" value="500KB"/>
+	  <param name="MaxFileSize" value="20480KB"/>
 	  <param name="MaxBackupIndex" value="10"/>
       <layout class="org.apache.log4j.PatternLayout">
         <param name="ConversionPattern" 
@@ -35,7 +34,7 @@
   <appender name="DEBUG" class="org.apache.log4j.RollingFileAppender">
   	  <param name="File" value="/logs/debug.log"/>
 	  <param name="Append" value="true" />
-	  <param name="MaxFileSize" value="500KB"/>
+	  <param name="MaxFileSize" value="20480KB"/>
 	  <param name="MaxBackupIndex" value="10"/>
       <layout class="org.apache.log4j.PatternLayout">
         <param name="ConversionPattern" 
@@ -46,7 +45,7 @@
   <appender name="WARN" class="org.apache.log4j.RollingFileAppender">
   	  <param name="File" value="/logs/warn.log"/>
 	  <param name="Append" value="true" />
-	  <param name="MaxFileSize" value="500KB"/>
+	  <param name="MaxFileSize" value="20480KB"/>
 	  <param name="MaxBackupIndex" value="10"/>
       <layout class="org.apache.log4j.PatternLayout">
         <param name="ConversionPattern" 
@@ -57,13 +56,34 @@
   <appender name="ERROR" class="org.apache.log4j.RollingFileAppender">
   	  <param name="File" value="/logs/error.log"/>
 	  <param name="Append" value="true" />
-	  <param name="MaxFileSize" value="500KB"/>
+	  <param name="MaxFileSize" value="20480KB"/>
 	  <param name="MaxBackupIndex" value="10"/>
       <layout class="org.apache.log4j.PatternLayout">
         <param name="ConversionPattern" 
         value="%-d{yyyy-MM-dd HH:mm:ss} %p [%t] %c - %m%n"/>
       </layout>
   </appender>
+
+  <appender name="controller" class="org.apache.log4j.DailyRollingFileAppender">
+  	  <param name="File" value="/logs/controller.log"/>
+	  <param name="Append" value="true" />
+	  <param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
+      <layout class="org.apache.log4j.PatternLayout">
+        <param name="ConversionPattern" 
+        value="%-d{yyyy-MM-dd HH:mm:ss} %p [%t] %c - %m%n"/>
+      </layout>
+  </appender>
+
+ <appender name="job" class="org.apache.log4j.DailyRollingFileAppender">
+  	  <param name="File" value="/logs/job.log"/>
+	  <param name="Append" value="true" />
+	  <param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
+      <layout class="org.apache.log4j.PatternLayout">
+        <param name="ConversionPattern" 
+        value="%-d{yyyy-MM-dd HH:mm:ss} %p [%t] %c - %m%n"/>
+      </layout>
+  </appender>
+
 
    <category name="DEBUG">
       <priority value="DEBUG"/>
@@ -121,8 +141,7 @@
 	<logger name="com.glaf">
         <level value="DEBUG"/>
     </logger> 
-
-
+	
   <root>
     <level value="INFO"/>
     <appender-ref ref="CONSOLE"/>
