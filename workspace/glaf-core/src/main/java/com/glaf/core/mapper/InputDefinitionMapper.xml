@@ -47,15 +47,6 @@
 			id, service_key, type_cd, key_name, type_title, title, java_type,
 			input_type,value_field,text_field,url, valid_type, required,
 			init_value
-
-			<if test="extendedColumns != null and  extendedColumns.size != 0">
-				<foreach collection="extendedColumns" item="column">
-					<if test="column.value != null">
-						,${column.columnName}
-					</if>
-				</foreach>
-			</if>
-
 		</trim>
 
 		<trim prefix=" values (" suffix=")" suffixOverrides=",">
@@ -79,10 +70,6 @@
 			#{required,
 			jdbcType=VARCHAR},
 			#{initValue, jdbcType=VARCHAR}
-
-			<include
-				refid="com.glaf.core.mapper.TableDataMapper.insertExtendedTableDataSql" />
-
 		</trim>
 	</insert>
 
@@ -121,10 +108,6 @@
 			<if test="initValue != null">
 				init_value = #{initValue, jdbcType=VARCHAR},
 			</if>
-
-			<include
-				refid="com.glaf.core.mapper.TableDataMapper.updateExtendedTableDataSql" />
-
 		</trim>
 		where
 		id = #{id, jdbcType=VARCHAR}
